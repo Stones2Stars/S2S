@@ -144,3 +144,19 @@ int  PlotContext::natureYield(int eYield, int eTeam) const
 	}
 	return m_plot->calculateNatureYield((YieldTypes)eYield, (TeamTypes)eTeam);
 }
+
+// The realized-yield group forward: the bound plot's own group read, handed on unchanged -- no store, no mirror,
+// no second derivation (contexts.md STORES vs FORWARDS). The out-array is FULLY DEFINED on every path, so an
+// unbound context zero-fills rather than leaving caller memory untouched.
+void PlotContext::yields(int (&realizedYields)[NUM_YIELD_TYPES]) const
+{
+	if (m_plot == NULL)
+	{
+		for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+		{
+			realizedYields[iYield] = 0;
+		}
+		return;
+	}
+	m_plot->getYields(realizedYields);
+}

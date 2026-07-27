@@ -245,9 +245,13 @@ the total-observability bar below.)
     `{"error":"too many event streams"}` and your capture silently records NOTHING. Verify the first frames are
     `event: hello` and not that error, and kill every loop when done — an empty capture reads exactly like "the
     feature did not fire."
-  - **(3) The on-demand mailbox-snapshot endpoints `/state/*` + `/computed/*`** compute a game-thread snapshot via
-    the single-slot mailbox and depend on no log file or gate — the most reliable read for a POINT-IN-TIME value
-    (see `docs/specs/http-endpoints.md`). When in doubt about a magnitude/state, hit the endpoint.
+  - **(3) The on-demand mailbox-snapshot endpoints** compute a game-thread snapshot via the single-slot mailbox and
+    depend on no log file or gate — the most reliable read for a POINT-IN-TIME value. ⚠ **The route table was purged:
+    the only data routes today are the six stored-vs-oracle cache documents** (cascade packages, enabler operating
+    set, team capabilities); everything else 404s, and the route surface is defined with the access surface
+    (see `docs/specs/http-endpoints.md`). Do not send an agent to poll a route that does not exist — and ⛔ do NOT
+    "fix" that by adding one: an endpoint is a LIVE CONSUMER, so a route reading a legacy member keeps that member
+    alive past the compiler census. Restoring a route to read a legacy value is the banned move; EMIT a spine event.
   Gates are separate and INDEPENDENT: `gPlayerLogLevel` gates the per-domain `.log` files; the `/events` stream is
   its OWN spine consumer — spine DOMAIN facts stream unconditionally, DIAGNOSTIC/TRACE at `gStreamLogLevel` — so a
   line can be in either surface without the other.

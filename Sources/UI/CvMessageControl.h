@@ -46,7 +46,6 @@ public:
 /************************************************************************************************/
 /* Afforess	                     END                                                            */
 /************************************************************************************************/
-	void sendRecalculateModifiers();
 	void sendBuildLists();
 	void sendBuildListPushOrder(int iID, OrderTypes eOrder, int iData, bool bAlt, bool bShift, bool bCtrl);
 	void sendBuildListPopOrder(int iID, int iNum);

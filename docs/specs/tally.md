@@ -79,8 +79,9 @@ load-time seed, no incremental maintenance, no rebuild, and no shadow**:
 > **The standardized event EMITTERS stay; the in-engine tally just doesn't consume them.**
 > The objects emit `DOMAIN` count events on change (already wired: `CvPlayer::changeBuildingCount` / unit-count →
 > `eventSpine().emit`). Those serve **observability** (the Orwell bar), **cache-invalidation** (the
-> modifier/enabler dirty triggers), and the **out-of-process replay** — **StoneBase** has no engine objects, so *it*
-> rebuilds its model from the event stream + `/state`. The **in-engine** tally needs none of it: it reads the live
+> modifier/enabler dirty triggers), and the **out-of-process replay** — a consumer with no engine objects rebuilds
+> its model from the event stream + `/state` ([event-spine.md](event-spine.md) KIND table). The **in-engine** tally
+> needs none of it: it reads the live
 > objects ("let an object care about itself, and standardize the accessors + event emitters"). **Genuine historical counters** (e.g.
 > "units of type X ever created") are *not* the tally's — they live on their owning object and are saved there; the
 > tally only reads/rolls them up.

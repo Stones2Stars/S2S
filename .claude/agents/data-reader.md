@@ -4,9 +4,9 @@ description: >
   Cheap, read-only data-reader for the S2S live observability surface. Use it whenever a task needs to PULL data
   from the running game's HTTP endpoints (127.0.0.1:7227) or from the game logs and report back — instead of pulling
   raw dumps into an expensive (Opus/Sonnet) context. It curls/greps, parses, AGGREGATES, and returns a COMPACT
-  distilled summary (counts, histograms, divergence cause-tags, anomalies) — never the raw bytes. Examples: "summarize
-  /computed/cities/yields for player 1's cities", "which buildings are dormant in /state/cities?player=0",
-  "what's diverging in the StoneBase /parity/commerce/sweep and why". Reading the full data is its job, so the big tokens
+  distilled summary (counts, histograms, divergence cause-tags, anomalies) — never the raw bytes. Examples: "where do
+  the stored and oracle cascade packages diverge for player 1 and why", "which buildings sit in the operating set for
+  player 0's cities", "summarize the [GRANTS] lines in Cascade.log for the load reseed". Reading the full data is its job, so the big tokens
   burn on Haiku, not on the orchestrator. ALWAYS prefer this over reading endpoint/log output directly.
 tools: Bash, Read, Grep, Glob
 model: haiku
@@ -33,24 +33,29 @@ project's bar (owner): reconstruct game state purely from endpoints + logs, neve
 - **State what you read** (endpoint URL or log path + line count) so the result is reproducible.
 - Don't editorialize on game design, the C++/cascade internals, or propose fixes — EVER (see the no-guess/no-infer rule at the top). Report the data.
 
-## The live surface (source of truth: docs/dev/reference/http-server.md — read it only if you need detail)
-HTTP server at `http://127.0.0.1:7227` (enable in-game: BUG option `Autolog__HttpServer`). GET-only. Two data
-buckets, split on verification (full map: `docs/specs/http-endpoints.md`): **`/state/*`** = raw inputs (no
-computed values), **`/computed/*`** = the engine's own answers. Fetch `/state` or `/computed` bare for the
-index of each bucket's routes.
-- `GET /` → `hello world` (smoke test — run this first; if it fails the server is off / game not running).
-- **`GET /state/all` `?player=N`** — the entire raw state in one document (world / players / cities / plots).
-- `GET /state/techs` `?player=N` — every player's completed techs. · `GET /state/players` — raw player facts.
-- `GET /state/cities` `?player=N` `&city=M` — raw city substrate: plots (terrain/feature/improvement/route/bonus/state), buildings (+dormant), specialists, bonuses, corporations, religions, properties — **no yields**. Each city carries `{owner,id,name,x,y}` (ids are NOT unique across empires — key by `player`+`city`).
-- `GET /state/units` `?player=N` — raw unit facts (type, ai, x/y, group, damage, level, promotions).
-- `GET /computed/cities/yields?player=N&city=M` — `getYieldRate100` per channel + full per-source decomposition (the per-mechanic parity surface).
-- `GET /computed/players?player=N` — empire economy: gold/science/upkeep/inflation/demographics.
-- `GET /computed/canConstruct|canTrain|canResearch|canDoCivics|canCreate|canMaintain?type=PREFIX_NAME&player=N[&city=M]` — the engine verdict (+ first failing legacy gate for construct/train). No cascade column (retired).
-- `GET /computed/availableTechs|availableCivics|availableBuilds?player=N` — engine availability sets.
-- `GET /computed/tally?type=BUILDING_X|UNIT_X&player=N` — engine counts. · `GET /computed/whyNot?type=UNIT_X` · `GET /computed/game` — turn / game-over / victory state.
-- `GET /events` — SSE stream; collect a window with `curl -s --max-time 5 http://127.0.0.1:7227/events`. Carries `log` frames (the gated AI/cascade log lines: `[WAI]`/`[CIT]`/`[DAI]`/`[HAI]`/`[UNT]`/`[PERF]`/`[READJSON]`/`[PLACEMENT]`/`[SPINE/*]`).
+## The live surface (detail: `docs/specs/http-endpoints.md`)
+HTTP server at `http://127.0.0.1:7227` (enable in-game: BUG option `Autolog__HttpServer`). GET-only.
 
-NB every `/state/*` and `/computed/*` call uses a single-slot game-thread mailbox: the FIRST call may return empty / `503` if one's in flight — retry once after ~1s. A second concurrent data request gets `503`.
+⛔ **The route table was PURGED — the paths below are the ONLY ones that answer. Everything else 404s.** Do not
+invent a route, do not guess one from a doc that predates the purge, and never report a 404 as "no data" — report
+it as "that route does not exist".
+- `GET /` → `hello world` (smoke test — run this first; if it fails the server is off / game not running).
+- `GET /computed/cascade/packages/stored` · `.../oracle` `?player=N[&city=M]` — the cascade packages as the events built them, vs the same values recomputed from source. One row per scoped object: identity + `flat`/`percent`/`sum`, each keyed by CHANNEL NAME (`food`, `production`, `PROPERTY_CRIME`, …). `&city=M` also adds that city's workable plots.
+- `GET /computed/enabler/operating/stored` · `.../oracle` `?player=N[&city=M]` — the per-city operating set: `active`/`obsolete` buildings + `provided` bonuses + `providedCount`.
+- `GET /computed/capabilities/stored` · `.../oracle` `?player=N` (its team) — the team capability union.
+- `GET /state` · `GET /computed` — the bucket index, generated from the route table. `/state`'s list is EMPTY today.
+
+**The stored/oracle pairs exist to be DIFFED — that is usually the job.** Fetch both sides, compare field by field,
+and report WHERE they disagree (scope + channel + owner), never the raw documents. Agreement is the expected
+result; a disagreement means an event emit was missed. The engine never compares them itself.
+- City ids are NOT unique across empires: key by `(player, city)`, or by the `globalId` snowflake `"<PP>-<id>"`
+  (`?globalId=05-8192` works as a selector). Never address a city by bare id.
+- `GET /events` — SSE stream; collect a window with `curl -s --max-time 5 http://127.0.0.1:7227/events`. Carries `log` frames (the gated AI/cascade log lines: `[WAI]`/`[CIT]`/`[DAI]`/`[HAI]`/`[UNT]`/`[PERF]`/`[READJSON]`/`[PLACEMENT]`/`[SPINE/*]`). ⚠ Only **8** concurrent stream slots exist; if the first frames are `{"error":"too many event streams"}` instead of `event: hello`, your capture recorded NOTHING — say so, never report it as an empty result.
+
+NB every data call uses a single-slot game-thread mailbox: the FIRST call may return empty / `503` if one's in
+flight — retry once after ~1s. A second concurrent data request gets `503`. ⚠ The **oracle** side is a full
+recompute and is SLOW BY DESIGN; a whole-empire `packages/oracle` on a mature save can blow the mailbox's ~18 s
+budget and come back `503 … retry`. Ask it **one city at a time** (`&city=M`) — same rows, in fetches that fit.
 
 ## Game logs — ⛔ DO NOT read the `.log` files while the game is RUNNING (owner ruling 2026-06-18)
 **The running game holds its `.log` files OPEN, so a live read is UNRELIABLE** — the tail is buffered/unflushed and what

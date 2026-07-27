@@ -116,9 +116,14 @@ public:
 	// `providedOut` = the union of every ACTIVE building's `provides.bonuses` -- the BONUS ids building supply
 	// makes present IN-VICINITY (json §5a). `obsoleteOut` = the PRESENT ∧ obsoleted-by-held-tech buildings (json §4.2):
 	// a THIRD outcome collected in the SAME pass -- excluded from active/provides, it deposits its `whenObsolete` tree.
-	// This is CvCity::refreshOperatingBuildings' recompute target -- consumers never call it directly; they read the
-	// STANDING cache via operatingBuildings()/wireOperatingBuildings() below.
+	// Consumers never call it directly; they read the STANDING set via operatingBuildings()/
+	// wireOperatingBuildings() below. It is reached through recomputeOperatingSetInto().
 	static void recomputeOperatingBuildingsInto(const CvCity* pCity, std::set<int>& activeOut, std::set<int>& providedOut, std::set<int>& obsoleteOut);
+
+	// The WHOLE set (the three fixpoint sets + the provider ref-count) recomputed from source into a
+	// CALLER-OWNED buffer -- the seed points it at the city's storage, the ENDPOINT ORACLE at its own scratch.
+	// Never given the maintained set, so serving the oracle structurally cannot repair it.
+	static void recomputeOperatingSetInto(const CvCity* pCity, OperatingBuildings& kOut);
 
 	// --- ACTIVE-SET targeted maintenance (state-repositories.md: the active-building set is maintained by
 	// targeted PROPAGATION, not blanket-recomputed). buildActiveIndex() inverts every building's `requires.operate`
@@ -134,11 +139,12 @@ public:
 	static void onPlayerScopeChangedActive(const CvCity* pCity);              // tech/civic/golden-age (player scope)
 	static void seedOperatingBuildings(const CvCity* pCity);                          // the LOAD seed: full recompute + the provider ref-count
 
-	// The STANDING per-city operating buildings (CvCity::m_operatingBuildings, CvCascadeOperatingBuildings.h) -- ensures freshness (event
-	// dirty + the shared accumulator epoch + the turn-roll self-heal) and returns the cache. Replaces the
-	// turn-scoped memo: the operating buildings are EVENT-CORRECT, so the old "shadow-phase-only" caveat is closed.
+	// The STANDING per-city operating buildings (CvCity::m_operatingBuildings, CvOperatingBuildings.h) -- a BARE
+	// FETCH, unconditionally. Nothing is recomputed on this path: the set is seeded once and kept current in
+	// place by the targeted on*Active hooks above, so a missed propagation stays visibly wrong
+	// ([DEC-no-self-heal]) until an external reader diffs this set against the endpoint oracle's recompute.
 	static const OperatingBuildings& operatingBuildings(const CvCity* pCity);
-	// Convenience: ensure + point ec.activeBuildings / ec.vicinityProvidedBonuses at the standing sets
+	// Convenience: point ec.activeBuildings / ec.vicinityProvidedBonuses at the standing sets
 	// (feeds cascadeIsBuildingActive + ev_vicinityHas; no per-call set copies).
 	static void wireOperatingBuildings(const CvCity* pCity, CvCascadeEvalCtx& ec);
 };

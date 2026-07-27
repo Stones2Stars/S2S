@@ -50,6 +50,33 @@ int  EmpireContext::teamMemberCount() const
 	return m_player != NULL ? GET_TEAM(m_player->getTeam()).getNumMembers() : 0;
 }
 
+// The realized-commerce group forward: the bound player's own group read, handed on unchanged -- no store, no
+// mirror, no second derivation (contexts.md STORES vs FORWARDS). The out-array is FULLY DEFINED on every path,
+// so an unbound context zero-fills rather than leaving caller memory untouched.
+void EmpireContext::commerces(int (&realizedCommerces)[NUM_COMMERCE_TYPES]) const
+{
+	if (m_player == NULL)
+	{
+		for (int iCommerce = 0; iCommerce < NUM_COMMERCE_TYPES; ++iCommerce)
+		{
+			realizedCommerces[iCommerce] = 0;
+		}
+		return;
+	}
+	m_player->getCommerces(realizedCommerces);
+}
+
+// The slider-percentage group forward: the same single forward the *_RATE counter tokens read, fanned out over
+// the group's own enum -- one accessor names CvPlayer::getCommercePercent, so the token read and the split read
+// cannot disagree. The out-array is FULLY DEFINED on every path (an unbound context answers 0 per channel).
+void EmpireContext::commerceRates(int (&commerceRates)[NUM_COMMERCE_TYPES]) const
+{
+	for (int iCommerce = 0; iCommerce < NUM_COMMERCE_TYPES; ++iCommerce)
+	{
+		commerceRates[iCommerce] = commerceRate(iCommerce);
+	}
+}
+
 // Fill the EMPIRE half of the eval ctx (player/team) from the bound player; CityContext::fillEvalCtx fills city/plot.
 void EmpireContext::fillEvalCtx(CvCascadeEvalCtx& ec) const
 {

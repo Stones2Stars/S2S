@@ -157,7 +157,6 @@ public:
 
 	void erase();
 
-	void clearModifierTotals();
 	void recalculateBaseYield();
 
 	// The per-plot ISOLATED live-state read surface -- the plot-scope sibling of CvCity::getCityContext /
@@ -171,6 +170,23 @@ public:
 	const CvCascadePackage<CvPlot>& getCascadePackage() const { return m_cascadePackage; }
 	// The package's refresh delegate (the CvDerivedCacheSet contract) -- delegates to the ONE gather.
 	void refreshCascadePackage(int64_t iMask) const;
+
+	// THE PLOT'S GROUP READ SURFACE -- the GAME-OBJECT read role's answer to "what do I HAVE, right now?"
+	// (patterns.md § THE TWO READ ROLES), one getter per modifier FAMILY the PLOT scope carries channels of
+	// (the set is the data's -- CvInfoKinds.h's census scope masks). The call carries NO channel argument and NO
+	// scope argument (the object IS the scope); the group's enum indexes the RESULT; there is no scalar getter
+	// per channel. ×100 NATIVE ([DEC-fixedpoint-x100]). A BARE FETCH per channel, unconditionally.
+	// ⚑ A PLOT IS RESOLVED IN ISOLATION (modifier.md §2 plot-as-base): these answer this plot's OWN package and
+	// take NO upper-scope percent -- the city stack scales the already-summed base later, once. That is also why
+	// the yield group here is the plot's flat base and never a rate.
+	void getYields(int (&yields)[NUM_YIELD_TYPES]) const;
+	void getCommerces(int (&commerces)[NUM_COMMERCE_TYPES]) const;
+	// The four wellbeing channels (modifier.md §2b). At plot scope the census authors HEALTH only (the feature
+	// fallout class); the other three answer 0 with no storage anywhere.
+	void getWellbeing(int (&wellbeing)[NUM_WELLBEING_CHANNELS]) const;
+	void getDefenseKinds(int (&defenses)[NUM_DEFENSE_KINDS]) const;
+	// The straggler-scalar group answered at THIS scope (cultureDistance is the plot-scope entry).
+	void getScalars(int (&scalars)[NUM_INFO_SCALARS]) const;
 
 /*********************************/
 /***** Parallel Maps - Begin *****/

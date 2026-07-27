@@ -16,6 +16,9 @@
 #include "CvTeamAI.h"
 #include "CvDLLInterfaceIFaceBase.h"
 #include "CvDLLUtilityIFaceBase.h"
+#include "CvCascadeChannelRegistry.h"   // channelLookup / wellbeingTwin -- the group read's channel identity
+#include "CvInfoKinds.h"                // the family + kind vocabulary the group read walks
+#include "Data/CvInfoValuation.h"       // realizedAtArea -- the ONE cross-scope roll-up
 
 // Public Functions...
 
@@ -131,7 +134,7 @@ void CvArea::reset(int iID, bool bWater, bool bConstructorCall)
 
 	for (int iI = 0; iI < MAX_PLAYERS; iI++)
 	{
-		m_cascadeSlots[iI].bind(this, (PlayerTypes)iI);   // the (area x player) cascade package (all-dirty from bind)
+		m_cascadeSlots[iI].bind(this, (PlayerTypes)iI, iID);   // the (area x player) cascade package (all-dirty from bind)
 		m_aiUnitsPerPlayer[iI] = 0;
 		m_aiAnimalsPerPlayer[iI] = 0;
 		m_aiCitiesPerPlayer[iI] = 0;
@@ -193,31 +196,6 @@ void CvArea::reset(int iID, bool bWater, bool bConstructorCall)
 	m_eCachedTeamPlotTypeCounts = NO_TEAM;
 	m_iCachedTurnPlotTypeCounts = -1;
 }
-
-void CvArea::clearModifierTotals()
-{
-	PROFILE_EXTRA_FUNC();
-	for (int iI = 0; iI < MAX_PLAYERS; iI++)
-	{
-		m_aiBuildingGoodHealth[iI] = 0;
-		m_aiBuildingBadHealth[iI] = 0;
-		m_aiBuildingHappiness[iI] = 0;
-		m_aiFreeSpecialist[iI] = 0;
-		m_aiPower[iI] = 0;
-		m_aiMaintenanceModifier[iI] = 0;
-
-		for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
-		{
-			m_aaiYieldRateModifier[iI][iJ] = 0;
-		}
-	}
-
-	for (int iI = 0; iI < MAX_TEAMS; iI++)
-	{
-		m_aiCleanPowerCount[iI] = 0;
-	}
-}
-
 
 void CvArea::read(FDataStreamBase* pStream)
 {
@@ -399,6 +377,25 @@ int CvArea::getID() const
 void CvArea::setID(int iID)
 {
 	m_iID = iID;
+}
+
+
+// The (area x player) slot's group read (see CvArea.h for the role + the grammar): walk the group's own enum,
+// resolve the entry's CHANNEL by identity -- anger/unhealth as the SIGN TWINS minted beside their authored
+// family (modifier.md §2b) -- and fold each through the ONE cross-scope roll-up.
+void CvArea::getWellbeing(PlayerTypes ePlayer, int (&wellbeing)[NUM_WELLBEING_CHANNELS]) const
+{
+	for (int iChannelIndex = 0; iChannelIndex < NUM_WELLBEING_CHANNELS; ++iChannelIndex)
+	{
+		const WellbeingChannel eWellbeing = (WellbeingChannel)iChannelIndex;
+		const int iAuthoredChannel = CascadeChannelRegistry::channelLookup(infoWellbeingFamily(eWellbeing), (int)CHANNEL_AMOUNT, -1);
+		int iChannel = iAuthoredChannel;
+		if (eWellbeing == WELLBEING_ANGER || eWellbeing == WELLBEING_UNHEALTH)
+		{
+			iChannel = CascadeChannelRegistry::wellbeingTwin(iAuthoredChannel);
+		}
+		wellbeing[iChannelIndex] = InfoValuation::realizedAtArea(*this, ePlayer, iChannel);
+	}
 }
 
 

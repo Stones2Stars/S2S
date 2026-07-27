@@ -32,6 +32,7 @@
 //
 
 #include "CvCascadeChannelRegistry.h"
+#include "CvCascadeSlotValues.h"
 #include "Infrastructure/CvDerivedCache.h"
 #include <vector>
 
@@ -39,22 +40,36 @@ template <class TOwner>
 struct CvCascadePackage
 {
 	CvCascScope scope;                     // which layout this package lives on (set at bind)
+	int identityFirst;                     // the SERVED identity, interpreted per scope (CvCascadeSlotValues.h)
+	int identitySecond;                    // its second axis: city id / team id / area id / plot y (-1 = none)
 	mutable std::vector<int> flat;      // dictionary 1: the channel-indexed x100 flat sums (local slots)
 	mutable std::vector<int> percent;   // dictionary 2: the channel-indexed x100 percent sums (local slots)
 	mutable std::vector<int> sum;       // the receiver slots: the realized x100 totals this scope consumes
 	CvDerivedCacheSet<TOwner, int64_t> set;   // THE dirty protocol -- the one component, 64-bit mask form
 
-	CvCascadePackage() : scope(CASC_SCOPE_CITY) {}
+	CvCascadePackage() : scope(CASC_SCOPE_CITY), identityFirst(-1), identitySecond(-1) {}
 
 	// Wire the owner + its refresh delegate. All-dirty from the start (a loaded game recomputes on first read).
-	void bind(CvCascScope ePackageScope, const TOwner* pOwner, void (TOwner::*pfnRefresh)(int64_t) const)
+	// iIdentityFirst/iIdentitySecond are the identity every SERVED value carries, so a divergence an external
+	// reader observes between the stored and oracle documents names WHICH object drifted (city 5-8192, plot
+	// 12/30) rather than "some city's production flats". The owner types differ per scope (city/plot/team/
+	// area-slot expose no common id accessor), so identity is passed IN here rather than read back off TOwner;
+	// either axis may be -1 where the scope genuinely has none.
+	void bind(CvCascScope ePackageScope, const TOwner* pOwner, void (TOwner::*pfnRefresh)(int64_t) const,
+	          int iIdentityFirst, int iIdentitySecond)
 	{
 		scope = ePackageScope;
+		identityFirst = iIdentityFirst;
+		identitySecond = iIdentitySecond;
 		set.bind(pOwner, pfnRefresh);
 	}
 
-	// ---- the reads: refresh THIS slot's bit if stale, then a bare fetch. Disjoint channels never pay for
-	// ---- each other; a never-authored channel answers 0 without any storage existing anywhere. ----
+	// ---- THE READ PATH: BARE FETCHES, UNCONDITIONALLY. The rebuild already happened AT THE MARK, so a read
+	// ---- never recomputes and there is nothing left on it to gate (state-repositories.md: an ensure-on-read
+	// ---- protocol is tombstoned, superseded-ideas #14). A channel no event ever marked therefore reads
+	// ---- whatever the events built -- visibly wrong if an emit is missing, which is exactly how the missing
+	// ---- emit gets found ([DEC-no-self-heal]). A never-authored channel answers 0 without any storage
+	// ---- existing anywhere. ----
 
 	int readFlat(int iChannel) const
 	{
@@ -63,7 +78,6 @@ struct CvCascadePackage
 		{
 			return 0;
 		}
-		set.ensure(CascadeChannelRegistry::scopeChannelBit(scope, iChannel));
 		return iSlot < (int)flat.size() ? flat[iSlot] : 0;
 	}
 
@@ -74,7 +88,6 @@ struct CvCascadePackage
 		{
 			return 0;
 		}
-		set.ensure(CascadeChannelRegistry::scopeChannelBit(scope, iChannel));
 		return iSlot < (int)percent.size() ? percent[iSlot] : 0;
 	}
 
@@ -85,24 +98,81 @@ struct CvCascadePackage
 		{
 			return 0;
 		}
-		set.ensure(CascadeChannelRegistry::scopeReceiverBit(scope, iChannel));
 		return iReceiver < (int)sum.size() ? sum[iReceiver] : 0;
 	}
 
-	// Raw fetches with no ensure -- for a combine that has already ensured the bits it walks.
-	int rawFlat(int iChannel) const
+	// The ENDPOINT-FACING STORED read: this package's slots as they stand, copied into a caller-owned document
+	// -- the same shape the oracle's fresh recompute fills, so an external consumer diffs the two field by
+	// field. A slot the storage has never been sized for answers 0, exactly as a consumer read would.
+	void readValuesInto(CvCascadeSlotValues& kValues) const
 	{
-		const int iSlot = CascadeChannelRegistry::scopeSlotIndex(scope, iChannel);
-		return (iSlot >= 0 && iSlot < (int)flat.size()) ? flat[iSlot] : 0;
-	}
-	int rawPercent(int iChannel) const
-	{
-		const int iSlot = CascadeChannelRegistry::scopeSlotIndex(scope, iChannel);
-		return (iSlot >= 0 && iSlot < (int)percent.size()) ? percent[iSlot] : 0;
+		kValues.reset(scope, identityFirst, identitySecond);
+		size_t iSlot = 0;
+		for (iSlot = 0; iSlot < kValues.flat.size() && iSlot < flat.size(); ++iSlot)
+		{
+			kValues.flat[iSlot] = flat[iSlot];
+		}
+		for (iSlot = 0; iSlot < kValues.percent.size() && iSlot < percent.size(); ++iSlot)
+		{
+			kValues.percent[iSlot] = percent[iSlot];
+		}
+		for (iSlot = 0; iSlot < kValues.sum.size() && iSlot < sum.size(); ++iSlot)
+		{
+			kValues.sum[iSlot] = sum[iSlot];
+		}
 	}
 
+	// ---- THE REBUILD-PATH INPUT READS -- CascadeGather ONLY, never a consumer read path. A combine runs
+	// ---- INSIDE a rebuild, where a cross-scope input the SAME event marked may not have reached its own
+	// ---- rebuild yet; reading it through its mark makes the mark ORDER within one event irrelevant, so a sum
+	// ---- can never sit stale behind an input its own event dirtied (state-repositories.md: "a sum's rebuild
+	// ---- reads its packages through their own dirty-check ... there is no dependency-ordered rebuild pass").
+	// ---- ⛔ This is NOT the retired ensure-on-read: it can only fire for a slot something DID mark. A MISSED
+	// ---- emit leaves the slot unmarked, so it reads clean here too and stays visibly wrong -- the tripwire is
+	// ---- untouched. It is also what makes the load drain order-free: every banked mark rebuilds its own
+	// ---- inputs first, whatever order the drain walks the owners in. ----
+
+	int sourceFlat(int iChannel) const
+	{
+		const int iSlot = CascadeChannelRegistry::scopeSlotIndex(scope, iChannel);
+		if (iSlot < 0)
+		{
+			return 0;
+		}
+		set.rebuildMarked(CascadeChannelRegistry::scopeChannelBit(scope, iChannel));
+		return iSlot < (int)flat.size() ? flat[iSlot] : 0;
+	}
+
+	int sourcePercent(int iChannel) const
+	{
+		const int iSlot = CascadeChannelRegistry::scopeSlotIndex(scope, iChannel);
+		if (iSlot < 0)
+		{
+			return 0;
+		}
+		set.rebuildMarked(CascadeChannelRegistry::scopeChannelBit(scope, iChannel));
+		return iSlot < (int)percent.size() ? percent[iSlot] : 0;
+	}
+
+	int sourceSum(int iChannel) const
+	{
+		const int iReceiver = CascadeChannelRegistry::scopeReceiverIndex(scope, iChannel);
+		if (iReceiver < 0)
+		{
+			return 0;
+		}
+		set.rebuildMarked(CascadeChannelRegistry::scopeReceiverBit(scope, iChannel));
+		return iReceiver < (int)sum.size() ? sum[iReceiver] : 0;
+	}
+
+	// The load drain (state-repositories.md): inside the load bracket the marks are BANKED, and this rebuilds
+	// every one of them once the stream has ended. Drains only what was marked -- never a mark-all.
+	void rebuildMarked() const { set.rebuildMarked(); }
+
 	// ---- the triggers (called ONLY by the modifier consumer's derived marks -- no hand-wired mutation-site
-	// ---- calls, state-repositories.md: the dirty flags fall out of the deposit addresses) ----
+	// ---- calls, state-repositories.md: the dirty flags fall out of the deposit addresses). The mark is ALSO
+	// ---- the rebuild: CvDerivedCacheSet::markDirty recomputes the marked components right here, which is what
+	// ---- lets every read above be a bare fetch. ----
 
 	void markChannel(int iChannel) const { set.markDirty(CascadeChannelRegistry::scopeChannelBit(scope, iChannel)); }
 	void markSum(int iChannel) const { set.markDirty(CascadeChannelRegistry::scopeReceiverBit(scope, iChannel)); }

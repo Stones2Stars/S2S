@@ -33,6 +33,11 @@ class CvGameObject
 {
 public:
 	virtual GameObjectTypes getGameObjectType() const = 0;
+	// Identity for a DOMAIN fact ABOUT this object -- WHO owns it and WHICH instance it is (event-spine.md: an
+	// event names WHAT / WHO / WHERE). The instance id is interpretable ONLY together with getGameObjectType(),
+	// since a city id and a plot id share the int. The base answers the ownerless, id-less case (the game).
+	virtual PlayerTypes getOwnerPlayerId() const;
+	virtual int getObjectInstanceId() const;
 	virtual CvProperties* getProperties() const = 0;
 	virtual const CvProperties* getPropertiesConst() const = 0;
 	virtual void foreach(GameObjectTypes eType, bst::function<void (const CvGameObject*)> func) const = 0;
@@ -118,6 +123,7 @@ class CvGameObjectTeam : public CvGameObject
 public:
 	explicit CvGameObjectTeam(CvTeam* pTeam);
 	virtual GameObjectTypes getGameObjectType() const;
+	virtual int getObjectInstanceId() const;   // a team has no owning player -- the base NO_PLAYER stands
 	virtual CvProperties* getProperties() const;
 	virtual const CvProperties* getPropertiesConst() const;
 	virtual void foreach(GameObjectTypes eType, bst::function<void (const CvGameObject*)> func) const;
@@ -143,6 +149,8 @@ class CvGameObjectPlayer : public CvGameObject
 public:
 	explicit CvGameObjectPlayer(CvPlayer* pPlayer);
 	virtual GameObjectTypes getGameObjectType() const;
+	virtual PlayerTypes getOwnerPlayerId() const;
+	virtual int getObjectInstanceId() const;
 	virtual CvProperties* getProperties() const;
 	virtual const CvProperties* getPropertiesConst() const;
 	virtual void foreach(GameObjectTypes eType, bst::function<void (const CvGameObject*)> func) const;
@@ -168,6 +176,8 @@ class CvGameObjectCity : public CvGameObject
 public:
 	explicit CvGameObjectCity(CvCity* pCity);
 	virtual GameObjectTypes getGameObjectType() const;
+	virtual PlayerTypes getOwnerPlayerId() const;
+	virtual int getObjectInstanceId() const;
 	virtual CvProperties* getProperties() const;
 	virtual const CvProperties* getPropertiesConst() const;
 	virtual void foreach(GameObjectTypes eType, bst::function<void (const CvGameObject*)> func) const;
@@ -195,6 +205,8 @@ class CvGameObjectUnit : public CvGameObject
 public:
 	explicit CvGameObjectUnit(CvUnit* pUnit);
 	virtual GameObjectTypes getGameObjectType() const;
+	virtual PlayerTypes getOwnerPlayerId() const;
+	virtual int getObjectInstanceId() const;
 	virtual CvProperties* getProperties() const;
 	virtual const CvProperties* getPropertiesConst() const;
 	virtual void foreach(GameObjectTypes eType, bst::function<void (const CvGameObject*)> func) const;
@@ -222,6 +234,8 @@ class CvGameObjectPlot : public CvGameObject
 public:
 	explicit CvGameObjectPlot(CvPlot* pPlot);
 	virtual GameObjectTypes getGameObjectType() const;
+	virtual PlayerTypes getOwnerPlayerId() const;   // NO_PLAYER on an unowned plot
+	virtual int getObjectInstanceId() const;        // the map index, the id every plot DOMAIN fact carries
 	virtual CvProperties* getProperties() const;
 	virtual const CvProperties* getPropertiesConst() const;
 	virtual void foreach(GameObjectTypes eType, bst::function<void (const CvGameObject*)> func) const;

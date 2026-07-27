@@ -41,8 +41,9 @@ The in-tree exhibits are not hypothetical: `isCoastalLand()` is an 8-neighbour s
 evaluation**; the §5a vicinity check is a radius union **per check**; and `getNumBonuses` is recorded in
 [enabler.md §8](../specs/enabler.md) as *"the turn wall's hottest cluster under the governor's read volume"* —
 a tech gate → two-hop plot-group resolution → group sum → minted gate → corp add-on, **re-executed on every
-call**. The `(scope,channel)` calc-count gate ([DEC-calc-count-gate](decisions.md#dec-calc-count-gate)) is how
-the win is observed: steady-state cost must track EVENT volume (thousands), never read volume (millions).
+call**. The win is STRUCTURAL: once the fact is stored there is no read-time work left to do, so cost tracks
+EVENT volume (what changed), never read volume (how often it is asked) — and it is observed where every
+performance claim is observed, on the per-turn wall clock ([DEC-turn-time-is-king](decisions.md#dec-turn-time-is-king)).
 
 ⛔ **A forwarded read that COMPUTES is the defect this rule exists to kill.** `PlotContext::hasCoast()` forwarding
 to `CvPlot::isCoastalLand()` — an 8-neighbour scan with an `area()->getNumTiles()` call per neighbour, on every
@@ -68,8 +69,8 @@ event-driven — never a read-time scan, and never left on the old accessor as a
 
 | context | owner | STORES (unique aggregate) | FORWARDS (read through the bound object / its owner) |
 |---|---|---|---|
-| **CityContext** | `CvCity` | `plotAttrs` — per-predicate plot COUNTS (the fold of member plots' bits) · **the VICINITY BONUSES available in the city** (owner) — the §5a radius union, MAP half (see the split below) · the **TRADED count** (the gated network number) · the **AREA facts** (area id, its tile count, the coastal water-body size) · the **holy-city count** | population, power, religion presence, holy-city-of, corporation, capital, government-centre, fresh-water access, property value (raw, `CvCity`-owned, O(1)); state religion (→ owner `CvPlayer`) |
-| **EmpireContext** | `CvPlayer` | `policies` — the empire's enacted-policy set (the derived UNION over live civics'/traits' policy blocks, stored nowhere else) | state religion (single enum → `CvPlayer::getStateReligion`), civics/traits/heritages presence, the team-held facts |
+| **CityContext** | `CvCity` | `plotAttrs` — per-predicate plot COUNTS (the fold of member plots' bits) · **the VICINITY BONUSES available in the city** (owner) — the §5a radius union, MAP half (see the split below) · the **TRADED count** (the gated network number) · the **AREA facts** (area id, its tile count, the coastal water-body size) · the **holy-city count** | population, power, religion presence, holy-city-of, corporation, capital, government-centre, fresh-water access, property value (raw, `CvCity`-owned, O(1)); state religion (→ owner `CvPlayer`); **the CURRENT REALIZED YIELDS** (owner) — the city's own O(1) group read, forwarded so a valuation can resolve a percent against a real base (below); **the CURRENT REALIZED COMMERCE** — `CvCity::getCommerces`, the per-commerce SPLIT of that commerce yield by the empire's sliders plus each channel's own deposits ([modifier.md §2a](../specs/modifier.md)), forwarded for the same reason |
+| **EmpireContext** | `CvPlayer` | `policies` — the empire's enacted-policy set (the derived UNION over live civics'/traits' policy blocks, stored nowhere else) | state religion (single enum → `CvPlayer::getStateReligion`), civics/traits/heritages presence, the team-held facts; **the CURRENT REALIZED COMMERCE** — `CvPlayer::getCommerces`, the four empire RECEIVER totals: the city-yields forward's empire twin, so an empire-scope percent resolves against a real base; **the COMMERCE SLIDER PERCENTAGES** (owner) — the player's gold / research / culture / espionage rates, the `GOLD_RATE`/`RESEARCH_RATE`/`CULTURE_RATE`/`ESPIONAGE_RATE` tokens ([json.md §3.1](../specs/json.md)); a group keyed by `CommerceTypes`, forwarded because `CvPlayer` owns them O(1) |
 
 ⛔ **THE VICINITY SPLIT — the context holds the MAP half, the enabler holds the BUILDING half.** The §5a in-vicinity
 supply is a union of two independently-owned halves, and storing either one twice is the duplication the model bans:
@@ -83,7 +84,7 @@ supply is a union of two independently-owned halves, and storing either one twic
 
 The reader unions the two. A mirror of the building half on the context would also *drift*, because the enabler
 mutates its set in place as the fixpoint ripples.
-| **PlotContext** | `CvPlot` | the `CASC_PRED_*` verdict **BITSET** — the OWN-PLOT block (water/land/relief/hills/peak/river/irrigation/feature-present/landmark/owned/**worked**) plus the ADJACENCY block (coast, fresh-water) | the RAW substrate a parameterized predicate keys on — terrain/feature/improvement/route/bonus ids, owner, latitude, nature yield — plus city-presence, the one verdict with no mutation event a bit could be maintained from (→ `CvPlot`) |
+| **PlotContext** | `CvPlot` | the `CASC_PRED_*` verdict **BITSET** — the OWN-PLOT block (water/land/relief/hills/peak/river/irrigation/feature-present/landmark/owned/**worked**) plus the ADJACENCY block (coast, fresh-water) | the RAW substrate a parameterized predicate keys on — terrain/feature/improvement/route/bonus ids, owner, latitude, nature yield — plus city-presence, the one verdict with no mutation event a bit could be maintained from (→ `CvPlot`); **the plot's CURRENT REALIZED YIELDS** — `CvPlot::getYields`, the whole isolated per-plot base package as a bare cache fetch (distinct from `natureYield`, the pre-improvement leg that COMPUTES per call) |
 
 **Pass by reference/pointer, never by value (owner).** Passing a bound context is far cheaper than snapshotting
 values; a context is never a value copy — that is *why* it forwards rather than mirrors.
@@ -129,6 +130,18 @@ exemplar). The context is the RESPONSIBILITY home — the one place every reader
 enabler's gates, the `expected*` valuations) goes for HAVE. The enabler's DERIVED sets (the domain vectors, the
 operating-building set) remain enabler-owned ([enabler.md §7](../specs/enabler.md)); the contexts serve the raw
 possession facts those machines gate against.
+
+**⚖ IF IT IS CURRENT STATE, IT IS THE CONTEXT'S — there is no third home (owner).** A value that looks like it
+needs a new category almost always just IS current state, and current state has one home. The worked case: the
+city's **thresholds** (growth / culture / great-people — what is REQUIRED right now, moving with population,
+gamespeed and era), its **turns-left** projections, and its cross-city **ranks** are none of them a new kind of
+read — they are this city's state now, so they are asked of the context like every other state fact. The
+STORES-vs-FORWARDS split then decides each one on its own merits (a value the object already computes O(1) is
+FORWARDED; only a homeless aggregate is stored) — the classification is never "invent a shape for it".
+⚠ **Ranks are the case that STRESSES the rule**, and stressing it is not breaking it: a rank is a comparison
+ACROSS cities, so no single city owns the answer and a stored rank would need maintaining on every sibling's
+change. Read it at the scope that can actually answer it — the player — rather than bending the city's context
+around it.
 
 ## COUNTS, not objects — "how many, not which" (owner)
 

@@ -118,10 +118,10 @@ The "`*100` getters mark the scaled fields" rule is INCOMPLETE: some fields are 
 
 ## 5. Verification — the math proves the scales, not manual JSON review
 
-The owner cannot eyeball thousands of JSONs; StoneBase
-imports the human JSON (human→×100 per §2), computes the effective value, and compares against the live
-legacy `getYieldRate100`. **Residual divergence localises the next mis-scaled field** → fix the curator →
-regenerate → re-run. Exact parity is the bar — 0 in-scope mismatches; a residual divergence is a data-collection gap (a still-mis-scaled field), never a formula difference ([DEC-parity](../../architecture/decisions.md#dec-parity)).
+The owner cannot eyeball thousands of JSONs, so a mis-scaled field is found by the MATH: the effective value the
+authored JSON produces is observed live on the `/computed` oracle endpoints, on a real save
+([DEC-done-is-observable](../../architecture/decisions.md#dec-done-is-observable)). **Residual divergence localises
+the next mis-scaled field** → fix the curator → regenerate → re-check. Exact parity is the bar — 0 in-scope mismatches; a residual divergence is a data-collection gap (a still-mis-scaled field), never a formula difference ([DEC-parity](../../architecture/decisions.md#dec-parity)).
 
 ## See also
 - [decisions ledger](../../architecture/decisions.md) — `DEC-fixedpoint-x100`, `DEC-curator-owns-descale` index

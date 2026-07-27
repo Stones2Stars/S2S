@@ -81,7 +81,7 @@ promotions, `PROCESS_IDLE`, the base civics — are authored onto **`TECH_GAME_S
 start node every player holds), derived by the curator (no prereq in legacy ⇒ enabled from game start). A missing
 edge therefore fails **closed** (the entity is unreachable — loud in validation), never silently-available.
 The dead workarounds for this — whole-domain frontiers, hardcoded always-available whitelists — are tombstoned
-([superseded-ideas #14](../architecture/superseded-ideas.md)). *(The Palace's FIRST placement is not the
+([superseded-ideas #18](../architecture/superseded-ideas.md)). *(The Palace's FIRST placement is not the
 enabler's doing: the settler's `grants.foundBuildings` places it at founding — the grants machine,
 [json](json.md) §5.)*
 
@@ -326,7 +326,9 @@ obsoletes; a building built leaves `buildable`; …). Every read is a **pure O(1
 calculator.** The static calculators (`TechEnabler::available` / `BuildingEnabler::verifyCity`'s fresh-build +
 `EnablerKernel::gateSet`) are the **validation oracle ONLY — never the read path and never a load build**; the
 oracle-vs-maintained diff is the missed-emit tripwire (the enabler consumes ONLY events precisely so a missed
-emit surfaces as a visibly wrong enabler). The `requires` gate re-runs **incrementally over only the affected candidates** (via the reverse
+emit surfaces as a visibly wrong enabler) — and that diff is taken **OUTSIDE the DLL**, between the two served
+documents (`/computed/enabler/operating/{stored,oracle}`, [http-endpoints.md](http-endpoints.md)); the engine
+never compares the two sides ([state-repositories.md](../architecture/state-repositories.md)). The `requires` gate re-runs **incrementally over only the affected candidates** (via the reverse
 index), and the operating-building set (§3.2) is maintained the same way — this is
 [state-repositories](../architecture/state-repositories.md)' targeted propagation applied to the availability
 machine. The representation is deliberately primitive: **the HAS list, and the enabler list built from HAS, are

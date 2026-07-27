@@ -113,6 +113,14 @@ public:
 	// Decode a scope's dirty mask to a "|"-joined channel-name string (receiver bits render as "sum:<name>")
 	// -- the [CASCADE] invalidate/rebuilt observability's package-name decode.
 	static void decodeMask(CvCascScope eScope, int64_t iMask, char* szOut, int iOutSize);
+
+	// ---- the minted layout's observability ----
+
+	// Emit the per-scope CHANNEL-SET census ([MODIFIER] channels scope=... authored=... slots=... receivers=...)
+	// -- the KEYS-ONLY-WHERE-NEEDED derivation made observable (the measured expectation: plot 13 / city 40 /
+	// empire 50 / area 3 / team 3 authored channels). Reports what THIS registry minted, so it can only run once
+	// the load has pushed every compiled deposit: fired at GAME_LOAD_FINISHED, guarded to once per load.
+	static void reportChannelCensus();
 };
 
 #endif // CV_CASCADE_CHANNEL_REGISTRY_H

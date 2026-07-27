@@ -630,7 +630,6 @@ enum ButtonPopupTypes
 	BUTTONPOPUP_SELECT_UNIT,
 	BUTTONPOPUP_SELECT_DISCOVERY_TECH,
 	BUTTONPOPUP_GET_SAVE_FORMAT, // Koshling - user choose save format dialog
-	BUTTONPOPUP_MODIFIER_RECALCULATION, // Ask user if he wants to recalculated modifiers when DLL or assets have changed
 	BUTTONPOPUP_NAME_LIST,
 	BUTTONPOPUP_CHOOSE_TRAIT,
 	BUTTONPOPUP_CHOOSE_TRAIT_NEGATIVE,
@@ -2987,7 +2986,6 @@ enum GameMessageTypes
 /************************************************************************************************/
 /* Afforess	                     END                                                            */
 /************************************************************************************************/
-	GAMEMESSAGE_RECALCULATE_MODIFIERS,
 	GAMEMESSAGE_BUILD_LISTS,
 	GAMEMESSAGE_BUILD_LIST_PUSH_ORDER,
 	GAMEMESSAGE_BUILD_LIST_POP_ORDER,

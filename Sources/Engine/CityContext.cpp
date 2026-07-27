@@ -298,6 +298,39 @@ bool CityContext::hasBuilding(int eBuilding) const   { return m_city != NULL && 
 int  CityContext::stateReligion() const        { return m_city != NULL ? (int)GET_PLAYER(m_city->getOwner()).getStateReligion() : -1; }
 bool CityContext::hasPolicy(int ePolicy) const { return m_city != NULL && GET_PLAYER(m_city->getOwner()).getEmpireContext().policies.has(ePolicy); }
 
+// The realized-yield group forward: the bound city's own group read, handed on unchanged -- no store, no mirror, no
+// second derivation (contexts.md STORES vs FORWARDS: forwarding raw data the object already holds O(1) is not
+// duplication; storing a second copy of it would be). The out-array is FULLY DEFINED on every path, so an unbound
+// context zero-fills rather than leaving caller memory untouched.
+void CityContext::yields(int (&realizedYields)[NUM_YIELD_TYPES]) const
+{
+	if (m_city == NULL)
+	{
+		for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+		{
+			realizedYields[iYield] = 0;
+		}
+		return;
+	}
+	m_city->getYields(realizedYields);
+}
+
+// The realized-commerce group forward: the bound city's own group read, handed on unchanged -- the split itself
+// lives on the calc surface, so nothing about it is repeated here. The out-array is FULLY DEFINED on every path,
+// so an unbound context zero-fills rather than leaving caller memory untouched.
+void CityContext::commerces(int (&realizedCommerces)[NUM_COMMERCE_TYPES]) const
+{
+	if (m_city == NULL)
+	{
+		for (int iCommerce = 0; iCommerce < NUM_COMMERCE_TYPES; ++iCommerce)
+		{
+			realizedCommerces[iCommerce] = 0;
+		}
+		return;
+	}
+	m_city->getCommerces(realizedCommerces);
+}
+
 // Fill the CITY half of the eval ctx from the bound city (the context IS the eval state -- no raw pointer leaks to
 // the caller; the ctx it fills is what the ONE evaluator reads). EmpireContext::fillEvalCtx fills player/team.
 void CityContext::fillEvalCtx(CvCascadeEvalCtx& ec) const

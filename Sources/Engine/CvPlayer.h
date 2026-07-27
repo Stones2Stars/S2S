@@ -225,7 +225,6 @@ public:
 
 	void verifyCivics();
 
-	void inhibitPlotGroupCalcsUntilFullRebuild(); //	Ignore updates until an update with reInitialize set
 	void updatePlotGroups(const CvArea* possibleNewInAreaOnly = NULL, bool reInitialize = false);
 
 	void updateYield();
@@ -891,6 +890,49 @@ public:
 	const CvCascadePackage<CvPlayer>& getCascadePackage() const { return m_cascadePackage; }
 	// The package's refresh delegate (the CvDerivedCacheSet contract) -- delegates to the ONE gather.
 	void refreshCascadePackage(int64_t iMask) const;
+
+	// THE EMPIRE'S GROUP READ SURFACE -- the GAME-OBJECT read role's answer to "what do I HAVE, right now?"
+	// (patterns.md § THE TWO READ ROLES). It is NOT the INFO role's authored what-do-I-CARRY answer and must
+	// never look like it. ONE GETTER PER FAMILY the EMPIRE scope carries channels of (the set is the data's --
+	// CvInfoKinds.h's census scope masks): the call carries NO channel argument and NO scope argument (the
+	// object IS the scope), the group's enum indexes the RESULT, and there is no scalar getter per channel --
+	// a caller wanting one value indexes the group. The surface grows by DATA, never by a new getter.
+	// Values are ×100 NATIVE ([DEC-fixedpoint-x100]); a reader divides by 100 at the point of use.
+	// Each fills its array through the ONE cross-scope roll-up (InfoValuation::realizedAtEmpire -- the team +
+	// empire packages combined AT READ, modifier.md §1), except the four channels the empire CONSUMES
+	// (gold/research/culture/espionage), which answer their maintained receiver sum. Every read is a BARE FETCH.
+	// NAMING: an engine-enum-indexed group takes the engine plural; a kind-enum-indexed group says so
+	// (get<Family>Kinds), which also keeps this surface distinct from the legacy scalar getters holding the bare
+	// family name (getStateReligion / getTradeRoutes / getDiplomacy) -- overloading those would make the two
+	// read roles look interchangeable.
+	void getYields(int (&yields)[NUM_YIELD_TYPES]) const;
+	void getCommerces(int (&commerces)[NUM_COMMERCE_TYPES]) const;
+	// The four wellbeing channels (modifier.md §2b) as the empire authors them -- four ordinary channels, each a
+	// positive magnitude. ⛔ The city-level VERDICTS (angryPopulation / healthRate) are final-state calculations
+	// downstream of these numbers, never entries in this array (patterns.md rule 6).
+	void getWellbeing(int (&wellbeing)[NUM_WELLBEING_CHANNELS]) const;
+	void getDefenseKinds(int (&defenses)[NUM_DEFENSE_KINDS]) const;
+	void getMaintenanceKinds(int (&maintenances)[NUM_MAINTENANCE_KINDS]) const;
+	void getUpkeepKinds(int (&upkeeps)[NUM_UPKEEP_KINDS]) const;
+	void getCostKinds(int (&costs)[NUM_COSTS_KINDS]) const;
+	void getBuildRateKinds(int (&buildRates)[NUM_BUILD_RATE_KINDS]) const;
+	void getCombatKinds(int (&combats)[NUM_COMBAT_KINDS]) const;
+	void getExperienceKinds(int (&experiences)[NUM_EXPERIENCE_KINDS]) const;
+	void getRevolutionKinds(int (&revolutions)[NUM_REVOLUTION_KINDS]) const;
+	void getTradeRouteKinds(int (&tradeRoutes)[NUM_TRADE_ROUTE_KINDS]) const;
+	void getStateReligionKinds(int (&stateReligions)[NUM_STATE_RELIGION_KINDS]) const;
+	void getDiplomacyKinds(int (&diplomacies)[NUM_DIPLOMACY_KINDS]) const;
+	void getDurationKinds(int (&durations)[NUM_DURATIONS_KINDS]) const;
+	void getAirKinds(int (&airs)[NUM_AIR_KINDS]) const;
+	void getCaptureKinds(int (&captures)[NUM_CAPTURE_KINDS]) const;
+	void getCargoKinds(int (&cargos)[NUM_CARGO_KINDS]) const;
+	// The two threshold families key the ENGINE's YieldTypes directly (their member spelling IS the channel --
+	// CvInfoKinds.h ruling 1), so they are yield-indexed groups rather than kind-indexed ones.
+	void getExtraYieldThresholds(int (&thresholds)[NUM_YIELD_TYPES]) const;
+	void getLessYieldThresholds(int (&thresholds)[NUM_YIELD_TYPES]) const;
+	// The straggler-scalar group (patterns.md getScalar, read as ONE group): every InfoScalar slot answered at
+	// THIS scope; the entries whose family the empire carries hold a value, the rest answer 0.
+	void getScalars(int (&scalars)[NUM_INFO_SCALARS]) const;
 
 	void setLastStateReligion(const ReligionTypes eNewReligion);
 
@@ -2360,9 +2402,6 @@ public:
 
 	void addPlotDangerSource(const CvPlot* pPlot, int iStrength);
 
-	void clearModifierTotals();
-	void recalculateModifiers();
-
 	void addPropertiesAllCities(const CvProperties* pProp);
 	void subtractPropertiesAllCities(const CvProperties* pProp);
 
@@ -2428,7 +2467,6 @@ private:
 
 	mutable bst::scoped_ptr<CvUpgradeCache> m_upgradeCache;
 
-	bool m_bInhibitPlotGroupRecalc;
 	mutable bool m_bMaintenanceDirty;
 	mutable bool m_orbitalInfrastructureCountDirty;
 	mutable int m_orbitalInfrastructureCount;

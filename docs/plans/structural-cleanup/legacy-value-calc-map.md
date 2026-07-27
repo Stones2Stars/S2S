@@ -18,7 +18,7 @@
 >
 > This is the **per-calc DESTROY-pass map**: for each per-turn value the engine realizes, *which legacy
 > getter computes it, what components feed it, the x1/x100 + clamp gotchas, and what the diagnostic dump
-> must emit so StoneBase reproduces it exactly.* You cannot delete a legacy calc you have not
+> must emit to attribute it to a named source.* You cannot delete a legacy calc you have not
 > mapped ([DEC-map-before-delete](../../architecture/decisions.md#dec-map-before-delete)); this is that map.
 
 ## BLUF

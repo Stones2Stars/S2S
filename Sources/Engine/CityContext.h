@@ -43,6 +43,7 @@
 
 #include "ContextDict.h"
 #include "CvCondition.h"   // CvCascVicinity -- the json par.3.4 ownership tiers the stored vicinity dicts key on
+#include "Defines/CvEnums.h"   // NUM_YIELD_TYPES / NUM_COMMERCE_TYPES -- the realized group forwards' out-array extents
 
 class CvPlot;
 class CvCity;
@@ -120,6 +121,19 @@ public:
 	bool hasBuilding(int eBuilding) const;    // CvCity::hasBuilding -- the §7 raw-presence has-list (m_bHasBuildings)
 	int  stateReligion() const;               // owner CvPlayer::getStateReligion  (STATE_RELIGION_IN_CITY = hasReligion(stateReligion()))
 	bool hasPolicy(int ePolicy) const;        // owner EmpireContext::policies.has  (empire aggregate, not mirrored here)
+	// The city's CURRENT REALIZED YIELDS -- CvCity::getYields, the city's own O(1) group read, handed on unchanged.
+	// FORWARDED, never stored: it is the bound object's own maintained data, so a copy here would be the banned
+	// duplication AND would need an invalidation the forward does not have. This is the base a percent deposit
+	// resolves against (contexts.md: THE CONTEXT *IS* THE CURRENT VALUE -- a valuation reads it HERE rather than
+	// taking current amounts as a separate parameter). x100 native, indexed by YieldTypes.
+	void yields(int (&realizedYields)[NUM_YIELD_TYPES]) const;
+	// The city's CURRENT REALIZED COMMERCE -- CvCity::getCommerces, the city's own group read, handed on
+	// unchanged: the per-commerce SPLIT of the commerce yield by the empire's sliders, plus each channel's own
+	// deposits (InfoValuation::commerceSplit). The commerce twin of yields() above and forwarded for the same
+	// reason -- it is the base a city-scope commerce percent deposit resolves against (contexts.md: THE CONTEXT
+	// *IS* THE CURRENT VALUE), and a stored copy would duplicate maintained data with no invalidation.
+	// ×100 native, indexed by CommerceTypes.
+	void commerces(int (&realizedCommerces)[NUM_COMMERCE_TYPES]) const;
 
 	// ⚠ THREE FORWARDS STILL COMPUTE, each for want of a fact -- recorded rather than papered over, because a store
 	// with no trigger is permanently wrong, which is worse than a cheap forward (the PlotContext::isCity precedent):

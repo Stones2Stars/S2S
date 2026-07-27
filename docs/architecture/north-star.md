@@ -40,7 +40,7 @@ once, here, rather than re-deriving a fresh prohibition at each seam.
 
 **⛔ "KEEP" means OUTSIDE the four systems — nothing else (owner).** The ONLY legacy that is legitimately kept is
 work that is none of the four systems' job: the **trade-route network calculation** (the cascade cannot re-derive
-the network, so it folds the route yield as an INPUT — [http-endpoints](../specs/http-endpoints.md)) and the
+the network, so it folds the route yield as an INPUT — [modifier §2a `tradeYield`](../specs/modifier.md)) and the
 **property engine's internal math** (the decay / diffusion / solver, owner-locked — [property-audit](../plans/structural-cleanup/property-audit.md)).
 These pass the test above by naming NO system: ask "whose job is this?" and the answer is neither readJson, nor
 infos, nor cascade, nor enabler. **Anything a system SHOULD touch is never KEEP — it is wired or it is open.** A

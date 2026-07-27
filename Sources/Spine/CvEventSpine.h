@@ -58,7 +58,7 @@ enum SpineFieldType
 	// This is how a former "%s = GC.getXInfo(i).getType()" line becomes a clean raw field (the index travels, not the string).
 	SFT_BUILDING, SFT_UNIT, SFT_TECH, SFT_PLAYER,
 	SFT_BONUS, SFT_IMPROVEMENT, SFT_PROMOTION, SFT_RELIGION, SFT_CORPORATION, SFT_FEATURE, SFT_TERRAIN, SFT_CIVIC, SFT_PROJECT, SFT_SPECIALIST,
-	SFT_TRAIT, SFT_ROUTE
+	SFT_TRAIT, SFT_ROUTE, SFT_COMMERCE, SFT_PROPERTY
 };
 
 //	Field identities are DOMAIN-LOCAL (owner 2026-06-18): each migrated domain defines its OWN field-tag enum + a
@@ -96,7 +96,7 @@ enum SpineDomainTag
 	// [MODIFIER/*]). Diagnostic lines (EVENTKIND_DIAGNOSTIC) -- census/diagnostic traces, logging only.
 	SD_READJSON,   // [READJSON] the JSON->InfoRepo load census (CvReadJson)
 	SD_ENABLER,    // [ENABLER] reserved (historical tag; no live registrant)
-	SD_MODIFIER,   // [MODIFIER] the perf + repo census (CvCascadeModifierMath)
+	SD_MODIFIER,   // [MODIFIER] the per-scope channel-set census (CvCascadeChannelRegistry)
 	SD_GRANTS,     // [GRANTS] the "provisions" consumer (CvCascadeGrants) -- resolves an entity's genuine grants on a DOMAIN event
 	SD_SPINE,      // [SPINE] spine lifecycle signals (game-load started/finished) -- rendered via the registered prefix, not inline
 	NUM_SPINE_DOMAINS
@@ -362,7 +362,27 @@ enum SpineDomainEvent
 	// wholesale identity reassignment is not addressable per-source, so there is no finer route to derive
 	// (DEC-no-self-heal bans papering over a MISSED invalidation, not announcing a genuine wholesale one).
 	// No payload -- the fact IS "all of them". DOMAIN.
-	SEVT_AREAS_RECALCULATED     = 54
+	SEVT_AREAS_RECALCULATED     = 54,
+	// A commerce SLIDER moved (CvPlayer::setCommercePercent) -- the empire's split of its cities' COMMERCE yield
+	// across gold / research / culture / espionage. Synced player state, deterministic and OOS-relevant, so
+	// DOMAIN and never DIAGNOSTIC: every city's realized rate of the moved channel is built on it (modifier.md
+	// §2a, the commerce paragraph). ⚠ ONE slider move emits SEVERAL of these -- the setter REBALANCES the other
+	// channels in place to keep the total at 100, and each channel it moves is its own state change.
+	// iType = CommerceTypes, iA = the new percent, iB = the old percent, iC = player, iSrcLoc = -1. DOMAIN.
+	SEVT_COMMERCE_PERCENT_CHANGED = 55,
+	// A game object's PROPERTY VALUE changed (CvProperties -- the generic (PropertyTypes,int) bag on
+	// game/team/player/city/unit/plot). DOMAIN: a property value is synced, deterministic, save-carried state that
+	// folds into the OOS checksum, and PROPERTY_* is one cascade channel per property info
+	// (state-repositories.md), read by CityContext::propertyValue, every requires.operate property BAND
+	// (enabler.md par.3) and every deposit conditioned on a property threshold.
+	// iType = PropertyTypes, iA = the NEW value, iB = the object KIND (GameObjectTypes -- what iSrcLoc identifies;
+	// a city id and a plot id are otherwise the same int), iC = owner player (-1 for the game, a team, an unowned
+	// plot), iSrcLoc = the object's OWN id (cityId | unitId | plotId | playerId | teamId; -1 = the game). The OLD
+	// value rides as a render field (the ints are full).
+	// ⚠ The solver's change PROPAGATION (CvProperties::propagateChange -- FLAMMABILITY's city->player rollup) fans
+	// one change onto OTHER objects, each of which re-enters the mutation path and emits its own fact. Those are
+	// DISTINCT objects' facts, not duplicates -- every one of them emits.
+	SEVT_PROPERTY_CHANGED = 56
 };
 
 //	Which entity's display name changed (the iType of a SEVT_NAME_CHANGE event). The logging consumer resolves the
@@ -412,6 +432,13 @@ void emitPlotGroupBonusChanged(int iOwner, int iPlotGroupId, int iBonus, int iDe
 void emitVicinityBonusChanged(int iCity, int iOwner, int iBonus, int iDelta);           // vicinity: a city's local presence of a bonus flipped (+1/-1)
 void emitCityNetworkChanged(int iOwner, int iCity);   // network membership: a city's center plot moved to a different plot-group
 void emitEraChanged(int iPlayer, int iEra);   // a player's era advanced (broad player-scope cascade input)
+//	A commerce slider moved. Call AFTER the percent field is updated, at EVERY choke point that moves it --
+//	including the setter's own rebalance of the channels the caller did not name (each is its own fact).
+void emitCommercePercentChanged(int iPlayer, int iCommerce, int iNewPercent, int iOldPercent);
+//	A game object's property value changed. Call AFTER the value is written, from the CvProperties mutation choke
+//	points -- never from CvGameObject::eventPropertyChanged (the unit override does not chain to the base).
+//	iObjectKind = GameObjectTypes (what iObjectId identifies); iOwner = NO_PLAYER (-1) where the object has none.
+void emitPropertyChanged(int iObjectKind, int iObjectId, int iOwner, int iProperty, int iNewValue, int iOldValue);
 void emitNukesChanged(int iPlayer, int iState);   // a player's nuke state: 0 disabled / 1 enabled / 2 banned
 void emitCultureLevelChanged(int iCity, int iOwner, int iNewLevel, int iOldLevel);   // culture level old->new (+ the radius/vicinity growth it drives)
 void emitHolyCityChanged(int iCity, int iOwner, int iReligion, bool bIsHoly);   // a city gained(true)/lost(false) a religion's holy-city designation
@@ -474,6 +501,7 @@ bool spineGameLoadInProgress();
 // mark (spineEventName). DIAGNOSTIC kind.
 void emitCacheInvalidate(int iScope, int iOwner, int iId, int64_t iMask, const char* szSource);   // iOwner: the empire (city ids are unique only within a player); -1 = none
 void emitCacheRebuilt(int iScope, int iOwner, int iId, int64_t iMask);   // the complement: a package was recomputed
+
 // The short human name of a spine event id (e.g. "religionChanged") -- the invalidate observability's `src`.
 const char* spineEventName(int iEventId);
 

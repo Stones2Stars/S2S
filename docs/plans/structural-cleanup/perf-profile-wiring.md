@@ -27,8 +27,8 @@
 > **ENABLER-FRONTIER fill counts + ms** (`front{B,U,PP,P}Fills/MsX10`, `promoFills/MsX10`), the flush-to-flush
 > `turnMsX10` ([DEC-turn-time-is-king](../../architecture/decisions.md#dec-turn-time-is-king)), the
 > **automation window** (`autoMissions`/`autoMissionMs`), the flipped scalar-getter read/refresh counters, and
-> the legacy-vs-cascade pair ms. This is gated (`gPlayerLogLevel`/`gPerfLogLevel`), teed to `/events`, and
-> stored by StoneBase — the sufficient, non-invasive surface. It STAYS; only the internal profiler is out.
+> the legacy-vs-cascade pair ms. This is gated (`gPlayerLogLevel`/`gPerfLogLevel`) and teed to `/events` — the
+> sufficient, non-invasive surface. It STAYS; only the internal profiler is out.
 
 ## What exists today (verified against the code 2026-07-06)
 
@@ -36,8 +36,9 @@
   (operating buildings recomputes vs cache hits, yieldRate100/percentStack/commerceRate100 computes, condition-evaluator
   leaf evals, accumulator refreshes, wellbeing computes) + `PerfAccumTimer` stopwatch accumulators
   (gPerfLogLevel-gated, ms×10 ints), flushed once per turn as a `[MODIFIER/perf]` spine line teed to
-  `/events` — the perf counters feed the `(scope,channel)` calc-count gate + the StoneBase performance dashboard
-  ([DEC-calc-count-gate](../../architecture/decisions.md#dec-calc-count-gate)). Every perf ruling on the #430 branch was made from these numbers.
+  `/events` — the headline number being the whole-turn wall clock
+  ([DEC-turn-time-is-king](../../architecture/decisions.md#dec-turn-time-is-king)). Every perf ruling on the
+  #430 branch was made from these numbers.
 - **The condEval CALLER-DOMAIN split** (`CascadeCondCaller` + `CascadeCondScope`, the flip-era outlier lap):
   a scoped tag set at the outermost compute entries attributes every eval to whoever initiated the chain
   (`ceOther/ceRates/ceWb/ceScalars/ceOperatingBuildings/ceFrontB/ceFrontU/ceFrontPP/ceFrontP/ceCanBuild/cePromo`); `ceOther`
@@ -47,8 +48,6 @@
   `[MODIFIER/perf]` line, beside `legacyRateMsX10`/`legacyWbMsX10` (the legacy oracle calls timed in the
   pre-cut pair nets). ⚠ In interactive play `turnMsX10` includes the human's between-turn time; it is clean on
   scripted/autoplay benches.
-- **The store lives in StoneBase** (the GameTracker port): the `/events` listener persists one row per turn to
-  the owner's Postgres (`perf_turns` + key-value `perf_fields`; CSV fallback). Verified live end-to-end.
 
 ## The wiring roadmap (what "we do want performance wiring" means, post-2026-07-06)
 
@@ -64,6 +63,10 @@ The internal-profiler reinstatement is off the table permanently, so the build-o
 3. **The whole-turn root total is the headline regression number** ([DEC-turn-time-is-king]) — `turnMsX10` on
    the scripted bench, stored per turn, is the number a change is judged against. Per-load costs (warm-up,
    readJson, index compile) are never optimized at turn time's expense.
+4. **INTENT (owner sequencing, not current state): StoneBase sets up the perf counting and the frontend views
+   properly once the rest of this is wired** — it reads `/events` and persists per-turn rows, so it is what shows
+   a TREND a point-in-time endpoint poll structurally cannot. StoneBase also transitions to an API for the online
+   pedia. Scope, endpoints and schema are undecided and are not to be invented ahead of that work.
 
 Cost honesty: the census is counters + gated stopwatches — an int increment per counted event always, a QPC
 pair only when `gPerfLogLevel` is on. Observational only, no OOS surface.

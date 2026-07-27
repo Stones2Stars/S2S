@@ -34,9 +34,11 @@
 #include "CvUnitCombatInfo.h" // /computed/cities/yields heal-per-unitcombat decomposition (getUnitCombatInfo().getType())
 #include "Enabler/CvCapabilities.h" // /computed/teamFlags hasLanguage (the legacy latch is cut, #430)
 #include "Enabler/CvEnablerKernel.h" // wireOperatingBuildings for the wellbeing eval ctx
-// NB no Cascade headers: this surface serves RAW state (/state) and the ENGINE's own answers (/computed)
-// only -- the cascade-vs-legacy shadow comparison was retired (the cutover is validated by the external
-// dry-calc + logging). See docs/specs/http-endpoints.md.
+#include "CvOracleEndpoints.h" // the derived-state planes' stored/oracle documents (the documents live THERE)
+// This surface serves RAW state (/state) and the engine's own answers (/computed). The /computed cache
+// documents read the cascade's OWN uniform channel-indexed surface -- never a legacy accumulator reached
+// around it -- and the STORED and ORACLE sides are SEPARATE routes with no in-DLL comparison between them:
+// the diff is an external consumer's job. See docs/specs/http-endpoints.md.
 
 // Deliberately the winsock 1.1 header, NOT winsock2.h: some unity batches pull a
 // full-fat windows.h (no WIN32_LEAN_AND_MEAN) which includes winsock.h, and
@@ -260,18 +262,42 @@ namespace
 	}
 
 	// --- game-thread evaluation -------------------------------------------------------
-	// ⛔ THE ENDPOINT SURFACE IS PURGED (owner). The old /state + /computed bodies had served their
-	// purpose and had become a chief source of rollerskating: ~4,250 lines of hand-rolled per-feature
-	// renderers, each reaching directly into engine internals, which is exactly the accumulation
-	// http-endpoints.md warns against ("the server SERVES state; it does not ACCUMULATE it").
-	// What survives is the SERVER itself + the event listener: sockets, the SSE /events stream, and
-	// the game-thread mailbox mechanism (the one piece that is genuinely hard and proven correct --
-	// the server thread must never touch a live game object). A new endpoint surface is built on the
-	// mailbox when there is something to serve.
-	CvString evaluateGate(const char* szAction, const char* /*szType*/, int /*iPlayer*/, int /*iCity*/, int /*iUnit*/)
+	// The mailbox's renderer: one action -> one document, ON THE GAME THREAD (it reads live game objects, so
+	// the server thread may never run it). The DOCUMENTS live in their own modules -- this dispatch stays a
+	// routing table and nothing else, because a renderer written here is how the previous surface accreted
+	// ~4,250 lines of per-feature bodies reaching into engine internals ("the server SERVES state; it does
+	// not ACCUMULATE it", observability.md). An unknown action answers with an error, never a guess.
+	CvString evaluateAction(const char* szAction, const char* /*szType*/, int iPlayer, int iCity, int /*iUnit*/)
 	{
+		if (szAction != NULL)
+		{
+			if (strcmp(szAction, "cascadePackagesStored") == 0)
+			{
+				return OracleEndpoints::cascadePackages(iPlayer, iCity, OracleEndpoints::ORACLE_SIDE_STORED);
+			}
+			if (strcmp(szAction, "cascadePackagesOracle") == 0)
+			{
+				return OracleEndpoints::cascadePackages(iPlayer, iCity, OracleEndpoints::ORACLE_SIDE_ORACLE);
+			}
+			if (strcmp(szAction, "enablerOperatingStored") == 0)
+			{
+				return OracleEndpoints::enablerOperating(iPlayer, iCity, OracleEndpoints::ORACLE_SIDE_STORED);
+			}
+			if (strcmp(szAction, "enablerOperatingOracle") == 0)
+			{
+				return OracleEndpoints::enablerOperating(iPlayer, iCity, OracleEndpoints::ORACLE_SIDE_ORACLE);
+			}
+			if (strcmp(szAction, "capabilitiesStored") == 0)
+			{
+				return OracleEndpoints::teamCapabilities(iPlayer, OracleEndpoints::ORACLE_SIDE_STORED);
+			}
+			if (strcmp(szAction, "capabilitiesOracle") == 0)
+			{
+				return OracleEndpoints::teamCapabilities(iPlayer, OracleEndpoints::ORACLE_SIDE_ORACLE);
+			}
+		}
 		picojson::value::object o;
-		o["error"]  = picojson::value(std::string("no endpoint surface"));
+		o["error"]  = picojson::value(std::string("unknown action"));
 		o["action"] = picojson::value(std::string(szAction != NULL ? szAction : ""));
 		return CvString(picojson::value(o).serialize().c_str());
 	}
@@ -293,7 +319,7 @@ namespace
 		iUnit = g_evalUnit;
 		LeaveCriticalSection(&g_evalLock);
 
-		const CvString szResult = evaluateGate(szAction, szType, iPlayer, iCity, iUnit); // safe: game thread
+		const CvString szResult = evaluateAction(szAction, szType, iPlayer, iCity, iUnit); // safe: game thread
 
 		EnterCriticalSection(&g_evalLock);
 		g_evalResult = szResult;
@@ -368,12 +394,20 @@ namespace
 		// emit RAW inputs; /computed actions emit the engine's own answers. Every data route is serviced on the
 		// game thread via the mailbox (evalRequestBlocking). See docs/specs/http-endpoints.md.
 		struct Route { const char* szPath; const char* szAction; const char* szDoc; };
-		// The route table is EMPTY: the endpoint surface was purged (see evaluateGate above). The dispatch
-		// machinery below is kept intact so a new surface plugs into the proven mailbox rather than being
-		// re-invented -- add rows here and they route through the game thread exactly as before.
-		static const Route ROUTES[1] = { { NULL, NULL, NULL } };
+		// The DERIVED-STATE planes, two routes each: what the EVENTS built, and a from-source recompute of the
+		// same values. The engine never compares them -- an external consumer fetches both and diffs them, and
+		// a disagreement is a missed emit named by scope + channel + owner (state-repositories.md).
+		static const Route ROUTES[] =
+		{
+			{ "/computed/cascade/packages/stored",  "cascadePackagesStored",  "cascade packages as the events built them: per-scope flat/percent slots + receiver sums, by channel name. ?player=N[&city=M]; a city selector adds its workable plots" },
+			{ "/computed/cascade/packages/oracle",  "cascadePackagesOracle",  "the same packages recomputed from source into scratch -- diff against .../stored" },
+			{ "/computed/enabler/operating/stored", "enablerOperatingStored", "the per-city operating set the targeted propagation maintains: active/obsolete/provided + provider counts. ?player=N[&city=M]" },
+			{ "/computed/enabler/operating/oracle", "enablerOperatingOracle", "the same set recomputed from source into scratch -- diff against .../stored" },
+			{ "/computed/capabilities/stored",      "capabilitiesStored",     "the team capability union as the have-change marks built it. ?player=N (its team)" },
+			{ "/computed/capabilities/oracle",      "capabilitiesOracle",     "the same union recomputed from source into scratch -- diff against .../stored" }
+		};
 
-		const int iNumRoutes = 0;   // the surface is purged; ROUTES[0] is a placeholder, never dispatched
+		const int iNumRoutes = (int)(sizeof(ROUTES) / sizeof(ROUTES[0]));
 
 		// liveness + the SSE stream are served on THIS (server) thread; every data route goes through the mailbox.
 		if (strcmp(szTarget, "/") == 0)

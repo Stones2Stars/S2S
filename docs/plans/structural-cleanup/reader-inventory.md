@@ -463,8 +463,8 @@ Entire family confirmed ZERO cascade representation (grep of Sources/Cascade for
 
 The `traderoutes` trace agent errored (StructuredOutput cap) and produced no map — but the owner's ruling makes a full re-trace unnecessary, because trade routes split into two things with different homes:
 
-- **Trade-route YIELD is NOT a cascade calc — it is READ.** It is already an **engine-generated package** (the trade network's yield, which the cascade can never re-derive — the network is out of scope). It is the ONE live-yield INPUT the read path folds ([modifier.md](../../specs/modifier.md) §2a `tradeYield`, [http-endpoints.md](../../specs/http-endpoints.md) — the sole live-yield input). So on the unified surface the trade-route yield is a **read-only provider** (a package the game object pulls, never a cascade sum).
-- **The trade-route COUNT (`getMaxTradeRoutes` — allowed routes) IS calculated by the cascade** — it is a modifier-influenced value (game + player + coastal + `city.extra` slot deposits). This is the `traderoutes` channel proper on the surface; `getMaxTradeRoutes` is a drycalc TARGET ([http-endpoints.md](../../specs/http-endpoints.md)).
+- **Trade-route YIELD is NOT a cascade calc — it is READ.** It is already an **engine-generated package** (the trade network's yield, which the cascade can never re-derive — the network is out of scope). It is the ONE live-yield INPUT the read path folds ([modifier.md](../../specs/modifier.md) §2a `tradeYield` — the sole live-yield input). So on the unified surface the trade-route yield is a **read-only provider** (a package the game object pulls, never a cascade sum).
+- **The trade-route COUNT (`getMaxTradeRoutes` — allowed routes) IS calculated by the cascade** — it is a modifier-influenced value (game + player + coastal + `city.extra` slot deposits). This is the `traderoutes` channel proper on the surface; `getMaxTradeRoutes` is a cascade-COMPUTED value, not a read ([modifier.md](../../specs/modifier.md)).
 
 So: trade yield = read the engine package; trade route count = cascade-calculated. No reader re-trace needed.
 

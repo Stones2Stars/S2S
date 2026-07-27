@@ -225,11 +225,6 @@ void CvMessageControl::sendGlobalDefineUpdate(CvWString szName, int iValue, floa
 /* Afforess	                     END                                                            */
 /************************************************************************************************/
 
-void CvMessageControl::sendRecalculateModifiers()
-{
-	gDLL->sendMessageData(new CvNetRecalculateModifiers());
-}
-
 void CvMessageControl::sendBuildLists()
 {
 	PROFILE_EXTRA_FUNC();

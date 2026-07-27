@@ -10,14 +10,13 @@
 #include "Defines/CvGlobals.h"
 #include "Engine/CvTeam.h"
 #include "AI/CvTeamAI.h"      // GET_TEAM
-#include "CvTechInfo.h"
 #include <set>
 #include <string>
 #include <vector>
 
 // The per-team cached union of every live HAVE source's ability blocks -- storage is the OWNER-SIDE
 // CvTeam::m_cascadeTeamCaps member (the Set protocol, scope-packages.md §3b); this module is the query surface
-// + the refresh math. Marked by CvTeam::setHasTech/reset; ensured on read. Sources today: held techs + the
+// + the refresh math. Marked by CvTeam::setHasTech/reset, and THE MARK REBUILDS. Sources today: held techs + the
 // universal TECH_GAME_START start node (techs are the only grantor kind in data; capabilities.md keeps
 // civic/building grantors as model headroom -- when data authors them, union them here AND mark on their
 // change events).
@@ -83,11 +82,32 @@ void CascadeCapabilities::refreshInto(const CvTeam& kTeam, CascadeTeamCaps& c)
 		if (*it >= 0 && *it < (int)c.terrainTrade.size()) c.terrainTrade[*it] = true;
 }
 
+// The flag's authored key ("canPassPeaks", "techs", "water") -- the name a served flag carries, so an external
+// reader diffing the stored union against the oracle names the capability rather than a bit position.
+const char* CascadeCapabilities::flagName(CascadeCapFlag eFlag)
+{
+	for (int iRow = 0; iRow < (int)(sizeof(CCAP_KEYS) / sizeof(CCAP_KEYS[0])); ++iRow)
+	{
+		if (CCAP_KEYS[iRow].eFlag == eFlag)
+		{
+			return CCAP_KEYS[iRow].szKey;
+		}
+	}
+	return "?";
+}
+
 static const CascadeTeamCaps& ccap_get(TeamTypes eTeam)
 {
-	const CvTeam& kTeam = GET_TEAM(eTeam);
-	kTeam.m_cascadeTeamCaps.set.ensure();   // clean path: one int test (the retired bValid, on the ONE protocol)
-	return kTeam.m_cascadeTeamCaps;
+	// A BARE FETCH, unconditionally -- the union stands exactly as the HAVE-change marks built it.
+	return GET_TEAM(eTeam).m_cascadeTeamCaps;
+}
+
+// The ENDPOINT-FACING STORED read: the union as the marks built it, for serving beside the oracle's fresh
+// recompute (refreshInto over a caller-owned CascadeTeamCaps). A HAVE change that failed to mark shows up as a
+// difference an EXTERNAL reader observes between the two served documents -- never as an in-DLL comparison.
+const CascadeTeamCaps& CascadeCapabilities::storedUnion(TeamTypes eTeam)
+{
+	return ccap_get(eTeam);
 }
 
 bool CascadeCapabilities::flag(TeamTypes eTeam, CascadeCapFlag eFlag)

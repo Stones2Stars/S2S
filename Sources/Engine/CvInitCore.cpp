@@ -2201,30 +2201,3 @@ void CvInitCore::calculateAssetCheckSum()
 	);
 	*/
 }
-
-void CvInitCore::checkVersions()
-{
-	/*
-	OutputDebugString(
-		CvString::format(
-			"Asset CheckSum checkVersions:\n%I32u = m_uiAssetCheckSum\n%I32u = m_uiSavegameAssetCheckSum",
-			m_uiAssetCheckSum, m_uiSavegameAssetCheckSum
-		)
-		.c_str()
-	);
-	*/
-	// If assets changed
-	if (m_uiSavegameAssetCheckSum != m_uiAssetCheckSum)
-	{
-		const PlayerTypes ePlayer = GC.getGame().getActivePlayer();
-		// DLL or assets changed, recommend modifier reloading
-		if (NO_PLAYER != ePlayer && GET_PLAYER(ePlayer).isAlive() && GET_PLAYER(ePlayer).isHumanPlayer())
-		{
-			CvPopupInfo* pInfo = new CvPopupInfo(BUTTONPOPUP_MODIFIER_RECALCULATION);
-			if (NULL != pInfo)
-			{
-				gDLL->getInterfaceIFace()->addPopup(pInfo, ePlayer, false, true);
-			}
-		}
-	}
-}

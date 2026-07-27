@@ -73,7 +73,6 @@ public:
 	bool isEmpty() const;
 	void clear();
 	void clearChange();
-	void clearForRecalculate();
 
 	//Note: The comparison operators are NOT symmetric. Only properties defined in the second operand are considered.
 	// That means any property object is smaller than the empty property and bigger as well.
@@ -93,6 +92,10 @@ public:
 
 	// For Python
 	std::wstring getPropertyDisplay(int index) const;
+
+	// The load RESEED (event-spine.md): both deserializers populate the value vector DIRECTLY, so the setters --
+	// and the DOMAIN fact they carry -- never run. This announces the fact a read restores.
+	void emitReadProperty(PropertyTypes eProp, int iValue) const;
 
 	void read(FDataStreamBase* pStream);
 	void readWrapper(FDataStreamBase* pStream);
@@ -118,8 +121,6 @@ private:
 
 
 
-
-	static bool isNotSourceDrainProperty(const CvProperties::PropertyValue& p);
 
 	typedef std::vector<PropertyValue> PropertyValueVector;
 	typedef PropertyValueVector::const_iterator prop_value_const_iterator;

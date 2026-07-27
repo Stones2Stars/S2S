@@ -36,6 +36,7 @@
 //
 
 #include "CvCondition.h"   // CASC_PRED_* -- the ONE predicate vocabulary the stored bitset keys on
+#include "Defines/CvEnums.h"   // NUM_YIELD_TYPES -- the realized-yield group forward's out-array extent
 
 class CvPlot;
 
@@ -97,6 +98,13 @@ public:
 	int  latitude() const;                       // CvPlot::getLatitude (the latitude band predicate)
 	int  natureYield(int eYield, int eTeam) const;   // CvPlot::calculateNatureYield -- the plot's own PRE-improvement
 	                                             // nature yield of a channel (per-channel AND per-team, so not a verdict bit)
+	// The plot's CURRENT REALIZED YIELDS -- CvPlot::getYields, the plot's own O(1) group read, handed on
+	// unchanged: the WHOLE isolated per-plot base package (substrate + improvement + route + the keyed/plots
+	// flats), which is what the city sums into its rate BASE (modifier.md §2 plot-as-base). The plot-scope twin
+	// of CityContext::yields, forwarded for the same reason and never stored. ⚠ Distinct from natureYield above,
+	// which is the PRE-improvement leg only and COMPUTES on every call; this one is a bare cache fetch.
+	// ×100 native, indexed by YieldTypes.
+	void yields(int (&realizedYields)[NUM_YIELD_TYPES]) const;
 
 private:
 	// One stored bit per CASC_PRED_* id. CONSTRAINT: every stored predicate id must be < 32 (the mask width); the

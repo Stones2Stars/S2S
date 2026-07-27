@@ -48,9 +48,8 @@ of the *implementation* against it, once, properly ([DEC-proper-once](../../arch
    ([DEC-enabler-not-cascade](../../architecture/decisions.md#dec-enabler-not-cascade)); a shared consumer welds
    them and forces one load policy onto two that genuinely differ.
 9. **Done = observable in the running game** via an endpoint poll — never "the code path exists" or "the data
-   loads" ([DEC-done-is-observable](../../architecture/decisions.md#dec-done-is-observable)), and the per-turn
-   `(scope,channel)` calc-count stays under the 50k gate
-   ([DEC-calc-count-gate](../../architecture/decisions.md#dec-calc-count-gate)).
+   loads" ([DEC-done-is-observable](../../architecture/decisions.md#dec-done-is-observable)) — and the per-turn
+   wall clock stays inside the target ([DEC-turn-time-is-king](../../architecture/decisions.md#dec-turn-time-is-king)).
 
 ## The accepted foundational design (unchanged — the code conforms to this)
 
@@ -98,9 +97,12 @@ Authority: [state-repositories.md](../../architecture/state-repositories.md), [m
 ## What does NOT exist (the deliberate gap)
 
 - **The modifier substrate.** Archived. There is no package storage, no accumulator, no modifier spine consumer.
-- **The graft onto the game objects.** `CvCity` / `CvPlayer` / `CvPlot` / `CvArea` / `CvTeam` are reverted to
-  `main`, so they carry no cache member and no enabler member. **The enabler is complete and hostless** — it is
-  waiting on the access surface, not on enabler work.
+- **The ENABLER's graft onto the game objects.** `CvCity` carries no `m_operatingBuildings` and `CvTeam` no
+  `m_cascadeTeamCaps`, so `CvCapabilities` / `CvEnablerKernel` reference members that do not exist. **The enabler is
+  complete and hostless** — it is waiting on the access surface, not on enabler work.
+  ⚠ The MODIFIER half of the graft **has since landed**: `CvCity` / `CvPlayer` / `CvPlot` / `CvTeam` each carry
+  `m_cascadePackage` and `CvArea` carries `m_cascadeSlots[MAX_PLAYERS]`, bound in each owner's `reset()`, alongside
+  the three contexts. Only the enabler-side members are still missing.
 - **The endpoint route table.** Purged wholesale; the transport survives.
 - **The read surface itself** — see below. This is the open item.
 
@@ -111,9 +113,38 @@ Authority: [state-repositories.md](../../architecture/state-repositories.md), [m
 
 Everything above is settled. What is NOT defined is the boundary every consumer meets:
 
-- **What the uniform getter set looks like** — the parameterized read over the channel index that replaces the 360
-  channel-shaped getters on `CvCity.h` + `CvPlayer.h` alone. Its shape decides what the packages must store, so it
-  is upstream of re-grafting anything.
+- **What the uniform getter set looks like** — the parameterized read that replaces the hand-named channel-shaped
+  getters on `CvCity.h` + `CvPlayer.h`: **622 declarations / 586 distinct names, measured** (wellbeing alone is 23%;
+  235 name a SOURCE and 255 carry a target-id argument — two axes the package does not have). Its shape decides what the packages must store, so it is upstream of
+  re-grafting anything. Two owner rulings fix its direction:
+  - **⛔ NOT the existing getters — ONE NEW COHERENT SURFACE, STANDARDIZED ACROSS THE INFOS (owner).** The design
+    task is **not** "find a replacement for each of the 622": no legacy getter name, signature, or shape survives
+    into it. The 622 are a **DELETION LIST plus a COVERAGE CHECKLIST** — the set of values that must be answerable
+    somewhere on the new surface — and nothing more. The shape comes from ONE standard, taken from the info
+    exemplar ([patterns.md § THE GETTER SETUP](../../architecture/patterns.md)) and applied as uniformly as it can
+    be made to go: per-GROUP reads parameterized over the group's natural index, ×100 native with no `100` in any
+    name, scope a spelled-out argument
+    ([DEC-scope-is-an-axis](../../architecture/decisions.md#dec-scope-is-an-axis)), extensible by DATA rather than
+    by new members. ⚠ **Mapping legacy getter → new getter is the half-migration reflex in its purest form**
+    ([DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface)): it lets the legacy
+    contract shape the replacement one getter at a time, which is exactly how the surface got here.
+  - **⚖ EXISTING ENGINE ENUMS ARE THE PARAMETER VOCABULARY where one exists (owner)** — `YieldTypes`,
+    `CommerceTypes` and their kin are what a group read is keyed on; a family with no engine enum uses its own
+    kind enum (`CvInfoKinds.h`). The data-minted channel id stays the CACHE's internal key, never something every
+    consumer learns.
+  - **⚖ BUILD THE BASE FIRST; "the most efficient way" comes AFTER (owner).** The AI eventually wants *"a full
+    'this is the improvements' snapshot for a building, or a set of buildings, so it can evaluate the results
+    against its weights"* — a one-call read a caller weights itself. It is a real direction to **KEEP IN MIND,
+    not to actively solve** (owner): tuning the shape of a surface that does not yet exist optimizes nothing.
+    ⛔ Do not build, investigate, or pre-shape it ahead of the base. **What "keep in mind" DOES bind:** the base
+    must not FORECLOSE it — a per-group read that can be filled into a caller-owned array leaves the door open;
+    a design that could only ever answer one scalar per call would close it.
+    **The efficiency that matters is ALREADY BANKED IN THE SPEC** — the event-driven frontier is the structural
+    win (the AI iterates a small maintained choice set instead of scanning the entity database; every read is an
+    O(1) lookup that never calls a calculator, [enabler.md §6/§7](../../specs/enabler.md)), alongside
+    event-built contexts turning per-read scans into stored fetches
+    ([contexts.md](../../architecture/contexts.md)). A snapshot is a refinement on top of that, not the source
+    of the gain.
 - **How a scope owner carries its cache** — the member, its binding, and its mark derivation, uniform across
   world / team / empire / area / city / plot.
 - **The per-scope live-state CONTEXTS the getters + evaluator read** ([contexts.md](../../architecture/contexts.md),
@@ -204,13 +235,12 @@ These are data/curator/audit items whose subject never lived in the archived sub
 
 Unchanged in principle, but note the surface it depends on is currently purged:
 
-1. **The 50k `(scope,channel)` calc gate** — reset at `doTurn` top, exposed on the perf endpoint. Total/turn under
-   50k (thousands steady-state, ~0 on a quiet turn); the histogram names the culprit on a breach.
-2. **Manifestation polls** — PROGRAMMATIC against the `/computed` oracle endpoints, never eyeballing the screen. A
+1. **Manifestation polls** — PROGRAMMATIC against the `/computed` oracle endpoints, never eyeballing the screen. A
    blind value is EMITTED first; emitting it is step one of that item's fix.
-3. **StoneBase** — repurposed from offline parity oracle to the user-visible PERFORMANCE layer
-   ([DEC-verify-in-game-not-reshadow](../../architecture/decisions.md#dec-verify-in-game-not-reshadow)). Parity and
-   shadow are CLOSED and are NOT re-run, re-invoked, or used to frame remaining work.
+2. **Turn time** — the whole performance signal, on the wall clock; the target and its sequencing are in
+   §Verification targets below. The process-memory gauge on `/computed/perf` rides beside it.
+3. **Parity and shadow are CLOSED** and are NOT re-run, re-invoked, or used to frame remaining work
+   ([DEC-verify-in-game-not-reshadow](../../architecture/decisions.md#dec-verify-in-game-not-reshadow)).
 
 ## Verification targets
 

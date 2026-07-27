@@ -64,21 +64,52 @@ reads objects). **Build order:** spine + the modifier scope accumulator → logg
   the one place a spine endpoint does resolution at emit rather than deferring to the gated render — justified because
   a rename is rare (four low-frequency choke points), not a hot-path firehose.
 - **Build status.** The spine primitive + KIND firewall + `IEventConsumer` = BUILT (`Spine/CvEventSpine.{h,cpp}`).
-  The **DOMAIN emit surface = BUILT**: **95 call sites** across `CvPlayer` (31) · `CvCity` (23) · `CvPlot` (20) ·
+  The **DOMAIN emit surface = BUILT**: **98 call sites** across `CvPlayer` (34) · `CvCity` (23) · `CvPlot` (20) ·
   `CvGame` (7) · `CvTeam` (4) · `CvUnit` (3) · `CvPlotGroup` (1) + the cascade's own diagnostics (6), restored
   at the genuine mutation choke points after the clean-slate revert had stripped them. The PLOT substrate is
   complete: terrain / feature / improvement / route / bonus / owner / **type / river / irrigation / landmark /
   worked**, so the per-scope contexts are maintained purely by facts, with no choke point driving a derivation
-  directly ([contexts.md](../architecture/contexts.md)). The **load-lifecycle
+  directly ([contexts.md](../architecture/contexts.md)). The **commerce SLIDERS** are on the surface too
+  (`SEVT_COMMERCE_PERCENT_CHANGED`, `CvPlayer::setCommercePercent` — the one choke point `changeCommercePercent` /
+  `verifyGoldCommercePercent` / `changeCommerceFlexibleCount` all reach the value through): a slider is synced
+  player state every city's realized per-commerce rate is built on ([modifier.md](modifier.md) §2a), so DOMAIN.
+  ⚠ **ONE slider move emits SEVERAL facts** — the setter REBALANCES the other channels in place to hold the total
+  at 100, writing them directly rather than recursing, so each channel it moves emits its own fact; a consumer
+  reading only the caller's channel sees a 100-total that does not add up. **PROPERTY VALUES** are on the surface
+  too (`SEVT_PROPERTY_CHANGED`, the three `CvProperties` mutation choke points — `setValue` plus the two
+  new-property `push_back` branches, which `changeValue` / `changeValueByProperty` / `setValueByProperty` all
+  funnel through): `PROPERTY_*` is one cascade channel per property info
+  ([state-repositories.md](../architecture/state-repositories.md)), read by `CityContext::propertyValue`, by every
+  `requires.operate` property BAND ([enabler.md](enabler.md) §3) and by every threshold-conditioned deposit, and
+  the value is synced save-carried state that folds into the OOS checksum — so DOMAIN. The fact names the object
+  KIND beside the object id, because a city id and a plot id are otherwise the same int.
+  ⛔ It is emitted at the `CvProperties` sites and **never** in `CvGameObject::eventPropertyChanged`:
+  `CvGameObjectUnit` OVERRIDES that hook without chaining to the base, so an emit placed there is silently
+  skipped for every unit. ⚠ The solver's change PROPAGATION fans one change onto OTHER objects, each of which
+  re-enters the mutation path — distinct objects' facts, so each emits. The object RESET path
+  (`CvProperties::clear`) deliberately announces nothing (it runs before there is an id or an owner to name —
+  `CvCity::read` / `CvUnit::read` call `reset()` as their first act). The
+  **load-lifecycle
   bracket** `GAME_LOAD_STARTED` / `GAME_LOAD_FINISHED` is emitted (`CvGame::read` / end of
   `CvGame::onFinalInitialized`), so `spineGameLoadInProgress()` reports correctly and result-producers suppress
   inside it. The **load reseed** = BUILT: the in-read emits fire from inside the save read (`CvPlayer::read` per
-  held tech / project / civic / trait / heritage + era / golden-age / state-religion / nukes, `CvCity::read` per
-  building / religion + holy-city / corp / specialist / population / power / culture-level, `CvPlot::read`
-  substrate + owner + working-city), wrapped by the bracket. ⚠ A plot fact whose field deserializes with no emit of
+  held tech / project / civic / trait / heritage + era / golden-age / state-religion / nukes / commerce sliders,
+  `CvCity::read` per building / religion + holy-city / corp / specialist / population / power / culture-level,
+  `CvPlot::read`
+  substrate + owner + working-city, `CvProperties::readWrapper` per stored property value on every owner scope),
+  wrapped by the bracket. ⚠ The property block needs its own in-read emit and has **no** duplicate to weigh
+  against: a property value is DERIVED FROM NOTHING, so — unlike a plot's substrate — no other in-read fact
+  re-derives it. A stored 0 is skipped, for the same reason the setter suppresses a no-op (the owner's `reset()`
+  emptied the bag, so 0 → 0 is not a change); the per-turn CHANGE ledger beside it is deliberately silent, being
+  an accumulation of deltas the value facts already carry. ⚠ A plot fact whose field deserializes with no emit of
   its own (type / river / irrigation / landmark / worked) needs **none**: `CvPlot::read`'s terrain emit is
   UNCONDITIONAL, and a substrate fact re-derives the plot's WHOLE verdict block — so every plot is already covered
-  exactly once, and adding a second in-read emit would only re-derive the same block.
+  exactly once, and adding a second in-read emit would only re-derive the same block. This holds for the MODIFIER
+  plane as well as the contexts', and for the same reason rather than by luck: `CvPlot::read`'s
+  `emitWorkingCityChanged` derives the very mask the play-time `worked` fact does
+  (`scopeReceiversFedBy(CITY|EMPIRE, PLOT)` — the plot-fed receiver sums), so a loaded city's plot-fed sums are
+  marked without a `worked` in-read emit. The worked SET itself is read live at the rebuild
+  (`CvCity::isWorkingPlot`), never replayed from events.
   ⚠ **One endpoint is deliberately unwired: `emitLoadPipeline`** — every one of its arguments is produced by the
   archived load-time warm-up/rebuild pass, which the CAPSTONE rule removed
   ([state-repositories.md](../architecture/state-repositories.md)); the event reseed replaced that pass, so the
@@ -117,6 +148,33 @@ each surface growing its own emitter ([observability.md](../reference/observabil
 not accumulate). The player pair emits for **every** player, not just humans: a turn going active/inactive is a
 state mutation, and the spine's contract is that every mutation emits while CONSUMERS filter (a consumer wanting
 humans only tests the player field) — a deliberately partial emit surface is what defeats the missed-emit tripwire.
+
+**⛔ ADD ALL THE EVENTS, EVER — the ONLY bar is DUPLICATES (owner).** *"As long as it's not duplicate events, go
+nuts, add all the events, ever."* The emit surface is meant to be EXHAUSTIVE: every state mutation in the engine
+announces itself, and completeness is the goal rather than a budget to spend carefully. This is not enthusiasm —
+it is the roadmap's stated ordering (*"the EMIT surface comes first; the cache build is the step AFTER — caches
+cannot build from events until the events are completely emitted"*), so an incomplete emit surface is a
+foundation defect, not a backlog item.
+
+⛔ **The ONE thing to avoid is a DUPLICATE — the same fact announced twice.** One fact, one emit, at the genuine
+mutation choke point. Two emits for one state change double it for every counting consumer and make the stream
+lie about what happened; and if two call sites both look like the choke point, the real fix is finding the one
+that is (or emitting from the single place they both pass through), never picking one and hoping. Distinct facts
+that happen to fire together are NOT duplicates — emit both.
+
+**⛔ TOO MANY EVENTS IS BETTER THAN NOT ENOUGH (owner) — and if an emit is found not to exist, ADD IT.** When
+weighing whether some mutation "deserves" an event, the answer is EMIT. The costs are wildly asymmetric: a
+MISSING emit is a silently wrong value that no compiler and no runtime catches, found only by someone noticing a
+number is off; a SURPLUS emit costs one consumer branch that declines to act. Never agonize over the judgement —
+if it moves state, it emits.
+
+⚠ **The ruling is about EMITS, and it does NOT extend to MARKS — their cost shapes are opposite.** A surplus
+emit is ~free; a surplus MARK is a real package REBUILD that was not needed, paid on the turn path at event
+volume. So: **emit liberally, mark precisely.** A mark stays derived from what the rebuild actually reads (the
+mask derivation exists so a flat-only event never rebuilds a percent stack —
+[state-repositories.md](../architecture/state-repositories.md)), and "too many events is better" is never
+licence to mark-all, widen a mask, or paper a mark you could not derive
+([DEC-no-self-heal](../architecture/decisions.md#dec-no-self-heal)).
 Turn DURATION analytics remain the `[PERF]` phase logs' job, not these facts'.
 
 **Events are FACTS, not causal steps.** "This building is here", "this tech is held" — order-independent,

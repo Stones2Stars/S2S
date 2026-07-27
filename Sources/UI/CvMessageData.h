@@ -452,16 +452,6 @@ private:
 /* Afforess	                     END                                                            */
 /************************************************************************************************/
 
-class CvNetRecalculateModifiers : public CvMessageData
-{
-public:
-	CvNetRecalculateModifiers();
-	virtual void Debug(char* szAddendum);
-	virtual void Execute();
-	virtual void PutInBuffer(FDataStreamBase* pStream);
-	virtual void SetFromBuffer(FDataStreamBase* pStream);
-};
-
 class CvNetBuildLists : public CvMessageData
 {
 public:

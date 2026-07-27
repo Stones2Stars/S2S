@@ -44,6 +44,40 @@ each matching worked plot (§5). The target reads a combined value — it never 
 > Plot and the upper scopes are mirror images (yield-only vs percent-only); **CITY is the one scope carrying
 > both**. This is why every scope can hold the SAME package type while many stay half-empty — emptiness is a
 > property of the origin rule, never a reason to omit a scope's package or to hand-shape a bespoke struct for it.
+>
+> **⚖ WHAT THE RULE GOVERNS — ONLY THE CHANNELS THAT ACTUALLY PRODUCE OUTPUT (owner).** *"Only commerce yields
+> and base yields actually produce output."* So the rule binds exactly those: the **base yields**
+> (food / production / commerce) and the **commerce yields** (gold / research / culture / espionage). Their flats
+> are authored at plot and city only, and none authors a percent at plot — that is the origin rule, in full.
+>
+> ⛔ **Every other family is NOT output, so it is not bound by it — and this is a CATEGORY difference, not a list
+> of exceptions.** **Happiness is the worked case: it is a TRANSIENT STATE, not a yield that produces anything**
+> — a condition the city is *in*, which changes how other things behave (growth, anger, food consumption) while
+> producing no output of its own. Nothing is *made* by happiness. So "where output originates" simply has no
+> claim on it, and wellbeing authoring **flats at EMPIRE and AREA** (the civic/tech/trait grants that roll down,
+> §2b) is the model working, not an exception to it. The same holds for **plot-scope PERCENTS** — health's
+> feature-fallout class (§2b), defense, the property plane.
+>
+> ⚖ **PROPERTIES are the honest IN-BETWEEN, and the test does not need to resolve them (owner).** You *could*
+> argue a property produces output — a value genuinely accumulates and propagates — but what it ultimately does
+> is **affect a transient state**, so it sits between the two. That ambiguity costs nothing here: either way it
+> is not an output-producing YIELD, so the origin rule does not bind it (the property plane authors plot-scope
+> percents), and the property engine is **self-contained by design** — what happens inside it stays inside it
+> ([engine.md](../reference/engine.md)), so no classification of it needs to leak outward. ⛔ Do not force
+> properties to one side to make the taxonomy tidy; the in-between is the accurate answer.
+>
+> ⚠ **The word "yield" carries TWO senses, and conflating them is what makes this look like a contradiction.**
+> [DEC-universal-yield](../architecture/decisions.md#dec-universal-yield)'s *"every modifiable number is a
+> yield"* means **every such number is a CHANNEL in the one machine** — a statement about carriage. The origin
+> rule's "yields" means **output-producing yields** — a statement about where output comes from. A family is
+> classified by asking *"does this produce output?"*, never by which list it appears on.
+>
+> **How a non-output family's sides are enforced: BY THE DATA.** Each scope's channel set is **minted from the
+> compiled deposits** (KEYS ONLY WHERE NEEDED, [state-repositories.md](../architecture/state-repositories.md)),
+> so which sides a scope fills is answered at load, and a read of a side no source authored answers 0 with no
+> storage existing anywhere. ⛔ **A read-side roll-up therefore never hand-gates a scope out of its chain** — the
+> channel set is the gate; a hand-written one silently deletes an authored family's contribution, and with no
+> runtime to catch it (the empire wellbeing flats are the case that bites: 558 authorings).
 > **Consequence (owner requirement): every modifier/yield cache consolidates to ONE shape** — the per-family
 > hand-named scalar members (`scGpBaseBld`, `scDefense`, `scMaintModCity`, …) collapse into the same
 > Σflat/Σpercent-per-channel form the yields and commerce already use, so a new scope or channel is DATA rather
@@ -109,8 +143,8 @@ slot does pure integer math and never sees the human boundary.
 > **Completeness is the bar ([DEC-represent-dont-fit](../architecture/decisions.md#dec-represent-dont-fit)).**
 > Multiplier deposits are treated as identity on the yield/commerce channels — no source authors one, so the cascade
 > is additive, exactly matching legacy. Live acceptance is done-is-observable
-> ([DEC-done-is-observable](../architecture/decisions.md#dec-done-is-observable)) + the `(scope,channel)` calc-count
-> gate: [validation](validation.md).
+> ([DEC-done-is-observable](../architecture/decisions.md#dec-done-is-observable)) + turn time
+> ([DEC-turn-time-is-king](../architecture/decisions.md#dec-turn-time-is-king)): [validation](validation.md).
 
 **Two non-additive combine modes, declared as FAMILY metadata (never per-deposit):** a `min` member that floors
 the combined total (e.g. `defense`); `combine: max|min` for worst/best-across-sources (anarchy turns,
@@ -142,8 +176,8 @@ order is load-bearing (it decides what the percent stack scales and what it does
 | BASE source | origin | base vs computed |
 |---|---|---|
 | **worked-plot yields** (`basePlotYield`) | Σ over the city's worked plots of each plot's ONE isolated base package (§2 plot-as-base): `max(0, terrain+feature+bonus)` nature + improvement (floored at −nature) + route + keyed building/civic/trait `plot`-flats + `plots`-target + city-centre constant + threshold/golden-age per-plot | **computed** from the curated plot substrate + `/state/plots` |
-| **trade-route yield** (`tradeYield`) | `/state` input | **input** — out-of-scope (the trade network); the calc *folds it in*, never derives it. The ONE live-yield input (see [http-endpoints](http-endpoints.md)) |
-| **free-city yield** (`freeCityYield`) | Σ the player's active traits' `YieldChanges` (`{ch}.empire.flat`) | **computed** (derived, never a `/state` read — [http-endpoints](http-endpoints.md)). ⚠ NAMING: "free-city" here = the legacy trait accumulator (`CvPlayer::m_aiFreeCityYield`, free yield granted in every city) — **NOT** the WLTKD celebration ("We Love the King/Emperor Day"), whose sole gameplay effect is zero city maintenance ([economy.md](../reference/economy.md)) |
+| **trade-route yield** (`tradeYield`) | engine-generated (the trade network) | **input** — out-of-scope: the cascade cannot re-derive the network, so the calc *folds the route yield in*, never derives it. **The ONE live-yield input** — a clean addition at the very end of the base, and the sole sanctioned exception to the pollution guardrail ([validation](validation.md), [DEC-calc-zero-ride-in](../architecture/decisions.md#dec-calc-zero-ride-in)) |
+| **free-city yield** (`freeCityYield`) | Σ the player's active traits' `YieldChanges` (`{ch}.empire.flat`) | **computed** — derivable from the trait JSON, so it is COMPUTED, never read off the engine; consuming the live value would leave the trait→yield derivation unvalidated ([validation](validation.md) pollution guardrail). ⚠ NAMING: "free-city" here = the legacy trait accumulator (`CvPlayer::m_aiFreeCityYield`, free yield granted in every city) — **NOT** the WLTKD celebration ("We Love the King/Emperor Day"), whose sole gameplay effect is zero city maintenance ([economy.md](../reference/economy.md)) |
 | **golden-age yield** | trait `goldenAge` member (`{ch}.empire.goldenAge.flat`) while in golden age | **computed** (`empire.goldenAge` member-mirror, §3 golden-age carve-out) |
 | **specialist yields** (`specialist`) | per assigned specialist: `intrinsic × (100 + specialist-%)⁄100` + building-local (gated `city.flat`) + per-type (`empire.flat`) + perAll + trait governing-deliverer | **computed**. NOTE the specialist carries its **own** percent layer (its intrinsic ×`(100+specialist-%)`) *before* it joins BASE and takes the city `modifier` — two distinct percent stacks |
 
@@ -165,6 +199,17 @@ The EXTRA is held ×100; the `100 × ⌊EXTRA100⁄100⌋` **truncates it to who
 > the TARGET building's own reverse-landed conditioned entries: authored deliverer-side (§4), landed at CITY scope
 > by the readJson reverse pass, gated on the source's presence at the authored scope. Civil disorder forces the
 > whole rate to 0 before any of this.
+>
+> ⛔ **THE SPLIT IS A CITY/EMPIRE CONCERN — THE PLOT AND THE BUILDING DO NOT CARE (owner).** *"The plot itself does
+> not need to care about the commerce split, nor the building, beyond what is written in the tooltip."* A plot
+> produces its isolated base package; a building deposits into its channels. **Neither knows or needs to know**
+> that the city's COMMERCE yield is later divided into gold / research / culture / espionage by the player's
+> sliders — that division happens where the sliders live, at CITY and EMPIRE. So the split never propagates
+> downward into a plot or building read, no plot/building surface grows a per-commerce-channel shape for it, and
+> the dependency it creates is bounded to **(city commerce yield + slider + active process) → the empire's
+> commerce receivers**. The ONE place a lower scope's contribution meets the split is **DISPLAY** — a tooltip
+> saying what this building is worth — and that is the [valuation](../architecture/patterns.md) answering a
+> resolved delta, not the plot or building carrying split knowledge of its own.
 
 ### How the percentages "smash together" — ONE additive stack
 
@@ -197,8 +242,9 @@ storage: a source depositing a negative value is routed to the opposing channel 
 combine or the cache is wellbeing-specific. The engine's own accumulators ARE these four channels
 (`happyLevel` / `unhappyLevel` / `goodHealth` / `badHealth` on `CvCity`) — four terms, so the four channels map
 one-to-one with no wellbeing-specific plumbing. The realized verdicts: `healthRate = min(0, health − unhealth)`;
-`angryPopulation = clamp(anger − happiness, 0, pop)`. The channel oracle is **`/computed/cities/wellbeing`**
-([http-endpoints](http-endpoints.md)) — one field per named engine term.
+`angryPopulation = clamp(anger − happiness, 0, pop)`. ⚠ The wellbeing channel oracle went with the route-table
+purge ([http-endpoints](http-endpoints.md)); when the route table is rebuilt it wants one field per named engine
+term, so a divergence localises to a single source.
 
 **The TARGET/INPUT split (the tradeYield precedent, [validation](validation.md) input rules):**
 
@@ -235,9 +281,9 @@ one-to-one with no wellbeing-specific plumbing. The realized verdicts: `healthRa
   (one-shot event state), **tax-rate unhappiness**, **foreign-culture anger**, **landmark anger** (option-gated —
   ⚖ KEEP through the migration: the existing engine implementation stays, *"straight up state derived from the
   plot in question"*; the landmark data pass is a sanctioned separate data pass (#448); the engine impl KEEPS),
-  **city-over-limit**, and **vassal** terms. These are saved/derived-from-saved state (legitimate inputs per the
-  [http-endpoints](http-endpoints.md) hard rule) — the calc folds them at the level combine exactly where the
-  engine does.
+  **city-over-limit**, and **vassal** terms. These are saved/derived-from-saved state — legitimate inputs, since
+  no deposit produces them and nothing about them is a cascade output ([validation](validation.md) pollution
+  guardrail) — and the calc folds them at the level combine exactly where the engine does.
   ⚖ **The `extraHappiness`/`extraHealth` accumulators are EVENT-GRANTED persisted state (owner ruling), a
   SANCTIONED read, not a ride-in:** the CITY `getExtraHappiness`/`getExtraHealth` are written ONLY by `applyEvent`
   (an event granting extra happiness/health) — genuine one-shot non-derivable state (the event-store class,

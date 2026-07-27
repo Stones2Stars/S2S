@@ -46,7 +46,11 @@ save-break); derived data serializes nothing; deleting a changer means auditing 
 
 - **`CvProperties`** is a generic `(PropertyTypes, int)` bag (values + per-turn rates) attachable to any object
   (game…plot). The mutating *rules* are **not** on it — they live in **`CvPropertyManipulators`** on info objects
-  (buildings / handicaps / bonuses), run by the solver each turn.
+  (buildings / handicaps / bonuses), run by the solver each turn. Every value change announces
+  `SEVT_PROPERTY_CHANGED` from the bag's own mutation sites (+ the in-read reseed) —
+  [event-spine.md](../specs/event-spine.md). ⚠ The same class doubles as authored INFO data (`CvOutcome`,
+  `CvEventInfo`, `CvEventTriggerInfo` prereqs); those instances are default-constructed with a NULL game object,
+  which is exactly what keeps a data parse silent on both the notification hook and the spine.
 - **`CvPropertySolver`** is a member of `CvGame` (**not** a singleton — `GC.getPropertySolver()` does NOT exist),
   run once per `doTurn` in fixed order **propagators → interactions → sources**, each a predict/compute/correct/apply
   pass (spread resolves against *pre-source* values, then production applies — counter-intuitive).
@@ -114,8 +118,9 @@ save-break); derived data serializes nothing; deleting a changer means auditing 
   derives read/copyNonDefaults/checkSum/init (`CvBuildInfo` is the reference). **The forward direction is
   top-down JSON via `readJson`, which bypasses `CvInfoUtil` entirely** — do NOT chase the old "migrate remaining
   infos to declarative XML" goal.
-- The asset **checksum** only triggers the modifier-recalc popup on mismatch — it does NOT gate MP OOS or block
-  loading; full parity is not required when restructuring data (cost = one spurious popup per existing save).
+- The asset **checksum** is serialized and nothing consumes it: it does NOT gate MP OOS, does NOT block loading,
+  and no code compares the savegame's value against the current one — so checksum parity is irrelevant when
+  restructuring data, at zero cost to an existing save.
 - **Category id ORDER comes from the `_order.json` manifest** (`Assets/Data/<cat>/_order.json`, curator-derived —
   `Tools/Migration/curate_order.py`): `loadJsonCategory` sorts a category's entities by manifest position before
   the registration assigns ids, so the engine ids reproduce the LEGACY id order (base XML document order, then

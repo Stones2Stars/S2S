@@ -63,14 +63,6 @@ bool CvEventReporter::kbdEvent(int evt, int key, int iCursorX, int iCursorY)
 
 			bClearSigns = !bClearSigns;
 		}
-		// key up for ctrl-shift-R - recalc modifiers
-		if ( gDLL->ctrlKey() && gDLL->shiftKey() && evt == 7 && (key == 30 || key == 32) )
-		{
-			// TESTING ONLY ... GET_PLAYER((PlayerTypes)0/*GC.getGame().getActivePlayer()*/).AI_doCivics();
-			//GC.getGame().recalculateModifiers();
-			//AIAndy: Changed to use a message to make it multiplayer safe
-			CvMessageControl::getInstance().sendRecalculateModifiers();
-		}
 		if ( gDLL->altKey() && gDLL->shiftKey() && evt == 7 && (key == 30) )
 		{
 			GC.getMap().toggleCitiesDisplay();

@@ -61,13 +61,15 @@ needs a fact FEEDS it to the one function, it never re-derives it.
    instance, any member field, a namespace grouping, or a file-`static` function no other unit can reach.
 4. **Exposed, never file-`static`-hidden.** Each calculator/evaluator is a **declared surface** (a header) reachable by
    every consumer. **A file-`static` calculator is a DRY hazard**: the next consumer can't see it, so it reimplements it
-   — the exact mechanism of the C2C rot. *(Realized: BOTH data-machines are split into per-package
-   static-methods classes — the **deposit-read side** (`MMKernel` / `PercentStack` / `YieldBasePackages` / `BuildingPackage` /
-   `CommerceCalc` -- declared in `Data/CvDepositRead.h`, mirroring StoneBase `Calc/*`) and the **enabler**
+   — the exact mechanism of the C2C rot. *(Realized: BOTH data-machines are split into static-methods classes — the
+   **deposit-read side** (`MMKernel`, the per-deposit leaf primitives, `Data/CvDepositRead.h`; `InfoValuation`,
+   `Data/CvInfoValuation.h`, carrying StoneBase's higher `Calc/*` packages — the per-group walk, the `YieldRate`
+   §2a combine `cityRate`, the `CommerceSplit` combine `commerceSplit`, the plot-as-base package, and the
+   cross-scope roll-up) and the **enabler**
    (`EnablerKernel` + `TechEnabler` / `BuildingEnabler` / `UnitEnabler` / `CivicEnabler` / `ProcessEnabler` /
    `ProjectEnabler` / `PromotionEnabler` / `BuildEnabler`, each `Sources/Enabler/Cv<X>Enabler.{h,cpp}`,
    mirroring StoneBase `CascadingEnabler/*`).)*
-5. **Harness ≠ calc.** The performance/observability surface (the StoneBase dashboard) and the spine logging are
+5. **Harness ≠ calc.** The observability surface and the spine logging are
    **separate consumers** of the calc surface, never folded into the calc functions.
 6. **Single source of "active".** "Is X active / available / connected / non-dormant" is computed **once, by the
    enabler**; the modifier **reads** it — it never recomputes from the live engine, and above all never reads the
@@ -209,7 +211,7 @@ group's natural index** — never N individual getters for a groupable set. This
      - the **compiled conditioned list** (`defenseConditioned()` / `yieldConditioned()` / … — the typed entries
        with prebuilt condition trees; what the package rebuild, the pedia, and the valuation walk);
      - the **what-if valuation** — the [contexts.md](contexts.md) per-GROUP endpoints
-       (`expectedFlatYields(cityContext, empireContext, plotGroup, flatYields100)` and siblings): the compiled
+       (`expectedFlatYields(cityContext, empireContext, plotGroup, flatYields)` and siblings): the compiled
        sums fetched straight PLUS the group's conditioned tail through the ONE evaluator, `plots`-targets scaled
        by `cityContext.plotAttrs`, scopes folded into the experienced-here answer, the active/dormant verdict fed
        from the enabler. This IS the AI's *"what do I gain from building this?"* read.
@@ -235,7 +237,7 @@ group's natural index** — never N individual getters for a groupable set. This
   int getDefense(DefenseKind eKind, ScopeKind eScope) const;      // one load, 0 calculation
   const CvModEntries& defenseConditioned() const;                 // prebuilt trees; walked at bounded cadences
   void expectedFlatYields(const CityContext& cityContext, const EmpireContext& empireContext,
-                          const CvPlotGroup* plotGroup, int (&flatYields100)[NUM_YIELD_TYPES]) const;
+                          const CvPlotGroup* plotGroup, int (&flatYields)[NUM_YIELD_TYPES]) const;
   // INTRINSIC — bare typed reads (×100 where a magnitude)
   int getAirlift() const;
   ```
@@ -257,8 +259,8 @@ group's natural index** — never N individual getters for a groupable set. This
   plots/units per call is the efficiency defect to reject in review. **Consumer call discipline:** `expected*` is
   a per-DECISION read — once per (city, candidate) per pass; an AI needing repeated score access caches its OWN
   scores (the sanctioned AI-heuristic residual, [superseded-ideas #1](superseded-ideas.md)) — it never re-asks the
-  what-if in an inner loop. Regressions surface live via the `(scope,channel)` calc counts + `/computed/perf`
-  ([DEC-calc-count-gate](decisions.md#dec-calc-count-gate)).
+  what-if in an inner loop. A regression in any of this surfaces where every performance regression surfaces — the
+  per-turn wall clock ([DEC-turn-time-is-king](decisions.md#dec-turn-time-is-king)).
 - **Every getter IS ×100** ([DEC-fixedpoint-x100](decisions.md#dec-fixedpoint-x100)) — no `getX`/`getX100` pair, no
   `100` suffix; the name says the VALUE, never the scale (always ×100). A reader wanting human does ÷100 at the
   boundary. The split lives in the flat-vs-modifier member name (`getFlatYield` vs `getYieldModifier`), never a
@@ -269,6 +271,98 @@ group's natural index** — never N individual getters for a groupable set. This
   read — genuine lone values, not a groupable set. The ~300 hand-named getters mirroring the legacy `CvXInfo`
   contract collapse into this surface, and consumers rewire onto it
   ([DEC-new-getter-surface](decisions.md#dec-new-getter-surface)) — the info half of the access surface.
+
+## ⚖ THE TWO READ ROLES — ONE GRAMMAR, TWO ANSWERS (owner)
+
+> The keystone of the ACCESS surface. The section above is the INFO half; this states what the info half and the
+> GAME-OBJECT half share, and what must stay different. Binding:
+> [DEC-new-getter-surface](decisions.md#dec-new-getter-surface).
+
+**⛔ The new surface is NOT a replacement mapping of the existing getters (owner).** No legacy getter name,
+signature, or shape survives into it. The measured 622 channel-shaped declarations on `CvCity`/`CvPlayer` are a
+**DELETION LIST and a COVERAGE CHECKLIST** — the set of values that must be answerable somewhere on the new
+surface — never a per-getter migration worklist. Mapping legacy→new one signature at a time is the
+half-migration reflex in its purest form: it lets the legacy contract dictate the replacement's shape, which is
+precisely how that surface accumulated.
+
+**The two roles are DISTINCT, and the distinction is load-bearing:**
+
+| role | asks | answers from |
+|---|---|---|
+| **INFO** | *"what do I CARRY?"* | authored data, compiled once at load — static, per-owner-agnostic, shared by every player |
+| **GAME OBJECT** | *"what do I HAVE, right now?"* | live realized state — the roll-up over the ~5 scope packages, with per-city gates applied at the combine |
+
+⛔ **They are NOT interchangeable and must never LOOK interchangeable.** Giving both the identical signature
+invites a consumer to treat authored data and live state as the same answer — the shared-vocabulary trap that
+[DEC-calc-zero-ride-in](decisions.md#dec-calc-zero-ride-in) exists to police from the other direction. Two roles,
+two surfaces.
+
+**What IS standardized is the GRAMMAR — both surfaces obey all of it:**
+
+1. **⛔ ONE GETTER PER GROUP — the getter IS the group (owner).** `getYields()`, `getProperties()`,
+   `getCommerces()`, … — the read hands back **the whole group**, and there is **NO scalar getter per channel**.
+   A consumer wanting one value takes the group and indexes it. This is the standardization: the surface grows by
+   GROUPS (a handful), never by channels (hundreds), and the per-channel scalar getter is the very shape the
+   rebuild is deleting.
+2. **The EXISTING ENGINE ENUM indexes the RESULT, not the call** (`YieldTypes`, `CommerceTypes`, …); a family
+   with no engine enum uses its own kind enum (`CvInfoKinds.h`). So the enum stays the consumer's vocabulary
+   while the call itself carries no channel argument. The data-minted channel id remains the CACHE's internal
+   key and is never something a consumer learns.
+3. **×100 native, always** — no `100` in any name, no `getX`/`getX100` pair, no scale variant
+   ([DEC-fixedpoint-x100](decisions.md#dec-fixedpoint-x100)). A reader ÷100s at the point of use.
+4. **Scope is a spelled-out ARGUMENT, never a name fragment** ([DEC-scope-is-an-axis](decisions.md#dec-scope-is-an-axis)).
+5. **⛔ THE VALUATION PROTOCOL — THE LIVE CONTEXTS GO IN, THE PROPOSED INCREASE COMES OUT (owner).** The caller
+   passes the live [contexts](contexts.md) and gets back **the DELTA** — what this candidate would ADD — never
+   the raw percentage and never the new total.
+   - **⛔ THE CONTEXT *IS* THE CURRENT VALUE — that is the whole point of it (owner).** A percent deposit has no
+     value on its own: *"+25% production"* is worth a little in a small city and a lot in a large one, so it
+     only becomes a number against the base it multiplies. The context supplies that base, because it is the
+     bound live-state surface for its scope. ⛔ **Do NOT pass current amounts as a separate parameter** — that
+     hands the read data the context already carries, and re-introduces the ad-hoc state-reach the contexts
+     exist to end. A context that cannot answer a base the resolution needs is a **CONTEXT GAP to close by
+     adding the forward** ([contexts.md](contexts.md)), never a reason to widen the signature.
+   - **Why the DELTA comes out:** the question is *"what do I gain from this?"*. A delta is directly weighable;
+     a new total forces every caller to subtract against a base it must fetch separately.
+   - The contexts serve BOTH halves in one pass: they carry the base the percent resolves against (the
+     `CityContext` forwards the city's CURRENT REALIZED YIELDS for exactly this, [contexts.md](contexts.md)),
+     and they are what the compiled CONDITIONED tail is evaluated over (*"+25% more while coal is connected"*).
+   - **⚑ TWO CONSUMERS, ONE CALL (owner): the AI's evaluation AND the build-list HOVER TOOLTIP.** The same
+     valuation answers *"what do I gain from this?"* for the AI weighting it and for the player reading the
+     tooltip. That is not a convenience — it is what makes the displayed number and the acted-on number the
+     SAME number, structurally. The classic failure it removes is a UI advertising one value while the AI plans
+     against another, which no amount of care prevents once they are two implementations
+     ([DEC-single-implementation](decisions.md#dec-single-implementation)). It is also why the resolved DELTA is
+     the right return: it is simultaneously what an AI weight multiplies and what a tooltip line prints.
+6. **⛔ A GROUP HANDS OUT ITS CHANNELS; A FINAL-STATE CALCULATION IS DOWNSTREAM OF IT (owner).** The wellbeing
+   group returns `happiness` and `anger` as **two separate numbers** (and `health`/`unhealth` likewise) — *"then
+   you will know the results from that"*. The realized end-state values (`angryPopulation`, `healthRate`) are
+   **NOT group entries and NOT getters**: they are a final-state calculation over numbers the group already
+   handed out ([modifier.md §2b](../specs/modifier.md) specs the arithmetic). ⛔ Folding a final-state value into
+   the channel array is a category error — it puts a computed OUTCOME in a slot that means "a channel a source
+   deposited into", and it hides the opposing-pair structure the four channels exist to express. The calculation
+   still exists **exactly once** as a pure static function on the calc surface
+   ([DEC-single-implementation](decisions.md#dec-single-implementation)); it is simply not part of the read.
+7. **The group read FILLS A CALLER-OWNED ARRAY** — one call in, the whole group out, indexed by the group's
+   enum. Passing state once and getting the whole resolved group back is also what keeps a future
+   whole-candidate snapshot possible without building it now; a design answering one scalar per call would
+   foreclose it *and* would re-resolve the same state per channel.
+6. **Extensible by DATA, not by new members/getters** — a new channel is a new id, not a new function.
+7. **Parameters spelled in full**, index parameters named for the enum they key
+   ([contexts.md](contexts.md) naming rule).
+
+**The GAME-OBJECT half's realized shape.** Each scope owner (`CvPlot` / `CvCity` / `CvPlayer` / `CvTeam` / the
+`CvArea` (area × player) slot) carries **one group read per modifier FAMILY whose channels the data authors AT
+that scope** — the set comes from the census scope masks + the minted channel sets, never a hand-written list.
+Every group folds through the **ONE cross-scope roll-up on the calc surface** (`InfoValuation::realizedAt*`,
+beside the `cityRate` combine it specializes): modifier.md §1's downward roll realized AT READ over the chain the
+object sits under (city = team + empire + area-slot + city · empire = team + empire · team/area/plot = itself;
+WORLD is CONFIG and carries no package, and PLOT never enters an upper chain — a per-plot value resolves in
+isolation first). A channel the scope **CONSUMES** answers its maintained receiver sum instead, and which side of
+a channel is the answer comes from the vocabulary's canonical-unit verdict (`infoKindUnit`): a percent-unit
+channel IS the additive stack, a flat-unit channel is the flat sum that stack scales. **Naming:** an
+engine-enum-indexed group takes the engine plural (`getYields`, `getCommerces`); a kind-enum-indexed group says so
+(`get<Family>Kinds`), which also keeps this surface from colliding with — or overloading — the legacy scalar
+getters that hold the bare family name.
 
 ## Materialize at mapFrom — no runtime string reads in info getters (the single-source law's load-time sibling)
 

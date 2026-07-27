@@ -756,6 +756,50 @@ public:
 	// The package's refresh delegate (the CvDerivedCacheSet contract) -- delegates to the ONE gather.
 	void refreshCascadePackage(int64_t iMask) const;
 
+	// THE REALIZED YIELD GROUP -- the GAME-OBJECT read role's answer to "what do I HAVE, right now?" (patterns.md
+	// § THE TWO READ ROLES). It is NOT the INFO role's authored what-do-I-CARRY answer and must never look like it.
+	// ONE GETTER PER GROUP: the call carries NO channel argument -- YieldTypes indexes the RESULT -- and there is
+	// no scalar getter per channel; a caller wanting one value indexes the group. The group grows by DATA, never
+	// by a new getter. Values are x100 NATIVE ([DEC-fixedpoint-x100]): no `100` in the name, no scale variant, a
+	// reader divides by 100 at the point of use. A BARE FETCH per channel, unconditionally -- nothing on a read
+	// path recomputes, gates, or ensures (state-repositories.md; superseded-ideas #14).
+	void getYields(int (&yields)[NUM_YIELD_TYPES]) const;
+
+	// THE REST OF THE CITY'S GROUP SURFACE -- same read role, same grammar, one getter per modifier FAMILY the
+	// CITY scope carries channels of (the set is the data's, CvInfoKinds.h's census scope masks). Each fills its
+	// group's ×100 array through the ONE cross-scope roll-up (InfoValuation::realizedAtCity -- modifier.md §1's
+	// downward roll realized AT READ over team + empire + (area × owner) + city), except the four channels the
+	// city CONSUMES, which answer their maintained receiver sum. A channel this scope's data never authored
+	// answers 0 with no storage anywhere.
+	// NAMING: a group indexed by an EXISTING ENGINE enum takes the engine plural (getYields / getCommerces); a
+	// group indexed by its family's own kind enum says so (get<Family>Kinds), which also keeps the whole
+	// game-object group surface visually distinct from the legacy scalar getters it will replace -- four of
+	// which (getMaintenance / getTradeRoutes / getDiplomacy / getStateReligion) hold the bare family name, and
+	// overloading THOSE would make the two read roles look interchangeable.
+	// ⛔ A FINAL-STATE value is NOT in any of these arrays (patterns.md rule 6): angryPopulation / healthRate and
+	// their kin are computed DOWNSTREAM from the channels the wellbeing group hands out, never folded into a slot.
+	// The four commerce channels are the ONE exception to the roll-up rule above, and not a fifth receiver slot:
+	// the city consumes the COMMERCE YIELD, and the EMPIRE'S SLIDER PERCENTAGES split that yield into gold /
+	// research / culture / espionage, each channel adding its own deposits on top (modifier.md §2a's commerce
+	// paragraph; the arithmetic is InfoValuation::commerceSplit, never restated here). Culture is the lone dual
+	// consumer: its deposits term is this city's maintained culture receiver sum, which the slider never scales.
+	void getCommerces(int (&commerces)[NUM_COMMERCE_TYPES]) const;
+	// The four wellbeing channels (modifier.md §2b): happiness/anger/health/unhealth as four ORDINARY channels,
+	// each a positive magnitude -- the opposing pairs are summed at the verdict, which is not a read.
+	void getWellbeing(int (&wellbeing)[NUM_WELLBEING_CHANNELS]) const;
+	void getDefenseKinds(int (&defenses)[NUM_DEFENSE_KINDS]) const;
+	void getMaintenanceKinds(int (&maintenances)[NUM_MAINTENANCE_KINDS]) const;
+	void getBuildRateKinds(int (&buildRates)[NUM_BUILD_RATE_KINDS]) const;
+	void getCombatKinds(int (&combats)[NUM_COMBAT_KINDS]) const;
+	void getExperienceKinds(int (&experiences)[NUM_EXPERIENCE_KINDS]) const;
+	void getRevolutionKinds(int (&revolutions)[NUM_REVOLUTION_KINDS]) const;
+	void getTradeRouteKinds(int (&tradeRoutes)[NUM_TRADE_ROUTE_KINDS]) const;
+	void getHealKinds(int (&heals)[NUM_HEAL_KINDS]) const;
+	void getUnderworldKinds(int (&underworlds)[NUM_UNDERWORLD_KINDS]) const;
+	// The straggler-scalar group (patterns.md getScalar, read as ONE group): every InfoScalar slot, each answered
+	// at THIS scope -- the entries whose family the city carries hold a value, the rest answer 0.
+	void getScalars(int (&scalars)[NUM_INFO_SCALARS]) const;
+
 	bool isAreaCleanPower() const;
 	void changePowerCount(int iChange);
 
@@ -1501,9 +1545,6 @@ public:
 	void clearCultureDistanceCache();
 	int cultureDistance(const CvPlot& plot) const;
 
-	void clearModifierTotals();
-	void recalculateModifiers();
-
 	void setBuildingListInvalid();
 	bool getBuildingListFilterActive(BuildingFilterTypes eFilter) const;
 	void setBuildingListFilterActive(BuildingFilterTypes eFilter, bool bActive);
@@ -2016,7 +2057,6 @@ private:
 	mutable stdext::hash_map<UnitTypes,UnitTypes> m_eCachedAllUpgradesResultsRoot;
 	mutable bool m_canTrainCachePopulated;
 	mutable bool m_canTrainCacheDirty;
-	bool m_bPlotWorkingMasked;
 	mutable int m_totalCommerceRateModifier[NUM_COMMERCE_TYPES];
 
 	mutable std::map<int,int> m_buildingSourcedPropertyCache;
@@ -2060,8 +2100,6 @@ public:
 		DECLARE_MAP_FUNCTOR(CvCity, void, onYieldChange);
 		DECLARE_MAP_FUNCTOR(CvCity, void, clearTradeRoutes);
 		DECLARE_MAP_FUNCTOR(CvCity, void, setBuildingListInvalid);
-		DECLARE_MAP_FUNCTOR(CvCity, void, clearModifierTotals);
-		DECLARE_MAP_FUNCTOR(CvCity, void, recalculateModifiers);
 		DECLARE_MAP_FUNCTOR(CvCity, void, ClearYieldValueCache);
 		DECLARE_MAP_FUNCTOR(CvCity, void, AI_preUnitTurn);
 		DECLARE_MAP_FUNCTOR(CvCity, void, AI_assignWorkingPlots);

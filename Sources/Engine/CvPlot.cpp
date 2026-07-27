@@ -36,6 +36,9 @@
 #include "CvDLLUtilityIFaceBase.h"
 #include "Repos/BuildsRepo.h"
 #include "CvCascadeGather.h"
+#include "CvCascadeChannelRegistry.h"   // channelLookup / wellbeingTwin -- the group reads' channel identity
+#include "CvInfoKinds.h"                // the family + kind vocabulary the group reads walk
+#include "Data/CvInfoValuation.h"       // realizedAtPlot -- the ONE cross-scope roll-up
 #include "Spine/CvEventSpine.h"   // the plot DOMAIN facts -- owner/terrain/feature/bonus/improvement/route/type/river/irrigation/landmark/working-city/network (play choke points + the in-read reseed)
 #include "FAStarNode.h"
 
@@ -65,6 +68,64 @@ static DefenderScoreCache* g_bestDefenderCache = NULL;
 void CvPlot::refreshCascadePackage(int64_t iMask) const
 {
 	CascadeGather::refreshPlot(*this, iMask);
+}
+
+// The plot's group reads (see CvPlot.h for the role + the grammar). Each walks its group's own enum, resolves
+// that entry's CHANNEL by identity, and folds it through the ONE cross-scope roll-up -- whose plot entry is this
+// plot's package alone, because a per-plot value is resolved BEFORE any city-level stack (modifier.md §2).
+void CvPlot::getYields(int (&yields)[NUM_YIELD_TYPES]) const
+{
+	for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+	{
+		const int iChannel = CascadeChannelRegistry::channelLookup(infoYieldFamily(iYield), (int)CHANNEL_AMOUNT, -1);
+		yields[iYield] = InfoValuation::realizedAtPlot(*this, iChannel);
+	}
+}
+
+void CvPlot::getCommerces(int (&commerces)[NUM_COMMERCE_TYPES]) const
+{
+	for (int iCommerce = 0; iCommerce < NUM_COMMERCE_TYPES; ++iCommerce)
+	{
+		const int iChannel = CascadeChannelRegistry::channelLookup(infoCommerceFamily(iCommerce), (int)CHANNEL_AMOUNT, -1);
+		commerces[iCommerce] = InfoValuation::realizedAtPlot(*this, iChannel);
+	}
+}
+
+void CvPlot::getWellbeing(int (&wellbeing)[NUM_WELLBEING_CHANNELS]) const
+{
+	for (int iChannelIndex = 0; iChannelIndex < NUM_WELLBEING_CHANNELS; ++iChannelIndex)
+	{
+		const WellbeingChannel eWellbeing = (WellbeingChannel)iChannelIndex;
+		// anger/unhealth are the SIGN TWINS minted beside their authored family (modifier.md §2b).
+		const int iAuthoredChannel = CascadeChannelRegistry::channelLookup(infoWellbeingFamily(eWellbeing), (int)CHANNEL_AMOUNT, -1);
+		int iChannel = iAuthoredChannel;
+		if (eWellbeing == WELLBEING_ANGER || eWellbeing == WELLBEING_UNHEALTH)
+		{
+			iChannel = CascadeChannelRegistry::wellbeingTwin(iAuthoredChannel);
+		}
+		wellbeing[iChannelIndex] = InfoValuation::realizedAtPlot(*this, iChannel);
+	}
+}
+
+void CvPlot::getDefenseKinds(int (&defenses)[NUM_DEFENSE_KINDS]) const
+{
+	for (int iKind = 0; iKind < NUM_DEFENSE_KINDS; ++iKind)
+	{
+		const int iChannel = CascadeChannelRegistry::channelLookup(MODFAM_DEFENSE, iKind, -1);
+		defenses[iKind] = InfoValuation::realizedAtPlot(*this, iChannel);
+	}
+}
+
+void CvPlot::getScalars(int (&scalars)[NUM_INFO_SCALARS]) const
+{
+	for (int iScalar = 0; iScalar < NUM_INFO_SCALARS; ++iScalar)
+	{
+		ModifierFamily eFamily = MODFAM_NONE;
+		int iKind = -1;
+		infoScalarSlot((InfoScalar)iScalar, eFamily, iKind);
+		const int iChannel = CascadeChannelRegistry::channelLookup(eFamily, iKind, -1);
+		scalars[iScalar] = InfoValuation::realizedAtPlot(*this, iChannel);
+	}
 }
 
 // Public Functions...
@@ -244,7 +305,9 @@ void CvPlot::reset(int iX, int iY, bool bConstructorCall)
 	m_iY = iY;
 	m_plotContext.bind(this);   // bind the per-plot context to its owner (the pointer IS this plot; forwarding reads it)
 	// bind the PLOT-scope cascade package (all-dirty from bind: a loaded/new plot recomputes on first read)
-	m_cascadePackage.bind(CASC_SCOPE_PLOT, this, &CvPlot::refreshCascadePackage);
+	// PLOT identity is the coordinate pair (a plot has no owner-independent id; the map index needs a map that
+	// does not exist yet at reset), so a plot divergence reports owner=x id=y -- read with cache=plot.
+	m_cascadePackage.bind(CASC_SCOPE_PLOT, this, &CvPlot::refreshCascadePackage, iX, iY);
 	m_iArea = FFreeList::INVALID_INDEX;
 	m_pPlotArea = NULL;
 	m_iFeatureVariety = 0;
@@ -326,33 +389,6 @@ void CvPlot::reset(int iX, int iY, bool bConstructorCall)
 		m_aiVisibilityCount[iI] = 0;
 	}
 }
-
-void CvPlot::clearModifierTotals()
-{
-	PROFILE_EXTRA_FUNC();
-	for (int iI = 0; iI < NUM_YIELD_TYPES; ++iI)
-	{
-		m_baseYields[iI] = 0;
-	}
-	m_commanderCount.clear();
-	m_commodoreCount.clear();
-
-	getProperties()->clearForRecalculate();
-
-	// We will recalculate visibility from first principles
-	clearVisibilityCounts();
-
-	// Fix any spurious routes that are on water tiles
-	if (isWater() && getRouteType() != NO_ROUTE && !GC.getRouteInfo(getRouteType()).isSeaTunnel())
-	{
-		setRouteType(NO_ROUTE, false);
-	}
-	unitGameStateCorrections();
-
-	// Recalc blockades from scratch
-	resetBlockadedCounts();
-}
-
 
 void CvPlot::pageGraphicsOut()
 {

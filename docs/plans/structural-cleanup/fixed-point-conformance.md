@@ -68,8 +68,8 @@ Wellbeing is the first channel converted, establishing the pattern the other cha
   cascade term via the `CascadeWellbeing::*Wellbeing` accessors and ÷100 to keep their human contract (so
   `happyLevelLegacy` stays consistent human).
 
-**Acceptance:** served-value SANITY on `/computed/cities/wellbeing` (per [DEC-oracle-tautology] the check is a sane
-number, NOT oracle parity) — specialist-heavy cities gain their previously-truncated fractional health/happiness;
+**Acceptance:** served-value SANITY on `/computed/cities/wellbeing` (the check is a sane
+number, NOT parity against a comparison twin — that surface is gone, [superseded-ideas](../../architecture/superseded-ideas.md) #17) — specialist-heavy cities gain their previously-truncated fractional health/happiness;
 `angryPopulation` stays a sane whole count; no 100× display. NOT bit-parity with the old per-item-truncated numbers
 — matching the old truncation IS the divergence being removed.
 

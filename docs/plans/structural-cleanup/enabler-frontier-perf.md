@@ -22,8 +22,8 @@
   frontier is rebuilt when (and only when) its reverse-index marks it. No blanket `playerSliceRebuild` markAll
   sits behind it absorbing misses — over-inclusion in the reverse index stays safe (a few harmless extra
   re-checks), but a MISS is a bug to close, not an accepted one-slice lag: a missed invalidation must surface as
-  a LIVE divergence (the `can*` endpoints + the `(scope,channel)` calc-count gate) and that divergence is the
-  signal to fix the reverse-index hole, never a residual a slice-boundary rebuild heals away.
+  a LIVE divergence (a wrong `can*` verdict, or a `stored`-vs-`oracle` diff on the operating-set routes) and that
+  divergence is the signal to fix the reverse-index hole, never a residual a slice-boundary rebuild heals away.
 
 ## Root cause (mapped, `file:line`)
 
@@ -110,7 +110,7 @@ committed item, with no blanket recompute sitting behind it.
   a stale-frontier regression shows as a `can*` endpoint divergence on a real save/turn — poll the `/computed/can*`
   oracle and fix the reverse-index hole it names. This is live manifestation, NOT a re-run of the closed legacy
   shadow.
-- **Measure:** the **wall** metric (end-turn press → next-turn start, StoneBase perf store) before/after, plus the
+- **Measure:** the **wall** metric (end-turn press → next-turn start) before/after, plus the
   `[MODIFIER/perf]` component counters (`condEval`, the `ceX` split, `frontUFills`/`frontBFills`, the frontier
   stopwatches) which are idle-independent. Target: `ceFrontU`/`ceFrontB`/most of `ceOperatingBuildings` (~4.8M of 5.2M) go
   away as the fill counts collapse from hundreds to ~one-per-city-per-turn.
@@ -158,12 +158,12 @@ as an on-demand oracle a spot-check can call to sanity the delta-maintained (act
 as a per-city-per-turn shadow diff driven to 0 — that shadow pattern is CLOSED
 ([DEC-verify-in-game-not-reshadow](../../architecture/decisions.md#dec-verify-in-game-not-reshadow),
 [DEC-no-self-heal](../../architecture/decisions.md#dec-no-self-heal)). A missed delta must surface as a LIVE
-divergence — a wrong `can*`/rate value on a real turn, or a `(scope,channel)` calc-count anomaly on the
-`[MODIFIER/perf]` line — which is the signal to fix the delta's ripple, never a residual a full recompute quietly
-corrects.
+divergence — a wrong `can*`/rate value on a real turn, or a `stored`-vs-`oracle` diff on the operating-set routes
+([http-endpoints.md](../../specs/http-endpoints.md)) — which is the signal to fix the delta's ripple, never a
+residual a full recompute quietly corrects.
 
 **Measure:** `ceOperatingBuildings` (target: ~2M → a fraction) + total condEval + the fill counts (the frontier reads get cheaper
-operating buildings) + `wall` once StoneBase is up.
+operating buildings) + the whole-turn `wall` time.
 
 ## See also
 

@@ -22,6 +22,7 @@
 #include "CvUnit.h"
 #include "CvXMLLoadUtility.h"
 #include "CheckSum.h"
+#include "Spine/CvEventSpine.h"   // the property DOMAIN fact -- the mutation choke points + the in-read reseed
 
 CvProperties::CvProperties()
 {
@@ -144,6 +145,19 @@ void CvProperties::changeChangeByProperty(PropertyTypes eProp, int iChange)
 	m_aiPropertyChange.push_back(PropertyValue(eProp,iChange));;
 }
 
+// Announce the property DOMAIN fact for this bag's owning game object (event-spine.md: one fact, one emit, at the
+// genuine mutation choke point). Every caller sits inside the `m_pGameObject` test that already guards the
+// notification hook -- which is also what keeps the INFO-side bags silent: CvOutcome / CvEventInfo /
+// CvEventTriggerInfo hold CvProperties as authored DATA, built through the default constructor, so their
+// m_pGameObject is NULL and an XML/JSON parse announces nothing.
+// ⛔ The emit lives HERE and not in CvGameObject::eventPropertyChanged: CvGameObjectUnit overrides that hook
+// without chaining to the base, so an emit placed there is silently skipped for every unit.
+static void emitPropertyFact(const CvGameObject* pObject, PropertyTypes eProperty, int iNewValue, int iOldValue)
+{
+	emitPropertyChanged((int)pObject->getGameObjectType(), pObject->getObjectInstanceId(),
+		(int)pObject->getOwnerPlayerId(), (int)eProperty, iNewValue, iOldValue);
+}
+
 void CvProperties::setValue(int index, int iVal)
 {
 	//TBOOSHUNTHERE
@@ -156,7 +170,12 @@ void CvProperties::setValue(int index, int iVal)
 	{
 		m_aiProperty[index].value = iVal;
 		if (m_pGameObject)
+		{
+			// The fact is announced BEFORE the band hook, so the cause precedes the consequences the hook
+			// applies (banded promotions on a unit, and the property-building placement downstream).
+			emitPropertyFact(m_pGameObject, m_aiProperty[index].prop, iVal, iOldVal);
 			m_pGameObject->eventPropertyChanged(m_aiProperty[index].prop, iVal);
+		}
 	}
 }
 
@@ -181,7 +200,11 @@ void CvProperties::setValueByProperty(PropertyTypes eProp, int iVal)
 	{
 		m_aiProperty.push_back(PropertyValue(eProp,iVal));
 		if (m_pGameObject)
+		{
+			// A property absent from the bag reads as 0 (getValueByProperty), so 0 IS the old value here.
+			emitPropertyFact(m_pGameObject, eProp, iVal, 0);
 			m_pGameObject->eventPropertyChanged(eProp, iVal);
+		}
 	}
 }
 
@@ -191,6 +214,7 @@ void CvProperties::changeValue(int index, int iChange)
 
 	const PropertyTypes eProperty = getProperty(index);
 
+	// setValue announces the fact (and suppresses a no-op) -- a second emit here would double it.
 	setValue(index, getValue(index) + iChange);
 	changeChangeByProperty(eProperty, iChange);
 	if (m_pGameObject)
@@ -214,6 +238,9 @@ void CvProperties::changeValueByProperty(PropertyTypes eProp, int iChange)
 		changeChangeByProperty(eProp, iChange);
 		if (m_pGameObject)
 		{
+			// This object's OWN fact first; propagateChange then fans the change onto OTHER objects, each of
+			// which re-enters this path and announces its own -- distinct facts, never duplicates of this one.
+			emitPropertyFact(m_pGameObject, eProp, iChange, 0);
 			propagateChange(eProp, iChange);
 			m_pGameObject->eventPropertyChanged(eProp, iChange);
 		}
@@ -269,6 +296,12 @@ bool CvProperties::isEmpty() const
 
 void CvProperties::clear()
 {
+	// ⛔ NO fact here, deliberately. clear() is the object RESET path (CvGame / CvTeam / CvPlayer / CvCity /
+	// CvUnit / CvPlot ::reset), which runs while an object is being constructed, re-initialized or re-used --
+	// CvCity::read and CvUnit::read call reset() as their FIRST act, with the identity arguments DEFAULTED, so
+	// there is no id and no owner to name and a fact emitted here would be attributed to (id 0, NO_PLAYER).
+	// Nothing is lost: the state a reset discards is re-announced by the read that follows it (the reseed in
+	// readWrapper below).
 	m_aiProperty.clear();
 }
 
@@ -277,14 +310,19 @@ void CvProperties::clearChange()
 	m_aiPropertyChange.clear();
 }
 
-bool CvProperties::isNotSourceDrainProperty(const CvProperties::PropertyValue& p)
+void CvProperties::emitReadProperty(PropertyTypes eProp, int iValue) const
 {
-	return !GC.getPropertyInfo(p.prop).isSourceDrain();
-}
-
-void CvProperties::clearForRecalculate()
-{
-	m_aiProperty.erase(std::remove_if(m_aiProperty.begin(), m_aiProperty.end(), isNotSourceDrainProperty), m_aiProperty.end());
+	// The load RESEED (event-spine.md). Both deserializers below fill m_aiProperty directly -- deliberately
+	// bypassing the setters, so no fact fires -- and a loaded game would otherwise reach a different consumer
+	// state than a played one. Nothing else covers the gap: unlike a plot's substrate, a property value is
+	// DERIVED FROM NOTHING, so no other in-read emit re-derives the property block and there is no duplicate to
+	// avoid. A stored 0 is skipped for exactly the reason setValue suppresses it -- the owning object's reset()
+	// emptied the bag, so 0 -> 0 is not a change. The two deserializers are alternatives, never both run for one
+	// object, so covering both cannot double a fact.
+	if (m_pGameObject != NULL && iValue != 0)
+	{
+		emitPropertyFact(m_pGameObject, eProp, iValue, 0);
+	}
 }
 
 void CvProperties::read(FDataStreamBase *pStream)
@@ -303,7 +341,11 @@ void CvProperties::read(FDataStreamBase *pStream)
 		pStream->Read(&eProp);
 		pStream->Read(&iVal);
 		// AIAndy: Changed to avoid usage of the methods that trigger property change events
-		if (eProp > -1) m_aiProperty.push_back(PropertyValue(static_cast<PropertyTypes>(eProp), iVal));
+		if (eProp > -1)
+		{
+			m_aiProperty.push_back(PropertyValue(static_cast<PropertyTypes>(eProp), iVal));
+			emitReadProperty(static_cast<PropertyTypes>(eProp), iVal);
+		}
 	}
 }
 
@@ -327,9 +369,17 @@ void CvProperties::readWrapper(FDataStreamBase *pStream)
 		WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvProperties", REMAPPED_CLASS_TYPE_PROPERTIES, &eProp);
 		WRAPPER_READ(wrapper, "CvProperties",&iVal);
 		// AIAndy: Changed to avoid usage of the methods that trigger property change events
-		if (eProp > -1) m_aiProperty.push_back(PropertyValue(static_cast<PropertyTypes>(eProp), iVal));
+		if (eProp > -1)
+		{
+			m_aiProperty.push_back(PropertyValue(static_cast<PropertyTypes>(eProp), iVal));
+			emitReadProperty(static_cast<PropertyTypes>(eProp), iVal);
+		}
 	}
 
+	// ⛔ The CHANGE ledger below gets NO fact. It is a per-turn accumulation of the very deltas the value facts
+	// above already carry (changeChangeByProperty is fed from changeValue / changeValueByProperty), and the
+	// solver clears it every turn (CvPropertySolver -> clearChange). Announcing it would restate one state
+	// change in a second shape -- the duplicate the spine's one bar forbids.
 	int iPropertyChangeNum = 0;
 	WRAPPER_READ(wrapper, "CvProperties",&iPropertyChangeNum);
 	for (int i = 0; i < iPropertyChangeNum; i++)

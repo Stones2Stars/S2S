@@ -130,4 +130,5 @@ thin on-demand resolver over `ud_reachable`. Dead consumer `canTrainInternal` dr
 Frontier getters (§1) ✅ · cache dropped (§2) ✅ · the `AI_chooseProduction` Level-A unification (§3, active) · the
 upgrade-cache retirement (§4) · Level B and the dimension-math simplification are parked follow-ons. Verified live
 per item via `/computed/can*` + the production picks on a loaded save ([validation.md](../../specs/validation.md));
-the `(scope,channel)` calc-count gate stays the standing perf tripwire.
+turn time stays the standing perf tripwire
+([DEC-turn-time-is-king](../../architecture/decisions.md#dec-turn-time-is-king)).

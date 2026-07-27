@@ -15,6 +15,14 @@
 #include "Engine/EmpireContext.h"         // fillEvalCtx (player/team)
 #include "Enabler/CvEnablerKernel.h"      // wireOperatingBuildings -- the FED-IN active/dormant verdict
 #include "Engine/CvPlayer.h"              // isHuman -- the audience resolution
+#include "CvCascadeChannelRegistry.h"     // the roll-up's channel identity + the per-scope/receiver layout
+#include "CvCascadeAreaSlot.h"            // the (area x player) slot the AREA-scope roll-up reads
+#include "Engine/CvCity.h"                // the roll-up's city package + its area/owner axes
+#include "Engine/CvPlot.h"                // the roll-up's plot package
+#include "Engine/CvTeam.h"                // the roll-up's team package
+#include "Engine/CvArea.h"                // getCascadeSlot -- the (area x player) package owner
+#include "AI/CvPlayerAI.h"                // GET_PLAYER -- the city's owning empire
+#include "AI/CvTeamAI.h"                  // GET_TEAM -- the empire's team
 #include "Engine/CvGame.h"                // isOption -- the resolvedCityLimit gate
 #include "Engine/CvMap.h"                 // getWorldSize -- the resolvedCityLimit scale
 #include "Defines/CvGlobals.h"            // GC
@@ -316,6 +324,185 @@ long InfoValuation::cityRate(long base, long specialists, int iPercentSum, long 
 		iModifier = 0;
 	}
 	return (base + specialists) * iModifier / 100 + 100 * (extra / 100);
+}
+
+long InfoValuation::commerceSplit(long commerceYieldRate, int iSliderPercent, long channelPercentSum,
+	long channelDeposits, long productionYieldRate, int iProductionToCommerce)
+{
+	// TIER 1 -- the slider share of the COMMERCE yield. The slider is a plain 0..100 counter (json §3.1), so the
+	// ÷100 is the percent-to-fraction conversion, not a fixed-point de-scale.
+	long iShare = commerceYieldRate * (long)iSliderPercent / 100;
+	// The ONE additive stack (modifier.md §2a), floored at zero exactly as the yield rate's is -- a stack below
+	// -100% zeroes the share, it never flips its sign. The stored percents are ×100, hence the second ÷100.
+	long iModifier = 100 + channelPercentSum / 100;
+	if (iModifier < 0)
+	{
+		iModifier = 0;
+	}
+	// TIER 2 -- the process conversion, added AFTER the percentages and never multiplied by them. The production
+	// yield truncates to whole hammers BEFORE the conversion scales it (the engine's order, mirrored verbatim);
+	// the conversion rate is ×100, so it de-scales to the authored human percent.
+	long iProcessConversion = (productionYieldRate / 100) * ((long)iProductionToCommerce / 100);
+	return iShare * iModifier / 100 + channelDeposits + iProcessConversion;
+}
+
+namespace
+{
+	// The channel's CANONICAL AUTHORED UNIT at the reading scope, resolved from the channel's own identity axes
+	// -- the census's flat-vs-percent verdict lives beside the vocabulary (infoKindUnit) and is consumed here,
+	// never re-decided per getter. A PROPERTY-plane channel carries kind 0 and answers the table's flat default.
+	CvCascUnit val_channelCanonicalUnit(int iChannel, CvCascScope eScope)
+	{
+		const ModifierFamily eFamily = CascadeChannelRegistry::channelFamily(iChannel);
+		const int iKind = CascadeChannelRegistry::channelKind(iChannel);
+		return infoKindUnit(eFamily, iKind, eScope);
+	}
+}
+
+long InfoValuation::realizedChannel(long flatSum, long percentSum, CvCascUnit eCanonicalUnit)
+{
+	// A PERCENT-unit channel has no flat plane of its own: the ONE additive stack IS its realized value
+	// (modifier.md §2a -- purely additive, applied once wherever it later scales something).
+	if (eCanonicalUnit == CASC_UNIT_PERCENT || eCanonicalUnit == CASC_UNIT_RAW_PERCENT)
+	{
+		return percentSum;
+	}
+	// A FLAT-unit channel is the flat sum the stack scales: the §2 combine with no external base and multiplier
+	// deposits identity. The stack floors at zero exactly as the §2a rate's does -- a stack below -100% zeroes
+	// the value, it never flips its sign.
+	long iModifier = 100 + percentSum / 100;
+	if (iModifier < 0)
+	{
+		iModifier = 0;
+	}
+	return flatSum * iModifier / 100;
+}
+
+int InfoValuation::realizedAtPlot(const CvPlot& plot, int iChannel)
+{
+	if (iChannel < 0)
+	{
+		return 0;
+	}
+	// PLOT is the bottom of the spine and the ONE scope with no upper chain: a per-plot value resolves in
+	// isolation as one base package BEFORE any city-level stack runs (modifier.md §2 plot-as-base), so an upper
+	// scope's percent must never reach it -- that percent applies once, later, to the city's already-summed
+	// base, and applying it here as well would scale the same magnitude twice. The plot carries no receiver
+	// slot (nothing is consumed at plot scope), so there is no maintained sum to prefer over the combine.
+	const long iFlatSum = plot.getCascadePackage().readFlat(iChannel);
+	const long iPercentSum = plot.getCascadePackage().readPercent(iChannel);
+	return (int)realizedChannel(iFlatSum, iPercentSum, val_channelCanonicalUnit(iChannel, CASC_SCOPE_PLOT));
+}
+
+void InfoValuation::rolledLegsAtCity(const CvCity& city, int iChannel, long& flatSum, long& percentSum)
+{
+	flatSum = 0;
+	percentSum = 0;
+	if (iChannel < 0)
+	{
+		return;
+	}
+	// The UPPER legs exist only while the city has an owner: an ownerless city has no empire, team or
+	// (area × player) slot to sit under, so its chain is its own package alone rather than an invalid index.
+	const PlayerTypes eOwner = city.getOwner();
+	if (eOwner != NO_PLAYER)
+	{
+		const CvPlayer& owner = GET_PLAYER(eOwner);
+		const CvTeam& team = GET_TEAM(owner.getTeam());
+		flatSum += team.getCascadePackage().readFlat(iChannel);
+		percentSum += team.getCascadePackage().readPercent(iChannel);
+		flatSum += owner.getCascadePackage().readFlat(iChannel);
+		percentSum += owner.getCascadePackage().readPercent(iChannel);
+		// The AREA leg is the (area × player) slot for THIS city's area -- an O(1) fetch and a filter, never a
+		// walk of the area's plots or cities. The area OBJECT is needed (its slot table lives there), which is
+		// why this takes the memoized area pointer rather than the stored area id.
+		const CvArea* pArea = city.area();
+		if (pArea != NULL)
+		{
+			const CvCascadeAreaSlot& areaSlot = pArea->getCascadeSlot(eOwner);
+			flatSum += areaSlot.package.readFlat(iChannel);
+			percentSum += areaSlot.package.readPercent(iChannel);
+		}
+	}
+	flatSum += city.getCascadePackage().readFlat(iChannel);
+	percentSum += city.getCascadePackage().readPercent(iChannel);
+}
+
+int InfoValuation::realizedAtCity(const CvCity& city, int iChannel)
+{
+	if (iChannel < 0)
+	{
+		return 0;
+	}
+	// The channels the CITY consumes (food/production/commerce/culture) answer the maintained receiver sum the
+	// gather's §2a combine already wrote AT THE MARK -- the realized RATE, which the generic combine below
+	// cannot reproduce (it carries no specialist term and no post-percent EXTRA tier).
+	if (CascadeChannelRegistry::scopeReceiverIndex(CASC_SCOPE_CITY, iChannel) >= 0)
+	{
+		return city.getCascadePackage().readSum(iChannel);
+	}
+	long iFlatSum = 0;
+	long iPercentSum = 0;
+	rolledLegsAtCity(city, iChannel, iFlatSum, iPercentSum);
+	return (int)realizedChannel(iFlatSum, iPercentSum, val_channelCanonicalUnit(iChannel, CASC_SCOPE_CITY));
+}
+
+int InfoValuation::realizedAtEmpire(const CvPlayer& player, int iChannel)
+{
+	if (iChannel < 0)
+	{
+		return 0;
+	}
+	// The channels the EMPIRE consumes (gold/research/culture/espionage) answer their maintained receiver sum --
+	// the per-city realized rates already summed by the gather; culture is the lone dual consumer and answers a
+	// receiver sum at BOTH scopes, each over its own combine.
+	if (CascadeChannelRegistry::scopeReceiverIndex(CASC_SCOPE_EMPIRE, iChannel) >= 0)
+	{
+		return player.getCascadePackage().readSum(iChannel);
+	}
+	// AREA is deliberately absent from the empire chain: an area-scope value belongs to ONE area while an empire
+	// spans several, so it is read by each CITY for its own area id -- folding it here would credit every city
+	// with every area's deposits.
+	long iFlatSum = 0;
+	long iPercentSum = 0;
+	// The TEAM leg exists only while the player is on one (an unassigned player slot is on none), so its chain
+	// is its own package alone rather than an invalid index.
+	if (player.getTeam() != NO_TEAM)
+	{
+		const CvTeam& team = GET_TEAM(player.getTeam());
+		iFlatSum += team.getCascadePackage().readFlat(iChannel);
+		iPercentSum += team.getCascadePackage().readPercent(iChannel);
+	}
+	iFlatSum += player.getCascadePackage().readFlat(iChannel);
+	iPercentSum += player.getCascadePackage().readPercent(iChannel);
+	return (int)realizedChannel(iFlatSum, iPercentSum, val_channelCanonicalUnit(iChannel, CASC_SCOPE_EMPIRE));
+}
+
+int InfoValuation::realizedAtTeam(const CvTeam& team, int iChannel)
+{
+	if (iChannel < 0)
+	{
+		return 0;
+	}
+	// TEAM is the top scope carrying a package (WORLD is CONFIG and has none -- state-repositories.md), so its
+	// chain is itself alone.
+	const long iFlatSum = team.getCascadePackage().readFlat(iChannel);
+	const long iPercentSum = team.getCascadePackage().readPercent(iChannel);
+	return (int)realizedChannel(iFlatSum, iPercentSum, val_channelCanonicalUnit(iChannel, CASC_SCOPE_TEAM));
+}
+
+int InfoValuation::realizedAtArea(const CvArea& area, PlayerTypes ePlayer, int iChannel)
+{
+	if (iChannel < 0 || ePlayer == NO_PLAYER)
+	{
+		return 0;
+	}
+	// The (area × player) slot's own chain is itself alone: the empire and team legs are folded by the CITY that
+	// reads this slot, so folding them here too would double-count them for that city.
+	const CvCascadeAreaSlot& areaSlot = area.getCascadeSlot(ePlayer);
+	const long iFlatSum = areaSlot.package.readFlat(iChannel);
+	const long iPercentSum = areaSlot.package.readPercent(iChannel);
+	return (int)realizedChannel(iFlatSum, iPercentSum, val_channelCanonicalUnit(iChannel, CASC_SCOPE_AREA));
 }
 
 void InfoValuation::expectedFlatYields(const CvModifiers* modifiers,

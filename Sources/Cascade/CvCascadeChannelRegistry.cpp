@@ -8,6 +8,7 @@
 #include "CvCascadeChannelRegistry.h"
 #include "CvModEntry.h"        // modSegmentSpell -- the kind member's authored spelling (naming only)
 #include "CvPropertyInfo.h"    // the property plane's channel name (the PROPERTY_* type string)
+#include "Spine/CvEventSpine.h"   // the [MODIFIER] domain -- the channel-set census render path
 #include "Defines/CvGlobals.h"
 #include <map>
 #include <string>
@@ -500,5 +501,90 @@ void CascadeChannelRegistry::decodeMask(CvCascScope eScope, int64_t iMask, char*
 	if (!bWroteAny)
 	{
 		strncat(szOut, "none", iOutSize - (int)strlen(szOut) - 1);
+	}
+}
+
+namespace
+{
+	// ---- the [MODIFIER] domain registration (event ids + field tags are DOMAIN-LOCAL) ----
+	enum ModifierDomainEvent
+	{
+		MODEVT_CHANNEL_CENSUS = 1   // the load-end per-scope channel-set census (KEYS ONLY WHERE NEEDED)
+	};
+	enum ModifierDomainField
+	{
+		MODF_SCOPE = 0,
+		MODF_AUTHORED,
+		MODF_SLOTS,
+		MODF_RECEIVERS
+	};
+
+	const char* cr_modifierDomainPrefix(int iEventId)
+	{
+		switch (iEventId)
+		{
+		case MODEVT_CHANNEL_CENSUS: return "[MODIFIER] channels";
+		default:                    return "[MODIFIER] ?";
+		}
+	}
+
+	const char* cr_modifierDomainFieldInfo(int iFieldTag, SpineFieldType* peType)
+	{
+		switch (iFieldTag)
+		{
+		case MODF_SCOPE:     *peType = SFT_STR; return "scope";
+		case MODF_AUTHORED:  *peType = SFT_INT; return "authored";
+		case MODF_SLOTS:     *peType = SFT_INT; return "slots";
+		case MODF_RECEIVERS: *peType = SFT_INT; return "receivers";
+		default:             *peType = SFT_INT; return NULL;
+		}
+	}
+
+	bool s_bModifierDomainRegistered = false;
+	void cr_ensureModifierDomain()
+	{
+		if (s_bModifierDomainRegistered)
+		{
+			return;
+		}
+		s_bModifierDomainRegistered = true;
+		spineRegisterDomain(SD_MODIFIER, cr_modifierDomainPrefix, NULL, cr_modifierDomainFieldInfo);   // NULL => Cascade.log
+	}
+
+	const char* cr_scopeName(int iScope)
+	{
+		switch (iScope)
+		{
+		case CASC_SCOPE_WORLD:  return "world";
+		case CASC_SCOPE_TEAM:   return "team";
+		case CASC_SCOPE_EMPIRE: return "empire";
+		case CASC_SCOPE_AREA:   return "area";
+		case CASC_SCOPE_CITY:   return "city";
+		case CASC_SCOPE_PLOT:   return "plot";
+		default:                return "?";
+		}
+	}
+}
+
+void CascadeChannelRegistry::reportChannelCensus()
+{
+	static bool s_bReported = false;
+	if (s_bReported)
+	{
+		return;
+	}
+	s_bReported = true;
+	cr_ensureModifierDomain();
+	// One line per package scope: the AUTHORED channel count (comparable to the state-repositories.md measured
+	// expectation), the SLOTTED count (sign twins included), and the receiver slots. World reports too -- its
+	// authored count is the mis-scoped-data census (world is CONFIG, no package).
+	for (int iScope = 0; iScope < CASCADE_PACKAGE_SCOPES; ++iScope)
+	{
+		CvSpineEvent census(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MODEVT_CHANNEL_CENSUS, 1);
+		census.addStr(MODF_SCOPE, cr_scopeName(iScope));
+		census.addI(MODF_AUTHORED, scopeAuthoredChannelCount((CvCascScope)iScope));
+		census.addI(MODF_SLOTS, scopeChannelCount((CvCascScope)iScope));
+		census.addI(MODF_RECEIVERS, scopeReceiverCount((CvCascScope)iScope));
+		eventSpine().emit(census);
 	}
 }

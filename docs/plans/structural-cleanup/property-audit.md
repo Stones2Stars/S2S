@@ -202,13 +202,10 @@ The source/propagator bridge DEFERS-and-COUNTS three conditioned classes; this i
 
 Rebuild (Assert compile-check, then Release/agentstart), end a turn: the property sources are verified LIVE via the
 endpoints (the per-turn `PROPERTY_*` deltas / property-source decomposition) — none lost, each attributed to a named
-source; Canterbury crime/education normalise; commerce recovers on its own. StoneBase is the perf/spec-check layer —
-`CheckPropertySweep.cs` maps curated `PROPERTY_*` families ↔ engine property sources for spec-compliance.
+source; Canterbury crime/education normalise; commerce recovers on its own.
 
 ## Reference
 
-- StoneBase (`C:\code\s2s\StoneBase`) — the perf/spec-check layer: `src/Application/Features/Parity/CheckPropertySweep.cs` (the spec-check family↔source map),
-  `src/Domain/Modifiers/ModifierFamilyParser.cs` (generic `PROPERTY_*` parse — no bespoke shape needed for flats).
 - [json.md](../../specs/json.md) §5 (grants pulses `on`/`relation`/`distance`), §9 (`properties` bespoke section),
   §6 (families) · [modifier.md](../../specs/modifier.md) (`per`). Legacy: `CvPropertySource`/`CvPropertyManipulators`/
   `CvPropertySolver`/`CvGameObject.cpp:626-747` · `CIV4PropertyInfos.xml` (curator input, never read at runtime).

@@ -389,6 +389,64 @@ void CvGameObjectPlot::foreach(GameObjectTypes eType, bst::function<void (const 
 	}
 }
 
+// The DOMAIN-fact identity (event-spine.md: WHO + WHERE). The base is the game's own answer -- no owning player
+// and no instance id, because there is exactly one game.
+PlayerTypes CvGameObject::getOwnerPlayerId() const
+{
+	return NO_PLAYER;
+}
+
+int CvGameObject::getObjectInstanceId() const
+{
+	return -1;
+}
+
+int CvGameObjectTeam::getObjectInstanceId() const
+{
+	return (int)m_pTeam->getID();
+}
+
+PlayerTypes CvGameObjectPlayer::getOwnerPlayerId() const
+{
+	return m_pPlayer->getID();
+}
+
+int CvGameObjectPlayer::getObjectInstanceId() const
+{
+	return (int)m_pPlayer->getID();
+}
+
+PlayerTypes CvGameObjectCity::getOwnerPlayerId() const
+{
+	return m_pCity->getOwner();
+}
+
+int CvGameObjectCity::getObjectInstanceId() const
+{
+	return m_pCity->getID();
+}
+
+PlayerTypes CvGameObjectUnit::getOwnerPlayerId() const
+{
+	return m_pUnit->getOwner();
+}
+
+int CvGameObjectUnit::getObjectInstanceId() const
+{
+	return m_pUnit->getID();
+}
+
+PlayerTypes CvGameObjectPlot::getOwnerPlayerId() const
+{
+	return m_pPlot->getOwner();
+}
+
+int CvGameObjectPlot::getObjectInstanceId() const
+{
+	// The map index -- the same plot id every other plot DOMAIN fact carries (CvPlot's emit sites).
+	return GC.getMap().plotNum(m_pPlot->getX(), m_pPlot->getY());
+}
+
 CvGameObjectPlayer* CvGameObjectGame::getOwner() const
 {
 	return NULL;
@@ -746,6 +804,11 @@ void CvGameObjectPlot::foreachManipulator(ManipCallbackFn func) const
 	}
 }
 
+// The per-object-type reaction to a property crossing a band (the unit override below places/removes the banded
+// promotions). ⛔ The PROPERTY DOMAIN fact does NOT belong here and must never be moved here: CvGameObjectUnit
+// overrides this hook WITHOUT chaining to the base, so an emit placed in the base is silently skipped for every
+// unit. The fact is emitted at the genuine mutation choke point instead -- the three CvProperties sites that call
+// this hook (CvProperties.cpp) -- which covers every object type regardless of what an override does.
 void CvGameObject::eventPropertyChanged(PropertyTypes eProperty, int iNewValue)
 {
 }

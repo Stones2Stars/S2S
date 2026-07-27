@@ -21,9 +21,13 @@
 //	in CvTeam (capabilities.md).
 //
 //	PERF: queries are hot (isTerrainTrade rides pathing/trade-network loops), so the union is CACHED per team --
-//	on the ONE CvDerivedCacheSet protocol (scope-packages.md §3b: owner-side storage on CvTeam, the component owns
-//	the dirty protocol; never serialized). setHasTech/reset MARK; queries ENSURE (the operating buildings idiom -- gate reads
-//	are decision-time; the clean-path cost is one int test, same as the retired hand-rolled bValid flag).
+//	on the ONE CvDerivedCacheSet protocol (owner-side storage on CvTeam, the component owns the mark protocol;
+//	never serialized). setHasTech/reset MARK, and THE MARK IS WHAT REBUILDS (state-repositories.md); a QUERY IS A
+//	BARE FETCH and never recomputes, so a HAVE change that fails to mark leaves the union visibly wrong
+//	([DEC-no-self-heal]). That is found from OUTSIDE the DLL: `storedUnion` serves the union the marks built and
+//	`refreshInto` recomputes it from source into a caller-owned buffer, and an external consumer diffs the two
+//	served documents. The DLL itself neither compares nor reports, and the oracle is never handed the stored
+//	union, so serving it cannot repair anything.
 //
 
 #include "Defines/CvEnums.h"
@@ -89,8 +93,16 @@ public:
 	static int corporationRevenueModifier(TeamTypes eTeam);          // derived-from-tech (never the legacy accumulator)
 
 	// The CacheSet refresh target (CvTeam::cascadeRefreshCaps delegates here): rebuilds the union + the
-	// precomputed hot-path reads from CURRENT state, fully defining every field (contract rule 2).
+	// precomputed hot-path reads from CURRENT state, fully defining every field (contract rule 2). It is ALSO
+	// THE ORACLE -- handed a caller-owned CascadeTeamCaps it recomputes the whole union from source with no
+	// gate, which is what an endpoint serves beside the stored union.
 	static void refreshInto(const CvTeam& kTeam, CascadeTeamCaps& c);
+
+	// The ENDPOINT-FACING STORED read: the team's union as the marks built it (the same object every query
+	// above answers from), for serving in the same shape as the oracle's recompute.
+	static const CascadeTeamCaps& storedUnion(TeamTypes eTeam);
+	// A flag's authored key ("canPassPeaks", "techs", "water") -- how a served flag names itself.
+	static const char* flagName(CascadeCapFlag eFlag);
 };
 
 #endif

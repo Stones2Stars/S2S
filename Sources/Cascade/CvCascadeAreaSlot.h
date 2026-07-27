@@ -27,11 +27,14 @@ struct CvCascadeAreaSlot
 
 	CvCascadeAreaSlot() : area(NULL), player(NO_PLAYER) {}
 
-	void bind(const CvArea* pArea, PlayerTypes eSlotPlayer)
+	// iAreaId is passed IN, never read off pArea: CvArea is only forward-declared here (CvArea.h includes this
+	// header, so completing the type would be circular). With the player it is the SERVED identity of this
+	// (area x player) slot -- a served value naming neither would not say which slot it came from.
+	void bind(const CvArea* pArea, PlayerTypes eSlotPlayer, int iAreaId)
 	{
 		area = pArea;
 		player = eSlotPlayer;
-		package.bind(CASC_SCOPE_AREA, this, &CvCascadeAreaSlot::refreshCascadePackage);
+		package.bind(CASC_SCOPE_AREA, this, &CvCascadeAreaSlot::refreshCascadePackage, (int)eSlotPlayer, iAreaId);
 	}
 
 	// The refresh delegate -- defined beside the gather (CvCascadeGather.cpp).

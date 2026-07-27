@@ -278,7 +278,6 @@ public:
 	// ! MODULAR_LOADING_CONTROL
 
 	void calculateAssetCheckSum();
-	void checkVersions();
 	void endGameSetup();
 
 // BUG - EXE/DLL Paths - start

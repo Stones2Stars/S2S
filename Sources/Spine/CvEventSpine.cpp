@@ -35,7 +35,9 @@
 #include "CvSpecialistInfo.h"
 #include "CvTraitInfo.h"
 #include "CvRouteInfo.h"
+#include "CvCommerceInfo.h"   // SFT_COMMERCE render (the slider fact's channel) -- bounded by NUM_COMMERCE_TYPES
 #include "CvTechInfo.h"   // SFT_TECH render (getTechInfo().getType()) -- imported directly (was a latent unity-transitive include)
+#include "CvPropertyInfo.h"   // SFT_PROPERTY render (the property fact names PROPERTY_CRIME, not a raw int)
 
 // ===================== the spine =====================
 
@@ -202,6 +204,15 @@ void spineRenderEventLine(char* szBuf, int iBufSize, const CvSpineEvent& kEvent)
 			m = _snprintf(szBuf + n, iBufSize - n, " %s=%s", szName,
 				(fld.v.i >= 0 && fld.v.i < GC.getNumRouteInfos()) ? GC.getRouteInfo((RouteTypes)fld.v.i).getType() : "?");
 			break;
+		case SFT_PROPERTY:
+			m = _snprintf(szBuf + n, iBufSize - n, " %s=%s", szName,
+				(fld.v.i >= 0 && fld.v.i < GC.getNumPropertyInfos()) ? GC.getPropertyInfo((PropertyTypes)fld.v.i).getType() : "?");
+			break;
+		case SFT_COMMERCE:
+			// CommerceTypes is a FIXED engine enum, so its bound is NUM_COMMERCE_TYPES, not a getNumXInfos() count.
+			m = _snprintf(szBuf + n, iBufSize - n, " %s=%s", szName,
+				(fld.v.i >= 0 && fld.v.i < NUM_COMMERCE_TYPES) ? GC.getCommerceInfo((CommerceTypes)fld.v.i).getType() : "?");
+			break;
 		case SFT_PLAYER:
 			// Instance name + raw id, BOTH (owner 2026-06-19): name=human readability, (id)=stable machine join-key for the
 			// primary consumers (AI agents during shadow-verify + StoneBase). Resolved LIVE here, which is exact + safe:
@@ -306,7 +317,9 @@ enum SpineDomainField
 	SPF_NAME_KIND, SPF_ENTITY_ID, SPF_NAME,
 	// the [CASCADE] invalidate observability fields
 	SPF_SCOPE, SPF_ID, SPF_PKG, SPF_SRC,
-	SPF_HERITAGE, SPF_ERA, SPF_TAGS,
+	SPF_HERITAGE, SPF_ERA, SPF_TAGS, SPF_COMMERCE,
+	// the property fact: WHAT changed + WHICH KIND of object carries it (the kind is what makes SPF_ID readable)
+	SPF_PROPERTY, SPF_OBJECT_KIND,
 	// the load-pipeline diagnostic fields (SEVT_LOAD_PIPELINE)
 	SPF_MS_REBUILD, SPF_MS_FIXPOINT, SPF_PASSES, SPF_MS_PLOTWARM, SPF_MS_PKGWARM,
 	SPF_FLIPS, SPF_CONVERGED, SPF_VERIFY_CATCH, SPF_MS_FIX_ENSURE, SPF_MS_FIX_PROCESS
@@ -355,6 +368,8 @@ static const char* spineDomainPrefix(int iEventId)
 	case SEVT_CITY_NETWORK_CHANGED:    return "[SPINE] cityNetworkChanged";
 	case SEVT_VICINITY_BONUS_CHANGED:  return "[SPINE] vicinityBonusChanged";
 	case SEVT_ERA_CHANGED:             return "[SPINE] eraChanged";
+	case SEVT_COMMERCE_PERCENT_CHANGED: return "[SPINE] commercePercentChanged";
+	case SEVT_PROPERTY_CHANGED:        return "[SPINE] propertyChanged";
 	case SEVT_NUKES_CHANGED:           return "[SPINE] nukesChanged";
 	case SEVT_CITY_CULTURE_LEVEL_CHANGED: return "[SPINE] cultureLevelChanged";
 	case SEVT_HOLY_CITY_CHANGED:       return "[SPINE] holyCityChanged";
@@ -417,6 +432,9 @@ static const char* spineDomainFieldInfo(int iFieldTag, SpineFieldType* peType)
 	case SPF_SRC:         *peType = SFT_STR;         return "src";
 	case SPF_HERITAGE:    *peType = SFT_INT;         return "heritage";
 	case SPF_ERA:         *peType = SFT_INT;         return "era";
+	case SPF_COMMERCE:    *peType = SFT_COMMERCE;    return "commerce";
+	case SPF_PROPERTY:    *peType = SFT_PROPERTY;    return "property";
+	case SPF_OBJECT_KIND: *peType = SFT_STR;         return "objectKind";
 	case SPF_TAGS:        *peType = SFT_STR;         return "tags";
 	case SPF_MS_REBUILD:  *peType = SFT_INT;         return "networkRebuildMs";
 	case SPF_MS_FIXPOINT: *peType = SFT_INT;         return "dormancyFixpointMs";
@@ -529,10 +547,14 @@ void spineRegisterConsumers()
 	// current state). Both derive their reactions from their own compiled surfaces; no shared consumer, no
 	// hand-wired mutation-site marks.
 	enablerRegisterConsumer();
-	modifierRegisterConsumer();
 	// The CONTEXTS' own consumer (contexts.md): buffers the load bracket's working-city facts and drains them
 	// once at GAME_LOAD_FINISHED through CvCity::onCityPlotChanged -- the plotAttrs reseed.
 	contextRegisterConsumer();
+	// ⛔ REGISTRATION ORDER IS A CONTRACT HERE, not tidiness: the modifier's GAME_LOAD_FINISHED drain rebuilds
+	// every package the reseed marked, and a package rebuild evaluates its conditions against the CityContext /
+	// EmpireContext stores -- which the contexts' own consumer BUILDS on that same event. Registering the
+	// modifier last is what makes the drain read finished stores instead of empty ones.
+	modifierRegisterConsumer();
 }
 
 void emitNameChange(int iKind, int iOwner, int iEntityId)
@@ -740,6 +762,38 @@ void emitEraChanged(int iPlayer, int iEra)
 	e.iDomainTag = SD_SPINE;
 	e.addI(SPF_ERA, iEra).addI(SPF_OWNER, iPlayer);
 	eventSpine().emit(e);
+}
+void emitCommercePercentChanged(int iPlayer, int iCommerce, int iNewPercent, int iOldPercent)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_COMMERCE_PERCENT_CHANGED, iCommerce, iNewPercent, iOldPercent, iPlayer, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_COMMERCE, iCommerce).addI(SPF_OWNER, iPlayer).addI(SPF_VALUE, iNewPercent).addI(SPF_OLD_VALUE, iOldPercent);
+	eventSpine().emit(e);
+}
+// The property fact's object KIND, spelled for the log. A raw GameObjectTypes int would leave the id field
+// uninterpretable (a city id and a plot id are the same int), so the kind renders as a borrowed literal -- the
+// invScopeName precedent, and safe because the render is synchronous at emit.
+static const char* propertyObjectKindName(int iObjectKind)
+{
+	switch (iObjectKind)
+	{
+	case GAMEOBJECT_GAME:   return "game";
+	case GAMEOBJECT_TEAM:   return "team";
+	case GAMEOBJECT_PLAYER: return "player";
+	case GAMEOBJECT_CITY:   return "city";
+	case GAMEOBJECT_UNIT:   return "unit";
+	case GAMEOBJECT_PLOT:   return "plot";
+	default:                return "?";
+	}
+}
+void emitPropertyChanged(int iObjectKind, int iObjectId, int iOwner, int iProperty, int iNewValue, int iOldValue)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PROPERTY_CHANGED, iProperty, iNewValue, iObjectKind, iOwner, iObjectId);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_PROPERTY, iProperty).addStr(SPF_OBJECT_KIND, propertyObjectKindName(iObjectKind))
+	 .addI(SPF_OWNER, iOwner).addI(SPF_ID, iObjectId)
+	 .addI(SPF_VALUE, iNewValue).addI(SPF_OLD_VALUE, iOldValue);
+	eventSpine().emit(e);   // synchronous render -> the borrowed kind literal outlives it
 }
 void emitNukesChanged(int iPlayer, int iState)
 {

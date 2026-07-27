@@ -628,8 +628,7 @@ but have **no pedia page**, so pedia-driven work would not serve them at all. Th
    `INTERFACE_DEBUG_SCREEN_BUTTON` art STAYS untouched (art is hands-off — roadmap § Scope decisions).
    ⚑ Its 50 checks encoded real design invariants the JSON spec does not state (a requirement may not unlock
    after the thing requiring it; replacements are explicit, never implicit; a replacing entity must be better).
-   Done properly those are **StoneBase's** modder spec-compliance role
-   ([validation.md](../../specs/validation.md)), and the invariants belong in the SPEC first — not a stage-4 item.
+   Those invariants belong in the SPEC first — not a stage-4 item.
 
 3. **Global DEFINEs — the READS stay, the WRITES are OUT OF SCOPE (owner).**
    Reads: `getMAX_PC_PLAYERS` (176) · `getMAX_PLAYERS` (74) · `getMAX_PC_TEAMS` (44) · `getBARBARIAN_PLAYER`

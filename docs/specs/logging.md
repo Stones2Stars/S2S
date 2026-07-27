@@ -7,7 +7,7 @@ The **observability surface** for the whole rework — *what the game exposes*. 
 **map-before-delete**: you cannot safely delete a legacy maintainer you cannot fully observe, so the game must be
 fully observable from the wire — never the screen. This doc specs **what to log**; the **event spine** it draws
 events from is [event-spine.md](event-spine.md), and how the cascade is **verified live** (live endpoint
-manifestation + the calc-count gate) is [validation.md](validation.md).
+manifestation + turn time) is [validation.md](validation.md).
 
 It is not polish. Without total observability the cascade ([enabler](enabler.md)/[modifier](modifier.md)/
 [tally](tally.md)) cannot prove it replicates the legacy machinery it replaces — so it cannot safely replace it.
@@ -38,14 +38,15 @@ surface, and the whole-game-state surface — a high score on one says nothing a
 
 Every observability hook is one of these — cheap, gated, **off by default**:
 
-1. **Snapshot field** — a read-only field on the `/players` | `/cities` | `/units` snapshot (a game-thread copy).
+1. **Snapshot field** — a read-only field on a served snapshot document (a game-thread copy).
 2. **Gated `[TAG]` log line** — emitted under a log-level gate (`gPlayerLogLevel`/`gCityLogLevel`/…) and teed to
    `/events` so it streams live.
-3. **Mailbox snapshot endpoint** — an on-demand snapshot computed on the game thread via the single-slot mailbox (the
-   `/state/*` + `/computed/*` pattern), depending on **no** log file or gate. *(The old `/diagnostic/*` sweep names are
-   retired — split into `/state` + `/computed`; see [http-endpoints.md](http-endpoints.md).)*
+3. **Mailbox snapshot endpoint** — an on-demand snapshot computed on the game thread via the single-slot mailbox,
+   depending on **no** log file or gate.
 
-The redesigned endpoint catalogue is [http-endpoints.md](http-endpoints.md).
+The HTTP transport, its standing invariants, and the routes that exist today are
+[http-endpoints.md](http-endpoints.md). ⚠ There is **no route catalogue** — the route table was purged and is
+defined with the access surface, so shapes 1 and 3 have almost no live instances right now.
 
 ---
 
@@ -90,8 +91,8 @@ The two reliable live reads:
 ## See also
 
 - [event-spine.md](event-spine.md) — the event source logging consumes. [validation.md](validation.md) — the live
-  endpoint manifestation + calc-count gate that *uses* this observability to prove a maintainer before it's cut.
-- [http-endpoints.md](http-endpoints.md) — the clean endpoint catalogue (`/state`, `/computed`, `/events`) this
-  surface publishes through.
+  endpoint manifestation that *uses* this observability to prove a maintainer before it's cut.
+- [http-endpoints.md](http-endpoints.md) — the HTTP transport (`/`, `/events`, the mailbox) this surface publishes
+  through, and its standing invariants.
 - [tally.md](tally.md) — the read-only count accessor (reads the object-owned counts; NOT a spine consumer). The KIND
   firewall (`DOMAIN` vs `DIAGNOSTIC`/`TRACE`) is still load-bearing for the synced-vs-unsynced split that logging + the offline replay ride.

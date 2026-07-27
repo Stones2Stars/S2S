@@ -87,9 +87,9 @@ drain / read-to-throwaway? ⇒ the member is dead ⇒ case (a), convert per §3.
 A recompute-only cache (yields, commerce, the cascade packages, network bonus counts, power, dormancy verdicts, …) is
 **never trusted from a save**: don't read it, don't write it, drain any old-save orphan via §3. `reset()` /
 dirty-on-construct means the first read after load recomputes from current state — never stale-from-save. This is
-**universal, not per-field-optional** (owner ruling): no cache is ever serialized. (`CvGame::recalculateModifiers` —
-the old purge of drifted serialized derived data — is RETIRED as a concept: with nothing derived read from a save,
-there is nothing to purge.) A serialized store survives ONLY for genuine **non-derivable** state (event/vote grants,
+**universal, not per-field-optional** (owner ruling): no cache is ever serialized. With nothing derived read from a
+save there is nothing to purge, so no blanket recompute exists to purge it ([DEC-no-self-heal](../architecture/decisions.md#dec-no-self-heal)).
+A serialized store survives ONLY for genuine **non-derivable** state (event/vote grants,
 e.g. `CvCity::m_paiFreeBonusEvents`). Cache mechanics: [state-repositories.md](../architecture/state-repositories.md).
 
 ## 6. Deleting a changer? Audit its whole BODY for side effects

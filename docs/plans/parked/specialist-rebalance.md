@@ -51,8 +51,10 @@ Specialist yields now receive the city yield modifier exactly like worked tiles.
   yield help moves the specialist lines into the multiplied base section; the three hurry/turns
   helpers in `CvGameTextMgr` include the new term.
 - **Old saves:** the array is absent (loads 0) and specialists stay baked flat inside
-  `m_aiExtraYield` until a **modifier recalculation** rebuilds both arrays — run one after
-  loading a pre-change save. (`recalculateModifiers` zeroes and reprocesses everything.)
+  `m_aiExtraYield`. There is no blanket recalculation to run
+  ([DEC-no-self-heal](../../architecture/decisions.md#dec-no-self-heal)) — the split must be derived
+  from source at load like every other derived value
+  ([state-repositories.md](../../architecture/state-repositories.md)).
 - AI: no valuation change needed — `AI_yieldValue` compares specialist and plot yields both
   unmultiplied, and the modifier now applies to both equally at realization.
 

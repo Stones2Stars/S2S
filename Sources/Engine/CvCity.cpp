@@ -20,6 +20,7 @@
 #include "CvPlot.h"
 #include "CvPlayerAI.h"
 #include "CvPopupInfo.h"
+#include "CvProcessInfo.h"              // getProductionToCommerce -- the commerce split's EXTRA-tier conversion rate
 #include "CvPython.h"
 #include "CvReachablePlotSet.h"
 #include "CvSelectionGroup.h"
@@ -33,6 +34,9 @@
 #include "Repos/BuildingsRepo.h"
 #include "Spine/CvEventSpine.h"
 #include "CvCascadeGather.h"
+#include "CvCascadeChannelRegistry.h"   // channelLookup -- the realized-yield group read's channel identity
+#include "CvInfoKinds.h"                // infoYieldFamily / CHANNEL_AMOUNT -- the YieldTypes -> channel family axis
+#include "Data/CvInfoValuation.h"       // realizedAtCity -- the ONE cross-scope roll-up the group reads fold through
 #ifdef THE_GREAT_WALL
 #include "CvDLLEngineIFaceBase.h"
 #endif
@@ -46,6 +50,184 @@
 void CvCity::refreshCascadePackage(int64_t iMask) const
 {
 	CascadeGather::refreshCity(*this, iMask);
+}
+
+// The realized yield group (see CvCity.h for the read role + the grammar it obeys). Each yield channel is a CITY
+// RECEIVER (CascadeChannelRegistry's spec'd receiver table: food/production/commerce/culture), so the realized rate
+// is the sum slot the gather's §2a combine already wrote AT THE MARK -- one O(1) fetch per channel, with no
+// cross-scope roll-up left to do here (state-repositories.md: the receiving scope stores its own realized total).
+// The channel axis is resolved by IDENTITY -- the ruling-1 YieldTypes -> family reverse lookup -- never by the
+// receiver table's slot order. A channel never minted answers 0, exactly as the package's own read does.
+void CvCity::getYields(int (&yields)[NUM_YIELD_TYPES]) const
+{
+	for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+	{
+		const int iChannel = CascadeChannelRegistry::channelLookup(infoYieldFamily(iYield), (int)CHANNEL_AMOUNT, -1);
+		yields[iYield] = m_cascadePackage.readSum(iChannel);
+	}
+}
+
+// The city's remaining group reads (see CvCity.h for the role + the grammar). Each is the same shape: walk the
+// group's own enum, resolve that entry's CHANNEL by identity, and fold it through the ONE cross-scope roll-up --
+// which answers a consumed channel from its maintained receiver sum and every other channel from the combine
+// over the packages a city sits under. No group read carries a channel argument, a scope argument, or a scalar
+// sibling: the enum indexes the RESULT. The COMMERCE group immediately below is the ONE read whose answer is not
+// that fold alone -- see its own note.
+//
+// THE PER-COMMERCE SPLIT'S CITY READ. The four commerce channels are not four independent receivers: the city
+// receives the COMMERCE YIELD, and the empire's slider percentages divide that yield across gold / research /
+// culture / espionage, each channel adding its own deposits (modifier.md §2a's commerce paragraph). The whole
+// arithmetic lives ONCE on the calc surface (InfoValuation::commerceSplit) -- this read only gathers the inputs:
+// the two yields through this city's own group read, the sliders through the OWNER'S EMPIRE CONTEXT (the sliders
+// are empire state and have no other home), the channel's stack through the ONE city chain walk, its deposits
+// through the ONE cross-scope roll-up, and the process conversion off the city's active process.
+void CvCity::getCommerces(int (&commerces)[NUM_COMMERCE_TYPES]) const
+{
+	int aiRealizedYields[NUM_YIELD_TYPES];
+	getYields(aiRealizedYields);
+	int aiCommerceRates[NUM_COMMERCE_TYPES];
+	for (int iCommerce = 0; iCommerce < NUM_COMMERCE_TYPES; ++iCommerce)
+	{
+		aiCommerceRates[iCommerce] = 0;   // an ownerless city has no empire to slide against: no share, deposits only
+	}
+	if (getOwner() != NO_PLAYER)
+	{
+		GET_PLAYER(getOwner()).getEmpireContext().commerceRates(aiCommerceRates);
+	}
+	// The EXTRA tier's rate: the city's active process, which is the ONE source of a hammers->commerce conversion
+	// (json §9 `conversion`; a city building anything else converts nothing).
+	const ProcessTypes eProcess = getProductionProcess();
+	for (int iCommerce = 0; iCommerce < NUM_COMMERCE_TYPES; ++iCommerce)
+	{
+		const CommerceTypes eCommerce = (CommerceTypes)iCommerce;
+		const int iChannel = CascadeChannelRegistry::channelLookup(infoCommerceFamily(iCommerce), (int)CHANNEL_AMOUNT, -1);
+		long iChannelFlatSum = 0;      // not this read's answer -- the deposits term comes through the roll-up below,
+		long iChannelPercentSum = 0;   // which prefers a consumed channel's maintained receiver sum (culture)
+		InfoValuation::rolledLegsAtCity(*this, iChannel, iChannelFlatSum, iChannelPercentSum);
+		int iProductionToCommerce = 0;
+		if (eProcess != NO_PROCESS)
+		{
+			iProductionToCommerce = GC.getProcessInfo(eProcess).getProductionToCommerce(eCommerce, CASC_SCOPE_CITY);
+		}
+		commerces[iCommerce] = (int)InfoValuation::commerceSplit(
+			aiRealizedYields[YIELD_COMMERCE],
+			aiCommerceRates[iCommerce],
+			iChannelPercentSum,
+			InfoValuation::realizedAtCity(*this, iChannel),
+			aiRealizedYields[YIELD_PRODUCTION],
+			iProductionToCommerce);
+	}
+}
+
+void CvCity::getWellbeing(int (&wellbeing)[NUM_WELLBEING_CHANNELS]) const
+{
+	for (int iChannelIndex = 0; iChannelIndex < NUM_WELLBEING_CHANNELS; ++iChannelIndex)
+	{
+		const WellbeingChannel eWellbeing = (WellbeingChannel)iChannelIndex;
+		// The opposing channels share ONE authored family and are minted as SIGN TWINS beside it (modifier.md
+		// §2b: a negative deposit routes to the opposing channel at fill), so anger/unhealth are looked up as
+		// the twin of their authored channel rather than as families of their own.
+		const int iAuthoredChannel = CascadeChannelRegistry::channelLookup(infoWellbeingFamily(eWellbeing), (int)CHANNEL_AMOUNT, -1);
+		int iChannel = iAuthoredChannel;
+		if (eWellbeing == WELLBEING_ANGER || eWellbeing == WELLBEING_UNHEALTH)
+		{
+			iChannel = CascadeChannelRegistry::wellbeingTwin(iAuthoredChannel);
+		}
+		wellbeing[iChannelIndex] = InfoValuation::realizedAtCity(*this, iChannel);
+	}
+}
+
+void CvCity::getDefenseKinds(int (&defenses)[NUM_DEFENSE_KINDS]) const
+{
+	for (int iKind = 0; iKind < NUM_DEFENSE_KINDS; ++iKind)
+	{
+		const int iChannel = CascadeChannelRegistry::channelLookup(MODFAM_DEFENSE, iKind, -1);
+		defenses[iKind] = InfoValuation::realizedAtCity(*this, iChannel);
+	}
+}
+
+void CvCity::getMaintenanceKinds(int (&maintenances)[NUM_MAINTENANCE_KINDS]) const
+{
+	for (int iKind = 0; iKind < NUM_MAINTENANCE_KINDS; ++iKind)
+	{
+		const int iChannel = CascadeChannelRegistry::channelLookup(MODFAM_MAINTENANCE, iKind, -1);
+		maintenances[iKind] = InfoValuation::realizedAtCity(*this, iChannel);
+	}
+}
+
+void CvCity::getBuildRateKinds(int (&buildRates)[NUM_BUILD_RATE_KINDS]) const
+{
+	for (int iKind = 0; iKind < NUM_BUILD_RATE_KINDS; ++iKind)
+	{
+		const int iChannel = CascadeChannelRegistry::channelLookup(MODFAM_BUILD_RATE, iKind, -1);
+		buildRates[iKind] = InfoValuation::realizedAtCity(*this, iChannel);
+	}
+}
+
+void CvCity::getCombatKinds(int (&combats)[NUM_COMBAT_KINDS]) const
+{
+	for (int iKind = 0; iKind < NUM_COMBAT_KINDS; ++iKind)
+	{
+		const int iChannel = CascadeChannelRegistry::channelLookup(MODFAM_COMBAT, iKind, -1);
+		combats[iKind] = InfoValuation::realizedAtCity(*this, iChannel);
+	}
+}
+
+void CvCity::getExperienceKinds(int (&experiences)[NUM_EXPERIENCE_KINDS]) const
+{
+	for (int iKind = 0; iKind < NUM_EXPERIENCE_KINDS; ++iKind)
+	{
+		const int iChannel = CascadeChannelRegistry::channelLookup(MODFAM_EXPERIENCE, iKind, -1);
+		experiences[iKind] = InfoValuation::realizedAtCity(*this, iChannel);
+	}
+}
+
+void CvCity::getRevolutionKinds(int (&revolutions)[NUM_REVOLUTION_KINDS]) const
+{
+	for (int iKind = 0; iKind < NUM_REVOLUTION_KINDS; ++iKind)
+	{
+		const int iChannel = CascadeChannelRegistry::channelLookup(MODFAM_REVOLUTION, iKind, -1);
+		revolutions[iKind] = InfoValuation::realizedAtCity(*this, iChannel);
+	}
+}
+
+void CvCity::getTradeRouteKinds(int (&tradeRoutes)[NUM_TRADE_ROUTE_KINDS]) const
+{
+	for (int iKind = 0; iKind < NUM_TRADE_ROUTE_KINDS; ++iKind)
+	{
+		const int iChannel = CascadeChannelRegistry::channelLookup(MODFAM_TRADE_ROUTES, iKind, -1);
+		tradeRoutes[iKind] = InfoValuation::realizedAtCity(*this, iChannel);
+	}
+}
+
+void CvCity::getHealKinds(int (&heals)[NUM_HEAL_KINDS]) const
+{
+	for (int iKind = 0; iKind < NUM_HEAL_KINDS; ++iKind)
+	{
+		const int iChannel = CascadeChannelRegistry::channelLookup(MODFAM_HEAL, iKind, -1);
+		heals[iKind] = InfoValuation::realizedAtCity(*this, iChannel);
+	}
+}
+
+void CvCity::getUnderworldKinds(int (&underworlds)[NUM_UNDERWORLD_KINDS]) const
+{
+	for (int iKind = 0; iKind < NUM_UNDERWORLD_KINDS; ++iKind)
+	{
+		const int iChannel = CascadeChannelRegistry::channelLookup(MODFAM_UNDERWORLD, iKind, -1);
+		underworlds[iKind] = InfoValuation::realizedAtCity(*this, iChannel);
+	}
+}
+
+void CvCity::getScalars(int (&scalars)[NUM_INFO_SCALARS]) const
+{
+	for (int iScalar = 0; iScalar < NUM_INFO_SCALARS; ++iScalar)
+	{
+		ModifierFamily eFamily = MODFAM_NONE;
+		int iKind = -1;
+		infoScalarSlot((InfoScalar)iScalar, eFamily, iKind);
+		const int iChannel = CascadeChannelRegistry::channelLookup(eFamily, iKind, -1);
+		scalars[iScalar] = InfoValuation::realizedAtCity(*this, iChannel);
+	}
 }
 
 
@@ -469,7 +651,7 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_dataRepository.reset();
 	m_cityContext.bind(this);   // bind the per-city context to its owner (the pointer IS this city; forwarding reads it)
 	// bind the CITY-scope cascade package (all-dirty from bind: a loaded/new city recomputes on first read)
-	m_cascadePackage.bind(CASC_SCOPE_CITY, this, &CvCity::refreshCascadePackage);
+	m_cascadePackage.bind(CASC_SCOPE_CITY, this, &CvCity::refreshCascadePackage, (int)eOwner, iID);
 
 	//--------------------------------
 	// Uninit class
@@ -608,7 +790,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_bLayoutDirty = false;
 	m_bMaintenanceDirty = false;
 	m_bPlundered = false;
-	m_bPlotWorkingMasked = false;
 	m_bPopProductionProcess = false;
 
 	m_eOwner = eOwner;
@@ -7976,14 +8157,14 @@ void CvCity::changeHurryAngerModifier(int iChange)
 			m_iHurryAngerTimer = 0;
 		}
 
-		if (m_iHurryAngerTimer > 0 && !GC.getGame().isRecalculatingModifiers())
+		if (m_iHurryAngerTimer > 0)
 		{
 			iRatio = (100 * (m_iHurryAngerTimer - 1)) / std::max(1, 100 + getHurryAngerModifier());
 		}
 
 		m_iHurryAngerModifier += iChange;
 
-		if (m_iHurryAngerTimer > 0 && !GC.getGame().isRecalculatingModifiers())
+		if (m_iHurryAngerTimer > 0)
 		{
 			m_iHurryAngerTimer = (iRatio * std::max(1, 100 + getHurryAngerModifier())) / 100 + 1;
 		}
@@ -12083,40 +12264,37 @@ void CvCity::setCommerceDirty(CommerceTypes eCommerce)
 void CvCity::updateCommerce(CommerceTypes eIndex, bool bForce) const
 {
 	PROFILE_EXTRA_FUNC();
-	if (!GC.getGame().isRecalculatingModifiers())
+	if (eIndex == NO_COMMERCE)
 	{
-		if (eIndex == NO_COMMERCE)
-		{
-			GET_PLAYER(getOwner()).invalidateYieldRankCache();
+		GET_PLAYER(getOwner()).invalidateYieldRankCache();
 
-			for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
-			{
-				updateCommerce((CommerceTypes)iI, bForce);
-			}
+		for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
+		{
+			updateCommerce((CommerceTypes)iI, bForce);
 		}
-		else
+	}
+	else
+	{
+		FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
+
+		if (bForce || m_abCommerceRateDirty[eIndex])
 		{
-			FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
+			m_abCommerceRateDirty[eIndex] = false;
+			const int iOldCommerce = m_aiCommerceRate[eIndex];
+			const int iNewCommerce = getCommerceRateAtSliderPercent(eIndex, GET_PLAYER(getOwner()).getCommercePercent(eIndex));
 
-			if (bForce || m_abCommerceRateDirty[eIndex])
+			if (iOldCommerce != iNewCommerce)
 			{
-				m_abCommerceRateDirty[eIndex] = false;
-				const int iOldCommerce = m_aiCommerceRate[eIndex];
-				const int iNewCommerce = getCommerceRateAtSliderPercent(eIndex, GET_PLAYER(getOwner()).getCommercePercent(eIndex));
+				m_aiCommerceRate[eIndex] = iNewCommerce;
 
-				if (iOldCommerce != iNewCommerce)
+				GET_PLAYER(getOwner()).invalidateCommerceRankCache(eIndex);
+
+				GET_PLAYER(getOwner()).changeCommerceRate(eIndex, iNewCommerce - iOldCommerce);
+
+				if (isCitySelected())
 				{
-					m_aiCommerceRate[eIndex] = iNewCommerce;
-
-					GET_PLAYER(getOwner()).invalidateCommerceRankCache(eIndex);
-
-					GET_PLAYER(getOwner()).changeCommerceRate(eIndex, iNewCommerce - iOldCommerce);
-
-					if (isCitySelected())
-					{
-						gDLL->getInterfaceIFace()->setDirty(InfoPane_DIRTY_BIT, true);
-						gDLL->getInterfaceIFace()->setDirty(CityScreen_DIRTY_BIT, true);
-					}
+					gDLL->getInterfaceIFace()->setDirty(InfoPane_DIRTY_BIT, true);
+					gDLL->getInterfaceIFace()->setDirty(CityScreen_DIRTY_BIT, true);
 				}
 			}
 		}
@@ -12437,25 +12615,21 @@ void CvCity::updateBuildingCommerce()
 {
 	PROFILE_FUNC();
 
-	// Disabled during modifier recalc (and called explicitly there after re-enabling)
-	if (!GC.getGame().isRecalculatingModifiers())
+	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 	{
-		for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
+		const CommerceTypes eType = static_cast<CommerceTypes>(iI);
+		int iNewBuildingCommerce = 0;
+
+		for (int iJ = 0; iJ < GC.getNumBuildingInfos(); iJ++)
 		{
-			const CommerceTypes eType = static_cast<CommerceTypes>(iI);
-			int iNewBuildingCommerce = 0;
+			iNewBuildingCommerce += getBuildingCommerceByBuilding(eType, (BuildingTypes)iJ);
+		}
 
-			for (int iJ = 0; iJ < GC.getNumBuildingInfos(); iJ++)
-			{
-				iNewBuildingCommerce += getBuildingCommerceByBuilding(eType, (BuildingTypes)iJ);
-			}
+		if (getBuildingCommerce(eType) != iNewBuildingCommerce)
+		{
+			m_aiBuildingCommerce[iI] = iNewBuildingCommerce;
 
-			if (getBuildingCommerce(eType) != iNewBuildingCommerce)
-			{
-				m_aiBuildingCommerce[iI] = iNewBuildingCommerce;
-
-				setCommerceDirty(eType);
-			}
+			setCommerceDirty(eType);
 		}
 	}
 }
@@ -14286,7 +14460,7 @@ bool CvCity::isWorkingPlot(int iIndex) const
 {
 	FASSERT_BOUNDS(0, NUM_CITY_PLOTS, iIndex);
 
-	return (m_bPlotWorkingMasked ? 0 : m_pabWorkingPlot[iIndex]);
+	return m_pabWorkingPlot[iIndex];
 }
 
 
@@ -14528,7 +14702,7 @@ void CvCity::setHasBuilding(const BuildingTypes eType, const bool bNewValue, con
 }
 
 
-// Toffer - Called by setupBuilding() and recalculateModifiers(), game-count left out as it isn't recalculated and doesn't need to be either.
+// Toffer - Called by setupBuilding(), game-count left out as it doesn't need to be maintained here.
 void CvCity::handleBuildingCounts(const BuildingTypes eBuilding, const int iChange, const bool bWonder)
 {
 	GET_PLAYER(getOwner()).changeBuildingCount(eBuilding, iChange);
@@ -22216,388 +22390,6 @@ int CvCity::getMintedCommerce() const
 	return iCommerceTimes100;
 }
 
-void CvCity::clearModifierTotals()
-{
-	PROFILE_EXTRA_FUNC();
-	// If the city is running a process turn it off until the recalc completes
-	bst::optional<OrderData> headOrder = getHeadOrder();
-	if (headOrder)
-	{
-		if (headOrder->eOrderType == ORDER_MAINTAIN)
-		{
-			processProcess(headOrder->getProcessType(), -1);
-		}
-	}
-	// Remove this city from its plot group (without bothering to do any recalculation iteratively)
-	CvPlotGroup* ownerPlotGroup = plotGroup(getOwner());
-	if (ownerPlotGroup)
-	{
-		ownerPlotGroup->removePlot(plot(), false);
-	}
-	m_iNumNationalWonders = 0;
-	m_iNumWorldWonders = 0;
-	m_iNumTeamWonders = 0;
-	m_iNumBuildings = 0;
-	m_iGreatPeopleRateModifier = 0;
-	m_iGovernmentCenterCount = 0;
-	m_iMaintenanceModifier = 0;
-	m_iWarWearinessModifier = 0;
-	m_iHurryAngerModifier = 0;
-	m_iHealRate = 0;
-	m_iBuildingGoodHealth = 0;
-	m_iBuildingBadHealth = 0;
-	m_iBonusGoodHealth = 0;
-	m_iBonusBadHealth = 0;
-	m_iBuildingGoodHappiness = 0;
-	m_iBuildingBadHappiness = 0;
-	m_iExtraBuildingGoodHappiness = 0;
-	m_iExtraBuildingBadHappiness = 0;
-	m_iExtraBuildingGoodHealth = 0;
-	m_iExtraBuildingBadHealth = 0;
-	m_iBonusGoodHappiness = 0;
-	m_iBonusBadHappiness = 0;
-	m_iReligionGoodHappiness = 0;
-	m_iReligionBadHappiness = 0;
-	m_iExtraHappiness = 0;
-	m_iExtraHealth = 0;
-	m_iNoUnhappinessCount = 0;
-	m_iNoUnhealthyPopulationCount = 0;
-	m_iBuildingOnlyHealthyCount = 0;
-	m_iFoodKeptPercent = 0;
-	m_iMilitaryProductionModifier = 0;
-	m_iSpaceProductionModifier = 0;
-	m_iExtraTradeRoutes = 0;
-	m_iTradeRouteModifier = 0;
-	m_iForeignTradeRouteModifier = 0;
-	m_iBuildingDefense = 0;
-	m_iBuildingBombardDefense = 0;
-	m_iFreeExperience = 0;
-	m_iMaxAirlift = 0;
-	m_iAirModifier = 0;
-	m_iAirUnitCapacity = 0;
-	m_iNukeModifier = 0;
-	m_iFreeSpecialist = 0;
-	m_iPowerCount = 0;
-	m_iSpecialistFreeExperience = 0;
-	m_iEspionageDefenseModifier = 0;
-	m_fPopulationgrowthratepercentageLog = 0.0;
-	m_iImprovementGoodHealth = 0;
-	m_iImprovementBadHealth = 0;
-	m_iSpecialistGoodHealth = 0;
-	m_iSpecialistBadHealth = 0;
-	m_iSpecialistHappiness = 0;
-	m_iSpecialistUnhappiness = 0;
-	m_iLineOfSight = 0;
-	m_iAdjacentDamagePercent = 0;
-	m_iWorkableRadiusOverride = 0;
-	m_iProtectedCultureCount = 0;
-	m_iNumUnitFullHeal = 0;
-	m_iMinimumDefenseLevel = 0;
-	m_iHealthPercentPerPopulation = 0;
-	m_iHappinessPercentPerPopulation = 0;
-	m_iBaseGreatPeopleRate = 0;
-	m_iNumPopulationEmployed = 0;
-
-	for (int iI = GC.getNumBonusInfos() - 1; iI > -1; iI--)
-	{
-		for (int iJ = 0; iJ < GC.getNumPropertyInfos(); iJ++)
-		{
-			m_ppaaiExtraBonusAidModifier[iI][iJ] = 0;
-		}
-		m_paiFreeBonus[iI] = 0;
-		m_paiNumBonuses[iI] = 0;
-	}
-
-	for (int iI = GC.getNumBuildingInfos() - 1; iI > -1; iI--)
-	{
-		m_pabReligiouslyDisabledBuilding[iI] = false;
-	}
-
-	for (int iI = GC.getNumUnitInfos() - 1; iI > -1; iI--)
-	{
-		m_paiGreatPeopleUnitRate[iI] = 0;
-	}
-
-	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
-	{
-		m_paiMaxSpecialistCount[iI] = 0;
-		m_paiForceSpecialistCount[iI] = 0;
-		m_paiFreeSpecialistCount[iI] = 0;
-	}
-
-	for (int iI = 0; iI < GC.getNumImprovementInfos(); iI++)
-	{
-		m_paiImprovementFreeSpecialists[iI] = 0;
-	}
-
-	for (int iI = 0; iI < GC.getNumReligionInfos(); iI++)
-	{
-		m_paiStateReligionHappiness[iI] = 0;
-	}
-
-	for (int iI = GC.getNumUnitCombatInfos() - 1; iI > -1; iI--)
-	{
-		m_paiUnitCombatFreeExperience[iI] = 0;
-		m_paiUnitCombatExtraStrength[iI] = 0;
-		m_paiUnitCombatProductionModifier[iI] = 0;
-		m_paiUnitCombatDefenseAgainstModifier[iI] = 0;
-		m_paiDamageAttackingUnitCombatCount[iI] = 0;
-		m_paiHealUnitCombatTypeVolume[iI] = 0;
-	}
-
-	for (int iI = 0; iI < GC.getNumPropertyInfos(); iI++)
-	{
-		m_paiAidRate[iI] = 0;
-	}
-
-	for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
-	{
-		m_aiRiverPlotYield[iI] = 0;
-		m_aiBaseYieldRate[iI] = 0;
-		m_aiBaseYieldPerPopRate[iI] = 0;
-		m_aiYieldRateModifier[iI] = 0;
-		m_aiPowerYieldRateModifier[iI] = 0;
-		m_aiBonusYieldRateModifier[iI] = 0;
-		m_aiTradeYield[iI] = 0;
-		m_aiCorporationYield[iI] = 0;
-		m_aiExtraSpecialistYield[iI] = 0;
-		m_aiExtraYield[iI] = 0;
-		m_aiSpecialistYieldTotal[iI] = 0;
-		m_buildingExtraYield100[iI] = 0;
-		m_buildingYieldMod[iI] = 0;
-	}
-
-	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
-	{
-		m_aiCommerceRate[iI] = 0;
-		m_abCommerceRateDirty[iI] = false;
-		m_aiProductionToCommerceModifier[iI] = 0;
-		m_aiBuildingCommerce[iI] = 0;
-		m_aiSpecialistCommerce100[iI] = 0;
-		m_aiReligionCommerce[iI] = 0;
-		m_aiCorporationCommerce[iI] = 0;
-		m_aiCommerceRateModifier[iI] = 0;
-		m_aiCommerceHappinessPer[iI] = 0;
-		m_commercePerPopFromBuildings[iI] = 0;
-		m_aiBonusCommerceRateModifier[iI] = 0;
-		m_aiBonusCommercePercentChanges[iI] = 0;
-		m_aiBuildingCommerceTechChange[iI] = 0;
-		m_aiExtraSpecialistCommerce[iI] = 0;
-		m_buildingCommerceMod[iI] = 0;
-	}
-
-	for (int iI = 0; iI < NUM_DOMAIN_TYPES; iI++)
-	{
-		m_aiDomainFreeExperience[iI] = 0;
-		m_aiDomainProductionModifier[iI] = 0;
-	}
-
-	m_vDisabledBuildings.clear();
-	m_vFreeBuildings.clear();
-	m_freeAreaBuildingCount.clear();
-	m_aBuildingYieldChange.clear();
-	m_aBuildingCommerceChange.clear();
-	m_aBuildingHappyChange.clear();
-	m_aBuildingHealthChange.clear();
-	m_buildingProductionMod.clear();
-	m_unitProductionMod.clear();
-	m_bonusDefenseChanges.clear();
-	m_buildingHappinessFromTech.clear();
-	m_buildingHealthFromTech.clear();
-	m_corpBonusProduction.clear();
-
-	m_terrainYieldChanges.clear();
-	m_plotYieldChanges.clear();
-	m_improvementYieldChanges.clear();
-
-	//m_Properties.clear();
-	m_aPropertySpawns.clear();
-
-	//	Force isWorkingPlot() to return false for now because we don't
-	//	want chnages to other thuings like traits, adjusting trhe not-yte-set
-	//	city yields based on plots being worked until we explicitly add them back in
-	m_bPlotWorkingMasked = true;
-
-	m_iExtraLocalCaptureProbabilityModifier = 0;
-	m_iExtraLocalCaptureResistanceModifier = 0;
-	m_iExtraLocalDynamicDefense = 0;
-	m_iExtraRiverDefensePenalty = 0;
-	m_iExtraMinDefense = 0;
-	m_iExtraBuildingDefenseRecoverySpeedModifier = 0;
-	m_iModifiedBuildingDefenseRecoverySpeedCap = 0;
-	m_iExtraCityDefenseRecoverySpeedModifier = 0;
-	m_iExtraTechSpecialistHappiness = 0;
-	m_iExtraBuildingHappinessFromTech = 0;
-	m_iExtraTechSpecialistHealth = 0;
-	m_iExtraBuildingHealthFromTech = 0;
-	m_iPrioritySpecialist = NO_SPECIALIST;
-	m_iExtraInsidiousness = 0;
-	m_iExtraInvestigation = 0;
-
-	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
-	{
-		for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
-		{
-			m_ppaaiLocalSpecialistExtraYield[iI][iJ] = 0;
-		}
-		m_paiSpecialistBannedCount[iI] = 0;
-		for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
-		{
-			m_ppaaiLocalSpecialistExtraCommerce[iI][iJ] = 0;
-		}
-	}
-}
-
-void CvCity::recalculateModifiers()
-{
-	PROFILE_EXTRA_FUNC();
-	area()->changePower(getOwner(), getPopulation());
-
-	m_bPlotWorkingMasked = false;
-
-	for (int iI = 0; iI < NUM_CITY_PLOTS; iI++)
-	{
-		if (isWorkingPlot(iI))
-		{
-			processWorkingPlot(iI, 1, true);
-		}
-	}
-
-	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
-	{
-		const int iSpecialistCount = getSpecialistCount((SpecialistTypes)iI);
-
-		if (iSpecialistCount > 0)
-		{
-			processSpecialist((SpecialistTypes)iI, iSpecialistCount);
-		}
-
-		//	Add back the unattributed specialists (those direct from Python or
-		//	from GPs that joined the city)
-		if (m_paiFreeSpecialistCountUnattributed[iI] != 0)
-		{
-			m_paiFreeSpecialistCount[iI] += m_paiFreeSpecialistCountUnattributed[iI];
-			processSpecialist((SpecialistTypes)iI, m_paiFreeSpecialistCountUnattributed[iI]);
-		}
-	}
-	{
-		std::vector<BuildingTypes> newBuildings;
-
-		foreach_(const BuildingTypes eTypeX, getHasBuildings())
-		{
-			const CvBuildingInfo& info = GC.getBuildingInfo(eTypeX);
-
-			// Toffer - Xml changes may have invalidated a building the city have; hence bValid.
-			const bool bObsolete = info.getObsoleteTech() < 0 ? false : GET_TEAM(getTeam()).isHasTech(info.getObsoleteTech());
-			bool bValid =
-			(
-				!bObsolete
-				&& // Do we have the building that this may be an extention of?
-				(info.getExtendsBuilding() == -1 || hasBuilding(info.getExtendsBuilding()))
-			);
-			if (!bValid) // Forget it.
-			{
-				alterBuildingLedger(eTypeX, false);
-
-				if (bObsolete)
-				{
-					BuildingTypes eObsoletesToBuilding = info.getObsoletesToBuilding();
-					while (eObsoletesToBuilding > NO_BUILDING)
-					{
-						if (hasBuilding(eObsoletesToBuilding))
-						{
-							break;
-						}
-						const CvBuildingInfo& newBuilding = GC.getBuildingInfo(eObsoletesToBuilding);
-						if (newBuilding.getObsoleteTech() < 0 || !GET_TEAM(getTeam()).isHasTech(newBuilding.getObsoleteTech()))
-						{
-							newBuildings.push_back(eObsoletesToBuilding);
-							break;
-						}
-						eObsoletesToBuilding = newBuilding.getObsoletesToBuilding();
-					}
-				}
-			}
-			else
-			{
-				// Is it replaced by another building.
-				for (int iJ = 0; iJ < info.getNumReplacementBuilding(); ++iJ)
-				{
-					if (hasBuilding((BuildingTypes)info.getReplacementBuilding(iJ)))
-					{
-						setDisabledBuilding(eTypeX, true, false);
-						bValid = false;
-						break;
-					}
-				}
-				handleBuildingCounts(eTypeX, 1, isLimitedWonder(eTypeX) && !info.isNoLimit());
-				if (bValid)
-				{
-					processBuilding(eTypeX, 1, false, true);
-				}
-			}
-		}
-		foreach_(const BuildingTypes eTypeX, newBuildings)
-		{
-			changeHasBuilding(eTypeX, true);
-		}
-	}
-
-	//	Put corporations back
-	for (int iI = 0; iI < GC.getNumCorporationInfos(); iI++)
-	{
-		if (isHasCorporation((CorporationTypes)iI))
-		{
-			applyCorporationModifiers((CorporationTypes)iI, true);
-		}
-	}
-
-	updateCorporation();
-
-	//	Put religions back
-	for (int iI = 0; iI < GC.getNumReligionInfos(); iI++)
-	{
-		if (isHasReligion((ReligionTypes)iI))
-		{
-			applyReligionModifiers((ReligionTypes)iI, true);
-		}
-	}
-
-	//checkBuildings(false);
-	checkReligiousDisablingAllBuildings();
-
-	//	Replay events in so far as they effect modifiers
-	for (int iI = 0; iI < (int)m_aEventsOccured.size(); iI++)
-	{
-		if (m_aEventsOccured[iI] != NO_EVENT)
-		{
-			applyEvent(m_aEventsOccured[iI], NULL);
-		}
-	}
-
-	//	If the city is running a process account for it again
-	bst::optional<OrderData> headOrder = getHeadOrder();
-	if (headOrder)
-	{
-		switch (headOrder->eOrderType)
-		{
-		case ORDER_MAINTAIN:
-			processProcess(headOrder->getProcessType(), 1);
-			break;
-		default:
-			break;
-		}
-	}
-
-	updateFreshWaterHealth();
-	updateFeatureHealth();
-	updateImprovementHealth();
-	updateFeatureHappiness();
-
-	//ls612: Make Sure to keep the Air Unit capacity
-	changeAirUnitCapacity(GC.getCITY_AIR_UNIT_CAPACITY());
-}
-
 void CvCity::setBuildingListInvalid()
 {
 	m_BuildingList.setInvalid();
@@ -23814,19 +23606,16 @@ void CvCity::setWorkerHave(const int iUnitID, const bool bNewValue)
 
 void CvCity::processTech(const TechTypes eTech, const int iChange)
 {
-	if (!GC.getGame().isRecalculatingModifiers())
+	updateSpecialistHappinessHealthFromTech();
 	{
-		updateSpecialistHappinessHealthFromTech();
-		{
-			const int iBuildingHappinessFromTech = getBuildingHappinessFromTech(eTech);
+		const int iBuildingHappinessFromTech = getBuildingHappinessFromTech(eTech);
 
-			if (iBuildingHappinessFromTech != 0)
-			{
-				m_iExtraBuildingHappinessFromTech += iBuildingHappinessFromTech * iChange;
-			}
+		if (iBuildingHappinessFromTech != 0)
+		{
+			m_iExtraBuildingHappinessFromTech += iBuildingHappinessFromTech * iChange;
 		}
-		m_iExtraBuildingHealthFromTech += getBuildingHealthFromTech(eTech) * iChange;
 	}
+	m_iExtraBuildingHealthFromTech += getBuildingHealthFromTech(eTech) * iChange;
 }
 
 

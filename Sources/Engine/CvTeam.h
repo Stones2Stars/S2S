@@ -35,6 +35,17 @@ public:
 	// The package's refresh delegate (the CvDerivedCacheSet contract) -- delegates to the ONE gather.
 	void refreshCascadePackage(int64_t iMask) const;
 
+	// THE TEAM'S GROUP READ SURFACE -- the GAME-OBJECT read role's answer to "what do I HAVE, right now?"
+	// (patterns.md § THE TWO READ ROLES), one getter per modifier FAMILY the TEAM scope carries channels of --
+	// combat and diplomacy, which is the whole of it (CvInfoKinds.h's census scope masks; three channels
+	// measured at team scope). The call carries NO channel argument and NO scope argument (the object IS the
+	// scope); the group's kind enum indexes the RESULT; there is no scalar getter per channel. ×100 NATIVE.
+	// Each folds through the ONE cross-scope roll-up, whose team entry is this package alone -- TEAM is the top
+	// scope carrying a package (WORLD is CONFIG and has none). The team consumes no channel, so no receiver sum
+	// exists here to prefer over the combine.
+	void getCombatKinds(int (&combats)[NUM_COMBAT_KINDS]) const;
+	void getDiplomacyKinds(int (&diplomacies)[NUM_DIPLOMACY_KINDS]) const;
+
 protected:
 	CvGameObjectTeam m_GameObject;
 	CvTeamDataRepository m_dataRepository;
@@ -504,7 +515,6 @@ public:
 	virtual bool AI_isSneakAttackReady(TeamTypes eIndex) const = 0;
 	virtual void AI_setWarPlan(TeamTypes eIndex, WarPlanTypes eNewValue, bool bWar = true, bool bInFull = true) = 0;
 
-	void recalculateModifiers();
 
 	int getLastRoundOfValidImprovementCacheUpdate() const;
 	void setLastRoundOfValidImprovementCacheUpdate();

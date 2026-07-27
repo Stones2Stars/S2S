@@ -505,8 +505,6 @@ protected:
 	int m_iNumCultureVictoryCities;
 	int m_eCultureVictoryCultureLevel;
 
-	bool m_bRecalculatingModifiers;
-
 	void doTurn();
 	void doDeals();
 	void doSpawns(PlayerTypes ePlayer);
@@ -833,8 +831,6 @@ public:
 
 	bool pythonIsBonusIgnoreLatitudes() const;
 
-	inline bool isRecalculatingModifiers() const { return m_bRecalculatingModifiers; }
-
 	DllExport void getGlobeLayers(std::vector<CvGlobeLayerData>& aLayers) const;
 	DllExport void startFlyoutMenu(const CvPlot* pPlot, std::vector<CvFlyoutMenuData>& aFlyoutItems) const;
 	DllExport void applyFlyoutMenu(const CvFlyoutMenuData& kItem);
@@ -876,8 +872,6 @@ public:
 	DllExport void handleMiddleMouse(bool bCtrl, bool bAlt, bool bShift);
 
 	DllExport void handleDiplomacySetAIComment(DiploCommentTypes eComment) const;
-
-	void recalculateModifiers();
 
 	void ensureChokePointsEvaluated();
 	int getBaseAirUnitIncrementsbyCargoVolume() const;

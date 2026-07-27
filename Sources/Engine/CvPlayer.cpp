@@ -41,8 +41,10 @@
 #include "CvDLLUtilityIFaceBase.h"
 #include "Repos/BuildingsRepo.h"
 #include "CvTraitInfo.h"
-#include "Data/CvInfoValuation.h"   // resolvedCityLimit -- the ruling-26 engine-side city-limit read
+#include "Data/CvInfoValuation.h"   // resolvedCityLimit + realizedAtEmpire -- the ONE cross-scope roll-up
 #include "CvCascadeGather.h"
+#include "CvCascadeChannelRegistry.h"   // channelLookup / wellbeingTwin -- the group reads' channel identity
+#include "CvInfoKinds.h"                // the family + kind vocabulary the group reads walk
 #include "Spine/CvEventSpine.h"   // the DOMAIN emit endpoints -- every state-change choke point below announces through these
 #include <boost/scoped_ptr.hpp>
 
@@ -761,6 +763,211 @@ void CvPlayer::refreshCascadePackage(int64_t iMask) const
 	CascadeGather::refreshEmpire(*this, iMask);
 }
 
+// The empire's group reads (see CvPlayer.h for the role + the grammar). Each walks its group's own enum,
+// resolves that entry's CHANNEL by identity -- never by a slot order -- and folds it through the ONE cross-scope
+// roll-up, which answers a consumed channel from its maintained receiver sum and every other channel from the
+// combine over the packages the empire sits under. A channel the data never authored answers 0.
+void CvPlayer::getYields(int (&yields)[NUM_YIELD_TYPES]) const
+{
+	for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+	{
+		const int iChannel = CascadeChannelRegistry::channelLookup(infoYieldFamily(iYield), (int)CHANNEL_AMOUNT, -1);
+		yields[iYield] = InfoValuation::realizedAtEmpire(*this, iChannel);
+	}
+}
+
+void CvPlayer::getCommerces(int (&commerces)[NUM_COMMERCE_TYPES]) const
+{
+	for (int iCommerce = 0; iCommerce < NUM_COMMERCE_TYPES; ++iCommerce)
+	{
+		const int iChannel = CascadeChannelRegistry::channelLookup(infoCommerceFamily(iCommerce), (int)CHANNEL_AMOUNT, -1);
+		commerces[iCommerce] = InfoValuation::realizedAtEmpire(*this, iChannel);
+	}
+}
+
+void CvPlayer::getWellbeing(int (&wellbeing)[NUM_WELLBEING_CHANNELS]) const
+{
+	for (int iChannelIndex = 0; iChannelIndex < NUM_WELLBEING_CHANNELS; ++iChannelIndex)
+	{
+		const WellbeingChannel eWellbeing = (WellbeingChannel)iChannelIndex;
+		// anger/unhealth are the SIGN TWINS minted beside their authored family, not families of their own
+		// (modifier.md §2b -- the split is a routing rule at fill, never a storage shape).
+		const int iAuthoredChannel = CascadeChannelRegistry::channelLookup(infoWellbeingFamily(eWellbeing), (int)CHANNEL_AMOUNT, -1);
+		int iChannel = iAuthoredChannel;
+		if (eWellbeing == WELLBEING_ANGER || eWellbeing == WELLBEING_UNHEALTH)
+		{
+			iChannel = CascadeChannelRegistry::wellbeingTwin(iAuthoredChannel);
+		}
+		wellbeing[iChannelIndex] = InfoValuation::realizedAtEmpire(*this, iChannel);
+	}
+}
+
+void CvPlayer::getDefenseKinds(int (&defenses)[NUM_DEFENSE_KINDS]) const
+{
+	for (int iKind = 0; iKind < NUM_DEFENSE_KINDS; ++iKind)
+	{
+		const int iChannel = CascadeChannelRegistry::channelLookup(MODFAM_DEFENSE, iKind, -1);
+		defenses[iKind] = InfoValuation::realizedAtEmpire(*this, iChannel);
+	}
+}
+
+void CvPlayer::getMaintenanceKinds(int (&maintenances)[NUM_MAINTENANCE_KINDS]) const
+{
+	for (int iKind = 0; iKind < NUM_MAINTENANCE_KINDS; ++iKind)
+	{
+		const int iChannel = CascadeChannelRegistry::channelLookup(MODFAM_MAINTENANCE, iKind, -1);
+		maintenances[iKind] = InfoValuation::realizedAtEmpire(*this, iChannel);
+	}
+}
+
+void CvPlayer::getUpkeepKinds(int (&upkeeps)[NUM_UPKEEP_KINDS]) const
+{
+	for (int iKind = 0; iKind < NUM_UPKEEP_KINDS; ++iKind)
+	{
+		const int iChannel = CascadeChannelRegistry::channelLookup(MODFAM_UPKEEP, iKind, -1);
+		upkeeps[iKind] = InfoValuation::realizedAtEmpire(*this, iChannel);
+	}
+}
+
+void CvPlayer::getCostKinds(int (&costs)[NUM_COSTS_KINDS]) const
+{
+	for (int iKind = 0; iKind < NUM_COSTS_KINDS; ++iKind)
+	{
+		const int iChannel = CascadeChannelRegistry::channelLookup(MODFAM_COSTS, iKind, -1);
+		costs[iKind] = InfoValuation::realizedAtEmpire(*this, iChannel);
+	}
+}
+
+void CvPlayer::getBuildRateKinds(int (&buildRates)[NUM_BUILD_RATE_KINDS]) const
+{
+	for (int iKind = 0; iKind < NUM_BUILD_RATE_KINDS; ++iKind)
+	{
+		const int iChannel = CascadeChannelRegistry::channelLookup(MODFAM_BUILD_RATE, iKind, -1);
+		buildRates[iKind] = InfoValuation::realizedAtEmpire(*this, iChannel);
+	}
+}
+
+void CvPlayer::getCombatKinds(int (&combats)[NUM_COMBAT_KINDS]) const
+{
+	for (int iKind = 0; iKind < NUM_COMBAT_KINDS; ++iKind)
+	{
+		const int iChannel = CascadeChannelRegistry::channelLookup(MODFAM_COMBAT, iKind, -1);
+		combats[iKind] = InfoValuation::realizedAtEmpire(*this, iChannel);
+	}
+}
+
+void CvPlayer::getExperienceKinds(int (&experiences)[NUM_EXPERIENCE_KINDS]) const
+{
+	for (int iKind = 0; iKind < NUM_EXPERIENCE_KINDS; ++iKind)
+	{
+		const int iChannel = CascadeChannelRegistry::channelLookup(MODFAM_EXPERIENCE, iKind, -1);
+		experiences[iKind] = InfoValuation::realizedAtEmpire(*this, iChannel);
+	}
+}
+
+void CvPlayer::getRevolutionKinds(int (&revolutions)[NUM_REVOLUTION_KINDS]) const
+{
+	for (int iKind = 0; iKind < NUM_REVOLUTION_KINDS; ++iKind)
+	{
+		const int iChannel = CascadeChannelRegistry::channelLookup(MODFAM_REVOLUTION, iKind, -1);
+		revolutions[iKind] = InfoValuation::realizedAtEmpire(*this, iChannel);
+	}
+}
+
+void CvPlayer::getTradeRouteKinds(int (&tradeRoutes)[NUM_TRADE_ROUTE_KINDS]) const
+{
+	for (int iKind = 0; iKind < NUM_TRADE_ROUTE_KINDS; ++iKind)
+	{
+		const int iChannel = CascadeChannelRegistry::channelLookup(MODFAM_TRADE_ROUTES, iKind, -1);
+		tradeRoutes[iKind] = InfoValuation::realizedAtEmpire(*this, iChannel);
+	}
+}
+
+void CvPlayer::getStateReligionKinds(int (&stateReligions)[NUM_STATE_RELIGION_KINDS]) const
+{
+	for (int iKind = 0; iKind < NUM_STATE_RELIGION_KINDS; ++iKind)
+	{
+		const int iChannel = CascadeChannelRegistry::channelLookup(MODFAM_STATE_RELIGION, iKind, -1);
+		stateReligions[iKind] = InfoValuation::realizedAtEmpire(*this, iChannel);
+	}
+}
+
+void CvPlayer::getDiplomacyKinds(int (&diplomacies)[NUM_DIPLOMACY_KINDS]) const
+{
+	for (int iKind = 0; iKind < NUM_DIPLOMACY_KINDS; ++iKind)
+	{
+		const int iChannel = CascadeChannelRegistry::channelLookup(MODFAM_DIPLOMACY, iKind, -1);
+		diplomacies[iKind] = InfoValuation::realizedAtEmpire(*this, iChannel);
+	}
+}
+
+void CvPlayer::getDurationKinds(int (&durations)[NUM_DURATIONS_KINDS]) const
+{
+	for (int iKind = 0; iKind < NUM_DURATIONS_KINDS; ++iKind)
+	{
+		const int iChannel = CascadeChannelRegistry::channelLookup(MODFAM_DURATIONS, iKind, -1);
+		durations[iKind] = InfoValuation::realizedAtEmpire(*this, iChannel);
+	}
+}
+
+void CvPlayer::getAirKinds(int (&airs)[NUM_AIR_KINDS]) const
+{
+	for (int iKind = 0; iKind < NUM_AIR_KINDS; ++iKind)
+	{
+		const int iChannel = CascadeChannelRegistry::channelLookup(MODFAM_AIR, iKind, -1);
+		airs[iKind] = InfoValuation::realizedAtEmpire(*this, iChannel);
+	}
+}
+
+void CvPlayer::getCaptureKinds(int (&captures)[NUM_CAPTURE_KINDS]) const
+{
+	for (int iKind = 0; iKind < NUM_CAPTURE_KINDS; ++iKind)
+	{
+		const int iChannel = CascadeChannelRegistry::channelLookup(MODFAM_CAPTURE, iKind, -1);
+		captures[iKind] = InfoValuation::realizedAtEmpire(*this, iChannel);
+	}
+}
+
+void CvPlayer::getCargoKinds(int (&cargos)[NUM_CARGO_KINDS]) const
+{
+	for (int iKind = 0; iKind < NUM_CARGO_KINDS; ++iKind)
+	{
+		const int iChannel = CascadeChannelRegistry::channelLookup(MODFAM_CARGO, iKind, -1);
+		cargos[iKind] = InfoValuation::realizedAtEmpire(*this, iChannel);
+	}
+}
+
+void CvPlayer::getExtraYieldThresholds(int (&thresholds)[NUM_YIELD_TYPES]) const
+{
+	// the kind axis IS the engine's YieldTypes value (CvInfoKinds.h ruling 1: the member spelling is the channel)
+	for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+	{
+		const int iChannel = CascadeChannelRegistry::channelLookup(MODFAM_EXTRA_YIELD_THRESHOLD, iYield, -1);
+		thresholds[iYield] = InfoValuation::realizedAtEmpire(*this, iChannel);
+	}
+}
+
+void CvPlayer::getLessYieldThresholds(int (&thresholds)[NUM_YIELD_TYPES]) const
+{
+	for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+	{
+		const int iChannel = CascadeChannelRegistry::channelLookup(MODFAM_LESS_YIELD_THRESHOLD, iYield, -1);
+		thresholds[iYield] = InfoValuation::realizedAtEmpire(*this, iChannel);
+	}
+}
+
+void CvPlayer::getScalars(int (&scalars)[NUM_INFO_SCALARS]) const
+{
+	for (int iScalar = 0; iScalar < NUM_INFO_SCALARS; ++iScalar)
+	{
+		ModifierFamily eFamily = MODFAM_NONE;
+		int iKind = -1;
+		infoScalarSlot((InfoScalar)iScalar, eFamily, iKind);
+		const int iChannel = CascadeChannelRegistry::channelLookup(eFamily, iKind, -1);
+		scalars[iScalar] = InfoValuation::realizedAtEmpire(*this, iChannel);
+	}
+}
+
 // FUNCTION: reset()
 // Initializes data members that are serialized.
 void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
@@ -771,7 +978,7 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_dataRepository.reset();
 	m_empireContext.bind(this);   // bind the per-player empire context to its owner (forwarding reads it)
 	// bind the EMPIRE-scope cascade package (all-dirty from bind: a loaded/new player recomputes on first read)
-	m_cascadePackage.bind(CASC_SCOPE_EMPIRE, this, &CvPlayer::refreshCascadePackage);
+	m_cascadePackage.bind(CASC_SCOPE_EMPIRE, this, &CvPlayer::refreshCascadePackage, (int)eID, -1);
 
 	//--------------------------------
 	// Uninit class
@@ -1063,8 +1270,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 
 	m_iFractionalCombatExperience = 0;
 	m_iNationalGreatPeopleRate = 0;
-
-	m_bInhibitPlotGroupRecalc = false;
 
 	for (iI = 0; iI < NUM_YIELD_TYPES; iI++)
 	{
@@ -4120,11 +4325,6 @@ void CvPlayer::verifyCivics()
 	}
 }
 
-void CvPlayer::inhibitPlotGroupCalcsUntilFullRebuild()	//	Ignore updates until an update with reInitialize set
-{
-	m_bInhibitPlotGroupRecalc = true;
-}
-
 void CvPlayer::updatePlotGroups(const CvArea* possibleNewInAreaOnly, bool reInitialize)
 {
 	PROFILE_FUNC();
@@ -4133,13 +4333,6 @@ void CvPlayer::updatePlotGroups(const CvArea* possibleNewInAreaOnly, bool reInit
 	{
 		return;
 	}
-
-	if ( m_bInhibitPlotGroupRecalc && !reInitialize )
-	{
-		return;
-	}
-
-	m_bInhibitPlotGroupRecalc = false;
 
 	algo::for_each(cities(), CvCity::fn::startDeferredBonusProcessing());
 
@@ -13015,6 +13208,12 @@ void CvPlayer::setCommercePercent(CommerceTypes eIndex, int iNewValue)
 
 	if (iOldValue != m_aiCommercePercent[eIndex])
 	{
+		// The slider is synced player state every city's realized per-commerce rate is built on (modifier.md
+		// §2a): a DOMAIN fact, emitted at the mutation site unconditionally -- consumers filter, the emit
+		// surface stays complete. This is the ONE choke point: changeCommercePercent, verifyGoldCommercePercent
+		// and changeCommerceFlexibleCount all reach the value through here.
+		emitCommercePercentChanged(getID(), (int)eIndex, m_aiCommercePercent[eIndex], iOldValue);
+
 		int iTotalCommercePercent = 0;
 
 		for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
@@ -13033,6 +13232,14 @@ void CvPlayer::setCommercePercent(CommerceTypes eIndex, int iNewValue)
 				const int iAdjustment = std::min(m_aiCommercePercent[iJ], iTotalCommercePercent - 100);
 				m_aiCommercePercent[iJ] -= iAdjustment;
 				iTotalCommercePercent -= iAdjustment;
+				// The rebalance writes the OTHER channels' percents DIRECTLY (it must not recurse through the
+				// setter), so those moves reach no other emit site: each channel it moves is its own state
+				// change and emits its own fact, or the surface is silently partial for every slider move that
+				// takes another channel down with it.
+				if (iAdjustment != 0)
+				{
+					emitCommercePercentChanged(getID(), iJ, m_aiCommercePercent[iJ], m_aiCommercePercent[iJ] + iAdjustment);
+				}
 			}
 		}
 		FAssert(100 == iTotalCommercePercent);
@@ -18558,6 +18765,14 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiTradeYieldModifier);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiFreeCityCommerce);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommercePercent);
+		// #430 reseed (event-spine.md the load-RESEED): the sliders deserialize WHOLESALE, so setCommercePercent
+		// never runs and its emit never fires -- the fact is announced here, co-located with the read. Every
+		// channel, not only the nonzero ones: 0% is a genuine slider position, and a consumer rebuilding the
+		// split needs the whole 100-total picture. The old value is 0 (reset() zeroed the array before the read).
+		for (int iCommerce = 0; iCommerce < NUM_COMMERCE_TYPES; ++iCommerce)
+		{
+			emitCommercePercentChanged(getID(), iCommerce, m_aiCommercePercent[iCommerce], 0);
+		}
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommerceRate);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommerceRateModifier);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCapitalCommerceRateModifier);
@@ -28213,351 +28428,6 @@ void CvPlayer::clearCanConstructCacheForGroup(SpecialBuildingTypes eSpecialBuild
 	algo::for_each(cities(), CvCity::fn::setBuildingListInvalid());
 }
 
-void CvPlayer::clearModifierTotals()
-{
-	PROFILE_EXTRA_FUNC();
-	//	Clear city-sourced modifiers
-	algo::for_each(cities(), CvCity::fn::clearModifierTotals());
-
-	//	Project stuff
-	m_iWorldHappiness = 0;
-	m_iProjectHappiness = 0;
-	m_iWorldHealth = 0;
-	m_iProjectHealth = 0;
-
-	m_iForceAllTradeRoutes = 0;
-	m_iNoCapitalUnhappiness = 0;
-	m_iCivilizationHealth = 0;
-
-	m_iForeignTradeRouteModifier = 0;
-	m_iTaxRateUnhappiness = 0;
-	m_iCivicHappiness = 0;
-	m_iUnitUpgradePriceModifier = 0;
-	m_iAnarchyModifier = 0;
-	m_iGoldenAgeModifier = 0;
-	m_iGlobalHurryModifier = 0;
-	m_iGreatPeopleRateModifier = 0;
-	m_iGreatGeneralRateModifier = 0;
-	m_iDomesticGreatGeneralRateModifier = 0;
-	m_iStateReligionGreatPeopleRateModifier = 0;
-	m_iMaxGlobalBuildingProductionModifier = 0;
-	m_iMaxTeamBuildingProductionModifier = 0;
-	m_iMaxPlayerBuildingProductionModifier = 0;
-	m_iFreeExperience = 0;
-	m_iFeatureProductionModifier = 0;
-	m_iWorkerSpeedModifier = 0;
-	m_iImprovementUpgradeRateModifier = 0;
-	m_iMilitaryProductionModifier = 0;
-	m_iSpaceProductionModifier = 0;
-	m_iCityDefenseModifier = 0;
-
-	m_iNonStateReligionCommerceCount = 0;
-	m_iUpgradeAnywhereCount = 0;
-	m_iRevIdxDistanceModifier = 0;
-	m_iRevIdxHolyCityGood = 0;
-	m_iRevIdxHolyCityBad = 0;
-	m_fRevIdxNationalityMod = 0;
-	m_fRevIdxBadReligionMod = 0;
-	m_fRevIdxGoodReligionMod = 0;
-	m_iCityLimit = 0;
-	m_iCityOverLimitUnhappy = 0;
-	m_iForeignUnhappyPercent = 0;
-
-	m_iBaseFreeUnitUpkeepCivilian = 0;
-	m_iBaseFreeUnitUpkeepMilitary = 0;
-	m_iFreeUnitUpkeepCivilianPopPercent = 0;
-	m_iFreeUnitUpkeepMilitaryPopPercent = 0;
-	m_iCivilianUnitUpkeepMod = 0;
-	m_iMilitaryUnitUpkeepMod = 0;
-	m_iUnitUpkeepMilitary100 = 0;
-	m_iUnitUpkeepCivilian100 = 0;
-	m_iFinalUnitUpkeep = 0;
-
-	m_iHappyPerMilitaryUnit = 0;
-	m_iMilitaryFoodProductionCount = 0;
-	m_iNoUnhealthyPopulationCount = 0;
-	m_iExpInBorderModifier = 0;
-	m_iBuildingOnlyHealthyCount = 0;
-
-	m_iMaintenanceModifier = 0;
-	m_iCoastalDistanceMaintenanceModifier = 0;
-	m_iConnectedCityMaintenanceModifier = 0;
-	m_iDistanceMaintenanceModifier = 0;
-	m_iNumCitiesMaintenanceModifier = 0;
-	m_iCorporationMaintenanceModifier = 0;
-	m_iHomeAreaMaintenanceModifier = 0;
-	m_iOtherAreaMaintenanceModifier = 0;
-
-	m_iUpkeepModifier = 0;
-	m_iLevelExperienceModifier = 0;
-	m_iExtraHealth = 0;
-	m_iCivicHealth = 0;
-	m_iBuildingGoodHealth = 0;
-	m_iBuildingBadHealth = 0;
-	m_iExtraHappiness = 0;
-	m_iBuildingHappiness = 0;
-	m_iLargestCityHappiness = 0;
-	m_iWarWearinessModifier = 0;
-	m_iFreeSpecialist = 0;
-	m_iNoForeignTradeCount = 0;
-	m_iNoCorporationsCount = 0;
-	m_iNoForeignCorporationsCount = 0;
-	m_iCoastalTradeRoutes = 0;
-	m_iTradeRoutes = 0;
-	m_iStateReligionCount = 0;
-	m_iNoNonStateReligionSpreadCount = 0;
-	m_iStateReligionHappiness = 0;
-	m_iNonStateReligionHappiness = 0;
-	m_iStateReligionUnitProductionModifier = 0;
-	m_iStateReligionBuildingProductionModifier = 0;
-	m_iStateReligionFreeExperience = 0;
-
-	m_iBuildingInflation = 0;
-	m_iCivicInflation = 0;
-	m_iProjectInflation = 0;
-	m_iTechInflation = 0;
-
-	m_iHurryCostModifier = 0;
-	m_iHurryInflationModifier = 0;
-
-	m_iTechScore = 0;
-	m_iWondersScore = 0;
-
-	m_iInquisitionCount = 0;
-	m_iNationalEspionageDefense = 0;
-	m_iCivicAnarchyModifier = 0;
-	m_iReligiousAnarchyModifier = 0;
-	m_iAIAttitudeModifier = 0;
-	m_iMaxTradeRoutesAdjustment = 0;
-	m_iNationalHurryAngerModifier = 0;
-	m_iNationalEnemyWarWearinessModifier = 0;
-	m_iNationalBombardDefenseModifier = 0;
-	m_iFixedBordersCount = 0;
-	m_iFreedomFighterCount = 0;
-	m_iExtraFreedomFighters = 0;
-	//Team Project (6)
-	m_iNationalCityStartCulture = 0;
-	m_iNationalAirUnitCapacity = 0;
-	m_iCapitalXPModifier = 0;
-	m_iStateReligionHolyCityXPModifier = 0;
-	m_iNonStateReligionHolyCityXPModifier = 0;
-	m_iNationalCityStartBonusPopulation = 0;
-	m_iNationalMissileRangeChange = 0;
-	m_iNationalFlightOperationRangeChange = 0;
-	m_iNationalNavalCargoSpaceChange = 0;
-	m_iNationalMissileCargoSpaceChange = 0;
-	m_iCitiesStartwithStateReligionCount = 0;
-	m_iDraftsOnCityCaptureCount = 0;
-	m_iFreeSpecialistperWorldWonderCount = 0;
-	m_iFreeSpecialistperNationalWonderCount = 0;
-	m_iFreeSpecialistperTeamProjectCount = 0;
-	m_iExtraGoodyCount = 0;
-
-	m_iAllReligionsActiveCount = 0;
-
-	m_iExtraNationalCaptureProbabilityModifier = 0;
-	m_iExtraNationalCaptureResistanceModifier = 0;
-
-	m_iExtraStateReligionSpreadModifier = 0;
-	m_iExtraNonStateReligionSpreadModifier = 0;
-	m_iNationalGreatPeopleRate = 0;
-
-	m_bHasLanguage = false;
-
-	m_iBaseMergeSelection = FFreeList::INVALID_INDEX;
-	m_iFirstMergeSelection = FFreeList::INVALID_INDEX;
-	m_iSecondMergeSelection = FFreeList::INVALID_INDEX;
-	m_iSplittingUnit = FFreeList::INVALID_INDEX;
-	m_iAmbushingUnit = FFreeList::INVALID_INDEX;
-	m_bAssassinate = false;
-
-	setPopulationgrowthratepercentage(0);
-	m_iReligionSpreadRate = 0;
-	setDistantUnitSupportCostModifier(0);
-	setExtraCityDefense(0);
-	setTraitExtraCityDefense(0);
-
-	m_bonusMintedPercent.clear();
-	m_freeBuildingCount.clear();
-	m_extraBuildingHappiness.clear();
-	m_extraBuildingHealth.clear();
-	m_buildingProductionMod.clear();
-	m_buildingCostMod.clear();
-	m_unitProductionMod.clear();
-	m_unitCombatProductionMod.clear();
-	m_unitCombatFreeXP.clear();
-	m_goldenAgeOnBirthOfGreatPersonCount.clear();
-	m_greatPeopleRateforUnit.clear();
-	m_commandFieldPlots.clear();
-	m_commodoreFieldPlots.clear();
-
-	for (int iI = 0; iI < GC.getNumFeatureInfos(); iI++)
-	{
-		m_paiFeatureHappiness[iI] = 0;
-	}
-
-	for (int iI = 0; iI < GC.getNumSpecialBuildingInfos(); iI++)
-	{
-		m_paiSpecialBuildingNotRequiredCount[iI] = 0;
-	}
-
-	for (int iI = 0; iI < GC.getNumHurryInfos(); iI++)
-	{
-		m_paiHurryCount[iI] = 0;
-	}
-
-	for (int iI = 0; iI < GC.getNumCivicOptionInfos(); iI++)
-	{
-		m_paiHasCivicOptionCount[iI] = 0;
-		m_paiNoCivicUpkeepCount[iI] = 0;
-	}
-
-	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
-	{
-		m_paiSpecialistValidCount[iI] = 0;
-	}
-
-	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
-	{
-		for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
-		{
-			m_ppaaiSpecialistExtraYield[iI][iJ] = 0;
-		}
-		//TB Traits begin
-		for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
-		{
-			m_ppaaiSpecialistExtraCommerce[iI][iJ] = 0;
-		}
-		//TB Traits end
-
-		m_paiFreeSpecialistCount[iI] = 0;
-	}
-
-	for (int iI = 0; iI < GC.getNumImprovementInfos(); iI++)
-	{
-		for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
-		{
-			m_ppaaiImprovementYieldChange[iI][iJ] = 0;
-		}
-		m_paiImprovementUpgradeRateModifierSpecific[iI] = 0;
-	}
-
-	for (int iI = 0; iI < GC.getNumTerrainInfos(); iI++)
-	{
-		for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
-		{
-			m_ppaaiTerrainYieldChange[iI][iJ] = 0;
-		}
-	}
-
-	for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
-	{
-		for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
-		{
-			m_ppiBuildingCommerceModifier[iI][iJ] = 0;
-		}
-	}
-
-	for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
-	{
-		m_paiBuildingCount[iI] = 0;
-
-		for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
-		{
-			m_ppiBuildingCommerceChange[iI][iJ] = 0;
-		}
-	}
-
-	for (int iI = 0; iI < GC.getNumSpecialBuildingInfos(); iI++)
-	{
-		m_paiBuildingGroupCount[iI] = 0;
-	}
-
-	for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
-	{
-		for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
-		{
-			m_ppiBonusCommerceModifier[iI][iJ] = 0;
-		}
-	}
-
-	for (int iI = 0; iI < GC.getNumBuildInfos(); iI++)
-	{
-		m_paiBuildWorkerSpeedModifierSpecific[iI] = 0;
-	}
-
-	for (int iI = 0; iI < NUM_DOMAIN_TYPES; iI++)
-	{
-		m_paiNationalDomainFreeExperience[iI] = 0;
-		m_paiNationalDomainProductionModifier[iI] = 0;
-	}
-
-	for (int iI = 0; iI < GC.getNumTechInfos(); iI++)
-	{
-		m_paiNationalTechResearchModifier[iI] = 0;
-	}
-
-	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
-	{
-		for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
-		{
-			m_ppiSpecialistCommercePercentChanges[iI][iJ] = 0;
-		}
-		for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
-		{
-			m_ppiSpecialistYieldPercentChanges[iI][iJ] = 0;
-		}
-		//Team Project (6)
-		m_paiEraAdvanceFreeSpecialistCount[iI] = 0;
-	}
-	for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
-	{
-		m_aiSeaPlotYield[iI] = 0;
-		m_aiYieldRateModifier[iI] = 0;
-		m_aiCapitalYieldRateModifier[iI] = 0;
-		m_aiExtraYieldThreshold[iI] = 0;
-		m_aiTradeYieldModifier[iI] = 0;
-		m_aiLandmarkYield[iI] = 0;
-
-		//TB Traits begin
-		m_aiFreeCityYield[iI] = 0;
-		m_aiSpecialistExtraYield[iI] = 0;
-		m_aiLessYieldThreshold[iI] = 0;
-		m_aiGoldenAgeYield[iI] = 0;
-		//TB Traits end
-	}
-
-	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
-	{
-		m_aiFreeCityCommerce[iI] = 0;
-		m_extraCommerce[iI] = 0;
-		m_aiCommerceRate[iI] = 0;
-		m_abCommerceDirty[iI] = false;
-		m_aiCommerceRateModifier[iI] = 0;
-		m_aiCommerceRateModifierfromEvents[iI] = 0;
-		m_aiCommerceRateModifierfromBuildings[iI] = 0;
-		m_aiCapitalCommerceRateModifier[iI] = 0;
-		m_aiStateReligionBuildingCommerce[iI] = 0;
-		m_aiSpecialistExtraCommerce[iI] = 0;
-		m_aiCommerceFlexibleCount[iI] = 0;
-		m_aiGoldenAgeCommerce[iI] = 0;
-	}
-
-	// Reset power to just that due to pop. Other contributions will be re-added during the recalc
-	m_iPower = getTotalPopulation();
-	m_iTechPower = 0;
-
-	// Similarly assets for pop, land, and units
-	m_iAssets = 10 * (getTotalPopulation() + getTotalLandScored());
-	m_iUnitPower = 0;
-
-	foreach_(const CvUnit* pLoopUnit, units())
-	{
-		m_iAssets += pLoopUnit->assetValueTotal();
-		m_iUnitPower += pLoopUnit->getPowerValueTotal();
-	}
-}
-
 void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 {
 	PROFILE_EXTRA_FUNC();
@@ -28811,195 +28681,6 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 
 	//Run through Unit Promotion Changes
 	algo::for_each(units(), CvUnit::fn::doSetFreePromotions(iChange > 0, eTrait));
-}
-
-void CvPlayer::recalculateModifiers()
-{
-	PROFILE_EXTRA_FUNC();
-	OutputDebugString("\nStarting recalculateModifiers...");
-
-	noteOrbitalInfrastructureCountDirty();
-
-	//	Put back starting defaults
-	changeBaseFreeUnitUpkeepCivilian(GC.getBASE_FREE_UNITS_UPKEEP_CIVILIAN());
-	changeBaseFreeUnitUpkeepMilitary(GC.getBASE_FREE_UNITS_UPKEEP_MILITARY());
-	changeFreeUnitUpkeepCivilianPopPercent(GC.getBASE_FREE_UNITS_UPKEEP_CIVILIAN_PER_100_POP());
-	changeFreeUnitUpkeepMilitaryPopPercent(GC.getBASE_FREE_UNITS_UPKEEP_MILITARY_PER_100_POP());
-	changeTradeRoutes(GC.getINITIAL_TRADE_ROUTES());
-	changeStateReligionHappiness(GC.getINITIAL_STATE_RELIGION_HAPPINESS());
-	changeNonStateReligionHappiness(GC.getINITIAL_NON_STATE_RELIGION_HAPPINESS());
-
-	for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
-	{
-		changeTradeYieldModifier(((YieldTypes)iI), GC.getYieldInfo((YieldTypes)iI).getTradeModifier() - getTradeYieldModifier((YieldTypes)iI));
-	}
-
-	//	Put back any unattributed (ie - from Python) happiness
-	changeExtraHappiness(m_iExtraHappinessUnattributed);
-
-	//	Put back trait-sourced modifiers
-	// Game Compatability issue resolution
-	//bool bHasCompiled = false;
-	//Apparently some games have displayed the ability to have a non-leaderhead (iLinePriority 0) trait being assigned to leaders in a Developing Leaderhead Game.
-	//This section should at least convert them if this takes place.  In the meantime... need to figure out HOW that's happening at all.  I've seen rev leaders initiated in the middle of the game come in with extra traits... may have something to do with that?
-	if (GC.getGame().isOption(GAMEOPTION_LEADER_DEVELOPING))
-	{
-		for (int iI = 0; iI <GC.getNumTraitInfos(); iI++)
-		{
-			const TraitTypes eTrait = ((TraitTypes)iI);
-			////removes the extra negative trait if it shouldn't be there.  After a version or two, this should be removed entirely and m_iCompatCheckCount can be repurposed later.
-			//if (hasTrait(eTrait) && GC.getTraitInfo(eTrait).isNegativeTrait() && GC.getGame().isOption(GAMEOPTION_LEADER_START_NO_POSITIVE_TRAITS))
-			//{
-			//	if (GC.getLeaderHeadInfo(getLeaderType()).hasTrait(eTrait) && m_iCompatCheckCount != 1)
-			//	{
-			//		m_pabHasTrait[eTrait] = false;
-			//		m_iCompatCheckCount = 1;
-			//	}
-			//}
-			if (!GC.getTraitInfo(eTrait).isCivilizationTrait() && !GC.getTraitInfo(eTrait).isBarbarianSelectionOnly())
-			{
-				if (hasTrait(eTrait) && GC.getTraitInfo(eTrait).getLinePriority() == 0 && GC.getTraitInfo(eTrait).getPromotionLine() != NO_PROMOTIONLINE)
-				{
-					for (int iJ = 0; iJ < GC.getNumTraitInfos(); iJ++)
-					{
-						const TraitTypes eReplacementTrait = ((TraitTypes)iJ);
-						if (GC.getTraitInfo(eReplacementTrait).getPromotionLine() != NO_PROMOTIONLINE)
-						{
-							if (GC.getTraitInfo(eReplacementTrait).getPromotionLine() == GC.getTraitInfo(eTrait).getPromotionLine())
-							{
-								if (GC.getTraitInfo(eReplacementTrait).isNegativeTrait() && GC.getTraitInfo(eTrait).isNegativeTrait() && GC.getTraitInfo(eReplacementTrait).getLinePriority() == -1)
-								{
-									m_pabHasTrait[eReplacementTrait] = true;
-									m_pabHasTrait[eTrait] = false;
-								}
-								else if (!GC.getTraitInfo(eReplacementTrait).isNegativeTrait() && !GC.getTraitInfo(eTrait).isNegativeTrait() && GC.getTraitInfo(eReplacementTrait).getLinePriority() == 1)
-								{
-									m_pabHasTrait[eReplacementTrait] = true;
-									m_pabHasTrait[eTrait] = false;
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-	else //Since Options can be changed in game now, this section should be able to restructure leaders according to original non-leaderhead development traits if changed back.
-	{
-		for (int iI = 0; iI < GC.getNumTraitInfos(); iI++)
-		{
-			const TraitTypes eTrait = ((TraitTypes)iI);
-			bool bLeaderHasTrait = false;
-			if (!GC.getTraitInfo(eTrait).isCivilizationTrait() && !GC.getTraitInfo(eTrait).isBarbarianSelectionOnly())
-			{
-				if (hasTrait(eTrait) && GC.getTraitInfo(eTrait).getLinePriority() != 0)
-				{
-					m_pabHasTrait[eTrait] = false;
-				}
-				if (GC.getGame().isOption(GAMEOPTION_LEADER_COMPLEX_TRAITS))
-				{
-					if (GC.getLeaderHeadInfo(getLeaderType()).isDefaultComplexTrait((int)eTrait))
-					{
-						bLeaderHasTrait = true;
-					}
-				}
-				else if (GC.getLeaderHeadInfo(getLeaderType()).isDefaultTrait((int)eTrait))
-				{
-					bLeaderHasTrait = true;
-				}
-				else if (GC.getLeaderHeadInfo(getLeaderType()).hasTrait(eTrait))
-				{
-					bLeaderHasTrait = true;
-				}
-				if (bLeaderHasTrait && !hasTrait(eTrait) && GC.getTraitInfo(eTrait).getLinePriority() == 0)
-				{
-					if (GC.getTraitInfo(eTrait).isNegativeTrait())
-					{
-						if (!GC.getGame().isOption(GAMEOPTION_LEADER_NO_NEGATIVE_TRAITS))
-						{
-							m_pabHasTrait[eTrait] = true;
-						}
-					}
-					else if (!GC.getGame().isOption(GAMEOPTION_LEADER_START_NO_POSITIVE_TRAITS))
-					{
-						m_pabHasTrait[eTrait] = true;
-					}
-				}
-			}
-		}
-	}
-	//Remove trait promos during recalc - it will add them back when processing in the traits.
-	algo::for_each(units(), CvUnit::fn::doSetFreePromotions(false, NO_TRAIT));
-
-	for (int iI = 0; iI < GC.getNumTraitInfos(); iI++)
-	{
-		if (hasTrait((TraitTypes)iI))
-		{
-			processTrait((TraitTypes)iI, 1);
-		}
-	}
-	foreach_(const HeritageTypes eTypeX, getHeritage())
-	{
-		processHeritage(eTypeX, 1);
-	}
-
-	// Put back city-sourced modifiers
-	algo::for_each(cities(), CvCity::fn::recalculateModifiers());
-
-	// Put back civic-sourced modifiers
-	for (int iI = 0; iI < GC.getNumCivicOptionInfos(); iI++)
-	{
-		const CivicTypes eCivic = getCivics((CivicOptionTypes)iI);
-
-		if ( eCivic != NO_CIVIC )
-		{
-			processCivics(eCivic, 1);
-		}
-	}
-// TB Nukefix
-//	m_bNukesValid = false;
-
-	//	Replay events in so far as they effect modifiers
-	for (CvEventMap::const_iterator it = m_mapEventsOccured.begin(); it != m_mapEventsOccured.end(); ++it)
-	{
-		applyEvent((*it).first, -1, false);
-	}
-
-	//	Recalculate unitAI counts
-	//	Note - would ideally have this be a virtual to avoid the cast but adding virtuals to this
-	//	class screws up the core engine which accessing it via the DLL interafce
-	((CvPlayerAI*)this)->AI_recalculateUnitCounts();
-	recalculateUnitCounts();
-
-	setMaintenanceDirty(true);
-
-	AI_updateBonusValue();
-	AI_updateFoundValues(true);
-	//	Re-establish blockades
-	updatePlunder(1, false);
-	resetCivTypeEffects();
-
-	// Recalc plot commander counts
-	for (int i = m_commanders.size() - 1; i > -1; i--)
-	{
-		CvUnit* com = m_commanders[i];
-
-		if (com->isCommanderReady())
-		{
-			com->plot()->countCommander(true, com);
-		}
-	}
-
-    // Recalc plot commodore counts
-	for (int i = m_commodores.size() - 1; i > -1; i--)
-	{
-		CvUnit* com = m_commodores[i];
-
-		if (com->isCommodoreReady())
-		{
-			com->plot()->countCommodore(true, com);
-		}
-	}
 }
 
 bool CvPlayer::upgradeAvailable(UnitTypes eFromUnit, UnitTypes eToUnit) const

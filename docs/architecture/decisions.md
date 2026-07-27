@@ -55,8 +55,8 @@ gold-commerce; `maintenance` is its own family. **Home:** [economy.md](../refere
 
 ### DEC-calc-zero-ride-in
 
-The dry-calc computes every value from JSON + game state with zero legacy-computed ride-in; engine-computed data
-enters only at the comparison boundary, never as a cascade input. The trap is the CAMOUFLAGED case — a DERIVED value
+The CASCADE computes every value from JSON + game state with zero legacy-computed ride-in: engine-computed data is
+never a cascade INPUT. The trap is the CAMOUFLAGED case — a DERIVED value
 masquerading as raw state, above all a building's ACTIVE/DORMANT verdict, which is a pure function of
 `requires.operate` and must be COMPUTED, never read from the engine. **Home:** [validation.md](../specs/validation.md).
 
@@ -86,13 +86,6 @@ what survives is this completeness bar, now verified live via the endpoints. **H
 
 The migration reproduces the engine's existing behaviour exactly; behavioural redesign ("should it behave this way at
 all?") is deferred to post-migration, never done during it. **Home:** [validation.md](../specs/validation.md).
-
-### DEC-stonebase-follows-spec
-
-The validation authority chain is ONE-WAY — SPEC → StoneBase → engine-oracle: StoneBase *implements* the spec, never
-reverse-engineers the engine's internal procedure; the engine fixes only the RESULT. A divergence is a curated-data
-gap mapped to a named source, or a deliberate spec-change-FIRST — never a creative StoneBase tweak. Same-result is
-necessary but NOT sufficient. **Home:** [validation.md](../specs/validation.md).
 
 ### DEC-no-parity-results-in-docs
 
@@ -264,14 +257,7 @@ loads." "Straight up missing" means it does not show in-game even if it loads (t
 apply/display). Every work item's acceptance is an endpoint-observable pass/fail on a real save, a real turn — the
 strict complement of [DEC-verify-in-game-not-reshadow](#dec-verify-in-game-not-reshadow). Programmatic already: the
 `/computed` oracle endpoints expose the real engine values as game-thread snapshots (a blind value is EMITTED first,
-step one of its fix); StoneBase's frontend renders them alongside the calc-counts. **Home:** [validation.md](../specs/validation.md).
-
-### DEC-calc-count-gate
-
-Every calculation logs its `(scope, channel)` (scope ∈ world/team/empire/area/city/plot/building/unit/specialist;
-channel = every modifiable number). The per-turn count is a standing acceptance gate + regression tripwire: >50k/turn
-is near-certainly a failure (a blanket recompute), a quiet turn approaches zero, steady-state tracks EVENT volume
-(thousands) not entity count (millions). Exposed live via the StoneBase performance dashboard. **Home:** [observability.md](../reference/observability.md).
+step one of its fix). **Home:** [validation.md](../specs/validation.md).
 
 ### DEC-cy-not-fixed
 
@@ -286,8 +272,8 @@ gameplay stays Python. **Home:** [roadmap.md](../plans/structural-cleanup/roadma
 **REUSING A LEGACY GETTER IS THE MECHANISM THAT PRODUCES THE HALF-MIGRATED STATE** (owner) — not a shortcut that
 merely risks one. A legacy getter's contract encodes legacy assumptions (its scale, its granularity, its combine,
 its one-channel shape), so pointing the cascade at it forces the CASCADE to bend to that shape; the result is a
-surface that is half cascade and half legacy and reads as nearly done. The 360 channel-shaped getters on
-`CvCity`/`CvPlayer` alone are 360 such contracts. Therefore: **build a NEW uniform, parameterized getter set over
+surface that is half cascade and half legacy and reads as nearly done. The **622 channel-shaped getter
+declarations (586 distinct names) measured on `CvCity`/`CvPlayer` alone** are that many such contracts. Therefore: **build a NEW uniform, parameterized getter set over
 the channel index, move consumers onto it, and DISCONNECT the old set** — never re-body a legacy getter, never
 keep both surfaces live, and never widen a legacy getter to fit. Python is rewired onto the same uniform set
 (the [DEC-cy-not-fixed](#dec-cy-not-fixed) ban generalized from the `Cy*` bindings to the whole getter surface).
@@ -335,26 +321,15 @@ re-wired** ([event-spine.md](../specs/event-spine.md) build status).
 ### DEC-verify-in-game-not-reshadow
 
 Parity + shadow are CLOSED — their job is FINISHED and they are NOT to be re-run, re-invoked, or used to frame any
-remaining work. The confirmation already exists and is sufficient: StoneBase strongly verified the event-spine
-STRUCTURE and the shadow strongly verified the CALCULATIONS reach the right numbers — the design is proven
+remaining work. The confirmation already exists and is sufficient: the event-spine STRUCTURE was strongly verified
+and the shadow strongly verified the CALCULATIONS reach the right numbers — the design is proven
 achievable. The original `readJson`-direct shadow read JSON STRAIGHT, bypassing the loaded `CvJson<X>Info` objects;
 that bypass was itself a rollerskate and must NOT be repeated. ⛔ Do not re-shadow and do not re-frame work as
 "parity"/"shadow": that framing sends agents rollerskating back into offline validation instead of building the real
 info-object-backed runtime. Remaining verification is the LIVE game ONLY — manifestation via the endpoints
-([DEC-done-is-observable](#dec-done-is-observable)) + the per-turn `(scope,channel)` calc-count gate. StoneBase itself
-is repurposed: PROMOTED from offline parity oracle to the USER-VISIBLE PERFORMANCE LAYER (the live
-`(scope,channel)`/turn-time dashboard — Razor + SignalR); it MAY still spot-verify parity against known-good as a
-sanity check, but that is not the migration's validation path. **Home:** [validation.md](../specs/validation.md).
-
-### DEC-oracle-tautology
-
-With the legacy accumulators DELETED (red ratchet), the `*Legacy` oracle getters + the `*Recomputed`/`*Leg` twins on
-the `/computed` endpoints read the cascade-derived flipped getters, NOT legacy — so every remaining oracle-vs-cascade
-comparison is cascade-vs-cascade: a structural always-parity that can never turn red (the false-confirmation trap). Oracle
-parity is NOT a verification signal (only served-value sanity + the compiler census are). The oracle surface is REMOVED,
-not maintained (a dedicated sweep). **An oracle endpoint is NOT a real consumer:** a legacy member whose only live
-consumer is an oracle endpoint is a self-referential keep-alive that fools the compiler census — remove the endpoint WITH
-the member; the oracle is never a reason to keep legacy alive. **Home:** [validation.md](../specs/validation.md).
+([DEC-done-is-observable](#dec-done-is-observable)) and turn time
+([DEC-turn-time-is-king](#dec-turn-time-is-king)).
+**Home:** [validation.md](../specs/validation.md).
 
 ### DEC-no-legacy-masking
 
@@ -366,8 +341,7 @@ hides the defect and defers the fix (the wellbeing panel reading legacy hid a 2�
 alive. **The legacy XML is REMOVED (the red ratchet), so a legacy fallback cannot even RUN — it is BAIT that substitutes
 a nonexistent answer and masks the hole** ([DEC-red-ratchet](#dec-red-ratchet)); a realized gate/getter is therefore
 a PURE cascade read (the six availability gates carry no `*Legacy` fallback, no pre-init guard, no what-if path).
-Corollary of [DEC-playability-not-a-gate](#dec-playability-not-a-gate) + [DEC-oracle-tautology](#dec-oracle-tautology)
-for the READ surface. **Home:** [validation.md](../specs/validation.md).
+Corollary of [DEC-playability-not-a-gate](#dec-playability-not-a-gate) for the READ surface. **Home:** [validation.md](../specs/validation.md).
 
 ### DEC-legacy-decache-poisons-perf
 

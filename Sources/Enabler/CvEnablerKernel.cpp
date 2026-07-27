@@ -20,6 +20,7 @@
 #include "Conditions/CvConditionEval.h"   // cascadeEvalCondition -- the StoneBase-ported typed-condition evaluator
 #include "CvCondition.h"       // CvCondition tree (CASC_COND_*/CASC_PRED_*) -- scanned for the operate reverse-index
 #include "CvBuildingInfo.h"
+#include "CvBonusInfo.h"       // the provided-bonus set's divergence naming
 #include "CvUnitInfo.h"
 #include "CvTechInfo.h"
 #include "CvCivicInfo.h"
@@ -652,31 +653,52 @@ void EnablerKernel::onPlayerScopeChangedActive(const CvCity* pCity)
 	ek_recheckActiveSet(pCity, seeds);
 }
 
-// The LOAD seed (CvCity::refreshOperatingBuildings): the ONE full recompute of active/provided + the provider ref-count
-// the ripple maintains. Called on the first ensure() after load/reset/city-creation; the on*Active hooks keep it
-// current thereafter, so the full recompute never runs per-event again.
+// The WHOLE per-city operating set recomputed FROM SOURCE into a CALLER-OWNED buffer: the fixpoint's three
+// sets plus the provider ref-count the ripple bookkeeps. Two callers, one implementation -- the LOAD/creation
+// SEED points it at the city's own storage, and the ENDPOINT ORACLE points it at a scratch buffer it owns
+// (state-repositories.md, the endpoint oracle). Handing it the destination is what makes "the oracle cannot
+// repair the maintained set" structural rather than a discipline: it is never given the stored set at all.
+void EnablerKernel::recomputeOperatingSetInto(const CvCity* pCity, OperatingBuildings& kOut)
+{
+	kOut.active.clear();
+	kOut.obsolete.clear();
+	kOut.provided.clear();
+	kOut.providedCount.clear();
+	if (pCity == NULL) return;
+	recomputeOperatingBuildingsInto(pCity, kOut.active, kOut.provided, kOut.obsolete);
+	for (std::set<int>::const_iterator it = kOut.active.begin(); it != kOut.active.end(); ++it)
+	{
+		const std::vector<int>* pProvidedBonuses = ek_provides(*it);
+		if (pProvidedBonuses == NULL)
+		{
+			continue;
+		}
+		for (size_t iBonusIndex = 0; iBonusIndex < pProvidedBonuses->size(); ++iBonusIndex)
+		{
+			kOut.providedCount[(*pProvidedBonuses)[iBonusIndex]]++;
+		}
+	}
+}
+
+// The LOAD seed (CvCity::refreshOperatingBuildings): the ONE full recompute into the city's own storage. It runs
+// once per load/reset/city-creation; the on*Active hooks maintain the set in place thereafter (targeted
+// propagation, never a blanket recompute -- enabler.md §3.2), so the full recompute never runs per-event again.
 void EnablerKernel::seedOperatingBuildings(const CvCity* pCity)
 {
 	if (pCity == NULL) return;
-	recomputeOperatingBuildingsInto(pCity, pCity->m_operatingBuildings.active, pCity->m_operatingBuildings.provided, pCity->m_operatingBuildings.obsolete);
-	std::map<int, int>& pcnt = pCity->m_operatingBuildings.providedCount;
-	pcnt.clear();
-	const std::set<int>& act = pCity->m_operatingBuildings.active;
-	for (std::set<int>::const_iterator it = act.begin(); it != act.end(); ++it)
-	{
-		const std::vector<int>* prov = ek_provides(*it);
-		if (prov) for (size_t k = 0; k < prov->size(); ++k) pcnt[(*prov)[k]]++;
-	}
+	recomputeOperatingSetInto(pCity, pCity->m_operatingBuildings);
 }
 
 const OperatingBuildings& EnablerKernel::operatingBuildings(const CvCity* pCity)
 {
-	// The standing per-city operating buildings, PURE Set protocol (scope-packages.md): events mark the Set directly
-	// (building/religion/corp flips in CvCity; tech/civic/GA via markPlayerScopeAndCities -- operate
-	// conditions read those; the slice boundary is the self-heal for the unhooked classes) -- no polling.
-	OperatingBuildings& f = pCity->m_operatingBuildings;
-	f.set.ensure();
-	return f;
+	// A BARE FETCH of the AUTHORITATIVE per-city set, unconditionally. There is no recompute on this path and
+	// there must not be one: the set is built ONCE by seedOperatingBuildings (city creation / the load seed) and
+	// kept current in place by the targeted on*Active hooks above (state-repositories.md: the enabler's sets are
+	// maintained by targeted PROPAGATION, never blanket-invalidated-and-recomputed -- blanket-recomputing the
+	// fixpoint per event is DESPAIR_INDEX #2). A propagation that fails to fire therefore leaves the set visibly
+	// wrong, which is how the missing hook gets found ([DEC-no-self-heal]); an external reader finds it by
+	// diffing this served set against the endpoint oracle's fresh recompute.
+	return pCity->m_operatingBuildings;
 }
 
 void EnablerKernel::wireOperatingBuildings(const CvCity* pCity, CvCascadeEvalCtx& ec)

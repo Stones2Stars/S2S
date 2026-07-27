@@ -3,20 +3,26 @@
 #define CV_CASCADE_OPERATING_BUILDINGS_H
 
 //
-//	OperatingBuildings -- the per-city CASCADE-COMPUTED operating buildings as a STANDING derived cache: the ACTIVE
-//	(non-dormant) building set + the in-vicinity provided bonuses (json.md §5a), at the operate/provides LEAST
-//	fixpoint (EnablerKernel::recomputeOperatingBuildingsInto). This replaces the turn-scoped operating buildings memo -- the operating buildings are
-//	now EVENT-INVALIDATED (building/religion/corporation flips mark dirty; player-level events ride the shared
-//	accumulator epoch; the turn roll is the self-heal cadence for the unhooked classes), so the old memo's
-//	"shadow-phase-only, must be event-invalidated before any consumer cut" caveat is CLOSED, not carried.
+//	OperatingBuildings -- the per-city CASCADE-COMPUTED operating buildings: the ACTIVE (non-dormant) building
+//	set + the in-vicinity provided bonuses (json.md §5a), at the operate/provides LEAST fixpoint
+//	(EnablerKernel::recomputeOperatingBuildingsInto).
 //
-//	STATE HOME: a mutable CvCity member (`m_operatingBuildings`), CvDerivedCacheSet-driven -- the exact idiom of the
-//	rate slots (m_cascadeRateSlots / state-repositories.md). Never serialized; all-dirty from birth, so a loaded
-//	game recomputes from current state; warmed transitively by the load-end slots warm-up (the slot refresh
-//	consumes the operating buildings). Query surface: EnablerKernel::operatingBuildings / wireOperatingBuildings.
+//	⛔ THIS IS NOT AN INPUT/OUTPUT CACHE AND CARRIES NO DIRTY PROTOCOL (state-repositories.md: "the ENABLER's
+//	sets are themselves derived state, but maintained by TARGETED PROPAGATION"). It is computed ONCE
+//	(EnablerKernel::seedOperatingBuildings -- city creation and the load seed) and thereafter each HAVE-change
+//	ripples through the AFFECTED SUBSET ONLY, updating this dataset IN PLACE via the operate reverse-index (the
+//	on*Active hooks; enabler.md §7). It is never blanket-invalidated-and-recomputed -- running the fixpoint as a
+//	dirty/recompute cache is "burning down the library of Alexandria" (DESPAIR_INDEX #2) -- and never a parallel
+//	shadow-delta. Reads are BARE FETCHES: a propagation that fails to fire leaves the set visibly wrong, which is
+//	how the missing hook is found ([DEC-no-self-heal]). It is found by an EXTERNAL reader diffing the served
+//	set against the endpoint oracle's from-source recompute (EnablerKernel::recomputeOperatingSetInto, which
+//	fills a caller-owned buffer) -- the DLL neither compares nor reports.
+//
+//	STATE HOME: a mutable CvCity member (`m_operatingBuildings`). Never serialized -- empty from birth, so a
+//	loaded game is populated by the seed rather than from the save. Query surface:
+//	EnablerKernel::operatingBuildings / wireOperatingBuildings.
 //
 
-#include "Infrastructure/CvDerivedCache.h"
 #include <set>
 #include <map>
 
@@ -31,12 +37,6 @@ struct OperatingBuildings
 	std::set<int> provided;    // the in-vicinity provided bonuses (json §5a) at the same fixpoint
 	std::map<int, int> providedCount;   // per-bonus ACTIVE-provider ref-count (provided == its keyset>0); the
 	                                    // targeted-ripple bookkeeping so removing one provider only un-provides at 0
-	// ONE freshness philosophy (scope-packages.md): events mark the Set directly (building/religion/corp
-	// flips; tech/civic/GA via markPlayerScopeAndCities; the slice boundary is the self-heal) -- no stamps.
-	// the dirty protocol (bind in CvCity's ctor); noncopyable via this member. Mask width EXPLICIT (the
-	// CvDerivedCacheSet TMask axis): this set is a whole-cache dirty/clean user, so the int form is its
-	// declared shape -- the 64-bit form is the cascade packages' (CvCascadePackage), never a default ridden.
-	CvDerivedCacheSet<CvCity, int> set;
 };
 
 #endif // CV_CASCADE_OPERATING_BUILDINGS_H

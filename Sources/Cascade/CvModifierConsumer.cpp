@@ -7,10 +7,15 @@
 //	scope-object lifecycle/composition events (city founded / ownership moves) and the golden-age engine
 //	member-mirror are not deposit-addressed, so no route exists in the index to derive.
 //
+//	⚠ A MARK HERE IS ALSO THE REBUILD (state-repositories.md: "the rebuild moves onto the mark"). Reads are bare
+//	fetches, so nothing downstream will recompute later -- the recompute happens at markMask, inside this
+//	consumer, on the event that derived the mark. Inside the load bracket the marks are BANKED instead and
+//	drained once at GAME_LOAD_FINISHED (mc_drainLoadMarks); the walk order there is irrelevant because a
+//	rebuild reads its cross-scope inputs through the package's rebuild-path accessors.
+//
 
 #include "CvGameCoreDLL.h"
 #include "CvModifierConsumer.h"
-#include "CvCascadeCalcCount.h"
 #include "CvCascadePackage.h"
 #include "CvCascadeAreaSlot.h"
 #include "CvCascadeChannelRegistry.h"
@@ -109,6 +114,31 @@ namespace
 			mc_markEmpire(&GET_PLAYER(pPlot->getOwner()),
 				CascadeChannelRegistry::scopeReceiversFedBy(CASC_SCOPE_EMPIRE, CASC_SCOPE_PLOT), szSource);
 		}
+	}
+
+	// The EMPIRE receiver bits whose channel is a COMMERCE channel -- derived from the MINTED receiver set, so
+	// a receiver that is not a commerce channel is never marked and no bit is hand-listed. This is the reach of
+	// the city's production->commerce PROCESS conversion: the gather folds getProductionProcess()'s
+	// productionToCommerce into the per-city commerce SPLIT, and that split is the per-city quantity ONLY an
+	// empire commerce receiver sums (a city's own receiver rates are the plain §2a combine, which reads no
+	// process and no slider).
+	int64_t mc_empireCommerceReceiverMask()
+	{
+		int64_t iMask = 0;
+		const int iReceivers = CascadeChannelRegistry::scopeReceiverCount(CASC_SCOPE_EMPIRE);
+		for (int iReceiver = 0; iReceiver < iReceivers; ++iReceiver)
+		{
+			const int iChannel = CascadeChannelRegistry::scopeReceiverChannel(CASC_SCOPE_EMPIRE, iReceiver);
+			if (iChannel < 0)
+			{
+				continue;
+			}
+			if (infoFamilyCommerce(CascadeChannelRegistry::channelFamily(iChannel)) >= 0)
+			{
+				iMask |= CascadeChannelRegistry::scopeReceiverBit(CASC_SCOPE_EMPIRE, iChannel);
+			}
+		}
+		return iMask;
 	}
 
 	// Apply a derived route to the owner objects the event names. pCity/pPlot narrow the fan to the event's
@@ -377,6 +407,40 @@ namespace
 				mc_markEmpire(pPlayer, CascadeChannelRegistry::scopeReceiversFedBy(CASC_SCOPE_EMPIRE, CASC_SCOPE_PLOT), szSource);
 				break;
 			}
+			case SEVT_PLOT_WORKED_CHANGED:   // a citizen took / left the plot: the city's worked-plot Sigma moves
+			{
+				// The worked-plot Sigma is the BASE of every city receiver rate (modifier.md §2a TIER 1): the
+				// rebuild sums the packages of exactly the plots city.isWorkingPlot() answers, so an assignment
+				// flip moves the realized sums the PLOT-authored channels feed -- and nothing besides them. The
+				// plot's OWN package is untouched: worked-ness changes no deposit the plot holds, which is why
+				// the substrate blanket has no business here. Same derivation as the WORKING-CITY membership
+				// fact, whose subset this assignment fact is (membership = may work it, worked = a citizen does).
+				// The event names its city (iB), so the fan never widens past it.
+				const CvCity* pCity = mc_city(pPlayer, kEvent.iB);
+				mc_markCity(pCity,
+					CascadeChannelRegistry::scopeReceiversFedBy(CASC_SCOPE_CITY, CASC_SCOPE_PLOT), szSource);
+				mc_markEmpire(pPlayer,
+					CascadeChannelRegistry::scopeReceiversFedBy(CASC_SCOPE_EMPIRE, CASC_SCOPE_PLOT), szSource);
+				// IS_WORKED is a live PREDICATE a deposit's gate may read (PlotContext::isWorked), so the
+				// deposits conditioned on it re-evaluate -- through the route the index derives for that state,
+				// never a widened mask.
+				mc_applyRoute(DepositIndex::dependencyForPredicate(CASC_PRED_IS_WORKED), pPlayer, pCity,
+					mc_plot(kEvent.iSrcLoc), szSource);
+				break;
+			}
+			case SEVT_CITY_ORDER_CHANGED:   // the queue HEAD is the active process (the production->commerce conversion)
+			{
+				// A city's active PROCESS is its head order, and the conversion it drives is a TIER-2 term of the
+				// per-city commerce split -- so the mark is exactly the empire's COMMERCE receiver sums, derived
+				// from the minted receiver set. The process reaches no package channel (it is live state read at
+				// the combine, never a deposit) and no city receiver sum.
+				// ⛔ The order TYPE cannot narrow this: pushOrder inserts at the FRONT whenever the head is
+				// ORDER_MAINTAIN, so pushing an ordinary build DISPLACES a running process -- a filter on
+				// ORDER_MAINTAIN would miss exactly that. The head order moving is what this fact announces, and
+				// the head order IS the process, so the mark is the process's own reach, unfiltered.
+				mc_markEmpire(pPlayer, mc_empireCommerceReceiverMask(), szSource);
+				break;
+			}
 			// ---- empire-level source flips ----
 			case SEVT_TECH_CHANGED:
 			{
@@ -533,21 +597,22 @@ namespace
 				}
 				break;
 			}
-			// ---- the turn boundary: flush the calc-count report (game scope only). NOT a self-heal site --
-			// ---- nothing is marked here ([DEC-no-self-heal]). ----
+			// ---- the turn boundary (game scope only): the channel-set census's new-game fallback, for the run
+			// ---- that never passes through a load. NOT a self-heal site -- nothing is marked here
+			// ---- ([DEC-no-self-heal]). ----
 			case SEVT_TURN_ENDED:
 			{
 				if (kEvent.iC == -1)
 				{
-					CascadeCalcCount::reportChannelCensus();   // once-guarded (covers the no-load new-game path)
-					CascadeCalcCount::reportAndReset();
+					CascadeChannelRegistry::reportChannelCensus();   // once-guarded, so the load path wins when there is one
 				}
 				break;
 			}
-			// ---- the load bracket end: the channel-set census (the layouts are complete) ----
+			// ---- the load bracket end: DRAIN the banked marks, then the channel-set census ----
 			case SEVT_GAME_LOAD_FINISHED:
 			{
-				CascadeCalcCount::reportChannelCensus();
+				mc_drainLoadMarks();
+				CascadeChannelRegistry::reportChannelCensus();
 				break;
 			}
 			default:
@@ -556,6 +621,53 @@ namespace
 		}
 
 	private:
+		// THE LOAD DRAIN. Inside the load bracket a mark does NOT rebuild (CvDerivedCache.h: mid-read the state a
+		// rebuild would read is half-deserialized -- the context stores, the areas and the plot-group network
+		// complete only when the stream ends), so the reseed's marks are BANKED. This drains them once, here.
+		// ⛔ It is NOT a blanket rebuild and must never become one ([state-repositories.md] CAPSTONE): every
+		// package walked rebuilds ONLY the bits an in-read event actually marked, and a package no event reached
+		// stays unbuilt -- visibly wrong, which is how its missing emit gets found. The walk order is
+		// irrelevant: a package's rebuild reads its cross-scope inputs through the rebuild-path accessors, so
+		// each input rebuilds its own banked marks first.
+		static void mc_drainLoadMarks()
+		{
+			const int iNumPlots = GC.getMap().numPlots();
+			for (int iPlotIndex = 0; iPlotIndex < iNumPlots; ++iPlotIndex)
+			{
+				const CvPlot* pPlot = GC.getMap().plotByIndex(iPlotIndex);
+				if (pPlot != NULL)
+				{
+					pPlot->getCascadePackage().rebuildMarked();
+				}
+			}
+			for (int iTeam = 0; iTeam < MAX_TEAMS; ++iTeam)
+			{
+				const CvTeam& team = GET_TEAM((TeamTypes)iTeam);
+				if (team.isAlive())
+				{
+					team.getCascadePackage().rebuildMarked();
+				}
+			}
+			for (int iPlayer = 0; iPlayer < MAX_PLAYERS; ++iPlayer)
+			{
+				const CvPlayer& player = GET_PLAYER((PlayerTypes)iPlayer);
+				if (!player.isAlive())
+				{
+					continue;
+				}
+				int iAreaLoop = 0;
+				for (const CvArea* pArea = GC.getMap().firstArea(&iAreaLoop); pArea != NULL; pArea = GC.getMap().nextArea(&iAreaLoop))
+				{
+					pArea->getCascadeSlot((PlayerTypes)iPlayer).package.rebuildMarked();
+				}
+				for (CvPlayer::city_iterator cityIterator = player.beginCities(); cityIterator != player.endCities(); ++cityIterator)
+				{
+					(*cityIterator)->getCascadePackage().rebuildMarked();
+				}
+				player.getCascadePackage().rebuildMarked();
+			}
+		}
+
 		// Every rate of the player re-realizes. All-receivers blanket KEPT: the golden-age yield/commerce
 		// effect is the OWNER-RULED engine member-mirror (modifier.md §3, the goldenAge carve-out) -- applied
 		// at the receiver combine, NOT authored as deposits, so the DepositIndex holds no route to derive

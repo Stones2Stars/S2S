@@ -39,8 +39,6 @@ public:
 	void uninit();
 	void reset(int iID = 0, bool bWater = false, bool bConstructorCall = false);
 
-	void clearModifierTotals();
-
 	// for serialization
 	virtual void read(FDataStreamBase* pStream);
 	virtual void write(FDataStreamBase* pStream);
@@ -58,6 +56,17 @@ public:
 	// The (area x player) modifier-cascade package slot -- the AREA scope's value cache
 	// (state-repositories.md per-scope package model; the uniform CvCascadePackage on every scoped item).
 	const CvCascadeAreaSlot& getCascadeSlot(PlayerTypes ePlayer) const { return m_cascadeSlots[ePlayer]; }
+
+	// THE AREA SLOT'S GROUP READ SURFACE -- the GAME-OBJECT read role's answer to "what do I HAVE, right now?"
+	// (patterns.md § THE TWO READ ROLES), one getter per modifier FAMILY the AREA scope carries channels of.
+	// The census authors happiness and health there (plus the count-by-type freeSpecialists leaf, which is not a
+	// channel group), so WELLBEING is the whole of it.
+	// ePlayer is the (area × player) slot's IDENTITY axis, NOT a scope argument: an area "knows no borders", so
+	// an area-scope deposit realizes per player and each city reads the slot for its own area id
+	// (state-repositories.md). The group's enum indexes the RESULT; the call carries no channel argument.
+	// ×100 NATIVE. The roll-up's area entry is this slot alone -- the empire and team legs are folded by the
+	// CITY that reads this slot, so folding them here too would double-count them for that city.
+	void getWellbeing(PlayerTypes ePlayer, int (&wellbeing)[NUM_WELLBEING_CHANNELS]) const;
 
 	int getNumTiles() const;
 	void changeNumTiles(int iChange);
@@ -236,8 +245,6 @@ private:
 //
 public:
 	struct fn {
-		DECLARE_MAP_FUNCTOR(CvArea, void, clearModifierTotals);
-
 		DECLARE_MAP_FUNCTOR_2(CvArea, void, setBestFoundValue, PlayerTypes, int);
 
 		DECLARE_MAP_FUNCTOR_CONST(CvArea, bool, isWater);

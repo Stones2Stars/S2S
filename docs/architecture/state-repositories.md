@@ -29,13 +29,16 @@ the hot path.
 
 ## The model
 
-> **domain object mutates → flips a dirty flag → the derived value recomputes lazily on next read → consumers up the
-> chain read that one value.** One trigger, one refresh path, one source of truth.
+> **domain object mutates → marks the derived value → THE MARK REBUILDS IT → consumers up the chain read that one
+> value as a bare fetch.** One trigger, one refresh path, one source of truth.
 
 A derived cache in this model is:
 
-1. **Lazy + dirty-flagged.** A trigger flips `dirty`; the value recomputes on the next read and clears the flag. The
-   expensive recompute runs **once per change-then-read**, never per change and never per read.
+1. **Mark-driven, and the MARK is what rebuilds.** A trigger marks the component and the recompute runs there; a
+   READ is a **bare fetch** and never recomputes (§ `ensure()` below — an ensure-on-read protocol is tombstoned).
+   The expensive recompute runs **once per change**, never per read. The one deferral is the load bracket: inside
+   `GAME_LOAD_STARTED`..`FINISHED` the marks are BANKED (a mid-read recompute would read half-deserialized state)
+   and each system drains its own banked marks once at `GAME_LOAD_FINISHED`.
 2. **Recompute-only, NOT serialized** — the [DEC-derived-never-trusted](decisions.md#dec-derived-never-trusted) rule,
    applied per-field. Neither the value nor the flag is saved; on load the flag is dirty by default, so the first read
    recomputes from current state — **never stale-from-save**. Drop serialization by the **soft-remove**
@@ -44,10 +47,16 @@ A derived cache in this model is:
    nothing after it shifts (a no-op on a new save that never wrote it). **No `WRAPPER_SKIP_ELEMENT`** (it leaves the
    dead member named — a rollerskate target); and just deleting the read/write *without* the `savemigration.txt` entry
    desyncs the whole downstream read.
-   **This is UNIVERSAL, not per-field-optional (owner ruling): NO cache is ever serialized.** `CvGame::
-   recalculateModifiers()` existed to purge drifted serialized derived data; with derived data never read from a
-   save there is nothing to purge — **the recalc is RETIRED as a concept** (never invoke it, never extend it, never
-   cite it as a heal; the event spine + the load-time rebuild replace it). Each remaining serialized cache
+   **This is UNIVERSAL, not per-field-optional (owner ruling): NO cache is ever serialized** — so nothing derived
+   is ever read from a save, and there is correspondingly nothing for a blanket recompute to purge.
+   ⛔ **No blanket recompute of derived state exists anywhere in the engine, and none is ever to be built**
+   ([DEC-no-self-heal](decisions.md#dec-no-self-heal)): the event spine builds the state, LOAD is the only full
+   pass (§ THE CAPSTONE RULE), and a missed invalidation must stay visible instead of being swept away. ⛔ A
+   wipe-the-totals-and-reapply pass over live game objects is therefore never a maintenance path to add or extend
+   — *"it is inherently obsolete under the event-driven system, since the new system recalcs on load anyway"*
+   (owner). It is the exact shape this model replaces, and it is worst where it looks most useful: firing on the
+   saves most likely to have drifted is what would hide the missed emits the spine exists to expose. Each
+   remaining serialized cache
    converts by the same move: skip the read, rebuild at load from source state through the live entry points
    (the bonus-network cluster — the plot-group counts AND membership, the bonus-fed wellbeing/modifier
    accumulators, power, the dormancy verdicts — is the realized exemplar: the load-end rebuild in
@@ -60,9 +69,9 @@ A derived cache in this model is:
    the value; the source does not **push** deltas into them. Push + a parallel cache double-count and drift; pull from
    one authoritative value cannot.
 
-**Worked shape (the plot-yield cache):** `getYield()` = `if (dirty) recompute; return cached` — O(1) when clean;
-`updateYield()` is the **trigger only** (flips dirty, fires the downstream dirties the old push carried — no eager
-recompute, no push); `CvCity::getPlotYield()` reads the CITY-side worked-plot Σ cache (`CvCity::m_plotYieldSum`, a
+**Worked shape (the plot-yield cache):** `getYield()` = `return cached` — a bare fetch, always O(1);
+`updateYield()` is the **trigger** (marks the slot, which is what rebuilds it, and fires the downstream marks the
+old push carried — no push); `CvCity::getPlotYield()` reads the CITY-side worked-plot Σ cache (`CvCity::m_plotYieldSum`, a
 `CvDerivedCache` marked by worked-plot flips + working-plot yield changes) — the push-maintained `m_aiBaseYieldRate`
 is dead. ⛔ The pull must be a CACHE at EVERY level, never a per-read walk: re-summing the radius on every
 `getPlotYield` call turns the game's hottest read O(radius) — measured at 913M plot reads in one turn inside the
@@ -82,6 +91,102 @@ derivable** — *"having events just be stored in the cache is lunacy"* (a recom
 in their own serialized field (`CvCity::m_aBuildingCommerceChangeEvents`), outside the recompute path; the reader
 sums `player-recompute (empire) + city event/vote (persisted)`.
 
+## ⛔ THE RECOMPUTE IS AN ENDPOINT ORACLE — NOT THE READ PATH, AND NEVER AN IN-DLL DIFF (owner)
+
+**"The ensures were some of the earliest rollerskates."** Read-side `ensure()` is tombstoned by name
+([superseded-ideas](superseded-ideas.md) #14: *"never re-add … an `ensure`-on-read protocol"*) and measured:
+an ensure-per-read protocol on AI-hot paths ground unit automation. A read is a **BARE FETCH, unconditionally** —
+there is no gate test on it, because there is nothing on the read path to gate.
+
+**The ruling (owner): keep the recompute, but it is called ONLY BY AN ENDPOINT, and the COMPARISON HAPPENS
+EXTERNALLY.** Two endpoints, one external diff:
+
+- **the STORED endpoint** serves what the EVENTS built — the live package/set values, read exactly as a consumer
+  reads them;
+- **the ORACLE endpoint** runs the recompute FROM SOURCE **into SCRATCH** and serves that;
+- **an external consumer diffs the two.** A disagreement is a **missed emit**, named by scope + channel + owner.
+
+⛔ **NEVER emit a divergence as a spine event — that is a GUARANTEED LICENSE TO BUILD SELF-HEALING (owner), and
+it is the reason this is a hard rule rather than a preference.** An event is an **invitation to a consumer**.
+Put a divergence on the spine and the next agent writes the consumer that handles it — and "handling" a value
+known to be wrong means CORRECTING it. Self-heal then arrives because the SHAPE invited it, not because anyone
+decided to add it, and it arrives wearing the authority of the event spine
+([DEC-no-self-heal](decisions.md#dec-no-self-heal)). **A PULL (an endpoint someone asks) cannot grow that
+consumer; a PUSH (an event fanned to whoever registers) grows it by default.** So the DLL neither compares nor
+reports: a divergence is not a happening, it is an OBSERVATION an external reader makes about two served
+numbers, and it has no in-DLL representation at all — no diff, no log line, no event, no field.
+
+⛔ **Frame this as REBUILD. Shadow is dead and cutover is dead (owner) — neither is a lens for any remaining
+work.** Do not describe this oracle as "shadowing" the cascade, do not reach for cutover staging, and do not
+revive either vocabulary to justify a comparison: the sanctioned shape is simply *two served surfaces, diffed
+outside* ([http-endpoints.md](../specs/http-endpoints.md)).
+
+⚑ **Serving into SCRATCH is what makes "never repairs" STRUCTURAL.** The oracle cannot write the stored slots
+because it is not given them — no snapshot, no restore, no discipline to remember and no window in which a
+half-finished recompute could leave a repaired value behind. A verifier that repairs is self-heal wearing a
+different hat ([DEC-no-self-heal](decisions.md#dec-no-self-heal)); this one structurally cannot.
+
+⚑ **What makes this comparison REAL:** it pits **event-built state against a fresh recompute-from-source** — two
+genuinely different derivations of the same number, which agree only while every mutation emitted. A comparison
+whose two sides share a derivation can never turn red and verifies nothing; this one can, and that is its job.
+
+**The identity a divergence needs to be actionable:** "some city's production flats are wrong" across 185 cities
+identifies nothing, so every served value carries its owner, **interpreted per scope** as the spine's DOMAIN ints
+are interpreted per event: city = `(owner, cityId)` · empire = `(playerId, —)` · team = `(—, teamId)` · area =
+`(player, areaId)` · plot = `(x, y)` (a plot has no owner-independent id, and the map index needs a map that does
+not exist at bind). Identity is passed IN at bind — the scope owners share no common id accessor.
+
+⚠ **Consequence, and it is not optional: the REBUILD MOVES ONTO THE MARK.** The event that marks a slot is what
+rebuilds it — the same shape the contexts use — with the batched turn-end sweep as the later refinement
+(§ THE TARGET END-STATE).
+
+**The realized shape.** `ensure()` is gone as a name; what stands in its place:
+
+- **`CvDerivedCacheSet::markDirty(mask)` marks AND rebuilds.** The rebuild is `rebuildMarked(mask)` (clear the
+  mark first, then run the owner's refresh). Marking without rebuilding is not an available move — which is the
+  invariant that lets every read be bare.
+- **THE ONE DEFERRAL — the load bracket.** Inside `GAME_LOAD_STARTED`..`FINISHED` `markDirty` BANKS the mark and
+  does not rebuild: a rebuild mid-read evaluates against half-deserialized state (the context stores, the areas
+  and the plot-group network complete only when the stream ends), and with no read-side recompute that wrong
+  value would then stand forever. Each system drains its OWN banked marks at `GAME_LOAD_FINISHED`
+  (`CvModifierConsumer::mc_drainLoadMarks`) — this is the reseed's eager load build, **not** a blanket: only bits
+  an in-read event actually marked rebuild, and a package no event reached stays unbuilt and visibly wrong.
+  ⚠ **Consumer registration order is therefore a contract**: the modifier consumer registers AFTER the contexts'
+  consumer, because its drain reads the context stores that consumer builds on the same event.
+- **TWO read surfaces, and only one of them is a read path.** `CvCascadePackage::readFlat/readPercent/readSum`
+  are the CONSUMER read path — bare fetches. `sourceFlat/sourcePercent/sourceSum` are the **rebuild-path input
+  reads**, called only from `CascadeGather`: a combine runs inside a rebuild, so it reads a cross-scope input
+  through that input's own mark. That is what makes "there is no dependency-ordered rebuild pass" true — the mark
+  ORDER within an event is irrelevant, and the load drain needs no ordering either. It is **not** the retired
+  ensure-on-read: it can only fire for a slot something DID mark, so a MISSED emit still reads clean and stays
+  visibly wrong.
+- **THERE IS NO GATE ON A READ.** A read is a bare fetch unconditionally — nothing is tested on it, because
+  nothing on it can recompute.
+- **The two served surfaces, per plane** (`/computed/*`, [http-endpoints.md](../specs/http-endpoints.md)):
+  `.../stored` serves what the events built (`CvCascadePackage::readValuesInto`,
+  `EnablerKernel::operatingBuildings`, `CascadeCapabilities::storedUnion`) and `.../oracle` serves the
+  from-source recompute into a buffer the endpoint owns (`CascadeGather::gather*Into`,
+  `EnablerKernel::recomputeOperatingSetInto`, `CascadeCapabilities::refreshInto`). Both sides render through
+  ONE renderer per plane (`Sources/Tools/CvOracleEndpoints.cpp`), so the documents are diffable field by field.
+- **Where the oracle lives is decided by where the STORAGE lives.** `CvDerivedCacheSet` owns only the mark
+  protocol, so the storage owner supplies the scratch (the gather's `gather*Into` for the cascade packages);
+  the single-flag forms expose `recomputeInto(buffer)` directly.
+- **An oracle run is a FULL RECALC, by design (owner) — it reads NOTHING off the stored surface.** Every input,
+  including every cross-scope one, is recomputed from source. ⛔ The tempting alternative — recompute only the
+  asked-about object and read its cross-scope inputs off the stored packages — is **WRONG, and wrong in the
+  specific way that killed the old twin surface**: an oracle that consumes stored values is partly built on the
+  very state it exists to check, so a wrong input is silently INHERITED and the two sides quietly share a
+  derivation again. **Independence is the entire value of the oracle**; nothing may be traded for it.
+  *(Attribution is not lost by going full: a drifted low scope diverges on its OWN row too, so the external
+  differ walks from the lowest diverging scope up to find the root cause — and attribution is the EXTERNAL
+  reader's job anyway, which is the whole point of taking the comparison out of the DLL.)*
+- **⛔ An oracle run's COST IS IRRELEVANT — "correct is correct" (owner).** It is invoked deliberately, by a
+  human or a tool asking a question, never on a turn path. So it is never trimmed, sampled, memoized, or made
+  incremental to look cheap: a full recompute that takes as long as it takes IS the deliverable. Do not optimize
+  it, and never let a performance argument reshape it — that is how an oracle stops being independent.
+- **An oracle run ANNOUNCES nothing.** It emits no `[CASCADE] rebuilt` line: nothing was rebuilt, and a
+  verification sweep must not move the numbers that describe real work.
+
 ## The standardized `CvDerivedCache` component
 
 **One reusable C++03 component** (`Sources/Infrastructure/CvDerivedCache.h`) rather than hand-rolled per cache — a
@@ -93,15 +198,22 @@ player building-commerce ledger).
 
 ```cpp
 template <class TOwner, class T, int N>
-class CvDerivedCache {                       // recompute-only, dirty-flagged, NEVER serialized; the single PULL source
+class CvDerivedCache {                       // recompute-only, mark-driven, NEVER serialized; the single PULL source
     mutable T    m_data[N];
-    mutable bool m_dirty;
+    mutable bool m_marked;
     TOwner*      m_owner;
     void (TOwner::*m_recompute)(T*) const;   // fills m_data from CURRENT state (needs owner; stays owner-side)
 public:
-    void bind(TOwner* o, void (TOwner::*fn)(T*) const) { m_owner = o; m_recompute = fn; m_dirty = true; }
-    void markDirty() { m_dirty = true; }     // the trigger — call at every input-change site (no eager recompute, no push)
-    T    get(int i) const { if (m_dirty) { (m_owner->*m_recompute)(m_data); m_dirty = false; } return m_data[i]; }
+    void bind(TOwner* o, void (TOwner::*fn)(T*) const);
+    void markDirty() const {                 // the trigger — call at every input-change site. THE MARK REBUILDS.
+        m_marked = true;
+        if (!spineGameLoadInProgress()) rebuildMarked();   // banked inside the load bracket; drained at its end
+    }
+    void rebuildMarked() const {             // clear the mark FIRST, then recompute (contract rule 1)
+        if (m_marked && m_owner) { m_marked = false; (m_owner->*m_recompute)(m_data); }
+    }
+    T get(int i) const { return m_data[i]; }               // A BARE FETCH — never a recompute, never a gate test
+    void recomputeInto(T* out) const;        // THE ORACLE — the same recompute over the CALLER's buffer, no gate
 };
 ```
 
@@ -135,10 +247,7 @@ public:
   On LOAD the cascade is stood up by the **event reseed** — the save read fires the DOMAIN events for every fact as it
   deserializes, and each package builds from its own deposits ([event-spine.md](../specs/event-spine.md) /
   [DEC-spine-reseed](decisions.md#dec-spine-reseed)); the old recompute-on-load / warm-up recalc
-  (`playerSliceRebuild` + `worldRebuild`) was a stabilize-the-drift STOPGAP and is REMOVED, and the cascade no longer
-  uses `recalculateModifiers` as a heal. (The legacy `recalculateModifiers` FUNCTION still exists in
-  `CvGame`/`CvTeam`/`CvPlayer`/`CvCity`, invoked only by the WorldBuilder / asset-checksum-mismatch popup path
-  (`CvMessageData.cpp`) — it is never the cascade's population path.) Post-load, an event marks only the package(s) its deposits touch, and **ONLY marked (dirty) packages
+  (`playerSliceRebuild` + `worldRebuild`) was a stabilize-the-drift STOPGAP and is REMOVED. Post-load, an event marks only the package(s) its deposits touch, and **ONLY marked (dirty) packages
   rebuild** — there is NO full per-player rebuild on `doTurn`, NO mark-all, NO per-slice blanket, and NO turn-roll
   self-heal ([DEC-no-self-heal](decisions.md#dec-no-self-heal)): those blankets (`playerSliceRebuild`, the EPOCH
   bump, the RATE turn-roll) are REMOVED, each replaced by targeted, spine-routed per-source-mask invalidation. A
@@ -170,6 +279,10 @@ public:
   Plot and the upper scopes are therefore mirror images (yield-only vs percent-only), and **CITY is the single
   scope carrying both**. That is why "whether a scope's packages are empty is irrelevant" is not hand-waving: the
   shape is uniform, and the origin rule says which half any given scope ever fills.
+  ⚖ **The rule governs the YIELD/RATE plane; for every other family the sides are the DATA's and the minted
+  channel sets enforce them** (wellbeing authors empire+area flats; health/defense/property author plot percents)
+  — [modifier.md §1](../specs/modifier.md). ⛔ Consequence for any read-side roll-up: **the channel set is the
+  gate, never a hand-written per-scope filter.**
 
   **⛔ THE CONSOLIDATION REQUIREMENT (owner): every modifier/yield cache is ONE shape** — TWO DICTIONARIES per
   scope object, one flats and one percents, each an int keyed by channel. The drift it replaces is the ~33
@@ -250,6 +363,15 @@ public:
     Channel-indexed slots invalidate by derived mask with no per-field code.
   - **The receiving scope is NOT the storing scope.** A package never moves to its consumer (that breaks the scope
     principle); the consumer stores only its own realized TOTAL — one cheap variable per channel.
+  - **⛔ A CROSS-SCOPE receiver total is the Σ of its MEMBERS' REALIZED values — and NOTHING beside that Σ.** The
+    empire's gold / research / culture / espionage sums are Σ over the player's cities of each city's realized
+    rate of that channel: exactly the quantity the retired per-read city walk answered, merely cached. The
+    per-city quantity for a commerce channel is the whole [modifier.md §2a](../specs/modifier.md) split — the
+    slider share of the city's COMMERCE yield, the channel's own deposits, and the process conversion — not the
+    channel's deposits alone. ⛔ **An upper scope's own package is NEVER added on top of that Σ:** its deposits
+    roll DOWN ([modifier.md §1](../specs/modifier.md)) and are therefore already inside every member's realized
+    value, so adding them again at the receiving scope counts each empire-scope deposit once per city PLUS once
+    more — a silent multiplication that compiles, runs, and simply reports wrong numbers.
   - **⛔ NOT a push accumulator, and NOT a per-read walk — the cached sum sits between those two failures.**
     Rejecting the legacy incremental accumulator does not license recomputing on every read: an empire-scope
     getter that re-walks every city per call (`CvPlayer::getCommerceRate`) is the per-read-walk cost class this
@@ -276,11 +398,14 @@ public:
   propagation, the shape the frontier ALREADY uses (`onBuildingChanged` / `recheckHave` off the reverse-index). It
   is likewise **not a given** the yield-package shape fits any OTHER non-package channel (the unit plane,
   properties); each is decided per-channel, only AFTER the spec is fully in place.
-- **THE TARGET END-STATE — flags all turn, ONE unified rebuild at turn end.** The whole model in one line: *"if
-  things have not changed, cache is not stale; if it has, rebuild."* Events are pure flag-sets (the DOMAIN-event →
-  markDirty pattern, no mid-turn recompute); reads serve the standing snapshot all turn; ONE batched rebuild pass at
-  turn end sweeps every flagged cache **in dependency order** (plot caches → city components → player aggregates),
-  priming the next cycle. Consequences: no lazy-refresh reentrancy, no mid-turn freshness questions, rebuild cost is
+- **THE TARGET END-STATE — flags all turn, ONE unified rebuild at turn end.** ⚠ This is the NEXT increment, not
+  what stands: **today the mark rebuilds immediately** (§ `ensure()` above), so an event does pay its recompute
+  mid-turn. The whole model in one line: *"if things have not changed, cache is not stale; if it has, rebuild."*
+  Events become pure flag-sets (the DOMAIN-event → markDirty pattern, no mid-turn recompute); reads serve the
+  standing snapshot all turn; ONE batched rebuild pass at turn end sweeps every flagged cache **in dependency
+  order** (plot caches → city components → player aggregates), priming the next cycle. The load drain built for
+  the bracket is the same pass at a different cadence, so the batch lands as a re-cadencing rather than new
+  machinery. Consequences: no lazy-refresh reentrancy, no mid-turn freshness questions, rebuild cost is
   one measurable phase. Pairs with the [AI build-queue-parity model](../plans/parked/ai-build-queue-parity.md) — the
   snapshot IS the fairness mechanism; this end-state lands WITH that rework. **The event→cache routing is DERIVED
   FROM THE DATA, never hand-wired:** a DOMAIN event carries its SOURCE; the source's compiled deposits (the

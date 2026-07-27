@@ -76,8 +76,6 @@ CvMessageData* CvMessageData::createMessage(GameMessageTypes eType)
 		return new CvNetAddReminder();
 	case GAMEMESSAGE_SET_GLOBAL_DEFINE:
 		return new CvGlobalDefineUpdate();
-	case GAMEMESSAGE_RECALCULATE_MODIFIERS:
-		return new CvNetRecalculateModifiers();
 	case GAMEMESSAGE_BUILD_LISTS:
 		return new CvNetBuildLists();
 	case GAMEMESSAGE_BUILD_LIST_PUSH_ORDER:
@@ -1353,29 +1351,6 @@ void CvGlobalDefineUpdate::SetFromBuffer(FDataStreamBase* pStream)
 	pStream->Read(&m_iValue);
 	pStream->Read(&m_fValue);
 	pStream->ReadString(m_szValue);
-}
-
-
-CvNetRecalculateModifiers::CvNetRecalculateModifiers() : CvMessageData(GAMEMESSAGE_RECALCULATE_MODIFIERS) { }
-
-void CvNetRecalculateModifiers::Debug(char *szAddendum)
-{
-	sprintf(szAddendum, "Starting modifier recalculation");
-}
-
-void CvNetRecalculateModifiers::Execute()
-{
-	GC.getGame().recalculateModifiers();
-}
-
-void CvNetRecalculateModifiers::PutInBuffer(FDataStreamBase* pStream)
-{
-	// Nothing to transmit
-}
-
-void CvNetRecalculateModifiers::SetFromBuffer(FDataStreamBase* pStream)
-{
-	// Nothing to transmit
 }
 
 

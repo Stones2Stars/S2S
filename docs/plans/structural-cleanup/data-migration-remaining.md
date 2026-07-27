@@ -180,7 +180,7 @@ one mechanic:
 
 ("health" in `Sources/Cascade/` is the separate WELLBEING sickness channel — built + consumed by `CvCascadeWellbeing`
 — NOT unit healing.) The whole thing matches the plan's "unit plane lands last" ([modifier.md](../../specs/modifier.md)
-§6) but is **under-tracked** (never modelled by StoneBase). Legacy apply (KEEP): `CvUnit::doHeal` (CvUnit.cpp:6467) → `changeDamage(-healRate())` / per-UnitCombat
+§6) but is **under-tracked**. Legacy apply (KEEP): `CvUnit::doHeal` (CvUnit.cpp:6467) → `changeDamage(-healRate())` / per-UnitCombat
 `changeHealAsDamage`; building full-heal via `CvCity::doHeal` (:21999); city heal-pool `getHealRate()` fed by building
 `iHealRateChange` via `processBuilding`.
 

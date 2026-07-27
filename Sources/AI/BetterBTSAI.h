@@ -51,8 +51,7 @@ void logCombatAI(int level, const char* format, ...);
 // flooding Asserts.log with stack traces. One key=value line per occurrence; the
 // repeated-line count is itself the signal (don't dedup).
 //   [ENG/viscap] (lvl 2, CvPlot::changeVisibilityCount) = a team's plot visibility
-//   count went negative and was capped to zero (fires en masse during
-//   recalculateModifiers' remove/re-add sight passes).
+//   count went negative and was capped to zero.
 void logEngine(int level, const char* format, ...);
 
 // Wall-clock turn-phase timing -> Performance.log, gated by gPerfLogLevel.

@@ -749,14 +749,6 @@ void CvDLLButtonPopup::OnOkClicked(CvPopup* pPopup, PopupReturn *pPopupReturn, C
 
 			break;
 		}
-		case BUTTONPOPUP_MODIFIER_RECALCULATION:
-		{
-			if (1 == pPopupReturn->getButtonClicked())
-			{
-				CvMessageControl::getInstance().sendRecalculateModifiers();;
-			}
-			break;
-		}
 		case BUTTONPOPUP_NAME_LIST:
 		{
 			if (pPopupReturn->getEditBoxString(0) && *(pPopupReturn->getEditBoxString(0)))
@@ -1133,10 +1125,6 @@ bool CvDLLButtonPopup::launchButtonPopup(CvPopup* pPopup, CvPopupInfo &info)
 		case BUTTONPOPUP_GET_SAVE_FORMAT:
 		{
 			return launchGetSaveFormatPopup(pPopup, info);
-		}
-		case BUTTONPOPUP_MODIFIER_RECALCULATION:
-		{
-			return launchModifierRecalculationPopup(pPopup, info);
 		}
 		case BUTTONPOPUP_NAME_LIST:
 		{
@@ -2571,22 +2559,6 @@ bool CvDLLButtonPopup::launchGetSaveFormatPopup(CvPopup* pPopup, CvPopupInfo &in
 
 	gDLL->getInterfaceIFace()->popupAddGenericButton(pPopup, gDLL->getText("TXT_KEY_POPUP_OLD_GAME_SAVE_FORMAT").c_str(), NULL, 0, WIDGET_GENERAL);
 	gDLL->getInterfaceIFace()->popupAddGenericButton(pPopup, gDLL->getText("TXT_KEY_POPUP_NEW_GAME_SAVE_FORMAT").c_str(), NULL, 1, WIDGET_GENERAL);
-
-	gDLL->getInterfaceIFace()->popupLaunch(pPopup, false, POPUPSTATE_IMMEDIATE);
-	return true;
-}
-
-bool CvDLLButtonPopup::launchModifierRecalculationPopup(CvPopup* pPopup, CvPopupInfo &info)
-{
-	CvWString szBuffer = gDLL->getText("TXT_KEY_POPUP_MODIFIER_RECALCULATION");
-
-	gDLL->getInterfaceIFace()->popupSetHeaderString(pPopup, szBuffer);
-
-	szBuffer = gDLL->getText("TXT_KEY_POPUP_MODIFIER_RECALCULATION_BODY");
-	gDLL->getInterfaceIFace()->popupSetBodyString(pPopup, szBuffer);
-
-	gDLL->getInterfaceIFace()->popupAddGenericButton(pPopup, gDLL->getText("TXT_KEY_POPUP_YES"), NULL, 1, WIDGET_GENERAL);
-	gDLL->getInterfaceIFace()->popupAddGenericButton(pPopup, gDLL->getText("TXT_KEY_POPUP_NO"), NULL, 0, WIDGET_GENERAL);
 
 	gDLL->getInterfaceIFace()->popupLaunch(pPopup, false, POPUPSTATE_IMMEDIATE);
 	return true;

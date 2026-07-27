@@ -1,11 +1,10 @@
 // readjson.cpp — isolated #428 JSON CONFORMANCE harness (step 1, v2).
 //
 // ⛔ FROZEN / SUPERSEDED (owner ruling 2026-06-29). Do NOT keep this current with json.md anymore.
-//   - The json→readable-text RENDER moved to StoneBase: `GET /render?type=<TYPE>` (it already parses the JSON into the
-//     typed model — far cheaper to maintain than this VC7.1 harness; it is also the long-term modder spec-compliance
-//     surface). See StoneBase src/Application/Features/Render/RenderEntity.cs.
+//   - The json→readable-text RENDER moved out of this harness: it already parses the JSON into the typed model,
+//     which is far cheaper to maintain than this VC7.1 harness.
 //   - The CONFORMANCE sweep (drive unknown buckets to zero) served its step-1 purpose; the grammar is now mapped.
-//   - The in-DLL `readJson` mirrors json.md + StoneBase's parser (the live, spec-current model), NOT this harness.
+//   - The live, spec-current model is the in-DLL `readJson` (json.md), NOT this harness.
 //     (This harness is also STALE: its `any` is the retired OR-of-AND-groups shape; json.md §3.4 is a recursive tree.)
 //   Kept for reference only; not built/maintained. Plan: docs/plans/structural-cleanup/readjson.md.
 //

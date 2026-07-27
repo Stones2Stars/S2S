@@ -35,8 +35,10 @@ Verify against the tree before acting on any claim that something is built.
 - **[specs/event-spine.md](specs/event-spine.md)** — the one dispatch primitive consumers draw events from (the KIND firewall).
 - **[specs/save.md](specs/save.md)** — the name-keyed save format + the **soft-remove** discipline (`savemigration.txt` drain, no `WRAPPER_SKIP_ELEMENT`, derived-serializes-nothing).
 - **[specs/logging.md](specs/logging.md)** — **what to log** (the Orwell observability bar, hook shapes, the coverage scale).
-- **[specs/validation.md](specs/validation.md)** — the dry-calc test + the **parity** bar (the shadow phase has ended).
-- **[specs/http-endpoints.md](specs/http-endpoints.md)** — the endpoint catalogue (`/state`, `/computed`, `/events`).
+- **[specs/validation.md](specs/validation.md)** — the live-verification discipline: done-is-observable endpoint polls + turn time (parity and shadow are closed).
+- **[specs/http-endpoints.md](specs/http-endpoints.md)** — the HTTP transport + its two standing invariants, and
+  ⛔ **why the route surface is EMPTY and must stay empty** (an endpoint is a live consumer: a route keeps a legacy
+  member alive past the compiler census). The six stored-vs-oracle cache documents are the whole surface today.
 - Unit classification — **[skills](specs/skills.md)** (mutable abilities) · **[tags](specs/tags.md)** (immutable
   membership) · **[state](specs/state.md)** (transient) · **[capabilities](specs/capabilities.md)** (empire).
 - **[specs/curators/](specs/curators/README.md)** — the migration conversion spec (**transient**; the old→new field

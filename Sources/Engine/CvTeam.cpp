@@ -29,12 +29,35 @@
 #include "CvDLLInterfaceIFaceBase.h"
 #include "CvDLLUtilityIFaceBase.h"
 #include "CvCascadeGather.h"
+#include "CvCascadeChannelRegistry.h"   // channelLookup -- the group reads' channel identity
+#include "CvInfoKinds.h"                // the family + kind vocabulary the group reads walk
+#include "Data/CvInfoValuation.h"       // realizedAtTeam -- the ONE cross-scope roll-up
 
 // The TEAM-scope cascade package's refresh delegate -- the one-line delegation to the ONE gather
 // ([DEC-single-implementation]; see CvCascadeGather).
 void CvTeam::refreshCascadePackage(int64_t iMask) const
 {
 	CascadeGather::refreshTeam(*this, iMask);
+}
+
+// The team's group reads (see CvTeam.h for the role + the grammar). Same shape as every other owner's: walk the
+// group's own enum, resolve the entry's CHANNEL by identity, fold it through the ONE roll-up.
+void CvTeam::getCombatKinds(int (&combats)[NUM_COMBAT_KINDS]) const
+{
+	for (int iKind = 0; iKind < NUM_COMBAT_KINDS; ++iKind)
+	{
+		const int iChannel = CascadeChannelRegistry::channelLookup(MODFAM_COMBAT, iKind, -1);
+		combats[iKind] = InfoValuation::realizedAtTeam(*this, iChannel);
+	}
+}
+
+void CvTeam::getDiplomacyKinds(int (&diplomacies)[NUM_DIPLOMACY_KINDS]) const
+{
+	for (int iKind = 0; iKind < NUM_DIPLOMACY_KINDS; ++iKind)
+	{
+		const int iChannel = CascadeChannelRegistry::channelLookup(MODFAM_DIPLOMACY, iKind, -1);
+		diplomacies[iKind] = InfoValuation::realizedAtTeam(*this, iChannel);
+	}
 }
 
 // Public Functions...
@@ -201,7 +224,7 @@ void CvTeam::reset(TeamTypes eID, bool bConstructorCall)
 
 	m_dataRepository.reset();
 	// bind the TEAM-scope cascade package (all-dirty from bind: a loaded/new team recomputes on first read)
-	m_cascadePackage.bind(CASC_SCOPE_TEAM, this, &CvTeam::refreshCascadePackage);
+	m_cascadePackage.bind(CASC_SCOPE_TEAM, this, &CvTeam::refreshCascadePackage, -1, (int)eID);
 
 	//--------------------------------
 	// Uninit class
@@ -7696,118 +7719,6 @@ void CvTeam::subtractPropertiesAllCities(const CvProperties* pProp)
 		if (GET_PLAYER((PlayerTypes)iI).isAliveAndTeam(getID()))
 		{
 			GET_PLAYER((PlayerTypes)iI).subtractPropertiesAllCities(pProp);
-		}
-	}
-}
-
-void CvTeam::recalculateModifiers()
-{
-	PROFILE_EXTRA_FUNC();
-	// Clear player modifiers
-	for (int iI = 0; iI < MAX_PLAYERS; iI++)
-	{
-		if (GET_PLAYER((PlayerTypes)iI).isAliveAndTeam(getID()))
-		{
-			GET_PLAYER((PlayerTypes)iI).clearModifierTotals();
-		}
-	}
-
-	for (int iI = 0; iI < MAX_TEAMS; iI++)
-	{
-		m_aiTechShareCount[iI] = 0;
-	}
-
-	//	Clear team level info (from techs)
-	m_iExtraWaterSeeFromCount = 0;
-	m_iCanPassPeaksCount = 0;
-	m_iMoveFastPeaksCount = 0;
-	m_iCanFoundOnPeaksCount = 0;
-	m_iRebaseAnywhereCount = 0;
-	m_iForeignTradeModifier = 0;
-	m_iTradeModifier = 0;
-	m_iTradeMissionModifier = 0;
-	m_iCorporationRevenueModifier = 0;
-	m_iCorporationMaintenanceModifier = 0;
-	m_iCanFarmDesertCount = 0;
-	m_iOpenBordersTradingCount = 0;
-	m_iDefensivePactTradingCount = 0;
-	m_iPermanentAllianceTradingCount = 0;
-	m_iVassalTradingCount = 0;
-	m_iBridgeBuildingCount = 0;
-	m_iIrrigationCount = 0;
-	m_iIgnoreIrrigationCount = 0;
-	m_iWaterWorkCount = 0;
-	m_iVassalPower = 0;
-	m_iMasterPower = 0;
-	m_iEnemyWarWearinessModifier = 0;
-	m_iRiverTradeCount = 0;
-	m_iNukeInterception = 0;
-
-	for (int iI = 0; iI < GC.getNumImprovementInfos(); iI++)
-	{
-		for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
-		{
-			m_ppaaiImprovementYieldChange[iI][iJ] = 0;
-		}
-	}
-
-	for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
-	{
-		m_paiBuildingCount[iI] = 0;
-		m_paiObsoleteBuildingCount[iI] = 0;
-
-		for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
-		{
-			m_ppiBuildingCommerceModifier[iI][iJ] = 0;
-		}
-		for (int iJ = 0; iJ < GC.getNumSpecialistInfos(); iJ++)
-		{
-			m_ppiBuildingSpecialistChange[iI][iJ] = 0;
-		}
-	}
-
-	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
-	{
-		m_paiFreeSpecialistCount[iI] = 0;
-	}
-
-	for (int iI = 0; iI < NUM_DOMAIN_TYPES; iI++)
-	{
-		m_aiExtraMoves[iI] = 0;
-	}
-
-	for (int iI = 0, num = GC.getNumRouteInfos(); iI < num; iI++)
-	{
-		m_paiRouteChange[iI] = 0;
-	}
-
-	// Recalculate player modifiers
-	for (int iI = 0; iI < MAX_PLAYERS; iI++)
-	{
-		if (GET_PLAYER((PlayerTypes)iI).isAliveAndTeam(getID()))
-		{
-			GET_PLAYER((PlayerTypes)iI).recalculateModifiers();
-		}
-	}
-	// Reapply techs
-	for (int iI = 0; iI < GC.getNumTechInfos(); iI++)
-	{
-		if (isHasTech((TechTypes)iI))
-		{
-			processTech((TechTypes)iI, 1);
-		}
-	}
-	// Reapply circumnavigation bonus
-	if (GC.getGame().getCircumnavigatedTeam() == getID())
-	{
-		setCircumnavigated(true);
-	}
-	// Reapply projects
-	for (int iI = 0; iI < GC.getNumProjectInfos(); iI++)
-	{
-		if (getProjectCount((ProjectTypes)iI) > 0)
-		{
-			processProjectChange((ProjectTypes)iI, getProjectCount((ProjectTypes)iI), getProjectCount((ProjectTypes)iI));
 		}
 	}
 }

@@ -69,7 +69,6 @@ private:
 	bool launchLaunchPopup(CvPopup* pPopup, CvPopupInfo &info);
 	bool launchFoundReligionPopup(CvPopup* pPopup, CvPopupInfo &info);
 	bool launchGetSaveFormatPopup(CvPopup* pPopup, CvPopupInfo &info);
-	bool launchModifierRecalculationPopup(CvPopup* pPopup, CvPopupInfo &info);
 	bool launchNameListPopup(CvPopup* pPopup, CvPopupInfo &info);
 	bool launchGoToCityPopup(CvPopup* pPopup, CvPopupInfo &info);
 

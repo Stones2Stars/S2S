@@ -95,7 +95,6 @@ CvGame::CvGame()
 		starshipLaunched[iI] = false;
 		diplomaticVictoryAchieved[iI] = false;
 	}
-	m_bRecalculatingModifiers = false;
 	m_bWorldBuilder = false;
 
 	reset(NO_HANDICAP, true);
@@ -561,9 +560,6 @@ void CvGame::onFinalInitialized(const bool bNewGame)
 		// Remove and re-add the GW on load
 		processGreatWall(false, true, false);
 		processGreatWall(true, true);
-
-		// Is a modifier recalc needed?
-		GC.getInitCore().checkVersions();
 	}
 	// Set the unit/building filters to default state now that game is fully initialized.
 	UnitFilterList::setFilterActiveAll(UNIT_FILTER_HIDE_UNBUILDABLE, getBugOptionBOOL("CityScreen__HideUntrainableUnits", true));
@@ -4160,23 +4156,17 @@ void CvGame::changeDiploVote(VoteSourceTypes eVoteSource, int iChange)
 
 	if (0 != iChange)
 	{
-		if (!m_bRecalculatingModifiers)
+		for (int iPlayer = 0; iPlayer < MAX_PLAYERS; iPlayer++)
 		{
-			for (int iPlayer = 0; iPlayer < MAX_PLAYERS; iPlayer++)
-			{
-				GET_PLAYER((PlayerTypes)iPlayer).processVoteSourceBonus(eVoteSource, false);
-			}
+			GET_PLAYER((PlayerTypes)iPlayer).processVoteSourceBonus(eVoteSource, false);
 		}
 
 		m_aiDiploVote[eVoteSource] += iChange;
 		FASSERT_NOT_NEGATIVE(getDiploVoteCount(eVoteSource));
 
-		if (!m_bRecalculatingModifiers)
+		for (int iPlayer = 0; iPlayer < MAX_PLAYERS; iPlayer++)
 		{
-			for (int iPlayer = 0; iPlayer < MAX_PLAYERS; iPlayer++)
-			{
-				GET_PLAYER((PlayerTypes)iPlayer).processVoteSourceBonus(eVoteSource, true);
-			}
+			GET_PLAYER((PlayerTypes)iPlayer).processVoteSourceBonus(eVoteSource, true);
 		}
 	}
 }
@@ -11623,170 +11613,6 @@ void CvGame::loadPirateShip(CvUnit* pUnit)
 	}
 }
 
-
-void CvGame::recalculateModifiers()
-{
-	OutputDebugString("Start profiling(false) for modifier recalc\n");
-	startProfilingDLL(false);
-	PROFILE_FUNC();
-
-	m_bRecalculatingModifiers = true;
-
-	//establish improvement costs
-	//for (int iI = 0; iI < GC.getNumImprovementInfos(); iI++)
-	//{
-	//	GC.getImprovementInfo((ImprovementTypes)iI).setHighestCost();
-	//}
-
-	//	Inhibit plot group manipulation until we rebuild at the end of everything else
-	for (int iI = 0; iI < MAX_PLAYERS; iI++)
-	{
-		if (GET_PLAYER((PlayerTypes)iI).isAlive())
-		{
-			GET_PLAYER((PlayerTypes)iI).inhibitPlotGroupCalcsUntilFullRebuild();
-		}
-	}
-
-	// AIAndy: Recalculate which info class replacements are currently active
-	GC.updateReplacements();
-
-	for (int iI = 0; iI < GC.getNumVoteSourceInfos(); iI++)
-	{
-		m_aiDiploVote[iI] = 0;
-	}
-
-	for (int iI = 0; iI < GC.getNumSpecialUnitInfos(); iI++)
-	{
-		m_pabSpecialUnitValid[iI] = false;
-		if (GC.getSpecialUnitInfo((SpecialUnitTypes)iI).isValid())
-		{
-			makeSpecialUnitValid((SpecialUnitTypes)iI);
-		}
-	}
-
-	for (int iI = 0; iI < GC.getNumSpecialBuildingInfos(); iI++)
-	{
-		m_pabSpecialBuildingValid[iI] = false;
-		if (GC.getSpecialBuildingInfo((SpecialBuildingTypes)iI).isValid())
-		{
-			makeSpecialBuildingValid((SpecialBuildingTypes)iI);
-		}
-	}
-
-	//TB Nukefix
-	//m_bNukesValid = false;
-
-	// AIAndy: Clear properties for recalculate, should be before any recalculation of any team because change propagation can cause cross team propagation (depending on usage)
-	// units are not supposed to have that kind of property (needs extra code if that changes)
-	getProperties()->clearForRecalculate();
-
-	for (int iI = 0; iI < GC.getMap().numPlots(); iI++)
-	{
-		CvPlot* plotX = GC.getMap().plotByIndex(iI);
-		plotX->clearModifierTotals();
-
-		// Toffer - Yield cache - Maybe not the perfect spot for this, but it should be done early.
-		plotX->recalculateBaseYield();
-	}
-
-	for (int iI = 0; iI < MAX_TEAMS; iI++)
-	{
-		if (GET_TEAM((TeamTypes)iI).isAlive())
-		{
-			GET_TEAM((TeamTypes)iI).getProperties()->clearForRecalculate();
-		}
-	}
-
-	for (int iPlayer = 0; iPlayer < MAX_PLAYERS; ++iPlayer)
-	{
-		CvPlayer& kLoopPlayer = GET_PLAYER((PlayerTypes)iPlayer);
-		if (kLoopPlayer.isAlive())
-		{
-			kLoopPlayer.getProperties()->clearForRecalculate();
-
-			foreach_(CvCity* pLoopCity, kLoopPlayer.cities())
-			{
-				pLoopCity->getProperties()->clearForRecalculate();
-			}
-		}
-	}
-
-	algo::for_each(GC.getMap().areas(), CvArea::fn::clearModifierTotals());
-
-	for(int iI = 0; iI < MAX_TEAMS; iI++)
-	{
-		if (GET_TEAM((TeamTypes)iI).isAlive())
-		{
-			GET_TEAM((TeamTypes)iI).recalculateModifiers();
-		}
-	}
-
-	for (int iI = 0; iI < GC.getNumVoteSourceInfos(); iI++)
-	{
-		for (int iPlayer = 0; iPlayer < MAX_PLAYERS; iPlayer++)
-		{
-			if (GET_PLAYER((PlayerTypes)iPlayer).isAlive())
-			{
-				GET_PLAYER((PlayerTypes)iPlayer).processVoteSourceBonus((VoteSourceTypes)iI, true);
-			}
-		}
-	}
-
-	updatePlotGroups(true);
-	updateTradeRoutes();
-
-	//	Recheck for disabled buildings everywhere (this has to be done after plot group establishment
-	//	or else resource dependencies will mean it gets the wrong answer, which will in turn force
-	//	(automatic) recalculation the following turn (which is very inefficient)
-	for (int iPlayer = 0; iPlayer < MAX_PLAYERS; ++iPlayer)
-	{
-		const CvPlayer& kLoopPlayer = GET_PLAYER((PlayerTypes)iPlayer);
-		if (kLoopPlayer.isAlive())
-		{
-			foreach_(CvCity* pLoopCity, kLoopPlayer.cities())
-			{
-				pLoopCity->doVicinityBonus();
-				pLoopCity->checkBuildings(false);
-			}
-		}
-	}
-
-	GC.getMap().updateSight(true, false);
-
-	gDLL->getEngineIFace()->RebuildAllPlots();
-
-	GC.getMap().setupGraphical();
-	GC.getMap().updateVisibility();
-#ifdef ENABLE_FOGWAR_DECAY
-	GC.getMap().InitFogDecay(true);
-	if (GC.getGame().isModderGameOption(MODDERGAMEOPTION_FOGWAR_DECAY))
-		GC.getMap().updateFog(true);
-#else
-	GC.getMap().updateFog();
-#endif
-	Cy::call_optional(PYCivModule, "recalculateModifiers");
-
-	m_bRecalculatingModifiers = false;
-
-	//	Force a one-time reclaculation of all city commerce after coming out
-	//	of the in-recalc section (which inhibits this doing any work)
-	for (int iPlayer = 0; iPlayer < MAX_PLAYERS; ++iPlayer)
-	{
-		CvPlayer& kLoopPlayer = GET_PLAYER((PlayerTypes)iPlayer);
-		if (kLoopPlayer.isAlive())
-		{
-			foreach_(CvCity* pLoopCity, kLoopPlayer.cities())
-			{
-				pLoopCity->updateBuildingCommerce();
-				pLoopCity->updateCommerce(NO_COMMERCE, true);
-			}
-			kLoopPlayer.recordHistory();
-		}
-	}
-
-	stopProfilingDLL(false);
-	OutputDebugString("Stop profiling(false) after modifier recalc\n");
-}
 
 CvProperties* CvGame::getProperties()
 {
