@@ -23,6 +23,7 @@ void CyRandomPythonInterface();
 void CyEnumsPythonInterface();
 void CyTeamPythonInterface();
 void CyAreaPythonInterface();
+void CyEnablerPythonInterface();
 void CyStructsPythonInterface1();
 void CyMapPythonInterface();
 void CyMapGeneratorPythonInterface();
@@ -115,6 +116,7 @@ DllExport void DLLPublishToPython()
 	CyRandomPythonInterface();
 	CyTeamPythonInterface();
 	CyAreaPythonInterface();
+	CyEnablerPythonInterface();
 	CyStructsPythonInterface1();
 	CyMapPythonInterface();
 	CyMapGeneratorPythonInterface();

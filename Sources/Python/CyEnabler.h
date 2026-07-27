@@ -1,0 +1,70 @@
+#pragma once
+
+#ifndef CyEnabler_h__
+#define CyEnabler_h__
+
+//
+//	CyEnabler -- the Python AVAILABILITY surface: the "can I, right now?" half of the GAME-OBJECT read role
+//	(enabler.md par.8), exposed to script.
+//
+//	⛔ THIS IS A NEW SURFACE, NOT A WIDENED BINDING ([DEC-cy-not-fixed]). The legacy per-type wrappers
+//	(CyCity::canTrain, CyPlayer::canConstruct, ...) are NOT extended and NOT reused: bolting availability onto
+//	them is precisely how the boundary gets shaped by the old contract instead of by the model. It is therefore
+//	deliberately ID-BASED -- it takes plain player / city / entity ids and holds no CyCity or CyPlayer -- so the
+//	new surface has no dependency on the old one and the legacy wrappers can be CUT AWAY without touching it.
+//
+//	THE GRAMMAR mirrors the C++ side exactly, one read pair per DOMAIN:
+//	  - a TRI-STATE verdict (EnablerState: ENABLER_HIDDEN / GREYED / LISTED), returned WHOLE rather than reduced
+//	    to a bool, because HIDDEN ("not in the tree at all") vs GREYED ("in the tree, requirements unmet") is the
+//	    "why not" a build-list needs. A script wanting a plain boolean tests == ENABLER_LISTED.
+//	  - the FRONTIER as a plain Python list of ids -- the small offered set a script iterates INSTEAD of walking
+//	    the whole entity database (enabler.md par.6).
+//
+//	⛔ NO WHAT-IF ARGUMENTS. Every read is a bare O(1) fetch of the maintained tri-state: no gate runs, no
+//	calculator is called, `requires` is never evaluated. A script asking "could I if I had X?" is asking the
+//	PICKING LOGIC's question, not availability's (enabler.md par.8), and answering it here would drag the legacy
+//	nine-argument shape back across the boundary.
+//	⛔ NO player-level train/construct VERDICT exists: construction and training are CITY concerns, because the
+//	gate needs the city-local supply (what is in VICINITY, and in the PLOT GROUP). The empire-wide question is
+//	the explicitly-named FAN, which walks the player's cities.
+//
+//	BOOST: this file uses ONLY the `python::` alias (= boost::python, the 1.32 compiled bridge -- the ONE Boost
+//	that can host the Py2.4 binding). It never writes a bare `boost::` and never opens a using-directive: the
+//	tree carries TWO Boosts (1.32 as `boost::`, header-only 1.55 as `boost155::`), and an unqualified `bind` or
+//	`function` can silently resolve to the wrong one through the PCH (engine.md). Qualify, always.
+//
+
+class CyEnabler
+{
+public:
+	CyEnabler() {}
+
+	// ---- CITY domains: construction + training, on one plane ----
+	int getBuildingAvailability(int iPlayer, int iCity, int /*BuildingTypes*/ eBuilding) const;
+	int getUnitAvailability(int iPlayer, int iCity, int /*UnitTypes*/ eUnit) const;
+	bool isBuildingContinuable(int iPlayer, int iCity, int /*BuildingTypes*/ eBuilding) const;
+	python::list getAvailableBuildings(int iPlayer, int iCity) const;
+	python::list getAvailableUnits(int iPlayer, int iCity) const;
+
+	// ---- PLAYER domains ----
+	int getTechAvailability(int iPlayer, int /*TechTypes*/ eTech) const;
+	int getCivicAvailability(int iPlayer, int /*CivicTypes*/ eCivic) const;
+	int getProjectAvailability(int iPlayer, int /*ProjectTypes*/ eProject) const;
+	int getProcessAvailability(int iPlayer, int /*ProcessTypes*/ eProcess) const;
+	python::list getAvailableTechs(int iPlayer) const;
+	python::list getAvailableCivics(int iPlayer) const;
+	python::list getAvailableProjects(int iPlayer) const;
+	python::list getAvailableProcesses(int iPlayer) const;
+
+	// ---- the two CARVE-OUTS (enabler.md par.7.1): the UNLOCKED half only. A build's plot-validity and a
+	// promotion's per-unit applicability are evaluated LIVE at their decision points, so a script treating
+	// these as the whole verdict will over-offer.
+	int getBuildUnlocked(int iPlayer, int /*BuildTypes*/ eBuild) const;
+	int getPromotionUnlocked(int iPlayer, int /*PromotionTypes*/ ePromotion) const;
+
+	// ---- the empire-wide FAN: walks the player's cities. NOT a verdict (there is none at this scope).
+	bool canAnyCityTrain(int iPlayer, int /*UnitTypes*/ eUnit) const;
+	bool canAnyCityConstruct(int iPlayer, int /*BuildingTypes*/ eBuilding) const;
+};
+
+#endif // CyEnabler_h__

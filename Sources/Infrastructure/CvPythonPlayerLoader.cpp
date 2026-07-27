@@ -80,19 +80,6 @@ void CvPythonPlayerLoader::CyPlayerPythonInterface1(boost::python::class_<CyPlay
 		.def("found", &CyPlayer::found, "void (int iX, int iY)")
 		.def("canTrain", &CyPlayer::canTrain, "bool (int eUnit, bool bContinue, bool bTestVisible)")
 		.def("canConstruct", &CyPlayer::canConstruct, "bool (int /*BuildingTypes*/eBuilding, bool bContinue, bool bTestVisible, bool bIgnoreCost)")
-
-		// ---- the NEW availability surface (enabler.md §8). No player-level train/construct VERDICT exists --
-		// those are city concerns -- so the empire-wide question is the explicitly-named fan.
-		.def("getTechAvailability", &CyPlayer::getTechAvailability, "int (int eTech) - EnablerState tri-state")
-		.def("getCivicAvailability", &CyPlayer::getCivicAvailability, "int (int eCivic) - EnablerState tri-state")
-		.def("getProjectAvailability", &CyPlayer::getProjectAvailability, "int (int eProject) - EnablerState tri-state")
-		.def("getProcessAvailability", &CyPlayer::getProcessAvailability, "int (int eProcess) - EnablerState tri-state")
-		.def("getAvailableTechs", &CyPlayer::getAvailableTechs, "list () - the LISTED tech frontier")
-		.def("getAvailableCivics", &CyPlayer::getAvailableCivics, "list () - the LISTED civic frontier")
-		.def("getAvailableProjects", &CyPlayer::getAvailableProjects, "list () - the LISTED project frontier")
-		.def("getAvailableProcesses", &CyPlayer::getAvailableProcesses, "list () - the LISTED process frontier")
-		.def("canAnyCityTrain", &CyPlayer::canAnyCityTrain, "bool (int eUnit) - fans over the player's cities")
-		.def("canAnyCityConstruct", &CyPlayer::canAnyCityConstruct, "bool (int eBuilding) - fans over the player's cities")
 		.def("canCreate", &CyPlayer::canCreate, "bool (int /*ProjectTypes*/ eProject, bool bContinue, bool bTestVisible)")
 		.def("getUnitProductionNeeded", &CyPlayer::getUnitProductionNeeded, "int (int /*UnitTypes*/ iIndex)")
 		.def("getBuildingProductionNeeded", &CyPlayer::getBuildingProductionNeeded, "int (int /*BuildingTypes*/ iIndex)")

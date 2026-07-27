@@ -105,20 +105,6 @@ public:
 	void found(int iX, int iY);
 	bool canTrain(int /*UnitTypes*/ eUnit, bool bContinue, bool bTestVisible) const;
 
-	// ---- THE NEW AVAILABILITY SURFACE (enabler.md §8), Python half. Player-held domains get the same
-	// verdict/frontier pair as the city ones. ⛔ There is deliberately no player-level train/construct VERDICT:
-	// those are CITY concerns (the gate needs vicinity + plot-group supply), so the empire-wide question is the
-	// explicitly-named FAN below, which walks the cities.
-	int getTechAvailability(int /*TechTypes*/ eTech) const;
-	int getCivicAvailability(int /*CivicTypes*/ eCivic) const;
-	int getProjectAvailability(int /*ProjectTypes*/ eProject) const;
-	int getProcessAvailability(int /*ProcessTypes*/ eProcess) const;
-	python::list getAvailableTechs() const;
-	python::list getAvailableCivics() const;
-	python::list getAvailableProjects() const;
-	python::list getAvailableProcesses() const;
-	bool canAnyCityTrain(int /*UnitTypes*/ eUnit) const;
-	bool canAnyCityConstruct(int /*BuildingTypes*/ eBuilding) const;
 	bool canConstruct(int /*BuildingTypes*/eBuilding, bool bContinue, bool bTestVisible, bool bIgnoreCost) const;
 	bool canCreate(int /*ProjectTypes*/ eProject, bool bContinue, bool bTestVisible) const;
 	int getUnitProductionNeeded(int /*UnitTypes*/ iIndex) const;

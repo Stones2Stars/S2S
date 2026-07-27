@@ -59,16 +59,6 @@ public:
 
 	bool canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool bIgnoreCost, bool bIgnoreUpgrades) const;
 
-	// ---- THE NEW AVAILABILITY SURFACE (enabler.md §8) -- the Python half of the GAME-OBJECT read role.
-	// One read pair per DOMAIN, mirroring the C++ grammar: a TRI-STATE verdict (EnablerState.* -- HIDDEN /
-	// GREYED / LISTED, so a script can tell "not offered" from "not in the tree at all") and the FRONTIER as a
-	// plain list of ids. ⛔ No what-if arguments: a script asking "could I if..." is asking the picking logic's
-	// question, not availability's.
-	int getUnitAvailability(int /*UnitTypes*/ eUnit) const;
-	int getBuildingAvailability(int /*BuildingTypes*/ eBuilding) const;
-	bool isBuildingContinuable(int /*BuildingTypes*/ eBuilding) const;
-	python::list getAvailableUnits() const;
-	python::list getAvailableBuildings() const;
 	bool canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestVisible, bool bIgnoreCost) const;
 	bool canCreate(ProjectTypes eProject, bool bContinue, bool bTestVisible) const;
 	bool canMaintain(ProcessTypes eProcess) const;
