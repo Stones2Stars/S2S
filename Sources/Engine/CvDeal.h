@@ -5,8 +5,8 @@
 #ifndef CIV4_DEAL_H
 #define CIV4_DEAL_H
 
-#include "LinkedList.h"
-//#include "CvStructs.h"
+#include "Infrastructure/LinkedList.h"
+//#include "Defines/CvStructs.h"
 
 class CvDeal
 	: private bst::noncopyable

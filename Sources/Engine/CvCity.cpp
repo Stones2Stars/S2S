@@ -1,35 +1,35 @@
 
-#include "FProfiler.h"
+#include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
-#include "BetterBTSAI.h" // logCityAI ([CIT/produced] / [CIT/waste] production-pipeline logging)
+#include "AI/BetterBTSAI.h" // logCityAI ([CIT/produced] / [CIT/waste] production-pipeline logging)
 #include "CvArea.h"
-#include "CvArtFileMgr.h"
+#include "UI/CvArtFileMgr.h"
 #include "CvBuildingInfo.h"
 #include "CvCity.h"
-#include "CvContractBroker.h"
-#include "CvDLLEntity.h"
-#include "CvEventReporter.h"
-#include "CvGameAI.h"
-#include "CvGameTextMgr.h"
-#include "CvGlobals.h"
+#include "AI/CvContractBroker.h"
+#include "Infrastructure/CvDLLEntity.h"
+#include "UI/CvEventReporter.h"
+#include "AI/CvGameAI.h"
+#include "UI/CvGameTextMgr.h"
+#include "Defines/CvGlobals.h"
 #include "CvImprovementInfo.h"
 #include "CvBonusInfo.h"
 #include "CvInfos.h"
 #include "CvMap.h"
 #include "CvPlot.h"
-#include "CvPlayerAI.h"
+#include "AI/CvPlayerAI.h"
 #include "CvPopupInfo.h"
 #include "CvProcessInfo.h"              // getProductionToCommerce -- the commerce split's EXTRA-tier conversion rate
-#include "CvPython.h"
+#include "Infrastructure/CvPython.h"
 #include "CvReachablePlotSet.h"
 #include "CvSelectionGroup.h"
-#include "CvTeamAI.h"
+#include "AI/CvTeamAI.h"
 #include "CvUnit.h"
 #include "CvUnitSelectionCriteria.h"
-#include "CvViewport.h"
-#include "CvDLLInterfaceIFaceBase.h"
-#include "CvDLLUtilityIFaceBase.h"
+#include "UI/CvViewport.h"
+#include "Infrastructure/CvDLLInterfaceIFaceBase.h"
+#include "Infrastructure/CvDLLUtilityIFaceBase.h"
 #include "CvTraitInfo.h"
 #include "Repos/BuildingsRepo.h"
 #include "Spine/CvEventSpine.h"
@@ -40,9 +40,9 @@
 #include "CvInfoKinds.h"                // infoYieldFamily / CHANNEL_AMOUNT -- the YieldTypes -> channel family axis
 #include "Data/CvInfoValuation.h"       // realizedAtCity -- the ONE cross-scope roll-up the group reads fold through
 #ifdef THE_GREAT_WALL
-#include "CvDLLEngineIFaceBase.h"
+#include "Infrastructure/CvDLLEngineIFaceBase.h"
 #endif
-#include "CityOutputHistory.h"
+#include "UI/CityOutputHistory.h"
 
 //Disable this passed in initialization list warning, as it is only stored in the constructor of CvBuildingList and not used
 #pragma warning( disable : 4355 )

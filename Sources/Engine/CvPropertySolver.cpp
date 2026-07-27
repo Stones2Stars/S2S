@@ -9,10 +9,10 @@
 
 #include "CvGameCoreDLL.h"
 #include "CvPropertyManipulators.h"
-#include "FProfiler.h"
-#include "BetterBTSAI.h"
-#include "CvGameAI.h"
-#include "CvGlobals.h"
+#include "Tools/FProfiler.h"
+#include "AI/BetterBTSAI.h"
+#include "AI/CvGameAI.h"
+#include "Defines/CvGlobals.h"
 #include "CvInfos.h"
 
 PropertySourceContext::PropertySourceContext(CvPropertySource* pSource, const CvGameObject* pObject) : m_pSource(pSource), m_pObject(pObject), m_iData1(0), m_iData2(0)

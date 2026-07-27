@@ -5,7 +5,7 @@
 #ifndef CIV4_PLOT_GROUP_H
 #define CIV4_PLOT_GROUP_H
 
-#include "LinkedList.h"
+#include "Infrastructure/LinkedList.h"
 
 typedef struct
 {

@@ -5,27 +5,27 @@
 #ifndef CIV4_PLAYER_H
 #define CIV4_PLAYER_H
 
-#include "copy_iterator.h"
-#include "CvBuildLists.h"
-#include "CvCityAI.h"
-#include "CvContractBroker.h"
-#include "CvWorkerAI.h"
-#include "CvHunterAI.h"
-#include "CvDecisionAI.h"
+#include "Tools/copy_iterator.h"
+#include "UI/CvBuildLists.h"
+#include "AI/CvCityAI.h"
+#include "AI/CvContractBroker.h"
+#include "AI/CvWorkerAI.h"
+#include "AI/CvHunterAI.h"
+#include "AI/CvDecisionAI.h"
 #include "CvGameObject.h"
-#include "CvBuildLists.h"
+#include "UI/CvBuildLists.h"
 #include "CvPlotGroup.h"
 #include "CvProperties.h"
 #include "EmpireContext.h"
 #include "CvCascadePackage.h"   // the EMPIRE-scope cascade package + receiver sums (state-repositories.md)
 #include "Enabler/CvEnabler.h"  // PlayerEnabler -- the per-player tri-state domains (enabler.md §7.1)
-#include "CvSelectionGroupAI.h"
-#include "CvTalkingHeadMessage.h"
-#include "CvUnitList.h"
-#include "CvUnitAI.h"
+#include "AI/CvSelectionGroupAI.h"
+#include "UI/CvTalkingHeadMessage.h"
+#include "UI/CvUnitList.h"
+#include "AI/CvUnitAI.h"
 #include "CvDerivedData.h"
-#include "index_iterator_base.h"
-#include "LinkedList.h"
+#include "Infrastructure/index_iterator_base.h"
+#include "Infrastructure/LinkedList.h"
 #ifdef CVARMY_BREAKSAVE
 	#include "CvArmy.h"
 #endif

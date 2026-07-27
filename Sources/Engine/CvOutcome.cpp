@@ -7,28 +7,28 @@
 //
 //------------------------------------------------------------------------------------------------
 
-#include "FProfiler.h"
+#include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
 #include "CvCity.h"
-#include "CvCityAI.h"
-#include "CvGlobals.h"
+#include "AI/CvCityAI.h"
+#include "Defines/CvGlobals.h"
 #include "CvBonusInfo.h"
 #include "CvInfos.h"
 #include "CvMap.h"
 #include "CvOutcome.h"
 #include "CvProperties.h"
-#include "CvPlayerAI.h"
+#include "AI/CvPlayerAI.h"
 #include "CvPlot.h"
-#include "CvPython.h"
-#include "CvTeamAI.h"
+#include "Infrastructure/CvPython.h"
+#include "AI/CvTeamAI.h"
 #include "CvUnit.h"
-#include "CvXMLLoadUtility.h"
-#include "CyUnit.h"
-#include "CyPlot.h"
-#include "CheckSum.h"
-#include "CvGameAI.h"
-#include "IntExpr.h"
+#include "Infrastructure/CvXMLLoadUtility.h"
+#include "Python/CyUnit.h"
+#include "Python/CyPlot.h"
+#include "Tools/CheckSum.h"
+#include "AI/CvGameAI.h"
+#include "Infrastructure/IntExpr.h"
 
 CvOutcome::CvOutcome(): m_eUnitType(NO_UNIT),
 						m_iChance(NULL),

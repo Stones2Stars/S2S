@@ -12,7 +12,7 @@
 #ifndef CV_UNIT_GROUPING_H
 #define CV_UNIT_GROUPING_H
 
-//#include "CvUnitFilters.h"
+//#include "UI/CvUnitFilters.h"
 
 class CvCity;
 class CvPlayer;

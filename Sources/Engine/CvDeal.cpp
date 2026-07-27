@@ -1,21 +1,21 @@
 // CvDeal.cpp
 
 
-#include "FProfiler.h"
+#include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
-#include "BetterBTSAI.h"
+#include "AI/BetterBTSAI.h"
 #include "CvBuildingInfo.h"
 #include "CvBonusInfo.h"
 #include "CvDeal.h"
-#include "CvEventReporter.h"
-#include "CvGameAI.h"
-#include "CvGameTextMgr.h"
-#include "CvGlobals.h"
+#include "UI/CvEventReporter.h"
+#include "AI/CvGameAI.h"
+#include "UI/CvGameTextMgr.h"
+#include "Defines/CvGlobals.h"
 #include "CvMap.h"
-#include "CvPlayerAI.h"
+#include "AI/CvPlayerAI.h"
 #include "CvPlot.h"
-#include "CvTeamAI.h"
+#include "AI/CvTeamAI.h"
 
 // Public Functions...
 

@@ -1,7 +1,7 @@
 // team.cpp
 
 
-#include "FProfiler.h"
+#include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
 #include "CvArea.h"
@@ -9,25 +9,25 @@
 #include "CvBonusInfo.h"
 #include "CvCity.h"
 #include "CvDeal.h"
-#include "CvDiploParameters.h"
-#include "CvEventReporter.h"
-#include "CvGameAI.h"
-#include "CvGlobals.h"
+#include "UI/CvDiploParameters.h"
+#include "UI/CvEventReporter.h"
+#include "AI/CvGameAI.h"
+#include "Defines/CvGlobals.h"
 #include "CvImprovementInfo.h"
 #include "CvInfos.h"
-#include "CvInitCore.h"
+#include "Infrastructure/CvInitCore.h"
 #include "CvMap.h"
-#include "CvPlayerAI.h"
+#include "AI/CvPlayerAI.h"
 #include "CvPlot.h"
 #include "CvPopupInfo.h"
-#include "CvPython.h"
+#include "Infrastructure/CvPython.h"
 #include "CvSelectionGroup.h"
 #include "Spine/CvEventSpine.h"   // emitTechChanged / emitTechAcquired / emitProjectChanged -- the DOMAIN emit surface
-#include "CvTeamAI.h"
+#include "AI/CvTeamAI.h"
 #include "CvUnit.h"
-#include "CvDLLEngineIFaceBase.h"
-#include "CvDLLInterfaceIFaceBase.h"
-#include "CvDLLUtilityIFaceBase.h"
+#include "Infrastructure/CvDLLEngineIFaceBase.h"
+#include "Infrastructure/CvDLLInterfaceIFaceBase.h"
+#include "Infrastructure/CvDLLUtilityIFaceBase.h"
 #include "CvCascadeGather.h"
 #include "CvCascadeChannelRegistry.h"   // channelLookup -- the group reads' channel identity
 #include "CvInfoKinds.h"                // the family + kind vocabulary the group reads walk

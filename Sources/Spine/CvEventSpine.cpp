@@ -20,7 +20,7 @@
                                       // CvPlayer.h; unity builds hide missing includes -- structural-cleanup.md §2)
 #include "CvBuildingInfo.h"
 #include "CvUnitInfo.h"
-#include "Grants/CvGrantsEngine.h"   // the #430 GRANTS consumer -- registered at the composition root below
+#include "Triggers/CvTriggerEngine.h"   // the #430 GRANTS consumer -- registered at the composition root below
 // typeIndex name-resolution in the consumer: the Info headers for each SFT_ kind (so GC.getXInfo(i).getType() compiles).
 // Imported DIRECTLY (no CvInfos.h umbrella -- owner 2026-06-18: that umbrella should be retired, import directly).
 #include "CvBonusInfo.h"
@@ -567,7 +567,7 @@ void spineRegisterConsumers()
 	// The #430 GRANTS machine: a SELECTIVE DOMAIN consumer -- on a building-built / unit-created event it resolves the
 	// source entity's genuine grants off the mapped CvInfo and emits a [GRANTS] shadow diagnostic (resolution only,
 	// un-run parity). The tally stays a non-consumer (reads object-owned counts).
-	cascadeRegisterGrants();
+	triggerRegisterConsumer();
 	// ONE consumer PER SYSTEM ([DEC-enabler-not-cascade]): the ENABLER's own consumer (load-active -- the
 	// reseed's in-read emits BUILD its domains) and the MODIFIER cascade's own consumer (load-active for
 	// cache building -- the reseed's emits derive the dirty marks; the first reads after load recompute from
@@ -1101,7 +1101,7 @@ void emitAreasRecalculated()
 }
 
 // The empire-count observability events + the grant-trigger events. iSrcLoc = -1 (empire/world footprint). grants
-// reads iType/iA/iB/iC off these (CvCascadeGrants); the addI fields are the render twin. One endpoint each so the
+// reads iType/iA/iB/iC off these (CvTriggerEngine); the addI fields are the render twin. One endpoint each so the
 // CvPlayer / CvTeam emit sites never build a CvSpineEvent inline.
 void emitBuildingCount(int iPlayer, int iBuilding, int iNewCount, int iDelta)
 {

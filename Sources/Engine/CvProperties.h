@@ -11,8 +11,8 @@
 #ifndef CV_PROPERTIES_H
 #define CV_PROPERTIES_H
 
-#include "CheckSum.h"
-#include "CvEnums.h"
+#include "Tools/CheckSum.h"
+#include "Defines/CvEnums.h"
 
 class CvCity;
 class CvGame;

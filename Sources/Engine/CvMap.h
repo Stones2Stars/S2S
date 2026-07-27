@@ -15,7 +15,7 @@
 #include "CvArea.h"
 #include "CvMapInterfaceBase.h"
 #include "CvPlot.h"
-#include "index_iterator_base.h"
+#include "Infrastructure/index_iterator_base.h"
 
 class CvCity;
 class CvPlotGroup;

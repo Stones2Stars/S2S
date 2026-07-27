@@ -60,10 +60,13 @@ architecture rules that apply to DLL source.
 > consecutive agents "finished" by quietly wiring old Infos back in wherever the JsonInfos didn't pan out, so the
 > fallback was removed. **Never restore anything from `SourceArchive/`, never re-add a `CvXInfo` class, never treat
 > a red build as a defect to fix by reviving one.** The ONLY road to green: build the JsonInfo structure, wire it up,
-> and wire up/replace ALL the getters (the engine/AI/UI consumer surface onto the JSON-fed infos). **The tree
-> currently LINKS green via that correct path** (the DllExport proxy + the replacement pocos are wired) — but the
-> ratchet rule is permanent and holds regardless of build state: a future red build is still fixed by finishing
-> JsonInfo wiring, never by reviving a `CvXInfo`.
+> and wire up/replace ALL the getters (the engine/AI/UI consumer surface onto the JSON-fed infos). The ratchet is
+> permanent and holds **whatever state the build is in**: a red build is fixed by finishing JsonInfo wiring, never
+> by reviving a `CvXInfo`.
+> ⛔ **This file states no build STATE, deliberately — a compile-state claim here is guaranteed to drift** (owner),
+> and a stale one is worse than none: it tells every agent the build works when it does not. Whether the tree
+> compiles today is MUTABLE work state and lives in [roadmap.md](docs/plans/structural-cleanup/roadmap.md); the
+> authoritative answer is the build itself. Rules belong here; status does not.
 >
 > **⛔ HARD RULE — READING A REPLACED INFO'S XML **INTO THE GAME** IS HARD BANNED ([DEC-no-xml-into-game](docs/architecture/decisions.md#dec-no-xml-into-game)).**
 > The legacy info XMLs (`Assets/XML/**/CIV4<X>Infos.xml`) for every type we have replaced with a `CvJson<X>Info`

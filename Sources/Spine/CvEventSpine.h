@@ -599,7 +599,7 @@ void emitAreasRecalculated();
 // The empire-count observability events + the grant-trigger events -- distinct from the per-source state-change
 // endpoints above (these carry the whole-empire count / a game-start or first-discover trigger, iSrcLoc = -1). One
 // clean endpoint each so the emit sites in CvPlayer / CvTeam never build a CvSpineEvent inline (single-source; every
-// DOMAIN emit is tagged for the logging render path). grants reads iType/iA/iB/iC off these (CvCascadeGrants).
+// DOMAIN emit is tagged for the logging render path). grants reads iType/iA/iB/iC off these (CvTriggerEngine).
 void emitBuildingCount(int iPlayer, int iBuilding, int iNewCount, int iDelta);
 void emitUnitCount(int iPlayer, int iUnit, int iNewCount, int iDelta);
 void emitTechAcquired(int iPlayer, int iTech);

@@ -6,12 +6,12 @@
 #define CIV4_GAME_H
 
 #include "CvDeal.h"
-#include "CvRandom.h"
+#include "Tools/CvRandom.h"
 #include "CvGameObject.h"
 #include "CvProperties.h"
 #include "CvPropertySolver.h"
 #include "CvDate.h"
-#include "CvAllocator.h"
+#include "Infrastructure/CvAllocator.h"
 #include "CvDerivedData.h"
 
 class CvArtInfoBuilding;

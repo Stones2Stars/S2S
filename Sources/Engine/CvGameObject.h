@@ -11,7 +11,7 @@
 #ifndef CV_GAME_OBJECT_H
 #define CV_GAME_OBJECT_H
 
-#include "CvPython.h"
+#include "Infrastructure/CvPython.h"
 
 class CvGameObjectGame;
 class CvGameObjectTeam;

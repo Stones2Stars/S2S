@@ -17,6 +17,15 @@
 #include <string>
 #include <vector>
 
+// This class carries `min`/`max` MEMBERS, and the windef.h min/max FUNCTION-MACROS are live on any include path
+// that reaches here before Engine/CvGameCoreUtils.h's #undef (boost pulls windows.h in ahead of the PCH's
+// NOMINMAX). Inside that window `min(-1)` in the ctor's initializer list macro-expands and the class will not
+// parse. The guard belongs HERE, on the header that owns the members, rather than on whichever header happens to
+// include it -- a per-includer guard only ever covers the paths someone thought of, and a new path silently
+// breaks the build somewhere else entirely. The macros are dead in engine code by standing rule.
+#undef min
+#undef max
+
 // The containment-spine scope (json §3.2, singular). SELF is the off-spine own-build scope.
 //
 // A scope must be unambiguously OWNABLE -- either UNIVERSAL (world: it affects everyone, always, so ownership

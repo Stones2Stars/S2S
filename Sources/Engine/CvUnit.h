@@ -5,7 +5,7 @@
 #ifndef CIV4_UNIT_H
 #define CIV4_UNIT_H
 
-#include "CvDLLEntity.h"
+#include "Infrastructure/CvDLLEntity.h"
 #include "CvGameObject.h"
 #include "CvProperties.h"
 #include "CvUnitComponents.h"

@@ -10,7 +10,7 @@
 #ifndef CV_OUTCOME_MISSION_H
 #define CV_OUTCOME_MISSION_H
 
-#include "CvOutcomeList.h"
+#include "UI/CvOutcomeList.h"
 #include "CvProperties.h"
 
 class CvUnit;

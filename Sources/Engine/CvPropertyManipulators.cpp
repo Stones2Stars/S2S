@@ -8,15 +8,15 @@
 //------------------------------------------------------------------------------------------------
 
 
-#include "FProfiler.h"
+#include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
 #include "CvPropertyInteraction.h"
 #include "CvPropertyManipulators.h"
 #include "CvPropertyPropagator.h"
 #include "CvPropertySource.h"
-#include "CvXMLLoadUtility.h"
-#include "CheckSum.h"
+#include "Infrastructure/CvXMLLoadUtility.h"
+#include "Tools/CheckSum.h"
 
 CvPropertyManipulators::~CvPropertyManipulators()
 {

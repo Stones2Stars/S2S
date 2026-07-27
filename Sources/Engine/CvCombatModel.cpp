@@ -1,14 +1,14 @@
 #include "CvGameCoreDLL.h"
 #include "CvCombatModel.h"
 
-#include "FProfiler.h"
+#include "Tools/FProfiler.h"
 
-#include "CvGameAI.h"
+#include "AI/CvGameAI.h"
 #include "CvGame.h"
-#include "CvGlobals.h"
+#include "Defines/CvGlobals.h"
 #include "CvGameCoreUtils.h" // getBinomialCoefficient, range
 #include "CvInfos.h"
-#include "CvPlayerAI.h"
+#include "AI/CvPlayerAI.h"
 #include "CvPlot.h"
 #include "CvUnit.h"
 

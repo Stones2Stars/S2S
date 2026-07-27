@@ -1,21 +1,21 @@
 // area.cpp
 
 
-#include "FProfiler.h"
+#include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
 #include "CvArea.h"
 #include "CvBonusInfo.h"
 #include "CvCity.h"
-#include "CvGameAI.h"
-#include "CvGlobals.h"
+#include "AI/CvGameAI.h"
+#include "Defines/CvGlobals.h"
 #include "CvMap.h"
 #include "CvInfos.h"
-#include "CvPlayerAI.h"
+#include "AI/CvPlayerAI.h"
 #include "CvPlot.h"
-#include "CvTeamAI.h"
-#include "CvDLLInterfaceIFaceBase.h"
-#include "CvDLLUtilityIFaceBase.h"
+#include "AI/CvTeamAI.h"
+#include "Infrastructure/CvDLLInterfaceIFaceBase.h"
+#include "Infrastructure/CvDLLUtilityIFaceBase.h"
 #include "Spine/CvEventSpine.h"         // emitAreaCleanPowerChanged / emitAreaTilesChanged -- the area DOMAIN facts
 
 // Public Functions...

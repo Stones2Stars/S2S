@@ -1,5 +1,5 @@
 #include "CvGameCoreDLL.h"
-#include "CvMapExternal.h"
+#include "UI/CvMapExternal.h"
 #include "CvMapInterfaceBase.h"
 
 CvMapInterfaceBase::CvMapInterfaceBase()

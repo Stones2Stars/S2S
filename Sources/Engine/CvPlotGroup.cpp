@@ -1,14 +1,14 @@
 // plotGroup.cpp
 
 
-#include "FProfiler.h"
+#include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
 #include "CvCity.h"
-#include "CvGlobals.h"
+#include "Defines/CvGlobals.h"
 #include "CvMap.h"
-#include "CvPlayerAI.h"
-#include "CvDLLFAStarIFaceBase.h"
+#include "AI/CvPlayerAI.h"
+#include "Infrastructure/CvDLLFAStarIFaceBase.h"
 #include "Spine/CvEventSpine.h"   // emitPlotGroupBonusChanged -- the network (plot-group) resource-presence DOMAIN fact
 
 //#define VALIDATION_FOR_PLOT_GROUPS

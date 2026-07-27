@@ -5,12 +5,12 @@
 
 // CvPlot.h
 
-#include "LinkedList.h"
-#include "copy_iterator.h"
+#include "Infrastructure/LinkedList.h"
+#include "Tools/copy_iterator.h"
 #include "CvGameObject.h"
 #include "CvProperties.h"
-#include "CvPlotPaging.h"
-#include "idinfo_iterator_base.h"
+#include "UI/CvPlotPaging.h"
+#include "Tools/idinfo_iterator_base.h"
 #include "PlotContext.h"
 #include "CvCascadePackage.h"   // the PLOT-scope cascade package (state-repositories.md)
 

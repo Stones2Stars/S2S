@@ -7,21 +7,21 @@
 //
 //------------------------------------------------------------------------------------------------
 
-#include "FProfiler.h"
+#include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
 #include "CvCity.h"
 #include "CvGame.h"
 #include "CvGameObject.h"
-#include "CvGlobals.h"
+#include "Defines/CvGlobals.h"
 #include "CvInfos.h"
 #include "CvPlayer.h"
 #include "CvPlot.h"
 #include "CvProperties.h"
 #include "CvTeam.h"
 #include "CvUnit.h"
-#include "CvXMLLoadUtility.h"
-#include "CheckSum.h"
+#include "Infrastructure/CvXMLLoadUtility.h"
+#include "Tools/CheckSum.h"
 #include "Spine/CvEventSpine.h"   // the property DOMAIN fact -- the mutation choke points + the in-read reseed
 
 CvProperties::CvProperties()

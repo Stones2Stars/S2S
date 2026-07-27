@@ -5,14 +5,14 @@
 #ifndef CIV4_CITY_H
 #define CIV4_CITY_H
 
-#include "LinkedList.h"
-#include "CvDLLEntity.h"
+#include "Infrastructure/LinkedList.h"
+#include "Infrastructure/CvDLLEntity.h"
 #include "CvGameObject.h"
 #include "CvProperties.h"
-#include "CvBuildingList.h"
-#include "CvUnitList.h"
+#include "UI/CvBuildingList.h"
+#include "UI/CvUnitList.h"
 #include "CvDerivedData.h"
-#include "CityOutputHistory.h"
+#include "UI/CityOutputHistory.h"
 #include "CvGameObject.h"
 #include "CityContext.h"
 #include "CvCascadePackage.h"   // the CITY-scope cascade package + receiver sums (state-repositories.md)

@@ -6,7 +6,7 @@
 #define CIV4_GAMECORE_UTILS_H
 
 #include "CvMap.h"
-#include "CvGlobals.h"
+#include "Defines/CvGlobals.h"
 
 class CvCity;
 class CvPathGeneratorBase;

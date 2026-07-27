@@ -1,9 +1,9 @@
 ﻿#include "CvArmy.h"
 #include "CvUnit.h"
 #include "CvSelectionGroup.h"
-#include "CvString.h"
-#include "CvPlayerAI.h"
-#include "BetterBTSAI.h"
+#include "Defines/CvString.h"
+#include "AI/CvPlayerAI.h"
+#include "AI/BetterBTSAI.h"
 
 #define NO_INDEX -1
 

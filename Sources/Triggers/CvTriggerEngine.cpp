@@ -1,12 +1,12 @@
 //
-//	CvCascadeGrants -- the #430 GRANTS machine consumer + the [GRANTS] spine domain. See the header + grants-machine.md.
+//	CvTriggerEngine -- the #430 GRANTS machine consumer + the [GRANTS] spine domain. See the header + grants-machine.md.
 //	Slice-1: on a building-built / unit-created DOMAIN event, resolve the source entity's GENUINE grants off its mapped
 //	CvJson<X>Info (the composed CvGrants unit in the InfoRepo, minus the deferred mission-keys) and emit a [GRANTS]
 //	diagnostic. Resolution only -- it does NOT apply (legacy applies); un-run parity (owner: no live parity until everything is in).
 //
 
 #include "CvGameCoreDLL.h"          // PCH umbrella
-#include "Grants/CvGrantsEngine.h"
+#include "Triggers/CvTriggerEngine.h"
 #include "Spine/CvEventSpine.h"
 #include "CvInfo.h"             // CvInfo::grantList / grantPulse / grantFlag (the CvGrants unit's read-throughs)
 #include "Repos/InfoRepo.h"        // InfoRepo<CvXInfo>::get().get(id) -> the mapped CvInfo*
@@ -38,18 +38,18 @@
 enum TrEvt { TRE_BUILDING = 1, TRE_UNIT, TRE_TECH, TRE_RELIGION, TRE_CIVIC, TRE_GAMESTART, TRE_REPEAT, TRE_FOUND };
 enum GrFld
 {
-	GF_PLAYER = 1, GF_BUILDING, GF_UNIT, GF_TECH, GF_RELIGION, GF_CIVIC,
-	GF_PROMOTIONS, GF_GRANTBUILDINGS,                        // unit genuine grants (promotions + settle-time buildings)
-	GF_TRIGGERENTRIES, GF_FREEPROMOS, GF_FREETECHS,          // building triggers + genuine grants
-	GF_GOLDENAGE, GF_POPULATION,                             // building flag + scoped-pulse grants (increment 2)
-	GF_FIRSTUNIT, GF_FIRSTPROPHET,                           // tech first-discover grants (increment 3a)
-	GF_NUMFREEUNITS, GF_FREEUNIT, GF_REVOLUTION,             // religion + civic grants (increment 3b)
-	GF_CIVICS, GF_TECHS, GF_BUILDINGS, GF_STARTINGGOLD,      // game-start civ + era/handicap grants (increment 3c)
-	GF_SUPPRESSED,                                           // 1 = resolved but WITHHELD
-	GF_FIRSTACQUIRE,                                         // buildings: 1 = genuine first build, 0 = conquest/restore
-	GF_CITY, GF_SPAWNED, GF_HEALED,                          // the per-turn apply (increment 5): what actually LANDED
-	GF_APPLIED,                                              // 1 = the machine ran the FIRST-BUILD apply (NOT a claim about every grant on the line)
-	GF_MATMISMATCH                                           // 1 = a mapFrom-materialized getter disagrees with its composed grants read
+	TF_PLAYER = 1, TF_BUILDING, TF_UNIT, TF_TECH, TF_RELIGION, TF_CIVIC,
+	TF_PROMOTIONS, TF_GRANTBUILDINGS,                        // unit genuine grants (promotions + settle-time buildings)
+	TF_TRIGGERENTRIES, TF_FREEPROMOS, TF_FREETECHS,          // building triggers + genuine grants
+	TF_GOLDENAGE, TF_POPULATION,                             // building flag + scoped-pulse grants (increment 2)
+	TF_FIRSTUNIT, TF_FIRSTPROPHET,                           // tech first-discover grants (increment 3a)
+	TF_NUMFREEUNITS, TF_FREEUNIT, TF_REVOLUTION,             // religion + civic grants (increment 3b)
+	TF_CIVICS, TF_TECHS, TF_BUILDINGS, TF_STARTINGGOLD,      // game-start civ + era/handicap grants (increment 3c)
+	TF_SUPPRESSED,                                           // 1 = resolved but WITHHELD
+	TF_FIRSTACQUIRE,                                         // buildings: 1 = genuine first build, 0 = conquest/restore
+	TF_CITY, TF_SPAWNED, TF_HEALED,                          // the per-turn apply (increment 5): what actually LANDED
+	TF_APPLIED,                                              // 1 = the machine ran the FIRST-BUILD apply (NOT a claim about every grant on the line)
+	TF_MATMISMATCH                                           // 1 = a mapFrom-materialized getter disagrees with its composed grants read
 };
 static const char* tr_prefix(int evt)
 {
@@ -66,47 +66,47 @@ static const char* tr_prefix(int evt)
 	default:           return "[GRANTS]";
 	}
 }
-static const char* gr_field(int tag, SpineFieldType* peType)
+static const char* tr_field(int tag, SpineFieldType* peType)
 {
 	*peType = SFT_INT;
 	switch (tag)
 	{
-	case GF_PLAYER:         *peType = SFT_PLAYER;   return "player";
-	case GF_BUILDING:       *peType = SFT_BUILDING; return "building";
-	case GF_UNIT:           *peType = SFT_UNIT;     return "unit";
-	case GF_TECH:           *peType = SFT_TECH;     return "tech";
-	case GF_RELIGION:       *peType = SFT_RELIGION; return "religion";
-	case GF_CIVIC:          *peType = SFT_CIVIC;    return "civic";
-	case GF_FIRSTUNIT:      *peType = SFT_UNIT;     return "firstFreeUnit";
-	case GF_FIRSTPROPHET:   *peType = SFT_UNIT;     return "firstFreeProphet";
-	case GF_FREEUNIT:       *peType = SFT_UNIT;     return "freeUnit";
-	case GF_NUMFREEUNITS:   return "numFreeUnits";
-	case GF_REVOLUTION:     return "revolution";
-	case GF_CIVICS:         return "civics";
-	case GF_TECHS:          return "techs";
-	case GF_BUILDINGS:      return "buildings";
-	case GF_STARTINGGOLD:   return "startingGold";
-	case GF_SUPPRESSED:     return "suppressed";
-	case GF_FIRSTACQUIRE:   return "firstAcquire";
-	case GF_PROMOTIONS:     return "promotions";
-	case GF_GRANTBUILDINGS: return "grantBuildings";
-	case GF_TRIGGERENTRIES: return "triggerEntries";
-	case GF_FREEPROMOS:     return "freePromotions";
-	case GF_FREETECHS:      return "freeTechs";
-	case GF_GOLDENAGE:      return "goldenAge";
-	case GF_POPULATION:     return "population";
-	case GF_CITY:           *peType = SFT_INT;      return "city";
-	case GF_SPAWNED:        *peType = SFT_UNIT;     return "spawned";
-	case GF_HEALED:         return "healed";
-	case GF_APPLIED:        return "appliedFirstBuild";
-	case GF_MATMISMATCH:    return "matMismatch";
+	case TF_PLAYER:         *peType = SFT_PLAYER;   return "player";
+	case TF_BUILDING:       *peType = SFT_BUILDING; return "building";
+	case TF_UNIT:           *peType = SFT_UNIT;     return "unit";
+	case TF_TECH:           *peType = SFT_TECH;     return "tech";
+	case TF_RELIGION:       *peType = SFT_RELIGION; return "religion";
+	case TF_CIVIC:          *peType = SFT_CIVIC;    return "civic";
+	case TF_FIRSTUNIT:      *peType = SFT_UNIT;     return "firstFreeUnit";
+	case TF_FIRSTPROPHET:   *peType = SFT_UNIT;     return "firstFreeProphet";
+	case TF_FREEUNIT:       *peType = SFT_UNIT;     return "freeUnit";
+	case TF_NUMFREEUNITS:   return "numFreeUnits";
+	case TF_REVOLUTION:     return "revolution";
+	case TF_CIVICS:         return "civics";
+	case TF_TECHS:          return "techs";
+	case TF_BUILDINGS:      return "buildings";
+	case TF_STARTINGGOLD:   return "startingGold";
+	case TF_SUPPRESSED:     return "suppressed";
+	case TF_FIRSTACQUIRE:   return "firstAcquire";
+	case TF_PROMOTIONS:     return "promotions";
+	case TF_GRANTBUILDINGS: return "grantBuildings";
+	case TF_TRIGGERENTRIES: return "triggerEntries";
+	case TF_FREEPROMOS:     return "freePromotions";
+	case TF_FREETECHS:      return "freeTechs";
+	case TF_GOLDENAGE:      return "goldenAge";
+	case TF_POPULATION:     return "population";
+	case TF_CITY:           *peType = SFT_INT;      return "city";
+	case TF_SPAWNED:        *peType = SFT_UNIT;     return "spawned";
+	case TF_HEALED:         return "healed";
+	case TF_APPLIED:        return "appliedFirstBuild";
+	case TF_MATMISMATCH:    return "matMismatch";
 	default:                return NULL;
 	}
 }
-static void gr_registerDomain()
+static void tr_registerDomain()
 {
 	static bool s_reg = false;
-	if (!s_reg) { spineRegisterDomain(SD_TRIGGERS, tr_prefix, "Cascade.log", gr_field); s_reg = true; }
+	if (!s_reg) { spineRegisterDomain(SD_TRIGGERS, tr_prefix, "Cascade.log", tr_field); s_reg = true; }
 }
 
 // The LOAD-BRACKET flag (event-spine.md / DEC-spine-reseed). A grant is the RESULT of a genuine in-play
@@ -125,45 +125,45 @@ static bool s_bFirstAcquire = true;
 // ===================== the grant-key handles =====================
 // Minted ONCE off the CvGrants LOCAL intern table (every runtime grant read is int-keyed; the authored strings
 // live on the parse surface only, [DEC-materialize-at-mapfrom]). Mint-on-first-ask makes static-init order safe.
-static const int gr_keyPromotions       = CvGrants::key("promotions");
-static const int gr_keyBuildings        = CvGrants::key("buildings");
-static const int gr_keyUnits            = CvGrants::key("units");
-static const int gr_keyTechs            = CvGrants::key("techs");
-static const int gr_keyCivics           = CvGrants::key("civics");
-static const int gr_keyFreeTechs        = CvGrants::key("freeTechs");
-static const int gr_keyGoldenAge        = CvGrants::key("goldenAge");
-static const int gr_keyPopulation       = CvGrants::key("population");
-static const int gr_keyScopeCity        = CvGrants::key("city");
-static const int gr_keyScopeEmpire      = CvGrants::key("empire");
-static const int gr_keyFirstFreeUnit    = CvGrants::key("firstFreeUnit");
-static const int gr_keyFirstFreeProphet = CvGrants::key("firstFreeProphet");
-static const int gr_keyNumFreeUnits     = CvGrants::key("numFreeUnits");
-static const int gr_keyFreeUnit         = CvGrants::key("freeUnit");
-static const int gr_keyRevolution       = CvGrants::key("revolution");
-static const int gr_keyStartingGold     = CvGrants::key("startingGold");
+static const int tr_keyPromotions       = CvGrants::key("promotions");
+static const int tr_keyBuildings        = CvGrants::key("buildings");
+static const int tr_keyUnits            = CvGrants::key("units");
+static const int tr_keyTechs            = CvGrants::key("techs");
+static const int tr_keyCivics           = CvGrants::key("civics");
+static const int tr_keyFreeTechs        = CvGrants::key("freeTechs");
+static const int tr_keyGoldenAge        = CvGrants::key("goldenAge");
+static const int tr_keyPopulation       = CvGrants::key("population");
+static const int tr_keyScopeCity        = CvGrants::key("city");
+static const int tr_keyScopeEmpire      = CvGrants::key("empire");
+static const int tr_keyFirstFreeUnit    = CvGrants::key("firstFreeUnit");
+static const int tr_keyFirstFreeProphet = CvGrants::key("firstFreeProphet");
+static const int tr_keyNumFreeUnits     = CvGrants::key("numFreeUnits");
+static const int tr_keyFreeUnit         = CvGrants::key("freeUnit");
+static const int tr_keyRevolution       = CvGrants::key("revolution");
+static const int tr_keyStartingGold     = CvGrants::key("startingGold");
 
 // ===================== resolution off the mapped CvInfo =====================
 // A grantList bucket's id-count (0 if absent). GENUINE buckets only -- the deferred mission-keys (unit `buildings`/
 // `greatPeople`/`greatPersonAction`/`goldenAge`) are simply not read here (they migrate in the missions pass).
-static int gr_listCount(const CvInfo* j, int iBucketKey)
+static int tr_listCount(const CvInfo* j, int iBucketKey)
 {
 	const std::vector<int>* l = j->grantList(iBucketKey);
 	return (l != NULL) ? (int)l->size() : 0;
 }
-static int gr_pulse(const CvInfo* j, int iChannelKey)   // pulses are stored ×100 -> /100 to the human count/amount
+static int tr_pulse(const CvInfo* j, int iChannelKey)   // pulses are stored ×100 -> /100 to the human count/amount
 {
 	return j->grantPulse(iChannelKey) / 100;
 }
-static int gr_flag(const CvInfo* j, int iFlagKey)   // a bool grant present? (goldenAge)
+static int tr_flag(const CvInfo* j, int iFlagKey)   // a bool grant present? (goldenAge)
 {
 	return j->grantFlag(iFlagKey) ? 1 : 0;
 }
-static int gr_scopedPulseSum(const CvInfo* j, int iChannelKey)   // sum a scoped pulse over its scopes (×100 -> /100)
+static int tr_scopedPulseSum(const CvInfo* j, int iChannelKey)   // sum a scoped pulse over its scopes (×100 -> /100)
 {
 	const CvGrants* g = j->getGrants();
 	return g ? g->scopedPulseSumAllScopes(iChannelKey) / 100 : 0;
 }
-static int gr_promoteEntryCount(const CvInfo* j)   // `triggers` promote entries (the end-turn free-promotion plane)
+static int tr_promoteEntryCount(const CvInfo* j)   // `triggers` promote entries (the end-turn free-promotion plane)
 {
 	const CvTriggers* pTriggers = j->getTriggers();
 	if (pTriggers == NULL) return 0;
@@ -192,7 +192,46 @@ static int gr_promoteEntryCount(const CvInfo* j)   // `triggers` promote entries
 // This also closes a LIVE defect: the legacy on-move path (CvCity::doPromotion) was gated on
 // isApplyFreePromotionOnMove(), a hardcoded `false`, so a unit that walked into a city NEVER gained its
 // promotions at all -- only units trained there did.
-static int gr_promoteOneUnit(CvCity* pCity, CvUnit* pUnit)
+// Apply ONE source's `onTurnEnd` promote entries to ONE unit -- the whole free-promotion plane, read off the
+// TRIGGER entries the data actually authors (264 of them). ⛔ It previously read CvBuildingInfo::getFreePromoTypes,
+// a legacy member the JSON-fed poco does not carry at all, so the apply was dead while the authored entries went
+// unread: one mechanic with a live data path nothing consumed and a legacy path that did not exist.
+//
+// Two gates survive the move, for different reasons. `canAcquirePromotion(Promote|ForFree)` is the PROMOTION
+// SYSTEM's own validity rule and stays -- it is also why a granted promotion needs no take-away verb: when the
+// promotion stops being valid that system drops it (owner). The legacy per-promotion BoolExpr becomes the entry's
+// parsed `condition`, evaluated through the ONE evaluator ([DEC-single-implementation]) instead of a second tree.
+static int tr_promoteFromEntries(CvCity* pCity, CvUnit* pUnit, const CvInfo* j)
+{
+	if (pCity == NULL || pUnit == NULL || j == NULL || j->getTriggers() == NULL) return 0;
+	const std::vector<CvTriggerEntry*>& entries = j->getTriggers()->entries();
+	if (entries.empty()) return 0;
+
+	CvCascadeEvalCtx ec;
+	pCity->getCityContext().fillEvalCtx(ec);
+	GET_PLAYER(pCity->getOwner()).getEmpireContext().fillEvalCtx(ec);
+	ec.unit = pUnit;                                  // the entry's condition may ask about the unit being promoted
+	CvCascadeEvalFlags kFlags;
+
+	int n = 0;
+	for (size_t i = 0; i < entries.size(); ++i)
+	{
+		const CvTriggerEntry* pEntry = entries[i];
+		if (pEntry->happening != "onTurnEnd" || pEntry->promotePromotions.empty()) continue;
+		if (pEntry->condition != NULL && !cascadeEvalCondition(pEntry->condition, ec, kFlags)) continue;
+		for (size_t k = 0; k < pEntry->promotePromotions.size(); ++k)
+		{
+			const PromotionTypes ePromotion = (PromotionTypes)pEntry->promotePromotions[k];
+			if (pUnit->isHasPromotion(ePromotion)) continue;
+			if (!pUnit->canAcquirePromotion(ePromotion, PromotionRequirements::Promote | PromotionRequirements::ForFree)) continue;
+			pUnit->setHasPromotion(ePromotion, true);
+			++n;
+		}
+	}
+	return n;
+}
+
+static int tr_promoteOneUnit(CvCity* pCity, CvUnit* pUnit)
 {
 	if (pCity == NULL || pUnit == NULL) return 0;
 	if (pUnit->getTeam() != GET_PLAYER(pCity->getOwner()).getTeam()) return 0;
@@ -200,22 +239,20 @@ static int gr_promoteOneUnit(CvCity* pCity, CvUnit* pUnit)
 	int n = 0;
 	for (std::set<int>::const_iterator it = ob.active.begin(); it != ob.active.end(); ++it)
 	{
-		const CvBuildingInfo& kB = GC.getBuildingInfo((BuildingTypes)*it);
-		if (kB.getFreePromoTypes().empty()) continue;
-		n += pCity->assignPromotionsFromBuildingChecked(kB, pUnit);   // GRANTED, not visited
+		n += tr_promoteFromEntries(pCity, pUnit, InfoRepo<CvBuildingInfo>::get().get(*it));
 	}
 	return n;
 }
 
-static int gr_promoteCityUnits(CvCity* pCity, const CvBuildingInfo& kB)
+static int tr_promoteCityUnits(CvCity* pCity, const CvInfo* j)
 {
-	if (pCity == NULL || kB.getFreePromoTypes().empty()) return 0;
+	if (pCity == NULL || j == NULL) return 0;
 	const TeamTypes eTeam = GET_PLAYER(pCity->getOwner()).getTeam();
 	int n = 0;
 	foreach_(CvUnit* pLoopUnit, pCity->plot()->units())
 	{
 		if (pLoopUnit->getTeam() != eTeam) continue;
-		n += pCity->assignPromotionsFromBuildingChecked(kB, pLoopUnit);   // GRANTED, not visited
+		n += tr_promoteFromEntries(pCity, pLoopUnit, j);
 	}
 	return n;
 }
@@ -228,7 +265,7 @@ static int gr_promoteCityUnits(CvCity* pCity, const CvBuildingInfo& kB)
 // Ordering note: the legacy applied these MID-setup; the machine applies at SEVT_BUILDING_CHANGED, which fires at
 // the END of setHasBuilding (CvCity.cpp:13486, after setupBuilding at :13446) -- so the building is fully set up
 // before its provisions land, which is strictly the safer order.
-static void gr_applyBuildingFirstBuild(const CvInfo* j, int iBuilding, int iPlayer, int iCity)
+static void tr_applyBuildingFirstBuild(const CvInfo* j, int iBuilding, int iPlayer, int iCity)
 {
 	CvPlayer& player = GET_PLAYER((PlayerTypes)iPlayer);
 	CvCity* pCity = player.getCity(iCity);
@@ -236,7 +273,7 @@ static void gr_applyBuildingFirstBuild(const CvInfo* j, int iBuilding, int iPlay
 
 
 	// LOCAL population -- legacy applied this OUTSIDE the isFinalInitialized/WorldBuilder guard, so it does too.
-	const int iPopCity = j->getGrants()->scopedPulse(gr_keyPopulation, gr_keyScopeCity) / 100;
+	const int iPopCity = j->getGrants()->scopedPulse(tr_keyPopulation, tr_keyScopeCity) / 100;
 	if (iPopCity != 0)
 	{
 		if (iPopCity > 0)
@@ -249,12 +286,12 @@ static void gr_applyBuildingFirstBuild(const CvInfo* j, int iBuilding, int iPlay
 	// The rest are gated exactly as legacy gated them.
 	if (!GC.getGame().isFinalInitialized() || gDLL->GetWorldBuilderMode()) return;
 
-	if (j->getGrants()->flag(gr_keyGoldenAge))
+	if (j->getGrants()->flag(tr_keyGoldenAge))
 	{
 		player.changeGoldenAgeTurns(1 + player.getGoldenAgeLength());
 	}
 
-	const int iPopEmpire = j->getGrants()->scopedPulse(gr_keyPopulation, gr_keyScopeEmpire) / 100;
+	const int iPopEmpire = j->getGrants()->scopedPulse(tr_keyPopulation, tr_keyScopeEmpire) / 100;
 	if (iPopEmpire > 0)
 	{
 		const CvBuildingInfo& kB = GC.getBuildingInfo((BuildingTypes)iBuilding);
@@ -270,7 +307,7 @@ static void gr_applyBuildingFirstBuild(const CvInfo* j, int iBuilding, int iPlay
 		}
 	}
 
-	const int iFreeTechs = j->getGrants()->pulse(gr_keyFreeTechs) / 100;
+	const int iFreeTechs = j->getGrants()->pulse(tr_keyFreeTechs) / 100;
 	if (iFreeTechs > 0)
 	{
 		if (pCity->isHuman())
@@ -282,19 +319,19 @@ static void gr_applyBuildingFirstBuild(const CvInfo* j, int iBuilding, int iPlay
 	}
 }
 
-static void gr_resolveBuilding(int iBuilding, int iPlayer, int iCity)
+static void tr_resolveBuilding(int iBuilding, int iPlayer, int iCity)
 {
 	const CvInfo* j = InfoRepo<CvBuildingInfo>::get().get(iBuilding);
 	if (j == NULL) return;
 	const int nRepeat    = (j->getTriggers() != NULL) ? (int)j->getTriggers()->entries().size() : 0;   // the `triggers` entries (per-turn spawn/heal/promote)
-	const int nFreePromo = gr_promoteEntryCount(j);   // end-turn promotions to units in the city (triggers promote entries)
-	const int nFreeTech  = gr_pulse(j, gr_keyFreeTechs);            // one-shot on first build
-	const int nGoldenAge = gr_flag(j, gr_keyGoldenAge);             // one-shot golden age (bool grant, increment 2)
-	const int nPop       = gr_scopedPulseSum(j, gr_keyPopulation);  // one-shot population boost (scoped pulse, increment 2)
+	const int nFreePromo = tr_promoteEntryCount(j);   // end-turn promotions to units in the city (triggers promote entries)
+	const int nFreeTech  = tr_pulse(j, tr_keyFreeTechs);            // one-shot on first build
+	const int nGoldenAge = tr_flag(j, tr_keyGoldenAge);             // one-shot golden age (bool grant, increment 2)
+	const int nPop       = tr_scopedPulseSum(j, tr_keyPopulation);  // one-shot population boost (scoped pulse, increment 2)
 	if (nRepeat == 0 && nFreePromo == 0 && nFreeTech == 0 && nGoldenAge == 0 && nPop == 0) return;
 	// The two population scopes SEPARATELY (nPop is their sum) -- the apply and the tripwire need them apart.
-	const int nPopCity   = (j->getGrants() != NULL) ? j->getGrants()->scopedPulse(gr_keyPopulation, gr_keyScopeCity)   / 100 : 0;
-	const int nPopEmpire = (j->getGrants() != NULL) ? j->getGrants()->scopedPulse(gr_keyPopulation, gr_keyScopeEmpire) / 100 : 0;
+	const int nPopCity   = (j->getGrants() != NULL) ? j->getGrants()->scopedPulse(tr_keyPopulation, tr_keyScopeCity)   / 100 : 0;
+	const int nPopEmpire = (j->getGrants() != NULL) ? j->getGrants()->scopedPulse(tr_keyPopulation, tr_keyScopeEmpire) / 100 : 0;
 	// The MATERIALIZATION tripwire: the mapFrom-materialized getters must agree with the composed grants read they
 	// were materialized FROM. They are otherwise unobservable (grants are not on /state/info), so a silent zeroing
 	// -- the real hazard of moving a live read to load time -- would never surface. 1 = they diverged.
@@ -307,33 +344,33 @@ static void gr_resolveBuilding(int iBuilding, int iPlayer, int iCity)
 	// APPLY -- the machine hands the provisions over; legacy's bFirst block is deleted. Withheld exactly when the
 	// resolution is (load bracket, or a conquest/restore that is not a genuine first acquisition).
 	const bool bApplied = !s_bSuppressed && (iCity >= 0);
-	if (bApplied) gr_applyBuildingFirstBuild(j, iBuilding, iPlayer, iCity);
+	if (bApplied) tr_applyBuildingFirstBuild(j, iBuilding, iPlayer, iCity);
 
 	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_TRIGGERS, TRE_BUILDING, 1)
-		.addI(GF_SUPPRESSED, s_bSuppressed ? 1 : 0).addI(GF_FIRSTACQUIRE, s_bFirstAcquire ? 1 : 0)
-		.addI(GF_APPLIED, bApplied ? 1 : 0).addI(GF_MATMISMATCH, bMatMismatch ? 1 : 0)
-		.addI(GF_PLAYER, iPlayer).addI(GF_BUILDING, iBuilding)
-		.addI(GF_TRIGGERENTRIES, nRepeat).addI(GF_FREEPROMOS, nFreePromo).addI(GF_FREETECHS, nFreeTech)
-		.addI(GF_GOLDENAGE, nGoldenAge).addI(GF_POPULATION, nPop));
+		.addI(TF_SUPPRESSED, s_bSuppressed ? 1 : 0).addI(TF_FIRSTACQUIRE, s_bFirstAcquire ? 1 : 0)
+		.addI(TF_APPLIED, bApplied ? 1 : 0).addI(TF_MATMISMATCH, bMatMismatch ? 1 : 0)
+		.addI(TF_PLAYER, iPlayer).addI(TF_BUILDING, iBuilding)
+		.addI(TF_TRIGGERENTRIES, nRepeat).addI(TF_FREEPROMOS, nFreePromo).addI(TF_FREETECHS, nFreeTech)
+		.addI(TF_GOLDENAGE, nGoldenAge).addI(TF_POPULATION, nPop));
 }
 
 // The unit's OWN `grants.promotions`, handed to the created INSTANCE. This is the ONLY leg of the legacy
 // CvUnit::setFreePromotion that is a grant: the player free-promotion registry is written solely by
 // CvPlayer::applyEvent (random events -- out of scope) and the trait-derived promotions are refcounted with the
 // trait (a MODIFIER, alive-with-source). See grant-apply-sites.md §4.
-static void gr_resolveUnit(int iUnit, int iPlayer, int iUnitId)
+static void tr_resolveUnit(int iUnit, int iPlayer, int iUnitId)
 {
 	const CvInfo* j = InfoRepo<CvUnitInfo>::get().get(iUnit);
 	if (j == NULL) return;
-	const int nPromos = gr_listCount(j, gr_keyPromotions);   // free promotions on creation
-	const int nFound  = gr_listCount(j, gr_keyBuildings);    // settle-time building seeds (grants.buildings on the settler)
+	const int nPromos = tr_listCount(j, tr_keyPromotions);   // free promotions on creation
+	const int nFound  = tr_listCount(j, tr_keyBuildings);    // settle-time building seeds (grants.buildings on the settler)
 	if (nPromos == 0 && nFound == 0) return;
 
 	int nApplied = 0;
 	if (!s_bSuppressed && iUnitId >= 0 && iPlayer >= 0 && nPromos > 0)
 	{
 		CvUnit* pUnit = GET_PLAYER((PlayerTypes)iPlayer).getUnit(iUnitId);
-		const std::vector<int>* promos = (j->getGrants() != NULL) ? j->getGrants()->list(gr_keyPromotions) : NULL;
+		const std::vector<int>* promos = (j->getGrants() != NULL) ? j->getGrants()->list(tr_keyPromotions) : NULL;
 		if (pUnit != NULL && promos != NULL)
 		{
 			for (size_t i = 0; i < promos->size(); ++i)
@@ -344,12 +381,12 @@ static void gr_resolveUnit(int iUnit, int iPlayer, int iUnitId)
 		}
 	}
 	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_TRIGGERS, TRE_UNIT, 1)
-		.addI(GF_SUPPRESSED, s_bSuppressed ? 1 : 0).addI(GF_APPLIED, nApplied)
-		.addI(GF_PLAYER, iPlayer).addI(GF_UNIT, iUnit)
-		.addI(GF_PROMOTIONS, nPromos).addI(GF_GRANTBUILDINGS, nFound));
+		.addI(TF_SUPPRESSED, s_bSuppressed ? 1 : 0).addI(TF_APPLIED, nApplied)
+		.addI(TF_PLAYER, iPlayer).addI(TF_UNIT, iUnit)
+		.addI(TF_PROMOTIONS, nPromos).addI(TF_GRANTBUILDINGS, nFound));
 }
 
-static int gr_firstId(const CvInfo* j, int iBucketKey)   // a single-id grant bucket's id (-1 if absent)
+static int tr_firstId(const CvInfo* j, int iBucketKey)   // a single-id grant bucket's id (-1 if absent)
 {
 	return (j->getGrants() != NULL) ? j->getGrants()->firstListId(iBucketKey) : -1;
 }
@@ -359,7 +396,7 @@ static int gr_firstId(const CvInfo* j, int iBucketKey)   // a single-id grant bu
 // the AI's queued research) and the "first to tech" announcements, both keyed off the same data.
 // The prophet leg is the tech's own `firstFreeProphet` gated on GAMEOPTION_RELIGION_DIVINE_PROPHETS -- exactly what
 // CvPlayer::getTechFreeProphet does (a pure info read + the option), so it moves without changing the resolution.
-static void gr_applyTechFirstDiscover(int iTech, int iPlayer, int iFirstUnit, int iFirstProphet, int nFreeTechs)
+static void tr_applyTechFirstDiscover(int iTech, int iPlayer, int iFirstUnit, int iFirstProphet, int nFreeTechs)
 {
 	CvPlayer& player = GET_PLAYER((PlayerTypes)iPlayer);
 	CvCity* pCapital = player.getCapitalCity();
@@ -377,33 +414,33 @@ static void gr_applyTechFirstDiscover(int iTech, int iPlayer, int iFirstUnit, in
 	}
 }
 
-static void gr_resolveTech(int iTech, int iPlayer)
+static void tr_resolveTech(int iTech, int iPlayer)
 {
 	const CvInfo* j = InfoRepo<CvTechInfo>::get().get(iTech);
 	if (j == NULL) return;
-	const int iFirstUnit    = gr_firstId(j, gr_keyFirstFreeUnit);     // first-discover free unit id (-1 none)
-	const int iFirstProphet = gr_firstId(j, gr_keyFirstFreeProphet);  // first-discover free prophet id (option-gated)
-	const int nFreeTechs    = gr_pulse(j, gr_keyFreeTechs);           // first-discover free tech picks (count)
+	const int iFirstUnit    = tr_firstId(j, tr_keyFirstFreeUnit);     // first-discover free unit id (-1 none)
+	const int iFirstProphet = tr_firstId(j, tr_keyFirstFreeProphet);  // first-discover free prophet id (option-gated)
+	const int nFreeTechs    = tr_pulse(j, tr_keyFreeTechs);           // first-discover free tech picks (count)
 	if (iFirstUnit < 0 && iFirstProphet < 0 && nFreeTechs == 0) return;
 	const bool bApplied = !s_bSuppressed && iPlayer >= 0;
-	if (bApplied) gr_applyTechFirstDiscover(iTech, iPlayer, iFirstUnit, iFirstProphet, nFreeTechs);
+	if (bApplied) tr_applyTechFirstDiscover(iTech, iPlayer, iFirstUnit, iFirstProphet, nFreeTechs);
 	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_TRIGGERS, TRE_TECH, 1)
-		.addI(GF_SUPPRESSED, s_bSuppressed ? 1 : 0).addI(GF_APPLIED, bApplied ? 1 : 0)
-		.addI(GF_PLAYER, iPlayer).addI(GF_TECH, iTech)
-		.addI(GF_FIRSTUNIT, iFirstUnit).addI(GF_FIRSTPROPHET, iFirstProphet).addI(GF_FREETECHS, nFreeTechs));
+		.addI(TF_SUPPRESSED, s_bSuppressed ? 1 : 0).addI(TF_APPLIED, bApplied ? 1 : 0)
+		.addI(TF_PLAYER, iPlayer).addI(TF_TECH, iTech)
+		.addI(TF_FIRSTUNIT, iFirstUnit).addI(TF_FIRSTPROPHET, iFirstProphet).addI(TF_FREETECHS, nFreeTechs));
 }
 
 // The RELIGION FOUNDER provisions. The two religions are DIFFERENT on purpose (CvPlayer::foundReligion): the SLOT
 // being claimed sets the COUNT, the religion the player CHOSE sets the unit TYPE. Legacy's apply is deleted.
 // (Under GAMEOPTION_RELIGION_DIVINE_PROPHETS foundReligion never runs -- founding is an OUTCOME there, a separate
 // system -- so this path simply does not fire, by design.)
-static void gr_resolveReligion(int iReligion, int iSlotReligion, int iPlayer, int iCity, bool bAward)
+static void tr_resolveReligion(int iReligion, int iSlotReligion, int iPlayer, int iCity, bool bAward)
 {
 	const CvInfo* jChosen = InfoRepo<CvReligionInfo>::get().get(iReligion);
 	const CvInfo* jSlot   = InfoRepo<CvReligionInfo>::get().get(iSlotReligion);
 	if (jChosen == NULL || jSlot == NULL) return;
-	const int nNumFree  = gr_pulse(jSlot, gr_keyNumFreeUnits);   // count of founder units -- from the SLOT
-	const int iFreeUnit = gr_firstId(jChosen, gr_keyFreeUnit);   // the founder unit type -- from the CHOSEN religion
+	const int nNumFree  = tr_pulse(jSlot, tr_keyNumFreeUnits);   // count of founder units -- from the SLOT
+	const int iFreeUnit = tr_firstId(jChosen, tr_keyFreeUnit);   // the founder unit type -- from the CHOSEN religion
 	if (nNumFree == 0 && iFreeUnit < 0) return;
 
 	const bool bApplied = !s_bSuppressed && bAward && iFreeUnit >= 0 && nNumFree > 0 && iPlayer >= 0;
@@ -419,25 +456,25 @@ static void gr_resolveReligion(int iReligion, int iSlotReligion, int iPlayer, in
 		}
 	}
 	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_TRIGGERS, TRE_RELIGION, 1)
-		.addI(GF_SUPPRESSED, s_bSuppressed ? 1 : 0).addI(GF_APPLIED, bApplied ? 1 : 0)
-		.addI(GF_PLAYER, iPlayer).addI(GF_RELIGION, iReligion).addI(GF_CITY, iCity)
-		.addI(GF_NUMFREEUNITS, nNumFree).addI(GF_FREEUNIT, iFreeUnit));
+		.addI(TF_SUPPRESSED, s_bSuppressed ? 1 : 0).addI(TF_APPLIED, bApplied ? 1 : 0)
+		.addI(TF_PLAYER, iPlayer).addI(TF_RELIGION, iReligion).addI(TF_CITY, iCity)
+		.addI(TF_NUMFREEUNITS, nNumFree).addI(TF_FREEUNIT, iFreeUnit));
 }
 
-static void gr_resolveCivic(int iCivic, int iPlayer)
+static void tr_resolveCivic(int iCivic, int iPlayer)
 {
 	const CvInfo* j = InfoRepo<CvCivicInfo>::get().get(iCivic);
 	if (j == NULL) return;
-	const int nRev = gr_pulse(j, gr_keyRevolution);   // rev-index pulse on adopt (signed; Python-applied in legacy)
+	const int nRev = tr_pulse(j, tr_keyRevolution);   // rev-index pulse on adopt (signed; Python-applied in legacy)
 	if (nRev == 0) return;
 	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_TRIGGERS, TRE_CIVIC, 1)
-		.addI(GF_SUPPRESSED, s_bSuppressed ? 1 : 0)
-		.addI(GF_PLAYER, iPlayer).addI(GF_CIVIC, iCivic).addI(GF_REVOLUTION, nRev));
+		.addI(TF_SUPPRESSED, s_bSuppressed ? 1 : 0)
+		.addI(TF_PLAYER, iPlayer).addI(TF_CIVIC, iCivic).addI(TF_REVOLUTION, nRev));
 }
 
 // Game start: resolve the player's game-start grants off its civilization (civics/techs/buildings), era + handicap
 // (startingGold). The apply is spread across legacy init points; the cascade resolves the whole set at ONE trigger.
-static void gr_resolvePlayerInit(int iPlayer)
+static void tr_resolvePlayerInit(int iPlayer)
 {
 	const CvPlayer& p = GET_PLAYER((PlayerTypes)iPlayer);
 	const CvInfo* jc = InfoRepo<CvCivilizationInfo>::get().get(p.getCivilizationType());
@@ -448,10 +485,10 @@ static void gr_resolvePlayerInit(int iPlayer)
 	// for a start era with no prior-era techs. Reading it resolves the wrong era's gold/units for every player.
 	const CvInfo* je = InfoRepo<CvEraInfo>::get().get((int)GC.getGame().getStartEra());
 	const CvInfo* jh = InfoRepo<CvHandicapInfo>::get().get(p.getHandicapType());
-	const int nCivics = (jc != NULL) ? gr_listCount(jc, gr_keyCivics)    : 0;
-	const int nTechs  = (jc != NULL) ? gr_listCount(jc, gr_keyTechs)     : 0;
-	const int nBuild  = (jc != NULL) ? gr_listCount(jc, gr_keyBuildings) : 0;
-	const int nGold   = ((je != NULL) ? gr_pulse(je, gr_keyStartingGold) : 0) + ((jh != NULL) ? gr_pulse(jh, gr_keyStartingGold) : 0);
+	const int nCivics = (jc != NULL) ? tr_listCount(jc, tr_keyCivics)    : 0;
+	const int nTechs  = (jc != NULL) ? tr_listCount(jc, tr_keyTechs)     : 0;
+	const int nBuild  = (jc != NULL) ? tr_listCount(jc, tr_keyBuildings) : 0;
+	const int nGold   = ((je != NULL) ? tr_pulse(je, tr_keyStartingGold) : 0) + ((jh != NULL) ? tr_pulse(jh, tr_keyStartingGold) : 0);
 	if (nCivics == 0 && nTechs == 0 && nBuild == 0 && nGold == 0) return;
 
 	// STARTING GOLD is the machine's: (handicap + era startingGold) x gamespeed, replacing CvPlayer::initFreeState's
@@ -465,9 +502,9 @@ static void gr_resolvePlayerInit(int iPlayer)
 		player.changeGold(nGold * GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent() / 100);
 	}
 	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_TRIGGERS, TRE_GAMESTART, 1)
-		.addI(GF_SUPPRESSED, s_bSuppressed ? 1 : 0).addI(GF_APPLIED, bApplied ? 1 : 0)
-		.addI(GF_PLAYER, iPlayer).addI(GF_CIVICS, nCivics).addI(GF_TECHS, nTechs)
-		.addI(GF_BUILDINGS, nBuild).addI(GF_STARTINGGOLD, nGold));
+		.addI(TF_SUPPRESSED, s_bSuppressed ? 1 : 0).addI(TF_APPLIED, bApplied ? 1 : 0)
+		.addI(TF_PLAYER, iPlayer).addI(TF_CIVICS, nCivics).addI(TF_TECHS, nTechs)
+		.addI(TF_BUILDINGS, nBuild).addI(TF_STARTINGGOLD, nGold));
 }
 
 // ===================== THE LOAD-BRACKET SUPPRESSION (event-spine.md; DEC-spine-reseed) =====================
@@ -498,7 +535,7 @@ static void gr_resolvePlayerInit(int iPlayer)
 
 // The full-heal provision -- heal up to iCount damaged own-team units on the city plot, chosen at random.
 // Mirrors the legacy CvCity::doHeal body verbatim (DEC-mirror-then-redesign), including its RNG draw.
-static int gr_applyFullHeal(CvCity* pCity, int iCount)
+static int tr_applyFullHeal(CvCity* pCity, int iCount)
 {
 	UnitVector damagedUnits;
 	algo::push_back(damagedUnits,
@@ -526,7 +563,7 @@ static int gr_applyFullHeal(CvCity* pCity, int iCount)
 //   - `chance: N` -- a flat percent. Parsed ×100, and a percent ×100 IS its own per-10000 figure (5% -> 500).
 // ⛔ The flat form previously could not fire at all: the spawn was reached through a property lookup that
 // returned early on the absent per, so every entry authored with plain odds was silently inert.
-static int gr_triggerChance10000(const CvCity* pCity, const CvTriggerEntry* pEntry)
+static int tr_triggerChance10000(const CvCity* pCity, const CvTriggerEntry* pEntry)
 {
 	const PropertyTypes eProperty = (PropertyTypes)pEntry->chancePerTypeId;
 	if (eProperty < 0 || eProperty >= GC.getNumPropertyInfos())
@@ -546,7 +583,7 @@ static int gr_triggerChance10000(const CvCity* pCity, const CvTriggerEntry* pEnt
 // PLACE one spawned unit. The odds were already decided by the caller (above); this only performs the action.
 // The spawn OWNER is the property's sign: a negative-weight property (crime, disease) spawns hostile for the
 // BARBARIAN player, a positive one -- and a flat-chance entry, which has no property to ask -- for the city owner.
-static int gr_applySpawn(CvCity* pCity, int iChancePerProperty, int iSpawnUnit)
+static int tr_applySpawn(CvCity* pCity, int iChancePerProperty, int iSpawnUnit)
 {
 	const PropertyTypes eProperty = (PropertyTypes)iChancePerProperty;
 	const bool bPositiveProperty =
@@ -579,7 +616,7 @@ static int gr_applySpawn(CvCity* pCity, int iChancePerProperty, int iSpawnUnit)
 	return (int)eUnit;
 }
 
-static void gr_applyCityPerTurn(CvCity* pCity)
+static void tr_applyCityPerTurn(CvCity* pCity)
 {
 	const CvInfo* pAny = NULL;
 	const CvPlayer& player = GET_PLAYER(pCity->getOwner());
@@ -615,18 +652,18 @@ static void gr_applyCityPerTurn(CvCity* pCity)
 			if (pEntry->healUnitCombatId >= 0) continue;   // the heal-RATE term -- the modifier plane's, not a grant
 			if (pEntry->grant != NULL)
 			{
-				const std::vector<int>* pSpawnUnits = pEntry->grant->list(gr_keyUnits);
+				const std::vector<int>* pSpawnUnits = pEntry->grant->list(tr_keyUnits);
 				if (pSpawnUnits != NULL && !pSpawnUnits->empty())
 				{
 					// ONE roll per ENTRY -- the odds belong to the trigger (json.md §5), not to each unit --
 					// and then the action places EVERY unit the entry grants. ⛔ Taking only [0] silently
 					// dropped the rest of an authored list, which no compiler or runtime could have caught.
-					const int iChance = gr_triggerChance10000(pCity, pEntry);
+					const int iChance = tr_triggerChance10000(pCity, pEntry);
 					if (iChance > 0 && GC.getGame().getSorenRandNum(10000, "Trigger Spawn Check") < iChance)
 					{
 						for (size_t u = 0; u < pSpawnUnits->size(); ++u)
 						{
-							const int iUnit = gr_applySpawn(pCity, pEntry->chancePerTypeId, (*pSpawnUnits)[u]);
+							const int iUnit = tr_applySpawn(pCity, pEntry->chancePerTypeId, (*pSpawnUnits)[u]);
 							if (iUnit >= 0) { iSpawned = iUnit; ++iSpawnCount; }
 						}
 					}
@@ -637,24 +674,24 @@ static void gr_applyCityPerTurn(CvCity* pCity)
 
 	}
 
-	const int iHealed = (iFullHeal > 0) ? gr_applyFullHeal(pCity, iFullHeal) : 0;
+	const int iHealed = (iFullHeal > 0) ? tr_applyFullHeal(pCity, iFullHeal) : 0;
 	if (iSpawnCount > 0 || iHealed > 0)
 	{
 		// The SPAWNED field is added ONLY when a unit actually landed: a sentinel -1 through the SFT_UNIT index
 		// formatter renders "spawned=?", which cannot be told apart from "a spawn was attempted and failed" --
 		// an ambiguous line defeats the point of a surface you reconstruct state from.
 		CvSpineEvent ev(EVENTKIND_DIAGNOSTIC, SD_TRIGGERS, TRE_REPEAT, 1);
-		ev.addI(GF_SUPPRESSED, s_bSuppressed ? 1 : 0)
-		  .addI(GF_PLAYER, pCity->getOwner()).addI(GF_CITY, pCity->getID())
-		  .addI(GF_HEALED, iHealed);
-		if (iSpawnCount > 0) { ev.addI(GF_SPAWNED, iSpawned); }
+		ev.addI(TF_SUPPRESSED, s_bSuppressed ? 1 : 0)
+		  .addI(TF_PLAYER, pCity->getOwner()).addI(TF_CITY, pCity->getID())
+		  .addI(TF_HEALED, iHealed);
+		if (iSpawnCount > 0) { ev.addI(TF_SPAWNED, iSpawned); }
 		eventSpine().emit(ev);
 	}
 }
 
 // The player's per-turn provisions. Suppressed inside the load bracket like every other apply: a grant is the
 // RESULT of a genuine in-play acquisition, and a load is not one ([DEC-spine-reseed]).
-static void gr_applyPerTurn(int iPlayer)
+static void tr_applyPerTurn(int iPlayer)
 {
 	if (s_bSuppressed) return;
 	if (iPlayer < 0 || iPlayer >= MAX_PLAYERS) return;
@@ -662,7 +699,7 @@ static void gr_applyPerTurn(int iPlayer)
 	if (!player.isAlive()) return;
 	foreach_(CvCity* pLoopCity, player.cities())
 	{
-		gr_applyCityPerTurn(pLoopCity);
+		tr_applyCityPerTurn(pLoopCity);
 	}
 }
 
@@ -674,12 +711,12 @@ static void gr_applyPerTurn(int iPlayer)
 // settle keys, barbarianInitialDefenders) still apply in CvPlayer::found: several are not authored in a `grants`
 // block at all, so the machine cannot resolve them off getGrants() until the curator emits them
 // (grant-apply-sites.md §5.4). The TRIGGER now exists; the DATA is the remaining blocker.
-static void gr_resolveCityFounded(int iOwner, int iCity, int iFounderType)
+static void tr_resolveCityFounded(int iOwner, int iCity, int iFounderType)
 {
 	if (iOwner < 0 || iFounderType < 0) return;
 	const CvInfo* j = InfoRepo<CvUnitInfo>::get().get(iFounderType);
 	if (j == NULL || j->getGrants() == NULL) return;
-	const std::vector<int>* pSeeds = j->getGrants()->list(gr_keyBuildings);
+	const std::vector<int>* pSeeds = j->getGrants()->list(tr_keyBuildings);
 	if (pSeeds == NULL || pSeeds->empty()) return;
 
 	CvPlayer& player = GET_PLAYER((PlayerTypes)iOwner);
@@ -697,7 +734,7 @@ static void gr_resolveCityFounded(int iOwner, int iCity, int iFounderType)
 			const int iBuilding = (*pSeeds)[i];
 			if (iBuilding < 0) continue;
 			// the entry's own `enabled` condition (the §3.9 conditioned object form), index-parallel to the ids
-			const CvCondition* pEnabled = j->getGrants()->listCond(gr_keyBuildings, i);
+			const CvCondition* pEnabled = j->getGrants()->listCond(tr_keyBuildings, i);
 			if (pEnabled != NULL && !cascadeEvalCondition(pEnabled, ec, kFlags)) continue;
 			if (pCity->hasBuilding((BuildingTypes)iBuilding)) continue;
 			pCity->changeHasBuilding((BuildingTypes)iBuilding, true);
@@ -705,9 +742,9 @@ static void gr_resolveCityFounded(int iOwner, int iCity, int iFounderType)
 		}
 	}
 	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_TRIGGERS, TRE_FOUND, 1)
-		.addI(GF_SUPPRESSED, s_bSuppressed ? 1 : 0).addI(GF_APPLIED, nPlaced)
-		.addI(GF_PLAYER, iOwner).addI(GF_CITY, iCity).addI(GF_UNIT, iFounderType)
-		.addI(GF_GRANTBUILDINGS, (int)pSeeds->size()));
+		.addI(TF_SUPPRESSED, s_bSuppressed ? 1 : 0).addI(TF_APPLIED, nPlaced)
+		.addI(TF_PLAYER, iOwner).addI(TF_CITY, iCity).addI(TF_UNIT, iFounderType)
+		.addI(TF_GRANTBUILDINGS, (int)pSeeds->size()));
 }
 
 // THE CAPITAL RELOCATED -- re-seed the palace into the new capital. The palace is what MAKES a city the capital
@@ -715,7 +752,7 @@ static void gr_resolveCityFounded(int iOwner, int iCity, int iFounderType)
 // the settler's `grants.buildings` covers FOUNDING only, and the civilization building list that used to carry the palace on
 // relocation no longer does. Same gate as the founding case -- the building on its OWN absence -- so an empire
 // that still holds a palace somewhere gets nothing.
-static void gr_resolveCapitalChanged(int iOwner, int iCity)
+static void tr_resolveCapitalChanged(int iOwner, int iCity)
 {
 	if (iOwner < 0 || iCity < 0) return;   // -1 city = no city left to be a capital
 	CvPlayer& player = GET_PLAYER((PlayerTypes)iOwner);
@@ -739,11 +776,11 @@ static void gr_resolveCapitalChanged(int iOwner, int iCity)
 	if (bApplied) pCity->changeHasBuilding((BuildingTypes)s_iCapitalBuilding, true);
 
 	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_TRIGGERS, TRE_FOUND, 1)
-		.addI(GF_SUPPRESSED, s_bSuppressed ? 1 : 0).addI(GF_APPLIED, bApplied ? 1 : 0)
-		.addI(GF_PLAYER, iOwner).addI(GF_CITY, iCity).addI(GF_BUILDING, s_iCapitalBuilding));
+		.addI(TF_SUPPRESSED, s_bSuppressed ? 1 : 0).addI(TF_APPLIED, bApplied ? 1 : 0)
+		.addI(TF_PLAYER, iOwner).addI(TF_CITY, iCity).addI(TF_BUILDING, s_iCapitalBuilding));
 }
 
-void CvCascadeGrants::onEvent(const CvSpineEvent& e)
+void CvTriggerEngine::onEvent(const CvSpineEvent& e)
 {
 	if (e.eKind != EVENTKIND_DOMAIN) return;
 	// ⛔ The machine's OPERATION is not gated on a log level. It used to return early below `gPlayerLogLevel < 1`,
@@ -766,24 +803,24 @@ void CvCascadeGrants::onEvent(const CvSpineEvent& e)
 			// the engine grants nothing in that case either (CvCity::setupBuilding's bFirst gate).
 			s_bFirstAcquire = (e.iA != 0);
 			if (!s_bFirstAcquire) s_bSuppressed = true;
-			gr_resolveBuilding(e.iType, e.iC, e.iSrcLoc);   // iSrcLoc = the city the building landed in
+			tr_resolveBuilding(e.iType, e.iC, e.iSrcLoc);   // iSrcLoc = the city the building landed in
 		}
 		break;
 	// The per-TYPE tally carries no instance, so it cannot apply -- the instance-aware SEVT_UNIT_CREATED does.
-	case SEVT_UNIT_CREATED:   gr_resolveUnit(e.iType, e.iC, e.iA); break;   // iA = the created unit's id
+	case SEVT_UNIT_CREATED:   tr_resolveUnit(e.iType, e.iC, e.iA); break;   // iA = the created unit's id
 	// iType = founding unit's type, iC = owner, iSrcLoc = the new city
-	case SEVT_CITY_FOUNDED:   gr_resolveCityFounded(e.iC, e.iSrcLoc, e.iType); break;
+	case SEVT_CITY_FOUNDED:   tr_resolveCityFounded(e.iC, e.iSrcLoc, e.iType); break;
 	// iC = owner, iSrcLoc = the new capital (-1 = none left)
-	case SEVT_CAPITAL_CHANGED: gr_resolveCapitalChanged(e.iC, e.iSrcLoc); break;
-	case SEVT_TECH_ACQUIRED:    gr_resolveTech(e.iType, e.iC);       break;  // first-discover only (iC = discoverer)
+	case SEVT_CAPITAL_CHANGED: tr_resolveCapitalChanged(e.iC, e.iSrcLoc); break;
+	case SEVT_TECH_ACQUIRED:    tr_resolveTech(e.iType, e.iC);       break;  // first-discover only (iC = discoverer)
 	// iType = chosen religion, iA = slot religion, iB = bAward, iC = founding player, iSrcLoc = holy city
-	case SEVT_RELIGION_FOUNDED: gr_resolveReligion(e.iType, e.iA, e.iC, e.iSrcLoc, e.iB != 0); break;
-	case SEVT_CIVIC_ADOPTED:    gr_resolveCivic(e.iType, e.iC);      break;  // iC = adopting player
-	case SEVT_PLAYER_INIT:      gr_resolvePlayerInit(e.iC);          break;  // iC = player (game start)
+	case SEVT_RELIGION_FOUNDED: tr_resolveReligion(e.iType, e.iA, e.iC, e.iSrcLoc, e.iB != 0); break;
+	case SEVT_CIVIC_ADOPTED:    tr_resolveCivic(e.iType, e.iC);      break;  // iC = adopting player
+	case SEVT_PLAYER_INIT:      tr_resolvePlayerInit(e.iC);          break;  // iC = player (game start)
 	// The per-turn provisions (increment 5). PLAYER-scoped only -- the GAME-scope boundary carries iC = -1 and is
 	// the perf/observability fact, not a grant trigger. Legacy ran the per-turn spawn inside CvCity::doTurn within
 	// CvPlayer::doTurn, so the player boundary is the ordering-faithful grain.
-	case SEVT_TURN_STARTED:     if (e.iC >= 0) { gr_applyPerTurn(e.iC); } break;
+	case SEVT_TURN_STARTED:     if (e.iC >= 0) { tr_applyPerTurn(e.iC); } break;
 	// Trigger (2) for free promotions: a building went ACTIVE in a city -- a fresh build OR a step out of
 	// dormancy (processBuilding fires on both). Hand its promotions to everyone already standing there.
 	// iType = building, iC = owner, iSrcLoc = city, iB = +1 in / -1 out.
@@ -791,12 +828,12 @@ void CvCascadeGrants::onEvent(const CvSpineEvent& e)
 		if (!s_bSuppressed && e.iB > 0 && e.iC >= 0)
 		{
 			CvCity* pC = GET_PLAYER((PlayerTypes)e.iC).getCity(e.iSrcLoc);
-			const int n = (pC != NULL) ? gr_promoteCityUnits(pC, GC.getBuildingInfo((BuildingTypes)e.iType)) : 0;
+			const int n = (pC != NULL) ? tr_promoteCityUnits(pC, InfoRepo<CvBuildingInfo>::get().get(e.iType)) : 0;
 			if (n > 0)
 			{
 				eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_TRIGGERS, TRE_REPEAT, 1)
-					.addI(GF_SUPPRESSED, 0).addI(GF_PLAYER, e.iC).addI(GF_CITY, e.iSrcLoc)
-					.addI(GF_BUILDING, e.iType).addI(GF_FREEPROMOS, n));
+					.addI(TF_SUPPRESSED, 0).addI(TF_PLAYER, e.iC).addI(TF_CITY, e.iSrcLoc)
+					.addI(TF_BUILDING, e.iType).addI(TF_FREEPROMOS, n));
 			}
 		}
 		break;
@@ -807,22 +844,22 @@ void CvCascadeGrants::onEvent(const CvSpineEvent& e)
 			CvPlayer& p = GET_PLAYER((PlayerTypes)e.iC);
 			CvCity* pC = p.getCity(e.iSrcLoc);
 			CvUnit* pU = p.getUnit(e.iA);
-			const int n = gr_promoteOneUnit(pC, pU);
+			const int n = tr_promoteOneUnit(pC, pU);
 			if (n > 0)
 			{
 				eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_TRIGGERS, TRE_REPEAT, 1)
-					.addI(GF_SUPPRESSED, 0).addI(GF_PLAYER, e.iC).addI(GF_CITY, e.iSrcLoc)
-					.addI(GF_UNIT, e.iType).addI(GF_FREEPROMOS, n));
+					.addI(TF_SUPPRESSED, 0).addI(TF_PLAYER, e.iC).addI(TF_CITY, e.iSrcLoc)
+					.addI(TF_UNIT, e.iType).addI(TF_FREEPROMOS, n));
 			}
 		}
 		break;
 	}
 }
 
-static CvCascadeGrants s_cascadeGrants;
+static CvTriggerEngine s_cascadeGrants;
 
-void cascadeRegisterGrants()
+void triggerRegisterConsumer()
 {
-	gr_registerDomain();
+	tr_registerDomain();
 	eventSpine().registerConsumer(&s_cascadeGrants);
 }

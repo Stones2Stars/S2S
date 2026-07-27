@@ -7,12 +7,12 @@
 //
 //------------------------------------------------------------------------------------------------
 
-#include "FProfiler.h"
+#include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
 #include "CvGameCoreUtils.h"
-#include "CvGameAI.h"
-#include "CvGlobals.h"
+#include "AI/CvGameAI.h"
+#include "Defines/CvGlobals.h"
 #include "CvInfos.h"
 #include "CvEraInfo.h"
 

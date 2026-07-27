@@ -5,8 +5,8 @@
 
 #include "CvGameCoreDLL.h"
 #include "CvDerivedData.h"
-#include "CvGameAI.h"
-#include "CvGlobals.h"
+#include "AI/CvGameAI.h"
+#include "Defines/CvGlobals.h"
 
 bool TLazyBase::s_bReadOnlyPhase = false;
 

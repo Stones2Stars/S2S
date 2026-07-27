@@ -1,23 +1,23 @@
 ﻿#include "CvGameCoreDLL.h"
 #include "CvBuildingInfo.h"
 #include "CvCity.h"
-#include "CvGameAI.h"
+#include "AI/CvGameAI.h"
 #include "CvGame.h"
-#include "CvGlobals.h"
+#include "Defines/CvGlobals.h"
 #include "CvInfos.h"
 #include "CvImprovementInfo.h"
 #include "CvBonusInfo.h"
 #include "CvMap.h"
-#include "CvMapExternal.h"
-#include "CvPlayerAI.h"
+#include "UI/CvMapExternal.h"
+#include "AI/CvPlayerAI.h"
 #include "CvPlot.h"
-#include "CvPython.h"
+#include "Infrastructure/CvPython.h"
 #include "CvSelectionGroup.h"
-#include "CvTeamAI.h"
+#include "AI/CvTeamAI.h"
 #include "CvUnit.h"
-#include "CvDLLFAStarIFaceBase.h"
-#include "CheckSum.h"
-#include "FAStarNode.h"
+#include "Infrastructure/CvDLLFAStarIFaceBase.h"
+#include "Tools/CheckSum.h"
+#include "Infrastructure/FAStarNode.h"
 
 
 #define PATH_MOVEMENT_WEIGHT									(1000)
@@ -3701,7 +3701,7 @@ void CvChecksum::add(uint8_t b)
 	sum = (sum << 8) + ((sum >> 24) ^ cipher);
 }
 
-#include "CyArgsList.h"
+#include "Python/CyArgsList.h"
 
 void AddDLLMessage(
 	PlayerTypes ePlayer, bool bForce, int iLength, CvWString szString, const char* pszSound,

@@ -7,18 +7,18 @@
 //
 //------------------------------------------------------------------------------------------------
 
-#include "FProfiler.h"
+#include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
 #include "CvGameObject.h"
-#include "CvGlobals.h"
+#include "Defines/CvGlobals.h"
 #include "CvOutcomeMission.h"
-#include "CvPlayerAI.h"
+#include "AI/CvPlayerAI.h"
 #include "CvUnit.h"
-#include "CvXMLLoadUtility.h"
-#include "CheckSum.h"
-#include "IntExpr.h"
-#include "BoolExpr.h"
+#include "Infrastructure/CvXMLLoadUtility.h"
+#include "Tools/CheckSum.h"
+#include "Infrastructure/IntExpr.h"
+#include "Infrastructure/BoolExpr.h"
 
 CvOutcomeMission::CvOutcomeMission() :
 m_eMission(NO_MISSION),

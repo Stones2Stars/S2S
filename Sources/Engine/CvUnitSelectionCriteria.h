@@ -12,9 +12,9 @@
 //
 //------------------------------------------------------------------------------------------------
 
-#include "CvEnums.h"
-#include "CvString.h"
-#include "CvGlobals.h"
+#include "Defines/CvEnums.h"
+#include "Defines/CvString.h"
+#include "Defines/CvGlobals.h"
 #include "CvInfos.h"
 #include "CvUnitSelectionCriteria.h"
 
