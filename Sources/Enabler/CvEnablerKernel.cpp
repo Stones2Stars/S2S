@@ -38,7 +38,7 @@ static const EnEdgeBucket EN_GEN_BUCKETS[] =
 };
 
 // The per-(bucket) InfoRepo dispatch -- the entity's CvInfo by bucket + id.
-const CvInfo* EnablerKernel::jsonFor(EnEdgeBucket eBucket, int id)
+const CvInfo* EnablerKernel::infoFor(EnEdgeBucket eBucket, int id)
 {
 	switch (eBucket)
 	{
@@ -168,7 +168,7 @@ bool EnablerKernel::requiresMet(const CvInfo* j, const CvCascadeEvalCtx& ec, boo
 // The system-placement gate (see the header for the role it plays and why it is not the availability read).
 bool EnablerKernel::requiresMetForPlayer(const CvPlayer& kPlayer, EnEdgeBucket eBucket, int iId)
 {
-	const CvInfo* j = jsonFor(eBucket, iId);
+	const CvInfo* j = infoFor(eBucket, iId);
 	if (j == NULL) return false;
 	CvCascadeEvalCtx ec;
 	kPlayer.getEmpireContext().fillEvalCtx(ec);   // player+team -- the contexts fill the eval state (contexts.md)
@@ -180,7 +180,7 @@ bool EnablerKernel::requiresMetForPlayer(const CvPlayer& kPlayer, EnEdgeBucket e
 // The city twin (see the header). Same ONE evaluator, over a ctx the city + empire contexts fill.
 bool EnablerKernel::requiresMetInCity(const CvCity& kCity, EnEdgeBucket eBucket, int iId, bool bVisible)
 {
-	const CvInfo* j = jsonFor(eBucket, iId);
+	const CvInfo* j = infoFor(eBucket, iId);
 	if (j == NULL) return false;
 	CvCascadeEvalCtx ec;
 	kCity.getCityContext().fillEvalCtx(ec);                                  // city+plot
@@ -307,7 +307,7 @@ void EnablerKernel::gateSet(EnEdgeBucket eBucket, const EnBucketSets& cand, cons
 	const std::set<int>& b = cand[eBucket];
 	for (std::set<int>::const_iterator it = b.begin(); it != b.end(); ++it)
 	{
-		const CvInfo* j = jsonFor(eBucket, *it);
+		const CvInfo* j = infoFor(eBucket, *it);
 		if (obsoletedByHeldTech(j, kTeam)) continue;
 		if (requiresMet(j, ec, bVisible) && allowedOk(j, *it, kPlayer, bUnit, eBucket)) avail.insert(*it);
 	}

@@ -9,7 +9,7 @@
 #include "Data/CvReadJson.h"           // rjInfoForType -- the ONE INFOTYPE-prefix -> InfoRepo dispatch
 #include "Defines/CvGlobals.h"         // GC.getNum<X>Infos -- the per-kind id spaces
 #include "Repos/InfoRepo.h"            // the per-info-type homes
-#include "Enabler/CvEnablerKernel.h"   // EnablerKernel::jsonFor -- the gate-axis per-bucket dispatch (single-source)
+#include "Enabler/CvEnablerKernel.h"   // EnablerKernel::infoFor -- the gate-axis per-bucket dispatch (single-source)
 #include "CvInfo.h"                    // the base surface: edges/requires/deposits/grants/provides/triggers
 #include "CvCondition.h"               // the typed requires tree the walks recurse
 #include "CvInfoKinds.h"               // infoFamilyYield / infoFamilyKey / infoIsTargetToken
@@ -77,7 +77,7 @@ namespace
 		X(CvSpecialistInfo,      getNumSpecialistInfos,      EDGEB_SPECIALISTS)
 
 	// The referenced info of an edge BUCKET (the display axis -- every bucket the spec vocabulary carries; the
-	// _AND/_OR/_WAIVED variants resolve to their kind's repo). Distinct from EnablerKernel::jsonFor, which is
+	// _AND/_OR/_WAIVED variants resolve to their kind's repo). Distinct from EnablerKernel::infoFor, which is
 	// the GATE axis and deliberately serves only the enabler's domain kinds. Reads never create: get() +
 	// const_cast (the load window's sanctioned mutation -- addReverseEdge is the load-only writer).
 	CvInfo* rp_infoForBucket(EnEdgeBucket eBucket, int iId)
@@ -521,7 +521,7 @@ namespace
 			const int iNumInfos = rp_gateKindCount(eKind);
 			for (int iInfo = 0; iInfo < iNumInfos; ++iInfo)
 			{
-				const CvInfo* pDependent = EnablerKernel::jsonFor(eKind, iInfo);
+				const CvInfo* pDependent = EnablerKernel::infoFor(eKind, iInfo);
 				if (pDependent == NULL)
 				{
 					continue;
@@ -532,7 +532,7 @@ namespace
 				const std::vector<int>& dormantSuccessors = pDependent->dormantTriggers();
 				for (size_t iDormant = 0; iDormant < dormantSuccessors.size(); ++iDormant)
 				{
-					CvInfo* pSuccessor = const_cast<CvInfo*>(EnablerKernel::jsonFor(eKind, dormantSuccessors[iDormant]));
+					CvInfo* pSuccessor = const_cast<CvInfo*>(EnablerKernel::infoFor(eKind, dormantSuccessors[iDormant]));
 					if (pSuccessor != NULL)
 					{
 						pSuccessor->addReverseEdge(EDGEF_REQUIRED_BY, eKind, iInfo);
@@ -541,7 +541,7 @@ namespace
 				}
 			}
 		}
-		// improvements + heritages carry requires too (no jsonFor bucket dispatch -- repo-direct)
+		// improvements + heritages carry requires too (no infoFor bucket dispatch -- repo-direct)
 		for (int iImprovement = 0; iImprovement < GC.getNumImprovementInfos(); ++iImprovement)
 		{
 			const CvInfo* pDependent = InfoRepo<CvImprovementInfo>::get().get(iImprovement);

@@ -64,7 +64,7 @@ class EnablerKernel
 {
 public:
 	// The per-(bucket) InfoRepo dispatch -- the entity's CvInfo by bucket + id.
-	static const CvInfo* jsonFor(EnEdgeBucket eBucket, int id);
+	static const CvInfo* infoFor(EnEdgeBucket eBucket, int id);
 
 	// Insert the (family, bucket) edge's targets (if present) into out.
 	static void addEdge(const CvInfo* j, EnEdgeFamily eFamily, EnEdgeBucket eBucket, std::set<int>& out);

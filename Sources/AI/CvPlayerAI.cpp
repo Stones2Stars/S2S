@@ -5573,7 +5573,7 @@ int CvPlayerAI::AI_techBuildingValue(TechTypes eTech, int iPathLength, bool& bEn
 	// ⛔ It replaces a scan of ALL ~5,180 buildings that asked each one the REVERSE question
 	// (isTechRequiredForBuilding) -- the whole-database scan enabler.md §6 exists to delete, run per tech valued.
 	std::set<int> unlockedBuildings;
-	EnablerKernel::addEdge(EnablerKernel::jsonFor(EDGEB_TECHS, (int)eTech), EDGEF_ENABLES, EDGEB_BUILDINGS, unlockedBuildings);
+	EnablerKernel::addEdge(EnablerKernel::infoFor(EDGEB_TECHS, (int)eTech), EDGEF_ENABLES, EDGEB_BUILDINGS, unlockedBuildings);
 
 	for (std::set<int>::const_iterator itUnlocked = unlockedBuildings.begin(); itUnlocked != unlockedBuildings.end(); ++itUnlocked)
 	{
