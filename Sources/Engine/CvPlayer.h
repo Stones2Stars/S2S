@@ -2524,10 +2524,6 @@ private:
 	int m_iNumCivicsSwitched;
 	mutable int* m_aiPathLengthCache;
 	mutable int* m_aiCostPathLengthCache;
-	mutable bool* m_bCanConstruct;
-	mutable bool* m_bCanConstructCached;
-	mutable bool* m_bCanConstructDefaultParam;
-	mutable bool* m_bCanConstructCachedDefaultParam;
 	mutable RouteTypes m_eBestRoute;
 	mutable BuildTypes m_eBestRouteBuild;
 	mutable std::map<int, bool>	m_canHaveBuilder;

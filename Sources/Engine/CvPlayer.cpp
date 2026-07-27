@@ -207,10 +207,6 @@ m_cachedBonusCount(NULL)
 	m_paiSpecialistValidCount = NULL;
 	m_aiPathLengthCache = NULL;
 	m_aiCostPathLengthCache = NULL;
-	m_bCanConstruct = NULL;
-	m_bCanConstructCached = NULL;
-	m_bCanConstructDefaultParam = NULL;
-	m_bCanConstructCachedDefaultParam = NULL;
 	m_pabResearchingTech = NULL;
 	m_pabLoyalMember = NULL;
 	m_paeCivics = NULL;
@@ -681,10 +677,6 @@ void CvPlayer::uninit()
 	SAFE_DELETE_ARRAY(m_aiPathLengthCache);
 	SAFE_DELETE_ARRAY(m_aiCostPathLengthCache);
 
-	SAFE_DELETE_ARRAY(m_bCanConstruct);
-	SAFE_DELETE_ARRAY(m_bCanConstructCached);
-	SAFE_DELETE_ARRAY(m_bCanConstructDefaultParam);
-	SAFE_DELETE_ARRAY(m_bCanConstructCachedDefaultParam);
 
 	m_upgradeCache.reset();
 
@@ -1553,26 +1545,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 			m_paeCivics[iI] = NO_CIVIC;
 		}
 
-
-		FAssertMsg(m_bCanConstruct==NULL, "about to leak memory, CvPlayer::m_bCanConstruct");
-		m_bCanConstruct = new bool[GC.getNumBuildingInfos()];
-
-		FAssertMsg(m_bCanConstructCached==NULL, "about to leak memory, CvPlayer::m_bCanConstructCached");
-		m_bCanConstructCached = new bool[GC.getNumBuildingInfos()];
-		for (iI = 0; iI < GC.getNumBuildingInfos(); iI++)
-		{
-			m_bCanConstructCached[iI] = false;
-		}
-
-		FAssertMsg(m_bCanConstructDefaultParam==NULL, "about to leak memory, CvPlayer::m_bCanConstructDefaultParam");
-		m_bCanConstructDefaultParam = new bool[GC.getNumBuildingInfos()];
-
-		FAssertMsg(m_bCanConstructCachedDefaultParam==NULL, "about to leak memory, CvPlayer::m_bCanConstructCachedDefaultParam");
-		m_bCanConstructCachedDefaultParam = new bool[GC.getNumBuildingInfos()];
-		for (iI = 0; iI < GC.getNumBuildingInfos(); iI++)
-		{
-			m_bCanConstructCachedDefaultParam[iI] = false;
-		}
 
 		FAssertMsg(m_aiPathLengthCache==NULL, "about to leak memory, CvPlayer::m_aiPathLengthCache");
 		m_aiPathLengthCache = new int[GC.getNumTechInfos()];
@@ -6885,62 +6857,10 @@ bool CvPlayer::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool
 
 bool CvPlayer::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestVisible, bool bIgnoreCost, TechTypes eIgnoreTechReq, int* probabilityEverConstructable, bool bExposed) const
 {
-	PROFILE_FUNC();
-
-	if (eBuilding == NO_BUILDING) return false;
-
-	bool bResult;
-	bool bHaveCachedResult;
-
-	//	Cache the param variant with false, true, true as this is used VERY heavily and
-	//	also the default param flavor
-	if ( !bContinue && bTestVisible && bIgnoreCost && eIgnoreTechReq == NO_TECH && probabilityEverConstructable == NULL && !bExposed)
-	{
-		if ( m_bCanConstructCached[eBuilding] )
-		{
-			bResult = m_bCanConstruct[eBuilding];
-			bHaveCachedResult = true;
-		}
-		else
-		{
-			bHaveCachedResult = false;
-		}
-
-		if ( !bHaveCachedResult )
-		{
-			bResult = canConstructInternal(eBuilding, bContinue, bTestVisible, bIgnoreCost);
-
-			m_bCanConstruct[eBuilding] = bResult;
-			m_bCanConstructCached[eBuilding] = true;
-		}
-	}
-	else if ( !bContinue && !bTestVisible && !bIgnoreCost && eIgnoreTechReq == NO_TECH && probabilityEverConstructable == NULL && !bExposed)
-	{
-		if ( m_bCanConstructCachedDefaultParam[eBuilding] )
-		{
-			bResult = m_bCanConstructDefaultParam[eBuilding];
-			bHaveCachedResult = true;
-		}
-		else
-		{
-			bHaveCachedResult = false;
-		}
-
-		if ( !bHaveCachedResult )
-		{
-			bResult = canConstructInternal(eBuilding, bContinue, bTestVisible, bIgnoreCost);
-
-			m_bCanConstructDefaultParam[eBuilding] = bResult;
-			m_bCanConstructCachedDefaultParam[eBuilding] = true;
-		}
-	}
-	else
-	{
-		bResult = canConstructInternal(eBuilding, bContinue, bTestVisible, bIgnoreCost, eIgnoreTechReq, probabilityEverConstructable, bExposed);
-	}
-
-	return bResult;
+	return canConstructInternal(eBuilding, bContinue, bTestVisible, bIgnoreCost, eIgnoreTechReq,
+		probabilityEverConstructable, bExposed);
 }
+
 
 bool CvPlayer::canConstructInternal(BuildingTypes eBuilding, bool bContinue, bool bTestVisible, bool bIgnoreCost, TechTypes eIgnoreTechReq, int* probabilityEverConstructable, bool bExposed) const
 {
@@ -28498,47 +28418,18 @@ void CvPlayer::changeCulture(int64_t iAddValue)
 void CvPlayer::clearCanConstructCache(BuildingTypes building, bool bIncludeCities) const
 {
 	PROFILE_EXTRA_FUNC();
-	for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
-	{
-		if (building == NO_BUILDING || building == static_cast<BuildingTypes>(iI))
-		{
-			m_bCanConstructCached[iI] = false;
-			m_bCanConstructCachedDefaultParam[iI] = false;
-
-			if (bIncludeCities)
-			{
-				algo::for_each(cities(), CvCity::fn::FlushCanConstructCache(building));
-			}
-		}
-	}
-
+	// The availability verdict is the ENABLER's maintained tri-state now, so there is no cache here to clear.
+	// What survives is the BUILD-LIST invalidation this also performed -- a UI/list concern, not a cache one,
+	// and the reason this function still exists at all.
 	algo::for_each(cities(), CvCity::fn::setBuildingListInvalid());
 }
 
 void CvPlayer::clearCanConstructCacheForGroup(SpecialBuildingTypes eSpecialBuilding, bool bIncludeCities) const
 {
 	PROFILE_EXTRA_FUNC();
-	for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
-	{
-		SpecialBuildingTypes eLoopSpecialBuilding = NO_SPECIALBUILDING;
-
-		if (eSpecialBuilding != NO_SPECIALBUILDING)
-		{
-			eLoopSpecialBuilding = GC.getBuildingInfo((BuildingTypes)iI).getSpecialBuilding();
-		}
-
-		if (eSpecialBuilding == eLoopSpecialBuilding)
-		{
-			m_bCanConstructCached[iI] = false;
-			m_bCanConstructCachedDefaultParam[iI] = false;
-
-			if (bIncludeCities)
-			{
-				algo::for_each(cities(), CvCity::fn::FlushCanConstructCache((BuildingTypes)iI));
-			}
-		}
-	}
-
+	// The availability verdict is the ENABLER's maintained tri-state now, so there is no cache here to clear.
+	// What survives is the BUILD-LIST invalidation this also performed -- a UI/list concern, not a cache one,
+	// and the reason this function still exists at all.
 	algo::for_each(cities(), CvCity::fn::setBuildingListInvalid());
 }
 

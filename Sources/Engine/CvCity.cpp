@@ -355,7 +355,6 @@ CvCity::CvCity()
 	m_paiHealUnitCombatTypeVolume = NULL;
 
 	m_bVisibilitySetup = false;
-	m_bCanConstruct = NULL;
 
 	//CvDLLEntity::createCityEntity(this);		// create and attach entity to city
 
@@ -1509,7 +1508,6 @@ void CvCity::doTurn()
 				AI_FlushBuildingValueCache();
 			}
 		}
-		FlushCanConstructCache();
 		setBuildingListInvalid();
 		setUnitListInvalid();
 	}
@@ -2545,28 +2543,6 @@ bool CvCity::canTrain(UnitCombatTypes eUnitCombat) const
 //#define VALIDATE_CAN_CONSTRUCT_CACHE
 #endif
 
-void CvCity::FlushCanConstructCache(BuildingTypes eBuilding)
-{
-	//OutputDebugString(CvString::format("[%d] FlushCanConstructCache (%d), workitem priority = %08lx\n", GetCurrentThreadId(), eBuilding, (m_workItem == NULL ? -1 : m_workItem->GetPriority())).c_str());
-
-	if (eBuilding == NO_BUILDING)
-	{
-		SAFE_DELETE(m_bCanConstruct);
-	}
-	else if (m_bCanConstruct != NULL)
-	{
-		(*m_bCanConstruct).erase(eBuilding);
-	}
-}
-
-void CvCity::NoteBuildingNoLongerConstructable(BuildingTypes eBuilding) const
-{
-	if (m_bCanConstruct != NULL)
-	{
-		(*m_bCanConstruct)[eBuilding] = false;
-	}
-}
-
 bool CvCity::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestVisible, bool bIgnoreCost, bool bIgnoreAmount, bool bIgnoreBuildings, TechTypes eIgnoreTechReq, int* probabilityEverConstructable, bool bExposed) const
 {
 	PROFILE_FUNC();
@@ -2575,58 +2551,10 @@ bool CvCity::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestVis
 	{
 		return false;
 	}
-	if (!bContinue && !bTestVisible && !bIgnoreCost && !bIgnoreAmount && !bIgnoreBuildings && eIgnoreTechReq == NO_TECH && probabilityEverConstructable == NULL && !bExposed)
-	{
-		bool bResult;
-		bool bHaveCachedResult;
-
-		if (m_bCanConstruct == NULL)
-		{
-
-			m_bCanConstruct = new std::map<int, bool>();
-			bHaveCachedResult = false;
-		}
-		else
-		{
-			std::map<int, bool>::const_iterator itr = m_bCanConstruct->find(eBuilding);
-			if (itr == m_bCanConstruct->end())
-			{
-				bHaveCachedResult = false;
-			}
-			else
-			{
-				bResult = itr->second;
-				bHaveCachedResult = true;
-#ifdef VALIDATE_CAN_CONSTRUCT_CACHE
-				//	Verify if required
-				if (bResult != canConstructInternal(eBuilding, bContinue, bTestVisible, bIgnoreCost, bIgnoreAmount, NO_BUILDING, bIgnoreBuildings, eIgnoreTechReq, NULL, bExposed))
-				{
-					MessageBox(NULL, "canConstruct cached result mismatch", "cvGameCore", MB_OK);
-					FErrorMsg("canConstruct cached result mismatch");
-				}
-#endif
-			}
-		}
-
-		if (!bHaveCachedResult)
-		{
-			bResult = canConstructInternal(eBuilding, bContinue, bTestVisible, bIgnoreCost, bIgnoreAmount, NO_BUILDING, bIgnoreBuildings, eIgnoreTechReq, NULL, bExposed);
-			{
-
-				if (m_bCanConstruct == NULL)
-				{
-
-					m_bCanConstruct = new std::map<int, bool>();
-				}
-				(*m_bCanConstruct)[eBuilding] = bResult;
-			}
-		}
-
-		return bResult;
-	}
-	return canConstructInternal(eBuilding, bContinue, bTestVisible, bIgnoreCost, bIgnoreAmount, NO_BUILDING, bIgnoreBuildings, eIgnoreTechReq, probabilityEverConstructable, bExposed);
+	return canConstructInternal(eBuilding, bContinue, bTestVisible, bIgnoreCost, bIgnoreAmount, NO_BUILDING,
+		bIgnoreBuildings, eIgnoreTechReq, probabilityEverConstructable, bExposed);
 }
-//	KOSHLING - Can construct cache end
+
 
 bool CvCity::canConstructInternal(BuildingTypes eBuilding, bool bContinue, bool bTestVisible, bool bIgnoreCost, bool bIgnoreAmount, BuildingTypes withExtraBuilding, bool bIgnoreBuildings, TechTypes eIgnoreTechReq, int* probabilityEverConstructable, bool bExposed) const
 {
@@ -13471,7 +13399,6 @@ void CvCity::processNumBonusChange(BonusTypes eIndex, int iOldValue, int iNewVal
 		}
 
 		//	Linking bonuses may change what is buildable
-		FlushCanConstructCache();
 	}
 }
 
@@ -14524,8 +14451,7 @@ void CvCity::setHasBuilding(const BuildingTypes eType, const bool bNewValue, con
 		if (kBuilding.EnablesOtherBuildings())
 		{
 			AI_FlushBuildingValueCache(true);
-			FlushCanConstructCache();
-		}
+			}
 #ifdef YIELD_VALUE_CACHING
 		ClearYieldValueCache(); // A new building can change yield rates
 #endif
@@ -15161,7 +15087,6 @@ void CvCity::setHasReligion(ReligionTypes eIndex, bool bNewValue, bool bAnnounce
 		GET_PLAYER(getOwner()).changeHasReligionCount(eIndex, ((isHasReligion(eIndex)) ? 1 : -1));
 
 		// Religion changes may change what is buildable
-		FlushCanConstructCache();
 
 		AI_setAssignWorkDirty(true);
 
@@ -15726,8 +15651,6 @@ void CvCity::pushOrder(OrderTypes eOrder, int iData1, int iData2, bool bSave, bo
 					return;
 				}
 
-				NoteBuildingNoLongerConstructable(buildingType);
-
 				owner.changeBuildingMaking(buildingType, 1);
 
 				const SpecialBuildingTypes eSpecialBuilding = GC.getBuildingInfo(buildingType).getSpecialBuilding();
@@ -16143,7 +16066,6 @@ void CvCity::popOrder(int orderIndex, bool bFinish, bool bChoose, bool bResolveL
 				}
 			}
 
-			FlushCanConstructCache(eConstructBuilding);	//	Flush value for this building
 			setBuildingListInvalid();
 			break;
 		}
