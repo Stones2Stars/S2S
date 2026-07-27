@@ -799,6 +799,16 @@ namespace
 				{
 					mc_markPlot(pPlot, CascadeChannelRegistry::scopeAllChannelsMask(CASC_SCOPE_PLOT), szSource);
 					mc_markPlotFedSums(pPlot, szSource);
+					// ...and the DEPARTED owner. mc_markPlotFedSums reads the plot's LIVE owner, so it can only
+					// ever reach the NEW one -- but the plot's yield has just left the old empire, whose plot-fed
+					// receiver sums are now stale with no route to re-derive them ([DEC-no-self-heal]: marked here
+					// or never). The fact carries the old owner precisely so a consumer can act on the DELTA, and
+					// this is the same both-sides shape SEVT_WORKING_CITY_CHANGED uses for its two cities.
+					if (kEvent.iA >= 0 && kEvent.iA != (int)NO_PLAYER)
+					{
+						mc_markEmpire(&GET_PLAYER((PlayerTypes)kEvent.iA),
+							CascadeChannelRegistry::scopeReceiversFedBy(CASC_SCOPE_EMPIRE, CASC_SCOPE_PLOT), szSource);
+					}
 					// IS_OWNED is a live PREDICATE a deposit's gate may read (PlotContext::isOwned = getOwner() !=
 					// NO_PLAYER), and setOwner is its ONE mutation. The plot leg is suppressed -- the blanket
 					// above already marked this package WHOLE, and a mark is the rebuild -- so what this adds is
