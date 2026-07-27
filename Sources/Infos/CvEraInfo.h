@@ -37,7 +37,6 @@ public:
 	virtual const CvModifiers* getModifiers() const { return &m_modifiers; }
 	// `grants.<channel>: N` is a §5 numeric PULSE parsed by the base dispatch; the view scalars below read
 	// the COMPOSED unit, so the grants machine and the engine views serve one representation.
-	virtual const CvGrants* getGrants() const { return &m_grants; }
 
 	// ======================= 3. MODIFIER GROUPS -- point reads over the compiled sums =================
 	// (Conditioned-list access + the expected* valuations are the base CvInfo surface; kind and scope are
@@ -72,14 +71,16 @@ public:
 	int getSoundtracks(int iIndex) const;
 	int getCitySoundscapeScriptId(int iCitySize) const;
 
+	virtual const CvTriggers*  getTriggers()  const { return &m_triggers; }   // §5 -- triggers + the folded grants
+
 protected:
 	virtual CvModifiers* mutModifiers() { return &m_modifiers; }
-	virtual CvGrants*    mutGrants()    { return &m_grants; }
+	virtual CvTriggers*  mutTriggers()  { return &m_triggers; }
 
 private:
 	// --- the composed section units ---
 	CvModifiers m_modifiers;   // §6 families: costs.world.* / growth / greatPeopleRate / durations / eventChance
-	CvGrants    m_grants;      // §5 -- the game-start starting-gold/units pulses
+	CvTriggers  m_triggers;    // §5 -- the game-start starting-gold/units pulses
 
 	// --- the intrinsic identity members (materialized once at mapFrom) ---
 	int m_iStartingUnitMultiplier;

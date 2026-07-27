@@ -187,10 +187,6 @@ protected:
 	int* m_aiAnimalsPerPlayer;
 	int* m_aiCitiesPerPlayer;
 	int* m_aiPopulationPerPlayer;
-	int* m_aiBuildingGoodHealth;
-	int* m_aiBuildingBadHealth;
-	int* m_aiBuildingHappiness;
-	int* m_aiFreeSpecialist;
 	int* m_aiPower;
 	int* m_aiBestFoundValue;
 	int* m_aiMaintenanceModifier;

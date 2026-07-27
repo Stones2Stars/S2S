@@ -82,42 +82,18 @@ public:
 	int getForceTeamVoteEligibilityCount(int /*VoteSourceTypes*/ eVoteSource) const;
 	bool isForceTeamVoteEligible(int /*VoteSourceTypes*/ eVoteSource) const;
 	void changeForceTeamVoteEligibilityCount(int /*VoteSourceTypes*/ eVoteSource, int iChange);
-	int getExtraWaterSeeFromCount() const;
 	bool isExtraWaterSeeFrom() const;
-	void changeExtraWaterSeeFromCount(int iChange);
-	int getMapTradingCount() const;
 	bool isMapTrading() const;
-	void changeMapTradingCount(int iChange);
-	int getTechTradingCount() const;
 	bool isTechTrading() const;
-	void changeTechTradingCount(int iChange);
-	int getGoldTradingCount() const;
 	bool isGoldTrading() const;
-	void changeGoldTradingCount(int iChange);
-	int getOpenBordersTradingCount() const;
 	bool isOpenBordersTrading() const;
-	void changeOpenBordersTradingCount(int iChange);
-	int getDefensivePactTradingCount() const;
 	bool isDefensivePactTrading() const;
-	void changeDefensivePactTradingCount(int iChange);
-	int getPermanentAllianceTradingCount() const;
 	bool isPermanentAllianceTrading() const;
-	void changePermanentAllianceTradingCount(int iChange);
-	int getVassalTradingCount() const;
 	bool isVassalStateTrading() const;
-	void changeVassalTradingCount(int iChange);
-	int getBridgeBuildingCount() const;
 	bool isBridgeBuilding() const;
-	void changeBridgeBuildingCount(int iChange);
-	int getIrrigationCount() const;
 	bool isIrrigation() const;
-	void changeIrrigationCount(int iChange);
-	int getIgnoreIrrigationCount() const;
 	bool isIgnoreIrrigation() const;
-	void changeIgnoreIrrigationCount(int iChange);
-	int getWaterWorkCount() const;
 	bool isWaterWork() const;
-	void changeWaterWorkCount(int iChange);
 
 	int getVassalPower() const;
 	void setVassalPower(int iPower);
@@ -135,9 +111,7 @@ public:
 	int getWarWeariness(int /*TeamTypes*/ eIndex) const;
 	void changeWarWeariness(int /*TeamTypes*/ eIndex, int iChange);
 
-	int getCommerceFlexibleCount(int /*CommerceTypes*/ eIndex) const;
 	bool isCommerceFlexible(int /*CommerceTypes*/ eIndex) const;
-	void changeCommerceFlexibleCount(int /*CommerceTypes*/ eIndex, int iChange);
 
 	int getExtraMoves(int /*DomainTypes*/ eIndex) const;
 	void changeExtraMoves(int /*DomainTypes*/ eIndex, int iChange);

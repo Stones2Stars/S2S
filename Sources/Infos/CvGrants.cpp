@@ -5,9 +5,12 @@
 //	  pulses     -- "population": 1 / "revolution": -100 (×100 at parse; readers ÷100)
 //	  scoped     -- "population": {"city": 3} (channel -> {scope: value×100})
 //	  flags      -- "goldenAge": true
-//	No §5 key shape is "unknown" -- an unrecognized entry key surfaces via the unconsumed census, never silently drops.
-//	Every authored key interns through the LOCAL load-minted table (CvGrants::key); storage and the runtime
-//	readers are int-keyed ([DEC-materialize-at-mapfrom]).
+//	No §5 KEY is ever "unknown" -- the key axis is open, so every authored key interns through the LOCAL
+//	load-minted table (CvGrants::key) and storage + the runtime readers are int-keyed
+//	([DEC-materialize-at-mapfrom]). What CAN be dropped is a VALUE: an id resolving to nothing, a malformed
+//	array element, a conditioned entry naming nothing, a scope carrying a non-number. Every one of those goes
+//	through the ONE census (jsonNoteUnconsumed) -- a grant is a trigger (json.md §5), so it answers to the same
+//	contract the trigger side does: being fail-closed is right, being fail-closed AND SILENT is not.
 //
 
 #include "CvGameCoreDLL.h"          // PCH umbrella -- picojson
@@ -94,12 +97,14 @@ void CvGrants::parse(const picojson::value& v)
 {
 	if (!v.is<picojson::object>())
 	{
+		jsonNoteUnconsumed("grants", "sectionNotAnObject");   // a malformed section is DROPPED WHOLE -- say so
 		return;
 	}
 	const picojson::object& o = v.get<picojson::object>();
 	for (picojson::object::const_iterator it = o.begin(); it != o.end(); ++it)
 	{
 		const int iKey = key(it->first.c_str());   // the one string->id boundary (parse-time intern)
+		const std::string szBucket = "grants." + it->first;   // the census path for anything this key drops
 		const picojson::value& val = it->second;
 		if (val.is<picojson::array>())
 		{
@@ -113,6 +118,12 @@ void CvGrants::parse(const picojson::value& v)
 					{
 						m_lists[iKey].push_back(id);
 						m_listConds[iKey].push_back(NULL);
+					}
+					else
+					{
+						// An authored id that resolves to nothing: the grant is GONE. It has to announce rather
+						// than vanish into a shorter list -- the same reason the trigger side announces it.
+						jsonNoteUnconsumed(szBucket, a[i].get<std::string>());
 					}
 				}
 				else if (a[i].is<picojson::object>())
@@ -142,8 +153,15 @@ void CvGrants::parse(const picojson::value& v)
 					}
 					else
 					{
+						// A conditioned entry naming nothing resolvable -- dropped WITH its condition, so a
+						// targeted provision reaches nobody. Never silent.
+						jsonNoteUnconsumed(szBucket, "entryHasNoResolvableId");
 						delete pCond;
 					}
+				}
+				else
+				{
+					jsonNoteUnconsumed(szBucket, "entryNotAStringOrObject");
 				}
 			}
 		}
@@ -157,6 +175,10 @@ void CvGrants::parse(const picojson::value& v)
 			if (id >= 0)
 			{
 				m_lists[iKey].push_back(id);
+			}
+			else
+			{
+				jsonNoteUnconsumed(szBucket, val.get<std::string>());
 			}
 		}
 		else if (val.is<bool>())
@@ -174,6 +196,10 @@ void CvGrants::parse(const picojson::value& v)
 				if (scopeIt->second.is<double>())
 				{
 					m_scopedPulses[iKey][key(scopeIt->first.c_str())] = jsonX100(scopeIt->second.get<double>());
+				}
+				else
+				{
+					jsonNoteUnconsumed(szBucket, scopeIt->first);   // a scope carrying a non-number is dropped
 				}
 			}
 		}

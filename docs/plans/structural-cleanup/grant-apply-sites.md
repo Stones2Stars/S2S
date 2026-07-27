@@ -260,7 +260,7 @@ question [grants-machine.md](grants-machine.md) left open.
    "don't re-fire grants on conquest" switch. **CODE STATE — the carrier is BUILT:** `SEVT_BUILDING_CHANGED` now
    carries `bFirst` (`emitBuildingChanged(..., bool bFirst)`, `CvEventSpine.h:322`) — the real flag from
    `CvCity.cpp:13501`, hard `false` from the load reseed at `:16752` (a load RESTORES, it is not an acquisition) —
-   and the machine consumes it (`s_bFirstAcquire = (e.iA != 0)`, `CvCascadeGrants.cpp:256`), emitting it as
+   and the machine consumes it (`s_bFirstAcquire = (e.iA != 0)`, `CvTriggerEngine.cpp`), emitting it as
    `firstAcquire` beside `suppressed` so the withholding REASON is on the wire. What the apply must then honour is
    the engine's own semantic; the ruling itself is not closed here.
 3. ~~Serialized ledgers.~~ **SETTLED (owner): the machine REPLACES the existing per-turn work**, so the ledgers

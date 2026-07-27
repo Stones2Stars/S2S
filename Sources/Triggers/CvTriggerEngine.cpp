@@ -160,7 +160,7 @@ static int tr_flag(const CvInfo* j, int iFlagKey)   // a bool grant present? (go
 }
 static int tr_scopedPulseSum(const CvInfo* j, int iChannelKey)   // sum a scoped pulse over its scopes (×100 -> /100)
 {
-	const CvGrants* g = j->getGrants();
+	const CvGrants* g = j->consideredGrants();
 	return g ? g->scopedPulseSumAllScopes(iChannelKey) / 100 : 0;
 }
 static int tr_promoteEntryCount(const CvInfo* j)   // `triggers` promote entries (the end-turn free-promotion plane)
@@ -267,11 +267,11 @@ static void tr_applyBuildingFirstBuild(const CvInfo* j, int iBuilding, int iPlay
 {
 	CvPlayer& player = GET_PLAYER((PlayerTypes)iPlayer);
 	CvCity* pCity = player.getCity(iCity);
-	if (pCity == NULL || j->getGrants() == NULL) return;
+	if (pCity == NULL || j->consideredGrants() == NULL) return;
 
 
 	// LOCAL population -- legacy applied this OUTSIDE the isFinalInitialized/WorldBuilder guard, so it does too.
-	const int iPopCity = j->getGrants()->scopedPulse(tr_keyPopulation, tr_keyScopeCity) / 100;
+	const int iPopCity = j->consideredGrants()->scopedPulse(tr_keyPopulation, tr_keyScopeCity) / 100;
 	if (iPopCity != 0)
 	{
 		if (iPopCity > 0)
@@ -284,12 +284,12 @@ static void tr_applyBuildingFirstBuild(const CvInfo* j, int iBuilding, int iPlay
 	// The rest are gated exactly as legacy gated them.
 	if (!GC.getGame().isFinalInitialized() || gDLL->GetWorldBuilderMode()) return;
 
-	if (j->getGrants()->flag(tr_keyGoldenAge))
+	if (j->consideredGrants()->flag(tr_keyGoldenAge))
 	{
 		player.changeGoldenAgeTurns(1 + player.getGoldenAgeLength());
 	}
 
-	const int iPopEmpire = j->getGrants()->scopedPulse(tr_keyPopulation, tr_keyScopeEmpire) / 100;
+	const int iPopEmpire = j->consideredGrants()->scopedPulse(tr_keyPopulation, tr_keyScopeEmpire) / 100;
 	if (iPopEmpire > 0)
 	{
 		const CvBuildingInfo& kB = GC.getBuildingInfo((BuildingTypes)iBuilding);
@@ -305,7 +305,7 @@ static void tr_applyBuildingFirstBuild(const CvInfo* j, int iBuilding, int iPlay
 		}
 	}
 
-	const int iFreeTechs = j->getGrants()->pulse(tr_keyFreeTechs) / 100;
+	const int iFreeTechs = j->consideredGrants()->pulse(tr_keyFreeTechs) / 100;
 	if (iFreeTechs > 0)
 	{
 		if (pCity->isHuman())
@@ -328,8 +328,8 @@ static void tr_resolveBuilding(int iBuilding, int iPlayer, int iCity)
 	const int nPop       = tr_scopedPulseSum(j, tr_keyPopulation);  // one-shot population boost (scoped pulse, increment 2)
 	if (nRepeat == 0 && nFreePromo == 0 && nFreeTech == 0 && nGoldenAge == 0 && nPop == 0) return;
 	// The two population scopes SEPARATELY (nPop is their sum) -- the apply and the tripwire need them apart.
-	const int nPopCity   = (j->getGrants() != NULL) ? j->getGrants()->scopedPulse(tr_keyPopulation, tr_keyScopeCity)   / 100 : 0;
-	const int nPopEmpire = (j->getGrants() != NULL) ? j->getGrants()->scopedPulse(tr_keyPopulation, tr_keyScopeEmpire) / 100 : 0;
+	const int nPopCity   = (j->consideredGrants() != NULL) ? j->consideredGrants()->scopedPulse(tr_keyPopulation, tr_keyScopeCity)   / 100 : 0;
+	const int nPopEmpire = (j->consideredGrants() != NULL) ? j->consideredGrants()->scopedPulse(tr_keyPopulation, tr_keyScopeEmpire) / 100 : 0;
 	// The MATERIALIZATION tripwire: the mapFrom-materialized getters must agree with the composed grants read they
 	// were materialized FROM. They are otherwise unobservable (grants are not on /state/info), so a silent zeroing
 	// -- the real hazard of moving a live read to load time -- would never surface. 1 = they diverged.
@@ -368,7 +368,7 @@ static void tr_resolveUnit(int iUnit, int iPlayer, int iUnitId)
 	if (!s_bSuppressed && iUnitId >= 0 && iPlayer >= 0 && nPromos > 0)
 	{
 		CvUnit* pUnit = GET_PLAYER((PlayerTypes)iPlayer).getUnit(iUnitId);
-		const std::vector<int>* promos = (j->getGrants() != NULL) ? j->getGrants()->list(tr_keyPromotions) : NULL;
+		const std::vector<int>* promos = (j->consideredGrants() != NULL) ? j->consideredGrants()->list(tr_keyPromotions) : NULL;
 		if (pUnit != NULL && promos != NULL)
 		{
 			for (size_t i = 0; i < promos->size(); ++i)
@@ -386,7 +386,7 @@ static void tr_resolveUnit(int iUnit, int iPlayer, int iUnitId)
 
 static int tr_firstId(const CvInfo* j, int iBucketKey)   // a single-id grant bucket's id (-1 if absent)
 {
-	return (j->getGrants() != NULL) ? j->getGrants()->firstListId(iBucketKey) : -1;
+	return (j->consideredGrants() != NULL) ? j->consideredGrants()->firstListId(iBucketKey) : -1;
 }
 
 // The TECH first-discoverer provisions. Mirrors the CvTeam::setHasTech first-discover block, whose apply legs are
@@ -707,14 +707,14 @@ static void tr_applyPerTurn(int iPlayer)
 // authored and inert, waiting for a trigger.
 // ⛔ The other settle-time provisions (start-era freePopulation, civilization buildings, FreeStartEra, the trait
 // settle keys, barbarianInitialDefenders) still apply in CvPlayer::found: several are not authored in a `grants`
-// block at all, so the machine cannot resolve them off getGrants() until the curator emits them
+// block at all, so the machine cannot resolve them off consideredGrants() until the curator emits them
 // (grant-apply-sites.md §5.4). The TRIGGER now exists; the DATA is the remaining blocker.
 static void tr_resolveCityFounded(int iOwner, int iCity, int iFounderType)
 {
 	if (iOwner < 0 || iFounderType < 0) return;
 	const CvInfo* j = InfoRepo<CvUnitInfo>::get().get(iFounderType);
-	if (j == NULL || j->getGrants() == NULL) return;
-	const std::vector<int>* pSeeds = j->getGrants()->list(tr_keyBuildings);
+	if (j == NULL || j->consideredGrants() == NULL) return;
+	const std::vector<int>* pSeeds = j->consideredGrants()->list(tr_keyBuildings);
 	if (pSeeds == NULL || pSeeds->empty()) return;
 
 	CvPlayer& player = GET_PLAYER((PlayerTypes)iOwner);
@@ -732,7 +732,7 @@ static void tr_resolveCityFounded(int iOwner, int iCity, int iFounderType)
 			const int iBuilding = (*pSeeds)[i];
 			if (iBuilding < 0) continue;
 			// the entry's own `enabled` condition (the §3.9 conditioned object form), index-parallel to the ids
-			const CvCondition* pEnabled = j->getGrants()->listCond(tr_keyBuildings, i);
+			const CvCondition* pEnabled = j->consideredGrants()->listCond(tr_keyBuildings, i);
 			if (pEnabled != NULL && !cascadeEvalCondition(pEnabled, ec, kFlags)) continue;
 			if (pCity->hasBuilding((BuildingTypes)iBuilding)) continue;
 			pCity->changeHasBuilding((BuildingTypes)iBuilding, true);

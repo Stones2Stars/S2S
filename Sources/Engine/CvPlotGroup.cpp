@@ -58,7 +58,6 @@ void CvPlotGroup::init(int iID, PlayerTypes eOwner, CvPlot* pPlot, bool bRecalcu
 
 void CvPlotGroup::uninit()
 {
-	SAFE_DELETE_ARRAY(m_paiNumBonuses);
 }
 
 // FUNCTION: reset()
@@ -76,10 +75,6 @@ void CvPlotGroup::reset(int iID, PlayerTypes eOwner, bool bConstructorCall)
 	m_sessionAllocSeq = m_allocationSeqForSession++;
 	m_sessionRecalcSeq = m_recalcSeqForSession;
 
-	if (!bConstructorCall)
-	{
-		SAFE_DELETE_ARRAY(m_paiNumBonuses);
-	}
 }
 
 
@@ -499,7 +494,6 @@ void CvPlotGroup::changeNumBonuses(const BonusTypes eBonus, const int iChange)
 	{
 		if (m_paiNumBonuses == NULL)
 		{
-			m_paiNumBonuses = new int[GC.getNumBonusInfos()];
 			memset(m_paiNumBonuses, 0, sizeof(int)*GC.getNumBonusInfos());
 		}
 
@@ -678,37 +672,7 @@ void CvPlotGroup::read(FDataStreamBase* pStream)
 
 	WRAPPER_READ(wrapper, "CvPlotGroup", (int*)&m_eOwner);
 
-	bool arrayPresent = true;
-	WRAPPER_READ_DECORATED(wrapper, "CvPlotGroup", &arrayPresent, "bonusesPresent");
-	if ( arrayPresent )
-	{
-		if ( m_paiNumBonuses == NULL )
-		{
-			m_paiNumBonuses = new int[GC.getNumBonusInfos()];
-		}
-		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlotGroup", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_paiNumBonuses);
-	}
-	else
-	{
-		SAFE_DELETE_ARRAY(m_paiNumBonuses);
-	}
 	WRAPPER_READ(wrapper, "CvPlotGroup", &m_numPlots);
-
-	if ( m_paiNumBonuses != NULL )
-	{
-		for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
-		{
-			if ( m_paiNumBonuses[iI] != 0 )
-			{
-				break;
-			}
-		}
-
-		if ( iI == GC.getNumBonusInfos() )
-		{
-			SAFE_DELETE_ARRAY(m_paiNumBonuses);
-		}
-	}
 
 	WRAPPER_READ(wrapper, "CvPlotGroup", &m_seedPlotX);
 	WRAPPER_READ(wrapper, "CvPlotGroup", &m_seedPlotY);
@@ -727,13 +691,6 @@ void CvPlotGroup::write(FDataStreamBase* pStream)
 
 	WRAPPER_WRITE(wrapper, "CvPlotGroup", m_iID);
 	WRAPPER_WRITE(wrapper, "CvPlotGroup", m_eOwner);
-
-	WRAPPER_WRITE_DECORATED(wrapper, "CvPlotGroup", (bool)(m_paiNumBonuses != NULL), "bonusesPresent");
-
-	if (m_paiNumBonuses != NULL)
-	{
-		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlotGroup", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_paiNumBonuses);
-	}
 
 	WRAPPER_WRITE(wrapper, "CvPlotGroup", m_numPlots);
 	WRAPPER_WRITE(wrapper, "CvPlotGroup", m_seedPlotX);

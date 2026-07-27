@@ -115,7 +115,8 @@ void CvCivilizationInfo::mapFrom(const picojson::value& entity)
 	// --- the typed game-start grant views: read off the COMPOSED units (already parsed + FK-resolved by the
 	//     base dispatch), never a second walk of the raw JSON ---
 	{
-		const std::vector<int>* pBuildingList = m_grants.list("buildings");
+		const CvGrants* pGrants = m_triggers.consideredGrant();
+		const std::vector<int>* pBuildingList = (pGrants != NULL) ? pGrants->list("buildings") : NULL;
 		if (pBuildingList != NULL)
 		{
 			for (size_t iEntry = 0; iEntry < pBuildingList->size(); ++iEntry)
@@ -123,7 +124,7 @@ void CvCivilizationInfo::mapFrom(const picojson::value& entity)
 				m_freeBuildings.push_back((BuildingTypes)(*pBuildingList)[iEntry]);
 			}
 		}
-		const std::vector<int>* pTechList = m_grants.list("techs");
+		const std::vector<int>* pTechList = (pGrants != NULL) ? pGrants->list("techs") : NULL;
 		if (pTechList != NULL)
 		{
 			for (size_t iEntry = 0; iEntry < pTechList->size(); ++iEntry)
@@ -132,7 +133,7 @@ void CvCivilizationInfo::mapFrom(const picojson::value& entity)
 			}
 		}
 		// grants.civics fill the CivicOption-slot vector (each civic dropped in its own option's slot)
-		const std::vector<int>* pCivicList = m_grants.list("civics");
+		const std::vector<int>* pCivicList = (pGrants != NULL) ? pGrants->list("civics") : NULL;
 		if (pCivicList != NULL && !pCivicList->empty())
 		{
 			const int iNumOptions = GC.getNumCivicOptionInfos();

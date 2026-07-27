@@ -21,7 +21,7 @@
 #include <ctype.h>
 
 CvTriggerEntry::CvTriggerEntry()
-	: happeningInterval(1), condition(NULL),
+	: consideredAction(false), happeningInterval(1), condition(NULL),
 	  chanceValue(0), chancePerTypeId(-1), chancePerEach(1), chancePerScope(-1),
 	  grant(NULL),
 	  heal(0), healFull(false), healUnitCombatId(-1), healCount(0),
@@ -47,6 +47,29 @@ void CvTriggers::clearParsed()
 		delete m_entries[i];
 	}
 	m_entries.clear();
+	m_iConsidered = -1;
+}
+
+const CvGrants* CvTriggers::consideredGrant() const
+{
+	if (m_iConsidered < 0 || m_iConsidered >= (int)m_entries.size())
+	{
+		return NULL;
+	}
+	return m_entries[m_iConsidered]->grant;
+}
+
+// The `grants` AUTHORING shape -> ONE entry in the same list (json.md §5, the degenerate trigger): the happening
+// is the source's own considered action, there is no condition and no roll, so the action simply applies.
+// mapFrom is idempotent by contract and clearParsed() runs first, so this never accumulates a second entry.
+void CvTriggers::parseGrants(const picojson::value& v)
+{
+	CvTriggerEntry* pEntry = new CvTriggerEntry();
+	pEntry->consideredAction = true;
+	pEntry->grant = new CvGrants();
+	pEntry->grant->parse(v);
+	m_iConsidered = (int)m_entries.size();
+	m_entries.push_back(pEntry);
 }
 
 // An on-token is a spine happening in authoring form: "on" + a capitalized happening name (json.md §5).

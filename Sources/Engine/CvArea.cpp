@@ -27,10 +27,6 @@ CvArea::CvArea()
 	m_aiAnimalsPerPlayer = new int[MAX_PLAYERS];
 	m_aiCitiesPerPlayer = new int[MAX_PLAYERS];
 	m_aiPopulationPerPlayer = new int[MAX_PLAYERS];
-	m_aiBuildingGoodHealth = new int[MAX_PLAYERS];
-	m_aiBuildingBadHealth = new int[MAX_PLAYERS];
-	m_aiBuildingHappiness = new int[MAX_PLAYERS];
-	m_aiFreeSpecialist = new int[MAX_PLAYERS];
 	m_aiPower = new int[MAX_PLAYERS];
 	m_aiBestFoundValue = new int[MAX_PLAYERS];
 	m_aiMaintenanceModifier = new int[MAX_PLAYERS];
@@ -81,10 +77,6 @@ CvArea::~CvArea()
 	SAFE_DELETE_ARRAY(m_aiAnimalsPerPlayer);
 	SAFE_DELETE_ARRAY(m_aiCitiesPerPlayer);
 	SAFE_DELETE_ARRAY(m_aiPopulationPerPlayer);
-	SAFE_DELETE_ARRAY(m_aiBuildingGoodHealth);
-	SAFE_DELETE_ARRAY(m_aiBuildingBadHealth);
-	SAFE_DELETE_ARRAY(m_aiBuildingHappiness);
-	SAFE_DELETE_ARRAY(m_aiFreeSpecialist);
 	SAFE_DELETE_ARRAY(m_aiPower);
 	SAFE_DELETE_ARRAY(m_aiBestFoundValue);
 	SAFE_DELETE_ARRAY(m_aiMaintenanceModifier);
@@ -136,10 +128,6 @@ void CvArea::reset(int iID, bool bWater, bool bConstructorCall)
 		m_aiAnimalsPerPlayer[iI] = 0;
 		m_aiCitiesPerPlayer[iI] = 0;
 		m_aiPopulationPerPlayer[iI] = 0;
-		m_aiBuildingGoodHealth[iI] = 0;
-		m_aiBuildingBadHealth[iI] = 0;
-		m_aiBuildingHappiness[iI] = 0;
-		m_aiFreeSpecialist[iI] = 0;
 		m_aiPower[iI] = 0;
 		m_aiBestFoundValue[iI] = 0;
 		m_aiMaintenanceModifier[iI] = 0;
@@ -221,10 +209,6 @@ void CvArea::read(FDataStreamBase* pStream)
 	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiAnimalsPerPlayer);
 	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiCitiesPerPlayer);
 	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiPopulationPerPlayer);
-	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiBuildingGoodHealth);
-	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiBuildingBadHealth);
-	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiBuildingHappiness);
-	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiFreeSpecialist);
 	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiPower);
 	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiBestFoundValue);
 	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiMaintenanceModifier);
@@ -306,10 +290,6 @@ void CvArea::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiAnimalsPerPlayer);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiCitiesPerPlayer);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiPopulationPerPlayer);
-	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiBuildingGoodHealth);
-	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiBuildingBadHealth);
-	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiBuildingHappiness);
-	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiFreeSpecialist);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiPower);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiBestFoundValue);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiMaintenanceModifier);

@@ -81,7 +81,6 @@ protected:
 
 	PlayerTypes m_eOwner;
 
-	int* m_paiNumBonuses;
 	mutable int m_seedPlotX;
 	mutable int m_seedPlotY;
 

@@ -34,7 +34,6 @@ public:
 	virtual const CvRequires*  getRequires()  const { return &m_requires; }
 	virtual const CvEdges*     getEdges()     const { return &m_edges; }
 	virtual const CvAllowed*   getAllowed()   const { return &m_allowed; }
-	virtual const CvGrants*    getGrants()    const { return &m_grants; }
 	virtual const CvModifiers* getModifiers() const { return &m_modifiers; }
 	virtual const CvClassificationBlock* getCapabilities() const { return &m_capabilities; }
 
@@ -112,11 +111,13 @@ public:
 	const std::set<TechTypes>& getLeadsToTechs() const { return m_leadsTo; }
 	void addLeadsToTech(TechTypes eTech) { m_leadsTo.insert(eTech); }
 
+	virtual const CvTriggers*  getTriggers()  const { return &m_triggers; }   // §5 -- triggers + the folded grants
+
 protected:
 	virtual CvRequires*  mutRequires()  { return &m_requires; }
 	virtual CvEdges*     mutEdges()     { return &m_edges; }
 	virtual CvAllowed*   mutAllowed()   { return &m_allowed; }
-	virtual CvGrants*    mutGrants()    { return &m_grants; }
+	virtual CvTriggers*  mutTriggers()  { return &m_triggers; }
 	virtual CvModifiers* mutModifiers() { return &m_modifiers; }
 	virtual CvClassificationBlock* mutCapabilities() { return &m_capabilities; }
 
@@ -125,7 +126,7 @@ private:
 	CvRequires  m_requires;
 	CvEdges     m_edges;
 	CvAllowed   m_allowed;
-	CvGrants    m_grants;
+	CvTriggers  m_triggers;
 	CvModifiers m_modifiers;
 	CvClassificationBlock m_capabilities;
 

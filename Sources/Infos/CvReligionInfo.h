@@ -29,7 +29,6 @@ public:
 
 	// ======================= 1. SECTIONS -- whole typed objects =======================
 	virtual const CvEdges*     getEdges()     const { return &m_edges; }
-	virtual const CvGrants*    getGrants()    const { return &m_grants; }   // §5 grants.freeUnit/numFreeUnits (founder missionary)
 	virtual const CvModifiers* getModifiers() const { return &m_modifiers; }
 
 	// ======================= 2. CLASSIFICATION -- none (religions author no §8 block) =======================
@@ -78,15 +77,17 @@ public:
 	const std::vector<BuildingTypes>& getShrineBuildings() const { return reinterpret_cast<const std::vector<BuildingTypes>&>(m_aeShrineBuildings); }
 	void addShrineBuilding(int iBuilding) { m_aeShrineBuildings.push_back(iBuilding); }
 
+	virtual const CvTriggers*  getTriggers()  const { return &m_triggers; }   // §5 -- triggers + the folded grants
+
 protected:
 	virtual CvEdges*     mutEdges()     { return &m_edges; }
-	virtual CvGrants*    mutGrants()    { return &m_grants; }
+	virtual CvTriggers*  mutTriggers()  { return &m_triggers; }
 	virtual CvModifiers* mutModifiers() { return &m_modifiers; }
 
 private:
 	// --- the composed section units ---
 	CvEdges     m_edges;
-	CvGrants    m_grants;
+	CvTriggers  m_triggers;
 	CvModifiers m_modifiers;
 
 	// --- the materialized §9 shrine plane + the intrinsic identity members ---

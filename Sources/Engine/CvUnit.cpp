@@ -541,28 +541,13 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 	m_iExtraMoves = 0;
 	m_iExtraMoveDiscount = 0;
 	m_iExtraAirRange = 0;
-	m_iExtraIntercept = 0;
-	m_iExtraEvasion = 0;
-	m_iExtraFirstStrikes = 0;
-	m_iExtraChanceFirstStrikes = 0;
-	m_iExtraWithdrawal = 0;
 	//TB Combat Mods Begin
-	m_iExtraAttackCombatModifier = 0;
-	m_iExtraDefenseCombatModifier = 0;
-	m_iExtraVSBarbs = 0;
-	m_iExtraReligiousCombatModifier = 0;
 	m_iStampedeCount = 0;
 	m_iAttackOnlyCitiesCount = 0;
 	m_iIgnoreNoEntryLevelCount = 0;
 	m_iIgnoreZoneofControlCount = 0;
 	m_iFliesToMoveCount = 0;
-	m_iExtraUnnerve = 0;
-	m_iExtraEnclose = 0;
-	m_iExtraLunge = 0;
-	m_iExtraDynamicDefense = 0;
-	m_iExtraStrength = 0;
 	m_iSMStrength = 0;
-	m_iAnimalIgnoresBordersCount = 0;
 	m_iOnslaughtCount = 0;
 	m_iExtraEndurance = 0;
 	m_iExtraPoisonProbabilityModifier = 0;
@@ -578,8 +563,6 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 	m_iSMCargoVolumeModifier = 0;
 	m_iCannotMergeSplitCount = 0;
 
-	m_iExtraCaptureProbabilityModifier = 0;
-	m_iExtraCaptureResistanceModifier = 0;
 
 	m_iExtraBreakdownChance = 0;
 	m_iExtraBreakdownDamage = 0;
@@ -589,12 +572,8 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 	m_iExtraCombatModifierPerVolumeMore = 0;
 	m_iExtraCombatModifierPerVolumeLess = 0;
 	m_iExtraMaxHP = 0;
-	m_iExtraStrengthModifier = 0;
-	m_iExtraDamageModifier = 0;
-	m_iExtraUpkeep100 = 0;
 	m_iUpkeepModifier = 0;
 	m_iUpkeepMultiplierSM = 0;
-	m_iUpkeep100 = 0;
 	m_iSMAssetValue = 0;
 	m_iSMPowerValue = 0;
 	m_iSMHPValue = 0;
@@ -610,22 +589,11 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 	m_iBaseDCMBombAccuracy = 0;
 	m_iBombardDirectCount = 0;
 	//TB Combat Mods End
-	m_iExtraCollateralDamage = 0;
 	m_iExtraBombardRate = 0;
 	m_iSMBombardRate = 0;
 	m_iSMAirBombBaseRate = 0;
 	m_iSMBaseWorkRate = 0;
 	m_iSMRevoltProtection = 0;
-	m_iExtraEnemyHeal = 0;
-	m_iExtraNeutralHeal = 0;
-	m_iExtraFriendlyHeal = 0;
-	m_iSameTileHeal = 0;
-	m_iAdjacentTileHeal = 0;
-	m_iExtraCombatPercent = 0;
-	m_iExtraCityAttackPercent = 0;
-	m_iExtraCityDefensePercent = 0;
-	m_iExtraHillsAttackPercent = 0;
-	m_iExtraHillsDefensePercent = 0;
 
 	m_iRevoltProtection = 0;
 	m_iCollateralDamageProtection = 0;
@@ -716,7 +684,6 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 	m_iDebugCount = 0;
 	m_iAssassinCount = 0;
 	m_iExtraStealthStrikes = 0;
-	m_iExtraStealthCombatModifier = 0;
 	m_iStealthDefenseCount = 0;
 	m_iOnlyDefensiveCount = 0;
 	m_iNoInvisibilityCount = 0;
@@ -850,27 +817,12 @@ CvUnit& CvUnit::operator=(const CvUnit& other)
 	m_iExtraMoves = other.m_iExtraMoves;
 	m_iExtraMoveDiscount = other.m_iExtraMoveDiscount;
 	m_iExtraAirRange = other.m_iExtraAirRange;
-	m_iExtraIntercept = other.m_iExtraIntercept;
-	m_iExtraEvasion = other.m_iExtraEvasion;
-	m_iExtraFirstStrikes = other.m_iExtraFirstStrikes;
-	m_iExtraChanceFirstStrikes = other.m_iExtraChanceFirstStrikes;
-	m_iExtraWithdrawal = other.m_iExtraWithdrawal;
-	m_iExtraAttackCombatModifier = other.m_iExtraAttackCombatModifier;
-	m_iExtraDefenseCombatModifier = other.m_iExtraDefenseCombatModifier;
-	m_iExtraVSBarbs = other.m_iExtraVSBarbs;
-	m_iExtraReligiousCombatModifier = other.m_iExtraReligiousCombatModifier;
 	m_iStampedeCount = other.m_iStampedeCount;
 	m_iAttackOnlyCitiesCount = other.m_iAttackOnlyCitiesCount;
 	m_iIgnoreNoEntryLevelCount = other.m_iIgnoreNoEntryLevelCount;
 	m_iIgnoreZoneofControlCount = other.m_iIgnoreZoneofControlCount;
 	m_iFliesToMoveCount = other.m_iFliesToMoveCount;
-	m_iExtraUnnerve = other.m_iExtraUnnerve;
-	m_iExtraEnclose = other.m_iExtraEnclose;
-	m_iExtraLunge = other.m_iExtraLunge;
-	m_iExtraDynamicDefense = other.m_iExtraDynamicDefense;
-	m_iExtraStrength = other.m_iExtraStrength;
 	m_iSMStrength = other.m_iSMStrength;
-	m_iAnimalIgnoresBordersCount = other.m_iAnimalIgnoresBordersCount;
 	m_iOnslaughtCount = other.m_iOnslaughtCount;
 	m_iExtraEndurance = other.m_iExtraEndurance;
 	m_iExtraPoisonProbabilityModifier = other.m_iExtraPoisonProbabilityModifier;
@@ -885,8 +837,6 @@ CvUnit& CvUnit::operator=(const CvUnit& other)
 	m_iSMExtraCargoVolume = other.m_iSMExtraCargoVolume;
 	m_iSMCargoVolumeModifier = other.m_iSMCargoVolumeModifier;
 	m_iCannotMergeSplitCount = other.m_iCannotMergeSplitCount;
-	m_iExtraCaptureProbabilityModifier = other.m_iExtraCaptureProbabilityModifier;
-	m_iExtraCaptureResistanceModifier = other.m_iExtraCaptureResistanceModifier;
 	m_iExtraBreakdownChance = other.m_iExtraBreakdownChance;
 	m_iExtraBreakdownDamage = other.m_iExtraBreakdownDamage;
 	m_iExtraTaunt = other.m_iExtraTaunt;
@@ -895,12 +845,8 @@ CvUnit& CvUnit::operator=(const CvUnit& other)
 	m_iExtraCombatModifierPerVolumeMore = other.m_iExtraCombatModifierPerVolumeMore;
 	m_iExtraCombatModifierPerVolumeLess = other.m_iExtraCombatModifierPerVolumeLess;
 	m_iExtraMaxHP = other.m_iExtraMaxHP;
-	m_iExtraStrengthModifier = other.m_iExtraStrengthModifier;
-	m_iExtraDamageModifier = other.m_iExtraDamageModifier;
-	m_iExtraUpkeep100 = other.m_iExtraUpkeep100;
 	m_iUpkeepModifier = other.m_iUpkeepModifier;
 	m_iUpkeepMultiplierSM = other.m_iUpkeepMultiplierSM;
-	m_iUpkeep100 = other.m_iUpkeep100;
 	m_iSMAssetValue = other.m_iSMAssetValue;
 	m_iSMPowerValue = other.m_iSMPowerValue;
 	m_iSMHPValue = other.m_iSMHPValue;
@@ -915,22 +861,11 @@ CvUnit& CvUnit::operator=(const CvUnit& other)
 	m_iBaseDCMBombRange = other.m_iBaseDCMBombRange;
 	m_iBaseDCMBombAccuracy = other.m_iBaseDCMBombAccuracy;
 	m_iBombardDirectCount = other.m_iBombardDirectCount;
-	m_iExtraCollateralDamage = other.m_iExtraCollateralDamage;
 	m_iExtraBombardRate = other.m_iExtraBombardRate;
 	m_iSMBombardRate = other.m_iSMBombardRate;
 	m_iSMAirBombBaseRate = other.m_iSMAirBombBaseRate;
 	m_iSMBaseWorkRate = other.m_iSMBaseWorkRate;
 	m_iSMRevoltProtection = other.m_iSMRevoltProtection;
-	m_iExtraEnemyHeal = other.m_iExtraEnemyHeal;
-	m_iExtraNeutralHeal = other.m_iExtraNeutralHeal;
-	m_iExtraFriendlyHeal = other.m_iExtraFriendlyHeal;
-	m_iSameTileHeal = other.m_iSameTileHeal;
-	m_iAdjacentTileHeal = other.m_iAdjacentTileHeal;
-	m_iExtraCombatPercent = other.m_iExtraCombatPercent;
-	m_iExtraCityAttackPercent = other.m_iExtraCityAttackPercent;
-	m_iExtraCityDefensePercent = other.m_iExtraCityDefensePercent;
-	m_iExtraHillsAttackPercent = other.m_iExtraHillsAttackPercent;
-	m_iExtraHillsDefensePercent = other.m_iExtraHillsDefensePercent;
 	m_iRevoltProtection = other.m_iRevoltProtection;
 	m_iCollateralDamageProtection = other.m_iCollateralDamageProtection;
 	m_iPillageChange = other.m_iPillageChange;
@@ -1003,7 +938,6 @@ CvUnit& CvUnit::operator=(const CvUnit& other)
 	m_iDebugCount = other.m_iDebugCount;
 	m_iAssassinCount = other.m_iAssassinCount;
 	m_iExtraStealthStrikes = other.m_iExtraStealthStrikes;
-	m_iExtraStealthCombatModifier = other.m_iExtraStealthCombatModifier;
 	m_iStealthDefenseCount = other.m_iStealthDefenseCount;
 	m_iOnlyDefensiveCount = other.m_iOnlyDefensiveCount;
 	m_iNoInvisibilityCount = other.m_iNoInvisibilityCount;
@@ -15916,7 +15850,6 @@ void CvUnit::calcUpkeep()
 		iCalc = getModifiedIntValue(iCalc, m_iUpkeepMultiplierSM);
 
 		const int iOldUpkeep = m_iUpkeep100;
-		m_iUpkeep100 = std::max(0,  iCalc);
 
 		// Update player total
 		if (m_iUpkeep100 != iOldUpkeep)
@@ -15933,7 +15866,6 @@ int CvUnit::getUpkeep() const
 
 void CvUnit::recalculateUnitUpkeep()
 {
-	m_iUpkeep100 = 0;
 	calcUpkeep();
 }
 // ! Upkeep
@@ -19559,23 +19491,7 @@ void CvUnit::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraMoves);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraMoveDiscount);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraAirRange);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraIntercept);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraEvasion);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraFirstStrikes);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraChanceFirstStrikes);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraWithdrawal);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraCollateralDamage);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraBombardRate);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraEnemyHeal);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraNeutralHeal);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraFriendlyHeal);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iSameTileHeal);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iAdjacentTileHeal);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraCombatPercent);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraCityAttackPercent);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraCityDefensePercent);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraHillsAttackPercent);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraHillsDefensePercent);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iRevoltProtection);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iCollateralDamageProtection);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iPillageChange);
@@ -19771,14 +19687,7 @@ void CvUnit::read(FDataStreamBase* pStream)
 	m_Properties.readWrapper(pStream);
 
 	//TB Combat Mods Begin  TB SubCombat Mods Begin
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraVSBarbs);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iStampedeCount);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraUnnerve);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraEnclose);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraLunge);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraDynamicDefense);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraStrength);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iAnimalIgnoresBordersCount);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iOnslaughtCount);
 
 	// Read compressed data format
@@ -19916,8 +19825,6 @@ void CvUnit::read(FDataStreamBase* pStream)
 			info->m_bValidBuildUp = g_pabTempValidBuildUp[iI];
 		}
 	}
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraAttackCombatModifier);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraDefenseCombatModifier);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iRetrainsAvailable);
 	//TB Combat Mods End  TB SubCombat Mods End
 
@@ -19943,8 +19850,6 @@ void CvUnit::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvUnit", &m_iVictoryStackHeal);
 	WRAPPER_READ(wrapper, "CvUnit", &m_bSurvivor);
 
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraCaptureProbabilityModifier);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraCaptureResistanceModifier);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraBreakdownChance);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraBreakdownDamage);
 
@@ -19992,8 +19897,6 @@ void CvUnit::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvUnit", &m_iGroupBaseTotal);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iSizeBaseTotal);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iCannotMergeSplitCount);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraStrengthModifier);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraDamageModifier);
 
 	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvUnit", REMAPPED_CLASS_TYPE_UNITS, (int*)&m_eGGExperienceEarnedTowardsType);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iSMCargo);
@@ -20297,7 +20200,6 @@ void CvUnit::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvUnit", (int*)&m_pPlayerInvestigated);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iAssassinCount);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraStealthStrikes);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraStealthCombatModifier);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iStealthDefenseCount);
 	WRAPPER_READ(wrapper, "CvUnit", &m_bRevealed);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iOnlyDefensiveCount);
@@ -20338,14 +20240,11 @@ void CvUnit::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvUnit", &m_iYOrigin);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraNoDefensiveBonusCount);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraGatherHerdCount);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraReligiousCombatModifier);
 	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvUnit", REMAPPED_CLASS_TYPE_RELIGIONS, (int*)&m_eReligionType);
 	WRAPPER_READ(wrapper, "CvUnit", &m_bIsReligionLocked);
 
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraUpkeep100);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iUpkeepModifier);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iUpkeepMultiplierSM);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iUpkeep100);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iBuildUpTurns);
 
 	for (int iI = GC.getNumUnitCombatInfos() - 1; iI > -1; iI--)
@@ -20579,23 +20478,7 @@ void CvUnit::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraMoves);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraMoveDiscount);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraAirRange);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraIntercept);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraEvasion);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraFirstStrikes);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraChanceFirstStrikes);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraWithdrawal);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraCollateralDamage);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraBombardRate);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraEnemyHeal);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraNeutralHeal);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraFriendlyHeal);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iSameTileHeal);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iAdjacentTileHeal);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraCombatPercent);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraCityAttackPercent);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraCityDefensePercent);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraHillsAttackPercent);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraHillsDefensePercent);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iRevoltProtection);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iCollateralDamageProtection);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iPillageChange);
@@ -20674,14 +20557,7 @@ void CvUnit::write(FDataStreamBase* pStream)
 	m_Properties.writeWrapper(pStream);
 
 	//TB Combat Mods Begin
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraVSBarbs);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iStampedeCount);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraUnnerve);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraEnclose);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraLunge);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraDynamicDefense);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraStrength);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iAnimalIgnoresBordersCount);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iOnslaughtCount);
 
 
@@ -20715,8 +20591,6 @@ void CvUnit::write(FDataStreamBase* pStream)
 
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraPoisonProbabilityModifier);
 
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraAttackCombatModifier);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraDefenseCombatModifier);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iRetrainsAvailable);
 	//TB Combat Mods end
 
@@ -20742,8 +20616,6 @@ void CvUnit::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iVictoryStackHeal);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_bSurvivor);
 
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraCaptureProbabilityModifier);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraCaptureResistanceModifier);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraBreakdownChance);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraBreakdownDamage);
 
@@ -20766,8 +20638,6 @@ void CvUnit::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iGroupBaseTotal);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iSizeBaseTotal);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iCannotMergeSplitCount);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraStrengthModifier);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraDamageModifier);
 	WRAPPER_WRITE_CLASS_ENUM(wrapper, "CvUnit", REMAPPED_CLASS_TYPE_UNITS, m_eGGExperienceEarnedTowardsType);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iSMCargo);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iSMCargoCapacity);
@@ -21000,7 +20870,6 @@ void CvUnit::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvUnit", (int)m_pPlayerInvestigated);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iAssassinCount);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraStealthStrikes);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraStealthCombatModifier);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iStealthDefenseCount);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_bRevealed);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iOnlyDefensiveCount);
@@ -21031,14 +20900,11 @@ void CvUnit::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iYOrigin);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraNoDefensiveBonusCount);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraGatherHerdCount);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraReligiousCombatModifier);
 	WRAPPER_WRITE_CLASS_ENUM(wrapper, "CvUnit", REMAPPED_CLASS_TYPE_RELIGIONS, m_eReligionType);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_bIsReligionLocked);
 
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraUpkeep100);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iUpkeepModifier);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iUpkeepMultiplierSM);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iUpkeep100);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iBuildUpTurns);
 
 	for (int iI = GC.getNumUnitCombatInfos() - 1; iI > -1; iI--)
@@ -26730,7 +26596,6 @@ void CvUnit::changeExtraStrengthModifier(int iChange)
 
 void CvUnit::setExtraStrengthModifier(int iChange)
 {
-	m_iExtraStrengthModifier = iChange;
 }
 
 void CvUnit::checkCityAttackDefensesDamage(CvCity* pCity, const std::vector<UnitCombatTypes>& kDamagableUnitCombatTypes)

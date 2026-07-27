@@ -174,19 +174,11 @@ m_cachedBonusCount(NULL)
 	m_aiCapitalYieldRateModifier = new int[NUM_YIELD_TYPES];
 	m_aiExtraYieldThreshold = new int[NUM_YIELD_TYPES];
 	m_aiTradeYieldModifier = new int[NUM_YIELD_TYPES];
-	m_aiFreeCityCommerce = new int[NUM_COMMERCE_TYPES];
-	m_extraCommerce = new int[NUM_COMMERCE_TYPES];
 	m_aiCommercePercent = new int[NUM_COMMERCE_TYPES];
-	m_aiCommerceRate = new int[NUM_COMMERCE_TYPES];
-	m_abCommerceDirty = new bool[NUM_COMMERCE_TYPES];
 	m_aiCommerceRateModifier = new int[NUM_COMMERCE_TYPES];
 	m_aiCommerceRateModifierfromEvents = new int[NUM_COMMERCE_TYPES];
 	m_aiCommerceRateModifierfromBuildings = new int[NUM_COMMERCE_TYPES];
 	m_aiCapitalCommerceRateModifier = new int[NUM_COMMERCE_TYPES];
-	m_aiStateReligionBuildingCommerce = new int[NUM_COMMERCE_TYPES];
-	m_aiSpecialistExtraCommerce = new int[NUM_COMMERCE_TYPES];
-	m_aiSpecialistExtraYield = new int[NUM_YIELD_TYPES];
-	m_aiCommerceFlexibleCount = new int[NUM_COMMERCE_TYPES];
 	m_aiGoldPerTurnByPlayer = new int[MAX_PLAYERS];
 	m_aiEspionageSpendingWeightAgainstTeam = new int[MAX_TEAMS];
 
@@ -194,7 +186,6 @@ m_cachedBonusCount(NULL)
 	m_abOptions = new bool[NUM_PLAYEROPTION_TYPES];
 
 	m_paiImprovementCount = NULL;
-	m_paiFeatureHappiness = NULL;
 	m_paiBuildingCount = NULL;
 	m_paiBuildingGroupCount = NULL;
 	m_paiBuildingGroupMaking = NULL;
@@ -212,11 +203,9 @@ m_cachedBonusCount(NULL)
 	m_pabLoyalMember = NULL;
 	m_paeCivics = NULL;
 	m_ppaaiSpecialistExtraYield = NULL;
-	m_ppaaiImprovementYieldChange = NULL;
 	m_pabAutomatedCanBuild = NULL;
 	m_ppaaiTerrainYieldChange = NULL;
 	m_paiResourceConsumption = NULL;
-	m_paiFreeSpecialistCount = NULL;
 	m_ppiBuildingCommerceModifier = NULL;
 	m_ppiBuildingCommerceChange = NULL;
 	m_ppiSpecialistCommercePercentChanges = NULL;
@@ -225,13 +214,11 @@ m_cachedBonusCount(NULL)
 	m_aiLandmarkYield = new int[NUM_YIELD_TYPES];
 	m_aiModderOptions = new int[NUM_MODDEROPTION_TYPES];
 
-	m_bHasLanguage = false;
 
 	//TB Traits begin
 	m_paiImprovementUpgradeRateModifierSpecific = NULL;
 	m_paiBuildWorkerSpeedModifierSpecific = NULL;
 	m_ppaaiSpecialistExtraCommerce = NULL;
-	m_aiFreeCityYield = new int[NUM_YIELD_TYPES];
 	m_pabHasTrait = NULL;
 	m_aiLessYieldThreshold = new int[NUM_YIELD_TYPES];
 
@@ -241,8 +228,6 @@ m_cachedBonusCount(NULL)
 
 	m_paiEraAdvanceFreeSpecialistCount = NULL;
 
-	m_aiGoldenAgeYield = new int[NUM_YIELD_TYPES];
-	m_aiGoldenAgeCommerce = new int[NUM_COMMERCE_TYPES];
 	//TB Traits end
 
 	m_bDisableHuman = false;
@@ -253,7 +238,6 @@ m_cachedBonusCount(NULL)
 
 	m_bRebel = false;
 	m_iMotherPlayer = -1;
-	m_iNationalGreatPeopleRate = 0;
 
 	// Used for DynamicCivNames
 	CvWString m_szName;
@@ -308,19 +292,11 @@ CvPlayer::~CvPlayer()
 	SAFE_DELETE_ARRAY(m_aiCapitalYieldRateModifier);
 	SAFE_DELETE_ARRAY(m_aiExtraYieldThreshold);
 	SAFE_DELETE_ARRAY(m_aiTradeYieldModifier);
-	SAFE_DELETE_ARRAY(m_aiFreeCityCommerce);
-	SAFE_DELETE_ARRAY(m_extraCommerce);
 	SAFE_DELETE_ARRAY(m_aiCommercePercent);
-	SAFE_DELETE_ARRAY(m_aiCommerceRate);
-	SAFE_DELETE_ARRAY(m_abCommerceDirty);
 	SAFE_DELETE_ARRAY(m_aiCommerceRateModifier);
 	SAFE_DELETE_ARRAY(m_aiCommerceRateModifierfromEvents);
 	SAFE_DELETE_ARRAY(m_aiCommerceRateModifierfromBuildings);
 	SAFE_DELETE_ARRAY(m_aiCapitalCommerceRateModifier);
-	SAFE_DELETE_ARRAY(m_aiStateReligionBuildingCommerce);
-	SAFE_DELETE_ARRAY(m_aiSpecialistExtraCommerce);
-	SAFE_DELETE_ARRAY(m_aiSpecialistExtraYield);
-	SAFE_DELETE_ARRAY(m_aiCommerceFlexibleCount);
 	SAFE_DELETE_ARRAY(m_aiGoldPerTurnByPlayer);
 	SAFE_DELETE_ARRAY(m_aiEspionageSpendingWeightAgainstTeam);
 	SAFE_DELETE_ARRAY(m_abFeatAccomplished);
@@ -330,13 +306,10 @@ CvPlayer::~CvPlayer()
 	SAFE_DELETE_ARRAY(m_aiModderOptions);
 
 	//TB Traits begin
-	SAFE_DELETE_ARRAY(m_aiFreeCityYield);
 	SAFE_DELETE_ARRAY(m_aiLessYieldThreshold);
 		//Team Project (6)
 	SAFE_DELETE_ARRAY(m_paiEraAdvanceFreeSpecialistCount);
 	//Team Project (7)
-	SAFE_DELETE_ARRAY(m_aiGoldenAgeYield);
-	SAFE_DELETE_ARRAY(m_aiGoldenAgeCommerce);
 	//TB Traits end
 
 	SAFE_DELETE_ARRAY(m_cachedBonusCount);
@@ -658,7 +631,6 @@ void CvPlayer::uninit()
 {
 	PROFILE_EXTRA_FUNC();
 	SAFE_DELETE_ARRAY(m_paiImprovementCount);
-	SAFE_DELETE_ARRAY(m_paiFeatureHappiness);
 	SAFE_DELETE_ARRAY(m_paiBuildingCount);
 	SAFE_DELETE_ARRAY(m_paiBuildingGroupCount);
 	SAFE_DELETE_ARRAY(m_paiBuildingGroupMaking);
@@ -684,10 +656,8 @@ void CvPlayer::uninit()
 	SAFE_DELETE(m_pBuildLists);
 
 	SAFE_DELETE_ARRAY2(m_ppaaiSpecialistExtraYield, GC.getNumSpecialistInfos());
-	SAFE_DELETE_ARRAY2(m_ppaaiImprovementYieldChange, GC.getNumImprovementInfos());
 	SAFE_DELETE_ARRAY(m_pabAutomatedCanBuild);
 	SAFE_DELETE_ARRAY(m_paiResourceConsumption);
-	SAFE_DELETE_ARRAY(m_paiFreeSpecialistCount);
 	SAFE_DELETE_ARRAY(m_paiImprovementUpgradeRateModifierSpecific);
 	SAFE_DELETE_ARRAY(m_paiBuildWorkerSpeedModifierSpecific);
 	SAFE_DELETE_ARRAY(m_pabHasTrait);
@@ -1191,8 +1161,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 
 	m_iCivilianUnitUpkeepMod = 0;
 	m_iMilitaryUnitUpkeepMod = 0;
-	m_iUnitUpkeepMilitary100 = 0;
-	m_iUnitUpkeepCivilian100 = 0;
 	m_iFinalUnitUpkeep = 0;
 
 	m_iNumMilitaryUnits = 0;
@@ -1219,16 +1187,10 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iUpkeepModifier = 0;
 	m_iLevelExperienceModifier = 0;
 	m_iExtraHealth = 0;
-	m_iCivicHealth = 0;
-	m_iBuildingGoodHealth = 0;
-	m_iBuildingBadHealth = 0;
 	m_iExtraHappiness = 0;
 	m_iExtraHappinessUnattributed = 0;
-	m_iBuildingHappiness = 0;
-	m_iLargestCityHappiness = 0;
 	m_iWarWearinessPercentAnger = 0;
 	m_iWarWearinessModifier = 0;
-	m_iFreeSpecialist = 0;
 	m_iNoForeignTradeCount = 0;
 	m_iNoCorporationsCount = 0;
 	m_iNoForeignCorporationsCount = 0;
@@ -1238,8 +1200,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iConversionTimer = 0;
 	m_iStateReligionCount = 0;
 	m_iNoNonStateReligionSpreadCount = 0;
-	m_iStateReligionHappiness = 0;
-	m_iNonStateReligionHappiness = 0;
 	m_iStateReligionUnitProductionModifier = 0;
 	m_iStateReligionBuildingProductionModifier = 0;
 	m_iStateReligionFreeExperience = 0;
@@ -1312,7 +1272,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 
 	m_iExtraStateReligionSpreadModifier = 0;
 	m_iExtraNonStateReligionSpreadModifier = 0;
-	m_iNationalGreatPeopleRate = 0;
 	//TB Traits end
 	m_iBaseMergeSelection = FFreeList::INVALID_INDEX;
 	m_iFirstMergeSelection = FFreeList::INVALID_INDEX;
@@ -1368,9 +1327,7 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iEnslavementChance = 0;
 	m_iForeignTradeRouteModifier = 0;
 	m_iTaxRateUnhappiness = 0;
-	m_iCivicHappiness = 0;
 	m_iUnitUpgradePriceModifier = 0;
-	m_iNationalGreatPeopleRate = 0;
 
 	// Afforess Food Threshold Modifier 08/16/09
 	m_fPopulationgrowthratepercentageLog = 0;
@@ -1379,13 +1336,8 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iDistantUnitSupportCostModifier = 0;
 	m_iReligionSpreadRate = 0;
 
-	m_iWorldHappiness = 0;
-	m_iProjectHappiness = 0;
-	m_iWorldHealth = 0;
-	m_iProjectHealth = 0;
 	m_iForceAllTradeRoutes = 0;
 	m_iNoCapitalUnhappiness = 0;
-	m_iCivilizationHealth = 0;
 
 	m_bShowLandmarks = true;
 
@@ -1416,7 +1368,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iSelectionRegroup = 0;
 
 	m_iFractionalCombatExperience = 0;
-	m_iNationalGreatPeopleRate = 0;
 
 	for (iI = 0; iI < NUM_YIELD_TYPES; iI++)
 	{
@@ -1428,28 +1379,17 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 		m_aiLandmarkYield[iI] = 0;
 
 		//TB Traits begin
-		m_aiFreeCityYield[iI] = 0;
-		m_aiSpecialistExtraYield[iI] = 0;
 		m_aiLessYieldThreshold[iI] = 0;
-		m_aiGoldenAgeYield[iI] = 0;
 		//TB Traits end
 	}
 
 	for (iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 	{
 		m_aiCommercePercent[iI] = 0;
-		m_aiFreeCityCommerce[iI] = 0;
-		m_extraCommerce[iI] = 0;
-		m_aiCommerceRate[iI] = 0;
-		m_abCommerceDirty[iI] = false;
 		m_aiCommerceRateModifier[iI] = 0;
 		m_aiCommerceRateModifierfromEvents[iI] = 0;
 		m_aiCommerceRateModifierfromBuildings[iI] = 0;
 		m_aiCapitalCommerceRateModifier[iI] = 0;
-		m_aiStateReligionBuildingCommerce[iI] = 0;
-		m_aiSpecialistExtraCommerce[iI] = 0;
-		m_aiCommerceFlexibleCount[iI] = 0;
-		m_aiGoldenAgeCommerce[iI] = 0;
 	}
 
 	for (iI = 0; iI < MAX_PLAYERS; iI++)
@@ -1503,11 +1443,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 		}
 
 		FAssertMsg(m_paiFeatureHappiness==NULL, "about to leak memory, CvPlayer::m_paiFeatureHappiness");
-		m_paiFeatureHappiness = new int [GC.getNumFeatureInfos()];
-		for (iI = 0; iI < GC.getNumFeatureInfos(); iI++)
-		{
-			m_paiFeatureHappiness[iI] = 0;
-		}
 
 		FAssertMsg(0 < GC.getNumBuildingInfos(), "GC.getNumBuildingInfos() is not greater than zero but it is used to allocate memory in CvPlayer::reset");
 		FAssertMsg(m_paiBuildingCount==NULL, "about to leak memory, CvPlayer::m_paiBuildingCount");
@@ -1616,7 +1551,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 		FAssertMsg(0 < GC.getNumSpecialistInfos(), "GC.getNumSpecialistInfos() is not greater than zero but it is used to allocate memory in CvPlayer::reset");
 		FAssertMsg(m_ppaaiSpecialistExtraYield==NULL, "about to leak memory, CvPlayer::m_ppaaiSpecialistExtraYield");
 		m_ppaaiSpecialistExtraYield = new int*[GC.getNumSpecialistInfos()];
-		m_paiFreeSpecialistCount = new int[GC.getNumSpecialistInfos()];
 
 		for (iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
 		{
@@ -1625,7 +1559,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 			{
 				m_ppaaiSpecialistExtraYield[iI][iJ] = 0;
 			}
-			m_paiFreeSpecialistCount[iI] = 0;
 		}
 		//TB Traits begin
 		FAssertMsg(0 < GC.getNumSpecialistInfos(), "GC.getNumSpecialistInfos() is not greater than zero but it is used to allocate memory in CvPlayer::reset");
@@ -1649,14 +1582,12 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 
 		//TB Traits end
 		FAssertMsg(m_ppaaiImprovementYieldChange==NULL, "about to leak memory, CvPlayer::m_ppaaiImprovementYieldChange");
-		m_ppaaiImprovementYieldChange = new int*[GC.getNumImprovementInfos()];
 		//TB Traits begin
 		FAssertMsg(m_paiImprovementUpgradeRateModifierSpecific==NULL, "about to leak memory, CvPlayer::m_paiImprovementUpgradeRateModifierSpecific");
 		m_paiImprovementUpgradeRateModifierSpecific = new int [GC.getNumImprovementInfos()];
 		//TB Traits end
 		for (iI = 0; iI < GC.getNumImprovementInfos(); iI++)
 		{
-			m_ppaaiImprovementYieldChange[iI] = new int[NUM_YIELD_TYPES];
 			for (iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
 			{
 				m_ppaaiImprovementYieldChange[iI][iJ] = 0;
@@ -4553,7 +4484,6 @@ void CvPlayer::updateCommerce(CommerceTypes eCommerce, bool bForce) const
 	}
 	else if (bForce || m_abCommerceDirty[eCommerce])
 	{
-		m_abCommerceDirty[eCommerce] = false;
 
 		algo::for_each(cities(), CvCity::fn::updateCommerce(eCommerce, bForce));
 	}
@@ -4571,7 +4501,6 @@ void CvPlayer::setCommerceDirty(CommerceTypes eIndex, bool bPlayerOnly)
 	}
 	else
 	{
-		m_abCommerceDirty[eIndex] = true;
 
 		if (!bPlayerOnly)
 		{
@@ -12945,7 +12874,6 @@ void CvPlayer::changeCommerceRate(CommerceTypes eIndex, int iChange)
 
 	if (iChange != 0)
 	{
-		m_aiCommerceRate[eIndex] = std::min(m_aiCommerceRate[eIndex]+iChange,MAX_COMMERCE_RATE_VALUE);
 		if (getID() == GC.getGame().getActivePlayer())
 		{
 			gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
@@ -18284,16 +18212,10 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iUpkeepModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iLevelExperienceModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraHealth);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iCivicHealth);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iBuildingGoodHealth);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iBuildingBadHealth);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraHappiness);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraHappinessUnattributed);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iBuildingHappiness);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iLargestCityHappiness);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iWarWearinessPercentAnger);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iWarWearinessModifier);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iFreeSpecialist);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNoForeignTradeCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNoCorporationsCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNoForeignCorporationsCount);
@@ -18303,8 +18225,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iConversionTimer);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iStateReligionCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNoNonStateReligionSpreadCount);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iStateReligionHappiness);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iNonStateReligionHappiness);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iStateReligionUnitProductionModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iStateReligionBuildingProductionModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iStateReligionFreeExperience);
@@ -18425,7 +18345,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiCapitalYieldRateModifier);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiExtraYieldThreshold);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiTradeYieldModifier);
-		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiFreeCityCommerce);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommercePercent);
 		// #430 reseed (event-spine.md the load-RESEED): the sliders deserialize WHOLESALE, so setCommercePercent
 		// never runs and its emit never fires -- the fact is announced here, co-located with the read. Every
@@ -18435,12 +18354,8 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		{
 			emitCommercePercentChanged(getID(), iCommerce, m_aiCommercePercent[iCommerce], 0);
 		}
-		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommerceRate);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommerceRateModifier);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCapitalCommerceRateModifier);
-		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiStateReligionBuildingCommerce);
-		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiSpecialistExtraCommerce);
-		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommerceFlexibleCount);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", MAX_PLAYERS, m_aiGoldPerTurnByPlayer);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", MAX_TEAMS, m_aiEspionageSpendingWeightAgainstTeam);
 
@@ -18450,7 +18365,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ_STRING(wrapper, "CvPlayer", m_szScriptData);
 
 		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_IMPROVEMENTS, GC.getNumImprovementInfos(), m_paiImprovementCount);
-		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_FEATURES, GC.getNumFeatureInfos(), m_paiFeatureHappiness);
 		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_BUILDINGS, GC.getNumBuildingInfos(), m_paiBuildingCount);
 
 		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_HURRIES, GC.getNumHurryInfos(), m_paiHurryCount);
@@ -18468,7 +18382,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_fPopulationgrowthratepercentageLog);
 
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iReligionSpreadRate);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iCivicHappiness);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iDistantUnitSupportCostModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraCityDefense);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iEnslavementChance);
@@ -18476,12 +18389,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiLandmarkYield);
 
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iWorldHealth);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iWorldHappiness);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iProjectHealth);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iProjectHappiness);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iForceAllTradeRoutes);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iCivilizationHealth);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iBuildingInflation);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iProjectInflation);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iTechInflation);
@@ -18526,7 +18434,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 
 		FAssertMsg(0 < GC.getNumBonusInfos(), "GC.getNumBonusInfos() is not greater than zero but it is expected to be in CvPlayer::read");
 		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_paiResourceConsumption);
-		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiFreeSpecialistCount);
 
 		WRAPPER_READ(wrapper, "CvPlayer", (int*)&m_ePledgedVote);
 		WRAPPER_READ(wrapper, "CvPlayer", (int*)&m_eSecretaryGeneralVote);
@@ -18704,7 +18611,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 
 			if ( iI != -1 )
 			{
-				WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_ppaaiImprovementYieldChange[iI]);
 			}
 			else
 			{
@@ -19215,8 +19121,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 				WRAPPER_SKIP_ELEMENT(wrapper, "CvPlayer", m_ppaaiSpecialistExtraCommerce[iI], SAVE_VALUE_TYPE_INT_ARRAY);
 			}
 		}
-		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiFreeCityYield);
-		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiSpecialistExtraYield);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iTraitExtraCityDefense);
 		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_TRAITS, GC.getNumTraitInfos(), m_pabHasTrait);
 		// Reseed: the player's held traits (a wholesale-array read, so the per-fact loop lives HERE, inside read()).
@@ -19268,8 +19172,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iFreeSpecialistperTeamProjectCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraGoodyCount);
 
-		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiGoldenAgeYield);
-		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiGoldenAgeCommerce);
 
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iBaseMergeSelection);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iFirstMergeSelection);
@@ -19281,7 +19183,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 
 		WRAPPER_READ(wrapper, "CvPlayer", (int*)&m_eGreatGeneralTypetoAssign);
 
-		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_abCommerceDirty);
 
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iFocusPlotX);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iFocusPlotY);
@@ -19296,11 +19197,8 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iSelectionRegroup);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iFreedomFighterCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraFreedomFighters);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iNationalGreatPeopleRate);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iCivilianUnitUpkeepMod);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iMilitaryUnitUpkeepMod);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iUnitUpkeepCivilian100);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iUnitUpkeepMilitary100);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iBaseFreeUnitUpkeepCivilian);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iBaseFreeUnitUpkeepMilitary);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iFreeUnitUpkeepCivilianPopPercent);
@@ -19602,8 +19500,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		{
 			emitHeritageChanged(getID(), (int)*itHeritage, true);
 		}
-		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_extraCommerce);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_bHasLanguage);
 		// Read Vector
 		{
 			uint iSize = 0;
@@ -19767,16 +19663,10 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iUpkeepModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iLevelExperienceModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraHealth);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCivicHealth);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iBuildingGoodHealth);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iBuildingBadHealth);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraHappiness);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraHappinessUnattributed);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iBuildingHappiness);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iLargestCityHappiness);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iWarWearinessPercentAnger);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iWarWearinessModifier);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iFreeSpecialist);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNoForeignTradeCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNoCorporationsCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNoForeignCorporationsCount);
@@ -19786,8 +19676,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iConversionTimer);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iStateReligionCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNoNonStateReligionSpreadCount);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iStateReligionHappiness);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNonStateReligionHappiness);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iStateReligionUnitProductionModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iStateReligionBuildingProductionModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iStateReligionFreeExperience);
@@ -19840,14 +19728,9 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiCapitalYieldRateModifier);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiExtraYieldThreshold);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiTradeYieldModifier);
-		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiFreeCityCommerce);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommercePercent);
-		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommerceRate);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommerceRateModifier);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCapitalCommerceRateModifier);
-		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiStateReligionBuildingCommerce);
-		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiSpecialistExtraCommerce);
-		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommerceFlexibleCount);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", MAX_PLAYERS, m_aiGoldPerTurnByPlayer);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", MAX_TEAMS, m_aiEspionageSpendingWeightAgainstTeam);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_FEAT_TYPES, m_abFeatAccomplished);
@@ -19856,7 +19739,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE_STRING(wrapper, "CvPlayer", m_szScriptData);
 
 		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_IMPROVEMENTS, GC.getNumImprovementInfos(), m_paiImprovementCount);
-		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_FEATURES, GC.getNumFeatureInfos(), m_paiFeatureHappiness);
 		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_BUILDINGS, GC.getNumBuildingInfos(), m_paiBuildingCount);
 
 		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_HURRIES, GC.getNumHurryInfos(), m_paiHurryCount);
@@ -19872,7 +19754,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iTaxRateUnhappiness);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_fPopulationgrowthratepercentageLog);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iReligionSpreadRate);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCivicHappiness);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iDistantUnitSupportCostModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraCityDefense);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iEnslavementChance);
@@ -19880,12 +19761,7 @@ void CvPlayer::write(FDataStreamBase* pStream)
 
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiLandmarkYield);
 
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iWorldHealth);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iWorldHappiness);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iProjectHealth);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iProjectHappiness);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iForceAllTradeRoutes);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCivilizationHealth);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iBuildingInflation);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iProjectInflation);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iTechInflation);
@@ -19920,7 +19796,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 
 		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_BUILDS, GC.getNumBuildInfos(), m_pabAutomatedCanBuild);
 		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_paiResourceConsumption);
-		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiFreeSpecialistCount);
 
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_ePledgedVote);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_eSecretaryGeneralVote);
@@ -19972,10 +19847,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 			WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_ppaaiSpecialistExtraYield[iI]);
 		}
 
-		for (iI=0;iI<GC.getNumImprovementInfos();iI++)
-		{
-			WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_ppaaiImprovementYieldChange[iI]);
-		}
 		m_researchQueue.Write(pStream);
 
 		{
@@ -20238,8 +20109,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		{
 			WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_ppaaiSpecialistExtraCommerce[iI]);
 		}
-		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiFreeCityYield);
-		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiSpecialistExtraYield);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iTraitExtraCityDefense);
 		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_TRAITS, GC.getNumTraitInfos(), m_pabHasTrait);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iLeaderHeadLevel);
@@ -20280,8 +20149,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iFreeSpecialistperTeamProjectCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraGoodyCount);
 
-		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiGoldenAgeYield);
-		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiGoldenAgeCommerce);
 
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iBaseMergeSelection);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iFirstMergeSelection);
@@ -20291,7 +20158,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommerceRateModifierfromEvents);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommerceRateModifierfromBuildings);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_eGreatGeneralTypetoAssign);
-		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_abCommerceDirty);
 
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iFocusPlotX);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iFocusPlotY);
@@ -20302,13 +20168,10 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iSelectionRegroup);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iFreedomFighterCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraFreedomFighters);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNationalGreatPeopleRate);
 		//TB Traits end
 
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCivilianUnitUpkeepMod);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iMilitaryUnitUpkeepMod);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iUnitUpkeepCivilian100);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iUnitUpkeepMilitary100);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iBaseFreeUnitUpkeepCivilian);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iBaseFreeUnitUpkeepMilitary);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iFreeUnitUpkeepCivilianPopPercent);
@@ -20444,8 +20307,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 				WRAPPER_WRITE_CLASS_ENUM_DECORATED(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_HERITAGE, eType, "iType");
 			}
 		}
-		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_extraCommerce);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_bHasLanguage);
 		// Write Vector
 		{
 			uint iSize = m_commandFieldPlots.size();
@@ -26505,7 +26366,6 @@ void CvPlayer::changeCivicHappiness(int iChange)
 {
 	if (iChange != 0)
 	{
-		m_iCivicHappiness = (m_iCivicHappiness + iChange);
 
 		AI_makeAssignWorkDirty();
 	}
@@ -26781,7 +26641,6 @@ void CvPlayer::setFreeSpecialistCount(SpecialistTypes eIndex, int iNewValue)
 
 	if (iOldValue != iNewValue)
 	{
-		m_paiFreeSpecialistCount[eIndex] = iNewValue;
 		FASSERT_NOT_NEGATIVE(getFreeSpecialistCount(eIndex));
 
 		algo::for_each(cities(), CvCity::fn::changeFreeSpecialistCount(eIndex, iNewValue - iOldValue));
@@ -30373,11 +30232,6 @@ void CvPlayer::processTech(const TechTypes eTech, const int iChange)
 	changeTechPower(tech.getPowerValue() * iChange);
 	changeTechScore(getScoreValueOfTech(eTech) * iChange);
 	changeTechInflation(tech.getInflationModifier() * iChange);
-
-	if (tech.isLanguage())
-	{
-		m_bHasLanguage = true;
-	}
 
 	for (int i = 0; i < NUM_COMMERCE_TYPES; i++)
 	{

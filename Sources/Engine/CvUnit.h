@@ -1582,28 +1582,13 @@ protected:
 	int m_iExtraMoves;
 	int m_iExtraMoveDiscount;
 	int m_iExtraAirRange;
-	int m_iExtraIntercept;
-	int m_iExtraEvasion;
-	int m_iExtraFirstStrikes;
-	int m_iExtraChanceFirstStrikes;
-	int m_iExtraWithdrawal;
 	//TB Combat Mods Begin
-	int m_iExtraAttackCombatModifier;
-	int m_iExtraDefenseCombatModifier;
-	int m_iExtraVSBarbs;
-	int m_iExtraReligiousCombatModifier;
 	int m_iStampedeCount;
 	int m_iAttackOnlyCitiesCount;
 	int m_iIgnoreNoEntryLevelCount;
 	int m_iIgnoreZoneofControlCount;
 	int m_iFliesToMoveCount;
-	int m_iExtraUnnerve;
-	int m_iExtraEnclose;
-	int m_iExtraLunge;
-	int m_iExtraDynamicDefense;
-	int m_iExtraStrength;
 	int m_iSMStrength;
-	int m_iAnimalIgnoresBordersCount;
 	int m_iOnslaughtCount;
 	int m_iExtraSelfHealModifier;
 	int m_iExtraNumHealSupport;
@@ -1620,7 +1605,6 @@ protected:
 	int m_iDebugCount;
 	int m_iAssassinCount;
 	int m_iExtraStealthStrikes;
-	int m_iExtraStealthCombatModifier;
 	int m_iStealthDefenseCount;
 	int m_iOnlyDefensiveCount;
 	int m_iNoInvisibilityCount;
@@ -1651,8 +1635,6 @@ protected:
 	int m_iSMExtraCargoVolume;
 	int m_iSMCargoVolumeModifier;
 
-	int m_iExtraCaptureProbabilityModifier;
-	int m_iExtraCaptureResistanceModifier;
 
 	int m_iExtraBreakdownChance;
 	int m_iExtraBreakdownDamage;
@@ -1662,13 +1644,9 @@ protected:
 	int m_iExtraCombatModifierPerVolumeMore;
 	int m_iExtraCombatModifierPerVolumeLess;
 	int m_iExtraMaxHP;
-	int m_iExtraStrengthModifier;
-	int m_iExtraDamageModifier;
 
-	int m_iExtraUpkeep100;
 	int m_iUpkeepModifier;
 	int m_iUpkeepMultiplierSM;
-	int m_iUpkeep100;
 
 	int m_iSMAssetValue;
 	int m_iSMPowerValue;
@@ -1685,22 +1663,11 @@ protected:
 	int m_iBaseDCMBombAccuracy;
 	int m_iBombardDirectCount;
 	//TB Combat Mods End
-	int m_iExtraCollateralDamage;
 	int m_iExtraBombardRate;
 	int m_iSMBombardRate;
 	int m_iSMAirBombBaseRate;
 	int m_iSMBaseWorkRate;
 	int m_iSMRevoltProtection;
-	int m_iExtraEnemyHeal;
-	int m_iExtraNeutralHeal;
-	int m_iExtraFriendlyHeal;
-	int m_iSameTileHeal;
-	int m_iAdjacentTileHeal;
-	int m_iExtraCombatPercent;
-	int m_iExtraCityAttackPercent;
-	int m_iExtraCityDefensePercent;
-	int m_iExtraHillsAttackPercent;
-	int m_iExtraHillsDefensePercent;
 
 	int m_iRevoltProtection;
 	int m_iCollateralDamageProtection;

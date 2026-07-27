@@ -98,12 +98,13 @@ void CvEraInfo::mapFrom(const picojson::value& entity)
 	// --- grants views: the one-shot starting grants, read off the COMPOSED unit (§5 numeric pulses, stored
 	//     ×100 by the section parse; /100 back to the human count). ONE representation: these views and the
 	//     grants machine read the same parsed pulses, so they cannot drift. ---
-	m_iStartingGold           = m_grants.pulse("startingGold") / 100;
-	m_iStartingUnitMultiplier = m_grants.pulse("startingUnitMultiplier") / 100;
-	m_iStartingDefenseUnits   = m_grants.pulse("startingDefenseUnits") / 100;
-	m_iStartingWorkerUnits    = m_grants.pulse("startingWorkerUnits") / 100;
-	m_iStartingExploreUnits   = m_grants.pulse("startingExploreUnits") / 100;
-	m_iFreePopulation         = m_grants.pulse("freePopulation") / 100;
+	const CvGrants* pGrants = m_triggers.consideredGrant();
+	m_iStartingGold           = (pGrants != NULL) ? pGrants->pulse("startingGold") / 100 : 0;
+	m_iStartingUnitMultiplier = (pGrants != NULL) ? pGrants->pulse("startingUnitMultiplier") / 100 : 0;
+	m_iStartingDefenseUnits   = (pGrants != NULL) ? pGrants->pulse("startingDefenseUnits") / 100 : 0;
+	m_iStartingWorkerUnits    = (pGrants != NULL) ? pGrants->pulse("startingWorkerUnits") / 100 : 0;
+	m_iStartingExploreUnits   = (pGrants != NULL) ? pGrants->pulse("startingExploreUnits") / 100 : 0;
+	m_iFreePopulation         = (pGrants != NULL) ? pGrants->pulse("freePopulation") / 100 : 0;
 
 	// --- identity: the sequence position + pacing inputs + the advanced-start budget (plain ints) ---
 	if (const picojson::object* pIdentity = jsonChildObj(entityObj, "identity"))

@@ -58,7 +58,7 @@ public:
 	const std::vector<PropertyPromotion>& getPropertyPromotions() const { return m_aPropertyPromotions; }
 	// CURATOR-GAP: the PropertyBuilding value-BANDS {iMinValue,iMaxValue} are not emitted on the property -- the curator
 	// deliberately splits them off to the Building pass (building.requires value-band); only the grant LIST survives at
-	// grants.buildings (reachable via getGrants()->list("buildings")). The {min,max,building} triple this getter's
+	// grants.buildings (reachable via consideredGrants()->list("buildings")). The {min,max,building} triple this getter's
 	// consumers need (CvCity auto-build range test) is unreconstructable here, so it stays empty (0/0 bands would be a
 	// silent placeholder). Resolves when the auto-build/requires-band wiring lands (curator second pass / #430).
 	const std::vector<PropertyBuilding>&  getPropertyBuildings()  const { return m_aPropertyBuildings; }
@@ -67,15 +67,16 @@ public:
 	virtual void mapFrom(const picojson::value& entity);
 
 	// --- the composed section units (by value; the base's mapFrom dispatch writes them via mut*) ---
-	virtual const CvGrants*    getGrants()    const { return &m_grants; }
 	virtual const CvModifiers* getModifiers() const { return &m_modifiers; }
 
+	virtual const CvTriggers*  getTriggers()  const { return &m_triggers; }   // §5 -- triggers + the folded grants
+
 protected:
-	virtual CvGrants*    mutGrants()    { return &m_grants; }
+	virtual CvTriggers*  mutTriggers()  { return &m_triggers; }
 	virtual CvModifiers* mutModifiers() { return &m_modifiers; }
 
 private:
-	CvGrants    m_grants;
+	CvTriggers  m_triggers;
 	CvModifiers m_modifiers;
 	int  m_iAIWeight;                                       // ai.weight
 	AIScaleTypes m_eAIScaleType;                            // ai.scale

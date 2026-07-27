@@ -44,7 +44,6 @@ public:
 	virtual const CvModifiers* getModifiers() const { return &m_modifiers; }
 	// `grants` (§5 numeric pulses + the `ai` scoped overrides) is COMPOSED: the section parse and the view
 	// scalars below read ONE representation, so the grants machine and the engine views cannot drift.
-	virtual const CvGrants* getGrants() const { return &m_grants; }
 
 	// ======================= 3. MODIFIER GROUPS -- game-start-base point reads ========================
 	// (Conditioned-list access + the expected* what-if valuations are the base CvInfo surface. Kind and
@@ -102,9 +101,11 @@ public:
 	// via the ONE shared bridge (CascadePropertyBridge::bridgeFamilies).
 	const CvPropertyManipulators* getPropertyManipulators() const { return &m_PropertyManipulators; }
 
+	virtual const CvTriggers*  getTriggers()  const { return &m_triggers; }   // §5 -- triggers + the folded grants
+
 protected:
 	virtual CvModifiers* mutModifiers() { return &m_modifiers; }
-	virtual CvGrants*    mutGrants()    { return &m_grants; }
+	virtual CvTriggers*  mutTriggers()  { return &m_triggers; }
 
 private:
 	// The ONE game-start-base read every point getter delegates to: the compiled (family, kind, scope, unit)
@@ -113,7 +114,7 @@ private:
 
 	// --- the composed section units ---
 	CvModifiers m_modifiers;                        // §6 families (the base dispatch fills this; feeds the PROPERTY_* bridge)
-	CvGrants    m_grants;                           // §5 game-start pulses (startingGold/units + the `ai` overrides)
+	CvTriggers  m_triggers;    // §5 game-start pulses (startingGold/units + the `ai` overrides)
 	CvPropertyManipulators m_PropertyManipulators;  // fed from the PROPERTY_* families (CascadePropertyBridge::bridgeFamilies)
 
 	// --- the materialized load-derived reads (mapFrom-only; the compiled entry list is the one scan source) ---

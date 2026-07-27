@@ -27,7 +27,6 @@ public:
 
 	// ======================= 1. SECTIONS -- whole typed objects =======================
 	virtual const CvEdges*     getEdges()     const { return &m_edges; }
-	virtual const CvGrants*    getGrants()    const { return &m_grants; }
 	virtual const CvTriggers*  getTriggers()  const { return &m_triggers; }
 	virtual const CvModifiers* getModifiers() const { return &m_modifiers; }
 
@@ -124,14 +123,12 @@ public:
 
 protected:
 	virtual CvEdges*     mutEdges()     { return &m_edges; }
-	virtual CvGrants*    mutGrants()    { return &m_grants; }
 	virtual CvTriggers*  mutTriggers()  { return &m_triggers; }
 	virtual CvModifiers* mutModifiers() { return &m_modifiers; }
 
 private:
 	// --- the composed section units ---
 	CvEdges     m_edges;
-	CvGrants    m_grants;
 	CvTriggers  m_triggers;
 	CvModifiers m_modifiers;
 

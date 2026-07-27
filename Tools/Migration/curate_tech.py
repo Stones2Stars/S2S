@@ -23,12 +23,12 @@ from store import REPO
 #     keep-on-building machinery doesn't express yet -> belongs on the building (COND_KEYED follow-up).
 TECH_BOOSTS = []
 
-# FreeSpecialistCounts -> freeSpecialists.team.{SPECIALIST_X}: N (owner ruling 2026-07-01; carried in the
-# mapping's `channels` with scope:"team"). TEAM scope because a tech grant is team-wide (modifier.md §6
-# "Specialist counts"; CvTeam holds the free-specialist accumulator, read into cities at CvCity.cpp:14277).
-# ⚠ CARRIED FAITHFULLY BUT INERT — the tech free-specialist WRITE-PATH is UNWIRED: no CvTeam::processTech ever
-# calls changeFreeSpecialistCount for a tech's FreeSpecialistCounts (only building/civic/unit/event/era-advance
-# do). The ONLY reader is AI valuation (CvPlayerAI.cpp:4776). So this is DEAD DATA — a despair-log candidate.
+# FreeSpecialistCounts -> freeSpecialists.EMPIRE.{SPECIALIST_X}: N. The TEAM is only a BRIDGE that shares the
+# tech with its members (owner): a player researches, the bridge hands the tech to everyone on the team, and the
+# DOMAIN event carries the team so the fan-out is drivable. So a tech's DEPOSIT is experienced PER PLAYER --
+# empire scope -- and the team carries no free-specialist channel of its own.
+# ⛔ The old team scope mirrored LEGACY STORAGE, not the model (it was chosen because CvTeam held the
+# free-specialist accumulator); that accumulator is deleted, so the justification is gone with it.
 # (Base XML: exactly ONE tech carries it — SPECIALIST_MERCHANT:1.)
 
 GRANTS = {"FirstFreeUnit": "firstFreeUnit", "FirstFreeProphet": "firstFreeProphet", "iFirstFreeTechs": "freeTechs"}

@@ -14,7 +14,7 @@
     "iCorporationRevenueModifier": {"scope": "player", "channel": "corporationRevenue", "kind": "percent"},
     "iCorporationMaintenanceModifier": {"scope": "player", "channel": "corporationMaintenance", "kind": "percent"},
     "iInflationModifier": {"scope": "player", "channel": "inflation", "kind": "percent"},
-    "FreeSpecialistCounts": {"scope": "team", "channel": "freeSpecialists", "kind": "flat", "targetType": "specialists"},
+    "FreeSpecialistCounts": {"scope": "empire", "channel": "freeSpecialists", "kind": "flat", "targetType": "specialists"},
     "DomainExtraMoves": {"scope": "player", "channel": "domainMoves", "kind": "flat", "targetType": "domains"},
     "TerrainTrades": {"scope": "team", "channel": "terrains", "kind": "refList", "block": "canTradeOn"},
     "CommerceFlexible": {"scope": "player", "kind": "flexArray", "block": "capabilities",

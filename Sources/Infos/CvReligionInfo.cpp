@@ -68,8 +68,9 @@ void CvReligionInfo::mapFrom(const picojson::value& entity)
 	m_szMovieSound.clear();
 
 	// grants-materialized reads (bucket-string reads are load-time only; pulses store ×100, /100 = human count)
-	m_iFreeUnit = m_grants.firstListId("freeUnit");
-	m_iNumFreeUnits = m_grants.pulse("numFreeUnits") / 100;
+	const CvGrants* pGrants = m_triggers.consideredGrant();
+	m_iFreeUnit = (pGrants != NULL) ? pGrants->firstListId("freeUnit") : -1;
+	m_iNumFreeUnits = (pGrants != NULL) ? pGrants->pulse("numFreeUnits") / 100 : 0;
 
 	if (!entity.is<picojson::object>())
 	{

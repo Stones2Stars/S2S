@@ -5,7 +5,7 @@
 //
 //	CvCivilizationInfo -- the CIVILIZATION poco rebuilt to the exemplar surface (patterns.md § THE GETTER SETUP).
 //	Styled for the JSON anatomy (json.md §2): the game-start provisions (grants.buildings/techs/civics) ride the
-//	composed CvGrants and are served as typed FK views materialized at mapFrom ([DEC-materialize-at-mapfrom] --
+//	composed grants payload and are served as typed FK views materialized at mapFrom ([DEC-materialize-at-mapfrom] --
 //	bare member reads, never per-call bucket-string walks); the NPC research ban (disables.techs) rides the
 //	composed edges; the spawnRate straggler compiles into the composed modifiers (base getScalar read).
 //	Selectability (identity.playable/aiPlayable) is load-only identity metadata (json.md §7); art / sound /
@@ -33,7 +33,6 @@ public:
 	virtual void mapFrom(const picojson::value& entity);
 
 	// ======================= 1. SECTIONS -- whole typed objects =======================
-	virtual const CvGrants*    getGrants()    const { return &m_grants; }
 	virtual const CvEdges*     getEdges()     const { return &m_edges; }
 	virtual const CvModifiers* getModifiers() const { return &m_modifiers; }
 
@@ -95,14 +94,16 @@ public:
 	int getSelectionSoundScriptId() const { return m_iSelectionSoundScriptId; }
 	int getActionSoundScriptId() const { return m_iActionSoundScriptId; }
 
+	virtual const CvTriggers*  getTriggers()  const { return &m_triggers; }   // §5 -- triggers + the folded grants
+
 protected:
-	virtual CvGrants*    mutGrants()    { return &m_grants; }
+	virtual CvTriggers*  mutTriggers()  { return &m_triggers; }
 	virtual CvEdges*     mutEdges()     { return &m_edges; }
 	virtual CvModifiers* mutModifiers() { return &m_modifiers; }
 
 private:
 	// --- the composed section units ---
-	CvGrants    m_grants;      // §5 -- the game-start provisions (buildings/techs/civics)
+	CvTriggers  m_triggers;    // §5 -- the game-start provisions, the null-condition trigger entry
 	CvEdges     m_edges;       // §4.1/4.2 -- the enables-family edges (the NPC disables.techs research ban)
 	CvModifiers m_modifiers;   // §6 families: spawnRate.empire.npcPeace.percent
 

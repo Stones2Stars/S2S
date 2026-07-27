@@ -302,7 +302,7 @@ namespace
 		}
 		rp_relatedFromModifiers(pSourceInfo->getModifiers(), eSourceBucket, iSourceId);
 		rp_relatedFromModifiers(pSourceInfo->getWhenObsolete(), eSourceBucket, iSourceId);
-		rp_relatedFromGrants(pSourceInfo->getGrants(), eSourceBucket, iSourceId);
+		rp_relatedFromGrants(pSourceInfo->consideredGrants(), eSourceBucket, iSourceId);
 		const CvProvides* pProvides = pSourceInfo->getProvides();
 		if (pProvides != NULL)
 		{

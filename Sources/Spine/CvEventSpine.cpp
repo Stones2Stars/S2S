@@ -564,10 +564,6 @@ void spineRegisterConsumers()
 	// name-change, grant triggers, the load bracket) renders through the consumer's structured path
 	// (spineRenderEventLine), never an inline string. NULL log file => Cascade.log.
 	spineRegisterDomain(SD_SPINE, spineDomainPrefix, NULL, spineDomainFieldInfo);
-	// The #430 GRANTS machine: a SELECTIVE DOMAIN consumer -- on a building-built / unit-created event it resolves the
-	// source entity's genuine grants off the mapped CvInfo and emits a [GRANTS] shadow diagnostic (resolution only,
-	// un-run parity). The tally stays a non-consumer (reads object-owned counts).
-	triggerRegisterConsumer();
 	// ONE consumer PER SYSTEM ([DEC-enabler-not-cascade]): the ENABLER's own consumer (load-active -- the
 	// reseed's in-read emits BUILD its domains) and the MODIFIER cascade's own consumer (load-active for
 	// cache building -- the reseed's emits derive the dirty marks; the first reads after load recompute from
@@ -588,6 +584,14 @@ void spineRegisterConsumers()
 	contextRegisterConsumer();
 	enablerRegisterConsumer();
 	modifierRegisterConsumer();
+	// The TRIGGER machine (json.md §5: a grant is a trigger with a null condition) registers LAST, and that is the
+	// same contract one line up rather than a separate rule: it READS both of the state-building machines' output --
+	// the per-scope CONTEXTS (every entry condition evaluates through getCityContext().fillEvalCtx /
+	// getEmpireContext().fillEvalCtx) and the ENABLER's operating-building set (a DORMANT building grants nothing).
+	// Registered ahead of them it would evaluate a trigger against stores that have not yet seen the very fact that
+	// fired it -- and since the trigger APPLIES (places buildings, spawns units, promotes), a stale read is a wrong
+	// grant handed out, not merely a wrong number, with nothing to re-derive it afterwards.
+	triggerRegisterConsumer();
 }
 
 void emitNameChange(int iKind, int iOwner, int iEntityId)

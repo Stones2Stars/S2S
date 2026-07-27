@@ -74,7 +74,6 @@ public:
 	virtual const CvRequires*  getRequires()     const { return NULL; }   // §4.3
 	virtual const CvEdges*     getEdges()        const { return NULL; }   // §4.1/§4.2
 	virtual const CvAllowed*   getAllowed()      const { return NULL; }   // §4.4
-	virtual const CvGrants*    getGrants()       const { return NULL; }   // §5
 	virtual const CvTriggers*      getTriggers()     const { return NULL; }   // §5 trigger -> chance -> action
 	virtual const CvProvides*  getProvides()     const { return NULL; }   // §5a
 	virtual const CvGate*      getGate()         const { return NULL; }   // entity-level enabled/disabled
@@ -121,10 +120,14 @@ public:
 	}
 	int allowedCap(EnAllowedCap eKind) const                                  // -1 = uncapped/absent
 	{ const CvAllowed* a = getAllowed(); return a ? a->cap(eKind) : -1; }
+	// The payload this entity hands over on its OWN CONSIDERED ACTION -- the `grants` authoring shape, compiled
+	// into the ONE entry list as the null-condition trigger (json.md §5). NULL when the entity authors none.
+	const CvGrants* consideredGrants() const
+	{ const CvTriggers* t = getTriggers(); return t ? t->consideredGrant() : NULL; }
 	const std::vector<int>* grantList(int iBucketKey) const                   // NULL when absent; CvGrants::key handle
-	{ const CvGrants* g = getGrants(); return g ? g->list(iBucketKey) : NULL; }
-	int grantPulse(int iChannelKey) const { const CvGrants* g = getGrants(); return g ? g->pulse(iChannelKey) : 0; }
-	bool grantFlag(int iFlagKey) const       { const CvGrants* g = getGrants(); return g ? g->flag(iFlagKey) : false; }
+	{ const CvGrants* g = consideredGrants(); return g ? g->list(iBucketKey) : NULL; }
+	int grantPulse(int iChannelKey) const { const CvGrants* g = consideredGrants(); return g ? g->pulse(iChannelKey) : 0; }
+	bool grantFlag(int iFlagKey) const       { const CvGrants* g = consideredGrants(); return g ? g->flag(iFlagKey) : false; }
 
 	// The FREE-PROMOTION payload, read off the `triggers` onTurnEnd promote entries -- for consumers that DISPLAY
 	// or SCORE it. (The applier walks the entries itself, because it must evaluate each entry's condition against
@@ -185,7 +188,6 @@ protected:
 	virtual CvRequires*  mutRequires()     { return NULL; }
 	virtual CvEdges*     mutEdges()        { return NULL; }
 	virtual CvAllowed*   mutAllowed()      { return NULL; }
-	virtual CvGrants*    mutGrants()       { return NULL; }
 	virtual CvTriggers*      mutTriggers()     { return NULL; }
 	virtual CvProvides*  mutProvides()     { return NULL; }
 	virtual CvGate*      mutGate()         { return NULL; }

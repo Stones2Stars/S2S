@@ -26,9 +26,15 @@ class CvGrants;
 class CvTriggerEntry
 {
 public:
-	// --- trigger: the WHEN/WHY ---
+	// --- trigger: the WHEN/WHY, in one of THREE forms ---
 	std::string happening;         // the on-token ("onTurn" / "onTurnEnd" / ... -- the spine's DOMAIN happenings
 	                               // in authoring form, an OPEN registry); "" = state-conditioned only
+	// The IMPLICIT happening: this entry came from the entity's own `grants` block, so it fires on the source's
+	// own CONSIDERED ACTION -- a building's construction, a tech's research, a civic's adoption, a settler's
+	// founding (json.md §5). It is never AUTHORED (a modder writes a plain `grants` block and no trigger field),
+	// which is exactly why it is a compiled flag rather than an on-token: there is no token to collide with, and
+	// the dispatcher's own event already names which considered action it is.
+	bool consideredAction;
 	int happeningInterval;         // {"onTurn": N} = every N turns (1 = every turn)
 	CvCondition* condition;    // a §3 state condition (NULL = none); a state-only trigger evaluates each turn
 	// --- chance: the odds (0 = no roll -> the action always lands when the trigger fires) ---
@@ -63,22 +69,33 @@ private:
 	CvTriggerEntry& operator=(const CvTriggerEntry&);
 };
 
+// The ONE payload plane an entity carries. `triggers` and `grants` are TWO AUTHORING SHAPES that compile into
+// THIS ONE ENTRY LIST -- json.md §5: "the split is about AUTHORING, not about two runtime mechanisms". A
+// `grants` block becomes a single entry with the implicit considered-action happening, no condition and no roll
+// (the degenerate case), so nothing about a grant has machinery of its own.
 class CvTriggers
 {
 public:
-	CvTriggers() {}
+	CvTriggers() : m_iConsidered(-1) {}
 	~CvTriggers();
 
 	// The unit's single load-time writer: parse the whole `triggers` array (every §5 entry shape; an
 	// unrecognized entry/action key surfaces via the unconsumed census, never silently drops).
 	void parse(const picojson::value& v);
+	// The OTHER authoring shape: the whole `grants` block -> ONE entry in this same list, implicit happening.
+	void parseGrants(const picojson::value& v);
 	void clearParsed();   // frees the owned entries + resets (the clear-first half of the section re-map)
 
 	const std::vector<CvTriggerEntry*>& entries() const { return m_entries; }
 	bool isEmpty() const { return m_entries.empty(); }
 
+	// The considered-action entry's payload -- the `grants` block's compiled home (NULL when the entity authors
+	// none). O(1): the entry's index is captured at parse, never searched for at read.
+	const CvGrants* consideredGrant() const;
+
 private:
 	std::vector<CvTriggerEntry*> m_entries;   // owned
+	int m_iConsidered;                        // index into m_entries of the considered-action entry (-1 = none)
 
 	CvTriggers(const CvTriggers&);            // noncopyable -- owns its entries
 	CvTriggers& operator=(const CvTriggers&);

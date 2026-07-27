@@ -1628,7 +1628,6 @@ public:
 
 
 	bool m_bChoosingReligion;
-	bool m_bHasLanguage;
 
 	int getBuildingCount(BuildingTypes eBuilding, bool bUpgrades) const;
 
@@ -1705,7 +1704,6 @@ protected:
 	int** m_ppiBonusCommerceModifier;
 	bool* m_pabAutomatedCanBuild;
 	int* m_paiResourceConsumption;
-	int* m_paiFreeSpecialistCount;
 	int* m_aiLandmarkYield;
 	int* m_aiModderOptions;
 	int m_iEnslavementChance;
@@ -1713,20 +1711,14 @@ protected:
 	TeamTypes m_eSecretaryGeneralVote;
 	UnitTypes m_eGreatGeneralTypetoAssign;
 	int m_iForeignTradeRouteModifier;
-	int m_iCivicHappiness;
 	int m_iNoLandmarkAngerCount;
 	int m_iLandmarkHappiness;
 	int m_iExtraCityDefense;
 	int m_iDistantUnitSupportCostModifier;
 	int m_iReligionSpreadRate;
 	int m_iTaxRateUnhappiness;
-	int m_iCivilizationHealth;
 	int m_iNoCapitalUnhappiness;
-	int m_iProjectHealth;
 	int m_iForceAllTradeRoutes;
-	int m_iProjectHappiness;
-	int m_iWorldHealth;
-	int m_iWorldHappiness;
 	float m_fPopulationgrowthratepercentageLog;
 	int m_iCorporationSpreadModifier;
 	// @SAVEBREAK - delete
@@ -1956,7 +1948,6 @@ protected:
 	bool m_bInquisitionConditions;
 
 	int m_iUnitUpgradePriceModifier;
-	int m_iNationalGreatPeopleRate;
 
 	int m_iNumNukeUnits;
 	int m_iNumOutsideUnits;
@@ -1967,8 +1958,6 @@ protected:
 	int m_iCivilianUnitUpkeepMod;
 	int m_iMilitaryUnitUpkeepMod;
 
-	int64_t m_iUnitUpkeepCivilian100;
-	int64_t m_iUnitUpkeepMilitary100;
 	mutable int64_t m_iFinalUnitUpkeep;
 	mutable bool m_bUnitUpkeepDirty;
 
@@ -1996,16 +1985,10 @@ protected:
 	int m_iUpkeepModifier;
 	int m_iLevelExperienceModifier;
 	int m_iExtraHealth;
-	int m_iCivicHealth;
-	int m_iBuildingGoodHealth;
-	int m_iBuildingBadHealth;
 	int m_iExtraHappiness;
 	int m_iExtraHappinessUnattributed;
-	int m_iBuildingHappiness;
-	int m_iLargestCityHappiness;
 	int m_iWarWearinessPercentAnger;
 	int m_iWarWearinessModifier;
-	int m_iFreeSpecialist;
 	int m_iNoForeignTradeCount;
 	int m_iNoCorporationsCount;
 	int m_iNoForeignCorporationsCount;
@@ -2015,8 +1998,6 @@ protected:
 	int m_iConversionTimer;
 	int m_iStateReligionCount;
 	int m_iNoNonStateReligionSpreadCount;
-	int m_iStateReligionHappiness;
-	int m_iNonStateReligionHappiness;
 	int m_iStateReligionUnitProductionModifier;
 	int m_iStateReligionBuildingProductionModifier;
 	int m_iStateReligionFreeExperience;
@@ -2064,11 +2045,8 @@ protected:
 	int m_iAIAttitudeModifier;
 	int m_iFocusPlotX;
 	int m_iFocusPlotY;
-	int* m_aiFreeCityYield;
 	int* m_aiLessYieldThreshold;
 
-	int* m_aiGoldenAgeYield;
-	int* m_aiGoldenAgeCommerce;
 	//TB Traits end
 
 	// Used for DynamicCivNames
@@ -2101,19 +2079,11 @@ protected:
 	int* m_aiCapitalYieldRateModifier;
 	int* m_aiExtraYieldThreshold;
 	int* m_aiTradeYieldModifier;
-	int* m_aiFreeCityCommerce; // @SAVEBREAK remove as it is unused.
-	int* m_extraCommerce;
 	int* m_aiCommercePercent;
-	int* m_aiCommerceRate;
-	bool* m_abCommerceDirty;
 	int* m_aiCommerceRateModifier;
 	int* m_aiCommerceRateModifierfromEvents;
 	int* m_aiCommerceRateModifierfromBuildings;
 	int* m_aiCapitalCommerceRateModifier;
-	int* m_aiStateReligionBuildingCommerce;
-	int* m_aiSpecialistExtraCommerce;
-	int* m_aiSpecialistExtraYield;
-	int* m_aiCommerceFlexibleCount;
 	int* m_aiGoldPerTurnByPlayer;
 	int* m_aiEspionageSpendingWeightAgainstTeam;
 
@@ -2125,7 +2095,6 @@ protected:
 	int* m_paiImprovementCount;
 	int** m_paiExtraBuildingYield;
 	int** m_paiExtraBuildingCommerce;
-	int* m_paiFeatureHappiness;
 	int* m_paiBuildingCount;
 	int* m_paiBuildingGroupCount;
 	int* m_paiBuildingGroupMaking;
@@ -2146,7 +2115,6 @@ protected:
 	CivicTypes* m_paeCivics;
 
 	int** m_ppaaiSpecialistExtraYield;
-	int** m_ppaaiImprovementYieldChange;
 	int** m_ppaaiSpecialistExtraCommerce;
 
 	CLinkList<TechTypes> m_researchQueue;

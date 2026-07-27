@@ -3,12 +3,16 @@
 #define CV_GRANTS_H
 
 //
-//	CvGrants -- the `grants` section as ONE composable unit (json.md §5): the PURE PAYLOAD handed out on the
-//	source's CONSIDERED ACTION (construct/research/adopt/found/mission -- implicit, no trigger field, no odds).
-//	Shapes: id-list buckets (plain strings or the conditioned `{<kind>: ID, enabled: <cond>}` object form),
-//	numeric pulses, scoped pulses, and bool flags. Anything recurring / chance-rolled / happening-fired is a
-//	`triggers` entry (CvTriggers), never a grant. Composed BY VALUE on the derived infos that author grants
-//	(the data-grounded table), and nested whole as a trigger action's `grant` payload.
+//	CvGrants -- the §5 PAYLOAD VOCABULARY: what an action hands over. Shapes: id-list buckets (plain strings or
+//	the conditioned `{<kind>: ID, enabled: <cond>}` object form), numeric pulses, scoped pulses, and bool flags.
+//
+//	⚖ It is a PAYLOAD, never a plane of its own. A grant is a TRIGGER WITH A NULL CONDITION (json.md §5), so the
+//	`grants` authoring block compiles into the entity's ONE `CvTriggers` entry list -- as a single entry whose
+//	happening is the implicit considered action (construct/research/adopt/found), with no condition and no roll.
+//	This class is therefore reached in exactly TWO ways, both of them a trigger entry's `grant`: that folded
+//	considered-action entry (CvTriggers::consideredGrant), and a `triggers` entry's explicit `action.grant`.
+//	⛔ There is no `getGrants()` section and no per-info `m_grants` member -- the split is about AUTHORING, not
+//	about two runtime mechanisms, and giving the payload its own section is what made it look like two.
 //	WRITE-ONCE AT LOAD. Owns its entries/conditions.
 //
 //	Keys: the grants key axis (buckets / pulse channels / scopes / flags) is OPEN in the data (json.md §5's

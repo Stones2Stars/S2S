@@ -673,8 +673,8 @@ void loadJson(JsonLoadPhase eLoadPhase)
 				.addI(RJF_REQBUILD, cd->requiresBuild() ? 1 : 0).addI(RJF_REQOPERATE, cd->requiresOperate() ? 1 : 0)
 				.addI(RJF_EDGES, cd->getEdges() ? cd->getEdges()->count() : 0)
 				.addI(RJF_ALLOWED, cd->getAllowed() ? cd->getAllowed()->authoredCount() : 0)
-				.addI(RJF_GRANTLISTS, cd->getGrants() ? (int)cd->getGrants()->lists().size() : 0)
-				.addI(RJF_GRANTPULSES, cd->getGrants() ? cd->getGrants()->pulseCount() : 0));
+				.addI(RJF_GRANTLISTS, cd->consideredGrants() ? (int)cd->consideredGrants()->lists().size() : 0)
+				.addI(RJF_GRANTPULSES, cd->consideredGrants() ? cd->consideredGrants()->pulseCount() : 0));
 			++iMapSample;
 		}
 	}

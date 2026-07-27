@@ -107,8 +107,7 @@ void CvInfo::clearSections()
 	if (CvEdges* u = mutEdges())            u->clearParsed();
 	if (CvProvides* u = mutProvides())      u->clearParsed();
 	if (CvAllowed* u = mutAllowed())        u->clearParsed();
-	if (CvGrants* u = mutGrants())          u->clearParsed();
-	if (CvTriggers* u = mutTriggers())          u->clearParsed();
+	if (CvTriggers* u = mutTriggers())      u->clearParsed();   // the ONE payload plane (triggers + the folded grants)
 	if (CvRequires* u = mutRequires())      u->clearParsed();
 	if (CvGate* u = mutGate())              u->clearParsed();
 	if (CvModifiers* u = mutModifiers())    u->clearParsed();
@@ -176,7 +175,9 @@ void CvInfo::mapSections(const picojson::value& entity)
 			if (CvAllowed* u = mutAllowed()) u->parse(v); else jsonNoteUnconsumed(m_szType.GetCString(), k);
 			break;
 		case CJK_GRANTS:
-			if (CvGrants* u = mutGrants()) u->parse(v); else jsonNoteUnconsumed(m_szType.GetCString(), k);
+			// The `grants` AUTHORING shape compiles into the SAME entry list as `triggers` -- a grant is a
+			// trigger with a null condition (json.md §5), so there is no second section to route it to.
+			if (CvTriggers* u = mutTriggers()) u->parseGrants(v); else jsonNoteUnconsumed(m_szType.GetCString(), k);
 			break;
 		case CJK_TRIGGERS:
 			if (CvTriggers* u = mutTriggers()) u->parse(v); else jsonNoteUnconsumed(m_szType.GetCString(), k);

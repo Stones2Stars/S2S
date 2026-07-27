@@ -123,7 +123,7 @@ int CvHandicapInfo::getColonyMaintenanceCap() const
 
 void CvHandicapInfo::mapFrom(const picojson::value& entity)
 {
-	CvInfo::mapFrom(entity);   // core reading (type / text keys) + the section dispatch (compiles m_modifiers, parses m_grants)
+	CvInfo::mapFrom(entity);   // core reading (type / text keys) + the section dispatch (compiles m_modifiers, folds grants into m_triggers)
 
 	// idempotency (CvInfo.h): the full-registry re-run fully redefines every materialized member
 	m_aiGoodies.clear();
@@ -181,13 +181,14 @@ void CvHandicapInfo::mapFrom(const picojson::value& entity)
 	//     numeric PULSES (stored ×100 by the section parse); the AI override rides `grants.ai.<key>`, which
 	//     the same parse captures as a SCOPED pulse under channel "ai". ONE representation, so the grants
 	//     machine reads the same parsed data these views serve. ---
-	m_iStartingGold         = m_grants.pulse("startingGold") / 100;
-	m_iStartingDefenseUnits = m_grants.pulse("startingDefenseUnits") / 100;
-	m_iStartingWorkerUnits  = m_grants.pulse("startingWorkerUnits") / 100;
-	m_iStartingExploreUnits = m_grants.pulse("startingExploreUnits") / 100;
-	m_iAIStartingDefenseUnits = m_grants.scopedPulse("ai", "startingDefenseUnits") / 100;
-	m_iAIStartingWorkerUnits  = m_grants.scopedPulse("ai", "startingWorkerUnits")  / 100;
-	m_iAIStartingExploreUnits = m_grants.scopedPulse("ai", "startingExploreUnits") / 100;
+	const CvGrants* pGrants = m_triggers.consideredGrant();
+	m_iStartingGold         = (pGrants != NULL) ? pGrants->pulse("startingGold") / 100 : 0;
+	m_iStartingDefenseUnits = (pGrants != NULL) ? pGrants->pulse("startingDefenseUnits") / 100 : 0;
+	m_iStartingWorkerUnits  = (pGrants != NULL) ? pGrants->pulse("startingWorkerUnits") / 100 : 0;
+	m_iStartingExploreUnits = (pGrants != NULL) ? pGrants->pulse("startingExploreUnits") / 100 : 0;
+	m_iAIStartingDefenseUnits = (pGrants != NULL) ? pGrants->scopedPulse("ai", "startingDefenseUnits") / 100 : 0;
+	m_iAIStartingWorkerUnits  = (pGrants != NULL) ? pGrants->scopedPulse("ai", "startingWorkerUnits")  / 100 : 0;
+	m_iAIStartingExploreUnits = (pGrants != NULL) ? pGrants->scopedPulse("ai", "startingExploreUnits") / 100 : 0;
 
 	// --- identity: the advanced-start POINTS BUDGET config + the goody-hut roster (GOODY_* FKs -> ids) ---
 	if (const picojson::object* pIdentity = jsonChildObj(entityObj, "identity"))

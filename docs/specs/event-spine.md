@@ -167,12 +167,17 @@ reads objects). **Build order:** spine + the modifier scope accumulator → logg
   ([state-repositories.md](../architecture/state-repositories.md)); the event reseed replaced that pass, so the
   endpoint has no honest caller. Open follow-ups (the tile-driven vicinity backstop; the per-city enabler
   priming that preceded the reseed emits): [info-rebuild.md](../plans/structural-cleanup/info-rebuild.md) ledger.
-  **Registered consumers today:** the broad FILE logging consumer, the `/events` STREAM consumer, the **grants
-  engine** (`Grants/CvGrantsEngine` -- resolver AND appliers built: `gr_applyTechFirstDiscover` /
-  `gr_applyBuildingFirstBuild` / `gr_applyPerTurn` / `gr_applyCityPerTurn` / `gr_applySpawn` / `gr_applyFullHeal`,
-  dispatched from `SEVT_TECH_ACQUIRED` / `RELIGION_FOUNDED` / `PLAYER_INIT` / `CITY_FOUNDED` / `CIVIC_ADOPTED` /
-  `TURN_STARTED` / `BUILDING_PROCESSED` / `UNIT_CREATED` / `CAPITAL_CHANGED`; the remaining increments are in
-  [grants-machine.md](../plans/structural-cleanup/grants-machine.md)), the **enabler's own** consumer
+  **Registered consumers today:** the broad FILE logging consumer, the `/events` STREAM consumer, the **trigger
+  engine** (`Triggers/CvTriggerEngine` -- the ONE payload machine, grants folded in as the null-condition case:
+  resolver AND appliers built (`tr_applyTechFirstDiscover` / `tr_applyBuildingFirstBuild` / `tr_applyPerTurn` /
+  `tr_applyCityPerTurn` / `tr_applySpawn` / `tr_applyFullHeal` / `tr_promoteFromEntries`), dispatched from
+  `SEVT_TECH_ACQUIRED` / `RELIGION_FOUNDED` / `PLAYER_INIT` / `CITY_FOUNDED` / `CIVIC_ADOPTED` / `TURN_STARTED` /
+  `BUILDING_CHANGED` / `BUILDING_PROCESSED` / `UNIT_CREATED` / `UNIT_ENTERED_CITY` / `CAPITAL_CHANGED`; the
+  remaining increments are in [grants-machine.md](../plans/structural-cleanup/grants-machine.md)).
+  ⛔ It registers **LAST**, after the contexts / enabler / modifier: it READS the contexts (every entry condition
+  evaluates through `fillEvalCtx`) and the enabler's operating set (a dormant building grants nothing), and unlike
+  those machines it APPLIES -- so a stale read hands out a wrong GRANT, not merely a wrong number.
+  Beside it: the **enabler's own** consumer
   (`Enabler/CvEnablerConsumer`, load-active), and the **modifier's own** consumer
   (`Cascade/CvModifierConsumer`, load-active for cache building): DOMAIN events in, index-derived dirty marks
   out (`DepositIndex::routeFor` + the condition-dependency routes --

@@ -39,13 +39,18 @@
 | property `buildings` | property present | (#430 pending — auto-built) | continuous |
 | feature/improvement property-pulses | per-turn | `CvPropertySolver::doTurn` (spatial, #429) | recurring |
 
-## The machine — `CvCascadeGrants` (`Sources/Cascade/CvCascadeGrants.{h,cpp}`)
+## The machine — `CvTriggerEngine` (`Sources/Triggers/CvTriggerEngine.{h,cpp}`)
 
-An `IEventConsumer` (`wantedKinds` = DOMAIN), registered at the composition root (`cascadeRegisterConsumers` →
-`cascadeRegisterGrants`). `onEvent` dispatches by the DOMAIN event, resolves the source entity's genuine grants off
-`InfoRepo<CvXInfo>::get().get(id)` (`grantLists`/`grantPulses`, the carved-out missions-pass keys simply not read), and emits a
-`[GRANTS]` diagnostic via the spine (`SD_GRANTS`). **Resolution only — it does NOT apply** (legacy applies); the
-resolved set is observable via `[GRANTS]`, and the apply-loop (increment 5) must MANIFEST in-game once built ([DEC-done-is-observable]).
+An `IEventConsumer` (`wantedKinds` = DOMAIN), registered at the composition root (`spineRegisterConsumers` →
+`triggerRegisterConsumer`) — **LAST**, after the contexts / enabler / modifier, because it reads both machines'
+output and, unlike them, APPLIES. `onEvent` dispatches by the DOMAIN event, resolves the source entity's payload
+off `InfoRepo<CvXInfo>::get().get(id)` (the carved-out missions-pass keys simply not read), applies it, and emits
+a `[TRIGGERS/*]` diagnostic via the spine (`SD_TRIGGERS`).
+
+**It APPLIES** — the resolver-only phase is over: the first-build provisions, the tech first-discover set, the
+religion founder units, the per-turn spawn/full-heal, the free promotions and the settle-time building seeds all
+hand over here, and the legacy apply sites they replace are deleted. What is resolved but NOT yet applied is
+listed as a gap in the coverage table below, never left implied.
 
 ## Build increments (each compiles before the next)
 
@@ -134,6 +139,18 @@ resolved set is observable via `[GRANTS]`, and the apply-loop (increment 5) must
    > composed `getGrants()->repeatables()`, which carries the full structure. Never widen the legacy members to
    > carry the missing fields ([grant-apply-sites.md](grant-apply-sites.md) §0).
 
+## ONE compiled plane — how `grants` and `triggers` meet
+
+Both authoring shapes compile into the **same entry list**, `CvTriggers` on the info; there is no `getGrants()`
+section and no `m_grants` member anywhere. A `grants` block becomes ONE entry with `consideredAction = true`, no
+condition and no roll — the degenerate trigger json.md §5 describes — and its payload lives in that entry's
+`grant` exactly as an explicit `action.grant` payload does. `CvTriggers::consideredGrant()` is the O(1) read
+(the entry's index is captured at parse, never searched for), surfaced on the info as `consideredGrants()`.
+
+⚑ The implicit happening is a compiled FLAG, not an on-token: it is never authored (a modder writes a plain
+`grants` block and no `trigger` field), so there is no token to collide with, and the dispatching event already
+names which considered action it is — a building's construction, a tech's research, a civic's adoption.
+
 ## The trigger plane — coverage, measured against the DATA
 
 > **TRIGGER IS THE TOP-LEVEL CONCEPT; a grant is a trigger with a null condition** (owner,
@@ -166,7 +183,7 @@ resolved set is observable via `[GRANTS]`, and the apply-loop (increment 5) must
   `freePromotions` — building-list and trait-dict alike stay `triggers` entries.
 
 **FIXED (do not re-report):** a flat `chance: N` now fires — the odds moved onto the trigger
-(`gr_triggerChance10000`), where §5 puts them, instead of being reachable only through a property lookup that
+(`tr_triggerChance10000`), where §5 puts them, instead of being reachable only through a property lookup that
 returned early on an absent `per`, which made every plain-odds entry silently inert; and an entry granting several
 units now places **all** of them, one roll per entry, instead of silently keeping `[0]`.
 

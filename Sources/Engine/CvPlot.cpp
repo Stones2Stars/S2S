@@ -150,7 +150,6 @@ CvPlot::CvPlot()
 	}
 
 	m_baseYields = new short[NUM_YIELD_TYPES]();
-	m_aiYield = new short[NUM_YIELD_TYPES]();
 
 	// Plot danger cache
 	m_borderDangerCache = new bool[MAX_TEAMS];
@@ -226,7 +225,6 @@ CvPlot::~CvPlot()
 	uninit();
 
 	SAFE_DELETE_ARRAY(m_baseYields);
-	SAFE_DELETE_ARRAY(m_aiYield);
 	SAFE_DELETE_ARRAY(m_borderDangerCache);
 }
 
@@ -8235,7 +8233,6 @@ void CvPlot::updateYield()
 		{
 			FASSERT_NOT_NEGATIVE(iNewYield);
 
-			m_aiYield[iI] = iNewYield;
 
 			if (bWorked)
 			{
@@ -11292,7 +11289,6 @@ void CvPlot::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvPlot", (int*)&m_workingCityOverride.eOwner);
 	WRAPPER_READ(wrapper, "CvPlot", &m_workingCityOverride.iID);
 
-	WRAPPER_READ_ARRAY(wrapper, "CvPlot", NUM_YIELD_TYPES, m_aiYield);
 
 	m_iActivePlayerSafeRangeCache = -1;
 	m_iActivePlayerSafeRangeCacheTestMoves = -1;
@@ -11773,7 +11769,6 @@ void CvPlot::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvPlot", m_workingCityOverride.eOwner);
 	WRAPPER_WRITE(wrapper, "CvPlot", m_workingCityOverride.iID);
 
-	WRAPPER_WRITE_ARRAY(wrapper, "CvPlot", NUM_YIELD_TYPES, m_aiYield);
 
 	if (m_aiCulture.empty())
 	{

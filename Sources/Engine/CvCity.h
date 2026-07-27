@@ -1666,7 +1666,6 @@ protected:
 	int m_iWorkingPopulation;
 	int m_iSpecialistPopulation;
 	int m_iNumGreatPeople;
-	int m_iBaseGreatPeopleRate;
 	int m_iGreatPeopleRateModifier;
 	int m_iGreatPeopleProgress;
 	int m_iNumWorldWonders;
@@ -1682,12 +1681,6 @@ protected:
 	int m_iEspionageHealthCounter;
 	int m_iEspionageHappinessCounter;
 	int m_iFreshWaterGoodHealth;
-	int m_iFeatureGoodHealth;
-	int m_iFeatureBadHealth;
-	int m_iBuildingGoodHealth;
-	int m_iBuildingBadHealth;
-	int m_iBonusGoodHealth;
-	int m_iBonusBadHealth;
 	int m_iHurryAngerTimer;
 	int m_iRevRequestAngerTimer;
 	int m_iRevSuccessTimer;
@@ -1695,18 +1688,6 @@ protected:
 	int m_iDefyResolutionAngerTimer;
 	int m_iHappinessTimer;
 	int m_iMilitaryHappinessUnits;
-	int m_iBuildingGoodHappiness;
-	int m_iBuildingBadHappiness;
-	int m_iExtraBuildingGoodHappiness;
-	int m_iExtraBuildingBadHappiness;
-	int m_iExtraBuildingGoodHealth;
-	int m_iExtraBuildingBadHealth;
-	int m_iFeatureGoodHappiness;
-	int m_iFeatureBadHappiness;
-	int m_iBonusGoodHappiness;
-	int m_iBonusBadHappiness;
-	int m_iReligionGoodHappiness;
-	int m_iReligionBadHappiness;
 	int m_iExtraHappiness;
 	int m_iExtraHealth;
 	int m_iNoUnhappinessCount;
@@ -1719,10 +1700,6 @@ protected:
 	int m_iOverflowProduction;
 	int m_iFeatureProduction;
 
-	int m_iSpecialistGoodHealth;
-	int m_iSpecialistBadHealth;
-	int m_iSpecialistHappiness;
-	int m_iSpecialistUnhappiness;
 	int m_iImprovementGoodHealth;
 	int m_iImprovementBadHealth;
 	int m_iLostProductionModified;
@@ -1737,7 +1714,6 @@ protected:
 	int m_iAdjacentDamagePercent;
 	int m_iWorkableRadiusOverride;
 	int m_iProtectedCultureCount;
-	int m_iNumUnitFullHeal;
 	int m_iDisabledPowerTimer;
 	int m_iWarWearinessTimer;
 	int m_iMinimumDefenseLevel;
@@ -1750,9 +1726,6 @@ protected:
 
 	int m_iFreshWater;
 
-	int* m_aiBonusCommerceRateModifier;
-	int* m_aiBonusCommercePercentChanges;
-	int* m_aiBuildingCommerceTechChange;
 
 	mutable int* m_cachedPropertyNeeds;
 	bool* m_pabHadVicinityBonus;
@@ -1770,7 +1743,6 @@ protected:
 	std::vector<BuildingTypes> m_hasBuildings;
 
 	std::vector<short> m_vFreeBuildings;
-	std::vector<short> m_vDisabledBuildings;
 	std::map<short, uint16_t> m_freeAreaBuildingCount;
 	std::map<short, int> m_bonusDefenseChanges;
 	std::map<short, int> m_buildingProductionMod;
@@ -1787,16 +1759,12 @@ protected:
 	int m_iExtraTradeRoutes;
 	int m_iTradeRouteModifier;
 	int m_iForeignTradeRouteModifier;
-	int m_iBuildingDefense;
-	int m_iBuildingBombardDefense;
 	int m_iFreeExperience;
 	int m_iCurrAirlift;
 	int m_iMaxAirlift;
 	int m_iAirModifier;
 	int m_iAirUnitCapacity;
 	int m_iNukeModifier;
-	int m_iFreeSpecialist;
-	int m_iPowerCount;
 	int m_iDefenseDamage;
 	int m_iLastDefenseDamage;
 	int m_iOccupationTimer;
@@ -1847,15 +1815,10 @@ protected:
 	int m_iExtraLocalCaptureResistanceModifier;
 	int m_iExtraLocalDynamicDefense;
 	int m_iExtraRiverDefensePenalty;
-	int m_iExtraMinDefense;
 	int m_iExtraBuildingDefenseRecoverySpeedModifier;
 	int m_iModifiedBuildingDefenseRecoverySpeedCap;
 	int m_iExtraCityDefenseRecoverySpeedModifier;
 
-	int m_iExtraTechSpecialistHappiness;
-	int m_iExtraBuildingHappinessFromTech;
-	int m_iExtraBuildingHealthFromTech;
-	int m_iExtraTechSpecialistHealth;
 	int** m_ppaaiLocalSpecialistExtraYield;
 	int** m_ppaaiLocalSpecialistExtraCommerce;
 	int m_iPrioritySpecialist;
@@ -1865,31 +1828,13 @@ protected:
 	int m_iExtraInsidiousness;
 	int m_iExtraInvestigation;
 
-	int* m_aiRiverPlotYield;
-	int* m_aiBaseYieldRate;
-	int* m_buildingExtraYield100;
 	int* m_buildingYieldMod;
-	int* m_buildingCommerceMod;
-	int* m_aiExtraYield;
-	int* m_aiSpecialistYieldTotal;
-	int* m_aiBaseYieldPerPopRate;
 	int* m_aiYieldRateModifier;
 	int* m_aiPowerYieldRateModifier;
-	int* m_aiBonusYieldRateModifier;
 	int* m_aiTradeYield;
-	int* m_aiCorporationYield;
-	int* m_aiExtraSpecialistYield;
-	int* m_aiExtraSpecialistCommerce;
-	mutable int* m_aiCommerceRate;
 	mutable bool* m_abCommerceRateDirty;
 	int* m_aiProductionToCommerceModifier;
-	int* m_aiBuildingCommerce;
-	int* m_aiSpecialistCommerce100;
-	int* m_aiReligionCommerce;
-	int* m_aiCorporationCommerce;
 	int* m_aiCommerceRateModifier;
-	int* m_aiCommerceHappinessPer;
-	int* m_commercePerPopFromBuildings;
 	int* m_aiDomainFreeExperience;
 	int* m_aiDomainProductionModifier;
 	int* m_aiCulture;
@@ -1903,8 +1848,6 @@ protected:
 	CvWString m_szName;
 	CvString m_szScriptData;
 
-	int* m_paiFreeBonus;
-	int* m_paiNumBonuses;
 	int* m_paiProjectProduction;
 	int* m_paiBuildingOriginalOwner;
 	int* m_paiBuildingOriginalTime;
@@ -1914,11 +1857,9 @@ protected:
 	int* m_paiSpecialistCount;
 	int* m_paiMaxSpecialistCount;
 	int* m_paiForceSpecialistCount;
-	int* m_paiFreeSpecialistCount;
 	int* m_paiFreeSpecialistCountUnattributed;
 	int* m_paiImprovementFreeSpecialists;
 	int* m_paiReligionInfluence;
-	int* m_paiStateReligionHappiness;
 	int* m_paiUnitCombatFreeExperience;
 
 	bool* m_pabWorkingPlot;
@@ -1938,8 +1879,6 @@ protected:
 	OrderQueue m_orderQueue;
 
 	std::vector< std::pair<float, float> > m_kWallOverridePoints;
-	std::vector< std::pair<TechTypes, int> > m_buildingHappinessFromTech;
-	std::vector< std::pair<TechTypes, int> > m_buildingHealthFromTech;
 	std::vector< std::pair<BuildingTypes, int> > m_progressOnBuilding;
 	std::vector< std::pair<BuildingTypes, int> > m_delayOnBuilding;
 	std::vector< std::pair<UnitTypes, int> > m_progressOnUnit;

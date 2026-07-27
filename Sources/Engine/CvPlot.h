@@ -1046,7 +1046,6 @@ protected:
 	// Super Forts end
 
 	short* m_baseYields;
-	short* m_aiYield;
 	bst::array<short, NUM_YIELD_TYPES> m_aExtraYield;
 	std::vector<std::pair<PlayerTypes,int> > m_aiCulture;
 	std::vector<PlotTeamVisibilityIntensity> m_aPlotTeamVisibilityIntensity;

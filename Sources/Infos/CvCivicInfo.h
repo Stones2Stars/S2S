@@ -20,7 +20,6 @@ public:
 
 	// ======================= 1. SECTIONS -- whole typed objects =======================
 	virtual const CvEdges*     getEdges()     const { return &m_edges; }
-	virtual const CvGrants*    getGrants()    const { return &m_grants; }
 	virtual const CvModifiers* getModifiers() const { return &m_modifiers; }
 	virtual const CvClassificationBlock* getPolicies()  const { return &m_policies; }
 
@@ -97,16 +96,18 @@ public:
 	bool hasCityOverLimitAnger() const { return m_bCityOverLimitAnger; }
 	const CvWString& getWeLoveTheKingKey() const { return m_szWeLoveTheKingKey; }   // TXT_KEY (celebration text)
 
+	virtual const CvTriggers*  getTriggers()  const { return &m_triggers; }   // §5 -- triggers + the folded grants
+
 protected:
 	virtual CvEdges*     mutEdges()     { return &m_edges; }
-	virtual CvGrants*    mutGrants()    { return &m_grants; }
+	virtual CvTriggers*  mutTriggers()  { return &m_triggers; }
 	virtual CvModifiers* mutModifiers() { return &m_modifiers; }
 	virtual CvClassificationBlock* mutPolicies()  { return &m_policies; }
 
 private:
 	// --- the composed section units ---
 	CvEdges     m_edges;
-	CvGrants    m_grants;
+	CvTriggers  m_triggers;
 	CvModifiers m_modifiers;
 	CvClassificationBlock m_policies;
 
