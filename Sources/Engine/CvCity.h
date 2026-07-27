@@ -427,7 +427,6 @@ public:
 
 
 
-	void assignPromotionsFromBuildingChecked(const CvBuildingInfo& kBuilding, CvUnit* pLoopUnit) const;
 
 	//TB Combat Mods (Buildings) end
 	//TB Traits begin
@@ -1978,7 +1977,6 @@ protected:
 	void doGreatPeople();
 	void doMeltdown();
 	bool doCheckProduction();
-	void doPromotion();
 
 	int getHurryCostModifier(UnitTypes eUnit) const;
 	int getHurryCostModifier(BuildingTypes eType) const;

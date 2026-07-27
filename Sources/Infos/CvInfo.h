@@ -126,6 +126,14 @@ public:
 	int grantPulse(int iChannelKey) const { const CvGrants* g = getGrants(); return g ? g->pulse(iChannelKey) : 0; }
 	bool grantFlag(int iFlagKey) const       { const CvGrants* g = getGrants(); return g ? g->flag(iFlagKey) : false; }
 
+	// The FREE-PROMOTION payload, read off the `triggers` onTurnEnd promote entries -- for consumers that DISPLAY
+	// or SCORE it. (The applier walks the entries itself, because it must evaluate each entry's condition against
+	// the unit being promoted; this read cannot, and does not pretend to.)
+	// Split by whether the entry carries a CONDITION: an unconditional promotion always lands, a conditional one
+	// may not, and the AI has always weighted the two differently. Both vectors are cleared and filled.
+	void triggerPromotions(std::vector<int>& outAlways, std::vector<int>& outConditional) const;
+	bool hasTriggerPromotions() const;
+
 	// --- the compiled modifier point reads (patterns.md § THE GETTER SETUP; kind and scope are separate
 	// arguments per [DEC-scope-is-an-axis]; the unit picks the Σflat vs Σpercent slot, modifier.md §2).
 	// AUDIENCE (json §3.9 `ai`): the default read is HUMAN; bIncludeAiOnly=true adds the ai-sibling sums

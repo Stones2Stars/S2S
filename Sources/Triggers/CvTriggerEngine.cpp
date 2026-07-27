@@ -189,13 +189,11 @@ static int tr_promoteEntryCount(const CvInfo* j)   // `triggers` promote entries
 // held. That is the blanket-recompute shape [DEC-no-self-heal] rejects, and the enabler's targeted-propagation
 // model is the house pattern for exactly this.
 //
-// This also closes a LIVE defect: the legacy on-move path (CvCity::doPromotion) was gated on
-// isApplyFreePromotionOnMove(), a hardcoded `false`, so a unit that walked into a city NEVER gained its
-// promotions at all -- only units trained there did.
+// It also closes a live defect: a unit that WALKED into a city never gained its promotions at all -- only units
+// trained there did -- because the path that should have handled it was gated on a flag hardcoded to false.
 // Apply ONE source's `onTurnEnd` promote entries to ONE unit -- the whole free-promotion plane, read off the
-// TRIGGER entries the data actually authors (264 of them). ⛔ It previously read CvBuildingInfo::getFreePromoTypes,
-// a legacy member the JSON-fed poco does not carry at all, so the apply was dead while the authored entries went
-// unread: one mechanic with a live data path nothing consumed and a legacy path that did not exist.
+// TRIGGER entries the data actually authors (264 of them) -- the ONE place the payload lives, so every route
+// (trained here, walked in, a building completing) lands through this single applier.
 //
 // Two gates survive the move, for different reasons. `canAcquirePromotion(Promote|ForFree)` is the PROMOTION
 // SYSTEM's own validity rule and stays -- it is also why a granted promotion needs no take-away verb: when the
@@ -807,7 +805,21 @@ void CvTriggerEngine::onEvent(const CvSpineEvent& e)
 		}
 		break;
 	// The per-TYPE tally carries no instance, so it cannot apply -- the instance-aware SEVT_UNIT_CREATED does.
-	case SEVT_UNIT_CREATED:   tr_resolveUnit(e.iType, e.iC, e.iA); break;   // iA = the created unit's id
+	case SEVT_UNIT_CREATED:
+		tr_resolveUnit(e.iType, e.iC, e.iA);   // iA = the created unit's id
+		// A unit TRAINED in a city takes that city's free promotions -- the same payload, through the same ONE
+		// applier the entered-city and building-processed routes use. It rides the spine rather than a hook in
+		// CvCity: the promote payload lives in the `triggers` entries, so a second walk beside this one would be
+		// a duplicate implementation of it ([DEC-single-implementation]).
+		if (e.iC >= 0 && e.iA >= 0)
+		{
+			CvUnit* pNewUnit = GET_PLAYER((PlayerTypes)e.iC).getUnit(e.iA);
+			if (pNewUnit != NULL && pNewUnit->plot() != NULL)
+			{
+				tr_promoteOneUnit(pNewUnit->plot()->getPlotCity(), pNewUnit);
+			}
+		}
+		break;
 	// iType = founding unit's type, iC = owner, iSrcLoc = the new city
 	case SEVT_CITY_FOUNDED:   tr_resolveCityFounded(e.iC, e.iSrcLoc, e.iType); break;
 	// iC = owner, iSrcLoc = the new capital (-1 = none left)

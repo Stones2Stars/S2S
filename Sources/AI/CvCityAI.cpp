@@ -5695,20 +5695,18 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 					iValue += kBuilding.getDomainFreeExperience(iI) * (bMetAnyCiv ? iDomainExpValue : iDomainExpValue / 2);
 				}
 				int iPromoValue = 0;
-				foreach_(const FreePromoTypes & freePromoType, kBuilding.getFreePromoTypes())
+				// The free-promotion payload, off the `triggers` onTurnEnd entries. A CONDITIONAL promotion may not
+				// land, so it scores lower than an unconditional one -- the split the legacy weighting also made.
+				std::vector<int> aPromoAlways;
+				std::vector<int> aPromoConditional;
+				kBuilding.triggerPromotions(aPromoAlways, aPromoConditional);
+				for (size_t iP = 0; iP < aPromoAlways.size(); ++iP)
 				{
-					if (freePromoType.m_pExprFreePromotionCondition)
-					{
-						iPromoValue += AI_getPromotionValue(freePromoType.ePromotion);
-					}
-					else
-					{
-						iPromoValue += AI_getPromotionValue(freePromoType.ePromotion) * 3/2;
-					}
+					iPromoValue += AI_getPromotionValue((PromotionTypes)aPromoAlways[iP]) * 3/2;
 				}
-				if (kBuilding.isApplyFreePromotionOnMove())
+				for (size_t iP = 0; iP < aPromoConditional.size(); ++iP)
 				{
-					iPromoValue *= 2;
+					iPromoValue += AI_getPromotionValue((PromotionTypes)aPromoConditional[iP]);
 				}
 				iValue += iPromoValue;
 
@@ -12826,9 +12824,8 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 			kBuilding.getGlobalFreeExperience() > 0 ||
 			!kBuilding.getUnitCombatFreeExperience().empty() ||
 			kBuilding.getDomainFreeExperience(NO_DOMAIN) > 0 ||
-			kBuilding.isApplyFreePromotionOnMove() ||
 			kBuilding.EnablesUnits() ||
-			!kBuilding.getFreePromoTypes().empty() ||
+			kBuilding.hasTriggerPromotions() ||
 			kBuilding.getNumUnitCombatRetrainTypes() > 0 ||
 			kBuilding.getNationalCaptureProbabilityModifier() > 0 ||
 			!kBuilding.getUnitCombatFreeExperience().empty() ||
@@ -13469,21 +13466,18 @@ void CvCityAI::CalculateAllBuildingValues(int iFocusFlags)
 				}
 
 				int iPromoValue = 0;
-				foreach_(const FreePromoTypes & freePromoType, kBuilding.getFreePromoTypes())
+				// The free-promotion payload, off the `triggers` onTurnEnd entries. A CONDITIONAL promotion may not
+				// land, so it scores lower than an unconditional one -- the split the legacy weighting also made.
+				std::vector<int> aPromoAlways;
+				std::vector<int> aPromoConditional;
+				kBuilding.triggerPromotions(aPromoAlways, aPromoConditional);
+				for (size_t iP = 0; iP < aPromoAlways.size(); ++iP)
 				{
-					if (freePromoType.m_pExprFreePromotionCondition)
-					{
-						iPromoValue += AI_getPromotionValue(freePromoType.ePromotion);
-					}
-					else
-					{
-						iPromoValue += AI_getPromotionValue(freePromoType.ePromotion) * 3/2;
-					}
+					iPromoValue += AI_getPromotionValue((PromotionTypes)aPromoAlways[iP]) * 3/2;
 				}
-
-				if (kBuilding.isApplyFreePromotionOnMove())
+				for (size_t iP = 0; iP < aPromoConditional.size(); ++iP)
 				{
-					iPromoValue *= 2;
+					iPromoValue += AI_getPromotionValue((PromotionTypes)aPromoConditional[iP]);
 				}
 
 				if (iFocusFlags & BUILDINGFOCUS_EXPERIENCE)

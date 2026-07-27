@@ -16673,15 +16673,18 @@ void CvGameTextMgr::setBuildingHelp(CvWStringBuffer &szBuffer, const BuildingTyp
 
 	if (!bRelDisabled)
 	{
-		foreach_(const FreePromoTypes& freePromo, kBuilding.getFreePromoTypes())
+		// The free-promotion payload, off the `triggers` onTurnEnd entries. Both lists are listed: the tooltip
+		// says what the building CAN hand out, and a conditioned entry is still something it hands out.
+		std::vector<int> aPromoAlways;
+		std::vector<int> aPromoConditional;
+		kBuilding.triggerPromotions(aPromoAlways, aPromoConditional);
+		aPromoAlways.insert(aPromoAlways.end(), aPromoConditional.begin(), aPromoConditional.end());
+		for (size_t iPromo = 0; iPromo < aPromoAlways.size(); ++iPromo)
 		{
-			const CvPromotionInfo& promo = GC.getPromotionInfo(freePromo.ePromotion);
+			const CvPromotionInfo& promo = GC.getPromotionInfo((PromotionTypes)aPromoAlways[iPromo]);
 
 			szBuffer.append(gDLL->getText("TXT_KEY_BUILDINGHELP_FREE_PROMO_CONDITION", CvWString(promo.getType()).GetCString(), promo.getTextKeyWide()));
-			if (!kBuilding.isApplyFreePromotionOnMove())
-			{
-				szBuffer.append(gDLL->getText("TXT_KEY_BUILDINGHELP_FREE_PROMO_CONDITION_ADDON"));
-			}
+			szBuffer.append(gDLL->getText("TXT_KEY_BUILDINGHELP_FREE_PROMO_CONDITION_ADDON"));
 			// The building's unit filter is a CvCondition (a boolean tree with no prose renderer). The
 			// promotion's QUALIFIED unitcombats describe the same restriction from the other side and read better
 			// than a rendered expression, so both the filtered and unfiltered cases list them.

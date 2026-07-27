@@ -1528,7 +1528,6 @@ void CvCity::doTurn()
 	setAirliftTargeted(false);
 	setBuiltFoodProducedUnit(false);
 	//Promotes Units if there is a building that allows it
-	{ PERF_SCOPE("city.doPromotion", getOwner()); doPromotion(); }
 	//Does vicinity bonus checks
 	{ PERF_SCOPE("city.doVicinityBonus", getOwner()); doVicinityBonus(); }
 	//Checks conditions of buildings, may disable or enable some
@@ -2518,13 +2517,6 @@ void CvCity::addProductionExperience(CvUnit* pUnit, bool bConscript)
 		pUnit->changeExperience(getProductionExperience(pUnit->getUnitType()) / ((bConscript) ? 2 : 1));
 	}
 
-	foreach_(const BuildingTypes eType, getHasBuildings())
-	{
-		if (!isDisabledBuilding(eType))
-		{
-			assignPromotionsFromBuildingChecked(GC.getBuildingInfo(eType), pUnit);
-		}
-	}
 }
 
 UnitTypes CvCity::getProductionUnit() const
@@ -13483,24 +13475,21 @@ void CvCity::changeUnitCombatFreeExperience(UnitCombatTypes eIndex, int iChange)
 bool CvCity::isFreePromotion(PromotionTypes ePromo) const
 {
 	PROFILE_EXTRA_FUNC();
-	foreach_(const BuildingTypes eTypeX, getHasBuildings())
+	// "Does an operating building here hand this promotion out unconditionally?" -- read off the `triggers`
+	// onTurnEnd promote entries. UNCONDITIONAL only: a conditioned entry may not apply to a given unit, and this
+	// answers a blanket question. The operating set already means present AND operating, so the old
+	// present-minus-disabled walk is subsumed.
+	const OperatingBuildings& ob = EnablerKernel::operatingBuildings(this);
+	std::vector<int> aAlways;
+	std::vector<int> aConditional;
+	for (std::set<int>::const_iterator it = ob.active.begin(); it != ob.active.end(); ++it)
 	{
-		if (isDisabledBuilding(eTypeX))
+		const CvInfo* j = InfoRepo<CvBuildingInfo>::get().get(*it);
+		if (j == NULL) continue;
+		j->triggerPromotions(aAlways, aConditional);
+		for (size_t i = 0; i < aAlways.size(); ++i)
 		{
-			continue;
-		}
-
-		foreach_(const FreePromoTypes& freePromoType, GC.getBuildingInfo(eTypeX).getFreePromoTypes())
-		{
-			if (ePromo == freePromoType.ePromotion)
-			{
-				// Toffer - This should be expanded to evaluate specific units and unitinfos
-				if (!freePromoType.m_pExprFreePromotionCondition)
-				{
-					return true;
-				}
-				break;
-			}
+			if (aAlways[i] == (int)ePromo) return true;
 		}
 	}
 	return false;
@@ -19753,36 +19742,6 @@ void CvCity::changePopulationgrowthratepercentage(int iChange, bool bAdd)
 	m_fPopulationgrowthratepercentageLog += (bAdd ? 1 : -1) * log((100 + (float)iChange) / 100);
 }
 
-void CvCity::doPromotion()
-{
-	PROFILE_FUNC();
-
-	if (isDisorder())
-	{
-		return;
-	}
-
-	for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
-	{
-		const BuildingTypes eBuilding = static_cast<BuildingTypes>(iI);
-		if (!isActiveBuilding(eBuilding))
-		{
-			continue;
-		}
-		const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
-
-		if (kBuilding.isApplyFreePromotionOnMove() && !kBuilding.getFreePromoTypes().empty())
-		{
-			foreach_(CvUnit* pLoopUnit, plot()->units())
-			{
-				if (pLoopUnit->getTeam() == GET_PLAYER(getOwner()).getTeam())
-				{
-					assignPromotionsFromBuildingChecked(kBuilding, pLoopUnit);
-				}
-			}
-		}
-	}
-}
 
 
 bool CvCity::isValidTerrainForBuildings(BuildingTypes eBuilding) const
@@ -21798,21 +21757,6 @@ void CvCity::changeUnitCombatDefenseAgainstModifierTotal(UnitCombatTypes eIndex,
 }
 
 
-void CvCity::assignPromotionsFromBuildingChecked(const CvBuildingInfo& building, CvUnit* unit) const
-{
-	PROFILE_EXTRA_FUNC();
-	foreach_(const FreePromoTypes& freePromoType, building.getFreePromoTypes())
-	{
-		if (unit->canAcquirePromotion(freePromoType.ePromotion, PromotionRequirements::Promote | PromotionRequirements::ForFree)
-		) {
-			if (!freePromoType.m_pExprFreePromotionCondition ||
-				freePromoType.m_pExprFreePromotionCondition->evaluate(unit->getGameObject()))
-			{
-				unit->setHasPromotion(freePromoType.ePromotion, true);
-			}
-		}
-	}
-}
 
 
 int CvCity::getBaseYieldRate(YieldTypes eIndex) const

@@ -522,7 +522,6 @@ void CyInfoPythonInterface1()
 		.def("getTechHappinessChanges", &CvBuildingInfo::getTechHappinessChanges, python::return_value_policy<python::reference_existing_object>())
 		.def("getTechHealthChanges", &CvBuildingInfo::getTechHealthChanges, python::return_value_policy<python::reference_existing_object>())
 		.def("getTechSpecialistChange", &CvBuildingInfo::getTechSpecialistChange, "int (int i, int j)")
-		.def("getFreePromoTypes", &CvBuildingInfo::cyGetFreePromoTypes)
 
 		.def("getBonusYieldChanges", &CvBuildingInfo::getBonusYieldChanges, "int (int i, int j)")
 		.def("getBonusYieldModifier", &CvBuildingInfo::getBonusYieldModifier, "int (int i, int j)")

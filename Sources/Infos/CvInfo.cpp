@@ -7,6 +7,7 @@
 //
 
 #include "CvGameCoreDLL.h"          // PCH umbrella -- picojson, CvString/CvWString
+#include "CvTriggers.h"   // CvTriggerEntry -- the onTurnEnd promote payload the free-promotion read walks
 #include "CvInfo.h"
 #include "CvJsonParse.h"            // jsonClassifyKey / jsonNoteUnconsumed + the shared walkers (jsonChildObj/jsonIdStr)
 #include "Data/CvInfoValuation.h"   // InfoValuation -- the ONE per-group what-if calc unit the expected* delegate to
@@ -216,4 +217,37 @@ void CvInfo::mapSections(const picojson::value& entity)
 		if (CvModifiers* u = mutModifiers()) u->parseEntity(o);
 		else jsonNoteUnconsumed(m_szType.GetCString(), "(modifier families)");
 	}
+}
+
+
+// The free-promotion payload for display/scoring consumers (see CvInfo.h for why the applier does not use this).
+void CvInfo::triggerPromotions(std::vector<int>& outAlways, std::vector<int>& outConditional) const
+{
+	outAlways.clear();
+	outConditional.clear();
+	const CvTriggers* pTriggers = getTriggers();
+	if (pTriggers == NULL) return;
+	const std::vector<CvTriggerEntry*>& entries = pTriggers->entries();
+	for (size_t i = 0; i < entries.size(); ++i)
+	{
+		const CvTriggerEntry* pEntry = entries[i];
+		if (pEntry->happening != "onTurnEnd" || pEntry->promotePromotions.empty()) continue;
+		std::vector<int>& out = (pEntry->condition != NULL) ? outConditional : outAlways;
+		for (size_t k = 0; k < pEntry->promotePromotions.size(); ++k)
+		{
+			out.push_back(pEntry->promotePromotions[k]);
+		}
+	}
+}
+
+bool CvInfo::hasTriggerPromotions() const
+{
+	const CvTriggers* pTriggers = getTriggers();
+	if (pTriggers == NULL) return false;
+	const std::vector<CvTriggerEntry*>& entries = pTriggers->entries();
+	for (size_t i = 0; i < entries.size(); ++i)
+	{
+		if (entries[i]->happening == "onTurnEnd" && !entries[i]->promotePromotions.empty()) return true;
+	}
+	return false;
 }

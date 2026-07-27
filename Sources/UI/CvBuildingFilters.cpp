@@ -269,7 +269,7 @@ bool BuildingFilterIsMilitary::isFilteredBuilding(const CvPlayer *pPlayer, CvCit
 		|| buildingInfo.getFreeExperience() > 0
 		|| buildingInfo.getNumUnitCombatRetrainTypes() > 0
 		|| buildingInfo.getNumUnitCombatProdModifiers() > 0
-		|| !buildingInfo.getFreePromoTypes().empty()
+		|| buildingInfo.hasTriggerPromotions()
 		|| !buildingInfo.getUnitCombatFreeExperience().empty()
 		|| buildingInfo.isAnyDomainFreeExperience();
 }
