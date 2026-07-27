@@ -631,7 +631,7 @@ enable-side over-offer, which is a VISIBLE defect to fix, never a reason to fall
 | buildings | ✅ | ✅ | ✅ (world/team/empire self-caps; per-city wonder-CATEGORY caps open) |
 | units | ✅ | ✅ | ✅ (world lifetime-created; empire era-scaled national cap) |
 | projects | ✅ | ✅ | ✅ |
-| civics · processes · builds | ✅ | ✗ — enable-side LISTED | ✗ |
+| civics · processes · builds | ✅ | ✅ | ✅ |
 | promotions | ✅ | on demand (§7.1 carve-out — no maintained flag) | n/a |
 
 **Promotions are the exception to the over-offer:** they set no gate flag, but `requires` + the unit-state
@@ -664,7 +664,13 @@ promotion offer is not over-inclusive.
    ([DEC-one-reverse-view](../architecture/decisions.md#dec-one-reverse-view)) — the `s_bc*` / `s_uc*` / operate
    `s_op*` static indexes inside `CvBuildingEnabler` / `CvUnitEnabler` / `CvEnablerKernel` are pre-existing
    bespoke-reverse-view remnants; each retires onto the info-homed REQUIRED_BY axis.
-2. **The gate stage for civics, processes, and builds** — the three flagless domains above.
+2. ~~**The gate stage for civics, processes, and builds**~~ **LANDED** — the three domains now set the gate flag
+   through the same trio the projects domain uses (`*_gate` / `*_touched` / `*_gateSet`): the entity-level
+   `enabled`/`disabled` pair, `requiresMet`, and `allowedOk`, re-gated over the tech source's touched set
+   (its enables/removal targets + its `EDGEF_REQUIRED_BY` dependents) on every membership change. Until now
+   they set NO flag, so every tree member stayed LISTED — the enable-side OVER-OFFER. ⚠ BUILDS gate the
+   UNLOCKED half only: a build's plot-validity half stays a live per-plot check (§7.1's carve-out), so a
+   consumer treating the domain verdict as the whole answer still over-offers by design.
 3. ~~**Per-city wonder-CATEGORY caps**~~ **LANDED** — but NOT in `allowedOk`, which is player-scoped and cannot
    see the city. The cap is per-CITY (a `CultureLevel` caps how many of a category one city may hold), so it
    gates in `bd_gate` beside the SpecialBuilding group cap, as `bd_categoryCapOk`. The building's CATEGORY is
