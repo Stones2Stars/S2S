@@ -19,6 +19,19 @@ shared spine consumer routing two different machines, and a legacy-getter surfac
 Each of those was individually defensible and collectively fatal: a hand-named field cannot be addressed
 uniformly, so every one of them forced its own invalidation path, which is precisely how that many accumulated.
 
+**⚑ THE ENABLER IS THE WORKED CASE, AND IT IS WHY THE INFO REDESIGN WAS FORCED (owner).** The enabler was
+already BUILT ONCE — and then *"tried to be forced into legacy endpoints,"* which is what triggered the full info
+redesign and the proper setup this rebuild is. The machine was not the problem; the boundary it was pushed
+through was. A finished machine wired into legacy-shaped call sites inherits every assumption those signatures
+encode, and the result reads as done while being half-migrated
+([DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface)).
+⛔ **The recurrence risk is highest exactly when a machine is finished and the call sites are waiting** — the
+consumer sweep. The pressure shows up as a legacy signature the new surface "just needs" to accept: a what-if
+argument, an ignore-this-clause flag, a bool where the new answer is richer. **Widening the new getter to fit the
+old call is the failure**; the call site is re-expressed instead, or the question is re-homed to whichever machine
+actually owns it ([enabler.md §8](../../specs/enabler.md): can-I-now is the enabler's, can-I-ever and by-what-path
+are the picking logic's).
+
 **So the substrate was archived rather than patched.** The proven machines were separated into their own trees, the
 engine game-object classes were reverted to `main`, and the drifted modifier substrate was moved out of the
 codebase entirely. This is not a redesign — the design below is unchanged and still authoritative. It is a rebuild
