@@ -1,15 +1,6 @@
 {
  "type": "BUILDING_CRIME_ILLEGAL_IMMIGRATION",
  "requires": {
-  "build": {
-   "all": [
-    "TECH_ALPHABET",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "all": [
     {
@@ -18,6 +9,11 @@
       "CIVIC_SKILLED_WORKERS",
       "CIVIC_SECURED_BORDERS"
      ]
+    },
+    "TECH_ALPHABET",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     },
     {
      "type": "PROPERTY_CRIME",

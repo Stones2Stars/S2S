@@ -9,7 +9,10 @@
   ]
  },
  "requires": {
-  "build": {
+  "operate": {
+   "dormant": [
+    "BUILDING_MATERIALS_CONGLOMERATE"
+   ],
    "all": [
     {
      "any": [
@@ -24,11 +27,6 @@
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
-   ]
-  },
-  "operate": {
-   "dormant": [
-    "BUILDING_MATERIALS_CONGLOMERATE"
    ]
   }
  },

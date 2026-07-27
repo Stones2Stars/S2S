@@ -1,15 +1,6 @@
 {
  "type": "BUILDING_MERCANTILISM_BONUS_GOLD",
  "requires": {
-  "build": {
-   "all": [
-    "TECH_MERCANTILISM",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "all": [
     "CIVIC_MERCANTILISM",
@@ -17,6 +8,11 @@
      "type": "BONUS_GOLD_ORE",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    "TECH_MERCANTILISM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     }
    ]
   }

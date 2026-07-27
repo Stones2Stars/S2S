@@ -1,7 +1,7 @@
 {
  "type": "BUILDING_REMAINS_THYLACINE",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     {
      "any": [

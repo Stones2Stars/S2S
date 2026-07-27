@@ -1,7 +1,7 @@
 {
  "type": "BUILDING_PIR_E_SABZ",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     {
      "IS_HOLY_CITY": "RELIGION_ZOROASTRIANISM"

@@ -6,16 +6,6 @@
   ]
  },
  "requires": {
-  "build": {
-   "all": [
-    "TECH_SKINNING",
-    "TECH_SHELTER_BUILDING",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "all": [
     {
@@ -27,6 +17,12 @@
      "type": "BONUS_WOOD",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    "TECH_SKINNING",
+    "TECH_SHELTER_BUILDING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     }
    ],
    "dormant": [

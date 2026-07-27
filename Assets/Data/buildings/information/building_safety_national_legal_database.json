@@ -1,7 +1,7 @@
 {
  "type": "BUILDING_SAFETY_NATIONAL_LEGAL_DATABASE",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_CLOUD_COMPUTING",
     {

@@ -11,7 +11,7 @@
   ]
  },
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_PREHISTORIC_DANCE",
     "TECH_CONTROLLED_FIRE",

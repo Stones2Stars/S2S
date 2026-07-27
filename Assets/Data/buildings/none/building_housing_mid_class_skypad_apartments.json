@@ -6,24 +6,6 @@
   ]
  },
  "requires": {
-  "build": {
-   "all": [
-    "BUILDING_PUSHBUTTON_AUTOMAT",
-    "BUILDING_SEWER_SYSTEM",
-    "BUILDING_WATER_PIPES",
-    "TECH_ATOMPUNK",
-    {
-     "any": [
-      "BUILDING_VIDEOPHONE_NETWORK",
-      "BUILDING_COMPUTER_NETWORK"
-     ]
-    },
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "all": [
     {
@@ -37,6 +19,20 @@
      "type": "POPULATION",
      "scope": "city",
      "min": 13
+    },
+    "BUILDING_PUSHBUTTON_AUTOMAT",
+    "BUILDING_SEWER_SYSTEM",
+    "BUILDING_WATER_PIPES",
+    "TECH_ATOMPUNK",
+    {
+     "any": [
+      "BUILDING_VIDEOPHONE_NETWORK",
+      "BUILDING_COMPUTER_NETWORK"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     }
    ],
    "dormant": [

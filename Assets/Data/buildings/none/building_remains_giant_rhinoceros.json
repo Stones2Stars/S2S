@@ -1,7 +1,7 @@
 {
  "type": "BUILDING_REMAINS_GIANT_RHINOCEROS",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "BUILDING_FOLKLORE_REQUIREMENT",
     {

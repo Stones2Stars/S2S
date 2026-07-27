@@ -1,17 +1,13 @@
 {
  "type": "BUILDING_CRIME_INSUBORDINATION",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_MILITARY_TRADITION",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    }
-   ]
-  },
-  "operate": {
-   "all": [
+    },
     {
      "type": "PROPERTY_CRIME",
      "scope": "city",

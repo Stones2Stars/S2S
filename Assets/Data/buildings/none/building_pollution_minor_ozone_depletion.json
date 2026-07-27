@@ -1,19 +1,15 @@
 {
  "type": "BUILDING_POLLUTION_MINOR_OZONE_DEPLETION",
  "requires": {
-  "build": {
-   "all": [
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "dormant": [
     "BUILDING_OZONE_GENERATOR"
    ],
    "all": [
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
     {
      "type": "PROPERTY_AIR_POLLUTION",
      "scope": "city",

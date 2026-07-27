@@ -6,21 +6,17 @@
   ]
  },
  "requires": {
-  "build": {
-   "all": [
-    "TECH_SEDENTARY_LIFESTYLE",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "all": [
     {
      "type": "POPULATION",
      "scope": "city",
      "min": 3
+    },
+    "TECH_SEDENTARY_LIFESTYLE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     }
    ]
   }

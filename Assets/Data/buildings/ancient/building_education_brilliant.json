@@ -1,15 +1,6 @@
 {
  "type": "BUILDING_EDUCATION_BRILLIANT",
  "requires": {
-  "build": {
-   "all": [
-    "TECH_SEDENTARY_LIFESTYLE",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "dormant": [
     "BUILDING_EDUCATION_CULTIVATED",
@@ -25,6 +16,11 @@
     "BUILDING_EDUCATION_OMNISCIENCE"
    ],
    "all": [
+    "TECH_SEDENTARY_LIFESTYLE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
     {
      "type": "PROPERTY_EDUCATION",
      "scope": "city",

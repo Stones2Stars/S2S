@@ -1,17 +1,13 @@
 {
  "type": "BUILDING_CRIME_INSURANCE_FRAUD",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_SOCIAL_CONTRACT",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    }
-   ]
-  },
-  "operate": {
-   "all": [
+    },
     {
      "type": "PROPERTY_CRIME",
      "scope": "city",

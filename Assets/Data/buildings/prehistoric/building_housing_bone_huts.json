@@ -6,22 +6,18 @@
   ]
  },
  "requires": {
-  "build": {
-   "all": [
-    "TECH_BONE_WORKING",
-    "TECH_SHELTER_BUILDING",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "all": [
     {
      "type": "BONUS_BONE",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    "TECH_BONE_WORKING",
+    "TECH_SHELTER_BUILDING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     }
    ],
    "dormant": [

@@ -1,20 +1,18 @@
 {
  "type": "BUILDING_CRIME_HUMAN_TRAFFICKING",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_EMANCIPATION",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    }
-   ],
-   "noneOf": [
-    "BUILDING_WORLDVIEW_SLAVERY_ACTIVE"
-   ]
-  },
-  "operate": {
-   "all": [
+    },
+    {
+     "noneOf": [
+      "BUILDING_WORLDVIEW_SLAVERY_ACTIVE"
+     ]
+    },
     {
      "type": "PROPERTY_CRIME",
      "scope": "city",

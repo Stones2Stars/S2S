@@ -11,8 +11,18 @@
   ]
  },
  "requires": {
-  "build": {
+  "operate": {
    "all": [
+    {
+     "type": "BONUS_BRICKS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_WOOD",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
     "TECH_MASONRY",
     {
      "any": [
@@ -29,20 +39,6 @@
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    }
-   ]
-  },
-  "operate": {
-   "all": [
-    {
-     "type": "BONUS_BRICKS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
-     "type": "BONUS_WOOD",
-     "scope": "city",
-     "connection": "trade|vicinity"
     }
    ],
    "dormant": [

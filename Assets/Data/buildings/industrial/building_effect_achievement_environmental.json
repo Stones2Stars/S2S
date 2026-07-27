@@ -1,7 +1,7 @@
 {
  "type": "BUILDING_EFFECT_ACHIEVEMENT_ENVIRONMENTAL",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_WILDLIFE_CONSERVATION",
     {

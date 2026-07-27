@@ -1,7 +1,7 @@
 {
  "type": "BUILDING_EFFECT_DISNEYLAND",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_ANIMATION",
     {

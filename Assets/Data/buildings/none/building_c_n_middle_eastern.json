@@ -1,7 +1,7 @@
 {
  "type": "BUILDING_C_N_MIDDLE_EASTERN",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     {
      "type": "MAPCATEGORY_EARTH",

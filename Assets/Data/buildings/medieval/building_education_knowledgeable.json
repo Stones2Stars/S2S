@@ -1,15 +1,6 @@
 {
  "type": "BUILDING_EDUCATION_KNOWLEDGEABLE",
  "requires": {
-  "build": {
-   "all": [
-    "TECH_MEDIEVAL_LIFESTYLE",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "dormant": [
     "BUILDING_EDUCATION_ACUMEN",
@@ -23,6 +14,11 @@
     "BUILDING_EDUCATION_OMNISCIENCE"
    ],
    "all": [
+    "TECH_MEDIEVAL_LIFESTYLE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
     {
      "type": "PROPERTY_EDUCATION",
      "scope": "city",

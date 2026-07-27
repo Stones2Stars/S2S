@@ -1,7 +1,7 @@
 {
  "type": "BUILDING_THE_ODINS_SANCTUARY",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     {
      "IS_HOLY_CITY": "RELIGION_ASATRU"

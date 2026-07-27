@@ -1,7 +1,7 @@
 {
  "type": "BUILDING_REMAINS_DIRE_WOLF",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "BUILDING_FOLKLORE_REQUIREMENT",
     {

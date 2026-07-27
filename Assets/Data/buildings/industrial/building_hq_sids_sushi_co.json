@@ -9,8 +9,13 @@
   ]
  },
  "requires": {
-  "build": {
+  "operate": {
    "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
     "TECH_MEDICINE",
     "TECH_SCREW_PROPELLER",
     "TECH_CORPORATION",
@@ -24,15 +29,6 @@
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    }
-   ]
-  },
-  "operate": {
-   "all": [
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 7
     }
    ]
   }

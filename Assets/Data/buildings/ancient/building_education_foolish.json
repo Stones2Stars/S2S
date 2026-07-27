@@ -1,15 +1,6 @@
 {
  "type": "BUILDING_EDUCATION_FOOLISH",
  "requires": {
-  "build": {
-   "all": [
-    "TECH_SEDENTARY_LIFESTYLE",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "dormant": [
     "BUILDING_EDUCATION_SENSELESS",
@@ -25,6 +16,11 @@
     "BUILDING_EDUCATION_MINDLESS"
    ],
    "all": [
+    "TECH_SEDENTARY_LIFESTYLE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
     {
      "type": "PROPERTY_EDUCATION",
      "scope": "city",

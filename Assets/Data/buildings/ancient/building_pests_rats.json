@@ -9,20 +9,6 @@
   ]
  },
  "requires": {
-  "build": {
-   "all": [
-    {
-     "latitude": {
-      "max": 80
-     }
-    },
-    "TECH_SEDENTARY_LIFESTYLE",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "all": [
     {
@@ -51,6 +37,16 @@
        "vicinity": "connected"
       }
      ]
+    },
+    {
+     "latitude": {
+      "max": 80
+     }
+    },
+    "TECH_SEDENTARY_LIFESTYLE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     }
    ],
    "dormant": [

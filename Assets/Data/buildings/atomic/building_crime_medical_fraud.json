@@ -1,17 +1,13 @@
 {
  "type": "BUILDING_CRIME_MEDICAL_FRAUD",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_MODERN_HEALTH_CARE",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    }
-   ]
-  },
-  "operate": {
-   "all": [
+    },
     {
      "type": "PROPERTY_CRIME",
      "scope": "city",

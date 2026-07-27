@@ -1,21 +1,17 @@
 {
  "type": "BUILDING_CRIME_SCHOOL_SHOOTINGS",
  "requires": {
-  "build": {
-   "all": [
-    "TECH_URBAN_CULTURE",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "all": [
     {
      "type": "BONUS_FIREARMS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    "TECH_URBAN_CULTURE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     },
     {
      "type": "PROPERTY_CRIME",

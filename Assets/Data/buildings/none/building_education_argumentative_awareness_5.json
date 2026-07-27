@@ -1,15 +1,6 @@
 {
  "type": "BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_5",
  "requires": {
-  "build": {
-   "all": [
-    "BUILDING_PALACE",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "dormant": [
     "BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_6",
@@ -22,6 +13,11 @@
     "BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_13"
    ],
    "all": [
+    "BUILDING_PALACE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
     {
      "type": "PROPERTY_EDUCATION",
      "scope": "city",

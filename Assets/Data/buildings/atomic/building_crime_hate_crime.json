@@ -1,17 +1,13 @@
 {
  "type": "BUILDING_CRIME_HATE_CRIME",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_MINORITY_RIGHTS",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    }
-   ]
-  },
-  "operate": {
-   "all": [
+    },
     {
      "type": "PROPERTY_CRIME",
      "scope": "city",

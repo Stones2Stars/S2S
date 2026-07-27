@@ -6,15 +6,6 @@
   ]
  },
  "requires": {
-  "build": {
-   "all": [
-    "TECH_AGRICULTURE",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "all": [
     {
@@ -37,6 +28,11 @@
        "vicinity": "connected"
       }
      ]
+    },
+    "TECH_AGRICULTURE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     }
    ]
   }

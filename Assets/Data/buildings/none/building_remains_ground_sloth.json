@@ -1,7 +1,7 @@
 {
  "type": "BUILDING_REMAINS_GROUND_SLOTH",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "BUILDING_FOLKLORE_REQUIREMENT",
     {

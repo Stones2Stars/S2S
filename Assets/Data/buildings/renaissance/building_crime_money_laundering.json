@@ -1,17 +1,13 @@
 {
  "type": "BUILDING_CRIME_MONEY_LAUNDERING",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_CORPORATION",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    }
-   ]
-  },
-  "operate": {
-   "all": [
+    },
     {
      "type": "PROPERTY_CRIME",
      "scope": "city",

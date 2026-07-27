@@ -1,7 +1,7 @@
 {
  "type": "BUILDING_THE_KONG_MIAO",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     {
      "IS_HOLY_CITY": "RELIGION_CONFUCIANISM"

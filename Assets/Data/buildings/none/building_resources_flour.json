@@ -9,7 +9,11 @@
   ]
  },
  "requires": {
-  "build": {
+  "operate": {
+   "dormant": [
+    "BUILDING_MODERN_MILL",
+    "BUILDING_FOOD_MANUFACTURING_DISTRICT"
+   ],
    "all": [
     {
      "any": [
@@ -24,12 +28,6 @@
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
-   ]
-  },
-  "operate": {
-   "dormant": [
-    "BUILDING_MODERN_MILL",
-    "BUILDING_FOOD_MANUFACTURING_DISTRICT"
    ]
   }
  },

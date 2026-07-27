@@ -1,17 +1,13 @@
 {
  "type": "BUILDING_CIVIC_BURN_TRASH",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
+    "CIVIC_BURN_GARBAGE",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
-   ]
-  },
-  "operate": {
-   "all": [
-    "CIVIC_BURN_GARBAGE"
    ]
   }
  },

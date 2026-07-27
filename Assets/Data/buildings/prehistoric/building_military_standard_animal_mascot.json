@@ -20,7 +20,7 @@
   ]
  },
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_CULTURAL_IDENTITY",
     {

@@ -1,17 +1,13 @@
 {
  "type": "BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_13",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "BUILDING_PALACE",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    }
-   ]
-  },
-  "operate": {
-   "all": [
+    },
     {
      "type": "PROPERTY_EDUCATION",
      "scope": "city",

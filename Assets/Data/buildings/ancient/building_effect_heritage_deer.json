@@ -11,7 +11,7 @@
   ]
  },
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_HERITAGE",
     "TECH_MEGAFAUNA_DOMESTICATION",

@@ -6,21 +6,17 @@
   ]
  },
  "requires": {
-  "build": {
-   "all": [
-    "TECH_STONE_BUILDING",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "all": [
     {
      "type": "BONUS_STONE",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    "TECH_STONE_BUILDING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     }
    ],
    "dormant": [

@@ -1,17 +1,13 @@
 {
  "type": "BUILDING_CRIME_GENE_FORGERY",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_GENETICS",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    }
-   ]
-  },
-  "operate": {
-   "all": [
+    },
     {
      "type": "PROPERTY_CRIME",
      "scope": "city",

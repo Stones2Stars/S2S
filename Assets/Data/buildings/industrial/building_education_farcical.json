@@ -1,15 +1,6 @@
 {
  "type": "BUILDING_EDUCATION_FARCICAL",
  "requires": {
-  "build": {
-   "all": [
-    "TECH_INDUSTRIAL_LIFESTYLE",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "dormant": [
     "BUILDING_EDUCATION_DIMWITTED",
@@ -21,6 +12,11 @@
     "BUILDING_EDUCATION_MINDLESS"
    ],
    "all": [
+    "TECH_INDUSTRIAL_LIFESTYLE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
     {
      "type": "PROPERTY_EDUCATION",
      "scope": "city",

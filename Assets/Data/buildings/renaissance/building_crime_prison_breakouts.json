@@ -1,7 +1,7 @@
 {
  "type": "BUILDING_CRIME_PRISON_BREAKOUTS",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_CONSTITUTION",
     {
@@ -15,11 +15,7 @@
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    }
-   ]
-  },
-  "operate": {
-   "all": [
+    },
     {
      "type": "PROPERTY_CRIME",
      "scope": "city",

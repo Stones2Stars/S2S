@@ -1,7 +1,7 @@
 {
  "type": "BUILDING_C_AD_ASIAN",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "BUILDING_PALACE",
     {
@@ -13,10 +13,12 @@
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
+    },
+    {
+     "noneOf": [
+      "BUILDING_C_N_ASIAN"
+     ]
     }
-   ],
-   "noneOf": [
-    "BUILDING_C_N_ASIAN"
    ]
   }
  },

@@ -159,7 +159,7 @@
   ]
  },
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     {
      "type": "BUILDING_PALACE",

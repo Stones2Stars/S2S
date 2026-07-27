@@ -1,17 +1,13 @@
 {
  "type": "BUILDING_CRIME_CYBERWARFARE",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_CYBERWARFARE",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    }
-   ]
-  },
-  "operate": {
-   "all": [
+    },
     {
      "type": "PROPERTY_CRIME",
      "scope": "city",

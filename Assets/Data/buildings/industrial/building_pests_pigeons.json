@@ -6,8 +6,13 @@
   ]
  },
  "requires": {
-  "build": {
+  "operate": {
    "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
     {
      "latitude": {
       "max": 70
@@ -17,15 +22,6 @@
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    }
-   ]
-  },
-  "operate": {
-   "all": [
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 7
     }
    ]
   }

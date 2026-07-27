@@ -19,7 +19,7 @@
   ]
  },
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_PLANETARY_COLONIZATION",
     {

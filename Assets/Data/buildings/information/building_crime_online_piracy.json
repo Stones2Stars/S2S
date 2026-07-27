@@ -1,15 +1,6 @@
 {
  "type": "BUILDING_CRIME_ONLINE_PIRACY",
  "requires": {
-  "build": {
-   "all": [
-    "TECH_FIBER_OPTICS",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "all": [
     {
@@ -18,6 +9,11 @@
      "connection": "trade|vicinity"
     },
     "HAS_POWER",
+    "TECH_FIBER_OPTICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
     {
      "type": "PROPERTY_CRIME",
      "scope": "city",

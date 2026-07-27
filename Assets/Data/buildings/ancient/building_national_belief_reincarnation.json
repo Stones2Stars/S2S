@@ -1,7 +1,7 @@
 {
  "type": "BUILDING_NATIONAL_BELIEF_REINCARNATION",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_REINCARNATION",
     {

@@ -1,17 +1,13 @@
 {
  "type": "BUILDING_CRIME_ILLEGAL_BRAINWASHING",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_MIND_UPLOADING",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    }
-   ]
-  },
-  "operate": {
-   "all": [
+    },
     {
      "type": "PROPERTY_CRIME",
      "scope": "city",

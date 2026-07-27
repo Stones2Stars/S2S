@@ -1,7 +1,7 @@
 {
  "type": "BUILDING_THE_MASJID_AL_HARAM",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     {
      "IS_HOLY_CITY": "RELIGION_ISLAM"

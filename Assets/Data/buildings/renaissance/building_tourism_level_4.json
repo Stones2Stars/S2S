@@ -1,17 +1,13 @@
 {
  "type": "BUILDING_TOURISM_LEVEL_4",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_RENAISSANCE_LIFESTYLE",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    }
-   ]
-  },
-  "operate": {
-   "all": [
+    },
     {
      "type": "PROPERTY_TOURISM",
      "scope": "city",

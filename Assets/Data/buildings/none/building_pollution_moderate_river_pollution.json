@@ -1,17 +1,13 @@
 {
  "type": "BUILDING_POLLUTION_MODERATE_RIVER_POLLUTION",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "HAS_RIVER",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    }
-   ]
-  },
-  "operate": {
-   "all": [
+    },
     {
      "type": "PROPERTY_WATER_POLLUTION",
      "scope": "city",

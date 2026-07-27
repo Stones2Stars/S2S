@@ -1,18 +1,14 @@
 {
  "type": "BUILDING_CIVIC_EGALITARIAN",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
+    "CIVIC_EGALITARIAN",
     "BUILDING_PALACE",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
-   ]
-  },
-  "operate": {
-   "all": [
-    "CIVIC_EGALITARIAN"
    ]
   }
  },

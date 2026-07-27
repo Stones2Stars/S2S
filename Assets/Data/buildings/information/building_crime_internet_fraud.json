@@ -1,17 +1,13 @@
 {
  "type": "BUILDING_CRIME_INTERNET_FRAUD",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_FIBER_OPTICS",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    }
-   ]
-  },
-  "operate": {
-   "all": [
+    },
     {
      "type": "PROPERTY_CRIME",
      "scope": "city",

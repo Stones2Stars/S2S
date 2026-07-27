@@ -1,7 +1,7 @@
 {
  "type": "BUILDING_UNIVERSAL_HEALTH_CARE",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_LIBERALISM",
     {

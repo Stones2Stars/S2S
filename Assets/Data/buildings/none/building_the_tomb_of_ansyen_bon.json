@@ -1,7 +1,7 @@
 {
  "type": "BUILDING_THE_TOMB_OF_ANSYEN_BON",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     {
      "IS_HOLY_CITY": "RELIGION_VOODOO"

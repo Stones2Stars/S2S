@@ -6,21 +6,17 @@
   ]
  },
  "requires": {
-  "build": {
-   "all": [
-    "TECH_MOTORIZED_TRANSPORTATION",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "all": [
     {
      "type": "BONUS_AUTOMOBILES",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    "TECH_MOTORIZED_TRANSPORTATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     }
    ],
    "dormant": [

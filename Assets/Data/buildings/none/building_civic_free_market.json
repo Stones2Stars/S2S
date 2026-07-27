@@ -1,18 +1,14 @@
 {
  "type": "BUILDING_CIVIC_FREE_MARKET",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
+    "CIVIC_FREE_MARKET",
     "BUILDING_PALACE",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
-   ]
-  },
-  "operate": {
-   "all": [
-    "CIVIC_FREE_MARKET"
    ]
   }
  },

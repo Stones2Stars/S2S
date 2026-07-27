@@ -1,16 +1,6 @@
 {
  "type": "BUILDING_PRESENCE_OF_METAL",
  "requires": {
-  "build": {
-   "all": [
-    "BUILDING_FOLKLORE_REQUIREMENT",
-    "TECH_SOFT_HAMMER_PERCUSSION",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "all": [
     {
@@ -58,6 +48,12 @@
        "vicinity": "owned"
       }
      ]
+    },
+    "BUILDING_FOLKLORE_REQUIREMENT",
+    "TECH_SOFT_HAMMER_PERCUSSION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     }
    ]
   }

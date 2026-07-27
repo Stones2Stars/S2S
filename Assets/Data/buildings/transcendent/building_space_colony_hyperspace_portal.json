@@ -7,7 +7,7 @@
   ]
  },
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_DUALFLUX_QUANTUM_TEMPORAL_RIFT",
     {

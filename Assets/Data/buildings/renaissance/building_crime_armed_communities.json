@@ -1,21 +1,17 @@
 {
  "type": "BUILDING_CRIME_ARMED_COMMUNITIES",
  "requires": {
-  "build": {
-   "all": [
-    "TECH_MATCHLOCK",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "all": [
     {
      "type": "BONUS_FIREARMS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    "TECH_MATCHLOCK",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     },
     {
      "type": "PROPERTY_CRIME",

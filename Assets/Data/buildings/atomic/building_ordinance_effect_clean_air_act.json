@@ -1,7 +1,7 @@
 {
  "type": "BUILDING_ORDINANCE_EFFECT_CLEAN_AIR_ACT",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_ECOLOGY",
     {

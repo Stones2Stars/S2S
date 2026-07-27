@@ -6,21 +6,17 @@
   ]
  },
  "requires": {
-  "build": {
-   "all": [
-    "TECH_CANINE_DOMESTICATION",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "all": [
     {
      "type": "POPULATION",
      "scope": "city",
      "min": 4
+    },
+    "TECH_CANINE_DOMESTICATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     }
    ]
   }

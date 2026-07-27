@@ -1,17 +1,13 @@
 {
  "type": "BUILDING_CRIME_ORGANIZED_CRIME",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_AUTOMATIC_WEAPONS",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    }
-   ]
-  },
-  "operate": {
-   "all": [
+    },
     {
      "type": "PROPERTY_CRIME",
      "scope": "city",

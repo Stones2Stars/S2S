@@ -11,7 +11,10 @@
   ]
  },
  "requires": {
-  "build": {
+  "operate": {
+   "dormant": [
+    "BUILDING_EFFECT_FERTILITY_FESTIVAL"
+   ],
    "all": [
     "TECH_PREHISTORIC_DANCE",
     {
@@ -25,11 +28,6 @@
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
-   ]
-  },
-  "operate": {
-   "dormant": [
-    "BUILDING_EFFECT_FERTILITY_FESTIVAL"
    ]
   }
  },

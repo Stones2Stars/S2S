@@ -6,15 +6,6 @@
   ]
  },
  "requires": {
-  "build": {
-   "all": [
-    "TECH_SANITATION",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "all": [
     {
@@ -22,7 +13,12 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "HAS_FRESHWATER"
+    "HAS_FRESHWATER",
+    "TECH_SANITATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ],
    "dormant": [
     "BUILDING_HOUSING_SHACKS",

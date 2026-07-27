@@ -1,7 +1,7 @@
 {
  "type": "BUILDING_PRESENCE_OF_SEA",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "HAS_COAST",
     "BUILDING_FOLKLORE_REQUIREMENT",

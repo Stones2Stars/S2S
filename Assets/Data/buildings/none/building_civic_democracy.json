@@ -1,18 +1,14 @@
 {
  "type": "BUILDING_CIVIC_DEMOCRACY",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
+    "CIVIC_DEMOCRACY",
     "BUILDING_PALACE",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
-   ]
-  },
-  "operate": {
-   "all": [
-    "CIVIC_DEMOCRACY"
    ]
   }
  },

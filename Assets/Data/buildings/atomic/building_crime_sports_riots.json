@@ -1,17 +1,13 @@
 {
  "type": "BUILDING_CRIME_SPORTS_RIOTS",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_MODERN_SPORTS",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    }
-   ]
-  },
-  "operate": {
-   "all": [
+    },
     {
      "type": "PROPERTY_CRIME",
      "scope": "city",

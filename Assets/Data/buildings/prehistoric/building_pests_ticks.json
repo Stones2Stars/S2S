@@ -6,15 +6,6 @@
   ]
  },
  "requires": {
-  "build": {
-   "all": [
-    "TECH_CANINE_DOMESTICATION",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "all": [
     {
@@ -37,6 +28,11 @@
        "vicinity": "connected"
       }
      ]
+    },
+    "TECH_CANINE_DOMESTICATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     }
    ]
   }

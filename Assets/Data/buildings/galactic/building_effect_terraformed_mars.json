@@ -1,7 +1,7 @@
 {
  "type": "BUILDING_EFFECT_TERRAFORMED_MARS",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_PLANETARY_TERRAFORMING",
     {

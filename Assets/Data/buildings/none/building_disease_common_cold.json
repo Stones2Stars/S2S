@@ -6,16 +6,12 @@
   ]
  },
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    }
-   ]
-  },
-  "operate": {
-   "all": [
+    },
     {
      "type": "PROPERTY_DISEASE",
      "scope": "city",

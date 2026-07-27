@@ -173,6 +173,29 @@ So the build-time gate = `build ∧ operate`; the ongoing dormancy gate = `opera
 toggles it active/dormant as the value crosses the threshold — no per-turn add/remove churn. A band's own
 non-constructibility (it is placed by the property system, not the production queue) authors as `notConstructible`
 (an `identity` flag, [json](json.md) §7).
+
+**⛔ THE BAND MODEL IS THE WHOLE QUEUE-EXCLUDED CLASS, NOT A PROPERTY SPECIAL CASE (owner): a `notConstructible`
+entity is PLACED IN EVERY CITY UNCONDITIONALLY, and DORMANCY decides everything after that.** Bands, autobuilds and
+every other system-placed building work identically — *"they should just get placed, then dormancy checked"* — so no
+placing system evaluates a placement gate, and the per-turn add/remove churn disappears for all of them at once
+rather than for bands alone.
+
+⚑ **The consequence is that such an entity carries NO `requires.build`, and this is structural rather than a
+convention to remember.** `build` only ever greys a QUEUE candidate and is checked ONCE (§3 above); the ongoing
+dormancy gate reads `operate` alone. A queue-excluded entity is never a queue candidate, so its `build` clause had
+exactly one consumer — the placement gate this ruling deletes — and anything left there would silently never be
+evaluated again (a cliff dwelling placed in a flat city would come up ACTIVE, its `TERRAIN_PEAK` clause sitting in
+the half nothing reads). The curator therefore folds `build` into `operate` for the whole class
+([DEC-recurate-on-decision](../architecture/decisions.md#dec-recurate-on-decision)).
+⚑ The folded position is strictly MORE correct than the one it leaves: `operate` is re-checked every recompute, so
+the entity correctly dorms if the ground it needed stops existing (terrain levelled to sea level — the WMD case),
+which a checked-once `build` clause could never do.
+
+⚠ **Cost, stated so it is not re-litigated:** this places ~705 buildings in every city. It allocates nothing new —
+the per-city building arrays are already dimensioned by `NUM_BUILDING_TYPES`
+([memory-footprint.md §2](../reference/memory-footprint.md)) — and it is not a per-turn cost, because the operate
+fixpoint is targeted-propagation maintained (§3.2) and re-walks only what an event touched. The load seed pays it
+once.
 Where the bands form a succession chain (the **Education ladder**) a higher band dorms the lower via
 `requires.operate.dormant` (only-highest-active, no stacking) — the **same uniform `ReplacementBuildings → dormant`
 mirror as §2, not a special case** (there is no separate "education" ruling); chainless bands (crime/disease/

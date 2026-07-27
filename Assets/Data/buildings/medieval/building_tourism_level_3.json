@@ -1,17 +1,13 @@
 {
  "type": "BUILDING_TOURISM_LEVEL_3",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_MEDIEVAL_LIFESTYLE",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    }
-   ]
-  },
-  "operate": {
-   "all": [
+    },
     {
      "type": "PROPERTY_TOURISM",
      "scope": "city",

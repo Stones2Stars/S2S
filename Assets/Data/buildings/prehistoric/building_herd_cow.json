@@ -17,19 +17,17 @@
   ]
  },
  "requires": {
-  "build": {
+  "operate": {
+   "dormant": [
+    "BUILDING_INDUSTRIAL_FARMS",
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+   ],
    "all": [
     "TECH_ANIMAL_HUSBANDRY",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
-   ]
-  },
-  "operate": {
-   "dormant": [
-    "BUILDING_INDUSTRIAL_FARMS",
-    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
    ]
   }
  },

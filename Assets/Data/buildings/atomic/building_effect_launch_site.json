@@ -29,7 +29,7 @@
   ]
  },
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_ADVANCED_ROCKETRY",
     {

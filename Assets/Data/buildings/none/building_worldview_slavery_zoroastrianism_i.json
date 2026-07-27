@@ -1,18 +1,14 @@
 {
  "type": "BUILDING_WORLDVIEW_SLAVERY_ZOROASTRIANISM_I",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
+    "RELIGION_ZOROASTRIANISM",
     "BUILDING_WORLDVIEW_SLAVERY_ACTIVE",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
-   ]
-  },
-  "operate": {
-   "all": [
-    "RELIGION_ZOROASTRIANISM"
    ],
    "dormant": [
     "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION"

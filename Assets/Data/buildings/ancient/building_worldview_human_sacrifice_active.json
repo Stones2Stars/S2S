@@ -6,18 +6,16 @@
   ]
  },
  "requires": {
-  "build": {
+  "operate": {
+   "dormant": [
+    "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION"
+   ],
    "all": [
     "TECH_SACRIFICE_CULT",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
-   ]
-  },
-  "operate": {
-   "dormant": [
-    "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION"
    ]
   }
  },

@@ -10,7 +10,7 @@
   ]
  },
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_ABYSS_COLONIZATION",
     {

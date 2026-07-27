@@ -694,7 +694,12 @@ Empire-agnostic self-description. Read directly — never summed or cascaded.
   (e.g. per-religion spread strength) does NOT go here; it gets its own block (`spread`, §9). Reaching for `identity`
   because a value has no obvious home is the anti-pattern.
   Two buildability flags: `notConstructible` (excluded from the player production queue; placed by another system)
-  and `autoBuild` (auto-placed in every city where `requires.build` holds); `autoBuild ⊂ notConstructible`.
+  and `autoBuild` (the placing system is the engine's own auto-placement); `autoBuild ⊂ notConstructible`.
+  ⛔ **A `notConstructible` entity carries NO `requires.build` — placement is UNCONDITIONAL and DORMANCY decides
+  everything** (owner). It is placed in every city and its `requires.operate` then makes it active or dormant, the
+  uniform band model ([enabler.md §3](enabler.md)) applied to the whole queue-excluded class. `build` only ever
+  greys a QUEUE candidate and is checked once; a queue-excluded entity is never a queue candidate, so a clause left
+  in `build` would never be evaluated again. Authoring one is a data error — the curator folds it into `operate`.
   **Civilization selectability** lives here too: `playable` / `aiPlayable` (can a human / the AI pick this civ) —
   **load-only metadata, no gameplay relevance** (animals/barbarians/neanderthals are technically civilizations), so
   it is intrinsic self-description, not a `policy`.

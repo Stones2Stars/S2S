@@ -1,18 +1,14 @@
 {
  "type": "BUILDING_CIVIC_MARTIAL_LAW",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
+    "CIVIC_MARTIAL_LAW",
     "BUILDING_PALACE",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
-   ]
-  },
-  "operate": {
-   "all": [
-    "CIVIC_MARTIAL_LAW"
    ]
   }
  },

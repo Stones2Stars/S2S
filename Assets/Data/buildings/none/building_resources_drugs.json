@@ -9,7 +9,10 @@
   ]
  },
  "requires": {
-  "build": {
+  "operate": {
+   "dormant": [
+    "BUILDING_FARMSCRAPER_I"
+   ],
    "all": [
     {
      "any": [
@@ -31,11 +34,6 @@
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
-   ]
-  },
-  "operate": {
-   "dormant": [
-    "BUILDING_FARMSCRAPER_I"
    ]
   }
  },

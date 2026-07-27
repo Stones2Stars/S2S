@@ -6,16 +6,6 @@
   ]
  },
  "requires": {
-  "build": {
-   "all": [
-    "HAS_COAST",
-    "TECH_FISHING",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "all": [
     {
@@ -39,6 +29,12 @@
        "vicinity": "connected"
       }
      ]
+    },
+    "HAS_COAST",
+    "TECH_FISHING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     }
    ],
    "dormant": [

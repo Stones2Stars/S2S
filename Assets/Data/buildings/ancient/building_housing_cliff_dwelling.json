@@ -12,19 +12,6 @@
   ]
  },
  "requires": {
-  "build": {
-   "all": [
-    "TECH_MASONRY",
-    {
-     "type": "TERRAIN_PEAK",
-     "scope": "plot"
-    },
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "all": [
     {
@@ -36,6 +23,15 @@
      "type": "BONUS_WOOD",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    "TECH_MASONRY",
+    {
+     "type": "TERRAIN_PEAK",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     }
    ],
    "dormant": [

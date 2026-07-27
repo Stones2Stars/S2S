@@ -6,15 +6,6 @@
   ]
  },
  "requires": {
-  "build": {
-   "all": [
-    "TECH_CAVE_DWELLING",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "dormant": [
     "BUILDING_HOUSING_LEAN_TOS",
@@ -25,6 +16,13 @@
     "BUILDING_HOUSING_DUGOUTS",
     "BUILDING_HOUSING_COLONY_ARCOLOGY",
     "BUILDING_LAUNCH_ARCOLOGY"
+   ],
+   "all": [
+    "TECH_CAVE_DWELLING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

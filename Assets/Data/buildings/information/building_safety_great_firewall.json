@@ -1,16 +1,6 @@
 {
  "type": "BUILDING_SAFETY_GREAT_FIREWALL",
  "requires": {
-  "build": {
-   "all": [
-    "BUILDING_COMPUTER_NETWORK",
-    "TECH_CYBERWARFARE",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "all": [
     "HAS_POWER",
@@ -23,6 +13,12 @@
       "CIVIC_SINGLE_PARTY",
       "CIVIC_GRID"
      ]
+    },
+    "BUILDING_COMPUTER_NETWORK",
+    "TECH_CYBERWARFARE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     }
    ]
   }

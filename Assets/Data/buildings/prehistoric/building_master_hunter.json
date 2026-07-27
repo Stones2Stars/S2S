@@ -210,18 +210,16 @@
   }
  },
  "requires": {
-  "build": {
+  "operate": {
+   "dormant": [
+    "BUILDING_MASTER_HUNTER_TRADITION"
+   ],
    "all": [
     "TECH_TRACKING",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
-   ]
-  },
-  "operate": {
-   "dormant": [
-    "BUILDING_MASTER_HUNTER_TRADITION"
    ]
   }
  },

@@ -1,21 +1,19 @@
 {
  "type": "BUILDING_EDUCATION_KNOWLEDGE_BASE_ANCIENT",
  "requires": {
-  "build": {
-   "all": [
-    "TECH_SEDENTARY_LIFESTYLE",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "dormant": [
     "BUILDING_EDUCATION_KNOWLEDGE_BASE_CLASSICAL",
     "BUILDING_EDUCATION_KNOWLEDGE_BASE_MEDIEVAL",
     "BUILDING_EDUCATION_KNOWLEDGE_BASE_RENAISSANCE",
     "BUILDING_EDUCATION_KNOWLEDGE_BASE_INDUSTRIAL"
+   ],
+   "all": [
+    "TECH_SEDENTARY_LIFESTYLE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

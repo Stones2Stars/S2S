@@ -1,15 +1,6 @@
 {
  "type": "BUILDING_EDUCATION_PREPOSTEROUS",
  "requires": {
-  "build": {
-   "all": [
-    "TECH_NANOTECH_LIFESTYLE",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "dormant": [
     "BUILDING_EDUCATION_IDIOCRACY",
@@ -18,6 +9,11 @@
     "BUILDING_EDUCATION_MINDLESS"
    ],
    "all": [
+    "TECH_NANOTECH_LIFESTYLE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
     {
      "type": "PROPERTY_EDUCATION",
      "scope": "city",

@@ -1,7 +1,7 @@
 {
  "type": "BUILDING_EFFECT_TERRAFORMED_LUNA",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_LUNAR_TERRAFORMING",
     {

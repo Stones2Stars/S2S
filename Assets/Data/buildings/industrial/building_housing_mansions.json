@@ -14,18 +14,6 @@
   ]
  },
  "requires": {
-  "build": {
-   "all": [
-    "BUILDING_WATER_PIPES",
-    "BUILDING_SEWER_SYSTEM",
-    "BUILDING_TELEPHONE_NETWORK",
-    "TECH_TELEPHONE",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "all": [
     {
@@ -34,7 +22,15 @@
      "connection": "trade|vicinity"
     },
     "HAS_FRESHWATER",
-    "HAS_POWER"
+    "HAS_POWER",
+    "BUILDING_WATER_PIPES",
+    "BUILDING_SEWER_SYSTEM",
+    "BUILDING_TELEPHONE_NETWORK",
+    "TECH_TELEPHONE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ],
    "dormant": [
     "BUILDING_HOUSING_CHATEAU",

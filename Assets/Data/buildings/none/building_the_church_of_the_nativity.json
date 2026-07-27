@@ -1,7 +1,7 @@
 {
  "type": "BUILDING_THE_CHURCH_OF_THE_NATIVITY",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     {
      "IS_HOLY_CITY": "RELIGION_CHRISTIANITY"

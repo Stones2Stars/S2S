@@ -1,7 +1,7 @@
 {
  "type": "BUILDING_THE_ISE_JINGU",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     {
      "IS_HOLY_CITY": "RELIGION_SHINTO"

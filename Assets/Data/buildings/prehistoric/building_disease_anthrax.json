@@ -6,15 +6,6 @@
   ]
  },
  "requires": {
-  "build": {
-   "all": [
-    "TECH_ANIMAL_HUSBANDRY",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "all": [
     {
@@ -30,6 +21,11 @@
        "connection": "trade|vicinity"
       }
      ]
+    },
+    "TECH_ANIMAL_HUSBANDRY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     },
     {
      "type": "PROPERTY_DISEASE",

@@ -1,21 +1,17 @@
 {
  "type": "BUILDING_THE_NATIONAL_STANDARD_OF_MEASUREMENT",
  "requires": {
-  "build": {
-   "all": [
-    "TECH_STANDARDIZATION",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "all": [
     {
      "type": "POPULATION",
      "scope": "city",
      "min": 3
+    },
+    "TECH_STANDARDIZATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     }
    ]
   }

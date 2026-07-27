@@ -1,15 +1,6 @@
 {
  "type": "BUILDING_EDUCATION_ACUMEN",
  "requires": {
-  "build": {
-   "all": [
-    "TECH_RENAISSANCE_LIFESTYLE",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "dormant": [
     "BUILDING_EDUCATION_SCHOLARLY",
@@ -22,6 +13,11 @@
     "BUILDING_EDUCATION_OMNISCIENCE"
    ],
    "all": [
+    "TECH_RENAISSANCE_LIFESTYLE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
     {
      "type": "PROPERTY_EDUCATION",
      "scope": "city",

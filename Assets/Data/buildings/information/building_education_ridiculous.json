@@ -1,15 +1,6 @@
 {
  "type": "BUILDING_EDUCATION_RIDICULOUS",
  "requires": {
-  "build": {
-   "all": [
-    "TECH_INFORMATION_LIFESTYLE",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "dormant": [
     "BUILDING_EDUCATION_PREPOSTEROUS",
@@ -19,6 +10,11 @@
     "BUILDING_EDUCATION_MINDLESS"
    ],
    "all": [
+    "TECH_INFORMATION_LIFESTYLE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
     {
      "type": "PROPERTY_EDUCATION",
      "scope": "city",

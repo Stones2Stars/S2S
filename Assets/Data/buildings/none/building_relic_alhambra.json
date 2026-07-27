@@ -1,7 +1,7 @@
 {
  "type": "BUILDING_RELIC_ALHAMBRA",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     {
      "type": "MAPCATEGORY_EARTH",

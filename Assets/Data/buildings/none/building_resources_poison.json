@@ -9,7 +9,11 @@
   ]
  },
  "requires": {
-  "build": {
+  "operate": {
+   "dormant": [
+    "BUILDING_CHEMISTRY_LAB",
+    "BUILDING_CHEMICALS_DISTRICT"
+   ],
    "all": [
     {
      "any": [
@@ -25,12 +29,6 @@
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
-   ]
-  },
-  "operate": {
-   "dormant": [
-    "BUILDING_CHEMISTRY_LAB",
-    "BUILDING_CHEMICALS_DISTRICT"
    ]
   }
  },

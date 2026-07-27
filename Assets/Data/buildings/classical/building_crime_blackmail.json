@@ -1,17 +1,13 @@
 {
  "type": "BUILDING_CRIME_BLACKMAIL",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_CURRENCY",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    }
-   ]
-  },
-  "operate": {
-   "all": [
+    },
     {
      "type": "PROPERTY_CRIME",
      "scope": "city",

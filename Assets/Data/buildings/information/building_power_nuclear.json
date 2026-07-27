@@ -6,23 +6,19 @@
   ]
  },
  "requires": {
-  "build": {
-   "all": [
-    "TECH_KNOWLEDGE_MANAGEMENT",
-    "TECH_SUPERCONDUCTORS",
-    "TECH_ATOMPUNK",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "all": [
     {
      "type": "BONUS_ATOMPUNK",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    "TECH_KNOWLEDGE_MANAGEMENT",
+    "TECH_SUPERCONDUCTORS",
+    "TECH_ATOMPUNK",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     }
    ]
   }

@@ -6,21 +6,17 @@
   ]
  },
  "requires": {
-  "build": {
-   "all": [
-    "TECH_AVIATION",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "all": [
     {
      "type": "BONUS_AIRCRAFT",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    "TECH_AVIATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     },
     {
      "type": "PROPERTY_CRIME",

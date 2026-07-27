@@ -1,19 +1,15 @@
 {
  "type": "BUILDING_POLLUTION_MODERATE_GLOBAL_WARMING",
  "requires": {
-  "build": {
-   "all": [
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "dormant": [
     "BUILDING_CLIMATE_GEOENGINEERING"
    ],
    "all": [
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
     {
      "type": "PROPERTY_AIR_POLLUTION",
      "scope": "city",

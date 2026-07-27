@@ -6,8 +6,13 @@
   ]
  },
  "requires": {
-  "build": {
+  "operate": {
    "all": [
+    {
+     "type": "BONUS_CLAY",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
     "TECH_POTTERY",
     {
      "any": [
@@ -24,15 +29,6 @@
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    }
-   ]
-  },
-  "operate": {
-   "all": [
-    {
-     "type": "BONUS_CLAY",
-     "scope": "city",
-     "connection": "trade|vicinity"
     }
    ],
    "dormant": [

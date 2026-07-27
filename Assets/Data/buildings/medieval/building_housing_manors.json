@@ -13,16 +13,6 @@
   ]
  },
  "requires": {
-  "build": {
-   "all": [
-    "BUILDING_SEWER_SYSTEM",
-    "TECH_SURVEYING",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "all": [
     {
@@ -35,6 +25,12 @@
      "type": "BONUS_BRICKS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    "BUILDING_SEWER_SYSTEM",
+    "TECH_SURVEYING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     }
    ],
    "dormant": [

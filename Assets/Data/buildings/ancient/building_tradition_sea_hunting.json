@@ -6,7 +6,7 @@
   ]
  },
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "BUILDING_MASTER_SEA_HUNTER",
     "TECH_SAILING",

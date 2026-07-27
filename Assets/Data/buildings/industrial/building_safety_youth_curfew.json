@@ -1,7 +1,7 @@
 {
  "type": "BUILDING_SAFETY_YOUTH_CURFEW",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_COMPULSORY_EDUCATION",
     {

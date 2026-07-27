@@ -9,7 +9,11 @@
   ]
  },
  "requires": {
-  "build": {
+  "operate": {
+   "dormant": [
+    "BUILDING_INDUSTRIAL_FARMS",
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+   ],
    "all": [
     {
      "any": [
@@ -89,12 +93,6 @@
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
-   ]
-  },
-  "operate": {
-   "dormant": [
-    "BUILDING_INDUSTRIAL_FARMS",
-    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
    ]
   }
  },

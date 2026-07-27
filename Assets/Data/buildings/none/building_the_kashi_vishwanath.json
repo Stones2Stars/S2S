@@ -1,7 +1,7 @@
 {
  "type": "BUILDING_THE_KASHI_VISHWANATH",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     {
      "IS_HOLY_CITY": "RELIGION_HINDUISM"

@@ -6,8 +6,14 @@
   ]
  },
  "requires": {
-  "build": {
+  "operate": {
    "all": [
+    {
+     "any": [
+      "CIVIC_ANARCHISM",
+      "CIVIC_CHIEFDOM"
+     ]
+    },
     "TECH_PREHISTORIC_DANCE",
     {
      "any": [
@@ -23,16 +29,6 @@
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    }
-   ]
-  },
-  "operate": {
-   "all": [
-    {
-     "any": [
-      "CIVIC_ANARCHISM",
-      "CIVIC_CHIEFDOM"
-     ]
     }
    ]
   }

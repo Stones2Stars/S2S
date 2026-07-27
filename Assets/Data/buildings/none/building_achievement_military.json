@@ -1,7 +1,7 @@
 {
  "type": "BUILDING_ACHIEVEMENT_MILITARY",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_WRITING",
     {

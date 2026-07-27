@@ -1,7 +1,7 @@
 {
  "type": "BUILDING_SPY_NETWORK",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_WRITING",
     {

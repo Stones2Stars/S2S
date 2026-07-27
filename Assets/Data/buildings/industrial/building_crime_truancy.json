@@ -1,17 +1,13 @@
 {
  "type": "BUILDING_CRIME_TRUANCY",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_COMPULSORY_EDUCATION",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    }
-   ]
-  },
-  "operate": {
-   "all": [
+    },
     {
      "type": "PROPERTY_CRIME",
      "scope": "city",

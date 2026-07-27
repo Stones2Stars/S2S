@@ -1,7 +1,7 @@
 {
  "type": "BUILDING_SCIENTOLOGY_SEDE",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     {
      "IS_HOLY_CITY": "RELIGION_SCIENTOLOGY"

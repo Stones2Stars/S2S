@@ -1,20 +1,16 @@
 {
  "type": "BUILDING_EDUCATION_WISE",
  "requires": {
-  "build": {
-   "all": [
-    "TECH_COSMIC_LIFESTYLE",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "dormant": [
     "BUILDING_EDUCATION_OMNISCIENCE"
    ],
    "all": [
+    "TECH_COSMIC_LIFESTYLE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
     {
      "type": "PROPERTY_EDUCATION",
      "scope": "city",

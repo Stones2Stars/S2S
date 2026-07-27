@@ -6,7 +6,7 @@
   ]
  },
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "BUILDING_PALACE",
     {
@@ -18,10 +18,12 @@
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
+    },
+    {
+     "noneOf": [
+      "BUILDING_C_N_NEANDERTHAL"
+     ]
     }
-   ],
-   "noneOf": [
-    "BUILDING_C_N_NEANDERTHAL"
    ]
   }
  },

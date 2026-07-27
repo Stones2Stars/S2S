@@ -1,7 +1,7 @@
 {
  "type": "BUILDING_PRESENCE_OF_REEF",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "BUILDING_FOLKLORE_REQUIREMENT",
     {

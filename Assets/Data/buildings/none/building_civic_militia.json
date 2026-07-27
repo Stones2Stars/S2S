@@ -1,17 +1,13 @@
 {
  "type": "BUILDING_CIVIC_MILITIA",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
+    "CIVIC_MILITIA",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
-   ]
-  },
-  "operate": {
-   "all": [
-    "CIVIC_MILITIA"
    ]
   }
  },

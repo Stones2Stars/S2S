@@ -1,18 +1,16 @@
 {
  "type": "BUILDING_SAFETY_MAXIMUM_SECURITY_PRISON",
  "requires": {
-  "build": {
+  "operate": {
+   "dormant": [
+    "BUILDING_SAFETY_ORBITAL_PRISON"
+   ],
    "all": [
     "TECH_CONSTITUTION",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
-   ]
-  },
-  "operate": {
-   "dormant": [
-    "BUILDING_SAFETY_ORBITAL_PRISON"
    ]
   }
  },

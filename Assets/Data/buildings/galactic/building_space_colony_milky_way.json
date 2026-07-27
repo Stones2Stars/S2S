@@ -23,7 +23,7 @@
   ]
  },
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_ADVANCED_SEEDSHIPS",
     {

@@ -1,7 +1,7 @@
 {
  "type": "BUILDING_EFFECT_DEPARTMENT_OF_FOREIGN_POLICY",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_FOREIGN_POLICY",
     {

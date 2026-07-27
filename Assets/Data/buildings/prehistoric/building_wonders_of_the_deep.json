@@ -9,7 +9,7 @@
   ]
  },
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "BUILDING_FOLKLORE_E_SEA",
     "TECH_ORAL_TRADITION",

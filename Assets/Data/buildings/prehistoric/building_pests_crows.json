@@ -9,20 +9,6 @@
   ]
  },
  "requires": {
-  "build": {
-   "all": [
-    {
-     "latitude": {
-      "max": 70
-     }
-    },
-    "TECH_TRIBALISM",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "all": [
     {
@@ -45,6 +31,16 @@
        "vicinity": "connected"
       }
      ]
+    },
+    {
+     "latitude": {
+      "max": 70
+     }
+    },
+    "TECH_TRIBALISM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     }
    ],
    "dormant": [

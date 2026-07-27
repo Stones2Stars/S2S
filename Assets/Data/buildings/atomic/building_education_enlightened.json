@@ -1,15 +1,6 @@
 {
  "type": "BUILDING_EDUCATION_ENLIGHTENED",
  "requires": {
-  "build": {
-   "all": [
-    "TECH_ATOMIC_LIFESTYLE",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "dormant": [
     "BUILDING_EDUCATION_COSMOPOLITAN",
@@ -20,6 +11,11 @@
     "BUILDING_EDUCATION_OMNISCIENCE"
    ],
    "all": [
+    "TECH_ATOMIC_LIFESTYLE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
     {
      "type": "PROPERTY_EDUCATION",
      "scope": "city",

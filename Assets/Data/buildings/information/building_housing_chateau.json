@@ -17,8 +17,15 @@
   ]
  },
  "requires": {
-  "build": {
+  "operate": {
    "all": [
+    {
+     "type": "BONUS_MARBLE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_FRESHWATER",
+    "HAS_POWER",
     "BUILDING_WATER_PIPES",
     "BUILDING_SEWER_SYSTEM",
     "BUILDING_TELEPHONE_NETWORK",
@@ -28,17 +35,6 @@
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
-   ]
-  },
-  "operate": {
-   "all": [
-    {
-     "type": "BONUS_MARBLE",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    "HAS_FRESHWATER",
-    "HAS_POWER"
    ],
    "dormant": [
     "BUILDING_HOUSING_COLONY_ARCOLOGY",

@@ -13,7 +13,7 @@
   ]
  },
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_BRONZE_WORKING",
     {

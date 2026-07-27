@@ -1,19 +1,15 @@
 {
  "type": "BUILDING_BLACK_HAT_HIDEOUT_UNSANCTIONED",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
+    "HAS_POWER",
     "BUILDING_WIRELESS_NETWORKS",
     "TECH_COMMUNICATION_NETWORKS",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    }
-   ]
-  },
-  "operate": {
-   "all": [
-    "HAS_POWER",
+    },
     {
      "type": "PROPERTY_CRIME",
      "scope": "city",

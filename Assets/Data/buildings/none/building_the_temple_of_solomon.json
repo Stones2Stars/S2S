@@ -1,7 +1,7 @@
 {
  "type": "BUILDING_THE_TEMPLE_OF_SOLOMON",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     {
      "IS_HOLY_CITY": "RELIGION_JUDAISM"

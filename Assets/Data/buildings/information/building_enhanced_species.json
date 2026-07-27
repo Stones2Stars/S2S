@@ -1,7 +1,7 @@
 {
  "type": "BUILDING_ENHANCED_SPECIES",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_GENOMIC_ENCYCLOPEDIA",
     {

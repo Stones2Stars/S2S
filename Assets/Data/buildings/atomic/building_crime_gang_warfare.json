@@ -1,17 +1,13 @@
 {
  "type": "BUILDING_CRIME_GANG_WARFARE",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_URBAN_CULTURE",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    }
-   ]
-  },
-  "operate": {
-   "all": [
+    },
     {
      "type": "PROPERTY_CRIME",
      "scope": "city",

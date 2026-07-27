@@ -13,18 +13,6 @@
   ]
  },
  "requires": {
-  "build": {
-   "all": [
-    "BUILDING_WATER_PIPES",
-    "BUILDING_SEWER_SYSTEM",
-    "BUILDING_TELEPHONE_NETWORK",
-    "TECH_TELEPHONE",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "all": [
     "HAS_FRESHWATER",
@@ -33,6 +21,14 @@
      "type": "POPULATION",
      "scope": "city",
      "min": 3
+    },
+    "BUILDING_WATER_PIPES",
+    "BUILDING_SEWER_SYSTEM",
+    "BUILDING_TELEPHONE_NETWORK",
+    "TECH_TELEPHONE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     }
    ],
    "dormant": [

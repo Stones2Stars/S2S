@@ -1,12 +1,6 @@
 {
  "type": "BUILDING_REMAINS_MAMMOTH",
  "requires": {
-  "build": {
-   "all": [
-    "BUILDING_FOLKLORE_REQUIREMENT",
-    "HERITAGE_FOLKLORE_MAMMOTH"
-   ]
-  },
   "operate": {
    "all": [
     {
@@ -14,7 +8,9 @@
      "scope": "city",
      "connection": "vicinity",
      "vicinity": "owned"
-    }
+    },
+    "BUILDING_FOLKLORE_REQUIREMENT",
+    "HERITAGE_FOLKLORE_MAMMOTH"
    ]
   }
  },

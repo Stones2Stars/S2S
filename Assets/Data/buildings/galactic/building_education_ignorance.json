@@ -1,21 +1,17 @@
 {
  "type": "BUILDING_EDUCATION_IGNORANCE",
  "requires": {
-  "build": {
-   "all": [
-    "TECH_GALACTIC_LIFESTYLE",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "dormant": [
     "BUILDING_EDUCATION_BEWILDERED",
     "BUILDING_EDUCATION_MINDLESS"
    ],
    "all": [
+    "TECH_GALACTIC_LIFESTYLE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
     {
      "type": "PROPERTY_EDUCATION",
      "scope": "city",

@@ -9,7 +9,10 @@
   ]
  },
  "requires": {
-  "build": {
+  "operate": {
+   "dormant": [
+    "BUILDING_MANUFACTURING_DISTRICT"
+   ],
    "all": [
     {
      "any": [
@@ -22,11 +25,6 @@
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
-   ]
-  },
-  "operate": {
-   "dormant": [
-    "BUILDING_MANUFACTURING_DISTRICT"
    ]
   }
  },

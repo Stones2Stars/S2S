@@ -1,17 +1,13 @@
 {
  "type": "BUILDING_TOURISM_LEVEL_8",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_NANOTECH_LIFESTYLE",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    }
-   ]
-  },
-  "operate": {
-   "all": [
+    },
     {
      "type": "PROPERTY_TOURISM",
      "scope": "city",

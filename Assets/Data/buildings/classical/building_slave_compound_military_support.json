@@ -1,7 +1,10 @@
 {
  "type": "BUILDING_SLAVE_COMPOUND_MILITARY_SUPPORT",
  "requires": {
-  "build": {
+  "operate": {
+   "dormant": [
+    "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION"
+   ],
    "all": [
     "BUILDING_SLAVE_COMPOUND",
     "TECH_MILITARY_TRAINING",
@@ -16,11 +19,6 @@
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
-   ]
-  },
-  "operate": {
-   "dormant": [
-    "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION"
    ]
   }
  },

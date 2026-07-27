@@ -6,21 +6,6 @@
   ]
  },
  "requires": {
-  "build": {
-   "all": [
-    "HAS_COAST",
-    {
-     "latitude": {
-      "max": 80
-     }
-    },
-    "TECH_SANITATION",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "all": [
     {
@@ -43,6 +28,17 @@
        "vicinity": "connected"
       }
      ]
+    },
+    "HAS_COAST",
+    {
+     "latitude": {
+      "max": 80
+     }
+    },
+    "TECH_SANITATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     }
    ]
   }

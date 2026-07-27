@@ -1,7 +1,7 @@
 {
  "type": "BUILDING_FOLKLORE_WALIA_IBEX",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "BUILDING_FOLKLORE_REQUIREMENT",
     {

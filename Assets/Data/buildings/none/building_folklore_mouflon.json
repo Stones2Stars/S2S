@@ -1,7 +1,7 @@
 {
  "type": "BUILDING_FOLKLORE_MOUFLON",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "BUILDING_FOLKLORE_REQUIREMENT",
     {

@@ -1,15 +1,6 @@
 {
  "type": "BUILDING_EDUCATION_MORONIC",
  "requires": {
-  "build": {
-   "all": [
-    "TECH_RENAISSANCE_LIFESTYLE",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "dormant": [
     "BUILDING_EDUCATION_FARCICAL",
@@ -22,6 +13,11 @@
     "BUILDING_EDUCATION_MINDLESS"
    ],
    "all": [
+    "TECH_RENAISSANCE_LIFESTYLE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
     {
      "type": "PROPERTY_EDUCATION",
      "scope": "city",

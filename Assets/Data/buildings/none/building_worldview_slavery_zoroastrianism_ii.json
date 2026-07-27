@@ -1,7 +1,10 @@
 {
  "type": "BUILDING_WORLDVIEW_SLAVERY_ZOROASTRIANISM_II",
  "requires": {
-  "build": {
+  "operate": {
+   "dormant": [
+    "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION"
+   ],
    "all": [
     "BUILDING_WORLDVIEW_SLAVERY_ACTIVE",
     {
@@ -11,11 +14,6 @@
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
-   ]
-  },
-  "operate": {
-   "dormant": [
-    "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION"
    ]
   }
  },

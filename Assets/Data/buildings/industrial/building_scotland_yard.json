@@ -9,21 +9,17 @@
   ]
  },
  "requires": {
-  "build": {
-   "all": [
-    "TECH_CRIMINOLOGY",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "all": [
     {
      "type": "POPULATION",
      "scope": "city",
      "min": 7
+    },
+    "TECH_CRIMINOLOGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     }
    ]
   }

@@ -1,18 +1,16 @@
 {
  "type": "BUILDING_WORLDVIEW_CANNIBALISM",
  "requires": {
-  "build": {
+  "operate": {
+   "dormant": [
+    "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION"
+   ],
    "all": [
     "BUILDING_PALACE",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
-   ]
-  },
-  "operate": {
-   "dormant": [
-    "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION"
    ]
   }
  },

@@ -1,7 +1,7 @@
 {
  "type": "BUILDING_GREAT_TEMPLE_TAY_NINH",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     {
      "IS_HOLY_CITY": "RELIGION_CAO_DAI"

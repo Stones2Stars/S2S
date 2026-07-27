@@ -1,7 +1,7 @@
 {
  "type": "BUILDING_PATTAKY_OF_OLODUMARE",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     {
      "IS_HOLY_CITY": "RELIGION_YORUBA"

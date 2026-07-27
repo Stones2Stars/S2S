@@ -1,17 +1,13 @@
 {
  "type": "BUILDING_CRIME_SECTARIAN_VIOLENCE",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_PROPAGANDA",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    }
-   ]
-  },
-  "operate": {
-   "all": [
+    },
     {
      "type": "PROPERTY_CRIME",
      "scope": "city",

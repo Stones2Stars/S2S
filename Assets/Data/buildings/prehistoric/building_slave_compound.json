@@ -12,7 +12,10 @@
   ]
  },
  "requires": {
-  "build": {
+  "operate": {
+   "dormant": [
+    "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION"
+   ],
    "all": [
     "BUILDING_WORLDVIEW_SLAVERY_ACTIVE",
     "TECH_SLAVERY",
@@ -20,11 +23,6 @@
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
-   ]
-  },
-  "operate": {
-   "dormant": [
-    "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION"
    ]
   }
  },

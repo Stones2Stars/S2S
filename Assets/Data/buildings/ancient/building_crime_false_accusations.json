@@ -1,17 +1,13 @@
 {
  "type": "BUILDING_CRIME_FALSE_ACCUSATIONS",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_ORATORY",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    }
-   ]
-  },
-  "operate": {
-   "all": [
+    },
     {
      "type": "PROPERTY_CRIME",
      "scope": "city",

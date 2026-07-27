@@ -9,8 +9,9 @@
   ]
  },
  "requires": {
-  "build": {
+  "operate": {
    "all": [
+    "HAS_POWER",
     {
      "any": [
       "BUILDING_FACTORY_PLASTIC",
@@ -21,11 +22,6 @@
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
-   ]
-  },
-  "operate": {
-   "all": [
-    "HAS_POWER"
    ],
    "dormant": [
     "BUILDING_MATERIALS_CONGLOMERATE"

@@ -6,8 +6,18 @@
   ]
  },
  "requires": {
-  "build": {
+  "operate": {
    "all": [
+    {
+     "type": "BONUS_PRIME_TIMBER",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_FINE_CLAY",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
     "TECH_POTTERY",
     {
      "any": [
@@ -24,20 +34,6 @@
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    }
-   ]
-  },
-  "operate": {
-   "all": [
-    {
-     "type": "BONUS_PRIME_TIMBER",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
-     "type": "BONUS_FINE_CLAY",
-     "scope": "city",
-     "connection": "trade|vicinity"
     }
    ],
    "dormant": [

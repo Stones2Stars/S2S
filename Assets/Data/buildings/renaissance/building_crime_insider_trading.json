@@ -1,18 +1,14 @@
 {
  "type": "BUILDING_CRIME_INSIDER_TRADING",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "BUILDING_STOCK_MARKET",
     "TECH_STOCK_BROKERING",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    }
-   ]
-  },
-  "operate": {
-   "all": [
+    },
     {
      "type": "PROPERTY_CRIME",
      "scope": "city",

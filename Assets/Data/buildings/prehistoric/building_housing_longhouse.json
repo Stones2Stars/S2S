@@ -6,8 +6,18 @@
   ]
  },
  "requires": {
-  "build": {
+  "operate": {
    "all": [
+    {
+     "type": "BONUS_PRIME_TIMBER",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    },
     "TECH_CARPENTRY",
     {
      "any": [
@@ -32,20 +42,6 @@
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    }
-   ]
-  },
-  "operate": {
-   "all": [
-    {
-     "type": "BONUS_PRIME_TIMBER",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 3
     }
    ],
    "dormant": [

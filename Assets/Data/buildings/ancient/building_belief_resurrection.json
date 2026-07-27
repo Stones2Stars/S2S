@@ -1,7 +1,7 @@
 {
  "type": "BUILDING_BELIEF_RESURRECTION",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_RESURRECTION",
     {

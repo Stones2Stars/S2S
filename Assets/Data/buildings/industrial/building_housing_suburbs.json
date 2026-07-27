@@ -11,8 +11,10 @@
   ]
  },
  "requires": {
-  "build": {
+  "operate": {
    "all": [
+    "HAS_FRESHWATER",
+    "HAS_POWER",
     "BUILDING_WATER_PIPES",
     "BUILDING_SEWER_SYSTEM",
     "BUILDING_TELEPHONE_NETWORK",
@@ -21,12 +23,6 @@
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
-   ]
-  },
-  "operate": {
-   "all": [
-    "HAS_FRESHWATER",
-    "HAS_POWER"
    ],
    "dormant": [
     "BUILDING_HOUSING_SMART_HOMES",

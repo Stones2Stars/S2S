@@ -1203,6 +1203,54 @@ def requires_building(rec, store):
     return out or None
 
 
+def fold_build_into_operate(req):
+    """A QUEUE-EXCLUDED entity has no build gate -- fold `requires.build` into `requires.operate` (owner ruling).
+
+    A `notConstructible` building is never offered through the production queue: it is PLACED by another system
+    (the property bands, autobuild, grants, spawns) and the enabler holds it statically excluded, so it is HIDDEN
+    by construction. Placement is UNCONDITIONAL -- every such building is placed in every city, and DORMANCY then
+    decides whether it does anything (the uniform band model, enabler.md par.3, generalized to the whole class).
+
+    That leaves `requires.build` with NO consumer at all. `build` only ever GREYS a queue candidate and is checked
+    ONCE at build (enabler.md par.3); the ongoing dormancy gate reads `operate` alone. So a condition left in
+    `build` would simply never be evaluated again -- a cliff dwelling placed in a flat city would come up ACTIVE
+    because its TERRAIN_PEAK clause sat in the half nothing reads. The conditions must therefore live in `operate`,
+    which is re-checked every recompute.
+
+    This is strictly MORE correct than the position it leaves: `operate` reacts to the plot substrate changing
+    (terrain levelled to sea level -- the WMD case), so the building correctly dorms if the ground it needed stops
+    existing, which a checked-once `build` clause could never do.
+
+    The merge is plain boolean algebra -- an AND of two ANDs is one AND; two `disabled` clauses suppress if EITHER
+    holds (`any`); two `enabled` clauses both bind (`all`)."""
+    if not isinstance(req, dict) or not isinstance(req.get("build"), dict):
+        return req
+    build = req["build"]
+    operate = OrderedDict(req["operate"]) if isinstance(req.get("operate"), dict) else OrderedDict()
+    conj = list(build.get("all") or [])
+    for comb in ("any", "noneOf"):                       # a combinator node joins the AND as one child (json par.3.4)
+        if comb in build:
+            conj.append(OrderedDict([(comb, build[comb])]))
+    if conj:
+        operate["all"] = list(operate.get("all") or []) + conj
+    for twin, joiner in (("enabled", "all"), ("disabled", "any")):
+        if twin not in build:
+            continue
+        operate[twin] = OrderedDict([(joiner, [operate[twin], build[twin]])]) if twin in operate else build[twin]
+    out = OrderedDict()
+    placed = False
+    for key, val in req.items():
+        if key in ("build", "operate"):
+            if not placed and operate:                   # operate takes the slot the pair occupied
+                out["operate"] = operate
+                placed = True
+            continue
+        out[key] = val
+    if not placed and operate:
+        out["operate"] = operate
+    return out or None
+
+
 def allowed_building(rec):
     """The declarative INSTANCE CAP (owner 2026-06-17): `allowed:{<scope>:N}` = "at most N of THIS may exist at
     scope" — the REAL cap number (NOT a requires SELF-atom, which forced an off-by-one and conflated needed/allowed).
@@ -1478,6 +1526,9 @@ def curate(typ, rec, store):
     # my requires holds"), which overlaps but is not the same.
     if _int(rec, "iCost") in (None, -1):
         identity["notConstructible"] = True
+        # Queue-excluded => placement is unconditional and DORMANCY decides everything, so `requires.build` has no
+        # consumer left and its clauses must move where they are still read (see fold_build_into_operate).
+        requires = fold_build_into_operate(requires)
 
     # --- attributes (HELD city-scope intrinsics, json §8) + the remaining identity markers ---
     attributes = OrderedDict()

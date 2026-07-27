@@ -9,18 +9,16 @@
   ]
  },
  "requires": {
-  "build": {
+  "operate": {
+   "dormant": [
+    "BUILDING_TELEPORT_BOOTH"
+   ],
    "all": [
     "TECH_MOTORIZED_TRANSPORTATION",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
-   ]
-  },
-  "operate": {
-   "dormant": [
-    "BUILDING_TELEPORT_BOOTH"
    ]
   }
  },

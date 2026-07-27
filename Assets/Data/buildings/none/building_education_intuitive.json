@@ -1,14 +1,6 @@
 {
  "type": "BUILDING_EDUCATION_INTUITIVE",
  "requires": {
-  "build": {
-   "all": [
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "dormant": [
     "BUILDING_EDUCATION_BRILLIANT",
@@ -25,6 +17,10 @@
     "BUILDING_EDUCATION_OMNISCIENCE"
    ],
    "all": [
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
     {
      "type": "PROPERTY_EDUCATION",
      "scope": "city",

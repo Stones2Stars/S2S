@@ -1,18 +1,14 @@
 {
  "type": "BUILDING_CRIME_UNLICENSED_CLONING",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "BUILDING_CLONING_FACTORY",
     "TECH_MAINSTREAM_CLONING",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    }
-   ]
-  },
-  "operate": {
-   "all": [
+    },
     {
      "type": "PROPERTY_CRIME",
      "scope": "city",

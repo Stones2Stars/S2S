@@ -6,8 +6,13 @@
   ]
  },
  "requires": {
-  "build": {
+  "operate": {
    "all": [
+    {
+     "type": "BONUS_GRASS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
     "TECH_SHELTER_BUILDING",
     {
      "type": "FEATURE_VERY_TALL_GRASS",
@@ -16,15 +21,6 @@
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    }
-   ]
-  },
-  "operate": {
-   "all": [
-    {
-     "type": "BONUS_GRASS",
-     "scope": "city",
-     "connection": "trade|vicinity"
     }
    ],
    "dormant": [

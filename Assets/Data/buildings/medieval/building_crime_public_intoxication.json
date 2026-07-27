@@ -1,21 +1,17 @@
 {
  "type": "BUILDING_CRIME_PUBLIC_INTOXICATION",
  "requires": {
-  "build": {
-   "all": [
-    "TECH_FUNDAMENTALISM",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "all": [
     {
      "type": "BONUS_ALCOHOL",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    "TECH_FUNDAMENTALISM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     },
     {
      "type": "PROPERTY_CRIME",

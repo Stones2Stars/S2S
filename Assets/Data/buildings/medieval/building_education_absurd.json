@@ -1,15 +1,6 @@
 {
  "type": "BUILDING_EDUCATION_ABSURD",
  "requires": {
-  "build": {
-   "all": [
-    "TECH_MEDIEVAL_LIFESTYLE",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "dormant": [
     "BUILDING_EDUCATION_MORONIC",
@@ -23,6 +14,11 @@
     "BUILDING_EDUCATION_MINDLESS"
    ],
    "all": [
+    "TECH_MEDIEVAL_LIFESTYLE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
     {
      "type": "PROPERTY_EDUCATION",
      "scope": "city",

@@ -6,8 +6,13 @@
   ]
  },
  "requires": {
-  "build": {
+  "operate": {
    "all": [
+    {
+     "type": "BONUS_BARK",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
     "TECH_BARK_WORKING",
     {
      "any": [
@@ -32,15 +37,6 @@
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    }
-   ]
-  },
-  "operate": {
-   "all": [
-    {
-     "type": "BONUS_BARK",
-     "scope": "city",
-     "connection": "trade|vicinity"
     }
    ],
    "dormant": [

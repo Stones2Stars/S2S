@@ -6,22 +6,18 @@
   ]
  },
  "requires": {
-  "build": {
-   "all": [
-    "BUILDING_PESTS_FLEAS",
-    "TECH_SEDENTARY_LIFESTYLE",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "all": [
     {
      "type": "POPULATION",
      "scope": "city",
      "min": 2
+    },
+    "BUILDING_PESTS_FLEAS",
+    "TECH_SEDENTARY_LIFESTYLE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     },
     {
      "type": "PROPERTY_DISEASE",

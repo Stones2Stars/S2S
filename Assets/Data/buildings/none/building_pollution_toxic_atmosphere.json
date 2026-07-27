@@ -1,16 +1,12 @@
 {
  "type": "BUILDING_POLLUTION_TOXIC_ATMOSPHERE",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    }
-   ]
-  },
-  "operate": {
-   "all": [
+    },
     {
      "type": "PROPERTY_AIR_POLLUTION",
      "scope": "city",

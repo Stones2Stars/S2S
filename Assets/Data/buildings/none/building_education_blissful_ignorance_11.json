@@ -1,21 +1,17 @@
 {
  "type": "BUILDING_EDUCATION_BLISSFUL_IGNORANCE_11",
  "requires": {
-  "build": {
-   "all": [
-    "BUILDING_PALACE",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "dormant": [
     "BUILDING_EDUCATION_BLISSFUL_IGNORANCE_12",
     "BUILDING_EDUCATION_BLISSFUL_IGNORANCE_13"
    ],
    "all": [
+    "BUILDING_PALACE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
     {
      "type": "PROPERTY_EDUCATION",
      "scope": "city",

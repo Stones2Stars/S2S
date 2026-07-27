@@ -1,21 +1,17 @@
 {
  "type": "BUILDING_EFFECT_NATIONAL_ACADEMIC_DATABASE",
  "requires": {
-  "build": {
-   "all": [
-    "TECH_CLOUD_COMPUTING",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "all": [
     {
      "type": "BONUS_COMPUTERS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    "TECH_CLOUD_COMPUTING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     }
    ]
   }

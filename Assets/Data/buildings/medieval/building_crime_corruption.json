@@ -1,17 +1,13 @@
 {
  "type": "BUILDING_CRIME_CORRUPTION",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_CIVIL_SERVICE",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    }
-   ]
-  },
-  "operate": {
-   "all": [
+    },
     {
      "type": "PROPERTY_CRIME",
      "scope": "city",

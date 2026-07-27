@@ -1,14 +1,6 @@
 {
  "type": "BUILDING_HOUSING_HOMELESS",
  "requires": {
-  "build": {
-   "all": [
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "dormant": [
     "BUILDING_HOUSING_TREE_HOLLOW",
@@ -53,6 +45,12 @@
     "BUILDING_HOUSING_HIGH_TECH_CONDOMINIUMS",
     "BUILDING_HOUSING_COLONY_ARCOLOGY",
     "BUILDING_LAUNCH_ARCOLOGY"
+   ],
+   "all": [
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

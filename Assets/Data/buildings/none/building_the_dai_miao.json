@@ -1,7 +1,7 @@
 {
  "type": "BUILDING_THE_DAI_MIAO",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     {
      "IS_HOLY_CITY": "RELIGION_TAOISM"

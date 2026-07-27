@@ -9,18 +9,16 @@
   ]
  },
  "requires": {
-  "build": {
+  "operate": {
+   "dormant": [
+    "BUILDING_HEALTHCARE_MEGACOMPLEX"
+   ],
    "all": [
     "TECH_FOLK_MEDICINE",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
-   ]
-  },
-  "operate": {
-   "dormant": [
-    "BUILDING_HEALTHCARE_MEGACOMPLEX"
    ]
   }
  },

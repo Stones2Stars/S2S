@@ -6,22 +6,18 @@
   ]
  },
  "requires": {
-  "build": {
-   "all": [
-    "BUILDING_UNIVERSITY",
-    "TECH_WOMENS_SUFFRAGE",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "all": [
     {
      "type": "BONUS_ALCOHOL",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    "BUILDING_UNIVERSITY",
+    "TECH_WOMENS_SUFFRAGE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     }
    ],
    "dormant": [

@@ -1,17 +1,13 @@
 {
  "type": "BUILDING_CRIME_CHILD_LABOR",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_LABOR_UNIONS",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    }
-   ]
-  },
-  "operate": {
-   "all": [
+    },
     {
      "type": "PROPERTY_CRIME",
      "scope": "city",

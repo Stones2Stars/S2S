@@ -1,22 +1,18 @@
 {
  "type": "BUILDING_NATIONAL_DRUG_PROHIBITION",
  "requires": {
-  "build": {
-   "all": [
-    "BUILDING_SUPREME_COURT",
-    "TECH_COUNTERCULTURE",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "all": [
     {
      "type": "POPULATION",
      "scope": "city",
      "min": 7
+    },
+    "BUILDING_SUPREME_COURT",
+    "TECH_COUNTERCULTURE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     }
    ]
   }

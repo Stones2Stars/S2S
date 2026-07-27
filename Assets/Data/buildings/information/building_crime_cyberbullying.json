@@ -1,21 +1,17 @@
 {
  "type": "BUILDING_CRIME_CYBERBULLYING",
  "requires": {
-  "build": {
-   "all": [
-    "TECH_ONLINE_COMMUNITY",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "all": [
     {
      "type": "BONUS_COMPUTERS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    "TECH_ONLINE_COMMUNITY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     },
     {
      "type": "PROPERTY_CRIME",

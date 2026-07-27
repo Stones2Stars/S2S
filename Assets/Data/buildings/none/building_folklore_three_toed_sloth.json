@@ -1,7 +1,7 @@
 {
  "type": "BUILDING_FOLKLORE_THREE_TOED_SLOTH",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "BUILDING_FOLKLORE_REQUIREMENT",
     {

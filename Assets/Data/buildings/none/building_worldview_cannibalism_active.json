@@ -1,7 +1,10 @@
 {
  "type": "BUILDING_WORLDVIEW_CANNIBALISM_ACTIVE",
  "requires": {
-  "build": {
+  "operate": {
+   "dormant": [
+    "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION"
+   ],
    "all": [
     {
      "type": "BUILDING_WORLDVIEW_CANNIBALISM",
@@ -13,11 +16,6 @@
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
-   ]
-  },
-  "operate": {
-   "dormant": [
-    "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION"
    ]
   }
  },

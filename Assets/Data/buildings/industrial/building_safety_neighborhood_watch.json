@@ -1,7 +1,7 @@
 {
  "type": "BUILDING_SAFETY_NEIGHBORHOOD_WATCH",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_CRIMINOLOGY",
     {

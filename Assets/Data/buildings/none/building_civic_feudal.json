@@ -1,18 +1,14 @@
 {
  "type": "BUILDING_CIVIC_FEUDAL",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
+    "CIVIC_FEUDAL",
     "BUILDING_PALACE",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
-   ]
-  },
-  "operate": {
-   "all": [
-    "CIVIC_FEUDAL"
    ]
   }
  },

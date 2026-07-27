@@ -1,18 +1,16 @@
 {
  "type": "BUILDING_EDUCATION_KNOWLEDGE_BASE_RENAISSANCE",
  "requires": {
-  "build": {
+  "operate": {
+   "dormant": [
+    "BUILDING_EDUCATION_KNOWLEDGE_BASE_INDUSTRIAL"
+   ],
    "all": [
     "TECH_RENAISSANCE_LIFESTYLE",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
-   ]
-  },
-  "operate": {
-   "dormant": [
-    "BUILDING_EDUCATION_KNOWLEDGE_BASE_INDUSTRIAL"
    ]
   }
  },

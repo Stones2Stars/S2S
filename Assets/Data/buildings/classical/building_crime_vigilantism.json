@@ -1,17 +1,13 @@
 {
  "type": "BUILDING_CRIME_VIGILANTISM",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_CODE_OF_LAWS",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    }
-   ]
-  },
-  "operate": {
-   "all": [
+    },
     {
      "type": "PROPERTY_CRIME",
      "scope": "city",

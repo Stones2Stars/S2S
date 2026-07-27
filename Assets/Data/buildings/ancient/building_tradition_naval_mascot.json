@@ -1,7 +1,7 @@
 {
  "type": "BUILDING_TRADITION_NAVAL_MASCOT",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "BUILDING_NAVAL_STANDARD_ANIMAL_MASCOT",
     "TECH_SAILING",

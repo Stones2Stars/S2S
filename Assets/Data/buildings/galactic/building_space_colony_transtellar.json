@@ -9,7 +9,7 @@
   ]
  },
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_INTERSTELLAR_TRAVEL",
     {

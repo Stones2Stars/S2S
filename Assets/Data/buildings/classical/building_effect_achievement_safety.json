@@ -1,7 +1,7 @@
 {
  "type": "BUILDING_EFFECT_ACHIEVEMENT_SAFETY",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_CODE_OF_LAWS",
     {

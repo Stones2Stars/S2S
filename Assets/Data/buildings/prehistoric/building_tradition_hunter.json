@@ -1,7 +1,7 @@
 {
  "type": "BUILDING_TRADITION_HUNTER",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_HUNTING",
     {

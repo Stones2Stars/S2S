@@ -1,21 +1,17 @@
 {
  "type": "BUILDING_CRIME_GUN_RAMPAGE",
  "requires": {
-  "build": {
-   "all": [
-    "TECH_SEMI_AUTOMATIC_WEAPONS",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  },
   "operate": {
    "all": [
     {
      "type": "BONUS_FIREARMS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    "TECH_SEMI_AUTOMATIC_WEAPONS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     },
     {
      "type": "PROPERTY_CRIME",

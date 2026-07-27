@@ -1,7 +1,7 @@
 {
  "type": "BUILDING_C_AD_EUROPEAN",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "BUILDING_PALACE",
     {
@@ -13,10 +13,12 @@
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
+    },
+    {
+     "noneOf": [
+      "BUILDING_C_N_EUROPEAN"
+     ]
     }
-   ],
-   "noneOf": [
-    "BUILDING_C_N_EUROPEAN"
    ]
   }
  },

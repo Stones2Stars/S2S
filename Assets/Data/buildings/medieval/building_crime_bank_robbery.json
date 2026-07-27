@@ -1,18 +1,14 @@
 {
  "type": "BUILDING_CRIME_BANK_ROBBERY",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "BUILDING_BANK",
     "TECH_BANKING",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    }
-   ]
-  },
-  "operate": {
-   "all": [
+    },
     {
      "type": "PROPERTY_CRIME",
      "scope": "city",

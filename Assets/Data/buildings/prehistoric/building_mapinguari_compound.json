@@ -10,18 +10,16 @@
   ]
  },
  "requires": {
-  "build": {
+  "operate": {
+   "dormant": [
+    "BUILDING_MAPINGUARI_CHANGING_OF_THE_GUARD_CEREMONY"
+   ],
    "all": [
     "TECH_SIMPLE_WOOD_WORKING",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
-   ]
-  },
-  "operate": {
-   "dormant": [
-    "BUILDING_MAPINGUARI_CHANGING_OF_THE_GUARD_CEREMONY"
    ]
   }
  },

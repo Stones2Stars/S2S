@@ -6,8 +6,18 @@
   ]
  },
  "requires": {
-  "build": {
+  "operate": {
    "all": [
+    {
+     "type": "BONUS_PRIME_TIMBER",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_BAMBOO",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
     "TECH_WOODWORKING",
     {
      "any": [
@@ -36,20 +46,6 @@
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    }
-   ]
-  },
-  "operate": {
-   "all": [
-    {
-     "type": "BONUS_PRIME_TIMBER",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
-     "type": "BONUS_BAMBOO",
-     "scope": "city",
-     "connection": "trade|vicinity"
     }
    ],
    "dormant": [

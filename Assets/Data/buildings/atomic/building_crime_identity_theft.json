@@ -1,17 +1,13 @@
 {
  "type": "BUILDING_CRIME_IDENTITY_THEFT",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_PERSONAL_COMPUTERS",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    }
-   ]
-  },
-  "operate": {
-   "all": [
+    },
     {
      "type": "PROPERTY_CRIME",
      "scope": "city",

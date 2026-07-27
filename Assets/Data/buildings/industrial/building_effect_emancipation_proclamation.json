@@ -1,7 +1,7 @@
 {
  "type": "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION",
  "requires": {
-  "build": {
+  "operate": {
    "all": [
     "TECH_EMANCIPATION",
     {
