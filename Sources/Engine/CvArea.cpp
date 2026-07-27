@@ -19,6 +19,7 @@
 #include "CvCascadeChannelRegistry.h"   // channelLookup / wellbeingTwin -- the group read's channel identity
 #include "CvInfoKinds.h"                // the family + kind vocabulary the group read walks
 #include "Data/CvInfoValuation.h"       // realizedAtArea -- the ONE cross-scope roll-up
+#include "Spine/CvEventSpine.h"         // emitAreaCleanPowerChanged / emitAreaTilesChanged -- the area DOMAIN facts
 
 // Public Functions...
 
@@ -513,6 +514,11 @@ void CvArea::changeNumTiles(int iChange)
 	{
 		m_iNumTiles += iChange;
 		FASSERT_NOT_NEGATIVE(getNumTiles());
+		// The COUNT is what CityContext serves (AREA_SIZE, and the isCoastal(minArea) max-adjacent-water store), so
+		// every nonzero change is one state change -- there is no derived verdict to cross.
+		// ⛔ No in-read reseed twin: SEVT_AREAS_RECALCULATED plus the map-settled guarantee already stand every
+		// area-id holder up after a load, so a second announcement per area would re-derive the same block.
+		emitAreaTilesChanged(getID(), m_iNumTiles, iChange);
 	}
 }
 
@@ -946,6 +952,9 @@ void CvArea::changeCleanPowerCount(TeamTypes eIndex, int iChange)
 
 		if (bWasCleanPower != (m_aiCleanPowerCount[eIndex] > 0))
 		{
+			// The third leg of CvCity::isPower() (reached through isAreaCleanPower). The existing count crossing IS
+			// the fact -- the raw count moves per providing building, the (area x team) verdict only here.
+			emitAreaCleanPowerChanged(getID(), (int)eIndex, m_aiCleanPowerCount[eIndex] > 0);
 			GET_TEAM(eIndex).updateCommerce();
 
 			if (eIndex == GC.getGame().getActiveTeam())

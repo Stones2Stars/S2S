@@ -3055,8 +3055,15 @@ int CvTeam::getNumMembers() const
 
 void CvTeam::changeNumMembers(int iChange)
 {
-	m_iNumMembers += iChange;
-	FASSERT_NOT_NEGATIVE(m_iNumMembers);
+	if (iChange != 0)
+	{
+		m_iNumMembers += iChange;
+		FASSERT_NOT_NEGATIVE(m_iNumMembers);
+		// #430 event spine: the `TEAM` counter token reads this COUNT itself (EmpireContext::teamMemberCount), so
+		// there is no derived verdict to cross -- every nonzero change is one state change. The callers are player
+		// init and setTeam (a member joining or leaving), never a per-turn tick.
+		emitTeamMembersChanged((int)getID(), m_iNumMembers, iChange);
+	}
 }
 
 
@@ -6568,6 +6575,13 @@ void CvTeam::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvTeam", &m_bCapitulated);
 
 	WRAPPER_READ(wrapper, "CvTeam", (int*)&m_eID);
+	// THE RESEED EMIT (DEC-spine-reseed): m_iNumMembers deserializes WHOLESALE (read at the top of read()), so
+	// changeNumMembers never runs on load. Emitted HERE rather than beside that read: m_eID -- the id the fact
+	// hangs on -- is only valid from this line on, reset() having cleared it. The count IS the delta (old = 0).
+	if (m_iNumMembers > 0)
+	{
+		emitTeamMembersChanged((int)m_eID, m_iNumMembers, m_iNumMembers);
+	}
 
 	WRAPPER_READ_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_aiStolenVisibilityTimer);
 

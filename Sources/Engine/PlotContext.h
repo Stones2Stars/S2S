@@ -90,9 +90,9 @@ public:
 	bool hasImprovement(int eImprovement) const; // {HAS_IMPROVEMENT: I}
 	bool hasRoute(int eRoute) const;             // the plot carries this route (the route-prereq vicinity scan)
 	bool hasBonus(int eBonus, int eTeam) const;  // {HAS_BONUS: B} (a plot bonus is revealed per team, so it cannot be one stored verdict)
-	// The city-PRESENCE read stays forwarded: it carries no mutation event a bit could be maintained from, and a
-	// stored bit with no trigger is a KNOWN-STALE verdict, which is worse than a cheap forward. Closing it needs
-	// the missing emit, not a bit here.
+	// The city-PRESENCE read stays FORWARDED -- CvPlot answers it O(1), so the STORES-vs-FORWARDS split keeps it
+	// here rather than as a stored bit. Its mutation now announces SEVT_PLOT_CITY_CHANGED (CvPlot::setPlotCity),
+	// so a reader that must REACT to a city appearing on the plot has a fact to hang on.
 	bool isCity() const;                         // the plot holds a city
 	int  owner() const;                          // CvPlot::getOwner (the vicinity scans' owned-plot test; NO_PLAYER = unowned)
 	int  latitude() const;                       // CvPlot::getLatitude (the latitude band predicate)

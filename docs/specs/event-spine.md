@@ -110,6 +110,48 @@ reads objects). **Build order:** spine + the modifier scope accumulator → logg
   (`scopeReceiversFedBy(CITY|EMPIRE, PLOT)` — the plot-fed receiver sums), so a loaded city's plot-fed sums are
   marked without a `worked` in-read emit. The worked SET itself is read live at the rebuild
   (`CvCity::isWorkingPlot`), never replayed from events.
+  **THE TIER-1 HOLES ARE CLOSED** — the facts a named consumer read but nothing announced. **`isPowered()` is
+  whole**: its three ORed legs each announce now — the power COUNT (`SEVT_POWER_CHANGED`), the **disabled-power
+  timer** (`SEVT_CITY_POWER_DISABLED_CHANGED`, `CvCity::changeDisabledPowerTimer`) and the **area clean-power**
+  flag (`SEVT_AREA_CLEAN_POWER_CHANGED`, `CvArea::changeCleanPowerCount`). ⚠ The timer TICKS DOWN every turn, so
+  it emits at the derived 0-CROSSING, never per decrement — a counter that moves on a schedule is not a state
+  change until its verdict flips, and this is the general rule for every timer-backed fact. Beside them:
+  **`SEVT_HEADQUARTERS_CHANGED`** (`CvGame::setHeadquarters`, per affected city — the `setHolyCity` shape, and
+  **not** a duplicate of the building/corporation PRESENCE facts the same setter drives),
+  **`SEVT_PLOT_CITY_CHANGED`** (`CvPlot::setPlotCity` — the ONE emit covering its `changeCityRadiusCount` /
+  `changePlayerCityRadiusCount` pass-throughs), **`SEVT_GOVERNMENT_CENTER_CHANGED`** and
+  **`SEVT_CITY_FRESH_WATER_CHANGED`** (the two `CvCity` counters, at their existing verdict crossings; the fresh
+  water one is the provider-BUILDING-fed access counter, distinct from the plot-adjacency verdict the substrate
+  maintains), **`SEVT_ANARCHY_CHANGED`** (`CvPlayer::changeAnarchyTurns`), **`SEVT_TEAM_MEMBERS_CHANGED`** and
+  **`SEVT_AREA_TILES_CHANGED`** (the two bare counters `EmpireContext::teamMemberCount` / `CityContext`'s
+  AREA_SIZE + max-adjacent-water read), and **`SEVT_UNIT_CREATED_COUNT_CHANGED`** (the world-instance cap's
+  cumulative counter — distinct from `SEVT_UNIT_COUNT`, the player's LIVE per-type tally, and from
+  `SEVT_UNIT_CREATED`, the instance; all three fire at one birth and none duplicates another).
+  **THE UNIT PLANE has its dirty triggers** — [state-repositories.md](../architecture/state-repositories.md)
+  specifies a unit's resolved values dirty *"ONLY when a promotion or combat class changes"*, and neither
+  existed: `SEVT_UNIT_PROMOTION_CHANGED` (`CvUnit::processPromotion`, the ONE funnel both `setHasPromotion`
+  overloads reach) and `SEVT_UNIT_COMBAT_CHANGED` (`CvUnit::processUnitCombat`, reached once past
+  `setHasUnitCombat`'s change guard AND its game-option/spy validity gate). **`SEVT_UNIT_KILLED`** is the DEATH
+  TWIN `SEVT_UNIT_CREATED` lacked — without it grants and the out-of-process replay see units born and never die;
+  it is emitted from `CvUnit::killUnconditional` at the first point past every non-death early return (delayed
+  death, respawn-at-capital, survivor), each of which leaves the unit ALIVE, so it fires once per genuine death.
+  **`SEVT_UNIT_LEFT_CITY`** is the leave twin of `SEVT_UNIT_ENTERED_CITY`; ⚠ it is announced for EVERY city plot
+  a unit vacates while the ENTRY's conquest branch resolves into an acquisition instead of an entry, so the two
+  do NOT net to occupancy — a consumer needing occupancy reads the unit's live plot.
+  **The reseed grew the matching in-read halves** wherever the setter cannot run on a load: `CvCity::read`
+  (government-centre count, fresh-water counter, disabled-power timer — a save can be taken mid-blackout — and
+  the headquarters designation, tested off the loaded IDInfo via `CvGame::isHeadquartersByOwnerId`, the
+  `isHolyCityByOwnerId` precedent, because `CvGame`'s array deserializes before the cities), `CvPlayer::read`
+  (anarchy turns — a save can load mid-revolution — the golden-age twin), `CvPlot::read` (the plot's city, whose
+  fact the terrain emit does **not** cover: terrain re-derives the stored verdict BITSET and city-presence is a
+  `PlotContext` FORWARD, not a bit in that block), `CvTeam::read` (the member count, emitted after `m_eID`
+  deserializes rather than beside the count, since the id the fact hangs on is only valid from there), and
+  **`CvUnit::read`, which previously emitted NOTHING** — the instance, its promotion set and its combat-class
+  set, each at its own genuine per-element read. ⛔ Two in-read halves are deliberately ABSENT and are not
+  oversights: **the world unit-created counter** (nothing stores a derivative of it — the cap reads it live, so
+  there is nothing to seed) and **the area tile count** (`SEVT_AREAS_RECALCULATED` plus the map-settled guarantee
+  already stand every area-id holder up, so a per-area announcement would re-derive the same block — the
+  `CvPlot::read` terrain precedent).
   ⚠ **One endpoint is deliberately unwired: `emitLoadPipeline`** — every one of its arguments is produced by the
   archived load-time warm-up/rebuild pass, which the CAPSTONE rule removed
   ([state-repositories.md](../architecture/state-repositories.md)); the event reseed replaced that pass, so the

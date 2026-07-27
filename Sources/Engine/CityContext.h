@@ -135,13 +135,15 @@ public:
 	// ×100 native, indexed by CommerceTypes.
 	void commerces(int (&realizedCommerces)[NUM_COMMERCE_TYPES]) const;
 
-	// ⚠ THREE FORWARDS STILL COMPUTE, each for want of a fact -- recorded rather than papered over, because a store
-	// with no trigger is permanently wrong, which is worse than a cheap forward (the PlotContext::isCity precedent):
-	//  - isPowered(): the power COUNT has SEVT_POWER_CHANGED, but the two other legs it ORs in -- the disabled-power
-	//    timer and the area clean-power flag -- have no fact of their own.
-	//  - isHeadquartersAny(): a corporation headquarters move announces nothing (CvGame::setHeadquarters).
+	// ⚠ ONE FORWARD STILL COMPUTES, recorded rather than papered over, because a store with no trigger is
+	// permanently wrong -- which is worse than a cheap forward (the PlotContext::isCity precedent):
 	//  - ownCulturePercent(): plot culture moves EVERY turn for every plot, so a store would be rewritten as often
 	//    as it is read; it is correctly a live read, not a missing fact.
+	// isPowered() and isHeadquartersAny() stay FORWARDS by the STORES-vs-FORWARDS split (both are data CvCity
+	// already answers O(1)), but all three of isPowered()'s legs now announce -- the power COUNT
+	// (SEVT_POWER_CHANGED), the disabled-power timer (SEVT_CITY_POWER_DISABLED_CHANGED) and the area clean-power
+	// flag (SEVT_AREA_CLEAN_POWER_CHANGED) -- and the headquarters designation announces
+	// SEVT_HEADQUARTERS_CHANGED, so a reader that needs to react to either has a fact to hang on.
 
 	// Fill the CITY half of a condition-eval context (ec.city + ec.plot) from the bound city -- the context IS the
 	// eval state (the evaluator reads through the ctx it fills). Paired with EmpireContext::fillEvalCtx (player/team).

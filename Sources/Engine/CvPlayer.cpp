@@ -9742,6 +9742,9 @@ void CvPlayer::changeAnarchyTurns(int iChange, bool bHideMessages)
 
 		if (bOldAnarchy != isAnarchy())
 		{
+			// #430 event spine: the IS_ANARCHY verdict crossing. The turn counter itself ticks down every turn, so
+			// only this 0-crossing is a state change.
+			emitAnarchyChanged(getID(), isAnarchy());
 			setCommerceDirty();
 			updateTradeRoutes();
 			updateCorporation();
@@ -18731,6 +18734,12 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		if (m_iGoldenAgeTurns > 0)
 		{
 			emitGoldenAgeChanged(getID(), true);
+		}
+		// The anarchy twin of the golden-age fact: a save can be taken mid-revolution, and m_iAnarchyTurns
+		// deserializes WHOLESALE (read earlier in read()), so changeAnarchyTurns never runs.
+		if (m_iAnarchyTurns > 0)
+		{
+			emitAnarchyChanged(getID(), true);
 		}
 		emitEraChanged(getID(), (int)m_eCurrentEra);
 		emitNukesChanged(getID(), getNukeState());

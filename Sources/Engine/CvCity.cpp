@@ -7611,6 +7611,9 @@ void CvCity::changeGovernmentCenterCount(int iChange)
 
 		if (bGovernmentCenter != isGovernmentCenter())
 		{
+			// #430 event spine: the VERDICT crossing is the fact -- the raw count moves per providing building,
+			// the government-centre state only here.
+			emitGovernmentCenterChanged(getID(), getOwner(), isGovernmentCenter());
 			GET_PLAYER(getOwner()).setMaintenanceDirty(true);
 		}
 	}
@@ -17398,6 +17401,13 @@ void CvCity::read(FDataStreamBase* pStream)
 			if (m_pabHasCorporation[iI])
 			{
 				emitCorporationChanged(iCityId, iCityOwner, iI, true);
+				// The headquarters fact rides the same reseed pass (the holy-city precedent above): CvGame's
+				// m_paHeadquarters deserializes before the cities, so setHeadquarters never runs. The IDInfo test
+				// is read-safe here, where getHeadquarters() cannot resolve this city back to itself.
+				if (GC.getGame().isHeadquartersByOwnerId((CorporationTypes)iI, (PlayerTypes)m_eOwner, iCityId))
+				{
+					emitHeadquartersChanged(iCityId, iCityOwner, iI, true);
+				}
 			}
 		}
 		// (no bonus reseed loop: the counts are no longer read from the save -- the load-end network fold
@@ -17413,6 +17423,14 @@ void CvCity::read(FDataStreamBase* pStream)
 		if (m_eCultureLevel != NO_CULTURELEVEL)
 		{
 			emitCultureLevelChanged(iCityId, iCityOwner, (int)m_eCultureLevel, (int)NO_CULTURELEVEL);
+		}
+		// #430 reseed: the GOVERNMENT-CENTRE verdict. m_iGovernmentCenterCount deserializes WHOLESALE (read earlier
+		// in read()), so changeGovernmentCenterCount never runs. The building reseed below is NOT a substitute: it
+		// announces building PRESENCE, and deriving the verdict from the building infos would be a reconstruction,
+		// not a fact.
+		if (m_iGovernmentCenterCount > 0)
+		{
+			emitGovernmentCenterChanged(iCityId, iCityOwner, true);
 		}
 	}
 
@@ -17436,11 +17454,23 @@ void CvCity::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvCity", &m_iLandmarkAngerTimer);
 
 	WRAPPER_READ(wrapper, "CvCity", &m_iFreshWater);
+	// THE RESEED EMIT (DEC-spine-reseed): the counter deserializes WHOLESALE, so changeFreshWater never runs and
+	// its crossing never fires. Emitted here, co-located with the read; only a city that HAS access has a fact.
+	if (m_iFreshWater > 0)
+	{
+		emitCityFreshWaterChanged(m_iID, (int)m_eOwner, true, m_iFreshWater);
+	}
 	WRAPPER_READ(wrapper, "CvCity", &m_iAdjacentDamagePercent);
 	WRAPPER_READ(wrapper, "CvCity", &m_iWorkableRadiusOverride);
 	WRAPPER_READ(wrapper, "CvCity", &m_iProtectedCultureCount);
 	WRAPPER_READ(wrapper, "CvCity", &m_iNumUnitFullHeal);
 	WRAPPER_READ(wrapper, "CvCity", &m_iDisabledPowerTimer);
+	// THE RESEED EMIT: a save can be taken mid-blackout, and the timer deserializes WHOLESALE -- so without this
+	// the HAS_POWER verdict reads powered for a city whose power is still disabled.
+	if (m_iDisabledPowerTimer > 0)
+	{
+		emitCityPowerDisabledChanged(m_iID, (int)m_eOwner, true, m_iDisabledPowerTimer);
+	}
 	WRAPPER_READ(wrapper, "CvCity", &m_iWarWearinessTimer);
 
 	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvCity", REMAPPED_CLASS_TYPE_COMBATINFOS, GC.getNumUnitCombatInfos(), m_paiUnitCombatExtraStrength);
@@ -20847,6 +20877,9 @@ void CvCity::changeFreshWater(int iChange)
 
 		if (bDidHaveFreshWater != hasFreshWater())
 		{
+			// #430 event spine: the provider-building-fed ACCESS verdict crossing. ⚠ Distinct from the plot's
+			// adjacency HAS_FRESHWATER fact -- a building can grant a city access on a plot with no water.
+			emitCityFreshWaterChanged(getID(), getOwner(), hasFreshWater(), m_iFreshWater);
 			algo::for_each(plots(), bind(CvPlot::updateIrrigated, _1));
 
 			updateFreshWaterHealth();
@@ -22001,7 +22034,15 @@ int CvCity::getDisabledPowerTimer() const
 
 void CvCity::changeDisabledPowerTimer(int iChange)
 {
+	// The timer is DECREMENTED every turn by doDisabledPower, so only its 0-CROSSING is a state change worth
+	// announcing -- a per-decrement emit would fire every turn while isPower() stood still. The crossing is the
+	// second of the three legs CvCity::isPower() ORs (the count leg emits from changePowerCount).
+	const bool bWasDisabled = m_iDisabledPowerTimer > 0;
 	m_iDisabledPowerTimer += iChange;
+	if (bWasDisabled != (m_iDisabledPowerTimer > 0))
+	{
+		emitCityPowerDisabledChanged(getID(), getOwner(), m_iDisabledPowerTimer > 0, m_iDisabledPowerTimer);
+	}
 }
 
 int CvCity::getWarWearinessTimer() const

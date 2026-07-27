@@ -1520,6 +1520,14 @@ void CvUnit::killUnconditional(bool bDelay, PlayerTypes ePlayer, bool bMessaged)
 		FAssertMsg(!getCombatUnit(), "The current unit instance's combat unit is expected to be NULL");
 	}
 
+	// #430 event spine: the DEATH TWIN of emitUnitCreated. Placed HERE because this is the first point every
+	// non-death early return above has been taken -- the delayed death (bDelay), the respawn-at-capital and the
+	// survivor branches all return before it, and each of those leaves the unit ALIVE. CvUnit::kill is a
+	// pass-through of this function, so the fact is emitted once per genuine death from either entry point.
+	// The plot is -1 where the unit held none; the tail below deletes the unit only when it did.
+	emitUnitKilled((int)getUnitType(), getID(), (int)eOwner,
+		(pPlot != NULL) ? GC.getMap().plotNum(pPlot->getX(), pPlot->getY()) : -1);
+
 	owner.changeUnitUpkeep(-getUpkeep(), isMilitaryBranch());
 
 	owner.changeUnitCount(m_eUnitType, -1);
@@ -13932,6 +13940,10 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
 				pOldCity->changeMilitaryHappinessUnits(-1);
 			}
 			pOldCity->noteUnitMoved(this);
+			// The LEAVE twin of emitUnitEnteredCity. ⚠ Unconditional on the old city, while the entry is announced
+			// only on the friendly branch (the enemy branch resolves into an acquisition instead of an entry), so
+			// the two do not net to occupancy -- a consumer needing that reads the unit's live plot.
+			emitUnitLeftCity((int)getUnitType(), getID(), (int)getOwner(), pOldCity->getID());
 		}
 
 		{
@@ -18301,8 +18313,10 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 	const CvUnitCombatInfo& kUnitCombat = GC.getUnitCombatInfo(eIndex);
 	const int iChange = (bAdding ? 1 : -1);
 	int	iI;
-
 	bool bSM = GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS);
+	// #430 event spine: the unit plane's SECOND dirty trigger. This is the ONE funnel -- setHasUnitCombat reaches
+	// it exactly once past BOTH its change guard and its game-option/spy validity gate, with the flag written.
+	emitUnitCombatChanged(getID(), (int)getOwner(), (int)eIndex, iChange);
 
 	if (bSM)
 	{
@@ -18691,6 +18705,14 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	const int iChange = (bAdding ? 1 : -1);
 	int	iI;
 	bool bSMrecalc = false;
+	// #430 event spine: the unit plane's FIRST dirty trigger (state-repositories.md -- a unit's resolved values
+	// dirty ONLY on a promotion or combat-class change). This is the ONE funnel: both setHasPromotion overloads
+	// reach it, past the has-flag guard, with the flag already written.
+	// ⚠ A unit's INITIAL free promotions run through here from CvUnit::init BEFORE emitUnitCreated (whose position
+	// is pinned between doSetFreePromotions and doSetDefaultStatuses -- see init), so these facts can precede the
+	// instance fact. That is sound rather than tolerated: spine events are FACTS, order-independent and
+	// prerequisite-free (event-spine.md), so a consumer resolves the unit by id and never by arrival order.
+	emitUnitPromotionChanged(getID(), (int)getOwner(), (int)eIndex, iChange);
 
 
 	if (kPromotion.isParalyze() && bAdding)
@@ -19513,6 +19535,11 @@ void CvUnit::read(FDataStreamBase* pStream)
 	}
 	m_pUnitInfo = &GC.getUnitInfo(m_eUnitType);
 	m_movementCharacteristicsHash = m_pUnitInfo->getZobristValue();
+	// THE RESEED EMIT (DEC-spine-reseed): the unit INSTANCE fact. A loaded unit never runs init(), so without this
+	// the stream shows an empire whose units all predate the save. Emitted HERE, the first point m_iID / m_eOwner /
+	// m_eUnitType have all deserialized. Result-producers suppress inside the load bracket, so this restores the
+	// instance without re-granting anything -- the emitBuildingChanged(bFirst = false) contract.
+	emitUnitCreated((int)m_eUnitType, m_iID, (int)m_eOwner);
 
 	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvUnit", REMAPPED_CLASS_TYPE_UNITS, (int*)&m_eLeaderUnitType);
 
@@ -19571,6 +19598,14 @@ void CvUnit::read(FDataStreamBase* pStream)
 						findOrCreatePromotionKeyedInfo((PromotionTypes)iI)->m_bHasPromotion = true;
 					}
 				}
+			}
+			// THE RESEED EMIT: the promotion set is written straight into the keyed map here, so processPromotion
+			// never runs and the unit plane's dirty trigger never fires. Tested against the RESULTING flag rather
+			// than the stream bit, because the two writes above are conditional (isRemoveAfterSet, the implied
+			// promotion-line block) -- so the fact announced is the state that actually landed.
+			if (isHasPromotion((PromotionTypes)iI))
+			{
+				emitUnitPromotionChanged(m_iID, (int)m_eOwner, iI, 1);
 			}
 		}
 	}
@@ -19851,6 +19886,9 @@ void CvUnit::read(FDataStreamBase* pStream)
 			UnitCombatKeyedInfo* info = findOrCreateUnitCombatKeyedInfo((UnitCombatTypes)iI);
 
 			info->m_bHasUnitCombat = true;
+			// THE RESEED EMIT: the combat-class set is written straight into the keyed map here, so
+			// processUnitCombat never runs and the unit plane's second dirty trigger never fires.
+			emitUnitCombatChanged(m_iID, (int)m_eOwner, iI, 1);
 		}
 	}
 

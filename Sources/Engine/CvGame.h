@@ -720,6 +720,9 @@ public:
 	void makeCorporationFounded(CorporationTypes eIndex, PlayerTypes ePlayer);
 
 	CvCity* getHeadquarters(CorporationTypes eIndex) const;
+	// Read-safe headquarters test off the loaded IDInfo -- usable from inside CvCity::read, where
+	// getHeadquarters() cannot resolve the city back to itself yet.
+	bool isHeadquartersByOwnerId(CorporationTypes eIndex, PlayerTypes eOwner, int iID) const;
 	void setHeadquarters(CorporationTypes eIndex, CvCity* pNewValue, bool bAnnounce);
 
 	PlayerVoteTypes getPlayerVote(PlayerTypes eOwnerIndex, int iVoteId) const;

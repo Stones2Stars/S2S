@@ -5087,6 +5087,10 @@ void CvGame::incrementUnitCreatedCount(UnitTypes eIndex)
 {
 	FASSERT_BOUNDS(0, GC.getNumUnitInfos(), eIndex);
 	m_paiUnitCreatedCount[eIndex]++;
+	// #430 event spine: the world-instance cap reads this counter live (CvUnitEnabler). It only ever grows, so
+	// every increment IS a state change -- there is no verdict to cross. ⛔ No in-read twin: nothing stores a
+	// derivative of it, so a loaded save serves the deserialized counter directly and has nothing to seed.
+	emitUnitCreatedCountChanged((int)eIndex, m_paiUnitCreatedCount[eIndex], 1);
 }
 
 
@@ -5633,6 +5637,15 @@ CvCity* CvGame::getHeadquarters(CorporationTypes eIndex) const
 }
 
 
+// Compares the loaded headquarters IDInfo DIRECTLY, with no getCity() resolution, so it is safe inside
+// CvCity::read -- there the city is not yet resolvable back to itself and getHeadquarters() == this cannot hold.
+bool CvGame::isHeadquartersByOwnerId(CorporationTypes eIndex, PlayerTypes eOwner, int iID) const
+{
+	FASSERT_BOUNDS(0, GC.getNumCorporationInfos(), eIndex);
+	return m_paHeadquarters[eIndex].eOwner == eOwner && m_paHeadquarters[eIndex].iID == iID;
+}
+
+
 void CvGame::setHeadquarters(CorporationTypes eIndex, CvCity* pNewValue, bool bAnnounce)
 {
 	PROFILE_EXTRA_FUNC();
@@ -5649,6 +5662,18 @@ void CvGame::setHeadquarters(CorporationTypes eIndex, CvCity* pNewValue, bool bA
 		else
 		{
 			m_paHeadquarters[eIndex].reset();
+		}
+
+		// #430 event spine: the HQ DESIGNATION moved -- IS_HEADQUARTERS flips for the OLD city (loses) and the NEW
+		// city (gains). Announced per affected city, the setHolyCity shape. ⛔ Distinct from the changeHasBuilding /
+		// setHasCorporation calls below: those are the building- and corporation-PRESENCE facts, not this one.
+		if (pOldValue != NULL)
+		{
+			emitHeadquartersChanged(pOldValue->getID(), pOldValue->getOwner(), (int)eIndex, false);
+		}
+		if (pNewValue != NULL)
+		{
+			emitHeadquartersChanged(pNewValue->getID(), pNewValue->getOwner(), (int)eIndex, true);
 		}
 
 		if (pOldValue != NULL)

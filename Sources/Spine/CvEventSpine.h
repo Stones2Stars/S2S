@@ -58,7 +58,10 @@ enum SpineFieldType
 	// This is how a former "%s = GC.getXInfo(i).getType()" line becomes a clean raw field (the index travels, not the string).
 	SFT_BUILDING, SFT_UNIT, SFT_TECH, SFT_PLAYER,
 	SFT_BONUS, SFT_IMPROVEMENT, SFT_PROMOTION, SFT_RELIGION, SFT_CORPORATION, SFT_FEATURE, SFT_TERRAIN, SFT_CIVIC, SFT_PROJECT, SFT_SPECIALIST,
-	SFT_TRAIT, SFT_ROUTE, SFT_COMMERCE, SFT_PROPERTY
+	SFT_TRAIT, SFT_ROUTE, SFT_COMMERCE, SFT_PROPERTY,
+	// The unit plane's combat CLASS (UnitCombatTypes) -- resolved via GC.getUnitCombatInfo, bounded by
+	// GC.getNumUnitCombatInfos(). Distinct from SFT_UNIT (the unit TYPE) and from SFT_PROMOTION.
+	SFT_UNITCOMBAT
 };
 
 //	Field identities are DOMAIN-LOCAL (owner 2026-06-18): each migrated domain defines its OWN field-tag enum + a
@@ -382,7 +385,84 @@ enum SpineDomainEvent
 	// ⚠ The solver's change PROPAGATION (CvProperties::propagateChange -- FLAMMABILITY's city->player rollup) fans
 	// one change onto OTHER objects, each of which re-enters the mutation path and emits its own fact. Those are
 	// DISTINCT objects' facts, not duplicates -- every one of them emits.
-	SEVT_PROPERTY_CHANGED = 56
+	SEVT_PROPERTY_CHANGED = 56,
+	// The city's power-DISABLED state flipped (CvCity::changeDisabledPowerTimer). CvCity::isPower() ORs THREE legs
+	// -- the power COUNT (SEVT_POWER_CHANGED), this timer, and the area clean-power flag below -- so the HAS_POWER
+	// verdict is stale unless all three announce. ⚠ The timer TICKS DOWN every turn (CvCity::doDisabledPower), so
+	// only the derived 0-CROSSING is a fact; emitting per decrement would fire every turn for no state change.
+	// iA = 1 disabled / 0 restored, iB = the new timer value, iC = owner, iSrcLoc = cityId. DOMAIN.
+	SEVT_CITY_POWER_DISABLED_CHANGED = 57,
+	// An AREA's CLEAN-POWER flag flipped for a TEAM (CvArea::changeCleanPowerCount, at its existing count crossing)
+	// -- the third leg of CvCity::isPower(), reached through CvCity::isAreaCleanPower(). The fact is scoped to
+	// (area x team), which has no owning player, so iC stays -1 and the team rides iB.
+	// iA = 1 clean-powered / 0 no longer, iB = teamId, iC = -1, iSrcLoc = areaId. DOMAIN.
+	SEVT_AREA_CLEAN_POWER_CHANGED = 58,
+	// A corporation's HEADQUARTERS designation moved (CvGame::setHeadquarters) -- the IS_HEADQUARTERS predicate
+	// flips for the OLD city (loses) and the NEW city (gains). Emitted per affected city, the setHolyCity shape.
+	// ⛔ NOT a duplicate of the changeHasBuilding / setHasCorporation calls the same setter makes: those announce
+	// building PRESENCE and corporation PRESENCE, and an HQ designation is neither.
+	// iType = Corporation, iA = 1 now HQ / 0 no longer, iC = city owner, iSrcLoc = cityId. DOMAIN.
+	SEVT_HEADQUARTERS_CHANGED = 59,
+	// The city SITTING ON a plot changed (CvPlot::setPlotCity) -- a city was founded/acquired onto the plot or
+	// removed from it. DISTINCT from SEVT_WORKING_CITY_CHANGED (which city may WORK the plot) and from
+	// SEVT_CITY_FOUNDED (the founding act, which does not fire on razing or on a plot losing its city).
+	// ⚠ CvPlot::changeCityRadiusCount / changePlayerCityRadiusCount are PASS-THROUGHS of this setter -- this one
+	// fact covers them; a second emit there would announce the same change per radius plot.
+	// iA = old cityId (-1 = none), iB = new cityId (-1 = none), iC = owner, iSrcLoc = plotId. DOMAIN.
+	SEVT_PLOT_CITY_CHANGED = 60,
+	// The city's GOVERNMENT-CENTRE verdict flipped (CvCity::changeGovernmentCenterCount, at its existing count
+	// crossing) -- the palace/counterpart buildings that make a city a maintenance origin. DISTINCT from
+	// SEVT_CAPITAL_CHANGED: a capital is always a government centre, but a government centre need not be capital.
+	// iA = 1 now a government centre / 0 no longer, iC = owner, iSrcLoc = cityId. DOMAIN.
+	SEVT_GOVERNMENT_CENTER_CHANGED = 61,
+	// The player entered / left ANARCHY (CvPlayer::changeAnarchyTurns, at its existing 0-crossing). Anarchy zeroes
+	// the empire's commerce and suspends civic/corporation effects, so IS_ANARCHY is a live cascade input.
+	// iA = 1 in anarchy / 0 no longer, iC = player, iSrcLoc = -1. DOMAIN.
+	SEVT_ANARCHY_CHANGED = 62,
+	// The city's FRESH-WATER ACCESS flipped (CvCity::changeFreshWater, at its existing count crossing) -- the
+	// PROVIDER-BUILDING-fed access counter. ⚠ DISTINCT from the plot-adjacency HAS_FRESHWATER verdict the plot
+	// substrate maintains (CvPlot::isFreshWater): a building can grant a city access on a dry plot.
+	// iA = 1 has access / 0 no longer, iB = the new counter, iC = owner, iSrcLoc = cityId. DOMAIN.
+	SEVT_CITY_FRESH_WATER_CHANGED = 63,
+	// ===== the UNIT plane. state-repositories.md: a unit's resolved values dirty "ONLY when a promotion or a
+	// combat class changes" -- neither trigger existed, so the plane had no fact to rebuild from. =====
+	// A unit gained / lost a PROMOTION (CvUnit::processPromotion -- the single funnel BOTH setHasPromotion
+	// overloads reach; the PromotionApply::flags overload delegates to the bool overload, which calls it).
+	// iType = Promotion, iA = unit id, iB = +1 gained / -1 lost, iC = owner, iSrcLoc = -1. DOMAIN.
+	SEVT_UNIT_PROMOTION_CHANGED = 64,
+	// A unit gained / lost a COMBAT CLASS (CvUnit::processUnitCombat -- the single funnel setHasUnitCombat reaches
+	// once past BOTH its change guard and its game-option/spy validity gate) -- the unit plane's second dirty
+	// trigger. A promotion's subCombat grants route through the same setter, so the fact is emitted once per
+	// genuine class change regardless of what caused it.
+	// iType = UnitCombat, iA = unit id, iB = +1 gained / -1 lost, iC = owner, iSrcLoc = -1. DOMAIN.
+	SEVT_UNIT_COMBAT_CHANGED = 65,
+	// A unit INSTANCE died -- the DEATH TWIN of SEVT_UNIT_CREATED, without which grants and the out-of-process
+	// replay see units born and never die. Emitted from CvUnit::killUnconditional at the point every non-death
+	// early return has been taken (delayed death, respawn-at-capital, survivor), so it fires exactly once per
+	// genuine death; CvUnit::kill is a PASS-THROUGH of that function.
+	// iType = unit TYPE, iA = unit id, iC = owner, iSrcLoc = the plot it died on (-1 = none). DOMAIN.
+	SEVT_UNIT_KILLED = 66,
+	// A unit LEFT a city's plot (CvUnit::setXY's old-city branch) -- the leave twin of SEVT_UNIT_ENTERED_CITY.
+	// ⚠ The leave is announced for EVERY city plot a unit vacates, while the entry's conquest branch resolves
+	// into an acquisition instead of an entry -- so the two are not a balanced pair, and a consumer that counts
+	// occupancy must read the unit's live plot rather than net the facts.
+	// iType = unit TYPE, iA = unit id, iC = owner, iSrcLoc = the city id it left. DOMAIN.
+	SEVT_UNIT_LEFT_CITY = 67,
+	// The WORLD's cumulative created-count of a unit type advanced (CvGame::incrementUnitCreatedCount) -- read
+	// live by the UnitEnabler's world-instance cap. The counter only ever grows, so every increment IS a distinct
+	// state change (there is no verdict to cross). DISTINCT from SEVT_UNIT_COUNT (a player's LIVE per-type tally)
+	// and from SEVT_UNIT_CREATED (the instance); all three fire at one unit's birth and none duplicates another.
+	// iType = unit TYPE, iA = the new world count, iB = +1, iC = -1 (world scope), iSrcLoc = -1. DOMAIN.
+	SEVT_UNIT_CREATED_COUNT_CHANGED = 68,
+	// A TEAM's member count changed (CvTeam::changeNumMembers) -- the `TEAM` counter token
+	// (EmpireContext::teamMemberCount). The COUNT itself is what the token reads, so every nonzero change is one
+	// state change; the setter carries no guard of its own, so the emit supplies it.
+	// iA = the new member count, iB = the change, iC = -1 (a team has no owning player), iSrcLoc = teamId. DOMAIN.
+	SEVT_TEAM_MEMBERS_CHANGED = 69,
+	// An AREA's tile count changed (CvArea::changeNumTiles) -- feeds CityContext's AREA_SIZE and its
+	// max-adjacent-water store (the isCoastal(minArea) form). An area has no owning player, so iC stays -1.
+	// iA = the new tile count, iB = the change, iC = -1, iSrcLoc = areaId. DOMAIN.
+	SEVT_AREA_TILES_CHANGED = 70
 };
 
 //	Which entity's display name changed (the iType of a SEVT_NAME_CHANGE event). The logging consumer resolves the
@@ -439,6 +519,35 @@ void emitCommercePercentChanged(int iPlayer, int iCommerce, int iNewPercent, int
 //	points -- never from CvGameObject::eventPropertyChanged (the unit override does not chain to the base).
 //	iObjectKind = GameObjectTypes (what iObjectId identifies); iOwner = NO_PLAYER (-1) where the object has none.
 void emitPropertyChanged(int iObjectKind, int iObjectId, int iOwner, int iProperty, int iNewValue, int iOldValue);
+//	The two silent legs of CvCity::isPower(), beside the power COUNT's emitPowerChanged. Call at the derived
+//	CROSSING only -- the disabled-power timer ticks down every turn, and a per-decrement emit would announce a
+//	fact that did not change.
+void emitCityPowerDisabledChanged(int iCity, int iOwner, bool bDisabled, int iTimer);
+void emitAreaCleanPowerChanged(int iArea, int iTeam, bool bCleanPower);
+//	A corporation headquarters designation moved. Call per AFFECTED city -- the old one loses, the new one gains
+//	(the emitHolyCityChanged shape). Never a substitute for the presence facts the same setter also drives.
+void emitHeadquartersChanged(int iCity, int iOwner, int iCorporation, bool bIsHeadquarters);
+//	The city sitting ON a plot changed. ONE emit at CvPlot::setPlotCity covers the radius-count pass-throughs.
+void emitPlotCityChanged(int iPlot, int iOwner, int iOldCity, int iNewCity);
+void emitGovernmentCenterChanged(int iCity, int iOwner, bool bIsGovernmentCenter);
+void emitAnarchyChanged(int iPlayer, bool bAnarchy);
+//	The city's PROVIDER-BUILDING-fed fresh-water ACCESS -- not the plot-adjacency fresh-water verdict.
+void emitCityFreshWaterChanged(int iCity, int iOwner, bool bHasFreshWater, int iCount);
+//	The unit plane's two dirty triggers. Call from the ONE funnel each (CvUnit::processPromotion /
+//	CvUnit::processUnitCombat), never from the setter overloads that pass through them.
+void emitUnitPromotionChanged(int iUnitId, int iOwner, int iPromotion, int iDelta);
+void emitUnitCombatChanged(int iUnitId, int iOwner, int iUnitCombat, int iDelta);
+//	A unit instance died -- the twin of emitUnitCreated. Call once the death is unconditional (past the delayed,
+//	respawn and survivor returns). iPlot = -1 where the unit held no plot.
+void emitUnitKilled(int iUnitType, int iUnitId, int iOwner, int iPlot);
+//	A unit left a city's plot -- the twin of emitUnitEnteredCity. Call from the old-city branch, before the move.
+void emitUnitLeftCity(int iUnitType, int iUnitId, int iOwner, int iCity);
+//	The world's cumulative created-count of a unit type advanced (the world-instance cap's input).
+void emitUnitCreatedCountChanged(int iUnitType, int iNewCount, int iDelta);
+//	A team's member count changed (the `TEAM` counter token's source).
+void emitTeamMembersChanged(int iTeam, int iNewCount, int iDelta);
+//	An area's tile count changed (AREA_SIZE + the city max-adjacent-water store).
+void emitAreaTilesChanged(int iArea, int iNewCount, int iDelta);
 void emitNukesChanged(int iPlayer, int iState);   // a player's nuke state: 0 disabled / 1 enabled / 2 banned
 void emitCultureLevelChanged(int iCity, int iOwner, int iNewLevel, int iOldLevel);   // culture level old->new (+ the radius/vicinity growth it drives)
 void emitHolyCityChanged(int iCity, int iOwner, int iReligion, bool bIsHoly);   // a city gained(true)/lost(false) a religion's holy-city designation

@@ -7816,6 +7816,9 @@ void CvPlot::setPlotCity(CvCity* pNewValue)
 	{
 		return;
 	}
+	// Captured BEFORE the write below: past it the old city is no longer resolvable from this plot.
+	const CvCity* pOldPlotCity = getPlotCity();
+
 	if (isCity())
 	{
 		for (int iI = 0; iI < NUM_CITY_PLOTS; ++iI)
@@ -7844,12 +7847,20 @@ void CvPlot::setPlotCity(CvCity* pNewValue)
 			}
 		}
 	}
+	const int iOldCityId = (pOldPlotCity != NULL) ? pOldPlotCity->getID() : -1;
+
 	if (pNewValue)
 	{
 		m_plotCity = pNewValue->getIDInfo();
 	}
 	else m_plotCity.reset();
 
+	// #430 event spine: the plot's CITY-PRESENCE fact -- PlotContext::isCity() is forwarded for want of exactly
+	// this emit. ⚠ The changeCityRadiusCount / changePlayerCityRadiusCount loops around this write are
+	// PASS-THROUGHS of the same change, so this ONE fact covers them; announcing per radius plot would emit the
+	// same state change NUM_CITY_PLOTS times.
+	emitPlotCityChanged(GC.getMap().plotNum(getX(), getY()), (int)getOwner(), iOldCityId,
+		(pNewValue != NULL) ? pNewValue->getID() : -1);
 
 	if (isCity())
 	{
@@ -11260,6 +11271,14 @@ void CvPlot::read(FDataStreamBase* pStream)
 
 	WRAPPER_READ(wrapper, "CvPlot", (int*)&m_plotCity.eOwner);
 	WRAPPER_READ(wrapper, "CvPlot", &m_plotCity.iID);
+	// THE RESEED EMIT (DEC-spine-reseed): m_plotCity deserializes WHOLESALE, so setPlotCity never runs and the
+	// plot's city-presence fact is never announced. The terrain emit above does NOT cover it -- it re-derives the
+	// plot's stored verdict BITSET, and city-presence is a PlotContext FORWARD, not a bit in that block. Old city
+	// is -1: a deserializing plot has no prior assignment to unfold.
+	if (m_plotCity.eOwner >= 0 && m_plotCity.eOwner < MAX_PLAYERS && m_plotCity.iID >= 0)
+	{
+		emitPlotCityChanged(GC.getMap().plotNum(m_iX, m_iY), (int)m_plotCity.eOwner, -1, m_plotCity.iID);
+	}
 	WRAPPER_READ(wrapper, "CvPlot", (int*)&m_workingCity.eOwner);
 	WRAPPER_READ(wrapper, "CvPlot", &m_workingCity.iID);
 	// THE RESEED EMIT (DEC-spine-reseed): reading the working-city fact off the stream is what announces it --

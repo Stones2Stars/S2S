@@ -38,6 +38,7 @@
 #include "CvCommerceInfo.h"   // SFT_COMMERCE render (the slider fact's channel) -- bounded by NUM_COMMERCE_TYPES
 #include "CvTechInfo.h"   // SFT_TECH render (getTechInfo().getType()) -- imported directly (was a latent unity-transitive include)
 #include "CvPropertyInfo.h"   // SFT_PROPERTY render (the property fact names PROPERTY_CRIME, not a raw int)
+#include "CvUnitCombatInfo.h"   // SFT_UNITCOMBAT render (the unit plane's combat-class fact names its class)
 
 // ===================== the spine =====================
 
@@ -167,6 +168,10 @@ void spineRenderEventLine(char* szBuf, int iBufSize, const CvSpineEvent& kEvent)
 		case SFT_PROMOTION:
 			m = _snprintf(szBuf + n, iBufSize - n, " %s=%s", szName,
 				(fld.v.i >= 0 && fld.v.i < GC.getNumPromotionInfos()) ? GC.getPromotionInfo((PromotionTypes)fld.v.i).getType() : "?");
+			break;
+		case SFT_UNITCOMBAT:
+			m = _snprintf(szBuf + n, iBufSize - n, " %s=%s", szName,
+				(fld.v.i >= 0 && fld.v.i < GC.getNumUnitCombatInfos()) ? GC.getUnitCombatInfo((UnitCombatTypes)fld.v.i).getType() : "?");
 			break;
 		case SFT_RELIGION:
 			m = _snprintf(szBuf + n, iBufSize - n, " %s=%s", szName,
@@ -320,6 +325,8 @@ enum SpineDomainField
 	SPF_HERITAGE, SPF_ERA, SPF_TAGS, SPF_COMMERCE,
 	// the property fact: WHAT changed + WHICH KIND of object carries it (the kind is what makes SPF_ID readable)
 	SPF_PROPERTY, SPF_OBJECT_KIND,
+	// the unit plane's two dirty triggers + the scoped ids the non-city/plot facts hang on
+	SPF_PROMOTION, SPF_UNITCOMBAT, SPF_UNIT_ID, SPF_TEAM, SPF_AREA, SPF_TIMER,
 	// the load-pipeline diagnostic fields (SEVT_LOAD_PIPELINE)
 	SPF_MS_REBUILD, SPF_MS_FIXPOINT, SPF_PASSES, SPF_MS_PLOTWARM, SPF_MS_PKGWARM,
 	SPF_FLIPS, SPF_CONVERGED, SPF_VERIFY_CATCH, SPF_MS_FIX_ENSURE, SPF_MS_FIX_PROCESS
@@ -370,6 +377,20 @@ static const char* spineDomainPrefix(int iEventId)
 	case SEVT_ERA_CHANGED:             return "[SPINE] eraChanged";
 	case SEVT_COMMERCE_PERCENT_CHANGED: return "[SPINE] commercePercentChanged";
 	case SEVT_PROPERTY_CHANGED:        return "[SPINE] propertyChanged";
+	case SEVT_CITY_POWER_DISABLED_CHANGED: return "[SPINE] cityPowerDisabledChanged";
+	case SEVT_AREA_CLEAN_POWER_CHANGED:    return "[SPINE] areaCleanPowerChanged";
+	case SEVT_HEADQUARTERS_CHANGED:    return "[SPINE] headquartersChanged";
+	case SEVT_PLOT_CITY_CHANGED:       return "[SPINE] plotCityChanged";
+	case SEVT_GOVERNMENT_CENTER_CHANGED: return "[SPINE] governmentCenterChanged";
+	case SEVT_ANARCHY_CHANGED:         return "[SPINE] anarchyChanged";
+	case SEVT_CITY_FRESH_WATER_CHANGED: return "[SPINE] cityFreshWaterChanged";
+	case SEVT_UNIT_PROMOTION_CHANGED:  return "[SPINE] unitPromotionChanged";
+	case SEVT_UNIT_COMBAT_CHANGED:     return "[SPINE] unitCombatChanged";
+	case SEVT_UNIT_KILLED:             return "[SPINE] unitKilled";
+	case SEVT_UNIT_LEFT_CITY:          return "[SPINE] unitLeftCity";
+	case SEVT_UNIT_CREATED_COUNT_CHANGED: return "[SPINE] unitCreatedCountChanged";
+	case SEVT_TEAM_MEMBERS_CHANGED:    return "[SPINE] teamMembersChanged";
+	case SEVT_AREA_TILES_CHANGED:      return "[SPINE] areaTilesChanged";
 	case SEVT_NUKES_CHANGED:           return "[SPINE] nukesChanged";
 	case SEVT_CITY_CULTURE_LEVEL_CHANGED: return "[SPINE] cultureLevelChanged";
 	case SEVT_HOLY_CITY_CHANGED:       return "[SPINE] holyCityChanged";
@@ -435,6 +456,12 @@ static const char* spineDomainFieldInfo(int iFieldTag, SpineFieldType* peType)
 	case SPF_COMMERCE:    *peType = SFT_COMMERCE;    return "commerce";
 	case SPF_PROPERTY:    *peType = SFT_PROPERTY;    return "property";
 	case SPF_OBJECT_KIND: *peType = SFT_STR;         return "objectKind";
+	case SPF_PROMOTION:   *peType = SFT_PROMOTION;   return "promotion";
+	case SPF_UNITCOMBAT:  *peType = SFT_UNITCOMBAT;  return "unitCombat";
+	case SPF_UNIT_ID:     *peType = SFT_INT;         return "unitId";
+	case SPF_TEAM:        *peType = SFT_INT;         return "team";
+	case SPF_AREA:        *peType = SFT_INT;         return "area";
+	case SPF_TIMER:       *peType = SFT_INT;         return "timer";
 	case SPF_TAGS:        *peType = SFT_STR;         return "tags";
 	case SPF_MS_REBUILD:  *peType = SFT_INT;         return "networkRebuildMs";
 	case SPF_MS_FIXPOINT: *peType = SFT_INT;         return "dormancyFixpointMs";
@@ -794,6 +821,112 @@ void emitPropertyChanged(int iObjectKind, int iObjectId, int iOwner, int iProper
 	 .addI(SPF_OWNER, iOwner).addI(SPF_ID, iObjectId)
 	 .addI(SPF_VALUE, iNewValue).addI(SPF_OLD_VALUE, iOldValue);
 	eventSpine().emit(e);   // synchronous render -> the borrowed kind literal outlives it
+}
+// The two silent legs of CvCity::isPower(), beside emitPowerChanged (the COUNT leg). Each is its own fact: the
+// timer is city-scoped state, the clean-power flag is (area x team) state, and the verdict ORs all three.
+void emitCityPowerDisabledChanged(int iCity, int iOwner, bool bDisabled, int iTimer)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_POWER_DISABLED_CHANGED, -1, bDisabled ? 1 : 0, iTimer, iOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_CITY, iCity).addI(SPF_OWNER, iOwner).addI(SPF_HAS, bDisabled ? 1 : 0).addI(SPF_TIMER, iTimer);
+	eventSpine().emit(e);
+}
+// An area belongs to no player (contexts.md: an area "knows no borders"), so the fact carries the TEAM it holds
+// for and leaves the owner unset.
+void emitAreaCleanPowerChanged(int iArea, int iTeam, bool bCleanPower)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_AREA_CLEAN_POWER_CHANGED, -1, bCleanPower ? 1 : 0, iTeam, -1, iArea);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_AREA, iArea).addI(SPF_TEAM, iTeam).addI(SPF_HAS, bCleanPower ? 1 : 0);
+	eventSpine().emit(e);
+}
+void emitHeadquartersChanged(int iCity, int iOwner, int iCorporation, bool bIsHeadquarters)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_HEADQUARTERS_CHANGED, iCorporation, bIsHeadquarters ? 1 : 0, 0, iOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_CORPORATION, iCorporation).addI(SPF_CITY, iCity).addI(SPF_OWNER, iOwner).addI(SPF_HAS, bIsHeadquarters ? 1 : 0);
+	eventSpine().emit(e);
+}
+// The old/new city pair is the emitWorkingCityChanged shape: a consumer acting on the delta needs both ends.
+void emitPlotCityChanged(int iPlot, int iOwner, int iOldCity, int iNewCity)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_CITY_CHANGED, -1, iOldCity, iNewCity, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_PLOT, iPlot).addI(SPF_OWNER, iOwner).addI(SPF_OLD_CITY, iOldCity).addI(SPF_NEW_CITY, iNewCity);
+	eventSpine().emit(e);
+}
+void emitGovernmentCenterChanged(int iCity, int iOwner, bool bIsGovernmentCenter)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_GOVERNMENT_CENTER_CHANGED, -1, bIsGovernmentCenter ? 1 : 0, 0, iOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_CITY, iCity).addI(SPF_OWNER, iOwner).addI(SPF_HAS, bIsGovernmentCenter ? 1 : 0);
+	eventSpine().emit(e);
+}
+void emitAnarchyChanged(int iPlayer, bool bAnarchy)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_ANARCHY_CHANGED, -1, bAnarchy ? 1 : 0, 0, iPlayer, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iPlayer).addI(SPF_ON, bAnarchy ? 1 : 0);
+	eventSpine().emit(e);
+}
+void emitCityFreshWaterChanged(int iCity, int iOwner, bool bHasFreshWater, int iCount)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_FRESH_WATER_CHANGED, -1, bHasFreshWater ? 1 : 0, iCount, iOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_CITY, iCity).addI(SPF_OWNER, iOwner).addI(SPF_HAS, bHasFreshWater ? 1 : 0).addI(SPF_COUNT, iCount);
+	eventSpine().emit(e);
+}
+// The unit plane. iA carries the unit INSTANCE id (the emitUnitCreated shape) -- a unit-scope fact has no city or
+// plot to name in iSrcLoc, and the instance is what a consumer must resolve to.
+void emitUnitPromotionChanged(int iUnitId, int iOwner, int iPromotion, int iDelta)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_UNIT_PROMOTION_CHANGED, iPromotion, iUnitId, iDelta, iOwner, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_PROMOTION, iPromotion).addI(SPF_UNIT_ID, iUnitId).addI(SPF_OWNER, iOwner).addI(SPF_DELTA, iDelta);
+	eventSpine().emit(e);
+}
+void emitUnitCombatChanged(int iUnitId, int iOwner, int iUnitCombat, int iDelta)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_UNIT_COMBAT_CHANGED, iUnitCombat, iUnitId, iDelta, iOwner, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_UNITCOMBAT, iUnitCombat).addI(SPF_UNIT_ID, iUnitId).addI(SPF_OWNER, iOwner).addI(SPF_DELTA, iDelta);
+	eventSpine().emit(e);
+}
+void emitUnitKilled(int iUnitType, int iUnitId, int iOwner, int iPlot)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_UNIT_KILLED, iUnitType, iUnitId, 0, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_UNIT, iUnitType).addI(SPF_UNIT_ID, iUnitId).addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot);
+	eventSpine().emit(e);
+}
+void emitUnitLeftCity(int iUnitType, int iUnitId, int iOwner, int iCity)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_UNIT_LEFT_CITY, iUnitType, iUnitId, 0, iOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_UNIT, iUnitType).addI(SPF_UNIT_ID, iUnitId).addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity);
+	eventSpine().emit(e);
+}
+// World scope: the counter belongs to the game, not to the player who happened to build the unit.
+void emitUnitCreatedCountChanged(int iUnitType, int iNewCount, int iDelta)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_UNIT_CREATED_COUNT_CHANGED, iUnitType, iNewCount, iDelta, -1, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_UNIT, iUnitType).addI(SPF_COUNT, iNewCount).addI(SPF_DELTA, iDelta);
+	eventSpine().emit(e);
+}
+void emitTeamMembersChanged(int iTeam, int iNewCount, int iDelta)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_TEAM_MEMBERS_CHANGED, -1, iNewCount, iDelta, -1, iTeam);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_TEAM, iTeam).addI(SPF_COUNT, iNewCount).addI(SPF_DELTA, iDelta);
+	eventSpine().emit(e);
+}
+void emitAreaTilesChanged(int iArea, int iNewCount, int iDelta)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_AREA_TILES_CHANGED, -1, iNewCount, iDelta, -1, iArea);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_AREA, iArea).addI(SPF_COUNT, iNewCount).addI(SPF_DELTA, iDelta);
+	eventSpine().emit(e);
 }
 void emitNukesChanged(int iPlayer, int iState)
 {

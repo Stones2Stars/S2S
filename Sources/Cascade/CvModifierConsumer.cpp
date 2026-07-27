@@ -7,6 +7,12 @@
 //	scope-object lifecycle/composition events (city founded / ownership moves) and the golden-age engine
 //	member-mirror are not deposit-addressed, so no route exists in the index to derive.
 //
+//	A PLOT-FACT predicate route names its owner objects through mc_applyPlotPredicate, whose fan is read off
+//	CascadeGather's per-scope ctx binding rather than guessed: the plot itself, the city SITTING ON it and that
+//	city's (area x owner) slot are the only packages a plot verdict can move, because those are the only folds
+//	that bind a plot -- so a one-tile fact never reaches the player. HAS_COAST and HAS_FRESHWATER additionally
+//	fan ONE HOP (the two adjacency verdicts, PlotContext::adjacencyFactsMask).
+//
 //	⚠ A MARK HERE IS ALSO THE REBUILD (state-repositories.md: "the rebuild moves onto the mark"). Reads are bare
 //	fetches, so nothing downstream will recompute later -- the recompute happens at markMask, inside this
 //	consumer, on the event that derived the mark. Inside the load bracket the marks are BANKED instead and
@@ -24,6 +30,7 @@
 #include "Spine/CvEventSpine.h"
 #include "Defines/CvGlobals.h"
 #include "Engine/CvMap.h"
+#include "Engine/CvGameCoreUtils.h"     // plotDirection -- the one-hop adjacency fan of the two adjacency verdicts
 #include "Engine/CvPlot.h"
 #include "Engine/CvCity.h"
 #include "Engine/CvPlayer.h"
@@ -264,6 +271,80 @@ namespace
 		}
 	}
 
+	// ---- the PLOT-FACT predicate routes: the owner objects whose rebuild READS the announcing plot ----
+	//
+	// A plot predicate (HAS_IRRIGATION / HAS_LANDMARK / IS_OWNED / HAS_COAST / HAS_FRESHWATER / the relief block)
+	// is answered off the eval ctx's PLOT (CvConditionEval::ev_evalPredicate -> PlotContext), and CascadeGather
+	// binds that plot PER SCOPE -- which IS the whole derivation of where a flip can reach:
+	//   PLOT   fold -- evalCtx.plot = the plot itself                         (gt_gatherPlotChannels)
+	//   CITY   fold -- evalCtx.plot = THAT CITY'S OWN CENTRE plot             (gt_fillCityEvalCtx -> InfoValuation::
+	//                  fillEvalCtx -> CityContext::fillEvalCtx: ec.plot = m_city->plot())
+	//   AREA   fold -- the same city-bound ctx, once per member city          (gt_gatherAreaChannels)
+	//   EMPIRE and TEAM folds bind NO plot at all (EmpireContext::fillEvalCtx fills player/team only; the team
+	//   gather sets team/player), so a plot predicate is constantly not-present there -- the evaluator's
+	//   NULL-object convention -- and those packages cannot move on a plot fact.
+	// So the objects a plot fact names are: the plot, the city SITTING ON it (if any) and that city's
+	// (area x owner) slot. ⛔ The PLAYER is therefore passed ONLY together with that city: every player-reaching
+	// leg of mc_applyRoute (the empire/team packages, the city-less all-cities fan, the cityFanAll sum fan) would
+	// otherwise turn a ONE-TILE fact into an empire-wide sweep -- the widening "emit liberally, mark precisely"
+	// forbids (event-spine.md; [DEC-no-self-heal]).
+	// The realized SUMS still reach the city that WORKS the plot: mc_applyRoute's receiver leg falls back to
+	// pPlot->getWorkingCity(), which is the city whose rate sums this plot's package (the worked-plot Sigma the
+	// gather reads through CvCity::isWorkingPlot).
+	void mc_applyPlotPredicate(CvCascPredKind ePredicate, const CvPlot* pPlot, bool bPlotPackageAlreadyMarked,
+		const char* szSource)
+	{
+		if (pPlot == NULL)
+		{
+			return;
+		}
+		const SourceRoute* pRoute = DepositIndex::dependencyForPredicate(ePredicate);
+		if (pRoute == NULL || pRoute->empty())
+		{
+			return;
+		}
+		const CvCity* pPlotCity = pPlot->getPlotCity();
+		const CvPlayer* pPlayer = (pPlotCity != NULL) ? &GET_PLAYER(pPlotCity->getOwner()) : NULL;
+		SourceRoute kRoute = *pRoute;
+		if (bPlotPackageAlreadyMarked)
+		{
+			// The caller's case already marked this plot's package WHOLE (the substrate blanket below), and a
+			// mark is ALSO the rebuild (CvCascadePackage::markMask -> CvDerivedCacheSet::markDirty) -- re-marking
+			// a bit marked moments ago is a SECOND full gather of the same plot, not a no-op. The blanket is a
+			// superset of every plot-scope bit this route can name, so the plot leg drops and the rest applies.
+			kRoute.packageMask[(int)CASC_SCOPE_PLOT] = 0;
+		}
+		if (pPlotCity == NULL)
+		{
+			// No city sits here, so no CITY/AREA fold -- each of which binds a city's CENTRE plot -- can have
+			// moved: the only package that did is the plot's own, and exactly ONE city consumes its realized
+			// value (the one working it). An above-city deposit's cityFanAll thus has nothing to fan, and leaving
+			// it set would instead DROP the working city's sums, mc_applyRoute's fan-all branch needing the
+			// player this fact does not name.
+			kRoute.cityFanAll = false;
+		}
+		mc_applyRoute(&kRoute, pPlayer, pPlotCity, pPlot, szSource);
+	}
+
+	// The ADJACENCY predicates fan ONE HOP. HAS_COAST and HAS_FRESHWATER are the two verdicts a plot derives from
+	// its NEIGHBOURS (PlotContext::adjacencyFactsMask), so a fact moving what a neighbour reads moves that
+	// neighbour's verdict too -- the same one-hop fan-out the contexts' maintainer runs
+	// (Engine/ContextConsumer::fanOutAdjacency). It cannot cascade: a neighbour's coast / fresh-water verdict
+	// reads nothing but facts held in the announcing plot's OWN block (CvPlot::isCoastalLand reads a neighbour's
+	// isWater plus its water area's tile count; CvPlot::isFreshWater's rect(1,1) leg reads a neighbour's isWater
+	// plus its fresh-water TERRAIN), so the derivation terminates at one ring.
+	void mc_applyAdjacentPlotPredicate(CvCascPredKind ePredicate, const CvPlot* pPlot, const char* szSource)
+	{
+		if (pPlot == NULL)
+		{
+			return;
+		}
+		for (int iDirection = 0; iDirection < NUM_DIRECTION_TYPES; ++iDirection)
+		{
+			mc_applyPlotPredicate(ePredicate, plotDirection(pPlot, (DirectionTypes)iDirection), false, szSource);
+		}
+	}
+
 	const CvPlayer* mc_player(int iPlayer)
 	{
 		return (iPlayer >= 0 && iPlayer < MAX_PLAYERS) ? &GET_PLAYER((PlayerTypes)iPlayer) : NULL;
@@ -393,7 +474,88 @@ namespace
 					pPlot->getCascadePackage().markMask(CascadeChannelRegistry::scopeAllChannelsMask(CASC_SCOPE_PLOT));
 					mc_invalidate(CASC_SCOPE_PLOT, kEvent.iC, kEvent.iSrcLoc, CascadeChannelRegistry::scopeAllChannelsMask(CASC_SCOPE_PLOT), szSource);
 					mc_markPlotFedSums(pPlot, szSource);
+					// The blanket covers this plot's OWN package and nothing else, so the two substrate facts a
+					// FRESH-WATER verdict reads carry legs it cannot reach. CvPlot::isFreshWater reads this plot's
+					// TERRAIN (isFreshWaterTerrain, and isImpassable) and its FEATURE (isAddsFreshWater) -- moving
+					// the verdict a CITY sitting here folds through its own centre plot, and its (area x owner)
+					// slot with it. TERRAIN additionally moves what the NEIGHBOURS read: isFreshWater's rect(1,1)
+					// leg tests an adjacent plot's isWater AND fresh-water terrain, so a terrain flip re-gates the
+					// ring's HAS_FRESHWATER deposits. The other three facts of this group reach neither leg --
+					// improvement / route / bonus appear nowhere in isFreshWater or isCoastalLand, and the
+					// irrigation they drive announces itself through CvPlot::setIrrigated's own fact.
+					if (kEvent.iEventId == SEVT_TERRAIN_CHANGED || kEvent.iEventId == SEVT_FEATURE_CHANGED)
+					{
+						mc_applyPlotPredicate(CASC_PRED_HAS_FRESHWATER, pPlot, true, szSource);
+					}
+					if (kEvent.iEventId == SEVT_TERRAIN_CHANGED)
+					{
+						mc_applyAdjacentPlotPredicate(CASC_PRED_HAS_FRESHWATER, pPlot, szSource);
+					}
 				}
+				break;
+			}
+			// ---- the remaining plot substrate facts. NO blanket here, and that is derived rather than
+			// ---- conservative: plot TYPE / river / irrigation / landmark are not deposit KEYS (gt_foldInfo keys
+			// ---- targeted entries on improvement / terrain / feature / bonus / route ONLY), so nothing but a
+			// ---- CONDITIONED deposit can read them -- and a conditioned deposit is exactly what the dependency
+			// ---- route addresses. ----
+			case SEVT_PLOT_TYPE_CHANGED:
+			{
+				// The land/water/relief axis. CvPlot::isWater() IS getPlotType() == PLOT_OCEAN, so this one fact
+				// carries the whole own-plot relief block (PlotContext::refreshOwnFacts reads isWater/isHills/
+				// isPeak, all of them getPlotType) AND both adjacency verdicts: isCoastalLand reads this plot's
+				// isWater and every neighbour's, and isFreshWater reads isWater on this plot and, through its
+				// rect(1,1) leg, on the ring. Hence self for all of them, plus the one-hop fan for the two
+				// adjacency verdicts alone.
+				const CvPlot* pPlot = mc_plot(kEvent.iSrcLoc);
+				mc_applyPlotPredicate(CASC_PRED_IS_WATER, pPlot, false, szSource);
+				mc_applyPlotPredicate(CASC_PRED_IS_LAND, pPlot, false, szSource);
+				mc_applyPlotPredicate(CASC_PRED_IS_FLATLANDS, pPlot, false, szSource);
+				mc_applyPlotPredicate(CASC_PRED_HAS_HILLS, pPlot, false, szSource);
+				mc_applyPlotPredicate(CASC_PRED_HAS_PEAK, pPlot, false, szSource);
+				mc_applyPlotPredicate(CASC_PRED_HAS_COAST, pPlot, false, szSource);
+				mc_applyPlotPredicate(CASC_PRED_HAS_FRESHWATER, pPlot, false, szSource);
+				mc_applyAdjacentPlotPredicate(CASC_PRED_HAS_COAST, pPlot, szSource);
+				mc_applyAdjacentPlotPredicate(CASC_PRED_HAS_FRESHWATER, pPlot, szSource);
+				break;
+			}
+			case SEVT_PLOT_RIVER_CHANGED:
+			{
+				// CvPlot::changeRiverCrossingCount crossing zero is the ONE mutation of isRiver(), which both
+				// HAS_RIVER and the fresh-water verdict read (PlotContext's stored fresh-water bit is
+				// isFreshWater() || isRiver(), and isFreshWater tests isRiver in its own right). Own-plot only:
+				// no neighbour verdict reads this plot's river -- isFreshWater's ring leg tests isWater plus
+				// fresh-water TERRAIN, never a crossing -- and each plot whose crossing count moves announces
+				// itself through its own emit, so there is nothing for a fan to cover.
+				const CvPlot* pPlot = mc_plot(kEvent.iSrcLoc);
+				mc_applyPlotPredicate(CASC_PRED_HAS_RIVER, pPlot, false, szSource);
+				mc_applyPlotPredicate(CASC_PRED_HAS_FRESHWATER, pPlot, false, szSource);
+				break;
+			}
+			case SEVT_PLOT_IRRIGATION_CHANGED:
+			{
+				// CvPlot::setIrrigated is the ONE mutation of the flag PlotContext::hasIrrigation reads (the
+				// improvement-driven updateIrrigated and the city fresh-water counter's sweep both funnel through
+				// it, so this fact carries every source of the change). An OWN fact -- PlotContext::ownFactsMask,
+				// no neighbour's verdict reads it -- so no adjacency fan.
+				mc_applyPlotPredicate(CASC_PRED_HAS_IRRIGATION, mc_plot(kEvent.iSrcLoc), false, szSource);
+				break;
+			}
+			case SEVT_PLOT_LANDMARK_CHANGED:
+			{
+				// CvPlot::setLandmarkType is the ONE mutation behind PlotContext::hasLandmark
+				// (getLandmarkType() != NO_LANDMARK). An OWN fact, so again no adjacency fan.
+				mc_applyPlotPredicate(CASC_PRED_HAS_LANDMARK, mc_plot(kEvent.iSrcLoc), false, szSource);
+				break;
+			}
+			case SEVT_PLOT_CITY_CHANGED:
+			{
+				// A city arriving on / leaving a plot moves that PLOT's fresh-water verdict: CvPlot::isFreshWater
+				// reads getPlotCity()->hasFreshWater(), the provider-building access counter, which an ACQUIRED
+				// city brings with its buildings. The city's own packages are not this fact's business -- a
+				// founding builds them whole (SEVT_CITY_FOUNDED) and an acquisition re-derives them
+				// (SEVT_CITY_OWNER_CHANGED); what neither of those reaches is the plot underneath.
+				mc_applyPlotPredicate(CASC_PRED_HAS_FRESHWATER, mc_plot(kEvent.iSrcLoc), false, szSource);
 				break;
 			}
 			case SEVT_WORKING_CITY_CHANGED:   // the plot's yield moves between cities: both cities' rates
@@ -505,6 +667,23 @@ namespace
 				mc_applyRoute(DepositIndex::dependencyForPredicate(CASC_PRED_HAS_POWER), pPlayer, pCity, NULL, szSource);
 				break;
 			}
+			case SEVT_CITY_FRESH_WATER_CHANGED:
+			{
+				// The CITY leg of HAS_FRESHWATER: the predicate is satisfied by the plot's own access OR by the
+				// city's provider-building counter (CvConditionEval: plotContext->hasFreshWater() ||
+				// cityContext->hasFreshWaterAccess()), and CvCity::changeFreshWater is that counter's one
+				// crossing. The reach is this city's CENTRE plot, which is precisely what the plot-fact helper
+				// resolves: the centre plot's getPlotCity() IS this city, so the one call marks the plot package
+				// (CvPlot::isFreshWater reads getPlotCity()->hasFreshWater(), so the tile's own verdict moves
+				// too), this city's package and receiver sums, and its (area x owner) slot. No adjacency fan --
+				// a neighbour's fresh-water leg reads isWater plus fresh-water TERRAIN, never a city's counter.
+				const CvCity* pCity = mc_city(pPlayer, kEvent.iSrcLoc);
+				if (pCity != NULL)
+				{
+					mc_applyPlotPredicate(CASC_PRED_HAS_FRESHWATER, pCity->plot(), false, szSource);
+				}
+				break;
+			}
 			case SEVT_GOLDEN_AGE_CHANGED:
 			{
 				mc_applyRoute(DepositIndex::dependencyForPredicate(CASC_PRED_IS_GOLDEN_AGE), pPlayer, NULL, NULL, szSource);
@@ -594,6 +773,12 @@ namespace
 				{
 					mc_markPlot(pPlot, CascadeChannelRegistry::scopeAllChannelsMask(CASC_SCOPE_PLOT), szSource);
 					mc_markPlotFedSums(pPlot, szSource);
+					// IS_OWNED is a live PREDICATE a deposit's gate may read (PlotContext::isOwned = getOwner() !=
+					// NO_PLAYER), and setOwner is its ONE mutation. The plot leg is suppressed -- the blanket
+					// above already marked this package WHOLE, and a mark is the rebuild -- so what this adds is
+					// the legs the blanket cannot reach: the package of a CITY sitting here (its fold binds this
+					// same plot as its centre) and that city's (area x owner) slot.
+					mc_applyPlotPredicate(CASC_PRED_IS_OWNED, pPlot, true, szSource);
 				}
 				break;
 			}

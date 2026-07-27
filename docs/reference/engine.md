@@ -121,6 +121,12 @@ save-break); derived data serializes nothing; deleting a changer means auditing 
 - The asset **checksum** is serialized and nothing consumes it: it does NOT gate MP OOS, does NOT block loading,
   and no code compares the savegame's value against the current one — so checksum parity is irrelevant when
   restructuring data, at zero cost to an existing save.
+  ⚖ **It is WRITE-ONLY state, and it is cut in a FOCUSED PURGE PASS at the end (owner)** — not piecemeal here.
+  Removing it is a serialized-member soft-remove ([save.md §3](../specs/save.md): full-delete the read + write,
+  name the tag in `Assets/savemigration.txt`), and that discipline is done once, deliberately, across every
+  orphaned serialized member together rather than one at a time as each is noticed. ⛔ This is owner-ruled
+  SEQUENCING, not a deferral to hide behind: the pass is a named piece of work, and any other write-only or
+  consumer-less serialized state found on the way belongs to it — record it here rather than cutting it alone.
 - **Category id ORDER comes from the `_order.json` manifest** (`Assets/Data/<cat>/_order.json`, curator-derived —
   `Tools/Migration/curate_order.py`): `loadJsonCategory` sorts a category's entities by manifest position before
   the registration assigns ids, so the engine ids reproduce the LEGACY id order (base XML document order, then
