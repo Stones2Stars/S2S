@@ -12368,7 +12368,7 @@ void CvGameTextMgr::setTechHelp(CvWStringBuffer &szBuffer, TechTypes eTech, bool
 			if (GC.getGame().canEverTrain((UnitTypes) iI)
 			&& (!bPlayerContext ||
 					!playerAct->isProductionMaxedUnit((UnitTypes) iI)
-				&&	!playerAct->canTrain((UnitTypes) iI)))
+				&&	!playerAct->canAnyCityTrain((UnitTypes) iI)))
 			{
 				const CvUnitInfo& kUnit = GC.getUnitInfo((UnitTypes) iI);
 				if (kUnit.getPrereqAndTech() == eTech)

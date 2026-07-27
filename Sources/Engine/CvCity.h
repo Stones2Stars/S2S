@@ -2102,11 +2102,8 @@ public:
 	const CityOutputHistory* getCityOutputHistory() const;
 
 private:
-	mutable stdext::hash_map<UnitTypes,bool> m_canTrainCacheUnits;
 	mutable stdext::hash_map<UnitTypes,UnitTypes> m_eCachedAllUpgradesResults;
 	mutable stdext::hash_map<UnitTypes,UnitTypes> m_eCachedAllUpgradesResultsRoot;
-	mutable bool m_canTrainCachePopulated;
-	mutable bool m_canTrainCacheDirty;
 	mutable int m_totalCommerceRateModifier[NUM_COMMERCE_TYPES];
 
 	mutable std::map<int,int> m_buildingSourcedPropertyCache;
@@ -2119,17 +2116,12 @@ private:
 	mutable std::map<int,bool>*	m_bCanConstruct;
 
 
-	//	Koshling - add cache of trainability of units which will be
-	//	populated prior to calculating the city's build choices and
-	//	then invalidated so it is only used within that scope
-#ifdef CAN_TRAIN_CACHING
+	// The UPGRADE cache (allUpgradesAvailable's memo) -- distinct from any trainability memo: it caches the
+	// upgrade-chain resolution, not an availability verdict, so it stands on its own.
 public:
-	void populateCanTrainCache(bool bUnconditional = true) const;
-	void clearCanTrainCache() const;
 	void clearUpgradeCache(UnitTypes eUnit) const;
 protected:
 	void invalidateCachedCanTrainForUnit(UnitTypes eUnit) const;
-#endif
 
 public:
 	//
@@ -2139,7 +2131,6 @@ public:
 		DECLARE_MAP_FUNCTOR(CvCity, void, startDeferredBonusProcessing);
 		DECLARE_MAP_FUNCTOR(CvCity, void, endDeferredBonusProcessing);
 		DECLARE_MAP_FUNCTOR(CvCity, void, doTurn);
-		DECLARE_MAP_FUNCTOR(CvCity, void, clearCanTrainCache);
 		DECLARE_MAP_FUNCTOR(CvCity, void, checkReligiousDisablingAllBuildings);
 		DECLARE_MAP_FUNCTOR(CvCity, void, updateExtraSpecialistYield);
 		DECLARE_MAP_FUNCTOR(CvCity, void, updateExtraSpecialistCommerce);

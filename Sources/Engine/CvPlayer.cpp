@@ -4083,10 +4083,7 @@ void CvPlayer::doTurn()
 	m_hunterAI.onTurnBegin(GC.getGame().getGameTurn());
 	m_decisionAI.onTurnBegin(GC.getGame().getGameTurn());
 
-#ifdef CAN_TRAIN_CACHING
-	//	Clear training caches at the start of each turn
-	algo::for_each(cities(), CvCity::fn::clearCanTrainCache());
-#endif
+	algo::for_each(cities(), CvCity::fn::clearUpgradeCache(NO_UNIT));
 
 	m_canHaveBuilder.clear();
 
@@ -4299,10 +4296,7 @@ void CvPlayer::doMultiMapTurn()
 	m_hunterAI.onTurnBegin(GC.getGame().getGameTurn());
 	m_decisionAI.onTurnBegin(GC.getGame().getGameTurn());
 
-#ifdef CAN_TRAIN_CACHING
-	//	Clear training caches at the start of each turn
-	algo::for_each(cities(), CvCity::fn::clearCanTrainCache());
-#endif
+	algo::for_each(cities(), CvCity::fn::clearUpgradeCache(NO_UNIT));
 
 	setBuildingListInvalid();
 
