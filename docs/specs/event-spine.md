@@ -69,7 +69,14 @@ reads objects). **Build order:** spine + the modifier scope accumulator → logg
   `CvMap` (1) · `CvPlotGroup` (1). The PLOT substrate is
   complete: terrain / feature / improvement / route / bonus / owner / **type / river / irrigation / landmark /
   worked**, so the per-scope contexts are maintained purely by facts, with no choke point driving a derivation
-  directly ([contexts.md](../architecture/contexts.md)). The **commerce SLIDERS** are on the surface too
+  directly ([contexts.md](../architecture/contexts.md)).
+  ⚠ **A substrate TYPE fact carries the OLD value alongside the new** (in `iA`, the `plotOwnerChanged` shape) —
+  terrain / feature / improvement / route, as `plotType` and `landmark` already did. This is not cosmetic: a
+  consumer that learns only what ARRIVED cannot re-mark a deposit conditioned or per-scaled on the type that
+  LEFT, so that deposit keeps contributing until something unrelated dirties it — and nothing self-heals it
+  ([DEC-no-self-heal](../architecture/decisions.md#dec-no-self-heal)). ⛔ The plot-BONUS fact is deliberately
+  NOT this shape: it carries the placed/removed DELTA instead, so its removal case is already named and its
+  `iA` must never be read as an old id. The **commerce SLIDERS** are on the surface too
   (`SEVT_COMMERCE_PERCENT_CHANGED`, `CvPlayer::setCommercePercent` — the one choke point `changeCommercePercent` /
   `verifyGoldCommercePercent` / `changeCommerceFlexibleCount` all reach the value through): a slider is synced
   player state every city's realized per-commerce rate is built on ([modifier.md](modifier.md) §2a), so DOMAIN.

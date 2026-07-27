@@ -505,11 +505,13 @@ void emitBonusChanged(int iCity, int iOwner, int iBonus, int iChange);
 void emitPopulationChanged(int iCity, int iOwner, int iNewPop);
 void emitSpecialistChanged(int iCity, int iOwner, int iSpecialist, int iDelta);
 void emitPowerChanged(int iCity, int iOwner, int iDelta);
-void emitImprovementChanged(int iPlot, int iOwner, int iImprovement);
+// The plot-SUBSTRATE type facts carry the OLD value alongside the new (the plotOwnerChanged shape below): a
+// consumer must be able to re-mark what LEFT, not only what arrived.
+void emitImprovementChanged(int iPlot, int iOwner, int iOldImprovement, int iImprovement);
 void emitPlotBonusChanged(int iPlot, int iOwner, int iBonus, int iChange);   // plot RESOURCE placed(+1)/removed(-1)
-void emitTerrainChanged(int iPlot, int iOwner, int iTerrain);
-void emitFeatureChanged(int iPlot, int iOwner, int iFeature);
-void emitRouteChanged(int iPlot, int iOwner, int iRoute);
+void emitTerrainChanged(int iPlot, int iOwner, int iOldTerrain, int iTerrain);
+void emitFeatureChanged(int iPlot, int iOwner, int iOldFeature, int iFeature);
+void emitRouteChanged(int iPlot, int iOwner, int iOldRoute, int iRoute);
 void emitTechChanged(int iPlayer, int iTech, bool bHas);
 void emitTraitChanged(int iPlayer, int iTrait, bool bAdd);
 // A civic was adopted (revolution pulse). Mirrors the inline SEVT_CIVIC_ADOPTED emit in CvPlayer::setCivics so the

@@ -225,6 +225,31 @@ namespace
 		}
 	}
 
+	// One plot-substrate id -> its TYPE string, for the dependency route keyed by that type. ONE lookup shared by
+	// the arriving and the departing id, so the two directions cannot drift apart.
+	const char* mc_substrateTypeName(int iEventId, int iId)
+	{
+		if (iId < 0)
+		{
+			return NULL;
+		}
+		switch (iEventId)
+		{
+		case SEVT_IMPROVEMENT_CHANGED:
+			return (iId < GC.getNumImprovementInfos()) ? GC.getImprovementInfo((ImprovementTypes)iId).getType() : NULL;
+		case SEVT_TERRAIN_CHANGED:
+			return (iId < GC.getNumTerrainInfos()) ? GC.getTerrainInfo((TerrainTypes)iId).getType() : NULL;
+		case SEVT_FEATURE_CHANGED:
+			return (iId < GC.getNumFeatureInfos()) ? GC.getFeatureInfo((FeatureTypes)iId).getType() : NULL;
+		case SEVT_ROUTE_CHANGED:
+			return (iId < GC.getNumRouteInfos()) ? GC.getRouteInfo((RouteTypes)iId).getType() : NULL;
+		case SEVT_PLOT_BONUS_CHANGED:
+			return (iId < GC.getNumBonusInfos()) ? GC.getBonusInfo((BonusTypes)iId).getType() : NULL;
+		default:
+			return NULL;
+		}
+	}
+
 	// The source-carrying application: the source info's own deposits + everything conditioned ON the source
 	// (a deposit gated on this entity's presence re-evaluates -- the dependency route keyed by its TYPE).
 	void mc_applySource(const CvInfo* pSourceInfo, const char* szTypeName,
@@ -452,10 +477,11 @@ namespace
 				const CvPlot* pPlot = mc_plot(kEvent.iSrcLoc);
 				if (pPlot != NULL)
 				{
-					// the whole-plot-package mark is the RULED blanket, not a derivable route: the event
-					// carries the NEW type only, and the departed substrate's deposits (own-output AND every
-					// owner-source entry keyed on it) are unaddressable without the old type -- the isolated
-					// base package refills whole (modifier.md §2 plot-as-base; the plot set is the smallest).
+					// the whole-plot-package mark is the RULED blanket, not a derivable route: a substrate swap
+					// re-derives this plot's whole isolated base package either way, and the plot channel set is the
+					// smallest of them (modifier.md plot-as-base). The per-TYPE dependency routes below address what a
+					// package blanket cannot -- deposits at CITY/EMPIRE scope keyed on the substrate -- and they now run
+					// in BOTH directions, the fact having gained the departing id.
 					pPlot->getCascadePackage().markMask(CascadeChannelRegistry::scopeAllChannelsMask(CASC_SCOPE_PLOT));
 					mc_invalidate(CASC_SCOPE_PLOT, kEvent.iC, kEvent.iSrcLoc, CascadeChannelRegistry::scopeAllChannelsMask(CASC_SCOPE_PLOT), szSource);
 					mc_markPlotFedSums(pPlot, szSource);
@@ -481,41 +507,24 @@ namespace
 					// EMPIRE scope that is CONDITIONED on -- or `per`-scaled by -- this substrate TYPE; that is
 					// exactly what the dependency route addresses, and without it such a deposit was never
 					// re-marked when the substrate appeared, staying wrong until something unrelated dirtied it.
-					// ⚠ ADDRESSES THE ARRIVING TYPE ONLY. The fact carries iType = the NEW substrate and no old
-					// value, so a deposit keyed on the DEPARTING one cannot be routed -- the same limit the
-					// blanket comment states, and the reason the plot package refills whole rather than by route.
-					const char* szSubstrateType = NULL;
-					if (kEvent.iType >= 0)
+					// BOTH DIRECTIONS. The four substrate TYPE facts carry the departing value in iA beside the
+					// arriving one in iType, so a deposit keyed on what LEFT is routed too -- previously it could
+					// not be, and such a deposit kept contributing until something unrelated dirtied it.
+					const char* szArriving = mc_substrateTypeName(kEvent.iEventId, kEvent.iType);
+					if (szArriving != NULL)
 					{
-						switch (kEvent.iEventId)
-						{
-						case SEVT_IMPROVEMENT_CHANGED:
-							if (kEvent.iType < GC.getNumImprovementInfos())
-								szSubstrateType = GC.getImprovementInfo((ImprovementTypes)kEvent.iType).getType();
-							break;
-						case SEVT_TERRAIN_CHANGED:
-							if (kEvent.iType < GC.getNumTerrainInfos())
-								szSubstrateType = GC.getTerrainInfo((TerrainTypes)kEvent.iType).getType();
-							break;
-						case SEVT_FEATURE_CHANGED:
-							if (kEvent.iType < GC.getNumFeatureInfos())
-								szSubstrateType = GC.getFeatureInfo((FeatureTypes)kEvent.iType).getType();
-							break;
-						case SEVT_ROUTE_CHANGED:
-							if (kEvent.iType < GC.getNumRouteInfos())
-								szSubstrateType = GC.getRouteInfo((RouteTypes)kEvent.iType).getType();
-							break;
-						case SEVT_PLOT_BONUS_CHANGED:
-							if (kEvent.iType < GC.getNumBonusInfos())
-								szSubstrateType = GC.getBonusInfo((BonusTypes)kEvent.iType).getType();
-							break;
-						default:
-							break;
-						}
+						mc_applySource(NULL, szArriving, pPlayer, pPlot->getWorkingCity(), pPlot, szSource);
 					}
-					if (szSubstrateType != NULL)
+					// ⛔ NOT for SEVT_PLOT_BONUS_CHANGED: that fact carries the placed/removed DELTA in iB and
+					// leaves iA at 0, so reading iA as an old id there would route bonus id 0 on every placement.
+					// Its removal case is already addressed -- it announces the bonus id with a -1 delta.
+					if (kEvent.iEventId != SEVT_PLOT_BONUS_CHANGED && kEvent.iA >= 0 && kEvent.iA != kEvent.iType)
 					{
-						mc_applySource(NULL, szSubstrateType, pPlayer, pPlot->getWorkingCity(), pPlot, szSource);
+						const char* szDeparting = mc_substrateTypeName(kEvent.iEventId, kEvent.iA);
+						if (szDeparting != NULL)
+						{
+							mc_applySource(NULL, szDeparting, pPlayer, pPlot->getWorkingCity(), pPlot, szSource);
+						}
 					}
 				}
 				break;

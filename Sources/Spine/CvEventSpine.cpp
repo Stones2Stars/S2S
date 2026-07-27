@@ -686,11 +686,16 @@ void emitPowerChanged(int iCity, int iOwner, int iDelta)
 	e.addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_DELTA, iDelta);
 	eventSpine().emit(e);
 }
-void emitImprovementChanged(int iPlot, int iOwner, int iImprovement)
+// The four plot-SUBSTRATE type facts carry the OLD value alongside the new, in iA -- the plotOwnerChanged /
+// plotTypeChanged shape this file already documents as the rule for a type change. Without the departing type a
+// consumer can re-mark only what ARRIVED: a deposit conditioned or per-scaled on the type that just LEFT has no
+// route to re-derive it, so it keeps contributing forever ([DEC-no-self-heal]: marked here or never).
+void emitImprovementChanged(int iPlot, int iOwner, int iOldImprovement, int iImprovement)
 {
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_IMPROVEMENT_CHANGED, iImprovement, 0, 0, iOwner, iPlot);
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_IMPROVEMENT_CHANGED, iImprovement, iOldImprovement, 0, iOwner, iPlot);
 	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_IMPROVEMENT, iImprovement).addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot);
+	e.addI(SPF_IMPROVEMENT, iImprovement).addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot)
+		.addI(SPF_OLD_VALUE, iOldImprovement);
 	eventSpine().emit(e);
 }
 void emitPlotBonusChanged(int iPlot, int iOwner, int iBonus, int iChange)
@@ -700,25 +705,28 @@ void emitPlotBonusChanged(int iPlot, int iOwner, int iBonus, int iChange)
 	e.addI(SPF_BONUS, iBonus).addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot).addI(SPF_DELTA, iChange);
 	eventSpine().emit(e);
 }
-void emitTerrainChanged(int iPlot, int iOwner, int iTerrain)
+void emitTerrainChanged(int iPlot, int iOwner, int iOldTerrain, int iTerrain)
 {
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_TERRAIN_CHANGED, iTerrain, 0, 0, iOwner, iPlot);
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_TERRAIN_CHANGED, iTerrain, iOldTerrain, 0, iOwner, iPlot);
 	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_TERRAIN, iTerrain).addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot);
+	e.addI(SPF_TERRAIN, iTerrain).addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot)
+		.addI(SPF_OLD_VALUE, iOldTerrain);
 	eventSpine().emit(e);
 }
-void emitFeatureChanged(int iPlot, int iOwner, int iFeature)
+void emitFeatureChanged(int iPlot, int iOwner, int iOldFeature, int iFeature)
 {
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_FEATURE_CHANGED, iFeature, 0, 0, iOwner, iPlot);
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_FEATURE_CHANGED, iFeature, iOldFeature, 0, iOwner, iPlot);
 	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_FEATURE, iFeature).addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot);
+	e.addI(SPF_FEATURE, iFeature).addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot)
+		.addI(SPF_OLD_VALUE, iOldFeature);
 	eventSpine().emit(e);
 }
-void emitRouteChanged(int iPlot, int iOwner, int iRoute)
+void emitRouteChanged(int iPlot, int iOwner, int iOldRoute, int iRoute)
 {
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_ROUTE_CHANGED, iRoute, 0, 0, iOwner, iPlot);
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_ROUTE_CHANGED, iRoute, iOldRoute, 0, iOwner, iPlot);
 	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_ROUTE, iRoute).addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot);
+	e.addI(SPF_ROUTE, iRoute).addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot)
+		.addI(SPF_OLD_VALUE, iOldRoute);
 	eventSpine().emit(e);
 }
 void emitTechChanged(int iPlayer, int iTech, bool bHas)

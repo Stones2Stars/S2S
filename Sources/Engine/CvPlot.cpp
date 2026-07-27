@@ -7100,7 +7100,7 @@ void CvPlot::setTerrainType(TerrainTypes eNewValue, bool bRecalculate, bool bReb
 	{
 		m_eTerrainType = eNewValue;
 		// #430 event spine: announce the terrain change (past the no-change guard). plotId per /state/plots convention.
-		emitTerrainChanged(GC.getMap().plotNum(getX(), getY()), getOwner(), (int)eNewValue);
+		emitTerrainChanged(GC.getMap().plotNum(getX(), getY()), getOwner(), (int)eOldTerrain, (int)eNewValue);
 
 		if (eOldTerrain != NO_TERRAIN)
 		{
@@ -7233,7 +7233,7 @@ void CvPlot::setFeatureType(FeatureTypes eNewValue, int iVariety, bool bImprovem
 		// #430 event spine: announce the feature change ONLY on a real feature-type change (not a variety-only reroll).
 		if (eOldFeature != eNewValue)
 		{
-			emitFeatureChanged(GC.getMap().plotNum(getX(), getY()), getOwner(), (int)eNewValue);
+			emitFeatureChanged(GC.getMap().plotNum(getX(), getY()), getOwner(), (int)eOldFeature, (int)eNewValue);
 		}
 
 		if (bUpdateSight)
@@ -7598,7 +7598,7 @@ void CvPlot::setImprovementType(ImprovementTypes eNewImprovement)
 		}
 		m_eImprovementType = eNewImprovement;
 		// #430 event spine: announce the improvement change (past the no-change guard, after the field commit).
-		emitImprovementChanged(GC.getMap().plotNum(getX(), getY()), getOwner(), (int)eNewImprovement);
+		emitImprovementChanged(GC.getMap().plotNum(getX(), getY()), getOwner(), (int)eOldImprovement, (int)eNewImprovement);
 		if (isOwned())
 		{
 			updatePlotGroupBonus(true);
@@ -7743,7 +7743,7 @@ void CvPlot::setRouteType(RouteTypes eNewValue, bool bUpdatePlotGroups)
 
 	m_eRouteType = eNewValue;
 	// #430 event spine: announce the route change (past the no-change early-return guard, after the field commit).
-	emitRouteChanged(GC.getMap().plotNum(getX(), getY()), getOwner(), (int)eNewValue);
+	emitRouteChanged(GC.getMap().plotNum(getX(), getY()), getOwner(), (int)eOldRoute, (int)eNewValue);
 
 	if (isOwned())
 	{
@@ -11242,7 +11242,7 @@ void CvPlot::read(FDataStreamBase* pStream)
 	// THE RESEED EMIT (DEC-spine-reseed): the terrain DOMAIN event fires HERE, as the field deserializes off the
 	// stream, INSIDE the read -- never a later pass over already-populated plots (that pseudo-emit is banned,
 	// superseded-ideas). Coords (m_iX/m_iY) + owner (m_eOwner) are already read above.
-	emitTerrainChanged(GC.getMap().plotNum(m_iX, m_iY), (int)m_eOwner, (int)m_eTerrainType);
+	emitTerrainChanged(GC.getMap().plotNum(m_iX, m_iY), (int)m_eOwner, (int)NO_TERRAIN, (int)m_eTerrainType);
 	// #430 reseed: plot OWNERSHIP as a change from unowned -> current (reseed change-shaped events as null -> current,
 	// exactly like a real acquisition). Only an OWNED plot has an ownership fact.
 	if (m_eOwner != NO_PLAYER)
@@ -11255,7 +11255,7 @@ void CvPlot::read(FDataStreamBase* pStream)
 	// has no fact to reseed, so nothing fires (emitting NO_* for every empty plot would be noise, not a fact).
 	if (m_eFeatureType != NO_FEATURE)
 	{
-		emitFeatureChanged(GC.getMap().plotNum(m_iX, m_iY), (int)m_eOwner, (int)m_eFeatureType);
+		emitFeatureChanged(GC.getMap().plotNum(m_iX, m_iY), (int)m_eOwner, (int)NO_FEATURE, (int)m_eFeatureType);
 	}
 
 	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvPlot", REMAPPED_CLASS_TYPE_BONUSES, &m_eBonusType);
@@ -11266,12 +11266,12 @@ void CvPlot::read(FDataStreamBase* pStream)
 	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvPlot", REMAPPED_CLASS_TYPE_IMPROVEMENTS, &m_eImprovementType);
 	if (m_eImprovementType != NO_IMPROVEMENT)
 	{
-		emitImprovementChanged(GC.getMap().plotNum(m_iX, m_iY), (int)m_eOwner, (int)m_eImprovementType);
+		emitImprovementChanged(GC.getMap().plotNum(m_iX, m_iY), (int)m_eOwner, (int)NO_IMPROVEMENT, (int)m_eImprovementType);
 	}
 	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvPlot", REMAPPED_CLASS_TYPE_ROUTES, &m_eRouteType);
 	if (m_eRouteType != NO_ROUTE)
 	{
-		emitRouteChanged(GC.getMap().plotNum(m_iX, m_iY), (int)m_eOwner, (int)m_eRouteType);
+		emitRouteChanged(GC.getMap().plotNum(m_iX, m_iY), (int)m_eOwner, (int)NO_ROUTE, (int)m_eRouteType);
 	}
 	WRAPPER_READ(wrapper, "CvPlot", &m_eRiverNSDirection);
 	WRAPPER_READ(wrapper, "CvPlot", &m_eRiverWEDirection);
