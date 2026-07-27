@@ -102,12 +102,13 @@ void CvBuildingInfo::mapFrom(const picojson::value& entity)
 	}
 
 	// --- the identity block: the census set, each key one typed member ---
+	// ⛔ An entity with NO `identity` block must still FULLY REDEFINE every member below -- the mapFrom
+	// idempotency contract (CvInfo.h), which the full-registry re-run depends on. So the block is read against
+	// an EMPTY object when absent and each jsonId* call takes its own default; an early return here instead left
+	// the previous pass's scalars standing.
+	static const picojson::object kEmptyIdentity;
 	const picojson::object* pIdentity = jsonChildObj(entityObj, "identity");
-	if (pIdentity == NULL)
-	{
-		return;
-	}
-	const picojson::object& identity = *pIdentity;
+	const picojson::object& identity = (pIdentity != NULL) ? *pIdentity : kEmptyIdentity;
 	m_iWorth = jsonIdInt(identity, "worth");
 	m_iMilitaryWorth = jsonIdInt(identity, "militaryWorth");
 	m_iConquestProbability = jsonIdInt(identity, "conquestProbability");

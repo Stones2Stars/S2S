@@ -76,6 +76,7 @@ public:
 	void setHolyCityChar(int /*iSymbol*/) { m_iHolyCityChar = 8551 + m_iTGAIndex * 2; }
 	const std::vector<BuildingTypes>& getShrineBuildings() const { return reinterpret_cast<const std::vector<BuildingTypes>&>(m_aeShrineBuildings); }
 	void addShrineBuilding(int iBuilding) { m_aeShrineBuildings.push_back(iBuilding); }
+	void clearShrineBuildings() { m_aeShrineBuildings.clear(); }   // clear-first: the reverse pass runs in BOTH load phases
 
 	virtual const CvTriggers*  getTriggers()  const { return &m_triggers; }   // §5 -- triggers + the folded grants
 

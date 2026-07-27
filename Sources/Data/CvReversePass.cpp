@@ -1040,12 +1040,22 @@ namespace
 	// (CvBuildingInfo::getShrineReligion -- json.md §9: the building declares only the FK; the per-commerce
 	// values live on the RELIGION); the consumers (CvCityAI:958 / CvCity:19016 foreach getShrineBuildings)
 	// ask the RELIGION for its shrine buildings. The legacy buildings-self-register path died in the cutover
-	// (addShrineBuilding had ZERO callers), so feed the registry here from the compiled FK. Idempotent like
-	// the sibling sub-passes: the repos are cleared and re-mapped before each full pass, so the vector starts
-	// empty. (No corporation analog exists: no HQ-building registry lives on CvCorporationInfo and no consumer
+	// (addShrineBuilding had ZERO callers), so feed the registry here from the compiled FK. Idempotent by
+	// CLEARING FIRST, like every sibling sub-pass -- this pass runs in both load phases, and relying on the
+	// repos to hand back a fresh vector would make correctness hinge on whether a re-map reuses the poco.
+	// (No corporation analog exists: no HQ-building registry lives on CvCorporationInfo and no consumer
 	// asks for one -- the corp HQ CITY is CvGame state; verified, nothing to feed.)
 	void rp_feedShrineBuildings()
 	{
+		const int iNumReligions = GC.getNumReligionInfos();
+		for (int iReligion = 0; iReligion < iNumReligions; ++iReligion)
+		{
+			CvReligionInfo* pReligion = static_cast<CvReligionInfo*>(InfoRepo<CvReligionInfo>::get().editPtr(iReligion));
+			if (pReligion != NULL)
+			{
+				pReligion->clearShrineBuildings();
+			}
+		}
 		const int iNumBuildings = GC.getNumBuildingInfos();
 		for (int iBuilding = 0; iBuilding < iNumBuildings; ++iBuilding)
 		{
