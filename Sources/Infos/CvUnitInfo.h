@@ -224,9 +224,6 @@ public:
 	// stored (a -1 stub crashes SetGlobalActionInfo).
 	int getCommandType() const { return m_iCommandType; }
 	void setCommandType(int iNewType) { m_iCommandType = iNewType; }
-	// RUNTIME militaryWorth writer: CvGame halves great-general power under !GAMEOPTION_UNIT_GREAT_COMMANDERS
-	// at game start (a post-load info mutation -- reported as a write-once seam; the store must be real).
-	void setMilitaryWorth(int iNewValue) { m_iMilitaryWorth = iNewValue; }
 
 	// --- load-derived reads (json par.9 sizeMatters: the ranks are DERIVED at load, never stored on the data) ---
 	// The members are materialized by deriveAtRegistryComplete (the reversePassRun post-map derivation step,

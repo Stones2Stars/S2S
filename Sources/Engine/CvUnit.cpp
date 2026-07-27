@@ -393,7 +393,7 @@ void CvUnit::init(int iID, UnitTypes eUnit, UnitAITypes eUnitAI, PlayerTypes eOw
 			// if unit doesn't have a group rank, it doesn't count as a SM unit at all
 			if (groupRank() > 0)
 			{
-				GET_PLAYER(eOwner).changeUnitCountSM(eUnit, intPow(3, groupRank()-1));
+				GET_PLAYER(eOwner).changeUnitCountSM(eUnit, smGroupMultiplier(groupRank()));
 			}
 		}
 		else
@@ -1541,7 +1541,7 @@ void CvUnit::die()
 	// if unit doesn't have a group rank, it doesn't count as a SM unit at all
 	&& groupRank() > 0)
 	{
-		owner.changeUnitCountSM(m_eUnitType, -intPow(3, groupRank()-1));
+		owner.changeUnitCountSM(m_eUnitType, -smGroupMultiplier(groupRank()));
 	}
 
 	if (m_pUnitInfo->getNukeRange() != -1)
@@ -19526,7 +19526,7 @@ void CvUnit::read(FDataStreamBase* pStream)
 		// if unit doesn't have a group rank, it doesn't count as a SM unit at all
 		&& GC.getUnitInfo(m_eUnitType).getBaseGroupRank() > 0)
 		{
-			GET_PLAYER(getOwner()).changeUnitCountSM(m_eUnitType, intPow(3, GC.getUnitInfo(m_eUnitType).getBaseGroupRank() - 1));
+			GET_PLAYER(getOwner()).changeUnitCountSM(m_eUnitType, smGroupMultiplier(GC.getUnitInfo(m_eUnitType).getBaseGroupRank()));
 		}
 		bKill = true;
 	}
@@ -26801,9 +26801,9 @@ void CvUnit::changeExtraGroup(int iChange)
 {
 	const int iOldEffCount = SMeffectiveCount();
 
-	GET_PLAYER(getOwner()).changeUnitCountSM(m_eUnitType, -intPow(3, groupRank()-1));
+	GET_PLAYER(getOwner()).changeUnitCountSM(m_eUnitType, -smGroupMultiplier(groupRank()));
 	m_iExtraGroup += iChange;
-	GET_PLAYER(getOwner()).changeUnitCountSM(m_eUnitType, intPow(3, groupRank()-1));
+	GET_PLAYER(getOwner()).changeUnitCountSM(m_eUnitType, smGroupMultiplier(groupRank()));
 
 	// Keep the strength-weighted force ledgers in step with rank changes (#395). Dead
 	// units were already removed from the ledgers by the kill path.

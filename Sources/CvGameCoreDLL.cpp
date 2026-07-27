@@ -688,6 +688,13 @@ int intPow(const int x, const int p)
 	return static_cast<int>(iResult);
 }
 
+int smGroupMultiplier(const int iGroupRank)
+{
+	// A rank below 1 has no geometry of its own -- it is one body, multiplier 1. Clamping here (rather than at
+	// each call) is what keeps the count's writers and its reader on the SAME rule.
+	return intPow(3, std::max(1, iGroupRank) - 1);
+}
+
 int getModifiedIntValue(const int iValue, const int iMod)
 {
 	if (iMod > 0)

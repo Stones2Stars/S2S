@@ -13521,7 +13521,7 @@ int CvPlayer::getUnitCountSM(const UnitTypes eUnit) const
 	// rank term at 1. A sub-1 derived rank is a data/derivation defect, not a valid divisor.
 	const int iBaseGroupRank = GC.getUnitInfo(eUnit).getBaseGroupRank();
 	FAssertMsg(iBaseGroupRank >= 1, CvString::format("SM base group rank %d < 1 for %s -- derivation/data defect", iBaseGroupRank, GC.getUnitInfo(eUnit).getType()).c_str());
-	return itr->second / intPow(3, std::max(1, iBaseGroupRank) - 1);
+	return itr->second / smGroupMultiplier(iBaseGroupRank);
 }
 
 

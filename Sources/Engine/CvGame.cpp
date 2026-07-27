@@ -305,17 +305,6 @@ void CvGame::init(HandicapTypes eHandicap)
 		}
 	}
 
-	if (!isOption(GAMEOPTION_UNIT_GREAT_COMMANDERS))
-	{
-		foreach_(CvUnitInfo* info, GC.getUnitInfos())
-		{
-			if (info->isGreatGeneral())
-			{
-				info->setPowerValue(info->getPowerValue() / 10);
-			}
-		}
-	}
-
 	setStartYear(GC.getSTART_YEAR());
 	m_iDateTurn = -500;
 

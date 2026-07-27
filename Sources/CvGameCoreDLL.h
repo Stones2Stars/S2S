@@ -277,6 +277,12 @@ int getModifiedIntValue(const int iValue, const int iMod);
 int64_t getModifiedIntValue64(const int64_t iValue, const int iMod);
 // ! Toffer
 
+// The Size-Matters GROUP multiplier of a rank -- json.md par.9's `count / 3^(groupRank-1)` geometry, as ONE
+// derivation shared by the writers (changeUnitCountSM) and the reader (getUnitCountSM). ⛔ The clamp lives HERE
+// and nowhere else: intPow(3, -1) is 0, so an unclamped rank-0 unit CONTRIBUTES ZERO on the write side while the
+// read side divides by 1 -- the two sides of one quantity disagreeing, silently.
+int smGroupMultiplier(int iGroupRank);
+
 int applySMRank(int value, int rankChange, int rankMultiplier);
 int64_t applySMRank64(int64_t value, int rankChange, int rankMultiplier, bool bScaleUp = true);
 
