@@ -586,4 +586,23 @@ void CascadeChannelRegistry::reportChannelCensus()
 		census.addI(MODF_RECEIVERS, scopeReceiverCount((CvCascScope)iScope));
 		eventSpine().emit(census);
 	}
+
+	// ⛔ The BIT BUDGET is checked UNCONDITIONALLY, not by assert. FAssertMsg compiles out of Release and
+	// FinalRelease -- the builds actually played -- while the channel registry is OPEN BY DESIGN (json.md §8:
+	// the member set grows with authored data, permanently), and empire already measures ~50 of the 59-slot
+	// region. Over budget, cr_channelBitOf clamps every excess slot onto the region's LAST bit: coarse-safe, so
+	// it over-marks rather than missing an invalidation -- but it silently pays rebuilds nothing asked for, and
+	// silence is the half this project cannot afford. Reported like the readJson coverage counts: one line, no
+	// gate, on every load, so growth is visible BEFORE it starts aliasing.
+	for (int iScope = 0; iScope < CASCADE_PACKAGE_SCOPES; ++iScope)
+	{
+		const int iSlots = scopeChannelCount((CvCascScope)iScope);
+		if (iSlots > (int)CASCADE_RECEIVER_BIT_FIRST)
+		{
+			gDLL->logMsg("Loading.log", CvString::format(
+				"[CASCADE] ERROR channel-bit-overflow scope=%s slots=%d budget=%d -- the excess slots share the "
+				"region's last bit (over-marking, never a missed invalidation)",
+				cr_scopeName(iScope), iSlots, (int)CASCADE_RECEIVER_BIT_FIRST).c_str(), true, false);
+		}
+	}
 }
