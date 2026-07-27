@@ -247,6 +247,17 @@ the area id"* (owner): the id is a fact a city reads, never a place state lives.
 goal is that a unit no longer carries ALL the data (the ~247-field fat-unit problem) — each unit holds only the state
 its role needs. Working out that role-partitioning is *why* it waits, rather than wiring a fat unit context now.
 
+**⚖ IDENTIFIED MEMBER — the UPGRADE resolution belongs to the UNIT CONTEXT (owner).** *"Upgrade should live in the
+unit context."* Today `allUpgradesAvailable` (and its memo) hangs off **`CvCity`**, and the misplacement is visible
+in the callers: they reach for an arbitrary city just to have somewhere to ask a question about a unit —
+`pCapitalCity->allUpgradesAvailable(u)`, `pCoastalCity->…`, `pCapital->…`.
+⛔ **That is not untidiness, it is a live defect: WHICH CITY YOU PICK CHANGES THE ANSWER.** The resolution reads
+city-scoped trainability (can the upgrade target be built *here*), so asking the capital about a unit standing
+somewhere else answers a different question than the one asked, silently.
+It landed on the city precisely BECAUSE it needs that city-scoped input — but the input is not the owner: the unit
+knows where it is, so a unit-scoped resolution asks the RIGHT city instead of leaving each caller to guess one.
+That is the shape when the unit context lands; until then the hosting stays put and this records why it moves.
+
 ## The read — the per-GROUP valuation: `(CityContext, EmpireContext, CvPlotGroup)` → the group's values
 
 An info's ACTUAL contextual output is read **one endpoint per GROUP of channels** (owner), never per single channel:
