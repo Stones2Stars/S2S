@@ -19017,6 +19017,18 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 		changeExtraGroup(kPromotion.getSizeMatters().group * iChange);
 		bSMrecalc = true;
 	}
+	// json.md par.9 names FOUR promotion delta scalars -- quality / group / sizeModifier / maxHP -- all "applied
+	// as changes when the promotion is gained". The last two were parsed and then read by nothing, so a
+	// promotion authoring them silently did nothing at all.
+	if (kPromotion.getSizeMatters().sizeModifier != 0)
+	{
+		changeExtraSize(kPromotion.getSizeMatters().sizeModifier * iChange);
+		bSMrecalc = true;
+	}
+	if (kPromotion.getSizeMatters().maxHP != 0)
+	{
+		changeExtraMaxHP(kPromotion.getSizeMatters().maxHP * iChange);
+	}
 
 
 	if (kPromotion.isZoneOfControl())
