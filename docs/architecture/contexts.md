@@ -248,15 +248,22 @@ goal is that a unit no longer carries ALL the data (the ~247-field fat-unit prob
 its role needs. Working out that role-partitioning is *why* it waits, rather than wiring a fat unit context now.
 
 **⚖ IDENTIFIED MEMBER — the UPGRADE resolution belongs to the UNIT CONTEXT (owner).** *"Upgrade should live in the
-unit context."* Today `allUpgradesAvailable` (and its memo) hangs off **`CvCity`**, and the misplacement is visible
-in the callers: they reach for an arbitrary city just to have somewhere to ask a question about a unit —
-`pCapitalCity->allUpgradesAvailable(u)`, `pCoastalCity->…`, `pCapital->…`.
-⛔ **That is not untidiness, it is a live defect: WHICH CITY YOU PICK CHANGES THE ANSWER.** The resolution reads
-city-scoped trainability (can the upgrade target be built *here*), so asking the capital about a unit standing
-somewhere else answers a different question than the one asked, silently.
-It landed on the city precisely BECAUSE it needs that city-scoped input — but the input is not the owner: the unit
-knows where it is, so a unit-scoped resolution asks the RIGHT city instead of leaving each caller to guess one.
-That is the shape when the unit context lands; until then the hosting stays put and this records why it moves.
+unit context."* Today `allUpgradesAvailable` (and its memo) hangs off **`CvCity`**, so a question about a UNIT is
+asked of whatever city was to hand — `pCapitalCity->allUpgradesAvailable(u)`, `pCoastalCity->…`, `pCapital->…`.
+
+**The DIRECTION is the ruling (owner): the UNIT asks.** *"When a unit asks if they can do their upgrade in a city
+somewhere, then the unit has to check if a city has whatever requirement it needs."* The unit drives and fans out
+to cities for the requirement; a city is a place the query LOOKS, never the owner of the question. It landed on
+the city because the resolution needs city-scoped trainability (can the target be built *there*) — but an input
+is not an owner.
+
+⚑ **AND IT IS PURELY AN AI-LOOP CONCERN (owner)** — the AI deciding whether, and where, to send a unit to
+upgrade. That settles its cost class: the memo is **AI-heuristic caching**, the sanctioned residual
+([superseded-ideas #1](superseded-ideas.md)), NOT engine state and NOT a derived cache on the cascade plane. It
+carries no dirty protocol, answers to no invalidation contract, and belongs with the asking side.
+⚠ It also means the arbitrary-city calls above are an AI APPROXIMATION, not a rule violation: a cheap stand-in
+for "somewhere", which is a fair thing for a heuristic to do. Do not "fix" them as a correctness bug — they move
+with the unit context, when the unit is the one asking.
 
 ## The read — the per-GROUP valuation: `(CityContext, EmpireContext, CvPlotGroup)` → the group's values
 
