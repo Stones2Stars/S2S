@@ -972,8 +972,6 @@ bool CvXMLLoadUtility::LoadPreMenuGlobals()
 		}
 	}
 
-	GC.doPostLoadCaching();
-
 	// Add TGA space fillers
 	CvReligionInfo* pReligionBogus = new CvReligionInfo();
 	aReligionInfos.insert(aReligionInfos.end(), GC.getGAMEFONT_TGA_RELIGIONS() - aReligionInfos.size(), pReligionBogus);
@@ -1083,12 +1081,17 @@ bool CvXMLLoadUtility::LoadPostMenuGlobals()
 	BuildsRepo::get().rebuild();
 
 	// #430: the postmenu full pass -- re-map EVERYTHING from readJson's retained parse store. This MUST run after
-	// the LAST LoadGlobalClassInfo of the post-menu stage: doPostLoadCaching (the previous home) fires pre-menu,
-	// BEFORE processes/votes/espionage-missions/spawns are registered, so every FK edge referencing those types
-	// silently dropped (the canMaintain empty-frontier bug). Here EVERY info type is in getInfoTypeForString.
-	// Static data, built once; the [READJSON/*] survey rides the event spine. This pass ends by FREEING the
-	// retained store -- after load, no JSON-shaped object survives ([DEC-one-json-reader]).
+	// the LAST LoadGlobalClassInfo of the post-menu stage, because only here is EVERY info type in
+	// getInfoTypeForString; anything derived earlier reads an incomplete registry and silently drops the FK edges
+	// naming a late-registered type (the canMaintain empty-frontier bug). Static data, built once; the
+	// [READJSON/*] survey rides the event spine. The pass carries the general reverse pass (and its post-map
+	// cross-entity derivations), then FREES the retained store -- after load, no JSON-shaped object survives
+	// ([DEC-one-json-reader]).
 	loadJson(JSON_LOAD_POSTMENU);
+
+	// The engine-side load indexes come AFTER that pass, for the same reason: they read the fully re-mapped
+	// infos, and the re-map would otherwise overwrite what they had already derived.
+	GC.buildLoadTimeIndexes();
 
 	OutputDebugString("Loading PostMenu Infos: End\n");
 

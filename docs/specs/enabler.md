@@ -135,8 +135,15 @@ techs are monotonic, no `operate`.
 > store's prereq-inversion is *for the GENERATE pass* (it flattens each entity's prereqs into the prereq entity's
 > `enables`). But many legacy consumers still read the **forward** view off the child — a route's `getPrereqBonus`
 > (the `CvPlot` build gate), a trait's `getPrereqTrait`, a tech's `leadsTo`. These are **reconstructed AT LOAD from
-> the inverted `enables`** (never stubbed, never re-authored on the child): the tech `leadsTo` + trait prereqs in
-> `CvGlobals::doPostLoadCaching`, the route bonus prereqs in the general reverse pass (`Data/CvReversePass.cpp`). **The inversion must keep AND vs OR
+> the inverted `enables`** (never stubbed, never re-authored on the child): the tech `leadsTo` and the route
+> bonus prereqs in the ONE general reverse pass (`Data/CvReversePass.cpp`) — a cross-entity reconstruction has
+> exactly ONE home, and it is never `mapFrom` (which runs while the view is still being built) nor a second
+> load-time pass beside the reader. ⚠ **The TRAIT prereqs are the deliberate exception and are NOT
+> reconstructed:** the rebuilt `CvTraitInfo` carries no prereq getter at all, because re-adding
+> `getPrereqTrait`/`getPrereqOrTrait1/2` would be a legacy getter name returning
+> ([DEC-new-getter-surface](../architecture/decisions.md#dec-new-getter-surface)). Their consumers
+> (`CvPlayer`, `CvGameTextMgr`) read the trait's own edge families instead, as stage-4 consumer work.
+> **The inversion must keep AND vs OR
 > in DISTINCT buckets** or the reverse map loses the distinction — a single AND prereq inverts to its own bucket
 > (`enables.routesAnd` / `enables.traitsAnd`), the OR-list to another (`enables.routes` / `enables.traitsOr`), and
 > the load pass rebuilds each forward getter separately. *(The tech case reconstructs from the child's retained

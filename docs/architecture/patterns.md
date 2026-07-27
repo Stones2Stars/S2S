@@ -388,6 +388,19 @@ turn-time/FPS tax.
   falls back to the string set so early consumers stay correct).
 - mapFrom is idempotent by contract, so the materialized members are fully redefined on every (re-)map —
   clear-first for accumulating containers, unconditional assignment for scalars.
+- **A CROSS-ENTITY value materializes in the REVERSE PASS's post-map derivation step, not at mapFrom.**
+  `mapFrom` structurally cannot serve a value derived from *another* info's edges — it runs while the reverse
+  view is still being built, so the view it would read is incomplete. The one home is a `rp_derive*` sub-pass
+  inside `reversePassRun()` (`Data/CvReversePass.cpp`), calling the type's `deriveAtRegistryComplete()` once
+  every entity is mapped and the RELATED/REQUIRED_BY families are landed; where the derivation needs a
+  cross-registry fact, the PASS computes it once and FEEDS it in (the DRY shape — a machine never re-derives
+  what another can hand it). Idempotent like its siblings: it fully redefines every member it fills.
+  ⛔ The alternative — resolving on first read behind a memo — is BANNED, and not as untidiness: a memo puts a
+  cache **and a dirty flag** on an info, which the INFO DATA-OUT contract above forbids *by construction*.
+  ⛔ And it is ONE step, not a per-type habit: minting a second post-map hook beside this pass is the
+  does-the-same-thing failure the enforcement check below exists to catch — reuse `deriveAtRegistryComplete`.
+  *(Realized: the unit plane's SM base sums / derived era / upgrade-chain closure, and `CvHeritageInfo`'s
+  acquisition prereqs — the tech and predecessor heritages whose `enables.heritages` list it.)*
 - The cascade's own gated sums are NOT this surface — they are `MMKernel` over the compiled `DepositIndex`,
   running at dirty-rebuild cadence, not per read.
 

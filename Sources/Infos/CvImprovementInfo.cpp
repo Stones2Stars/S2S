@@ -305,7 +305,7 @@ void CvImprovementInfo::materializeValidity()
 void CvImprovementInfo::mapFrom(const picojson::value& entity)
 {
 	// remap-idempotency (CvInfo.h contract): fully define every accumulating member.
-	// NB m_aeBuildTypes is NOT cleared here -- doPostLoadCaching populates it, not this parse.
+	// NB m_aeBuildTypes is NOT cleared here -- the reverse pass owns it (clear-first), not this parse.
 	m_aeMapCategories.clear();
 	m_aiAlternativeImprovementUpgradeTypes.clear();
 	m_aiFeatureChangeTypes.clear();

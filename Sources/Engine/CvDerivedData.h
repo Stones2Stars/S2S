@@ -22,7 +22,7 @@
 //	where its inputs are invariant (a tech fact at Team, a civic value at Player, the constructible
 //	set at City), so one recompute serves everything below it.
 //	NOTE: truly STATIC XML-derived data (the prereq/enabler reverse-indices) does NOT live here --
-//	it lives on cvInternalGlobals, built once in doPostLoadCaching and never invalidated (see
+//	it lives on cvInternalGlobals, built once in buildLoadTimeIndexes and never invalidated (see
 //	getBuildingsEnabledBy / getUnitsEnabledBy). The Game repository is for GAME-STATE-derived,
 //	game-scoped data only.
 //

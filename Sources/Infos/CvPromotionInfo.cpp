@@ -216,7 +216,7 @@ static void pr_eraseValue(std::vector<int>& values, int iValue)
 	}
 }
 
-// Pedia caches, computed post-load (the archived doPostLoadCaching semantic): the qualified set = the
+// Applicability sets, derived post-map by the general reverse pass: the qualified set = the
 // unitcombats this promotion applies to (identity.unitCombats) UNION the promotion line's unitcombat list;
 // the disqualified set = this promotion's notOnUnitCombats UNION the line's, each removed from the
 // qualified set.

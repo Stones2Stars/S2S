@@ -391,7 +391,7 @@ public:
 	int getNumStatusPromotions() const;
 
 	// Building types carrying EMPIRE-scope per-turn property sources (the converted <PropertiesAllCities>
-	// one-shots -- property-audit.md one-shot ruling). Load-built in doPostLoadCaching; the
+	// one-shots -- property-audit.md one-shot ruling). Load-built in buildLoadTimeIndexes; the
 	// CvGameObjectCity::foreachManipulator all-cities walk iterates this short list, never all building infos.
 	const std::vector<BuildingTypes>& getAllCitiesManipBuildings() const { return m_allCitiesManipBuildings; }
 
@@ -818,7 +818,7 @@ public:
 	void cacheGameSpecificValues();
 
 protected:
-	void doPostLoadCaching();
+	void buildLoadTimeIndexes();   // the engine-side load indexes; runs AFTER loadJson(JSON_LOAD_POSTMENU)
 	void buildConstructibilityEnablerIndex();
 	void buildInvisibleSeerIndex();
 

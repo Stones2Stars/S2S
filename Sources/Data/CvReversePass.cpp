@@ -1199,6 +1199,144 @@ namespace
 			pUnit->deriveAtRegistryComplete(rp_firstPrereqTechEra(pUnitData), combatClassesWithPromotions);
 		}
 	}
+
+	// The heritage acquisition prereqs (the gating tech + the predecessor heritages) read back off each
+	// heritage's OWN EDGEF_RELATED lists, so they can only be derived once rp_buildRelated has landed them --
+	// hence a post-map sub-pass here rather than a mapFrom read. Materializing them makes both getters bare
+	// member reads; the alternative (resolve-on-first-read behind a memo) would put a cache AND a dirty flag on
+	// an info, which the INFO DATA-OUT contract forbids by construction (patterns.md).
+	void rp_deriveHeritagePrereqs()
+	{
+		const int iNumHeritages = GC.getNumHeritageInfos();
+		for (int iHeritage = 0; iHeritage < iNumHeritages; ++iHeritage)
+		{
+			CvInfo* pHeritageData = const_cast<CvInfo*>(InfoRepo<CvHeritageInfo>::get().get(iHeritage));
+			if (pHeritageData == NULL)
+			{
+				continue;
+			}
+			static_cast<CvHeritageInfo*>(pHeritageData)->deriveAtRegistryComplete();
+		}
+	}
+
+	// ===== The cross-entity INDEXES =====
+	// Each is derived from ANOTHER info's data, so it can only be built once every entity is mapped -- which is
+	// exactly this pass, and is why a load-time derivation never sits anywhere earlier: ahead of the postmenu
+	// full-registry re-map it would read an incomplete registry AND be overwritten by that re-map. Every one is
+	// CLEAR-FIRST, because reversePassRun runs in BOTH load phases.
+
+	// The promotion-LINE member index (line -> its promotions), inverted from each promotion's promotionLine FK.
+	// The ladder walk (CvUnit::canAcquirePromotion) reads it; unpopulated, every rank of a line offers at once.
+	void rp_derivePromotionLineMembers()
+	{
+		for (int iLine = GC.getNumPromotionLineInfos() - 1; iLine > -1; --iLine)
+		{
+			GC.getPromotionLineInfo((PromotionLineTypes)iLine).clearPromotions();
+		}
+		for (int iPromotion = GC.getNumPromotionInfos() - 1; iPromotion > -1; --iPromotion)
+		{
+			const PromotionLineTypes eLine = GC.getPromotionInfo((PromotionTypes)iPromotion).getPromotionLine();
+			if (eLine != NO_PROMOTIONLINE)
+			{
+				GC.getPromotionLineInfo(eLine).addPromotion(iPromotion);
+			}
+		}
+	}
+
+	// The promotion applicability sets: qualified = its own unitCombats UNION its line's; disqualified = the
+	// notOn sets, removed from qualified. Both setters rebuild their vector whole (already clear-first), and
+	// both read the promotion LINE, so this runs after rp_derivePromotionLineMembers.
+	void rp_derivePromotionQualification()
+	{
+		for (int iPromotion = GC.getNumPromotionInfos() - 1; iPromotion > -1; --iPromotion)
+		{
+			CvPromotionInfo& kPromotion = GC.getPromotionInfo((PromotionTypes)iPromotion);
+			kPromotion.setQualifiedUnitCombatTypes();
+			kPromotion.setDisqualifiedUnitCombatTypes();
+		}
+	}
+
+	// Tech "leads to": invert every tech's retained AND/OR prereq lists, so getLeadsToTechs(P) yields every tech
+	// naming P as a prereq.
+	void rp_deriveTechLeadsTo()
+	{
+		const int iNumTechs = GC.getNumTechInfos();
+		for (int iTech = 0; iTech < iNumTechs; ++iTech)
+		{
+			GC.getTechInfo((TechTypes)iTech).clearLeadsTo();
+		}
+		for (int iTech = 0; iTech < iNumTechs; ++iTech)
+		{
+			const TechTypes eTech = (TechTypes)iTech;
+			const CvTechInfo& kTech = GC.getTechInfo(eTech);
+			const std::vector<TechTypes>& andPrereqs = kTech.getPrereqAndTechs();
+			for (size_t iEntry = 0; iEntry < andPrereqs.size(); ++iEntry)
+			{
+				if (andPrereqs[iEntry] != NO_TECH)
+				{
+					GC.getTechInfo(andPrereqs[iEntry]).addLeadsToTech(eTech);
+				}
+			}
+			const std::vector<TechTypes>& orPrereqs = kTech.getPrereqOrTechs();
+			for (size_t iEntry = 0; iEntry < orPrereqs.size(); ++iEntry)
+			{
+				if (orPrereqs[iEntry] != NO_TECH)
+				{
+					GC.getTechInfo(orPrereqs[iEntry]).addLeadsToTech(eTech);
+				}
+			}
+		}
+	}
+
+	// Improvement -> the builds that lay it (worker AI), plus the two bonus-side twins: which improvements trade
+	// a bonus, and each bonus's (improvement, build) trade pairs (AI_countNumImprovableBonuses).
+	void rp_deriveImprovementAndBonusIndexes()
+	{
+		const int iNumImprovements = GC.getNumImprovementInfos();
+		const int iNumBonuses = GC.getNumBonusInfos();
+		const int iNumBuilds = GC.getNumBuildInfos();
+
+		for (int iImprovement = 0; iImprovement < iNumImprovements; ++iImprovement)
+		{
+			GC.getImprovementInfo((ImprovementTypes)iImprovement).clearBuildTypes();
+		}
+		for (int iBonus = 0; iBonus < iNumBonuses; ++iBonus)
+		{
+			GC.getBonusInfo((BonusTypes)iBonus).clearRuntimeImprovementIndexes();
+		}
+
+		for (int iImprovement = 0; iImprovement < iNumImprovements; ++iImprovement)
+		{
+			const ImprovementTypes eImprovement = (ImprovementTypes)iImprovement;
+			const CvImprovementInfo& kImprovement = GC.getImprovementInfo(eImprovement);
+			for (int iBonus = 0; iBonus < iNumBonuses; ++iBonus)
+			{
+				if (kImprovement.isImprovementBonusTrade(iBonus))
+				{
+					GC.getBonusInfo((BonusTypes)iBonus).setProvidedByImprovementTypes(eImprovement);
+				}
+			}
+		}
+
+		for (int iBuild = 0; iBuild < iNumBuilds; ++iBuild)
+		{
+			const BuildTypes eBuild = (BuildTypes)iBuild;
+			const ImprovementTypes eImprovement = GC.getBuildInfo(eBuild).getImprovement();
+			if (eImprovement == NO_IMPROVEMENT)
+			{
+				continue;
+			}
+			GC.getImprovementInfo(eImprovement).addBuildType(eBuild);
+			const CvImprovementInfo& kImprovement = GC.getImprovementInfo(eImprovement);
+			for (int iBonus = 0; iBonus < iNumBonuses; ++iBonus)
+			{
+				if (kImprovement.isImprovementBonusTrade(iBonus))
+				{
+					GC.getBonusInfo((BonusTypes)iBonus).addTradeProvidingImprovement(eImprovement, eBuild);
+				}
+			}
+		}
+	}
 }
 
 void reversePassRun()
@@ -1217,6 +1355,11 @@ void reversePassRun()
 	rp_buildRequiredBy();
 	rp_sortUniqueAll();
 	rp_deriveUnitPlane();
+	rp_deriveHeritagePrereqs();
+	rp_derivePromotionLineMembers();
+	rp_derivePromotionQualification();   // reads the line members above
+	rp_deriveTechLeadsTo();
+	rp_deriveImprovementAndBonusIndexes();
 	s_counts.milliseconds = (unsigned int)(GetTickCount() - iStartTick);
 }
 

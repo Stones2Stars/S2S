@@ -126,7 +126,10 @@ save-break); derived data serializes nothing; deleting a changer means auditing 
     phase: clears the repos, re-registers every store entity (REUSE-ONLY ids — a type is mapped only after its
     registration has landed; pre-registering a postmenu type crashed the load), re-runs the idempotent
     `mapFrom` on EVERY entity against the complete registry, mints + resolves the classification registries,
-    compiles the DepositIndex, and runs the FK/reverse passes. The premenu/postmenu PHASING is load-bearing:
+    runs the FK/reverse passes — whose closing `rp_derive*` sub-passes are the ONE home for a member derived
+    from ANOTHER info's edges (`deriveAtRegistryComplete`; the reverse view is final there, so such a member
+    materializes once and its getter is a bare read, [DEC-materialize-at-mapfrom]) — and compiles the
+    DepositIndex. The premenu/postmenu PHASING is load-bearing:
     premenu consumers need premenu categories mapped before the menu; the postmenu types
     (processes/votes/espionage-missions/spawns) register late, so the postmenu re-run is what completes every
     cross-category FK edge. The postmenu pass ends by FREEING the store — after load, no JSON-shaped object

@@ -36,7 +36,7 @@
 #include "Repos/BuildingsRepo.h"
 #include "Repos/BuildsRepo.h"
 #include "Repos/InfoRepo.h"   // #430: the 5 EXE-bound getters return the JSON-mapped shim from the per-type InfoRepo
-#include "Data/CvReadJson.h"   // #430: map the curated JSON -> InfoRepo at load (doPostLoadCaching, with the XML)
+#include "Data/CvReadJson.h"   // #430: map the curated JSON -> InfoRepo at load
 #include <time.h>
 #include <sstream>
 
@@ -3236,27 +3236,16 @@ uint32_t cvInternalGlobals::getAssetCheckSum() const
 	return iSum;
 }
 
-void cvInternalGlobals::doPostLoadCaching()
+// The ENGINE-side load-time indexes over info data -- GC-owned lists and the two enabler reverse-indexes, none
+// of them an info MEMBER (a member derived from another info's data belongs to the general reverse pass's
+// post-map derivation step, Data/CvReversePass.cpp). Every list is rebuilt whole.
+// ⛔ It runs AFTER loadJson(JSON_LOAD_POSTMENU), never before: the postmenu pass is what completes the registry
+// and re-runs mapFrom on every entity, so anything built ahead of it reads incomplete data and is then
+// overwritten by the re-map.
+void cvInternalGlobals::buildLoadTimeIndexes()
 {
 	PROFILE_EXTRA_FUNC();
 	checkInitialCivics();
-
-	// Build the promotion-LINE member reverse index (line -> its promotions) from each promotion's
-	// promotionLine FK. This is the list the "must hold the next-lower line priority" ladder walk reads
-	// (CvUnit::canAcquirePromotion) -- nothing populated it since the JSON cut, so the walk was vacuous and
-	// every rank of a line offered at once. Clear-then-rebuild keeps the pass idempotent.
-	for (int iI = getNumPromotionLineInfos() - 1; iI > -1; iI--)
-	{
-		getPromotionLineInfo(static_cast<PromotionLineTypes>(iI)).clearPromotions();
-	}
-	for (int iI = getNumPromotionInfos() - 1; iI > -1; iI--)
-	{
-		const PromotionLineTypes eLine = getPromotionInfo(static_cast<PromotionTypes>(iI)).getPromotionLine();
-		if (eLine != NO_PROMOTIONLINE)
-		{
-			getPromotionLineInfo(eLine).addPromotion(iI);
-		}
-	}
 
 	// Index the buildings carrying EMPIRE-scope per-turn property sources (the converted <PropertiesAllCities>
 	// one-shots -- property-audit.md one-shot ruling), so the per-city gather walks this short list instead of
@@ -3270,51 +3259,10 @@ void cvInternalGlobals::doPostLoadCaching()
 		}
 	}
 
-	//Establish Promotion Pedia Help info
-	for (int iI = getNumPromotionInfos() - 1; iI > -1; iI--)
-	{
-		const PromotionTypes ePromotion = static_cast<PromotionTypes>(iI);
-		getPromotionInfo(ePromotion).setQualifiedUnitCombatTypes();
-		getPromotionInfo(ePromotion).setDisqualifiedUnitCombatTypes();
-	}
-	for (int iI = getNumUnitInfos() - 1; iI > -1; iI--)
-	{
-		const UnitTypes eUnit = static_cast<UnitTypes>(iI);
-		getUnitInfo(eUnit).setQualifiedPromotionTypes();
-		getUnitInfo(eUnit).setCanAnimalIgnores();
-	}
-	// Establish derived xml caching in info classes
+	// The map-generation bonus list (placement-ordered), rebuilt whole.
 	{
 		const int iNumBonusInfos = getNumBonusInfos();
-
-		for (int iI = getNumImprovementInfos() - 1; iI > -1; iI--)
-		{
-			const ImprovementTypes eType = static_cast<ImprovementTypes>(iI);
-			const CvImprovementInfo& improvement = getImprovementInfo(eType);
-
-			for (int iBonus = 0; iBonus < iNumBonusInfos; iBonus++)
-			{
-				if (improvement.isImprovementBonusTrade(iBonus))
-				{
-					getBonusInfo((BonusTypes)iBonus).setProvidedByImprovementTypes(eType);
-				}
-			}
-		}
-		// Each bonus's (improvement, build) trade-providing pair list -- eager at load (the JSON poco has no lazy
-		// build path; mirrors the archived CvBonusInfo::getTradeProvidingImprovements): for each build, if the
-		// improvement it lays trade-provides the bonus, record (improvement, build). Consumer: AI_countNumImprovableBonuses.
-		for (int iBonus = 0; iBonus < iNumBonusInfos; iBonus++)
-		{
-			for (int iJ = 0; iJ < getNumBuildInfos(); iJ++)
-			{
-				const BuildTypes eBuild = static_cast<BuildTypes>(iJ);
-				const ImprovementTypes eImp = getBuildInfo(eBuild).getImprovement();
-				if (eImp != NO_IMPROVEMENT && getImprovementInfo(eImp).isImprovementBonusTrade(iBonus))
-				{
-					getBonusInfo(static_cast<BonusTypes>(iBonus)).addTradeProvidingImprovement(eImp, eBuild);
-				}
-			}
-		}
+		m_mapBonuses.clear();
 		for (int iBonus = 0; iBonus < iNumBonusInfos; iBonus++)
 		{
 			if (getBonusInfo(static_cast<BonusTypes>(iBonus)).getPlacementOrder() > -1)
@@ -3324,64 +3272,10 @@ void cvInternalGlobals::doPostLoadCaching()
 		}
 	}
 
-	// Tech "leads to" reverse index: invert every tech's prereq (AND + OR) lists so getLeadsToTechs(P) yields every
-	// tech that lists P as a prereq. Prereqs are populated by mapFrom (pre-menu), so this reads real data here.
-	for (int iI = 0; iI < getNumTechInfos(); iI++)
-	{
-		const TechTypes eTech = static_cast<TechTypes>(iI);
-		const CvTechInfo& kTech = getTechInfo(eTech);
-		const std::vector<TechTypes>& andPrereqs = kTech.getPrereqAndTechs();
-		for (size_t j = 0; j < andPrereqs.size(); ++j)
-			if (andPrereqs[j] != NO_TECH) getTechInfo(andPrereqs[j]).addLeadsToTech(eTech);
-		const std::vector<TechTypes>& orPrereqs = kTech.getPrereqOrTechs();
-		for (size_t j = 0; j < orPrereqs.size(); ++j)
-			if (orPrereqs[j] != NO_TECH) getTechInfo(orPrereqs[j]).addLeadsToTech(eTech);
-	}
-
-	// Trait prereq reverse index (reverse-map at load): the curator inverts each trait's prereqs onto the prereq
-	// entity's `enables`, bucket-split to keep AND vs OR distinct (store.py) -- the prereq TRAIT carries
-	// enables.traitsAnd (single AND) / enables.traitsOr (OR pair), the prereq TECH carries enables.traits. Reconstruct
-	// the forward getters the engine + pedia read (getPrereqTrait/OrTrait1/2 CvPlayer.cpp:29492 / CvGameTextMgr.cpp:6214).
-	// getTraitInfo returns the ACTIVE trait set (simple/complex per option) -- exactly what those getters read.
-	for (int iI = 0; iI < getNumTraitInfos(); iI++)
-	{
-		const TraitTypes ePrereq = static_cast<TraitTypes>(iI);
-		const CvEdges* pEdges = getTraitInfo(ePrereq).getEdges();
-		if (pEdges == NULL) continue;
-		if (const std::vector<int>* andT = pEdges->find(EDGEF_ENABLES, EDGEB_TRAITS_AND))
-			for (size_t j = 0; j < andT->size(); ++j)
-				getTraitInfo(static_cast<TraitTypes>((*andT)[j])).setPrereqTrait(ePrereq);
-		if (const std::vector<int>* orT = pEdges->find(EDGEF_ENABLES, EDGEB_TRAITS_OR))
-			for (size_t j = 0; j < orT->size(); ++j)
-				getTraitInfo(static_cast<TraitTypes>((*orT)[j])).addPrereqOrTrait(ePrereq);
-	}
-	// tech -> trait prereq: the prereq tech carries the trait in enables.traits -> getPrereqTech.
-	for (int iI = 0; iI < getNumTechInfos(); iI++)
-	{
-		const TechTypes eTech2 = static_cast<TechTypes>(iI);
-		const CvEdges* pEdges = getTechInfo(eTech2).getEdges();
-		if (pEdges == NULL) continue;
-		if (const std::vector<int>* traits = pEdges->find(EDGEF_ENABLES, EDGEB_TRAITS))
-			for (size_t j = 0; j < traits->size(); ++j)
-				getTraitInfo(static_cast<TraitTypes>((*traits)[j])).setPrereqTech(eTech2);
-	}
-
-	// Improvement -> builds reverse index (getBuildTypes): for each build, record it on the improvement it lays.
-	// Mirrors the legacy doPostLoadCaching scan; worker AI reads it.
-	for (int iJ = 0; iJ < getNumBuildInfos(); iJ++)
-	{
-		const BuildTypes eBuild = static_cast<BuildTypes>(iJ);
-		const ImprovementTypes eImp = getBuildInfo(eBuild).getImprovement();
-		if (eImp != NO_IMPROVEMENT) getImprovementInfo(eImp).addBuildType(eBuild);
-	}
-
-	// (Building improvement-keyed yield upgrade-chain expansion: lives in the readJson reverse pass
-	// (CvReadJson.cpp) -- it must run AFTER the post-menu full-registry mapFrom, which clears and
-	// re-populates the poco maps; this function fires PRE-menu on empty maps.)
-
 	{
 		//TB: Set Statuses and starsigns
 		m_aiStatusPromotions.clear();
+		m_starsigns.clear();
 		for (int iI = 0; iI < GC.getNumPromotionInfos(); iI++)
 		{
 			const PromotionTypes ePromoX = static_cast<PromotionTypes>(iI);
@@ -3397,14 +3291,6 @@ void cvInternalGlobals::doPostLoadCaching()
 		}
 	}
 
-	foreach_(const std::vector<CvInfoBase*>* infoVector, m_aInfoVectors)
-	{
-		for (uint32_t i = 0, num = infoVector->size(); i < num; i++)
-		{
-			(*infoVector)[i]->doPostLoadCaching(i);
-		}
-	}
-
 	CityOutputHistory::setCityOutputHistorySize((uint16_t)GC.getCITY_OUTPUT_HISTORY_SIZE());
 
 	// Derive the static constructibility enabler reverse-index now that every building's
@@ -3412,12 +3298,6 @@ void cvInternalGlobals::doPostLoadCaching()
 	buildConstructibilityEnablerIndex();
 
 	buildInvisibleSeerIndex();
-
-	// #430 cascade: the JSON->InfoRepo map does NOT run here. doPostLoadCaching fires at the end of
-	// LoadPreMenuGlobals, BEFORE the post-menu XML stage -- so PROCESS_/VOTE_/ESPIONAGE_/SPAWN_ ids were not yet in
-	// the type registry and every FK edge referencing them silently dropped into the unresolved set (the canMaintain
-	// empty-frontier bug, 2026-07-02: every tech's enables.processes vanished). The map now runs at the end of
-	// LoadPostMenuGlobals (CvXMLLoadUtilitySet.cpp), when EVERY info type is registered.
 }
 
 const std::vector<BuildingTypes>& cvInternalGlobals::getBuildingsEnabledBy(BuildingTypes eEnabler) const
@@ -3652,7 +3532,7 @@ void cvInternalGlobals::buildConstructibilityEnablerIndex()
 // #195 Phase 2: one-shot verification that the unified requirement model reproduces the
 // typed prereq fields the enabler index relies on. Logged via the [PERF] channel (not
 // asserted) so it surfaces in any DLL -- including FinalRelease -- when
-// Autolog__LogLevelPerf >= 1. The index itself is built at load (doPostLoadCaching) before
+// Autolog__LogLevelPerf >= 1. The index itself is built at load (buildLoadTimeIndexes) before
 // gPerfLogLevel is read at game init, so this is called once from the CABV PreLoop, by which
 // point the log level is set. mismatches=0 == the model faithfully backs the index.
 void cvInternalGlobals::logConstructRequirementFidelity() const

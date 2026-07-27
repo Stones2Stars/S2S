@@ -12,7 +12,7 @@
 //	`enables.*` -- base availability data, never poco getters. The tech-side FORWARD views that survive are
 //	the enabler.md §2 reconstructions: the multi-parent prereqs walked out of the composed requires.build tree
 //	(the child retains them -- curate_tech keeps AndPreReqs/OrPreReqs on the child), and the leadsTo reverse
-//	index built at load by CvGlobals::doPostLoadCaching from exactly those retained prereqs.
+//	index built at load by the general reverse pass from exactly those retained prereqs.
 //
 
 #include "CvInfo.h"
@@ -107,9 +107,10 @@ public:
 	const std::vector<TechTypes>& getPrereqOrTechs() const  { return m_aePrereqOrTechs; }
 	const std::vector<PrereqBuilding>& getPrereqOrBuildings() const { return m_aPrereqOrBuildings; }
 	// --- the leadsTo REVERSE index (which techs list THIS tech as a prereq) -- built at load by
-	// CvGlobals::doPostLoadCaching from the retained prereq views above; the writer is load-window-only ---
+	// the general reverse pass from the retained prereq views above; the writer is load-window-only ---
 	const std::set<TechTypes>& getLeadsToTechs() const { return m_leadsTo; }
 	void addLeadsToTech(TechTypes eTech) { m_leadsTo.insert(eTech); }
+	void clearLeadsTo() { m_leadsTo.clear(); }   // clear-first: the reverse pass runs in BOTH load phases
 
 	virtual const CvTriggers*  getTriggers()  const { return &m_triggers; }   // §5 -- triggers + the folded grants
 
@@ -158,7 +159,7 @@ private:
 	std::vector<TechTypes> m_aePrereqAndTechs;         // team-scope TECH_ atoms in requires.build.all (incl. folded 1-member ORs)
 	std::vector<TechTypes> m_aePrereqOrTechs;          // FIRST multi-member TECH any-group under requires.build.all
 	std::vector<PrereqBuilding> m_aPrereqOrBuildings;  // the requires.build.all[].any[] BUILDING_ OR-group ((building, min) pairs)
-	std::set<TechTypes> m_leadsTo;                     // filled by doPostLoadCaching (addLeadsToTech)
+	std::set<TechTypes> m_leadsTo;                     // filled by the reverse pass (rp_deriveTechLeadsTo)
 };
 
 // The synthetic TECH_GAME_START root (no engine id -- lives OFF the InfoRepo; readjson.md §5.1): the universal

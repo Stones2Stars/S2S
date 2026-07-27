@@ -127,10 +127,11 @@ public:
 	int getPrereqNatureYield(int iYield) const
 	{ return (iYield >= 0 && iYield < NUM_YIELD_TYPES) ? m_aiPrereqNatureYield[iYield] : 0; }
 
-	// --- RUNTIME cross-reference (not curated): doPostLoadCaching scans every BuildInfo for
+	// --- RUNTIME cross-reference (not curated): the reverse pass scans every BuildInfo for
 	// getImprovement()==this and rebuilds this list at load. Worker AI reads it. ---
 	const std::vector<BuildTypes>& getBuildTypes() const { return m_aeBuildTypes; }
 	void addBuildType(BuildTypes eBuild) { m_aeBuildTypes.push_back(eBuild); }   // load-window writer
+	void clearBuildTypes() { m_aeBuildTypes.clear(); }   // clear-first: the reverse pass runs in BOTH load phases
 
 	// The improvement's property sources are authored as `triggers` property-delta entries (json.md §5) and
 	// BRIDGED back into this object in mapFrom (CascadePropertyBridge::bridgePulses) so the KEEP-legacy plot
@@ -217,7 +218,7 @@ private:
 	std::set<int> m_bonusMakesValid;     // requires.build.any {bonus:[...]} membership (BONUS_ presence atoms)
 	int m_aiPrereqNatureYield[NUM_YIELD_TYPES];   // requires.build {natureYield:{...}} min thresholds (CASC_PRED_NATURE_YIELD atoms)
 
-	std::vector<BuildTypes> m_aeBuildTypes;          // runtime cross-reference (doPostLoadCaching)
+	std::vector<BuildTypes> m_aeBuildTypes;          // runtime cross-reference (the reverse pass)
 	CvPropertyManipulators m_PropertyManipulators;   // fed from the triggers PROPERTY pulses (CascadePropertyBridge)
 };
 

@@ -14,13 +14,13 @@ The cascade's enabler is the "can I?" machine — HAS / CAN GET / HAS THE MEANS 
 
 It is a **read-only description, not an evaluator** — `CvCity::canConstruct` / `CvPlayer::canTrain` still do the real evaluation and keep their `probabilityEverConstructable` hints and `bExposed`/`bTestVisible` gate stratification. The model exists so the prerequisite relationships can be *introspected* (for the reverse-index and the help text) without re-running the evaluator.
 
-- `CvBuildingInfo::getConstructRequirements()` — built once at load in `doPostLoadCaching` (via `buildConstructRequirements`) from the typed `Prereq*` fields: GOM_BUILDING (InCity=ALL, Or=ANY, NotInCity=FORBID, NumOf=COUNT), GOM_TECH, GOM_BONUS (And/Or), GOM_RELIGION, GOM_CORPORATION, GOM_CIVIC (And/Or), GOM_OPTION, GOM_TERRAIN (And/Or), GOM_FEATURE, GOM_IMPROVEMENT, GOM_HERITAGE.
+- `CvBuildingInfo::getConstructRequirements()` — built once at load in `buildLoadTimeIndexes` (via `buildConstructRequirements`) from the typed `Prereq*` fields: GOM_BUILDING (InCity=ALL, Or=ANY, NotInCity=FORBID, NumOf=COUNT), GOM_TECH, GOM_BONUS (And/Or), GOM_RELIGION, GOM_CORPORATION, GOM_CIVIC (And/Or), GOM_OPTION, GOM_TERRAIN (And/Or), GOM_FEATURE, GOM_IMPROVEMENT, GOM_HERITAGE.
 - `CvUnitInfo::getTrainRequirements()` — the train-side analogue.
 - **Not modelled** (bespoke semantics, no consumer): vicinity / raw-vicinity bonus, state-religion, and the non-GOM prereqs (population, culture level, properties, war, power). These keep their typed handling — the model does not cover them.
 
 ## The static enabler reverse-index (turn-time)
 
-`cvInternalGlobals::buildConstructibilityEnablerIndex()` (in `CvGlobals`) derives, once at the end of `doPostLoadCaching`, two reverse-indices from the model plus each construct/train condition's involved GOMs:
+`cvInternalGlobals::buildConstructibilityEnablerIndex()` (in `CvGlobals`) derives, once at the end of `buildLoadTimeIndexes`, two reverse-indices from the model plus each construct/train condition's involved GOMs:
 
 - `getBuildingsEnabledBy(BuildingTypes B)` → buildings whose constructibility B (or a free bonus B grants) can flip true.
 - `getUnitsEnabledBy(BuildingTypes B)` → units B can help train.

@@ -100,8 +100,11 @@ public:
 
 	const std::vector<MapCategoryTypes>& getMapCategories() const { return m_aeMapCategories; }
 
-	// --- RUNTIME "which improvements trade this bonus" -- populated post-load by CvGlobals's derived-caching
-	// pass (one setProvidedByImprovementTypes per ImprovementInfo::isImprovementBonusTrade hit). NOT JSON. ---
+	// --- RUNTIME "which improvements trade this bonus" -- built by the general reverse pass's post-map
+	// derivation step (one setProvidedByImprovementTypes per ImprovementInfo::isImprovementBonusTrade hit),
+	// which is where a cross-entity index belongs: it needs every entity mapped. NOT JSON. ---
+	void clearRuntimeImprovementIndexes()          // clear-first: the pass runs in BOTH load phases
+	{ m_providedByImprovementTypes.clear(); m_tradeProvidingImprovements.clear(); }
 	void setProvidedByImprovementTypes(const ImprovementTypes eType);
 	const std::vector<ImprovementTypes>& getProvidedByImprovementTypes() const { return m_providedByImprovementTypes; }
 	ImprovementTypes getProvidedByImprovementType(const int iIndex) const { return m_providedByImprovementTypes[iIndex]; }

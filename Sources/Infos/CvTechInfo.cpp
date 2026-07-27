@@ -56,7 +56,7 @@ void CvTechInfo::mapFrom(const picojson::value& entity)
 {
 	// remap-idempotency (CvInfo.h): the full-registry pass re-runs mapFrom -- fully define every accumulating
 	// member (the ability sets clear-first; the prereq vectors would double).
-	// NB m_leadsTo is NOT cleared here -- CvGlobals::doPostLoadCaching populates it, not this parse
+	// NB m_leadsTo is NOT cleared here -- the reverse pass's rp_deriveTechLeadsTo owns it (clear-first), not this parse
 	// (addLeadsToTech is a std::set insert, so a re-populate cannot double).
 	m_canTrade.clear();
 	m_canTradeOnTerrains.clear();

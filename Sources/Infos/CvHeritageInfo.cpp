@@ -2,8 +2,9 @@
 //	CvHeritageInfo -- the heritage poco's own typed reading on top of the base section dispatch (see the
 //	header). mapFrom materializes the identity set + the property bridge ONCE ([DEC-materialize-at-mapfrom]);
 //	the ERA-banded empire commerce lives on the compiled conditioned entries (base surface), never as a
-//	mirrored band table. The acquisition prereqs resolve lazily from THIS info's own load-populated reverse
-//	view (EDGEF_RELATED), the exact enables-predicate confirmed against each related source's forward edge.
+//	mirrored band table. The acquisition prereqs materialize in the general reverse pass's post-map derivation
+//	step from THIS info's own load-populated reverse view (EDGEF_RELATED), the exact enables-predicate confirmed
+//	against each related source's forward edge.
 //
 
 #include "CvGameCoreDLL.h"
@@ -15,7 +16,6 @@
 CvHeritageInfo::CvHeritageInfo()
 	: m_bNeedsLanguage(false)
 	, m_iMissionType(-1)
-	, m_bPrereqsResolved(false)
 	, m_iPrereqTech(NO_TECH)
 {
 }
@@ -23,15 +23,14 @@ CvHeritageInfo::CvHeritageInfo()
 // The prereq read-back (see the header): iterate THIS info's own EDGEF_RELATED lists (the load-populated
 // reverse view -- a candidate SUPERSET of everything referencing this heritage) and keep exactly the sources
 // whose FORWARD enables.heritages edge lists this heritage -- the consumer-kept exact predicate over the
-// RELATED superset. Bounded by the related lists; no repo-wide scan. Lazy + memoized (all pocos and the
-// reverse pass are complete at every runtime caller; never called during load).
-void CvHeritageInfo::resolvePrereqs() const
+// RELATED superset. Bounded by the related lists; no repo-wide scan. Run ONCE from inside the general reverse
+// pass (rp_deriveHeritagePrereqs), after it has landed the EDGEF_RELATED families, so both getters are bare
+// member reads and the info carries no memo ([DEC-materialize-at-mapfrom]).
+void CvHeritageInfo::deriveAtRegistryComplete()
 {
-	if (m_bPrereqsResolved)
-	{
-		return;
-	}
-	m_bPrereqsResolved = true;
+	// Idempotent like the sibling sub-passes: fully redefine the output every run.
+	m_iPrereqTech = NO_TECH;
+	m_prereqOrHeritage.clear();
 
 	const int iThis = GC.getInfoTypeForString(getType(), true);   // this heritage's own registered id
 	if (iThis < 0)
@@ -101,28 +100,14 @@ void CvHeritageInfo::resolvePrereqs() const
 	}
 }
 
-int CvHeritageInfo::getPrereqTech() const
-{
-	resolvePrereqs();
-	return m_iPrereqTech;
-}
-
-const std::vector<HeritageTypes>& CvHeritageInfo::getPrereqOrHeritage() const
-{
-	resolvePrereqs();
-	return m_prereqOrHeritage;
-}
-
 void CvHeritageInfo::mapFrom(const picojson::value& entity)
 {
 	CvInfo::mapFrom(entity);   // core reading + the section dispatch (compiles m_modifiers, fills edges)
 
-	// idempotency (CvInfo.h): the full-registry re-run fully redefines every materialized member (and the
-	// lazy memo restarts clean -- it is only ever read post-load).
+	// idempotency (CvInfo.h): the full-registry re-run fully redefines every member mapFrom owns. The
+	// acquisition prereqs are NOT mapFrom's -- they come from the cross-entity view and are redefined by
+	// materializeCrossEntity(), which the reader runs after this pass.
 	m_bNeedsLanguage = false;
-	m_bPrereqsResolved = false;
-	m_iPrereqTech = NO_TECH;
-	m_prereqOrHeritage.clear();
 
 	// PROPERTY_* per-turn SOURCES: a heritage's <PROPERTY_X>.city.flat (the tech-gated folklore education)
 	// deposits in EVERY owner city while held -- RELATION_ASSOCIATED fans each source to every owner city per

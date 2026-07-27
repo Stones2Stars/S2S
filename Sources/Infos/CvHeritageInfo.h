@@ -28,6 +28,10 @@ public:
 
 	virtual void mapFrom(const picojson::value& entity);
 
+	// The post-map derivation the reverse pass drives (rp_deriveHeritagePrereqs), matching the unit plane's
+	// deriveAtRegistryComplete: runnable only once EVERY entity is mapped, because it reads OTHER infos' edges.
+	void deriveAtRegistryComplete();
+
 	// ======================= 1. SECTIONS -- whole typed objects =======================
 	virtual const CvEdges*     getEdges()     const { return &m_edges; }
 	virtual const CvModifiers* getModifiers() const { return &m_modifiers; }
@@ -48,10 +52,9 @@ public:
 	//   getPrereqTech       = the tech whose enables.heritages lists THIS heritage (legacy single PrereqTech).
 	//   getPrereqOrHeritage = every heritage whose enables.heritages lists THIS heritage (the folklore->taxon
 	//                         predecessors; empty for a folklore heritage, which is tech-gated only).
-	// Resolved lazily on first read (the reverse pass has run by any runtime caller; never during load),
-	// memoized in mutable members -- a pure derived memo over immutable loaded data.
-	int getPrereqTech() const;
-	const std::vector<HeritageTypes>& getPrereqOrHeritage() const;
+	// Both are materialized ONCE by deriveAtRegistryComplete(), so these are BARE MEMBER READS.
+	int getPrereqTech() const { return m_iPrereqTech; }
+	const std::vector<HeritageTypes>& getPrereqOrHeritage() const { return m_prereqOrHeritage; }
 
 	// --- RUNTIME member (assigned post-load, NOT JSON) ---
 	int getMissionType() const { return m_iMissionType; }
@@ -71,11 +74,9 @@ private:
 	int m_iMissionType;   // runtime
 	CvPropertyManipulators m_PropertyManipulators;   // fed from the PROPERTY_* families (CascadePropertyBridge)
 
-	// --- the lazy prereq memo (derived from the load-populated reverse view; see the .cpp) ---
-	void resolvePrereqs() const;
-	mutable bool m_bPrereqsResolved;
-	mutable int m_iPrereqTech;
-	mutable std::vector<HeritageTypes> m_prereqOrHeritage;
+	// --- the acquisition prereqs, materialized from the load-populated reverse view (see the .cpp) ---
+	int m_iPrereqTech;
+	std::vector<HeritageTypes> m_prereqOrHeritage;
 };
 
 #endif // CV_JSON_HERITAGE_INFO_H
