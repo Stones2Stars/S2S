@@ -139,7 +139,7 @@ as acceptable, scheduled, or "kept until X" — that reframing is the failure th
 > accessed."* (owner)
 
 Everything above is settled. The GRAMMAR is now settled too — [patterns.md § THE TWO READ ROLES](../../architecture/patterns.md)
-— and the GAME-OBJECT half is BUILT: **41 group reads** across plot / city / player / team / area, folding through
+— and the GAME-OBJECT half is BUILT: **41 group reads** across plot / city / player / team, folding through
 the one cross-scope roll-up (`InfoValuation::realizedAt*`), plus the endpoint oracle.
 
 ⛔ **What is NOT done is the DISCONNECT — the legacy getter set is STILL STANDING beside it (the KILL LIST above),
