@@ -915,6 +915,18 @@ public:
 	// ⚠ Projects and processes are PLAYER-held although a CITY builds them: their HAVE axes are team-scope, so
 	// per-city copies would be byte-identical state that must never drift, and the city gate reads through its
 	// owner (enabler.md §7.1).
+	// ---- THE "ANYWHERE" FAN -- construction and training are CITY concerns, on one plane (enabler.md §8): the
+	// gate needs the city-local supply (what is in VICINITY, and in the PLOT GROUP), which no higher scope can
+	// see. ⛔ There is therefore NO player-level construct/train verdict, and these are NOT one: they ASK THE
+	// CITIES and are named to say so. O(cities) by construction.
+	// ⛔ A caller that holds a city must ask THAT city (getUnitAvailability / getBuildingAvailability); reaching
+	// for the fan there is both wrong and needlessly linear. Use these only for a genuine "can I build this
+	// ANYWHERE in my empire?".
+	// ⛔ And do NOT replace them with a maintained player-level union: that is duplicated state which must never
+	// drift -- the same argument that keeps projects/processes player-held rather than copied per city (§7.1).
+	bool canAnyCityTrain(UnitTypes eUnit) const;
+	bool canAnyCityConstruct(BuildingTypes eBuilding) const;
+
 	EnablerDomain::State getTechAvailability(TechTypes eTech) const;
 	EnablerDomain::State getCivicAvailability(CivicTypes eCivic) const;
 	EnablerDomain::State getProjectAvailability(ProjectTypes eProject) const;

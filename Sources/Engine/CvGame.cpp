@@ -3290,7 +3290,7 @@ bool CvGame::canTrainNukes() const
 		{
 			for (int iJ = 0; iJ < GC.getNumUnitInfos(); iJ++)
 			{
-				if (GC.getUnitInfo((UnitTypes)iJ).getNukeRange() != -1 && player.canTrain((UnitTypes)iJ))
+				if (GC.getUnitInfo((UnitTypes)iJ).getNukeRange() != -1 && player.canAnyCityTrain((UnitTypes)iJ))
 				{
 					return true;
 				}

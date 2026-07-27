@@ -10568,7 +10568,7 @@ CvCity* CvUnit::getUpgradeCity(bool bSearch) const
 	{
 		const UnitTypes eUnitX = (UnitTypes)iUnitX;
 
-		if (upgradeAvailable(m_eUnitType, eUnitX) && kPlayer.canTrain(eUnitX)
+		if (upgradeAvailable(m_eUnitType, eUnitX) && kPlayer.canAnyCityTrain(eUnitX)
 		&& kPlayer.AI_unitValue(eUnitX, eUnitAI, pArea) > iCurrentValue)
 		{
 			int iSearchValue;

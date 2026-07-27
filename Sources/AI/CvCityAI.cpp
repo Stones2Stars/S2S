@@ -6400,7 +6400,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 				foreach_(const BuildingModifier2 & modifier, kBuilding.getGlobalBuildingProductionModifiers())
 				{
 					const BuildingTypes eLoopBuilding = modifier.first;
-					if (kOwner.canConstruct(eLoopBuilding))
+					if (kOwner.canAnyCityConstruct(eLoopBuilding))
 					{
 						const int iModifier = modifier.second;
 
@@ -6421,7 +6421,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 				foreach_(const BuildingModifier2 & modifier, kBuilding.getGlobalBuildingCostModifiers())
 				{
 					const BuildingTypes eLoopBuilding = modifier.first;
-					if (kOwner.canConstruct(eLoopBuilding))
+					if (kOwner.canAnyCityConstruct(eLoopBuilding))
 					{
 						const int iOriginalCost = kOwner.getProductionNeeded(eLoopBuilding);
 						int iPlayerMod = kOwner.getBuildingCostModifier(eLoopBuilding);
@@ -14190,7 +14190,7 @@ void CvCityAI::CalculateAllBuildingValues(int iFocusFlags)
 				foreach_(const BuildingModifier2 & modifier, kBuilding.getGlobalBuildingCostModifiers())
 				{
 					const BuildingTypes eLoopBuilding = modifier.first;
-					if (kOwner.canConstruct(eLoopBuilding))
+					if (kOwner.canAnyCityConstruct(eLoopBuilding))
 					{
 						const int iOriginalCost = kOwner.getProductionNeeded(eLoopBuilding);
 						int iPlayerMod = kOwner.getBuildingCostModifier(eLoopBuilding);

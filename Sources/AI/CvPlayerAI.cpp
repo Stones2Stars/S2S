@@ -5803,7 +5803,7 @@ int CvPlayerAI::AI_techBuildingValue(TechTypes eTech, int iPathLength, bool& bEn
 
 				iValue += iBuildingValue;
 			}
-			else if (canConstruct(eLoopBuilding))
+			else if (canAnyCityConstruct(eLoopBuilding))
 			{
 				if (!isLimitedWonder(eLoopBuilding)
 				&& (kLoopBuilding.getCommerceChange(COMMERCE_CULTURE) > 0 || kLoopBuilding.getCommercePerPopChange(COMMERCE_CULTURE) > 0))
@@ -5900,7 +5900,7 @@ bool CvPlayerAI::AI_canTrainSettler() {
 	if (!m_canTrainSettler) {
 		for (int iI = GC.getNumUnitInfos() - 1; iI > -1; iI--)
 		{
-			if (GC.getUnitInfo((UnitTypes)iI).getDefaultUnitAIType() == UNITAI_SETTLE && canTrain((UnitTypes)iI))
+			if (GC.getUnitInfo((UnitTypes)iI).getDefaultUnitAIType() == UNITAI_SETTLE && canAnyCityTrain((UnitTypes)iI))
 			{
 				m_canTrainSettler = true;
 				break;
@@ -9146,7 +9146,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus, bool bForTrade) const
 
 								iTempTradeValue = iTempValue;
 							}
-							else if (canTrain((UnitTypes)iI))
+							else if (canAnyCityTrain((UnitTypes)iI))
 							{
 								// is it a water unit and no coastal cities or our coastal city cannot build because its obsolete
 								if ((bIsWater && (pCoastalCity->allUpgradesAvailable((UnitTypes)iI) != NO_UNIT)) ||
@@ -24840,7 +24840,7 @@ int CvPlayerAI::AI_bestCityUnitAIValue(UnitAITypes eUnitAI, const CvCity* pCity,
 			const int iValue = AI_unitValue(eLoopUnit, eUnitAI, (pCity == NULL) ? NULL : pCity->area(), criteria);
 			if (iValue > iBestValue)
 			{
-				if (NULL == pCity ? canTrain(eLoopUnit) : (pCity->getUnitAvailability(eLoopUnit) == EnablerDomain::STATE_LISTED))
+				if (NULL == pCity ? canAnyCityTrain(eLoopUnit) : (pCity->getUnitAvailability(eLoopUnit) == EnablerDomain::STATE_LISTED))
 				{
 					iBestValue = iValue;
 					if (peBestUnitType != NULL)
@@ -26860,7 +26860,7 @@ int CvPlayerAI::AI_militaryBonusVal(BonusTypes eBonus)
 
 	for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
 	{
-		if (canTrain((UnitTypes)iI))
+		if (canAnyCityTrain((UnitTypes)iI))
 		{
 			if (GC.getUnitInfo((UnitTypes)iI).getPrereqAndBonus() == eBonus)
 			{

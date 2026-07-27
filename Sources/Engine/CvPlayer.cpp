@@ -788,6 +788,32 @@ void CvPlayer::primeEnablerDomains() const
 // ---- THE PLAYER'S AVAILABILITY READS (see CvPlayer.h for the role, the grammar, and the two carve-outs). Every
 // ---- one is a BARE O(1) fetch of the maintained tri-state -- no gate, no calculator, no `requires` evaluation. ----
 
+// The "anywhere" fan (see CvPlayer.h). Deliberately a WALK, not a stored union: the per-city verdicts it reads
+// are themselves bare fetches, so the cost is one cheap read per city and nothing has to be kept in sync.
+bool CvPlayer::canAnyCityTrain(UnitTypes eUnit) const
+{
+	for (CvPlayer::city_iterator it = beginCities(); it != endCities(); ++it)
+	{
+		if ((*it) != NULL && (*it)->getUnitAvailability(eUnit) == EnablerDomain::STATE_LISTED)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+bool CvPlayer::canAnyCityConstruct(BuildingTypes eBuilding) const
+{
+	for (CvPlayer::city_iterator it = beginCities(); it != endCities(); ++it)
+	{
+		if ((*it) != NULL && (*it)->getBuildingAvailability(eBuilding) == EnablerDomain::STATE_LISTED)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 EnablerDomain::State CvPlayer::getTechAvailability(TechTypes eTech) const
 {
 	return (EnablerDomain::State)m_enabler.techs.state((int)eTech);
@@ -2319,7 +2345,7 @@ UnitTypes CvPlayer::getBestUnitType(UnitAITypes eUnitAI) const
 
 	for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
 	{
-		if (algo::none_of(cities(), CvCity::fn::canTrain((UnitTypes) iI)))
+		if (!canAnyCityTrain((UnitTypes) iI))
 			continue;
 
 		const int iValue = AI_unitValue((UnitTypes) iI, eUnitAI, NULL);
@@ -10127,7 +10153,7 @@ int CvPlayer::getWorkRate(BuildTypes eBuild) const
 			{
 				iScore = iUnitRate*10;
 			}
-			else if (canTrain((UnitTypes)iI))
+			else if (canAnyCityTrain((UnitTypes)iI))
 			{
 				iScore = iUnitRate;
 			}
@@ -17613,7 +17639,7 @@ int CvPlayer::getAdvancedStartUnitCost(UnitTypes eUnit, bool bAdd, const CvPlot*
 
 	if (!pPlot)
 	{
-		if (bAdd && algo::none_of(cities(), CvCity::fn::canTrain(eUnit)))
+		if (bAdd && !canAnyCityTrain(eUnit))
 		{
 			return -1;
 		}
@@ -17893,7 +17919,7 @@ int CvPlayer::getAdvancedStartBuildingCost(BuildingTypes eBuilding, bool bAdd, c
 		return -1;
 	}
 
-	if (!pCity && bAdd && algo::none_of(cities(), CvCity::fn::canConstruct(eBuilding)))
+	if (!pCity && bAdd && !canAnyCityConstruct(eBuilding))
 	{
 		return -1;
 	}
@@ -28961,7 +28987,7 @@ bool CvPlayer::canHaveBuilder(BuildTypes eBuild) const
 		// Could we build one?
 		for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
 		{
-			if (GC.getUnitInfo((UnitTypes)iI).hasBuild(eBuild) && canTrain((UnitTypes)iI))
+			if (GC.getUnitInfo((UnitTypes)iI).hasBuild(eBuild) && canAnyCityTrain((UnitTypes)iI))
 			{
 				hasSuitableUnit = true;
 				break;
@@ -30518,7 +30544,7 @@ int CvPlayer::getTypicalUnitValue(UnitAITypes eUnitAI) const
 
 	for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
 	{
-		if (GC.getUnitInfo((UnitTypes)iI).getUnitAIType(eUnitAI) && canTrain((UnitTypes)iI))
+		if (GC.getUnitInfo((UnitTypes)iI).getUnitAIType(eUnitAI) && canAnyCityTrain((UnitTypes)iI))
 		{
 			const int iValue = GC.getGame().AI_combatValue((UnitTypes)iI);
 			if (iValue > iHighestValue)
