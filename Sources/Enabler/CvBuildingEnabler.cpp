@@ -215,6 +215,13 @@ static const std::vector<int>& bd_cappedBuildings()
 
 static bool bd_categoryCapOk(int iB, const CvCity& kCity)
 {
+	// ONE CITY CHALLENGE: no wonder limits at all (owner). It is an ordinary game option like any other, so it
+	// gates HERE, at the consuming system, and the info keeps serving ungated data (json.md §9). There is
+	// deliberately NO curated OCC cap variant to read -- the option does not RESCALE the limit, it removes it.
+	if (GC.getGame().isOption(GAMEOPTION_CHALLENGE_ONE_CITY))
+	{
+		return true;
+	}
 	const CvInfo* j = InfoRepo<CvBuildingInfo>::get().get(iB);
 	const CvAllowed* a = (j != NULL) ? j->getAllowed() : NULL;
 	if (a == NULL)

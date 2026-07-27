@@ -678,9 +678,12 @@ promotion offer is not over-inclusive.
    whole capped set (`bd_cappedBuildings`): on `onCityCultureLevelChanged`, and in this city on
    `onCityBuildingChanged` beside the existing cap-scope fan. An unrouted gate input is a permanently stale
    verdict ([DEC-no-self-heal](../architecture/decisions.md#dec-no-self-heal)).
-   ⚠ **Data gap, not wired:** the `CHALLENGE_ONE_CITY` national-wonder variant (`getMaxNationalWondersOCC`) has
-   no curated field on `CvCultureLevelInfo` — the legacy `CvCity` read of it is a dangling stage-4 call. The
-   OCC option therefore does not scale the national cap until that datum is curated.
+   ⚖ **ONE CITY CHALLENGE = NO wonder limits (owner).** OCC remains an UNSUPPORTED mode, but it is an ordinary
+   game option like any other, so it needs no special machinery: when it is on the category cap simply does not
+   apply. ⛔ There is deliberately **no curated OCC cap variant** — the option does not RESCALE the limit, it
+   REMOVES it, so the legacy `getMaxNationalWondersOCC` field is not migrated and its dangling `CvCity` read dies
+   with that surface. The gate reads the option at the CONSUMING system (here, the enabler) while the info keeps
+   serving ungated data ([json.md §9](json.md)).
 4. **RESIDENCY + COUNTING.** The `CvPlotGroup` holds the network's bonus content and **is the ONLY authoritative
    list for trade resources** — the city holds no authoritative mirror. But the CITY read must be a **maintained
    number, added and subtracted on spine events, never calculated per read** (the state-repositories capstone):
