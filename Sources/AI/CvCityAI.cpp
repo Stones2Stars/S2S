@@ -4379,14 +4379,13 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, int& iBestValue, bool bAs
 		}
 	}
 
-	// #430 F2b (enabler.md par.6): scan the LISTED unit frontier, not the whole unit database -- canTrain(u) with
-	// default args IS the bare read m_enabler.units.listed(u) (CvCity.cpp:2324), so the dropped !canTrain(eUnitX)
-	// skip below is exactly the frontier's complement. REVERSE iteration: the original scanned DESCENDING (highest
+	// #430 F2b (enabler.md par.6): scan the LISTED unit frontier, not the whole unit database -- getAvailableUnits fills the
+	// city's LISTED unit frontier, so the dropped !canTrain(eUnitX) skip below is exactly its complement. REVERSE iteration: the original scanned DESCENDING (highest
 	// id first) and the winner is chosen by strict > (first-seen highest value wins ties) with a per-unit SorenRand
 	// draw, so id order is load-bearing for BOTH the tie-break AND the RNG-to-unit mapping; rbegin/rend over the
 	// ascending listedIds reproduces the identical descending visit order over the identical (canTrain-true) set.
 	std::vector<int> vecTrainable;
-	getTrainableFrontier(vecTrainable);
+	getAvailableUnits(vecTrainable);
 	for (std::vector<int>::const_reverse_iterator it = vecTrainable.rbegin(), itEnd = vecTrainable.rend(); it != itEnd; ++it)
 	{
 		const UnitTypes eUnitX = static_cast<UnitTypes>(*it);
@@ -4539,7 +4538,7 @@ const std::vector<CvCity::ScoredBuilding> CvCityAI::AI_bestBuildingsThreshold(in
 	std::vector<BuildingTypes> possibles;
 
 	// #430 F2b (enabler.md par.6): iterate the enabler's LISTED frontier, not the whole ~5200-building
-	// database. canConstruct((BuildingTypes)idx) with default args IS the bare read m_enabler.buildings.listed(idx)
+	// database. getAvailableBuildings fills the city's LISTED building frontier
 	// (CvCity.cpp:2489), so {idx : canConstruct(idx)} == the listedIds set -- the identical membership, minus the
 	// per-turn 5200-probe scan (this loop ran ~7x/city/turn via AI_chooseProduction's focus ladder). isBuildingMaxedOut
 	// stays the per-candidate cap filter (the per-player extra-instances allowance the enabler allowedOk does not yet
@@ -5901,10 +5900,10 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 				iValue += (kBuilding.getFreeExperience() * (bMetAnyCiv ? 16 : 8));
 
 				// #430 F2b (enabler.md par.6): iterate the LISTED unit frontier instead of scanning every unit --
-				// canTrain(u) default-args IS m_enabler.units.listed(u) (CvCity.cpp:2324). Order-independent
+				// getAvailableUnits fills the city's LISTED unit frontier. Order-independent
 				// (a commutative iValue += sum); the DOMAIN_SEA / combat-type checks stay as per-candidate filters.
 				std::vector<int> vecTrainable;
-				getTrainableFrontier(vecTrainable);
+				getAvailableUnits(vecTrainable);
 				for (std::vector<int>::const_iterator it = vecTrainable.begin(), itEnd = vecTrainable.end(); it != itEnd; ++it)
 				{
 					const UnitTypes eUnitX = (UnitTypes)*it;
@@ -9157,12 +9156,12 @@ bool CvCityAI::AI_bestSpreadUnit(bool bMissionary, bool bExecutive, int iBaseCha
 					if (iReligionValue > 0)
 					{
 						// #430 F2b (enabler.md par.6): iterate the LISTED unit frontier instead of scanning every unit --
-						// canTrain(u) default-args IS m_enabler.units.listed(u) (CvCity.cpp:2324); the && canTrain guard on the
+						// getAvailableUnits fills the city's LISTED unit frontier; the && canTrain guard on the
 						// best-update is now implicit in the frontier (canTrain-false units could never win via the short-circuit),
 						// so the set is identical. Forward: original ascending, strict > (lowest-id wins ties), no RNG in this inner
 						// loop (the missionary roll is drawn once above).
 						std::vector<int> vecTrainable;
-						getTrainableFrontier(vecTrainable);
+						getAvailableUnits(vecTrainable);
 						for (std::vector<int>::const_iterator it = vecTrainable.begin(), itEnd = vecTrainable.end(); it != itEnd; ++it)
 						{
 							const UnitTypes eUnitX = (UnitTypes)*it;
@@ -9206,11 +9205,11 @@ bool CvCityAI::AI_bestSpreadUnit(bool bMissionary, bool bExecutive, int iBaseCha
 					if (iCorporationValue > 0)
 					{
 						// #430 F2b (enabler.md par.6): iterate the LISTED unit frontier instead of scanning every unit --
-						// canTrain(u) default-args IS m_enabler.units.listed(u) (CvCity.cpp:2324); the && canTrain entry-guard is
+						// getAvailableUnits fills the city's LISTED unit frontier; the && canTrain entry-guard is
 						// now implicit in the frontier, so the visited set is identical. Forward: original ascending, strict >
 						// (lowest-id wins ties), no RNG in this inner loop (the executive roll is drawn once above).
 						std::vector<int> vecTrainable;
-						getTrainableFrontier(vecTrainable);
+						getAvailableUnits(vecTrainable);
 						for (std::vector<int>::const_iterator it = vecTrainable.begin(), itEnd = vecTrainable.end(); it != itEnd; ++it)
 						{
 							const UnitTypes eUnitX = (UnitTypes)*it;
@@ -12228,11 +12227,11 @@ bool CvCityAI::AI_trainInquisitor()
 	UnitTypes eBestUnit = NO_UNIT;
 
 	// #430 F2b (enabler.md par.6): iterate this city's LISTED unit frontier. canTrain(i, false, false) is the
-	// default-value call (bContinue=false, bTestVisible=false) that hits the bare m_enabler.units.listed flip
+	// fresh-offer frontier read (queued candidates excluded)
 	// (CvCity::canTrain guard ignores bTestVisible in strict mode), so listedIds is the identical trainable set.
 	// isInquisitor + cheapest-cost stay per-candidate filters; ascending forward keeps the strict-'<' first-cheapest pick.
 	std::vector<int> vecTrainable;
-	getTrainableFrontier(vecTrainable);
+	getAvailableUnits(vecTrainable);
 	for (std::vector<int>::const_iterator it = vecTrainable.begin(), itEnd = vecTrainable.end(); it != itEnd; ++it)
 	{
 		const UnitTypes eUnit = (UnitTypes)*it;
@@ -12359,10 +12358,10 @@ int CvCityAI::AI_getPromotionValue(PromotionTypes ePromotion) const
 	int iCanTrainCount = 0;
 	int iValue = 0;
 	// #430 F2b (enabler.md par.6): iterate the LISTED unit frontier instead of scanning every unit --
-	// canTrain(u) default-args IS m_enabler.units.listed(u) (CvCity.cpp:2324). Order-independent: the loop only
+	// getAvailableUnits fills the city's LISTED unit frontier. Order-independent: the loop only
 	// accumulates iCanTrainCount and a commutative iValue sum; the combat-type check stays a per-candidate filter.
 	std::vector<int> vecTrainable;
-	getTrainableFrontier(vecTrainable);
+	getAvailableUnits(vecTrainable);
 	for (std::vector<int>::const_iterator it = vecTrainable.begin(), itEnd = vecTrainable.end(); it != itEnd; ++it)
 	{
 		const UnitTypes eUnitX = (UnitTypes)*it;
@@ -13042,7 +13041,7 @@ void CvCityAI::CalculateAllBuildingValues(int iFocusFlags)
 		int iConstructible = 0;
 		int iEnablers = 0;
 		// #430 F2b (enabler.md par.6): the directly-constructible outer set is the enabler's LISTED frontier
-		// -- canConstruct(eBuilding) with default args IS m_enabler.buildings.listed(eBuilding) (CvCity.cpp:2489),
+		// -- getAvailableBuildings fills the city's LISTED building frontier,
 		// so iterating listedIds yields the identical constructible set without the whole-database scan. The inner
 		// dependent-augmentation below is UNCHANGED: it stays a genuine what-if (canConstructInternal with
 		// withExtraBuilding=eBuilding -- "could I build eType if I also had eBuilding") over the precomputed
@@ -13698,10 +13697,10 @@ void CvCityAI::CalculateAllBuildingValues(int iFocusFlags)
 				int iValue = kBuilding.getFreeExperience() * (bMetAnyCiv ? 16 : 8);
 
 				// #430 F2b (enabler.md par.6): iterate the LISTED unit frontier instead of scanning every unit --
-				// canTrain(u) default-args IS m_enabler.units.listed(u) (CvCity.cpp:2324). Order-independent (a commutative
+				// getAvailableUnits fills the city's LISTED unit frontier. Order-independent (a commutative
 				// iValue += sum); the DOMAIN_SEA / combat-type checks stay as per-candidate filters.
 				std::vector<int> vecTrainable;
-				getTrainableFrontier(vecTrainable);
+				getAvailableUnits(vecTrainable);
 				for (std::vector<int>::const_iterator it = vecTrainable.begin(), itEnd = vecTrainable.end(); it != itEnd; ++it)
 				{
 					const UnitTypes eUnitX = (UnitTypes)*it;

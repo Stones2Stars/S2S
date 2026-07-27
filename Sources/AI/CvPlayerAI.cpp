@@ -17129,7 +17129,7 @@ void CvPlayerAI::AI_doCivics()
 	}
 
 	// #430 F2b (enabler.md par.6): count over the enabler's LISTED civic frontier. canDoCivics(i) default-args
-	// IS m_enabler.civics.listed(i) (CvPlayer.cpp), so this is the identical per-option count without the
+	// IS the player's LISTED civic frontier, so this is the identical per-option count without the
 	// whole-civic-database scan. Order-irrelevant (a pure count accumulation).
 	std::vector<int> vecAdoptable;
 	m_enabler.civics.listedIds(vecAdoptable);
@@ -20496,7 +20496,7 @@ int CvPlayerAI::AI_eventValue(EventTypes eEvent, const EventTriggeredData& kTrig
 	TechTypes eBestTech = NO_TECH;
 	int iBestValue = 0;
 	// #430 F2b (enabler.md): iterate the enabler's LISTED tech frontier instead of scanning every tech info and
-	// probing each id -- getTechAvailability(i) == STATE_LISTED IS m_enabler.techs.listed(i) (CvPlayer.cpp). The
+	// probing each id -- getAvailableTechs fills the player's LISTED tech frontier. The
 	// whole loop body sits inside the gate; the best pick uses strict '>', so ascending (forward) order keeps the
 	// original lowest-id-wins result.
 	std::vector<int> vecResearchable;
@@ -22336,11 +22336,11 @@ int CvPlayerAI::AI_getStrategyHash() const
 	if (pCapitalCity != NULL)
 	{
 		// #430 F2b (enabler.md): iterate the capital city's LISTED unit frontier instead of scanning every unit
-		// info and calling canTrain per id -- default-args CvCity::canTrain IS m_enabler.units.listed. Guarded
+		// info and calling canTrain per id -- getAvailableUnits IS the city's LISTED unit frontier. Guarded
 		// non-NULL; the loop body is wholly inside the gate and its accumulations (count/max/flags) are
 		// order-independent, so forward iteration matches.
 		std::vector<int> vecTrainable;
-		pCapitalCity->getTrainableFrontier(vecTrainable);
+		pCapitalCity->getAvailableUnits(vecTrainable);
 		for (std::vector<int>::const_iterator it = vecTrainable.begin(), itEnd = vecTrainable.end(); it != itEnd; ++it)
 		{
 			const UnitTypes eUnitX = static_cast<UnitTypes>(*it);
