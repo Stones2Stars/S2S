@@ -793,13 +793,6 @@ EnablerDomain::State CvPlayer::getTechAvailability(TechTypes eTech) const
 	return (EnablerDomain::State)m_enabler.techs.state((int)eTech);
 }
 
-bool CvPlayer::isTechEverReachable(TechTypes eTech) const
-{
-	const EnablerDomain& d = m_enabler.techs;
-	const int iId = (int)eTech;
-	return !d.isHeld(iId) && !d.isStaticExcluded(iId) && d.removeCount(iId) == 0;
-}
-
 EnablerDomain::State CvPlayer::getCivicAvailability(CivicTypes eCivic) const
 {
 	return (EnablerDomain::State)m_enabler.civics.state((int)eCivic);
@@ -15109,7 +15102,7 @@ bool CvPlayer::pushResearch(TechTypes eTech, bool bClear)
 		return true;
 	}
 
-	if (!(isTechEverReachable(eTech)))
+	if (!(canEverResearch(eTech)))
 	{
 		return false;
 	}
@@ -15144,7 +15137,7 @@ bool CvPlayer::pushResearch(TechTypes eTech, bool bClear)
 			break;
 		}
 
-		if ((isTechEverReachable(ePreReq)))
+		if ((canEverResearch(ePreReq)))
 		{
 			// Find the length of the path to this pre-req
 			const int iNumSteps = findPathLength(ePreReq);

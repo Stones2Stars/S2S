@@ -84,11 +84,6 @@ public:
 	// planes + the unit's held-promo/unitcombat planes; membership = Σenable > 0 && Σremove == 0).
 	int enableCount(int iId) const;
 	int removeCount(int iId) const;
-	// The STATIC never-offered plane (identity.disable), read bare. HIDDEN conflates two different answers --
-	// "no held source enables it YET" and "it can NEVER be offered" -- so a consumer asking the EVER question
-	// ("is this a legitimate future target?", the research-queue class) needs this plane to tell them apart.
-	// Exposing the existing plane, NOT a new state: the tri-state vocabulary is unchanged.
-	bool isStaticExcluded(int iId) const;
 
 	// FRONTIER ITERATION (enabler.md par.6 -- the AI's production/research decisions iterate ONLY this small
 	// offered set, never the whole entity database; the F2b consumer sweep). One O(N) byte-scan fills `out` with

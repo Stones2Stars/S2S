@@ -546,12 +546,19 @@ consumer of that same shape.
 ⛔ The overlay is the CALLER's, held in the caller's own scratch: it never writes the maintained planes. A
 hypothetical that mutated the domain would leave the real frontier describing a game state that never happened.
 
-**⚖ THE "EVER" QUESTION IS ITS OWN READ — the tri-state cannot answer it.** HIDDEN conflates *"nothing enables it
-YET"* with *"it can never be offered"*, and a **queue** asks precisely the difference: a research target is chosen
-now and researched later, so "not currently offerable" is not a refusal. `CvPlayer::isTechEverReachable` answers
-it off the membership planes directly — not held, not statically barred (`identity.disable`), nothing held
-removes it. It exposes the EXISTING `FLAG_STATIC_EXCLUDED` plane as a bare read (`EnablerDomain::isStaticExcluded`)
-rather than minting a fourth state: the tri-state vocabulary is unchanged.
+**⚖ THE "EVER" QUESTION IS THE PICKING LOGIC'S, AND IT ALREADY OWNS IT.** HIDDEN conflates *"nothing enables it
+YET"* with *"it can never be offered"*, and a research QUEUE asks precisely that difference — a target is chosen
+now and researched later, so "not currently offerable" is not a refusal. ⛔ That is **not a gap in the tri-state
+to fill**: per the boundary above it is a picking concern, and `CvPlayer::canEverResearch` is its existing, single
+implementation, carrying the PERMANENT bars the enabler does not model as membership — the game-option bars
+(`NO_FUTURE`, a tech's `PrereqGameOption`), the world-unique rule (*"religion techs are global and can only be
+invented once by one player in a game"*) and the limited-religion hoarding guard.
+⚠ **Do not re-derive it on the availability surface.** A second "ever" predicate reading only the membership
+planes silently drops those bars — it would call a religion tech already invented elsewhere a legitimate queue
+target ([DEC-single-implementation](../architecture/decisions.md#dec-single-implementation)).
+The split, stated once: **the enabler answers CAN-I-NOW (the tri-state); the picking logic answers CAN-I-EVER and
+BY WHAT PATH.** The two membership bars that ARE the enabler's — `identity.disable` and a civilization's own
+never-researchable list — are static for a player's life and sit on the static-exclusion plane at `initDomain`.
 
 ⚠ The two **carve-out** domains answer the UNLOCKED half only, and a consumer treating either as the whole verdict
 over-offers: a BUILD's plot-validity half and a PROMOTION's per-unit applicability are evaluated LIVE at their

@@ -4196,7 +4196,7 @@ TechTypes CvPlayerAI::AI_bestTech(int iMaxPathLength, bool bIgnoreCost, bool bAs
 	// If we had already decided to beeline previously, stick with it
 	if (m_eBestResearchTarget != NO_TECH && iMaxPathLength > 1)
 	{
-		if ((isTechEverReachable(m_eBestResearchTarget)))
+		if ((canEverResearch(m_eBestResearchTarget)))
 		{
 			techPath* path = findBestPath(m_eBestResearchTarget, iValue, bIgnoreCost, bAsync);
 
@@ -4223,7 +4223,7 @@ TechTypes CvPlayerAI::AI_bestTech(int iMaxPathLength, bool bIgnoreCost, bool bAs
 				const TechTypes eTechX = static_cast<TechTypes>(iI);
 
 				if ((eIgnoreAdvisor == NO_ADVISOR || GC.getTechInfo(eTechX).getAdvisorType() != eIgnoreAdvisor)
-				&& (isTechEverReachable(eTechX))
+				&& (canEverResearch(eTechX))
 				&& GC.getTechInfo(eTechX).getEra() <= getCurrentEra() + 1)
 				{
 					iPathLength = findPathLength(eTechX, false);
@@ -33105,7 +33105,7 @@ TechTypes CvPlayerAI::AI_bestReligiousTech(int iMaxPathLength, TechTypes eIgnore
 
 		if ((eIgnoreTech == NO_TECH || eTechX != eIgnoreTech)
 		&& (eIgnoreAdvisor == NO_ADVISOR || GC.getTechInfo(eTechX).getAdvisorType() != eIgnoreAdvisor)
-		&& (isTechEverReachable(eTechX))
+		&& (canEverResearch(eTechX))
 		&& GC.getTechInfo(eTechX).getEra() <= getCurrentEra())
 		{
 			const int iPathLength = findPathLength(eTechX, false);

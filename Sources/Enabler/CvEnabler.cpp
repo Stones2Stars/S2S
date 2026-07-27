@@ -107,11 +107,6 @@ int EnablerDomain::removeCount(int iId) const
 	return inRange(iId) ? (int)m_aiRemove[iId] : 0;
 }
 
-bool EnablerDomain::isStaticExcluded(int iId) const
-{
-	return inRange(iId) && (m_aFlags[iId] & (unsigned char)FLAG_STATIC_EXCLUDED) != 0;
-}
-
 void EnablerDomain::listedIds(std::vector<int>& out) const
 {
 	out.clear();

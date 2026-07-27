@@ -5103,7 +5103,7 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
 									}
 									break;
 								}
-								if (GET_PLAYER(eActivePlayer).isTechEverReachable(eTechPrereq) && iClosestX > GC.getTechInfo(eTechPrereq).getGridX())
+								if (GET_PLAYER(eActivePlayer).canEverResearch(eTechPrereq) && iClosestX > GC.getTechInfo(eTechPrereq).getGridX())
 								{
 									iClosestX = GC.getTechInfo(eTechPrereq).getGridX();
 									eClosestUnlockingTech = eTechPrereq;
