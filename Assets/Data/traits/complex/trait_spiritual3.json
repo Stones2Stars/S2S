@@ -130,7 +130,7 @@
   "empire": {
    "civicOptions": {
     "CIVICOPTION_RELIGION": {
-     "enabler": true
+     "percent": -100
     }
    }
   }

@@ -12530,11 +12530,6 @@ int CvCity::getCorpBonusProduction(const BonusTypes eBonus) const
 	return 0;
 }
 
-void CvCity::changeCorpBonusProduction(const BonusTypes eBonus, const int iChange)
-{
-}
-
-
 bool CvCity::isCorporationBonus(BonusTypes eBonus) const
 {
 	PROFILE_EXTRA_FUNC();

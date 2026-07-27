@@ -25,7 +25,6 @@ void CyAreaPythonInterface()
 
 		.def("getUnitsPerPlayer", &CyArea::getUnitsPerPlayer, "int (int (PlayerTypes) iIndex) - Returns the number of units in this area for this player")
 		.def("getCitiesPerPlayer", &CyArea::getCitiesPerPlayer, "int (int (PlayerTypes) iIndex) - Returns the number of cities in this area for this player")
-		.def("getBuildingHappiness", &CyArea::getBuildingHappiness, "int (int (PlayerTypes) iIndex) - Returns ?")
 		.def("getPower", &CyArea::getPower, "int (int (PlayerTypes) iIndex) - Returns power of this area for this player")
 		.def("getBestFoundValue", &CyArea::getBestFoundValue, "int (int (PlayerTypes) iIndex) - Returns the best found value for a plot in this area")
 

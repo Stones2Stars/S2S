@@ -1137,7 +1137,6 @@ public:
 	void changeNumBonuses(BonusTypes eIndex, int iChange);
 
 	int getCorpBonusProduction(const BonusTypes eBonus) const;
-	void changeCorpBonusProduction(const BonusTypes eBonus, const int iChange);
 	bool isCorporationBonus(BonusTypes eBonus) const;
 	bool isActiveCorporation(CorporationTypes eCorporation) const;
 

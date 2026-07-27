@@ -230,7 +230,10 @@ KEYED = {
     "SpecialUnitProductionModifierTypes": ("buildRate",      "empire", "specialUnits",   "percent", None),
     "UnitCombatFreeExperiences":          ("experience",     "empire", "unitCombats",    "flat",    None),
     "UnitCombatProductionModifiers":      ("buildRate",      "empire", "unitCombats",    "percent", None),
-    "CivicOptionNoUpkeepTypes":           ("upkeep",         "empire", "civicOptions",   "enabler", None),
+    # A civic option whose upkeep this trait WAIVES. Emitted as the magnitude that says so (-100%), never a
+    # bare `enabler` bool: the modifier plane carries magnitudes, and a boolean keyed by a target is neither a
+    # kind nor a `policy` (json.md §9: a policy is a PURE STATE, never parameterized by a target).
+    "CivicOptionNoUpkeepTypes":           ("upkeep",         "empire", "civicOptions",   "percent", None),
     "TechResearchModifiers":              ("researchRate",   "empire", "techs",          "percent", None),  # research-RATE "+% to research tech X" — researchRate is the research analogue of buildRate (owner 2026-06-28), TARGET-KEYED by tech (researchRate.empire.techs.{TECH}.percent) exactly as buildRate.empire.buildings.{X}; DISTINCT from commerce `research` (cascade never reads researchRate). Retires the `byTech` member invention.
     # Specialist yield/commerce boosts STAY on the trait, keyed by the specialist (governing-deliverer), NOT inverted
     # onto the shared specialist -- the simple/complex sets carry DIFFERENT per-set values, so inverting onto the ONE
@@ -478,6 +481,11 @@ def curate(typ, rec, store):
                     out_val = True if unit == "enabler" else val
                     if unit == "enabler" and not val:
                         continue
+                    # A membership-list tag carries no magnitude of its own -- the LIST is the assertion ("this
+                    # target is waived"). Emit the magnitude that states it, so the entry is an ordinary modifier
+                    # deposit rather than a bool the modifier plane cannot read.
+                    if tag == "CivicOptionNoUpkeepTypes":
+                        out_val = -100
                     (fam.setdefault(family, {}).setdefault(scope, {}).setdefault(tt, {})
                      .setdefault(target, {}))[unit] = out_val
         elif tag in POLICIES:

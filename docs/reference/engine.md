@@ -16,6 +16,28 @@ across the process boundary — **not** style choices: **C++03, 32-bit, Python 2
 - **PCH footgun:** never `using namespace boost*` — a bare `bind`/`function` can silently resolve to `boost::`
   through the PCH (bit `CvHttpServer`). The cascade event-spine deliberately names no Boost type.
 
+## Is a symbol really EXE-bound? — the decisive test
+
+"`DllExport` because the closed EXE calls it" is the standing justification for keeping a legacy name, and it is
+**checkable**, so it is never taken on trust.
+
+⛔ **An import-table check answers NOTHING here.** `Civ4BeyondSword.exe` has **no static import entry for the
+game-core DLL** — it loads it dynamically. Concluding "the EXE does not import it, so it is free" from the import
+table is therefore a false negative for every symbol.
+
+**The decisive test:** the EXE resolves the DLL's functions at runtime **by mangled name**, so its lookup keys are
+present in the binary as plain strings. Parse the DLL's export directory for the mangled names, then test each one
+for literal presence in the EXE image:
+
+- present  ⇒ the EXE resolves that symbol ⇒ **a real ABI obligation**: the name, signature and calling convention
+  are fixed and the symbol cannot be renamed or removed.
+- absent   ⇒ **no ABI obligation** ⇒ it is ordinary DLL-internal surface and may be renamed, re-homed, or deleted
+  like anything else.
+
+Measured against the deployed `Assets/CvGameCoreDLL.dll`: **1,205 of 1,302 exports are EXE-referenced; 97 are
+not.** The 97 are the ones a cut may freely take. ⚠ The test needs a DEPLOYED DLL to read the export table from,
+so run it against the last good build, not a red tree.
+
 ## Save / load
 
 The name-keyed save format, the soft-add / soft-remove rules, the `Assets/savemigration.txt` drain, the two kinds of

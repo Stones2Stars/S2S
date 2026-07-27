@@ -497,7 +497,13 @@ static void tr_resolvePlayerInit(int iPlayer)
 	{
 		CvPlayer& player = GET_PLAYER((PlayerTypes)iPlayer);
 		player.setGold(0);
-		player.changeGold(nGold * GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent() / 100);
+		// ⚠ ÷10000, not ÷100: the speed scalar is ×100 like every other value on the surface
+		// ([DEC-fixedpoint-x100]), so multiplying a human gold amount by it lands in ×100 space and takes the
+		// second reduction. A ÷100 here would inflate starting gold 100-fold -- the latent 100x class the
+		// scale sweep exists to catch (info-rebuild ledger item 27).
+		const int iSpeedPercent =
+			GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getScalar(SCALAR_SPEED, CASC_SCOPE_WORLD, CASC_UNIT_PERCENT);
+		player.changeGold(nGold * iSpeedPercent / 10000);
 	}
 	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_TRIGGERS, TRE_GAMESTART, 1)
 		.addI(TF_SUPPRESSED, s_bSuppressed ? 1 : 0).addI(TF_APPLIED, bApplied ? 1 : 0)

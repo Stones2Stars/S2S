@@ -7024,11 +7024,21 @@ void CvPlot::setPlotType(PlotTypes eNewValue, bool bRecalculate, bool bRebuildGr
 
 			if (!bRecalculateAreas)
 			{
+				// ⛔ Capture the OLD area BEFORE the reassignment. setArea() clears BOTH m_iArea and the cached
+				// m_pPlotArea, so area() is NULL on the very next line -- the single-tile cleanup below could
+				// never fire, and every terrain change that orphaned a one-tile area left a ZERO-TILE CvArea in
+				// m_areas, which area-scoring code then iterates assuming getNumTiles() > 0. setArea's own
+				// processArea(area(), -1) has already decremented it, so "was one tile" is the test that means
+				// "is empty now".
+				const int iOldAreaId = getArea();
+				const CvArea* pOldArea = area();
+				const bool bOldAreaEmptied = (pOldArea != NULL && pOldArea->getNumTiles() == 1);
+
 				setArea(FFreeList::INVALID_INDEX);
 
-				if (area() && area()->getNumTiles() == 1)
+				if (bOldAreaEmptied)
 				{
-					GC.getMap().deleteArea(getArea());
+					GC.getMap().deleteArea(iOldAreaId);
 				}
 				if (!pNewArea)
 				{

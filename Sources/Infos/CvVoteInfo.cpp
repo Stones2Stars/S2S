@@ -114,6 +114,13 @@ void CvVoteInfo::mapFrom(const picojson::value& entity)
 		{
 			m_eRole = VOTE_ROLE_VICTORY;
 		}
+		else
+		{
+			// A bespoke block's value vocabulary is CLOSED, so an unrecognized token is authored data that
+			// silently became NONE -- the fail-closed-AND-silent shape the ONE census exists to kill. Report it
+			// exactly as an unknown section key is reported.
+			jsonNoteUnconsumed("role", roleName);
+		}
 	}
 
 	if (const picojson::object* pEffect = jsonChildObj(entityObj, "effect"))

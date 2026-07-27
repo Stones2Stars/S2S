@@ -458,6 +458,47 @@ namespace
 					{
 						mc_applyAdjacentPlotPredicate(CASC_PRED_HAS_FRESHWATER, pPlot, szSource);
 					}
+
+					// ⛔ The blanket above marks this PLOT's own package. It does NOT reach a deposit at CITY or
+					// EMPIRE scope that is CONDITIONED on -- or `per`-scaled by -- this substrate TYPE; that is
+					// exactly what the dependency route addresses, and without it such a deposit was never
+					// re-marked when the substrate appeared, staying wrong until something unrelated dirtied it.
+					// ⚠ ADDRESSES THE ARRIVING TYPE ONLY. The fact carries iType = the NEW substrate and no old
+					// value, so a deposit keyed on the DEPARTING one cannot be routed -- the same limit the
+					// blanket comment states, and the reason the plot package refills whole rather than by route.
+					const char* szSubstrateType = NULL;
+					if (kEvent.iType >= 0)
+					{
+						switch (kEvent.iEventId)
+						{
+						case SEVT_IMPROVEMENT_CHANGED:
+							if (kEvent.iType < GC.getNumImprovementInfos())
+								szSubstrateType = GC.getImprovementInfo((ImprovementTypes)kEvent.iType).getType();
+							break;
+						case SEVT_TERRAIN_CHANGED:
+							if (kEvent.iType < GC.getNumTerrainInfos())
+								szSubstrateType = GC.getTerrainInfo((TerrainTypes)kEvent.iType).getType();
+							break;
+						case SEVT_FEATURE_CHANGED:
+							if (kEvent.iType < GC.getNumFeatureInfos())
+								szSubstrateType = GC.getFeatureInfo((FeatureTypes)kEvent.iType).getType();
+							break;
+						case SEVT_ROUTE_CHANGED:
+							if (kEvent.iType < GC.getNumRouteInfos())
+								szSubstrateType = GC.getRouteInfo((RouteTypes)kEvent.iType).getType();
+							break;
+						case SEVT_PLOT_BONUS_CHANGED:
+							if (kEvent.iType < GC.getNumBonusInfos())
+								szSubstrateType = GC.getBonusInfo((BonusTypes)kEvent.iType).getType();
+							break;
+						default:
+							break;
+						}
+					}
+					if (szSubstrateType != NULL)
+					{
+						mc_applySource(NULL, szSubstrateType, pPlayer, pPlot->getWorkingCity(), pPlot, szSource);
+					}
 				}
 				break;
 			}
