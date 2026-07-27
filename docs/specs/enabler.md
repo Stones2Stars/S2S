@@ -665,8 +665,22 @@ promotion offer is not over-inclusive.
    `s_op*` static indexes inside `CvBuildingEnabler` / `CvUnitEnabler` / `CvEnablerKernel` are pre-existing
    bespoke-reverse-view remnants; each retires onto the info-homed REQUIRED_BY axis.
 2. **The gate stage for civics, processes, and builds** — the three flagless domains above.
-3. **Per-city wonder-CATEGORY caps** in `allowedOk` (the `CultureLevel` `worldWonders`/`teamWonders`/
-   `nationalWonders` counts, [json.md §4.4](json.md)).
+3. ~~**Per-city wonder-CATEGORY caps**~~ **LANDED** — but NOT in `allowedOk`, which is player-scoped and cannot
+   see the city. The cap is per-CITY (a `CultureLevel` caps how many of a category one city may hold), so it
+   gates in `bd_gate` beside the SpecialBuilding group cap, as `bd_categoryCapOk`. The building's CATEGORY is
+   derived from WHICH self-cap it authors ([json.md §4.4](json.md): the cap's scope is what makes it a world /
+   team / national wonder) rather than any `isWorldWonder` mirror, and the counts are the city's raw category
+   counts — never the engine's `isWorldWondersMaxed()` verdict, which is a computed output a gate must not ride
+   in on ([DEC-calc-zero-ride-in](../architecture/decisions.md#dec-calc-zero-ride-in)).
+   ⚠ **Its two gate INPUTS are routed, which is half the work:** a category verdict moves on facts that name the
+   candidate NOWHERE — the city's CULTURE LEVEL (its max), and another wonder of the same category ARRIVING here
+   (its count). Neither is reachable through the candidate's own `EDGEF_REQUIRED_BY` set, so both re-gate the
+   whole capped set (`bd_cappedBuildings`): on `onCityCultureLevelChanged`, and in this city on
+   `onCityBuildingChanged` beside the existing cap-scope fan. An unrouted gate input is a permanently stale
+   verdict ([DEC-no-self-heal](../architecture/decisions.md#dec-no-self-heal)).
+   ⚠ **Data gap, not wired:** the `CHALLENGE_ONE_CITY` national-wonder variant (`getMaxNationalWondersOCC`) has
+   no curated field on `CvCultureLevelInfo` — the legacy `CvCity` read of it is a dangling stage-4 call. The
+   OCC option therefore does not scale the national cap until that datum is curated.
 4. **RESIDENCY + COUNTING.** The `CvPlotGroup` holds the network's bonus content and **is the ONLY authoritative
    list for trade resources** — the city holds no authoritative mirror. But the CITY read must be a **maintained
    number, added and subtracted on spine events, never calculated per read** (the state-repositories capstone):

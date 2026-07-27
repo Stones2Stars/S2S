@@ -179,6 +179,65 @@ static const std::vector<int>& bd_sbMembers(int iSb)
 	return s_sbMembers[iSb];
 }
 
+// The per-CITY wonder-CATEGORY cap (json.md §4.4, enabler.md §8): a CultureLevel caps how many of a CATEGORY one
+// city may hold -- distinct from the building's own self-cap, which limits how many of THAT building exist at a
+// scope. The two read different data and both must hold.
+//
+// The building's CATEGORY is not a separate flag: json.md §4.4 says the self-cap's SCOPE is what makes it a world
+// / team / national wonder, so it is derived from which cap the building authors -- no `isWorldWonder` mirror.
+// The counts are the city's own raw category counts (ordinary state reads, not a derived verdict: the engine's
+// own isWorldWondersMaxed() answer is exactly the kind of computed output a gate must not ride in on,
+// [DEC-calc-zero-ride-in]).
+// Every building carrying a self-cap, i.e. every building the per-city CATEGORY cap can gate. Built once from
+// static data (the bd_sbMembers precedent). This is the re-gate SET for the two facts that move a category
+// verdict without referencing the building at all -- the city's culture level, and another wonder of the same
+// category appearing here.
+static const std::vector<int>& bd_cappedBuildings()
+{
+	static std::vector<int> s_capped;
+	static bool s_built = false;
+	if (!s_built)
+	{
+		s_built = true;
+		for (int b = 0; b < GC.getNumBuildingInfos(); ++b)
+		{
+			const CvInfo* j = InfoRepo<CvBuildingInfo>::get().get(b);
+			const CvAllowed* a = (j != NULL) ? j->getAllowed() : NULL;
+			if (a == NULL) continue;
+			if (a->cap(ALLOWEDCAP_WORLD) >= 0 || a->cap(ALLOWEDCAP_TEAM) >= 0 || a->cap(ALLOWEDCAP_EMPIRE) >= 0)
+			{
+				s_capped.push_back(b);
+			}
+		}
+	}
+	return s_capped;
+}
+
+static bool bd_categoryCapOk(int iB, const CvCity& kCity)
+{
+	const CvInfo* j = InfoRepo<CvBuildingInfo>::get().get(iB);
+	const CvAllowed* a = (j != NULL) ? j->getAllowed() : NULL;
+	if (a == NULL)
+	{
+		return true;
+	}
+	const CvCultureLevelInfo& kLevel = GC.getCultureLevelInfo(kCity.getCultureLevel());
+	// world / team / empire self-cap -> world / team / NATIONAL wonder, in that order.
+	if (a->cap(ALLOWEDCAP_WORLD) >= 0)
+	{
+		return kCity.getNumWorldWonders() < kLevel.getMaxWorldWonders();
+	}
+	if (a->cap(ALLOWEDCAP_TEAM) >= 0)
+	{
+		return kCity.getNumTeamWonders() < kLevel.getMaxTeamWonders();
+	}
+	if (a->cap(ALLOWEDCAP_EMPIRE) >= 0)
+	{
+		return kCity.getNumNationalWonders() < kLevel.getMaxNationalWonders();
+	}
+	return true;   // uncapped building -- no category, so no category cap
+}
+
 static bool bd_groupCapOk(int iB, const CvPlayer& kPlayer)
 {
 	const SpecialBuildingTypes sb = GC.getBuildingInfo((BuildingTypes)iB).getSpecialBuilding();
@@ -227,7 +286,7 @@ static bool bd_groupCapOk(int iB, const CvPlayer& kPlayer)
 // check (building "replacement" is DORMANCY, enabler.md §2/§3 -- a candidate whose dormantTriggers successor
 // is PRESENT in the city would be born dormant, so it gates out; the successor's EDGEF_REQUIRED_BY reverse
 // edge re-gates it on the successor's flips), the allowed self-caps (world/team/empire, the tally's real
-// buildings domain; the per-city wonder-CATEGORY caps stay the allowedOk first-cut TODO), AND the
+// buildings domain), the per-CITY wonder-CATEGORY cap from the city's CultureLevel, AND the
 // SpecialBuilding GROUP cap above.
 static void bd_gate(const CvCity& kCity, const CvPlayer& kPlayer, const std::set<int>& waived, EnablerDomain& d, int iB)
 {
@@ -262,7 +321,8 @@ static void bd_gate(const CvCity& kCity, const CvPlayer& kPlayer, const std::set
 	                 || (j != NULL && !cascadeGateOk(j->getGate(), ec, gateFlags))   // entity-level enabled/disabled (DEC-entity-gate)
 	                 || !EnablerKernel::requiresMet(j, ec)
 	                 || !EnablerKernel::allowedOk(j, iB, kPlayer, /*bUnit*/ false)
-	                 || !bd_groupCapOk(iB, kPlayer));
+	                 || !bd_groupCapOk(iB, kPlayer)
+	                 || !bd_categoryCapOk(iB, kCity));
 	// QUEUED is the FRESH-OFFER exclusion (par.8, the legacy "!bContinue getFirstBuildingOrder"), NOT a gate reason:
 	// a SEPARATE read-time overlay so canConstruct(bContinue=true)/canContinueProduction can see past it. Folding it
 	// into the gate (as before) flipped a queued building to GREYED -> !listed -> canContinueProduction=false ->
@@ -457,6 +517,13 @@ void BuildingEnabler::onCityBuildingChanged(const CvCity& kCity, int iBuilding, 
 				foreach_(const CvCity* pCity, kP.cities())
 					bd_gateSet(*pCity, capSet);
 			}
+			// THIS CITY additionally re-gates every capped building: the per-city CATEGORY cap counts the city's
+			// wonders of a category, so one arriving can cap out every OTHER candidate of that category here --
+			// candidates the cap-scope fan above never names, because it re-gates the building whose own COUNT
+			// moved, not its category siblings.
+			const std::vector<int>& categoryCapped = bd_cappedBuildings();
+			std::set<int> categorySet(categoryCapped.begin(), categoryCapped.end());
+			bd_gateSet(kCity, categorySet);
 		}
 	}
 }
@@ -536,6 +603,11 @@ void BuildingEnabler::onCityCultureLevelChanged(const CvCity& kCity, int iOldLev
 	{
 		std::set<int> touched;
 		bd_touched(bd_sourceInfo(AX_CULTURE, iOldLevel), touched);
+		// ...plus every CAPPED building here: the per-city wonder-CATEGORY cap reads the culture level's max, so a
+		// level change moves that verdict for candidates referencing the level NOWHERE -- the touched set above
+		// cannot reach them, and an unrouted gate input is a permanently stale verdict ([DEC-no-self-heal]).
+		const std::vector<int>& capped = bd_cappedBuildings();
+		touched.insert(capped.begin(), capped.end());
 		bd_gateSet(kCity, touched);
 	}
 }
