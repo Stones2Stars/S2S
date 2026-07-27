@@ -650,10 +650,11 @@ long InfoValuation::tradeRouteChannelYield(long routeYield, int iChannelBasePerc
 	// systems' job) and its value is FOLDED IN rather than computed. So one operand arrives from OUTSIDE the
 	// cascade on the engine's PLAIN scale (iChannelBasePercent = CvYieldInfo::getTradeModifier, 100 / 0) and the
 	// other from INSIDE it on the stored ×100 scale (iChannelModifierPercentSum = getTradeRouteYieldModifier).
-	// An EDGE CONVERTS -- exactly as readJson converts at the IN boundary and a reader ÷100s at the OUT boundary
-	// ([DEC-fixedpoint-x100]) -- so the base is lifted to ×100 and one ÷10000 takes both back down. Converting at
-	// the edge means a caller passes what it HAS and cannot get the scale wrong; pushing it outward would put a
-	// scale contract on every consumer of the fold, which is how a +50% modifier becomes +5000%.
+	// An EDGE CONVERTS -- the standing rule, not a local one: readJson converts at the IN boundary, a reader ÷100s
+	// at the OUT boundary, and ×100 is native everywhere between ([DEC-fixedpoint-x100]). So the base is lifted to
+	// ×100 and one ÷10000 takes both back down. Converting at the edge means a caller passes what it HAS and
+	// cannot get the scale wrong; pushing it outward would put a scale contract on every consumer of the fold,
+	// which is how a +50% modifier becomes +5000%.
 	const long iCombinedPercent100 = (long)iChannelBasePercent * 100 + (long)iChannelModifierPercentSum;
 	return routeYield * iCombinedPercent100 / 10000;
 }
