@@ -172,7 +172,10 @@ void CvBonusInfo::mapFrom(const picojson::value& entity)
 		}
 	}
 
-	// world.art.icon -- the ART_DEF_* tag the EXE map-gen art lookup keys on
+	// world.art.icon -- the ART_DEF_* tag the EXE map-gen art lookup keys on. Cleared first: jsonIdStr only
+	// assigns when the key is present, so without this an absent block would leave the PREVIOUS pass's tag
+	// standing on the re-map (the mapFrom idempotency contract, CvInfo.h).
+	m_szArtDefineTag.clear();
 	if (const picojson::object* pArt = jsonWorldArt(entityObj))
 	{
 		jsonIdStr(*pArt, "define", m_szArtDefineTag);

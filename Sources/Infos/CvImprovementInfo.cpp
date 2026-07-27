@@ -470,7 +470,9 @@ void CvImprovementInfo::mapFrom(const picojson::value& entity)
 		}
 	}
 
-	// world.art.icon -- the ART_DEF_* tag (EXE map-gen art lookup)
+	// world.art.icon -- the ART_DEF_* tag (EXE map-gen art lookup). Cleared first: jsonIdStr only assigns when
+	// the key is present (mapFrom idempotency, CvInfo.h).
+	m_szArtDefineTag.clear();
 	if (const picojson::object* pArt = jsonWorldArt(entityObj))
 	{
 		jsonIdStr(*pArt, "define", m_szArtDefineTag);

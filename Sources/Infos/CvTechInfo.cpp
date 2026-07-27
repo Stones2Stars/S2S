@@ -144,6 +144,9 @@ void CvTechInfo::mapFrom(const picojson::value& entity)
 	}
 
 	// --- sound.{sound,soundMP} -- the tech-completed jingle + the MP variant (distinct keys) ---
+	// Cleared first: jsonIdStr only assigns when the key is present (mapFrom idempotency, CvInfo.h).
+	m_szSound.clear();
+	m_szSoundMP.clear();
 	if (const picojson::object* pSound = jsonChildObj(entityObj, "sound"))
 	{
 		jsonIdStr(*pSound, "sound", m_szSound);

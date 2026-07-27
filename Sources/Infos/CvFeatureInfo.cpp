@@ -177,7 +177,10 @@ void CvFeatureInfo::mapFrom(const picojson::value& entity)
 		m_iAdvancedStartRemoveCost = jsonIdInt(*pCost, "advancedStartRemoveCost");
 	}
 
-	// world.art: the ART_DEF_* icon tag + the on-map effect (type + probability)
+	// world.art: the ART_DEF_* icon tag + the on-map effect (type + probability). Cleared first: jsonIdStr only
+	// assigns when the key is present (mapFrom idempotency, CvInfo.h).
+	m_szArtDefineTag.clear();
+	m_szEffectType.clear();
 	if (const picojson::object* pArt = jsonWorldArt(entityObj))
 	{
 		jsonIdStr(*pArt, "define", m_szArtDefineTag);

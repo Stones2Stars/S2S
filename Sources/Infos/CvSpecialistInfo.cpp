@@ -26,16 +26,16 @@ int CvSpecialistInfo::getFlavorValue(int iFlavor) const
 
 void CvSpecialistInfo::mapFrom(const picojson::value& entity)
 {
-	// idempotency (CvInfo.h): the full-registry re-run fully redefines every materialized member (clear-first,
-	// before the base map -- the sibling ordering)
+	CvInfo::mapFrom(entity);   // core reading + the section dispatch (compiles m_modifiers)
+
+	// idempotency (CvInfo.h): the full-registry re-run fully redefines every materialized member. The base map
+	// runs FIRST and this type's own members are reset after it -- the documented order every sibling follows.
 	m_iGreatPeopleUnitType = -1;
 	m_bSlave = false;
 	m_bVisible = false;
 	m_aiCategories.clear();
 	m_flavours.clear();
 	m_szTexture.clear();
-
-	CvInfo::mapFrom(entity);   // core reading + the section dispatch (compiles m_modifiers)
 
 	// PROPERTY_* per-turn SOURCES: a specialist's <PROPERTY_X>.city.flat (the doctor's disease cut, the
 	// law-keeper crime cuts) deposits in ITS city, once per assigned specialist (the city gather count-scales)
