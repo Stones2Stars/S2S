@@ -644,13 +644,16 @@ long InfoValuation::tradeRouteChannelYield(long routeYield, int iChannelBasePerc
 	// engine's incoming route yield -- profit × (base% + Σmod) / 100, the channel identity on the base percent
 	// (commerce 100, food/production 0 -- CvYieldInfo::getTradeModifier; engine CvCity::calculateTradeYield).
 	//
-	// ⛔ THE TWO PERCENTS ARRIVE ON DIFFERENT SCALES, and reconciling them is THIS function's job rather than
-	// each caller's. iChannelBasePercent is the engine's PLAIN identity (100 / 0); iChannelModifierPercentSum is
-	// the deposit sum straight off the info surface (getTradeRouteYieldModifier), which is ×100 like every stored
-	// magnitude. Adding them raw would read a +50% modifier as +5000% -- so the base is lifted to ×100 and the
-	// single ÷10000 takes both back down. Doing it here means a caller passes what it HAS and cannot get the
-	// scale wrong; the alternative (demanding a pre-divided argument) is an unstated contract on a function
-	// designed to be called from two different consumers.
+	// ⛔ THIS FUNCTION IS AN EDGE, which is why the two scales differ here and why the conversion belongs HERE.
+	// tradeYield is the ONE sanctioned live-yield INPUT (modifier.md §2a): the cascade cannot re-derive the
+	// trade NETWORK, so that calculation stays engine-owned (north-star.md KEEP -- it is none of the four
+	// systems' job) and its value is FOLDED IN rather than computed. So one operand arrives from OUTSIDE the
+	// cascade on the engine's PLAIN scale (iChannelBasePercent = CvYieldInfo::getTradeModifier, 100 / 0) and the
+	// other from INSIDE it on the stored ×100 scale (iChannelModifierPercentSum = getTradeRouteYieldModifier).
+	// An EDGE CONVERTS -- exactly as readJson converts at the IN boundary and a reader ÷100s at the OUT boundary
+	// ([DEC-fixedpoint-x100]) -- so the base is lifted to ×100 and one ÷10000 takes both back down. Converting at
+	// the edge means a caller passes what it HAS and cannot get the scale wrong; pushing it outward would put a
+	// scale contract on every consumer of the fold, which is how a +50% modifier becomes +5000%.
 	const long iCombinedPercent100 = (long)iChannelBasePercent * 100 + (long)iChannelModifierPercentSum;
 	return routeYield * iCombinedPercent100 / 10000;
 }
