@@ -54,9 +54,19 @@ void TechEnabler::initDomain(const CvPlayer& kPlayer)
 {
 	EnablerDomain& d = kPlayer.m_enabler.techs;
 	d.init(GC.getNumTechInfos());
+	// The PERMANENT bars -- a tech this player can never research whatever else changes. Both are static for the
+	// life of the player (a civilization never changes), which is exactly what the static-exclusion plane is for;
+	// bars that can LIFT belong on the gate instead, and bars that are consumed elsewhere in play belong on the
+	// removal plane.
+	const CvCivilizationInfo& kCiv = GC.getCivilizationInfo(kPlayer.getCivilizationType());
 	for (int t = 0; t < GC.getNumTechInfos(); ++t)
-		// the static never-researchable class (identity.disable -- the law-ban techs + the root itself)
-		if (GC.getTechInfo((TechTypes)t).isDisable()) d.setStaticExcluded(t, true);
+	{
+		if (GC.getTechInfo((TechTypes)t).isDisable()          // identity.disable -- law-ban techs + the root
+		|| kCiv.isCivilizationDisableTechs(t))                // this CIV can never research it
+		{
+			d.setStaticExcluded(t, true);
+		}
+	}
 }
 
 // THE GATE for one candidate (enabler.md par.7.1 steps 2+3): the requires.build evaluation (the multi-parent

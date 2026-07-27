@@ -516,6 +516,36 @@ destroy that and misreport why it is not offered. The overlay rides only the two
 (fresh offer, queued excluded) and `CvCity::isBuildingContinuable` (reads past it, so the production-check sweep
 does not cancel every in-progress build).
 
+### ⛔ WHAT THE ENABLER IS NOT — tech-tree PATHING AND QUEUING BELONG TO THE TECH-PICKING LOGIC (owner)
+
+The enabler answers **"can I, right now?"** and stops there. Two research features are **NOT its concern**:
+
+- **QUEUING FURTHER THAN THE TREE** — a player may queue a tech that is not in CAN GET yet (several steps away).
+- **THE EASIEST PATH** to a chosen tech — the cheapest prerequisite chain from what is currently held.
+
+*"That is NOT the enabler's concern; that is the concern of the actual tech-picking logic."* Both are
+**research-only and only needed inside the TECH-TREE BROWSER** (owner). They are structurally impossible for the
+enabler anyway: its maintained frontier holds only what is unlocked NOW, so it cannot see a candidate three steps
+out — that answer comes from the **static compiled `enables`/prereq edges** the infos carry
+([patterns.md § THE WHAT-IF DRIVER](../architecture/patterns.md)), walked COLD by the picking logic. A path search
+is a genuine graph walk, which is acceptable on a browser path and would be unacceptable on the frontier.
+
+⛔ So do NOT grow path-finding, queue projection, or a reachability closure inside the enabler. The enabler
+supplies the FACTS (held / statically barred / removed / the gate verdict); the picking logic composes the route.
+This is the [north-star](../architecture/north-star.md) test applied — ask *whose job is this?* and the answer
+names the picking logic, not availability.
+
+**⚑ AND IT NEEDS NO NEW MACHINERY EITHER — the picking logic just HYPOTHETICALLY FINISHES a tech (owner).** It
+takes the maintained planes, overlays "as if this tech were held" (which contributes that tech's `enables` edges),
+re-applies the §7.1 membership formula, and repeats — walking outward until it reaches the target. That is the
+whole of both features: queuing beyond the tree is one such step, the easiest path is the cheapest chain of them.
+**This is an EXISTING pattern, not a new one:** the raw membership reads (`enableCount` / `removeCount`) are
+public precisely so a composite gate can OVERLAY per-instance planes on the maintained ones before applying the
+formula — exactly what the promotions level-up gate already does (§7.1's carve-out). The picking logic is a second
+consumer of that same shape.
+⛔ The overlay is the CALLER's, held in the caller's own scratch: it never writes the maintained planes. A
+hypothetical that mutated the domain would leave the real frontier describing a game state that never happened.
+
 **⚖ THE "EVER" QUESTION IS ITS OWN READ — the tri-state cannot answer it.** HIDDEN conflates *"nothing enables it
 YET"* with *"it can never be offered"*, and a **queue** asks precisely the difference: a research target is chosen
 now and researched later, so "not currently offerable" is not a refusal. `CvPlayer::isTechEverReachable` answers
