@@ -82,7 +82,7 @@ Authority: [state-repositories.md](../../architecture/state-repositories.md), [m
 |---|---|---|
 | Event spine + KIND firewall + `IEventConsumer` | `Sources/Spine/` | BUILT |
 | DOMAIN emit surface + the in-read load reseed + the load bracket | `Sources/Spine/` + the engine read paths | BUILT — **127 emit call sites**, the bracket emitted at BOTH ends, the in-read reseed live ([event-spine.md](../../specs/event-spine.md)). The remaining Tier-2 facts + the three routes that could not be derived are the [info-rebuild.md](info-rebuild.md) audit ledger |
-| Enabler (8 domains, kernel, own consumer, operating-buildings) | `Sources/Enabler/` | BUILT + **GRAFTED** onto city / player / team; consumer registered after the contexts (the load-order contract). The availability getters are what remain |
+| Enabler (8 domains, kernel, own consumer, operating-buildings) | `Sources/Enabler/` | BUILT + **GRAFTED** onto city / player / team, consumer registered after the contexts (the load-order contract), and the **availability READ surface built** (one read pair per domain, [enabler.md §8](../../specs/enabler.md)). Moving consumers onto it is the remaining sweep |
 | Condition evaluator (`cascadeEvalCondition`, eval ctx, predicates) | `Sources/Conditions/` | BUILT |
 | Deposit index + deposit-read calcs (`MMKernel`/`PercentStack`/…) | `Sources/Data/` | BUILT |
 | readJson + the two-pass loader + the full-registry re-map | `Sources/Data/` | BUILT |
@@ -97,11 +97,12 @@ Authority: [state-repositories.md](../../architecture/state-repositories.md), [m
 
 ## What does NOT exist (the deliberate gap)
 
-- **The availability GETTERS.** The enabler machine is now GRAFTED (`CvCity::m_enabler` +
-  `m_operatingBuildings`, `CvPlayer::m_enabler`, `CvTeam::m_cascadeTeamCaps` — [enabler.md §8](../../specs/enabler.md)),
-  so its state has a host and its consumer builds it from the reseed. What is missing is the read surface on top:
-  `canConstruct` / `canTrain` / `canResearch` reading those sets. It lands with the legacy getter disconnect, never
-  as a per-site rewire.
+- **The CONSUMER SWEEP onto the new surfaces.** Both read surfaces now exist — the modifier's group reads and the
+  enabler's availability reads ([enabler.md §8](../../specs/enabler.md)) — and the enabler is grafted onto its
+  scope owners. What has not happened is moving CONSUMERS onto them and deleting the legacy names (the KILL LIST
+  above). ⚖ **The new surface is deliberately built AHEAD of that sweep (owner):** *"assume it is already
+  disconnected, add the new"* — gating a replacement on the disconnect is what leaves a machine unreachable
+  indefinitely.
 - **The endpoint route table** beyond the six stored-vs-oracle documents — and it stays empty until the access
   surface can be read through, never restored to reach around it ([http-endpoints.md](../../specs/http-endpoints.md)).
 - **The Python data-fetching library** that replaces the `Cy*` info surface — built as ONE surface, with the old

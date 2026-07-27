@@ -488,9 +488,42 @@ through the CityContext / EmpireContext stores, which the contexts' consumer bui
 `GAME_LOAD_FINISHED` event; gating ahead of it evaluates against empty stores and every verdict is silently wrong,
 with no self-heal to re-derive it ([state-repositories.md](../architecture/state-repositories.md)).
 
+### The availability READ surface — BUILT
+
+**⚖ THE NEW SURFACE IS BUILT WITHOUT WAITING FOR THE LEGACY DISCONNECT (owner):** *"assume it is already
+disconnected, add the new."* The disconnect is its own sweep; gating the replacement on it is what leaves the
+machine unreachable indefinitely. Build the new surface as if the legacy one were already gone.
+
+**ONE READ PAIR PER DOMAIN** — the domain IS the group, and the existing engine enum
+(`BuildingTypes`/`TechTypes`/…) is the consumer's vocabulary. The domain set is fixed and small, so the surface
+grows by DOMAIN, never by candidate; there is no per-candidate getter and no what-if argument.
+
+| owner | verdict (tri-state) | frontier (caller-owned fill) |
+|---|---|---|
+| `CvCity` | `getBuildingAvailability` · `getUnitAvailability` | `getAvailableBuildings` · `getAvailableUnits` |
+| `CvPlayer` | `getTechAvailability` · `getCivicAvailability` · `getProjectAvailability` · `getProcessAvailability` | `getAvailableTechs` · `getAvailableCivics` · `getAvailableProjects` · `getAvailableProcesses` |
+| `CvPlayer` (carve-outs) | `getBuildUnlocked` · `getPromotionUnlocked` | `getUnlockedBuilds` · `getUnlockedPromotions` |
+
+⛔ **Every read is a BARE O(1) FETCH of the maintained tri-state** — no gate runs, no calculator is called, and
+`requires` is never evaluated (§7). A missed propagation therefore leaves a visibly wrong verdict instead of
+being silently recomputed away ([DEC-no-self-heal](../architecture/decisions.md#dec-no-self-heal)).
+
+**The tri-state is returned WHOLE, answering TREE + GATE only.** HIDDEN vs GREYED is the "why not" the build list
+needs (§6), so reducing it to a bool would force a second read to recover it. ⛔ The **QUEUED overlay is
+deliberately not folded in**: the domain keeps `FLAG_QUEUED` separate from `FLAG_GATE_FAILED` precisely so
+"already queued" stays distinguishable from "requires unmet", and collapsing a queued candidate onto GREYED would
+destroy that and misreport why it is not offered. The overlay rides only the two reads that care — the FRONTIER
+(fresh offer, queued excluded) and `CvCity::isBuildingContinuable` (reads past it, so the production-check sweep
+does not cancel every in-progress build).
+
+⚠ The two **carve-out** domains answer the UNLOCKED half only, and a consumer treating either as the whole verdict
+over-offers: a BUILD's plot-validity half and a PROMOTION's per-unit applicability are evaluated LIVE at their
+decision points (§7.1). The TEAM's capability reads are not here — `CascadeCapabilities` is already that query
+surface ([capabilities.md](capabilities.md)); duplicating it onto `CvTeam` would be a second implementation.
+
 ⛔ Still do not re-attach the machine ad hoc — a per-site `can*` rewire is the half-migration this rebuild exists
-to avoid ([DEC-new-getter-surface](../architecture/decisions.md#dec-new-getter-surface)). What remains is the
-availability GETTERS reading these sets, landing with the legacy getter-surface disconnect.
+to avoid ([DEC-new-getter-surface](../architecture/decisions.md#dec-new-getter-surface)). Moving CONSUMERS onto
+this surface is the remaining sweep.
 
 ### The gate stages, by domain
 

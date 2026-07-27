@@ -785,6 +785,71 @@ void CvPlayer::primeEnablerDomains() const
 	PromotionEnabler::initDomain(*this);
 }
 
+// ---- THE PLAYER'S AVAILABILITY READS (see CvPlayer.h for the role, the grammar, and the two carve-outs). Every
+// ---- one is a BARE O(1) fetch of the maintained tri-state -- no gate, no calculator, no `requires` evaluation. ----
+
+EnablerDomain::State CvPlayer::getTechAvailability(TechTypes eTech) const
+{
+	return (EnablerDomain::State)m_enabler.techs.state((int)eTech);
+}
+
+EnablerDomain::State CvPlayer::getCivicAvailability(CivicTypes eCivic) const
+{
+	return (EnablerDomain::State)m_enabler.civics.state((int)eCivic);
+}
+
+EnablerDomain::State CvPlayer::getProjectAvailability(ProjectTypes eProject) const
+{
+	return (EnablerDomain::State)m_enabler.projects.state((int)eProject);
+}
+
+EnablerDomain::State CvPlayer::getProcessAvailability(ProcessTypes eProcess) const
+{
+	return (EnablerDomain::State)m_enabler.processes.state((int)eProcess);
+}
+
+void CvPlayer::getAvailableTechs(std::vector<int>& techs) const
+{
+	m_enabler.techs.listedIds(techs);
+}
+
+void CvPlayer::getAvailableCivics(std::vector<int>& civics) const
+{
+	m_enabler.civics.listedIds(civics);
+}
+
+void CvPlayer::getAvailableProjects(std::vector<int>& projects) const
+{
+	m_enabler.projects.listedIds(projects);
+}
+
+void CvPlayer::getAvailableProcesses(std::vector<int>& processes) const
+{
+	m_enabler.processes.listedIds(processes);
+}
+
+// The two carve-outs: the UNLOCKED half only. The plot-validity half of a build, and the per-unit applicability
+// of a promotion, are evaluated LIVE at their decision points (enabler.md §7.1).
+EnablerDomain::State CvPlayer::getBuildUnlocked(BuildTypes eBuild) const
+{
+	return (EnablerDomain::State)m_enabler.builds.state((int)eBuild);
+}
+
+EnablerDomain::State CvPlayer::getPromotionUnlocked(PromotionTypes ePromotion) const
+{
+	return (EnablerDomain::State)m_enabler.promotions.state((int)ePromotion);
+}
+
+void CvPlayer::getUnlockedBuilds(std::vector<int>& builds) const
+{
+	m_enabler.builds.listedIds(builds);
+}
+
+void CvPlayer::getUnlockedPromotions(std::vector<int>& promotions) const
+{
+	m_enabler.promotions.listedIds(promotions);
+}
+
 // The empire's group reads (see CvPlayer.h for the role + the grammar). Each walks its group's own enum,
 // resolves that entry's CHANNEL by identity -- never by a slot order -- and folds it through the ONE cross-scope
 // roll-up, which answers a consumed channel from its maintained receiver sum and every other channel from the

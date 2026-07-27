@@ -905,6 +905,39 @@ public:
 	// Sizing only; the events build the content.
 	void primeEnablerDomains() const;
 
+	// ---- THE AVAILABILITY READ SURFACE (player-held domains) -- the ENABLER's "can I, right now?" half of the
+	// GAME-OBJECT read role (patterns.md § THE TWO READ ROLES), one read pair per DOMAIN, the existing engine enum
+	// as the consumer's vocabulary. ⛔ Every read is a BARE O(1) fetch of the maintained tri-state: no gate runs,
+	// no calculator is called, `requires` is never evaluated (enabler.md §7) -- so a missed propagation leaves a
+	// visibly wrong verdict instead of being silently recomputed away ([DEC-no-self-heal]).
+	// The tri-state is returned whole (HIDDEN vs GREYED is the "why not"); the frontier read fills a caller-owned
+	// vector so a hot caller reuses one buffer.
+	//
+	// ⚠ Projects and processes are PLAYER-held although a CITY builds them: their HAVE axes are team-scope, so
+	// per-city copies would be byte-identical state that must never drift, and the city gate reads through its
+	// owner (enabler.md §7.1).
+	EnablerDomain::State getTechAvailability(TechTypes eTech) const;
+	EnablerDomain::State getCivicAvailability(CivicTypes eCivic) const;
+	EnablerDomain::State getProjectAvailability(ProjectTypes eProject) const;
+	EnablerDomain::State getProcessAvailability(ProcessTypes eProcess) const;
+	void getAvailableTechs(std::vector<int>& techs) const;
+	void getAvailableCivics(std::vector<int>& civics) const;
+	void getAvailableProjects(std::vector<int>& projects) const;
+	void getAvailableProcesses(std::vector<int>& processes) const;
+
+	// ⚠ THE TWO DELIBERATE CARVE-OUTS (enabler.md §7.1 -- maintain a set only where reads are hot and the owner
+	// space is small). Both of these answer the UNLOCKED half ONLY; each has a second half evaluated live, and a
+	// consumer treating either as the whole verdict will over-offer:
+	//   - BUILDS: the player's unlocked worker-builds. The PLOT-VALIDITY half stays a live per-plot gate (a
+	//     maintained set over ~10k plots is waste, and worker decisions already iterate plots).
+	//   - PROMOTIONS: the player's unlocked set. There are deliberately NO per-unit maintained sets (thousands of
+	//     units x hundreds of promotions, churned every tech, for a decision that happens only at level-up), so
+	//     the unit-state applicability is evaluated ON DEMAND at level-up.
+	EnablerDomain::State getBuildUnlocked(BuildTypes eBuild) const;
+	EnablerDomain::State getPromotionUnlocked(PromotionTypes ePromotion) const;
+	void getUnlockedBuilds(std::vector<int>& builds) const;
+	void getUnlockedPromotions(std::vector<int>& promotions) const;
+
 	// THE EMPIRE'S GROUP READ SURFACE -- the GAME-OBJECT read role's answer to "what do I HAVE, right now?"
 	// (patterns.md § THE TWO READ ROLES). It is NOT the INFO role's authored what-do-I-CARRY answer and must
 	// never look like it. ONE GETTER PER FAMILY the EMPIRE scope carries channels of (the set is the data's --

@@ -772,6 +772,40 @@ public:
 	                                                   // operate/provides least fixpoint -- what the MODIFIER reads
 	                                                   // to decide which buildings deposit (enabler.md §3.2)
 
+	// ---- THE AVAILABILITY READ SURFACE -- the ENABLER's "can I, right now?" half of the GAME-OBJECT read role
+	// (patterns.md § THE TWO READ ROLES). Distinct from the INFO role's authored what-do-I-CARRY answer and from
+	// the modifier's how-much groups beside it; the two machines stay separate ([DEC-enabler-not-cascade]).
+	//
+	// ONE READ PAIR PER DOMAIN -- the DOMAIN is the group, and the existing engine enum is the consumer's
+	// vocabulary (BuildingTypes / UnitTypes indexes the question). The domain set is FIXED and small, so it grows
+	// by DOMAIN, never by candidate; there is no per-candidate getter and no what-if argument.
+	//
+	// ⛔ EVERY READ IS A BARE O(1) LOOKUP THAT NEVER CALLS A CALCULATOR (enabler.md §7): the verdict already sits
+	// in the maintained tri-state, put there by the events. A read never gates, never recomputes and never
+	// evaluates `requires` -- so a missed propagation leaves a visibly wrong verdict rather than being silently
+	// recomputed away ([DEC-no-self-heal]).
+	//
+	// The TRI-STATE is returned whole rather than reduced to a bool: HIDDEN vs GREYED is the "why not" the build
+	// list needs, and §6's greying falls out of the same gate at no extra cost. Collapsing it here would force a
+	// second read to recover it. It answers TREE + GATE only.
+	// ⛔ The QUEUED overlay is deliberately NOT folded into it. EnablerDomain keeps FLAG_QUEUED separate from
+	// FLAG_GATE_FAILED precisely so "already in the queue" stays distinguishable from "requires unmet"; mapping a
+	// queued candidate onto GREYED here would destroy that distinction and lie about why it is not offered. The
+	// overlay therefore rides the two reads that actually care -- the frontier, and the continue verdict.
+	EnablerDomain::State getBuildingAvailability(BuildingTypes eBuilding) const;
+	EnablerDomain::State getUnitAvailability(UnitTypes eUnit) const;
+
+	// THE FRESH OFFER -- the small frontier the AI's production decision iterates INSTEAD of scoring the whole
+	// entity database (enabler.md §6: one shared choice set for UI and AI), with queued candidates excluded.
+	// Caller-owned vector, cleared and filled, so a hot caller reuses one buffer.
+	void getAvailableBuildings(std::vector<int>& buildings) const;
+	void getAvailableUnits(std::vector<int>& units) const;
+
+	// THE CONTINUE VERDICT -- "may this in-progress build carry on?", reading PAST the queued overlay. It is its
+	// own question, not a flag on the offer: a building in the queue IS queued by definition, so asking the fresh
+	// offer about it would cancel every in-progress build on the production-check sweep.
+	bool isBuildingContinuable(BuildingTypes eBuilding) const;
+
 	// THE REALIZED YIELD GROUP -- the GAME-OBJECT read role's answer to "what do I HAVE, right now?" (patterns.md
 	// § THE TWO READ ROLES). It is NOT the INFO role's authored what-do-I-CARRY answer and must never look like it.
 	// ONE GETTER PER GROUP: the call carries NO channel argument -- YieldTypes indexes the RESULT -- and there is

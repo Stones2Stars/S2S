@@ -54,6 +54,35 @@ void CvCity::refreshCascadePackage(int64_t iMask) const
 	CascadeGather::refreshCity(*this, iMask);
 }
 
+// ---- THE CITY'S AVAILABILITY READS (see CvCity.h for the role + the grammar). Every one is a BARE O(1) fetch of
+// ---- the maintained tri-state: no gate runs here, no calculator is called, and `requires` is never evaluated --
+// ---- the verdict was put there by the events (enabler.md §7). ----
+
+EnablerDomain::State CvCity::getBuildingAvailability(BuildingTypes eBuilding) const
+{
+	return (EnablerDomain::State)m_enabler.buildings.state((int)eBuilding);
+}
+
+EnablerDomain::State CvCity::getUnitAvailability(UnitTypes eUnit) const
+{
+	return (EnablerDomain::State)m_enabler.units.state((int)eUnit);
+}
+
+void CvCity::getAvailableBuildings(std::vector<int>& buildings) const
+{
+	m_enabler.buildings.listedIds(buildings);
+}
+
+void CvCity::getAvailableUnits(std::vector<int>& units) const
+{
+	m_enabler.units.listedIds(units);
+}
+
+bool CvCity::isBuildingContinuable(BuildingTypes eBuilding) const
+{
+	return m_enabler.buildings.listedForContinue((int)eBuilding);
+}
+
 // The realized yield group (see CvCity.h for the read role + the grammar it obeys). Each yield channel is a CITY
 // RECEIVER (CascadeChannelRegistry's spec'd receiver table: food/production/commerce/culture), so the realized rate
 // is the sum slot the gather's §2a combine already wrote AT THE MARK -- one O(1) fetch per channel, with no
