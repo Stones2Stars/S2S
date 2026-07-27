@@ -7,8 +7,7 @@ computed and kept coherent. `CvPlot` and `CvCity` are **domain objects** — the
 This is the **design the cascade plane is built to**, stated independently of any one implementation of it. The
 component (`CvDerivedCache`, `Sources/Infrastructure/`) is live, and the value-cache plane is built on it: the ONE
 uniform package (`Sources/Cascade/CvCascadePackage.h`, channel-indexed Σflat100/Σpercent100 slots + receiver sums
-on the 64-bit `CvDerivedCacheSet`) is a data member on team / player / area / city / plot (area per
-(area × player), `CvCascadeAreaSlot`); the per-scope channel sets are minted from the compiled deposits at load
+on the 64-bit `CvDerivedCacheSet`) is a data member on team / player / city / plot; the per-scope channel sets are minted from the compiled deposits at load
 (`CvCascadeChannelRegistry`, the ClassificationRegistry precedent); the mark derivation lives on the DepositIndex
 (`routeFor` + the condition-dependency routes); the modifier's own spine consumer (`CvModifierConsumer`,
 load-active) applies the derived masks; the gather (`CvCascadeGather`) is the one rebuild implementation and the
@@ -132,8 +131,8 @@ whose two sides share a derivation can never turn red and verifies nothing; this
 
 **The identity a divergence needs to be actionable:** "some city's production flats are wrong" across 185 cities
 identifies nothing, so every served value carries its owner, **interpreted per scope** as the spine's DOMAIN ints
-are interpreted per event: city = `(owner, cityId)` · empire = `(playerId, —)` · team = `(—, teamId)` · area =
-`(player, areaId)` · plot = `(x, y)` (a plot has no owner-independent id, and the map index needs a map that does
+are interpreted per event: city = `(owner, cityId)` · empire = `(playerId, —)` · team = `(—, teamId)` ·
+plot = `(x, y)` (a plot has no owner-independent id, and the map index needs a map that does
 not exist at bind). Identity is passed IN at bind — the scope owners share no common id accessor.
 
 ⚠ **Consequence, and it is not optional: the REBUILD MOVES ONTO THE MARK.** The event that marks a slot is what
@@ -259,7 +258,7 @@ public:
   the dirty bits split per yield/commerce channel; the bit-layout split is the increment after the bare-fetch shape
   verifies.
 - **⚖ THE PER-SCOPE PACKAGE MODEL — the cascade's FOUNDING DESIGN ([modifier.md](../specs/modifier.md) §1), stated
-  as cache architecture.** A `CvDerivedCache` lives ON EVERY SCOPED ITEM, every level (world → team → player → area
+  as cache architecture.** A `CvDerivedCache` lives ON EVERY SCOPED ITEM, every level (world → team → player
   → city → plot); the cascade loads **yield packages in ONE UNIFORM FORMAT** (Σflat and Σpercent each their OWN
   package per channel; the unit is part of the slot key) into each scope's cache; each cache knows its own staleness
   from events at its OWN scope (a world change rebuilds the world package while every other level stands). **The
@@ -273,14 +272,14 @@ public:
   **⛔ THE ORIGIN RULE — THIS IS THE PURE CASCADE DESIGN (owner), not a constraint bolted onto it:**
   - **YIELDS come from exactly three sources: PLOT, SPECIALISTS, and BUILDINGS (city).** Nowhere else produces a
     yield. So the flat/yield side of a package exists at **plot** and **city** only.
-  - **MODIFIERS come from everything BUT plot** — city, area, empire, team, world. So the percent side exists at
+  - **MODIFIERS come from everything BUT plot** — city, empire, team, world. So the percent side exists at
     every scope except plot.
 
   Plot and the upper scopes are therefore mirror images (yield-only vs percent-only), and **CITY is the single
   scope carrying both**. That is why "whether a scope's packages are empty is irrelevant" is not hand-waving: the
   shape is uniform, and the origin rule says which half any given scope ever fills.
   ⚖ **The rule governs the YIELD/RATE plane; for every other family the sides are the DATA's and the minted
-  channel sets enforce them** (wellbeing authors empire+area flats; health/defense/property author plot percents)
+  channel sets enforce them** (wellbeing authors empire flats; health/defense/property author plot percents)
   — [modifier.md §1](../specs/modifier.md). ⛔ Consequence for any read-side roll-up: **the channel set is the
   gate, never a hand-written per-scope filter.**
 
@@ -295,22 +294,30 @@ public:
   a dense array over every channel on every object is mostly zeros — on 9,600 plots that is ~7 MB of nothing.
   Each scope carries ONLY the channels authored AT that scope, both the channel ids and the per-scope sets
   derived from the data at load (the `ClassificationRegistry` minting precedent), never hand-listed. Measured
-  from `Assets/Data`: plot **13** · city **40** · empire **50** · area **3** · team **3** · self 1 — 76 distinct
-  non-unit channels, but no object carrying more than 50. ⚠ city and empire exceed a 32-bit dirty mask, so the
+  from `Assets/Data`: plot **13** · city **40** · empire **50** · team **3** · self 1 — the distinct non-unit
+  channels, with no object carrying more than 50. ⚠ city and empire exceed a 32-bit dirty mask, so the
   shared `CvDerivedCacheSet` mask widens to 64-bit (every existing user occupies few bits and is unaffected).
-  *Area and team being THREE channels each is also why they never got packages: as a bespoke struct each was a
-  project; as three keys each is trivial.*
 
-  **⚖ HOW AN AREA-SCOPE DEPOSIT RESOLVES — the (area × player) slot, read by area ID (owner).** An AREA is the
-  wrong thing to hold state: *"it knows no borders"* — one landmass spans several empires, so there is no single
-  owner for an area-scoped value (hence no `AreaContext`, [contexts.md](contexts.md)). The player axis does the
-  bordering: **a city belongs to exactly ONE area**, so *"when the wonder gives power to the area, you check
-  which cities of YOURS have that area id."* The deposit lands in the `(area, player)` slot
-  (`CvCascadeAreaSlot`) and each city reads the slot for ITS OWN area id — an O(1) fetch and a filter, never a
-  walk of the area's plots or cities.
-  ⛔ **So the city carries its area ID, and never a `CvArea*` or a per-read `area()` chase.** The reason is the
-  READ cost, not fear of churn: a per-read `area()->getNumTiles()` dereferences a whole object to answer a
-  counter an int already holds.
+  **⛔ A SCOPE MUST BE UNAMBIGUOUSLY OWNABLE — WHICH IS WHY A LANDMASS IS NOT ONE (owner).** This is the test a
+  candidate scope has to pass, and it explains the whole spine at once:
+  - **WORLD passes by being UNIVERSAL** — *"game scope works, because it affects everyone, always"*, so the
+    question of who owns the value never arises.
+  - **team / empire / city / plot pass by being OWNED BY EXACTLY ONE PLAYER** up the chain, which is what lets a
+    deposit roll DOWN and a target read one combined total.
+  - **A LANDMASS passes NEITHER.** *"It knows no borders"* — one landmass spans several empires at once, so an
+    effect on it *"affects individual players"* and is inherently a per-(landmass × player) **CROSS-PRODUCT**
+    rather than a scope. Modelling it as one forces a bespoke slot into the MIDDLE of the containment spine, and
+    that bespoke slot is the TELL, not the solution.
+
+  So **there is no area scope**: `"area"` is not a scope token, no object carries an area package, and the
+  containment spine is `world › team › empire › city › plot` ([json.md §3.2](../specs/json.md)). The legacy
+  `iArea*` authorings were modders reading "area" as "player" — they author at **EMPIRE** — and the ONE genuine
+  area concept is a PHYSICAL CONTIGUITY constraint (you cannot run power lines across an ocean), which is the
+  engine-side clean-power counter and never a cascade channel.
+  ⚑ **The area ID SURVIVES as a plain FACT**, and that is the whole of what an area is to the cascade: a bare id
+  plus its tile count, forwarded by `CityContext` for the `AREA_SIZE` token and the coastal water-body read
+  ([contexts.md](contexts.md)). ⛔ The city carries that ID, never a `CvArea*` or a per-read `area()` chase — a
+  per-read `area()->getNumTiles()` dereferences a whole object to answer a counter an int already holds.
   **⚑ Areas are VIRTUALLY NEVER recalculated (owner)** — `CvMap::recalculateAreas` exists for the extreme case
   of terrain levelled to sea level (the WMD mechanic), plus map generation; a landmass does not otherwise split
   or merge in play. Treat a rebuild as RARE-but-real: it does `m_areas.removeAll()` and reassigns every id.
@@ -343,8 +350,8 @@ public:
   substrate grew ONE BESPOKE STRUCT PER SCOPE, each with hand-named per-channel members instead of channel-indexed
   Σflat/Σpercent; it is archived and must not be reconstructed ([superseded-ideas](superseded-ideas.md) #14).
   **A missing scope is a SYMPTOM of that, not the disease:** with one uniform package, giving a scope its packages
-  is a single member; with bespoke structs every scope is its own project — which is exactly why the small scopes
-  (area, team — three channels each) never got one, and why their sums leaked into whichever neighbour already had
+  is a single member; with bespoke structs every scope is its own project — which is exactly why a small scope
+  (team, at three channels) never got one, and why its sums leaked into whichever neighbour already had
   a struct. So the package TYPE is unified FIRST (one owner-templated, channel-indexed package on
   `CvDerivedCacheSet<TOwner>`), after which every scope falls out of the same member. Adding a further per-scope
   struct deepens the divergence this closes.

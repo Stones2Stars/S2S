@@ -350,12 +350,12 @@ two surfaces.
 7. **Parameters spelled in full**, index parameters named for the enum they key
    ([contexts.md](contexts.md) naming rule).
 
-**The GAME-OBJECT half's realized shape.** Each scope owner (`CvPlot` / `CvCity` / `CvPlayer` / `CvTeam` / the
-`CvArea` (area × player) slot) carries **one group read per modifier FAMILY whose channels the data authors AT
+**The GAME-OBJECT half's realized shape.** Each scope owner (`CvPlot` / `CvCity` / `CvPlayer` / `CvTeam`)
+carries **one group read per modifier FAMILY whose channels the data authors AT
 that scope** — the set comes from the census scope masks + the minted channel sets, never a hand-written list.
 Every group folds through the **ONE cross-scope roll-up on the calc surface** (`InfoValuation::realizedAt*`,
 beside the `cityRate` combine it specializes): modifier.md §1's downward roll realized AT READ over the chain the
-object sits under (city = team + empire + area-slot + city · empire = team + empire · team/area/plot = itself;
+object sits under (city = team + empire + city · empire = team + empire · team/plot = itself;
 WORLD is CONFIG and carries no package, and PLOT never enters an upper chain — a per-plot value resolves in
 isolation first). A channel the scope **CONSUMES** answers its maintained receiver sum instead, and which side of
 a channel is the answer comes from the vocabulary's canonical-unit verdict (`infoKindUnit`): a percent-unit

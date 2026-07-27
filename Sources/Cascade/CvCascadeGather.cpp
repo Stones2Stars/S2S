@@ -8,7 +8,6 @@
 
 #include "CvGameCoreDLL.h"
 #include "CvCascadeGather.h"
-#include "CvCascadeAreaSlot.h"
 #include "CvCascadePackage.h"
 #include "CvCascadeChannelRegistry.h"
 #include "CvModifiers.h"
@@ -24,7 +23,6 @@
 #include "Engine/CvCity.h"
 #include "Engine/CvPlayer.h"
 #include "Engine/CvTeam.h"
-#include "Engine/CvArea.h"
 #include "AI/CvPlayerAI.h"   // GET_PLAYER
 #include "AI/CvTeamAI.h"     // GET_TEAM
 #include "CvTerrainInfo.h"
@@ -469,36 +467,6 @@ namespace
 		}
 	}
 
-	void gt_gatherAreaChannels(const CvArea& area, PlayerTypes ePlayer, int64_t iWantedBits,
-		std::vector<int>& flatSlots, std::vector<int>& percentSlots)
-	{
-		gt_beginRefill(CASC_SCOPE_AREA, iWantedBits, flatSlots, percentSlots);
-
-		// area-scope deposits realize per (area x player): the player's ACTIVE buildings in cities of this area
-		const CvPlayer& player = GET_PLAYER(ePlayer);
-		for (CvPlayer::city_iterator cityIterator = player.beginCities(); cityIterator != player.endCities(); ++cityIterator)
-		{
-			const CvCity* pLoopCity = *cityIterator;
-			if (pLoopCity == NULL || pLoopCity->area() != &area)
-			{
-				continue;
-			}
-			CvCascadeEvalCtx evalCtx;
-			InfoValuation::fillEvalCtx(pLoopCity->getCityContext(), player.getEmpireContext(), NULL, evalCtx);
-			if (evalCtx.activeBuildings == NULL)
-			{
-				continue;
-			}
-			for (std::set<int>::const_iterator it = evalCtx.activeBuildings->begin(); it != evalCtx.activeBuildings->end(); ++it)
-			{
-				const CvBuildingInfo& building = GC.getBuildingInfo((BuildingTypes)(*it));
-				const bool bObsolete = cascadeIsBuildingObsolete(*it, evalCtx);
-				gt_foldInfo(bObsolete ? building.getWhenObsolete() : building.getModifiers(),
-					1, CASC_SCOPE_AREA, iWantedBits, evalCtx, NULL, 0, false, flatSlots, percentSlots);
-			}
-		}
-	}
-
 	// ---- THE ORACLE'S FROM-SOURCE INPUT DOCUMENTS. Each recomputes one scope's WHOLE CHANNEL SET into a fresh
 	// ---- document; NONE of them carries receiver sums, and that is the RECURSION BOUND: a channel fold reads
 	// ---- only live game state, so it cannot ask for another scope, and the sum legs -- the only consumers of
@@ -535,13 +503,6 @@ namespace
 			kDocument.flat, kDocument.percent);
 	}
 
-	void gt_freshAreaDocument(const CvArea& area, PlayerTypes ePlayer, CvCascadeSlotValues& kDocument)
-	{
-		kDocument.reset(CASC_SCOPE_AREA, (int)ePlayer, area.getID());
-		gt_gatherAreaChannels(area, ePlayer, CascadeChannelRegistry::scopeAllChannelsMask(CASC_SCOPE_AREA),
-			kDocument.flat, kDocument.percent);
-	}
-
 	// Every scope package one city's realized totals consume, recomputed FROM SOURCE. Collected ONCE per city
 	// per oracle run and read for every channel: these documents are pure functions of the live game and no
 	// game state changes inside one synchronous oracle call, so building them once is the SAME full recompute,
@@ -550,11 +511,7 @@ namespace
 	{
 		CvCascadeSlotValues empire;
 		CvCascadeSlotValues team;
-		CvCascadeSlotValues area;
-		bool hasArea;
 		std::vector<CvCascadeSlotValues> workedPlots;
-
-		CascadeOracleCityInputs() : hasArea(false) {}
 	};
 
 	void gt_collectFreshCityInputs(const CvCity& city, CascadeOracleCityInputs& kInputs)
@@ -562,12 +519,6 @@ namespace
 		const CvPlayer& owner = GET_PLAYER(city.getOwner());
 		gt_freshEmpireDocument(owner, kInputs.empire);
 		gt_freshTeamDocument(GET_TEAM(owner.getTeam()), kInputs.team);
-		const CvArea* pArea = city.area();
-		kInputs.hasArea = (pArea != NULL);
-		if (kInputs.hasArea)
-		{
-			gt_freshAreaDocument(*pArea, city.getOwner(), kInputs.area);
-		}
 		kInputs.workedPlots.clear();
 		const int iNumPlots = city.getNumCityPlots();
 		for (int iPlotIndex = 0; iPlotIndex < iNumPlots; ++iPlotIndex)
@@ -604,8 +555,8 @@ namespace
 	// property) belong to their own combines.
 	struct CascadeCityCombineTerms
 	{
-		long baseFlat;     // TIER 1: the worked-plot Sigma + the empire/team/area flats rolled down (modifier.md §2a)
-		long percentSum;   // the ONE additive percent stack (x100): city + empire + team + area
+		long baseFlat;     // TIER 1: the worked-plot Sigma + the empire/team flats rolled down (modifier.md §2a)
+		long percentSum;   // the ONE additive percent stack (x100): city + empire + team
 		long cityFlat;     // TIER 2: the city package's flat tier, added AFTER the percentages
 
 		CascadeCityCombineTerms() : baseFlat(0), percentSum(0), cityFlat(0) {}
@@ -617,7 +568,6 @@ namespace
 	{
 		const CvPlayer& owner = GET_PLAYER(city.getOwner());
 		const CvTeam& team = GET_TEAM(owner.getTeam());
-		const CvArea* pArea = city.area();
 
 		const int iNumPlots = city.getNumCityPlots();
 		for (int iPlotIndex = 0; iPlotIndex < iNumPlots; ++iPlotIndex)
@@ -637,11 +587,6 @@ namespace
 		kTerms.percentSum += city.getCascadePackage().sourcePercent(iChannel);
 		kTerms.percentSum += owner.getCascadePackage().sourcePercent(iChannel);
 		kTerms.percentSum += team.getCascadePackage().sourcePercent(iChannel);
-		if (pArea != NULL)
-		{
-			kTerms.baseFlat += pArea->getCascadeSlot(city.getOwner()).package.sourceFlat(iChannel);
-			kTerms.percentSum += pArea->getCascadeSlot(city.getOwner()).package.sourcePercent(iChannel);
-		}
 		kTerms.cityFlat = city.getCascadePackage().sourceFlat(iChannel);
 	}
 
@@ -661,11 +606,6 @@ namespace
 		kTerms.percentSum += kCityDocument.percentForChannel(iChannel);
 		kTerms.percentSum += kInputs.empire.percentForChannel(iChannel);
 		kTerms.percentSum += kInputs.team.percentForChannel(iChannel);
-		if (kInputs.hasArea)
-		{
-			kTerms.baseFlat += kInputs.area.flatForChannel(iChannel);
-			kTerms.percentSum += kInputs.area.percentForChannel(iChannel);
-		}
 		kTerms.cityFlat = kCityDocument.flatForChannel(iChannel);
 	}
 
@@ -708,7 +648,7 @@ namespace
 	// ---- scope's sums, and the downward roll is realized at the combine. ----
 
 	// The city's ROLLED CHAIN legs for one channel, read the REBUILD way: the SAME chain
-	// InfoValuation::rolledLegsAtCity describes on the read path -- team + empire + (area × owner) + city --
+	// InfoValuation::rolledLegsAtCity describes on the read path -- team + empire + city --
 	// through the rebuild-path accessors, so every input rebuilds through its own mark and the mark ORDER within
 	// one event stays irrelevant. The worked plots are deliberately absent (a plot never enters an upper scope's
 	// chain -- modifier.md §2 plot-as-base), and the city's own flats sit INSIDE the rolled sum rather than in a
@@ -723,12 +663,6 @@ namespace
 		percentSum += team.getCascadePackage().sourcePercent(iChannel);
 		flatSum += owner.getCascadePackage().sourceFlat(iChannel);
 		percentSum += owner.getCascadePackage().sourcePercent(iChannel);
-		const CvArea* pArea = city.area();
-		if (pArea != NULL)
-		{
-			flatSum += pArea->getCascadeSlot(city.getOwner()).package.sourceFlat(iChannel);
-			percentSum += pArea->getCascadeSlot(city.getOwner()).package.sourcePercent(iChannel);
-		}
 		flatSum += city.getCascadePackage().sourceFlat(iChannel);
 		percentSum += city.getCascadePackage().sourcePercent(iChannel);
 	}
@@ -744,11 +678,6 @@ namespace
 		percentSum += kInputs.team.percentForChannel(iChannel);
 		flatSum += kInputs.empire.flatForChannel(iChannel);
 		percentSum += kInputs.empire.percentForChannel(iChannel);
-		if (kInputs.hasArea)
-		{
-			flatSum += kInputs.area.flatForChannel(iChannel);
-			percentSum += kInputs.area.percentForChannel(iChannel);
-		}
 		flatSum += kCityDocument.flatForChannel(iChannel);
 		percentSum += kCityDocument.percentForChannel(iChannel);
 	}
@@ -984,15 +913,6 @@ namespace
 	}
 }
 
-// The area slot's refresh delegate (declared in CvCascadeAreaSlot.h).
-void CvCascadeAreaSlot::refreshCascadePackage(int64_t iMask) const
-{
-	if (area != NULL && player != NO_PLAYER)
-	{
-		CascadeGather::refreshArea(*area, player, iMask);
-	}
-}
-
 void CascadeGather::refreshPlot(const CvPlot& plot, int64_t iMask)
 {
 	const CvCascadePackage<CvPlot>& package = plot.getCascadePackage();
@@ -1072,25 +992,3 @@ void CascadeGather::gatherTeamInto(const CvTeam& team, CvCascadeSlotValues& kVal
 	gt_freshTeamDocument(team, kValues);
 }
 
-void CascadeGather::refreshArea(const CvArea& area, PlayerTypes ePlayer, int64_t iMask)
-{
-	if (ePlayer == NO_PLAYER)
-	{
-		return;
-	}
-	const CvCascadeAreaSlot& slot = area.getCascadeSlot(ePlayer);
-	const CvCascadePackage<CvCascadeAreaSlot>& package = slot.package;
-	package.ensureSized();
-	gt_gatherAreaChannels(area, ePlayer, iMask, package.flat, package.percent);
-	emitCacheRebuilt((int)CASC_SCOPE_AREA, (int)ePlayer, area.getID(), iMask);
-}
-
-void CascadeGather::gatherAreaInto(const CvArea& area, PlayerTypes ePlayer, CvCascadeSlotValues& kValues)
-{
-	if (ePlayer == NO_PLAYER)
-	{
-		kValues.reset(CASC_SCOPE_AREA, (int)ePlayer, area.getID());
-		return;   // no (area x player) slot exists -- the document stays the zero-filled layout
-	}
-	gt_freshAreaDocument(area, ePlayer, kValues);
-}

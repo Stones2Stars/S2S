@@ -332,7 +332,7 @@ to the holding building via `getBaseCommerceRateFromBuilding100`), both modelled
 > - **The COMPLETE source map of `totalFreeSpecialists()` (`CvCity.cpp:5747`), every term grounded to its JSON source:**
 >   `total = max(0, Σ of the below)`, and `0` if `pop < 1`. All are reversible modifier deposits from **ACTIVE** sources:
 >   - `getFreeSpecialist()` (city; London = **9**) = Σ active buildings' `iFreeSpecialist` → **`freeSpecialists.city.any`** (`:4639`).
->   - `area()->getFreeSpecialist(owner)` = Σ active buildings' `iAreaFreeSpecialist` → **`freeSpecialists.area.any`** (`CvPlayer.cpp:7394`).
+>   - `area()->getFreeSpecialist(owner)` = Σ active buildings' `iAreaFreeSpecialist` → **`freeSpecialists.empire.any`** (`CvPlayer.cpp:7394`) — area is not a scope; the legacy `iArea*` rows author at EMPIRE ([state-repositories.md](../../architecture/state-repositories.md)).
 >   - `player.getFreeSpecialist()` = Σ active buildings' `iGlobalFreeSpecialist` (→ **`freeSpecialists.empire.any`**, `CvPlayer.cpp:7395`)
 >     - Σ adopted civics' `iFreeSpecialist` (→ **`freeSpecialists.empire.any`**, `:18045`) + Σ active traits' `iFreeSpecialist` (→ **`freeSpecialists.empire.any`**, `:28515`).
 >   - improvement term = `Σ_imp getImprovementFreeSpecialists(imp) × countNumImprovedPlots(imp)`, where the per-improvement
@@ -365,11 +365,10 @@ to the holding building via `getBaseCommerceRateFromBuilding100`), both modelled
 >   `freeSpecialists.any` count-leaf over active buildings (city/area/empire) + civics + active-set traits + the improvement
 >   `per`-scaler + the per-wonder term, matching the engine `totalFreeSpecialists` oracle. Two cross-cutting facts the sweep
 >   surfaced (both fixed):
->   - **AREA scope is CROSS-CITY:** `freeSpecialists.area.any` (Gateway Arch / Statue of Liberty) = engine
->     `area()->getFreeSpecialist(owner)`, shared by every city in the player's CvArea — NOT derivable from one city. Resolved
->     by tagging each city with its `Area` (CvArea id from `/state/all`) and summing the area-peer cities' active `area.any`
->     at projection into `EvalState.AreaFreeSpecialists`. (This is the same area-scope cross-city accumulation the yield
->     cascade's `AreaYieldModifier` (a failure-to-close) needs — `City.Area` now exists for it.)
+>   - **The legacy AREA term is EMPIRE-scope now:** `iAreaFreeSpecialist` (Gateway Arch / Statue of Liberty) = engine
+>     `area()->getFreeSpecialist(owner)`, which shared the value across the landmass. A landmass is not an ownable scope,
+>     so it authors **`freeSpecialists.empire.any`** and reaches every city of the player. ⚠ Behaviour change, deliberate:
+>     the legacy term stopped at the coastline and the empire term does not.
 >   - **A trait's free-spec COUNT is PURE_TRAITS-gated** (a signed value): the engine `CvTraitInfo::getFreeSpecialist`
 >     drops a positive trait's negative downside / a negative trait's positive upside under `GAMEOPTION_LEADER_PURE_TRAITS`
 >     (e.g. GLORIOUS1's `−1`). The cascade applies the same alignment filter. (Civics/buildings carry no alignment.)

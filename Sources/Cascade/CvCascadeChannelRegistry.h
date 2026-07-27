@@ -24,7 +24,7 @@
 //	The WELLBEING SIGN TWINS: happiness/health are the only AUTHORED wellbeing families; anger/unhealth are
 //	minted BESIDE them as sign twins (modifier.md #2b -- a negative deposit routes to the opposing channel at
 //	fill; four ordinary channels, no polarity storage). Twins are flagged so the authored-channel census stays
-//	comparable to the measured per-scope counts (plot 13 / city 40 / empire 50 / area 3 / team 3).
+//	comparable to the measured per-scope counts (plot 13 / city 40 / empire 50 / team 3).
 //
 //	APPEND-ONLY, like the DepositIndex interner: channel ids and local slot indices survive a readJson re-map
 //	(the re-push re-registers the same keys to the same ids). Purely-organizational static-methods class
@@ -79,7 +79,7 @@ public:
 	// The scope's channel-set size (package slots; sign twins included).
 	static int scopeChannelCount(CvCascScope eScope);
 	// The scope's AUTHORED channel count (twins excluded) -- the census figure comparable to the measured
-	// plot 13 / city 40 / empire 50 / area 3 / team 3.
+	// plot 13 / city 40 / empire 50 / team 3.
 	static int scopeAuthoredChannelCount(CvCascScope eScope);
 	// A channel's local slot index at a scope; -1 = not authored at that scope (no storage anywhere).
 	static int scopeSlotIndex(CvCascScope eScope, int iChannel);
@@ -118,7 +118,7 @@ public:
 
 	// Emit the per-scope CHANNEL-SET census ([MODIFIER] channels scope=... authored=... slots=... receivers=...)
 	// -- the KEYS-ONLY-WHERE-NEEDED derivation made observable (the measured expectation: plot 13 / city 40 /
-	// empire 50 / area 3 / team 3 authored channels). Reports what THIS registry minted, so it can only run once
+	// empire 50 / team 3 authored channels). Reports what THIS registry minted, so it can only run once
 	// the load has pushed every compiled deposit: fired at GAME_LOAD_FINISHED, guarded to once per load.
 	static void reportChannelCensus();
 };

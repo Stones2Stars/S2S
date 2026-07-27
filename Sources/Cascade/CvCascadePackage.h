@@ -6,7 +6,7 @@
 //	CvCascadePackage -- the ONE uniform per-scope value package of the modifier cascade
 //	(state-repositories.md, the per-scope package model; [DEC-uniform-cache-shape]).
 //
-//	EVERY scope object (team / player / area / city / plot) carries this SAME type as a data member; what
+//	EVERY scope object (team / player / city / plot) carries this SAME type as a data member; what
 //	varies between scopes is only WHICH SLOTS carry a value (the registry's data-derived channel set -- KEYS
 //	ONLY WHERE NEEDED). The storage is the owner ruling's TWO DICTIONARIES -- one flats, one percents, each an
 //	int keyed by channel (locally indexed by the scope's layout; the unit is part of the slot key, so a flat
@@ -41,7 +41,7 @@ struct CvCascadePackage
 {
 	CvCascScope scope;                     // which layout this package lives on (set at bind)
 	int identityFirst;                     // the SERVED identity, interpreted per scope (CvCascadeSlotValues.h)
-	int identitySecond;                    // its second axis: city id / team id / area id / plot y (-1 = none)
+	int identitySecond;                    // its second axis: city id / team id / plot y (-1 = none)
 	mutable std::vector<int> flat;      // dictionary 1: the channel-indexed x100 flat sums (local slots)
 	mutable std::vector<int> percent;   // dictionary 2: the channel-indexed x100 percent sums (local slots)
 	mutable std::vector<int> sum;       // the receiver slots: the realized x100 totals this scope consumes
@@ -53,7 +53,7 @@ struct CvCascadePackage
 	// iIdentityFirst/iIdentitySecond are the identity every SERVED value carries, so a divergence an external
 	// reader observes between the stored and oracle documents names WHICH object drifted (city 5-8192, plot
 	// 12/30) rather than "some city's production flats". The owner types differ per scope (city/plot/team/
-	// area-slot expose no common id accessor), so identity is passed IN here rather than read back off TOwner;
+	// scope owners expose no common id accessor), so identity is passed IN here rather than read back off TOwner;
 	// either axis may be -1 where the scope genuinely has none.
 	void bind(CvCascScope ePackageScope, const TOwner* pOwner, void (TOwner::*pfnRefresh)(int64_t) const,
 	          int iIdentityFirst, int iIdentitySecond)

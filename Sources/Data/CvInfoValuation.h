@@ -205,9 +205,6 @@ public:
 	static void rolledLegsAtCity(const CvCity& city, int iChannel, long& flatSum, long& percentSum);
 	static int realizedAtEmpire(const CvPlayer& player, int iChannel);
 	static int realizedAtTeam(const CvTeam& team, int iChannel);
-	// The AREA slot's read. ePlayer is the (area × player) slot's IDENTITY axis -- an area "knows no borders", so
-	// an area-scope value realizes per player (state-repositories.md) -- never a scope argument.
-	static int realizedAtArea(const CvArea& area, PlayerTypes ePlayer, int iChannel);
 
 	// ---- the §2a fold seams (their canonical calc functions live HERE so the future package rebuild and the
 	// ---- expected* endpoints call the SAME math -- pure statics: inputs in, ×100 out).

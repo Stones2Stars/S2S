@@ -18,9 +18,15 @@
 #include <vector>
 
 // The containment-spine scope (json §3.2, singular). SELF is the off-spine own-build scope.
+//
+// A scope must be unambiguously OWNABLE -- either UNIVERSAL (world: it affects everyone, always, so ownership
+// never arises) or owned by exactly ONE player up the chain (team / empire / city / plot). That is what lets a
+// deposit roll DOWN and a target read one combined total. A LANDMASS satisfies neither: it is shared by several
+// empires at once, so an effect on it is inherently a per-(landmass x player) CROSS-PRODUCT rather than a scope,
+// and modelling it as one forces a bespoke slot in the middle of the spine.
 enum CvCascScope
 {
-	CASC_SCOPE_WORLD, CASC_SCOPE_TEAM, CASC_SCOPE_EMPIRE, CASC_SCOPE_AREA, CASC_SCOPE_CITY, CASC_SCOPE_PLOT,
+	CASC_SCOPE_WORLD, CASC_SCOPE_TEAM, CASC_SCOPE_EMPIRE, CASC_SCOPE_CITY, CASC_SCOPE_PLOT,
 	CASC_SCOPE_IMPROVEMENT, CASC_SCOPE_FEATURE, CASC_SCOPE_TERRAIN, CASC_SCOPE_ROUTE, CASC_SCOPE_BUILDING,
 	CASC_SCOPE_SPECIALIST, CASC_SCOPE_UNIT, CASC_SCOPE_SELF
 };

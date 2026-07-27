@@ -558,7 +558,6 @@ namespace
 		case CASC_SCOPE_WORLD:  return "world";
 		case CASC_SCOPE_TEAM:   return "team";
 		case CASC_SCOPE_EMPIRE: return "empire";
-		case CASC_SCOPE_AREA:   return "area";
 		case CASC_SCOPE_CITY:   return "city";
 		case CASC_SCOPE_PLOT:   return "plot";
 		default:                return "?";

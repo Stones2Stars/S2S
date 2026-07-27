@@ -64,9 +64,9 @@ reads objects). **Build order:** spine + the modifier scope accumulator → logg
   the one place a spine endpoint does resolution at emit rather than deferring to the gated render — justified because
   a rename is rare (four low-frequency choke points), not a hot-path firehose.
 - **Build status.** The spine primitive + KIND firewall + `IEventConsumer` = BUILT (`Spine/CvEventSpine.{h,cpp}`).
-  The **DOMAIN emit surface = BUILT**: **98 call sites** across `CvPlayer` (34) · `CvCity` (23) · `CvPlot` (20) ·
-  `CvGame` (7) · `CvTeam` (4) · `CvUnit` (3) · `CvPlotGroup` (1) + the cascade's own diagnostics (6), restored
-  at the genuine mutation choke points after the clean-slate revert had stripped them. The PLOT substrate is
+  The **DOMAIN emit surface = BUILT**: **127 call sites** at the genuine mutation choke points — `CvPlayer` (36) ·
+  `CvCity` (30) · `CvPlot` (20) · `CvUnit` (14) · `CvGame` (10) · `CvProperties` (7) · `CvTeam` (6) · `CvArea` (2) ·
+  `CvMap` (1) · `CvPlotGroup` (1). The PLOT substrate is
   complete: terrain / feature / improvement / route / bonus / owner / **type / river / irrigation / landmark /
   worked**, so the per-scope contexts are maintained purely by facts, with no choke point driving a derivation
   directly ([contexts.md](../architecture/contexts.md)). The **commerce SLIDERS** are on the surface too

@@ -55,14 +55,18 @@ from store import Store, REPO
 SCALAR_FAMILIES = {
     # health / happiness / healing
     "iHealth": ("health", "city", None, "flat"),
-    "iAreaHealth": ("health", "area", None, "flat"),
+    # AREA scope is abolished (owner): the legacy iArea* rows are modders reading "area" as "player". The ONE
+    # legitimate area concept is a PHYSICAL CONTIGUITY constraint -- you cannot run power lines across an ocean
+    # (the clean-power flag, engine-side, no cascade channel) -- and health/happiness/specialists carry no such
+    # constraint, so nothing justifies them stopping at a coastline. They author at EMPIRE.
+    "iAreaHealth": ("health", "empire", None, "flat"),
     "iGlobalHealth": ("health", "empire", None, "flat"),
     # per-pop rows author as §3.7 per-scalers (ruling 4, info-rebuild.md): flat + per{POPULATION, each:100}.
     # Engine math verified ×pop÷100 (CvCity.cpp:22017/22031 `m_i… * getPopulation() / 100`), so the RAW XML
     # value is human per-100-pop. The unit token below routes the curate() loop to _inject_per.
     "iHealthPercentPerPopulation": ("health", "city", None, "perPopulation"),
     "iHappiness": ("happiness", "city", None, "flat"),
-    "iAreaHappiness": ("happiness", "area", None, "flat"),
+    "iAreaHappiness": ("happiness", "empire", None, "flat"),   # area abolished -> empire (see iAreaHealth)
     "iGlobalHappiness": ("happiness", "empire", None, "flat"),
     "iHappinessPercentPerPopulation": ("happiness", "city", None, "perPopulation"),   # per-scaler, see health above
     "iHealRateChange": ("heal", "city", None, "flat"),   # ruling 13: folds into the heal family (the engine's cityContribution term of the one heal calc) -- `healing` was a fresh-key rollerskate
@@ -76,9 +80,10 @@ SCALAR_FAMILIES = {
     # maintenance (grouped, cost-style)
     "iMaintenanceModifier": ("maintenance", "city", None, "percent"),
     "iGlobalMaintenanceModifier": ("maintenance", "empire", None, "percent"),
-    "iAreaMaintenanceModifier": ("maintenance", "area", None, "percent"),
-    # iOtherAreaMaintenanceModifier is NOT here: it re-authors as a conditioned deposit on the IS_HOME_AREA
-    # predicate (ruling 2, info-rebuild.md) -- handled explicitly in curate().
+    # iAreaMaintenanceModifier and iOtherAreaMaintenanceModifier are NOT here: the home/other-area maintenance
+    # pair re-authors as a conditioned deposit on the IS_HOME_AREA predicate (ruling 2, info-rebuild.md;
+    # json.md §3.5) -- handled explicitly in curate(). NOTHING authors either tag today, so both surface in the
+    # UNHANDLED coverage report if data ever appears; model it then, never as an area-scope deposit.
     "iDistanceMaintenanceModifier": ("maintenance", "empire", "distance", "percent"),
     "iNumCitiesMaintenanceModifier": ("maintenance", "empire", "numCities", "percent"),
     "iCoastalDistanceMaintenanceModifier": ("maintenance", "empire", "coastalDistance", "percent"),
@@ -111,7 +116,7 @@ SCALAR_FAMILIES = {
     "iExperience": ("experience", "city", None, "flat"),
     "iGlobalExperience": ("experience", "empire", None, "flat"),
     "iFreeSpecialist": ("freeSpecialists", "city", None, "any"),
-    "iAreaFreeSpecialist": ("freeSpecialists", "area", None, "any"),
+    "iAreaFreeSpecialist": ("freeSpecialists", "empire", None, "any"),   # area abolished -> empire
     "iGlobalFreeSpecialist": ("freeSpecialists", "empire", None, "any"),
     # misc city
     "iAnarchyModifier": ("anarchy", "city", None, "percent"),
@@ -160,7 +165,9 @@ YIELD_FAMILIES = {
     "YieldChanges": ("city", engine.YIELDS, "flat"),
     "YieldModifiers": ("city", engine.YIELDS, "percent"),
     "YieldPerPopChanges": ("city", engine.YIELDS, "perPopulation"),
-    "AreaYieldModifiers": ("area", engine.YIELDS, "percent"),
+    # AreaYieldModifiers is NOT here: area scope is abolished, and nothing authors the tag (it surfaces in the
+    # UNHANDLED coverage report if data ever appears). A yield percent confined to one landmass has no physical
+    # constraint justifying it -- unlike clean power, which is the ONE real area concept and is engine-side.
     "GlobalYieldModifiers": ("empire", engine.YIELDS, "percent"),
     # GlobalSeaPlotYieldChanges + RiverPlotYieldChanges are PLOTS-TARGET folds (owner 2026-06-22): a scope-wide
     # source depositing onto every matching plot in scope. Handled in pass2 via _inject_plots (the "PLOTS-TARGET

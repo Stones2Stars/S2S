@@ -9,7 +9,7 @@
 //
 //	A PLOT-FACT predicate route names its owner objects through mc_applyPlotPredicate, whose fan is read off
 //	CascadeGather's per-scope ctx binding rather than guessed: the plot itself, the city SITTING ON it and that
-//	city's (area x owner) slot are the only packages a plot verdict can move, because those are the only folds
+//	city's package are the only ones a plot verdict can move, because those are the only folds
 //	that bind a plot -- so a one-tile fact never reaches the player. HAS_COAST and HAS_FRESHWATER additionally
 //	fan ONE HOP (the two adjacency verdicts, PlotContext::adjacencyFactsMask).
 //
@@ -23,7 +23,6 @@
 #include "CvGameCoreDLL.h"
 #include "CvModifierConsumer.h"
 #include "CvCascadePackage.h"
-#include "CvCascadeAreaSlot.h"
 #include "CvCascadeChannelRegistry.h"
 #include "Data/CvDepositIndex.h"        // routeFor + the dependency routes -- the ONE mark derivation
 #include "Data/CvDepositRead.h"         // MMKernel::traitData -- the active trait set's info
@@ -35,7 +34,6 @@
 #include "Engine/CvCity.h"
 #include "Engine/CvPlayer.h"
 #include "Engine/CvTeam.h"
-#include "Engine/CvArea.h"
 #include "AI/CvPlayerAI.h"              // GET_PLAYER
 #include "AI/CvTeamAI.h"                // GET_TEAM
 #include "CvBuildingInfo.h"
@@ -83,16 +81,6 @@ namespace
 		}
 		pPlot->getCascadePackage().markMask(iMask);
 		mc_invalidate(CASC_SCOPE_PLOT, (int)pPlot->getOwner(), GC.getMap().plotNum(pPlot->getX(), pPlot->getY()), iMask, szSource);
-	}
-
-	void mc_markAreaSlot(const CvArea* pArea, PlayerTypes ePlayer, int64_t iMask, const char* szSource)
-	{
-		if (pArea == NULL || ePlayer == NO_PLAYER || iMask == 0)
-		{
-			return;
-		}
-		pArea->getCascadeSlot(ePlayer).package.markMask(iMask);
-		mc_invalidate(CASC_SCOPE_AREA, (int)ePlayer, pArea->getID(), iMask, szSource);
 	}
 
 	void mc_markEmpire(const CvPlayer* pPlayer, int64_t iMask, const char* szSource)
@@ -203,26 +191,6 @@ namespace
 			pPlayer->getCascadePackage().markMask(iEmpireMask);
 			mc_invalidate(CASC_SCOPE_EMPIRE, (int)pPlayer->getID(), (int)pPlayer->getID(), iEmpireMask, szSource);
 		}
-		// AREA slots: the event's own area, else every area the owner has a city in
-		const int64_t iAreaMask = pRoute->packageMask[(int)CASC_SCOPE_AREA];
-		if (iAreaMask != 0 && pPlayer != NULL)
-		{
-			if (pCity != NULL)
-			{
-				mc_markAreaSlot(pCity->area(), pPlayer->getID(), iAreaMask, szSource);
-			}
-			else if (pPlot != NULL)
-			{
-				mc_markAreaSlot(pPlot->area(), pPlayer->getID(), iAreaMask, szSource);
-			}
-			else
-			{
-				for (CvPlayer::city_iterator cityIterator = pPlayer->beginCities(); cityIterator != pPlayer->endCities(); ++cityIterator)
-				{
-					mc_markAreaSlot((*cityIterator)->area(), pPlayer->getID(), iAreaMask, szSource);
-				}
-			}
-		}
 		// TEAM package
 		const int64_t iTeamMask = pRoute->packageMask[(int)CASC_SCOPE_TEAM];
 		if (iTeamMask != 0 && pPlayer != NULL)
@@ -279,12 +247,11 @@ namespace
 	//   PLOT   fold -- evalCtx.plot = the plot itself                         (gt_gatherPlotChannels)
 	//   CITY   fold -- evalCtx.plot = THAT CITY'S OWN CENTRE plot             (gt_fillCityEvalCtx -> InfoValuation::
 	//                  fillEvalCtx -> CityContext::fillEvalCtx: ec.plot = m_city->plot())
-	//   AREA   fold -- the same city-bound ctx, once per member city          (gt_gatherAreaChannels)
 	//   EMPIRE and TEAM folds bind NO plot at all (EmpireContext::fillEvalCtx fills player/team only; the team
 	//   gather sets team/player), so a plot predicate is constantly not-present there -- the evaluator's
 	//   NULL-object convention -- and those packages cannot move on a plot fact.
 	// So the objects a plot fact names are: the plot, the city SITTING ON it (if any) and that city's
-	// (area x owner) slot. ⛔ The PLAYER is therefore passed ONLY together with that city: every player-reaching
+	// own package. ⛔ The PLAYER is therefore passed ONLY together with that city: every player-reaching
 	// leg of mc_applyRoute (the empire/team packages, the city-less all-cities fan, the cityFanAll sum fan) would
 	// otherwise turn a ONE-TILE fact into an empire-wide sweep -- the widening "emit liberally, mark precisely"
 	// forbids (event-spine.md; [DEC-no-self-heal]).
@@ -316,7 +283,7 @@ namespace
 		}
 		if (pPlotCity == NULL)
 		{
-			// No city sits here, so no CITY/AREA fold -- each of which binds a city's CENTRE plot -- can have
+			// No city sits here, so no CITY fold -- which binds a city's CENTRE plot -- can have
 			// moved: the only package that did is the plot's own, and exactly ONE city consumes its realized
 			// value (the one working it). An above-city deposit's cityFanAll thus has nothing to fan, and leaving
 			// it set would instead DROP the working city's sums, mc_applyRoute's fan-all branch needing the
@@ -477,7 +444,7 @@ namespace
 					// The blanket covers this plot's OWN package and nothing else, so the two substrate facts a
 					// FRESH-WATER verdict reads carry legs it cannot reach. CvPlot::isFreshWater reads this plot's
 					// TERRAIN (isFreshWaterTerrain, and isImpassable) and its FEATURE (isAddsFreshWater) -- moving
-					// the verdict a CITY sitting here folds through its own centre plot, and its (area x owner)
+					// the verdict a CITY sitting here folds through its own centre plot
 					// slot with it. TERRAIN additionally moves what the NEIGHBOURS read: isFreshWater's rect(1,1)
 					// leg tests an adjacent plot's isWater AND fresh-water terrain, so a terrain flip re-gates the
 					// ring's HAS_FRESHWATER deposits. The other three facts of this group reach neither leg --
@@ -675,7 +642,7 @@ namespace
 				// crossing. The reach is this city's CENTRE plot, which is precisely what the plot-fact helper
 				// resolves: the centre plot's getPlotCity() IS this city, so the one call marks the plot package
 				// (CvPlot::isFreshWater reads getPlotCity()->hasFreshWater(), so the tile's own verdict moves
-				// too), this city's package and receiver sums, and its (area x owner) slot. No adjacency fan --
+				// too), and this city's package and receiver sums. No adjacency fan --
 				// a neighbour's fresh-water leg reads isWater plus fresh-water TERRAIN, never a city's counter.
 				const CvCity* pCity = mc_city(pPlayer, kEvent.iSrcLoc);
 				if (pCity != NULL)
@@ -777,7 +744,7 @@ namespace
 					// NO_PLAYER), and setOwner is its ONE mutation. The plot leg is suppressed -- the blanket
 					// above already marked this package WHOLE, and a mark is the rebuild -- so what this adds is
 					// the legs the blanket cannot reach: the package of a CITY sitting here (its fold binds this
-					// same plot as its centre) and that city's (area x owner) slot.
+					// same plot as its centre).
 					mc_applyPlotPredicate(CASC_PRED_IS_OWNED, pPlot, true, szSource);
 				}
 				break;
@@ -840,11 +807,6 @@ namespace
 				{
 					continue;
 				}
-				int iAreaLoop = 0;
-				for (const CvArea* pArea = GC.getMap().firstArea(&iAreaLoop); pArea != NULL; pArea = GC.getMap().nextArea(&iAreaLoop))
-				{
-					pArea->getCascadeSlot((PlayerTypes)iPlayer).package.rebuildMarked();
-				}
 				for (CvPlayer::city_iterator cityIterator = player.beginCities(); cityIterator != player.endCities(); ++cityIterator)
 				{
 					(*cityIterator)->getCascadePackage().rebuildMarked();
@@ -874,7 +836,7 @@ namespace
 				CascadeChannelRegistry::scopeAllReceiversMask(CASC_SCOPE_EMPIRE), szSource);
 		}
 
-		// An empire changed composition wholesale (conquest): its empire package + sums + areas re-derive.
+		// An empire changed composition wholesale (conquest): its empire package + sums re-derive.
 		// Whole-scope blankets KEPT: the event is a scope-object COMPOSITION move, not deposit-addressed --
 		// the empire's live source multiplicities (owned-building counts, presence sets, per-city scalers)
 		// shift at once, and no union of per-source routes can address the DEPARTED side's folded deposits.
@@ -889,11 +851,6 @@ namespace
 				| CascadeChannelRegistry::scopeAllReceiversMask(CASC_SCOPE_EMPIRE));
 			mc_invalidate(CASC_SCOPE_EMPIRE, (int)pPlayer->getID(), (int)pPlayer->getID(),
 				CascadeChannelRegistry::scopeAllChannelsMask(CASC_SCOPE_EMPIRE), szSource);
-			for (CvPlayer::city_iterator cityIterator = pPlayer->beginCities(); cityIterator != pPlayer->endCities(); ++cityIterator)
-			{
-				mc_markAreaSlot((*cityIterator)->area(), pPlayer->getID(),
-					CascadeChannelRegistry::scopeAllChannelsMask(CASC_SCOPE_AREA), szSource);
-			}
 		}
 	};
 

@@ -81,42 +81,77 @@ Authority: [state-repositories.md](../../architecture/state-repositories.md), [m
 | Machine | Home | State |
 |---|---|---|
 | Event spine + KIND firewall + `IEventConsumer` | `Sources/Spine/` | BUILT |
-| DOMAIN emit surface + the in-read load reseed + the load bracket | `Sources/Spine/` + the engine read paths | ENDPOINTS BUILT — CALL SITES SEVERED by the revert (2 rewired; the bracket unemitted at BOTH ends): [info-rebuild.md](info-rebuild.md) audit ledger |
+| DOMAIN emit surface + the in-read load reseed + the load bracket | `Sources/Spine/` + the engine read paths | BUILT — **127 emit call sites**, the bracket emitted at BOTH ends, the in-read reseed live ([event-spine.md](../../specs/event-spine.md)). The remaining Tier-2 facts + the three routes that could not be derived are the [info-rebuild.md](info-rebuild.md) audit ledger |
 | Enabler (8 domains, kernel, own consumer, operating-buildings) | `Sources/Enabler/` | BUILT — **hostless**, see below |
 | Condition evaluator (`cascadeEvalCondition`, eval ctx, predicates) | `Sources/Conditions/` | BUILT |
 | Deposit index + deposit-read calcs (`MMKernel`/`PercentStack`/…) | `Sources/Data/` | BUILT |
 | readJson + the two-pass loader + the full-registry re-map | `Sources/Data/` | BUILT |
 | Info pocos + repos (all 23 replaced types + the 11 uniformity types) | `Sources/Infos/`, `Sources/Repos/` | BUILT |
 | Tally (read-only accessor over object-owned counts) | `Sources/Tally/` | BUILT |
-| Grants engine | `Sources/Grants/` | Resolver + APPLIERS built (tech first-discover, building first-build, per-turn, spawn, full-heal), consuming the restored DOMAIN emits and suppressed inside the load bracket so a reseed never re-grants; remaining increments: [grants-machine.md](grants-machine.md) |
+| Grants engine | `Sources/Grants/` | Resolver + APPLIERS built (tech first-discover, building first-build, per-turn, spawn, full-heal), consuming the DOMAIN emits and suppressed inside the load bracket so a reseed never re-grants; remaining increments: [grants-machine.md](grants-machine.md) |
 | Property feed + channel | `Sources/Property/` | BUILT (engine math is KEEP-legacy) |
 | Save soft-remove drain (`savemigration.txt` + `sm_isCut`) | `Sources/Infrastructure/` | BUILT |
 | Derived-cache component (`CvDerivedCache`/`Set`/`Vec`) | `Sources/Infrastructure/` | BUILT |
-| HTTP transport (sockets, mailbox, `/events` SSE, `/` liveness) | `Sources/Tools/` | BUILT — **routes purged** |
+| HTTP transport (sockets, mailbox, `/events` SSE, `/` liveness) | `Sources/Tools/` | BUILT. The route surface is the **six stored-vs-oracle cache documents** and nothing else ([http-endpoints.md](../../specs/http-endpoints.md)) |
+| Modifier substrate — the uniform channel-indexed package, the gather, the modifier's own consumer | `Sources/Cascade/` | BUILT — `m_cascadePackage` on city / player / plot / team, bound in each owner's `reset()`. There is no AREA package: a landmass is not an ownable scope ([state-repositories.md](../../architecture/state-repositories.md)) |
 
 ## What does NOT exist (the deliberate gap)
 
-- **The modifier substrate.** Archived. There is no package storage, no accumulator, no modifier spine consumer.
 - **The ENABLER's graft onto the game objects.** `CvCity` carries no `m_operatingBuildings` and `CvTeam` no
   `m_cascadeTeamCaps`, so `CvCapabilities` / `CvEnablerKernel` reference members that do not exist. **The enabler is
-  complete and hostless** — it is waiting on the access surface, not on enabler work.
-  ⚠ The MODIFIER half of the graft **has since landed**: `CvCity` / `CvPlayer` / `CvPlot` / `CvTeam` each carry
-  `m_cascadePackage` and `CvArea` carries `m_cascadeSlots[MAX_PLAYERS]`, bound in each owner's `reset()`, alongside
-  the three contexts. Only the enabler-side members are still missing.
-- **The endpoint route table.** Purged wholesale; the transport survives.
-- **The read surface itself** — see below. This is the open item.
+  complete and hostless.** It is the one machine still waiting on its host — the MODIFIER half of the same graft has
+  landed (the packages above, bound in each owner's `reset()`, alongside the three contexts).
+- **The endpoint route table** beyond the six stored-vs-oracle documents — and it stays empty until the access
+  surface can be read through, never restored to reach around it ([http-endpoints.md](../../specs/http-endpoints.md)).
+- **The Python data-fetching library** that replaces the `Cy*` info surface — built as ONE surface, with the old
+  one disconnected in the same pass ([DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed)).
+
+## ⛔ LEGACY STILL BREATHING — the KILL LIST (this is a DEMOLITION ORDER, not an inventory)
+
+**Every row below is legacy that is STILL ALIVE IN THE TREE RIGHT NOW. None of it is a gap, a stage, a
+transitional shape, or a thing to keep working while the replacement matures — it is a DEFECT, and the only
+correct action on it is DELETION** ([DEC-no-legacy-masking](../../architecture/decisions.md#dec-no-legacy-masking),
+[DEC-no-deferred](../../architecture/decisions.md#dec-no-deferred),
+[DEC-proper-once](../../architecture/decisions.md#dec-proper-once)).
+
+⛔ **Purge it VIOLENTLY.** A legacy path left alive MASKS the hole its replacement has not yet filled, so keeping
+it "until the new thing is ready" is the exact move that produces a half-migrated branch which reads as nearly
+done. What is missing or wrong must be IMMEDIATELY VISIBLE, which means legacy has to FAIL LOUD rather than quietly
+answer. **Blast radius is the SIGNAL the cut reached, never a reason to soften it**
+([DEC-accumulator-cut-uniform](../../architecture/decisions.md#dec-accumulator-cut-uniform)) — and the tree is
+deliberately red, so there is nothing to protect
+([DEC-playability-not-a-gate](../../architecture/decisions.md#dec-playability-not-a-gate)).
+
+| still alive | where | the order |
+|---|---|---|
+| the hand-named **channel-shaped getter set** (622 decls / 586 names measured) | `CvCity.h` · `CvPlayer.h` | DELETE. The 41 new group reads stand beside them TODAY — two live surfaces, the state [DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface) forbids. Move every consumer, delete the old names |
+| the **`Cy*` info binding surface** (61 files) | `Sources/Python/` | CUT AWAY once the new library lands — not widened, not shimmed beside, not left breathing |
+| `CvCity`'s **hand-rolled dirty caches** (`m_aiCommerceRate`, `m_aiCommerceRateModifier`, …) | `CvCity.h` | DEMOLITION FODDER, never conversion targets ([state-repositories.md](../../architecture/state-repositories.md)) — cut when the channel that replaces them lands |
+| the direct **`gDLL->logMsg` / BetterBTSAI log-helper** call sites + the four log-level globals they gate | `Sources/AI/`, engine files | RETIRE WHOLESALE as each domain migrates onto the spine ([observability.md](../../reference/observability.md)) — never tidied in place |
+
+⚠ **The list is KNOWN-INCOMPLETE and is not a completeness gate.** Legacy found anywhere else is killed on the
+same terms; add it here when you find it. ⛔ What is NOT allowed is discovering a legacy surface and recording it
+as acceptable, scheduled, or "kept until X" — that reframing is the failure this section exists to prevent.
 
 ## ⛔ THE OPEN ITEM — the ACCESS surface
 
 > *"What we ultimately want is settled in the spec. What is not done is defining what and how things are
 > accessed."* (owner)
 
-Everything above is settled. What is NOT defined is the boundary every consumer meets:
+Everything above is settled. The GRAMMAR is now settled too — [patterns.md § THE TWO READ ROLES](../../architecture/patterns.md)
+— and the GAME-OBJECT half is BUILT: **41 group reads** across plot / city / player / team / area, folding through
+the one cross-scope roll-up (`InfoValuation::realizedAt*`), plus the endpoint oracle.
 
-- **What the uniform getter set looks like** — the parameterized read that replaces the hand-named channel-shaped
-  getters on `CvCity.h` + `CvPlayer.h`: **622 declarations / 586 distinct names, measured** (wellbeing alone is 23%;
-  235 name a SOURCE and 255 carry a target-id argument — two axes the package does not have). Its shape decides what the packages must store, so it is upstream of
-  re-grafting anything. Two owner rulings fix its direction:
+⛔ **What is NOT done is the DISCONNECT — the legacy getter set is STILL STANDING beside it (the KILL LIST above),
+and killing it is the next action, not a later phase.** ⚠ An agent reading only that the group reads exist would
+conclude the access surface is done and build on a half-migration.
+
+The rest of the boundary every consumer meets:
+
+- **The DELETION of the legacy getter set** — **622 declarations / 586 distinct names, measured** (wellbeing alone
+  is 23%; 235 name a SOURCE and 255 carry a target-id argument — two axes the package does not have). They are a
+  DELETION LIST plus a COVERAGE CHECKLIST, never a per-getter migration worklist. Two owner rulings fix the
+  direction of what replaces them:
   - **⛔ NOT the existing getters — ONE NEW COHERENT SURFACE, STANDARDIZED ACROSS THE INFOS (owner).** The design
     task is **not** "find a replacement for each of the 622": no legacy getter name, signature, or shape survives
     into it. The 622 are a **DELETION LIST plus a COVERAGE CHECKLIST** — the set of values that must be answerable
@@ -257,6 +292,39 @@ Unchanged in principle, but note the surface it depends on is currently purged:
 ## Scope decisions
 
 1. **Backlog scope = the #430 critical path only.** The `docs/plans/parked/` forward-FEATURE backlog is OUT.
+1b. **⚖ WORLDBUILDER IS NOT A CONSTRAINT ON THIS REWORK (owner)** — *"WorldBuilder is something that will need a
+   real review and pass, post rework; if we temporarily kind of break it, I can live with it."* So a WB path is
+   never a reason to preserve a shape, keep a legacy call alive, or narrow a cut — it gets its own deliberate
+   review pass afterwards. ⛔ This does NOT license breaking it carelessly or leaving it undocumented: when a
+   change knowingly breaks a WB path, SAY SO in the change so the later pass has a worklist.
+   **⚑ WHY it needs its OWN pass rather than riding along (owner): *"WorldBuilder can add or remove anything, at
+   will."*** That is a categorically different relationship to the model than any other consumer. Every other
+   surface reaches state through a genuine acquisition — a building is CONSTRUCTED, a unit is TRAINED, a tech is
+   RESEARCHED — and the whole event spine is built on that: one fact, emitted at the genuine mutation choke
+   point. WB instead mutates arbitrary state directly and at will, so it can violate every invariant the model
+   rests on: it can make an entity appear with no acquisition, vanish with no death, or change owner with no
+   conquest. A WB edit that changes state silently leaves every cache, context and enabler set wrong, exactly as
+   a missing emit does — WB is simply the surface that can produce that condition deliberately, on any field, in
+   one click.
+   **⛔ THE REQUIREMENT, therefore: WORLDBUILDER ADDING OR REMOVING ANYTHING EMITS, exactly as the normal path
+   does — with **no WB special case anywhere**.** ⛔ Do not build a "WorldBuilder mode" that suppresses or
+   reroutes facts: a second, quieter mutation path is precisely the hole this model exists to close.
+   - **ADDING is "grants on demand" (owner)** — the grants machine hands an entity over on a genuine
+     acquisition; WB hands the same entity over on a click. From the model's side they are the SAME event, so a
+     WB addition is a genuine acquisition: same DOMAIN fact, every consumer reacting identically.
+   - ⚠ **REMOVING is the mirror concept — *"grants that remove", kind of thing (owner) — and we do not have any.***
+     That names it exactly: WB removal is an inverse grant, and the machine has no such notion, so the remove
+     side cannot lean on an existing precedent the way the add side can. ⛔ The answer is NOT to build
+     grant-removal machinery for WB's sake — it is that the removal **FACT** must exist and be emitted, the same
+     fact a genuine in-play removal would announce. Its facts are THINNEST
+     exactly where WB is most arbitrary, because normal gameplay rarely removes: a tech is monotonic in play but
+     WB can un-research one; the same holds for anything else acquired-and-kept. So the pass must expect to FIND
+     MISSING removal facts rather than merely route existing ones — and per [event-spine.md](../../specs/event-spine.md)
+     (*"add all the events, ever"*), the answer to a missing one is to add it.
+   So the WB pass is not "check WB still works" — it is: **does every arbitrary WB mutation, in BOTH directions,
+   go through a genuine emitting choke point?** (It reaches deep: it is among the Python unit-kill sites,
+   and it drove paths the docs wrongly credited elsewhere — the retired modifier-recalc was claimed to have a
+   WorldBuilder invoker and did not.)
 2. **Python = boundary redesign + fix values.** Do NOT pull Python-authoritative gameplay into the DLL.
 3. **⛔ ART IS OUT OF SCOPE — leave it alone (owner).** The art defines (`CIV4ArtDefines_*`), their `ART_`/
    `EFFECT_` tag ids, and the asset files are UNTOUCHED by this rework: JSON carries only the tag id, the

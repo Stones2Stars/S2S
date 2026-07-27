@@ -25,7 +25,7 @@ rolls down to each of the player's cities; a city-scope deposit lands locally; a
 each matching worked plot (§5). The target reads a combined value — it never re-walks the sources.
 
 > **⚖ STORAGE SEMANTICS — the SCOPE PRINCIPLE.** Deposits accumulate in a package **AT THEIR OWN SCOPE** — one uniform package
-> format (Σflat / Σpercent per channel, §2) cached on each scope object (world / team / empire / area /
+> format (Σflat / Σpercent per channel, §2) cached on each scope object (world / team / empire /
 > city / plot), each package event-invalidated at its own scope only. The downward "roll" is realized **AT
 > READ TIME**: the realized value is the trivial sum of the ~5 scope packages, with per-city gates
 > (state-religion-in-city, coastal, connected, area membership) applied live at the combine. **A lower
@@ -38,7 +38,7 @@ each matching worked plot (§5). The target reads a combined value — it never 
 > incidental, it IS the model:
 > - **YIELDS come from exactly three sources — PLOT, SPECIALISTS, and BUILDINGS (city).** Nothing else produces a
 >   yield, so the flat/yield side exists at **plot** and **city** only.
-> - **MODIFIERS come from everything BUT plot** — city, area, empire, team, world. The percent side exists at
+> - **MODIFIERS come from everything BUT plot** — city, empire, team, world. The percent side exists at
 >   every scope except plot.
 >
 > Plot and the upper scopes are mirror images (yield-only vs percent-only); **CITY is the one scope carrying
@@ -216,7 +216,7 @@ The EXTRA is held ×100; the `100 × ⌊EXTRA100⁄100⌋` **truncates it to who
 `modifier` is **a single additive sum** — every active source's `{channel}.<scope>.percent`, added together, then
 `max(0,·)`:
 
-- **active buildings** (this city, non-dormant): `city.percent` + `area.percent`
+- **active buildings** (this city, non-dormant): `city.percent`
 - **empire buildings** (every building the player owns anywhere — rolls DOWN to each city): `empire.percent`
 - **adopted civics**: `empire.percent`
 - **the player's active traits** (the option-selected set, pure-filtered §4): `empire.percent`
@@ -249,7 +249,7 @@ term, so a divergence localises to a single source.
 **The TARGET/INPUT split (the tradeYield precedent, [validation](validation.md) input rules):**
 
 - **DEPOSIT-COMPUTED (the cascade's targets)** — everything a live source's `health`/`happiness` family deposits
-  produce: **buildings** (city `flat`/`perPopulation` + the area/empire-scope rollups + conditioned entries incl.
+  produce: **buildings** (city `flat`/`perPopulation` + the empire-scope rollups + conditioned entries incl.
   `HAS_STATE_RELIGION`-gated and the reverse-landed source-keyed boosts — a wonder/civic/tech `buildings.{B}`
   wellbeing deposit is authored deliverer-side (§4) but the readJson reverse pass lands it on the TARGET building
   as a CITY-scope conditioned entry gated on the source's presence at the authored scope, so it reads

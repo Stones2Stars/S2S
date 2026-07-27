@@ -16,11 +16,9 @@
 #include "Enabler/CvEnablerKernel.h"      // wireOperatingBuildings -- the FED-IN active/dormant verdict
 #include "Engine/CvPlayer.h"              // isHuman -- the audience resolution
 #include "CvCascadeChannelRegistry.h"     // the roll-up's channel identity + the per-scope/receiver layout
-#include "CvCascadeAreaSlot.h"            // the (area x player) slot the AREA-scope roll-up reads
 #include "Engine/CvCity.h"                // the roll-up's city package + its area/owner axes
 #include "Engine/CvPlot.h"                // the roll-up's plot package
 #include "Engine/CvTeam.h"                // the roll-up's team package
-#include "Engine/CvArea.h"                // getCascadeSlot -- the (area x player) package owner
 #include "AI/CvPlayerAI.h"                // GET_PLAYER -- the city's owning empire
 #include "AI/CvTeamAI.h"                  // GET_TEAM -- the empire's team
 #include "Engine/CvGame.h"                // isOption -- the resolvedCityLimit gate
@@ -32,13 +30,13 @@ namespace
 {
 	//
 	//	The scope FOLD SET of the experienced-here answer (modifier.md §1 scope principle: the realized value is
-	//	the trivial sum of the scope packages a city sits under -- world/team/empire/area/city). Plot-scope and
+	//	the trivial sum of the scope packages a city sits under -- world/team/empire/city). Plot-scope and
 	//	the sub-city scopes are NOT city-experienced sums (plot output is the isolated per-plot base package;
 	//	unit-scope is a self-accumulator); the plots-TARGET group has its own endpoint.
 	//
 	const CvCascScope VAL_FOLD_SCOPES[] =
 	{
-		CASC_SCOPE_WORLD, CASC_SCOPE_TEAM, CASC_SCOPE_EMPIRE, CASC_SCOPE_AREA, CASC_SCOPE_CITY
+		CASC_SCOPE_WORLD, CASC_SCOPE_TEAM, CASC_SCOPE_EMPIRE, CASC_SCOPE_CITY
 	};
 	const int NUM_VAL_FOLD_SCOPES = (int)(sizeof(VAL_FOLD_SCOPES) / sizeof(VAL_FOLD_SCOPES[0]));
 
@@ -402,8 +400,8 @@ void InfoValuation::rolledLegsAtCity(const CvCity& city, int iChannel, long& fla
 	{
 		return;
 	}
-	// The UPPER legs exist only while the city has an owner: an ownerless city has no empire, team or
-	// (area × player) slot to sit under, so its chain is its own package alone rather than an invalid index.
+	// The UPPER legs exist only while the city has an owner: an ownerless city has no empire or team to sit
+	// under, so its chain is its own package alone rather than an invalid index.
 	const PlayerTypes eOwner = city.getOwner();
 	if (eOwner != NO_PLAYER)
 	{
@@ -413,16 +411,6 @@ void InfoValuation::rolledLegsAtCity(const CvCity& city, int iChannel, long& fla
 		percentSum += team.getCascadePackage().readPercent(iChannel);
 		flatSum += owner.getCascadePackage().readFlat(iChannel);
 		percentSum += owner.getCascadePackage().readPercent(iChannel);
-		// The AREA leg is the (area × player) slot for THIS city's area -- an O(1) fetch and a filter, never a
-		// walk of the area's plots or cities. The area OBJECT is needed (its slot table lives there), which is
-		// why this takes the memoized area pointer rather than the stored area id.
-		const CvArea* pArea = city.area();
-		if (pArea != NULL)
-		{
-			const CvCascadeAreaSlot& areaSlot = pArea->getCascadeSlot(eOwner);
-			flatSum += areaSlot.package.readFlat(iChannel);
-			percentSum += areaSlot.package.readPercent(iChannel);
-		}
 	}
 	flatSum += city.getCascadePackage().readFlat(iChannel);
 	percentSum += city.getCascadePackage().readPercent(iChannel);
@@ -489,20 +477,6 @@ int InfoValuation::realizedAtTeam(const CvTeam& team, int iChannel)
 	const long iFlatSum = team.getCascadePackage().readFlat(iChannel);
 	const long iPercentSum = team.getCascadePackage().readPercent(iChannel);
 	return (int)realizedChannel(iFlatSum, iPercentSum, val_channelCanonicalUnit(iChannel, CASC_SCOPE_TEAM));
-}
-
-int InfoValuation::realizedAtArea(const CvArea& area, PlayerTypes ePlayer, int iChannel)
-{
-	if (iChannel < 0 || ePlayer == NO_PLAYER)
-	{
-		return 0;
-	}
-	// The (area × player) slot's own chain is itself alone: the empire and team legs are folded by the CITY that
-	// reads this slot, so folding them here too would double-count them for that city.
-	const CvCascadeAreaSlot& areaSlot = area.getCascadeSlot(ePlayer);
-	const long iFlatSum = areaSlot.package.readFlat(iChannel);
-	const long iPercentSum = areaSlot.package.readPercent(iChannel);
-	return (int)realizedChannel(iFlatSum, iPercentSum, val_channelCanonicalUnit(iChannel, CASC_SCOPE_AREA));
 }
 
 void InfoValuation::expectedFlatYields(const CvModifiers* modifiers,

@@ -24,12 +24,12 @@
   "empire": 1
  },
  "happiness": {
-  "area": {
+  "empire": {
    "flat": 1
   }
  },
  "health": {
-  "area": {
+  "empire": {
    "flat": 1
   }
  },

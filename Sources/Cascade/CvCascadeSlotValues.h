@@ -17,7 +17,6 @@
 //	THE IDENTITY is TWO ints INTERPRETED PER SCOPE, exactly as the spine's DOMAIN ints are interpreted per
 //	event (the scope owners share no common id accessor, so identity is passed IN at bind):
 //	   city   -> (owner player, city id)      empire -> (player id, -1)        team -> (-1, team id)
-//	   area   -> (slot player, area id)       plot   -> (x, y)
 //	A divergence naming only its scope and channel says a missed emit exists somewhere among every city on the
 //	map without naming which one, which is not actionable.
 //
@@ -28,8 +27,8 @@
 struct CvCascadeSlotValues
 {
 	CvCascScope scope;
-	int identityFirst;                 // per scope: city owner | player id | -1 | area's player | plot x
-	int identitySecond;                // per scope: city id | -1 | team id | area id | plot y
+	int identityFirst;                 // per scope: city owner | player id | -1 | plot x
+	int identitySecond;                // per scope: city id | -1 | team id | plot y
 	std::vector<int> flat;             // dictionary 1, by the scope's LOCAL slot index: the x100 flat sums
 	std::vector<int> percent;          // dictionary 2, same indexing: the x100 percent sums
 	std::vector<int> sum;              // the receiver slots: the realized x100 totals this scope consumes

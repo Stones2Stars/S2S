@@ -232,10 +232,16 @@ CAPSTONE — LOAD is the only full build).
 
 ## Scope set — plot / city / player now; units FUTURE (role-specific); no AreaContext (owner)
 
-Contexts exist today on **plot, city, and player**. There is deliberately **no `AreaContext`**: an area is not
-specific to any player — it is a bare **id**, "a really big plot" to reference. An area-scoped effect (**power** is
-virtually the only driver of area-scope modifiers) maps onto the **player**, never an area context. Team is likewise
-not a context.
+Contexts exist today on **plot, city, and player**. There is deliberately **no `AreaContext`**, and the reason
+generalizes: **an area is not a scope at all.** A scope must be unambiguously OWNABLE — universal (world) or
+owned by exactly one player up the chain — and a landmass is shared by several empires at once, so anything on it
+is a per-(landmass × player) cross-product rather than a scope
+([state-repositories.md](state-repositories.md)). An area is therefore a bare **id**, "a really big plot" to
+reference, and an area-shaped effect authors at **empire**. Team is likewise not a context.
+
+⚑ **What the contexts DO carry is the area FACT** — the city's area id, its tile count and the coastal
+water-body size, forwarded by `CityContext` for the `AREA_SIZE` token and the adjacency reads. *"We rather use
+the area id"* (owner): the id is a fact a city reads, never a place state lives.
 
 **Units are a deliberate FUTURE scope, held off on purpose (owner).** A unit context must be **ROLE-SPECIFIC**: the
 goal is that a unit no longer carries ALL the data (the ~247-field fat-unit problem) — each unit holds only the state

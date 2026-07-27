@@ -119,18 +119,18 @@ namespace
 		INFO_SCOPE_BIT(CASC_SCOPE_UNIT),                                                                          // firstStrike
 		INFO_SCOPE_BIT(CASC_SCOPE_CITY) | INFO_SCOPE_BIT(CASC_SCOPE_EMPIRE) | INFO_SCOPE_BIT(CASC_SCOPE_PLOT),    // food
 		INFO_SCOPE_BIT(CASC_SCOPE_CITY),                                                                          // foodKept
-		INFO_SCOPE_BIT(CASC_SCOPE_CITY) | INFO_SCOPE_BIT(CASC_SCOPE_EMPIRE) | INFO_SCOPE_BIT(CASC_SCOPE_AREA)
+		INFO_SCOPE_BIT(CASC_SCOPE_CITY) | INFO_SCOPE_BIT(CASC_SCOPE_EMPIRE)
 			| INFO_SCOPE_BIT(CASC_SCOPE_TEAM),                                                                    // freeSpecialists
 		INFO_SCOPE_BIT(CASC_SCOPE_CITY) | INFO_SCOPE_BIT(CASC_SCOPE_EMPIRE),                                      // gold
 		INFO_SCOPE_BIT(CASC_SCOPE_EMPIRE),                                                                        // goldenAge
 		INFO_SCOPE_BIT(CASC_SCOPE_EMPIRE) | INFO_SCOPE_BIT(CASC_SCOPE_CITY),                                      // greatGeneralRate
 		INFO_SCOPE_BIT(CASC_SCOPE_CITY) | INFO_SCOPE_BIT(CASC_SCOPE_EMPIRE) | INFO_SCOPE_BIT(CASC_SCOPE_WORLD),   // greatPeopleRate
 		INFO_SCOPE_BIT(CASC_SCOPE_EMPIRE) | INFO_SCOPE_BIT(CASC_SCOPE_WORLD),                                     // growth
-		INFO_SCOPE_BIT(CASC_SCOPE_CITY) | INFO_SCOPE_BIT(CASC_SCOPE_EMPIRE) | INFO_SCOPE_BIT(CASC_SCOPE_AREA)
+		INFO_SCOPE_BIT(CASC_SCOPE_CITY) | INFO_SCOPE_BIT(CASC_SCOPE_EMPIRE)
 			| INFO_SCOPE_BIT(CASC_SCOPE_WORLD),                                                                   // happiness
 		INFO_SCOPE_BIT(CASC_SCOPE_UNIT) | INFO_SCOPE_BIT(CASC_SCOPE_CITY),                                        // heal
 		INFO_SCOPE_BIT(CASC_SCOPE_CITY) | INFO_SCOPE_BIT(CASC_SCOPE_EMPIRE) | INFO_SCOPE_BIT(CASC_SCOPE_PLOT)
-			| INFO_SCOPE_BIT(CASC_SCOPE_AREA) | INFO_SCOPE_BIT(CASC_SCOPE_WORLD),                                 // health
+			| INFO_SCOPE_BIT(CASC_SCOPE_WORLD),                                                                   // health
 		INFO_SCOPE_BIT(CASC_SCOPE_EMPIRE),                                                                        // hurry
 		INFO_SCOPE_BIT(CASC_SCOPE_CITY),                                                                          // hurryAnger
 		INFO_SCOPE_BIT(CASC_SCOPE_EMPIRE),                                                                        // improvementUpgradeRate

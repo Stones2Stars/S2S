@@ -5,7 +5,6 @@
 
 //#include "CvEnums.h"
 
-#include "CvCascadeAreaSlot.h"   // the (area x player) cascade package slot (state-repositories.md)
 
 class CvCity;
 class CvPlot;
@@ -53,21 +52,8 @@ public:
 	int getID() const;
 	void setID(int iID);
 
-	// The (area x player) modifier-cascade package slot -- the AREA scope's value cache
-	// (state-repositories.md per-scope package model; the uniform CvCascadePackage on every scoped item).
-	const CvCascadeAreaSlot& getCascadeSlot(PlayerTypes ePlayer) const { return m_cascadeSlots[ePlayer]; }
-
-	// THE AREA SLOT'S GROUP READ SURFACE -- the GAME-OBJECT read role's answer to "what do I HAVE, right now?"
-	// (patterns.md § THE TWO READ ROLES), one getter per modifier FAMILY the AREA scope carries channels of.
-	// The census authors happiness and health there (plus the count-by-type freeSpecialists leaf, which is not a
-	// channel group), so WELLBEING is the whole of it.
-	// ePlayer is the (area × player) slot's IDENTITY axis, NOT a scope argument: an area "knows no borders", so
-	// an area-scope deposit realizes per player and each city reads the slot for its own area id
-	// (state-repositories.md). The group's enum indexes the RESULT; the call carries no channel argument.
-	// ×100 NATIVE. The roll-up's area entry is this slot alone -- the empire and team legs are folded by the
-	// CITY that reads this slot, so folding them here too would double-count them for that city.
-	void getWellbeing(PlayerTypes ePlayer, int (&wellbeing)[NUM_WELLBEING_CHANNELS]) const;
-
+	// An AREA carries NO cascade package and is NOT a scope: a scope must be unambiguously OWNABLE, and a
+	// landmass is shared by several empires at once (CvCondition.h). Area-shaped effects author at EMPIRE.
 	int getNumTiles() const;
 	void changeNumTiles(int iChange);
 
@@ -225,10 +211,6 @@ protected:
 	int** m_aaiNumTrainAIUnits;
 	int** m_aaiNumAIUnits;
 	int** m_aaiEffNumAIUnitsTimes100; // transient (#395)
-
-	// the AREA-scope cascade packages, one slot per player (area effects realize per (area x player));
-	// recompute-only, never serialized -- all-dirty from bind (reset), first read recomputes
-	CvCascadeAreaSlot m_cascadeSlots[MAX_PLAYERS];
 
 	mutable TeamTypes m_eCachedTeamPlotTypeCounts;
 	mutable int m_iCachedTurnPlotTypeCounts;

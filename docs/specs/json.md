@@ -86,7 +86,7 @@ modifier targets — **not separate shapes.** Learn them once.
 ### 3.2 Scopes — the containment spine (always SINGULAR)
 
 ```
-world › team › empire › area › city › plot{improvement|feature|terrain|route} › building | specialist | unit
+world › team › empire › city › plot{improvement|feature|terrain|route} › building | specialist | unit
 ```
 
 A **scope** says *where* something applies or *where* a count is taken. `empire` = the player (all their
@@ -513,6 +513,21 @@ declare the number. Enforcement reads the [tally](tally.md) count.
 >   with the §8 outcome plane (the outcome verb `triggers` renames to **`fires`** to clear this section's name).
 > - The OUTCOME plane already conforms — a mission's roll (`chance` + the per-promotion `odds` table) is the
 >   trigger, its verbs the action; nothing re-homes there.
+>
+> ⚖ **DIRECTION (owner, not yet specced): coin **`removes`** as the first-class MIRROR OF `grants`** — *"we can
+> coin 'removes'; it's needed for triggers."* Today the take-away side exists only as scattered partial verbs
+> (the `destroy` action verb here, `consumes` on the §8 outcome plane) while the give side has a whole named
+> vocabulary; a trigger that takes something away has no counterpart to `grants` to reach for.
+> ⛔ **It belongs on the PAYLOAD plane, NOT the enabler's — "it's different than the enabler loop" (owner), and
+> that distinction is the thing to get right.** The enabler's `disables` / `obsoletes` / `replaces` are
+> **availability RULES**: standing edges, evaluated continuously, governing whether a thing may be in the tree or
+> keep running ([enabler.md §2](enabler.md)) — repeal the law and the building comes back. `removes` is a
+> **one-shot PAYLOAD**: this action, now, takes this away, with no ongoing rule and nothing to re-evaluate —
+> exactly the way `grants` is a payload rather than an availability edge. Building it as an enabler edge would
+> make a momentary effect into a permanent rule.
+> ⚠ If it lands it is a data-model change: the curator + regen ride in the SAME work item
+> ([DEC-recurate-on-decision](../architecture/decisions.md#dec-recurate-on-decision)), and the scattered
+> `destroy`/`consumes` verbs are the migration input.
 
 > **`grants` is ONLY genuine provisions handed out on the considered action.** What does NOT belong here (and where it lives
 > instead): unit `buildings` (MISSION_CONSTRUCT) → the **`constructs`** outcome verb under `outcomes.actions[]` (§8,
@@ -931,7 +946,7 @@ marble; +10 culture, doubling after it has stood 1000 turns.*
 `replaces` · `disables` · `requires` · `allowed` · `grants` · `triggers` · `skills` · `tags` · `state` · `attributes` ·
 `capabilities` · `shrine` · `headquarters` · *(modifier families)* · *(auxiliary/bespoke, §9)*
 
-**Scope (singular)** — `world › team › empire › area › city › plot{improvement|feature|terrain|route} › building|specialist|unit` · off-spine `self` = the entity's own build
+**Scope (singular)** — `world › team › empire › city › plot{improvement|feature|terrain|route} › building|specialist|unit` · off-spine `self` = the entity's own build
 **Target (plural)** — `plots · units · cities · areas · empires` = all of that kind in the scope, predicate-filtered
 **Combinators** — `all` (AND `&&`) · `any` (OR `||`) · `noneOf` (NONE), each over its direct children (leaf or nested node); a recursive boolean tree, nestable to any depth
 **Atom** — `{ type, scope, min?, max?, connection? }` · presence = `min:1`

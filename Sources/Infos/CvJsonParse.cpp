@@ -173,7 +173,7 @@ void jsonReadKeyedBoolIdList(const picojson::object& parent, const char* key, st
 CvCascScope jsonParseScope(const std::string& s, CvCascScope defaultScope)
 {
 	if (s == "world") return CASC_SCOPE_WORLD;   if (s == "team") return CASC_SCOPE_TEAM;
-	if (s == "empire") return CASC_SCOPE_EMPIRE; if (s == "area") return CASC_SCOPE_AREA;
+	if (s == "empire") return CASC_SCOPE_EMPIRE;
 	if (s == "city") return CASC_SCOPE_CITY;     if (s == "plot") return CASC_SCOPE_PLOT;
 	if (s == "improvement") return CASC_SCOPE_IMPROVEMENT; if (s == "feature") return CASC_SCOPE_FEATURE;
 	if (s == "terrain") return CASC_SCOPE_TERRAIN; if (s == "route") return CASC_SCOPE_ROUTE;

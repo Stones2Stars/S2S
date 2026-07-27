@@ -28,7 +28,7 @@
 //
 //	⛔ AN ORACLE RUN IS A FULL RECALC AND READS NOTHING OFF THE STORED SURFACE (owner). Every input, including
 //	every CROSS-SCOPE one, is recomputed from source: a city's realized total re-gathers each worked plot, the
-//	empire, the team and the (area x player) slot into fresh documents first. An oracle that consumed a stored
+//	empire and the team into fresh documents first. An oracle that consumed a stored
 //	value would be partly built on the very state it exists to check -- a wrong input silently INHERITED, both
 //	sides quietly sharing a derivation, which is exactly the flaw that killed the old comparison-twin surface.
 //	INDEPENDENCE IS THE ENTIRE VALUE OF THE ORACLE and nothing is traded for it: attribution is the external
@@ -52,7 +52,6 @@ class CvPlot;
 class CvCity;
 class CvPlayer;
 class CvTeam;
-class CvArea;
 
 struct CvCascadeEvalCtx;
 
@@ -65,7 +64,6 @@ public:
 	static void refreshCity(const CvCity& city, int64_t iMask);
 	static void refreshEmpire(const CvPlayer& player, int64_t iMask);
 	static void refreshTeam(const CvTeam& team, int64_t iMask);
-	static void refreshArea(const CvArea& area, PlayerTypes ePlayer, int64_t iMask);
 
 	// THE ORACLE -- every slot of one scoped object, recomputed FROM SOURCE into the caller's document. The
 	// stored package is neither read as an output nor written.
@@ -73,7 +71,6 @@ public:
 	static void gatherCityInto(const CvCity& city, CvCascadeSlotValues& kValues);
 	static void gatherEmpireInto(const CvPlayer& player, CvCascadeSlotValues& kValues);
 	static void gatherTeamInto(const CvTeam& team, CvCascadeSlotValues& kValues);
-	static void gatherAreaInto(const CvArea& area, PlayerTypes ePlayer, CvCascadeSlotValues& kValues);
 
 };
 

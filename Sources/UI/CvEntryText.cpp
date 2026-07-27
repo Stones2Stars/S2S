@@ -106,7 +106,6 @@ namespace
 		case CASC_SCOPE_WORLD:       return L"world-wide";
 		case CASC_SCOPE_TEAM:        return L"team-wide";
 		case CASC_SCOPE_EMPIRE:      return L"empire-wide";
-		case CASC_SCOPE_AREA:        return L"in this area";
 		case CASC_SCOPE_CITY:        return L"";
 		case CASC_SCOPE_PLOT:        return L"on this plot";
 		case CASC_SCOPE_IMPROVEMENT: return L"on the improvement";
@@ -129,7 +128,6 @@ namespace
 		case CASC_SCOPE_WORLD:       return L"world";
 		case CASC_SCOPE_TEAM:        return L"team";
 		case CASC_SCOPE_EMPIRE:      return L"empire";
-		case CASC_SCOPE_AREA:        return L"area";
 		case CASC_SCOPE_CITY:        return L"city";
 		case CASC_SCOPE_PLOT:        return L"plot";
 		case CASC_SCOPE_IMPROVEMENT: return L"improvement";

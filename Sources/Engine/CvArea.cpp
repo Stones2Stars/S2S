@@ -16,9 +16,6 @@
 #include "CvTeamAI.h"
 #include "CvDLLInterfaceIFaceBase.h"
 #include "CvDLLUtilityIFaceBase.h"
-#include "CvCascadeChannelRegistry.h"   // channelLookup / wellbeingTwin -- the group read's channel identity
-#include "CvInfoKinds.h"                // the family + kind vocabulary the group read walks
-#include "Data/CvInfoValuation.h"       // realizedAtArea -- the ONE cross-scope roll-up
 #include "Spine/CvEventSpine.h"         // emitAreaCleanPowerChanged / emitAreaTilesChanged -- the area DOMAIN facts
 
 // Public Functions...
@@ -135,7 +132,6 @@ void CvArea::reset(int iID, bool bWater, bool bConstructorCall)
 
 	for (int iI = 0; iI < MAX_PLAYERS; iI++)
 	{
-		m_cascadeSlots[iI].bind(this, (PlayerTypes)iI, iID);   // the (area x player) cascade package (all-dirty from bind)
 		m_aiUnitsPerPlayer[iI] = 0;
 		m_aiAnimalsPerPlayer[iI] = 0;
 		m_aiCitiesPerPlayer[iI] = 0;
@@ -378,25 +374,6 @@ int CvArea::getID() const
 void CvArea::setID(int iID)
 {
 	m_iID = iID;
-}
-
-
-// The (area x player) slot's group read (see CvArea.h for the role + the grammar): walk the group's own enum,
-// resolve the entry's CHANNEL by identity -- anger/unhealth as the SIGN TWINS minted beside their authored
-// family (modifier.md §2b) -- and fold each through the ONE cross-scope roll-up.
-void CvArea::getWellbeing(PlayerTypes ePlayer, int (&wellbeing)[NUM_WELLBEING_CHANNELS]) const
-{
-	for (int iChannelIndex = 0; iChannelIndex < NUM_WELLBEING_CHANNELS; ++iChannelIndex)
-	{
-		const WellbeingChannel eWellbeing = (WellbeingChannel)iChannelIndex;
-		const int iAuthoredChannel = CascadeChannelRegistry::channelLookup(infoWellbeingFamily(eWellbeing), (int)CHANNEL_AMOUNT, -1);
-		int iChannel = iAuthoredChannel;
-		if (eWellbeing == WELLBEING_ANGER || eWellbeing == WELLBEING_UNHEALTH)
-		{
-			iChannel = CascadeChannelRegistry::wellbeingTwin(iAuthoredChannel);
-		}
-		wellbeing[iChannelIndex] = InfoValuation::realizedAtArea(*this, ePlayer, iChannel);
-	}
 }
 
 

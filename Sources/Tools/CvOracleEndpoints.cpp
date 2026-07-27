@@ -12,7 +12,6 @@
 #include "Enabler/CvCapabilities.h"         // the team capability union: the standing read + the recompute
 #include "Engine/CvCity.h"
 #include "Engine/CvPlot.h"
-#include "Engine/CvArea.h"
 #include "Engine/CvPlayer.h"
 #include "Engine/CvTeam.h"
 #include "Defines/CvGlobals.h"
@@ -44,7 +43,6 @@ namespace
 		case CASC_SCOPE_WORLD:  return "world";
 		case CASC_SCOPE_TEAM:   return "team";
 		case CASC_SCOPE_EMPIRE: return "empire";
-		case CASC_SCOPE_AREA:   return "area";
 		case CASC_SCOPE_CITY:   return "city";
 		case CASC_SCOPE_PLOT:   return "plot";
 		default:                return "?";
@@ -73,10 +71,6 @@ namespace
 			break;
 		case CASC_SCOPE_TEAM:
 			kRow["team"] = picojson::value((double)kValues.identitySecond);
-			break;
-		case CASC_SCOPE_AREA:
-			kRow["player"] = picojson::value((double)kValues.identityFirst);
-			kRow["area"] = picojson::value((double)kValues.identitySecond);
 			break;
 		case CASC_SCOPE_PLOT:
 			kRow["x"] = picojson::value((double)kValues.identityFirst);
@@ -260,18 +254,6 @@ namespace
 		}
 	}
 
-	void oe_fillArea(const CvArea& kArea, PlayerTypes ePlayer, OracleEndpoints::OracleSide eSide, CvCascadeSlotValues& kValues)
-	{
-		if (eSide == OracleEndpoints::ORACLE_SIDE_ORACLE)
-		{
-			CascadeGather::gatherAreaInto(kArea, ePlayer, kValues);
-		}
-		else
-		{
-			kArea.getCascadeSlot(ePlayer).package.readValuesInto(kValues);
-		}
-	}
-
 	void oe_fillPlot(const CvPlot& kPlot, OracleEndpoints::OracleSide eSide, CvCascadeSlotValues& kValues)
 	{
 		if (eSide == OracleEndpoints::ORACLE_SIDE_ORACLE)
@@ -306,9 +288,6 @@ CvString OracleEndpoints::cascadePackages(int iPlayer, int iCity, OracleSide eSi
 		kPackages.push_back(oe_renderSlotValues(kValues));
 	}
 
-	// The cities, and the (area x player) slot of every area they sit in -- an area appears ONCE however many
-	// of the player's cities share it (the slot is per (area, player), not per city).
-	std::set<int> kSeenAreas;
 	for (CvPlayer::city_iterator cityIterator = kPlayer.beginCities(); cityIterator != kPlayer.endCities(); ++cityIterator)
 	{
 		const CvCity* pLoopCity = *cityIterator;
@@ -322,13 +301,6 @@ CvString OracleEndpoints::cascadePackages(int iPlayer, int iCity, OracleSide eSi
 		}
 		oe_fillCity(*pLoopCity, eSide, kValues);
 		kPackages.push_back(oe_renderSlotValues(kValues));
-
-		const CvArea* pArea = pLoopCity->area();
-		if (pArea != NULL && kSeenAreas.insert(pArea->getID()).second)
-		{
-			oe_fillArea(*pArea, ePlayer, eSide, kValues);
-			kPackages.push_back(oe_renderSlotValues(kValues));
-		}
 		// The PLOT scope's way in: one named city's workable plots. Without a city selector the plot rows are
 		// left out -- the whole map's plot packages are a different question, asked one city at a time.
 		if (iCity < 0)
