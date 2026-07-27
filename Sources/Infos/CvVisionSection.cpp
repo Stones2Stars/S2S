@@ -12,28 +12,6 @@
 
 namespace
 {
-	// vision[key] = { INVISIBLE_X: N } -> out[FK id] = N.
-	void vs_readIntensityMap(const picojson::object& vision, const char* szKey, std::map<int, int>& out)
-	{
-		const picojson::object* pChild = jsonChildObj(vision, szKey);
-		if (pChild == NULL)
-		{
-			return;
-		}
-		for (picojson::object::const_iterator iter = pChild->begin(); iter != pChild->end(); ++iter)
-		{
-			if (!iter->second.is<double>())
-			{
-				continue;
-			}
-			const int iInvisible = jsonResolveId(iter->first);
-			if (iInvisible >= 0)
-			{
-				out[iInvisible] = (int)iter->second.get<double>();
-			}
-		}
-	}
-
 	// vision[key] = [ { invisible, terrain, intensity }, ... ] -> typed rows.
 	void vs_readTerrainRows(const picojson::object& vision, const char* szKey, std::vector<InvisibleTerrainChanges>& out)
 	{
@@ -154,10 +132,10 @@ void CvVisionSection::parse(const picojson::value& entity)
 		range = jsonIdInt(*pRange, "flat");
 	}
 	jsonReadIdList(*pVision, "negates", negates);
-	vs_readIntensityMap(*pVision, "visibilityIntensity", visibilityIntensity);
-	vs_readIntensityMap(*pVision, "invisibilityIntensity", invisibilityIntensity);
-	vs_readIntensityMap(*pVision, "visibilityIntensityRange", visibilityIntensityRange);
-	vs_readIntensityMap(*pVision, "visibilityIntensitySameTile", visibilityIntensitySameTile);
+	jsonReadFkMap(*pVision,"visibilityIntensity", visibilityIntensity);
+	jsonReadFkMap(*pVision,"invisibilityIntensity", invisibilityIntensity);
+	jsonReadFkMap(*pVision,"visibilityIntensityRange", visibilityIntensityRange);
+	jsonReadFkMap(*pVision,"visibilityIntensitySameTile", visibilityIntensitySameTile);
 	vs_readTerrainRows(*pVision, "invisibleTerrain", invisibleTerrain);
 	vs_readFeatureRows(*pVision, "invisibleFeature", invisibleFeature);
 	vs_readImprovementRows(*pVision, "invisibleImprovement", invisibleImprovement);

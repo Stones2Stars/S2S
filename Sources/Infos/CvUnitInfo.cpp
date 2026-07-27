@@ -21,30 +21,14 @@
 
 namespace
 {
-	// o[section][key] = { TYPE: N } -> out[FK id] = N (spread.religion / spread.corporation).
+	// o[section][key] = { TYPE: N } -> out[FK id] = N (spread.religion / spread.corporation). The keyed-map read
+	// itself is the SHARED jsonReadFkMap; this only walks in to the section first.
 	void un_readKeyedIntMap(const picojson::object& parent, const char* szSection, const char* szKey, std::map<int, int>& out)
 	{
 		const picojson::object* pSection = jsonChildObj(parent, szSection);
-		if (pSection == NULL)
+		if (pSection != NULL)
 		{
-			return;
-		}
-		const picojson::object* pKeyed = jsonChildObj(*pSection, szKey);
-		if (pKeyed == NULL)
-		{
-			return;
-		}
-		for (picojson::object::const_iterator iter = pKeyed->begin(); iter != pKeyed->end(); ++iter)
-		{
-			if (!iter->second.is<double>())
-			{
-				continue;
-			}
-			const int iResolved = jsonResolveId(iter->first);
-			if (iResolved >= 0)
-			{
-				out[iResolved] = (int)iter->second.get<double>();
-			}
+			jsonReadFkMap(*pSection, szKey, out);
 		}
 	}
 
