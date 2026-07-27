@@ -196,6 +196,17 @@ relationships are **distinct gates, mirroring the engine** (`build`/`operate` sh
   `dormant` clause is fail-safe (default *not*-dormant). *(This recursion — `uc_reachable`, the StoneBase
   `UnitCascade.Reachable` closure — is what resolves the whole upgrade TREE: chains, obsolete intermediates, cycles.
   It is the spec'd resolver; do NOT replace it with a one-level or hand-rolled scheme.)*
+  ⛔ **`CvCity::allUpgradesAvailable` IS A SECOND IMPLEMENTATION OF THIS CLOSURE, and it goes**
+  ([DEC-single-implementation](../architecture/decisions.md#dec-single-implementation)). Verified against both
+  bodies: the legacy one recurses `getUnitUpgrade(i)` (skipping superseders) and its ONLY availability test at
+  the leaf is `canTrain(u, …, bIgnoreUpgrades=true)` — *"if a city canTrain, it can also upgrade, so it's a
+  looped canTrain call"* (owner). `bIgnoreUpgrades` exists purely to break its own recursion. The enabler needs
+  no such flag: `ud_reachable` resolves the whole tree ONCE and the per-unit verdict already folds it, so a
+  LISTED unit is by construction one whose upgrade chain does not dorm it.
+  ⚠ Its BOOLEAN callers (`…allUpgradesAvailable(u) != NO_UNIT`) are answered by the tri-state directly. Only the
+  return of WHICH unit you would get has a separate consumer, and that is a resolution the closure can serve —
+  it is not a reason to keep the duplicate.
+
 - **`SupersedingUnits` → the `replaces` edge (`replacedBy.units`, §2)** = genuine **removal-on-succession**: the unit
   drops from buildable the moment any superseder is itself buildable (mirrors `isSupersedingUnitAvailable`). The engine
   SKIPS superseders in `allUpgradesAvailable`, so they live here, not in the dormancy gate. This is the first real use
