@@ -7,10 +7,12 @@
 
 #include "Infrastructure/CvDLLEntity.h"
 #include "CvGameObject.h"
+#include "Cascade/CvUnitResolved.h"   // the UNIT plane's resolved values (state-repositories.md)
 #include "CvProperties.h"
 #include "CvUnitComponents.h"
 
 #pragma warning( disable: 4251 )		// needs to have dll-interface to be used by clients of class
+
 
 class CvArea;
 class CvCity;
@@ -1287,6 +1289,10 @@ public:
 	void setCapturingUnit(const CvUnit* pCapturingUnit);
 
 	const CvUnitInfo& getUnitInfo() const;
+	// The UNIT plane read -- a bare fetch of the resolved value (no gather, no evaluation).
+	int resolvedValue(UnitResolvedSlot eSlot) const { return m_resolvedValues.get(eSlot); }
+	// The dirty entry point: the two spine facts that can move a unit's resolved values.
+	void markResolvedValuesDirty() const { m_resolvedValues.markDirty(*this); }
 
 	void setLeaderUnitType(UnitTypes leaderUnitType);
 
@@ -1707,6 +1713,9 @@ protected:
 	UnitTypes m_eLeaderUnitType;
 	UnitTypes m_eGGExperienceEarnedTowardsType;
 	CvUnitInfo *m_pUnitInfo;
+	// The UNIT plane's RESOLVED VALUES -- summed over the held set, dirtied ONLY on a promotion or
+	// combat-class change (state-repositories.md). Never serialized; a read is a bare fetch.
+	mutable UnitResolvedValues m_resolvedValues;
 	ReligionTypes m_eReligionType;
 
 	IDInfo m_combatUnit;

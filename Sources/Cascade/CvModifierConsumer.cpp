@@ -32,6 +32,7 @@
 #include "Engine/CvGameCoreUtils.h"     // plotDirection -- the one-hop adjacency fan of the two adjacency verdicts
 #include "Engine/CvPlot.h"
 #include "Engine/CvCity.h"
+#include "Engine/CvUnit.h"
 #include "Engine/CvPlayer.h"
 #include "Engine/CvTeam.h"
 #include "AI/CvPlayerAI.h"              // GET_PLAYER
@@ -425,6 +426,23 @@ namespace
 			}
 			// ---- plot substrate changes: the plot's isolated base package refills whole (the substrate IS
 			// ---- the base; the event carries no old-type to narrow by) + the working city's rates ----
+			// ---- THE UNIT PLANE: resolved values, not a package (state-repositories.md). The model names
+			// ---- these two facts EXACTLY -- "they dirty on a different trigger from everything else: ONLY
+			// ---- when a promotion or combat class changes" -- so there is no route derivation here and no
+			// ---- blanket: the held set moved, so the unit re-resolves. Unit MOVEMENT never reaches this.
+			case SEVT_UNIT_PROMOTION_CHANGED:
+			case SEVT_UNIT_COMBAT_CHANGED:
+			{
+				if (pPlayer != NULL && kEvent.iA >= 0)
+				{
+					const CvUnit* pUnit = pPlayer->getUnit(kEvent.iA);
+					if (pUnit != NULL)
+					{
+						pUnit->markResolvedValuesDirty();
+					}
+				}
+				break;
+			}
 			case SEVT_IMPROVEMENT_CHANGED:
 			case SEVT_TERRAIN_CHANGED:
 			case SEVT_FEATURE_CHANGED:
