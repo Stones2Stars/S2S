@@ -29,12 +29,11 @@
 > genuine metadata, and stay). Each key re-homes to the block that already exists for its kind; the count is a
 > worklist, never a licence.
 
-- **Held booleans → the classification blocks** — `nukeImmune` / `zoneOfControl` / `actsAsCity` / `countsAsPeak` /
-  `noImprovement` / `noCity` / `noBonus`. ⛔ Blocked for the plot substrate: **features and terrain have no
-  classification block** (§8 defines unit `skills`/`tags`/`state`, building `attributes`, empire `capabilities`
-  and stops), so this needs an owner call on whether `attributes` extends to plot substrate or the substrate gets
-  its own. ⚠ Do NOT merge the two `nukeImmune` mechanics while re-homing — a BUILDING's makes its city immune
-  (already correctly in `attributes`, 1367), a FEATURE's means the feature survives the blast (the 29 misplaced).
+- **Held booleans → the classification blocks.** The plot substrate's block now exists (`characteristics`,
+  [json.md §8](../../specs/json.md)) and the six unambiguous ones have moved. What is LEFT is the substrate keys
+  that are held-boolean-SHAPED but may be constraints instead — `flatMovementCost` (route), and deciding whether
+  `noImprovement` / `noCity` / `noBonus` (feature) are characteristics or `requires` gates. The spec's bound is
+  the test: what the substrate IS or DOES is a characteristic; what may exist THERE is a gate.
 - **Magnitudes → modifier families** — `movementCost` / `flatMovementCost` (the movement resolver),
   `sightRange` (vision), `cargo`, `captures`, `conscription`, `controlPoints`, `espionagePoints`, the radii
   (`cityRadius`, `workableRadius`, `cultureRange`).
