@@ -2130,23 +2130,19 @@ public:
 	void changeUpgradeAnywhereCount(int iChange);
 
 	void updateSpotIntensity(const InvisibleTypes eInvisibleType = NO_INVISIBLE, const bool bSameTile = false);
-	int visibilityIntensityTotal(InvisibleTypes eInvisibleType) const;
 	int getExtraVisibilityIntensityType(InvisibleTypes eIndex) const;
 	void changeExtraVisibilityIntensityType(InvisibleTypes eIndex, int iChange);
 
 	bool hasAnyInvisibilityType() const;
 	bool hasInvisibilityType(InvisibleTypes eInvisibleType) const;
-	int invisibilityIntensityTotal(InvisibleTypes eInvisibleType) const;
 	int getExtraInvisibilityIntensityType(InvisibleTypes eIndex) const;
 	void changeExtraInvisibilityIntensityType(InvisibleTypes eIndex, int iChange);
 	void setHasAnyInvisibility();
 
 	//These need text displays on the unit
-	int visibilityIntensityRangeTotal(InvisibleTypes eInvisibleType) const;
 	int getExtraVisibilityIntensityRangeType(InvisibleTypes eIndex) const;
 	void changeExtraVisibilityIntensityRangeType(InvisibleTypes eIndex, int iChange);
 
-	int visibilityIntensitySameTileTotal(InvisibleTypes eInvisibleType) const;
 	void changeExtraVisibilityIntensitySameTileType(InvisibleTypes eIndex, int iChange);
 
 	int getNumExtraInvisibleTerrains() const;

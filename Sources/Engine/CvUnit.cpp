@@ -28995,39 +28995,6 @@ void CvUnit::updateSpotIntensity(const InvisibleTypes eInvisibleType, const bool
 	}
 }
 
-int CvUnit::visibilityIntensityTotal(InvisibleTypes eInvisibleType) const
-{
-	int iAmount = (
-		m_pUnitInfo->getVisibilityIntensityType(eInvisibleType)
-		+ getExtraVisibilityIntensityType(eInvisibleType)
-		+ extraVisibleTerrain(eInvisibleType, plot()->getTerrainType())
-	);
-
-	if (plot()->isAsPeak())
-	{
-		iAmount += extraVisibleTerrain(eInvisibleType, GC.getTERRAIN_PEAK());
-	}
-	else if (plot()->isHills())
-	{
-		iAmount += extraVisibleTerrain(eInvisibleType, GC.getTERRAIN_HILL());
-	}
-	const FeatureTypes eFeature = plot()->getFeatureType();
-	if (eFeature != NO_FEATURE)
-	{
-		iAmount += extraVisibleFeature(eInvisibleType, eFeature);
-	}
-	const ImprovementTypes eImprovement = plot()->getImprovementType();
-	if (eImprovement != NO_IMPROVEMENT)
-	{
-		iAmount += extraVisibleImprovement(eInvisibleType, eImprovement);
-	}
-	if (plot()->isCity(true))
-	{
-		iAmount += extraVisibleImprovement(eInvisibleType, GC.getIMPROVEMENT_CITY());
-	}
-	return iAmount;
-}
-
 int CvUnit::getExtraVisibilityIntensityType(InvisibleTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, GC.getNumInvisibleInfos(), eIndex);
@@ -29065,39 +29032,6 @@ void CvUnit::changeExtraVisibilityIntensityType(InvisibleTypes eIndex, int iChan
 bool CvUnit::hasInvisibilityType(InvisibleTypes eInvisibleType) const
 {
 	return !isNegatesInvisible(eInvisibleType) && !m_pUnitInfo->isNoInvisibility() && getNoInvisibilityCount() < 1;
-}
-
-int CvUnit::invisibilityIntensityTotal(InvisibleTypes eType) const
-{
-	int iAmount = (
-		m_pUnitInfo->getInvisibilityIntensityType(eType)
-		+ getExtraInvisibilityIntensityType(eType)
-		+ extraInvisibleTerrain(eType, plot()->getTerrainType())
-	);
-
-	if (plot()->isAsPeak())
-	{
-		iAmount += extraInvisibleTerrain(eType, GC.getTERRAIN_PEAK());
-	}
-	else if (plot()->isHills())
-	{
-		iAmount += extraInvisibleTerrain(eType, GC.getTERRAIN_HILL());
-	}
-	const FeatureTypes eFeature = plot()->getFeatureType();
-	if (eFeature != NO_FEATURE)
-	{
-		iAmount += extraInvisibleFeature(eType, eFeature);
-	}
-	const ImprovementTypes eImprovement = plot()->getImprovementType();
-	if (eImprovement != NO_IMPROVEMENT)
-	{
-		iAmount += extraInvisibleImprovement(eType, eImprovement);
-	}
-	if (plot()->isCity(true))
-	{
-		iAmount += extraInvisibleImprovement(eType, GC.getIMPROVEMENT_CITY());
-	}
-	return iAmount;
 }
 
 int CvUnit::getExtraInvisibilityIntensityType(InvisibleTypes eIndex) const
@@ -29154,39 +29088,6 @@ void CvUnit::setHasAnyInvisibility()
 	m_bHasAnyInvisibility = false;
 }
 
-int CvUnit::visibilityIntensityRangeTotal(InvisibleTypes eInvisibleType) const
-{
-	int iAmount = (
-		m_pUnitInfo->getVisibilityIntensityRangeType(eInvisibleType)
-		+ getExtraVisibilityIntensityRangeType(eInvisibleType)
-		+ extraVisibleTerrainRange(eInvisibleType, plot()->getTerrainType())
-	);
-
-	if (plot()->isAsPeak())
-	{
-		iAmount += extraVisibleTerrainRange(eInvisibleType, GC.getTERRAIN_PEAK());
-	}
-	else if (plot()->isHills())
-	{
-		iAmount += extraVisibleTerrainRange(eInvisibleType, GC.getTERRAIN_HILL());
-	}
-	const FeatureTypes eFeature = plot()->getFeatureType();
-	if (eFeature != NO_FEATURE)
-	{
-		iAmount += extraVisibleFeatureRange(eInvisibleType, eFeature);
-	}
-	const ImprovementTypes eImprovement = plot()->getImprovementType();
-	if (eImprovement != NO_IMPROVEMENT)
-	{
-		iAmount += extraVisibleImprovementRange(eInvisibleType, eImprovement);
-	}
-	if (plot()->isCity(true))
-	{
-		iAmount += extraVisibleImprovementRange(eInvisibleType, GC.getIMPROVEMENT_CITY());
-	}
-	return std::max(0, iAmount);
-}
-
 int CvUnit::getExtraVisibilityIntensityRangeType(InvisibleTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, GC.getNumInvisibleInfos(), eIndex);
@@ -29203,13 +29104,6 @@ void CvUnit::changeExtraVisibilityIntensityRangeType(InvisibleTypes eIndex, int 
 		updateSpotIntensity(eIndex);
 	}
 }
-
-int CvUnit::visibilityIntensitySameTileTotal(InvisibleTypes eType) const
-{
-	FASSERT_BOUNDS(0, GC.getNumInvisibleInfos(), eType);
-	return m_aiExtraVisibilityIntensitySameTile[eType];
-}
-
 
 void CvUnit::changeExtraVisibilityIntensitySameTileType(InvisibleTypes eIndex, int iChange)
 {

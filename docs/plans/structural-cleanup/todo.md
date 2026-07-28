@@ -95,15 +95,12 @@
 > costs to see through). A budget spent walking outward, exactly as movement is spent. Data, spec, engine read
 > path and the pedia render are all on it; what is below is what is NOT.
 
-- **The retired per-type intensity getters ANSWER 0 rather than failing to compile.**
-  `visibilityIntensityTotal` / `invisibilityIntensityTotal` / `…RangeTotal` / `…SameTileTotal` still exist and
-  still read the old per-`INVISIBLE_*` accumulators, which no data now feeds. Their readers — ~30 `CvPlayerAI`
-  valuation sites and the `CvGameTextMgr` per-type unit help — therefore see 0 instead of a compile error.
-  ⚠ **This is the one place the vision cut is QUIETER than the delete-driven rule wants**
-  ([DEC-no-legacy-masking](../../architecture/decisions.md#dec-no-legacy-masking)): a silent 0 is a masked hole,
-  not a loud one. Deleting the four getters turns them into the ordinary compiler census, and the AI valuation
-  should read `concealment()` / `detectionAgainst()` instead. Sequenced with the AI consumer cut, but do not
-  mistake it for done.
+- **The hide-and-seek CONSUMER census: 26 `CvPlayerAI` valuation reads + 7 `CvGameTextMgr` help reads.** The
+  four per-type intensity getters are DELETED, so these are compile errors rather than silent zeroes — ordinary
+  consumer debt, sequenced with the AI cut, and a dangling site here is intended output. Their replacement is
+  `CvUnit::concealment()` (one number) and `CvUnit::detectionAgainst(method)`. ⚠ The AI sites SUM inside a loop
+  over every `INVISIBLE_*`, so a mechanical swap would count concealment fourteen times — the loop collapses to
+  one read, which is why this is a rewrite rather than a rename.
 - **The hide-and-seek help text still enumerates per type** — spot intensity, spot range and same-tile, one
   block per `INVISIBLE_*`. It renders values that are now always 0, and it is the exact thing the pairing was
   written down to make sayable: a detection entry renders itself through `appendEntryLines`.
