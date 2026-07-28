@@ -32,6 +32,9 @@
   "production": 4492,
   "hurryModifier": 10000
  },
+ "attributes": {
+  "adds3rdRing": true
+ },
  "world": {
   "art": {
    "define": "ART_DEF_BUILDING_INTERGALACTIC_BIRCH_PLANET"
@@ -40,7 +43,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERGALACTIC_BIRCH_PLANET",
   "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_BIRCH_PLANET_PEDIA",
-  "workableRadius": 3,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

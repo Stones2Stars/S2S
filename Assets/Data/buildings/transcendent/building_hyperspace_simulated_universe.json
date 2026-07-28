@@ -79,6 +79,9 @@
   "production": 1945,
   "hurryModifier": 10000
  },
+ "attributes": {
+  "adds3rdRing": true
+ },
  "world": {
   "art": {
    "define": "ART_DEF_BUILDING_HYPERSPACE_SIMULATED_UNIVERSE"
@@ -87,7 +90,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HYPERSPACE_SIMULATED_UNIVERSE",
   "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_SIMULATED_UNIVERSE_PEDIA",
-  "workableRadius": 3,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

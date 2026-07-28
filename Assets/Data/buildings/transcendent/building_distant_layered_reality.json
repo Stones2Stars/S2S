@@ -41,6 +41,9 @@
   "production": 2914,
   "hurryModifier": 10000
  },
+ "attributes": {
+  "adds3rdRing": true
+ },
  "world": {
   "art": {
    "define": "ART_DEF_BUILDING_DISTANT_LAYERED_REALITY"
@@ -49,7 +52,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DISTANT_LAYERED_REALITY",
   "civilopedia": "TXT_KEY_BUILDING_DISTANT_LAYERED_REALITY_PEDIA",
-  "workableRadius": 3,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

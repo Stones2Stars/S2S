@@ -117,6 +117,9 @@
    }
   ]
  },
+ "attributes": {
+  "adds3rdRing": true
+ },
  "world": {
   "art": {
    "define": "ART_DEF_BUILDING_METROPOLITAN_ADMINISTRATION"
@@ -132,7 +135,6 @@
   "worth": 4,
   "militaryWorth": 5,
   "conquestProbability": 100,
-  "workableRadius": 3,
   "dcmAirbombMission": 2,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

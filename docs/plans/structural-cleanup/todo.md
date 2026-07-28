@@ -60,20 +60,15 @@
     `plotDistance <= range`. Plot-culture SPREAD is the #429 spatial plane
     ([legacy-value-calc-map §9.4](../../reference/legacy-value-calc-map.md)), not a deposit down the scope spine,
     so it moves with that rework rather than into a family.
-- **The city WORKABLE RADIUS is PURE STATE (owner), so it needs no family — that is why none names it.**
+- **The city WORKABLE RADIUS is PURE STATE (owner) — the building side is DONE, the culture side is config.**
     Per [contexts.md](../../architecture/contexts.md) *"if it is current state, it is the CONTEXT's, there is no
-    third home"*, the resolved radius is `CityContext` business; the doc already leans on this, maintaining the
-    vicinity tiers off the culture-level fact BECAUSE the radius grows with culture. The mechanism stays
-    culture-expansion driven (owner).
-    The two authored keys are therefore INPUTS to that state, not deposits: `cityRadius` (19, CULTURELEVEL) is
-    the tier's config parameter, and `workableRadius` (12, BUILDING) is an OVERRIDE — `getNumCityPlots` takes it
-    when non-zero, else the culture level's. ⚠ The override is a REPLACE, not a sum, and the 12 authorings are
-    "this building supersedes the culture tier" rather than adding to it.
-    ⚑ **Only ONE of the 12 overrides actually does anything.** Culture grants radius 2 at the low tiers and 3
-    from ILLUSTRIOUS upward, so the third ring arrives with culture on its own. `METROPOLITAN_ADMINISTRATION` is
-    RENAISSANCE and grants it EARLY — the real mechanic (owner: "a feature that enables 3rd ring"). The other 11
-    are transhuman / galactic / transcendent / cosmic, by which point any city is long past ILLUSTRIOUS and
-    already at 3, so their override replaces 3 with 3. Worth knowing before anything is built to serve them.
+    third home"*, the resolved radius is `CityContext` business, driven by culture expansion; the doc already
+    leans on this, maintaining the vicinity tiers off the culture-level fact BECAUSE the radius grows with
+    culture. `cityRadius` (19, CULTURELEVEL) is that mechanic's config parameter and stays with it.
+    ⚑ The building override is now the **`adds3rdRing` attribute** (owner): every one of the 12 authorings was
+    the same number 3, so the field carried no information — what a building says is the boolean "this city gets
+    the third ring early". Only `METROPOLITAN_ADMINISTRATION` (renaissance) does real work with it; the other 11
+    are transhuman-and-later, by which point culture already grants 3 on its own.
 - **`controlPoints` (28) is NOT a magnitude — it is the COMMANDER system's per-turn budget.** A Great
   Commander backs one combat per point: a unit fighting within `commandRange` spends one via
   `tryUseCommander`, at zero the commander supports nobody else that turn, and `restoreControlPoints` refills

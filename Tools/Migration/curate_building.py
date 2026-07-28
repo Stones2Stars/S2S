@@ -216,7 +216,7 @@ CAP_IDENTITY = {
 ID_SCALAR = {
     "iAsset": "worth", "iPower": "militaryWorth", "iConquestProb": "conquestProbability",
     "iAirlift": "airlift", "iAirUnitCapacity": "airUnitCapacity", "iLineOfSight": "sightRange",
-    "iWorkableRadius": "workableRadius", "iNumPopulationEmployed": "populationEmployed",
+    "iNumPopulationEmployed": "populationEmployed",
     "iExtraPlayerInstances": "maxPlayerInstancesExtra", "iDCMAirbombMission": "dcmAirbombMission",
     "ExtendsBuilding": "extends", "ProductionContinueBuilding": "productionContinue",
     "GreatPeopleUnitType": "greatPeopleUnitType", "DiploVoteType": "diploVoteType",
@@ -1525,6 +1525,14 @@ def curate(typ, rec, store):
     for tag, name in CAP_ATTRIBUTES.items():
         if _bool(rec, tag):
             attributes[name] = True
+    # iWorkableRadius -> the `adds3rdRing` ATTRIBUTE (owner). The legacy field is a numeric OVERRIDE of the
+    # city radius, but it carries no information: every one of the 12 authorings is exactly 3, and the city
+    # radius is PURE STATE driven by culture expansion (culture grants 2 at the low tiers, 3 from ILLUSTRIOUS),
+    # so what a building actually says is the boolean "this city gets the third ring early". Held, immutable,
+    # city-scope -> `attributes` (json.md par.8). ⚑ Only METROPOLITAN_ADMINISTRATION (renaissance) does real
+    # work with it; the other 11 are transhuman-and-later, by which point culture already grants 3.
+    if (_int(rec, "iWorkableRadius") or 0) >= 3:
+        attributes["adds3rdRing"] = True
     for tag, name in CAP_IDENTITY.items():
         if _bool(rec, tag):
             identity[name] = True

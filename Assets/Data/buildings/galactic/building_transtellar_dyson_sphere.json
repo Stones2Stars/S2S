@@ -26,6 +26,9 @@
   "production": 4056,
   "hurryModifier": 10000
  },
+ "attributes": {
+  "adds3rdRing": true
+ },
  "world": {
   "art": {
    "define": "ART_DEF_BUILDING_TRANSTELLAR_DYSON_SPHERE"
@@ -34,7 +37,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TRANSTELLAR_DYSON_SPHERE",
   "civilopedia": "TXT_KEY_BUILDING_TRANSTELLAR_DYSON_SPHERE_PEDIA",
-  "workableRadius": 3,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

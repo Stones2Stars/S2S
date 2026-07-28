@@ -75,6 +75,9 @@
   "production": 4123,
   "hurryModifier": 10000
  },
+ "attributes": {
+  "adds3rdRing": true
+ },
  "world": {
   "art": {
    "define": "ART_DEF_BUILDING_DEEP_SPACE_BISHOP_RING"
@@ -83,7 +86,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DEEP_SPACE_BISHOP_RING",
   "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_BISHOP_RING_PEDIA",
-  "workableRadius": 3,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

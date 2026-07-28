@@ -53,7 +53,8 @@
   "hurryModifier": 10000
  },
  "attributes": {
-  "providesPower": true
+  "providesPower": true,
+  "adds3rdRing": true
  },
  "world": {
   "art": {
@@ -63,7 +64,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERSTELLAR_DYSON_SPHERE",
   "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_DYSON_SPHERE_PEDIA",
-  "workableRadius": 3,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

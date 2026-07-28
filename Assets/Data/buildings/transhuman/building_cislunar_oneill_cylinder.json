@@ -50,6 +50,9 @@
   "production": 2793,
   "hurryModifier": 10000
  },
+ "attributes": {
+  "adds3rdRing": true
+ },
  "world": {
   "art": {
    "define": "ART_DEF_BUILDING_CISLUNAR_ONEILL_CYLINDER"
@@ -58,7 +61,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CISLUNAR_ONEILL_CYLINDER",
   "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_ONEILL_CYLINDER_PEDIA",
-  "workableRadius": 3,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

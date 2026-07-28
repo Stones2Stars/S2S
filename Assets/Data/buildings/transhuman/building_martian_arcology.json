@@ -76,6 +76,9 @@
   "production": 5294,
   "hurryModifier": 10000
  },
+ "attributes": {
+  "adds3rdRing": true
+ },
  "world": {
   "art": {
    "define": "ART_DEF_BUILDING_MARTIAN_ARCOLOGY"
@@ -84,7 +87,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MARTIAN_ARCOLOGY",
   "civilopedia": "TXT_KEY_BUILDING_MARTIAN_ARCOLOGY_PEDIA",
-  "workableRadius": 3,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [
