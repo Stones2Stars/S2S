@@ -90,24 +90,23 @@
 
 ## Vision
 
-> The model: [vision.md](../../specs/vision.md) — `vision` (strength) + `elevation` (height, positional) +
-> `obstruction` (what the ground costs to see through), a budget spent walking outward exactly as movement works.
+> The model: [vision.md](../../specs/vision.md) — ONE `vision` family whose kinds are STRENGTH (the observer's,
+> memberless), `elevation` (height, positional — the ground's or a city's) and `obstruction` (what the ground
+> costs to see through). A budget spent walking outward, exactly as movement is spent. Data, spec, engine read
+> path and the pedia render are all on it; what is below is what is NOT.
 
-- **The city-side wiring does not exist.** Buildings deposit their sight into `CvCity::m_iLineOfSight`, which is
-  serialized, reset and maintained on every building add/remove — and **read by nothing** (no caller, not
-  `DllExport`, no Python consumer). A city's sight is a hardcoded `changeAdjacentSight(team, 1, …)`, so the 30
-  buildings authoring it grant no vision at all while the pedia advertises it and `CvCityAI` pays 15/level for
-  it. A city needs the `visibilityRange()`-equivalent the unit side already has.
-- **TERRAIN authors no elevation yet.** Relief is engine-derived from the plot type (`getTerrainElevation`:
-  flat/hills/peak → 0/1/2), so a peak's `elevation.plot.flat: 2` is data that has to be AUTHORED, not migrated —
-  there is no legacy field to convert. Same for terrain `obstruction`.
 - **The `vision` key still doubles as the hide-and-seek tables** — 13 non-scope keys (`invisible`,
   `visibilityIntensity`, `invisibilityIntensity`, the per-terrain/feature/improvement invisibility maps) sit
-  under `vision` beside the scope-keyed family, so the block is half family and half bespoke. They are the
-  reserved **`detection`** plane ([json.md §6](../../specs/json.md)); the split lands with the hide-and-seek
-  rework, which [vision.md §4](../../specs/vision.md) is the missing half of.
-- **`MAX_UNIT_VISIBILITY_RANGE` / `RECON_VISIBILITY_RANGE`** (8 / 5) survive as engine constants; the first is
-  the clamp on `sight`, the second is a recon unit's strength and wants authoring as one.
+  under `vision` beside the scope-keyed family, so the block is half family and half bespoke and the
+  unitcombat curator has to MERGE rather than assign. They are the reserved **`detection`** plane
+  ([json.md §6](../../specs/json.md)); the split lands with the hide-and-seek rework, which
+  [vision.md §4](../../specs/vision.md) is the missing half of.
+- **Three AI valuation reads of the deleted improvement getters** (`CvCityAI` once, `CvUnitAI` twice) — the
+  compiler census, sequenced with the rest of the AI consumer cut, not fixed on sight. Their replacement is the
+  improvement's compiled `vision` entries, the same source the pedia now renders from.
+- **Nothing is verified.** The walk, the budgets and the render are wired but untestable until the tree is
+  green ([DEC-done-is-observable](../../architecture/decisions.md#dec-done-is-observable)). First checks when it
+  is: a unit on flat open ground sees 1 plot, on a peak 4; a jungle costs 2; a city with tree platforms sees 2.
 
 ## Data — blocked on a prerequisite
 
