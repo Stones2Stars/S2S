@@ -5238,7 +5238,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 
 						for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
 						{
-							if (getCityContext().tradedBonusCount(iI) > 0)
+							if (hasBonus((BonusTypes)iI))
 							{
 								iValue += (kBuilding.getBonusDefenseChanges(iI) / 4);
 							}
@@ -5559,7 +5559,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 						if (bUnitIsOtherwiseEnabled)
 						{
 							bool bUnitIsBonusEnabled = true;
-							if (kUnit.getPrereqAndBonus() != NO_BONUS && getCityContext().tradedBonusCount(kUnit.getPrereqAndBonus()) == 0)
+							if (kUnit.getPrereqAndBonus() != NO_BONUS && !hasBonus((BonusTypes)kUnit.getPrereqAndBonus()))
 							{
 								if (kBuilding.getFreeBonuses().hasValue((BonusTypes)kUnit.getPrereqAndBonus()))
 								{
@@ -5579,7 +5579,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 							{
 								iFreeExtraBonusCount++;
 
-								if (getCityContext().tradedBonusCount(eXtraFreeBonus) > 0)
+								if (hasBonus(eXtraFreeBonus))
 								{
 									bHasORBonusAlready = true;
 								}
@@ -6023,7 +6023,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 					}
 					for (int iI = 0; iI < kBuilding.getNumBonusAidModifiers(); iI++)
 					{
-						if (getCityContext().tradedBonusCount(kBuilding.getBonusAidModifier(iI).eBonusType) > 0)
+						if (hasBonus(kBuilding.getBonusAidModifier(iI).eBonusType))
 						{
 							iValue += kBuilding.getBonusAidModifier(iI).iModifier / 3;
 						}
@@ -12450,7 +12450,7 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 	{
 		return true;
 	}
-	if (kBuilding.isPower() || (kBuilding.getPowerBonus() != NO_BONUS && getCityContext().tradedBonusCount(kBuilding.getPowerBonus()) > 0))
+	if (kBuilding.isPower() || (kBuilding.getPowerBonus() != NO_BONUS && hasBonus((BonusTypes)(kBuilding.getPowerBonus()))))
 	{
 		return true;
 	}

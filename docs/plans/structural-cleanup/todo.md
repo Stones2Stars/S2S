@@ -283,6 +283,21 @@ measure what survives, then cut the genuine residue. The classes below are the u
   ⚠ Still on it, as ordinary consumer debt: **`CvGameTextMgr`** (3 sites — the pedia's prereq lines, which belong
   with the composer move onto rendered entry lines) and `CyPlayer` (inside the orphaned loader above). Delete the
   `CvPlayer` function with the last of them; do NOT revive the table to keep a text line rendering.
+- **⛔ THE TRADED-BONUS READ COMES DIRECTLY FROM THE PLOT GROUP (owner) — and today NOTHING does.** The chain in
+  tree is three deep and every link is a mirror of the one above it:
+  **`CvPlotGroup`** (authoritative network content) → **`CvCity::m_paiNumBonuses`** (an incrementally-maintained
+  city array, `changeNumBonuses` += delta — the STORED-ACCUMULATOR DRIFT class, and the mirror
+  [enabler.md §8](../../specs/enabler.md) says must not exist: *"the city holds no authoritative mirror"*) →
+  **`CityContext::tradedBonusCount`** (a COPY of `getNumBonuses`, whose `refreshTradedBonuses` re-derives EVERY
+  bonus on each refresh — a full recalc, the thing being deleted everywhere else).
+  ⚠ **So "route it through the context" is the WRONG fix here** and was tried: it moves a read from the
+  second-order mirror to the third-order copy. The gates (`TechCityTrade`, minted, corp production) are real and
+  must survive, so this is not a call-site swap — it is
+  [enabler.md §8](../../specs/enabler.md) open item 2 (RESIDENCY + COUNTING): the city read becomes a maintained
+  number fed by the crossing fan-out off the plot group, and the two mirrors collapse into it.
+  ⛔ **`contexts.md` CONTRADICTS ITSELF on this** and must be fixed with the work: it states traded state is
+  "NEVER mirrored into `CityContext`" and then, in the next sentence, sends a `connection:"trade"` atom to
+  `CityContext::tradedBonusCount`. A doc that describes a half-state reads like a design.
 - **② Realized-value reads** (`getYieldRate`/`…100`, `getCommerceRate`/`…TimesTimes100`, `getMaintenanceTimes100`,
   `getTotalDefense`/`getDefenseModifier`) — already answerable by the existing group reads; these are a consumer
   move, not new surface.
