@@ -48,8 +48,23 @@
     `MISSION_INFILTRATE` — `canInfiltrate` gates on it being non-zero and `infiltrate()` spends it — so the
     authoring home rides the missions/`CvOutcome` PERMANENT carve-out, not this sweep. The channel is settled;
     only where it is written waits.
-- **Magnitudes with NO family named yet** — `conscription` and the radii (`cityRadius`, `workableRadius`,
-  `cultureRange`). The genuinely unplaced set.
+- **`conscription` (247, UNIT) is NOT an effect — it is a SELECTION WEIGHT, and it stays in identity.** Its one
+    consumer picks the best draftable unit: `CvCity` walks the enabler's LISTED frontier and keeps the highest
+    `getConscriptionValue()`. It deposits nothing and produces nothing; it RANKS. That is the same class as
+    `worth` / `militaryWorth`, which the inert whitelist already treats as metadata — so the census bucketing it
+    as an effect was the inconsistency, not the data.
+- **`cultureRange` (15, IMPROVEMENT) rides the SPATIAL carve-out.** It is the radius of
+    `pushCultureFromImprovement` — a `rect(iRange, iRange)` walk pushing culture onto every plot within
+    `plotDistance <= range`. Plot-culture SPREAD is the #429 spatial plane
+    ([legacy-value-calc-map §9.4](../../reference/legacy-value-calc-map.md)), not a deposit down the scope spine,
+    so it moves with that rework rather than into a family.
+- **The city WORKABLE RADIUS is the one genuinely open item, and it is ONE concept from two sources:**
+    `cityRadius` (19, CULTURELEVEL) is the radius a culture level grants, `workableRadius` (12, BUILDING) is a
+    building OVERRIDE of it (`setWorkableRadiusOverride`), and `CvCity::getNumCityPlots` picks the override when
+    present else the culture level's. It is a real gameplay magnitude — it decides which plots the city can work,
+    and it is what the `VICINITY` / `WORKABLE` predicates and the enabler's growing-radius rings read
+    ([enabler.md §3](../../specs/enabler.md)). No family names it. ⚠ Whatever it becomes, the TWO keys resolve to
+    ONE value with an override rule, so they land together or the rule is lost.
 - **`controlPoints` (28) is NOT a magnitude — it is the COMMANDER system's per-turn budget.** A Great
   Commander backs one combat per point: a unit fighting within `commandRange` spends one via
   `tryUseCommander`, at zero the commander supports nobody else that turn, and `restoreControlPoints` refills

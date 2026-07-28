@@ -693,7 +693,7 @@ _INERT_OK_IDENTITY = frozenset((
     # display / pedia placement
     "advisor", "visibilityPriority", "fontButtonIndex", "gridX", "gridY", "graphicalOnly", "appearance", "order",
     # metadata ABOUT the entity, producing nothing on its own
-    "conquestProbability", "mapCategories", "forceNoPrereqScaling", "worth", "militaryWorth",
+    "conquestProbability", "mapCategories", "forceNoPrereqScaling", "worth", "militaryWorth", "conscription",
 ))
 
 _ID_RE = re.compile(r"^[A-Z][A-Z0-9]*(?:_[A-Z0-9]+)+$")
