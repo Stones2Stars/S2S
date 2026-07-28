@@ -27079,13 +27079,11 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		//	CURRENTLY works ok since the available outcomes are basically the animal subdues
 		for (int iI = 0; iI < GC.getNumOutcomeInfos(); iI++)
 		{
-			for (int iJ = 0; iJ < GC.getOutcomeInfo((OutcomeTypes)iI).getNumExtraChancePromotions(); iJ++)
+			const std::map<int, int>& kPromotionOdds = GC.getOutcomeInfo((OutcomeTypes)iI).getPromotionOdds();
+			const std::map<int, int>::const_iterator itOdds = kPromotionOdds.find((int)ePromotion);
+			if (itOdds != kPromotionOdds.end())
 			{
-				if (GC.getOutcomeInfo((OutcomeTypes)iI).getExtraChancePromotion(iJ) == ePromotion)
-				{
-					iValue += 2 * GC.getOutcomeInfo((OutcomeTypes)iI).getExtraChancePromotionChance(iJ);
-					break;
-				}
+				iValue += 2 * itOdds->second;
 			}
 		}
 	}

@@ -10282,15 +10282,14 @@ void CvGameTextMgr::parsePromotionHelpInternal(CvWStringBuffer &szBuffer, Promot
 	{
 		const CvOutcomeInfo& kOutcome = GC.getOutcomeInfo((OutcomeTypes)iI);
 
+		const std::map<int, int>& kPromotionOdds = kOutcome.getPromotionOdds();
 		int iExtraChancePromotion = 0;
 		for(int iJ = 0; iJ < (int)linePromotionsOwned.size(); iJ++ )
 		{
-			for (int iK = 0; iK < kOutcome.getNumExtraChancePromotions(); iK++)
+			const std::map<int, int>::const_iterator itOdds = kPromotionOdds.find((int)linePromotionsOwned[iJ]);
+			if (itOdds != kPromotionOdds.end())
 			{
-				if (kOutcome.getExtraChancePromotion(iK) == linePromotionsOwned[iJ])
-				{
-					iExtraChancePromotion += kOutcome.getExtraChancePromotionChance(iK);
-				}
+				iExtraChancePromotion += itOdds->second;
 			}
 		}
 		if (iExtraChancePromotion != 0)

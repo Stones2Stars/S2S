@@ -351,11 +351,12 @@ int CvOutcome::getChance(const CvUnit &kUnit) const
 		iChance += GC.getHandicapInfo(GC.getGame().getHandicapType()).getSubdueAnimalBonusAI();
 	}
 
-	for (int i = 0; i < kInfo.getNumExtraChancePromotions(); i++)
+	const std::map<int, int>& kPromotionOdds = kInfo.getPromotionOdds();
+	for (std::map<int, int>::const_iterator itOdds = kPromotionOdds.begin(); itOdds != kPromotionOdds.end(); ++itOdds)
 	{
-		if (kUnit.isHasPromotion(kInfo.getExtraChancePromotion(i)))
+		if (kUnit.isHasPromotion((PromotionTypes)itOdds->first))
 		{
-			iChance += kInfo.getExtraChancePromotionChance(i);
+			iChance += itOdds->second;
 		}
 	}
 	return iChance > 0 ? iChance : 0;
@@ -388,7 +389,7 @@ bool CvOutcome::isPossible(const CvUnit& kUnit) const
 		}
 	}
 
-	if (kInfo.getCity())
+	if (kInfo.hasPlacement(OUTCOME_PLACEMENT_CITY))
 	{
 		if (!kUnit.plot()->isCity())
 		{
@@ -396,7 +397,7 @@ bool CvOutcome::isPossible(const CvUnit& kUnit) const
 		}
 	}
 
-	if (kInfo.getNotCity())
+	if (kInfo.hasPlacement(OUTCOME_PLACEMENT_NOT_CITY))
 	{
 		if (kUnit.plot()->isCity())
 		{
@@ -417,14 +418,14 @@ bool CvOutcome::isPossible(const CvUnit& kUnit) const
 	const PlayerTypes ePlotOwner = kUnit.plot()->getOwner();
 	if (ePlotOwner == NO_PLAYER)
 	{
-		if (!kInfo.getNeutralTerritory())
+		if (!kInfo.hasTerritory(OUTCOME_TERRITORY_NEUTRAL))
 		{
 			return false;
 		}
 	}
 	else if (GET_PLAYER(ePlotOwner).isNPC())
 	{
-		if (!kInfo.getBarbarianTerritory())
+		if (!kInfo.hasTerritory(OUTCOME_TERRITORY_BARBARIAN))
 		{
 			return false;
 		}
@@ -435,19 +436,19 @@ bool CvOutcome::isPossible(const CvUnit& kUnit) const
 		const CvTeam& kPlotOwnerTeam = GET_TEAM(ePlotOwnerTeam);
 		if (kOwnerTeam.isAtWar(ePlotOwnerTeam))
 		{
-			if (!kInfo.getHostileTerritory())
+			if (!kInfo.hasTerritory(OUTCOME_TERRITORY_HOSTILE))
 			{
 				return false;
 			}
 		}
 		else if ((eOwnerTeam == ePlotOwnerTeam) || (kPlotOwnerTeam.isVassal(eOwnerTeam)))
 		{
-			if (!kInfo.getFriendlyTerritory())
+			if (!kInfo.hasTerritory(OUTCOME_TERRITORY_FRIENDLY))
 			{
 				return false;
 			}
 		}
-		else if (!kInfo.getNeutralTerritory())
+		else if (!kInfo.hasTerritory(OUTCOME_TERRITORY_NEUTRAL))
 		{
 			return false;
 		}
@@ -716,7 +717,7 @@ bool CvOutcome::isPossibleInPlot(const CvUnit& kUnit, const CvPlot& kPlot, bool 
 		}
 	}
 
-	if (kInfo.getCity())
+	if (kInfo.hasPlacement(OUTCOME_PLACEMENT_CITY))
 	{
 		if (!kPlot.isCity())
 		{
@@ -724,7 +725,7 @@ bool CvOutcome::isPossibleInPlot(const CvUnit& kUnit, const CvPlot& kPlot, bool 
 		}
 	}
 
-	if (kInfo.getNotCity())
+	if (kInfo.hasPlacement(OUTCOME_PLACEMENT_NOT_CITY))
 	{
 		if (kPlot.isCity())
 		{
@@ -737,14 +738,14 @@ bool CvOutcome::isPossibleInPlot(const CvUnit& kUnit, const CvPlot& kPlot, bool 
 	const PlayerTypes ePlotOwner = kPlot.getOwner();
 	if (ePlotOwner == NO_PLAYER)
 	{
-		if (!kInfo.getNeutralTerritory())
+		if (!kInfo.hasTerritory(OUTCOME_TERRITORY_NEUTRAL))
 		{
 			return false;
 		}
 	}
 	else if (GET_PLAYER(ePlotOwner).isNPC())
 	{
-		if (!kInfo.getBarbarianTerritory())
+		if (!kInfo.hasTerritory(OUTCOME_TERRITORY_BARBARIAN))
 		{
 			return false;
 		}
@@ -755,21 +756,21 @@ bool CvOutcome::isPossibleInPlot(const CvUnit& kUnit, const CvPlot& kPlot, bool 
 		const CvTeam& kPlotOwnerTeam = GET_TEAM(ePlotOwnerTeam);
 		if (kOwnerTeam.isAtWar(ePlotOwnerTeam))
 		{
-			if (!kInfo.getHostileTerritory())
+			if (!kInfo.hasTerritory(OUTCOME_TERRITORY_HOSTILE))
 			{
 				return false;
 			}
 		}
 		else if ((eOwnerTeam == ePlotOwnerTeam) || (kPlotOwnerTeam.isVassal(eOwnerTeam)))
 		{
-			if (!kInfo.getFriendlyTerritory())
+			if (!kInfo.hasTerritory(OUTCOME_TERRITORY_FRIENDLY))
 			{
 				return false;
 			}
 		}
 		else
 		{
-			if (!kInfo.getNeutralTerritory())
+			if (!kInfo.hasTerritory(OUTCOME_TERRITORY_NEUTRAL))
 			{
 				return false;
 			}
@@ -999,7 +1000,7 @@ bool CvOutcome::execute(CvUnit &kUnit, PlayerTypes eDefeatedUnitPlayer, UnitType
 
 	CvPlayer& kPlayer = GET_PLAYER(kUnit.getOwner());
 
-	const bool bToCoastalCity = GC.getOutcomeInfo(getType()).getToCoastalCity();
+	const bool bToCoastalCity = GC.getOutcomeInfo(getType()).hasPlacement(OUTCOME_PLACEMENT_COASTAL_CITY);
 
 	const CvUnitInfo* pUnitInfo =
 	(
@@ -1344,7 +1345,7 @@ int CvOutcome::AI_getValueInPlot(const CvUnit &kUnit, const CvPlot &kPlot, bool 
 	int iValue = 0;
 
 	CvPlayerAI& kPlayer = GET_PLAYER(kUnit.getOwner());
-	const bool bToCoastalCity = GC.getOutcomeInfo(getType()).getToCoastalCity();
+	const bool bToCoastalCity = GC.getOutcomeInfo(getType()).hasPlacement(OUTCOME_PLACEMENT_COASTAL_CITY);
 	//CvUnitInfo* pUnitInfo = &kUnit.getUnitInfo();
 
 	if (m_ePromotionType > NO_PROMOTION)
@@ -1701,7 +1702,7 @@ void CvOutcome::copyNonDefaults(CvOutcome* pOutcome)
 void CvOutcome::buildDisplayString(CvWStringBuffer &szBuffer, const CvUnit& kUnit) const
 {
 	//CvPlayer& kPlayer = GET_PLAYER(kUnit.getOwner());
-	const bool bToCoastalCity = GC.getOutcomeInfo(getType()).getToCoastalCity();
+	const bool bToCoastalCity = GC.getOutcomeInfo(getType()).hasPlacement(OUTCOME_PLACEMENT_COASTAL_CITY);
 	//CvUnitInfo* pUnitInfo = &kUnit.getUnitInfo();
 
 	szBuffer.append(GC.getOutcomeInfo(getType()).getText());
