@@ -148,7 +148,7 @@ gates anything.
 | `canSetScienceRate` | `setScienceRate` | commerce-flexible (TECH_GAME_START) | the science slider |
 | `canSetCultureRate` | `setCultureRate` | commerce-flexible (TECH_DRAMA) | the culture slider |
 | `canSetEspionageRate` | `setEspionageRate` | commerce-flexible (TECH_GAME_START) | the espionage slider |
-| ~~`dcmAirBomb1` / `dcmAirBomb2`~~ | same | `bDCMAirBombTech1/2` | DCM air-bomb target tiers — **MOOT: DCM air bombing is slated for whole-system REMOVAL** ([structural-cleanup.md](../plans/structural-cleanup/structural-cleanup.md) Tier 2); the channels drop with it |
+| ~~`dcmAirBomb1` / `dcmAirBomb2`~~ | same | `bDCMAirBombTech1/2` | DCM air-bomb target tiers — **MOOT: DCM air bombing is slated for whole-system REMOVAL** ([structural-cleanup.md](../plans/structural-cleanup/todo.md) Tier 2); the channels drop with it |
 
 ## Grounded meanings
 

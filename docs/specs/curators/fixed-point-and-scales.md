@@ -50,8 +50,8 @@ rewired — the exact reflex that produced the half-migration. Carrying ×100 ou
 (the answer is always "×100"), and the visible-100×-if-mis-wired forcing function makes every consumer wire
 correctly or be discarded. **Blast radius is never a reason to limit the conversion.** A consumer that only tests
 SIGN or ranks is scale-invariant (no change); one that mixes with a whole count reduces at that use; an aggregate
-stays ×100 and its own reader reduces. Migration status + the pilot pattern:
-[fixed-point-conformance.md](../../plans/structural-cleanup/fixed-point-conformance.md).
+stays ×100 and its own reader reduces. The conversion METHOD is §4c-bis below; what remains to convert is the
+[todo](../../plans/structural-cleanup/todo.md).
 
 **Consequence:** a ×100 value in a JSON file is a **curator bug** — it leaked an integer-math
 representation onto the human surface. Because the curator absorbs all scale mixing once, readJson has
@@ -115,6 +115,29 @@ The "`*100` getters mark the scaled fields" rule is INCOMPLETE: some fields are 
 
 > The per-pop row is the [DEC-no-guessing](../../architecture/decisions.md#dec-no-guessing) case in miniature:
 > the scale was *mapped* at the consumption site, never guessed from the field name.
+
+## 4c-bis. ⛔ CONVERT BY ARITHMETIC CLUSTER, NEVER BY GETTER
+
+**A getter cannot be converted alone.** Its co-operands are on the same scale *by arithmetic necessity*: convert one
+side and every mixing site needs a compensating `÷100` — manufacturing the very fudge factor that signals a
+misplaced reduce. Convert the whole cluster and the mixing sites need **no change at all**, because the units
+already cancel. This is why such a sweep keeps getting re-shoehorned: each getter looks independently convertible,
+and none is.
+
+**The acceptance gate per cluster: ZERO new fudge factors at the mixing sites.** If a conversion forces compensating
+constants, the cluster boundary was drawn WRONG — stop and redraw it, never push through. (This is the second of
+[AGENTS.md](../../../AGENTS.md)'s drift detectors, stated as a conversion method.)
+
+⚑ **A cluster is defined by what MIXES, not by what looks similar.** Worked groupings: the yield/food/wellbeing
+chain is one unit because food consumption subtracts angry population and health rate; commerce joins it at the
+production→commerce term; gold/maintenance/upkeep joins commerce because gold IS a yield
+([DEC-universal-yield](../../architecture/decisions.md#dec-universal-yield)); unit experience is genuinely
+self-contained and so is the one safely parallelizable cluster.
+⚠ **Same SHAPE is not same NATURE:** a `…Times100` on AI unit counts or plot strength carries *fractional
+SizeMatters counts*, not a modifier channel — it is not a scale violation and must not be swept in with the yields.
+
+**Sequencing within a cluster (owner): set the mechanic up to spec FIRST, then wire the consumers.** Do not open
+with a hundred consumer edits; build the value chain so it is internally ×100-consistent, then reduce at the readers.
 
 ## 4d. ⛔ THE EDGE — where a scale error can occur at all, and therefore what an audit checks
 

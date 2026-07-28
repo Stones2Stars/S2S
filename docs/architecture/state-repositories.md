@@ -78,6 +78,35 @@ governor's valuation, the cost class this whole doc exists to prevent. The engin
 stale-cache divergences resolved **at the source**, behaviour-preserving
 ([DEC-parity](decisions.md#dec-parity)).
 
+### ⛔ THE LEGACY-ACCUMULATOR CUT — every accumulator, ONE uniform mechanism
+
+> Binding: [DEC-accumulator-cut-uniform](decisions.md#dec-accumulator-cut-uniform). **NOT wellbeing-specific — it is
+> EVERY legacy serialized incremental accumulator, and they all work exactly the same way.** Wellbeing was the pilot
+> that proved it; the same cut then repeats UNCHANGED. **Blast radius is not a concern — it is the SIGNAL: a cut
+> that does NOT reach broadly means the legacy is not actually being cut.**
+
+**What an accumulator IS — the three-part test.** A member that is ALL of: (1) **serialized** in `read()`/`write()`;
+(2) **incrementally maintained** by `change*`/`update*`/`process*` deltas, never recomputed-from-source; (3) a
+**per-turn game quantity the cascade now owns**. These are the STORED-ACCUMULATOR DRIFT class
+([modifier.md §2b](../specs/modifier.md)): they carry decades of save history no live source can reproduce, so a
+stored-vs-recompute diff is **DRIFT (history pollution), never state to preserve** — the recompute is the correct side.
+
+**The uniform mechanism:**
+
+1. Add the cluster's **fresh-gather accessor** returning its term from the cascade, ×100 internally.
+2. **Re-point the realized getter** to it, reducing `÷100` at the reader boundary — **no `*Legacy` fallback, no
+   variant getter** ([DEC-no-legacy-masking](decisions.md#dec-no-legacy-masking): anything sneaking a legacy value
+   back in is an ERROR, never a safety net; on a red tree a wrong/empty cascade value is the CORRECT exposed outcome).
+3. **HARD-DELETE** the member and its maintainers.
+4. **FULL-DELETE the read + write** and NAME the tag in `Assets/savemigration.txt` — the reader drains the orphan
+   transparently ([save.md §3](../specs/save.md)). No `WRAPPER_SKIP_ELEMENT`; an UNLISTED deleted-read orphan is the
+   one hard desync.
+5. **The COMPILER is the census** — every surviving consumer is a compile error to rewire; you cannot
+   flip-and-pretend. Done = endpoint-observable on a loaded save, not "it compiles."
+
+⚠ **Audit each deleted `change*`/`update*` BODY for side effects first** — legacy changers carry non-obvious riders
+(trade-network recompute, UI-dirty, power) the surviving trigger site must still fire ([save.md §6](../specs/save.md)).
+
 **Incremental-accumulate ledgers convert to recompute-from-source.** The serialized player ledger
 `m_ppiBuildingCommerceChange` double-counted by build order (the accumulator replayed onto the loaded value); it is
 now a recompute-from-source cache (Σ over the player's buildings' `GlobalBuildingExtraCommerces` on dirty), the

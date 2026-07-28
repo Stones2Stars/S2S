@@ -20,8 +20,8 @@ modifier) reduces at the POINT OF USE that consumes it as a whole number, never 
 consumer reads. **No getter has a ×100 "variant"** (never a `getX`+`getX100` pair); reducing at the getter forces that
 split and lets the cascade be shoehorned into legacy-shaped getters — the half-migration reflex. **Blast radius never
 limits the conversion** — the mapped consumer surface is the worklist, not a warning. **Home:**
-[fixed-point-and-scales.md](../specs/curators/fixed-point-and-scales.md); the standing conversion worklist:
-[fixed-point-conformance.md](../plans/structural-cleanup/fixed-point-conformance.md).
+[fixed-point-and-scales.md](../specs/curators/fixed-point-and-scales.md) (which also carries the CONVERT-BY-CLUSTER
+method and the boundary-enumeration audit).
 
 ### DEC-curator-owns-descale
 
@@ -369,9 +369,8 @@ full-delete the read + write and name the tag in `Assets/savemigration.txt` (the
 `WRAPPER_SKIP_ELEMENT`, [DEC-save-remove-is-soft](#dec-save-remove-is-soft)), and let the COMPILER census the consumers. **NOT
 wellbeing-specific — they ALL work exactly the same way**; wellbeing is the pilot. **Blast radius is the SIGNAL** (a
 cut that does not reach broadly is not cutting the legacy), never a limit; anything sneaking a legacy value back in is
-an ERROR ([DEC-no-legacy-masking](#dec-no-legacy-masking)). The recompute-from-source
-([state-repositories.md](state-repositories.md)) application of [DEC-universal-yield](#dec-universal-yield). **Home:**
-[fixed-point-conformance.md](../plans/structural-cleanup/fixed-point-conformance.md).
+an ERROR ([DEC-no-legacy-masking](#dec-no-legacy-masking)). The recompute-from-source application of
+[DEC-universal-yield](#dec-universal-yield). **Home:** [state-repositories.md](state-repositories.md).
 
 ### DEC-playability-not-a-gate
 

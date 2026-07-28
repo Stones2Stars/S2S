@@ -93,6 +93,29 @@
 - **Retiring the engine start selection** — the whole-database scan + AI scoring, and the per-role starting counts,
   retire once packages carry the identities. Until then they remain the live path.
 
+## Scale conversion
+
+> Method: [fixed-point-and-scales.md § CONVERT BY ARITHMETIC CLUSTER](../../specs/curators/fixed-point-and-scales.md).
+> Mechanism for cutting an accumulator: [state-repositories.md](../../architecture/state-repositories.md).
+
+- **Convert the remaining human-twin getters cluster by cluster**, never getter by getter. The clusters that still
+  mix: yield/food/wellbeing (the keystone — food consumption subtracts angry population and health rate), commerce
+  (joins it at the production→commerce term), gold/maintenance/upkeep (gold IS a yield, so it rides with commerce),
+  trade profit, war weariness. Unit experience is self-contained and is the one safely parallelizable cluster.
+  Acceptance per cluster: ZERO new fudge factors at the mixing sites.
+- **⚠ Needs an owner ruling before being swept in:** the `…Times100` on AI unit counts and plot strength carries
+  fractional SizeMatters counts, not a modifier channel — same shape, different nature.
+- **`getFinalExpense` folds a ×10000 inflation modifier** — a third scale to reconcile when the gold cluster converts.
+
+## Tree / include hygiene
+
+- **Retire the `CvInfos.h` umbrella** (~177 includers) — a hand-careful pass; the lessons and the hard bans are in
+  [AGENTS.md](../../../AGENTS.md) Conventions §Design.
+- **The dead-code / dead-XML pass** — tooling generates CANDIDATES only; nothing is auto-deleted, every removal is
+  verified against source/data and test-loaded against a save, one subsystem at a time.
+- **The CTB `/events` blind spot** — the `[CTB/work/intransit]` block gates on a different log global than every
+  other CTB gate and its line stays legacy-only, so it never reaches `/events`.
+
 ## Green-up (after the structure, never ahead of it)
 
 - Engine-repair debt: the bare Engine includes · `CvOutcomeMission::mapFrom` · the property-manipulator helpers ·

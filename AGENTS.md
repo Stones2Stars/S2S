@@ -398,7 +398,17 @@ the total-observability bar below.)
   hole; [DEC-proper-once](docs/architecture/decisions.md#dec-proper-once): no transitional shim). Python-authoritative
   *gameplay* still stays Python — this is about the INFO/state binding surface, not about pulling gameplay into the DLL.
 - **Import Info headers DIRECTLY; do not lean on the `CvInfos.h` umbrella.** New/edited code includes the specific
-  header it needs; the umbrella is flagged for retirement.
+  header it needs; the umbrella is flagged for retirement. **⛔ Retiring it is a dedicated, hand-careful pass, NOT a
+  session-tail script run** ([DEC-proper-once](docs/architecture/decisions.md#dec-proper-once)) — a scripted attempt
+  was reverted after building down to a fragile tail. Three lessons bought by that attempt:
+  - **Detect usage by ACCESSOR, not just type name.** Most files touch an Info via `GC.getXInfo()` and never write
+    `CvXInfo`, so scanning only for the type name under-adds — the reverted attempt hit 853 undefined-type errors.
+    Map BOTH the type name AND `get<X>Info(`.
+  - **⛔ Never inject Info includes into FOUNDATIONAL / EXE-bound headers** (`CvInfoBase.h`, `CvEnums.h`, the
+    EXE-bound core headers) — that trades an umbrella for a worse cycle.
+  - Most of the umbrella's includers use no Info type at all, so the bulk is pure dead-include removal — the easy,
+    near-zero-risk win. The PCH's own copy is commented out, so the umbrella is not globally provided and the
+    retirement is real rather than cosmetic.
 - Preserve save compatibility by default; for intentional breaks, coordinate and mark with `@SAVEBREAK`. See
   `Notes for the next breaking of save game compatability cycle.txt`.
 - **FRONT-LOAD save-breaking reworks NOW.** S2S is its own project (only the closed Firaxis EXE binds; inherited C2C

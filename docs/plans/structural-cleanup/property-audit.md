@@ -17,13 +17,13 @@
 > approved `properties` block, and `CvPropertyInfo` reads them into `CvPropertyPropagatorDiffuse` + the change-prop
 > table. (Plot-scope sources have "no real purpose at this time" but ride along — they cost nothing.)
 >
-> **Build order (owner "curator next"):** (1) ✅ the city-scope C++ bridge — building/unit flats + decay + population
-> baseline (already-curated data, DONE, compiling: increments 1+2). (2) ✅ curator emits `properties.diffuse[]` /
-> `changePropagation[]`. (3) ✅ `CvPropertyInfo` reads them. (4) ✅ the BoolExpr translator
+> **Build order (owner "curator next"):** (1) the city-scope C++ bridge — building/unit flats + decay + population
+> baseline (already-curated data, DONE, compiling: increments 1+2). (2) curator emits `properties.diffuse[]` /
+> `changePropagation[]`. (3) `CvPropertyInfo` reads them. (4) the BoolExpr translator
 > (`Cascade/CvCascadePropertyBridge` — conditioned building/unit flats incl. the 78 tech-gated education entries,
 > the IS_OWNED diffuse gates, the per-POPULATION `each>1` IntExpr amounts, the changePropagation table; verified
 > live: ANCIENT_CUSTOMS = exactly its 3 authored sources, folklore = their 2 gated education sources).
-> (5) ✅ the all-cities gather (revived by the one-shot ruling below): `PROPERTY_X.empire.flat` → the building's
+> (5) the all-cities gather (revived by the one-shot ruling below): `PROPERTY_X.empire.flat` → the building's
 > all-cities manipulator container → the load-built `GC.getAllCitiesManipBuildings` index → the count-scaled
 > `CvGameObjectCity::foreachManipulator` walk; observable at load via the yields payload's
 > `allCitiesManipBuildings` root map + per-building `propertyManipEmpire`. (6) validate — the turn-level pass
@@ -67,7 +67,7 @@
 > Fixed: `CvPropertyManipulators::clear()` + clear-and-refill at the top of each bridge walk (the CvInfo.h
 > contract).
 >
-> **✅ THE CARRIER BRIDGES (owner 2026-07-16: "stubbing is straight up not allowed"):** every legacy
+> **THE CARRIER BRIDGES (owner 2026-07-16: "stubbing is straight up not allowed"):** every legacy
 > property-source carrier delivers from its curated JSON through the ONE shared walk
 > (`CascadePropertyBridge::bridgeFamilies` / `bridgePulses`), mirroring each category's legacy delivery shape:
 > civics/traits/heritages CITY+RELATION_ASSOCIATED (player gather → every owner city; heritage's legacy XML

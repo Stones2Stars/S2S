@@ -32,7 +32,7 @@ The engine game-object classes are back on `main`, so these describe live code a
 > ([DEC-playability-not-a-gate](../../architecture/decisions.md#dec-playability-not-a-gate)).
 - **[constructibility.md](../../reference/legacy-constructibility.md)** — the legacy `canConstruct`/`canTrain` + reverse-index machinery
   the enabler replaces.
-- **[structural-cleanup.md](structural-cleanup.md)** — the `Sources/` tree reorg (landed) + the dead-code /
+- **[structural-cleanup.md](todo.md)** — the `Sources/` tree reorg (landed) + the dead-code /
   dead-XML pass (candidate-generation only).
 
 ## The data work (unaffected by the runtime rebuild)
@@ -48,7 +48,7 @@ The engine game-object classes are back on `main`, so these describe live code a
   Worklists: **[unitcombat-tag-mapping.md](unitcombat-tag-mapping.md)** ·
   **[unitcombat-merge-candidates.md](unitcombat-merge-candidates.md)** (map the obvious, FLAG the unsure — never
   blunt-purge).
-- **[fixed-point-conformance.md](fixed-point-conformance.md)** — the ×100 conversion worklist
+- **[fixed-point-conformance.md](../../specs/curators/fixed-point-and-scales.md)** — the ×100 conversion worklist
   ([DEC-fixedpoint-x100](../../architecture/decisions.md#dec-fixedpoint-x100)).
 
 ## The grants machine (resolver built, apply-loop NOT built)
