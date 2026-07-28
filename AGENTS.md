@@ -112,6 +112,14 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <C
     failed.)
 - **Quick compile check after an edit:** `Assert build` from `Sources/`.
   Incremental is ~30s; a clean rebuild is several minutes (~25 unity batches × ~30s).
+  - **⛔ MSVC STOPS AT 100 ERRORS PER TRANSLATION UNIT (`fatal error C1003`), so on the deliberately-red tree a
+    grep for YOUR files in the build log PROVES NOTHING.** The unity batches truncate, and which files get to
+    report is a function of how the earlier ones consumed the budget — so an edit of yours can be silently
+    hidden behind ~38 files of pre-existing consumer debt, and appear only later when unrelated content shifts.
+    *(Measured: a regex that stripped a first ctor initializer left `Class::Class()` followed by a leading comma
+    in TWO infos; both compiled "clean" by that grep, and one surfaced a build later.)* **Check `grep -c C1003`:
+    if it is non-zero, errors are hidden — verify your own files by reading what you changed, not by their
+    absence from the log.**
 - The `Tools/MakeDLL*.bat` shortcuts (`MakeDLLAssert.bat`, `MakeDLLRelease.bat`, …)
   always `rebuild deploy` — full clean+rebuild+copy. Don't use them for an
   iterative compile-check loop.

@@ -15,7 +15,7 @@
 #include "AI/CvGameAI.h"          // complete CvGameAI -- GC.getGame().getSorenRand() (zobrist draw, mirrors the archive)
 
 CvFeatureInfo::CvFeatureInfo()
-	, m_iSeeThroughChange(0)
+	: m_iSeeThroughChange(0)
 	, m_iPopDestroys(-1)
 	, m_iAppearanceProbability(0)
 	, m_iDisappearanceProbability(0)

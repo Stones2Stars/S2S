@@ -13,7 +13,7 @@
 #include "AI/CvGameAI.h"          // complete CvGameAI -- GC.getGame().getSorenRand() (zobrist draw, mirrors the archive)
 
 CvTerrainInfo::CvTerrainInfo()
-	, m_iBuildModifier(0)
+	: m_iBuildModifier(0)
 	, m_iDistanceToLand(0)
 	, m_iZobristValue(0)
 	, m_iWorldSoundscapeScriptId(-1)

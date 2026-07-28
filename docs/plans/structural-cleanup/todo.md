@@ -194,6 +194,12 @@ site ([fixed-point-and-scales §4c-bis](../../specs/curators/fixed-point-and-sca
   VISION family has moved onto it. The other info-help composer families still hand-assemble from getters.
   ⚑ Each move DELETES composer code rather than porting it: a rendered line already carries magnitude,
   unit, target, scope, per-scaler and conditions, so a new channel needs no composer edit at all.
+  ⚖ **THE DLL DOES NOT CONVERT FOR DISPLAY — the consumer converts itself (owner: "let python convert
+  themselves").** A composer doing `(float)value / 100 / denominator` to print `%.2f` is the DLL performing the
+  presentation layer's arithmetic, and it puts FLOAT in the DLL for a value the engine holds as an integer.
+  ⚠ Not an OOS risk while it is display-only, which is exactly why it survives unnoticed — but it is the wrong
+  side of the boundary, and it is the shape to remove as each composer moves, never to copy into a new one.
+  Live instances: the two route-cost lines in `CvGameTextMgr` (pedia movement cost).
 - **Re-point the unit consumer getters onto `resolvedValue()`** (`Sources/Cascade/CvUnitResolved`).
 - **The unit power-value plane** — its readers are ordinary consumer debt on a deliberately red tree.
 - **The Python data-fetching library** — built COMPLETE, then the `Cy*` surface disconnected whole. Contract:
