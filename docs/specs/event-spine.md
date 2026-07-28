@@ -180,7 +180,7 @@ reads objects). **Build order:** spine + the modifier scope accumulator → logg
   `tr_applyCityPerTurn` / `tr_applySpawn` / `tr_applyFullHeal` / `tr_promoteFromEntries`), dispatched from
   `SEVT_TECH_ACQUIRED` / `RELIGION_FOUNDED` / `PLAYER_INIT` / `CITY_FOUNDED` / `CIVIC_ADOPTED` / `TURN_STARTED` /
   `BUILDING_CHANGED` / `BUILDING_PROCESSED` / `UNIT_CREATED` / `UNIT_ENTERED_CITY` / `CAPITAL_CHANGED`; the
-  remaining increments are in [grants-machine.md](../plans/structural-cleanup/grants-machine.md)).
+  remaining increments are in [grants-machine.md](triggers.md)).
   ⛔ It registers **LAST**, after the contexts / enabler / modifier: it READS the contexts (every entry condition
   evaluates through `fillEvalCtx`) and the enabler's operating set (a dormant building grants nothing), and unlike
   those machines it APPLIES -- so a stale read hands out a wrong GRANT, not merely a wrong number.

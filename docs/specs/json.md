@@ -574,7 +574,7 @@ declare the number. Enforcement reads the [tally](tally.md) count.
   (owner) — there is no legacy engine apply to port.** Do not go looking for one: the legacy `bNewCityFree` path
   (`CvPlayer::found`, gated on `isNewCityFree()`) is a DIFFERENT, now-dead mechanic that merely sits at the same
   call site. This lands with the grants machine's apply-loop
-  ([grants-machine.md](../plans/structural-cleanup/grants-machine.md) increment 5); the data is authored and
+  ([grants-machine.md](triggers.md) increment 5); the data is authored and
   waiting. The settler ALONE carries the founder buildings — no civilization authors a duplicate in its own
   `grants.buildings`.
 - **Recurring / chance-rolled / state-conditioned handouts are NOT grants — they are `triggers` entries**

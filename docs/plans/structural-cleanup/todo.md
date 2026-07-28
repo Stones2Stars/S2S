@@ -65,6 +65,14 @@
   NOT a coverage oracle — the appendix is enumerable). Read maps: [pedia-map.md](../../reference/pedia-read-map.md) ·
   [python-read-map.md](../../reference/python-read-map.md).
 
+## Triggers / grants
+
+- **Start packages are DESIGN, not built** ([triggers.md](../../specs/triggers.md) § Game-start provisions): the
+  entity type, its folder + prefix + repo row + manifest, and the shipped default packages. Two content decisions
+  ride it — which units the defaults name, and NPC/barbarian starts (not authored in a grants block today).
+- **Retiring the engine start selection** — the whole-database scan + AI scoring, and the per-role starting counts,
+  retire once packages carry the identities. Until then they remain the live path.
+
 ## Green-up (after the structure, never ahead of it)
 
 - Engine-repair debt: the bare Engine includes · `CvOutcomeMission::mapFrom` · the property-manipulator helpers ·

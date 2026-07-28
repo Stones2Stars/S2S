@@ -126,7 +126,7 @@ Authority: [state-repositories.md](../../architecture/state-repositories.md), [m
 | readJson + the two-pass loader + the full-registry re-map | `Sources/Data/` | BUILT |
 | Info pocos + repos (all 23 replaced types + the 11 uniformity types) | `Sources/Infos/`, `Sources/Repos/` | BUILT |
 | Tally (read-only accessor over object-owned counts) | `Sources/Tally/` | BUILT |
-| Trigger engine (grants folded in) | `Sources/Triggers/` | Resolver + APPLIERS built (tech first-discover, building first-build, per-turn, spawn, full-heal), consuming the DOMAIN emits and suppressed inside the load bracket so a reseed never re-grants; remaining increments: [grants-machine.md](grants-machine.md) |
+| Trigger engine (grants folded in) | `Sources/Triggers/` | Resolver + APPLIERS built (tech first-discover, building first-build, per-turn, spawn, full-heal), consuming the DOMAIN emits and suppressed inside the load bracket so a reseed never re-grants; remaining increments: [grants-machine.md](../../specs/triggers.md) |
 | Property feed + channel | `Sources/Property/` | BUILT (engine math is KEEP-legacy) |
 | Save soft-remove drain (`savemigration.txt` + `sm_isCut`) | `Sources/Infrastructure/` | BUILT |
 | Derived-cache component (`CvDerivedCache`/`Set`/`Vec`) | `Sources/Infrastructure/` | BUILT |
@@ -323,8 +323,8 @@ These are data/curator/audit items whose subject never lived in the archived sub
   merge-candidate worklists. Owner realization: the `UnitCombat` god-group must be distilled before the migration
   can finish, because it is the common blocker under the keyed "vs unit-combat-class" combat modifiers, the upkeep
   military/civilian bucketing, and the `IS_<tag>` predicate surface.
-- **The grants apply-loop** — [grants-machine.md](grants-machine.md) + [grant-apply-sites.md](../../reference/legacy-grant-apply-sites.md)
-  + [start-packages.md](start-packages.md). The resolver and the first appliers are wired onto the spine (see the
+- **The grants apply-loop** — [grants-machine.md](../../specs/triggers.md) + [grant-apply-sites.md](../../reference/legacy-grant-apply-sites.md)
+  + [start-packages.md](../../specs/triggers.md). The resolver and the first appliers are wired onto the spine (see the
   EXISTS table); what remains is the rest of the apply surface. ⚠ It is ONE piece among many, never the headline
   gap — and whether a grant hands out the RIGHT payload is not testable until the tree is green, so it is ranked
   by WIRING like everything else (the banner's WIRED-OUTRANKS-CORRECT rule).

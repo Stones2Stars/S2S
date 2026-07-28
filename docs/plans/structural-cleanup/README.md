@@ -53,11 +53,11 @@ The engine game-object classes are back on `main`, so these describe live code a
 
 ## The grants machine (resolver built, apply-loop NOT built)
 
-- **[grants-machine.md](grants-machine.md)** — the machine's spec.
+- **[grants-machine.md](../../specs/triggers.md)** — the machine's spec.
 - **[grant-apply-sites.md](../../reference/legacy-grant-apply-sites.md)** — the `file:line` map of where provisions are handed over
   today. The apply surface accreted over fifteen years across two languages and is not reconstructible from
   memory; this is what the machine must replace.
-- **[start-packages.md](start-packages.md)** — the game-start provisions as authored data (design, not built).
+- **[start-packages.md](../../specs/triggers.md)** — the game-start provisions as authored data (design, not built).
 
 ## The enabler + perf
 

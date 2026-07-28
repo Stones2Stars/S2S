@@ -1,12 +1,12 @@
 # The grant APPLY-SITE map — where provisions are actually handed over today
 
-> **Why this exists.** [grants-machine.md](../plans/structural-cleanup/grants-machine.md) specs the machine and carries a trigger→legacy-site
+> **Why this exists.** [grants-machine.md](../specs/triggers.md) specs the machine and carries a trigger→legacy-site
 > *inventory*. That inventory was checked domain-by-domain against live code and was found to **understate the
 > surface in every single domain**, with drifted line numbers throughout and at least one row citing a function
 > that does not exist. The apply surface is not reconstructible from memory — it accreted over fifteen years
 > across two languages — so it is mapped here, once, with `file:line` for each site.
 >
-> **This doc is the map. [grants-machine.md](../plans/structural-cleanup/grants-machine.md) stays the machine's spec.** Do not fold them
+> **This doc is the map. [grants-machine.md](../specs/triggers.md) stays the machine's spec.** Do not fold them
 > together: one is "what the machine is", this is "what it must replace".
 >
 > ⛔ **The apply cannot be moved before the CLASSIFICATION below is ruled on.** Several sites look like grants and
@@ -246,7 +246,7 @@ building `getFreeTraitTypes` ("conferred while active"); vote `tradeRoutes`/`isF
 (`m_paiFreeSpecialistCountUnattributed`) is genuine one-shot state: Great-Person `join` consumes the unit so no
 source survives (`CvUnit.cpp:8778`), city acquisition carries it (`CvPlayer.cpp:2606`), and **era-advance free
 specialists are a persisted pulse, not a while-active modifier** (`CvPlayer.cpp:12187`) — which pins the lifetime
-question [grants-machine.md](../plans/structural-cleanup/grants-machine.md) left open.
+question [grants-machine.md](../specs/triggers.md) left open.
 
 ## 5. Open rulings (blocking the apply)
 
@@ -312,7 +312,7 @@ question [grants-machine.md](../plans/structural-cleanup/grants-machine.md) left
    `CvPlayer::deleteCity` (`:14755`) — the single dispose/raze choke point.
 
 ## See also
-- [grants-machine.md](../plans/structural-cleanup/grants-machine.md) — the machine + its build increments (its inventory table is superseded
+- [grants-machine.md](../specs/triggers.md) — the machine + its build increments (its inventory table is superseded
   by §2 here). · [json.md §5](../specs/json.md) — the `grants` vocabulary. ·
   [mission-outcome-system.md](mission-outcome-system.md) — the missions carve-out (the four
   hardcoded ability keys) AND the outcome system, which is separate from this machine entirely (§2).
