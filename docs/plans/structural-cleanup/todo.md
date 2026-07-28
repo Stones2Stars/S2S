@@ -163,10 +163,13 @@
   - **Per-id buckets** — the two per-id buckets (BONUS→buildings, BUILDING→buildings) — are
     the only true duplicates of `EDGEF_REQUIRED_BY`
     ([DEC-one-reverse-view](../../architecture/decisions.md#dec-one-reverse-view)).
-    ⚠ **But converging them is not free:** the canonical axis is `requires`-GENERAL while these are operate-SPECIFIC,
-    so the swap would drag build-only dependents into the provides-ripple fixpoint. That is SAFE by the
-    over-inclusion invariant ([enabler.md §5](../../specs/enabler.md)) but lands the extra work in the hot loop —
-    decide deliberately, and measure.
+    ⚑ **The over-inclusion is MEASURED and small, so this convergence is cheap.** The canonical axis is
+    `requires`-GENERAL (it records the dependent's KIND but not the build-vs-operate TIMING, so the distinction is
+    unrecoverable from the edge) while these buckets are operate-SPECIFIC — so the swap drags build-only dependents
+    into the provides-ripple fixpoint. Across the authored data that is **196 build-only edges against 3,921
+    operate ones (~5%)**: the resource requirements are overwhelmingly `operate`, because a resource gate folds
+    into operate so the building DORMS when supply is lost (the band model working). Safe by the over-inclusion
+    invariant ([enabler.md §5](../../specs/enabler.md)) and cheap by measurement.
   - **Axis-flag lists** (population / power / golden age / state religion / live-state, and the coarse
     religion / corporation / civic / tech lists) plus the PROPERTY band index are **NOT convergence targets**: the
     reverse pass deliberately excludes engine tokens, the plot substrate and `PROPERTY_` bands, and the coarse
