@@ -6142,7 +6142,7 @@ int CvSelectionGroup::countSeeInvisibleActive(UnitAITypes eUnitAI, InvisibleType
 		{
 			if (GC.getGame().isOption(GAMEOPTION_COMBAT_HIDE_SEEK))
 			{
-				if (pLoopUnit->visibilityIntensityTotal(eInvisibleType) > 0)
+				if (pLoopUnit->detectionAgainst(eInvisibleType) > 0)
 				{
 					iCount++;
 				}

@@ -123,7 +123,8 @@ enum ModifierFamily
 	MODFAM_UNDERWORLD,
 	MODFAM_UPKEEP,
 	MODFAM_VISION,   // vision.md: how well an OBSERVER sees -- its STRENGTH, and the unit plane's only source
-	                 // (base stat + promotions). Spent walking outward against MODFAM_OBSTRUCTION.
+	                 // (base stat + promotions), the ground's elevation and obstruction, and the
+	                 // hide-and-seek pair. One family; the KINDS below are what it is made of.
 	MODFAM_WAR_WEARINESS,
 	MODFAM_WITHDRAWAL,
 	MODFAM_WORK_RATE,
@@ -353,6 +354,11 @@ enum VisionKind
 	VISION_STRENGTH = 0,      // how well the observer sees (memberless -- the family's default kind)
 	VISION_ELEVATION,         // how high it is; grants sight to whoever looks from it
 	VISION_OBSTRUCTION,       // what it costs to see THROUGH this ground
+	// The hide-and-seek pair (vision.md §4): ONE detection type counters ONE concealment type, and the METHOD
+	// is the hider's TAG -- a detection entry names the method it answers through the ordinary {unit: IS_<TAG>}
+	// qualifier, so the pairing needs no vocabulary of its own.
+	VISION_CONCEALMENT,       // how well a unit HIDES
+	VISION_DETECTION,         // how well a seeker sees a hidden unit, per method it answers
 	NUM_VISION_KINDS
 };
 const int VISION_SCOPES = INFO_SCOPE_BIT(CASC_SCOPE_UNIT) | INFO_SCOPE_BIT(CASC_SCOPE_PLOT) | INFO_SCOPE_BIT(CASC_SCOPE_CITY);

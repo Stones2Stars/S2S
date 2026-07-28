@@ -12882,6 +12882,77 @@ void CvUnit::changeNoInvisibilityCount(int iChange)
 }
 
 
+namespace
+{
+	// The hider's METHOD is its TAG, and the enum name IS the tag name -- INVISIBLE_NAVAL_DISGUISE becomes
+	// TAG_NAVAL_DISGUISE, a prefix swap. So neither side carries a table and the two cannot drift (vision.md §4).
+	CvString uv_methodTag(InvisibleTypes eMethod)
+	{
+		CvString szTag = "TAG_";
+		szTag += GC.getInvisibleInfo(eMethod).getType() + strlen("INVISIBLE_");
+		return szTag;
+	}
+
+	// ONE contributor's detection against a method: an entry qualified by that method's tag, or an UNQUALIFIED
+	// entry, which answers any method (a see-everything detector).
+	int uv_detectionOf(const CvInfo* pInfo, const CvString& szTag)
+	{
+		const CvModifiers* pModifiers = pInfo != NULL ? pInfo->getModifiers() : NULL;
+		if (pModifiers == NULL)
+		{
+			return 0;
+		}
+		int iTotal = 0;
+		const std::vector<CvModEntry*>& aEntries = pModifiers->entries();
+		for (std::vector<CvModEntry*>::const_iterator it = aEntries.begin(); it != aEntries.end(); ++it)
+		{
+			const CvModEntry* pEntry = *it;
+			if (pEntry == NULL || pEntry->family != MODFAM_VISION || pEntry->kind != VISION_DETECTION)
+			{
+				continue;
+			}
+			const CvCondition* pQual = pEntry->unitQual;
+			if (pQual == NULL || (pQual->predKind == CASC_PRED_IS_TAG && pQual->param == szTag))
+			{
+				iTotal += pEntry->value;
+			}
+		}
+		return iTotal;
+	}
+}
+
+int CvUnit::concealment() const
+{
+	// How well this unit hides. ONE number -- the METHOD it hides by is its tag, and a seeker's detection
+	// against THAT method is what this is weighed against (vision.md §4: one detection type counters one
+	// concealment type).
+	return resolvedValue(URS_CONCEALMENT);
+}
+
+int CvUnit::detectionAgainst(InvisibleTypes eMethod) const
+{
+	// Walked at SIGHT REGISTRATION (per move), never per read -- isInvisible is one of the hottest reads in the
+	// engine and reads the plot's already-registered value instead.
+	const CvString szTag = uv_methodTag(eMethod);
+	int iTotal = uv_detectionOf(&getUnitInfo(), szTag);
+
+	for (int iPromotion = 0; iPromotion < GC.getNumPromotionInfos(); ++iPromotion)
+	{
+		if (isHasPromotion((PromotionTypes)iPromotion))
+		{
+			iTotal += uv_detectionOf(&GC.getPromotionInfo((PromotionTypes)iPromotion), szTag);
+		}
+	}
+	for (int iCombat = 0; iCombat < GC.getNumUnitCombatInfos(); ++iCombat)
+	{
+		if (isHasUnitCombat((UnitCombatTypes)iCombat))
+		{
+			iTotal += uv_detectionOf(&GC.getUnitCombatInfo((UnitCombatTypes)iCombat), szTag);
+		}
+	}
+	return iTotal;
+}
+
 bool CvUnit::isInvisible(TeamTypes eTeam, bool bDebug, bool bCheckCargo) const
 {
 	PROFILE_EXTRA_FUNC();
@@ -12932,10 +13003,13 @@ bool CvUnit::isInvisible(TeamTypes eTeam, bool bDebug, bool bCheckCargo) const
 				{
 					return true;
 				}
-				const int iIntensity = invisibilityIntensityTotal(eInvisible);
+				// THE CONTEST (vision.md §4): this unit's concealment against the best DETECTION any of that
+				// team's seers has registered here for this method. A bare fetch -- the walk happened once, at
+				// registration.
+				const int iConcealment = concealment();
 
-				if ((iIntensity > 0 || GC.getInvisibleInfo(eInvisible).isIntrinsic())
-				&& plot()->getHighestPlotTeamVisibilityIntensity(eInvisible, eTeam) < iIntensity)
+				if ((iConcealment > 0 || GC.getInvisibleInfo(eInvisible).isIntrinsic())
+				&& plot()->getHighestPlotTeamVisibilityIntensity(eInvisible, eTeam) < iConcealment)
 				{
 					return true;
 				}
@@ -28910,24 +28984,11 @@ void CvUnit::updateSpotIntensity(const InvisibleTypes eInvisibleType, const bool
 			{
 				CvPlot* pPlot = plotXY(getX(), getY(), dx, dy);
 
-				if (NULL != pPlot && (bAerial || plot()->canSeePlot(pPlot, getTeam())))
+				if (NULL != pPlot && (bAerial || plot()->canSeePlot(pPlot, sight())))
 				{
-					const int iDistance = std::max(abs(dx), abs(dy));
-
-					if (iDistance > 0)
-					{
-						pPlot->setSpotIntensity(
-							getTeam(), eInvisible, getID(),
-							visibilityIntensityTotal(eInvisible) - std::max(0, iDistance - visibilityIntensityRangeTotal(eInvisible))
-						);
-					}
-					else
-					{
-						pPlot->setSpotIntensity(
-							getTeam(), eInvisible, getID(),
-							visibilityIntensityTotal(eInvisible) + visibilityIntensitySameTileTotal(eInvisible)
-						);
-					}
+					// The same registration as CvPlot::changeAdjacentSight, and the same rule: DETECTION with
+					// no distance attenuation and no spot range, because reach is vision's (vision.md §4).
+					pPlot->setSpotIntensity(getTeam(), eInvisible, getID(), detectionAgainst(eInvisible));
 				}
 			}
 		}

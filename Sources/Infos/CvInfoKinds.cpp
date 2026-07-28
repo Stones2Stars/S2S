@@ -302,6 +302,8 @@ namespace
 	const InfoMemberRow MEMBERS_VISION[] = {
 		{ "elevation", VISION_ELEVATION },
 		{ "obstruction", VISION_OBSTRUCTION },
+		{ "concealment", VISION_CONCEALMENT },
+		{ "detection", VISION_DETECTION },
 		{ 0, 0 } };
 
 	const InfoMemberRow MEMBERS_AIR[] = {

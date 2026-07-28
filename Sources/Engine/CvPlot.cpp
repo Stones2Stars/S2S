@@ -2635,15 +2635,10 @@ void CvPlot::changeAdjacentSight(TeamTypes eTeam, int iSight, bool bIncrement, C
 
 					if (bIncrement && bHideSeek && eInvisible != NO_INVISIBLE && pUnit != NULL)
 					{
-						const int iDistance = std::max(abs(dx), abs(dy));
-
-						if (iDistance > 0)
-						{
-							const int iSpotRange = pUnit->visibilityIntensityRangeTotal(eInvisible);
-
-							iFinalIntensity = pUnit->visibilityIntensityTotal(eInvisible) - std::max(0, iDistance - iSpotRange);
-						}
-						else iFinalIntensity = pUnit->visibilityIntensityTotal(eInvisible) + pUnit->visibilityIntensitySameTileTotal(eInvisible);
+						// Register this seer's DETECTION against the method (vision.md §4). No distance
+						// attenuation and no spot range: detection is an ADDENDUM to vision and rides the
+						// reach the budget already granted, so a plot we can see is a plot we detect on.
+						iFinalIntensity = pUnit->detectionAgainst(eInvisible);
 					}
 					pPlot->changeVisibilityCount(eTeam, (bIncrement ? 1 : -1), eInvisible, bUpdatePlotGroups, iFinalIntensity, iUnitID);
 				}
