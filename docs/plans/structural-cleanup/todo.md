@@ -163,18 +163,16 @@
   which is machinery the building enabler ALREADY has and uses. The provides→operate chain needs no fixpoint
   work-list either: if each active flip announces its supply change, the chain propagates through the spine one
   fact at a time and terminates naturally, because a no-op write emits nothing.
-  **Three defects, one root cause:**
-  - **The flip emits NOTHING.** `SEVT_VICINITY_BONUS_CHANGED` exists and the modifier, enabler and contexts
-    consumers are all already wired to it — but its ONE emit site is the building being ADDED/REMOVED from the
-    city. A present building going active↔dormant changes the supply (json.md §5a: a dormant building supplies
-    nothing) and announces nothing. So vicinity-conditioned packages are never re-marked and `requires.build` gates
-    on that bonus are never re-gated — the ripple walks only OPERATE consumers.
-  - **That missing fact is WHY the work-list exists** — unable to route the flip, the enabler hand-rolled its own
-    propagation beside the routed one ([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation)).
-    Emit the fact and the parallel machine loses its reason to exist.
+  **The missing fact that justified it is now emitted** — a present building going active↔dormant announces its
+  supply crossing, so the routed path reaches the vicinity-conditioned packages and the `requires.build` gates that
+  the work-list could never reach. **What is LEFT is retiring the parallel machine itself:** the enabler hand-rolled
+  this propagation because it could not route the flip
+  ([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation)), and that reason is gone.
   - **Its runaway cap "self-heals at the slice boundary"** — a self-heal
     ([DEC-no-self-heal](../../architecture/decisions.md#dec-no-self-heal)), and the slice-boundary rebuild it names
-    was REMOVED. Nothing heals it: if the cap trips, the operating set stays silently wrong.
+    was REMOVED. Nothing heals it: if the cap trips, the operating set stays silently wrong. It is an assert today,
+    which surfaces the trip in `Assert`/`Debug` only — the shipped builds compile `FASSERT` out
+    ([Sources/AGENTS.md](../../../Sources/AGENTS.md)), so a live trip stays silent until the work-list goes.
   ⚠ **The one real design constraint:** `emit()` dispatches SYNCHRONOUSLY, inline at the mutation site, so an event
   chain recurses on the call stack where the work-list iterated. Depth is the chain length (the manufactured
   ore→wares→firearms ladder). Design for that — it is not a reason to keep the parallel machine.
