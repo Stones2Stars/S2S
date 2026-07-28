@@ -74,6 +74,17 @@
   > DOES own via `cascadeIsBuildingActive`). Hence `{HAS_CORPORATION:X}` = ACTIVE ([enabler §3](../specs/enabler.md),
   > [json §3.5](../specs/json.md)), and the corp-commerce deposit gate reading `isActiveCorporation` is correct, not
   > interim debt.
+- **⚖ A CORPORATION CAN BE OBSOLETED, and the capability is KEPT (owner) — it is HEADROOM, not dead surface.**
+  The chain is wired end to end and needs no code to activate: a tech authoring `obsoletes.corporations` lands on
+  its `EDGEF_OBSOLETES`/`EDGEB_CORPORATIONS` edge, the readJson reverse pass stamps the corporation's obsoleting
+  tech from exactly that edge, and every consumer already reads it — the city dormancy gate above, the
+  spread/found gates, the team's obsolete-tech sweep that strips the corp from its cities, the pedia line, and
+  the AI's tech valuation.
+  ⚠ **ZERO corporations author one today — in the curated JSON *and* in the legacy XML, which carries no
+  `ObsoleteTech` tag for the type at all** — so the gate is inert and the AI term contributes nothing. ⛔ That is
+  NOT a data gap to fill and NOT a reason to purge the member as unused: the ability is wanted, so the check
+  stays and lights up the moment data authors one. (Same shape as the capability lapse-with-source semantic in
+  [capabilities.md](../specs/capabilities.md) — headroom the model carries for free.)
 
 ## See also
 
