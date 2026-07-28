@@ -2710,24 +2710,6 @@ void CvUnit::updateCombat(CvUnit* pSelectedDefender, bool bSamePlot, bool bSteal
 					);
 				}
 			}
-			//Damage to Attacking Unit from City Defenses
-			if (pPlot->isCity(false) && !bSamePlot)
-			{
-				std::vector<UnitCombatTypes> damagableUnitCombatTypes;
-
-				CvCity* pCity = pPlot->getPlotCity();
-				for (std::map<UnitCombatTypes, UnitCombatKeyedInfo>::iterator it = m_unitCombatKeyedInfo.begin(), end = m_unitCombatKeyedInfo.end(); it != end; ++it)
-				{
-					if (it->second.m_bHasUnitCombat && pCity->canDamageAttackingUnitCombat(it->first))
-					{
-						damagableUnitCombatTypes.push_back(it->first);
-					}
-				}
-				if (damagableUnitCombatTypes.size() > 0)
-				{
-					checkCityAttackDefensesDamage(pCity, damagableUnitCombatTypes);
-				}
-			}
 		}
 		FAssertMsg(pDefender, "Defender is not assigned a valid value");
 		FAssertMsg(plot()->isBattle(), "Current unit instance plot is not fighting as expected");
@@ -26614,71 +26596,6 @@ void CvUnit::changeExtraStrengthModifier(int iChange)
 
 void CvUnit::setExtraStrengthModifier(int iChange)
 {
-}
-
-void CvUnit::checkCityAttackDefensesDamage(CvCity* pCity, const std::vector<UnitCombatTypes>& kDamagableUnitCombatTypes)
-{
-	PROFILE_EXTRA_FUNC();
-	//Here we cycle through each active building in the city that's triggering the fact that it can possibly damage the attacking unit here and make a check
-	//using the building's % chance to damage.  Then if it hits, deals DamageToAttacker.
-	//Then battle would proceed as normal.
-	foreach_(const BuildingTypes eType, pCity->getHasBuildings())
-	{
-		if (pCity->isDisabledBuilding(eType))
-		{
-			continue;
-		}
-		const CvBuildingInfo& buildingX = GC.getBuildingInfo(eType);
-
-		if (!buildingX.isDamageAttackerCapable())
-		{
-			continue;
-		}
-		const bool bSpecific = !buildingX.isDamageAllAttackers();
-
-		for (uint16_t iJ = 0; iJ < kDamagableUnitCombatTypes.size(); iJ++)
-		{
-			if (bSpecific && !buildingX.isMayDamageAttackingUnitCombatType(kDamagableUnitCombatTypes[iJ]))
-			{
-				continue;
-			}
-			if (GC.getGame().getSorenRandNum(100, "BuildingAttackRoll") < buildingX.getDamageAttackerChance())
-			{
-				int iBuildingAttackDamageBase = buildingX.getDamageToAttacker();
-
-				if (iBuildingAttackDamageBase > 0)
-				{
-					changeDamage(iBuildingAttackDamageBase, getOwner());
-
-					if (isHuman())
-					{
-						AddDLLMessage(
-							getOwner(), true, GC.getEVENT_MESSAGE_TIME(),
-							gDLL->getText(
-								"TXT_KEY_MISC_ATTACKER_SUFFERS_BUILDING_DAMAGE",
-								getNameKey(), pCity->getNameKey(), buildingX.getTextKeyWide(), iBuildingAttackDamageBase
-							),
-							"AS2D_COMBAT", MESSAGE_TYPE_INFO, NULL, GC.getCOLOR_RED(), pCity->getX(), pCity->getY()
-						);
-					}
-
-					if (GET_PLAYER(pCity->getOwner()).isHumanPlayer())
-					{
-						AddDLLMessage(
-							pCity->getOwner(), true, GC.getEVENT_MESSAGE_TIME(),
-							gDLL->getText(
-								"TXT_KEY_MISC_BUILDING_DAMAGED_ATTACKER",
-								getNameKey(), pCity->getNameKey(), buildingX.getTextKeyWide(), iBuildingAttackDamageBase
-							),
-							"AS2D_POSITIVE_DINK", MESSAGE_TYPE_INFO, NULL, GC.getCOLOR_GREEN(), pCity->getX(), pCity->getY()
-						);
-					}
-				}
-			}
-			// Don't continue over the other combat types for this building.
-			break; // A building can only attack a specific unit once per turn.
-		}
-	}
 }
 
 bool CvUnit::isBreakdownCombat(const CvPlot* pPlot, bool bSamePlot) const

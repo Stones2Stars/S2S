@@ -5496,14 +5496,6 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 				for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
 				{
 					iValue += kBuilding.getUnitCombatDefenseAgainstModifier(iI) / 2;
-					if (kBuilding.isMayDamageAttackingUnitCombatType(iI))
-					{
-						iValue += (kBuilding.getDamageAttackerChance() * kBuilding.getDamageToAttacker()) / 4;
-					}
-				}
-				if (kBuilding.isDamageAllAttackers())
-				{
-					iValue += (kBuilding.getDamageAttackerChance() * kBuilding.getDamageToAttacker());
 				}
 
 				iValue += -kBuilding.getAirModifier() / 4;
@@ -12759,8 +12751,7 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 			kBuilding.getMinDefense() > 0 ||
 			kBuilding.getBuildingDefenseRecoverySpeedModifier() > 0 ||
 			kBuilding.getCityDefenseRecoverySpeedModifier() > 0 ||
-			kBuilding.getNumUnitCombatDefenseAgainstModifiers() > 0 ||
-			(kBuilding.getDamageAttackerChance() > 0 && kBuilding.getDamageToAttacker() > 0))
+			kBuilding.getNumUnitCombatDefenseAgainstModifiers() > 0)
 		{
 			return true;
 		}
@@ -13277,14 +13268,6 @@ void CvCityAI::CalculateAllBuildingValues(int iFocusFlags)
 				for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
 				{
 					iValue += kBuilding.getUnitCombatDefenseAgainstModifier(iI) / 2;
-					if (kBuilding.isMayDamageAttackingUnitCombatType(iI))
-					{
-						iValue += (kBuilding.getDamageAttackerChance() * kBuilding.getDamageToAttacker()) / 4;
-					}
-				}
-				if (kBuilding.isDamageAllAttackers())
-				{
-					iValue += (kBuilding.getDamageAttackerChance() * kBuilding.getDamageToAttacker());
 				}
 				iValue -= kBuilding.getRiverDefensePenalty() / 2;
 				iValue -= kBuilding.getAirModifier() / 4;

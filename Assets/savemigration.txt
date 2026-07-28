@@ -596,4 +596,14 @@ exact name.
 CvUnit::m_iQualityBaseTotal
 CvUnit::m_iGroupBaseTotal
 CvUnit::m_iSizeBaseTotal
+The BUILDING COUNTER-DAMAGE cut: a building damaging a unit that ATTACKS its city is a TRIGGER by shape (a
+happening, a roll, an effect on the attacker), so if the functionality is wanted it is modelled on the trigger
+plane rather than kept as a defense member -- S2S#453. The mechanic was also half-dead: its gate
+isDamageAttackerCapable is a DERIVED flag CvBuildingInfo only ever set from bDamageAllAttackers or an INHERITED
+may-damage list, never from a building's OWN authored list, so the 6 trap buildings carrying a hand-authored
+MayDamageAttackingUnitCombatTypes list never fired at all. Engine path, city count array and curated data are
+all gone. The count array was a per-UnitCombat class array maintained purely from the building side (nothing
+else ever wrote it), so it is derived and carries no state worth keeping. Plain named array, drained by exact
+name.
+CvCity::m_paiDamageAttackingUnitCombatCount
 ========================

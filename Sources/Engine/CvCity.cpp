@@ -326,7 +326,6 @@ CvCity::CvCity()
 	m_ppaaiLocalSpecialistExtraCommerce = NULL;
 
 	m_paiSpecialistBannedCount = NULL;
-	m_paiDamageAttackingUnitCombatCount = NULL;
 	m_paiHealUnitCombatTypeVolume = NULL;
 
 	m_bVisibilitySetup = false;
@@ -620,7 +619,6 @@ void CvCity::uninit()
 	SAFE_DELETE_ARRAY(m_paiUnitCombatDefenseAgainstModifier);
 	SAFE_DELETE_ARRAY(m_paiStartDeferredSectionNumBonuses);
 	SAFE_DELETE_ARRAY(m_paiSpecialistBannedCount);
-	SAFE_DELETE_ARRAY(m_paiDamageAttackingUnitCombatCount);
 	SAFE_DELETE_ARRAY(m_paiHealUnitCombatTypeVolume);
 	SAFE_DELETE_ARRAY2(m_ppaaiLocalSpecialistExtraYield, GC.getNumSpecialistInfos());
 	SAFE_DELETE_ARRAY2(m_ppaaiLocalSpecialistExtraCommerce, GC.getNumSpecialistInfos());
@@ -951,7 +949,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 		m_paiUnitCombatExtraStrength = new int[GC.getNumUnitCombatInfos()];
 		m_paiUnitCombatProductionModifier = new int[GC.getNumUnitCombatInfos()];
 		m_paiUnitCombatDefenseAgainstModifier = new int[GC.getNumUnitCombatInfos()];
-		m_paiDamageAttackingUnitCombatCount = new int[GC.getNumUnitCombatInfos()];
 		m_paiHealUnitCombatTypeVolume = new int[GC.getNumUnitCombatInfos()];
 
 		for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
@@ -960,7 +957,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 			m_paiUnitCombatExtraStrength[iI] = 0;
 			m_paiUnitCombatProductionModifier[iI] = 0;
 			m_paiUnitCombatDefenseAgainstModifier[iI] = 0;
-			m_paiDamageAttackingUnitCombatCount[iI] = 0;
 			m_paiHealUnitCombatTypeVolume[iI] = 0;
 		}
 
@@ -3851,14 +3847,6 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 
 		changeMaxSpecialistCount((SpecialistTypes)iI, (kBuilding.getSpecialistCount(iI) + GET_TEAM(getTeam()).getBuildingSpecialistChange(eBuilding, (SpecialistTypes)iI)) * iChange);
 		changeFreeSpecialistCount((SpecialistTypes)iI, kBuilding.getFreeSpecialistCount(iI) * iChange);
-	}
-
-	for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
-	{
-		if (kBuilding.isMayDamageAttackingUnitCombatType(iI))
-		{
-			changeDamageAttackingUnitCombatCount((UnitCombatTypes)iI, iChange);
-		}
 	}
 
 	if (kBuilding.getNumHealUnitCombatTypes() > 0)
@@ -16518,7 +16506,6 @@ void CvCity::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvCity", &m_iModifiedBuildingDefenseRecoverySpeedCap);
 	WRAPPER_READ(wrapper, "CvCity", &m_iExtraCityDefenseRecoverySpeedModifier);
 	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvCity", REMAPPED_CLASS_TYPE_COMBATINFOS, GC.getNumUnitCombatInfos(), m_paiUnitCombatDefenseAgainstModifier);
-	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvCity", REMAPPED_CLASS_TYPE_COMBATINFOS, GC.getNumUnitCombatInfos(), m_paiDamageAttackingUnitCombatCount);
 	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvCity", REMAPPED_CLASS_TYPE_COMBATINFOS, GC.getNumUnitCombatInfos(), m_paiHealUnitCombatTypeVolume);
 	//TB Combat Mod (Buildings) end
 
@@ -17081,7 +17068,6 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvCity", m_iModifiedBuildingDefenseRecoverySpeedCap);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iExtraCityDefenseRecoverySpeedModifier);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_COMBATINFOS, GC.getNumUnitCombatInfos(), m_paiUnitCombatDefenseAgainstModifier);
-	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_COMBATINFOS, GC.getNumUnitCombatInfos(), m_paiDamageAttackingUnitCombatCount);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_COMBATINFOS, GC.getNumUnitCombatInfos(), m_paiHealUnitCombatTypeVolume);
 	//TB Combat Mod (Buildings) end
 
@@ -21594,32 +21580,6 @@ int CvCity::cityDefenseRecoveryRate() const
 	iValue /= 100;
 
 	return iValue;
-}
-
-bool CvCity::canDamageAttackingUnitCombat(UnitCombatTypes eUnitCombat) const
-{
-	FASSERT_BOUNDS(0, GC.getNumUnitCombatInfos(), eUnitCombat);
-
-	return m_paiDamageAttackingUnitCombatCount[eUnitCombat] > 0;
-}
-
-int CvCity::getDamageAttackingUnitCombatCount(UnitCombatTypes eUnitCombat) const
-{
-	FASSERT_BOUNDS(0, GC.getNumUnitCombatInfos(), eUnitCombat);
-
-	return m_paiDamageAttackingUnitCombatCount[eUnitCombat];
-}
-
-void CvCity::setDamageAttackingUnitCombatCount(UnitCombatTypes eUnitCombat, int iValue)
-{
-	m_paiDamageAttackingUnitCombatCount[eUnitCombat] = iValue;
-}
-
-void CvCity::changeDamageAttackingUnitCombatCount(UnitCombatTypes eUnitCombat, int iChange)
-{
-	FASSERT_BOUNDS(0, GC.getNumUnitCombatInfos(), eUnitCombat);
-
-	m_paiDamageAttackingUnitCombatCount[eUnitCombat] += iChange;
 }
 
 

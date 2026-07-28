@@ -15935,47 +15935,6 @@ void CvGameTextMgr::setBuildingHelp(CvWStringBuffer &szBuffer, const BuildingTyp
 		szBuffer.append(gDLL->getText("TXT_KEY_BUILDINGHELP_ZONE_OF_CONTROL"));
 	}
 
-	if (kBuilding.isDamageAttackerCapable())
-	{
-		bFirst = true;
-		if (kBuilding.isDamageAllAttackers())
-		{
-			if (kBuilding.getDamageAttackerChance() > 0 && kBuilding.getDamageToAttacker() > 0)
-			{
-				if (bFirst)
-				{
-					bFirst = false;
-				}
-				szBuffer.append(NEWLINE);
-				szBuffer.append(gDLL->getText("TXT_KEY_BUILDINGHELP_DAMAGE_ALL_ATTACKER", kBuilding.getDamageAttackerChance(), kBuilding.getDamageToAttacker()));
-			}
-		}
-		else
-		{
-			for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
-			{
-				UnitCombatTypes eUnitCombat = ((UnitCombatTypes)iI);
-				if (kBuilding.isMayDamageAttackingUnitCombatType(eUnitCombat))
-				{
-					if (kBuilding.getDamageAttackerChance() > 0 && kBuilding.getDamageToAttacker() > 0)
-					{
-						if (bFirst)
-						{
-							szBuffer.append(NEWLINE);
-							szBuffer.append(gDLL->getText("TXT_KEY_BUILDINGHELP_DAMAGE_ATTACKER_START", GC.getUnitCombatInfo(eUnitCombat).getTextKeyWide()));
-							bFirst = false;
-						}
-						else szBuffer.append(gDLL->getText("TXT_KEY_BUILDINGHELP_DAMAGE_ATTACKER_MIDDLE", GC.getUnitCombatInfo(eUnitCombat).getTextKeyWide()));
-					}
-				}
-			}
-			if (!bFirst)
-			{
-				szBuffer.append(gDLL->getText("TXT_KEY_BUILDINGHELP_DAMAGE_ATTACKER_END", kBuilding.getDamageAttackerChance(), kBuilding.getDamageToAttacker()));
-			}
-		}
-	}
-
 	if (kBuilding.getMaxPopulationAllowed() > -1)
 	{
 		szBuffer.append(NEWLINE);
@@ -29910,57 +29869,6 @@ void CvGameTextMgr::getDefenseHelp(CvWStringBuffer &szBuffer, CvCity& city)
 		szBuffer.append(DOUBLE_SEPARATOR);
 		szBuffer.append(NEWLINE);
 		szBuffer.append(gDLL->getText("TXT_KEY_MISC_ADJ_DMG_HOVER", city.getAdjacentDamagePercent()));
-	}
-
-	bFirst = true;
-	for (int iJ = 0; iJ < GC.getNumBuildingInfos(); iJ++)
-	{
-		const BuildingTypes eBuilding = static_cast<BuildingTypes>(iJ);
-		if (city.isActiveBuilding(eBuilding))
-		{
-			continue;
-		}
-		const CvBuildingInfo& building = GC.getBuildingInfo(eBuilding);
-		if (!building.isDamageAttackerCapable()
-		|| building.getDamageAttackerChance() <= 0
-		|| building.getDamageToAttacker() <= 0)
-		{
-			continue;
-		}
-		if (building.isDamageAllAttackers())
-		{
-			if (bFirst)
-			{
-				szBuffer.append(DOUBLE_SEPARATOR);
-				bFirst = false;
-			}
-			szBuffer.append(NEWLINE);
-
-			szBuffer.append(gDLL->getText("TXT_KEY_BUILDINGHELP_DAMAGE_ALL_ATTACKER", building.getDamageAttackerChance(), building.getDamageToAttacker()));
-		}
-		else
-		{
-			for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
-			{
-				const UnitCombatTypes eUnitCombat = static_cast<UnitCombatTypes>(iI);
-				if (city.canDamageAttackingUnitCombat(eUnitCombat)
-				&& building.isMayDamageAttackingUnitCombatType(eUnitCombat))
-				{
-					if (bFirst)
-					{
-						szBuffer.append(DOUBLE_SEPARATOR);
-						szBuffer.append(NEWLINE);
-						szBuffer.append(gDLL->getText("TXT_KEY_BUILDINGHELP_DAMAGE_ATTACKER_START", GC.getUnitCombatInfo(eUnitCombat).getTextKeyWide()));
-						bFirst = false;
-					}
-					else szBuffer.append(gDLL->getText("TXT_KEY_BUILDINGHELP_DAMAGE_ATTACKER_MIDDLE", GC.getUnitCombatInfo(eUnitCombat).getTextKeyWide()));
-				}
-			}
-			if (!bFirst)
-			{
-				szBuffer.append(gDLL->getText("TXT_KEY_BUILDINGHELP_DAMAGE_ATTACKER_END", building.getDamageAttackerChance(), building.getDamageToAttacker()));
-			}
-		}
 	}
 
 	if (city.getOwner() == GC.getGame().getActivePlayer()

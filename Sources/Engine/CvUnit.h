@@ -1902,7 +1902,6 @@ public:
 	void changeExtraStrengthModifier(int iChange);
 	void setExtraStrengthModifier(int iChange);
 
-	void checkCityAttackDefensesDamage(CvCity* pCity, const std::vector<UnitCombatTypes>& kDamagableUnitCombatTypes);
 
 	bool isBreakdownCombat(const CvPlot* pPlot, bool bSamePlot = false) const;
 	void resolveBreakdownAttack(const CvPlot* pPlot);

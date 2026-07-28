@@ -1822,7 +1822,6 @@ protected:
 	int** m_ppaaiLocalSpecialistExtraCommerce;
 	int m_iPrioritySpecialist;
 	int* m_paiSpecialistBannedCount;
-	int* m_paiDamageAttackingUnitCombatCount;
 	int* m_paiHealUnitCombatTypeVolume;
 	int m_iExtraInsidiousness;
 	int m_iExtraInvestigation;
@@ -2023,10 +2022,6 @@ public:
 	void setExtraCityDefenseRecoverySpeedModifier(int iValue);
 	void changeExtraCityDefenseRecoverySpeedModifier(int iChange);
 
-	bool canDamageAttackingUnitCombat(UnitCombatTypes eUnitCombat) const;
-	int getDamageAttackingUnitCombatCount(UnitCombatTypes eUnitCombat) const;
-	void setDamageAttackingUnitCombatCount(UnitCombatTypes eUnitCombat, int iValue);
-	void changeDamageAttackingUnitCombatCount(UnitCombatTypes eUnitCombat, int iChange);
 
 	int cityDefenseRecoveryRate() const;
 	int getInvestigationTotal(bool bActual = false) const;
