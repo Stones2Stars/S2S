@@ -4740,7 +4740,7 @@ int CvPlayer::countReligionSpreadUnits(const CvArea* pArea, ReligionTypes eRelig
 	{
 		if (!unitX->isDead()
 		&& unitX->getArea() == pArea->getID()
-		&& unitX->getUnitInfo().getReligionSpreads(eReligion) > 0)
+		&& unitX->getUnitInfo().getReligionSpreadStrength(eReligion) > 0)
 		{
 			iCount++;
 		}
@@ -4752,7 +4752,7 @@ int CvPlayer::countReligionSpreadUnits(const CvArea* pArea, ReligionTypes eRelig
 		{
 			const UnitTypes eUnit = pLoopCity->getProductionUnit();
 
-			if (eUnit != NO_UNIT && GC.getUnitInfo(eUnit).getReligionSpreads(eReligion) > 0)
+			if (eUnit != NO_UNIT && GC.getUnitInfo(eUnit).getReligionSpreadStrength(eReligion) > 0)
 			{
 				iCount++;
 			}
@@ -4771,7 +4771,7 @@ int CvPlayer::countCorporationSpreadUnits(const CvArea* pArea, CorporationTypes 
 	{
 		if (pLoopUnit->area() == pArea)
 		{
-			if (pLoopUnit->getUnitInfo().getCorporationSpreads(eCorporation) > 0)
+			if (pLoopUnit->getUnitInfo().getCorporationSpreadStrength(eCorporation) > 0)
 			{
 				++iCount;
 			}
@@ -4786,7 +4786,7 @@ int CvPlayer::countCorporationSpreadUnits(const CvArea* pArea, CorporationTypes 
 
 			if( eUnit != NO_UNIT )
 			{
-				if(GC.getUnitInfo(eUnit).getCorporationSpreads(eCorporation) > 0)
+				if(GC.getUnitInfo(eUnit).getCorporationSpreadStrength(eCorporation) > 0)
 				{
 					iCount++;
 				}

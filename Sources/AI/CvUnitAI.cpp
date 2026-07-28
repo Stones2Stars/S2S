@@ -1042,16 +1042,24 @@ bool CvUnitAI::AI_promote()
 	int iBestValue = 0;
 	PromotionTypes eBestPromotion = NO_PROMOTION;
 
-	for (int iI = 0; iI < GC.getNumPromotionInfos(); iI++)
+	// The player maintains the UNLOCKED-promotion set (enabler.md §7.1's carve-out: no per-unit maintained sets,
+	// so the per-unit applicability stays a live canPromote check at the decision point). Iterating that set
+	// replaces a sweep of every promotion in the database, per unit, per level-up.
+	std::vector<int> unlockedPromotions;
+	GET_PLAYER(getOwner()).getUnlockedPromotions(unlockedPromotions);
+
+	for (size_t iAt = 0; iAt < unlockedPromotions.size(); ++iAt)
 	{
-		if (canPromote((PromotionTypes)iI, -1))
+		const PromotionTypes ePromotion = static_cast<PromotionTypes>(unlockedPromotions[iAt]);
+
+		if (canPromote(ePromotion, -1))
 		{
-			int iValue = AI_promotionValue((PromotionTypes)iI);
+			int iValue = AI_promotionValue(ePromotion);
 
 			if (iValue > iBestValue)
 			{
 				iBestValue = iValue;
-				eBestPromotion = (PromotionTypes)iI;
+				eBestPromotion = ePromotion;
 			}
 		}
 	}
@@ -13470,10 +13478,15 @@ bool CvUnitAI::AI_spreadReligion()
 	const CvPlayerAI& owner = GET_PLAYER(getOwner());
 	const ReligionTypes eStateReligion = owner.getStateReligion();
 
+	// The unit's own `spread` block IS the keyed map -- both the point read below and the fallback scan read it,
+	// never rediscovering it by asking every religion in the database whether this unit spreads it.
+	const std::map<int, int>& religionSpread = m_pUnitInfo->getReligionSpread();
+	const std::map<int, int>::const_iterator itStateSpread = religionSpread.find((int)eStateReligion);
+
 	// More often than not, it is the state religion the AI spreads.
 	ReligionTypes eReligion =
 		(
-			(eStateReligion != NO_RELIGION && m_pUnitInfo->getReligionSpreads(eStateReligion) > 0)
+			(eStateReligion != NO_RELIGION && itStateSpread != religionSpread.end() && itStateSpread->second > 0)
 			?
 			eStateReligion
 			:
@@ -13481,11 +13494,11 @@ bool CvUnitAI::AI_spreadReligion()
 		);
 	if (eReligion == NO_RELIGION)
 	{
-		for (int iI = 0; iI < GC.getNumReligionInfos(); iI++)
+		for (std::map<int, int>::const_iterator itSpread = religionSpread.begin(); itSpread != religionSpread.end(); ++itSpread)
 		{
-			if (m_pUnitInfo->getReligionSpreads((ReligionTypes)iI) > 0)
+			if (itSpread->second > 0)
 			{
-				eReligion = (ReligionTypes)iI;
+				eReligion = static_cast<ReligionTypes>(itSpread->first);
 				break;
 			}
 		}
@@ -13741,11 +13754,14 @@ bool CvUnitAI::AI_spreadCorporation()
 	CorporationTypes eCorporation = NO_CORPORATION;
 	int iBaseFlags = (isHuman() ? MOVE_NO_ENEMY_TERRITORY : (MOVE_NO_ENEMY_TERRITORY | MOVE_IGNORE_DANGER));
 
-	for (int iI = 0; iI < GC.getNumCorporationInfos(); ++iI)
+	// The unit's own `spread` block IS the keyed map -- read it, never sweep the corporation database.
+	const std::map<int, int>& corporationSpread = m_pUnitInfo->getCorporationSpread();
+
+	for (std::map<int, int>::const_iterator itSpread = corporationSpread.begin(); itSpread != corporationSpread.end(); ++itSpread)
 	{
-		if (m_pUnitInfo->getCorporationSpreads((CorporationTypes)iI) > 0)
+		if (itSpread->second > 0)
 		{
-			eCorporation = ((CorporationTypes)iI);
+			eCorporation = static_cast<CorporationTypes>(itSpread->first);
 			break;
 		}
 	}
@@ -14025,26 +14041,32 @@ bool CvUnitAI::AI_spreadReligionAirlift()
 
 	if (eReligion == NO_RELIGION)
 	{
-		if (GET_PLAYER(getOwner()).getStateReligion() != NO_RELIGION)
+		const ReligionTypes eOwnerStateReligion = GET_PLAYER(getOwner()).getStateReligion();
+
+		if (eOwnerStateReligion != NO_RELIGION)
 		{
-			if (m_pUnitInfo->getReligionSpreads(GET_PLAYER(getOwner()).getStateReligion()) > 0)
+			// The unit's own `spread` map answers this directly.
+			const std::map<int, int>& religionSpread = m_pUnitInfo->getReligionSpread();
+			const std::map<int, int>::const_iterator itStateSpread = religionSpread.find((int)eOwnerStateReligion);
+
+			if (itStateSpread != religionSpread.end() && itStateSpread->second > 0)
 			{
-				eReligion = GET_PLAYER(getOwner()).getStateReligion();
+				eReligion = eOwnerStateReligion;
 			}
 		}
 	}
 
 	if (eReligion == NO_RELIGION)
 	{
-		for (iI = 0; iI < GC.getNumReligionInfos(); iI++)
+		// The unit's own `spread` map, not a sweep of every religion.
+		const std::map<int, int>& religionSpread = m_pUnitInfo->getReligionSpread();
+
+		for (std::map<int, int>::const_iterator itSpread = religionSpread.begin(); itSpread != religionSpread.end(); ++itSpread)
 		{
-			//if (bCultureVictory || GET_TEAM(getTeam()).hasHolyCity((ReligionTypes)iI))
+			if (itSpread->second > 0)
 			{
-				if (m_pUnitInfo->getReligionSpreads((ReligionTypes)iI) > 0)
-				{
-					eReligion = ((ReligionTypes)iI);
-					break;
-				}
+				eReligion = static_cast<ReligionTypes>(itSpread->first);
+				break;
 			}
 		}
 	}
@@ -14135,11 +14157,14 @@ bool CvUnitAI::AI_spreadCorporationAirlift()
 
 	CorporationTypes eCorporation = NO_CORPORATION;
 
-	for (int iI = 0; iI < GC.getNumCorporationInfos(); ++iI)
+	// The unit's own `spread` block IS the keyed map -- read it, never sweep the corporation database.
+	const std::map<int, int>& corporationSpread = m_pUnitInfo->getCorporationSpread();
+
+	for (std::map<int, int>::const_iterator itSpread = corporationSpread.begin(); itSpread != corporationSpread.end(); ++itSpread)
 	{
-		if (m_pUnitInfo->getCorporationSpreads((CorporationTypes)iI) > 0)
+		if (itSpread->second > 0)
 		{
-			eCorporation = ((CorporationTypes)iI);
+			eCorporation = static_cast<CorporationTypes>(itSpread->first);
 			break;
 		}
 	}

@@ -184,6 +184,13 @@ public:
 	// --- par.9 bespoke sections ---
 	const std::map<int, int>& getReligionSpread() const { return m_religionSpread; }         // spread.religion.{RELIGION}: strength
 	const std::map<int, int>& getCorporationSpread() const { return m_corporationSpread; }   // spread.corporation.{CORP}: strength
+	// The POINT reads over those two maps -- the keyed-group `count(id)` shape ([contexts.md] COUNTS, not
+	// objects). A consumer asking about ONE religion/corporation indexes the group here; it never sweeps the
+	// religion/corporation database asking each id whether this unit spreads it.
+	int getReligionSpreadStrength(int iReligion) const
+	{ const std::map<int, int>::const_iterator it = m_religionSpread.find(iReligion); return it != m_religionSpread.end() ? it->second : 0; }
+	int getCorporationSpreadStrength(int iCorporation) const
+	{ const std::map<int, int>::const_iterator it = m_corporationSpread.find(iCorporation); return it != m_corporationSpread.end() ? it->second : 0; }
 	const std::vector<GroupSpawnUnitCombat>& getGroupSpawn() const { return m_groupSpawn; }  // groupSpawn rows {unitCombat, chance, title}
 	const std::vector<int>& getUpgradesTo() const { return m_aiUpgradesTo; }         // succession.upgradesTo
 	bool isUpgradeTo(int iUnit) const { return vectorHas(m_aiUpgradesTo, iUnit); }

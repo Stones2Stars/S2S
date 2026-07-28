@@ -3230,7 +3230,7 @@ void CvGame::replaceCorporation(CorporationTypes eCorporation1, CorporationTypes
 			}
 			foreach_(CvUnit* pLoopUnit, player.units())
 			{
-				if (pLoopUnit->getUnitInfo().getCorporationSpreads(eCorporation1) > 0)
+				if (pLoopUnit->getUnitInfo().getCorporationSpreadStrength(eCorporation1) > 0)
 				{
 					pLoopUnit->kill(false);
 				}
@@ -11240,7 +11240,7 @@ void CvGame::doFoundCorporation(CorporationTypes eCorporation, bool bForce)
 	{
 		for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
 		{
-			if (canEverTrain((UnitTypes)iI) && GC.getUnitInfo((UnitTypes)iI).getCorporationSpreads(eCorporation) > 0)
+			if (canEverTrain((UnitTypes)iI) && GC.getUnitInfo((UnitTypes)iI).getCorporationSpreadStrength(eCorporation) > 0)
 			{
 				return;
 			}

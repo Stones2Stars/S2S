@@ -13716,7 +13716,7 @@ void CvGameTextMgr::setBasicUnitHelpWithCity(CvWStringBuffer &szBuffer, UnitType
 		bFirst = true;
 		for (int iI = 0; iI < GC.getNumReligionInfos(); ++iI)
 		{
-			if (kUnit.getReligionSpreads(iI) > 0)
+			if (kUnit.getReligionSpreadStrength(iI) > 0)
 			{
 				szTempBuffer.Format(L"%s%s", NEWLINE, gDLL->getText("TXT_KEY_UNITHELP_CAN_SPREAD").c_str());
 				CvWString szReligion;
@@ -13730,7 +13730,7 @@ void CvGameTextMgr::setBasicUnitHelpWithCity(CvWStringBuffer &szBuffer, UnitType
 		bFirst = true;
 		for (int iI = 0; iI < GC.getNumCorporationInfos(); ++iI)
 		{
-			if (kUnit.getCorporationSpreads(iI) > 0)
+			if (kUnit.getCorporationSpreadStrength(iI) > 0)
 			{
 				szTempBuffer.Format(L"%s%s", NEWLINE, gDLL->getText("TXT_KEY_UNITHELP_CAN_EXPAND").c_str());
 				CvWString szCorporation;

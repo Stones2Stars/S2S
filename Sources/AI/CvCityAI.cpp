@@ -6299,7 +6299,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 								religiousBuildingValue += (2 + iNumCitiesInArea);
 							}
 
-							if (bCulturalVictory2 && GC.getUnitInfo((UnitTypes)iI).getReligionSpreads(eReligion))
+							if (bCulturalVictory2 && GC.getUnitInfo((UnitTypes)iI).getReligionSpreadStrength(eReligion))
 							{
 								//this gives a very large extra value if the religion is (nearly) unique
 								//to no extra value for a fully spread religion.
@@ -8984,7 +8984,7 @@ bool CvCityAI::AI_bestSpreadUnit(bool bMissionary, bool bExecutive, int iBaseCha
 						for (std::vector<int>::const_iterator it = vecTrainable.begin(), itEnd = vecTrainable.end(); it != itEnd; ++it)
 						{
 							const UnitTypes eUnitX = (UnitTypes)*it;
-							if (GC.getUnitInfo(eUnitX).getReligionSpreads(eReligion) > 0
+							if (GC.getUnitInfo(eUnitX).getReligionSpreadStrength(eReligion) > 0
 								&& GC.getUnitInfo(eUnitX).getProductionCost() > 0)
 							{
 								const int iValue = iReligionValue / GC.getUnitInfo(eUnitX).getProductionCost();
@@ -9033,14 +9033,14 @@ bool CvCityAI::AI_bestSpreadUnit(bool bMissionary, bool bExecutive, int iBaseCha
 						{
 							const UnitTypes eUnitX = (UnitTypes)*it;
 							const CvUnitInfo& kUnitInfo = GC.getUnitInfo(eUnitX);
-							if (kUnitInfo.getCorporationSpreads(eCorporation) > 0)
+							if (kUnitInfo.getCorporationSpreadStrength(eCorporation) > 0)
 							{
 								int iValue = iCorporationValue / kUnitInfo.getProductionCost();
 								int iTotalCount = 0;
 								int iPlotCount = 0;
 								foreach_(const CvUnit * pLoopUnit, kPlayer.units())
 								{
-									if ((pLoopUnit->AI_getUnitAIType() == UNITAI_MISSIONARY) && (pLoopUnit->getUnitInfo().getCorporationSpreads(eCorporation) > 0))
+									if ((pLoopUnit->AI_getUnitAIType() == UNITAI_MISSIONARY) && (pLoopUnit->getUnitInfo().getCorporationSpreadStrength(eCorporation) > 0))
 									{
 										iTotalCount++;
 										if (pLoopUnit->plot() == plot())

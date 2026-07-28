@@ -5534,7 +5534,7 @@ bool CvUnit::canGift(bool bTestVisible, bool bTestTransport) const
 
 	for (int iCorp = 0; iCorp < GC.getNumCorporationInfos(); ++iCorp)
 	{
-		if (m_pUnitInfo->getCorporationSpreads(iCorp) > 0)
+		if (m_pUnitInfo->getCorporationSpreadStrength(iCorp) > 0)
 		{
 			return false;
 		}
@@ -8442,7 +8442,7 @@ bool CvUnit::canSpread(const CvPlot* pPlot, ReligionTypes eReligion, bool bTestV
 {
 	PROFILE_FUNC();
 
-	if (eReligion == NO_RELIGION || m_pUnitInfo->getReligionSpreads(eReligion) <= 0)
+	if (eReligion == NO_RELIGION || m_pUnitInfo->getReligionSpreadStrength(eReligion) <= 0)
 	{
 		return false;
 	}
@@ -8505,7 +8505,7 @@ bool CvUnit::spread(ReligionTypes eReligion)
 	{
 		if (GC.getGame().isReligionFounded(eReligion))
 		{
-			int iSpreadProb = m_pUnitInfo->getReligionSpreads(eReligion);
+			int iSpreadProb = m_pUnitInfo->getReligionSpreadStrength(eReligion);
 
 			if ((ReligionTypes)GET_PLAYER(getOwner()).getStateReligion() == eReligion)
 			{
@@ -8576,7 +8576,7 @@ bool CvUnit::canSpreadCorporation(const CvPlot* pPlot, CorporationTypes eCorpora
 		return false;
 	}
 
-	if (m_pUnitInfo->getCorporationSpreads(eCorporation) <= 0)
+	if (m_pUnitInfo->getCorporationSpreadStrength(eCorporation) <= 0)
 	{
 		return false;
 	}
@@ -8721,7 +8721,7 @@ bool CvUnit::spreadCorporation(CorporationTypes eCorporation)
 	{
 		GET_PLAYER(getOwner()).changeGold(-spreadCorporationCost(eCorporation, pCity));
 
-		iSpreadProb = m_pUnitInfo->getCorporationSpreads(eCorporation);
+		iSpreadProb = m_pUnitInfo->getCorporationSpreadStrength(eCorporation);
 
 		if (pCity->getTeam() != getTeam())
 		{

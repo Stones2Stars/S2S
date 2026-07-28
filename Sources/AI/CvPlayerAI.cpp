@@ -10845,7 +10845,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 			{
 				for (int iI = 0; iI < GC.getNumReligionInfos(); iI++)
 				{
-					if (kUnitInfo.getReligionSpreads((ReligionTypes)iI) > 0)
+					if (kUnitInfo.getReligionSpreadStrength((ReligionTypes)iI) > 0)
 					{
 						const int iNeededMissionaries = AI_neededMissionaries(pArea, (ReligionTypes)iI);
 
@@ -10858,7 +10858,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 				}
 				for (int iI = 0; !bValid && iI < GC.getNumCorporationInfos(); iI++)
 				{
-					if (kUnitInfo.getCorporationSpreads((CorporationTypes)iI) > 0)
+					if (kUnitInfo.getCorporationSpreadStrength((CorporationTypes)iI) > 0)
 					{
 						const int iNeededMissionaries = AI_neededExecutives(pArea, (CorporationTypes)iI);
 
@@ -11522,14 +11522,14 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 				iValue += (kUnitInfo.getMoves() * 100);
 				if (getStateReligion() != NO_RELIGION)
 				{
-					if (kUnitInfo.getReligionSpreads(getStateReligion()) > 0)
+					if (kUnitInfo.getReligionSpreadStrength(getStateReligion()) > 0)
 					{
-						iValue += (5 * kUnitInfo.getReligionSpreads(getStateReligion())) / 2;
+						iValue += (5 * kUnitInfo.getReligionSpreadStrength(getStateReligion())) / 2;
 					}
 				}
 				for (int iI = 0; iI < GC.getNumReligionInfos(); iI++)
 				{
-					if (kUnitInfo.getReligionSpreads((ReligionTypes)iI) && hasHolyCity((ReligionTypes)iI))
+					if (kUnitInfo.getReligionSpreadStrength((ReligionTypes)iI) && hasHolyCity((ReligionTypes)iI))
 					{
 						iValue += 80;
 						break;
@@ -11541,7 +11541,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 					int iTempValue = 0;
 					for (int iI = 0; iI < GC.getNumReligionInfos(); iI++)
 					{
-						if (kUnitInfo.getReligionSpreads((ReligionTypes)iI))
+						if (kUnitInfo.getReligionSpreadStrength((ReligionTypes)iI))
 						{
 							iTempValue += (50 * getNumCities()) / (1 + getHasReligionCount((ReligionTypes)iI));
 						}
@@ -11550,9 +11550,9 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 				}
 				for (int iI = 0; iI < GC.getNumCorporationInfos(); ++iI)
 				{
-					if (hasHeadquarters((CorporationTypes)iI) && kUnitInfo.getCorporationSpreads(iI) > 0)
+					if (hasHeadquarters((CorporationTypes)iI) && kUnitInfo.getCorporationSpreadStrength(iI) > 0)
 					{
-						iValue += kUnitInfo.getCorporationSpreads(iI) * 5/2;
+						iValue += kUnitInfo.getCorporationSpreadStrength(iI) * 5/2;
 
 						if (pArea)
 						{
