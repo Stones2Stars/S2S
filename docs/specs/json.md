@@ -46,7 +46,7 @@ of them.
 | **Provisions** | `grants` · `triggers` · `provides` | `grants` = pure payload on the source's considered action; `triggers` = trigger → chance → action (happening-fired / rolled / state-conditioned effects); `provides` = a continuous in-vicinity SUPPLY while active (e.g. a building or map bonus that makes a `BONUS_*` available in the city) |
 | **Effects** | every **modifier family** key (`food`, `production`, `happiness`, …, one per `PROPERTY_*`) | per-turn magnitudes this deposits onto targets |
 | **Intrinsic** ("what am I") | `identity` (incl. all TEXT) · `cost` · `ui` · `world` · `sound` · `ai` | empire-agnostic self-description, art, audio, AI metadata |
-| **Classification** | `skills` (UNIT, mutable abilities) · `tags` (UNIT, immutable type membership) · `state` (UNIT, transient) · `attributes` (BUILDING, held city-scope intrinsics) · `capabilities` (TEAM, grantor-provided) | §8 — the classification model; scope carried by the section name |
+| **Classification** | `skills` (UNIT, mutable abilities) · `tags` (UNIT, immutable type membership) · `state` (UNIT, transient) · `attributes` (BUILDING, held city-scope intrinsics) · `characteristics` (PLOT SUBSTRATE, held plot-scope intrinsics) · `capabilities` (TEAM, grantor-provided) | §8 — the classification model; scope carried by the section name |
 | **Applicability** | entity-level `enabled` · `disabled` | the whole entity applies only while `enabled` holds and `disabled` does not (the §3.9 pair at entity level) — the canonical whole-entity game-option gate: `"enabled": "GAMEOPTION_X"` |
 | **Auxiliary / bespoke** | `policies` · `succession` · `excludes` · `produces` · `condition` · `effect` · `vision` · `outcomes` · `mapGeneration` · `replacedBy` · `promotionLine` · `buildUp` · `shrine` · `headquarters` · `properties` · `voteSource` · `threshold` · `role` · `victory` · `targetLevel` · `conversion` · `cityFounding` · `unitCapability` · `canTrade` (tech → the trade-table/deal system: tradeable items + agreements — `techs`/`openBorders`/`rightOfPassage`/`embassy`/`bonuses`/…) · `canTradeOn` (tech → trade-route system; terrain refs) · `canWorkOn` (tech → the city `canWork` gate; workable plot classes — `water`/`peaks`/…) — all three [capabilities.md](capabilities.md) | data read by their own systems, not the cascade |
 
@@ -811,6 +811,25 @@ its `capabilities` are what it *hands to the empire* (provided) — the opposite
 `nukeImmune` is an `attribute` (the building holds it), but its `setCultureRate` is a `capability` (the building
 provides the slider to the empire).
 
+The **PLOT SUBSTRATE** has its own **`characteristics`** block — the **HELD**, immutable, **plot-scope** intrinsics
+of whatever IS the plot: **terrain · feature · improvement · route**, all four carriers, one block and one registry
+(the §3.2 spine's `plot{improvement|feature|terrain|route}`). Plain booleans like its siblings, the section name
+carrying the scope. `countsAsPeak`, `actsAsCity`, `bombardable`, `zoneOfControl`, `ignoreTerrainCulture`,
+`nukeImmune`, …
+
+> **⚖ ITS OWN BLOCK, NOT `attributes` EXTENDED — names are never conflated (owner).** The substrate is a distinct
+> carrier at a distinct scope, so it gets a distinct word rather than borrowing the building's. The cost of one
+> more vocabulary entry is trivial; the cost of a name that means two things is paid forever by every reader who
+> has to work out which one is meant.
+> ⚠ **`nukeImmune` is the standing exhibit for why: the SAME key names two DIFFERENT mechanics on two carriers.**
+> A BUILDING's `nukeImmune` makes its **city** immune; a plot substrate's means the **feature itself survives** the
+> blast. Separate blocks keep them separable — a single shared block would have quietly merged them.
+
+⛔ **A `characteristics` entry is something the substrate IS or DOES, never a constraint on what may exist there.**
+"No improvement may be built here" / "no city may be founded here" / "only on flatlands" are gates, so they author
+in `requires` / `allowed` (§4), exactly as they would on any other entity. The block is not a second home for
+placement rules.
+
 **Two further unit blocks:**
 
 - **`builds`** — the unit's per-type **`BUILD_*` repertoire** (which worker-builds it can perform), owned **per unit-type**
@@ -858,7 +877,7 @@ NOT `grants` (it is held-while-active, not a one-shot handout).
 
 > **⚖ The classification categories are RUNTIME-GENERATED INFOS ([DEC-classification-infos]).** Every distinct
 > authored block key mints one generated info at load — the camelCase key becomes an `INFOTYPE_NAME` id
-> (`"setScienceRate"` → `CAPABILITY_SET_SCIENCE_RATE`; prefixes `SKILL_` / `TAG_` / `ATTRIBUTE_` / `CAPABILITY_` /
+> (`"setScienceRate"` → `CAPABILITY_SET_SCIENCE_RATE`; prefixes `SKILL_` / `TAG_` / `ATTRIBUTE_` / `CHARACTERISTIC_` / `CAPABILITY_` /
 > `POLICY_`, [naming.md](naming.md)) registered in the global infotype map and created as an info in its category's
 > repo — *"clear data to refer to, even if they are only in essence a boolean switch."* Nothing is authored per
 > category (no data folder): the registry derives from the union of keys across all entities
@@ -868,7 +887,7 @@ NOT `grants` (it is held-while-active, not a one-shot handout).
 > planes: `true` = grant, `false` = revoke (the skills.md §4 grant/revoke pairs ride the same two-plane block).
 >
 > **⛔ These registries are OPEN BY DESIGN — the member set grows with authored data, permanently (owner).** Because
-> the categories mint from the union of authored keys, identifying new **tags / skills / capabilities / attributes /
+> the categories mint from the union of authored keys, identifying new **tags / skills / capabilities / attributes / characteristics /
 > policies** is an ONGOING activity expected to continue for the life of the mod — a new one is authored data that
 > mints its info, never an engine change. So a glossary ([tags](tags.md) / [skills](skills.md) /
 > [capabilities](capabilities.md) / [state](state.md)) is **never "incomplete" against a finish line**: it catalogues
@@ -1001,7 +1020,7 @@ marble; +10 culture, doubling after it has stood 1000 turns.*
 
 **Top-level keys** — `type` · `identity` · `cost` · `ui` · `world` · `sound` · `ai` · `enables` · `obsoletes` ·
 `replaces` · `disables` · `requires` · `allowed` · `grants` · `triggers` · `skills` · `tags` · `state` · `attributes` ·
-`capabilities` · `shrine` · `headquarters` · *(modifier families)* · *(auxiliary/bespoke, §9)*
+`characteristics` · `capabilities` · `shrine` · `headquarters` · *(modifier families)* · *(auxiliary/bespoke, §9)*
 
 **Scope (singular)** — `world › team › empire › city › plot{improvement|feature|terrain|route} › building|specialist|unit` · off-spine `self` = the entity's own build
 **Target (plural)** — `plots · units · cities · areas · empires` = all of that kind in the scope, predicate-filtered

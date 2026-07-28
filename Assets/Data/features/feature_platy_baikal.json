@@ -7,6 +7,10 @@
    }
   }
  },
+ "characteristics": [
+  "nukeImmune",
+  "ignoreTerrainCulture"
+ ],
  "world": {
   "art": {
    "define": "ART_DEF_FEATURE_BAIKAL"
@@ -26,8 +30,6 @@
   "noCity": true,
   "noImprovement": true,
   "noBonus": true,
-  "nukeImmune": true,
-  "ignoreTerrainCulture": true,
   "validTerrains": [
    "TERRAIN_GRASSLAND",
    "TERRAIN_PLAINS",

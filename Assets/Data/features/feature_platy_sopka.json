@@ -7,6 +7,11 @@
    }
   }
  },
+ "characteristics": [
+  "nukeImmune",
+  "countsAsPeak",
+  "ignoreTerrainCulture"
+ ],
  "triggers": [
   {
    "trigger": "onTurn",
@@ -34,9 +39,6 @@
   "noCity": true,
   "noImprovement": true,
   "noBonus": true,
-  "nukeImmune": true,
-  "countsAsPeak": true,
-  "ignoreTerrainCulture": true,
   "validTerrains": [
    "TERRAIN_ICE",
    "TERRAIN_PERMAFROST",

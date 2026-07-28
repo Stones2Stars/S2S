@@ -438,9 +438,9 @@ address and a spelled-out getter parameter — never a fragment of an enum/membe
 
 ### DEC-classification-infos
 
-The §8/§9 classification categories (skills / tags / attributes / capabilities / policies) exist as
+The §8/§9 classification categories (skills / tags / attributes / characteristics / capabilities / policies) exist as
 RUNTIME-GENERATED INFOS: one info per distinct authored block key, minted at load into the global infotype map
-(`SKILL_`/`TAG_`/`ATTRIBUTE_`/`CAPABILITY_`/`POLICY_` + UPPER_SNAKE of the camelCase key) and its category's
+(`SKILL_`/`TAG_`/`ATTRIBUTE_`/`CHARACTERISTIC_`/`CAPABILITY_`/`POLICY_` + UPPER_SNAKE of the camelCase key) and its category's
 InfoRepo — referenceable like any authored info, with every entity's blocks resolved to by-id bitsets. Nothing is
 hand-authored per category; the registry derives from the data. **Home:** [json.md §8](../specs/json.md).
 

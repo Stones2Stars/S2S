@@ -14,6 +14,10 @@
    }
   }
  },
+ "characteristics": [
+  "nukeImmune",
+  "ignoreTerrainCulture"
+ ],
  "world": {
   "art": {
    "define": "ART_DEF_FEATURE_PRAVCICKA_BRANA"
@@ -30,8 +34,6 @@
   "noCity": true,
   "noImprovement": true,
   "noBonus": true,
-  "nukeImmune": true,
-  "ignoreTerrainCulture": true,
   "validTerrains": [
    "TERRAIN_PLAINS",
    "TERRAIN_ROCKY",

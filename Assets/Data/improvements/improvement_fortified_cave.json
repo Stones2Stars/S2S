@@ -30,6 +30,10 @@
    }
   }
  },
+ "characteristics": [
+  "actsAsCity",
+  "bombardable"
+ ],
  "world": {
   "art": {
    "define": "ART_DEF_IMPROVEMENT_FORTIFIED_CAVE"
@@ -41,7 +45,6 @@
  "identity": {
   "description": "TXT_KEY_IMPROVEMENT_FORTIFIED_CAVE",
   "civilopedia": "TXT_KEY_IMPROVEMENT_FORTIFIED_CAVE_PEDIA",
-  "actsAsCity": true,
   "advancedStart": {
    "cost": 10
   },
@@ -49,7 +52,6 @@
   "outsideBorders": true,
   "militaryStructure": true,
   "upgradesTo": "IMPROVEMENT_FORTIFIED_CAVE_WITH_CACHE",
-  "bombardable": true,
   "cultureRange": 1,
   "upgradeRequiresFortify": true,
   "universalBonusTrade": true

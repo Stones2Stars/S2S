@@ -56,6 +56,11 @@
    }
   }
  },
+ "characteristics": [
+  "actsAsCity",
+  "bombardable",
+  "zoneOfControl"
+ ],
  "world": {
   "art": {
    "define": "ART_DEF_IMPROVEMENT_COMMAND_CENTER"
@@ -67,7 +72,6 @@
  "identity": {
   "description": "TXT_KEY_IMPROVEMENT_COMMAND_CENTER",
   "civilopedia": "TXT_KEY_IMPROVEMENT_COMMAND_CENTER_PEDIA",
-  "actsAsCity": true,
   "pillageTo": "IMPROVEMENT_COMMAND_BUNKER",
   "advancedStart": {
    "cost": 80
@@ -75,9 +79,7 @@
   "outsideBorders": true,
   "militaryStructure": true,
   "cultureRange": 2,
-  "bombardable": true,
   "upgradeRequiresFortify": true,
-  "universalBonusTrade": true,
-  "zoneOfControl": true
+  "universalBonusTrade": true
  }
 }

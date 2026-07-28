@@ -7,6 +7,10 @@
    }
   }
  },
+ "characteristics": [
+  "nukeImmune",
+  "ignoreTerrainCulture"
+ ],
  "world": {
   "art": {
    "define": "ART_DEF_FEATURE_PAMUKKALE"
@@ -24,8 +28,6 @@
   "noCity": true,
   "noImprovement": true,
   "noBonus": true,
-  "nukeImmune": true,
-  "ignoreTerrainCulture": true,
   "validTerrains": [
    "TERRAIN_TAIGA",
    "TERRAIN_ICE",

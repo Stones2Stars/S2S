@@ -36,6 +36,10 @@
    "flat": 30
   }
  },
+ "characteristics": [
+  "actsAsCity",
+  "bombardable"
+ ],
  "world": {
   "art": {
    "define": "ART_DEF_IMPROVEMENT_HAMLET"
@@ -49,9 +53,7 @@
   },
   "upgradeTime": 5,
   "outsideBorders": true,
-  "actsAsCity": true,
   "upgradesTo": "IMPROVEMENT_RESOURCE_TOWN",
-  "bombardable": true,
   "upgradeRequiresFortify": true,
   "universalBonusTrade": true
  }

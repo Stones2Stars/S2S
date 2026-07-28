@@ -43,6 +43,10 @@
    }
   }
  },
+ "characteristics": [
+  "actsAsCity",
+  "bombardable"
+ ],
  "world": {
   "art": {
    "define": "ART_DEF_IMPROVEMENT_SEED_CAMP"
@@ -54,11 +58,9 @@
   "advancedStart": {
    "cost": 10
   },
-  "actsAsCity": true,
   "upgradeTime": 5,
   "outsideBorders": true,
   "upgradesTo": "IMPROVEMENT_RESOURCE_OUTPOST",
-  "bombardable": true,
   "upgradeRequiresFortify": true,
   "universalBonusTrade": true
  }

@@ -10,6 +10,9 @@
    ]
   }
  },
+ "characteristics": [
+  "actsAsCity"
+ ],
  "world": {
   "art": {
    "define": "ART_DEF_IMPROVEMENT_CITY_RUINS"
@@ -18,7 +21,6 @@
  "identity": {
   "description": "TXT_WORD_CITY",
   "civilopedia": "TXT_KEY_IMPROVEMENT_CITY_PEDIA",
-  "actsAsCity": true,
   "graphicalOnly": true
  }
 }

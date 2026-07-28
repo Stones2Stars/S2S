@@ -64,7 +64,8 @@ FEATURE_DROP = ["iWarmingDefense", "RiverYieldChange", "PropertyManipulators"]
 # curate() checks to_identity BEFORE the channel mapping -- so iMovement lands intrinsic, not as a stray family.
 CFG = cc.EntityConfig("FeatureInfo", extra_drop=FEATURE_DROP, families=FEATURE_FAMILIES,
                       to_identity={"iMovement": "movementCost"},
-                      grants={"OnUnitChangeTo": "onUnitChangeTo"})
+                      grants={"OnUnitChangeTo": "onUnitChangeTo"},
+                      characteristics=['bNukeImmune', 'bCountsAsPeak', 'bIgnoreTerrainCulture'])
 
 # No inbound boosts: a feature is never the deliveryguy for another entity's modifier (modifier-spec §6.1).
 FEATURE_BOOSTS = []

@@ -36,6 +36,9 @@
    }
   }
  },
+ "characteristics": [
+  "bombardable"
+ ],
  "world": {
   "art": {
    "define": "ART_DEF_IMPROVEMENT_LISTENING_NODE"
@@ -53,7 +56,6 @@
   },
   "outsideBorders": true,
   "militaryStructure": true,
-  "bombardable": true,
   "upgradeRequiresFortify": true
  }
 }

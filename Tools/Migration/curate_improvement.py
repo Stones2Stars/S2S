@@ -196,7 +196,8 @@ CFG = cc.EntityConfig("ImprovementInfo", families=IMP_FAMILIES, id_rename=ID_REN
                       # EXE-bound DllExport read (the CvBonusInfo-style map-gen shim leaf, cascade-engine-430.md #3) with
                       # live DLL/Python/UI callers -- the flag and the predicate are not exclusive.
                       map_gen=["iUniqueRange", "iGoodyRange", "iTilesPerGoody", "bGoody", "bRequiresRiverSide"],
-                      extra_drop=EXTRA_DROP, requires_fn=requires_improvement)
+                      extra_drop=EXTRA_DROP, requires_fn=requires_improvement,
+                      characteristics=['bActsAsCity', 'bBombardable', 'bIsZOCSource'])
 
 # Inbound boosts: Building/Civic ImprovementYieldChanges stay KEEP-ON-SOURCE (the cascade gathers those keyed from the
 # building/civic). The TECH's ImprovementYieldChanges is the exception (owner 2026-06-26): a tech BOOSTS an improvement's

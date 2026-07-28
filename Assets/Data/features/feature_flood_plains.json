@@ -26,6 +26,9 @@
    "percent": -40
   }
  },
+ "characteristics": [
+  "ignoreTerrainCulture"
+ ],
  "triggers": [
   {
    "trigger": "onTurn",
@@ -71,7 +74,6 @@
    "TERRAIN_MUDDY",
    "TERRAIN_PLAINS",
    "TERRAIN_SCRUB"
-  ],
-  "ignoreTerrainCulture": true
+  ]
  }
 }

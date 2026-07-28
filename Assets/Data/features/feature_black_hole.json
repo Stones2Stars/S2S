@@ -1,5 +1,8 @@
 {
  "type": "FEATURE_BLACK_HOLE",
+ "characteristics": [
+  "nukeImmune"
+ ],
  "world": {
   "art": {
    "define": "ART_DEF_FEATURE_BLACK_HOLE"
@@ -20,7 +23,6 @@
   "noCity": true,
   "noImprovement": true,
   "visibleAlways": true,
-  "nukeImmune": true,
   "validTerrains": [
    "TERRAIN_ORION_ARM",
    "TERRAIN_MILKY_WAY"

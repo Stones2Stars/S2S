@@ -1,5 +1,9 @@
 {
  "type": "FEATURE_PLATY_BARRINGER_CRATER",
+ "characteristics": [
+  "nukeImmune",
+  "ignoreTerrainCulture"
+ ],
  "world": {
   "art": {
    "define": "ART_DEF_FEATURE_BARRINGER_CRATER"
@@ -16,8 +20,6 @@
   "noCity": true,
   "noImprovement": true,
   "noBonus": true,
-  "nukeImmune": true,
-  "ignoreTerrainCulture": true,
   "validTerrains": [
    "TERRAIN_SCRUB",
    "TERRAIN_DESERT",

@@ -56,6 +56,9 @@
    }
   }
  },
+ "characteristics": [
+  "bombardable"
+ ],
  "world": {
   "art": {
    "define": "ART_DEF_IMPROVEMENT_RADAR_TOWER"
@@ -72,7 +75,6 @@
    "cost": 400
   },
   "outsideBorders": true,
-  "militaryStructure": true,
-  "bombardable": true
+  "militaryStructure": true
  }
 }

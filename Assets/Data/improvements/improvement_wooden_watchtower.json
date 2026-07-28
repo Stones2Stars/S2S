@@ -53,6 +53,9 @@
    }
   }
  },
+ "characteristics": [
+  "bombardable"
+ ],
  "world": {
   "art": {
    "define": "ART_DEF_IMPROVEMENT_WOODEN_WATCHTOWER"
@@ -71,7 +74,6 @@
   "outsideBorders": true,
   "militaryStructure": true,
   "upgradesTo": "IMPROVEMENT_STONE_WATCHTOWER",
-  "bombardable": true,
   "upgradeRequiresFortify": true
  }
 }

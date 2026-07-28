@@ -423,7 +423,7 @@ class EntityConfig:
     """Per-entity config, mostly read from mapping/<Entity>.json (channels/cost/art/prereqs)."""
     def __init__(self, entity, cost_rename=None, grants=None, era_fn=None, extra_drop=None, map_gen=None,
                  families=None, id_rename=None, to_identity=None, requires_fn=None, art_rename=None, allowed_fn=None,
-                 enabler_block=None):
+                 enabler_block=None, characteristics=None):
         m = json.load(open(os.path.join(MAPDIR, entity + ".json")))
         self.entity = entity
         # owner 2026-06-29: where this entity's `kind:"enabler"` boolean channels land — "capabilities" (tech
@@ -450,6 +450,12 @@ class EntityConfig:
         self.cost_rename = cost_rename or {}
         self.grants = grants or {}
         self.map_gen = set(map_gen or [])   # field tags routed into a `mapGeneration` group instead of identity
+        # PLOT SUBSTRATE held booleans -> the `characteristics` block (json.md par.8): what the terrain / feature /
+        # improvement / route IS or DOES, out of `identity`, which carries NO effects (owner). Its own block and
+        # its own CHARACTERISTIC_ registry rather than the building `attributes` word -- the same key can name a
+        # different mechanic per carrier (a BUILDING nukeImmune shields its city; a FEATURE one survives the blast),
+        # and one shared block would have merged them.
+        self.characteristics = set(characteristics or [])
         self.era_fn = era_fn or (lambda rec, store: "")
         # requires_fn(rec, store) -> the TARGET-side reversible MEANS gate (enabler-spec §3/§5): the positive
         # `requires.{build,operate}` BoolExpr authored ON this entity from its OWN prereq fields (the fields the
@@ -463,6 +469,7 @@ class EntityConfig:
 
 def curate(typ, rec, cfg, store, boosts):
     text_fields, families, cost, art_blocks, identity, grants, map_gen = {}, {}, {}, {}, {}, {}, {}
+    chars = {}
     ai_behaviour, ai_flavours = {}, None
     for c in rec:
         tag, t = c.tag, engine.text(c)
@@ -496,11 +503,11 @@ def curate(typ, rec, cfg, store, boosts):
         elif tag[:1] == "b" and len(tag) > 2 and tag[1:2].isupper():
             if t in ("1", "true", "True"):                 # boolean flag -> clean name + true (false omitted)
                 name = cfg.id_rename.get(tag) or B_FLAG_NAMES.get(tag, tag[1].lower() + tag[2:])
-                (map_gen if tag in cfg.map_gen else identity)[name] = True
+                (chars if tag in cfg.characteristics else map_gen if tag in cfg.map_gen else identity)[name] = True
         else:
             if list(c) or t:
                 name = cfg.id_rename.get(tag) or engine.FIELD_RENAME.get(tag, de_i(tag))
-                (map_gen if tag in cfg.map_gen else identity)[name] = engine.generic(c)
+                (chars if tag in cfg.characteristics else map_gen if tag in cfg.map_gen else identity)[name] = engine.generic(c)
 
     for family, fdata in boosts.items():                   # fold entity-targeted modifiers into their family
         families[family] = _merge_val(families[family], fdata) if family in families else fdata
@@ -553,6 +560,8 @@ def curate(typ, rec, cfg, store, boosts):
     for _blk in ("ui", "world", "sound"):      # art now lives in the ui/world/sound top-level subsystem blocks
         if art_blocks.get(_blk):
             out[_blk] = art_blocks[_blk]
+    if chars:
+        out["characteristics"] = [k for k, v in chars.items() if v]
     if map_gen:
         out["mapGeneration"] = map_gen
     if identity:
@@ -605,7 +614,7 @@ def main(cfg, boosts_config, out_dir, post_process=None, synthesize=None):
     has = lambda k: sum(1 for (o, _) in result.values() if k in o)
     STRUCT = {"type", "description", "civilopedia", "help", "quote", "strategy", "enables", "obsoletes",
               "replaces", "disables", "obsoletedBy", "provides", "requires", "allowed", "grants", "cost", "ai",
-              "ui", "world", "sound", "mapGeneration", "identity"}
+              "ui", "world", "sound", "mapGeneration", "identity", "characteristics"}
     fams = lambda o: [k for k in o if k not in STRUCT]
     print("%s curated: %d" % (cfg.entity, n))
     for k in ("enables", "obsoletes", "replaces", "disables", "requires", "grants", "ai"):

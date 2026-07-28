@@ -50,6 +50,9 @@
    }
   }
  },
+ "characteristics": [
+  "bombardable"
+ ],
  "world": {
   "art": {
    "define": "ART_DEF_IMPROVEMENT_AQUATIC_ANTI_AIR_DEFENSE"
@@ -63,7 +66,6 @@
    "cost": 60
   },
   "outsideBorders": true,
-  "militaryStructure": true,
-  "bombardable": true
+  "militaryStructure": true
  }
 }

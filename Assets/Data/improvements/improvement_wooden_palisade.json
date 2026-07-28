@@ -46,6 +46,10 @@
    }
   }
  },
+ "characteristics": [
+  "actsAsCity",
+  "bombardable"
+ ],
  "world": {
   "art": {
    "define": "ART_DEF_IMPROVEMENT_WOODEN_PALISADE"
@@ -57,7 +61,6 @@
  "identity": {
   "description": "TXT_KEY_IMPROVEMENT_WOODEN_PALISADE",
   "civilopedia": "TXT_KEY_IMPROVEMENT_FORT_PEDIA",
-  "actsAsCity": true,
   "advancedStart": {
    "cost": 10
   },
@@ -66,7 +69,6 @@
   "militaryStructure": true,
   "pillageTo": "IMPROVEMENT_ABATIS_THORN_HEDGE",
   "upgradesTo": "IMPROVEMENT_FORT",
-  "bombardable": true,
   "upgradeRequiresFortify": true,
   "universalBonusTrade": true
  }

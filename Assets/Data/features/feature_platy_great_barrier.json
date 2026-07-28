@@ -22,6 +22,10 @@
    }
   }
  },
+ "characteristics": [
+  "nukeImmune",
+  "ignoreTerrainCulture"
+ ],
  "triggers": [
   {
    "trigger": "onTurn",
@@ -46,8 +50,6 @@
   "civilopedia": "TXT_KEY_FEATURE_GREAT_BARRIER_PEDIA",
   "movementCost": 5,
   "noCity": true,
-  "nukeImmune": true,
-  "ignoreTerrainCulture": true,
   "validTerrains": [
    "TERRAIN_COAST_TROPICAL"
   ]

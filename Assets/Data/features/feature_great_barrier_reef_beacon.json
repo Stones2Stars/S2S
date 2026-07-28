@@ -22,6 +22,10 @@
    }
   }
  },
+ "characteristics": [
+  "nukeImmune",
+  "ignoreTerrainCulture"
+ ],
  "triggers": [
   {
    "trigger": "onTurn",
@@ -47,8 +51,6 @@
   "movementCost": 2,
   "appearance": -1,
   "noCity": true,
-  "nukeImmune": true,
-  "ignoreTerrainCulture": true,
   "validTerrains": [
    "TERRAIN_COAST_TROPICAL"
   ]

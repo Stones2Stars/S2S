@@ -17,6 +17,9 @@
    }
   }
  },
+ "characteristics": [
+  "ignoreTerrainCulture"
+ ],
  "world": {
   "art": {
    "define": "ART_DEF_FEATURE_OASIS"
@@ -49,7 +52,6 @@
   "noAdjacent": true,
   "requiresFlatlands": true,
   "addsFreshWater": true,
-  "ignoreTerrainCulture": true,
   "validTerrains": [
    "TERRAIN_DESERT",
    "TERRAIN_DUNES",

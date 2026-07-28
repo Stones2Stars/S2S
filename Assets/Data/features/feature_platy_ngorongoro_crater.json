@@ -1,5 +1,9 @@
 {
  "type": "FEATURE_PLATY_NGORONGORO_CRATER",
+ "characteristics": [
+  "nukeImmune",
+  "ignoreTerrainCulture"
+ ],
  "world": {
   "art": {
    "define": "ART_DEF_FEATURE_NGORONGORO_CRATER"
@@ -17,8 +21,6 @@
   "noCity": true,
   "noImprovement": true,
   "noBonus": true,
-  "nukeImmune": true,
-  "ignoreTerrainCulture": true,
   "validTerrains": [
    "TERRAIN_PLAINS",
    "TERRAIN_GRASSLAND",

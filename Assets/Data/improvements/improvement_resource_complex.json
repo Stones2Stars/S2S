@@ -43,6 +43,10 @@
    }
   }
  },
+ "characteristics": [
+  "actsAsCity",
+  "bombardable"
+ ],
  "world": {
   "art": {
    "define": "ART_DEF_IMPROVEMENT_TOWN"
@@ -56,8 +60,6 @@
   },
   "upgradeTime": 5,
   "outsideBorders": true,
-  "actsAsCity": true,
-  "bombardable": true,
   "upgradeRequiresFortify": true,
   "universalBonusTrade": true
  }

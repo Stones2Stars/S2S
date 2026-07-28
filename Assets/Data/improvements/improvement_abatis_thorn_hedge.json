@@ -43,6 +43,10 @@
    }
   }
  },
+ "characteristics": [
+  "actsAsCity",
+  "bombardable"
+ ],
  "world": {
   "art": {
    "define": "ART_DEF_IMPROVEMENT_ABATIS_THORN_HEDGE"
@@ -54,7 +58,6 @@
  "identity": {
   "description": "TXT_KEY_IMPROVEMENT_ABATIS_THORN_HEDGE",
   "civilopedia": "TXT_KEY_IMPROVEMENT_FORT_PEDIA",
-  "actsAsCity": true,
   "advancedStart": {
    "cost": 10
   },
@@ -62,7 +65,6 @@
   "outsideBorders": true,
   "militaryStructure": true,
   "upgradesTo": "IMPROVEMENT_WOODEN_PALISADE",
-  "bombardable": true,
   "upgradeRequiresFortify": true,
   "universalBonusTrade": true
  }

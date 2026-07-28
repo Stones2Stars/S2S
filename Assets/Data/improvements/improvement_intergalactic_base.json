@@ -44,6 +44,11 @@
    }
   }
  },
+ "characteristics": [
+  "actsAsCity",
+  "bombardable",
+  "zoneOfControl"
+ ],
  "world": {
   "art": {
    "define": "ART_DEF_IMPROVEMENT_INTERGALACTIC_BASE"
@@ -56,16 +61,13 @@
   "description": "TXT_KEY_IMPROVEMENT_INTERGALACTIC_BASE",
   "civilopedia": "TXT_KEY_IMPROVEMENT_INTERGALACTIC_BASE_PEDIA",
   "extraterrestrial": true,
-  "actsAsCity": true,
   "advancedStart": {
    "cost": 60
   },
   "outsideBorders": true,
   "militaryStructure": true,
   "cultureRange": 1,
-  "bombardable": true,
   "upgradeRequiresFortify": true,
-  "universalBonusTrade": true,
-  "zoneOfControl": true
+  "universalBonusTrade": true
  }
 }

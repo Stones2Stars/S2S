@@ -7,6 +7,11 @@
    }
   }
  },
+ "characteristics": [
+  "nukeImmune",
+  "countsAsPeak",
+  "ignoreTerrainCulture"
+ ],
  "world": {
   "art": {
    "define": "ART_DEF_FEATURE_SUGARLOAF"
@@ -22,9 +27,6 @@
   "noCity": true,
   "noImprovement": true,
   "noBonus": true,
-  "nukeImmune": true,
-  "countsAsPeak": true,
-  "ignoreTerrainCulture": true,
   "validTerrains": [
    "TERRAIN_COAST",
    "TERRAIN_COAST_TROPICAL",

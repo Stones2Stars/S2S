@@ -1,5 +1,8 @@
 {
  "type": "FEATURE_RADIATION_CLOUD",
+ "characteristics": [
+  "nukeImmune"
+ ],
  "world": {
   "art": {
    "define": "ART_DEF_FEATURE_RADIATION_CLOUD"
@@ -13,7 +16,6 @@
   "civilopedia": "TXT_KEY_FEATURE_RADIATION_CLOUD_PEDIA",
   "movementCost": 1,
   "popDestroys": -1,
-  "noImprovement": true,
-  "nukeImmune": true
+  "noImprovement": true
  }
 }

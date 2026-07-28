@@ -17,6 +17,9 @@
    }
   }
  },
+ "characteristics": [
+  "nukeImmune"
+ ],
  "world": {
   "art": {
    "define": "ART_DEF_FEATURE_REEF"
@@ -124,7 +127,6 @@
   "civilopedia": "TXT_KEY_FEATURE_REEF_PEDIA",
   "movementCost": 5,
   "appearance": 400,
-  "nukeImmune": true,
   "validTerrains": [
    "TERRAIN_COAST",
    "TERRAIN_COAST_POLAR",

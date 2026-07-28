@@ -56,6 +56,11 @@
    }
   }
  },
+ "characteristics": [
+  "actsAsCity",
+  "bombardable",
+  "zoneOfControl"
+ ],
  "world": {
   "art": {
    "define": "ART_DEF_IMPROVEMENT_COMMAND_BUNKER"
@@ -67,7 +72,6 @@
  "identity": {
   "description": "TXT_KEY_IMPROVEMENT_COMMAND_BUNKER",
   "civilopedia": "TXT_KEY_IMPROVEMENT_COMMAND_BUNKER_PEDIA",
-  "actsAsCity": true,
   "advancedStart": {
    "cost": 60
   },
@@ -77,9 +81,7 @@
   "pillageTo": "IMPROVEMENT_FORT",
   "upgradesTo": "IMPROVEMENT_COMMAND_CENTER",
   "cultureRange": 1,
-  "bombardable": true,
   "upgradeRequiresFortify": true,
-  "universalBonusTrade": true,
-  "zoneOfControl": true
+  "universalBonusTrade": true
  }
 }
