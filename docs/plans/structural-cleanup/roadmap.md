@@ -185,9 +185,21 @@ Everything above is settled. The GRAMMAR is now settled too — [patterns.md § 
 — and the GAME-OBJECT half is BUILT: **41 group reads** across plot / city / player / team, folding through
 the one cross-scope roll-up (`InfoValuation::realizedAt*`), plus the endpoint oracle.
 
-⛔ **What is NOT done is the DISCONNECT — the legacy getter set is STILL STANDING beside it (the KILL LIST above),
-and killing it is the next action, not a later phase.** ⚠ An agent reading only that the group reads exist would
-conclude the access surface is done and build on a half-migration.
+⛔ **What is NOT done is the DISCONNECT — the legacy getter set is STILL STANDING beside it (the KILL LIST above).**
+⚠ An agent reading only that the group reads exist would conclude the access surface is done and build on a
+half-migration.
+
+⚖ **The `CvCity`/`CvPlayer` getter consolidation is KNOWN and WILL be done — it is simply NOT the primary focus
+(owner).** It is not deferred and not optional ([DEC-no-deferred](../../architecture/decisions.md#dec-no-deferred)
+still binds: it is a failure to fix, not a backlog entry); what the ruling settles is ORDER. Getting all core
+systems and their STRUCTURE in place comes first, because plugging holes while structure is missing means plugging
+them with the only thing standing there — legacy (the banner's structure-first rule). Pick this up when the
+structure is complete, not as the opening move.
+⚑ **And a fair few of those getters CONSOLIDATE ON THEIR OWN (owner): they are INFO-BACKED reads, so restructuring
+the infos already collapses them** — the count is not a worklist of independent items. ⛔ Do not plan a per-getter
+sweep for work that falls out of wiring the rebuilt infos through; measure what actually survives that first, then
+cut the genuine residue. (The same reason the 622 are a DELETION list + COVERAGE checklist, never a per-getter
+migration worklist — [DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface).)
 
 The rest of the boundary every consumer meets:
 
