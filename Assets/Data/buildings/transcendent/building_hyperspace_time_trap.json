@@ -15,10 +15,6 @@
   "city": {
    "amount": {
     "percent": 30
-   },
-   "counterDamage": {
-    "damage": 30,
-    "chance": 30
    }
   }
  },

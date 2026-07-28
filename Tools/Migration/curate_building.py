@@ -814,33 +814,23 @@ def pass2(typ, rec, store, fams, grants, triggers, identity, enables, capabiliti
     corphq = _txt(rec, "GlobalCorporationCommerce")
     if corphq:
         bespoke["headquarters"] = corphq
-    # --- COUNTER-DAMAGE fold (owner ruling 2026-07-01; ⚑ DESIGNED shape, flagged for review): the building damages
-    # attacking units. ONE mechanic, ONE home: fold the amount + chance (already in defense.city via SCALAR_FAMILIES:
-    # damageToAttacker/damageAttackerChance) TOGETHER with the "who" selector into a single `defense.city.counterDamage`
-    # member. Engine (CvUnit.cpp:26595-26653, verified): per attacking unit whose combat type is damagable, roll
-    # getDamageAttackerChance()% -> deal getDamageToAttacker() damage; the WHO is bDamageAllAttackers (ALL attackers)
-    # else the MayDamageAttackingUnitCombatTypes list. Shape:
-    #     defense.city.counterDamage = { damage:N, chance:N, units?:{unitCombats:[...]} }
-    # `units` selector ABSENT => all attackers (bDamageAllAttackers); a `unitCombats` membership list => selective.
-    # (Uses the §6.1 units-target / §3.7 unit-selector vocabulary; a plural `units` target narrowed by a unitCombats
-    # membership list, not the identity list the old code parked.) ---
+    # --- COUNTER-DAMAGE is DROPPED, not emitted (owner ruling): a building damaging a unit that attacks its city is
+    # a TRIGGER by shape (a happening, a roll, an effect on the attacker), and if the functionality is wanted it is
+    # modelled properly on the trigger plane rather than carried over as a defense MEMBER. So the legacy fields are
+    # consumed here and emitted nowhere; the rework is tracked as its own issue.
+    #
+    # The legacy mechanic it drops was half-dead anyway, which is why porting the shape verbatim was never the right
+    # move. `CvUnit::checkCityAttackDefensesDamage` gates on `isDamageAttackerCapable()`, a DERIVED flag that
+    # `CvBuildingInfo` only ever sets from `bDamageAllAttackers` (read) or from an INHERITED may-damage list (the
+    # merge, guarded on the building's own list being empty) -- there is NO path setting it from a building's OWN
+    # authored list. So across the 13 trap buildings the 7 carrying `bDamageAllAttackers` fired, and the 6 carrying
+    # a hand-authored 7-to-13-entry `MayDamageAttackingUnitCombatTypes` list never fired at all.
+    # Both halves go; the reworked mechanic is authored fresh, not migrated. ---
     dc = fams.get("defense", {}).get("city") if isinstance(fams.get("defense"), dict) else None
-    dmg = dc.pop("damageToAttacker", None) if isinstance(dc, dict) else None
-    chance = dc.pop("damageAttackerChance", None) if isinstance(dc, dict) else None
-    md = _typelist(rec, "MayDamageAttackingUnitCombatTypes")
-    all_attackers = _bool(rec, "bDamageAllAttackers")
-    if dmg is not None or chance is not None or md or all_attackers:
-        cd = OrderedDict()
-        if isinstance(dmg, dict) and "flat" in dmg:
-            cd["damage"] = dmg["flat"]
-        if isinstance(chance, dict) and "flat" in chance:
-            cd["chance"] = chance["flat"]
-        if md and not all_attackers:                 # selective: a unitCombats membership list
-            cd["units"] = OrderedDict([("unitCombats", md)])
-        # all_attackers (or no list) => `units` omitted = applies to EVERY attacker.
-        if cd:
-            dc["counterDamage"] = cd
-        if isinstance(dc, dict) and not dc:          # cleanup: defense.city emptied
+    if isinstance(dc, dict):
+        dc.pop("damageToAttacker", None)
+        dc.pop("damageAttackerChance", None)
+        if not dc:                                   # cleanup: defense.city emptied
             fams["defense"].pop("city", None)
             if not fams["defense"]:
                 fams.pop("defense", None)

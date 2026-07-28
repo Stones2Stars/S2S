@@ -73,26 +73,6 @@
   "city": {
    "amount": {
     "percent": 20
-   },
-   "counterDamage": {
-    "damage": 25,
-    "chance": 30,
-    "units": {
-     "unitCombats": [
-      "UNITCOMBAT_ARCHER",
-      "UNITCOMBAT_ASSAULT_MECH",
-      "UNITCOMBAT_DREADNOUGHT",
-      "UNITCOMBAT_GUN",
-      "UNITCOMBAT_HITECH",
-      "UNITCOMBAT_MELEE",
-      "UNITCOMBAT_MOUNTED",
-      "UNITCOMBAT_ROBOT",
-      "UNITCOMBAT_SIEGE",
-      "UNITCOMBAT_THROWING",
-      "UNITCOMBAT_TRACKED",
-      "UNITCOMBAT_WHEELED"
-     ]
-    }
    }
   }
  },

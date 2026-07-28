@@ -66,21 +66,6 @@
   "city": {
    "amount": {
     "percent": 10
-   },
-   "counterDamage": {
-    "damage": 10,
-    "chance": 20,
-    "units": {
-     "unitCombats": [
-      "UNITCOMBAT_ARCHER",
-      "UNITCOMBAT_GUN",
-      "UNITCOMBAT_MELEE",
-      "UNITCOMBAT_MOUNTED",
-      "UNITCOMBAT_SIEGE",
-      "UNITCOMBAT_THROWING",
-      "UNITCOMBAT_WHEELED"
-     ]
-    }
    }
   }
  },

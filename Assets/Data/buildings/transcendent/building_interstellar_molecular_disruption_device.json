@@ -20,14 +20,6 @@
    ]
   }
  },
- "defense": {
-  "city": {
-   "counterDamage": {
-    "damage": 50,
-    "chance": 50
-   }
-  }
- },
  "cost": {
   "production": 8197,
   "hurryModifier": 10000
