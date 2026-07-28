@@ -372,6 +372,17 @@ getters that hold the bare family name.
 > scattered per-type interfaces, one getter per legacy field, no coherent payload anywhere. ⛔ "It kind of exists
 > already" is never licence to widen or build on a `Cy*` binding.
 
+> **⚖ WHY THE KILL IS HARD — it is a FORCING FUNCTION, not a tidiness goal (owner).** *"What I want is a
+> consistent surface all the way through, so I force a hard kill on the python surface, because otherwise you
+> will take shortcuts."* A live `Cy` surface is an ESCAPE HATCH: while it answers, the cheap move is always to
+> bend the new design so Python keeps working, and the result is a surface that is consistent nowhere. Killing it
+> removes the option, which is the point — the consistency is what is being bought, and the kill is how it is
+> paid for.
+> ⛔ **So a good-sounding reason to spare one binding is the failure, every time.** "Python still calls it",
+> "cutting it breaks a screen", "wait until the replacement lands" — each is the shortcut wearing caution, and
+> each leaves the hatch open. ⚠ Note what is NOT implied: nothing requires the kill to be one atomic operation.
+> Piecemeal cutting is fine; what is banned is bending anything to keep the old surface functional.
+
 Four words carry the whole requirement:
 
 - **ONE SURFACE.** A single library IS the Python-facing read boundary — not the per-type `Cy*` interfaces it
