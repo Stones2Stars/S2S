@@ -232,6 +232,16 @@ public:
 	// engine getter (0 when the option is off or the civic carries no limit). The per.above CITY_LIMIT eval leg
 	// (MMKernel::perApply) applies the SAME scale; its option gate rides the authored deposit's `enabled`.
 	static int resolvedCityLimit(int iBaseCityLimit);
+
+	// THE WELLBEING OPPOSING-PAIR NETS (modifier.md §2b: happiness sums against anger, health against unhealth).
+	// A group hands out its four CHANNELS; the net is a FINAL-STATE calculation over numbers the group already
+	// handed out (patterns.md § THE TWO READ ROLES rule 6) -- so it is NOT a channel, NOT a getter, and lives
+	// here exactly once ([DEC-single-implementation]) rather than being open-coded at each what-if call site.
+	// Takes the array expectedWellbeing filled; ×100 in, ×100 out (no reader reduces here, [DEC-fixedpoint-x100]).
+	// ⛔ These are the raw opposing-pair differences, NOT the realized verdicts: `angryPopulation` clamps against
+	// population and `healthRate` floors at 0, both of which need city state this what-if deliberately has not got.
+	static int netHappiness(const int (&wellbeing)[NUM_WELLBEING_CHANNELS]);
+	static int netHealth(const int (&wellbeing)[NUM_WELLBEING_CHANNELS]);
 };
 
 #endif // CV_INFO_VALUATION_H

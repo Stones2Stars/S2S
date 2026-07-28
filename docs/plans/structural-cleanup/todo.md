@@ -243,10 +243,30 @@ measure what survives, then cut the genuine residue. The classes below are the u
   Their replacement — `expectedFlatYields` / `expectedYieldModifiers` / `expectedPlotYields` /
   `expectedFlatCommerce` / `expectedWellbeing` — is **BUILT and has ZERO callers**, which is why the two pass-in
   scenarios currently hold vacuously.
-  ⚑ **Its consumers are precisely the TWO patterns.md names as ONE call:** the AI weighting a candidate
-  (`CvPlayerAI` 14, `CvCityAI` 7) and the build-list HOVER TOOLTIP (`CvBuildingFilters`, `CvBuildingSort`,
-  `CvDLLWidgetData`), plus `CvGameTextMgr`. Wiring them onto one valuation is what makes the displayed number and
-  the acted-on number the same number structurally.
+  ⚑ **Its consumers are precisely the TWO patterns.md names as ONE call:** the AI weighting a candidate and the
+  build-list HOVER TOOLTIP (`CvBuildingFilters`, `CvBuildingSort`, `CvDLLWidgetData`), plus `CvGameTextMgr`.
+  Wiring them onto one valuation is what makes the displayed number and the acted-on number the same number
+  structurally.
+  ⚠ **`CvPlayerAI`'s 3 `getAdditionalEventChance` hits are NOT this family** — that is `CvEventInfo`'s event-chance
+  list, a different mechanic a `getAdditional*` grep sweeps up by accident. The AI what-if sites are 7 in
+  `CvCityAI` and 13 in `CvPlayerAI`.
+  - **The WELLBEING half is converted** — the 6 `CvCityAI` happiness/health sites now ask the INFO
+    (`kBuilding.expectedWellbeing(cityContext, empireContext, plotGroup, …)`), one group read serving both
+    channels per candidate, with the opposing-pair nets added ONCE to the calc surface
+    (`InfoValuation::netHappiness` / `netHealth`) rather than open-coded per site.
+  - ⛔ **The YIELD half does NOT convert mechanically, and this is the real design item.**
+    `getAdditionalYieldByBuilding` is composite: base + extra + base-MODIFIER deltas, **minus the same for every
+    `getReplacedBuilding` the city already has fully active**. That supersession-netting leg is the problem — it
+    asks *"what do I gain, net of what this supersedes"*, and the info-side valuation structurally cannot answer
+    it (an info knows what it carries, never what the asking city already has). ⛔ Do NOT widen `expected*` with a
+    replaced-buildings argument — that is the roadmap's named failure ("a what-if argument, an ignore-this-clause
+    flag"). The supersession fact belongs to the ENABLER, which already owns `replacedBy`; the open call is
+    whether the netting re-homes there or the call site composes two valuations itself.
+  - **The CIVIC half carries 6- and 9-argument legacy signatures**
+    (`getAdditionalHappinessByCivic(eCivic, bDifferenceToCurrent, bCivicOptionVacuum, eStateReligion, iExtraPop,
+    iMilitaryHappinessUnits)`; `getAdditionalHealthByCivic` with `iIgnoreNoUnhealthyPopulationCount` /
+    `iIgnoreBuildingOnlyHealthyCount`). Those flags encode a civic-SWAP simulation, not a candidate's
+    contribution. Same ban applies — re-express the call site, never absorb the arguments.
 - **② Realized-value reads** (`getYieldRate`/`…100`, `getCommerceRate`/`…TimesTimes100`, `getMaintenanceTimes100`,
   `getTotalDefense`/`getDefenseModifier`) — already answerable by the existing group reads; these are a consumer
   move, not new surface.
