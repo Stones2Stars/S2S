@@ -144,11 +144,13 @@ SCALAR_FAMILIES = {
     # ruling 18: unit-upgrade price % (CvPlayer changeUnitUpgradePriceModifier -> CvUnit::upgradePrice
     # CvUnit.cpp:10356, a percent modifier on the price) -> the ONE costs family, kind upgrade.
     "iUnitUpgradePriceModifier": ("costs", "empire", "upgrade", "percent"),
-    # vision: a city's sight STRENGTH -- the same base-plus-modifiers shape as combat `strength` (owner). A bigger
-    # number sees further; terrain/features (jungle, peaks) impose the opposing resistance a seer must overcome
-    # (`vision.plot.seeThrough` on the feature). Scope is `city` because a building raises the CITY's sight, the
-    # unit-plane twin being the promotion's `vision.range` -- one family, the scope axis carrying the carrier.
-    "iLineOfSight": ("vision", "city", "range", "flat"),
+    # vision: a city's sight BUDGET -- vision works exactly as movement does (owner), so it takes movement's shape
+    # exactly. A budget is spent walking outward, one open plot costing 1 and a jungle 2, so a sight of N sees N
+    # plots of open ground and less through anything costlier. SCOPE alone carries the meaning, precisely as
+    # `movement.unit.flat` (the unit's moves) sits against `movement.plot.flat` (the plot's cost): here `city` is
+    # the observer's budget, and the plot substrate's own `vision.plot.flat` is what that budget is spent on. No
+    # member is needed or wanted -- a member must name WHICH COMPONENT (json.md §6), and this one names the scope.
+    "iLineOfSight": ("vision", "city", None, "flat"),
     # defense family (grouped; `min` floor clamp lives here, modifier-spec §7)
     "iDefense": ("defense", "city", "amount", "percent"),
     "iBombardDefense": ("defense", "city", "bombardDefense", "percent"),

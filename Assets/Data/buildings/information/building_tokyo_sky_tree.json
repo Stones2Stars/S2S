@@ -57,9 +57,7 @@
  },
  "vision": {
   "city": {
-   "range": {
-    "flat": 3
-   }
+   "flat": 3
   }
  },
  "cost": {
