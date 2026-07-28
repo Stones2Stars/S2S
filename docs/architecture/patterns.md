@@ -382,6 +382,17 @@ getters that hold the bare family name.
 > "cutting it breaks a screen", "wait until the replacement lands" — each is the shortcut wearing caution, and
 > each leaves the hatch open. ⚠ Note what is NOT implied: nothing requires the kill to be one atomic operation.
 > Piecemeal cutting is fine; what is banned is bending anything to keep the old surface functional.
+>
+> ⚑ **AND CUTTING WRONG IS CHEAP — "if we delete a working binding, we re-add it; or more probably, REPLACE
+> it" (owner).** The second half is the point: a binding that turns out to be needed comes back as the NEW
+> surface serving that read, not as the old `.def` restored. So a deletion is not merely reversible, it is how
+> a genuine requirement gets DISCOVERED and moved — the cut converts an assumed dependency into a named one.
+> Re-adding the legacy binding is the fallback, never the default, or the cut has bought nothing.
+> ⚑ The cheapness is structural, not optimism: Python takes the surface with `from CvPythonExtensions import *`
+> — **169 files star-import it against 6 with an explicit list** — so NOTHING declares a dependency on any
+> single binding. A removed `.def` causes no import-time failure at all; it surfaces at the one call site that
+> used it. ⛔ So do NOT slow a cut down to protect a binding, and do not build a resolver to prove one is safe
+> first — the compiler names the dead ones for free, and being wrong costs one call site, not a regression.
 
 Four words carry the whole requirement:
 
