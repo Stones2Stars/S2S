@@ -4982,7 +4982,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 	int iLimitedWonderLimit = limitedWonderLimit(eBuilding);
 	bool bIsLimitedWonder = (iLimitedWonderLimit >= 0);
 
-	const ReligionTypes eStateReligion = kOwner.getStateReligion();
+	const ReligionTypes eStateReligion = static_cast<ReligionTypes>(kOwner.getEmpireContext().stateReligion());
 
 	const CvArea* pArea = area();
 	bool bAreaAlone = kOwner.AI_isAreaAlone(pArea);
@@ -5238,7 +5238,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 
 						for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
 						{
-							if (hasBonus((BonusTypes)iI))
+							if (getCityContext().tradedBonusCount(iI) > 0)
 							{
 								iValue += (kBuilding.getBonusDefenseChanges(iI) / 4);
 							}
@@ -5431,7 +5431,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 					{
 						iValue -= (8 * kOwner.getNumCities()) * kBuilding.getRevIdxNational();
 					}
-					if (kBuilding.getRevIdxDistanceModifier() != 0 && (!isCapital()))
+					if (kBuilding.getRevIdxDistanceModifier() != 0 && (!getCityContext().isCapital()))
 					{
 						const CvCity* pCapital = kOwner.getCapitalCity();
 						if (pCapital != NULL)
@@ -5514,7 +5514,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 
 				iValue += kBuilding.getNationalCaptureProbabilityModifier() * 2;
 
-				if ((!isDevelopingCity() || isCapital()) && kBuilding.EnablesUnits())
+				if ((!isDevelopingCity() || getCityContext().isCapital()) && kBuilding.EnablesUnits())
 				{
 					const bool bWarPlan = kTeam.hasWarPlan(true);
 					const CvGameObjectCity* pObject = getGameObject();
@@ -5559,7 +5559,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 						if (bUnitIsOtherwiseEnabled)
 						{
 							bool bUnitIsBonusEnabled = true;
-							if (kUnit.getPrereqAndBonus() != NO_BONUS && !hasBonus((BonusTypes)kUnit.getPrereqAndBonus()))
+							if (kUnit.getPrereqAndBonus() != NO_BONUS && getCityContext().tradedBonusCount(kUnit.getPrereqAndBonus()) == 0)
 							{
 								if (kBuilding.getFreeBonuses().hasValue((BonusTypes)kUnit.getPrereqAndBonus()))
 								{
@@ -5579,7 +5579,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 							{
 								iFreeExtraBonusCount++;
 
-								if (hasBonus(eXtraFreeBonus))
+								if (getCityContext().tradedBonusCount(eXtraFreeBonus) > 0)
 								{
 									bHasORBonusAlready = true;
 								}
@@ -6023,7 +6023,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 					}
 					for (int iI = 0; iI < kBuilding.getNumBonusAidModifiers(); iI++)
 					{
-						if (hasBonus(kBuilding.getBonusAidModifier(iI).eBonusType))
+						if (getCityContext().tradedBonusCount(kBuilding.getBonusAidModifier(iI).eBonusType) > 0)
 						{
 							iValue += kBuilding.getBonusAidModifier(iI).iModifier / 3;
 						}
@@ -6294,7 +6294,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 						if (eReligion != NO_RELIGION)
 						{
 							//encouragement to get some minimal ability to train special units
-							if (bCulturalVictory1 || isHolyCity(eReligion) || isCapital())
+							if (bCulturalVictory1 || getCityContext().isHolyCityOf(eReligion) || getCityContext().isCapital())
 							{
 								religiousBuildingValue += (2 + iNumCitiesInArea);
 							}
@@ -6382,7 +6382,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 								if (iPlayer != getOwner() && GET_PLAYER((PlayerTypes)iPlayer).isAlive())
 								{
 									iPlayerCount++;
-									if (kOwner.getStateReligion() == GET_PLAYER((PlayerTypes)iPlayer).getStateReligion())
+									if (kOwner.getEmpireContext().stateReligion() == GET_PLAYER((PlayerTypes)iPlayer).getEmpireContext().stateReligion())
 									{
 										iShareReligionCount++;
 									}
@@ -12450,7 +12450,7 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 	{
 		return true;
 	}
-	if (kBuilding.isPower() || (kBuilding.getPowerBonus() != NO_BONUS && hasBonus((BonusTypes)(kBuilding.getPowerBonus()))))
+	if (kBuilding.isPower() || (kBuilding.getPowerBonus() != NO_BONUS && getCityContext().tradedBonusCount(kBuilding.getPowerBonus()) > 0))
 	{
 		return true;
 	}
