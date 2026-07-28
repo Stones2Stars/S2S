@@ -29629,7 +29629,7 @@ bool CvUnitAI::AI_selectStatus(bool bStack, CvUnit* pUnit)
 					iTemp = kPromotion.getCombatPercent();
 					if (plot() != NULL && iTemp != 0)
 					{
-						int iRange = visibilityRange(plot()) + getMoves();
+						int iRange = sight(plot()) / VISION_OPEN_GROUND_COST + getMoves();
 						if (GET_PLAYER(getOwner()).AI_getPlotDanger(plot(), iRange) > 0)
 						{
 							iTemp *= 2;
@@ -29795,7 +29795,7 @@ bool CvUnitAI::AI_selectStatus(bool bStack, CvUnit* pUnit)
 					iTemp = kPromotion.getCombatPercent();
 					if (pUnit->plot() != NULL && iTemp != 0)
 					{
-						int iRange = pUnit->visibilityRange(plot()) + pUnit->getMoves();
+						int iRange = pUnit->sight(plot()) / VISION_OPEN_GROUND_COST + pUnit->getMoves();
 						/*if (GET_PLAYER(getOwner()).AI_getVisiblePlotDanger(plot(), iRange, false, getGroup(), 70))*/
 						if (GET_PLAYER(getOwner()).AI_getPlotDanger(plot(), iRange) > 0)
 						{

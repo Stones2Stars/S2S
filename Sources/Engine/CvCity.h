@@ -867,6 +867,7 @@ public:
 	// Vision (vision.md): the city as an OBSERVER -- VISION_ELEVATION is what its buildings raise, and a
 	// building can never elevate a unit passing through, which is why this is city-scoped and not the plot's.
 	void getVisionKinds(int (&visions)[NUM_VISION_KINDS]) const;
+	int sight() const;   // the city's sight BUDGET: its strength + what its buildings elevate
 	// The straggler-scalar group (patterns.md getScalar, read as ONE group): every InfoScalar slot, each answered
 	// at THIS scope -- the entries whose family the city carries hold a value, the rest answer 0.
 	void getScalars(int (&scalars)[NUM_INFO_SCALARS]) const;

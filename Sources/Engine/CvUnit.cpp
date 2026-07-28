@@ -537,7 +537,6 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 	m_iVictoryHeal = 0;
 	m_iVictoryStackHeal = 0;
 
-	m_iExtraVisibilityRange = 0;
 	m_iExtraMoves = 0;
 	m_iExtraMoveDiscount = 0;
 	m_iExtraAirRange = 0;
@@ -813,7 +812,6 @@ CvUnit& CvUnit::operator=(const CvUnit& other)
 	m_iVictoryAdjacentHeal = other.m_iVictoryAdjacentHeal;
 	m_iVictoryHeal = other.m_iVictoryHeal;
 	m_iVictoryStackHeal = other.m_iVictoryStackHeal;
-	m_iExtraVisibilityRange = other.m_iExtraVisibilityRange;
 	m_iExtraMoves = other.m_iExtraMoves;
 	m_iExtraMoveDiscount = other.m_iExtraMoveDiscount;
 	m_iExtraAirRange = other.m_iExtraAirRange;
@@ -4476,11 +4474,12 @@ TeamTypes CvUnit::getDeclareWarMove(const CvPlot* pPlot) const
 bool CvUnit::willRevealByMove(const CvPlot* pPlot) const
 {
 	PROFILE_EXTRA_FUNC();
-	const int iRange = visibilityRange(pPlot) + 1;
+	const int iSight = sight(pPlot);
+	const int iRange = iSight / VISION_OPEN_GROUND_COST + 1;
 
 	foreach_(const CvPlot* plotX, pPlot->rect(iRange, iRange))
 	{
-		if (!plotX->isRevealed(getTeam(), false) && pPlot->canSeePlot(plotX, getTeam()))
+		if (!plotX->isRevealed(getTeam(), false) && pPlot->canSeePlot(plotX, iSight))
 		{
 			return true;
 		}
@@ -10788,19 +10787,24 @@ bool CvUnit::isHuman() const
 }
 
 
-int CvUnit::visibilityRange(const CvPlot* pPlot) const
+int CvUnit::sight(const CvPlot* pPlot) const
 {
 	if (pPlot == NULL)
 	{
 		pPlot = plot();
 	}
-	int iRange = 1 + pPlot->getTerrainElevation() + getExtraVisibilityRange();
+	// The unit's sight BUDGET (vision.md): its own STRENGTH -- base stat + combat classes + promotions, the
+	// resolved unit plane -- plus the ELEVATION of wherever it happens to be standing. Elevation is the
+	// ground's and POSITIONAL: a unit on a peak carries the peak's 3, and loses it the moment it steps off.
+	int iSight = resolvedValue(URS_VISION);
 
-	if (pPlot->getImprovementType() != NO_IMPROVEMENT)
+	if (pPlot != NULL)
 	{
-		iRange += GC.getImprovementInfo(pPlot->getImprovementType()).getVisibilityChange();
+		iSight += pPlot->visionElevation();
 	}
-	return std::min(GC.getMAX_UNIT_VISIBILITY_RANGE(), iRange);
+	// The global define is authored in PLOTS, so it is lifted to the vision scale here rather than re-authored
+	// -- anyone editing GlobalDefines still reads it as "eight plots".
+	return std::min(GC.getMAX_UNIT_VISIBILITY_RANGE() * VISION_OPEN_GROUND_COST, iSight);
 }
 
 
@@ -13904,7 +13908,7 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
 
 		setFortifyTurns(0);
 
-		pOldPlot->changeAdjacentSight(getTeam(), visibilityRange(pOldPlot), false, this, true);
+		pOldPlot->changeAdjacentSight(getTeam(), sight(pOldPlot), false, this, true);
 		changeDebugCount(-1);
 
 		pOldPlot->area()->changeUnitsPerPlayer(eMyPlayer, -1);
@@ -14089,7 +14093,7 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
 			}
 		}
 
-		pNewPlot->changeAdjacentSight(getTeam(), visibilityRange(pNewPlot), true, this, true); // needs to be here so that the square is considered visible when we move into it...
+		pNewPlot->changeAdjacentSight(getTeam(), sight(pNewPlot), true, this, true); // needs to be here so that the square is considered visible when we move into it...
 		changeDebugCount(1);
 		pNewPlot->addUnit(this, bUpdate && !hasCargo());
 
@@ -14342,7 +14346,7 @@ void CvUnit::setReconPlot(CvPlot* pNewPlot)
 	{
 		if (pOldPlot)
 		{
-			pOldPlot->changeAdjacentSight(getTeam(), GC.getRECON_VISIBILITY_RANGE(), false, this, true);
+			pOldPlot->changeAdjacentSight(getTeam(), GC.getRECON_VISIBILITY_RANGE() * VISION_OPEN_GROUND_COST, false, this, true);
 			pOldPlot->changeReconCount(-1); // changeAdjacentSight() tests for getReconCount()
 			changeDebugCount(-1);
 		}
@@ -14353,7 +14357,7 @@ void CvUnit::setReconPlot(CvPlot* pNewPlot)
 			m_iReconY = pNewPlot->getY();
 
 			pNewPlot->changeReconCount(1); // changeAdjacentSight() tests for getReconCount()
-			pNewPlot->changeAdjacentSight(getTeam(), GC.getRECON_VISIBILITY_RANGE(), true, this, true);
+			pNewPlot->changeAdjacentSight(getTeam(), GC.getRECON_VISIBILITY_RANGE() * VISION_OPEN_GROUND_COST, true, this, true);
 			changeDebugCount(1);
 		}
 		else
@@ -15368,48 +15372,6 @@ void CvUnit::changeVictoryStackHeal(int iChange)
 	}
 }
 
-
-int CvUnit::getExtraVisibilityRange() const
-{
-	if (!isCommander())
-	{
-		const CvUnit* pCommander = getCommander();
-		if (pCommander)
-		{
-			return m_iExtraVisibilityRange + pCommander->m_iExtraVisibilityRange;
-		}
-	}
-	if (!isCommodore())
-    	{
-    		const CvUnit* pCommodore = getCommodore();
-    		if (pCommodore)
-    		{
-    			return m_iExtraVisibilityRange + pCommodore->m_iExtraVisibilityRange;
-    		}
-    	}
-	return m_iExtraVisibilityRange;
-}
-
-void CvUnit::changeExtraVisibilityRange(int iChange)
-{
-	if (iChange != 0)
-	{
-		if (plot() != NULL)
-		{
-			plot()->changeAdjacentSight(getTeam(), visibilityRange(plot()), false, this, false);
-			changeDebugCount(-1);
-		}
-
-		m_iExtraVisibilityRange += iChange;
-		FASSERT_NOT_NEGATIVE(getExtraVisibilityRange());
-
-		if (plot() != NULL)
-		{
-			plot()->changeAdjacentSight(getTeam(), visibilityRange(plot()), true, this, false);
-			changeDebugCount(1);
-		}
-	}
-}
 
 int CvUnit::getExtraMoves() const
 {
@@ -18330,7 +18292,6 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 		}
 	}
 
-	changeExtraVisibilityRange(kUnitCombat.getVisibilityChange() * iChange);//no merge/split diff
 	changeExtraMoves(kUnitCombat.getMovesChange() * iChange);//no merge/split diff
 	changeExtraMoveDiscount(kUnitCombat.getMoveDiscountChange() * iChange);//no merge/split diff
 	changeExtraAirRange(kUnitCombat.getAirRangeChange() * iChange);//no merge/split diff
@@ -18820,7 +18781,6 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	changeVictoryHeal((kPromotion.getVictoryHeal()) * iChange);
 	changeVictoryStackHeal((kPromotion.getVictoryStackHeal()) * iChange);
 
-	changeExtraVisibilityRange(kPromotion.getVisibilityChange() * iChange);
 	changeExtraMoves(kPromotion.getMovesChange() * iChange);
 	changeExtraMoveDiscount(kPromotion.getMoveDiscountChange() * iChange);
 	changeExtraAirRange(kPromotion.getAirRangeChange() * iChange);
@@ -19481,7 +19441,6 @@ void CvUnit::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvUnit", &m_shadowUnit.iID);
 
 	WRAPPER_READ(wrapper, "CvUnit", &m_iImmuneToFirstStrikesCount);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraVisibilityRange);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraMoves);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraMoveDiscount);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraAirRange);
@@ -20476,7 +20435,6 @@ void CvUnit::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvUnit", m_shadowUnit.iID);
 
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iImmuneToFirstStrikesCount);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraVisibilityRange);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraMoves);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraMoveDiscount);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraAirRange);
@@ -28940,7 +28898,7 @@ void CvUnit::updateSpotIntensity(const InvisibleTypes eInvisibleType, const bool
 
 	const bool bAerial = getDomainType() == DOMAIN_AIR;
 
-	const int iRange = bSameTile ? 0 : visibilityRange(plot());
+	const int iRange = bSameTile ? 0 : sight(plot());
 
 	for (int i = aSeeInvisibleTypes.size() - 1; i > -1; i--)
 	{

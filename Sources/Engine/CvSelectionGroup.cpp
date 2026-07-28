@@ -131,7 +131,7 @@ bool CvSelectionGroup::sentryAlert() const
 	int iMaxRange = 0;
 	foreach_(CvUnit* unitX, units())
 	{
-		const int iRange = unitX->visibilityRange();
+		const int iRange = unitX->sight();
 		if (iRange > iMaxRange)
 		{
 			iMaxRange = iRange;
@@ -145,7 +145,7 @@ bool CvSelectionGroup::sentryAlert() const
 
 		foreach_(const CvPlot* plotX, myPlot->rect(iMaxRange, iMaxRange))
 		{
-			if (myPlot->canSeePlot(plotX, unit->getTeam()) && plotX->isVisibleEnemyUnit(unit))
+			if (myPlot->canSeePlot(plotX, iMaxRange) && plotX->isVisibleEnemyUnit(unit))
 			{
 				return true;
 			}
@@ -167,7 +167,7 @@ bool CvSelectionGroup::sentryAlertSameDomainType() const
 
 	foreach_(CvUnit* unitX, units())
 	{
-		const int iRange = unitX->visibilityRange();
+		const int iRange = unitX->sight();
 		if (iRange > iMaxRange)
 		{
 			iMaxRange = iRange;
@@ -181,7 +181,7 @@ bool CvSelectionGroup::sentryAlertSameDomainType() const
 
 		foreach_(const CvPlot* plotX, myPlot->rect(iMaxRange, iMaxRange))
 		{
-			if (myPlot->canSeePlot(plotX, unit->getTeam()) && plotX->isVisibleEnemyUnit(unit))
+			if (myPlot->canSeePlot(plotX, iMaxRange) && plotX->isVisibleEnemyUnit(unit))
 			{
 				if (plotX->isWater())
 				{

@@ -482,7 +482,7 @@ void CvCity::init(int iID, PlayerTypes eOwner, int iX, int iY, bool bBumpUnits, 
 	{
 		if (GET_TEAM(getTeam()).isVassal((TeamTypes)iI))
 		{
-			pPlot->changeAdjacentSight((TeamTypes)iI, 1, true, NULL, false);
+			pPlot->changeAdjacentSight((TeamTypes)iI, sight(), true, NULL, false);
 		}
 	}
 
@@ -1273,7 +1273,7 @@ void CvCity::kill(bool bUpdatePlotGroups, bool bUpdateCulture)
 	{
 		if (GET_TEAM(kOwner.getTeam()).isVassal((TeamTypes)iI))
 		{
-			pPlot->changeAdjacentSight((TeamTypes)iI, 1, false, NULL, false);
+			pPlot->changeAdjacentSight((TeamTypes)iI, sight(), false, NULL, false);
 		}
 	}
 
@@ -1281,7 +1281,7 @@ void CvCity::kill(bool bUpdatePlotGroups, bool bUpdateCulture)
 	{
 		if (abEspionageVisibility[iI])
 		{
-			pPlot->changeAdjacentSight((TeamTypes)iI, 1, false, NULL, false);
+			pPlot->changeAdjacentSight((TeamTypes)iI, sight(), false, NULL, false);
 		}
 	}
 
@@ -1297,7 +1297,7 @@ void CvCity::kill(bool bUpdatePlotGroups, bool bUpdateCulture)
 		{
 			if (GET_TEAM(kOwner.getTeam()).isHasEmbassy((TeamTypes)iI))
 			{
-				pPlot->changeAdjacentSight((TeamTypes)iI, 1, false, NULL, false);
+				pPlot->changeAdjacentSight((TeamTypes)iI, sight(), false, NULL, false);
 			}
 		}
 		kOwner.findNewCapital();
@@ -19981,6 +19981,16 @@ int CvCity::calculateCorporationHappiness() const
 	return iHappiness;
 }
 
+
+int CvCity::sight() const
+{
+	// A city is an OBSERVER like any other (vision.md): its sight is its own STRENGTH plus the ELEVATION its
+	// buildings raise -- a tree platform puts the lookout a storey up. Both are cascade channels built by the
+	// spine, so this is a bare read; the accumulator that used to sum them served nothing and is gone.
+	int aVisions[NUM_VISION_KINDS];
+	getVisionKinds(aVisions);
+	return aVisions[VISION_STRENGTH] + aVisions[VISION_ELEVATION] + VISION_OPEN_GROUND_COST;
+}
 
 void CvCity::getVisionKinds(int (&visions)[NUM_VISION_KINDS]) const
 {

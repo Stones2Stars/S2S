@@ -59,9 +59,6 @@ public:
 	int getUpgradeTime() const { return m_iUpgradeTime; }                       // identity.upgradeTime
 	int getAdvancedStartCost() const { return m_iAdvancedStartCost; }           // identity.advancedStart.cost
 	bool isUpgradeRequiresFortify() const { return m_bUpgradeRequiresFortify; } // identity.upgradeRequiresFortify
-	// vision -- the §9 bespoke line-of-sight block (vision.plot.{seeFrom,visibilityRange}.flat)
-	int getSeeFrom() const { return m_iSeeFrom; }
-	int getVisibilityChange() const { return m_iVisibilityChange; }
 	// sound.soundscape -> the runtime audio-manager index, resolved at info-load via gDLL->getAudioTagIndex;
 	// -1 == "no sound" (the legacy absent-tag read default).
 	int getWorldSoundscapeScriptId() const { return m_iWorldSoundscapeScriptId; }
@@ -172,8 +169,6 @@ private:
 	int m_iFeatureGrowthProbability;
 	int m_iUpgradeTime;
 	int m_iAdvancedStartCost;
-	int m_iSeeFrom;
-	int m_iVisibilityChange;
 	int m_iWorldSoundscapeScriptId;
 	int m_iUniqueRange;
 	int m_iGoodyUniqueRange;

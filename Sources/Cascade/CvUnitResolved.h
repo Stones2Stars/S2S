@@ -59,6 +59,9 @@ enum UnitResolvedSlot
 	URS_CAPTURE_PROBABILITY,      // capture.unit.probability
 	URS_CAPTURE_RESISTANCE,       // capture.unit.resistance
 	URS_UPKEEP_EXTRA,             // upkeep.unit.extra
+	URS_VISION,                   // vision.unit.flat              -- the unit's sight STRENGTH (vision.md):
+	                              //   its own base plus its combat classes plus its promotions. Elevation is
+	                              //   NOT here -- that belongs to the ground and is added at read.
 	NUM_UNIT_RESOLVED_SLOTS
 };
 

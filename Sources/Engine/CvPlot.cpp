@@ -140,20 +140,11 @@ int CvPlot::visionElevation() const
 	// state rather than authored data, and whatever the substrate authors on top -- a watchtower improvement
 	// raising whoever stands here. POSITIONAL: it belongs to the place, never to the observer, so stepping off
 	// loses it.
-	// PEAK IS 3, HILLS 1 (owner) -- vision's own numbers, deliberately not the legacy relief tier's 2/1: a peak
-	// should command a genuinely commanding view, and 3 buys sight past two plots of jungle where 2 would not.
-	int iRelief = 0;
-	if (isAsPeak())
-	{
-		iRelief = 3;
-	}
-	else if (isHills())
-	{
-		iRelief = 1;
-	}
+	// Relief is AUTHORED, not derived: TERRAIN_PEAK carries 300 and TERRAIN_HILL 100, so there is no plot-type
+	// special case here and a modder can raise a terrain without touching the engine.
 	int aVisions[NUM_VISION_KINDS];
 	getVisionKinds(aVisions);
-	return VISION_OPEN_GROUND_COST * iRelief + aVisions[VISION_ELEVATION];
+	return aVisions[VISION_ELEVATION];
 }
 
 void CvPlot::getScalars(int (&scalars)[NUM_INFO_SCALARS]) const
@@ -2596,65 +2587,7 @@ void CvPlot::correctWaterTerrains(int iLastDistance, const DirectionTypes dir, c
 	}
 }
 
-int CvPlot::seeFromLevel(TeamTypes eTeam) const
-{
-	int iLevel = 0;
-
-	if (getImprovementType() != NO_IMPROVEMENT)
-	{
-		iLevel += GC.getImprovementInfo(getImprovementType()).getSeeFrom();
-	}
-
-	if (!isWater())
-	{
-		iLevel += 1 + getTerrainElevation();
-	}
-	else if (GET_TEAM(eTeam).isExtraWaterSeeFrom())
-	{
-		iLevel++;
-	}
-	return iLevel;
-}
-
-int CvPlot::seeThroughLevel() const
-{
-	int iLevel = isWater() ? 0 : 1 + getTerrainElevation();
-
-	if (getFeatureType() != NO_FEATURE)
-	{
-		iLevel += GC.getFeatureInfo(getFeatureType()).getSeeThroughChange();
-	}
-	return iLevel;
-}
-
-// Toffer - Quite basic setup:
-//	Water/Flatland < Hill < Peak.
-int CvPlot::getElevationLevel(const bool bExtra) const
-{
-	int iLevel = 3 * getTerrainElevation();
-
-	if (bExtra && getImprovementType() != NO_IMPROVEMENT)
-	{
-		iLevel += GC.getImprovementInfo(getImprovementType()).getSeeFrom();
-	}
-	return iLevel;
-}
-
-int CvPlot::getTerrainElevation() const
-{
-	if (isAsPeak())
-	{
-		return 2;
-	}
-	if (isHills())
-	{
-		return 1;
-	}
-	return 0;
-}
-
-
-void CvPlot::changeAdjacentSight(TeamTypes eTeam, int iRange, bool bIncrement, CvUnit* pUnit, bool bUpdatePlotGroups)
+void CvPlot::changeAdjacentSight(TeamTypes eTeam, int iSight, bool bIncrement, CvUnit* pUnit, bool bUpdatePlotGroups)
 {
 	PROFILE_EXTRA_FUNC();
 	const bool bHideSeek = GC.getGame().isOption(GAMEOPTION_COMBAT_HIDE_SEEK);
@@ -2684,6 +2617,9 @@ void CvPlot::changeAdjacentSight(TeamTypes eTeam, int iRange, bool bIncrement, C
 	aSeeInvisibleTypes.push_back(NO_INVISIBLE);
 
 	const bool bAerial = pUnit && pUnit->getDomainType() == DOMAIN_AIR;
+	// The budget bounds the search: nothing past `iSight` plots of open ground can be reachable, and the
+	// per-plot walk then charges obstruction inside that box.
+	const int iRange = iSight / VISION_OPEN_GROUND_COST;
 
 	foreach_(const InvisibleTypes eInvisible, aSeeInvisibleTypes)
 	{
@@ -2693,7 +2629,7 @@ void CvPlot::changeAdjacentSight(TeamTypes eTeam, int iRange, bool bIncrement, C
 			{
 				CvPlot* pPlot = plotXY(getX(), getY(), dx, dy);
 
-				if (NULL != pPlot && (bAerial || canSeePlot(pPlot, eTeam)))
+				if (NULL != pPlot && (bAerial || canSeePlot(pPlot, iSight)))
 				{
 					int iFinalIntensity = 0;
 
@@ -2716,187 +2652,40 @@ void CvPlot::changeAdjacentSight(TeamTypes eTeam, int iRange, bool bIncrement, C
 	}
 }
 
-bool CvPlot::canSeePlot(const CvPlot* pPlot, TeamTypes eTeam) const
+bool CvPlot::canSeePlot(const CvPlot* pPlot, int iSight) const
 {
 	if (pPlot == NULL)
 	{
 		return false;
 	}
-	//find displacement
 	const int dx = dxWrap(pPlot->getX() - getX());
 	const int dy = dyWrap(pPlot->getY() - getY());
-	int iDummy1 = 0;
-	int iDummy2 = 0;
-	return canSeeDisplacementPlot(eTeam, dx, dy, dx, dy, iDummy1, iDummy2, true);
-}
-
-bool CvPlot::canSeeDisplacementPlot(TeamTypes eTeam, int dx, int dy, int dx0, int dy0, int& iTopElevation, int& iTopElevationDistance, bool bEndPoint) const
-{
-	// Base case is current plot
 	if (dx == 0 && dy == 0)
 	{
-		return true;
+		return true;   // you are never charged to see where you stand
 	}
-	const CvPlot* seePlot = plotXY(getX(), getY(), dx, dy);
-
-	if (seePlot == NULL)
+	// Spend the budget walking the STRAIGHT LINE to the target (vision.md). Vision must NOT route around an
+	// obstruction the way movement routes around a hill -- routing around is precisely what would let you see
+	// behind it, so this is the one place the movement mirror deliberately breaks.
+	// The target plot is itself paid for, which is what makes "you see INTO the jungle and not past it" fall
+	// out rather than needing a rule of its own.
+	const int iSteps = std::max(abs(dx), abs(dy));
+	const int iHalf = iSteps / 2;
+	int iSpent = 0;
+	for (int iStep = 1; iStep <= iSteps; ++iStep)
 	{
-		return false;
-	}
-	bool bCanFail = true;
-	if (!bEndPoint)
-	{
-		iTopElevation = seePlot->getElevationLevel();
-		iTopElevationDistance = std::max(abs(dx), abs(dy));
-
-		if (2*iTopElevationDistance >= std::max(abs(dx0), abs(dy0))
-		&& plotXY(getX(), getY(), dx0, dy0)->getElevationLevel() > iTopElevation)
-		{
-			bCanFail = false; // This is a guess for now
-		}
-	}
-	int step1[] = { 0, 0 };
-	int step2[] = { dx, dy };
-	int iSteps = 0;
-
-	if (abs(dx) > 1 || abs(dy) > 1) // seePlot is not adjacent to "this" plot.
-	{
-		iSteps++;
-		if (dx == 0) // Straight vertical line to "this" plot.
-		{
-			step1[1] = dy - getSign(dy);
-		}
-		else if (dy == 0) // Straight horizontal line to "this" plot.
-		{
-			step1[0] = dx - getSign(dx);
-		}
-		else // Diagonal is valid for sure
-		{
-			step1[0] = dx - getSign(dx);
-			step1[1] = dy - getSign(dy);
-
-			if (abs(dx) != abs(dy)) // Diagonal to "this" plot is not grid aligned.
-			{
-				iSteps++;
-				// One of the two straight directions is also valid
-				if (abs(dx) > abs(dy))
-				{
-					step2[0] = dx - getSign(dx);
-				}
-				else
-				{
-					step2[1] = dy - getSign(dy);
-				}
-			}
-		}
-		int iTopElevation1 = 0;
-		int iTopElevationDistance1 = 0;
-		const bool bFailedStep1 = !canSeeDisplacementPlot(eTeam, step1[0], step1[1], dx0, dy0, iTopElevation1, iTopElevationDistance1);
-
-		bool bFailed = false;
-		bool bTestCanFail = false;
-		if (iSteps == 2)
-		{
-			if (bFailedStep1 && 2*abs(step1[0]) < abs(dx0) && 2*abs(step1[1]) < abs(dy0))
-			{
-				if (bCanFail)
-				{
-					return false;
-				}
-				bFailed = true;
-			}
-			int iTopElevation2 = 0;
-			int iTopElevationDistance2 = 0;
-
-			if (!canSeeDisplacementPlot(eTeam, step2[0], step2[1], dx0, dy0, iTopElevation2, iTopElevationDistance2))
-			{
-				if (bFailedStep1)
-				{
-					if (bCanFail)
-					{
-						return false;
-					}
-					bFailed = true;
-				}
-				if (!bFailed && 2*abs(step2[0]) > abs(dx0) && 2*abs(step2[1]) > abs(dy0))
-				{
-					if (bCanFail)
-					{
-						return false;
-					}
-					bFailed = true;
-				}
-			}
-			if (iTopElevation1 < iTopElevation2)
-			{
-				if (iTopElevation1 > iTopElevation)
-				{
-					iTopElevation = iTopElevation1;
-					iTopElevationDistance = iTopElevationDistance1;
-					bTestCanFail = true;
-				}
-			}
-			else if (iTopElevation2 > iTopElevation)
-			{
-				iTopElevation = iTopElevation2;
-				iTopElevationDistance = iTopElevationDistance2;
-				bTestCanFail = true;
-			}
-		}
-		else if (bFailedStep1)
-		{
-			if (bCanFail)
-			{
-				return false;
-			}
-			bFailed = true;
-		}
-		else if (iTopElevation1 > iTopElevation)
-		{
-			iTopElevation = iTopElevation1;
-			iTopElevationDistance = iTopElevationDistance1;
-			bTestCanFail = true;
-		}
-
-		if (bTestCanFail)
-		{
-			if (plotXY(getX(), getY(), dx0, dy0)->getElevationLevel() > iTopElevation && 2*iTopElevationDistance >= std::max(abs(dx0), abs(dy0)))
-			{
-				return true;
-			}
-		}
-		else if (bFailed)
+		const int iOffsetX = (dx * iStep + (dx < 0 ? -iHalf : iHalf)) / iSteps;
+		const int iOffsetY = (dy * iStep + (dy < 0 ? -iHalf : iHalf)) / iSteps;
+		const CvPlot* pStep = plotXY(getX(), getY(), iOffsetX, iOffsetY);
+		if (pStep == NULL)
 		{
 			return false;
 		}
-		else if (!bCanFail)
-		{
-			return true;
-		}
-	}
-
-	if (bEndPoint)
-	{
-		const int iMyElevation = getElevationLevel(true);
-		if (iMyElevation < iTopElevation)
+		iSpent += pStep->visionCost();
+		if (iSpent > iSight)
 		{
 			return false;
 		}
-		if (iMyElevation == iTopElevation)
-		{
-			if (seePlot->getElevationLevel() < iTopElevation)
-			{
-				return false;
-			}
-		}
-		else if (seePlot->getElevationLevel() < iTopElevation && 2*iTopElevationDistance >= std::max(abs(dx0), abs(dy0)))
-		{
-			return false;
-		}
-	}
-	else if (seeFromLevel(eTeam) < seePlot->seeThroughLevel())
-	{
-		return false;
 	}
 	return true;
 }
@@ -2922,16 +2711,16 @@ void CvPlot::updateSight(bool bIncrement, bool bUpdatePlotGroups)
 				// Embassy Allows Players to See Capitals
 				|| pCity->isCapital() && team.isHasEmbassy((TeamTypes)iI))
 				{
-					changeAdjacentSight((TeamTypes)iI, 1, bIncrement, NULL, bUpdatePlotGroups);
+					changeAdjacentSight((TeamTypes)iI, pCity->sight(), bIncrement, NULL, bUpdatePlotGroups);
 				}
 			}
 		}
 	}
 
-	// Owned
+	// Owned -- the territory itself, not a city: an owner sees one plot around ground they hold.
 	if (isOwned())
 	{
-		changeAdjacentSight(getTeam(), 1, bIncrement, NULL, bUpdatePlotGroups);
+		changeAdjacentSight(getTeam(), VISION_OPEN_GROUND_COST, bIncrement, NULL, bUpdatePlotGroups);
 	}
 
 	// Unit
@@ -2949,7 +2738,7 @@ void CvPlot::updateSight(bool bIncrement, bool bUpdatePlotGroups)
 					pLoopUnit->changeDebugCount(1);
 				else pLoopUnit->changeDebugCount(-1);
 
-				changeAdjacentSight(pLoopUnit->getTeam(), pLoopUnit->visibilityRange(), bIncrement, pLoopUnit, bUpdatePlotGroups);
+				changeAdjacentSight(pLoopUnit->getTeam(), pLoopUnit->sight(), bIncrement, pLoopUnit, bUpdatePlotGroups);
 			}
 			else
 			{
@@ -6599,7 +6388,7 @@ void CvPlot::setOwner(PlayerTypes eNewValue, bool bCheckUnits, bool bUpdatePlotG
 			// Remove effects from old owner of tile (Keep symmetry with below where needed!)
 			if (isOwned())
 			{
-				changeAdjacentSight(getTeam(), 1, false, NULL, bUpdatePlotGroup);
+				changeAdjacentSight(getTeam(), VISION_OPEN_GROUND_COST, false, NULL, bUpdatePlotGroup);
 
 				if (area())
 				{
@@ -6651,7 +6440,7 @@ void CvPlot::setOwner(PlayerTypes eNewValue, bool bCheckUnits, bool bUpdatePlotG
 			// Add same effects to new owner of tile (Keep symmetry with above!)
 			if (isOwned())
 			{
-				changeAdjacentSight(getTeam(), 1, true, NULL, bUpdatePlotGroup);
+				changeAdjacentSight(getTeam(), VISION_OPEN_GROUND_COST, true, NULL, bUpdatePlotGroup);
 
 				if (area())
 				{

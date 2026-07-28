@@ -278,13 +278,12 @@ public:
 	bool correctWaterTerrain(int &iLastDistance);
 	void correctWaterTerrains(int iLastDistance, const DirectionTypes dir, const bool bContinue = false);
 
-	int getElevationLevel(const bool bExtra = false) const;
-	int getTerrainElevation() const;
-	int seeFromLevel(TeamTypes eTeam) const;
-	int seeThroughLevel() const;
-	void changeAdjacentSight(TeamTypes eTeam, int iRange, bool bIncrement, CvUnit* pUnit, bool bUpdatePlotGroups);
-	bool canSeePlot(const CvPlot* plot, TeamTypes eTeam) const;
-	bool canSeeDisplacementPlot(TeamTypes eTeam, int dx, int dy, int dx0, int dy0, int& iTopElevation, int& iTopElevationDistance, bool bEndPoint = false) const;
+	// VISION (vision.md) -- a sight budget spent walking outward, exactly as movement is spent.
+	void getVisionKinds(int (&visions)[NUM_VISION_KINDS]) const;
+	int visionCost() const;        // what a seer spends to see THROUGH this plot (open ground = one plot)
+	int visionElevation() const;   // how high this ground is; grants sight to whoever stands here, POSITIONALLY
+	void changeAdjacentSight(TeamTypes eTeam, int iSight, bool bIncrement, CvUnit* pUnit, bool bUpdatePlotGroups);
+	bool canSeePlot(const CvPlot* pPlot, int iSight) const;
 	void updateSight(bool bIncrement, bool bUpdatePlotGroups);
 	void updateSeeFromSight(bool bIncrement, bool bUpdatePlotGroups);
 

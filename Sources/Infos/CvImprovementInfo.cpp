@@ -21,8 +21,6 @@ CvImprovementInfo::CvImprovementInfo()
 	, m_iFeatureGrowthProbability(0)
 	, m_iUpgradeTime(0)
 	, m_iAdvancedStartCost(100)
-	, m_iSeeFrom(0)
-	, m_iVisibilityChange(0)
 	, m_iWorldSoundscapeScriptId(-1)
 	, m_iUniqueRange(0)
 	, m_iGoodyUniqueRange(0)
@@ -444,22 +442,6 @@ void CvImprovementInfo::mapFrom(const picojson::value& entity)
 				{
 					m_bonusDepletionRand[iBonusId] = (int)depletionIter->second.get<double>();
 				}
-			}
-		}
-	}
-
-	// vision -- the §9 bespoke line-of-sight block (vision.plot.{seeFrom,visibilityRange}.flat)
-	if (const picojson::object* pVision = jsonChildObj(entityObj, "vision"))
-	{
-		if (const picojson::object* pPlot = jsonChildObj(*pVision, "plot"))
-		{
-			if (const picojson::object* pSeeFrom = jsonChildObj(*pPlot, "seeFrom"))
-			{
-				m_iSeeFrom = jsonIdInt(*pSeeFrom, "flat");
-			}
-			if (const picojson::object* pVisibility = jsonChildObj(*pPlot, "visibilityRange"))
-			{
-				m_iVisibilityChange = jsonIdInt(*pVisibility, "flat");
 			}
 		}
 	}

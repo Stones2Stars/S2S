@@ -745,7 +745,7 @@ public:
 	bool isHominid() const;
 	bool isHuman() const;
 
-	int visibilityRange(const CvPlot* pPlot = NULL) const;
+	int sight(const CvPlot* pPlot = NULL) const;   // the unit's sight BUDGET (vision.md)
 
 	int baseMoves() const;
 	int maxMoves() const;
@@ -1089,8 +1089,6 @@ public:
 	int getVictoryStackHeal() const;
 	void changeVictoryStackHeal(int iChange);
 
-	int getExtraVisibilityRange() const;
-	void changeExtraVisibilityRange(int iChange);
 
 	int getExtraMoves() const;
 	void changeExtraMoves(int iChange);
@@ -1584,7 +1582,6 @@ protected:
 	int m_iVictoryHeal;
 	int m_iVictoryStackHeal;
 
-	int m_iExtraVisibilityRange;
 	int m_iExtraMoves;
 	int m_iExtraMoveDiscount;
 	int m_iExtraAirRange;
@@ -2423,7 +2420,7 @@ public:
 		DECLARE_MAP_FUNCTOR_CONST(CvUnit, bool, isSpy);
 		DECLARE_MAP_FUNCTOR_CONST(CvUnit, int, cargoSpace);
 		DECLARE_MAP_FUNCTOR_CONST(CvUnit, int, getFortifyTurns);
-		DECLARE_MAP_FUNCTOR_CONST(CvUnit, int, visibilityRange);
+		DECLARE_MAP_FUNCTOR_CONST(CvUnit, int, sight);
 		DECLARE_MAP_FUNCTOR_CONST(CvUnit, int, collateralDamage);
 		DECLARE_MAP_FUNCTOR_CONST(CvUnit, int, getBombardRate);
 		DECLARE_MAP_FUNCTOR_CONST(CvUnit, int, getDamage);
