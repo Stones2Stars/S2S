@@ -157,6 +157,28 @@
   set, and the `AI_chooseProduction` focus-ladder collapse into ONE unified scoring pass
   ([enabler.md §6/§8](../../specs/enabler.md)). The focus-ladder collapse is an AI-architecture change, not a
   per-loop rewrite.
+- **⛔ THE ACTIVE-SET WORK-LIST RIPPLE IS A SECOND PROPAGATION MECHANISM, and it exists only because a fact is
+  missing (owner).** A building's operate verdict depends solely on its OWN operate atoms, so it can know by
+  itself: the event names the changed atom, `EDGEF_REQUIRED_BY` names the dependents, each re-evaluates itself —
+  which is machinery the building enabler ALREADY has and uses. The provides→operate chain needs no fixpoint
+  work-list either: if each active flip announces its supply change, the chain propagates through the spine one
+  fact at a time and terminates naturally, because a no-op write emits nothing.
+  **Three defects, one root cause:**
+  - **The flip emits NOTHING.** `SEVT_VICINITY_BONUS_CHANGED` exists and the modifier, enabler and contexts
+    consumers are all already wired to it — but its ONE emit site is the building being ADDED/REMOVED from the
+    city. A present building going active↔dormant changes the supply (json.md §5a: a dormant building supplies
+    nothing) and announces nothing. So vicinity-conditioned packages are never re-marked and `requires.build` gates
+    on that bonus are never re-gated — the ripple walks only OPERATE consumers.
+  - **That missing fact is WHY the work-list exists** — unable to route the flip, the enabler hand-rolled its own
+    propagation beside the routed one ([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation)).
+    Emit the fact and the parallel machine loses its reason to exist.
+  - **Its runaway cap "self-heals at the slice boundary"** — a self-heal
+    ([DEC-no-self-heal](../../architecture/decisions.md#dec-no-self-heal)), and the slice-boundary rebuild it names
+    was REMOVED. Nothing heals it: if the cap trips, the operating set stays silently wrong.
+  ⚠ **The one real design constraint:** `emit()` dispatches SYNCHRONOUSLY, inline at the mutation site, so an event
+  chain recurses on the call stack where the work-list iterated. Depth is the chain length (the manufactured
+  ore→wares→firearms ladder). Design for that — it is not a reason to keep the parallel machine.
+
 - **The operate reverse index — NARROWER than it looks, and one part of it is a perf trap.** Verified in tree: the
   building and unit buckets are ALREADY converged and gone; what remains is the operate index in
   `CvEnablerKernel.cpp`, and it splits into two genuinely different classes:
