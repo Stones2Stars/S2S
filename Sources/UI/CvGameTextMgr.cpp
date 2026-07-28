@@ -4980,11 +4980,11 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
 		}
 		else
 		{
-			int iMovementCost = GC.getTerrainInfo(pPlot->getTerrainType()).getMovementCost();
+			int iMovementCost = GC.getTerrainInfo(pPlot->getTerrainType()).getFlatMovement(MOVEMENT_MOVES, CASC_SCOPE_PLOT) / 100;
 
 			if (pPlot->getFeatureType() != NO_FEATURE)
 			{
-				iMovementCost += GC.getFeatureInfo(pPlot->getFeatureType()).getMovementCost();
+				iMovementCost += GC.getFeatureInfo(pPlot->getFeatureType()).getFlatMovement(MOVEMENT_MOVES, CASC_SCOPE_PLOT) / 100;
 			}
 
 			if (pPlot->isHills())
@@ -5011,7 +5011,7 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
 		{
 			const RouteTypes eRouteType = pPlot->getRevealedRouteType(eActiveTeam, true);
 			const CvRouteInfo& eRoute = GC.getRouteInfo(eRouteType);
-			const int iRouteCost = eRoute.getMovementCost() + GET_TEAM(eActiveTeam).getRouteChange(eRouteType);
+			const int iRouteCost = eRoute.getFlatMovement(MOVEMENT_MOVES, CASC_SCOPE_PLOT) / 100 + GET_TEAM(eActiveTeam).getRouteChange(eRouteType);
 
 			szTempBuffer.clear();
 			szTempBuffer.Format(L"%.2f%c ", (float)iRouteCost / GC.getMOVE_DENOMINATOR(), gDLL->getSymbolID(MOVES_CHAR));
@@ -21432,7 +21432,7 @@ void CvGameTextMgr::buildMoveString(CvWStringBuffer &szBuffer, TechTypes eTech, 
 
 	for (iI = 0; iI < GC.getNumRouteInfos(); ++iI)
 	{
-		iMoveDiff = ((GC.getMOVE_DENOMINATOR() / std::max(1, (GC.getRouteInfo((RouteTypes) iI).getMovementCost() + ((bPlayerContext) ? GET_TEAM(GC.getGame().getActiveTeam()).getRouteChange((RouteTypes)iI) : 0)))) - (GC.getMOVE_DENOMINATOR() / std::max(1, (GC.getRouteInfo((RouteTypes) iI).getMovementCost() + ((bPlayerContext) ? GET_TEAM(GC.getGame().getActiveTeam()).getRouteChange((RouteTypes)iI) : 0) + GC.getRouteInfo((RouteTypes) iI).getTechMovementChange(eTech)))));
+		iMoveDiff = ((GC.getMOVE_DENOMINATOR() / std::max(1, (GC.getRouteInfo((RouteTypes) iI).getFlatMovement(MOVEMENT_MOVES, CASC_SCOPE_PLOT) / 100 + ((bPlayerContext) ? GET_TEAM(GC.getGame().getActiveTeam()).getRouteChange((RouteTypes)iI) : 0)))) - (GC.getMOVE_DENOMINATOR() / std::max(1, (GC.getRouteInfo((RouteTypes) iI).getFlatMovement(MOVEMENT_MOVES, CASC_SCOPE_PLOT) / 100 + ((bPlayerContext) ? GET_TEAM(GC.getGame().getActiveTeam()).getRouteChange((RouteTypes)iI) : 0) + GC.getRouteInfo((RouteTypes) iI).getTechMovementChange(eTech)))));
 
 		if (iMoveDiff != 0)
 		{
@@ -23955,10 +23955,10 @@ void CvGameTextMgr::setRouteHelp(CvWStringBuffer &szBuffer, RouteTypes eRoute, b
 		szBuffer.append(gDLL->getText("TXT_KEY_ROUTE_SEA_TUNNEL"));
 	}
 
-	if (info.getMovementCost() != 0)
+	if (info.getFlatMovement(MOVEMENT_MOVES, CASC_SCOPE_PLOT) / 100 != 0)
 	{
 		szTempBuffer.clear();
-		szTempBuffer.Format(L"%.2f%c ", (float)info.getMovementCost() / iMoveDenominator, gDLL->getSymbolID(MOVES_CHAR));
+		szTempBuffer.Format(L"%.2f%c ", (float)info.getFlatMovement(MOVEMENT_MOVES, CASC_SCOPE_PLOT) / 100 / iMoveDenominator, gDLL->getSymbolID(MOVES_CHAR));
 		szBuffer.append(NEWLINE);
 		szBuffer.append(gDLL->getText("TXT_KEY_ROUTE_MOVEMENT_COST", szTempBuffer.GetCString()));
 	}
@@ -24006,7 +24006,7 @@ void CvGameTextMgr::setRouteHelp(CvWStringBuffer &szBuffer, RouteTypes eRoute, b
 				if (0 != info.getTechMovementChange(iTech))
 				{
 					szTempBuffer.clear();
-					szTempBuffer.Format(L"%.2f%c ", (float)info.getMovementCost() / iMoveDenominator, gDLL->getSymbolID(MOVES_CHAR));
+					szTempBuffer.Format(L"%.2f%c ", (float)info.getFlatMovement(MOVEMENT_MOVES, CASC_SCOPE_PLOT) / 100 / iMoveDenominator, gDLL->getSymbolID(MOVES_CHAR));
 					szBuffer.append(NEWLINE);
 					szBuffer.append(gDLL->getText("TXT_KEY_MOVEMENT_ROUTE_WITH_TECH", szTempBuffer.GetCString(), GC.getTechInfo((TechTypes)iTech).getTextKeyWide()));
 				}
@@ -24594,9 +24594,9 @@ void CvGameTextMgr::setFeatureHelp(CvWStringBuffer &szBuffer, FeatureTypes eFeat
 	setYieldChangeHelp(szBuffer, L"", L"", gDLL->getText("TXT_KEY_TERRAINHELP_NEXT_TO_RIVER"), aiYields);
 
 
-	if (feature.getMovementCost() != 0)
+	if (feature.getFlatMovement(MOVEMENT_MOVES, CASC_SCOPE_PLOT) / 100 != 0)
 	{
-		szBuffer.append(gDLL->getText("TXT_KEY_TERRAINHELP_MOVEMENT_COST", feature.getMovementCost()));
+		szBuffer.append(gDLL->getText("TXT_KEY_TERRAINHELP_MOVEMENT_COST", feature.getFlatMovement(MOVEMENT_MOVES, CASC_SCOPE_PLOT) / 100));
 	}
 
 	CvWString szHealth;
@@ -24690,9 +24690,9 @@ void CvGameTextMgr::setTerrainHelp(CvWStringBuffer &szBuffer, TerrainTypes eTerr
 		setYieldChangeHelp(szBuffer, L"", L"", L"", aiYields);
 	}
 
-	if (terrain.getMovementCost() != 0)
+	if (terrain.getFlatMovement(MOVEMENT_MOVES, CASC_SCOPE_PLOT) / 100 != 0)
 	{
-		szBuffer.append(gDLL->getText("TXT_KEY_TERRAINHELP_MOVEMENT_COST", terrain.getMovementCost()));
+		szBuffer.append(gDLL->getText("TXT_KEY_TERRAINHELP_MOVEMENT_COST", terrain.getFlatMovement(MOVEMENT_MOVES, CASC_SCOPE_PLOT) / 100));
 	}
 
 	if (terrain.getBuildModifier() != 0)

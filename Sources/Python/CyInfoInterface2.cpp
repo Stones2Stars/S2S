@@ -131,7 +131,6 @@ void CyInfoPythonInterface2()
 	python::class_<CvRouteInfo, python::bases<CvInfoBase>, boost::noncopyable>("CvRouteInfo", python::no_init)
 
 		.def("getValue", &CvRouteInfo::getValue, "int ()")
-		.def("getMovementCost", &CvRouteInfo::getMovementCost, "int ()")
 		.def("getPrereqBonus", &CvRouteInfo::getPrereqBonus, "int ()")
 
 		// Arrays
@@ -239,7 +238,6 @@ void CyInfoPythonInterface2()
 
 	python::class_<CvFeatureInfo, python::bases<CvInfoBase>, boost::noncopyable>("CvFeatureInfo", python::no_init)
 
-		.def("getMovementCost", &CvFeatureInfo::getMovementCost, "int ()")
 		.def("getAppearanceProbability", &CvFeatureInfo::getAppearanceProbability, "int ()")
 		.def("getDisappearanceProbability", &CvFeatureInfo::getDisappearanceProbability, "int ()")
 		.def("getGrowthProbability", &CvFeatureInfo::getGrowthProbability, "int ()")

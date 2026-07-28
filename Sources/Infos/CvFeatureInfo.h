@@ -53,7 +53,11 @@ public:
 	}
 
 	// ======================= 3. INTRINSIC -- bare typed reads (the census identity set) ======================
-	int getMovementCost() const { return m_iMovementCost; }                          // identity.movementCost
+	// The substrate's own base movement cost, served as the family it is authored in
+	// ([modifier.md] par.6: a plot substrate's base movement cost IS the `movement` family). x100 native like
+	// every compiled sum -- the reader reduces at its point of use ([DEC-fixedpoint-x100]).
+	int getFlatMovement(MovementKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_MOVEMENT, eKind, eScope, CASC_UNIT_FLAT); }
 	int getSeeThroughChange() const { return m_iSeeThroughChange; }                  // vision.plot.seeThrough.flat (§9 bespoke)
 	int getPopDestroys() const { return m_iPopDestroys; }                            // identity.popDestroys (-1 = never)
 	int getAppearanceProbability() const { return m_iAppearanceProbability; }        // identity.appearance
@@ -137,7 +141,6 @@ private:
 	CvModifiers m_modifiers;
 
 	// --- the intrinsic identity members (materialized once at mapFrom; getters are bare reads) ---
-	int m_iMovementCost;
 	int m_iSeeThroughChange;
 	int m_iPopDestroys;
 	int m_iAppearanceProbability;

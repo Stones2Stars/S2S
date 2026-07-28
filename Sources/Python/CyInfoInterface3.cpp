@@ -22,7 +22,6 @@ void CyInfoPythonInterface3()
 
 	python::class_<CvTerrainInfo, python::bases<CvInfoBase>, boost::noncopyable>("CvTerrainInfo", python::no_init)
 
-		.def("getMovementCost", &CvTerrainInfo::getMovementCost, "int ()")
 		.def("getDefenseModifier", &CvTerrainInfo::getDefenseModifier, "int ()")
 
 		.def("isWaterTerrain", &CvTerrainInfo::isWaterTerrain, "bool ()")

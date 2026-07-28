@@ -21235,11 +21235,11 @@ bool CvUnitAI::AI_improveLocalPlot(int iRange, const CvCity* pIgnoreCity)
 		}
 		else if (plot()->getRouteType() == NO_ROUTE)
 		{
-			int iPlotMoveCost = GC.getTerrainInfo(plot()->getTerrainType()).getMovementCost();
+			int iPlotMoveCost = GC.getTerrainInfo(plot()->getTerrainType()).getFlatMovement(MOVEMENT_MOVES, CASC_SCOPE_PLOT) / 100;
 
 			if (plot()->getFeatureType() != NO_FEATURE)
 			{
-				iPlotMoveCost += GC.getFeatureInfo(plot()->getFeatureType()).getMovementCost();
+				iPlotMoveCost += GC.getFeatureInfo(plot()->getFeatureType()).getFlatMovement(MOVEMENT_MOVES, CASC_SCOPE_PLOT) / 100;
 			}
 			if (plot()->isHills())
 			{
@@ -22094,7 +22094,7 @@ BuildTypes CvUnitAI::AI_betterPlotBuild(const CvPlot* pPlot, BuildTypes eBuild) 
 			}
 		}
 
-		if ((kFeatureInfo.getMovementCost() > 1) && (iWorkersNeeded > 1))
+		if ((kFeatureInfo.getFlatMovement(MOVEMENT_MOVES, CASC_SCOPE_PLOT) / 100 > 1) && (iWorkersNeeded > 1))
 		{
 			bBuildRoute = true;
 		}

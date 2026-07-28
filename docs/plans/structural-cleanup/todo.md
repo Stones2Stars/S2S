@@ -233,9 +233,20 @@ treat [unitcombat-merge-candidates.md](unitcombat-merge-candidates.md) as a live
   mix: yield/food/wellbeing (the keystone — food consumption subtracts angry population and health rate), commerce
   (joins it at the production→commerce term), gold/maintenance/upkeep (gold IS a yield, so it rides with commerce),
   trade profit, war weariness. Unit experience is self-contained and is the one safely parallelizable cluster.
-- **MOVEMENT is a cluster too, and it carries a live defect** — the substrate cost getters read a member nothing
-  authors (section above). Its operands: the terrain / feature / route family sums, `MOVE_DENOMINATOR`, the
-  hills / river / peak extras, the route `min`-override and the double-move divisors, and the unit's own moves.
+- **MOVEMENT — the SHAPE is converted; the SCALE is not.** `getFlatMovement(MovementKind, CvCascScope)` now serves
+  the family on terrain / feature / route and the 24 consumers read it, each reducing `÷100` at its point of use.
+  That is behaviour-preserving: every authored value is an exact multiple of 100, and the two float readers are
+  PEDIA DISPLAY ONLY — they render a cost, they do not move a unit.
+
+  ⛔ **The real question is that MOVEMENT IS ALREADY A PER-100 VALUE (owner) — `MOVE_DENOMINATOR` is its fixed
+  point, and always was.** That is why routes author 5–100: they are already denominator units expressing part
+  steps. So the cascade's ×100 sits on top of a denominator the mechanic already had, and the family slot now
+  holds **two scales, each ×100'd**: terrain/feature as whole moves (1–6), routes as denominator units (5–100).
+  ⛔ Do NOT "finish" this by carrying ×100 deeper into the resolver — that compounds the double-scaling instead
+  of resolving it. What has to be decided first is which single denominator movement speaks in, and that is a
+  CURATOR question (does terrain author denominator units too?), not a consumer sweep.
+  ⚑ Also untouched: `ROUTE_VACTRAIN`'s conditioned `-4 @TECH_SKYROADS` entry is NOT read by the point getter;
+  the live equivalent is `CvTeam::getRouteChange`, so consuming it would double-count until that accumulator is cut.
   Acceptance per cluster: ZERO new fudge factors at the mixing sites.
 - **⚠ Needs an owner ruling before being swept in:** the `…Times100` on AI unit counts and plot strength carries
   fractional SizeMatters counts, not a modifier channel — same shape, different nature.

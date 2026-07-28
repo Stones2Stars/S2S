@@ -39,7 +39,11 @@ public:
 	{ return m_modifiers.sum(MODFAM_DEFENSE, eKind, eScope, infoDefenseUnit(eKind)); }
 
 	// ======================= 3. INTRINSIC -- bare typed reads (the census identity set) ======================
-	int getMovementCost() const { return m_iMovementCost; }       // identity.movementCost
+	// The substrate's own base movement cost, served as the family it is authored in
+	// ([modifier.md] par.6: a plot substrate's base movement cost IS the `movement` family). x100 native like
+	// every compiled sum -- the reader reduces at its point of use ([DEC-fixedpoint-x100]).
+	int getFlatMovement(MovementKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_MOVEMENT, eKind, eScope, CASC_UNIT_FLAT); }
 	int getBuildModifier() const { return m_iBuildModifier; }     // identity.buildTimeModifier (ruling 18 plane 1)
 	int getDistanceToLand() const { return m_iDistanceToLand; }   // identity.distanceToLand (0 = land; 1/2/... = coast/ocean tiers)
 	bool isWaterTerrain() const { return m_iDistanceToLand > 0; }
@@ -84,7 +88,6 @@ private:
 	CvModifiers m_modifiers;
 
 	// --- the intrinsic identity members (materialized once at mapFrom; getters are bare reads) ---
-	int m_iMovementCost;
 	int m_iBuildModifier;
 	int m_iDistanceToLand;
 	int m_iZobristValue;               // map-hash drawn from the synced RNG in the ctor (OOS-load-bearing)

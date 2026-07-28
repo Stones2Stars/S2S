@@ -3203,7 +3203,7 @@ void CvDLLWidgetData::parseActionHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 					}
 
 					// TODO Fix, make separate func
-					int iMovementCost = GC.getRouteInfo(eRoute).getMovementCost() + team.getRouteChange(eRoute);
+					int iMovementCost = GC.getRouteInfo(eRoute).getFlatMovement(MOVEMENT_MOVES, CASC_SCOPE_PLOT) / 100 + team.getRouteChange(eRoute);
 
 					int iMoves = 0;
 					if (iMovementCost > 0)

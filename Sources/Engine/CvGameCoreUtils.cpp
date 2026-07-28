@@ -1815,7 +1815,7 @@ int	NewPathHeuristicFunc(const CvSelectionGroup* pGroup, int iFromX, int iFromY,
 
 				if ( eBestRoute != NO_ROUTE )
 				{
-					int iRouteCost = GC.getRouteInfo(eBestRoute).getMovementCost();
+					int iRouteCost = GC.getRouteInfo(eBestRoute).getFlatMovement(MOVEMENT_MOVES, CASC_SCOPE_PLOT) / 100;
 
 					iLimitCost = (iHeuristicCost*iRouteCost)/GC.getMOVE_DENOMINATOR();
 

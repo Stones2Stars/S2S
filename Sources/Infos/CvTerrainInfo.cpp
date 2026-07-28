@@ -13,7 +13,6 @@
 #include "AI/CvGameAI.h"          // complete CvGameAI -- GC.getGame().getSorenRand() (zobrist draw, mirrors the archive)
 
 CvTerrainInfo::CvTerrainInfo()
-	: m_iMovementCost(0)
 	, m_iBuildModifier(0)
 	, m_iDistanceToLand(0)
 	, m_iZobristValue(0)
@@ -46,7 +45,6 @@ void CvTerrainInfo::mapFrom(const picojson::value& entity)
 	if (const picojson::object* pIdentity = jsonChildObj(entityObj, "identity"))
 	{
 		m_iBuildModifier = jsonIdInt(*pIdentity, "buildTimeModifier");
-		m_iMovementCost = jsonIdInt(*pIdentity, "movementCost");
 		m_iDistanceToLand = jsonIdInt(*pIdentity, "distanceToLand");
 		m_bFreshWaterTerrain = jsonIdBool(*pIdentity, "freshWaterTerrain");
 		m_bImpassable = jsonIdBool(*pIdentity, "impassable");

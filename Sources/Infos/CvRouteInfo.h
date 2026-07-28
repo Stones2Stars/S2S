@@ -40,7 +40,11 @@ public:
 	// ======================= 3. INTRINSIC -- bare typed reads (the census identity set) ======================
 	int getValue() const { return m_iValue; }                       // identity.value (route quality rank)
 	int getAdvancedStartCost() const { return m_iAdvancedStartCost; } // identity.advancedStart.cost
-	int getMovementCost() const { return m_iMovementCost; }         // identity.movementCost (base traversal)
+	// The substrate's own base movement cost, served as the family it is authored in
+	// ([modifier.md] par.6: a plot substrate's base movement cost IS the `movement` family). x100 native like
+	// every compiled sum -- the reader reduces at its point of use ([DEC-fixedpoint-x100]).
+	int getFlatMovement(MovementKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_MOVEMENT, eKind, eScope, CASC_UNIT_FLAT); }
 	bool isSeaTunnel() const { return m_bSeaTunnel; }               // identity.seaTunnel
 	int getZobristValue() const { return m_iZobristValue; }
 
@@ -65,7 +69,6 @@ private:
 	// --- the intrinsic identity members (materialized once at mapFrom; getters are bare reads) ---
 	int m_iValue;
 	int m_iAdvancedStartCost;
-	int m_iMovementCost;
 	int m_iZobristValue;               // map-hash drawn from the synced RNG in the ctor (OOS-load-bearing)
 	bool m_bSeaTunnel;
 	BonusTypes m_ePrereqBonus;                     // load-reconstructed single AND prereq (CvReversePass)

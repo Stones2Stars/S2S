@@ -15,7 +15,6 @@
 #include "AI/CvGameAI.h"          // complete CvGameAI -- GC.getGame().getSorenRand() (zobrist draw, mirrors the archive)
 
 CvFeatureInfo::CvFeatureInfo()
-	: m_iMovementCost(0)
 	, m_iSeeThroughChange(0)
 	, m_iPopDestroys(-1)
 	, m_iAppearanceProbability(0)
@@ -106,7 +105,6 @@ void CvFeatureInfo::mapFrom(const picojson::value& entity)
 	// identity: placement + relief fields
 	if (const picojson::object* pIdentity = jsonChildObj(entityObj, "identity"))
 	{
-		m_iMovementCost = jsonIdInt(*pIdentity, "movementCost");
 		m_iPopDestroys = jsonIdInt(*pIdentity, "popDestroys", -1);   // legacy load default -1 = never destroyed
 		m_iAppearanceProbability = jsonIdInt(*pIdentity, "appearance");
 		m_iDisappearanceProbability = jsonIdInt(*pIdentity, "disappearance");

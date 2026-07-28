@@ -1712,10 +1712,10 @@ bool CvWorkerAI::improveCity(CvUnitAI* unit, CvCity* pCity)
 		}
 		else if (unit->plot()->getRouteType() == NO_ROUTE)
 		{
-			int iPlotMoveCost = GC.getTerrainInfo(unit->plot()->getTerrainType()).getMovementCost();
+			int iPlotMoveCost = GC.getTerrainInfo(unit->plot()->getTerrainType()).getFlatMovement(MOVEMENT_MOVES, CASC_SCOPE_PLOT) / 100;
 			if (unit->plot()->getFeatureType() != NO_FEATURE)
 			{
-				iPlotMoveCost += GC.getFeatureInfo(unit->plot()->getFeatureType()).getMovementCost();
+				iPlotMoveCost += GC.getFeatureInfo(unit->plot()->getFeatureType()).getFlatMovement(MOVEMENT_MOVES, CASC_SCOPE_PLOT) / 100;
 			}
 			if (unit->plot()->isHills())
 			{

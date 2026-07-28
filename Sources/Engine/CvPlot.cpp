@@ -4395,11 +4395,11 @@ int CvPlot::movementCost(const CvUnit* pUnit, const CvPlot* pFromPlot) const
 			const RouteTypes toRouteType = getRouteType();
 			const CvRouteInfo& toRoute = GC.getRouteInfo(toRouteType);
 
-			int iRouteCost = fromRoute.getMovementCost() + GET_TEAM(pUnit->getTeam()).getRouteChange(fromRouteType);
+			int iRouteCost = fromRoute.getFlatMovement(MOVEMENT_MOVES, CASC_SCOPE_PLOT) / 100 + GET_TEAM(pUnit->getTeam()).getRouteChange(fromRouteType);
 			FAssertMsg(iRouteCost > 0, "Route cost is expected to be greater than 0");
 			if (toRouteType != fromRouteType)
 			{
-				const int iToRouteCost = toRoute.getMovementCost() + GET_TEAM(pUnit->getTeam()).getRouteChange(toRouteType);
+				const int iToRouteCost = toRoute.getFlatMovement(MOVEMENT_MOVES, CASC_SCOPE_PLOT) / 100 + GET_TEAM(pUnit->getTeam()).getRouteChange(toRouteType);
 
 				if (iToRouteCost > iRouteCost)
 				{
@@ -4420,11 +4420,11 @@ int CvPlot::movementCost(const CvUnit* pUnit, const CvPlot* pFromPlot) const
 			}
 			else
 			{
-				iRegularCost = GC.getTerrainInfo(getTerrainType()).getMovementCost();
+				iRegularCost = GC.getTerrainInfo(getTerrainType()).getFlatMovement(MOVEMENT_MOVES, CASC_SCOPE_PLOT) / 100;
 
 				if (getFeatureType() != NO_FEATURE)
 				{
-					iRegularCost += GC.getFeatureInfo(getFeatureType()).getMovementCost();
+					iRegularCost += GC.getFeatureInfo(getFeatureType()).getFlatMovement(MOVEMENT_MOVES, CASC_SCOPE_PLOT) / 100;
 				}
 
 				if (isHills())

@@ -7599,7 +7599,7 @@ RouteTypes CvPlayer::getBestRouteInternal(const CvPlot* pPlot, bool bConnect, co
 				iValue -= GC.getBuildInfo((BuildTypes)iI).getCost();
 
 				// Extra movement is dependant on unit speed; iMovement != iFlatMovement, so this isn't a very useful measure...
-				// iValue += std::max(0, baseMoves / std::min(baseMoves, GC.getRouteInfo(eRoute).getMovementCost()) - 1);
+				// iValue += std::max(0, baseMoves / std::min(baseMoves, GC.getRouteInfo(eRoute).getFlatMovement(MOVEMENT_MOVES, CASC_SCOPE_PLOT) / 100) - 1);
 			}
 
 			if (iValue > iBestValue)
