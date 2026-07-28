@@ -116,6 +116,31 @@ The "`*100` getters mark the scaled fields" rule is INCOMPLETE: some fields are 
 > The per-pop row is the [DEC-no-guessing](../../architecture/decisions.md#dec-no-guessing) case in miniature:
 > the scale was *mapped* at the consumption site, never guessed from the field name.
 
+## 4d. ⛔ THE EDGE — where a scale error can occur at all, and therefore what an audit checks
+
+**A scale error cannot happen inside the cascade.** ×100 is native EVERYWHERE within it (§1), so every magnitude
+there is ×100 by construction and any two operands already agree. **A scale error is only possible where a value
+CROSSES A BOUNDARY** — which makes the audit an ENUMERATION OF BOUNDARIES, never a sweep over every multiply:
+
+1. the **IN** boundary — readJson's single human→×100 conversion;
+2. the **OUT** boundary — a reader's `÷100` at the point of use;
+3. a **sanctioned engine INPUT** — a value the cascade folds in rather than computes.
+
+⚑ **The trade-route fold is THE EDGE (owner)** — the exemplar of class 3 and the reason class 3 exists.
+`tradeYield` is the ONE sanctioned live-yield input ([modifier.md §2a](../modifier.md)): the cascade cannot
+re-derive the trade NETWORK, so that calculation stays engine-owned ([north-star.md](../../architecture/north-star.md)
+KEEP — it is none of the four systems' job) and its value is FOLDED IN. That is precisely why the scales differ
+there, and why **the conversion belongs THERE: an edge converts**, exactly as the IN and OUT boundaries do.
+
+**How to audit, since the naming ruling removed the marker.** Every value is ×100 and NO name says so, so a
+grep for a `100` token returns nothing and proves nothing. Instead, at each boundary site check the two operands
+against the **DECLARED scale of the surface each came from** (the calc functions' documented inputs/outputs, the
+package slot reads, the compiled sums) — never against a name. ⛔ Where a boundary function mixes a plain engine
+percent with a ×100 sum, fix it STRUCTURALLY — have the function lift and take both down together — so a caller
+passes what it holds and cannot get the scale wrong; a comment warning the caller is not a fix.
+⚠ **And never multiply two ×100 values without rescaling** — the product is ×10000, so the `÷100` belongs at the
+multiply.
+
 ## 5. Verification — the math proves the scales, not manual JSON review
 
 The owner cannot eyeball thousands of JSONs, so a mis-scaled field is found by the MATH: the effective value the

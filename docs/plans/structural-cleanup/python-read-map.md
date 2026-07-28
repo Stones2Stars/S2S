@@ -1,6 +1,6 @@
 # Python read-map census (stage-4 input)
 
-> Work item under [info-rebuild.md](info-rebuild.md) § "The FINAL stage" — the evidence base for the stage-4
+> Evidence base for the stage-4 Python library ([patterns.md § THE PYTHON READ BOUNDARY](../../architecture/patterns.md)) — the evidence base for the stage-4
 > Python surface, everything OUTSIDE the pedia. The pedia slice is mapped in
 > [pedia-map.md](pedia-map.md) and is excluded from the detailed work here (§1 reconciles the totals).
 >
@@ -109,7 +109,7 @@ projection of those same five shapes. That is the real content of the owner's in
 with the data: the pedia is the **shape** oracle.
 
 It is also close to a *type* oracle for the modifier-carrying and enabler-carrying types — the critical set from
-the [green gate](info-rebuild.md). For buildings, units, techs, promotions, bonuses, improvements, civics,
+the [green gate](roadmap.md). For buildings, units, techs, promotions, bonuses, improvements, civics,
 traits, terrains, features, routes, corporations, religions, projects and specialists, the pedia already reads
 the widest field set of any consumer.
 
@@ -161,7 +161,7 @@ Four clusters, each with a distinct owner:
 
 **Note the overlap with the info rebuild's own scope:** `CvVictoryInfo`, `CvVoteInfo`, `CvHurryInfo`,
 `CvWorldInfo`, `CvHandicapInfo` and `CvProcessInfo` are all rebuilt types per
-[info-rebuild.md § stage 2](info-rebuild.md) — so the library must serve them regardless; the pedia simply never
+the rebuilt info surface ([patterns.md](../../architecture/patterns.md)) — so the library must serve them regardless; the pedia simply never
 asks. That is the precise sense in which the pedia under-specifies.
 
 ### 2.4 The per-field residue, qualified
@@ -193,7 +193,7 @@ The pedia is **99.7% a static-info reader**: of its 1,078 bound sites, 739 are I
 of the whole engine surface.** Building only what the pedia needs would leave the majority of Python's engine
 traffic unserved. This is not an argument against the hypothesis — those planes are not what an *info* library
 is for — but a completeness claim scoped to "the reader surface" must say so explicitly, because
-[the ONE-SURFACE ruling](info-rebuild.md) makes a single uncovered read a reach-around into legacy, and a
+[the ONE-SURFACE ruling](../../architecture/patterns.md) makes a single uncovered read a reach-around into legacy, and a
 reach-around is the second live surface the ruling forbids.
 
 ### 2.6 The verdict, operationally
@@ -206,7 +206,7 @@ the entire STATE / COMPUTED / MUTATION surface.** The stage-4 tick-list is there
 ## 3. Consumer families, ranked by weight
 
 What each family must **be served**, expressed in the structured shapes of
-[info-rebuild.md § the Python deliverable](info-rebuild.md).
+[patterns.md § THE PYTHON READ BOUNDARY](../../architecture/patterns.md).
 
 ### 3.1 `EntryPoints/` — 4,358 sites, 14 files — the engine's call-in surface
 
@@ -334,7 +334,7 @@ already owes **rendered entry lines** (ruling 29, `Sources/UI/CvEntryText.{h,cpp
 serves**; free-standing `getText("TXT_KEY_…")` lookups for a screen's own chrome (labels, headers, button text)
 remain a localization service call. That keeps the one-surface ruling intact — no consumer ever asks the
 *library* for an entity's text and gets a raw key back — without making the library the TXT gateway.
-Per [ruling 30](info-rebuild.md) the vocabulary TXT keys are sequenced after the stages complete, so the
+Per [the todo](todo.md) the vocabulary TXT keys are sequenced after the stages complete, so the
 renderer's spell-back fallback is the accepted output meanwhile.
 
 The concentration is informative: `Screens/` 655 · `Revolution/Gameready/` 329 · `Contrib/` 302 ·
@@ -368,7 +368,7 @@ direction.
 `<root>` 297 · `EntryPoints/` 265 · `Revolution/Gameready/` 248 · `Revolution/` 90 · `pyWB/` 81.
 
 These are **not data fetching** and the library must not absorb them — that would pull gameplay into the DLL
-boundary, which [the deliverable ruling](info-rebuild.md) explicitly forbids ("Python-authoritative gameplay
+boundary, which [the deliverable ruling](../../architecture/patterns.md) explicitly forbids ("Python-authoritative gameplay
 stays Python"). But they are a real boundary that stage 4 must design *beside* the library, because the same
 handler that reads through the library writes through this path. Two sub-shapes:
 
@@ -519,7 +519,7 @@ analysis of the Python tree can tell you the live subset. Any "these reads are d
 `Revolution/Gameready/Revolution.py:1170` reads
 `pPlayer.getRevIdxDistanceModifier() + pCity.getRevIndexDistanceMod()` — two spellings of one mechanic, consumed
 by Python-authoritative gameplay and invisible to an engine-side read census. Verified live at that line.
-Per [info-rebuild.md](info-rebuild.md) **both distance kinds stay as-is, untouched by any stage (owner ruling)**;
+Per [patterns.md](../../architecture/patterns.md) **both distance kinds stay as-is, untouched by any stage (owner ruling)**;
 Revolutions owns them in its own rework. **No stage-4 investigation.** Recorded here only as the calibration
 case for §5.7.
 
@@ -536,7 +536,7 @@ Stated plainly, because a completeness gate depends on it:
 - **Therefore: a "this read is dead, drop it" judgement is NOT SAFE anywhere in this tree.** The safe direction
   is one-way — a read found is a read to serve; a read *not* found is not evidence of absence. The library must
   be built to the union, and the only trustworthy completeness signal is the one
-  [info-rebuild.md](info-rebuild.md) already specifies: the census list as tick-list, with the legacy surface
+  [patterns.md](../../architecture/patterns.md) already specifies: the census list as tick-list, with the legacy surface
   disconnected in the same work item.
 - **Adversarial check performed:** rather than assert completeness, I inverted the question — took the DLL's
   2,109 bound names and asked which are reached by *no* literal Python call, then hunted the mechanism that

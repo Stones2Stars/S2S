@@ -638,6 +638,30 @@ The full address of a deposit:
   `gold`/`research`/`culture`/`espionage`; each property is its own family (`PROPERTY_CRIME`, …).
 - **Grouped families** keep `<member>` parts (`maintenance`, `defense`, …): `maintenance` uses a `distance`
   member; `defense` uses an `amount` member (the additive defense %), with a `min` member for the floor.
+- **⛔ THE MEMBER TRIAGE TEST — a member is a KIND only if it answers *WHICH component does this modify* (owner).**
+  `defense.bombardDefense` and `maintenance.distance` name components, so they are genuine kinds. A member that
+  answers **WHEN or WHERE** the value applies is a **condition-as-member rollerskate** — the predicate simply has
+  not been defined yet ([DEC-conditions-are-predicates](../architecture/decisions.md#dec-conditions-are-predicates)),
+  and it re-authors as a conditioned deposit (the worked case: `maintenance.empire.{homeArea,otherArea}` →
+  `enabled: "IS_HOME_AREA"` / `"!IS_HOME_AREA"`, §3.5). Run this test on every proposed member: the scope axis and
+  the conditions must never inflate a family's vocabulary. ⚑ A **`per<X>`-named member is its own verdict** — it IS
+  a §3.7 `per` count-scaler (`perPopulation` → `per:{type:POPULATION}`), never a kind.
+- **⛔ `strength` is the BASE; `combat` is everything that MODIFIES it (owner).** `strength.unit.flat` is the
+  unit's base value and is absent if it cannot fight; every semantic modifier (`attack`, `defense`, `cityAttack`,
+  `cityDefense`, `hillsAttack`/`hillsDefense`, `stealth`, `flanking`, `lunge`, …) plus the type-keyed vs-entries
+  (`UNITCOMBAT_*`/`UNIT_*`/`TERRAIN_*`/`FEATURE_*`/`DOMAIN_*`) is `combat`, at unit/empire/team/city scope. ⛔ A
+  concept with its own family never hides as a `combat` member: capture odds → `capture`, cargo → `cargo`, ranges →
+  `air`/`range`, espionage defense → its own family.
+- **THE COST CLUSTER IS THREE PLANES — do not merge them.** (1) The **actual cost** is the reserved `cost` section
+  plus the entity's own self-data (`hurryCost` = "hurrying ME"; `buildTime`). (2) **What CHANGES a cost** is the ONE
+  `costs` modifier family, kinds by category (`train`/`construct`/`create`/`build`/`research`/`improvementUpgrade`/
+  `hurry`/`upgrade`), with **scope as the axis** — never a `world*`-prefixed kind
+  ([DEC-scope-is-an-axis](../architecture/decisions.md#dec-scope-is-an-axis)). (3) The **derived price** (upgrade
+  gold, hurry gold/pop) is engine-computed from planes 1 × 2; its formula parameters are world/handicap config, never
+  vocabulary.
+- **`underworld` is the in-city criminal contest** (criminals burrow, investigators drag them out): kinds
+  `insidiousness` + `investigation`, city scope. ⚠ **`detection` is RESERVED for the hide-and-seek plane** — the
+  map-level spotting of hidden units is a different system with its own future block, and must not be folded in here.
 - The **unit plane** has its own family set (`strength`, `withdrawal`, `firstStrike`, `bombard`, `collateral`,
   `air`, `heal`, `movement`, `experience`, `workRate`, `cargo`, `vision`, `capture`, …); a `unit`-scope deposit is
   a self-accumulator.

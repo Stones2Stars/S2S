@@ -364,6 +364,58 @@ engine-enum-indexed group takes the engine plural (`getYields`, `getCommerces`);
 (`get<Family>Kinds`), which also keeps this surface from colliding with — or overloading — the legacy scalar
 getters that hold the bare family name.
 
+## ⛔ THE PYTHON READ BOUNDARY — ONE COMPLETE DATA-FETCHING LIBRARY (owner)
+
+> The Python half of the access surface. Binding: [DEC-cy-not-fixed](decisions.md#dec-cy-not-fixed) — the `Cy*`
+> `.def` surface is NOT a contract to preserve. **This is a REBUILD, not an invention:** Python has always fetched
+> through a binding layer and that MECHANISM (boost::python) is fine and stays. What is wrong is the SHAPE —
+> scattered per-type interfaces, one getter per legacy field, no coherent payload anywhere. ⛔ "It kind of exists
+> already" is never licence to widen or build on a `Cy*` binding.
+
+Four words carry the whole requirement:
+
+- **ONE SURFACE.** A single library IS the Python-facing read boundary — not the per-type `Cy*` interfaces it
+  replaces, not a widened binding, never two live surfaces for one read.
+- **COMPLETE.** Every read Python performs today has an answer **before** the legacy surface is disconnected.
+  Completeness is the GATE, not an aspiration: one gap forces a reach-around into legacy, and that reach-around
+  IS the second live surface the ruling forbids — the half-migration re-created at the last seam.
+- **DATA FETCHING, not gameplay.** It serves reads/payloads; Python-authoritative gameplay (Revolution, events)
+  stays Python and becomes a CONSUMER of it.
+- **⛔ ENUM OPERATIONS ARE FIRST CLASS** — name→type/enum resolution is a supported operation, covering
+  **resolution AND EXTENSION**: BUG resolves `WidgetTypes`/`InputTypes`/`InterfaceDirtyBits` by name from config
+  strings *and* MINTS new `WidgetTypes` members at runtime, handing them back as widget ids. A read-only lookup
+  does not serve that, and three engine enums are reachable ONLY this way — so a library lacking it forces the
+  banned reach-around. It generalizes `getInfoTypeForString` and mirrors the load-minted classification
+  registries ([DEC-classification-infos](decisions.md#dec-classification-infos)).
+
+**⚑ BUILD IT FOR THE PEDIA — but know exactly what that proves (owner).** The pedia's purpose is to display every
+entity exhaustively, so it is not a sample of the info surface, it **is** the info surface rendered. Therefore:
+
+- **SHAPE — complete by construction.** Nothing in Python needs a payload shape the pedia does not already force,
+  so serving the pedia SETTLES the library's structure; no later consumer introduces a new kind of read.
+- **⚠ COVERAGE — NOT proven, and the gap is enumerable.** The pedia is ~99.7% a static reader: it exercises a
+  fraction of STATE, almost no COMPUTED and no MUTATION, so a large part of the Python surface sits in planes it
+  never touches. The residue is an appendix — whole info types with no pedia page (map-gen, game-config,
+  diplomacy/victory/vote, command/UI-action) plus per-field reads. **Serving the pedia completes the INFO plane
+  and the shapes; it does not complete the boundary.** Treating it as a coverage oracle is the mistake to avoid.
+
+**⛔ TWO THINGS THE LIBRARY DOES NOT OWN:**
+
+- **TEXT/localization.** `getText`-style key→string resolution is not info data, and decisively: **TXT and ART
+  keys are NOT MIGRATED** — both remain XML-side systems the JSON only REFERENCES ([json.md §7](../specs/json.md);
+  [naming.md](../specs/naming.md)). So the library serves already-RENDERED lines and the raw key reference;
+  resolution stays with the existing managers and Python screen chrome keeps calling the text system directly.
+  This is an unmigrated system BOUNDARY, not a hole in the library.
+- **REVOLUTION's distance mechanic.** ⚠ `revolution.distanceMod` is **NOT dead** — Revolutions is
+  Python-authoritative and consumes it through the player/city aggregates, which makes the read INVISIBLE to any
+  engine-side grep. It is the standing exhibit for why an engine-read census cannot prove Python coverage. **Both
+  distance kinds STAY AS-IS, untouched by any stage (owner):** Revolutions is due its own rework, and that rework
+  owns every revolution-data question, including the two-spelling nuance.
+- **MAP SCRIPTS.** They read map-gen types nothing else reads, run BEFORE most game state exists, are
+  WRITE-dominated (they build the map; this is a read surface), and `eval` script-supplied expressions as an open
+  extension point. Their contract stays the named Python CALLBACKS ([engine.md](../reference/engine.md)), so
+  third-party scripts are unaffected by the `Cy*` cut and their types leave this library's coverage appendix.
+
 ## Materialize at mapFrom — no runtime string reads in info getters (the single-source law's load-time sibling)
 
 > Binding: [DEC-materialize-at-mapfrom](decisions.md#dec-materialize-at-mapfrom). Owner ruling: *"all of these should

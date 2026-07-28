@@ -150,6 +150,16 @@ slot does pure integer math and never sees the human boundary.
 the combined total (e.g. `defense`); `combine: max|min` for worst/best-across-sources (anarchy turns,
 `naturalDefense`). Authors write signed values; the mode wires the combiner.
 
+> **⚖ THE FREE-AMOUNT SIGN CONVENTION (owner) — one convention per kind, never a per-source flip.** The
+> `upkeep.freeMilitary` / `upkeep.freeCivilian` kinds carry **free-amount semantics throughout**: a POSITIVE entry
+> GRANTS free upkeep, a NEGATIVE entry SHRINKS the free allowance. Entries sum like any other channel, and the
+> **group total floors at zero as family-combine metadata** (the `min` mechanism above) — distinct from, and
+> applied before, the engine's own `net = max(0, upkeep − Σfree)` floor. **Two floors, deliberately: one on the
+> group, one at the consumption site.** A pop-scaled source authors `{P, per: {POPULATION, each: 100}}` keeping
+> its own sign. ⚠ This is an owner-ruled INTENTIONAL divergence from the legacy asymmetric rounding helper
+> (whose `mod<0` branch computed `v×100/(100−mod)`): the ruled shape is **additive linear**, attributed and never
+> bit-chased ([validation.md](validation.md) intentional class).
+
 > **⛔ There is NO `polarity` mode — wellbeing is FOUR ORDINARY CHANNELS (owner):** `happiness`, `anger`,
 > `health`, `unhealth`. Happiness sums against anger, health against unhealth, at the verdict (§2b). A negative
 > deposit is routed to the opposing channel **at fill**, so the split is a routing rule, never a storage shape —

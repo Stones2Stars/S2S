@@ -1,6 +1,6 @@
 # Pedia read-map census (stage-4 input)
 
-> Work item under [info-rebuild.md](info-rebuild.md) § "The FINAL stage" — the evidence base for the stage-4
+> Evidence base for the stage-4 Python library ([patterns.md § THE PYTHON READ BOUNDARY](../../architecture/patterns.md)) — the evidence base for the stage-4
 > Python surface, pedia slice. Per [DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed) this maps
 > **NEEDS, not getters to port**: every binding named below is obsolete by ruling; the counts say what a pedia
 > page must be SERVED, not what calls survive. Counts are grep-derived static call sites at the censused tree.
@@ -28,7 +28,7 @@ Wiring (all verified live, no dead screens):
 ## 2. The C++ text feeders (referenced, not re-censused)
 
 Every entity page's **effect-lines body is exactly ONE `CyGameTextMgr` call** with `bCivilopediaText=True` —
-the same composer families already censused in [info-rebuild.md](info-rebuild.md) ruling 29 (~15,000 lines /
+the same composer families already censused in [patterns.md](../../architecture/patterns.md) (the per-entry renderer) (~15,000 lines /
 ~1,450 hand-assembled `getText` blocks across 18 info-help composer families; heaviest: `setBuildingHelp`
 2805/269, `setBasicUnitHelp*` 2134/224, `parsePromotionHelpInternal` 2071/221, `parseCivicInfo` 1555/158,
 `parseTraits` 1493/179). Feeders the pedia calls (`Sources/Python/CyGameTextMgrInterface.cpp`):

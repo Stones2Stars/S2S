@@ -173,7 +173,7 @@ reads objects). **Build order:** spine + the modifier scope accumulator → logg
   archived load-time warm-up/rebuild pass, which the CAPSTONE rule removed
   ([state-repositories.md](../architecture/state-repositories.md)); the event reseed replaced that pass, so the
   endpoint has no honest caller. Open follow-ups (the tile-driven vicinity backstop; the per-city enabler
-  priming that preceded the reseed emits): [info-rebuild.md](../plans/structural-cleanup/info-rebuild.md) ledger.
+  priming that preceded the reseed emits): [todo.md](../plans/structural-cleanup/todo.md).
   **Registered consumers today:** the broad FILE logging consumer, the `/events` STREAM consumer, the **trigger
   engine** (`Triggers/CvTriggerEngine` -- the ONE payload machine, grants folded in as the null-condition case:
   resolver AND appliers built (`tr_applyTechFirstDiscover` / `tr_applyBuildingFirstBuild` / `tr_applyPerTurn` /

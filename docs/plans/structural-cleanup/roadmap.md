@@ -22,6 +22,16 @@
 > endpoint-observable ([DEC-done-is-observable](../../architecture/decisions.md#dec-done-is-observable)) and so
 > **cannot be tested until the tree is green again**; ranking a not-yet-testable correctness gap as the top
 > priority mis-sequences the work. ⚠ This SEQUENCES the acceptance bar, it does not relax it.
+>
+> **⛔ THE ORDER: design surface → contexts → THEN the AI calls (owner).** *"We nail the design surface, and
+> contexts, then we wire the AI calls with the new data."* The AI is the LARGEST consumer of the info surface
+> (`CvPlayerAI`/`CvUnitAI`/`CvCityAI`/`CvTeamAI` are the bulk of the consumer debt), which is exactly why it goes
+> LAST: wiring thousands of AI reads onto a surface still being settled bakes in a shape we are still deciding,
+> and every later refinement re-breaks them.
+> ⚠ **So a dangling AI call site is NOT a defect to fix on sight.** The purge deleted the legacy getters so the
+> COMPILER would name every consumer — that census is a WORKLIST FOR A LATER STAGE, not a queue of bugs. Reaching
+> into `Sources/AI/` to "repair" one wires the AI to a moving target and quietly re-legitimises whatever getter
+> shape happened to exist that day. **Read the red as intended output.**
 
 ## Context — why this rebuild exists
 
@@ -109,7 +119,7 @@ Authority: [state-repositories.md](../../architecture/state-repositories.md), [m
 | Machine | Home | State |
 |---|---|---|
 | Event spine + KIND firewall + `IEventConsumer` | `Sources/Spine/` | BUILT |
-| DOMAIN emit surface + the in-read load reseed + the load bracket | `Sources/Spine/` + the engine read paths | BUILT — **127 emit call sites**, the bracket emitted at BOTH ends, the in-read reseed live ([event-spine.md](../../specs/event-spine.md)). The remaining Tier-2 facts + the three routes that could not be derived are the [info-rebuild.md](info-rebuild.md) audit ledger |
+| DOMAIN emit surface + the in-read load reseed + the load bracket | `Sources/Spine/` + the engine read paths | BUILT — **127 emit call sites**, the bracket emitted at BOTH ends, the in-read reseed live ([event-spine.md](../../specs/event-spine.md)). The remaining Tier-2 facts + the three routes that could not be derived are the [todo.md](todo.md) |
 | Enabler (8 domains, kernel, own consumer, operating-buildings) | `Sources/Enabler/` | BUILT + **GRAFTED** onto city / player / team, consumer registered after the contexts (the load-order contract), and the **availability READ surface built** (one read pair per domain, [enabler.md §8](../../specs/enabler.md)). Moving consumers onto it is the remaining sweep |
 | Condition evaluator (`cascadeEvalCondition`, eval ctx, predicates) | `Sources/Conditions/` | BUILT |
 | Deposit index + deposit-read calcs (`MMKernel`/`PercentStack`/…) | `Sources/Data/` | BUILT |
@@ -253,7 +263,7 @@ The rest of the boundary every consumer meets:
   `isCoastalLand` an 8-neighbour scan per predicate; `getNumBonuses` the turn wall's hottest cluster — all now
   bare fetches. **OPEN:** the id-keyed radius dictionaries that would collapse `ev_cityPlotHas`' remaining
   per-check scan (terrain/feature/improvement/route prereqs), and the context gaps in the
-  [info-rebuild.md](info-rebuild.md) ledger.
+  [todo.md](todo.md).
 - **How the INFO side hands its data to the cascade — "make the infos sane" (active).** Today an info IS the legacy
   variable set (220 members on `CvBuildingInfo`, 247 on `CvUnitInfo`), with JSON force-fed into it and a
   ~300-getter surface mirroring the legacy `CvXInfo` contract. The target — **an info STYLED FOR THE JSON**:
@@ -264,7 +274,7 @@ The rest of the boundary every consumer meets:
   legacy-scalar defect and the sane `CLS_HAS` cure side by side); (3) roll across the other infos + rewire
   consumers onto the coherent surface ([DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface)).
   The ordered worklist (the one-reader consolidation, the interning pass, the scope-free vocabulary, the
-  `Json`-prefix rename sweep, acceptance): [info-rebuild.md](info-rebuild.md).
+  `Json`-prefix rename sweep, acceptance): [todo.md](todo.md).
   An info holds **only its own side**: cross-entity own-output (a building's improvement/terrain yields) is NOT a
   building member — the improvement owns its yield, conditioned on the building's presence
   ([DEC-deliveryguy]). The info is shaped to that NOW; it is not distorted to hold data it shouldn't just because
@@ -277,7 +287,7 @@ The rest of the boundary every consumer meets:
   flat keyed `<yield>.<scope>.{improvements|terrains|features|routes}.{TARGET}` on a building/civic/tech lands
   plot-scope (where every component-specific buff resolves) — building→improvement yields land; and a
   buildings-keyed output-channel deposit (gold/culture/research/espionage/commerce/food/production/happiness/
-  health on a building/civic/tech — the wonder/civic/tech → building-type boosts, info-rebuild.md ruling 19)
+  health on a building/civic/tech — the wonder/civic/tech → building-type boosts, the reverse-pass landing rules)
   lands on the target BUILDING at CITY scope (building output per modifier.md §2a/§2b), same family/value/unit,
   presence-gated at the AUTHORED deposit's scope axis, any authored condition composed in.
   Governing-deliverer keyed maps stay source-side ([DEC-deliveryguy], modifier.md §4): `buildRate` keyed targets,
@@ -295,7 +305,7 @@ The rest of the boundary every consumer meets:
   surface replacing the scattered per-type `Cy*` interfaces, COMPLETE against the census (screens + pedia +
   the Python-authoritative systems) so no read is left needing a reach-around into legacy — a gap re-creates
   the two live surfaces the ruling forbids. Data fetching only; Python gameplay stays Python and consumes it.
-  Not a widened binding, not a shim beside it. Detail + acceptance: [info-rebuild.md](info-rebuild.md).
+  Not a widened binding, not a shim beside it. Detail + acceptance: [todo.md](todo.md).
 - **The endpoint route table**, which reads the same uniform getters as everything else.
 
 ⛔ **Do not start re-attaching machines to the game objects before this is defined.** A per-site rewire is exactly
@@ -390,7 +400,7 @@ Unchanged in principle, but note the surface it depends on is currently purged:
    [naming.md](../../specs/naming.md)). This includes **not** cleaning up art that becomes orphaned when a
    consumer is removed — an unreferenced define is inert, and pruning it is neither this rework's job nor a
    tidiness licence. Same standing as TXT: an unmigrated system boundary, not a gap
-   ([info-rebuild.md](info-rebuild.md) § the Python library).
+   ([patterns.md § THE PYTHON READ BOUNDARY](../../architecture/patterns.md)).
 4. **NOT failures — deliberate, owner-ruled permanent carve-outs:** the golden-age YIELD-EFFECT member-mirror
    ([golden-age.md](../../reference/golden-age.md)); the mission-CONCEPT unification and the Python-authoritative
    outcome hooks; random EVENTS; Revolution. *(The `CvOutcome` DATA itself IS migrated to JSON.)*
