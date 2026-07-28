@@ -284,17 +284,6 @@ bool isCorporationTech(TechTypes eTech)
 	return false;
 }
 
-bool isTechRequiredForUnit(TechTypes eTech, UnitTypes eUnit)
-{
-	const CvUnitInfo& info = GC.getUnitInfo(eUnit);
-
-	if (info.getPrereqAndTech() == eTech)
-	{
-		return true;
-	}
-	return algo::any_of_equal(info.getPrereqAndTechs(), eTech);
-}
-
 bool isTechRequiredForProject(TechTypes eTech, ProjectTypes eProject)
 {
 	if (GC.getProjectInfo(eProject).getTechPrereq() == eTech)

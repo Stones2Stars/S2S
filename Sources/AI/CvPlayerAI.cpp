@@ -4728,17 +4728,21 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 	
 
 	int iTempValue = 0;
-	for (int iI = 0; iI < GC.getNumCorporationInfos(); iI++)
+	// WHAT DOES THIS TECH OBSOLETE? -- the tech's own `obsoletes` edge IS the answer, in place of asking every
+	// corporation the reverse question (patterns.md § THE WHAT-IF DRIVER). The edge is the same one the load
+	// pass reads to stamp each corporation's obsoleting tech, so the two cannot disagree.
+	std::set<int> obsoletedCorporations;
+	EnablerKernel::addEdge(EnablerKernel::infoFor(EDGEB_TECHS, (int)eTech), EDGEF_OBSOLETES, EDGEB_CORPORATIONS, obsoletedCorporations);
+
+	for (std::set<int>::const_iterator itObsoleted = obsoletedCorporations.begin(); itObsoleted != obsoletedCorporations.end(); ++itObsoleted)
 	{
-		if (GC.getCorporationInfo((CorporationTypes)iI).getObsoleteTech() != NO_TECH
-		&& GC.getCorporationInfo((CorporationTypes)iI).getObsoleteTech() == eTech)
+		const CorporationTypes eLoopCorporation = static_cast<CorporationTypes>(*itObsoleted);
+
+		foreach_(const CvCity * pLoopCity, cities())
 		{
-			foreach_(const CvCity * pLoopCity, cities())
+			if (pLoopCity->isHasCorporation(eLoopCorporation))
 			{
-				if (pLoopCity->isHasCorporation((CorporationTypes)iI))
-				{
-					iTempValue -= AI_corporationValue((CorporationTypes)iI, pLoopCity);
-				}
+				iTempValue -= AI_corporationValue(eLoopCorporation, pLoopCity);
 			}
 		}
 	}
@@ -4747,17 +4751,20 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 	
 
 	iTempValue = 0;
-	for (int iI = 0; iI < GC.getNumPromotionInfos(); iI++)
+	// Same forward read for the promotion plane -- the tech's `obsoletes` edge, not a sweep of all ~1,229
+	// promotions per tech valued.
+	std::set<int> obsoletedPromotions;
+	EnablerKernel::addEdge(EnablerKernel::infoFor(EDGEB_TECHS, (int)eTech), EDGEF_OBSOLETES, EDGEB_PROMOTIONS, obsoletedPromotions);
+
+	for (std::set<int>::const_iterator itObsoleted = obsoletedPromotions.begin(); itObsoleted != obsoletedPromotions.end(); ++itObsoleted)
 	{
-		if (GC.getPromotionInfo((PromotionTypes)iI).getObsoleteTech() != NO_TECH
-		&& GC.getPromotionInfo((PromotionTypes)iI).getObsoleteTech() == eTech)
+		const PromotionTypes eLoopPromotion = static_cast<PromotionTypes>(*itObsoleted);
+
+		foreach_(const CvUnit * pLoopUnit, units())
 		{
-			foreach_(const CvUnit * pLoopUnit, units())
+			if (pLoopUnit->isHasPromotion(eLoopPromotion))
 			{
-				if (pLoopUnit->isHasPromotion((PromotionTypes)iI))
-				{
-					iTempValue -= AI_promotionValue((PromotionTypes)iI, pLoopUnit->getUnitType(), pLoopUnit, pLoopUnit->AI_getUnitAIType());
-				}
+				iTempValue -= AI_promotionValue(eLoopPromotion, pLoopUnit->getUnitType(), pLoopUnit, pLoopUnit->AI_getUnitAIType());
 			}
 		}
 	}
@@ -4884,178 +4891,181 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 	}
 
 	int iBuildValue = 0;
-	for (int iJ = 0; iJ < GC.getNumBuildInfos(); iJ++)
+	// WHICH BUILDS DOES THIS TECH UNLOCK? -- the tech's own `enables` edge names them (patterns.md
+	// § THE WHAT-IF DRIVER), in place of asking every build in the database the reverse question.
+	std::set<int> unlockedBuilds;
+	EnablerKernel::addEdge(EnablerKernel::infoFor(EDGEB_TECHS, (int)eTech), EDGEF_ENABLES, EDGEB_BUILDS, unlockedBuilds);
+
+	for (std::set<int>::const_iterator itUnlockedBuild = unlockedBuilds.begin(); itUnlockedBuild != unlockedBuilds.end(); ++itUnlockedBuild)
 	{
-		if (GC.getBuildInfo((BuildTypes)iJ).getTechPrereq() == eTech)
+		const BuildTypes eLoopBuild = static_cast<BuildTypes>(*itUnlockedBuild);
+		ImprovementTypes eImprovement = GC.getBuildInfo(eLoopBuild).getImprovement();
+
+		if (eImprovement != NO_IMPROVEMENT)
 		{
-			ImprovementTypes eImprovement = GC.getBuildInfo((BuildTypes)iJ).getImprovement();
+			//	If it's an upgradable improvement
+			eImprovement = kTeam.finalImprovementUpgrade(eImprovement);
+		}
+		else
+		{
+			// only increment build value if it is not an improvement, otherwise handle it there
+			iBuildValue += 200;
+		}
 
-			if (eImprovement != NO_IMPROVEMENT)
+		if (eImprovement != NO_IMPROVEMENT)
+		{
+			const CvImprovementInfo& kImprovement = GC.getImprovementInfo(eImprovement);
+
+			int iImprovementValue = 300;
+
+			iImprovementValue += ((kImprovement.isActsAsCity()) ? 75 : 0);
+			iImprovementValue += ((kImprovement.isHillsMakesValid()) ? 100 : 0);
+			iImprovementValue += ((kImprovement.isFreshWaterMakesValid()) ? 200 : 0);
+			iImprovementValue += ((kImprovement.isRiverSideMakesValid()) ? 100 : 0);
+			iImprovementValue += ((kImprovement.isCarriesIrrigation()) ? 300 : 0);
+
+			for (int iK = 0; iK < GC.getNumTerrainInfos(); iK++)
 			{
-				//	If it's an upgradable improvement
-				eImprovement = kTeam.finalImprovementUpgrade(eImprovement);
+				iImprovementValue += (kImprovement.getTerrainMakesValid(iK) ? 50 : 0);
+
+				//Desert has negative defense // Toffer - Not very well defined then...
+				if (GC.getTerrainInfo((TerrainTypes)iK).getDefenseModifier() < 0 && kTeam.isCanFarmDesert())
+				{
+					iImprovementValue += 50;
+				}
 			}
-			else
+
+			for (int iK = 0; iK < GC.getNumFeatureInfos(); iK++)
 			{
-				// only increment build value if it is not an improvement, otherwise handle it there
-				iBuildValue += 200;
+				iImprovementValue += (kImprovement.getFeatureMakesValid(iK) ? 50 : 0);
 			}
 
-			if (eImprovement != NO_IMPROVEMENT)
+			for (int iK = 0; iK < NUM_YIELD_TYPES; iK++)
 			{
-				const CvImprovementInfo& kImprovement = GC.getImprovementInfo(eImprovement);
+				iTempValue = 0;
 
-				int iImprovementValue = 300;
+				iTempValue += (kImprovement.getYieldChange(iK) * 200);
+				iTempValue += (kImprovement.getRiverSideYieldChange(iK) * 100);
+				iTempValue += (kImprovement.getIrrigatedYieldChange(iK) * 150);
 
-				iImprovementValue += ((kImprovement.isActsAsCity()) ? 75 : 0);
-				iImprovementValue += ((kImprovement.isHillsMakesValid()) ? 100 : 0);
-				iImprovementValue += ((kImprovement.isFreshWaterMakesValid()) ? 200 : 0);
-				iImprovementValue += ((kImprovement.isRiverSideMakesValid()) ? 100 : 0);
-				iImprovementValue += ((kImprovement.isCarriesIrrigation()) ? 300 : 0);
-
-				for (int iK = 0; iK < GC.getNumTerrainInfos(); iK++)
+				// land food yield is more valueble
+				if (iK == YIELD_FOOD && !kImprovement.isWaterImprovement())
 				{
-					iImprovementValue += (kImprovement.getTerrainMakesValid(iK) ? 50 : 0);
-
-					//Desert has negative defense // Toffer - Not very well defined then...
-					if (GC.getTerrainInfo((TerrainTypes)iK).getDefenseModifier() < 0 && kTeam.isCanFarmDesert())
-					{
-						iImprovementValue += 50;
-					}
+					iTempValue *= 3;
+					iTempValue /= 2;
 				}
 
-				for (int iK = 0; iK < GC.getNumFeatureInfos(); iK++)
+				if (bFinancialTrouble && iK == YIELD_COMMERCE)
 				{
-					iImprovementValue += (kImprovement.getFeatureMakesValid(iK) ? 50 : 0);
+					iTempValue *= 2;
 				}
 
-				for (int iK = 0; iK < NUM_YIELD_TYPES; iK++)
+				iTempValue *= AI_yieldWeight((YieldTypes)iK);
+				iTempValue /= 100;
+
+				iImprovementValue += iTempValue;
+			}
+
+			for (int iK = 0; iK < GC.getNumBonusInfos(); iK++)
+			{
+				int iBonusValue = 0;
+
+				iBonusValue += (kImprovement.isImprovementBonusMakesValid(iK) ? 450 : 0);
+				iBonusValue += (kImprovement.isImprovementObsoleteBonusMakesValid(iK) ? 100 : 0);
+				iBonusValue += (kImprovement.isImprovementBonusTrade(iK) ? 45 * AI_bonusVal((BonusTypes)iK) : 0);
+
+				if (iBonusValue > 0)
 				{
-					iTempValue = 0;
-
-					iTempValue += (kImprovement.getYieldChange(iK) * 200);
-					iTempValue += (kImprovement.getRiverSideYieldChange(iK) * 100);
-					iTempValue += (kImprovement.getIrrigatedYieldChange(iK) * 150);
-
-					// land food yield is more valueble
-					if (iK == YIELD_FOOD && !kImprovement.isWaterImprovement())
+					for (int iL = 0; iL < NUM_YIELD_TYPES; iL++)
 					{
-						iTempValue *= 3;
-						iTempValue /= 2;
-					}
+						iTempValue = 0;
 
-					if (bFinancialTrouble && iK == YIELD_COMMERCE)
-					{
-						iTempValue *= 2;
-					}
+						iTempValue += (kImprovement.getImprovementBonusYield(iK, iL) * 300);
+						iTempValue += (kImprovement.getIrrigatedYieldChange(iL) * 200);
 
-					iTempValue *= AI_yieldWeight((YieldTypes)iK);
-					iTempValue /= 100;
-
-					iImprovementValue += iTempValue;
-				}
-
-				for (int iK = 0; iK < GC.getNumBonusInfos(); iK++)
-				{
-					int iBonusValue = 0;
-
-					iBonusValue += (kImprovement.isImprovementBonusMakesValid(iK) ? 450 : 0);
-					iBonusValue += (kImprovement.isImprovementObsoleteBonusMakesValid(iK) ? 100 : 0);
-					iBonusValue += (kImprovement.isImprovementBonusTrade(iK) ? 45 * AI_bonusVal((BonusTypes)iK) : 0);
-
-					if (iBonusValue > 0)
-					{
-						for (int iL = 0; iL < NUM_YIELD_TYPES; iL++)
+						// food bonuses are more valuable
+						if (iL == YIELD_FOOD)
 						{
-							iTempValue = 0;
-
-							iTempValue += (kImprovement.getImprovementBonusYield(iK, iL) * 300);
-							iTempValue += (kImprovement.getIrrigatedYieldChange(iL) * 200);
-
-							// food bonuses are more valuable
-							if (iL == YIELD_FOOD)
-							{
-								iTempValue *= 2;
-							}
-							// otherwise, devalue the bonus slightly
-							else if (iL == YIELD_COMMERCE && bFinancialTrouble)
-							{
-								iTempValue *= 4;
-								iTempValue /= 3;
-							}
-							else
-							{
-								iTempValue *= 3;
-								iTempValue /= 4;
-							}
-
-							if (bAdvancedStart && getCurrentEra() < 2)
-							{
-								iTempValue *= (iL == YIELD_FOOD) ? 3 : 2;
-							}
-
-							iTempValue *= AI_yieldWeight((YieldTypes)iL);
-							iTempValue /= 100;
-
-							iBonusValue += iTempValue;
+							iTempValue *= 2;
+						}
+						// otherwise, devalue the bonus slightly
+						else if (iL == YIELD_COMMERCE && bFinancialTrouble)
+						{
+							iTempValue *= 4;
+							iTempValue /= 3;
+						}
+						else
+						{
+							iTempValue *= 3;
+							iTempValue /= 4;
 						}
 
-						const int iNumBonuses = countOwnedBonuses((BonusTypes)iK);
-
-						if (iNumBonuses > 0)
+						if (bAdvancedStart && getCurrentEra() < 2)
 						{
-							iBonusValue *= (iNumBonuses + 2);
-
-							//Fuyu: massive bonus for early worker logic
-							int iCityRadiusBonusCount = 0;
-							if (getNumCities() <= 3 && GC.getGame().getElapsedGameTurns() < 30 * GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getHammerCostPercent() / 100)
-							{
-								//count bonuses inside city radius or easily claimed
-								foreach_(const CvCity * pLoopCity, cities())
-								{
-									iCityRadiusBonusCount += pLoopCity->AI_countNumBonuses((BonusTypes)iK, true, pLoopCity->getCommerceRate(COMMERCE_CULTURE) > 0, -1);
-								}
-							}
-							if (iCityRadiusBonusCount > 1)
-							{
-								iTempValue *= 3 + iCityRadiusBonusCount - getNumCities();
-							}
-							iBonusValue /= kImprovement.isWaterImprovement() ? 4 : 3; // water resources are worthless
-
-							iImprovementValue += iBonusValue;
+							iTempValue *= (iL == YIELD_FOOD) ? 3 : 2;
 						}
+
+						iTempValue *= AI_yieldWeight((YieldTypes)iL);
+						iTempValue /= 100;
+
+						iBonusValue += iTempValue;
+					}
+
+					const int iNumBonuses = countOwnedBonuses((BonusTypes)iK);
+
+					if (iNumBonuses > 0)
+					{
+						iBonusValue *= (iNumBonuses + 2);
+
+						//Fuyu: massive bonus for early worker logic
+						int iCityRadiusBonusCount = 0;
+						if (getNumCities() <= 3 && GC.getGame().getElapsedGameTurns() < 30 * GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getHammerCostPercent() / 100)
+						{
+							//count bonuses inside city radius or easily claimed
+							foreach_(const CvCity * pLoopCity, cities())
+							{
+								iCityRadiusBonusCount += pLoopCity->AI_countNumBonuses((BonusTypes)iK, true, pLoopCity->getCommerceRate(COMMERCE_CULTURE) > 0, -1);
+							}
+						}
+						if (iCityRadiusBonusCount > 1)
+						{
+							iTempValue *= 3 + iCityRadiusBonusCount - getNumCities();
+						}
+						iBonusValue /= kImprovement.isWaterImprovement() ? 4 : 3; // water resources are worthless
+
+						iImprovementValue += iBonusValue;
 					}
 				}
-
-				// if water improvement, weight by coastal cities (weight the whole build)
-				if (kImprovement.isWaterImprovement())
-				{
-					iImprovementValue *= iCoastalCities;
-					iImprovementValue /= std::max(1, iCityCount / 2);
-				}
-
-				iBuildValue += iImprovementValue;
 			}
 
-			const RouteTypes eRoute = (RouteTypes)GC.getBuildInfo((BuildTypes)iJ).getRoute();
-
-			if (eRoute != NO_ROUTE)
+			// if water improvement, weight by coastal cities (weight the whole build)
+			if (kImprovement.isWaterImprovement())
 			{
-				iBuildValue += ((getBestRoute() == NO_ROUTE) ? 700 : 200) * (getNumCities() + (bAdvancedStart ? 4 : 0));
+				iImprovementValue *= iCoastalCities;
+				iImprovementValue /= std::max(1, iCityCount / 2);
+			}
 
-				for (int iK = 0; iK < NUM_YIELD_TYPES; iK++)
+			iBuildValue += iImprovementValue;
+		}
+
+		const RouteTypes eRoute = (RouteTypes)GC.getBuildInfo(eLoopBuild).getRoute();
+
+		if (eRoute != NO_ROUTE)
+		{
+			iBuildValue += ((getBestRoute() == NO_ROUTE) ? 700 : 200) * (getNumCities() + (bAdvancedStart ? 4 : 0));
+
+			for (int iK = 0; iK < NUM_YIELD_TYPES; iK++)
+			{
+				iTempValue = GC.getRouteInfo(eRoute).getYieldChange(iK) * 100;
+
+				for (int iL = 0; iL < GC.getNumImprovementInfos(); iL++)
 				{
-					iTempValue = GC.getRouteInfo(eRoute).getYieldChange(iK) * 100;
-
-					for (int iL = 0; iL < GC.getNumImprovementInfos(); iL++)
-					{
-						iTempValue += GC.getImprovementInfo((ImprovementTypes)iL).getRouteYieldChanges(eRoute, iK) * 50;
-					}
-					iTempValue *= AI_yieldWeight((YieldTypes)iK);
-					iTempValue /= 100;
-
-					iBuildValue += iTempValue;
+					iTempValue += GC.getImprovementInfo((ImprovementTypes)iL).getRouteYieldChanges(eRoute, iK) * 50;
 				}
+				iTempValue *= AI_yieldWeight((YieldTypes)iK);
+				iTempValue /= 100;
+
+				iBuildValue += iTempValue;
 			}
 		}
 	}
@@ -5066,12 +5076,19 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 	//which could be a lot since nearly every build clears jungle...
 
 	//TB Note: I'm thinking buildinfo feature tech is NOT the right call here at all?
+	// The builds that reference this tech are named by the tech's own RELATED edge -- the load pass lands a
+	// build there for each feature-clearing tech it carries. RELATED is a candidate SUPERSET, so the exact
+	// per-feature predicate stays; hoisting it out of the feature loop computes it once instead of re-sweeping
+	// every build in the database per feature.
+	std::set<int> techRelatedBuilds;
+	EnablerKernel::addEdge(EnablerKernel::infoFor(EDGEB_TECHS, (int)eTech), EDGEF_RELATED, EDGEB_BUILDS, techRelatedBuilds);
+
 	for (int iJ = 0; iJ < GC.getNumFeatureInfos(); iJ++)
 	{
 		bool bIsFeatureRemove = false;
-		for (int iK = 0; iK < GC.getNumBuildInfos(); iK++)
+		for (std::set<int>::const_iterator itRelatedBuild = techRelatedBuilds.begin(); itRelatedBuild != techRelatedBuilds.end(); ++itRelatedBuild)
 		{
-			if (GC.getBuildInfo((BuildTypes)iK).getFeatureTech((FeatureTypes)iJ) == eTech)
+			if (GC.getBuildInfo(static_cast<BuildTypes>(*itRelatedBuild)).getFeatureTech((FeatureTypes)iJ) == eTech)
 			{
 				bIsFeatureRemove = true;
 				break;
@@ -5112,14 +5129,22 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 	// does tech reveal bonus resources
 	int iBonusRevealValue = 0;
 
-	for (int iJ = 0; iJ < GC.getNumBonusInfos(); iJ++)
+	// WHICH BONUSES DOES THIS TECH REVEAL? -- the tech's `enables` edge is the same source the load pass reads
+	// to stamp each bonus's reveal tech (patterns.md § THE WHAT-IF DRIVER). That stamp is FIRST-WINS, so the
+	// edge is a SUPERSET of the bonuses whose reveal tech is actually this one -- the predicate below stays.
+	std::set<int> enabledBonuses;
+	EnablerKernel::addEdge(EnablerKernel::infoFor(EDGEB_TECHS, (int)eTech), EDGEF_ENABLES, EDGEB_BONUSES, enabledBonuses);
+
+	for (std::set<int>::const_iterator itEnabledBonus = enabledBonuses.begin(); itEnabledBonus != enabledBonuses.end(); ++itEnabledBonus)
 	{
-		if (GC.getBonusInfo((BonusTypes)iJ).getTechReveal() == eTech)
+		const BonusTypes eLoopBonus = static_cast<BonusTypes>(*itEnabledBonus);
+
+		if (GC.getBonusInfo(eLoopBonus).getTechReveal() == eTech)
 		{
 			int iRevealValue = 150;
-			iRevealValue += (AI_bonusVal((BonusTypes)iJ) * 50);
+			iRevealValue += (AI_bonusVal(eLoopBonus) * 50);
 
-			BonusClassTypes eBonusClass = (BonusClassTypes)GC.getBonusInfo((BonusTypes)iJ).getBonusClassType();
+			BonusClassTypes eBonusClass = (BonusClassTypes)GC.getBonusInfo(eLoopBonus).getBonusClassType();
 			int iBonusClassTotal = (m_bonusClassRevealed[eBonusClass] + m_bonusClassUnrevealed[eBonusClass]);
 
 			//iMultiplier is basically a desperation value
@@ -5146,20 +5171,20 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 
 			// K-Mod
 			// If we don't yet have the 'enable' tech, reduce the value of the reveal.
-			if (GC.getBonusInfo((BonusTypes)iJ).getTechCityTrade() != eTech && !kTeam.isHasTech((TechTypes)(GC.getBonusInfo((BonusTypes)iJ).getTechCityTrade())))
+			if (GC.getBonusInfo(eLoopBonus).getTechCityTrade() != eTech && !kTeam.isHasTech((TechTypes)(GC.getBonusInfo(eLoopBonus).getTechCityTrade())))
 				iRevealValue /= 3;
 			// K-Mod end
 
 			iBonusRevealValue += iRevealValue;
 		}
 		// K-Mod: Value for enabling resources that are already revealed
-		else if (GC.getBonusInfo((BonusTypes)iJ).getTechCityTrade() == eTech && kTeam.isHasTech((TechTypes)(GC.getBonusInfo((BonusTypes)iJ).getTechReveal())))
+		else if (GC.getBonusInfo(eLoopBonus).getTechCityTrade() == eTech && kTeam.isHasTech((TechTypes)(GC.getBonusInfo(eLoopBonus).getTechReveal())))
 		{
-			int iOwned = countOwnedBonuses((BonusTypes)iJ);
+			int iOwned = countOwnedBonuses(eLoopBonus);
 			if (iOwned > 0)
 			{
 				int iEnableValue = 150;
-				iEnableValue += (AI_bonusVal((BonusTypes)iJ) * 50);
+				iEnableValue += (AI_bonusVal(eLoopBonus) * 50);
 				iEnableValue *= (iOwned > 1) ? 150 : 100;
 				iEnableValue /= 100;
 
@@ -5952,11 +5977,18 @@ int CvPlayerAI::AI_techUnitValue(TechTypes eTech, int iPathLength, bool& bEnable
 
 	bEnablesUnitWonder = false;
 	int iValue = 0;
-	for (int i = GC.getNumUnitInfos() - 1; i > -1; i--)
-	{
-		const UnitTypes eUnitX = static_cast<UnitTypes>(i);
+	// WHAT DOES THIS TECH ENABLE? -- the tech's own load-compiled `enables` edge IS the answer (patterns.md
+	// § THE WHAT-IF DRIVER: a pure list fetch), in place of a sweep of every unit in the database per tech
+	// valued. The accumulation is a commutative sum with no cross-iteration best-tracking, so the set's
+	// ascending order is equivalent to the old descending walk.
+	std::set<int> unlockedUnits;
+	EnablerKernel::addEdge(EnablerKernel::infoFor(EDGEB_TECHS, (int)eTech), EDGEF_ENABLES, EDGEB_UNITS, unlockedUnits);
 
-		if (GC.getGame().canEverTrain(eUnitX) && isTechRequiredForUnit(eTech, eUnitX))
+	for (std::set<int>::const_iterator itUnlocked = unlockedUnits.begin(); itUnlocked != unlockedUnits.end(); ++itUnlocked)
+	{
+		const UnitTypes eUnitX = static_cast<UnitTypes>(*itUnlocked);
+
+		if (GC.getGame().canEverTrain(eUnitX))
 		{
 			const CvUnitInfo& unitX = GC.getUnitInfo(eUnitX);
 			iValue += 200;
@@ -21397,16 +21429,18 @@ int CvPlayerAI::AI_cultureVictoryTechValue(TechTypes eTech) const
 	//units
 	const bool bAnyWarplan = GET_TEAM(getTeam()).hasWarPlan(true);
 	int iBestUnitValue = 0;
-	for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
-	{
-		if (isTechRequiredForUnit((eTech), (UnitTypes)iI))
-		{
-			int iTempValue = (GC.getUnitInfo((UnitTypes)iI).getCombat() * 100) / std::max(1, (GC.getGame().getBestLandUnitCombat()));
-			iTempValue *= bAnyWarplan ? 2 : 1;
+	// The tech's own `enables` edge names the units it unlocks -- a list fetch, not a database sweep
+	// (patterns.md § THE WHAT-IF DRIVER). iBestUnitValue is a max, so visit order does not affect it.
+	std::set<int> unlockedUnits;
+	EnablerKernel::addEdge(EnablerKernel::infoFor(EDGEB_TECHS, (int)eTech), EDGEF_ENABLES, EDGEB_UNITS, unlockedUnits);
 
-			iValue += iTempValue / 3;
-			iBestUnitValue = std::max(iBestUnitValue, iTempValue);
-		}
+	for (std::set<int>::const_iterator itUnlockedUnit = unlockedUnits.begin(); itUnlockedUnit != unlockedUnits.end(); ++itUnlockedUnit)
+	{
+		int iTempValue = (GC.getUnitInfo(static_cast<UnitTypes>(*itUnlockedUnit)).getCombat() * 100) / std::max(1, (GC.getGame().getBestLandUnitCombat()));
+		iTempValue *= bAnyWarplan ? 2 : 1;
+
+		iValue += iTempValue / 3;
+		iBestUnitValue = std::max(iBestUnitValue, iTempValue);
 	}
 	iValue += std::max(0, iBestUnitValue - 15);
 

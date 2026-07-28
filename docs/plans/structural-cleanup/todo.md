@@ -421,6 +421,14 @@ measure what survives, then cut the genuine residue. The classes below are the u
     `getBuildingCount(x) > 0`. That is a HAVE read, not a frontier one, and the aggregate it wants — a
     PLAYER-level held-building list — does not exist (`CvCity::getHasBuildings` is the city-scope one). Give the
     OBJECT the aggregate ([tally.md](../../specs/tally.md): "let an object care about itself"), never a side-store.
+  - **`CvPlayerAI::AI_techValue`'s four REMAINING sweeps are all dangling**, and each is a different shape:
+    the tech's own keyed containers read by enumerating every id (`kTech.getFreeSpecialistCount` over every
+    specialist; `kTech.isTerrainTrade` over every terrain — the latter is the
+    [`canTradeOn` block](../../specs/capabilities.md), which carries real `TERRAIN_` refs to read directly), and
+    cross-entity tech-keyed value tables (`CvRouteInfo::getTechMovementChange`,
+    `CvImprovementInfo::getTechYieldChanges`). **None of those four getters is declared on any info**, so all
+    four are stage-4 consumer debt, not loop-shape defects. The tech-keyed pair's eventual driver is the tech's
+    `EDGEF_RELATED` bucket for that kind.
   - **The OWN-DATA inversions** — `kCivic.getBuildingCommerceModifier` / `getBuildingHappinessChanges` /
     `getBuildingHealthChanges` are read by enumerating every building id to find the CIVIC's own authored keys.
     That is the keyed-container inversion [pedia-read-map finding 2](../../reference/pedia-read-map.md) names; it

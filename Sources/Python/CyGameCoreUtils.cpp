@@ -158,11 +158,6 @@ bool cyIsReligionTech(int /*TechTypes*/ eTech)
 	return isReligionTech((TechTypes) eTech);
 }
 
-bool cyIsTechRequiredForUnit(int /*TechTypes*/ eTech, int /*UnitTypes*/ eUnit)
-{
-	return isTechRequiredForUnit((TechTypes)eTech, (UnitTypes)eUnit);
-}
-
 bool cyIsTechRequiredForProject(int /*TechTypes*/ eTech, int /*ProjectTypes*/ eProject)
 {
 	return isTechRequiredForProject((TechTypes)eTech, (ProjectTypes)eProject);

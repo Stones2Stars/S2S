@@ -1524,10 +1524,16 @@ DenialTypes CvTeamAI::AI_techTrade(const TechTypes eTech, const TeamTypes eTeam)
 		}
 	}
 
-	for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
+	// The tech's own `enables` edge names what it unlocks -- a list fetch, never a sweep asking each unit the
+	// reverse question (patterns.md § THE WHAT-IF DRIVER).
+	std::set<int> unlockedUnits;
+	EnablerKernel::addEdge(EnablerKernel::infoFor(EDGEB_TECHS, (int)eTech), EDGEF_ENABLES, EDGEB_UNITS, unlockedUnits);
+
+	for (std::set<int>::const_iterator itUnlockedUnit = unlockedUnits.begin(); itUnlockedUnit != unlockedUnits.end(); ++itUnlockedUnit)
 	{
-		if (isWorldUnit((UnitTypes)iI) && getUnitMaking((UnitTypes)iI) > 0
-		&& isTechRequiredForUnit(eTech, (UnitTypes)iI))
+		const UnitTypes eLoopUnit = static_cast<UnitTypes>(*itUnlockedUnit);
+
+		if (isWorldUnit(eLoopUnit) && getUnitMaking(eLoopUnit) > 0)
 		{
 			return DENIAL_MYSTERY;
 		}
@@ -4497,149 +4503,151 @@ int CvTeamAI::AI_getTechMonopolyValue(TechTypes eTech, TeamTypes eTeam) const
 
 	const bool bWarPlan = getAnyWarPlanCount(eTeam) > 0;
 
-	for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
+	// The tech's own `enables` edge names the units it unlocks (patterns.md § THE WHAT-IF DRIVER); the value
+	// accumulates commutatively, so the set's ascending order is equivalent to the old id walk.
+	std::set<int> unlockedUnits;
+	EnablerKernel::addEdge(EnablerKernel::infoFor(EDGEB_TECHS, (int)eTech), EDGEF_ENABLES, EDGEB_UNITS, unlockedUnits);
+
+	for (std::set<int>::const_iterator itUnlockedUnit = unlockedUnits.begin(); itUnlockedUnit != unlockedUnits.end(); ++itUnlockedUnit)
 	{
-		const UnitTypes eLoopUnit = (UnitTypes)iI;
+		const UnitTypes eLoopUnit = static_cast<UnitTypes>(*itUnlockedUnit);
 
-		if (isTechRequiredForUnit((eTech), eLoopUnit))
+		if (isWorldUnit(eLoopUnit))
 		{
-			if (isWorldUnit(eLoopUnit))
+			iValue += 50;
+		}
+		if (GC.getUnitInfo(eLoopUnit).getPrereqAndTech() == eTech)
+		{
+			int iNavalValue = 0;
+
+			int iCombatRatio = (GC.getUnitInfo(eLoopUnit).getCombat() * 100) / std::max(1, GC.getGame().getBestLandUnitCombat());
+			if (iCombatRatio > 50)
 			{
-				iValue += 50;
+				iValue += ((bWarPlan ? 100 : 50) * (iCombatRatio - 40)) / 50;
 			}
-			if (GC.getUnitInfo(eLoopUnit).getPrereqAndTech() == eTech)
+
+			switch (GC.getUnitInfo(eLoopUnit).getDefaultUnitAIType())
 			{
-				int iNavalValue = 0;
+			case UNITAI_UNKNOWN:
+			case UNITAI_ANIMAL:
+			case UNITAI_SETTLE:
+			case UNITAI_WORKER:
+			case UNITAI_SUBDUED_ANIMAL:
+			case UNITAI_HUNTER:
+			case UNITAI_HUNTER_ESCORT:
+			case UNITAI_HEALER:
+			case UNITAI_PROPERTY_CONTROL:
+			case UNITAI_HEALER_SEA:
+			case UNITAI_PROPERTY_CONTROL_SEA:
+			case UNITAI_BARB_CRIMINAL:
+			case UNITAI_INVESTIGATOR:
+			case UNITAI_SEE_INVISIBLE:
+			case UNITAI_SEE_INVISIBLE_SEA:
+			case UNITAI_ESCORT:
+				break;
 
-				int iCombatRatio = (GC.getUnitInfo(eLoopUnit).getCombat() * 100) / std::max(1, GC.getGame().getBestLandUnitCombat());
-				if (iCombatRatio > 50)
+			case UNITAI_ATTACK:
+			case UNITAI_ATTACK_CITY:
+			case UNITAI_ATTACK_CITY_LEMMING:
+			case UNITAI_COLLATERAL:
+				iValue += bWarPlan ? 50 : 20;
+				break;
+
+			case UNITAI_PILLAGE:
+			case UNITAI_RESERVE:
+			case UNITAI_COUNTER:
+			case UNITAI_PARADROP:
+			case UNITAI_CITY_DEFENSE:
+			case UNITAI_CITY_COUNTER:
+			case UNITAI_CITY_SPECIAL:
+			case UNITAI_PILLAGE_COUNTER:
+			case UNITAI_INFILTRATOR:
+				iValue += bWarPlan ? 40 : 15;
+				break;
+
+
+			case UNITAI_EXPLORE:
+			case UNITAI_MISSIONARY:
+				break;
+
+			case UNITAI_PROPHET:
+			case UNITAI_ARTIST:
+			case UNITAI_SCIENTIST:
+			case UNITAI_GENERAL:
+			case UNITAI_GREAT_HUNTER:
+			case UNITAI_GREAT_ADMIRAL:
+			case UNITAI_MERCHANT:
+			case UNITAI_ENGINEER:
+				break;
+
+			case UNITAI_SPY:
+				break;
+
+			case UNITAI_ICBM:
+				iValue += bWarPlan ? 80 : 40;
+				break;
+
+			case UNITAI_WORKER_SEA:
+				break;
+
+			case UNITAI_ATTACK_SEA:
+				iNavalValue += 50;
+				break;
+
+			case UNITAI_RESERVE_SEA:
+			case UNITAI_ESCORT_SEA:
+				iNavalValue += 30;
+				break;
+
+			case UNITAI_EXPLORE_SEA:
+				iValue += GC.getGame().circumnavigationAvailable() ? 100 : 0;
+				break;
+
+			case UNITAI_ASSAULT_SEA:
+				iNavalValue += 60;
+				break;
+
+			case UNITAI_SETTLER_SEA:
+			case UNITAI_MISSIONARY_SEA:
+			case UNITAI_SPY_SEA:
+				break;
+
+			case UNITAI_CARRIER_SEA:
+			case UNITAI_MISSILE_CARRIER_SEA:
+				iNavalValue += 40;
+				break;
+
+			case UNITAI_PIRATE_SEA:
+				iNavalValue += 20;
+				break;
+
+			case UNITAI_ATTACK_AIR:
+			case UNITAI_DEFENSE_AIR:
+				iValue += bWarPlan ? 60 : 30;
+				break;
+
+			case UNITAI_CARRIER_AIR:
+				iNavalValue += 40;
+				break;
+
+			case UNITAI_MISSILE_AIR:
+				iValue += bWarPlan ? 40 : 20;
+				break;
+
+			default:
+				FErrorMsg("error"); // This assert was thrown - audit to see what AI may be missing from the above.
+				break;
+			}
+
+			if (iNavalValue > 0)
+			{
+				if (AI_isAnyCapitalAreaAlone())
 				{
-					iValue += ((bWarPlan ? 100 : 50) * (iCombatRatio - 40)) / 50;
+					iValue += iNavalValue / 2;
 				}
-
-				switch (GC.getUnitInfo(eLoopUnit).getDefaultUnitAIType())
+				if (bWarPlan && !AI_isLandTarget(eTeam))
 				{
-				case UNITAI_UNKNOWN:
-				case UNITAI_ANIMAL:
-				case UNITAI_SETTLE:
-				case UNITAI_WORKER:
-				case UNITAI_SUBDUED_ANIMAL:
-				case UNITAI_HUNTER:
-				case UNITAI_HUNTER_ESCORT:
-				case UNITAI_HEALER:
-				case UNITAI_PROPERTY_CONTROL:
-				case UNITAI_HEALER_SEA:
-				case UNITAI_PROPERTY_CONTROL_SEA:
-				case UNITAI_BARB_CRIMINAL:
-				case UNITAI_INVESTIGATOR:
-				case UNITAI_SEE_INVISIBLE:
-				case UNITAI_SEE_INVISIBLE_SEA:
-				case UNITAI_ESCORT:
-					break;
-
-				case UNITAI_ATTACK:
-				case UNITAI_ATTACK_CITY:
-				case UNITAI_ATTACK_CITY_LEMMING:
-				case UNITAI_COLLATERAL:
-					iValue += bWarPlan ? 50 : 20;
-					break;
-
-				case UNITAI_PILLAGE:
-				case UNITAI_RESERVE:
-				case UNITAI_COUNTER:
-				case UNITAI_PARADROP:
-				case UNITAI_CITY_DEFENSE:
-				case UNITAI_CITY_COUNTER:
-				case UNITAI_CITY_SPECIAL:
-				case UNITAI_PILLAGE_COUNTER:
-				case UNITAI_INFILTRATOR:
-					iValue += bWarPlan ? 40 : 15;
-					break;
-
-
-				case UNITAI_EXPLORE:
-				case UNITAI_MISSIONARY:
-					break;
-
-				case UNITAI_PROPHET:
-				case UNITAI_ARTIST:
-				case UNITAI_SCIENTIST:
-				case UNITAI_GENERAL:
-				case UNITAI_GREAT_HUNTER:
-				case UNITAI_GREAT_ADMIRAL:
-				case UNITAI_MERCHANT:
-				case UNITAI_ENGINEER:
-					break;
-
-				case UNITAI_SPY:
-					break;
-
-				case UNITAI_ICBM:
-					iValue += bWarPlan ? 80 : 40;
-					break;
-
-				case UNITAI_WORKER_SEA:
-					break;
-
-				case UNITAI_ATTACK_SEA:
-					iNavalValue += 50;
-					break;
-
-				case UNITAI_RESERVE_SEA:
-				case UNITAI_ESCORT_SEA:
-					iNavalValue += 30;
-					break;
-
-				case UNITAI_EXPLORE_SEA:
-					iValue += GC.getGame().circumnavigationAvailable() ? 100 : 0;
-					break;
-
-				case UNITAI_ASSAULT_SEA:
-					iNavalValue += 60;
-					break;
-
-				case UNITAI_SETTLER_SEA:
-				case UNITAI_MISSIONARY_SEA:
-				case UNITAI_SPY_SEA:
-					break;
-
-				case UNITAI_CARRIER_SEA:
-				case UNITAI_MISSILE_CARRIER_SEA:
-					iNavalValue += 40;
-					break;
-
-				case UNITAI_PIRATE_SEA:
-					iNavalValue += 20;
-					break;
-
-				case UNITAI_ATTACK_AIR:
-				case UNITAI_DEFENSE_AIR:
-					iValue += bWarPlan ? 60 : 30;
-					break;
-
-				case UNITAI_CARRIER_AIR:
-					iNavalValue += 40;
-					break;
-
-				case UNITAI_MISSILE_AIR:
-					iValue += bWarPlan ? 40 : 20;
-					break;
-
-				default:
-					FErrorMsg("error"); // This assert was thrown - audit to see what AI may be missing from the above.
-					break;
-				}
-
-				if (iNavalValue > 0)
-				{
-					if (AI_isAnyCapitalAreaAlone())
-					{
-						iValue += iNavalValue / 2;
-					}
-					if (bWarPlan && !AI_isLandTarget(eTeam))
-					{
-						iValue += iNavalValue / 2;
-					}
+					iValue += iNavalValue / 2;
 				}
 			}
 		}
