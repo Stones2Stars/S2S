@@ -311,6 +311,27 @@ city; live at the swap cut, when an obsolete building STAYS present.
 I need." A build is permitted while **`count(me, scope) < allowed`**; the count comes from the [tally](tally.md).
 The engine owns ignoring caps under game options / era-scaling — the machine just compares.
 
+**The two cap shapes gate in DIFFERENT places, because they have different scopes.** A **self-cap**
+(`world`/`team`/`empire`) is player-scoped and gates in `allowedOk`. A **category count-cap** — how many
+world/team/national wonders one CITY may hold, set by its `CultureLevel` — is per-CITY, which `allowedOk` cannot
+see, so it gates in the building domain's own gate beside the SpecialBuilding group cap. A building's CATEGORY is
+derived from **WHICH self-cap it authors** ([json.md §4.4](json.md): the cap's scope is what makes it a world /
+team / national wonder), never from an `isWorldWonder` mirror, and the comparison uses the city's RAW category
+counts — never the engine's `isWorldWondersMaxed()` verdict, which is a computed output a gate must not ride in on
+([DEC-calc-zero-ride-in](../architecture/decisions.md#dec-calc-zero-ride-in)).
+
+⚠ **Its two gate INPUTS name the candidate NOWHERE, so neither is reachable through the candidate's own
+`EDGEF_REQUIRED_BY` set** — the city's CULTURE LEVEL (which sets the max) and another wonder of the same category
+ARRIVING here (which moves the count). Both therefore re-gate the whole capped set: on the culture-level fact, and
+in this city on the building-changed fact beside the existing cap-scope fan. An unrouted gate input is a
+permanently stale verdict ([DEC-no-self-heal](../architecture/decisions.md#dec-no-self-heal)).
+
+⚖ **ONE CITY CHALLENGE = NO wonder limits (owner).** OCC remains an UNSUPPORTED mode, but it is an ordinary game
+option like any other and needs no special machinery: while it is on, the category cap simply does not apply.
+⛔ There is deliberately **no curated OCC cap variant** — the option does not RESCALE the limit, it REMOVES it, so
+the legacy per-culture-level OCC cap field is not migrated. The gate reads the option at the CONSUMING system
+(here, the enabler) while the info keeps serving ungated data ([json.md §9](json.md)).
+
 ---
 
 ## 5. The load-bearing asymmetry — bidirectional, not down-only
@@ -642,7 +663,7 @@ enable-side over-offer, which is a VISIBLE defect to fix, never a reason to fall
 | domain | membership | `requires` gate | `allowed` cap |
 |---|---|---|---|
 | techs | ✅ | ✅ | ✅ (world-unique founder techs) |
-| buildings | ✅ | ✅ | ✅ (world/team/empire self-caps; per-city wonder-CATEGORY caps open) |
+| buildings | ✅ | ✅ | ✅ (world/team/empire self-caps + the per-city wonder-CATEGORY cap, §4) |
 | units | ✅ | ✅ | ✅ (world lifetime-created; empire era-scaled national cap) |
 | projects | ✅ | ✅ | ✅ |
 | civics · processes · builds | ✅ | ✅ | ✅ |
@@ -680,33 +701,7 @@ promotion offer is not over-inclusive.
    band index are NOT convergence targets — the reverse pass deliberately excludes engine tokens, the plot
    substrate and `PROPERTY_` bands, and a coarse list matches a coarse event. Detail + the perf caveat:
    [todo.md](../plans/structural-cleanup/todo.md).
-2. ~~**The gate stage for civics, processes, and builds**~~ **LANDED** — the three domains now set the gate flag
-   through the same trio the projects domain uses (`*_gate` / `*_touched` / `*_gateSet`): the entity-level
-   `enabled`/`disabled` pair, `requiresMet`, and `allowedOk`, re-gated over the tech source's touched set
-   (its enables/removal targets + its `EDGEF_REQUIRED_BY` dependents) on every membership change. Until now
-   they set NO flag, so every tree member stayed LISTED — the enable-side OVER-OFFER. ⚠ BUILDS gate the
-   UNLOCKED half only: a build's plot-validity half stays a live per-plot check (§7.1's carve-out), so a
-   consumer treating the domain verdict as the whole answer still over-offers by design.
-3. ~~**Per-city wonder-CATEGORY caps**~~ **LANDED** — but NOT in `allowedOk`, which is player-scoped and cannot
-   see the city. The cap is per-CITY (a `CultureLevel` caps how many of a category one city may hold), so it
-   gates in `bd_gate` beside the SpecialBuilding group cap, as `bd_categoryCapOk`. The building's CATEGORY is
-   derived from WHICH self-cap it authors ([json.md §4.4](json.md): the cap's scope is what makes it a world /
-   team / national wonder) rather than any `isWorldWonder` mirror, and the counts are the city's raw category
-   counts — never the engine's `isWorldWondersMaxed()` verdict, which is a computed output a gate must not ride
-   in on ([DEC-calc-zero-ride-in](../architecture/decisions.md#dec-calc-zero-ride-in)).
-   ⚠ **Its two gate INPUTS are routed, which is half the work:** a category verdict moves on facts that name the
-   candidate NOWHERE — the city's CULTURE LEVEL (its max), and another wonder of the same category ARRIVING here
-   (its count). Neither is reachable through the candidate's own `EDGEF_REQUIRED_BY` set, so both re-gate the
-   whole capped set (`bd_cappedBuildings`): on `onCityCultureLevelChanged`, and in this city on
-   `onCityBuildingChanged` beside the existing cap-scope fan. An unrouted gate input is a permanently stale
-   verdict ([DEC-no-self-heal](../architecture/decisions.md#dec-no-self-heal)).
-   ⚖ **ONE CITY CHALLENGE = NO wonder limits (owner).** OCC remains an UNSUPPORTED mode, but it is an ordinary
-   game option like any other, so it needs no special machinery: when it is on the category cap simply does not
-   apply. ⛔ There is deliberately **no curated OCC cap variant** — the option does not RESCALE the limit, it
-   REMOVES it, so the legacy `getMaxNationalWondersOCC` field is not migrated and its dangling `CvCity` read dies
-   with that surface. The gate reads the option at the CONSUMING system (here, the enabler) while the info keeps
-   serving ungated data ([json.md §9](json.md)).
-4. **RESIDENCY + COUNTING.** The `CvPlotGroup` holds the network's bonus content and **is the ONLY authoritative
+2. **RESIDENCY + COUNTING.** The `CvPlotGroup` holds the network's bonus content and **is the ONLY authoritative
    list for trade resources** — the city holds no authoritative mirror. But the CITY read must be a **maintained
    number, added and subtracted on spine events, never calculated per read** (the state-repositories capstone):
    `CvCity::getNumBonuses` is a bare fetch of a derived, never-serialized per-city count kept current by the
@@ -715,11 +710,11 @@ promotion offer is not over-inclusive.
    EVERY call) was the turn wall's hottest cluster under the governor's read volume. VICINITY belongs to the CITY
    and is a plain local-presence fact: it satisfies `connection:"vicinity"` atoms and NOTHING else — it never adds
    a second owned count (one pasture is ONE horse, not vicinity+network=2).
-5. **Neither the counts NOR plot-group MEMBERSHIP are trusted from a save** (membership is derived state: routes +
+3. **Neither the counts NOR plot-group MEMBERSHIP are trusted from a save** (membership is derived state: routes +
    terrain-trade capabilities + ownership). The deserialized groups are drained and discarded; a load-end rebuild
    re-colors membership from current state and folds the counts through the live entry points as each plot joins,
    announcing every bonus fact as a genuine crossing emit before the `GAME_LOAD_FINISHED` gate pass.
-6. **The DORMANCY VERDICT is the operating-building fixpoint** (§3.2,
+4. **The DORMANCY VERDICT is the operating-building fixpoint** (§3.2,
    [DEC-calc-zero-ride-in](../architecture/decisions.md#dec-calc-zero-ride-in)) — applied through the engine's
    disabled-building flag, never a hand re-derivation from legacy prereq getters, plus the two runtime-state legs
    the authored data does not carry (employed-population composition; the banned-non-state-religion policy). The
@@ -731,7 +726,7 @@ promotion offer is not over-inclusive.
    ⛔ **BAKED-CONSUMER RE-RUNS:** an engine consumer that BAKES state on modifier changes (the trade-route
    ASSIGNMENT) runs during this fixpoint against not-yet-warmed packages and its baked result self-heals never;
    every such consumer is re-run ONCE after the load-end package warm.
-7. **The dynamic operate axes ride their events** — connectivity via the plot-group/network bonus events,
+5. **The dynamic operate axes ride their events** — connectivity via the plot-group/network bonus events,
    vicinity (radius growth) via the culture-level event — routed into the operate re-check of dependents.
 
 ### The consumer ITERATION sweep (F2b)
