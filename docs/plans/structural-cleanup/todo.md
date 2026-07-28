@@ -283,18 +283,33 @@ measure what survives, then cut the genuine residue. The classes below are the u
   ⚠ Still on it, as ordinary consumer debt: **`CvGameTextMgr`** (3 sites — the pedia's prereq lines, which belong
   with the composer move onto rendered entry lines) and `CyPlayer` (inside the orphaned loader above). Delete the
   `CvPlayer` function with the last of them; do NOT revive the table to keep a text line rendering.
-- **⛔ THE TRADED-BONUS READ COMES DIRECTLY FROM THE PLOT GROUP (owner) — and today NOTHING does.** The chain in
-  tree is three deep and every link is a mirror of the one above it:
-  **`CvPlotGroup`** (authoritative network content) → **`CvCity::m_paiNumBonuses`** (an incrementally-maintained
-  city array, `changeNumBonuses` += delta — the STORED-ACCUMULATOR DRIFT class, and the mirror
-  [enabler.md §8](../../specs/enabler.md) says must not exist: *"the city holds no authoritative mirror"*) →
-  **`CityContext::tradedBonusCount`** (a COPY of `getNumBonuses`, whose `refreshTradedBonuses` re-derives EVERY
-  bonus on each refresh — a full recalc, the thing being deleted everywhere else).
+- **⛔ THE TRADED-BONUS READ COMES DIRECTLY FROM THE PLOT GROUP (owner).**
+  ⚑ **The mechanic, so the shape is not misread as a mirror chain (owner): a bonus is added to the CITY by the
+  VICINITY events, and the plot group "gets a trade copy" IN THE SAME CALL.** So `CvCity::m_paiNumBonuses` and the
+  plot group's content are not one authoritative store and one copy of it — they are the two halves of
+  `connection` ([json.md §3.4](../../specs/json.md) `"trade"` vs `"vicinity"`), written together at one site.
+  ⇒ **A TRADE read therefore goes to the PLOT GROUP, directly** — never to a city-side number and never to a
+  context copy of one. The city/context side answers VICINITY, which is its own half and legitimately city-owned.
+  ⛔ What IS a third copy is **`CityContext::tradedBonusCount`**: it stores `getNumBonuses` per bonus, and its
+  `refreshTradedBonuses` re-derives EVERY bonus on each refresh — a full recalc of the kind being deleted
+  everywhere else, standing between a reader and a source it should read directly.
   ⚠ **So "route it through the context" is the WRONG fix here** and was tried: it moves a read from the
-  second-order mirror to the third-order copy. The gates (`TechCityTrade`, minted, corp production) are real and
-  must survive, so this is not a call-site swap — it is
+  second-order mirror to the third-order copy. The real shape is
   [enabler.md §8](../../specs/enabler.md) open item 2 (RESIDENCY + COUNTING): the city read becomes a maintained
   number fed by the crossing fan-out off the plot group, and the two mirrors collapse into it.
+  ⛔ **And the three "gates" inside `getNumBonuses` do NOT all have to survive — that assumption is wrong and was
+  the reason the swap looked harder than it is (owner).** Checked one at a time:
+  - **corp production** — `BonusProduced` is already curated to **`provides.bonuses`** (§5a continuous supply;
+    3 corporations author it), which the enabler resolves into `OperatingBuildings::provided`. So the term inside
+    the count getter is a DUPLICATE of the provides plane, not a gate to preserve.
+  - **`TechCityTrade`** — specced to invert into the TECH's **`enables.bonuses`** (`curate_bonus.py`: *"tech edges
+    are the tech's, dropped here"*; `store.py` registers the inversion), i.e. an enabler GENERATE edge, never a
+    hardcoded test inside a count read.
+    ⛔ **DATA GAP — the inversion is specced and NOT LANDED: zero techs author `enables.bonuses`.** That is a
+    [DEC-data-first](../../architecture/decisions.md#dec-data-first) item and it blocks the residency work, since
+    removing the engine gate before the edge exists would make every bonus available from turn one.
+  - **minted** (`getBonusMintedPercent`) — the one genuinely unmapped term; find its home before assuming either
+    way.
   ⛔ **`contexts.md` CONTRADICTS ITSELF on this** and must be fixed with the work: it states traded state is
   "NEVER mirrored into `CityContext`" and then, in the next sentence, sends a `connection:"trade"` atom to
   `CityContext::tradedBonusCount`. A doc that describes a half-state reads like a design.
