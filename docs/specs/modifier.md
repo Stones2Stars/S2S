@@ -525,6 +525,15 @@ self-accumulator, set on the unit or a promotion), with two complementary member
 - **`cargo.space`** — how much the unit **carries** *and what*: `cargo.space.{unit: IS_<domain>, flat: N}` — a
   carrier is `cargo.space.{unit: IS_AIR, flat: N}` (*you can't transport a plane on a landing craft*); an
   unrestricted hold is just `cargo.space.flat`. (From legacy `iCargo` + `DomainCargo`.)
+  ⚖ **The "what" is ALWAYS a TAG predicate — that is what tags are for (owner).** The legacy restriction by
+  `SPECIALUNIT_*` group (`SpecialCargo` / `SMNotSpecialCargo`) brings no new qualifier form with it: it authors as
+  the same `{unit: IS_<TAG>}` shape as the domain case. ⚠ It does require the tag to exist AND to be
+  DISCRIMINATING — several legacy groups are indistinguishable on the current tag set (people and troops are both
+  merely `landUnit`; fighters and seaplanes both merely air/military), so converting one before its tag is minted
+  silently WIDENS what the carrier accepts. Mint the tag first; that is ordinary open-registry authoring
+  ([tags.md](tags.md)).
+  ⚖ **Capacity has ONE home, and Size Matters DERIVES from it (owner):** `smSpace` follows from how many units
+  the carrier can hold, so it is never a second authored number ([json.md §9](json.md)).
 - **`cargo.size`** — the unit's cargo **footprint** (room it occupies when loaded), **defaulting to 1** if unset.
   (SizeMatters extends cargo via `smSpace`/`volume`/`volumeModifier` — a separate rework.)
 
