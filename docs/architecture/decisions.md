@@ -292,8 +292,11 @@ legacy-shaped getters — the half-migration reflex". **Home:** [roadmap.md](../
 Self-heal is NOT a backstop the cascade keeps. No blanket per-turn/per-slice rebuild (`playerSliceRebuild`, the epoch
 bump, the turn-roll self-heal) papers over a missed invalidation — those blankets are REMOVED, not graded as
 "acceptable interims." Correctness comes ONLY from complete, targeted, spine-routed per-source-mask invalidation; a
-missed invalidation must surface as a live divergence, never be silently rebuilt away. Sharpens the CAPSTONE RULE
-(LOAD is the only full pass). **Home:** [state-repositories.md](state-repositories.md).
+missed invalidation must surface as a live divergence, never be silently rebuilt away. ⚑ **A self-heal is the
+FOSSIL of a missing emit** — it appears because a fact was not announced and recomputing was the cheapest way to
+stop the symptom — so finding one is a SEARCH: wire the un-announced fact, and the recalc falls out as a
+consequence rather than being deleted as the fix. Sharpens the CAPSTONE RULE (LOAD is the only full pass).
+**Home:** [state-repositories.md](state-repositories.md).
 
 ### DEC-uniform-cache-shape
 

@@ -78,6 +78,26 @@ governor's valuation, the cost class this whole doc exists to prevent. The engin
 stale-cache divergences resolved **at the source**, behaviour-preserving
 ([DEC-parity](decisions.md#dec-parity)).
 
+### ⛔ A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT — so it is a SEARCH, not just a ban
+
+**Where self-heal came from (owner):** the old branch was full of blanket recalculations *because agents did not
+properly wire the events and shortcut by adding a self-heal calc instead*. That is the causal direction, and it is
+what makes [DEC-no-self-heal](decisions.md#dec-no-self-heal) findable rather than merely prohibitive:
+
+> **A recalc does not appear because someone wanted a recalc. It appears because a fact was not announced, the
+> value went wrong, and recomputing was the cheapest way to make the symptom stop.**
+
+⇒ **Every self-heal marks the spot where an emit is missing.** So when you find one — a periodic rebuild, a
+"refresh if stale", a runaway cap that "recovers next slice", a wipe-and-reapply — do NOT simply delete it and
+declare the rule enforced. **Find the fact it was compensating for and wire THAT**; the recalc then has nothing
+left to do and is removed as a consequence, not as the fix.
+
+⚠ And a self-heal is worse than the bug it hides, which is why it is banned rather than tolerated: the missed emit
+would have surfaced as a visibly wrong value that someone could chase, whereas the recalc converts it into
+permanent invisible drift **and** reinstates exactly the per-read/per-turn work the caches exist to delete.
+⛔ A comment claiming a recalc "heals" something is itself suspect twice over — the healer may not even exist any
+more (a slice rebuild that was since removed), leaving a truncation that repairs nothing and announces nothing.
+
 ### ⛔ THE LEGACY-ACCUMULATOR CUT — every accumulator, ONE uniform mechanism
 
 > Binding: [DEC-accumulator-cut-uniform](decisions.md#dec-accumulator-cut-uniform). **NOT wellbeing-specific — it is
