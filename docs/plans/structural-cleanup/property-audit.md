@@ -31,19 +31,19 @@
 >
 > **⚖ THE ONE-SHOT RULING (owner 2026-07-16 — ruled earlier but never written down, twice, so it was "re-found"
 > a third time): the legacy one-shot `<Properties>`/`<PropertiesAllCities>` semantic is DEAD — EVERY such value
-> RE-CLASSIFIES as a PER-TURN source. No exceptions: flammability converts too and gets REBALANCED later
-> (accepted — its values will climb until the rebalance; the mechanic is dormant today). The rebalance's known
-> shape (owner): flammability's problem is NO early-game counters — every reducer is late (fire code / smoke
-> detector / fire service) — so counter-values get added to a few early entities (a data/balance pass).**
+> RE-CLASSIFIES as a PER-TURN source. No exceptions: flammability converts too.**
 >
-> ⚠ **The rebalance SHAPE is UNRECONCILED and needs an owner call — two are on record and they are not the same:**
-> (a) **add counter-values to a few early entities** (the line above), or (b) **scale the positive adders `/5`,
-> leaving negative reducers unchanged** — measured over `Assets/Data/buildings/` as **313 positive**
-> `PROPERTY_FLAMMABILITY.city.flat` adders vs **64 negative** reducers. Whichever wins, it lands as a **curator
-> scaling rule**: there is no separate `PROPERTY_FIRE` — all fire data is `PROPERTY_FLAMMABILITY` flowing through
-> the generic `PROPERTY_*` fold, so `curate_building.py` (which has no flammability rule today) gains one → recurate
-> + regen ([DEC-recurate-on-decision](../../architecture/decisions.md#dec-recurate-on-decision)). ⛔ Hand-editing the
-> derived JSONs is banned.
+> **The flammability rebalance is LANDED, in both of its halves** — they are complements, not alternatives.
+> Flammability's problem was that every reducer arrived late (fire code / smoke detector / fire service), so the
+> fix is a curator SCALING rule plus early-game COUNTERS:
+> - **positive adders `/5` (rounded), negative reducers unchanged** — a rule in `curate_building.py`, since there
+>   is no separate `PROPERTY_FIRE`: all fire data is `PROPERTY_FLAMMABILITY` flowing through the generic
+>   `PROPERTY_*` fold;
+> - **early-game reducers** authored through the post-curation additions layer (`Assets/Data/_additions/`).
+>
+> ⛔ Both live in the CURATOR/additions pipeline, never in the derived JSON — hand-editing `Assets/Data/**` is
+> banned, and any further balance move is a curator change → recurate + regen
+> ([DEC-recurate-on-decision](../../architecture/decisions.md#dec-recurate-on-decision)).
 > Why: the ORIGINAL property design made all pollution-class `<Properties>` one-shots, but building designers
 > after the original design authored against the same block ASSUMING per-turn — the shipped XML is mixed-intent
 > data sharing one shape, and the one-shot semantic "makes no sense whatsoever". A sanctioned intentional
