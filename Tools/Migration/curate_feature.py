@@ -14,7 +14,7 @@ Modeling calls (verified vs CvFeatureInfo + CvPlot::calculateYield/movementCost/
                        river yield, compounding with the terrain's river bonus (enabler-spec §3; first HAS_RIVER use).
 - iHealthPercent    -> health.plot.percent (Feature OWNS health; Terrain dropped it precisely because it lives here).
 - iDefense          -> defense.plot.amount.percent (feature defense %, additive onto the plot).
-- iMovement         -> INTRINSIC `identity.movementCost` (resolver-subsystem, owner 2026-06-20; NOT a family).
+- iMovement         -> the `movement` family (`movement.plot.flat`). The RESOLVER is bespoke; its INPUTS are
                        The feature's extra traversal cost is read per-(unit,edge) by the movement resolver
                        (CvPlot::movementCost, additive onto terrain), not summed down a scope spine — matching
                        curate_route.py / curate_terrain.py. Only cascading deltas (promotion discount/credit) are families.
@@ -63,7 +63,6 @@ FEATURE_DROP = ["iWarmingDefense", "RiverYieldChange", "PropertyManipulators"]
 # to_identity OVERRIDES the Feature mapping (which classifies iMovement as a movement/city channel) because
 # curate() checks to_identity BEFORE the channel mapping -- so iMovement lands intrinsic, not as a stray family.
 CFG = cc.EntityConfig("FeatureInfo", extra_drop=FEATURE_DROP, families=FEATURE_FAMILIES,
-                      to_identity={"iMovement": "movementCost"},
                       grants={"OnUnitChangeTo": "onUnitChangeTo"},
                       id_rename={'bNoCity': 'unfoundable', 'bNoImprovement': 'unimprovable',
                                  'bNoBonus': 'prohibitsBonus'},

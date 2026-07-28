@@ -16,6 +16,11 @@
    "flat": 2
   }
  },
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/baseterrain/DuneSalt.dds"
@@ -130,7 +135,6 @@
   "foundCoast": true,
   "foundFreshWater": true,
   "buildTimeModifier": 25,
-  "movementCost": 1,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ]

@@ -1,5 +1,10 @@
 {
  "type": "FEATURE_PLATY_NUKUORO",
+ "movement": {
+  "plot": {
+   "flat": 2
+  }
+ },
  "vision": {
   "plot": {
    "seeThrough": {
@@ -25,7 +30,6 @@
  "identity": {
   "description": "TXT_KEY_FEATURE_NUKUORO",
   "civilopedia": "TXT_KEY_FEATURE_NUKUORO_PEDIA",
-  "movementCost": 2,
   "validTerrains": [
    "TERRAIN_COAST_TROPICAL"
   ]

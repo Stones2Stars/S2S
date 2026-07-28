@@ -20,6 +20,11 @@
    "flat": 1
   }
  },
+ "movement": {
+  "plot": {
+   "flat": 2
+  }
+ },
  "ui": {
   "art": {
    "icon": "Art/Interface\\Buttons\\WorldBuilder\\TERRAIN_TAIGA.dds"
@@ -133,7 +138,6 @@
   "civilopedia": "TXT_KEY_TERRAIN_TAIGA_PEDIA",
   "found": true,
   "buildTimeModifier": 15,
-  "movementCost": 2,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ]

@@ -10,6 +10,11 @@
    "flat": 2
   }
  },
+ "movement": {
+  "plot": {
+   "flat": 5
+  }
+ },
  "vision": {
   "plot": {
    "seeThrough": {
@@ -125,7 +130,6 @@
  "identity": {
   "description": "TXT_KEY_FEATURE_REEF",
   "civilopedia": "TXT_KEY_FEATURE_REEF_PEDIA",
-  "movementCost": 5,
   "appearance": 400,
   "validTerrains": [
    "TERRAIN_COAST",

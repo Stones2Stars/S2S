@@ -1,5 +1,10 @@
 {
  "type": "ROUTE_TRAIL",
+ "movement": {
+  "plot": {
+   "flat": 100
+  }
+ },
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/Builds/path.dds"
@@ -11,7 +16,6 @@
   "advancedStart": {
    "cost": 5
   },
-  "movementCost": 100,
   "flatMovementCost": 100
  }
 }

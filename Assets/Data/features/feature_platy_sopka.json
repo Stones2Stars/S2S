@@ -1,5 +1,10 @@
 {
  "type": "FEATURE_PLATY_SOPKA",
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
  "vision": {
   "plot": {
    "seeThrough": {
@@ -37,7 +42,6 @@
  "identity": {
   "description": "TXT_KEY_FEATURE_SOPKA",
   "civilopedia": "TXT_KEY_FEATURE_SOPKA_PEDIA",
-  "movementCost": 1,
   "requiresFlatlands": true,
   "validTerrains": [
    "TERRAIN_ICE",

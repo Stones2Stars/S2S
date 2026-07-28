@@ -5,6 +5,11 @@
    "flat": 1
   }
  },
+ "movement": {
+  "plot": {
+   "flat": 2
+  }
+ },
  "defense": {
   "plot": {
    "amount": {
@@ -79,7 +84,6 @@
  "identity": {
   "description": "TXT_KEY_FEATURE_MANGROVE",
   "civilopedia": "TXT_KEY_FEATURE_MANGROVE_PEDIA",
-  "movementCost": 2,
   "popDestroys": -1,
   "coastalOnly": true,
   "requiresFlatlands": true,

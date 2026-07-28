@@ -78,6 +78,11 @@
    }
   }
  },
+ "movement": {
+  "plot": {
+   "flat": 40
+  }
+ },
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/Builds/BuildRailroad.dds"
@@ -89,7 +94,6 @@
   "advancedStart": {
    "cost": 18
   },
-  "movementCost": 40,
   "flatMovementCost": 16
  }
 }

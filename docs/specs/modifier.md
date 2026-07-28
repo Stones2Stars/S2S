@@ -533,9 +533,14 @@ No bespoke host↔cargo family is needed. The full unit-stat family vocabulary
 
 > **Movement & range** are their own resolver subsystem, not ordinary downward families: `moveCost` is computed
 > **per `(unit, edge)`** with a route `min`-override, double-move divisors, and a floor — it doesn't fit the
-> "deposit DOWN → O(1) summed read" shape. The plot-side base cost stays intrinsic on terrain/feature/route; only
-> the cascading *deltas* (tech route changes, promotion move bonuses) are real modifier families. (Detail: the
-> movement subsystem doc, pending.)
+> "deposit DOWN → O(1) summed read" shape. **But the RESOLVER being bespoke does not make its INPUTS intrinsic
+> (owner): a plot substrate's base movement cost IS the `movement` family** — `movement.plot.flat` on the
+> terrain / feature / route — and it composes with the cascading deltas (tech route changes, promotion move
+> bonuses) in the ordinary way, as the §3.9 entry list. The route case shows it directly: the base cost is the
+> bare number and a tech-gated change is a conditioned entry beside it, in one slot.
+> ⚑ The distinction to hold: **the resolver reads the family and applies its own arithmetic** (min-override,
+> divisors, floor). What was wrong was parking the base value in `identity`, which carries no effects
+> ([json.md §7](json.md)) — a movement cost is plainly one. (Detail: the movement subsystem doc, pending.)
 
 ### Specialist counts
 

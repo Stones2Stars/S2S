@@ -20,6 +20,11 @@
    "flat": 6
   }
  },
+ "movement": {
+  "plot": {
+   "flat": 20
+  }
+ },
  "ui": {
   "art": {
    "icon": "Art/Interface\\Buttons\\WorldBuilder\\Terrain_Ocean.dds"
@@ -131,7 +136,6 @@
  "identity": {
   "description": "TXT_KEY_TERRAIN_PLAGUED_WATER",
   "civilopedia": "TXT_KEY_TERRAIN_PLAGUED_WATER_PEDIA",
-  "distanceToLand": 1,
-  "movementCost": 20
+  "distanceToLand": 1
  }
 }

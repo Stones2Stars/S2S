@@ -15,6 +15,11 @@
    "flat": 1
   }
  },
+ "movement": {
+  "plot": {
+   "flat": 50
+  }
+ },
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/Builds/buildplanetarymaglev.dds"
@@ -26,7 +31,6 @@
   "advancedStart": {
    "cost": 30
   },
-  "movementCost": 50,
   "flatMovementCost": 50
  }
 }

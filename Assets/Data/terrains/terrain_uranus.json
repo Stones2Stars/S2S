@@ -10,6 +10,11 @@
    "flat": 2
   }
  },
+ "movement": {
+  "plot": {
+   "flat": 3
+  }
+ },
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/baseterrain/uranus.dds"
@@ -26,7 +31,6 @@
  "identity": {
   "description": "TXT_KEY_TERRAIN_URANUS",
   "civilopedia": "TXT_KEY_TERRAIN_URANUS_PEDIA",
-  "movementCost": 3,
   "found": true,
   "mapCategories": [
    "MAPCATEGORY_SOLAR_SYSTEM",

@@ -25,6 +25,11 @@
    "percent": -100
   }
  },
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
  "world": {
   "art": {
    "define": "ART_DEF_FEATURE_INFECTIOUS_SMOG"
@@ -33,7 +38,6 @@
  "identity": {
   "description": "TXT_KEY_FEATURE_INFECTIOUS_SMOG",
   "civilopedia": "TXT_KEY_FEATURE_INFECTIOUS_SMOG_PEDIA",
-  "movementCost": 1,
   "disappearance": 350,
   "spread": 500,
   "popDestroys": -1,

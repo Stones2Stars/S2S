@@ -15,6 +15,11 @@
    "flat": 2
   }
  },
+ "movement": {
+  "plot": {
+   "flat": 5
+  }
+ },
  "vision": {
   "plot": {
    "seeThrough": {
@@ -49,7 +54,6 @@
  "identity": {
   "description": "TXT_KEY_FEATURE_GREAT_BARRIER",
   "civilopedia": "TXT_KEY_FEATURE_GREAT_BARRIER_PEDIA",
-  "movementCost": 5,
   "validTerrains": [
    "TERRAIN_COAST_TROPICAL"
   ]

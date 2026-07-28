@@ -1,5 +1,10 @@
 {
  "type": "FEATURE_PLATY_BARRINGER_CRATER",
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
  "characteristics": [
   "unfoundable",
   "unimprovable",
@@ -18,7 +23,6 @@
  "identity": {
   "description": "TXT_KEY_FEATURE_BARRINGER_CRATER",
   "civilopedia": "TXT_KEY_FEATURE_BARRINGER_CRATER_PEDIA",
-  "movementCost": 1,
   "requiresFlatlands": true,
   "validTerrains": [
    "TERRAIN_SCRUB",

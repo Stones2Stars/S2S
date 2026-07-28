@@ -10,6 +10,11 @@
    "flat": 2
   }
  },
+ "movement": {
+  "plot": {
+   "flat": 3
+  }
+ },
  "defense": {
   "plot": {
    "amount": {
@@ -36,7 +41,6 @@
   "foundCoast": true,
   "foundFreshWater": true,
   "buildTimeModifier": 25,
-  "movementCost": 3,
   "mapCategories": [
    "MAPCATEGORY_MARTIAN"
   ]

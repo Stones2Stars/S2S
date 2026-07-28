@@ -15,6 +15,11 @@
    "flat": 1
   }
  },
+ "movement": {
+  "plot": {
+   "flat": 2
+  }
+ },
  "defense": {
   "plot": {
    "amount": {
@@ -57,7 +62,6 @@
  "identity": {
   "description": "TXT_KEY_FEATURE_TAR_PIT",
   "civilopedia": "TXT_KEY_FEATURE_TAR_PIT_PEDIA",
-  "movementCost": 2,
   "appearance": 50,
   "requiresFlatlands": true,
   "popDestroys": -1,

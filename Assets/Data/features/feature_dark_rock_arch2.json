@@ -1,5 +1,10 @@
 {
  "type": "FEATURE_DARK_ROCK_ARCH2",
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
  "vision": {
   "plot": {
    "seeThrough": {
@@ -31,7 +36,6 @@
  "identity": {
   "description": "TXT_KEY_FEATURE_OUTCROP_DARK",
   "civilopedia": "TXT_KEY_FEATURE_OUTCROP_PEDIA",
-  "movementCost": 1,
   "appearance": 50,
   "popDestroys": 4,
   "validTerrains": [

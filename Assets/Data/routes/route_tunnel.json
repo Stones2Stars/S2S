@@ -22,6 +22,11 @@
    }
   }
  },
+ "movement": {
+  "plot": {
+   "flat": 55
+  }
+ },
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/builds/buildtunnel.dds"
@@ -33,7 +38,6 @@
   "advancedStart": {
    "cost": 20
   },
-  "movementCost": 55,
   "flatMovementCost": 22,
   "seaTunnel": true
  }

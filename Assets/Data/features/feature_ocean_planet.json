@@ -1,5 +1,10 @@
 {
  "type": "FEATURE_OCEAN_PLANET",
+ "movement": {
+  "plot": {
+   "flat": 2
+  }
+ },
  "defense": {
   "plot": {
    "amount": {
@@ -25,7 +30,6 @@
  "identity": {
   "description": "TXT_KEY_FEATURE_OCEAN_PLANET",
   "civilopedia": "TXT_KEY_FEATURE_OCEAN_PLANET_PEDIA",
-  "movementCost": 2,
   "popDestroys": -1,
   "validTerrains": [
    "TERRAIN_TRANSTELLAR_SPACE"

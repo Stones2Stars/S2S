@@ -1,5 +1,10 @@
 {
  "type": "FEATURE_CRATER_LARGE",
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
  "defense": {
   "plot": {
    "amount": {
@@ -28,7 +33,6 @@
  "identity": {
   "description": "TXT_KEY_FEATURE_CRATER_LARGE",
   "civilopedia": "TXT_KEY_FEATURE_CRATER_PEDIA",
-  "movementCost": 1,
   "popDestroys": 40,
   "appearance": 250,
   "noAdjacent": true,

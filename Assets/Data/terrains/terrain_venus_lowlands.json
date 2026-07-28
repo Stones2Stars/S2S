@@ -10,6 +10,11 @@
    "flat": 2
   }
  },
+ "movement": {
+  "plot": {
+   "flat": 3
+  }
+ },
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/baseterrain/venus.dds"
@@ -28,7 +33,6 @@
   "civilopedia": "TXT_KEY_TERRAIN_VENUS_PEDIA",
   "found": true,
   "buildTimeModifier": 50,
-  "movementCost": 3,
   "mapCategories": [
    "MAPCATEGORY_VENUSIAN"
   ]

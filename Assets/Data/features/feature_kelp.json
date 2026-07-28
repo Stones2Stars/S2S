@@ -15,6 +15,11 @@
    "flat": -2
   }
  },
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
  "triggers": [
   {
    "trigger": "onTurn",
@@ -92,7 +97,6 @@
  "identity": {
   "description": "TXT_KEY_FEATURE_KELP",
   "civilopedia": "TXT_KEY_FEATURE_KELP_PEDIA",
-  "movementCost": 1,
   "appearance": 400,
   "growth": 15,
   "validTerrains": [

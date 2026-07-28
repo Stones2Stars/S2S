@@ -15,6 +15,11 @@
    "flat": 2
   }
  },
+ "movement": {
+  "plot": {
+   "flat": 2
+  }
+ },
  "defense": {
   "plot": {
    "amount": {
@@ -135,7 +140,6 @@
   "civilopedia": "TXT_KEY_TERRAIN_COAST_PEDIA",
   "distanceToLand": 1,
   "climateZoneType": "CLIMATE_ZONE_POLAR",
-  "movementCost": 2,
   "mapCategories": [
    "MAPCATEGORY_EARTH",
    "MAPCATEGORY_AQUATIC"

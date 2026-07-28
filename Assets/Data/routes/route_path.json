@@ -1,5 +1,10 @@
 {
  "type": "ROUTE_PATH",
+ "movement": {
+  "plot": {
+   "flat": 80
+  }
+ },
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/Builds/dirt.dds"
@@ -11,7 +16,6 @@
   "advancedStart": {
    "cost": 6
   },
-  "movementCost": 80,
   "flatMovementCost": 80
  }
 }

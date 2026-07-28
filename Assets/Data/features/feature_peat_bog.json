@@ -25,6 +25,11 @@
    "percent": -50
   }
  },
+ "movement": {
+  "plot": {
+   "flat": 2
+  }
+ },
  "defense": {
   "plot": {
    "amount": {
@@ -70,7 +75,6 @@
  "identity": {
   "description": "TXT_KEY_FEATURE_PEAT_BOG",
   "civilopedia": "TXT_KEY_FEATURE_PEAT_BOG_PEDIA",
-  "movementCost": 2,
   "appearance": 80,
   "popDestroys": -1,
   "requiresFlatlands": true,

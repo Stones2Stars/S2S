@@ -20,6 +20,11 @@
    "flat": 1
   }
  },
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/TerrainFeatures/DuneRock.dds"
@@ -133,7 +138,6 @@
   "civilopedia": "TXT_KEY_TERRAIN_SCRUB_PEDIA",
   "found": true,
   "buildTimeModifier": 20,
-  "movementCost": 1,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ]

@@ -102,6 +102,11 @@
    }
   }
  },
+ "movement": {
+  "plot": {
+   "flat": 15
+  }
+ },
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/Builds/BuildJumplane.dds"
@@ -113,7 +118,6 @@
   "advancedStart": {
    "cost": 30
   },
-  "movementCost": 15,
   "flatMovementCost": 3
  }
 }

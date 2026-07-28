@@ -1,5 +1,10 @@
 {
  "type": "FEATURE_SUPERMASSIVE_BLACK_HOLE",
+ "movement": {
+  "plot": {
+   "flat": 2
+  }
+ },
  "defense": {
   "plot": {
    "amount": {
@@ -29,7 +34,6 @@
   "description": "TXT_KEY_FEATURE_SUPERMASSIVE_BLACK_HOLE",
   "civilopedia": "TXT_KEY_FEATURE_SUPERMASSIVE_BLACK_HOLE_PEDIA",
   "popDestroys": -1,
-  "movementCost": 2,
   "validTerrains": [
    "TERRAIN_GALACTIC_CORE"
   ]

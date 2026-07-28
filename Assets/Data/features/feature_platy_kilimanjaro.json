@@ -1,5 +1,10 @@
 {
  "type": "FEATURE_PLATY_KILIMANJARO",
+ "movement": {
+  "plot": {
+   "flat": 2
+  }
+ },
  "vision": {
   "plot": {
    "seeThrough": {
@@ -26,7 +31,6 @@
  "identity": {
   "description": "TXT_KEY_FEATURE_KILIMANJARO",
   "civilopedia": "TXT_KEY_FEATURE_KILIMANJARO_PEDIA",
-  "movementCost": 2,
   "validTerrains": [
    "TERRAIN_SCRUB"
   ]

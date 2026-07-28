@@ -10,6 +10,11 @@
    "flat": 1
   }
  },
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
  "defense": {
   "plot": {
    "amount": {
@@ -60,7 +65,6 @@
  "identity": {
   "description": "TXT_KEY_FEATURE_BAMBOO",
   "civilopedia": "TXT_KEY_FEATURE_BAMBOO_PEDIA",
-  "movementCost": 1,
   "appearance": 500,
   "growth": 20,
   "popDestroys": 5,

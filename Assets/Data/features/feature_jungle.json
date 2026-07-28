@@ -15,6 +15,11 @@
    "percent": -20
   }
  },
+ "movement": {
+  "plot": {
+   "flat": 2
+  }
+ },
  "defense": {
   "plot": {
    "amount": {
@@ -109,7 +114,6 @@
  "identity": {
   "description": "TXT_KEY_FEATURE_JUNGLE",
   "civilopedia": "TXT_KEY_FEATURE_JUNGLE_PEDIA",
-  "movementCost": 2,
   "growth": 10,
   "popDestroys": 3,
   "validTerrains": [

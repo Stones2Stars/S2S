@@ -1,5 +1,10 @@
 {
  "type": "FEATURE_CRATER",
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
  "defense": {
   "plot": {
    "amount": {
@@ -32,7 +37,6 @@
  "identity": {
   "description": "TXT_KEY_FEATURE_CRATER",
   "civilopedia": "TXT_KEY_FEATURE_CRATER_PEDIA",
-  "movementCost": 1,
   "appearance": 60,
   "popDestroys": 20,
   "validTerrains": [

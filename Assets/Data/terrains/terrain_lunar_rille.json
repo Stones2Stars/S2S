@@ -10,6 +10,11 @@
    "flat": 3
   }
  },
+ "movement": {
+  "plot": {
+   "flat": 3
+  }
+ },
  "defense": {
   "plot": {
    "amount": {
@@ -35,7 +40,6 @@
   "civilopedia": "TXT_KEY_TERRAIN_LUNAR_RILLE_PEDIA",
   "found": true,
   "buildTimeModifier": 25,
-  "movementCost": 3,
   "mapCategories": [
    "MAPCATEGORY_LUNAR"
   ]

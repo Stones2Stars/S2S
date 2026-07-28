@@ -1,5 +1,10 @@
 {
  "type": "FEATURE_FOREST_BURNT",
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
  "defense": {
   "plot": {
    "amount": {
@@ -65,7 +70,6 @@
  "identity": {
   "description": "TXT_KEY_FEATURE_FOREST_BURNT",
   "civilopedia": "TXT_KEY_FEATURE_FOREST_PEDIA",
-  "movementCost": 1,
   "appearance": 100,
   "popDestroys": 3,
   "validTerrains": [

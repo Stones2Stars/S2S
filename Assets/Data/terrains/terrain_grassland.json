@@ -15,6 +15,11 @@
    ]
   }
  },
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
  "ui": {
   "art": {
    "icon": "Art/Interface\\Buttons\\WorldBuilder\\Terrain_Grass.dds"
@@ -127,7 +132,6 @@
   "description": "TXT_KEY_TERRAIN_GRASSLAND",
   "civilopedia": "TXT_KEY_TERRAIN_GRASSLAND_PEDIA",
   "found": true,
-  "movementCost": 1,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ]

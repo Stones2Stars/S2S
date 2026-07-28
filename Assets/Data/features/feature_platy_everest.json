@@ -1,5 +1,10 @@
 {
  "type": "FEATURE_PLATY_EVEREST",
+ "movement": {
+  "plot": {
+   "flat": 2
+  }
+ },
  "vision": {
   "plot": {
    "seeThrough": {
@@ -26,7 +31,6 @@
  "identity": {
   "description": "TXT_KEY_FEATURE_EVEREST",
   "civilopedia": "TXT_KEY_FEATURE_EVEREST_PEDIA",
-  "movementCost": 2,
   "validTerrains": [
    "TERRAIN_ICE",
    "TERRAIN_PERMAFROST",

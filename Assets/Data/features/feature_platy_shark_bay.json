@@ -1,5 +1,10 @@
 {
  "type": "FEATURE_PLATY_SHARK_BAY",
+ "movement": {
+  "plot": {
+   "flat": 2
+  }
+ },
  "defense": {
   "plot": {
    "amount": {
@@ -32,7 +37,6 @@
  "identity": {
   "description": "TXT_KEY_FEATURE_SHARK_BAY",
   "civilopedia": "TXT_KEY_FEATURE_SHARK_BAY_PEDIA",
-  "movementCost": 2,
   "validTerrains": [
    "TERRAIN_COAST",
    "TERRAIN_COAST_TROPICAL"

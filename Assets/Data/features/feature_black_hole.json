@@ -1,5 +1,10 @@
 {
  "type": "FEATURE_BLACK_HOLE",
+ "movement": {
+  "plot": {
+   "flat": 4
+  }
+ },
  "characteristics": [
   "unfoundable",
   "unimprovable",
@@ -16,7 +21,6 @@
  "identity": {
   "description": "TXT_KEY_FEATURE_BLACK_HOLE",
   "civilopedia": "TXT_KEY_FEATURE_BLACK_HOLE_PEDIA",
-  "movementCost": 4,
   "appearance": 500,
   "noCoast": true,
   "noRiver": true,

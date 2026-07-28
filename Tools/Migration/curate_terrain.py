@@ -11,7 +11,7 @@ Per-field dispositions: classifications/terrain-classification.json (adversarial
 Modeling calls (verified vs CvTerrainInfo + CvPlot::calculateYield/movementCost/getDefenseModifier + CvCity):
 - Yields            -> SPLIT base-yield families food/production/commerce, PLOT scope (CvPlot.cpp:8077, summed
                        into the tile's base yield). The grassland-food / hill-hammers base.
-- iMovement         -> INTRINSIC `identity.movementCost` (NOT a `movement`/`moveCost` family). moveCost is a
+- iMovement         -> the `movement` family (`movement.plot.flat`). moveCost is a
                        RESOLVER SUBSYSTEM (owner ruling 2026-06-20): the per-tile traversal cost is read per-
                        (unit,edge) by the movement resolver (CvPlot::movementCost — terrain+feature+hills+route-min+
                        discount+double-move+floor), NOT summed down a scope spine like a yield. So the terrain's
@@ -167,7 +167,7 @@ TERRAIN_ID_RENAME = {"MapCategoryTypes": "mapCategories"}
 # iMovement -- the robust way to force it intrinsic (id_rename would be skipped if the mapping channels it).
 CFG = cc.EntityConfig("TerrainInfo", extra_drop=["iHealthPercent"],
                       families=TERRAIN_FAMILIES, id_rename=TERRAIN_ID_RENAME,
-                      to_identity={"iMovement": "movementCost", "iBuildModifier": "buildTimeModifier"})
+                      to_identity={"iBuildModifier": "buildTimeModifier"})
 
 # NO inbound boosts: a terrain is never the deliveryguy for another entity's modifier (owner 2026-06-16).
 TERRAIN_BOOSTS = []

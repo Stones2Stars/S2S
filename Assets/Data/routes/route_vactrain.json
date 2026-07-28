@@ -104,6 +104,7 @@
  "movement": {
   "plot": {
    "flat": [
+    20,
     {
      "value": -4,
      "enabled": {
@@ -125,7 +126,6 @@
   "advancedStart": {
    "cost": 24
   },
-  "movementCost": 20,
   "flatMovementCost": 8
  }
 }

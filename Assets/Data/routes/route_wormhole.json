@@ -15,6 +15,11 @@
    "flat": 1
   }
  },
+ "movement": {
+  "plot": {
+   "flat": 25
+  }
+ },
  "ui": {
   "art": {
    "icon": "art/interface/buttons/improvements/wormhole.dds"
@@ -26,7 +31,6 @@
   "advancedStart": {
    "cost": 30
   },
-  "movementCost": 25,
   "flatMovementCost": 25
  }
 }

@@ -34,9 +34,18 @@
   that are held-boolean-SHAPED but may be constraints instead — `flatMovementCost` (route), and deciding whether
   `noImprovement` / `noCity` / `noBonus` (feature) are characteristics or `requires` gates. The spec's bound is
   the test: what the substrate IS or DOES is a characteristic; what may exist THERE is a gate.
-- **Magnitudes → modifier families** — `movementCost` / `flatMovementCost` (the movement resolver),
-  `sightRange` (vision), `cargo`, `captures`, `conscription`, `controlPoints`, `espionagePoints`, the radii
-  (`cityRadius`, `workableRadius`, `cultureRange`).
+- **Magnitudes → modifier families** — `sightRange` (vision), `cargo`, `captures`, `conscription`,
+  `controlPoints`, `espionagePoints`, the radii (`cityRadius`, `workableRadius`, `cultureRange`).
+  ⚠ `flatMovementCost` (route) is the residue of the movement move: it needs its own MEMBER name in the
+  `movement` family (it is a flat-RATE override, not a flat magnitude, so it cannot share the `flat` slot with
+  the base cost) — an owner call on vocabulary, so it stays intrinsic until then.
+- **`popDestroys` → a TRIGGER on population (owner).** Not a renamed identity field: `trigger` → `action.destroy`
+  on the §5 plane, the happening being the city reaching a population (`onPopulationGrowth` is already in the
+  registry). The authored values are a THRESHOLD — `-1` never (30 features), `0` at founding (2), `3`–`40` at
+  that population (33) — so the trigger condition carries the number. ⛔ Blocked on one shape question: the
+  action must destroy **the feature the trigger is authored on**, and the `destroy` verb's examples target
+  another entity (`{"destroy": {"building": "random"}}`); `SELF` is defined only as a `per` count-scaler token
+  ([json.md §3.1](../../specs/json.md)), so naming the carrier as a target needs a decision.
 - **Constraints → `requires` / `allowed`** — `terrainImpassable`, `featureImpassable`, `requiresFlatlands`,
   `validTerrains`, `minAreaSize`, `distanceToLand`, the `found*` gates.
 - **Keys with a home already specced** — `tradeable` (910, TECH) is the `canTrade` block

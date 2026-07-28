@@ -5,6 +5,11 @@
    "flat": 3
   }
  },
+ "movement": {
+  "plot": {
+   "flat": 2
+  }
+ },
  "triggers": [
   {
    "trigger": "onTurn",
@@ -49,7 +54,6 @@
  "identity": {
   "description": "TXT_KEY_FEATURE_ICE",
   "civilopedia": "TXT_KEY_FEATURE_ICE_PEDIA",
-  "movementCost": 2,
   "addsFreshWater": true,
   "impassable": true,
   "validTerrains": [

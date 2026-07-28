@@ -1,5 +1,10 @@
 {
  "type": "FEATURE_PLATY_DEAD_SEA",
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
  "vision": {
   "plot": {
    "seeThrough": {
@@ -25,7 +30,6 @@
  "identity": {
   "description": "TXT_KEY_FEATURE_DEAD_SEA",
   "civilopedia": "TXT_KEY_FEATURE_DEAD_SEA_PEDIA",
-  "movementCost": 1,
   "noRiver": true,
   "requiresFlatlands": true,
   "validTerrains": [

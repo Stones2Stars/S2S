@@ -15,6 +15,11 @@
    "flat": 1
   }
  },
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
  "characteristics": [
   "unfoundable",
   "unimprovable",
@@ -58,7 +63,6 @@
  "identity": {
   "description": "TXT_KEY_FEATURE_VOLCANO_ACTIVE",
   "civilopedia": "TXT_KEY_FEATURE_VOLCANO_PEDIA",
-  "movementCost": 1,
   "appearance": 300,
   "requiresFlatlands": true,
   "validTerrains": [

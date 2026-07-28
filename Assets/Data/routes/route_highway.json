@@ -69,6 +69,11 @@
    }
   }
  },
+ "movement": {
+  "plot": {
+   "flat": 22
+  }
+ },
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/Builds/BuildHighway.dds"
@@ -80,7 +85,6 @@
   "advancedStart": {
    "cost": 12
   },
-  "movementCost": 22,
   "flatMovementCost": 22
  }
 }

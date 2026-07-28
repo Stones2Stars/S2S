@@ -20,6 +20,11 @@
    ]
   }
  },
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
  "ui": {
   "art": {
    "icon": "Art/Interface\\Buttons\\WorldBuilder\\Terrain_Plains.dds"
@@ -132,7 +137,6 @@
   "description": "TXT_KEY_TERRAIN_PLAINS",
   "civilopedia": "TXT_KEY_TERRAIN_PLAINS_PEDIA",
   "found": true,
-  "movementCost": 1,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ]

@@ -39,6 +39,11 @@
    }
   }
  },
+ "movement": {
+  "plot": {
+   "flat": 60
+  }
+ },
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/Builds/BuildRoad.dds"
@@ -50,7 +55,6 @@
   "advancedStart": {
    "cost": 12
   },
-  "movementCost": 60,
   "flatMovementCost": 60
  }
 }

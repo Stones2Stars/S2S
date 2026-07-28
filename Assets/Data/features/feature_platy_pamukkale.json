@@ -1,5 +1,10 @@
 {
  "type": "FEATURE_PLATY_PAMUKKALE",
+ "movement": {
+  "plot": {
+   "flat": 2
+  }
+ },
  "vision": {
   "plot": {
    "seeThrough": {
@@ -25,7 +30,6 @@
  "identity": {
   "description": "TXT_KEY_FEATURE_PAMUKKALE",
   "civilopedia": "TXT_KEY_FEATURE_PAMUKKALE_PEDIA",
-  "movementCost": 2,
   "requiresFlatlands": true,
   "addsFreshWater": true,
   "validTerrains": [

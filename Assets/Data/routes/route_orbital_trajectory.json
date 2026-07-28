@@ -15,6 +15,11 @@
    "flat": 1
   }
  },
+ "movement": {
+  "plot": {
+   "flat": 100
+  }
+ },
  "ui": {
   "art": {
    "icon": "art/interface/buttons/improvements/cislunar_trajectory.dds"
@@ -26,7 +31,6 @@
   "advancedStart": {
    "cost": 30
   },
-  "movementCost": 100,
   "flatMovementCost": 100
  }
 }

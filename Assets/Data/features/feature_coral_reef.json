@@ -10,6 +10,11 @@
    "flat": 2
   }
  },
+ "movement": {
+  "plot": {
+   "flat": 4
+  }
+ },
  "triggers": [
   {
    "trigger": "onTurn",
@@ -29,7 +34,6 @@
  "identity": {
   "description": "TXT_KEY_FEATURE_CORAL_REEF",
   "civilopedia": "TXT_KEY_FEATURE_CORAL_REEF_PEDIA",
-  "movementCost": 4,
   "appearance": 500,
   "growth": 5,
   "validTerrains": [

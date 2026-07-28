@@ -20,6 +20,11 @@
    "percent": 50
   }
  },
+ "movement": {
+  "plot": {
+   "flat": 2
+  }
+ },
  "defense": {
   "plot": {
    "amount": {
@@ -74,7 +79,6 @@
  "identity": {
   "description": "TXT_KEY_FEATURE_FOREST_ANCIENT",
   "civilopedia": "TXT_KEY_FEATURE_FOREST_PEDIA",
-  "movementCost": 2,
   "appearance": 300,
   "popDestroys": 3,
   "validTerrains": [

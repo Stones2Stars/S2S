@@ -15,6 +15,11 @@
    "percent": 25
   }
  },
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
  "defense": {
   "plot": {
    "amount": {
@@ -97,7 +102,6 @@
  "identity": {
   "description": "TXT_KEY_FEATURE_FOREST",
   "civilopedia": "TXT_KEY_FEATURE_FOREST_PEDIA",
-  "movementCost": 1,
   "popDestroys": 3,
   "validTerrains": [
    "TERRAIN_GRASSLAND",

@@ -10,6 +10,11 @@
    "flat": 2
   }
  },
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/WorldBuilder/orion_arm.dds"
@@ -24,7 +29,6 @@
   "description": "TXT_KEY_TERRAIN_ORION_ARM",
   "civilopedia": "TXT_KEY_TERRAIN_ORION_ARM_PEDIA",
   "found": true,
-  "movementCost": 1,
   "mapCategories": [
    "MAPCATEGORY_GALACTIC",
    "MAPCATEGORY_MILKY_WAY"

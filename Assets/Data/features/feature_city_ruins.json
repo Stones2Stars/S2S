@@ -1,5 +1,10 @@
 {
  "type": "FEATURE_CITY_RUINS",
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
  "defense": {
   "plot": {
    "amount": {
@@ -119,7 +124,6 @@
  "identity": {
   "description": "TXT_KEY_IMPROVEMENT_CITY_RUINS",
   "civilopedia": "TXT_KEY_IMPROVEMENT_CITY_RUINS_PEDIA",
-  "movementCost": 1,
   "popDestroys": 0
  }
 }

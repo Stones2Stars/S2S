@@ -15,6 +15,11 @@
    "flat": 2
   }
  },
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/baseterrain/barren.dds"
@@ -128,7 +133,6 @@
   "civilopedia": "TXT_KEY_TERRAIN_BARREN_PEDIA",
   "found": true,
   "buildTimeModifier": 10,
-  "movementCost": 1,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ]

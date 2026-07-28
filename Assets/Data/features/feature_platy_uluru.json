@@ -1,5 +1,10 @@
 {
  "type": "FEATURE_PLATY_ULURU",
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
  "defense": {
   "plot": {
    "amount": {
@@ -32,7 +37,6 @@
  "identity": {
   "description": "TXT_KEY_FEATURE_ULURU",
   "civilopedia": "TXT_KEY_FEATURE_ULURU_PEDIA",
-  "movementCost": 1,
   "requiresFlatlands": true,
   "validTerrains": [
    "TERRAIN_DESERT",

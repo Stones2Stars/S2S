@@ -15,6 +15,11 @@
    "flat": 1
   }
  },
+ "movement": {
+  "plot": {
+   "flat": 2
+  }
+ },
  "defense": {
   "plot": {
    "amount": {
@@ -135,7 +140,6 @@
   "civilopedia": "TXT_KEY_TERRAIN_COAST_PEDIA",
   "distanceToLand": 1,
   "freshWaterTerrain": true,
-  "movementCost": 2,
   "mapCategories": [
    "MAPCATEGORY_EARTH",
    "MAPCATEGORY_AQUATIC"

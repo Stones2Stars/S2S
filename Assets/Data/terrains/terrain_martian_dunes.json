@@ -10,6 +10,11 @@
    "flat": 2
   }
  },
+ "movement": {
+  "plot": {
+   "flat": 4
+  }
+ },
  "ui": {
   "art": {
    "icon": "Art/Interface\\Buttons\\WorldBuilder\\Terrain_Desert.dds"
@@ -29,7 +34,6 @@
   "foundCoast": true,
   "foundFreshWater": true,
   "buildTimeModifier": 50,
-  "movementCost": 4,
   "mapCategories": [
    "MAPCATEGORY_MARTIAN"
   ]

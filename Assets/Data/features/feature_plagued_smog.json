@@ -25,6 +25,11 @@
    "percent": -200
   }
  },
+ "movement": {
+  "plot": {
+   "flat": 4
+  }
+ },
  "world": {
   "art": {
    "define": "ART_DEF_FEATURE_PLAGUED_SMOG"
@@ -33,7 +38,6 @@
  "identity": {
   "description": "TXT_KEY_FEATURE_PLAGUED_SMOG",
   "civilopedia": "TXT_KEY_FEATURE_PLAGUED_SMOG_PEDIA",
-  "movementCost": 4,
   "disappearance": 150,
   "spread": 1000,
   "popDestroys": -1,

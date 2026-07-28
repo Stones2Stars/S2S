@@ -1,5 +1,10 @@
 {
  "type": "FEATURE_PLATY_BAIKAL",
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
  "vision": {
   "plot": {
    "seeThrough": {
@@ -25,7 +30,6 @@
  "identity": {
   "description": "TXT_KEY_FEATURE_BAIKAL",
   "civilopedia": "TXT_KEY_FEATURE_BAIKAL_PEDIA",
-  "movementCost": 1,
   "noCoast": true,
   "noRiver": true,
   "requiresFlatlands": true,

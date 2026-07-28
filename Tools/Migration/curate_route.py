@@ -7,7 +7,8 @@ empty, no `enables` block).
 Modeling calls (light-batch-classification.json, verified vs CvRouteInfo + the live consumers):
 - Yields -> the SPLIT base-yield families food/production/commerce at PLOT scope (a tile yield, summed into the
   plot alongside terrain/improvement yields by CvPlot::calculateYield) — a genuine cascade deposit.
-- iMovement/iFlatMovement -> IDENTITY (movementCost/flatMovementCost), NOT a `movement` family. A route's
+- iMovement -> the `movement` family (`movement.plot.flat`); iFlatMovement stays identity pending its own
+  member name. A route's
   BASE traversal cost is an intrinsic own-stat read directly per-route by pathfinding (CvPlot::movementCost); it
   is never summed onto a scope accumulator. Base stats are identity; only the cascading DELTA (below) is a family.
 - TechMovementChanges -> the `movement` family ON THE ROUTE (owner ruling 2026-07-01). Each nonzero
@@ -44,7 +45,7 @@ ROUTE_FAMILIES = {
 }
 
 # Intrinsic own-stats -> identity, with clearer names than the default de_i would give.
-ROUTE_ID_RENAME = {"iMovement": "movementCost", "iFlatMovement": "flatMovementCost"}
+ROUTE_ID_RENAME = {"iFlatMovement": "flatMovementCost"}
 
 # Inbound entity-targeted modifiers that invert ONTO the route:
 #   (sourceEntity, field, targetType, family, valueKeys, unit, scope)
@@ -76,7 +77,14 @@ def post_process(typ, obj, rec, store):
         enabled = OrderedDict([("type", tech), ("scope", "team")])
         entry = OrderedDict([("value", delta), ("enabled", enabled)])
         leaf = obj.setdefault("movement", OrderedDict()).setdefault("plot", OrderedDict())
-        leaf.setdefault("flat", []).append(entry)
+        # The route's BASE cost already sits in this slot as a bare number (iMovement -> the `movement` family,
+        # owner: "movementCost is already movement"). A leaf is one entry OR a list of entries (json.md par.3.9),
+        # and the list IS the formula mechanism -- so the base folds in as the first entry and the tech deltas
+        # append after it, summing exactly as any other composite deposit does.
+        cur = leaf.get("flat")
+        if not isinstance(cur, list):
+            leaf["flat"] = [] if cur is None else [cur]
+        leaf["flat"].append(entry)
         added = True
     if added:                                       # keep `movement` in its FAMILY_ORDER slot, before the
         _reorder_movement(obj)                       # ui/world/sound/mapGeneration/identity suffix (cosmetic)

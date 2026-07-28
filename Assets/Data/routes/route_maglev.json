@@ -97,6 +97,11 @@
    }
   }
  },
+ "movement": {
+  "plot": {
+   "flat": 22
+  }
+ },
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/Builds/BuildMaglev.dds"
@@ -108,7 +113,6 @@
   "advancedStart": {
    "cost": 24
   },
-  "movementCost": 22,
   "flatMovementCost": 11
  }
 }

@@ -15,6 +15,11 @@
    "flat": 4
   }
  },
+ "movement": {
+  "plot": {
+   "flat": 4
+  }
+ },
  "ui": {
   "art": {
    "icon": "Art/Interface\\Buttons\\WorldBuilder\\Terrain_Ice.dds"
@@ -129,7 +134,6 @@
   "foundCoast": true,
   "foundFreshWater": true,
   "buildTimeModifier": 100,
-  "movementCost": 4,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ]

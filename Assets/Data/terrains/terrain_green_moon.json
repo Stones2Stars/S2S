@@ -15,6 +15,11 @@
    "flat": 2
   }
  },
+ "movement": {
+  "plot": {
+   "flat": 3
+  }
+ },
  "ui": {
   "art": {
    "icon": "Art/Interface\\Buttons\\WorldBuilder\\Terrain_Grass.dds"
@@ -33,7 +38,6 @@
   "civilopedia": "TXT_KEY_TERRAIN_GREEN_MOON_PEDIA",
   "found": true,
   "buildTimeModifier": 50,
-  "movementCost": 3,
   "mapCategories": [
    "MAPCATEGORY_LUNAR"
   ]

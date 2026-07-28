@@ -15,6 +15,11 @@
    "flat": 2
   }
  },
+ "movement": {
+  "plot": {
+   "flat": 5
+  }
+ },
  "ui": {
   "art": {
    "icon": "art/interface/buttons/improvements/aspatial_route.dds"
@@ -26,7 +31,6 @@
   "advancedStart": {
    "cost": 30
   },
-  "movementCost": 5,
   "flatMovementCost": 5
  }
 }

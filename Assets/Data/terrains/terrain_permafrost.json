@@ -15,6 +15,11 @@
    "flat": 3
   }
  },
+ "movement": {
+  "plot": {
+   "flat": 3
+  }
+ },
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/baseterrain/DuneIce.dds"
@@ -130,7 +135,6 @@
    "MAPCATEGORY_EARTH"
   ],
   "found": true,
-  "buildTimeModifier": 55,
-  "movementCost": 3
+  "buildTimeModifier": 55
  }
 }

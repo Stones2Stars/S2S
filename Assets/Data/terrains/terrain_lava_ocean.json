@@ -10,6 +10,11 @@
    "flat": 2
   }
  },
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/WorldBuilder/lava_ocean.dds"
@@ -24,7 +29,6 @@
   "description": "TXT_KEY_TERRAIN_LAVA_OCEAN",
   "civilopedia": "TXT_KEY_TERRAIN_LAVA_OCEAN_PEDIA",
   "distanceToLand": 1,
-  "movementCost": 1,
   "mapCategories": [
    "MAPCATEGORY_SOLAR_SYSTEM",
    "MAPCATEGORY_AQUATIC",

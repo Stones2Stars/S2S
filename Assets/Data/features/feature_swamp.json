@@ -25,6 +25,11 @@
    "percent": -50
   }
  },
+ "movement": {
+  "plot": {
+   "flat": 3
+  }
+ },
  "defense": {
   "plot": {
    "amount": {
@@ -74,7 +79,6 @@
  "identity": {
   "description": "TXT_KEY_FEATURE_SWAMP",
   "civilopedia": "TXT_KEY_FEATURE_SWAMP_PEDIA",
-  "movementCost": 3,
   "appearance": 200,
   "popDestroys": 6,
   "requiresFlatlands": true,

@@ -101,6 +101,11 @@
    }
   }
  },
+ "movement": {
+  "plot": {
+   "flat": 15
+  }
+ },
  "ui": {
   "art": {
    "icon": "art/interface/buttons/improvements/gravity_train.dds"
@@ -112,7 +117,6 @@
   "advancedStart": {
    "cost": 24
   },
-  "movementCost": 15,
   "flatMovementCost": 5
  }
 }

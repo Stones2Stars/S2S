@@ -15,6 +15,11 @@
    "flat": 4
   }
  },
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
  "vision": {
   "plot": {
    "seeThrough": {
@@ -49,7 +54,6 @@
  "identity": {
   "description": "TXT_KEY_FEATURE_GREAT_BARRIER_REEF_LIGHTHOUSE",
   "civilopedia": "TXT_KEY_FEATURE_GREAT_BARRIER_PEDIA",
-  "movementCost": 1,
   "appearance": -1,
   "validTerrains": [
    "TERRAIN_COAST_TROPICAL"
