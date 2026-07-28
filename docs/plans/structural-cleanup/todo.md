@@ -213,6 +213,54 @@
   can be read THROUGH, never restored to reach around it ([http-endpoints.md](../../specs/http-endpoints.md)).
 - **The Python data-fetching library** — see Stage 4 below.
 
+## The GETTER cut — game objects + AI (⚖ owner: MORE PRESSING THAN THE PYTHON LAYER)
+
+> ⚖ **Sequencing ruling (owner): the game-object and AI getters are updated BEFORE the Python library is built.**
+> Not a deferral of the library — an ORDER call, and the roadmap's own (*design surface → contexts → THEN the AI
+> calls*). The reason is the library's gate: it must be **COMPLETE**
+> ([patterns.md](../../architecture/patterns.md)), and every value the new surface cannot answer is one a binding
+> would reach around into legacy for — re-creating the two live surfaces the hard kill exists to close. So the
+> read surface is finished first, and the library is written against a settled one.
+
+**Measured state (verify before acting; counts drift):**
+
+| surface | new group reads | legacy channel-shaped names still standing |
+|---|---:|---:|
+| `CvCity.h` | 14 | **164** (of 574 total `get*/is*/has*`) |
+| `CvPlayer.h` | 20 | **103** (of 617) |
+| `CvPlot.h` / `CvTeam.h` | 6 / 2 | — |
+
+**AI consumption: 825 channel-getter call sites** — `CvPlayerAI` 386 · `CvCityAI` 370 · `CvUnitAI` 62 ·
+`CvWorkerAI` 2 · `CvTeamAI` 1.
+
+⛔ **This is NOT a 267-item worklist.** Per the roadmap, many collapse as the rebuilt infos wire through —
+measure what survives, then cut the genuine residue. The classes below are the unit of work, never the getter.
+
+- **① The WHAT-IF valuation — the identified FIRST block, and the cleanest.** The **26 `getAdditional*By*`
+  getters** on `CvCity` (`…BaseYieldByBuilding`, `…CommerceBySpecialist`, `…HappinessByCivic`,
+  `…HealthByFeature`, `…DefenseByBuilding`, …) ARE the legacy what-if valuation: each returns a **delta**, which
+  is exactly the [valuation protocol](../../architecture/patterns.md)'s "contexts in, proposed increase out".
+  Their replacement — `expectedFlatYields` / `expectedYieldModifiers` / `expectedPlotYields` /
+  `expectedFlatCommerce` / `expectedWellbeing` — is **BUILT and has ZERO callers**, which is why the two pass-in
+  scenarios currently hold vacuously.
+  ⚑ **Its consumers are precisely the TWO patterns.md names as ONE call:** the AI weighting a candidate
+  (`CvPlayerAI` 14, `CvCityAI` 7) and the build-list HOVER TOOLTIP (`CvBuildingFilters`, `CvBuildingSort`,
+  `CvDLLWidgetData`), plus `CvGameTextMgr`. Wiring them onto one valuation is what makes the displayed number and
+  the acted-on number the same number structurally.
+- **② Realized-value reads** (`getYieldRate`/`…100`, `getCommerceRate`/`…TimesTimes100`, `getMaintenanceTimes100`,
+  `getTotalDefense`/`getDefenseModifier`) — already answerable by the existing group reads; these are a consumer
+  move, not new surface.
+- **③ Per-SOURCE decomposition terms** (`getBuildingHappiness`, `getBonusGoodHealth`, `getFeatureGoodHappiness`,
+  `getReligionHappiness`, `getSpecialistHappiness`, `getCivicHappiness`, `getMilitaryHappiness`,
+  `getCelebrityHappiness`, `getVassalHappiness`, `getStateReligionHappiness`, …) — the legacy accumulators, cut by
+  [DEC-accumulator-cut-uniform](../../architecture/decisions.md#dec-accumulator-cut-uniform). ⛔ They do NOT each
+  earn a replacement getter: the group read answers the TOTAL, and per-source attribution is the ORACLE
+  endpoint's job, not the read surface's.
+- **④ The genuine residue needing NEW surface** — the slider math (`getCommerceFromPercent`,
+  `getCommerceRateAtSliderPercent`), the espionage counters, the live combat state (`getDefenseDamage`,
+  `getLastDefenseDamage`), `getHappinessTimer`, and the `CvPlayer` unit-upkeep family. These are what the
+  classification is FOR: only they need design.
+
 ## Stage 4 — the consumer cut (sequenced LAST; see the roadmap's ORDER ruling)
 
 - **The `CvCity`/`CvPlayer` getter consolidation** — known work, not the primary focus, and a fair few collapse on
@@ -238,6 +286,14 @@
   [patterns.md § THE PYTHON READ BOUNDARY](../../architecture/patterns.md). Build it for the pedia (a SHAPE oracle,
   NOT a coverage oracle — the appendix is enumerable). Read maps: [pedia-map.md](../../reference/pedia-read-map.md) ·
   [python-read-map.md](../../reference/python-read-map.md).
+  ⚖ **Sequenced AFTER the getter cut above (owner).** Two INFO-side holes are already named and would shape the
+  library wrong if it were written first: **(a) there is no `requires` RENDERER** — `CvEntryText` renders modifier
+  entries and conditions only, and its own header defers the requires/gate render, yet a pedia page's prereq block
+  is ~70 sites plus the Python `getGOMReqs` BoolExpr walk the structured tree is meant to delete; **(b) category /
+  sort metadata has no home** — the hub derives groupings from ~60 heuristics (`getEra`+1, `getBonusClassType`,
+  `getProductionCost() <= 0`, `getMaxGlobalInstances() == 1`, grid X/Y), which
+  [pedia-read-map finding 4](../../reference/pedia-read-map.md) flags as needing a decision on where category tags
+  live.
 
 ## Triggers / grants
 
