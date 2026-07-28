@@ -182,15 +182,15 @@
 > The concept + the target model: [engine.md § UnitCombat](../../reference/engine.md). The MINIMUM that unblocks
 > the stuck consumers is the cascade-QUERY surface, not a full re-taxonomy.
 
-- **Re-express the keyed "vs unit-combat-class" modifiers onto TAG predicates**, retiring `UNITCOMBAT_*` as a
-  modifier target. ⚖ **POST-REWORK, its own dedicated pass (owner)** — until it runs, tags and unitcombats live
-  side by side, which is sanctioned and costs nothing (the mapping is additive).
+⛔ **NOT #430 WORK — the class PURGE and the vs-modifier re-expression are OUT OF SCOPE (owner):** *"they can live
+side by side for a good long while, I am not purging unitcombats in the 430 work."* Coexistence is the sanctioned
+end state for this rework's duration, not a half-state to close ([engine.md § UnitCombat](../../reference/engine.md)),
+and the mapping being additive is what makes it cost nothing. ⚠ Tags taking over the identifier role was the
+purge's stated GATE, so meeting that gate reads like a green light — it is not one. Do not open it, and do not
+treat [unitcombat-merge-candidates.md](unitcombat-merge-candidates.md) as a live worklist.
+
 - **Reconcile the double flags** — `bSpy` lives on both the unit and the unit-combat; unify onto the `spy` tag,
   same for `outlaw`/criminal.
-- **Purge the classes that exist only to IDENTIFY** — expected to be hundreds of files, and **GATED on tags taking
-  over the identifier role**, not opportunistic: purging ahead of that removes classes still doing identifier duty
-  (the blunt purge that over-reached and was reverted). Bounded by the unreferenced-is-not-dead caveat — module XML
-  holds assignments. Candidates: [unitcombat-merge-candidates.md](unitcombat-merge-candidates.md).
 
 ## Triggers / grants
 
