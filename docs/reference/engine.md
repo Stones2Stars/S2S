@@ -213,6 +213,12 @@ save-break); derived data serializes nothing; deleting a changer means auditing 
   unit-combat (the vs-tag stat bundle) *and* has the `mounted` tag (its queryable type), because they answer
   different questions — *how does it fight?* vs *what is it?* A unit's effective tags are its own ∪ its combat
   classes'.
+  ⚑ **The payoff is a LARGE purge, and it is GATED, not opportunistic (owner): *"I expect to be able to purge
+  literally 100's of unitcombat files eventually, when they stop being used as identifiers, but we are not there
+  yet."*** That names the dependency exactly — the proliferation exists because the combat-class enum doubles as an
+  IDENTIFIER (the size/species/weapon/motility taxonomy). Once TAGS carry identity, every class that existed only to
+  identify becomes dead weight and goes. ⛔ So the purge follows the tag re-expression; purging ahead of it removes
+  classes still doing identifier duty (the blunt purge that over-reached and was reverted).
   ⚖ **This is the GOAL, not the now (owner) — and TAGS AND UNITCOMBATS LIVING SIDE BY SIDE IS SANCTIONED, not a
   half-state to fix.** The shipped data still keys vs-entries by `UNITCOMBAT_*` ([skills.md](../specs/skills.md) §1
   documents that current shape) and that is FINE: *"there is nothing stopping us from letting tags and unitcombats

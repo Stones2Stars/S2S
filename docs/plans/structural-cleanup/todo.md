@@ -80,9 +80,10 @@
   side by side, which is sanctioned and costs nothing (the mapping is additive).
 - **Reconcile the double flags** — `bSpy` lives on both the unit and the unit-combat; unify onto the `spy` tag,
   same for `outlaw`/criminal.
-- **Purge the vestigial classes** — a majority are referenced by no unit. Opportunistic, never required, and
-  bounded by the unreferenced-is-not-dead caveat (module XML holds assignments; a blunt purge over-reached once and
-  was reverted). Candidates: [unitcombat-merge-candidates.md](unitcombat-merge-candidates.md).
+- **Purge the classes that exist only to IDENTIFY** — expected to be hundreds of files, and **GATED on tags taking
+  over the identifier role**, not opportunistic: purging ahead of that removes classes still doing identifier duty
+  (the blunt purge that over-reached and was reverted). Bounded by the unreferenced-is-not-dead caveat — module XML
+  holds assignments. Candidates: [unitcombat-merge-candidates.md](unitcombat-merge-candidates.md).
 
 ## Triggers / grants
 
