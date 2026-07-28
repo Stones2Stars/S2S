@@ -4583,9 +4583,7 @@ int CvPlot::movementCost(const CvUnit* pUnit, const CvPlot* pFromPlot) const
 				}
 			}
 
-			const int iRouteFlatCost = std::max(fromRoute.getFlatMovementCost(), toRoute.getFlatMovementCost()) * pUnit->baseMoves();
-			FAssert(iRouteFlatCost > 0);
-			iResult = std::min(iMoveDenominator, std::min(iRouteCost, iRouteFlatCost));
+			iResult = std::min(iMoveDenominator, iRouteCost);
 		}
 		else
 		{

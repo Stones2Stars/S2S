@@ -23964,12 +23964,6 @@ void CvGameTextMgr::setRouteHelp(CvWStringBuffer &szBuffer, RouteTypes eRoute, b
 		szBuffer.append(gDLL->getText("TXT_KEY_ROUTE_MOVEMENT_COST", szTempBuffer.GetCString()));
 	}
 
-	if (info.getFlatMovementCost() != 0)
-	{
-		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_ROUTE_FLAT_MOVEMENT_COST", iMoveDenominator / info.getFlatMovementCost()));
-	}
-
 	if (info.getPrereqBonus() != NO_BONUS)
 	{
 		if ((GC.getGame().getActivePlayer() != NO_PLAYER && !GET_PLAYER(GC.getGame().getActivePlayer()).hasBonus((BonusTypes)info.getPrereqBonus())) || GC.getGame().getActivePlayer() == NO_PLAYER)

@@ -15,7 +15,6 @@
   "value": 1,
   "advancedStart": {
    "cost": 5
-  },
-  "flatMovementCost": 100
+  }
  }
 }

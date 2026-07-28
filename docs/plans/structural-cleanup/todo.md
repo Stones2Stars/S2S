@@ -36,9 +36,6 @@
   the test: what the substrate IS or DOES is a characteristic; what may exist THERE is a gate.
 - **Magnitudes → modifier families** — `sightRange` (vision), `cargo`, `captures`, `conscription`,
   `controlPoints`, `espionagePoints`, the radii (`cityRadius`, `workableRadius`, `cultureRange`).
-  ⚠ `flatMovementCost` (route) is the residue of the movement move: it needs its own MEMBER name in the
-  `movement` family (it is a flat-RATE override, not a flat magnitude, so it cannot share the `flat` slot with
-  the base cost) — an owner call on vocabulary, so it stays intrinsic until then.
 - **Constraints → `requires` / `allowed`** — `terrainImpassable`, `featureImpassable`, `requiresFlatlands`,
   `validTerrains`, `minAreaSize`, `distanceToLand`, the `found*` gates.
 - **Keys with a home already specced** — `tradeable` (910, TECH) is the `canTrade` block

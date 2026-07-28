@@ -3204,7 +3204,6 @@ void CvDLLWidgetData::parseActionHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 
 					// TODO Fix, make separate func
 					int iMovementCost = GC.getRouteInfo(eRoute).getMovementCost() + team.getRouteChange(eRoute);
-					int iFlatMovementCost = GC.getRouteInfo(eRoute).getFlatMovementCost();
 
 					int iMoves = 0;
 					if (iMovementCost > 0)
@@ -3221,33 +3220,11 @@ void CvDLLWidgetData::parseActionHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 						iMoves = GC.getMOVE_DENOMINATOR();
 					}
 
-					int iFlatMoves = 0;
-					if (iFlatMovementCost > 0)
-					{
-						iFlatMoves = (GC.getMOVE_DENOMINATOR() / iFlatMovementCost);
 
-						if ((iFlatMoves * iFlatMovementCost) < GC.getMOVE_DENOMINATOR())
-						{
-							iFlatMoves++;
-						}
-					}
-					else
+					if (iMoves > 1)
 					{
-						iFlatMoves = GC.getMOVE_DENOMINATOR();
-					}
-
-					if ((iMoves > 1) || (iFlatMoves > 1))
-					{
-						if (iMoves >= iFlatMoves)
-						{
-							szBuffer.append(NEWLINE);
-							szBuffer.append(gDLL->getText("TXT_KEY_ACTION_MOVEMENT_COST", iMoves));
-						}
-						else
-						{
-							szBuffer.append(NEWLINE);
-							szBuffer.append(gDLL->getText("TXT_KEY_ACTION_FLAT_MOVEMENT_COST", iFlatMoves));
-						}
+						szBuffer.append(NEWLINE);
+						szBuffer.append(gDLL->getText("TXT_KEY_ACTION_MOVEMENT_COST", iMoves));
 					}
 
 					szBuffer.append(NEWLINE);

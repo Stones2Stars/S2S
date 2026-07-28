@@ -31,8 +31,7 @@
   "iValue",
   "BonusType",
   "Yields",
-  "bSeaTunnel",
-  "iFlatMovement"
+  "bSeaTunnel"
  ],
  "boostsIn": [
   "improvementYieldChanges"

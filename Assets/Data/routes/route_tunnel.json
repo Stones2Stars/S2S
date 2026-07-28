@@ -38,7 +38,6 @@
   "advancedStart": {
    "cost": 20
   },
-  "flatMovementCost": 22,
   "seaTunnel": true
  }
 }

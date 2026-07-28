@@ -148,3 +148,14 @@
     the engine does today — "this is how it works" carries no weight without a live named reason (a spec
     requirement, the EXE calling in, save state, a real ordering dependency). A behaviour change is a fact to state
     and weigh, never a thing to defer.
+23. **The ROUTE flat-movement cost** (`iFlatMovement` → `CvRouteInfo::getFlatMovementCost`, consumed in
+    `CvPlot::movementCost` as `min(routeCost, flatCost × unit->baseMoves())`) *(dead — owner: "kill the
+    mechanic")*. It guaranteed every unit a FIXED tile count along a route regardless of its own moves
+    (`MOVE_DENOMINATOR / flatCost`), by scaling the per-step cost with `baseMoves`. Sitting inside a `min()` it
+    was a FLOOR, never a cap — a fast unit was not held back, it simply gained nothing. **13 of the 21 authored
+    routes had `flatCost == moveCost`, which makes it mathematically inert** (it binds only when
+    `baseMoves < moveCost / flatCost`, i.e. below 1), so it did anything at all only on the rail-and-tunnel
+    class. Engine path, route getter, Cy binding, both help composers and the data are all removed.
+    ⚠ **NOT the same thing as the UNIT skill of the same name** (`CvUnitInfo::isFlatMovementCost`, "every tile
+    costs 1 movement", [skills.md](../specs/skills.md)) — a different mechanic, which STAYS.
+    **Never reinstate the route-side one.**

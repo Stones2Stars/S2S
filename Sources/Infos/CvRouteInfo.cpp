@@ -16,7 +16,6 @@ CvRouteInfo::CvRouteInfo()
 	: m_iValue(0)
 	, m_iAdvancedStartCost(100)
 	, m_iMovementCost(0)
-	, m_iFlatMovementCost(0)
 	, m_iZobristValue(0)
 	, m_bSeaTunnel(false)
 	, m_ePrereqBonus(NO_BONUS)
@@ -45,7 +44,6 @@ void CvRouteInfo::mapFrom(const picojson::value& entity)
 	{
 		m_iValue = jsonIdInt(*pIdentity, "value");
 		m_iMovementCost = jsonIdInt(*pIdentity, "movementCost");
-		m_iFlatMovementCost = jsonIdInt(*pIdentity, "flatMovementCost");
 		m_bSeaTunnel = jsonIdBool(*pIdentity, "seaTunnel");
 		if (const picojson::object* pAdvancedStart = jsonChildObj(*pIdentity, "advancedStart"))
 		{

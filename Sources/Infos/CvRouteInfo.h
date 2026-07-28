@@ -41,7 +41,6 @@ public:
 	int getValue() const { return m_iValue; }                       // identity.value (route quality rank)
 	int getAdvancedStartCost() const { return m_iAdvancedStartCost; } // identity.advancedStart.cost
 	int getMovementCost() const { return m_iMovementCost; }         // identity.movementCost (base traversal)
-	int getFlatMovementCost() const { return m_iFlatMovementCost; } // identity.flatMovementCost
 	bool isSeaTunnel() const { return m_bSeaTunnel; }               // identity.seaTunnel
 	int getZobristValue() const { return m_iZobristValue; }
 
@@ -67,7 +66,6 @@ private:
 	int m_iValue;
 	int m_iAdvancedStartCost;
 	int m_iMovementCost;
-	int m_iFlatMovementCost;
 	int m_iZobristValue;               // map-hash drawn from the synced RNG in the ctor (OOS-load-bearing)
 	bool m_bSeaTunnel;
 	BonusTypes m_ePrereqBonus;                     // load-reconstructed single AND prereq (CvReversePass)

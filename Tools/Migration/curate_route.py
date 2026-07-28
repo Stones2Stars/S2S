@@ -7,8 +7,8 @@ empty, no `enables` block).
 Modeling calls (light-batch-classification.json, verified vs CvRouteInfo + the live consumers):
 - Yields -> the SPLIT base-yield families food/production/commerce at PLOT scope (a tile yield, summed into the
   plot alongside terrain/improvement yields by CvPlot::calculateYield) — a genuine cascade deposit.
-- iMovement -> the `movement` family (`movement.plot.flat`); iFlatMovement stays identity pending its own
-  member name. A route's
+- iMovement -> the `movement` family (`movement.plot.flat`). iFlatMovement is DROPPED -- the route flat-cost
+  mechanic is KILLED (owner), engine and data. A route's
   BASE traversal cost is an intrinsic own-stat read directly per-route by pathfinding (CvPlot::movementCost); it
   is never summed onto a scope accumulator. Base stats are identity; only the cascading DELTA (below) is a family.
 - TechMovementChanges -> the `movement` family ON THE ROUTE (owner ruling 2026-07-01). Each nonzero
@@ -45,7 +45,7 @@ ROUTE_FAMILIES = {
 }
 
 # Intrinsic own-stats -> identity, with clearer names than the default de_i would give.
-ROUTE_ID_RENAME = {"iFlatMovement": "flatMovementCost"}
+ROUTE_ID_RENAME = {}
 
 # Inbound entity-targeted modifiers that invert ONTO the route:
 #   (sourceEntity, field, targetType, family, valueKeys, unit, scope)
@@ -56,7 +56,7 @@ ROUTE_BOOSTS = [
 # TechMovementChanges is now HOMED on the route (post_process below), so it is DROPPED from the raw-identity
 # emit (it is emitted as a `movement` family, not parked). BonusType (single AND prereq bonus) is dropped —
 # store-inverted to the bonus's enables.routes; PrereqOrBonuses is already in the mapping's prereqs (cfg.drop).
-CFG = cc.EntityConfig("RouteInfo", extra_drop=["BonusType", "TechMovementChanges"],
+CFG = cc.EntityConfig("RouteInfo", extra_drop=["BonusType", "TechMovementChanges", "iFlatMovement"],
                       families=ROUTE_FAMILIES, id_rename=ROUTE_ID_RENAME,
                       to_identity={"iAdvancedStartCost": "advancedStart.cost"})
 

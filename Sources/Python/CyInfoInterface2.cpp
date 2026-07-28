@@ -132,7 +132,6 @@ void CyInfoPythonInterface2()
 
 		.def("getValue", &CvRouteInfo::getValue, "int ()")
 		.def("getMovementCost", &CvRouteInfo::getMovementCost, "int ()")
-		.def("getFlatMovementCost", &CvRouteInfo::getFlatMovementCost, "int ()")
 		.def("getPrereqBonus", &CvRouteInfo::getPrereqBonus, "int ()")
 
 		// Arrays
