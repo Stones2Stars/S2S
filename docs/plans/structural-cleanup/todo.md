@@ -63,6 +63,11 @@
   replaces them lands.
 - **The direct `gDLL->logMsg` / BetterBTSAI log-helper call sites** and the log-level globals they gate — retired
   WHOLESALE as each domain migrates onto the spine, never tidied in place.
+- **The building counter-damage engine path** — its DATA is cut, so the code is pure residue: `CvUnit`'s
+  `checkCityAttackDefensesDamage` + its combat-resolution call site, `CvCity`'s `canDamageAttackingUnitCombat` +
+  the `m_paiDamageAttackingUnitCombatCount` array and its `processBuilding` maintenance, two `CvCityAI`
+  valuation sites, and the two `CvGameTextMgr` help composers. All already compile errors (the getters live only
+  in `SourceArchive/`). The reworked mechanic is a trigger, authored fresh — S2S#453.
 
 ## Not built yet
 
