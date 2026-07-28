@@ -23937,9 +23937,6 @@ void CvGameTextMgr::setRouteHelp(CvWStringBuffer &szBuffer, RouteTypes eRoute, b
 		return;
 	}
 	CvWString szTempBuffer;
-	CvWString szFirstBuffer;
-
-	const int iMoveDenominator = GC.getMOVE_DENOMINATOR();
 
 	const CvRouteInfo& info = GC.getRouteInfo(eRoute);
 	if (!bCivilopediaText)
