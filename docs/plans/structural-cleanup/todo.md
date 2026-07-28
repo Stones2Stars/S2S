@@ -25,15 +25,10 @@
 ## Data — the `identity` effect re-home
 
 > The ruling: `identity` carries NO effects ([json.md §7](../../specs/json.md)). The shipped data does not obey it
-> — **103 of 213 authored identity keys carry effects, 5,571 authorings** (the other ~74k are text, display and
+> — **91 of 201 authored identity keys carry effects, 5,073 authorings** (the other ~74k are text, display and
 > genuine metadata, and stay). Each key re-homes to the block that already exists for its kind; the count is a
 > worklist, never a licence.
 
-- **Held booleans → the classification blocks.** The plot substrate's block now exists (`characteristics`,
-  [json.md §8](../../specs/json.md)) and the six unambiguous ones have moved. What is LEFT is the substrate keys
-  that are held-boolean-SHAPED but may be constraints instead — `flatMovementCost` (route), and deciding whether
-  `noImprovement` / `noCity` / `noBonus` (feature) are characteristics or `requires` gates. The spec's bound is
-  the test: what the substrate IS or DOES is a characteristic; what may exist THERE is a gate.
 - **Magnitudes → modifier families** — `sightRange` (vision), `cargo`, `captures`, `conscription`,
   `controlPoints`, `espionagePoints`, the radii (`cityRadius`, `workableRadius`, `cultureRange`).
 - **Constraints → `requires` / `allowed`** — `terrainImpassable`, `featureImpassable`, `requiresFlatlands`,
@@ -65,7 +60,7 @@
 ## Data — cross-curator claims to VERIFY
 
 - `curate_bonus` actually inverts the civic bonus-commerce modifiers (the civic curator drops them on that promise).
-- The yield resolver reads `identity.movementCost`.
+- The yield resolver reads the `movement` family (it read `identity.movementCost` before the move).
 - The property propagator/change-propagator re-homes actually happen at the unit/building passes.
 - PropertyBuilding min/max value bands are consumed by the building pass.
 - Every bespoke second-pass tag has live emit code, not just set membership.
