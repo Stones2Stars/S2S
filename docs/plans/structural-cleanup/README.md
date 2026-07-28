@@ -22,11 +22,14 @@ The engine game-object classes are back on `main`, so these describe live code a
 
 - **[legacy-value-calc-map.md](legacy-value-calc-map.md)** — every legacy per-turn value calc traced to its getter
   and its components. Confirm the named FUNCTION, never the line number.
-- **[legacy-cut-worklist.md](legacy-cut-worklist.md)** — the accumulator-cut MECHANISM
-  ([DEC-accumulator-cut-uniform](../../architecture/decisions.md#dec-accumulator-cut-uniform)), ordered by
-  cut-readiness. The value of the cut is legacy PURGE, not memory reclaimed — rank by leverage.
-- **[reader-inventory.md](reader-inventory.md)** — the reader→(scope, channel) census: which consumer reads the
-  final modifier-influenced value of each channel family.
+
+> ⛔ **A per-channel reader census is NOT how the consumer sweep is driven, and one is not to be re-generated.**
+> The previous one classified every reader as cascade / legacy / mixed against a substrate that has since been
+> archived, which left a confident-looking map whose "cascade" and "mixed" rows all silently meant legacy. Worse,
+> working from it makes the sweep a per-channel HOLE-PLUGGING exercise, and a hole plugged today is plugged with
+> the only thing standing there — legacy (the roadmap banner's structure-first rule). Drive the sweep from the
+> target surface and let the COMPILER census the consumers
+> ([DEC-playability-not-a-gate](../../architecture/decisions.md#dec-playability-not-a-gate)).
 - **[constructibility.md](constructibility.md)** — the legacy `canConstruct`/`canTrain` + reverse-index machinery
   the enabler replaces.
 - **[structural-cleanup.md](structural-cleanup.md)** — the `Sources/` tree reorg (landed) + the dead-code /

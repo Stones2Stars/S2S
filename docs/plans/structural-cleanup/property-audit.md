@@ -35,6 +35,15 @@
 > (accepted — its values will climb until the rebalance; the mechanic is dormant today). The rebalance's known
 > shape (owner): flammability's problem is NO early-game counters — every reducer is late (fire code / smoke
 > detector / fire service) — so counter-values get added to a few early entities (a data/balance pass).**
+>
+> ⚠ **The rebalance SHAPE is UNRECONCILED and needs an owner call — two are on record and they are not the same:**
+> (a) **add counter-values to a few early entities** (the line above), or (b) **scale the positive adders `/5`,
+> leaving negative reducers unchanged** — measured over `Assets/Data/buildings/` as **313 positive**
+> `PROPERTY_FLAMMABILITY.city.flat` adders vs **64 negative** reducers. Whichever wins, it lands as a **curator
+> scaling rule**: there is no separate `PROPERTY_FIRE` — all fire data is `PROPERTY_FLAMMABILITY` flowing through
+> the generic `PROPERTY_*` fold, so `curate_building.py` (which has no flammability rule today) gains one → recurate
+> + regen ([DEC-recurate-on-decision](../../architecture/decisions.md#dec-recurate-on-decision)). ⛔ Hand-editing the
+> derived JSONs is banned.
 > Why: the ORIGINAL property design made all pollution-class `<Properties>` one-shots, but building designers
 > after the original design authored against the same block ASSUMING per-turn — the shipped XML is mixed-intent
 > data sharing one shape, and the one-shot semantic "makes no sense whatsoever". A sanctioned intentional

@@ -40,8 +40,17 @@ once, here, rather than re-deriving a fresh prohibition at each seam.
 
 **⛔ "KEEP" means OUTSIDE the four systems — nothing else (owner).** The ONLY legacy that is legitimately kept is
 work that is none of the four systems' job: the **trade-route network calculation** (the cascade cannot re-derive
-the network, so it folds the route yield as an INPUT — [modifier §2a `tradeYield`](../specs/modifier.md)) and the
-**property engine's internal math** (the decay / diffusion / solver, owner-locked — [property-audit](../plans/structural-cleanup/property-audit.md)).
+the network, so it folds the route yield as an INPUT — [modifier §2a `tradeYield`](../specs/modifier.md)), the
+**property engine's internal math** (the decay / diffusion / solver, owner-locked — [property-audit](../plans/structural-cleanup/property-audit.md)),
+and the **WAREHOUSE mechanics** below.
+
+**⚖ THE WAREHOUSE CARVE-OUT — accumulating a rate and spending it is the GAME OBJECT's job, not the cascade's.**
+The cascade owns the RATE; what the object does with that rate over time is its own mechanic. Two instances, one
+shape: **production banking** (hammers accumulate into a build order, overflow spills) and **CULTURE** (the
+per-turn culture rate is a cascade commerce channel, but the banked culture VALUE, the culture LEVEL derived from
+it, and the border/plot-ownership it buys are the city's warehouse). A warehouse reads a cascade rate and keeps
+its own ledger, so it passes the whose-job test by naming no system — do not mistake the banked value for an
+unmigrated cascade channel and do not move the accumulation into a package.
 These pass the test above by naming NO system: ask "whose job is this?" and the answer is neither readJson, nor
 infos, nor cascade, nor enabler. **Anything a system SHOULD touch is never KEEP — it is wired or it is open.** A
 count is the tally's job, so a bespoke engine count-loop is an unwired tally domain, not a KEEP; availability is
