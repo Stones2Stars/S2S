@@ -60,13 +60,16 @@
     `plotDistance <= range`. Plot-culture SPREAD is the #429 spatial plane
     ([legacy-value-calc-map §9.4](../../reference/legacy-value-calc-map.md)), not a deposit down the scope spine,
     so it moves with that rework rather than into a family.
-- **The city WORKABLE RADIUS is the one genuinely open item, and it is ONE concept from two sources:**
-    `cityRadius` (19, CULTURELEVEL) is the radius a culture level grants, `workableRadius` (12, BUILDING) is a
-    building OVERRIDE of it (`setWorkableRadiusOverride`), and `CvCity::getNumCityPlots` picks the override when
-    present else the culture level's. It is a real gameplay magnitude — it decides which plots the city can work,
-    and it is what the `VICINITY` / `WORKABLE` predicates and the enabler's growing-radius rings read
-    ([enabler.md §3](../../specs/enabler.md)). No family names it. ⚠ Whatever it becomes, the TWO keys resolve to
-    ONE value with an override rule, so they land together or the rule is lost.
+- **The city WORKABLE RADIUS is PURE STATE (owner), so it needs no family — that is why none names it.**
+    Per [contexts.md](../../architecture/contexts.md) *"if it is current state, it is the CONTEXT's, there is no
+    third home"*, the resolved radius is `CityContext` business; the doc already leans on this, maintaining the
+    vicinity tiers off the culture-level fact BECAUSE the radius grows with culture. The mechanism stays
+    culture-expansion driven (owner).
+    The two authored keys are therefore INPUTS to that state, not deposits: `cityRadius` (19, CULTURELEVEL) is
+    the tier's config parameter, and `workableRadius` (12, BUILDING) is an OVERRIDE — `getNumCityPlots` takes it
+    when non-zero, else the culture level's. ⚠ The override is a REPLACE, not a sum, and the 12 authorings are
+    all late-game arcology/megastructure buildings granting radius 3, so whatever serves the state must express
+    "this building supersedes the culture tier" rather than adding to it.
 - **`controlPoints` (28) is NOT a magnitude — it is the COMMANDER system's per-turn budget.** A Great
   Commander backs one combat per point: a unit fighting within `commandRange` spends one via
   `tryUseCommander`, at zero the commander supports nobody else that turn, and `restoreControlPoints` refills
