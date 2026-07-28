@@ -275,6 +275,14 @@ measure what survives, then cut the genuine residue. The classes below are the u
   rewriting the loop is the work. A converted read wedged into an otherwise-legacy expression is the same defect
   one level down — convert the ARITHMETIC CLUSTER, not the operand
   ([fixed-point-and-scales §4c-bis](../../specs/curators/fixed-point-and-scales.md)).
+- **The BUILDING-PREREQ TABLE is retired, and its residue is outside the AI.** The per-building prereq-count map
+  (a `min` on a `requires` atom in the authored model) has no getter on the info any more, so
+  `CvPlayer::getBuildingPrereqBuilding` reads a member that does not exist — it is DANGLING, not working code, and
+  it goes. The AI is already off it: "which buildings need me" is the candidate's own
+  `edge(EDGEF_REQUIRED_BY, EDGEB_BUILDINGS)`, and "do I have enough prereqs" is the enabler's LISTED verdict.
+  ⚠ Still on it, as ordinary consumer debt: **`CvGameTextMgr`** (3 sites — the pedia's prereq lines, which belong
+  with the composer move onto rendered entry lines) and `CyPlayer` (inside the orphaned loader above). Delete the
+  `CvPlayer` function with the last of them; do NOT revive the table to keep a text line rendering.
 - **② Realized-value reads** (`getYieldRate`/`…100`, `getCommerceRate`/`…TimesTimes100`, `getMaintenanceTimes100`,
   `getTotalDefense`/`getDefenseModifier`) — already answerable by the existing group reads; these are a consumer
   move, not new surface.

@@ -4626,10 +4626,10 @@ bool CvCityAI::AI_scoreBuildingsFromListThreshold(std::vector<ScoredBuilding>& s
 			)
 		// adviser is not one we are ignoring
 		&&	(eIgnoreAdvisor == NO_ADVISOR || buildingInfo.getAdvisorType() != eIgnoreAdvisor)
-		// We can actually build the building
-		&&	(getBuildingAvailability(eBuilding) == EnablerDomain::STATE_LISTED)
-		// Automated production doesn't look at buildings with prerequisites?
-		&&	(!isProductionAutomated() || buildingInfo.getPrereqNumOfBuildings().empty()))
+		// We can actually build the building -- and this ONE gate answers prerequisites too: a candidate whose
+		// prereqs are unmet is GREYED, never LISTED (enabler.md §3/§6), so automated production needs no
+		// separate prereq test beside it.
+		&&	(getBuildingAvailability(eBuilding) == EnablerDomain::STATE_LISTED))
 		{
 			int64_t iValue = 0;
 
@@ -6318,41 +6318,46 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 
 				iValue += religiousBuildingValue;
 
-				// is this building needed to build other buildings?
-				for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
+				// Is this building needed to build other buildings? Asked FORWARD off this building's OWN reverse
+				// edge family -- every info already carries its reverse lookups after load
+				// ([DEC-one-reverse-view]), so the dependents are a list fetch over ~a handful, never the
+				// backwards sweep of all ~5,200 buildings this used to run PER CANDIDATE.
+				// A prereq COUNT lives as a `min` on a requires atom now, and the AI's real question -- "is a
+				// dependent BLOCKED, and might I be why?" -- is the enabler's own O(1) verdict: a dependent
+				// sitting GREYED is in the tree with its gate unmet. Membership + that verdict ARE the answer,
+				// so nothing re-derives a count. ⚠ This weighs differently from a count-based test; deliberate.
+				const std::vector<int>* pDependentBuildings = kBuilding.edge(EDGEF_REQUIRED_BY, EDGEB_BUILDINGS);
+				if (pDependentBuildings != NULL)
 				{
-					PROFILE("CvCityAI::AI_buildingValueThresholdOriginal.Buildings");
-
-					const BuildingTypes eLoopBuilding = static_cast<BuildingTypes>(iI);
-					const int iPrereqBuildings = kOwner.getBuildingPrereqBuilding(eLoopBuilding, eBuilding);
-
-					// if we need some of us to build iI building, and we dont need more than we have cities
-					if (iPrereqBuildings > 0 && iPrereqBuildings <= iNumCities)
+					for (std::vector<int>::const_iterator it = pDependentBuildings->begin(),
+						itEnd = pDependentBuildings->end(); it != itEnd; ++it)
 					{
-						// do we need more than what we are currently building?
-						if (iPrereqBuildings > kOwner.getBuildingCountPlusMaking(eBuilding))
+						const BuildingTypes eLoopBuilding = static_cast<BuildingTypes>(*it);
+
+						if (getBuildingAvailability(eLoopBuilding) != EnablerDomain::STATE_GREYED)
 						{
-							iValue += (iNumCities * 3);
+							continue;
+						}
+						iValue += (iNumCities * 3);
 
-							if (bCulturalVictory1)
+						if (bCulturalVictory1)
+						{
+							const int iLoopBuildingCultureModifier = GC.getBuildingInfo(eLoopBuilding).getCommerceModifier(COMMERCE_CULTURE);
+							if (iLoopBuildingCultureModifier > 0)
 							{
-								const int iLoopBuildingCultureModifier = GC.getBuildingInfo(eLoopBuilding).getCommerceModifier(COMMERCE_CULTURE);
-								if (iLoopBuildingCultureModifier > 0)
+								const int iLoopBuildingsBuilt = kOwner.getBuildingCount(eLoopBuilding);
+
+								// If we have less than the number needed in culture cities
+								// OR we are one of the top cities AND we do not have the building
+								if (iLoopBuildingsBuilt < iCulturalVictoryNumCultureCities
+								|| iCultureRank <= iCulturalVictoryNumCultureCities
+								&& !hasBuilding(eLoopBuilding))
 								{
-									const int iLoopBuildingsBuilt = kOwner.getBuildingCount(eLoopBuilding);
+									iValue += iLoopBuildingCultureModifier;
 
-									// If we have less than the number needed in culture cities
-									// OR we are one of the top cities AND we do not have the building
-									if (iLoopBuildingsBuilt < iCulturalVictoryNumCultureCities
-									|| iCultureRank <= iCulturalVictoryNumCultureCities
-									&& !hasBuilding(eLoopBuilding))
+									if (bCulturalVictory3)
 									{
-										iValue += iLoopBuildingCultureModifier;
-
-										if (bCulturalVictory3)
-										{
-											iValue += iLoopBuildingCultureModifier * 2;
-										}
+										iValue += iLoopBuildingCultureModifier * 2;
 									}
 								}
 							}
@@ -12823,27 +12828,20 @@ int CvCityAI::getBuildingCommerceValue(BuildingTypes eBuilding, int iI, int* aiF
 			}
 			else
 			{
-				int iCountBuilt = kOwner.getBuildingCountPlusMaking(eBuilding);
-
-				// do we have enough buildings to build extras?
-				bool bHaveEnough = true;
+				// Do we have enough buildings to build extras? The enabler already folds BOTH halves of that --
+				// the `requires` gate (the prereq buildings this used to re-derive by sweeping the whole
+				// database) and the `allowed` cap -- into ONE maintained tri-state, so a LISTED candidate is by
+				// construction one whose prereqs are satisfied (enabler.md §3/§4). O(1), and no scan.
+				// ⚠ This answers the CURRENT verdict, where the sweep it replaces asked a scaled what-if ("would
+				// I still have enough for N more?"). That scaling was a property of the retired per-building
+				// prereq table and has no source in the authored model, so the question collapses here --
+				// deliberate, and the kind of behaviour change validation.md says to state rather than defer.
+				bool bHaveEnough = (getBuildingAvailability(eBuilding) == EnablerDomain::STATE_LISTED);
 
 				// if its limited and the limit is less than the number we need in culture cities, do not build here
 				if (iLimitedWonderLimit >= 0 && (iLimitedWonderLimit <= iCulturalVictoryNumCultureCities))
 				{
 					bHaveEnough = false;
-				}
-
-				for (int iJ = 0; bHaveEnough && iJ < GC.getNumBuildingInfos(); iJ++)
-				{
-					// count excess the number of prereq buildings which do not have this building built for yet
-					const int iPrereqBuildings = kOwner.getBuildingPrereqBuilding(eBuilding, (BuildingTypes)iJ, -iCountBuilt);
-
-					// do we not have enough built (do not count ones in progress)
-					if (iPrereqBuildings > 0 && kOwner.getBuildingCount((BuildingTypes)iJ) < iPrereqBuildings)
-					{
-						bHaveEnough = false;
-					}
 				}
 
 				// if we have enough and our rank is close to the top, then possibly build here too
