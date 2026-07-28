@@ -48,9 +48,17 @@
     `MISSION_INFILTRATE` — `canInfiltrate` gates on it being non-zero and `infiltrate()` spends it — so the
     authoring home rides the missions/`CvOutcome` PERMANENT carve-out, not this sweep. The channel is settled;
     only where it is written waits.
-- **Magnitudes with NO family named yet** — `conscription`, `controlPoints`, and the radii
-  (`cityRadius`, `workableRadius`, `cultureRange`). These are the ones that genuinely need a home decided; the
-  four above do not.
+- **Magnitudes with NO family named yet** — `conscription` and the radii (`cityRadius`, `workableRadius`,
+  `cultureRange`). The genuinely unplaced set.
+- **`controlPoints` (28) is NOT a magnitude — it is the COMMANDER system's per-turn budget.** A Great
+  Commander backs one combat per point: a unit fighting within `commandRange` spends one via
+  `tryUseCommander`, at zero the commander supports nobody else that turn, and `restoreControlPoints` refills
+  at turn start (a commodore twin exists for the naval side). So it is a capacity + a spend + a refill —
+  closest in shape to the WAREHOUSE carve-out ([north-star.md](../../architecture/north-star.md)): the capacity
+  could be a channel, but the per-turn ledger is the object's own business.
+  ⛔ Do NOT mint a commander family for this one key — that is the machinery-for-one-mechanic move declined for
+  counter-damage. The commander/commodore system is simply UNMAPPED: it appears in no carve-out list and no
+  spec, so it wants a pass of its own before any of its data is re-homed.
 - **Constraints → `requires` / `allowed`** — `terrainImpassable`, `featureImpassable`, `requiresFlatlands`,
   `validTerrains`, `minAreaSize`, `distanceToLand`, the `found*` gates.
 - **Keys with a home already specced** — `tradeable` (910, TECH) is the `canTrade` block
