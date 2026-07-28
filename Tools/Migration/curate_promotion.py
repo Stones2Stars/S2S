@@ -123,7 +123,7 @@ FAMILIES = {
     # NORMALIZED: a discount of 25 authors as costs.upgrade -25 (a cost modifier, uniform with the empire-scope
     # price modifiers); the NEGATE_TAGS hook below flips it.
     "iUpgradeDiscount":             ("costs", "upgrade", "percent"),
-    "iVisibilityChange":            ("vision", "range", "flat"),
+    "iVisibilityChange":            ("vision", None, "flat"),   # sight STRENGTH (how far), the engine's getExtraVisibilityRange -- scope carries it, no member (vision.md)
     "iCaptureProbabilityModifierChange":   ("capture", "probability", "flat"),
     "iCaptureResistanceModifierChange":    ("capture", "resistance", "flat"),
     "iPoisonProbabilityModifierChange":    ("poison", "probability", "flat"),  # afflictions (inert), kept-for-now
@@ -315,14 +315,9 @@ def curate(typ, rec, store):
             v = -v
         if v:
             node = fam_unit(family)
-            if family == "vision":
-                node = vision           # route vision.range into the vision block instead
             if member:
                 node = node.setdefault(member, OrderedDict())
             node[unit] = v
-    # vision.range got mis-routed above only for the scalar; clean the empty stub
-    if "vision" in fams and not fams["vision"]["unit"]:
-        fams.pop("vision")
 
     # --- vs-keyed pair-lists -> family.unit.<kw>.{TYPE}[.member].unit ---
     for tag, (family, kw, member, unit) in VS_KEYED.items():

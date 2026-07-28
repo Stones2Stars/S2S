@@ -20,13 +20,13 @@
    }
   }
  },
- "skills": {
-  "immuneToFirstStrikes": true
- },
  "vision": {
-  "range": {
+  "unit": {
    "flat": 1
   }
+ },
+ "skills": {
+  "immuneToFirstStrikes": true
  },
  "promotionLine": {
   "PROMOTIONLINE_PROJECTION": 2

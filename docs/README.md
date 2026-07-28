@@ -36,6 +36,8 @@ Verify against the tree before acting on any claim that something is built.
 - **[specs/enabler.md](specs/enabler.md)** — the **"can I?"** machine (2-pass generate→gate; `enables`/`requires`/`allowed`).
 - **[specs/modifier.md](specs/modifier.md)** — the **"how much?"** machine (deposit-down, combine, the deliveryguy ownership rule).
 - **[specs/tally.md](specs/tally.md)** — the **"how many?"** machine (counts roll up, serializes nothing).
+- **[specs/vision.md](specs/vision.md)** — the **"how far can I see?"** machine (a budget spent walking outward,
+  exactly as movement works; the STRENGTH vs ELEVATION split).
 - **[specs/triggers.md](specs/triggers.md)** — the **provisions** machine (trigger → chance → action; a grant is a
   trigger with a null condition), incl. the game-start START PACKAGES.
 - **[specs/event-spine.md](specs/event-spine.md)** — the one dispatch primitive consumers draw events from (the KIND firewall).

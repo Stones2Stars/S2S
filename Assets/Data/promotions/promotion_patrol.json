@@ -5,6 +5,11 @@
    "PROMOTION_PATROL2"
   ]
  },
+ "vision": {
+  "unit": {
+   "flat": 1
+  }
+ },
  "capture": {
   "unit": {
    "probability": {
@@ -15,11 +20,6 @@
  "revoltProtection": {
   "unit": {
    "percent": 3
-  }
- },
- "vision": {
-  "range": {
-   "flat": 1
   }
  },
  "promotionLine": {

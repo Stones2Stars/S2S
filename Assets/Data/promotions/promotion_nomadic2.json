@@ -6,7 +6,7 @@
   }
  },
  "vision": {
-  "range": {
+  "unit": {
    "flat": 1
   }
  },

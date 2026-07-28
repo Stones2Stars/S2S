@@ -1,10 +1,8 @@
 {
  "type": "FEATURE_PLATY_SUGARLOAF",
- "vision": {
+ "obstruction": {
   "plot": {
-   "seeThrough": {
-    "flat": 1
-   }
+   "flat": 1
   }
  },
  "characteristics": [

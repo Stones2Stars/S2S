@@ -37,11 +37,9 @@
    }
   }
  },
- "vision": {
+ "obstruction": {
   "plot": {
-   "seeThrough": {
-    "flat": 1
-   }
+   "flat": 1
   }
  },
  "triggers": [

@@ -86,6 +86,11 @@
    }
   }
  },
+ "vision": {
+  "unit": {
+   "flat": 1
+  }
+ },
  "capture": {
   "unit": {
    "probability": {
@@ -95,11 +100,6 @@
  },
  "skills": {
   "immuneToFirstStrikes": true
- },
- "vision": {
-  "range": {
-   "flat": 1
-  }
  },
  "promotionLine": {
   "PROMOTIONLINE_SENSORS": 2

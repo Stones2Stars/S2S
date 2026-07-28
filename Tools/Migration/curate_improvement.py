@@ -83,8 +83,11 @@ IMP_FAMILIES = {
     "iAirBombDefense":   {"channel": "defense",  "scope": "plot", "kind": "flat", "member": "air"},    # air-bomb defense magnitude (rolled, CvUnit.cpp:7127); owner 2026-07-01
     "iHappiness":        {"channel": "happiness", "scope": "plot", "kind": "flat"},   # #430 gap fix: intrinsic per-radius-improvement city happiness (was a dead identity.happiness leftover; x1 human, read raw by legacy updateFeatureHappiness)
     "iCulture":          {"channel": "culture",  "scope": "plot", "kind": "flat"},
-    "iVisibilityChange": {"channel": "vision",   "scope": "plot", "kind": "flat", "member": "visibilityRange"},
-    "iSeeFrom":          {"channel": "vision",   "scope": "plot", "kind": "flat", "member": "seeFrom"},
+    # Both legacy levers raised how well an observer standing here sees -- one as a radius, one as an elevation
+    # tier -- so both ARE elevation (vision.md), and they sum onto the one channel as the two number systems go.
+    # Elevation is POSITIONAL: a watchtower raises whoever stands on it, and only while they stand on it.
+    "iVisibilityChange": {"channel": "elevation", "scope": "plot", "kind": "flat"},
+    "iSeeFrom":          {"channel": "elevation", "scope": "plot", "kind": "flat"},
 }
 
 # Placement bools NOT already in the mapping prereqs (those are auto-dropped) — drop from the default path; requires_fn

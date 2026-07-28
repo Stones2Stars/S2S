@@ -42,7 +42,6 @@
     and nothing else, as do `FIGHTER` (16) and `SEAPLANE` (1) to air/airUnit/military — so converting on the
     current set would SILENTLY MERGE them (a people-only transport would start taking troops). Mint the missing
     tags first; that is ordinary open-registry authoring ([tags.md](../../specs/tags.md)), not an engine change.
-  - `sightRange` (30, BUILDING) → the **`vision`** block ([json.md §9](../../specs/json.md), line-of-sight).
   - `captures` (450, UNIT) → the **`capture`** family (the §6 unit-plane list).
   - `espionagePoints` (24, UNIT) → the **`espionage`** family — one of the four commerce channels (owner), so
     the family already exists. The value is an espionage-commerce amount delivered as a ONE-SHOT payload, which
@@ -88,6 +87,27 @@
 - **The inert test's identity whitelist is a SYMPTOM of this** (`curate_common`): it exists only because identity
   currently carries effects. When the re-home lands the carve-out goes with it and the section test alone is
   enough.
+
+## Vision
+
+> The model: [vision.md](../../specs/vision.md) — `vision` (strength) + `elevation` (height, positional) +
+> `obstruction` (what the ground costs to see through), a budget spent walking outward exactly as movement works.
+
+- **The city-side wiring does not exist.** Buildings deposit their sight into `CvCity::m_iLineOfSight`, which is
+  serialized, reset and maintained on every building add/remove — and **read by nothing** (no caller, not
+  `DllExport`, no Python consumer). A city's sight is a hardcoded `changeAdjacentSight(team, 1, …)`, so the 30
+  buildings authoring it grant no vision at all while the pedia advertises it and `CvCityAI` pays 15/level for
+  it. A city needs the `visibilityRange()`-equivalent the unit side already has.
+- **TERRAIN authors no elevation yet.** Relief is engine-derived from the plot type (`getTerrainElevation`:
+  flat/hills/peak → 0/1/2), so a peak's `elevation.plot.flat: 2` is data that has to be AUTHORED, not migrated —
+  there is no legacy field to convert. Same for terrain `obstruction`.
+- **The `vision` key still doubles as the hide-and-seek tables** — 13 non-scope keys (`invisible`,
+  `visibilityIntensity`, `invisibilityIntensity`, the per-terrain/feature/improvement invisibility maps) sit
+  under `vision` beside the scope-keyed family, so the block is half family and half bespoke. They are the
+  reserved **`detection`** plane ([json.md §6](../../specs/json.md)); the split lands with the hide-and-seek
+  rework, which [vision.md §4](../../specs/vision.md) is the missing half of.
+- **`MAX_UNIT_VISIBILITY_RANGE` / `RECON_VISIBILITY_RANGE`** (8 / 5) survive as engine constants; the first is
+  the clamp on `sight`, the second is a recon unit's strength and wants authoring as one.
 
 ## Data — blocked on a prerequisite
 

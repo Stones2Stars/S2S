@@ -46,14 +46,9 @@
    }
   }
  },
- "vision": {
+ "elevation": {
   "plot": {
-   "visibilityRange": {
-    "flat": 3
-   },
-   "seeFrom": {
-    "flat": 1
-   }
+   "flat": 1
   }
  },
  "characteristics": [

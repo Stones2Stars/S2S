@@ -12,16 +12,16 @@
    ]
   }
  },
+ "vision": {
+  "unit": {
+   "flat": 1
+  }
+ },
  "capture": {
   "unit": {
    "probability": {
     "flat": 3
    }
-  }
- },
- "vision": {
-  "range": {
-   "flat": 1
   }
  },
  "promotionLine": {
