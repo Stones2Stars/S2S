@@ -723,10 +723,28 @@ the values; the engine combines them — the combine mode is **family metadata**
 Empire-agnostic self-description. Read directly — never summed or cascaded.
 
 - **`identity`** — "what am I": all **TEXT** (`description`, `help`, `civilopedia`, `message`, `quote`, `strategy`,
-  `adjective`, `shortDescription`) + intrinsic flags/values (radii, classifications, capability bools, base stats).
-  ⛔ **`identity` is STRICTLY self-description — NEVER a catch-all** (owner 2026-07-11): a datum that isn't "what am I"
+  `adjective`, `shortDescription`), display/pedia placement, and metadata ABOUT the entity that produces nothing on
+  its own (`conquestProbability`, `mapCategories`, AI worth).
+  ⛔ **`identity` is STRICTLY self-description — NEVER a catch-all** (owner): a datum that isn't "what am I"
   (e.g. per-religion spread strength) does NOT go here; it gets its own block (`spread`, §9). Reaching for `identity`
   because a value has no obvious home is the anti-pattern.
+  ⛔ **AND IT CARRIES NO EFFECTS AT ALL (owner).** Not "few", not "only intrinsic ones" — **none**. A value that
+  DOES something has a home already and `identity` is never it:
+  - a **held boolean ability** is a classification block — unit `skills`, building `attributes`, empire
+    `capabilities` (§8). *`nukeImmune` is the worked case, and the data already proves the rule: **1367 buildings
+    author it in `attributes` and 6 units in `skills`** — correct. The only misplaced ones are **29 FEATURES**
+    authoring it in `identity`.* ⚠ Two facts that case exposes, both open: **plot substrate has no classification
+    block** (§8 covers unit / building / empire and stops), and the feature's meaning is **not** the building's —
+    a building's `nukeImmune` makes its CITY immune, a feature's means the FEATURE survives the blast. One word,
+    two mechanics, different carriers; re-homing must not merge them.
+  - a **magnitude** is a modifier family (§6) — a radius, a movement cost, a sight range, a cargo amount.
+  - a **constraint on what may exist or be built** is `requires` / `allowed` (§4).
+  - a **capability to trade / work / travel on something** is its own root block (`canTrade`, `canTradeOn`,
+    `canWorkOn` — [capabilities.md](capabilities.md)).
+
+  ⚠ The shipped data does not yet obey this: **103 of 213 authored `identity` keys carry effects.** That is a
+  re-home worklist, not a licence — an effect authored into `identity` is a data error whichever way the count
+  goes.
   Two buildability flags: `notConstructible` (excluded from the player production queue; placed by another system)
   and `autoBuild` (the placing system is the engine's own auto-placement); `autoBuild ⊂ notConstructible`.
   ⛔ **A `notConstructible` entity carries NO `requires.build` — placement is UNCONDITIONAL and DORMANCY decides

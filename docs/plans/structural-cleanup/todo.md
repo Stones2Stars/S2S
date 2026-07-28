@@ -22,6 +22,33 @@
 - The ruling-16 trigger-plane set (`survivor`, `cityCapture`, `combat.subdueAnimal`, `combat.nukeInterception`) —
   each attaches to its trigger's `chance`; authoring shapes finalize with the trigger system's build-out.
 
+## Data — the `identity` effect re-home
+
+> The ruling: `identity` carries NO effects ([json.md §7](../../specs/json.md)). The shipped data does not obey it
+> — **103 of 213 authored identity keys carry effects, 5,571 authorings** (the other ~74k are text, display and
+> genuine metadata, and stay). Each key re-homes to the block that already exists for its kind; the count is a
+> worklist, never a licence.
+
+- **Held booleans → the classification blocks** — `nukeImmune` / `zoneOfControl` / `actsAsCity` / `countsAsPeak` /
+  `noImprovement` / `noCity` / `noBonus`. ⛔ Blocked for the plot substrate: **features and terrain have no
+  classification block** (§8 defines unit `skills`/`tags`/`state`, building `attributes`, empire `capabilities`
+  and stops), so this needs an owner call on whether `attributes` extends to plot substrate or the substrate gets
+  its own. ⚠ Do NOT merge the two `nukeImmune` mechanics while re-homing — a BUILDING's makes its city immune
+  (already correctly in `attributes`, 1367), a FEATURE's means the feature survives the blast (the 29 misplaced).
+- **Magnitudes → modifier families** — `movementCost` / `flatMovementCost` (the movement resolver),
+  `sightRange` (vision), `cargo`, `captures`, `conscription`, `controlPoints`, `espionagePoints`, the radii
+  (`cityRadius`, `workableRadius`, `cultureRange`).
+- **Constraints → `requires` / `allowed`** — `terrainImpassable`, `featureImpassable`, `requiresFlatlands`,
+  `validTerrains`, `minAreaSize`, `distanceToLand`, the `found*` gates.
+- **Keys with a home already specced** — `tradeable` (910, TECH) is the `canTrade` block
+  ([capabilities.md](../../specs/capabilities.md)); `commerceDoubleTime` is a second deposit gated on
+  `existedFor` ([json.md §3](../../specs/json.md)); `advancedStart` is already flagged *"parked in identity …
+  pending review"* by `curate_handicap.py`; `pillageGold` (131, IMPROVEMENT) is recorded as an ORPHANED dead
+  field ([legacy-value-calc-map §10.3](../../reference/legacy-value-calc-map.md)) and drops rather than moves.
+- **The inert test's identity whitelist is a SYMPTOM of this** (`curate_common`): it exists only because identity
+  currently carries effects. When the re-home lands the carve-out goes with it and the section test alone is
+  enough.
+
 ## Data — blocked on a prerequisite
 
 - **`paralyze` → the `state` block** — blocked on the greenfield `state` model ([state.md](../../specs/state.md)),
