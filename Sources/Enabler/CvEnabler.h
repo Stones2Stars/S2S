@@ -67,6 +67,12 @@ public:
 	// gate pass). Split out from FLAG_GATE_FAILED precisely so bContinue can tell "queued" from "gate failed".
 	void setQueued(int iId, bool bQueued);
 	bool isHeld(int iId) const;
+	// The STATIC-EXCLUSION read (enabler.md par.8): the permanent, life-of-the-owner bars seeded at initDomain
+	// (a tech's identity.disable + its civilization's never-researchable list; a building's notConstructible; a
+	// unit's spawnOnly). It is the membership plane's own verdict, so a CAN-I-EVER consumer asks HERE rather
+	// than re-reading the authoring off the infos -- that duplicate is a second implementation of one verdict
+	// ([DEC-single-implementation]).
+	bool isStaticExcluded(int iId) const;
 
 	// The bare O(1) reads.
 	unsigned char state(int iId) const;

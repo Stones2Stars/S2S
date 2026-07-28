@@ -8109,11 +8109,13 @@ bool CvPlayer::canEverResearch(TechTypes eTech) const
 	if (eTech < 0 || eTech >= GC.getNumTechInfos()) {
 		return false; // ID de tech invalide
 	}
-	CvTechInfo& kTechInfo = GC.getTechInfo(eTech);
-	if (kTechInfo.isDisable()
-	|| GC.getCivilizationInfo(getCivilizationType()).isCivilizationDisableTechs(eTech)
+	// The two PERMANENT membership bars are the ENABLER's, on its static-exclusion plane (enabler.md par.8) --
+	// seeded once by TechEnabler::initDomain from identity.disable + this civilization's never-researchable
+	// list. Re-reading that authoring off the infos here was a second implementation of one verdict
+	// ([DEC-single-implementation]); the plane IS the answer.
+	if (m_enabler.techs.isStaticExcluded(eTech)
 	|| !GC.getGame().canEverResearch(eTech)
-	|| kTechInfo.isGlobal() && (isNPC() || GC.getGame().countKnownTechNumTeams(eTech) > 0))
+	|| GC.getTechInfo(eTech).isGlobal() && (isNPC() || GC.getGame().countKnownTechNumTeams(eTech) > 0))
 	{
 		return false;
 	}
@@ -8122,12 +8124,15 @@ bool CvPlayer::canEverResearch(TechTypes eTech) const
 	// Religion techs are global and can thus only be invented once by one player in a game.
 	if (GC.getGame().isOption(GAMEOPTION_RELIGION_LIMITED) && !canFoundReligion())
 	{
-		foreach_(const CvReligionInfo* info, GC.getReligionInfos())
+		// WHICH RELIGIONS DOES THIS TECH UNLOCK? -- the tech's own `enables` edge, not a sweep of every religion
+		// asking the reverse question. This runs per tech inside the AI's tech loops, so the sweep was paid
+		// religions x techs every time a research choice was scored.
+		std::set<int> unlockedReligions;
+		EnablerKernel::addEdge(EnablerKernel::infoFor(EDGEB_TECHS, (int)eTech), EDGEF_ENABLES, EDGEB_RELIGIONS, unlockedReligions);
+
+		if (!unlockedReligions.empty())
 		{
-			if (info->getTechPrereq() == eTech)
-			{
-				return false;
-			}
+			return false;
 		}
 	}
 	return true;

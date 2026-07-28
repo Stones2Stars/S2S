@@ -68,6 +68,11 @@ void EnablerDomain::setStaticExcluded(int iId, bool bExcluded)
 	refresh(iId);
 }
 
+bool EnablerDomain::isStaticExcluded(int iId) const
+{
+	return inRange(iId) && (m_aFlags[iId] & (unsigned char)FLAG_STATIC_EXCLUDED) != 0;
+}
+
 void EnablerDomain::setGateFailed(int iId, bool bFailed)
 {
 	if (!inRange(iId)) return;

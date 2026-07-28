@@ -407,6 +407,15 @@ measure what survives, then cut the genuine residue. The classes below are the u
   set, and the `AI_chooseProduction` focus-ladder collapse into ONE unified scoring pass
   ([enabler.md §6/§8](../../specs/enabler.md)). The focus-ladder collapse is an AI-architecture change, not a
   per-loop rewrite.
+- **`AI_bestTech` / `AI_bestReligiousTech` still sweep every tech, and the fix is the §8 OVERLAY WALK, not a
+  frontier swap.** They deliberately look PAST the frontier — a candidate is kept at `findPathLength <=
+  iMaxPathLength`, and up to `7 x` that while beelining — so `listedIds` is the wrong driver and swapping to it
+  would break multi-step targeting. The spec'd shape is the picking logic's own
+  ([enabler.md §8](../../specs/enabler.md)): overlay "as if this tech were held" on the maintained membership
+  planes (`enableCount`/`removeCount` are public for exactly this), re-apply the §7.1 formula, and walk OUTWARD
+  from the frontier to the depth wanted — visiting only reachable candidates instead of scoring all ~943 techs
+  and running a path walk per candidate. ⛔ Not a per-loop rewrite and not a carve-out: it is the one genuine
+  design piece left on the tech plane, and it stays open until it is built properly.
 - **The whole-database BUILDING sweeps LEFT outside `CvCityAI`** — the enablement valuations now ask the asking
   entity's own compiled edge ([DEC-one-reverse-view](../../architecture/decisions.md#dec-one-reverse-view)); what
   remains is THREE distinct classes, and treating them as one job is the trap:
