@@ -144,12 +144,21 @@ differentiation entirely. A silent 0 is the masked-hole class
 ([DEC-no-legacy-masking](../../architecture/decisions.md#dec-no-legacy-masking)); the spec is unambiguous that a
 substrate's base cost IS the family ([modifier.md §6](../../specs/modifier.md)).
 
-⚠ **It is NOT a three-line getter swap, and doing it as one is the banned move.** The family is ×100 native while
-`m_iMovementCost` is human, and `CvPlot::movementCost` mixes it with `MOVE_DENOMINATOR`, the hills/river/peak
-extras, the route `min`-override and the unit's own moves — so converting the getter alone manufactures exactly
-the compensating fudge factor that means the cluster boundary was drawn wrong
-([fixed-point-and-scales §4c-bis](../../specs/curators/fixed-point-and-scales.md)). It lands with the MOVEMENT
-cluster below, not before it.
+⛔ **The fix is NOT to re-point `getMovementCost()` at the family — that is the computed-getter FLIP, and it is
+dead** ([superseded-ideas #15](../../architecture/superseded-ideas.md),
+[DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface)). Keeping the legacy signature
+and swapping its body leaves every call site untouched, which is the half-migration tell, not the win. The getter
+is the wrong SHAPE regardless of what feeds it: a per-channel scalar on an info is the very thing
+[patterns.md](../../architecture/patterns.md)'s DATA-OUT contract replaces with a per-GROUP parameterized read.
+
+⇒ **`getMovementCost()` is on the DELETION list.** The substrate serves the family through the coherent surface —
+`getFlatMovement(MovementKind, CvCascScope)`, mirroring the `getFlatCombat` already in tree — and
+`CvPlot::movementCost` is re-expressed onto it rather than left believing it still reads a scalar.
+
+⚠ The SCALE conversion rides along and does not lead: the family is ×100 while `m_iMovementCost` was human, and
+the resolver mixes it with `MOVE_DENOMINATOR`, the hills/river/peak extras, the route `min`-override and the
+unit's own moves — so the reduce belongs at that consumer, once, with no compensating constant left at any mixing
+site ([fixed-point-and-scales §4c-bis](../../specs/curators/fixed-point-and-scales.md)).
 
 ## Legacy still breathing — the KILL LIST
 
