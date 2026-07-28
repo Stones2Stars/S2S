@@ -431,6 +431,11 @@ of them:
   Python-authoritative gameplay possible at all, so this is REQUIRED FUNCTIONALITY, not a deferral —
   [DEC-no-deferred](decisions.md#dec-no-deferred) does not apply to it and it is not a thing to "finish later".
   ⚠ The list is open ("amongst other things"): treat a callback you find as kept unless ruled otherwise.
+  ⚖ **KEPT THROUGH #430, not kept forever — the successor is named (owner): `CvEventReporter` is replaced by
+  the TRIGGERS machine and events move INTO C++, "but that is not 430."** So this is a SCOPE boundary with a
+  known destination, not a permanent Python carve-out — do not read "permanent carve-out" on the event surface
+  as "Python owns this forever", and equally do not start the move inside #430. The triggers machine
+  ([triggers.md](../specs/triggers.md)) is where it lands when its own work item is taken.
 - ⚑ Consequence: the `Cy*` WRAPPER classes (`CyCity`/`CyUnit`/`CyPlayer`/…) STAY while their bindings do not —
   33 engine files hold them for that direction. **A wrapper with no binding is the CORRECT end state here**, and
   reading it as a half-cut to complete would delete working gameplay.
