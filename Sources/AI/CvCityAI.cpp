@@ -19,7 +19,6 @@
 #include "Defines/CvGlobals.h"
 #include "Engine/CvMap.h"
 #include "CvPlayerAI.h"
-#include "Data/CvInfoValuation.h"        // the what-if valuation nets (netHappiness/netHealth)
 #include "Engine/CvPlot.h"
 #include "Infrastructure/CvPython.h"
 #include "Engine/CvReachablePlotSet.h"
@@ -5213,15 +5212,29 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 
 	//Don't consider a building if it causes the city to immediately start shrinking from unhealthiness
 	//For that purpose ignore bad health and unhappiness from Espionage.
-	// The what-if valuation: the live contexts go in, the proposed increase comes out (patterns.md § THE TWO READ
-	// ROLES rule 5). ONE group read serves both channels; the opposing-pair nets are the shared final-state calc.
+	// The city's OWN channels and the candidate's contribution are read in the SAME wellbeing vocabulary -- the
+	// city through its group read, the candidate through the what-if valuation (patterns.md § THE TWO READ ROLES:
+	// "what do I HAVE" vs "what do I CARRY"). Both are ×100, so the balances compose before anything reduces.
+	int aCityWellbeing[NUM_WELLBEING_CHANNELS];
+	getWellbeing(aCityWellbeing);
+
 	int aBuildingWellbeing[NUM_WELLBEING_CHANNELS];
 	GC.getBuildingInfo(eBuilding).expectedWellbeing(
 		getCityContext(), kOwner.getEmpireContext(), plotGroup(getOwner()), aBuildingWellbeing);
-	int iBuildingActualHappiness = InfoValuation::netHappiness(aBuildingWellbeing) / 100;
-	int iBuildingActualHealth = InfoValuation::netHealth(aBuildingWellbeing) / 100;
-	int iBaseHappinessLevel = happyLevel() / 100 - unhappyLevel() / 100 + getEspionageHappinessCounter();
-	int iBaseHealthLevel = goodHealth() / 100 - badHealth() / 100 + getEspionageHealthCounter();
+
+	// These are the opposing-pair BALANCES, not the §2b verdicts: the code below wants the signed headroom
+	// (std::min(0, -level) reads the SURPLUS), which healthRate's floor-at-zero would destroy. A consumer
+	// composing the channels the group handed out is the rule 6 shape, not a second implementation.
+	// The espionage counters are RAW STATE the channels deliberately do not carry (modifier.md §2b), so they
+	// join here, in whole units, at the point the balance becomes one.
+	int iBuildingActualHappiness =
+		(aBuildingWellbeing[WELLBEING_HAPPINESS] - aBuildingWellbeing[WELLBEING_ANGER]) / 100;
+	int iBuildingActualHealth =
+		(aBuildingWellbeing[WELLBEING_HEALTH] - aBuildingWellbeing[WELLBEING_UNHEALTH]) / 100;
+	const int iBaseHappinessLevel =
+		(aCityWellbeing[WELLBEING_HAPPINESS] - aCityWellbeing[WELLBEING_ANGER]) / 100 + getEspionageHappinessCounter();
+	const int iBaseHealthLevel =
+		(aCityWellbeing[WELLBEING_HEALTH] - aCityWellbeing[WELLBEING_UNHEALTH]) / 100 + getEspionageHealthCounter();
 
 	int iBaseFoodDifference = getYieldRate(YIELD_FOOD) - getFoodConsumedByPopulation() - std::max(0, -iHealthLevel);
 
@@ -8084,6 +8097,15 @@ int CvCityAI::AI_getTargetSize() const
 	const CvPlayerAI& kPlayer = GET_PLAYER(getOwner());
 	int iTargetSize = AI_getGoodTileCount();
 
+	// The city's own wellbeing balances, read ONCE in the channel vocabulary; the candidate under production is
+	// asked of its INFO in the same vocabulary, so the two compose without either side changing shape.
+	int aCityWellbeing[NUM_WELLBEING_CHANNELS];
+	getWellbeing(aCityWellbeing);
+	const int iHappinessBalance =
+		(aCityWellbeing[WELLBEING_HAPPINESS] - aCityWellbeing[WELLBEING_ANGER]) / 100 + getEspionageHappinessCounter();
+	const int iHealthBalance =
+		(aCityWellbeing[WELLBEING_HEALTH] - aCityWellbeing[WELLBEING_UNHEALTH]) / 100 + getEspionageHealthCounter();
+
 	int iHappyAdjust = 0;
 	int iHealthAdjust = 0;
 	if (getProductionBuilding() != NO_BUILDING)
@@ -8091,11 +8113,11 @@ int CvCityAI::AI_getTargetSize() const
 		int aProductionWellbeing[NUM_WELLBEING_CHANNELS];
 		GC.getBuildingInfo(getProductionBuilding()).expectedWellbeing(
 			getCityContext(), kPlayer.getEmpireContext(), plotGroup(getOwner()), aProductionWellbeing);
-		iHappyAdjust += InfoValuation::netHappiness(aProductionWellbeing) / 100;
-		iHealthAdjust += InfoValuation::netHealth(aProductionWellbeing) / 100;
+		iHappyAdjust += (aProductionWellbeing[WELLBEING_HAPPINESS] - aProductionWellbeing[WELLBEING_ANGER]) / 100;
+		iHealthAdjust += (aProductionWellbeing[WELLBEING_HEALTH] - aProductionWellbeing[WELLBEING_UNHEALTH]) / 100;
 	}
 
-	iTargetSize -= std::max(0, (iTargetSize - (1 + getPopulation() + goodHealth() / 100 - badHealth() / 100 + getEspionageHealthCounter() + std::max(0, iHealthAdjust))) / 2);
+	iTargetSize -= std::max(0, (iTargetSize - (1 + getPopulation() + iHealthBalance + std::max(0, iHealthAdjust))) / 2);
 
 	if (iTargetSize < getPopulation())
 	{
@@ -8103,7 +8125,7 @@ int CvCityAI::AI_getTargetSize() const
 	}
 
 	// Target city size should not be perturbed by espionage, other short term effects
-	iTargetSize = std::min(iTargetSize, getPopulation() + (happyLevel() / 100 - unhappyLevel() / 100 + getEspionageHappinessCounter() + std::max(0, iHappyAdjust)));
+	iTargetSize = std::min(iTargetSize, getPopulation() + (iHappinessBalance + std::max(0, iHappyAdjust)));
 
 	if (kPlayer.getAdvancedStartPoints() >= 0)
 	{
@@ -13108,7 +13130,8 @@ void CvCityAI::CalculateAllBuildingValues(int iFocusFlags)
 			int aBuildingWellbeing[NUM_WELLBEING_CHANNELS];
 			kBuilding.expectedWellbeing(
 				getCityContext(), kOwner.getEmpireContext(), plotGroup(getOwner()), aBuildingWellbeing);
-			int iBuildingActualHealth = InfoValuation::netHealth(aBuildingWellbeing) / 100;
+			int iBuildingActualHealth =
+				(aBuildingWellbeing[WELLBEING_HEALTH] - aBuildingWellbeing[WELLBEING_UNHEALTH]) / 100;
 
 			const int iUnhealthyPopulationFromBuilding = std::min(0, -iBaseHealthLevel) + std::max(0, -iBuildingActualHealth);
 
@@ -13192,7 +13215,9 @@ void CvCityAI::CalculateAllBuildingValues(int iFocusFlags)
 				iSpecialistExtraHappy += kSpecialist.getHappinessPercent();
 			}
 			iBuildingActualHealth += iSpecialistExtraHealth / 100;
-			const int iBuildingActualHappiness = InfoValuation::netHappiness(aBuildingWellbeing) / 100 + iSpecialistExtraHappy / 100;
+			const int iBuildingActualHappiness =
+				(aBuildingWellbeing[WELLBEING_HAPPINESS] - aBuildingWellbeing[WELLBEING_ANGER]) / 100
+				+ iSpecialistExtraHappy / 100;
 			const int iLimitedWonderLimit = limitedWonderLimit(eBuilding);
 			const bool bIsLimitedWonder = iLimitedWonderLimit >= 0;
 

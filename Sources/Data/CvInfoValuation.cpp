@@ -694,15 +694,3 @@ int InfoValuation::resolvedCityLimit(int iBaseCityLimit)
 	}
 	return iBaseCityLimit * GC.getWorldInfo(GC.getMap().getWorldSize()).getCityLimitsScalePercent() / 100;
 }
-
-int InfoValuation::netHappiness(const int (&wellbeing)[NUM_WELLBEING_CHANNELS])
-{
-	// modifier.md §2b: happiness sums against anger at the verdict. The pair is the whole calculation.
-	return wellbeing[WELLBEING_HAPPINESS] - wellbeing[WELLBEING_ANGER];
-}
-
-int InfoValuation::netHealth(const int (&wellbeing)[NUM_WELLBEING_CHANNELS])
-{
-	// modifier.md §2b: health sums against unhealth, the mirror of the happiness pair above.
-	return wellbeing[WELLBEING_HEALTH] - wellbeing[WELLBEING_UNHEALTH];
-}
