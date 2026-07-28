@@ -47,6 +47,13 @@ public:
 	int getNumBonuses(const BonusTypes eBonus) const;
 	bool hasBonus(const BonusTypes eBonus) const;
 	void changeNumBonuses(const BonusTypes eBonus, const int iChange);
+	// WHAT THE NETWORK HOLDS. The plot group is the ONLY authoritative list for trade resources
+	// ([enabler.md §8]), so it must be able to say WHICH bonuses it has -- not only how many of one. The store
+	// is sparse `id -> count` (COUNTS, not objects -- [contexts.md]), so it is ENUMERABLE by construction and a
+	// consumer never sweeps the bonus database asking hasBonus per id. An absent key IS zero, so the map is
+	// exactly the held set. DERIVED, never serialized: the counts are not trusted from a save, and the load-end
+	// rebuild re-folds each one through changeNumBonuses as its plot joins ([enabler.md §8]).
+	const std::map<int, int>& getBonuses() const { return m_bonusCounts; }
 
 	int getNumCities();
 
@@ -83,6 +90,8 @@ protected:
 
 	mutable int m_seedPlotX;
 	mutable int m_seedPlotY;
+
+	std::map<int, int> m_bonusCounts;   // the network's held resources: bonus id -> count (absent == zero)
 
 	plotGroupHashInfo m_zobristHashes;
 						//	XOR of the zobrist contributions from all

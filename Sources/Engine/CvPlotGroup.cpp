@@ -22,7 +22,6 @@ CvPlotGroup::CvPlotGroup()
 	, m_sessionRecalcSeq(0)
 	, m_iID(0)
 	, m_eOwner(NO_PLAYER)
-	, m_paiNumBonuses(NULL)
 	, m_seedPlotX(0)
 	, m_seedPlotY(0)
 	, m_zobristHashes()
@@ -474,7 +473,8 @@ void CvPlotGroup::setID(int iID)
 int CvPlotGroup::getNumBonuses(const BonusTypes eBonus) const
 {
 	FASSERT_BOUNDS(0, GC.getNumBonusInfos(), eBonus);
-	return (m_paiNumBonuses == NULL ? 0 : m_paiNumBonuses[eBonus]);
+	const std::map<int, int>::const_iterator itBonus = m_bonusCounts.find((int)eBonus);
+	return itBonus != m_bonusCounts.end() ? itBonus->second : 0;
 }
 
 
@@ -492,14 +492,19 @@ void CvPlotGroup::changeNumBonuses(const BonusTypes eBonus, const int iChange)
 
 	if (iChange != 0)
 	{
-		if (m_paiNumBonuses == NULL)
-		{
-			memset(m_paiNumBonuses, 0, sizeof(int)*GC.getNumBonusInfos());
-		}
-
 		const int iOldTotal = getNumBonuses(eBonus);
-		m_paiNumBonuses[eBonus] += iChange;
-		const int iNewTotal = getNumBonuses(eBonus);
+		const int iNewTotal = iOldTotal + iChange;
+
+		// An absent key IS zero, so dropping the entry keeps the map exactly the HELD set -- which is what makes
+		// it answerable as a list without a sweep.
+		if (iNewTotal != 0)
+		{
+			m_bonusCounts[(int)eBonus] = iNewTotal;
+		}
+		else
+		{
+			m_bonusCounts.erase((int)eBonus);
+		}
 		// #430 NETWORK bonus event: the plot-group IS the connectivity/network identity (a traded resource enters at
 		// the capital's group and reaches every connected city). On a PRESENCE transition, announce it (owner,
 		// plotGroupId) so the cache-invalidation consumer re-evals connection:trade deposits for the member cities.
