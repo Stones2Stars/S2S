@@ -225,6 +225,11 @@ save-break); derived data serializes nothing; deleting a changer means auditing 
   live side by side."* Actually solving the re-expression needs its own **post-rework dedicated pass**, so the two
   shapes coexist until then. ⛔ Do not read the coexistence as drift, and do not "converge" them opportunistically
   mid-rework — the additive model above is exactly why coexistence costs nothing.
+  ⚠ **Meeting the gate is NOT a green light, and this is the trap to name explicitly.** Tags taking over the
+  identifier role was the purge's stated precondition, so as identity tags land it starts to *read* as permission
+  to begin purging — it is not. The purge is a separate, owner-scheduled piece of work, and
+  [unitcombat-merge-candidates.md](../plans/structural-cleanup/unitcombat-merge-candidates.md) is a study of what
+  a future pass could merge, **never a live worklist** to act on.
 
 ## See also
 

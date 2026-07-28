@@ -121,12 +121,11 @@ covers **22** units, adding the ones INFILTRATOR missed — `OUTLAW` (primary `R
 
 ## Open
 
-- **The FLAGGED unitcombat remainder** — the 318 unitcombats left FLAGGED in the first-pass mapping
+- **The FLAGGED unitcombat remainder** — the 317 unitcombats (of 455) still carrying no identity tag
   ([unitcombat-tag-mapping.md](../plans/structural-cleanup/unitcombat-tag-mapping.md)): the taxonomy families
   (weapon/size/species/quality/group — stay `sizeMatters`/data) + the ambiguous individual classes
   (`COMBATANT`/`PACIFIST`/`HITECH`/`ROBOT`/`LAW_ENFORCEMENT`/… — need owner calls, e.g. a `police`/`medic`/`missile`
   tag). Editable follow-up; map-the-obvious-flag-the-unsure, no completeness gate.
-- The **bSpy skill → `spy` tag** reconciliation (the spy notion is mis-filed as a skill too — drop the skill).
 - `IS_*` predicates are **independent queries** (not tag-membership), but **may be defined to encompass tags**;
   JSON-definable + predicate groups come post-migration ([json](json.md) §3.7).
 

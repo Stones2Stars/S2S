@@ -24,12 +24,14 @@
 
 ## Data — the `identity` effect re-home
 
-> The ruling: `identity` carries NO effects ([json.md §7](../../specs/json.md)). The shipped data does not obey it
-> — **91 of 201 authored identity keys carry effects, 5,073 authorings** (the other ~74k are text, display and
-> genuine metadata, and stay). Each key re-homes to the block that already exists for its kind; the count is a
-> worklist, never a licence. ⚠ That count is the sweep's SCOPE, not a defect tally — the bullets below have since
-> resolved several of the keys it counts as metadata, carve-outs, or channels that already exist. Read the
-> disposition, not the number.
+> The ruling: `identity` carries NO effects ([json.md §7](../../specs/json.md)). The shipped data does not fully
+> obey it yet: **196 distinct identity keys are authored across ~78k authorings**, the overwhelming majority of
+> which are text, display and genuine metadata and STAY. The effect-carrying residue is the bullets below — each
+> re-homes to the block that already exists for its kind.
+> ⚠ **Read the disposition, not a headline count.** Successive passes have resolved keys the old counts booked as
+> effects — some were metadata all along (`conscription`), some ride carve-outs (`cultureRange`, `controlPoints`),
+> and some are simply gone (`captures`, `cargo`, `movementCost` and `special` now author **zero** identity
+> entries). A count is the sweep's SCOPE, never a defect tally.
 
 - **Magnitudes whose family ALREADY EXISTS — a curator move, not a design question.**
   - **A carrier whose restriction has no base capacity to sit on — 31 units, flagged
@@ -103,18 +105,36 @@
 > costs to see through). A budget spent walking outward, exactly as movement is spent. Data, spec, engine read
 > path and the pedia render are all on it; what is below is what is NOT.
 
-- **The hide-and-seek CONSUMER census: 26 `CvPlayerAI` valuation reads + 7 `CvGameTextMgr` help reads.** The
-  four per-type intensity getters are DELETED, so these are compile errors rather than silent zeroes — ordinary
-  consumer debt, sequenced with the AI cut, and a dangling site here is intended output. Their replacement is
-  `CvUnit::concealment()` (one number) and `CvUnit::detectionAgainst(method)`. ⚠ The AI sites SUM inside a loop
-  over every `INVISIBLE_*`, so a mechanical swap would count concealment fourteen times — the loop collapses to
-  one read, which is why this is a rewrite rather than a rename.
+- **The hide-and-seek CONSUMER census (re-measured): 11 dangling reads in `CvPlayerAI` + 17 in `CvGameTextMgr`.**
+  The four per-type intensity getters are DELETED from the infos (verified: no declaration survives in
+  `Sources/Infos/`), so these are compile errors rather than silent zeroes — ordinary consumer debt, sequenced
+  with the AI cut, and a dangling site here is intended output. Their replacement is `CvUnit::concealment()` (one
+  number) and `CvUnit::detectionAgainst(method)`. ⚠ The AI sites SUM inside a loop over every `INVISIBLE_*`, so a
+  mechanical swap would count concealment fourteen times — the loop collapses to one read, which is why this is a
+  rewrite rather than a rename.
+  ⛔ **Do NOT sweep the neighbouring `getInvisibleType` / `getSeeInvisibleType` / `getNumSeeInvisibleTypes` calls
+  with them** (14 in `CvPlayerAI`, 10 in `CvGameTextMgr`): those are still-LIVE `CvUnit` methods, not info
+  getters, and they compile. They sit in the same blocks, which is exactly why they invite a mechanical
+  search-and-replace that would break working code.
 - **The hide-and-seek help text still enumerates per type** — spot intensity, spot range and same-tile, one
   block per `INVISIBLE_*`. It renders values that are now always 0, and it is the exact thing the pairing was
   written down to make sayable: a detection entry renders itself through `appendEntryLines`.
-- **Three AI valuation reads of the deleted improvement getters** (`CvCityAI` once, `CvUnitAI` twice) — the
-  compiler census, sequenced with the rest of the AI consumer cut, not fixed on sight. Their replacement is the
-  improvement's compiled `vision` entries, the same source the pedia now renders from.
+- **8 AI valuation reads of the deleted vision getters, across THREE files** (re-measured): `CvCityAI` 2
+  (`improvement.getVisibilityChange` + `.getSeeFrom` on one line), `CvUnitAI` 2 (`getVisibilityChange`), and
+  **`CvPlayerAI` 4 — which the earlier census missed entirely**: they read `getVisibilityChange` on a PROMOTION
+  and a UNITCOMBAT, not an improvement, so a sweep scoped to "the improvement getters" walks straight past them.
+  Neither getter is declared anywhere in `Sources/Infos/` any more. Compiler census, sequenced with the rest of
+  the AI consumer cut, not fixed on sight; the replacement is the entity's compiled `vision` entries, the same
+  source the pedia renders from.
+- **⛔ `CvFeatureInfo::getSeeThroughChange()` is a SECOND masked zero — the movement defect's twin, and this one
+  has a live consumer.** The member maps from `vision.plot.seeThrough.flat`, an address **no entity authors**:
+  all 78 vision-authoring features emit `vision.plot.obstruction` (the spec'd kind — a feature's see-through value
+  IS its obstruction, [vision.md §5](../../specs/vision.md), which retires the `seeThrough` member outright). So
+  it answers **0 for every feature**. ⚠ Its one reader is `CvPlot.cpp:7032`, the visibility-dirty test
+  `old.getSeeThroughChange() != new.getSeeThroughChange()` — with both sides permanently 0 that comparison is
+  **always false, so a feature change never refreshes line-of-sight**. Delete the member and re-express the check
+  on the `obstruction` entries; `curate_feature.py`'s docstring still advertises the retired `seeThrough` address
+  and is corrected with it.
 - **Nothing is verified.** The walk, the budgets and the render are wired but untestable until the tree is
   green ([DEC-done-is-observable](../../architecture/decisions.md#dec-done-is-observable)). First checks when it
   is: a unit on flat open ground sees 1 plot, on a peak 4; a jungle costs 2; a city with tree platforms sees 2.
@@ -134,32 +154,6 @@
 - **`largestCity` cannot retire** until ranked-target-selection EVALUATION lands, so the civic/trait curators still
   emit the legacy member.
 
-## Data — the substrate movement cost reads a member NOTHING authors
-
-⛔ **`CvTerrainInfo` / `CvFeatureInfo` / `CvRouteInfo::getMovementCost()` return `m_iMovementCost`, mapped from
-`identity.movementCost` — which no entity authors any more.** The curator moved every substrate to the
-`movement` family (102 terrains · 88 features · 21 routes author `movement.plot`; **zero** author the identity
-key), and the engine getters were never rewired, so all 211 answer **0** and `CvPlot::movementCost` loses terrain
-differentiation entirely. A silent 0 is the masked-hole class
-([DEC-no-legacy-masking](../../architecture/decisions.md#dec-no-legacy-masking)); the spec is unambiguous that a
-substrate's base cost IS the family ([modifier.md §6](../../specs/modifier.md)).
-
-⛔ **The fix is NOT to re-point `getMovementCost()` at the family — that is the computed-getter FLIP, and it is
-dead** ([superseded-ideas #15](../../architecture/superseded-ideas.md),
-[DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface)). Keeping the legacy signature
-and swapping its body leaves every call site untouched, which is the half-migration tell, not the win. The getter
-is the wrong SHAPE regardless of what feeds it: a per-channel scalar on an info is the very thing
-[patterns.md](../../architecture/patterns.md)'s DATA-OUT contract replaces with a per-GROUP parameterized read.
-
-⇒ **`getMovementCost()` is on the DELETION list.** The substrate serves the family through the coherent surface —
-`getFlatMovement(MovementKind, CvCascScope)`, mirroring the `getFlatCombat` already in tree — and
-`CvPlot::movementCost` is re-expressed onto it rather than left believing it still reads a scalar.
-
-⚠ The SCALE conversion rides along and does not lead: the family is ×100 while `m_iMovementCost` was human, and
-the resolver mixes it with `MOVE_DENOMINATOR`, the hills/river/peak extras, the route `min`-override and the
-unit's own moves — so the reduce belongs at that consumer, once, with no compensating constant left at any mixing
-site ([fixed-point-and-scales §4c-bis](../../specs/curators/fixed-point-and-scales.md)).
-
 ## Legacy still breathing — the KILL LIST
 
 > The standing rule (purge violently; blast radius is the signal; the worst offenders are the ones OFF the core
@@ -170,8 +164,20 @@ site ([fixed-point-and-scales §4c-bis](../../specs/curators/fixed-point-and-sca
   today, which is the two-live-surfaces state
   ([DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface)) forbids. Move every consumer,
   delete the old names.
-- **The `Cy*` binding surface is GONE** — every `Cy*Interface*.cpp` and `CvPython*Loader` deleted with its
-  registration. What remains to BUILD is the replacement ([Stage 4](#stage-4--the-consumer-cut-sequenced-last-see-the-roadmaps-order-ruling)),
+- **The `Cy*` binding surface is CUT AT THE REGISTRATION, but 7 loader files still stand.** The 23
+  `Cy*Interface*.cpp` files ARE deleted and `CvDLLPython::DLLPublishToPython` no longer defines a single
+  `class_<Cy*>` — so nothing is published. ⚠ **But `Sources/Infrastructure/CvPython*Loader.cpp` was never deleted**
+  (the nuke commit said "interface/loader files" and only trimmed the loaders): six of them still carry
+  **1,324 `.def` bindings** — City 356 · Player 348 · Misc 261 · Unit 137 · GlobalContext 111 · Plot 111 — plus
+  `CvPythonEnumLoader.cpp`. **Verified: ZERO callers of any of their entry points anywhere in the tree**, and
+  fbuild globs recursively, so all seven still COMPILE. They are corpses by the standing rule (a `.def` for a
+  deleted getter is cut on sight; piecemeal cutting is not forbidden) — cut them.
+  ⚑ **One is NOT merely a corpse: `CvPythonEnumLoader` publishes the engine ENUMS**, and enum resolution AND
+  EXTENSION is a first-class requirement of the replacement library
+  ([patterns.md](../../architecture/patterns.md)) — BUG reaches `WidgetTypes`/`InputTypes`/`InterfaceDirtyBits`
+  only this way and MINTS new members at runtime. Deleting it without the library serving that leaves those reads
+  with no path at all, so it is a COVERAGE obligation, not just a deletion.
+  What remains to BUILD is the replacement ([Stage 4](#stage-4--the-consumer-cut-sequenced-last-see-the-roadmaps-order-ruling)),
   and its coverage checklist is measured, not estimated: **285 of the 399 removed info-binding names were still
   called from `Assets/Python`** (heaviest: `RevolutionWatchAdvisor` 50, `PediaBuilding` 38, `CvMainInterface` 31,
   `CvTechChooser` 30). Those calls were already dead — the getters behind them had gone — so the list is a
@@ -215,7 +221,8 @@ site ([fixed-point-and-scales §4c-bis](../../specs/curators/fixed-point-and-sca
   intended output, not a defect to fix on sight.
 - **`CvGameTextMgr` composers onto rendered entry lines** — the per-entry renderer exists
   (`Sources/UI/CvEntryText`) and `CvGameTextMgr::appendEntryLines` is the shared consumer, but only the
-  VISION family has moved onto it. The other info-help composer families still hand-assemble from getters.
+  VISION and MOVEMENT families have moved onto it (5 call sites). The other info-help composer families still
+  hand-assemble from getters.
   ⚑ Each move DELETES composer code rather than porting it: a rendered line already carries magnitude,
   unit, target, scope, per-scaler and conditions, so a new channel needs no composer edit at all.
   ⚖ **THE DLL DOES NOT CONVERT FOR DISPLAY — the consumer converts itself (owner: "let python convert
@@ -223,28 +230,14 @@ site ([fixed-point-and-scales §4c-bis](../../specs/curators/fixed-point-and-sca
   presentation layer's arithmetic, and it puts FLOAT in the DLL for a value the engine holds as an integer.
   ⚠ Not an OOS risk while it is display-only, which is exactly why it survives unnoticed — but it is the wrong
   side of the boundary, and it is the shape to remove as each composer moves, never to copy into a new one.
-  Live instances: the two route-cost lines in `CvGameTextMgr` (pedia movement cost).
+  Live instance: the plot-help revealed-route cost in `CvGameTextMgr` — a LIVE-STATE read, not a composer, so it
+  does not retire with a composer move and needs its own re-expression.
 - **Re-point the unit consumer getters onto `resolvedValue()`** (`Sources/Cascade/CvUnitResolved`).
 - **The unit power-value plane** — its readers are ordinary consumer debt on a deliberately red tree.
 - **The Python data-fetching library** — built COMPLETE, then the `Cy*` surface disconnected whole. Contract:
   [patterns.md § THE PYTHON READ BOUNDARY](../../architecture/patterns.md). Build it for the pedia (a SHAPE oracle,
   NOT a coverage oracle — the appendix is enumerable). Read maps: [pedia-map.md](../../reference/pedia-read-map.md) ·
   [python-read-map.md](../../reference/python-read-map.md).
-
-## UnitCombat distillation
-
-> The concept + the target model: [engine.md § UnitCombat](../../reference/engine.md). The MINIMUM that unblocks
-> the stuck consumers is the cascade-QUERY surface, not a full re-taxonomy.
-
-⛔ **NOT #430 WORK — the class PURGE and the vs-modifier re-expression are OUT OF SCOPE (owner):** *"they can live
-side by side for a good long while, I am not purging unitcombats in the 430 work."* Coexistence is the sanctioned
-end state for this rework's duration, not a half-state to close ([engine.md § UnitCombat](../../reference/engine.md)),
-and the mapping being additive is what makes it cost nothing. ⚠ Tags taking over the identifier role was the
-purge's stated GATE, so meeting that gate reads like a green light — it is not one. Do not open it, and do not
-treat [unitcombat-merge-candidates.md](unitcombat-merge-candidates.md) as a live worklist.
-
-- **Reconcile the double flags** — `bSpy` lives on both the unit and the unit-combat; unify onto the `spy` tag,
-  same for `outlaw`/criminal.
 
 ## Triggers / grants
 
@@ -264,9 +257,10 @@ treat [unitcombat-merge-candidates.md](unitcombat-merge-candidates.md) as a live
   (joins it at the production→commerce term), gold/maintenance/upkeep (gold IS a yield, so it rides with commerce),
   trade profit, war weariness. Unit experience is self-contained and is the one safely parallelizable cluster.
 - **MOVEMENT — the SHAPE is converted; the SCALE is not.** `getFlatMovement(MovementKind, CvCascScope)` now serves
-  the family on terrain / feature / route and the 24 consumers read it, each reducing `÷100` at its point of use.
-  That is behaviour-preserving: every authored value is an exact multiple of 100, and the two float readers are
-  PEDIA DISPLAY ONLY — they render a cost, they do not move a unit.
+  the family on terrain / feature / route, and its **17 consumer reads across 7 files** each reduce `÷100` at their
+  own point of use. That is behaviour-preserving: every authored value is an exact multiple of 100, and the one
+  surviving float reader is DISPLAY ONLY (the plot-help revealed-route cost) — it renders a cost, it does not move
+  a unit.
 
   ⛔ **The real question is that MOVEMENT IS ALREADY A PER-100 VALUE (owner) — `MOVE_DENOMINATOR` is its fixed
   point, and always was.** That is why routes author 5–100: they are already denominator units expressing part

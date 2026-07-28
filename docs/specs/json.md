@@ -762,9 +762,8 @@ Empire-agnostic self-description. Read directly — never summed or cascaded.
   - a **capability to trade / work / travel on something** is its own root block (`canTrade`, `canTradeOn`,
     `canWorkOn` — [capabilities.md](capabilities.md)).
 
-  ⚠ The shipped data does not yet obey this: **103 of 213 authored `identity` keys carry effects.** That is a
-  re-home worklist, not a licence — an effect authored into `identity` is a data error whichever way the count
-  goes.
+  ⚠ The shipped data does not yet fully obey this — an effect authored into `identity` is a data error, and the
+  re-home worklist lives in [todo.md](../plans/structural-cleanup/todo.md), never as a count here.
   Two buildability flags: `notConstructible` (excluded from the player production queue; placed by another system)
   and `autoBuild` (the placing system is the engine's own auto-placement); `autoBuild ⊂ notConstructible`.
   ⛔ **A `notConstructible` entity carries NO `requires.build` — placement is UNCONDITIONAL and DORMANCY decides
