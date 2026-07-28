@@ -36,6 +36,25 @@
 passes when `mismatches=0`. `[INIT/*]` was renamed from `[GAME/*]` to avoid clashing with the `[STATE/game]` cascade
 feed. Call-site census exists (WAI 43 sites, HAI 54, CTB 66, …). Dead sinks: `CB.log`, `C2C.log` (ruled DELETE).
 
+## ⛔ The internal profiler is DEAD — the CENSUS is the perf surface
+
+**Never use the internal profiler; never reinstate the `PROFILE_*` macro family.** The one attempt to ship it in
+**Release** (behind a runtime gate) caused an allocation-failure crash on end-turn and was reverted the same day.
+
+⚑ **The mechanism, because it is what makes the family kraken bait:** `PROFILE_FUNC`/`PROFILE` are live in the
+Profile configs but no-ops in Release/Assert — *the same line behaves differently per config* — and the
+`PROFILE_BEGIN` sites (including a per-FRAME one) call the sampler **directly, bypassing any scope gate**. So
+compiling the profiler into Release ran those ungated, per frame, with a critical section per call. There is no
+fix-and-reinstate plan: removal is the direction. ⛔ Do not add, un-gate, or Release-compile any `PROFILE_*` /
+internal-profiler path.
+
+**What we use instead** is the gated per-turn CENSUS teed to `/events`: call counts (operating-building recomputes
+vs cache hits, rate/percent-stack/commerce computes, condition-evaluator leaf evals), ms accumulators, the
+condition-eval CALLER split (which is what makes an outlier attributable rather than merely visible), the
+enabler-frontier fill counts + ms, and the flush-to-flush whole-turn wall clock — the headline number
+([DEC-turn-time-is-king](../architecture/decisions.md#dec-turn-time-is-king)). Non-invasive, always shippable, and
+sufficient.
+
 **The process `memory` gauge** (`workingSetMB`/`peakWorkingSetMB`/`pagefileMB`, the CvPlotPaging
 `GetProcessMemoryInfo` mechanism) splits a per-turn RAM climb (leak) from a one-time step (retained structure) —
 load-bearing under the 32-bit ~3.2GB address-space ceiling. ⚠ Its `/computed/perf` route went with the route-table

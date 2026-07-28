@@ -125,6 +125,15 @@
 
 ## Enabler
 
+- **The frontier's every-turn full rebuild** — the GENERATE walk is a pure function of HAVE and must be computed
+  once per HAVE-change, but events that do not affect it blanket-dirty the unit frontier, forcing a full re-walk on
+  the next `canTrain` read. Buildings have an incremental path; **units never got one**. The operating-building
+  fixpoint rides the same triggers and recomputes alongside. (The old root-cause trace named the archived
+  substrate — re-locate the trigger sites on the rebuilt consumer before acting.)
+- **The AI production decision iterates the finished set** — named frontier reads returning the maintained LISTED
+  set, and the `AI_chooseProduction` focus-ladder collapse into ONE unified scoring pass
+  ([enabler.md §6/§8](../../specs/enabler.md)). The focus-ladder collapse is an AI-architecture change, not a
+  per-loop rewrite.
 - Converge the private reverse buckets (`s_bc*` / `s_uc*` / `s_op*`) onto `EDGEF_REQUIRED_BY`
   ([DEC-one-reverse-view](../../architecture/decisions.md#dec-one-reverse-view)).
 - The remaining §8 open items: residency/counting, plot-group membership not trusted from a save, the load-end

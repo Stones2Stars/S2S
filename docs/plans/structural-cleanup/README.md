@@ -61,11 +61,11 @@ The engine game-object classes are back on `main`, so these describe live code a
 
 ## The enabler + perf
 
-- **[enabler-finished-set.md](enabler-finished-set.md)** — the AI decides from the enabler's LISTED frontier in
+- **[enabler-finished-set.md](../../specs/enabler.md)** — the AI decides from the enabler's LISTED frontier in
   ONE unified scoring pass, instead of probing the whole entity database per id.
-- **[enabler-frontier-perf.md](enabler-frontier-perf.md)** — the frontier perf model: the GENERATE walk is a pure
+- **[enabler-frontier-perf.md](../../specs/enabler.md)** — the frontier perf model: the GENERATE walk is a pure
   function of HAVE and is computed once per HAVE-change; the GATE walk is the dynamic part and stays.
-- **[perf-profile-wiring.md](perf-profile-wiring.md)** — the census-based perf surface. ⛔ The internal
+- **[perf-profile-wiring.md](../../reference/observability.md)** — the census-based perf surface. ⛔ The internal
   `PROFILE_*` profiler is permanently dead and is NEVER reinstated.
 
 ---

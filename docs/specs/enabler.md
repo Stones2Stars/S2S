@@ -290,7 +290,7 @@ operating right now").
 It is **maintained by targeted propagation, never a blanket recompute**: computed once at load, then each
 HAVE-change ripples only the affected buildings into the authoritative set in place (via an operate reverse-index)
 — see [state-repositories](../architecture/state-repositories.md) and
-[enabler-frontier-perf](../plans/structural-cleanup/enabler-frontier-perf.md) Stage 2. In code it is
+[enabler-frontier-perf](enabler.md) Stage 2. In code it is
 `CvCity::m_operatingBuildings` (type **`OperatingBuildings`** — its `active` + `provided` + `obsolete` sets), read via
 `EnablerKernel::operatingBuildings` / `wireOperatingBuildings`; the full recompute
 `recomputeOperatingBuildingsInto` is the load seed and the validation oracle. *(Historical note: this was the
@@ -324,6 +324,20 @@ A pure down-only design (sources push everything onto targets) was tried and aba
 (many sources enable one thing) but **cannot reliably model AND**, and it forces a modder to maintain every
 requirement at the top of the chain. The upward `require` callback is load-bearing. Do not "simplify" it back to
 down-only.
+
+⚑ **The DATA proves it, so this is not a stylistic preference:** across the curated set, **~75% of building
+`requires` and the large majority of unit `requires` are AND** — multi-condition, often at different scopes, with
+live predicates (connected / `IS_CAPITAL` / count thresholds). A top-down single-enable inversion cannot flatten
+that, so the up-walk STAYS. What makes it cheap is that it re-runs **INCREMENTALLY over only the affected
+candidates** via the `EDGEF_REQUIRED_BY` reverse index (§7.1), never over the whole frontier.
+
+⛔ **CORRECTNESS *IS* THE TARGETED INVALIDATION — there is no self-heal net behind it**
+([DEC-no-self-heal](../architecture/decisions.md#dec-no-self-heal)). The reverse index plus targeted propagation is
+the WHOLE correctness mechanism: every HAVE-change re-gates exactly its dependents, and nothing blanket-rebuilds
+behind it absorbing misses. ⚑ The asymmetry to hold onto: **over-inclusion in the reverse index is SAFE** (a few
+harmless extra re-checks), while a **MISS is a bug to close, never an accepted one-slice lag** — it must surface as
+a live divergence (a wrong `can*` verdict, or a stored-vs-oracle diff on the operating-set routes), and that
+divergence is the signal to fix the reverse-index hole.
 
 ---
 
