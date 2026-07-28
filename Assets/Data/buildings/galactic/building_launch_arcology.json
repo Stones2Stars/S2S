@@ -61,6 +61,13 @@
    "flat": 17
   }
  },
+ "vision": {
+  "city": {
+   "range": {
+    "flat": 1
+   }
+  }
+ },
  "PROPERTY_CRIME": {
   "city": {
    "flat": -10
@@ -91,7 +98,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LAUNCH_ARCOLOGY",
   "civilopedia": "TXT_KEY_BUILDING_LAUNCH_ARCOLOGY_PEDIA",
-  "sightRange": 1,
   "advisor": "ADVISOR_GROWTH",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

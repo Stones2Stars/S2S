@@ -33,6 +33,13 @@
    }
   }
  },
+ "vision": {
+  "city": {
+   "range": {
+    "flat": 1
+   }
+  }
+ },
  "cost": {
   "production": 4144,
   "hurryModifier": 10000
@@ -45,7 +52,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LUNAR_DEATH_RAY",
   "civilopedia": "TXT_KEY_BUILDING_LUNAR_DEATH_RAY_PEDIA",
-  "sightRange": 1,
   "dcmAirbombMission": 2,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

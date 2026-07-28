@@ -83,6 +83,13 @@
    "flat": 1
   }
  },
+ "vision": {
+  "city": {
+   "range": {
+    "flat": 1
+   }
+  }
+ },
  "PROPERTY_CRIME": {
   "city": {
    "flat": -2
@@ -119,7 +126,6 @@
   ],
   "worth": 2,
   "militaryWorth": 2,
-  "sightRange": 1,
   "dcmAirbombMission": 2,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1000,

@@ -52,6 +52,13 @@
    "flat": 2
   }
  },
+ "vision": {
+  "city": {
+   "range": {
+    "flat": 2
+   }
+  }
+ },
  "PROPERTY_TOURISM": {
   "city": {
    "flat": 4
@@ -104,7 +111,6 @@
   "worth": 10,
   "conquestProbability": 100,
   "airUnitCapacity": 4,
-  "sightRange": 2,
   "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1,

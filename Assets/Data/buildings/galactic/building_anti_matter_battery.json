@@ -54,6 +54,13 @@
    "flat": 1
   }
  },
+ "vision": {
+  "city": {
+   "range": {
+    "flat": 3
+   }
+  }
+ },
  "PROPERTY_FLAMMABILITY": {
   "city": {
    "flat": 5
@@ -92,7 +99,6 @@
   "civilopedia": "TXT_KEY_BUILDING_ANTI_MATTER_BATTERY_PEDIA",
   "worth": 8,
   "militaryWorth": 8,
-  "sightRange": 3,
   "dcmAirbombMission": 2,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1000,

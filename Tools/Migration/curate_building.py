@@ -144,6 +144,11 @@ SCALAR_FAMILIES = {
     # ruling 18: unit-upgrade price % (CvPlayer changeUnitUpgradePriceModifier -> CvUnit::upgradePrice
     # CvUnit.cpp:10356, a percent modifier on the price) -> the ONE costs family, kind upgrade.
     "iUnitUpgradePriceModifier": ("costs", "empire", "upgrade", "percent"),
+    # vision: a city's sight STRENGTH -- the same base-plus-modifiers shape as combat `strength` (owner). A bigger
+    # number sees further; terrain/features (jungle, peaks) impose the opposing resistance a seer must overcome
+    # (`vision.plot.seeThrough` on the feature). Scope is `city` because a building raises the CITY's sight, the
+    # unit-plane twin being the promotion's `vision.range` -- one family, the scope axis carrying the carrier.
+    "iLineOfSight": ("vision", "city", "range", "flat"),
     # defense family (grouped; `min` floor clamp lives here, modifier-spec §7)
     "iDefense": ("defense", "city", "amount", "percent"),
     "iBombardDefense": ("defense", "city", "bombardDefense", "percent"),
@@ -215,7 +220,7 @@ CAP_IDENTITY = {
 # identity scalars: tag -> key (non-zero int OR non-empty string).
 ID_SCALAR = {
     "iAsset": "worth", "iPower": "militaryWorth", "iConquestProb": "conquestProbability",
-    "iAirlift": "airlift", "iAirUnitCapacity": "airUnitCapacity", "iLineOfSight": "sightRange",
+    "iAirlift": "airlift", "iAirUnitCapacity": "airUnitCapacity",
     "iNumPopulationEmployed": "populationEmployed",
     "iExtraPlayerInstances": "maxPlayerInstancesExtra", "iDCMAirbombMission": "dcmAirbombMission",
     "ExtendsBuilding": "extends", "ProductionContinueBuilding": "productionContinue",

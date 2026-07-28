@@ -41,6 +41,13 @@
    }
   }
  },
+ "vision": {
+  "city": {
+   "range": {
+    "flat": 1
+   }
+  }
+ },
  "cost": {
   "production": 3075,
   "hurryModifier": 10000
@@ -53,7 +60,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERGALACTIC_GAMMA_RAY_BURST_CANNON",
   "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_GAMMA_RAY_BURST_CANNON_PEDIA",
-  "sightRange": 1,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

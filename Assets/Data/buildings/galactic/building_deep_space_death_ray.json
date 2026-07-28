@@ -39,6 +39,13 @@
    "flat": -5
   }
  },
+ "vision": {
+  "city": {
+   "range": {
+    "flat": 1
+   }
+  }
+ },
  "cost": {
   "production": 7032,
   "hurryModifier": 10000
@@ -51,7 +58,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DEEP_SPACE_DEATH_RAY",
   "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_DEATH_RAY_PEDIA",
-  "sightRange": 1,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

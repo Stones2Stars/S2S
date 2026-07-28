@@ -55,6 +55,13 @@
    "flat": 2
   }
  },
+ "vision": {
+  "city": {
+   "range": {
+    "flat": 2
+   }
+  }
+ },
  "cost": {
   "production": 7080,
   "sizeModifier": 3,
@@ -82,7 +89,6 @@
   "civilopedia": "TXT_KEY_BUILDING_TOKYO_TOWER_PEDIA",
   "worth": 10,
   "conquestProbability": 100,
-  "sightRange": 2,
   "greatPeopleUnitType": "UNIT_ARTIST",
   "advisor": "ADVISOR_CULTURE",
   "visibilityPriority": 1,

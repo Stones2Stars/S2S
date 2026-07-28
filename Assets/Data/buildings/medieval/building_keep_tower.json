@@ -77,6 +77,13 @@
    "flat": 1
   }
  },
+ "vision": {
+  "city": {
+   "range": {
+    "flat": 2
+   }
+  }
+ },
  "PROPERTY_CRIME": {
   "city": {
    "flat": -5
@@ -110,7 +117,6 @@
   "civilopedia": "TXT_KEY_BUILDING_KEEP_TOWER_PEDIA",
   "worth": 4,
   "militaryWorth": 4,
-  "sightRange": 2,
   "dcmAirbombMission": 2,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1000,

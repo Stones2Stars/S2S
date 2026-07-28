@@ -27,6 +27,13 @@
    }
   }
  },
+ "vision": {
+  "city": {
+   "range": {
+    "flat": 1
+   }
+  }
+ },
  "cost": {
   "production": 2422,
   "hurryModifier": 10000
@@ -39,7 +46,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HYPERSPACE_ENERGY_CANNON",
   "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_ENERGY_CANNON_PEDIA",
-  "sightRange": 1,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -33,6 +33,13 @@
    }
   }
  },
+ "vision": {
+  "city": {
+   "range": {
+    "flat": 1
+   }
+  }
+ },
  "cost": {
   "production": 1279,
   "hurryModifier": 10000
@@ -45,7 +52,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CISLUNAR_ION_CANNON",
   "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_ION_CANNON_PEDIA",
-  "sightRange": 1,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -44,6 +44,13 @@
    }
   }
  },
+ "vision": {
+  "city": {
+   "range": {
+    "flat": 1
+   }
+  }
+ },
  "cost": {
   "production": 7351,
   "hurryModifier": 10000
@@ -56,7 +63,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERSTELLAR_CHRONOTON_CANNONS",
   "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_CHRONOTON_CANNONS_PEDIA",
-  "sightRange": 1,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -55,6 +55,13 @@
    "flat": 2
   }
  },
+ "vision": {
+  "city": {
+   "range": {
+    "flat": 3
+   }
+  }
+ },
  "cost": {
   "production": 11550,
   "sizeModifier": 3,
@@ -82,7 +89,6 @@
   "civilopedia": "TXT_KEY_BUILDING_TOKYO_SKY_TREE_PEDIA",
   "worth": 10,
   "conquestProbability": 100,
-  "sightRange": 3,
   "greatPeopleUnitType": "UNIT_ARTIST",
   "advisor": "ADVISOR_CULTURE",
   "visibilityPriority": 1,

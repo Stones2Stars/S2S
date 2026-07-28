@@ -54,6 +54,13 @@
    "flat": 2
   }
  },
+ "vision": {
+  "city": {
+   "range": {
+    "flat": 1
+   }
+  }
+ },
  "PROPERTY_TOURISM": {
   "city": {
    "flat": 8
@@ -89,7 +96,6 @@
   },
   "worth": 10,
   "conquestProbability": 100,
-  "sightRange": 1,
   "greatPeopleUnitType": "UNIT_MERCHANT",
   "advisor": "ADVISOR_CULTURE",
   "visibilityPriority": 1,

@@ -34,6 +34,13 @@
    }
   }
  },
+ "vision": {
+  "city": {
+   "range": {
+    "flat": 1
+   }
+  }
+ },
  "cost": {
   "production": 2110,
   "hurryModifier": 10000
@@ -46,7 +53,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MARTIAN_FROST_CANNON",
   "civilopedia": "TXT_KEY_BUILDING_MARTIAN_FROST_CANNON_PEDIA",
-  "sightRange": 1,
   "dcmAirbombMission": 1,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
