@@ -27,7 +27,9 @@
 > The ruling: `identity` carries NO effects ([json.md §7](../../specs/json.md)). The shipped data does not obey it
 > — **91 of 201 authored identity keys carry effects, 5,073 authorings** (the other ~74k are text, display and
 > genuine metadata, and stay). Each key re-homes to the block that already exists for its kind; the count is a
-> worklist, never a licence.
+> worklist, never a licence. ⚠ That count is the sweep's SCOPE, not a defect tally — the bullets below have since
+> resolved several of the keys it counts as metadata, carve-outs, or channels that already exist. Read the
+> disposition, not the number.
 
 - **Magnitudes whose family ALREADY EXISTS — a curator move, not a design question.**
   - `cargo` (84, UNIT) → the **`cargo`** family ([modifier.md §6](../../specs/modifier.md)). Capacity has ONE
