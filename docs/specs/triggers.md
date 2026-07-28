@@ -72,6 +72,14 @@ against nothing and quietly answers false.
   PRE-source values ([engine.md](../reference/engine.md)) — and that engine's math is owner-LOCKED.
 - ⛔ **Do not build machinery for a hypothetical verb.** A verb with zero authorings is an EXAMPLE in the spec, not
   live data; it lands if and when its authoring direction is taken.
+  ⚑ **The worked case — building counter-damage (owner).** A trap building damaging a unit that attacks its city
+  IS a trigger by shape: a happening, a roll, an effect on the attacker. But re-homing it would mean minting an
+  `onAttacked` happening AND a `damage` verb **for that one mechanic**, which the engine already implements
+  end-to-end — so it stays where it is, and the two additions wait for a second mechanic that genuinely needs
+  them. *"These are murky waters we rather not disturb unless we absolutely have to."* ⚠ Being trigger-SHAPED is
+  therefore not on its own a reason to re-home something; the test is whether the plane gains a capability it
+  does not already have. *(Its data stays curated as `defense.city.counterDamage`, and the UNIT-side trap
+  subsystem is separately dead — [skills.md](skills.md).)*
 - ⚠ **A promotion that stops being valid is dropped by the PROMOTION SYSTEM itself** (owner). So a granted
   promotion needs no take-away verb, and "the payload plane cannot revoke" is NOT an argument for re-homing the
   free-promotion shapes.

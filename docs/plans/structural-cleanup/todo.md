@@ -11,9 +11,6 @@
 
 ## Blocked on an owner ruling
 
-- **`defense.counterDamage`** (13 authorings) — its `chance` is an on-attack roll, so it belongs on the trigger
-  plane, but re-homing needs an `onAttacked` happening AND a `damage` action verb, neither of which exists. Until
-  ruled, the membership-list shape compiles no entries.
 - **The `savemigration.txt` parser is PREFIX-FREE** — it skips only `|`/`=`/`#` lines and registers the first
   whitespace-delimited token containing `::`, so the file's own documented `CUT:`/`RENAME:` prefixes are IGNORED
   and a wrapped prose line beginning with a live `Class::m_member` token would silently drain that field on every
