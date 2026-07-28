@@ -163,20 +163,20 @@ void BuildingEnabler::onCityCreated(const CvCity& kCity)
 // getSpecialBuilding FK); the GROUP entity holds the cap (allowed:{empire:N} -- the grouped wonders); the
 // count = Σ member buildings at the cap scope through the tally's buildings domain. Group->members is DERIVED
 // (json §4.4 "member->group is authored, group->members derived") -- load-compiled once, game-thread static.
-static std::map<int, std::vector<int> > s_sbMembers;
-static bool s_sbMembersBuilt = false;
+static std::map<int, std::vector<int> > s_specialBuildingMembers;
+static bool s_specialBuildingMembersBuilt = false;
 static const std::vector<int>& bd_sbMembers(int iSb)
 {
-	if (!s_sbMembersBuilt)
+	if (!s_specialBuildingMembersBuilt)
 	{
-		s_sbMembersBuilt = true;
+		s_specialBuildingMembersBuilt = true;
 		for (int b = 0; b < GC.getNumBuildingInfos(); ++b)
 		{
 			const SpecialBuildingTypes sb = GC.getBuildingInfo((BuildingTypes)b).getSpecialBuilding();
-			if (sb != NO_SPECIALBUILDING) s_sbMembers[(int)sb].push_back(b);
+			if (sb != NO_SPECIALBUILDING) s_specialBuildingMembers[(int)sb].push_back(b);
 		}
 	}
-	return s_sbMembers[iSb];
+	return s_specialBuildingMembers[iSb];
 }
 
 // The per-CITY wonder-CATEGORY cap (json.md §4.4, enabler.md §8): a CultureLevel caps how many of a CATEGORY one

@@ -160,15 +160,15 @@
 - **The operate reverse index — NARROWER than it looks, and one part of it is a perf trap.** Verified in tree: the
   building/unit buckets (`s_bc*`/`s_uc*`) are ALREADY converged and gone; what remains is the operate index in
   `CvEnablerKernel.cpp`, and it splits into two genuinely different classes:
-  - **Per-id buckets** — `s_opBonusConsumers` (BONUS→buildings) and `s_opBuildingDeps` (BUILDING→buildings) — are
+  - **Per-id buckets** — the two per-id buckets (BONUS→buildings, BUILDING→buildings) — are
     the only true duplicates of `EDGEF_REQUIRED_BY`
     ([DEC-one-reverse-view](../../architecture/decisions.md#dec-one-reverse-view)).
     ⚠ **But converging them is not free:** the canonical axis is `requires`-GENERAL while these are operate-SPECIFIC,
     so the swap would drag build-only dependents into the provides-ripple fixpoint. That is SAFE by the
     over-inclusion invariant ([enabler.md §5](../../specs/enabler.md)) but lands the extra work in the hot loop —
     decide deliberately, and measure.
-  - **Axis-flag lists** (`s_opPop`/`Power`/`Golden`/`StateRel`/`Dynamic`, and the coarse
-    `s_opReligion`/`Corp`/`Civic`/`TechAny`) plus the PROPERTY band index are **NOT convergence targets**: the
+  - **Axis-flag lists** (population / power / golden age / state religion / live-state, and the coarse
+    religion / corporation / civic / tech lists) plus the PROPERTY band index are **NOT convergence targets**: the
     reverse pass deliberately excludes engine tokens, the plot substrate and `PROPERTY_` bands, and the coarse
     lists match coarse events (a religion/civic CHANGED fact names no id). Making those per-id would be a
     REFINEMENT of the re-gate, not a convergence — and it is the lever on the operate fixpoint's cost.

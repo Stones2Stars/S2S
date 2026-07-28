@@ -18,6 +18,14 @@ root `AGENTS.md`.
 - **No 2-letter or cryptic-abbreviation identifiers (owner)** — no `ss`, `fd`, `cx`, `pg`; names are spelled out
   in full for locals, parameters, members, and enum entries alike (the no-abbreviated-parameters ruling in
   [contexts.md](../docs/architecture/contexts.md), generalized to every identifier).
+  **⛔ THE REASON IS ANTI-CONCEALMENT, not style (owner): *"it is not unknown for agents to hide poor
+  implementation behind abbreviated variables, that I don't immediately catch."*** An unreadable name defeats
+  REVIEW — the owner cannot audit what they cannot read, so the abbreviation is where a weak or wrong structure
+  survives unexamined. ⚑ The worked case: a family of `s_op*` file-statics read as one uniform "operate index",
+  and a plan doc accordingly described them as one thing to retire wholesale. Spelled out, they were **two
+  genuinely different classes** — per-id reverse buckets, and coarse axis-flag lists that are correct as they are
+  and must NOT be converged. The names were the only thing hiding that. ⇒ Treat an abbreviated identifier as a
+  review-blocker on sight, and rename it before reasoning about the code it names.
 - The DLL must remain compliant with the existing build chain.
 - Do not update, replace, or modernize the build chain/toolchain.
 

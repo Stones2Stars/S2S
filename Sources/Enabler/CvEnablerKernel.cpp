@@ -429,15 +429,15 @@ void EnablerKernel::recomputeOperatingBuildingsInto(const CvCity* pCity, std::se
 // s_bc*/recheckHave (CvBuildingEnabler.cpp), extended to the operate<->provides fixpoint. enabler.md §7.
 namespace {
 
-static bool s_opIdxBuilt = false;
-static std::vector<int> s_opPop, s_opPower, s_opReligion, s_opCorp, s_opGolden, s_opStateRel, s_opCivic, s_opTechAny, s_opDynamic;
-static std::map<int, std::vector<int> > s_opPropBandConsumers;   // F5: PROPERTY_ id -> buildings whose requires.operate has a band on it
-static std::map<int, std::set<int> > s_opPropThresholds;         // F5: PROPERTY_ id -> the sorted union of its band thresholds (the watermark's window boundaries)
-static std::vector<int> s_opAnyBonus;                         // {buildings whose operate references ANY bonus} -- the whole-set re-check (plot-group membership change)
-static std::map<int, std::vector<int> > s_opBonusConsumers;   // BONUS_ id -> {buildings whose operate consumes it}
-static std::map<int, std::vector<int> > s_opBuildingDeps;     // BUILDING_ id -> {buildings whose operate references it}
-static std::map<int, std::vector<int> > s_opDormBy;           // trigger BUILDING_ id -> {buildings it dorms}
-static std::vector<int> s_opObsoletable;                      // buildings with any obsoletedBy.techs -> re-checked on a tech (player-scope) change (json §4.2)
+static bool s_operateIndexBuilt = false;
+static std::vector<int> s_operateNeedsPopulation, s_operateNeedsPower, s_operateNeedsReligion, s_operateNeedsCorporation, s_operateNeedsGoldenAge, s_operateNeedsStateReligion, s_operateNeedsCivic, s_operateNeedsTech, s_operateNeedsLiveState;
+static std::map<int, std::vector<int> > s_operatePropertyBandConsumers;   // F5: PROPERTY_ id -> buildings whose requires.operate has a band on it
+static std::map<int, std::set<int> > s_operatePropertyBandThresholds;         // F5: PROPERTY_ id -> the sorted union of its band thresholds (the watermark's window boundaries)
+static std::vector<int> s_operateNeedsAnyBonus;                         // {buildings whose operate references ANY bonus} -- the whole-set re-check (plot-group membership change)
+static std::map<int, std::vector<int> > s_operateBonusConsumers;   // BONUS_ id -> {buildings whose operate consumes it}
+static std::map<int, std::vector<int> > s_operateBuildingDependents;     // BUILDING_ id -> {buildings whose operate references it}
+static std::map<int, std::vector<int> > s_operateDormantTriggeredBy;           // trigger BUILDING_ id -> {buildings it dorms}
+static std::vector<int> s_operateObsoletableBuildings;                      // buildings with any obsoletedBy.techs -> re-checked on a tech (player-scope) change (json §4.2)
 
 // The work-list ripple: re-check `seeds` under the AUTHORITATIVE provided supply, updating active/provided/
 // providedCount in place; on an active flip that crosses a bonus's provided-count 0<->1, push that bonus's operate
@@ -486,8 +486,8 @@ static void ek_recheckActiveSet(const CvCity* pCity, const std::vector<int>& see
 				if (++f.providedCount[bn] == 1)
 				{
 					f.provided.insert(bn);
-					std::map<int, std::vector<int> >::const_iterator cit = s_opBonusConsumers.find(bn);
-					if (cit != s_opBonusConsumers.end())
+					std::map<int, std::vector<int> >::const_iterator cit = s_operateBonusConsumers.find(bn);
+					if (cit != s_operateBonusConsumers.end())
 						for (size_t k = 0; k < cit->second.size(); ++k)
 							if (pending.insert(cit->second[k]).second) work.push_back(cit->second[k]);
 				}
@@ -504,8 +504,8 @@ static void ek_recheckActiveSet(const CvCity* pCity, const std::vector<int>& see
 				{
 					f.providedCount.erase(pc);
 					f.provided.erase(bn);
-					std::map<int, std::vector<int> >::const_iterator cit = s_opBonusConsumers.find(bn);
-					if (cit != s_opBonusConsumers.end())
+					std::map<int, std::vector<int> >::const_iterator cit = s_operateBonusConsumers.find(bn);
+					if (cit != s_operateBonusConsumers.end())
 						for (size_t k = 0; k < cit->second.size(); ++k)
 							if (pending.insert(cit->second[k]).second) work.push_back(cit->second[k]);
 				}
@@ -567,8 +567,8 @@ void EnablerKernel::scanCondDeps(const CvCondition* c, CascadeCondDeps& d, bool 
 
 void EnablerKernel::buildActiveIndex()
 {
-	if (s_opIdxBuilt) return;
-	s_opIdxBuilt = true;
+	if (s_operateIndexBuilt) return;
+	s_operateIndexBuilt = true;
 	const int nB = GC.getNumBuildingInfos();
 	for (int b = 0; b < nB; ++b)
 	{
@@ -577,28 +577,28 @@ void EnablerKernel::buildActiveIndex()
 		CascadeCondDeps d;
 		// OPERATE only -- active/dormant is governed by requires.operate; DYNAMIC marked (the per-turn re-check bucket).
 		scanCondDeps(j->requiresOperate(), d, /*bTrackUnits*/ false, /*bMarkDynamic*/ true);
-		if (d.pop)            s_opPop.push_back(b);
-		if (d.power)          s_opPower.push_back(b);
-		if (d.religion)       s_opReligion.push_back(b);
-		if (d.corp)           s_opCorp.push_back(b);
-		if (d.goldenAge)      s_opGolden.push_back(b);
-		if (d.stateReligion)  s_opStateRel.push_back(b);
-		if (d.civicAny)       s_opCivic.push_back(b);
-		if (!d.techs.empty()) s_opTechAny.push_back(b);
-		if (d.dynamic)        s_opDynamic.push_back(b);
-		if (!d.bonuses.empty()) s_opAnyBonus.push_back(b);   // #430 G3: the whole-set bucket (a plot-group membership shift may move any of them)
-		for (std::set<int>::const_iterator it = d.bonuses.begin(); it != d.bonuses.end(); ++it) s_opBonusConsumers[*it].push_back(b);
-		for (std::set<int>::const_iterator it = d.buildings.begin(); it != d.buildings.end(); ++it) s_opBuildingDeps[*it].push_back(b);
+		if (d.pop)            s_operateNeedsPopulation.push_back(b);
+		if (d.power)          s_operateNeedsPower.push_back(b);
+		if (d.religion)       s_operateNeedsReligion.push_back(b);
+		if (d.corp)           s_operateNeedsCorporation.push_back(b);
+		if (d.goldenAge)      s_operateNeedsGoldenAge.push_back(b);
+		if (d.stateReligion)  s_operateNeedsStateReligion.push_back(b);
+		if (d.civicAny)       s_operateNeedsCivic.push_back(b);
+		if (!d.techs.empty()) s_operateNeedsTech.push_back(b);
+		if (d.dynamic)        s_operateNeedsLiveState.push_back(b);
+		if (!d.bonuses.empty()) s_operateNeedsAnyBonus.push_back(b);   // #430 G3: the whole-set bucket (a plot-group membership shift may move any of them)
+		for (std::set<int>::const_iterator it = d.bonuses.begin(); it != d.bonuses.end(); ++it) s_operateBonusConsumers[*it].push_back(b);
+		for (std::set<int>::const_iterator it = d.buildings.begin(); it != d.buildings.end(); ++it) s_operateBuildingDependents[*it].push_back(b);
 		for (std::map<int, std::pair<int, int> >::const_iterator it = d.propertyBands.begin(); it != d.propertyBands.end(); ++it)
 		{
-			s_opPropBandConsumers[it->first].push_back(b);                       // F5: the property-band operate reverse-index
-			if (it->second.first  != -1) s_opPropThresholds[it->first].insert(it->second.first);   // min boundary
-			if (it->second.second != -1) s_opPropThresholds[it->first].insert(it->second.second);   // max boundary
+			s_operatePropertyBandConsumers[it->first].push_back(b);                       // F5: the property-band operate reverse-index
+			if (it->second.first  != -1) s_operatePropertyBandThresholds[it->first].insert(it->second.first);   // min boundary
+			if (it->second.second != -1) s_operatePropertyBandThresholds[it->first].insert(it->second.second);   // max boundary
 		}
 		const std::vector<int>& dorm = j->dormantTriggers();
-		for (size_t i = 0; i < dorm.size(); ++i) s_opDormBy[dorm[i]].push_back(b);
+		for (size_t i = 0; i < dorm.size(); ++i) s_operateDormantTriggeredBy[dorm[i]].push_back(b);
 		// obsolescence is tech-driven (obsoletedBy.techs): index the obsoletable buildings for the player-scope re-check.
-		if (j->edge(EDGEF_OBSOLETED_BY, EDGEB_TECHS) != NULL) s_opObsoletable.push_back(b);
+		if (j->edge(EDGEF_OBSOLETED_BY, EDGEB_TECHS) != NULL) s_operateObsoletableBuildings.push_back(b);
 	}
 }
 
@@ -608,10 +608,10 @@ void EnablerKernel::onBuildingChangedActive(const CvCity* pCity, int eBuilding)
 	if (pCity == NULL || eBuilding < 0) return;
 	std::vector<int> seeds;
 	seeds.push_back(eBuilding);
-	std::map<int, std::vector<int> >::const_iterator dep = s_opBuildingDeps.find(eBuilding);
-	if (dep != s_opBuildingDeps.end()) seeds.insert(seeds.end(), dep->second.begin(), dep->second.end());
-	std::map<int, std::vector<int> >::const_iterator dm = s_opDormBy.find(eBuilding);
-	if (dm != s_opDormBy.end()) seeds.insert(seeds.end(), dm->second.begin(), dm->second.end());
+	std::map<int, std::vector<int> >::const_iterator dep = s_operateBuildingDependents.find(eBuilding);
+	if (dep != s_operateBuildingDependents.end()) seeds.insert(seeds.end(), dep->second.begin(), dep->second.end());
+	std::map<int, std::vector<int> >::const_iterator dm = s_operateDormantTriggeredBy.find(eBuilding);
+	if (dm != s_operateDormantTriggeredBy.end()) seeds.insert(seeds.end(), dm->second.begin(), dm->second.end());
 	ek_recheckActiveSet(pCity, seeds);
 }
 
@@ -621,19 +621,19 @@ void EnablerKernel::onHaveChangedActive(const CvCity* pCity, int eHaveKind)
 	if (pCity == NULL) return;
 	switch (eHaveKind)
 	{
-	case CASC_HAVE_POP:   ek_recheckActiveSet(pCity, s_opPop); break;
-	case CASC_HAVE_POWER: ek_recheckActiveSet(pCity, s_opPower); break;
-	case CASC_HAVE_CORP:  ek_recheckActiveSet(pCity, s_opCorp); break;
+	case CASC_HAVE_POP:   ek_recheckActiveSet(pCity, s_operateNeedsPopulation); break;
+	case CASC_HAVE_POWER: ek_recheckActiveSet(pCity, s_operateNeedsPower); break;
+	case CASC_HAVE_CORP:  ek_recheckActiveSet(pCity, s_operateNeedsCorporation); break;
 	case CASC_HAVE_RELIGION:
 	{
-		std::vector<int> seeds(s_opReligion);
-		seeds.insert(seeds.end(), s_opStateRel.begin(), s_opStateRel.end());
+		std::vector<int> seeds(s_operateNeedsReligion);
+		seeds.insert(seeds.end(), s_operateNeedsStateReligion.begin(), s_operateNeedsStateReligion.end());
 		ek_recheckActiveSet(pCity, seeds);
 		break;
 	}
 	// #430 G3: a plot-group MEMBERSHIP change (the city moved group) can shift its ENTIRE connected-resource set, so
 	// every bonus-operate building re-checks. A single bonus's access flip is the targeted onBonusAccessChangedActive.
-	case CASC_HAVE_BONUS: ek_recheckActiveSet(pCity, s_opAnyBonus); break;
+	case CASC_HAVE_BONUS: ek_recheckActiveSet(pCity, s_operateNeedsAnyBonus); break;
 	default: break;
 	}
 }
@@ -645,8 +645,8 @@ void EnablerKernel::onBonusAccessChangedActive(const CvCity* pCity, int eBonus)
 {
 	buildActiveIndex();
 	if (pCity == NULL || eBonus < 0) return;
-	std::map<int, std::vector<int> >::const_iterator it = s_opBonusConsumers.find(eBonus);
-	if (it != s_opBonusConsumers.end()) ek_recheckActiveSet(pCity, it->second);
+	std::map<int, std::vector<int> >::const_iterator it = s_operateBonusConsumers.find(eBonus);
+	if (it != s_operateBonusConsumers.end()) ek_recheckActiveSet(pCity, it->second);
 }
 
 // F5: a property crossed one of its operate-band thresholds in pCity (the property-engine watermark detected it) ->
@@ -657,14 +657,14 @@ void EnablerKernel::onPropertyBandHitActive(const CvCity* pCity, int eProperty)
 {
 	buildActiveIndex();
 	if (pCity == NULL || eProperty < 0) return;
-	std::map<int, std::vector<int> >::const_iterator it = s_opPropBandConsumers.find(eProperty);
-	if (it != s_opPropBandConsumers.end()) ek_recheckActiveSet(pCity, it->second);
+	std::map<int, std::vector<int> >::const_iterator it = s_operatePropertyBandConsumers.find(eProperty);
+	if (it != s_operatePropertyBandConsumers.end()) ek_recheckActiveSet(pCity, it->second);
 }
 
 const std::map<int, std::set<int> >& EnablerKernel::propertyBandThresholds()
 {
 	buildActiveIndex();
-	return s_opPropThresholds;
+	return s_operatePropertyBandThresholds;
 }
 
 void EnablerKernel::onPlayerScopeChangedActive(const CvCity* pCity)
@@ -673,10 +673,10 @@ void EnablerKernel::onPlayerScopeChangedActive(const CvCity* pCity)
 	if (pCity == NULL) return;
 	// tech/civic/golden-age player-scope change: re-check the buildings whose operate references any of them.
 	// Over-inclusive (we don't get the specific tech/civic here), but these events are infrequent -- amortized cheap.
-	std::vector<int> seeds(s_opTechAny);
-	seeds.insert(seeds.end(), s_opCivic.begin(), s_opCivic.end());
-	seeds.insert(seeds.end(), s_opGolden.begin(), s_opGolden.end());
-	seeds.insert(seeds.end(), s_opObsoletable.begin(), s_opObsoletable.end());   // tech research flips obsolescence (json §4.2)
+	std::vector<int> seeds(s_operateNeedsTech);
+	seeds.insert(seeds.end(), s_operateNeedsCivic.begin(), s_operateNeedsCivic.end());
+	seeds.insert(seeds.end(), s_operateNeedsGoldenAge.begin(), s_operateNeedsGoldenAge.end());
+	seeds.insert(seeds.end(), s_operateObsoletableBuildings.begin(), s_operateObsoletableBuildings.end());   // tech research flips obsolescence (json §4.2)
 	ek_recheckActiveSet(pCity, seeds);
 }
 
