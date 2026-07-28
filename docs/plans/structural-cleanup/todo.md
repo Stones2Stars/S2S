@@ -42,9 +42,15 @@
     tags first; that is ordinary open-registry authoring ([tags.md](../../specs/tags.md)), not an engine change.
   - `sightRange` (30, BUILDING) → the **`vision`** block ([json.md §9](../../specs/json.md), line-of-sight).
   - `captures` (450, UNIT) → the **`capture`** family (the §6 unit-plane list).
-- **Magnitudes with NO family named yet** — `conscription`, `controlPoints`, `espionagePoints`, and the radii
+  - `espionagePoints` (24, UNIT) → the **`espionage`** family — one of the four commerce channels (owner), so
+    the family already exists. The value is an espionage-commerce amount delivered as a ONE-SHOT payload, which
+    [json.md §8](../../specs/json.md) already covers ("reused families for one-shot yields"). ⚠ Its CARRIER is
+    `MISSION_INFILTRATE` — `canInfiltrate` gates on it being non-zero and `infiltrate()` spends it — so the
+    authoring home rides the missions/`CvOutcome` PERMANENT carve-out, not this sweep. The channel is settled;
+    only where it is written waits.
+- **Magnitudes with NO family named yet** — `conscription`, `controlPoints`, and the radii
   (`cityRadius`, `workableRadius`, `cultureRange`). These are the ones that genuinely need a home decided; the
-  three above do not.
+  four above do not.
 - **Constraints → `requires` / `allowed`** — `terrainImpassable`, `featureImpassable`, `requiresFlatlands`,
   `validTerrains`, `minAreaSize`, `distanceToLand`, the `found*` gates.
 - **Keys with a home already specced** — `tradeable` (910, TECH) is the `canTrade` block
