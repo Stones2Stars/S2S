@@ -213,9 +213,12 @@ save-break); derived data serializes nothing; deleting a changer means auditing 
   unit-combat (the vs-tag stat bundle) *and* has the `mounted` tag (its queryable type), because they answer
   different questions — *how does it fight?* vs *what is it?* A unit's effective tags are its own ∪ its combat
   classes'.
-  ⚠ **This is the TARGET model; the shipped data still keys vs-entries by `UNITCOMBAT_*`** ([skills.md](../specs/skills.md)
-  §1 documents that current shape). The re-expression rides the distillation work — do not treat the two as
-  agreeing today.
+  ⚖ **This is the GOAL, not the now (owner) — and TAGS AND UNITCOMBATS LIVING SIDE BY SIDE IS SANCTIONED, not a
+  half-state to fix.** The shipped data still keys vs-entries by `UNITCOMBAT_*` ([skills.md](../specs/skills.md) §1
+  documents that current shape) and that is FINE: *"there is nothing stopping us from letting tags and unitcombats
+  live side by side."* Actually solving the re-expression needs its own **post-rework dedicated pass**, so the two
+  shapes coexist until then. ⛔ Do not read the coexistence as drift, and do not "converge" them opportunistically
+  mid-rework — the additive model above is exactly why coexistence costs nothing.
 
 ## See also
 

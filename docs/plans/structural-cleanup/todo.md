@@ -76,7 +76,8 @@
   not a perfection-gated blocker). Worklist: [unitcombat-tag-mapping.md](unitcombat-tag-mapping.md).
 - **Fold combat-class tags into a unit's effective tag set** (unit-level ∪ primary ∪ subs ∪ promotion-granted).
 - **Re-express the keyed "vs unit-combat-class" modifiers onto TAG predicates**, retiring `UNITCOMBAT_*` as a
-  modifier target. Needs the keyed consumer, which is unbuilt.
+  modifier target. ⚖ **POST-REWORK, its own dedicated pass (owner)** — until it runs, tags and unitcombats live
+  side by side, which is sanctioned and costs nothing (the mapping is additive).
 - **Reconcile the double flags** — `bSpy` lives on both the unit and the unit-combat; unify onto the `spy` tag,
   same for `outlaw`/criminal.
 - **Purge the vestigial classes** — a majority are referenced by no unit. Opportunistic, never required, and
