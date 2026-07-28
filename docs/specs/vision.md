@@ -136,23 +136,75 @@ case to encode.
 
 ---
 
-## 4. The opening this leaves — HIDE AND SEEK
+## 4. HIDE AND SEEK — the intent, written down
 
-A **strength** axis on the seeing side is what a sane hide-and-seek mechanic needs to contest against.
-Concealment is then the mirror of obstruction — a hidden unit raises what a seeker must overcome — so the whole
-system becomes the same contest described here instead of the bespoke per-`INVISIBLE_*` intensity tables it is
-today. *"Now we have the basis for a real vision system without a bolt-on per question"* (owner).
+> ⚑ **NOT BUILT. This section records what the mechanic IS and where it lands — it is not a licence to build it.**
+> It exists because the system's actual rule *"has 0 real documentation anywhere"* (owner), which is the same
+> disease that left vision itself unspecced: undocumented intent becomes tribal knowledge, and every consumer
+> then invents its own shape.
 
-⛔ **It is NOT folded in here, and it is NOT to be built ahead of a design (owner):** *"let the detection stay
-there, we need to come up with a clean way to handle hide and seek, I just don't have it yet."* The reserved word
-is `detection` ([json.md §6](json.md)), but a reserved name is a home, not a mechanic — so the invisibility
-tables STAY under `vision` for now, and the half-family/half-bespoke block that leaves is an accepted cost rather
-than a defect to tidy.
+### The rule the code never states
 
-What this model contributes is the missing half: a seeing-strength number for concealment to be weighed against,
-and the guarantee that the weighing needs no new vocabulary when it lands. ⛔ Until then, do not split the
-tables out, do not mint `detection`, and do not re-purpose `vision.plot.obstruction` as concealment — relocating
-them without a mechanic would move the mess rather than solve it.
+**ONE detection type counters ONE concealment type** (owner). It is a PAIRING, not a matrix and not a single
+contest: a seeker's strength against submarines is weighed against a hider's submarine concealment, and against
+nothing else.
+
+The shipped data says so plainly once you know to look — the same key appears on both sides:
+
+| side | carries | means |
+|---|---|---|
+| the hider | `invisible: INVISIBLE_SUBMARINE` | the METHOD it hides by |
+| | `invisibilityIntensity: { INVISIBLE_SUBMARINE: n }` | how well it hides by that method |
+| the seeker | `visibilityIntensity: { INVISIBLE_SUBMARINE: n }` | how well it answers that method |
+| | `visibilityIntensityRange` | ⚠ a SECOND reach, parallel to vision's |
+| | `visibilityIntensitySameTile` | a bonus at zero distance |
+
+**The type IS the pairing.** Nothing in the engine says so, which is why it reads as an arbitrary pile of tables.
+
+### What the data actually uses (measured, not assumed)
+
+14 invisible types across 13 table keys, 477 authorings.
+
+- **Magnitudes are genuinely graduated** — 1 … 26, plus ~100 NEGATIVE entries (counter-detection, something
+  actively reducing what a seeker perceives). This texture is real and any redesign keeps it.
+- **The per-type CROSS-PRODUCT is largely fiction** — **270 of 355 authoring entities name exactly ONE type**;
+  only 10 name four or more, and `CAMOUFLAGE` / `SIZE` / `DISGUISED` are three quarters of everything. The
+  14×13 surface serves a quarter of its own data.
+
+### Where it lands — DIRECTION, not design
+
+The pairing needs **no new vocabulary**: the method becomes a [tag](tags.md), and both strengths become ordinary
+`vision` entries qualified by it — the same `{unit: IS_<TAG>}` qualifier cargo uses for what it may carry.
+
+```jsonc
+// the hider
+"tags":   [ "submarine" ],
+"vision": { "unit": { "concealment": { "flat": 300 } } }
+
+// the seeker: sonar answers submarines well and camouflage poorly
+"vision": { "unit": { "detection": [ { "value": 500, "unit": "IS_SUBMARINE" },
+                                     { "value": 200, "unit": "IS_CAMOUFLAGE" } ] } }
+```
+
+`perceived ⟺ reachable ∧ detection(against that method) ≥ concealment`
+
+⛔ **Detection is an ADDENDUM to vision and gets NO reach of its own (owner).** Reach is the §2 budget, already
+computed; detection only ever runs on a plot that budget already granted. That is what retires
+`visibilityIntensityRange` — a second range system running beside vision's, with nothing keeping the two in
+step. Negatives need no mechanism either: the family sums, so counter-detection is a negative deposit.
+
+### ⛔ THE DATA STAYS AS THE ORIGINAL DESIGNER AUTHORED IT (owner)
+
+*"Leave the hide and seek data as the original designer intended, as much as we can."* The invisibility tables
+are **NOT** to be collapsed, re-scaled, re-authored or migrated ahead of the mechanic. Their present home
+alongside the scope-keyed family — which makes the `vision` key half family and half bespoke, and makes the
+unitcombat curator MERGE rather than assign — is an **accepted cost**, not a defect to tidy.
+
+⛔ So: do not split them out, do not mint `detection` (a reserved NAME, [json.md §6](json.md), is a home with no
+mechanic in it), and do not re-purpose `vision.plot.obstruction` as concealment. What is missing is a DESIGN,
+and inventing one to tidy a key is the machinery-for-one-mechanic move declined for counter-damage
+([triggers.md](triggers.md)). When the design comes, the pairing above is what it must express and §2 is the
+reach it rides on.
 
 ---
 
