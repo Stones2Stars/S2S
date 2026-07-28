@@ -33,26 +33,13 @@ void CyInfoPythonInterface2()
 		// Arrays
 
 		.def("isLeaders", &CvCivilizationInfo::isLeaders, "bool (int i)")
-		.def("isCivilizationBuilding", &CvCivilizationInfo::isCivilizationBuilding, "bool (int i)")
-		.def("isCivilizationFreeTechs", &CvCivilizationInfo::isCivilizationFreeTechs, "bool (int i)")
 
-		.def("getCityNames", &CvCivilizationInfo::getCityNames, "string (int i)")
 	;
 
 	python::class_<CvVictoryInfo, python::bases<CvInfoBase>, boost::noncopyable>("CvVictoryInfo", python::no_init)
 
-		.def("getLandPercent", &CvVictoryInfo::getLandPercent, "int ()")
-		.def("getMinLandPercent", &CvVictoryInfo::getMinLandPercent, "int ()")
-		.def("getReligionPercent", &CvVictoryInfo::getReligionPercent, "int ()")
 		.def("getCityCulture", &CvVictoryInfo::getCityCulture, "int ()")
-		.def("getNumCultureCities", &CvVictoryInfo::getNumCultureCities, "int ()")
-		.def("getTotalCultureRatio", &CvVictoryInfo::getTotalCultureRatio, "int ()")
 
-		.def("isTotalVictory", &CvVictoryInfo::isTotalVictory, "bool ()")
-		.def("isTargetScore", &CvVictoryInfo::isTargetScore, "bool ()")
-		.def("isEndScore", &CvVictoryInfo::isEndScore, "bool ()")
-		.def("isConquest", &CvVictoryInfo::isConquest, "bool ()")
-		.def("isDiploVote", &CvVictoryInfo::isDiploVote, "bool ()")
 		.def("isPermanent", &CvVictoryInfo::isPermanent, "bool ()")
 
 		.def("getMovie", &CvVictoryInfo::getMovie, "string ()")
@@ -63,30 +50,19 @@ void CyInfoPythonInterface2()
 		.def("getGoldPerProduction", &CvHurryInfo::getGoldPerProduction, "int ()")
 		.def("getProductionPerPopulation", &CvHurryInfo::getProductionPerPopulation, "int ()")
 
-		.def("isAnger", &CvHurryInfo::isAnger, "bool ()")
 	;
 
 	python::class_<CvHandicapInfo, python::bases<CvInfoBase>, boost::noncopyable>("CvHandicapInfo", python::no_init)
 
 		.def("getStartingGold", &CvHandicapInfo::getStartingGold, "int ()")
-		.def("getCorporationMaintenancePercent", &CvHandicapInfo::getCorporationMaintenancePercent, "int ()")
-		.def("getCivicUpkeepPercent", &CvHandicapInfo::getCivicUpkeepPercent, "int ()")
-		.def("getHealthBonus", &CvHandicapInfo::getHealthBonus, "int ()")
 
 		.def("getStartingDefenseUnits", &CvHandicapInfo::getStartingDefenseUnits, "int ()")
 		.def("getStartingWorkerUnits", &CvHandicapInfo::getStartingWorkerUnits, "int ()")
 		.def("getStartingExploreUnits", &CvHandicapInfo::getStartingExploreUnits, "int ()")
-		.def("getBarbarianInitialDefenders", &CvHandicapInfo::getBarbarianInitialDefenders, "int ()")
-		.def("getAIUnitUpgradePercent", &CvHandicapInfo::getAIUnitUpgradePercent, "int ()")
-		.def("getAIPerEraModifier", &CvHandicapInfo::getAIPerEraModifier, "int ()")
-		.def("getRevolutionIndexPercent", &CvHandicapInfo::getRevolutionIndexPercent, "int ()")
 	;
 
 	python::class_<CvGameSpeedInfo, python::bases<CvInfoBase>, boost::noncopyable>("CvGameSpeedInfo", python::no_init)
 
-		.def("getSpeedPercent", &CvGameSpeedInfo::getSpeedPercent, "int ()")
-		.def("getHammerCostPercent", &CvGameSpeedInfo::getHammerCostPercent, "int ()")
-		.def("getUnitYieldScalePercent", &CvGameSpeedInfo::getUnitYieldScalePercent, "int ()")
 
 		.def("getTurnsInEra", &CvGameSpeedInfo::getTurnsInEra, "int (int iEra)")
 		.def("getEraStartTurn", &CvGameSpeedInfo::getEraStartTurn, "int (int iEra)")
@@ -101,13 +77,11 @@ void CyInfoPythonInterface2()
 	python::class_<CvBuildInfo, python::bases<CvInfoBase>, boost::noncopyable>("CvBuildInfo", python::no_init)
 
 		.def("getTime", &CvBuildInfo::getTime, "int ()")
-		.def("getCost", &CvBuildInfo::getCost, "int ()")
 		.def("getTechPrereq", &CvBuildInfo::getTechPrereq, "int ()")
 		.def("getImprovement", &CvBuildInfo::getImprovement, "int ()")
 		.def("getRoute", &CvBuildInfo::getRoute, "int ()")
 		.def("getMissionType", &CvBuildInfo::getMissionType, "int ()")
 
-		.def("isKill", &CvBuildInfo::isKill, "bool ()")
 		.def("setDisabled", &CvBuildInfo::setDisabled, "bool ()")
 
 		// Arrays
@@ -134,7 +108,6 @@ void CyInfoPythonInterface2()
 		.def("getPrereqBonus", &CvRouteInfo::getPrereqBonus, "int ()")
 
 		// Arrays
-		.def("getYieldChange", &CvRouteInfo::getYieldChange, "int (int i)")
 		.def("getPrereqOrBonuses", &CvRouteInfo::getPrereqOrBonuses, python::return_value_policy<python::reference_existing_object>())
 	;
 
@@ -147,13 +120,9 @@ void CyInfoPythonInterface2()
 		.def("getTilesPerGoody", &CvImprovementInfo::getTilesPerGoody, "int ()")
 		.def("getGoodyUniqueRange", &CvImprovementInfo::getGoodyUniqueRange, "int ()")
 		.def("getUpgradeTime", &CvImprovementInfo::getUpgradeTime, "int ()")
-		.def("getAirBombDefense", &CvImprovementInfo::getAirBombDefense, "int ()")
-		.def("getDefenseModifier", &CvImprovementInfo::getDefenseModifier, "int ()")
-		.def("getHappiness", &CvImprovementInfo::getHappiness, "int ()")
 		.def("getPillageGold", &CvImprovementInfo::getPillageGold, "int ()")
 		.def("getImprovementPillage", &CvImprovementInfo::getImprovementPillage, "int ()")
 		.def("getImprovementUpgrade", &CvImprovementInfo::getImprovementUpgrade, "int ()")
-		.def("getNumAlternativeImprovementUpgradeTypes", &CvImprovementInfo::getNumAlternativeImprovementUpgradeTypes, "int ()")
 		.def("getPrereqTech", &CvImprovementInfo::getPrereqTech, "int ()")
 
 		.def("isActsAsCity", &CvImprovementInfo::isActsAsCity, "bool ()")
@@ -172,22 +141,15 @@ void CyInfoPythonInterface2()
 
 		// Arrays
 		.def("getPrereqNatureYield", &CvImprovementInfo::getPrereqNatureYield, "int (int i)")
-		.def("getYieldChange", &CvImprovementInfo::getYieldChange, "int (int i)")
-		.def("getRiverSideYieldChange", &CvImprovementInfo::getRiverSideYieldChange, "int (int i)")
-		.def("getIrrigatedYieldChange", &CvImprovementInfo::getIrrigatedYieldChange, "int (int i)")
-		.def("getAlternativeImprovementUpgradeType", &CvImprovementInfo::getAlternativeImprovementUpgradeType, "int (int i)")
 
 		.def("getTerrainMakesValid", &CvImprovementInfo::getTerrainMakesValid, "bool (int i)")
 		.def("getFeatureMakesValid", &CvImprovementInfo::getFeatureMakesValid, "bool (int i)")
 		.def("isAlternativeImprovementUpgradeType", &CvImprovementInfo::isAlternativeImprovementUpgradeType, "bool (int i)")
 
-		.def("getImprovementBonusYield", &CvImprovementInfo::getImprovementBonusYield, "int (int i, int j)")
 		.def("isImprovementBonusMakesValid", &CvImprovementInfo::isImprovementBonusMakesValid, "bool (int i)")
 		.def("isImprovementBonusTrade", &CvImprovementInfo::isImprovementBonusTrade, "bool (int i)")
 		.def("getImprovementBonusDiscoverRand", &CvImprovementInfo::getImprovementBonusDiscoverRand, "int (int i)")
 
-		.def("getTechYieldChanges", &CvImprovementInfo::getTechYieldChanges, "int (int i, int j)")
-		.def("getRouteYieldChanges", &CvImprovementInfo::getRouteYieldChanges, "int (int i, int j)")
 	;
 
 	python::class_<CvBonusClassInfo, python::bases<CvInfoBase>, boost::noncopyable>("CvBonusClassInfo", python::no_init)
@@ -200,8 +162,6 @@ void CyInfoPythonInterface2()
 		.def("getTechReveal", &CvBonusInfo::getTechReveal, "int ()")
 		.def("getTechCityTrade", &CvBonusInfo::getTechCityTrade, "int ()")
 		.def("getTechObsolete", &CvBonusInfo::getTechObsolete, "int ()")
-		.def("getHealth", &CvBonusInfo::getHealth, "int ()")
-		.def("getHappiness", &CvBonusInfo::getHappiness, "int ()")
 		.def("getMinAreaSize", &CvBonusInfo::getMinAreaSize, "int ()")
 		.def("getMinLatitude", &CvBonusInfo::getMinLatitude, "int ()")
 		.def("getMaxLatitude", &CvBonusInfo::getMaxLatitude, "int ()")
@@ -226,7 +186,6 @@ void CyInfoPythonInterface2()
 		.def("getArtDefineTag", &CvBonusInfo::getArtDefineTag, "string ()")
 
 		// Arrays
-		.def("getYieldChange", &CvBonusInfo::getYieldChange, "int (int i)")
 
 		.def("isTerrain", &CvBonusInfo::isTerrain, "bool (int i)")
 		.def("isFeature", &CvBonusInfo::isFeature, "bool (int i)")
@@ -240,8 +199,6 @@ void CyInfoPythonInterface2()
 		.def("getAppearanceProbability", &CvFeatureInfo::getAppearanceProbability, "int ()")
 		.def("getDisappearanceProbability", &CvFeatureInfo::getDisappearanceProbability, "int ()")
 		.def("getGrowthProbability", &CvFeatureInfo::getGrowthProbability, "int ()")
-		.def("getDefenseModifier", &CvFeatureInfo::getDefenseModifier, "int ()")
-		.def("getWarmingDefense", &CvFeatureInfo::getWarmingDefense, "int ()")
 		.def("getNumVarieties", &CvFeatureInfo::getNumVarieties, "int ()")
 
 		.def("isNoRiver", &CvFeatureInfo::isNoRiver, "bool ()")
@@ -252,8 +209,6 @@ void CyInfoPythonInterface2()
 		.def("isNukeImmune", &CvFeatureInfo::isNukeImmune, "bool ()")
 
 		// Arrays
-		.def("getYieldChange", &CvFeatureInfo::getYieldChange, "int (int i)")
-		.def("getRiverYieldChange", &CvFeatureInfo::getRiverYieldChange, "int (int i)")
 
 		.def("isTerrain", &CvFeatureInfo::isTerrain, "bool (int i)")
 	;

@@ -22,14 +22,12 @@ void CyInfoPythonInterface3()
 
 	python::class_<CvTerrainInfo, python::bases<CvInfoBase>, boost::noncopyable>("CvTerrainInfo", python::no_init)
 
-		.def("getDefenseModifier", &CvTerrainInfo::getDefenseModifier, "int ()")
 
 		.def("isWaterTerrain", &CvTerrainInfo::isWaterTerrain, "bool ()")
 		.def("isImpassable", &CvTerrainInfo::isImpassable, "bool ()")
 		.def("isFound", &CvTerrainInfo::isFound, "bool ()")
 
 		// Arrays
-		.def("getYield", &CvTerrainInfo::getYield, "int (int i)")
 	;
 
 
@@ -62,9 +60,7 @@ void CyInfoPythonInterface3()
 		.def("getArtDefineTag", &CvLeaderHeadInfo::getArtDefineTag, "string ()")
 
 		// Arrays
-		.def("hasTrait", &CvLeaderHeadInfo::hasTrait, "bool (int i)")
 		.def("getFlavorValue", &CvLeaderHeadInfo::getFlavorValue, "int (int i)")
-		.def("getDiploPeaceMusicScriptIds", &CvLeaderHeadInfo::getDiploPeaceMusicScriptIds, "int (int i)")
 
 		// Other
 		.def("getLeaderHead", &CvLeaderHeadInfo::getLeaderHead, "string ()")
@@ -76,7 +72,6 @@ void CyInfoPythonInterface3()
 
 		.def("getTechPrereq", &CvProcessInfo::getTechPrereq, "int ()")
 		// Arrays
-		.def("getProductionToCommerceModifier", &CvProcessInfo::getProductionToCommerceModifier, "int (int i)")
 	;
 
 
@@ -84,34 +79,20 @@ void CyInfoPythonInterface3()
 
 		.def("getTradeRoutes", &CvVoteInfo::getTradeRoutes, "int ()")
 
-		.def("isSecretaryGeneral", &CvVoteInfo::isSecretaryGeneral, "bool ()")
-		.def("isVictory", &CvVoteInfo::isVictory, "bool ()")
-		.def("isDefensivePact", &CvVoteInfo::isDefensivePact, "bool ()")
-		.def("isOpenBorders", &CvVoteInfo::isOpenBorders, "bool ()")
-		.def("isForcePeace", &CvVoteInfo::isForcePeace, "bool ()")
 
 		// Arrays
-		.def("isVoteSourceType", &CvVoteInfo::isVoteSourceType, "bool (int i)")
 	;
 
 
 	python::class_<CvProjectInfo, python::bases<CvInfoBase>, boost::noncopyable>("CvProjectInfo", python::no_init)
 
-		.def("getVictoryPrereq", &CvProjectInfo::getVictoryPrereq, "int ()")
 		.def("getTechPrereq", &CvProjectInfo::getTechPrereq, "int ()")
-		.def("getMaxGlobalInstances", &CvProjectInfo::getMaxGlobalInstances, "int ()")
-		.def("getMaxTeamInstances", &CvProjectInfo::getMaxTeamInstances, "int ()")
 		.def("getProductionCost", &CvProjectInfo::getProductionCost, "int ()")
-		.def("getNukeInterception", &CvProjectInfo::getNukeInterception, "int ()")
 
 		.def("isSpaceship", &CvProjectInfo::isSpaceship, "bool ()")
-		.def("isAllowsNukes", &CvProjectInfo::isAllowsNukes, "bool ()")
 
-		.def("getMovieArtDef", &CvProjectInfo::getMovieArtDef, "string ()")
-		.def("getCreateSound", &CvProjectInfo::getCreateSound, "string ()")
 
 		// Arrays
-		.def("getBonusProductionModifier", &CvProjectInfo::getBonusProductionModifier, "int (int i)")
 		.def("getVictoryThreshold", &CvProjectInfo::getVictoryThreshold, "int (int i)")
 		.def("getVictoryMinThreshold", &CvProjectInfo::getVictoryMinThreshold, "int (int i)")
 		.def("getVictoryDelayPercent", &CvProjectInfo::getVictoryDelayPercent, "int ()")
@@ -132,9 +113,7 @@ void CyInfoPythonInterface3()
 		.def("getMovieSound", &CvReligionInfo::getMovieSound, "string ()")
 		.def("getSound", &CvReligionInfo::getSound, "string ()")
 		.def("getButtonDisabled", &CvReligionInfo::getButtonDisabled, "string ()")
-		.def("getAdjectiveKey", &CvReligionInfo::pyGetAdjectiveKey, "wstring ()")
 		// Arrays
-		.def("getGlobalReligionCommerce", &CvReligionInfo::getGlobalReligionCommerce, "int (int i)")
 		.def("getFlavorValue", &CvReligionInfo::getFlavorValue, "int (int i)")
 	;
 
@@ -148,7 +127,6 @@ void CyInfoPythonInterface3()
 		.def("getTechPrereq", &CvCorporationInfo::getTechPrereq, "int ()")
 		.def("getObsoleteTech", &CvCorporationInfo::getObsoleteTech, "int ()")
 
-		.def("getMaintenance", &CvCorporationInfo::getMaintenance, "int ()")
 		.def("getMissionType", &CvCorporationInfo::getMissionType, "int ()")
 
 		.def("getMovieFile", &CvCorporationInfo::getMovieFile, "string ()")
@@ -156,36 +134,15 @@ void CyInfoPythonInterface3()
 		.def("getSound", &CvCorporationInfo::getSound, "string ()")
 
 		// Arrays
-		.def("getPrereqBonuses", &CvCorporationInfo::getPrereqBonuses, python::return_value_policy<python::reference_existing_object>())
-		.def("getCommerceProduced", &CvCorporationInfo::getCommerceProduced, "int (int i)")
-		.def("getYieldProduced", &CvCorporationInfo::getYieldProduced, "int (int i)")
 	;
 
 
 	python::class_<CvTraitInfo, python::bases<CvInfoBase>, boost::noncopyable>("CvTraitInfo", python::no_init)
 
-		.def("getHealth", &CvTraitInfo::getHealth, "int ()")
-		.def("getHappiness", &CvTraitInfo::getHappiness, "int ()")
-		.def("getLevelExperienceModifier", &CvTraitInfo::getLevelExperienceModifier, "int ()")
-		.def("getGreatPeopleRateModifier", &CvTraitInfo::getGreatPeopleRateModifier, "int ()")
-		.def("getGreatGeneralRateModifier", &CvTraitInfo::getGreatGeneralRateModifier, "int ()")
-		.def("getNumBuildingProductionModifiers", &CvTraitInfo::getNumBuildingProductionModifiers, "int ()")
 
-		.def("getRevIdxLocal", &CvTraitInfo::getRevIdxLocal, "int ()")
-		.def("getRevIdxNational", &CvTraitInfo::getRevIdxNational, "int ()")
-		.def("getRevIdxHolyCityGood", &CvTraitInfo::getRevIdxHolyCityGood, "int ()")
-		.def("getRevIdxHolyCityBad", &CvTraitInfo::getRevIdxHolyCityBad, "int ()")
-		.def("getRevIdxNationalityMod", &CvTraitInfo::getRevIdxNationalityMod, "float ()")
-		.def("getRevIdxBadReligionMod", &CvTraitInfo::getRevIdxBadReligionMod, "float ()")
-		.def("getRevIdxGoodReligionMod", &CvTraitInfo::getRevIdxGoodReligionMod, "float ()")
 
-		.def("getShortDescription", &CvTraitInfo::getShortDescription, "int (int i)")
-		.def("getCommerceChange", &CvTraitInfo::getCommerceChange, "int (int i)")
 		.def("getCommerceModifier", &CvTraitInfo::getCommerceModifier, "int (int i)")
-		.def("getBuildingProductionModifier", &CvTraitInfo::getBuildingProductionModifier)
-		.def("getBuildingHappinessModifiers", &CvTraitInfo::getBuildingHappinessModifiers, python::return_value_policy<python::reference_existing_object>())
 
-		.def("getImprovementYieldChange", &CvTraitInfo::getImprovementYieldChange, "int (int i, int j)")
 	;
 
 	python::class_<CvWorldInfo, python::bases<CvInfoBase>, boost::noncopyable>("CvWorldInfo", python::no_init)
@@ -301,22 +258,8 @@ void CyInfoPythonInterface3()
 		.def("getHistoricalStartYear", &CvEraInfo::getHistoricalStartYear, "int () -")
 		.def("getHistoricalEndYear", &CvEraInfo::getHistoricalEndYear, "int () -")
 		.def("getNormalSpeedTurns", &CvEraInfo::getNormalSpeedTurns, "int () -")
-		.def("getGrowthPercent", &CvEraInfo::getGrowthPercent, "int () -")
-		.def("getTrainPercent", &CvEraInfo::getTrainPercent, "int () -")
-		.def("getConstructPercent", &CvEraInfo::getConstructPercent, "int () -")
-		.def("getCreatePercent", &CvEraInfo::getCreatePercent, "int () -")
-		.def("getResearchPercent", &CvEraInfo::getResearchPercent, "int () -")
-		.def("getBuildPercent", &CvEraInfo::getBuildPercent, "int () -")
-		.def("getImprovementPercent", &CvEraInfo::getImprovementPercent, "int () -")
-		.def("getGreatPeoplePercent", &CvEraInfo::getGreatPeoplePercent, "int () -")
-		.def("getAnarchyPercent", &CvEraInfo::getAnarchyPercent, "int () -")
-		.def("getEventChancePerTurn", &CvEraInfo::getEventChancePerTurn, "int () -")
 		.def("getNumSoundtracks", &CvEraInfo::getNumSoundtracks, "int () -")
 
-		.def("isNoGoodies", &CvEraInfo::isNoGoodies, "bool () -")
-		.def("isNoAnimals", &CvEraInfo::isNoAnimals, "bool () -")
-		.def("isNoBarbUnits", &CvEraInfo::isNoBarbUnits, "bool () -")
-		.def("isNoBarbCities", &CvEraInfo::isNoBarbCities, "bool () -")
 	;
 
 
