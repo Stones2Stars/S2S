@@ -15,7 +15,7 @@
  "vision": {
   "plot": {
    "obstruction": {
-    "flat": 1
+    "flat": 100
    }
   }
  },

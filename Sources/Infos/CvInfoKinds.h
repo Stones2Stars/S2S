@@ -356,6 +356,16 @@ enum VisionKind
 	NUM_VISION_KINDS
 };
 const int VISION_SCOPES = INFO_SCOPE_BIT(CASC_SCOPE_UNIT) | INFO_SCOPE_BIT(CASC_SCOPE_PLOT) | INFO_SCOPE_BIT(CASC_SCOPE_CITY);
+// THE VISION SCALE. One plot of open ground costs 100 -- the same "one step = 100" denominator movement already
+// uses (MOVE_DENOMINATOR), so the two families read alike. A baseline of 1 was the thing that had to go: it left
+// no room between values, and the data shows what that cost -- ALL 78 obstruction-authoring features carried the
+// identical `1`, because forest simply could not be made cheaper than jungle. At 100 it can (forest 60, jungle
+// 100), and a promotion can add a quarter of a plot.
+// ⛔ ONE SCALE, ALWAYS -- every vision number is in this unit. Movement fractured into two (terrain in whole
+// moves, routes in denominator units) precisely because its baseline could not express a part-step; vision has
+// no such split to inherit and must never grow one. ×100 fixed point still sits underneath for anything finer.
+const int VISION_PLOT = 100;                             // the authored (human) cost of one open plot
+const int VISION_OPEN_GROUND_COST = VISION_PLOT * 100;   // the same in the engine's native ×100
 
 // Ruling 5 re-homes: flightRange/missileRange land here beside intercept/evasion.
 enum AirKind

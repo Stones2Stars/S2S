@@ -12,16 +12,16 @@
    }
   }
  },
- "vision": {
-  "plot": {
-   "obstruction": {
-    "flat": 1
-   }
-  }
- },
  "characteristics": [
   "unfoundable"
  ],
+ "vision": {
+  "plot": {
+   "obstruction": {
+    "flat": 100
+   }
+  }
+ },
  "world": {
   "art": {
    "define": "ART_DEF_FEATURE_QUASAR"

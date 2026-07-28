@@ -130,6 +130,9 @@ def _reorder(obj):
 _DELTAS = {}  # filled lazily on first post_process call (one Store load)
 
 
+VISION_PLOT = 100   # one open plot's sight cost -- the vision scale (vision.md; CvInfoKinds.h)
+
+
 def post_process(typ, obj, rec, store):
     if not _DELTAS:
         _DELTAS.update(_yield_deltas(store))
@@ -143,6 +146,14 @@ def post_process(typ, obj, rec, store):
     if _river_capable(typ, mc):
         for y, v in _DELTAS["river"].items():
             _inject(obj, y, "plot", "flat", v, HAS_RIVER)
+    # (3) ELEVATION -- AUTHORED OUTRIGHT, never converted (owner): the curator simply sees "this is peak, add 3
+    # elevation". There is no legacy field to migrate -- relief was engine-derived from the PLOT TYPE, so
+    # authoring it fresh at the vision scale is both cleaner and the only honest option. PEAK IS 3 (owner),
+    # deliberately above the legacy relief tier's 2: a peak should command a genuinely commanding view, and 3
+    # plots of elevation buys sight past two plots of jungle where 2 would not.
+    iElevation = {"TERRAIN_PEAK": 3, "TERRAIN_HILL": 1}.get(typ)
+    if iElevation:
+        obj.setdefault("vision", OrderedDict()).setdefault("plot", OrderedDict())["elevation"] =             OrderedDict([("flat", iElevation * VISION_PLOT)])
     _reorder(obj)
 
 # Terrain's OWN modifier families (override the empty mapping channels). Every deposit is PLOT scope — the

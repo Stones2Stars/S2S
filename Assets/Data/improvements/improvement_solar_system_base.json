@@ -35,7 +35,7 @@
  "vision": {
   "plot": {
    "elevation": {
-    "flat": 1
+    "flat": 100
    }
   }
  },

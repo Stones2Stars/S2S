@@ -12,16 +12,16 @@
    }
   }
  },
- "vision": {
-  "plot": {
-   "obstruction": {
-    "flat": 1
-   }
-  }
- },
  "characteristics": [
   "unimprovable"
  ],
+ "vision": {
+  "plot": {
+   "obstruction": {
+    "flat": 100
+   }
+  }
+ },
  "triggers": [
   {
    "trigger": {

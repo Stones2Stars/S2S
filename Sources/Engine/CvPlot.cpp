@@ -116,6 +116,46 @@ void CvPlot::getDefenseKinds(int (&defenses)[NUM_DEFENSE_KINDS]) const
 	}
 }
 
+void CvPlot::getVisionKinds(int (&visions)[NUM_VISION_KINDS]) const
+{
+	for (int iKind = 0; iKind < NUM_VISION_KINDS; ++iKind)
+	{
+		const int iChannel = CascadeChannelRegistry::channelLookup(MODFAM_VISION, iKind, -1);
+		visions[iKind] = InfoValuation::realizedAtPlot(*this, iChannel);
+	}
+}
+
+int CvPlot::visionCost() const
+{
+	// What a sight budget spends to see THROUGH this plot (vision.md). Open ground costs the base; an
+	// obstruction adds its own on top, so a jungle authoring 1 costs 2 and eats two plots of a seer's budget.
+	int aVisions[NUM_VISION_KINDS];
+	getVisionKinds(aVisions);
+	return VISION_OPEN_GROUND_COST + aVisions[VISION_OBSTRUCTION];
+}
+
+int CvPlot::visionElevation() const
+{
+	// How high this ground is. Two legs, both genuinely the plot's: the PLOT TYPE's relief, which is engine
+	// state rather than authored data, and whatever the substrate authors on top -- a watchtower improvement
+	// raising whoever stands here. POSITIONAL: it belongs to the place, never to the observer, so stepping off
+	// loses it.
+	// PEAK IS 3, HILLS 1 (owner) -- vision's own numbers, deliberately not the legacy relief tier's 2/1: a peak
+	// should command a genuinely commanding view, and 3 buys sight past two plots of jungle where 2 would not.
+	int iRelief = 0;
+	if (isAsPeak())
+	{
+		iRelief = 3;
+	}
+	else if (isHills())
+	{
+		iRelief = 1;
+	}
+	int aVisions[NUM_VISION_KINDS];
+	getVisionKinds(aVisions);
+	return VISION_OPEN_GROUND_COST * iRelief + aVisions[VISION_ELEVATION];
+}
+
 void CvPlot::getScalars(int (&scalars)[NUM_INFO_SCALARS]) const
 {
 	for (int iScalar = 0; iScalar < NUM_INFO_SCALARS; ++iScalar)

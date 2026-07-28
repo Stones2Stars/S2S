@@ -46,7 +46,7 @@ from collections import OrderedDict
 
 import engine
 import boolexpr
-from curate_common import put_art, emit_art, FAMILY_ORDER, de_i, fold_text_to_identity, gate_entity, wipe_entity_json, skip_inert
+from curate_common import put_art, emit_art, FAMILY_ORDER, de_i, fold_text_to_identity, gate_entity, wipe_entity_json, skip_inert, scale_vision
 from curate_unit import TAG_BY_UNITCOMBAT   # the ONE unitcombat->tag map (a building's free-promotion condition keys on it)
 from store import Store, REPO
 
@@ -1609,6 +1609,7 @@ def curate(typ, rec, store):
     if identity:
         out["identity"] = identity
     fold_text_to_identity(out)   # TEXT -> identity (json.md §7)
+    scale_vision(out)            # sight values onto THE vision scale (vision.md)
     return out
 
 

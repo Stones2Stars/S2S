@@ -17,16 +17,16 @@
    }
   }
  },
- "vision": {
-  "plot": {
-   "obstruction": {
-    "flat": 1
-   }
-  }
- },
  "characteristics": [
   "unfoundable"
  ],
+ "vision": {
+  "plot": {
+   "obstruction": {
+    "flat": 100
+   }
+  }
+ },
  "triggers": [
   {
    "trigger": "onTurn",

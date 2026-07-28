@@ -12,13 +12,6 @@
    }
   }
  },
- "vision": {
-  "plot": {
-   "obstruction": {
-    "flat": 1
-   }
-  }
- },
  "characteristics": [
   "unfoundable",
   "unimprovable",
@@ -26,6 +19,13 @@
   "nukeImmune",
   "ignoreTerrainCulture"
  ],
+ "vision": {
+  "plot": {
+   "obstruction": {
+    "flat": 100
+   }
+  }
+ },
  "world": {
   "art": {
    "define": "ART_DEF_FEATURE_BASALT_ORGAN"

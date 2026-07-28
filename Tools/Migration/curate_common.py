@@ -335,6 +335,33 @@ def accumulate_conditioned(store, config):
     return out
 
 
+VISION_PLOT = 100   # one open plot's sight cost -- THE vision scale (vision.md; mirrored in CvInfoKinds.h)
+
+
+def scale_vision(out):
+    """Lift a legacy vision value onto THE VISION SCALE (vision.md).
+
+    Every legacy sight number was a MULTIPLE OF ONE PLOT -- a building's `iLineOfSight` of 2 meant "two plots
+    further", a jungle's see-through of 1 meant "one plot's worth harder". One open plot now costs VISION_PLOT,
+    so those values scale by it and land in the single unit every vision number shares.
+
+    The point is the room underneath: a baseline of 1 left none, and the data showed exactly what that cost --
+    ALL 78 obstruction-authoring features carried the identical `1`, because forest could not be made cheaper
+    than jungle. A modder still writes a sensible whole number (owner); the x100 fixed point at the readJson
+    boundary is none of their business.
+    """
+    vision = out.get("vision")
+    if not isinstance(vision, dict):
+        return
+    for scope, node in vision.items():
+        if scope not in ("unit", "plot", "city") or not isinstance(node, dict):
+            continue
+        for key, leaf in node.items():
+            if isinstance(leaf, dict) and "flat" in leaf and isinstance(leaf["flat"], int):
+                leaf["flat"] *= VISION_PLOT
+            elif key == "flat" and isinstance(leaf, int):
+                node[key] = leaf * VISION_PLOT
+
 def apply_channel(families, spec, c, enabler_block=None):
     """Deposit a scope-wide modifier into its FAMILY (flat-family layout, §3): <family>.<scope>[.<member>].<unit>.
     The mapping `channel` IS the family; named valueKeys (food/gold/…) are members; a scalar has no member."""

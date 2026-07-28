@@ -20,18 +20,18 @@
    "flat": 5
   }
  },
- "vision": {
-  "plot": {
-   "obstruction": {
-    "flat": 1
-   }
-  }
- },
  "characteristics": [
   "unfoundable",
   "nukeImmune",
   "ignoreTerrainCulture"
  ],
+ "vision": {
+  "plot": {
+   "obstruction": {
+    "flat": 100
+   }
+  }
+ },
  "triggers": [
   {
    "trigger": "onTurn",

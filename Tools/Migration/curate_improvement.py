@@ -291,6 +291,7 @@ def post_process(typ, obj, rec, store):
         pulses = [g for g in (engine.property_source_trigger(s) for s in pm if s.tag == "PropertySource") if g]
         if pulses:
             obj.setdefault("triggers", []).extend(pulses)
+    cc.scale_vision(obj)   # sight values onto THE vision scale (vision.md)
     _reorder(obj)
 
 

@@ -5,13 +5,6 @@
    "flat": 1
   }
  },
- "vision": {
-  "plot": {
-   "obstruction": {
-    "flat": 1
-   }
-  }
- },
  "characteristics": [
   "unfoundable",
   "unimprovable",
@@ -20,6 +13,13 @@
   "countsAsPeak",
   "ignoreTerrainCulture"
  ],
+ "vision": {
+  "plot": {
+   "obstruction": {
+    "flat": 100
+   }
+  }
+ },
  "triggers": [
   {
    "trigger": "onTurn",

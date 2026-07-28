@@ -25,6 +25,13 @@
    "flat": 1
   }
  },
+ "vision": {
+  "plot": {
+   "elevation": {
+    "flat": 100
+   }
+  }
+ },
  "ui": {
   "art": {
    "icon": "Art/Interface\\Buttons\\WorldBuilder\\Terrain_Hill.dds"

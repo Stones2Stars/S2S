@@ -1,12 +1,5 @@
 {
  "type": "FEATURE_PLATY_SUGARLOAF",
- "vision": {
-  "plot": {
-   "obstruction": {
-    "flat": 1
-   }
-  }
- },
  "characteristics": [
   "unfoundable",
   "unimprovable",
@@ -15,6 +8,13 @@
   "countsAsPeak",
   "ignoreTerrainCulture"
  ],
+ "vision": {
+  "plot": {
+   "obstruction": {
+    "flat": 100
+   }
+  }
+ },
  "world": {
   "art": {
    "define": "ART_DEF_FEATURE_SUGARLOAF"

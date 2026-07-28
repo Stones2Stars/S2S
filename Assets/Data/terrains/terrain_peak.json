@@ -31,6 +31,13 @@
    "flat": 2
   }
  },
+ "vision": {
+  "plot": {
+   "elevation": {
+    "flat": 300
+   }
+  }
+ },
  "ui": {
   "art": {
    "icon": "Art/Interface\\Buttons\\WorldBuilder\\feature_peak.dds"

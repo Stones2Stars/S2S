@@ -51,13 +51,12 @@ FEATURE_FAMILIES = {
     "iHealthPercent":   {"channel": "health",         "scope": "plot", "kind": "percent"},
     "iDefense":         {"channel": "defense",        "scope": "plot", "kind": "percent", "member": "amount"},
     "iCultureDistance": {"channel": "cultureDistance","scope": "plot", "kind": "flat"},
-    "iSeeThrough":      {"channel": "vision",         "scope": "plot", "kind": "flat", "member": "obstruction"},   # what the ground costs to see THROUGH -- a feature's see-through value IS its obstruction (jungle 2, open ground 1); vision.md
 }
 
 # RiverYieldChange + PropertyManipulators are dropped from the DEFAULT path and rebuilt in post_process (the first
 # is HAS_RIVER-conditional, which apply_channel can't express; the second becomes `triggers` entries, §5).
 # iWarmingDefense is dead. Prereqs (none) come from the mapping.
-FEATURE_DROP = ["iWarmingDefense", "RiverYieldChange", "PropertyManipulators", "iPopDestroys"]
+FEATURE_DROP = ["iWarmingDefense", "RiverYieldChange", "PropertyManipulators", "iPopDestroys", "iSeeThrough"]
 
 # iMovement -> intrinsic `identity.movementCost` via to_identity (resolver-subsystem; matches terrain/route).
 # to_identity OVERRIDES the Feature mapping (which classifies iMovement as a movement/city channel) because
@@ -72,6 +71,7 @@ CFG = cc.EntityConfig("FeatureInfo", extra_drop=FEATURE_DROP, families=FEATURE_F
 # No inbound boosts: a feature is never the deliveryguy for another entity's modifier (modifier-spec §6.1).
 FEATURE_BOOSTS = []
 
+VISION_PLOT = 100   # one open plot's sight cost -- the vision scale (vision.md; CvInfoKinds.h)
 HAS_RIVER = "HAS_RIVER"   # bare-string predicate shorthand (enabler-spec §3)
 _PREFIX = ["type", "description", "civilopedia", "help", "quote", "strategy",
            "enables", "obsoletes", "replaces", "disables", "requires"]
@@ -139,6 +139,15 @@ def post_process(typ, obj, rec, store):
                                      ("min", max(1, int(pdText)))])),
             ("action", OrderedDict([("destroy", "self")])),
         ]))
+    # iSeeThrough -> vision.plot.obstruction, AT THE VISION SCALE (vision.md). The legacy value is a MULTIPLE
+    # of an open plot -- a jungle's `1` meant "one plot's worth harder than open ground" -- so it scales by
+    # VISION_PLOT (100) to land in the one unit every vision number shares. This is what buys the granularity
+    # the old scale denied: every one of the 78 authoring features carried the identical `1`, because forest
+    # could not be made cheaper than jungle. Now it can, by authoring 60 against jungle's 100.
+    stNode = rec.find("iSeeThrough")
+    stText = engine.text(stNode) if stNode is not None else None
+    if stText is not None and engine.is_int(stText) and int(stText) != 0:
+        obj.setdefault("vision", OrderedDict()).setdefault("plot", OrderedDict())["obstruction"] =             OrderedDict([("flat", int(stText) * VISION_PLOT)])
     _reorder(obj)
 
 

@@ -51,7 +51,8 @@ from collections import OrderedDict
 
 import engine
 from curate_common import (put_art, emit_art, FAMILY_ORDER, de_i, descale100, fold_text_to_identity, gate_entity,
-                           emit_sizematters, SM_FLAT_CHANGE, SM_COMBATMOD_CHANGE, SM_CARGO_CHANGE, wipe_entity_json)
+                           emit_sizematters, SM_FLAT_CHANGE, SM_COMBATMOD_CHANGE, SM_CARGO_CHANGE, wipe_entity_json,
+                           scale_vision)
 from store import Store, REPO
 
 # ---- scalar deposits: tag -> (member|None, unit). All at `unit` scope (self-accumulator, §5). ----
@@ -538,6 +539,7 @@ def curate(typ, rec, store):
         out["identity"] = identity
     emit_sizematters(out, lambda t: _int(rec, t), flat=SM_FLAT_CHANGE, combatmod=SM_COMBATMOD_CHANGE, cargo=SM_CARGO_CHANGE)
     fold_text_to_identity(out)   # TEXT -> identity (json.md §7)
+    scale_vision(out)            # sight values onto THE vision scale (vision.md)
     return out
 
 

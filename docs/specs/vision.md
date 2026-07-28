@@ -38,6 +38,33 @@ splitting them out would scatter one mechanic across three families to no end.
 
 ---
 
+## 1a. THE SCALE — one plot of open ground costs 100
+
+**A baseline of 1 is too low** (owner), and the shipped data shows exactly what it cost: **all 78
+obstruction-authoring features carried the identical `1`**, because there was no value between "free" and
+"twice as expensive" — forest simply could not be made cheaper than jungle. One plot now costs **100**, the same
+"one step = 100" denominator movement already uses, so both families read alike and there is room to say what
+you mean.
+
+| quantity | value | reads as |
+|---|--:|---|
+| open ground — the baseline | **100** | one plot |
+| jungle / forest obstruction | +100 | costs 2 plots to see through |
+| hills elevation | +100 | one plot |
+| peak elevation | +300 | three plots |
+| a unit's base sight | 200 | sees 2 plots |
+| a sharpening promotion | +25 … +100 | a quarter plot to a full one |
+
+⛔ **ONE SCALE, ALWAYS.** Movement fractured into two — terrain in whole moves, routes in denominator units —
+because its baseline could not express a part-step. Vision inherits no such split and must never grow one.
+
+⚑ **A modder writes the sensible number and nothing else** (owner). `100` is the authored value; readJson's
+×100 conversion at the boundary is none of their business, and that the engine then works in 10,000 has no real
+consequence. Anything finer than a hundredth of a plot authors `0.5` and the fixed point carries it — so there
+is never a reason to invent a second unit.
+
+---
+
 ## 2. The formula
 
 ```
@@ -88,20 +115,20 @@ rule, not the final word.
 ## 3. Worked authoring
 
 ```jsonc
-// a jungle: expensive to see through, flat ground
-"vision": { "plot": { "obstruction": { "flat": 2 } } }
+// a jungle: one extra plot's worth to see through, so it costs 2 plots in all
+"vision": { "plot": { "obstruction": { "flat": 100 } } }
 
-// a peak: high ground, and costly to see past
-"vision": { "plot": { "elevation": { "flat": 2 }, "obstruction": { "flat": 3 } } }
+// a peak: three plots of elevation to stand on
+"vision": { "plot": { "elevation": { "flat": 300 } } }
 
-// a watchtower improvement: raises whoever stands here
-"vision": { "plot": { "elevation": { "flat": 1 } } }
+// a watchtower improvement: raises whoever stands here by a plot
+"vision": { "plot": { "elevation": { "flat": 100 } } }
 
 // a unit's own sight, and a promotion sharpening it
-"vision": { "unit": { "flat": 1 } }
+"vision": { "unit": { "flat": 200 } }
 
 // tree platforms: the city's lookout goes up a storey
-"vision": { "city": { "elevation": { "flat": 1 } } }
+"vision": { "city": { "elevation": { "flat": 100 } } }
 ```
 
 Ground that authors no `vision.plot.obstruction` costs the open-ground default — **absent means ordinary**, never a special
