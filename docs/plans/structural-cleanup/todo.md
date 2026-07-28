@@ -29,8 +29,18 @@
 > genuine metadata, and stay). Each key re-homes to the block that already exists for its kind; the count is a
 > worklist, never a licence.
 
-- **Magnitudes → modifier families** — `sightRange` (vision), `cargo`, `captures`, `conscription`,
-  `controlPoints`, `espionagePoints`, the radii (`cityRadius`, `workableRadius`, `cultureRange`).
+- **Magnitudes whose family ALREADY EXISTS — a curator move, not a design question.**
+  - `cargo` (84, UNIT) → the **`cargo`** family ([modifier.md §6](../../specs/modifier.md)). Capacity has ONE
+    home there and the Size-Matters figure DERIVES from it (owner) — nothing to migrate on that side, since no
+    unit authors `iSMCargo` at all. ⚠ One genuine gap: what `identity.cargo` holds today is not the amount but
+    `SpecialCargo`/`SMNotSpecialCargo` — a restriction to a `SPECIALUNIT_*` GROUP. §6 expresses the "what" as a
+    `unit:` PREDICATE (`{unit: IS_AIR}`), and a special-unit group is not one, so that qualifier needs a form
+    before the move can carry it.
+  - `sightRange` (30, BUILDING) → the **`vision`** block ([json.md §9](../../specs/json.md), line-of-sight).
+  - `captures` (450, UNIT) → the **`capture`** family (the §6 unit-plane list).
+- **Magnitudes with NO family named yet** — `conscription`, `controlPoints`, `espionagePoints`, and the radii
+  (`cityRadius`, `workableRadius`, `cultureRange`). These are the ones that genuinely need a home decided; the
+  three above do not.
 - **Constraints → `requires` / `allowed`** — `terrainImpassable`, `featureImpassable`, `requiresFlatlands`,
   `validTerrains`, `minAreaSize`, `distanceToLand`, the `found*` gates.
 - **Keys with a home already specced** — `tradeable` (910, TECH) is the `canTrade` block

@@ -972,7 +972,13 @@ Data read by a specific system, not the cascade. Use only when the entity needs 
     `maxHP`/`combatModifier`/`cargo`. A base equal to the legacy `−10` "unset" sentinel is emitted **absent** (never
     `0` — `0` is a real rank).
   - **Unit** (its own SM fields): `combatModifier` (its per-rank combat mods), plus `groupSize`/`baseCargoVolume`
-    where authored. The unit's quality/group/size **RANK is DERIVED at load, never stored**: `Σ` over the unit's
+    where authored. ⚖ **`smSpace` is DERIVED, not authored (owner): under Size Matters a carrier's space follows
+    from how many units it can carry** — so it derives from the `cargo` family's capacity, the same
+    derived-at-load class as the ranks below. The data agrees: **no unit authors it** (legacy `iSMCargo` appears
+    in no unit record); the only authorings are the 23 PROMOTION deltas, which are the delta plane working as
+    intended. ⛔ So carrying capacity has ONE home — **`cargo`** ([modifier.md §6](modifier.md)) — and the SM
+    figure is read off it, never a second authored number to keep in step.
+    The unit's quality/group/size **RANK is DERIVED at load, never stored**: `Σ` over the unit's
     combat classes (primary `combatClass` + the `combatClasses` subs) of each `*Base` where `> −10` — reproducing the
     engine post-load pass (`CvUnitInfo`: `m_iBaseGroupRank += getGroupBase()`). The group rank feeds `getUnitCountSM`
     (`count ⁄ 3^(groupRank−1)`), so a stubbed `0` divides by zero — the getter MUST return the real derived value.
