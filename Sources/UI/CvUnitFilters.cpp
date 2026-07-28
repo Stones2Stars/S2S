@@ -13,7 +13,8 @@
 #include "Engine/CvCity.h"
 #include "Defines/CvGlobals.h"
 #include "AI/CvPlayerAI.h"
-#include "CvInfos.h"
+#include "CvUnitInfo.h"               // the rebuilt unit poco: combatClass / domain / the skills bitset
+#include "CvClassificationBlock.h"    // CLSD_SKILL + the memoized generated-id bit test behind the skill reads
 
 void UnitFilterBase::Activate()
 {
@@ -63,14 +64,17 @@ bool UnitFilterIsLimited::isFilteredUnit(const CvPlayer *pPlayer, const CvCity *
 	return isLimitedUnit(eUnit);
 }
 
+// The filters key the unit's PRIMARY combat class -- the root `combatClass` FK. The sub classes
+// (`combatClasses`) are deliberately not consulted: these buckets partition the build list, and every class the
+// UI filters on (worker, siege, mounted, hero, spy, ...) is authored as a unit's primary.
 bool UnitFilterIsCombat::isFilteredUnit(const CvPlayer *pPlayer, const CvCity *pCity, UnitTypes eUnit) const
 {
-	return (UnitCombatTypes)(GC.getUnitInfo(eUnit).getUnitCombatType()) == m_eCombat;
+	return (UnitCombatTypes)(GC.getUnitInfo(eUnit).getCombatClass()) == m_eCombat;
 }
 
 bool UnitFilterIsCombats::isFilteredUnit(const CvPlayer *pPlayer, const CvCity *pCity, UnitTypes eUnit) const
 {
-	return algo::any_of_equal(m_eCombats, (UnitCombatTypes)GC.getUnitInfo(eUnit).getUnitCombatType());
+	return algo::any_of_equal(m_eCombats, (UnitCombatTypes)GC.getUnitInfo(eUnit).getCombatClass());
 }
 
 void UnitFilterIsCombats::addCombat(UnitCombatTypes eCombat)
@@ -85,12 +89,15 @@ bool UnitFilterIsCombats::isEmpty() const
 
 bool UnitFilterIsDomain::isFilteredUnit(const CvPlayer *pPlayer, const CvCity *pCity, UnitTypes eUnit) const
 {
-	return GC.getUnitInfo(eUnit).getDomainType() == m_eDomain;
+	return GC.getUnitInfo(eUnit).getDomain() == m_eDomain;
 }
 
 bool UnitFilterIsDefense::isFilteredUnit(const CvPlayer *pPlayer, const CvCity *pCity, UnitTypes eUnit) const
 {
-	return GC.getUnitInfo(eUnit).isOnlyDefensive();
+	// `onlyDefensive` is a unit SKILL on the rebuilt surface, so the read is the classification bitset's
+	// memoized generated-id test -- the CLS_HAS idiom, never a per-call string lookup.
+	static int s_onlyDefensiveSkillId = -1;
+	return GC.getUnitInfo(eUnit).getSkills()->hasKey(s_onlyDefensiveSkillId, CLSD_SKILL, "onlyDefensive");
 }
 
 UnitFilterList::UnitFilterList(const CvPlayer *pPlayer, const CvCity *pCity)

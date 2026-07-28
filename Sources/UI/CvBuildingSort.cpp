@@ -10,7 +10,10 @@
 #include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
+#include "CvBuildListValuation.h"
 #include "CvBuildingInfo.h"
+#include "CvInfoKinds.h"
+#include "CvModifiers.h"
 #include "Engine/CvCity.h"
 #include "Defines/CvGlobals.h"
 #include "Engine/CvPlayer.h"
@@ -74,23 +77,23 @@ BuildingSortCommerce::BuildingSortCommerce(CommerceTypes eCommerce, bool bInvert
 
 int BuildingSortCommerce::getBuildingValue(const CvPlayer* pPlayer, CvCity* pCity, BuildingTypes eBuilding) const
 {
-	if (pCity)
+	PROFILE_EXTRA_FUNC();
+	int aFlatCommerce[NUM_COMMERCE_TYPES];
+	if (!CvBuildListValuation::buildingFlatCommerce(eBuilding, pPlayer, pCity, aFlatCommerce))
 	{
-		int iYieldCommerce = pCity->getAdditionalYieldByBuilding(YIELD_COMMERCE, eBuilding);
-		int iCommerce = pCity->getAdditionalCommerceByBuilding(m_eCommerce, eBuilding);
-		iCommerce += iYieldCommerce * pPlayer->getCommercePercent(m_eCommerce);
-		if (m_eCommerce == COMMERCE_GOLD)
-			iCommerce += pCity->getSavedMaintenanceTimes100ByBuilding(eBuilding);
-		return iCommerce;
+		return 0;
 	}
-	else
+	int iCommerce = aFlatCommerce[m_eCommerce];
+	// The commerce YIELD is split across the commerce types by the player's rates, so the share this criterion's
+	// type receives counts toward it. The flat yield is x100 and getCommercePercent is a human percent, so the
+	// /100 here is that percent's reduction and the sum stays x100.
+	int aFlatYields[NUM_YIELD_TYPES];
+	if (pPlayer != NULL
+		&& CvBuildListValuation::buildingFlatYields(eBuilding, pPlayer, pCity, aFlatYields))
 	{
-		const CvBuildingInfo& kInfo = GC.getBuildingInfo(eBuilding);
-		int iYieldCommerce = kInfo.getYieldChange(YIELD_COMMERCE) + kInfo.getYieldPerPopChange(YIELD_COMMERCE) + kInfo.getYieldModifier(YIELD_COMMERCE) / 5;
-		int iCommerce = kInfo.getCommerceChange(m_eCommerce) + kInfo.getCommercePerPopChange(m_eCommerce) + kInfo.getCommerceModifier(m_eCommerce) / 5;
-		iCommerce += iYieldCommerce * pPlayer->getCommercePercent(m_eCommerce);
-		return iCommerce;
+		iCommerce += aFlatYields[YIELD_COMMERCE] * pPlayer->getCommercePercent(m_eCommerce) / 100;
 	}
+	return iCommerce;
 }
 
 BuildingSortYield::BuildingSortYield(YieldTypes eYield, bool bInvert) : BuildingSortBase(bInvert)
@@ -100,41 +103,38 @@ BuildingSortYield::BuildingSortYield(YieldTypes eYield, bool bInvert) : Building
 
 int BuildingSortYield::getBuildingValue(const CvPlayer* pPlayer, CvCity* pCity, BuildingTypes eBuilding) const
 {
-	if (pCity)
+	PROFILE_EXTRA_FUNC();
+	// The FLAT channel is what an ordering can be built from. The yield MODIFIER is a percent: it only becomes a
+	// comparable amount once resolved against the city's current rate in the channel, which is a valuation the
+	// seam owns (contexts in, delta out) -- adding the raw percent here would rank two different scales as one.
+	int aFlatYields[NUM_YIELD_TYPES];
+	if (!CvBuildListValuation::buildingFlatYields(eBuilding, pPlayer, pCity, aFlatYields))
 	{
-		return pCity->getAdditionalYieldByBuilding(m_eYield, eBuilding);
+		return 0;
 	}
-	else
-	{
-		const CvBuildingInfo& kInfo = GC.getBuildingInfo(eBuilding);
-		return kInfo.getYieldChange(m_eYield) + kInfo.getYieldPerPopChange(m_eYield) + kInfo.getYieldModifier(m_eYield) / 5;
-	}
+	return aFlatYields[m_eYield];
 }
 
 int BuildingSortHappiness::getBuildingValue(const CvPlayer* pPlayer, CvCity* pCity, BuildingTypes eBuilding) const
 {
-	if (pCity)
+	PROFILE_EXTRA_FUNC();
+	int iBalance = 0;
+	if (!CvBuildListValuation::buildingHappinessBalance(eBuilding, pPlayer, pCity, iBalance))
 	{
-		return pCity->getAdditionalHappinessByBuilding(eBuilding);
+		return 0;
 	}
-	else
-	{
-		const CvBuildingInfo& kInfo = GC.getBuildingInfo(eBuilding);
-		return kInfo.getHappiness() + kInfo.getAreaHappiness() + kInfo.getGlobalHappiness();
-	}
+	return iBalance;
 }
 
 int BuildingSortHealth::getBuildingValue(const CvPlayer* pPlayer, CvCity* pCity, BuildingTypes eBuilding) const
 {
-	if (pCity)
+	PROFILE_EXTRA_FUNC();
+	int iBalance = 0;
+	if (!CvBuildListValuation::buildingHealthBalance(eBuilding, pPlayer, pCity, iBalance))
 	{
-		return pCity->getAdditionalHealthByBuilding(eBuilding);
+		return 0;
 	}
-	else
-	{
-		const CvBuildingInfo& kInfo = GC.getBuildingInfo(eBuilding);
-		return kInfo.getHealth() + kInfo.getAreaHealth() + kInfo.getGlobalHealth();
-	}
+	return iBalance;
 }
 
 int BuildingSortCost::getBuildingValue(const CvPlayer* pPlayer, CvCity* pCity, BuildingTypes eBuilding) const
@@ -183,17 +183,20 @@ bool BuildingSortName::isLesserBuilding(const CvPlayer* pPlayer, CvCity* pCity, 
 int BuildingSortProperty::getBuildingValue(const CvPlayer* pPlayer, CvCity* pCity, BuildingTypes eBuilding) const
 {
 	PROFILE_EXTRA_FUNC();
-	const CvBuildingInfo& kInfo = GC.getBuildingInfo(eBuilding);
-	int iSum = kInfo.getProperties()->getValueByProperty(m_eProperty) + kInfo.getPropertiesAllCities()->getValueByProperty(m_eProperty);
-
-	foreach_(const CvPropertySource* pSource, kInfo.getPropertyManipulators()->getSources())
+	if (m_eProperty == NO_PROPERTY)
 	{
-		if (pSource->getProperty() == m_eProperty)
-		{
-			iSum += pSource->getSourcePredict(pCity->getGameObject(), pCity->getProperties()->getValueByProperty(m_eProperty));
-		}
+		return 0;
 	}
-	return iSum;
+	const CvModifiers* pModifiers = GC.getBuildingInfo(eBuilding).getModifiers();
+	if (pModifiers == NULL)
+	{
+		return 0;
+	}
+	// The building's own compiled contribution to the property, over the scopes a building authors the open
+	// per-property plane at (PROPERTY_X.city.flat, PROPERTY_X.empire.flat). Signed, and x100 -- an ordering is
+	// scale-invariant, so it is never reduced here.
+	return pModifiers->propertySum((int)m_eProperty, CASC_SCOPE_CITY, CASC_UNIT_FLAT)
+		+ pModifiers->propertySum((int)m_eProperty, CASC_SCOPE_EMPIRE, CASC_UNIT_FLAT);
 }
 
 BuildingSortList::BuildingSortList(CvPlayer *pPlayer, CvCity *pCity)

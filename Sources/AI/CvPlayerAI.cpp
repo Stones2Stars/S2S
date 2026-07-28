@@ -18,6 +18,7 @@
 #include "CvHeritageInfo.h"
 #include "CvUnitCombatInfo.h"
 #include "CvTraitInfo.h"
+#include "Enabler/CvCapabilities.h"     // the empire capability union + the authored-key vocabulary
 #include "Infrastructure/CvInitCore.h"
 #include "Engine/CvMap.h"
 #include "Engine/CvPlot.h"
@@ -4662,7 +4663,7 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 	int iRandomMax = 2000;
 
 	// Map stuff
-	if (iCoastalCities > 0 && kTech.isExtraWaterSeeFrom())
+	if (iCoastalCities > 0 && kTech.getCapabilities()->has("canSeeFurtherFromWater"))
 	{
 		iValue += 100 * iRCSMultiplier;
 
@@ -4672,12 +4673,12 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 		}
 	}
 
-	if (kTech.isMapCentering())
+	if (kTech.getCapabilities()->has("hasCenteredMap"))
 	{
 		iValue += 100;
 	}
 
-	if (kTech.isMapVisible())
+	if (kTech.getCapabilities()->has("hasWholeMapRevealed"))
 	{
 		iValue += 100;
 
@@ -4688,7 +4689,7 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 	}
 
 	// Expand trading options
-	if (kTech.isMapTrading())
+	if (kTech.canTradeItem("maps"))
 	{
 		iValue += 100;
 
@@ -4698,14 +4699,14 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 		}
 	}
 
-	if (kTech.isTechTrading() && !GC.getGame().isOption(GAMEOPTION_NO_TECH_TRADING))
+	if (kTech.canTradeItem("techs") && !GC.getGame().isOption(GAMEOPTION_NO_TECH_TRADING))
 	{
 		iValue += 500;
 
 		iValue += 500 * iHasMetCount;
 	}
 
-	if (kTech.isGoldTrading())
+	if (kTech.canTradeItem("gold"))
 	{
 		iValue += 200;
 
@@ -4715,7 +4716,7 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 		}
 	}
 
-	if (kTech.isOpenBordersTrading() && iHasMetCount > 0)
+	if (kTech.canTradeItem("openBorders") && iHasMetCount > 0)
 	{
 		iValue += 500;
 
@@ -4730,43 +4731,43 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 		}
 	}
 
-	if (kTech.isDefensivePactTrading())
+	if (kTech.canTradeItem("defensivePact"))
 	{
 		iValue += 400;
 	}
 
-	if (kTech.isPermanentAllianceTrading() && GC.getGame().isOption(GAMEOPTION_ENABLE_PERMANENT_ALLIANCES))
+	if (kTech.canTradeItem("permanentAlliance") && GC.getGame().isOption(GAMEOPTION_ENABLE_PERMANENT_ALLIANCES))
 	{
 		iValue += 200;
 	}
 
-	if (kTech.isVassalStateTrading() && !GC.getGame().isOption(GAMEOPTION_NO_VASSAL_STATES))
+	if (kTech.canTradeItem("vassals") && !GC.getGame().isOption(GAMEOPTION_NO_VASSAL_STATES))
 	{
 		iValue += 200;
 	}
 
 	// Tile improvement abilities
-	if (kTech.isBridgeBuilding())
+	if (kTech.getCapabilities()->has("canBuildBridges"))
 	{
 		iValue += 400 * iRCSMultiplier;
 	}
 
-	if (kTech.isIrrigation())
+	if (kTech.getCapabilities()->has("canSpreadIrrigation"))
 	{
 		iValue += 400;
 	}
 
-	if (kTech.isIgnoreIrrigation())
+	if (kTech.getCapabilities()->has("canIgnoreIrrigation"))
 	{
 		iValue += 500;
 	}
 
-	if (kTech.isWaterWork())
+	if (kTech.canWorkOnClass("water"))
 	{
 		iValue += (600 * iCoastalCities);
 	}
 
-	if (kTech.isCanPassPeaks())
+	if (kTech.getCapabilities()->has("canPassPeaks"))
 	{
 		for (int iI = 0; iI < GC.getMap().numPlots(); iI++)
 		{
@@ -4779,12 +4780,12 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 		}
 	}
 
-	if (kTech.isMoveFastPeaks())
+	if (kTech.getCapabilities()->has("canMoveFastOnPeaks"))
 	{
 		iValue += 150 * iRCSMultiplier;
 	}
 
-	if (kTech.isCanFoundOnPeaks())
+	if (kTech.getCapabilities()->has("canFoundOnPeaks"))
 	{
 		iValue += 100 * iRCSMultiplier;
 	}
@@ -4838,7 +4839,7 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 
 	iTempValue = 0;
 
-	if (kTech.isRebaseAnywhere() && GC.getMAX_AIRLIFT_RANGE() > 0)
+	if (kTech.getCapabilities()->has("canRebaseAnywhere") && GC.getMAX_AIRLIFT_RANGE() > 0)
 	{
 		iValue += 300;
 	}
@@ -4876,7 +4877,11 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 
 	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 	{
-		if (kTech.isCommerceFlexible(iI))
+		// Does this tech unlock the channel's SLIDER? The grantor's own `capabilities` block, keyed by the
+		// channel's slider capability -- GOLD is residual and has none, which answers false without a special
+		// case here.
+		if (kTech.getCapabilities()->has(
+				CascadeCapabilities::flagName(CascadeCapabilities::commerceRateFlag((CommerceTypes)iI))))
 		{
 			iValue += 100;
 			if (iI == COMMERCE_CULTURE && AI_isDoVictoryStrategy(AI_VICTORY_CULTURE2))
@@ -4888,7 +4893,7 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 
 	for (int iI = 0; iI < GC.getNumTerrainInfos(); iI++)
 	{
-		if (kTech.isTerrainTrade(iI))
+		if (kTech.canTradeOnTerrain(iI))
 		{
 			if (GC.getTerrainInfo((TerrainTypes)iI).isWaterTerrain())
 			{
@@ -4908,7 +4913,7 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 		}
 	}
 
-	if (kTech.isRiverTrade())
+	if (kTech.getCapabilities()->has("hasRiverTrade"))
 	{
 		iValue += 1000 * iRCSMultiplier;
 	}
@@ -5600,7 +5605,7 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 	}
 
 	//Tech Whore
-	if (!GC.getGame().isOption(GAMEOPTION_NO_TECH_TRADING) && (kTech.isTechTrading() || kTeam.isTechTrading()))
+	if (!GC.getGame().isOption(GAMEOPTION_NO_TECH_TRADING) && (kTech.canTradeItem("techs") || kTeam.isTechTrading()))
 	{
 		if ((bAsync ? GC.getASyncRand().get(100, "AI Tech Whore ASYNC") : GC.getGame().getSorenRandNum(100, "AI Tech Whore")) < (GC.getGame().isOption(GAMEOPTION_NO_TECH_BROKERING) ? 20 : 10))
 		{
@@ -13962,44 +13967,24 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 				bool bHasEnablingCivic = (hasAllReligionsActive());
 				bool bHasMultipleEnablingCivicCategories = (getAllReligionsActiveCount() > 1);
 
-				for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
+				// Iterate what the empire HOLDS, not the whole building database. This was a ~5,200-id scan
+				// whose only real gate was `count > 0` -- a HAVE question the object now answers directly
+				// ([tally.md]: give the OBJECT the accessor). The era filter that stood here went with it as
+				// redundant: a building you already hold is by construction one you could reach.
+				foreach_(const BuildingTypes eLoopBuilding, getHasBuildings())
 				{
-					const BuildingTypes eLoopBuilding = static_cast<BuildingTypes>(iI);
-
-					if (GC.getBuildingInfo(eLoopBuilding).getPrereqAndTech() == NO_TECH || GC.getTechInfo((TechTypes)GC.getBuildingInfo(eLoopBuilding).getPrereqAndTech()).getEra() <= getCurrentEra())
+					if (GC.getBuildingInfo(eLoopBuilding).getReligion() != eCurrentReligion)
 					{
-						if (getBuildingCount(eLoopBuilding) > 0)
-						{
-							if (GC.getBuildingInfo(eLoopBuilding).getReligionType() != eCurrentReligion)
-							{
-								int iValueDivisor = 1;
+						const int iNumInstancesToScore = isLimitedWonder(eLoopBuilding) ? 1 : std::max(getNumCities(), getBuildingCount(eLoopBuilding) + getNumCities() / 4);
 
-								if (GC.getBuildingInfo(eLoopBuilding).getPrereqAndTech() != NO_TECH &&
-									!pTeam.isHasTech((TechTypes)GC.getBuildingInfo(eLoopBuilding).getPrereqAndTech()))
-								{
-									iValueDivisor = 2;
-								}
+						//	If the building is enabled by multiple categories just count it at half value always
+						//	This isn't strictly accurate, but because civic evaluation works by linarly combining
+						//	evaluations in different categories, cross-category couplings like this have to give
+						//	stable result or else civic choices will oscillate
+						const int iDivisor = (bHasMultipleEnablingCivicCategories || bHasEnablingCivic) ? 12 : 6;
 
-								const int iNumInstancesToScore = isLimitedWonder(eLoopBuilding) ? 1 : std::max(getNumCities(), getBuildingCount(eLoopBuilding) + getNumCities() / 4);
-
-								//	If the building is enabled by multiple categories just count it at half value always
-								//	This isn't strictly accurate, but because civic evaluation works by linarly combining
-								//	evaluations in different categories, cross-category couplings like this have to give
-								//	stable result or else civic choices will oscillate
-								if (bHasMultipleEnablingCivicCategories || bHasEnablingCivic)
-								{
-									//Estimate value from capital city
-									iTempValue = pCapital->AI_buildingValue(eLoopBuilding, 0) * iNumInstancesToScore / (12 * iValueDivisor);
-									
-								}
-								else
-								{
-									//Estimate value from capital city
-									iTempValue = pCapital->AI_buildingValue(eLoopBuilding, 0) * iNumInstancesToScore / (6 * iValueDivisor);
-									
-								}
-							}
-						}
+						//Estimate value from capital city
+						iTempValue = pCapital->AI_buildingValue(eLoopBuilding, 0) * iNumInstancesToScore / iDivisor;
 					}
 				}
 			}
@@ -14013,32 +13998,18 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 
 				if (bHasEnablingCivic || bHasMultipleEnablingCivicCategories)
 				{
-					for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
+					// The held-set again -- the twin of the sweep above, same HAVE question, same redundant
+					// era filter dropped with it.
+					foreach_(const BuildingTypes eLoopBuilding, getHasBuildings())
 					{
-						const BuildingTypes eLoopBuilding = static_cast<BuildingTypes>(iI);
-
-						if (getBuildingCount(eLoopBuilding) > 0
-						&&
-						(
-							GC.getBuildingInfo(eLoopBuilding).getPrereqAndTech() == NO_TECH
-							||
-							GC.getTechInfo((TechTypes)GC.getBuildingInfo(eLoopBuilding).getPrereqAndTech()).getEra() <= getCurrentEra()
-							)
-						&& GC.getBuildingInfo(eLoopBuilding).getReligionType() != eCurrentReligion)
+						if (GC.getBuildingInfo(eLoopBuilding).getReligion() != eCurrentReligion)
 						{
 							//Loses us the ability to construct the building
-							int iValueDivisor = bHasMultipleEnablingCivicCategories ? 12 : 6;
-
-							if (GC.getBuildingInfo(eLoopBuilding).getPrereqAndTech() != NO_TECH
-							&& !pTeam.isHasTech((TechTypes)GC.getBuildingInfo(eLoopBuilding).getPrereqAndTech()))
-							{
-								iValueDivisor *= 2;
-							}
+							const int iValueDivisor = bHasMultipleEnablingCivicCategories ? 12 : 6;
 							const int iNumInstancesToScore = (isLimitedWonder(eLoopBuilding) ? 1 : std::max(getNumCities(), getBuildingCount(eLoopBuilding) + getNumCities() / 4));
 
 							iTempValue = pCapital->AI_buildingValue(eLoopBuilding, 0) * iNumInstancesToScore / iValueDivisor;
 
-							
 							iValue -= iTempValue;
 						}
 					}
@@ -14047,52 +14018,14 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 		}
 	}
 
-	bool bFinancialTrouble = AI_isFinancialTrouble();
-	iTempValue = 0;
-	for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
-	{
-		const BuildingTypes eLoopBuilding = static_cast<BuildingTypes>(iI);
-
-		for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
-		{
-			if (kCivic.getBuildingCommerceModifier(eLoopBuilding, iJ) != 0)
-			{
-				const int iMulitplier = (iJ == COMMERCE_GOLD && bFinancialTrouble) ? 6 : 4;
-				iTempValue += getBuildingCount((BuildingTypes)iI) * kCivic.getBuildingCommerceModifier(eLoopBuilding, iJ) * iMulitplier;
-			}
-			if (kCivic.getBuildingCommerceChange(iI, iJ) != 0)
-			{
-				const int iMulitplier = (iJ == COMMERCE_GOLD && bFinancialTrouble) ? 12 : 8;
-				iTempValue += getBuildingCount((BuildingTypes)iI) * kCivic.getBuildingCommerceChange(iI, iJ) * iMulitplier;
-			}
-		}
-	}
-	
-	iValue += iTempValue;
-
-	iTempValue = 0;
-	for (int iJ = 0; iJ < GC.getNumImprovementInfos(); iJ++)
-	{
-		iTempValue += (8 * (kCivic.getImprovementHappinessChanges(iJ) * (getImprovementCount((ImprovementTypes)iJ) + getNumCities())));
-		iTempValue += ((8 * (kCivic.getImprovementHealthPercentChanges(iJ) * (getImprovementCount((ImprovementTypes)iJ) + getNumCities()))) / 100);
-	}
-	
-	iValue += iTempValue;
-
-	iTempValue = 0;
-	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
-	{
-		for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
-		{
-			iTempValue += ((kCivic.getSpecialistCommercePercentChanges(iI, iJ) * getTotalPopulation()) / 500);
-		}
-		for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
-		{
-			iTempValue += ((kCivic.getSpecialistYieldPercentChanges(iI, iJ) * getTotalPopulation()) / 500);
-		}
-	}
-	
-	iValue += iTempValue;
+	// ⚠ THREE KEYED CIVIC TERMS ARE GONE -- buildings, improvements, specialists -- and the hole is deliberate.
+	// Each was a whole-database scan reading a keyed getter that exists on NO info, because a civic does not
+	// carry these containers by design: its `{channel}.empire.buildings.{B}` deposits are LANDED BY THE REVERSE
+	// PASS ON THE TARGET BUILDING conditioned on this civic's presence (modifier.md §2a), its specialist
+	// percents live on the SPECIALIST as own-output conditioned on the civic ([DEC-deliveryguy]), and the
+	// per-improvement happiness authors on no civic at all (it folds into the feature terms, modifier.md §2b).
+	// Valuing them needs an AS-IF-ADOPTED evaluation of those landed entries, which `expected*` cannot express:
+	// it resolves against the CURRENT EmpireContext, in which this civic is precisely what is not adopted.
 
 	iTempValue = 0;
 	for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
@@ -14439,24 +14372,10 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 	iValue += (kCivic.getStateReligionHappiness() * iHighestReligionCount * 4);
 */
 
-	if (kCivic.isAnyBuildingHappinessChange())
-	{
-		for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
-		{
-			iTempValue = kCivic.getBuildingHappinessChanges(iI);
-			if (iTempValue != 0 && !isLimitedWonder((BuildingTypes)iI) && !pTeam.isObsoleteBuilding((BuildingTypes)iI))
-			{
-				const CvBuildingInfo& buildingInfo = GC.getBuildingInfo((BuildingTypes)iI);
-				if (buildingInfo.getPrereqAndTech() == NO_TECH || GC.getTechInfo((TechTypes)buildingInfo.getPrereqAndTech()).getEra() <= getCurrentEra())
-				{
-					//+0.5 per city that does not yet have that building
-					iTempValue = iTempValue * (getNumCities() - getBuildingCount((BuildingTypes)iI)) / 2;
-					
-					iValue += iTempValue;
-				}
-			}
-		}
-	}
+	// The civic's building-keyed HAPPINESS term is gone with the other three keyed scans above, for the same
+	// reason: 49 civics author `happiness.empire.buildings`, but the reverse pass lands it on the TARGET
+	// building, so the civic carries nothing to enumerate and every getter this block read is declared on no
+	// info. It returns with the as-if-adopted valuation.
 
 	//#2: Health
 	if ((getNumCities() > 0) &&
@@ -14730,22 +14649,8 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 	}
 */
 
-	iTempValue = 0;
-	if (kCivic.isAnyBuildingHealthChange())
-	{
-		for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
-		{
-			const int iHealthChange = kCivic.getBuildingHealthChanges(iI);
-
-			if (iHealthChange != 0 && !isLimitedWonder((BuildingTypes)iI))
-			{
-				//+0.5 per city that does not yet have that building
-				iTempValue += iHealthChange * std::min(getNumCities(), getNumCities() - getBuildingCount((BuildingTypes)iI)) / 2;
-			}
-		}
-	}
-	
-	iValue += iTempValue;
+	// The building-keyed HEALTH twin of the block above (15 civics author `health.empire.buildings`), gone for
+	// the same reason and returning with the same valuation.
 	//#2: Health - end
 
 	//#3: Trade
@@ -20744,42 +20649,30 @@ int CvPlayerAI::AI_eventValue(EventTypes eEvent, const EventTriggeredData& kTrig
 	}
 
 	{	//Yield and other changes
-		if (kEvent.getNumBuildingYieldChanges() > 0)
+		// Iterate the event's OWN authored entries, which is the idiom CvEventInfo.h documents on the
+		// container accessors themselves. Each of these summed over EVERY building id to reach a handful of
+		// entries -- and the per-id getters LINEAR-SCAN the same vector per call, so the yield one alone cost
+		// ~5,200 x NUM_YIELD_TYPES scans per event evaluated. Summing all ids of a keyed change is
+		// arithmetically the same as summing the container once, so the totals are identical.
+		// (The events system itself is untouched here -- this is only how the AI READS its data.)
+		foreach_(const BuildingYieldChange& kChange, kEvent.getBuildingYieldChanges())
 		{
-			for (int iBuilding = 0; iBuilding < GC.getNumBuildingInfos(); ++iBuilding)
-			{
-				for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
-				{
-					aiYields[iYield] += kEvent.getBuildingYieldChange(iBuilding, iYield);
-				}
-			}
+			aiYields[kChange.eYield] += kChange.iChange;
 		}
 
-		if (kEvent.getNumBuildingCommerceChanges() > 0)
+		foreach_(const BuildingCommerceChange& kChange, kEvent.getBuildingCommerceChanges())
 		{
-			for (int iBuilding = 0; iBuilding < GC.getNumBuildingInfos(); ++iBuilding)
-			{
-				for (int iCommerce = 0; iCommerce < NUM_COMMERCE_TYPES; ++iCommerce)
-				{
-					aiCommerceYields[iCommerce] += kEvent.getBuildingCommerceChange(iBuilding, iCommerce);
-				}
-			}
+			aiCommerceYields[kChange.eCommerce] += kChange.iChange;
 		}
 
-		if (kEvent.getNumBuildingHappyChanges() > 0)
+		foreach_(const BuildingChangeArray::value_type& kChange, kEvent.getBuildingHappyChanges())
 		{
-			for (int iBuilding = 0; iBuilding < GC.getNumBuildingInfos(); ++iBuilding)
-			{
-				iHappy += kEvent.getBuildingHappyChange(iBuilding);
-			}
+			iHappy += kChange.second;
 		}
 
-		if (kEvent.getNumBuildingHealthChanges() > 0)
+		foreach_(const BuildingChangeArray::value_type& kChange, kEvent.getBuildingHealthChanges())
 		{
-			for (int iBuilding = 0; iBuilding < GC.getNumBuildingInfos(); ++iBuilding)
-			{
-				iHealth += kEvent.getBuildingHealthChange(iBuilding);
-			}
+			iHealth += kChange.second;
 		}
 	}
 
@@ -21561,12 +21454,13 @@ int CvPlayerAI::AI_cultureVictoryTechValue(TechTypes eTech) const
 	}
 	int iValue = 0;
 
-	if (GC.getTechInfo(eTech).isDefensivePactTrading())
+	if (GC.getTechInfo(eTech).canTradeItem("defensivePact"))
 	{
 		iValue += 50;
 	}
 
-	if (GC.getTechInfo(eTech).isCommerceFlexible(COMMERCE_CULTURE))
+	if (GC.getTechInfo(eTech).getCapabilities()->has(
+			CascadeCapabilities::flagName(CascadeCapabilities::commerceRateFlag(COMMERCE_CULTURE))))
 	{
 		iValue += 100;
 	}
@@ -28546,11 +28440,11 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//#42 Effects for Promotions that give Moves on Peaks...
-	if (kPromotion.isCanMovePeaks() && !(GET_TEAM(getTeam()).isCanPassPeaks()))
+	if (kPromotion.getSkills()->has("canPassPeaks") && !(GET_TEAM(getTeam()).isCanPassPeaks()))
 	{
 		iValue += 50;
 	}
-	if (kPromotion.isCanLeadThroughPeaks() && !(GET_TEAM(getTeam()).isCanPassPeaks()))
+	if (kPromotion.getSkills()->has("canLeadThroughPeaks") && !(GET_TEAM(getTeam()).isCanPassPeaks()))
 	{// Ability to lead a stack through mountains
 		iValue += 75;
 	}
@@ -31682,11 +31576,11 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 	}
 
-	if (kUnitCombat.isCanMovePeaks() && !(GET_TEAM(getTeam()).isCanPassPeaks()))
+	if (kUnitCombat.getSkills()->has("canPassPeaks") && !(GET_TEAM(getTeam()).isCanPassPeaks()))
 	{
 		iValue += 35;
 	}
-	if (kUnitCombat.isCanLeadThroughPeaks() && !(GET_TEAM(getTeam()).isCanPassPeaks()))
+	if (kUnitCombat.getSkills()->has("canLeadThroughPeaks") && !(GET_TEAM(getTeam()).isCanPassPeaks()))
 	{
 		iValue += 75;
 	}

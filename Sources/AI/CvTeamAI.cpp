@@ -984,7 +984,7 @@ int CvTeamAI::AI_chooseElection(const VoteSelectionData& kVoteSelectionData) con
 	{
 		const VoteTypes eVote = kVoteSelectionData.aVoteOptions[iI].eVote;
 
-		FAssert(GC.getVoteInfo(eVote).isVoteSourceType(eVoteSource));
+		FAssert(GC.getVoteInfo(eVote).hasVoteSource(eVoteSource));
 		FAssert(GC.getGame().isChooseElection(eVote));
 
 		bool bValid = true;
@@ -1457,7 +1457,7 @@ DenialTypes CvTeamAI::AI_techTrade(const TechTypes eTech, const TeamTypes eTeam)
 	for (int i = 0; i < MAX_PC_PLAYERS; i++)
 	{
 		if (GET_PLAYER((PlayerTypes)i).isAliveAndTeam(getID())
-		&& eAttitude <= GC.getLeaderHeadInfo(GET_PLAYER((PlayerTypes)i).getPersonalityType()).getTechRefuseAttitudeThreshold())
+		&& eAttitude <= GC.getLeaderHeadInfo(GET_PLAYER((PlayerTypes)i).getPersonalityType()).getRefuseAttitudeThreshold(REFUSAL_TECH))
 		{
 			return DENIAL_ATTITUDE;
 		}
@@ -1483,10 +1483,13 @@ DenialTypes CvTeamAI::AI_techTrade(const TechTypes eTech, const TeamTypes eTeam)
 			{
 				int iNoTechTradeThreshold = AI_noTechTradeThreshold();
 
-				iNoTechTradeThreshold *= GC.getGameSpeedInfo(game.getGameSpeedType()).getSpeedPercent();
+				iNoTechTradeThreshold *= GC.getGameSpeedInfo(game.getGameSpeedType()).getScalar(SCALAR_SPEED, CASC_SCOPE_WORLD, CASC_UNIT_PERCENT);
 				iNoTechTradeThreshold /= 100;
 
-				iNoTechTradeThreshold *= std::max(0, 100 + GC.getHandicapInfo(GET_TEAM(eTeam).getHandicapType()).getNoTechTradeModifier());
+				// diplomacy.team.noTechTrade.percent -- the difficulty scaling, on the rebuilt handicap surface
+				// (kind + scope as separate axes). ×100 reduces here, against the human-scale 100 base.
+				iNoTechTradeThreshold *= std::max(0, 100 + GC.getHandicapInfo(GET_TEAM(eTeam).getHandicapType())
+					.getDiplomacy(DIPLOMACY_NO_TECH_TRADE, CASC_SCOPE_TEAM, /*bAiAudience*/ false) / 100);
 				iNoTechTradeThreshold /= 100;
 
 				if (AI_getMemoryCount(eTeam, MEMORY_RECEIVED_TECH_FROM_ANY) > iNoTechTradeThreshold)
@@ -1512,7 +1515,9 @@ DenialTypes CvTeamAI::AI_techTrade(const TechTypes eTech, const TeamTypes eTeam)
 		}
 		int iTechTradeKnownPercent = AI_techTradeKnownPercent();
 
-		iTechTradeKnownPercent *= std::max(0, 100 + GC.getHandicapInfo(GET_TEAM(eTeam).getHandicapType()).getTechTradeKnownModifier());
+		// diplomacy.team.techTradeKnown.percent -- same surface, same reduce-at-use.
+		iTechTradeKnownPercent *= std::max(0, 100 + GC.getHandicapInfo(GET_TEAM(eTeam).getHandicapType())
+			.getDiplomacy(DIPLOMACY_TECH_TRADE_KNOWN, CASC_SCOPE_TEAM, /*bAiAudience*/ false) / 100);
 		iTechTradeKnownPercent /= 100;
 
 		iTechTradeKnownPercent *= AI_getTechMonopolyValue(eTech, eTeam);
@@ -1682,7 +1687,7 @@ DenialTypes CvTeamAI::AI_mapTrade(TeamTypes eTeam) const
 	{
 		if (GET_PLAYER((PlayerTypes)i).isAliveAndTeam(eTeam))
 		{
-			const int iThreshold = GC.getLeaderHeadInfo(GET_PLAYER((PlayerTypes)i).getPersonalityType()).getMapRefuseAttitudeThreshold();
+			const int iThreshold = GC.getLeaderHeadInfo(GET_PLAYER((PlayerTypes)i).getPersonalityType()).getRefuseAttitudeThreshold(REFUSAL_MAP);
 			if (iMapTradeAttitudeOtherTeam < iThreshold)
 			{
 				iMapTradeAttitudeOtherTeam = iThreshold;
@@ -1707,7 +1712,7 @@ DenialTypes CvTeamAI::AI_mapTrade(TeamTypes eTeam) const
 	for (int i = 0; i < MAX_PC_PLAYERS; i++)
 	{
 		if (GET_PLAYER((PlayerTypes)i).isAliveAndTeam(getID())
-		&& eAttitude <= GC.getLeaderHeadInfo(GET_PLAYER((PlayerTypes)i).getPersonalityType()).getMapRefuseAttitudeThreshold())
+		&& eAttitude <= GC.getLeaderHeadInfo(GET_PLAYER((PlayerTypes)i).getPersonalityType()).getRefuseAttitudeThreshold(REFUSAL_MAP))
 		{
 			return DENIAL_ATTITUDE;
 		}
@@ -2023,7 +2028,7 @@ DenialTypes CvTeamAI::AI_surrenderTrade(TeamTypes eMasterTeam, int iPowerMultipl
 		for (int i = 0; i < MAX_PC_PLAYERS; i++)
 		{
 			if (GET_PLAYER((PlayerTypes)i).isAliveAndTeam(eTeam)
-			&& eModifiedAttitude <= GC.getLeaderHeadInfo(GET_PLAYER((PlayerTypes)i).getPersonalityType()).getVassalRefuseAttitudeThreshold())
+			&& eModifiedAttitude <= GC.getLeaderHeadInfo(GET_PLAYER((PlayerTypes)i).getPersonalityType()).getRefuseAttitudeThreshold(REFUSAL_VASSAL))
 			{
 				return DENIAL_ATTITUDE;
 			}
@@ -2160,7 +2165,7 @@ int CvTeamAI::AI_getRivalAirPower( ) const
 	{
 		const CvUnitInfo& kUnit = GC.getUnitInfo((UnitTypes)iI);
 
-		if (kUnit.getDomainType() == DOMAIN_AIR && kUnit.getAirCombat() > 0)
+		if (kUnit.getDomain() == DOMAIN_AIR && kUnit.getAirCombat() > 0)
 		{
 			for(int iTeamX = 0; iTeamX < MAX_PC_TEAMS; iTeamX++)
 			{
@@ -2169,7 +2174,9 @@ int CvTeamAI::AI_getRivalAirPower( ) const
 					int iUnitPower = GET_TEAM((TeamTypes)iTeamX).getUnitCount((UnitTypes)iI);
 					if (iUnitPower > 0)
 					{
-						iUnitPower *= kUnit.getPowerValue();
+						// identity.militaryWorth -- the power-valuation config the legacy power value became
+						// (a plain human-scale weight, authored on 1,370 units).
+						iUnitPower *= kUnit.getMilitaryWorth();
 
 						if (AI_getWarPlan((TeamTypes)iTeamX) == NO_WARPLAN)
 						{
@@ -2838,7 +2845,7 @@ DenialTypes CvTeamAI::AI_declareWarTrade(TeamTypes eWarTeam, TeamTypes eTeam, bo
 		for (int iI = 0; iI < MAX_PC_PLAYERS; iI++)
 		{
 			if (GET_PLAYER((PlayerTypes)iI).isAliveAndTeam(getID())
-			&& eAttitude <= GC.getLeaderHeadInfo(GET_PLAYER((PlayerTypes)iI).getPersonalityType()).getDeclareWarRefuseAttitudeThreshold())
+			&& eAttitude <= GC.getLeaderHeadInfo(GET_PLAYER((PlayerTypes)iI).getPersonalityType()).getRefuseAttitudeThreshold(REFUSAL_DECLARE_WAR))
 			{
 				return DENIAL_ATTITUDE;
 			}
@@ -2850,7 +2857,7 @@ DenialTypes CvTeamAI::AI_declareWarTrade(TeamTypes eWarTeam, TeamTypes eTeam, bo
 	for (int iI = 0; iI < MAX_PC_PLAYERS; iI++)
 	{
 		if (GET_PLAYER((PlayerTypes)iI).isAliveAndTeam(getID())
-		&& eAttitudeToVictim > GC.getLeaderHeadInfo(GET_PLAYER((PlayerTypes)iI).getPersonalityType()).getDeclareWarThemRefuseAttitudeThreshold())
+		&& eAttitudeToVictim > GC.getLeaderHeadInfo(GET_PLAYER((PlayerTypes)iI).getPersonalityType()).getRefuseAttitudeThreshold(REFUSAL_DECLARE_WAR_THEM))
 		{
 			return DENIAL_ATTITUDE_THEM;
 		}
@@ -2917,7 +2924,7 @@ DenialTypes CvTeamAI::AI_openBordersTrade(TeamTypes eTeam) const
 	for (int iI = 0; iI < MAX_PC_PLAYERS; iI++)
 	{
 		if (GET_PLAYER((PlayerTypes)iI).isAliveAndTeam(getID())
-		&& eAttitude <= GC.getLeaderHeadInfo(GET_PLAYER((PlayerTypes)iI).getPersonalityType()).getOpenBordersRefuseAttitudeThreshold())
+		&& eAttitude <= GC.getLeaderHeadInfo(GET_PLAYER((PlayerTypes)iI).getPersonalityType()).getRefuseAttitudeThreshold(REFUSAL_OPEN_BORDERS))
 		{
 			return DENIAL_ATTITUDE;
 		}
@@ -2958,7 +2965,7 @@ DenialTypes CvTeamAI::AI_defensivePactTrade(TeamTypes eTeam) const
 	for (int iI = 0; iI < MAX_PC_PLAYERS; iI++)
 	{
 		if (GET_PLAYER((PlayerTypes)iI).isAliveAndTeam(getID())
-		&& eAttitude <= GC.getLeaderHeadInfo(GET_PLAYER((PlayerTypes)iI).getPersonalityType()).getDefensivePactRefuseAttitudeThreshold())
+		&& eAttitude <= GC.getLeaderHeadInfo(GET_PLAYER((PlayerTypes)iI).getPersonalityType()).getRefuseAttitudeThreshold(REFUSAL_DEFENSIVE_PACT))
 		{
 			return DENIAL_ATTITUDE;
 		}
@@ -3002,7 +3009,7 @@ DenialTypes CvTeamAI::AI_permanentAllianceTrade(TeamTypes eTeam) const
 	for (int iI = 0; iI < MAX_PLAYERS; iI++)
 	{
 		if (GET_PLAYER((PlayerTypes)iI).isAliveAndTeam(getID())
-		&& eAttitude <= GC.getLeaderHeadInfo(GET_PLAYER((PlayerTypes)iI).getPersonalityType()).getPermanentAllianceRefuseAttitudeThreshold())
+		&& eAttitude <= GC.getLeaderHeadInfo(GET_PLAYER((PlayerTypes)iI).getPersonalityType()).getRefuseAttitudeThreshold(REFUSAL_PERMANENT_ALLIANCE))
 		{
 			return DENIAL_ATTITUDE;
 		}
@@ -3981,14 +3988,14 @@ void CvTeamAI::AI_doWar()
 			iTimeModifier /= iThreshold;
 		}
 
-		iTimeModifier *= 50 + GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getHammerCostPercent();
-		iTimeModifier /= 150;
+		// The gamespeed hammer-cost scaling is gone: that derivation is deliberately NOT served by the info
+		// (it composes the upscaled-costs game option AT THE CONSUMER), so re-deriving it here would be an
+		// invention. War timing is unscaled by game speed until that consumer-side calc lands.
 		FASSERT_NOT_NEGATIVE(iTimeModifier);
 	}
 
 	int iAbandonTimeModifier = 100;
-	iAbandonTimeModifier *= 50 + GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getHammerCostPercent();
-	iAbandonTimeModifier /= 150;
+	// Same gamespeed hammer-cost scaling, same reason -- see above.
 
 	//Afforess - abandon plans more quickly in financial distress
 	const short iFundedPercent = teamLeader.AI_fundingHealth(0, iExtraWarExpenses);
@@ -4152,7 +4159,7 @@ void CvTeamAI::AI_doWar()
 				FAssert(!GET_TEAM((TeamTypes)iI).isMinorCiv());
 
 				if (isAtWar((TeamTypes)iI) && AI_isChosenWar((TeamTypes)iI)
-				&& AI_getAtWarCounter((TeamTypes)iI) > std::max(10, GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent() * 14/100))
+				&& AI_getAtWarCounter((TeamTypes)iI) > std::max(10, GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getScalar(SCALAR_SPEED, CASC_SCOPE_WORLD, CASC_UNIT_PERCENT) * 14/100))
 				{
 					// If nothing is happening in war
 					if (AI_getWarSuccess((TeamTypes)iI) + GET_TEAM((TeamTypes)iI).AI_getWarSuccess(getID()) < 2*GC.getWAR_SUCCESS_ATTACKING()
@@ -4187,7 +4194,7 @@ void CvTeamAI::AI_doWar()
 					}
 
 					// Fought to a long draw
-					if (AI_getAtWarCounter((TeamTypes)iI) > (AI_getWarPlan((TeamTypes)iI) == WARPLAN_TOTAL ? 40 : 30) * GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent() / 100)
+					if (AI_getAtWarCounter((TeamTypes)iI) > (AI_getWarPlan((TeamTypes)iI) == WARPLAN_TOTAL ? 40 : 30) * GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getScalar(SCALAR_SPEED, CASC_SCOPE_WORLD, CASC_UNIT_PERCENT) / 100)
 					{
 						int iOurValue = AI_endWarVal((TeamTypes)iI);
 						int iTheirValue = GET_TEAM((TeamTypes)iI).AI_endWarVal(getID());
@@ -4271,8 +4278,9 @@ void CvTeamAI::AI_doWar()
 
 			// overall war check (quite frequently true)
 			if (!bFinancesOpposeWar && (iGetBetterUnitsCount - iDaggerCount) * 3 < iNumMembers * 2
-			// random overall war chance (at noble+ difficulties this is 100%)
-			&& GC.getGame().getSorenRandNum(100, "AI Declare War 1") < GC.getHandicapInfo(GC.getGame().getHandicapType()).getAIDeclareWarProb())
+			// random overall war chance -- diplomacy.empire.declareWar.ai.percent (the AI-audience leaf)
+			&& GC.getGame().getSorenRandNum(100, "AI Declare War 1") < GC.getHandicapInfo(GC.getGame().getHandicapType())
+				.getDiplomacy(DIPLOMACY_DECLARE_WAR, CASC_SCOPE_EMPIRE, /*bAiAudience*/ true) / 100)
 			{
 				// if random in this range is 0, we go to war of this type (so lower numbers are higher probablity)
 				// average of everyone on our team
@@ -4447,7 +4455,9 @@ void CvTeamAI::AI_doWar()
 //returns true if war is veto'd by rolls.
 bool CvTeamAI::AI_performNoWarRolls(TeamTypes eTeam)
 {
-	if (GC.getGame().getSorenRandNum(100, "AI Declare War 1") > GC.getHandicapInfo(GC.getGame().getHandicapType()).getAIDeclareWarProb())
+	// The AI-audience declare-war probability, off the rebuilt handicap surface.
+	if (GC.getGame().getSorenRandNum(100, "AI Declare War 1") > GC.getHandicapInfo(GC.getGame().getHandicapType())
+		.getDiplomacy(DIPLOMACY_DECLARE_WAR, CASC_SCOPE_EMPIRE, /*bAiAudience*/ true) / 100)
 	{
 		return true;
 	}
@@ -4518,17 +4528,21 @@ int CvTeamAI::AI_getTechMonopolyValue(TechTypes eTech, TeamTypes eTeam) const
 		{
 			iValue += 50;
 		}
-		if (GC.getUnitInfo(eLoopUnit).getPrereqAndTech() == eTech)
 		{
+			// The redundant "is this unit's prereq tech eTech" test went with its dead getter: the loop
+			// already iterates exactly the units THIS tech enables, so the check was tautological.
 			int iNavalValue = 0;
 
-			int iCombatRatio = (GC.getUnitInfo(eLoopUnit).getCombat() * 100) / std::max(1, GC.getGame().getBestLandUnitCombat());
+			// The unit's base strength is the `strength.unit.flat` family read (×100 -- reduced here, where
+			// it meets the engine's human-scale best-unit value).
+			const int iBaseCombat = GC.getUnitInfo(eLoopUnit).getFlatCombat(COMBAT_AMOUNT, CASC_SCOPE_UNIT) / 100;
+			int iCombatRatio = (iBaseCombat * 100) / std::max(1, GC.getGame().getBestLandUnitCombat());
 			if (iCombatRatio > 50)
 			{
 				iValue += ((bWarPlan ? 100 : 50) * (iCombatRatio - 40)) / 50;
 			}
 
-			switch (GC.getUnitInfo(eLoopUnit).getDefaultUnitAIType())
+			switch (GC.getUnitInfo(eLoopUnit).getDefaultUnitAI())
 			{
 			case UNITAI_UNKNOWN:
 			case UNITAI_ANIMAL:
@@ -4664,7 +4678,7 @@ int CvTeamAI::AI_getTechMonopolyValue(TechTypes eTech, TeamTypes eTeam) const
 	{
 		const BuildingTypes eLoopBuilding = static_cast<BuildingTypes>(*itUnlocked);
 
-		if (GC.getBuildingInfo(eLoopBuilding).getReligionType() == NO_RELIGION)
+		if (GC.getBuildingInfo(eLoopBuilding).getReligion() == NO_RELIGION)
 		{
 			iValue += 30;
 		}
@@ -4771,7 +4785,7 @@ DenialTypes CvTeamAI::AI_embassyTrade(TeamTypes eTeam) const
 	for (int iI = 0; iI < MAX_PC_PLAYERS; ++iI)
 	{
 		if (GET_PLAYER((PlayerTypes)iI).isAliveAndTeam(getID())
-		&& eAttitude <= GC.getLeaderHeadInfo(GET_PLAYER((PlayerTypes)iI).getPersonalityType()).getOpenBordersRefuseAttitudeThreshold())
+		&& eAttitude <= GC.getLeaderHeadInfo(GET_PLAYER((PlayerTypes)iI).getPersonalityType()).getRefuseAttitudeThreshold(REFUSAL_OPEN_BORDERS))
 		{
 			return DENIAL_ATTITUDE;
 		}

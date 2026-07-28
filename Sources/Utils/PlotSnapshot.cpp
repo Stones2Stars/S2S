@@ -195,7 +195,12 @@ void appendAnimalsField(const CvPlot* pPlot, char* out, size_t outSize)
 		}
 		const bool bKnownType = (pUnit->getUnitType() != NO_UNIT);
 		const char* szType = bKnownType ? pUnit->getUnitInfo().getType() : "UNKNOWN";
-		const int iCombat   = bKnownType ? pUnit->getUnitInfo().getCombat() : 0;
+		// The composite strength read (it already folds the air/land pick and the Size-Matters stage);
+		// ×100 reduces here because the snapshot column is a whole number.
+		const int iCombat   = bKnownType
+			? pUnit->getUnitInfo().getTotalModifiedCombatStrength(
+				GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS)) / 100
+			: 0;
 		const int iAggr     = bKnownType ? pUnit->getUnitInfo().getAggression() : 0;
 		const int iEnemy    = (eActiveTeam == NO_TEAM) ? -1 : (pUnit->isEnemy(eActiveTeam) ? 1 : 0);
 

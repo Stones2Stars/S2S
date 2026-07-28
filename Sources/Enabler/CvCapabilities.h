@@ -103,6 +103,11 @@ public:
 	static const CascadeTeamCaps& storedUnion(TeamTypes eTeam);
 	// A flag's authored key ("canPassPeaks", "techs", "water") -- how a served flag names itself.
 	static const char* flagName(CascadeCapFlag eFlag);
+	// The commerce channel -> its SLIDER capability. GOLD is the residual channel and has no slider
+	// (capabilities.md), so it answers CCF_COUNT -- "no such capability", not a flag to test. One
+	// implementation because every consumer asking "may this channel's rate be set" needs the same map
+	// ([DEC-single-implementation]); the KEY is then flagName(), never a second spelling.
+	static CascadeCapFlag commerceRateFlag(CommerceTypes eCommerce);
 };
 
 #endif

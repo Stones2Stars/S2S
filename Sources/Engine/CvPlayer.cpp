@@ -1451,6 +1451,9 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 		{
 			m_paiBuildingCount[iI] = 0;
 		}
+		// The held-set mirrors that array, so it empties with it. Load-bearing on a RECYCLED player slot:
+		// without it a new player would inherit the previous occupant's held buildings.
+		m_heldBuildings.clear();
 
 		FAssertMsg(m_paiBuildingGroupCount==NULL, "about to leak memory, CvPlayer::m_paiBuildingGroupCount");
 		m_paiBuildingGroupCount = new int [GC.getNumSpecialBuildingInfos()];
@@ -13578,8 +13581,24 @@ int CvPlayer::getUnitCountPlusMaking(const UnitTypes eIndex) const
 void CvPlayer::changeBuildingCount(BuildingTypes eIndex, int iChange)
 {
 	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eIndex);
+	const bool bHeldBefore = getBuildingCount(eIndex) > 0;
 	m_paiBuildingCount[eIndex] += iChange;
 	FASSERT_NOT_NEGATIVE(getBuildingCount(eIndex));
+
+	// Maintain the held-set at its CROSSINGS only -- this is the one choke point, so the enumeration cannot
+	// drift from the count it mirrors.
+	const bool bHeldNow = getBuildingCount(eIndex) > 0;
+	if (bHeldNow != bHeldBefore)
+	{
+		if (bHeldNow)
+		{
+			m_heldBuildings.push_back(eIndex);
+		}
+		else
+		{
+			m_heldBuildings.erase(std::find(m_heldBuildings.begin(), m_heldBuildings.end(), eIndex));
+		}
+	}
 
 	// Every genuine empire building gain/loss, carrying the building type + the new empire count + the delta.
 	emitBuildingCount((int)getID(), (int)eIndex, getBuildingCount(eIndex), iChange);

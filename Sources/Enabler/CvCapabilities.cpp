@@ -96,6 +96,20 @@ const char* CascadeCapabilities::flagName(CascadeCapFlag eFlag)
 	return "?";
 }
 
+// The commerce channel -> its slider capability. GOLD is the RESIDUAL channel (its rate is whatever the other
+// sliders leave), so it has no slider to unlock and answers CCF_COUNT rather than a flag that would always
+// read false.
+CascadeCapFlag CascadeCapabilities::commerceRateFlag(CommerceTypes eCommerce)
+{
+	switch (eCommerce)
+	{
+	case COMMERCE_RESEARCH:  return CCF_SET_SCIENCE_RATE;
+	case COMMERCE_CULTURE:   return CCF_SET_CULTURE_RATE;
+	case COMMERCE_ESPIONAGE: return CCF_SET_ESPIONAGE_RATE;
+	default:                 return CCF_COUNT;
+	}
+}
+
 static const CascadeTeamCaps& ccap_get(TeamTypes eTeam)
 {
 	// A BARE FETCH, unconditionally -- the union stands exactly as the HAVE-change marks built it.

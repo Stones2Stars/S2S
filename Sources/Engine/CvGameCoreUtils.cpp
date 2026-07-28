@@ -248,16 +248,6 @@ ImprovementTypes finalImprovementUpgrade(ImprovementTypes eImprovement, int iCou
 	return eImprovement;
 }
 
-int getWorldSizeMaxConscript(CivicTypes eCivic)
-{
-	int iMaxConscript = GC.getCivicInfo(eCivic).getMaxConscript();
-
-	iMaxConscript *= std::max(0, (GC.getWorldInfo(GC.getMap().getWorldSize()).getMaxConscriptModifier() + 100));
-	iMaxConscript /= 100;
-
-	return iMaxConscript;
-}
-
 bool isReligionTech(TechTypes eTech)
 {
 	PROFILE_EXTRA_FUNC();
@@ -294,38 +284,9 @@ bool isTechRequiredForProject(TechTypes eTech, ProjectTypes eProject)
 	return false;
 }
 
-bool isWorldUnit(UnitTypes eUnit)
-{
-	return GC.getUnitInfo(eUnit).getMaxGlobalInstances() != -1;
-}
-bool isNationalUnit(UnitTypes eUnit)
-{
-	return GC.getUnitInfo(eUnit).getMaxPlayerInstances() != -1;
-}
 bool isLimitedUnit(UnitTypes eUnit)
 {
 	return (isWorldUnit(eUnit) || isNationalUnit(eUnit));
-}
-
-bool isWorldWonder(BuildingTypes building)
-{
-	return GC.getBuildingInfo(building).getMaxGlobalInstances() != -1;
-}
-
-bool isTeamWonder(BuildingTypes building)
-{
-	return GC.getBuildingInfo(building).getMaxTeamInstances() != -1;
-}
-
-bool isNationalWonder(BuildingTypes building)
-{
-	return GC.getBuildingInfo(building).getMaxPlayerInstances() != -1;
-}
-
-bool isNationalWonderGroup(BuildingTypes building)
-{
-	const SpecialBuildingTypes eSpecialBuilding = GC.getBuildingInfo(building).getSpecialBuilding();
-	return eSpecialBuilding != NO_SPECIALBUILDING && GC.getSpecialBuildingInfo(eSpecialBuilding).getMaxPlayerInstances() != -1;
 }
 
 bool isNationalWonderGroupSpecialBuilding(SpecialBuildingTypes eSpecialBuilding)
@@ -336,57 +297,6 @@ bool isNationalWonderGroupSpecialBuilding(SpecialBuildingTypes eSpecialBuilding)
 bool isLimitedWonder(BuildingTypes eBuilding)
 {
 	return isWorldWonder(eBuilding) || isTeamWonder(eBuilding) || isNationalWonder(eBuilding);
-}
-
-int limitedWonderLimit(BuildingTypes eBuilding)
-{
-	int iCount = 0;
-	bool bIsLimited = false;
-	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
-
-	int iMax = kBuilding.getMaxGlobalInstances();
-	if (iMax != -1)
-	{
-		iCount += iMax;
-		bIsLimited = true;
-	}
-
-	iMax = kBuilding.getMaxTeamInstances();
-	if (iMax != -1)
-	{
-		iCount += iMax;
-		bIsLimited = true;
-	}
-
-	iMax = kBuilding.getMaxPlayerInstances();
-	if (iMax != -1)
-	{
-		iCount += iMax;
-		bIsLimited = true;
-	}
-
-	const SpecialBuildingTypes eSpecialBuilding = kBuilding.getSpecialBuilding();
-	if (eSpecialBuilding != NO_SPECIALBUILDING)
-	{
-		iMax = GC.getSpecialBuildingInfo(eSpecialBuilding).getMaxPlayerInstances();
-		if (iMax != -1)
-		{
-			iCount += iMax;
-			bIsLimited = true;
-		}
-	}
-
-	return bIsLimited ? iCount : -1;
-}
-
-bool isWorldProject(ProjectTypes eProject)
-{
-	return (GC.getProjectInfo(eProject).getMaxGlobalInstances() != -1);
-}
-
-bool isTeamProject(ProjectTypes eProject)
-{
-	return (GC.getProjectInfo(eProject).getMaxTeamInstances() != -1);
 }
 
 bool isLimitedProject(ProjectTypes eProject)
@@ -458,7 +368,7 @@ TechTypes getDiscoveryTech(const UnitTypes eUnit, const PlayerTypes ePlayer)
 
 			for (int iJ = 0; iJ < GC.getNumFlavorTypes(); iJ++)
 			{
-				iValue += GC.getTechInfo(eTechX).getFlavorValue(iJ) * GC.getUnitInfo(eUnit).getFlavorValue(iJ);
+				iValue += GC.getTechInfo(eTechX).getFlavorValue(iJ) * GC.getUnitInfo(eUnit).getFlavour(iJ);
 			}
 
 			if (iValue > 0)
@@ -865,7 +775,7 @@ bool PUF_isNoMissionAI(const CvUnit* pUnit, int iData1, int iData2, const CvUnit
 
 bool PUF_isFiniteRange(const CvUnit* pUnit, int iData1, int iData2, const CvUnit* pThis)
 {
-	return ((pUnit->getDomainType() != DOMAIN_AIR) || (pUnit->getUnitInfo().getAirRange() > 0));
+	return (pUnit->getDomainType() != DOMAIN_AIR);
 }
 
 /************************************************************************************************/
@@ -3642,13 +3552,9 @@ bool isAdjacentDirection(DirectionTypes eFacingDirection, DirectionTypes eOtherD
 }
 
 
-//	Koshling - abstract treaty length from the define int to allow scaling
 int getTreatyLength()
 {
-	int iResult = GC.getDefineINT("PEACE_TREATY_LENGTH");
-
-	iResult *= GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent();
-	iResult /= 100;
+	const int iResult = GC.getDefineINT("PEACE_TREATY_LENGTH");
 
 	return std::max(1, iResult);
 }

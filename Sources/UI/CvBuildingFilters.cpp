@@ -11,13 +11,54 @@
 
 #include "CvGameCoreDLL.h"
 #include "CvBuildingFilters.h"
+#include "CvBuildListValuation.h"
 #include "CvBuildingInfo.h"
+#include "CvInfoKinds.h"
+#include "CvModEntry.h"
+#include "CvModifiers.h"
 #include "Infrastructure/CvBugOptions.h"
 #include "Engine/CvCity.h"
 #include "AI/CvGameAI.h"
 #include "Defines/CvGlobals.h"
 #include "CvInfos.h"
 #include "AI/CvPlayerAI.h"
+
+namespace
+{
+	// Does the building author ANY deposit in this modifier family? The compiled point sums answer only the
+	// scope-wide (memberless) slot, and the military families are authored overwhelmingly through KEYED targets
+	// (experience.city.unitCombats.UNITCOMBAT_*, combat.city.unitCombats.*). Keyed/targeted groups are entry-list
+	// reads by design (CvBuildingInfo.h), so family MEMBERSHIP is asked of the compiled entry list.
+	bool bf_authorsFamily(const CvBuildingInfo& kBuilding, ModifierFamily eFamily)
+	{
+		const CvModifiers* pModifiers = kBuilding.getModifiers();
+		if (pModifiers == NULL)
+		{
+			return false;
+		}
+		foreach_(const CvModEntry* pEntry, pModifiers->entries())
+		{
+			if (pEntry->family == eFamily)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	// The building's own compiled contribution to one property, over the scopes a building authors the open
+	// per-property plane at (PROPERTY_X.city.flat, PROPERTY_X.empire.flat). Signed and x100.
+	int bf_propertyAmount(const CvBuildingInfo& kBuilding, PropertyTypes eProperty)
+	{
+		const CvModifiers* pModifiers = kBuilding.getModifiers();
+		if (pModifiers == NULL)
+		{
+			return 0;
+		}
+		return pModifiers->propertySum((int)eProperty, CASC_SCOPE_CITY, CASC_UNIT_FLAT)
+			+ pModifiers->propertySum((int)eProperty, CASC_SCOPE_EMPIRE, CASC_UNIT_FLAT);
+	}
+}
 
 void BuildingFilterBase::Activate()
 {
@@ -82,16 +123,12 @@ BuildingFilterIsCommerce::BuildingFilterIsCommerce(CommerceTypes eCommerce, bool
 
 bool BuildingFilterIsCommerce::isFilteredBuilding(const CvPlayer *pPlayer, CvCity *pCity, BuildingTypes eBuilding) const
 {
-	if (pCity)
+	int aFlatCommerce[NUM_COMMERCE_TYPES];
+	if (!CvBuildListValuation::buildingFlatCommerce(eBuilding, pPlayer, pCity, aFlatCommerce))
 	{
-		return pCity->getAdditionalCommerceByBuilding(m_eCommerce, eBuilding) > 0;
+		return false;
 	}
-	const CvBuildingInfo& buildingInfo = GC.getBuildingInfo(eBuilding);
-	return buildingInfo.getCommerceChange(m_eCommerce) > 0
-		|| buildingInfo.getCommercePerPopChange(m_eCommerce) > 0
-		|| buildingInfo.getCommerceModifier(m_eCommerce) > 0
-		|| buildingInfo.getSpecialistExtraCommerce(m_eCommerce) > 0
-		|| buildingInfo.getGlobalCommerceModifier(m_eCommerce) > 0;
+	return aFlatCommerce[m_eCommerce] > 0;
 }
 
 BuildingFilterIsYieldAndCommerce::BuildingFilterIsYieldAndCommerce(YieldTypes eYield, CommerceTypes eCommerce, bool bInvert)
@@ -99,62 +136,23 @@ BuildingFilterIsYieldAndCommerce::BuildingFilterIsYieldAndCommerce(YieldTypes eY
 
 bool BuildingFilterIsYieldAndCommerce::isFilteredBuilding(const CvPlayer *pPlayer, CvCity *pCity, BuildingTypes eBuilding) const
 {
-	// Check for yield (e.g., YIELD_COMMERCE)
-	bool bHasYield = false;
-	if (pCity)
+	PROFILE_EXTRA_FUNC();
+	// Yield (e.g., YIELD_COMMERCE) or commerce type (e.g., COMMERCE_GOLD).
+	int aFlatYields[NUM_YIELD_TYPES];
+	if (CvBuildListValuation::buildingFlatYields(eBuilding, pPlayer, pCity, aFlatYields)
+		&& aFlatYields[m_eYield] > 0)
 	{
-		bHasYield = pCity->getAdditionalYieldByBuilding(m_eYield, eBuilding, true) > 0;
+		return true;
 	}
-	else
+	int aYieldModifiers[NUM_YIELD_TYPES];
+	if (CvBuildListValuation::buildingYieldModifiers(eBuilding, pPlayer, pCity, aYieldModifiers)
+		&& aYieldModifiers[m_eYield] > 0)
 	{
-		const CvBuildingInfo& info = GC.getBuildingInfo(eBuilding);
-		foreach_(const PlotArray& pair, info.getPlotYieldChanges())
-		{
-			if (pair.second[m_eYield] > 0)
-			{
-				bHasYield = true;
-				break;
-			}
-		}
-		if (!bHasYield)
-		{
-			foreach_(const TerrainArray& pair, info.getTerrainYieldChanges())
-			{
-				if (pair.second[m_eYield] > 0)
-				{
-					bHasYield = true;
-					break;
-				}
-			}
-		}
-		if (!bHasYield)
-		{
-			bHasYield = info.getYieldChange(m_eYield) > 0
-				|| info.getYieldPerPopChange(m_eYield) > 0
-				|| info.getYieldModifier(m_eYield) > 0
-				|| info.getAreaYieldModifier(m_eYield) > 0
-				|| info.getGlobalYieldModifier(m_eYield) > 0
-				|| info.getGlobalSeaPlotYieldChange(m_eYield) > 0;
-		}
+		return true;
 	}
-
-	// Check for commerce type (e.g., COMMERCE_GOLD)
-	bool bHasCommerce = false;
-	if (pCity)
-	{
-		bHasCommerce = pCity->getAdditionalCommerceByBuilding(m_eCommerce, eBuilding) > 0;
-	}
-	else
-	{
-		const CvBuildingInfo& buildingInfo = GC.getBuildingInfo(eBuilding);
-		bHasCommerce = buildingInfo.getCommerceChange(m_eCommerce) > 0
-			|| buildingInfo.getCommercePerPopChange(m_eCommerce) > 0
-			|| buildingInfo.getCommerceModifier(m_eCommerce) > 0
-			|| buildingInfo.getSpecialistExtraCommerce(m_eCommerce) > 0
-			|| buildingInfo.getGlobalCommerceModifier(m_eCommerce) > 0;
-	}
-
-	return bHasYield || bHasCommerce;
+	int aFlatCommerce[NUM_COMMERCE_TYPES];
+	return CvBuildListValuation::buildingFlatCommerce(eBuilding, pPlayer, pCity, aFlatCommerce)
+		&& aFlatCommerce[m_eCommerce] > 0;
 }
 
 BuildingFilterIsYield::BuildingFilterIsYield(YieldTypes eYield, bool bInvert) : BuildingFilterBase(bInvert), m_eYield(eYield) {}
@@ -162,169 +160,115 @@ BuildingFilterIsYield::BuildingFilterIsYield(YieldTypes eYield, bool bInvert) : 
 bool BuildingFilterIsYield::isFilteredBuilding(const CvPlayer *pPlayer, CvCity *pCity, BuildingTypes eBuilding) const
 {
 	PROFILE_EXTRA_FUNC();
-	if (pCity)
+	// A building offers the yield if it deposits the channel flat OR raises the city's rate in it -- the two are
+	// separate groups because they are separate scales, and either one alone answers this filter's question.
+	int aFlatYields[NUM_YIELD_TYPES];
+	if (CvBuildListValuation::buildingFlatYields(eBuilding, pPlayer, pCity, aFlatYields)
+		&& aFlatYields[m_eYield] > 0)
 	{
-		return pCity->getAdditionalYieldByBuilding(m_eYield, eBuilding, true) > 0;
+		return true;
 	}
-	const CvBuildingInfo& info = GC.getBuildingInfo(eBuilding);
-
-	foreach_(const PlotArray& pair, info.getPlotYieldChanges())
-	{
-		if (pair.second[m_eYield] > 0)
-		{
-			return true;
-		}
-	}
-	foreach_(const TerrainArray& pair, info.getTerrainYieldChanges())
-	{
-		if (pair.second[m_eYield] > 0)
-		{
-			return true;
-		}
-	}
-	return info.getYieldChange(m_eYield) > 0
-		|| info.getYieldPerPopChange(m_eYield) > 0
-		|| info.getYieldModifier(m_eYield) > 0
-		|| info.getAreaYieldModifier(m_eYield) > 0
-		|| info.getGlobalYieldModifier(m_eYield) > 0
-		|| info.getGlobalSeaPlotYieldChange(m_eYield) > 0;
+	int aYieldModifiers[NUM_YIELD_TYPES];
+	return CvBuildListValuation::buildingYieldModifiers(eBuilding, pPlayer, pCity, aYieldModifiers)
+		&& aYieldModifiers[m_eYield] > 0;
 }
 
 bool BuildingFilterIsHappiness::isFilteredBuilding(const CvPlayer *pPlayer, CvCity *pCity, BuildingTypes eBuilding) const
 {
 	PROFILE_EXTRA_FUNC();
-	if (pCity)
+	int iBalance = 0;
+	if (!CvBuildListValuation::buildingHappinessBalance(eBuilding, pPlayer, pCity, iBalance))
 	{
-		return pCity->getAdditionalHappinessByBuilding(eBuilding) > 0;
+		return false;
 	}
-	const CvBuildingInfo& buildingInfo = GC.getBuildingInfo(eBuilding);
-	foreach_(const TechModifier& modifier, buildingInfo.getTechHappinessChanges())
-	{
-		if (modifier.second > 0)
-			return true;
-	}
-	return buildingInfo.getHappiness() > 0
-		|| buildingInfo.getAreaHappiness() > 0
-		|| buildingInfo.getGlobalHappiness() > 0;
+	return iBalance > 0;
 }
 
 bool BuildingFilterIsHealth::isFilteredBuilding(const CvPlayer *pPlayer, CvCity *pCity, BuildingTypes eBuilding) const
 {
 	PROFILE_EXTRA_FUNC();
-	if (pCity)
+	int iBalance = 0;
+	if (!CvBuildListValuation::buildingHealthBalance(eBuilding, pPlayer, pCity, iBalance))
 	{
-		return pCity->getAdditionalHealthByBuilding(eBuilding) > 0;
+		return false;
 	}
-	const CvBuildingInfo& buildingInfo = GC.getBuildingInfo(eBuilding);
-	foreach_(const TechModifier& modifier, buildingInfo.getTechHealthChanges())
-	{
-		if (modifier.second > 0)
-			return true;
-	}
-	return buildingInfo.getHealth() > 0
-		|| buildingInfo.getAreaHealth() > 0
-		|| buildingInfo.getGlobalHealth() > 0;
+	return iBalance > 0;
 }
 
 bool BuildingFilterIsUnhappiness::isFilteredBuilding(const CvPlayer *pPlayer, CvCity *pCity, BuildingTypes eBuilding) const
 {
 	PROFILE_EXTRA_FUNC();
-	if (pCity)
+	int iBalance = 0;
+	if (!CvBuildListValuation::buildingHappinessBalance(eBuilding, pPlayer, pCity, iBalance))
 	{
-		return pCity->getAdditionalHappinessByBuilding(eBuilding) < 0;
+		return false;
 	}
-	const CvBuildingInfo& buildingInfo = GC.getBuildingInfo(eBuilding);
-	foreach_(const TechModifier& modifier, buildingInfo.getTechHappinessChanges())
-	{
-		if (modifier.second < 0)
-			return true;
-	}
-	return buildingInfo.getHappiness() < 0
-		|| buildingInfo.getAreaHappiness() < 0
-		|| buildingInfo.getGlobalHappiness() < 0;
+	return iBalance < 0;
 }
 
 bool BuildingFilterIsUnhealthiness::isFilteredBuilding(const CvPlayer *pPlayer, CvCity *pCity, BuildingTypes eBuilding) const
 {
 	PROFILE_EXTRA_FUNC();
-	if (pCity)
+	int iBalance = 0;
+	if (!CvBuildListValuation::buildingHealthBalance(eBuilding, pPlayer, pCity, iBalance))
 	{
-		return pCity->getAdditionalHealthByBuilding(eBuilding) < 0;
+		return false;
 	}
-	const CvBuildingInfo& buildingInfo = GC.getBuildingInfo(eBuilding);
-	foreach_(const TechModifier& modifier, buildingInfo.getTechHealthChanges())
-	{
-		if (modifier.second < 0)
-			return true;
-	}
-	return buildingInfo.getHealth() < 0
-		|| buildingInfo.getAreaHealth() < 0
-		|| buildingInfo.getGlobalHealth() < 0;
+	return iBalance < 0;
 }
 
-bool BuildingFilterIsMilitary::isFilteredBuilding(const CvPlayer *pPlayer, CvCity *pCity, BuildingTypes eBuilding) const // not finished
+bool BuildingFilterIsMilitary::isFilteredBuilding(const CvPlayer *pPlayer, CvCity *pCity, BuildingTypes eBuilding) const
 {
-	const CvBuildingInfo& buildingInfo = GC.getBuildingInfo(eBuilding);
-	return buildingInfo.getMilitaryProductionModifier() > 0
-		|| buildingInfo.getFreeExperience() > 0
-		|| buildingInfo.getNumUnitCombatRetrainTypes() > 0
-		|| buildingInfo.getNumUnitCombatProdModifiers() > 0
-		|| buildingInfo.hasTriggerPromotions()
-		|| !buildingInfo.getUnitCombatFreeExperience().empty()
-		|| buildingInfo.isAnyDomainFreeExperience();
+	PROFILE_EXTRA_FUNC();
+	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+	// The military BUILD RATE is the one scope-wide point read (buildRate.<scope>.military). The keyed buildRate
+	// targets are deliberately NOT read: a unit- or domain-keyed build rate names UNIT_TRADE_CARAVAN as readily
+	// as a soldier, so it says nothing about military without resolving the target's own nature.
+	if (kBuilding.getBuildRateModifier(BUILD_RATE_MILITARY, CASC_SCOPE_CITY) != 0
+		|| kBuilding.getBuildRateModifier(BUILD_RATE_MILITARY, CASC_SCOPE_EMPIRE) != 0)
+	{
+		return true;
+	}
+	// Unit EXPERIENCE and COMBAT are military whole-family -- every kind either one authors is about the units
+	// the city produces -- so membership answers the filter, and it covers the keyed unitCombat/domain targets
+	// the point sums cannot see.
+	if (bf_authorsFamily(kBuilding, MODFAM_EXPERIENCE) || bf_authorsFamily(kBuilding, MODFAM_COMBAT))
+	{
+		return true;
+	}
+	// A building that hands the units it produces a free promotion is military by the same reading.
+	return kBuilding.hasTriggerPromotions();
 }
 
 bool BuildingFilterIsCityDefense::isFilteredBuilding(const CvPlayer *pPlayer, CvCity *pCity, BuildingTypes eBuilding) const
 {
-	const CvBuildingInfo& buildingInfo = GC.getBuildingInfo(eBuilding);
-	if (GC.getGame().isOption(GAMEOPTION_COMBAT_SURROUND_DESTROY))
+	PROFILE_EXTRA_FUNC();
+	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+	// The DEFENSE family IS the concept, so this asks the whole vocabulary rather than electing kinds: any
+	// non-zero defense kind, at a scope a building authors defense at, means the building touches city defense.
+	// Each kind's canonical authored unit resolves in the vocabulary (infoDefenseUnit), so no unit is chosen
+	// here and no kind carries a weight -- the filter needs presence, not magnitude.
+	for (int iDefenseKind = 0; iDefenseKind < NUM_DEFENSE_KINDS; ++iDefenseKind)
 	{
-		if (buildingInfo.getLocalDynamicDefense() > 0)
+		if (kBuilding.getDefense((DefenseKind)iDefenseKind, CASC_SCOPE_CITY) != 0
+			|| kBuilding.getDefense((DefenseKind)iDefenseKind, CASC_SCOPE_EMPIRE) != 0)
+		{
 			return true;
+		}
 	}
-	return buildingInfo.getDefenseModifier() > 0
-		|| buildingInfo.getAllCityDefenseModifier() > 0
-		|| buildingInfo.getAdjacentDamagePercent() > 0
-		|| buildingInfo.getBombardDefenseModifier() > 0
-		|| buildingInfo.getLocalCaptureProbabilityModifier() > 0
-		|| buildingInfo.getLocalCaptureResistanceModifier() > 0
-		|| buildingInfo.getNationalCaptureResistanceModifier() > 0
-		|| buildingInfo.getRiverDefensePenalty() < 0
-		|| buildingInfo.getMinDefense() > 0
-		|| buildingInfo.getBuildingDefenseRecoverySpeedModifier() > 0
-		|| buildingInfo.getCityDefenseRecoverySpeedModifier() > 0
-		|| buildingInfo.getNumUnitCombatDefenseAgainstModifiers() > 0;
+	return false;
 }
 
 bool BuildingFilterIsProperty::isFilteredBuilding(const CvPlayer *pPlayer, CvCity *pCity, BuildingTypes eBuilding) const
 {
 	PROFILE_EXTRA_FUNC();
-	const CvBuildingInfo& kInfo = GC.getBuildingInfo(eBuilding);
-	if ((kInfo.getProperties()->getValueByProperty(m_eProperty) != 0) || (kInfo.getPropertiesAllCities()->getValueByProperty(m_eProperty)))
-		return true;
-
-	const CvPropertyManipulators* pMani = kInfo.getPropertyManipulators();
-	foreach_(const CvPropertySource* pSource, pMani->getSources())
+	if (m_eProperty == NO_PROPERTY)
 	{
-		if (pSource->getProperty() == m_eProperty)
-			return true;
+		return false;
 	}
-
-	foreach_(const CvPropertyInteraction* pInteraction, pMani->getInteractions())
-	{
-		if (pInteraction->getSourceProperty() == m_eProperty)
-			return true;
-		if (pInteraction->getTargetProperty() == m_eProperty)
-			return true;
-	}
-
-	foreach_(const CvPropertyPropagator* pPropagator, pMani->getPropagators())
-	{
-		if (pPropagator->getProperty() == m_eProperty)
-			return true;
-	}
-
-	return false;
+	// Either SIGN qualifies: a building that suppresses crime belongs in the crime filter exactly as one that
+	// breeds it does.
+	return bf_propertyAmount(GC.getBuildingInfo(eBuilding), m_eProperty) != 0;
 }
 
 BuildingFilterList::BuildingFilterList(CvPlayer *pPlayer, CvCity *pCity)

@@ -233,6 +233,19 @@
 **AI consumption: 825 channel-getter call sites** — `CvPlayerAI` 386 · `CvCityAI` 370 · `CvUnitAI` 62 ·
 `CvWorkerAI` 2 · `CvTeamAI` 1.
 
+⚑ **Measured on the INFO side, which is the bigger number: of the 342 distinct info getters `CvPlayerAI` calls,
+280 are declared on NO info.** That reframes the file — it is not loops with dead bodies, it is the whole
+info-read surface, and the dead set spans subsystems whose replacements are NOT built (the unit-stat plane,
+hide-and-seek, the per-source wellbeing decomposition, revolution). ⛔ So it does not convert the way `CvCityAI`
+did, where the `expected*` valuation already stood behind every read. **The one cluster with a BUILT
+replacement is the CAPABILITY family** — `isTechTrading` / `isMapTrading` / `isGoldTrading` /
+`isOpenBordersTrading` / `isDefensivePactTrading` / `isPermanentAllianceTrading` / `isVassalStateTrading` /
+`isCanFoundOnPeaks` / `isCanPassPeaks` / `isMoveFastPeaks` / `isCanLeadThroughPeaks` / `isIrrigation` /
+`isIgnoreIrrigation` / `isBridgeBuilding` / `isRiverTrade` / `isMapCentering` / `isMapVisible` /
+`isExtraWaterSeeFrom` / `isWaterWork` / `isTerrainTrade` / `isCommerceFlexible` / `isRebaseAnywhere` — every one
+of which is a `capabilities` / `canTrade` / `canTradeOn` / `canWorkOn` key whose home is `CascadeCapabilities`
+([capabilities.md](../../specs/capabilities.md)). Take that cluster whole; the rest waits on its own machine.
+
 ⛔ **This is NOT a 267-item worklist.** Per the roadmap, many collapse as the rebuilt infos wire through —
 measure what survives, then cut the genuine residue. The classes below are the unit of work, never the getter.
 
@@ -241,12 +254,31 @@ measure what survives, then cut the genuine residue. The classes below are the u
   `…HealthByFeature`, `…DefenseByBuilding`, …) ARE the legacy what-if valuation: each returns a **delta**, which
   is exactly the [valuation protocol](../../architecture/patterns.md)'s "contexts in, proposed increase out".
   Their replacement — `expectedFlatYields` / `expectedYieldModifiers` / `expectedPlotYields` /
-  `expectedFlatCommerce` / `expectedWellbeing` — is **BUILT and has ZERO callers**, which is why the two pass-in
-  scenarios currently hold vacuously.
+  `expectedFlatCommerce` / `expectedWellbeing` — is **BUILT**, and the wellbeing, plot-yield, yield-modifier
+  and commerce halves of `CvCityAI`'s building valuation are on it.
   ⚑ **Its consumers are precisely the TWO patterns.md names as ONE call:** the AI weighting a candidate and the
   build-list HOVER TOOLTIP (`CvBuildingFilters`, `CvBuildingSort`, `CvDLLWidgetData`), plus `CvGameTextMgr`.
   Wiring them onto one valuation is what makes the displayed number and the acted-on number the same number
   structurally.
+  ⛔ **`CvBuildingFilters` / `CvBuildingSort` are currently INERT, and that is a REGRESSION against the line
+  above, not a finished state.** Their dead info-direct reads were correctly removed, but the classes were left
+  returning `false`/`0` instead of being wired to `expected*` — so the build list's military / city-defense /
+  property filters and the property sort do nothing, and the yield/commerce/wellbeing filters work only when a
+  city is bound. They are a NAMED destination, so "inert" is where they must not stop.
+  ⚖ **THE CITY-LESS VIEW EVALUATES AGAINST THE CAPITAL (owner).** `expected*` needs a `CityContext`, and the
+  build list's player-level "all buildings" view has no city bound. The answer is the AI's own precedent, made
+  explicit: value the candidate against the player's CAPITAL. So the context resolution is one rule — the bound
+  city if there is one, else the capital — and it belongs in ONE place both the filters and the sorts read
+  ([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation)), never re-derived per
+  criterion. A player with no capital has no valuation to give and the criterion ranks neutral.
+  ⚖ **REBUILD, do not restore (owner):** *"at least we have eliminated the legacy, which was the goal"* — the
+  dead info-direct reads that were cut STAY cut. What returns is built fresh on the frontier + `expected*`, not
+  a revival of the legacy bodies.
+  ⚑ **Two criterion classes, two answers — do not treat them as one job:** a STAT criterion (unit strength /
+  moves / cargo / air range / bombard / withdrawal) re-points onto the entity's own compiled family read
+  (`getFlatCombat(COMBAT_AMOUNT, CASC_SCOPE_UNIT)`, `getAir(AIR_RANGE, …)`, `getCargo(…)`, …) and needs only a
+  kind/scope choice plus `/100` at use; a VALUE criterion (yield / commerce / wellbeing / defense) goes through
+  `expected*` against the resolved context. The stat half is mechanical; only the value half touches the seam.
   ⚠ **`CvPlayerAI`'s 3 `getAdditionalEventChance` hits are NOT this family** — that is `CvEventInfo`'s event-chance
   list, a different mechanic a `getAdditional*` grep sweeps up by accident. The AI what-if sites are 7 in
   `CvCityAI` and 13 in `CvPlayerAI`.
@@ -267,6 +299,17 @@ measure what survives, then cut the genuine residue. The classes below are the u
     iMilitaryHappinessUnits)`; `getAdditionalHealthByCivic` with `iIgnoreNoUnhealthyPopulationCount` /
     `iIgnoreBuildingOnlyHealthyCount`). Those flags encode a civic-SWAP simulation, not a candidate's
     contribution. Same ban applies — re-express the call site, never absorb the arguments.
+  - ⛔ **AND THE CIVIC HALF NEEDS A MECHANISM THAT DOES NOT EXIST — the AS-IF-ADOPTED valuation.** A civic's
+    keyed deposits are never on the civic: `{channel}.empire.buildings.{B}` is reverse-landed on the TARGET
+    BUILDING conditioned on the civic's presence (modifier.md §2a), and its specialist percents sit on the
+    SPECIALIST as own-output ([DEC-deliveryguy]). So "what would this civic give me" cannot be answered by
+    `expected*`, which resolves against the CURRENT `EmpireContext` — the one in which the candidate civic is
+    by definition NOT adopted. `AI_civicValue`'s three keyed scans (buildings / improvements / specialists)
+    were deleted rather than left reading getters that exist on no info, so the term is a visible hole until
+    this lands. ⚑ The shape to reach for is the enabler's, not a new one: [enabler.md §8](../../specs/enabler.md)
+    already has the picking logic OVERLAY a hypothetical HAVE plane on the maintained ones and re-apply the
+    formula — the modifier side needs the same overlay on the context the valuation evaluates against, held
+    in the CALLER's scratch, never written to the live context.
 - **⚖ AI LOOPS ARE DESIGNED TOWARD THE NEW SURFACE, AND ANY FULL-RECALC-OF-ALL-THINGS IS NUKED (owner).** Two
   rulings that govern this whole section, and they cut the other way from "don't touch the AI":
   **(a) changing an AI loop to accommodate the surface is NOT banned** — the contexts exist precisely so it can;
@@ -308,6 +351,50 @@ measure what survives, then cut the genuine residue. The classes below are the u
   `getCommerceRateAtSliderPercent`), the espionage counters, the live combat state (`getDefenseDamage`,
   `getLastDefenseDamage`), `getHappinessTimer`, and the `CvPlayer` unit-upkeep family. These are what the
   classification is FOR: only they need design.
+
+## The HANDICAP consumer rewire — the surface EXISTS, only the consumers are stale
+
+> ⛔ **Do NOT build a new handicap getter surface — `CvHandicapInfo` is already rebuilt to the exemplar** (kind
+> + scope as separate axes, plus the `bAiAudience` leaf the dual-plane data needs, plus bare intrinsic reads for
+> the genuinely lone config values). Difficulty IS config, so the legacy shape was close to right; what the
+> rebuilt surface adds is exactly the two axes legacy had to spell out as separate getter NAMES
+> (`getAITrainPercent` vs `getAIWorldTrainPercent` = one call, two scopes —
+> [DEC-scope-is-an-axis](../../architecture/decisions.md#dec-scope-is-an-axis)). Wired in the same shape it is
+> no behaviour change.
+>
+> ⚠ **The trap this closes:** every one of these reads a DIFFICULTY SCALER, so a consumer that loses one does
+> not fail loudly — it silently plays a flat game. Verify the successor rather than killing on sight; the
+> mapping below is verified against the authored data and the header, not inferred from names.
+
+**15 legacy names / 22 call sites** (a floor — measured on a `C1003`-truncated build): `CvPlayer` 11 ·
+`CvUnitAI` 4 · `CvTeamAI` 4 (done) · `CvTeam` 2 · `CvOutcome` 1. Every getter below is ×100, so reduce `/100`
+at the point it meets a human-scale operand.
+
+| legacy name | successor |
+|---|---|
+| `getAITrainPercent` / `getAIConstructPercent` / `getAICreatePercent` | `getCostsModifier(COSTS_TRAIN\|CONSTRUCT\|CREATE, CASC_SCOPE_EMPIRE, true)` |
+| `getAIWorldTrainPercent` / `getAIWorldConstructPercent` / `getAIWorldCreatePercent` | the same kinds at `CASC_SCOPE_WORLD` |
+| `getAIResearchPercent` | `getCostsModifier(COSTS_RESEARCH, CASC_SCOPE_EMPIRE, true)` |
+| `getAIDeclareWarProb` | `getDiplomacy(DIPLOMACY_DECLARE_WAR, CASC_SCOPE_EMPIRE, true)` |
+| `getNoTechTradeModifier` | `getDiplomacy(DIPLOMACY_NO_TECH_TRADE, CASC_SCOPE_TEAM, false)` |
+| `getTechTradeKnownModifier` | `getDiplomacy(DIPLOMACY_TECH_TRADE_KNOWN, CASC_SCOPE_TEAM, false)` |
+| `getAnimalAttackProb` | `getBarbarians(BARBARIANS_ANIMAL_ATTACK_PROB, CASC_SCOPE_WORLD)` |
+| `getBarbarianInitialDefenders` | `getBarbarians(BARBARIANS_DEFENDERS, CASC_SCOPE_WORLD)` |
+| `getAIPerEraModifier` | `getUnitUpkeepEraModifier()` (an intrinsic — the header names it as the successor) |
+| `getAIAdvancedStartPercent` | `getAdvancedStartAiPercent()` (intrinsic) |
+| `getSubdueAnimalBonusAI` | ⚠ UNVERIFIED — no successor located; verify before disposing |
+
+⚑ **The `ai` sub-object in the data IS the `bAiAudience` argument** (`diplomacy.empire.declareWar.ai.percent`
+→ `bAiAudience = true`); a leaf with no `ai` sibling reads `false`. Do not sum the two planes.
+
+## The GAMESPEED hammer-cost consumer calc — genuinely unbuilt
+
+`CvGameSpeedInfo` states outright that the option-gated `AdaptHammerCost` derivation (speed percent × the
+upscaled-costs define under `GAMEOPTION_EXP_UPSCALED_BUILDING_AND_UNIT_COSTS`) is **NOT served by the info** —
+"a game option gates AT THE CONSUMING SYSTEM". No shared consumer-side calc exists, so its readers currently
+have nothing to call. It wants ONE implementation on the calc surface
+([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation)), not a re-derivation
+per call site. Killed at the `CvTeamAI` war-timing sites meanwhile (war timing is unscaled by game speed there).
 
 ## Stage 4 — the consumer cut (sequenced LAST; see the roadmap's ORDER ruling)
 
@@ -433,11 +520,24 @@ measure what survives, then cut the genuine residue. The classes below are the u
     `CvImprovementInfo::getTechYieldChanges`). **None of those four getters is declared on any info**, so all
     four are stage-4 consumer debt, not loop-shape defects. The tech-keyed pair's eventual driver is the tech's
     `EDGEF_RELATED` bucket for that kind.
-  - **The OWN-DATA inversions** — `kCivic.getBuildingCommerceModifier` / `getBuildingHappinessChanges` /
-    `getBuildingHealthChanges` are read by enumerating every building id to find the CIVIC's own authored keys.
-    That is the keyed-container inversion [pedia-read-map finding 2](../../reference/pedia-read-map.md) names; it
-    dies to the container being served whole, not to a frontier swap. ⚠ The `CvEventInfo` twins
-    (`getBuildingYieldChange`/`…CommerceChange`/`…HappyChange`/`…HealthChange`) ride the EVENTS carve-out.
+  - **The OWN-DATA inversions** — the keyed-container inversion
+    [pedia-read-map finding 2](../../reference/pedia-read-map.md) names: a loop over every id of registry R
+    that exists only to find the keys the ENTITY ITSELF authored. It dies to the container being served whole,
+    never to a frontier swap. ⚠ The `CvEventInfo` twins
+    (`getBuildingYieldChange`/`…CommerceChange`/`…HappyChange`/`…HealthChange`) ride the EVENTS carve-out and STAY.
+    **What is left, measured, all on getters declared on NO info — `CvUnitAI`, six sites:**
+    `kPromotion.getUnitCombatModifierPercent` (28227, over every unitcombat) · `getTerrainDefensePercent`
+    (28309) · `getFeatureDefensePercent` (28326) · `getTerrainAttackPercent` (28450) ·
+    `getFeatureAttackPercent` (28469), plus the property-manipulator scan at 29237 (its getters are LIVE — the
+    loop shape is the only defect there).
+    ⚑ **The conversion shape, grounded:** the data authors these as `combat.unit.terrain.{TERRAIN_X}.attack|
+    defense.percent`, so the promotion's OWN compiled entries carry them — walk
+    `getModifiers()->entries()` filtered on `family == MODFAM_COMBAT`, `kind == COMBAT_ATTACK`/`COMBAT_DEFENSE`
+    and `targetSeg == modSegmentLookup("terrain"|"feature"|"unitCombat")`, reading each entry's `targetFk` +
+    `value` (×100). That iterates the handful the promotion authored instead of the whole registry, and it is
+    the sanctioned entry-list read (patterns.md § THE GETTER SETUP read 3 — the compiled list is what the
+    pedia and the valuation walk). ⚠ `CvUnitAI.cpp` is a `C1003`-TRUNCATED TU, so these cannot be
+    compiler-verified until the debt ahead of them clears — verify by reading, not by absence from the log.
 - **⛔ THE ACTIVE-SET WORK-LIST RIPPLE IS A SECOND PROPAGATION MECHANISM, and it exists only because a fact is
   missing (owner).** A building's operate verdict depends solely on its OWN operate atoms, so it can know by
   itself: the event names the changed atom, `EDGEF_REQUIRED_BY` names the dependents, each re-evaluates itself —
@@ -492,5 +592,7 @@ measure what survives, then cut the genuine residue. The classes below are the u
   if/when WorldBuilder option toggling is in scope.
 - **Ranked-target-selection EVALUATION** is parked ([parked/ranked-target-selection.md](../parked/ranked-target-selection.md));
   a ranked entry applies unranked until it lands.
-- **The `expected*` endpoints have no callers yet**, so the two pass-in scenarios hold vacuously — the seam is
-  built ahead of the package graft by design.
+- **Hoist the per-commerce valuation in `getBuildingCommerceValue`.** It is called once per (candidate ×
+  commerce channel) by its caller, so the valuation runs 4× per candidate where the caller already threads
+  other per-candidate arrays (`aiBaseCommerceRate`, `aiPlayerCommerceRate`) in for exactly this reason. Correct
+  as it stands; the hoist follows the established shape rather than inventing one.

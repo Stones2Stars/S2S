@@ -20,6 +20,7 @@
 #include "Engine/CvMap.h"
 #include "CvPlayerAI.h"
 #include "Enabler/CvEnablerKernel.h"     // the §5a vicinity union -- the enabler + context halves, one home
+#include "Infos/CvInfoKinds.h"           // the family/kind/unit vocabulary the valuation reads are keyed on
 #include "Engine/CvPlot.h"
 #include "Infrastructure/CvPython.h"
 #include "Engine/CvReachablePlotSet.h"
@@ -5234,15 +5235,19 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 				{
 					if ((GC.getGame().getBestLandUnit() == NO_UNIT) || !(GC.getUnitInfo(GC.getGame().getBestLandUnit()).isIgnoreBuildingDefense()))
 					{
-						iValue += (std::max(0, std::min(((kBuilding.getDefenseModifier() + getBuildingDefense()) - getNaturalDefense() - 10), kBuilding.getDefenseModifier())) / 4);
+						// The candidate's whole defense contribution is ONE valuation read: the compiled defense
+						// sum PLUS its bonus-conditioned entries, resolved against the bonuses this city
+						// actually has. The per-bonus scan this replaces WAS the conditioned tail, evaluated
+						// by hand against a keyed table -- the exact work the valuation exists to do
+						// (patterns.md § THE GETTER SETUP read 3). ×100 reduces here, where it meets the
+						// engine's human-scale defense values.
+						const int iDefensePercent =
+							kBuilding.expectedModifier(
+								MODFAM_DEFENSE, DEFENSE_AMOUNT, CASC_UNIT_PERCENT,
+								getCityContext(), kOwner.getEmpireContext(), plotGroup(getOwner())) / 100;
 
-						for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
-						{
-							if (hasBonus((BonusTypes)iI))
-							{
-								iValue += (kBuilding.getBonusDefenseChanges(iI) / 4);
-							}
-						}
+						iValue +=
+							std::max(0, std::min(iDefensePercent + getBuildingDefense() - getNaturalDefense() - 10, iDefensePercent)) / 4;
 					}
 
 
@@ -6532,69 +6537,22 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 int CvCityAI::AI_buildingYieldValue(YieldTypes eYield, BuildingTypes eBuilding, const CvBuildingInfo& kBuilding, bool bForeignTrade, int iFreeSpecialistYield) const
 {
 	PROFILE_EXTRA_FUNC();
+	const CvPlayerAI& kOwner = GET_PLAYER(getOwner());
 	int iValue = tradeRouteValue(kBuilding, eYield, bForeignTrade);
 
 	int iBaseRate = getPlotYield(eYield);
 	{
-		int iPlotChange = 0;
-		foreach_(const PlotArray & pair, kBuilding.getPlotYieldChanges())
-		{
-			if (pair.second[eYield] != 0)
-			{
-				foreach_(const CvPlot * plotX, plots(NUM_CITY_PLOTS))
-				{
-					if (plotX->getPlotType() == pair.first && canWork(plotX))
-					{
-						iPlotChange += pair.second[eYield];
-					}
-				}
-			}
-		}
-		foreach_(const TerrainArray & pair, kBuilding.getTerrainYieldChanges())
-		{
-			if (pair.second[eYield] != 0)
-			{
-				foreach_(const CvPlot * plotX, plots(NUM_CITY_PLOTS))
-				{
-					if (plotX->getTerrainType() == pair.first && canWork(plotX))
-					{
-						iPlotChange += pair.second[eYield];
-					}
-				}
-			}
-		}
-		// Building->improvement yield: count plots currently carrying the matching improvement.
-		// Both the city-local and player-wide variants benefit this city's worked plots.
-		foreach_(const ImprovementArray & pair, kBuilding.getImprovementYieldChanges())
-		{
-			if (pair.second[eYield] != 0)
-			{
-				foreach_(const CvPlot * plotX, plots(NUM_CITY_PLOTS))
-				{
-					if (plotX->getImprovementType() == pair.first && canWork(plotX))
-					{
-						iPlotChange += pair.second[eYield];
-					}
-				}
-			}
-		}
-		foreach_(const ImprovementArray & pair, kBuilding.getGlobalImprovementYieldChanges())
-		{
-			if (pair.second[eYield] != 0)
-			{
-				foreach_(const CvPlot * plotX, plots(NUM_CITY_PLOTS))
-				{
-					if (plotX->getImprovementType() == pair.first && canWork(plotX))
-					{
-						iPlotChange += pair.second[eYield];
-					}
-				}
-			}
-		}
-		if (kBuilding.getRiverPlotYieldChange(eYield) > 0)
-		{
-			iPlotChange += kBuilding.getRiverPlotYieldChange(eYield) * countNumRiverPlots();
-		}
+		// The candidate's whole PLOTS-TARGET contribution in ONE read. Each of the four keyed sweeps this
+		// replaces walked all 21 city plots per candidate PER YIELD to count matching plots by hand; the
+		// valuation scales each plots-target deposit by the city context's STORED plotAttrs count
+		// (patterns.md § THE GETTER SETUP read 3, contexts.md). The building-keyed improvement/terrain maps
+		// are gone by design -- cross-entity own-output lives on the TARGET, conditioned on this building's
+		// presence ([DEC-deliveryguy]), so the valuation reaches them from the plot side.
+		int aPlotYields[NUM_YIELD_TYPES];
+		kBuilding.expectedPlotYields(
+			getCityContext(), kOwner.getEmpireContext(), plotGroup(getOwner()), aPlotYields);
+
+		const int iPlotChange = aPlotYields[eYield] / 100;
 		if (iPlotChange != 0)
 		{
 			iValue += std::min(getPopulation(), 10) * iPlotChange;
@@ -6615,23 +6573,19 @@ int CvCityAI::AI_buildingYieldValue(YieldTypes eYield, BuildingTypes eBuilding, 
 	}
 
 	{
-		int iMod = kBuilding.getYieldModifier(eYield) + GET_TEAM(getTeam()).getBuildingYieldTechModifier(eYield, eBuilding);
-		for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
-		{
-			if (hasBonus((BonusTypes)iI))
-			{
-				iMod += kBuilding.getBonusYieldModifier(iI, eYield);
-				// The §5a vicinity union through its ONE home -- the enabler's active-building supply OR the
-				// context's stored MAP tier, two O(1) fetches. The engine getter this replaces re-derived both
-				// halves PER BONUS PER CANDIDATE: a radius walk plus a sweep of every building.
-				if (kBuilding.getVicinityBonusYieldChanges(iI, eYield) != 0
-				&& EnablerKernel::cityHasVicinityBonus(this, iI, CASC_VIC_OWNED))
-				{
-					iValue += kBuilding.getVicinityBonusYieldChanges(iI, eYield) * 8;
-				}
-			}
-		}
-		if (!isPower() && (kBuilding.isPower() || kBuilding.getPowerBonus() != NO_BONUS && hasBonus((BonusTypes)kBuilding.getPowerBonus())))
+		// ONE valuation read answers the candidate's whole yield-modifier contribution HERE: its compiled
+		// percent sum plus every conditioned entry resolved against this city -- the bonus-gated ones the
+		// per-bonus scan used to walk, and the vicinity-gated ones, evaluated by the ONE evaluator against
+		// the contexts rather than re-derived per bonus per candidate.
+		int aYieldModifiers[NUM_YIELD_TYPES];
+		kBuilding.expectedYieldModifiers(
+			getCityContext(), kOwner.getEmpireContext(), plotGroup(getOwner()), aYieldModifiers);
+
+		int iMod = aYieldModifiers[eYield] / 100 + GET_TEAM(getTeam()).getBuildingYieldTechModifier(eYield, eBuilding);
+
+		// The candidate would switch the city's POWER on, which is not its own deposit but a state flip that
+		// lets the city's power-gated modifier apply. `providesPower` is the authored attribute (json §8).
+		if (!isPower() && kBuilding.providesPower())
 		{
 			iMod += getPowerYieldRateModifier(eYield);
 		}
@@ -12752,9 +12706,16 @@ int CvCityAI::getBuildingCommerceValue(BuildingTypes eBuilding, int iI, int* aiF
 	// Toffer - Hmm, the following code is odd, why not use the AI_buildingYieldValue function?
 
 	//	Factor in yield changes
+	// The candidate's commerce-yield contribution, valued ONCE against this city: the percent side here, the
+	// flat side below. Both fold in every conditioned entry -- including the bonus-gated and vicinity-gated
+	// ones the per-bonus scans below used to walk by hand against keyed tables that no longer exist.
+	int aYieldModifiers[NUM_YIELD_TYPES];
+	kBuilding.expectedYieldModifiers(
+		getCityContext(), kOwner.getEmpireContext(), plotGroup(getOwner()), aYieldModifiers);
+
 	const int iSemiModifiedBase = (
 		getPlotYield(YIELD_COMMERCE) * (
-			kBuilding.getYieldModifier(YIELD_COMMERCE)
+			aYieldModifiers[YIELD_COMMERCE] / 100
 			+ GET_TEAM(getTeam()).getBuildingYieldTechModifier(YIELD_COMMERCE, eBuilding)
 		)
 	);
@@ -12775,32 +12736,28 @@ int CvCityAI::getBuildingCommerceValue(BuildingTypes eBuilding, int iI, int* aiF
 		getBaseYieldRateFromBuilding(YIELD_COMMERCE, eBuilding) * 8 / 100
 	);
 
-	for (int iJ = 0; iJ < GC.getNumBonusInfos(); iJ++)
-	{
-		if (hasBonus((BonusTypes)iJ))
-		{
-			//TB Traits begin
-			iTempValue += (kBuilding.getBonusYieldModifier(iJ, YIELD_COMMERCE) * getBaseYieldRate(YIELD_COMMERCE) / 12);
-			//TB Traits end
-			iTempValue += (kBuilding.getBonusYieldChanges(iJ, YIELD_COMMERCE) * 8);
-			if (kBuilding.getVicinityBonusYieldChanges(iJ, YIELD_COMMERCE) != 0
-			&& EnablerKernel::cityHasVicinityBonus(this, iJ, CASC_VIC_CONNECTED))
-			{
-				iTempValue += (kBuilding.getVicinityBonusYieldChanges(iJ, YIELD_COMMERCE) * 8);
-			}
-		}
-	}
+	// The flat half of that same valuation -- the bonus- and vicinity-gated commerce-yield flats included.
+	// ⚠ Behaviour change, deliberate: the scan this replaces added the bonus-gated MODIFIER a second time
+	// here (weighted by the base rate) after iSemiModifiedBase had already counted the building's own. The
+	// valuation returns one combined percent, so the modifier is counted once, where it belongs.
+	int aFlatYields[NUM_YIELD_TYPES];
+	kBuilding.expectedFlatYields(
+		getCityContext(), kOwner.getEmpireContext(), plotGroup(getOwner()), aFlatYields);
+
+	iTempValue += aFlatYields[YIELD_COMMERCE] * 8 / 100;
 	iTempValue *= GET_PLAYER(getOwner()).getCommercePercent((CommerceTypes)iI);
 	iTempValue /= 100;
 	iResult += iTempValue;
 
-	// add value for a commerce modifier
-	int iCommerceModifier = kBuilding.getCommerceModifier(iI) + GET_TEAM(getTeam()).getBuildingCommerceTechModifier((CommerceTypes)iI, eBuilding);
-
-	for (int iJ = 0; iJ < GC.getNumBonusInfos(); iJ++)
-	{
-		iCommerceModifier += kBuilding.getBonusCommerceModifier(iJ, iI);
-	}
+	// add value for a commerce modifier -- one valuation read for the channel, its bonus-gated entries
+	// resolved against the bonuses this city HAS. The scan this replaces summed the per-bonus table over
+	// EVERY bonus with no possession test at all, so it credited the candidate for resources the city
+	// does not own.
+	const int iCommerceModifier =
+		kBuilding.expectedModifier(
+			infoCommerceFamily((CommerceTypes)iI), CHANNEL_AMOUNT, CASC_UNIT_PERCENT,
+			getCityContext(), kOwner.getEmpireContext(), plotGroup(getOwner())) / 100
+		+ GET_TEAM(getTeam()).getBuildingCommerceTechModifier((CommerceTypes)iI, eBuilding);
 
 	if (aiBaseCommerceRate[iI] == MAX_INT)
 	{

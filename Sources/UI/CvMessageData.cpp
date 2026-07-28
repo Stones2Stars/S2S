@@ -1672,25 +1672,25 @@ void CvNetChooseMergeUnit::Debug(char* szAddendum)
 namespace NetChooseMergeUnit {
 	bool isGroupUpgradePromotion(const CvUnit* unit, PromotionTypes promotion)
 	{
-		return GC.getPromotionInfo(promotion).getGroupChange() > 0 &&
+		return GC.getPromotionInfo(promotion).getSizeMatters().group > 0 &&
 			(unit->canAcquirePromotion(promotion, PromotionRequirements::Promote | PromotionRequirements::ForOffset) || unit->canAcquirePromotion(promotion));
 	}
 
 	bool isGroupDowngradePromotion(const CvUnit* unit, PromotionTypes promotion)
 	{
-		return GC.getPromotionInfo(promotion).getGroupChange() < 0 &&
+		return GC.getPromotionInfo(promotion).getSizeMatters().group < 0 &&
 			(unit->canAcquirePromotion(promotion, PromotionRequirements::Promote | PromotionRequirements::ForOffset) || unit->canAcquirePromotion(promotion));
 	}
 
 	bool isQualityUpgradePromotion(const CvUnit* unit, PromotionTypes promotion)
 	{
-		return GC.getPromotionInfo(promotion).getQualityChange() > 0 &&
+		return GC.getPromotionInfo(promotion).getSizeMatters().quality > 0 &&
 			(unit->canAcquirePromotion(promotion, PromotionRequirements::Promote | PromotionRequirements::ForOffset) || unit->canAcquirePromotion(promotion));
 	}
 
 	bool isQualityDowngradePromotion(const CvUnit* unit, PromotionTypes promotion)
 	{
-		return GC.getPromotionInfo(promotion).getQualityChange() < 0 &&
+		return GC.getPromotionInfo(promotion).getSizeMatters().quality < 0 &&
 			(unit->canAcquirePromotion(promotion, PromotionRequirements::Promote | PromotionRequirements::ForOffset) || unit->canAcquirePromotion(promotion));
 	}
 }
@@ -1735,11 +1735,14 @@ void CvNetChooseMergeUnit::Execute()
 			for (int iI = 0; iI < GC.getNumPromotionInfos(); iI++)
 			{
 				PromotionTypes ePromotion = ((PromotionTypes)iI);
-				if (GC.getPromotionInfo(ePromotion).getGroupChange() == 0 && GC.getPromotionInfo(ePromotion).getQualityChange() == 0)
+				const CvPromotionInfo& kPromotion = GC.getPromotionInfo(ePromotion);
+				const int iGroupChange = kPromotion.getSizeMatters().group;
+				const int iQualityChange = kPromotion.getSizeMatters().quality;
+				if (iGroupChange == 0 && iQualityChange == 0)
 				{
 					if (pUnit1->isHasPromotion(ePromotion) || pUnit2->isHasPromotion(ePromotion) || pUnit3->isHasPromotion(ePromotion))
 					{
-						if (GC.getPromotionInfo(ePromotion).isLeader())
+						if (kPromotion.isLeader())
 						{
 							pkMergedUnit->setHasPromotion(ePromotion, true, true);
 						}
@@ -1754,18 +1757,18 @@ void CvNetChooseMergeUnit::Execute()
 						}
 					}
 				}
-				else if (GC.getPromotionInfo(ePromotion).getQualityChange() != 0)
+				else if (iQualityChange != 0)
 				{
 					if (pUnit1->isHasPromotion(ePromotion) || pUnit2->isHasPromotion(ePromotion) || pUnit3->isHasPromotion(ePromotion))
 					{
-						iTotalQualityOffset += GC.getPromotionInfo(ePromotion).getQualityChange();
+						iTotalQualityOffset += iQualityChange;
 					}
 				}
-				else if (GC.getPromotionInfo(ePromotion).getGroupChange() != 0)
+				else if (iGroupChange != 0)
 				{
 					if (pUnit1->isHasPromotion(ePromotion) || pUnit2->isHasPromotion(ePromotion) || pUnit3->isHasPromotion(ePromotion))
 					{
-						iTotalGroupOffset += GC.getPromotionInfo(ePromotion).getGroupChange();
+						iTotalGroupOffset += iGroupChange;
 					}
 				}
 			}
@@ -1872,11 +1875,14 @@ void CvNetConfirmSplitUnit::Execute()
 			for (int iI = 0; iI < GC.getNumPromotionInfos(); iI++)
 			{
 				PromotionTypes ePromotion = ((PromotionTypes)iI);
-				if (GC.getPromotionInfo(ePromotion).getGroupChange() == 0 && GC.getPromotionInfo(ePromotion).getQualityChange() == 0)
+				const CvPromotionInfo& kPromotion = GC.getPromotionInfo(ePromotion);
+				const int iGroupChange = kPromotion.getSizeMatters().group;
+				const int iQualityChange = kPromotion.getSizeMatters().quality;
+				if (iGroupChange == 0 && iQualityChange == 0)
 				{
 					if (pUnit0->isHasPromotion(ePromotion))
 					{
-						if (GC.getPromotionInfo(ePromotion).isLeader())
+						if (kPromotion.isLeader())
 						{
 							pUnit1->setHasPromotion(ePromotion, true, true);
 						}
@@ -1893,18 +1899,18 @@ void CvNetConfirmSplitUnit::Execute()
 					}
 					// Must include an adjustment here when equipments are able to be inventoried - Shouldn't just lose the 2nd and 3rd unit's equipment.
 				}
-				else if (GC.getPromotionInfo(ePromotion).getQualityChange() != 0)
+				else if (iQualityChange != 0)
 				{
 					if (pUnit0->isHasPromotion(ePromotion))
 					{
-						iTotalQualityOffset += GC.getPromotionInfo((PromotionTypes)iI).getQualityChange();
+						iTotalQualityOffset += iQualityChange;
 					}
 				}
-				else if (GC.getPromotionInfo(ePromotion).getGroupChange() != 0)
+				else if (iGroupChange != 0)
 				{
 					if (pUnit0->isHasPromotion(ePromotion))
 					{
-						iTotalGroupOffset += GC.getPromotionInfo((PromotionTypes)iI).getGroupChange();
+						iTotalGroupOffset += iGroupChange;
 					}
 				}
 			}

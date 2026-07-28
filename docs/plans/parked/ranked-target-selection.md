@@ -38,11 +38,54 @@ Ranking is a *selection/threshold* concern, not a yes/no state query — and it 
   recognizes `rankedBy` on a plural target and the cascade ranks the in-scope objects by the metric, selecting the
   top-N. One place, general for all future ranking metrics.
 
-## Open / to formulate
-- Exact key spelling (`rankedBy` vs `orderBy`), metric token names, and whether `min:` gets a symmetric "bottom-N".
-- How `N = TargetNumCities` is expressed (world token) + the `/state` emission of it.
-- The cascade selection mechanism (rank the empire's cities by the metric at projection) + parity tiebreak vs
-  engine `findPopulationRank`.
+## ⚖ ONE ORDERING MECHANISM, USED EVERYWHERE (owner)
+
+**"There is no reason why we can't use the same sorting/filtering in all places."** The ranked TARGET selection
+here and the BUILD-LIST UI's filter/sort are the same operation — *order a set of objects by a named metric,
+optionally keep the top N* — so they are ONE implementation with one extensible metric registry, not two
+([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation)). json.md §3.3 already
+calls the metric set "an extensible registry", so this is the registry being taken at its word rather than a new
+concept.
+
+⚑ **The one real difference to design for, and it is not a blocker:** a metric is either a PROPERTY of an object
+that already exists (`CITY_SIZE` = population — the ranked-target case) or a VALUATION of a candidate that does
+not exist yet (what a building would give me — the build-list case, answered by `expected*` through
+[CvBuildListValuation](../../../Sources/UI/CvBuildListValuation.h)). Both are "metric(object) -> int"; only the
+source differs. The registry must therefore be keyed by metric, not assume an intrinsic read.
+
+⛔ Do NOT build a second ordering step for the UI. If the UI's sort needs a metric the registry lacks, ADD THE
+METRIC — that is the extension point.
+
+⚖ **THE CONTRACT IS SET-IN → SET-OUT (owner):** *"it is full set in -> filtered or sorted out."* The operation
+takes the FULL candidate set and returns the narrowed/ordered one; it does not iterate a database, does not know
+what produced the set, and does not know who consumes the result. That is what lets one implementation serve
+both callers, because both already hold a full set:
+
+- the **enabler frontier** hands out exactly that — `getAvailableBuildings` / `getAvailableUnits` /
+  `getAvailableTechs` fill a caller-owned `std::vector<int>` ([enabler.md §8](../../specs/enabler.md)); the
+  build list passes it straight in;
+- the **modifier's plural target** resolves the in-scope objects (the empire's cities) and passes those in.
+
+⚑ Consequence worth stating, because it decides the signature: the set element is an ID, and the metric is what
+knows how to score an id. So the surface is `(set, metric, ordering, max)` in and a set out — never a
+per-call-site comparator, and never a bespoke overload per object kind.
+
+## What is BUILT vs what is LEFT
+
+**Built:** the authoring vocabulary and the whole PARSE side. The curators emit it
+(`curate_civic.py` / `curate_trait.py` write `max: "TARGET_NUM_CITIES"` + `orderedByDescending: "CITY_SIZE"`),
+civics carry it in `Assets/Data`, and the compiled `CvModEntry` retains it (`orderedBySeg`, `rankMaxToken`)
+through the reverse pass. Spelling is SETTLED — `orderedBy` / `orderedByDescending` (json.md §3.3); the earlier
+`rankedBy` working name is dead and any remaining use above is stale wording, not an open question.
+
+**Left:**
+- The SELECTION step itself — rank the in-scope objects by the metric and keep the top N, at the ONE parse/
+  projection hook, shared with the UI per the ruling above.
+- The metric REGISTRY (`CITY_SIZE` first; the build-list valuation metrics join it).
+- `TARGET_NUM_CITIES` as a resolvable world token — `CvWorldInfo::getTargetNumCities` exists as info data but the
+  token is not emitted on `/state`, so a ranked entry currently applies UNRANKED.
+- Whether `min:` gets a symmetric "bottom-N", and the tiebreak against engine `findPopulationRank` for the
+  largestCity-happiness parity case.
 
 ## Related
 - [DEC-conditions-are-predicates](../../architecture/decisions.md#dec-conditions-are-predicates) — the invention sweep this unblocks (`largestCity`).

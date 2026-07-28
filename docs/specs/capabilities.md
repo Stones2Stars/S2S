@@ -130,25 +130,28 @@ gates anything.
 > (rulings above). `moveOnWater` is DROPPED (exists in neither data nor engine; `canWorkOn.water` is the
 > water-working ability, a different thing).
 
-| capability (canonical) | was (emitted) | legacy source | meaning |
-|---|---|---|---|
-| `canFoundOnPeaks` | `canFoundOnPeaks` | `bCanFoundOnPeaks` (TECH_ALGEBRA) | can found cities on peak tiles |
-| `canPassPeaks` | `canPassPeaks` | `bCanPassPeaks` (TECH_MOUNTAINEERING) | move through peaks — **dual-plane** with the unit skill (ruling above) |
-| `canMoveFastOnPeaks` | `moveFastPeaks` | `bMoveFastPeaks` (TECH_COLONIALISM) | faster movement over peaks |
-| `canFarmDesert` | `desertFarming` | `bEnablesDesertFarming` | can farm desert tiles |
-| `canSpreadIrrigation` | `irrigation` | `bIrrigation` | irrigation spreads / chains from fresh water |
-| `canIgnoreIrrigation` | `ignoreIrrigation` | `bIgnoreIrrigation` | farms work without an irrigation chain |
-| `canBuildBridges` | `bridgeBuilding` | `bBridgeBuilding` | roads cross rivers |
-| `hasRiverTrade` | `riverTrade` | `bRiverTrade` | a river acts as a trade ROAD (conduit — ruling above) |
-| `canRebaseAnywhere` | `rebaseAnywhere` | tech flag | air units may rebase to any friendly plot |
-| `canSeeFurtherFromWater` | `extraWaterSeeFrom` | `bExtraWaterSeeFrom` | see FROM water plots one level higher (`CvPlot::seeFromLevel`) |
-| `hasCenteredMap` | `mapCentering` | `bMapCentering` (TECH_GEOMETRY — the SOLE authoring; the building-side tag is schema-only, data-dead) | minimap centered on your civ + round-globe view; arrive-and-stay latch ≡ derived (tech-only grantor) |
-| `hasWholeMapRevealed` | `mapVisible` | `bMapVisible` | reveals the ENTIRE map on acquire (`setRevealedPlots`, `CvTeam.cpp:5292`) |
-| `hasLanguage` | `language` | `bLanguage` (TECH_LANGUAGE) | civ has developed language — gates `needLanguage` heritages (`CvPlayer.cpp:30970`) |
-| `canSetScienceRate` | `setScienceRate` | commerce-flexible (TECH_GAME_START) | the science slider |
-| `canSetCultureRate` | `setCultureRate` | commerce-flexible (TECH_DRAMA) | the culture slider |
-| `canSetEspionageRate` | `setEspionageRate` | commerce-flexible (TECH_GAME_START) | the espionage slider |
-| ~~`dcmAirBomb1` / `dcmAirBomb2`~~ | same | `bDCMAirBombTech1/2` | DCM air-bomb target tiers — **MOOT: DCM air bombing is slated for whole-system REMOVAL** ([structural-cleanup.md](../plans/structural-cleanup/todo.md) Tier 2); the channels drop with it |
+**The name below IS the authored key** — the curated data emits these spellings verbatim, so a consumer reads
+the block by this string and nothing translates.
+
+| capability | legacy source | meaning |
+|---|---|---|
+| `canFoundOnPeaks` | `bCanFoundOnPeaks` (TECH_ALGEBRA) | can found cities on peak tiles |
+| `canPassPeaks` | `bCanPassPeaks` (TECH_MOUNTAINEERING) | move through peaks — **dual-plane** with the unit skill (ruling above) |
+| `canMoveFastOnPeaks` | `bMoveFastPeaks` (TECH_COLONIALISM) | faster movement over peaks |
+| `canFarmDesert` | `bEnablesDesertFarming` | can farm desert tiles |
+| `canSpreadIrrigation` | `bIrrigation` | irrigation spreads / chains from fresh water |
+| `canIgnoreIrrigation` | `bIgnoreIrrigation` | farms work without an irrigation chain |
+| `canBuildBridges` | `bBridgeBuilding` | roads cross rivers |
+| `hasRiverTrade` | `bRiverTrade` | a river acts as a trade ROAD (conduit — ruling above) |
+| `canRebaseAnywhere` | tech flag | air units may rebase to any friendly plot |
+| `canSeeFurtherFromWater` | `bExtraWaterSeeFrom` | see FROM water plots one level higher (`CvPlot::seeFromLevel`) |
+| `hasCenteredMap` | `bMapCentering` (TECH_GEOMETRY — the SOLE authoring; the building-side tag is schema-only, data-dead) | minimap centered on your civ + round-globe view; arrive-and-stay latch ≡ derived (tech-only grantor) |
+| `hasWholeMapRevealed` | `bMapVisible` | reveals the ENTIRE map on acquire (`setRevealedPlots`, `CvTeam.cpp:5292`) |
+| `hasLanguage` | `bLanguage` (TECH_LANGUAGE) | civ has developed language — gates `needLanguage` heritages (`CvPlayer.cpp:30970`) |
+| `canSetScienceRate` | commerce-flexible (TECH_GAME_START) | the science slider |
+| `canSetCultureRate` | commerce-flexible (TECH_DRAMA) | the culture slider |
+| `canSetEspionageRate` | commerce-flexible (TECH_GAME_START) | the espionage slider |
+| ~~`dcmAirBomb1` / `dcmAirBomb2`~~ | `bDCMAirBombTech1/2` | DCM air-bomb target tiers — **MOOT: DCM air bombing is slated for whole-system REMOVAL** ([structural-cleanup.md](../plans/structural-cleanup/todo.md) Tier 2); the channels drop with it, and they are still authored until then |
 
 ## Grounded meanings
 

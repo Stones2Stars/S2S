@@ -11,6 +11,7 @@
 //
 
 #include "CvInfo.h"
+#include "CvClassificationBlock.h"   // the §8 held-boolean block + CLS_HAS
 #include <map>
 
 class CvBuildingInfo : public CvInfo
@@ -35,6 +36,9 @@ public:
 	// What the building HAS (held city-scope intrinsics: nukeImmune, zoneOfControl, governmentCenter, ...).
 	bool hasAttribute(int iAttributeId) const { return m_attributes.hasId(iAttributeId); }
 	bool hasAttributes() const                { return !m_attributes.isEmpty(); }
+	// The named reads over that bitset, one per authored key a consumer asks for BY MEANING (the
+	// patterns.md exemplar: a coherent read over the JSON-derived structure, never a legacy scalar).
+	bool providesPower() const CLS_HAS(m_attributes, CLSD_ATTRIBUTE, "providesPower")
 	// What the building PROVIDES to the empire (grantor-provided capabilities: setCultureRate, ...).
 	bool providesCapability(int iCapabilityId) const { return m_capabilities.hasId(iCapabilityId); }
 	bool providesCapabilities() const                { return !m_capabilities.isEmpty(); }

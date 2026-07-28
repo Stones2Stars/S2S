@@ -1129,6 +1129,12 @@ public:
 	int getUnitCountPlusMaking(const UnitTypes eUnit) const;
 
 	int getBuildingCount(BuildingTypes eIndex) const;
+	// WHICH buildings the empire holds, not merely how many of one. The per-type count answers a point
+	// question; a consumer asking "what do I have" had no aggregate and swept all ~5,200 ids testing
+	// count > 0 ([tally.md]: give the OBJECT the accessor, never a side-store). DERIVED, never serialized:
+	// maintained by the ONE `changeBuildingCount` choke point and rebuilt by the load reseed, the same shape
+	// `CvCity::getHasBuildings` already has at city scope.
+	const std::vector<BuildingTypes>& getHasBuildings() const { return m_heldBuildings; }
 	int getBuildingGroupCount(SpecialBuildingTypes eIndex) const;
 	bool isBuildingMaxedOut(BuildingTypes eIndex, int iExtra = 0) const;
 	bool isBuildingGroupMaxedOut(SpecialBuildingTypes eIndex, int iExtra = 0) const;
@@ -2096,6 +2102,10 @@ protected:
 	int** m_paiExtraBuildingYield;
 	int** m_paiExtraBuildingCommerce;
 	int* m_paiBuildingCount;
+	// The ENUMERABLE half of the count above: which building types the empire currently holds at all.
+	// DERIVED, never serialized -- maintained by `changeBuildingCount` at its 0<->held crossings and rebuilt
+	// by the load reseed, exactly as `CvCity::m_hasBuildings` is at city scope.
+	std::vector<BuildingTypes> m_heldBuildings;
 	int* m_paiBuildingGroupCount;
 	int* m_paiBuildingGroupMaking;
 	int* m_paiHurryCount;
