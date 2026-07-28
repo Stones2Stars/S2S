@@ -5394,8 +5394,12 @@ bool CvPlayer::canTradeItem(PlayerTypes eWhoTo, TradeData item, bool bTestDenial
 		{
 			FAssertMsg(item.m_iData >= 0, "item.m_iData is expected to be non-negative (invalid Index)");
 
+			// ⚠ The per-tech tradability flag is GONE from the infos and its replacement is not wired: a tech's
+			// own tradability belongs in its `canTrade` block ([capabilities.md]), which the `tradeable` re-home
+			// still owes. The clause is deleted rather than kept dangling, so the gap shows as an over-permissive
+			// offer instead of legacy quietly answering ([DEC-no-legacy-masking]); the empire-level
+			// isTechTrading() capability and the NoTradeTech list below still bound it.
 			if (!GC.getGame().isOption(GAMEOPTION_NO_TECH_TRADING)
-			&& GC.getTechInfo((TechTypes)item.m_iData).isTrade()
 			&& GET_TEAM(getTeam()).isHasTech((TechTypes)item.m_iData)
 			&& !GET_TEAM(getTeam()).isNoTradeTech((TechTypes)item.m_iData)
 			&& !GET_TEAM(GET_PLAYER(eWhoTo).getTeam()).isHasTech((TechTypes)item.m_iData)

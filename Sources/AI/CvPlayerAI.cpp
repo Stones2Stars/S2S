@@ -1138,8 +1138,15 @@ void CvPlayerAI::AI_doPeace()
 					{
 						int iBestValue = 0;
 
-						for (int iJ = 0; iJ < GC.getNumTechInfos(); iJ++)
+						// A tech is tradable only if it is LISTED on the RECEIVER's frontier -- canTradeItem's own last
+						// clause. So the frontier IS the candidate set; probing all ~943 techs to rediscover it is the
+						// whole-database sweep enabler.md §6 deletes, and it leans on legacy gates that are going away.
+						std::vector<int> tradableTechs;
+						getAvailableTechs(tradableTechs);
+
+						for (size_t iAt = 0; iAt < tradableTechs.size(); ++iAt)
 						{
+							const int iJ = tradableTechs[iAt];
 							setTradeItem(&item, TRADE_TECHNOLOGIES, iJ);
 
 							if (GET_PLAYER((PlayerTypes)iI).canTradeItem(getID(), item, true))
@@ -1202,8 +1209,15 @@ void CvPlayerAI::AI_doPeace()
 					{
 						int iBestValue = 0;
 
-						for (int iJ = 0; iJ < GC.getNumTechInfos(); iJ++)
+						// A tech is tradable only if it is LISTED on the RECEIVER's frontier -- canTradeItem's own last
+						// clause. So the frontier IS the candidate set; probing all ~943 techs to rediscover it is the
+						// whole-database sweep enabler.md §6 deletes, and it leans on legacy gates that are going away.
+						std::vector<int> tradableTechs;
+						GET_PLAYER((PlayerTypes)iI).getAvailableTechs(tradableTechs);
+
+						for (size_t iAt = 0; iAt < tradableTechs.size(); ++iAt)
 						{
+							const int iJ = tradableTechs[iAt];
 							setTradeItem(&item, TRADE_TECHNOLOGIES, iJ);
 
 							if (canTradeItem(((PlayerTypes)iI), item, true))
@@ -17774,8 +17788,15 @@ void CvPlayerAI::AI_doDiplo()
 			if (GET_PLAYER((PlayerTypes)iI).isAlive() && iI != getID()
 			&& canContact((PlayerTypes)iI) && AI_isWillingToTalk((PlayerTypes)iI))
 			{
-				for (int iJ = 0; iJ < GC.getNumTechInfos(); iJ++)
+				// A tech is tradable only if it is LISTED on the RECEIVER's frontier -- canTradeItem's own last
+				// clause. So the frontier IS the candidate set; probing all ~943 techs to rediscover it is the
+				// whole-database sweep enabler.md §6 deletes, and it leans on legacy gates that are going away.
+				std::vector<int> tradableTechs;
+				getAvailableTechs(tradableTechs);
+
+				for (size_t iAt = 0; iAt < tradableTechs.size(); ++iAt)
 				{
+					const int iJ = tradableTechs[iAt];
 					setTradeItem(&item, TRADE_TECHNOLOGIES, iJ);
 
 					if (GET_PLAYER((PlayerTypes)iI).canTradeItem(getID(), item, true))
@@ -17988,8 +18009,15 @@ void CvPlayerAI::AI_doDiplo()
 					// Don't give techs for free to advanced vassals ...
 					if (GET_PLAYER((PlayerTypes)iI).getTechScore() * 10 < getTechScore() * 9)
 					{
-						for (int iJ = 0; iJ < GC.getNumTechInfos(); iJ++)
+						// A tech is tradable only if it is LISTED on the RECEIVER's frontier -- canTradeItem's own last
+						// clause. So the frontier IS the candidate set; probing all ~943 techs to rediscover it is the
+						// whole-database sweep enabler.md §6 deletes, and it leans on legacy gates that are going away.
+						std::vector<int> tradableTechs;
+						GET_PLAYER((PlayerTypes)iI).getAvailableTechs(tradableTechs);
+
+						for (size_t iAt = 0; iAt < tradableTechs.size(); ++iAt)
 						{
+							const int iJ = tradableTechs[iAt];
 							if (GET_TEAM(getTeam()).AI_techTrade((TechTypes)iJ, GET_PLAYER((PlayerTypes)iI).getTeam()) == NO_DENIAL)
 							{
 								setTradeItem(&item, TRADE_TECHNOLOGIES, iJ);
@@ -18401,8 +18429,15 @@ void CvPlayerAI::AI_doDiplo()
 								iBestValue = 0;
 								eBestGiveTech = NO_TECH;
 
-								for (int iJ = 0; iJ < GC.getNumTechInfos(); iJ++)
+								// A tech is tradable only if it is LISTED on the RECEIVER's frontier -- canTradeItem's own last
+								// clause. So the frontier IS the candidate set; probing all ~943 techs to rediscover it is the
+								// whole-database sweep enabler.md §6 deletes, and it leans on legacy gates that are going away.
+								std::vector<int> tradableTechs;
+								GET_PLAYER((PlayerTypes)iI).getAvailableTechs(tradableTechs);
+
+								for (size_t iAt = 0; iAt < tradableTechs.size(); ++iAt)
 								{
+									const int iJ = tradableTechs[iAt];
 									setTradeItem(&item, TRADE_TECHNOLOGIES, iJ);
 
 									if (canTradeItem((PlayerTypes)iI, item, true))
@@ -18466,9 +18501,14 @@ void CvPlayerAI::AI_doDiplo()
 									iBestValue = 0;
 									eBestReceiveTech = NO_TECH;
 
-									for (int iJ = 0; iJ < GC.getNumTechInfos(); iJ++)
+									// The receivable set is OUR frontier (canTradeItem's own last clause), not the
+									// tech database; the random start is kept so the pick is not id-ordered.
+									std::vector<int> tradableTechs;
+									getAvailableTechs(tradableTechs);
+
+									for (size_t iAt = 0; iAt < tradableTechs.size(); ++iAt)
 									{
-										TechTypes eCandidateTech = (TechTypes)((iRandomTechChoiceSeed + iJ) % GC.getNumTechInfos());
+										const TechTypes eCandidateTech = static_cast<TechTypes>(tradableTechs[(static_cast<size_t>(iRandomTechChoiceSeed) + iAt) % tradableTechs.size()]);
 										setTradeItem(&item, TRADE_TECHNOLOGIES, eCandidateTech);
 
 										if (GET_PLAYER((PlayerTypes)iI).canTradeItem(getID(), item, true))
@@ -18566,8 +18606,15 @@ void CvPlayerAI::AI_doDiplo()
 									iBestValue = 0;
 									eBestReceiveTech = NO_TECH;
 
-									for (int iJ = 0; iJ < GC.getNumTechInfos(); iJ++)
+									// A tech is tradable only if it is LISTED on the RECEIVER's frontier -- canTradeItem's own last
+									// clause. So the frontier IS the candidate set; probing all ~943 techs to rediscover it is the
+									// whole-database sweep enabler.md §6 deletes, and it leans on legacy gates that are going away.
+									std::vector<int> tradableTechs;
+									getAvailableTechs(tradableTechs);
+
+									for (size_t iAt = 0; iAt < tradableTechs.size(); ++iAt)
 									{
+										const int iJ = tradableTechs[iAt];
 										setTradeItem(&item, TRADE_TECHNOLOGIES, iJ);
 
 										if (GET_PLAYER((PlayerTypes)iI).canTradeItem(getID(), item, true)
@@ -18752,9 +18799,14 @@ void CvPlayerAI::AI_doDiplo()
 									iBestValue = 0;
 									eBestReceiveTech = NO_TECH;
 
-									for (int iJ = 0; iJ < GC.getNumTechInfos(); iJ++)
+									// The tradable set is the RECEIVER's frontier -- canTradeItem's own last clause -- so it is read,
+									// never rediscovered by probing every tech in the database.
+									std::vector<int> tradableTechs;
+									getAvailableTechs(tradableTechs);
+
+									for (size_t iAt = 0; iAt < tradableTechs.size(); ++iAt)
 									{
-										TechTypes eCandidateTech = (TechTypes)((iRandomTechChoiceSeed + iJ) % GC.getNumTechInfos());
+										const TechTypes eCandidateTech = static_cast<TechTypes>(tradableTechs[(static_cast<size_t>(iRandomTechChoiceSeed) + iAt) % tradableTechs.size()]);
 										setTradeItem(&item, TRADE_TECHNOLOGIES, eCandidateTech);
 
 										if (GET_PLAYER((PlayerTypes)iI).canTradeItem(getID(), item, true))
@@ -18776,9 +18828,14 @@ void CvPlayerAI::AI_doDiplo()
 										iBestValue = 0;
 										eBestGiveTech = NO_TECH;
 
-										for (int iJ = 0; iJ < GC.getNumTechInfos(); iJ++)
+										// The tradable set is the RECEIVER's frontier -- canTradeItem's own last clause -- so it is read,
+										// never rediscovered by probing every tech in the database.
+										std::vector<int> tradableTechs;
+										GET_PLAYER((PlayerTypes)iI).getAvailableTechs(tradableTechs);
+
+										for (size_t iAt = 0; iAt < tradableTechs.size(); ++iAt)
 										{
-											TechTypes eCandidateTech = (TechTypes)((iRandomTechChoiceSeed + iJ) % GC.getNumTechInfos());
+											const TechTypes eCandidateTech = static_cast<TechTypes>(tradableTechs[(static_cast<size_t>(iRandomTechChoiceSeed) + iAt) % tradableTechs.size()]);
 											setTradeItem(&item, TRADE_TECHNOLOGIES, eCandidateTech);
 
 											if (canTradeItem(((PlayerTypes)iI), item, true))
@@ -18964,8 +19021,14 @@ void CvPlayerAI::AI_doDiplo()
 									iBestValue = 0;
 									eBestGiveTech = NO_TECH;
 
-									for (int iJ = 0; iJ < GC.getNumTechInfos(); iJ++)
+									// The tradable set is the RECEIVER's frontier -- canTradeItem's own last clause -- so it is read,
+									// never rediscovered by probing every tech in the database.
+									std::vector<int> tradableTechs;
+									GET_PLAYER((PlayerTypes)iI).getAvailableTechs(tradableTechs);
+
+									for (size_t iAt = 0; iAt < tradableTechs.size(); ++iAt)
 									{
+										const int iJ = tradableTechs[iAt];
 										setTradeItem(&item, TRADE_TECHNOLOGIES, iJ);
 
 										if (canTradeItem((PlayerTypes)iI, item, true))
@@ -19172,8 +19235,14 @@ void CvPlayerAI::AI_doDiplo()
 											iBestValue = 0;
 											eBestGiveTech = NO_TECH;
 
-											for (int iJ = 0; iJ < GC.getNumTechInfos(); iJ++)
+											// The tradable set is the RECEIVER's frontier -- canTradeItem's own last clause -- so it is read,
+											// never rediscovered by probing every tech in the database.
+											std::vector<int> tradableTechs;
+											GET_PLAYER((PlayerTypes)iI).getAvailableTechs(tradableTechs);
+
+											for (size_t iAt = 0; iAt < tradableTechs.size(); ++iAt)
 											{
+												const int iJ = tradableTechs[iAt];
 												setTradeItem(&item, TRADE_TECHNOLOGIES, iJ);
 
 												if (canTradeItem((PlayerTypes)iI, item, true))
@@ -19665,8 +19734,14 @@ void CvPlayerAI::AI_doDiplo()
 									int iBestValue = 0;
 									if (iNumTradableUnits > 0)
 									{
-										for (int iJ = 0; iJ < GC.getNumTechInfos(); iJ++)
+										// The tradable set is the RECEIVER's frontier -- canTradeItem's own last clause -- so it is read,
+										// never rediscovered by probing every tech in the database.
+										std::vector<int> tradableTechs;
+										GET_PLAYER((PlayerTypes)iI).getAvailableTechs(tradableTechs);
+
+										for (size_t iAt = 0; iAt < tradableTechs.size(); ++iAt)
 										{
+											const int iJ = tradableTechs[iAt];
 											setTradeItem(&item, TRADE_TECHNOLOGIES, iJ);
 
 											if (canTradeItem((PlayerTypes)iI, item, true))
@@ -20006,8 +20081,14 @@ void CvPlayerAI::AI_doDiplo()
 									iBestValue = 0;
 									eBestGiveTech = NO_TECH;
 
-									for (int iJ = 0; iJ < GC.getNumTechInfos(); iJ++)
+									// The tradable set is the RECEIVER's frontier -- canTradeItem's own last clause -- so it is read,
+									// never rediscovered by probing every tech in the database.
+									std::vector<int> tradableTechs;
+									GET_PLAYER((PlayerTypes)iI).getAvailableTechs(tradableTechs);
+
+									for (size_t iAt = 0; iAt < tradableTechs.size(); ++iAt)
 									{
+										const int iJ = tradableTechs[iAt];
 										setTradeItem(&item, TRADE_TECHNOLOGIES, iJ);
 
 										if (canTradeItem((PlayerTypes)iI, item, true))
@@ -20047,8 +20128,14 @@ void CvPlayerAI::AI_doDiplo()
 
 									if ((iTheirValue < iOurValue) && (eBestGiveTech != NO_TECH))
 									{
-										for (int iJ = 0; iJ < GC.getNumTechInfos(); iJ++)
+										// The tradable set is the RECEIVER's frontier -- canTradeItem's own last clause -- so it is read,
+										// never rediscovered by probing every tech in the database.
+										std::vector<int> tradableTechs;
+										GET_PLAYER((PlayerTypes)iI).getAvailableTechs(tradableTechs);
+
+										for (size_t iAt = 0; iAt < tradableTechs.size(); ++iAt)
 										{
+											const int iJ = tradableTechs[iAt];
 											if (iJ != eBestGiveTech)
 											{
 												setTradeItem(&item, TRADE_TECHNOLOGIES, iJ);
