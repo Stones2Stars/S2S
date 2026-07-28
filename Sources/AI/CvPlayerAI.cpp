@@ -4138,6 +4138,45 @@ int64_t CvPlayerAI::AI_goldTarget() const
 	return iGold + AI_getExtraGoldTarget();
 }
 
+// THE RESEARCH CANDIDATE WALK (enabler.md §6) -- the ONE place a tech search builds its candidate set.
+// It starts at the enabler's LISTED techs (what is researchable NOW) and follows `leadsTo`, the load-built
+// forward index naming the techs that list a tech as their prereq, one hop per step out to iWalkDepth. It
+// replaces reading the whole tech database and computing a path length for every entry.
+// ⚑ Hop depth <= findPathLength BY CONSTRUCTION: every tech on a shortest path is reached by following leadsTo
+// from its own prereq. So the set is a SUPERSET of what a path-length test keeps -- it drops no candidate a
+// database sweep would have found, and findBestPath still resolves the real path and cost per candidate.
+void CvPlayerAI::AI_walkResearchFrontier(int iWalkDepth, std::set<int>& candidateTechs) const
+{
+	PROFILE_EXTRA_FUNC();
+
+	const CvTeam& kTeam = GET_TEAM(getTeam());
+
+	std::vector<int> researchableNow;
+	m_enabler.techs.listedIds(researchableNow);
+
+	candidateTechs.clear();
+	candidateTechs.insert(researchableNow.begin(), researchableNow.end());
+
+	std::vector<int> walkWave(researchableNow.begin(), researchableNow.end());
+
+	for (int iWalkStep = 1; iWalkStep < iWalkDepth && !walkWave.empty(); ++iWalkStep)
+	{
+		std::vector<int> nextWave;
+
+		for (size_t iAt = 0; iAt < walkWave.size(); ++iAt)
+		{
+			foreach_(const TechTypes eLeadsTo, GC.getTechInfo(static_cast<TechTypes>(walkWave[iAt])).getLeadsToTechs())
+			{
+				if (!kTeam.isHasTech(eLeadsTo) && candidateTechs.insert((int)eLeadsTo).second)
+				{
+					nextWave.push_back((int)eLeadsTo);
+				}
+			}
+		}
+		walkWave.swap(nextWave);
+	}
+}
+
 TechTypes CvPlayerAI::AI_bestTech(int iMaxPathLength, bool bIgnoreCost, bool bAsync, TechTypes eIgnoreTech, AdvisorTypes eIgnoreAdvisor)
 {
 	PROFILE("CvPlayerAI::AI_bestTech");
@@ -4215,14 +4254,20 @@ TechTypes CvPlayerAI::AI_bestTech(int iMaxPathLength, bool bIgnoreCost, bool bAs
 	bool beeLine = false;
 	int beeLineThreshold;
 
+	// The candidates are WALKED OUTWARD FROM THE FRONTIER, never read off the whole tech database. iMaxPathLength
+	// IS the AI's research search depth (hardcoded 3 today, an AI variable later), so it bounds the walk and
+	// every test below -- nothing is scored deeper than the AI is configured to look.
+	std::set<int> candidateTechs;
+	AI_walkResearchFrontier(iMaxPathLength, candidateTechs);
+
 	do
 	{
-		for (int iI = 0; iI < GC.getNumTechInfos(); iI++)
+		for (std::set<int>::const_iterator itCandidate = candidateTechs.begin(); itCandidate != candidateTechs.end(); ++itCandidate)
 		{
-			if (eIgnoreTech == NO_TECH || iI != eIgnoreTech)
-			{
-				const TechTypes eTechX = static_cast<TechTypes>(iI);
+			const TechTypes eTechX = static_cast<TechTypes>(*itCandidate);
 
+			if (eIgnoreTech == NO_TECH || eTechX != eIgnoreTech)
+			{
 				if ((eIgnoreAdvisor == NO_ADVISOR || GC.getTechInfo(eTechX).getAdvisorType() != eIgnoreAdvisor)
 				&& (canEverResearch(eTechX))
 				&& GC.getTechInfo(eTechX).getEra() <= getCurrentEra() + 1)
@@ -4235,7 +4280,12 @@ TechTypes CvPlayerAI::AI_bestTech(int iMaxPathLength, bool bIgnoreCost, bool bAs
 					{
 						bValid = iPathLength <= iMaxPathLength;
 					}
-					else if (iPathLength > iMaxPathLength && iPathLength <= iMaxPathLength * 7)
+					// ⛔ THE BEELINE NO LONGER REACHES PAST THE AI'S OWN SEARCH DEPTH. It ran to
+					// iMaxPathLength * 7 -- 21 hops at the AI's hardcoded 3, i.e. most of the tech tree -- which
+					// is exactly the "beeline five techs deep" shape AGENTS.md names as the enablement
+					// pathology. It now picks a FURTHER target within the same depth on value/cost, never a
+					// deeper one, so the depth variable alone governs how far the AI commits.
+					else if (iPathLength > 1 && iPathLength <= iMaxPathLength)
 					{
 						const int iTempValue = AI_TechValueCached(eTechX, bAsync);
 
@@ -33185,9 +33235,14 @@ TechTypes CvPlayerAI::AI_bestReligiousTech(int iMaxPathLength, TechTypes eIgnore
 	int iBestValue = 0;
 	TechTypes eBestTech = NO_TECH;
 
-	for (int iI = 0; iI < GC.getNumTechInfos(); iI++)
+	// Walked outward from the enabler's researchable frontier via `leadsTo`, to the depth this search accepts --
+	// the same shape as AI_bestTech, never a sweep of the tech database.
+	std::set<int> candidateTechs;
+	AI_walkResearchFrontier(iMaxPathLength, candidateTechs);
+
+	for (std::set<int>::const_iterator itCandidate = candidateTechs.begin(); itCandidate != candidateTechs.end(); ++itCandidate)
 	{
-		const TechTypes eTechX = static_cast<TechTypes>(iI);
+		const TechTypes eTechX = static_cast<TechTypes>(*itCandidate);
 
 		if ((eIgnoreTech == NO_TECH || eTechX != eIgnoreTech)
 		&& (eIgnoreAdvisor == NO_ADVISOR || GC.getTechInfo(eTechX).getAdvisorType() != eIgnoreAdvisor)

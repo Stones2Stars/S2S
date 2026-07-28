@@ -197,6 +197,9 @@ public:
 	int64_t AI_goldTarget() const;
 	int AI_goldValueAssessmentModifier() const;
 
+	// The ONE research candidate walk: the enabler's researchable frontier, carried outward by `leadsTo` to the
+	// requested depth (enabler.md §6) -- never a read of the whole tech database.
+	void AI_walkResearchFrontier(int iWalkDepth, std::set<int>& candidateTechs) const;
 	TechTypes AI_bestTech(int iMaxPathLength = 1, bool bIgnoreCost = false, bool bAsync = false, TechTypes eIgnoreTech = NO_TECH, AdvisorTypes eIgnoreAdvisor = NO_ADVISOR);
 
 
