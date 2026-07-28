@@ -17,6 +17,8 @@
 #include "Engine/CvArea.h"
 #include "CvArtFileMgr.h"
 #include "CvBuildingInfo.h"
+#include "Infos/CvModifiers.h"        // entries() -- the compiled §3.9 deposits a composer renders
+#include "UI/CvEntryText.h"           // entryDetailLine -- the ONE per-entry renderer
 #include "CvBonusInfo.h"
 #include "Engine/CvCity.h"
 #include "AI/CvCityAI.h"
@@ -2323,10 +2325,13 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, 
 					}
 				}
 
-				if (pUnit->getExtraVisibilityRange() != 0)
+				// A LIVE unit's sight, not an info's entries -- so this reads the resolved value rather than
+				// rendering compiled lines. /100 at this out boundary, the reader rule ([DEC-fixedpoint-x100]).
+				if (pUnit->resolvedValue(URS_VISION) != 0)
 				{
 					szString.append(NEWLINE);
-					szString.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_VISIBILITY", pUnit->getExtraVisibilityRange()));
+					szString.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_VISIBILITY",
+						pUnit->resolvedValue(URS_VISION) / VISION_OPEN_GROUND_COST));
 				}
 
 				//Movement
@@ -22364,11 +22369,7 @@ void CvGameTextMgr::setUnitCombatHelp(CvWStringBuffer& szBuffer, UnitCombatTypes
 		szBuffer.append(NEWLINE);
 		szBuffer.append(gDLL->getText("TXT_KEY_UNITHELP_INVISIBLE_ALL"));
 	}
-	if (info.getVisibilityChange() != 0)
-	{
-		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_IMPROVEMENTHELP_VISIBILITY_RANGE", info.getVisibilityChange()));
-	}
+	appendEntryLines(szBuffer, info, MODFAM_VISION);   // vision.md: elevation/obstruction render themselves
 
 	if (GC.getGame().isOption(GAMEOPTION_COMBAT_HIDE_SEEK))
 	{
@@ -23467,6 +23468,24 @@ void CvGameTextMgr::setUnitCombatHelp(CvWStringBuffer& szBuffer, UnitCombatTypes
 		info.getPropertyManipulators()->buildDisplayString(szBuffer);
 }
 
+void CvGameTextMgr::appendEntryLines(CvWStringBuffer& szBuffer, const CvInfo& info, ModifierFamily eFamily)
+{
+	const CvModifiers* pModifiers = info.getModifiers();
+	if (pModifiers == NULL)
+	{
+		return;
+	}
+	const std::vector<CvModEntry*>& aEntries = pModifiers->entries();
+	for (std::vector<CvModEntry*>::const_iterator it = aEntries.begin(); it != aEntries.end(); ++it)
+	{
+		if (*it != NULL && (*it)->family == eFamily)
+		{
+			szBuffer.append(NEWLINE);
+			szBuffer.append(entryDetailLine(**it));
+		}
+	}
+}
+
 void CvGameTextMgr::setImprovementHelp(CvWStringBuffer &szBuffer, ImprovementTypes eImprovement, FeatureTypes eFeature, bool bCivilopediaText)
 {
 	PROFILE_EXTRA_FUNC();
@@ -23843,16 +23862,7 @@ void CvGameTextMgr::setImprovementHelp(CvWStringBuffer &szBuffer, ImprovementTyp
 		szBuffer.append(NEWLINE);
 		szBuffer.append(gDLL->getText("TXT_KEY_IMPROVEMENTHELP_CULTURE_RANGE", info.getCultureRange()));
 	}
-	if (info.getVisibilityChange() > 0)
-	{
-		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_IMPROVEMENTHELP_VISIBILITY_RANGE", info.getVisibilityChange()));
-	}
-	if (info.getSeeFrom() > 0)
-	{
-		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_IMPROVEMENTHELP_SEE_FROM", info.getSeeFrom()));
-	}
+	appendEntryLines(szBuffer, info, MODFAM_VISION);   // vision.md: elevation/obstruction render themselves
 	if (info.getPillageGold() > 0)
 	{
 		szBuffer.append(NEWLINE);

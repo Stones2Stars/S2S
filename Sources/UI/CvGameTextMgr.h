@@ -123,6 +123,11 @@ public:
 	void setBuildUpHelp(CvWStringBuffer &szBuffer, PromotionLineTypes ePromotionLine);
 	void setTraitHelp(CvWStringBuffer &szBuffer, TraitTypes eTrait);
 	void setUnitCombatHelp(CvWStringBuffer& szBuffer, UnitCombatTypes eUnitCombat, bool bCivilopediaText = false) const;
+	// COMPOSERS CONSUME RENDERED LINES, they never hand-assemble from getters (patterns.md § THE GETTER
+	// SETUP category 5, the CvCombatModel::computeCombatPreview detailLines pattern). Appends one localized
+	// line per compiled entry of a family -- magnitude, unit, target, scope, per-scaler and conditions all
+	// rendered by the ONE renderer, so a new channel needs no composer edit at all.
+	void appendEntryLines(CvWStringBuffer& szBuffer, const CvInfo& info, ModifierFamily eFamily);
 	void setImprovementHelp(CvWStringBuffer &szBuffer, ImprovementTypes eImprovement, FeatureTypes eFeature = NO_FEATURE, bool bCivilopediaText = false);
 	void setRouteHelp(CvWStringBuffer &szBuffer, RouteTypes eRoute, bool bCivilopediaText = false);
 	void setTerrainHelp(CvWStringBuffer &szBuffer, TerrainTypes eTerrain, bool bCivilopediaText = false);
