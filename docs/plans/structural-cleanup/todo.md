@@ -44,9 +44,12 @@
     restriction governs the carrier's whole hold, promotion-granted space included
     ([modifier.md §6](../../specs/modifier.md)) — so what is missing is only the SHAPE: the §3.9 entry grammar
     has no payload-less form for a restriction with no amount of its own.
-    ⚠ **The declared domain is not the real rule either (owner): these ships carry settlers and such, NOT
-    military** — so `DomainCargo: DOMAIN_LAND` overstates what they may take, and the civilians-only restriction
-    is authored nowhere yet. Whatever shape lands must be able to say it.
+    ⚠ **The declared domain may overstate what they take.** `DomainCargo: DOMAIN_LAND` permits any land unit,
+    but the owner recalls an unpromoted galley taking only a settler or other civilian — **explicitly an
+    UNCONFIRMED recollection ("it has been a loooong while"), so it is a question to settle in-game, never a
+    premise to author against.** What IS verified in the data: `UNIT_TRIREME` authors no `iCargo` at all, while
+    `UNIT_GALLEY` authors `3` — so the galley plainly carries and the trireme's hold, if any, comes from the
+    promotion line. Settle whether a civilians-only rule exists before deciding the shape must express it.
     ⚑ Nothing that worked is lost: all 31 sat inert in `identity`, read by nothing; the flag makes them loud.
   - `espionagePoints` (24, UNIT) → the **`espionage`** family — one of the four commerce channels (owner), so
     the family already exists. The value is an espionage-commerce amount delivered as a ONE-SHOT payload, which

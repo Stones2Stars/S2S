@@ -532,6 +532,15 @@ self-accumulator, set on the unit or a promotion), with two complementary member
   > ⚑ **This is a real mechanic, not an edge case:** the whole ancient-navy transport line has **zero base
   > `iCargo`** and earns its hold by promotion (TRANSPORT1/2/3 on `UNITCOMBAT_WOODEN_SHIPS`), so the carrier
   > declaring WHAT and the promotion supplying HOW MUCH is the normal shape there, not an anomaly.
+  >
+  > ⚖ **A PROMOTION ADDS SPACE, NEVER PERMISSION — an INTENTIONAL divergence from legacy (owner: "we go with
+  > yours, it's cleaner").** In the legacy game a transport promotion WIDENS the class carried: an unpromoted
+  > galley takes a settler, a promoted one takes military. The ruled model does not reproduce that — WHAT is the
+  > carrier's, fixed, and a promotion only ever changes HOW MUCH. ⛔ So do not "repair" this back by letting a
+  > promotion author a wider qualifier: the behaviour change is chosen, and the reason is that a permission that
+  > moves with promotions puts WHAT in two places and makes a carrier's rule unreadable from the carrier
+  > ([validation.md](validation.md) intentional-model-change class; the spec leads, legacy behaviour is not
+  > preserved for its own sake).
   > ⚠ Consequence: a carrier whose base capacity is 0 still has a restriction to state, and the §3.9 entry
   > grammar has no payload-less form for it — the open item in [todo.md](../plans/structural-cleanup/todo.md).
   ⚖ **The "what" is ALWAYS a TAG predicate — that is what tags are for (owner).** The legacy restriction by
