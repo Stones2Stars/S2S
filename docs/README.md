@@ -17,13 +17,14 @@ The tiers are not interchangeable, and the difference decides what a stale line 
   agent conforms to. If you find status prose in a spec, that is a defect — move it, don't extend it.
 - **`reference/` = how the ENGINE behaves today.** Independent of the cascade rework; the legacy mechanics,
   toolchain constraints, and formulas. Stable.
-- **`plans/` = MUTABLE work state**, and the only tier where "we built X" belongs. ⛔ **A plan doc's claims are
-  VERIFIED against the tree before they are acted on** — branch `cascade-rebuild` archived the substrate several of
-  them were written against, so a doc can name symbols that no longer exist while reading as authoritative. The
-  cheap mechanical check: grep one or two of the symbols it is anchored on; if they live only in `SourceArchive/`,
-  the doc describes a dead world. (Docs found in that state are DELETED, their durable rulings promoted into the
-  owning spec — never left standing behind a status marker,
-  [DEC-docs-current-truth](architecture/decisions.md#dec-docs-current-truth).)
+- **`plans/` = the TODO tier — what is NOT done yet, as short bulleted lists**
+  ([DEC-spec-plus-todo](architecture/decisions.md#dec-spec-plus-todo)). ⛔ **A plan doc is not a progress record:**
+  no `LANDED`/`✅ DONE`/completion ledger belongs in one — a finished item is DELETED and anything durable it
+  established moves into the SPEC. The list measures what is LEFT; git history records what was done.
+  ⛔ **Verify any claim against the tree before acting on it** — branch `cascade-rebuild` archived the substrate
+  several plan docs were written against, so a doc can name symbols that no longer exist while reading as
+  authoritative. The cheap mechanical check: grep one or two of the symbols it is anchored on; if they live only in
+  `SourceArchive/`, the doc describes a dead world. Prefer DELETING a stale status claim to updating it.
 
 ⛔ **Where two docs disagree, the spec wins over the plan, and the LIVE CODE settles a question of what exists.**
 Verify against the tree before acting on any claim that something is built.

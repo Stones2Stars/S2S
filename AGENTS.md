@@ -417,6 +417,22 @@ the total-observability bar below.)
   chronicles): it states what IS. Anything outdated is DELETED, not annotated — git history is the archaeology, and
   [superseded-ideas.md](docs/architecture/superseded-ideas.md) is the only tombstone registry (one line per dead
   approach that carries revival risk). Migration/status chronicles belong in `docs/plans/`, never in specs.
+- **⛔ SPEC + a SHORT BULLETED TODO — never a TODO LIST *inside* a doc, and never status woven through prose
+  (owner).** Status claims DRIFT — that is their nature, not a discipline failure — so the more of them a doc
+  carries, the faster the whole doc rots and the more confidently it misleads. **A doc is therefore one of two
+  things, never both:** a **SPEC** (the design: timeless, what the thing IS and must be) or a **TODO** (a short
+  bulleted list of what is not done yet). ⛔ Do NOT write "LANDED" / "✅ DONE" / "PARTLY LANDED" / build-status
+  tables / per-item completion ledgers into a doc: an item that is DONE is simply DELETED from the todo list, and
+  anything durable it established (a ruling, a design constraint, a hard-won fact) moves into the SPEC where it
+  belongs. **The measure of a todo list is what is LEFT, never a record of what was achieved** — git history is
+  the record of work done ([DEC-docs-current-truth](docs/architecture/decisions.md#dec-docs-current-truth): the
+  same delete-don't-annotate rule, applied to progress).
+  ⚑ **Why this is load-bearing rather than tidiness:** a doc's RULINGS stay true while its STATUS claims decay, so
+  a status-heavy doc reads as authoritative long after its status half is fiction — and an agent cannot tell the
+  halves apart. The measured cost: two plan docs anchored on an archived substrate, a "landed" curator change
+  recorded as an open question, and an emit surface declared SEVERED in one paragraph and wired two screens later
+  in the same file. **Verify a status claim against the tree before acting on it, and prefer deleting it to
+  updating it.**
 - **ACTIVELY find, READ, and VERIFY the docs for whatever you are working on — BEFORE and WHILE you work.** For ANY
   subsystem you touch: search `docs/` for it, read the relevant spec/reference page end-to-end, and confirm the
   intended design FROM THE DOC — never reconstruct the model from the live code or memory, and never propose

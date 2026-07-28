@@ -135,6 +135,16 @@ Docs state CURRENT TRUTH only — no dated rulings, no supersession trails, no s
 Outdated content is DELETED, not annotated; git history is the archaeology; superseded-ideas.md is the only
 tombstone registry; status chronicles live in `docs/plans/`. **Home:** [AGENTS.md](../../AGENTS.md) Conventions §Docs.
 
+### DEC-spec-plus-todo
+
+A doc is a SPEC (the timeless design) or a TODO (a short bulleted list of what is NOT done) — never both, and
+never status woven through prose. Status claims drift by nature, so a status-heavy doc rots and misleads with
+authority; no `LANDED`/`✅ DONE`/completion ledger/build-status table is written into a doc. A finished item is
+DELETED from the todo and anything durable it established moves into the spec; the todo measures what is LEFT,
+git history records what was done. Verify any status claim against the tree before acting on it, and prefer
+deleting it to updating it. The progress-facing half of
+[DEC-docs-current-truth](#dec-docs-current-truth). **Home:** [AGENTS.md](../../AGENTS.md) Conventions §Docs.
+
 ### DEC-WF-rulings-to-repo
 
 Every owner ruling → the right repo doc immediately and unprompted, in the same work item; memory-only is unfinished.
