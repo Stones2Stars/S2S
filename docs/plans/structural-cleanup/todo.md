@@ -32,10 +32,14 @@
 - **Magnitudes whose family ALREADY EXISTS — a curator move, not a design question.**
   - `cargo` (84, UNIT) → the **`cargo`** family ([modifier.md §6](../../specs/modifier.md)). Capacity has ONE
     home there and the Size-Matters figure DERIVES from it (owner) — nothing to migrate on that side, since no
-    unit authors `iSMCargo` at all. ⚠ One genuine gap: what `identity.cargo` holds today is not the amount but
-    `SpecialCargo`/`SMNotSpecialCargo` — a restriction to a `SPECIALUNIT_*` GROUP. §6 expresses the "what" as a
-    `unit:` PREDICATE (`{unit: IS_AIR}`), and a special-unit group is not one, so that qualifier needs a form
-    before the move can carry it.
+    unit authors `iSMCargo` at all. What `identity.cargo` actually holds is the "WHAT can it carry" restriction
+    (`SpecialCargo`/`SMNotSpecialCargo`, a `SPECIALUNIT_*` group), and **that is what TAGS are for (owner)** —
+    it authors as the ordinary `{unit: IS_<TAG>}` qualifier, so no new qualifier form is needed.
+    ⚠ **What IS needed first is the tags, and today's set cannot express the groups:** of the seven,
+    only `MISSILE` has an exact tag already. `PEOPLE` (176 units) and `TROOP` (94) both reduce to `landUnit`
+    and nothing else, as do `FIGHTER` (16) and `SEAPLANE` (1) to air/airUnit/military — so converting on the
+    current set would SILENTLY MERGE them (a people-only transport would start taking troops). Mint the missing
+    tags first; that is ordinary open-registry authoring ([tags.md](../../specs/tags.md)), not an engine change.
   - `sightRange` (30, BUILDING) → the **`vision`** block ([json.md §9](../../specs/json.md), line-of-sight).
   - `captures` (450, UNIT) → the **`capture`** family (the §6 unit-plane list).
 - **Magnitudes with NO family named yet** — `conscription`, `controlPoints`, `espionagePoints`, and the radii
