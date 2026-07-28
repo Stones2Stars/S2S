@@ -1554,21 +1554,23 @@ DenialTypes CvTeamAI::AI_techTrade(const TechTypes eTech, const TeamTypes eTeam)
 		}
 	}
 
-	for (int iI = 0; iI < GC.getNumProjectInfos(); iI++)
-	{
-		if (GC.getProjectInfo((ProjectTypes)iI).getTechPrereq() == eTech)
-		{
-			if (isWorldProject((ProjectTypes)iI) && getProjectMaking((ProjectTypes)iI) > 0)
-			{
-				return DENIAL_MYSTERY;
-			}
+	std::set<int> unlockedProjects;
+	EnablerKernel::addEdge(EnablerKernel::infoFor(EDGEB_TECHS, (int)eTech), EDGEF_ENABLES, EDGEB_PROJECTS, unlockedProjects);
 
-			for (int iJ = 0; iJ < GC.getNumVictoryInfos(); iJ++)
+	for (std::set<int>::const_iterator itUnlockedProject = unlockedProjects.begin(); itUnlockedProject != unlockedProjects.end(); ++itUnlockedProject)
+	{
+		const ProjectTypes eLoopProject = static_cast<ProjectTypes>(*itUnlockedProject);
+
+		if (isWorldProject(eLoopProject) && getProjectMaking(eLoopProject) > 0)
+		{
+			return DENIAL_MYSTERY;
+		}
+
+		for (int iJ = 0; iJ < GC.getNumVictoryInfos(); iJ++)
+		{
+			if (game.isVictoryValid((VictoryTypes)iJ) && GC.getProjectInfo(eLoopProject).getVictoryThreshold((VictoryTypes)iJ))
 			{
-				if (game.isVictoryValid((VictoryTypes)iJ) && GC.getProjectInfo((ProjectTypes)iI).getVictoryThreshold((VictoryTypes)iJ))
-				{
-					return DENIAL_VICTORY;
-				}
+				return DENIAL_VICTORY;
 			}
 		}
 	}
@@ -4671,21 +4673,23 @@ int CvTeamAI::AI_getTechMonopolyValue(TechTypes eTech, TeamTypes eTeam) const
 			iValue += 50;
 		}
 	}
-	for (int iI = 0; iI < GC.getNumProjectInfos(); iI++)
+	std::set<int> unlockedProjects;
+	EnablerKernel::addEdge(EnablerKernel::infoFor(EDGEB_TECHS, (int)eTech), EDGEF_ENABLES, EDGEB_PROJECTS, unlockedProjects);
+
+	for (std::set<int>::const_iterator itUnlockedProject = unlockedProjects.begin(); itUnlockedProject != unlockedProjects.end(); ++itUnlockedProject)
 	{
-		if (GC.getProjectInfo((ProjectTypes)iI).getTechPrereq() == eTech)
+		const ProjectTypes eLoopProject = static_cast<ProjectTypes>(*itUnlockedProject);
+
+		if (isWorldProject(eLoopProject))
 		{
-			if (isWorldProject((ProjectTypes)iI))
+			if (!(GC.getGame().isProjectMaxedOut(eLoopProject)))
 			{
-				if (!(GC.getGame().isProjectMaxedOut((ProjectTypes)iI)))
-				{
-					iValue += 100;
-				}
+				iValue += 100;
 			}
-			else
-			{
-				iValue += 50;
-			}
+		}
+		else
+		{
+			iValue += 50;
 		}
 	}
 	return iValue;

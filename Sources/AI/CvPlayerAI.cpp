@@ -5238,35 +5238,37 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 
 	/* ------------------ Project Value  ------------------ */
 	bool bEnablesProjectWonder = false;
-	for (int iJ = 0; iJ < GC.getNumProjectInfos(); iJ++)
+	std::set<int> unlockedProjects;
+	EnablerKernel::addEdge(EnablerKernel::infoFor(EDGEB_TECHS, (int)eTech), EDGEF_ENABLES, EDGEB_PROJECTS, unlockedProjects);
+
+	for (std::set<int>::const_iterator itUnlockedProject = unlockedProjects.begin(); itUnlockedProject != unlockedProjects.end(); ++itUnlockedProject)
 	{
-		if (GC.getProjectInfo((ProjectTypes)iJ).getTechPrereq() == eTech)
+		const ProjectTypes eLoopProject = static_cast<ProjectTypes>(*itUnlockedProject);
+
+		iValue += 1000;
+
+		if ((VictoryTypes)GC.getProjectInfo(eLoopProject).getVictoryPrereq() != NO_VICTORY)
 		{
-			iValue += 1000;
-
-			if ((VictoryTypes)GC.getProjectInfo((ProjectTypes)iJ).getVictoryPrereq() != NO_VICTORY)
+			if (!GC.getProjectInfo(eLoopProject).isSpaceship())
 			{
-				if (!GC.getProjectInfo((ProjectTypes)iJ).isSpaceship())
-				{
-					// Apollo
-					iValue += (AI_isDoVictoryStrategy(AI_VICTORY_SPACE2) ? 2000 : 100);
-				}
-				// Space ship parts
-				else if (AI_isDoVictoryStrategy(AI_VICTORY_SPACE3))
-				{
-					iValue += 1000;
-				}
+				// Apollo
+				iValue += (AI_isDoVictoryStrategy(AI_VICTORY_SPACE2) ? 2000 : 100);
 			}
-
-			if (iPathLength <= 1 && getTotalPopulation() > 5 && isWorldProject((ProjectTypes)iJ)
-			&& !GC.getGame().isProjectMaxedOut((ProjectTypes)iJ))
+			// Space ship parts
+			else if (AI_isDoVictoryStrategy(AI_VICTORY_SPACE3))
 			{
-				bEnablesProjectWonder = true;
+				iValue += 1000;
+			}
+		}
 
-				if (bCapitalAlone)
-				{
-					iValue += 100;
-				}
+		if (iPathLength <= 1 && getTotalPopulation() > 5 && isWorldProject(eLoopProject)
+		&& !GC.getGame().isProjectMaxedOut(eLoopProject))
+		{
+			bEnablesProjectWonder = true;
+
+			if (bCapitalAlone)
+			{
+				iValue += 100;
 			}
 		}
 	}
@@ -5281,29 +5283,31 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 
 	/* ------------------ Process Value  ------------------ */
 	bool bIsGoodProcess = false;
-	for (int iJ = 0; iJ < GC.getNumProcessInfos(); iJ++)
+	std::set<int> unlockedProcesses;
+	EnablerKernel::addEdge(EnablerKernel::infoFor(EDGEB_TECHS, (int)eTech), EDGEF_ENABLES, EDGEB_PROCESSES, unlockedProcesses);
+
+	for (std::set<int>::const_iterator itUnlockedProcess = unlockedProcesses.begin(); itUnlockedProcess != unlockedProcesses.end(); ++itUnlockedProcess)
 	{
-		if (GC.getProcessInfo((ProcessTypes)iJ).getTechPrereq() == eTech)
+		const ProcessTypes eLoopProcess = static_cast<ProcessTypes>(*itUnlockedProcess);
+
+		iValue += 100;
+
+		for (int iK = 0; iK < NUM_COMMERCE_TYPES; iK++)
 		{
-			iValue += 100;
+			iTempValue = (GC.getProcessInfo(eLoopProcess).getProductionToCommerceModifier(iK) * 4);
 
-			for (int iK = 0; iK < NUM_COMMERCE_TYPES; iK++)
+			iTempValue *= AI_commerceWeight((CommerceTypes)iK);
+			iTempValue /= 100;
+
+			if (iK == COMMERCE_GOLD || iK == COMMERCE_RESEARCH)
 			{
-				iTempValue = (GC.getProcessInfo((ProcessTypes)iJ).getProductionToCommerceModifier(iK) * 4);
-
-				iTempValue *= AI_commerceWeight((CommerceTypes)iK);
-				iTempValue /= 100;
-
-				if (iK == COMMERCE_GOLD || iK == COMMERCE_RESEARCH)
-				{
-					bIsGoodProcess = true;
-				}
-				else if ((iK == COMMERCE_CULTURE) && AI_isDoVictoryStrategy(AI_VICTORY_CULTURE1))
-				{
-					iTempValue *= 3;
-				}
-				iValue += iTempValue;
+				bIsGoodProcess = true;
 			}
+			else if ((iK == COMMERCE_CULTURE) && AI_isDoVictoryStrategy(AI_VICTORY_CULTURE1))
+			{
+				iTempValue *= 3;
+			}
+			iValue += iTempValue;
 		}
 	}
 
@@ -5328,35 +5332,37 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 	}
 
 	/* ------------------ Civic Value  ------------------ */
-	for (int iJ = 0; iJ < GC.getNumCivicInfos(); iJ++)
+	std::set<int> unlockedCivics;
+	EnablerKernel::addEdge(EnablerKernel::infoFor(EDGEB_TECHS, (int)eTech), EDGEF_ENABLES, EDGEB_CIVICS, unlockedCivics);
+
+	for (std::set<int>::const_iterator itUnlockedCivic = unlockedCivics.begin(); itUnlockedCivic != unlockedCivics.end(); ++itUnlockedCivic)
 	{
-		if (GC.getCivicInfo((CivicTypes)iJ).getTechPrereq() == eTech)
+		const CivicTypes eLoopCivic = static_cast<CivicTypes>(*itUnlockedCivic);
+
+		iValue += 200;
+
+		const CivicTypes eCivic = getCivics((CivicOptionTypes)(GC.getCivicInfo(eLoopCivic).getCivicOptionType()));
+		if (NO_CIVIC != eCivic)
 		{
-			iValue += 200;
+			const int iCurrentCivicValue = AI_civicValue(eCivic);
+			const int iNewCivicValue = AI_civicValue(eLoopCivic);
+			int iTechCivicValue = 0;
 
-			const CivicTypes eCivic = getCivics((CivicOptionTypes)(GC.getCivicInfo((CivicTypes)iJ).getCivicOptionType()));
-			if (NO_CIVIC != eCivic)
+			if (iNewCivicValue > iCurrentCivicValue)
 			{
-				const int iCurrentCivicValue = AI_civicValue(eCivic);
-				const int iNewCivicValue = AI_civicValue((CivicTypes)iJ);
-				int iTechCivicValue = 0;
-
-				if (iNewCivicValue > iCurrentCivicValue)
-				{
-					//	Because civic values can be negative theer is no absolute scale so we cannot meaningfully scale
-					//	this relative to the current value.  Aslo 2400 is not enough to matter for some critical changes
-					//iValue += std::min(2400, (2400 * (iNewCivicValue - iCurrentCivicValue)) / std::max(1, iCurrentCivicValue));
-					iTechCivicValue = std::min(50000, 50 * (iNewCivicValue - iCurrentCivicValue));
-					iValue += iTechCivicValue;
-				}
-
-				if (eCivic == GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteCivic())
-				{
-					iValue += 600;
-				}
-
-				
+				//	Because civic values can be negative theer is no absolute scale so we cannot meaningfully scale
+				//	this relative to the current value.  Aslo 2400 is not enough to matter for some critical changes
+				//iValue += std::min(2400, (2400 * (iNewCivicValue - iCurrentCivicValue)) / std::max(1, iCurrentCivicValue));
+				iTechCivicValue = std::min(50000, 50 * (iNewCivicValue - iCurrentCivicValue));
+				iValue += iTechCivicValue;
 			}
+
+			if (eCivic == GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteCivic())
+			{
+				iValue += 600;
+			}
+
+			
 		}
 	}
 
@@ -5441,14 +5447,16 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 			}
 
 			int iCorporationValue = 0;
-			for (int iJ = 0; iJ < GC.getNumCorporationInfos(); iJ++)
+			std::set<int> unlockedCorporations;
+			EnablerKernel::addEdge(EnablerKernel::infoFor(EDGEB_TECHS, (int)eTech), EDGEF_ENABLES, EDGEB_CORPORATIONS, unlockedCorporations);
+
+			for (std::set<int>::const_iterator itUnlockedCorporation = unlockedCorporations.begin(); itUnlockedCorporation != unlockedCorporations.end(); ++itUnlockedCorporation)
 			{
-				if (GC.getCorporationInfo((CorporationTypes)iJ).getTechPrereq() == eTech)
+				const CorporationTypes eLoopCorporation = static_cast<CorporationTypes>(*itUnlockedCorporation);
+
+				if (!(GC.getGame().isCorporationFounded(eLoopCorporation)))
 				{
-					if (!(GC.getGame().isCorporationFounded((CorporationTypes)iJ)))
-					{
-						iCorporationValue += 100 + ((bAsync) ? GC.getASyncRand().get(2400, "AI Research Corporation ASYNC") : GC.getGame().getSorenRandNum(2400, "AI Research Corporation"));
-					}
+					iCorporationValue += 100 + ((bAsync) ? GC.getASyncRand().get(2400, "AI Research Corporation ASYNC") : GC.getGame().getSorenRandNum(2400, "AI Research Corporation"));
 				}
 			}
 
@@ -21460,12 +21468,14 @@ int CvPlayerAI::AI_cultureVictoryTechValue(TechTypes eTech) const
 	}
 
 	//important civics
-	for (int iI = 0; iI < GC.getNumCivicInfos(); iI++)
+	std::set<int> unlockedCivics;
+	EnablerKernel::addEdge(EnablerKernel::infoFor(EDGEB_TECHS, (int)eTech), EDGEF_ENABLES, EDGEB_CIVICS, unlockedCivics);
+
+	for (std::set<int>::const_iterator itUnlockedCivic = unlockedCivics.begin(); itUnlockedCivic != unlockedCivics.end(); ++itUnlockedCivic)
 	{
-		if (GC.getCivicInfo((CivicTypes)iI).getTechPrereq() == eTech)
-		{
-			iValue += GC.getCivicInfo((CivicTypes)iI).getCommerceModifier(COMMERCE_CULTURE) * 2;
-		}
+		const CivicTypes eLoopCivic = static_cast<CivicTypes>(*itUnlockedCivic);
+
+		iValue += GC.getCivicInfo(eLoopCivic).getCommerceModifier(COMMERCE_CULTURE) * 2;
 	}
 
 	return iValue;
@@ -25793,11 +25803,14 @@ bool CvPlayerAI::AI_isPlotThreatened(const CvPlot* pPlot, int iRange, bool bTest
 bool CvPlayerAI::AI_isFirstTech(TechTypes eTech) const
 {
 	PROFILE_EXTRA_FUNC();
-	for (int iI = 0; iI < GC.getNumReligionInfos(); iI++)
+	std::set<int> unlockedReligions;
+	EnablerKernel::addEdge(EnablerKernel::infoFor(EDGEB_TECHS, (int)eTech), EDGEF_ENABLES, EDGEB_RELIGIONS, unlockedReligions);
+
+	for (std::set<int>::const_iterator itUnlockedReligion = unlockedReligions.begin(); itUnlockedReligion != unlockedReligions.end(); ++itUnlockedReligion)
 	{
-		if (GC.getReligionInfo((ReligionTypes)iI).getTechPrereq() == eTech
-		&& !GC.getGame().isReligionSlotTaken((ReligionTypes)iI)
-		&& canFoundReligion())
+		const ReligionTypes eLoopReligion = static_cast<ReligionTypes>(*itUnlockedReligion);
+
+		if (!GC.getGame().isReligionSlotTaken(eLoopReligion) && canFoundReligion())
 		{
 			return true;
 		}
