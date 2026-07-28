@@ -15,6 +15,7 @@
 #include "AI/CvTeamAI.h"             // GET_TEAM
 #include "Defines/CvGlobals.h"
 #include "Engine/CvCity.h"
+#include "Spine/CvEventSpine.h"      // emitVicinityBonusChanged -- the ACTIVE half of the vicinity-supply fact
 #include "Engine/CvPlayer.h"
 #include "Engine/CvTeam.h"
 #include "Conditions/CvConditionEval.h"   // cascadeEvalCondition -- the StoneBase-ported typed-condition evaluator
@@ -441,7 +442,19 @@ static std::vector<int> s_operateObsoletableBuildings;                      // b
 
 // The work-list ripple: re-check `seeds` under the AUTHORITATIVE provided supply, updating active/provided/
 // providedCount in place; on an active flip that crosses a bonus's provided-count 0<->1, push that bonus's operate
-// consumers (the provides-ripple). Bounded by the fixpoint; a runaway cap self-heals at the slice boundary.
+// consumers (the provides-ripple).
+//
+// ⚑ A CROSSING IS A VICINITY-SUPPLY FACT, AND IT IS ANNOUNCED (json.md §5a: a dormant building supplies nothing).
+// The building-PRESENCE half already emits from processBuilding; this is the ACTIVE half, and without it the flip
+// was visible to nothing outside this function -- vicinity-conditioned packages were never re-marked and the
+// bonus's requires.BUILD dependents were never re-gated (this list walks only the OPERATE consumers). A missing
+// emit is a silently wrong value ([DEC-no-self-heal]: a miss must surface, never be swept away).
+//
+// ⛔ The crossings are announced AFTER the fixpoint converges, never inside it, because `emit()` dispatches
+// SYNCHRONOUSLY: a mid-loop emit hands every consumer a half-settled `provided` set to evaluate against. Today's
+// consumers do not re-enter this function (the enabler's re-gates the BUILD tri-state, the modifier marks, the
+// contexts refresh), so this is not unwinding a live recursion -- it is the invariant that keeps the fact honest
+// as consumers are added. Banked-then-drained is the same discipline the load bracket uses.
 static void ek_recheckActiveSet(const CvCity* pCity, const std::vector<int>& seeds)
 {
 	if (pCity == NULL || seeds.empty()) return;
@@ -455,11 +468,18 @@ static void ek_recheckActiveSet(const CvCity* pCity, const std::vector<int>& see
 	CvCascadeEvalFlags flags;
 	std::set<int> pending;
 	std::vector<int> work;
+	std::vector<std::pair<int, int> > supplyCrossings;   // (BONUS_ id, +1 gained / -1 lost) -- drained below
 	for (size_t i = 0; i < seeds.size(); ++i) if (pending.insert(seeds[i]).second) work.push_back(seeds[i]);
+	// A runaway guard, not a recovery: nothing repairs a truncated fixpoint, so tripping this leaves the
+	// operating set WRONG and is a defect to fix at its cause ([DEC-no-self-heal]).
 	int cap = GC.getNumBuildingInfos() + 512;
 	while (!work.empty())
 	{
-		if (--cap < 0) break;
+		if (--cap < 0)
+		{
+			FAssertMsg(false, "operating-set fixpoint exceeded its runaway guard -- the set is left incomplete");
+			break;
+		}
 		const int b = work.back(); work.pop_back();
 		// The ONE shared verdict (ek_classifyBuilding) drives BOTH memberships. Obsolete-set maintenance (json
 		// §4.2): present ∧ obsoleted-by-held-tech keeps the building in the parallel obsolete set (the whenObsolete
@@ -486,6 +506,7 @@ static void ek_recheckActiveSet(const CvCity* pCity, const std::vector<int>& see
 				if (++f.providedCount[bn] == 1)
 				{
 					f.provided.insert(bn);
+					supplyCrossings.push_back(std::make_pair(bn, 1));   // GAINED -- announced after convergence
 					std::map<int, std::vector<int> >::const_iterator cit = s_operateBonusConsumers.find(bn);
 					if (cit != s_operateBonusConsumers.end())
 						for (size_t k = 0; k < cit->second.size(); ++k)
@@ -504,6 +525,7 @@ static void ek_recheckActiveSet(const CvCity* pCity, const std::vector<int>& see
 				{
 					f.providedCount.erase(pc);
 					f.provided.erase(bn);
+					supplyCrossings.push_back(std::make_pair(bn, -1));   // LOST -- announced after convergence
 					std::map<int, std::vector<int> >::const_iterator cit = s_operateBonusConsumers.find(bn);
 					if (cit != s_operateBonusConsumers.end())
 						for (size_t k = 0; k < cit->second.size(); ++k)
@@ -511,6 +533,15 @@ static void ek_recheckActiveSet(const CvCity* pCity, const std::vector<int>& see
 				}
 			}
 		}
+	}
+
+	// The fixpoint has settled -- announce every supply crossing it produced. Consumers (the modifier's
+	// vicinity-conditioned packages, the enabler's own vicinity re-gate, the contexts) now see a coherent
+	// `provided` set. A re-entrant flip lands as its own converged batch, so the chain terminates for the same
+	// reason the fixpoint does: a no-op write crosses nothing and announces nothing.
+	for (size_t i = 0; i < supplyCrossings.size(); ++i)
+	{
+		emitVicinityBonusChanged(pCity->getID(), pCity->getOwner(), supplyCrossings[i].first, supplyCrossings[i].second);
 	}
 }
 
