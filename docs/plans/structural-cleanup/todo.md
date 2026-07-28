@@ -134,15 +134,22 @@
 - **`largestCity` cannot retire** until ranked-target-selection EVALUATION lands, so the civic/trait curators still
   emit the legacy member.
 
-## Data — cross-curator claims to VERIFY
+## Data — the substrate movement cost reads a member NOTHING authors
 
-- `curate_bonus` actually inverts the civic bonus-commerce modifiers (the civic curator drops them on that promise).
-- The yield resolver reads the `movement` family (it read `identity.movementCost` before the move).
-- The property propagator/change-propagator re-homes actually happen at the unit/building passes.
-- PropertyBuilding min/max value bands are consumed by the building pass.
-- Every bespoke second-pass tag has live emit code, not just set membership.
-- Stale tooling docs: `Tools/Migration/README.md` references a non-existent `curate_pocos.py`, and
-  `curate_building.py`'s docstring claims second-pass tags show as UNHANDLED when they are mostly implemented.
+⛔ **`CvTerrainInfo` / `CvFeatureInfo` / `CvRouteInfo::getMovementCost()` return `m_iMovementCost`, mapped from
+`identity.movementCost` — which no entity authors any more.** The curator moved every substrate to the
+`movement` family (102 terrains · 88 features · 21 routes author `movement.plot`; **zero** author the identity
+key), and the engine getters were never rewired, so all 211 answer **0** and `CvPlot::movementCost` loses terrain
+differentiation entirely. A silent 0 is the masked-hole class
+([DEC-no-legacy-masking](../../architecture/decisions.md#dec-no-legacy-masking)); the spec is unambiguous that a
+substrate's base cost IS the family ([modifier.md §6](../../specs/modifier.md)).
+
+⚠ **It is NOT a three-line getter swap, and doing it as one is the banned move.** The family is ×100 native while
+`m_iMovementCost` is human, and `CvPlot::movementCost` mixes it with `MOVE_DENOMINATOR`, the hills/river/peak
+extras, the route `min`-override and the unit's own moves — so converting the getter alone manufactures exactly
+the compensating fudge factor that means the cluster boundary was drawn wrong
+([fixed-point-and-scales §4c-bis](../../specs/curators/fixed-point-and-scales.md)). It lands with the MOVEMENT
+cluster below, not before it.
 
 ## Legacy still breathing — the KILL LIST
 
@@ -217,6 +224,9 @@ treat [unitcombat-merge-candidates.md](unitcombat-merge-candidates.md) as a live
   mix: yield/food/wellbeing (the keystone — food consumption subtracts angry population and health rate), commerce
   (joins it at the production→commerce term), gold/maintenance/upkeep (gold IS a yield, so it rides with commerce),
   trade profit, war weariness. Unit experience is self-contained and is the one safely parallelizable cluster.
+- **MOVEMENT is a cluster too, and it carries a live defect** — the substrate cost getters read a member nothing
+  authors (section above). Its operands: the terrain / feature / route family sums, `MOVE_DENOMINATOR`, the
+  hills / river / peak extras, the route `min`-override and the double-move divisors, and the unit's own moves.
   Acceptance per cluster: ZERO new fudge factors at the mixing sites.
 - **⚠ Needs an owner ruling before being swept in:** the `…Times100` on AI unit counts and plot strength carries
   fractional SizeMatters counts, not a modifier channel — same shape, different nature.

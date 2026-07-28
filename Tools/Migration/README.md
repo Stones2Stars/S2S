@@ -83,7 +83,6 @@ core. Coverage (run the matching script to re-export):
 | | | Victory | `curate_victory.py` |
 | | | Vote | `curate_vote.py` |
 
-`curate_pocos.py` — batch curator for verified data-holder entities (text/identity only).
 Note the owner ruling "**no entity is truly a POCO**": a 0-channel classification is a
 hypothesis to disprove against the live C++ consumer, not a fast path.
 
