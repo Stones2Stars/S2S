@@ -5,9 +5,11 @@
   "message": "TXT_KEY_OUTCOME_EXPLORE_MULTIVERSE_MESSAGE"
  },
  "requires": {
-  "all": [
-   "TECH_MULTIVERSE_TRAVERSAL"
-  ]
+  "build": {
+   "all": [
+    "TECH_MULTIVERSE_TRAVERSAL"
+   ]
+  }
  },
  "territory": [
   "neutral"

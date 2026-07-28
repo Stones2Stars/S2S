@@ -5,9 +5,11 @@
   "message": "TXT_KEY_OUTCOME_EXPLORE_INTERGALACTIC_MESSAGE"
  },
  "requires": {
-  "all": [
-   "TECH_FOLDING_SPACE"
-  ]
+  "build": {
+   "all": [
+    "TECH_FOLDING_SPACE"
+   ]
+  }
  },
  "territory": [
   "neutral"

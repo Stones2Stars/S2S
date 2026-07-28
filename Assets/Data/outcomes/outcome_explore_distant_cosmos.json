@@ -5,9 +5,11 @@
   "message": "TXT_KEY_OUTCOME_EXPLORE_DISTANT_COSMOS_MESSAGE"
  },
  "requires": {
-  "all": [
-   "TECH_QUANTUM_RAMJET"
-  ]
+  "build": {
+   "all": [
+    "TECH_QUANTUM_RAMJET"
+   ]
+  }
  },
  "territory": [
   "neutral"

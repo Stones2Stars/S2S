@@ -5,10 +5,12 @@
   "message": "TXT_KEY_OUTCOME_UPGRADE_TO_SPEARMAN_MESSAGE"
  },
  "requires": {
-  "all": [
-   "TECH_SPEAR_MAKING",
-   "BUILDING_BARRACKS"
-  ]
+  "build": {
+   "all": [
+    "TECH_SPEAR_MAKING",
+    "BUILDING_BARRACKS"
+   ]
+  }
  },
  "in": "city"
 }

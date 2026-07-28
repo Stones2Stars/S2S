@@ -5,9 +5,11 @@
   "message": "TXT_KEY_OUTCOME_ANIMAL_RECORD_TALE_MESSAGE"
  },
  "requires": {
-  "all": [
-   "BUILDING_EFFECT_LASCAUX_CAVES"
-  ]
+  "build": {
+   "all": [
+    "BUILDING_EFFECT_LASCAUX_CAVES"
+   ]
+  }
  },
  "in": "city",
  "replaces": [

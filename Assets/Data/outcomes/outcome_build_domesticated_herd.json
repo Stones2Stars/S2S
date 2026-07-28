@@ -5,8 +5,10 @@
   "message": "TXT_KEY_MISSION_BUILD_DOMESTICATED_HERD_HELP"
  },
  "requires": {
-  "all": [
-   "TECH_TRADE"
-  ]
+  "build": {
+   "all": [
+    "TECH_TRADE"
+   ]
+  }
  }
 }

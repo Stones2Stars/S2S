@@ -5,9 +5,11 @@
   "message": "TXT_KEY_OUTCOME_EXPLORE_JMOON_MESSAGE"
  },
  "requires": {
-  "all": [
-   "TECH_JOVIAN_EXPLORATION"
-  ]
+  "build": {
+   "all": [
+    "TECH_JOVIAN_EXPLORATION"
+   ]
+  }
  },
  "territory": [
   "neutral"

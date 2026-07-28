@@ -5,10 +5,12 @@
   "message": "TXT_KEY_OUTCOME_SELL_CAPTIVE_MESSAGE"
  },
  "requires": {
-  "all": [
-   "TECH_TRADE",
-   "BUILDING_SLAVE_MARKET"
-  ]
+  "build": {
+   "all": [
+    "TECH_TRADE",
+    "BUILDING_SLAVE_MARKET"
+   ]
+  }
  },
  "in": "city",
  "replaces": [

@@ -5,9 +5,11 @@
   "message": "TXT_KEY_OUTCOME_EXPLORE_ASTEROID_MESSAGE"
  },
  "requires": {
-  "all": [
-   "TECH_ION_PROPULSION"
-  ]
+  "build": {
+   "all": [
+    "TECH_ION_PROPULSION"
+   ]
+  }
  },
  "territory": [
   "neutral"

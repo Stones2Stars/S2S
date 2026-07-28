@@ -5,9 +5,11 @@
   "message": "TXT_KEY_OUTCOME_GO_TO_MAP_MILKY_WAY"
  },
  "requires": {
-  "all": [
-   "TECH_ACNP_PROPULSION"
-  ]
+  "build": {
+   "all": [
+    "TECH_ACNP_PROPULSION"
+   ]
+  }
  },
  "territory": [
   "friendly",

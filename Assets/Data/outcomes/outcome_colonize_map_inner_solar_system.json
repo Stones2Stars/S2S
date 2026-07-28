@@ -5,9 +5,11 @@
   "message": "TXT_KEY_OUTCOME_GO_TO_MAP_INNER_SOLAR_SYSTEM"
  },
  "requires": {
-  "all": [
-   "TECH_DEEP_SPACE_COLONIES"
-  ]
+  "build": {
+   "all": [
+    "TECH_DEEP_SPACE_COLONIES"
+   ]
+  }
  },
  "territory": [
   "friendly",

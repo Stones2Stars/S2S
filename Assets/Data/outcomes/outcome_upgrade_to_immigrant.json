@@ -5,9 +5,11 @@
   "message": "TXT_KEY_OUTCOME_UPGRADE_TO_IMMIGRANT_MESSAGE"
  },
  "requires": {
-  "all": [
-   "TECH_SEDENTARY_LIFESTYLE"
-  ]
+  "build": {
+   "all": [
+    "TECH_SEDENTARY_LIFESTYLE"
+   ]
+  }
  },
  "in": "city"
 }

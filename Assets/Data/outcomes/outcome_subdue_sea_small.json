@@ -5,9 +5,11 @@
   "message": "TXT_KEY_OUTCOME_SUBDUE_MESSAGE"
  },
  "requires": {
-  "all": [
-   "TECH_COMMERCIAL_WHALING"
-  ]
+  "build": {
+   "all": [
+    "TECH_COMMERCIAL_WHALING"
+   ]
+  }
  },
  "territory": [
   "neutral",

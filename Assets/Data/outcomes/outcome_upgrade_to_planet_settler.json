@@ -5,9 +5,11 @@
   "message": "TXT_KEY_OUTCOME_UPGRADE_TO_PLANET_SETTLER_MESSAGE"
  },
  "requires": {
-  "all": [
-   "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS"
-  ]
+  "build": {
+   "all": [
+    "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS"
+   ]
+  }
  },
  "territory": [
   "neutral"

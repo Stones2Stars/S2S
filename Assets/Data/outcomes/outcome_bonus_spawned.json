@@ -5,8 +5,10 @@
   "message": "TXT_KEY_OUTCOME_HUNTING_BONUS_SPAWNED_MESSAGE"
  },
  "requires": {
-  "all": [
-   "TECH_CANINE_DOMESTICATION"
-  ]
+  "build": {
+   "all": [
+    "TECH_CANINE_DOMESTICATION"
+   ]
+  }
  }
 }

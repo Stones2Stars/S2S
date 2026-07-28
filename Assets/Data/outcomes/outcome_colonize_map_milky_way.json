@@ -5,9 +5,11 @@
   "message": "TXT_KEY_OUTCOME_GO_TO_MAP_MILKY_WAY"
  },
  "requires": {
-  "all": [
-   "TECH_TRANSTANGIBLE_NEUTRINO_ACCELERATORS"
-  ]
+  "build": {
+   "all": [
+    "TECH_TRANSTANGIBLE_NEUTRINO_ACCELERATORS"
+   ]
+  }
  },
  "territory": [
   "friendly",

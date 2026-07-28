@@ -5,9 +5,11 @@
   "message": "TXT_KEY_OUTCOME_GO_TO_MAP_TRANSNEPTUNIAN"
  },
  "requires": {
-  "all": [
-   "TECH_SOLAR_ORDNANCE"
-  ]
+  "build": {
+   "all": [
+    "TECH_SOLAR_ORDNANCE"
+   ]
+  }
  },
  "territory": [
   "friendly",

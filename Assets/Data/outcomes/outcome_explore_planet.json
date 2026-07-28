@@ -5,9 +5,11 @@
   "message": "TXT_KEY_OUTCOME_EXPLORE_PLANET_MESSAGE"
  },
  "requires": {
-  "all": [
-   "TECH_PLANETARY_EXPLORATION"
-  ]
+  "build": {
+   "all": [
+    "TECH_PLANETARY_EXPLORATION"
+   ]
+  }
  },
  "territory": [
   "neutral"

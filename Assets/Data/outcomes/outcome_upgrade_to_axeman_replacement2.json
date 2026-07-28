@@ -5,10 +5,12 @@
   "message": "TXT_KEY_OUTCOME_UPGRADE_TO_AXEMAN_MESSAGE"
  },
  "requires": {
-  "all": [
-   "TECH_AXE_MAKING",
-   "BUILDING_MILITARY_BASE"
-  ]
+  "build": {
+   "all": [
+    "TECH_AXE_MAKING",
+    "BUILDING_MILITARY_BASE"
+   ]
+  }
  },
  "in": "city",
  "replaces": [

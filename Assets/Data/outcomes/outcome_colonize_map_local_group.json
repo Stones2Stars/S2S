@@ -5,9 +5,11 @@
   "message": "TXT_KEY_OUTCOME_GO_TO_MAP_LOCAL_GROUP"
  },
  "requires": {
-  "all": [
-   "TECH_SPACE_CREASING"
-  ]
+  "build": {
+   "all": [
+    "TECH_SPACE_CREASING"
+   ]
+  }
  },
  "territory": [
   "friendly",

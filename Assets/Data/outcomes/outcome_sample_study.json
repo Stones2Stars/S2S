@@ -5,9 +5,11 @@
   "message": "TXT_KEY_OUTCOME_SAMPLE_STUDY_MESSAGE"
  },
  "requires": {
-  "all": [
-   "TECH_SATELLITES"
-  ]
+  "build": {
+   "all": [
+    "TECH_SATELLITES"
+   ]
+  }
  },
  "in": "city"
 }

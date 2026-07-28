@@ -5,9 +5,11 @@
   "message": "TXT_KEY_OUTCOME_JOIN_AS_SLAVE_ENTERTAINMENT_MESSAGE"
  },
  "requires": {
-  "all": [
-   "BUILDING_SLAVE_COMPOUND_ENTERTAINMENT"
-  ]
+  "build": {
+   "all": [
+    "BUILDING_SLAVE_COMPOUND_ENTERTAINMENT"
+   ]
+  }
  },
  "in": "city"
 }

@@ -5,9 +5,11 @@
   "message": "TXT_KEY_OUTCOME_GO_TO_MAP_VIRGO_SUPERCLUSTER"
  },
  "requires": {
-  "all": [
-   "TECH_FOLDING_SPACE"
-  ]
+  "build": {
+   "all": [
+    "TECH_FOLDING_SPACE"
+   ]
+  }
  },
  "territory": [
   "friendly",

@@ -5,9 +5,11 @@
   "message": "TXT_KEY_OUTCOME_ANIMAL_COMBAT_MESSAGE"
  },
  "requires": {
-  "all": [
-   "BUILDING_COLOSSEUM"
-  ]
+  "build": {
+   "all": [
+    "BUILDING_COLOSSEUM"
+   ]
+  }
  },
  "in": "city",
  "replaces": [

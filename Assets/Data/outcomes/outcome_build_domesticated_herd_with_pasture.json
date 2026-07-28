@@ -5,9 +5,11 @@
   "message": "TXT_KEY_OUTCOME_BUILD_DOMESTICATED_PASTURE_MESSAGE"
  },
  "requires": {
-  "all": [
-   "TECH_IRON_WORKING"
-  ]
+  "build": {
+   "all": [
+    "TECH_IRON_WORKING"
+   ]
+  }
  },
  "replaces": [
   "OUTCOME_BUILD_DOMESTICATED_HERD"

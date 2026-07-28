@@ -5,9 +5,11 @@
   "message": "TXT_KEY_OUTCOME_ANIMAL_RECORD_TALE_MESSAGE"
  },
  "requires": {
-  "all": [
-   "BUILDING_SCHOOL_OF_SCRIBES"
-  ]
+  "build": {
+   "all": [
+    "BUILDING_SCHOOL_OF_SCRIBES"
+   ]
+  }
  },
  "in": "city",
  "replaces": [

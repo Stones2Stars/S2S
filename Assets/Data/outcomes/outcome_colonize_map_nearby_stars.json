@@ -5,9 +5,11 @@
   "message": "TXT_KEY_OUTCOME_GO_TO_MAP_NEARBY_STARS"
  },
  "requires": {
-  "all": [
-   "TECH_INTERSTELLAR_TRAVEL"
-  ]
+  "build": {
+   "all": [
+    "TECH_INTERSTELLAR_TRAVEL"
+   ]
+  }
  },
  "territory": [
   "friendly",

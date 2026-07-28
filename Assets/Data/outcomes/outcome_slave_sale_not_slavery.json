@@ -5,9 +5,11 @@
   "message": "TXT_KEY_OUTCOME_SELL_CAPTIVE_MESSAGE"
  },
  "requires": {
-  "all": [
-   "TECH_TRADE"
-  ]
+  "build": {
+   "all": [
+    "TECH_TRADE"
+   ]
+  }
  },
  "in": "city"
 }

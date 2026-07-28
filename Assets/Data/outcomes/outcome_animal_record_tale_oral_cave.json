@@ -5,9 +5,11 @@
   "message": "TXT_KEY_OUTCOME_ANIMAL_RECORD_TALE_MESSAGE"
  },
  "requires": {
-  "all": [
-   "BUILDING_CAVE_PAINTINGS"
-  ]
+  "build": {
+   "all": [
+    "BUILDING_CAVE_PAINTINGS"
+   ]
+  }
  },
  "in": "city",
  "replaces": [

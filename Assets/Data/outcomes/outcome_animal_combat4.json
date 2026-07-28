@@ -5,9 +5,11 @@
   "message": "TXT_KEY_OUTCOME_ANIMAL_COMBAT_MESSAGE"
  },
  "requires": {
-  "all": [
-   "BUILDING_MINOR_LEAGUE_STADIUM"
-  ]
+  "build": {
+   "all": [
+    "BUILDING_MINOR_LEAGUE_STADIUM"
+   ]
+  }
  },
  "in": "city",
  "replaces": [

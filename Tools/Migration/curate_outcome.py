@@ -6,7 +6,7 @@ payload -- the per-carrier rewards live on the units (curate_unit.py's `outcomes
 OUTCOME_* id via `requires.outcome`). This curator emits ONLY the gate:
 
   - identity.description / identity.message               (Description auto-hoists; Message read below)
-  - requires: {all:[...]}  <- PrereqTech (team) / PrereqCivic (empire) / PrereqBuildings (city) apply-time prereqs
+  - requires: {build:{all:[...]}}  <- PrereqTech (team) / PrereqCivic (empire) / PrereqBuildings (city) prereqs
   - obsoletedBy: TECH_X                                   <- ObsoleteTech
   - territory: [friendly|neutral|hostile|barbarian]       <- the 4 territory bools, as an allowed-territory whitelist
   - in: "city" | "notCity"  +  coastalCity: true          <- bCity / bNotCity / bToCoastalCity
@@ -52,6 +52,10 @@ def post_process(typ, obj, rec, store):
 
     # requires: the apply-time prereqs as one cascade condition tree (bare strings -- scope implied by the id prefix:
     # TECH_->team, CIVIC_->empire, BUILDING_->city). The applier evaluates it via cascadeEvalCondition.
+    # ⛔ The condition tree lives INSIDE a TIMING clause, never floating as the base of `requires` (owner): a bare
+    # `requires.all` is consumed by no section unit -- CvRequires::parse routes build/operate/spread and sends
+    # anything else to the unconsumed-key census. An outcome is a leaf action checked once at the moment it fires,
+    # so its timing is `build` (json.md §4.3; the same reason a unit carries build only -- it never goes dormant).
     reqs = []
     pt = _txt(rec, "PrereqTech")
     if pt:
@@ -64,7 +68,7 @@ def post_process(typ, obj, rec, store):
         if b:
             reqs.append(b)
     if reqs:
-        obj["requires"] = OrderedDict([("all", reqs)])
+        obj["requires"] = OrderedDict([("build", OrderedDict([("all", reqs)]))])
 
     ot = _txt(rec, "ObsoleteTech")
     if ot:

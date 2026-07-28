@@ -5,10 +5,12 @@
   "message": "TXT_KEY_OUTCOME_UPGRADE_TO_ARCHER_MESSAGE"
  },
  "requires": {
-  "all": [
-   "TECH_ARCHERY",
-   "BUILDING_EFFECT_TRADITION_ARCHERY"
-  ]
+  "build": {
+   "all": [
+    "TECH_ARCHERY",
+    "BUILDING_EFFECT_TRADITION_ARCHERY"
+   ]
+  }
  },
  "in": "city",
  "replaces": [

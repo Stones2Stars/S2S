@@ -5,9 +5,11 @@
   "message": "TXT_KEY_OUTCOME_ANIMAL_RECORD_TALE_MESSAGE"
  },
  "requires": {
-  "all": [
-   "BUILDING_UNIVERSITY"
-  ]
+  "build": {
+   "all": [
+    "BUILDING_UNIVERSITY"
+   ]
+  }
  },
  "in": "city",
  "replaces": [

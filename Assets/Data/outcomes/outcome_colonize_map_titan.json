@@ -5,9 +5,11 @@
   "message": "TXT_KEY_OUTCOME_GO_TO_MAP_TITAN"
  },
  "requires": {
-  "all": [
-   "TECH_ABYSS_COLONIZATION"
-  ]
+  "build": {
+   "all": [
+    "TECH_ABYSS_COLONIZATION"
+   ]
+  }
  },
  "territory": [
   "friendly",

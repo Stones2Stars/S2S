@@ -5,9 +5,11 @@
   "message": "TXT_KEY_OUTCOME_JOIN_AS_SLAVE_MILITARY_MESSAGE"
  },
  "requires": {
-  "all": [
-   "BUILDING_SLAVE_COMPOUND_MILITARY_SUPPORT"
-  ]
+  "build": {
+   "all": [
+    "BUILDING_SLAVE_COMPOUND_MILITARY_SUPPORT"
+   ]
+  }
  },
  "in": "city"
 }

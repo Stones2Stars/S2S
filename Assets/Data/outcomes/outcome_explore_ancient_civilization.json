@@ -5,9 +5,11 @@
   "message": "TXT_KEY_OUTCOME_EXPLORE_ANCIENT_CIVILIZATION_MESSAGE"
  },
  "requires": {
-  "all": [
-   "TECH_ASTROIMPERIALISM"
-  ]
+  "build": {
+   "all": [
+    "TECH_ASTROIMPERIALISM"
+   ]
+  }
  },
  "territory": [
   "neutral"

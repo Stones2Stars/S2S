@@ -5,9 +5,11 @@
   "message": "TXT_KEY_OUTCOME_CAPTURE_ASTEROID_MESSAGE"
  },
  "requires": {
-  "all": [
-   "TECH_ASTEROID_BELT_PROBES"
-  ]
+  "build": {
+   "all": [
+    "TECH_ASTEROID_BELT_PROBES"
+   ]
+  }
  },
  "territory": [
   "neutral"

@@ -5,9 +5,11 @@
   "message": "TXT_KEY_OUTCOME_JOIN_AS_SLAVE_FOOD_MESSAGE"
  },
  "requires": {
-  "all": [
-   "BUILDING_SLAVE_COMPOUND_FOOD"
-  ]
+  "build": {
+   "all": [
+    "BUILDING_SLAVE_COMPOUND_FOOD"
+   ]
+  }
  },
  "in": "city"
 }

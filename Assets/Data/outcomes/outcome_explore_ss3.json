@@ -5,9 +5,11 @@
   "message": "TXT_KEY_OUTCOME_EXPLORE_SS3_MESSAGE"
  },
  "requires": {
-  "all": [
-   "TECH_ASTEROID_MINING"
-  ]
+  "build": {
+   "all": [
+    "TECH_ASTEROID_MINING"
+   ]
+  }
  },
  "territory": [
   "neutral"

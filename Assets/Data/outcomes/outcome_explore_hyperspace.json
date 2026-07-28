@@ -5,9 +5,11 @@
   "message": "TXT_KEY_OUTCOME_EXPLORE_HYPERSPACE_MESSAGE"
  },
  "requires": {
-  "all": [
-   "TECH_ENDLESS_EXPLORATION"
-  ]
+  "build": {
+   "all": [
+    "TECH_ENDLESS_EXPLORATION"
+   ]
+  }
  },
  "territory": [
   "neutral"

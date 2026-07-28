@@ -5,9 +5,11 @@
   "message": "TXT_KEY_OUTCOME_EXPLORE_INTERSTELLAR_MESSAGE"
  },
  "requires": {
-  "all": [
-   "TECH_ASTROGATION_CONSTELLATION"
-  ]
+  "build": {
+   "all": [
+    "TECH_ASTROGATION_CONSTELLATION"
+   ]
+  }
  },
  "territory": [
   "neutral"

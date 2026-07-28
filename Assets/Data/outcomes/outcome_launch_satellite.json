@@ -5,9 +5,11 @@
   "message": "TXT_KEY_OUTCOME_LAUNCH_SATELLITE_MESSAGE"
  },
  "requires": {
-  "all": [
-   "TECH_SATELLITES"
-  ]
+  "build": {
+   "all": [
+    "TECH_SATELLITES"
+   ]
+  }
  },
  "territory": [
   "neutral"
