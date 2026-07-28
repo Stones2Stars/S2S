@@ -1,6 +1,6 @@
 # Unit-combat → identity-tag mapping (first pass, EDITABLE worklist)
 
-> Sibling worklist to [`unitcombat-distillation.md`](unitcombat-distillation.md) §3.A / §3.E. Data source: live
+> Sibling worklist to [`unitcombat-distillation.md`](../../reference/engine.md) §3.A / §3.E. Data source: live
 > `Assets/Data/**` (2026-07-19). This is a **first pass** — map the OBVIOUS, FLAG the unsure. Tick / edit freely;
 > nothing here is load-bearing until the owner signs off.
 

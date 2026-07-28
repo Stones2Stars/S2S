@@ -65,6 +65,24 @@
   NOT a coverage oracle — the appendix is enumerable). Read maps: [pedia-map.md](../../reference/pedia-read-map.md) ·
   [python-read-map.md](../../reference/python-read-map.md).
 
+## UnitCombat distillation
+
+> The concept + the target model: [engine.md § UnitCombat](../../reference/engine.md). The MINIMUM that unblocks
+> the stuck consumers is the cascade-QUERY surface, not a full re-taxonomy.
+
+- **Emit `tags` from `curate_unitcombat.py`** — it emits families/skills/vision/outcomes/sizeMatters/identity and
+  zero tags today, so the tech/equipment classes (`mounted`/`gunpowder`/`mechanized`) are unauthored. Greenfield:
+  there is no legacy flag to migrate from, and a reasonable FIRST PASS is fine (a wrong tag is a quick data edit,
+  not a perfection-gated blocker). Worklist: [unitcombat-tag-mapping.md](unitcombat-tag-mapping.md).
+- **Fold combat-class tags into a unit's effective tag set** (unit-level ∪ primary ∪ subs ∪ promotion-granted).
+- **Re-express the keyed "vs unit-combat-class" modifiers onto TAG predicates**, retiring `UNITCOMBAT_*` as a
+  modifier target. Needs the keyed consumer, which is unbuilt.
+- **Reconcile the double flags** — `bSpy` lives on both the unit and the unit-combat; unify onto the `spy` tag,
+  same for `outlaw`/criminal.
+- **Purge the vestigial classes** — a majority are referenced by no unit. Opportunistic, never required, and
+  bounded by the unreferenced-is-not-dead caveat (module XML holds assignments; a blunt purge over-reached once and
+  was reverted). Candidates: [unitcombat-merge-candidates.md](unitcombat-merge-candidates.md).
+
 ## Triggers / grants
 
 - **Start packages are DESIGN, not built** ([triggers.md](../../specs/triggers.md) § Game-start provisions): the

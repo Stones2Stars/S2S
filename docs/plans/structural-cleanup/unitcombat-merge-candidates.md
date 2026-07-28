@@ -2,7 +2,7 @@
 
 > **Status:** CANDIDATE LIST for owner review. Read-only mapping — no data was edited. Tick / strike / annotate
 > below, then a follow-up change executes the ticked items. Companion to
-> [unitcombat-distillation.md](unitcombat-distillation.md) §E.
+> [unitcombat-distillation.md](../../reference/engine.md) §E.
 >
 > **Method (owner 2026-07-19):** map the OBVIOUS, FLAG the unsure — do NOT blunt-purge (the 2026-06-14 blunt purge
 > over-reached and was reverted). Only genuinely-dead / genuinely-identical items are proposed; everything ambiguous

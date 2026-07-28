@@ -43,7 +43,7 @@ The engine game-object classes are back on `main`, so these describe live code a
   property ENGINE math is KEEP-legacy and must NOT be rewritten.
 - **[stub-census.md](stub-census.md)** — poco getters returning a constant where legacy computed a real value,
   with named live consumers. Keep CURRENT: delete rows as they are fixed.
-- **[unitcombat-distillation.md](unitcombat-distillation.md)** — slim the `UnitCombat` god-group into tags /
+- **[unitcombat-distillation.md](../../reference/engine.md)** — slim the `UnitCombat` god-group into tags /
   skills / modifier-source. **Required before #430 completes** — the common blocker under three fronts.
   Worklists: **[unitcombat-tag-mapping.md](unitcombat-tag-mapping.md)** ·
   **[unitcombat-merge-candidates.md](unitcombat-merge-candidates.md)** (map the obvious, FLAG the unsure — never

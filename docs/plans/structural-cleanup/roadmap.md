@@ -319,7 +319,7 @@ These are data/curator/audit items whose subject never lived in the archived sub
 - **F7 — the data tail.** [todo.md](todo.md): NPC civs /
   `stronglyRestricted`, `state`/paralyze, the corporation rework, the leaderhead trait remap, ranked-target
   selection. Leaders ship TRAITLESS by owner ruling; the community re-adds traits post-merge.
-- **UnitCombat distillation** — [unitcombat-distillation.md](unitcombat-distillation.md) + the tag-mapping and
+- **UnitCombat distillation** — [unitcombat-distillation.md](../../reference/engine.md) + the tag-mapping and
   merge-candidate worklists. Owner realization: the `UnitCombat` god-group must be distilled before the migration
   can finish, because it is the common blocker under the keyed "vs unit-combat-class" combat modifiers, the upkeep
   military/civilian bucketing, and the `IS_<tag>` predicate surface.

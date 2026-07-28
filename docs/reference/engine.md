@@ -181,7 +181,7 @@ save-break); derived data serializes nothing; deleting a changer means auditing 
 - **What a UnitCombat IS (owner):** a definition of a unit's **strengths and weaknesses** — the good/bad-against
   column (a shared vs-tag stat bundle), NOT a definition of the unit's TYPE (that is the [tag](../specs/skills.md))
   nor its ABILITIES (those are skills). Three concerns, three homes. This is what it originally was in BTS (a
-  vs-based combat grouping); the S2S distillation restores it ([unitcombat-distillation.md](../plans/structural-cleanup/unitcombat-distillation.md)).
+  vs-based combat grouping); the S2S distillation restores it ([unitcombat-distillation.md](engine.md)).
 - Vanilla: a thin label. **S2S/C2C:** a fat `CvUnitCombatInfo` (~150 fields, near-mirror of `CvPromotionInfo` — a
   combat class ≈ a free promotion for every member), many-to-many membership, proliferated to **~981 classes (~77%
   attached to no unit — vestigial)**; ~96% of live classes are inert tags (size/species/motility taxonomies crammed
@@ -202,6 +202,20 @@ save-break); derived data serializes nothing; deleting a changer means auditing 
   sharing Promotion's modifier-family vocabulary (**do UnitCombat + Promotion together**). Its non-stat content
   distills out: identity → tags, abilities → skills, leaving the pure strengths/weaknesses list. Verify live, then
   purge only vestigial/duplicate classes.
+- **⚖ THE LOAD-BEARING DISTINCTION (owner): a TAG is what a unit IS; a UNITCOMBAT is the good/bad-AGAINST column,
+  and its "vs" modifiers key on TAGS — never on another unit-combat id.** The canonical pair: **`anti-mounted` is a
+  UnitCombat** (the modifier group carrying the bonuses), **`mounted` is a TAG** (the identity of the unit it
+  fights). So a vs-modifier authors as `strength.unit.percent {unit: IS_MOUNTED}` **ON** the anti-mounted
+  unit-combat — and **the UnitCombat id stops being a modifier TARGET entirely.** Its reason to exist is DRY: author
+  "these stats vs these tags" once and attach it to every unit of a kind, instead of duplicating them per unit.
+  ⛔ **Promotion prereqs/grants likewise key off the TAG**, not `UNITCOMBAT_*`.
+  ⚑ **A unit carries BOTH, permanently — the mapping is ADDITIVE, not a replacement:** a mounted unit keeps its
+  unit-combat (the vs-tag stat bundle) *and* has the `mounted` tag (its queryable type), because they answer
+  different questions — *how does it fight?* vs *what is it?* A unit's effective tags are its own ∪ its combat
+  classes'.
+  ⚠ **This is the TARGET model; the shipped data still keys vs-entries by `UNITCOMBAT_*`** ([skills.md](../specs/skills.md)
+  §1 documents that current shape). The re-expression rides the distillation work — do not treat the two as
+  agreeing today.
 
 ## See also
 
