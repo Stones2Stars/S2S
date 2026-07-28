@@ -222,12 +222,6 @@ counter-detection (the family sums, so a negative deposit just subtracts). A pro
 tags are not promotion-grantable ([tags.md](tags.md)) — while a unit and a unitcombat, both type-derived, carry
 the method tag.
 
-⚠ **The engine still runs the OLD path.** `changeAdjacentSight` reads `visibilityIntensityTotal` /
-`visibilityIntensityRangeTotal` per `INVISIBLE_*`, which no data now feeds. That is the intended direction —
-legacy fails LOUD rather than quietly answering ([DEC-no-legacy-masking](../architecture/decisions.md#dec-no-legacy-masking))
-— but it means hide-and-seek is DATA-complete and RUNTIME-absent until the contest above is evaluated where
-that loop is.
-
 ## 5. What this model retires
 
 The legacy engine expressed one idea with two unrelated number systems: a **radius**
