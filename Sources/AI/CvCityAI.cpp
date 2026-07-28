@@ -6275,11 +6275,17 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 				}
 
 				int religiousBuildingValue = 0;
-				for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
+				// WHICH UNITS NEED THIS BUILDING? -- the building's own requires-reverse index names them
+				// ([DEC-one-reverse-view]). Asking all ~2,073 units the reverse question, once per candidate
+				// building, is the whole-database scan enabler.md §6 deletes.
+				std::set<int> unitsNeedingBuilding;
+				EnablerKernel::addEdge(EnablerKernel::infoFor(EDGEB_BUILDINGS, (int)eBuilding), EDGEF_REQUIRED_BY, EDGEB_UNITS, unitsNeedingBuilding);
+
+				for (std::set<int>::const_iterator itNeeds = unitsNeedingBuilding.begin(); itNeeds != unitsNeedingBuilding.end(); ++itNeeds)
 				{
 					PROFILE("CvCityAI::AI_buildingValueThresholdOriginal.Units");
 
-					if (GC.getUnitInfo((UnitTypes)iI).isPrereqAndBuilding((int)eBuilding))
+					const int iI = *itNeeds;
 					{
 						// BBAI TODO: Smarter monastary construction, better support for mods
 
@@ -12141,11 +12147,17 @@ bool CvCityAI::AI_buildCaravan()
 	if (((2 * getYieldRate(YIELD_PRODUCTION)) / 3) > iAveProduction)
 	{
 		int iBestHurry = 0;
-		for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
+		// The city's own trainable frontier, not the unit database. ⚠ Behaviour: the candidate set narrows from
+		// in-tree (LISTED + GREYED) to LISTED -- a GREYED unit cannot be trained, so it cannot be hurried either.
+		std::vector<int> trainableUnits;
+		getAvailableUnits(trainableUnits);
+
+		for (size_t iAt = 0; iAt < trainableUnits.size(); ++iAt)
 		{
+			const int iI = trainableUnits[iAt];
+
 			if (GC.getUnitInfo((UnitTypes)iI).getBaseHurry() > iBestHurry)
 			{
-				if (getUnitAvailability((UnitTypes)iI) >= EnablerDomain::STATE_GREYED)
 				{
 					iBestHurry = GC.getUnitInfo((UnitTypes)iI).getBaseHurry();
 					eBestUnit = (UnitTypes)iI;
