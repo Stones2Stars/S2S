@@ -148,7 +148,7 @@ SCALAR_FAMILIES = {
     # and elevation grants sight to whoever looks from it (vision.md). The scope is CITY and that is load-bearing:
     # a building cannot elevate a unit that moves through, only the fixed observer it belongs to, which is exactly
     # what separates it from a watchtower improvement on the same plot (`elevation.plot`).
-    "iLineOfSight": ("elevation", "city", None, "flat"),
+    "iLineOfSight": ("vision", "city", "elevation", "flat"),
     # defense family (grouped; `min` floor clamp lives here, modifier-spec §7)
     "iDefense": ("defense", "city", "amount", "percent"),
     "iBombardDefense": ("defense", "city", "bombardDefense", "percent"),

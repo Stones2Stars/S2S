@@ -102,7 +102,6 @@ public:
 	int getMilitaryWorth() const            { return m_iMilitaryWorth; }
 	int getConquestProbability() const      { return m_iConquestProbability; }      // survive-conquest percent config
 	int getVisibilityPriority() const       { return m_iVisibilityPriority; }
-	int getSightRange() const               { return m_iSightRange; }
 	int getAirlift() const                  { return m_iAirlift; }
 	int getAirUnitCapacity() const          { return m_iAirUnitCapacity; }
 	int getWorkableRadius() const           { return m_iWorkableRadius; }
@@ -159,7 +158,6 @@ private:
 	int m_iMilitaryWorth;
 	int m_iConquestProbability;
 	int m_iVisibilityPriority;
-	int m_iSightRange;
 	int m_iAirlift;
 	int m_iAirUnitCapacity;
 	int m_iWorkableRadius;

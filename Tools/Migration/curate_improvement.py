@@ -86,8 +86,8 @@ IMP_FAMILIES = {
     # Both legacy levers raised how well an observer standing here sees -- one as a radius, one as an elevation
     # tier -- so both ARE elevation (vision.md), and they sum onto the one channel as the two number systems go.
     # Elevation is POSITIONAL: a watchtower raises whoever stands on it, and only while they stand on it.
-    "iVisibilityChange": {"channel": "elevation", "scope": "plot", "kind": "flat"},
-    "iSeeFrom":          {"channel": "elevation", "scope": "plot", "kind": "flat"},
+    "iVisibilityChange": {"channel": "vision",   "scope": "plot", "kind": "flat", "member": "elevation"},
+    "iSeeFrom":          {"channel": "vision",   "scope": "plot", "kind": "flat", "member": "elevation"},
 }
 
 # Placement bools NOT already in the mapping prereqs (those are auto-dropped) — drop from the default path; requires_fn

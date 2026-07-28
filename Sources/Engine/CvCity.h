@@ -864,6 +864,9 @@ public:
 	void getTradeRouteKinds(int (&tradeRoutes)[NUM_TRADE_ROUTE_KINDS]) const;
 	void getHealKinds(int (&heals)[NUM_HEAL_KINDS]) const;
 	void getUnderworldKinds(int (&underworlds)[NUM_UNDERWORLD_KINDS]) const;
+	// Vision (vision.md): the city as an OBSERVER -- VISION_ELEVATION is what its buildings raise, and a
+	// building can never elevate a unit passing through, which is why this is city-scoped and not the plot's.
+	void getVisionKinds(int (&visions)[NUM_VISION_KINDS]) const;
 	// The straggler-scalar group (patterns.md getScalar, read as ONE group): every InfoScalar slot, each answered
 	// at THIS scope -- the entries whose family the city carries hold a value, the rest answer 0.
 	void getScalars(int (&scalars)[NUM_INFO_SCALARS]) const;
@@ -1382,8 +1385,6 @@ public:
 	int calculateCorporationHappiness() const;
 
 	BuildTypes findChopBuild(FeatureTypes eFeature) const;
-	int getLineOfSight() const;
-	void changeLineOfSight(int iChange);
 	int calculateBonusCommerceRateModifier(CommerceTypes eIndex) const;
 	int getLandmarkAngerTimer() const;
 	void changeLandmarkAngerTimer(int iChange);
@@ -1708,7 +1709,6 @@ protected:
 
 	bool m_bBuiltFoodProducedUnit;
 	bool m_bResetTechs;
-	int m_iLineOfSight;
 	int m_iLandmarkAngerTimer;
 	int m_iAdjacentDamagePercent;
 	int m_iWorkableRadiusOverride;

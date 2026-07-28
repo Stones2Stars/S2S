@@ -607,3 +607,10 @@ else ever wrote it), so it is derived and carries no state worth keeping. Plain 
 name.
 CvCity::m_paiDamageAttackingUnitCombatCount
 ========================
+| CvCity::m_iLineOfSight -- the city's line-of-sight accumulator. It summed its buildings' sight contribution and
+| was read by NOTHING: no caller anywhere in the engine, not DllExport so the EXE never asked, no Python consumer.
+| A city's sight was a hardcoded changeAdjacentSight(team, 1, ...), so the buildings advertising it in the pedia
+| granted no vision at all. The value is now the cascade's `vision` family at city scope (VISION_ELEVATION -- a
+| building raises its city's lookout), built by the spine like every other channel, so there is nothing to store.
+CvCity::m_iLineOfSight
+========================

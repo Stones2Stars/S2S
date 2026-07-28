@@ -720,7 +720,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_iImprovementGoodHealth = 0;
 	m_iImprovementBadHealth = 0;
 	m_iCiv = NO_CIVILIZATION;
-	m_iLineOfSight = 0;
 	m_iLandmarkAngerTimer = 0;
 	m_iFreshWater = 0;
 	m_iAdjacentDamagePercent = 0;
@@ -3866,10 +3865,6 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 			changeUnitCombatExtraStrength(modifier.first, modifier.second * iChange);
 		}
 
-		if (!bReligiously)
-		{
-			changeLineOfSight(kBuilding.getLineOfSight() * iChange);
-		}
 		changeAdjacentDamagePercent(kBuilding.getAdjacentDamagePercent() * iChange);
 		changeNumUnitFullHeal(kBuilding.getNumUnitFullHeal() * iChange);
 		changeNumPopulationEmployed(kBuilding.getNumPopulationEmployed() * iChange);
@@ -16305,7 +16300,6 @@ void CvCity::read(FDataStreamBase* pStream)
 	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvCity", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_pabHadVicinityBonus);
 	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvCity", REMAPPED_CLASS_TYPE_CIVILIZATIONS, &m_iCiv);
 
-	WRAPPER_READ(wrapper, "CvCity", &m_iLineOfSight);
 	WRAPPER_READ(wrapper, "CvCity", &m_iLandmarkAngerTimer);
 
 	WRAPPER_READ(wrapper, "CvCity", &m_iFreshWater);
@@ -16974,7 +16968,6 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_pabHadVicinityBonus);
 	WRAPPER_WRITE_CLASS_ENUM(wrapper, "CvCity", REMAPPED_CLASS_TYPE_CIVILIZATIONS, m_iCiv);
 
-	WRAPPER_WRITE(wrapper, "CvCity", m_iLineOfSight);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iLandmarkAngerTimer);
 
 	WRAPPER_WRITE(wrapper, "CvCity", m_iFreshWater);
@@ -19989,14 +19982,16 @@ int CvCity::calculateCorporationHappiness() const
 }
 
 
-int CvCity::getLineOfSight() const
+void CvCity::getVisionKinds(int (&visions)[NUM_VISION_KINDS]) const
 {
-	return m_iLineOfSight;
-}
-
-void CvCity::changeLineOfSight(int iChange)
-{
-	m_iLineOfSight += iChange;
+	// The city's sight (vision.md), read like every other group: its buildings raise VISION_ELEVATION, and the
+	// packages those deposits feed are built by the spine -- the load reseed once, then each BUILDING_CHANGED
+	// fact -- exactly as every other channel is. No accumulator, no serialization, nothing to drift.
+	for (int iKind = 0; iKind < NUM_VISION_KINDS; ++iKind)
+	{
+		const int iChannel = CascadeChannelRegistry::channelLookup(MODFAM_VISION, iKind, -1);
+		visions[iKind] = InfoValuation::realizedAtCity(*this, iChannel);
+	}
 }
 
 

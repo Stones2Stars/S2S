@@ -122,6 +122,8 @@ enum ModifierFamily
 	MODFAM_TRADE_ROUTES,
 	MODFAM_UNDERWORLD,
 	MODFAM_UPKEEP,
+	MODFAM_VISION,   // vision.md: how well an OBSERVER sees -- its STRENGTH, and the unit plane's only source
+	                 // (base stat + promotions). Spent walking outward against MODFAM_OBSTRUCTION.
 	MODFAM_WAR_WEARINESS,
 	MODFAM_WITHDRAWAL,
 	MODFAM_WORK_RATE,
@@ -339,6 +341,21 @@ enum MovementKind
 	NUM_MOVEMENT_KINDS
 };
 const int MOVEMENT_SCOPES = INFO_SCOPE_BIT(CASC_SCOPE_UNIT) | INFO_SCOPE_BIT(CASC_SCOPE_PLOT);
+
+// Vision (vision.md) -- ONE family, the sight budget spent walking outward exactly as movement is. The three
+// kinds are what the model is made of, and the SCOPE says whose: a unit's STRENGTH is its base stat plus its
+// promotions and nothing else; ELEVATION is positional (a peak is 2, so a unit standing there has 2 and only
+// there) or a city's own, raised by its buildings -- which is why a building can never elevate a unit passing
+// through; OBSTRUCTION is what the ground costs to see through. Strength and elevation are interchangeable
+// currencies against obstruction: a jungle demands extra budget, payable by seeing better or standing higher.
+enum VisionKind
+{
+	VISION_STRENGTH = 0,      // how well the observer sees (memberless -- the family's default kind)
+	VISION_ELEVATION,         // how high it is; grants sight to whoever looks from it
+	VISION_OBSTRUCTION,       // what it costs to see THROUGH this ground
+	NUM_VISION_KINDS
+};
+const int VISION_SCOPES = INFO_SCOPE_BIT(CASC_SCOPE_UNIT) | INFO_SCOPE_BIT(CASC_SCOPE_PLOT) | INFO_SCOPE_BIT(CASC_SCOPE_CITY);
 
 // Ruling 5 re-homes: flightRange/missileRange land here beside intercept/evasion.
 enum AirKind

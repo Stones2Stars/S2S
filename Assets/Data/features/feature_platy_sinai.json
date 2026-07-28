@@ -1,8 +1,10 @@
 {
  "type": "FEATURE_PLATY_SINAI",
- "obstruction": {
+ "vision": {
   "plot": {
-   "flat": 1
+   "obstruction": {
+    "flat": 1
+   }
   }
  },
  "characteristics": [

@@ -20,9 +20,11 @@
    "flat": 5
   }
  },
- "obstruction": {
+ "vision": {
   "plot": {
-   "flat": 1
+   "obstruction": {
+    "flat": 1
+   }
   }
  },
  "characteristics": [

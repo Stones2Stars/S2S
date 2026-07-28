@@ -51,7 +51,7 @@ FEATURE_FAMILIES = {
     "iHealthPercent":   {"channel": "health",         "scope": "plot", "kind": "percent"},
     "iDefense":         {"channel": "defense",        "scope": "plot", "kind": "percent", "member": "amount"},
     "iCultureDistance": {"channel": "cultureDistance","scope": "plot", "kind": "flat"},
-    "iSeeThrough":      {"channel": "obstruction",    "scope": "plot", "kind": "flat"},   # what the ground costs to see THROUGH -- a feature's see-through value IS its obstruction (jungle 2, open ground 1); vision.md
+    "iSeeThrough":      {"channel": "vision",         "scope": "plot", "kind": "flat", "member": "obstruction"},   # what the ground costs to see THROUGH -- a feature's see-through value IS its obstruction (jungle 2, open ground 1); vision.md
 }
 
 # RiverYieldChange + PropertyManipulators are dropped from the DEFAULT path and rebuilt in post_process (the first

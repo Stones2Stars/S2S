@@ -5440,7 +5440,6 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 						iValue += kBuilding.isZoneOfControl() ? 50 : 0;
 					}
 
-					iValue += kBuilding.getLineOfSight() * 15;
 
 					foreach_(const UnitCombatModifier2 & modifier, kBuilding.getUnitCombatExtraStrength())
 					{
@@ -12735,7 +12734,6 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 			kBuilding.isNeverCapture() ||
 			kBuilding.isNukeImmune() ||
 			GC.getGame().isOption(GAMEOPTION_UNSUPPORTED_ZONE_OF_CONTROL) && kBuilding.isZoneOfControl() ||
-			kBuilding.getLineOfSight() > 0 ||
 			!kBuilding.getUnitCombatExtraStrength().empty() ||
 			kBuilding.getAdjacentDamagePercent() > 0 ||
 			kBuilding.isProtectedCulture() ||
@@ -13212,7 +13210,6 @@ void CvCityAI::CalculateAllBuildingValues(int iFocusFlags)
 					{
 						iValue += kBuilding.isZoneOfControl() ? 50 : 0;
 					}
-					iValue += kBuilding.getLineOfSight() * 15;
 
 					foreach_(const UnitCombatModifier2 & modifier, kBuilding.getUnitCombatExtraStrength())
 					{

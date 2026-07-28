@@ -16402,17 +16402,6 @@ void CvGameTextMgr::setBuildingHelp(CvWStringBuffer &szBuffer, const BuildingTyp
 			szBuffer.append(gDLL->getText("TXT_KEY_BUILDINGHELP_HURRY_ANGER_MOD", kBuilding.getHurryAngerModifier()));
 		}
 	}
-	if (kBuilding.getLineOfSight() > 0)
-	{
-		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_BUILDINGHELP_INCREASES_LINE_OF_SIGHT"));
-	}
-	else if (kBuilding.getLineOfSight() < 0)
-	{
-		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_BUILDINGHELP_DECREASES_LINE_OF_SIGHT"));
-	}
-
 	if (!bRelDisabled)
 	{
 		if (kBuilding.getInflationModifier() != 0)

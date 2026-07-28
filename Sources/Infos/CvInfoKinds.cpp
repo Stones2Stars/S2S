@@ -80,6 +80,7 @@ namespace
 		"tradeRoutes",              // MODFAM_TRADE_ROUTES
 		"underworld",               // MODFAM_UNDERWORLD
 		"upkeep",                   // MODFAM_UPKEEP
+		"vision",                   // MODFAM_VISION
 		"warWeariness",             // MODFAM_WAR_WEARINESS
 		"withdrawal",               // MODFAM_WITHDRAWAL
 		"workRate",                 // MODFAM_WORK_RATE
@@ -159,6 +160,7 @@ namespace
 		INFO_SCOPE_BIT(CASC_SCOPE_CITY) | INFO_SCOPE_BIT(CASC_SCOPE_EMPIRE) | INFO_SCOPE_BIT(CASC_SCOPE_WORLD),   // tradeRoutes
 		INFO_SCOPE_BIT(CASC_SCOPE_CITY),                                                                          // underworld
 		INFO_SCOPE_BIT(CASC_SCOPE_EMPIRE) | INFO_SCOPE_BIT(CASC_SCOPE_UNIT),                                      // upkeep
+		VISION_SCOPES,                                                                                            // vision
 		INFO_SCOPE_BIT(CASC_SCOPE_CITY) | INFO_SCOPE_BIT(CASC_SCOPE_EMPIRE),                                      // warWeariness
 		INFO_SCOPE_BIT(CASC_SCOPE_UNIT),                                                                          // withdrawal
 		INFO_SCOPE_BIT(CASC_SCOPE_EMPIRE) | INFO_SCOPE_BIT(CASC_SCOPE_UNIT),                                      // workRate
@@ -295,6 +297,11 @@ namespace
 		{ "moves", MOVEMENT_MOVES },
 		{ "moveDiscount", MOVEMENT_MOVE_DISCOUNT },
 		{ "dropRange", MOVEMENT_DROP_RANGE },
+		{ 0, 0 } };
+
+	const InfoMemberRow MEMBERS_VISION[] = {
+		{ "elevation", VISION_ELEVATION },
+		{ "obstruction", VISION_OBSTRUCTION },
 		{ 0, 0 } };
 
 	const InfoMemberRow MEMBERS_AIR[] = {
@@ -478,6 +485,7 @@ namespace
 		MEMBERS_TRADE_ROUTES,       // tradeRoutes
 		MEMBERS_UNDERWORLD,         // underworld
 		MEMBERS_UPKEEP,             // upkeep
+		MEMBERS_VISION,             // vision
 		MEMBERS_WAR_WEARINESS,      // warWeariness
 		0,                          // withdrawal
 		MEMBERS_WORK_RATE,          // workRate

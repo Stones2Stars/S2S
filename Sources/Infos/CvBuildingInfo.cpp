@@ -13,7 +13,6 @@ CvBuildingInfo::CvBuildingInfo()
 	, m_iMilitaryWorth(0)
 	, m_iConquestProbability(0)
 	, m_iVisibilityPriority(0)
-	, m_iSightRange(0)
 	, m_iAirlift(0)
 	, m_iAirUnitCapacity(0)
 	, m_iWorkableRadius(0)
@@ -113,7 +112,6 @@ void CvBuildingInfo::mapFrom(const picojson::value& entity)
 	m_iMilitaryWorth = jsonIdInt(identity, "militaryWorth");
 	m_iConquestProbability = jsonIdInt(identity, "conquestProbability");
 	m_iVisibilityPriority = jsonIdInt(identity, "visibilityPriority");
-	m_iSightRange = jsonIdInt(identity, "sightRange");
 	m_iAirlift = jsonIdInt(identity, "airlift");
 	m_iAirUnitCapacity = jsonIdInt(identity, "airUnitCapacity");
 	m_iWorkableRadius = jsonIdInt(identity, "workableRadius");

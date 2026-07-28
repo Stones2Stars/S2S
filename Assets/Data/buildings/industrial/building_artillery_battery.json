@@ -80,9 +80,11 @@
    "flat": 1
   }
  },
- "elevation": {
+ "vision": {
   "city": {
-   "flat": 2
+   "elevation": {
+    "flat": 2
+   }
   }
  },
  "PROPERTY_FLAMMABILITY": {

@@ -26,9 +26,11 @@
    }
   }
  },
- "elevation": {
+ "vision": {
   "plot": {
-   "flat": 4
+   "elevation": {
+    "flat": 4
+   }
   }
  },
  "characteristics": [

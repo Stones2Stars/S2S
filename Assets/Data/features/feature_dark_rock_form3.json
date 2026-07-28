@@ -5,9 +5,11 @@
    "flat": 1
   }
  },
- "obstruction": {
+ "vision": {
   "plot": {
-   "flat": 1
+   "obstruction": {
+    "flat": 1
+   }
   }
  },
  "triggers": [

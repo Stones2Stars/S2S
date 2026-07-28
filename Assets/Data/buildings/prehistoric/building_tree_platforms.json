@@ -78,9 +78,11 @@
    "flat": 2
   }
  },
- "elevation": {
+ "vision": {
   "city": {
-   "flat": 1
+   "elevation": {
+    "flat": 1
+   }
   }
  },
  "cost": {
