@@ -176,11 +176,19 @@ site ([fixed-point-and-scales §4c-bis](../../specs/curators/fixed-point-and-sca
   The `.def`s name getters the rebuilt infos no longer have, and a failed `.def` poisons the rest of its chain
   (`C2228: left of '.def' must have class/struct/union type`) — all three `CyInfoInterface*.cpp` files blow the
   100-error cap, so the true count is HIDDEN behind it.
-  ⚖ **A `.def` for a DELETED getter is cut ON SIGHT (owner: "it's not like the game currently works").** That is
-  not the piecemeal cutting the whole-cut rule forbids — that rule protects a WORKING surface from being taken
-  apart before its replacement exists. A binding to a getter that no longer exists is a dangling reference the
-  compiler census already named, and for a `Cy` binding the only way to fix a named consumer is to DELETE it
+  ⚖ **A `.def` for a DELETED getter is cut ON SIGHT (owner: "it's not like the game currently works").** A
+  binding to a getter that no longer exists is a dangling reference the compiler census already named, and for a
+  `Cy` binding the only way to fix a named consumer is to DELETE it
   ([DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed) forbids re-pointing or widening).
+  ⛔ **WHAT IS ACTUALLY FORBIDDEN: shoehorning anything into legacy so the PYTHON GETTERS KEEP WORKING (owner).**
+  That is the ban — not the method of cutting. Keeping a dead binding alive *because Python calls it*, widening a
+  getter to satisfy a `.def`, or holding a cut back to spare the `Cy` surface are all the same move, and it is
+  the one that produces the half-migrated state ([DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed)).
+  ⚖ **PIECEMEAL CUTTING IS NOT FORBIDDEN — do not read a prohibition in (owner: "I have never forbidden piecemeal
+  cutting").** "Cut away WHOLE" states the END STATE — complete disconnection, nothing left breathing — and the
+  SHAPES banned on the way there (a widened binding, a shim beside it, two parallel live surfaces). It does not
+  require one atomic operation, and inventing that requirement blocks exactly the dead-binding sweep this surface
+  needs. Cut what is provably dead when you find it.
   ⚑ The Python side is already broken regardless: `Revolution.py:1140` calls `getFlatMovementCost`, removed with
   the route flat-movement mechanic ([superseded-ideas #23](../../architecture/superseded-ideas.md)), so that block
   dies on an `AttributeError` before reaching anything else. Preserving a binding "for live Python" is fiction
