@@ -26,6 +26,15 @@ root `AGENTS.md`.
   genuinely different classes** — per-id reverse buckets, and coarse axis-flag lists that are correct as they are
   and must NOT be converged. The names were the only thing hiding that. ⇒ Treat an abbreviated identifier as a
   review-blocker on sight, and rename it before reasoning about the code it names.
+  **⚖ THE ONE SANCTIONED ABBREVIATION — a FILE-SCOPE PREFIX, anchored by its own FILE (owner):** *"when the prefix
+  is in the name of the file, it makes sense to have the prefix; it does not make sense to have it as a standalone
+  collection somewhere."* A short prefix on the file-static helpers of ONE translation unit is legitimate — the
+  unity build shares a TU, so file-scope helpers need collision-proofing, and **the FILENAME supplies the
+  expansion**, so the reader is never guessing (`gt_` reads as gather because it lives in the gather file, and
+  nowhere else). **The test is correspondence:** the prefix abbreviates the file it lives in, and appears in NO
+  other file. ⛔ What is banned is the free-floating collection — a prefix naming some *concept* rather than its
+  file, so nothing on screen expands it. That is what the renamed operate-index statics were: an `op` family
+  inside the enabler-kernel file, anchored to nothing.
 - The DLL must remain compliant with the existing build chain.
 - Do not update, replace, or modernize the build chain/toolchain.
 

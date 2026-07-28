@@ -29,8 +29,8 @@ static int mmk_seg(const char* s, int& cache)
 	if (cache < 0) cache = DepositIndex::lookupSegment(std::string(s));
 	return cache;
 }
-static int s_segSelf = -1;
-static int s_segCityLimit = -1;
+static int s_segmentSelf = -1;
+static int s_segmentCityLimit = -1;
 
 // A deposit applies iff enabled holds (or is absent) AND disabled does NOT hold (json.md §3.9), evaluated through the
 // typed-condition evaluator against the live engine ctx. MODIFIER context = the lenient flags (default): a
@@ -92,7 +92,7 @@ long MMKernel::perScale(const CascadeDeposit& dep, const CvCascadeEvalCtx& ec, l
 		value *= cascadeCountCityReligions(dep.religionQual, ec);
 	}
 	if (!dep.hasPer) return value;
-	if (dep.perTokenSeg >= 0 && dep.perTokenSeg == mmk_seg("SELF", s_segSelf)) return value;   // unresolved SELF
+	if (dep.perTokenSeg >= 0 && dep.perTokenSeg == mmk_seg("SELF", s_segmentSelf)) return value;   // unresolved SELF
 	const CvCascScope eScope = (CvCascScope)dep.perScope;   // push-resolved: authored, else the deposit's own scope
 	long iCount = 0;
 	if (dep.perAnyOf != NULL && dep.perAnyOfTypes != NULL)   // per.anyOf: the SUMMED count of every listed type (json §3.7)
@@ -107,7 +107,7 @@ long MMKernel::perScale(const CascadeDeposit& dep, const CvCascadeEvalCtx& ec, l
 	bool bAboveIsCityLimit = false;
 	if (dep.hasAbove && dep.perAboveSeg >= 0)
 	{
-		if (dep.perAboveSeg != mmk_seg("CITY_LIMIT", s_segCityLimit)) return value;   // unknown token -- skip
+		if (dep.perAboveSeg != mmk_seg("CITY_LIMIT", s_segmentCityLimit)) return value;   // unknown token -- skip
 		bAboveIsCityLimit = true;
 	}
 	return perApply(value, iCount, dep.perEach, dep.hasAbove, dep.perAbove, bAboveIsCityLimit);
