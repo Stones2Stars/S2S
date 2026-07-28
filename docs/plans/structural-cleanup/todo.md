@@ -158,7 +158,7 @@
   ([enabler.md §6/§8](../../specs/enabler.md)). The focus-ladder collapse is an AI-architecture change, not a
   per-loop rewrite.
 - **The operate reverse index — NARROWER than it looks, and one part of it is a perf trap.** Verified in tree: the
-  building/unit buckets (`s_bc*`/`s_uc*`) are ALREADY converged and gone; what remains is the operate index in
+  building and unit buckets are ALREADY converged and gone; what remains is the operate index in
   `CvEnablerKernel.cpp`, and it splits into two genuinely different classes:
   - **Per-id buckets** — the two per-id buckets (BONUS→buildings, BUILDING→buildings) — are
     the only true duplicates of `EDGEF_REQUIRED_BY`
