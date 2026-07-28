@@ -49,11 +49,20 @@ curator's job, structurally** (`curate_common.skip_inert`), not a list somebody 
 
 Two halves, both load-bearing:
 
-- **INERT — FAIL-CLOSED.** Only keys known to be effect-free (`identity`/`cost`/`ui`/`world`/`sound`/`ai`, the
+- **INERT — FAIL-CLOSED, TWICE.** Only keys known to be effect-free (`cost`/`ui`/`world`/`sound`/`ai`, the
   constraints `requires`/`allowed`/`enabled`/`disabled`, and the target-side `obsoletedBy`/`replacedBy`) make an
   entity droppable. **A section the test has never heard of keeps the entity ALIVE**, so adding a
   [json.md](../json.md) section can never silently start deleting content — the worst it can do is decline a drop
   that would have been correct.
+  ⛔ **`identity` is NOT blanket-inert, and assuming it is will delete live content.** [json.md §7](../json.md)
+  is explicit that identity carries "intrinsic flags/values (radii, classifications, capability bools, base
+  stats)" alongside the TEXT — so a plot feature is doing real work from inside identity via `movementCost` /
+  `nukeImmune` / `noImprovement`, and across the curated set there are **213 distinct identity keys**, most of
+  them behavioural. Only a small whitelist counts as inert (text · display/pedia placement · metadata ABOUT the
+  entity such as `conquestProbability` / `mapCategories`); any other identity key makes the entity LIVE.
+  ⚑ The whitelist is of **KEYS, not of dead entities** — that distinction is the point of the ruling. A key list
+  describes the SCHEMA, so it is small, stable, and fails closed; a list of dead entities would be exactly the
+  hand-maintained inventory this replaces.
 - **UNREFERENCED — exhaustive, and it runs SECOND.** An entity can be inert and still load-bearing: a shell whose
   only job is to be another entity's prereq gate, an `obsoletes` target, an `enables` entry. Dropping one breaks
   the referrer, so the scan covers every XML record's every element plus Python and the DLL — over the handful

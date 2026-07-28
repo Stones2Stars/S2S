@@ -599,6 +599,8 @@ def main(cfg, boosts_config, out_dir, post_process=None, synthesize=None):
     store, result = run(cfg, boosts_config, post_process=post_process)
     if synthesize:                    # whole-set hook: append SYNTHETIC entities that have no XML record of their
         synthesize(store, result)     # own, derived from the FULL store (the TECH_GAME_START root). Mutates result.
+    # Skip the shells: no effect, no unlock, named by nothing (fail-closed + reference-guarded + announced).
+    skip_inert(result, store, cfg.entity)
     n = len(result)
     has = lambda k: sum(1 for (o, _) in result.values() if k in o)
     STRUCT = {"type", "description", "civilopedia", "help", "quote", "strategy", "enables", "obsoletes",
@@ -670,15 +672,35 @@ _INERT_OK_KEYS = frozenset((
     "obsoletedBy", "replacedBy",                        # target-side: what removes THIS
 ))
 
+
+# ⛔ `identity` is NOT blanket-inert. json.md par.7 is explicit that it holds "intrinsic flags/values (radii,
+# classifications, capability bools, base stats)" alongside the TEXT -- so a plot feature carrying movementCost /
+# nukeImmune / noImprovement is doing real work from inside identity. Only these keys are pure self-description or
+# display metadata; ANY other identity key makes the entity LIVE, the same fail-closed direction as the section
+# test. (Caught by FEATURE_RADIATION_CLOUD, which a blanket-identity rule would have deleted.)
+_INERT_OK_IDENTITY = frozenset((
+    # text
+    "description", "shortDescription", "adjective", "civilopedia", "help", "quote", "strategy", "message", "text",
+    # display / pedia placement
+    "advisor", "visibilityPriority", "fontButtonIndex", "gridX", "gridY", "graphicalOnly", "appearance", "order",
+    # metadata ABOUT the entity, producing nothing on its own
+    "conquestProbability", "mapCategories", "forceNoPrereqScaling", "worth", "militaryWorth",
+))
+
 _ID_RE = re.compile(r"^[A-Z][A-Z0-9]*(?:_[A-Z0-9]+)+$")
 
 
 def is_inert(out):
     """True iff the emitted entity produces no effect and unlocks nothing.
 
-    FAIL-CLOSED: any top-level key not known to be effect-free makes it LIVE.
-    """
-    return not [k for k in out if k not in _INERT_OK_KEYS]
+    FAIL-CLOSED twice over: any top-level key not known to be effect-free makes it LIVE, and so does any
+    `identity` key outside the pure text/display/self-metadata set."""
+    if [k for k in out if k not in _INERT_OK_KEYS]:
+        return False
+    ident = out.get("identity")
+    if isinstance(ident, dict) and [k for k in ident if k not in _INERT_OK_IDENTITY]:
+        return False
+    return True
 
 
 def _xml_referenced_ids(store):
@@ -726,7 +748,8 @@ def skip_inert(results, store, label, keep=()):
     WHY -- a near-miss is the interesting case, because it names an entity that
     does nothing on its own and exists only to be pointed at.
     """
-    candidates = [t for t, out in results.items() if t not in keep and is_inert(out)]
+    unwrap = lambda v: v[0] if isinstance(v, tuple) else v   # shared main() holds (obj, era)
+    candidates = [t for t, v in results.items() if t not in keep and is_inert(unwrap(v))]
     if not candidates:
         return results
     referenced = _xml_referenced_ids(store)
@@ -742,6 +765,8 @@ def skip_inert(results, store, label, keep=()):
         print("DROPPED %d inert %s (no effect, no unlock, referenced nowhere): %s"
               % (len(dropped), label, ", ".join(sorted(dropped))))
     if held:
-        print("INERT but REFERENCED, kept %d %s: %s"
-              % (len(held), label, ", ".join(sorted(held))))
+        shown = sorted(held)
+        tail = "" if len(shown) <= 12 else " (+%d more)" % (len(shown) - 12)
+        print("INERT but REFERENCED, kept %d %s: %s%s"
+              % (len(held), label, ", ".join(shown[:12]), tail))
     return results
