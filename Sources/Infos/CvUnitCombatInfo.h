@@ -29,6 +29,7 @@ public:
 	// ======================= 1. SECTIONS -- whole typed objects =======================
 	virtual const CvModifiers* getModifiers() const { return &m_modifiers; }
 	virtual const CvClassificationBlock* getSkills() const { return &m_skills; }
+	virtual const CvClassificationBlock* getTags() const { return &m_tags; }
 	virtual const CvGate* getGate() const { return &m_gate; }
 	const CvVisionSection& getVision() const { return m_vision; }
 	const CvSizeMattersSection& getSizeMatters() const { return m_sizeMatters; }
@@ -39,6 +40,11 @@ public:
 	bool providesSkill(int iSkillId) const { return m_skills.hasId(iSkillId); }
 	bool revokesSkill(int iSkillId) const { return m_skills.hasFalseId(iSkillId); }
 	bool providesSkills() const { return !m_skills.isEmpty(); }
+	// The class's IDENTITY tags -- what it says its carrier IS, as opposed to the good/bad-AGAINST stats it
+	// holds ([engine.md] UnitCombat). This is the tag's ONE home: CvUnitInfo::deriveAtRegistryComplete unions a
+	// unit's combat classes' tags into the unit's own at load, so no unit carries a baked copy to go stale.
+	bool hasTag(int iTagId) const { return m_tags.hasId(iTagId); }
+	bool hasTags() const { return !m_tags.isEmpty(); }
 
 	// ======================= 3. MODIFIER GROUPS -- point reads over the compiled sums =======================
 	// (Conditioned-list access + the expected* what-if valuations are the base CvInfo surface. The census
@@ -102,12 +108,14 @@ public:
 protected:
 	virtual CvModifiers* mutModifiers() { return &m_modifiers; }
 	virtual CvClassificationBlock* mutSkills() { return &m_skills; }
+	virtual CvClassificationBlock* mutTags() { return &m_tags; }
 	virtual CvGate* mutGate() { return &m_gate; }
 
 private:
 	// --- the composed section units ---
 	CvModifiers m_modifiers;
 	CvClassificationBlock m_skills;
+	CvClassificationBlock m_tags;
 	CvGate m_gate;
 	CvVisionSection m_vision;
 	CvSizeMattersSection m_sizeMatters;

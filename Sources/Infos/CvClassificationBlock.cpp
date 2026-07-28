@@ -47,6 +47,23 @@ void CvClassificationBlock::resolveIds(int eDomain)
 	}
 }
 
+void CvClassificationBlock::mergeGrantedIds(const CvClassificationBlock& kOther)
+{
+	// resolveIds sizes every block to the registry count, so these normally match; the grow is defensive for a
+	// merge attempted before this block was resolved (it then simply takes the other's width).
+	if (kOther.m_byId.size() > m_byId.size())
+	{
+		m_byId.resize(kOther.m_byId.size(), 0);
+	}
+	for (size_t i = 0; i < kOther.m_byId.size(); ++i)
+	{
+		if (kOther.m_byId[i] != 0)
+		{
+			m_byId[i] = 1;
+		}
+	}
+}
+
 bool CvClassificationBlock::hasKey(int& iIdCache, int eDomain, const char* szKey) const
 {
 	if (!m_byId.empty()) return hasId(ClassificationRegistry::cachedKeyId(iIdCache, eDomain, szKey));

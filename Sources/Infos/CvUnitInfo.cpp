@@ -194,11 +194,18 @@ const char* CvUnitInfo::getButton() const
 // every derived member is recomputed and assigned each run; the upgrade chain is cleared first.
 void CvUnitInfo::deriveAtRegistryComplete(int iFirstPrereqTechEra, const std::set<int>& combatClassesWithPromotions)
 {
-	// --- the SM base ranks + strength/cargo bases: ONE combat-class pass mirroring the archived post-load
-	// derivation. Ranks = Sigma each class's *Base where > -10 (the "unset" sentinel); change base (x100) =
-	// Sigma classes' flat-combat sum; modifier base = Sigma (quality/size/group base - 5) where > -10; cargo
-	// volume applies the volumetric multiplier once per unit of the (size+group) offset, /100, floor 1. The
-	// group rank feeds getUnitCountSM (count / 3^(rank-1)), so the derived value must be real, never a stub.
+	// --- the SM base ranks + strength/cargo bases + the IDENTITY TAGS: ONE combat-class pass mirroring the
+	// archived post-load derivation. Ranks = Sigma each class's *Base where > -10 (the "unset" sentinel); change
+	// base (x100) = Sigma classes' flat-combat sum; modifier base = Sigma (quality/size/group base - 5) where
+	// > -10; cargo volume applies the volumetric multiplier once per unit of the (size+group) offset, /100,
+	// floor 1. The group rank feeds getUnitCountSM (count / 3^(rank-1)), so the derived value must be real,
+	// never a stub.
+	//
+	// TAGS ride the same walk because they answer the same question over the same set: a unit's effective tags
+	// are its OWN union its combat classes' ([engine.md] UnitCombat). The tag is authored once, on the CLASS, so
+	// a unit holds no baked copy that could go stale when a class is re-tagged. The walk is primary +
+	// combatClasses, which is exactly the set tags are defined over -- a tag is creation/upgrade-set and NOT
+	// promotion-grantable ([tags.md]), so a class a PROMOTION grants contributes no tag and none is missed here.
 	int iQualityRank = 0;
 	int iGroupRank = 0;
 	int iSizeRank = 0;
@@ -213,6 +220,7 @@ void CvUnitInfo::deriveAtRegistryComplete(int iFirstPrereqTechEra, const std::se
 			continue;
 		}
 		const CvUnitCombatInfo& classInfo = GC.getUnitCombatInfo((UnitCombatTypes)iClass);
+		m_tags.mergeGrantedIds(*classInfo.getTags());
 		iChange += classInfo.getFlatCombat(COMBAT_AMOUNT, CASC_SCOPE_UNIT);
 		const int iQuality = classInfo.getSizeMatters().qualityBase;
 		const int iSize = classInfo.getSizeMatters().sizeBase;

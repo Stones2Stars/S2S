@@ -68,6 +68,12 @@ public:
 	// Fill the by-id bitsets from the name sets via the domain's key->id registry; sized to the domain count.
 	// Called by CvInfo::resolveClassificationIds after the registry mint pass (LOAD-ONLY).
 	void resolveIds(int eDomain);
+	// Fold another block's GRANT plane into this one, BY ID -- a load-time derivation that takes on another
+	// entity's classification (a unit taking on its combat classes' tags). It must be the id plane, not the
+	// names: readJson mints + resolves every block BEFORE the reverse pass runs, so by derivation time the name
+	// sets are already spent and a name added there would never reach a bitset. The revoke plane is deliberately
+	// NOT merged -- a tag is pure membership and nothing revokes one ([tags.md]).
+	void mergeGrantedIds(const CvClassificationBlock& kOther);
 	bool hasId(int iId) const { return iId >= 0 && iId < (int)m_byId.size() && m_byId[iId] != 0; }
 	bool hasFalseId(int iId) const { return iId >= 0 && iId < (int)m_falseById.size() && m_falseById[iId] != 0; }
 	// The getter read behind CLS_HAS: O(1) once resolved; the pre-resolve load window reads the string set.
