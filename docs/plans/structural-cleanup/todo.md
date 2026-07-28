@@ -407,6 +407,25 @@ measure what survives, then cut the genuine residue. The classes below are the u
   set, and the `AI_chooseProduction` focus-ladder collapse into ONE unified scoring pass
   ([enabler.md §6/§8](../../specs/enabler.md)). The focus-ladder collapse is an AI-architecture change, not a
   per-loop rewrite.
+- **The whole-database BUILDING sweeps LEFT outside `CvCityAI`** — the enablement valuations now ask the asking
+  entity's own compiled edge ([DEC-one-reverse-view](../../architecture/decisions.md#dec-one-reverse-view)); what
+  remains is THREE distinct classes, and treating them as one job is the trap:
+  - **`CvPlayerAI::AI_baseBonusVal`'s per-bonus building loop.** Every term it reads is a bonus-keyed value table
+    (`getBonusYieldModifier` / `getBonusYieldChanges` / `getBonusCommerceModifier` / `getBonusHappinessChanges` /
+    `getBonusHealthChanges` / `getBonusDefenseChanges` / `getBonusProductionModifier` / `getPowerBonus`), and
+    **not one of those getters is declared on any info** — so the loop is dangling consumer debt whose
+    replacement valuation is unbuilt, sequenced with the AI cut. Its eventual driver is the bonus's
+    `EDGEF_RELATED` (the candidate SUPERSET — consumers keep their exact predicates over it). ⛔ Converting the
+    driver ahead of the valuation wires the loop to a moving target (the roadmap's ORDER ruling).
+  - **The HELD-building sweeps** (`AI_civicValue`'s religion-disabling blocks) scan the database testing
+    `getBuildingCount(x) > 0`. That is a HAVE read, not a frontier one, and the aggregate it wants — a
+    PLAYER-level held-building list — does not exist (`CvCity::getHasBuildings` is the city-scope one). Give the
+    OBJECT the aggregate ([tally.md](../../specs/tally.md): "let an object care about itself"), never a side-store.
+  - **The OWN-DATA inversions** — `kCivic.getBuildingCommerceModifier` / `getBuildingHappinessChanges` /
+    `getBuildingHealthChanges` are read by enumerating every building id to find the CIVIC's own authored keys.
+    That is the keyed-container inversion [pedia-read-map finding 2](../../reference/pedia-read-map.md) names; it
+    dies to the container being served whole, not to a frontier swap. ⚠ The `CvEventInfo` twins
+    (`getBuildingYieldChange`/`…CommerceChange`/`…HappyChange`/`…HealthChange`) ride the EVENTS carve-out.
 - **⛔ THE ACTIVE-SET WORK-LIST RIPPLE IS A SECOND PROPAGATION MECHANISM, and it exists only because a fact is
   missing (owner).** A building's operate verdict depends solely on its OWN operate atoms, so it can know by
   itself: the event names the changed atom, `EDGEF_REQUIRED_BY` names the dependents, each re-evaluates itself —

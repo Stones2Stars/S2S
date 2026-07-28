@@ -45,7 +45,6 @@ int cyGetWorldSizeMaxConscript(int /*CivicTypes*/ eCivic);
 bool cyIsReligionTech(int /*TechTypes*/ eTech);
 
 bool cyIsTechRequiredForUnit(int /*TechTypes*/ eTech, int /*UnitTypes*/ eUnit);
-bool cyIsTechRequiredForBuilding(int /*TechTypes*/ eTech, int /*BuildingTypes*/ eBuilding);
 bool cyIsTechRequiredForProject(int /*TechTypes*/ eTech, int /*ProjectTypes*/ eProject);
 bool cyIsWorldUnit(int /*UnitTypes*/ eUnit);
 bool cyIsNationalUnit(int /*UnitTypes*/ eUnit);

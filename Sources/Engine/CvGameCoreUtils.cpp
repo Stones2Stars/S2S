@@ -295,25 +295,6 @@ bool isTechRequiredForUnit(TechTypes eTech, UnitTypes eUnit)
 	return algo::any_of_equal(info.getPrereqAndTechs(), eTech);
 }
 
-bool isTechRequiredForBuilding(TechTypes eTech, BuildingTypes eBuilding)
-{
-	const CvBuildingInfo& info = GC.getBuildingInfo(eBuilding);
-
-	if (info.getPrereqAndTech() == eTech
-	|| algo::any_of_equal(info.getPrereqAndTechs(), eTech))
-	{
-		return true;
-	}
-
-	const SpecialBuildingTypes eSpecial = info.getSpecialBuilding();
-	if (NO_SPECIALBUILDING != eSpecial && GC.getSpecialBuildingInfo(eSpecial).getTechPrereq() == eTech)
-	{
-		return true;
-	}
-
-	return false;
-}
-
 bool isTechRequiredForProject(TechTypes eTech, ProjectTypes eProject)
 {
 	if (GC.getProjectInfo(eProject).getTechPrereq() == eTech)

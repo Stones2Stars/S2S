@@ -163,11 +163,6 @@ bool cyIsTechRequiredForUnit(int /*TechTypes*/ eTech, int /*UnitTypes*/ eUnit)
 	return isTechRequiredForUnit((TechTypes)eTech, (UnitTypes)eUnit);
 }
 
-bool cyIsTechRequiredForBuilding(int /*TechTypes*/ eTech, int /*BuildingTypes*/ eBuilding)
-{
-	return isTechRequiredForBuilding((TechTypes)eTech, (BuildingTypes)eBuilding);
-}
-
 bool cyIsTechRequiredForProject(int /*TechTypes*/ eTech, int /*ProjectTypes*/ eProject)
 {
 	return isTechRequiredForProject((TechTypes)eTech, (ProjectTypes)eProject);

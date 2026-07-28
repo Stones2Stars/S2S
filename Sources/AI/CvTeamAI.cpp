@@ -8,6 +8,7 @@
 #include "Engine/CvArea.h"
 #include "CvBuildingInfo.h"
 #include "CvBonusInfo.h"
+#include "Enabler/CvEnablerKernel.h"   // the compiled enables edges (tech valuation)
 #include "Engine/CvCity.h"
 #include "CvGameAI.h"
 #include "Defines/CvGlobals.h"
@@ -17,7 +18,6 @@
 #include "Engine/CvPlot.h"
 #include "Infrastructure/CvPython.h"
 #include "CvTeamAI.h"
-#include "Repos/BuildingsRepo.h"
 #include "Spine/CvEventSpine.h" // #430 logging consolidation: route [WAR] through the spine (shadow)
 
 // #430 logging: [WAR] team-war -> event spine (CvTeamAI). Self-registers its prefixes + WarAI.log file; the spine never
@@ -1533,9 +1533,16 @@ DenialTypes CvTeamAI::AI_techTrade(const TechTypes eTech, const TeamTypes eTeam)
 		}
 	}
 
-	foreach_(const BuildingTypes eWonder, BuildingsRepo::get().worldWonders())
+	// The tech's own `enables` edge names what it unlocks -- a list fetch, never a sweep asking each wonder the
+	// reverse question (patterns.md § THE WHAT-IF DRIVER).
+	std::set<int> unlockedBuildings;
+	EnablerKernel::addEdge(EnablerKernel::infoFor(EDGEB_TECHS, (int)eTech), EDGEF_ENABLES, EDGEB_BUILDINGS, unlockedBuildings);
+
+	for (std::set<int>::const_iterator itUnlocked = unlockedBuildings.begin(); itUnlocked != unlockedBuildings.end(); ++itUnlocked)
 	{
-		if (isTechRequiredForBuilding(eTech, eWonder) && getBuildingMaking(eWonder) > 0)
+		const BuildingTypes eWonder = static_cast<BuildingTypes>(*itUnlocked);
+
+		if (isWorldWonder(eWonder) && getBuildingMaking(eWonder) > 0)
 		{
 			return DENIAL_MYSTERY;
 		}
@@ -4637,18 +4644,23 @@ int CvTeamAI::AI_getTechMonopolyValue(TechTypes eTech, TeamTypes eTeam) const
 			}
 		}
 	}
-	for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
+	// WHAT DOES THIS TECH ENABLE? -- asked FORWARD off the tech's own load-compiled `enables` edge family
+	// (patterns.md § THE WHAT-IF DRIVER: a pure list fetch). Membership IS the unlock, so the per-candidate
+	// reverse test is gone along with the sweep of every building in the database.
+	std::set<int> unlockedBuildings;
+	EnablerKernel::addEdge(EnablerKernel::infoFor(EDGEB_TECHS, (int)eTech), EDGEF_ENABLES, EDGEB_BUILDINGS, unlockedBuildings);
+
+	for (std::set<int>::const_iterator itUnlocked = unlockedBuildings.begin(); itUnlocked != unlockedBuildings.end(); ++itUnlocked)
 	{
-		if (isTechRequiredForBuilding(eTech, (BuildingTypes)iI))
+		const BuildingTypes eLoopBuilding = static_cast<BuildingTypes>(*itUnlocked);
+
+		if (GC.getBuildingInfo(eLoopBuilding).getReligionType() == NO_RELIGION)
 		{
-			if (GC.getBuildingInfo((BuildingTypes)iI).getReligionType() == NO_RELIGION)
-			{
-				iValue += 30;
-			}
-			if (isWorldWonder((BuildingTypes)iI) && !GC.getGame().isBuildingMaxedOut((BuildingTypes)iI))
-			{
-				iValue += 50;
-			}
+			iValue += 30;
+		}
+		if (isWorldWonder(eLoopBuilding) && !GC.getGame().isBuildingMaxedOut(eLoopBuilding))
+		{
+			iValue += 50;
 		}
 	}
 	for (int iI = 0; iI < GC.getNumProjectInfos(); iI++)

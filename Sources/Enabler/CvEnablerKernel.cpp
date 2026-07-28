@@ -51,6 +51,9 @@ const CvInfo* EnablerKernel::infoFor(EnEdgeBucket eBucket, int id)
 	case EDGEB_CIVICS:     return InfoRepo<CvCivicInfo>::get().get(id);
 	case EDGEB_PROMOTIONS: return InfoRepo<CvPromotionInfo>::get().get(id);
 	case EDGEB_BUILDS:     return InfoRepo<CvBuildInfo>::get().get(id);
+	// The BONUS axis is GATE-ONLY (enabler.md §8 resolved forks): a bonus never drives tree membership, but its
+	// EDGEF_REQUIRED_BY dependents ARE what a bonus event re-gates, so the bucket must resolve to read them.
+	case EDGEB_BONUSES:    return InfoRepo<CvBonusInfo>::get().get(id);
 	// EDGEB_HURRIES has no InfoRepo (HURRY_ not in RJ_REPO_TYPES) -> NULL; canHurry needs only the enables.hurries
 	// edges (on the civics/techs), and a NULL json passes requires/allowed -> the gate IS "the hurry type is generated".
 	default:               return NULL;

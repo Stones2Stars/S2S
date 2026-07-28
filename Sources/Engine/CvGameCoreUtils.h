@@ -220,7 +220,6 @@ int getWorldSizeMaxConscript(CivicTypes eCivic);
 bool isReligionTech(TechTypes eTech);
 
 bool isTechRequiredForUnit(TechTypes eTech, UnitTypes eUnit);
-bool isTechRequiredForBuilding(TechTypes eTech, BuildingTypes eBuilding);
 bool isTechRequiredForProject(TechTypes eTech, ProjectTypes eProject);
 
 bool isWorldUnit(UnitTypes eUnit);
