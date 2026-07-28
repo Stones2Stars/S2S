@@ -53,6 +53,16 @@
     "relation": "near",
     "distance": 1
    }
+  },
+  {
+   "trigger": {
+    "type": "POPULATION",
+    "scope": "city",
+    "min": 6
+   },
+   "action": {
+    "destroy": "self"
+   }
   }
  ],
  "world": {
@@ -80,7 +90,6 @@
   "description": "TXT_KEY_FEATURE_SWAMP",
   "civilopedia": "TXT_KEY_FEATURE_SWAMP_PEDIA",
   "appearance": 200,
-  "popDestroys": 6,
   "requiresFlatlands": true,
   "addsFreshWater": true,
   "validTerrains": [

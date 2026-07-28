@@ -33,7 +33,6 @@
  "identity": {
   "description": "TXT_KEY_FEATURE_BLUE_SUPERGIANT",
   "civilopedia": "TXT_KEY_FEATURE_BLUE_SUPERGIANT_PEDIA",
-  "popDestroys": -1,
   "validTerrains": [
    "TERRAIN_ORION_ARM",
    "TERRAIN_MILKY_WAY"

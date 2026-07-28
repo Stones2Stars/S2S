@@ -46,7 +46,6 @@
   "description": "TXT_KEY_FEATURE_OASIS",
   "civilopedia": "TXT_KEY_FEATURE_OASIS_PEDIA",
   "appearance": 1000,
-  "popDestroys": -1,
   "noCoast": true,
   "noRiver": true,
   "noAdjacent": true,

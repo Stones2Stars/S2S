@@ -48,6 +48,16 @@
     "relation": "near",
     "distance": 1
    }
+  },
+  {
+   "trigger": {
+    "type": "POPULATION",
+    "scope": "city",
+    "min": 3
+   },
+   "action": {
+    "destroy": "self"
+   }
   }
  ],
  "world": {
@@ -80,7 +90,6 @@
   "description": "TXT_KEY_FEATURE_FOREST_ANCIENT",
   "civilopedia": "TXT_KEY_FEATURE_FOREST_PEDIA",
   "appearance": 300,
-  "popDestroys": 3,
   "validTerrains": [
    "TERRAIN_GRASSLAND",
    "TERRAIN_PLAINS",

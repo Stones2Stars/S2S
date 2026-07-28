@@ -22,6 +22,18 @@
  "characteristics": [
   "unimprovable"
  ],
+ "triggers": [
+  {
+   "trigger": {
+    "type": "POPULATION",
+    "scope": "city",
+    "min": 40
+   },
+   "action": {
+    "destroy": "self"
+   }
+  }
+ ],
  "world": {
   "art": {
    "define": "ART_DEF_FEATURE_CRATER_LARGE"
@@ -33,7 +45,6 @@
  "identity": {
   "description": "TXT_KEY_FEATURE_CRATER_LARGE",
   "civilopedia": "TXT_KEY_FEATURE_CRATER_PEDIA",
-  "popDestroys": 40,
   "appearance": 250,
   "noAdjacent": true,
   "requiresFlatlands": true,

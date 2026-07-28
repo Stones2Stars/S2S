@@ -42,7 +42,6 @@
   "description": "TXT_KEY_FEATURE_FALLOUT",
   "civilopedia": "TXT_KEY_FEATURE_FALLOUT_PEDIA",
   "disappearance": 800,
-  "growth": 60,
-  "popDestroys": -1
+  "growth": 60
  }
 }

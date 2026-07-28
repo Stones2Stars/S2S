@@ -521,6 +521,20 @@ declare the number. Enforcement reads the [tally](tally.md) count.
 > - **`action`** — an OPEN verb registry: **`destroy`** · **`grant`** (the §5 payload vocabulary nested whole) ·
 >   `spawn` / `place` / `promote` / property deltas / anything else the data needs — one verb vocabulary shared
 >   with the §8 outcome plane (the outcome verb `triggers` renames to **`fires`** to clear this section's name).
+>   ⚖ **The action's SUBJECT defaults to the entity the trigger is authored on — `"destroy": "self"` (owner).**
+>   A verb needs no way to name its own carrier, exactly as a `grants` happening never names the source whose
+>   considered action it is. ⛔ So do NOT extend the `SELF` count-token (§3.1) into a target vocabulary; the
+>   off-spine `self` scope (§3.2) is the word, and the carrier is implicit everywhere else.
+>
+> ⚖ **A trigger may read an event from UP the containment spine — the plot hears its city (owner).** The spine
+> (§3.2) puts `plot` directly under `city`, so a city's happening reaching the plot beneath it is an ordinary
+> downward flow, not a special case: *"the city knows what plot it's on, so the plot can handle the events from
+> the city — if a feature is on the plot, it reads the pop-increase event from the city, and voila"*. The worked
+> case is a feature destroyed as its city grows: `trigger: {type: POPULATION, scope: city, min: N}` +
+> `action: {destroy: self}`, off the `SEVT_POPULATION_CHANGED` fact the spine already carries.
+> ⚑ This is what lets ONE condition replace a legacy special case: the engine destroyed such a feature at
+> FOUNDING when its threshold was 0 or 1 and at `newPop >= N` thereafter — two code paths that are uniformly
+> "city population ≥ N", since a founded city always has population ≥ 1.
 > - The OUTCOME plane already conforms — a mission's roll (`chance` + the per-promotion `odds` table) is the
 >   trigger, its verbs the action; nothing re-homes there.
 >

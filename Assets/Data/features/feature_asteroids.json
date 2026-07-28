@@ -30,7 +30,6 @@
  "identity": {
   "description": "TXT_KEY_FEATURE_ASTEROIDS",
   "civilopedia": "TXT_KEY_FEATURE_ASTEROIDS_PEDIA",
-  "popDestroys": -1,
   "validTerrains": [
    "TERRAIN_INNER_SOLAR_SYSTEM",
    "TERRAIN_OUTER_SOLAR_SYSTEM",

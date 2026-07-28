@@ -52,6 +52,16 @@
     "relation": "near",
     "distance": 1
    }
+  },
+  {
+   "trigger": {
+    "type": "POPULATION",
+    "scope": "city",
+    "min": 3
+   },
+   "action": {
+    "destroy": "self"
+   }
   }
  ],
  "cost": {
@@ -115,7 +125,6 @@
   "description": "TXT_KEY_FEATURE_JUNGLE",
   "civilopedia": "TXT_KEY_FEATURE_JUNGLE_PEDIA",
   "growth": 10,
-  "popDestroys": 3,
   "validTerrains": [
    "TERRAIN_GRASSLAND",
    "TERRAIN_MUDDY",

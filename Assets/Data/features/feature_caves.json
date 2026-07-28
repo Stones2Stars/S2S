@@ -39,7 +39,6 @@
   "civilopedia": "TXT_KEY_FEATURE_CAVES_PEDIA",
   "appearance": 500,
   "noAdjacent": true,
-  "popDestroys": -1,
   "validTerrains": [
    "TERRAIN_BARREN",
    "TERRAIN_DESERT",

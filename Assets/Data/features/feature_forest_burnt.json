@@ -19,6 +19,18 @@
    }
   }
  },
+ "triggers": [
+  {
+   "trigger": {
+    "type": "POPULATION",
+    "scope": "city",
+    "min": 3
+   },
+   "action": {
+    "destroy": "self"
+   }
+  }
+ ],
  "world": {
   "art": {
    "define": "ART_DEF_FEATURE_FOREST_BURNT"
@@ -71,7 +83,6 @@
   "description": "TXT_KEY_FEATURE_FOREST_BURNT",
   "civilopedia": "TXT_KEY_FEATURE_FOREST_PEDIA",
   "appearance": 100,
-  "popDestroys": 3,
   "validTerrains": [
    "TERRAIN_GRASSLAND",
    "TERRAIN_PLAINS",

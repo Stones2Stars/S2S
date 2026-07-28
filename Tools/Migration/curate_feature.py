@@ -57,7 +57,7 @@ FEATURE_FAMILIES = {
 # RiverYieldChange + PropertyManipulators are dropped from the DEFAULT path and rebuilt in post_process (the first
 # is HAS_RIVER-conditional, which apply_channel can't express; the second becomes `triggers` entries, §5).
 # iWarmingDefense is dead. Prereqs (none) come from the mapping.
-FEATURE_DROP = ["iWarmingDefense", "RiverYieldChange", "PropertyManipulators"]
+FEATURE_DROP = ["iWarmingDefense", "RiverYieldChange", "PropertyManipulators", "iPopDestroys"]
 
 # iMovement -> intrinsic `identity.movementCost` via to_identity (resolver-subsystem; matches terrain/route).
 # to_identity OVERRIDES the Feature mapping (which classifies iMovement as a movement/city channel) because
@@ -122,6 +122,23 @@ def post_process(typ, obj, rec, store):
         pulses = [g for g in (engine.property_source_trigger(s) for s in pm if s.tag == "PropertySource") if g]
         if pulses:
             obj.setdefault("triggers", []).extend(pulses)
+    # iPopDestroys -> a TRIGGER on the city's POPULATION (owner). The chain is ordinary containment: a city
+    # knows its plot, the plot carries the feature, so the feature reads the city's population fact and dies --
+    # "dead feature". SEVT_POPULATION_CHANGED already carries it. The ACTION's subject is the entity the
+    # trigger is authored on, implicit exactly as a `grants` happening is (json.md par.5), so no SELF-target
+    # vocabulary is needed.
+    # ONE condition replaces the legacy THREE branches: the engine destroyed at founding when the value was 0
+    # or 1 (CvCity::init) and at `newPop >= value` thereafter (CvCity::setPopulation), which is uniformly
+    # "city population >= value" -- a founded city always has pop >= 1, so 0 and 1 both fire at founding and
+    # normalize to min:1. -1 means never, and emits nothing.
+    pdNode = rec.find("iPopDestroys")
+    pdText = engine.text(pdNode) if pdNode is not None else None
+    if pdText is not None and engine.is_int(pdText) and int(pdText) > -1:
+        obj.setdefault("triggers", []).append(OrderedDict([
+            ("trigger", OrderedDict([("type", "POPULATION"), ("scope", "city"),
+                                     ("min", max(1, int(pdText)))])),
+            ("action", OrderedDict([("destroy", "self")])),
+        ]))
     _reorder(obj)
 
 

@@ -14,6 +14,16 @@
     "relation": "near",
     "distance": 1
    }
+  },
+  {
+   "trigger": {
+    "type": "POPULATION",
+    "scope": "city",
+    "min": 10
+   },
+   "action": {
+    "destroy": "self"
+   }
   }
  ],
  "world": {
@@ -74,7 +84,6 @@
   "civilopedia": "TXT_KEY_FEATURE_CACTUS_PEDIA",
   "appearance": 800,
   "growth": 10,
-  "popDestroys": 10,
   "requiresFlatlands": true,
   "validTerrains": [
    "TERRAIN_DESERT",

@@ -30,7 +30,6 @@
  "identity": {
   "description": "TXT_KEY_FEATURE_SMALL_MOON",
   "civilopedia": "TXT_KEY_FEATURE_SMALL_MOON_PEDIA",
-  "popDestroys": -1,
   "validTerrains": [
    "TERRAIN_OUTER_SOLAR_SYSTEM"
   ]

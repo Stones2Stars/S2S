@@ -64,7 +64,6 @@
   "civilopedia": "TXT_KEY_FEATURE_TAR_PIT_PEDIA",
   "appearance": 50,
   "requiresFlatlands": true,
-  "popDestroys": -1,
   "validTerrains": [
    "TERRAIN_MARSH",
    "TERRAIN_MUDDY",

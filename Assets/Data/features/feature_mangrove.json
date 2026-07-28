@@ -84,7 +84,6 @@
  "identity": {
   "description": "TXT_KEY_FEATURE_MANGROVE",
   "civilopedia": "TXT_KEY_FEATURE_MANGROVE_PEDIA",
-  "popDestroys": -1,
   "coastalOnly": true,
   "requiresFlatlands": true,
   "appearance": 200,

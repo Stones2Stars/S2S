@@ -12,6 +12,18 @@
    }
   }
  },
+ "triggers": [
+  {
+   "trigger": {
+    "type": "POPULATION",
+    "scope": "city",
+    "min": 20
+   },
+   "action": {
+    "destroy": "self"
+   }
+  }
+ ],
  "world": {
   "art": {
    "define": "ART_DEF_FEATURE_CRATER"
@@ -38,7 +50,6 @@
   "description": "TXT_KEY_FEATURE_CRATER",
   "civilopedia": "TXT_KEY_FEATURE_CRATER_PEDIA",
   "appearance": 60,
-  "popDestroys": 20,
   "validTerrains": [
    "TERRAIN_BARREN",
    "TERRAIN_DESERT",

@@ -33,7 +33,6 @@
  "identity": {
   "description": "TXT_KEY_FEATURE_SUPERMASSIVE_BLACK_HOLE",
   "civilopedia": "TXT_KEY_FEATURE_SUPERMASSIVE_BLACK_HOLE_PEDIA",
-  "popDestroys": -1,
   "validTerrains": [
    "TERRAIN_GALACTIC_CORE"
   ]

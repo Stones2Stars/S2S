@@ -40,7 +40,6 @@
   "civilopedia": "TXT_KEY_FEATURE_INFECTIOUS_SMOG_PEDIA",
   "disappearance": 350,
   "spread": 500,
-  "popDestroys": -1,
   "validTerrains": [
    "TERRAIN_BADLAND",
    "TERRAIN_BARREN",

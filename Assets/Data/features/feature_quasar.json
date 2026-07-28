@@ -33,7 +33,6 @@
  "identity": {
   "description": "TXT_KEY_FEATURE_QUASAR",
   "civilopedia": "TXT_KEY_FEATURE_QUASAR_PEDIA",
-  "popDestroys": -1,
   "validTerrains": [
    "TERRAIN_OBSERVABLE_UNIVERSE"
   ]

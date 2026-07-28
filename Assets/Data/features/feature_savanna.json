@@ -29,6 +29,16 @@
     "relation": "near",
     "distance": 1
    }
+  },
+  {
+   "trigger": {
+    "type": "POPULATION",
+    "scope": "city",
+    "min": 8
+   },
+   "action": {
+    "destroy": "self"
+   }
   }
  ],
  "cost": {
@@ -51,7 +61,6 @@
   "civilopedia": "TXT_KEY_FEATURE_SAVANNA_PEDIA",
   "appearance": 1000,
   "growth": 15,
-  "popDestroys": 8,
   "validTerrains": [
    "TERRAIN_DESERT",
    "TERRAIN_PLAINS",

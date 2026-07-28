@@ -38,6 +38,16 @@
     "relation": "near",
     "distance": 1
    }
+  },
+  {
+   "trigger": {
+    "type": "POPULATION",
+    "scope": "city",
+    "min": 5
+   },
+   "action": {
+    "destroy": "self"
+   }
   }
  ],
  "world": {
@@ -67,7 +77,6 @@
   "civilopedia": "TXT_KEY_FEATURE_BAMBOO_PEDIA",
   "appearance": 500,
   "growth": 20,
-  "popDestroys": 5,
   "validTerrains": [
    "TERRAIN_LUSH",
    "TERRAIN_MUDDY",

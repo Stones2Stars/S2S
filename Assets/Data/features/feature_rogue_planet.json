@@ -30,7 +30,6 @@
  "identity": {
   "description": "TXT_KEY_FEATURE_ROGUE_PLANET",
   "civilopedia": "TXT_KEY_FEATURE_ROGUE_PLANET_PEDIA",
-  "popDestroys": -1,
   "validTerrains": [
    "TERRAIN_TRANSTELLAR_SPACE"
   ]

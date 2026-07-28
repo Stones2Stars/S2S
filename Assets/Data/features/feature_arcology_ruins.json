@@ -12,6 +12,18 @@
    }
   }
  },
+ "triggers": [
+  {
+   "trigger": {
+    "type": "POPULATION",
+    "scope": "city",
+    "min": 1
+   },
+   "action": {
+    "destroy": "self"
+   }
+  }
+ ],
  "world": {
   "art": {
    "define": "ART_DEF_FEATURE_ARCOLOGY_RUINS"
@@ -116,7 +128,6 @@
  },
  "identity": {
   "description": "TXT_KEY_IMPROVEMENT_ARCOLOGY_RUINS",
-  "civilopedia": "TXT_KEY_IMPROVEMENT_CITY_RUINS_PEDIA",
-  "popDestroys": 0
+  "civilopedia": "TXT_KEY_IMPROVEMENT_CITY_RUINS_PEDIA"
  }
 }

@@ -40,7 +40,6 @@
   "civilopedia": "TXT_KEY_FEATURE_PLAGUED_SMOG_PEDIA",
   "disappearance": 150,
   "spread": 1000,
-  "popDestroys": -1,
   "validTerrains": [
    "TERRAIN_BADLAND",
    "TERRAIN_BARREN",

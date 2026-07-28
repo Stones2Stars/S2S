@@ -42,6 +42,16 @@
     "relation": "near",
     "distance": 1
    }
+  },
+  {
+   "trigger": {
+    "type": "POPULATION",
+    "scope": "city",
+    "min": 3
+   },
+   "action": {
+    "destroy": "self"
+   }
   }
  ],
  "world": {
@@ -70,7 +80,6 @@
   "civilopedia": "TXT_KEY_FEATURE_VERY_TALL_GRASS_PEDIA",
   "appearance": 500,
   "growth": 20,
-  "popDestroys": 3,
   "validTerrains": [
    "TERRAIN_GRASSLAND",
    "TERRAIN_PLAINS",

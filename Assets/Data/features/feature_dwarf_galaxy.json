@@ -30,7 +30,6 @@
  "identity": {
   "description": "TXT_KEY_FEATURE_DWARF_GALAXY",
   "civilopedia": "TXT_KEY_FEATURE_DWARF_GALAXY_PEDIA",
-  "popDestroys": -1,
   "validTerrains": [
    "TERRAIN_LOCAL_GROUP",
    "TERRAIN_VIRGO_SUPERCLUSTER"

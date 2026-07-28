@@ -19,7 +19,6 @@
  },
  "identity": {
   "description": "TXT_KEY_FEATURE_RADIATION_CLOUD",
-  "civilopedia": "TXT_KEY_FEATURE_RADIATION_CLOUD_PEDIA",
-  "popDestroys": -1
+  "civilopedia": "TXT_KEY_FEATURE_RADIATION_CLOUD_PEDIA"
  }
 }

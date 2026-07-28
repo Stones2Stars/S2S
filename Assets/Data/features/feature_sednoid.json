@@ -30,7 +30,6 @@
  "identity": {
   "description": "TXT_KEY_FEATURE_SEDNOID",
   "civilopedia": "TXT_KEY_FEATURE_SEDNOID_PEDIA",
-  "popDestroys": -1,
   "validTerrains": [
    "TERRAIN_TRANSNEPTUNIAN_SPACE"
   ]

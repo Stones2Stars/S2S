@@ -30,7 +30,6 @@
  "identity": {
   "description": "TXT_KEY_FEATURE_PLANETARY_RING",
   "civilopedia": "TXT_KEY_FEATURE_PLANETARY_RING_PEDIA",
-  "popDestroys": -1,
   "validTerrains": [
    "TERRAIN_OUTER_SOLAR_SYSTEM"
   ]
