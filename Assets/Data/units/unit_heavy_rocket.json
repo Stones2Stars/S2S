@@ -26,6 +26,11 @@
    "flat": 24
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_HEAVY_ROCKET"
+  }
+ },
  "skills": [
   "canMoveAllTerrain",
   "canMoveImpassable",
@@ -109,7 +114,6 @@
   "defaultUnitAI": "UNITAI_WORKER",
   "formationType": "FORMATION_TYPE_DEFAULT",
   "advisor": "ADVISOR_ECONOMY",
-  "captures": "UNIT_HEAVY_ROCKET",
   "unitAIs": [
    "UNITAI_WORKER"
   ],

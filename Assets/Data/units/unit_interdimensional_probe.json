@@ -16,6 +16,11 @@
    "flat": 12
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_INTERDIMENSIONAL_PROBE"
+  }
+ },
  "skills": [
   "canMoveAllTerrain",
   "canMoveImpassable",
@@ -87,7 +92,6 @@
   "defaultUnitAI": "UNITAI_WORKER",
   "formationType": "FORMATION_TYPE_DEFAULT",
   "advisor": "ADVISOR_ECONOMY",
-  "captures": "UNIT_INTERDIMENSIONAL_PROBE",
   "unitAIs": [
    "UNITAI_WORKER"
   ],

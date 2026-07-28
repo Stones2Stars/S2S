@@ -31,6 +31,11 @@
    "flat": 24
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_SPACE_SHUTTLE"
+  }
+ },
  "skills": [
   "canMoveAllTerrain",
   "canMoveImpassable",
@@ -119,7 +124,6 @@
   "defaultUnitAI": "UNITAI_WORKER",
   "formationType": "FORMATION_TYPE_DEFAULT",
   "advisor": "ADVISOR_ECONOMY",
-  "captures": "UNIT_SPACE_SHUTTLE",
   "unitAIs": [
    "UNITAI_WORKER"
   ],

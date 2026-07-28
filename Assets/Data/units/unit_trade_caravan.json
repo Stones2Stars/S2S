@@ -178,6 +178,11 @@
    "flat": 2
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_TRADE_CARAVAN"
+  }
+ },
  "skills": [
   "noCapture",
   "noNonTypeProdMods",
@@ -262,7 +267,6 @@
   "defaultUnitAI": "UNITAI_MERCHANT",
   "formationType": "FORMATION_TYPE_DEFAULT",
   "advisor": "ADVISOR_GROWTH",
-  "captures": "UNIT_TRADE_CARAVAN",
   "unitAIs": [
    "UNITAI_MERCHANT",
    "UNITAI_ENGINEER"

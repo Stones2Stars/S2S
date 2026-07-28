@@ -13,6 +13,11 @@
    "flat": 24
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_HYPERINTELLIGENT_WORK_CREW"
+  }
+ },
  "skills": [
   "canMoveAllTerrain",
   "canMoveImpassable",
@@ -66,7 +71,6 @@
   "defaultUnitAI": "UNITAI_WORKER",
   "formationType": "FORMATION_TYPE_DEFAULT",
   "advisor": "ADVISOR_ECONOMY",
-  "captures": "UNIT_HYPERINTELLIGENT_WORK_CREW",
   "unitAIs": [
    "UNITAI_WORKER"
   ],

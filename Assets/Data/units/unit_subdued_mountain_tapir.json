@@ -5,6 +5,11 @@
    "flat": 1
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_SUBDUED_MOUNTAIN_TAPIR"
+  }
+ },
  "skills": [
   "onlyDefensive",
   "militaryTrade"
@@ -71,7 +76,6 @@
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_SUBDUED_ANIMAL",
   "formationType": "FORMATION_TYPE_ANIMAL",
-  "captures": "UNIT_SUBDUED_MOUNTAIN_TAPIR",
   "unitAIs": [
    "UNITAI_SUBDUED_ANIMAL"
   ],

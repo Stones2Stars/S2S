@@ -96,7 +96,8 @@
  ],
  "tags": [
   "military",
-  "landUnit"
+  "landUnit",
+  "vtol"
  ],
  "combatClass": "UNITCOMBAT_HELICOPTER",
  "combatClasses": [
@@ -146,7 +147,6 @@
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_HEALER",
   "formationType": "FORMATION_TYPE_DEFAULT",
-  "special": "SPECIALUNIT_VTOL",
   "advisor": "ADVISOR_MILITARY",
   "unitAIs": [
    "UNITAI_HEALER"

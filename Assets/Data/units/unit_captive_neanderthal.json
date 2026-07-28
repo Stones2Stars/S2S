@@ -5,12 +5,18 @@
    "flat": 1
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_CAPTIVE_NEANDERTHAL"
+  }
+ },
  "skills": [
   "onlyDefensive",
   "militaryTrade"
  ],
  "tags": [
-  "landUnit"
+  "landUnit",
+  "captive"
  ],
  "combatClass": "UNITCOMBAT_CAPTIVE",
  "combatClasses": [
@@ -284,9 +290,7 @@
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_SUBDUED_ANIMAL",
   "formationType": "FORMATION_TYPE_DEFAULT",
-  "special": "SPECIALUNIT_CAPTIVE",
   "advisor": "ADVISOR_ECONOMY",
-  "captures": "UNIT_CAPTIVE_NEANDERTHAL",
   "unitAIs": [
    "UNITAI_SUBDUED_ANIMAL"
   ],

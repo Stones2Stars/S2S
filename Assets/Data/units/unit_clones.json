@@ -76,7 +76,8 @@
  "tags": [
   "worker",
   "civilian",
-  "landUnit"
+  "landUnit",
+  "troop"
  ],
  "combatClass": "UNITCOMBAT_WORKER",
  "combatClasses": [
@@ -116,7 +117,6 @@
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_WORKER",
   "formationType": "FORMATION_TYPE_DEFAULT",
-  "special": "SPECIALUNIT_TROOP",
   "advisor": "ADVISOR_ECONOMY",
   "unitAIs": [
    "UNITAI_WORKER"

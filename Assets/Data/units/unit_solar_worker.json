@@ -16,6 +16,11 @@
    "flat": 24
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_SOLAR_WORKER"
+  }
+ },
  "skills": [
   "canMoveImpassable",
   "ignoreTerrainCost"
@@ -62,7 +67,6 @@
   "defaultUnitAI": "UNITAI_WORKER",
   "formationType": "FORMATION_TYPE_DEFAULT",
   "advisor": "ADVISOR_ECONOMY",
-  "captures": "UNIT_SOLAR_WORKER",
   "unitAIs": [
    "UNITAI_WORKER"
   ],

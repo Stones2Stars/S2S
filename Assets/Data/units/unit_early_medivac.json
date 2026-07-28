@@ -84,7 +84,12 @@
  "cargo": {
   "unit": {
    "space": {
-    "unit": "IS_LAND",
+    "unit": {
+     "all": [
+      "IS_LAND",
+      "!IS_VTOL"
+     ]
+    },
     "flat": 2
    }
   }
@@ -97,7 +102,8 @@
  ],
  "tags": [
   "military",
-  "landUnit"
+  "landUnit",
+  "vtol"
  ],
  "combatClass": "UNITCOMBAT_HEALTH_CARE",
  "combatClasses": [
@@ -146,7 +152,6 @@
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_PROPERTY_CONTROL",
   "formationType": "FORMATION_TYPE_DEFAULT",
-  "special": "SPECIALUNIT_VTOL",
   "advisor": "ADVISOR_MILITARY",
   "unitAIs": [
    "UNITAI_HEALER",
@@ -154,9 +159,6 @@
   ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "cargo": {
-   "smNotSpecial": "SPECIALUNIT_VTOL"
-  }
+  ]
  }
 }

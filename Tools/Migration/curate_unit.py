@@ -34,7 +34,7 @@ from collections import OrderedDict
 import engine
 import boolexpr
 from curate_common import (VISION_PLOT, collapse_hide_and_seek, merge_vision, put_art, emit_art, FAMILY_ORDER, de_i, fold_text_to_identity, gate_entity,
-                           add_tags,
+                           add_tags, specialunit_tag,
                            emit_sizematters, SM_COMBATMOD_UNIT)
 from store import Store, REPO
 
@@ -158,8 +158,8 @@ ID_SCALAR = {"iAsset": "worth", "iPower": "militaryWorth", "iXPValueAttack": "xp
              "iAnimalCombat": "animalCombat", "iCommandRange": "commandRange", "iControlPoints": "controlPoints",
              "iLeaderExperience": "leaderExperience", "iMinAreaSize": "minAreaSize",
              "Domain": "domain", "DefaultUnitAI": "defaultUnitAI", "FormationType": "formationType",
-             "Special": "special", "Advisor": "advisor", "LeaderPromotion": "leaderPromotion",
-             "ReligionType": "religion", "iEspionagePoints": "espionagePoints", "Capture": "captures"}
+             "Advisor": "advisor", "LeaderPromotion": "leaderPromotion",
+             "ReligionType": "religion", "iEspionagePoints": "espionagePoints"}
 ID_LIST = {"UnitAIs": "unitAIs", "NotUnitAIs": "notUnitAIs",
            "MapCategoryTypes": "mapCategories", "UniqueNames": "uniqueNames", "FeatureImpassableTypes": "featureImpassable",
            "TerrainImpassableTypes": "terrainImpassable", "DefendAgainstUnit": "defendAgainstUnit"}
@@ -887,25 +887,42 @@ def pass2(typ, rec, store, fams, caps, grants, vision, identity):
         for k, v in _pairs(bpm):
             lst.append(OrderedDict([("value", v),
                                     ("enabled", OrderedDict([("type", k), ("scope", "city"), ("min", 1)]))]))
-    # cargo CAPACITY + what-it-carries -> cargo.unit.space.{unit: IS_<DOMAIN>?, flat}. A domain-restricted hold
-    # carries only that domain: a carrier is cargo.space.{unit: IS_AIR, flat} (you can't transport a plane on a
-    # landing craft); an unrestricted hold is just cargo.space.flat. Finer special-unit restrictions
-    # (Special/SMNotSpecial) stay in identity.cargo for now (folded later).
+    # cargo CAPACITY + WHAT it carries -> cargo.unit.space.{unit: <predicate>?, flat} ([modifier.md] par.6).
+    # An unrestricted hold is just cargo.space.flat; a restricted one qualifies by a unit PREDICATE. All three
+    # legacy restrictions are the SAME qualifier shape, which is the whole reason the special-group one needed no
+    # new form (owner: "that is what TAGS are for"):
+    #   DomainCargo       -> IS_<DOMAIN>      (you can't transport a plane on a landing craft)
+    #   SpecialCargo      -> IS_<TAG>         the group's membership tag
+    #   SMNotSpecialCargo -> !IS_<TAG>        the same tag, negated (json par.3.4's ! on a single leaf)
+    # Several compose through an `all` node rather than a bespoke multi-field shape.
     icargo = _int(rec, "iCargo")
+    preds = []
+    dom = _txt(rec, "DomainCargo")
+    if dom and dom.startswith("DOMAIN_"):
+        preds.append("IS_" + dom[len("DOMAIN_"):])
+    spec = _txt(rec, "SpecialCargo")
+    if spec and spec.startswith("SPECIALUNIT_"):
+        preds.append("IS_" + specialunit_tag(spec).upper())
+    notspec = _txt(rec, "SMNotSpecialCargo")
+    if notspec and notspec.startswith("SPECIALUNIT_"):
+        preds.append("!IS_" + specialunit_tag(notspec).upper())
     if icargo:
         space = OrderedDict()
-        dom = _txt(rec, "DomainCargo")
-        if dom and dom.startswith("DOMAIN_"):
-            space["unit"] = "IS_" + dom[len("DOMAIN_"):]
+        if len(preds) == 1:
+            space["unit"] = preds[0]
+        elif preds:
+            space["unit"] = OrderedDict([("all", preds)])
         space["flat"] = icargo
         fams.setdefault("cargo", OrderedDict()).setdefault("unit", OrderedDict())["space"] = space
-    cargo = OrderedDict()
-    for tag, key in (("SpecialCargo", "special"), ("SMNotSpecialCargo", "smNotSpecial")):
-        v = _txt(rec, tag)
-        if v:
-            cargo[key] = v
-    if cargo:
-        identity["cargo"] = cargo
+    elif preds:
+        # A restriction with no capacity to qualify carries nothing -- say so rather than drop it silently.
+        _flag("cargo_restriction_no_capacity", typ)
+    # <Capture> -- the unit you GET for capturing this one. ⚖ The capture family carries BOTH what you get and
+    # the odds (owner), so the result lands beside capture.unit.probability / .resistance rather than sitting in
+    # identity, which carries no effects (json par.7).
+    becomes = _txt(rec, "Capture")
+    if becomes and becomes.startswith("UNIT_"):
+        fams.setdefault("capture", OrderedDict()).setdefault("unit", OrderedDict())["becomes"] = becomes
     # tech-gated passability + heritage + advanced-start -> identity (parked, faithful)
     for tag, key in (("FeaturePassableTechs", "featurePassableTechs"), ("TerrainPassableTechs", "terrainPassableTechs")):
         node = rec.find(tag)
@@ -1010,6 +1027,11 @@ def curate(typ, rec, store):
     dom_tag = {"DOMAIN_LAND": "landUnit", "DOMAIN_SEA": "seaUnit", "DOMAIN_AIR": "airUnit"}.get(_txt(rec, "Domain"))
     if dom_tag:
         tags[dom_tag] = True
+    # the SPECIALUNIT_* group is type-derived MEMBERSHIP -> a TAG (json par.8), never identity: it carries no
+    # value and exists to be QUERIED, which is exactly what a carrier's cargo restriction does (IS_<TAG> above).
+    spec_grp = _txt(rec, "Special")
+    if spec_grp and spec_grp.startswith("SPECIALUNIT_"):
+        tags[specialunit_tag(spec_grp)] = True
     # NB the unit does NOT bake its combat classes' identity tags (mounted/gunpowder/naval/outlaw/...). Those are
     # authored ON the UNITCOMBAT and the engine unions them into the unit at load
     # (CvUnitInfo::deriveAtRegistryComplete over primary + combatClasses), so the fact has ONE home. What stays

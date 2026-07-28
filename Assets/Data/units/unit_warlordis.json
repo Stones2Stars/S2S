@@ -31,11 +31,17 @@
    "flat": 1
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_WARLORDIS"
+  }
+ },
  "skills": [
   "onlyDefensive"
  ],
  "tags": [
-  "landUnit"
+  "landUnit",
+  "people"
  ],
  "combatClass": "UNITCOMBAT_CAPTAIN",
  "combatClasses": [
@@ -79,10 +85,8 @@
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_GENERAL",
   "formationType": "FORMATION_TYPE_DEFAULT",
-  "special": "SPECIALUNIT_PEOPLE",
   "advisor": "ADVISOR_MILITARY",
   "leaderPromotion": "PROMOTION_LEADER",
-  "captures": "UNIT_WARLORDIS",
   "unitAIs": [
    "UNITAI_GENERAL"
   ],

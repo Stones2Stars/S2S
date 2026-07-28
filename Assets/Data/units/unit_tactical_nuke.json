@@ -46,7 +46,8 @@
  ],
  "tags": [
   "military",
-  "airUnit"
+  "airUnit",
+  "missile"
  ],
  "combatClass": "UNITCOMBAT_DOOM",
  "combatClasses": [
@@ -82,7 +83,6 @@
   "domain": "DOMAIN_AIR",
   "defaultUnitAI": "UNITAI_ICBM",
   "formationType": "FORMATION_TYPE_MACHINE",
-  "special": "SPECIALUNIT_MISSILE",
   "advisor": "ADVISOR_MILITARY",
   "unitAIs": [
    "UNITAI_ICBM"

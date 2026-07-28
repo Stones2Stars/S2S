@@ -19,6 +19,11 @@
    "flat": 3
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_VENUS_WORKER"
+  }
+ },
  "skills": [
   "ignoreTerrainCost"
  ],
@@ -62,7 +67,6 @@
   "defaultUnitAI": "UNITAI_WORKER",
   "formationType": "FORMATION_TYPE_DEFAULT",
   "advisor": "ADVISOR_ECONOMY",
-  "captures": "UNIT_VENUS_WORKER",
   "unitAIs": [
    "UNITAI_WORKER"
   ],

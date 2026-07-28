@@ -5,6 +5,11 @@
    "flat": 1
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_SUBDUED_MANEDWOLF"
+  }
+ },
  "skills": [
   "onlyDefensive",
   "militaryTrade"
@@ -182,7 +187,6 @@
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_SUBDUED_ANIMAL",
   "formationType": "FORMATION_TYPE_ANIMAL",
-  "captures": "UNIT_SUBDUED_MANEDWOLF",
   "unitAIs": [
    "UNITAI_SUBDUED_ANIMAL"
   ],

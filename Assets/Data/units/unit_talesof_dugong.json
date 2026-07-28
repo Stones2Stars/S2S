@@ -12,6 +12,11 @@
    "flat": 2
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_TALESOF_DUGONG"
+  }
+ },
  "skills": [
   "militaryTrade"
  ],
@@ -53,7 +58,6 @@
   "domain": "DOMAIN_SEA",
   "defaultUnitAI": "UNITAI_SUBDUED_ANIMAL",
   "formationType": "FORMATION_TYPE_DEFAULT",
-  "captures": "UNIT_TALESOF_DUGONG",
   "unitAIs": [
    "UNITAI_SUBDUED_ANIMAL"
   ],

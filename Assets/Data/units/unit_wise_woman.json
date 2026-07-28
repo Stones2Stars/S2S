@@ -56,7 +56,8 @@
  ],
  "tags": [
   "military",
-  "landUnit"
+  "landUnit",
+  "people"
  ],
  "combatClass": "UNITCOMBAT_HEALTH_CARE",
  "combatClasses": [
@@ -102,7 +103,6 @@
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_PROPERTY_CONTROL",
   "formationType": "FORMATION_TYPE_DEFAULT",
-  "special": "SPECIALUNIT_PEOPLE",
   "advisor": "ADVISOR_MILITARY",
   "unitAIs": [
    "UNITAI_HEALER",

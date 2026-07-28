@@ -90,6 +90,11 @@
    }
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_KOREAN_HWACHA"
+  }
+ },
  "skills": [
   "noDefensiveBonus",
   "pillage",
@@ -150,7 +155,6 @@
   "defaultUnitAI": "UNITAI_ATTACK_CITY",
   "formationType": "FORMATION_TYPE_MACHINE",
   "advisor": "ADVISOR_MILITARY",
-  "captures": "UNIT_KOREAN_HWACHA",
   "unitAIs": [
    "UNITAI_ATTACK_CITY",
    "UNITAI_COLLATERAL",

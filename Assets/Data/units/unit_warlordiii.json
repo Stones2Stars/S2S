@@ -136,6 +136,11 @@
    }
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_WARLORDIIIS"
+  }
+ },
  "skills": [
   "alwaysHostile",
   "hiddenNationality",
@@ -196,7 +201,6 @@
   "defaultUnitAI": "UNITAI_GENERAL",
   "formationType": "FORMATION_TYPE_DEFAULT",
   "advisor": "ADVISOR_MILITARY",
-  "captures": "UNIT_WARLORDIIIS",
   "unitAIs": [
    "UNITAI_GENERAL"
   ],

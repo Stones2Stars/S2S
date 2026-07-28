@@ -131,7 +131,13 @@
  "cargo": {
   "unit": {
    "space": {
-    "unit": "IS_LAND",
+    "unit": {
+     "all": [
+      "IS_LAND",
+      "IS_PEOPLE",
+      "!IS_VTOL"
+     ]
+    },
     "flat": 1
    }
   }
@@ -145,7 +151,8 @@
  ],
  "tags": [
   "military",
-  "landUnit"
+  "landUnit",
+  "troop"
  ],
  "combatClass": "UNITCOMBAT_LAW_ENFORCEMENT",
  "combatClasses": [
@@ -210,7 +217,6 @@
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_PROPERTY_CONTROL",
   "formationType": "FORMATION_TYPE_RANGED",
-  "special": "SPECIALUNIT_TROOP",
   "advisor": "ADVISOR_MILITARY",
   "unitAIs": [
    "UNITAI_CITY_COUNTER",
@@ -218,10 +224,6 @@
   ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "cargo": {
-   "special": "SPECIALUNIT_PEOPLE",
-   "smNotSpecial": "SPECIALUNIT_VTOL"
-  }
+  ]
  }
 }

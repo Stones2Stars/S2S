@@ -664,8 +664,14 @@ The full address of a deposit:
   unit's base value and is absent if it cannot fight; every semantic modifier (`attack`, `defense`, `cityAttack`,
   `cityDefense`, `hillsAttack`/`hillsDefense`, `stealth`, `flanking`, `lunge`, …) plus the type-keyed vs-entries
   (`UNITCOMBAT_*`/`UNIT_*`/`TERRAIN_*`/`FEATURE_*`/`DOMAIN_*`) is `combat`, at unit/empire/team/city scope. ⛔ A
-  concept with its own family never hides as a `combat` member: capture odds → `capture`, cargo → `cargo`, ranges →
+  concept with its own family never hides as a `combat` member: capture → `capture`, cargo → `cargo`, ranges →
   `air`/`range`, espionage defense → its own family.
+- **⚖ `capture` carries BOTH WHAT YOU GET AND THE ODDS (owner).** `capture.unit.becomes` names the unit you
+  receive for capturing this one; `capture.unit.probability` / `.resistance` are the odds. The two belong
+  together because they are one mechanic answered from one place — splitting the result off into `identity` (or
+  a bespoke block) would leave a reader holding the chance of an outcome the data never names.
+  ⚑ So a family member is not required to be a magnitude: `becomes` is an FK, and that is the family stating its
+  own outcome rather than a foreign concept hiding inside it.
 - **THE COST CLUSTER IS THREE PLANES — do not merge them.** (1) The **actual cost** is the reserved `cost` section
   plus the entity's own self-data (`hurryCost` = "hurrying ME"; `buildTime`). (2) **What CHANGES a cost** is the ONE
   `costs` modifier family, kinds by category (`train`/`construct`/`create`/`build`/`research`/`improvementUpgrade`/

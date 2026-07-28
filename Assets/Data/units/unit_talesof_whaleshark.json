@@ -12,6 +12,11 @@
    "flat": 2
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_TALESOF_WHALESHARK"
+  }
+ },
  "skills": [
   "militaryTrade"
  ],
@@ -69,7 +74,6 @@
   "domain": "DOMAIN_SEA",
   "defaultUnitAI": "UNITAI_SUBDUED_ANIMAL",
   "formationType": "FORMATION_TYPE_DEFAULT",
-  "captures": "UNIT_TALESOF_WHALESHARK",
   "unitAIs": [
    "UNITAI_SUBDUED_ANIMAL"
   ],

@@ -68,6 +68,11 @@
    }
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_MOTAR"
+  }
+ },
  "skills": [
   "noDefensiveBonus",
   "pillage",
@@ -127,7 +132,6 @@
   "defaultUnitAI": "UNITAI_ATTACK_CITY",
   "formationType": "FORMATION_TYPE_MACHINE",
   "advisor": "ADVISOR_MILITARY",
-  "captures": "UNIT_MOTAR",
   "unitAIs": [
    "UNITAI_ATTACK_CITY",
    "UNITAI_COLLATERAL",

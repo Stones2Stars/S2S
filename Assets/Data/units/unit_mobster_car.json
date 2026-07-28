@@ -115,7 +115,13 @@
  "cargo": {
   "unit": {
    "space": {
-    "unit": "IS_LAND",
+    "unit": {
+     "all": [
+      "IS_LAND",
+      "IS_PEOPLE",
+      "!IS_VTOL"
+     ]
+    },
     "flat": 2
    }
   }
@@ -137,6 +143,7 @@
  "tags": [
   "military",
   "landUnit",
+  "troop",
   "disguised",
   "political"
  ],
@@ -212,7 +219,6 @@
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_INFILTRATOR",
   "formationType": "FORMATION_TYPE_DEFAULT",
-  "special": "SPECIALUNIT_TROOP",
   "advisor": "ADVISOR_GROWTH",
   "espionagePoints": 750,
   "unitAIs": [
@@ -226,10 +232,6 @@
   ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "cargo": {
-   "special": "SPECIALUNIT_PEOPLE",
-   "smNotSpecial": "SPECIALUNIT_VTOL"
-  }
+  ]
  }
 }

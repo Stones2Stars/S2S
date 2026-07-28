@@ -14,6 +14,11 @@
    "flat": 1
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_FREED_SLAVE"
+  }
+ },
  "tags": [
   "worker",
   "civilian",
@@ -69,7 +74,6 @@
   "defaultUnitAI": "UNITAI_WORKER",
   "formationType": "FORMATION_TYPE_DEFAULT",
   "advisor": "ADVISOR_ECONOMY",
-  "captures": "UNIT_FREED_SLAVE",
   "unitAIs": [
    "UNITAI_WORKER"
   ],

@@ -72,7 +72,8 @@
  ],
  "tags": [
   "military",
-  "airUnit"
+  "airUnit",
+  "fighter"
  ],
  "combatClass": "UNITCOMBAT_SUPERSONIC_PLANES",
  "combatClasses": [
@@ -121,7 +122,6 @@
   "domain": "DOMAIN_AIR",
   "defaultUnitAI": "UNITAI_DEFENSE_AIR",
   "formationType": "FORMATION_TYPE_MACHINE",
-  "special": "SPECIALUNIT_FIGHTER",
   "advisor": "ADVISOR_MILITARY",
   "unitAIs": [
    "UNITAI_DEFENSE_AIR",

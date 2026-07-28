@@ -94,7 +94,8 @@
  ],
  "tags": [
   "military",
-  "airUnit"
+  "airUnit",
+  "fighter"
  ],
  "combatClass": "UNITCOMBAT_STEALTH",
  "combatClasses": [
@@ -135,7 +136,6 @@
   "domain": "DOMAIN_AIR",
   "defaultUnitAI": "UNITAI_ATTACK_AIR",
   "formationType": "FORMATION_TYPE_MACHINE",
-  "special": "SPECIALUNIT_FIGHTER",
   "advisor": "ADVISOR_MILITARY",
   "unitAIs": [
    "UNITAI_ATTACK_AIR"

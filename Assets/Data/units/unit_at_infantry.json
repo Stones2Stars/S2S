@@ -64,7 +64,8 @@
  ],
  "tags": [
   "military",
-  "landUnit"
+  "landUnit",
+  "troop"
  ],
  "combatClass": "UNITCOMBAT_ROCKET_LAUNCHER",
  "combatClasses": [
@@ -115,7 +116,6 @@
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_COUNTER",
   "formationType": "FORMATION_TYPE_DEFAULT",
-  "special": "SPECIALUNIT_TROOP",
   "advisor": "ADVISOR_MILITARY",
   "unitAIs": [
    "UNITAI_COUNTER",

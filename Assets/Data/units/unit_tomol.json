@@ -50,7 +50,12 @@
  "cargo": {
   "unit": {
    "space": {
-    "unit": "IS_LAND",
+    "unit": {
+     "all": [
+      "IS_LAND",
+      "IS_PEOPLE"
+     ]
+    },
     "flat": 3
    }
   }
@@ -139,9 +144,6 @@
    "TERRAIN_TRENCH",
    "TERRAIN_TRENCH_POLAR",
    "TERRAIN_TRENCH_TROPICAL"
-  ],
-  "cargo": {
-   "special": "SPECIALUNIT_PEOPLE"
-  }
+  ]
  }
 }

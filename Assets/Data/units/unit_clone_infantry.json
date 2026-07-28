@@ -38,7 +38,8 @@
  ],
  "tags": [
   "military",
-  "landUnit"
+  "landUnit",
+  "troop"
  ],
  "combatClass": "UNITCOMBAT_CLONES",
  "combatClasses": [
@@ -84,7 +85,6 @@
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_CITY_DEFENSE",
   "formationType": "FORMATION_TYPE_DEFAULT",
-  "special": "SPECIALUNIT_TROOP",
   "advisor": "ADVISOR_MILITARY",
   "unitAIs": [
    "UNITAI_ATTACK",

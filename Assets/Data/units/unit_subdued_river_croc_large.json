@@ -5,6 +5,11 @@
    "flat": 1
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_SUBDUED_RIVER_CROC_LARGE"
+  }
+ },
  "skills": [
   "onlyDefensive",
   "militaryTrade"
@@ -162,7 +167,6 @@
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_SUBDUED_ANIMAL",
   "formationType": "FORMATION_TYPE_DEFAULT",
-  "captures": "UNIT_SUBDUED_RIVER_CROC_LARGE",
   "unitAIs": [
    "UNITAI_SUBDUED_ANIMAL"
   ],

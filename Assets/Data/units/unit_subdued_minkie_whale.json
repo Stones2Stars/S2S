@@ -12,6 +12,11 @@
    "flat": 2
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_SUBDUED_MINKIE_WHALE"
+  }
+ },
  "skills": [
   "onlyDefensive",
   "militaryTrade"
@@ -117,7 +122,6 @@
   "domain": "DOMAIN_SEA",
   "defaultUnitAI": "UNITAI_SUBDUED_ANIMAL",
   "formationType": "FORMATION_TYPE_DEFAULT",
-  "captures": "UNIT_SUBDUED_MINKIE_WHALE",
   "unitAIs": [
    "UNITAI_SUBDUED_ANIMAL"
   ],

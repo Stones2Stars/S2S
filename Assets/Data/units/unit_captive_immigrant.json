@@ -5,6 +5,11 @@
    "flat": 2
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_CAPTIVE_CIVILIAN"
+  }
+ },
  "tags": [
   "landUnit"
  ],
@@ -64,7 +69,6 @@
   "defaultUnitAI": "UNITAI_CITY_SPECIAL",
   "formationType": "FORMATION_TYPE_DEFAULT",
   "advisor": "ADVISOR_GROWTH",
-  "captures": "UNIT_CAPTIVE_CIVILIAN",
   "unitAIs": [
    "UNITAI_CITY_SPECIAL"
   ],

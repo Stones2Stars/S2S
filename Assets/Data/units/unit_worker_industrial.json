@@ -91,6 +91,11 @@
    "flat": 2
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_WORKER_INDUSTRIAL"
+  }
+ },
  "skills": [
   "food",
   "workerTrade"
@@ -141,7 +146,6 @@
   "defaultUnitAI": "UNITAI_WORKER",
   "formationType": "FORMATION_TYPE_DEFAULT",
   "advisor": "ADVISOR_ECONOMY",
-  "captures": "UNIT_WORKER_INDUSTRIAL",
   "unitAIs": [
    "UNITAI_WORKER"
   ],

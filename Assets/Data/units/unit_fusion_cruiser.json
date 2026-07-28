@@ -80,7 +80,12 @@
  "cargo": {
   "unit": {
    "space": {
-    "unit": "IS_AIR",
+    "unit": {
+     "all": [
+      "IS_AIR",
+      "IS_MISSILE"
+     ]
+    },
     "flat": 6
    }
   }
@@ -154,9 +159,6 @@
   ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "cargo": {
-   "special": "SPECIALUNIT_MISSILE"
-  }
+  ]
  }
 }

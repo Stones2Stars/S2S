@@ -139,9 +139,6 @@
    "TERRAIN_TRENCH",
    "TERRAIN_TRENCH_TROPICAL",
    "TERRAIN_TRENCH_POLAR"
-  ],
-  "cargo": {
-   "special": "SPECIALUNIT_PEOPLE"
-  }
+  ]
  }
 }

@@ -39,6 +39,11 @@
    }
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_BIOLOGICAL_WARFARE_MISSILE"
+  }
+ },
  "skills": [
   "noDefensiveBonus",
   "ignoreBuildingDefense",
@@ -48,7 +53,8 @@
  ],
  "tags": [
   "military",
-  "airUnit"
+  "airUnit",
+  "missile"
  ],
  "combatClass": "UNITCOMBAT_MISSILE",
  "combatClasses": [
@@ -83,9 +89,7 @@
   "domain": "DOMAIN_AIR",
   "defaultUnitAI": "UNITAI_MISSILE_AIR",
   "formationType": "FORMATION_TYPE_DEFAULT",
-  "special": "SPECIALUNIT_MISSILE",
   "advisor": "ADVISOR_MILITARY",
-  "captures": "UNIT_BIOLOGICAL_WARFARE_MISSILE",
   "unitAIs": [
    "UNITAI_MISSILE_AIR",
    "UNITAI_ATTACK_AIR"

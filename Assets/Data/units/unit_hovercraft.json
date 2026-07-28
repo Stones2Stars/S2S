@@ -77,7 +77,12 @@
  "cargo": {
   "unit": {
    "space": {
-    "unit": "IS_LAND",
+    "unit": {
+     "all": [
+      "IS_LAND",
+      "IS_TROOP"
+     ]
+    },
     "flat": 1
    }
   }
@@ -167,9 +172,6 @@
    "TERRAIN_TRENCH_TROPICAL",
    "TERRAIN_TRENCH_POLAR",
    "TERRAIN_LAKE"
-  ],
-  "cargo": {
-   "special": "SPECIALUNIT_TROOP"
-  }
+  ]
  }
 }

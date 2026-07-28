@@ -21,7 +21,8 @@
   "greatGeneral"
  ],
  "tags": [
-  "landUnit"
+  "landUnit",
+  "people"
  ],
  "combatClass": "UNITCOMBAT_PRODIGY",
  "combatClasses": [
@@ -145,7 +146,6 @@
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_GREAT_ADMIRAL",
   "formationType": "FORMATION_TYPE_DEFAULT",
-  "special": "SPECIALUNIT_PEOPLE",
   "advisor": "ADVISOR_MILITARY",
   "leaderPromotion": "PROMOTION_LEADER",
   "unitAIs": [

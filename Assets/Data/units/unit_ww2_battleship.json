@@ -138,9 +138,6 @@
   ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "cargo": {
-   "special": "SPECIALUNIT_MISSILE"
-  }
+  ]
  }
 }

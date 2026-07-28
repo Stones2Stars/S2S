@@ -24,6 +24,11 @@
    "flat": 20
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_LUNAR_BULLDOZER"
+  }
+ },
  "skills": [
   "onlyDefensive"
  ],
@@ -72,7 +77,6 @@
   "defaultUnitAI": "UNITAI_WORKER",
   "formationType": "FORMATION_TYPE_DEFAULT",
   "advisor": "ADVISOR_ECONOMY",
-  "captures": "UNIT_LUNAR_BULLDOZER",
   "unitAIs": [
    "UNITAI_WORKER"
   ],

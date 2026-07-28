@@ -52,6 +52,11 @@
    }
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_AKSUM_MERCHANTS"
+  }
+ },
  "skills": [
   "noCapture",
   "noNonTypeProdMods",
@@ -128,7 +133,6 @@
   "defaultUnitAI": "UNITAI_MERCHANT",
   "formationType": "FORMATION_TYPE_MACHINE",
   "advisor": "ADVISOR_ECONOMY",
-  "captures": "UNIT_AKSUM_MERCHANTS",
   "unitAIs": [
    "UNITAI_MERCHANT",
    "UNITAI_ENGINEER"

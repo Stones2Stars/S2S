@@ -76,6 +76,11 @@
    }
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_OXYBELES"
+  }
+ },
  "skills": [
   "noDefensiveBonus",
   "pillage",
@@ -134,7 +139,6 @@
   "defaultUnitAI": "UNITAI_ATTACK_CITY",
   "formationType": "FORMATION_TYPE_MACHINE",
   "advisor": "ADVISOR_MILITARY",
-  "captures": "UNIT_OXYBELES",
   "unitAIs": [
    "UNITAI_ATTACK_CITY",
    "UNITAI_COLLATERAL"

@@ -12,8 +12,14 @@
    "flat": 4
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_WARLORDVIIIS"
+  }
+ },
  "tags": [
-  "landUnit"
+  "landUnit",
+  "people"
  ],
  "combatClass": "UNITCOMBAT_CAPTAIN",
  "combatClasses": [
@@ -52,10 +58,8 @@
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_GENERAL",
   "formationType": "FORMATION_TYPE_DEFAULT",
-  "special": "SPECIALUNIT_PEOPLE",
   "advisor": "ADVISOR_MILITARY",
   "leaderPromotion": "PROMOTION_LEADER",
-  "captures": "UNIT_WARLORDVIIIS",
   "unitAIs": [
    "UNITAI_GENERAL"
   ],

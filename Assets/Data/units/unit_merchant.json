@@ -12,7 +12,8 @@
  "tags": [
   "merchant",
   "civilian",
-  "landUnit"
+  "landUnit",
+  "people"
  ],
  "combatClass": "UNITCOMBAT_PRODIGY",
  "combatClasses": [
@@ -163,7 +164,6 @@
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_MERCHANT",
   "formationType": "FORMATION_TYPE_DEFAULT",
-  "special": "SPECIALUNIT_PEOPLE",
   "advisor": "ADVISOR_GROWTH",
   "unitAIs": [
    "UNITAI_MERCHANT"

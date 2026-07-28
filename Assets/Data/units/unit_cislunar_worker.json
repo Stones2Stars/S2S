@@ -16,6 +16,11 @@
    "flat": 24
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_CISLUNAR_WORKER"
+  }
+ },
  "skills": [
   "ignoreTerrainCost"
  ],
@@ -60,7 +65,6 @@
   "defaultUnitAI": "UNITAI_WORKER",
   "formationType": "FORMATION_TYPE_DEFAULT",
   "advisor": "ADVISOR_ECONOMY",
-  "captures": "UNIT_CISLUNAR_WORKER",
   "unitAIs": [
    "UNITAI_WORKER"
   ],

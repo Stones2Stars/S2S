@@ -77,6 +77,11 @@
    }
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_LIGHT_ARTILLERY"
+  }
+ },
  "skills": [
   "noDefensiveBonus",
   "pillage",
@@ -137,7 +142,6 @@
   "defaultUnitAI": "UNITAI_ATTACK_CITY",
   "formationType": "FORMATION_TYPE_MACHINE",
   "advisor": "ADVISOR_MILITARY",
-  "captures": "UNIT_LIGHT_ARTILLERY",
   "unitAIs": [
    "UNITAI_ATTACK_CITY",
    "UNITAI_COLLATERAL",

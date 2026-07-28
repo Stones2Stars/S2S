@@ -6,6 +6,11 @@
    "flat": 1
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_TREASURE"
+  }
+ },
  "skills": [
   "rivalTerritory"
  ],
@@ -81,7 +86,6 @@
   "defaultUnitAI": "UNITAI_ENGINEER",
   "formationType": "FORMATION_TYPE_DEFAULT",
   "advisor": "ADVISOR_GROWTH",
-  "captures": "UNIT_TREASURE",
   "unitAIs": [
    "UNITAI_ARTIST",
    "UNITAI_ENGINEER"

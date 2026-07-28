@@ -96,7 +96,12 @@
  "cargo": {
   "unit": {
    "space": {
-    "unit": "IS_LAND",
+    "unit": {
+     "all": [
+      "IS_LAND",
+      "IS_PEOPLE"
+     ]
+    },
     "flat": 1
    }
   }
@@ -175,9 +180,6 @@
   ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "cargo": {
-   "special": "SPECIALUNIT_PEOPLE"
-  }
+  ]
  }
 }

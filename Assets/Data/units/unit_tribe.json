@@ -25,6 +25,11 @@
    "flat": 1
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_CAPTIVE_CIVILIAN"
+  }
+ },
  "skills": [
   "food",
   "found",
@@ -156,7 +161,6 @@
   "defaultUnitAI": "UNITAI_SETTLE",
   "formationType": "FORMATION_TYPE_SETTLER",
   "advisor": "ADVISOR_GROWTH",
-  "captures": "UNIT_CAPTIVE_CIVILIAN",
   "unitAIs": [
    "UNITAI_SETTLE"
   ],

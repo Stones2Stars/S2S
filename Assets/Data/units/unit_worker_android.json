@@ -76,6 +76,11 @@
    "flat": 3
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_WORKER_ANDROID"
+  }
+ },
  "skills": [
   "ignoreTerrainCost",
   "workerTrade"
@@ -119,7 +124,6 @@
   "defaultUnitAI": "UNITAI_WORKER",
   "formationType": "FORMATION_TYPE_DEFAULT",
   "advisor": "ADVISOR_ECONOMY",
-  "captures": "UNIT_WORKER_ANDROID",
   "unitAIs": [
    "UNITAI_WORKER"
   ],

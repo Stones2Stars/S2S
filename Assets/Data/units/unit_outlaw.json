@@ -138,6 +138,7 @@
  "cargo": {
   "unit": {
    "space": {
+    "unit": "IS_CAPTIVE",
     "flat": 2
    }
   }
@@ -157,6 +158,7 @@
  "tags": [
   "military",
   "landUnit",
+  "troop",
   "camouflage"
  ],
  "combatClass": "UNITCOMBAT_RUFFIAN",
@@ -232,7 +234,6 @@
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_PILLAGE",
   "formationType": "FORMATION_TYPE_DEFAULT",
-  "special": "SPECIALUNIT_TROOP",
   "advisor": "ADVISOR_MILITARY",
   "unitAIs": [
    "UNITAI_ATTACK",
@@ -245,9 +246,6 @@
   ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "cargo": {
-   "special": "SPECIALUNIT_CAPTIVE"
-  }
+  ]
  }
 }

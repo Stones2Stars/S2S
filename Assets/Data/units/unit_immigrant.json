@@ -17,6 +17,11 @@
    "flat": 2
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_WORKER"
+  }
+ },
  "skills": [
   "food"
  ],
@@ -75,7 +80,6 @@
   "defaultUnitAI": "UNITAI_CITY_SPECIAL",
   "formationType": "FORMATION_TYPE_DEFAULT",
   "advisor": "ADVISOR_GROWTH",
-  "captures": "UNIT_WORKER",
   "unitAIs": [
    "UNITAI_CITY_SPECIAL"
   ],

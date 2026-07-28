@@ -43,6 +43,11 @@
    "flat": 24
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_MAGSAIL_WORKER"
+  }
+ },
  "skills": [
   "canMoveAllTerrain",
   "canMoveImpassable",
@@ -104,7 +109,6 @@
   "defaultUnitAI": "UNITAI_WORKER",
   "formationType": "FORMATION_TYPE_DEFAULT",
   "advisor": "ADVISOR_ECONOMY",
-  "captures": "UNIT_MAGSAIL_WORKER",
   "unitAIs": [
    "UNITAI_WORKER"
   ],

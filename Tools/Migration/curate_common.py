@@ -370,6 +370,18 @@ def hide_method_tag(invisible_type):
     sides cannot drift and neither carries a per-type list."""
     parts = invisible_type[len("INVISIBLE_"):].lower().split("_")
     return parts[0] + "".join(w.capitalize() for w in parts[1:])
+def specialunit_tag(special_type):
+    """SPECIALUNIT_PEOPLE -> "people"; SPECIALUNIT_SEAPLANE -> "seaplane".
+
+    The SPECIALUNIT_* group is pure type-derived MEMBERSHIP, which is exactly a tag ([tags.md] par.8) -- so the
+    group becomes the unit's tag and a carrier's restriction reads it as the ordinary {unit: IS_<TAG>} qualifier
+    ([modifier.md] par.6). MECHANICAL, never a table: the same derivation as hide_method_tag, so a new group
+    needs no curator edit.
+    """
+    parts = special_type[len("SPECIALUNIT_"):].lower().split("_")
+    return parts[0] + "".join(w.capitalize() for w in parts[1:])
+
+
 # A bare "can see this method" with no graduated strength -- it beats an ordinary hider and no more.
 HIDE_SEE_BASELINE = 1
 # NegatesInvisibility: the method simply stops working against this seeker.

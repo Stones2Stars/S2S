@@ -65,7 +65,13 @@
  "cargo": {
   "unit": {
    "space": {
-    "unit": "IS_AIR",
+    "unit": {
+     "all": [
+      "IS_AIR",
+      "IS_FIGHTER",
+      "!IS_MISSILE"
+     ]
+    },
     "flat": 2
    }
   }
@@ -134,10 +140,6 @@
   ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "cargo": {
-   "special": "SPECIALUNIT_FIGHTER",
-   "smNotSpecial": "SPECIALUNIT_MISSILE"
-  }
+  ]
  }
 }

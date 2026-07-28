@@ -52,6 +52,11 @@
    }
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_SUPPLY_TRAIN"
+  }
+ },
  "skills": [
   "noCapture",
   "noNonTypeProdMods",
@@ -128,7 +133,6 @@
   "defaultUnitAI": "UNITAI_MERCHANT",
   "formationType": "FORMATION_TYPE_MACHINE",
   "advisor": "ADVISOR_ECONOMY",
-  "captures": "UNIT_SUPPLY_TRAIN",
   "unitAIs": [
    "UNITAI_MERCHANT",
    "UNITAI_ENGINEER"

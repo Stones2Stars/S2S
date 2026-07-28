@@ -28,6 +28,11 @@
    "flat": 24
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_CAPTIVE_CIVILIAN"
+  }
+ },
  "skills": [
   "canMoveAllTerrain",
   "food",
@@ -156,7 +161,6 @@
   "defaultUnitAI": "UNITAI_SETTLE",
   "formationType": "FORMATION_TYPE_DEFAULT",
   "advisor": "ADVISOR_GROWTH",
-  "captures": "UNIT_CAPTIVE_CIVILIAN",
   "unitAIs": [
    "UNITAI_SETTLE"
   ],

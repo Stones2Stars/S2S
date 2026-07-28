@@ -85,7 +85,8 @@
  ],
  "tags": [
   "military",
-  "airUnit"
+  "airUnit",
+  "seaplane"
  ],
  "combatClass": "UNITCOMBAT_EARLY_BOMBERS",
  "combatClasses": [
@@ -130,7 +131,6 @@
   "domain": "DOMAIN_AIR",
   "defaultUnitAI": "UNITAI_DEFENSE_AIR",
   "formationType": "FORMATION_TYPE_MACHINE",
-  "special": "SPECIALUNIT_SEAPLANE",
   "advisor": "ADVISOR_MILITARY",
   "unitAIs": [
    "UNITAI_DEFENSE_AIR",

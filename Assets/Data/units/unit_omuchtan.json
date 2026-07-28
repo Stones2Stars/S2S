@@ -60,7 +60,8 @@
  ],
  "tags": [
   "military",
-  "landUnit"
+  "landUnit",
+  "people"
  ],
  "combatClass": "UNITCOMBAT_RECON",
  "combatClasses": [
@@ -119,7 +120,6 @@
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_EXPLORE",
   "formationType": "FORMATION_TYPE_DEFAULT",
-  "special": "SPECIALUNIT_PEOPLE",
   "advisor": "ADVISOR_GROWTH",
   "unitAIs": [
    "UNITAI_EXPLORE",

@@ -80,7 +80,8 @@
  ],
  "tags": [
   "military",
-  "airUnit"
+  "airUnit",
+  "fighter"
  ],
  "combatClass": "UNITCOMBAT_EARLY_FIGHTERS",
  "combatClasses": [
@@ -127,7 +128,6 @@
   "domain": "DOMAIN_AIR",
   "defaultUnitAI": "UNITAI_DEFENSE_AIR",
   "formationType": "FORMATION_TYPE_MACHINE",
-  "special": "SPECIALUNIT_FIGHTER",
   "advisor": "ADVISOR_MILITARY",
   "unitAIs": [
    "UNITAI_DEFENSE_AIR",

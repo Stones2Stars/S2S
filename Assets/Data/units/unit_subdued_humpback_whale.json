@@ -12,6 +12,11 @@
    "flat": 2
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_SUBDUED_HUMPBACK_WHALE"
+  }
+ },
  "skills": [
   "onlyDefensive",
   "renderBelowWater",
@@ -118,7 +123,6 @@
   "domain": "DOMAIN_SEA",
   "defaultUnitAI": "UNITAI_SUBDUED_ANIMAL",
   "formationType": "FORMATION_TYPE_MACHINE",
-  "captures": "UNIT_SUBDUED_HUMPBACK_WHALE",
   "unitAIs": [
    "UNITAI_SUBDUED_ANIMAL"
   ],

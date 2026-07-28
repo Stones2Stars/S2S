@@ -28,6 +28,7 @@
  "tags": [
   "military",
   "landUnit",
+  "troop",
   "camouflage"
  ],
  "combatClass": "UNITCOMBAT_CLONES",
@@ -79,7 +80,6 @@
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_ATTACK_CITY",
   "formationType": "FORMATION_TYPE_MACHINE",
-  "special": "SPECIALUNIT_TROOP",
   "advisor": "ADVISOR_MILITARY",
   "unitAIs": [
    "UNITAI_ATTACK",

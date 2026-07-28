@@ -24,7 +24,8 @@
  ],
  "tags": [
   "spy",
-  "landUnit"
+  "landUnit",
+  "people"
  ],
  "combatClass": "UNITCOMBAT_SPY",
  "combatClasses": [
@@ -75,7 +76,6 @@
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_SPY",
   "formationType": "FORMATION_TYPE_DEFAULT",
-  "special": "SPECIALUNIT_PEOPLE",
   "advisor": "ADVISOR_MILITARY",
   "unitAIs": [
    "UNITAI_SPY"

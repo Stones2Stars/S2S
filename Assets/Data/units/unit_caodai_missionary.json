@@ -21,7 +21,8 @@
  "tags": [
   "missionary",
   "civilian",
-  "landUnit"
+  "landUnit",
+  "people"
  ],
  "combatClass": "UNITCOMBAT_MISSIONARY",
  "combatClasses": [
@@ -58,7 +59,6 @@
   "worth": 1,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_MISSIONARY",
-  "special": "SPECIALUNIT_PEOPLE",
   "advisor": "ADVISOR_RELIGION",
   "unitAIs": [
    "UNITAI_MISSIONARY"

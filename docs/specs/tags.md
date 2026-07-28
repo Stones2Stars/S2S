@@ -88,6 +88,17 @@ Only the OBVIOUS identities map; the size/species/motility/weapon taxonomy stays
 `{unit: IS_MOUNTED}` / `IS_GUNPOWDER` / `IS_NAVAL` / … evaluate live (`cascadeEvalCondition`), and the per-tag
 tally (`CvCascadeTally::countUnitsWithTag`) counts them at empire/team/world scope.
 
+### Cargo group — from the unit's `SPECIALUNIT_*` membership
+
+`people` (176) · `troop` (94) · `fighter` (16) · `missile` (8) · `vtol` (6) · `captive` (3) · `seaplane` (1).
+Derived MECHANICALLY from the unit's own group (`SPECIALUNIT_PEOPLE` → `people`, `curate_common.specialunit_tag`),
+never a table — a new group needs no curator edit.
+
+⚑ **This is what made the cargo restriction expressible.** A carrier says WHAT it may carry as the ordinary
+`{unit: IS_<TAG>}` qualifier ([modifier.md §6](modifier.md)), so the group had to be a tag first — and had to be
+DISCRIMINATING: `people` and `troop` both reduce to `landUnit` and nothing else, so converting before these
+existed would have silently WIDENED every people-only transport into a troop carrier.
+
 ### Criminal-type — `outlaw`
 
 Derived from the **criminal combat CLASS**, not a `DefaultUnitAI` role. A unit is criminal-type →

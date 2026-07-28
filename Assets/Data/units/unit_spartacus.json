@@ -24,7 +24,8 @@
   }
  },
  "tags": [
-  "landUnit"
+  "landUnit",
+  "people"
  ],
  "combatClass": "UNITCOMBAT_HERO",
  "combatClasses": [
@@ -79,7 +80,6 @@
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_ATTACK",
   "formationType": "FORMATION_TYPE_DEFAULT",
-  "special": "SPECIALUNIT_PEOPLE",
   "advisor": "ADVISOR_MILITARY",
   "leaderPromotion": "PROMOTION_LEADER",
   "unitAIs": [

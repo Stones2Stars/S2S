@@ -12,6 +12,11 @@
    "flat": 2
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_SUBDUED_RAY_EAGLE"
+  }
+ },
  "skills": [
   "onlyDefensive",
   "militaryTrade"
@@ -105,7 +110,6 @@
   "domain": "DOMAIN_SEA",
   "defaultUnitAI": "UNITAI_SUBDUED_ANIMAL",
   "formationType": "FORMATION_TYPE_DEFAULT",
-  "captures": "UNIT_SUBDUED_RAY_EAGLE",
   "unitAIs": [
    "UNITAI_SUBDUED_ANIMAL"
   ],

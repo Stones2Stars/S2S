@@ -50,6 +50,11 @@
    }
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_LIGHT_AA"
+  }
+ },
  "skills": [
   "noCapture",
   "mechanized",
@@ -105,7 +110,6 @@
   "defaultUnitAI": "UNITAI_CITY_COUNTER",
   "formationType": "FORMATION_TYPE_DEFAULT",
   "advisor": "ADVISOR_MILITARY",
-  "captures": "UNIT_LIGHT_AA",
   "unitAIs": [
    "UNITAI_COUNTER",
    "UNITAI_CITY_COUNTER",

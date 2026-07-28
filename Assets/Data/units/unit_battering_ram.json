@@ -52,6 +52,11 @@
    "percent": 10
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_BATTERING_RAM"
+  }
+ },
  "skills": [
   "noDefensiveBonus",
   "firstStrikeImmune",
@@ -114,7 +119,6 @@
   "defaultUnitAI": "UNITAI_ATTACK_CITY",
   "formationType": "FORMATION_TYPE_MACHINE",
   "advisor": "ADVISOR_MILITARY",
-  "captures": "UNIT_BATTERING_RAM",
   "unitAIs": [
    "UNITAI_ATTACK_CITY"
   ],

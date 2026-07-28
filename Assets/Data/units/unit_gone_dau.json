@@ -50,6 +50,11 @@
    }
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_WORKBOAT_MIDDLE"
+  }
+ },
  "skills": [
   "canMoveImpassable",
   "mechanized",
@@ -99,7 +104,6 @@
   "defaultUnitAI": "UNITAI_WORKER_SEA",
   "formationType": "FORMATION_TYPE_MACHINE",
   "advisor": "ADVISOR_ECONOMY",
-  "captures": "UNIT_WORKBOAT_MIDDLE",
   "unitAIs": [
    "UNITAI_WORKER_SEA"
   ],

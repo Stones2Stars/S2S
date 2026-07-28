@@ -41,11 +41,17 @@
    "flat": 2
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_BARD"
+  }
+ },
  "skills": [
   "rivalTerritory"
  ],
  "tags": [
-  "landUnit"
+  "landUnit",
+  "people"
  ],
  "combatClass": "UNITCOMBAT_ENTERTAINER",
  "combatClasses": [
@@ -145,9 +151,7 @@
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_PROPERTY_CONTROL",
   "formationType": "FORMATION_TYPE_DEFAULT",
-  "special": "SPECIALUNIT_PEOPLE",
   "advisor": "ADVISOR_CULTURE",
-  "captures": "UNIT_BARD",
   "unitAIs": [
    "UNITAI_PROPERTY_CONTROL"
   ],

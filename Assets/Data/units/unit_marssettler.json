@@ -13,6 +13,11 @@
    "flat": 2
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_CAPTIVE_CIVILIAN"
+  }
+ },
  "skills": [
   "food",
   "found"
@@ -140,7 +145,6 @@
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_SETTLE",
   "advisor": "ADVISOR_GROWTH",
-  "captures": "UNIT_CAPTIVE_CIVILIAN",
   "unitAIs": [
    "UNITAI_SETTLE"
   ],

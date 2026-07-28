@@ -147,6 +147,7 @@
  "cargo": {
   "unit": {
    "space": {
+    "unit": "IS_CAPTIVE",
     "flat": 1
    }
   }
@@ -169,6 +170,7 @@
  "tags": [
   "military",
   "landUnit",
+  "people",
   "camouflage",
   "disguised"
  ],
@@ -247,7 +249,6 @@
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_INFILTRATOR",
   "formationType": "FORMATION_TYPE_DEFAULT",
-  "special": "SPECIALUNIT_PEOPLE",
   "advisor": "ADVISOR_MILITARY",
   "espionagePoints": 100,
   "unitAIs": [
@@ -261,9 +262,6 @@
   ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "cargo": {
-   "special": "SPECIALUNIT_CAPTIVE"
-  }
+  ]
  }
 }

@@ -91,6 +91,7 @@
  "tags": [
   "military",
   "landUnit",
+  "people",
   "camouflage"
  ],
  "combatClass": "UNITCOMBAT_MELEE",
@@ -155,7 +156,6 @@
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_RESERVE",
   "formationType": "FORMATION_TYPE_DEFAULT",
-  "special": "SPECIALUNIT_PEOPLE",
   "advisor": "ADVISOR_MILITARY",
   "unitAIs": [
    "UNITAI_CITY_DEFENSE",

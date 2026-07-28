@@ -22,12 +22,18 @@
    "flat": 1
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_STORY_TELLER"
+  }
+ },
  "skills": [
   "rivalTerritory",
   "militaryTrade"
  ],
  "tags": [
-  "landUnit"
+  "landUnit",
+  "people"
  ],
  "combatClass": "UNITCOMBAT_ENTERTAINER",
  "combatClasses": [
@@ -121,9 +127,7 @@
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_PROPERTY_CONTROL",
   "formationType": "FORMATION_TYPE_DEFAULT",
-  "special": "SPECIALUNIT_PEOPLE",
   "advisor": "ADVISOR_CULTURE",
-  "captures": "UNIT_STORY_TELLER",
   "unitAIs": [
    "UNITAI_PROPERTY_CONTROL"
   ],

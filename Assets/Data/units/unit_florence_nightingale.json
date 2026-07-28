@@ -57,7 +57,8 @@
   "onlyDefensive"
  ],
  "tags": [
-  "landUnit"
+  "landUnit",
+  "people"
  ],
  "combatClass": "UNITCOMBAT_HERO",
  "combatClasses": [
@@ -102,7 +103,6 @@
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_RESERVE",
   "formationType": "FORMATION_TYPE_DEFAULT",
-  "special": "SPECIALUNIT_PEOPLE",
   "advisor": "ADVISOR_MILITARY",
   "unitAIs": [
    "UNITAI_RESERVE",

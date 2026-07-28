@@ -18,10 +18,16 @@
    "flat": 2
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_SIKH_MISSIONARY"
+  }
+ },
  "tags": [
   "missionary",
   "civilian",
-  "landUnit"
+  "landUnit",
+  "people"
  ],
  "combatClass": "UNITCOMBAT_MISSIONARY",
  "combatClasses": [
@@ -58,9 +64,7 @@
   "worth": 1,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_MISSIONARY",
-  "special": "SPECIALUNIT_PEOPLE",
   "advisor": "ADVISOR_RELIGION",
-  "captures": "UNIT_SIKH_MISSIONARY",
   "unitAIs": [
    "UNITAI_MISSIONARY"
   ],

@@ -13,6 +13,11 @@
    "flat": 3
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_ENERGY_ENTITY"
+  }
+ },
  "skills": [
   "canMoveAllTerrain",
   "canMoveImpassable",
@@ -66,7 +71,6 @@
   "defaultUnitAI": "UNITAI_WORKER",
   "formationType": "FORMATION_TYPE_DEFAULT",
   "advisor": "ADVISOR_ECONOMY",
-  "captures": "UNIT_ENERGY_ENTITY",
   "unitAIs": [
    "UNITAI_WORKER"
   ],

@@ -31,6 +31,11 @@
    "flat": 1
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_WORKBOAT"
+  }
+ },
  "skills": [
   "mechanized",
   "renderBelowWater"
@@ -79,7 +84,6 @@
   "defaultUnitAI": "UNITAI_WORKER_SEA",
   "formationType": "FORMATION_TYPE_MACHINE",
   "advisor": "ADVISOR_ECONOMY",
-  "captures": "UNIT_WORKBOAT",
   "unitAIs": [
    "UNITAI_WORKER_SEA"
   ],

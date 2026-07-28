@@ -92,6 +92,11 @@
    "flat": 2
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_WORKCAMEL"
+  }
+ },
  "skills": [
   "food",
   "workerTrade"
@@ -147,7 +152,6 @@
   "defaultUnitAI": "UNITAI_WORKER",
   "formationType": "FORMATION_TYPE_DEFAULT",
   "advisor": "ADVISOR_ECONOMY",
-  "captures": "UNIT_WORKCAMEL",
   "unitAIs": [
    "UNITAI_WORKER"
   ],

@@ -55,7 +55,8 @@
  ],
  "tags": [
   "military",
-  "landUnit"
+  "landUnit",
+  "troop"
  ],
  "combatClass": "UNITCOMBAT_GUN",
  "combatClasses": [
@@ -99,7 +100,6 @@
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_PARADROP",
   "formationType": "FORMATION_TYPE_DEFAULT",
-  "special": "SPECIALUNIT_TROOP",
   "advisor": "ADVISOR_MILITARY",
   "unitAIs": [
    "UNITAI_PARADROP"

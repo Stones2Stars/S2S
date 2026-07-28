@@ -137,6 +137,7 @@
  "tags": [
   "military",
   "landUnit",
+  "people",
   "camouflage",
   "disguised"
  ],
@@ -218,7 +219,6 @@
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_INFILTRATOR",
   "formationType": "FORMATION_TYPE_DEFAULT",
-  "special": "SPECIALUNIT_PEOPLE",
   "advisor": "ADVISOR_MILITARY",
   "espionagePoints": 50,
   "unitAIs": [

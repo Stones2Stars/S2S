@@ -93,6 +93,11 @@
    "flat": 2
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_WORKER"
+  }
+ },
  "skills": [
   "food"
  ],
@@ -141,7 +146,6 @@
   "formationType": "FORMATION_TYPE_DEFAULT",
   "advisor": "ADVISOR_ECONOMY",
   "religion": "RELIGION_VOODOO",
-  "captures": "UNIT_WORKER",
   "unitAIs": [
    "UNITAI_WORKER"
   ],

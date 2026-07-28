@@ -457,6 +457,11 @@
    "flat": 2
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_EARLY_FOOD_MERCHANT_C2C"
+  }
+ },
  "skills": [
   "noCapture",
   "food",
@@ -531,7 +536,6 @@
   "defaultUnitAI": "UNITAI_MERCHANT",
   "formationType": "FORMATION_TYPE_DEFAULT",
   "advisor": "ADVISOR_GROWTH",
-  "captures": "UNIT_EARLY_FOOD_MERCHANT_C2C",
   "unitAIs": [
    "UNITAI_MERCHANT",
    "UNITAI_ENGINEER"

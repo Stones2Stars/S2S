@@ -146,9 +146,6 @@
   "defendAgainstUnit": [
    "UNIT_SUBMARINE",
    "UNIT_ATTACK_SUBMARINE"
-  ],
-  "cargo": {
-   "special": "SPECIALUNIT_MISSILE"
-  }
+  ]
  }
 }

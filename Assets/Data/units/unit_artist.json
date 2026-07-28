@@ -9,7 +9,8 @@
   "goldenAge"
  ],
  "tags": [
-  "landUnit"
+  "landUnit",
+  "people"
  ],
  "combatClass": "UNITCOMBAT_PRODIGY",
  "combatClasses": [
@@ -127,7 +128,6 @@
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_ARTIST",
   "formationType": "FORMATION_TYPE_DEFAULT",
-  "special": "SPECIALUNIT_PEOPLE",
   "advisor": "ADVISOR_CULTURE",
   "unitAIs": [
    "UNITAI_ARTIST"

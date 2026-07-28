@@ -17,10 +17,16 @@
    "flat": 2
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_BAHAI_MISSIONARY"
+  }
+ },
  "tags": [
   "missionary",
   "civilian",
-  "landUnit"
+  "landUnit",
+  "people"
  ],
  "combatClass": "UNITCOMBAT_MISSIONARY",
  "combatClasses": [
@@ -53,9 +59,7 @@
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_MISSIONARY",
   "formationType": "FORMATION_TYPE_DEFAULT",
-  "special": "SPECIALUNIT_PEOPLE",
   "advisor": "ADVISOR_RELIGION",
-  "captures": "UNIT_BAHAI_MISSIONARY",
   "unitAIs": [
    "UNITAI_MISSIONARY"
   ],

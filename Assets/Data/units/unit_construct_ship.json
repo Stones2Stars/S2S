@@ -29,6 +29,11 @@
    "flat": 6
   }
  },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_CONSTRUCT_SHIP"
+  }
+ },
  "skills": [
   "canMoveImpassable",
   "ignoreTerrainCost",
@@ -74,7 +79,6 @@
   "defaultUnitAI": "UNITAI_WORKER_SEA",
   "formationType": "FORMATION_TYPE_MACHINE",
   "advisor": "ADVISOR_ECONOMY",
-  "captures": "UNIT_CONSTRUCT_SHIP",
   "unitAIs": [
    "UNITAI_WORKER_SEA"
   ],
