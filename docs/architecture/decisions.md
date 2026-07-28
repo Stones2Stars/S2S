@@ -365,12 +365,18 @@ an ERROR ([DEC-no-legacy-masking](#dec-no-legacy-masking)). The recompute-from-s
 
 ### DEC-playability-not-a-gate
 
-The `json-data-migration` branch is knowingly not playable, and playability is NOT a gate on removing legacy —
-"it would break the game / needs a playtest first" is a rollerskate excuse. Removal is DELETE-DRIVEN: hard-delete the
-member (save-safe via `savemigration.txt`), and the COMPILER is the census (every consumer still on it is a compile
-error — un-self-certifiable, so you cannot flip-and-pretend). Done = compiler-complete rewire onto the cascade +
-endpoint-observable correctness on a LOADED save (not *playing*). The only legacy that stays is an owner-ruled
-carve-out. **Home:** [validation.md](../specs/validation.md).
+The rebuild branch is knowingly not playable AND does not compile; neither playability nor COMPILING is a gate on
+removing legacy — "it would break the game / needs a playtest first" is a rollerskate excuse, and **green is the
+bait**: chasing it is what makes an agent shoehorn the new implementation into legacy, so everything goes in place
+first and the tree compiles at the END, as the result of the completed rewire. While it is red, **WIRED outranks
+CORRECT** (a machine's facts emitted and consumer registered beats knowing its output is right — correctness is
+endpoint-observable and untestable until green). Removal is DELETE-DRIVEN: hard-delete the member (save-safe via
+`savemigration.txt`), and the COMPILER is the census (every consumer still on it is a compile error —
+un-self-certifiable, so you cannot flip-and-pretend), so a compile error is a WORKLIST ENTRY, never a reason to
+re-shape what is being built. Done = compiler-complete rewire onto the cascade + endpoint-observable correctness on
+a LOADED save (not *playing*). The only legacy that stays is an owner-ruled carve-out. **Home:**
+[roadmap.md](../plans/structural-cleanup/roadmap.md); the acceptance bar it sequences:
+[validation.md](../specs/validation.md).
 
 ### DEC-red-ratchet
 

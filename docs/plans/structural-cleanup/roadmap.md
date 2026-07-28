@@ -6,7 +6,22 @@
 >
 > **⚑ Branch `cascade-rebuild` is a deliberate CLEAN SLATE and does not compile. That is the intended state**
 > (owner): *"I could not possibly care less if this compiles; having a clean slate to do this right is the target."*
-> A red tree is NOT a defect to fix by re-attaching what was archived — see §What was archived, and why.
+> A red tree is NOT a defect to fix by re-attaching what was archived (§Context).
+>
+> **⛔ COMPILING IS NOT A GATE — AND GREEN IS THE BAIT (owner).** Everything goes IN PLACE FIRST; the tree compiles
+> at the END, as the RESULT of the completed rewire. The reason is a failure mode, not patience: **chasing green is
+> what makes an agent shoehorn the new implementation into legacy** — a half-built surface is made to compile by
+> bending it to whatever call sites are still standing, which is exactly the half-migration this rebuild exists to
+> undo ([DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface)). A compile error is a
+> WORKLIST ENTRY (the compiler is the census), never a reason to narrow, widen, or re-shape what is being built.
+> ⛔ "Get it building" is not a milestone, and a green tree is not evidence of progress.
+>
+> **⛔ WIRED OUTRANKS CORRECT while the tree is red (owner).** The priority is that every machine is WIRED — its
+> facts emitted, its consumer registered, its surface reachable — not that its output is verified right: *"it is
+> more important that triggers are wired than knowing if they give the correct result."* Correctness is
+> endpoint-observable ([DEC-done-is-observable](../../architecture/decisions.md#dec-done-is-observable)) and so
+> **cannot be tested until the tree is green again**; ranking a not-yet-testable correctness gap as the top
+> priority mis-sequences the work. ⚠ This SEQUENCES the acceptance bar, it does not relax it.
 
 ## Context — why this rebuild exists
 
@@ -287,7 +302,10 @@ These are data/curator/audit items whose subject never lived in the archived sub
   can finish, because it is the common blocker under the keyed "vs unit-combat-class" combat modifiers, the upkeep
   military/civilian bucketing, and the `IS_<tag>` predicate surface.
 - **The grants apply-loop** — [grants-machine.md](grants-machine.md) + [grant-apply-sites.md](grant-apply-sites.md)
-  + [start-packages.md](start-packages.md). Still the biggest feature gap: grants resolves but does not apply.
+  + [start-packages.md](start-packages.md). The resolver and the first appliers are wired onto the spine (see the
+  EXISTS table); what remains is the rest of the apply surface. ⚠ It is ONE piece among many, never the headline
+  gap — and whether a grant hands out the RIGHT payload is not testable until the tree is green, so it is ranked
+  by WIRING like everything else (the banner's WIRED-OUTRANKS-CORRECT rule).
 - **Poco stubs** — [stub-census.md](stub-census.md). Getters returning a constant where legacy computed a real
   value, feeding live consumers wrong numbers. **Reproduce-not-default:** a poco getter whose value is not curated
   JSON must reproduce legacy's mechanism, never a stand-in 0/-1/empty.
