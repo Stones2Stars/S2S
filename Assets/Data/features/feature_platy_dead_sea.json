@@ -8,6 +8,9 @@
   }
  },
  "characteristics": [
+  "unfoundable",
+  "unimprovable",
+  "prohibitsBonus",
   "nukeImmune",
   "ignoreTerrainCulture"
  ],
@@ -25,9 +28,6 @@
   "movementCost": 1,
   "noRiver": true,
   "requiresFlatlands": true,
-  "noCity": true,
-  "noImprovement": true,
-  "noBonus": true,
   "validTerrains": [
    "TERRAIN_SALT_FLATS",
    "TERRAIN_DESERT"

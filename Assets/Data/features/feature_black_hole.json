@@ -1,6 +1,8 @@
 {
  "type": "FEATURE_BLACK_HOLE",
  "characteristics": [
+  "unfoundable",
+  "unimprovable",
   "nukeImmune"
  ],
  "world": {
@@ -20,8 +22,6 @@
   "noRiver": true,
   "noAdjacent": true,
   "requiresFlatlands": true,
-  "noCity": true,
-  "noImprovement": true,
   "visibleAlways": true,
   "validTerrains": [
    "TERRAIN_ORION_ARM",

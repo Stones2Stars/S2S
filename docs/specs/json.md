@@ -825,10 +825,21 @@ carrying the scope. `countsAsPeak`, `actsAsCity`, `bombardable`, `zoneOfControl`
 > A BUILDING's `nukeImmune` makes its **city** immune; a plot substrate's means the **feature itself survives** the
 > blast. Separate blocks keep them separable — a single shared block would have quietly merged them.
 
-⛔ **A `characteristics` entry is something the substrate IS or DOES, never a constraint on what may exist there.**
-"No improvement may be built here" / "no city may be founded here" / "only on flatlands" are gates, so they author
-in `requires` / `allowed` (§4), exactly as they would on any other entity. The block is not a second home for
-placement rules.
+⛔ **The bound — does it describe THE THING, or WHERE THE THING MAY GO?**
+
+- **A CHARACTERISTIC describes the substrate itself**, intrinsically and always, including what may be done *to*
+  or *on* it: `unfoundable` (no city may be founded here), `unimprovable` (no improvement may be built here),
+  `prohibitsBonus`, `bombardable`, `nukeImmune`, `actsAsCity`, `countsAsPeak`. These are read BY other systems —
+  the founding gate, the worker-build gate, bonus placement — but they are properties of the feature, not
+  conditions the feature is tested against.
+- **A PLACEMENT CONDITION says where this substrate may EXIST**, and is evaluated against the plot's live state:
+  `requiresFlatlands`, `validTerrains`, `noCoast` / `coastalOnly`, `noRiver` / `requiresRiver`, `noAdjacent`.
+  Those author in `requires` (§4) like any other condition.
+
+⚑ **The grammatical tell tracks the real one:** a characteristic is an adjective about the thing (`bombardable`,
+`unfoundable`) — a placement condition names the ground it needs. ⚠ Do not read "it restricts something else" as
+disqualifying: `unfoundable` restricts city founding and is still a characteristic, exactly as `bombardable`
+restricts nothing and is one. The question is whose property it is, never who is affected by it.
 
 **Two further unit blocks:**
 

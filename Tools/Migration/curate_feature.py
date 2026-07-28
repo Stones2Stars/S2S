@@ -65,7 +65,10 @@ FEATURE_DROP = ["iWarmingDefense", "RiverYieldChange", "PropertyManipulators"]
 CFG = cc.EntityConfig("FeatureInfo", extra_drop=FEATURE_DROP, families=FEATURE_FAMILIES,
                       to_identity={"iMovement": "movementCost"},
                       grants={"OnUnitChangeTo": "onUnitChangeTo"},
-                      characteristics=['bNukeImmune', 'bCountsAsPeak', 'bIgnoreTerrainCulture'])
+                      id_rename={'bNoCity': 'unfoundable', 'bNoImprovement': 'unimprovable',
+                                 'bNoBonus': 'prohibitsBonus'},
+                      characteristics=['bNukeImmune', 'bCountsAsPeak', 'bIgnoreTerrainCulture',
+                                       'bNoCity', 'bNoImprovement', 'bNoBonus'])
 
 # No inbound boosts: a feature is never the deliveryguy for another entity's modifier (modifier-spec §6.1).
 FEATURE_BOOSTS = []

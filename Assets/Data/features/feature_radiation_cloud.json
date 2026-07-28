@@ -1,6 +1,7 @@
 {
  "type": "FEATURE_RADIATION_CLOUD",
  "characteristics": [
+  "unimprovable",
   "nukeImmune"
  ],
  "world": {
@@ -15,7 +16,6 @@
   "description": "TXT_KEY_FEATURE_RADIATION_CLOUD",
   "civilopedia": "TXT_KEY_FEATURE_RADIATION_CLOUD_PEDIA",
   "movementCost": 1,
-  "popDestroys": -1,
-  "noImprovement": true
+  "popDestroys": -1
  }
 }

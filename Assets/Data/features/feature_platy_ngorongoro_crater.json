@@ -1,6 +1,9 @@
 {
  "type": "FEATURE_PLATY_NGORONGORO_CRATER",
  "characteristics": [
+  "unfoundable",
+  "unimprovable",
+  "prohibitsBonus",
   "nukeImmune",
   "ignoreTerrainCulture"
  ],
@@ -18,9 +21,6 @@
   "addsFreshWater": true,
   "movementCost": 1,
   "requiresFlatlands": true,
-  "noCity": true,
-  "noImprovement": true,
-  "noBonus": true,
   "validTerrains": [
    "TERRAIN_PLAINS",
    "TERRAIN_GRASSLAND",

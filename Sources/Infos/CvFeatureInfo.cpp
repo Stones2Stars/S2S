@@ -27,20 +27,14 @@ CvFeatureInfo::CvFeatureInfo()
 	, m_iZobristValue(0)
 	, m_iWorldSoundscapeScriptId(-1)
 	, m_bImpassable(false)
-	, m_bNoCity(false)
-	, m_bNoImprovement(false)
-	, m_bNoBonus(false)
-	, m_bCountsAsPeak(false)
 	, m_bRequiresFlatlands(false)
 	, m_bRequiresRiver(false)
 	, m_bAddsFreshWater(false)
-	, m_bNukeImmune(false)
 	, m_bNoCoast(false)
 	, m_bNoRiver(false)
 	, m_bNoAdjacent(false)
 	, m_bCoastalOnly(false)
 	, m_bVisibleAlways(false)
-	, m_bIgnoreTerrainCulture(false)
 	, m_bCanGrowAnywhere(false)
 {
 	// Non-XML runtime map-hash value, drawn from the synced RNG at info construction EXACTLY as the archived
@@ -119,20 +113,14 @@ void CvFeatureInfo::mapFrom(const picojson::value& entity)
 		m_iGrowthProbability = jsonIdInt(*pIdentity, "growth");
 		m_iSpreadProbability = jsonIdInt(*pIdentity, "spread");
 		m_bImpassable = jsonIdBool(*pIdentity, "impassable");
-		m_bNoCity = jsonIdBool(*pIdentity, "noCity");
-		m_bNoImprovement = jsonIdBool(*pIdentity, "noImprovement");
-		m_bNoBonus = jsonIdBool(*pIdentity, "noBonus");
-		m_bCountsAsPeak = jsonIdBool(*pIdentity, "countsAsPeak");
 		m_bRequiresFlatlands = jsonIdBool(*pIdentity, "requiresFlatlands");
 		m_bRequiresRiver = jsonIdBool(*pIdentity, "requiresRiver");
 		m_bAddsFreshWater = jsonIdBool(*pIdentity, "addsFreshWater");
-		m_bNukeImmune = jsonIdBool(*pIdentity, "nukeImmune");
 		m_bNoCoast = jsonIdBool(*pIdentity, "noCoast");
 		m_bNoRiver = jsonIdBool(*pIdentity, "noRiver");
 		m_bNoAdjacent = jsonIdBool(*pIdentity, "noAdjacent");
 		m_bCoastalOnly = jsonIdBool(*pIdentity, "coastalOnly");
 		m_bVisibleAlways = jsonIdBool(*pIdentity, "visibleAlways");
-		m_bIgnoreTerrainCulture = jsonIdBool(*pIdentity, "ignoreTerrainCulture");
 		m_bCanGrowAnywhere = jsonIdBool(*pIdentity, "canGrowAnywhere");
 
 		picojson::object::const_iterator terrainsIter = pIdentity->find("validTerrains");

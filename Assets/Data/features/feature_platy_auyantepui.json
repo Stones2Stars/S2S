@@ -1,6 +1,9 @@
 {
  "type": "FEATURE_PLATY_AUYANTEPUI",
  "characteristics": [
+  "unfoundable",
+  "unimprovable",
+  "prohibitsBonus",
   "nukeImmune",
   "countsAsPeak",
   "ignoreTerrainCulture"
@@ -18,9 +21,6 @@
   "civilopedia": "TXT_KEY_FEATURE_AUYANTEPUI_PEDIA",
   "noCoast": true,
   "requiresFlatlands": true,
-  "noCity": true,
-  "noImprovement": true,
-  "noBonus": true,
   "validTerrains": [
    "TERRAIN_GRASSLAND"
   ]

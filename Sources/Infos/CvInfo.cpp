@@ -115,6 +115,7 @@ void CvInfo::clearSections()
 	if (CvClassificationBlock* u = mutSkills())       u->clearParsed();
 	if (CvClassificationBlock* u = mutTags())         u->clearParsed();
 	if (CvClassificationBlock* u = mutAttributes())   u->clearParsed();
+	if (CvClassificationBlock* u = mutCharacteristics()) u->clearParsed();
 	if (CvClassificationBlock* u = mutCapabilities()) u->clearParsed();
 	if (CvClassificationBlock* u = mutPolicies())     u->clearParsed();
 }
@@ -126,6 +127,7 @@ void CvInfo::resolveClassificationIds()
 	if (CvClassificationBlock* u = mutSkills())       u->resolveIds(CLSD_SKILL);
 	if (CvClassificationBlock* u = mutTags())         u->resolveIds(CLSD_TAG);
 	if (CvClassificationBlock* u = mutAttributes())   u->resolveIds(CLSD_ATTRIBUTE);
+	if (CvClassificationBlock* u = mutCharacteristics()) u->resolveIds(CLSD_CHARACTERISTIC);
 	if (CvClassificationBlock* u = mutCapabilities()) u->resolveIds(CLSD_CAPABILITY);
 	if (CvClassificationBlock* u = mutPolicies())     u->resolveIds(CLSD_POLICY);
 }
@@ -160,6 +162,7 @@ void CvInfo::mapSections(const picojson::value& entity)
 		if (k == "skills")            { if (CvClassificationBlock* u = mutSkills())       u->parse(v); continue; }
 		if (k == "tags")              { if (CvClassificationBlock* u = mutTags())         u->parse(v); continue; }
 		if (k == "attributes")        { if (CvClassificationBlock* u = mutAttributes())   u->parse(v); continue; }
+		if (k == "characteristics")   { if (CvClassificationBlock* u = mutCharacteristics()) u->parse(v); continue; }
 		if (k == "capabilities")      { if (CvClassificationBlock* u = mutCapabilities()) u->parse(v); continue; }
 		if (k == "policies")          { if (CvClassificationBlock* u = mutPolicies())     u->parse(v); continue; }
 

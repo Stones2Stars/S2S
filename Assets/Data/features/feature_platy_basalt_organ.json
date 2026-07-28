@@ -15,6 +15,9 @@
   }
  },
  "characteristics": [
+  "unfoundable",
+  "unimprovable",
+  "prohibitsBonus",
   "nukeImmune",
   "ignoreTerrainCulture"
  ],
@@ -31,9 +34,6 @@
   "civilopedia": "TXT_KEY_FEATURE_BASALT_ORGAN_PEDIA",
   "movementCost": 1,
   "requiresFlatlands": true,
-  "noCity": true,
-  "noImprovement": true,
-  "noBonus": true,
   "validTerrains": [
    "TERRAIN_SALT_FLATS",
    "TERRAIN_BARREN",

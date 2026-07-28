@@ -8,6 +8,9 @@
   }
  },
  "characteristics": [
+  "unfoundable",
+  "unimprovable",
+  "prohibitsBonus",
   "nukeImmune",
   "countsAsPeak",
   "ignoreTerrainCulture"
@@ -35,9 +38,6 @@
   "description": "TXT_KEY_FEATURE_KRAKATOA",
   "civilopedia": "TXT_KEY_FEATURE_KRAKATOA_PEDIA",
   "movementCost": 1,
-  "noCity": true,
-  "noImprovement": true,
-  "noBonus": true,
   "validTerrains": [
    "TERRAIN_COAST",
    "TERRAIN_COAST_TROPICAL",

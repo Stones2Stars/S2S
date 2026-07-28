@@ -591,9 +591,10 @@ void loadJson(JsonLoadPhase eLoadPhase)
 		for (size_t s = 0; s < store.size(); ++s)
 			if (store[s].data != NULL) mapped.push_back(store[s].data);
 		ClassificationRegistry::buildAndResolve(mapped);
-		gDLL->logMsg("Loading.log", CvString::format("[READJSON] classification minted skills=%d tags=%d attributes=%d capabilities=%d policies=%d ms=%u",
+		gDLL->logMsg("Loading.log", CvString::format("[READJSON] classification minted skills=%d tags=%d attributes=%d characteristics=%d capabilities=%d policies=%d ms=%u",
 			ClassificationRegistry::count(CLSD_SKILL), ClassificationRegistry::count(CLSD_TAG),
-			ClassificationRegistry::count(CLSD_ATTRIBUTE), ClassificationRegistry::count(CLSD_CAPABILITY),
+			ClassificationRegistry::count(CLSD_ATTRIBUTE), ClassificationRegistry::count(CLSD_CHARACTERISTIC),
+			ClassificationRegistry::count(CLSD_CAPABILITY),
 			ClassificationRegistry::count(CLSD_POLICY), (unsigned)(GetTickCount() - s2sT0)).c_str(), true, false);
 	}
 	// The initial JSON map is DONE -- the spine announcement (the owner's load-lifecycle observability):

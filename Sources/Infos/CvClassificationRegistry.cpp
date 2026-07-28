@@ -11,10 +11,11 @@
 // The five generated-domain repo tags (phantom discriminators; payload = the RepoPayload default, plain CvInfo).
 // Their InfoRepo singletons are OWNED rows in InfoRepo.cpp.
 class CvSkillClsTag; class CvTagClsTag; class CvAttributeClsTag; class CvCapabilityClsTag; class CvPolicyClsTag;
+class CvCharacteristicClsTag;
 
 namespace
 {
-	const char* CLS_PREFIX[NUM_CLS_DOMAINS] = { "SKILL_", "TAG_", "ATTRIBUTE_", "CAPABILITY_", "POLICY_" };
+	const char* CLS_PREFIX[NUM_CLS_DOMAINS] = { "SKILL_", "TAG_", "ATTRIBUTE_", "CHARACTERISTIC_", "CAPABILITY_", "POLICY_" };
 
 	// per-domain minted state -- APPEND-ONLY process-wide (ids never shift across the premenu/postmenu passes)
 	std::vector<std::string> s_keys[NUM_CLS_DOMAINS];              // [id] -> camelCase key
@@ -57,6 +58,7 @@ namespace
 		case CLSD_SKILL:      return InfoRepo<CvSkillClsTag>::get().editPtr(iId);
 		case CLSD_TAG:        return InfoRepo<CvTagClsTag>::get().editPtr(iId);
 		case CLSD_ATTRIBUTE:  return InfoRepo<CvAttributeClsTag>::get().editPtr(iId);
+		case CLSD_CHARACTERISTIC: return InfoRepo<CvCharacteristicClsTag>::get().editPtr(iId);
 		case CLSD_CAPABILITY: return InfoRepo<CvCapabilityClsTag>::get().editPtr(iId);
 		case CLSD_POLICY:     return InfoRepo<CvPolicyClsTag>::get().editPtr(iId);
 		}
@@ -71,6 +73,7 @@ namespace
 		case CLSD_SKILL:      return d->getSkills();
 		case CLSD_TAG:        return d->getTags();
 		case CLSD_ATTRIBUTE:  return d->getAttributes();
+		case CLSD_CHARACTERISTIC: return d->getCharacteristics();
 		case CLSD_CAPABILITY: return d->getCapabilities();
 		case CLSD_POLICY:     return d->getPolicies();
 		}

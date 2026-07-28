@@ -23,6 +23,7 @@
   }
  },
  "characteristics": [
+  "unfoundable",
   "nukeImmune",
   "ignoreTerrainCulture"
  ],
@@ -49,7 +50,6 @@
   "description": "TXT_KEY_FEATURE_GREAT_BARRIER",
   "civilopedia": "TXT_KEY_FEATURE_GREAT_BARRIER_PEDIA",
   "movementCost": 5,
-  "noCity": true,
   "validTerrains": [
    "TERRAIN_COAST_TROPICAL"
   ]

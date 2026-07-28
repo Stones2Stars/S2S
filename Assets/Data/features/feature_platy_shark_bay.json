@@ -15,6 +15,9 @@
   }
  },
  "characteristics": [
+  "unfoundable",
+  "unimprovable",
+  "prohibitsBonus",
   "nukeImmune",
   "ignoreTerrainCulture"
  ],
@@ -30,9 +33,6 @@
   "description": "TXT_KEY_FEATURE_SHARK_BAY",
   "civilopedia": "TXT_KEY_FEATURE_SHARK_BAY_PEDIA",
   "movementCost": 2,
-  "noCity": true,
-  "noImprovement": true,
-  "noBonus": true,
   "validTerrains": [
    "TERRAIN_COAST",
    "TERRAIN_COAST_TROPICAL"

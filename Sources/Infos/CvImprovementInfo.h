@@ -15,6 +15,7 @@
 //
 
 #include "CvInfo.h"
+#include "CvClassificationBlock.h"   // the §8 held-boolean block + CLS_HAS
 #include "Defines/CvEnums.h"   // NUM_YIELD_TYPES / ImprovementTypes / BonusTypes / MapCategoryTypes / BuildTypes
 #include <vector>
 #include <map>
@@ -84,12 +85,15 @@ public:
 	const std::vector<int>& getFeatureChangeTypes() const { return m_aiFeatureChangeTypes; }
 	bool isFeatureChangeType(int iFeature) const;                       // membership (a FEATURE_ engine id)
 
-	bool isActsAsCity() const { return m_bActsAsCity; }
+	bool isActsAsCity() const CLS_HAS(m_characteristics, CLSD_CHARACTERISTIC, "actsAsCity")
+	virtual const CvClassificationBlock* getCharacteristics() const { return &m_characteristics; }
+	bool hasCharacteristic(int iId) const { return m_characteristics.hasId(iId); }
+	bool isZOCSource() const CLS_HAS(m_characteristics, CLSD_CHARACTERISTIC, "zoneOfControl")
+
 	bool isMilitaryStructure() const { return m_bMilitaryStructure; }
 	bool isCarriesIrrigation() const { return m_bCarriesIrrigation; }
 	bool isOutsideBorders() const { return m_bOutsideBorders; }
-	bool isBombardable() const { return m_bBombardable; }
-	bool isZOCSource() const { return m_bZOCSource; }
+	bool isBombardable() const CLS_HAS(m_characteristics, CLSD_CHARACTERISTIC, "bombardable")
 	bool isExtraterresial() const { return m_bExtraterrestrial; }
 	bool isPlacesBonus() const { return m_bPlacesBonus; }         // identity placement-transform outcome flags
 	bool isPlacesFeature() const { return m_bPlacesFeature; }
@@ -177,12 +181,11 @@ private:
 	ImprovementTypes m_eImprovementUpgrade;   // identity.upgradesTo (FK; self-FKs resolve at the full-registry re-run)
 	ImprovementTypes m_eImprovementPillage;   // identity.pillageTo (FK)
 	BonusTypes m_eBonusChange;                // identity.bonusChange (FK)
-	bool m_bActsAsCity;
 	bool m_bMilitaryStructure;
+	virtual CvClassificationBlock* mutCharacteristics() { return &m_characteristics; }
+	CvClassificationBlock m_characteristics;   // json.md §8 -- the plot-substrate held booleans
 	bool m_bCarriesIrrigation;
 	bool m_bOutsideBorders;
-	bool m_bBombardable;
-	bool m_bZOCSource;
 	bool m_bExtraterrestrial;
 	bool m_bUniversalBonusTrade;
 	bool m_bUpgradeRequiresFortify;

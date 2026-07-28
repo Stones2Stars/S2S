@@ -14,6 +14,9 @@
    }
   }
  },
+ "characteristics": [
+  "unfoundable"
+ ],
  "world": {
   "art": {
    "define": "ART_DEF_FEATURE_BLUE_SUPERGIANT"
@@ -26,7 +29,6 @@
   "description": "TXT_KEY_FEATURE_BLUE_SUPERGIANT",
   "civilopedia": "TXT_KEY_FEATURE_BLUE_SUPERGIANT_PEDIA",
   "popDestroys": -1,
-  "noCity": true,
   "movementCost": 2,
   "validTerrains": [
    "TERRAIN_ORION_ARM",

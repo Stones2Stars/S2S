@@ -30,12 +30,9 @@ CvImprovementInfo::CvImprovementInfo()
 	, m_eImprovementUpgrade(NO_IMPROVEMENT)
 	, m_eImprovementPillage(NO_IMPROVEMENT)
 	, m_eBonusChange(NO_BONUS)
-	, m_bActsAsCity(false)
 	, m_bMilitaryStructure(false)
 	, m_bCarriesIrrigation(false)
 	, m_bOutsideBorders(false)
-	, m_bBombardable(false)
-	, m_bZOCSource(false)
 	, m_bExtraterrestrial(false)
 	, m_bUniversalBonusTrade(false)
 	, m_bUpgradeRequiresFortify(false)
@@ -348,12 +345,9 @@ void CvImprovementInfo::mapFrom(const picojson::value& entity)
 		m_eImprovementPillage = (ImprovementTypes)jsonIdFk(*pIdentity, "pillageTo");
 		m_eBonusChange = (BonusTypes)jsonIdFk(*pIdentity, "bonusChange");
 
-		m_bActsAsCity = jsonIdBool(*pIdentity, "actsAsCity");
 		m_bMilitaryStructure = jsonIdBool(*pIdentity, "militaryStructure");
 		m_bCarriesIrrigation = jsonIdBool(*pIdentity, "carriesIrrigation");
 		m_bOutsideBorders = jsonIdBool(*pIdentity, "outsideBorders");
-		m_bBombardable = jsonIdBool(*pIdentity, "bombardable");
-		m_bZOCSource = jsonIdBool(*pIdentity, "zoneOfControl");
 		m_bExtraterrestrial = jsonIdBool(*pIdentity, "extraterrestrial");
 		m_bUniversalBonusTrade = jsonIdBool(*pIdentity, "universalBonusTrade");
 		m_bUpgradeRequiresFortify = jsonIdBool(*pIdentity, "upgradeRequiresFortify");

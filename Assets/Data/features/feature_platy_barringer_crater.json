@@ -1,6 +1,9 @@
 {
  "type": "FEATURE_PLATY_BARRINGER_CRATER",
  "characteristics": [
+  "unfoundable",
+  "unimprovable",
+  "prohibitsBonus",
   "nukeImmune",
   "ignoreTerrainCulture"
  ],
@@ -17,9 +20,6 @@
   "civilopedia": "TXT_KEY_FEATURE_BARRINGER_CRATER_PEDIA",
   "movementCost": 1,
   "requiresFlatlands": true,
-  "noCity": true,
-  "noImprovement": true,
-  "noBonus": true,
   "validTerrains": [
    "TERRAIN_SCRUB",
    "TERRAIN_DESERT",

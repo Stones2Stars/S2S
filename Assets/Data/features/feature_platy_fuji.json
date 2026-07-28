@@ -8,6 +8,9 @@
   }
  },
  "characteristics": [
+  "unfoundable",
+  "unimprovable",
+  "prohibitsBonus",
   "nukeImmune",
   "countsAsPeak",
   "ignoreTerrainCulture"
@@ -35,9 +38,6 @@
   "description": "TXT_KEY_FEATURE_FUJI",
   "civilopedia": "TXT_KEY_FEATURE_FUJI_PEDIA",
   "movementCost": 1,
-  "noCity": true,
-  "noImprovement": true,
-  "noBonus": true,
   "validTerrains": [
    "TERRAIN_ICE",
    "TERRAIN_PERMAFROST",

@@ -15,6 +15,9 @@
   }
  },
  "characteristics": [
+  "unfoundable",
+  "unimprovable",
+  "prohibitsBonus",
   "nukeImmune",
   "ignoreTerrainCulture"
  ],
@@ -31,9 +34,6 @@
   "civilopedia": "TXT_KEY_FEATURE_PRAVCICKA_BRANA_PEDIA",
   "movementCost": 2,
   "requiresFlatlands": true,
-  "noCity": true,
-  "noImprovement": true,
-  "noBonus": true,
   "validTerrains": [
    "TERRAIN_PLAINS",
    "TERRAIN_ROCKY",

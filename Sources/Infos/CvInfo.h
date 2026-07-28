@@ -82,6 +82,7 @@ public:
 	virtual const CvClassificationBlock* getSkills()       const { return NULL; }   // §8 (flat bools; keyed extras = subclass)
 	virtual const CvClassificationBlock* getTags()         const { return NULL; }   // §8
 	virtual const CvClassificationBlock* getAttributes()   const { return NULL; }   // §8 (buildings)
+	virtual const CvClassificationBlock* getCharacteristics() const { return NULL; } // §8 (plot substrate)
 	virtual const CvClassificationBlock* getCapabilities() const { return NULL; }   // §8 (grantors)
 	virtual const CvClassificationBlock* getPolicies()     const { return NULL; }   // §9 (civics/traits)
 
@@ -196,6 +197,7 @@ protected:
 	virtual CvClassificationBlock* mutSkills()       { return NULL; }
 	virtual CvClassificationBlock* mutTags()         { return NULL; }
 	virtual CvClassificationBlock* mutAttributes()   { return NULL; }
+	virtual CvClassificationBlock* mutCharacteristics() { return NULL; }
 	virtual CvClassificationBlock* mutCapabilities() { return NULL; }
 	virtual CvClassificationBlock* mutPolicies()     { return NULL; }
 

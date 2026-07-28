@@ -7,6 +7,9 @@
    }
   }
  },
+ "characteristics": [
+  "unimprovable"
+ ],
  "world": {
   "art": {
    "define": "ART_DEF_FEATURE_CRATER_SMALL"
@@ -23,7 +26,6 @@
   "popDestroys": 20,
   "noAdjacent": true,
   "requiresFlatlands": true,
-  "noImprovement": true,
   "validTerrains": [
    "TERRAIN_LUNAR_REGOLITH",
    "TERRAIN_LUNAR_MARE",

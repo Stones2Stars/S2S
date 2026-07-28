@@ -15,6 +15,9 @@
   }
  },
  "characteristics": [
+  "unfoundable",
+  "unimprovable",
+  "prohibitsBonus",
   "nukeImmune",
   "ignoreTerrainCulture"
  ],
@@ -31,9 +34,6 @@
   "civilopedia": "TXT_KEY_FEATURE_ULURU_PEDIA",
   "movementCost": 1,
   "requiresFlatlands": true,
-  "noCity": true,
-  "noImprovement": true,
-  "noBonus": true,
   "validTerrains": [
    "TERRAIN_DESERT",
    "TERRAIN_SCRUB"

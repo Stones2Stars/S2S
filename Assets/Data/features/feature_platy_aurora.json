@@ -1,6 +1,9 @@
 {
  "type": "FEATURE_PLATY_AURORA",
  "characteristics": [
+  "unfoundable",
+  "unimprovable",
+  "prohibitsBonus",
   "nukeImmune",
   "ignoreTerrainCulture"
  ],
@@ -15,9 +18,6 @@
  "identity": {
   "description": "TXT_KEY_FEATURE_AURORA",
   "civilopedia": "TXT_KEY_FEATURE_AURORA_PEDIA",
-  "noCity": true,
-  "noImprovement": true,
-  "noBonus": true,
   "validTerrains": [
    "TERRAIN_ICE",
    "TERRAIN_TUNDRA",

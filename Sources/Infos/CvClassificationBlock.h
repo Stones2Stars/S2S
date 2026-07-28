@@ -32,6 +32,7 @@ enum ClsDomain
 	CLSD_SKILL = 0,     // unit `skills`
 	CLSD_TAG,           // unit `tags`
 	CLSD_ATTRIBUTE,     // building `attributes`
+	CLSD_CHARACTERISTIC,// plot substrate `characteristics` (terrain/feature/improvement/route)
 	CLSD_CAPABILITY,    // empire `capabilities`
 	CLSD_POLICY,        // empire `policies`
 	NUM_CLS_DOMAINS

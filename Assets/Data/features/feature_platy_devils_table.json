@@ -15,6 +15,9 @@
   }
  },
  "characteristics": [
+  "unfoundable",
+  "unimprovable",
+  "prohibitsBonus",
   "nukeImmune",
   "ignoreTerrainCulture"
  ],
@@ -30,9 +33,6 @@
   "description": "TXT_KEY_FEATURE_DEVILS_TABLE",
   "civilopedia": "TXT_KEY_FEATURE_DEVILS_TABLE_PEDIA",
   "movementCost": 1,
-  "noCity": true,
-  "noImprovement": true,
-  "noBonus": true,
   "validTerrains": [
    "TERRAIN_PLAINS",
    "TERRAIN_DESERT",

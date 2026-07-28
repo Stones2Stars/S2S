@@ -25,6 +25,9 @@
    "percent": -80
   }
  },
+ "characteristics": [
+  "unimprovable"
+ ],
  "world": {
   "art": {
    "define": "ART_DEF_FEATURE_FALLOUT"
@@ -36,7 +39,6 @@
   "movementCost": 1,
   "disappearance": 800,
   "growth": 60,
-  "popDestroys": -1,
-  "noImprovement": true
+  "popDestroys": -1
  }
 }

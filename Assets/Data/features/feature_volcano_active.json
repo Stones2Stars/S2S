@@ -16,6 +16,9 @@
   }
  },
  "characteristics": [
+  "unfoundable",
+  "unimprovable",
+  "prohibitsBonus",
   "nukeImmune",
   "countsAsPeak"
  ],
@@ -58,9 +61,6 @@
   "movementCost": 1,
   "appearance": 300,
   "requiresFlatlands": true,
-  "noCity": true,
-  "noImprovement": true,
-  "noBonus": true,
   "validTerrains": [
    "TERRAIN_BARREN",
    "TERRAIN_ROCKY",

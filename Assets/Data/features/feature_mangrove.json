@@ -19,6 +19,9 @@
    }
   }
  },
+ "characteristics": [
+  "unfoundable"
+ ],
  "triggers": [
   {
    "trigger": "onTurn",
@@ -78,7 +81,6 @@
   "civilopedia": "TXT_KEY_FEATURE_MANGROVE_PEDIA",
   "movementCost": 2,
   "popDestroys": -1,
-  "noCity": true,
   "coastalOnly": true,
   "requiresFlatlands": true,
   "appearance": 200,

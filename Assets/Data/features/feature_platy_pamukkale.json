@@ -8,6 +8,9 @@
   }
  },
  "characteristics": [
+  "unfoundable",
+  "unimprovable",
+  "prohibitsBonus",
   "nukeImmune",
   "ignoreTerrainCulture"
  ],
@@ -25,9 +28,6 @@
   "movementCost": 2,
   "requiresFlatlands": true,
   "addsFreshWater": true,
-  "noCity": true,
-  "noImprovement": true,
-  "noBonus": true,
   "validTerrains": [
    "TERRAIN_TAIGA",
    "TERRAIN_ICE",

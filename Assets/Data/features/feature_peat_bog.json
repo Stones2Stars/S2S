@@ -32,6 +32,9 @@
    }
   }
  },
+ "characteristics": [
+  "unfoundable"
+ ],
  "triggers": [
   {
    "trigger": "onTurn",
@@ -72,7 +75,6 @@
   "popDestroys": -1,
   "requiresFlatlands": true,
   "addsFreshWater": true,
-  "noCity": true,
   "validTerrains": [
    "TERRAIN_TAIGA",
    "TERRAIN_PLAINS",

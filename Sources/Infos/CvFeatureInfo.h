@@ -13,6 +13,7 @@
 //
 
 #include "CvInfo.h"
+#include "CvClassificationBlock.h"   // the §8 held-boolean block + CLS_HAS
 #include "Defines/CvEnums.h"   // TerrainTypes / MapCategoryTypes
 #include <vector>
 
@@ -61,11 +62,14 @@ public:
 	int getSpreadProbability() const { return m_iSpreadProbability; }                // identity.spread
 	int getAdvancedStartRemoveCost() const { return m_iAdvancedStartRemoveCost; }    // cost.advancedStartRemoveCost
 
+	virtual const CvClassificationBlock* getCharacteristics() const { return &m_characteristics; }
+	bool hasCharacteristic(int iId) const { return m_characteristics.hasId(iId); }
+
 	bool isImpassable() const { return m_bImpassable; }
-	bool isNoCity() const { return m_bNoCity; }
-	bool isNoImprovement() const { return m_bNoImprovement; }
-	bool isNoBonus() const { return m_bNoBonus; }
-	bool isCountsAsPeak() const { return m_bCountsAsPeak; }
+	bool isNoCity() const CLS_HAS(m_characteristics, CLSD_CHARACTERISTIC, "unfoundable")
+	bool isNoImprovement() const CLS_HAS(m_characteristics, CLSD_CHARACTERISTIC, "unimprovable")
+	bool isNoBonus() const CLS_HAS(m_characteristics, CLSD_CHARACTERISTIC, "prohibitsBonus")
+	bool isCountsAsPeak() const CLS_HAS(m_characteristics, CLSD_CHARACTERISTIC, "countsAsPeak")
 	bool isRequiresFlatlands() const { return m_bRequiresFlatlands; }
 	bool isRequiresRiver() const { return m_bRequiresRiver; }
 	bool isNoCoast() const { return m_bNoCoast; }
@@ -73,10 +77,10 @@ public:
 	bool isNoAdjacent() const { return m_bNoAdjacent; }
 	bool isCoastalOnly() const { return m_bCoastalOnly; }
 	bool isVisibleAlways() const { return m_bVisibleAlways; }
-	bool isIgnoreTerrainCulture() const { return m_bIgnoreTerrainCulture; }
+	bool isIgnoreTerrainCulture() const CLS_HAS(m_characteristics, CLSD_CHARACTERISTIC, "ignoreTerrainCulture")
 	bool isCanGrowAnywhere() const { return m_bCanGrowAnywhere; }
 	bool isAddsFreshWater() const { return m_bAddsFreshWater; }
-	bool isNukeImmune() const { return m_bNukeImmune; }
+	bool isNukeImmune() const CLS_HAS(m_characteristics, CLSD_CHARACTERISTIC, "nukeImmune")
 	// isOnlyBad -- COMPUTED over the compiled reads (the BUG city-plot-status test): no positive health, no
 	// fresh water, no positive tile yield.
 	bool isOnlyBad() const;
@@ -145,21 +149,18 @@ private:
 	int m_iZobristValue;               // map-hash drawn from the synced RNG in the ctor (OOS-load-bearing)
 	int m_iWorldSoundscapeScriptId;    // sound.soundscape -> audio-manager index; -1 when absent
 	std::vector<int> m_ai3DAudioScriptFootstepIndex;   // sound.footsteps: FootstepAudioType index -> AS3D_ script index
+	virtual CvClassificationBlock* mutCharacteristics() { return &m_characteristics; }
+
+	CvClassificationBlock m_characteristics;   // json.md §8 -- the plot-substrate held booleans
 	bool m_bImpassable;
-	bool m_bNoCity;
-	bool m_bNoImprovement;
-	bool m_bNoBonus;
-	bool m_bCountsAsPeak;
 	bool m_bRequiresFlatlands;
 	bool m_bRequiresRiver;
 	bool m_bAddsFreshWater;
-	bool m_bNukeImmune;
 	bool m_bNoCoast;
 	bool m_bNoRiver;
 	bool m_bNoAdjacent;
 	bool m_bCoastalOnly;
 	bool m_bVisibleAlways;
-	bool m_bIgnoreTerrainCulture;
 	bool m_bCanGrowAnywhere;
 	std::string m_szArtDefineTag;      // world.art.icon (ART_DEF_* tag)
 	std::string m_szEffectType;        // world.art.effect.type
