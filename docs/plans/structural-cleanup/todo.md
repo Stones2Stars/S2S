@@ -95,16 +95,18 @@
 > costs to see through). A budget spent walking outward, exactly as movement is spent. Data, spec, engine read
 > path and the pedia render are all on it; what is below is what is NOT.
 
-- **⚖ THE HIDE-AND-SEEK TABLES STAY UNDER `vision` — OWNER-HELD, not an open task (owner):** *"let the
-  detection stay there, we need to come up with a clean way to handle hide and seek, I just don't have it yet."*
-  13 non-scope keys (`invisible`, `visibilityIntensity`, `invisibilityIntensity`, the per-terrain/feature/
-  improvement invisibility maps) sit under `vision` beside the scope-keyed family, so the block is half family
-  and half bespoke and the unitcombat curator MERGES rather than assigns. **That cost is accepted, and moving
-  them is NOT the work** — the reserved `detection` name ([json.md §6](../../specs/json.md)) is a home with no
-  design in it yet, and relocating tables into it would just move the mess.
-  ⛔ Do not split them, do not mint `detection`, and do not read this as a deferral to close: what is missing is
-  a MECHANIC, and inventing one to tidy a key is the machinery-for-its-own-sake move. When the design comes,
-  [vision.md §4](../../specs/vision.md) is the half it contests against.
+- **The retired per-type intensity getters ANSWER 0 rather than failing to compile.**
+  `visibilityIntensityTotal` / `invisibilityIntensityTotal` / `…RangeTotal` / `…SameTileTotal` still exist and
+  still read the old per-`INVISIBLE_*` accumulators, which no data now feeds. Their readers — ~30 `CvPlayerAI`
+  valuation sites and the `CvGameTextMgr` per-type unit help — therefore see 0 instead of a compile error.
+  ⚠ **This is the one place the vision cut is QUIETER than the delete-driven rule wants**
+  ([DEC-no-legacy-masking](../../architecture/decisions.md#dec-no-legacy-masking)): a silent 0 is a masked hole,
+  not a loud one. Deleting the four getters turns them into the ordinary compiler census, and the AI valuation
+  should read `concealment()` / `detectionAgainst()` instead. Sequenced with the AI consumer cut, but do not
+  mistake it for done.
+- **The hide-and-seek help text still enumerates per type** — spot intensity, spot range and same-tile, one
+  block per `INVISIBLE_*`. It renders values that are now always 0, and it is the exact thing the pairing was
+  written down to make sayable: a detection entry renders itself through `appendEntryLines`.
 - **Three AI valuation reads of the deleted improvement getters** (`CvCityAI` once, `CvUnitAI` twice) — the
   compiler census, sequenced with the rest of the AI consumer cut, not fixed on sight. Their replacement is the
   improvement's compiled `vision` entries, the same source the pedia now renders from.
