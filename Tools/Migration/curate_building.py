@@ -46,7 +46,7 @@ from collections import OrderedDict
 
 import engine
 import boolexpr
-from curate_common import put_art, emit_art, FAMILY_ORDER, de_i, fold_text_to_identity, gate_entity, wipe_entity_json
+from curate_common import put_art, emit_art, FAMILY_ORDER, de_i, fold_text_to_identity, gate_entity, wipe_entity_json, skip_inert
 from curate_unit import TAG_BY_UNITCOMBAT   # the ONE unitcombat->tag map (a building's free-promotion condition keys on it)
 from store import Store, REPO
 
@@ -1805,6 +1805,10 @@ def main():
         results[typ] = curate(typ, rec, store)
         pt = _txt(rec, "PrereqTech")
         era_of[typ] = era_map.get(pt, "none")
+    # Drop the shells: an entity that produces no effect, unlocks nothing and is named by nothing is dead
+    # weight -- loaded resident, listed in the manifest, offered in the build list and scored by the AI, all to
+    # do nothing. Fail-closed + reference-guarded + announced (curate_common.skip_inert).
+    skip_inert(results, store, "buildings")
     n = len(results)
     # SpecialBuilding #31 rides this pass (the per-player-capped GROUP).
     sb_results = OrderedDict((typ, curate_special(typ, rec, store))

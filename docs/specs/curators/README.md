@@ -39,6 +39,34 @@ curator's docstring + body. To read the map for an entity, **read its curator.**
 > `Assets/Data` JSON the engine loads. The `_additions` files are the reviewable/revertible source layer; **re-run
 > `curate_additions.py --write` after ANY re-curate** so the additions always land last.
 
+## ⛔ THE CURATOR SKIPS DEAD THINGS — a MECHANISM, never a hand-kept list (owner)
+
+An entity that produces **no effect, unlocks nothing, and is named by nothing** is dead weight: loaded resident,
+listed in the manifest, offered in the build list and scored by the AI, all to do nothing. The legacy XML
+accumulates these because a modder authors a shell and the field that would have made it work is dropped,
+renamed, or never read — so the shell survives every later pass looking plausible. **Detecting them is the
+curator's job, structurally** (`curate_common.skip_inert`), not a list somebody maintains by hand.
+
+Two halves, both load-bearing:
+
+- **INERT — FAIL-CLOSED.** Only keys known to be effect-free (`identity`/`cost`/`ui`/`world`/`sound`/`ai`, the
+  constraints `requires`/`allowed`/`enabled`/`disabled`, and the target-side `obsoletedBy`/`replacedBy`) make an
+  entity droppable. **A section the test has never heard of keeps the entity ALIVE**, so adding a
+  [json.md](../json.md) section can never silently start deleting content — the worst it can do is decline a drop
+  that would have been correct.
+- **UNREFERENCED — exhaustive, and it runs SECOND.** An entity can be inert and still load-bearing: a shell whose
+  only job is to be another entity's prereq gate, an `obsoletes` target, an `enables` entry. Dropping one breaks
+  the referrer, so the scan covers every XML record's every element plus Python and the DLL — over the handful
+  the structural test already narrowed to, never over the whole category. ⚑ **This half is not belt-and-braces:**
+  on its first run it held two of six building candidates that were genuinely pointed at.
+
+**A drop ANNOUNCES, and so does a near-miss** — the [triggers.md](../triggers.md) census discipline: data that
+vanishes and reports nothing is invisible on both axes at once. The kept-but-inert line is the more interesting
+half, because it names an entity that does nothing on its own and exists only to be referenced.
+
+⚠ **Distinct from `store.DROPPED_TYPES`**, which cuts a Type whole at the store because a whole SYSTEM was ruled
+out. That is a DECISION; this is a DETECTION. Do not fold either into the other.
+
 ## Modules — the curator folds in the ones we want
 
 The store enumerates `Assets/XML` **and** `Assets/Modules`, so a wanted module's records merge into the curated

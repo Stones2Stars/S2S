@@ -14,6 +14,7 @@ See docs/specs/modifier.md (the flat-family modifier model + deliveryguy/inversi
 import argparse
 import json
 import os
+import re
 from collections import OrderedDict
 
 import engine
@@ -625,3 +626,122 @@ def main(cfg, boosts_config, out_dir, post_process=None, synthesize=None):
             with open(os.path.join(folder, typ.lower() + ".json"), "w") as f:
                 json.dump(obj, f, indent=1, ensure_ascii=False)
         print("\nwrote %d %s JSON files under %s" % (n, cfg.entity, os.path.relpath(out_dir, REPO)))
+
+
+# ---------------------------------------------------------------------------
+# INERT-ENTITY SKIP -- "curators should have mechanics to skip dead things" (owner)
+# ---------------------------------------------------------------------------
+# An entity that produces NO effect and unlocks NOTHING is dead weight: it is
+# loaded resident, listed in the manifest, offered in build lists, and scored by
+# the AI, all to do nothing. The legacy XML accumulates these because a modder
+# authors a shell and the field that would have made it work is dropped, renamed,
+# or never read -- so the shell survives every later pass looking plausible.
+#
+# The mechanism is a STRUCTURAL test plus a REFERENCE guard, and both halves are
+# load-bearing:
+#
+#   1. INERT -- the emitted object carries no section that DOES anything. The test
+#      is FAIL-CLOSED: only keys known to be effect-free make an entity droppable,
+#      so a section this list has never heard of keeps the entity ALIVE. A new
+#      json.md section therefore cannot silently start deleting content; the worst
+#      it can do is stop a drop that would have been correct.
+#   2. UNREFERENCED -- nothing anywhere names it. An entity can be inert and still
+#      load-bearing: a shell whose only job is to be another entity's prereq gate,
+#      an obsoletes target, an `enables` entry. Dropping one of those breaks the
+#      referrer, so the scan is exhaustive (every XML record's every element, plus
+#      Python and the DLL) and it runs over the handful the structural test
+#      already narrowed to -- never over the whole category.
+#
+# A drop is ANNOUNCED, never silent (the triggers.md census discipline: authored
+# data that vanishes and reports nothing is invisible on both axes at once).
+#
+# This is NOT the same tool as store.DROPPED_TYPES, which cuts a Type whole at the
+# store because a whole SYSTEM was ruled out. That is a decision; this is a
+# detection.
+
+# Keys that never, on their own, make an entity DO anything: its own identity, what
+# it costs, what it needs, and what removes it. Everything else -- every modifier
+# family, every edge that adds to the tree, every provision, every classification
+# block, every bespoke system section -- means the entity is alive.
+_INERT_OK_KEYS = frozenset((
+    "type",
+    "identity", "cost", "ui", "world", "sound", "ai",   # intrinsic self-description (json.md par.7)
+    "requires", "allowed", "enabled", "disabled",       # constraints ON it, not effects OF it
+    "obsoletedBy", "replacedBy",                        # target-side: what removes THIS
+))
+
+_ID_RE = re.compile(r"^[A-Z][A-Z0-9]*(?:_[A-Z0-9]+)+$")
+
+
+def is_inert(out):
+    """True iff the emitted entity produces no effect and unlocks nothing.
+
+    FAIL-CLOSED: any top-level key not known to be effect-free makes it LIVE.
+    """
+    return not [k for k in out if k not in _INERT_OK_KEYS]
+
+
+def _xml_referenced_ids(store):
+    """Every Type id NAMED by some XML record, excluding each record's OWN <Type>
+    declaration. One pass over the whole store, cached on it."""
+    idx = getattr(store, "_inert_ref_index", None)
+    if idx is not None:
+        return idx
+    idx = set()
+    for _ent, table in store.tables.items():
+        for _typ, rec in table.items():
+            own = rec.find("Type")
+            for node in rec.iter():
+                if node is own:
+                    continue
+                text = (node.text or "").strip()
+                if text and _ID_RE.match(text):
+                    idx.add(text)
+    store._inert_ref_index = idx
+    return idx
+
+
+def _named_in_tree(typ, subdirs):
+    """Is the literal id mentioned anywhere under these repo subdirectories?"""
+    needle = typ.encode("utf-8")
+    for sub in subdirs:
+        root = os.path.join(REPO, sub)
+        for dirpath, _dirnames, filenames in os.walk(root):
+            for fn in filenames:
+                if not fn.lower().endswith((".py", ".cpp", ".h", ".xml")):
+                    continue
+                try:
+                    with open(os.path.join(dirpath, fn), "rb") as fh:
+                        if needle in fh.read():
+                            return True
+                except OSError:
+                    continue
+    return False
+
+
+def skip_inert(results, store, label, keep=()):
+    """Drop every entity in `results` that is inert AND referenced by nothing.
+
+    Mutates and returns `results`. Prints what went and, when a candidate is kept,
+    WHY -- a near-miss is the interesting case, because it names an entity that
+    does nothing on its own and exists only to be pointed at.
+    """
+    candidates = [t for t, out in results.items() if t not in keep and is_inert(out)]
+    if not candidates:
+        return results
+    referenced = _xml_referenced_ids(store)
+    dropped, held = [], []
+    for typ in candidates:
+        if typ in referenced or _named_in_tree(typ, ("Assets/Python", "Sources")):
+            held.append(typ)
+        else:
+            dropped.append(typ)
+    for typ in dropped:
+        del results[typ]
+    if dropped:
+        print("DROPPED %d inert %s (no effect, no unlock, referenced nowhere): %s"
+              % (len(dropped), label, ", ".join(sorted(dropped))))
+    if held:
+        print("INERT but REFERENCED, kept %d %s: %s"
+              % (len(held), label, ", ".join(sorted(held))))
+    return results
