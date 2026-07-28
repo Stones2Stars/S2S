@@ -18,12 +18,21 @@
   }
  },
  "vision": {
-  "visibilityIntensity": {
-   "INVISIBLE_SUBMARINE": 2,
-   "INVISIBLE_DISGUISED": 1,
-   "INVISIBLE_CAMOUFLAGE": 1
-  },
   "unit": {
+   "detection": [
+    {
+     "value": 200,
+     "unit": "IS_SUBMARINE"
+    },
+    {
+     "value": 100,
+     "unit": "IS_DISGUISED"
+    },
+    {
+     "value": 100,
+     "unit": "IS_CAMOUFLAGE"
+    }
+   ],
    "flat": 100
   }
  },

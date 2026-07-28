@@ -146,7 +146,9 @@
   "landUnit",
   "police",
   "animal",
-  "synthetic"
+  "synthetic",
+  "camouflage",
+  "unseen"
  ],
  "combatClass": "UNITCOMBAT_FELINE",
  "combatClasses": [
@@ -176,12 +178,10 @@
  ],
  "vision": {
   "unit": {
+   "concealment": {
+    "flat": 1000
+   },
    "flat": 100
-  },
-  "invisible": "INVISIBLE_CAMOUFLAGE",
-  "invisibilityIntensity": {
-   "INVISIBLE_CAMOUFLAGE": 7,
-   "INVISIBLE_INVISIBLE": 2
   }
  },
  "cost": {

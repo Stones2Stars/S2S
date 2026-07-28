@@ -5,10 +5,18 @@
   "assassin": false
  },
  "vision": {
-  "negates": [
-   "INVISIBLE_CAMOUFLAGE",
-   "INVISIBLE_INVISIBLE"
-  ]
+  "unit": {
+   "detection": [
+    {
+     "value": 1000,
+     "unit": "IS_CAMOUFLAGE"
+    },
+    {
+     "value": 1000,
+     "unit": "IS_UNSEEN"
+    }
+   ]
+  }
  },
  "promotionLine": {
   "PROMOTIONLINE_WANTED": 1

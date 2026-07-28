@@ -101,7 +101,8 @@
  ],
  "tags": [
   "landUnit",
-  "recon"
+  "recon",
+  "camouflage"
  ],
  "combatClass": "UNITCOMBAT_HUNTER",
  "combatClasses": [
@@ -118,13 +119,14 @@
  ],
  "vision": {
   "unit": {
+   "concealment": {
+    "flat": 100
+   },
+   "detection": {
+    "value": 100,
+    "unit": "IS_CAMOUFLAGE"
+   },
    "flat": 100
-  },
-  "visibilityIntensity": {
-   "INVISIBLE_CAMOUFLAGE": 1
-  },
-  "invisibilityIntensity": {
-   "INVISIBLE_CAMOUFLAGE": 1
   }
  },
  "grants": {

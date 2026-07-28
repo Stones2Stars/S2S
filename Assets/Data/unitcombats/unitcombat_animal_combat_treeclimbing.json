@@ -1,19 +1,5 @@
 {
  "type": "UNITCOMBAT_ANIMAL_COMBAT_TREECLIMBING",
- "vision": {
-  "invisibleFeature": [
-   {
-    "invisible": "INVISIBLE_CAMOUFLAGE",
-    "feature": "FEATURE_FOREST_ANCIENT",
-    "intensity": 1
-   },
-   {
-    "invisible": "INVISIBLE_CAMOUFLAGE",
-    "feature": "FEATURE_JUNGLE",
-    "intensity": 1
-   }
-  ]
- },
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/nature_tree_climbing.dds"

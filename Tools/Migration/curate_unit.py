@@ -33,7 +33,7 @@ from collections import OrderedDict
 
 import engine
 import boolexpr
-from curate_common import (VISION_PLOT, put_art, emit_art, FAMILY_ORDER, de_i, fold_text_to_identity, gate_entity,
+from curate_common import (VISION_PLOT, collapse_hide_and_seek, merge_vision, put_art, emit_art, FAMILY_ORDER, de_i, fold_text_to_identity, gate_entity,
                            emit_sizematters, SM_COMBATMOD_UNIT)
 from store import Store, REPO
 
@@ -1267,8 +1267,11 @@ def curate(typ, rec, store):
         out["combatClass"] = combat_class    # PRIMARY combat class -> ROOT (owner 2026-07-20), not identity
     if sub_combats:
         out["combatClasses"] = sub_combats   # SUB combat classes -> ROOT, not identity
-    if vision:
-        out["vision"] = vision
+    # Collapse the per-type invisibility tables onto the vision family FIRST (vision.md §4), then merge
+    # whatever the mechanic did not claim -- the collapse writes vision.unit, so a bare assign would
+    # overwrite it.
+    collapse_hide_and_seek(out, vision, True)
+    merge_vision(out, vision)
     if outcomes:
         out["outcomes"] = outcomes
     if grants:

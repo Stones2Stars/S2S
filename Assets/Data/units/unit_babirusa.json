@@ -66,36 +66,7 @@
  "vision": {
   "unit": {
    "flat": 100
-  },
-  "invisibleTerrain": [
-   {
-    "invisible": "INVISIBLE_CAMOUFLAGE",
-    "terrain": "TERRAIN_MUDDY",
-    "intensity": 1
-   }
-  ],
-  "invisibleFeature": [
-   {
-    "invisible": "INVISIBLE_CAMOUFLAGE",
-    "feature": "FEATURE_FOREST",
-    "intensity": 1
-   },
-   {
-    "invisible": "INVISIBLE_CAMOUFLAGE",
-    "feature": "FEATURE_FOREST_ANCIENT",
-    "intensity": 1
-   },
-   {
-    "invisible": "INVISIBLE_CAMOUFLAGE",
-    "feature": "FEATURE_JUNGLE",
-    "intensity": 1
-   },
-   {
-    "invisible": "INVISIBLE_CAMOUFLAGE",
-    "feature": "FEATURE_SWAMP",
-    "intensity": 1
-   }
-  ]
+  }
  },
  "outcomes": {
   "kill": [

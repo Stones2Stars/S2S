@@ -169,12 +169,21 @@
  ],
  "vision": {
   "unit": {
+   "detection": [
+    {
+     "value": 600,
+     "unit": "IS_DISGUISED"
+    },
+    {
+     "value": 400,
+     "unit": "IS_POLITICAL"
+    },
+    {
+     "value": 100,
+     "unit": "IS_CAMOUFLAGE"
+    }
+   ],
    "flat": 100
-  },
-  "visibilityIntensity": {
-   "INVISIBLE_DISGUISED": 6,
-   "INVISIBLE_POLITICAL": 4,
-   "INVISIBLE_CAMOUFLAGE": 1
   }
  },
  "succession": {

@@ -56,14 +56,7 @@
  "vision": {
   "unit": {
    "flat": 100
-  },
-  "invisibleTerrain": [
-   {
-    "invisible": "INVISIBLE_CAMOUFLAGE",
-    "terrain": "TERRAIN_TAIGA",
-    "intensity": 1
-   }
-  ]
+  }
  },
  "outcomes": {
   "kill": [

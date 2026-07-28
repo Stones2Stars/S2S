@@ -4,19 +4,12 @@
   "stealthDefense": true
  },
  "vision": {
-  "visibilityIntensity": {
-   "INVISIBLE_POLITICAL": 5
-  },
-  "visibilityIntensitySameTile": {
-   "INVISIBLE_DISGUISED": 1
-  },
-  "invisibleFeature": [
-   {
-    "invisible": "INVISIBLE_CAMOUFLAGE",
-    "feature": "FEATURE_CAVES",
-    "intensity": 1
+  "unit": {
+   "detection": {
+    "value": 500,
+    "unit": "IS_POLITICAL"
    }
-  ]
+  }
  },
  "ui": {
   "art": {

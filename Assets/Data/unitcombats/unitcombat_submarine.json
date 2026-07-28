@@ -11,13 +11,19 @@
   }
  },
  "vision": {
-  "visibilityIntensity": {
-   "INVISIBLE_SUBMARINE": 1
-  },
-  "invisibilityIntensity": {
-   "INVISIBLE_SUBMARINE": 1
+  "unit": {
+   "concealment": {
+    "flat": 100
+   },
+   "detection": {
+    "value": 100,
+    "unit": "IS_SUBMARINE"
+   }
   }
  },
+ "tags": [
+  "submarine"
+ ],
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/submarines.dds"

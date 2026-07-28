@@ -15,8 +15,10 @@
   }
  },
  "vision": {
-  "invisibilityIntensity": {
-   "INVISIBLE_CAMOUFLAGE": 1
+  "unit": {
+   "concealment": {
+    "flat": 10000
+   }
   }
  },
  "promotionLine": {

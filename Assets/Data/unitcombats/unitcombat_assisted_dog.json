@@ -1,8 +1,11 @@
 {
  "type": "UNITCOMBAT_ASSISTED_DOG",
  "vision": {
-  "visibilityIntensity": {
-   "INVISIBLE_CAMOUFLAGE": 1
+  "unit": {
+   "detection": {
+    "value": 100,
+    "unit": "IS_CAMOUFLAGE"
+   }
   }
  },
  "ui": {

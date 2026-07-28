@@ -9,10 +9,15 @@
   "stealthDefense": false
  },
  "vision": {
-  "invisibilityIntensity": {
-   "INVISIBLE_CAMOUFLAGE": 1
+  "unit": {
+   "concealment": {
+    "flat": 100
+   }
   }
  },
+ "tags": [
+  "camouflage"
+ ],
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/nature_hiding.dds"

@@ -18,13 +18,19 @@
   }
  },
  "vision": {
-  "visibilityIntensity": {
-   "INVISIBLE_NAVAL_DISGUISE": 1
-  },
-  "invisibilityIntensity": {
-   "INVISIBLE_NAVAL_DISGUISE": 1
+  "unit": {
+   "concealment": {
+    "flat": 100
+   },
+   "detection": {
+    "value": 100,
+    "unit": "IS_NAVALDISGUISE"
+   }
   }
  },
+ "tags": [
+  "navalDisguise"
+ ],
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/pirate_ships.dds"

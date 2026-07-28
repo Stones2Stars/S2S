@@ -1,8 +1,11 @@
 {
  "type": "UNITCOMBAT_GRAVITY_DRIVE_SHIPS",
  "vision": {
-  "visibilityIntensity": {
-   "INVISIBLE_NAVAL_DISGUISE": 3
+  "unit": {
+   "detection": {
+    "value": 300,
+    "unit": "IS_NAVALDISGUISE"
+   }
   }
  },
  "ui": {

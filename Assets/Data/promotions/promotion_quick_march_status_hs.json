@@ -22,9 +22,12 @@
   }
  },
  "vision": {
-  "negates": [
-   "INVISIBLE_CAMOUFLAGE"
-  ]
+  "unit": {
+   "detection": {
+    "value": 1000,
+    "unit": "IS_CAMOUFLAGE"
+   }
+  }
  },
  "promotionLine": {
   "PROMOTIONLINE_ENHANCED_MARCH": 3

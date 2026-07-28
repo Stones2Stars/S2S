@@ -127,12 +127,21 @@
  ],
  "vision": {
   "unit": {
+   "detection": [
+    {
+     "value": 500,
+     "unit": "IS_DISGUISED"
+    },
+    {
+     "value": 500,
+     "unit": "IS_POLITICAL"
+    },
+    {
+     "value": 200,
+     "unit": "IS_CAMOUFLAGE"
+    }
+   ],
    "flat": 100
-  },
-  "visibilityIntensity": {
-   "INVISIBLE_DISGUISED": 5,
-   "INVISIBLE_POLITICAL": 5,
-   "INVISIBLE_CAMOUFLAGE": 2
   }
  },
  "grants": {

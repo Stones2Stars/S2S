@@ -14,11 +14,16 @@
   "fliesToMove": true
  },
  "vision": {
-  "invisibilityIntensity": {
-   "INVISIBLE_SUBMARINE": 2,
-   "INVISIBLE_SUBMERGED": 1
+  "unit": {
+   "concealment": {
+    "flat": 300
+   }
   }
  },
+ "tags": [
+  "submarine",
+  "submerged"
+ ],
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/balloons.dds"

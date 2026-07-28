@@ -119,12 +119,21 @@
  ],
  "vision": {
   "unit": {
+   "detection": [
+    {
+     "value": 600,
+     "unit": "IS_CAMOUFLAGE"
+    },
+    {
+     "value": 200,
+     "unit": "IS_POLITICAL"
+    },
+    {
+     "value": 200,
+     "unit": "IS_UNSEEN"
+    }
+   ],
    "flat": 100
-  },
-  "visibilityIntensity": {
-   "INVISIBLE_CAMOUFLAGE": 6,
-   "INVISIBLE_POLITICAL": 2,
-   "INVISIBLE_INVISIBLE": 2
   }
  },
  "cost": {

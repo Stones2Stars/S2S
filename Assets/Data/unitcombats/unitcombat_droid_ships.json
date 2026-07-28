@@ -1,8 +1,11 @@
 {
  "type": "UNITCOMBAT_DROID_SHIPS",
  "vision": {
-  "visibilityIntensity": {
-   "INVISIBLE_NAVAL_DISGUISE": 2
+  "unit": {
+   "detection": {
+    "value": 200,
+    "unit": "IS_NAVALDISGUISE"
+   }
   }
  },
  "ui": {

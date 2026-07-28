@@ -1,14 +1,11 @@
 {
  "type": "UNITCOMBAT_QUALITY_STANDARD",
  "vision": {
-  "visibilityIntensity": {
-   "INVISIBLE_SIZE": 8
-  },
-  "visibilityIntensityRange": {
-   "INVISIBLE_SIZE": -1
-  },
-  "visibilityIntensitySameTile": {
-   "INVISIBLE_SIZE": 2
+  "unit": {
+   "detection": {
+    "value": 800,
+    "unit": "IS_SMALL"
+   }
   }
  },
  "enabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",

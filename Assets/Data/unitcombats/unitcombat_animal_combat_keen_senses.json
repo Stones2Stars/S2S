@@ -1,9 +1,17 @@
 {
  "type": "UNITCOMBAT_ANIMAL_COMBAT_KEEN_SENSES",
  "vision": {
-  "visibilityIntensity": {
-   "INVISIBLE_SIZE": 2,
-   "INVISIBLE_CAMOUFLAGE": 2
+  "unit": {
+   "detection": [
+    {
+     "value": 200,
+     "unit": "IS_SMALL"
+    },
+    {
+     "value": 200,
+     "unit": "IS_CAMOUFLAGE"
+    }
+   ]
   }
  },
  "ui": {

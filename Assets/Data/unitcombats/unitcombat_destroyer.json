@@ -8,8 +8,11 @@
   }
  },
  "vision": {
-  "visibilityIntensity": {
-   "INVISIBLE_SUBMARINE": 1
+  "unit": {
+   "detection": {
+    "value": 100,
+    "unit": "IS_SUBMARINE"
+   }
   }
  },
  "ui": {

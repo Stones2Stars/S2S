@@ -154,7 +154,9 @@
   "outlaw",
   "landUnit",
   "mechanized",
-  "armored"
+  "armored",
+  "disguised",
+  "political"
  ],
  "combatClass": "UNITCOMBAT_CRIMINAL",
  "combatClasses": [
@@ -174,15 +176,20 @@
  ],
  "vision": {
   "unit": {
+   "concealment": {
+    "flat": 800
+   },
+   "detection": [
+    {
+     "value": 300,
+     "unit": "IS_DISGUISED"
+    },
+    {
+     "value": 500,
+     "unit": "IS_POLITICAL"
+    }
+   ],
    "flat": 100
-  },
-  "visibilityIntensity": {
-   "INVISIBLE_DISGUISED": 3,
-   "INVISIBLE_POLITICAL": 5
-  },
-  "invisibilityIntensity": {
-   "INVISIBLE_DISGUISED": 3,
-   "INVISIBLE_POLITICAL": 5
   }
  },
  "grants": {

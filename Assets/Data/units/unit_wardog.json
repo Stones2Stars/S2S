@@ -108,10 +108,11 @@
  ],
  "vision": {
   "unit": {
+   "detection": {
+    "value": 200,
+    "unit": "IS_CAMOUFLAGE"
+   },
    "flat": 100
-  },
-  "visibilityIntensity": {
-   "INVISIBLE_CAMOUFLAGE": 2
   }
  },
  "succession": {

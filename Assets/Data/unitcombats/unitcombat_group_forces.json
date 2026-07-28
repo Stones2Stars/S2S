@@ -13,20 +13,20 @@
   }
  },
  "vision": {
-  "visibilityIntensity": {
-   "INVISIBLE_SIZE": 1
-  },
-  "invisibilityIntensity": {
-   "INVISIBLE_SIZE": -2,
-   "INVISIBLE_CAMOUFLAGE": -2
-  },
-  "visibilityIntensityRange": {
-   "INVISIBLE_SIZE": 1
-  },
-  "visibilityIntensitySameTile": {
-   "INVISIBLE_SIZE": 1
+  "unit": {
+   "concealment": {
+    "flat": -400
+   },
+   "detection": {
+    "value": 100,
+    "unit": "IS_SMALL"
+   }
   }
  },
+ "tags": [
+  "small",
+  "camouflage"
+ ],
  "enabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",
  "sizeMatters": {
   "groupBase": 6

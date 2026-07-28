@@ -7,11 +7,6 @@
    ]
   }
  },
- "vision": {
-  "visibilityIntensityRange": {
-   "INVISIBLE_CAMOUFLAGE": 1
-  }
- },
  "promotionLine": {
   "PROMOTIONLINE_WARRIORS_INTUITION": 2
  },

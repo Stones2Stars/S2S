@@ -13,65 +13,6 @@
  "skills": {
   "stealthDefense": true
  },
- "vision": {
-  "invisibleFeature": [
-   {
-    "invisible": "INVISIBLE_CAMOUFLAGE",
-    "feature": "FEATURE_JUNGLE",
-    "intensity": 1
-   },
-   {
-    "invisible": "INVISIBLE_CAMOUFLAGE",
-    "feature": "FEATURE_FOREST",
-    "intensity": 1
-   },
-   {
-    "invisible": "INVISIBLE_CAMOUFLAGE",
-    "feature": "FEATURE_FOREST_YOUNG",
-    "intensity": 1
-   },
-   {
-    "invisible": "INVISIBLE_CAMOUFLAGE",
-    "feature": "FEATURE_FOREST_BURNT",
-    "intensity": 1
-   },
-   {
-    "invisible": "INVISIBLE_CAMOUFLAGE",
-    "feature": "FEATURE_FOREST_ANCIENT",
-    "intensity": 1
-   },
-   {
-    "invisible": "INVISIBLE_CAMOUFLAGE",
-    "feature": "FEATURE_SWAMP",
-    "intensity": 1
-   },
-   {
-    "invisible": "INVISIBLE_CAMOUFLAGE",
-    "feature": "FEATURE_BAMBOO",
-    "intensity": 1
-   },
-   {
-    "invisible": "INVISIBLE_CAMOUFLAGE",
-    "feature": "FEATURE_CACTUS",
-    "intensity": 1
-   },
-   {
-    "invisible": "INVISIBLE_CAMOUFLAGE",
-    "feature": "FEATURE_SAVANNA",
-    "intensity": 1
-   },
-   {
-    "invisible": "INVISIBLE_CAMOUFLAGE",
-    "feature": "FEATURE_MANGROVE",
-    "intensity": 1
-   },
-   {
-    "invisible": "INVISIBLE_CAMOUFLAGE",
-    "feature": "FEATURE_VERY_TALL_GRASS",
-    "intensity": 1
-   }
-  ]
- },
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/reptile.dds"

@@ -138,10 +138,21 @@ case to encode.
 
 ## 4. HIDE AND SEEK — the intent, written down
 
-> ⚑ **NOT BUILT. This section records what the mechanic IS and where it lands — it is not a licence to build it.**
-> It exists because the system's actual rule *"has 0 real documentation anywhere"* (owner), which is the same
-> disease that left vision itself unspecced: undocumented intent becomes tribal knowledge, and every consumer
-> then invents its own shape.
+> **The DATA is collapsed onto this shape; the CONTEST is not yet evaluated by the engine.** The pairing below
+> is what the data now says and what the runtime must come to enforce.
+>
+> ⚑ **WHY THIS MATTERS MORE THAN TIDINESS — the mechanic is playable but not UNDERSTANDABLE (owner):**
+> *"it's expressed in icons, and nowhere is it really stated what counters what"*, with four kinds of
+> invisibility live in the early game. It rested on the assumption that *"the AI should be able to create
+> perfect unit combination counters at all times"* — and humans even less so; *"the designer worked under
+> the theory that if he understood it, everyone could."* Add animals that instakill from invisibility with
+> absurd strength and the whole thing stops being a mechanic and becomes noise.
+>
+> ⇒ **Comprehensibility is the requirement, not a nice-to-have.** A rule nobody can state is a rule nobody
+> can play against. That is why the pairing is written down here, and why the collapse matters: a detection
+> entry now RENDERS itself — *"+1 Detection — units matching IS_DISGUISED"* — through the one per-entry
+> renderer ([patterns.md](../architecture/patterns.md) category 5), so what counters what is finally SAYABLE
+> in the pedia instead of being inferred from icons.
 
 ### The rule the code never states
 
@@ -193,20 +204,29 @@ computed; detection only ever runs on a plot that budget already granted. That i
 `visibilityIntensityRange` — a second range system running beside vision's, with nothing keeping the two in
 step. Negatives need no mechanism either: the family sums, so counter-detection is a negative deposit.
 
-### ⛔ THE DATA STAYS AS THE ORIGINAL DESIGNER AUTHORED IT (owner)
+### What the collapse did, and what it cost
 
-*"Leave the hide and seek data as the original designer intended, as much as we can."* The invisibility tables
-are **NOT** to be collapsed, re-scaled, re-authored or migrated ahead of the mechanic. Their present home
-alongside the scope-keyed family — which makes the `vision` key half family and half bespoke, and makes the
-unitcombat curator MERGE rather than assign — is an **accepted cost**, not a defect to tidy.
+⚖ **Owner ruling: collapse and rescale, marginal data loss accepted** — *"it's a TB mod after all, it's on
+drugs."* The 13 per-type tables (477 authorings across 14 types) are gone; what stands in their place:
 
-⛔ So: do not split them out, do not mint `detection` (a reserved NAME, [json.md §6](json.md), is a home with no
-mechanic in it), and do not re-purpose `vision.plot.obstruction` as concealment. What is missing is a DESIGN,
-and inventing one to tidy a key is the machinery-for-one-mechanic move declined for counter-damage
-([triggers.md](triggers.md)). When the design comes, the pairing above is what it must express and §2 is the
-reach it rides on.
+| was | is |
+|---|---|
+| `invisible: INVISIBLE_SUBMARINE` | the **`submarine` tag** — the method is type-derived membership |
+| `invisibilityIntensity{X: n}` | `vision.unit.concealment` + the method's tag |
+| `visibilityIntensity{X: n}` · `seeInvisible` · `negates` | `vision.unit.detection`, each entry qualified `{unit: IS_<TAG>}` |
+| `visibilityIntensityRange` + its 3 substrate variants | **gone** — detection is an addendum and rides §2's reach |
+| `visibilityIntensitySameTile`, the per-substrate conditional tables | **gone** — the marginal loss taken deliberately |
 
----
+**What survived is what the data used:** the 1:1 pairing, graduated strengths, and negatives as
+counter-detection (the family sums, so a negative deposit just subtracts). A promotion carries magnitudes only —
+tags are not promotion-grantable ([tags.md](tags.md)) — while a unit and a unitcombat, both type-derived, carry
+the method tag.
+
+⚠ **The engine still runs the OLD path.** `changeAdjacentSight` reads `visibilityIntensityTotal` /
+`visibilityIntensityRangeTotal` per `INVISIBLE_*`, which no data now feeds. That is the intended direction —
+legacy fails LOUD rather than quietly answering ([DEC-no-legacy-masking](../architecture/decisions.md#dec-no-legacy-masking))
+— but it means hide-and-seek is DATA-complete and RUNTIME-absent until the contest above is evaluated where
+that loop is.
 
 ## 5. What this model retires
 

@@ -119,13 +119,19 @@
   "cannotMergeSplit": true
  },
  "vision": {
-  "visibilityIntensity": {
-   "INVISIBLE_CAMOUFLAGE": 1
-  },
-  "invisibilityIntensity": {
-   "INVISIBLE_CAMOUFLAGE": 1
+  "unit": {
+   "concealment": {
+    "flat": 100
+   },
+   "detection": {
+    "value": 100,
+    "unit": "IS_CAMOUFLAGE"
+   }
   }
  },
+ "tags": [
+  "camouflage"
+ ],
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/strike_teams.dds"

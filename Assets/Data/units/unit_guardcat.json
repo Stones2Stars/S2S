@@ -148,7 +148,8 @@
  "tags": [
   "military",
   "landUnit",
-  "animal"
+  "animal",
+  "camouflage"
  ],
  "combatClass": "UNITCOMBAT_FELINE",
  "combatClasses": [
@@ -174,11 +175,10 @@
  ],
  "vision": {
   "unit": {
+   "concealment": {
+    "flat": 500
+   },
    "flat": 100
-  },
-  "invisible": "INVISIBLE_CAMOUFLAGE",
-  "invisibilityIntensity": {
-   "INVISIBLE_CAMOUFLAGE": 4
   }
  },
  "succession": {

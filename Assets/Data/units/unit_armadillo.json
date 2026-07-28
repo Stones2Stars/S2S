@@ -37,14 +37,7 @@
  "vision": {
   "unit": {
    "flat": 100
-  },
-  "invisibleTerrain": [
-   {
-    "invisible": "INVISIBLE_CAMOUFLAGE",
-    "terrain": "TERRAIN_ROCKY",
-    "intensity": 1
-   }
-  ]
+  }
  },
  "outcomes": {
   "kill": [

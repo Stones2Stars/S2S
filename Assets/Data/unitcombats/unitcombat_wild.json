@@ -11,10 +11,21 @@
   "noCapture": true
  },
  "vision": {
-  "visibilityIntensity": {
-   "INVISIBLE_DISGUISED": 10,
-   "INVISIBLE_POLITICAL": 10,
-   "INVISIBLE_CAMOUFLAGE": 1
+  "unit": {
+   "detection": [
+    {
+     "value": 1000,
+     "unit": "IS_DISGUISED"
+    },
+    {
+     "value": 1000,
+     "unit": "IS_POLITICAL"
+    },
+    {
+     "value": 100,
+     "unit": "IS_CAMOUFLAGE"
+    }
+   ]
   }
  },
  "ui": {

@@ -1,39 +1,5 @@
 {
  "type": "PROMOTION_BUILD_UP_BLEND_INTO_CROWD1",
- "vision": {
-  "invisibleImprovement": [
-   {
-    "invisible": "INVISIBLE_DISGUISED",
-    "improvement": "IMPROVEMENT_COTTAGE",
-    "intensity": 1
-   },
-   {
-    "invisible": "INVISIBLE_DISGUISED",
-    "improvement": "IMPROVEMENT_HAMLET",
-    "intensity": 1
-   },
-   {
-    "invisible": "INVISIBLE_DISGUISED",
-    "improvement": "IMPROVEMENT_VILLAGE",
-    "intensity": 1
-   },
-   {
-    "invisible": "INVISIBLE_DISGUISED",
-    "improvement": "IMPROVEMENT_TOWN",
-    "intensity": 1
-   },
-   {
-    "invisible": "INVISIBLE_DISGUISED",
-    "improvement": "IMPROVEMENT_SUBURBS",
-    "intensity": 1
-   },
-   {
-    "invisible": "INVISIBLE_DISGUISED",
-    "improvement": "IMPROVEMENT_CITY",
-    "intensity": 1
-   }
-  ]
- },
  "promotionLine": {
   "PROMOTIONLINE_BUILD_UP_BLEND_INTO_CROWD": 1
  },

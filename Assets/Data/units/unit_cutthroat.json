@@ -143,7 +143,9 @@
   "military",
   "outlaw",
   "landUnit",
-  "melee"
+  "melee",
+  "camouflage",
+  "disguised"
  ],
  "combatClass": "UNITCOMBAT_CRIMINAL",
  "combatClasses": [
@@ -163,16 +165,20 @@
  ],
  "vision": {
   "unit": {
+   "concealment": {
+    "flat": 900
+   },
+   "detection": [
+    {
+     "value": 300,
+     "unit": "IS_CAMOUFLAGE"
+    },
+    {
+     "value": 400,
+     "unit": "IS_DISGUISED"
+    }
+   ],
    "flat": 100
-  },
-  "invisible": "INVISIBLE_CAMOUFLAGE",
-  "visibilityIntensity": {
-   "INVISIBLE_CAMOUFLAGE": 3,
-   "INVISIBLE_DISGUISED": 4
-  },
-  "invisibilityIntensity": {
-   "INVISIBLE_DISGUISED": 4,
-   "INVISIBLE_CAMOUFLAGE": 4
   }
  },
  "grants": {

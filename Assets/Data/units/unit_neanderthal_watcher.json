@@ -108,10 +108,11 @@
  ],
  "vision": {
   "unit": {
+   "detection": {
+    "value": 100,
+    "unit": "IS_DISGUISED"
+   },
    "flat": 100
-  },
-  "visibilityIntensity": {
-   "INVISIBLE_DISGUISED": 1
   }
  },
  "grants": {

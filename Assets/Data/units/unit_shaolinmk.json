@@ -94,7 +94,8 @@
   "melee",
   "medic",
   "police",
-  "civilian"
+  "civilian",
+  "camouflage"
  ],
  "combatClass": "UNITCOMBAT_MELEE",
  "combatClasses": [
@@ -115,13 +116,14 @@
  ],
  "vision": {
   "unit": {
+   "concealment": {
+    "flat": 400
+   },
+   "detection": {
+    "value": 300,
+    "unit": "IS_CAMOUFLAGE"
+   },
    "flat": 100
-  },
-  "visibilityIntensity": {
-   "INVISIBLE_CAMOUFLAGE": 3
-  },
-  "invisibilityIntensity": {
-   "INVISIBLE_CAMOUFLAGE": 4
   }
  },
  "grants": {

@@ -12,8 +12,10 @@
   ]
  },
  "vision": {
-  "invisibilityIntensity": {
-   "INVISIBLE_NAVAL_DISGUISE": -1
+  "unit": {
+   "concealment": {
+    "flat": -10000
+   }
   }
  },
  "enabled": "GAMEOPTION_COMBAT_HIDE_SEEK",

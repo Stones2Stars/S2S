@@ -119,7 +119,8 @@
  "tags": [
   "military",
   "seaUnit",
-  "naval"
+  "naval",
+  "submarine"
  ],
  "combatClass": "UNITCOMBAT_SUBMARINE",
  "combatClasses": [
@@ -139,9 +140,11 @@
  ],
  "vision": {
   "unit": {
+   "concealment": {
+    "flat": 100
+   },
    "flat": 100
-  },
-  "invisible": "INVISIBLE_SUBMARINE"
+  }
  },
  "succession": {
   "upgradesTo": [

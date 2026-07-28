@@ -5,20 +5,6 @@
    "percent": 10
   }
  },
- "vision": {
-  "invisibleTerrain": [
-   {
-    "invisible": "INVISIBLE_CAMOUFLAGE",
-    "terrain": "TERRAIN_MUDDY",
-    "intensity": 1
-   },
-   {
-    "invisible": "INVISIBLE_CAMOUFLAGE",
-    "terrain": "TERRAIN_MARSH",
-    "intensity": 1
-   }
-  ]
- },
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/mammal.dds"

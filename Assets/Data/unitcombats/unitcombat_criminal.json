@@ -47,76 +47,25 @@
   "cannotMergeSplit": true
  },
  "vision": {
-  "visibilityIntensity": {
-   "INVISIBLE_CAMOUFLAGE": 1,
-   "INVISIBLE_DISGUISED": 1
-  },
-  "invisibilityIntensity": {
-   "INVISIBLE_DISGUISED": 1
-  },
-  "invisibleImprovement": [
-   {
-    "invisible": "INVISIBLE_CAMOUFLAGE",
-    "improvement": "IMPROVEMENT_CITY",
-    "intensity": 1
+  "unit": {
+   "concealment": {
+    "flat": 100
    },
-   {
-    "invisible": "INVISIBLE_DISGUISED",
-    "improvement": "IMPROVEMENT_CITY",
-    "intensity": 1
-   },
-   {
-    "invisible": "INVISIBLE_CAMOUFLAGE",
-    "improvement": "IMPROVEMENT_COTTAGE",
-    "intensity": 1
-   },
-   {
-    "invisible": "INVISIBLE_DISGUISED",
-    "improvement": "IMPROVEMENT_COTTAGE",
-    "intensity": 1
-   },
-   {
-    "invisible": "INVISIBLE_CAMOUFLAGE",
-    "improvement": "IMPROVEMENT_HAMLET",
-    "intensity": 1
-   },
-   {
-    "invisible": "INVISIBLE_DISGUISED",
-    "improvement": "IMPROVEMENT_HAMLET",
-    "intensity": 1
-   },
-   {
-    "invisible": "INVISIBLE_CAMOUFLAGE",
-    "improvement": "IMPROVEMENT_VILLAGE",
-    "intensity": 1
-   },
-   {
-    "invisible": "INVISIBLE_DISGUISED",
-    "improvement": "IMPROVEMENT_VILLAGE",
-    "intensity": 1
-   },
-   {
-    "invisible": "INVISIBLE_CAMOUFLAGE",
-    "improvement": "IMPROVEMENT_TOWN",
-    "intensity": 1
-   },
-   {
-    "invisible": "INVISIBLE_DISGUISED",
-    "improvement": "IMPROVEMENT_TOWN",
-    "intensity": 1
-   },
-   {
-    "invisible": "INVISIBLE_CAMOUFLAGE",
-    "improvement": "IMPROVEMENT_SUBURBS",
-    "intensity": 1
-   },
-   {
-    "invisible": "INVISIBLE_DISGUISED",
-    "improvement": "IMPROVEMENT_SUBURBS",
-    "intensity": 1
-   }
-  ]
+   "detection": [
+    {
+     "value": 100,
+     "unit": "IS_CAMOUFLAGE"
+    },
+    {
+     "value": 100,
+     "unit": "IS_DISGUISED"
+    }
+   ]
+  }
  },
+ "tags": [
+  "disguised"
+ ],
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/criminals.dds"

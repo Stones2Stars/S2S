@@ -1,12 +1,21 @@
 {
  "type": "UNITCOMBAT_AIR_RECON",
  "vision": {
-  "visibilityIntensity": {
-   "INVISIBLE_SUBMARINE": 2,
-   "INVISIBLE_SUBMERGED": 2,
-   "INVISIBLE_CAMOUFLAGE": 2
-  },
   "unit": {
+   "detection": [
+    {
+     "value": 200,
+     "unit": "IS_SUBMARINE"
+    },
+    {
+     "value": 200,
+     "unit": "IS_SUBMERGED"
+    },
+    {
+     "value": 200,
+     "unit": "IS_CAMOUFLAGE"
+    }
+   ],
    "flat": 100
   }
  },

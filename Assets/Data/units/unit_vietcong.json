@@ -111,14 +111,7 @@
  "vision": {
   "unit": {
    "flat": 100
-  },
-  "invisibleFeature": [
-   {
-    "invisible": "INVISIBLE_CAMOUFLAGE",
-    "feature": "FEATURE_JUNGLE",
-    "intensity": 1
-   }
-  ]
+  }
  },
  "grants": {
   "promotions": [

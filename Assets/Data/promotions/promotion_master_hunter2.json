@@ -16,8 +16,11 @@
   "river": true
  },
  "vision": {
-  "visibilityIntensity": {
-   "INVISIBLE_CAMOUFLAGE": 1
+  "unit": {
+   "detection": {
+    "value": 100,
+    "unit": "IS_CAMOUFLAGE"
+   }
   }
  },
  "promotionLine": {

@@ -8,8 +8,10 @@
   }
  },
  "vision": {
-  "invisibilityIntensity": {
-   "INVISIBLE_CLOAKED": 1
+  "unit": {
+   "concealment": {
+    "flat": 10000
+   }
   }
  },
  "promotionLine": {

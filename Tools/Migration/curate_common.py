@@ -362,6 +362,99 @@ def scale_vision(out):
             elif key == "flat" and isinstance(leaf, int):
                 node[key] = leaf * VISION_PLOT
 
+# The 14 legacy hiding METHODS -> their tag names. The method is WHAT a unit hides by, which is type-derived
+# membership, so it is a TAG ([tags.md]) and the seeker's qualifier reads it as IS_<TAG>.
+HIDE_METHOD_TAG = {
+    "INVISIBLE_SUBMARINE": "submarine",   "INVISIBLE_STEALTH": "stealth",
+    "INVISIBLE_CAMOUFLAGE": "camouflage", "INVISIBLE_INVISIBLE": "unseen",
+    "INVISIBLE_CLOAKED": "cloaked",       "INVISIBLE_VOID": "void",
+    "INVISIBLE_NANO": "nano",             "INVISIBLE_PHASED": "phased",
+    "INVISIBLE_IMMATERIAL": "immaterial", "INVISIBLE_DISGUISED": "disguised",
+    "INVISIBLE_POLITICAL": "political",   "INVISIBLE_SUBMERGED": "submerged",
+    "INVISIBLE_SIZE": "small",            "INVISIBLE_NAVAL_DISGUISE": "navalDisguise",
+}
+# A bare "can see this method" with no graduated strength -- it beats an ordinary hider and no more.
+HIDE_SEE_BASELINE = 1
+# NegatesInvisibility: the method simply stops working against this seeker.
+HIDE_NEGATE_STRENGTH = 10
+
+
+def collapse_hide_and_seek(out, vision, bTags):
+    """Collapse the 13 per-type invisibility tables onto the `vision` family (vision.md §4).
+
+    ONE detection type counters ONE concealment type (owner) -- a PAIRING, and the legacy type IS that pairing:
+    the hider's `invisibilityIntensity{X}` and the seeker's `visibilityIntensity{X}` share a key. So the method
+    becomes a TAG and both strengths become ordinary vision entries, the seeker's qualified by `IS_<TAG>`.
+    Nothing new is minted: it is the same {unit: IS_<TAG>} qualifier cargo uses for what it may carry.
+
+    ⚖ Marginal data loss is ACCEPTED (owner) -- the second reach (`visibilityIntensityRange` and its
+    terrain/feature/improvement variants) goes because detection is an ADDENDUM to vision and rides the §2
+    budget, and the same-tile bonus and the per-substrate conditional tables go with it. What survives is what
+    the data actually uses: the pairing, and graduated strengths including the negatives (the family sums, so
+    counter-detection is just a negative deposit).
+    """
+    tags = []
+    conceal = 0
+    detect = []
+
+    # the hider: its method, and how well it hides by it
+    method = vision.pop("invisible", None)
+    if isinstance(method, str) and method in HIDE_METHOD_TAG:
+        tags.append(HIDE_METHOD_TAG[method])
+        conceal = max(conceal, HIDE_SEE_BASELINE)
+    for typ, val in (vision.pop("invisibilityIntensity", None) or {}).items():
+        if typ in HIDE_METHOD_TAG and isinstance(val, int):
+            tags.append(HIDE_METHOD_TAG[typ])
+            conceal += val
+
+    # the seeker: which methods it answers, and how well
+    seen = OrderedDict()
+    for typ in (vision.pop("seeInvisible", None) or []):
+        if typ in HIDE_METHOD_TAG:
+            seen[typ] = HIDE_SEE_BASELINE
+    for typ, val in (vision.pop("visibilityIntensity", None) or {}).items():
+        if typ in HIDE_METHOD_TAG and isinstance(val, int):
+            seen[typ] = seen.get(typ, 0) + val
+    for typ in (vision.pop("negates", None) or []):
+        if typ in HIDE_METHOD_TAG:
+            seen[typ] = seen.get(typ, 0) + HIDE_NEGATE_STRENGTH
+    for typ, val in seen.items():
+        detect.append(OrderedDict([("value", val * VISION_PLOT),
+                                   ("unit", "IS_" + HIDE_METHOD_TAG[typ].upper())]))
+
+    # the second reach and the per-substrate conditional tables -- dropped with the mechanic they served
+    for dead in ("visibilityIntensityRange", "visibilityIntensitySameTile", "invisibleTerrain",
+                 "invisibleFeature", "invisibleImprovement", "visibleTerrainRange", "visibleFeatureRange",
+                 "visibleImprovementRange", "visibleImprovement"):
+        vision.pop(dead, None)
+
+    if conceal or detect:
+        node = out.setdefault("vision", OrderedDict()).setdefault("unit", OrderedDict())
+        if conceal:
+            node["concealment"] = OrderedDict([("flat", conceal * VISION_PLOT)])
+        if detect:
+            node["detection"] = detect[0] if len(detect) == 1 else detect
+    if bTags and tags:
+        have = out.setdefault("tags", [])
+        for tag in tags:
+            if tag not in have:
+                have.append(tag)
+
+def merge_vision(out, vision):
+    """Merge a leftover `vision` dict into out["vision"] WITHOUT clobbering a scope already filled.
+
+    A plain dict.update() replaces the whole scope sub-dict, so a base-sight write of {"unit": {"flat": N}}
+    silently deleted the concealment/detection the hide-and-seek collapse had just put there. Merge per scope.
+    """
+    if not vision:
+        return
+    node = out.setdefault("vision", OrderedDict())
+    for scope, value in vision.items():
+        if isinstance(value, dict) and isinstance(node.get(scope), dict):
+            node[scope].update(value)
+        else:
+            node[scope] = value
+
 def apply_channel(families, spec, c, enabler_block=None):
     """Deposit a scope-wide modifier into its FAMILY (flat-family layout, §3): <family>.<scope>[.<member>].<unit>.
     The mapping `channel` IS the family; named valueKeys (food/gold/…) are members; a scalar has no member."""

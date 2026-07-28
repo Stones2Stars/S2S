@@ -1,11 +1,11 @@
 {
  "type": "UNITCOMBAT_GROUP_BATTALION",
  "vision": {
-  "visibilityIntensity": {
-   "INVISIBLE_SIZE": 1
-  },
-  "visibilityIntensitySameTile": {
-   "INVISIBLE_SIZE": 1
+  "unit": {
+   "detection": {
+    "value": 100,
+    "unit": "IS_SMALL"
+   }
   }
  },
  "enabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",

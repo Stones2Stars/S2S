@@ -11,8 +11,10 @@
   "blendIntoCity": true
  },
  "vision": {
-  "invisibilityIntensity": {
-   "INVISIBLE_DISGUISED": 1
+  "unit": {
+   "concealment": {
+    "flat": 10000
+   }
   }
  },
  "promotionLine": {

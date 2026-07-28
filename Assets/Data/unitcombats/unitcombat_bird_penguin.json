@@ -12,27 +12,6 @@
    "percent": 5
   }
  },
- "vision": {
-  "invisibleTerrain": [
-   {
-    "invisible": "INVISIBLE_CAMOUFLAGE",
-    "terrain": "TERRAIN_ICE",
-    "intensity": 1
-   },
-   {
-    "invisible": "INVISIBLE_CAMOUFLAGE",
-    "terrain": "TERRAIN_TUNDRA",
-    "intensity": 1
-   }
-  ],
-  "invisibleFeature": [
-   {
-    "invisible": "INVISIBLE_CAMOUFLAGE",
-    "feature": "FEATURE_ICE",
-    "intensity": 1
-   }
-  ]
- },
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/birds.dds"

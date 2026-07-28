@@ -5,12 +5,10 @@
   "assassin": false
  },
  "vision": {
-  "invisibilityIntensity": {
-   "INVISIBLE_CAMOUFLAGE": -1,
-   "INVISIBLE_DISGUISED": -1,
-   "INVISIBLE_POLITICAL": -1,
-   "INVISIBLE_NAVAL_DISGUISE": -1,
-   "INVISIBLE_INVISIBLE": -1
+  "unit": {
+   "concealment": {
+    "flat": -50000
+   }
   }
  },
  "promotionLine": {

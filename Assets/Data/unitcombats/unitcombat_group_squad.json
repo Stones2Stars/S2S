@@ -13,10 +13,15 @@
   }
  },
  "vision": {
-  "invisibilityIntensity": {
-   "INVISIBLE_SIZE": 4
+  "unit": {
+   "concealment": {
+    "flat": 400
+   }
   }
  },
+ "tags": [
+  "small"
+ ],
  "enabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",
  "sizeMatters": {
   "groupBase": 3

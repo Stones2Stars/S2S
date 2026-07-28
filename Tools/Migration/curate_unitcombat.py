@@ -37,7 +37,7 @@ from collections import OrderedDict
 
 import engine
 from store import Store, REPO
-from curate_common import (FAMILY_ORDER, put_art, emit_art, descale100, fold_text_to_identity, gate_entity,
+from curate_common import (FAMILY_ORDER, collapse_hide_and_seek, merge_vision, put_art, emit_art, descale100, fold_text_to_identity, gate_entity,
                            emit_sizematters, SM_FLAT_CHANGE, SM_COMBATMOD_CHANGE, SM_CARGO_CHANGE)
 # REUSE the Promotion unit-stat vocabulary (the shared §5 definition) + helpers.
 from curate_promotion import (COMBAT_MODS, FAMILIES, NEGATE_TAGS, CAP_BOOL, CAP_PAIR, CAP_COUNT, VISION_PAIRS,
@@ -248,8 +248,10 @@ def curate(typ, rec, store):
         out[f] = fams[f]
     if caps:
         out["skills"] = caps
-    if vision:
-        out.setdefault("vision", OrderedDict()).update(vision)   # MERGE: the family (sight) and the hide-and-seek tables share the key
+    # A unitcombat is TYPE-DERIVED, so it may carry the method tag (a promotion may not -- tags are not
+    # promotion-grantable, [tags.md]).
+    collapse_hide_and_seek(out, vision, True)
+    merge_vision(out, vision)
     if outcomes:
         out["outcomes"] = outcomes
     gate_entity(out, gate_on, gate_off)

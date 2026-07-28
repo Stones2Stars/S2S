@@ -106,7 +106,8 @@
   "landUnit",
   "recon",
   "melee",
-  "archery"
+  "archery",
+  "camouflage"
  ],
  "combatClass": "UNITCOMBAT_STRIKE_TEAM",
  "combatClasses": [
@@ -126,14 +127,14 @@
  ],
  "vision": {
   "unit": {
+   "concealment": {
+    "flat": 400
+   },
+   "detection": {
+    "value": 200,
+    "unit": "IS_CAMOUFLAGE"
+   },
    "flat": 100
-  },
-  "invisible": "INVISIBLE_CAMOUFLAGE",
-  "visibilityIntensity": {
-   "INVISIBLE_CAMOUFLAGE": 2
-  },
-  "invisibilityIntensity": {
-   "INVISIBLE_CAMOUFLAGE": 3
   }
  },
  "grants": {

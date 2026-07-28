@@ -92,7 +92,8 @@
  "tags": [
   "military",
   "seaUnit",
-  "naval"
+  "naval",
+  "stealth"
  ],
  "combatClass": "UNITCOMBAT_NUCLEAR_SHIPS",
  "combatClasses": [
@@ -117,9 +118,11 @@
  ],
  "vision": {
   "unit": {
+   "concealment": {
+    "flat": 100
+   },
    "flat": 100
-  },
-  "invisible": "INVISIBLE_STEALTH"
+  }
  },
  "cost": {
   "production": 6818,

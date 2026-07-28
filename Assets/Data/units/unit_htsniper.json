@@ -102,7 +102,9 @@
   "military",
   "landUnit",
   "recon",
-  "synthetic"
+  "synthetic",
+  "camouflage",
+  "unseen"
  ],
  "combatClass": "UNITCOMBAT_STRIKE_TEAM",
  "combatClasses": [
@@ -121,16 +123,20 @@
  ],
  "vision": {
   "unit": {
+   "concealment": {
+    "flat": 800
+   },
+   "detection": [
+    {
+     "value": 600,
+     "unit": "IS_CAMOUFLAGE"
+    },
+    {
+     "value": 200,
+     "unit": "IS_UNSEEN"
+    }
+   ],
    "flat": 100
-  },
-  "invisible": "INVISIBLE_CAMOUFLAGE",
-  "visibilityIntensity": {
-   "INVISIBLE_CAMOUFLAGE": 6,
-   "INVISIBLE_INVISIBLE": 2
-  },
-  "invisibilityIntensity": {
-   "INVISIBLE_CAMOUFLAGE": 6,
-   "INVISIBLE_INVISIBLE": 1
   }
  },
  "grants": {

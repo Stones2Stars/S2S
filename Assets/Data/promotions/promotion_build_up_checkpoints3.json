@@ -1,8 +1,11 @@
 {
  "type": "PROMOTION_BUILD_UP_CHECKPOINTS3",
  "vision": {
-  "visibilityIntensity": {
-   "INVISIBLE_DISGUISED": 1
+  "unit": {
+   "detection": {
+    "value": 100,
+    "unit": "IS_DISGUISED"
+   }
   }
  },
  "promotionLine": {

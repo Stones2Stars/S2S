@@ -1,10 +1,5 @@
 {
  "type": "UNITCOMBAT_SPECIES_ALIEN",
- "vision": {
-  "visibilityIntensitySameTile": {
-   "INVISIBLE_DISGUISED": 1
-  }
- },
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/species_alien.dds"

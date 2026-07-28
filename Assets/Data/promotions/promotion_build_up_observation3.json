@@ -1,10 +1,5 @@
 {
  "type": "PROMOTION_BUILD_UP_OBSERVATION3",
- "vision": {
-  "visibilityIntensityRange": {
-   "INVISIBLE_CAMOUFLAGE": 1
-  }
- },
  "promotionLine": {
   "PROMOTIONLINE_BUILD_UP_OBSERVATION": 5
  },

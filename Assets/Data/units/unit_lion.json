@@ -72,31 +72,7 @@
  "vision": {
   "unit": {
    "flat": 100
-  },
-  "invisibleTerrain": [
-   {
-    "invisible": "INVISIBLE_CAMOUFLAGE",
-    "terrain": "TERRAIN_DESERT",
-    "intensity": 1
-   },
-   {
-    "invisible": "INVISIBLE_CAMOUFLAGE",
-    "terrain": "TERRAIN_PLAINS",
-    "intensity": 1
-   },
-   {
-    "invisible": "INVISIBLE_CAMOUFLAGE",
-    "terrain": "TERRAIN_SCRUB",
-    "intensity": 1
-   }
-  ],
-  "invisibleFeature": [
-   {
-    "invisible": "INVISIBLE_CAMOUFLAGE",
-    "feature": "FEATURE_SAVANNA",
-    "intensity": 1
-   }
-  ]
+  }
  },
  "outcomes": {
   "kill": [

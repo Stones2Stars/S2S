@@ -1,8 +1,10 @@
 {
  "type": "PROMOTION_LOW_PROFILE2",
  "vision": {
-  "invisibilityIntensity": {
-   "INVISIBLE_SIZE": 1
+  "unit": {
+   "concealment": {
+    "flat": 10000
+   }
   }
  },
  "promotionLine": {

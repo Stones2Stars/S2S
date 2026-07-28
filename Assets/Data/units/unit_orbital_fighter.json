@@ -64,7 +64,8 @@
   "military",
   "airUnit",
   "air",
-  "space"
+  "space",
+  "stealth"
  ],
  "combatClass": "UNITCOMBAT_ORBITAL_AIRCRAFT",
  "combatClasses": [
@@ -88,14 +89,14 @@
  ],
  "vision": {
   "unit": {
+   "concealment": {
+    "flat": 200
+   },
+   "detection": {
+    "value": 100,
+    "unit": "IS_STEALTH"
+   },
    "flat": 100
-  },
-  "invisible": "INVISIBLE_STEALTH",
-  "visibilityIntensity": {
-   "INVISIBLE_STEALTH": 1
-  },
-  "invisibilityIntensity": {
-   "INVISIBLE_STEALTH": 1
   }
  },
  "cost": {

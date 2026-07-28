@@ -88,7 +88,8 @@
  "tags": [
   "military",
   "landUnit",
-  "gunpowder"
+  "gunpowder",
+  "camouflage"
  ],
  "combatClass": "UNITCOMBAT_GUN",
  "combatClasses": [
@@ -106,9 +107,11 @@
  ],
  "vision": {
   "unit": {
+   "concealment": {
+    "flat": 100
+   },
    "flat": 100
-  },
-  "invisible": "INVISIBLE_CAMOUFLAGE"
+  }
  },
  "succession": {
   "upgradesTo": [

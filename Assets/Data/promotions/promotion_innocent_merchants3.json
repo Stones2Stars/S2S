@@ -1,8 +1,10 @@
 {
  "type": "PROMOTION_INNOCENT_MERCHANTS3",
  "vision": {
-  "invisibilityIntensity": {
-   "INVISIBLE_NAVAL_DISGUISE": 1
+  "unit": {
+   "concealment": {
+    "flat": 10000
+   }
   }
  },
  "promotionLine": {

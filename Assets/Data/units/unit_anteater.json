@@ -39,24 +39,7 @@
  "vision": {
   "unit": {
    "flat": 100
-  },
-  "invisibleFeature": [
-   {
-    "invisible": "INVISIBLE_CAMOUFLAGE",
-    "feature": "FEATURE_JUNGLE",
-    "intensity": 1
-   },
-   {
-    "invisible": "INVISIBLE_CAMOUFLAGE",
-    "feature": "FEATURE_FOREST_ANCIENT",
-    "intensity": 1
-   },
-   {
-    "invisible": "INVISIBLE_CAMOUFLAGE",
-    "feature": "FEATURE_MANGROVE",
-    "intensity": 1
-   }
-  ]
+  }
  },
  "outcomes": {
   "kill": [

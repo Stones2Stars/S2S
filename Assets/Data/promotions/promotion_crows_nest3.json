@@ -1,9 +1,17 @@
 {
  "type": "PROMOTION_CROWS_NEST3",
  "vision": {
-  "visibilityIntensity": {
-   "INVISIBLE_NAVAL_DISGUISE": 1,
-   "INVISIBLE_SUBMARINE": 1
+  "unit": {
+   "detection": [
+    {
+     "value": 100,
+     "unit": "IS_NAVALDISGUISE"
+    },
+    {
+     "value": 100,
+     "unit": "IS_SUBMARINE"
+    }
+   ]
   }
  },
  "promotionLine": {

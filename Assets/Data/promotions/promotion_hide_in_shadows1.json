@@ -1,8 +1,10 @@
 {
  "type": "PROMOTION_HIDE_IN_SHADOWS1",
  "vision": {
-  "invisibilityIntensity": {
-   "INVISIBLE_CAMOUFLAGE": 1
+  "unit": {
+   "concealment": {
+    "flat": 10000
+   }
   }
  },
  "promotionLine": {

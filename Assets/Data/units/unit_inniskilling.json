@@ -153,7 +153,8 @@
   "military",
   "landUnit",
   "recon",
-  "gunpowder"
+  "gunpowder",
+  "camouflage"
  ],
  "combatClass": "UNITCOMBAT_STRIKE_TEAM",
  "combatClasses": [
@@ -171,14 +172,14 @@
  ],
  "vision": {
   "unit": {
+   "concealment": {
+    "flat": 600
+   },
+   "detection": {
+    "value": 400,
+    "unit": "IS_CAMOUFLAGE"
+   },
    "flat": 100
-  },
-  "invisible": "INVISIBLE_CAMOUFLAGE",
-  "visibilityIntensity": {
-   "INVISIBLE_CAMOUFLAGE": 4
-  },
-  "invisibilityIntensity": {
-   "INVISIBLE_CAMOUFLAGE": 5
   }
  },
  "grants": {

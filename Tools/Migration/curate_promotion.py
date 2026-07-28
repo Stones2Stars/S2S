@@ -52,7 +52,7 @@ from collections import OrderedDict
 import engine
 from curate_common import (put_art, emit_art, FAMILY_ORDER, de_i, descale100, fold_text_to_identity, gate_entity,
                            emit_sizematters, SM_FLAT_CHANGE, SM_COMBATMOD_CHANGE, SM_CARGO_CHANGE, wipe_entity_json,
-                           scale_vision)
+                           scale_vision, collapse_hide_and_seek, merge_vision)
 from store import Store, REPO
 
 # ---- scalar deposits: tag -> (member|None, unit). All at `unit` scope (self-accumulator, §5). ----
@@ -525,8 +525,11 @@ def curate(typ, rec, store):
         out[f] = fams[f]
     if caps:
         out["skills"] = caps
-    if vision:
-        out["vision"] = vision
+    # Collapse the per-type invisibility tables onto the vision family FIRST (vision.md §4), then merge
+    # whatever the mechanic did not claim -- the collapse writes vision.unit, so a bare assign would
+    # overwrite it.
+    collapse_hide_and_seek(out, vision, False)
+    merge_vision(out, vision)
     if promo_lines:
         out["promotionLine"] = promo_lines    # line membership as [{LINE: rank}] (owner 2026-06-16); accumulator-shaped
     if grants:

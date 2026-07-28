@@ -12,11 +12,6 @@
    }
   }
  },
- "vision": {
-  "visibilityIntensityRange": {
-   "INVISIBLE_SIZE": -4
-  }
- },
  "enabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",
  "sizeMatters": {
   "qualityBase": 0

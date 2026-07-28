@@ -12,8 +12,11 @@
   }
  },
  "vision": {
-  "visibilityIntensity": {
-   "INVISIBLE_NAVAL_DISGUISE": 1
+  "unit": {
+   "detection": {
+    "value": 100,
+    "unit": "IS_NAVALDISGUISE"
+   }
   }
  },
  "ui": {

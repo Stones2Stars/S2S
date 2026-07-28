@@ -1,8 +1,10 @@
 {
  "type": "PROMOTION_BUILD_UP_CONCEALMENT3",
  "vision": {
-  "invisibilityIntensity": {
-   "INVISIBLE_CAMOUFLAGE": 1
+  "unit": {
+   "concealment": {
+    "flat": 10000
+   }
   }
  },
  "promotionLine": {

@@ -145,10 +145,11 @@
  ],
  "vision": {
   "unit": {
+   "detection": {
+    "value": 600,
+    "unit": "IS_DISGUISED"
+   },
    "flat": 100
-  },
-  "visibilityIntensity": {
-   "INVISIBLE_DISGUISED": 6
   }
  },
  "succession": {

@@ -129,7 +129,8 @@
  "tags": [
   "military",
   "landUnit",
-  "gunpowder"
+  "gunpowder",
+  "camouflage"
  ],
  "combatClass": "UNITCOMBAT_RUFFIAN",
  "combatClasses": [
@@ -146,13 +147,14 @@
  ],
  "vision": {
   "unit": {
+   "concealment": {
+    "flat": 200
+   },
+   "detection": {
+    "value": 200,
+    "unit": "IS_CAMOUFLAGE"
+   },
    "flat": 100
-  },
-  "visibilityIntensity": {
-   "INVISIBLE_CAMOUFLAGE": 2
-  },
-  "invisibilityIntensity": {
-   "INVISIBLE_CAMOUFLAGE": 2
   }
  },
  "grants": {
