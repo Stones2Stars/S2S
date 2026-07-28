@@ -37,7 +37,7 @@ The engine game-object classes are back on `main`, so these describe live code a
 
 ## The data work (unaffected by the runtime rebuild)
 
-- **[data-migration-remaining.md](data-migration-remaining.md)** — the curator/JSON worklist; the #1-priority tier
+- **[todo.md](todo.md)** — the curator/JSON worklist; the #1-priority tier
   ([DEC-data-first](../../architecture/decisions.md#dec-data-first)).
 - **[property-audit.md](property-audit.md)** — LOCKED, owner-approved. The property SOURCE-data migration; the
   property ENGINE math is KEEP-legacy and must NOT be rewritten.

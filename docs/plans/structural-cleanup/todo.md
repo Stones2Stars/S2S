@@ -25,6 +25,31 @@
 - The ruling-16 trigger-plane set (`survivor`, `cityCapture`, `combat.subdueAnimal`, `combat.nukeInterception`) —
   each attaches to its trigger's `chance`; authoring shapes finalize with the trigger system's build-out.
 
+## Data — blocked on a prerequisite
+
+- **`paralyze` → the `state` block** — blocked on the greenfield `state` model ([state.md](../../specs/state.md)),
+  which is work to BUILD. No data is lost meanwhile.
+- **The FLAGGED unitcombat remainder** — the taxonomy families (weapon/size/species/quality/group) and the
+  ambiguous individual classes; map the obvious, flag the unsure, never blunt-purge
+  ([unitcombat-tag-mapping.md](unitcombat-tag-mapping.md)).
+- **`stronglyRestricted` → a `requires.build` civ-membership gate** — pending NPC civilizations being wired.
+- **Property pulses** — a shared property-source cleaner so spatial sources emit as trigger entries carrying
+  `on`/`relation`/`distance`, instead of being parked verbatim. Pure DATA and unblocked; the ENGINE spatial
+  distribution that later reads those fields is a separate consumer.
+- **Corp HQ revenue** (`HeadquarterCommerces`) — rides the corporation rework carve-out.
+- **`largestCity` cannot retire** until ranked-target-selection EVALUATION lands, so the civic/trait curators still
+  emit the legacy member.
+
+## Data — cross-curator claims to VERIFY
+
+- `curate_bonus` actually inverts the civic bonus-commerce modifiers (the civic curator drops them on that promise).
+- The yield resolver reads `identity.movementCost`.
+- The property propagator/change-propagator re-homes actually happen at the unit/building passes.
+- PropertyBuilding min/max value bands are consumed by the building pass.
+- Every bespoke second-pass tag has live emit code, not just set membership.
+- Stale tooling docs: `Tools/Migration/README.md` references a non-existent `curate_pocos.py`, and
+  `curate_building.py`'s docstring claims second-pass tags show as UNHANDLED when they are mostly implemented.
+
 ## Stage 4 — the consumer cut (sequenced LAST; see the roadmap's ORDER ruling)
 
 - **The `CvCity`/`CvPlayer` getter consolidation** — known work, not the primary focus, and a fair few collapse on

@@ -284,7 +284,7 @@ term, so a divergence localises to a single source.
   number. Structurally live end-to-end; **zero data carries it today** (schema-only civic field, no improvement
   authors `iHappiness`), so the verdict is unchanged — the path is future-proof for any modder data.
   **Celebrity happiness** is currently an INPUT; the `skills.celebrity` unit-scan port (the CvCity scan,
-  data-migration-remaining.md) is PENDING migration work to finish it.
+  todo.md) is PENDING migration work to finish it.
 - **RAW-STATE INPUTS (folded, never derived)** — the runtime timers/counters no deposit produces: the **anger
   percents** (overcrowding = f(pop), noMilitary, foreign-culture, enemy-religion, hurry/conscript/defy/
   revRequest timers, war-weariness, revIndex, civic anger%), the **espionage counters**, **event anger**

@@ -316,7 +316,7 @@ conforming.
 
 These are data/curator/audit items whose subject never lived in the archived substrate:
 
-- **F7 — the data tail.** [data-migration-remaining.md](data-migration-remaining.md): NPC civs /
+- **F7 — the data tail.** [todo.md](todo.md): NPC civs /
   `stronglyRestricted`, `state`/paralyze, the corporation rework, the leaderhead trait remap, ranked-target
   selection. Leaders ship TRAITLESS by owner ruling; the community re-adds traits post-merge.
 - **UnitCombat distillation** — [unitcombat-distillation.md](unitcombat-distillation.md) + the tag-mapping and
@@ -403,4 +403,24 @@ Unchanged in principle, but note the surface it depends on is currently purged:
    ([patterns.md § THE PYTHON READ BOUNDARY](../../architecture/patterns.md)).
 4. **NOT failures — deliberate, owner-ruled permanent carve-outs:** the golden-age YIELD-EFFECT member-mirror
    ([golden-age.md](../../reference/golden-age.md)); the mission-CONCEPT unification and the Python-authoritative
-   outcome hooks; random EVENTS; Revolution. *(The `CvOutcome` DATA itself IS migrated to JSON.)*
+   outcome hooks; random EVENTS; Revolution. *(The `CvOutcome` DATA itself IS migrated to JSON.)* Plus:
+   - **HEAL stays KEEP-legacy.** *"As long as units and buildings still heal units, I'm happy; it needs a broader
+     rework to make sense anyway."* So #430 builds no heal model, and heal is **EXEMPT from exact parity** — the
+     acceptance bar is behavioural and two-sided: heal must not be LOST (a rate collapsing toward 0) and must not
+     be WILDLY OVERPOWERED (a ×100 or double-count). ⚑ **The redesign is a COUPLED CLUSTER, not standalone:** it
+     depends on dismantling the unit-combat complexity (the per-UnitCombat heal-as-type dimension is a symptom of
+     it) and on tags being fleshed out. Doing it earlier would just re-encode the current mess — a dependency
+     order, not a punt.
+   - **The CORPORATION system** — a principle-level rework of the corp MODEL (owner: *"don't like how corporations
+     work in principle"*), its own deliberate piece of work; the corp-HQ revenue rides it.
+   - **NPC build-lockdown** (`stronglyRestricted`) — ⚖ losing it during the enabler flip is **ACCEPTED**: *"I truly
+     don't care about NPC barbarians or neanderthals being locked down or not… we may after all want to do it in a
+     better manner anyway."* So it is never a reason to preserve a legacy gate clause.
+5. **⛔ PURELY-PYTHON, NEVER-XML EFFECTS ARE OUT OF SCOPE (owner).** #430 migrates the **XML-dealt-with surface**
+   (XML data + the DLL machinery that reads it). Gameplay living ONLY in Python that reads NO XML field is a
+   separate surface the cascade never touches — the hardcoded per-turn wonder spawns/grants in `CvEventManager`,
+   and effects that are structurally INEXPRESSIBLE in the model (a culture burst when a unit dies has no home in
+   the `grants`/modifier/enabler vocabulary, which declares provisions on standard triggers, not arbitrary event
+   reactions). ⚑ **Their absence from any migration inventory is the scope boundary working, not a gap** — and
+   there is **no exposure by construction**: the grants machine applies only what is in the XML-derived JSON, so
+   an effect that was never in XML never enters the JSON and can never double-up or be lost.

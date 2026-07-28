@@ -4,7 +4,7 @@
 > that, on a `DOMAIN` state-change, resolves the **source entity's genuine grants** off the mapped `CvJsonInfo`
 > (`grantLists`/`grantPulses` in the per-type `InfoRepo`) and — when the apply-loop lands — applies them; the apply-loop must
 > MANIFEST in-game ([DEC-done-is-observable](../../architecture/decisions.md#dec-done-is-observable)). Design authority:
-> [json.md](../../specs/json.md) §5 (`grants`). The **classification pass** (2026-07-01, [data-migration-remaining.md](data-migration-remaining.md))
+> [json.md](../../specs/json.md) §5 (`grants`). The **classification pass** (2026-07-01, [todo.md](todo.md))
 > cleaned the surface: `grants` now holds **only genuine provisions handed out on a trigger** — the mis-homed keys
 > moved out, and the unit activated-MISSION keys are a **PERMANENT carve-out (missions pass)** ([mission-outcome-system.md](../../reference/mission-outcome-system.md)).
 
@@ -219,4 +219,4 @@ a loaded game, not a hypothetical.
   start packages authored ONCE and stacked, replacing the hardcoded engine unit selection.
 - [json.md](../../specs/json.md) §5 (`grants`) · [event-spine.md](../../specs/event-spine.md) (the `IEventConsumer` front door) ·
   [mission-outcome-system.md](../../reference/mission-outcome-system.md) (the carved-out missions-pass keys, NOT grants) ·
-  [data-migration-remaining.md](data-migration-remaining.md) (the classification pass).
+  [todo.md](todo.md) (the classification pass).

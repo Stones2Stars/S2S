@@ -139,4 +139,4 @@ discover/hurry/trade/greatWork/hurryFood, `goldenAge`→golden age (and `greatPe
 ## See also
 
 - [json.md](../specs/json.md) §5 (`grants`) / §8 (the `missions` block — a PERMANENT carve-out, ground-up rework, out of #430). ·
-  [data-migration-remaining.md](../plans/structural-cleanup/data-migration-remaining.md) (the deferred-pass entry).
+  [todo.md](../plans/structural-cleanup/todo.md) (the deferred-pass entry).
