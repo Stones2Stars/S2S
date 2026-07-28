@@ -36,6 +36,8 @@ Verify against the tree before acting on any claim that something is built.
 - **[specs/enabler.md](specs/enabler.md)** — the **"can I?"** machine (2-pass generate→gate; `enables`/`requires`/`allowed`).
 - **[specs/modifier.md](specs/modifier.md)** — the **"how much?"** machine (deposit-down, combine, the deliveryguy ownership rule).
 - **[specs/tally.md](specs/tally.md)** — the **"how many?"** machine (counts roll up, serializes nothing).
+- **[specs/triggers.md](specs/triggers.md)** — the **provisions** machine (trigger → chance → action; a grant is a
+  trigger with a null condition), incl. the game-start START PACKAGES.
 - **[specs/event-spine.md](specs/event-spine.md)** — the one dispatch primitive consumers draw events from (the KIND firewall).
 - **[specs/save.md](specs/save.md)** — the name-keyed save format + the **soft-remove** discipline (`savemigration.txt` drain, no `WRAPPER_SKIP_ELEMENT`, derived-serializes-nothing).
 - **[specs/logging.md](specs/logging.md)** — **what to log** (the Orwell observability bar, hook shapes, the coverage scale).
@@ -60,6 +62,12 @@ Verify against the tree before acting on any claim that something is built.
 - **[reference/observability.md](reference/observability.md)** — the operational tag registry / gate knobs / live server / field census / PlotSnapshot.
 - **[reference/memory-footprint.md](reference/memory-footprint.md)** — where the RAM goes under the 32-bit ceiling: the static clusters (info classes, per-object arrays, cascade caches) vs the per-turn churn; textures/icons are loaded once (shared).
 - **[reference/external-tools-and-workflows.md](reference/external-tools-and-workflows.md)** — crash-dump symbolization, FpkBuilder.
+- **The LEGACY censuses** — how the legacy behaves today, so the cascade can replace it:
+  **[legacy-value-calc-map](reference/legacy-value-calc-map.md)** (which getter computes each per-turn value, and
+  from what) · **[legacy-grant-apply-sites](reference/legacy-grant-apply-sites.md)** (where provisions are handed
+  over) · **[legacy-constructibility](reference/legacy-constructibility.md)** (the `canConstruct`/`canTrain`
+  machinery the enabler replaces) · **[pedia-read-map](reference/pedia-read-map.md)** +
+  **[python-read-map](reference/python-read-map.md)** (what the Python surface consumes).
 
 ## `architecture/` — the design compass
 - **[architecture/decisions.md](architecture/decisions.md)** — the **DECISIONS LEDGER** (the `DEC-*` index — grep it before adding any ruling).
@@ -70,9 +78,10 @@ Verify against the tree before acting on any claim that something is built.
 
 ## `plans/` — mutable work state
 - **[plans/structural-cleanup/roadmap.md](plans/structural-cleanup/roadmap.md)** — 🔝 **the master plan** (the only
-  session-start read in this tier): the design, what exists on the branch, and the open access-surface item.
-- **[plans/structural-cleanup/](plans/structural-cleanup/README.md)** — the bulldozer reference, indexed
-  🟢 live / 🟡 mixed / 🔴 superseded. Check a doc's mark before trusting it.
+  session-start read in this tier): the design and the governing rulings. It carries NO status.
+- **[plans/structural-cleanup/todo.md](plans/structural-cleanup/todo.md)** — what is NOT done, as short bullets.
+- **[plans/structural-cleanup/](plans/structural-cleanup/README.md)** — the rest of the tier: the decision
+  worklists awaiting owner input, and the owner-LOCKED property audit.
 - **[plans/parked/](plans/parked/README.md)** — un-killed forward design intent (the backlog). Carried AS-IS: stale
   paths and stale status are expected, and each is re-grounded only when its initiative becomes active.
 

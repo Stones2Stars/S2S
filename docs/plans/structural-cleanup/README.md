@@ -1,79 +1,38 @@
-# Structural cleanup — the bulldozer reference (transient)
+# Structural cleanup — the #430 work tier
 
-> **Not everyday docs (owner ruling).** This is what you reach for **when the bulldozer arrives** — the work that
-> deletes the legacy machinery the cascade replaces. It is the *destroy map*, never a result set
-> ([DEC-no-parity-results-in-docs](../../architecture/decisions.md#dec-no-parity-results-in-docs)). Kept until the
-> legacy is gone; **dropped then.**
+> **Two docs carry this tier.** The DESIGN and the rulings are [roadmap.md](roadmap.md) (mandated session-start
+> reading); what is NOT done is [todo.md](todo.md). Nothing else here is a plan
+> ([DEC-spec-plus-todo](../../architecture/decisions.md#dec-spec-plus-todo)).
 >
-> Only [roadmap.md](roadmap.md) is session-start reading. Everything else is reached for deliberately, for the one
-> job named below.
+> ⛔ **No status lives in this tier.** No `LANDED`, no completion ledger, no "what exists" table: a finished item is
+> DELETED from the todo, and anything durable it established moves into its owning SPEC first. What is built is
+> answered by the tree — verify against the code, never against a doc.
 
-## The plan
+- **[roadmap.md](roadmap.md)** — 🔝 the design the code conforms to, the governing rulings (compiling is not a gate ·
+  wired outranks correct · design surface → contexts → THEN the AI calls), the demolition rule, and the open
+  access-surface item.
+- **[todo.md](todo.md)** — everything left, as short bullets.
 
-- **[roadmap.md](roadmap.md)** — 🔝 **the master plan.** The design the code conforms to, what exists on the
-  branch, and the open access-surface item. Mandated session-start reading. How legacy is removed is delete-driven
-  — the compiler is the census, correctness is verified live per mechanism
-  ([DEC-playability-not-a-gate](../../architecture/decisions.md#dec-playability-not-a-gate)); there is no gated
-  phase to treat as holy writ.
+## The decision worklists
 
-## The legacy inventories (what must be replaced, grounded in `file:line`)
+Neither is a plan; each is a surface awaiting owner input, reached from the todo:
 
-The engine game-object classes are back on `main`, so these describe live code again.
+- **[unitcombat-tag-mapping.md](unitcombat-tag-mapping.md)** — the unitcombat → identity-tag first pass. Map the
+  OBVIOUS, FLAG the unsure.
+- **[unitcombat-merge-candidates.md](unitcombat-merge-candidates.md)** — purge candidates for owner review. ⛔ Never
+  blunt-purge: a previous one over-reached and was reverted, and the purge is GATED on tags taking over the
+  identifier role ([engine.md](../../reference/engine.md)).
+- **[stub-census.md](stub-census.md)** — poco getters returning a constant where legacy computed a real value, with
+  named consumers. Rows are DELETED as they are fixed.
 
-- **[legacy-value-calc-map.md](../../reference/legacy-value-calc-map.md)** — every legacy per-turn value calc traced to its getter
-  and its components. Confirm the named FUNCTION, never the line number.
+## Owner-LOCKED
 
-> ⛔ **A per-channel reader census is NOT how the consumer sweep is driven, and one is not to be re-generated.**
-> The previous one classified every reader as cascade / legacy / mixed against a substrate that has since been
-> archived, which left a confident-looking map whose "cascade" and "mixed" rows all silently meant legacy. Worse,
-> working from it makes the sweep a per-channel HOLE-PLUGGING exercise, and a hole plugged today is plugged with
-> the only thing standing there — legacy (the roadmap banner's structure-first rule). Drive the sweep from the
-> target surface and let the COMPILER census the consumers
-> ([DEC-playability-not-a-gate](../../architecture/decisions.md#dec-playability-not-a-gate)).
-- **[constructibility.md](../../reference/legacy-constructibility.md)** — the legacy `canConstruct`/`canTrain` + reverse-index machinery
-  the enabler replaces.
-- **[structural-cleanup.md](todo.md)** — the `Sources/` tree reorg (landed) + the dead-code /
-  dead-XML pass (candidate-generation only).
-
-## The data work (unaffected by the runtime rebuild)
-
-- **[todo.md](todo.md)** — the curator/JSON worklist; the #1-priority tier
-  ([DEC-data-first](../../architecture/decisions.md#dec-data-first)).
-- **[property-audit.md](property-audit.md)** — LOCKED, owner-approved. The property SOURCE-data migration; the
-  property ENGINE math is KEEP-legacy and must NOT be rewritten.
-- **[stub-census.md](stub-census.md)** — poco getters returning a constant where legacy computed a real value,
-  with named live consumers. Keep CURRENT: delete rows as they are fixed.
-- **[unitcombat-distillation.md](../../reference/engine.md)** — slim the `UnitCombat` god-group into tags /
-  skills / modifier-source. **Required before #430 completes** — the common blocker under three fronts.
-  Worklists: **[unitcombat-tag-mapping.md](unitcombat-tag-mapping.md)** ·
-  **[unitcombat-merge-candidates.md](unitcombat-merge-candidates.md)** (map the obvious, FLAG the unsure — never
-  blunt-purge).
-- **[fixed-point-conformance.md](../../specs/curators/fixed-point-and-scales.md)** — the ×100 conversion worklist
-  ([DEC-fixedpoint-x100](../../architecture/decisions.md#dec-fixedpoint-x100)).
-
-## The grants machine (resolver built, apply-loop NOT built)
-
-- **[grants-machine.md](../../specs/triggers.md)** — the machine's spec.
-- **[grant-apply-sites.md](../../reference/legacy-grant-apply-sites.md)** — the `file:line` map of where provisions are handed over
-  today. The apply surface accreted over fifteen years across two languages and is not reconstructible from
-  memory; this is what the machine must replace.
-- **[start-packages.md](../../specs/triggers.md)** — the game-start provisions as authored data (design, not built).
-
-## The enabler + perf
-
-- **[enabler-finished-set.md](../../specs/enabler.md)** — the AI decides from the enabler's LISTED frontier in
-  ONE unified scoring pass, instead of probing the whole entity database per id.
-- **[enabler-frontier-perf.md](../../specs/enabler.md)** — the frontier perf model: the GENERATE walk is a pure
-  function of HAVE and is computed once per HAVE-change; the GATE walk is the dynamic part and stays.
-- **[perf-profile-wiring.md](../../reference/observability.md)** — the census-based perf surface. ⛔ The internal
-  `PROFILE_*` profiler is permanently dead and is NEVER reinstated.
+- **[property-audit.md](property-audit.md)** — the property SOURCE-data migration. The property ENGINE math is
+  KEEP-legacy and must NOT be rewritten.
 
 ---
 
-⛔ **No doc in this tier carries a "superseded — ignore §X" banner, and none may be given one.** A banner asking
-the reader to discount the text beneath it does not work: the body is longer, more specific and more actionable
-than the banner, so the body wins and the marking becomes permission-shaped. Content that no longer holds is
-**DELETED**, its durable part promoted into the owning spec, and — where the dead approach carries revival risk —
-recorded in [superseded-ideas.md](../../architecture/superseded-ideas.md), the ONE tombstone registry
-([DEC-docs-current-truth](../../architecture/decisions.md#dec-docs-current-truth),
-[DEC-no-rollerskate-evidence](../../architecture/decisions.md#dec-no-rollerskate-evidence)).
+**Where the legacy MAPS went:** they are censuses of how the legacy behaves, not work to do, so they live in
+[`docs/reference/`](../../reference/) — a legacy map filed under `plans/` reads as planned work, which is exactly
+the bait. See `legacy-value-calc-map`, `legacy-grant-apply-sites`, `legacy-constructibility`, `pedia-read-map`,
+`python-read-map`.

@@ -247,9 +247,7 @@ The rest of the boundary every consumer meets:
   building member — the improvement owns its yield, conditioned on the building's presence
   ([DEC-deliveryguy]). The info is shaped to that NOW; it is not distorted to hold data it shouldn't just because
   the delivery mechanism isn't built (a red tree loses no live data).
-- **The GENERAL modifier own-output reverse-map — LANDED in code (`Sources/Data/CvReversePass.cpp`, the ONE
-  general pass `loadJson` calls); runtime verification still pending on the red tree — verified live, never on a
-  promise.** At load, any source's target-keyed own-output deposit is reverse-landed on the TARGET as a compiled
+- **The GENERAL modifier own-output reverse-map** — ONE general load-time pass. At load, any source's target-keyed own-output deposit is reverse-landed on the TARGET as a compiled
   conditioned own-output entry ("+X while the source is present" — the source's presence is the entry's prebuilt
   `enabled` condition), so a modder authors either side and both carry it. Two landing classes: a yield-channel
   flat keyed `<yield>.<scope>.{improvements|terrains|features|routes}.{TARGET}` on a building/civic/tech lands

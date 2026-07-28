@@ -33,9 +33,9 @@
 > a third time): the legacy one-shot `<Properties>`/`<PropertiesAllCities>` semantic is DEAD — EVERY such value
 > RE-CLASSIFIES as a PER-TURN source. No exceptions: flammability converts too.**
 >
-> **The flammability rebalance is LANDED, in both of its halves** — they are complements, not alternatives.
-> Flammability's problem was that every reducer arrived late (fire code / smoke detector / fire service), so the
-> fix is a curator SCALING rule plus early-game COUNTERS:
+> **The flammability rebalance has TWO halves and they are complements, not alternatives.** Its problem was that
+> every reducer arrived late (fire code / smoke detector / fire service), so the fix is a curator SCALING rule plus
+> early-game COUNTERS:
 > - **positive adders `/5` (rounded), negative reducers unchanged** — a rule in `curate_building.py`, since there
 >   is no separate `PROPERTY_FIRE`: all fire data is `PROPERTY_FLAMMABILITY` flowing through the generic
 >   `PROPERTY_*` fold;
