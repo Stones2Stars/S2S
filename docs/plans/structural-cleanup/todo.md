@@ -62,8 +62,8 @@
 - **The unit power-value plane** — its readers are ordinary consumer debt on a deliberately red tree.
 - **The Python data-fetching library** — built COMPLETE, then the `Cy*` surface disconnected whole. Contract:
   [patterns.md § THE PYTHON READ BOUNDARY](../../architecture/patterns.md). Build it for the pedia (a SHAPE oracle,
-  NOT a coverage oracle — the appendix is enumerable). Read maps: [pedia-map.md](pedia-map.md) ·
-  [python-read-map.md](python-read-map.md).
+  NOT a coverage oracle — the appendix is enumerable). Read maps: [pedia-map.md](../../reference/pedia-read-map.md) ·
+  [python-read-map.md](../../reference/python-read-map.md).
 
 ## Green-up (after the structure, never ahead of it)
 

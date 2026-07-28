@@ -323,7 +323,7 @@ These are data/curator/audit items whose subject never lived in the archived sub
   merge-candidate worklists. Owner realization: the `UnitCombat` god-group must be distilled before the migration
   can finish, because it is the common blocker under the keyed "vs unit-combat-class" combat modifiers, the upkeep
   military/civilian bucketing, and the `IS_<tag>` predicate surface.
-- **The grants apply-loop** — [grants-machine.md](grants-machine.md) + [grant-apply-sites.md](grant-apply-sites.md)
+- **The grants apply-loop** — [grants-machine.md](grants-machine.md) + [grant-apply-sites.md](../../reference/legacy-grant-apply-sites.md)
   + [start-packages.md](start-packages.md). The resolver and the first appliers are wired onto the spine (see the
   EXISTS table); what remains is the rest of the apply surface. ⚠ It is ONE piece among many, never the headline
   gap — and whether a grant hands out the RIGHT payload is not testable until the tree is green, so it is ranked

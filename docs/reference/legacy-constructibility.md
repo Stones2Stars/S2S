@@ -4,7 +4,7 @@
 > **Grounding:** the live DLL functions named below (`CvCity::canConstruct`, `CvPlayer::canTrain`, `cvInternalGlobals::buildConstructibilityEnablerIndex`, `CvBuildingInfo::buildConstructRequirements`, `CvGameTextMgr::buildBuildingRequiresString`). Citations are by **function name** — line numbers drift, so confirm the function, not any integer.
 > This is the **legacy** constructibility machinery (the introspectable `ConstructRequirement` model, the static enabler reverse-index, and the help-text consumers) and how it maps onto the cascade's enabler "can I?" surface. It is the as-shipped behaviour the enabler is replacing — read this to understand the mechanism being verified live, then cut, not a description of the cascade itself.
 
-The cascade's enabler is the "can I?" machine — HAS / CAN GET / HAS THE MEANS TO, with `enables` vs `requires` — defined in [`enabler.md`](../../specs/enabler.md). This doc does **not** re-explain that model; it documents the **legacy** code that the enabler maps onto: the introspectable `ConstructRequirement` description, the `getBuildingsEnabledBy`/`getUnitsEnabledBy` reverse-index, and the help-text renderers. The real evaluation still lives in `CvCity::canConstruct` / `CvPlayer::canTrain`.
+The cascade's enabler is the "can I?" machine — HAS / CAN GET / HAS THE MEANS TO, with `enables` vs `requires` — defined in [`enabler.md`](../specs/enabler.md). This doc does **not** re-explain that model; it documents the **legacy** code that the enabler maps onto: the introspectable `ConstructRequirement` description, the `getBuildingsEnabledBy`/`getUnitsEnabledBy` reverse-index, and the help-text renderers. The real evaluation still lives in `CvCity::canConstruct` / `CvPlayer::canTrain`.
 
 ---
 
@@ -27,7 +27,7 @@ It is a **read-only description, not an evaluator** — `CvCity::canConstruct` /
 
 These are a **pure function of info data → identical on every client** (lockstep / OOS-safe), never rebuilt during play. The CABV PreLoop (`CvCityAI::CalculateAllBuildingValues`) builds the constructible set from `getBuildingsEnabledBy` (O(dependents)) instead of the old O(buildings²) inner re-scan, and the unit-enabler value loops iterate `getUnitsEnabledBy(B)` instead of all units. This was the #195 Phase 1 turn-time win (~390× on the PreLoop; ~11.7 s/turn of enabler re-derivation eliminated). The enabler relationship is introspected from conditions via `BoolExpr::getInvolvedGOMs` (the gather-visitor sibling of `getInvolvesGOM`).
 
-This reverse-index is the legacy analogue of the enabler's **CAN GET** generation — "for each thing you HAVE, what does it unlock?" — see [`enabler.md` §2](../../specs/enabler.md). Determinism here is the same OOS-load-bearing constraint the cascade math carries ([DEC-fixedpoint-x100](../../architecture/decisions.md#dec-fixedpoint-x100)); the index being a pure function of static info data is what keeps it lockstep-safe.
+This reverse-index is the legacy analogue of the enabler's **CAN GET** generation — "for each thing you HAVE, what does it unlock?" — see [`enabler.md` §2](../specs/enabler.md). Determinism here is the same OOS-load-bearing constraint the cascade math carries ([DEC-fixedpoint-x100](../architecture/decisions.md#dec-fixedpoint-x100)); the index being a pure function of static info data is what keeps it lockstep-safe.
 
 ## Help-text consumption
 
@@ -44,7 +44,7 @@ This reverse-index is the legacy analogue of the enabler's **CAN GET** generatio
 
 ## See also
 
-- [`enabler.md`](../../specs/enabler.md) — the enabler's "can I?" model (HAS / CAN GET / HAS THE MEANS TO, `enables` vs `requires`); this legacy `canConstruct`/`canTrain` + reverse-index machinery is what that enabler maps onto and is replacing.
-- [`fixed-point-and-scales.md`](../../specs/curators/fixed-point-and-scales.md) — the cascade scale registry; the OOS-determinism constraint that makes the reverse-index a static pure-function-of-data lives in the same lockstep regime ([DEC-fixedpoint-x100](../../architecture/decisions.md#dec-fixedpoint-x100)).
-- [`../../architecture/decisions.md`](../../architecture/decisions.md) — the rulings ledger; in particular [DEC-cascade-bidirectional](../../architecture/decisions.md#dec-cascade-bidirectional) (the cascade `requires`/AND model that supersedes this legacy gate evaluation) and [DEC-map-before-delete](../../architecture/decisions.md#dec-map-before-delete) (why this legacy mechanism is verified live before cut).
+- [`enabler.md`](../specs/enabler.md) — the enabler's "can I?" model (HAS / CAN GET / HAS THE MEANS TO, `enables` vs `requires`); this legacy `canConstruct`/`canTrain` + reverse-index machinery is what that enabler maps onto and is replacing.
+- [`fixed-point-and-scales.md`](../specs/curators/fixed-point-and-scales.md) — the cascade scale registry; the OOS-determinism constraint that makes the reverse-index a static pure-function-of-data lives in the same lockstep regime ([DEC-fixedpoint-x100](../architecture/decisions.md#dec-fixedpoint-x100)).
+- [`../../architecture/decisions.md`](../architecture/decisions.md) — the rulings ledger; in particular [DEC-cascade-bidirectional](../architecture/decisions.md#dec-cascade-bidirectional) (the cascade `requires`/AND model that supersedes this legacy gate evaluation) and [DEC-map-before-delete](../architecture/decisions.md#dec-map-before-delete) (why this legacy mechanism is verified live before cut).
 - [`../../README.md`](../../README.md) — the comprehension map / overview-of-overviews.

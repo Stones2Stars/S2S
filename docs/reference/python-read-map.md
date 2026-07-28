@@ -1,11 +1,11 @@
 # Python read-map census (stage-4 input)
 
-> Evidence base for the stage-4 Python library ([patterns.md § THE PYTHON READ BOUNDARY](../../architecture/patterns.md)) — the evidence base for the stage-4
+> Evidence base for the stage-4 Python library ([patterns.md § THE PYTHON READ BOUNDARY](../architecture/patterns.md)) — the evidence base for the stage-4
 > Python surface, everything OUTSIDE the pedia. The pedia slice is mapped in
-> [pedia-map.md](pedia-map.md) and is excluded from the detailed work here (§1 reconciles the totals).
+> [pedia-map.md](pedia-read-map.md) and is excluded from the detailed work here (§1 reconciles the totals).
 >
-> Per [DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed) and
-> [DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface) this maps **NEEDS, not getters
+> Per [DEC-cy-not-fixed](../architecture/decisions.md#dec-cy-not-fixed) and
+> [DEC-new-getter-surface](../architecture/decisions.md#dec-new-getter-surface) this maps **NEEDS, not getters
 > to port**: the legacy `Cy*` info surface is obsolete by ruling — its `.def` entries name getters that no longer
 > exist on the rebuilt infos. Every count below says what a consumer must be SERVED by the one data-fetching
 > library, never what call survives. Counts are script-derived static call sites at the censused tree; the method
@@ -82,7 +82,7 @@ INFO / REQ / TEXT / STATE / COMPUTED / MUTATION are the read kinds defined in §
 The pedia set (`Screens/Pedia/` 21 + `Screens/Sevopedia/` 2 + `Contrib/UnitUpgradesGraph.py`) is **24 files /
 1,078 bound engine call sites** (INFO 739 · TEXT 202 · STATE 134 · COMPUTED 3 · MUTATION 0).
 
-[pedia-map.md](pedia-map.md) reports **~1,283 static call sites** for the same set. The two are consistent and
+[pedia-map.md](pedia-read-map.md) reports **~1,283 static call sites** for the same set. The two are consistent and
 measure different things: pedia-map counts *every non-UI `get*/is/has/parse*` call in the file* — which includes
 calls whose method is **not** on the binding surface (Python helper methods, `CyGInterfaceScreen` accessors like
 `getXResolution`) — while this census counts only names that resolve to a live `.def`. **Both numbers stand; use
@@ -102,14 +102,14 @@ read kinds. Both halves are load-bearing.
 ### 2.1 Where the hypothesis holds
 
 Serving the pedia forces the library to produce exactly the structured shapes
-[pedia-map.md §5](pedia-map.md) specifies — the per-entity page payload, the per-type index payload, the edge
+[pedia-map.md §5](pedia-read-map.md) specifies — the per-entity page payload, the per-type index payload, the edge
 lists, the rendered entry lines, the requires section object. **Nothing in the rest of the tree asks for a
 *shape* the pedia does not already force.** Every non-pedia INFO consumer censused here is served by some
 projection of those same five shapes. That is the real content of the owner's intuition and it survives contact
 with the data: the pedia is the **shape** oracle.
 
 It is also close to a *type* oracle for the modifier-carrying and enabler-carrying types — the critical set from
-the [green gate](roadmap.md). For buildings, units, techs, promotions, bonuses, improvements, civics,
+the [green gate](../plans/structural-cleanup/roadmap.md). For buildings, units, techs, promotions, bonuses, improvements, civics,
 traits, terrains, features, routes, corporations, religions, projects and specialists, the pedia already reads
 the widest field set of any consumer.
 
@@ -161,7 +161,7 @@ Four clusters, each with a distinct owner:
 
 **Note the overlap with the info rebuild's own scope:** `CvVictoryInfo`, `CvVoteInfo`, `CvHurryInfo`,
 `CvWorldInfo`, `CvHandicapInfo` and `CvProcessInfo` are all rebuilt types per
-the rebuilt info surface ([patterns.md](../../architecture/patterns.md)) — so the library must serve them regardless; the pedia simply never
+the rebuilt info surface ([patterns.md](../architecture/patterns.md)) — so the library must serve them regardless; the pedia simply never
 asks. That is the precise sense in which the pedia under-specifies.
 
 ### 2.4 The per-field residue, qualified
@@ -193,7 +193,7 @@ The pedia is **99.7% a static-info reader**: of its 1,078 bound sites, 739 are I
 of the whole engine surface.** Building only what the pedia needs would leave the majority of Python's engine
 traffic unserved. This is not an argument against the hypothesis — those planes are not what an *info* library
 is for — but a completeness claim scoped to "the reader surface" must say so explicitly, because
-[the ONE-SURFACE ruling](../../architecture/patterns.md) makes a single uncovered read a reach-around into legacy, and a
+[the ONE-SURFACE ruling](../architecture/patterns.md) makes a single uncovered read a reach-around into legacy, and a
 reach-around is the second live surface the ruling forbids.
 
 ### 2.6 The verdict, operationally
@@ -206,7 +206,7 @@ the entire STATE / COMPUTED / MUTATION surface.** The stage-4 tick-list is there
 ## 3. Consumer families, ranked by weight
 
 What each family must **be served**, expressed in the structured shapes of
-[patterns.md § THE PYTHON READ BOUNDARY](../../architecture/patterns.md).
+[patterns.md § THE PYTHON READ BOUNDARY](../architecture/patterns.md).
 
 ### 3.1 `EntryPoints/` — 4,358 sites, 14 files — the engine's call-in surface
 
@@ -334,7 +334,7 @@ already owes **rendered entry lines** (ruling 29, `Sources/UI/CvEntryText.{h,cpp
 serves**; free-standing `getText("TXT_KEY_…")` lookups for a screen's own chrome (labels, headers, button text)
 remain a localization service call. That keeps the one-surface ruling intact — no consumer ever asks the
 *library* for an entity's text and gets a raw key back — without making the library the TXT gateway.
-Per [the todo](todo.md) the vocabulary TXT keys are sequenced after the stages complete, so the
+Per [the todo](../plans/structural-cleanup/todo.md) the vocabulary TXT keys are sequenced after the stages complete, so the
 renderer's spell-back fallback is the accepted output meanwhile.
 
 The concentration is informative: `Screens/` 655 · `Revolution/Gameready/` 329 · `Contrib/` 302 ·
@@ -356,10 +356,10 @@ names and are attributed to INFO, so the *tree walk itself* is nearly invisible 
 real weight is the mechanism, not the site count.**
 
 This is an **INFO-plane need answered by the `CvRequires` section object** rendered as a structured display
-tree — independently the same conclusion as [pedia-map.md finding 3](pedia-map.md): *"no boolean-expression API
+tree — independently the same conclusion as [pedia-map.md finding 3](pedia-read-map.md): *"no boolean-expression API
 belongs on the new surface."* Confirmed here for the non-pedia consumers too: `TestCode.py` and
 `HelperFunctions.py` want *the list of required techs/buildings/bonuses*, never the tree. The
-[DEC-one-reverse-view](../../architecture/decisions.md#dec-one-reverse-view) edge families answer the inverse
+[DEC-one-reverse-view](../architecture/decisions.md#dec-one-reverse-view) edge families answer the inverse
 direction.
 
 ### 4.3 (d) MUTATION — out of scope for the library, but still needed
@@ -368,7 +368,7 @@ direction.
 `<root>` 297 · `EntryPoints/` 265 · `Revolution/Gameready/` 248 · `Revolution/` 90 · `pyWB/` 81.
 
 These are **not data fetching** and the library must not absorb them — that would pull gameplay into the DLL
-boundary, which [the deliverable ruling](../../architecture/patterns.md) explicitly forbids ("Python-authoritative gameplay
+boundary, which [the deliverable ruling](../architecture/patterns.md) explicitly forbids ("Python-authoritative gameplay
 stays Python"). But they are a real boundary that stage 4 must design *beside* the library, because the same
 handler that reads through the library writes through this path. Two sub-shapes:
 
@@ -385,11 +385,11 @@ handler that reads through the library writes through this path. Two sub-shapes:
 `Revolution/Gameready/` (342), `<root>` (387), `Screens/Worldbuilder/` (262), `Screens/` (263).
 
 The availability half (`canConstruct` / `canTrain` / `canResearch` / `canDo*`) is **the enabler's surface, not
-the cascade's** — [DEC-enabler-not-cascade](../../architecture/decisions.md#dec-enabler-not-cascade) — and
+the cascade's** — [DEC-enabler-not-cascade](../architecture/decisions.md#dec-enabler-not-cascade) — and
 Python must read the enabler's own cached verdict, never re-derive it. The rate half (`calculateTotalCulture`,
 `foodDifference`, growth/production turn estimates) is cascade-computed. **Both are live-context reads that sit
 beside the info payload, never inside it** — the same conclusion as
-[pedia-map.md finding 5](pedia-map.md), reached here at 800× the site count.
+[pedia-map.md finding 5](pedia-read-map.md), reached here at 800× the site count.
 
 ## 5. ⚑ The grep-invisible reads
 
@@ -519,7 +519,7 @@ analysis of the Python tree can tell you the live subset. Any "these reads are d
 `Revolution/Gameready/Revolution.py:1170` reads
 `pPlayer.getRevIdxDistanceModifier() + pCity.getRevIndexDistanceMod()` — two spellings of one mechanic, consumed
 by Python-authoritative gameplay and invisible to an engine-side read census. Verified live at that line.
-Per [patterns.md](../../architecture/patterns.md) **both distance kinds stay as-is, untouched by any stage (owner ruling)**;
+Per [patterns.md](../architecture/patterns.md) **both distance kinds stay as-is, untouched by any stage (owner ruling)**;
 Revolutions owns them in its own rework. **No stage-4 investigation.** Recorded here only as the calibration
 case for §5.7.
 
@@ -536,7 +536,7 @@ Stated plainly, because a completeness gate depends on it:
 - **Therefore: a "this read is dead, drop it" judgement is NOT SAFE anywhere in this tree.** The safe direction
   is one-way — a read found is a read to serve; a read *not* found is not evidence of absence. The library must
   be built to the union, and the only trustworthy completeness signal is the one
-  [patterns.md](../../architecture/patterns.md) already specifies: the census list as tick-list, with the legacy surface
+  [patterns.md](../architecture/patterns.md) already specifies: the census list as tick-list, with the legacy surface
   disconnected in the same work item.
 - **Adversarial check performed:** rather than assert completeness, I inverted the question — took the DLL's
   2,109 bound names and asked which are reached by *no* literal Python call, then hunted the mechanism that
@@ -546,7 +546,7 @@ Stated plainly, because a completeness gate depends on it:
 
 ## 6. The Python-authoritative systems
 
-These stay Python by [owner carve-out](../../architecture/decisions.md#dec-no-deferred) and become **consumers**
+These stay Python by [owner carve-out](../architecture/decisions.md#dec-no-deferred) and become **consumers**
 of the library.
 
 ### 6.1 Revolution — 4,369 sites
@@ -614,7 +614,7 @@ but have **no pedia page**, so pedia-driven work would not serve them at all. Th
    and (d) `MapScriptToolsOld.py:193` `eval`s an expression supplied by the script — an open extension surface
    by design.
    **Consequences:** those map-gen types leave the library's coverage appendix (they were counted among the 59
-   unpaged info types); the map-generation contract stays what [engine.md](../../reference/engine.md) already
+   unpaged info types); the map-generation contract stays what [engine.md](engine.md) already
    specs — **the named Python CALLBACKS are the contract, not the impl** — and it keeps its own DLL-fallback
    behaviour. Third-party map scripts therefore remain a supported surface on their own terms, unaffected by the
    `Cy*` cut. A future map-gen boundary redesign is its own work item, never a stage-4 rider.
@@ -647,7 +647,7 @@ but have **no pedia page**, so pedia-driven work would not serve them at all. Th
    and it takes effect immediately**.
 
    That is the difference in kind: a **game option** is chosen at game setup and fixed for the game (so JSON may
-   gate an entity on it, [DEC-entity-gate](../../architecture/decisions.md#dec-entity-gate)); a **live option**
+   gate an entity on it, [DEC-entity-gate](../architecture/decisions.md#dec-entity-gate)); a **live option**
    is a user setting changeable mid-game. They are NOT to be folded into `GAMEOPTION_*` on the assumption that
    they are strays. Two consequences worth knowing rather than re-deriving: JSON cannot gate on a live option
    (nothing static may depend on a value that moves under it), and a flip carries **no DOMAIN event** — if the
@@ -656,7 +656,7 @@ but have **no pedia page**, so pedia-driven work would not serve them at all. Th
 
 3b. **A natural-disaster mechanic whose whole effect is loss of a plot improvement is authored as a §5 TRIGGER,
    never as a Python event — RULED (owner).** `trigger → chance → action` with the `destroy` verb
-   ([json.md §5](../../specs/json.md)) already expresses that shape exactly, so the capability belongs as DATA on
+   ([json.md §5](../specs/json.md)) already expresses that shape exactly, so the capability belongs as DATA on
    the trigger plane. This does NOT reopen the events carve-out (#425 events stay Python) — it fixes where this
    one shape of capability lives if it is ever wanted.
 
@@ -673,7 +673,7 @@ but have **no pedia page**, so pedia-driven work would not serve them at all. Th
    name)` *and* `setattr(WidgetTypes, name, widget)` — BUG MINTS new enum members at runtime from config names
    and hands them back to the engine as widget ids. A read-only lookup would not serve it. This generalizes what
    the engine already does for infotypes (`getInfoTypeForString`) and pairs naturally with the load-minted
-   classification registries ([DEC-classification-infos](../../architecture/decisions.md#dec-classification-infos)),
+   classification registries ([DEC-classification-infos](../architecture/decisions.md#dec-classification-infos)),
    which are the same idea on the info plane: names minted to ids at load, resolved by id thereafter.
 
    And the completeness argument that makes it load-bearing: a library WITHOUT name→type resolution forces those

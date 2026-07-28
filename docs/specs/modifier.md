@@ -130,7 +130,7 @@ slot does pure integer math and never sees the human boundary.
 
 > **A plot's yield is ONE base package, resolved in isolation BEFORE the city modifiers.**
 > All output from a single plot is computed in **complete isolation** as one base-yield package — `CvPlot::calculateYield`
-> per plot ([calc-map](../plans/structural-cleanup/legacy-value-calc-map.md) §10.1: `calculateNatureYield`(`getBaseYield`=
+> per plot ([calc-map](../reference/legacy-value-calc-map.md) §10.1: `calculateNatureYield`(`getBaseYield`=
 > terrain+feature+river+hills/peak + bonus) + improvement (floored at `-nature`) + route + the keyed/plots flats,
 > `max(0,·)`) — and that result is passed **up the chain**: the city SUMS its worked-plot packages into the §1 `base`.
 > **The plot yields ARE "the base the rest is calculated from."** So anything that scales a *specific improvement or

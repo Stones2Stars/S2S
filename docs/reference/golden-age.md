@@ -39,7 +39,7 @@ All three are gated on `isGoldenAge()` and land in the city's **`base`**, so the
 1. **Per-plot yield bonus** — `CvPlot::calculateYield:8403`. **It is NOT a flat "+1 on every worked plot."** It is
    **threshold-gated**: a worked plot gets `+CvYieldInfo.getGoldenAgeYield(y)` **only if** its yield clears
    `CvYieldInfo.getGoldenAgeYieldThreshold(y)`; a plot below the threshold gets nothing. This addend is part of
-   `basePlotYield` ([calc-map](../plans/structural-cleanup/legacy-value-calc-map.md) §10.1).
+   `basePlotYield` ([calc-map](legacy-value-calc-map.md) §10.1).
    - **⚠ The threshold IGNORES the plot's improvement & route (counter-intuitive, and load-bearing for faithful reproduction):**
      the test runs on the **PRE-improvement, PRE-route** running yield — `nature + extra + [centre] + playerTerrain +
      seaPlot + getYieldChangeAt + landmark + extra/less-threshold`. The improvement (`:8430`) and route (`:8435`) are

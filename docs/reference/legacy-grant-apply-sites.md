@@ -1,12 +1,12 @@
 # The grant APPLY-SITE map — where provisions are actually handed over today
 
-> **Why this exists.** [grants-machine.md](grants-machine.md) specs the machine and carries a trigger→legacy-site
+> **Why this exists.** [grants-machine.md](../plans/structural-cleanup/grants-machine.md) specs the machine and carries a trigger→legacy-site
 > *inventory*. That inventory was checked domain-by-domain against live code and was found to **understate the
 > surface in every single domain**, with drifted line numbers throughout and at least one row citing a function
 > that does not exist. The apply surface is not reconstructible from memory — it accreted over fifteen years
 > across two languages — so it is mapped here, once, with `file:line` for each site.
 >
-> **This doc is the map. [grants-machine.md](grants-machine.md) stays the machine's spec.** Do not fold them
+> **This doc is the map. [grants-machine.md](../plans/structural-cleanup/grants-machine.md) stays the machine's spec.** Do not fold them
 > together: one is "what the machine is", this is "what it must replace".
 >
 > ⛔ **The apply cannot be moved before the CLASSIFICATION below is ruled on.** Several sites look like grants and
@@ -35,7 +35,7 @@ buy it, the machine owns it. Consequences that settle most of §5:
   (upgrade/merge promotion carry-over), unit merge/split, scrap refunds, production→gold overflow, negotiated
   deal/gift transfers, improvement upgrades.
 - **OUT — modifiers.** Anything alive only while its source is (§4) never "arrived" independently; it is the
-  source's ongoing effect, and it belongs to [modifier.md](../../specs/modifier.md).
+  source's ongoing effect, and it belongs to [modifier.md](../specs/modifier.md).
 
 > **⛔ THE MACHINE REPLACES LEGACY — IT NEVER WIDENS IT (owner ruling).** The goal is a FULL replacement and a
 > **vast reduction of endpoints**: many scattered apply sites collapse into one. So a change that *widens a legacy
@@ -47,7 +47,7 @@ buy it, the machine owns it. Consequences that settle most of §5:
 > `getGrants()->repeatables()` — which already carries interval, chance, the spatial intent and the `enabled`
 > condition in full ([CvGrants.h](../../../Sources/Infos/CvGrants.h) `CvJsonGrantRepeatable`) — and the
 > collapse members die with the city ledgers. Widening them would be the transitional shim
-> [DEC-proper-once](../../architecture/decisions.md#dec-proper-once) bans, applied to a member already condemned.
+> [DEC-proper-once](../architecture/decisions.md#dec-proper-once) bans, applied to a member already condemned.
 > ⚠ Do NOT confuse the two `getNumUnitFullHeal`s: the **info-side** `CvBuildingInfo::getNumUnitFullHeal()` is
 > static data with live READ consumers (AI valuation `CvCityAI.cpp:5473/12752/13255`, pedia
 > `CvGameTextMgr.cpp:15923`) and **STAYS**; only the **city-side** accumulator `CvCity::m_iNumUnitFullHeal` is cut.
@@ -58,7 +58,7 @@ Three distinctions, each of which has already been got wrong at least once:
 
 - **GRANT** — handed over once, then persists with no living source. The machine's business.
 - **MODIFIER** — alive only while its source is; refcounted or toggled with the source's presence. NOT the
-  machine's business ([modifier.md](../../specs/modifier.md) — the `freeSpecialists` precedent).
+  machine's business ([modifier.md](../specs/modifier.md) — the `freeSpecialists` precedent).
 - **READ** — a consumer of the same info data for pedia/AI/UI. Not an apply, but **must keep working when an
   apply moves**, so it is mapped separately rather than discarded.
 
@@ -137,7 +137,7 @@ as gaps to close: the C++ is the hand-over mechanism for a Python-driven system,
 **⛔ OUTCOMES ARE NOT GRANTS (owner ruling)** — the `outcomes.kill[]`/`actions[]` reward payloads are their OWN
 system, already set up separately: the `CvOutcome`/`CvOutcomeMission`/`CvOutcomeList` classes and their
 `execute()`/dispatch are UNCHANGED, fed from JSON via `mapFrom`
-([mission-outcome-system.md](../../reference/mission-outcome-system.md)). `CvOutcome::execute` (`:1045+`) is that
+([mission-outcome-system.md](mission-outcome-system.md)). `CvOutcome::execute` (`:1045+`) is that
 system's apply, NOT an unmigrated grant site — do not fold it into this machine.
 
 | granted | C++ helper (NOT a gap) | function |
@@ -233,7 +233,7 @@ religionCount + corporationCount + greatPeople*2`, scaled by `(100 + culturePerc
 |---|---|---|
 | the unit info's own `getFreePromotions` — fed from **`grants.promotions`** (`CvUnitInfo.cpp:684`) | set at creation, never removed | **GRANT — this machine** |
 | the player free-promotion registry, keyed by unit type AND by unitcombat (`CvPlayer::isFreePromotion`) | written **ONLY** by `CvPlayer::applyEvent` (`:21245`) | **OUT OF SCOPE — random events** (and genuine one-shot event-store state) |
-| trait `isFreePromotionUnitCombats` | explicitly REMOVED when the trait is lost (`setFreePromotion`'s `!bAdding` branch) | **MODIFIER — alive-with-source** ([modifier.md](../../specs/modifier.md)), the `freeSpecialists` precedent |
+| trait `isFreePromotionUnitCombats` | explicitly REMOVED when the trait is lost (`setFreePromotion`'s `!bAdding` branch) | **MODIFIER — alive-with-source** ([modifier.md](../specs/modifier.md)), the `freeSpecialists` precedent |
 
 Moving the whole function would import a modifier AND an out-of-scope event store into the grants machine — the
 exact §1 mistake. Only the `grants.promotions` leg migrates.
@@ -246,7 +246,7 @@ building `getFreeTraitTypes` ("conferred while active"); vote `tradeRoutes`/`isF
 (`m_paiFreeSpecialistCountUnattributed`) is genuine one-shot state: Great-Person `join` consumes the unit so no
 source survives (`CvUnit.cpp:8778`), city acquisition carries it (`CvPlayer.cpp:2606`), and **era-advance free
 specialists are a persisted pulse, not a while-active modifier** (`CvPlayer.cpp:12187`) — which pins the lifetime
-question [grants-machine.md](grants-machine.md) left open.
+question [grants-machine.md](../plans/structural-cleanup/grants-machine.md) left open.
 
 ## 5. Open rulings (blocking the apply)
 
@@ -268,8 +268,8 @@ question [grants-machine.md](grants-machine.md) left open.
    `:4255`, `changeHealUnitCombatTypeVolume` `:4352`, `changeNumUnitFullHeal` `:4370`, all
    `kBuilding.getX() * iChange`) — no event/vote/espionage writer exists — so each is a Σ over the city's buildings
    of a static info field: the STORED-ACCUMULATOR DRIFT class, cut by
-   [DEC-accumulator-cut-uniform](../../architecture/decisions.md#dec-accumulator-cut-uniform) via the
-   `Assets/savemigration.txt` soft-remove ([save.md §3](../../specs/save.md)) — delete member + read + write, name
+   [DEC-accumulator-cut-uniform](../architecture/decisions.md#dec-accumulator-cut-uniform) via the
+   `Assets/savemigration.txt` soft-remove ([save.md §3](../specs/save.md)) — delete member + read + write, name
    the tag, no `WRAPPER_SKIP_ELEMENT`, **no `@SAVEBREAK`** (field removal is not a save break).
 
    ⚠ **But they are NOT one class — the replacement OWNER differs (§1: "several sites look like grants and are
@@ -277,7 +277,7 @@ question [grants-machine.md](grants-machine.md) left open.
    | ledger | mechanic | replaced by |
    |---|---|---|
    | `m_aPropertySpawns` | per-turn unit spawn — an arrival outside normal creation | **the grants machine** |
-   | `m_iNumUnitFullHeal` | discrete per-turn action (fully heals up to N damaged units, `CvCity::doHeal` `:20202`); [json.md §5](../../specs/json.md) names a heal as a `repeatable` payload | **the grants machine** |
+   | `m_iNumUnitFullHeal` | discrete per-turn action (fully heals up to N damaged units, `CvCity::doHeal` `:20202`); [json.md §5](../specs/json.md) names a heal as a `repeatable` payload | **the grants machine** |
    | `m_paiHealUnitCombatTypeVolume` | **continuous heal-RATE contribution**, not a discrete event — consumed at `CvUnit.cpp:6232` (`iTotalHeal += pCity->getHealRate() + pCity->getHealUnitCombatTypeTotal(...)`) and already a named term in the `/computed/units/heal` decomposition | **the MODIFIER heal channel** (alive-with-source ⇒ modifier, the `freeSpecialists` precedent) — F4's unit-side heal channel is built; this is its city-scope deposit |
 4. ~~Scope of "grant".~~ **SETTLED by the §0 scope rule** — arrival-outside-normal-creation decides it. What
    remains is **HOMING, not a data gap: every one of these provisions IS curated** — verified against
@@ -295,7 +295,7 @@ question [grants-machine.md](grants-machine.md) left open.
 
    **The ruling needed is which of these RE-HOME into `grants`** — a data-model change, so it triggers the
    curator update + regen in the same work item
-   ([DEC-recurate-on-decision](../../architecture/decisions.md#dec-recurate-on-decision)). Two are not merely
+   ([DEC-recurate-on-decision](../architecture/decisions.md#dec-recurate-on-decision)). Two are not merely
    homing: `extraGoody` feeds the goody-hut system that §2 rules OUT, and the advanced-start budget is flagged
    *"parked in identity … pending review"* by `curate_handicap.py:55` — an open curator question in its own right.
 5. **Start-era grants applied forever.** `freePopulation` and `FreeStartEra` buildings fire at *every* city
@@ -312,7 +312,7 @@ question [grants-machine.md](grants-machine.md) left open.
    `CvPlayer::deleteCity` (`:14755`) — the single dispose/raze choke point.
 
 ## See also
-- [grants-machine.md](grants-machine.md) — the machine + its build increments (its inventory table is superseded
-  by §2 here). · [json.md §5](../../specs/json.md) — the `grants` vocabulary. ·
-  [mission-outcome-system.md](../../reference/mission-outcome-system.md) — the missions carve-out (the four
+- [grants-machine.md](../plans/structural-cleanup/grants-machine.md) — the machine + its build increments (its inventory table is superseded
+  by §2 here). · [json.md §5](../specs/json.md) — the `grants` vocabulary. ·
+  [mission-outcome-system.md](mission-outcome-system.md) — the missions carve-out (the four
   hardcoded ability keys) AND the outcome system, which is separate from this machine entirely (§2).

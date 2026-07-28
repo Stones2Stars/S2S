@@ -5,7 +5,7 @@
 > intent: *"this gives modders a chance to set up how they want."*
 >
 > Companion: [grants-machine.md](grants-machine.md) (the machine that applies them) ·
-> [grant-apply-sites.md](grant-apply-sites.md) §2 Game start (the legacy sites being replaced).
+> [grant-apply-sites.md](../../reference/legacy-grant-apply-sites.md) §2 Game start (the legacy sites being replaced).
 
 ## Why
 
@@ -100,4 +100,4 @@ Nothing bespoke — it follows the standing pattern, and skipping any of these i
 - **Retiring the engine selection.** `addStartUnitAI` (whole-database scan + `AI_unitValue` scoring) and the
   era/handicap per-role counts retire once packages carry the identities. Until then they remain the live path.
 - **NPC / barbarian starts** — `barbarianInitialDefenders` is in scope per the §0 scope rule but is not authored in
-  a `grants` block ([grant-apply-sites.md](grant-apply-sites.md) §5.4 curation gap); packages are its natural home.
+  a `grants` block ([grant-apply-sites.md](../../reference/legacy-grant-apply-sites.md) §5.4 curation gap); packages are its natural home.

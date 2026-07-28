@@ -1,6 +1,9 @@
-# Legacy value-calc map — which getter computes each value, and what the dump must emit
+# Legacy value-calc map — which getter computes each per-turn value, and from what
 
-> **Status:** reference · **Verified against:** `Sources/Engine/CvCity.cpp`, `CvPlayer.cpp`, `CvUnit.cpp`,
+> **How the LEGACY engine computes each per-turn value today** — the getter, its components, and the
+> x1/x100 + clamp gotchas. Reference, not a worklist: nothing here is a task.
+>
+> **Verified against:** `Sources/Engine/CvCity.cpp`, `CvPlayer.cpp`, `CvUnit.cpp`,
 > `CvGameCoreDLL.cpp`, `CvProperties*.cpp`, `Assets/Python/Revolution/` — 2026-06-19 parallel agent sweep
 > (waves 1–4).
 > **Grounding:** every formula below was read at its named getter. **Line numbers DRIFT — confirm against
@@ -19,7 +22,7 @@
 > This is the **per-calc DESTROY-pass map**: for each per-turn value the engine realizes, *which legacy
 > getter computes it, what components feed it, the x1/x100 + clamp gotchas, and what the diagnostic dump
 > must emit to attribute it to a named source.* You cannot delete a legacy calc you have not
-> mapped ([DEC-map-before-delete](../../architecture/decisions.md#dec-map-before-delete)); this is that map.
+> mapped ([DEC-map-before-delete](../architecture/decisions.md#dec-map-before-delete)); this is that map.
 
 ## BLUF
 
@@ -56,21 +59,21 @@ populationGrowthRate; nonexistent → `byCargo`; dead → `pillageGold` (buildin
 > The revolution index is Python-authoritative (the `Assets/Python/Revolution/` mod consumes the `revolution.*` family
 > via the Cy getters); the cascade does **not** compute or validate it, and **revolution needs an extensive rework —
 > eventually moved into C++ — a PERMANENT carve-out (owner-ruled).** So the `revolution` family is **exempt from the
-> [DEC-conditions-are-predicates](../../architecture/decisions.md#dec-conditions-are-predicates) invention-retirement**:
+> [DEC-conditions-are-predicates](../architecture/decisions.md#dec-conditions-are-predicates) invention-retirement**:
 > its bespoke members (`holyCityGood`/`holyCityBad`, `distanceModifier`, `local`/`national`, …) **stay as authored** —
 > the only bar is that the data **parses correctly** (a valid `family.scope.member.unit` shape, which it is). Do NOT
 > map revolution good/bad semantics into predicates; there is no payoff and the whole system is a
 > PERMANENT carve-out (owner-ruled) — a later C++ rework.
 >
 > **Scales.** Every ×100 / per-100 / human / multiplier claim in this doc is governed by the
-> [scale registry](../../specs/curators/fixed-point-and-scales.md) — that is the single source of truth for scales
-> ([DEC-fixedpoint-x100](../../architecture/decisions.md#dec-fixedpoint-x100)). Where a getter name ends in
+> [scale registry](../specs/curators/fixed-point-and-scales.md) — that is the single source of truth for scales
+> ([DEC-fixedpoint-x100](../architecture/decisions.md#dec-fixedpoint-x100)). Where a getter name ends in
 > `…100` or `…Times100`, the result is ×100 fixed-point; this doc names the scale per calc but does not
 > restate the rules.
 
 ---
 
-## 1. City CORE YIELDS — food / production / commerce (the full pipeline) ✅ BUILT (cityInput)
+## 1. City CORE YIELDS — food / production / commerce (the full pipeline)
 
 > **The emulation-grade trace** (owner ruling 2026-06-20: the core-yield calc is foundational to the outside legacy
 > emulation and to the completeness bar — map it THOROUGHLY, every source/scale/clamp/order, not a one-liner). All values verified
@@ -122,7 +125,7 @@ getYieldRate100(y) = min(CITY_MAX_YIELD_RATE, max(100,
 `getExtraYield100(y)` (`:11323`) `= m_aiExtraYield[y]*100 + getBuildingExtraYield100(y) + getBaseYieldPerPopRate(y)*getPopulation()`.
 `getExtraYield(y) = getExtraYield100(y)/100` — ⚠ **truncated to x1 BEFORE the `×100` re-scale in 1.2**, so sub-unit
 precision is lost (the documented x1-truncation gotcha; the `×100` is the proof the bucket is human-scale —
-[scale registry §3](../../specs/curators/fixed-point-and-scales.md#3-how-to-figure-a-fields-scale-the-method--do-not-eyeball-the-name)).
+[scale registry §3](../specs/curators/fixed-point-and-scales.md#3-how-to-figure-a-fields-scale-the-method--do-not-eyeball-the-name)).
 Sources: flat extra-yield, per-building extra yields (already ×100), per-pop yields × population.
 
 ### 1.5 `getSpecialistYieldTotal(y)` (`:11351`) = `m_aiSpecialistYieldTotal[y]` — a maintained accumulator of specialist yields (city-modified, see 1.2).
@@ -134,7 +137,7 @@ Per assigned specialist of type X, `count[X] ×` the **FIVE** engine terms (`pro
 | **intrinsic** | `SpecialistInfo.getYieldChange` | specialist `{y}.city.flat` (base) |
 | **local** | `getLocalSpecialistExtraYield` ← building `LocalSpecialistYieldChange` (`CvCity` :4811, THIS city) | specialist `{y}.city.flat`, gated by the building **in-city** |
 | **perType (building)** | `player.getExtraSpecialistYield` ← building `getSpecialistYieldChange` **non-local** (`CvPlayer` :7493, per instance, EMPIRE-wide) | specialist `{y}.empire.flat`, gated by the player **HAVING the building** (`{BUILDING, scope:empire}`) — mirrors `getGlobalYieldModifier`(empire) vs `getYieldModifier`(city) |
-| **perType (trait)** | `player.getExtraSpecialistYield` ← trait `getSpecialistYieldChange` (`CvPlayer` :28582) | on the **TRAIT**, keyed by specialist (`{y}.empire.specialists.{SPEC}.flat`, governing-deliverer; active set, PURE-filtered — the trait simple/complex callout, [modifier](../../specs/modifier.md)) |
+| **perType (trait)** | `player.getExtraSpecialistYield` ← trait `getSpecialistYieldChange` (`CvPlayer` :28582) | on the **TRAIT**, keyed by specialist (`{y}.empire.specialists.{SPEC}.flat`, governing-deliverer; active set, PURE-filtered — the trait simple/complex callout, [modifier](../specs/modifier.md)) |
 | **all** | `player.getSpecialistExtra{Yield,Commerce}` ← **building**/civic/trait `SpecialistExtra{Yields,Commerces}` (per ANY specialist) | **building**/civic/trait `{y}.empire.specialist.perSpecialist`, × the city's TOTAL specialists |
 | **pct** | `player.getSpecialistYieldPercentChanges` ← civic `SpecialistYieldPercentChanges` (applied `/100` INTEGER, additive) | specialist `{y}.city.percent`, read as `Σpercent/100` |
 
@@ -151,44 +154,41 @@ Per assigned specialist of type X, `count[X] ×` the **FIVE** engine terms (`pro
 > TYPED-free, `CvCity.cpp:23291`) — EXACTLY what `/state` reports per type. So the cascade takes assigned+typed-free
 > counts from `/state` and computes the output (owner ruling 2026-06-28: *SpecialistInfo gives per-type production; we
 > fetch how many of each type the AI assigned and calculate the output — we never reproduce the AI's assignment*).
-> **The split is ASSIGNMENT vs OUTPUT — this is the foundational [pollution guardrail](../../specs/validation.md#-the-pollution-guardrail--structural-not-disciplinary)
+> **The split is ASSIGNMENT vs OUTPUT — this is the foundational [pollution guardrail](../specs/validation.md#-the-pollution-guardrail--structural-not-disciplinary)
 > (raw `/state` INPUTS vs cascade-COMPUTED outputs), present since the start of the migration, NOT a new ruling.** The AI's
 > *assignment* of specialists to types (`getBestSpecialist`=`AI_specialistValue`) is a stored STATE fact the cascade
 > READS from `/state` (an input, never recomputed); the specialists' actual *output* (yield/commerce) is what the
-> cascade COMPUTES (the live OUTPUT-SEAM — the engine owns the middle assignment mechanism, the cascade owns the output yields, [DEC-universal-yield](../../architecture/decisions.md#dec-universal-yield)). So the GENERIC free specialists (the `totalFreeSpecialists` amount) DO produce output
+> cascade COMPUTES (the live OUTPUT-SEAM — the engine owns the middle assignment mechanism, the cascade owns the output yields, [DEC-universal-yield](../architecture/decisions.md#dec-universal-yield)). So the GENERIC free specialists (the `totalFreeSpecialists` amount) DO produce output
 > the cascade must reproduce — take their AI-resolved per-type counts from `/state` and compute output like any other
 > specialist. They are NOT currently in `specialistCount`/`/state.specialists`, so honouring it needs `/state` to emit
 > the generic free specialists by their engine-resolved type (a raw state fact, see §2 free-spec note); then the existing
 > per-type output calc covers them.
 >
-> **✅ STREAMLINE DONE + VERIFIED LIVE (Release deployed + reloaded — specialist commerce AND yield
-> confirmed CLEAN against the engine oracle): YIELD and COMMERCE specialist values are now UNIFORM deterministic
-> recomputes**, replacing the stale incremental accumulators.
+> , replacing the stale incremental accumulators.
 > Formula (uniform): the specialist's INTRINSIC `getYield/CommerceChange × (100+pct)/100` (×100 fixed-point, ÷100 once);
 > local/perType/perAll get NO percent; a percent on a zero-intrinsic specialist adds nothing. The count-frozen
 > flat-per-specialist add-on is dropped (a PERMANENT carve-out, owner-ruled balance-later).
 >
 > - **Getters are RECOMPUTE-ON-READ (the committed form).** `getSpecialistCommerce` + `getSpecialistYieldTotal` recompute
 >   from current state on every read (intrinsic loop; yield adds the eager `m_aiExtraSpecialistYield`). Per
->   [state-repositories.md](../../architecture/state-repositories.md) this is the **acknowledged WORKAROUND form** (the
+>   [state-repositories.md](../architecture/state-repositories.md) this is the **acknowledged WORKAROUND form** (the
 >   "squirrelBanana" recompute-every-read — correct, but pays the full cost per read); the **proper** end state is the
 >   lazy dirty-flagged cache, to be delivered by the **standardized "cached array" component** (owner ruling 2026-06-28),
 >   which formalizes that doc's pattern and is applied to plot + specialist + future caches. Until then the eager
 >   `updateSpecialist{Commerce}`/`updateExtraSpecialistYield` machinery remains only to fire the rate-dirty trigger
 >   (`setCommerceDirty`/`onYieldChange`) — its cache writes are vestigial (the getter ignores them).
 > - **Stale save-read SKIPPED.** `m_aiSpecialistCommerce100` / `m_aiSpecialistYieldTotal` are `WRAPPER_SKIP_ELEMENT` on
->   read (the [DEC-save-remove-is-soft](../../architecture/decisions.md) soft-remove) so the old drift never loads —
->   the [state-repositories.md](../../architecture/state-repositories.md) "ignore save read + recompute" technique.
+>   read (the [DEC-save-remove-is-soft](../architecture/decisions.md) soft-remove) so the old drift never loads —
+>   the [state-repositories.md](../architecture/state-repositories.md) "ignore save read + recompute" technique.
 > - **Stale writers removed:** `processSpecialist` commerce block + `CvPlayer:27896` (commerce); `processSpecialist:5156`
 >   - `CvPlayer:27926` (yield).
 > - **Cascade:** dropped the yield-vs-commerce branch in `SpecialistYieldTotal` — multiplicative for ALL channels. Yield
 >   verified clean (no specialist yield pct active in-save → no number change); commerce verified clean too
 >   (engine recomputes the same deterministic value as the cascade; commerce numbers shifted off their old stale values, authorized).
-> - **Remaining:** only (2) below — the deploy+verify (1) is DONE.
 >   (2) The standardized `CvDerivedCache` component (upgrade recompute-on-read → lazy dirty cache; migrate plot +
 >   specialist) — **formalized — F0 foundation work (owner-ruled), not deferred**; design +
 >   chosen C++03 mechanism (templated value-holder + member-fn-ptr recompute) in
->   [state-repositories.md](../../architecture/state-repositories.md#the-standardized-cvderivedcache-component-formalized-2026-06-28-built-at-shadow--final-migration-time).
+>   [state-repositories.md](../architecture/state-repositories.md#the-standardized-cvderivedcache-component-formalized-2026-06-28-built-at-shadow--final-migration-time).
 >
 > **⛔ The specialist-commerce PERCENT (`SpecialistCommercePercentChanges`) is a balance-tweaked, buggy, STALE,
 > non-deterministic engine value — FULL mechanism mapped 2026-06-28 (supersedes the earlier "stale cache / recalc fixes
@@ -219,10 +219,10 @@ Per assigned specialist of type X, `count[X] ×` the **FIVE** engine terms (`pro
 > (oracle 25, the +1 = stale drift). Sub-questions for the owner: (a) mirror the flat-`pct/100`-per-specialist behavior, or
 > read the "+%" as a true percent OF the base (→ 0 for zero-base specs)? (b) for a spec with both intrinsic & pct, mirror
 > the engine's double-apply or apply once? This awaits an owner design call; until decided, the cascade's
-> specialist-commerce pct term is an unresolved failure-to-close (not shipped — [DEC-done-is-observable](../../architecture/decisions.md#dec-done-is-observable)); the rest of §2 is deterministic and proceeds. *(Also open: 6 gold cities
+> specialist-commerce pct term is an unresolved failure-to-close (not shipped — [DEC-done-is-observable](../architecture/decisions.md#dec-done-is-observable)); the rest of §2 is deterministic and proceeds. *(Also open: 6 gold cities
 > mismatch at pct=0 — a separate small deterministic gap, TBD.)*
 
-**Dump:** base, specialist, modifier + the full 7-way breakdown (`modBonus/modBuilding/modPlayer/modEvent/modPower/modArea/modCapital`), extraYield (x1), extraYield100, legacy100, cap. **DONE + verified live** (London 3/3).
+**Dump:** base, specialist, modifier + the full 7-way breakdown (`modBonus/modBuilding/modPlayer/modEvent/modPower/modArea/modCapital`), extraYield (x1), extraYield100, legacy100, cap..
 
 ## 2. COMMERCE split — `CvCity::getCommerceRateTimes100`
 
@@ -276,8 +276,8 @@ to the holding building via `getBaseCommerceRateFromBuilding100`), both modelled
 >   13700 vs cascade 8900) — NOT a cascade miss but the **engine over-counting**: `m_ppiBuildingCommerceChange` was a
 >   *serialized incremental accumulator* (`CvCity:5054` player ledger + `:4708` per-receiver snapshot + `CvPlayer:27477`
 >   per-city push) that **replayed onto the loaded value on load/recalc**, so a `+5` guild grant became `+10` on receivers
->   built after the guild (CARPENTER 1000 vs 500). Per [validation §"touching legacy"](../../specs/validation.md) +
->   [state-repositories](../../architecture/state-repositories.md), fully mapped (every writer) + shown non-deterministic,
+>   built after the guild (CARPENTER 1000 vs 500). Per [validation §"touching legacy"](../specs/validation.md) +
+>   [state-repositories](../architecture/state-repositories.md), fully mapped (every writer) + shown non-deterministic,
 >   then (owner-authorized) **streamlined to recompute-from-source**: `getBuildingCommerceChange` recomputes Σ over the
 >   player's `getHasBuildings → getGlobalBuildingCommerceChanges` on a dedicated dirty flag (never serialized,
 >   `WRAPPER_SKIP`), trigger-only writer, cities PULL it. Engine now == cascade (8900); P6/C8192 gold commerce verified
@@ -286,13 +286,13 @@ to the holding building via `getBaseCommerceRateFromBuilding100`), both modelled
 >   PERSISTED `CvCity::m_aBuildingCommerceChangeEvents`, read normally; the reader = `player-recompute(empire) + city
 >   event/vote(persisted)`. `@SAVEBREAK` (`m_ppiBuildingCommerceChange` no longer serialized; old `m_aBuildingCommerceChange`
 >   retired consume-don't-keep; event/vote migrated to the new uniquely-tagged field — old-save grants lost once). Full
->   mechanism + the save-safe how: [state-repositories.md](../../architecture/state-repositories.md).
+>   mechanism + the save-safe how: [state-repositories.md](../architecture/state-repositories.md).
 >
 > **⚠ FIXED-POINT (OOS): flat commerce must sum in ×100, not truncate (2026-06-27).** Fractional human commerce flats
 > (e.g. a Folklore building's research `[1, −0.6@TECH_LANGUAGE, −0.1@…×4]` → nets 0) MUST be summed as `Σ round(human×100)`,
 > never `(int)human × 100` (which truncates −0.6→0 and kept a phantom +1 ×93 buildings). The StoneBase reader is
 > `YieldModifierCascade.SumUnit100`. Yields are integer so unaffected; only commerce has fractional flats. This is the
-> [scale registry](../../specs/curators/fixed-point-and-scales.md) integer-math rule applied in the cascade.
+> [scale registry](../specs/curators/fixed-point-and-scales.md) integer-math rule applied in the cascade.
 >
 > **⚠ FAILURE-TO-CLOSE — per-building FREE-SPECIALIST commerce (TRACED).** `getBaseCommerceRateFromBuilding100`
 > (`CvCity.cpp`) folds a building's **free specialists' commerce** into that building's per-building commerce:
@@ -321,9 +321,9 @@ to the holding building via `getBaseCommerceRateFromBuilding100`), both modelled
 >   `AI_specialistValue` path is for assigning CITIZENS to specialist slots — a different mechanism. No AI valuation
 >   enters the free amount.
 > - **⛔ Correction #2 (owner 2026-06-27): they are NOT a `grant` — they are the REVERSIBLE `freeSpecialists` MODIFIER
->   family.** "Free specialists from buildings go away if the building goes away" — so by [json](../../specs/json.md) §5
+>   family.** "Free specialists from buildings go away if the building goes away" — so by [json](../specs/json.md) §5
 >   they are emphatically **not** `grants` (a `grant` PERSISTS — a granted unit survives its granter). They are a
->   [modifier](../../specs/modifier.md) deposit: re-evaluated every recompute, contributing **only while the source is
+>   [modifier](../specs/modifier.md) deposit: re-evaluated every recompute, contributing **only while the source is
 >   active (constructed, non-dormant)**, and removed the instant the source is. The engine proves the reversibility —
 >   `changeFreeSpecialist(kBuilding.getFreeSpecialist() × iChange)` runs with `iChange = −1` on removal (`CvCity.cpp:4639`),
 >   so `getFreeSpecialist()` is a maintained accumulator, not a one-shot. **The data is already correct** — the curator
@@ -332,11 +332,11 @@ to the holding building via `getBaseCommerceRateFromBuilding100`), both modelled
 > - **The COMPLETE source map of `totalFreeSpecialists()` (`CvCity.cpp:5747`), every term grounded to its JSON source:**
 >   `total = max(0, Σ of the below)`, and `0` if `pop < 1`. All are reversible modifier deposits from **ACTIVE** sources:
 >   - `getFreeSpecialist()` (city; London = **9**) = Σ active buildings' `iFreeSpecialist` → **`freeSpecialists.city.any`** (`:4639`).
->   - `area()->getFreeSpecialist(owner)` = Σ active buildings' `iAreaFreeSpecialist` → **`freeSpecialists.empire.any`** (`CvPlayer.cpp:7394`) — area is not a scope; the legacy `iArea*` rows author at EMPIRE ([state-repositories.md](../../architecture/state-repositories.md)).
+>   - `area()->getFreeSpecialist(owner)` = Σ active buildings' `iAreaFreeSpecialist` → **`freeSpecialists.empire.any`** (`CvPlayer.cpp:7394`) — area is not a scope; the legacy `iArea*` rows author at EMPIRE ([state-repositories.md](../architecture/state-repositories.md)).
 >   - `player.getFreeSpecialist()` = Σ active buildings' `iGlobalFreeSpecialist` (→ **`freeSpecialists.empire.any`**, `CvPlayer.cpp:7395`)
 >     - Σ adopted civics' `iFreeSpecialist` (→ **`freeSpecialists.empire.any`**, `:18045`) + Σ active traits' `iFreeSpecialist` (→ **`freeSpecialists.empire.any`**, `:28515`).
 >   - improvement term = `Σ_imp getImprovementFreeSpecialists(imp) × countNumImprovedPlots(imp)`, where the per-improvement
->     rate is Σ active buildings' `ImprovementFreeSpecialists[imp]` (`:4885`). ✅ **CURATOR FIXED** (`curate_building.py`,
+>     rate is Σ active buildings' `ImprovementFreeSpecialists[imp]` (`:4885`). **CURATOR FIXED** (`curate_building.py`,
 >     `_inject_per`): emitted as a `per` count-scaler `freeSpecialists.city.any = {value:n, per:{type:IMPROVEMENT, scope:city}}`,
 >     NOT the old presence `enabled:{improvement}` flat. `countNumImprovedPlots` = plots whose **working city is this** AND
 >     carry the improvement (`CvCity.cpp:1822` — the `Assigned`/`getWorkingCity()==this` domain, worked or not).
@@ -360,7 +360,6 @@ to the holding building via `getBaseCommerceRateFromBuilding100`), both modelled
 > - **Oracle emitted + verified** (`/computed/cities/yields`, committed): `totalFreeSpecialists` (London = **59**) +
 >   `cityFreeSpecialist` (the `freeSpecialists.city.any` part, London = **9**) — vs `/state` assigned 150. The 59 free
 >   specialists' output is what the cascade silently missed.
-> - **Build status (StoneBase, foundational):** ✅ **(1) the AMOUNT is reproduced + StoneBase-verified over EVERY real-civ city, all
 >   players** (StoneBase `/parity/freeSpecialists` + `…/sweep` — that job is closed). `FreeSpecialistAmountCascade` sums the
 >   `freeSpecialists.any` count-leaf over active buildings (city/area/empire) + civics + active-set traits + the improvement
 >   `per`-scaler + the per-wonder term, matching the engine `totalFreeSpecialists` oracle. Two cross-cutting facts the sweep
@@ -375,8 +374,8 @@ to the holding building via `getBaseCommerceRateFromBuilding100`), both modelled
 >   The parser was extended for the count-leaf LIST shape (`ModifierFamilyParser`: an array under `any`/SPECIALIST →
 >   `count` magnitudes). Engine per-term decomposition emitted for attribution (`/computed/cities/yields`:
 >   area/player/improvement/wonder + raw wonder counts).
-> - **OUTPUT — the generic free specialists' output IS the live OUTPUT-SEAM per [DEC-universal-yield](../../architecture/decisions.md#dec-universal-yield) (the foundational ASSIGNMENT-vs-OUTPUT split / the
->   [pollution guardrail](../../specs/validation.md#-the-pollution-guardrail--structural-not-disciplinary), present from
+> - **OUTPUT — the generic free specialists' output IS the live OUTPUT-SEAM per [DEC-universal-yield](../architecture/decisions.md#dec-universal-yield) (the foundational ASSIGNMENT-vs-OUTPUT split / the
+>   [pollution guardrail](../specs/validation.md#-the-pollution-guardrail--structural-not-disciplinary), present from
 >   the start — see §1.5).** Computing *which type* the engine assigned each generic free slot (`getBestSpecialist` =
 >   `AI_specialistValue`, `CvCityAI.cpp:12355`) is read as a state INPUT, NOT reproduced. But the *actual output* those
 >   specialists produce (yield/commerce) is squarely the cascade's OUTPUT to manifest: the engine folds it into
@@ -393,7 +392,7 @@ to the holding building via `getBaseCommerceRateFromBuilding100`), both modelled
 >   realized commerce / total city output (the live manifestation), with the building/specialist split treated as attribution. (Engine `/state`
 >   emit + cascade verify needs a DLL rebuild.)
 >
-> **⛔ OWNER RULING — a free specialist is a free specialist; the commerce diff is a FORCED, attributed divergence (the live OUTPUT-SEAM, [DEC-universal-yield](../../architecture/decisions.md#dec-universal-yield)).** The
+> **⛔ OWNER RULING — a free specialist is a free specialist; the commerce diff is a FORCED, attributed divergence (the live OUTPUT-SEAM, [DEC-universal-yield](../architecture/decisions.md#dec-universal-yield)).** The
 > legacy building-fold (attributing a building's free specialists' output to the BUILDING via
 > `getBaseCommerceRateFromBuilding100`, and — `CvCity.cpp:4732` + `:12398-12400` — **DOUBLE-counting the building's TYPED
 > free**: once in the city `m_paiFreeSpecialistCount` ledger via `:4732` AND again folded into the building at `:12400`)
@@ -406,7 +405,7 @@ to the holding building via `getBaseCommerceRateFromBuilding100`), both modelled
 > (owner-expected + endorsed 2026-06-29): as full free typed specialists they now collect the per-specialist "all" bonus
 > (`SpecialistExtraCommerces`, Sistine-style) that the engine's building-fold WITHHOLDS, so realized diverges UPWARD on
 > cities with an "all" source (P0/C8192 culture −4460 → +7582).** The building-fold-without-"all" was a balance hack —
-> "not the way to balance" (balance is a PERMANENT carve-out, owner-ruled balance-later); the diff is **forced** and **the commerce divergence is an intentional, attributed one — the live OUTPUT-SEAM ([DEC-universal-yield](../../architecture/decisions.md#dec-universal-yield))**.
+> "not the way to balance" (balance is a PERMANENT carve-out, owner-ruled balance-later); the diff is **forced** and **the commerce divergence is an intentional, attributed one — the live OUTPUT-SEAM ([DEC-universal-yield](../architecture/decisions.md#dec-universal-yield))**.
 > The other residuals (religion-culture + realized-rounding, ~17 cities) are likewise forced.
 
 ## 3. HEALTH + HAPPINESS — good/bad signed-split
@@ -415,7 +414,7 @@ to the holding building via `getBaseCommerceRateFromBuilding100`), both modelled
 
 `happyLevel()` (~5689) = Σ `max(0, source)` over ~22 sources (revSuccess, largestCity, military, stateReligion, building good, feature/bonus good, religion good, commerce, area/player building, extra, handicap, vassal, civic, specialist/100, world, project, corporation, celebrity, techHappiness, +temp). `unhappyLevel()` (~5606) = `(Σ anger% × (pop+extra) / PERCENT_ANGER_DIVISOR) − Σ min(0, good source) + Σ bad source`; gated 0 by `isNoUnhappiness`/no-capital-unhappiness. anger% = overcrowding+noMilitary+culture+religion+hurry+conscript+defy+warWeariness+revRequest+revIndex+Σcivic.
 
-**Gotchas:** specialist/improvement health & happiness are **/100** (the legacy latent /100 — see [scale registry §4c](../../specs/curators/fixed-point-and-scales.md#4c-the-100-space-addends-that-lack-a-100-getter--the-heuristics-blind-spot)); espionage counters clamped to 8; flags `isNoUnhappiness`/`isNoUnhealthyPopulation`/`isBuildingOnlyHealthy` zero-out; per-pop via `calculatePopulationHealth/Happiness`.
+**Gotchas:** specialist/improvement health & happiness are **/100** (the legacy latent /100 — see [scale registry §4c](../specs/curators/fixed-point-and-scales.md#4c-the-100-space-addends-that-lack-a-100-getter--the-heuristics-blind-spot)); espionage counters clamped to 8; flags `isNoUnhappiness`/`isNoUnhealthyPopulation`/`isBuildingOnlyHealthy` zero-out; per-pop via `calculatePopulationHealth/Happiness`.
 
 **Dump:** realized `goodHealth`/`badHealth`/`healthRate` + `happyLevel`/`unhappyLevel`/`angryPopulation`; for fidelity-reproduction dump the component buckets (building good/bad, bonus, feature, specialist/100, extra, per-pop, civic/trait/player, corporation, tech) + the anger%-sum + pop + the gate flags. (Many components — itemize the buckets the maps list. **§12: happiness dump has REAL GAPS** — anger% sources, several happy/unhappy terms, and gate flags are missing.)
 
@@ -434,7 +433,7 @@ to the holding building via `getBaseCommerceRateFromBuilding100`), both modelled
 
 - CITY maintenance `getMaintenanceTimes100` (`CvCity.cpp` ~7579, x100): `era.getInitialCityMaintenancePercent() + getModifiedIntValue(calculateBaseMaintenanceTimes100(), getEffectiveMaintenanceModifier())` (skipped if disorder/WeLoveTheKing/pop 0). Base = Σ building+distance+numCities+colony+corporation (each `…Times100`). EffectiveModifier = city `getMaintenanceModifier` + player + `area()->getTotalAreaMaintenanceModifier` (+ connected-to-capital). Caps: numCities ≤ 2,000,000; colony capped; rebels ×50%.
 - CIVIC upkeep `getSingleCivicUpkeep`/`getCivicUpkeep` (`CvPlayer.cpp` ~14219): `(max(0,(pop+OFFSET)*UpkeepInfo.populationPercent/100) + max(0,(cities+OFFSET)*cityPercent/100))` → getModifiedIntValue(upkeepModifier) → ×handicap.civicUpkeep% → (AI) ×AI mods; `max(1,·)`; rebels halve total.
-- UNIT upkeep `getFinalUnitUpkeep` (`CvPlayer.cpp` ~10327): `(civilianNet + militaryNet) × handicap.unitUpkeep%/100 × (AI) aiUnitUpkeep%/100 × (100+aiPerEra×era)/100`. Per-unit `calcUpkeep100` (`CvUnit.cpp` ~15798, x100): `(100×baseUpkeep + extraUpkeep100)` → getModifiedIntValue(upkeepModifier) → getModifiedIntValue(upkeepMultiplierSM). (`iExtraUpkeep100` is one of the 6 closed per-100 fields — [scale registry §4b](../../specs/curators/fixed-point-and-scales.md#4b-the-closed-per-100-set--100-to-humanize).)
+- UNIT upkeep `getFinalUnitUpkeep` (`CvPlayer.cpp` ~10327): `(civilianNet + militaryNet) × handicap.unitUpkeep%/100 × (AI) aiUnitUpkeep%/100 × (100+aiPerEra×era)/100`. Per-unit `calcUpkeep100` (`CvUnit.cpp` ~15798, x100): `(100×baseUpkeep + extraUpkeep100)` → getModifiedIntValue(upkeepModifier) → getModifiedIntValue(upkeepMultiplierSM). (`iExtraUpkeep100` is one of the 6 closed per-100 fields — [scale registry §4b](../specs/curators/fixed-point-and-scales.md#4b-the-closed-per-100-set--100-to-humanize).)
 
 **Dump:** city — eraInitialPercent, the 5 base components (×100), effectiveMaintenanceModifier, realized getMaintenanceTimes100, disorder/WLTK flags. player — civicUpkeep, finalUnitUpkeep. **§12: only the realized totals are dumped — NO decomposition** (the "+ the handicap/AI/era mults as inputs" claim is FALSE today).
 
@@ -476,13 +475,12 @@ inventory sweep. Status = the EMULATOR's coverage (dump + fidelity guard), NOT t
 "things that modify" each = the source classes (buildings/civics/techs/traits/bonuses/religions/corps/
 specialists/events/handicap/era/cultureLevel/…).
 
-- **✅ LIVE (dump + guard verified):** `food`, `production`, `commerce` (city yields).
+- `food`, `production`, `commerce` (city yields).
 - **◐ DUMP built, guard pending:** the commerce split — `gold`, `research`, `culture`, `espionage` (commerce-derived).
 - **📋 MAPPED (§1-5; dump + guard pending):** `health`, `happiness` (good/bad split), `defense` (amount/min/bombard/…), `maintenance`, `upkeep`.
 - **📋 MAPPED (§6; needs the `unitInput` endpoint, aggregate-only):** unit-plane — `strength` (+ all members), `withdrawal`, `firstStrike`, `bombard`, `collateral`, `air`, `heal`, `capture`, and partials `movement`/`experience`/`workRate`/`cargo`/`vision`/`espionage`(unit).
-- **✅ MAPPED (§9, wave-2):** each `PROPERTY_*` (solver, §9.1), `revolution` (Python-authoritative — only the C++ anger step is reproducible, §9.2), `growth`+`foodKept` (§9.3), `inflation`/`hurry`+`hurryAnger`/`freeExperience` (§9.4), `buildRate`/`greatPeopleRate`/`tradeRoutes` (§9.5). **NB `culture` RATE = `COMMERCE_CULTURE`** (already captured via commerce); only plot-culture *spread* is extra (spatial → #429).
-- **✅ MAPPED (§10, wave-3) — with corrections:**
-  - plot-substrate: `movement`, `cultureDistance` (spatial), `buildTime`, `vision` — §10.1. (Plot YIELD base decomposes the §1 yield `base`.)
+- each `PROPERTY_*` (solver, §9.1), `revolution` (Python-authoritative — only the C++ anger step is reproducible, §9.2), `growth`+`foodKept` (§9.3), `inflation`/`hurry`+`hurryAnger`/`freeExperience` (§9.4), `buildRate`/`greatPeopleRate`/`tradeRoutes` (§9.5). **NB `culture` RATE = `COMMERCE_CULTURE`** (already captured via commerce); only plot-culture *spread* is extra (spatial → #429).
+- - plot-substrate: `movement`, `cultureDistance` (spatial), `buildTime`, `vision` — §10.1. (Plot YIELD base decomposes the §1 yield `base`.)
   - cost/duration scaling: `costs`/`buildCost`/`techCost`, `durations`, `perEra`, `missionYieldMultiplier` — §10.2, all via the `getModifiedIntValue` hub (§7).
   - building-level: `cityCapture`, `occupationTime`, `espionageDefense`, `populationGrowthRate` (FLOAT log-space), `healing` — §10.3. **`pillageGold` is an ORPHANED/dead building field** (→ drop).
   - **CORRECTIONS:** ~~`celebrity happiness` does not exist~~ — **WRONG, retracted 2026-06-19: it DOES exist** (`CvCity::getCelebrityHappiness` 5599 → `happyLevel` 5715; unit-derived). `byCargo` does not exist (vestigial); `byOccupant` = military happiness + the celebrity term. `spawnRate` is a **stochastic per-plot event**, not a per-turn value-channel. `stateReligion` is a predicate gate on existing families (6 sub-modifiers), not its own channel. Inert/edge unit flags `poison`/`revoltProtection`/`survivor` stay out.
@@ -599,7 +597,7 @@ Realized value getter: `CvProperties::getValueByProperty(eProp)` (`CvProperties.
 
 ---
 
-**✅ THE CALC MAP IS COMPLETE (waves 1-4, 2026-06-19).** Every per-turn value calc — city, empire/player,
+Every per-turn value calc — city, empire/player,
 and unit-plane — is mapped to its realized getter + per-source + gotchas; the dedup map (§7) + the family
 inventory (§8) round it out. **The CALC map being complete is NOT the same as the DUMP being complete** —
 §12 is the audited gap list.
@@ -612,8 +610,6 @@ The calc map above says what legacy COMPUTES; this section is the audited truth 
 actually EMITS (so StoneBase has the data). **Where a per-§ "Dump:" line conflicts with this
 section, THIS section is ground truth.** Endpoints that exist: **`cityInput`** (city-scope), **`playerInput`**
 (player-scope). **No `unitInput` endpoint exists.**
-
-**✅ COMPLETE-for-reproduction (every formula input emitted):**
 
 - City **yields** (§1) — incl. the full 7-way modifier breakdown `modBonus/modBuilding/modPlayer/modEvent/modPower/modArea/modCapital` (the §1 "Dump:" line UNDERSTATES this).
 - **Commerce split** (§2) — slider/baseExtra100/totalModifier/prodToCommerce/realized + city-level consts. *(The §2 ⚠ "verify visibility" warning is STALE — all three getters are public, called directly.)*
@@ -642,16 +638,16 @@ compile, one live verify across all.
 
 ## See also
 
-- [fixed-point & the scale registry](../../specs/curators/fixed-point-and-scales.md) — the single source of truth for every
+- [fixed-point & the scale registry](../specs/curators/fixed-point-and-scales.md) — the single source of truth for every
   ×100 / per-100 / human scale this map names; consult it before de-scaling any field cited here.
-- [decisions ledger](../../architecture/decisions.md) — the cross-cutting rulings this map operates under:
-  [DEC-map-before-delete](../../architecture/decisions.md#dec-map-before-delete) (why this map must be
-  complete before a legacy calc is cut), [DEC-no-guessing](../../architecture/decisions.md#dec-no-guessing)
+- [decisions ledger](../architecture/decisions.md) — the cross-cutting rulings this map operates under:
+  [DEC-map-before-delete](../architecture/decisions.md#dec-map-before-delete) (why this map must be
+  complete before a legacy calc is cut), [DEC-no-guessing](../architecture/decisions.md#dec-no-guessing)
   (a divergence is attributed to a named source via the dump, never hypothesized),
-  [DEC-parity](../../architecture/decisions.md#dec-parity) (the completeness bar — a divergence is a
+  [DEC-parity](../architecture/decisions.md#dec-parity) (the completeness bar — a divergence is a
   data-collection gap, never a formula difference).
-- [enabler](../../specs/enabler.md) / [modifier](../../specs/modifier.md) — the cascade design these accumulators replace;
+- [enabler](../specs/enabler.md) / [modifier](../specs/modifier.md) — the cascade design these accumulators replace;
   this map is the legacy side those summed accumulators are shadowed against.
-- [observability surface](../../reference/observability.md) — the `/diagnostic/cityInput` / `playerInput`
+- [observability surface](observability.md) — the `/diagnostic/cityInput` / `playerInput`
   endpoints this dump spec extends, and how the shadow guards read them.
 - [comprehension map](../../README.md) — the docs2 overview-of-overviews that orients this reference.

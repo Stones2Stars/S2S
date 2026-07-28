@@ -1,7 +1,7 @@
 # Pedia read-map census (stage-4 input)
 
-> Evidence base for the stage-4 Python library ([patterns.md § THE PYTHON READ BOUNDARY](../../architecture/patterns.md)) — the evidence base for the stage-4
-> Python surface, pedia slice. Per [DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed) this maps
+> Evidence base for the stage-4 Python library ([patterns.md § THE PYTHON READ BOUNDARY](../architecture/patterns.md)) — the evidence base for the stage-4
+> Python surface, pedia slice. Per [DEC-cy-not-fixed](../architecture/decisions.md#dec-cy-not-fixed) this maps
 > **NEEDS, not getters to port**: every binding named below is obsolete by ruling; the counts say what a pedia
 > page must be SERVED, not what calls survive. Counts are grep-derived static call sites at the censused tree.
 
@@ -28,7 +28,7 @@ Wiring (all verified live, no dead screens):
 ## 2. The C++ text feeders (referenced, not re-censused)
 
 Every entity page's **effect-lines body is exactly ONE `CyGameTextMgr` call** with `bCivilopediaText=True` —
-the same composer families already censused in [patterns.md](../../architecture/patterns.md) (the per-entry renderer) (~15,000 lines /
+the same composer families already censused in [patterns.md](../architecture/patterns.md) (the per-entry renderer) (~15,000 lines /
 ~1,450 hand-assembled `getText` blocks across 18 info-help composer families; heaviest: `setBuildingHelp`
 2805/269, `setBasicUnitHelp*` 2134/224, `parsePromotionHelpInternal` 2071/221, `parseCivicInfo` 1555/158,
 `parseTraits` 1493/179). Feeders the pedia calls (`Sources/Python/CyGameTextMgrInterface.cpp`):
@@ -94,7 +94,7 @@ Improvement 77.
 | Identity/text (name, type key, civilopedia/strategy text, quote) | every page; ~200 sites | identity intrinsics — one identity block per entity |
 | Effect lines (the modifier body) | 1 feeder call/page, backed by the ~1,450-block composer census | **the per-entry renderer** (`CvEntryText`, patterns.md category 5) — rendered entry lines replace the composer body. Pedia wants MORE than a flat tooltip blob: pages hand-place SOME groups separately (yields/commerce tables, happiness/health, GP) → entries must arrive **tagged by family/kind so the page can group and lay out by family**, and must render in BOTH modes (full-page, player-context tooltip) |
 | Requires/prereqs display | ~70 sites + the GOM walks | **the `CvRequires` section object** rendered as a structured tree — kills the Python-side `getGOMReqs` BoolExpr recursion AND the keyed-container inversion loops (`isPrereqAndCivics(i)` over all civics etc.) |
-| Cross-links (who-unlocks-me / who-needs-me / who-replaces-me) | ~42 DB scans + fwd lists | **`EDGEF_RELATED` / `EDGEF_REQUIRED_BY` edge families** ([DEC-one-reverse-view](../../architecture/decisions.md#dec-one-reverse-view)) — the reverse pass already generalizes over requires trees, deposits, grants, provides, triggers, so the GOM-walking scans (tech page walking every building's construct condition) are exactly the `EDGEF_REQUIRED_BY` read. Forward chains (unit upgrades, tech leadsTo, building replacements, qualified unitcombats) are forward edge families |
+| Cross-links (who-unlocks-me / who-needs-me / who-replaces-me) | ~42 DB scans + fwd lists | **`EDGEF_RELATED` / `EDGEF_REQUIRED_BY` edge families** ([DEC-one-reverse-view](../architecture/decisions.md#dec-one-reverse-view)) — the reverse pass already generalizes over requires trees, deposits, grants, provides, triggers, so the GOM-walking scans (tech page walking every building's construct condition) are exactly the `EDGEF_REQUIRED_BY` read. Forward chains (unit upgrades, tech leadsTo, building replacements, qualified unitcombats) are forward edge families |
 | Art/buttons | ~150 sites (`getButton`, chars/symbols, movies) | identity/art intrinsics; font-symbol chars stay engine reads |
 | Stats/costs | ~120 sites | point reads over compiled sums + intrinsics (cost, moves, base strength, upkeep, latitudes) — ×100 convention, format at the render boundary |
 | Category/sort metadata (the hub's grouping system) | ~60 sites | **NO clean answer yet** — see finding 4 |

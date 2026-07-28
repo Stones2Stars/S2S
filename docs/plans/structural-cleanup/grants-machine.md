@@ -9,7 +9,7 @@
 > moved out, and the unit activated-MISSION keys are a **PERMANENT carve-out (missions pass)** ([mission-outcome-system.md](../../reference/mission-outcome-system.md)).
 
 > ⛔ **The inventory table below is SUPERSEDED as a map of the legacy surface — see
-> [grant-apply-sites.md](grant-apply-sites.md).** Checked domain-by-domain against live code, it understated the
+> [grant-apply-sites.md](../../reference/legacy-grant-apply-sites.md).** Checked domain-by-domain against live code, it understated the
 > apply surface in EVERY domain, carried drifted line numbers throughout, and cites at least one function that
 > does not exist (`CvPlayer::setHolyCity` — the apply is in `foundReligion`). Whole grant-bearing subsystems have
 > no row here at all: goody huts, random events, espionage missions, votes, outcome reward payloads, NPC spawners,
@@ -115,7 +115,7 @@ listed as a gap in the coverage table below, never left implied.
    > `CvUnit.cpp:6232`, a named source in the `/computed/units/heal` decomposition), i.e. alive-with-source ⇒ a
    > MODIFIER, the `freeSpecialists` precedent ([modifier.md](../../specs/modifier.md)). It is equally derived and
    > equally cut, but its replacement is the modifier plane's heal channel. Classification detail + the full site
-   > map: [grant-apply-sites.md](grant-apply-sites.md) §5.3.
+   > map: [grant-apply-sites.md](../../reference/legacy-grant-apply-sites.md) §5.3.
    >
    > **⚖ THE PER-TURN APPLY ARRIVES VIA THE SPINE — the machine is an `IEventConsumer`, and that is its ONLY way
    > in (owner ruling).** It consumes `SEVT_TURN_STARTED` ([event-spine.md](../../specs/event-spine.md), built for
@@ -137,7 +137,7 @@ listed as a gap in the coverage table below, never left implied.
    > `m_iPropertySpawnUnit`/`Property` / `m_healUnitCombats` on `CvBuildingInfo`) — those are the legacy shape being
    > deleted, and they LOSE `interval`/`enabled`/`chance` at `CvBuildingInfo::mapFrom` (`:236-246`). It reads the
    > composed `getGrants()->repeatables()`, which carries the full structure. Never widen the legacy members to
-   > carry the missing fields ([grant-apply-sites.md](grant-apply-sites.md) §0).
+   > carry the missing fields ([grant-apply-sites.md](../../reference/legacy-grant-apply-sites.md) §0).
 
 ## ONE compiled plane — how `grants` and `triggers` meet
 

@@ -20,7 +20,7 @@
 
 The engine game-object classes are back on `main`, so these describe live code again.
 
-- **[legacy-value-calc-map.md](legacy-value-calc-map.md)** — every legacy per-turn value calc traced to its getter
+- **[legacy-value-calc-map.md](../../reference/legacy-value-calc-map.md)** — every legacy per-turn value calc traced to its getter
   and its components. Confirm the named FUNCTION, never the line number.
 
 > ⛔ **A per-channel reader census is NOT how the consumer sweep is driven, and one is not to be re-generated.**
@@ -30,7 +30,7 @@ The engine game-object classes are back on `main`, so these describe live code a
 > the only thing standing there — legacy (the roadmap banner's structure-first rule). Drive the sweep from the
 > target surface and let the COMPILER census the consumers
 > ([DEC-playability-not-a-gate](../../architecture/decisions.md#dec-playability-not-a-gate)).
-- **[constructibility.md](constructibility.md)** — the legacy `canConstruct`/`canTrain` + reverse-index machinery
+- **[constructibility.md](../../reference/legacy-constructibility.md)** — the legacy `canConstruct`/`canTrain` + reverse-index machinery
   the enabler replaces.
 - **[structural-cleanup.md](structural-cleanup.md)** — the `Sources/` tree reorg (landed) + the dead-code /
   dead-XML pass (candidate-generation only).
@@ -54,7 +54,7 @@ The engine game-object classes are back on `main`, so these describe live code a
 ## The grants machine (resolver built, apply-loop NOT built)
 
 - **[grants-machine.md](grants-machine.md)** — the machine's spec.
-- **[grant-apply-sites.md](grant-apply-sites.md)** — the `file:line` map of where provisions are handed over
+- **[grant-apply-sites.md](../../reference/legacy-grant-apply-sites.md)** — the `file:line` map of where provisions are handed over
   today. The apply surface accreted over fifteen years across two languages and is not reconstructible from
   memory; this is what the machine must replace.
 - **[start-packages.md](start-packages.md)** — the game-start provisions as authored data (design, not built).
