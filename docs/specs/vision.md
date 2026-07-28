@@ -143,10 +143,16 @@ Concealment is then the mirror of obstruction — a hidden unit raises what a se
 system becomes the same contest described here instead of the bespoke per-`INVISIBLE_*` intensity tables it is
 today. *"Now we have the basis for a real vision system without a bolt-on per question"* (owner).
 
-⛔ **It is NOT folded in here, and the reserved word is `detection`** ([json.md §6](json.md)): map-level spotting
-of hidden units is its own system with its own block. What this model contributes is the missing half — a
-seeing-strength number to weigh against — and the guarantee that the weighing needs no new vocabulary when it
-lands. Do not build it ahead of that, and do not re-purpose `vision.plot.obstruction` as concealment.
+⛔ **It is NOT folded in here, and it is NOT to be built ahead of a design (owner):** *"let the detection stay
+there, we need to come up with a clean way to handle hide and seek, I just don't have it yet."* The reserved word
+is `detection` ([json.md §6](json.md)), but a reserved name is a home, not a mechanic — so the invisibility
+tables STAY under `vision` for now, and the half-family/half-bespoke block that leaves is an accepted cost rather
+than a defect to tidy.
+
+What this model contributes is the missing half: a seeing-strength number for concealment to be weighed against,
+and the guarantee that the weighing needs no new vocabulary when it lands. ⛔ Until then, do not split the
+tables out, do not mint `detection`, and do not re-purpose `vision.plot.obstruction` as concealment — relocating
+them without a mechanic would move the mess rather than solve it.
 
 ---
 

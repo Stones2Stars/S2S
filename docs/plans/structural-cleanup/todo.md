@@ -95,12 +95,16 @@
 > costs to see through). A budget spent walking outward, exactly as movement is spent. Data, spec, engine read
 > path and the pedia render are all on it; what is below is what is NOT.
 
-- **The `vision` key still doubles as the hide-and-seek tables** — 13 non-scope keys (`invisible`,
-  `visibilityIntensity`, `invisibilityIntensity`, the per-terrain/feature/improvement invisibility maps) sit
-  under `vision` beside the scope-keyed family, so the block is half family and half bespoke and the
-  unitcombat curator has to MERGE rather than assign. They are the reserved **`detection`** plane
-  ([json.md §6](../../specs/json.md)); the split lands with the hide-and-seek rework, which
-  [vision.md §4](../../specs/vision.md) is the missing half of.
+- **⚖ THE HIDE-AND-SEEK TABLES STAY UNDER `vision` — OWNER-HELD, not an open task (owner):** *"let the
+  detection stay there, we need to come up with a clean way to handle hide and seek, I just don't have it yet."*
+  13 non-scope keys (`invisible`, `visibilityIntensity`, `invisibilityIntensity`, the per-terrain/feature/
+  improvement invisibility maps) sit under `vision` beside the scope-keyed family, so the block is half family
+  and half bespoke and the unitcombat curator MERGES rather than assigns. **That cost is accepted, and moving
+  them is NOT the work** — the reserved `detection` name ([json.md §6](../../specs/json.md)) is a home with no
+  design in it yet, and relocating tables into it would just move the mess.
+  ⛔ Do not split them, do not mint `detection`, and do not read this as a deferral to close: what is missing is
+  a MECHANIC, and inventing one to tidy a key is the machinery-for-its-own-sake move. When the design comes,
+  [vision.md §4](../../specs/vision.md) is the half it contests against.
 - **Three AI valuation reads of the deleted improvement getters** (`CvCityAI` once, `CvUnitAI` twice) — the
   compiler census, sequenced with the rest of the AI consumer cut, not fixed on sight. Their replacement is the
   improvement's compiled `vision` entries, the same source the pedia now renders from.
