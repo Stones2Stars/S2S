@@ -170,12 +170,15 @@ site ([fixed-point-and-scales §4c-bis](../../specs/curators/fixed-point-and-sca
   today, which is the two-live-surfaces state
   ([DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface)) forbids. Move every consumer,
   delete the old names.
-- **The `Cy*` info binding surface** (`Sources/Python/`) — cut away WHOLE once the new library lands; never
-  widened, shimmed beside, or left breathing.
-  ⚠ **But it is ALREADY largely a CORPSE, so "waiting for the library" describes something that does not work.**
-  The `.def`s name getters the rebuilt infos no longer have, and a failed `.def` poisons the rest of its chain
-  (`C2228: left of '.def' must have class/struct/union type`) — all three `CyInfoInterface*.cpp` files blow the
-  100-error cap, so the true count is HIDDEN behind it.
+- **The `Cy*` binding surface is GONE** — every `Cy*Interface*.cpp` and `CvPython*Loader` deleted with its
+  registration. What remains to BUILD is the replacement ([Stage 4](#stage-4--the-consumer-cut-sequenced-last-see-the-roadmaps-order-ruling)),
+  and its coverage checklist is measured, not estimated: **285 of the 399 removed info-binding names were still
+  called from `Assets/Python`** (heaviest: `RevolutionWatchAdvisor` 50, `PediaBuilding` 38, `CvMainInterface` 31,
+  `CvTechChooser` 30). Those calls were already dead — the getters behind them had gone — so the list is a
+  requirements set, never a regression report.
+  ⚑ **The `Cy*` WRAPPER classes STAY, and that is correct, not a half-cut:** 33 engine files hold them for the
+  engine→Python CALLBACK direction, which is out of scope
+  ([patterns.md](../../architecture/patterns.md): the cut is directional).
   ⚖ **A `.def` for a DELETED getter is cut ON SIGHT (owner: "it's not like the game currently works").** A
   binding to a getter that no longer exists is a dangling reference the compiler census already named, and for a
   `Cy` binding the only way to fix a named consumer is to DELETE it

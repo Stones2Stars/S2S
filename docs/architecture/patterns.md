@@ -421,6 +421,20 @@ entity exhaustively, so it is not a sample of the info surface, it **is** the in
   diplomacy/victory/vote, command/UI-action) plus per-field reads. **Serving the pedia completes the INFO plane
   and the shapes; it does not complete the boundary.** Treating it as a coverage oracle is the mistake to avoid.
 
+**⛔ THE CUT IS DIRECTIONAL — only the READ surface dies (owner).** The bridge runs both ways, and #430 owns one
+of them:
+
+- **Python → engine READS** (the `Cy*` info/state bindings) — this is what the library replaces, and the binding
+  surface is GONE.
+- **Engine → Python CALLBACKS** — **NEEDED, and kept (owner: "we need eventreporter, we need mapscript, amongst
+  other things")**. `CvEventReporter`, the map-script hooks and `CvOutcome`'s Python outcomes are what makes
+  Python-authoritative gameplay possible at all, so this is REQUIRED FUNCTIONALITY, not a deferral —
+  [DEC-no-deferred](decisions.md#dec-no-deferred) does not apply to it and it is not a thing to "finish later".
+  ⚠ The list is open ("amongst other things"): treat a callback you find as kept unless ruled otherwise.
+- ⚑ Consequence: the `Cy*` WRAPPER classes (`CyCity`/`CyUnit`/`CyPlayer`/…) STAY while their bindings do not —
+  33 engine files hold them for that direction. **A wrapper with no binding is the CORRECT end state here**, and
+  reading it as a half-cut to complete would delete working gameplay.
+
 **⛔ TWO THINGS THE LIBRARY DOES NOT OWN:**
 
 - **TEXT/localization.** `getText`-style key→string resolution is not info data, and decisively: **TXT and ART
