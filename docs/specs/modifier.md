@@ -525,6 +525,15 @@ self-accumulator, set on the unit or a promotion), with two complementary member
 - **`cargo.space`** — how much the unit **carries** *and what*: `cargo.space.{unit: IS_<domain>, flat: N}` — a
   carrier is `cargo.space.{unit: IS_AIR, flat: N}` (*you can't transport a plane on a landing craft*); an
   unrestricted hold is just `cargo.space.flat`. (From legacy `iCargo` + `DomainCargo`.)
+  > **⚖ THE RESTRICTION IS THE CARRIER'S AND GOVERNS ITS WHOLE HOLD — including capacity a PROMOTION grants
+  > (owner).** WHAT a carrier may take is a property of the carrier; HOW MUCH sums from every source. So a
+  > restriction never binds only the entry it is written on: an ancient galley that carries civilians carries
+  > civilians in the space `PROMOTION_TRANSPORT1` adds too, never a warrior in the promoted slot.
+  > ⚑ **This is a real mechanic, not an edge case:** the whole ancient-navy transport line has **zero base
+  > `iCargo`** and earns its hold by promotion (TRANSPORT1/2/3 on `UNITCOMBAT_WOODEN_SHIPS`), so the carrier
+  > declaring WHAT and the promotion supplying HOW MUCH is the normal shape there, not an anomaly.
+  > ⚠ Consequence: a carrier whose base capacity is 0 still has a restriction to state, and the §3.9 entry
+  > grammar has no payload-less form for it — the open item in [todo.md](../plans/structural-cleanup/todo.md).
   ⚖ **The "what" is ALWAYS a TAG predicate — that is what tags are for (owner).** The legacy restriction by
   `SPECIALUNIT_*` group (`SpecialCargo` / `SMNotSpecialCargo`) brings no new qualifier form with it: it authors as
   the same `{unit: IS_<TAG>}` shape as the domain case. ⚠ It does require the tag to exist AND to be

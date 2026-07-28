@@ -32,14 +32,22 @@
 > disposition, not the number.
 
 - **Magnitudes whose family ALREADY EXISTS — a curator move, not a design question.**
-  - **A cargo restriction on a carrier with NO base capacity — 31 units, flagged `cargo_restriction_no_capacity`.**
-    The restriction folds onto the `cargo.space` entry as its `{unit: …}` qualifier, so a carrier whose `iCargo`
-    is 0 has nothing to qualify and the rule does not author. ⚠ It is NOT provably inert: **26 promotions grant
-    `cargo.space`**, so such a unit can gain capacity later and the restriction would then bind. What the entry
-    grammar has no form for is the carrier-property half on its own — a qualifier with no payload
-    ([json.md §3.9](../../specs/json.md)) — and how a QUALIFIED capacity composes with an unqualified
-    promotion-granted one is unspecified. ⚑ Nothing that worked is lost: these sat inert in `identity` before,
-    read by nothing; the flag makes them loud. Needs the composition rule spec'd, then the shape follows.
+  - **A carrier whose restriction has no base capacity to sit on — 31 units, flagged
+    `cargo_restriction_no_capacity`.** The restriction folds onto the `cargo.space` entry as its `{unit: …}`
+    qualifier, so a carrier with `iCargo: 0` has no entry to carry it and the rule does not author. The split:
+    **19 ancient naval transports** declaring a DOMAIN they carry (Trireme, Quinquereme, Bireme, Dromon) and
+    **12 modern warships** declaring a special group (missile destroyers/battleships, an ironclad, a
+    seaplane-carrying battlecruiser).
+    ⚑ **NOT leftovers — this is the normal shape for that whole line.** Those galleys earn their hold from
+    `PROMOTION_TRANSPORT1/2/3` (`cargo.space.flat: 1` each, on `UNITCOMBAT_WOODEN_SHIPS`, which every one of them
+    carries): the CARRIER declares what, the PROMOTION supplies how much. The composition is ruled — a
+    restriction governs the carrier's whole hold, promotion-granted space included
+    ([modifier.md §6](../../specs/modifier.md)) — so what is missing is only the SHAPE: the §3.9 entry grammar
+    has no payload-less form for a restriction with no amount of its own.
+    ⚠ **The declared domain is not the real rule either (owner): these ships carry settlers and such, NOT
+    military** — so `DomainCargo: DOMAIN_LAND` overstates what they may take, and the civilians-only restriction
+    is authored nowhere yet. Whatever shape lands must be able to say it.
+    ⚑ Nothing that worked is lost: all 31 sat inert in `identity`, read by nothing; the flag makes them loud.
   - `espionagePoints` (24, UNIT) → the **`espionage`** family — one of the four commerce channels (owner), so
     the family already exists. The value is an espionage-commerce amount delivered as a ONE-SHOT payload, which
     [json.md §8](../../specs/json.md) already covers ("reused families for one-shot yields"). ⚠ Its CARRIER is
