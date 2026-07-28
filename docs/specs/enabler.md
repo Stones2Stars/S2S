@@ -674,10 +674,12 @@ promotion offer is not over-inclusive.
 
 ### Open work
 
-1. **Converge the enabler's PRIVATE reverse buckets onto `EDGEF_REQUIRED_BY`**
-   ([DEC-one-reverse-view](../architecture/decisions.md#dec-one-reverse-view)) — the `s_bc*` / `s_uc*` / operate
-   `s_op*` static indexes inside `CvBuildingEnabler` / `CvUnitEnabler` / `CvEnablerKernel` are pre-existing
-   bespoke-reverse-view remnants; each retires onto the info-homed REQUIRED_BY axis.
+1. **The operate reverse index** — the building/unit buckets already converged onto `EDGEF_REQUIRED_BY`; what is
+   left is the operate index, and only its two PER-ID buckets are genuine duplicates of the canonical axis. The
+   axis-flag lists (power / golden age / state religion / the coarse religion-civic-tech lists) and the PROPERTY
+   band index are NOT convergence targets — the reverse pass deliberately excludes engine tokens, the plot
+   substrate and `PROPERTY_` bands, and a coarse list matches a coarse event. Detail + the perf caveat:
+   [todo.md](../plans/structural-cleanup/todo.md).
 2. ~~**The gate stage for civics, processes, and builds**~~ **LANDED** — the three domains now set the gate flag
    through the same trio the projects domain uses (`*_gate` / `*_touched` / `*_gateSet`): the entity-level
    `enabled`/`disabled` pair, `requiresMet`, and `allowedOk`, re-gated over the tech source's touched set
