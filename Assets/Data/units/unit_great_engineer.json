@@ -24,6 +24,11 @@
   "UNITCOMBAT_HEALS_AS_PEOPLE",
   "UNITCOMBAT_HEALS_MECHANICAL"
  ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
  "outcomes": {
   "actions": [
    {

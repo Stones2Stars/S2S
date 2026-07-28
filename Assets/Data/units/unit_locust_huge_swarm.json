@@ -34,6 +34,11 @@
   "UNITCOMBAT_SIZE_FINE",
   "UNITCOMBAT_HEALS_AS_SWARM"
  ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
  "world": {
   "art": {
    "define": "ART_DEF_UNIT_LOCUST_HUGE_SWARM"

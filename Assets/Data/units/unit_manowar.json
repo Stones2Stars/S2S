@@ -117,6 +117,11 @@
   "UNITCOMBAT_HEALS_AS_PEOPLE",
   "UNITCOMBAT_HEALS_AS_NAVAL"
  ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
  "succession": {
   "upgradesTo": [
    "UNIT_PRE_DREADNOUGHT",

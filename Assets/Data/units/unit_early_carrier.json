@@ -114,6 +114,11 @@
   "UNITCOMBAT_HEALS_AS_NAVAL",
   "UNITCOMBAT_HEALS_AIRCRAFT"
  ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
  "succession": {
   "upgradesTo": [
    "UNIT_CARRIER"

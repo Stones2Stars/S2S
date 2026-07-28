@@ -54,6 +54,11 @@
   "UNITCOMBAT_SIZE_GARGANTUAN",
   "UNITCOMBAT_HEALS_AS_AIRCRAFT"
  ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
  "cost": {
   "production": 1350,
   "upkeep": 6

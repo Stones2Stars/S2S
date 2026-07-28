@@ -115,12 +115,10 @@ def curate(typ, rec, store):
         if v and tag in NEGATE_TAGS:           # sign-normalized (upgrade discount -> negative costs.upgrade)
             v = -v
         if v:
-            node = vision if family == "vision" else fam_unit(family)
+            node = fam_unit(family)
             if member:
                 node = node.setdefault(member, OrderedDict())
             node[unit] = v
-    if "vision" in fams and not fams["vision"]["unit"]:
-        fams.pop("vision")
 
     # --- vs-keyed combat/work modifiers (UC container names) ---
     for tag, (family, kw, member, unit) in VS_KEYED.items():
@@ -244,12 +242,14 @@ def curate(typ, rec, store):
     if obsoletes:
         out["obsoletes"] = OrderedDict((k, obsoletes[k]) for k in sorted(obsoletes))
     ordered = [f for f in FAMILY_ORDER if f in fams] + [f for f in fams if f not in FAMILY_ORDER]
+
+
     for f in ordered:
         out[f] = fams[f]
     if caps:
         out["skills"] = caps
     if vision:
-        out["vision"] = vision
+        out.setdefault("vision", OrderedDict()).update(vision)   # MERGE: the family (sight) and the hide-and-seek tables share the key
     if outcomes:
         out["outcomes"] = outcomes
     gate_entity(out, gate_on, gate_off)

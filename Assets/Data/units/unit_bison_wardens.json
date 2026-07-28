@@ -85,6 +85,11 @@
   "UNITCOMBAT_SIZE_MEDIUM",
   "UNITCOMBAT_HEALS_AS_PEOPLE"
  ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
  "grants": {
   "promotions": [
    "PROMOTION_HUNTING_SIGHT1",

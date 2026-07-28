@@ -5,6 +5,9 @@
    "INVISIBLE_SUBMARINE": 2,
    "INVISIBLE_SUBMERGED": 2,
    "INVISIBLE_CAMOUFLAGE": 2
+  },
+  "unit": {
+   "flat": 100
   }
  },
  "ui": {

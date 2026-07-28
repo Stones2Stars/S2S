@@ -159,6 +159,11 @@
   "UNITCOMBAT_HEALS_ANIMALS",
   "UNITCOMBAT_HEALS_PEOPLE"
  ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
  "succession": {
   "upgradesTo": [
    "UNIT_VET"

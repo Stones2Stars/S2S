@@ -50,6 +50,11 @@
   "UNITCOMBAT_HEALS_AS_PEOPLE",
   "UNITCOMBAT_HEALS_AS_AIRCRAFT"
  ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
  "grants": {
   "buildings": [
    {

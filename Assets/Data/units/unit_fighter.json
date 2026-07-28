@@ -98,6 +98,11 @@
   "UNITCOMBAT_SIZE_LARGE",
   "UNITCOMBAT_HEALS_AS_AIRCRAFT"
  ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
  "succession": {
   "upgradesTo": [
    "UNIT_F4_PHANTOM"

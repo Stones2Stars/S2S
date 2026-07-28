@@ -24,6 +24,11 @@
  "combatClasses": [
   "UNITCOMBAT_IDEA"
  ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
  "outcomes": {
   "actions": [
    {

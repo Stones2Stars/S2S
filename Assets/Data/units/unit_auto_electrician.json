@@ -110,6 +110,11 @@
   "UNITCOMBAT_HEALS_MECHANICAL",
   "UNITCOMBAT_HEALS_AIRCRAFT"
  ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
  "succession": {
   "upgradesTo": [
    "UNIT_REPLICATION_MECHANIC"

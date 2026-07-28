@@ -123,6 +123,11 @@
   "UNITCOMBAT_SIZE_MEDIUM",
   "UNITCOMBAT_HEALS_AS_MECHANICAL"
  ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
  "cost": {
   "production": 1080,
   "upkeep": 1

@@ -70,6 +70,11 @@
   "UNITCOMBAT_SIZE_MICROSCOPIC",
   "UNITCOMBAT_HEALS_AS_NANOMORPH"
  ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
  "grants": {
   "promotions": [
    "PROMOTION_SENSORS",

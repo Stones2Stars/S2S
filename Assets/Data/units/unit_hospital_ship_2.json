@@ -122,6 +122,11 @@
   "UNITCOMBAT_HEALS_PEOPLE",
   "UNITCOMBAT_HEALS_NAVAL"
  ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
  "cost": {
   "production": 1200,
   "upkeep": 5

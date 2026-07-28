@@ -99,6 +99,11 @@
   "UNITCOMBAT_HEALS_AS_PEOPLE",
   "UNITCOMBAT_HEALS_ANIMALS"
  ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
  "succession": {
   "upgradesTo": [
    "UNIT_ECOLOGIST"

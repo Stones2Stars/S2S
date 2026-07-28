@@ -119,6 +119,11 @@
   "UNITCOMBAT_HEALS_SPACECRAFT",
   "UNITCOMBAT_HEALS_TECH"
  ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
  "succession": {
   "upgradesTo": [
    "UNIT_NANITE_REPAIR_CLOUD"

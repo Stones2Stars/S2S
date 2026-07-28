@@ -54,6 +54,11 @@
   "UNITCOMBAT_SIZE_LARGE",
   "UNITCOMBAT_HEALS_AS_PEOPLE"
  ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
  "outcomes": {
   "actions": [
    {

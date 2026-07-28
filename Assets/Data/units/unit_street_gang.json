@@ -173,6 +173,9 @@
   "UNITCOMBAT_HEALS_AS_MECHANICAL"
  ],
  "vision": {
+  "unit": {
+   "flat": 100
+  },
   "visibilityIntensity": {
    "INVISIBLE_DISGUISED": 3,
    "INVISIBLE_POLITICAL": 5

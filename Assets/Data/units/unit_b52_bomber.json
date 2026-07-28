@@ -104,6 +104,11 @@
   "UNITCOMBAT_SIZE_GARGANTUAN",
   "UNITCOMBAT_HEALS_AS_AIRCRAFT"
  ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
  "succession": {
   "upgradesTo": [
    "UNIT_B1_LANCER"

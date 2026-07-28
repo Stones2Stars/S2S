@@ -117,6 +117,9 @@
   "UNITCOMBAT_HEALS_TECH"
  ],
  "vision": {
+  "unit": {
+   "flat": 100
+  },
   "invisible": "INVISIBLE_STEALTH"
  },
  "grants": {

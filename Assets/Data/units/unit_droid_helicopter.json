@@ -134,6 +134,11 @@
   "UNITCOMBAT_HEALS_AS_TECH",
   "UNITCOMBAT_HEALS_AS_MECHANICAL"
  ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
  "cost": {
   "production": 4300,
   "upkeep": 6

@@ -121,6 +121,9 @@
   "UNITCOMBAT_EXILE"
  ],
  "vision": {
+  "unit": {
+   "flat": 100
+  },
   "invisible": "INVISIBLE_CAMOUFLAGE",
   "invisibilityIntensity": {
    "INVISIBLE_CAMOUFLAGE": 1

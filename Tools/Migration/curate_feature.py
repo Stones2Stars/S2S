@@ -43,6 +43,7 @@ from collections import OrderedDict
 
 import engine
 import curate_common as cc
+from curate_common import VISION_PLOT
 from store import REPO
 
 # Feature's OWN per-plot modifier families (override the mapping's wrong city scope -> plot).
@@ -71,7 +72,6 @@ CFG = cc.EntityConfig("FeatureInfo", extra_drop=FEATURE_DROP, families=FEATURE_F
 # No inbound boosts: a feature is never the deliveryguy for another entity's modifier (modifier-spec §6.1).
 FEATURE_BOOSTS = []
 
-VISION_PLOT = 100   # one open plot's sight cost -- the vision scale (vision.md; CvInfoKinds.h)
 HAS_RIVER = "HAS_RIVER"   # bare-string predicate shorthand (enabler-spec §3)
 _PREFIX = ["type", "description", "civilopedia", "help", "quote", "strategy",
            "enables", "obsoletes", "replaces", "disables", "requires"]

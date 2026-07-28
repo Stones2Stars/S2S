@@ -112,6 +112,11 @@
   "UNITCOMBAT_HEALS_AS_MECHANICAL",
   "UNITCOMBAT_HEALS_AS_TECH"
  ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
  "grants": {
   "promotions": [
    "PROMOTION_AMPHIBIOUS"

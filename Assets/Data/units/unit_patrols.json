@@ -142,6 +142,9 @@
   "UNITCOMBAT_HEALS_AS_PEOPLE"
  ],
  "vision": {
+  "unit": {
+   "flat": 100
+  },
   "visibilityIntensity": {
    "INVISIBLE_DISGUISED": 4
   }

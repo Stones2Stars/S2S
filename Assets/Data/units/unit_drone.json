@@ -76,6 +76,11 @@
   "UNITCOMBAT_HEALS_AS_AIRCRAFT",
   "UNITCOMBAT_HEALS_AS_TECH"
  ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
  "grants": {
   "promotions": [
    "PROMOTION_SENTRY",

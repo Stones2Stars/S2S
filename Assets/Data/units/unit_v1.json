@@ -64,6 +64,11 @@
   "UNITCOMBAT_GROUP_SOLO",
   "UNITCOMBAT_SIZE_LARGE"
  ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
  "succession": {
   "upgradesTo": [
    "UNIT_GUIDED_MISSILE"

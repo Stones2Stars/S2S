@@ -39,6 +39,11 @@
   "spy",
   "landUnit"
  ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
  "grants": {
   "promotions": [
    "PROMOTION_SENTRY"

@@ -36,6 +36,11 @@
   "UNITCOMBAT_PACIFIST",
   "UNITCOMBAT_CIVILIAN"
  ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
  "outcomes": {
   "actions": [
    {

@@ -112,6 +112,11 @@
   "UNITCOMBAT_HEALS_AS_AIRCRAFT",
   "UNITCOMBAT_HEALS_AS_TECH"
  ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
  "cost": {
   "production": 1925,
   "upkeep": 11

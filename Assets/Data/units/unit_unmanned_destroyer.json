@@ -130,6 +130,11 @@
   "UNITCOMBAT_HEALS_AS_TECH",
   "UNITCOMBAT_HEALS_AS_NAVAL"
  ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
  "cost": {
   "production": 3285,
   "upkeep": 6

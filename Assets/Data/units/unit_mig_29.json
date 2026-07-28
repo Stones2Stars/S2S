@@ -119,6 +119,11 @@
   "UNITCOMBAT_SIZE_HUGE",
   "UNITCOMBAT_HEALS_AS_AIRCRAFT"
  ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
  "grants": {
   "promotions": [
    "PROMOTION_AIR_TO_AIR1",

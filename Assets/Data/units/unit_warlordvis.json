@@ -36,6 +36,11 @@
   "UNITCOMBAT_SIZE_MEDIUM",
   "UNITCOMBAT_HEALS_AS_PEOPLE"
  ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
  "grants": {
   "greatPeople": [
    "SPECIALIST_GREAT_MILITARY_INSTRUCTOR"

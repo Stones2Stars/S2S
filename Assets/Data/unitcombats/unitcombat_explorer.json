@@ -22,6 +22,9 @@
    "INVISIBLE_SUBMARINE": 2,
    "INVISIBLE_DISGUISED": 1,
    "INVISIBLE_CAMOUFLAGE": 1
+  },
+  "unit": {
+   "flat": 100
   }
  },
  "sizeMatters": {

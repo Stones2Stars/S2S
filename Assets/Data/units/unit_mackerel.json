@@ -77,6 +77,11 @@
   "UNITCOMBAT_SIZE_TINY",
   "UNITCOMBAT_HEALS_AS_ANIMALS"
  ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
  "outcomes": {
   "kill": [
    {

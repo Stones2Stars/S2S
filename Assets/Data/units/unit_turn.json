@@ -53,6 +53,11 @@
   "UNITCOMBAT_GROUP_SOLO",
   "UNITCOMBAT_SIZE_HUGE"
  ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
  "cost": {
   "production": 6200,
   "upkeep": 6

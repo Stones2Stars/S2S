@@ -141,6 +141,11 @@
   "UNITCOMBAT_HEALS_AS_TECH",
   "UNITCOMBAT_HEALS_ALL"
  ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
  "succession": {
   "upgradesTo": [
    "UNIT_ANIMA_REPAIR_CLOUD"

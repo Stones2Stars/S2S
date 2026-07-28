@@ -67,6 +67,11 @@
   "UNITCOMBAT_HEALS_AS_TECH",
   "UNITCOMBAT_HEALS_AS_MECHANICAL"
  ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
  "outcomes": {
   "actions": [
    {

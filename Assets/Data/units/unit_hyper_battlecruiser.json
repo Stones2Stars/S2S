@@ -64,6 +64,11 @@
   "space"
  ],
  "combatClass": "UNITCOMBAT_WORMHOLE_SPACESHIP",
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
  "cost": {
   "production": 4850,
   "upkeep": 11,

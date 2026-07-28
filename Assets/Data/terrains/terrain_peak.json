@@ -31,13 +31,6 @@
    "flat": 2
   }
  },
- "vision": {
-  "plot": {
-   "elevation": {
-    "flat": 300
-   }
-  }
- },
  "ui": {
   "art": {
    "icon": "Art/Interface\\Buttons\\WorldBuilder\\feature_peak.dds"
@@ -52,5 +45,12 @@
   "description": "TXT_KEY_TERRAIN_PEAK",
   "civilopedia": "TXT_KEY_TERRAIN_PEAK_PEDIA",
   "buildTimeModifier": 75
+ },
+ "vision": {
+  "plot": {
+   "elevation": {
+    "flat": 300
+   }
+  }
  }
 }

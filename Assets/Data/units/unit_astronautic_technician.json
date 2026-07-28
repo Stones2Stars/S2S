@@ -105,6 +105,11 @@
   "UNITCOMBAT_HEALS_AIRCRAFT",
   "UNITCOMBAT_HEALS_SPACECRAFT"
  ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
  "cost": {
   "production": 1180,
   "upkeep": 9,

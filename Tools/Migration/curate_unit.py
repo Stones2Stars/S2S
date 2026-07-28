@@ -33,7 +33,7 @@ from collections import OrderedDict
 
 import engine
 import boolexpr
-from curate_common import (put_art, emit_art, FAMILY_ORDER, de_i, fold_text_to_identity, gate_entity,
+from curate_common import (VISION_PLOT, put_art, emit_art, FAMILY_ORDER, de_i, fold_text_to_identity, gate_entity,
                            emit_sizematters, SM_COMBATMOD_UNIT)
 from store import Store, REPO
 
@@ -1018,6 +1018,11 @@ def curate(typ, rec, store):
     ai = OrderedDict()
     art_blocks = OrderedDict()
     vision = OrderedDict()
+    # EVERY unit carries a BASE SIGHT (owner): one plot of open ground, the unit's own contribution and
+    # nothing else -- elevation belongs to the ground it happens to stand on and is added at read, and
+    # promotions expand this. Authored on every unit rather than defaulted in the engine so that making a
+    # scout see further is a data edit (200) and not a special case.
+    vision["unit"] = OrderedDict([("flat", VISION_PLOT)])
 
     # --- identity.base (create-unit foundation) ---
     for tag, key in BASE.items():

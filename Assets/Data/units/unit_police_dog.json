@@ -111,6 +111,9 @@
   "UNITCOMBAT_HEALS_AS_ANIMALS"
  ],
  "vision": {
+  "unit": {
+   "flat": 100
+  },
   "visibilityIntensity": {
    "INVISIBLE_CAMOUFLAGE": 4,
    "INVISIBLE_POLITICAL": 1

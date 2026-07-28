@@ -145,6 +145,9 @@
   "UNITCOMBAT_HEALS_AS_TECH"
  ],
  "vision": {
+  "unit": {
+   "flat": 100
+  },
   "visibilityIntensity": {
    "INVISIBLE_DISGUISED": 1,
    "INVISIBLE_POLITICAL": 7

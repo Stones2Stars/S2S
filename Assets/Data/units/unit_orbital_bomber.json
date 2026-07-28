@@ -106,6 +106,9 @@
   "UNITCOMBAT_HEALS_AS_TECH"
  ],
  "vision": {
+  "unit": {
+   "flat": 100
+  },
   "invisible": "INVISIBLE_STEALTH",
   "visibilityIntensity": {
    "INVISIBLE_STEALTH": 1

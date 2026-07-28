@@ -108,6 +108,11 @@
   "UNITCOMBAT_SIZE_SMALL",
   "UNITCOMBAT_HEALS_AS_PEOPLE"
  ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
  "succession": {
   "upgradesTo": [
    "UNIT_STONE_MACEMAN"

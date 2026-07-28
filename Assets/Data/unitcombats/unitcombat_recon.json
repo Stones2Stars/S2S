@@ -26,6 +26,9 @@
  "vision": {
   "visibilityIntensity": {
    "INVISIBLE_CAMOUFLAGE": 1
+  },
+  "unit": {
+   "flat": 100
   }
  },
  "ui": {

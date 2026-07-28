@@ -1,0 +1,5 @@
+{
+ "UNITCOMBAT_RECON":     { "vision": { "unit": { "flat": 100 } } },
+ "UNITCOMBAT_EXPLORER":  { "vision": { "unit": { "flat": 100 } } },
+ "UNITCOMBAT_AIR_RECON": { "vision": { "unit": { "flat": 100 } } }
+}

@@ -92,6 +92,11 @@
   "UNITCOMBAT_SIZE_HUGE",
   "UNITCOMBAT_HEALS_AS_ANIMALS"
  ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
  "succession": {
   "upgradesTo": [
    "UNIT_MAPINGUARI"

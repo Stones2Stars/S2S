@@ -109,6 +109,11 @@
   "UNITCOMBAT_HEALS_AS_AIRCRAFT",
   "UNITCOMBAT_HEALS_AS_TECH"
  ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
  "succession": {
   "upgradesTo": [
    "UNIT_ORBITAL_BOMBER"
