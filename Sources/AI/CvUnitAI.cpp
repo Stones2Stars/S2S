@@ -20658,27 +20658,37 @@ bool CvUnitAI::AI_specialSeaTransportMissionary()
 				iValue = 0;
 				iCorpValue = 0;
 
-				for (iJ = 0; iJ < GC.getNumReligionInfos(); iJ++)
+				// A unit can only spread what its OWN `spread` map names, so that map bounds the loop -- never a
+				// sweep of every religion in the database, per candidate plot.
+				const std::map<int, int>& religionSpread = pMissionaryUnit->getUnitInfo().getReligionSpread();
+
+				for (std::map<int, int>::const_iterator itSpread = religionSpread.begin(); itSpread != religionSpread.end(); ++itSpread)
 				{
-					if (pMissionaryUnit->canSpread(pLoopPlot, ((ReligionTypes)iJ)))
+					const ReligionTypes eLoopReligion = static_cast<ReligionTypes>(itSpread->first);
+					if (pMissionaryUnit->canSpread(pLoopPlot, eLoopReligion))
 					{
-						if (GET_PLAYER(getOwner()).getStateReligion() == ((ReligionTypes)iJ))
+						if (GET_PLAYER(getOwner()).getStateReligion() == eLoopReligion)
 						{
 							iValue += 3;
 						}
 
-						if (GET_PLAYER(getOwner()).hasHolyCity((ReligionTypes)iJ))
+						if (GET_PLAYER(getOwner()).hasHolyCityeLoopReligion)
 						{
 							iValue++;
 						}
 					}
 				}
 
-				for (iJ = 0; iJ < GC.getNumCorporationInfos(); iJ++)
+				// A unit can only spread what its OWN `spread` map names, so that map bounds the loop -- never a
+				// sweep of every corporation in the database, per candidate plot.
+				const std::map<int, int>& corporationSpread = pMissionaryUnit->getUnitInfo().getCorporationSpread();
+
+				for (std::map<int, int>::const_iterator itSpread = corporationSpread.begin(); itSpread != corporationSpread.end(); ++itSpread)
 				{
-					if (pMissionaryUnit->canSpreadCorporation(pLoopPlot, ((CorporationTypes)iJ)))
+					const CorporationTypes eLoopCorporation = static_cast<CorporationTypes>(itSpread->first);
+					if (pMissionaryUnit->canSpreadCorporation(pLoopPlot, eLoopCorporation))
 					{
-						if (GET_PLAYER(getOwner()).hasHeadquarters((CorporationTypes)iJ))
+						if (GET_PLAYER(getOwner()).hasHeadquarterseLoopCorporation)
 						{
 							iCorpValue += 3;
 						}
@@ -22148,9 +22158,15 @@ BuildTypes CvUnitAI::AI_betterPlotBuild(const CvPlot* pPlot, BuildTypes eBuild) 
 
 	BuildTypes eBestBuild = NO_BUILD;
 	int iBestValue = 0;
-	for (int iBuild = 0; iBuild < GC.getNumBuildInfos(); iBuild++)
+	// The player maintains the UNLOCKED-builds set (enabler.md §7.1's carve-out: the plot-validity half stays a
+	// live per-plot canBuild gate below, since a maintained set over ~10k plots is waste). Iterating it replaces
+	// a sweep of every build in the database, per worker, per plot considered.
+	std::vector<int> unlockedBuilds;
+	GET_PLAYER(getOwner()).getUnlockedBuilds(unlockedBuilds);
+
+	for (size_t iAt = 0; iAt < unlockedBuilds.size(); ++iAt)
 	{
-		const BuildTypes eBuild = ((BuildTypes)iBuild);
+		const BuildTypes eBuild = static_cast<BuildTypes>(unlockedBuilds[iAt]);
 		const CvBuildInfo& kBuildInfo = GC.getBuildInfo(eBuild);
 
 		const RouteTypes eRoute = (RouteTypes)kBuildInfo.getRoute();
@@ -28799,19 +28815,24 @@ bool CvUnitAI::AI_foundReligion()
 		//go over all religions that can be founded:
 		if (!GC.getGame().isOption(GAMEOPTION_RELIGION_LIMITED))
 		{
-			for (iI = 0; iI < GC.getNumReligionInfos(); iI++)
+			// A unit can only spread what its OWN `spread` map names, so that map bounds the loop -- never a
+			// sweep of every religion in the database, per candidate plot.
+			const std::map<int, int>& religionSpread = getUnitInfo().getReligionSpread();
+
+			for (std::map<int, int>::const_iterator itSpread = religionSpread.begin(); itSpread != religionSpread.end(); ++itSpread)
 			{
-				if (canSpread(plot(), (ReligionTypes)iI))
+				const ReligionTypes eLoopReligion = static_cast<ReligionTypes>(itSpread->first);
+				if (canSpread(plot(), eLoopReligion))
 				{
-					if (!GC.getGame().isReligionFounded((ReligionTypes)iI))
+					if (!GC.getGame().isReligionFoundedeLoopReligion)
 					{
 						for (iJ = 0; iJ < GC.getNumFlavorTypes(); iJ++)
 						{
-							value += std::max(1, GET_PLAYER(getOwner()).AI_getFlavorValue((FlavorTypes)iJ)) * std::max(1, GC.getReligionInfo((ReligionTypes)iI).getFlavorValue((FlavorTypes)iJ));
+							value += std::max(1, GET_PLAYER(getOwner()).AI_getFlavorValue((FlavorTypes)iJ)) * std::max(1, GC.getReligionInfoeLoopReligion.getFlavorValue((FlavorTypes)iJ));
 						}
 						if (value > bestValue)
 						{
-							eBestReligion = ((ReligionTypes)iI);
+							eBestReligion = eLoopReligion;
 							bestValue = value;
 						}
 					}
@@ -28829,18 +28850,23 @@ bool CvUnitAI::AI_foundReligion()
 
 		if (GC.getGame().isOption(GAMEOPTION_RELIGION_LIMITED) && GC.getGame().isReligionFounded(eFavorite))
 		{
-			for (iI = 0; iI < GC.getNumReligionInfos(); iI++)
+			// A unit can only spread what its OWN `spread` map names, so that map bounds the loop -- never a
+			// sweep of every religion in the database, per candidate plot.
+			const std::map<int, int>& religionSpread = getUnitInfo().getReligionSpread();
+
+			for (std::map<int, int>::const_iterator itSpread = religionSpread.begin(); itSpread != religionSpread.end(); ++itSpread)
 			{
-				if (canSpread(plot(), (ReligionTypes)iI))
+				const ReligionTypes eLoopReligion = static_cast<ReligionTypes>(itSpread->first);
+				if (canSpread(plot(), eLoopReligion))
 				{
-					if (!GC.getGame().isReligionFounded((ReligionTypes)iI))
+					if (!GC.getGame().isReligionFoundedeLoopReligion)
 					{
 						for (iJ = 0; iJ < GC.getNumFlavorTypes(); iJ++)
 						{
-							value += (GET_PLAYER(getOwner()).AI_getFlavorValue((FlavorTypes)iJ) + 1) * (GC.getReligionInfo((ReligionTypes)iI).getFlavorValue((FlavorTypes)iJ) + 1);
+							value += (GET_PLAYER(getOwner()).AI_getFlavorValue((FlavorTypes)iJ) + 1) * (GC.getReligionInfoeLoopReligion.getFlavorValue((FlavorTypes)iJ) + 1);
 							if (value > bestValue)
 							{
-								eBestReligion = ((ReligionTypes)iI);
+								eBestReligion = eLoopReligion;
 								bestValue = value;
 							}
 						}
