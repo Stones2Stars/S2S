@@ -50,6 +50,29 @@
 - Stale tooling docs: `Tools/Migration/README.md` references a non-existent `curate_pocos.py`, and
   `curate_building.py`'s docstring claims second-pass tags show as UNHANDLED when they are mostly implemented.
 
+## Legacy still breathing — the KILL LIST
+
+> The standing rule (purge violently; blast radius is the signal; the worst offenders are the ones OFF the core
+> loop) is [roadmap.md § LEGACY STILL BREATHING](roadmap.md). ⚠ KNOWN-INCOMPLETE — legacy found anywhere else is
+> killed on the same terms; add it here. ⛔ Never record a found legacy surface as acceptable or "kept until X".
+
+- **The hand-named channel-shaped getter set** on `CvCity.h`/`CvPlayer.h` — the new group reads stand beside them
+  today, which is the two-live-surfaces state
+  ([DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface)) forbids. Move every consumer,
+  delete the old names.
+- **The `Cy*` info binding surface** (`Sources/Python/`) — cut away WHOLE once the new library lands; never
+  widened, shimmed beside, or left breathing.
+- **`CvCity`'s hand-rolled dirty caches** — demolition fodder, never conversion targets; cut when the channel that
+  replaces them lands.
+- **The direct `gDLL->logMsg` / BetterBTSAI log-helper call sites** and the log-level globals they gate — retired
+  WHOLESALE as each domain migrates onto the spine, never tidied in place.
+
+## Not built yet
+
+- **The endpoint route table** beyond the six stored-vs-oracle documents — it stays empty until the access surface
+  can be read THROUGH, never restored to reach around it ([http-endpoints.md](../../specs/http-endpoints.md)).
+- **The Python data-fetching library** — see Stage 4 below.
+
 ## Stage 4 — the consumer cut (sequenced LAST; see the roadmap's ORDER ruling)
 
 - **The `CvCity`/`CvPlayer` getter consolidation** — known work, not the primary focus, and a fair few collapse on

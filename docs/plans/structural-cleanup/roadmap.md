@@ -1,8 +1,12 @@
 # #430 roadmap — the cascade rebuild
 
-> **The master plan for the active work.** Mandated session-start reading (root `AGENTS.md`). It states the design
-> the code must conform to, what exists against it today, and what is open. Governing rulings are ledgered as
-> `DEC-*`; this doc links them, it does not re-articulate them.
+> **The master plan for the active work.** Mandated session-start reading (root `AGENTS.md`). It states the DESIGN
+> the code must conform to and the rulings that govern how it is built. Governing rulings are ledgered as `DEC-*`;
+> this doc links them, it does not re-articulate them.
+>
+> ⛔ **This doc carries NO status and NO worklist** ([DEC-spec-plus-todo](../../architecture/decisions.md#dec-spec-plus-todo)):
+> what is not done lives in the [todo](todo.md), and what is BUILT is answered by the tree, never by a table here
+> that drifts. Verify any claim against the code before acting on it.
 >
 > **⚑ Branch `cascade-rebuild` is a deliberate CLEAN SLATE and does not compile. That is the intended state**
 > (owner): *"I could not possibly care less if this compiles; having a clean slate to do this right is the target."*
@@ -114,38 +118,6 @@ Authority: [state-repositories.md](../../architecture/state-repositories.md), [m
   OUTPUT yields; only the middle mechanism is engine-owned (free-specialist assignment; the golden-age plot
   threshold).
 
-## What EXISTS on this branch (verified against the tree)
-
-| Machine | Home | State |
-|---|---|---|
-| Event spine + KIND firewall + `IEventConsumer` | `Sources/Spine/` | BUILT |
-| DOMAIN emit surface + the in-read load reseed + the load bracket | `Sources/Spine/` + the engine read paths | BUILT — **127 emit call sites**, the bracket emitted at BOTH ends, the in-read reseed live ([event-spine.md](../../specs/event-spine.md)). The remaining Tier-2 facts + the three routes that could not be derived are the [todo.md](todo.md) |
-| Enabler (8 domains, kernel, own consumer, operating-buildings) | `Sources/Enabler/` | BUILT + **GRAFTED** onto city / player / team, consumer registered after the contexts (the load-order contract), and the **availability READ surface built** (one read pair per domain, [enabler.md §8](../../specs/enabler.md)). Moving consumers onto it is the remaining sweep |
-| Condition evaluator (`cascadeEvalCondition`, eval ctx, predicates) | `Sources/Conditions/` | BUILT |
-| Deposit index + deposit-read calcs (`MMKernel`/`PercentStack`/…) | `Sources/Data/` | BUILT |
-| readJson + the two-pass loader + the full-registry re-map | `Sources/Data/` | BUILT |
-| Info pocos + repos (all 23 replaced types + the 11 uniformity types) | `Sources/Infos/`, `Sources/Repos/` | BUILT |
-| Tally (read-only accessor over object-owned counts) | `Sources/Tally/` | BUILT |
-| Trigger engine (grants folded in) | `Sources/Triggers/` | Resolver + APPLIERS built (tech first-discover, building first-build, per-turn, spawn, full-heal), consuming the DOMAIN emits and suppressed inside the load bracket so a reseed never re-grants; remaining increments: [grants-machine.md](../../specs/triggers.md) |
-| Property feed + channel | `Sources/Property/` | BUILT (engine math is KEEP-legacy) |
-| Save soft-remove drain (`savemigration.txt` + `sm_isCut`) | `Sources/Infrastructure/` | BUILT |
-| Derived-cache component (`CvDerivedCache`/`Set`/`Vec`) | `Sources/Infrastructure/` | BUILT |
-| HTTP transport (sockets, mailbox, `/events` SSE, `/` liveness) | `Sources/Tools/` | BUILT. The route surface is the **six stored-vs-oracle cache documents** and nothing else ([http-endpoints.md](../../specs/http-endpoints.md)) |
-| Modifier substrate — the uniform channel-indexed package, the gather, the modifier's own consumer | `Sources/Cascade/` | BUILT — `m_cascadePackage` on city / player / plot / team, bound in each owner's `reset()`. There is no AREA package: a landmass is not an ownable scope ([state-repositories.md](../../architecture/state-repositories.md)) |
-
-## What does NOT exist (the deliberate gap)
-
-- **The CONSUMER SWEEP onto the new surfaces.** Both read surfaces now exist — the modifier's group reads and the
-  enabler's availability reads ([enabler.md §8](../../specs/enabler.md)) — and the enabler is grafted onto its
-  scope owners. What has not happened is moving CONSUMERS onto them and deleting the legacy names (the KILL LIST
-  above). ⚖ **The new surface is deliberately built AHEAD of that sweep (owner):** *"assume it is already
-  disconnected, add the new"* — gating a replacement on the disconnect is what leaves a machine unreachable
-  indefinitely.
-- **The endpoint route table** beyond the six stored-vs-oracle documents — and it stays empty until the access
-  surface can be read through, never restored to reach around it ([http-endpoints.md](../../specs/http-endpoints.md)).
-- **The Python data-fetching library** that replaces the `Cy*` info surface — built as ONE surface, with the old
-  one disconnected in the same pass ([DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed)).
-
 ## ⛔ LEGACY STILL BREATHING — the KILL LIST (this is a DEMOLITION ORDER, not an inventory)
 
 **Every row below is legacy that is STILL ALIVE IN THE TREE RIGHT NOW. None of it is a gap, a stage, a
@@ -162,12 +134,8 @@ answer. **Blast radius is the SIGNAL the cut reached, never a reason to soften i
 deliberately red, so there is nothing to protect
 ([DEC-playability-not-a-gate](../../architecture/decisions.md#dec-playability-not-a-gate)).
 
-| still alive | where | the order |
-|---|---|---|
-| the hand-named **channel-shaped getter set** (622 decls / 586 names measured) | `CvCity.h` · `CvPlayer.h` | DELETE. The 41 new group reads stand beside them TODAY — two live surfaces, the state [DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface) forbids. Move every consumer, delete the old names |
-| the **`Cy*` info binding surface** (61 files) | `Sources/Python/` | CUT AWAY once the new library lands — not widened, not shimmed beside, not left breathing |
-| `CvCity`'s **hand-rolled dirty caches** (`m_aiCommerceRate`, `m_aiCommerceRateModifier`, …) | `CvCity.h` | DEMOLITION FODDER, never conversion targets ([state-repositories.md](../../architecture/state-repositories.md)) — cut when the channel that replaces them lands |
-| the direct **`gDLL->logMsg` / BetterBTSAI log-helper** call sites + the four log-level globals they gate | `Sources/AI/`, engine files | RETIRE WHOLESALE as each domain migrates onto the spine ([observability.md](../../reference/observability.md)) — never tidied in place |
+**What is still breathing, and the order on each, is the [todo](todo.md).** This section is the STANDING
+RULE the todo answers to, never the inventory.
 
 ⛔ **THE WORST OFFENDERS ARE THE ONES OFF THE CORE LOOP (owner) — prioritize them, do not discount them.** A legacy
 path that runs every turn is exercised constantly, so a defect in it surfaces fast. One that fires occasionally —
@@ -311,28 +279,6 @@ The rest of the boundary every consumer meets:
 ⛔ **Do not start re-attaching machines to the game objects before this is defined.** A per-site rewire is exactly
 the half-migration this rebuild exists to undo, and it is what every previous attempt did while believing it was
 conforming.
-
-## Work that survives the rebuild (unaffected by the substrate archive)
-
-These are data/curator/audit items whose subject never lived in the archived substrate:
-
-- **F7 — the data tail.** [todo.md](todo.md): NPC civs /
-  `stronglyRestricted`, `state`/paralyze, the corporation rework, the leaderhead trait remap, ranked-target
-  selection. Leaders ship TRAITLESS by owner ruling; the community re-adds traits post-merge.
-- **UnitCombat distillation** — [unitcombat-distillation.md](../../reference/engine.md) + the tag-mapping and
-  merge-candidate worklists. Owner realization: the `UnitCombat` god-group must be distilled before the migration
-  can finish, because it is the common blocker under the keyed "vs unit-combat-class" combat modifiers, the upkeep
-  military/civilian bucketing, and the `IS_<tag>` predicate surface.
-- **The grants apply-loop** — [grants-machine.md](../../specs/triggers.md) + [grant-apply-sites.md](../../reference/legacy-grant-apply-sites.md)
-  + [start-packages.md](../../specs/triggers.md). The resolver and the first appliers are wired onto the spine (see the
-  EXISTS table); what remains is the rest of the apply surface. ⚠ It is ONE piece among many, never the headline
-  gap — and whether a grant hands out the RIGHT payload is not testable until the tree is green, so it is ranked
-  by WIRING like everything else (the banner's WIRED-OUTRANKS-CORRECT rule).
-- **Poco stubs** — [stub-census.md](stub-census.md). Getters returning a constant where legacy computed a real
-  value, feeding live consumers wrong numbers. **Reproduce-not-default:** a poco getter whose value is not curated
-  JSON must reproduce legacy's mechanism, never a stand-in 0/-1/empty.
-- **The property source data** — [property-audit.md](property-audit.md) (LOCKED, owner-approved). The engine math
-  is intact and must NOT be rewritten.
 
 ## Observability / acceptance
 
