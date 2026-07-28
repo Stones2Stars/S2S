@@ -172,6 +172,19 @@ site ([fixed-point-and-scales §4c-bis](../../specs/curators/fixed-point-and-sca
   delete the old names.
 - **The `Cy*` info binding surface** (`Sources/Python/`) — cut away WHOLE once the new library lands; never
   widened, shimmed beside, or left breathing.
+  ⚠ **But it is ALREADY largely a CORPSE, so "waiting for the library" describes something that does not work.**
+  The `.def`s name getters the rebuilt infos no longer have, and a failed `.def` poisons the rest of its chain
+  (`C2228: left of '.def' must have class/struct/union type`) — all three `CyInfoInterface*.cpp` files blow the
+  100-error cap, so the true count is HIDDEN behind it.
+  ⚖ **A `.def` for a DELETED getter is cut ON SIGHT (owner: "it's not like the game currently works").** That is
+  not the piecemeal cutting the whole-cut rule forbids — that rule protects a WORKING surface from being taken
+  apart before its replacement exists. A binding to a getter that no longer exists is a dangling reference the
+  compiler census already named, and for a `Cy` binding the only way to fix a named consumer is to DELETE it
+  ([DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed) forbids re-pointing or widening).
+  ⚑ The Python side is already broken regardless: `Revolution.py:1140` calls `getFlatMovementCost`, removed with
+  the route flat-movement mechanic ([superseded-ideas #23](../../architecture/superseded-ideas.md)), so that block
+  dies on an `AttributeError` before reaching anything else. Preserving a binding "for live Python" is fiction
+  wherever the getter is gone.
 - **`CvCity`'s hand-rolled dirty caches** — demolition fodder, never conversion targets; cut when the channel that
   replaces them lands.
 - **The direct `gDLL->logMsg` / BetterBTSAI log-helper call sites** and the log-level globals they gate — retired
