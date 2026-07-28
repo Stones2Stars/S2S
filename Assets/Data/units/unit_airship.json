@@ -34,8 +34,7 @@
  ],
  "tags": [
   "military",
-  "airUnit",
-  "air"
+  "airUnit"
  ],
  "combatClass": "UNITCOMBAT_BALLOON",
  "combatClasses": [

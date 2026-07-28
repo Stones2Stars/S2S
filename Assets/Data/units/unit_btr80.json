@@ -90,10 +90,7 @@
  ],
  "tags": [
   "military",
-  "landUnit",
-  "mechanized",
-  "naval",
-  "armored"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_WHEELED",
  "combatClasses": [

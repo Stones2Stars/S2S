@@ -85,8 +85,7 @@
  ],
  "tags": [
   "military",
-  "seaUnit",
-  "naval"
+  "seaUnit"
  ],
  "combatClass": "UNITCOMBAT_WOODEN_SHIPS",
  "combatClasses": [

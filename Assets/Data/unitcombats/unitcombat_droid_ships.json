@@ -1,5 +1,8 @@
 {
  "type": "UNITCOMBAT_DROID_SHIPS",
+ "tags": [
+  "naval"
+ ],
  "vision": {
   "unit": {
    "detection": {

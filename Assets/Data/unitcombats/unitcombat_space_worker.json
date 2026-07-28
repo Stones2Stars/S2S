@@ -3,6 +3,10 @@
  "skills": {
   "cannotMergeSplit": true
  },
+ "tags": [
+  "worker",
+  "space"
+ ],
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/workers.dds"

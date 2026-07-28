@@ -29,8 +29,7 @@
  "tags": [
   "worker",
   "civilian",
-  "seaUnit",
-  "naval"
+  "seaUnit"
  ],
  "combatClass": "UNITCOMBAT_SEA_WORKER",
  "combatClasses": [

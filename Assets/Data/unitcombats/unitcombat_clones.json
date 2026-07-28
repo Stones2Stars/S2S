@@ -10,6 +10,9 @@
    }
   }
  },
+ "tags": [
+  "synthetic"
+ ],
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/clones.dds"

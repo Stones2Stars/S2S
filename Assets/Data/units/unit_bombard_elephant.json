@@ -82,10 +82,7 @@
  ],
  "tags": [
   "military",
-  "landUnit",
-  "mounted",
-  "siege",
-  "gunpowder"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_MOUNTED",
  "combatClasses": [

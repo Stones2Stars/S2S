@@ -19,6 +19,9 @@
    }
   }
  },
+ "tags": [
+  "civilian"
+ ],
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/civilians.dds"

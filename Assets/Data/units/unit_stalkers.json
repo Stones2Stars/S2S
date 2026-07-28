@@ -104,9 +104,6 @@
  "tags": [
   "military",
   "landUnit",
-  "recon",
-  "melee",
-  "archery",
   "camouflage"
  ],
  "combatClass": "UNITCOMBAT_STRIKE_TEAM",

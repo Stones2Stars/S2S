@@ -57,10 +57,7 @@
   "onlyDefensive"
  ],
  "tags": [
-  "landUnit",
-  "hero",
-  "medic",
-  "civilian"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_HERO",
  "combatClasses": [

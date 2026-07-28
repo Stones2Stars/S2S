@@ -66,9 +66,7 @@
  "tags": [
   "worker",
   "civilian",
-  "landUnit",
-  "mechanized",
-  "armored"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_WORKER",
  "combatClasses": [

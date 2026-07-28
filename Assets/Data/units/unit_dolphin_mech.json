@@ -89,10 +89,7 @@
  ],
  "tags": [
   "military",
-  "landUnit",
-  "mechanized",
-  "armored",
-  "animal"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_ASSAULT_MECH",
  "combatClasses": [

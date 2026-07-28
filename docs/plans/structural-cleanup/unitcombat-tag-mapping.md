@@ -20,7 +20,10 @@
 
 - **Scope:** the **400** unit-combats referenced by ≥1 unit (primary `combatClass` ∪ `combatClasses`) or ≥1
   promotion `identity.unitCombats`. (814 total; 414 referenced by nothing → the merge/purge worklist, separate.)
-- **Map the obvious, flag the unsure** (owner). Result: **82 MAPPED**, **318 FLAGGED**.
+- **Map the obvious, flag the unsure** — the FIRST-pass method, since superseded for the individual classes:
+  **an extra tag costs nothing and certainty is not a gate** (owner, [tags.md](../../specs/tags.md)), so every
+  individual class now carries a tag. What stays FLAGGED is only the taxonomy FAMILIES below, which are excluded
+  on a different ground — a size/quality/group RANK is not an identity at all, it is `sizeMatters` data.
 - **Culture combats are NOT mapped — they were DROPPED** (owner 2026-07-19): the 344 `UNITCOMBAT_CULTURE_*` are
   redundant double-data of the culture BONUS (see [`unitcombat-merge-candidates.md`](unitcombat-merge-candidates.md)),
   removed entirely rather than distilled to a tag; the culture identity already lives on `BONUS_X.enables.units`.
@@ -149,15 +152,19 @@
 
 ## FLAGGED (unsure / not-an-identity / needs owner)
 
-> **2ND PASS RESOLVED (owner 2026-07-21) — the individual ambiguous classes are ruled; `curate_unit.py`
-> `TAG_BY_UNITCOMBAT` carries them.** NEW vocabulary added: `police` (LAW_ENFORCEMENT) · `medic` (HEALTH_CARE) ·
+> **2ND PASS RESOLVED — the individual ambiguous classes are ruled; `curate_common.py`'s `TAG_BY_UNITCOMBAT`
+> carries them, emitted onto the UNITCOMBAT by `curate_unitcombat.py`.** NEW vocabulary added: `police` (LAW_ENFORCEMENT) · `medic` (HEALTH_CARE) ·
 > `missile` (MISSILE/BALLISTIC) · `synthetic` (ROBOT/HITECH/CLONES/NANITE/NANOMORPHIC) · `diplomat` · `entertainer`.
 > Folded onto EXISTING tags: HUNTER/STRIKE_TEAM→`recon`, EXECUTIVE→`merchant`, PACIFIST→`civilian`,
 > COMMODORE/CAPTAIN→`naval`, ROCKET_LAUNCHER→`siege`. Ruled NOT tags (left excluded): COMBATANT, SPEED_FAST/SLOW,
 > ATTACK_FORM_*, STEALTH, SWARM (movement/attack-form/generic taxonomy); the animal sub-states/species WILD, TAMED,
-> CAPTIVE, RECKLESS_ANIMAL, CANINE, FELINE (base `animal` covers them). STILL FLAGGED (genuinely unclear, no tag this
-> pass): IDEA, DOOM, NOMAD, THROWING, HOVERCRAFT, PIRATE, RUFFIAN, EXILE, ATTACHE, PRODIGY, ADMINISTRATOR, COMMANDER.
-> The taxonomy FAMILIES below stay data (sizeMatters), unchanged.
+> CAPTIVE, RECKLESS_ANIMAL, CANINE, FELINE (base `animal` covers them).
+>
+> **THIRD PASS — the remainder is tagged, under the extra-tags-are-free ruling.** Folded onto existing vocabulary:
+> HOVERCRAFT→`mechanized`, ATTACHE→`diplomat`, RUFFIAN/EXILE/PIRATE→`outlaw`, ADMINISTRATOR→`bureaucrat`. Minted:
+> `throwing` (a thrown-weapon skirmisher is ranged but not archery), `commander`, `prodigy`, `nomad`, `idea`,
+> `doom`. The taxonomy FAMILIES below stay data (sizeMatters) — excluded because a RANK is not an identity, which
+> is a different reason from being unsure, so the ruling does not touch them.
 
 ### Taxonomy families — NOT identity tags (each family = one reason)
 

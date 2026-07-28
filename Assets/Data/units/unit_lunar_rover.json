@@ -43,9 +43,7 @@
   "onlyDefensive"
  ],
  "tags": [
-  "landUnit",
-  "recon",
-  "mechanized"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_RECON",
  "combatClasses": [

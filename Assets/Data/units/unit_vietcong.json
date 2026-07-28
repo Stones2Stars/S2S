@@ -88,9 +88,7 @@
  ],
  "tags": [
   "military",
-  "landUnit",
-  "siege",
-  "gunpowder"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_SIEGE",
  "combatClasses": [

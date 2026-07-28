@@ -3,6 +3,9 @@
  "skills": {
   "cannotMergeSplit": true
  },
+ "tags": [
+  "civilian"
+ ],
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/Units/Categories/Pacifist.dds"

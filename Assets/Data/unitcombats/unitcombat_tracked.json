@@ -10,6 +10,10 @@
    }
   }
  },
+ "tags": [
+  "mechanized",
+  "armored"
+ ],
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/tracked.dds"

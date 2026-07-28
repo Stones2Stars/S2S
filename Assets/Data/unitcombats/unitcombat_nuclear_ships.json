@@ -1,5 +1,8 @@
 {
  "type": "UNITCOMBAT_NUCLEAR_SHIPS",
+ "tags": [
+  "naval"
+ ],
  "vision": {
   "unit": {
    "detection": {

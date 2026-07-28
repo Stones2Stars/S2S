@@ -94,8 +94,7 @@
  ],
  "tags": [
   "military",
-  "airUnit",
-  "air"
+  "airUnit"
  ],
  "combatClass": "UNITCOMBAT_STEALTH",
  "combatClasses": [

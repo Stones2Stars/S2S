@@ -1,5 +1,9 @@
 {
  "type": "UNITCOMBAT_AIR_RECON",
+ "tags": [
+  "air",
+  "recon"
+ ],
  "vision": {
   "unit": {
    "detection": [

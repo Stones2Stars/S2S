@@ -6,9 +6,7 @@
   }
  },
  "tags": [
-  "landUnit",
-  "settler",
-  "civilian"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_SETTLER",
  "combatClasses": [

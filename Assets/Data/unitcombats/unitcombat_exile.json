@@ -12,6 +12,9 @@
   "excile": true,
   "barbCoExist": true
  },
+ "tags": [
+  "outlaw"
+ ],
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/Units/Categories/Exile.dds"

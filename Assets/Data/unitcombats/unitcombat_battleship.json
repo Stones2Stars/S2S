@@ -7,6 +7,9 @@
    "TERRAIN_OCEAN_TROPICAL": true
   }
  },
+ "tags": [
+  "naval"
+ ],
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/battleships.dds"

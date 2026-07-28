@@ -58,8 +58,7 @@
  ],
  "tags": [
   "military",
-  "landUnit",
-  "mechanized"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_WHEELED",
  "combatClasses": [

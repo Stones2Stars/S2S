@@ -1,5 +1,8 @@
 {
  "type": "UNITCOMBAT_NAVAL_COMBATANT",
+ "tags": [
+  "naval"
+ ],
  "vision": {
   "unit": {
    "detection": {

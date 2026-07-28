@@ -53,10 +53,7 @@
   "rivalTerritory"
  ],
  "tags": [
-  "landUnit",
-  "hero",
-  "gunpowder",
-  "recon"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_HERO",
  "combatClasses": [

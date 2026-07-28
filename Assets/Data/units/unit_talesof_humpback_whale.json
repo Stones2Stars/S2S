@@ -17,8 +17,7 @@
   "militaryTrade"
  ],
  "tags": [
-  "seaUnit",
-  "animal"
+  "seaUnit"
  ],
  "combatClass": "UNITCOMBAT_SEA_ANIMAL_TALE",
  "combatClasses": [

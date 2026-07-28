@@ -30,10 +30,7 @@
  "tags": [
   "worker",
   "civilian",
-  "landUnit",
-  "space",
-  "mechanized",
-  "armored"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_SPACE_WORKER",
  "combatClasses": [

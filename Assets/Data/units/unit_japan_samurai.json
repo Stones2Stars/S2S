@@ -67,9 +67,7 @@
  ],
  "tags": [
   "military",
-  "landUnit",
-  "melee",
-  "archery"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_MELEE",
  "combatClasses": [

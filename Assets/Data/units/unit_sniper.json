@@ -141,8 +141,6 @@
  "tags": [
   "military",
   "landUnit",
-  "recon",
-  "gunpowder",
   "camouflage"
  ],
  "combatClass": "UNITCOMBAT_STRIKE_TEAM",

@@ -105,6 +105,10 @@
  "skills": {
   "cannotMergeSplit": true
  },
+ "tags": [
+  "outlaw",
+  "camouflage"
+ ],
  "vision": {
   "unit": {
    "concealment": {
@@ -116,9 +120,6 @@
    }
   }
  },
- "tags": [
-  "camouflage"
- ],
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/ruffian.dds"

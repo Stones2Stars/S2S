@@ -50,10 +50,7 @@
  ],
  "tags": [
   "military",
-  "landUnit",
-  "recon",
-  "mechanized",
-  "mounted"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_RECON",
  "combatClasses": [

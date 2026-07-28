@@ -62,6 +62,9 @@
   "cannotMergeSplit": true,
   "noInvisibility": true
  },
+ "tags": [
+  "police"
+ ],
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/law_enforcers.dds"

@@ -130,8 +130,6 @@
  "tags": [
   "military",
   "landUnit",
-  "recon",
-  "melee",
   "camouflage"
  ],
  "combatClass": "UNITCOMBAT_STRIKE_TEAM",

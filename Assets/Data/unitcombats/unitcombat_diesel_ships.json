@@ -1,5 +1,8 @@
 {
  "type": "UNITCOMBAT_DIESEL_SHIPS",
+ "tags": [
+  "naval"
+ ],
  "vision": {
   "unit": {
    "detection": {

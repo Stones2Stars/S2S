@@ -36,8 +36,7 @@
  ],
  "tags": [
   "spy",
-  "landUnit",
-  "civilian"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_SPY",
  "combatClasses": [

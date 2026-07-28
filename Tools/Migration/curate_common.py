@@ -376,6 +376,103 @@ HIDE_SEE_BASELINE = 1
 HIDE_NEGATE_STRENGTH = 10
 
 
+# ---- unitcombat -> identity TAG mapping (first pass, owner-approved; worklist:
+# docs/plans/structural-cleanup/unitcombat-tag-mapping.md). A tag is what a unit IS; a UnitCombat is the
+# good/bad-AGAINST stat group ([engine.md] UnitCombat). The mapping is ADDITIVE -- the UnitCombat is KEPT as the
+# stat source and merely also says what its carrier IS.
+#
+# The tag has ONE home: it is authored on the UNITCOMBAT (curate_unitcombat), and the ENGINE unions a unit's
+# combat classes' tags into the unit's own at load (CvUnitInfo::deriveAtRegistryComplete, over primary +
+# combatClasses -- the same walk the sizeMatters base ranks use). A unit therefore does NOT carry a baked copy:
+# baking it would put the same fact in two places, so a modder editing a class's tags would leave every unit
+# stale until re-curation.
+#
+# Only the OBVIOUS identities map; the weapon/size/species/quality/group taxonomy families stay FLAGGED as
+# sizeMatters data, never forced. hero/animal/space/police/medic/missile/synthetic/diplomat/entertainer/
+# bureaucrat are owner-approved NEW vocabulary.
+TAG_BY_UNITCOMBAT = {
+    # tech / equipment
+    "UNITCOMBAT_GUN": ["gunpowder"], "UNITCOMBAT_SIEGE_GUNPOWDER": ["siege", "gunpowder"],
+    "UNITCOMBAT_MOUNTED": ["mounted"], "UNITCOMBAT_MOTILITY_RIDING": ["mounted"],
+    "UNITCOMBAT_MOUNT_HORSE": ["mounted"], "UNITCOMBAT_MOUNT_ELEPHANT": ["mounted"], "UNITCOMBAT_MOUNT_CAMEL": ["mounted"],
+    "UNITCOMBAT_MOUNT_GIRAFFE": ["mounted"], "UNITCOMBAT_MOUNT_MAMMOTH": ["mounted"], "UNITCOMBAT_MOUNT_ZEBRA": ["mounted"],
+    "UNITCOMBAT_MOUNT_DEER": ["mounted"], "UNITCOMBAT_MOUNT_BEAR": ["mounted"], "UNITCOMBAT_MOUNT_LLAMA": ["mounted"],
+    "UNITCOMBAT_MOUNT_BISON": ["mounted"], "UNITCOMBAT_MOUNT_RHINO": ["mounted"],
+    "UNITCOMBAT_ARMOR_VEHICULAR": ["mechanized", "armored"], "UNITCOMBAT_WHEELED": ["mechanized"],
+    "UNITCOMBAT_MOTILITY_DRIVING": ["mechanized"], "UNITCOMBAT_TRACKED": ["mechanized", "armored"],
+    "UNITCOMBAT_ASSAULT_MECH": ["mechanized", "armored"],
+    # domain — naval
+    "UNITCOMBAT_MOTILITY_NAVAL": ["naval"], "UNITCOMBAT_ARMOR_NAVAL": ["naval"], "UNITCOMBAT_NAVAL_COMBATANT": ["naval"],
+    "UNITCOMBAT_WOODEN_SHIPS": ["naval"], "UNITCOMBAT_TRANSPORT": ["naval"], "UNITCOMBAT_DIESEL_SHIPS": ["naval"],
+    "UNITCOMBAT_STEAM_SHIPS": ["naval"], "UNITCOMBAT_NUCLEAR_SHIPS": ["naval"], "UNITCOMBAT_DESTROYER": ["naval"],
+    "UNITCOMBAT_SUBMARINE": ["naval"], "UNITCOMBAT_BATTLESHIP": ["naval"], "UNITCOMBAT_CRUISER": ["naval"],
+    "UNITCOMBAT_DREADNOUGHT": ["naval"], "UNITCOMBAT_DROID_SHIPS": ["naval"], "UNITCOMBAT_GRAVITY_DRIVE_SHIPS": ["naval"],
+    "UNITCOMBAT_JET_SHIPS": ["naval"], "UNITCOMBAT_LEVITATION_SHIPS": ["naval"], "UNITCOMBAT_SHOCKWAVE_SHIPS": ["naval"],
+    "UNITCOMBAT_TROID_SHIPS": ["naval"],
+    # domain — air
+    "UNITCOMBAT_ARMOR_AIRCRAFT": ["air"], "UNITCOMBAT_MOTILITY_AERIAL": ["air"], "UNITCOMBAT_HELICOPTER": ["air"],
+    "UNITCOMBAT_GUNSHIP": ["air"], "UNITCOMBAT_JET_FIGHTERS": ["air"], "UNITCOMBAT_BALLOON": ["air"],
+    "UNITCOMBAT_EARLY_FIGHTERS": ["air"], "UNITCOMBAT_BOMBERS": ["air"], "UNITCOMBAT_EARLY_BOMBERS": ["air"],
+    "UNITCOMBAT_SUPERSONIC_PLANES": ["air"], "UNITCOMBAT_ORBITAL_AIRCRAFT": ["air", "space"], "UNITCOMBAT_AIR_RECON": ["air", "recon"],
+    # type / combat
+    "UNITCOMBAT_MELEE": ["melee"], "UNITCOMBAT_ARCHER": ["archery"], "UNITCOMBAT_SIEGE": ["siege"],
+    "UNITCOMBAT_SIEGE_FIELD": ["siege"], "UNITCOMBAT_SIEGE_URBAN": ["siege"], "UNITCOMBAT_SIEGE_WOODEN": ["siege"],
+    "UNITCOMBAT_SIEGE_DEFENSIVE": ["siege"], "UNITCOMBAT_SIEGE_ROCKETRY": ["siege"], "UNITCOMBAT_SIEGE_ENERGY": ["siege"],
+    "UNITCOMBAT_SIEGE_GATECRASHER": ["siege"], "UNITCOMBAT_RECON": ["recon"], "UNITCOMBAT_EXPLORER": ["recon"],
+    # role (folds onto existing role tags; outlaw is also handled by the CRIMINAL_COMBAT block above)
+    "UNITCOMBAT_CIVILIAN": ["civilian"], "UNITCOMBAT_MISSIONARY": ["missionary"], "UNITCOMBAT_WORKER": ["worker"],
+    "UNITCOMBAT_TRADE": ["merchant"], "UNITCOMBAT_CRIMINAL": ["outlaw"], "UNITCOMBAT_SETTLER": ["settler"],
+    "UNITCOMBAT_SEA_WORKER": ["worker"], "UNITCOMBAT_SPY": ["spy"], "UNITCOMBAT_COMBAT_WORKER": ["worker"],
+    # NEW vocabulary (owner-approved 2026-07-21): hero / animal / space
+    "UNITCOMBAT_HERO": ["hero"], "UNITCOMBAT_ANIMAL": ["animal"], "UNITCOMBAT_SEA_ANIMAL": ["animal"],
+    "UNITCOMBAT_SEA_ANIMAL_TALE": ["animal"], "UNITCOMBAT_SPACE_WORKER": ["worker", "space"],
+    "UNITCOMBAT_EARLY_SPACESHIP": ["space"], "UNITCOMBAT_WORMHOLE_SPACESHIP": ["space"],
+    "UNITCOMBAT_SOLAR_SAIL_SPACESHIP": ["space"], "UNITCOMBAT_ANTIMATTER_SPACESHIP": ["space"],
+    "UNITCOMBAT_NUCLEAR_SPACESHIP": ["space"],
+    # --- flagged-remainder second pass (owner-approved 2026-07-21, unitcombat-tag-mapping.md §FLAGGED) ---
+    # map-to-existing vocabulary:
+    "UNITCOMBAT_HUNTER": ["recon"], "UNITCOMBAT_STRIKE_TEAM": ["recon"],   # (STRIKE_TEAM also -> outlaw via its CRIMINAL subcombat)
+    "UNITCOMBAT_EXECUTIVE": ["merchant"], "UNITCOMBAT_PACIFIST": ["civilian"],
+    "UNITCOMBAT_COMMODORE": ["naval"], "UNITCOMBAT_CAPTAIN": ["naval"], "UNITCOMBAT_ROCKET_LAUNCHER": ["siege"],
+    # NEW vocabulary (owner-approved 2026-07-21): police / medic / missile / synthetic / diplomat / entertainer
+    "UNITCOMBAT_LAW_ENFORCEMENT": ["police"], "UNITCOMBAT_HEALTH_CARE": ["medic"],
+    # bureaucrat (owner-approved): the legal / civil-service professions -- JUDGE + LAWYER (primary) and
+    # GREAT_STATESMAN (sub-combat). Read by the university free-promotion conditions (POLICING1), which key on
+    # this class rather than on law enforcement.
+    "UNITCOMBAT_ADMINISTRATOR": ["bureaucrat"],
+    "UNITCOMBAT_MISSILE": ["missile"], "UNITCOMBAT_BALLISTIC": ["missile"],
+    "UNITCOMBAT_ROBOT": ["synthetic"], "UNITCOMBAT_HITECH": ["synthetic"], "UNITCOMBAT_CLONES": ["synthetic"],
+    "UNITCOMBAT_NANITE": ["synthetic"], "UNITCOMBAT_NANOMORPHIC": ["synthetic"],
+    "UNITCOMBAT_DIPLOMAT": ["diplomat"], "UNITCOMBAT_ENTERTAINER": ["entertainer"],
+    # --- the last FLAGGED individuals (owner: "you can always have more tags, it doesn't hurt to add an extra
+    # tag, even though we don't fully know what it does"). An extra tag is inert until something queries it, so
+    # certainty is NOT a gate -- a surplus tag costs nothing, while a MISSING one leaves the class stuck doing
+    # identifier duty and blocks the purge. Prefer existing vocabulary; mint where nothing fits.
+    "UNITCOMBAT_HOVERCRAFT": ["mechanized"],      # a powered vehicle, land/sea hybrid
+    "UNITCOMBAT_ATTACHE": ["diplomat"],           # military attache -- a diplomatic posting
+    "UNITCOMBAT_RUFFIAN": ["outlaw"], "UNITCOMBAT_EXILE": ["outlaw"],   # criminal-type, like CRIMINAL itself
+    "UNITCOMBAT_PIRATE": ["outlaw"],              # criminal at sea; the naval half comes from its ship class
+    "UNITCOMBAT_THROWING": ["throwing"],          # thrown-weapon skirmisher -- ranged, but not archery
+    "UNITCOMBAT_COMMANDER": ["commander"], "UNITCOMBAT_PRODIGY": ["prodigy"],
+    "UNITCOMBAT_NOMAD": ["nomad"], "UNITCOMBAT_IDEA": ["idea"], "UNITCOMBAT_DOOM": ["doom"],
+}
+
+
+def add_tags(out, tags):
+    """Append tags to out["tags"] without duplicating or clobbering.
+
+    The block is an always-present ARRAY OF STRINGS ([tags.md]), and two independent sources write it (the
+    hide-and-seek METHOD tag and the identity mapping below), so a plain assignment would silently drop
+    whichever ran first -- the same clobber that cost the concealment values once already.
+    """
+    if not tags:
+        return
+    have = out.setdefault("tags", [])
+    for tag in tags:
+        if tag not in have:
+            have.append(tag)
+
+
 def collapse_hide_and_seek(out, vision, bTags):
     """Collapse the 13 per-type invisibility tables onto the `vision` family (vision.md §4).
 
@@ -431,11 +528,8 @@ def collapse_hide_and_seek(out, vision, bTags):
             node["concealment"] = OrderedDict([("flat", conceal * VISION_PLOT)])
         if detect:
             node["detection"] = detect[0] if len(detect) == 1 else detect
-    if bTags and tags:
-        have = out.setdefault("tags", [])
-        for tag in tags:
-            if tag not in have:
-                have.append(tag)
+    if bTags:
+        add_tags(out, tags)
 
 def merge_vision(out, vision):
     """Merge a leftover `vision` dict into out["vision"] WITHOUT clobbering a scope already filled.

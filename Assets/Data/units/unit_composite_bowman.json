@@ -95,8 +95,7 @@
  ],
  "tags": [
   "military",
-  "landUnit",
-  "archery"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_ARCHER",
  "combatClasses": [

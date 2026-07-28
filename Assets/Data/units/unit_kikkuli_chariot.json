@@ -126,10 +126,7 @@
  ],
  "tags": [
   "military",
-  "landUnit",
-  "mounted",
-  "mechanized",
-  "archery"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_MOUNTED",
  "combatClasses": [

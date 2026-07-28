@@ -5,6 +5,9 @@
    "percent": 10
   }
  },
+ "tags": [
+  "mounted"
+ ],
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/mobility.dds"

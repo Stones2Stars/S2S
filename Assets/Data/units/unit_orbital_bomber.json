@@ -83,8 +83,6 @@
  "tags": [
   "military",
   "airUnit",
-  "air",
-  "space",
   "stealth"
  ],
  "combatClass": "UNITCOMBAT_ORBITAL_AIRCRAFT",

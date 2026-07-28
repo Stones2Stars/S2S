@@ -10,6 +10,10 @@
    "TERRAIN_TRENCH_TROPICAL": true
   }
  },
+ "tags": [
+  "naval",
+  "submarine"
+ ],
  "vision": {
   "unit": {
    "concealment": {
@@ -21,9 +25,6 @@
    }
   }
  },
- "tags": [
-  "submarine"
- ],
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/submarines.dds"

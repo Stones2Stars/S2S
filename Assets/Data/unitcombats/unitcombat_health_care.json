@@ -3,6 +3,9 @@
  "skills": {
   "cannotMergeSplit": true
  },
+ "tags": [
+  "medic"
+ ],
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/healthcare_units.dds"

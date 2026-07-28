@@ -165,10 +165,10 @@
   their own as the rebuilt infos wire through. Measure what survives that before planning a sweep.
 - **The AI call sites** — the largest consumer of the info surface, deliberately last. A dangling AI call site is
   intended output, not a defect to fix on sight.
-- **`CvGameTextMgr` composers onto rendered entry lines** — the per-entry renderer exists
-  (`Sources/UI/CvEntryText`) and `CvGameTextMgr::appendEntryLines` is the shared consumer, but only the
-  VISION family has moved onto it. The other info-help composer families still hand-assemble from getters.
-  ⚑ Each move DELETES composer code rather than porting it: a rendered line already carries magnitude,
+- **`CvGameTextMgr` composers onto rendered entry lines** — the per-entry renderer exists
+  (`Sources/UI/CvEntryText`) and `CvGameTextMgr::appendEntryLines` is the shared consumer, but only the
+  VISION family has moved onto it. The other info-help composer families still hand-assemble from getters.
+  ⚑ Each move DELETES composer code rather than porting it: a rendered line already carries magnitude,
   unit, target, scope, per-scaler and conditions, so a new channel needs no composer edit at all.
 - **Re-point the unit consumer getters onto `resolvedValue()`** (`Sources/Cascade/CvUnitResolved`).
 - **The unit power-value plane** — its readers are ordinary consumer debt on a deliberately red tree.
@@ -182,11 +182,6 @@
 > The concept + the target model: [engine.md § UnitCombat](../../reference/engine.md). The MINIMUM that unblocks
 > the stuck consumers is the cascade-QUERY surface, not a full re-taxonomy.
 
-- **Emit `tags` from `curate_unitcombat.py`** — it emits families/skills/vision/outcomes/sizeMatters/identity and
-  zero tags today, so the tech/equipment classes (`mounted`/`gunpowder`/`mechanized`) are unauthored. Greenfield:
-  there is no legacy flag to migrate from, and a reasonable FIRST PASS is fine (a wrong tag is a quick data edit,
-  not a perfection-gated blocker). Worklist: [unitcombat-tag-mapping.md](unitcombat-tag-mapping.md).
-- **Fold combat-class tags into a unit's effective tag set** (unit-level ∪ primary ∪ subs ∪ promotion-granted).
 - **Re-express the keyed "vs unit-combat-class" modifiers onto TAG predicates**, retiring `UNITCOMBAT_*` as a
   modifier target. ⚖ **POST-REWORK, its own dedicated pass (owner)** — until it runs, tags and unitcombats live
   side by side, which is sanctioned and costs nothing (the mapping is additive).

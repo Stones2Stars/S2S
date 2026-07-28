@@ -61,8 +61,7 @@
  "tags": [
   "merchant",
   "civilian",
-  "landUnit",
-  "mechanized"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_TRADE",
  "combatClasses": [

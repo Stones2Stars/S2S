@@ -18,9 +18,7 @@
   "militaryTrade"
  ],
  "tags": [
-  "seaUnit",
-  "naval",
-  "civilian"
+  "seaUnit"
  ],
  "combatClass": "UNITCOMBAT_SUBDUED",
  "combatClasses": [

@@ -1,5 +1,9 @@
 {
  "type": "UNITCOMBAT_ORBITAL_AIRCRAFT",
+ "tags": [
+  "air",
+  "space"
+ ],
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/orbital_aircraft.dds"

@@ -46,6 +46,10 @@
  "skills": {
   "cannotMergeSplit": true
  },
+ "tags": [
+  "outlaw",
+  "disguised"
+ ],
  "vision": {
   "unit": {
    "concealment": {
@@ -63,9 +67,6 @@
    ]
   }
  },
- "tags": [
-  "disguised"
- ],
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/criminals.dds"

@@ -17,6 +17,10 @@
    "TERRAIN_COAST_TROPICAL": true
   }
  },
+ "tags": [
+  "outlaw",
+  "navalDisguise"
+ ],
  "vision": {
   "unit": {
    "concealment": {
@@ -28,9 +32,6 @@
    }
   }
  },
- "tags": [
-  "navalDisguise"
- ],
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/pirate_ships.dds"

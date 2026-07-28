@@ -7,6 +7,9 @@
    }
   }
  },
+ "tags": [
+  "animal"
+ ],
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/animals.dds"

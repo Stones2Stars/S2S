@@ -15,8 +15,7 @@
   }
  },
  "tags": [
-  "landUnit",
-  "naval"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_PRODIGY",
  "combatClasses": [

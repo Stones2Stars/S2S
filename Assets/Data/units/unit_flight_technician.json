@@ -69,9 +69,7 @@
  ],
  "tags": [
   "military",
-  "landUnit",
-  "gunpowder",
-  "civilian"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_GUN",
  "combatClasses": [

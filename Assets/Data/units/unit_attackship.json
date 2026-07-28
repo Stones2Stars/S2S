@@ -55,8 +55,7 @@
   "canMoveImpassable"
  ],
  "tags": [
-  "landUnit",
-  "space"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_NUCLEAR_SPACESHIP",
  "vision": {

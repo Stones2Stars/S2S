@@ -1,5 +1,8 @@
 {
  "type": "UNITCOMBAT_SHOCKWAVE_SHIPS",
+ "tags": [
+  "naval"
+ ],
  "vision": {
   "unit": {
    "detection": {

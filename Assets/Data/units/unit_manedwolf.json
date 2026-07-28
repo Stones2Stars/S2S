@@ -29,8 +29,7 @@
   "onlyDefensive"
  ],
  "tags": [
-  "landUnit",
-  "animal"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_ANIMAL",
  "combatClasses": [

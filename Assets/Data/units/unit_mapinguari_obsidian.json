@@ -70,8 +70,7 @@
  ],
  "tags": [
   "military",
-  "landUnit",
-  "animal"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_ANIMAL",
  "combatClasses": [

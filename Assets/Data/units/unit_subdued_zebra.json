@@ -21,8 +21,7 @@
   "onlyDefensive"
  ],
  "tags": [
-  "landUnit",
-  "civilian"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_SUBDUED",
  "combatClasses": [

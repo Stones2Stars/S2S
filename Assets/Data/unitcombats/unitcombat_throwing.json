@@ -10,6 +10,9 @@
    }
   }
  },
+ "tags": [
+  "throwing"
+ ],
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/throwing_units.dds"

@@ -46,6 +46,9 @@
  "skills": {
   "cannotMergeSplit": true
  },
+ "tags": [
+  "merchant"
+ ],
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/traders.dds"

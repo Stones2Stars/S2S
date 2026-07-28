@@ -77,9 +77,7 @@
  ],
  "tags": [
   "military",
-  "landUnit",
-  "mounted",
-  "siege"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_MOUNTED",
  "combatClasses": [

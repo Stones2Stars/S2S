@@ -4,6 +4,9 @@
   "cannotMergeSplit": true,
   "alwaysInvisible": true
  },
+ "tags": [
+  "idea"
+ ],
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/idea.dds"

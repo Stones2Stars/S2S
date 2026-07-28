@@ -1,5 +1,8 @@
 {
  "type": "UNITCOMBAT_JET_SHIPS",
+ "tags": [
+  "naval"
+ ],
  "vision": {
   "unit": {
    "detection": {

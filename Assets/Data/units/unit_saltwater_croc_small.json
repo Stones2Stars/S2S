@@ -33,9 +33,7 @@
   "blendIntoCity"
  ],
  "tags": [
-  "seaUnit",
-  "animal",
-  "naval"
+  "seaUnit"
  ],
  "combatClass": "UNITCOMBAT_SEA_ANIMAL",
  "combatClasses": [

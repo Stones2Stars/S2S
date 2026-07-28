@@ -43,9 +43,7 @@
  ],
  "tags": [
   "military",
-  "landUnit",
-  "archery",
-  "mounted"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_ARCHER",
  "combatClasses": [

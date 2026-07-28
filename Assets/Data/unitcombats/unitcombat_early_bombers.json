@@ -1,5 +1,8 @@
 {
  "type": "UNITCOMBAT_EARLY_BOMBERS",
+ "tags": [
+  "air"
+ ],
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/early_bombers.dds"

@@ -175,8 +175,6 @@
  "tags": [
   "military",
   "landUnit",
-  "mounted",
-  "gunpowder",
   "camouflage"
  ],
  "combatClass": "UNITCOMBAT_RUFFIAN",

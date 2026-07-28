@@ -82,9 +82,6 @@
  "tags": [
   "military",
   "landUnit",
-  "naval",
-  "mechanized",
-  "armored",
   "camouflage"
  ],
  "combatClass": "UNITCOMBAT_DREADNOUGHT",

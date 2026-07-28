@@ -41,9 +41,7 @@
   "upgradeAnywhere"
  ],
  "tags": [
-  "landUnit",
-  "recon",
-  "mounted"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_RECON",
  "combatClasses": [

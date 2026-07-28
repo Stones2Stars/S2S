@@ -18,6 +18,9 @@
  "skills": {
   "cannotMergeSplit": true
  },
+ "tags": [
+  "hero"
+ ],
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/heroic.dds"

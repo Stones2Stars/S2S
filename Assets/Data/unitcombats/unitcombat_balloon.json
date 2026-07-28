@@ -13,6 +13,11 @@
  "skills": {
   "fliesToMove": true
  },
+ "tags": [
+  "air",
+  "submarine",
+  "submerged"
+ ],
  "vision": {
   "unit": {
    "concealment": {
@@ -20,10 +25,6 @@
    }
   }
  },
- "tags": [
-  "submarine",
-  "submerged"
- ],
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/balloons.dds"

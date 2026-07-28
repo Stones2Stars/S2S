@@ -56,9 +56,7 @@
  ],
  "tags": [
   "military",
-  "landUnit",
-  "recon",
-  "melee"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_STRIKE_TEAM",
  "combatClasses": [

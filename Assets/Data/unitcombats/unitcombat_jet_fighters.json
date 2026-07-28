@@ -1,5 +1,8 @@
 {
  "type": "UNITCOMBAT_JET_FIGHTERS",
+ "tags": [
+  "air"
+ ],
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/jet_fighters.dds"

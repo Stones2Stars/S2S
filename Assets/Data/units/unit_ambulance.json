@@ -94,11 +94,7 @@
  ],
  "tags": [
   "military",
-  "landUnit",
-  "medic",
-  "mechanized",
-  "civilian",
-  "armored"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_HEALTH_CARE",
  "combatClasses": [

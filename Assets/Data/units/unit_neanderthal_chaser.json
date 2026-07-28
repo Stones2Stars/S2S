@@ -72,8 +72,7 @@
   "assassin"
  ],
  "tags": [
-  "landUnit",
-  "recon"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_HUNTER",
  "combatClasses": [

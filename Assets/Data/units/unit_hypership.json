@@ -30,8 +30,7 @@
  "tags": [
   "settler",
   "civilian",
-  "landUnit",
-  "space"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_SETTLER",
  "combatClasses": [

@@ -105,8 +105,7 @@
  ],
  "tags": [
   "military",
-  "seaUnit",
-  "naval"
+  "seaUnit"
  ],
  "combatClass": "UNITCOMBAT_NUCLEAR_SHIPS",
  "combatClasses": [

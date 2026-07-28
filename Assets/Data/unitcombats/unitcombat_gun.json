@@ -10,6 +10,9 @@
    }
   }
  },
+ "tags": [
+  "gunpowder"
+ ],
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/gunpowder_units.dds"

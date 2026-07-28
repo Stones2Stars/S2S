@@ -61,9 +61,7 @@
  ],
  "tags": [
   "military",
-  "seaUnit",
-  "naval",
-  "police"
+  "seaUnit"
  ],
  "combatClass": "UNITCOMBAT_DIESEL_SHIPS",
  "combatClasses": [

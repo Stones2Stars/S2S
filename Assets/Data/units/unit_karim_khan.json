@@ -42,9 +42,7 @@
  ],
  "tags": [
   "military",
-  "landUnit",
-  "hero",
-  "archery"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_HERO",
  "combatClasses": [

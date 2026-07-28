@@ -45,10 +45,7 @@
  ],
  "tags": [
   "military",
-  "landUnit",
-  "synthetic",
-  "mechanized",
-  "armored"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_ROBOT",
  "combatClasses": [

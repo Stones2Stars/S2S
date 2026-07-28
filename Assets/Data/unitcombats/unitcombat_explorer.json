@@ -17,6 +17,9 @@
    }
   }
  },
+ "tags": [
+  "recon"
+ ],
  "vision": {
   "unit": {
    "detection": [

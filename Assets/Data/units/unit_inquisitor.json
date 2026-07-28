@@ -33,9 +33,7 @@
  "tags": [
   "merchant",
   "civilian",
-  "landUnit",
-  "missionary",
-  "police"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_MISSIONARY",
  "combatClasses": [

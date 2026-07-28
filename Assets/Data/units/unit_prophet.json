@@ -42,9 +42,7 @@
   "goldenAge"
  ],
  "tags": [
-  "landUnit",
-  "missionary",
-  "civilian"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_PRODIGY",
  "combatClasses": [

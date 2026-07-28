@@ -104,10 +104,7 @@
  ],
  "tags": [
   "military",
-  "landUnit",
-  "naval",
-  "mechanized",
-  "armored"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_DREADNOUGHT",
  "combatClasses": [

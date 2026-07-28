@@ -145,11 +145,7 @@
  ],
  "tags": [
   "military",
-  "landUnit",
-  "police",
-  "mechanized",
-  "civilian",
-  "armored"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_LAW_ENFORCEMENT",
  "combatClasses": [

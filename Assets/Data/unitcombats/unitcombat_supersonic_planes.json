@@ -1,5 +1,8 @@
 {
  "type": "UNITCOMBAT_SUPERSONIC_PLANES",
+ "tags": [
+  "air"
+ ],
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/super_sonic.dds"

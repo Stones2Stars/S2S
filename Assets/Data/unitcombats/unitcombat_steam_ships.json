@@ -1,5 +1,8 @@
 {
  "type": "UNITCOMBAT_STEAM_SHIPS",
+ "tags": [
+  "naval"
+ ],
  "vision": {
   "unit": {
    "detection": {

@@ -60,8 +60,7 @@
   "canMoveImpassable"
  ],
  "tags": [
-  "landUnit",
-  "space"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_WORMHOLE_SPACESHIP",
  "vision": {

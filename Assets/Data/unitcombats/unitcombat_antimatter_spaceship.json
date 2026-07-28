@@ -1,5 +1,8 @@
 {
  "type": "UNITCOMBAT_ANTIMATTER_SPACESHIP",
+ "tags": [
+  "space"
+ ],
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/antimatter_spaceship.dds"

@@ -95,8 +95,7 @@
  ],
  "tags": [
   "military",
-  "landUnit",
-  "siege"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_SIEGE",
  "combatClasses": [

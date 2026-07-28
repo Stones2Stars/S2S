@@ -3,6 +3,9 @@
  "skills": {
   "cannotMergeSplit": true
  },
+ "tags": [
+  "diplomat"
+ ],
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/attache.dds"

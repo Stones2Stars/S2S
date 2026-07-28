@@ -5,6 +5,9 @@
    "percent": 12
   }
  },
+ "tags": [
+  "mechanized"
+ ],
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/mobility.dds"

@@ -10,6 +10,9 @@
    }
   }
  },
+ "tags": [
+  "naval"
+ ],
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/dreadnoughts.dds"

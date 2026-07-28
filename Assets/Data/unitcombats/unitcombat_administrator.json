@@ -8,6 +8,9 @@
  "skills": {
   "cannotMergeSplit": true
  },
+ "tags": [
+  "bureaucrat"
+ ],
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/administrators.dds"

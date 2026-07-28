@@ -60,8 +60,7 @@
  ],
  "tags": [
   "military",
-  "airUnit",
-  "missile"
+  "airUnit"
  ],
  "combatClass": "UNITCOMBAT_MISSILE",
  "combatClasses": [

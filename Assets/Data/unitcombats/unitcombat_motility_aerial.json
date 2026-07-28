@@ -3,6 +3,9 @@
  "skills": {
   "fliesToMove": true
  },
+ "tags": [
+  "air"
+ ],
  "vision": {
   "unit": {
    "detection": {

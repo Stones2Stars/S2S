@@ -38,6 +38,7 @@ from collections import OrderedDict
 import engine
 from store import Store, REPO
 from curate_common import (FAMILY_ORDER, collapse_hide_and_seek, merge_vision, put_art, emit_art, descale100, fold_text_to_identity, gate_entity,
+                           TAG_BY_UNITCOMBAT, add_tags,
                            emit_sizematters, SM_FLAT_CHANGE, SM_COMBATMOD_CHANGE, SM_CARGO_CHANGE)
 # REUSE the Promotion unit-stat vocabulary (the shared §5 definition) + helpers.
 from curate_promotion import (COMBAT_MODS, FAMILIES, NEGATE_TAGS, CAP_BOOL, CAP_PAIR, CAP_COUNT, VISION_PAIRS,
@@ -248,8 +249,13 @@ def curate(typ, rec, store):
         out[f] = fams[f]
     if caps:
         out["skills"] = caps
-    # A unitcombat is TYPE-DERIVED, so it may carry the method tag (a promotion may not -- tags are not
-    # promotion-grantable, [tags.md]).
+    # --- tags: what this class says its CARRIER is (the identity half of the distillation, [tags.md]) ---
+    # A UnitCombat holds the good/bad-AGAINST stats; the tag says what the unit IS. Authored HERE, once: the
+    # engine unions a unit's combat classes' tags into the unit at load, so no unit carries a baked copy.
+    # Only the OBVIOUS identities map -- the taxonomy families (weapon/size/species/quality/group) carry none.
+    add_tags(out, TAG_BY_UNITCOMBAT.get(typ, ()))
+    # A unitcombat is TYPE-DERIVED, so it may carry the hiding-METHOD tag too (a promotion may not -- tags are
+    # not promotion-grantable, [tags.md]).
     collapse_hide_and_seek(out, vision, True)
     merge_vision(out, vision)
     if outcomes:

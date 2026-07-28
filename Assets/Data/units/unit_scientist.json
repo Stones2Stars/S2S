@@ -9,8 +9,7 @@
   "goldenAge"
  ],
  "tags": [
-  "landUnit",
-  "civilian"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_PRODIGY",
  "combatClasses": [

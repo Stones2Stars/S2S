@@ -13,6 +13,9 @@
  "skills": {
   "fliesToMove": true
  },
+ "tags": [
+  "mechanized"
+ ],
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/hovercrafts.dds"

@@ -38,9 +38,7 @@
  ],
  "tags": [
   "military",
-  "landUnit",
-  "police",
-  "gunpowder"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_LAW_ENFORCEMENT",
  "combatClasses": [

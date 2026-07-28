@@ -1,5 +1,8 @@
 {
  "type": "UNITCOMBAT_EARLY_SPACESHIP",
+ "tags": [
+  "space"
+ ],
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/early_spaceship.dds"

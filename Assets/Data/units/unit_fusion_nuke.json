@@ -53,8 +53,7 @@
  ],
  "tags": [
   "military",
-  "airUnit",
-  "missile"
+  "airUnit"
  ],
  "combatClass": "UNITCOMBAT_DOOM",
  "combatClasses": [

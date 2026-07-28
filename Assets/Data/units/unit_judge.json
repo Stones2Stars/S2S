@@ -30,8 +30,7 @@
  "tags": [
   "merchant",
   "civilian",
-  "landUnit",
-  "bureaucrat"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_ADMINISTRATOR",
  "combatClasses": [

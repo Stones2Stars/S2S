@@ -10,10 +10,7 @@
   "rivalTerritory"
  ],
  "tags": [
-  "landUnit",
-  "merchant",
-  "mechanized",
-  "civilian"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_TRADE",
  "combatClasses": [

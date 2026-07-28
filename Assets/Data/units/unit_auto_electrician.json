@@ -88,10 +88,7 @@
  ],
  "tags": [
   "military",
-  "landUnit",
-  "mechanized",
-  "civilian",
-  "armored"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_WHEELED",
  "combatClasses": [

@@ -75,11 +75,7 @@
  ],
  "tags": [
   "military",
-  "landUnit",
-  "siege",
-  "synthetic",
-  "mechanized",
-  "armored"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_SIEGE",
  "combatClasses": [

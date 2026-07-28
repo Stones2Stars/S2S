@@ -25,6 +25,9 @@
    }
   }
  },
+ "tags": [
+  "air"
+ ],
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/helicopters.dds"

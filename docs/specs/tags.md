@@ -8,6 +8,14 @@ The catalogue of a unit's **immutable, accounting-only classification tags** (th
 > for the life of the mod ([json.md §8](json.md): the classification registries mint from authored keys), so this
 > glossary catalogues the tags identified so far and more arriving is the normal state, never a gap to close. A unit
 > carrying no tag yet is fine (low-risk, filled in validation).
+>
+> ⚖ **AN EXTRA TAG COSTS NOTHING — certainty is NOT a gate (owner):** *"you can always have more tags, it doesn't
+> hurt to add an extra tag, even though we don't fully know what it does."* A tag is inert until something queries
+> it, so a surplus one is harmless while a MISSING one is not: it leaves its combat class doing identifier duty,
+> which is precisely what blocks the class purge ([engine.md](../reference/engine.md) UnitCombat). ⛔ So do not
+> withhold a tag pending a decision about what it means — author it and refine later; a wrong tag is a one-line
+> data edit. This is what the asymmetry looks like applied to classification, and it mirrors the emit surface's
+> *"too many events is better than not enough"* ([event-spine.md](event-spine.md)).
 
 ## What a tag is (recap)
 
@@ -46,11 +54,19 @@ are wired to it deeply); the tag is the classification view, and `IS_LAND`/`IS_W
 
 ### Tech / equipment / type / domain identity — derived from unitcombats (first pass DONE)
 
-Derived by folding a unit's **combat classes** (primary `<Combat>` + `<SubCombatTypes>`) through the
-unitcombat→tag mapping (`TAG_BY_UNITCOMBAT` in `curate_unit.py`): every unit carrying `UNITCOMBAT_X` also gets
-its mapped identity tag(s). ADDITIVE — the unit keeps `UNITCOMBAT_X` (the stat-holding modifier source); the tag
-is its queryable identity. Tags are creation/upgrade-set (not promotion-grantable), so the static primary+subs
-fold is complete. Only the OBVIOUS identities map; the size/species/motility/weapon taxonomy stays FLAGGED
+**A unit's effective tags are its OWN ∪ its combat classes'.** The identity tag is authored ON THE UNITCOMBAT
+(`TAG_BY_UNITCOMBAT` in `curate_common.py`, emitted by `curate_unitcombat.py`), and the engine unions a unit's
+combat classes' tags into the unit at load — `CvUnitInfo::deriveAtRegistryComplete`, over primary `<Combat>` +
+`<SubCombatTypes>`, the same walk the sizeMatters base ranks already use. ADDITIVE — the unit keeps
+`UNITCOMBAT_X` (the stat-holding modifier source); the tag is its queryable identity.
+
+⛔ **A unit carries NO baked copy, and that is the point.** Baking the fold into the unit's own block put one
+fact in two places, so re-tagging a class left every unit of it stale until re-curation. One home, derived at
+load. ⚑ The union is over primary + subs precisely because a tag is creation/upgrade-set and **not
+promotion-grantable** — a combat class a PROMOTION grants therefore contributes no tag, so nothing is missed by
+not walking the runtime set.
+
+Only the OBVIOUS identities map; the size/species/motility/weapon taxonomy stays FLAGGED
 (`sizeMatters`/data), never forced ([unitcombat-tag-mapping.md](../plans/structural-cleanup/unitcombat-tag-mapping.md)):
 
 - **tech / equipment:** `gunpowder` (uses gunpowder) · `mechanized` (mechanical/motorised) · `mounted` (cavalry) ·
@@ -76,8 +92,8 @@ tally (`CvCascadeTally::countUnitsWithTag`) counts them at empire/team/world sco
 
 Derived from the **criminal combat CLASS**, not a `DefaultUnitAI` role. A unit is criminal-type →
 tag **`outlaw`** iff its **primary `<Combat>` is `UNITCOMBAT_CRIMINAL`** *or* `UNITCOMBAT_CRIMINAL` appears in its
-**`<SubCombatTypes>`**. Curator: `combat_class == UNITCOMBAT_CRIMINAL or UNITCOMBAT_CRIMINAL in SubCombatTypes`
-(`curate_unit.py`).
+**`<SubCombatTypes>`**. ⚑ That rule needs no special case: it is exactly "primary ∪ subs", which IS the union
+above, so `outlaw` is simply `UNITCOMBAT_CRIMINAL`'s authored tag like any other.
 
 This combat-class signal is **broader** than the old `UNITAI_INFILTRATOR` gate (which caught only **13**): it now
 covers **22** units, adding the ones INFILTRATOR missed — `OUTLAW` (primary `RUFFIAN` + subcombat `CRIMINAL`),

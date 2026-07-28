@@ -24,8 +24,7 @@
  "tags": [
   "worker",
   "civilian",
-  "landUnit",
-  "space"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_SPACE_WORKER",
  "combatClasses": [

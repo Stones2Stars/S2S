@@ -105,9 +105,7 @@
  ],
  "tags": [
   "military",
-  "landUnit",
-  "gunpowder",
-  "synthetic"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_GUN",
  "combatClasses": [

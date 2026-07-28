@@ -62,9 +62,7 @@
  ],
  "tags": [
   "military",
-  "airUnit",
-  "air",
-  "recon"
+  "airUnit"
  ],
  "combatClass": "UNITCOMBAT_AIR_RECON",
  "combatClasses": [

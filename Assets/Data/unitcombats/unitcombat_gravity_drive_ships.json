@@ -1,5 +1,8 @@
 {
  "type": "UNITCOMBAT_GRAVITY_DRIVE_SHIPS",
+ "tags": [
+  "naval"
+ ],
  "vision": {
   "unit": {
    "detection": {

@@ -12,9 +12,7 @@
  ],
  "tags": [
   "spy",
-  "landUnit",
-  "bureaucrat",
-  "civilian"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_PRODIGY",
  "combatClasses": [

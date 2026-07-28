@@ -29,8 +29,7 @@
   }
  },
  "tags": [
-  "landUnit",
-  "naval"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_CAPTAIN",
  "combatClasses": [

@@ -88,11 +88,7 @@
  ],
  "tags": [
   "military",
-  "landUnit",
-  "synthetic",
-  "naval",
-  "mechanized",
-  "armored"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_HOVERCRAFT",
  "combatClasses": [

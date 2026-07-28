@@ -10,6 +10,9 @@
    }
   }
  },
+ "tags": [
+  "siege"
+ ],
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/missiles.dds"

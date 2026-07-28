@@ -23,6 +23,9 @@
    "FEATURE_CORAL_REEF": true
   }
  },
+ "tags": [
+  "recon"
+ ],
  "vision": {
   "unit": {
    "detection": {

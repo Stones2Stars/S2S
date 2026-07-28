@@ -78,9 +78,7 @@
  ],
  "tags": [
   "military",
-  "landUnit",
-  "animal",
-  "police"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_ANIMAL",
  "combatClasses": [

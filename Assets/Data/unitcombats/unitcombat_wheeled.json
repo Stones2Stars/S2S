@@ -10,6 +10,9 @@
    }
   }
  },
+ "tags": [
+  "mechanized"
+ ],
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/wheeled.dds"

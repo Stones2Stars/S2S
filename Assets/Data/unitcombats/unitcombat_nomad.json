@@ -1,5 +1,8 @@
 {
  "type": "UNITCOMBAT_NOMAD",
+ "tags": [
+  "nomad"
+ ],
  "vision": {
   "unit": {
    "detection": {

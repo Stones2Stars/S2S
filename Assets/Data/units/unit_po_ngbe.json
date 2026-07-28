@@ -44,9 +44,7 @@
  ],
  "tags": [
   "military",
-  "landUnit",
-  "hero",
-  "melee"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_HERO",
  "combatClasses": [

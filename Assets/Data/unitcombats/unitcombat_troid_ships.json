@@ -1,5 +1,8 @@
 {
  "type": "UNITCOMBAT_TROID_SHIPS",
+ "tags": [
+  "naval"
+ ],
  "vision": {
   "unit": {
    "detection": {

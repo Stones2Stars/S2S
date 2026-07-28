@@ -10,6 +10,9 @@
    }
   }
  },
+ "tags": [
+  "archery"
+ ],
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/archers.dds"

@@ -7,6 +7,9 @@
    "TERRAIN_OCEAN_TROPICAL": true
   }
  },
+ "tags": [
+  "naval"
+ ],
  "vision": {
   "unit": {
    "detection": {
