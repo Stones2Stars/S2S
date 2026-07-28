@@ -52,7 +52,6 @@
 #define NB_MAX_BUILDINGS 2
 
 
-class BuildingValueCache; // KOSHLING Mod - pre-calculate and cache building values for all focuses
 class CvArea;
 class CvUnitSelectionCriteria;
 
@@ -121,7 +120,7 @@ typedef struct
  * - Integration with global AI strategies, player traits, and game options.
  *
  * The class contains many methods whose implementations are complex (often >20 lines), including:
- * - AI_chooseProduction(), AI_assignWorkingPlots(), AI_specialistValue(), AI_bestUnit(), AI_bestUnitAI(), AI_bestBuildingsThreshold(), AI_scoreBuildingsFromListThreshold(), AI_buildingValue(), AI_buildingValueThreshold(), AI_buildingValueThresholdOriginal(), AI_buildingValueThresholdOriginalUncached(), AI_updateBestBuild(), AI_updateWorkersNeededHere(), AI_yieldValue(), AI_yieldValueInternal(), AI_plotValue(), AI_findBestImprovementForPlot(), AI_countGoodSpecialists(), AI_getCityImportance(), AI_getYieldMultipliers(), AI_getImprovementValue(), AI_bestAdvancedStartBuilding(), AI_getGoodTileCount(), AI_countWorkedPoorTiles(), AI_getTargetSize(), AI_getBestBuild(), AI_countBestBuilds(), AI_calculateWaterWorldPercent(), AI_yieldMultiplier(), AI_updateSpecialYieldMultiplier(), AI_specialYieldMultiplier(), AI_countNumBonuses(), AI_countNumImprovableBonuses(), AI_getPlotMagicValue(), AI_countGoodTiles(), AI_calculateTargetCulturePerTurn(), AI_stealPlots(), AI_cachePlayerCloseness(), AI_FlushBuildingValueCache(), getPropertySourceValue(), getPropertyDecay(), getPropertyNonBuildingSource(), AI_getBuildingYieldValue(), AI_getBuildingProductionValue(), AI_getBuildingCommerceValue(), buildingMayHaveAnyValue(), CalculateAllBuildingValues(), happynessValue(), healthValue(), worstWorkedPlotValue(), buildingPropertiesValue(), AI_establishSeeInvisibleCoverage(), AI_establishInvestigatorCoverage(), AI_isNegativePropertyUnit(), AI_meetsUnitSelectionCriteria().
+ * - AI_chooseProduction(), AI_assignWorkingPlots(), AI_specialistValue(), AI_bestUnit(), AI_bestUnitAI(), AI_bestBuildingsThreshold(), AI_scoreBuildingsFromListThreshold(), AI_buildingValue(), AI_buildingValueThreshold(), AI_buildingValueThresholdOriginal(), AI_buildingValueThresholdOriginalUncached(), AI_updateBestBuild(), AI_updateWorkersNeededHere(), AI_yieldValue(), AI_yieldValueInternal(), AI_plotValue(), AI_findBestImprovementForPlot(), AI_countGoodSpecialists(), AI_getCityImportance(), AI_getYieldMultipliers(), AI_getImprovementValue(), AI_bestAdvancedStartBuilding(), AI_getGoodTileCount(), AI_countWorkedPoorTiles(), AI_getTargetSize(), AI_getBestBuild(), AI_countBestBuilds(), AI_calculateWaterWorldPercent(), AI_yieldMultiplier(), AI_updateSpecialYieldMultiplier(), AI_specialYieldMultiplier(), AI_countNumBonuses(), AI_countNumImprovableBonuses(), AI_getPlotMagicValue(), AI_countGoodTiles(), AI_calculateTargetCulturePerTurn(), AI_stealPlots(), AI_cachePlayerCloseness(), getPropertySourceValue(), getPropertyDecay(), getPropertyNonBuildingSource(), AI_getBuildingYieldValue(), AI_getBuildingProductionValue(), AI_getBuildingCommerceValue(), buildingMayHaveAnyValue(), happynessValue(), healthValue(), worstWorkedPlotValue(), buildingPropertiesValue(), AI_establishSeeInvisibleCoverage(), AI_establishInvestigatorCoverage(), AI_isNegativePropertyUnit(), AI_meetsUnitSelectionCriteria().
  *
  * @note
  * - Many methods use internal caching and are optimized for performance.
@@ -791,7 +790,6 @@ public:
 	 * - Clears or retains cached values depending on the parameter.
 	 * - Ensures up-to-date building evaluations for city AI decisions.
 	 */
-	void AI_FlushBuildingValueCache(bool bRetainValues = false);
 
 	/**
 	 * Computes the property source value for a given property and source value.
@@ -840,7 +838,6 @@ private:
 	const;
 
 	bool buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags) const;
-	void CalculateAllBuildingValues(int iFocusFlags);
 	int happynessValue(int iAddedHappyness, int iBaseHappinessLevel, int iBaseHealthLevel) const;
 	int healthValue(int iAddedHealth, int iUseHappinessLevel, int iBaseHealthLevel, int iBaseFoodDifference) const;
 	int worstWorkedPlotValue() const;
@@ -854,7 +851,6 @@ private:
 	bool AI_meetsUnitSelectionCriteria(UnitTypes eUnit, const CvUnitSelectionCriteria* criteria) const;
 
 	//	The cache itself
-	BuildingValueCache* cachedBuildingValues;
 
 #ifdef YIELD_VALUE_CACHING
 	virtual void ClearYieldValueCache();

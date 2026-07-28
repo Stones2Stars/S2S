@@ -267,6 +267,14 @@ measure what survives, then cut the genuine residue. The classes below are the u
     iMilitaryHappinessUnits)`; `getAdditionalHealthByCivic` with `iIgnoreNoUnhealthyPopulationCount` /
     `iIgnoreBuildingOnlyHealthyCount`). Those flags encode a civic-SWAP simulation, not a candidate's
     contribution. Same ban applies — re-express the call site, never absorb the arguments.
+- **⚖ AI LOOPS ARE DESIGNED TOWARD THE NEW SURFACE, AND ANY FULL-RECALC-OF-ALL-THINGS IS NUKED (owner).** Two
+  rulings that govern this whole section, and they cut the other way from "don't touch the AI":
+  **(a) changing an AI loop to accommodate the surface is NOT banned** — the contexts exist precisely so it can;
+  **(b) there is no shim — there is only the new surface, which the AI loops accommodate.** ⛔ So the failure mode
+  is inverted from what it looks like: bending the surface to keep an AI loop's shape is the rollerskate, and
+  rewriting the loop is the work. A converted read wedged into an otherwise-legacy expression is the same defect
+  one level down — convert the ARITHMETIC CLUSTER, not the operand
+  ([fixed-point-and-scales §4c-bis](../../specs/curators/fixed-point-and-scales.md)).
 - **② Realized-value reads** (`getYieldRate`/`…100`, `getCommerceRate`/`…TimesTimes100`, `getMaintenanceTimes100`,
   `getTotalDefense`/`getDefenseModifier`) — already answerable by the existing group reads; these are a consumer
   move, not new surface.

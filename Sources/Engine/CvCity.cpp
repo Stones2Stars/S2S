@@ -1366,28 +1366,8 @@ void CvCity::doTurn()
 	//	Fail safe
 	m_deferringBonusProcessingCount = 0;
 
-	//	New turn.  Generally won't really need a cache flush because
-	//	last city of previous turn won't match, but for the sake of edge cases
-	//	flush anyway to be safe
 	{
 		PERF_SCOPE("city.cacheFlush", getOwner());
-		//	Building-value retention (derived-data repository pilot, bounded staleness --
-		//	Sources/docs/plans/derived-data-repository.md §6.2). The per-city building-value
-		//	cache is retained across turns: a full refresh runs only every
-		//	BUILDING_VALUE_REFRESH_PERIOD turns, staggered by city id so ~1/period of the
-		//	cities recompute each turn. Building changes still flush immediately
-		//	(setHasBuilding -> AI_FlushBuildingValueCache(true)); other inputs (tech, civics,
-		//	bonuses, pop) reach the values with at most period-turns lag, which the AI
-		//	deliberately tolerates for production choices. An earlier attempt at this HUNG:
-		//	stale data could spin doProduction's completion loop -- that loop is now bounded
-		//	with gated [CIT/spin] diagnostics, so worst case is one logged idle city-turn.
-		{
-			const int BUILDING_VALUE_REFRESH_PERIOD = 4;
-			if ((GC.getGame().getGameTurn() + getID()) % BUILDING_VALUE_REFRESH_PERIOD == 0)
-			{
-				AI_FlushBuildingValueCache();
-			}
-		}
 		setBuildingListInvalid();
 		setUnitListInvalid();
 	}
@@ -13515,11 +13495,6 @@ void CvCity::setHasBuilding(const BuildingTypes eType, const bool bNewValue, con
 	{
 		const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eType);
 
-		// Changing the buildings in a city invaldiates lots of cached data so flush the caches
-		if (kBuilding.EnablesOtherBuildings())
-		{
-			AI_FlushBuildingValueCache(true);
-			}
 #ifdef YIELD_VALUE_CACHING
 		ClearYieldValueCache(); // A new building can change yield rates
 #endif
