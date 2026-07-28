@@ -19,12 +19,12 @@
    },
    "detection": {
     "value": 400,
-    "unit": "IS_SMALL"
+    "unit": "IS_SIZE"
    }
   }
  },
  "tags": [
-  "small",
+  "size",
   "camouflage"
  ],
  "enabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",

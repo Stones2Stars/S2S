@@ -13,7 +13,7 @@
     },
     {
      "value": 1000,
-     "unit": "IS_UNSEEN"
+     "unit": "IS_INVISIBLE"
     }
    ]
   }

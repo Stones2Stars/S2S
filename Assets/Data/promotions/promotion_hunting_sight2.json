@@ -24,7 +24,7 @@
    "detection": [
     {
      "value": 100,
-     "unit": "IS_SMALL"
+     "unit": "IS_SIZE"
     },
     {
      "value": 100,

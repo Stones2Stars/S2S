@@ -16,7 +16,7 @@
   "unit": {
    "detection": {
     "value": 600,
-    "unit": "IS_SMALL"
+    "unit": "IS_SIZE"
    }
   }
  },

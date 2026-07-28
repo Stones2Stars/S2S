@@ -5,7 +5,7 @@
    "detection": [
     {
      "value": 200,
-     "unit": "IS_SMALL"
+     "unit": "IS_SIZE"
     },
     {
      "value": 200,

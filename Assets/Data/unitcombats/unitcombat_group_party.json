@@ -20,7 +20,7 @@
   }
  },
  "tags": [
-  "small"
+  "size"
  ],
  "enabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",
  "sizeMatters": {

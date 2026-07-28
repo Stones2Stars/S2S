@@ -14,12 +14,12 @@
    },
    "detection": {
     "value": -200,
-    "unit": "IS_SMALL"
+    "unit": "IS_SIZE"
    }
   }
  },
  "tags": [
-  "small"
+  "size"
  ],
  "enabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",
  "sizeMatters": {

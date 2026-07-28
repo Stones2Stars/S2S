@@ -130,7 +130,7 @@
     },
     {
      "value": 200,
-     "unit": "IS_UNSEEN"
+     "unit": "IS_INVISIBLE"
     }
    ],
    "flat": 100

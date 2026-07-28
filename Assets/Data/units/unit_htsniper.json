@@ -104,7 +104,7 @@
   "recon",
   "synthetic",
   "camouflage",
-  "unseen"
+  "invisible"
  ],
  "combatClass": "UNITCOMBAT_STRIKE_TEAM",
  "combatClasses": [
@@ -133,7 +133,7 @@
     },
     {
      "value": 200,
-     "unit": "IS_UNSEEN"
+     "unit": "IS_INVISIBLE"
     }
    ],
    "flat": 100

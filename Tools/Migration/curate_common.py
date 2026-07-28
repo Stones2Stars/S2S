@@ -364,15 +364,12 @@ def scale_vision(out):
 
 # The 14 legacy hiding METHODS -> their tag names. The method is WHAT a unit hides by, which is type-derived
 # membership, so it is a TAG ([tags.md]) and the seeker's qualifier reads it as IS_<TAG>.
-HIDE_METHOD_TAG = {
-    "INVISIBLE_SUBMARINE": "submarine",   "INVISIBLE_STEALTH": "stealth",
-    "INVISIBLE_CAMOUFLAGE": "camouflage", "INVISIBLE_INVISIBLE": "unseen",
-    "INVISIBLE_CLOAKED": "cloaked",       "INVISIBLE_VOID": "void",
-    "INVISIBLE_NANO": "nano",             "INVISIBLE_PHASED": "phased",
-    "INVISIBLE_IMMATERIAL": "immaterial", "INVISIBLE_DISGUISED": "disguised",
-    "INVISIBLE_POLITICAL": "political",   "INVISIBLE_SUBMERGED": "submerged",
-    "INVISIBLE_SIZE": "small",            "INVISIBLE_NAVAL_DISGUISE": "navalDisguise",
-}
+def hide_method_tag(invisible_type):
+    """INVISIBLE_NAVAL_DISGUISE -> "navalDisguise". MECHANICAL, never a table (owner: special cases are never a
+    thing -- we model them into the core set). The engine derives the same name from the same enum, so the two
+    sides cannot drift and neither carries a per-type list."""
+    parts = invisible_type[len("INVISIBLE_"):].lower().split("_")
+    return parts[0] + "".join(w.capitalize() for w in parts[1:])
 # A bare "can see this method" with no graduated strength -- it beats an ordinary hider and no more.
 HIDE_SEE_BASELINE = 1
 # NegatesInvisibility: the method simply stops working against this seeker.
@@ -399,28 +396,28 @@ def collapse_hide_and_seek(out, vision, bTags):
 
     # the hider: its method, and how well it hides by it
     method = vision.pop("invisible", None)
-    if isinstance(method, str) and method in HIDE_METHOD_TAG:
-        tags.append(HIDE_METHOD_TAG[method])
+    if isinstance(method, str) and method.startswith("INVISIBLE_"):
+        tags.append(hide_method_tag(method))
         conceal = max(conceal, HIDE_SEE_BASELINE)
     for typ, val in (vision.pop("invisibilityIntensity", None) or {}).items():
-        if typ in HIDE_METHOD_TAG and isinstance(val, int):
-            tags.append(HIDE_METHOD_TAG[typ])
+        if typ.startswith("INVISIBLE_") and isinstance(val, int):
+            tags.append(hide_method_tag(typ))
             conceal += val
 
     # the seeker: which methods it answers, and how well
     seen = OrderedDict()
     for typ in (vision.pop("seeInvisible", None) or []):
-        if typ in HIDE_METHOD_TAG:
+        if typ.startswith("INVISIBLE_"):
             seen[typ] = HIDE_SEE_BASELINE
     for typ, val in (vision.pop("visibilityIntensity", None) or {}).items():
-        if typ in HIDE_METHOD_TAG and isinstance(val, int):
+        if typ.startswith("INVISIBLE_") and isinstance(val, int):
             seen[typ] = seen.get(typ, 0) + val
     for typ in (vision.pop("negates", None) or []):
-        if typ in HIDE_METHOD_TAG:
+        if typ.startswith("INVISIBLE_"):
             seen[typ] = seen.get(typ, 0) + HIDE_NEGATE_STRENGTH
     for typ, val in seen.items():
         detect.append(OrderedDict([("value", val * VISION_PLOT),
-                                   ("unit", "IS_" + HIDE_METHOD_TAG[typ].upper())]))
+                                   ("unit", "IS_" + hide_method_tag(typ).upper())]))
 
     # the second reach and the per-substrate conditional tables -- dropped with the mechanic they served
     for dead in ("visibilityIntensityRange", "visibilityIntensitySameTile", "invisibleTerrain",
