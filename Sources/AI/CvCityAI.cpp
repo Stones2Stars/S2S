@@ -19,6 +19,7 @@
 #include "Defines/CvGlobals.h"
 #include "Engine/CvMap.h"
 #include "CvPlayerAI.h"
+#include "Enabler/CvEnablerKernel.h"     // the §5a vicinity union -- the enabler + context halves, one home
 #include "Engine/CvPlot.h"
 #include "Infrastructure/CvPython.h"
 #include "Engine/CvReachablePlotSet.h"
@@ -6614,7 +6615,11 @@ int CvCityAI::AI_buildingYieldValue(YieldTypes eYield, BuildingTypes eBuilding, 
 			if (hasBonus((BonusTypes)iI))
 			{
 				iMod += kBuilding.getBonusYieldModifier(iI, eYield);
-				if (kBuilding.getVicinityBonusYieldChanges(iI, eYield) != 0 && (hasVicinityBonus((BonusTypes)iI) || hasRawVicinityBonus((BonusTypes)iI)))
+				// The §5a vicinity union through its ONE home -- the enabler's active-building supply OR the
+				// context's stored MAP tier, two O(1) fetches. The engine getter this replaces re-derived both
+				// halves PER BONUS PER CANDIDATE: a radius walk plus a sweep of every building.
+				if (kBuilding.getVicinityBonusYieldChanges(iI, eYield) != 0
+				&& EnablerKernel::cityHasVicinityBonus(this, iI, CASC_VIC_OWNED))
 				{
 					iValue += kBuilding.getVicinityBonusYieldChanges(iI, eYield) * 8;
 				}
@@ -12766,7 +12771,8 @@ int CvCityAI::getBuildingCommerceValue(BuildingTypes eBuilding, int iI, int* aiF
 			iTempValue += (kBuilding.getBonusYieldModifier(iJ, YIELD_COMMERCE) * getBaseYieldRate(YIELD_COMMERCE) / 12);
 			//TB Traits end
 			iTempValue += (kBuilding.getBonusYieldChanges(iJ, YIELD_COMMERCE) * 8);
-			if (kBuilding.getVicinityBonusYieldChanges(iJ, YIELD_COMMERCE) != 0 && hasVicinityBonus((BonusTypes)iJ))
+			if (kBuilding.getVicinityBonusYieldChanges(iJ, YIELD_COMMERCE) != 0
+			&& EnablerKernel::cityHasVicinityBonus(this, iJ, CASC_VIC_CONNECTED))
 			{
 				iTempValue += (kBuilding.getVicinityBonusYieldChanges(iJ, YIELD_COMMERCE) * 8);
 			}
