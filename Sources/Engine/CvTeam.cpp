@@ -4390,13 +4390,15 @@ void CvTeam::processProjectChange(ProjectTypes eIndex, int iChange, int iOldProj
 							}
 						}
 					}
-					player.changeProjectHappiness(kProject.getGlobalHappiness());
-					player.changeProjectHealth(kProject.getGlobalHealth());
+					player.changeProjectHappiness(kProject.getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_EMPIRE));
+					player.changeProjectHealth(kProject.getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_EMPIRE));
 					player.changeProjectInflation(kProject.getInflationModifier());
-					player.changeMaintenanceModifier(kProject.getGlobalMaintenanceModifier());
-					player.changeDistanceMaintenanceModifier(kProject.getDistanceMaintenanceModifier());
-					player.changeNumCitiesMaintenanceModifier(kProject.getNumCitiesMaintenanceModifier());
-					player.changeConnectedCityMaintenanceModifier(kProject.getConnectedCityMaintenanceModifier());
+					// The maintenance KINDS at their scope ([DEC-scope-is-an-axis]). The connected-city kind is
+					// gone with the legacy getter: NOTHING in Assets/Data authors a connectedCity maintenance
+					// modifier, so the leg only ever added zero.
+					player.changeMaintenanceModifier(kProject.getMaintenanceModifier(MAINTENANCE_AMOUNT, CASC_SCOPE_EMPIRE));
+					player.changeDistanceMaintenanceModifier(kProject.getMaintenanceModifier(MAINTENANCE_DISTANCE, CASC_SCOPE_EMPIRE));
+					player.changeNumCitiesMaintenanceModifier(kProject.getMaintenanceModifier(MAINTENANCE_NUM_CITIES, CASC_SCOPE_EMPIRE));
 
 					for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
 					{

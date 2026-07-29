@@ -7281,24 +7281,22 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, CvArea* pAr
 		}
 	}
 
-	if (kBuilding.getAreaHealth() > 0)
+	// ⚠ The legacy AREA and GLOBAL wellbeing fields now compile to the SAME slot: the curator folds both
+	// iAreaHealth/iAreaHappiness and iGlobalHealth/iGlobalHappiness into <family>.empire.flat, because a landmass
+	// is not an ownable scope (state-repositories.md -- there is no area scope). So this reads the empire value
+	// ONCE and the AREA leg is gone; feeding both accumulators from one slot would double every such building.
+	// ⚠ Deliberate behaviour change, the ruled one: the legacy area term stopped at the coastline, the empire
+	// term does not (the iAreaFreeSpecialist precedent, legacy-value-calc-map).
+	const int iEmpireHealth = kBuilding.getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_EMPIRE);
+	if (iEmpireHealth > 0)
 	{
-		pArea->changeBuildingGoodHealth(getID(), (kBuilding.getAreaHealth() * iChange));
+		changeBuildingGoodHealth(iEmpireHealth * iChange);
 	}
 	else
 	{
-		pArea->changeBuildingBadHealth(getID(), (kBuilding.getAreaHealth() * iChange));
+		changeBuildingBadHealth(iEmpireHealth * iChange);
 	}
-	if (kBuilding.getGlobalHealth() > 0)
-	{
-		changeBuildingGoodHealth(kBuilding.getGlobalHealth() * iChange);
-	}
-	else
-	{
-		changeBuildingBadHealth(kBuilding.getGlobalHealth() * iChange);
-	}
-	pArea->changeBuildingHappiness(getID(), (kBuilding.getAreaHappiness() * iChange));
-	changeBuildingHappiness(kBuilding.getGlobalHappiness() * iChange);
+	changeBuildingHappiness(kBuilding.getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_EMPIRE) * iChange);
 	changeWorkerSpeedModifier(kBuilding.getWorkerSpeedModifier() * iChange);
 	changeSpaceProductionModifier(kBuilding.getGlobalSpaceProductionModifier() * iChange);
 	changeCityDefenseModifier(kBuilding.getAllCityDefenseModifier() * iChange);

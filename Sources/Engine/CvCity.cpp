@@ -8013,11 +8013,8 @@ int CvCity::getAdditionalHappinessByBuilding(BuildingTypes eBuilding, int& iGood
 	// Player Building
 	addGoodOrBad(GET_PLAYER(getOwner()).getExtraBuildingHappiness(eBuilding), iGood, iBad);
 
-	// Area
-	addGoodOrBad(kBuilding.getAreaHappiness(), iGood, iBad);
-
-	// Global
-	addGoodOrBad(kBuilding.getGlobalHappiness(), iGood, iBad);
+	// Empire -- the legacy AREA and GLOBAL fields fold to ONE slot (no area scope), so this reads once.
+	addGoodOrBad(kBuilding.getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_EMPIRE), iGood, iBad);
 
 	// Religion
 	if (kBuilding.getReligionType() != NO_RELIGION && kBuilding.getReligionType() == GET_PLAYER(getOwner()).getStateReligion())
@@ -8182,11 +8179,8 @@ int CvCity::getAdditionalHealthByBuilding(BuildingTypes eBuilding, int& iGood, i
 	// Player Building
 	addGoodOrBad(GET_PLAYER(getOwner()).getExtraBuildingHealth(eBuilding), iGood, iBad);
 
-	// Area
-	addGoodOrBad(kBuilding.getAreaHealth(), iGood, iBad);
-
-	// Global
-	addGoodOrBad(kBuilding.getGlobalHealth(), iGood, iBad);
+	// Empire -- the legacy AREA and GLOBAL fields fold to ONE slot (no area scope), so this reads once.
+	addGoodOrBad(kBuilding.getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_EMPIRE), iGood, iBad);
 
 	// No Unhealthiness from Buildings
 	if (isBuildingOnlyHealthy())

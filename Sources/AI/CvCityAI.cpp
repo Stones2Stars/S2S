@@ -5416,8 +5416,9 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 					iValue -= iWarWearinessModifer * iHappyModifier / 16;
 				}
 
-				iValue += (kBuilding.getAreaHappiness() * (iNumCitiesInArea - 1) * 8);
-				iValue += (kBuilding.getGlobalHappiness() * (iNumCities - 1) * 8);
+				// The legacy AREA and GLOBAL legs fold to ONE empire slot (no area scope), so the value is
+				// counted once, over EVERY other city rather than only the landmass's.
+				iValue += (kBuilding.getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_EMPIRE) * (iNumCities - 1) * 8);
 
 				int iWarWearinessPercentAnger = kOwner.getWarWearinessPercentAnger();
 				int iGlobalWarWearinessModifer = kBuilding.getGlobalWarWearinessModifier();
@@ -5477,8 +5478,9 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 
 				iValue += healthValue(iBuildingActualHealth, iBaseHappinessLevel - (getEspionageHappinessCounter() / 2) + std::max(0, iBuildingActualHappiness), iBaseHealthLevel, iBaseFoodDifference);
 
-				iValue += (kBuilding.getAreaHealth() * (iNumCitiesInArea - 1) * 4);
-				iValue += (kBuilding.getGlobalHealth() * (iNumCities - 1) * 4);
+				// The legacy AREA and GLOBAL legs fold to ONE empire slot (no area scope), so the value is
+				// counted once, over EVERY other city rather than only the landmass's.
+				iValue += (kBuilding.getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_EMPIRE) * (iNumCities - 1) * 4);
 			}
 
 			if ((iFocusFlags & BUILDINGFOCUS_EXPERIENCE) || (iPass > 0))
@@ -6694,8 +6696,8 @@ int CvCityAI::AI_projectValue(ProjectTypes eProject) const
 
 	const int iOurNumCities = GET_PLAYER(getOwner()).getNumCities();
 
-	iValue += 4 * iOurNumCities * project.getGlobalHappiness();
-	iValue += 4 * iOurNumCities * project.getGlobalHealth();
+	iValue += 4 * iOurNumCities * project.getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_EMPIRE);
+	iValue += 4 * iOurNumCities * project.getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_EMPIRE);
 
 	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 	{
@@ -12555,9 +12557,8 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 				return true;
 			}
 		}
-		if (kBuilding.getHappiness() > 0
-			|| kBuilding.getAreaHappiness() > 0
-			|| kBuilding.getGlobalHappiness() > 0
+		if (kBuilding.getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_CITY) > 0
+			|| kBuilding.getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_EMPIRE) > 0
 			|| kBuilding.getStateReligionHappiness() > 0
 			|| kBuilding.isNoUnhappiness()
 			|| kBuilding.getWarWearinessModifier() < 0
@@ -12579,9 +12580,8 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 				return true;
 			}
 		}
-		if (kBuilding.getHealth() > 0
-			|| kBuilding.getAreaHealth() > 0
-			|| kBuilding.getGlobalHealth() > 0
+		if (kBuilding.getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_CITY) > 0
+			|| kBuilding.getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_EMPIRE) > 0
 			|| kBuilding.isNoUnhealthyPopulation()
 			|| kBuilding.isBuildingOnlyHealthy()
 			|| !kBuilding.getBonusHealthChanges().empty()
