@@ -138,7 +138,6 @@ consuming code (high confidence unless noted), not general knowledge.
 | skill | what it does |
 |---|---|
 | `counterSpy` | espionage counter-agent — cuts enemy spy-mission success on/near its plot, intercepts spies (+XP) |
-| `dcmAirBomb` | ❌ **DEAD** (owner 2026-07-20) — DCM air bombing is slated for removal; **dropped** by `curate_unit.py`, not emitted. It also carried a COUNT (a tier), and a skill that carries a value is not a skill. |
 | `dcmFighterEngage` | can fly the DCM fighter-intercept (FEngage) mission (option-gated) |
 | `defenders` | per-`UnitCombat` list — unit is a valid target for attackers of those combat types (+ AI value) |
 | `defenseOnly` | stackable count feeding `isOnlyDefensive()` (with the static `onlyDefensive` bool) — blocks initiating attacks |

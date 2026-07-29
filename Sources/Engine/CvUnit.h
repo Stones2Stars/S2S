@@ -1410,22 +1410,6 @@ public:
 	bool verifyStackValid();
 
 // Dale - AB: Bombing START
-	bool canAirBomb1() const;
-	bool canAirBomb1At(const CvPlot* pPlot, int iX, int iY) const;
-	bool airBomb1(int iX, int iY);
-	bool canAirBomb2() const;
-	bool canAirBomb2At(const CvPlot* pPlot, int iX, int iY) const;
-	bool airBomb2(int iX, int iY);
-	bool canAirBomb3() const;
-	bool canAirBomb3At(const CvPlot* pPlot, int iX, int iY) const;
-	bool airBomb3(int iX, int iY);
-	bool canAirBomb4() const;
-	bool canAirBomb4At(const CvPlot* pPlot, int iX, int iY) const;
-	bool airBomb4(int iX, int iY);
-	bool canAirBomb5() const;
-	bool canAirBomb5At(const CvPlot* pPlot, int iX, int iY) const;
-	bool airBomb5(int iX, int iY);
-
 // Dale - RB: Field Bombard START
 	bool canRBombard(bool bEver = false) const;
 	bool canBombardAtRanged(const CvPlot* pPlot, int iX, int iY) const;

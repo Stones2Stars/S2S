@@ -111,7 +111,6 @@ void CvPythonGlobalContextLoader::CyGlobalContextPythonInterface2(boost::python:
 	OutputDebugString("Python Extension Module - CyGlobalContextPythonInterface2\n");
 	inst
 		// global defines.xml
-		.def("isDCM_AIR_BOMBING", &CyGlobalContext::isDCM_AIR_BOMBING, "bool ()")
 		.def("isDCM_RANGE_BOMBARD", &CyGlobalContext::isDCM_RANGE_BOMBARD, "bool ()")
 		.def("isDCM_OPP_FIRE", &CyGlobalContext::isDCM_OPP_FIRE, "bool ()")
 		.def("isDCM_ACTIVE_DEFENSE", &CyGlobalContext::isDCM_ACTIVE_DEFENSE, "bool ()")

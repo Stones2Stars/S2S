@@ -151,7 +151,6 @@ the block by this string and nothing translates.
 | `canSetScienceRate` | commerce-flexible (TECH_GAME_START) | the science slider |
 | `canSetCultureRate` | commerce-flexible (TECH_DRAMA) | the culture slider |
 | `canSetEspionageRate` | commerce-flexible (TECH_GAME_START) | the espionage slider |
-| ~~`dcmAirBomb1` / `dcmAirBomb2`~~ | `bDCMAirBombTech1/2` | DCM air-bomb target tiers — **MOOT: DCM air bombing is slated for whole-system REMOVAL** ([structural-cleanup.md](../plans/structural-cleanup/todo.md) Tier 2); the channels drop with it, and they are still authored until then |
 
 ## Grounded meanings
 

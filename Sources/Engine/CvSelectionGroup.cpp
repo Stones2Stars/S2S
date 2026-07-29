@@ -1131,46 +1131,6 @@ bool CvSelectionGroup::canStartMission(int iMission, int iData1, int iData2, CvP
 			{
 				break;
 			}
-			case MISSION_AIRBOMB1:
-			{
-				if (unitX->canAirBomb1At(pPlot, iData1, iData2))
-				{
-					return true;
-				}
-				break;
-			}
-			case MISSION_AIRBOMB2:
-			{
-				if (unitX->canAirBomb2At(pPlot, iData1, iData2))
-				{
-					return true;
-				}
-				break;
-			}
-			case MISSION_AIRBOMB3:
-			{
-				if (unitX->canAirBomb3At(pPlot, iData1, iData2))
-				{
-					return true;
-				}
-				break;
-			}
-			case MISSION_AIRBOMB4:
-			{
-				if (unitX->canAirBomb4At(pPlot, iData1, iData2))
-				{
-					return true;
-				}
-				break;
-			}
-			case MISSION_AIRBOMB5:
-			{
-				if (unitX->canAirBomb5At(pPlot, iData1, iData2))
-				{
-					return true;
-				}
-				break;
-			}
 			case MISSION_FENGAGE:
 			{
 				if (unitX->canFEngageAt(pPlot, iData1, iData2))
@@ -1823,46 +1783,6 @@ bool CvSelectionGroup::startMission()
 							{
 								bAction = true;
 								pUnitNode = NULL; // allow one unit at a time to do espionage
-							}
-							break;
-						}
-						case MISSION_AIRBOMB1:
-						{
-							if (pLoopUnit->airBomb1(headMissionQueueNode()->m_data.iData1, headMissionQueueNode()->m_data.iData2))
-							{
-								bAction = true;
-							}
-							break;
-						}
-						case MISSION_AIRBOMB2:
-						{
-							if (pLoopUnit->airBomb2(headMissionQueueNode()->m_data.iData1, headMissionQueueNode()->m_data.iData2))
-							{
-								bAction = true;
-							}
-							break;
-						}
-						case MISSION_AIRBOMB3:
-						{
-							if (pLoopUnit->airBomb3(headMissionQueueNode()->m_data.iData1, headMissionQueueNode()->m_data.iData2))
-							{
-								bAction = true;
-							}
-							break;
-						}
-						case MISSION_AIRBOMB4:
-						{
-							if (pLoopUnit->airBomb4(headMissionQueueNode()->m_data.iData1, headMissionQueueNode()->m_data.iData2))
-							{
-								bAction = true;
-							}
-							break;
-						}
-						case MISSION_AIRBOMB5:
-						{
-							if (pLoopUnit->airBomb5(headMissionQueueNode()->m_data.iData1, headMissionQueueNode()->m_data.iData2))
-							{
-								bAction = true;
 							}
 							break;
 						}
@@ -2658,46 +2578,6 @@ bool CvSelectionGroup::canDoInterfaceMode(InterfaceModeTypes eInterfaceMode)
 				}
 				break;
 			}
-			case INTERFACEMODE_AIRBOMB1:
-			{
-				if (pLoopUnit->canAirBomb1())
-				{
-					return true;
-				}
-				break;
-			}
-			case INTERFACEMODE_AIRBOMB2:
-			{
-				if (pLoopUnit->canAirBomb2())
-				{
-					return true;
-				}
-				break;
-			}
-			case INTERFACEMODE_AIRBOMB3:
-			{
-				if (pLoopUnit->canAirBomb3())
-				{
-					return true;
-				}
-				break;
-			}
-			case INTERFACEMODE_AIRBOMB4:
-			{
-				if (pLoopUnit->canAirBomb4())
-				{
-					return true;
-				}
-				break;
-			}
-			case INTERFACEMODE_AIRBOMB5:
-			{
-				if (pLoopUnit->canAirBomb5())
-				{
-					return true;
-				}
-				break;
-			}
 			case INTERFACEMODE_BOMBARD:
 			{
 				if (pLoopUnit->canRBombard())
@@ -2773,26 +2653,6 @@ bool CvSelectionGroup::canDoInterfaceModeAt(InterfaceModeTypes eInterfaceMode, C
 			case INTERFACEMODE_REBASE:
 			{
 				return pLoopUnit->canEnterPlot(pPlot);
-			}
-			case INTERFACEMODE_AIRBOMB1:
-			{
-				return GC.isDCM_AIR_BOMBING() && pLoopUnit->canAirBomb1At(pLoopUnit->plot(), pPlot->getX(), pPlot->getY());
-			}
-			case INTERFACEMODE_AIRBOMB2:
-			{
-				return GC.isDCM_AIR_BOMBING() && pLoopUnit->canAirBomb2At(pLoopUnit->plot(), pPlot->getX(), pPlot->getY());
-			}
-			case INTERFACEMODE_AIRBOMB3:
-			{
-				return GC.isDCM_AIR_BOMBING() && pLoopUnit->canAirBomb3At(pLoopUnit->plot(), pPlot->getX(), pPlot->getY());
-			}
-			case INTERFACEMODE_AIRBOMB4:
-			{
-				return GC.isDCM_AIR_BOMBING() && pLoopUnit->canAirBomb4At(pLoopUnit->plot(), pPlot->getX(), pPlot->getY());
-			}
-			case INTERFACEMODE_AIRBOMB5:
-			{
-				return GC.isDCM_AIR_BOMBING() && pLoopUnit->canAirBomb5At(pLoopUnit->plot(), pPlot->getX(), pPlot->getY());
 			}
 			case INTERFACEMODE_BOMBARD:
 			{
@@ -5817,11 +5677,6 @@ void CvSelectionGroup::read(FDataStreamBase* pStream)
 			case MISSION_PARADROP:
 			case MISSION_AIRBOMB:
 			case MISSION_RANGE_ATTACK:
-			case MISSION_AIRBOMB1:
-			case MISSION_AIRBOMB2:
-			case MISSION_AIRBOMB3:
-			case MISSION_AIRBOMB4:
-			case MISSION_AIRBOMB5:
 			case MISSION_RBOMBARD:
 			case MISSION_FENGAGE:
 			case MISSION_CLAIM_TERRITORY:

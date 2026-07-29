@@ -7086,11 +7086,6 @@ bool CvUnit::paradrop(int iX, int iY)
 
 bool CvUnit::canAirBomb() const
 {
-	if (GC.isDCM_AIR_BOMBING() && isHuman())
-	{
-		return false;
-	}
-
 	if (getDomainType() != DOMAIN_AIR)
 	{
 		return false;
@@ -7131,57 +7126,22 @@ bool CvUnit::canAirBombAt(const CvPlot* pPlot, int iX, int iY) const
 
 	CvCity* pCity = pTargetPlot->getPlotCity();
 
-	if (pTargetPlot->getImprovementType() != NO_IMPROVEMENT)
+	// An improvement on the target plot short-circuits to allowed: the only test that lived here was the DCM
+	// sea-unit one, so with DCM air bombing gone the branch has nothing left to ask.
+	if (pTargetPlot->getImprovementType() == NO_IMPROVEMENT)
 	{
-		if (GC.getImprovementInfo(pTargetPlot->getImprovementType()).isActsAsCity() && pCity == NULL)
+		if (pCity != NULL)
 		{
-			if (m_pUnitInfo->getDCMAirBomb4())
+			if (!pCity->isBombardable(this))
 			{
-				int iCount = 0;
-				foreach_(const CvUnit* pLoopUnit, pPlot->units())
-				{
-					if (pLoopUnit->getDomainType() == DOMAIN_SEA && atWar(pLoopUnit->getTeam(), getTeam()))
-					{
-						iCount++;
-					}
-				}
-				if (iCount > 0)
-				{
-					return true;
-				}
+				return false;
 			}
 		}
-	}
-	else if (pCity != NULL)
-	{
-		if (GC.isDCM_AIR_BOMBING())
-		{
-			for (int iI = 0; iI < MAX_PLAYERS; ++iI)
-			{
-				if (atWar(GET_PLAYER((PlayerTypes)iI).getTeam(), getTeam()))
-				{
-					if (algo::any_of(GET_PLAYER((PlayerTypes)iI).units(),
-						CvUnit::fn::plot() == pTargetPlot && CvUnit::fn::getDomainType() == DOMAIN_SEA))
-					{
-						return true;
-					}
-				}
-			}
-			if (pCity->isBombardable(this))
-			{
-				return true;
-			}
-			return false;
-		}
-		else if (!(pCity->isBombardable(this)))
+		// Toffer - Something is wrong here, this else if can never be true as we already established that there's no improvement here if first if fails.
+		else if (!pTargetPlot->isImprovementDestructible())
 		{
 			return false;
 		}
-	}
-	// Toffer - Something is wrong here, this else if can never be true as we already established that there's no improvement here if first if fails.
-	else if (!pTargetPlot->isImprovementDestructible())
-	{
-		return false;
 	}
 	return true;
 }
@@ -7215,211 +7175,79 @@ bool CvUnit::airBomb(int iX, int iY)
 
 	if (pPlot->getImprovementType() != NO_IMPROVEMENT)
 	{
-		if (!GC.isDCM_AIR_BOMBING())
+		
+		if (GC.getGame().getSorenRandNum(getAirBombCurrRate(), "Air Bomb - Offense")
+			>=
+			GC.getGame().getSorenRandNum(GC.getImprovementInfo(pPlot->getImprovementType()).getAirBombDefense(), "Air Bomb - Defense"))
 		{
-			if (GC.getGame().getSorenRandNum(getAirBombCurrRate(), "Air Bomb - Offense")
-				>=
-				GC.getGame().getSorenRandNum(GC.getImprovementInfo(pPlot->getImprovementType()).getAirBombDefense(), "Air Bomb - Defense"))
+			AddDLLMessage(
+				getOwner(), true, GC.getEVENT_MESSAGE_TIME(),
+				gDLL->getText(
+					"TXT_KEY_MISC_YOU_UNIT_DESTROYED_IMP",
+					getNameKey(), GC.getImprovementInfo(pPlot->getImprovementType()).getTextKeyWide()
+				),
+				"AS2D_PILLAGE", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_GREEN(), pPlot->getX(), pPlot->getY()
+			);
+			if (pPlot->isOwned())
 			{
-				AddDLLMessage(
-					getOwner(), true, GC.getEVENT_MESSAGE_TIME(),
-					gDLL->getText(
-						"TXT_KEY_MISC_YOU_UNIT_DESTROYED_IMP",
-						getNameKey(), GC.getImprovementInfo(pPlot->getImprovementType()).getTextKeyWide()
-					),
-					"AS2D_PILLAGE", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_GREEN(), pPlot->getX(), pPlot->getY()
-				);
-				if (pPlot->isOwned())
+				if (BARBARIAN_PLAYER != getVisualOwner(getTeam()))
 				{
-					if (BARBARIAN_PLAYER != getVisualOwner(getTeam()))
-					{
-						AddDLLMessage(
-							pPlot->getOwner(), false, GC.getEVENT_MESSAGE_TIME(),
-							gDLL->getText(
-								"TXT_KEY_MISC_YOU_IMP_WAS_DESTROYED",
-								GC.getImprovementInfo(pPlot->getImprovementType()).getTextKeyWide(),
-								getNameKey(), getVisualCivAdjective(pPlot->getTeam())
-							),
-							"AS2D_PILLAGED", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_RED(), pPlot->getX(), pPlot->getY(), true, true
-						);
-					}
-					else
-					{
-						AddDLLMessage(
-							pPlot->getOwner(), false, GC.getEVENT_MESSAGE_TIME(),
-							gDLL->getText(
-								"TXT_KEY_MISC_YOU_IMP_WAS_DESTROYED_HIDDEN",
-								GC.getImprovementInfo(pPlot->getImprovementType()).getTextKeyWide(), getNameKey()
-							),
-							"AS2D_PILLAGED", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_RED(), pPlot->getX(), pPlot->getY(), true, true
-						);
-					}
+					AddDLLMessage(
+						pPlot->getOwner(), false, GC.getEVENT_MESSAGE_TIME(),
+						gDLL->getText(
+							"TXT_KEY_MISC_YOU_IMP_WAS_DESTROYED",
+							GC.getImprovementInfo(pPlot->getImprovementType()).getTextKeyWide(),
+							getNameKey(), getVisualCivAdjective(pPlot->getTeam())
+						),
+						"AS2D_PILLAGED", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_RED(), pPlot->getX(), pPlot->getY(), true, true
+					);
 				}
-				pPlot->setImprovementType(GC.getImprovementInfo(pPlot->getImprovementType()).getImprovementPillage());
+				else
+				{
+					AddDLLMessage(
+						pPlot->getOwner(), false, GC.getEVENT_MESSAGE_TIME(),
+						gDLL->getText(
+							"TXT_KEY_MISC_YOU_IMP_WAS_DESTROYED_HIDDEN",
+							GC.getImprovementInfo(pPlot->getImprovementType()).getTextKeyWide(), getNameKey()
+						),
+						"AS2D_PILLAGED", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_RED(), pPlot->getX(), pPlot->getY(), true, true
+					);
+				}
 			}
-			else
-			{
-				AddDLLMessage(
-					getOwner(), true, GC.getEVENT_MESSAGE_TIME(),
-					gDLL->getText(
-						"TXT_KEY_MISC_YOU_UNIT_FAIL_DESTROY_IMP",
-						getNameKey(), GC.getImprovementInfo(pPlot->getImprovementType()).getTextKeyWide()
-					),
-					"AS2D_BOMB_FAILS", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_RED(), pPlot->getX(), pPlot->getY()
-				);
-			}
+			pPlot->setImprovementType(GC.getImprovementInfo(pPlot->getImprovementType()).getImprovementPillage());
 		}
-		else if (GC.getImprovementInfo(pPlot->getImprovementType()).isActsAsCity() && pCity == NULL && m_pUnitInfo->getDCMAirBomb4()
-
-		&& algo::any_of(pPlot->units(), CvUnit::fn::getDomainType() == DOMAIN_SEA))
+		else
 		{
-			airBomb4(iX, iY);
+			AddDLLMessage(
+				getOwner(), true, GC.getEVENT_MESSAGE_TIME(),
+				gDLL->getText(
+					"TXT_KEY_MISC_YOU_UNIT_FAIL_DESTROY_IMP",
+					getNameKey(), GC.getImprovementInfo(pPlot->getImprovementType()).getTextKeyWide()
+				),
+				"AS2D_BOMB_FAILS", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_RED(), pPlot->getX(), pPlot->getY()
+			);
 		}
 	}
 	else if (pCity != NULL)
 	{
-		if (!GC.isDCM_AIR_BOMBING())
-		{
-			pCity->changeDefenseModifier(-getAirBombCurrRate());
-
-			AddDLLMessage(
-				pCity->getOwner(), false, GC.getEVENT_MESSAGE_TIME(),
-				gDLL->getText(
-					"TXT_KEY_MISC_YOU_DEFENSES_REDUCED_TO",
-					pCity->getNameKey(), pCity->getDefenseModifier(false), getNameKey()
-				),
-				"AS2D_BOMBARDED", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_RED(), pCity->getX(), pCity->getY(), true, true
-			);
-			AddDLLMessage(
-				getOwner(), true, GC.getEVENT_MESSAGE_TIME(),
-				gDLL->getText(
-					"TXT_KEY_MISC_ENEMY_DEFENSES_REDUCED_TO",
-					getNameKey(), pCity->getNameKey(), pCity->getDefenseModifier(false)
-				),
-				"AS2D_BOMBARD", MESSAGE_TYPE_INFO, NULL, GC.getCOLOR_GREEN(), pCity->getX(), pCity->getY()
-			);
-		}
-		else
-		{
-			int iMis1, iMis2, iMis3;
-			iMis1 = iMis2 = iMis3 = 0;
-			if (m_pUnitInfo->getDCMAirBomb1())
-			{
-				iMis1 = 10;
-				int iCount = 0;
-				foreach_(const CvPlot* pLoopPlot, plot()->rect(2, 2))
-				{
-					iCount += algo::count_if(pLoopPlot->units(), CvUnit::fn::getOwner() == getOwner());
-				}
-				iMis1 *= iCount * 2;
-			}
-
-			if (m_pUnitInfo->getDCMAirBomb2() || m_pUnitInfo->getDCMAirBomb3())
-			{
-				const bool bAirBomb2 = m_pUnitInfo->getDCMAirBomb2();
-				const bool bAirBomb3 = m_pUnitInfo->getDCMAirBomb3();
-
-				foreach_(const BuildingTypes eType, pCity->getHasBuildings())
-				{
-					if (pCity->isDisabledBuilding(eType))
-					{
-						continue;
-					}
-					if (GC.getBuildingInfo(eType).getDCMAirbombMission() == 2)
-					{
-						if (bAirBomb2)
-						{
-							iMis2 += 10;
-						}
-					}
-					else if (bAirBomb3 && GC.getBuildingInfo(eType).getDCMAirbombMission() == 3)
-					{
-						iMis3 += 20;
-					}
-				}
-			}
-			const int iMis4 = m_pUnitInfo->getDCMAirBomb4() ? 40 * algo::count_if(pPlot->units(), CvUnit::fn::getDomainType() == DOMAIN_SEA) : 0;
-
-			const int iMis5 = m_pUnitInfo->getDCMAirBomb5() ? 10 * GC.getGame().getSorenRandNum(20, "Strat Bombing") : 0;
-
-			int iMis0 = 1;
-			if (iMis2 > iMis1)
-			{
-				iMis1 = iMis2;
-				iMis0++;
-			}
-			if (iMis3 > iMis1)
-			{
-				iMis1 = iMis3;
-				iMis0++;
-			}
-			if (iMis4 > iMis1)
-			{
-				iMis1 = iMis4;
-				iMis0++;
-			}
-			if (iMis5 > iMis1)
-			{
-				iMis0++;
-			}
-			bool bNoTarget = true;
-			switch(iMis0)
-			{
-				case 1:
-				{
-					if (airBomb1(iX, iY))
-					{
-						bNoTarget = false;
-					}
-					break;
-				}
-				case 2:
-				{
-					if (airBomb2(iX, iY))
-					{
-						bNoTarget = false;
-					}
-					break;
-				}
-				case 3:
-				{
-					if (airBomb3(iX, iY))
-					{
-						bNoTarget = false;
-					}
-					break;
-				}
-				case 4:
-				{
-					if (airBomb4(iX, iY))
-					{
-						bNoTarget = false;
-					}
-					break;
-				}
-				case 5:
-				{
-					if (airBomb5(iX, iY))
-					{
-						bNoTarget = false;
-					}
-					break;
-				}
-			}
-			if (bNoTarget && pCity->getPopulation() > 1 && GC.getGame().getSorenRandNum(5, "Airbomb population") < 2)
-			{
-				pCity->changePopulation(-1);
-
-				AddDLLMessage(
-					getOwner(), true, GC.getEVENT_MESSAGE_TIME(), gDLL->getText("TXT_KEY_MISC_YOU_AIRBOMB_POP"),
-					"AS2D_BOMBARD", MESSAGE_TYPE_INFO, NULL, GC.getCOLOR_GREEN(), pCity->getX(), pCity->getY(), true, true
-				);
-				AddDLLMessage(
-					pCity->getOwner(), false, GC.getEVENT_MESSAGE_TIME(), gDLL->getText("TXT_KEY_MISC_ENEMY_AIRBOMB_POP"),
-					"AS2D_BOMBARDED", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_RED(), pCity->getX(), pCity->getY(), true, true
-				);
-			}
-		}
+		pCity->changeDefenseModifier(-getAirBombCurrRate());
+		AddDLLMessage(
+			pCity->getOwner(), false, GC.getEVENT_MESSAGE_TIME(),
+			gDLL->getText(
+				"TXT_KEY_MISC_YOU_DEFENSES_REDUCED_TO",
+				pCity->getNameKey(), pCity->getDefenseModifier(false), getNameKey()
+			),
+			"AS2D_BOMBARDED", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_RED(), pCity->getX(), pCity->getY(), true, true
+		);
+		AddDLLMessage(
+			getOwner(), true, GC.getEVENT_MESSAGE_TIME(),
+			gDLL->getText(
+				"TXT_KEY_MISC_ENEMY_DEFENSES_REDUCED_TO",
+				getNameKey(), pCity->getNameKey(), pCity->getDefenseModifier(false)
+			),
+			"AS2D_BOMBARD", MESSAGE_TYPE_INFO, NULL, GC.getCOLOR_GREEN(), pCity->getX(), pCity->getY()
+		);
+	
 	}
 	setReconPlot(pPlot);
 	setMadeAttack(true);
@@ -11044,11 +10872,6 @@ BuildTypes CvUnit::getBuildType() const
 		case MISSION_ESPIONAGE:
 		case MISSION_DIE_ANIMATION:
 		// Dale - AB: Bombing
-		case MISSION_AIRBOMB1:
-		case MISSION_AIRBOMB2:
-		case MISSION_AIRBOMB3:
-		case MISSION_AIRBOMB4:
-		case MISSION_AIRBOMB5:
 		// Dale - RB: Field Bombard
 		case MISSION_RBOMBARD:
 		// Dale - FE: Fighters
@@ -22409,817 +22232,6 @@ int CvUnit::getSelectionSoundScript() const
 }
 
 
-// Dale - AB: Bombing
-bool CvUnit::canAirBomb1() const
-{
-	if (!GC.isDCM_AIR_BOMBING())
-	{
-		return false;
-	}
-	if (!m_pUnitInfo->getDCMAirBomb1())
-	{
-		return false;
-	}
-	if (getDomainType() != DOMAIN_AIR)
-	{
-		return false;
-	}
-
-	if (getAirBombBaseRate() == 0)
-	{
-		return false;
-	}
-
-	if (isMadeAttack())
-	{
-		return false;
-	}
-
-	return true;
-}
-
-
-bool CvUnit::canAirBomb1At(const CvPlot* pPlot, int iX, int iY) const
-{
-	if (!canAirBomb1())
-	{
-		return false;
-	}
-
-	const CvPlot* pTargetPlot = GC.getMap().plot(iX, iY);
-	if (plotDistance(pPlot->getX(), pPlot->getY(), pTargetPlot->getX(), pTargetPlot->getY()) > airRange()
-	|| pTargetPlot->isOwned() && !atWar(pTargetPlot->getTeam(), getTeam()))
-	{
-		return false;
-	}
-
-	const CvCity* pCity = pTargetPlot->getPlotCity();
-	if (pCity != NULL && pCity->isBombardable(this))
-	{
-		return true;
-	}
-	if (pTargetPlot->isImprovementDestructible())
-	{
-		return true;
-	}
-	return false;
-}
-
-
-bool CvUnit::airBomb1(int iX, int iY)
-{
-	PROFILE_EXTRA_FUNC();
-	if (!canAirBomb1At(plot(), iX, iY))
-	{
-		return false;
-	}
-
-	CvPlot* pPlot = GC.getMap().plot(iX, iY);
-
-	if (interceptTest(pPlot))
-	{
-		return true;
-	}
-	CvWString szBuffer;
-
-	CvCity* pCity = pPlot->getPlotCity();
-	if (pCity != NULL)
-	{
-		pCity->changeDefenseDamage(getAirBombCurrRate());
-
-		changeExperience(GC.getDefineINT("MIN_EXPERIENCE_PER_COMBAT"), maxXPValue(NULL, pCity->isHominid()), pCity->getOwner() == getOwner());
-
-
-		szBuffer = gDLL->getText("TXT_KEY_MISC_YOU_DEFENSES_REDUCED_TO", pCity->getNameKey(), pCity->getDefenseModifier(false), getNameKey());
-		AddDLLMessage(pCity->getOwner(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_RED(), pCity->getX(), pCity->getY(), true, true);
-
-		szBuffer = gDLL->getText("TXT_KEY_MISC_ENEMY_DEFENSES_REDUCED_TO", getNameKey(), pCity->getNameKey(), pCity->getDefenseModifier(false));
-		AddDLLMessage(getOwner(), true, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARD", MESSAGE_TYPE_INFO, NULL, GC.getCOLOR_GREEN(), pCity->getX(), pCity->getY());
-	}
-	else
-	{
-		if (pPlot->getImprovementType() != NO_IMPROVEMENT)
-		{
-			if (GC.getGame().getSorenRandNum(getAirBombCurrRate(), "Air Bomb - Offense") >=
-					GC.getGame().getSorenRandNum(GC.getImprovementInfo(pPlot->getImprovementType()).getAirBombDefense(), "Air Bomb - Defense"))
-			{
-				{
-
-					szBuffer = gDLL->getText("TXT_KEY_MISC_YOU_UNIT_DESTROYED_IMP", getNameKey(), GC.getImprovementInfo(pPlot->getImprovementType()).getTextKeyWide());
-					AddDLLMessage(getOwner(), true, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_PILLAGE", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_GREEN(), pPlot->getX(), pPlot->getY());
-				}
-
-				if (pPlot->isOwned())
-				{
-					{
-
-						szBuffer = gDLL->getText("TXT_KEY_MISC_YOU_IMP_WAS_DESTROYED", GC.getImprovementInfo(pPlot->getImprovementType()).getTextKeyWide(), getNameKey(), GET_PLAYER(getOwner()).getCivilizationAdjectiveKey());
-						AddDLLMessage(pPlot->getOwner(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_PILLAGED", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_RED(), pPlot->getX(), pPlot->getY(), true, true);
-					}
-					changeExperience(GC.getDefineINT("MIN_EXPERIENCE_PER_COMBAT"), maxXPValue(NULL, pPlot->isHominid()), true, pPlot->getOwner() == getOwner());
-				}
-
-				pPlot->setImprovementType(GC.getImprovementInfo(pPlot->getImprovementType()).getImprovementPillage());
-
-			}
-			else
-			{
-
-				szBuffer = gDLL->getText("TXT_KEY_MISC_YOU_UNIT_FAIL_DESTROY_IMP", getNameKey(), GC.getImprovementInfo(pPlot->getImprovementType()).getTextKeyWide());
-				AddDLLMessage(getOwner(), true, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMB_FAILS", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_RED(), pPlot->getX(), pPlot->getY());
-			}
-		}
-	}
-
-	setReconPlot(pPlot);
-
-	setMadeAttack(true);
-	changeMoves(GC.getMOVE_DENOMINATOR());
-
-	addMission(CvAirMissionDefinition(MISSION_AIRBOMB, pPlot, this));
-
-	if (isSuicide())
-	{
-		kill(true);
-	}
-	return true;
-}
-
-bool CvUnit::canAirBomb2() const
-{
-	if (!GC.isDCM_AIR_BOMBING())
-	{
-		return false;
-	}
-	if (!m_pUnitInfo->getDCMAirBomb2())
-	{
-		return false;
-	}
-	if (getDomainType() != DOMAIN_AIR)
-	{
-		return false;
-	}
-	if (getAirBombBaseRate() == 0)
-	{
-		return false;
-	}
-	if (isMadeAttack())
-	{
-		return false;
-	}
-	return true;
-}
-
-
-bool CvUnit::canAirBomb2At(const CvPlot* pPlot, int iX, int iY) const
-{
-	if (!canAirBomb2())
-	{
-		return false;
-	}
-	const CvPlot* pTargetPlot = GC.getMap().plot(iX, iY);
-	if (plotDistance(pPlot->getX(), pPlot->getY(), pTargetPlot->getX(), pTargetPlot->getY()) > airRange())
-	{
-		return false;
-	}
-	if (pTargetPlot->isOwned() && !atWar(pTargetPlot->getTeam(), getTeam()))
-	{
-		return false;
-	}
-	return pTargetPlot->getPlotCity() != NULL;
-}
-
-
-bool CvUnit::airBomb2(int iX, int iY)
-{
-	PROFILE_EXTRA_FUNC();
-	CvCity* pCity;
-	CvPlot* pPlot;
-	CvWString szBuffer;
-	int build, iI, iAttempts, iMaxAttempts;
-	bool bNoTarget = true;
-	bool abTech1 = false;
-	bool abTech2 = false;
-	CLinkList<int> buildingList;
-
-	if (!canAirBomb2At(plot(), iX, iY))
-	{
-		return false;
-	}
-	pPlot = GC.getMap().plot(iX, iY);
-	if (interceptTest(pPlot))
-	{
-		return true;
-	}
-
-	pCity = pPlot->getPlotCity();
-
-	for (iI = 0; iI < GC.getNumTechInfos(); iI++)
-	{
-		if (GC.getTechInfo((TechTypes)iI).getDCMAirBombTech1())
-		{
-            if (GET_TEAM(GET_PLAYER(getOwner()).getTeam()).isHasTech((TechTypes)iI))
-			{
-				abTech1 = true;
-			}
-		}
-		if (GC.getTechInfo((TechTypes)iI).getDCMAirBombTech2())
-		{
-            if (GET_TEAM(GET_PLAYER(getOwner()).getTeam()).isHasTech((TechTypes)iI))
-			{
-				abTech2 = true;
-			}
-		}
-	}
-	if (pCity != NULL)
-	{
-		buildingList.clear();
-		for (iI = 0; iI < GC.getNumBuildingInfos(); iI++)
-		{
-			if (GC.getBuildingInfo((BuildingTypes)iI).getDCMAirbombMission() == 2)
-			{
-				buildingList.insertAtEnd(iI);
-			}
-		}
-		if (buildingList.getLength() > 0)
-		{
-			iI = GC.getGame().getSorenRandNum(buildingList.getLength(), "Airbomb building");
-			build = buildingList.nodeNum(iI)->m_data;
-			if (pCity->isActiveBuilding((BuildingTypes)build))
-			{
-				bNoTarget = false;
-			}
-			if (abTech1)
-			{
-				iAttempts = 0;
-				if (abTech2)
-				{
-					iMaxAttempts = 8;
-				}
-				else
-				{
-					iMaxAttempts = 4;
-				}
-				while (bNoTarget)
-				{
-					iAttempts++;
-					iI = GC.getGame().getSorenRandNum(buildingList.getLength(), "Airbomb building");
-					build = buildingList.nodeNum(iI)->m_data;
-					if (pCity->isActiveBuilding((BuildingTypes)build) || iAttempts > iMaxAttempts)
-					{
-						bNoTarget = false;
-					}
-				}
-			}
-			if (pCity->isActiveBuilding((BuildingTypes)build))
-			{
-				bNoTarget = false;
-				changeExperience(GC.getDefineINT("MIN_EXPERIENCE_PER_COMBAT"), maxXPValue(NULL, pCity->isHominid()), true, pCity->getOwner() == getOwner());
-
-				pCity->changeHasBuilding((BuildingTypes)build, false);
-				{
-
-					szBuffer = gDLL->getText("TXT_KEY_MISC_ENEMY_AIRBOMB2SUCCESS", GC.getBuildingInfo((BuildingTypes)build).getTextKeyWide(), pCity->getNameKey());
-					AddDLLMessage(pCity->getOwner(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_RED(), pCity->getX(), pCity->getY(), true, true);
-					szBuffer = gDLL->getText("TXT_KEY_MISC_YOU_AIRBOMB2SUCCESS", GC.getBuildingInfo((BuildingTypes)build).getTextKeyWide(), pCity->getNameKey());
-					AddDLLMessage(getOwner(), true, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARD", MESSAGE_TYPE_INFO, NULL, GC.getCOLOR_GREEN(), pCity->getX(), pCity->getY(), true, true);
-				}
-
-			}
-			else
-			{
-
-				szBuffer = gDLL->getText("TXT_KEY_MISC_ENEMY_AIRBOMB2FAIL", pCity->getNameKey());
-				AddDLLMessage(pCity->getOwner(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_RED(), pCity->getX(), pCity->getY(), true, true);
-				szBuffer = gDLL->getText("TXT_KEY_MISC_YOU_AIRBOMB2FAIL", pCity->getNameKey());
-				AddDLLMessage(getOwner(), true, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARD", MESSAGE_TYPE_INFO, NULL, GC.getCOLOR_GREEN(), pCity->getX(), pCity->getY(), true, true);
-			}
-		}
-		if(bNoTarget)
-		{
-			if(pCity->getPopulation() > 1)
-			{
-				if(GC.getGame().getSorenRandNum(5, "Airbomb population") < 2)
-				{
-					pCity->changePopulation(-1);
-
-					{
-
-						szBuffer = gDLL->getText("TXT_KEY_MISC_YOU_AIRBOMB_POP");
-						AddDLLMessage(getOwner(), true, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARD", MESSAGE_TYPE_INFO, NULL, GC.getCOLOR_GREEN(), pCity->getX(), pCity->getY(), true, true);
-						szBuffer = gDLL->getText("TXT_KEY_MISC_ENEMY_AIRBOMB_POP");
-						AddDLLMessage(pCity->getOwner(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_RED(), pCity->getX(), pCity->getY(), true, true);
-					}
-				}
-			}
-		}
-	}
-	setReconPlot(pPlot);
-	setMadeAttack(true);
-	changeMoves(GC.getMOVE_DENOMINATOR());
-
-	addMission(CvAirMissionDefinition(MISSION_AIRBOMB, pPlot, this));
-
-	if (isSuicide())
-	{
-		kill(true);
-	}
-	return true;
-}
-
-bool CvUnit::canAirBomb3() const
-{
-	if (!GC.isDCM_AIR_BOMBING())
-	{
-		return false;
-	}
-	if (!m_pUnitInfo->getDCMAirBomb3())
-	{
-		return false;
-	}
-	if (getDomainType() != DOMAIN_AIR)
-	{
-		return false;
-	}
-	if (getAirBombBaseRate() == 0)
-	{
-		return false;
-	}
-	if (isMadeAttack())
-	{
-		return false;
-	}
-	return true;
-}
-
-
-bool CvUnit::canAirBomb3At(const CvPlot* pPlot, int iX, int iY) const
-{
-	if (!canAirBomb3())
-	{
-		return false;
-	}
-	const CvPlot* pTargetPlot = GC.getMap().plot(iX, iY);
-	if (plotDistance(pPlot->getX(), pPlot->getY(), pTargetPlot->getX(), pTargetPlot->getY()) > airRange())
-	{
-		return false;
-	}
-	if (pTargetPlot->isOwned())
-	{
-		if (!atWar(pTargetPlot->getTeam(), getTeam()))
-		{
-			return false;
-		}
-	}
-	const CvCity* pCity = pTargetPlot->getPlotCity();
-	if (pCity == NULL)
-	{
-		return false;
-	}
-	return true;
-}
-
-
-bool CvUnit::airBomb3(int iX, int iY)
-{
-	PROFILE_EXTRA_FUNC();
-	CvCity* pCity;
-	CvPlot* pPlot;
-	CvWString szBuffer;
-	int build, iI, iAttempts, iMaxAttempts;
-	bool bNoTarget = true;
-	bool abTech1 = false;
-	bool abTech2 = false;
-	CLinkList<int> buildingList;
-	bool bSuccess = false;
-
-	if (!canAirBomb3At(plot(), iX, iY))
-	{
-		return false;
-	}
-	pPlot = GC.getMap().plot(iX, iY);
-	if (interceptTest(pPlot))
-	{
-		return true;
-	}
-
-	pCity = pPlot->getPlotCity();
-
-	for (iI = 0; iI < GC.getNumTechInfos(); iI++)
-	{
-		if (GC.getTechInfo((TechTypes)iI).getDCMAirBombTech1())
-		{
-            if (GET_TEAM(GET_PLAYER(getOwner()).getTeam()).isHasTech((TechTypes)iI))
-			{
-				abTech1 = true;
-			}
-		}
-		if (GC.getTechInfo((TechTypes)iI).getDCMAirBombTech2())
-		{
-            if (GET_TEAM(GET_PLAYER(getOwner()).getTeam()).isHasTech((TechTypes)iI))
-			{
-				abTech2 = true;
-			}
-		}
-	}
-	if (pCity != NULL)
-	{
-		buildingList.clear();
-		for (iI = 0; iI < GC.getNumBuildingInfos(); iI++)
-		{
-			if (GC.getBuildingInfo((BuildingTypes)iI).getDCMAirbombMission() == 3)
-			{
-				buildingList.insertAtEnd(iI);
-			}
-		}
-		if (buildingList.getLength() > 0)
-		{
-			iI = GC.getGame().getSorenRandNum(buildingList.getLength(), "Airbomb building");
-			build = buildingList.nodeNum(iI)->m_data;
-			if (pCity->isActiveBuilding((BuildingTypes)build))
-			{
-				bNoTarget = false;
-			}
-			if (abTech1)
-			{
-				iAttempts = 0;
-				if (abTech2)
-				{
-					iMaxAttempts = 8;
-				}
-				else
-				{
-					iMaxAttempts = 4;
-				}
-				while (bNoTarget)
-				{
-					iAttempts++;
-					iI = GC.getGame().getSorenRandNum(buildingList.getLength(), "Airbomb building");
-					build = buildingList.nodeNum(iI)->m_data;
-					if (pCity->isActiveBuilding((BuildingTypes)build) || iAttempts > iMaxAttempts)
-					{
-						bNoTarget = false;
-					}
-				}
-			}
-			if (pCity->isActiveBuilding((BuildingTypes)build))
-			{
-				pCity->changeHasBuilding((BuildingTypes)build, false);
-
-				changeExperience(GC.getDefineINT("MIN_EXPERIENCE_PER_COMBAT"), maxXPValue(NULL, pCity->isHominid()), true, pCity->getOwner() == getOwner());
-				{
-
-					szBuffer = gDLL->getText("TXT_KEY_MISC_ENEMY_AIRBOMB3SUCCESS", GC.getBuildingInfo((BuildingTypes)build).getTextKeyWide(), pCity->getNameKey());
-					AddDLLMessage(pCity->getOwner(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_RED(), pCity->getX(), pCity->getY(), true, true);
-					szBuffer = gDLL->getText("TXT_KEY_MISC_YOU_AIRBOMB3SUCCESS", GC.getBuildingInfo((BuildingTypes)build).getTextKeyWide(), pCity->getNameKey());
-					AddDLLMessage(getOwner(), true, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARD", MESSAGE_TYPE_INFO, NULL, GC.getCOLOR_GREEN(), pCity->getX(), pCity->getY(), true, true);
-				}
-				bSuccess = true;
-			}
-			else
-			{
-
-				szBuffer = gDLL->getText("TXT_KEY_MISC_ENEMY_AIRBOMB3FAIL", pCity->getNameKey());
-				AddDLLMessage(pCity->getOwner(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_RED(), pCity->getX(), pCity->getY(), true, true);
-				szBuffer = gDLL->getText("TXT_KEY_MISC_YOU_AIRBOMB3FAIL", pCity->getNameKey());
-				AddDLLMessage(getOwner(), true, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARD", MESSAGE_TYPE_INFO, NULL, GC.getCOLOR_GREEN(), pCity->getX(), pCity->getY(), true, true);
-			}
-		}
-		if(bNoTarget)
-		{
-			if(pCity->getPopulation() > 1)
-			{
-				if(GC.getGame().getSorenRandNum(5, "Airbomb population") < 1)
-				{
-					pCity->changePopulation(-1);
-
-					{
-
-						szBuffer = gDLL->getText("TXT_KEY_MISC_YOU_AIRBOMB_POP");
-						AddDLLMessage(getOwner(), true, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARD", MESSAGE_TYPE_INFO, NULL, GC.getCOLOR_GREEN(), pCity->getX(), pCity->getY(), true, true);
-						szBuffer = gDLL->getText("TXT_KEY_MISC_ENEMY_AIRBOMB_POP");
-						AddDLLMessage(pCity->getOwner(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_RED(), pCity->getX(), pCity->getY(), true, true);
-					}
-					bSuccess = true;
-				}
-			}
-		}
-	}
-	setReconPlot(pPlot);
-	setMadeAttack(true);
-	changeMoves(GC.getMOVE_DENOMINATOR());
-	addMission(CvAirMissionDefinition(MISSION_AIRBOMB, pPlot, this));
-
-	if (isSuicide())
-	{
-		kill(true);
-	}
-	return true;
-}
-
-bool CvUnit::canAirBomb4() const
-{
-	if (!GC.isDCM_AIR_BOMBING())
-	{
-		return false;
-	}
-	if (!m_pUnitInfo->getDCMAirBomb4())
-	{
-		return false;
-	}
-	if (getDomainType() != DOMAIN_AIR)
-	{
-		return false;
-	}
-	if (getAirBombBaseRate() == 0)
-	{
-		return false;
-	}
-	if (isMadeAttack())
-	{
-		return false;
-	}
-	return true;
-}
-
-
-bool CvUnit::canAirBomb4At(const CvPlot* pPlot, int iX, int iY) const
-{
-	PROFILE_EXTRA_FUNC();
-	if (!canAirBomb4())
-	{
-		return false;
-	}
-	const CvPlot* pTargetPlot = GC.getMap().plot(iX, iY);
-	if (plotDistance(pPlot->getX(), pPlot->getY(), pTargetPlot->getX(), pTargetPlot->getY()) > airRange())
-	{
-		return false;
-	}
-	if (pTargetPlot->isOwned())
-	{
-		if (!atWar(pTargetPlot->getTeam(), getTeam()))
-		{
-			return false;
-		}
-	}
-	if (pTargetPlot->getPlotCity() != NULL
-	|| (pTargetPlot->getImprovementType() != NO_IMPROVEMENT && GC.getImprovementInfo(pTargetPlot->getImprovementType()).isActsAsCity()))
-	{
-		for (int iI = 0; iI < MAX_PLAYERS; ++iI)
-		{
-			if (atWar(GET_PLAYER((PlayerTypes)iI).getTeam(), getTeam()))
-			{
-				if (algo::any_of(GET_PLAYER((PlayerTypes)iI).units(),
-					CvUnit::fn::plot() == pTargetPlot && CvUnit::fn::getDomainType() == DOMAIN_SEA))
-				{
-					return true;
-				}
-			}
-		}
-	}
-	return false;
-}
-
-
-bool CvUnit::airBomb4(int iX, int iY)
-{
-	PROFILE_EXTRA_FUNC();
-	CvUnit* pUnit;
-	CvWString szBuffer;
-	bool bSuccess = false, bNoTarget = true;
-	int iDamage, iUnitDamage;
-
-	if (!canAirBomb4At(plot(), iX, iY))
-	{
-		return false;
-	}
-	CvPlot* pPlot = GC.getMap().plot(iX, iY);
-	if (interceptTest(pPlot))
-	{
-		return true;
-	}
-
-	CvCity* pCity = pPlot->getPlotCity();
-	int iCount = algo::count_if(pPlot->units(), CvUnit::fn::getDomainType() == DOMAIN_SEA);
-	iCount = (GC.getGame().getSorenRandNum(iCount, "Choose ship") + 1);
-	CLLNode<IDInfo>* pUnitNode = pPlot->headUnitNode();
-	while (iCount > 0)
-	{
-		CvUnit* pLoopUnit = ::getUnit(pUnitNode->m_data);
-		pUnitNode = pPlot->nextUnitNode(pUnitNode);
-		if (pLoopUnit->getDomainType() == DOMAIN_SEA)
-		{
-			iCount--;
-			pUnit = pLoopUnit;
-		}
-	}
-
-	{
-		if (pUnit != NULL)
-		{
-			bNoTarget = false;
-			changeExperience(GC.getDefineINT("MIN_EXPERIENCE_PER_COMBAT"), maxXPValue(pUnit), true, pPlot->getOwner() == getOwner());
-
-			iDamage = (airCombatDamage(pUnit) * 2);
-			iUnitDamage = std::max(pUnit->getDamage(), std::min((pUnit->getDamage() + iDamage), airCombatLimit(pUnit)));
-
-			{
-
-				szBuffer = gDLL->getText("TXT_KEY_MISC_YOU_ARE_ATTACKED_BY_AIR", pUnit->getNameKey(), getNameKey(), -(((iUnitDamage - pUnit->getDamage()) * 100) / pUnit->getMaxHP()));
-				AddDLLMessage(pUnit->getOwner(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_AIR_ATTACK", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_RED(), pPlot->getX(), pPlot->getY(), true, true);
-				szBuffer = gDLL->getText("TXT_KEY_MISC_YOU_ATTACK_BY_AIR", getNameKey(), pUnit->getNameKey(), -(((iUnitDamage - pUnit->getDamage()) * 100) / pUnit->getMaxHP()));
-				AddDLLMessage(getOwner(), true, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_AIR_ATTACKED", MESSAGE_TYPE_INFO, pUnit->getButton(), GC.getCOLOR_GREEN(), pPlot->getX(), pPlot->getY(), true, true);
-			}
-			bSuccess = true;
-			pUnit->setDamage(iUnitDamage, getOwner());
-			//TB Combat Mod begin
-			//TB Combat mod end
-			if (GC.getGame().getSorenRandNum(100, "Spin the dice") < 50)
-			{
-				pUnit->setDamage(pUnit->getMaxHP());
-
-				{
-
-					szBuffer = gDLL->getText("TXT_KEY_MISC_ENEMYSINK_AIRBOMB4SUCCESS", pUnit->getNameKey());
-					AddDLLMessage(pUnit->getOwner(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_RED(), pPlot->getX(), pPlot->getY(), true, true);
-					szBuffer = gDLL->getText("TXT_KEY_MISC_YOUSINK_AIRBOMB4SUCCESS", pUnit->getNameKey());
-					AddDLLMessage(getOwner(), true, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARD", MESSAGE_TYPE_INFO, NULL, GC.getCOLOR_GREEN(), pPlot->getX(), pPlot->getY(), true, true);
-				}
-			}
-		}
-		else
-		{
-
-			szBuffer = gDLL->getText("TXT_KEY_MISC_ENEMY_AIRBOMB4FAIL", pCity->getNameKey());
-			AddDLLMessage(pCity->getOwner(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_RED(), pPlot->getX(), pPlot->getY(), true, true);
-			szBuffer = gDLL->getText("TXT_KEY_MISC_YOU_AIRBOMB4FAIL", pCity->getNameKey());
-			AddDLLMessage(getOwner(), true, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARD", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_GREEN(), pPlot->getX(), pPlot->getY(), true, true);
-		}
-		if(bNoTarget)
-		{
-			if (pCity != NULL)
-			{
-				if(pCity->getPopulation() > 1)
-				{
-					if(GC.getGame().getSorenRandNum(5, "Airbomb population") < 1)
-					{
-						pCity->changePopulation(-1);
-						bSuccess = true;
-
-						{
-
-							szBuffer = gDLL->getText("TXT_KEY_MISC_YOU_AIRBOMB_POP");
-							AddDLLMessage(getOwner(), true, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARD", MESSAGE_TYPE_INFO, NULL, GC.getCOLOR_GREEN(), pPlot->getX(), pPlot->getY(), true, true);
-							szBuffer = gDLL->getText("TXT_KEY_MISC_ENEMY_AIRBOMB_POP");
-							AddDLLMessage(pCity->getOwner(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_RED(), pPlot->getX(), pPlot->getY(), true, true);
-						}
-					}
-				}
-			}
-		}
-	}
-	setReconPlot(pPlot);
-	setMadeAttack(true);
-	changeMoves(GC.getMOVE_DENOMINATOR());
-	addMission(CvAirMissionDefinition(MISSION_AIRBOMB, pPlot, this));
-
-	if (isSuicide())
-	{
-		kill(true);
-	}
-	return true;
-}
-
-bool CvUnit::canAirBomb5() const
-{
-	if (!GC.isDCM_AIR_BOMBING())
-	{
-		return false;
-	}
-	if (!m_pUnitInfo->getDCMAirBomb5())
-	{
-		return false;
-	}
-	if (getDomainType() != DOMAIN_AIR)
-	{
-		return false;
-	}
-	if (getAirBombBaseRate() == 0)
-	{
-		return false;
-	}
-	if (isMadeAttack())
-	{
-		return false;
-	}
-	return true;
-}
-
-
-bool CvUnit::canAirBomb5At(const CvPlot* pPlot, int iX, int iY) const
-{
-	if (!canAirBomb5())
-	{
-		return false;
-	}
-	const CvPlot* pTargetPlot = GC.getMap().plot(iX, iY);
-	if (plotDistance(pPlot->getX(), pPlot->getY(), pTargetPlot->getX(), pTargetPlot->getY()) > airRange())
-	{
-		return false;
-	}
-	if (pTargetPlot->isOwned())
-	{
-		if (!atWar(pTargetPlot->getTeam(), getTeam()))
-		{
-			return false;
-		}
-	}
-	const CvCity* pCity = pTargetPlot->getPlotCity();
-	if (pCity == NULL)
-	{
-		return false;
-	}
-	return true;
-}
-
-
-bool CvUnit::airBomb5(int iX, int iY)
-{
-	PROFILE_EXTRA_FUNC();
-	CvCity* pCity;
-	CvPlot* pPlot;
-	CvWString szBuffer;
-	bool bNoTarget = true;
-	bool bSuccess = false;
-
-	if (!canAirBomb5At(plot(), iX, iY))
-	{
-		return false;
-	}
-	pPlot = GC.getMap().plot(iX, iY);
-	if (interceptTest(pPlot))
-	{
-		return true;
-	}
-
-	pCity = pPlot->getPlotCity();
-
-	if (pCity != NULL)
-	{
-		if (GC.getGame().getSorenRandNum(100, "Airbomb") < 50)
-		{
-			bNoTarget = false;
-			pCity->setProductionProgress(pCity->getProductionProgress() / 2);
-			bSuccess = true;
-			{
-
-				szBuffer = gDLL->getText("TXT_KEY_MISC_YOU_AIRBOMB5SUCCESS", pCity->getNameKey());
-				AddDLLMessage(getOwner(), true, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARD", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_GREEN(), pCity->getX(), pCity->getY(), true, true);
-				szBuffer = gDLL->getText("TXT_KEY_MISC_ENEMY_AIRBOMB5SUCCESS", pCity->getNameKey());
-				AddDLLMessage(pCity->getOwner(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_RED(), pCity->getX(), pCity->getY(), true, true);
-			}
-			changeExperience(GC.getDefineINT("MIN_EXPERIENCE_PER_COMBAT"), maxXPValue(NULL, pCity->isHominid()), true, pCity->getOwner() == getOwner());
-		}
-		else
-		{
-
-			szBuffer = gDLL->getText("TXT_KEY_MISC_YOU_AIRBOMB5FAIL", pCity->getNameKey());
-			AddDLLMessage(getOwner(), true, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARD", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_GREEN(), pCity->getX(), pCity->getY(), true, true);
-			szBuffer = gDLL->getText("TXT_KEY_MISC_ENEMY_AIRBOMB5FAIL", pCity->getNameKey());
-			AddDLLMessage(pCity->getOwner(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_RED(), pCity->getX(), pCity->getY(), true, true);
-		}
-		if(bNoTarget)
-		{
-			if(pCity->getPopulation() > 1)
-			{
-				if(GC.getGame().getSorenRandNum(5, "Airbomb population") < 1)
-				{
-					pCity->changePopulation(-1);
-					bSuccess = true;
-
-					{
-
-						szBuffer = gDLL->getText("TXT_KEY_MISC_YOU_AIRBOMB_POP");
-						AddDLLMessage(getOwner(), true, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARD", MESSAGE_TYPE_INFO, NULL, GC.getCOLOR_GREEN(), pCity->getX(), pCity->getY(), true, true);
-						szBuffer = gDLL->getText("TXT_KEY_MISC_ENEMY_AIRBOMB_POP");
-						AddDLLMessage(pCity->getOwner(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_RED(), pCity->getX(), pCity->getY(), true, true);
-					}
-				}
-			}
-		}
-	}
-	setReconPlot(pPlot);
-	setMadeAttack(true);
-	changeMoves(GC.getMOVE_DENOMINATOR());
-	addMission(CvAirMissionDefinition(MISSION_AIRBOMB, pPlot, this));
-
-	if (isSuicide())
-	{
-		kill(true);
-	}
-	return true;
-}
-// ! Dale - AB: Bombing
 
 // Dale - RB: Field Bombard
 bool CvUnit::canRBombard(bool bEver) const
