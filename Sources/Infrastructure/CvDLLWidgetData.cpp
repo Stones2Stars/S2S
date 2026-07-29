@@ -3004,7 +3004,11 @@ void CvDLLWidgetData::parseActionHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 											int iBadHealthAdjust = 0;
 											if (iBad > iGood && pLoopCity->getProductionBuilding() != NO_BUILDING)
 											{
-												iBadHealthAdjust = -std::min(0, pLoopCity->getAdditionalHealthByBuilding(pLoopCity->getProductionBuilding()));
+												int aProdWellbeing[NUM_WELLBEING_CHANNELS];
+												GC.getBuildingInfo(pLoopCity->getProductionBuilding()).expectedWellbeing(
+													pLoopCity->getCityContext(), GET_PLAYER(pLoopCity->getOwner()).getEmpireContext(),
+													pLoopCity->plotGroup(pLoopCity->getOwner()), aProdWellbeing);
+												iBadHealthAdjust = -std::min(0, (aProdWellbeing[WELLBEING_HEALTH] - aProdWellbeing[WELLBEING_UNHEALTH]) / 100);
 											}
 
 											int iSpoiledFood = pLoopCity->getAdditionalSpoiledFood(iGood, iBad, -iBadHealthAdjust);
@@ -3038,7 +3042,14 @@ void CvDLLWidgetData::parseActionHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 												int iBuildingAdjust = 0;
 												if (pLoopCity->getProductionBuilding() != NO_BUILDING)
 												{
-													iBuildingAdjust = std::max(0, pLoopCity->getAdditionalHappinessByBuilding(pLoopCity->getProductionBuilding()) - pLoopCity->getAdditionalHealthByBuilding(pLoopCity->getProductionBuilding()));
+													// ONE valuation answers both channels, so the tooltip and the AI weigh the SAME number
+													int aProdWellbeing[NUM_WELLBEING_CHANNELS];
+													GC.getBuildingInfo(pLoopCity->getProductionBuilding()).expectedWellbeing(
+														pLoopCity->getCityContext(), GET_PLAYER(pLoopCity->getOwner()).getEmpireContext(),
+														pLoopCity->plotGroup(pLoopCity->getOwner()), aProdWellbeing);
+													iBuildingAdjust = std::max(0,
+														 (aProdWellbeing[WELLBEING_HAPPINESS] - aProdWellbeing[WELLBEING_ANGER]) / 100
+														-(aProdWellbeing[WELLBEING_HEALTH] - aProdWellbeing[WELLBEING_UNHEALTH]) / 100);
 												}
 
 												if (iHealthLevel < iHappinessLevel + iBuildingAdjust)
