@@ -48,8 +48,10 @@ public:
 	{ return m_modifiers.sum(infoYieldFamily(eYield), CHANNEL_GOLDEN_AGE, eScope, CASC_UNIT_FLAT); }
 	int getGoldenAgeCommerce(CommerceTypes eCommerce, CvCascScope eScope) const
 	{ return m_modifiers.sum(infoCommerceFamily(eCommerce), CHANNEL_GOLDEN_AGE, eScope, CASC_UNIT_FLAT); }
-	// The authored wellbeing families' signed sums; the four-channel sign ROUTING is a fill/valuation rule
-	// (modifier.md §2b -- expectedWellbeing), so ANGER/UNHEALTH hold no slot and read 0 here.
+	// The authored wellbeing families' SIGNED sums. ⛔ ANGER/UNHEALTH read 0 here BY CONSTRUCTION and that is
+	// never a gap to chase: an INFO keeps a negative in its POSITIVE family (happiness -1, not anger +1) --
+	// the sign ROUTING to the opposing channel happens at FILL, on the city PACKAGE, not on authored data
+	// (modifier.md §2b). So this read already carries the negatives; there is nothing to verify in the JSON.
 	int getFlatWellbeing(WellbeingChannel eChannel, CvCascScope eScope) const
 	{
 		if (eChannel == WELLBEING_ANGER || eChannel == WELLBEING_UNHEALTH)

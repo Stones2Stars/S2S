@@ -418,6 +418,31 @@ measure what survives, then cut the genuine residue. The classes below are the u
   ⚑ **They are now UNFED AND UNREAD — nothing maintains them and nothing consumes them**, so what is left is the
   mechanical delete: the member, its `change*`/`get*`, its read + write, and the tag named in
   `Assets/savemigration.txt`. ⚠ Audit each `change*` BODY for side-effect riders first ([save.md §6](../../specs/save.md)).
+  ⚑ **THE INFO-SIDE WELLBEING DISPOSITION — settled once, so no pass re-derives it.** The cluster keeps coming
+  back because it is worked getter-by-getter as the compiler names them, which is the very thing
+  [§4c-bis](../../specs/curators/fixed-point-and-scales.md) forbids. **~177 call sites across 17 dangling info
+  getters, and the answer is UNIFORM: not one of them earns a replacement getter — the group read answers the
+  total.** The concept survives in every case; only the per-source READ dies:
+
+  | dangling info read | where the concept lives now |
+  |---|---|
+  | `getCivicHappiness` · `getHappiness`/`getHealth` (bonus / building / improvement) | ordinary deposits → the group read |
+  | `getStateReligionHappiness` (33 sites) | **no religion-side data exists** (§2b) — a `HAS_STATE_RELIGION`-gated conditioned deposit on the civic/trait/building |
+  | `getHappyPerMilitaryUnit` (20) | `happiness.empire.cities.{unit: IS_MILITARY}` — host-from-occupants, added LIVE on top ([DEC-unit-modifiers-on-top](../../architecture/decisions.md#dec-unit-modifiers-on-top)) |
+  | `getCityOverLimitUnhappy` (18) | the `per:{type: CITY, above: CITY_LIMIT}` scaler ([json.md §3.7](../../specs/json.md)) |
+  | `getCivicPercentAnger` · `getForeignerUnhappyPercent` | RAW-STATE anger inputs (§2b), folded at the realized read — never deposits |
+  | `getHappinessPercentPerPopulation` · `getHealthPercentPerPopulation` | the `per:{type: POPULATION}` scaler |
+  | `getTechHappiness` · `getTechHealth` (specialist) | `enabled: TECH_X` conditioned deposits |
+  | `getBuildingHappinessChanges` · `isAnyBuildingHappinessChange` (civic) | reverse-landed on the TARGET building at city scope (§2b) |
+  | `getFeatureHappinessChangesSparse` (civic) | stays SOURCE-side — the governing-deliverer carve-out (§2b one-term bundling) |
+  | `getHappinessPercent`/`getHealthPercent` (specialist / feature) | deposits; the ×100-latent legacy field is already de-scaled by the curator |
+  | `getWorldHappiness`/`getWorldHealth` (project) | ⚠ **MIS-SCOPED DATA, a curator fix** — a project granting to everyone authors the plural target `world.empires`, never `world` scope ([state-repositories.md](../../architecture/state-repositories.md)) |
+  | `getLargestCityHappiness` (15) | BLOCKED on ranked-target-selection evaluation (below) |
+
+  ⛔ **So the conversion is a CONSUMER collapse, not 17 re-points**: a site asking "what does this ONE source
+  give" is either the valuation (`expectedWellbeing`, BUILT) or it is per-source attribution, which is the
+  ORACLE's job and not a read-surface concern. Re-pointing such a site onto a per-source info getter is the
+  half-migration wearing a new name — it compiles, reads as done, and preserves the shape being deleted.
   ⚠ Their last maintainers go with them: `processBonus` and `processSpecialist` are the same
   accumulator-maintainer shape `processBuilding` already lost, and every read they still make is a compiled
   deposit (the specialist's wellbeing/yield/commerce/underworld/greatPeopleRate, the bonus's wellbeing and
