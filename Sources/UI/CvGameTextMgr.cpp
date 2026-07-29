@@ -12888,27 +12888,25 @@ void CvGameTextMgr::setBasicUnitHelpWithCity(CvWStringBuffer &szBuffer, UnitType
 
 		//Modified Production
 			//From Trait
+		const int iUnitsSegment = InfoValuation::keyedTargetSegment("units");
 		for (int i = 0; i < GC.getNumTraitInfos(); ++i)
 		{
-			TraitTypes eTrait = ((TraitTypes)i);
-			for (int j = 0; j < GC.getTraitInfo(eTrait).getNumUnitProductionModifiers(); j++)
+			const TraitTypes eTrait = ((TraitTypes)i);
+			const CvTraitInfo& kTraitInfo = GC.getTraitInfo(eTrait);
+			const int iModifier = InfoValuation::keyedTarget(
+				kTraitInfo.getModifiers(), MODFAM_BUILD_RATE, -1, iUnitsSegment, (int)eUnit);
+			if (iModifier == 0)
 			{
-				if ((UnitTypes)GC.getTraitInfo(eTrait).getUnitProductionModifier(j).eUnit == eUnit)
-				{
-					if (GC.getTraitInfo(eTrait).getUnitProductionModifier(j).iModifier != 0)
-					{
-						if (GC.getTraitInfo(eTrait).getUnitProductionModifier(j).iModifier == 100)
-						{
-							szBuffer.append(NEWLINE);
-							szBuffer.append(gDLL->getText("TXT_KEY_DOUBLE_SPEED_TRAIT", GC.getTraitInfo(eTrait).getTextKeyWide()));
-						}
-						else
-						{
-							szBuffer.append(NEWLINE);
-							szBuffer.append(gDLL->getText("TXT_KEY_PRODUCTION_MODIFIER_TRAIT", GC.getTraitInfo(eTrait).getUnitProductionModifier(j).iModifier, GC.getTraitInfo(eTrait).getTextKeyWide()));
-						}
-					}
-				}
+				continue;
+			}
+			szBuffer.append(NEWLINE);
+			if (iModifier == 100)
+			{
+				szBuffer.append(gDLL->getText("TXT_KEY_DOUBLE_SPEED_TRAIT", kTraitInfo.getTextKeyWide()));
+			}
+			else
+			{
+				szBuffer.append(gDLL->getText("TXT_KEY_PRODUCTION_MODIFIER_TRAIT", iModifier, kTraitInfo.getTextKeyWide()));
 			}
 		}
 
@@ -16139,27 +16137,24 @@ void CvGameTextMgr::setBuildingHelp(CvWStringBuffer &szBuffer, const BuildingTyp
 	if (bCivilopediaText)
 	{
 		// Trait
+		const int iBuildingsSegment = InfoValuation::keyedTargetSegment("buildings");
 		for (int iTI = 0; iTI < GC.getNumTraitInfos(); ++iTI)
 		{
-			const CvTraitInfo* pTrait = &GC.getTraitInfo((TraitTypes)iTI);
-			for (int j = 0; j < pTrait->getNumBuildingProductionModifiers(); j++)
+			const CvTraitInfo& kTraitInfo = GC.getTraitInfo((TraitTypes)iTI);
+			const int iModifier = InfoValuation::keyedTarget(
+				kTraitInfo.getModifiers(), MODFAM_BUILD_RATE, -1, iBuildingsSegment, (int)eBuilding);
+			if (iModifier == 0)
 			{
-				if (pTrait->getBuildingProductionModifier(j).eBuilding == eBuilding)
-				{
-					if (pTrait->getBuildingProductionModifier(j).iModifier != 0)
-					{
-						if (pTrait->getBuildingProductionModifier(j).iModifier == 100)
-						{
-							szBuffer.append(NEWLINE);
-							szBuffer.append(gDLL->getText("TXT_KEY_DOUBLE_SPEED_TRAIT", pTrait->getTextKeyWide()));
-						}
-						else
-						{
-							szBuffer.append(NEWLINE);
-							szBuffer.append(gDLL->getText("TXT_KEY_PRODUCTION_MODIFIER_TRAIT", pTrait->getBuildingProductionModifier(j).iModifier, pTrait->getTextKeyWide()));
-						}
-					}
-				}
+				continue;
+			}
+			szBuffer.append(NEWLINE);
+			if (iModifier == 100)
+			{
+				szBuffer.append(gDLL->getText("TXT_KEY_DOUBLE_SPEED_TRAIT", kTraitInfo.getTextKeyWide()));
+			}
+			else
+			{
+				szBuffer.append(gDLL->getText("TXT_KEY_PRODUCTION_MODIFIER_TRAIT", iModifier, kTraitInfo.getTextKeyWide()));
 			}
 		}
 

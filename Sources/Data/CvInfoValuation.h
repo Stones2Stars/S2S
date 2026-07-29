@@ -81,6 +81,18 @@ public:
 	static void collectKeyedCombat(const CvModifiers* modifiers, CombatTargetAxis eAxis, int iKind,
 		std::vector<std::pair<int, int> >& targetPercents);
 
+	//	The GENERAL keyed point read that `keyedCombat` above is one specialization of: sum this entity's own
+	//	compiled deposits onto ONE named target, for ANY family whose §6.1 address ends in a named-entity key
+	//	(`buildRate.<scope>.{units|buildings|unitCombats|specialBuildings}.{TARGET}`, and its siblings).
+	//	`iKind < 0` matches any kind, which is what a keyed address carrying no member segment compiles to.
+	//	⚠ Returns the value AS COMPILED -- a percent is NOT scaled ([DEC-fixedpoint-x100]).
+	static int keyedTarget(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind,
+		int iTargetSegment, int iTargetFk);
+
+	//	The interner lookup for a keyed target token, resolved ONCE per call site rather than per entry.
+	//	Returns -1 when the segment was never authored anywhere, which makes every keyed read answer 0.
+	static int keyedTargetSegment(const char* szTargetSegment);
+
 	// THE EVAL-CTX FILL SEAM (contexts.md: "the contexts ARE the eval state"): CityContext::fillEvalCtx
 	// (city/plot) + EmpireContext::fillEvalCtx (player/team) + the plotGroup pass-in (the reserved TRADED-bonus
 	// source -- evalCtx.plotGroup; NULL = the city's own plot-group-backed reads answer trade) + the enabler's

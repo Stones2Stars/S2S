@@ -7096,31 +7096,20 @@ int CvPlayer::getProductionModifier(UnitTypes eUnit) const
 	{
 		iMultiplier += getMilitaryProductionModifier();
 	}
+	// Resolved ONCE per call rather than per trait: the interner is only populated after load, so a file-scope
+	// static would latch -1 forever.
+	const int iUnitsSegment = InfoValuation::keyedTargetSegment("units");
+
 	for (int iI = 0; iI < GC.getNumTraitInfos(); iI++)
 	{
 		if (hasTrait((TraitTypes)iI))
 		{
 			const CvTraitInfo& kTrait = GC.getTraitInfo((TraitTypes)iI);
 
-			for (int j = 0; j < kTrait.getNumUnitProductionModifiers(); j++)
-			{
-				if ((UnitTypes)kTrait.getUnitProductionModifier(j).eUnit == eUnit)
-				{
-					iMultiplier += kTrait.getUnitProductionModifier(j).iModifier;
-					break;
-				}
-			}
-			if (GC.getUnitInfo(eUnit).getSpecialUnitType() != NO_SPECIALUNIT)
-			{
-				for (int j = 0; j < kTrait.getNumSpecialUnitProductionModifiers(); j++)
-				{
-					if ((SpecialUnitTypes)kTrait.getSpecialUnitProductionModifier(j).eSpecialUnit == GC.getUnitInfo(eUnit).getSpecialUnitType())
-					{
-						iMultiplier += kTrait.getSpecialUnitProductionModifier(j).iModifier;
-						break;
-					}
-				}
-			}
+			// `buildRate.<scope>.units.{UNIT_X}` -- the trait's OWN compiled keyed entries, never a walk of a
+			// keyed container the info no longer holds (pedia-read-map finding 2).
+			iMultiplier += InfoValuation::keyedTarget(
+				kTrait.getModifiers(), MODFAM_BUILD_RATE, -1, iUnitsSegment, (int)eUnit);
 		}
 	}
 	return iMultiplier;
@@ -7130,6 +7119,11 @@ int CvPlayer::getProductionModifier(BuildingTypes eBuilding) const
 {
 	PROFILE_EXTRA_FUNC();
 	int iMultiplier = 0;
+	// Resolved ONCE per call (see the UnitTypes overload above).
+	const int iBuildingsSegment = InfoValuation::keyedTargetSegment("buildings");
+	const int iSpecialBuildingsSegment = InfoValuation::keyedTargetSegment("specialBuildings");
+	const SpecialBuildingTypes eSpecialBuilding = GC.getBuildingInfo(eBuilding).getSpecialBuildingType();
+
 	for (int iI = 0; iI < GC.getNumTraitInfos(); iI++)
 	{
 		const TraitTypes eTrait = ((TraitTypes)iI);
@@ -7137,24 +7131,15 @@ int CvPlayer::getProductionModifier(BuildingTypes eBuilding) const
 		{
 			const CvTraitInfo& kTrait = GC.getTraitInfo(eTrait);
 
-			for (int j = 0; j < kTrait.getNumBuildingProductionModifiers(); j++)
-			{
-				if (kTrait.getBuildingProductionModifier(j).eBuilding == eBuilding)
-				{
-					iMultiplier += kTrait.getBuildingProductionModifier(j).iModifier;
-				}
-			}
-			const SpecialBuildingTypes eSpecialBuilding = GC.getBuildingInfo(eBuilding).getSpecialBuildingType();
+			// `buildRate.<scope>.buildings.{BUILDING_X}` + the SpecialBuilding group key beside it.
+			iMultiplier += InfoValuation::keyedTarget(
+				kTrait.getModifiers(), MODFAM_BUILD_RATE, -1, iBuildingsSegment, (int)eBuilding);
 
 			if (eSpecialBuilding != NO_SPECIALBUILDING)
 			{
-				foreach_(const SpecialBuildingModifier& pair, kTrait.getSpecialBuildingProductionModifiers())
-				{
-					if (pair.first == eSpecialBuilding)
-					{
-						iMultiplier += pair.second;
-					}
-				}
+				iMultiplier += InfoValuation::keyedTarget(
+					kTrait.getModifiers(), MODFAM_BUILD_RATE, -1, iSpecialBuildingsSegment,
+					(int)eSpecialBuilding);
 			}
 		}
 	}

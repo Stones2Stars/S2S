@@ -144,28 +144,37 @@ namespace
 	}
 }
 
-int InfoValuation::keyedCombat(const CvModifiers* modifiers, CombatTargetAxis eAxis, int iTargetFk, int iKind)
+int InfoValuation::keyedTargetSegment(const char* szTargetSegment)
 {
-	if (modifiers == NULL || iTargetFk < 0)
+	return modSegmentLookup(szTargetSegment);
+}
+
+int InfoValuation::keyedTarget(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind,
+	int iTargetSegment, int iTargetFk)
+{
+	if (modifiers == NULL || iTargetFk < 0 || iTargetSegment < 0)
 	{
 		return 0;
 	}
-	const int iSegment = keyedCombatSegment(eAxis);
-	if (iSegment < 0)
-	{
-		return 0;
-	}
-	int iPercent = 0;
+	int iTotal = 0;
 	const std::vector<CvModEntry*>& kEntries = modifiers->entries();
 	for (size_t iEntry = 0; iEntry < kEntries.size(); ++iEntry)
 	{
 		const CvModEntry& kEntry = *kEntries[iEntry];
-		if (keyedCombatEntryMatches(kEntry, iSegment, iKind) && kEntry.targetFk == iTargetFk)
+		if (kEntry.family == eFamily
+		&&  kEntry.targetSeg == iTargetSegment
+		&&  kEntry.targetFk == iTargetFk
+		&& (iKind < 0 || kEntry.kind == iKind))
 		{
-			iPercent += kEntry.value;
+			iTotal += kEntry.value;
 		}
 	}
-	return iPercent;
+	return iTotal;
+}
+
+int InfoValuation::keyedCombat(const CvModifiers* modifiers, CombatTargetAxis eAxis, int iTargetFk, int iKind)
+{
+	return keyedTarget(modifiers, MODFAM_COMBAT, iKind, keyedCombatSegment(eAxis), iTargetFk);
 }
 
 void InfoValuation::collectKeyedCombat(const CvModifiers* modifiers, CombatTargetAxis eAxis, int iKind,
