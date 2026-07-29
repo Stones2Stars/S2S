@@ -348,8 +348,8 @@ measure what survives, then cut the genuine residue. The classes below are the u
     ×100 value, so re-pointing it alone would need a `÷100` — it converts WITH the commerce cluster, never
     ahead of it ([fixed-point-and-scales §4c-bis](../../specs/curators/fixed-point-and-scales.md)); and the
     two `CvCityAI` HQ-commerce reads are ordinary AI consumer debt, sequenced with the AI cut.
-    ⚑ **The still-open `getPrereqBonuses` → `getConsumedBonuses()` re-point is a CENSUS case, not a sweep**
-    — see the blanket-rename warning in
+    ⚑ **The ~25 corporation consumed-bonus WALKS are a separate, larger item** — they are not a rename and must
+    not be made to compile as one; see the blanket-rename warning in
     [the consumer rewire census](#the-consumer-rewire-census--the-compilers-worklist-and-how-to-regenerate-it).
   - **The CIVIC half carries 6- and 9-argument legacy signatures**
     (`getAdditionalHappinessByCivic(eCivic, bDifferenceToCurrent, bCivicOptionVacuum, eStateReligion, iExtraPop,
@@ -512,10 +512,14 @@ is the same hazard [§Vision](#vision) flags for `getInvisibleType`/`getSeeInvis
 is SEMANTIC (what is the receiver?), not textual** — so for any name that is also a live method, do not sweep:
 leave it and let the compiler name the info-side sites individually.
 ⚠ **And the collision is not only info-vs-game-object — it happens INFO-to-INFO.** `getPrereqBonuses` is DELETED
-on `CvCorporationInfo` (successor: `getConsumedBonuses()`, the `per:{anyOf}` union its per-bonus deposits scale
-over) while remaining a **live member read on `CvBuildInfo`** — so the same name is a re-point on one receiver
-and correct working code on the other, across ~33 sites in `CvGame` / `CvPlayer` / `CvPlot` / `CvUnit` /
-`CvGameTextMgr` / `CvDLLWidgetData` / `CvPlayerAI`. Convert by receiver, one site at a time.
+on `CvCorporationInfo` while remaining a **live member read on `CvBuildInfo`**, so the same name is dead on one
+receiver and correct working code on the other, across ~25 sites in `CvCity` / `CvGame` / `CvPlayer` / `CvPlot` /
+`CvUnit` / `CvGameTextMgr` / `CvDLLWidgetData` / `CvPlayerAI`.
+⛔ **The corporation ones are NOT a re-point — do not "fix" them by swapping in `getConsumedBonuses()`.** Every
+one is `foreach_(bonus in the corp's list) { …liveStateRead(bonus)… }`, the per-read walk the event-built stores
+exist to delete ([contexts.md](../../architecture/contexts.md): the event-built read-only state answers it, and
+renaming the receiver only makes the walk COMPILE while it still walks). They stay DANGLING until the maintained
+read lands — that is the census working, not debt to clear.
 
 **Where a whole family is genuinely unbuilt, it belongs in its own section below, not in this census.** The
 unit plane is the standing example — `CvUnitInfo` carries the largest dangling set, and much of it

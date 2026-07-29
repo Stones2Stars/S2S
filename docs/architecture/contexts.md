@@ -64,6 +64,21 @@ call**. The win is STRUCTURAL: once the fact is stored there is no read-time wor
 EVENT volume (what changed), never read volume (how often it is asked) — and it is observed where every
 performance claim is observed, on the per-turn wall clock ([DEC-turn-time-is-king](decisions.md#dec-turn-time-is-king)).
 
+> **⛔ SO A CONSUMER NEVER WALKS AN INFO'S KEYED LIST TO ASK A PER-ITEM LIVE-STATE QUESTION — THE EVENT-BUILT
+> READ-ONLY STATE ANSWERS IT (owner).** *"There should be no iterating like that; the eventspine-built read-only
+> should be able to handle that."* The shape to recognise is `foreach_(key in someInfo.getKeyedList()) { …
+> liveStateRead(key) … }` — the info supplies the keys and the loop asks the live state once per key. That is the
+> per-read scan this whole section deletes, merely sourced from an info instead of from the map.
+> ⚑ **The worked case is the corporation's consumed bonuses:** `foreach_(bonus in corp's bonuses) getNumBonuses(bonus)`
+> re-executes [enabler.md §8](../specs/enabler.md)'s hottest cluster once PER BONUS, and where the question is a
+> MAGNITUDE the answer is already authored — the rate carries a `per:{anyOf: consumed bonuses}` scaler, so the
+> valuation resolves rate × count in one call and the loop simply disappears.
+> ⛔ **And renaming the receiver is NOT the fix.** A walk that compiles against the new getter reads as migrated
+> while doing exactly what it did before — the half-migration
+> ([DEC-new-getter-surface](decisions.md#dec-new-getter-surface)), and it hides the hole the maintained read has
+> not yet filled ([DEC-no-legacy-masking](decisions.md#dec-no-legacy-masking)). Leave such a site DANGLING as the
+> census entry it is until the maintained fetch exists.
+
 ⛔ **A forwarded read that COMPUTES is the defect this rule exists to kill.** `PlotContext::hasCoast()` forwarding
 to `CvPlot::isCoastalLand()` — an 8-neighbour scan with an `area()->getNumTiles()` call per neighbour, on every
 predicate evaluation — is the worked example, and it directly contradicts
