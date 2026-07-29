@@ -284,20 +284,6 @@ measure what survives, then cut the genuine residue. The classes below are the u
   build-list HOVER TOOLTIP (`CvBuildingFilters`, `CvBuildingSort`, `CvDLLWidgetData`), plus `CvGameTextMgr`.
   Wiring them onto one valuation is what makes the displayed number and the acted-on number the same number
   structurally.
-  ⛔ **`CvBuildingFilters` / `CvBuildingSort` are currently INERT, and that is a REGRESSION against the line
-  above, not a finished state.** Their dead info-direct reads were correctly removed, but the classes were left
-  returning `false`/`0` instead of being wired to `expected*` — so the build list's military / city-defense /
-  property filters and the property sort do nothing, and the yield/commerce/wellbeing filters work only when a
-  city is bound. They are a NAMED destination, so "inert" is where they must not stop.
-  ⚖ **THE CITY-LESS VIEW EVALUATES AGAINST THE CAPITAL (owner).** `expected*` needs a `CityContext`, and the
-  build list's player-level "all buildings" view has no city bound. The answer is the AI's own precedent, made
-  explicit: value the candidate against the player's CAPITAL. So the context resolution is one rule — the bound
-  city if there is one, else the capital — and it belongs in ONE place both the filters and the sorts read
-  ([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation)), never re-derived per
-  criterion. A player with no capital has no valuation to give and the criterion ranks neutral.
-  ⚖ **REBUILD, do not restore (owner):** *"at least we have eliminated the legacy, which was the goal"* — the
-  dead info-direct reads that were cut STAY cut. What returns is built fresh on the frontier + `expected*`, not
-  a revival of the legacy bodies.
   ⚑ **Two criterion classes, two answers — do not treat them as one job:** a STAT criterion (unit strength /
   moves / cargo / air range / bombard / withdrawal) re-points onto the entity's own compiled family read
   (`getFlatCombat(COMBAT_AMOUNT, CASC_SCOPE_UNIT)`, `getAir(AIR_RANGE, …)`, `getCargo(…)`, …) and needs only a

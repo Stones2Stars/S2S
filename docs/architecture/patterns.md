@@ -368,6 +368,12 @@ two surfaces.
    - The contexts serve BOTH halves in one pass: they carry the base the percent resolves against (the
      `CityContext` forwards the city's CURRENT REALIZED YIELDS for exactly this, [contexts.md](contexts.md)),
      and they are what the compiled CONDITIONED tail is evaluated over (*"+25% more while coal is connected"*).
+   - **⚖ A CITY-LESS VIEW EVALUATES AGAINST THE CAPITAL (owner).** The valuation needs a `CityContext`, and a
+     player-level "all buildings" view (the build list) has no city bound. The rule is the AI's own precedent
+     made explicit: **the bound city if there is one, else the player's CAPITAL** — and it lives in ONE place
+     every criterion reads ([DEC-single-implementation](decisions.md#dec-single-implementation)), never
+     re-derived per filter or per sort. A player with no capital has no valuation to give, and the criterion
+     ranks neutral rather than inventing one.
    - **⚑ TWO CONSUMERS, ONE CALL (owner): the AI's evaluation AND the build-list HOVER TOOLTIP.** The same
      valuation answers *"what do I gain from this?"* for the AI weighting it and for the player reading the
      tooltip. That is not a convenience — it is what makes the displayed number and the acted-on number the
