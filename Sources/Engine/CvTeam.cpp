@@ -4370,7 +4370,7 @@ void CvTeam::processProjectChange(ProjectTypes eIndex, int iChange, int iOldProj
 
 					for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
 					{
-						player.changeCommerceRateModifierfromBuildings(((CommerceTypes)iJ), kProject.getCommerceModifier(iJ));
+						player.changeCommerceRateModifierfromBuildings(((CommerceTypes)iJ), kProject.getCommerceModifier((CommerceTypes)iJ, CASC_SCOPE_EMPIRE));
 					}
 				}
 				player.changeTradeRoutes(kProject.getWorldTradeRoutes());

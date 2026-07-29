@@ -351,6 +351,16 @@ measure what survives, then cut the genuine residue. The classes below are the u
     ⚑ **The ~25 corporation consumed-bonus WALKS are a separate, larger item** — they are not a rename and must
     not be made to compile as one; see the blanket-rename warning in
     [the consumer rewire census](#the-consumer-rewire-census--the-compilers-worklist-and-how-to-regenerate-it).
+  - ⛔ **The SPECIALIST experience reads are NOT an arity fix — do not "repair" them by adding axes.**
+    Six sites (`CvCityAI` 1, `CvGameTextMgr` 5) call `CvSpecialistInfo::getExperience()` with no
+    arguments and look like a mechanical widening to `getExperience(kind, scope)`. That fold would be
+    WRONG while compiling: specialists author experience as a KEYED entry
+    (`experience.city.unitCombats.{UNITCOMBAT_*}.flat`), and [modifier.md §5](../../specs/modifier.md)
+    names this exact address as the "silently, plausibly wrong" case — a keyed entry folded scope-wide
+    hands EVERY unit the one combat class's experience. The point read answers 0 here by construction
+    (nothing folds into the unconditioned slot), so the sites need the ENTRY-LIST read over the
+    specialist's own authored entries, which is what the info header already says they are.
+
   - **The CIVIC half carries 6- and 9-argument legacy signatures**
     (`getAdditionalHappinessByCivic(eCivic, bDifferenceToCurrent, bCivicOptionVacuum, eStateReligion, iExtraPop,
     iMilitaryHappinessUnits)`; `getAdditionalHealthByCivic` with `iIgnoreNoUnhealthyPopulationCount` /

@@ -4351,7 +4351,7 @@ int CvCity::foodConsumption(const bool bNoAngry, const int iExtra, const bool bI
 {
 	return getFoodConsumedByPopulation(iExtra)
 		- (bNoAngry ? angryPopulation(iExtra) : 0) // Doesn't belong here, should be extracted out to wherever it is needed
-		- healthRate(bNoAngry, iExtra)
+		- healthRate(iExtra)
 		+ (bIncludeWastage ? (int)foodWastage() : 0);
 }
 // ! Toffer - Gradual food consumption change
@@ -6799,7 +6799,7 @@ int CvCity::getAdditionalHealthByPlayerNoUnhealthyPopulation(int iExtraPop, int 
 	}
 	else
 	{
-		iHealth += unhealthyPopulation(false, iExtraPop);
+		iHealth += unhealthyPopulation(iExtraPop);
 	}
 	return iHealth;
 }
