@@ -1,6 +1,71 @@
 // playerAI.cpp
 
 #include "CvGameCoreDLL.h"
+#include "Infos/CvClassificationBlock.h"   // CLSD_SKILL + the memoized id bit test
+
+namespace
+{
+	// The json.md §8 SKILL reads this file makes on a PROMOTION / UNITCOMBAT info. The consumer holds
+	// the memoized generated-id (the CvUnitFilters precedent); the info exposes only the parameterized
+	// group read getSkills(), never a named getter per key.
+	bool skillAlwaysHeal(const CvClassificationBlock* skills)
+	{
+		static int s_alwaysHealSkillId = -1;
+		return skills->hasKey(s_alwaysHealSkillId, CLSD_SKILL, "alwaysHeal");
+	}
+	bool skillImmuneToFirstStrikes(const CvClassificationBlock* skills)
+	{
+		static int s_immuneToFirstStrikesSkillId = -1;
+		return skills->hasKey(s_immuneToFirstStrikesSkillId, CLSD_SKILL, "immuneToFirstStrikes");
+	}
+	bool skillDefensiveVictoryMove(const CvClassificationBlock* skills)
+	{
+		static int s_defensiveVictoryMoveSkillId = -1;
+		return skills->hasKey(s_defensiveVictoryMoveSkillId, CLSD_SKILL, "defensiveVictoryMove");
+	}
+	bool skillOffensiveVictoryMove(const CvClassificationBlock* skills)
+	{
+		static int s_offensiveVictoryMoveSkillId = -1;
+		return skills->hasKey(s_offensiveVictoryMoveSkillId, CLSD_SKILL, "offensiveVictoryMove");
+	}
+	bool skillFreeDrop(const CvClassificationBlock* skills)
+	{
+		static int s_freeDropSkillId = -1;
+		return skills->hasKey(s_freeDropSkillId, CLSD_SKILL, "freeDrop");
+	}
+	bool skillOneUp(const CvClassificationBlock* skills)
+	{
+		static int s_oneUpSkillId = -1;
+		return skills->hasKey(s_oneUpSkillId, CLSD_SKILL, "oneUp");
+	}
+	bool skillPillageEspionage(const CvClassificationBlock* skills)
+	{
+		static int s_pillageEspionageSkillId = -1;
+		return skills->hasKey(s_pillageEspionageSkillId, CLSD_SKILL, "pillageEspionage");
+	}
+	bool skillPillageMarauder(const CvClassificationBlock* skills)
+	{
+		static int s_pillageMarauderSkillId = -1;
+		return skills->hasKey(s_pillageMarauderSkillId, CLSD_SKILL, "pillageMarauder");
+	}
+	bool skillPillageOnMove(const CvClassificationBlock* skills)
+	{
+		static int s_pillageOnMoveSkillId = -1;
+		return skills->hasKey(s_pillageOnMoveSkillId, CLSD_SKILL, "pillageOnMove");
+	}
+	bool skillPillageOnVictory(const CvClassificationBlock* skills)
+	{
+		static int s_pillageOnVictorySkillId = -1;
+		return skills->hasKey(s_pillageOnVictorySkillId, CLSD_SKILL, "pillageOnVictory");
+	}
+	bool skillPillageResearch(const CvClassificationBlock* skills)
+	{
+		static int s_pillageResearchSkillId = -1;
+		return skills->hasKey(s_pillageResearchSkillId, CLSD_SKILL, "pillageResearch");
+	}
+}
+
+#include "Data/CvInfoValuation.h"   // InfoValuation::collectHealByUnitCombat + HealByUnitCombat
 #include "Engine/CvGameSpeedScale.h"
 #include "Enabler/CvEnablerKernel.h"   // the compiled enables edges + the one gate (tech valuation)
 #include "Engine/CvArea.h"
@@ -27054,7 +27119,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 
 		//Logistics
 		//I & III
-		iValue += (kPromotion.getMovesChange() * 20);
+		iValue += (kPromotion.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100 * 20);
 		//II
 		if (kPromotion.isEnemyRoute()) iValue += 20;
 		iValue += (kPromotion.getMoveDiscountChange() * 10);
@@ -27086,25 +27151,25 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		}
 
 		//Loyalty
-		if (kPromotion.isAlwaysHeal())
+		if (skillAlwaysHeal(kPromotion.getSkills()))
 		{
 			iValue += 15;
 		}
 
 		//Instigator
 		//I & II
-		if (kPromotion.getEnemyHealChange())
+		if (kPromotion.getFlatHeal(HEAL_ENEMY_TERRITORY, CASC_SCOPE_UNIT) / 100)
 		{
 			iValue += 15;
 		}
 		//III
-		if (kPromotion.getNeutralHealChange())
+		if (kPromotion.getFlatHeal(HEAL_NEUTRAL_TERRITORY, CASC_SCOPE_UNIT) / 100)
 		{
 			iValue += 15;
 		}
 
 		//Alchemist
-		if (kPromotion.getFriendlyHealChange())
+		if (kPromotion.getFlatHeal(HEAL_FRIENDLY_TERRITORY, CASC_SCOPE_UNIT) / 100)
 		{
 			iValue += 15;
 		}
@@ -27203,7 +27268,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//#6 Effects for Promotions that have Amphibious ??
-	if (kPromotion.isOneUp())
+	if (skillOneUp(kPromotion.getSkills()))
 	{
 		if (eUnitAI == UNITAI_RESERVE
 		||  eUnitAI == UNITAI_COUNTER
@@ -27219,7 +27284,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//#7 Effects for Promotions that have Defensive Victory Move
-	if (kPromotion.isDefensiveVictoryMove())
+	if (skillDefensiveVictoryMove(kPromotion.getSkills()))
 	{
 		if (eUnitAI == UNITAI_RESERVE
 		||  eUnitAI == UNITAI_COUNTER
@@ -27237,7 +27302,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//#8 Effects for Promotions that have Free Drop
-	if (kPromotion.isFreeDrop())
+	if (skillFreeDrop(kPromotion.getSkills()))
 	{
 		if (eUnitAI == UNITAI_PILLAGE || eUnitAI == UNITAI_ATTACK)
 		{
@@ -27247,7 +27312,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//#9 Effects for Promotions that have Offensive Victory Move
-	if (kPromotion.isOffensiveVictoryMove())
+	if (skillOffensiveVictoryMove(kPromotion.getSkills()))
 	{
 		if ((eUnitAI == UNITAI_PILLAGE) ||
 				(eUnitAI == UNITAI_ATTACK) ||
@@ -27370,7 +27435,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	//#15 Effects for Promotions with isPillages...
 	{
 		iTemp = 0;
-		if (kPromotion.isPillageEspionage())
+		if (skillPillageEspionage(kPromotion.getSkills()))
 		{
 			if (pUnit)
 			{
@@ -27410,7 +27475,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		iValue += iTemp;
 
 		iTemp = 0;
-		if (kPromotion.isPillageMarauder())
+		if (skillPillageMarauder(kPromotion.getSkills()))
 		{
 			if (pUnit)
 			{
@@ -27450,7 +27515,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		iValue += iTemp;
 
 		iTemp = 0;
-		if (kPromotion.isPillageOnMove())
+		if (skillPillageOnMove(kPromotion.getSkills()))
 		{
 			if (pUnit)
 			{
@@ -27474,7 +27539,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		iValue += iTemp;
 
 		iTemp = 0;
-		if (kPromotion.isPillageOnVictory())
+		if (skillPillageOnVictory(kPromotion.getSkills()))
 		{
 			if (pUnit)
 			{
@@ -27498,7 +27563,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		iValue += iTemp;
 
 		iTemp = 0;
-		if (kPromotion.isPillageResearch())
+		if (skillPillageResearch(kPromotion.getSkills()))
 		{
 			if (pUnit)
 			{
@@ -27650,7 +27715,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 
 
 	//#21 Effects for Promotions that have a chance to survive...
-	iTemp = kPromotion.getSurvivorChance();
+	iTemp = kPromotion.getScalar(SCALAR_SURVIVOR, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT);
 	if (iTemp > 0)
 	{
 		if ((eUnitAI == UNITAI_ATTACK) ||
@@ -27831,7 +27896,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//#26 Effects for Promotions with Self Heal...
-	iTemp = kPromotion.getSelfHealModifier();
+	iTemp = kPromotion.getHealModifier(HEAL_SELF_MODIFIER, CASC_SCOPE_UNIT);
 	if (iTemp > 0)
 	{
 		if (bForBuildUp)
@@ -27895,7 +27960,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//#27 Effects for Promotions on ennemy Heal...
-	iTemp = kPromotion.getEnemyHealChange();
+	iTemp = kPromotion.getFlatHeal(HEAL_ENEMY_TERRITORY, CASC_SCOPE_UNIT) / 100;
 	if (iTemp > 0)
 	{
 		if (pUnit)
@@ -27944,7 +28009,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//#28 Effects for Promotions on neutral Heal...
-	iTemp = kPromotion.getNeutralHealChange();
+	iTemp = kPromotion.getFlatHeal(HEAL_NEUTRAL_TERRITORY, CASC_SCOPE_UNIT) / 100;
 	if (iTemp > 0)
 	{
 		if (pUnit)
@@ -27998,7 +28063,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//#29 Effects for Promotions on Friendly Heal...
-	iTemp = kPromotion.getFriendlyHealChange();
+	iTemp = kPromotion.getFlatHeal(HEAL_FRIENDLY_TERRITORY, CASC_SCOPE_UNIT) / 100;
 	if (iTemp > 0)
 	{
 		if (pUnit)
@@ -28140,7 +28205,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//#32 Effects for Promotions on num of Same tile Heal...
-	iTemp = kPromotion.getSameTileHealChange();
+	iTemp = kPromotion.getFlatHeal(HEAL_SAME_TILE, CASC_SCOPE_UNIT) / 100;
 	if (iTemp > 0)
 	{
 		if (pUnit)
@@ -28183,7 +28248,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//#33 Effects for Promotions on num of Adj tile Heal...
-	iTemp = kPromotion.getAdjacentTileHealChange();
+	iTemp = kPromotion.getFlatHeal(HEAL_ADJACENT_TILE, CASC_SCOPE_UNIT) / 100;
 	if (iTemp > 0)
 	{
 		if (pUnit)
@@ -28213,13 +28278,16 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//#34 Effects for Promotions on num Combat unit Heal...
-	if (kPromotion.getNumHealUnitCombatChangeTypes() > 0)
+	std::vector<HealByUnitCombat> healRows;
+	InfoValuation::collectHealByUnitCombat(kPromotion.getModifiers(), healRows);
+	if (!healRows.empty())
 	{
-		for (int iK = 0; iK < kPromotion.getNumHealUnitCombatChangeTypes(); iK++)
+		for (size_t iRow = 0; iRow < healRows.size(); ++iRow)
 		{
-			UnitCombatTypes eHealUnitCombat = kPromotion.getHealUnitCombatChangeType(iK).eUnitCombat;
-			iTemp = kPromotion.getHealUnitCombatChangeType(iK).iHeal;
-			iTemp += kPromotion.getHealUnitCombatChangeType(iK).iAdjacentHeal;
+			const UnitCombatTypes eHealUnitCombat = (UnitCombatTypes)healRows[iRow].iUnitCombat;
+			//	the deposits are ×100 amounts; this weighting consumes whole hit points
+			iTemp = healRows[iRow].iHeal / 100;
+			iTemp += healRows[iRow].iAdjacentHeal / 100;
 			iTemp += kPromotion.getNumHealSupport();
 
 			if (iTemp > 0)
@@ -28345,7 +28413,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//#37 Effects for Promotions on Always Heal...
-	if (kPromotion.isAlwaysHeal())
+	if (skillAlwaysHeal(kPromotion.getSkills()))
 	{
 		if ((eUnitAI == UNITAI_EXPLORE) ||
 			(eUnitAI == UNITAI_HUNTER) ||
@@ -28451,7 +28519,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//#43 Effects for Promotions that immunise to 1st Strikes...
-	if (kPromotion.isImmuneToFirstStrikes()
+	if (skillImmuneToFirstStrikes(kPromotion.getSkills())
 		&& (pUnit == NULL || !pUnit->immuneToFirstStrikes()))
 	{
 		if ((eUnitAI == UNITAI_ATTACK_CITY) ||
@@ -28589,7 +28657,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//#48 Effects for Promotions that affects Moves in general...
-	iTemp = kPromotion.getMovesChange();
+	iTemp = kPromotion.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100;
 	if (iTemp != 0)
 	{
 		if ((eUnitAI == UNITAI_ATTACK_SEA) ||
@@ -28693,7 +28761,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//#53 Effects for Promotions that Give 1st strikes...
-	iTemp = kPromotion.getFirstStrikesChange() * 2;
+	iTemp = kPromotion.getScalar(SCALAR_FIRST_STRIKES, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100 * 2;
 	iTemp += kPromotion.getChanceFirstStrikesChange();
 	if (iTemp != 0)
 	{
@@ -28877,7 +28945,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	if (!bNoDefensiveBonus)
 	{
 		{
-			iTemp = kPromotion.getCityDefensePercent();
+			iTemp = kPromotion.getCombatModifier(COMBAT_CITY_DEFENSE, CASC_SCOPE_UNIT);
 			if (iTemp != 0)
 			{
 				iTemp *= 100 + 2*(kUnit.getCityDefenseModifier() + (pUnit ? pUnit->getExtraCityDefensePercent() : 0));
@@ -28903,7 +28971,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 				else iValue += iTemp / 800;
 			}
 
-			iTemp = kPromotion.getHillsDefensePercent();
+			iTemp = kPromotion.getCombatModifier(COMBAT_HILLS_DEFENSE, CASC_SCOPE_UNIT);
 			if (iTemp != 0)
 			{
 				iTemp *= 100 + 2*(kUnit.getHillsDefenseModifier() + (pUnit ? pUnit->getExtraHillsDefensePercent() : 0));
@@ -29159,7 +29227,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 	//end mod
 
-	iTemp = kPromotion.getCombatPercent();
+	iTemp = kPromotion.getCombatModifier(COMBAT_AMOUNT, CASC_SCOPE_UNIT);
 	if (iTemp != 0)
 	{
 		//@MOD Commanders: combat promotion value
@@ -29525,7 +29593,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 
 	//TB Combat Mods
 	//TB Modification note:adjusted City Attack promo value to balance better against withdraw promos for city attack ai units.
-	iTemp = kPromotion.getCityAttackPercent();
+	iTemp = kPromotion.getCombatModifier(COMBAT_CITY_ATTACK, CASC_SCOPE_UNIT);
 	if (iTemp != 0)
 	{
 		if (eUnitAI == UNITAI_ATTACK || eUnitAI == UNITAI_ATTACK_CITY || eUnitAI == UNITAI_ATTACK_CITY_LEMMING)
@@ -29540,7 +29608,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		}
 	}
 
-	iTemp = kPromotion.getHillsAttackPercent();
+	iTemp = kPromotion.getCombatModifier(COMBAT_HILLS_ATTACK, CASC_SCOPE_UNIT);
 	if (iTemp != 0)
 	{
 		iTemp *= 100 + 2*(pUnit ? pUnit->getExtraHillsAttackPercent() : kUnit.getHillsAttackModifier());
@@ -29591,7 +29659,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		}
 	}
 
-	iTemp = kPromotion.getCaptureProbabilityModifierChange();
+	iTemp = kPromotion.getCapture(CAPTURE_PROBABILITY, CASC_SCOPE_UNIT) / 100;
 	if (iTemp != 0)
 	{
 		if (eUnitAI == UNITAI_INVESTIGATOR || pUnit && pUnit->canAttack())
@@ -29608,7 +29676,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		}
 	}
 
-	iTemp = kPromotion.getCaptureResistanceModifierChange();
+	iTemp = kPromotion.getCapture(CAPTURE_RESISTANCE, CASC_SCOPE_UNIT) / 100;
 	if (iTemp != 0)
 	{
 		if (pUnit != NULL && pUnit->canFight() || eUnitAI == UNITAI_INVESTIGATOR || eUnitAI == UNITAI_ESCORT)
@@ -30574,7 +30642,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 
 			//Logistics
 			//I & III
-		iValue += (kUnitCombat.getMovesChange() * 20);
+		iValue += (kUnitCombat.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100 * 20);
 		//II
 		if (kUnitCombat.isEnemyRoute()) iValue += 20;
 		iValue += (kUnitCombat.getMoveDiscountChange() * 10);
@@ -30606,25 +30674,25 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 
 		//Loyalty
-		if (kUnitCombat.isAlwaysHeal())
+		if (skillAlwaysHeal(kUnitCombat.getSkills()))
 		{
 			iValue += 15;
 		}
 
 		//Instigator
 		//I & II
-		if (kUnitCombat.getEnemyHealChange())
+		if (kUnitCombat.getFlatHeal(HEAL_ENEMY_TERRITORY, CASC_SCOPE_UNIT) / 100)
 		{
 			iValue += 15;
 		}
 		//III
-		if (kUnitCombat.getNeutralHealChange())
+		if (kUnitCombat.getFlatHeal(HEAL_NEUTRAL_TERRITORY, CASC_SCOPE_UNIT) / 100)
 		{
 			iValue += 15;
 		}
 
 		//Alchemist
-		if (kUnitCombat.getFriendlyHealChange())
+		if (kUnitCombat.getFlatHeal(HEAL_FRIENDLY_TERRITORY, CASC_SCOPE_UNIT) / 100)
 		{
 			iValue += 15;
 		}
@@ -30655,7 +30723,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 	}
 
-	if (kUnitCombat.isOneUp())
+	if (skillOneUp(kUnitCombat.getSkills()))
 	{
 		if ((eUnitAI == UNITAI_RESERVE) ||
 			  (eUnitAI == UNITAI_COUNTER) ||
@@ -30673,7 +30741,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 	}
 
-	if (kUnitCombat.isDefensiveVictoryMove())
+	if (skillDefensiveVictoryMove(kUnitCombat.getSkills()))
 	{
 		if ((eUnitAI == UNITAI_RESERVE) ||
 			  (eUnitAI == UNITAI_COUNTER) ||
@@ -30696,7 +30764,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 	}
 
 	iTemp = 0;
-	if (kUnitCombat.isFreeDrop())
+	if (skillFreeDrop(kUnitCombat.getSkills()))
 	{
 		if ((eUnitAI == UNITAI_PILLAGE) ||
 				(eUnitAI == UNITAI_ATTACK))
@@ -30709,7 +30777,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 	}
 
-	if (kUnitCombat.isOffensiveVictoryMove())
+	if (skillOffensiveVictoryMove(kUnitCombat.getSkills()))
 	{
 		if ((eUnitAI == UNITAI_PILLAGE) ||
 				(eUnitAI == UNITAI_ATTACK) ||
@@ -30734,7 +30802,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 	iValue += iTemp;
 
 	iTemp = 0;
-	if (kUnitCombat.isPillageEspionage())
+	if (skillPillageEspionage(kUnitCombat.getSkills()))
 	{
 		if (pUnit)
 		{
@@ -30766,7 +30834,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 	}
 
-	if (kUnitCombat.isPillageMarauder())
+	if (skillPillageMarauder(kUnitCombat.getSkills()))
 	{
 		if (pUnit)
 		{
@@ -30787,7 +30855,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		else iTemp += 2;
 	}
 
-	if (kUnitCombat.isPillageOnMove())
+	if (skillPillageOnMove(kUnitCombat.getSkills()))
 	{
 		if (pUnit)
 		{
@@ -30807,7 +30875,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		else iTemp++;
 	}
 
-	if (kUnitCombat.isPillageOnVictory())
+	if (skillPillageOnVictory(kUnitCombat.getSkills()))
 	{
 		if (pUnit)
 		{
@@ -30827,7 +30895,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		else iTemp += 4;
 	}
 
-	if (kUnitCombat.isPillageResearch())
+	if (skillPillageResearch(kUnitCombat.getSkills()))
 	{
 		if (pUnit)
 		{
@@ -30984,7 +31052,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 	}
 
-	iTemp = kUnitCombat.getSurvivorChance();
+	iTemp = kUnitCombat.getScalar(SCALAR_SURVIVOR, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT);
 	if (iTemp > 0)
 	{
 		if ((eUnitAI == UNITAI_ATTACK) ||
@@ -31066,7 +31134,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		iValue += iTemp;
 	}
 
-	iTemp = kUnitCombat.getSelfHealModifier();
+	iTemp = kUnitCombat.getHealModifier(HEAL_SELF_MODIFIER, CASC_SCOPE_UNIT);
 	if (iTemp > 0)
 	{
 		if (pUnit)
@@ -31118,7 +31186,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		iValue += iTemp;
 	}
 
-	iTemp = kUnitCombat.getEnemyHealChange();
+	iTemp = kUnitCombat.getFlatHeal(HEAL_ENEMY_TERRITORY, CASC_SCOPE_UNIT) / 100;
 	if (iTemp > 0)
 	{
 		if (pUnit)
@@ -31166,7 +31234,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		iValue += iTemp;
 	}
 
-	iTemp = kUnitCombat.getNeutralHealChange();
+	iTemp = kUnitCombat.getFlatHeal(HEAL_NEUTRAL_TERRITORY, CASC_SCOPE_UNIT) / 100;
 	if (iTemp > 0)
 	{
 		if (pUnit)
@@ -31219,7 +31287,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		iValue += iTemp;
 	}
 
-	iTemp = kUnitCombat.getFriendlyHealChange();
+	iTemp = kUnitCombat.getFlatHeal(HEAL_FRIENDLY_TERRITORY, CASC_SCOPE_UNIT) / 100;
 	if (iTemp > 0)
 	{
 		if (pUnit)
@@ -31352,7 +31420,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		iValue += iTemp;
 	}
 
-	iTemp = kUnitCombat.getSameTileHealChange();
+	iTemp = kUnitCombat.getFlatHeal(HEAL_SAME_TILE, CASC_SCOPE_UNIT) / 100;
 	if (iTemp > 0)
 	{
 		if (pUnit)
@@ -31380,7 +31448,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		iValue += iTemp;
 	}
 
-	iTemp = kUnitCombat.getAdjacentTileHealChange();
+	iTemp = kUnitCombat.getFlatHeal(HEAL_ADJACENT_TILE, CASC_SCOPE_UNIT) / 100;
 	if (iTemp > 0)
 	{
 		if (pUnit)
@@ -31485,7 +31553,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		iValue += iTemp;
 	}
 
-	if (kUnitCombat.isAlwaysHeal())
+	if (skillAlwaysHeal(kUnitCombat.getSkills()))
 	{
 		if ((eUnitAI == UNITAI_EXPLORE) ||
 			(eUnitAI == UNITAI_HUNTER) ||
@@ -31586,7 +31654,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		iValue += 75;
 	}
 
-	if (kUnitCombat.isImmuneToFirstStrikes()
+	if (skillImmuneToFirstStrikes(kUnitCombat.getSkills())
 		&& (pUnit == NULL || !pUnit->immuneToFirstStrikes()))
 	{
 		if ((eUnitAI == UNITAI_ATTACK_CITY) ||
@@ -31684,7 +31752,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 	}
 
-	iTemp = kUnitCombat.getMovesChange();
+	iTemp = kUnitCombat.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100;
 	if (iTemp != 0)
 	{
 		if ((eUnitAI == UNITAI_ATTACK_SEA) ||
@@ -31783,7 +31851,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 	}
 
-	iTemp = kUnitCombat.getFirstStrikesChange() * 2;
+	iTemp = kUnitCombat.getScalar(SCALAR_FIRST_STRIKES, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100 * 2;
 	iTemp += kUnitCombat.getChanceFirstStrikesChange();
 	if (iTemp != 0)
 	{
@@ -32277,7 +32345,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 	}
 
-	iTemp = kUnitCombat.getCombatPercent();
+	iTemp = kUnitCombat.getCombatModifier(COMBAT_AMOUNT, CASC_SCOPE_UNIT);
 	if (iTemp != 0)
 	{
 		//@MOD Commanders: combat promotion value
@@ -32616,7 +32684,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 	//TB Modification note:adjusted City Attack promo value to balance better against withdraw promos for city attack ai units.
 	if (eUnitAI == UNITAI_ATTACK || eUnitAI == UNITAI_ATTACK_CITY || eUnitAI == UNITAI_ATTACK_CITY_LEMMING)
 	{
-		const int iCityAttack = kUnitCombat.getCityAttackPercent();
+		const int iCityAttack = kUnitCombat.getCombatModifier(COMBAT_CITY_ATTACK, CASC_SCOPE_UNIT);
 
 		if (iCityAttack != 0)
 		{
@@ -32632,7 +32700,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 	}
 
-	iTemp = kUnitCombat.getCityDefensePercent();
+	iTemp = kUnitCombat.getCombatModifier(COMBAT_CITY_DEFENSE, CASC_SCOPE_UNIT);
 	if (iTemp != 0)
 	{
 		iExtra = kUnit.getCityDefenseModifier() + (pUnit == NULL ? 0 : pUnit->getExtraCityDefensePercent() * 2);
@@ -32656,7 +32724,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 	}
 
-	iTemp = kUnitCombat.getHillsAttackPercent();
+	iTemp = kUnitCombat.getCombatModifier(COMBAT_HILLS_ATTACK, CASC_SCOPE_UNIT);
 	if (iTemp != 0)
 	{
 		iExtra = pUnit == NULL ? kUnit.getHillsAttackModifier() : pUnit->getExtraHillsAttackPercent();
@@ -32673,7 +32741,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 	}
 
-	iTemp = kUnitCombat.getHillsDefensePercent();
+	iTemp = kUnitCombat.getCombatModifier(COMBAT_HILLS_DEFENSE, CASC_SCOPE_UNIT);
 	if (iTemp != 0)
 	{
 		iExtra = (kUnit.getHillsDefenseModifier() + (pUnit == NULL ? 0 : pUnit->getExtraHillsDefensePercent() * 2));
@@ -32735,7 +32803,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 	}
 
 	//Team Project (3)
-	iTemp = kUnitCombat.getCaptureProbabilityModifierChange();
+	iTemp = kUnitCombat.getCapture(CAPTURE_PROBABILITY, CASC_SCOPE_UNIT) / 100;
 	if (iTemp != 0)
 	{
 		if ((eUnitAI == UNITAI_INVESTIGATOR) ||
@@ -32753,7 +32821,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 	}
 
-	iTemp = kUnitCombat.getCaptureResistanceModifierChange();
+	iTemp = kUnitCombat.getCapture(CAPTURE_RESISTANCE, CASC_SCOPE_UNIT) / 100;
 	if (iTemp != 0)
 	{
 		if (pUnit != NULL && pUnit->canFight())

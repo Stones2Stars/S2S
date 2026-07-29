@@ -22,6 +22,7 @@
 //
 
 #include "CvInfoKinds.h"                  // ModifierFamily / kind enums / WellbeingChannel / CvCascUnit / CvCascScope
+#include <vector>                         // the keyed-heal collector's out-list
 #include "Defines/CvEnums.h"              // NUM_YIELD_TYPES / NUM_COMMERCE_TYPES -- the group out-array extents
 
 class CvModifiers;
@@ -37,9 +38,26 @@ class CvPlayer;
 class CvTeam;
 class CvArea;
 
+//	One keyed heal deposit: `heal.unit.unitCombat.{UNITCOMBAT_X}.{heal|adjacentHeal}`. Both amounts are ×100
+//	([DEC-fixedpoint-x100]); the reader reduces at its point of use.
+struct HealByUnitCombat
+{
+	int iUnitCombat;
+	int iHeal;
+	int iAdjacentHeal;
+
+	HealByUnitCombat() : iUnitCombat(-1), iHeal(0), iAdjacentHeal(0) {}
+};
+
 class InfoValuation
 {
 public:
+	//	The KEYED heal read, collected ONCE for every consumer ([DEC-single-implementation]). It walks the
+	//	entity's own COMPILED ENTRY LIST -- the handful of combat classes it actually authored -- rather than
+	//	enumerating the whole UnitCombat registry, which is the keyed-container inversion the rebuild deletes
+	//	(pedia-read-map finding 2). Entries for one combat class are merged into a single row.
+	static void collectHealByUnitCombat(const CvModifiers* modifiers, std::vector<HealByUnitCombat>& healRows);
+
 	// THE EVAL-CTX FILL SEAM (contexts.md: "the contexts ARE the eval state"): CityContext::fillEvalCtx
 	// (city/plot) + EmpireContext::fillEvalCtx (player/team) + the plotGroup pass-in (the reserved TRADED-bonus
 	// source -- evalCtx.plotGroup; NULL = the city's own plot-group-backed reads answer trade) + the enabler's

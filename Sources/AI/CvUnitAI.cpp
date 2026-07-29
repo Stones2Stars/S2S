@@ -1,7 +1,84 @@
 // unitAI.cpp
 
 #include "CvGameCoreDLL.h"
+#include "Infos/CvClassificationBlock.h"   // CLSD_SKILL + the memoized id bit test
+
+namespace
+{
+	// The json.md §8 SKILL reads this file makes on a PROMOTION / UNITCOMBAT info. The consumer holds
+	// the memoized generated-id (the CvUnitFilters precedent); the info exposes only the parameterized
+	// group read getSkills(), never a named getter per key.
+	bool skillStealthDefense(const CvClassificationBlock* skills)
+	{
+		static int s_stealthDefenseSkillId = -1;
+		return skills->hasKey(s_stealthDefenseSkillId, CLSD_SKILL, "stealthDefense");
+	}
+	bool skillDefenseOnly(const CvClassificationBlock* skills)
+	{
+		static int s_defenseOnlySkillId = -1;
+		return skills->hasKey(s_defenseOnlySkillId, CLSD_SKILL, "defenseOnly");
+	}
+	bool skillAlwaysHeal(const CvClassificationBlock* skills)
+	{
+		static int s_alwaysHealSkillId = -1;
+		return skills->hasKey(s_alwaysHealSkillId, CLSD_SKILL, "alwaysHeal");
+	}
+	bool skillImmuneToFirstStrikes(const CvClassificationBlock* skills)
+	{
+		static int s_immuneToFirstStrikesSkillId = -1;
+		return skills->hasKey(s_immuneToFirstStrikesSkillId, CLSD_SKILL, "immuneToFirstStrikes");
+	}
+	bool skillDefensiveVictoryMove(const CvClassificationBlock* skills)
+	{
+		static int s_defensiveVictoryMoveSkillId = -1;
+		return skills->hasKey(s_defensiveVictoryMoveSkillId, CLSD_SKILL, "defensiveVictoryMove");
+	}
+	bool skillOffensiveVictoryMove(const CvClassificationBlock* skills)
+	{
+		static int s_offensiveVictoryMoveSkillId = -1;
+		return skills->hasKey(s_offensiveVictoryMoveSkillId, CLSD_SKILL, "offensiveVictoryMove");
+	}
+	bool skillFreeDrop(const CvClassificationBlock* skills)
+	{
+		static int s_freeDropSkillId = -1;
+		return skills->hasKey(s_freeDropSkillId, CLSD_SKILL, "freeDrop");
+	}
+	bool skillOneUp(const CvClassificationBlock* skills)
+	{
+		static int s_oneUpSkillId = -1;
+		return skills->hasKey(s_oneUpSkillId, CLSD_SKILL, "oneUp");
+	}
+	bool skillPillageEspionage(const CvClassificationBlock* skills)
+	{
+		static int s_pillageEspionageSkillId = -1;
+		return skills->hasKey(s_pillageEspionageSkillId, CLSD_SKILL, "pillageEspionage");
+	}
+	bool skillPillageMarauder(const CvClassificationBlock* skills)
+	{
+		static int s_pillageMarauderSkillId = -1;
+		return skills->hasKey(s_pillageMarauderSkillId, CLSD_SKILL, "pillageMarauder");
+	}
+	bool skillPillageOnMove(const CvClassificationBlock* skills)
+	{
+		static int s_pillageOnMoveSkillId = -1;
+		return skills->hasKey(s_pillageOnMoveSkillId, CLSD_SKILL, "pillageOnMove");
+	}
+	bool skillPillageOnVictory(const CvClassificationBlock* skills)
+	{
+		static int s_pillageOnVictorySkillId = -1;
+		return skills->hasKey(s_pillageOnVictorySkillId, CLSD_SKILL, "pillageOnVictory");
+	}
+	bool skillPillageResearch(const CvClassificationBlock* skills)
+	{
+		static int s_pillageResearchSkillId = -1;
+		return skills->hasKey(s_pillageResearchSkillId, CLSD_SKILL, "pillageResearch");
+	}
+}
+
+#include "Data/CvInfoValuation.h"   // InfoValuation::collectHealByUnitCombat + HealByUnitCombat
 #include "Engine/CvGameSpeedScale.h"
+#include "Infos/CvModifiers.h"      // the compiled entry list -- entries()
+#include "Infos/CvModEntry.h"       // CvModEntry + modSegmentLookup (the keyed-target read)
 
 #include "Tools/FProfiler.h"
 
@@ -28232,11 +28309,11 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 				bool bPromotionHasAccountedValue = false;
 
 				//	Generic strength multiplier
-				if (kPromotion.getCombatPercent() != 0)
+				if (kPromotion.getCombatModifier(COMBAT_AMOUNT, CASC_SCOPE_UNIT) != 0)
 				{
-					iResult = (iResult * (100 + kPromotion.getCombatPercent())) / 100;
+					iResult = (iResult * (100 + kPromotion.getCombatModifier(COMBAT_AMOUNT, CASC_SCOPE_UNIT))) / 100;
 
-					bPromotionHasAccountedValue |= (kPromotion.getCombatPercent() > 0);
+					bPromotionHasAccountedValue |= (kPromotion.getCombatModifier(COMBAT_AMOUNT, CASC_SCOPE_UNIT) > 0);
 				}
 
 				//	Unit combat modifiers
@@ -28258,65 +28335,84 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 				}
 
 				//	First strikes
-				if (kPromotion.getFirstStrikesChange() != 0)
+				const int iFirstStrikes = kPromotion.getScalar(SCALAR_FIRST_STRIKES, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100;
+				if (iFirstStrikes != 0)
 				{
 					int iFirstStrikesWeight = 15;
 
-					iResult = (iResult * (100 + iFirstStrikesWeight * kPromotion.getFirstStrikesChange())) / 100;
+					iResult = (iResult * (100 + iFirstStrikesWeight * iFirstStrikes)) / 100;
 
-					bPromotionHasAccountedValue |= (kPromotion.getFirstStrikesChange() > 0);
+					bPromotionHasAccountedValue |= (iFirstStrikes > 0);
 				}
 
-				//	Tile and adjacent tile healing are considered with any flags
+				//	Tile and adjacent tile healing are considered with any flags.
+				//	The per-unitcombat heal is a KEYED deposit (`heal.unit.unitCombat.{UC}.{heal|adjacentHeal}`),
+				//	so it is read off the promotion's own COMPILED ENTRY LIST -- the handful it authored, never
+				//	an enumeration of every combat class (patterns.md § THE GETTER SETUP, read 3).
 				int iUCHeal = 0;
 				int iUCAdjHeal = 0;
-				for (int iK = 0; iK < kPromotion.getNumHealUnitCombatChangeTypes(); iK++)
 				{
-					iUCHeal += kPromotion.getHealUnitCombatChangeType(iK).iHeal;
-					iUCAdjHeal += kPromotion.getHealUnitCombatChangeType(iK).iAdjacentHeal;
+					std::vector<HealByUnitCombat> healRows;
+					InfoValuation::collectHealByUnitCombat(kPromotion.getModifiers(), healRows);
+					for (size_t iRow = 0; iRow < healRows.size(); ++iRow)
+					{
+						iUCHeal += healRows[iRow].iHeal;
+						iUCAdjHeal += healRows[iRow].iAdjacentHeal;
+					}
+					//	a heal is an AMOUNT (x100); this weighting consumes whole hit points
+					iUCHeal /= 100;
+					iUCAdjHeal /= 100;
 				}
-				if (kPromotion.getSameTileHealChange() != 0 || iUCHeal > 0)
-				{
 
+				const int iSameTileHeal = kPromotion.getFlatHeal(HEAL_SAME_TILE, CASC_SCOPE_UNIT) / 100;
+				const int iAdjacentTileHeal = kPromotion.getFlatHeal(HEAL_ADJACENT_TILE, CASC_SCOPE_UNIT) / 100;
+
+				if (iSameTileHeal != 0 || iUCHeal > 0)
+				{
 					int iSameTileHealWeight = 75;
 
-					iResult = ((iResult * (100 + (iSameTileHealWeight * ((kPromotion.getSameTileHealChange() + iUCHeal) / 100)) / 100)));
+					iResult = (iResult * (100 + (iSameTileHealWeight * (iSameTileHeal + iUCHeal)) / 100)) / 100;
 
-					bPromotionHasAccountedValue |= ((kPromotion.getSameTileHealChange() + iUCHeal) > 0);
+					bPromotionHasAccountedValue |= ((iSameTileHeal + iUCHeal) > 0);
 				}
-				if (kPromotion.getAdjacentTileHealChange() != 0 || iUCAdjHeal > 0)
+				if (iAdjacentTileHeal != 0 || iUCAdjHeal > 0)
 				{
 					int iAdjacentTileHealWeight = 200;
 
-					iResult = (iResult * (100 + (iAdjacentTileHealWeight * (kPromotion.getAdjacentTileHealChange() + iUCAdjHeal)) / 100)) / 100;
+					iResult = (iResult * (100 + (iAdjacentTileHealWeight * (iAdjacentTileHeal + iUCAdjHeal)) / 100)) / 100;
 
-					bPromotionHasAccountedValue |= ((kPromotion.getAdjacentTileHealChange() + iUCAdjHeal) > 0);
+					bPromotionHasAccountedValue |= ((iAdjacentTileHeal + iUCAdjHeal) > 0);
 				}
 
 				//Team Project (2)
 								//	Survival Chance multiplier
-				if (kPromotion.getSurvivorChance() != 0)
+				//	survivor is a PERCENT -- not scaled, so it is used as authored
+				const int iSurvivorChance = kPromotion.getScalar(SCALAR_SURVIVOR, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT);
+				if (iSurvivorChance != 0)
 				{
-					iResult = (iResult * (100 + kPromotion.getSurvivorChance())) / 100;
+					iResult = (iResult * (100 + iSurvivorChance)) / 100;
 
-					bPromotionHasAccountedValue |= (kPromotion.getSurvivorChance() > 0);
+					bPromotionHasAccountedValue |= (iSurvivorChance > 0);
 				}
 
 				//Team Project (3)
 								//	Capture Modifier
-				if (kPromotion.getCaptureProbabilityModifierChange() != 0)
-				{
-					iResult = (iResult * (100 + (kPromotion.getCaptureProbabilityModifierChange() * 4))) / 100;
+				const int iCaptureProbability = kPromotion.getCapture(CAPTURE_PROBABILITY, CASC_SCOPE_UNIT) / 100;
+				const int iCaptureResistance = kPromotion.getCapture(CAPTURE_RESISTANCE, CASC_SCOPE_UNIT) / 100;
 
-					bPromotionHasAccountedValue |= (kPromotion.getCaptureProbabilityModifierChange() > 0);
+				if (iCaptureProbability != 0)
+				{
+					iResult = (iResult * (100 + (iCaptureProbability * 4))) / 100;
+
+					bPromotionHasAccountedValue |= (iCaptureProbability > 0);
 				}
 
 				//	Capture Resistance Modifier
-				if (kPromotion.getCaptureResistanceModifierChange() != 0)
+				if (iCaptureResistance != 0)
 				{
-					iResult = (iResult * (100 + (kPromotion.getCaptureResistanceModifierChange() * 3))) / 100;
+					iResult = (iResult * (100 + (iCaptureResistance * 3))) / 100;
 
-					bPromotionHasAccountedValue |= (kPromotion.getCaptureResistanceModifierChange() > 0);
+					bPromotionHasAccountedValue |= (iCaptureResistance > 0);
 				}
 
 				if ((eFlags & UNITVALUE_FLAGS_DEFENSIVE) != 0)
@@ -28358,25 +28454,25 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 						}
 					}
 					//	Hills defense
-					if (kPromotion.getHillsDefensePercent() != 0)
+					if (kPromotion.getCombatModifier(COMBAT_HILLS_DEFENSE, CASC_SCOPE_UNIT) != 0)
 					{
 						int iHillsWeight = 30;	//	Crudely assume 30% hills for now
 
-						iResult = (iResult * (100 + (kPromotion.getHillsDefensePercent() * iHillsWeight) / 100)) / 100;
+						iResult = (iResult * (100 + (kPromotion.getCombatModifier(COMBAT_HILLS_DEFENSE, CASC_SCOPE_UNIT) * iHillsWeight) / 100)) / 100;
 
-						bPromotionHasAccountedValue |= (kPromotion.getHillsDefensePercent() > 0);
+						bPromotionHasAccountedValue |= (kPromotion.getCombatModifier(COMBAT_HILLS_DEFENSE, CASC_SCOPE_UNIT) > 0);
 					}
 					//	City defense
-					if (kPromotion.getCityDefensePercent() != 0)
+					if (kPromotion.getCombatModifier(COMBAT_CITY_DEFENSE, CASC_SCOPE_UNIT) != 0)
 					{
 						//	Always value city defence as half since units with it are often going to be stationed in cities
-						iResult = (iResult * (100 + kPromotion.getCityDefensePercent() / 2)) / 100;
+						iResult = (iResult * (100 + kPromotion.getCombatModifier(COMBAT_CITY_DEFENSE, CASC_SCOPE_UNIT) / 2)) / 100;
 
-						bPromotionHasAccountedValue |= (kPromotion.getCityDefensePercent() > 0);
+						bPromotionHasAccountedValue |= (kPromotion.getCombatModifier(COMBAT_CITY_DEFENSE, CASC_SCOPE_UNIT) > 0);
 					}
 
 					//	First strike immunity
-					if (kPromotion.isImmuneToFirstStrikes())
+					if (skillImmuneToFirstStrikes(kPromotion.getSkills()))
 					{
 						int		iFirstStrikeWeight = 120;	//	Future - make this adaptive to known enemy units
 
@@ -28386,7 +28482,7 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 					}
 
 					//	Consider healing as part of defense
-					if (kPromotion.isAlwaysHeal())
+					if (skillAlwaysHeal(kPromotion.getSkills()))
 					{
 						int		iAlwaysHealWeight = 140;
 
@@ -28396,29 +28492,36 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 					}
 
 					//Team Project (2)
-					if (kPromotion.getVictoryHeal() > 0)
-					{
-						iResult = (iResult * (100 + (kPromotion.getVictoryHeal() * 10))) / 100;
+					//	The heal family is one group read, taken ONCE per channel: a heal is an AMOUNT, so the
+					//	info serves it ×100 and the ÷100 happens here, at the single point this weighting
+					//	consumes it as whole hit points -- never repeated down the block.
+					const int iVictoryHeal = kPromotion.getFlatHeal(HEAL_VICTORY, CASC_SCOPE_UNIT) / 100;
+					const int iVictoryStackHeal = kPromotion.getFlatHeal(HEAL_VICTORY_STACK, CASC_SCOPE_UNIT) / 100;
+					const int iVictoryAdjacentHeal = kPromotion.getFlatHeal(HEAL_VICTORY_ADJACENT, CASC_SCOPE_UNIT) / 100;
 
-						bPromotionHasAccountedValue |= (kPromotion.getVictoryHeal() > 0);
+					if (iVictoryHeal > 0)
+					{
+						iResult = (iResult * (100 + (iVictoryHeal * 10))) / 100;
+
+						bPromotionHasAccountedValue = true;
 					}
 
-					if (kPromotion.getVictoryStackHeal() > 0)
+					if (iVictoryStackHeal > 0)
 					{
-						iResult = (iResult * (100 + (kPromotion.getVictoryStackHeal() * 20))) / 100;
+						iResult = (iResult * (100 + (iVictoryStackHeal * 20))) / 100;
 
-						bPromotionHasAccountedValue |= (kPromotion.getVictoryStackHeal() > 0);
+						bPromotionHasAccountedValue = true;
 					}
 
-					if (kPromotion.getVictoryAdjacentHeal() > 0)
+					if (iVictoryAdjacentHeal > 0)
 					{
-						iResult = (iResult * (100 + (kPromotion.getVictoryAdjacentHeal() * 20))) / 100;
+						iResult = (iResult * (100 + (iVictoryAdjacentHeal * 20))) / 100;
 
-						bPromotionHasAccountedValue |= (kPromotion.getVictoryAdjacentHeal() > 0);
+						bPromotionHasAccountedValue = true;
 					}
 
 					//Extra Lives (should double the value of the unit...)
-					if (kPromotion.isOneUp())
+					if (skillOneUp(kPromotion.getSkills()))
 					{
 						int iOneUpWeight = 200;
 
@@ -28428,7 +28531,7 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 					}
 
 					// Defensive Victory Moves
-					if (kPromotion.isDefensiveVictoryMove())
+					if (skillDefensiveVictoryMove(kPromotion.getSkills()))
 					{
 						int iDefensiveVictoryMoveWeight = 140;
 
@@ -28438,13 +28541,13 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 					}
 
 					//	For defense consider extra healing in friendly terrioty
-					if (kPromotion.getFriendlyHealChange() != 0)
+					if (kPromotion.getFlatHeal(HEAL_FRIENDLY_TERRITORY, CASC_SCOPE_UNIT) / 100 != 0)
 					{
 						int		iHealWeight = 25;
 
-						iResult = (iResult * (1000 + (kPromotion.getFriendlyHealChange() * iHealWeight) / 1000)) / 1000;
+						iResult = (iResult * (1000 + (kPromotion.getFlatHeal(HEAL_FRIENDLY_TERRITORY, CASC_SCOPE_UNIT) / 100 * iHealWeight) / 1000)) / 1000;
 
-						bPromotionHasAccountedValue |= (kPromotion.getFriendlyHealChange() > 0);
+						bPromotionHasAccountedValue |= (kPromotion.getFlatHeal(HEAL_FRIENDLY_TERRITORY, CASC_SCOPE_UNIT) / 100 > 0);
 					}
 				}
 
@@ -28452,7 +28555,7 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 				{
 					//Team Project (2)
 						// Offensive Victory Moves
-					if (kPromotion.isOffensiveVictoryMove())
+					if (skillOffensiveVictoryMove(kPromotion.getSkills()))
 					{
 						//may want to include Blitz into this factor somehow
 						int iOffensiveVictoryMoveWeight = 140;
@@ -28501,39 +28604,39 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 						}
 					}
 					//	Hills attack
-					if (kPromotion.getHillsAttackPercent() != 0)
+					if (kPromotion.getCombatModifier(COMBAT_HILLS_ATTACK, CASC_SCOPE_UNIT) != 0)
 					{
 						int iHillsWeight = 30;	//	Crudely assume 30% hills for now
 
-						iResult = (iResult * (100 + (kPromotion.getHillsAttackPercent() * iHillsWeight) / 100)) / 100;
+						iResult = (iResult * (100 + (kPromotion.getCombatModifier(COMBAT_HILLS_ATTACK, CASC_SCOPE_UNIT) * iHillsWeight) / 100)) / 100;
 
-						bPromotionHasAccountedValue |= (kPromotion.getHillsAttackPercent() > 0);
+						bPromotionHasAccountedValue |= (kPromotion.getCombatModifier(COMBAT_HILLS_ATTACK, CASC_SCOPE_UNIT) > 0);
 					}
 					//	City attack
-					if (kPromotion.getCityAttackPercent() != 0)
+					if (kPromotion.getCombatModifier(COMBAT_CITY_ATTACK, CASC_SCOPE_UNIT) != 0)
 					{
 						//	Always value city attack as half since units with it are often going to be used in attacks
-						iResult = (iResult * (100 + kPromotion.getCityAttackPercent() / 2)) / 100;
+						iResult = (iResult * (100 + kPromotion.getCombatModifier(COMBAT_CITY_ATTACK, CASC_SCOPE_UNIT) / 2)) / 100;
 
-						bPromotionHasAccountedValue |= (kPromotion.getCityAttackPercent() > 0);
+						bPromotionHasAccountedValue |= (kPromotion.getCombatModifier(COMBAT_CITY_ATTACK, CASC_SCOPE_UNIT) > 0);
 					}
 
 					//	For attack consider extra healing in neutral and enemy territory
-					if (kPromotion.getNeutralHealChange() != 0)
+					if (kPromotion.getFlatHeal(HEAL_NEUTRAL_TERRITORY, CASC_SCOPE_UNIT) / 100 != 0)
 					{
 						int		iNeutralHealWeight = 20;
 
-						iResult = (iResult * (1000 + (kPromotion.getNeutralHealChange() * iNeutralHealWeight) / 10)) / 1000;
+						iResult = (iResult * (1000 + (kPromotion.getFlatHeal(HEAL_NEUTRAL_TERRITORY, CASC_SCOPE_UNIT) / 100 * iNeutralHealWeight) / 10)) / 1000;
 
-						bPromotionHasAccountedValue |= (kPromotion.getNeutralHealChange() > 0);
+						bPromotionHasAccountedValue |= (kPromotion.getFlatHeal(HEAL_NEUTRAL_TERRITORY, CASC_SCOPE_UNIT) / 100 > 0);
 					}
-					if (kPromotion.getEnemyHealChange() != 0)
+					if (kPromotion.getFlatHeal(HEAL_ENEMY_TERRITORY, CASC_SCOPE_UNIT) / 100 != 0)
 					{
 						int		iEnemyHealWeight = 30;
 
-						iResult = (iResult * (1000 + (kPromotion.getEnemyHealChange() * iEnemyHealWeight) / 10)) / 1000;
+						iResult = (iResult * (1000 + (kPromotion.getFlatHeal(HEAL_ENEMY_TERRITORY, CASC_SCOPE_UNIT) / 100 * iEnemyHealWeight) / 10)) / 1000;
 
-						bPromotionHasAccountedValue |= (kPromotion.getEnemyHealChange() > 0);
+						bPromotionHasAccountedValue |= (kPromotion.getFlatHeal(HEAL_ENEMY_TERRITORY, CASC_SCOPE_UNIT) / 100 > 0);
 					}
 					//Team Project (2)
 										//	Collateral Damage Limit
@@ -28563,7 +28666,7 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 				{
 					//Team Project (2)
 										// Free Drop (takes no movement to perform an air drop)
-					if (kPromotion.isFreeDrop())
+					if (skillFreeDrop(kPromotion.getSkills()))
 					{
 						int iFreeDropWeight = 110;
 
@@ -28572,7 +28675,7 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 						bPromotionHasAccountedValue = true;
 					}
 					// Pillage Espionage
-					if (kPromotion.isPillageEspionage())
+					if (skillPillageEspionage(kPromotion.getSkills()))
 					{
 						int iPillageEspionageWeight = 110;
 
@@ -28581,7 +28684,7 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 						bPromotionHasAccountedValue = true;
 					}
 					// Pillage Research
-					if (kPromotion.isPillageResearch())
+					if (skillPillageResearch(kPromotion.getSkills()))
 					{
 						int iPillageResearchWeight = 110;
 
@@ -28590,7 +28693,7 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 						bPromotionHasAccountedValue = true;
 					}
 					// Pillage Marauder
-					if (kPromotion.isPillageMarauder())
+					if (skillPillageMarauder(kPromotion.getSkills()))
 					{
 						int iPillageMarauderWeight = 115;
 
@@ -28599,7 +28702,7 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 						bPromotionHasAccountedValue = true;
 					}
 					// PillageOnMove
-					if (kPromotion.isPillageOnMove())
+					if (skillPillageOnMove(kPromotion.getSkills()))
 					{
 						int iPillageOnMoveWeight = 115;
 
@@ -28608,7 +28711,7 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 						bPromotionHasAccountedValue = true;
 					}
 					// PillageOnVictory
-					if (kPromotion.isPillageOnVictory())
+					if (skillPillageOnVictory(kPromotion.getSkills()))
 					{
 						int iPillageOnVictoryWeight = 115;
 
@@ -29535,7 +29638,7 @@ bool CvUnitAI::AI_selectStatus(bool bStack, CvUnit* pUnit)
 				{
 					//Keep things as thin as possible here - program in as new statuses are introduced
 					//Stay the Hand
-					int iTemp = kPromotion.getDefenseOnlyChange();
+					int iTemp = (skillDefenseOnly(kPromotion.getSkills()) ? 1 : 0);
 					if (iTemp != 0)
 					{
 						if (eMissionAI == MISSIONAI_SPREAD ||
@@ -29562,7 +29665,7 @@ bool CvUnitAI::AI_selectStatus(bool bStack, CvUnit* pUnit)
 					}
 
 					//Stealth Defense
-					iTemp = kPromotion.getStealthDefenseChange();
+					iTemp = (skillStealthDefense(kPromotion.getSkills()) ? 1 : 0);
 					if (iTemp != 0)
 					{
 						if (eUnitAI == UNITAI_SETTLE ||
@@ -29660,7 +29763,7 @@ bool CvUnitAI::AI_selectStatus(bool bStack, CvUnit* pUnit)
 
 					//Enhanced March
 					//Moves
-					iTemp = kPromotion.getMovesChange();
+					iTemp = kPromotion.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100;
 					if (iTemp != 0)
 					{
 						if ((eMissionAI == MISSIONAI_SPREAD ||
@@ -29693,7 +29796,7 @@ bool CvUnitAI::AI_selectStatus(bool bStack, CvUnit* pUnit)
 						iValue += iTemp;
 					}
 					//combat%
-					iTemp = kPromotion.getCombatPercent();
+					iTemp = kPromotion.getCombatModifier(COMBAT_AMOUNT, CASC_SCOPE_UNIT);
 					if (plot() != NULL && iTemp != 0)
 					{
 						int iRange = sight(plot()) / VISION_OPEN_GROUND_COST + getMoves();
@@ -29708,7 +29811,7 @@ bool CvUnitAI::AI_selectStatus(bool bStack, CvUnit* pUnit)
 						iValue += iTemp;
 					}
 					//selfheal
-					iTemp = kPromotion.getSelfHealModifier();
+					iTemp = kPromotion.getHealModifier(HEAL_SELF_MODIFIER, CASC_SCOPE_UNIT);
 					iTemp *= getGroup()->getWorstDamagePercent();
 					iTemp /= 10;
 					iValue += iTemp;
@@ -29826,7 +29929,7 @@ bool CvUnitAI::AI_selectStatus(bool bStack, CvUnit* pUnit)
 
 					//Enhanced March
 					//Moves
-					int iTemp = kPromotion.getMovesChange();
+					int iTemp = kPromotion.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100;
 					if (iTemp != 0)
 					{
 						if ((eMissionAI == MISSIONAI_SPREAD ||
@@ -29859,7 +29962,7 @@ bool CvUnitAI::AI_selectStatus(bool bStack, CvUnit* pUnit)
 						iValue += iTemp;
 					}
 					//combat%
-					iTemp = kPromotion.getCombatPercent();
+					iTemp = kPromotion.getCombatModifier(COMBAT_AMOUNT, CASC_SCOPE_UNIT);
 					if (pUnit->plot() != NULL && iTemp != 0)
 					{
 						int iRange = pUnit->sight(plot()) / VISION_OPEN_GROUND_COST + pUnit->getMoves();
@@ -29875,7 +29978,7 @@ bool CvUnitAI::AI_selectStatus(bool bStack, CvUnit* pUnit)
 						iValue += iTemp;
 					}
 					//selfheal
-					iTemp = kPromotion.getSelfHealModifier();
+					iTemp = kPromotion.getHealModifier(HEAL_SELF_MODIFIER, CASC_SCOPE_UNIT);
 					iTemp *= getDamage();
 					iTemp /= 10;
 					iValue += iTemp;

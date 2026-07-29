@@ -4,6 +4,81 @@
 #include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
+#include "Infos/CvClassificationBlock.h"   // CLSD_SKILL + the memoized id bit test
+
+namespace
+{
+	// The json.md §8 SKILL reads this file makes on a PROMOTION / UNITCOMBAT info. The consumer holds
+	// the memoized generated-id (the CvUnitFilters precedent); the info exposes only the parameterized
+	// group read getSkills(), never a named getter per key.
+	bool skillStealthDefense(const CvClassificationBlock* skills)
+	{
+		static int s_stealthDefenseSkillId = -1;
+		return skills->hasKey(s_stealthDefenseSkillId, CLSD_SKILL, "stealthDefense");
+	}
+	bool skillDefenseOnly(const CvClassificationBlock* skills)
+	{
+		static int s_defenseOnlySkillId = -1;
+		return skills->hasKey(s_defenseOnlySkillId, CLSD_SKILL, "defenseOnly");
+	}
+	bool skillAlwaysHeal(const CvClassificationBlock* skills)
+	{
+		static int s_alwaysHealSkillId = -1;
+		return skills->hasKey(s_alwaysHealSkillId, CLSD_SKILL, "alwaysHeal");
+	}
+	bool skillImmuneToFirstStrikes(const CvClassificationBlock* skills)
+	{
+		static int s_immuneToFirstStrikesSkillId = -1;
+		return skills->hasKey(s_immuneToFirstStrikesSkillId, CLSD_SKILL, "immuneToFirstStrikes");
+	}
+	bool skillDefensiveVictoryMove(const CvClassificationBlock* skills)
+	{
+		static int s_defensiveVictoryMoveSkillId = -1;
+		return skills->hasKey(s_defensiveVictoryMoveSkillId, CLSD_SKILL, "defensiveVictoryMove");
+	}
+	bool skillOffensiveVictoryMove(const CvClassificationBlock* skills)
+	{
+		static int s_offensiveVictoryMoveSkillId = -1;
+		return skills->hasKey(s_offensiveVictoryMoveSkillId, CLSD_SKILL, "offensiveVictoryMove");
+	}
+	bool skillFreeDrop(const CvClassificationBlock* skills)
+	{
+		static int s_freeDropSkillId = -1;
+		return skills->hasKey(s_freeDropSkillId, CLSD_SKILL, "freeDrop");
+	}
+	bool skillOneUp(const CvClassificationBlock* skills)
+	{
+		static int s_oneUpSkillId = -1;
+		return skills->hasKey(s_oneUpSkillId, CLSD_SKILL, "oneUp");
+	}
+	bool skillPillageEspionage(const CvClassificationBlock* skills)
+	{
+		static int s_pillageEspionageSkillId = -1;
+		return skills->hasKey(s_pillageEspionageSkillId, CLSD_SKILL, "pillageEspionage");
+	}
+	bool skillPillageMarauder(const CvClassificationBlock* skills)
+	{
+		static int s_pillageMarauderSkillId = -1;
+		return skills->hasKey(s_pillageMarauderSkillId, CLSD_SKILL, "pillageMarauder");
+	}
+	bool skillPillageOnMove(const CvClassificationBlock* skills)
+	{
+		static int s_pillageOnMoveSkillId = -1;
+		return skills->hasKey(s_pillageOnMoveSkillId, CLSD_SKILL, "pillageOnMove");
+	}
+	bool skillPillageOnVictory(const CvClassificationBlock* skills)
+	{
+		static int s_pillageOnVictorySkillId = -1;
+		return skills->hasKey(s_pillageOnVictorySkillId, CLSD_SKILL, "pillageOnVictory");
+	}
+	bool skillPillageResearch(const CvClassificationBlock* skills)
+	{
+		static int s_pillageResearchSkillId = -1;
+		return skills->hasKey(s_pillageResearchSkillId, CLSD_SKILL, "pillageResearch");
+	}
+}
+
+#include "Data/CvInfoValuation.h"   // InfoValuation::collectHealByUnitCombat + HealByUnitCombat
 #include "Engine/CvGameSpeedScale.h"
 #include "AI/BetterBTSAI.h"
 #include "CvArea.h"
@@ -18071,7 +18146,7 @@ bool CvUnit::isPromotionValid(PromotionTypes ePromotion, bool bFree, bool bKeepC
     		return false;
     	}
 
-	if (isBlendIntoCity() && promo.getCityDefensePercent() != 0)
+	if (isBlendIntoCity() && promo.getCombatModifier(COMBAT_CITY_DEFENSE, CASC_SCOPE_UNIT) != 0)
 	{
 		return false;
 	}
@@ -18367,7 +18442,7 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 		}
 	}
 
-	changeExtraMoves(kUnitCombat.getMovesChange() * iChange);//no merge/split diff
+	changeExtraMoves(kUnitCombat.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split diff
 	changeExtraMoveDiscount(kUnitCombat.getMoveDiscountChange() * iChange);//no merge/split diff
 	changeExtraAirRange(kUnitCombat.getAirRangeChange() * iChange);//no merge/split diff
 	changeExtraIntercept(kUnitCombat.getInterceptChange() * iChange);//no merge/split diff
@@ -18381,18 +18456,18 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 
 	changeExtraCollateralDamage(kUnitCombat.getCollateralDamageChange() * iChange);//I suspect no merge/split
 	changeExtraBombardRate(kUnitCombat.getBombardRateChange() * iChange);//no merge/split (affect this volumetrically on the final value)
-	changeExtraFirstStrikes(kUnitCombat.getFirstStrikesChange() * iChange);//no merge/split
+	changeExtraFirstStrikes(kUnitCombat.getScalar(SCALAR_FIRST_STRIKES, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100 * iChange);//no merge/split
 	changeExtraChanceFirstStrikes(kUnitCombat.getChanceFirstStrikesChange() * iChange);//no merge/split
-	changeExtraEnemyHeal(kUnitCombat.getEnemyHealChange() * iChange);//no merge/split (modified but not multiplicative)
-	changeExtraNeutralHeal(kUnitCombat.getNeutralHealChange() * iChange);//no merge/split (modified but not multiplicative)
-	changeExtraFriendlyHeal(kUnitCombat.getFriendlyHealChange() * iChange);//no merge/split (modified but not multiplicative)
-	changeSameTileHeal(kUnitCombat.getSameTileHealChange() * iChange);//no merge/split (modified but not multiplicative)
-	changeAdjacentTileHeal(kUnitCombat.getAdjacentTileHealChange() * iChange);//no merge/split (modified but not multiplicative)
-	changeExtraCombatPercent(kUnitCombat.getCombatPercent() * iChange);//no merge/split
-	changeExtraCityAttackPercent(kUnitCombat.getCityAttackPercent() * iChange);//no merge/split
-	changeExtraCityDefensePercent(kUnitCombat.getCityDefensePercent() * iChange);//no merge/split
-	changeExtraHillsAttackPercent(kUnitCombat.getHillsAttackPercent() * iChange);//no merge/split
-	changeExtraHillsDefensePercent(kUnitCombat.getHillsDefensePercent() * iChange);//no merge/split
+	changeExtraEnemyHeal(kUnitCombat.getFlatHeal(HEAL_ENEMY_TERRITORY, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split (modified but not multiplicative)
+	changeExtraNeutralHeal(kUnitCombat.getFlatHeal(HEAL_NEUTRAL_TERRITORY, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split (modified but not multiplicative)
+	changeExtraFriendlyHeal(kUnitCombat.getFlatHeal(HEAL_FRIENDLY_TERRITORY, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split (modified but not multiplicative)
+	changeSameTileHeal(kUnitCombat.getFlatHeal(HEAL_SAME_TILE, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split (modified but not multiplicative)
+	changeAdjacentTileHeal(kUnitCombat.getFlatHeal(HEAL_ADJACENT_TILE, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split (modified but not multiplicative)
+	changeExtraCombatPercent(kUnitCombat.getCombatModifier(COMBAT_AMOUNT, CASC_SCOPE_UNIT) * iChange);//no merge/split
+	changeExtraCityAttackPercent(kUnitCombat.getCombatModifier(COMBAT_CITY_ATTACK, CASC_SCOPE_UNIT) * iChange);//no merge/split
+	changeExtraCityDefensePercent(kUnitCombat.getCombatModifier(COMBAT_CITY_DEFENSE, CASC_SCOPE_UNIT) * iChange);//no merge/split
+	changeExtraHillsAttackPercent(kUnitCombat.getCombatModifier(COMBAT_HILLS_ATTACK, CASC_SCOPE_UNIT) * iChange);//no merge/split
+	changeExtraHillsDefensePercent(kUnitCombat.getCombatModifier(COMBAT_HILLS_DEFENSE, CASC_SCOPE_UNIT) * iChange);//no merge/split
 	// Assume only worker units can get the relevant unit combats, if not then we'll need a retroactive unitComp late init function.
 	if (isWorker())
 	{
@@ -18433,7 +18508,7 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 	changeExtraDropRange((kUnitCombat.getExtraDropRange()) * iChange);//no merge/split
 	changeExtraNoDefensiveBonusCount((kUnitCombat.getNoDefensiveBonusChange()) * iChange);
 	changeExtraGatherHerdCount((kUnitCombat.getGatherHerdChange()) * iChange);
-	changeSurvivorChance((kUnitCombat.getSurvivorChance()) * iChange);//no merge/split
+	changeSurvivorChance((kUnitCombat.getScalar(SCALAR_SURVIVOR, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT)) * iChange);//no merge/split
 	changeVictoryAdjacentHeal((kUnitCombat.getVictoryAdjacentHeal()) * iChange);//no merge/split
 	changeVictoryHeal((kUnitCombat.getVictoryHeal()) * iChange);//no merge/split
 	changeVictoryStackHeal((kUnitCombat.getVictoryStackHeal()) * iChange);//no merge/split
@@ -18449,8 +18524,8 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 	changeExtraStrength(kUnitCombat.getStrengthChange() * iChange);//no merge/split (but included into merge/split mult)
 	changeExtraEndurance(kUnitCombat.getEnduranceChange() * iChange);//no merge/split
 	changeExtraPoisonProbabilityModifier(kUnitCombat.getPoisonProbabilityModifierChange() * iChange);//no merge/split
-	changeExtraCaptureProbabilityModifier(kUnitCombat.getCaptureProbabilityModifierChange() * iChange);//no merge/split
-	changeExtraCaptureResistanceModifier(kUnitCombat.getCaptureResistanceModifierChange() * iChange);//no merge/split
+	changeExtraCaptureProbabilityModifier(kUnitCombat.getCapture(CAPTURE_PROBABILITY, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split
+	changeExtraCaptureResistanceModifier(kUnitCombat.getCapture(CAPTURE_RESISTANCE, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split
 
 	changeExtraBreakdownChance(kUnitCombat.getBreakdownChanceChange() * iChange);//no merge/split (larger/smaller just more/less survivable)
 	changeExtraBreakdownDamage(kUnitCombat.getBreakdownDamageChange() * iChange);//no merge/split
@@ -18478,22 +18553,22 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 	//
 
 	//booleans //no merge/split
-	changeDefensiveVictoryMoveCount((kUnitCombat.isDefensiveVictoryMove()) ? iChange : 0);//no merge/split
-	changeFreeDropCount((kUnitCombat.isFreeDrop()) ? iChange : 0);//no merge/split
-	changeOffensiveVictoryMoveCount((kUnitCombat.isOffensiveVictoryMove()) ? iChange : 0);//no merge/split
-	changeOneUpCount((kUnitCombat.isOneUp()) ? iChange : 0);//no merge/split
-	changePillageEspionageCount((kUnitCombat.isPillageEspionage()) ? iChange : 0);//no merge/split
-	changePillageMarauderCount((kUnitCombat.isPillageMarauder()) ? iChange : 0);//no merge/split
-	changePillageOnMoveCount((kUnitCombat.isPillageOnMove()) ? iChange : 0);//no merge/split
-	changePillageOnVictoryCount((kUnitCombat.isPillageOnVictory()) ? iChange : 0);//no merge/split
-	changePillageResearchCount((kUnitCombat.isPillageResearch()) ? iChange : 0);//no merge/split
+	changeDefensiveVictoryMoveCount((skillDefensiveVictoryMove(kUnitCombat.getSkills())) ? iChange : 0);//no merge/split
+	changeFreeDropCount((skillFreeDrop(kUnitCombat.getSkills())) ? iChange : 0);//no merge/split
+	changeOffensiveVictoryMoveCount((skillOffensiveVictoryMove(kUnitCombat.getSkills())) ? iChange : 0);//no merge/split
+	changeOneUpCount((skillOneUp(kUnitCombat.getSkills())) ? iChange : 0);//no merge/split
+	changePillageEspionageCount((skillPillageEspionage(kUnitCombat.getSkills())) ? iChange : 0);//no merge/split
+	changePillageMarauderCount((skillPillageMarauder(kUnitCombat.getSkills())) ? iChange : 0);//no merge/split
+	changePillageOnMoveCount((skillPillageOnMove(kUnitCombat.getSkills())) ? iChange : 0);//no merge/split
+	changePillageOnVictoryCount((skillPillageOnVictory(kUnitCombat.getSkills())) ? iChange : 0);//no merge/split
+	changePillageResearchCount((skillPillageResearch(kUnitCombat.getSkills())) ? iChange : 0);//no merge/split
 	changeBlitzCount((kUnitCombat.isBlitz()) ? iChange : 0);//no merge/split
 	changeAmphibCount((kUnitCombat.isAmphib()) ? iChange : 0);//no merge/split
 	changeRiverCount((kUnitCombat.isRiver()) ? iChange : 0);//no merge/split
 	changeEnemyRouteCount((kUnitCombat.isEnemyRoute()) ? iChange : 0);//no merge/split
-	changeAlwaysHealCount((kUnitCombat.isAlwaysHeal()) ? iChange : 0);
+	changeAlwaysHealCount((skillAlwaysHeal(kUnitCombat.getSkills())) ? iChange : 0);
 	changeHillsDoubleMoveCount((kUnitCombat.isHillsDoubleMove()) ? iChange : 0);
-	changeImmuneToFirstStrikesCount((kUnitCombat.isImmuneToFirstStrikes()) ? iChange : 0);
+	changeImmuneToFirstStrikesCount((skillImmuneToFirstStrikes(kUnitCombat.getSkills())) ? iChange : 0);
 	changeAlwaysInvisibleCount((kUnitCombat.isAlwaysInvisible()) ? iChange : 0);
 	changeStampedeCount((kUnitCombat.isStampedeChange()) ? iChange : 0);
 	changeStampedeCount((kUnitCombat.isRemoveStampede()) ? -iChange : 0);
@@ -18518,14 +18593,14 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 	changeCannotMergeSplitCount((kUnitCombat.isCannotMergeSplit()) ? iChange : 0);
 	changeRBombardForceAbilityCount((kUnitCombat.isRBombardForceAbility()) ? iChange : 0);
 	changeNoSelfHealCount((kUnitCombat.isNoSelfHeal()) ? iChange : 0);
-	changeExtraSelfHealModifier(kUnitCombat.getSelfHealModifier() * iChange);
+	changeExtraSelfHealModifier(kUnitCombat.getHealModifier(HEAL_SELF_MODIFIER, CASC_SCOPE_UNIT) * iChange);
 	changeExtraNumHealSupport(kUnitCombat.getNumHealSupport() * iChange);
 	changeExtraInsidiousness(kUnitCombat.getInsidiousnessChange() * iChange);
 	changeExtraInvestigation(kUnitCombat.getInvestigationChange() * iChange);
 	changeExtraStealthStrikes(kUnitCombat.getStealthStrikesChange() * iChange);
 	changeExtraStealthCombatModifier(kUnitCombat.getStealthCombatModifierChange() * iChange);
-	changeStealthDefenseCount(kUnitCombat.getStealthDefenseChange() * iChange);
-	changeOnlyDefensiveCount(kUnitCombat.getDefenseOnlyChange() * iChange);
+	changeStealthDefenseCount((skillStealthDefense(kUnitCombat.getSkills()) ? 1 : 0) * iChange);
+	changeOnlyDefensiveCount((skillDefenseOnly(kUnitCombat.getSkills()) ? 1 : 0) * iChange);
 	changeNoInvisibilityCount(kUnitCombat.getNoInvisibilityChange() * iChange);
 	changeNoCaptureCount(kUnitCombat.getNoCaptureChange() * iChange);
 
@@ -18808,7 +18883,7 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	changeAmphibCount((kPromotion.isAmphib()) ? iChange : 0);
 	changeRiverCount((kPromotion.isRiver()) ? iChange : 0);
 	changeEnemyRouteCount((kPromotion.isEnemyRoute()) ? iChange : 0);
-	changeAlwaysHealCount((kPromotion.isAlwaysHeal()) ? iChange : 0);
+	changeAlwaysHealCount((skillAlwaysHeal(kPromotion.getSkills())) ? iChange : 0);
 	changeHillsDoubleMoveCount((kPromotion.isHillsDoubleMove()) ? iChange : 0);
 
 	changeCanMovePeaksCount((kPromotion.isCanMovePeaks()) ? iChange : 0);
@@ -18830,18 +18905,18 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
     	m_commodore->changeCommandRange(kPromotion.getCommandRange() * iChange);
     }
 
-	changeImmuneToFirstStrikesCount((kPromotion.isImmuneToFirstStrikes()) ? iChange : 0);
+	changeImmuneToFirstStrikesCount((skillImmuneToFirstStrikes(kPromotion.getSkills())) ? iChange : 0);
 
-	changeDefensiveVictoryMoveCount((kPromotion.isDefensiveVictoryMove()) ? iChange : 0);
-	changeFreeDropCount((kPromotion.isFreeDrop()) ? iChange : 0);
-	changeOffensiveVictoryMoveCount((kPromotion.isOffensiveVictoryMove()) ? iChange : 0);
+	changeDefensiveVictoryMoveCount((skillDefensiveVictoryMove(kPromotion.getSkills())) ? iChange : 0);
+	changeFreeDropCount((skillFreeDrop(kPromotion.getSkills())) ? iChange : 0);
+	changeOffensiveVictoryMoveCount((skillOffensiveVictoryMove(kPromotion.getSkills())) ? iChange : 0);
 
-	changeOneUpCount((kPromotion.isOneUp()) ? iChange : 0);
-	changePillageEspionageCount((kPromotion.isPillageEspionage()) ? iChange : 0);
-	changePillageMarauderCount((kPromotion.isPillageMarauder()) ? iChange : 0);
-	changePillageOnMoveCount((kPromotion.isPillageOnMove()) ? iChange : 0);
-	changePillageOnVictoryCount((kPromotion.isPillageOnVictory()) ? iChange : 0);
-	changePillageResearchCount((kPromotion.isPillageResearch()) ? iChange : 0);
+	changeOneUpCount((skillOneUp(kPromotion.getSkills())) ? iChange : 0);
+	changePillageEspionageCount((skillPillageEspionage(kPromotion.getSkills())) ? iChange : 0);
+	changePillageMarauderCount((skillPillageMarauder(kPromotion.getSkills())) ? iChange : 0);
+	changePillageOnMoveCount((skillPillageOnMove(kPromotion.getSkills())) ? iChange : 0);
+	changePillageOnVictoryCount((skillPillageOnVictory(kPromotion.getSkills())) ? iChange : 0);
+	changePillageResearchCount((skillPillageResearch(kPromotion.getSkills())) ? iChange : 0);
 	changeAirCombatLimitChange((kPromotion.getAirCombatLimitChange()) * iChange);
 	changeCelebrityHappy((kPromotion.getCelebrityHappy()) * iChange);
 	changeCollateralDamageLimitChange((kPromotion.getCollateralDamageLimitChange()) * iChange);
@@ -18851,17 +18926,17 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	changeExtraNoDefensiveBonusCount((kPromotion.getNoDefensiveBonusChange()) * iChange);
 	changeExtraGatherHerdCount((kPromotion.getGatherHerdChange()) * iChange);
 
-	changeSurvivorChance((kPromotion.getSurvivorChance()) * iChange);
+	changeSurvivorChance((kPromotion.getScalar(SCALAR_SURVIVOR, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT)) * iChange);
 	changeVictoryAdjacentHeal((kPromotion.getVictoryAdjacentHeal()) * iChange);
 	changeVictoryHeal((kPromotion.getVictoryHeal()) * iChange);
 	changeVictoryStackHeal((kPromotion.getVictoryStackHeal()) * iChange);
 
-	changeExtraMoves(kPromotion.getMovesChange() * iChange);
+	changeExtraMoves(kPromotion.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100 * iChange);
 	changeExtraMoveDiscount(kPromotion.getMoveDiscountChange() * iChange);
 	changeExtraAirRange(kPromotion.getAirRangeChange() * iChange);
 	changeExtraIntercept(kPromotion.getInterceptChange() * iChange);
 	changeExtraEvasion(kPromotion.getEvasionChange() * iChange);
-	changeExtraFirstStrikes(kPromotion.getFirstStrikesChange() * iChange);
+	changeExtraFirstStrikes(kPromotion.getScalar(SCALAR_FIRST_STRIKES, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100 * iChange);
 	changeExtraChanceFirstStrikes(kPromotion.getChanceFirstStrikesChange() * iChange);
 	changeExtraWithdrawal(kPromotion.getWithdrawalChange() * iChange);
 	//TB Combat Mods Begin
@@ -18898,8 +18973,8 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	changeExtraEndurance(kPromotion.getEnduranceChange() * iChange);
 	changeExtraPoisonProbabilityModifier(kPromotion.getPoisonProbabilityModifierChange() * iChange);
 
-	changeExtraCaptureProbabilityModifier(kPromotion.getCaptureProbabilityModifierChange() * iChange);
-	changeExtraCaptureResistanceModifier(kPromotion.getCaptureResistanceModifierChange() * iChange);
+	changeExtraCaptureProbabilityModifier(kPromotion.getCapture(CAPTURE_PROBABILITY, CASC_SCOPE_UNIT) / 100 * iChange);
+	changeExtraCaptureResistanceModifier(kPromotion.getCapture(CAPTURE_RESISTANCE, CASC_SCOPE_UNIT) / 100 * iChange);
 
 	changeExtraBreakdownChance(kPromotion.getBreakdownChanceChange() * iChange);
 	changeExtraBreakdownDamage(kPromotion.getBreakdownDamageChange() * iChange);
@@ -18928,16 +19003,16 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 		changeExtraBombardRate(kPromotion.getBombardRateChange() * iChange);
 		bSMrecalc = true;
 	}
-	changeExtraEnemyHeal(kPromotion.getEnemyHealChange() * iChange);
-	changeExtraNeutralHeal(kPromotion.getNeutralHealChange() * iChange);
-	changeExtraFriendlyHeal(kPromotion.getFriendlyHealChange() * iChange);
-	changeSameTileHeal(kPromotion.getSameTileHealChange() * iChange);
-	changeAdjacentTileHeal(kPromotion.getAdjacentTileHealChange() * iChange);
-	changeExtraCombatPercent(kPromotion.getCombatPercent() * iChange);
-	changeExtraCityAttackPercent(kPromotion.getCityAttackPercent() * iChange);
-	changeExtraCityDefensePercent(kPromotion.getCityDefensePercent() * iChange);
-	changeExtraHillsAttackPercent(kPromotion.getHillsAttackPercent() * iChange);
-	changeExtraHillsDefensePercent(kPromotion.getHillsDefensePercent() * iChange);
+	changeExtraEnemyHeal(kPromotion.getFlatHeal(HEAL_ENEMY_TERRITORY, CASC_SCOPE_UNIT) / 100 * iChange);
+	changeExtraNeutralHeal(kPromotion.getFlatHeal(HEAL_NEUTRAL_TERRITORY, CASC_SCOPE_UNIT) / 100 * iChange);
+	changeExtraFriendlyHeal(kPromotion.getFlatHeal(HEAL_FRIENDLY_TERRITORY, CASC_SCOPE_UNIT) / 100 * iChange);
+	changeSameTileHeal(kPromotion.getFlatHeal(HEAL_SAME_TILE, CASC_SCOPE_UNIT) / 100 * iChange);
+	changeAdjacentTileHeal(kPromotion.getFlatHeal(HEAL_ADJACENT_TILE, CASC_SCOPE_UNIT) / 100 * iChange);
+	changeExtraCombatPercent(kPromotion.getCombatModifier(COMBAT_AMOUNT, CASC_SCOPE_UNIT) * iChange);
+	changeExtraCityAttackPercent(kPromotion.getCombatModifier(COMBAT_CITY_ATTACK, CASC_SCOPE_UNIT) * iChange);
+	changeExtraCityDefensePercent(kPromotion.getCombatModifier(COMBAT_CITY_DEFENSE, CASC_SCOPE_UNIT) * iChange);
+	changeExtraHillsAttackPercent(kPromotion.getCombatModifier(COMBAT_HILLS_ATTACK, CASC_SCOPE_UNIT) * iChange);
+	changeExtraHillsDefensePercent(kPromotion.getCombatModifier(COMBAT_HILLS_DEFENSE, CASC_SCOPE_UNIT) * iChange);
 	// Assume only worker units can get the relevant promotions, if not then we'll need a retroactive unitComp late init function.
 	if (isWorker())
 	{
@@ -19005,15 +19080,15 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	changeExtraDCMBombRange(kPromotion.getDCMBombRangeChange() * iChange);
 	changeExtraDCMBombAccuracy(kPromotion.getDCMBombAccuracyChange() * iChange);
 	changeNoSelfHealCount((kPromotion.isNoSelfHeal()) ? iChange : 0);
-	changeExtraSelfHealModifier(kPromotion.getSelfHealModifier() * iChange);
+	changeExtraSelfHealModifier(kPromotion.getHealModifier(HEAL_SELF_MODIFIER, CASC_SCOPE_UNIT) * iChange);
 	changeExtraNumHealSupport(kPromotion.getNumHealSupport() * iChange);
 	changeExtraInsidiousness(kPromotion.getInsidiousnessChange() * iChange);
 	changeExtraInvestigation(kPromotion.getInvestigationChange() * iChange);
 	changeAssassinCount(kPromotion.getAssassinChange() * iChange);
 	changeExtraStealthStrikes(kPromotion.getStealthStrikesChange() * iChange);
 	changeExtraStealthCombatModifier(kPromotion.getStealthCombatModifierChange() * iChange);
-	changeStealthDefenseCount(kPromotion.getStealthDefenseChange() * iChange);
-	changeOnlyDefensiveCount(kPromotion.getDefenseOnlyChange() * iChange);
+	changeStealthDefenseCount((skillStealthDefense(kPromotion.getSkills()) ? 1 : 0) * iChange);
+	changeOnlyDefensiveCount((skillDefenseOnly(kPromotion.getSkills()) ? 1 : 0) * iChange);
 	changeNoInvisibilityCount(kPromotion.getNoInvisibilityChange() * iChange);
 	changeExtraTrapDamageMax(kPromotion.getTrapDamageMax() * iChange);
 	changeExtraTrapDamageMin(kPromotion.getTrapDamageMin() * iChange);
@@ -19166,10 +19241,17 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	}
 
 
-	for (iI = 0; iI < kPromotion.getNumHealUnitCombatChangeTypes(); iI++)
 	{
-		changeHealUnitCombatTypeVolume(((UnitCombatTypes)kPromotion.getHealUnitCombatChangeType(iI).eUnitCombat), kPromotion.getHealUnitCombatChangeType(iI).iHeal * iChange);
-		changeHealUnitCombatTypeAdjacentVolume(((UnitCombatTypes)kPromotion.getHealUnitCombatChangeType(iI).eUnitCombat), kPromotion.getHealUnitCombatChangeType(iI).iAdjacentHeal * iChange);
+		std::vector<HealByUnitCombat> healRows;
+		InfoValuation::collectHealByUnitCombat(kPromotion.getModifiers(), healRows);
+		for (size_t iRow = 0; iRow < healRows.size(); ++iRow)
+		{
+			const HealByUnitCombat& kRow = healRows[iRow];
+			const UnitCombatTypes eHealUnitCombat = (UnitCombatTypes)kRow.iUnitCombat;
+			//	the accumulators carry whole hit points; the deposits are ×100 amounts
+			changeHealUnitCombatTypeVolume(eHealUnitCombat, kRow.iHeal / 100 * iChange);
+			changeHealUnitCombatTypeAdjacentVolume(eHealUnitCombat, kRow.iAdjacentHeal / 100 * iChange);
+		}
 	}
 
 	if (kPromotion.setSpecialUnit() != NO_SPECIALUNIT)
@@ -24960,17 +25042,17 @@ void CvUnit::doBattleFieldPromotions(CvUnit* pDefender, const CombatDetails& cdD
 				aAttackerAvailablePromotions.push_back(promotionType);
 			}
 			//* attack hills
-			if (kPromotion.getHillsAttackPercent() > 0 && pPlot->isHills())
+			if (kPromotion.getCombatModifier(COMBAT_HILLS_ATTACK, CASC_SCOPE_UNIT) > 0 && pPlot->isHills())
 			{
 				aAttackerAvailablePromotions.push_back(promotionType);
 			}
 			//* attack city
-			if (kPromotion.getCityAttackPercent() > 0 && pPlot->isCity(true))	//count forts too
+			if (kPromotion.getCombatModifier(COMBAT_CITY_ATTACK, CASC_SCOPE_UNIT) > 0 && pPlot->isCity(true))	//count forts too
 			{
 				aAttackerAvailablePromotions.push_back(promotionType);
 			}
 			//* first strikes/chanses promotions
-			if ((kPromotion.getFirstStrikesChange() > 0 ||
+			if ((kPromotion.getScalar(SCALAR_FIRST_STRIKES, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100 > 0 ||
 				kPromotion.getChanceFirstStrikesChange() > 0) && (firstStrikes() > 0 || chanceFirstStrikes() > 0))
 			{
 				aAttackerAvailablePromotions.push_back(promotionType);
@@ -24995,7 +25077,7 @@ void CvUnit::doBattleFieldPromotions(CvUnit* pDefender, const CombatDetails& cdD
 			}
 			//TB Combat Mods End
 			//* combat strength promotions
-			if (kPromotion.getCombatPercent() > 0 && !kPromotion.isAmphib())
+			if (kPromotion.getCombatModifier(COMBAT_AMOUNT, CASC_SCOPE_UNIT) > 0 && !kPromotion.isAmphib())
 			{
 				aAttackerAvailablePromotions.push_back(promotionType);
 			}
@@ -25063,17 +25145,17 @@ void CvUnit::doBattleFieldPromotions(CvUnit* pDefender, const CombatDetails& cdD
 				aDefenderAvailablePromotions.push_back(promotionType);
 			}
 			//* defend hills
-			if (!noDefensiveBonus() && (kPromotion.getHillsDefensePercent() > 0 && pPlot->isHills()))
+			if (!noDefensiveBonus() && (kPromotion.getCombatModifier(COMBAT_HILLS_DEFENSE, CASC_SCOPE_UNIT) > 0 && pPlot->isHills()))
 			{
 				aDefenderAvailablePromotions.push_back(promotionType);
 			}
 			//* defend city
-			if (!noDefensiveBonus() && kPromotion.getCityDefensePercent() > 0 && pPlot->isCity(true))	//count forts too
+			if (!noDefensiveBonus() && kPromotion.getCombatModifier(COMBAT_CITY_DEFENSE, CASC_SCOPE_UNIT) > 0 && pPlot->isCity(true))	//count forts too
 			{
 				aDefenderAvailablePromotions.push_back(promotionType);
 			}
 			//* first strikes/chanses promotions
-			if ((kPromotion.getFirstStrikesChange() > 0 ||
+			if ((kPromotion.getScalar(SCALAR_FIRST_STRIKES, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100 > 0 ||
 				kPromotion.getChanceFirstStrikesChange() > 0) &&
 				(pDefender->firstStrikes() > 0 || pDefender->chanceFirstStrikes() > 0))
 			{
@@ -25101,7 +25183,7 @@ void CvUnit::doBattleFieldPromotions(CvUnit* pDefender, const CombatDetails& cdD
 			}
 			//TB Combat Mods End
 			//* combat strength promotions
-			if (kPromotion.getCombatPercent() > 0)
+			if (kPromotion.getCombatModifier(COMBAT_AMOUNT, CASC_SCOPE_UNIT) > 0)
 			{
 				aDefenderAvailablePromotions.push_back(promotionType);
 			}
@@ -28438,7 +28520,7 @@ void CvUnit::changeNoSelfHealCount(int iChange)
 
 int CvUnit::getSelfHealModifierTotal() const
 {
-	return m_pUnitInfo->getSelfHealModifier() + m_iExtraSelfHealModifier;
+	return m_pUnitInfo->getHealModifier(HEAL_SELF_MODIFIER, CASC_SCOPE_UNIT) + m_iExtraSelfHealModifier;
 }
 
 void CvUnit::changeExtraSelfHealModifier(int iChange)
@@ -28586,17 +28668,21 @@ void CvUnit::setBuildUpType(PromotionLineTypes ePromotionLine, MissionTypes eSle
 						int iValue = 0;
 						if (bCanHeal)
 						{
-							for (int iJ = 0; iJ < kPromotion.getNumHealUnitCombatChangeTypes(); iJ++)
+							std::vector<HealByUnitCombat> healRows;
+							InfoValuation::collectHealByUnitCombat(kPromotion.getModifiers(), healRows);
+							for (size_t iRow = 0; iRow < healRows.size(); ++iRow)
 							{
-								iValue += kPromotion.getHealUnitCombatChangeType(iJ).iHeal * getHealUnitCombatTypeTotal((UnitCombatTypes)kPromotion.getHealUnitCombatChangeType(iJ).eUnitCombat);
-								iValue += kPromotion.getHealUnitCombatChangeType(iJ).iAdjacentHeal * getHealUnitCombatTypeAdjacentTotal((UnitCombatTypes)kPromotion.getHealUnitCombatChangeType(iJ).eUnitCombat);
+								const HealByUnitCombat& kRow = healRows[iRow];
+								const UnitCombatTypes eHealUnitCombat = (UnitCombatTypes)kRow.iUnitCombat;
+								iValue += kRow.iHeal / 100 * getHealUnitCombatTypeTotal(eHealUnitCombat);
+								iValue += kRow.iAdjacentHeal / 100 * getHealUnitCombatTypeAdjacentTotal(eHealUnitCombat);
 							}
-							iValue += kPromotion.getSameTileHealChange() * 100;
-							iValue += kPromotion.getAdjacentTileHealChange() * 10;
+							iValue += kPromotion.getFlatHeal(HEAL_SAME_TILE, CASC_SCOPE_UNIT) / 100 * 100;
+							iValue += kPromotion.getFlatHeal(HEAL_ADJACENT_TILE, CASC_SCOPE_UNIT) / 100 * 10;
 						}
 						if (bMustHeal)
 						{
-							iValue += kPromotion.getSelfHealModifier() * 100;
+							iValue += kPromotion.getHealModifier(HEAL_SELF_MODIFIER, CASC_SCOPE_UNIT) * 100;
 						}
 						if (iValue > iBestValue)
 						{
@@ -28827,7 +28913,7 @@ void CvUnit::processLoadedSpecialUnit(bool bChange, SpecialUnitTypes eSpecialUni
 	const CvSpecialUnitInfo& kSpecialUnit = GC.getSpecialUnitInfo(eSpecialUnit);
 	const int iChange = (bChange ? 1 : -1);
 
-	changeExtraCombatPercent(kSpecialUnit.getCombatPercent() * iChange);
+	changeExtraCombatPercent(kSpecialUnit.getCombatModifier(COMBAT_AMOUNT, CASC_SCOPE_UNIT) * iChange);
 	changeExtraWithdrawal(kSpecialUnit.getWithdrawalChange() * iChange);
 }
 

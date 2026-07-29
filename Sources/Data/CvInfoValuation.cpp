@@ -119,6 +119,53 @@ namespace
 	}
 }
 
+
+void InfoValuation::collectHealByUnitCombat(const CvModifiers* modifiers, std::vector<HealByUnitCombat>& healRows)
+{
+	healRows.clear();
+	if (modifiers == NULL)
+	{
+		return;
+	}
+	static const int iUnitCombatSeg = modSegmentLookup("unitCombat");
+	if (iUnitCombatSeg < 0)
+	{
+		return;   // nothing anywhere authored a unitCombat-keyed deposit
+	}
+	const std::vector<CvModEntry*>& kEntries = modifiers->entries();
+	for (size_t iEntry = 0; iEntry < kEntries.size(); ++iEntry)
+	{
+		const CvModEntry& kEntry = *kEntries[iEntry];
+		if (kEntry.family != MODFAM_HEAL || kEntry.targetSeg != iUnitCombatSeg || kEntry.targetFk < 0)
+		{
+			continue;
+		}
+		if (kEntry.kind != HEAL_RATE && kEntry.kind != HEAL_ADJACENT)
+		{
+			continue;
+		}
+		size_t iRow = 0;
+		while (iRow < healRows.size() && healRows[iRow].iUnitCombat != kEntry.targetFk)
+		{
+			++iRow;
+		}
+		if (iRow == healRows.size())
+		{
+			HealByUnitCombat kNew;
+			kNew.iUnitCombat = kEntry.targetFk;
+			healRows.push_back(kNew);
+		}
+		if (kEntry.kind == HEAL_RATE)
+		{
+			healRows[iRow].iHeal += kEntry.value;
+		}
+		else
+		{
+			healRows[iRow].iAdjacentHeal += kEntry.value;
+		}
+	}
+}
+
 void InfoValuation::fillEvalCtx(const CityContext& cityContext, const EmpireContext& empireContext,
 	const CvPlotGroup* plotGroup, CvCascadeEvalCtx& evalCtx)
 {
