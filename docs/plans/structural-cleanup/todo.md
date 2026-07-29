@@ -120,10 +120,22 @@
 > costs to see through). A budget spent walking outward, exactly as movement is spent. Data, spec, engine read
 > path and the pedia render are all on it; what is below is what is NOT.
 
-- **The hide-and-seek CONSUMER census (re-measured): 11 dangling reads in `CvPlayerAI` + 17 in `CvGameTextMgr`.**
-  The four per-type intensity getters are DELETED from the infos (verified: no declaration survives in
-  `Sources/Infos/`), so these are compile errors rather than silent zeroes — and the replacement EXISTS, so they
-  convert NOW rather than waiting on a folder. Their replacement is `CvUnit::concealment()` (one
+- **The hide-and-seek CONSUMER census — 35 sites, and it is NOT just AI + text.** Re-measured:
+  `CvPlayerAI` 11 · `CvGameTextMgr` 15 · **`CvUnit` 7** · `CvCityAI` 1 · `CvPlot` 1.
+  ⛔ **The `CvUnit` seven are the part an AI-and-tooltips framing hides, and they change the shape of the job:**
+  they are not reads at all but the per-type ACCUMULATOR MAINTENANCE in `processPromotion` /
+  `processUnitCombat` (`changeExtraVisibilityIntensityType` + its three siblings), feeding four
+  `m_aiExtra*Intensity*` arrays that are **SERIALIZED** (`WRAPPER_READ_DECORATED` / `WRITE_DECORATED` in an
+  enum loop). So this is an accumulator CUT
+  ([DEC-accumulator-cut-uniform](../../architecture/decisions.md#dec-accumulator-cut-uniform)), not a consumer
+  sweep, and it carries a save step: the tags are BRACKET-FREE (`"extraVisibilityIntensity"`, the bracket is in
+  the C++ subscript, not the tag), so they DO soft-remove via `savemigration.txt` and consecutive same-named
+  tags all drain ([save.md §3](../../specs/save.md)) — ⚠ but get that judgement wrong and the load desyncs
+  wholesale, so confirm the tag spelling against the stream before cutting.
+  ⚑ The replacements are BUILT and sound (verified: `CvUnit::concealment()` reads `resolvedValue(URS_CONCEALMENT)`
+  and `detectionAgainst()` walks `uv_detectionOf` — neither touches the dangling getters), so nothing blocks this
+  but the care the save step deserves. The four per-type intensity getters are DELETED from the infos, so the AI
+  and text sites are compile errors rather than silent zeroes. Their replacement is `CvUnit::concealment()` (one
   number) and `CvUnit::detectionAgainst(method)`. ⚠ The AI sites SUM inside a loop over every `INVISIBLE_*`, so a
   mechanical swap would count concealment fourteen times — the loop collapses to one read, which is why this is a
   rewrite rather than a rename.
@@ -250,8 +262,8 @@
 
 | surface | new group reads | legacy channel-shaped names still standing |
 |---|---:|---:|
-| `CvCity.h` | 14 | **164** (of 574 total `get*/is*/has*`) |
-| `CvPlayer.h` | 20 | **103** (of 617) |
+| `CvCity.h` | 14 | **164** (of 522 total `get*/is*/has*`) |
+| `CvPlayer.h` | 20 | **103** (of 597) |
 | `CvPlot.h` / `CvTeam.h` | 6 / 2 | — |
 
 **AI consumption: 825 channel-getter call sites** — `CvPlayerAI` 386 · `CvCityAI` 370 · `CvUnitAI` 62 ·
