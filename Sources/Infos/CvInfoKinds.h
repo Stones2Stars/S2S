@@ -262,6 +262,7 @@ enum CombatKind
 	COMBAT_DAMAGE_MODIFIER,
 	COMBAT_BREAKDOWN_CHANCE,
 	COMBAT_BREAKDOWN_DAMAGE,
+	COMBAT_LIMIT,                     // member `combatLimit` -- the unit's combat-limit change (flat)
 	COMBAT_KAMIKAZE,
 	COMBAT_RELIGIOUS,
 	COMBAT_VS_BARBS,

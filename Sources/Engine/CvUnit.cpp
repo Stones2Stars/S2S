@@ -11,6 +11,11 @@ namespace
 	// The json.md §8 SKILL reads this file makes on a PROMOTION / UNITCOMBAT info. The consumer holds
 	// the memoized generated-id (the CvUnitFilters precedent); the info exposes only the parameterized
 	// group read getSkills(), never a named getter per key.
+	bool skillCelebrity(const CvClassificationBlock* skills)
+	{
+		static int s_celebritySkillId = -1;
+		return skills->hasKey(s_celebritySkillId, CLSD_SKILL, "celebrity");
+	}
 	bool skillStealthDefense(const CvClassificationBlock* skills)
 	{
 		static int s_stealthDefenseSkillId = -1;
@@ -18501,11 +18506,11 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 	changeExperiencePercent(kUnitCombat.getExperiencePercent() * iChange);//no merge/split (modified but not multiplicative)
 	changeKamikazePercent((kUnitCombat.getKamikazePercent()) * iChange);//no merge/split
 	changeAirCombatLimitChange((kUnitCombat.getAirCombatLimitChange()) * iChange);//no merge/split
-	changeCelebrityHappy((kUnitCombat.getCelebrityHappy()) * iChange);//no merge/split
-	changeCollateralDamageLimitChange((kUnitCombat.getCollateralDamageLimitChange()) * iChange);//no merge/split
-	changeCollateralDamageMaxUnitsChange((kUnitCombat.getCollateralDamageMaxUnitsChange()) * iChange);//no merge/split
-	changeCombatLimitChange((kUnitCombat.getCombatLimitChange()) * iChange);//no merge/split
-	changeExtraDropRange((kUnitCombat.getExtraDropRange()) * iChange);//no merge/split
+	changeCelebrityHappy(((skillCelebrity(kUnitCombat.getSkills()) ? 1 : 0)) * iChange);//no merge/split
+	changeCollateralDamageLimitChange((kUnitCombat.getFlatCollateral(COLLATERAL_LIMIT, CASC_SCOPE_UNIT) / 100) * iChange);//no merge/split
+	changeCollateralDamageMaxUnitsChange((kUnitCombat.getFlatCollateral(COLLATERAL_MAX_UNITS, CASC_SCOPE_UNIT) / 100) * iChange);//no merge/split
+	changeCombatLimitChange((kUnitCombat.getFlatCombat(COMBAT_LIMIT, CASC_SCOPE_UNIT) / 100) * iChange);//no merge/split
+	changeExtraDropRange((kUnitCombat.getMovement(MOVEMENT_DROP_RANGE, CASC_SCOPE_UNIT) / 100) * iChange);//no merge/split
 	changeExtraNoDefensiveBonusCount((kUnitCombat.getNoDefensiveBonusChange()) * iChange);
 	changeExtraGatherHerdCount((kUnitCombat.getGatherHerdChange()) * iChange);
 	changeSurvivorChance((kUnitCombat.getScalar(SCALAR_SURVIVOR, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT)) * iChange);//no merge/split
@@ -18918,11 +18923,11 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	changePillageOnVictoryCount((skillPillageOnVictory(kPromotion.getSkills())) ? iChange : 0);
 	changePillageResearchCount((skillPillageResearch(kPromotion.getSkills())) ? iChange : 0);
 	changeAirCombatLimitChange((kPromotion.getAirCombatLimitChange()) * iChange);
-	changeCelebrityHappy((kPromotion.getCelebrityHappy()) * iChange);
-	changeCollateralDamageLimitChange((kPromotion.getCollateralDamageLimitChange()) * iChange);
-	changeCollateralDamageMaxUnitsChange((kPromotion.getCollateralDamageMaxUnitsChange()) * iChange);
-	changeCombatLimitChange((kPromotion.getCombatLimitChange()) * iChange);
-	changeExtraDropRange((kPromotion.getExtraDropRange()) * iChange);
+	changeCelebrityHappy(((skillCelebrity(kPromotion.getSkills()) ? 1 : 0)) * iChange);
+	changeCollateralDamageLimitChange((kPromotion.getFlatCollateral(COLLATERAL_LIMIT, CASC_SCOPE_UNIT) / 100) * iChange);
+	changeCollateralDamageMaxUnitsChange((kPromotion.getFlatCollateral(COLLATERAL_MAX_UNITS, CASC_SCOPE_UNIT) / 100) * iChange);
+	changeCombatLimitChange((kPromotion.getFlatCombat(COMBAT_LIMIT, CASC_SCOPE_UNIT) / 100) * iChange);
+	changeExtraDropRange((kPromotion.getMovement(MOVEMENT_DROP_RANGE, CASC_SCOPE_UNIT) / 100) * iChange);
 	changeExtraNoDefensiveBonusCount((kPromotion.getNoDefensiveBonusChange()) * iChange);
 	changeExtraGatherHerdCount((kPromotion.getGatherHerdChange()) * iChange);
 

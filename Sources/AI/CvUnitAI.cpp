@@ -8,6 +8,11 @@ namespace
 	// The json.md §8 SKILL reads this file makes on a PROMOTION / UNITCOMBAT info. The consumer holds
 	// the memoized generated-id (the CvUnitFilters precedent); the info exposes only the parameterized
 	// group read getSkills(), never a named getter per key.
+	bool skillCelebrity(const CvClassificationBlock* skills)
+	{
+		static int s_celebritySkillId = -1;
+		return skills->hasKey(s_celebritySkillId, CLSD_SKILL, "celebrity");
+	}
 	bool skillStealthDefense(const CvClassificationBlock* skills)
 	{
 		static int s_stealthDefenseSkillId = -1;
@@ -28640,25 +28645,25 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 					}
 					//Team Project (2)
 										//	Collateral Damage Limit
-					if (kPromotion.getCollateralDamageLimitChange() != 0)
+					if (kPromotion.getFlatCollateral(COLLATERAL_LIMIT, CASC_SCOPE_UNIT) / 100 != 0)
 					{
-						iResult = (iResult * (100 + (kPromotion.getCollateralDamageLimitChange()))) / 100;
+						iResult = (iResult * (100 + (kPromotion.getFlatCollateral(COLLATERAL_LIMIT, CASC_SCOPE_UNIT) / 100))) / 100;
 
-						bPromotionHasAccountedValue |= (kPromotion.getCollateralDamageLimitChange() > 0);
+						bPromotionHasAccountedValue |= (kPromotion.getFlatCollateral(COLLATERAL_LIMIT, CASC_SCOPE_UNIT) / 100 > 0);
 					}
 					//	Collateral Damage Limit
-					if (kPromotion.getCollateralDamageMaxUnitsChange() != 0)
+					if (kPromotion.getFlatCollateral(COLLATERAL_MAX_UNITS, CASC_SCOPE_UNIT) / 100 != 0)
 					{
-						iResult = (iResult * (100 + (kPromotion.getCollateralDamageMaxUnitsChange() * 5))) / 100;
+						iResult = (iResult * (100 + (kPromotion.getFlatCollateral(COLLATERAL_MAX_UNITS, CASC_SCOPE_UNIT) / 100 * 5))) / 100;
 
-						bPromotionHasAccountedValue |= (kPromotion.getCollateralDamageMaxUnitsChange() > 0);
+						bPromotionHasAccountedValue |= (kPromotion.getFlatCollateral(COLLATERAL_MAX_UNITS, CASC_SCOPE_UNIT) / 100 > 0);
 					}
 					//	Combat Limit Change
-					if (kPromotion.getCombatLimitChange() != 0)
+					if (kPromotion.getFlatCombat(COMBAT_LIMIT, CASC_SCOPE_UNIT) / 100 != 0)
 					{
-						iResult = (iResult * (100 + (kPromotion.getCombatLimitChange()))) / 100;
+						iResult = (iResult * (100 + (kPromotion.getFlatCombat(COMBAT_LIMIT, CASC_SCOPE_UNIT) / 100))) / 100;
 
-						bPromotionHasAccountedValue |= (kPromotion.getCombatLimitChange() > 0);
+						bPromotionHasAccountedValue |= (kPromotion.getFlatCombat(COMBAT_LIMIT, CASC_SCOPE_UNIT) / 100 > 0);
 					}
 				}
 
@@ -28720,18 +28725,18 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 						bPromotionHasAccountedValue = true;
 					}
 					//	Celebrity Happy
-					if (kPromotion.getCelebrityHappy() != 0)
+					if ((skillCelebrity(kPromotion.getSkills()) ? 1 : 0) != 0)
 					{
-						iResult = (iResult * (100 + (kPromotion.getCelebrityHappy() * 10))) / 100;
+						iResult = (iResult * (100 + ((skillCelebrity(kPromotion.getSkills()) ? 1 : 0) * 10))) / 100;
 
-						bPromotionHasAccountedValue |= (kPromotion.getCelebrityHappy() > 0);
+						bPromotionHasAccountedValue |= ((skillCelebrity(kPromotion.getSkills()) ? 1 : 0) > 0);
 					}
 					//	Drop Range
-					if (kPromotion.getExtraDropRange() != 0)
+					if (kPromotion.getMovement(MOVEMENT_DROP_RANGE, CASC_SCOPE_UNIT) / 100 != 0)
 					{
-						iResult = (iResult * (100 + (kPromotion.getExtraDropRange() * 3))) / 100;
+						iResult = (iResult * (100 + (kPromotion.getMovement(MOVEMENT_DROP_RANGE, CASC_SCOPE_UNIT) / 100 * 3))) / 100;
 
-						bPromotionHasAccountedValue |= (kPromotion.getExtraDropRange() > 0);
+						bPromotionHasAccountedValue |= (kPromotion.getMovement(MOVEMENT_DROP_RANGE, CASC_SCOPE_UNIT) / 100 > 0);
 					}
 
 				}

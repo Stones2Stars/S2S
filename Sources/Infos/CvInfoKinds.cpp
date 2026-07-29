@@ -247,6 +247,7 @@ namespace
 		{ "damageModifier", COMBAT_DAMAGE_MODIFIER },
 		{ "breakdownChance", COMBAT_BREAKDOWN_CHANCE },
 		{ "breakdownDamage", COMBAT_BREAKDOWN_DAMAGE },
+		{ "combatLimit", COMBAT_LIMIT },
 		{ "kamikaze", COMBAT_KAMIKAZE },
 		{ "religious", COMBAT_RELIGIOUS },
 		{ "vsBarbs", COMBAT_VS_BARBS },

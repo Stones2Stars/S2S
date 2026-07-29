@@ -8,6 +8,11 @@ namespace
 	// The json.md §8 SKILL reads this file makes on a PROMOTION / UNITCOMBAT info. The consumer holds
 	// the memoized generated-id (the CvUnitFilters precedent); the info exposes only the parameterized
 	// group read getSkills(), never a named getter per key.
+	bool skillCelebrity(const CvClassificationBlock* skills)
+	{
+		static int s_celebritySkillId = -1;
+		return skills->hasKey(s_celebritySkillId, CLSD_SKILL, "celebrity");
+	}
 	bool skillAlwaysHeal(const CvClassificationBlock* skills)
 	{
 		static int s_alwaysHealSkillId = -1;
@@ -27628,7 +27633,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//#17 Effects for Promotions that have Happyness Bonus...
-	iTemp = kPromotion.getCelebrityHappy();
+	iTemp = (skillCelebrity(kPromotion.getSkills()) ? 1 : 0);
 	if (iTemp != 0)
 	{
 		if (eUnitAI == UNITAI_CITY_DEFENSE
@@ -27652,7 +27657,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//#18 Effects for Promotions that have extra collateral damage...
-	iTemp = kPromotion.getCollateralDamageLimitChange();
+	iTemp = kPromotion.getFlatCollateral(COLLATERAL_LIMIT, CASC_SCOPE_UNIT) / 100;
 	if (iTemp != 0)
 	{
 		if ((eUnitAI == UNITAI_ATTACK_AIR) ||
@@ -27665,7 +27670,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		}
 	}
 
-	iTemp = kPromotion.getCollateralDamageMaxUnitsChange();
+	iTemp = kPromotion.getFlatCollateral(COLLATERAL_MAX_UNITS, CASC_SCOPE_UNIT) / 100;
 	if (iTemp != 0)
 	{
 		if ((eUnitAI == UNITAI_ATTACK_AIR) ||
@@ -27679,7 +27684,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//#19 Effects 
-	iTemp = kPromotion.getCombatLimitChange();
+	iTemp = kPromotion.getFlatCombat(COMBAT_LIMIT, CASC_SCOPE_UNIT) / 100;
 	if (iTemp != 0)
 	{
 		if (pUnit)
@@ -27711,7 +27716,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//#20 Effects
-	iTemp = kPromotion.getExtraDropRange();
+	iTemp = kPromotion.getMovement(MOVEMENT_DROP_RANGE, CASC_SCOPE_UNIT) / 100;
 	if (iTemp > 0)
 	{
 		if ((eUnitAI == UNITAI_ATTACK) ||
@@ -30955,7 +30960,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 	}
 
-	iTemp = kUnitCombat.getCelebrityHappy();
+	iTemp = (skillCelebrity(kUnitCombat.getSkills()) ? 1 : 0);
 	int iTempTemp = 0;
 	if (iTemp > 0)
 	{
@@ -30990,7 +30995,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		iValue += iTempTemp;
 	}
 
-	iTemp = kUnitCombat.getCollateralDamageLimitChange();
+	iTemp = kUnitCombat.getFlatCollateral(COLLATERAL_LIMIT, CASC_SCOPE_UNIT) / 100;
 	if (iTemp != 0)
 	{
 		if ((eUnitAI == UNITAI_ATTACK_AIR) ||
@@ -31003,7 +31008,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 	}
 
-	iTemp = kUnitCombat.getCollateralDamageMaxUnitsChange();
+	iTemp = kUnitCombat.getFlatCollateral(COLLATERAL_MAX_UNITS, CASC_SCOPE_UNIT) / 100;
 	if (iTemp != 0)
 	{
 		if ((eUnitAI == UNITAI_ATTACK_AIR) ||
@@ -31016,7 +31021,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 	}
 
-	iTemp = kUnitCombat.getCombatLimitChange();
+	iTemp = kUnitCombat.getFlatCombat(COMBAT_LIMIT, CASC_SCOPE_UNIT) / 100;
 	if (iTemp != 0)
 	{
 		if (pUnit)
@@ -31050,7 +31055,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 	}
 
-	iTemp = kUnitCombat.getExtraDropRange();
+	iTemp = kUnitCombat.getMovement(MOVEMENT_DROP_RANGE, CASC_SCOPE_UNIT) / 100;
 	if (iTemp > 0)
 	{
 		if ((eUnitAI == UNITAI_ATTACK) ||

@@ -21,6 +21,11 @@ namespace
 	// The json.md §8 SKILL reads this file makes on a PROMOTION / UNITCOMBAT info. The consumer holds
 	// the memoized generated-id (the CvUnitFilters precedent); the info exposes only the parameterized
 	// group read getSkills(), never a named getter per key.
+	bool skillCelebrity(const CvClassificationBlock* skills)
+	{
+		static int s_celebritySkillId = -1;
+		return skills->hasKey(s_celebritySkillId, CLSD_SKILL, "celebrity");
+	}
 	bool skillStealthDefense(const CvClassificationBlock* skills)
 	{
 		static int s_stealthDefenseSkillId = -1;
@@ -8927,11 +8932,11 @@ void CvGameTextMgr::parsePromotionHelpInternal(CvWStringBuffer &szBuffer, Promot
 		iMaxHPChange += promoX.getMaxHPChange();
 		iStrengthModifier += promoX.getStrengthModifier();
 		iAirCombatLimitChange += promoX.getAirCombatLimitChange();
-		iCelebrityHappy += promoX.getCelebrityHappy();
-		iCollateralDamageLimitChange += promoX.getCollateralDamageLimitChange();
-		iCollateralDamageMaxUnitsChange += promoX.getCollateralDamageMaxUnitsChange();
-		iCombatLimitChange += promoX.getCombatLimitChange();
-		iExtraDropRange += promoX.getExtraDropRange();
+		iCelebrityHappy += (skillCelebrity(promoX.getSkills()) ? 1 : 0);
+		iCollateralDamageLimitChange += promoX.getFlatCollateral(COLLATERAL_LIMIT, CASC_SCOPE_UNIT) / 100;
+		iCollateralDamageMaxUnitsChange += promoX.getFlatCollateral(COLLATERAL_MAX_UNITS, CASC_SCOPE_UNIT) / 100;
+		iCombatLimitChange += promoX.getFlatCombat(COMBAT_LIMIT, CASC_SCOPE_UNIT) / 100;
+		iExtraDropRange += promoX.getMovement(MOVEMENT_DROP_RANGE, CASC_SCOPE_UNIT) / 100;
 		iSurvivorChance += promoX.getScalar(SCALAR_SURVIVOR, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT);
 		iSelfHealModifier += promoX.getHealModifier(HEAL_SELF_MODIFIER, CASC_SCOPE_UNIT);
 		iHealSupport += promoX.getNumHealSupport();
@@ -22895,34 +22900,34 @@ void CvGameTextMgr::setUnitCombatHelp(CvWStringBuffer& szBuffer, UnitCombatTypes
 		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_AIR_LIMIT_CHANGE", info.getAirCombatLimitChange()));
 	}
 
-	if (info.getCelebrityHappy() != 0)
+	if ((skillCelebrity(info.getSkills()) ? 1 : 0) != 0)
 	{
 		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_CELEBRITY", info.getCelebrityHappy()));
+		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_CELEBRITY", (skillCelebrity(info.getSkills()) ? 1 : 0)));
 	}
 
-	if (info.getCollateralDamageLimitChange() != 0)
+	if (info.getFlatCollateral(COLLATERAL_LIMIT, CASC_SCOPE_UNIT) / 100 != 0)
 	{
 		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_COLLATERAL_LIMIT_CHANGE", info.getCollateralDamageLimitChange()));
+		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_COLLATERAL_LIMIT_CHANGE", info.getFlatCollateral(COLLATERAL_LIMIT, CASC_SCOPE_UNIT) / 100));
 	}
 
-	if (info.getCollateralDamageMaxUnitsChange() != 0)
+	if (info.getFlatCollateral(COLLATERAL_MAX_UNITS, CASC_SCOPE_UNIT) / 100 != 0)
 	{
 		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_MAX_UNITS_CHANGE", info.getCollateralDamageMaxUnitsChange()));
+		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_MAX_UNITS_CHANGE", info.getFlatCollateral(COLLATERAL_MAX_UNITS, CASC_SCOPE_UNIT) / 100));
 	}
 
-	if (info.getCombatLimitChange() != 0)
+	if (info.getFlatCombat(COMBAT_LIMIT, CASC_SCOPE_UNIT) / 100 != 0)
 	{
 		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_COMBAT_LIMIT", info.getCombatLimitChange()));
+		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_COMBAT_LIMIT", info.getFlatCombat(COMBAT_LIMIT, CASC_SCOPE_UNIT) / 100));
 	}
 
-	if (info.getExtraDropRange() != 0)
+	if (info.getMovement(MOVEMENT_DROP_RANGE, CASC_SCOPE_UNIT) / 100 != 0)
 	{
 		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_EXTRA_DROP_RANGE", info.getExtraDropRange()));
+		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_EXTRA_DROP_RANGE", info.getMovement(MOVEMENT_DROP_RANGE, CASC_SCOPE_UNIT) / 100));
 	}
 
 	if (info.getScalar(SCALAR_SURVIVOR, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT) != 0)
