@@ -2668,9 +2668,12 @@ const CvArtInfoBuilding* CvGame::getBuildingArtInfo(BuildingTypes eBuilding) con
 	return GC.getBuildingInfo(eBuilding).getArtInfo();
 }
 
-bool CvGame::isWaterBuilding(BuildingTypes eBuilding) const
+bool CvGame::isWaterBuilding(BuildingTypes) const
 {
-	return GC.getBuildingInfo(eBuilding).isWater();
+	// DllExport -- the EXE binds this, so the function stays. NO building authors a `water` attribute
+	// anywhere in Assets/Data, so false IS the answer; a water-only placement rule authors as an ordinary
+	// requires clause, never a flag here.
+	return false;
 }
 
 CivilopediaWidgetShowTypes CvGame::getWidgetShow(BonusTypes eBonus) const

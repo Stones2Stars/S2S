@@ -2879,7 +2879,7 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 
 		foreach_(const BuildingTypes eType, pOldCity->getHasBuildings())
 		{
-			if (!GC.getBuildingInfo(eType).isNeverCapture() && !isProductionMaxedBuilding(eType, true)
+			if (!GC.getBuildingInfo(eType).isDestroyedOnCapture() && !isProductionMaxedBuilding(eType, true)
 			&& (!bConquest || bRecapture || GC.getGame().getSorenRandNum(100, "Capture Probability") < GC.getBuildingInfo(eType).getConquestProbability()))
 			{
 				buildingLedger.insert(std::make_pair(eType, pOldCity->getBuildingData(eType)));
@@ -7304,7 +7304,7 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, CvArea* pAr
 	changeUnitUpgradePriceModifier(kBuilding.getUnitUpgradePriceModifier() * iChange);
 	changeRevIdxNational(kBuilding.getRevIdxNational() * iChange);
 
-	pArea->changeBorderObstacleCount(getTeam(), kBuilding.isAreaBorderObstacle() ? iChange : 0);
+	pArea->changeBorderObstacleCount(getTeam(), kBuilding.isBorderObstacle() ? iChange : 0);
 
 	pArea->changeMaintenanceModifier(getID(), (kBuilding.getAreaMaintenanceModifier() * iChange));
 

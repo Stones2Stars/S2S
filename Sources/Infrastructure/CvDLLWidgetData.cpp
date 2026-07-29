@@ -1984,14 +1984,6 @@ void CvDLLWidgetData::parseHurryHelp(CvWidgetDataStruct &widgetDataStruct, CvWSt
 				}
 			}
 
-			for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
-			{
-				if (GC.getBuildingInfo((BuildingTypes)iI).isHurry(widgetDataStruct.m_iData1))
-				{
-					setListHelp(szBuffer, gDLL->getText("TXT_KEY_REQUIRES"), GC.getBuildingInfo((BuildingTypes)iI).getDescription(), gDLL->getText("TXT_KEY_OR").c_str(), bFirst);
-					bFirst = false;
-				}
-			}
 
 			if (!bFirst)
 			{

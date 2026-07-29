@@ -3703,7 +3703,6 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 		changeWarWearinessModifier(kBuilding.getWarWearinessModifier() * iChange);
 		changeHurryAngerModifier(kBuilding.getHurryAngerModifier() * iChange);
 		changeHealRate(kBuilding.getHealRateChange() * iChange);
-		changeQuarantinedCount(kBuilding.isQuarantine() ? iChange : 0);
 
 		if (kBuilding.getHealth() > 0)
 		{

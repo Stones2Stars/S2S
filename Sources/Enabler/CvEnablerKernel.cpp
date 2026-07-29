@@ -274,7 +274,7 @@ bool EnablerKernel::allowedOk(const CvInfo* j, int iId, const CvPlayer& kPlayer,
 		if (!bUnit && iKind == ALLOWEDCAP_EMPIRE
 		// identity.noInstanceLimit waives ONLY the empire (national-wonder) enforcement -- the cap stays
 		// authored (it IS the wonder category); the PALACE relocate case (CvPlayer::isBuildingMaxedOut mirror)
-		&& GC.getBuildingInfo((BuildingTypes)iId).isNoLimit())
+		&& GC.getBuildingInfo((BuildingTypes)iId).isNoInstanceLimit())
 		{
 			continue;
 		}

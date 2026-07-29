@@ -993,17 +993,6 @@ void CvTeam::processBuilding(BuildingTypes eBuilding, int iChange, bool bReligio
 
 	if (!bReligiouslyDisabling)
 	{
-		for (int i = 0; i < GC.getNumVoteSourceInfos(); ++i)
-		{
-			if (GC.getBuildingInfo(eBuilding).getDiploVoteType() == i)
-			{
-				changeForceTeamVoteEligibilityCount((VoteSourceTypes)i, (GC.getBuildingInfo(eBuilding).isForceTeamVoteEligible()) ? iChange : 0);
-			}
-		}
-		if (iChange > 0 && GC.getBuildingInfo(eBuilding).isMapCentering())
-		{
-			setMapCentering(true);
-		}
 	}
 	changeEnemyWarWearinessModifier(GC.getBuildingInfo(eBuilding).getEnemyWarWearinessModifier() * iChange);
 }

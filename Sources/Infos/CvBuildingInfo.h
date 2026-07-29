@@ -39,6 +39,16 @@ public:
 	// The named reads over that bitset, one per authored key a consumer asks for BY MEANING (the
 	// patterns.md exemplar: a coherent read over the JSON-derived structure, never a legacy scalar).
 	bool providesPower() const CLS_HAS(m_attributes, CLSD_ATTRIBUTE, "providesPower")
+	// Each named for the AUTHORED KEY's meaning, never the legacy getter it replaces: `borderObstacle` carries
+	// no "area" (a landmass is not a scope), and `destroyedOnCapture` says what happens rather than what does
+	// not (the legacy spelling was the negative, isNeverCapture).
+	bool isTeamShare() const             CLS_HAS(m_attributes, CLSD_ATTRIBUTE, "teamShare")
+	bool isZoneOfControl() const         CLS_HAS(m_attributes, CLSD_ATTRIBUTE, "zoneOfControl")
+	bool isCapital() const               CLS_HAS(m_attributes, CLSD_ATTRIBUTE, "capital")
+	bool isBorderObstacle() const        CLS_HAS(m_attributes, CLSD_ATTRIBUTE, "borderObstacle")
+	bool isForceAllTradeRoutes() const   CLS_HAS(m_attributes, CLSD_ATTRIBUTE, "forceAllTradeRoutes")
+	bool isOrbitalInfrastructure() const CLS_HAS(m_attributes, CLSD_ATTRIBUTE, "orbitalInfrastructure")
+	bool isDestroyedOnCapture() const    CLS_HAS(m_attributes, CLSD_ATTRIBUTE, "destroyedOnCapture")
 	// What the building PROVIDES to the empire (grantor-provided capabilities: setCultureRate, ...).
 	bool providesCapability(int iCapabilityId) const { return m_capabilities.hasId(iCapabilityId); }
 	bool providesCapabilities() const                { return !m_capabilities.isEmpty(); }
