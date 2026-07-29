@@ -21,6 +21,10 @@
 - `culture.unit.garrison` · `costs.empire.perInstance` — flagged in-code, awaiting their batch.
 - The ruling-16 trigger-plane set (`survivor`, `cityCapture`, `combat.subdueAnimal`, `combat.nukeInterception`) —
   each attaches to its trigger's `chance`; authoring shapes finalize with the trigger system's build-out.
+  ⚠ **One CONSUMER is already dangling on this and must not be unblocked by minting a kind:**
+  `CvOutcome.cpp`'s `getSubdueAnimalBonusAI` adds to an outcome's `iChance`. `subdueAnimal` is authored in 8
+  handicaps and flows through as an UNKINDED member by design (`CvInfoKinds.h`: *"NEVER kinds here"*), so the
+  site waits on this re-home — giving it a `COMBAT_SUBDUE_ANIMAL` kind to make it compile is the banned move.
 
 ## Data — the `identity` effect re-home
 
@@ -188,7 +192,7 @@
   ([patterns.md](../../architecture/patterns.md)) — BUG reaches `WidgetTypes`/`InputTypes`/`InterfaceDirtyBits`
   only this way and MINTS new members at runtime. Deleting it without the library serving that leaves those reads
   with no path at all, so it is a COVERAGE obligation, not just a deletion.
-  What remains to BUILD is the replacement ([Stage 4](#stage-4--the-consumer-cut-sequenced-last-see-the-roadmaps-order-ruling)),
+  What remains to BUILD is the replacement ([Stage 4](#stage-4--the-python-surface-sequenced-after-the-read-surface-settles)),
   and its coverage checklist is measured, not estimated: **285 of the 399 removed info-binding names were still
   called from `Assets/Python`** (heaviest: `RevolutionWatchAdvisor` 50, `PediaBuilding` 38, `CvMainInterface` 31,
   `CvTechChooser` 30). Those calls were already dead — the getters behind them had gone — so the list is a
@@ -463,62 +467,6 @@ measure what survives, then cut the genuine residue. The classes below are the u
   `getLastDefenseDamage`), `getHappinessTimer`, and the `CvPlayer` unit-upkeep family. These are what the
   classification is FOR: only they need design.
 
-## The HANDICAP consumer rewire — the surface EXISTS, only the consumers are stale
-
-> ⛔ **Do NOT build a new handicap getter surface — `CvHandicapInfo` is already rebuilt to the exemplar** (kind
-> + scope as separate axes, plus the `bAiAudience` leaf the dual-plane data needs, plus bare intrinsic reads for
-> the genuinely lone config values). Difficulty IS config, so the legacy shape was close to right; what the
-> rebuilt surface adds is exactly the two axes legacy had to spell out as separate getter NAMES
-> (`getAITrainPercent` vs `getAIWorldTrainPercent` = one call, two scopes —
-> [DEC-scope-is-an-axis](../../architecture/decisions.md#dec-scope-is-an-axis)). Wired in the same shape it is
-> no behaviour change.
->
-> ⚠ **The trap this closes:** every one of these reads a DIFFICULTY SCALER, so a consumer that loses one does
-> not fail loudly — it silently plays a flat game. Verify the successor rather than killing on sight; the
-> mapping below is verified against the authored data and the header, not inferred from names.
-
-⛔ **THE SCALE IS PER-UNIT, NOT PER-GETTER — a blanket `/100` on this family is WRONG and silently zeroes a
-percent.** `infoKindUnit` decides it: a **PERCENT** kind is NOT scaled and reads human directly
-([DEC-fixedpoint-x100](../../architecture/decisions.md#dec-fixedpoint-x100)), a **FLAT** kind is ×100 and its
-reader reduces at the point of use. `declareWar` is a percent (90 → 90); `attitude`, the barbarian
-tiles/turns/defenders counts and `freeWinsVsBarbs` are flats (8 → 800). Check the kind's unit before writing
-either form.
-
-⚑ **The live proof this matters:** `BARBARIANS_DEFENDERS` is FLAT, and three already-converted sites read it
-raw — a loop bound spawning 800 initial defenders instead of 8, and a `getNumUnits() >= 800` test that could
-never fire (dead barbarian-attack behaviour). A missing `/100` on a difficulty scaler does not crash; it
-silently plays a different game.
-
-**Remaining names — all verified DANGLING (no declaration on `CvHandicapInfo`), successor + unit verified
-against the authored JSON:**
-
-| legacy name | successor | unit |
-|---|---|---|
-| `getAttitudeChange` | `getDiplomacy(DIPLOMACY_ATTITUDE, CASC_SCOPE_EMPIRE, false)` | flat → `/100` |
-| `getUnownedTilesPerBarbarianCity` | `getBarbarians(BARBARIANS_TILES_PER_CITY, CASC_SCOPE_WORLD)` | flat → `/100` |
-| `getBarbarianCityCreationTurnsElapsed` | `getBarbarians(BARBARIANS_CITY_CREATION_TURNS, CASC_SCOPE_WORLD)` | flat → `/100` |
-| `getUnownedWaterTilesPerBarbarianUnit` | `getBarbarians(BARBARIANS_WATER_TILES_PER_UNIT, CASC_SCOPE_WORLD)` | flat → `/100` |
-| `getBarbarianCityCreationProb` | `getBarbarians(BARBARIANS_CITY_CREATION_PROB, CASC_SCOPE_WORLD)` | percent |
-| `getInflationPercent` | `getUpkeepModifier(UPKEEP_INFLATION, CASC_SCOPE_EMPIRE, false)` | percent |
-| `getUnitUpkeepPercent` / `getAIUnitUpkeepPercent` | `getUpkeepModifier(UPKEEP_UNIT, CASC_SCOPE_EMPIRE, false\|true)` | percent |
-| `getCivicUpkeepPercent` / `getAICivicUpkeepPercent` | `getUpkeepModifier(UPKEEP_CIVIC, CASC_SCOPE_EMPIRE, false\|true)` | percent |
-| `getAIWarWearinessPercent` | `getDiplomacy(DIPLOMACY_WAR_WEARINESS, CASC_SCOPE_EMPIRE, true)` | percent |
-| `getAIGrowthPercent` | `getScalarModifier(SCALAR_GROWTH, CASC_SCOPE_EMPIRE, true)` | percent |
-| `getAIWorkRateModifier` | `getScalarModifier(SCALAR_WORK_RATE, CASC_SCOPE_EMPIRE, true)` | percent |
-| `getAIUnitUpgradePercent` | `getCostsModifier(COSTS_UPGRADE, CASC_SCOPE_EMPIRE, true)` | percent |
-| `getAnimalCombatModifier` / `getAIAnimalCombatModifier` | `getCombat(COMBAT_ANIMAL, CASC_SCOPE_WORLD, false\|true)` | percent |
-| `getBarbarianCombatModifier` / `getAIBarbarianCombatModifier` | `getCombat(COMBAT_BARBARIAN, CASC_SCOPE_WORLD, false\|true)` | percent |
-| `getFreeWinsVsBarbs` | `getCombat(COMBAT_FREE_WINS_VS_BARBS, CASC_SCOPE_EMPIRE, false)` | flat → `/100` |
-
-⚠ **`getSubdueAnimalBonusAI` (`CvOutcome.cpp`) is NOT a re-point and has no kind by design.** `subdueAnimal` is
-ruling-16 TRIGGER-PLANE chance data (`CvInfoKinds.h`: *"NEVER kinds here"*), authored in 8 handicaps and flowing
-through as an unkinded member; its consumer adds to an outcome's `iChance`, which is that plane exactly. It
-waits on the trigger-plane re-home — ⛔ do not mint a `COMBAT_SUBDUE_ANIMAL` kind to make it compile.
-
-⚑ **The `ai` sub-object in the data IS the `bAiAudience` argument** (`diplomacy.empire.declareWar.ai.percent`
-→ `bAiAudience = true`); a leaf with no `ai` sibling reads `false`. Do not sum the two planes. Note the base and
-AI planes split by difficulty: the easy handicaps author the BASE combat leaves, the hard ones the `ai` leaves.
-
 ## The CONSUMER REWIRE census — the compiler's worklist, and how to regenerate it
 
 > The delete-driven cut left the consumers dangling on purpose (the compiler is the census,
@@ -584,7 +532,7 @@ unit plane is the standing example — `CvUnitInfo` carries the largest dangling
 the `getRequires()` / `getAllowed()` SECTION objects the consumers have not been re-expressed onto, plus the
 per-source unit-stat reads whose replacement is not built.
 
-## Stage 4 — the consumer cut (sequenced LAST; see the roadmap's ORDER ruling)
+## Stage 4 — the Python surface (sequenced after the read surface settles)
 
 - **The `CvCity`/`CvPlayer` getter consolidation** — known work, not the primary focus, and a fair few collapse on
   their own as the rebuilt infos wire through. Measure what survives that before planning a sweep.

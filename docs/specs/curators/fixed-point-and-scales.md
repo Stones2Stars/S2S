@@ -186,6 +186,20 @@ passes what it holds and cannot get the scale wrong; a comment warning the calle
 ⚠ **And never multiply two ×100 values without rescaling** — the product is ×10000, so the `÷100` belongs at the
 multiply.
 
+> **⛔ THE OUT BOUNDARY IS DECIDED PER UNIT, AND A FAMILY-WIDE `÷100` RULE IS ITSELF A DEFECT.** Within one
+> family the kinds differ: `infoKindUnit` makes some PERCENT (unscaled — a re-point is 1:1) and some FLAT
+> (×100 — the reader reduces). So "this getter set is ×100, reduce at the reader" is never a safe blanket; it
+> zeroes every percent it touches. **Ask the KIND's unit, never the family's or the getter's name.**
+>
+> ⚑ **The worked case, both ways round, on ONE family (handicap).** `DIPLOMACY_DECLARE_WAR` is a percent, so a
+> blanket `÷100` would have turned a 90% AI war probability into **0** — the difficulty setting silently
+> switched off. `BARBARIANS_DEFENDERS` is a flat, and reading it raw returned the authored **8 as 800**: a loop
+> bound spawning 800 initial defenders, and a `getNumUnits() >= 800` test that could never fire, leaving an
+> entire AI branch dead.
+> ⚠ **Neither failure crashes, and that is the point** — a mis-scaled CONFIG scaler produces a game that runs
+> perfectly while playing by different numbers, so it survives every smoke test. This class is found by
+> checking the unit at the boundary, never by observing that the build is green.
+
 ## 5. Verification — the math proves the scales, not manual JSON review
 
 The owner cannot eyeball thousands of JSONs, so a mis-scaled field is found by the MATH: the effective value the
