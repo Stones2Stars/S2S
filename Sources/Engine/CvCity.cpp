@@ -9615,11 +9615,11 @@ int CvCity::getCommerceRateTimes100(CommerceTypes eIndex) const
 	PROFILE_FUNC();
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
 
-	if (m_abCommerceRateDirty[eIndex])
-	{
-		updateCommerce(eIndex);
-	}
-	return m_aiCommerceRate[eIndex];
+	// A read is a BARE FETCH -- no dirty gate, no recompute-on-read (superseded-ideas #14).
+	// The city is this channel's RECEIVER, so its realized sum IS the answer; x100 native.
+	int aCommerces[NUM_COMMERCE_TYPES];
+	getCommerces(aCommerces);
+	return aCommerces[eIndex];
 }
 
 
