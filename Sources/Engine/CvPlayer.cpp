@@ -26422,26 +26422,6 @@ void CvPlayer::changeExtraCityDefense(int iChange)
 	setExtraCityDefense(getExtraCityDefense() + iChange);
 }
 
-int CvPlayer::getWorldHappiness() const
-{
-	return m_iWorldHappiness;
-}
-
-void CvPlayer::changeWorldHappiness(int iChange)
-{
-	m_iWorldHappiness += iChange;
-}
-
-int CvPlayer::getWorldHealth() const
-{
-	return m_iWorldHealth;
-}
-
-void CvPlayer::changeWorldHealth(int iChange)
-{
-	m_iWorldHealth += iChange;
-}
-
 int CvPlayer::getProjectHappiness() const
 {
 	return m_iProjectHappiness;

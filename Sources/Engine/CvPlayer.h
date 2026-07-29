@@ -1433,11 +1433,7 @@ public:
 	void setPopulationgrowthratepercentage(int iNewValue);
 	void changePopulationgrowthratepercentage(int iChange, bool bAdd);
 
-	int getWorldHappiness() const;
-	void changeWorldHappiness(int iChange);
 
-	int getWorldHealth() const;
-	void changeWorldHealth(int iChange);
 
 	int getProjectHappiness() const;
 	void changeProjectHappiness(int iChange);

@@ -4388,8 +4388,6 @@ void CvTeam::processProjectChange(ProjectTypes eIndex, int iChange, int iOldProj
 						player.changeCommerceRateModifierfromBuildings(((CommerceTypes)iJ), kProject.getCommerceModifier(iJ));
 					}
 				}
-				player.changeWorldHappiness(kProject.getWorldHappiness());
-				player.changeWorldHealth(kProject.getWorldHealth());
 				player.changeTradeRoutes(kProject.getWorldTradeRoutes());
 			}
 		}
