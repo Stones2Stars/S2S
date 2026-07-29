@@ -4687,52 +4687,27 @@ bool CvCityAI::AI_scoreBuildingsFromListThreshold(std::vector<ScoredBuilding>& s
 			}
 
 			// If this building enables the construction of other buildings then we want to rate it higher!
-			if (buildingInfo.EnablesOtherBuildings())
+			// "What does this unlock?" is a FORWARD EDGE FETCH off the building's own compiled `enables`
+			// (AGENTS.md § AI valuation of ENABLEMENT): the edge IS the answer, so there is no reverse index
+			// to consult and no what-if to run. The legacy shape asked it BACKWARDS -- a static reverse index
+			// plus a BoolExpr BECOMES_TRUE overlay per dependent -- which is the whole-database question
+			// enabler.md §6 exists to delete ([DEC-one-reverse-view]: an info already carries its own edges).
 			{
-				PROFILE("CvCityAI::AI_bestBuildingThreshold.EnablesOthers");
-
-				// #195: candidate dependents come from the precomputed static reverse-index
-				// (GC.getBuildingsEnabledBy, O(dependents)) instead of the legacy O(buildings)
-				// re-scan -- this was the last surviving copy of the pattern the CABV PreLoop
-				// migrated off. The original trigger triple (construct-condition BECOMES_TRUE /
-				// PrereqInCity / PrereqOr) and the couldConstructWith(..., eExtraBuilding) overlay
-				// confirm are kept verbatim, just evaluated over the index's few dependents,
-				// so the scored value is unchanged.
-				const std::vector<BuildingTypes>& aDependents = GC.getBuildingsEnabledBy(eBuilding);
-				if (!aDependents.empty())
+				const CvEdges* pEdges = buildingInfo.getEdges();
+				const std::vector<int>* pEnabled =
+					(pEdges != NULL) ? pEdges->find(EDGEF_ENABLES, EDGEB_BUILDINGS) : NULL;
+				if (pEnabled != NULL)
 				{
-					const CvGameObjectCity* pObject = getGameObject();
-					// add the extra building and its bonuses to the override to see if they influence the construct condition
-					std::vector<GOMOverride> queries;
-					GOMOverride query = { pObject, GOM_BUILDING, eBuilding, true };
-					queries.push_back(query);
-					query.GOM = GOM_BONUS;
-					foreach_(const int iFreeBonus, buildingInfo.getProvides()->bonuses)
+					PROFILE("CvCityAI::AI_bestBuildingThreshold.EnablesOthers");
+					for (std::vector<int>::const_iterator it = pEnabled->begin(); it != pEnabled->end(); ++it)
 					{
-						query.id = iFreeBonus;
-						queries.push_back(query);
-					}
-
-					foreach_(const BuildingTypes eDependent, aDependents)
-					{
-						if (hasBuilding(eDependent)) continue;
-
-						// check if this building enables the construct condition of the dependent
-						bool bEnablesCondition = false;
-						const BoolExpr* condition = GC.getBuildingInfo(eDependent).getConstructCondition();
-						if (condition && condition->evaluateChange(pObject, queries) == BOOLEXPR_CHANGE_BECOMES_TRUE)
+						const BuildingTypes eDependent = static_cast<BuildingTypes>(*it);
+						if (hasBuilding(eDependent))
 						{
-							bEnablesCondition = true;
+							continue;
 						}
-
-						if ((bEnablesCondition || GC.getBuildingInfo(eDependent).isPrereqInCityBuilding(eBuilding) || GC.getBuildingInfo(eDependent).isPrereqOrBuilding(eBuilding))
-						&& couldConstructWith(eDependent, eBuilding))
-						{
-							PROFILE("AI_bestBuildingThreshold.Enablement");
-
-							// We only value the unlocked building at 1/2 rate
-							iValue += AI_buildingValueThreshold(eDependent, iFocusFlags, 0, false, true) / 2;
-						}
+						// We only value the unlocked building at 1/2 rate
+						iValue += AI_buildingValueThreshold(eDependent, iFocusFlags, 0, false, true) / 2;
 					}
 				}
 			}
@@ -5537,179 +5512,105 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 
 				iValue += kBuilding.getNationalCaptureProbabilityModifier() * 2;
 
-				if ((!isDevelopingCity() || getCityContext().isCapital()) && kBuilding.EnablesUnits())
+			if ((!isDevelopingCity() || getCityContext().isCapital()))
+			{
+				// "What does this unlock?" is the building's own compiled `enables.units` FORWARD EDGE
+				// (AGENTS.md § AI valuation of ENABLEMENT). The legacy shape asked it backwards through a static
+				// reverse index and then RE-DERIVED every unit prereq by hand -- tech, AND/OR buildings, AND/OR
+				// bonuses -- plus a BoolExpr what-if overlay. The edge already asserts the unlock, and whether the
+				// unit is actually trainable HERE is the enabler's verdict, not this loop's to recompute
+				// ([DEC-one-reverse-view], enabler.md §6).
+				const CvEdges* pUnitEdges = kBuilding.getEdges();
+				const std::vector<int>* pEnabledUnits =
+					(pUnitEdges != NULL) ? pUnitEdges->find(EDGEF_ENABLES, EDGEB_UNITS) : NULL;
+				if (pEnabledUnits != NULL)
 				{
 					const bool bWarPlan = kTeam.hasWarPlan(true);
-					const CvGameObjectCity* pObject = getGameObject();
-					// add the extra building and its bonuses to the override to see if they influence the train condition of a unit
-					std::vector<GOMOverride> queries;
-					GOMOverride query = { pObject, GOM_BUILDING, eBuilding, true };
-					queries.push_back(query);
-					query.GOM = GOM_BONUS;
-					foreach_(const int iFreeBonus, kBuilding.getProvides()->bonuses)
+					for (std::vector<int>::const_iterator it = pEnabledUnits->begin(); it != pEnabledUnits->end(); ++it)
 					{
-						query.id = iFreeBonus;
-						queries.push_back(query);
-					}
-
-					// #195: only units this building can statically help train are candidates;
-					// the precomputed reverse-index narrows the scan from all units to those.
-					// The runtime gates below (tech, hasBonus, isActiveBuilding) are unchanged,
-					// so the value result is identical (verified: zero [PERF/cabvset] UNIT-MISMATCH).
-					foreach_(const UnitTypes eEnabledUnit, GC.getUnitsEnabledBy(eBuilding))
-					{
-						const CvUnitInfo& kUnit = GC.getUnitInfo(eEnabledUnit);
-						bool bUnitIsEnabler = kUnit.isPrereqAndBuilding((int)eBuilding);
-						bool bUnitIsOtherwiseEnabled = false;
-
-						if (kTeam.isHasTech((TechTypes)kUnit.getPrereqAndTech()))
+						const CvUnitInfo& kUnit = GC.getUnitInfo(static_cast<UnitTypes>(*it));
+						if (kUnit.getDefaultUnitAI() != NO_UNITAI && kOwner.AI_totalAreaUnitAIs(pArea, kUnit.getDefaultUnitAI()) == 0)
 						{
-							bUnitIsOtherwiseEnabled = bUnitIsEnabler || kUnit.getNumPrereqAndBuildings() == 0;
-							if (!bUnitIsOtherwiseEnabled)
-							{
-								for (int iI = 0; iI < kUnit.getNumPrereqAndBuildings(); ++iI)
-								{
-									// Toffer - seems strange to use break here if only one of X "AND" requirements are met...
-									if (isActiveBuilding((BuildingTypes)kUnit.getPrereqAndBuilding(iI)))
-									{
-										bUnitIsOtherwiseEnabled = true;
-										break;
-									}
-								}
-							}
+							iValue += iNumCitiesInArea;
 						}
 
-						if (bUnitIsOtherwiseEnabled)
+						int iAllowedUnitsValue = 0;
+
+						// This forces the AI to build necessary buildings for units.
+						switch (kUnit.getDefaultUnitAI())
 						{
-							bool bUnitIsBonusEnabled = true;
-							if (kUnit.getPrereqAndBonus() != NO_BONUS && !hasBonus((BonusTypes)kUnit.getPrereqAndBonus()))
-							{
-								if (kBuilding.getProvides()->has((BonusTypes)kUnit.getPrereqAndBonus()))
-								{
-									bUnitIsEnabler = true;
-								}
-								else
-								{
-									bUnitIsBonusEnabled = false;
-								}
-							}
-
-							bool bHasORBonusAlready = false;
-							bool bFreeBonusIsORBonus = false;
-							int	iFreeExtraBonusCount = 0;
-
-							foreach_(const BonusTypes eXtraFreeBonus, kUnit.getPrereqOrBonuses())
-							{
-								iFreeExtraBonusCount++;
-
-								if (hasBonus(eXtraFreeBonus))
-								{
-									bHasORBonusAlready = true;
-								}
-								else if (kBuilding.getProvides()->has(eXtraFreeBonus))
-								{
-									bFreeBonusIsORBonus = true;
-								}
-							}
-
-							if (iFreeExtraBonusCount > 0 && !bHasORBonusAlready)
-							{
-								if (bFreeBonusIsORBonus)
-								{
-									bUnitIsEnabler = true;
-								}
-								else
-								{
-									bUnitIsBonusEnabled = false;
-								}
-							}
-
-							if (bUnitIsEnabler)
-							{
-								if (kUnit.getDefaultUnitAI() != NO_UNITAI && kOwner.AI_totalAreaUnitAIs(pArea, kUnit.getDefaultUnitAI()) == 0)
-								{
-									iValue += iNumCitiesInArea;
-								}
-
-								int iAllowedUnitsValue = 0;
-
-								// This forces the AI to build necessary buildings for units.
-								switch (kUnit.getDefaultUnitAI())
-								{
-								case UNITAI_UNKNOWN:
-									break;
-								case UNITAI_ANIMAL:
-									iAllowedUnitsValue += kUnit.getCombat() / 5;
-									break;
-								case UNITAI_SETTLE:
-								case UNITAI_SETTLER_SEA:
-									iAllowedUnitsValue += 25;
-									break;
-								case UNITAI_WORKER:
-								case UNITAI_WORKER_SEA:
-									iAllowedUnitsValue += std::max(0, AI_getWorkersNeeded()) * 2;// 10; Calvitix test
-									break;
-								case UNITAI_ATTACK:
-								case UNITAI_ATTACK_CITY:
-								case UNITAI_COLLATERAL:
-								case UNITAI_PILLAGE:
-								case UNITAI_RESERVE:
-								case UNITAI_COUNTER:
-								case UNITAI_CITY_DEFENSE:
-								case UNITAI_CITY_COUNTER:
-								case UNITAI_CITY_SPECIAL:
-								case UNITAI_ATTACK_SEA:
-								case UNITAI_RESERVE_SEA:
-								case UNITAI_ESCORT_SEA:
-								case UNITAI_ASSAULT_SEA:
-								case UNITAI_CARRIER_SEA:
-								case UNITAI_MISSILE_CARRIER_SEA:
-								case UNITAI_PIRATE_SEA:
-								case UNITAI_ATTACK_AIR:
-								case UNITAI_DEFENSE_AIR:
-								case UNITAI_CARRIER_AIR:
-								case UNITAI_MISSILE_AIR:
-								case UNITAI_PARADROP:
-								case UNITAI_ATTACK_CITY_LEMMING:
-									iAllowedUnitsValue += std::max(6, (kUnit.getCombat() * kUnit.getCombat())) / 5 + (kUnit.getAirCombat() * kUnit.getAirCombat()) / 5;
-									break;
-								case UNITAI_INVESTIGATOR:
-								case UNITAI_PROPERTY_CONTROL:
-								case UNITAI_HEALER:
-								case UNITAI_PROPERTY_CONTROL_SEA:
-								case UNITAI_HEALER_SEA:
-								case UNITAI_EXPLORE:
-								case UNITAI_MISSIONARY:
-								case UNITAI_PROPHET:
-								case UNITAI_ARTIST:
-								case UNITAI_SCIENTIST:
-								case UNITAI_GENERAL:
-								case UNITAI_GREAT_HUNTER:
-								case UNITAI_GREAT_ADMIRAL:
-								case UNITAI_MERCHANT:
-								case UNITAI_ENGINEER:
-								case UNITAI_SPY:
-								case UNITAI_SPY_SEA:
-								case UNITAI_MISSIONARY_SEA:
-								case UNITAI_EXPLORE_SEA:
-									iAllowedUnitsValue += 10;
-									break;
-								case UNITAI_ICBM:
-									iAllowedUnitsValue += (kUnit.getNukeRange() != -1 ? kUnit.getNukeRange() * 50 : 0);
-									break;
-								}
-								if (bWarPlan)
-									iAllowedUnitsValue *= 2;
-
-								if (iAllowedUnitsValue > 0)
-								{
-									// Just because we can build new units here doesn't add much if we can already build them a ton of other places
-									iAllowedUnitsValue = iAllowedUnitsValue * 3 / (3 + std::min(10, kOwner.countNumBuildings(eBuilding)));
-								}
-
-								iValue += bUnitIsBonusEnabled ? iAllowedUnitsValue : iAllowedUnitsValue / 5;
-							}
+						case UNITAI_UNKNOWN:
+							break;
+						case UNITAI_ANIMAL:
+							iAllowedUnitsValue += kUnit.getCombat() / 5;
+							break;
+						case UNITAI_SETTLE:
+						case UNITAI_SETTLER_SEA:
+							iAllowedUnitsValue += 25;
+							break;
+						case UNITAI_WORKER:
+						case UNITAI_WORKER_SEA:
+							iAllowedUnitsValue += std::max(0, AI_getWorkersNeeded()) * 2;// 10; Calvitix test
+							break;
+						case UNITAI_ATTACK:
+						case UNITAI_ATTACK_CITY:
+						case UNITAI_COLLATERAL:
+						case UNITAI_PILLAGE:
+						case UNITAI_RESERVE:
+						case UNITAI_COUNTER:
+						case UNITAI_CITY_DEFENSE:
+						case UNITAI_CITY_COUNTER:
+						case UNITAI_CITY_SPECIAL:
+						case UNITAI_ATTACK_SEA:
+						case UNITAI_RESERVE_SEA:
+						case UNITAI_ESCORT_SEA:
+						case UNITAI_ASSAULT_SEA:
+						case UNITAI_CARRIER_SEA:
+						case UNITAI_MISSILE_CARRIER_SEA:
+						case UNITAI_PIRATE_SEA:
+						case UNITAI_ATTACK_AIR:
+						case UNITAI_DEFENSE_AIR:
+						case UNITAI_CARRIER_AIR:
+						case UNITAI_MISSILE_AIR:
+						case UNITAI_PARADROP:
+						case UNITAI_ATTACK_CITY_LEMMING:
+							iAllowedUnitsValue += std::max(6, (kUnit.getCombat() * kUnit.getCombat())) / 5 + (kUnit.getAirCombat() * kUnit.getAirCombat()) / 5;
+							break;
+						case UNITAI_INVESTIGATOR:
+						case UNITAI_PROPERTY_CONTROL:
+						case UNITAI_HEALER:
+						case UNITAI_PROPERTY_CONTROL_SEA:
+						case UNITAI_HEALER_SEA:
+						case UNITAI_EXPLORE:
+						case UNITAI_MISSIONARY:
+						case UNITAI_PROPHET:
+						case UNITAI_ARTIST:
+						case UNITAI_SCIENTIST:
+						case UNITAI_GENERAL:
+						case UNITAI_GREAT_HUNTER:
+						case UNITAI_GREAT_ADMIRAL:
+						case UNITAI_MERCHANT:
+						case UNITAI_ENGINEER:
+						case UNITAI_SPY:
+						case UNITAI_SPY_SEA:
+						case UNITAI_MISSIONARY_SEA:
+						case UNITAI_EXPLORE_SEA:
+							iAllowedUnitsValue += 10;
+							break;
+						case UNITAI_ICBM:
+							iAllowedUnitsValue += (kUnit.getNukeRange() != -1 ? kUnit.getNukeRange() * 50 : 0);
+							break;
 						}
+						if (bWarPlan)
+							iAllowedUnitsValue *= 2;
+
+						if (iAllowedUnitsValue > 0)
+						{
+							// Just because we can build new units here doesn't add much if we can already build them a ton of other places
+							iAllowedUnitsValue = iAllowedUnitsValue * 3 / (3 + std::min(10, kOwner.countNumBuildings(eBuilding)));
+						}
+
+						iValue += iAllowedUnitsValue;
 					}
 				}
 			}

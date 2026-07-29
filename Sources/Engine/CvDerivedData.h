@@ -21,10 +21,10 @@
 //	tenants (the canConstruct caches) are shared with the UI. Each datum lives at the HIGHEST level
 //	where its inputs are invariant (a tech fact at Team, a civic value at Player, the constructible
 //	set at City), so one recompute serves everything below it.
-//	NOTE: truly STATIC XML-derived data (the prereq/enabler reverse-indices) does NOT live here --
-//	it lives on cvInternalGlobals, built once in buildLoadTimeIndexes and never invalidated (see
-//	getBuildingsEnabledBy / getUnitsEnabledBy). The Game repository is for GAME-STATE-derived,
-//	game-scoped data only.
+//	NOTE: truly STATIC load-derived data does NOT live here. A reverse lookup ("who references me") is
+//	carried by the referenced INFO itself, as an edge family populated once by the readJson reverse pass
+//	([DEC-one-reverse-view]) -- never a side index on cvInternalGlobals. The Game repository is for
+//	GAME-STATE-derived, game-scoped data only.
 //
 //	---------------------------------------------------------------------------------------------
 //	HOW STALENESS IS TRACKED -- two complementary mechanisms:

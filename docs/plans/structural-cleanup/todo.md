@@ -329,6 +329,17 @@ measure what survives, then cut the genuine residue. The classes below are the u
   rewriting the loop is the work. A converted read wedged into an otherwise-legacy expression is the same defect
   one level down — convert the ARITHMETIC CLUSTER, not the operand
   ([fixed-point-and-scales §4c-bis](../../specs/curators/fixed-point-and-scales.md)).
+- **The legacy CONSTRUCTIBILITY model's last consumer is the requires DISPLAY.** The static reverse-index
+  (`buildConstructibilityEnablerIndex` / `getBuildingsEnabledBy` / `getUnitsEnabledBy`) and its fidelity audit
+  are GONE — a reverse lookup is the referenced info's own edge family
+  ([DEC-one-reverse-view](../../architecture/decisions.md#dec-one-reverse-view)), and the AI's two enablement
+  valuations now read the source's forward `enables.buildings` / `enables.units` instead of asking backwards
+  and re-deriving prereqs with a BoolExpr what-if. ⚠ What SURVIVES is `ConstructRequirement` +
+  `getConstructRequirements` / `getConstructCondition`, kept alive by **13 `CvGameTextMgr` sites** that render
+  a building's prereq block (`appendVicinityRequirementHelp` / `appendRequirementHelp` /
+  `appendCivicRequirementHelp`). They cannot move until the **`requires` RENDERER exists** — `CvEntryText`
+  renders modifier entries and conditions only, and its own header defers the requires/gate render (the
+  Stage-4 hole (a) below). The model dies with that renderer, not before.
 - **The BUILDING-PREREQ TABLE is retired, and its residue is outside the AI.** The per-building prereq-count map
   (a `min` on a `requires` atom in the authored model) has no getter on the info any more, so
   `CvPlayer::getBuildingPrereqBuilding` reads a member that does not exist — it is DANGLING, not working code, and

@@ -597,15 +597,12 @@ public:
 	// flip from false to true. Load-derived from info data only -> identical on every
 	// client. Lets the CABV PreLoop replace its O(buildings^2) enabler re-scan with an
 	// O(dependents) lookup. See docs/dev/plans/unified-prerequisites-and-constructibility.md
-	const std::vector<BuildingTypes>& getBuildingsEnabledBy(BuildingTypes eEnabler) const;
 	// Analogue for unit training: for enabler building B, the units whose train
 	// condition / typed prereqs B (or a free bonus B grants) can satisfy. Lets the
 	// CABV unit-enabler value loop narrow its scan from all units to B's candidates.
-	const std::vector<UnitTypes>& getUnitsEnabledBy(BuildingTypes eEnabler) const;
 	// #195 Phase 2: one-shot [PERF/reqmodel] log verifying the unified requirement model
 	// reproduces the typed prereq fields the enabler index relies on (FinalRelease-visible
 	// via Autolog__LogLevelPerf). Called once from the CABV PreLoop.
-	void logConstructRequirementFidelity() const;
 
 	// Static invisibility counter reverse-index: for invisibility class I, the trainable
 	// units that can see I. Load-derived from info data only -> identical on every client.
@@ -819,7 +816,6 @@ public:
 
 protected:
 	void buildLoadTimeIndexes();   // the engine-side load indexes; runs AFTER loadJson(JSON_LOAD_POSTMENU)
-	void buildConstructibilityEnablerIndex();
 	void buildInvisibleSeerIndex();
 
 	bool m_bGraphicsInitialized;

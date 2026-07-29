@@ -1973,62 +1973,6 @@ int CvCity::findCommerceRateRank(CommerceTypes eCommerce) const
 }
 
 
-bool CvCity::isPlotTrainable(UnitTypes eUnit, bool bTestVisible) const
-{
-	PROFILE_FUNC();
-
-	if (!bTestVisible)
-	{
-		const CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
-		const CvPlayer& pPlayer = GET_PLAYER(getOwner());
-
-		if (unitNeedsStateReligion(kUnit) && pPlayer.getStateReligion() != NO_RELIGION && !isHasReligion(pPlayer.getStateReligion()))
-		{
-			return false;
-		}
-
-		for (int iI = 0; iI < kUnit.getNumPrereqAndBuildings(); ++iI)
-		{
-			const BuildingTypes eBuildingX = (BuildingTypes)kUnit.getPrereqAndBuilding(iI);
-			if (!GET_TEAM(getTeam()).isObsoleteBuilding(eBuildingX) && !isActiveBuilding(eBuildingX))
-			{
-				const SpecialBuildingTypes eSpecialBuilding = GC.getBuildingInfo(eBuildingX).getSpecialBuildingType();
-
-				if (eSpecialBuilding == NO_SPECIALBUILDING || !pPlayer.isSpecialBuildingNotRequired(eSpecialBuilding))
-				{
-					return false;
-				}
-			}
-		}
-
-		{
-			bool bFound = true;
-			for (int iI = 0; iI < kUnit.getPrereqOrBuildingsNum(); iI++)
-			{
-				if (!GET_TEAM(getTeam()).isObsoleteBuilding(kUnit.getPrereqOrBuilding(iI)))
-				{
-					bFound = false;
-					if (isActiveBuilding(kUnit.getPrereqOrBuilding(iI)))
-					{
-						bFound = true;
-						break;
-					}
-				}
-			}
-			if (!bFound) return false;
-		}
-
-		if (kUnit.getTrainCondition())
-		{
-			if (!kUnit.getTrainCondition()->evaluate(const_cast<CvGameObjectCity*>(getGameObject())))
-			{
-				return false;
-			}
-		}
-	}
-	return true;
-}
-
 // Returns one of the upgrades...
 UnitTypes CvCity::trainableUpgradeFor(UnitTypes eUnit) const
 {

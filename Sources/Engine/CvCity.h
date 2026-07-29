@@ -1929,7 +1929,6 @@ protected:
 	virtual bool AI_addBestCitizen(bool bWorkers, bool bSpecialists, int* piBestPlot = NULL, SpecialistTypes* peBestSpecialist = NULL) = 0;
 	virtual bool AI_removeWorstCitizen(SpecialistTypes eIgnoreSpecialist = NO_SPECIALIST) = 0;
 
-	bool isPlotTrainable(UnitTypes eUnit, bool bTestVisible) const;
 
 	//TB Building tags
 	void setExtraLocalCaptureProbabilityModifier(int iValue);
