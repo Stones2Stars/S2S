@@ -8132,7 +8132,9 @@ int CvCityAI::AI_getImprovementValue(const CvPlot* pPlot, ImprovementTypes eImpr
 
 		if (improvement.isZOCSource()) iMilitaryValue += 200;
 
-		iMilitaryValue += 2 * (5 * improvement.getVisibilityChange() + 2 * improvement.getSeeFrom());
+		// vision.md §5: an improvement's legacy see-from AND visibility-change are ONE concept now -- its
+		// ELEVATION -- so the two weighted terms collapse into a single one carrying their combined weight.
+		iMilitaryValue += 2 * 7 * improvement.getFlatVision(VISION_ELEVATION, CASC_SCOPE_PLOT) / VISION_OPEN_GROUND_COST;
 
 		const int iDefense = improvement.getDefense(DEFENSE_AMOUNT, CASC_SCOPE_PLOT);
 		if (iDefense < 0)

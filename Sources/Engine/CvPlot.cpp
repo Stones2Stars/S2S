@@ -7030,8 +7030,8 @@ void CvPlot::setFeatureType(FeatureTypes eNewValue, int iVariety, bool bImprovem
 		bool bUpdateSight = false;
 
 		if (eOldFeature == NO_FEATURE || eNewValue == NO_FEATURE
-		|| GC.getFeatureInfo(eOldFeature).getVision(VISION_OBSTRUCTION, CASC_SCOPE_PLOT)
-		!= GC.getFeatureInfo(eNewValue).getVision(VISION_OBSTRUCTION, CASC_SCOPE_PLOT))
+		|| GC.getFeatureInfo(eOldFeature).getFlatVision(VISION_OBSTRUCTION, CASC_SCOPE_PLOT)
+		!= GC.getFeatureInfo(eNewValue).getFlatVision(VISION_OBSTRUCTION, CASC_SCOPE_PLOT))
 		{
 			bUpdateSight = true;
 		}

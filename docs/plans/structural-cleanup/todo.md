@@ -134,13 +134,6 @@
 - **The hide-and-seek help text still enumerates per type** — spot intensity, spot range and same-tile, one
   block per `INVISIBLE_*`. It renders values that are now always 0, and it is the exact thing the pairing was
   written down to make sayable: a detection entry renders itself through `appendEntryLines`.
-- **8 AI valuation reads of the deleted vision getters, across THREE files** (re-measured): `CvCityAI` 2
-  (`improvement.getVisibilityChange` + `.getSeeFrom` on one line), `CvUnitAI` 2 (`getVisibilityChange`), and
-  **`CvPlayerAI` 4 — which the earlier census missed entirely**: they read `getVisibilityChange` on a PROMOTION
-  and a UNITCOMBAT, not an improvement, so a sweep scoped to "the improvement getters" walks straight past them.
-  Neither getter is declared anywhere in `Sources/Infos/` any more. Compiler census, sequenced with the rest of
-  the AI consumer cut, not fixed on sight; the replacement is the entity's compiled `vision` entries, the same
-  source the pedia renders from.
 - **Nothing is verified.** The walk, the budgets and the render are wired but untestable until the tree is
   green ([DEC-done-is-observable](../../architecture/decisions.md#dec-done-is-observable)). First checks when it
   is: a unit on flat open ground sees 1 plot, on a peak 4; a jungle costs 2; a city with tree platforms sees 2.

@@ -70,6 +70,10 @@ public:
 	{ return m_modifiers.sum(MODFAM_AIR, eKind, eScope, infoKindUnit(MODFAM_AIR, eKind, eScope)); }
 	int getMovement(MovementKind eKind, CvCascScope eScope) const
 	{ return m_modifiers.sum(MODFAM_MOVEMENT, eKind, eScope, CASC_UNIT_FLAT); }
+	// How much SIGHT this promotion sharpens ([vision.md] §1: a unit's strength is its base stat plus its
+	// promotions). Engine-native, so a reader wanting PLOTS divides by VISION_OPEN_GROUND_COST at its use.
+	int getFlatVision(VisionKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_VISION, eKind, eScope, CASC_UNIT_FLAT); }
 	int getFlatBombard(BombardKind eKind, CvCascScope eScope) const
 	{ return m_modifiers.sum(MODFAM_BOMBARD, eKind, eScope, CASC_UNIT_FLAT); }
 	int getBombardModifier(BombardKind eKind, CvCascScope eScope) const

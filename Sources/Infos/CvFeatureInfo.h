@@ -62,7 +62,7 @@ public:
 	{ return m_modifiers.sum(MODFAM_MOVEMENT, eKind, eScope, CASC_UNIT_FLAT); }
 	// What this ground costs to see THROUGH, served as the family it is authored in ([vision.md] §1: a
 	// feature's see-through value IS its `obstruction`). Same shape as the movement read above.
-	int getVision(VisionKind eKind, CvCascScope eScope) const
+	int getFlatVision(VisionKind eKind, CvCascScope eScope) const
 	{ return m_modifiers.sum(MODFAM_VISION, eKind, eScope, CASC_UNIT_FLAT); }
 	int getPopDestroys() const { return m_iPopDestroys; }                            // identity.popDestroys (-1 = never)
 	int getAppearanceProbability() const { return m_iAppearanceProbability; }        // identity.appearance

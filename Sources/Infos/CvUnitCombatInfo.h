@@ -55,6 +55,13 @@ public:
 	{ return m_modifiers.sum(MODFAM_COMBAT, eKind, eScope, CASC_UNIT_FLAT); }
 	int getCombatModifier(CombatKind eKind, CvCascScope eScope) const
 	{ return m_modifiers.sum(MODFAM_COMBAT, eKind, eScope, CASC_UNIT_PERCENT); }
+	// How much SIGHT this combat class carries ([vision.md] §1). ⚠ NO unitcombat authors a strength today --
+	// they author only the detection/concealment pair -- so this answers 0 and the AI terms reading it
+	// contribute nothing. That is live-but-inert HEADROOM, exactly like the corporation-obsolete chain: not a
+	// data gap to fill, and equally not a reason to purge a wired read. Engine-native; a reader wanting PLOTS
+	// divides by VISION_OPEN_GROUND_COST at its use.
+	int getFlatVision(VisionKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_VISION, eKind, eScope, CASC_UNIT_FLAT); }
 	// capture probability/resistance: the unit plane authors FLAT percentage-point chances (census verdict;
 	// the infoKindUnit CAPTURE row carries the empire-scope percent authoring -- reported).
 	int getCapture(CaptureKind eKind, CvCascScope eScope) const

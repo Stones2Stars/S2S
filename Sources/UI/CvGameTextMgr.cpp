@@ -7425,7 +7425,7 @@ void CvGameTextMgr::parsePromotionHelpInternal(CvWStringBuffer &szBuffer, Promot
 		iTrapComplexity += promoX.getTrapComplexity();
 		iTrapNumTriggers += promoX.getNumTriggers();
 		iTrapTriggerBeforeAttackChange += promoX.getTriggerBeforeAttackChange();
-		iVisibilityChange += promoX.getVisibilityChange();
+		iVisibilityChange += promoX.getFlatVision(VISION_STRENGTH, CASC_SCOPE_UNIT) / VISION_OPEN_GROUND_COST;
 		iCaptureProbabilityModifierChange += promoX.getCapture(CAPTURE_PROBABILITY, CASC_SCOPE_UNIT) / 100;
 		iCaptureResistanceModifierChange += promoX.getCapture(CAPTURE_RESISTANCE, CASC_SCOPE_UNIT) / 100;
 		iBreakdownChanceChange += promoX.getBreakdownChanceChange();

@@ -26741,11 +26741,13 @@ BuildTypes CvUnitAI::AI_findBestFort(const CvPlot* pPlot) const
 		if (kImprovement.isMilitaryStructure() && canBuild(pPlot, eBuild))
 		{
 			++iQualified;
+			// vision.md §5: the improvement's legacy visibility-change IS its ELEVATION, read in plots.
+			const int iElevationPlots = kImprovement.getFlatVision(VISION_ELEVATION, CASC_SCOPE_PLOT) / VISION_OPEN_GROUND_COST;
 			int iValue =
 				(
 					kImprovement.getDefense(DEFENSE_AMOUNT, CASC_SCOPE_PLOT) * 100
 					+
-					kImprovement.getVisibilityChange() * 1000 // Each visibility equals 10% defense mod
+					iElevationPlots * 1000 // Each plot of elevation equals 10% defense mod
 				);
 			if (kImprovement.isActsAsCity())
 			{
@@ -26763,7 +26765,7 @@ BuildTypes CvUnitAI::AI_findBestFort(const CvPlot* pPlot) const
 				{
 					logBuildEvaluation(3, "  AI_findBestFort cand build=%s impr=%s def=%d vis=%d acts=%d zoc=%d time=%d score=%d",
 						GC.getBuildInfo(eBuild).getType(), kImprovement.getType(),
-						kImprovement.getDefense(DEFENSE_AMOUNT, CASC_SCOPE_PLOT), kImprovement.getVisibilityChange(),
+						kImprovement.getDefense(DEFENSE_AMOUNT, CASC_SCOPE_PLOT), iElevationPlots,
 						kImprovement.isActsAsCity() ? 1 : 0, kImprovement.isZOCSource() ? 1 : 0,
 						GC.getBuildInfo(eBuild).getTime(), iValue);
 				}

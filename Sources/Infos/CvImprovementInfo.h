@@ -51,6 +51,11 @@ public:
 	// answer the city plane for the plot air read.
 	int getDefense(DefenseKind eKind, CvCascScope eScope) const
 	{ return m_modifiers.sum(MODFAM_DEFENSE, eKind, eScope, infoDefenseUnit(eKind, eScope)); }
+	// How high this improvement stands whoever is on it ([vision.md] §5: an improvement's see-from IS its
+	// elevation). POSITIONAL -- it belongs to the plot, never to the observer. Engine-native, so a reader
+	// wanting PLOTS divides by VISION_OPEN_GROUND_COST at its use.
+	int getFlatVision(VisionKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_VISION, eKind, eScope, CASC_UNIT_FLAT); }
 
 	// ======================= 3. INTRINSIC -- bare typed reads (the census identity set) ======================
 	int getPillageGold() const { return m_iPillageGold; }                       // identity.pillageGold

@@ -27155,7 +27155,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		}//total 20, 30, 40 points
 
 		//Security
-		iValue += (kPromotion.getVisibilityChange() * 10);
+		iValue += kPromotion.getFlatVision(VISION_STRENGTH, CASC_SCOPE_UNIT) * 10 / VISION_OPEN_GROUND_COST;
 		//Lean towards more security if security is already present
 		iValue += (kPromotion.getInterceptChange() + (pUnit == NULL ? kUnit.getInterceptionProbability() : pUnit->currInterceptionProbability()));
 		//total 20, 30, 40 points
@@ -28659,7 +28659,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//#47 Effects for Promotions that affects Visibility...
-	iTemp = kPromotion.getVisibilityChange();
+	iTemp = kPromotion.getFlatVision(VISION_STRENGTH, CASC_SCOPE_UNIT) / VISION_OPEN_GROUND_COST;
 	if (iTemp != 0)
 	{
 		if ((eUnitAI == UNITAI_SEE_INVISIBLE) ||
@@ -30678,7 +30678,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}//total 20, 30, 40 points
 
 		//Security
-		iValue += (kUnitCombat.getVisibilityChange() * 10);
+		iValue += kUnitCombat.getFlatVision(VISION_STRENGTH, CASC_SCOPE_UNIT) * 10 / VISION_OPEN_GROUND_COST;
 		//Lean towards more security if security is already present
 		iValue += (kUnitCombat.getInterceptChange() + (pUnit == NULL ? kUnit.getInterceptionProbability() : pUnit->currInterceptionProbability()));
 		//total 20, 30, 40 points
@@ -31755,7 +31755,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 	}
 
-	iTemp = kUnitCombat.getVisibilityChange();
+	iTemp = kUnitCombat.getFlatVision(VISION_STRENGTH, CASC_SCOPE_UNIT) / VISION_OPEN_GROUND_COST;
 	if (iTemp != 0)
 	{
 		if ((eUnitAI == UNITAI_SEE_INVISIBLE) ||
