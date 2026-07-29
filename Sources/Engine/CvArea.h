@@ -87,17 +87,9 @@ public:
 	int getPopulationPerPlayer(PlayerTypes eIndex) const;
 	void changePopulationPerPlayer(PlayerTypes eIndex, int iChange);
 
-	int getBuildingGoodHealth(PlayerTypes eIndex) const;
-	void changeBuildingGoodHealth(PlayerTypes eIndex, int iChange);
 
-	int getBuildingBadHealth(PlayerTypes eIndex) const;
-	void changeBuildingBadHealth(PlayerTypes eIndex, int iChange);
 
-	int getBuildingHappiness(PlayerTypes eIndex) const;
-	void changeBuildingHappiness(PlayerTypes eIndex, int iChange);
 
-	int getFreeSpecialist(PlayerTypes eIndex) const;
-	void changeFreeSpecialist(PlayerTypes eIndex, int iChange);
 
 	int getPower(PlayerTypes eIndex) const;
 	void changePower(PlayerTypes eIndex, int iChange);

@@ -1468,7 +1468,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 			m_paiImprovementCount[iI] = 0;
 		}
 
-		FAssertMsg(m_paiFeatureHappiness==NULL, "about to leak memory, CvPlayer::m_paiFeatureHappiness");
 
 		FAssertMsg(0 < GC.getNumBuildingInfos(), "GC.getNumBuildingInfos() is not greater than zero but it is used to allocate memory in CvPlayer::reset");
 		FAssertMsg(m_paiBuildingCount==NULL, "about to leak memory, CvPlayer::m_paiBuildingCount");
