@@ -15847,9 +15847,6 @@ void CvGameTextMgr::setBuildingHelp(CvWStringBuffer &szBuffer, const BuildingTyp
 			}
 		}
 
-		//Properties
-		kBuilding.getProperties()->buildChangesString(szBuffer);
-		kBuilding.getPropertiesAllCities()->buildChangesAllCitiesString(szBuffer);
 
 		kBuilding.getPrereqMinProperties()->buildRequiresMinString(szBuffer, pCity ? pCity->getPropertiesConst() : NULL);
 		kBuilding.getPrereqMaxProperties()->buildRequiresMaxString(szBuffer, pCity ? pCity->getPropertiesConst() : NULL);

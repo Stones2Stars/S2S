@@ -12409,8 +12409,7 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 	if (kBuilding.getFreeSpecialist() > 0 ||
 		kBuilding.getAreaFreeSpecialist() > 0 ||
 		kBuilding.getGlobalFreeSpecialist() > 0 ||
-		(kBuilding.getPropertyManipulators() != NULL && kBuilding.getPropertyManipulators()->getNumSources() > 0) ||
-		kBuilding.getProperties()->getNumProperties() > 0)
+		(kBuilding.getPropertyManipulators() != NULL && kBuilding.getPropertyManipulators()->getNumSources() > 0))
 	{
 		return true;
 	}
@@ -13079,23 +13078,6 @@ int CvCityAI::buildingPropertiesValue(const CvBuildingInfo& kBuilding) const
 		}
 	}
 
-	const CvProperties* buildingProperties = kBuilding.getProperties();
-	int num = buildingProperties->getNumProperties();
-	for (int iI = 0; iI < num; iI++)
-	{
-		const PropertyTypes eProperty = (PropertyTypes)buildingProperties->getProperty(iI);
-		const int iBuildingValue = buildingProperties->getValue(iI);
-
-		std::map<int, int>::iterator itr = effectivePropertyChanges.find(eProperty);
-		if (itr == effectivePropertyChanges.end())
-		{
-			effectivePropertyChanges[eProperty] = iBuildingValue;
-		}
-		else
-		{
-			itr->second += iBuildingValue;
-		}
-	}
 
 	int iValue = 0;
 	for (std::map<int, int>::const_iterator itr = effectivePropertyChanges.begin(); itr != effectivePropertyChanges.end(); ++itr)

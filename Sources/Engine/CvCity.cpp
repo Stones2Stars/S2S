@@ -3666,39 +3666,6 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 	}
 
 	{
-		PROFILE("CvCity::processBuilding.properties");
-
-		const CvProperties* pProp = kBuilding.getProperties();
-		const CvProperties* pPropAllCities = kBuilding.getPropertiesAllCities();
-		if (iChange > 0)
-		{
-			// Property manipulators must be serialized as the propagation can mean we're updating
-			//	properties on many entities (granular locking produces too much overhead).
-			if (!pProp->isEmpty())
-			{
-				getProperties()->addProperties(pProp);
-			}
-			if (!pPropAllCities->isEmpty())
-			{
-				GET_TEAM(getTeam()).addPropertiesAllCities(pPropAllCities);
-			}
-		}
-		else
-		{
-			// Property manipulators must be serialized as the propagation can mean we're updating
-			//	properties on many entities (granular locking produces too much overhead).
-			if (!pProp->isEmpty())
-			{
-				getProperties()->subtractProperties(pProp);
-			}
-			if (!pPropAllCities->isEmpty())
-			{
-				GET_TEAM(getTeam()).subtractPropertiesAllCities(pPropAllCities);
-			}
-		}
-	}
-
-	{
 		PROFILE("CvCity::processBuilding.part2");
 
 		const bool bChange = (iChange == 1);
