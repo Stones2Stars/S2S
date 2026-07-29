@@ -831,7 +831,6 @@ void CvArea::changeCleanPowerCount(TeamTypes eIndex, int iChange)
 			// The third leg of CvCity::isPower() (reached through isAreaCleanPower). The existing count crossing IS
 			// the fact -- the raw count moves per providing building, the (area x team) verdict only here.
 			emitAreaCleanPowerChanged(getID(), (int)eIndex, m_aiCleanPowerCount[eIndex] > 0);
-			GET_TEAM(eIndex).updateCommerce();
 
 			if (eIndex == GC.getGame().getActiveTeam())
 			{

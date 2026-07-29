@@ -674,11 +674,9 @@ void CvCityAI::AI_assignWorkingPlots()
 	//update the special yield multiplier to be current
 	AI_updateSpecialYieldMultiplier();
 
-	//	If we're in disorder no need to go through all of this, but we must call updateCommerce()
 	//	directly to have the disorder take effect on the commerce of this city
 	if (isDisorder())
 	{
-		setCommerceDirty();
 	}
 	else
 	{

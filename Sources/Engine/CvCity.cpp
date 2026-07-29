@@ -1288,8 +1288,6 @@ void CvCity::kill(bool bUpdatePlotGroups, bool bUpdateCulture)
 
 	pPlot->setImprovementType(GC.getIMPROVEMENT_CITY_RUINS());
 
-	kOwner.setCommerceDirty(NO_COMMERCE);
-	kOwner.updateCommerce(NO_COMMERCE);
 
 	CvEventReporter::getInstance().cityLost(this);
 
@@ -5553,7 +5551,6 @@ void CvCity::changeSpecialistPopulation(int iChange)
 
 		GET_PLAYER(getOwner()).invalidateYieldRankCache();
 
-		setCommerceDirty(NO_COMMERCE);
 	}
 }
 
@@ -5571,7 +5568,6 @@ void CvCity::changeNumGreatPeople(int iChange)
 		m_iNumGreatPeople += iChange;
 		FASSERT_NOT_NEGATIVE(m_iNumGreatPeople);
 
-		setCommerceDirty(NO_COMMERCE);
 	}
 }
 
@@ -7908,7 +7904,6 @@ void CvCity::changePowerCount(int iChange)
 		{
 			GET_PLAYER(getOwner()).invalidateYieldRankCache();
 
-			setCommerceDirty();
 
 			if (getTeam() == GC.getGame().getActiveTeam())
 			{
@@ -9153,7 +9148,6 @@ void CvCity::onYieldChange()
 #ifdef YIELD_VALUE_CACHING
 	ClearYieldValueCache();
 #endif
-	setCommerceDirty();
 
 	if (getTeam() == GC.getGame().getActiveTeam())
 	{
@@ -9207,7 +9201,6 @@ void CvCity::changeYieldRateModifier(YieldTypes eIndex, int iChange)
 
 		if (eIndex == YIELD_COMMERCE)
 		{
-			setCommerceDirty();
 		}
 
 		AI_setAssignWorkDirty(true);
@@ -9240,7 +9233,6 @@ void CvCity::changePowerYieldRateModifier(YieldTypes eIndex, int iChange)
 
 		if (eIndex == YIELD_COMMERCE)
 		{
-			setCommerceDirty();
 		}
 
 		AI_setAssignWorkDirty(true);
@@ -9591,7 +9583,6 @@ void CvCity::updateExtraSpecialistCommerce()
 		updateExtraSpecialistCommerce((CommerceTypes)iI);
 	}
 
-	setCommerceDirty();
 
 	if (getTeam() == GC.getGame().getActiveTeam())
 	{
@@ -9655,7 +9646,6 @@ int CvCity::getBaseCommerceRateTimes100(CommerceTypes eIndex) const
 
 	if (m_abCommerceRateDirty[eIndex])
 	{
-		updateCommerce(eIndex);
 	}
 
 	//STEP 1 : Slider + remaining steps.
@@ -9704,7 +9694,6 @@ int CvCity::getCommerceRateAtSliderPercent(CommerceTypes eIndex, int iSliderPerc
 	}
 	if (m_abCommerceRateDirty[eIndex])
 	{
-		updateCommerce(eIndex);
 	}
 	int iRate = std::min<int>(CITY_MAX_YIELD_RATE100, getYieldRate100(YIELD_COMMERCE));
 	int iExtraRate = std::min<int>(CITY_MAX_YIELD_RATE100, getBaseCommerceRateExtra(eIndex));
@@ -9756,66 +9745,6 @@ int CvCity::getTotalCommerceRateModifier(CommerceTypes eIndex) const
 // commerce-dirty signal the rate read still uses.
 void CvCity::setCommerceModifierDirty(CommerceTypes eCommerce)
 {
-	setCommerceDirty(eCommerce);
-}
-
-void CvCity::setCommerceDirty(CommerceTypes eCommerce)
-{
-	PROFILE_EXTRA_FUNC();
-	if (eCommerce == NO_COMMERCE)
-	{
-		for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
-		{
-			setCommerceDirty((CommerceTypes)iI);
-		}
-	}
-	else
-	{
-		m_abCommerceRateDirty[eCommerce] = true;
-		if (getOwner() != NO_PLAYER)
-		{
-			GET_PLAYER(getOwner()).setCommerceDirty(eCommerce, true);
-		}
-	}
-}
-
-void CvCity::updateCommerce(CommerceTypes eIndex, bool bForce) const
-{
-	PROFILE_EXTRA_FUNC();
-	if (eIndex == NO_COMMERCE)
-	{
-		GET_PLAYER(getOwner()).invalidateYieldRankCache();
-
-		for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
-		{
-			updateCommerce((CommerceTypes)iI, bForce);
-		}
-	}
-	else
-	{
-		FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-
-		if (bForce || m_abCommerceRateDirty[eIndex])
-		{
-			m_abCommerceRateDirty[eIndex] = false;
-			const int iOldCommerce = m_aiCommerceRate[eIndex];
-			const int iNewCommerce = getCommerceRateAtSliderPercent(eIndex, GET_PLAYER(getOwner()).getCommercePercent(eIndex));
-
-			if (iOldCommerce != iNewCommerce)
-			{
-
-				GET_PLAYER(getOwner()).invalidateCommerceRankCache(eIndex);
-
-				GET_PLAYER(getOwner()).changeCommerceRate(eIndex, iNewCommerce - iOldCommerce);
-
-				if (isCitySelected())
-				{
-					gDLL->getInterfaceIFace()->setDirty(InfoPane_DIRTY_BIT, true);
-					gDLL->getInterfaceIFace()->setDirty(CityScreen_DIRTY_BIT, true);
-				}
-			}
-		}
-	}
 }
 
 int CvCity::getProductionToCommerceModifier(CommerceTypes eIndex) const
@@ -9833,7 +9762,6 @@ void CvCity::changeProductionToCommerceModifier(CommerceTypes eIndex, int iChang
 	{
 		m_aiProductionToCommerceModifier[eIndex] += iChange;
 
-		setCommerceDirty(eIndex);
 		gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
 	}
 }
@@ -10143,7 +10071,6 @@ void CvCity::updateBuildingCommerce()
 		if (getBuildingCommerce(eType) != iNewBuildingCommerce)
 		{
 
-			setCommerceDirty(eType);
 		}
 	}
 }
@@ -10163,7 +10090,6 @@ void CvCity::changeSpecialistCommerceTimes100(CommerceTypes eIndex, int iChange)
 	if (iChange != 0)
 	{
 		m_aiSpecialistCommerce100[eIndex] += iChange;
-		setCommerceDirty(eIndex);
 	}
 }
 
@@ -10247,7 +10173,6 @@ void CvCity::updateReligionCommerce(CommerceTypes eIndex)
 	{
 		FASSERT_NOT_NEGATIVE(getReligionCommerce(eIndex));
 
-		setCommerceDirty(eIndex);
 	}
 }
 
@@ -10352,7 +10277,6 @@ void CvCity::updateCorporationCommerce(CommerceTypes eIndex)
 	{
 		FASSERT_NOT_NEGATIVE(getCorporationCommerce(eIndex));
 
-		setCommerceDirty(eIndex);
 	}
 }
 
@@ -10553,7 +10477,6 @@ void CvCity::changeCommercePerPopFromBuildings(const CommerceTypes eIndex, const
 	if (iChange != 0)
 	{
 		m_commercePerPopFromBuildings[eIndex] += iChange;
-		setCommerceDirty(eIndex);
 	}
 }
 
@@ -17408,7 +17331,6 @@ void CvCity::changeBuildingCommerceTechChange(CommerceTypes eIndex, int iChange)
 	if (iChange != 0)
 	{
 		m_aiBuildingCommerceTechChange[eIndex] += iChange;
-		setCommerceDirty(eIndex);
 	}
 }
 

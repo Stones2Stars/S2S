@@ -11077,7 +11077,6 @@ void CvPlayer::setCapitalCity(CvCity* pNewCapitalCity)
 			{
 				pOldCapitalCity->setCommerceModifierDirty((CommerceTypes)iI);
 			}
-			pOldCapitalCity->updateCommerce();
 			pOldCapitalCity->setInfoDirty(true);
 		}
 		if (pNewCapitalCity)
@@ -11086,7 +11085,6 @@ void CvPlayer::setCapitalCity(CvCity* pNewCapitalCity)
 			{
 				pNewCapitalCity->setCommerceModifierDirty((CommerceTypes)iI);
 			}
-			pNewCapitalCity->updateCommerce();
 			pNewCapitalCity->setInfoDirty(true);
 		}
 	}
@@ -12484,7 +12482,6 @@ void CvPlayer::changeCapitalYieldRateModifier(YieldTypes eIndex, int iChange)
 		{
 			if (eIndex == YIELD_COMMERCE)
 			{
-				pCapitalCity->updateCommerce();
 			}
 
 			pCapitalCity->AI_setAssignWorkDirty(true);

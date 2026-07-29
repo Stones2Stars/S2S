@@ -1006,8 +1006,6 @@ public:
 	int getCommerceRateAtSliderPercent(CommerceTypes eIndex, int iSliderPercent) const;
 	int getTotalCommerceRateModifier(CommerceTypes eIndex) const;
 	void setCommerceModifierDirty(CommerceTypes eCommerce);
-	void setCommerceDirty(CommerceTypes eCommerce = NO_COMMERCE);
-	void updateCommerce(CommerceTypes eIndex = NO_COMMERCE, bool bForce = true) const;
 
 	int getProductionToCommerceModifier(CommerceTypes eIndex) const;
 	void changeProductionToCommerceModifier(CommerceTypes eIndex, int iChange);
@@ -1995,7 +1993,6 @@ public:
 		DECLARE_MAP_FUNCTOR_1(CvCity, void, updateFeatureHappiness, bool);
 		DECLARE_MAP_FUNCTOR_1(CvCity, void, updateReligionHappiness, bool);
 		DECLARE_MAP_FUNCTOR_1(CvCity, void, setCommerceModifierDirty, CommerceTypes);
-		DECLARE_MAP_FUNCTOR_1(CvCity, void, setCommerceDirty, CommerceTypes);
 		DECLARE_MAP_FUNCTOR_1(CvCity, void, setLayoutDirty, bool);
 		DECLARE_MAP_FUNCTOR_1(CvCity, void, AI_setAssignWorkDirty, bool);
 		DECLARE_MAP_FUNCTOR_1(CvCity, void, AI_setChooseProductionDirty, bool);
@@ -2006,7 +2003,6 @@ public:
 		DECLARE_MAP_FUNCTOR_1(CvCity, void, changeFood, int);
 
 		DECLARE_MAP_FUNCTOR_2(CvCity, void, setBuildingListFilterActive, BuildingFilterTypes, bool);
-		DECLARE_MAP_FUNCTOR_2(CvCity, void, updateCommerce, CommerceTypes, bool);
 		DECLARE_MAP_FUNCTOR_2(CvCity, void, setFreeBuilding, BuildingTypes, bool);
 		DECLARE_MAP_FUNCTOR_2(CvCity, void, changeFreeAreaBuildingCount, BuildingTypes, int);
 		DECLARE_MAP_FUNCTOR_2(CvCity, void, changeFreeSpecialistCount, SpecialistTypes, int);
