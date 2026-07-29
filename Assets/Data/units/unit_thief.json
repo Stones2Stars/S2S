@@ -33,13 +33,6 @@
    }
   }
  },
- "espionage": {
-  "unit": {
-   "insidiousness": {
-    "flat": 5
-   }
-  }
- },
  "buildRate": {
   "self": {
    "percent": [
@@ -98,6 +91,13 @@
   "unit": {
    "strikes": {
     "flat": 1
+   }
+  }
+ },
+ "underworld": {
+  "unit": {
+   "insidiousness": {
+    "flat": 5
    }
   }
  },

@@ -1,12 +1,5 @@
 {
  "type": "UNITCOMBAT_LAW_ENFORCEMENT",
- "espionage": {
-  "unit": {
-   "investigation": {
-    "flat": 1
-   }
-  }
- },
  "combat": {
   "unit": {
    "attack": {
@@ -50,6 +43,13 @@
    },
    "resistance": {
     "flat": -10
+   }
+  }
+ },
+ "underworld": {
+  "unit": {
+   "investigation": {
+    "flat": 1
    }
   }
  },

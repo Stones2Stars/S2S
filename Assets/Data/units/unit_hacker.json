@@ -52,13 +52,6 @@
    }
   }
  },
- "espionage": {
-  "unit": {
-   "insidiousness": {
-    "flat": 150
-   }
-  }
- },
  "movement": {
   "unit": {
    "flat": 1
@@ -110,6 +103,13 @@
   "unit": {
    "resistance": {
     "flat": -40
+   }
+  }
+ },
+ "underworld": {
+  "unit": {
+   "insidiousness": {
+    "flat": 150
    }
   }
  },

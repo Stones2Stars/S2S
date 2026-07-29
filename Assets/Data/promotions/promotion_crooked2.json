@@ -1,12 +1,5 @@
 {
  "type": "PROMOTION_CROOKED2",
- "espionage": {
-  "unit": {
-   "insidiousness": {
-    "flat": 10
-   }
-  }
- },
  "combat": {
   "unit": {
    "stealthStrikes": {
@@ -17,6 +10,13 @@
  "withdrawal": {
   "unit": {
    "percent": 10
+  }
+ },
+ "underworld": {
+  "unit": {
+   "insidiousness": {
+    "flat": 10
+   }
   }
  },
  "PROPERTY_CRIME": {

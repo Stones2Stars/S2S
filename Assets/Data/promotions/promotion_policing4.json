@@ -1,12 +1,5 @@
 {
  "type": "PROMOTION_POLICING4",
- "espionage": {
-  "unit": {
-   "investigation": {
-    "flat": 4
-   }
-  }
- },
  "combat": {
   "unit": {
    "stealth": {
@@ -18,6 +11,13 @@
   "unit": {
    "probability": {
     "flat": 5
+   }
+  }
+ },
+ "underworld": {
+  "unit": {
+   "investigation": {
+    "flat": 4
    }
   }
  },

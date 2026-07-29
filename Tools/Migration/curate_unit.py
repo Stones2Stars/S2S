@@ -83,8 +83,11 @@ UNIT_FAMILIES = {
     "iNukeRange": ("air", "nukeRange", "flat"),
     "iCaptureProbabilityModifier": ("capture", "probability", "flat"),
     "iCaptureResistanceModifier": ("capture", "resistance", "flat"),
-    "iInsidiousness": ("espionage", "insidiousness", "flat"),
-    "iInvestigation": ("espionage", "investigation", "flat"),
+    # UNDERWORLD, not espionage (owner): the in-city criminal contest -- a criminal's stealth against an
+    # investigator's catch. The carriers say it plainly (UNITCOMBAT_CRIMINAL / UNITCOMBAT_LAW_ENFORCEMENT).
+    # Same filing as curate_building / curate_specialist / curate_promotion.
+    "iInsidiousness": ("underworld", "insidiousness", "flat"),
+    "iInvestigation": ("underworld", "investigation", "flat"),
     "iNumHealSupport": ("heal", "support", "flat"),
     "iSelfHealModifier": ("heal", "selfModifier", "percent"),   # mirror curate_promotion FAMILIES (unit self-heal %)
     "iDropRange": ("movement", "dropRange", "flat"),

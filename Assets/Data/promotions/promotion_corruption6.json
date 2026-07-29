@@ -1,16 +1,16 @@
 {
  "type": "PROMOTION_CORRUPTION6",
- "espionage": {
-  "unit": {
-   "insidiousness": {
-    "flat": 6
-   }
-  }
- },
  "combat": {
   "unit": {
    "stealth": {
     "percent": 5
+   }
+  }
+ },
+ "underworld": {
+  "unit": {
+   "insidiousness": {
+    "flat": 6
    }
   }
  },

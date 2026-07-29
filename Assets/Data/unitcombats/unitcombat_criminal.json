@@ -1,12 +1,5 @@
 {
  "type": "UNITCOMBAT_CRIMINAL",
- "espionage": {
-  "unit": {
-   "insidiousness": {
-    "flat": 1
-   }
-  }
- },
  "combat": {
   "unit": {
    "attack": {
@@ -35,6 +28,13 @@
    },
    "resistance": {
     "flat": -10
+   }
+  }
+ },
+ "underworld": {
+  "unit": {
+   "insidiousness": {
+    "flat": 1
    }
   }
  },

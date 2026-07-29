@@ -1,16 +1,16 @@
 {
  "type": "PROMOTION_CORRUPTION10",
- "espionage": {
-  "unit": {
-   "insidiousness": {
-    "flat": 10
-   }
-  }
- },
  "combat": {
   "unit": {
    "stealthStrikes": {
     "flat": 1
+   }
+  }
+ },
+ "underworld": {
+  "unit": {
+   "insidiousness": {
+    "flat": 10
    }
   }
  },

@@ -41,13 +41,6 @@
    }
   }
  },
- "espionage": {
-  "unit": {
-   "insidiousness": {
-    "flat": 25
-   }
-  }
- },
  "movement": {
   "unit": {
    "flat": 2
@@ -101,6 +94,13 @@
   "unit": {
    "probability": {
     "flat": 10
+   }
+  }
+ },
+ "underworld": {
+  "unit": {
+   "insidiousness": {
+    "flat": 25
    }
   }
  },

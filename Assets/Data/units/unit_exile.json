@@ -33,13 +33,6 @@
    }
   }
  },
- "espionage": {
-  "unit": {
-   "insidiousness": {
-    "flat": 2
-   }
-  }
- },
  "movement": {
   "unit": {
    "flat": 1
@@ -67,6 +60,13 @@
  "withdrawal": {
   "unit": {
    "percent": 5
+  }
+ },
+ "underworld": {
+  "unit": {
+   "insidiousness": {
+    "flat": 2
+   }
   }
  },
  "costs": {

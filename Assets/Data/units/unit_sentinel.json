@@ -49,13 +49,6 @@
    }
   }
  },
- "espionage": {
-  "unit": {
-   "investigation": {
-    "flat": 200
-   }
-  }
- },
  "movement": {
   "unit": {
    "flat": 5
@@ -111,6 +104,13 @@
   "unit": {
    "probability": {
     "flat": 40
+   }
+  }
+ },
+ "underworld": {
+  "unit": {
+   "investigation": {
+    "flat": 200
    }
   }
  },

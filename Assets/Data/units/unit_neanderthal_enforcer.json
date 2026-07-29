@@ -38,13 +38,6 @@
    }
   }
  },
- "espionage": {
-  "unit": {
-   "investigation": {
-    "flat": 5
-   }
-  }
- },
  "movement": {
   "unit": {
    "flat": 1
@@ -72,6 +65,13 @@
  "strength": {
   "unit": {
    "flat": 4
+  }
+ },
+ "underworld": {
+  "unit": {
+   "investigation": {
+    "flat": 5
+   }
   }
  },
  "PROPERTY_CRIME": {

@@ -32,13 +32,6 @@
    }
   }
  },
- "espionage": {
-  "unit": {
-   "investigation": {
-    "flat": 30
-   }
-  }
- },
  "buildRate": {
   "self": {
    "percent": [
@@ -104,6 +97,13 @@
   "unit": {
    "probability": {
     "flat": 12
+   }
+  }
+ },
+ "underworld": {
+  "unit": {
+   "investigation": {
+    "flat": 30
    }
   }
  },

@@ -128,8 +128,12 @@ FAMILIES = {
     "iCaptureProbabilityModifierChange":   ("capture", "probability", "flat"),
     "iCaptureResistanceModifierChange":    ("capture", "resistance", "flat"),
     "iPoisonProbabilityModifierChange":    ("poison", "probability", "flat"),  # afflictions (inert), kept-for-now
-    "iInsidiousnessChange":         ("espionage", "insidiousness", "flat"),    # revolutions (owner)
-    "iInvestigationChange":         ("espionage", "investigation", "flat"),    # crime (owner)
+    # UNDERWORLD, not espionage (owner): the in-city criminal contest -- a criminal's stealth vs an
+    # investigator's catch (CvUnit::doInsidiousnessVSInvestigationCheck). Espionage never "becomes"
+    # insidiousness; they are separate mechanics that happen to be carried by some of the same units.
+    # Filed the same way by curate_building.py and curate_specialist.py -- this was the odd one out.
+    "iInsidiousnessChange":         ("underworld", "insidiousness", "flat"),
+    "iInvestigationChange":         ("underworld", "investigation", "flat"),
     "iRevoltProtection":            ("revoltProtection", None, "percent"),
     "iPillageChange":               ("pillage", None, "flat"),
     "iSurvivorChance":              ("survivor", None, "percent"),

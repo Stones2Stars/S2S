@@ -18,13 +18,6 @@
  "allowed": {
   "empire": 5
  },
- "espionage": {
-  "unit": {
-   "investigation": {
-    "flat": 15
-   }
-  }
- },
  "buildRate": {
   "self": {
    "percent": [
@@ -113,6 +106,13 @@
   "unit": {
    "probability": {
     "flat": 10
+   }
+  }
+ },
+ "underworld": {
+  "unit": {
+   "investigation": {
+    "flat": 15
    }
   }
  },
