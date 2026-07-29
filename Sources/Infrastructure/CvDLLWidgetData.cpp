@@ -8,6 +8,7 @@
 #include "CvBuildingInfo.h"
 #include "CvImprovementInfo.h"
 #include "CvBonusInfo.h"
+#include "CvHandicapInfo.h"
 #include "Engine/CvCity.h"
 #include "Engine/CvDeal.h"
 #include "CvDLLWidgetData.h"
@@ -4078,7 +4079,8 @@ void CvDLLWidgetData::parseContactCivHelp(CvWidgetDataStruct &widgetDataStruct, 
 		{
 			if (bFinancialProWar || !bFinancesOpposeWar)
 			{
-				fOverallWarPercentage = (float)std::min(100, GC.getHandicapInfo(GC.getGame().getHandicapType()).getAIDeclareWarProb());
+					const CvHandicapInfo& kHandicap = GC.getHandicapInfo(GC.getGame().getHandicapType());
+					fOverallWarPercentage = (float)std::min(100, kHandicap.getDiplomacy(DIPLOMACY_DECLARE_WAR, CASC_SCOPE_EMPIRE, true));
 			}
 		}
 

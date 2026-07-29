@@ -3184,7 +3184,7 @@ void CvUnitAI::AI_attackMove()
 		}
 		else if (area()->getAreaAIType(getTeam()) != AREAAI_DEFENSIVE
 		&& (area()->getCitiesPerPlayer(BARBARIAN_PLAYER) > 0 || area()->getCitiesPerPlayer(NEANDERTHAL_PLAYER) > 0)
-		&& getGroup()->getNumUnits() >= GC.getHandicapInfo(GC.getGame().getHandicapType()).getBarbarians(BARBARIANS_DEFENDERS, CASC_SCOPE_WORLD)
+		&& getGroup()->getNumUnits() >= GC.getHandicapInfo(GC.getGame().getHandicapType()).getBarbarians(BARBARIANS_DEFENDERS, CASC_SCOPE_WORLD) / 100
 		&& AI_goToTargetBarbCity(10)) // Deal with Barbarian pest
 		{
 			return;

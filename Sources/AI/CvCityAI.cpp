@@ -6874,7 +6874,7 @@ int CvCityAI::AI_neededDefenders()
 		return std::max
 		(
 			1,
-			GC.getHandicapInfo(GC.getGame().getHandicapType()).getBarbarians(BARBARIANS_DEFENDERS, CASC_SCOPE_WORLD)
+			GC.getHandicapInfo(GC.getGame().getHandicapType()).getBarbarians(BARBARIANS_DEFENDERS, CASC_SCOPE_WORLD) / 100
 			+ (getPopulation() + 2) / 7
 		);
 	}
