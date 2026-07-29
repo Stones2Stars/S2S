@@ -360,7 +360,7 @@ namespace
 			{
 				continue;
 			}
-			const std::vector<TerrainStructs>& terraformRows = pBuild->getTerrainStructs();
+			const std::vector<TerrainStructs>& terraformRows = pBuild->getProduces().terraformRows;
 			for (size_t iRow = 0; iRow < terraformRows.size(); ++iRow)
 			{
 				rp_landRelated(rp_infoForBucket(EDGEB_TECHS, (int)terraformRows[iRow].ePrereqTech), EDGEB_BUILDS, iBuild);

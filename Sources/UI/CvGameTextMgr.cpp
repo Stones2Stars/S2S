@@ -1092,7 +1092,7 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, 
 				szString.append(
 					gDLL->getText(
 						modifier.second == InfoValuation::keyedCombat(pUnit->getUnitInfo().getModifiers(), InfoValuation::COMBAT_TARGET_UNIT, modifier.first, COMBAT_DEFENSE) ? "TXT_KEY_UNITHELP_MOD_VS_TYPE" : "TXT_KEY_UNITHELP_ATTACK_MOD_VS_CLASS",
-						modifier.second, CvWString(GC.getUnitInfo(modifier.first).getType()).c_str(), GC.getUnitInfo(modifier.first).getTextKeyWide()
+						modifier.second, CvWString(GC.getUnitInfo((UnitTypes)modifier.first).getType()).c_str(), GC.getUnitInfo((UnitTypes)modifier.first).getTextKeyWide()
 					)
 				);
 			}
@@ -1110,7 +1110,7 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, 
 					bFirst = false;
 				}
 				szString.append(gDLL->getText("TXT_KEY_UNITHELP_DEFENSE_MOD_VS_CLASS", modifier.second,
-					CvWString(GC.getUnitInfo(modifier.first).getType()).c_str(), GC.getUnitInfo(modifier.first).getTextKeyWide()));
+					CvWString(GC.getUnitInfo((UnitTypes)modifier.first).getType()).c_str(), GC.getUnitInfo((UnitTypes)modifier.first).getTextKeyWide()));
 			}
 
 			bFirst = true;
@@ -1365,7 +1365,7 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, 
 						szString.append(L", ");
 					}
 
-					szString.append(gDLL->getText("TXT_KEY_UNITHELP_COMBAT_FLANKING_STRIKES", modifier.second, GC.getUnitInfo(modifier.first).getDescription()));
+					szString.append(gDLL->getText("TXT_KEY_UNITHELP_COMBAT_FLANKING_STRIKES", modifier.second, GC.getUnitInfo((UnitTypes)modifier.first).getDescription()));
 				}
 			}
 
@@ -5136,8 +5136,6 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
 				&& (pPlot->getImprovementType() == NO_IMPROVEMENT || !bonus.isProvidedByImprovementType(pPlot->getImprovementType())))
 				{
 					bool bKnowsValid = false;
-					TechTypes eMostRecentObsoletingTech = NO_TECH;
-					int iMostRecentX = 0;
 					TechTypes eClosestUnlockingTech = NO_TECH;
 					int iClosestX = MAX_INT;
 
@@ -5153,17 +5151,6 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
 							{
 								const CvBuildInfo& kBuild = GC.getBuildInfo(eBuild);
 
-								const TechTypes eObsoleteTech = kBuild.getObsoleteTech();
-
-								if (eObsoleteTech != NO_TECH && GET_TEAM(eActiveTeam).isHasTech(eObsoleteTech))
-								{
-									if (GC.getTechInfo(eObsoleteTech).getGridX() > iMostRecentX)
-									{
-										iMostRecentX = GC.getTechInfo(eObsoleteTech).getGridX();
-										eMostRecentObsoletingTech = eObsoleteTech;
-									}
-									continue;
-								}
 								const TechTypes eTechPrereq = kBuild.getTechPrereq();
 
 								if (eTechPrereq == NO_TECH || GET_TEAM(eActiveTeam).isHasTech(eTechPrereq))
@@ -5206,12 +5193,6 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
 						if (eClosestUnlockingTech != NO_TECH)
 						{
 							szString.append(gDLL->getText("TXT_KEY_PLOT_RESEARCH", GC.getTechInfo(eClosestUnlockingTech).getTextKeyWide()));
-						}
-						else if (eMostRecentObsoletingTech != NO_TECH)
-						{
-							szString.append(gDLL->getText("TXT_KEY_BUILDINGHELP_OBSOLETE_WITH",
-								CvWString(GC.getTechInfo(eMostRecentObsoletingTech).getType()).GetCString(),
-								GC.getTechInfo(eMostRecentObsoletingTech).getTextKeyWide()));
 						}
 					}
 				}
@@ -13004,7 +12985,7 @@ void CvGameTextMgr::setBasicUnitHelpWithCity(CvWStringBuffer &szBuffer, UnitType
 			szBuffer.append(
 				gDLL->getText(
 					modifier.second == InfoValuation::keyedCombat(kUnit.getModifiers(), InfoValuation::COMBAT_TARGET_UNIT, modifier.first, COMBAT_DEFENSE) ? "TXT_KEY_UNITHELP_MOD_VS_TYPE" : "TXT_KEY_UNITHELP_ATTACK_MOD_VS_CLASS",
-					modifier.second, CvWString(GC.getUnitInfo(modifier.first).getType()).c_str(), GC.getUnitInfo(modifier.first).getTextKeyWide()
+					modifier.second, CvWString(GC.getUnitInfo((UnitTypes)modifier.first).getType()).c_str(), GC.getUnitInfo((UnitTypes)modifier.first).getTextKeyWide()
 				)
 			);
 		}
@@ -13024,7 +13005,7 @@ void CvGameTextMgr::setBasicUnitHelpWithCity(CvWStringBuffer &szBuffer, UnitType
 				bFirst = false;
 			}
 			szBuffer.append(gDLL->getText("TXT_KEY_UNITHELP_DEFENSE_MOD_VS_CLASS", modifier.second,
-				CvWString(GC.getUnitInfo(modifier.first).getType()).c_str(), GC.getUnitInfo(modifier.first).getTextKeyWide()));
+				CvWString(GC.getUnitInfo((UnitTypes)modifier.first).getType()).c_str(), GC.getUnitInfo((UnitTypes)modifier.first).getTextKeyWide()));
 		}
 
 		bFirst = true;
@@ -13254,7 +13235,7 @@ void CvGameTextMgr::setBasicUnitHelpWithCity(CvWStringBuffer &szBuffer, UnitType
 				{
 					szBuffer.append(L", ");
 				}
-				szBuffer.append(gDLL->getText("TXT_KEY_UNITHELP_COMBAT_FLANKING_STRIKES", modifier.second, GC.getUnitInfo(modifier.first).getDescription()));
+				szBuffer.append(gDLL->getText("TXT_KEY_UNITHELP_COMBAT_FLANKING_STRIKES", modifier.second, GC.getUnitInfo((UnitTypes)modifier.first).getDescription()));
 			}
 		}
 
@@ -17548,7 +17529,7 @@ void CvGameTextMgr::setBuildingHelp(CvWStringBuffer &szBuffer, const BuildingTyp
 				szFirstBuffer.Format(L"%s%c%d%s", NEWLINE, gDLL->getSymbolID(BULLET_CHAR), abs(modifier.second),
 					(modifier.second > 0 ? gDLL->getText("TXT_KEY_UNITHELP_CLASS_PRODUCTION_FAST_MOD") : gDLL->getText("TXT_KEY_UNITHELP_CLASS_PRODUCTION_SLOW_MOD")).c_str());
 
-				szUnit.Format(L"<link=%s>%s</link>", CvWString(GC.getUnitInfo(modifier.first).getType()).c_str(), GC.getUnitInfo(modifier.first).getDescription());
+				szUnit.Format(L"<link=%s>%s</link>", CvWString(GC.getUnitInfo((UnitTypes)modifier.first).getType()).c_str(), GC.getUnitInfo((UnitTypes)modifier.first).getDescription());
 
 				setListHelp(szBuffer, szFirstBuffer, szUnit, L", ", (modifier.second != iLast));
 				iLast = modifier.second;
@@ -21882,7 +21863,7 @@ void CvGameTextMgr::buildImprovementString(CvWStringBuffer &szBuffer, TechTypes 
 	{
 		if (kBuild.getRoute() == NO_ROUTE || GC.getGame().isOption(GAMEOPTION_ADVANCED_ROUTES) || GC.getRouteInfo((RouteTypes)kBuild.getRoute()).isSeaTunnel())
 		{
-			foreach_(const TerrainStructs& kTerrainStruct, kBuild.getTerrainStructs())
+			foreach_(const TerrainStructs& kTerrainStruct, kBuild.getProduces().terraformRows)
 			{
 				if (kTerrainStruct.ePrereqTech == eTech)
 				{
@@ -21914,15 +21895,7 @@ void CvGameTextMgr::buildImprovementString(CvWStringBuffer &szBuffer, TechTypes 
 
 		if (GC.getGame().getActiveTeam() != NO_TEAM)
 		{
-			if (kBuild.getObsoleteTech() != NO_TECH)
-			{
-				if (GET_TEAM(GC.getGame().getActiveTeam()).isHasTech(kBuild.getObsoleteTech()))
-				{
-					szBuffer.append(gDLL->getText("TXT_KEY_TECHHELP_OBSOLETES", CvWString(kBuild.getType()).c_str(), kBuild.getTextKeyWide()));
-				}
-				else szBuffer.append(gDLL->getText("TXT_KEY_MISC_CAN_BUILD_IMPROVEMENT", kBuild.getTextKeyWide()));
-			}
-			else szBuffer.append(gDLL->getText("TXT_KEY_MISC_CAN_BUILD_IMPROVEMENT", kBuild.getTextKeyWide()));
+			szBuffer.append(gDLL->getText("TXT_KEY_MISC_CAN_BUILD_IMPROVEMENT", kBuild.getTextKeyWide()));
 		}
 		else szBuffer.append(gDLL->getText("TXT_KEY_MISC_CAN_BUILD_IMPROVEMENT", kBuild.getTextKeyWide()));
 	}
@@ -22606,11 +22579,6 @@ void CvGameTextMgr::setUnitCombatHelp(CvWStringBuffer& szBuffer, UnitCombatTypes
 		}
 	}
 
-	if (info.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100 != 0)
-	{
-		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_MOVE", info.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100));
-	}
 
 	if (info.getMoveDiscountChange() != 0)
 	{
@@ -22715,11 +22683,6 @@ void CvGameTextMgr::setUnitCombatHelp(CvWStringBuffer& szBuffer, UnitCombatTypes
 		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_BOMBARD", info.getBombardRateChange()));
 	}
 
-	if (info.getScalar(SCALAR_FIRST_STRIKES, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100 != 0)
-	{
-		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_FIRST_STRIKE", info.getScalar(SCALAR_FIRST_STRIKES, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100));
-	}
 
 	if (info.getChanceFirstStrikesChange() != 0)
 	{
@@ -22732,38 +22695,9 @@ void CvGameTextMgr::setUnitCombatHelp(CvWStringBuffer& szBuffer, UnitCombatTypes
 		szBuffer.append(NEWLINE);
 		szBuffer.append(gDLL->getText("TXT_KEY_UNITHELP_SELF_HEAL_NONE"));
 	}
-	else if (info.getHealModifier(HEAL_SELF_MODIFIER, CASC_SCOPE_UNIT) != 0)
-	{
-		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_UNITHELP_SELF_HEAL", info.getHealModifier(HEAL_SELF_MODIFIER, CASC_SCOPE_UNIT)));
-	}
 
-	if (info.getFlatHeal(HEAL_ENEMY_TERRITORY, CASC_SCOPE_UNIT) / 100 != 0)
-	{
-		szBuffer.append(NEWLINE);
 
-		if (info.isSpy())
-			szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_INSTIGATE_SPY", info.getFlatHeal(HEAL_ENEMY_TERRITORY, CASC_SCOPE_UNIT) / 100));
-		else szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_HEALS_EXTRA", info.getFlatHeal(HEAL_ENEMY_TERRITORY, CASC_SCOPE_UNIT) / 100) + gDLL->getText("TXT_KEY_PROMOTIONHELP_ENEMY_LANDS"));
-	}
 
-	if (info.getFlatHeal(HEAL_NEUTRAL_TERRITORY, CASC_SCOPE_UNIT) / 100 != 0)
-	{
-		szBuffer.append(NEWLINE);
-
-		if (info.isSpy())
-			szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_INSTIGATE2_SPY", info.getFlatHeal(HEAL_NEUTRAL_TERRITORY, CASC_SCOPE_UNIT) / 100));
-		else szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_HEALS_EXTRA", info.getFlatHeal(HEAL_NEUTRAL_TERRITORY, CASC_SCOPE_UNIT) / 100) + gDLL->getText("TXT_KEY_PROMOTIONHELP_NEUTRAL_LANDS"));
-	}
-
-	if (info.getFlatHeal(HEAL_FRIENDLY_TERRITORY, CASC_SCOPE_UNIT) / 100 != 0)
-	{
-		szBuffer.append(NEWLINE);
-
-		if (info.isSpy())
-			szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_POISON_SPY", info.getFlatHeal(HEAL_FRIENDLY_TERRITORY, CASC_SCOPE_UNIT) / 100));
-		else szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_HEALS_EXTRA", info.getFlatHeal(HEAL_FRIENDLY_TERRITORY, CASC_SCOPE_UNIT) / 100) + gDLL->getText("TXT_KEY_PROMOTIONHELP_FRIENDLY_LANDS"));
-	}
 
 	if (info.getNumHealSupport() != 0)
 	{
@@ -22771,23 +22705,8 @@ void CvGameTextMgr::setUnitCombatHelp(CvWStringBuffer& szBuffer, UnitCombatTypes
 		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_HEAL_SUPPORT", info.getNumHealSupport()));
 	}
 
-	if (info.getFlatHeal(HEAL_SAME_TILE, CASC_SCOPE_UNIT) / 100 != 0)
-	{
-		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_HEALS_SAME", info.getFlatHeal(HEAL_SAME_TILE, CASC_SCOPE_UNIT) / 100) + gDLL->getText("TXT_KEY_PROMOTIONHELP_DAMAGE_TURN"));
-	}
 
-	if (info.getFlatHeal(HEAL_ADJACENT_TILE, CASC_SCOPE_UNIT) / 100 != 0)
-	{
-		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_HEALS_ADJACENT", info.getFlatHeal(HEAL_ADJACENT_TILE, CASC_SCOPE_UNIT) / 100) + gDLL->getText("TXT_KEY_PROMOTIONHELP_DAMAGE_TURN"));
-	}
 
-	if (info.getCombatModifier(COMBAT_AMOUNT, CASC_SCOPE_UNIT) != 0)
-	{
-		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_STRENGTH", info.getCombatModifier(COMBAT_AMOUNT, CASC_SCOPE_UNIT)));
-	}
 
 	if (info.getCombatModifierPerSizeMoreChange() != 0)
 	{
@@ -22813,29 +22732,9 @@ void CvGameTextMgr::setUnitCombatHelp(CvWStringBuffer& szBuffer, UnitCombatTypes
 		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_UNIT_COMBAT_MOD_PER_VOLUME_LESS", info.getCombatModifierPerVolumeLessChange()));
 	}
 
-	if (info.getCombatModifier(COMBAT_CITY_ATTACK, CASC_SCOPE_UNIT) != 0)
-	{
-		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_CITY_ATTACK", info.getCombatModifier(COMBAT_CITY_ATTACK, CASC_SCOPE_UNIT)));
-	}
 
-	if (info.getCombatModifier(COMBAT_CITY_DEFENSE, CASC_SCOPE_UNIT) != 0)
-	{
-		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_CITY_DEFENSE", info.getCombatModifier(COMBAT_CITY_DEFENSE, CASC_SCOPE_UNIT)));
-	}
 
-	if (info.getCombatModifier(COMBAT_HILLS_ATTACK, CASC_SCOPE_UNIT) != 0)
-	{
-		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_UNITHELP_HILLS_ATTACK", info.getCombatModifier(COMBAT_HILLS_ATTACK, CASC_SCOPE_UNIT)));
-	}
 
-	if (info.getCombatModifier(COMBAT_HILLS_DEFENSE, CASC_SCOPE_UNIT) != 0)
-	{
-		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_HILLS_DEFENSE", info.getCombatModifier(COMBAT_HILLS_DEFENSE, CASC_SCOPE_UNIT)));
-	}
 
 	if (info.getHillsWorkPercent() != 0)
 	{
@@ -22906,35 +22805,10 @@ void CvGameTextMgr::setUnitCombatHelp(CvWStringBuffer& szBuffer, UnitCombatTypes
 		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_CELEBRITY", (skillCelebrity(info.getSkills()) ? 1 : 0)));
 	}
 
-	if (info.getFlatCollateral(COLLATERAL_LIMIT, CASC_SCOPE_UNIT) / 100 != 0)
-	{
-		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_COLLATERAL_LIMIT_CHANGE", info.getFlatCollateral(COLLATERAL_LIMIT, CASC_SCOPE_UNIT) / 100));
-	}
 
-	if (info.getFlatCollateral(COLLATERAL_MAX_UNITS, CASC_SCOPE_UNIT) / 100 != 0)
-	{
-		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_MAX_UNITS_CHANGE", info.getFlatCollateral(COLLATERAL_MAX_UNITS, CASC_SCOPE_UNIT) / 100));
-	}
 
-	if (info.getFlatCombat(COMBAT_LIMIT, CASC_SCOPE_UNIT) / 100 != 0)
-	{
-		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_COMBAT_LIMIT", info.getFlatCombat(COMBAT_LIMIT, CASC_SCOPE_UNIT) / 100));
-	}
 
-	if (info.getMovement(MOVEMENT_DROP_RANGE, CASC_SCOPE_UNIT) / 100 != 0)
-	{
-		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_EXTRA_DROP_RANGE", info.getMovement(MOVEMENT_DROP_RANGE, CASC_SCOPE_UNIT) / 100));
-	}
 
-	if (info.getScalar(SCALAR_SURVIVOR, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT) != 0)
-	{
-		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_SURVIVOR", info.getScalar(SCALAR_SURVIVOR, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT)));
-	}
 
 	if (info.getVictoryAdjacentHeal())
 	{
@@ -23049,17 +22923,7 @@ void CvGameTextMgr::setUnitCombatHelp(CvWStringBuffer& szBuffer, UnitCombatTypes
 		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_POISON_PROB", info.getPoisonProbabilityModifierChange()));
 	}
 
-	if (info.getCapture(CAPTURE_PROBABILITY, CASC_SCOPE_UNIT) / 100 != 0)
-	{
-		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_UNITHELP_CAPTURE_PROBABILITY_MODIFIER", info.getCapture(CAPTURE_PROBABILITY, CASC_SCOPE_UNIT) / 100));
-	}
 
-	if (info.getCapture(CAPTURE_RESISTANCE, CASC_SCOPE_UNIT) / 100 != 0)
-	{
-		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_UNITHELP_CAPTURE_RESISTANCE_MODIFIER", info.getCapture(CAPTURE_RESISTANCE, CASC_SCOPE_UNIT) / 100));
-	}
 
 	if (info.getPeaksWorkPercent() != 0)
 	{
@@ -23554,6 +23418,16 @@ void CvGameTextMgr::setUnitCombatHelp(CvWStringBuffer& szBuffer, UnitCombatTypes
 	//Propery Manipulators
 	if (info.getPropertyManipulators())
 		info.getPropertyManipulators()->buildDisplayString(szBuffer);
+
+	// The structured entry list renders these families itself -- magnitude, unit, target, scope,
+	// per-scaler and conditions all come off the compiled entry, so there is no composer to write.
+	appendEntryLines(szBuffer, info, MODFAM_COMBAT);
+	appendEntryLines(szBuffer, info, MODFAM_HEAL);
+	appendEntryLines(szBuffer, info, MODFAM_CAPTURE);
+	appendEntryLines(szBuffer, info, MODFAM_COLLATERAL);
+	appendEntryLines(szBuffer, info, MODFAM_MOVEMENT);
+	appendEntryLines(szBuffer, info, MODFAM_FIRST_STRIKE);
+
 }
 
 void CvGameTextMgr::appendEntryLines(CvWStringBuffer& szBuffer, const CvInfo& info, ModifierFamily eFamily)

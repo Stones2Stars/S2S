@@ -7406,8 +7406,7 @@ bool CvPlayer::canBuild(const CvPlot* pPlot, BuildTypes eBuild, bool bTestVisibl
 
 	const CvBuildInfo& kBuild = GC.getBuildInfo(eBuild);
 
-	if (kBuild.isDisabled()
-	||	kBuild.getObsoleteTech() != NO_TECH && GET_TEAM(getTeam()).isHasTech(kBuild.getObsoleteTech()))
+	if (kBuild.isDisabled())
 	{
 		return false;
 	}
@@ -7441,7 +7440,7 @@ bool CvPlayer::canBuild(const CvPlot* pPlot, BuildTypes eBuild, bool bTestVisibl
 					}
 				}
 				// terrain is similar to feature; can't build if don't have tech, etc, only diff is looping thru terrain structs because that's how we roll
-				foreach_(const TerrainStructs& kTerrainStruct, kBuild.getTerrainStructs())
+				foreach_(const TerrainStructs& kTerrainStruct, kBuild.getProduces().terraformRows)
 				{
 					const TerrainTypes eTerrain = kTerrainStruct.eTerrain;
 					if (

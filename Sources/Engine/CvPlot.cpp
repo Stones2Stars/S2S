@@ -3444,7 +3444,7 @@ int CvPlot::getBuildTime(BuildTypes eBuild) const
 	}
 
 	const TerrainTypes eTerrain = getTerrainType();
-	foreach_(const TerrainStructs& kTerrainStruct, kBuild.getTerrainStructs())
+	foreach_(const TerrainStructs& kTerrainStruct, kBuild.getProduces().terraformRows)
 	{
 		if (kTerrainStruct.eTerrain == eTerrain)
 		{

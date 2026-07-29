@@ -11389,10 +11389,8 @@ int CvCityAI::AI_countNumImprovableBonuses(bool bIncludeNeutral, TechTypes eExtr
 						const CvBuildInfo& kBuild = GC.getBuildInfo(itr->second);
 
 						//	Koshling - not checking if eExtraTech obsoletes the build since we ARE checking is ENABLES it, and it
-						//	makes no sense for the same tech to boh enable and obsolete a build.  However, we DO need to check that
-						//	we do not ALREADY have an obsoleting tech
-						if (kBuild.getTechPrereq() == eExtraTech
-						&& (kBuild.getObsoleteTech() == NO_TECH || !GET_TEAM(getTeam()).isHasTech(kBuild.getObsoleteTech())))
+						//	makes no sense for the same tech to boh enable and obsolete a build.
+						if (kBuild.getTechPrereq() == eExtraTech)
 						{
 							iCount++;
 							break;

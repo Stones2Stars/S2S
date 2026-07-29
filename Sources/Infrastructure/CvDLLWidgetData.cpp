@@ -2892,7 +2892,7 @@ void CvDLLWidgetData::parseActionHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 							}
 						}
 						// Check terrain prereqs against current plot
-						foreach_(const TerrainStructs& kTerrainStruct, GC.getBuildInfo(eBuild).getTerrainStructs())
+						foreach_(const TerrainStructs& kTerrainStruct, GC.getBuildInfo(eBuild).getProduces().terraformRows)
 						{
 							const TerrainTypes eTerrain = kTerrainStruct.eTerrain;
 							if (eTerrain == pMissionPlot->getTerrainType()

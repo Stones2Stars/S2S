@@ -22,6 +22,7 @@
 class CounterSet;
 class CvCity;
 class CvDeal;
+class CvInfo;                 // appendEntryLines renders any info's compiled entries
 struct ConstructRequirement;
 class CvPopupInfo;
 class CvPlayer;
