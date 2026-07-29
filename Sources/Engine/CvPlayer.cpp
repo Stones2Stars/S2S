@@ -12734,11 +12734,12 @@ int CvPlayer::getCommerceRate(CommerceTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
 
-	if (m_abCommerceDirty[eIndex])
-	{
-		updateCommerce(eIndex, false);
-	}
-	return m_aiCommerceRate[eIndex] / 100;
+	// A read is a BARE FETCH: no dirty gate, no recompute-on-read (the retired ensure()
+	// protocol, superseded-ideas #14). The empire is this channel's RECEIVER, so its realized
+	// sum IS the answer -- one group read, indexed by the caller, /100 at the reader boundary.
+	int aCommerces[NUM_COMMERCE_TYPES];
+	getCommerces(aCommerces);
+	return aCommerces[eIndex] / 100;
 }
 
 int CvPlayer::getTotalCityBaseCommerceRate(CommerceTypes eIndex) const
