@@ -37,6 +37,9 @@
 #include "CvCascadeGather.h"
 #include "Enabler/CvBuildingEnabler.h"   // onCityCreated -- the per-city domain lifecycle start (enabler.md 7.1)
 #include "Enabler/CvUnitEnabler.h"
+#include "Enabler/CvEnablerKernel.h"     // EnablerKernel:: -- the operate/gate surface (only fwd-declared above)
+#include "Repos/InfoRepo.h"              // InfoRepo<> -- the per-type registry the id reads go through
+#include "Conditions/CvConditionEval.h"  // the CvCascadeEvalCtx DEFINITION (CvCascadeGather only forward-declares)
 #include "CvCascadeChannelRegistry.h"   // channelLookup -- the realized-yield group read's channel identity
 #include "CvInfoKinds.h"                // infoYieldFamily / CHANNEL_AMOUNT -- the YieldTypes -> channel family axis
 #include "Data/CvInfoValuation.h"       // realizedAtCity -- the ONE cross-scope roll-up the group reads fold through
@@ -3689,490 +3692,87 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 	// Process the building
 	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
 
+	// ⚖ WHAT THIS FUNCTION IS NOW. It used to be the maintainer for ~50 per-source accumulators, one `change*`
+	// per authored building field. Those fields no longer exist on the rebuilt info -- the values are compiled
+	// DEPOSITS the cascade folds per scope, so re-summing them into a city-side store would be a second,
+	// drifting copy of data the packages already hold ([DEC-accumulator-cut-uniform]).
+	// What legitimately remains is what is NOT a modifier deposit: the supply this building puts into the city's
+	// vicinity, the engine-side counters and caps, the cross-scope fan-out, and the announcement.
 	if (!bReligiously && kBuilding.isOrbitalInfrastructure())
 	{
 		owner.noteOrbitalInfrastructureCountDirty();
 	}
 
+	// The in-vicinity SUPPLY (json §5a `provides.bonuses`) -- not a deposit; it changes what the city HAS.
+	const CvProvides* pProvides = kBuilding.getProvides();
+	foreach_(const int iFreeBonus, pProvides->bonuses)
 	{
-		PROFILE("CvCity::processBuilding.part2");
-
-		const bool bChange = (iChange == 1);
-
-		const CvProvides* pProvides = kBuilding.getProvides();
-		foreach_(const int iFreeBonus, pProvides->bonuses)
-		{
-			const BonusTypes eFreeBonus = (BonusTypes)iFreeBonus;
-			const int iSuppliedDelta = pProvides->countOf(iFreeBonus) * iChange;
-			changeFreeBonus(eFreeBonus, iSuppliedDelta);
-			clearVicinityBonusCache(eFreeBonus);
-			clearRawVicinityBonusCache(eFreeBonus);
-			// the event carries the applied local DELTA (a city can hold several of a bonus locally --
-			// a presence-flip gate would hide the 1->2/2->1 transitions and undercount downstream)
-			emitVicinityBonusChanged(getID(), getOwner(), iFreeBonus, iSuppliedDelta);
-		}
-
-
-
-		changePopulationgrowthratepercentage(kBuilding.getPopulationgrowthratepercentage(), iChange == 1);
-
-		if (!bReligiously)
-		{
-			changeGreatPeopleRateModifier(kBuilding.getGreatPeopleRateModifier() * iChange);
-		}
-		changeMaxAirlift(kBuilding.getAirlift() * iChange);
-		changeAirModifier(kBuilding.getAirModifier() * iChange);
-		changeAirUnitCapacity(kBuilding.getAirUnitCapacity() * iChange);
-		changeNukeModifier(kBuilding.getNukeModifier() * iChange);
-		changeFreeSpecialist(kBuilding.getFreeSpecialist() * iChange);
-		changeMaintenanceModifier(kBuilding.getMaintenanceModifier() * iChange);
-		changeWarWearinessModifier(kBuilding.getWarWearinessModifier() * iChange);
-		changeHurryAngerModifier(kBuilding.getHurryAngerModifier() * iChange);
-		changeHealRate(kBuilding.getHealRateChange() * iChange);
-
-		if (kBuilding.getHealth() > 0)
-		{
-			changeBuildingGoodHealth(kBuilding.getHealth() * iChange);
-		}
-		else changeBuildingBadHealth(kBuilding.getHealth() * iChange);
-
-
-		if (kBuilding.getHappiness() > 0)
-		{
-			changeBuildingGoodHappiness(kBuilding.getHappiness() * iChange);
-		}
-		else changeBuildingBadHappiness(kBuilding.getHappiness() * iChange);
-
-
-		if (kBuilding.getReligionType() != NO_RELIGION)
-		{
-			changeStateReligionHappiness((ReligionTypes)kBuilding.getReligionType(), kBuilding.getStateReligionHappiness() * iChange);
-		}
-		changeMilitaryProductionModifier(kBuilding.getMilitaryProductionModifier() * iChange);
-		changeSpaceProductionModifier(kBuilding.getSpaceProductionModifier() * iChange);
-		changeTradeRouteModifier(kBuilding.getTradeRouteModifier() * iChange);
-		changeForeignTradeRouteModifier(kBuilding.getForeignTradeRouteModifier() * iChange);
-		changePowerCount(kBuilding.isPower() ? iChange : 0);
-		// (the four city-scope amenity verdicts are no longer counted here: this same choke point emits
-		// SEVT_BUILDING_PROCESSED, and the contexts' consumer folds the building's `amenities` off it)
-		changeRevIndexDistanceMod(kBuilding.getRevIdxDistanceModifier() * iChange);
+		const BonusTypes eFreeBonus = (BonusTypes)iFreeBonus;
+		const int iSuppliedDelta = pProvides->countOf(iFreeBonus) * iChange;
+		changeFreeBonus(eFreeBonus, iSuppliedDelta);
+		clearVicinityBonusCache(eFreeBonus);
+		clearRawVicinityBonusCache(eFreeBonus);
+		// the event carries the applied local DELTA (a city can hold several of a bonus locally --
+		// a presence-flip gate would hide the 1->2/2->1 transitions and undercount downstream)
+		emitVicinityBonusChanged(getID(), getOwner(), iFreeBonus, iSuppliedDelta);
 	}
-	for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
-	{
-		PROFILE("CvCity::processBuilding.Yields");
-		const YieldTypes eYieldX = static_cast<YieldTypes>(iI);
-		changeBuildingExtraYield(eYieldX, 100 * iChange * (kBuilding.getYieldChange(iI) + getBuildingYieldChange(eBuilding, eYieldX)));
-		changeRiverPlotYield(eYieldX, kBuilding.getRiverPlotYieldChange(iI) * iChange);
-		changeBaseYieldPerPopRate(eYieldX, kBuilding.getYieldPerPopChange(iI) * iChange);
 
-
-		changePowerYieldRateModifier(eYieldX, kBuilding.getPowerYieldModifier(iI) * iChange);
-	}
+	changeMaxAirlift(kBuilding.getAirlift() * iChange);
+	changeAirUnitCapacity(kBuilding.getAirUnitCapacity() * iChange);
+	changeMaintenanceModifier(kBuilding.getMaintenanceModifier(MAINTENANCE_AMOUNT, CASC_SCOPE_CITY) * iChange);
 
 	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 	{
-		PROFILE("CvCity::processBuilding.Commerces");
 		const CommerceTypes eCommerceX = static_cast<CommerceTypes>(iI);
-
-		changeCommercePerPopFromBuildings(eCommerceX, iChange * kBuilding.getCommercePerPopChange(iI));
-
+		// The player-side ledger legs stay: they are recompute-from-source stores the city PULLS, not
+		// per-building accumulators (state-repositories.md).
 		changeBuildingCommerceChange(eBuilding, eCommerceX, iChange * owner.getBuildingCommerceChange(eBuilding, eCommerceX));
-
-		changeBuildingCommerceModifier(eCommerceX, iChange * (kBuilding.getCommerceModifier(iI) + owner.getBuildingCommerceModifier(eBuilding, eCommerceX)));
-
-		changeCommerceHappinessPer(eCommerceX, kBuilding.getCommerceHappiness(iI) * iChange);
-	}
-
-	if (!bReligiously)
-	{
-		foreach_(const ReligionModifier& pair, kBuilding.getReligionChanges())
-		{
-			PROFILE("CvCity::processBuilding.Religions");
-			changeReligionInfluence(pair.first, pair.second * iChange);
-		}
+		changeBuildingCommerceModifier(eCommerceX, iChange * (kBuilding.getCommerceModifier(eCommerceX, CASC_SCOPE_CITY) + owner.getBuildingCommerceModifier(eBuilding, eCommerceX)));
 	}
 
 	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
 	{
-		PROFILE("CvCity::processBuilding.Specialists");
-
-		changeMaxSpecialistCount((SpecialistTypes)iI, (kBuilding.getSpecialistCount(iI) + GET_TEAM(getTeam()).getBuildingSpecialistChange(eBuilding, (SpecialistTypes)iI)) * iChange);
-		changeFreeSpecialistCount((SpecialistTypes)iI, kBuilding.getFreeSpecialistCount(iI) * iChange);
+		// The TEAM-granted slot count only; the building's own authored count is a deposit now.
+		changeMaxSpecialistCount((SpecialistTypes)iI, GET_TEAM(getTeam()).getBuildingSpecialistChange(eBuilding, (SpecialistTypes)iI) * iChange);
 	}
 
-	if (kBuilding.getNumHealUnitCombatTypes() > 0)
+	if (kBuilding.isZoneOfControl())
 	{
-		for (int iI = 0; iI < kBuilding.getNumHealUnitCombatTypes(); iI++)
-		{
-			changeHealUnitCombatTypeVolume((UnitCombatTypes)kBuilding.getHealUnitCombatType(iI).eUnitCombat, kBuilding.getHealUnitCombatType(iI).iHeal * iChange);
-		}
+		changeZoCCount(iChange);
 	}
-
-
-	{
-		PROFILE("CvCity::processBuilding.Part3");
-
-		foreach_(const UnitCombatModifier2& modifier, kBuilding.getUnitCombatExtraStrength())
-		{
-			changeUnitCombatExtraStrength(modifier.first, modifier.second * iChange);
-		}
-
-		changeAdjacentDamagePercent(kBuilding.getAdjacentDamagePercent() * iChange);
-		changeNumUnitFullHeal(kBuilding.getNumUnitFullHeal() * iChange);
-		changeNumPopulationEmployed(kBuilding.getNumPopulationEmployed() * iChange);
-		changeHealthPercentPerPopulation(kBuilding.getHealthPercentPerPopulation() * iChange);
-		changeHappinessPercentPerPopulation(kBuilding.getHappinessPercentPerPopulation() * iChange);
-
-
-	}
-
-	for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
-	{
-		PROFILE("CvCity::processBuilding.CombatInfos");
-
-		const UnitCombatTypes eCombatX = static_cast<UnitCombatTypes>(iI);
-
-		changeUnitCombatProductionModifier(eCombatX, kBuilding.getUnitCombatProdModifier(iI) * iChange);
-
-		if (!bReligiously)
-		{
-			//TB Defense Mod
-			changeUnitCombatDefenseAgainstModifierTotal(eCombatX, kBuilding.getUnitCombatDefenseAgainstModifier(iI) * iChange);
-		}
-	}
-	//TB Combat Mods (Buildings) end
-
-	//TB Building Tags
-	changeExtraLocalCaptureProbabilityModifier(kBuilding.getLocalCaptureProbabilityModifier() * iChange);
-	changeExtraLocalCaptureResistanceModifier(kBuilding.getLocalCaptureResistanceModifier() * iChange);
-
-	//TB Defense Mod
 	if (!bReligiously)
 	{
-		changeExtraLocalDynamicDefense(kBuilding.getLocalDynamicDefense() * iChange);
-		changeExtraRiverDefensePenalty(kBuilding.getRiverDefensePenalty() * iChange);
-		changeExtraMinDefense(kBuilding.getMinDefense() * iChange);
-		if (kBuilding.getBuildingDefenseRecoverySpeedModifier() > 0 && kBuilding.getDefenseModifier() > 0)
+		if (kBuilding.isProtectedCulture())
 		{
-			changeExtraBuildingDefenseRecoverySpeedModifier(kBuilding.getBuildingDefenseRecoverySpeedModifier() * iChange);
-			changeModifiedBuildingDefenseRecoverySpeedCap(kBuilding.getDefenseModifier() * iChange);
+			changeProtectedCultureCount(iChange > 0 ? 1 : -1);
 		}
-		changeExtraCityDefenseRecoverySpeedModifier(kBuilding.getCityDefenseRecoverySpeedModifier() * iChange);
-	}
-
-	foreach_(const TechModifier& modifier, kBuilding.getTechHappinessChanges())
-	{
-		changeBuildingHappinessFromTech(modifier.first, modifier.second * iChange);
-	}
-
-	foreach_(const TechModifier& modifier, kBuilding.getTechHealthChanges())
-	{
-		changeBuildingHealthFromTech(modifier.first, modifier.second * iChange);
-	}
-
-	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
-	{
-		const SpecialistTypes eSpecialistX = static_cast<SpecialistTypes>(iI);
-		for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
+		if (kBuilding.getWorkableRadius() > 0)
 		{
-			if (kBuilding.getLocalSpecialistYieldChange(eSpecialistX, (YieldTypes) iJ) != 0)
-			{
-				changeLocalSpecialistExtraYield(eSpecialistX, (YieldTypes)iJ, kBuilding.getLocalSpecialistYieldChange(eSpecialistX, (YieldTypes)iJ) * iChange);
-			}
-		}
-		for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
-		{
-			if (kBuilding.getLocalSpecialistCommerceChange(eSpecialistX, (CommerceTypes) iJ) != 0)
-			{
-				changeLocalSpecialistExtraCommerce(eSpecialistX, (CommerceTypes)iJ, kBuilding.getLocalSpecialistCommerceChange((SpecialistTypes)iI, (CommerceTypes)iJ) * iChange);
-			}
+			setWorkableRadiusOverride(iChange > 0 ? kBuilding.getWorkableRadius() : 0);
 		}
 	}
 
+	// The cross-scope fan-out: a team-shared building processes for every team member.
+	for (int iI = 0; iI < MAX_PLAYERS; iI++)
 	{
-		PROFILE("CvCity::processBuilding.Part4");
-
-		int iMinBuildingDefenseLevel = kBuilding.getNoEntryDefenseLevel();
-
-		if (!GC.getGame().isOption(GAMEOPTION_COMBAT_REALISTIC_SIEGE))
+		if (GET_PLAYER((PlayerTypes)iI).isAliveAndTeam(getTeam()) && (iI == getOwner() || kBuilding.isTeamShare()))
 		{
-			iMinBuildingDefenseLevel = 0;
-		}
-
-		if (iMinBuildingDefenseLevel > 0)
-		{
-			const int iCurrentMinDefenseLevel = getMinimumDefenseLevel();
-
-			if (iChange > 0)
-			{
-				if (iMinBuildingDefenseLevel > iCurrentMinDefenseLevel)
-				{
-					setMinimumDefenseLevel(iMinBuildingDefenseLevel);
-				}
-			}
-			else if (iMinBuildingDefenseLevel == iCurrentMinDefenseLevel)
-			{
-				int iNewMinDefenseLevel = 0;
-
-				foreach_(const BuildingTypes eTypeX, getHasBuildings())
-				{
-					if (!isDormantBuilding(eTypeX))
-					{
-						const int iLevel = GC.getBuildingInfo(eTypeX).getNoEntryDefenseLevel();
-
-						if (iLevel > iNewMinDefenseLevel)
-						{
-							iNewMinDefenseLevel = iLevel;
-						}
-					}
-				}
-				setMinimumDefenseLevel(iNewMinDefenseLevel);
-			}
-		}
-
-		if (kBuilding.isZoneOfControl())
-		{
-			changeZoCCount(iChange);
-		}
-
-		if (!bReligiously)
-		{
-			if (kBuilding.isProtectedCulture())
-			{
-				changeProtectedCultureCount(iChange > 0 ? 1 : -1);
-			}
-			if (kBuilding.getWorkableRadius() > 0)
-			{
-				setWorkableRadiusOverride(iChange > 0 ? kBuilding.getWorkableRadius() : 0);
-			}
-			if (kBuilding.isProvidesFreshWater())
-			{
-				changeFreshWater(iChange);
-			}
+			GET_PLAYER((PlayerTypes)iI).processBuilding(eBuilding, iChange, area(), bReligiously);
 		}
 	}
-	foreach_(const ImprovementModifier& pair, kBuilding.getImprovementFreeSpecialists())
-	{
-		changeImprovementFreeSpecialists(pair.first, pair.second * iChange);
-	}
-
-	foreach_(const BonusModifier& modifier, kBuilding.getBonusHealthChanges())
-	{
-		if (hasBonus(modifier.first))
-		{
-			if (modifier.second > 0)
-			{
-				changeBonusGoodHealth(modifier.second * iChange);
-			}
-			else
-			{
-				changeBonusBadHealth(modifier.second * iChange);
-			}
-		}
-	}
-
-	foreach_(const BonusModifier& modifier, kBuilding.getBonusHappinessChanges())
-	{
-		if (hasBonus(modifier.first))
-		{
-			if (modifier.second > 0)
-			{
-				changeBonusGoodHappiness(modifier.second * iChange);
-			}
-			else
-			{
-				changeBonusBadHappiness(modifier.second * iChange);
-			}
-		}
-	}
-
-	for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
-	{
-		PROFILE("CvCity::processBuilding.Bonuses2");
-		if (hasBonus((BonusTypes)iI))
-		{
-			if (kBuilding.getPowerBonus() == iI)
-			{
-				changePowerCount(iChange);
-			}
-
-			for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
-			{
-				changeBonusYieldRateModifier((YieldTypes)iJ, kBuilding.getBonusYieldModifier(iI, iJ) * iChange);
-
-				int iBonusChange = kBuilding.getBonusYieldChanges(iI, iJ);
-				if (hasVicinityBonus((BonusTypes)iI))
-				{
-					iBonusChange += kBuilding.getVicinityBonusYieldChanges(iI, iJ);
-				}
-				updateYieldRate(eBuilding, (YieldTypes)iJ, (getBuildingYieldChange(eBuilding, (YieldTypes)iJ) + iBonusChange) * iChange);
-			}
-			for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
-			{
-				changeBonusCommerceRateModifier((CommerceTypes)iJ, kBuilding.getBonusCommerceModifier(iI, iJ) * iChange);
-				changeBonusCommercePercentChanges((CommerceTypes)iJ, kBuilding.getBonusCommercePercentChanges(iI, iJ) * iChange);
-			}
-		}
-	}
-	foreach_(const TechArray& pair, kBuilding.getTechYieldChanges())
-	{
-		if (GET_TEAM(getTeam()).isHasTech(pair.first))
-		{
-			for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
-			{
-				changeBuildingExtraYield((YieldTypes)iI, iChange * pair.second[(YieldTypes)iI]);
-			}
-		}
-	}
-	foreach_(const TechArray& pair, kBuilding.getTechYieldModifiers())
-	{
-		if (GET_TEAM(getTeam()).isHasTech(pair.first))
-		{
-			for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
-			{
-			}
-		}
-	}
-	foreach_(const TechCommerceArray& pair, kBuilding.getTechCommerceChanges())
-	{
-		if (GET_TEAM(getTeam()).isHasTech(pair.first))
-		{
-			for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
-			{
-				changeBuildingCommerceTechChange((CommerceTypes)iI, iChange * pair.second[(CommerceTypes)iI]);
-			}
-		}
-	}
-	foreach_(const TechCommerceArray& pair, kBuilding.getTechCommerceModifiers())
-	{
-		if (GET_TEAM(getTeam()).isHasTech(pair.first))
-		{
-			for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
-			{
-				changeBuildingCommerceModifier((CommerceTypes)iI, iChange * pair.second[(CommerceTypes)iI]);
-			}
-		}
-	}
-	foreach_(const TerrainArray& pair, kBuilding.getTerrainYieldChanges())
-	{
-		YieldArray yields;
-
-		for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
-		{
-			yields[iI] = iChange * pair.second[iI];
-		}
-		changeTerrainYieldChanges(pair.first, yields);
-	}
-	foreach_(const PlotArray& pair, kBuilding.getPlotYieldChanges())
-	{
-		YieldArray yields;
-
-		for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
-		{
-			yields[iI] = iChange * pair.second[iI];
-		}
-		changePlotYieldChanges(pair.first, yields);
-	}
-	foreach_(const ImprovementArray& pair, kBuilding.getImprovementYieldChanges())
-	{
-		YieldArray yields;
-
-		for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
-		{
-			yields[iI] = iChange * pair.second[iI];
-		}
-		changeImprovementYieldChanges(pair.first, yields);
-	}
-
-	for (int iI = 0; iI < NUM_DOMAIN_TYPES; iI++)
-	{
-		changeDomainProductionModifier((DomainTypes)iI, kBuilding.getDomainProductionModifier(iI) * iChange);
-	}
-
-	foreach_(const UnitModifier2& modifier, kBuilding.getUnitProductionModifiers())
-	{
-		changeUnitProductionModifier(modifier.first, modifier.second * iChange);
-	}
-	foreach_(const BuildingModifier2& modifier, kBuilding.getBuildingProductionModifiers())
-	{
-		changeBuildingProductionModifier(modifier.first, modifier.second * iChange);
-	}
-	foreach_(const BuildingCommerce& kChange, kBuilding.getGlobalBuildingCommerceChanges())
-	{
-		for (int i = 0; i < NUM_COMMERCE_TYPES; i++)
-		{
-			owner.changeBuildingCommerceChange(kChange.first, (CommerceTypes)i, kChange.second[i] * iChange);
-		}
-	}
-	/*
-	for (int iI = 0; iI < GC.getNumImprovementInfos(); iI++)
-	{
-		for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
-		{
-			changeImprovementYieldChange(((ImprovementTypes)iI), ((YieldTypes)iJ), (kBuilding.getImprovementYieldChanges(iI, iJ) * iChange));
-		}
-	}
-	*/
-	{
-		PROFILE("CvCity::processBuilding.Part5");
-		updateExtraBuildingHappiness();
-		updateExtraBuildingHealth();
-
-		owner.changeAssets(kBuilding.getAssetValue() * iChange);
-
-		area()->changePower(getOwner(), kBuilding.getPowerValue() * iChange);
-		owner.changePower(kBuilding.getPowerValue() * iChange);
-
-		for (int iI = 0; iI < MAX_PLAYERS; iI++)
-		{
-			if (GET_PLAYER((PlayerTypes)iI).isAliveAndTeam(getTeam()) && (iI == getOwner() || kBuilding.isTeamShare()))
-			{
-				GET_PLAYER((PlayerTypes)iI).processBuilding(eBuilding, iChange, area(), bReligiously);
-			}
-		}
-	}
-
 	GET_TEAM(getTeam()).processBuilding(eBuilding, iChange, bReligiously);
 
 	if (!bReligiously)
 	{
-		PROFILE("CvCity::processBuilding.NotReligiouslyDisabling");
-
 		GC.getGame().processBuilding(eBuilding, iChange);
 
-		// Note: this whole section was pretty well qualified to be ignored on religious disabling.
-
-		//TB DEFENSEBUG:  The following building defense line is allowing buildings that are replaced to continue to function!
-		//We can only assume this entire section therefore gets around replaced buildings, particularly after a recalc.
-
-		changeBuildingBombardDefense(kBuilding.getBombardDefenseModifier() * iChange);
-
-		changeBaseGreatPeopleRate(kBuilding.getGreatPeopleRateChange() * iChange);
-
-		UnitTypes eGreatPeopleUnit = (UnitTypes)kBuilding.getGreatPeopleUnitType();
-
-		if (eGreatPeopleUnit != NO_UNIT)
-		{
-			changeGreatPeopleUnitRate(eGreatPeopleUnit, kBuilding.getGreatPeopleRateChange() * iChange);
-		}
-
-		const SpecialBuildingTypes eSpecialBuilding = kBuilding.getSpecialBuildingType();
+		const SpecialBuildingTypes eSpecialBuilding = (SpecialBuildingTypes)kBuilding.getSpecialBuildingType();
 		if (eSpecialBuilding != NO_SPECIALBUILDING)
 		{
 			owner.changeBuildingGroupCount(eSpecialBuilding, iChange);
 		}
-
 		owner.changeWondersScore(getWonderScore(eBuilding) * iChange);
-
-		for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
-		{
-			if (kBuilding.getBonusDefenseChanges(iI) != 0)
-			{
-				changeBonusDefenseChanges((BonusTypes)iI, kBuilding.getBonusDefenseChanges(iI) * iChange);
-			}
-		}
 	}
-	updateBuildingCommerce();
 
 	m_buildingSourcedPropertyCache.clear();
 
@@ -4182,8 +3782,6 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 	if (!bReligiously && GC.getGame().isOption(GAMEOPTION_RELIGION_DISABLING))
 	{
 		checkReligiousDisabling(eBuilding, owner);
-		updateReligionHappiness();
-		updateReligionCommerce();
 	}
 	setMaintenanceDirty(true);
 	setLayoutDirty(true);
