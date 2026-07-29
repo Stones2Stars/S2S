@@ -352,6 +352,15 @@ measure what survives, then cut the genuine residue. The classes below are the u
 - **② Realized-value reads** (`getYieldRate`/`…100`, `getCommerceRate`/`…TimesTimes100`, `getMaintenanceTimes100`,
   `getTotalDefense`/`getDefenseModifier`) — already answerable by the existing group reads; these are a consumer
   move, not new surface.
+- **③a The BONUS wellbeing pair is mid-cut and the remainder is named.** `CvCity::getBonusHappiness` (the
+  per-source decomposition) and `CvCity::processBonus` (the `m_iBonusGood/BadHappiness` accumulator maintainer)
+  lost their TRAIT leg: a trait's bonus-gated wellbeing is authored as a CONDITIONED deposit
+  (`happiness.empire.flat` + `enabled:{BONUS_X, min:1}`), so it is the cascade's to evaluate and re-summing it
+  into a legacy accumulator would double it once the channel lands. ⚠ The BUILDING leg still reads
+  `CvBuildingInfo::getBonusHappinessChanges` (a live keyed map) and still feeds the accumulators, so the pair is
+  a genuine partial state until the wellbeing channel cut takes it whole by
+  [DEC-accumulator-cut-uniform](../../architecture/decisions.md#dec-accumulator-cut-uniform). ⛔ Do NOT "repair"
+  it by re-adding a trait read — the decomposition earns no replacement getter (③ below).
 - **③ Per-SOURCE decomposition terms** (`getBuildingHappiness`, `getBonusGoodHealth`, `getFeatureGoodHappiness`,
   `getReligionHappiness`, `getSpecialistHappiness`, `getCivicHappiness`, `getMilitaryHappiness`,
   `getCelebrityHappiness`, `getVassalHappiness`, `getStateReligionHappiness`, …) — the legacy accumulators, cut by
