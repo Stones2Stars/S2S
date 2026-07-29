@@ -1118,7 +1118,7 @@ bool CvWorkerAI::improveBonus(CvUnitAI* unit, int allowedMovementTurns)
 			if (kImprovementX.isActsAsCity())
 			{
 				const int iDefenseRaw = kImprovementX.getAirBombDefense()
-				                      + kImprovementX.getDefenseModifier();
+				                      + kImprovementX.getDefense(DEFENSE_AMOUNT, CASC_SCOPE_PLOT);
 				iValueDefense = iDefenseRaw / W.defenseDivisor;
 				if (kImprovementX.isZOCSource()) iValueDefense += W.zocSourceBonus;
 

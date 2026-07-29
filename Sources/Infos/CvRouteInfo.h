@@ -16,6 +16,7 @@
 //
 
 #include "CvInfo.h"
+#include <map>
 #include "Defines/CvEnums.h"   // BonusTypes / NO_BONUS
 #include <vector>
 
@@ -34,6 +35,16 @@ public:
 	// (Conditioned-list access + the expected* what-if valuations are the base CvInfo surface. Census
 	// participation: food/production/commerce plot flats -- the route's own tile output; the
 	// plot.improvements.{IMP} keyed rows and the tech-conditioned movement deltas stay entry-list reads.)
+	// <yield>.plot.improvements.{IMPROVEMENT_*}.flat -- the yield this route adds to ONE improvement.
+	// The governing-deliverer shape (modifier.md §4: a route upgrading improvements lives on the ROUTE,
+	// keyed by target), so it is read per improvement and NEVER folded scope-wide (§5). Materialized at
+	// mapFrom; 0 = none.
+	int getImprovementYield(int iImprovement, YieldTypes eYield) const
+	{
+		std::map<int, int>::const_iterator it =
+			m_improvementYield.find(iImprovement * NUM_YIELD_TYPES + (int)eYield);
+		return it != m_improvementYield.end() ? it->second : 0;
+	}
 	int getFlatYield(YieldTypes eYield, CvCascScope eScope) const
 	{ return m_modifiers.sum(infoYieldFamily(eYield), CHANNEL_AMOUNT, eScope, CASC_UNIT_FLAT); }
 
@@ -67,6 +78,7 @@ protected:
 	virtual CvModifiers* mutModifiers() { return &m_modifiers; }
 
 private:
+	std::map<int, int> m_improvementYield;   // (improvement*NUM_YIELD+yield) -> flat, materialized at mapFrom
 	// --- the composed section units ---
 	CvEdges     m_edges;
 	CvModifiers m_modifiers;

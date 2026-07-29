@@ -9,6 +9,7 @@
 
 #include "CvGameCoreDLL.h"        // PCH umbrella -- picojson
 #include "CvRouteInfo.h"
+#include "CvModEntry.h"
 #include "CvJsonParse.h"          // the shared walkers (jsonChildObj/jsonIdInt/jsonIdBool)
 #include "AI/CvGameAI.h"          // complete CvGameAI -- GC.getGame().getSorenRand() (zobrist draw, mirrors the archive)
 
@@ -32,6 +33,23 @@ void CvRouteInfo::mapFrom(const picojson::value& entity)
 	m_aePrereqOrBonuses.clear();
 
 	CvInfo::mapFrom(entity);   // core reading + the section dispatch (compiles m_modifiers)
+
+	// the KEYED improvement-yield plane, scanned ONCE from the compiled entries (modifier.md §4/§5)
+	m_improvementYield.clear();
+	{
+		const int iImprovementsSeg = modSegmentLookup("improvements");
+		const std::vector<CvModEntry*>& entries = m_modifiers.entries();
+		for (size_t iEntry = 0; iEntry < entries.size(); ++iEntry)
+		{
+			const CvModEntry* pEntry = entries[iEntry];
+			const int iYield = infoFamilyYield(pEntry->family);
+			if (iImprovementsSeg >= 0 && pEntry->targetSeg == iImprovementsSeg
+			&&  pEntry->targetFk >= 0 && iYield >= 0)
+			{
+				m_improvementYield[pEntry->targetFk * NUM_YIELD_TYPES + iYield] += pEntry->value;
+			}
+		}
+	}
 	if (!entity.is<picojson::object>())
 	{
 		return;

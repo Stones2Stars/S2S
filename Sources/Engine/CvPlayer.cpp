@@ -7516,7 +7516,6 @@ RouteTypes CvPlayer::getBestRoute(const CvPlot* pPlot, bool bConnect, const CvUn
 	return getBestRouteInternal(pPlot, bConnect, pBuilder);
 }
 
-// This maybe should be in CvPlot from how often it calls pPlot...? Or investigate, use getRouteYieldChangesArray if applicable
 // Find the yield difference from current plot yield for given yieldType, if eRoute is placed on pPlot
 int CvPlayer::calculatePlotRouteYieldDifference(const CvPlot* pPlot, const RouteTypes eRoute, YieldTypes eYield) const
 {
@@ -7530,8 +7529,8 @@ int CvPlayer::calculatePlotRouteYieldDifference(const CvPlot* pPlot, const Route
 
 	if (bIsRoute && bIsImprovement)
 	{
-		iYield += GC.getImprovementInfo(pPlot->getImprovementType()).getRouteYieldChanges(eRoute, eYield)
-			   -  GC.getImprovementInfo(pPlot->getImprovementType()).getRouteYieldChanges(pPlot->getRouteType(), eYield)
+		iYield += GC.getRouteInfo(eRoute).getImprovementYield(pPlot->getImprovementType(), (YieldTypes)(eYield))
+			   -  GC.getRouteInfo(pPlot->getRouteType()).getImprovementYield(pPlot->getImprovementType(), (YieldTypes)(eYield))
 			   -  GC.getRouteInfo(pPlot->getRouteType()).getYieldChange(eYield);
 	}
 	else if (bIsRoute)
@@ -7540,7 +7539,7 @@ int CvPlayer::calculatePlotRouteYieldDifference(const CvPlot* pPlot, const Route
 	}
 	else if (bIsImprovement)
 	{
-		iYield += GC.getImprovementInfo(pPlot->getImprovementType()).getRouteYieldChanges(eRoute, eYield);
+		iYield += GC.getRouteInfo(eRoute).getImprovementYield(pPlot->getImprovementType(), (YieldTypes)(eYield));
 	}
 	return iYield;
 }

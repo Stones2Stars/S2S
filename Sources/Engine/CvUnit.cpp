@@ -3946,9 +3946,9 @@ bool CvUnit::isActionRecommended(int iAction) const
 					// If route improves yields from improvement
 					if (eImprovement != NO_IMPROVEMENT
 					&& (
-						GC.getImprovementInfo(eImprovement).getRouteYieldChanges(eRouteNew, YIELD_FOOD) > 0
-					||	GC.getImprovementInfo(eImprovement).getRouteYieldChanges(eRouteNew, YIELD_PRODUCTION) > 0
-					||	GC.getImprovementInfo(eImprovement).getRouteYieldChanges(eRouteNew, YIELD_COMMERCE) > 0))
+						GC.getRouteInfo(eRouteNew).getImprovementYield(eImprovement, (YieldTypes)(YIELD_FOOD)) > 0
+					||	GC.getRouteInfo(eRouteNew).getImprovementYield(eImprovement, (YieldTypes)(YIELD_PRODUCTION)) > 0
+					||	GC.getRouteInfo(eRouteNew).getImprovementYield(eImprovement, (YieldTypes)(YIELD_COMMERCE)) > 0))
 					{
 						return true;
 					}
@@ -7466,11 +7466,11 @@ bool CvUnit::bombard()
 			pTargetPlot->changeDefenseDamage(getBombardRate());
 
 			CvWString szBuffer = gDLL->getText("TXT_KEY_MISC_DEFENSES_IN_CITY_REDUCED_TO", GC.getImprovementInfo(pTargetPlot->getImprovementType()).getText(),
-				(GC.getImprovementInfo(pTargetPlot->getImprovementType()).getDefenseModifier()-pTargetPlot->getDefenseDamage()), GET_PLAYER(getOwner()).getNameKey());
+				(GC.getImprovementInfo(pTargetPlot->getImprovementType()).getDefense(DEFENSE_AMOUNT, CASC_SCOPE_PLOT)-pTargetPlot->getDefenseDamage()), GET_PLAYER(getOwner()).getNameKey());
 			AddDLLMessage(pTargetPlot->getOwner(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_RED(), pTargetPlot->getX(), pTargetPlot->getY(), true, true);
 
 			szBuffer = gDLL->getText("TXT_KEY_MISC_YOU_REDUCE_CITY_DEFENSES", getNameKey(), GC.getImprovementInfo(pTargetPlot->getImprovementType()).getText(),
-				(GC.getImprovementInfo(pTargetPlot->getImprovementType()).getDefenseModifier()-pTargetPlot->getDefenseDamage()));
+				(GC.getImprovementInfo(pTargetPlot->getImprovementType()).getDefense(DEFENSE_AMOUNT, CASC_SCOPE_PLOT)-pTargetPlot->getDefenseDamage()));
 			AddDLLMessage(getOwner(), true, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARD", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_GREEN(), pTargetPlot->getX(), pTargetPlot->getY());
 		}
 		// Super Forts end

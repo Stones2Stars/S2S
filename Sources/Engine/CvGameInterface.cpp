@@ -261,7 +261,7 @@ void CvGame::updateColoredPlots()
 											{
 												for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
 												{
-													if (kPlotImprovement.getRouteYieldChanges(eBestRoute, iJ) > 0)
+													if (GC.getRouteInfo(eBestRoute).getImprovementYield(eImprovement, (YieldTypes)(iJ)) > 0)
 													{
 														bCanBeImproved = true;
 														break;
@@ -272,7 +272,7 @@ void CvGame::updateColoredPlots()
 											{
 												for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
 												{
-													if (kPlotImprovement.getRouteYieldChanges(eBestRoute, iJ) > kPlotImprovement.getRouteYieldChanges(eRoute, iJ))
+													if (GC.getRouteInfo(eBestRoute).getImprovementYield(eImprovement, (YieldTypes)(iJ)) > GC.getRouteInfo(eRoute).getImprovementYield(eImprovement, (YieldTypes)(iJ)))
 													{
 														bCanBeImproved = true;
 														break;

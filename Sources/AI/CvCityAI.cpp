@@ -8134,7 +8134,7 @@ int CvCityAI::AI_getImprovementValue(const CvPlot* pPlot, ImprovementTypes eImpr
 
 		iMilitaryValue += 2 * (5 * improvement.getVisibilityChange() + 2 * improvement.getSeeFrom());
 
-		const int iDefense = improvement.getDefenseModifier();
+		const int iDefense = improvement.getDefense(DEFENSE_AMOUNT, CASC_SCOPE_PLOT);
 		if (iDefense < 0)
 		{
 			iMilitaryValue -= iDefense * iDefense;

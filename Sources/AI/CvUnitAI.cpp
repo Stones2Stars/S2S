@@ -18185,7 +18185,7 @@ bool CvUnitAI::AI_bombardCity()
 				//getGroup()->AI_compareStacks(pBombardCity->plot(), /*bPotentialEnemy*/ true, /*bCheckCanAttack*/ true, /*bCheckCanMove*/ true);
 				//int iOurStrength = pBombardCity->plot()->AI_sumStrength(getOwner(), NO_PLAYER, DOMAIN_LAND, false, false, false)
 
-				if (pTargetPlot->getDefenseDamage() < ((GC.getImprovementInfo(pTargetPlot->getImprovementType()).getDefenseModifier() * 3) / 4))
+				if (pTargetPlot->getDefenseDamage() < ((GC.getImprovementInfo(pTargetPlot->getImprovementType()).getDefense(DEFENSE_AMOUNT, CASC_SCOPE_PLOT) * 3) / 4))
 				{
 					return getGroup()->pushMissionInternal(MISSION_BOMBARD);
 				}
@@ -21783,11 +21783,11 @@ bool CvUnitAI::AI_fortTerritory(bool bCanal, bool bAirbase)
 				{
 					const CvImprovementInfo& kImprovement = GC.getImprovementInfo(GC.getBuildInfo(eBuild).getImprovement());
 
-					if ((bCanal && kImprovement.isCanMoveSeaUnits() || kImprovement.isActsAsCity() && kImprovement.getDefenseModifier() > 0)
+					if ((bCanal && kImprovement.isCanMoveSeaUnits() || kImprovement.isActsAsCity() && kImprovement.getDefense(DEFENSE_AMOUNT, CASC_SCOPE_PLOT) > 0)
 					&& canBuild(pLoopPlot, eBuild))
 					{
 						++iQualified;
-						int iBuildValue = 100 * kImprovement.getDefenseModifier();
+						int iBuildValue = 100 * kImprovement.getDefense(DEFENSE_AMOUNT, CASC_SCOPE_PLOT);
 
 						if (kImprovement.isCanMoveSeaUnits() && bCanal)
 						{
@@ -21804,7 +21804,7 @@ bool CvUnitAI::AI_fortTerritory(bool bCanal, bool bAirbase)
 							logBuildEvaluation(3, "  AI_fortTerritory cand build=%s impr=%s canMoveSea=%d acts=%d def=%d zoc=%d time=%d score=%d",
 								GC.getBuildInfo(eBuild).getType(), kImprovement.getType(),
 								kImprovement.isCanMoveSeaUnits() ? 1 : 0, kImprovement.isActsAsCity() ? 1 : 0,
-								kImprovement.getDefenseModifier(), kImprovement.isZOCSource() ? 1 : 0,
+								kImprovement.getDefense(DEFENSE_AMOUNT, CASC_SCOPE_PLOT), kImprovement.isZOCSource() ? 1 : 0,
 								GC.getBuildInfo(eBuild).getTime(), iBuildValue);
 						}
 
@@ -22292,9 +22292,9 @@ BuildTypes CvUnitAI::AI_betterPlotBuild(const CvPlot* pPlot, BuildTypes eBuild) 
 					const ImprovementTypes eImprovement = kOriginalBuildInfo.getImprovement();
 					if (eImprovement != NO_IMPROVEMENT)
 					{
-						int iRouteMultiplier = ((GC.getImprovementInfo(eImprovement).getRouteYieldChanges(eRoute, YIELD_FOOD)) * 100);
-						iRouteMultiplier += ((GC.getImprovementInfo(eImprovement).getRouteYieldChanges(eRoute, YIELD_PRODUCTION)) * 100);
-						iRouteMultiplier += ((GC.getImprovementInfo(eImprovement).getRouteYieldChanges(eRoute, YIELD_COMMERCE)) * 60);
+						int iRouteMultiplier = ((GC.getRouteInfo(eRoute).getImprovementYield(eImprovement, (YieldTypes)(YIELD_FOOD))) * 100);
+						iRouteMultiplier += ((GC.getRouteInfo(eRoute).getImprovementYield(eImprovement, (YieldTypes)(YIELD_PRODUCTION))) * 100);
+						iRouteMultiplier += ((GC.getRouteInfo(eRoute).getImprovementYield(eImprovement, (YieldTypes)(YIELD_COMMERCE))) * 60);
 						iValue *= 100 + iRouteMultiplier;
 						iValue /= 100;
 					}
@@ -22492,7 +22492,7 @@ bool CvUnitAI::AI_routeTerritory(bool bImprovementOnly)
 			}
 			for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
 			{
-				if (GC.getImprovementInfo(eType).getRouteYieldChanges(eBestRoute, iJ) > 0)
+				if (GC.getRouteInfo(eBestRoute).getImprovementYield(eType, (YieldTypes)(iJ)) > 0)
 				{
 					bValid = true;
 					break;
@@ -26743,7 +26743,7 @@ BuildTypes CvUnitAI::AI_findBestFort(const CvPlot* pPlot) const
 			++iQualified;
 			int iValue =
 				(
-					kImprovement.getDefenseModifier() * 100
+					kImprovement.getDefense(DEFENSE_AMOUNT, CASC_SCOPE_PLOT) * 100
 					+
 					kImprovement.getVisibilityChange() * 1000 // Each visibility equals 10% defense mod
 				);
@@ -26763,7 +26763,7 @@ BuildTypes CvUnitAI::AI_findBestFort(const CvPlot* pPlot) const
 				{
 					logBuildEvaluation(3, "  AI_findBestFort cand build=%s impr=%s def=%d vis=%d acts=%d zoc=%d time=%d score=%d",
 						GC.getBuildInfo(eBuild).getType(), kImprovement.getType(),
-						kImprovement.getDefenseModifier(), kImprovement.getVisibilityChange(),
+						kImprovement.getDefense(DEFENSE_AMOUNT, CASC_SCOPE_PLOT), kImprovement.getVisibilityChange(),
 						kImprovement.isActsAsCity() ? 1 : 0, kImprovement.isZOCSource() ? 1 : 0,
 						GC.getBuildInfo(eBuild).getTime(), iValue);
 				}

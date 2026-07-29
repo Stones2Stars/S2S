@@ -5188,7 +5188,7 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 
 				for (int iL = 0; iL < GC.getNumImprovementInfos(); iL++)
 				{
-					iTempValue += GC.getImprovementInfo((ImprovementTypes)iL).getRouteYieldChanges(eRoute, iK) * 50;
+					iTempValue += GC.getRouteInfo(eRoute).getImprovementYield((ImprovementTypes)iL, (YieldTypes)(iK)) * 50;
 				}
 				iTempValue *= AI_yieldWeight((YieldTypes)iK);
 				iTempValue /= 100;
@@ -23876,9 +23876,9 @@ RouteTypes CvPlayerAI::AI_bestAdvancedStartRoute(const CvPlot* pPlot, int* piYie
 				int iYieldValue = 0;
 				if (pPlot->getImprovementType() != NO_IMPROVEMENT)
 				{
-					iYieldValue += ((GC.getImprovementInfo(pPlot->getImprovementType()).getRouteYieldChanges(eRoute, YIELD_FOOD)) * 100);
-					iYieldValue += ((GC.getImprovementInfo(pPlot->getImprovementType()).getRouteYieldChanges(eRoute, YIELD_PRODUCTION)) * 60);
-					iYieldValue += ((GC.getImprovementInfo(pPlot->getImprovementType()).getRouteYieldChanges(eRoute, YIELD_COMMERCE)) * 40);
+					iYieldValue += ((GC.getRouteInfo(eRoute).getImprovementYield(pPlot->getImprovementType(), (YieldTypes)(YIELD_FOOD))) * 100);
+					iYieldValue += ((GC.getRouteInfo(eRoute).getImprovementYield(pPlot->getImprovementType(), (YieldTypes)(YIELD_PRODUCTION))) * 60);
+					iYieldValue += ((GC.getRouteInfo(eRoute).getImprovementYield(pPlot->getImprovementType(), (YieldTypes)(YIELD_COMMERCE))) * 40);
 				}
 				iValue *= 1000;
 				iValue /= (1 + iCost);

@@ -3156,16 +3156,22 @@ void CvDLLWidgetData::parseActionHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 						{
 							if (pMissionPlot->getRouteType() != ((RouteTypes)iI))
 							{
+								int aiRouteYields[NUM_YIELD_TYPES];
+								for (int iY = 0; iY < NUM_YIELD_TYPES; ++iY)
+								{
+									aiRouteYields[iY] = GC.getRouteInfo((RouteTypes)iI).getImprovementYield(
+										pMissionPlot->getImprovementType(), (YieldTypes)iY);
+								}
 								GAMETEXT.setYieldChangeHelp(szBuffer, GC.getRouteInfo((RouteTypes)iI).getDescription(),
-									L": ", L"", improvement->getRouteYieldChangesArray((RouteTypes)iI));
+									L": ", L"", aiRouteYields);
 							}
 						}
 					}
 
-					if (improvement->getDefenseModifier() != 0)
+					if (improvement->getDefense(DEFENSE_AMOUNT, CASC_SCOPE_PLOT) != 0)
 					{
 						szBuffer.append(NEWLINE);
-						szBuffer.append(gDLL->getText("TXT_KEY_ACTION_DEFENSE_MODIFIER", improvement->getDefenseModifier() - pMissionPlot->getDefenseDamage()));
+						szBuffer.append(gDLL->getText("TXT_KEY_ACTION_DEFENSE_MODIFIER", improvement->getDefense(DEFENSE_AMOUNT, CASC_SCOPE_PLOT) - pMissionPlot->getDefenseDamage()));
 					}
 
 					if (team.getImprovementUpgrade(eImprovement) != NO_IMPROVEMENT)
@@ -3193,14 +3199,14 @@ void CvDLLWidgetData::parseActionHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 					if (eFinalImprovement != NO_IMPROVEMENT)
 					{
 						RouteTypes eExistingRoute = pMissionPlot->getRouteType();
-						const int* pYieldChanges = GC.getImprovementInfo(eFinalImprovement).getRouteYieldChangesArray(eRoute);
-						const int* pExistingYieldChanges = (eExistingRoute == NO_ROUTE ? NULL : GC.getImprovementInfo(eFinalImprovement).getRouteYieldChangesArray(eExistingRoute));
-
 						int aiYields[NUM_YIELD_TYPES];
 						for (int iI = 0; iI < NUM_YIELD_TYPES; ++iI)
 						{
-							aiYields[iI] = (pYieldChanges == NULL ? 0 : pYieldChanges[iI]);
-							aiYields[iI] -= (pExistingYieldChanges == NULL ? 0 : pExistingYieldChanges[iI]);
+							aiYields[iI] = GC.getRouteInfo(eRoute).getImprovementYield(eFinalImprovement, (YieldTypes)iI);
+							if (eExistingRoute != NO_ROUTE)
+							{
+								aiYields[iI] -= GC.getRouteInfo(eExistingRoute).getImprovementYield(eFinalImprovement, (YieldTypes)iI);
+							}
 						}
 
 						GAMETEXT.setYieldChangeHelp(szBuffer, GC.getImprovementInfo(eFinalImprovement).getDescription(), L": ", L"", aiYields);

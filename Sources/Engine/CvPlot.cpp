@@ -3859,7 +3859,7 @@ bool CvPlot::isBombardable(const CvUnit* pUnit) const
 	{
 		if(GC.getImprovementInfo(eImprovement).isBombardable())
 		{
-			return (getDefenseDamage() < GC.getImprovementInfo(eImprovement).getDefenseModifier());
+			return (getDefenseDamage() < GC.getImprovementInfo(eImprovement).getDefense(DEFENSE_AMOUNT, CASC_SCOPE_PLOT));
 		}
 	}
 	return false;
@@ -3884,7 +3884,7 @@ void CvPlot::changeDefenseDamage(int iChange)
 {
 	if ((iChange != 0) && (getImprovementType() != NO_IMPROVEMENT))
 	{
-		m_iDefenseDamage = range((m_iDefenseDamage + iChange), 0, GC.getImprovementInfo(getImprovementType()).getDefenseModifier());
+		m_iDefenseDamage = range((m_iDefenseDamage + iChange), 0, GC.getImprovementInfo(getImprovementType()).getDefense(DEFENSE_AMOUNT, CASC_SCOPE_PLOT));
 
 		if (iChange > 0)
 		{
@@ -4296,7 +4296,7 @@ int CvPlot::defenseModifier(TeamTypes eDefender, bool bIgnoreBuilding, bool bHel
 		&& (getTeam() == NO_TEAM || GET_TEAM(eDefender).isFriendlyTerritory(getTeam())))
 		{
 			// Super Forts begin *bombard*
-			iModifier += GC.getImprovementInfo(eImprovement).getDefenseModifier() - getDefenseDamage();
+			iModifier += GC.getImprovementInfo(eImprovement).getDefense(DEFENSE_AMOUNT, CASC_SCOPE_PLOT) - getDefenseDamage();
 		}
 	}
 
@@ -7290,7 +7290,7 @@ void CvPlot::setImprovementCurrentValue()
 		if (GC.getImprovementInfo(eImprovement).isMilitaryStructure())
 		{
 			int iCounterDefenseValue = GC.getImprovementInfo(eImprovement).getAirBombDefense()/10;
-			iCounterDefenseValue += GC.getImprovementInfo(eImprovement).getDefenseModifier()/10;
+			iCounterDefenseValue += GC.getImprovementInfo(eImprovement).getDefense(DEFENSE_AMOUNT, CASC_SCOPE_PLOT)/10;
 			iCounterDefenseValue += (GC.getImprovementInfo(eImprovement).isZOCSource() ? 3 : 0);
 			if (!isCityRadius())
 			{
@@ -8157,7 +8157,7 @@ int CvPlot::calculateImprovementYieldChange(ImprovementTypes eImprovement, Yield
 
 		for (int iI = 0; iI < GC.getNumRouteInfos(); ++iI)
 		{
-			iBestYield = std::max(iBestYield, GC.getImprovementInfo(eImprovement).getRouteYieldChanges(iI, eYield));
+			iBestYield = std::max(iBestYield, GC.getRouteInfo(iI).getImprovementYield(eImprovement, (YieldTypes)(eYield)));
 		}
 		iYield += iBestYield;
 	}
@@ -8173,7 +8173,7 @@ int CvPlot::calculateImprovementYieldChange(ImprovementTypes eImprovement, Yield
 		);
 		if (eRoute != NO_ROUTE)
 		{
-			iYield += GC.getImprovementInfo(eImprovement).getRouteYieldChanges(eRoute, eYield);
+			iYield += GC.getRouteInfo(eRoute).getImprovementYield(eImprovement, (YieldTypes)(eYield));
 		}
 	}
 
@@ -12138,10 +12138,10 @@ int CvPlot::getYieldWithBuild(BuildTypes eBuild, YieldTypes eYield, bool bWithUp
 		eImprovement = getImprovementType();
 		if (eImprovement != NO_IMPROVEMENT)
 		{
-			iYield += GC.getImprovementInfo(eImprovement).getRouteYieldChanges(eRoute, eYield);
+			iYield += GC.getRouteInfo(eRoute).getImprovementYield(eImprovement, (YieldTypes)(eYield));
 			if (getRouteType() != NO_ROUTE)
 			{
-				iYield -= GC.getImprovementInfo(eImprovement).getRouteYieldChanges(getRouteType(), eYield);
+				iYield -= GC.getRouteInfo(getRouteType()).getImprovementYield(eImprovement, (YieldTypes)(eYield));
 			}
 		}
 	}

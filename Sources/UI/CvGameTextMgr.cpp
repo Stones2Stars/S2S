@@ -20031,10 +20031,10 @@ void CvGameTextMgr::setImprovementHelp(CvWStringBuffer &szBuffer, ImprovementTyp
 		}
 	}
 
-	if (0 != info.getDefenseModifier())
+	if (0 != info.getDefense(DEFENSE_AMOUNT, CASC_SCOPE_PLOT))
 	{
 		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_IMPROVEMENTHELP_DEFENSE_MODIFIER", info.getDefenseModifier()));
+		szBuffer.append(gDLL->getText("TXT_KEY_IMPROVEMENTHELP_DEFENSE_MODIFIER", info.getDefense(DEFENSE_AMOUNT, CASC_SCOPE_PLOT)));
 	}
 
 	if (0 != info.getHealthPercent())
@@ -20141,7 +20141,7 @@ void CvGameTextMgr::setImprovementHelp(CvWStringBuffer &szBuffer, ImprovementTyp
 		szBuffer.append(gDLL->getText("TXT_KEY_IMPROVEMENTHELP_LESS_GROWTH"));
 	}
 
-	if (info.isBombardable() && (info.getDefenseModifier() > 0))
+	if (info.isBombardable() && (info.getDefense(DEFENSE_AMOUNT, CASC_SCOPE_PLOT) > 0))
 	{
 		szBuffer.append(NEWLINE);
 		szBuffer.append(gDLL->getText("TXT_KEY_IMPROVEMENTHELP_BOMBARD"));

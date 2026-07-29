@@ -577,16 +577,6 @@ int CyTeam::getAdjacentResearch(int i) const
 	return m_pTeam->getAdjacentResearch()[i];
 }
 
-int CyTeam::getImprovementYieldChange(int /*ImprovementTypes*/ eIndex1, int /*YieldTypes*/ eIndex2) const
-{
-	return m_pTeam->getImprovementYieldChange((ImprovementTypes)eIndex1, (YieldTypes)eIndex2);
-}
-
-void CyTeam::changeImprovementYieldChange(int /*ImprovementTypes*/ eIndex1, int /*YieldTypes*/ eIndex2, int iChange)
-{
-	m_pTeam->changeImprovementYieldChange((ImprovementTypes)eIndex1, (YieldTypes)eIndex2, iChange);
-}
-
 int CyTeam::getBuildingCommerceTechChange(int eIndex, int eBuilding) const
 {
 	return m_pTeam->getBuildingCommerceTechChange((CommerceTypes)eIndex, (BuildingTypes)eBuilding);
