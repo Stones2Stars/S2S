@@ -4260,6 +4260,13 @@ int CvCity::getCelebrityHappiness() const
 // ! TheLadiesOgre
 
 
+// ⛔ SCALE — the four wellbeing verdicts return ×100, the engine's native representation
+// ([DEC-fixedpoint-x100]: no getter reduces, and there is no ×100-variant getter). The wellbeing CHANNELS are
+// already ×100, so it is the whole-count raw-state inputs that are lifted to meet them -- never the channel
+// reduced to meet the inputs, which would hand every one of the ~50 consumers a pre-rounded number.
+// The single ÷100 happens at exactly two kinds of place: the DISCRETE final-state calculations
+// (angryPopulation / healthRate -- whole citizens and whole health points, [patterns.md] rule 6), and any
+// READER boundary (UI composers, CyCity/CyPlayer, the AI's whole-face arithmetic).
 int CvCity::unhappyLevel(int iExtra) const
 {
 	PROFILE_FUNC();
@@ -4277,7 +4284,7 @@ int CvCity::unhappyLevel(int iExtra) const
 	// would be a second implementation of the routing.
 	int aWellbeing[NUM_WELLBEING_CHANNELS];
 	getWellbeing(aWellbeing);
-	int iUnhappiness = aWellbeing[WELLBEING_ANGER] / 100;   // ×100 native; reduced once, here at the reader
+	int iUnhappiness = aWellbeing[WELLBEING_ANGER];
 
 	// (2) THE ANGER PERCENTS -- runtime timers and ratios no deposit produces, scaled by population.
 	int iAngerPercent = 0;
@@ -4295,37 +4302,40 @@ int CvCity::unhappyLevel(int iExtra) const
 	{
 		iAngerPercent += owner.getCivicPercentAnger((CivicTypes)iI);
 	}
-	iUnhappiness += ((iAngerPercent * (getPopulation() + iExtra)) / GC.getPERCENT_ANGER_DIVISOR());
+	// The truncating integer division is the engine quirk reproduced verbatim (modifier.md §2b), so the
+	// truncation happens FIRST and the whole-citizen result is then lifted to ×100.
+	iUnhappiness += 100 * ((iAngerPercent * (getPopulation() + iExtra)) / GC.getPERCENT_ANGER_DIVISOR());
 
 	// (3) THE REMAINING RAW-STATE INPUTS -- saved or derived-from-saved state, legitimate to fold because no
-	// deposit produces them and none is a cascade output (the §2b input list).
-	iUnhappiness += std::max(0, getVassalUnhappiness());
-	iUnhappiness += std::max(0, getEspionageHappinessCounter());
-	iUnhappiness += std::max(0, owner.calculateTaxRateUnhappiness());
-	iUnhappiness += std::max(0, getEventAnger());
-	iUnhappiness -= std::min(0, getExtraHappiness() + owner.getExtraHappiness());   // event-granted, sanctioned
+	// deposit produces them and none is a cascade output (the §2b input list). Each is a whole-citizen count,
+	// so each is lifted to the channel's scale rather than the channel being reduced to theirs.
+	iUnhappiness += 100 * std::max(0, getVassalUnhappiness());
+	iUnhappiness += 100 * std::max(0, getEspionageHappinessCounter());
+	iUnhappiness += 100 * std::max(0, owner.calculateTaxRateUnhappiness());
+	iUnhappiness += 100 * std::max(0, getEventAnger());
+	iUnhappiness -= 100 * std::min(0, getExtraHappiness() + owner.getExtraHappiness());   // event-granted, sanctioned
 
 	int iForeignAnger = owner.getForeignUnhappyPercent();
 	if (iForeignAnger != 0)
 	{
 		iForeignAnger = 100 / iForeignAnger;
 		iForeignAnger = ((100 - plot()->calculateCulturePercent(getOwner())) * iForeignAnger) / 100;
-		iUnhappiness += std::max(0, iForeignAnger);
+		iUnhappiness += 100 * std::max(0, iForeignAnger);
 	}
 	if (GC.getGame().isOption(GAMEOPTION_MAP_PERSONALIZED))
 	{
 		if (!owner.isNoLandmarkAnger())
 		{
-			iUnhappiness += std::max(0, getLandmarkAnger());
+			iUnhappiness += 100 * std::max(0, getLandmarkAnger());
 		}
-		iUnhappiness -= std::min(0, owner.getLandmarkHappiness());
+		iUnhappiness -= 100 * std::min(0, owner.getLandmarkHappiness());
 	}
 	if (owner.getCityLimit() != 0 && owner.getCityOverLimitUnhappy() != 0)
 	{
 		const int iOverLimitCities = owner.getNumCities() - owner.getCityLimit();
 		if (iOverLimitCities > 0)
 		{
-			iUnhappiness += owner.getCityOverLimitUnhappy() * iOverLimitCities;
+			iUnhappiness += 100 * owner.getCityOverLimitUnhappy() * iOverLimitCities;
 		}
 	}
 	return std::max(0, iUnhappiness);
@@ -4341,23 +4351,23 @@ int CvCity::happyLevel() const
 	// raw-state inputs no deposit produces.
 	int aWellbeing[NUM_WELLBEING_CHANNELS];
 	getWellbeing(aWellbeing);
-	int iHappiness = aWellbeing[WELLBEING_HAPPINESS] / 100;
+	int iHappiness = aWellbeing[WELLBEING_HAPPINESS];
 
-	iHappiness += std::max(0, getRevSuccessHappiness());
-	iHappiness += std::max(0, getVassalHappiness());
-	iHappiness += std::max(0, getExtraHappiness() + owner.getExtraHappiness());   // event-granted, sanctioned
+	iHappiness += 100 * std::max(0, getRevSuccessHappiness());
+	iHappiness += 100 * std::max(0, getVassalHappiness());
+	iHappiness += 100 * std::max(0, getExtraHappiness() + owner.getExtraHappiness());   // event-granted, sanctioned
 	// ⚖ Unit-carried happiness is computed LIVE and added ON TOP, outside every cached sum and every percentage
 	// ([DEC-unit-modifiers-on-top]) -- which is exactly why unit movement dirties no wellbeing cache.
-	iHappiness += std::max(0, getMilitaryHappiness());
-	iHappiness += std::max(0, getCelebrityHappiness());
+	iHappiness += 100 * std::max(0, getMilitaryHappiness());
+	iHappiness += 100 * std::max(0, getCelebrityHappiness());
 
 	if (GC.getGame().isOption(GAMEOPTION_MAP_PERSONALIZED))
 	{
-		iHappiness += std::max(0, owner.getLandmarkHappiness());
+		iHappiness += 100 * std::max(0, owner.getLandmarkHappiness());
 	}
 	if (getHappinessTimer() > 0)
 	{
-		iHappiness += GC.getTEMP_HAPPY();
+		iHappiness += 100 * GC.getTEMP_HAPPY();
 	}
 	return std::max(0, iHappiness);
 }
@@ -4367,7 +4377,10 @@ int CvCity::angryPopulation(int iExtra) const
 {
 	PROFILE("CvCityAI::angryPopulation");
 
-	return range(unhappyLevel(iExtra) - happyLevel(), 0, getPopulation() + iExtra);
+	// ÷100 at the DISCRETE boundary: the verdicts are ×100 native, but the game unassigns WHOLE citizens
+	// ([DEC-fixedpoint-x100]: a whole game count reduces at the point of use, never inside the getter).
+	// This is a final-state calculation over the channels, not a group read ([patterns.md] rule 6).
+	return range((unhappyLevel(iExtra) - happyLevel()) / 100, 0, getPopulation() + iExtra);
 }
 
 
@@ -4470,9 +4483,9 @@ int CvCity::goodHealth() const
 
 	int aWellbeing[NUM_WELLBEING_CHANNELS];
 	getWellbeing(aWellbeing);
-	int iTotalHealth = aWellbeing[WELLBEING_HEALTH] / 100;
+	int iTotalHealth = aWellbeing[WELLBEING_HEALTH];
 
-	iTotalHealth += std::max(0, getExtraHealth() + GET_PLAYER(getOwner()).getExtraHealth());
+	iTotalHealth += 100 * std::max(0, getExtraHealth() + GET_PLAYER(getOwner()).getExtraHealth());
 	return std::max(0, iTotalHealth);
 }
 
@@ -4483,18 +4496,20 @@ int CvCity::badHealth(bool bNoAngry, int iExtra) const
 
 	int aWellbeing[NUM_WELLBEING_CHANNELS];
 	getWellbeing(aWellbeing);
-	int iUnhealth = aWellbeing[WELLBEING_UNHEALTH] / 100;
+	int iUnhealth = aWellbeing[WELLBEING_UNHEALTH];
 
-	iUnhealth += std::max(0, getEspionageHealthCounter());
-	iUnhealth -= std::min(0, getExtraHealth() + GET_PLAYER(getOwner()).getExtraHealth());
+	iUnhealth += 100 * std::max(0, getEspionageHealthCounter());
+	iUnhealth -= 100 * std::min(0, getExtraHealth() + GET_PLAYER(getOwner()).getExtraHealth());
 
-	return unhealthyPopulation(bNoAngry, iExtra) + iUnhealth;
+	// unhealthyPopulation is a whole-citizen count (§2b's population term), lifted to the channel's scale.
+	return 100 * unhealthyPopulation(bNoAngry, iExtra) + iUnhealth;
 }
 
 
 int CvCity::healthRate(bool bNoAngry, int iExtra) const
 {
-	return std::min(0, (goodHealth() - badHealth(bNoAngry, iExtra)));
+	// ÷100 at the discrete boundary, as angryPopulation -- health points are whole (modifier.md §2b).
+	return std::min(0, (goodHealth() - badHealth(bNoAngry, iExtra)) / 100);
 }
 
 
@@ -6833,8 +6848,9 @@ int CvCity::getAdditionalHealth(int iGoodPercent, int iBadPercent, int& iGood, i
  */
 int CvCity::getAdditionalAngryPopuplation(int iGood, int iBad) const
 {
-	int iHappy = happyLevel();
-	int iUnhappy = unhappyLevel();
+	// ÷100: iGood/iBad are whole-citizen deltas and the result is a whole population count.
+	int iHappy = happyLevel() / 100;
+	int iUnhappy = unhappyLevel() / 100;
 	int iPop = getPopulation();
 
 	return range((iUnhappy + iBad) - (iHappy + iGood), 0, iPop) - range(iUnhappy - iHappy, 0, iPop);
@@ -6847,8 +6863,9 @@ int CvCity::getAdditionalAngryPopuplation(int iGood, int iBad) const
  */
 int CvCity::getAdditionalSpoiledFood(int iGood, int iBad, int iHealthAdjust) const
 {
-	int iHealthy = goodHealth();
-	int iUnhealthy = badHealth();
+	// ÷100: iGood/iBad/iHealthAdjust are whole health points, as is the returned food figure.
+	int iHealthy = goodHealth() / 100;
+	int iUnhealthy = badHealth() / 100;
 	int iRate = iHealthy - iUnhealthy + iHealthAdjust;
 
 	return std::min(0, iRate) - std::min(0, iRate + iGood - iBad);
@@ -7307,7 +7324,7 @@ int CvCity::getAdditionalHappinessByCivic(CivicTypes eCivic, bool bDifferenceToC
 
 	if (isCapital() && kCivic.isNoCapitalUnhappiness())
 	{
-		iHappy = std::max(unhappyLevel(0), iHappy);
+		iHappy = std::max(unhappyLevel(0) / 100, iHappy);   // ÷100: iHappy is a whole-citizen delta
 	}
 
 	return iHappy;
@@ -7580,11 +7597,11 @@ int CvCity::getAdditionalHappinessByBuilding(BuildingTypes eBuilding, int& iGood
 	else if (kBuilding.isNoUnhappiness())
 	{
 		// override extra unhappiness and completely negate all existing unhappiness
-		iBad = iStartingBad - unhappyLevel();
+		iBad = iStartingBad - unhappyLevel() / 100;   // ÷100: iBad is a whole-citizen delta
 	}
 	// Effect on Angry Population
-	int iHappy = happyLevel();
-	int iUnhappy = unhappyLevel();
+	int iHappy = happyLevel() / 100;
+	int iUnhappy = unhappyLevel() / 100;
 	int iPop = getPopulation();
 	iAngryPop += range((iUnhappy + iBad) - (iHappy + iGood), 0, iPop) - range(iUnhappy - iHappy, 0, iPop);
 
@@ -7709,8 +7726,8 @@ int CvCity::getAdditionalHealthByBuilding(BuildingTypes eBuilding, int& iGood, i
 	}
 
 	// Effect on Spoiled Food
-	int iHealthy = goodHealth();
-	int iUnhealthy = badHealth();
+	int iHealthy = goodHealth() / 100;   // ÷100: whole health points against a whole food figure
+	int iUnhealthy = badHealth() / 100;
 	int iFood = getYieldRate(YIELD_FOOD) - foodConsumption();
 	iSpoiledFood -= std::min(0, (iHealthy + iGood) - (iUnhealthy + iBad)) - std::min(0, iHealthy - iUnhealthy);
 	if (iSpoiledFood > 0)
@@ -16878,14 +16895,15 @@ bool CvCity::isEventTriggerPossible(EventTriggerTypes eTrigger) const
 
 	if (kTrigger.getAngry() > 0)
 	{
-		if (unhappyLevel(0) - happyLevel() < kTrigger.getAngry())
+		// ÷100: the trigger threshold is a whole-citizen count
+		if ((unhappyLevel(0) - happyLevel()) / 100 < kTrigger.getAngry())
 		{
 			return false;
 		}
 	}
 	else if (kTrigger.getAngry() < 0)
 	{
-		if (happyLevel() - unhappyLevel(0) < -kTrigger.getAngry())
+		if ((happyLevel() - unhappyLevel(0)) / 100 < -kTrigger.getAngry())
 		{
 			return false;
 		}
@@ -16893,14 +16911,15 @@ bool CvCity::isEventTriggerPossible(EventTriggerTypes eTrigger) const
 
 	if (kTrigger.getUnhealthy() > 0)
 	{
-		if (badHealth(false, 0) - goodHealth() < kTrigger.getUnhealthy())
+		// ÷100: the trigger threshold is a whole health-point count
+		if ((badHealth(false, 0) - goodHealth()) / 100 < kTrigger.getUnhealthy())
 		{
 			return false;
 		}
 	}
 	else if (kTrigger.getUnhealthy() < 0)
 	{
-		if (goodHealth() - badHealth(false, 0) < -kTrigger.getUnhealthy())
+		if ((goodHealth() - badHealth(false, 0)) / 100 < -kTrigger.getUnhealthy())
 		{
 			return false;
 		}
