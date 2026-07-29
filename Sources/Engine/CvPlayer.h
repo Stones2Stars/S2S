@@ -700,20 +700,14 @@ public:
 
 	int getExtraHealth() const;
 	void changeExtraHealth(int iChange);
-	void changeCivicHealth(const int iChange, const bool bLimited = false);
 
-	int getCivicHealth() const; // Included in getExtraHealth() but split off to aid hover text displays
 
 
 
 	int getExtraHappiness() const;
 	void changeExtraHappiness(int iChange, bool bUnattributed = false);
 
-	int getBuildingHappiness() const;
-	void changeBuildingHappiness(int iChange);
 
-	int getLargestCityHappiness() const;
-	void changeLargestCityHappiness(int iChange, bool bLimited = false);
 
 	int getWarWearinessPercentAnger() const;
 	void updateWarWearinessPercentAnger();
@@ -759,10 +753,6 @@ public:
 	bool isNoNonStateReligionSpread() const;
 	void changeNoNonStateReligionSpreadCount(int iChange);
 
-	int getStateReligionHappiness() const;
-	void changeStateReligionHappiness(int iChange, bool bLimited = false);
-	int getNonStateReligionHappiness() const;
-	void changeNonStateReligionHappiness(int iChange, bool bLimited = false);
 
 	int getStateReligionUnitProductionModifier() const;
 	void changeStateReligionUnitProductionModifier(int iChange);
@@ -1443,8 +1433,6 @@ public:
 	inline bool isNoCapitalUnhappiness() const { return m_iNoCapitalUnhappiness > 0; }
 	void changeNoCapitalUnhappiness(int iChange);
 
-	int getCivilizationHealth() const;
-	void changeCivilizationHealth(int iChange);
 
 	int getTaxRateUnhappiness() const;
 	void changeTaxRateUnhappiness(int iChange);
@@ -1500,7 +1488,6 @@ public:
 
 	int getForeignTradeRouteModifier() const;
 	void changeForeignTradeRouteModifier(int iChange);
-	int getCivicHappiness() const;
 	void changeCivicHappiness(int iChange);
 
 	bool hasEnemyDefenderUnit(const CvPlot* pPlot) const;

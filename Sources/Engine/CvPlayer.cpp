@@ -10592,29 +10592,6 @@ void CvPlayer::changeLevelExperienceModifier(int iChange)
 }
 
 
-int CvPlayer::getCivicHealth() const
-{
-	// AIAndy: Barbarians do not get player wide unhealthiness
-	if (isNPC() && m_iCivicHealth < 0)
-	{
-		return 0;
-	}
-	return m_iCivicHealth;
-}
-
-void CvPlayer::changeCivicHealth(const int iChange, const bool bLimited)
-{
-	if (iChange != 0)
-	{
-		m_iCivicHealth += iChange;
-
-		if (!bLimited)
-		{
-			AI_makeAssignWorkDirty();
-		}
-	}
-}
-
 int CvPlayer::getExtraHealth() const
 {
 	// AIAndy: Barbarians do not get player wide unhealthiness
@@ -10664,43 +10641,6 @@ void CvPlayer::changeExtraHappiness(int iChange, bool bUnattributed)
 		}
 
 		AI_makeAssignWorkDirty();
-	}
-}
-
-
-int CvPlayer::getBuildingHappiness() const
-{
-	return m_iBuildingHappiness;
-}
-
-
-void CvPlayer::changeBuildingHappiness(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iBuildingHappiness += iChange;
-
-		AI_makeAssignWorkDirty();
-	}
-}
-
-
-int CvPlayer::getLargestCityHappiness() const
-{
-	return m_iLargestCityHappiness;
-}
-
-
-void CvPlayer::changeLargestCityHappiness(int iChange, bool bLimited)
-{
-	if (iChange != 0)
-	{
-		m_iLargestCityHappiness += iChange;
-
-		if (!bLimited)
-		{
-			AI_makeAssignWorkDirty();
-		}
 	}
 }
 
@@ -11032,41 +10972,6 @@ void CvPlayer::changeNoNonStateReligionSpreadCount(int iChange)
 {
 	m_iNoNonStateReligionSpreadCount += iChange;
 	FASSERT_NOT_NEGATIVE(getNoNonStateReligionSpreadCount());
-}
-
-
-int CvPlayer::getStateReligionHappiness() const
-{
-	return m_iStateReligionHappiness;
-}
-
-
-void CvPlayer::changeStateReligionHappiness(int iChange, bool bLimited)
-{
-	if (iChange != 0)
-	{
-		m_iStateReligionHappiness += iChange;
-
-		updateReligionHappiness(bLimited);
-	}
-}
-
-
-int CvPlayer::getNonStateReligionHappiness() const
-{
-	return m_iNonStateReligionHappiness;
-}
-
-
-//Fuyu bLimited
-void CvPlayer::changeNonStateReligionHappiness(int iChange, bool bLimited)
-{
-	if (iChange != 0)
-	{
-		m_iNonStateReligionHappiness += iChange;
-
-		updateReligionHappiness(bLimited);
-	}
 }
 
 
@@ -26232,11 +26137,6 @@ bool CvPlayer::hasEnemyDefenderUnit(const CvPlot* pPlot) const
 	return false;
 }
 
-int CvPlayer::getCivicHappiness() const
-{
-	return m_iCivicHappiness;
-}
-
 void CvPlayer::changeCivicHappiness(int iChange)
 {
 	if (iChange != 0)
@@ -26550,22 +26450,6 @@ int CvPlayer::doMultipleResearch(int iOverflow)
 		eCurrentTech = getCurrentResearch();
 	}
 	return std::max(0, iOverflow);
-}
-
-int CvPlayer::getCivilizationHealth() const
-{
-	return m_iCivilizationHealth;
-}
-
-
-void CvPlayer::changeCivilizationHealth(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iCivilizationHealth += iChange;
-
-		AI_makeAssignWorkDirty();
-	}
 }
 
 int CvPlayer::getNoLandmarkAngerCount() const

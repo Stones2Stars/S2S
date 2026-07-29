@@ -608,20 +608,14 @@ public:
 	int getAdditionalHappinessByBuilding(BuildingTypes eType) const;
 	int getAdditionalHappinessByBuilding(BuildingTypes eType, int& iGood, int& iBad, int& iAngryPop) const;
 
-	int getExtraBuildingGoodHealth() const;
-	int getExtraBuildingBadHealth() const;
 	void updateExtraBuildingHealth(bool bLimited = false);
 
 	int getAdditionalHealthByBuilding(BuildingTypes eType) const;
 	int getAdditionalHealthByBuilding(BuildingTypes eType, int& iGood, int& iBad, int& iSpoiledFood, int& iStarvation) const;
 
-	int getFeatureGoodHappiness() const;
-	int getFeatureBadHappiness() const;
 	void updateFeatureHappiness(bool bLimited = false);
 
 
-	int getReligionGoodHappiness() const;
-	int getReligionBadHappiness() const;
 	int getReligionHappiness(ReligionTypes eReligion) const;
 	void updateReligionHappiness(bool bLimited = false);
 
@@ -1864,8 +1858,6 @@ protected:
 
 public:
 	int localCitizenCaptureResistance() const;
-	int getExtraTechHappinessTotal() const;
-	int getExtraTechHealthTotal() const;
 	int getLocalSpecialistExtraYield(SpecialistTypes eSpecialist, YieldTypes eYield) const;
 	int getLocalSpecialistExtraCommerce(SpecialistTypes eSpecialist, CommerceTypes eCommerce) const;
 
@@ -1873,13 +1865,10 @@ private:
 	void updateExtraTechSpecialistHappiness();
 
 	int getBuildingHappinessFromTech(const TechTypes eTech) const;
-	void changeBuildingHappinessFromTech(const TechTypes eTech, const int iChange);
 	int getBuildingHealthFromTech(const TechTypes eTech) const;
-	void changeBuildingHealthFromTech(const TechTypes eTech, const int iChange);
 
 	void updateExtraTechHappiness();
 	void updateExtraTechSpecialistHealth();
-	int getExtraTechSpecialistHealth() const;
 	int getTechHealth(TechTypes eTech) const;
 	void changeLocalSpecialistExtraYield(SpecialistTypes eSpecialist, YieldTypes eYield, int iChange);
 	void changeLocalSpecialistExtraCommerce(SpecialistTypes eSpecialist, CommerceTypes eCommerce, int iChange);

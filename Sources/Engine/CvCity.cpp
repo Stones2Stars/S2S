@@ -7181,18 +7181,6 @@ void subtractGoodOrBad(int iValue, int& iGood, int& iBad)
 // BUG - Building Additional Happiness - end
 
 
-int CvCity::getExtraBuildingGoodHealth() const
-{
-	return m_iExtraBuildingGoodHealth;
-}
-
-
-int CvCity::getExtraBuildingBadHealth() const
-{
-	return m_iExtraBuildingBadHealth;
-}
-
-
 void CvCity::updateExtraBuildingHealth(bool bLimited)
 {
 	PROFILE_EXTRA_FUNC();
@@ -7232,18 +7220,6 @@ void CvCity::updateExtraBuildingHealth(bool bLimited)
 			AI_setAssignWorkDirty(true);
 		}
 	}
-}
-
-
-int CvCity::getFeatureGoodHappiness() const
-{
-	return m_iFeatureGoodHappiness;
-}
-
-
-int CvCity::getFeatureBadHappiness() const
-{
-	return m_iFeatureBadHappiness;
 }
 
 
@@ -7315,18 +7291,6 @@ void CvCity::updateFeatureHappiness(bool bLimited)
 			AI_setAssignWorkDirty(true);
 		}
 	}
-}
-
-
-int CvCity::getReligionGoodHappiness() const
-{
-	return m_iReligionGoodHappiness;
-}
-
-
-int CvCity::getReligionBadHappiness() const
-{
-	return m_iReligionBadHappiness;
 }
 
 
@@ -19465,44 +19429,6 @@ int CvCity::getBuildingHappinessFromTech(const TechTypes eTech) const
 	return 0;
 }
 
-void CvCity::changeBuildingHappinessFromTech(const TechTypes eTech, const int iChange)
-{
-	PROFILE_EXTRA_FUNC();
-	FASSERT_BOUNDS(0, GC.getNumTechInfos(), eTech);
-
-	if (iChange == 0)
-	{
-		return;
-	}
-	if (GET_TEAM(getTeam()).isHasTech(eTech))
-	{
-		m_iExtraBuildingHappinessFromTech += iChange;
-	}
-	bool bFirst = true;
-	for (std::vector< std::pair<TechTypes, int> >::iterator it = m_buildingHappinessFromTech.begin(); it != m_buildingHappinessFromTech.end(); ++it)
-	{
-		if ((*it).first == eTech)
-		{
-			if ((*it).second == -iChange)
-			{
-				m_buildingHappinessFromTech.erase(it);
-			}
-			else
-			{
-				(*it).second += iChange;
-			}
-			bFirst = false;
-			break;
-		}
-	}
-	if (bFirst) m_buildingHappinessFromTech.push_back(std::make_pair(eTech, iChange));
-}
-
-int CvCity::getExtraTechHappinessTotal() const
-{
-	return m_iExtraBuildingHappinessFromTech + m_iExtraTechSpecialistHappiness;
-}
-
 void CvCity::updateSpecialistHappinessHealthFromTech()
 {
 	updateExtraTechSpecialistHappiness();
@@ -19537,11 +19463,6 @@ void CvCity::updateExtraTechSpecialistHealth()
 	}
 }
 
-int CvCity::getExtraTechSpecialistHealth() const
-{
-	return m_iExtraTechSpecialistHealth;
-}
-
 int CvCity::getBuildingHealthFromTech(const TechTypes eTech) const
 {
 	PROFILE_EXTRA_FUNC();
@@ -19553,44 +19474,6 @@ int CvCity::getBuildingHealthFromTech(const TechTypes eTech) const
 		}
 	}
 	return 0;
-}
-
-void CvCity::changeBuildingHealthFromTech(const TechTypes eTech, const int iChange)
-{
-	PROFILE_EXTRA_FUNC();
-	FASSERT_BOUNDS(0, GC.getNumTechInfos(), eTech);
-
-	if (iChange == 0)
-	{
-		return;
-	}
-	if (GET_TEAM(getTeam()).isHasTech(eTech))
-	{
-		m_iExtraBuildingHealthFromTech += iChange;
-	}
-	bool bFirst = true;
-	for (std::vector< std::pair<TechTypes, int> >::iterator it = m_buildingHealthFromTech.begin(); it != m_buildingHealthFromTech.end(); ++it)
-	{
-		if ((*it).first == eTech)
-		{
-			if ((*it).second == -iChange)
-			{
-				m_buildingHealthFromTech.erase(it);
-			}
-			else
-			{
-				(*it).second += iChange;
-			}
-			bFirst = false;
-			break;
-		}
-	}
-	if (bFirst) m_buildingHealthFromTech.push_back(std::make_pair(eTech, iChange));
-}
-
-int CvCity::getExtraTechHealthTotal() const
-{
-	return m_iExtraBuildingHealthFromTech + m_iExtraTechSpecialistHealth;
 }
 
 int CvCity::getLocalSpecialistExtraYield(SpecialistTypes eSpecialist, YieldTypes eYield) const
@@ -20001,10 +19884,8 @@ void CvCity::processTech(const TechTypes eTech, const int iChange)
 
 		if (iBuildingHappinessFromTech != 0)
 		{
-			m_iExtraBuildingHappinessFromTech += iBuildingHappinessFromTech * iChange;
 		}
 	}
-	m_iExtraBuildingHealthFromTech += getBuildingHealthFromTech(eTech) * iChange;
 }
 
 
