@@ -334,22 +334,20 @@ measure what survives, then cut the genuine residue. The classes below are the u
     replaced-buildings argument — that is the roadmap's named failure ("a what-if argument, an ignore-this-clause
     flag"). The supersession fact belongs to the ENABLER, which already owns `replacedBy`; the open call is
     whether the netting re-homes there or the call site composes two valuations itself.
-  - **The MAINTENANCE half needs an `expectedMaintenance` that does not exist.** `CvCity`'s six
-    `get*MaintenanceSavedBy{Building,Civic}` getters are this same what-if family under a different verb — each
-    answers "what would this candidate SAVE me", i.e. contexts in, delta out. But the built `expected*` set is
-    yields / yield-modifiers / plot-yields / flat-commerce / wellbeing; there is no maintenance endpoint, so
-    these have nowhere to go yet.
-    ⚑ The per-source reads they make DO have successors (`getMaintenanceModifier(MaintenanceKind, CvCascScope)`
-    on building / civic / handicap, plus `getColonyMaintenanceCap`), so this is not a missing-info problem —
-    ⛔ but re-pointing them getter-by-getter would rebuild the legacy decomposition on the new surface, which is
-    the half-migration. The unit of work is the endpoint.
-    ⚠ Two of the legacy reads are NOT kinds and must not be minted as any: `homeArea`/`otherArea` are the
-    condition-as-member case [json.md §6](../../specs/json.md) names by name (→ `enabled: "IS_HOME_AREA"` /
-    `"!IS_HOME_AREA"`), and `connectedCity` is the same shape. They resolve through the conditioned-entry
-    evaluation the endpoint would run, never through a point read.
-    ⚑ The scope axis MERGES two legacy names: a building's `area` and `global` maintenance modifiers both land
-    at `CASC_SCOPE_EMPIRE` (there is no area scope — [state-repositories.md](../../architecture/state-repositories.md)),
-    so a consumer must read the empire modifier ONCE rather than summing both.
+  - **The MAINTENANCE half's remaining sites are the CONFIG reads, not the what-ifs.** The building/civic
+    what-ifs are on the valuation now (`expectedModifier(MODFAM_MAINTENANCE, …)` — the generic grouped-family
+    walk, which is what a family with no bespoke `expected*` uses; there is no `expectedMaintenance` and none
+    is wanted). ⚠ Two lessons worth keeping: a building's `area` and `global` modifiers both land at
+    `CASC_SCOPE_EMPIRE` (there is no area scope — [state-repositories.md](../../architecture/state-repositories.md)),
+    so summing both DOUBLE-COUNTS; and `homeArea`/`otherArea`/`connectedCity` are never kinds — they are the
+    condition-as-member shape [json.md §6](../../specs/json.md) names, and once the *where* is a predicate the
+    home/other twin collapses into one function.
+    **What is LEFT** is the `calculate*MaintenanceTimes100` chain's CONFIG reads: `CvHandicapInfo`'s
+    distance / numCities / colony / corporation percents (successors exist —
+    `getMaintenanceModifier(MaintenanceKind, CvCascScope)` + `getColonyMaintenanceCap()`, so this is the
+    ordinary [handicap rewire](#the-handicap-consumer-rewire--the-surface-exists-only-the-consumers-are-stale)),
+    plus two with NO successor to verify first: `CvEraInfo::getInitialCityMaintenancePercent` and
+    `CvCorporationInfo::getMaintenance` (the latter rides the corporation carve-out).
   - **The CIVIC half carries 6- and 9-argument legacy signatures**
     (`getAdditionalHappinessByCivic(eCivic, bDifferenceToCurrent, bCivicOptionVacuum, eStateReligion, iExtraPop,
     iMilitaryHappinessUnits)`; `getAdditionalHealthByCivic` with `iIgnoreNoUnhealthyPopulationCount` /

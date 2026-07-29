@@ -5871,24 +5871,20 @@ int CvCity::getSavedMaintenanceTimes100ByBuilding(BuildingTypes eBuilding) const
 		return 0;
 	}
 	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+	const CvPlayer& owner = GET_PLAYER(getOwner());
 
-	const int iModifier =
-	(
-		kBuilding.getMaintenanceModifier() +
-		kBuilding.getGlobalMaintenanceModifier() +
-		kBuilding.getAreaMaintenanceModifier() +
-		(
-			(isConnectedToCapital() && !isCapital())
-			?
-			kBuilding.getConnectedCityMaintenanceModifier() : 0
-		)
-	);
-	const int iDirectMaintenance =
-	(
-		(kBuilding.getCommerceChange(COMMERCE_GOLD) < 0 && GC.getTREAT_NEGATIVE_GOLD_AS_MAINTENANCE())
-		?
-		-kBuilding.getCommerceChange(COMMERCE_GOLD) * 100 : 0
-	);
+	// ⚖ ONE call replaces the four hand-summed legacy reads (city + global + area + connected-city). The scope
+	// axis merges two of them -- there is no area scope, so an `area` modifier authors at EMPIRE alongside
+	// `global` ([state-repositories.md]) and summing both would double-count -- and the connected-city leg was
+	// never a KIND: it is a CONDITION on an ordinary deposit, which the what-if evaluates against THIS city
+	// through the eval ctx ([DEC-conditions-are-predicates]). That is why this is a valuation, not a point read.
+	const int iModifier = kBuilding.expectedModifier(MODFAM_MAINTENANCE, MAINTENANCE_AMOUNT, CASC_UNIT_PERCENT,
+		getCityContext(), owner.getEmpireContext(), plotGroup(getOwner()));
+
+	// A building whose upkeep is a gold AMOUNT authors maintenance.city.flat -- the negative-gold fold, already
+	// resolved by the curator, so the consumer no longer re-reads a negative commerce and flips its sign.
+	const int iDirectMaintenance = kBuilding.getFlatMaintenance(MAINTENANCE_AMOUNT, CASC_SCOPE_CITY);
+
 	if (iModifier == 0 && iDirectMaintenance == 0)
 	{
 		return 0;
@@ -5908,14 +5904,12 @@ int CvCity::getDistanceMaintenanceSavedByCivic(CivicTypes eCivic) const
 	{
 		return 0;
 	}
-	const int iMod = GC.getCivicInfo(eCivic).getDistanceMaintenanceModifier();
-
+	const int iMod = GC.getCivicInfo(eCivic).getMaintenanceModifier(MAINTENANCE_DISTANCE, CASC_SCOPE_EMPIRE);
 	if (iMod == 0)
 	{
 		return 0;
 	}
 	const int iFinalMod = getEffectiveMaintenanceModifier();
-
 	return (
 		getModifiedIntValue(calculateDistanceMaintenanceTimes100(), iFinalMod)
 		-
@@ -5926,18 +5920,17 @@ int CvCity::getDistanceMaintenanceSavedByCivic(CivicTypes eCivic) const
 int CvCity::getNumCitiesMaintenanceSavedByCivic(CivicTypes eCivic) const
 {
 	FASSERT_BOUNDS(0, GC.getNumCivicInfos(), eCivic);
+
 	if (isDisorder() || isWeLoveTheKingDay())
 	{
 		return 0;
 	}
-	const int iMod = GC.getCivicInfo(eCivic).getNumCitiesMaintenanceModifier();
-
+	const int iMod = GC.getCivicInfo(eCivic).getMaintenanceModifier(MAINTENANCE_NUM_CITIES, CASC_SCOPE_EMPIRE);
 	if (iMod == 0)
 	{
 		return 0;
 	}
 	const int iFinalMod = getEffectiveMaintenanceModifier();
-
 	return (
 		getModifiedIntValue(calculateNumCitiesMaintenanceTimes100(), iFinalMod)
 		-
@@ -5945,48 +5938,29 @@ int CvCity::getNumCitiesMaintenanceSavedByCivic(CivicTypes eCivic) const
 	);
 }
 
-int CvCity::getHomeAreaMaintenanceSavedByCivic(CivicTypes eCivic) const
+// ⚖ ONE function where legacy had a home-area and an other-area twin. They were byte-identical apart from an
+// inverted `isHomeArea` guard and which member they read -- the condition-as-member shape json.md §6 names by
+// name (`maintenance.empire.{homeArea,otherArea}` -> `enabled: "IS_HOME_AREA"` / `"!IS_HOME_AREA"`). With the
+// where expressed as a PREDICATE the twin disappears: the what-if evaluates the civic's conditioned entries
+// against THIS city and returns whichever applies, or nothing.
+int CvCity::getAreaMaintenanceSavedByCivic(CivicTypes eCivic) const
 {
 	FASSERT_BOUNDS(0, GC.getNumCivicInfos(), eCivic);
 
-	if (isDisorder() || isWeLoveTheKingDay() || !area()->isHomeArea(getOwner()))
+	if (isDisorder() || isWeLoveTheKingDay())
 	{
 		return 0;
 	}
-	const int iMod = GC.getCivicInfo(eCivic).getHomeAreaMaintenanceModifier();
-
+	const CvPlayer& owner = GET_PLAYER(getOwner());
+	const int iMod = GC.getCivicInfo(eCivic).expectedModifier(MODFAM_MAINTENANCE, MAINTENANCE_AMOUNT,
+		CASC_UNIT_PERCENT, getCityContext(), owner.getEmpireContext(), plotGroup(getOwner()));
 	if (iMod == 0)
 	{
 		return 0;
 	}
 	const int iBaseMaintenance = calculateBaseMaintenanceTimes100();
 	const int iEffectiveMaintenanceMod = getEffectiveMaintenanceModifier();
-	return // The difference
-	(
-		getModifiedIntValue(iBaseMaintenance, iEffectiveMaintenanceMod)
-		-
-		getModifiedIntValue(iBaseMaintenance, iEffectiveMaintenanceMod + iMod)
-	);
-}
-
-int CvCity::getOtherAreaMaintenanceSavedByCivic(CivicTypes eCivic) const
-{
-	FASSERT_BOUNDS(0, GC.getNumCivicInfos(), eCivic);
-
-	if (isDisorder() || isWeLoveTheKingDay() || area()->isHomeArea(getOwner()))
-	{
-		return 0;
-	}
-	const int iMod = GC.getCivicInfo(eCivic).getOtherAreaMaintenanceModifier();
-
-	if (iMod == 0)
-	{
-		return 0;
-	}
-	const int iBaseMaintenance = calculateBaseMaintenanceTimes100();
-	const int iEffectiveMaintenanceMod = getEffectiveMaintenanceModifier();
-	return // The difference
-	(
+	return (
 		getModifiedIntValue(iBaseMaintenance, iEffectiveMaintenanceMod)
 		-
 		getModifiedIntValue(iBaseMaintenance, iEffectiveMaintenanceMod + iMod)

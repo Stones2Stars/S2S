@@ -1457,8 +1457,7 @@ public:
 
 	int getDistanceMaintenanceSavedByCivic(CivicTypes eCivic) const;
 	int getNumCitiesMaintenanceSavedByCivic(CivicTypes eCivic) const;
-	int getHomeAreaMaintenanceSavedByCivic(CivicTypes eCivic) const;
-	int getOtherAreaMaintenanceSavedByCivic(CivicTypes eCivic) const;
+	int getAreaMaintenanceSavedByCivic(CivicTypes eCivic) const;
 
 	void read(FDataStreamBase* pStream);
 	void write(FDataStreamBase* pStream);
