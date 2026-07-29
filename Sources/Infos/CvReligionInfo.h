@@ -80,6 +80,11 @@ public:
 
 	virtual const CvTriggers*  getTriggers()  const { return &m_triggers; }   // §5 -- triggers + the folded grants
 
+	// The KEEP-legacy property engine's per-turn SOURCES (property-audit.md). The gather roster walks
+	// a religion, so the container must exist -- but NO religion authors a PROPERTY_* family today, so it is
+	// accurately EMPTY rather than stubbed: it fills the moment such a deposit is curated.
+	const CvPropertyManipulators* getPropertyManipulators() const { return &m_PropertyManipulators; }
+
 protected:
 	virtual CvEdges*     mutEdges()     { return &m_edges; }
 	virtual CvTriggers*  mutTriggers()  { return &m_triggers; }
@@ -111,6 +116,7 @@ private:
 	int m_iChar;
 	int m_iHolyCityChar;
 	std::vector<int> m_aeShrineBuildings;
+	CvPropertyManipulators m_PropertyManipulators;   // fed from the PROPERTY_* families (CascadePropertyBridge)
 };
 
 #endif // CV_JSON_RELIGION_INFO_H

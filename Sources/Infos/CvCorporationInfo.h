@@ -78,6 +78,11 @@ public:
 	int getMissionType() const { return m_iMissionType; }
 	void setMissionType(int iMission) { m_iMissionType = iMission; }
 
+	// The KEEP-legacy property engine's per-turn SOURCES (property-audit.md). The gather roster walks
+	// a corporation, so the container must exist -- but NO corporation authors a PROPERTY_* family today, so it is
+	// accurately EMPTY rather than stubbed: it fills the moment such a deposit is curated.
+	const CvPropertyManipulators* getPropertyManipulators() const { return &m_PropertyManipulators; }
+
 protected:
 	virtual CvEdges*     mutEdges()     { return &m_edges; }
 	virtual CvProvides*  mutProvides()  { return &m_provides; }
@@ -111,6 +116,7 @@ private:
 	int m_iChar;
 	int m_iHeadquarterChar;
 	int m_iMissionType;
+	CvPropertyManipulators m_PropertyManipulators;   // fed from the PROPERTY_* families (CascadePropertyBridge)
 };
 
 #endif // CV_JSON_CORPORATION_INFO_H

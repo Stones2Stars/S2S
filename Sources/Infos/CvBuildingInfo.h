@@ -125,6 +125,12 @@ public:
 	int getReligion() const                 { return m_iReligion; }                 // RELIGION_* FK (the religious-building association)
 	int getShrineReligion() const           { return m_iShrineReligion; }           // json §9 `shrine`: the religion this is the SHRINE of
 	int getHeadquartersCorporation() const  { return m_iHeadquartersCorporation; }  // json §9 `headquarters`: the corp-HQ FK
+
+	// The KEEP-legacy property engine's per-turn SOURCES, bridged from this building's PROPERTY_* families
+	// (property-audit.md). Buildings gather NO_RELATION -- a building's deposit lands in its OWN city -- while
+	// the `empire`-scope authorings ride the all-cities container the city gather walks for the owning player.
+	const CvPropertyManipulators* getPropertyManipulators() const { return &m_PropertyManipulators; }
+	const CvPropertyManipulators* getPropertyManipulatorsAllCities() const { return &m_PropertyManipulatorsAllCities; }
 	const std::vector<int>& getMapCategories() const        { return m_aiMapCategories; }         // MAPCATEGORY_* FKs
 	const std::vector<int>& getEnabledCivilizations() const { return m_aiEnabledCivilizations; }  // CIVILIZATION_* FKs
 	const std::map<int, int>& getVictoryThresholds() const  { return m_victoryThresholds; }       // VICTORY_* FK -> threshold
@@ -186,6 +192,9 @@ private:
 	std::map<int, int> m_victoryThresholds;
 	int m_aiStateReligionCommerce[NUM_COMMERCE_TYPES];
 	int m_aiCommerceDoubleTime[NUM_COMMERCE_TYPES];
+	// Fed from the PROPERTY_* families (CascadePropertyBridge::bridgeFamilies -- property-audit.md).
+	CvPropertyManipulators m_PropertyManipulators;            // PROPERTY_X.city.flat -- this building's own city
+	CvPropertyManipulators m_PropertyManipulatorsAllCities;   // PROPERTY_X.empire.flat -- every city of the owner
 };
 
 #endif // CV_JSON_BUILDING_INFO_H

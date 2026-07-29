@@ -7,6 +7,7 @@
 #include "CvGameCoreDLL.h"
 #include "CvBuildingInfo.h"
 #include "CvJsonParse.h"   // jsonChildObj / jsonIdInt / jsonIdBool / jsonIdFk / jsonIdStr / jsonResolveId / jsonCommerceMap
+#include "Property/CvPropertyBridge.h" // the shared PROPERTY_* family -> manipulator walk
 
 CvBuildingInfo::CvBuildingInfo()
 	: m_iWorth(0)
@@ -80,6 +81,14 @@ void CvBuildingInfo::mapFrom(const picojson::value& entity)
 	m_aiMapCategories.clear();
 	m_aiEnabledCivilizations.clear();
 	m_victoryThresholds.clear();
+
+	// PROPERTY_* per-turn SOURCES: a building's <PROPERTY_X>.city.flat (the crime/disease/pollution cuts and
+	// adders that make the solver's numbers move) deposits in ITS OWN city -- NO_RELATION, the legacy building
+	// shape -- while <PROPERTY_X>.empire.flat rides the all-cities container the city gather walks for the
+	// owning player (property-audit.md's converted one-shots). The ONE shared walk over the compiled entries;
+	// it clears both containers first, per the mapFrom idempotency contract.
+	CascadePropertyBridge::bridgeFamilies(getModifiers(), m_PropertyManipulators, NO_RELATION, 0,
+		&m_PropertyManipulatorsAllCities);
 
 	if (!entity.is<picojson::object>())
 	{

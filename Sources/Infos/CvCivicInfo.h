@@ -98,6 +98,10 @@ public:
 
 	virtual const CvTriggers*  getTriggers()  const { return &m_triggers; }   // §5 -- triggers + the folded grants
 
+	// The KEEP-legacy property engine's per-turn SOURCES, bridged from this civic's PROPERTY_* families
+	// (property-audit.md). Player-gathered and fanned to every owner city -- RELATION_ASSOCIATED.
+	const CvPropertyManipulators* getPropertyManipulators() const { return &m_PropertyManipulators; }
+
 protected:
 	virtual CvEdges*     mutEdges()     { return &m_edges; }
 	virtual CvTriggers*  mutTriggers()  { return &m_triggers; }
@@ -118,6 +122,7 @@ private:
 	int m_iCityLimit;
 	bool m_bCityOverLimitAnger;
 	CvWString m_szWeLoveTheKingKey;
+	CvPropertyManipulators m_PropertyManipulators;   // fed from the PROPERTY_* families (CascadePropertyBridge)
 };
 
 #endif // CV_JSON_CIVIC_INFO_H

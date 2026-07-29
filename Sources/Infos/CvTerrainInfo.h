@@ -78,6 +78,11 @@ public:
 		return -1;
 	}
 
+	// The KEEP-legacy property engine's per-turn SOURCES (property-audit.md). The gather roster walks
+	// a terrain, so the container must exist -- but NO terrain authors a PROPERTY_* family today, so it is
+	// accurately EMPTY rather than stubbed: it fills the moment such a deposit is curated.
+	const CvPropertyManipulators* getPropertyManipulators() const { return &m_PropertyManipulators; }
+
 protected:
 	virtual CvEdges*     mutEdges()     { return &m_edges; }
 	virtual CvModifiers* mutModifiers() { return &m_modifiers; }
@@ -101,6 +106,7 @@ private:
 	ClimateZoneTypes m_eClimate;       // identity.climateZoneType (CLIMATE_ZONE_*)
 	std::string m_szArtDefineTag;      // world.art.icon (ART_DEF_* tag; the EXE map-gen art lookup key)
 	std::vector<MapCategoryTypes> m_aeMapCategories;   // identity.mapCategories (MAPCATEGORY_*)
+	CvPropertyManipulators m_PropertyManipulators;   // fed from the PROPERTY_* families (CascadePropertyBridge)
 };
 
 #endif // CV_JSON_TERRAIN_INFO_H

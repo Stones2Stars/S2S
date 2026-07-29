@@ -114,6 +114,10 @@ public:
 	// json.md par.9 `excludes` -- the same-tier traits this one is mutually exclusive with.
 	const std::vector<int>& getExcludes() const { return m_aiExcludes; }
 
+	// The KEEP-legacy property engine's per-turn SOURCES, bridged from this trait's PROPERTY_* families
+	// (property-audit.md). Player-gathered and fanned to every owner city -- RELATION_ASSOCIATED.
+	const CvPropertyManipulators* getPropertyManipulators() const { return &m_PropertyManipulators; }
+
 protected:
 	virtual CvEdges*     mutEdges()     { return &m_edges; }
 	virtual CvTriggers*  mutTriggers()  { return &m_triggers; }
@@ -135,6 +139,7 @@ private:
 	int m_iMinAnarchy;
 	int m_iMaxAnarchy;
 	CvWString m_szShortDescriptionKey;
+	CvPropertyManipulators m_PropertyManipulators;   // fed from the PROPERTY_* families (CascadePropertyBridge)
 	int m_iSuccessionPromotionLine;
 	int m_iSuccessionPriority;
 	std::vector<int> m_aiExcludes;

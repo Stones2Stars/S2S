@@ -6,6 +6,7 @@
 
 #include "CvGameCoreDLL.h"
 #include "CvTraitInfo.h"
+#include "Property/CvPropertyBridge.h" // the shared PROPERTY_* family -> manipulator walk
 #include "CvJsonParse.h"   // jsonChildObj / jsonIdInt / jsonIdBool / jsonIdStr / jsonIdFk / jsonReadIdList
 
 CvTraitInfo::CvTraitInfo()
@@ -34,6 +35,11 @@ void CvTraitInfo::mapFrom(const picojson::value& entity)
 	m_iSuccessionPromotionLine = -1;
 	m_iSuccessionPriority = 0;
 	m_aiExcludes.clear();
+
+	// PROPERTY_* per-turn SOURCES: a trait's <PROPERTY_X>.city.flat deposits in EVERY owner city while the trait
+	// is held -- RELATION_ASSOCIATED, the player-gathered fan the legacy trait manipulators used. The ONE shared
+	// walk over the compiled entries; it clears the container first, per the mapFrom idempotency contract.
+	CascadePropertyBridge::bridgeFamilies(getModifiers(), m_PropertyManipulators, RELATION_ASSOCIATED);
 
 	if (!entity.is<picojson::object>())
 	{

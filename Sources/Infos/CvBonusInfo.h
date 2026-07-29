@@ -135,6 +135,11 @@ public:
 	void addTradeProvidingImprovement(ImprovementTypes eImprovement, BuildTypes eBuild)
 	{ m_tradeProvidingImprovements.push_back(std::make_pair(eImprovement, eBuild)); }
 
+	// The KEEP-legacy property engine's per-turn SOURCES (property-audit.md). The gather roster walks
+	// a bonus, so the container must exist -- but NO bonus authors a PROPERTY_* family today, so it is
+	// accurately EMPTY rather than stubbed: it fills the moment such a deposit is curated.
+	const CvPropertyManipulators* getPropertyManipulators() const { return &m_PropertyManipulators; }
+
 protected:
 	virtual CvEdges*     mutEdges()     { return &m_edges; }
 	virtual CvModifiers* mutModifiers() { return &m_modifiers; }
@@ -178,6 +183,7 @@ private:
 	std::set<int> m_featureTerrainSet;  // mapGeneration.validPlacementOn
 	std::vector<ImprovementTypes> m_providedByImprovementTypes;  // runtime (CvGlobals derived-cache pass); NOT JSON
 	std::vector<std::pair<ImprovementTypes, BuildTypes> > m_tradeProvidingImprovements;  // runtime cross-index; NOT JSON
+	CvPropertyManipulators m_PropertyManipulators;   // fed from the PROPERTY_* families (CascadePropertyBridge)
 };
 
 #endif // CV_JSON_BONUS_INFO_H

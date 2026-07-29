@@ -57,6 +57,11 @@ public:
 	const std::vector<BonusTypes>& getPrereqOrBonuses() const { return m_aePrereqOrBonuses; }
 	void addPrereqOrBonus(BonusTypes eBonus) { m_aePrereqOrBonuses.push_back(eBonus); }
 
+	// The KEEP-legacy property engine's per-turn SOURCES (property-audit.md). The gather roster walks
+	// a route, so the container must exist -- but NO route authors a PROPERTY_* family today, so it is
+	// accurately EMPTY rather than stubbed: it fills the moment such a deposit is curated.
+	const CvPropertyManipulators* getPropertyManipulators() const { return &m_PropertyManipulators; }
+
 protected:
 	virtual CvEdges*     mutEdges()     { return &m_edges; }
 	virtual CvModifiers* mutModifiers() { return &m_modifiers; }
@@ -73,6 +78,7 @@ private:
 	bool m_bSeaTunnel;
 	BonusTypes m_ePrereqBonus;                     // load-reconstructed single AND prereq (CvReversePass)
 	std::vector<BonusTypes> m_aePrereqOrBonuses;   // load-reconstructed OR-list (CvReversePass)
+	CvPropertyManipulators m_PropertyManipulators;   // fed from the PROPERTY_* families (CascadePropertyBridge)
 };
 
 #endif // CV_JSON_ROUTE_INFO_H
