@@ -3742,13 +3742,6 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 		PROFILE("CvCity::processBuilding.part2");
 
 		const bool bChange = (iChange == 1);
-		foreach_(const TraitTypes eTrait, kBuilding.getFreeTraitTypes())
-		{
-			if (GC.getTraitInfo(eTrait).isCivilizationTrait())
-			{
-				owner.setHasTrait(eTrait, bChange);
-			}
-		}
 
 		const CvProvides* pProvides = kBuilding.getProvides();
 		foreach_(const int iFreeBonus, pProvides->bonuses)

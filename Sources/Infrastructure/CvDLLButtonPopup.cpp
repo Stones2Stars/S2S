@@ -2813,7 +2813,7 @@ bool CvDLLButtonPopup::launchChooseTraitPopup(CvPopup* pPopup, CvPopupInfo &info
 	{
 		const CvTraitInfo& kTrait = GC.getTraitInfo((TraitTypes)iTrait);
 		const TraitTypes eTrait = ((TraitTypes)iTrait);
-		if (!GET_PLAYER(ePlayer).hasTrait(eTrait) && !GC.getTraitInfo(eTrait).isNegativeTrait() && !GC.getTraitInfo(eTrait).isCivilizationTrait())
+		if (!GET_PLAYER(ePlayer).hasTrait(eTrait) && !GC.getTraitInfo(eTrait).isNegativeTrait())
 		{
 			if (GET_PLAYER(ePlayer).canLearnTrait(eTrait))
 			{
@@ -2821,7 +2821,7 @@ bool CvDLLButtonPopup::launchChooseTraitPopup(CvPopup* pPopup, CvPopupInfo &info
 				bSelected = true;
 			}
 		}
-		else if (GET_PLAYER(ePlayer).hasTrait(eTrait) && GC.getTraitInfo(eTrait).isNegativeTrait() && !GC.getTraitInfo(eTrait).isCivilizationTrait())
+		else if (GET_PLAYER(ePlayer).hasTrait(eTrait) && GC.getTraitInfo(eTrait).isNegativeTrait())
 		{
 			if (GET_PLAYER(ePlayer).canUnlearnTrait(eTrait, true))
 			{
@@ -2857,7 +2857,7 @@ bool CvDLLButtonPopup::launchChooseTraitPopupNegative(CvPopup* pPopup, CvPopupIn
 	{
 		const CvTraitInfo& kTrait = GC.getTraitInfo((TraitTypes)iTrait);
 		const TraitTypes eTrait = ((TraitTypes)iTrait);
-		if (!GET_PLAYER(ePlayer).hasTrait(eTrait) && GC.getTraitInfo(eTrait).isNegativeTrait() && !GC.getTraitInfo(eTrait).isCivilizationTrait())
+		if (!GET_PLAYER(ePlayer).hasTrait(eTrait) && GC.getTraitInfo(eTrait).isNegativeTrait())
 		{
 			if (GET_PLAYER(ePlayer).canLearnTrait(eTrait, true))
 			{
@@ -2865,7 +2865,7 @@ bool CvDLLButtonPopup::launchChooseTraitPopupNegative(CvPopup* pPopup, CvPopupIn
 				bSelected = true;
 			}
 		}
-		else if (GET_PLAYER(ePlayer).hasTrait(eTrait) && !GC.getTraitInfo(eTrait).isNegativeTrait() && !GC.getTraitInfo(eTrait).isCivilizationTrait())
+		else if (GET_PLAYER(ePlayer).hasTrait(eTrait) && !GC.getTraitInfo(eTrait).isNegativeTrait())
 		{
 			if (GET_PLAYER(ePlayer).canUnlearnTrait(eTrait, false))
 			{

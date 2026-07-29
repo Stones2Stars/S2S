@@ -6342,14 +6342,14 @@ void CvGameTextMgr::parseLeaderShortTraits(CvWStringBuffer &szHelpString, Leader
 					eTrait = TraitTypes(GC.getLeaderHeadInfo(eLeader).getDefaultComplexTrait(iI));
 					if (!(GC.getGame().isOption(GAMEOPTION_LEADER_NO_NEGATIVE_TRAITS) && GC.getTraitInfo(eTrait).isNegativeTrait()) &&
 						!(GC.getGame().isOption(GAMEOPTION_LEADER_START_NO_POSITIVE_TRAITS) && !GC.getTraitInfo(eTrait).isNegativeTrait()) &&
-						((GC.getGame().isOption(GAMEOPTION_LEADER_DEVELOPING) && (GC.getTraitInfo(eTrait).getLinePriority() != 0 || GC.getTraitInfo(eTrait).isCivilizationTrait())) ||
-						(!GC.getGame().isOption(GAMEOPTION_LEADER_DEVELOPING) && GC.getTraitInfo(eTrait).getLinePriority() == 0)))
+						((GC.getGame().isOption(GAMEOPTION_LEADER_DEVELOPING) && GC.getTraitInfo(eTrait).getSuccessionPriority() != 0) ||
+						(!GC.getGame().isOption(GAMEOPTION_LEADER_DEVELOPING) && GC.getTraitInfo(eTrait).getSuccessionPriority() == 0)))
 					{
 						if (!bFirst)
 						{
 							szHelpString.append(L"/");
 						}
-						szHelpString.append(gDLL->getText(GC.getTraitInfo(eTrait).getShortDescription()));
+						szHelpString.append(gDLL->getText(GC.getTraitInfo(eTrait).getShortDescriptionKey()));
 						bFirst = false;
 					}
 				}
@@ -6364,14 +6364,14 @@ void CvGameTextMgr::parseLeaderShortTraits(CvWStringBuffer &szHelpString, Leader
 					eTrait = TraitTypes(GC.getLeaderHeadInfo(eLeader).getDefaultTrait(iI));
 					if (!(GC.getGame().isOption(GAMEOPTION_LEADER_NO_NEGATIVE_TRAITS) && GC.getTraitInfo(eTrait).isNegativeTrait()) &&
 						!(GC.getGame().isOption(GAMEOPTION_LEADER_START_NO_POSITIVE_TRAITS) && !GC.getTraitInfo(eTrait).isNegativeTrait()) &&
-						((GC.getGame().isOption(GAMEOPTION_LEADER_DEVELOPING) && (GC.getTraitInfo(eTrait).getLinePriority() != 0 || GC.getTraitInfo(eTrait).isCivilizationTrait())) ||
-						(!GC.getGame().isOption(GAMEOPTION_LEADER_DEVELOPING) && GC.getTraitInfo(eTrait).getLinePriority() == 0)))
+						((GC.getGame().isOption(GAMEOPTION_LEADER_DEVELOPING) && GC.getTraitInfo(eTrait).getSuccessionPriority() != 0) ||
+						(!GC.getGame().isOption(GAMEOPTION_LEADER_DEVELOPING) && GC.getTraitInfo(eTrait).getSuccessionPriority() == 0)))
 					{
 						if (!bFirst)
 						{
 							szHelpString.append(L"/");
 						}
-						szHelpString.append(gDLL->getText(GC.getTraitInfo(eTrait).getShortDescription()));
+						szHelpString.append(gDLL->getText(GC.getTraitInfo(eTrait).getShortDescriptionKey()));
 						bFirst = false;
 					}
 				}
@@ -6384,14 +6384,14 @@ void CvGameTextMgr::parseLeaderShortTraits(CvWStringBuffer &szHelpString, Leader
 				eTrait = ((TraitTypes)iI);
 				if (GC.getLeaderHeadInfo(eLeader).hasTrait(eTrait) && !(GC.getGame().isOption(GAMEOPTION_LEADER_NO_NEGATIVE_TRAITS) && GC.getTraitInfo(eTrait).isNegativeTrait()) &&
 					!(GC.getGame().isOption(GAMEOPTION_LEADER_START_NO_POSITIVE_TRAITS) && !GC.getTraitInfo(eTrait).isNegativeTrait()) &&
-					((GC.getGame().isOption(GAMEOPTION_LEADER_DEVELOPING) && (GC.getTraitInfo(eTrait).getLinePriority() != 0 || GC.getTraitInfo(eTrait).isCivilizationTrait())) ||
-					(!GC.getGame().isOption(GAMEOPTION_LEADER_DEVELOPING) && GC.getTraitInfo(eTrait).getLinePriority() == 0)))
+					((GC.getGame().isOption(GAMEOPTION_LEADER_DEVELOPING) && GC.getTraitInfo(eTrait).getSuccessionPriority() != 0) ||
+					(!GC.getGame().isOption(GAMEOPTION_LEADER_DEVELOPING) && GC.getTraitInfo(eTrait).getSuccessionPriority() == 0)))
 				{
 					if (!bFirst)
 					{
 						szHelpString.append(L"/");
 					}
-					szHelpString.append(gDLL->getText(GC.getTraitInfo(eTrait).getShortDescription()));
+					szHelpString.append(gDLL->getText(GC.getTraitInfo(eTrait).getShortDescriptionKey()));
 					bFirst = false;
 				}
 			}
@@ -14936,15 +14936,6 @@ void CvGameTextMgr::setBuildingHelp(CvWStringBuffer &szBuffer, const BuildingTyp
 			PropertyTypes eProperty = kBuilding.getBonusAidModifier(iI).ePropertyType;
 			szBuffer.append(NEWLINE);
 			szBuffer.append(gDLL->getText("TXT_KEY_BUILDINGHELP_BONUS_AID_MODIFIER", GC.getBonusInfo(eBonus).getDescription(), iBonusAidModifier, GC.getPropertyInfo(eProperty).getDescription()));
-		}
-	}
-
-	foreach_(const TraitTypes eTrait, kBuilding.getFreeTraitTypes())
-	{
-		if (GC.getTraitInfo(eTrait).isCivilizationTrait())
-		{
-			szBuffer.append(NEWLINE);
-			szBuffer.append(gDLL->getText("TXT_KEY_BUILDINGHELP_FREE_TRAIT", GC.getTraitInfo(eTrait).getDescription()));
 		}
 	}
 

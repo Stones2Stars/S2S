@@ -28695,7 +28695,7 @@ void CvPlayer::setHasTrait(TraitTypes eIndex, bool bNewValue)
 		emitTraitChanged(getID(), (int)eIndex, bNewValue);
 		processTrait(eIndex, bNewValue ? 1 : -1);
 
-		if (GC.getGame().isOption(GAMEOPTION_LEADER_DEVELOPING) && GC.getTraitInfo(eIndex).getLinePriority() != 0)
+		if (GC.getGame().isOption(GAMEOPTION_LEADER_DEVELOPING) && GC.getTraitInfo(eIndex).getSuccessionPriority() != 0)
 		{
 			const bool bNegativeTrait = GC.getTraitInfo(eIndex).isNegativeTrait();
 
@@ -28783,7 +28783,7 @@ bool CvPlayer::canLearnTrait(TraitTypes eIndex, bool isSelectingNegative) const
 
 	const CvTraitInfo& kTrait = GC.getTraitInfo(eIndex);
 
-	if (kTrait.getLinePriority() == 0 || !kTrait.isValidTrait()) return false;
+	if (kTrait.getSuccessionPriority() == 0 || !kTrait.isValidTrait()) return false;
 
 
 	const TraitTypes eTraitPrerequisite = kTrait.getPrereqTrait();
@@ -28843,18 +28843,18 @@ bool CvPlayer::canLearnTrait(TraitTypes eIndex, bool isSelectingNegative) const
 			const TraitTypes ePrereq = ((TraitTypes)iI);
 			if (!hasTrait(ePrereq) && GC.getTraitInfo(ePrereq).getPromotionLine() != NO_PROMOTIONLINE)
 			{
-				if (!kTrait.isNegativeTrait() && kTrait.getLinePriority() > 1)
+				if (!kTrait.isNegativeTrait() && kTrait.getSuccessionPriority() > 1)
 				{
 					if (GC.getTraitInfo(ePrereq).getPromotionLine() == kTrait.getPromotionLine()
-					&& (GC.getTraitInfo(ePrereq).getLinePriority() == (kTrait.getLinePriority() - 1)))
+					&& (GC.getTraitInfo(ePrereq).getSuccessionPriority() == (kTrait.getSuccessionPriority() - 1)))
 					{
 						return false;
 					}
 				}
-				else if (kTrait.isNegativeTrait() && isSelectingNegative && (kTrait.getLinePriority() < -1))
+				else if (kTrait.isNegativeTrait() && isSelectingNegative && (kTrait.getSuccessionPriority() < -1))
 				{
 					if (GC.getTraitInfo(ePrereq).getPromotionLine() == kTrait.getPromotionLine()
-					&& (GC.getTraitInfo(ePrereq).getLinePriority() == (kTrait.getLinePriority() + 1)))
+					&& (GC.getTraitInfo(ePrereq).getSuccessionPriority() == (kTrait.getSuccessionPriority() + 1)))
 					{
 						return false;
 					}
@@ -28883,7 +28883,7 @@ bool CvPlayer::canLearnTrait(TraitTypes eIndex, bool isSelectingNegative) const
 bool CvPlayer::canUnlearnTrait(TraitTypes eTrait, bool bPositive) const
 {
 	PROFILE_EXTRA_FUNC();
-	if (GC.getTraitInfo(eTrait).getLinePriority() == 0)
+	if (GC.getTraitInfo(eTrait).getSuccessionPriority() == 0)
 	{
 		return false;
 	}
@@ -28898,11 +28898,11 @@ bool CvPlayer::canUnlearnTrait(TraitTypes eTrait, bool bPositive) const
 		return false;
 	}
 
-	if (GC.getGame().isOption(GAMEOPTION_LEADER_DEVELOPING) && GC.getTraitInfo(eTrait).getLinePriority() == 0)
+	if (GC.getGame().isOption(GAMEOPTION_LEADER_DEVELOPING) && GC.getTraitInfo(eTrait).getSuccessionPriority() == 0)
 	{
 		return false;
 	}
-	else if (!GC.getGame().isOption(GAMEOPTION_LEADER_DEVELOPING) && GC.getTraitInfo(eTrait).getLinePriority() != 0)
+	else if (!GC.getGame().isOption(GAMEOPTION_LEADER_DEVELOPING) && GC.getTraitInfo(eTrait).getSuccessionPriority() != 0)
 	{
 		return false;
 	}
@@ -28916,7 +28916,7 @@ bool CvPlayer::canUnlearnTrait(TraitTypes eTrait, bool bPositive) const
 			{
 				if (GC.getTraitInfo(eTrait).isNegativeTrait())
 				{
-					if (GC.getTraitInfo(qTrait).getLinePriority() < GC.getTraitInfo(eTrait).getLinePriority())
+					if (GC.getTraitInfo(qTrait).getSuccessionPriority() < GC.getTraitInfo(eTrait).getSuccessionPriority())
 					{
 						return false;
 					}
@@ -28924,7 +28924,7 @@ bool CvPlayer::canUnlearnTrait(TraitTypes eTrait, bool bPositive) const
 			}
 			else
 			{
-				if (GC.getTraitInfo(qTrait).getLinePriority() > GC.getTraitInfo(eTrait).getLinePriority())
+				if (GC.getTraitInfo(qTrait).getSuccessionPriority() > GC.getTraitInfo(eTrait).getSuccessionPriority())
 				{
 					return false;
 				}
@@ -29052,7 +29052,7 @@ void CvPlayer::doPromoteLeader()
 				{
 					FlavorTypes eFlavor = ((FlavorTypes)iJ);
 					iFlavorValue = (GC.getLeaderHeadInfo(getPersonalityType()).getFlavorValue(eFlavor)+1) * (GC.getTraitInfo(eTrait).getFlavorValue(eFlavor)+1);
-					if (GC.getTraitInfo(eTrait).getLinePriority() > 0)
+					if (GC.getTraitInfo(eTrait).getSuccessionPriority() > 0)
 					{
 						int iLevelModifier = getLeaderHeadLevel();
 						if (GC.getGame().isOption(GAMEOPTION_LEADER_START_NO_POSITIVE_TRAITS))
@@ -29067,7 +29067,7 @@ void CvPlayer::doPromoteLeader()
 						}
 						else
 						{
-							iPriorityModifier = GC.getTraitInfo(eTrait).getLinePriority();
+							iPriorityModifier = GC.getTraitInfo(eTrait).getSuccessionPriority();
 						}
 						int iMult = (iPriorityModifier * 10 * iMultModifier);
 						iFlavorValue *= iMult;
@@ -29126,7 +29126,7 @@ void CvPlayer::doPromoteLeader()
 					{
 						FlavorTypes eFlavor = ((FlavorTypes)iJ);
 						iFlavorValue = (GC.getLeaderHeadInfo(getPersonalityType()).getFlavorValue(eFlavor)+1) * (100 - GC.getTraitInfo(eTrait).getFlavorValue(eFlavor)+1);
-						if (GC.getTraitInfo(eTrait).getLinePriority() < 0)
+						if (GC.getTraitInfo(eTrait).getSuccessionPriority() < 0)
 						{
 							int iLevelModifier = getLeaderHeadLevel();
 							if (GC.getGame().isOption(GAMEOPTION_LEADER_START_NO_POSITIVE_TRAITS))
@@ -29137,7 +29137,7 @@ void CvPlayer::doPromoteLeader()
 							int iPriorityModifier = 0;
 							if (GC.getTraitInfo(eTrait).isNegativeTrait())
 							{
-								iPriorityModifier = -GC.getTraitInfo(eTrait).getLinePriority();
+								iPriorityModifier = -GC.getTraitInfo(eTrait).getSuccessionPriority();
 							}
 							else
 							{
@@ -29186,7 +29186,7 @@ void CvPlayer::clearLeaderTraits()
 	for (int iI = 0; iI < GC.getNumTraitInfos(); iI++)
 	{
 		TraitTypes eTrait = ((TraitTypes)iI);
-		if (hasTrait(eTrait) && !GC.getTraitInfo(eTrait).isCivilizationTrait())
+		if (hasTrait(eTrait))
 		{
 			m_pabHasTrait[eTrait] = false;
 			processTrait((TraitTypes)iI, -1);

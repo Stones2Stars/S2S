@@ -5859,26 +5859,6 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 
 			if (iPass > 0)
 			{
-				foreach_(const TraitTypes eTrait, kBuilding.getFreeTraitTypes())
-				{
-					if (GC.getTraitInfo(eTrait).isCivilizationTrait())
-					{
-						if (!GC.getTraitInfo(eTrait).isNegativeTrait())
-						{
-							for (int iJ = 0; iJ < GC.getNumFlavorTypes(); iJ++)
-							{
-								iValue += (GC.getLeaderHeadInfo(kOwner.getLeaderType()).getFlavorValue(iJ) * GC.getTraitInfo(eTrait).getFlavorValue(iJ));
-							}
-						}
-						else
-						{
-							for (int iJ = 0; iJ < GC.getNumFlavorTypes(); iJ++)
-							{
-								iValue -= (GC.getLeaderHeadInfo(kOwner.getLeaderType()).getFlavorValue(iJ) * GC.getTraitInfo(eTrait).getFlavorValue(iJ));
-							}
-						}
-					}
-				}
 				for (int iI = 0; iI < GC.getNumHurryInfos(); iI++)
 				{
 					if (kBuilding.isHurry(iI))
