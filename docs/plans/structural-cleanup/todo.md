@@ -453,11 +453,15 @@ per-source unit-stat reads whose replacement is not built.
 - **The AI call sites** — the largest consumer of the info surface, deliberately last. A dangling AI call site is
   intended output, not a defect to fix on sight.
 - **`CvGameTextMgr` composers onto rendered entry lines** — the per-entry renderer exists
-  (`Sources/UI/CvEntryText`) and `CvGameTextMgr::appendEntryLines` is the shared consumer, but only the
-  VISION and MOVEMENT families have moved onto it (5 call sites). The other info-help composer families still
-  hand-assemble from getters.
+  (`Sources/UI/CvEntryText`) and `CvGameTextMgr::appendEntryLines` is the shared consumer. The unit /
+  unitcombat / promotion / vision / movement families have moved; the remaining info-help composers
+  (`setBuildingHelp`, `setBonusHelp`, `setTechHelp`, `setProjectHelp`, `parseTraits`, `parseCivicInfo`, …)
+  still hand-assemble from getters.
   ⚑ Each move DELETES composer code rather than porting it: a rendered line already carries magnitude,
   unit, target, scope, per-scaler and conditions, so a new channel needs no composer edit at all.
+  ⛔ **The bound: the BLOCKS stay, the SUB-BLOCKS go** — a block composes several SOURCES, so choosing them
+  and heading them is the text manager's job; the per-source render inside is never hand-built. The ruling +
+  the practical test: [patterns.md § the per-entry TEXT render](../../architecture/patterns.md).
   ⚖ **THE DLL DOES NOT CONVERT FOR DISPLAY — the consumer converts itself (owner: "let python convert
   themselves").** A composer doing `(float)value / 100 / denominator` to print `%.2f` is the DLL performing the
   presentation layer's arithmetic, and it puts FLOAT in the DLL for a value the engine holds as an integer.

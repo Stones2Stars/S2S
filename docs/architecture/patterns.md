@@ -226,6 +226,24 @@ group's natural index** — never N individual getters for a groupable set. This
      list is COMPLETE — unconditioned entries are RETAINED as entries** (the folded sums are the derived fast
      plane beside them, never a replacement) — per-entry text and per-entry attribution both require the list.
 
+     > **⚖ THE DIVISION OF LABOUR — `CvGameTextMgr` KEEPS THE BLOCKS AND LOSES THE SUB-BLOCKS (owner).** The
+     > renderer is expected to remove *"the vast majority of bespoke work GameTextMgr used to do"*: the text
+     > manager *"should only care about TXT_KEY replacements, and be the `Cy` target for actual string
+     > content — it should not need to manually convert entries for each individual tooltip, or text box, when
+     > that text conversion can be built programmatically."*
+     > ⛔ **But the BLOCKS STAY, and the reason is what makes the line findable: *"the blocks are different
+     > sources put together"*.** A block is a COMPOSITION — one heading over contributions from several
+     > distinct sources (the building, the civic, the trait all feeding one happiness block) — so deciding
+     > which sources compose it, in what order, under which TXT_KEY heading, is genuinely the text manager's
+     > job and cannot be derived from any single entry list. ⛔ **What must never be hand-built is every
+     > SUB-BLOCK** — the per-source render inside the block. That is one `appendEntryLines` call per (source,
+     > family), and a block simply issues several.
+     > ⚑ The practical test on any composer edit: if you are writing `getText` around a MAGNITUDE, you are
+     > building a sub-block by hand and it is wrong; if you are writing `getText` for a HEADING or choosing
+     > which sources belong together, that is the block and it is right.
+     > ⛔ So a whole-entity "render every family at once" dump is NOT the shape — it flattens the composition
+     > the blocks exist to express, which is why the surface is per-family.
+
   ```cpp
   // SECTIONS — whole typed objects
   const CvRequires*  getRequires() const;

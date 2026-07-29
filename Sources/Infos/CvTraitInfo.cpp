@@ -6,7 +6,7 @@
 
 #include "CvGameCoreDLL.h"
 #include "CvTraitInfo.h"
-#include "CvJsonParse.h"   // jsonChildObj / jsonIdInt / jsonIdBool / jsonIdStr
+#include "CvJsonParse.h"   // jsonChildObj / jsonIdInt / jsonIdBool / jsonIdStr / jsonIdFk / jsonReadIdList
 
 CvTraitInfo::CvTraitInfo()
 	: m_bNegativeTrait(false)
@@ -15,6 +15,8 @@ CvTraitInfo::CvTraitInfo()
 	, m_bImpurePromotions(false)
 	, m_iMinAnarchy(0)
 	, m_iMaxAnarchy(0)
+	, m_iSuccessionPromotionLine(-1)
+	, m_iSuccessionPriority(0)
 {
 }
 
@@ -29,6 +31,9 @@ void CvTraitInfo::mapFrom(const picojson::value& entity)
 	m_iMinAnarchy = 0;
 	m_iMaxAnarchy = 0;
 	m_szShortDescriptionKey.clear();
+	m_iSuccessionPromotionLine = -1;
+	m_iSuccessionPriority = 0;
+	m_aiExcludes.clear();
 
 	if (!entity.is<picojson::object>())
 	{
@@ -49,4 +54,12 @@ void CvTraitInfo::mapFrom(const picojson::value& entity)
 			m_szShortDescriptionKey = CvWString(szTextKey.c_str());
 		}
 	}
+
+	// --- par.9 succession.{promotionLine, priority} + excludes ---
+	if (const picojson::object* pSuccession = jsonChildObj(entityObj, "succession"))
+	{
+		m_iSuccessionPromotionLine = jsonIdFk(*pSuccession, "promotionLine");
+		m_iSuccessionPriority = jsonIdInt(*pSuccession, "priority");
+	}
+	jsonReadIdList(entityObj, "excludes", m_aiExcludes);
 }

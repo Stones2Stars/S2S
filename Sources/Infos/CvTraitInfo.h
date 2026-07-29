@@ -106,6 +106,14 @@ public:
 	int getMaxAnarchy() const                 { return m_iMaxAnarchy; }
 	const CvWString& getShortDescriptionKey() const { return m_szShortDescriptionKey; }   // TXT_KEY
 
+	// json.md par.9 `succession` -- the promotion-LINE this trait belongs to and its ordering rank within it.
+	// The line's own levels advance by gameplay progression, never by tech: the HELD trait is the authoritative
+	// level (modifier.md par.4), so these are pure ordering data, never a gate.
+	int getSuccessionPromotionLine() const { return m_iSuccessionPromotionLine; }
+	int getSuccessionPriority() const      { return m_iSuccessionPriority; }
+	// json.md par.9 `excludes` -- the same-tier traits this one is mutually exclusive with.
+	const std::vector<int>& getExcludes() const { return m_aiExcludes; }
+
 protected:
 	virtual CvEdges*     mutEdges()     { return &m_edges; }
 	virtual CvTriggers*  mutTriggers()  { return &m_triggers; }
@@ -127,6 +135,9 @@ private:
 	int m_iMinAnarchy;
 	int m_iMaxAnarchy;
 	CvWString m_szShortDescriptionKey;
+	int m_iSuccessionPromotionLine;
+	int m_iSuccessionPriority;
+	std::vector<int> m_aiExcludes;
 };
 
 #endif // CV_JSON_TRAIT_INFO_H
