@@ -5657,6 +5657,22 @@ void CvSelectionGroup::read(FDataStreamBase* pStream)
 		CLLNode<MissionData>* pNode = headMissionQueueNode();
 		while (pNode != NULL)
 		{
+			// The queue is a RAW binary image, so the mission id in it is the one the SAVE was written with.
+			// Resolve it by NAME through the mission mapping table (WriteClassMappingTable already emits one)
+			// BEFORE anything switches on it: a mission removed since that save would otherwise keep whatever
+			// index it held and silently become whichever mission now occupies it -- and every case below
+			// would dispatch on the wrong one. `allowMissing` is REQUIRED: without it a removed mission calls
+			// HandleIncompatibleSave and refuses the load outright.
+			const int iRemappedMission =
+				wrapper.getNewClassEnumValue(REMAPPED_CLASS_TYPE_MISSIONS, (int)pNode->m_data.eMissionType, true);
+			if (iRemappedMission == (int)NO_MISSION)
+			{
+				//	This mission has been removed - delete this queue element
+				pNode = deleteMissionQueueNode(pNode);
+				continue;
+			}
+			pNode->m_data.eMissionType = (MissionTypes)iRemappedMission;
+
 			switch(pNode->m_data.eMissionType)
 			{
 			case MISSION_BUILD:

@@ -427,6 +427,14 @@ grep -o "error C2039: '[^']*' : is not a member of '[^']*'" <log> | sort -u
 one symbol reveals previously-hidden errors in the same TU, which is why the raw error TOTAL barely moves and
 is a useless progress metric. Count DISTINCT `(member, class)` pairs instead.
 
+⛔ **AND THE PAIR COUNT IS UNRELIABLE IN BOTH DIRECTIONS — a DROP is not progress either.** The unity batches
+group several files per TU, so deleting code anywhere in a batch changes how the 100-error budget is spent and
+therefore WHICH files get to report at all. A symbol can vanish from the census while every one of its call
+sites is still standing. ⚑ So a cleared pair is only real once `grep -rn` says the symbol is gone from
+`Sources/`; the census alone never proves it. ⚠ Run that grep from the REPO ROOT — a leftover `cd Sources`
+from the build makes `grep -rn … Sources/` fail, and in a `grep | grep | head` pipeline the exit code comes
+from `head`, so a `|| echo "absent"` fallback reports success and the miss reads as a clean result.
+
 **The disposition test, in order — this is the part that matters:**
 
 1. **`grep` the owning info's header for a successor FIRST.** The rebuilt infos are named for the JSON
