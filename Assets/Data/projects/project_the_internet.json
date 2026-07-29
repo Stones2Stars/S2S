@@ -27,7 +27,9 @@
  },
  "tradeRoutes": {
   "world": {
-   "flat": 1
+   "empires": {
+    "flat": 1
+   }
   }
  },
  "research": {

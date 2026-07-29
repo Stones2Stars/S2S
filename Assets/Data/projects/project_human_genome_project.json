@@ -8,7 +8,9 @@
    "flat": 1
   },
   "world": {
-   "flat": 1
+   "empires": {
+    "flat": 1
+   }
   }
  },
  "gold": {

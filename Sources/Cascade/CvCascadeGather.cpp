@@ -118,11 +118,24 @@ namespace
 		const int iFeaturesSeg = modSegmentLookup("features");
 		const int iBonusesSeg = modSegmentLookup("bonuses");
 		const int iRoutesSeg = modSegmentLookup("routes");
+		const int iEmpiresSeg = modSegmentLookup("empires");
 		const std::vector<CvModEntry*>& entries = pModifiers->entries();
 		for (size_t iEntry = 0; iEntry < entries.size(); ++iEntry)
 		{
 			const CvModEntry* pEntry = entries[iEntry];
-			if (pEntry == NULL || pEntry->scope != eScope)
+			if (pEntry == NULL)
+			{
+				continue;
+			}
+			// json §3.3's `empires` plural target: a WORLD-scope deposit onto EVERY empire lands in each
+			// PLAYER's package, because WORLD is CONFIG and carries no package of its own
+			// (state-repositories.md -- "a project granting something to every player is NOT world-scope
+			// state"). So the empire gather accepts it even though the authored scope is world.
+			const bool bWorldEmpires = (eScope == CASC_SCOPE_EMPIRE
+				&& pEntry->scope == CASC_SCOPE_WORLD
+				&& iEmpiresSeg >= 0
+				&& pEntry->targetSeg == iEmpiresSeg);
+			if (pEntry->scope != eScope && !bWorldEmpires)
 			{
 				continue;
 			}
@@ -153,11 +166,17 @@ namespace
 			// receiver's specialist term).
 			if (pEntry->targetSeg >= 0 || pEntry->targetFk >= 0)
 			{
-				if (eScope != CASC_SCOPE_PLOT || pKeyPlot == NULL)
+				// The `empires` fan is the ONE targeted entry that folds outside plot scope: its target IS
+				// the gathering owner, so landing it here is the deposit, not a keyed lookup.
+				if (!bWorldEmpires && (eScope != CASC_SCOPE_PLOT || pKeyPlot == NULL))
 				{
 					continue;
 				}
-				if (pEntry->targetSeg == iPlotsSeg)
+				if (bWorldEmpires)
+				{
+					// falls through: the fan IS the fold, no per-target test applies
+				}
+				else if (pEntry->targetSeg == iPlotsSeg)
 				{
 					// falls through: applies() below evaluates the per-plot filter against THIS plot's ctx
 				}

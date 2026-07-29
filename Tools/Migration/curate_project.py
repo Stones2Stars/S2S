@@ -8,6 +8,10 @@ scope of every field — verified line-by-line against that function:
   iInflationModifier, the four maintenance modifiers, CommerceModifiers (4559-4570).
 - WORLD scope (EVERY alive player, OUTSIDE the team check): iWorldHappiness/iWorldHealth/iWorldTradeRoutes
   (4572-4574). The first-pass mapping mis-scoped these as team — the C++ is explicit they are world.
+  ⚠ They emit the PLURAL TARGET `world.empires`, never a bare `world` flat: WORLD is CONFIG and carries no
+  package, so "grants something to every player" is the §3.3 empires fan that lands in EACH PLAYER's package
+  (state-repositories.md — this was the flagged mis-scoped-data curator fix). A bare `world.<unit>` here would
+  compile to a slot no scope stores and the value would simply vanish.
 
 Modeling calls made this pass (light-batch-classification.json + the C++):
 - The victory-launch cluster (VictoryThresholds/VictoryMinThresholds per-victory + iVictoryDelayPercent +
@@ -62,9 +66,9 @@ FAMILIES = {
     "iInflationModifier":             ("inflation",   "empire", None,               "percent"),
     "iGlobalHappiness":               ("happiness",   "empire", None,               "flat"),
     "iGlobalHealth":                  ("health",      "empire", None,               "flat"),
-    "iWorldHappiness":                ("happiness",   "world",  None,               "flat"),
-    "iWorldHealth":                   ("health",      "world",  None,               "flat"),
-    "iWorldTradeRoutes":              ("tradeRoutes", "world",  None,               "flat"),   # ruling 11: kind 0 IS the route count (memberless -- the reconciliation micro-fix)
+    "iWorldHappiness":                ("happiness",   "world",  "empires",               "flat"),
+    "iWorldHealth":                   ("health",      "world",  "empires",               "flat"),
+    "iWorldTradeRoutes":              ("tradeRoutes", "world",  "empires",               "flat"),   # ruling 11: kind 0 IS the route count (memberless -- the reconciliation micro-fix)
 }
 # CommerceModifiers: SPLIT per-identifier commerce families (gold/research/culture/espionage), empire/percent.
 SPLIT_COMMERCE = {"CommerceModifiers": ("empire", "percent")}

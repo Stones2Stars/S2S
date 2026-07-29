@@ -13,7 +13,9 @@
    "flat": 2
   },
   "world": {
-   "flat": 2
+   "empires": {
+    "flat": 2
+   }
   }
  },
  "cost": {
