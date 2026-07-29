@@ -18,6 +18,19 @@
 #include "CvImprovementInfo.h"
 #include "CvBonusInfo.h"
 #include "CvSpawnInfo.h"
+#include "CvClassificationBlock.h"   // CLSD_TAG + the memoized id bit test
+
+// The json.md §8 TAG read this file makes. tags.md rules the wild/tamed animal SUB-STATES out of the
+// vocabulary ("base `animal` covers them"), so `animal` IS the available answer -- and the info's tag
+// bitset is already the fold of the unit's own tags with its combat classes' (deriveAtRegistryComplete).
+namespace
+{
+	bool unitIsAnimal(const CvUnitInfo& kUnit)
+	{
+		static int s_animalTagId = -1;
+		return kUnit.getTags()->hasKey(s_animalTagId, CLSD_TAG, "animal");
+	}
+}
 
 
 //======================================================================================================
@@ -284,7 +297,7 @@ bool CvSpawnInfo::getTreatAsBarbarian() const
 
 bool CvSpawnInfo::getNeutralOnly() const
 {
-	if (GC.getUnitInfo(getUnitType()).isWildAnimal() && GC.getGame().isOption(GAMEOPTION_ANIMAL_DANGEROUS))
+	if (unitIsAnimal(GC.getUnitInfo(getUnitType())) && GC.getGame().isOption(GAMEOPTION_ANIMAL_DANGEROUS))
 	{
 		return false;
 	}

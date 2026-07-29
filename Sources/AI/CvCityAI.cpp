@@ -40,6 +40,18 @@
 #include "CvCityLogTags.h" // [CIT] tag enums (shared with CvCity.cpp -- defined once, see header)
 #include "Infos/CvClassificationBlock.h"   // CLSD_SKILL + the memoized id bit test
 
+// The json.md §8 classification reads this file makes. The consumer holds the memoized generated-id
+// (the CvUnitFilters precedent): the info exposes only the parameterized group read, never a named
+// getter per key (patterns.md -- a per-key boolean getter is the shape the rebuild deletes).
+namespace
+{
+	bool unitIgnoresBuildingDefense(const CvUnitInfo& kUnit)
+	{
+		static int s_ignoreBuildingDefenseId = -1;
+		return kUnit.getSkills()->hasKey(s_ignoreBuildingDefenseId, CLSD_SKILL, "ignoreBuildingDefense");
+	}
+}
+
 namespace
 {
 	// The json.md §8 SKILL reads this file makes. The consumer holds the memoized generated-id
@@ -5224,7 +5236,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 
 				if (!bAreaAlone)
 				{
-					if ((GC.getGame().getBestLandUnit() == NO_UNIT) || !(GC.getUnitInfo(GC.getGame().getBestLandUnit()).isIgnoreBuildingDefense()))
+					if ((GC.getGame().getBestLandUnit() == NO_UNIT) || !(unitIgnoresBuildingDefense(GC.getUnitInfo(GC.getGame().getBestLandUnit()))))
 					{
 						// The candidate's whole defense contribution is ONE valuation read: the compiled defense
 						// sum PLUS its bonus-conditioned entries, resolved against the bonuses this city

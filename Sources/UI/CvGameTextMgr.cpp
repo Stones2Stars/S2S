@@ -2511,12 +2511,6 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, 
 					}
 				}
 
-				if (pUnit->getUnitInfo().isNoRevealMap())
-				{
-					szString.append(NEWLINE);
-					szString.append(gDLL->getText("TXT_KEY_UNITHELP_VISIBILITY_MOVE_RANGE"));
-				}
-
 				//Paradrop
 				if (pUnit->getDropRange() > 0)
 				{
@@ -3140,7 +3134,7 @@ void CvGameTextMgr::setPlotListHelp(CvWStringBuffer &szString, CvPlot* pPlot, bo
 					szString.append(CvWString::format(L"%c", gDLL->getSymbolID(STRENGTH_CHAR)));
 				}
 
-				if (kPlayer.getID() != GC.getGame().getActivePlayer() && !kUnit.isHiddenNationality())
+				if (kPlayer.getID() != GC.getGame().getActivePlayer() && !unitHasHiddenNationality(kUnit))
 				{
 					szString.append(L", ");
 
@@ -12212,7 +12206,7 @@ void CvGameTextMgr::setBasicUnitHelpWithCity(CvWStringBuffer &szBuffer, UnitType
 		}
 
 		//Hidden Nationality
-		if (kUnit.isHiddenNationality())
+		if (unitHasHiddenNationality(kUnit))
 		{
 			szBuffer.append(NEWLINE);
 			szBuffer.append(gDLL->getText("TXT_KEY_UNITHELP_HIDDEN_NATIONALITY"));
@@ -24742,6 +24736,18 @@ void CvGameTextMgr::parseGreatGeneralHelp(CvWStringBuffer &szBuffer, CvPlayer& k
 //------------------------------------------------------------------------------------------------
 
 #include "AI/CvCityLogTags.h"   // citEmitBillboardPoll -- the billboard-feed trace (every entry point emits)
+
+// The json.md §8 classification reads this file makes. The consumer holds the memoized generated-id
+// (the CvUnitFilters precedent): the info exposes only the parameterized group read, never a named
+// getter per key (patterns.md -- a per-key boolean getter is the shape the rebuild deletes).
+namespace
+{
+	bool unitHasHiddenNationality(const CvUnitInfo& kUnit)
+	{
+		static int s_hiddenNationalityId = -1;
+		return kUnit.getSkills()->hasKey(s_hiddenNationalityId, CLSD_SKILL, "hiddenNationality");
+	}
+}
 
 void CvGameTextMgr::buildCityBillboardIconString( CvWStringBuffer& szBuffer, CvCity* pCity)
 {

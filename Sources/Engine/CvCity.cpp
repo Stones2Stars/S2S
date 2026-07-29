@@ -46,6 +46,18 @@
 #include "UI/CityOutputHistory.h"
 #include "Infos/CvClassificationBlock.h"   // CLSD_SKILL + the memoized id bit test
 
+// The json.md §8 classification reads this file makes. The consumer holds the memoized generated-id
+// (the CvUnitFilters precedent): the info exposes only the parameterized group read, never a named
+// getter per key (patterns.md -- a per-key boolean getter is the shape the rebuild deletes).
+namespace
+{
+	bool unitIsSpy(const CvUnitInfo& kUnit)
+	{
+		static int s_spyTagId = -1;
+		return kUnit.getTags()->hasKey(s_spyTagId, CLSD_TAG, "spy");
+	}
+}
+
 namespace
 {
 	// The json.md §8 SKILL reads this file makes. The consumer holds the memoized generated-id
@@ -2285,7 +2297,7 @@ int CvCity::getProductionExperience(UnitTypes eUnit) const
 	{
 		const CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
 
-		if (kUnit.isSpy() && !GC.isSS_ENABLED())
+		if (unitIsSpy(kUnit) && !GC.isSS_ENABLED())
 		{
 			return 0;
 		}

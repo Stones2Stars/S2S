@@ -119,6 +119,58 @@ namespace
 #include "Infrastructure/CvDLLButtonPopup.h"
 #ifdef USE_OLD_PATH_GENERATOR
 #include "Infrastructure/FAStarNode.h"
+
+// The json.md §8 SKILL reads this file makes. The consumer holds the memoized generated-id
+// (the CvUnitFilters precedent): the info exposes only the parameterized group read getSkills(),
+// never a named getter per key (patterns.md -- a per-key boolean getter is the shape the rebuild deletes).
+namespace
+{
+	bool unitIsNoNonOwnedCityEntry(const CvUnitInfo& kUnit)
+	{
+		static int s_noNonOwnedCityEntryId = -1;
+		return kUnit.getSkills()->hasKey(s_noNonOwnedCityEntryId, CLSD_SKILL, "noNonOwnedCityEntry");
+	}
+	bool unitIsOnlyDefensive(const CvUnitInfo& kUnit)
+	{
+		static int s_onlyDefensiveId = -1;
+		return kUnit.getSkills()->hasKey(s_onlyDefensiveId, CLSD_SKILL, "onlyDefensive");
+	}
+	bool unitIsInquisitor(const CvUnitInfo& kUnit)
+	{
+		static int s_inquisitorId = -1;
+		return kUnit.getSkills()->hasKey(s_inquisitorId, CLSD_SKILL, "inquisitor");
+	}
+	bool unitCanPillage(const CvUnitInfo& kUnit)
+	{
+		static int s_pillageId = -1;
+		return kUnit.getSkills()->hasKey(s_pillageId, CLSD_SKILL, "pillage");
+	}
+	bool unitIsAlwaysHostile(const CvUnitInfo& kUnit)
+	{
+		static int s_alwaysHostileId = -1;
+		return kUnit.getSkills()->hasKey(s_alwaysHostileId, CLSD_SKILL, "alwaysHostile");
+	}
+	bool unitIsSuicide(const CvUnitInfo& kUnit)
+	{
+		static int s_suicideId = -1;
+		return kUnit.getSkills()->hasKey(s_suicideId, CLSD_SKILL, "suicide");
+	}
+	bool unitCanSabotage(const CvUnitInfo& kUnit)
+	{
+		static int s_sabotageId = -1;
+		return kUnit.getSkills()->hasKey(s_sabotageId, CLSD_SKILL, "sabotage");
+	}
+	bool unitCanDestroy(const CvUnitInfo& kUnit)
+	{
+		static int s_destroyId = -1;
+		return kUnit.getSkills()->hasKey(s_destroyId, CLSD_SKILL, "destroy");
+	}
+	bool unitCanStealPlans(const CvUnitInfo& kUnit)
+	{
+		static int s_stealPlansId = -1;
+		return kUnit.getSkills()->hasKey(s_stealPlansId, CLSD_SKILL, "stealPlans");
+	}
+}
 #endif
 
 static CvEntity* g_dummyEntity = NULL;
@@ -4579,8 +4631,6 @@ bool CvUnit::canEnterPlot(const CvPlot* pPlot, MoveCheck::flags flags /*= MoveCh
 	}
 	// Wrong map category?
 	if (m_pUnitInfo && !isMapCategory(*pPlot, *m_pUnitInfo)
-	// Can Explore?
-	|| m_pUnitInfo->isNoRevealMap() && willRevealByMove(pPlot)
 	// Exiled?
 	|| isExcile() && (pPlot->getOwner() == getOwner() || pPlot->getOwner() == getOriginalOwner())
 	// Spies barred territorial entry by some condition
@@ -4733,7 +4783,7 @@ bool CvUnit::canEnterPlot(const CvPlot* pPlot, MoveCheck::flags flags /*= MoveCh
 	}
 
 	//ls612: For units that can't enter non-Owned Cities
-	if (m_pUnitInfo->isNoNonOwnedEntry() && pPlot->isCity() && (pPlot->getOwner() != getOwner()))
+	if (unitIsNoNonOwnedCityEntry(*m_pUnitInfo) && pPlot->isCity() && (pPlot->getOwner() != getOwner()))
 	{
 		return false;
 	}
@@ -4930,7 +4980,7 @@ bool CvUnit::canEnterPlot(const CvPlot* pPlot, MoveCheck::flags flags /*= MoveCh
 	{
 		if (!bIgnoreTileLimit)
 		{
-			if (!getUnitInfo().isOnlyDefensive() && baseCombatStr() > 0)
+			if (!unitIsOnlyDefensive(getUnitInfo()) && baseCombatStr() > 0)
 			{
 				if (getDomainType() == DOMAIN_LAND && !pPlot->isWater() || getDomainType() == DOMAIN_SEA && pPlot->isWater() || getDomainType() == DOMAIN_AIR)
 				{
@@ -4942,7 +4992,7 @@ bool CvUnit::canEnterPlot(const CvPlot* pPlot, MoveCheck::flags flags /*= MoveCh
 						if (pLoopUnit->getTeam() == getTeam())
 						{
 							//Ignore workers, Missionaries, etc...
-							if (!pLoopUnit->getUnitInfo().isOnlyDefensive() && pLoopUnit->baseCombatStr() > 0)
+							if (!unitIsOnlyDefensive(pLoopUnit->getUnitInfo()) && pLoopUnit->baseCombatStr() > 0)
 							{
 								//No counting cargo for ships, or harbors
 								if (pLoopUnit->getDomainType() == getDomainType())
@@ -5210,7 +5260,7 @@ bool CvUnit::canAutomate(AutomateTypes eAutomate) const
 	/*                                                                                              */
 	/*  Clicking on the Automate button with an Inquisitor causes a CTD                             */
 	/************************************************************************************************/
-	if (m_pUnitInfo->isInquisitor())
+	if (unitIsInquisitor(*m_pUnitInfo))
 	{
 		return false;
 	}
@@ -5296,7 +5346,7 @@ bool CvUnit::canAutomate(AutomateTypes eAutomate) const
 		break;
 
 	case AUTOMATE_PILLAGE:
-		if (!getUnitInfo().isPillage())
+		if (!unitCanPillage(getUnitInfo()))
 		{
 			return false;
 		}
@@ -5348,7 +5398,7 @@ bool CvUnit::canAutomate(AutomateTypes eAutomate) const
 		{
 			return false;
 		}
-		if (!isHiddenNationality() || !m_pUnitInfo->isAlwaysHostile())
+		if (!isHiddenNationality() || !unitIsAlwaysHostile(*m_pUnitInfo))
 		{
 			return false;
 		}
@@ -6948,7 +6998,7 @@ bool CvUnit::canRecon() const
 		return false;
 	}
 
-	if (m_pUnitInfo->isSuicide())
+	if (unitIsSuicide(*m_pUnitInfo))
 	{
 		return false;
 	}
@@ -7447,7 +7497,7 @@ bool CvUnit::bombard()
 
 bool CvUnit::canPillage(const CvPlot* pPlot) const
 {
-	if (pPlot == NULL || !m_pUnitInfo->isPillage())
+	if (pPlot == NULL || !unitCanPillage(*m_pUnitInfo))
 	{
 		return false;
 	}
@@ -7728,7 +7778,7 @@ bool CvUnit::canPlunder(const CvPlot* pPlot, bool bTestVisible) const
 		return false;
 	}
 
-	if (!m_pUnitInfo->isPillage())
+	if (!unitCanPillage(*m_pUnitInfo))
 	{
 		return false;
 	}
@@ -7861,7 +7911,7 @@ int CvUnit::sabotageProb(const CvPlot* pPlot, ProbabilityTypes eProbStyle) const
 
 bool CvUnit::canSabotage(const CvPlot* pPlot, bool bTestVisible) const
 {
-	if (!m_pUnitInfo->isSabotage())
+	if (!unitCanSabotage(*m_pUnitInfo))
 	{
 		return false;
 	}
@@ -8034,7 +8084,7 @@ int CvUnit::destroyProb(const CvPlot* pPlot, ProbabilityTypes eProbStyle) const
 
 bool CvUnit::canDestroy(const CvPlot* pPlot, bool bTestVisible) const
 {
-	if (!m_pUnitInfo->isDestroy())
+	if (!unitCanDestroy(*m_pUnitInfo))
 	{
 		return false;
 	}
@@ -8195,7 +8245,7 @@ int CvUnit::stealPlansProb(const CvPlot* pPlot, ProbabilityTypes eProbStyle) con
 
 bool CvUnit::canStealPlans(const CvPlot* pPlot, bool bTestVisible) const
 {
-	if (!(m_pUnitInfo->isStealPlans()))
+	if (!(unitCanStealPlans(*m_pUnitInfo)))
 	{
 		return false;
 	}
@@ -10923,7 +10973,7 @@ bool CvUnit::isNoBadGoodies() const
 
 bool CvUnit::isOnlyDefensive() const
 {
-	return m_iOnlyDefensiveCount + m_pUnitInfo->isOnlyDefensive();
+	return m_iOnlyDefensiveCount + unitIsOnlyDefensive(*m_pUnitInfo);
 }
 
 void CvUnit::changeOnlyDefensiveCount(int iChange)
@@ -12932,7 +12982,7 @@ bool CvUnit::isNukeImmune() const
 
 bool CvUnit::isInquisitor() const
 {
-	return m_pUnitInfo->isInquisitor();
+	return unitIsInquisitor(*m_pUnitInfo);
 }
 
 
@@ -13853,7 +13903,7 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
 			}
 		}
 
-		if (pNewPlot->isGoody(getTeam()) && !isNPC() && !m_pUnitInfo->isNoRevealMap())
+		if (pNewPlot->isGoody(getTeam()) && !isNPC())
 		{
 			myPlayer.doGoody(pNewPlot, this);
 		}
@@ -17959,7 +18009,7 @@ bool CvUnit::isPromotionValid(PromotionTypes ePromotion, bool bFree, bool bKeepC
 	}
 
 	//Disable Looter Promos for units that cannot pillage
-	if (promo.getPillageChange() > 0 && !m_pUnitInfo->isPillage())
+	if (promo.getPillageChange() > 0 && !unitCanPillage(*m_pUnitInfo))
 	{
 		return false;
 	}
@@ -21876,7 +21926,7 @@ bool CvUnit::isPotentialEnemy(TeamTypes eTeam, const CvPlot* pPlot, const CvUnit
 
 bool CvUnit::isSuicide() const
 {
-	return m_pUnitInfo->isSuicide() || getKamikazePercent() != 0;
+	return unitIsSuicide(*m_pUnitInfo) || getKamikazePercent() != 0;
 }
 
 int CvUnit::getDropRange() const
@@ -22100,7 +22150,7 @@ int CvUnit::getRenderPriority(UnitSubEntityTypes eUnitSubEntity, int iMeshGroupT
 
 bool CvUnit::isAlwaysHostile(const CvPlot* pPlot) const
 {
-	if (!m_pUnitInfo->isAlwaysHostile() && getHiddenNationalityCount() < 1)
+	if (!unitIsAlwaysHostile(*m_pUnitInfo) && getHiddenNationalityCount() < 1)
 	{
 		return false;
 	}
@@ -23038,7 +23088,7 @@ int CvUnit::doPillageInfluence()
 
 bool CvUnit::canPerformInquisition(const CvPlot* pPlot) const
 {
-	if (!m_pUnitInfo->isInquisitor())
+	if (!unitIsInquisitor(*m_pUnitInfo))
 	{
 		return false;
 	}
@@ -23394,7 +23444,7 @@ bool CvUnit::canClaimTerritory(const CvPlot* pPlot) const
 		return false;
 	}
 
-	if (isNPC() || m_pUnitInfo->isAlwaysHostile() || isHiddenNationality() || !m_pUnitInfo->isPillage())
+	if (isNPC() || unitIsAlwaysHostile(*m_pUnitInfo) || isHiddenNationality() || !unitCanPillage(*m_pUnitInfo))
 	{
 		return false;
 	}

@@ -25535,10 +25535,6 @@ bool CvUnitAI::AI_plotValid(const CvPlot* pPlot) const
 {
 	PROFILE_FUNC();
 
-	if (m_pUnitInfo->isNoRevealMap() && willRevealByMove(pPlot))
-	{
-		return false;
-	}
 
 	switch (getDomainType())
 	{
