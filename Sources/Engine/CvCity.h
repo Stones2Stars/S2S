@@ -382,7 +382,6 @@ public:
 	int extraFreeSpecialists() const;
 
 	int unhealthyPopulation(int iExtra = 0) const;
-	int totalGoodBuildingHealth() const;
 	int totalBadBuildingHealth() const;
 	int healthRate(int iExtra = 0) const;
 	int getPopulationPlusProgress(const int iExtra) const;

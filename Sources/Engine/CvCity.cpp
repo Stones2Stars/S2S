@@ -4297,16 +4297,6 @@ int CvCity::unhealthyPopulation(int iExtra) const
 }
 
 
-int CvCity::totalGoodBuildingHealth() const
-{
-	return getBuildingGoodHealth()
-		+ area()->getBuildingGoodHealth(getOwner())
-		+ GET_PLAYER(getOwner()).getBuildingGoodHealth()
-		+ getExtraBuildingGoodHealth()
-		+ std::max(0, calculatePopulationHealth());
-}
-
-
 int CvCity::totalBadBuildingHealth() const
 {
 	if (isBuildingOnlyHealthy())
