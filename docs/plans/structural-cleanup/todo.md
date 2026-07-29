@@ -118,8 +118,8 @@
 
 - **The hide-and-seek CONSUMER census (re-measured): 11 dangling reads in `CvPlayerAI` + 17 in `CvGameTextMgr`.**
   The four per-type intensity getters are DELETED from the infos (verified: no declaration survives in
-  `Sources/Infos/`), so these are compile errors rather than silent zeroes — ordinary consumer debt, sequenced
-  with the AI cut, and a dangling site here is intended output. Their replacement is `CvUnit::concealment()` (one
+  `Sources/Infos/`), so these are compile errors rather than silent zeroes — and the replacement EXISTS, so they
+  convert NOW rather than waiting on a folder. Their replacement is `CvUnit::concealment()` (one
   number) and `CvUnit::detectionAgainst(method)`. ⚠ The AI sites SUM inside a loop over every `INVISIBLE_*`, so a
   mechanical swap would count concealment fourteen times — the loop collapses to one read, which is why this is a
   rewrite rather than a rename.
@@ -347,7 +347,8 @@ measure what survives, then cut the genuine residue. The classes below are the u
     corp-HQ commerce read in `CvCity::getBuildingCommerceByBuilding` sits inside an **×1 human twin** of a
     ×100 value, so re-pointing it alone would need a `÷100` — it converts WITH the commerce cluster, never
     ahead of it ([fixed-point-and-scales §4c-bis](../../specs/curators/fixed-point-and-scales.md)); and the
-    two `CvCityAI` HQ-commerce reads are ordinary AI consumer debt, sequenced with the AI cut.
+    two `CvCityAI` HQ-commerce reads convert WITH that same commerce cluster — the ×100 cluster boundary is
+    what sequences them, never the folder they sit in.
     ⚑ **The ~25 corporation consumed-bonus WALKS are a separate, larger item** — they are not a rename and must
     not be made to compile as one; see the blanket-rename warning in
     [the consumer rewire census](#the-consumer-rewire-census--the-compilers-worklist-and-how-to-regenerate-it).
@@ -476,26 +477,47 @@ measure what survives, then cut the genuine residue. The classes below are the u
 > not fail loudly — it silently plays a flat game. Verify the successor rather than killing on sight; the
 > mapping below is verified against the authored data and the header, not inferred from names.
 
-**15 legacy names / 22 call sites** (a floor — measured on a `C1003`-truncated build): `CvPlayer` 11 ·
-`CvUnitAI` 4 · `CvTeamAI` 4 (done) · `CvTeam` 2 · `CvOutcome` 1. Every getter below is ×100, so reduce `/100`
-at the point it meets a human-scale operand.
+⛔ **THE SCALE IS PER-UNIT, NOT PER-GETTER — a blanket `/100` on this family is WRONG and silently zeroes a
+percent.** `infoKindUnit` decides it: a **PERCENT** kind is NOT scaled and reads human directly
+([DEC-fixedpoint-x100](../../architecture/decisions.md#dec-fixedpoint-x100)), a **FLAT** kind is ×100 and its
+reader reduces at the point of use. `declareWar` is a percent (90 → 90); `attitude`, the barbarian
+tiles/turns/defenders counts and `freeWinsVsBarbs` are flats (8 → 800). Check the kind's unit before writing
+either form.
 
-| legacy name | successor |
-|---|---|
-| `getAITrainPercent` / `getAIConstructPercent` / `getAICreatePercent` | `getCostsModifier(COSTS_TRAIN\|CONSTRUCT\|CREATE, CASC_SCOPE_EMPIRE, true)` |
-| `getAIWorldTrainPercent` / `getAIWorldConstructPercent` / `getAIWorldCreatePercent` | the same kinds at `CASC_SCOPE_WORLD` |
-| `getAIResearchPercent` | `getCostsModifier(COSTS_RESEARCH, CASC_SCOPE_EMPIRE, true)` |
-| `getAIDeclareWarProb` | `getDiplomacy(DIPLOMACY_DECLARE_WAR, CASC_SCOPE_EMPIRE, true)` |
-| `getNoTechTradeModifier` | `getDiplomacy(DIPLOMACY_NO_TECH_TRADE, CASC_SCOPE_TEAM, false)` |
-| `getTechTradeKnownModifier` | `getDiplomacy(DIPLOMACY_TECH_TRADE_KNOWN, CASC_SCOPE_TEAM, false)` |
-| `getAnimalAttackProb` | `getBarbarians(BARBARIANS_ANIMAL_ATTACK_PROB, CASC_SCOPE_WORLD)` |
-| `getBarbarianInitialDefenders` | `getBarbarians(BARBARIANS_DEFENDERS, CASC_SCOPE_WORLD)` |
-| `getAIPerEraModifier` | `getUnitUpkeepEraModifier()` (an intrinsic — the header names it as the successor) |
-| `getAIAdvancedStartPercent` | `getAdvancedStartAiPercent()` (intrinsic) |
-| `getSubdueAnimalBonusAI` | ⚠ UNVERIFIED — no successor located; verify before disposing |
+⚑ **The live proof this matters:** `BARBARIANS_DEFENDERS` is FLAT, and three already-converted sites read it
+raw — a loop bound spawning 800 initial defenders instead of 8, and a `getNumUnits() >= 800` test that could
+never fire (dead barbarian-attack behaviour). A missing `/100` on a difficulty scaler does not crash; it
+silently plays a different game.
+
+**Remaining names — all verified DANGLING (no declaration on `CvHandicapInfo`), successor + unit verified
+against the authored JSON:**
+
+| legacy name | successor | unit |
+|---|---|---|
+| `getAttitudeChange` | `getDiplomacy(DIPLOMACY_ATTITUDE, CASC_SCOPE_EMPIRE, false)` | flat → `/100` |
+| `getUnownedTilesPerBarbarianCity` | `getBarbarians(BARBARIANS_TILES_PER_CITY, CASC_SCOPE_WORLD)` | flat → `/100` |
+| `getBarbarianCityCreationTurnsElapsed` | `getBarbarians(BARBARIANS_CITY_CREATION_TURNS, CASC_SCOPE_WORLD)` | flat → `/100` |
+| `getUnownedWaterTilesPerBarbarianUnit` | `getBarbarians(BARBARIANS_WATER_TILES_PER_UNIT, CASC_SCOPE_WORLD)` | flat → `/100` |
+| `getBarbarianCityCreationProb` | `getBarbarians(BARBARIANS_CITY_CREATION_PROB, CASC_SCOPE_WORLD)` | percent |
+| `getInflationPercent` | `getUpkeepModifier(UPKEEP_INFLATION, CASC_SCOPE_EMPIRE, false)` | percent |
+| `getUnitUpkeepPercent` / `getAIUnitUpkeepPercent` | `getUpkeepModifier(UPKEEP_UNIT, CASC_SCOPE_EMPIRE, false\|true)` | percent |
+| `getCivicUpkeepPercent` / `getAICivicUpkeepPercent` | `getUpkeepModifier(UPKEEP_CIVIC, CASC_SCOPE_EMPIRE, false\|true)` | percent |
+| `getAIWarWearinessPercent` | `getDiplomacy(DIPLOMACY_WAR_WEARINESS, CASC_SCOPE_EMPIRE, true)` | percent |
+| `getAIGrowthPercent` | `getScalarModifier(SCALAR_GROWTH, CASC_SCOPE_EMPIRE, true)` | percent |
+| `getAIWorkRateModifier` | `getScalarModifier(SCALAR_WORK_RATE, CASC_SCOPE_EMPIRE, true)` | percent |
+| `getAIUnitUpgradePercent` | `getCostsModifier(COSTS_UPGRADE, CASC_SCOPE_EMPIRE, true)` | percent |
+| `getAnimalCombatModifier` / `getAIAnimalCombatModifier` | `getCombat(COMBAT_ANIMAL, CASC_SCOPE_WORLD, false\|true)` | percent |
+| `getBarbarianCombatModifier` / `getAIBarbarianCombatModifier` | `getCombat(COMBAT_BARBARIAN, CASC_SCOPE_WORLD, false\|true)` | percent |
+| `getFreeWinsVsBarbs` | `getCombat(COMBAT_FREE_WINS_VS_BARBS, CASC_SCOPE_EMPIRE, false)` | flat → `/100` |
+
+⚠ **`getSubdueAnimalBonusAI` (`CvOutcome.cpp`) is NOT a re-point and has no kind by design.** `subdueAnimal` is
+ruling-16 TRIGGER-PLANE chance data (`CvInfoKinds.h`: *"NEVER kinds here"*), authored in 8 handicaps and flowing
+through as an unkinded member; its consumer adds to an outcome's `iChance`, which is that plane exactly. It
+waits on the trigger-plane re-home — ⛔ do not mint a `COMBAT_SUBDUE_ANIMAL` kind to make it compile.
 
 ⚑ **The `ai` sub-object in the data IS the `bAiAudience` argument** (`diplomacy.empire.declareWar.ai.percent`
-→ `bAiAudience = true`); a leaf with no `ai` sibling reads `false`. Do not sum the two planes.
+→ `bAiAudience = true`); a leaf with no `ai` sibling reads `false`. Do not sum the two planes. Note the base and
+AI planes split by difficulty: the easy handicaps author the BASE combat leaves, the hard ones the `ai` leaves.
 
 ## The CONSUMER REWIRE census — the compiler's worklist, and how to regenerate it
 
@@ -566,8 +588,9 @@ per-source unit-stat reads whose replacement is not built.
 
 - **The `CvCity`/`CvPlayer` getter consolidation** — known work, not the primary focus, and a fair few collapse on
   their own as the rebuilt infos wire through. Measure what survives that before planning a sweep.
-- **The AI call sites** — the largest consumer of the info surface, deliberately last. A dangling AI call site is
-  intended output, not a defect to fix on sight.
+- **The AI call sites** — the largest consumer of the info surface, and ORDINARY consumer work
+  ([roadmap.md](roadmap.md): the AI loops are ordinary consumers). A site waits only when its REPLACEMENT MACHINE
+  is unbuilt — name that machine, never the folder.
 - **`CvGameTextMgr` composers onto rendered entry lines** — the per-entry renderer exists
   (`Sources/UI/CvEntryText`) and `CvGameTextMgr::appendEntryLines` is the shared consumer. The composers with
   NO conversion at all are **`setBonusHelp`**, **`setAngerHelp`** and **`parsePromotionHelpInternal`**; the rest
@@ -714,9 +737,9 @@ per-source unit-stat reads whose replacement is not built.
     (`getBonusYieldModifier` / `getBonusYieldChanges` / `getBonusCommerceModifier` / `getBonusHappinessChanges` /
     `getBonusHealthChanges` / `getBonusDefenseChanges` / `getBonusProductionModifier` / `getPowerBonus`), and
     **not one of those getters is declared on any info** — so the loop is dangling consumer debt whose
-    replacement valuation is unbuilt, sequenced with the AI cut. Its eventual driver is the bonus's
-    `EDGEF_RELATED` (the candidate SUPERSET — consumers keep their exact predicates over it). ⛔ Converting the
-    driver ahead of the valuation wires the loop to a moving target (the roadmap's ORDER ruling).
+    replacement valuation is UNBUILT — that missing valuation is what it waits on, not the folder. Its eventual
+    driver is the bonus's `EDGEF_RELATED` (the candidate SUPERSET — consumers keep their exact predicates over
+    it). ⛔ Converting the driver ahead of the valuation wires the loop to a surface that cannot yet answer it.
   - **The HELD-building sweeps** (`AI_civicValue`'s religion-disabling blocks) scan the database testing
     `getBuildingCount(x) > 0`. That is a HAVE read, not a frontier one, and the aggregate it wants — a
     PLAYER-level held-building list — does not exist (`CvCity::getHasBuildings` is the city-scope one). Give the
@@ -727,8 +750,8 @@ per-source unit-stat reads whose replacement is not built.
     [`canTradeOn` block](../../specs/capabilities.md), which carries real `TERRAIN_` refs to read directly), and
     cross-entity tech-keyed value tables (`CvRouteInfo::getTechMovementChange`,
     `CvImprovementInfo::getTechYieldChanges`). **None of those four getters is declared on any info**, so all
-    four are stage-4 consumer debt, not loop-shape defects. The tech-keyed pair's eventual driver is the tech's
-    `EDGEF_RELATED` bucket for that kind.
+    four wait on the MEMBERS being restored to the infos, not on a folder. The tech-keyed pair's eventual driver
+    is the tech's `EDGEF_RELATED` bucket for that kind.
   - **The OWN-DATA inversions** — the keyed-container inversion
     [pedia-read-map finding 2](../../reference/pedia-read-map.md) names: a loop over every id of registry R
     that exists only to find the keys the ENTITY ITSELF authored. It dies to the container being served whole,

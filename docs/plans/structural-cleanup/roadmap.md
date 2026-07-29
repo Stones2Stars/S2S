@@ -27,15 +27,18 @@
 > **cannot be tested until the tree is green again**; ranking a not-yet-testable correctness gap as the top
 > priority mis-sequences the work. ⚠ This SEQUENCES the acceptance bar, it does not relax it.
 >
-> **⛔ THE ORDER: design surface → contexts → THEN the AI calls (owner).** *"We nail the design surface, and
-> contexts, then we wire the AI calls with the new data."* The AI is the LARGEST consumer of the info surface
-> (`CvPlayerAI`/`CvUnitAI`/`CvCityAI`/`CvTeamAI` are the bulk of the consumer debt), which is exactly why it goes
-> LAST: wiring thousands of AI reads onto a surface still being settled bakes in a shape we are still deciding,
-> and every later refinement re-breaks them.
-> ⚠ **So a dangling AI call site is NOT a defect to fix on sight.** The purge deleted the legacy getters so the
-> COMPILER would name every consumer — that census is a WORKLIST FOR A LATER STAGE, not a queue of bugs. Reaching
-> into `Sources/AI/` to "repair" one wires the AI to a moving target and quietly re-legitimises whatever getter
-> shape happened to exist that day. **Read the red as intended output.**
+> **⛔ THE AI LOOPS ARE ORDINARY CONSUMERS — CONVERT THEM (owner).** `CvPlayerAI`/`CvUnitAI`/`CvCityAI`/`CvTeamAI`
+> are the BULK of the consumer surface, and treating them as untouchable is what fragments the work: a single
+> defect spanning `CvPlayer` + `CvCityAI` + `CvUnitAI` is ONE fix, and splitting it by which folder the site
+> happens to sit in leaves the AI halves rotting indefinitely. **Rewriting an AI loop to fit the new surface IS
+> the work** — the contexts exist precisely so it can be rewritten.
+> ⛔ **The ONE thing that is banned is the opposite move: bending the new surface to preserve an AI call's old
+> shape** — accepting a what-if argument, an ignore-this-clause flag, a bool where the new answer is richer
+> ([DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface)). That, not the folder, is
+> the failure mode.
+> ⚠ **A dangling AI call site is a WORKLIST ENTRY like any other** (the compiler is the census). What genuinely
+> waits is only a read whose REPLACEMENT MACHINE does not exist yet — name the missing machine when you leave
+> one, never the file it lives in.
 
 ## Context — why this rebuild exists
 
