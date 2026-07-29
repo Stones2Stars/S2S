@@ -111,6 +111,28 @@ save-break); derived data serializes nothing; deleting a changer means auditing 
   ([DEC-fixedpoint-x100](../architecture/decisions.md#dec-fixedpoint-x100)), so the value is already what every
   caller wants. ⛔ Do not re-derive either percent at a call site, and do not add a `/100` to "correct" it.
 
+## Consuming-system calcs — where an option-composed verdict lives
+
+**⚖ An info never reads game state, so a value composing a GAME OPTION gets its own consuming-system calc — one
+place, never re-derived per call site** (json.md §9 +
+[DEC-single-implementation](../architecture/decisions.md#dec-single-implementation)). This generalizes the
+`CvGameSpeedScale` note above, and is the shape any future one copies: a purely-organizational static-methods
+class (no data members, never instantiated — a namespace risks VC7.1/Boost name-mangling) holding the
+composition the info structurally cannot.
+
+| calc | composes | replaces |
+|---|---|---|
+| **`CvGameSpeedScale`** (`Sources/Engine/`) | `GAMEOPTION_EXP_UPSCALED_BUILDING_AND_UNIT_COSTS` × `UPSCALED_HAMMER_COST_MODIFIER` over the gamespeed scalars | per-call-site re-derivation of the hammer-cost percent |
+| **`CvTraitSelection`** (`Sources/Engine/`) | `GAMEOPTION_LEADER_NO_NEGATIVE_TRAITS` / `START_NO_POSITIVE_TRAITS` / `LEADER_DEVELOPING` against a trait's alignment + succession rank | the archived `CvTraitInfo::isValidTrait` (an info getter reading game state — the boundary violation itself), **and** the hand-inlined copies of its composition that had spread across `CvPlayer` and `CvGameTextMgr` |
+
+⚑ **The tell that one is needed: the same option composition appearing at more than one call site.** Those copies
+DRIFT — the `CvGameTextMgr` inlines had already lost two legs of the rule (the negative-trait
+`START_NO_POSITIVE × DEVELOPING` clause, and the barbarian-selection carve-out), so the set of traits the UI
+showed as selectable disagreed with the set the engine allowed. Consolidating adopts the fuller rule.
+⚠ **Not every use of these options is that verdict:** the leader level-up valuation reads
+`START_NO_POSITIVE_TRAITS` as a level/weighting modifier, which is a different question and correctly stays
+where it is. Read what the option is being ASKED, never match on the option name.
+
 ## Handicaps — two "handicaps", asymmetric
 
 - **Per-player** (`m_aeHandicap`, saved) vs **game** (`m_eHandicap`, NOT saved — recomputed as the integer average

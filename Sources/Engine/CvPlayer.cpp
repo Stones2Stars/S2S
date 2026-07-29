@@ -4,6 +4,7 @@
 #include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
+#include "CvTraitSelection.h"
 #include "Engine/CvGameSpeedScale.h"
 #include "Enabler/CvEnablerKernel.h"   // requiresMetForPlayer -- the system-placement gate
 #include "AI/BetterBTSAI.h"
@@ -455,7 +456,7 @@ void CvPlayer::initMore(PlayerTypes eID, LeaderHeadTypes ePersonality, bool bSet
 			for (int iI = 0; iI < iNumDefaultComplexTraits; ++iI)
 			{
 				const TraitTypes eTrait = TraitTypes(GC.getLeaderHeadInfo(ePersonality).getDefaultComplexTrait(iI));
-				if (GC.getTraitInfo(eTrait).isValidTrait(true))
+				if (CvTraitSelection::isSelectable(GC.getTraitInfo(eTrait), true))
 				{
 					m_pabHasTrait[eTrait] = true;
 					processTrait(eTrait, 1);
@@ -467,7 +468,7 @@ void CvPlayer::initMore(PlayerTypes eID, LeaderHeadTypes ePersonality, bool bSet
 			for (int iI = 0; iI < iNumCoreDefaultTraits; ++iI)
 			{
 				const TraitTypes eTrait = TraitTypes(GC.getLeaderHeadInfo(ePersonality).getDefaultTrait(iI));
-				if (GC.getTraitInfo(eTrait).isValidTrait(true))
+				if (CvTraitSelection::isSelectable(GC.getTraitInfo(eTrait), true))
 				{
 					m_pabHasTrait[eTrait] = true;
 					processTrait(eTrait, 1);
@@ -478,7 +479,7 @@ void CvPlayer::initMore(PlayerTypes eID, LeaderHeadTypes ePersonality, bool bSet
 		{
 			for (int iI = 0; iI < GC.getNumTraitInfos(); iI++)
 			{
-				if (GC.getLeaderHeadInfo(ePersonality).hasTrait((TraitTypes)iI) && GC.getTraitInfo((TraitTypes)iI).isValidTrait(true))
+				if (GC.getLeaderHeadInfo(ePersonality).hasTrait((TraitTypes)iI) && CvTraitSelection::isSelectable(GC.getTraitInfo((TraitTypes)iI), true))
 				{
 					m_pabHasTrait[(TraitTypes)iI] = true;
 					processTrait((TraitTypes)iI, 1);
@@ -1899,7 +1900,7 @@ void CvPlayer::changeLeader(LeaderHeadTypes eNewLeader)
 			if (GC.getLeaderHeadInfo(eLeader).isDefaultComplexTrait(iI))
 			{
 				eTrait = TraitTypes(GC.getLeaderHeadInfo(eLeader).getDefaultComplexTrait(iI));
-				if (GC.getTraitInfo(eTrait).isValidTrait(true))
+				if (CvTraitSelection::isSelectable(GC.getTraitInfo(eTrait), true))
 				{
 					m_pabHasTrait[eTrait] = true;
 					processTrait(eTrait, 1);
@@ -1914,7 +1915,7 @@ void CvPlayer::changeLeader(LeaderHeadTypes eNewLeader)
 			if (GC.getLeaderHeadInfo(eLeader).isDefaultTrait(iI))
 			{
 				eTrait = TraitTypes(GC.getLeaderHeadInfo(eLeader).getDefaultTrait(iI));
-				if (GC.getTraitInfo(eTrait).isValidTrait(true))
+				if (CvTraitSelection::isSelectable(GC.getTraitInfo(eTrait), true))
 				{
 					m_pabHasTrait[eTrait] = true;
 					processTrait(eTrait, 1);
@@ -1926,7 +1927,7 @@ void CvPlayer::changeLeader(LeaderHeadTypes eNewLeader)
 	{
 		for (int iI = 0; iI < GC.getNumTraitInfos(); iI++)
 		{
-			if (GC.getLeaderHeadInfo(eLeader).hasTrait((TraitTypes)iI) && GC.getTraitInfo((TraitTypes)iI).isValidTrait(true))
+			if (GC.getLeaderHeadInfo(eLeader).hasTrait((TraitTypes)iI) && CvTraitSelection::isSelectable(GC.getTraitInfo((TraitTypes)iI), true))
 			{
 				m_pabHasTrait[(TraitTypes)iI] = true;
 				processTrait((TraitTypes)iI, 1);
@@ -28686,7 +28687,7 @@ void CvPlayer::setHasTrait(TraitTypes eIndex, bool bNewValue)
 		return;
 	}
 
-	if (!bNewValue || (bNewValue && GC.getTraitInfo(eIndex).isValidTrait()))
+	if (!bNewValue || (bNewValue && CvTraitSelection::isSelectable(GC.getTraitInfo(eIndex), false)))
 	{
 		m_pabHasTrait[eIndex] = bNewValue;
 		// The RUNTIME trait change, past the top-of-function no-change guard and after the field commit inside the
@@ -28783,7 +28784,7 @@ bool CvPlayer::canLearnTrait(TraitTypes eIndex, bool isSelectingNegative) const
 
 	const CvTraitInfo& kTrait = GC.getTraitInfo(eIndex);
 
-	if (kTrait.getSuccessionPriority() == 0 || !kTrait.isValidTrait()) return false;
+	if (kTrait.getSuccessionPriority() == 0 || !CvTraitSelection::isSelectable(kTrait, false)) return false;
 
 
 	const TraitTypes eTraitPrerequisite = kTrait.getPrereqTrait();

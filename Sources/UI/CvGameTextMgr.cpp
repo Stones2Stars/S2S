@@ -14,6 +14,7 @@
 #include "Tools/FProfiler.h"
 #include "Engine/CvGameCoreUtils.h"
 #include "CvGameCoreDLL.h"
+#include "Engine/CvTraitSelection.h"
 #include "Infos/CvClassificationBlock.h"   // CLSD_SKILL + the memoized id bit test
 
 namespace
@@ -6340,10 +6341,7 @@ void CvGameTextMgr::parseLeaderShortTraits(CvWStringBuffer &szHelpString, Leader
 				if (GC.getLeaderHeadInfo(eLeader).isDefaultTrait(iI))
 				{
 					eTrait = TraitTypes(GC.getLeaderHeadInfo(eLeader).getDefaultComplexTrait(iI));
-					if (!(GC.getGame().isOption(GAMEOPTION_LEADER_NO_NEGATIVE_TRAITS) && GC.getTraitInfo(eTrait).isNegativeTrait()) &&
-						!(GC.getGame().isOption(GAMEOPTION_LEADER_START_NO_POSITIVE_TRAITS) && !GC.getTraitInfo(eTrait).isNegativeTrait()) &&
-						((GC.getGame().isOption(GAMEOPTION_LEADER_DEVELOPING) && GC.getTraitInfo(eTrait).getSuccessionPriority() != 0) ||
-						(!GC.getGame().isOption(GAMEOPTION_LEADER_DEVELOPING) && GC.getTraitInfo(eTrait).getSuccessionPriority() == 0)))
+					if (CvTraitSelection::isSelectable(GC.getTraitInfo(eTrait), true))
 					{
 						if (!bFirst)
 						{
@@ -6362,10 +6360,7 @@ void CvGameTextMgr::parseLeaderShortTraits(CvWStringBuffer &szHelpString, Leader
 				if (GC.getLeaderHeadInfo(eLeader).isDefaultTrait(iI))
 				{
 					eTrait = TraitTypes(GC.getLeaderHeadInfo(eLeader).getDefaultTrait(iI));
-					if (!(GC.getGame().isOption(GAMEOPTION_LEADER_NO_NEGATIVE_TRAITS) && GC.getTraitInfo(eTrait).isNegativeTrait()) &&
-						!(GC.getGame().isOption(GAMEOPTION_LEADER_START_NO_POSITIVE_TRAITS) && !GC.getTraitInfo(eTrait).isNegativeTrait()) &&
-						((GC.getGame().isOption(GAMEOPTION_LEADER_DEVELOPING) && GC.getTraitInfo(eTrait).getSuccessionPriority() != 0) ||
-						(!GC.getGame().isOption(GAMEOPTION_LEADER_DEVELOPING) && GC.getTraitInfo(eTrait).getSuccessionPriority() == 0)))
+					if (CvTraitSelection::isSelectable(GC.getTraitInfo(eTrait), true))
 					{
 						if (!bFirst)
 						{
@@ -6382,10 +6377,7 @@ void CvGameTextMgr::parseLeaderShortTraits(CvWStringBuffer &szHelpString, Leader
 			for (int iI = 0; iI < GC.getNumTraitInfos(); ++iI)
 			{
 				eTrait = ((TraitTypes)iI);
-				if (GC.getLeaderHeadInfo(eLeader).hasTrait(eTrait) && !(GC.getGame().isOption(GAMEOPTION_LEADER_NO_NEGATIVE_TRAITS) && GC.getTraitInfo(eTrait).isNegativeTrait()) &&
-					!(GC.getGame().isOption(GAMEOPTION_LEADER_START_NO_POSITIVE_TRAITS) && !GC.getTraitInfo(eTrait).isNegativeTrait()) &&
-					((GC.getGame().isOption(GAMEOPTION_LEADER_DEVELOPING) && GC.getTraitInfo(eTrait).getSuccessionPriority() != 0) ||
-					(!GC.getGame().isOption(GAMEOPTION_LEADER_DEVELOPING) && GC.getTraitInfo(eTrait).getSuccessionPriority() == 0)))
+				if (GC.getLeaderHeadInfo(eLeader).hasTrait(eTrait) && CvTraitSelection::isSelectable(GC.getTraitInfo(eTrait), true))
 				{
 					if (!bFirst)
 					{
