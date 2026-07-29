@@ -4993,16 +4993,9 @@ void CvDLLWidgetData::parseMaintenanceHelp(CvWidgetDataStruct &widgetDataStruct,
 			szBuffer.assign(gDLL->getText("TXT_KEY_MISC_MAINT_INFO"));
 			szBuffer.append(NEWLINE);
 
-			int iMaintenanceValue = GC.getEraInfo(GET_PLAYER(pHeadSelectedCity->getOwner()).getCurrentEra()).getInitialCityMaintenancePercent();
-			if (iMaintenanceValue > 0 && !pHeadSelectedCity->isDisorder() && !GET_PLAYER(pHeadSelectedCity->getOwner()).isAnarchy())
-			{
-				CvWString szMaint = CvWString::format(L"%d.%02d", iMaintenanceValue/100, iMaintenanceValue%100);
-				szBuffer.append(NEWLINE);
-				szBuffer.append(gDLL->getText("TXT_KEY_MISC_BASE_MAINTENANCE", szMaint.GetCString()));
-			}
 			const int iMod = pHeadSelectedCity->getEffectiveMaintenanceModifier();
 
-			iMaintenanceValue = getModifiedIntValue(pHeadSelectedCity->calculateDistanceMaintenanceTimes100(), iMod);
+			int iMaintenanceValue = getModifiedIntValue(pHeadSelectedCity->calculateDistanceMaintenanceTimes100(), iMod);
 			if (iMaintenanceValue != 0)
 			{
 				CvWString szMaint = CvWString::format(L"%d.%02d", iMaintenanceValue/100, iMaintenanceValue%100);

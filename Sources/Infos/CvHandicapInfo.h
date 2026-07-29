@@ -64,9 +64,9 @@ public:
 	// The straggler scalars carrying the handicap's ai plane (growth / workRate -- both percent): the same
 	// game-start-base read through the InfoScalar slot table.
 	int getScalarModifier(InfoScalar eScalar, CvCascScope eScope, bool bAiAudience) const;
-	// The colony-maintenance hard CAP (maintenance.empire.colony.cap -- ×100): the straight point read over
-	// the (MAINTENANCE, CAP, EMPIRE, COUNT) compiled slot -- the dotted "colony.cap" member row; the walk's
-	// bare-number leaf under `colony` synthesizes the COUNT unit.
+	// The colony-maintenance hard CAP (maintenance.empire.colony.cap.percent): the straight point read over the
+	// (MAINTENANCE, CAP, EMPIRE, PERCENT) compiled slot -- the dotted "colony.cap" member row. It bounds the
+	// colony component as a RATIO OF DISTANCE maintenance, so it is a percent and carries no scale.
 	int getColonyMaintenanceCap() const;
 
 	// ======================= 4. INTRINSIC -- bare typed reads (config; human values) ==================

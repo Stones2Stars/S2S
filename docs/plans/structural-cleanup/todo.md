@@ -342,12 +342,17 @@ measure what survives, then cut the genuine residue. The classes below are the u
     so summing both DOUBLE-COUNTS; and `homeArea`/`otherArea`/`connectedCity` are never kinds — they are the
     condition-as-member shape [json.md §6](../../specs/json.md) names, and once the *where* is a predicate the
     home/other twin collapses into one function.
-    **What is LEFT** is the `calculate*MaintenanceTimes100` chain's CONFIG reads: `CvHandicapInfo`'s
-    distance / numCities / colony / corporation percents (successors exist —
-    `getMaintenanceModifier(MaintenanceKind, CvCascScope)` + `getColonyMaintenanceCap()`, so this is the
-    ordinary [handicap rewire](#the-handicap-consumer-rewire--the-surface-exists-only-the-consumers-are-stale)),
-    plus two with NO successor to verify first: `CvEraInfo::getInitialCityMaintenancePercent` and
-    `CvCorporationInfo::getMaintenance` (the latter rides the corporation carve-out).
+    **What is LEFT is the CORPORATION per-bonus rate**, and it is NOT a point-getter re-point.
+    `CvCorporationInfo` deliberately carries **no per-group point getters** — every entry a corporation
+    authors is CONDITIONED (`{HAS_CORPORATION: SELF}` with a `per:{anyOf: consumed bonuses}` scaler), so
+    nothing folds into an unconditioned sum (its header states this as the census shape). The legacy site
+    hand-rolls exactly what that scaler already expresses: it walks `getPrereqBonuses()` summing
+    `getNumBonuses`, then multiplies by the flat rate. So the rate and the bonus loop are ONE arithmetic
+    cluster and convert together through the valuation, never operand-by-operand
+    ([fixed-point-and-scales §4c-bis](../../specs/curators/fixed-point-and-scales.md)).
+    ⚠ `getPrereqBonuses` has a successor for the set half — `getConsumedBonuses()` (the same `per:{anyOf}`
+    union) — so the dormancy/spread gates that only need the SET re-point directly; only the maintenance
+    magnitude needs the valuation.
   - **The CIVIC half carries 6- and 9-argument legacy signatures**
     (`getAdditionalHappinessByCivic(eCivic, bDifferenceToCurrent, bCivicOptionVacuum, eStateReligion, iExtraPop,
     iMilitaryHappinessUnits)`; `getAdditionalHealthByCivic` with `iIgnoreNoUnhealthyPopulationCount` /

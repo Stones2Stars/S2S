@@ -6010,10 +6010,10 @@ void CvCity::updateMaintenance() const
 {
 	m_bMaintenanceDirty = false;
 
-	int iNewMaintenance = GC.getEraInfo(GET_PLAYER(getOwner()).getCurrentEra()).getInitialCityMaintenancePercent();
+	int iNewMaintenance = 0;
 	if (!isDisorder() && !isWeLoveTheKingDay() && getPopulation() > 0)
 	{
-		iNewMaintenance += getModifiedIntValue(calculateBaseMaintenanceTimes100(), getEffectiveMaintenanceModifier());
+		iNewMaintenance = getModifiedIntValue(calculateBaseMaintenanceTimes100(), getEffectiveMaintenanceModifier());
 	}
 
 	if (m_iMaintenance != iNewMaintenance)
@@ -6074,7 +6074,7 @@ int CvCity::calculateDistanceMaintenanceTimes100(int iExtraDistanceModifier, int
 			iValue /= 100;
 			// !Toffer
 
-			iValue *= GC.getHandicapInfo(getHandicapType()).getDistanceMaintenancePercent();
+			iValue *= GC.getHandicapInfo(getHandicapType()).getMaintenanceModifier(MAINTENANCE_DISTANCE, CASC_SCOPE_EMPIRE);
 			iValue /= 100;
 
 			iValue = std::max(0, iValue);
@@ -6134,7 +6134,7 @@ int CvCity::calculateNumCitiesMaintenanceTimes100(int iExtraModifier) const
 
 	iNumCitiesMaint = getModifiedIntValue(iNumCitiesMaint, owner.getNumCitiesMaintenanceModifier() + iExtraModifier);
 
-	iNumCitiesMaint *= GC.getHandicapInfo(getHandicapType()).getNumCitiesMaintenancePercent();
+	iNumCitiesMaint *= GC.getHandicapInfo(getHandicapType()).getMaintenanceModifier(MAINTENANCE_NUM_CITIES, CASC_SCOPE_EMPIRE);
 	iNumCitiesMaint /= 100;
 
 	// Rebels pay less maintenance
@@ -6177,14 +6177,15 @@ int CvCity::calculateColonyMaintenanceTimes100() const
 	iNumCitiesPercent *= GC.getWorldInfo(GC.getMap().getWorldSize()).getColonyMaintenancePercent();
 	iNumCitiesPercent /= 100;
 
-	iNumCitiesPercent *= GC.getHandicapInfo(getHandicapType()).getColonyMaintenancePercent();
+	iNumCitiesPercent *= GC.getHandicapInfo(getHandicapType()).getMaintenanceModifier(MAINTENANCE_COLONY, CASC_SCOPE_EMPIRE);
 	iNumCitiesPercent /= 100;
 
 	int iNumCities = (area()->getCitiesPerPlayer(getOwner()) - 1) * iNumCitiesPercent;
 
 	int iMaintenance = iNumCities * iNumCities / 100;
 
-	iMaintenance = std::min(iMaintenance, GC.getHandicapInfo(getHandicapType()).getMaxColonyMaintenance() * calculateDistanceMaintenanceTimes100() / 100);
+	// The cap bounds the colony component as a ratio of the distance component, which is why it divides by 100.
+	iMaintenance = std::min(iMaintenance, GC.getHandicapInfo(getHandicapType()).getColonyMaintenanceCap() * calculateDistanceMaintenanceTimes100() / 100);
 
 	FASSERT_NOT_NEGATIVE(iMaintenance);
 
@@ -6244,16 +6245,12 @@ int CvCity::calculateCorporationMaintenanceTimes100(CorporationTypes eCorporatio
 	// Handicap
 	if (GC.getGame().isOption(GAMEOPTION_ADVANCED_REALISTIC_CORPORATIONS))
 	{
-		iMaintenance = (
-			iMaintenance
-			* GC.getHandicapInfo(getHandicapType()).getCorporationMaintenancePercent()
-			* GC.getHandicapInfo(getHandicapType()).getCorporationMaintenancePercent()
-			/ 8000
-		);
+		const int iHandicapPercent = GC.getHandicapInfo(getHandicapType()).getMaintenanceModifier(MAINTENANCE_CORPORATION, CASC_SCOPE_EMPIRE);
+		iMaintenance = iMaintenance * iHandicapPercent * iHandicapPercent / 8000;
 	}
 	else
 	{
-		iMaintenance *= GC.getHandicapInfo(getHandicapType()).getCorporationMaintenancePercent();
+		iMaintenance *= GC.getHandicapInfo(getHandicapType()).getMaintenanceModifier(MAINTENANCE_CORPORATION, CASC_SCOPE_EMPIRE);
 		iMaintenance /= 100;
 	}
 
@@ -19048,7 +19045,7 @@ int64_t CvCity::calcCorporateMaintenance() const
 			}
 			iCorpTaxes = getModifiedIntValue64(iCorpTaxes, GET_PLAYER(getOwner()).getCorporationMaintenanceModifier() + GET_TEAM(getTeam()).getCorporationMaintenanceModifier());
 
-			iCorpTaxes *= GC.getHandicapInfo(getHandicapType()).getCorporationMaintenancePercent();
+			iCorpTaxes *= GC.getHandicapInfo(getHandicapType()).getMaintenanceModifier(MAINTENANCE_CORPORATION, CASC_SCOPE_EMPIRE);
 			iCorpTaxes /= 100;
 
 			iTaxes += iCorpTaxes;

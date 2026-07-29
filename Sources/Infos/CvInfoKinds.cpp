@@ -789,9 +789,10 @@ CvCascUnit infoKindUnit(ModifierFamily eFamily, int iKind, CvCascScope eScope)
 		}
 		if (iKind == (int)MAINTENANCE_CAP)
 		{
-			// authored as a bare-number leaf under colony (colony:{cap:N}) -- the walk synthesizes COUNT, so
-			// the compiled slot's unit axis IS COUNT (the engine gold cap, never a percent)
-			return CASC_UNIT_COUNT;
+			// colony:{cap:{percent:N}} -- the cap bounds the colony component as a RATIO OF DISTANCE
+			// maintenance (`cap * distanceMaintenance100 / 100`), so it is a percent like every sibling and
+			// the sub-member says which component it bounds.
+			return CASC_UNIT_PERCENT;
 		}
 		return CASC_UNIT_PERCENT;
 	case MODFAM_CAPTURE:

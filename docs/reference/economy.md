@@ -11,10 +11,15 @@
 supply + corporate maintenance.
 
 - **Treasury tax** (anti-hoarding): `(gold + 250·√gold) / (25 · gameSpeedPercent)`.
-- **City maintenance** = era floor + modified base; suppressed on disorder/WLTK. Base = distance (distance×pop, 0
+- **City maintenance** = the modified base; suppressed on disorder/WLTK. Base = distance (distance×pop, 0
   at the government center) + numCities `((n−1)·72·(pop+13)/13`, vassal-divided) + colony + corporation +
   building-gold (when `TREAT_NEGATIVE_GOLD_AS_MAINTENANCE`). Effective modifier = city + player + area +
   (connected & ¬capital ? connectedMod : 0).
+  ⚑ **The COLONY cap is a RATIO OF THE DISTANCE component, not a gold amount** — the engine reads it as
+  `min(colony, cap × distanceMaintenance100 / 100)`, so the handicap range 80…480 means 0.8×…4.8×. It is
+  therefore a **percent** (`maintenance.empire.colony.cap.percent`) and carries no scale
+  ([DEC-fixedpoint-x100](../architecture/decisions.md#dec-fixedpoint-x100)); treating it as a count ×100s it
+  and the `min()` silently stops binding, which reads as a difficulty scaler quietly going flat.
 - **Civic upkeep** = `max(0,(pop+offset)·popPct/100) + max(0,(cities+offset)·cityPct/100)`, handicap-scaled.
 - **Inflation** = `100 · hurriedCount · handicapInflationPct/100`, × civic/tech/building/event/rebel chain; decays per `HURRY_INFLATION_DECAY_RATE`.
 - **Per-turn order:** `verifyGoldCommercePercent` (silently raises the gold slider on deficit) → `doGold` (strike +

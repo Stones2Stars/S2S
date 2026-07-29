@@ -21324,7 +21324,6 @@ void CvGameTextMgr::buildFinanceCityMaintString(CvWStringBuffer& szBuffer, Playe
 	{
 		return;
 	}
-	int iBaseMaint = 0;
 	int iDistanceMaint = 0;
 	int iNumCityMaint = 0;
 	int iColonyMaint = 0;
@@ -21333,12 +21332,8 @@ void CvGameTextMgr::buildFinanceCityMaintString(CvWStringBuffer& szBuffer, Playe
 
 	const CvPlayer& player = GET_PLAYER(ePlayer);
 
-	const int iBase = GC.getEraInfo(player.getCurrentEra()).getInitialCityMaintenancePercent();
-
 	foreach_(const CvCity* pLoopCity, player.cities())
 	{
-		iBaseMaint += iBase;
-
 		if (!pLoopCity->isDisorder() && !pLoopCity->isWeLoveTheKingDay() && pLoopCity->getPopulation() > 0)
 		{
 			const int iMod = pLoopCity->getEffectiveMaintenanceModifier();
@@ -21351,12 +21346,6 @@ void CvGameTextMgr::buildFinanceCityMaintString(CvWStringBuffer& szBuffer, Playe
 		}
 	}
 
-	if (iBaseMaint != 0)
-	{
-		CvWString szMaint = CvWString::format(L"%d.%02d", iBaseMaint/100, iBaseMaint%100);
-		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_MISC_BASE_MAINTENANCE", szMaint.GetCString()));
-	}
 	if (iDistanceMaint != 0)
 	{
 		CvWString szMaint = CvWString::format(L"%d.%02d", iDistanceMaint/100, iDistanceMaint%100);

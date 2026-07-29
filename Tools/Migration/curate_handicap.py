@@ -27,8 +27,9 @@ THE HUMAN/AI DUALITY (the core awkwardness — read this before touching the dat
 
 WHAT EACH FAMILY MEANS (current behaviour — the meanings that must survive the later rework):
 - `maintenance.empire.{distance,numCities,colony,corporation}.percent` — % scale on each gold city-maintenance
-  COMPONENT (mirrors CvCity::calculateBaseMaintenance). `colony.cap` = a hard CAP on the colony component
-  (iMaxColonyMaintenance), NOT a percent — a clamp carried in the family structure (modifier-spec §7).
+  COMPONENT (mirrors CvCity::calculateBaseMaintenance). `colony.cap.percent` caps the colony component, and it
+  caps it as a RATIO OF DISTANCE maintenance (`cap * distanceMaintenance100 / 100`) — so it is a percent like
+  its siblings, and the sub-member says WHICH component it bounds.
 - `upkeep.empire.{unit,civic,inflation,supply}.percent` — % scale on recurring gold upkeep costs.
   unit/civic/inflation are DUAL (base + ai); supply is AI-ONLY.
 - `happiness.empire.flat` / `health.empire.flat` — flat happy/health bonus in every city of the owner.
@@ -80,7 +81,10 @@ FAMILIES = {
     "iNumCitiesMaintenancePercent":   ("maintenance", "empire", "numCities",   "percent", None),
     "iColonyMaintenancePercent":      ("maintenance", "empire", "colony",      "percent", None),
     "iCorporationMaintenancePercent": ("maintenance", "empire", "corporation", "percent", None),
-    "iMaxColonyMaintenance":          ("maintenance", "empire", "colony",      "cap",     None),  # caps the colony component
+    # The colony cap is a RATIO of the distance-maintenance component, not a gold amount: the engine reads it as
+    # `min(colonyMaint, cap * distanceMaintenance100 / 100)`, so 80..480 across the handicaps means 0.8x..4.8x.
+    # It is therefore a PERCENT (a whole number, never scaled), and `cap` is a sub-MEMBER of `colony`.
+    "iMaxColonyMaintenance":          ("maintenance", "empire", "colony.cap",  "percent", None),
     # --- upkeep: recurring gold upkeep costs ---
     "iUnitUpkeepPercent":             ("upkeep", "empire", "unit",      "percent", None),
     "iAIUnitUpkeepPercent":           ("upkeep", "empire", "unit",      "percent", "ai"),
@@ -199,10 +203,14 @@ FAMILY_ORDER = ["maintenance", "upkeep", "happiness", "health", "growth", "costs
 
 
 def _put(fam, family, scope, member, unit, audience, val):
-    """Deposit into a family section: <family>.<scope>[.<member>][.ai].<unit> = val."""
+    """Deposit into a family section: <family>.<scope>[.<member>][.ai].<unit> = val.
+
+    A member may be DOTTED (`colony.cap`) to address a sub-member, matching the kind table's own spelling
+    (`{"colony.cap", MAINTENANCE_CAP}`); each segment nests one level, so a sub-member and its parent's own
+    unit leaf share the parent node."""
     node = fam.setdefault(family, {}).setdefault(scope, {})
-    if member:
-        node = node.setdefault(member, {})
+    for segment in (member.split(".") if member else []):
+        node = node.setdefault(segment, {})
     if audience == "ai":
         node = node.setdefault("ai", {})
     node[unit] = val

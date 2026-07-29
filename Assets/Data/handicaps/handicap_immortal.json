@@ -3,7 +3,9 @@
  "maintenance": {
   "empire": {
    "colony": {
-    "cap": 360,
+    "cap": {
+     "percent": 360
+    },
     "percent": 180
    },
    "distance": {
