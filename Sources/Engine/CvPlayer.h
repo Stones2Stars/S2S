@@ -704,11 +704,7 @@ public:
 
 	int getCivicHealth() const; // Included in getExtraHealth() but split off to aid hover text displays
 
-	int getBuildingGoodHealth() const;
-	void changeBuildingGoodHealth(int iChange);
 
-	int getBuildingBadHealth() const;
-	void changeBuildingBadHealth(int iChange);
 
 	int getExtraHappiness() const;
 	void changeExtraHappiness(int iChange, bool bUnattributed = false);
@@ -1111,8 +1107,6 @@ public:
 	int getExtraBuildingHealth(const BuildingTypes eIndex) const;
 	void changeExtraBuildingHealth(const BuildingTypes eIndex, const int iChange, const bool bLimited = false);
 
-	int getFeatureHappiness(FeatureTypes eIndex) const;
-	void changeFeatureHappiness(FeatureTypes eIndex, int iChange, bool bLimited = false);
 
 	int getUnitCount(const UnitTypes eUnit) const;
 	void changeUnitCount(const UnitTypes eUnit, const int iChange);

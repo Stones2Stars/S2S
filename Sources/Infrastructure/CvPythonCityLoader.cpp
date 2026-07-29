@@ -317,7 +317,6 @@ void CvPythonCityLoader::CyCityPythonInterface2(boost::python::class_<CyCity>& i
 		.def("getReligionInfluence", &CyCity::getReligionInfluence, "int (ReligionID) - value of influence from ReligionID")
 		.def("changeReligionInfluence", &CyCity::changeReligionInfluence, "void (ReligionID, iChange) - adjust ReligionID influence by iChange")
 
-		.def("getStateReligionHappiness", &CyCity::getStateReligionHappiness, "int (int /*ReligionTypes*/ ReligionID)")
 
 		.def("getEspionageDefenseModifier", &CyCity::getEspionageDefenseModifier, "int ()")
 

@@ -17493,7 +17493,7 @@ void CvGameTextMgr::setReligionHelpCity(CvWStringBuffer &szBuffer, ReligionTypes
 
 	if (eStateReligion == eReligion || bForceState)
 	{
-		iHappiness = (pCity->getStateReligionHappiness(eReligion) + GET_PLAYER(pCity->getOwner()).getStateReligionHappiness());
+		iHappiness = GET_PLAYER(pCity->getOwner()).getStateReligionHappiness();
 
 		if (iHappiness != 0)
 		{

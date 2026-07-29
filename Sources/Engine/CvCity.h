@@ -577,8 +577,6 @@ public:
 	int getFreshWaterGoodHealth() const;
 	void updateFreshWaterHealth();
 
-	int getFeatureGoodHealth() const;
-	int getFeatureBadHealth() const;
 	void updateFeatureHealth();
 // BUG - Feature Health - start
 	void calculateFeatureHealthPercent(int& iGood, int& iBad) const;
@@ -594,27 +592,15 @@ public:
 	int getAdditionalStarvation(int iSpoiledFood, int iFoodAdjust = 0) const;
 // BUG - Actual Effects - end
 
-	int getBuildingGoodHealth() const;
-	int getBuildingBadHealth() const;
 	int getBuildingHealth(BuildingTypes eType) const;
-	int getBuildingGoodHealth(BuildingTypes eType) const;
-	int getBuildingBadHealth(BuildingTypes eType) const;
-	void changeBuildingGoodHealth(int iChange);
-	void changeBuildingBadHealth(int iChange);
 
 
 	int getMilitaryHappiness() const;
 	int getMilitaryHappinessUnits() const;
 	void changeMilitaryHappinessUnits(int iChange);
 
-	int getBuildingGoodHappiness() const;
-	int getBuildingBadHappiness() const;
 	int getBuildingHappiness(BuildingTypes eType) const;
-	void changeBuildingGoodHappiness(int iChange);
-	void changeBuildingBadHappiness(int iChange);
 
-	int getExtraBuildingGoodHappiness() const;
-	int getExtraBuildingBadHappiness() const;
 	void updateExtraBuildingHappiness(bool bLimited = false);
 
 	int getAdditionalHappinessByCivic(CivicTypes eCivic, bool bDifferenceToCurrent = true, bool bCivicOptionVacuum = false, ReligionTypes eStateReligion = NO_RELIGION, int iExtraPop = 0, int iMilitaryHappinessUnits = -1) const;
@@ -1195,9 +1181,6 @@ public:
 	uint32_t getReligionInfluence(ReligionTypes eIndex) const;
 	void changeReligionInfluence(ReligionTypes eIndex, int iChange);
 
-	int getCurrentStateReligionHappiness() const;
-	int getStateReligionHappiness(ReligionTypes eIndex) const;
-	void changeStateReligionHappiness(ReligionTypes eIndex, int iChange);
 
 
 	bool isFreePromotion(PromotionTypes eIndex) const;

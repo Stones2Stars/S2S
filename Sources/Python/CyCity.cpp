@@ -1459,11 +1459,6 @@ void CyCity::changeReligionInfluence(int /*ReligionTypes*/ iIndex, int iChange)
 	m_pCity->changeReligionInfluence((ReligionTypes) iIndex, iChange);
 }
 
-int CyCity::getStateReligionHappiness(int /*ReligionTypes*/ eIndex) const
-{
-	return m_pCity->getStateReligionHappiness((ReligionTypes) eIndex);
-}
-
 int CyCity::getEspionageDefenseModifier() const
 {
 	return m_pCity->getEspionageDefenseModifier();

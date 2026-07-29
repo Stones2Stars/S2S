@@ -10638,42 +10638,6 @@ void CvPlayer::changeExtraHealth(int iChange)
 }
 
 
-int CvPlayer::getBuildingGoodHealth() const
-{
-	return m_iBuildingGoodHealth;
-}
-
-
-void CvPlayer::changeBuildingGoodHealth(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iBuildingGoodHealth += iChange;
-		FASSERT_NOT_NEGATIVE(getBuildingGoodHealth());
-
-		AI_makeAssignWorkDirty();
-	}
-}
-
-
-int CvPlayer::getBuildingBadHealth() const
-{
-	return m_iBuildingBadHealth;
-}
-
-
-void CvPlayer::changeBuildingBadHealth(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iBuildingBadHealth += iChange;
-		FAssert(getBuildingBadHealth() <= 0);
-
-		AI_makeAssignWorkDirty();
-	}
-}
-
-
 int CvPlayer::getExtraHappiness() const
 {
 	// AIAndy: Barbarians do not get player wide unhappiness
@@ -13382,33 +13346,6 @@ int CvPlayer::getExtraBuildingHealth(const BuildingTypes eIndex) const
 	std::map<short, int>::const_iterator itr = m_extraBuildingHealth.find((short)eIndex);
 	return itr != m_extraBuildingHealth.end() ? itr->second : 0;
 }
-
-
-int CvPlayer::getFeatureHappiness(FeatureTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, GC.getNumFeatureInfos(), eIndex);
-	return m_paiFeatureHappiness[eIndex];
-}
-
-
-/********************************************************************************/
-/* 	New Civic AI						02.08.2010				Fuyu			*/
-/********************************************************************************/
-//Fuyu bLimited
-void CvPlayer::changeFeatureHappiness(FeatureTypes eIndex, int iChange, bool bLimited)
-{
-	FASSERT_BOUNDS(0, GC.getNumFeatureInfos(), eIndex);
-
-	if (iChange != 0)
-	{
-		m_paiFeatureHappiness[eIndex] += iChange;
-
-		updateFeatureHappiness(bLimited);
-	}
-}
-/********************************************************************************/
-/* 	New Civic AI												END 			*/
-/********************************************************************************/
 
 
 bool CvPlayer::isUnitMaxedOut(const UnitTypes eIndex, const int iExtra) const

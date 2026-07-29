@@ -6452,25 +6452,6 @@ void CvCity::updateFreshWaterHealth()
 }
 
 
-int CvCity::getFeatureGoodHealth() const
-{
-	return m_iFeatureGoodHealth;
-}
-
-
-int CvCity::getFeatureBadHealth() const
-{
-	return m_iFeatureBadHealth;
-}
-
-
-// BUG - Feature Health - start
-/*
- * Recalculates the total percentage health effects from existing features
- * and updates the values if they have changed.
- *
- * Bad health is stored as a negative value.
- */
 void CvCity::updateFeatureHealth()
 {
 	int iNewGoodHealth = 0;
@@ -6686,16 +6667,6 @@ int CvCity::getAdditionalStarvation(int iSpoiledFood, int iFoodAdjust) const
 // BUG - Actual Effects - start
 
 
-int CvCity::getBuildingGoodHealth() const
-{
-	return m_iBuildingGoodHealth;
-}
-
-int CvCity::getBuildingBadHealth() const
-{
-	return m_iBuildingBadHealth;
-}
-
 int CvCity::getBuildingHealth(BuildingTypes eBuilding) const
 {
 	int iHealth = getBuildingGoodHealth(eBuilding);
@@ -6733,39 +6704,6 @@ int CvCity::getBuildingBadHealth(BuildingTypes eBuilding) const
 	return iHealth;
 }
 
-void CvCity::changeBuildingGoodHealth(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iBuildingGoodHealth += iChange;
-		FASSERT_NOT_NEGATIVE(getBuildingGoodHealth());
-
-		AI_setAssignWorkDirty(true);
-
-		if (getTeam() == GC.getGame().getActiveTeam())
-		{
-			setInfoDirty(true);
-		}
-	}
-}
-
-void CvCity::changeBuildingBadHealth(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iBuildingBadHealth += iChange;
-		FAssert(getBuildingBadHealth() <= 0);
-
-		AI_setAssignWorkDirty(true);
-
-		if (getTeam() == GC.getGame().getActiveTeam())
-		{
-			setInfoDirty(true);
-		}
-	}
-}
-
-
 int CvCity::getMilitaryHappinessUnits() const
 {
 	return m_iMilitaryHappinessUnits;
@@ -6787,18 +6725,6 @@ void CvCity::changeMilitaryHappinessUnits(int iChange)
 
 		AI_setAssignWorkDirty(true);
 	}
-}
-
-
-int CvCity::getBuildingGoodHappiness() const
-{
-	return m_iBuildingGoodHappiness + std::max(0, calculatePopulationHappiness());
-}
-
-
-int CvCity::getBuildingBadHappiness() const
-{
-	return m_iBuildingBadHappiness + std::min(0, calculatePopulationHappiness());
 }
 
 
@@ -6831,46 +6757,6 @@ int CvCity::getBuildingHappiness(BuildingTypes eBuilding) const
 }
 
 
-void CvCity::changeBuildingGoodHappiness(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iBuildingGoodHappiness += iChange;
-		FASSERT_NOT_NEGATIVE(getBuildingGoodHappiness());
-
-		AI_setAssignWorkDirty(true);
-	}
-}
-
-
-void CvCity::changeBuildingBadHappiness(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iBuildingBadHappiness += iChange;
-		FAssert(getBuildingBadHappiness() <= 0);
-
-		AI_setAssignWorkDirty(true);
-	}
-}
-
-
-int CvCity::getExtraBuildingGoodHappiness() const
-{
-	return m_iExtraBuildingGoodHappiness;
-}
-
-
-int CvCity::getExtraBuildingBadHappiness() const
-{
-	return m_iExtraBuildingBadHappiness;
-}
-
-
-/********************************************************************************/
-/* 	New Civic AI						19.08.2010				Fuyu			*/
-/********************************************************************************/
-//Fuyu bLimited
 void CvCity::updateExtraBuildingHappiness(bool bLimited)
 {
 	PROFILE_EXTRA_FUNC();
@@ -12282,36 +12168,6 @@ void CvCity::changeReligionInfluence(ReligionTypes eIndex, int iChange)
 {
 	FASSERT_BOUNDS(0, GC.getNumReligionInfos(), eIndex);
 	m_paiReligionInfluence[eIndex] += iChange;
-}
-
-
-int CvCity::getCurrentStateReligionHappiness() const
-{
-	if (GET_PLAYER(getOwner()).getStateReligion() != NO_RELIGION)
-	{
-		return getStateReligionHappiness(GET_PLAYER(getOwner()).getStateReligion());
-	}
-	return 0;
-}
-
-
-int CvCity::getStateReligionHappiness(ReligionTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, GC.getNumReligionInfos(), eIndex);
-	return m_paiStateReligionHappiness[eIndex];
-}
-
-
-void CvCity::changeStateReligionHappiness(ReligionTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, GC.getNumReligionInfos(), eIndex);
-
-	if (iChange != 0)
-	{
-		m_paiStateReligionHappiness[eIndex] += iChange;
-
-		AI_setAssignWorkDirty(true);
-	}
 }
 
 
