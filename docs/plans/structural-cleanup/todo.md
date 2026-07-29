@@ -141,15 +141,6 @@
   Neither getter is declared anywhere in `Sources/Infos/` any more. Compiler census, sequenced with the rest of
   the AI consumer cut, not fixed on sight; the replacement is the entity's compiled `vision` entries, the same
   source the pedia renders from.
-- **⛔ `CvFeatureInfo::getSeeThroughChange()` is a SECOND masked zero — the movement defect's twin, and this one
-  has a live consumer.** The member maps from `vision.plot.seeThrough.flat`, an address **no entity authors**:
-  all 78 vision-authoring features emit `vision.plot.obstruction` (the spec'd kind — a feature's see-through value
-  IS its obstruction, [vision.md §5](../../specs/vision.md), which retires the `seeThrough` member outright). So
-  it answers **0 for every feature**. ⚠ Its one reader is `CvPlot.cpp:7032`, the visibility-dirty test
-  `old.getSeeThroughChange() != new.getSeeThroughChange()` — with both sides permanently 0 that comparison is
-  **always false, so a feature change never refreshes line-of-sight**. Delete the member and re-express the check
-  on the `obstruction` entries; `curate_feature.py`'s docstring still advertises the retired `seeThrough` address
-  and is corrected with it.
 - **Nothing is verified.** The walk, the budgets and the render are wired but untestable until the tree is
   green ([DEC-done-is-observable](../../architecture/decisions.md#dec-done-is-observable)). First checks when it
   is: a unit on flat open ground sees 1 plot, on a peak 4; a jungle costs 2; a city with tree platforms sees 2.

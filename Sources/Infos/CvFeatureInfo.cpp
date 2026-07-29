@@ -15,8 +15,7 @@
 #include "AI/CvGameAI.h"          // complete CvGameAI -- GC.getGame().getSorenRand() (zobrist draw, mirrors the archive)
 
 CvFeatureInfo::CvFeatureInfo()
-	: m_iSeeThroughChange(0)
-	, m_iPopDestroys(-1)
+	: m_iPopDestroys(-1)
 	, m_iAppearanceProbability(0)
 	, m_iDisappearanceProbability(0)
 	, m_iGrowthProbability(0)
@@ -88,19 +87,6 @@ void CvFeatureInfo::mapFrom(const picojson::value& entity)
 	// sinks, reef water-pollution sinks) feed the KEEP-legacy solver via the plot gather. The ONE shared
 	// pulse walk (clear-and-refill inside).
 	CascadePropertyBridge::bridgePulses(getTriggers(), m_PropertyManipulators);
-
-	// vision -- the §9 bespoke line-of-sight block (vision.plot.seeThrough.flat)
-	m_iSeeThroughChange = 0;
-	if (const picojson::object* pVision = jsonChildObj(entityObj, "vision"))
-	{
-		if (const picojson::object* pPlot = jsonChildObj(*pVision, "plot"))
-		{
-			if (const picojson::object* pSeeThrough = jsonChildObj(*pPlot, "seeThrough"))
-			{
-				m_iSeeThroughChange = jsonIdInt(*pSeeThrough, "flat");
-			}
-		}
-	}
 
 	// identity: placement + relief fields
 	if (const picojson::object* pIdentity = jsonChildObj(entityObj, "identity"))

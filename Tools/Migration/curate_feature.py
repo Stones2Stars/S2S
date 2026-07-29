@@ -19,8 +19,9 @@ Modeling calls (verified vs CvFeatureInfo + CvPlot::calculateYield/movementCost/
                        (CvPlot::movementCost, additive onto terrain), not summed down a scope spine — matching
                        curate_route.py / curate_terrain.py. Only cascading deltas (promotion discount/credit) are families.
 - iCultureDistance  -> cultureDistance.plot.flat (summed into the city culture-distance total).
-- iSeeThrough       -> `vision` block: vision.plot.seeThrough.flat (line-of-sight; grouped for the coming vision
-                       rework — owner 2026-06-16; modifier-spec §0.8 dedicated-block rule).
+- iSeeThrough       -> vision.plot.obstruction.flat, AT THE VISION SCALE (vision.md §1a: one plot of open
+                       ground costs 100). A feature's see-through value IS its obstruction — there is no
+                       separate `seeThrough` address, and the kind is what the engine reads.
 - iWarmingDefense   -> DROP. Dead: GLOBAL_WARMING is `// #define`d out (compiled out); a future global-warming
                        system gets its OWN base object, not a feature field (owner; issue #436, global-warming-mod.md).
 - PropertyManipulators -> top-level `triggers` entries (json.md §5, ruling 8): the RELATION_NEAR pollution pulse

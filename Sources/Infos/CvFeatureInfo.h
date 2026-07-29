@@ -60,7 +60,10 @@ public:
 	// every compiled sum -- the reader reduces at its point of use ([DEC-fixedpoint-x100]).
 	int getFlatMovement(MovementKind eKind, CvCascScope eScope) const
 	{ return m_modifiers.sum(MODFAM_MOVEMENT, eKind, eScope, CASC_UNIT_FLAT); }
-	int getSeeThroughChange() const { return m_iSeeThroughChange; }                  // vision.plot.seeThrough.flat (§9 bespoke)
+	// What this ground costs to see THROUGH, served as the family it is authored in ([vision.md] §1: a
+	// feature's see-through value IS its `obstruction`). Same shape as the movement read above.
+	int getVision(VisionKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_VISION, eKind, eScope, CASC_UNIT_FLAT); }
 	int getPopDestroys() const { return m_iPopDestroys; }                            // identity.popDestroys (-1 = never)
 	int getAppearanceProbability() const { return m_iAppearanceProbability; }        // identity.appearance
 	int getDisappearanceProbability() const { return m_iDisappearanceProbability; }  // identity.disappearance
@@ -143,7 +146,6 @@ private:
 	CvModifiers m_modifiers;
 
 	// --- the intrinsic identity members (materialized once at mapFrom; getters are bare reads) ---
-	int m_iSeeThroughChange;
 	int m_iPopDestroys;
 	int m_iAppearanceProbability;
 	int m_iDisappearanceProbability;
