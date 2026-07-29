@@ -10331,7 +10331,7 @@ int CvUnit::upgradePrice(UnitTypes eUnit) const
 		if (!isHuman())
 		{
 			iMod += (
-				GC.getHandicapInfo(GC.getGame().getHandicapType()).getAIUnitUpgradePercent() - 100
+				GC.getHandicapInfo(GC.getGame().getHandicapType()).getCostsModifier(COSTS_UPGRADE, CASC_SCOPE_EMPIRE, true) - 100
 				+
 				GC.getHandicapInfo(GC.getGame().getHandicapType()).getUnitUpkeepEraModifier() * GET_PLAYER(getOwner()).getCurrentEra()
 			);
@@ -11571,7 +11571,7 @@ int CvUnit::maxCombatStr(const CvPlot* pPlot, const CvUnit* pAttacker, CombatDet
 		{
 			if (pAttacker->isHuman())
 			{
-				iExtraModifier = GC.getHandicapInfo(GC.getGame().getHandicapType()).getAnimalCombatModifier();
+				iExtraModifier = GC.getHandicapInfo(GC.getGame().getHandicapType()).getCombat(COMBAT_ANIMAL, CASC_SCOPE_WORLD, false);
 				iModifier += iExtraModifier;
 				if (pCombatDetails != NULL)
 				{
@@ -11580,7 +11580,7 @@ int CvUnit::maxCombatStr(const CvPlot* pPlot, const CvUnit* pAttacker, CombatDet
 			}
 			else
 			{
-				iExtraModifier = GC.getHandicapInfo(GC.getGame().getHandicapType()).getAIAnimalCombatModifier();
+				iExtraModifier = GC.getHandicapInfo(GC.getGame().getHandicapType()).getCombat(COMBAT_ANIMAL, CASC_SCOPE_WORLD, true);
 				iModifier += iExtraModifier;
 				if (pCombatDetails != NULL)
 				{
@@ -11593,7 +11593,7 @@ int CvUnit::maxCombatStr(const CvPlot* pPlot, const CvUnit* pAttacker, CombatDet
 		{
 			if (isHuman())
 			{
-				iExtraModifier = -GC.getHandicapInfo(GC.getGame().getHandicapType()).getAnimalCombatModifier();
+				iExtraModifier = -GC.getHandicapInfo(GC.getGame().getHandicapType()).getCombat(COMBAT_ANIMAL, CASC_SCOPE_WORLD, false);
 				iModifier += iExtraModifier;
 				if (pCombatDetails != NULL)
 				{
@@ -11602,7 +11602,7 @@ int CvUnit::maxCombatStr(const CvPlot* pPlot, const CvUnit* pAttacker, CombatDet
 			}
 			else
 			{
-				iExtraModifier = -GC.getHandicapInfo(GC.getGame().getHandicapType()).getAIAnimalCombatModifier();
+				iExtraModifier = -GC.getHandicapInfo(GC.getGame().getHandicapType()).getCombat(COMBAT_ANIMAL, CASC_SCOPE_WORLD, true);
 				iModifier += iExtraModifier;
 				if (pCombatDetails != NULL)
 				{
@@ -11616,7 +11616,7 @@ int CvUnit::maxCombatStr(const CvPlot* pPlot, const CvUnit* pAttacker, CombatDet
 			//TB Combat Mods Begin
 			if (pAttacker->isHuman())
 			{
-				iExtraModifier = GC.getHandicapInfo(GC.getGame().getHandicapType()).getBarbarianCombatModifier() - pAttacker->vsBarbsModifier();
+				iExtraModifier = GC.getHandicapInfo(GC.getGame().getHandicapType()).getCombat(COMBAT_BARBARIAN, CASC_SCOPE_WORLD, false) - pAttacker->vsBarbsModifier();
 				iModifier += iExtraModifier;
 				if (pCombatDetails != NULL)
 				{
@@ -11625,7 +11625,7 @@ int CvUnit::maxCombatStr(const CvPlot* pPlot, const CvUnit* pAttacker, CombatDet
 			}
 			else
 			{
-				iExtraModifier = GC.getHandicapInfo(GC.getGame().getHandicapType()).getAIBarbarianCombatModifier() - pAttacker->vsBarbsModifier();
+				iExtraModifier = GC.getHandicapInfo(GC.getGame().getHandicapType()).getCombat(COMBAT_BARBARIAN, CASC_SCOPE_WORLD, true) - pAttacker->vsBarbsModifier();
 				iModifier += iExtraModifier;
 				if (pCombatDetails != NULL)
 				{
@@ -11640,7 +11640,7 @@ int CvUnit::maxCombatStr(const CvPlot* pPlot, const CvUnit* pAttacker, CombatDet
 
 			if (isHuman())
 			{
-				iExtraModifier = -GC.getHandicapInfo(GC.getGame().getHandicapType()).getBarbarianCombatModifier();
+				iExtraModifier = -GC.getHandicapInfo(GC.getGame().getHandicapType()).getCombat(COMBAT_BARBARIAN, CASC_SCOPE_WORLD, false);
 				iModifier += (iExtraModifier + iBarbsMod);
 				if (pCombatDetails != NULL)
 				{
@@ -11649,7 +11649,7 @@ int CvUnit::maxCombatStr(const CvPlot* pPlot, const CvUnit* pAttacker, CombatDet
 			}
 			else
 			{
-				iExtraModifier = -GC.getHandicapInfo(GC.getGame().getHandicapType()).getAIBarbarianCombatModifier();
+				iExtraModifier = -GC.getHandicapInfo(GC.getGame().getHandicapType()).getCombat(COMBAT_BARBARIAN, CASC_SCOPE_WORLD, true);
 				iModifier += (iExtraModifier + iBarbsMod);
 				if (pCombatDetails != NULL)
 				{
@@ -27068,7 +27068,7 @@ int CvUnit::workRate(bool bMax) const
 	if (GET_PLAYER(getOwner()).isNormalAI())
 	{
 		iWorkMod += (
-			GC.getHandicapInfo(GC.getGame().getHandicapType()).getAIWorkRateModifier()
+			GC.getHandicapInfo(GC.getGame().getHandicapType()).getScalarModifier(SCALAR_WORK_RATE, CASC_SCOPE_EMPIRE, true)
 			-
 			GC.getHandicapInfo(GC.getGame().getHandicapType()).getUnitUpkeepEraModifier() * GET_PLAYER(getOwner()).getCurrentEra()
 		);

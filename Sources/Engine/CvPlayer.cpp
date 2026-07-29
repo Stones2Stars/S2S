@@ -7810,7 +7810,7 @@ int CvPlayer::getInflationMod10000() const
 {
 	int iInflationPerTurnTimes10000 = 100 * getHurriedCount();
 
-	iInflationPerTurnTimes10000 *= GC.getHandicapInfo(getHandicapType()).getInflationPercent();
+	iInflationPerTurnTimes10000 *= GC.getHandicapInfo(getHandicapType()).getUpkeepModifier(UPKEEP_INFLATION, CASC_SCOPE_EMPIRE, false);
 	iInflationPerTurnTimes10000 /= 100;
 
 	int iMod = (
@@ -9657,7 +9657,7 @@ int CvPlayer::getWorkRate(BuildTypes eBuild) const
 	if (isNormalAI())
 	{
 		const int iMod = (
-			GC.getHandicapInfo(GC.getGame().getHandicapType()).getAIWorkRateModifier()
+			GC.getHandicapInfo(GC.getGame().getHandicapType()).getScalarModifier(SCALAR_WORK_RATE, CASC_SCOPE_EMPIRE, true)
 			-
 			GC.getHandicapInfo(GC.getGame().getHandicapType()).getUnitUpkeepEraModifier() * getCurrentEra()
 		);
@@ -10145,12 +10145,12 @@ int64_t CvPlayer::calcFinalUnitUpkeep(const bool bReal) const
 	if (iCalc > 0)
 	{
 		// Difficulty adjustment
-		iCalc *= GC.getHandicapInfo(getHandicapType()).getUnitUpkeepPercent();
+		iCalc *= GC.getHandicapInfo(getHandicapType()).getUpkeepModifier(UPKEEP_UNIT, CASC_SCOPE_EMPIRE, false);
 		iCalc /= 100;
 
 		if (!isHumanPlayer())
 		{
-			iCalc *= GC.getHandicapInfo(GC.getGame().getHandicapType()).getAIUnitUpkeepPercent();
+			iCalc *= GC.getHandicapInfo(GC.getGame().getHandicapType()).getUpkeepModifier(UPKEEP_UNIT, CASC_SCOPE_EMPIRE, true);
 			iCalc /= 100;
 
 			iCalc *= std::max(0, 100 + GC.getHandicapInfo(GC.getGame().getHandicapType()).getUnitUpkeepEraModifier() * getCurrentEra());
@@ -10656,7 +10656,7 @@ int CvPlayer::getModifiedWarWearinessPercentAnger(int iWarWearinessPercentAnger)
 	{
 		const int iMod =
 		(
-			GC.getHandicapInfo(GC.getGame().getHandicapType()).getAIWarWearinessPercent() - 100
+			GC.getHandicapInfo(GC.getGame().getHandicapType()).getDiplomacy(DIPLOMACY_WAR_WEARINESS, CASC_SCOPE_EMPIRE, true) - 100
 			+
 			GC.getHandicapInfo(GC.getGame().getHandicapType()).getUnitUpkeepEraModifier() * getCurrentEra()
 		);
@@ -13907,13 +13907,13 @@ int CvPlayer::getSingleCivicUpkeep(CivicTypes eCivic, bool bIgnoreAnarchy) const
 	);
 	iUpkeep = getModifiedIntValue(iUpkeep, getUpkeepModifier());
 
-	iUpkeep *= GC.getHandicapInfo(getHandicapType()).getCivicUpkeepPercent();
+	iUpkeep *= GC.getHandicapInfo(getHandicapType()).getUpkeepModifier(UPKEEP_CIVIC, CASC_SCOPE_EMPIRE, false);
 	iUpkeep /= 100;
 
 	if (isNormalAI())
 	{
 		const int iMod = (
-			GC.getHandicapInfo(GC.getGame().getHandicapType()).getAICivicUpkeepPercent() - 100
+			GC.getHandicapInfo(GC.getGame().getHandicapType()).getUpkeepModifier(UPKEEP_CIVIC, CASC_SCOPE_EMPIRE, true) - 100
 			+
 			GC.getHandicapInfo(GC.getGame().getHandicapType()).getUnitUpkeepEraModifier() * getCurrentEra()
 		);
@@ -24089,7 +24089,7 @@ int CvPlayer::getGrowthThreshold(int iPopulation) const
 	{
 		const int iMod =
 		(
-			GC.getHandicapInfo(GC.getGame().getHandicapType()).getAIGrowthPercent() - 100
+			GC.getHandicapInfo(GC.getGame().getHandicapType()).getScalarModifier(SCALAR_GROWTH, CASC_SCOPE_EMPIRE, true) - 100
 			+
 			GC.getHandicapInfo(GC.getGame().getHandicapType()).getUnitUpkeepEraModifier() * getCurrentEra()
 		);

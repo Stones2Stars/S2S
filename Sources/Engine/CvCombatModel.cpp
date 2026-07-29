@@ -43,13 +43,13 @@ RoundModel buildRoundModel(const CvUnit* pAttacker, int iAttackerStrength, int i
 	if (pAttacker->isNPC())
 	{
 		if (!pDefender->isNPC()
-			&& GET_PLAYER(pDefender->getOwner()).getWinsVsBarbs() < GC.getHandicapInfo(GET_PLAYER(pDefender->getOwner()).getHandicapType()).getFreeWinsVsBarbs())
+			&& GET_PLAYER(pDefender->getOwner()).getWinsVsBarbs() < GC.getHandicapInfo(GET_PLAYER(pDefender->getOwner()).getHandicapType()).getCombat(COMBAT_FREE_WINS_VS_BARBS, CASC_SCOPE_EMPIRE, false) / 100)
 		{
 			m.iDefenderOdds = std::max((90 * GC.getCOMBAT_DIE_SIDES()) / 100, m.iDefenderOdds);
 		}
 	}
 	else if (pDefender->isNPC()
-		&& GET_PLAYER(pAttacker->getOwner()).getWinsVsBarbs() < GC.getHandicapInfo(GET_PLAYER(pAttacker->getOwner()).getHandicapType()).getFreeWinsVsBarbs())
+		&& GET_PLAYER(pAttacker->getOwner()).getWinsVsBarbs() < GC.getHandicapInfo(GET_PLAYER(pAttacker->getOwner()).getHandicapType()).getCombat(COMBAT_FREE_WINS_VS_BARBS, CASC_SCOPE_EMPIRE, false) / 100)
 	{
 		m.iDefenderOdds = std::min((10 * GC.getCOMBAT_DIE_SIDES()) / 100, m.iDefenderOdds);
 	}

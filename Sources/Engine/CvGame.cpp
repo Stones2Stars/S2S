@@ -6996,7 +6996,7 @@ void CvGame::createBarbarianCities(bool bNeanderthal)
 	||
 		isOption(GAMEOPTION_BARBARIAN_NONE)
 	||
-		GC.getHandicapInfo(getHandicapType()).getUnownedTilesPerBarbarianCity() <= 0
+		GC.getHandicapInfo(getHandicapType()).getBarbarians(BARBARIANS_TILES_PER_CITY, CASC_SCOPE_WORLD) / 100 <= 0
 	|| (
 			bNeanderthal
 			?
@@ -7013,7 +7013,7 @@ void CvGame::createBarbarianCities(bool bNeanderthal)
 	const bool bBarbWorld = isOption(GAMEOPTION_BARBARIAN_WORLD);
 
 	// No barb city spawn the first X turns (difficulty and gamespeed decide X), unless it's a barbarian world.
-	if (!bBarbWorld && getElapsedGameTurns() < GC.getHandicapInfo(getHandicapType()).getBarbarianCityCreationTurnsElapsed() * iBarbPercent / 100)
+	if (!bBarbWorld && getElapsedGameTurns() < GC.getHandicapInfo(getHandicapType()).getBarbarians(BARBARIANS_CITY_CREATION_TURNS, CASC_SCOPE_WORLD) / 100 * iBarbPercent / 100)
 	{
 		return;
 	}
@@ -7052,14 +7052,14 @@ void CvGame::createBarbarianCities(bool bNeanderthal)
 		iRand /= 2;
 	}
 	// Odds based on handicap
-	if (iRand >= 10 * GC.getHandicapInfo(getHandicapType()).getBarbarianCityCreationProb())
+	if (iRand >= 10 * GC.getHandicapInfo(getHandicapType()).getBarbarians(BARBARIANS_CITY_CREATION_PROB, CASC_SCOPE_WORLD))
 	{
 		return;
 	}
 
 	int iTargetCitiesMultiplier = 100;
 	{
-		const int iTargetBarbCities = 5*iCivCities * GC.getHandicapInfo(getHandicapType()).getBarbarianCityCreationProb() / 100;
+		const int iTargetBarbCities = 5*iCivCities * GC.getHandicapInfo(getHandicapType()).getBarbarians(BARBARIANS_CITY_CREATION_PROB, CASC_SCOPE_WORLD) / 100;
 		if (iBarbCities < iTargetBarbCities)
 		{
 			iTargetCitiesMultiplier += 300 * (iTargetBarbCities - iBarbCities) / iTargetBarbCities;
@@ -7098,7 +7098,7 @@ void CvGame::createBarbarianCities(bool bNeanderthal)
 
 	// Find plot
 	const MapCategoryTypes earth = GC.getMAPCATEGORY_EARTH();
-	const int iUnownedTilesThreshold = GC.getHandicapInfo(getHandicapType()).getUnownedTilesPerBarbarianCity();
+	const int iUnownedTilesThreshold = GC.getHandicapInfo(getHandicapType()).getBarbarians(BARBARIANS_TILES_PER_CITY, CASC_SCOPE_WORLD) / 100;
 
 	int iBestValue = 0;
 	CvPlot* pBestPlot = NULL;
@@ -7210,7 +7210,7 @@ namespace {
 		if (!area->isWater())
 			return 0;
 
-		int iDivisor = GC.getHandicapInfo(game->getHandicapType()).getUnownedWaterTilesPerBarbarianUnit();
+		int iDivisor = GC.getHandicapInfo(game->getHandicapType()).getBarbarians(BARBARIANS_WATER_TILES_PER_UNIT, CASC_SCOPE_WORLD) / 100;
 
 		if (game->isOption(GAMEOPTION_BARBARIAN_RAGING))
 		{

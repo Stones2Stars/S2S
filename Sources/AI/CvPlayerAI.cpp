@@ -6874,7 +6874,7 @@ int CvPlayerAI::AI_getAttitudeVal(PlayerTypes ePlayer, bool bForced) const
 
 	int iAttitude = GC.getLeaderHeadInfo(getPersonalityType()).getBaseAttitude();
 
-	iAttitude += GC.getHandicapInfo(GET_PLAYER(ePlayer).getHandicapType()).getAttitudeChange();
+	iAttitude += GC.getHandicapInfo(GET_PLAYER(ePlayer).getHandicapType()).getDiplomacy(DIPLOMACY_ATTITUDE, CASC_SCOPE_EMPIRE, false) / 100;
 
 	iAttitude += GET_PLAYER(ePlayer).getAIAttitudeModifier();
 
@@ -6973,7 +6973,7 @@ int CvPlayerAI::AI_getFirstImpressionAttitude(PlayerTypes ePlayer) const
 {
 	bool bShowPersonalityAttitude = isShowPersonalityModifiers();
 	CvPlayerAI& kPlayer = GET_PLAYER(ePlayer);
-	int iAttitude = GC.getHandicapInfo(kPlayer.getHandicapType()).getAttitudeChange();
+	int iAttitude = GC.getHandicapInfo(kPlayer.getHandicapType()).getDiplomacy(DIPLOMACY_ATTITUDE, CASC_SCOPE_EMPIRE, false) / 100;
 
 	//ls612: If you Start as Minors the first impression is not important
 	if (GC.getGame().isOption(GAMEOPTION_UNSUPPORTED_START_AS_MINORS))
