@@ -4495,43 +4495,6 @@ void CvPlayer::updateExtraSpecialistYield()
 }
 
 
-void CvPlayer::updateCommerce(CommerceTypes eCommerce, bool bForce) const
-{
-	PROFILE_EXTRA_FUNC();
-	if ( eCommerce == NO_COMMERCE )
-	{
-		for(int iI = 0; iI < NUM_COMMERCE_TYPES; iI++ )
-		{
-			updateCommerce((CommerceTypes)iI, bForce);
-		}
-	}
-	else if (bForce || m_abCommerceDirty[eCommerce])
-	{
-
-		algo::for_each(cities(), CvCity::fn::updateCommerce(eCommerce, bForce));
-	}
-}
-
-void CvPlayer::setCommerceDirty(CommerceTypes eIndex, bool bPlayerOnly)
-{
-	PROFILE_EXTRA_FUNC();
-	if (eIndex == NO_COMMERCE)
-	{
-		for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
-		{
-			setCommerceDirty((CommerceTypes)iI, bPlayerOnly);
-		}
-	}
-	else
-	{
-
-		if (!bPlayerOnly)
-		{
-			algo::for_each(cities(), CvCity::fn::setCommerceDirty(eIndex));
-		}
-	}
-}
-
 void CvPlayer::updateBuildingCommerce()
 {
 	algo::for_each(cities(), CvCity::fn::updateBuildingCommerce());
@@ -9363,7 +9326,6 @@ void CvPlayer::changeAnarchyTurns(int iChange, bool bHideMessages)
 			// #430 event spine: the IS_ANARCHY verdict crossing. The turn counter itself ticks down every turn, so
 			// only this 0-crossing is a state change.
 			emitAnarchyChanged(getID(), isAnarchy());
-			setCommerceDirty();
 			updateTradeRoutes();
 			updateCorporation();
 
@@ -12465,7 +12427,6 @@ void CvPlayer::changeGoldenAgeCommerce(CommerceTypes eIndex, int iChange)
 	{
 		m_aiGoldenAgeCommerce[eIndex] += iChange;
 
-		setCommerceDirty(eIndex);
 	}
 }
 
@@ -12489,7 +12450,6 @@ void CvPlayer::changeYieldRateModifier(YieldTypes eIndex, int iChange)
 
 		if (eIndex == YIELD_COMMERCE)
 		{
-			setCommerceDirty();
 		}
 		AI_makeAssignWorkDirty();
 
@@ -12651,7 +12611,6 @@ void CvPlayer::changeExtraCommerce(const CommerceTypes eIndex, const int iChange
 	if (iChange != 0)
 	{
 		m_extraCommerce[eIndex] += iChange;
-		setCommerceDirty(eIndex);
 	}
 }
 
@@ -12710,7 +12669,6 @@ void CvPlayer::setCommercePercent(CommerceTypes eIndex, int iNewValue)
 		}
 		FAssert(100 == iTotalCommercePercent);
 
-		setCommerceDirty();
 
 		AI_makeAssignWorkDirty();
 
@@ -12784,7 +12742,6 @@ void CvPlayer::changeCommerceRateModifier(CommerceTypes eIndex, int iChange)
 		m_aiCommerceRateModifier[eIndex] = std::min(m_aiCommerceRateModifier[eIndex] + iChange, MAX_COMMERCE_RATE_MODIFIER_VALUE);
 
 		setCityCommerceModifierDirty(eIndex);
-		setCommerceDirty(eIndex);
 
 		AI_makeAssignWorkDirty();
 	}
@@ -12808,7 +12765,6 @@ void CvPlayer::changeCommerceRateModifierfromEvents(CommerceTypes eIndex, int iC
 		m_aiCommerceRateModifier[eIndex] = std::min(m_aiCommerceRateModifier[eIndex] + iChange, MAX_COMMERCE_RATE_MODIFIER_VALUE);
 
 		setCityCommerceModifierDirty(eIndex);
-		setCommerceDirty(eIndex);
 
 		AI_makeAssignWorkDirty();
 	}
@@ -12832,7 +12788,6 @@ void CvPlayer::changeCommerceRateModifierfromBuildings(CommerceTypes eIndex, int
 		m_aiCommerceRateModifier[eIndex] = std::min(m_aiCommerceRateModifier[eIndex] + iChange, MAX_COMMERCE_RATE_MODIFIER_VALUE);
 
 		setCityCommerceModifierDirty(eIndex);
-		setCommerceDirty(eIndex);
 
 		AI_makeAssignWorkDirty();
 	}
@@ -12882,7 +12837,6 @@ void CvPlayer::changeStateReligionBuildingCommerce(CommerceTypes eIndex, int iCh
 		m_aiStateReligionBuildingCommerce[eIndex] += iChange;
 		FASSERT_NOT_NEGATIVE(getStateReligionBuildingCommerce(eIndex));
 
-		setCommerceDirty(eIndex);
 	}
 }
 
@@ -12902,7 +12856,6 @@ void CvPlayer::changeSpecialistExtraCommerce(CommerceTypes eIndex, int iChange)
 	{
 		m_aiSpecialistExtraCommerce[eIndex] += iChange;
 
-		setCommerceDirty(eIndex);
 
 		AI_makeAssignWorkDirty();
 	}
@@ -27072,7 +27025,6 @@ void CvPlayer::changeBuildingCommerceChange(BuildingTypes eType, CommerceTypes C
 				cityX->changeBuildingCommerceChange(eType, CommerceType, iChange);
 			}
 		}
-		setCommerceDirty();
 	}
 }
 
@@ -27100,7 +27052,6 @@ void CvPlayer::changeBuildingCommerceModifier(BuildingTypes eType, CommerceTypes
 				cityX->changeBuildingCommerceModifier(eCommerce, iChange);
 			}
 		}
-		setCommerceDirty();
 	}
 }
 
@@ -27122,7 +27073,6 @@ void CvPlayer::changeBonusCommerceModifier(BonusTypes eIndex1, CommerceTypes eIn
 
 		m_ppiBonusCommerceModifier[eIndex1][eIndex2] += iChange;
 		setCityCommerceModifierDirty(eIndex2);
-		setCommerceDirty();
 	}
 }
 

@@ -236,8 +236,6 @@ public:
 	void updateReligionHappiness(bool bLimited = false);
 
 	void updateExtraSpecialistYield();
-	void setCommerceDirty(CommerceTypes eIndex = NO_COMMERCE, bool bPlayerOnly = false);
-	void updateCommerce(CommerceTypes eCommerce = NO_COMMERCE, bool bForce = true) const;
 	void updateBuildingCommerce();
 	void updateReligionCommerce();
 	void updateCorporation();

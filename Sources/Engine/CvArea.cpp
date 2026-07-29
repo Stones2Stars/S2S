@@ -921,7 +921,6 @@ void CvArea::changeYieldRateModifier(PlayerTypes eIndex1, YieldTypes eIndex2, in
 
 		if (eIndex2 == YIELD_COMMERCE)
 		{
-			GET_PLAYER(eIndex1).setCommerceDirty();
 		}
 
 		GET_PLAYER(eIndex1).AI_makeAssignWorkDirty();
