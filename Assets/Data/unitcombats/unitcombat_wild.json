@@ -10,6 +10,9 @@
  "skills": {
   "noCapture": true
  },
+ "tags": [
+  "wild"
+ ],
  "vision": {
   "unit": {
    "detection": [

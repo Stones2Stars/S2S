@@ -193,12 +193,10 @@ These are the size/species/motility/weapon taxonomy the distillation plan (§3.A
 |---|---:|---|
 | UNITCOMBAT_COMBATANT | 1021 | generic "is a combatant" base; near-`military` but that tag is already `bMilitarySupport`-derived — not a specific identity |
 | UNITCOMBAT_PACIFIST | 378 | non-combatant marker; likely → `civilian` but overlaps the derived `civilian` tag — confirm |
-| UNITCOMBAT_WILD | 198 | animal lifecycle state (wild vs tamed); animal-adjacent, not a clean identity |
 | UNITCOMBAT_SPEED_FAST | 466 | movement-speed taxonomy, not identity |
 | UNITCOMBAT_SPEED_SLOW | 93 | movement-speed taxonomy, not identity |
 | UNITCOMBAT_RECKLESS_ANIMAL | 90 | animal behaviour marker; animal-adjacent |
 | UNITCOMBAT_THROWING | 57 (prim 35) | thrown-weapon skirmisher (javelin/sling/bola); ranged but distinct from `archery`; no vocab tag |
-| UNITCOMBAT_TAMED | 53 | animal lifecycle state; animal-adjacent |
 | UNITCOMBAT_LAW_ENFORCEMENT | 45 (prim 32) | police/enforcer role; no vocab tag (suggest a `law`/`police` tag?) |
 | UNITCOMBAT_HUNTER | 37 (prim 32) | hunter/scout line (subdues animals); recon-adjacent — suggest `recon`? confirm |
 | UNITCOMBAT_HEALTH_CARE | 30 (prim 25) | medic/healer role; no vocab tag (suggest `medic`?) |

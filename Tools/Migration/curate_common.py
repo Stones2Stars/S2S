@@ -437,6 +437,9 @@ TAG_BY_UNITCOMBAT = {
     "UNITCOMBAT_SEA_WORKER": ["worker"], "UNITCOMBAT_SPY": ["spy"], "UNITCOMBAT_COMBAT_WORKER": ["worker"],
     # NEW vocabulary (owner-approved 2026-07-21): hero / animal / space
     "UNITCOMBAT_HERO": ["hero"], "UNITCOMBAT_ANIMAL": ["animal"], "UNITCOMBAT_SEA_ANIMAL": ["animal"],
+    # the animal LIFECYCLE states. `wild` is derivable (animal and not tamed) and minted anyway --
+    # an extra tag costs nothing and a missing one does (tags.md).
+    "UNITCOMBAT_TAMED": ["tamed"], "UNITCOMBAT_WILD": ["wild"],
     "UNITCOMBAT_SEA_ANIMAL_TALE": ["animal"], "UNITCOMBAT_SPACE_WORKER": ["worker", "space"],
     "UNITCOMBAT_EARLY_SPACESHIP": ["space"], "UNITCOMBAT_WORMHOLE_SPACESHIP": ["space"],
     "UNITCOMBAT_SOLAR_SAIL_SPACESHIP": ["space"], "UNITCOMBAT_ANTIMATTER_SPACESHIP": ["space"],
