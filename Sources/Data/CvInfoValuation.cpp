@@ -148,6 +148,37 @@ int InfoValuation::keyedTargetSegment(const char* szTargetSegment)
 {
 	return modSegmentLookup(szTargetSegment);
 }
+void InfoValuation::collectKeyedTarget(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind,
+	int iTargetSegment, std::vector<std::pair<int, int> >& targetValues)
+{
+	targetValues.clear();
+	if (modifiers == NULL || iTargetSegment < 0)
+	{
+		return;
+	}
+	const std::vector<CvModEntry*>& kEntries = modifiers->entries();
+	for (size_t iEntry = 0; iEntry < kEntries.size(); ++iEntry)
+	{
+		const CvModEntry& kEntry = *kEntries[iEntry];
+		if (kEntry.family != eFamily
+		||  kEntry.targetSeg != iTargetSegment
+		||  kEntry.targetFk < 0
+		|| (iKind >= 0 && kEntry.kind != iKind))
+		{
+			continue;
+		}
+		size_t iRow = 0;
+		while (iRow < targetValues.size() && targetValues[iRow].first != kEntry.targetFk)
+		{
+			++iRow;
+		}
+		if (iRow == targetValues.size())
+		{
+			targetValues.push_back(std::make_pair(kEntry.targetFk, 0));
+		}
+		targetValues[iRow].second += kEntry.value;
+	}
+}
 
 int InfoValuation::keyedTarget(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind,
 	int iTargetSegment, int iTargetFk)

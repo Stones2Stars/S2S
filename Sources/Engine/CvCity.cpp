@@ -56,6 +56,26 @@ namespace
 		static int s_spyTagId = -1;
 		return kUnit.getTags()->hasKey(s_spyTagId, CLSD_TAG, "spy");
 	}
+
+	// Fold one source's collected (targetFk, value) rows into a running total, scaled by that source's live
+	// multiplicity (a specialist's assigned count; 1 for a presence source).
+	void mergeKeyedRows(std::vector<std::pair<int, int> >& total,
+		const std::vector<std::pair<int, int> >& sourceRows, int iMultiplicity)
+	{
+		for (size_t iSource = 0; iSource < sourceRows.size(); ++iSource)
+		{
+			size_t iRow = 0;
+			while (iRow < total.size() && total[iRow].first != sourceRows[iSource].first)
+			{
+				++iRow;
+			}
+			if (iRow == total.size())
+			{
+				total.push_back(std::make_pair(sourceRows[iSource].first, 0));
+			}
+			total[iRow].second += sourceRows[iSource].second * iMultiplicity;
+		}
+	}
 }
 
 namespace
@@ -2289,6 +2309,55 @@ int CvCity::keyedExperience(int iTargetSegment, int iTargetFk) const
 	}
 
 	return iExperience + GET_PLAYER(getOwner()).keyedExperience(iTargetSegment, iTargetFk);
+}
+
+
+int CvCity::getDomainExperience(DomainTypes eDomain) const
+{
+	return keyedExperience(InfoValuation::keyedTargetSegment("domains"), (int)eDomain);
+}
+
+
+// The COLLECT twin of keyedExperience on the unitCombat axis: walk each live source ONCE and merge what it
+// authored, rather than asking every source about every unitcombat id.
+void CvCity::collectUnitCombatExperience(std::vector<std::pair<int, int> >& rows) const
+{
+	PROFILE_EXTRA_FUNC();
+	rows.clear();
+	const int iSegment = InfoValuation::keyedTargetSegment("unitCombats");
+	if (iSegment < 0)
+	{
+		return;
+	}
+	std::vector<std::pair<int, int> > sourceRows;
+
+	const std::set<int>& kActive = m_operatingBuildings.active;
+	for (std::set<int>::const_iterator it = kActive.begin(); it != kActive.end(); ++it)
+	{
+		InfoValuation::collectKeyedTarget(
+			GC.getBuildingInfo((BuildingTypes)*it).getModifiers(), MODFAM_EXPERIENCE, -1, iSegment, sourceRows);
+		mergeKeyedRows(rows, sourceRows, 1);
+	}
+	for (int iSpecialist = 0; iSpecialist < GC.getNumSpecialistInfos(); ++iSpecialist)
+	{
+		const int iCount = getSpecialistCount((SpecialistTypes)iSpecialist);
+		if (iCount > 0)
+		{
+			InfoValuation::collectKeyedTarget(
+				GC.getSpecialistInfo((SpecialistTypes)iSpecialist).getModifiers(), MODFAM_EXPERIENCE, -1, iSegment, sourceRows);
+			mergeKeyedRows(rows, sourceRows, iCount);
+		}
+	}
+	const CvPlayer& kPlayer = GET_PLAYER(getOwner());
+	for (int iTrait = 0; iTrait < GC.getNumTraitInfos(); ++iTrait)
+	{
+		if (kPlayer.hasTrait((TraitTypes)iTrait))
+		{
+			InfoValuation::collectKeyedTarget(
+				GC.getTraitInfo((TraitTypes)iTrait).getModifiers(), MODFAM_EXPERIENCE, -1, iSegment, sourceRows);
+			mergeKeyedRows(rows, sourceRows, 1);
+		}
+	}
 }
 
 

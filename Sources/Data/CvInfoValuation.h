@@ -89,6 +89,16 @@ public:
 	static int keyedTarget(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind,
 		int iTargetSegment, int iTargetFk);
 
+	//	The COLLECT form of the general keyed read -- every (targetFk, value) this entity authored on one
+	//	family+segment(+kind), for a consumer that iterates WHAT IS THERE rather than asking about one target.
+	//	Stands to `keyedTarget` exactly as `collectKeyedCombat` stands to `keyedCombat`.
+	//	⛔ This is what a "for every domain / every unitcombat, does this entity deposit?" loop becomes: it walks
+	//	the handful the entity AUTHORED instead of the whole target registry, which is the own-data inversion
+	//	pedia-read-map finding 2 names as the shape to delete.
+	//	⚠ Values come back AS COMPILED (a flat is ×100, a percent is not -- [DEC-fixedpoint-x100]).
+	static void collectKeyedTarget(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind,
+		int iTargetSegment, std::vector<std::pair<int, int> >& targetValues);
+
 	//	The interner lookup for a keyed target token, resolved ONCE per call site rather than per entry.
 	//	Returns -1 when the segment was never authored anywhere, which makes every keyed read answer 0.
 	static int keyedTargetSegment(const char* szTargetSegment);

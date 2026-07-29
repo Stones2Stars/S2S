@@ -13447,10 +13447,13 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 
 	const int iWarmongerPercent = 25000 / std::max(100, 100 + GC.getLeaderHeadInfo(getPersonalityType()).getMaxWarRand());
 
-	if (kCivic.getFreeExperience() > 0)
+	// `experience.empire.flat` -- the civic's own compiled deposit; ×100, so it reduces once here rather than
+	// inside the weighting arithmetic below ([DEC-fixedpoint-x100]).
+	const int iCivicFreeExperience = kCivic.getExperience(EXPERIENCE_AMOUNT, CASC_SCOPE_EMPIRE) / 100;
+	if (iCivicFreeExperience > 0)
 	{
 		// Free experience increases value of hammers spent on units, population is an okay measure of base hammer production
-		iTempValue = (kCivic.getFreeExperience() * getTotalPopulation() * (bWarPlan ? 30 : 12)) / 100;
+		iTempValue = (iCivicFreeExperience * getTotalPopulation() * (bWarPlan ? 30 : 12)) / 100;
 		iTempValue *= AI_averageYieldMultiplier(YIELD_PRODUCTION);
 		iTempValue /= 100;
 		iTempValue *= iWarmongerPercent;
@@ -14926,11 +14929,19 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 				iStateReligionValue += ((getNumCities() - iHighestReligionCount) * 2) / std::max(1, iTempNoNonStateReligionSpreadCount);
 			}
 			//iValue += (kCivic.getStateReligionHappiness() * iHighestReligionCount * 4);
-			iStateReligionValue += ((kCivic.getStateReligionGreatPeopleRateModifier() * iHighestReligionCount) / 20);
-			iStateReligionValue += (kCivic.getStateReligionGreatPeopleRateModifier() / 4);
-			iStateReligionValue += ((kCivic.getStateReligionUnitProductionModifier() * iHighestReligionCount) / 4);
-			iStateReligionValue += ((kCivic.getStateReligionBuildingProductionModifier() * iHighestReligionCount) / 3);
-			iStateReligionValue += (kCivic.getStateReligionFreeExperience() * iHighestReligionCount * ((bWarPlan) ? 6 : 2));
+			// The whole state-religion cluster reads the civic's own `stateReligion.empire.<kind>` deposits. The
+			// three modifiers are PERCENT kinds (not scaled); free experience is the one FLAT kind, so it alone
+			// reduces ([DEC-fixedpoint-x100] — the unit verdict lives beside the kind enum, not here).
+			const int iGreatPeopleRate = kCivic.getStateReligion(STATE_RELIGION_GREAT_PEOPLE_RATE, CASC_SCOPE_EMPIRE);
+			const int iUnitProduction = kCivic.getStateReligion(STATE_RELIGION_UNIT_PRODUCTION, CASC_SCOPE_EMPIRE);
+			const int iBuildingProduction = kCivic.getStateReligion(STATE_RELIGION_BUILDING_PRODUCTION, CASC_SCOPE_EMPIRE);
+			const int iFreeExperience = kCivic.getStateReligion(STATE_RELIGION_FREE_EXPERIENCE, CASC_SCOPE_EMPIRE) / 100;
+
+			iStateReligionValue += ((iGreatPeopleRate * iHighestReligionCount) / 20);
+			iStateReligionValue += (iGreatPeopleRate / 4);
+			iStateReligionValue += ((iUnitProduction * iHighestReligionCount) / 4);
+			iStateReligionValue += ((iBuildingProduction * iHighestReligionCount) / 3);
+			iStateReligionValue += (iFreeExperience * iHighestReligionCount * ((bWarPlan) ? 6 : 2));
 
 			int iTempReligionValue = 0;
 
@@ -25706,9 +25717,16 @@ bool CvPlayerAI::AI_isCivicValueRecalculationRequired(CivicTypes eCivic, CivicTy
 			}
 			if (getStateReligionCount() > 1)
 			{
-				if ((kCivic.getStateReligionHappiness() != 0 && kCivic.getStateReligionHappiness() != kCivic.getNonStateReligionHappiness())
-					|| kCivic.getStateReligionGreatPeopleRateModifier() != 0 || kCivic.getStateReligionUnitProductionModifier() != 0
-					|| kCivic.getStateReligionBuildingProductionModifier() != 0 || kCivic.getStateReligionFreeExperience() != 0)
+				// "Does this civic treat the STATE religion specially?" -- each leg is one of the civic's own
+				// `stateReligion.empire.<kind>` deposits. ⚠ The old happiness leg compared against a NON-state
+				// happiness read that no longer exists and that no civic ever authored (5 traits author
+				// `nonStateReligion`, zero civics), so it compared against a constant 0; the leg is the plain
+				// non-zero test it always effectively was.
+				if (kCivic.getStateReligion(STATE_RELIGION_HAPPINESS, CASC_SCOPE_EMPIRE) != 0
+					|| kCivic.getStateReligion(STATE_RELIGION_GREAT_PEOPLE_RATE, CASC_SCOPE_EMPIRE) != 0
+					|| kCivic.getStateReligion(STATE_RELIGION_UNIT_PRODUCTION, CASC_SCOPE_EMPIRE) != 0
+					|| kCivic.getStateReligion(STATE_RELIGION_BUILDING_PRODUCTION, CASC_SCOPE_EMPIRE) != 0
+					|| kCivic.getStateReligion(STATE_RELIGION_FREE_EXPERIENCE, CASC_SCOPE_EMPIRE) != 0)
 				{
 					return true;
 				}

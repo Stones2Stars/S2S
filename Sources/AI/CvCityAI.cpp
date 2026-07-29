@@ -21,6 +21,7 @@
 #include "Engine/CvMap.h"
 #include "CvPlayerAI.h"
 #include "Enabler/CvEnablerKernel.h"     // the §5a vicinity union -- the enabler + context halves, one home
+#include "Data/CvInfoValuation.h"        // keyedTarget / collectKeyedTarget -- the keyed entry-list reads
 #include "Infos/CvInfoKinds.h"           // the family/kind/unit vocabulary the valuation reads are keyed on
 #include "Engine/CvPlot.h"
 #include "Infrastructure/CvPython.h"
@@ -1427,11 +1428,12 @@ void CvCityAI::AI_chooseProduction()
 
 	const int iLowlimitProductionRank = (player.getNumCities() + 1) * 2 / 3;
 
-	// Free experience for various unit domains
-	const int iFreeLandExperience = getSpecialistFreeExperience() + getDomainFreeExperience(DOMAIN_LAND);
-	// AIAndy: Not used here at the moment
-	//const int iFreeSeaExperience = getSpecialistFreeExperience() + getDomainFreeExperience(DOMAIN_SEA);
-	const int iFreeAirExperience = getSpecialistFreeExperience() + getDomainFreeExperience(DOMAIN_AIR);
+	// Free experience for various unit domains -- `experience.<scope>.domains.{DOMAIN}` over every live source.
+	// ⚠ The old specialist term is NOT dropped, it is subsumed: a specialist's experience is scope-wide, so it
+	// sits in the city's own package rather than on a domain key, and no specialist authors it today anyway.
+	// ×100, reduced here because iFreeLandExperience is mixed into a probability percent below.
+	const int iFreeLandExperience = getDomainExperience(DOMAIN_LAND) / 100;
+	const int iFreeAirExperience = getDomainExperience(DOMAIN_AIR) / 100;
 
 	const int iOwnedSeeInvisibles = player.AI_totalAreaUnitAIs(pArea, UNITAI_SEE_INVISIBLE);
 	const int iMaxSeeInvisibleUnits = 2 + player.getNumCities() + intSqrt(player.getNumCities() * intSqrt(eCurrentEra));
@@ -2685,7 +2687,7 @@ void CvCityAI::AI_chooseProduction()
 		// BBAI TODO: Check that this works to produce early rushes on tight maps
 		//Building city hunting stack.
 
-		if (getDomainFreeExperience(DOMAIN_LAND) == 0 && getYieldRate(YIELD_PRODUCTION) > 5 * getPopulation()
+		if (getDomainExperience(DOMAIN_LAND) == 0 && getYieldRate(YIELD_PRODUCTION) > 5 * getPopulation()
 			&& AI_chooseBuilding(BUILDINGFOCUS_EXPERIENCE, (eCurrentEra > 1) ? 0 : 7, 33))
 		{
 			return;
@@ -3066,7 +3068,7 @@ void CvCityAI::AI_chooseProduction()
 	// EXPERIENCE is deliberately kept OUT of the unified BUILDINGFOCUS_ECONOMY pass and decided here. Land XP is
 	// the broad base (it tends to cover all units; domain-specific buildings like the Stable add mounted XP on
 	// top); the exact per-domain mechanic is ambiguous today and out of scope, so this stays on the land base.
-	if (getDomainFreeExperience(DOMAIN_LAND) == 0 && getYieldRate(YIELD_PRODUCTION) > 4	&& AI_chooseBuilding(BUILDINGFOCUS_EXPERIENCE, (eCurrentEra > 1) ? 0 : 7, 33))
+	if (getDomainExperience(DOMAIN_LAND) == 0 && getYieldRate(YIELD_PRODUCTION) > 4	&& AI_chooseBuilding(BUILDINGFOCUS_EXPERIENCE, (eCurrentEra > 1) ? 0 : 7, 33))
 	{
 		return;
 	}
@@ -5475,22 +5477,23 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 			{
 				PROFILE("CvCityAI::AI_buildingValueThresholdOriginal.Experience");
 
-				iValue += (kBuilding.getFreeExperience() * (bMetAnyCiv ? 12 : 6));
+				// Resolved once per call rather than per entry (the interner is only populated after load).
+				const int iUnitCombatsSeg = InfoValuation::keyedTargetSegment("unitCombats");
+				const int iDomainsSeg = InfoValuation::keyedTargetSegment("domains");
 
-				foreach_(const UnitCombatModifier2 & modifier, kBuilding.getUnitCombatFreeExperience())
-				{
-					if ((getUnitAvailability(modifier.first) == EnablerDomain::STATE_LISTED))
-					{
-						iValue += modifier.second * (bMetAnyCiv ? 6 : 3);
-					}
-				}
+				iValue += ((kBuilding.getExperience(EXPERIENCE_AMOUNT, CASC_SCOPE_CITY) / 100) * (bMetAnyCiv ? 12 : 6));
 
-				for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
+				// The building's OWN keyed `experience.city.unitCombats.{UC}` entries -- the handful it authored.
+				// ⚠ The gate this replaces passed a UNITCOMBAT id to getUnitAvailability(UnitTypes), i.e. it indexed
+				// the unit tri-state array by a combat-class id, so it answered garbage rather than "can I train
+				// something of this class". A broken gate is not carried into new code; the deposit is valued
+				// outright until the real question ("does any LISTED unit carry this class") earns a read.
+				std::vector<std::pair<int, int> > keyedExperienceRows;
+				InfoValuation::collectKeyedTarget(
+					kBuilding.getModifiers(), MODFAM_EXPERIENCE, -1, iUnitCombatsSeg, keyedExperienceRows);
+				for (size_t iRow = 0; iRow < keyedExperienceRows.size(); ++iRow)
 				{
-					if (kBuilding.isUnitCombatRetrainType((UnitCombatTypes)iI))
-					{
-						iValue += 20;
-					}
+					iValue += (keyedExperienceRows[iRow].second / 100) * (bMetAnyCiv ? 6 : 3);
 				}
 
 				for (int iI = 0; iI < NUM_DOMAIN_TYPES; iI++)
@@ -5505,7 +5508,8 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 					{
 						iDomainExpValue = 12;
 					}
-					iValue += kBuilding.getDomainFreeExperience(iI) * (bMetAnyCiv ? iDomainExpValue : iDomainExpValue / 2);
+					iValue += (InfoValuation::keyedTarget(kBuilding.getModifiers(), MODFAM_EXPERIENCE, -1, iDomainsSeg, iI) / 100)
+						* (bMetAnyCiv ? iDomainExpValue : iDomainExpValue / 2);
 				}
 				int iPromoValue = 0;
 				// The free-promotion payload, off the `triggers` onTurnEnd entries. A CONDITIONAL promotion may not
@@ -5523,7 +5527,6 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 				}
 				iValue += iPromoValue;
 
-				iValue += kBuilding.getNationalCaptureProbabilityModifier() * 2;
 
 			if ((!isDevelopingCity() || getCityContext().isCapital()))
 			{
@@ -5632,7 +5635,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 			{
 				PROFILE("CvCityAI::AI_buildingValueThresholdOriginal.Sea");
 
-				iValue += (kBuilding.getFreeExperience() * (bMetAnyCiv ? 16 : 8));
+				iValue += ((kBuilding.getExperience(EXPERIENCE_AMOUNT, CASC_SCOPE_CITY) / 100) * (bMetAnyCiv ? 16 : 8));
 
 				// #430 F2b (enabler.md par.6): iterate the LISTED unit frontier instead of scanning every unit --
 				// getAvailableUnits fills the city's LISTED unit frontier. Order-independent
@@ -5648,16 +5651,13 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 					if (eCombatType != NO_UNITCOMBAT
 						&& kUnitInfo.getDomainType() == DOMAIN_SEA)
 					{
-						iValue += (kBuilding.getUnitCombatFreeExperience().getValue(eCombatType) * (bMetAnyCiv ? 6 : 3));
-
-						if (kBuilding.isUnitCombatRetrainType(eCombatType))
-						{
-							iValue += 20;
-						}
+						iValue += ((InfoValuation::keyedTarget(kBuilding.getModifiers(), MODFAM_EXPERIENCE, -1,
+							InfoValuation::keyedTargetSegment("unitCombats"), (int)eCombatType) / 100) * (bMetAnyCiv ? 6 : 3));
 					}
 				}
 
-				iValue += (kBuilding.getDomainFreeExperience(DOMAIN_SEA) * (bMetAnyCiv ? 16 : 8));
+				iValue += ((InfoValuation::keyedTarget(kBuilding.getModifiers(), MODFAM_EXPERIENCE, -1,
+					InfoValuation::keyedTargetSegment("domains"), (int)DOMAIN_SEA) / 100) * (bMetAnyCiv ? 16 : 8));
 
 				iValue += (kBuilding.getDomainProductionModifier(DOMAIN_SEA) / 4);
 			}
@@ -5858,7 +5858,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 				iValue += kBuilding.getGlobalGreatPeopleRateModifier() * iNumCities / 8;
 				iValue += kBuilding.getAnarchyModifier() / (-4);
 				iValue += kBuilding.getGlobalHurryModifier() * (-2);
-				iValue += kBuilding.getGlobalFreeExperience() * iNumCities * (bMetAnyCiv ? 6 : 3);
+				iValue += (kBuilding.getExperience(EXPERIENCE_AMOUNT, CASC_SCOPE_EMPIRE) / 100) * iNumCities * (bMetAnyCiv ? 6 : 3);
 
 				if (bCanPopRush)
 				{
@@ -5908,7 +5908,8 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 						{
 							iValue += iMilitaryProductionModifier / 4;
 						}
-						iValue += iMilitaryProductionModifier * (getFreeExperience() + getSpecialistFreeExperience()) / 10;
+						// The city's own unit-agnostic base XP (both hand-named accumulators are folded into it).
+						iValue += iMilitaryProductionModifier * (getProductionExperience() / 100) / 10;
 					}
 					// otherwise, this is a limited wonder (aka Heroic Epic), we _really_ do not want to build this here
 					// subtract from the value (if this wonder has a lot of other stuff, we still might build it)
@@ -10304,7 +10305,7 @@ int CvCityAI::AI_plotValue(const CvPlot* pPlot, bool bAvoidGrowth, bool bRemove,
 
 int CvCityAI::AI_experienceWeight() const
 {
-	return ((getProductionExperience() + getDomainFreeExperience(DOMAIN_SEA)) * 2);
+	return (((getProductionExperience() + getDomainExperience(DOMAIN_SEA)) / 100) * 2);
 }
 
 
@@ -12195,18 +12196,28 @@ int CvCityAI::AI_getMilitaryProductionRateRank() const
 		if ((DomainTypes)iI != DOMAIN_SEA)
 		{
 			iRate += getDomainProductionModifier((DomainTypes)iI) / 10;
-			iRate += getDomainFreeExperience((DomainTypes)iI);
+			iRate += getDomainExperience((DomainTypes)iI) / 100;
 		}
 	}
 	iRate += getProductionModifier() / 10;
-	iRate += getFreeExperience();
+	iRate += getProductionExperience() / 100;
 
+	// The city's keyed unitcombat experience, collected ONCE and filtered — never asked per id over the whole
+	// unitcombat registry, which would be O(registry x live sources) on a per-city ranking read.
+	std::vector<std::pair<int, int> > unitCombatExperience;
+	collectUnitCombatExperience(unitCombatExperience);
+	for (size_t iRow = 0; iRow < unitCombatExperience.size(); ++iRow)
+	{
+		if (GC.getUnitCombatInfo((UnitCombatTypes)unitCombatExperience[iRow].first).isForMilitary())
+		{
+			iRate += unitCombatExperience[iRow].second / 100;
+		}
+	}
 	for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
 	{
 		if (GC.getUnitCombatInfo((UnitCombatTypes)iI).isForMilitary())
 		{
 			iRate += getUnitCombatProductionModifier((UnitCombatTypes)iI) / 10;
-			iRate += getUnitCombatFreeExperience((UnitCombatTypes)iI);
 		}
 	}
 	int iRank = 1;
@@ -12247,17 +12258,25 @@ int CvCityAI::AI_getNavalMilitaryProductionRateRank() const
 	int iRate = getPopulation() + getYieldRate(YIELD_PRODUCTION) - getYieldRate(YIELD_COMMERCE);
 
 	iRate += getDomainProductionModifier(DOMAIN_SEA) / 10;
-	iRate += getDomainFreeExperience(DOMAIN_SEA);
+	iRate += getDomainExperience(DOMAIN_SEA) / 100;
 
 	iRate += getProductionModifier() / 10;
-	iRate += getFreeExperience();
+	iRate += getProductionExperience() / 100;
 
+	std::vector<std::pair<int, int> > unitCombatExperience;
+	collectUnitCombatExperience(unitCombatExperience);
+	for (size_t iRow = 0; iRow < unitCombatExperience.size(); ++iRow)
+	{
+		if (GC.getUnitCombatInfo((UnitCombatTypes)unitCombatExperience[iRow].first).isForNavalMilitary())
+		{
+			iRate += unitCombatExperience[iRow].second / 100;
+		}
+	}
 	for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
 	{
 		if (GC.getUnitCombatInfo((UnitCombatTypes)iI).isForNavalMilitary())
 		{
 			iRate += getUnitCombatProductionModifier((UnitCombatTypes)iI) / 10;
-			iRate += getUnitCombatFreeExperience((UnitCombatTypes)iI);
 		}
 	}
 	int iRank = 1;
@@ -12506,7 +12525,9 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 	}
 	if ((iFocusFlags & BUILDINGFOCUS_DOMAINSEA) != 0)
 	{
-		if (kBuilding.getDomainProductionModifier(DOMAIN_SEA) > 0 || kBuilding.getDomainFreeExperience(DOMAIN_SEA) > 0)
+		if (kBuilding.getDomainProductionModifier(DOMAIN_SEA) > 0
+		|| InfoValuation::keyedTarget(kBuilding.getModifiers(), MODFAM_EXPERIENCE, -1,
+			InfoValuation::keyedTargetSegment("domains"), (int)DOMAIN_SEA) > 0)
 		{
 			return true;
 		}
@@ -12514,16 +12535,22 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 	}
 	if ((iFocusFlags & BUILDINGFOCUS_EXPERIENCE) != 0)
 	{
-		if (kBuilding.getFreeExperience() > 0 ||
-			kBuilding.getGlobalFreeExperience() > 0 ||
-			!kBuilding.getUnitCombatFreeExperience().empty() ||
-			kBuilding.getDomainFreeExperience(NO_DOMAIN) > 0 ||
-			kBuilding.EnablesUnits() ||
-			kBuilding.hasTriggerPromotions() ||
-			kBuilding.getNumUnitCombatRetrainTypes() > 0 ||
-			kBuilding.getNationalCaptureProbabilityModifier() > 0 ||
-			!kBuilding.getUnitCombatFreeExperience().empty() ||
-			kBuilding.isAnyDomainFreeExperience())
+		// "Does this building do anything for EXPERIENCE?" -- asked ONCE per axis off its own compiled entries,
+		// which is why each axis appears exactly once here and every index it reads is a real one.
+		std::vector<std::pair<int, int> > keyedExperienceRows;
+		InfoValuation::collectKeyedTarget(kBuilding.getModifiers(), MODFAM_EXPERIENCE, -1,
+			InfoValuation::keyedTargetSegment("unitCombats"), keyedExperienceRows);
+		const bool bKeyedUnitCombatExperience = !keyedExperienceRows.empty();
+		InfoValuation::collectKeyedTarget(kBuilding.getModifiers(), MODFAM_EXPERIENCE, -1,
+			InfoValuation::keyedTargetSegment("domains"), keyedExperienceRows);
+		const bool bKeyedDomainExperience = !keyedExperienceRows.empty();
+
+		if (kBuilding.getExperience(EXPERIENCE_AMOUNT, CASC_SCOPE_CITY) > 0 ||
+			kBuilding.getExperience(EXPERIENCE_AMOUNT, CASC_SCOPE_EMPIRE) > 0 ||
+			bKeyedUnitCombatExperience ||
+			bKeyedDomainExperience ||
+			kBuilding.edge(EDGEF_ENABLES, EDGEB_UNITS) != NULL ||
+			kBuilding.hasTriggerPromotions())
 		{
 			return true;
 		}

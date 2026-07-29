@@ -744,6 +744,15 @@ per-source unit-stat reads whose replacement is not built.
 
 ## Known gaps carried deliberately
 
+- **Three building AI-valuation terms were DROPPED as genuinely dead, not re-pointed** (the census disposition
+  test's step 3 — no successor on the info AND no authoring in the data): the per-unitcombat **retrain** bonus
+  (zero authorings anywhere in `Assets/Data`), the building **capture-probability** term (zero building
+  authorings), and the availability gate on a building's per-unitcombat experience — that last one passed a
+  UNITCOMBAT id to `getUnitAvailability(UnitTypes)`, so it indexed the unit tri-state array by a combat-class id
+  and answered garbage. ⚑ The real question it was reaching for — *"does any LISTED unit carry this combat
+  class?"* — is answerable off the enabler's frontier and is worth a read **if** the valuation is ever shown to
+  need it; it is not re-added speculatively.
+
 - **Game-option flips carry no DOMAIN event** — a mid-game toggle would not re-mark. An emit endpoint is the fix
   if/when WorldBuilder option toggling is in scope.
 - **Ranked-target-selection EVALUATION** is parked ([parked/ranked-target-selection.md](../parked/ranked-target-selection.md));

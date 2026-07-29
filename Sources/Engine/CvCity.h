@@ -878,6 +878,11 @@ public:
 	bool isBombardable(const CvUnit* pUnit) const;
 	int cascadeValue(ModifierFamily eFamily, int eKind) const;   // ANY (family,kind) slot; unit per infoKindUnit
 	int keyedExperience(int iTargetSegment, int iTargetFk) const;   // the keyed experience.<scope>.{unitCombats|domains} legs
+	int getDomainExperience(DomainTypes eDomain) const;             // experience.<scope>.domains.{DOMAIN}, every live source
+	// Every (unitCombat, experience) this city's live sources deposit, collected ONCE. ⛔ A consumer wanting the
+	// military subset filters THESE rows -- it never asks per id over the unitcombat registry, which is the
+	// own-data inversion (pedia-read-map finding 2) and would be O(registry x sources) per call.
+	void collectUnitCombatExperience(std::vector<std::pair<int, int> >& rows) const;
 	int cascadeDefense(int eKind) const;
 	int getTotalDefense(bool bIgnoreBuilding) const;
 	int getDefenseModifier(bool bIgnoreBuilding) const;
