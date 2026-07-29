@@ -8273,11 +8273,13 @@ int CvGame::calculateSyncChecksum()
 					iMultiplier += pLoopCity->getWorkingPopulation();
 					iMultiplier += pLoopCity->getSpecialistPopulation();
 					iMultiplier += pLoopCity->getNumGreatPeople();
-					// ÷100: the verdicts are ×100 while every other term here is a whole count
-					iMultiplier += pLoopCity->goodHealth() / 100;
-					iMultiplier += pLoopCity->badHealth() / 100;
-					iMultiplier += pLoopCity->happyLevel() / 100;
-					iMultiplier += pLoopCity->unhappyLevel() / 100;
+					// All four channels, in whole units -- every other term here is a whole count.
+					int aWellbeing[NUM_WELLBEING_CHANNELS];
+					pLoopCity->realizedWellbeing(0, aWellbeing);
+					for (int iChannelIndex = 0; iChannelIndex < NUM_WELLBEING_CHANNELS; ++iChannelIndex)
+					{
+						iMultiplier += aWellbeing[iChannelIndex] / 100;
+					}
 					iMultiplier += pLoopCity->getFood();
 				}
 				break;

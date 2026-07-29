@@ -367,8 +367,16 @@ public:
 
 	int getCelebrityHappiness() const;
 
-	int unhappyLevel(int iExtra = 0) const;
-	int happyLevel() const;
+	// THE REALIZED wellbeing channels -- the DEPOSITS (getWellbeing) plus the raw-state inputs no deposit
+	// produces (modifier.md §2b). Distinct from getWellbeing on purpose: that one answers in the vocabulary a
+	// CANDIDATE also answers in, so the two compose; this one is the city's own level and composes with nothing.
+	// A consumer wanting ONE side of a pair reads the array -- there is no per-side getter, and the four legacy
+	// level getters it replaces are deleted, not renamed ([DEC-new-getter-surface]).
+	void realizedWellbeing(int iExtraPopulation, int (&wellbeing)[NUM_WELLBEING_CHANNELS]) const;
+	// The opposing-pair NETS, in WHOLE faces / health points (signed -- a surplus is as meaningful as a
+	// deficit). The pairing itself lives once on the calc surface (InfoValuation::netHappiness/netHealth).
+	int netHappiness(int iExtraPopulation = 0) const;
+	int netHealth(int iExtraPopulation = 0) const;
 	int angryPopulation(int iExtra = 0) const;
 
 	int visiblePopulation() const;
@@ -377,12 +385,10 @@ public:
 	int extraSpecialists() const;
 	int extraFreeSpecialists() const;
 
-	int unhealthyPopulation(bool bNoAngry = false, int iExtra = 0) const;
+	int unhealthyPopulation(int iExtra = 0) const;
 	int totalGoodBuildingHealth() const;
 	int totalBadBuildingHealth() const;
-	int goodHealth() const;
-	int badHealth(bool bNoAngry = false, int iExtra = 0) const;
-	int healthRate(bool bNoAngry = false, int iExtra = 0) const;
+	int healthRate(int iExtra = 0) const;
 	int getPopulationPlusProgress(const int iExtra) const;
 	int getFoodConsumedPerPopulation(const int iExtra = 0) const;
 	int getFoodConsumedByPopulation(const int iExtra = 0) const;
@@ -2081,10 +2087,8 @@ public:
 		DECLARE_MAP_FUNCTOR_CONST(CvCity, int, getID);
 		DECLARE_MAP_FUNCTOR_CONST(CvCity, int, getPopulation);
 		DECLARE_MAP_FUNCTOR_CONST(CvCity, int64_t, getRealPopulation);
-		DECLARE_MAP_FUNCTOR_CONST(CvCity, int, goodHealth);
-		DECLARE_MAP_FUNCTOR_CONST(CvCity, int, badHealth);
-		DECLARE_MAP_FUNCTOR_CONST(CvCity, int, happyLevel);
-		DECLARE_MAP_FUNCTOR_CONST(CvCity, int, unhappyLevel);
+		DECLARE_MAP_FUNCTOR_CONST(CvCity, int, netHappiness);
+		DECLARE_MAP_FUNCTOR_CONST(CvCity, int, netHealth);
 		DECLARE_MAP_FUNCTOR_CONST(CvCity, const CvWString, getName);
 		DECLARE_MAP_FUNCTOR_CONST(CvCity, const CvArea*, area);
 		DECLARE_MAP_FUNCTOR_CONST(CvCity, const CvPlot*, plot);

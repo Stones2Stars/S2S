@@ -296,6 +296,18 @@ public:
 	// (MMKernel::perApply) applies the SAME scale; its option gate rides the authored deposit's `enabled`.
 	static int resolvedCityLimit(int iBaseCityLimit);
 
+	// THE OPPOSING-PAIR NETS (modifier.md §2b): wellbeing is FOUR ORDINARY CHANNELS summed in opposing pairs,
+	// and the pairing is a FINAL-STATE calculation over numbers a group read already handed out -- never a
+	// channel of its own and never a getter ([patterns.md] rule 6). It lives here, once, so the city's realized
+	// level, the AI's candidate valuation (expectedWellbeing) and the tooltips all net the SAME way
+	// ([DEC-single-implementation]).
+	// ⛔ PURE: fed the four channels, not an object -- the caller decides WHICH four (a city's realized set, or
+	// a candidate's expected delta), which is exactly what lets one implementation serve both.
+	// ×100 in, WHOLE out: the discrete boundary is here, because faces and health points are whole
+	// ([DEC-fixedpoint-x100]: a whole game count reduces at the point of use).
+	static int netHappiness(const int (&wellbeing)[NUM_WELLBEING_CHANNELS]);
+	static int netHealth(const int (&wellbeing)[NUM_WELLBEING_CHANNELS]);
+
 };
 
 #endif // CV_INFO_VALUATION_H

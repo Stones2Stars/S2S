@@ -819,7 +819,7 @@ bool CvCityAI::AI_avoidGrowth()
 	if (!isHuman() || !AI_isEmphasizeYield(YIELD_FOOD) && !AI_isEmphasizeGreatPeople())
 	{
 		int iExtra = (isHuman()) ? 0 : 1;
-		int iHappinessLevel = happyLevel() / 100 - unhappyLevel(iExtra) / 100;
+		int iHappinessLevel = netHappiness(iExtra);
 
 		// ignore military unhappy, since we assume it will be fixed quickly, grow anyway
 		if (getMilitaryHappinessUnits() == 0)
@@ -845,14 +845,14 @@ bool CvCityAI::AI_avoidGrowth()
 
 	if (AI_isEmphasizeAvoidAngryCitizens())
 	{
-		if (unhappyLevel() / 100 > happyLevel() / 100)
+		if (netHappiness() < 0)
 		{
 			return true;
 		}
 
 		if (getFoodTurnsLeft() == 1)
 		{
-			const int iHappyFacesLeft = happyLevel() / 100 - unhappyLevel(getHappinessTimer() > 0 ? GC.getTEMP_HAPPY() : 0) / 100;
+			const int iHappyFacesLeft = netHappiness(getHappinessTimer() > 0 ? GC.getTEMP_HAPPY() : 0);
 
 			if (iHappyFacesLeft < 1)
 			{
@@ -863,14 +863,14 @@ bool CvCityAI::AI_avoidGrowth()
 
 	if (AI_isEmphasizeAvoidUnhealthyCitizens())
 	{
-		if (badHealth() / 100 > goodHealth() / 100)
+		if (netHealth() < 0)
 		{
 			return true;
 		}
 
 		if (getFoodTurnsLeft() == 1)
 		{
-			const int iHealthyFacesLeft = goodHealth() / 100 - badHealth() / 100;
+			const int iHealthyFacesLeft = netHealth();
 
 			if (iHealthyFacesLeft < 1)
 			{
@@ -1049,8 +1049,8 @@ int CvCityAI::AI_specialistValue(SpecialistTypes eSpecialist, bool bAvoidGrowth,
 
 	int iSpecialistHealth = GC.getSpecialistInfo(eSpecialist).getHealthPercent() / 100;
 	int iSpecialistHappiness = GC.getSpecialistInfo(eSpecialist).getHappinessPercent() / 100;
-	int iHappinessLevel = happyLevel() / 100 - unhappyLevel(1) / 100 + getEspionageHappinessCounter();
-	int iHealthLevel = goodHealth() / 100 - badHealth(/*bNoAngry*/ false, std::max(0, (iHappinessLevel + 1) / 2)) / 100 + getEspionageHealthCounter();
+	int iHappinessLevel = netHappiness(1) + getEspionageHappinessCounter();
+	int iHealthLevel = netHealth(std::max(0, (iHappinessLevel + 1) / 2)) + getEspionageHealthCounter();
 
 	int iBaseFoodDifference = getYieldRate(YIELD_FOOD) - getFoodConsumedByPopulation() - std::max(0, -iHealthLevel);
 
@@ -1472,7 +1472,7 @@ void CvCityAI::AI_chooseProduction()
 		iMinFoundValue /= 2;
 	}
 
-	int iHealth = goodHealth() / 100 - badHealth(true, 0) / 100;
+	int iHealth = netHealth(0);
 	int iFoodDiffBase = foodDifference(false, false, true);
 
 	/// END OF #0 VARIABLES PREPARATION
@@ -1950,7 +1950,7 @@ void CvCityAI::AI_chooseProduction()
 		return;
 	}
 	// Emergency happyness
-	const int iHappyness = happyLevel() / 100 - unhappyLevel(0) / 100;
+	const int iHappyness = netHappiness(0);
 
 	//#5 If more than 7 unhappy citizens or more than a sixth of the population  => BUILDING for Happyness
 	if (iHappyness < -7 || iHappyness < -getPopulation() / 6)
@@ -2133,7 +2133,7 @@ void CvCityAI::AI_chooseProduction()
 		}
 		// Sea Workers
 		else if (!bWaterDanger && getPopulation() <= 4 && iNeededSeaWorkers > 0
-		&& happyLevel() / 100 - unhappyLevel(1) / 100 > 0 && iExistingSeaWorkers == 0
+		&& netHappiness(1) > 0 && iExistingSeaWorkers == 0
 		&& AI_chooseUnit("capital worker", UNITAI_WORKER_SEA))
 		{
 			return;
@@ -2875,7 +2875,7 @@ void CvCityAI::AI_chooseProduction()
 		if ((iWorkersInArea < ((4 * iNeededWorkersInArea) + 6) / 7)
 			/* || (bFinancialTrouble && (iWorkersInArea < (((2*iNeededWorkersInArea) + 1)/3))) */
 			|| (((iWorkersInArea < ((2 * iNeededWorkersInArea) + 2) / 3) || (bFinancialTrouble && (iWorkersInArea < (((3 * iNeededWorkersInArea) + 3) / 4))))
-				&& (((happyLevel() / 100 - unhappyLevel() / 100) <= 0) && (foodDifference(false) > 0 || (foodDifference(false) == 0 && happyLevel() / 100 - unhappyLevel() / 100 < 0)))))
+				&& (((netHappiness()) <= 0) && (foodDifference(false) > 0 || (foodDifference(false) == 0 && netHappiness() < 0)))))
 		{
 			if (iWorkersNeeded > 0)
 			{
@@ -4997,9 +4997,9 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 	int iFoodDifference = foodDifference(false);
 
 	// Reduce reaction to espionage induced happy/health problems
-	int iHappinessLevel = happyLevel() / 100 - unhappyLevel(1) / 100 + getEspionageHappinessCounter() / 2;
+	int iHappinessLevel = netHappiness(1) + getEspionageHappinessCounter() / 2;
 	int iAngryPopulation = range(-iHappinessLevel, 0, (getPopulation() + 1));
-	int iHealthLevel = goodHealth() / 100 - badHealth(/*bNoAngry*/ false, std::max(0, (iHappinessLevel + 1) / 2)) / 100 + getEspionageHealthCounter() / 2;
+	int iHealthLevel = netHealth(std::max(0, (iHappinessLevel + 1) / 2)) + getEspionageHealthCounter() / 2;
 
 	int iHappyModifier = (iHappinessLevel <= iHealthLevel && iHappinessLevel <= 6) ? 6 : 3;
 	if (iHappinessLevel >= 10)
@@ -6059,7 +6059,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 
 					if (iFoodPerTurn > 0)
 					{
-						int iCityHappy = happyLevel() / 100 - unhappyLevel() / 100;
+						int iCityHappy = netHappiness();
 						if (iCityHappy >= 0)
 						{
 							int iCurrentFoodToGrow = growthThreshold();
@@ -6081,7 +6081,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 
 						if (iFoodPerTurn > 0)
 						{
-							const int iCityHappy = pLoopCity->happyLevel() / 100 - pLoopCity->unhappyLevel() / 100;
+							const int iCityHappy = pLoopCity->netHappiness();
 							if (iCityHappy >= 0)
 							{
 								const int iCurrentFoodToGrow = pLoopCity->growthThreshold();
@@ -6981,7 +6981,7 @@ int CvCityAI::AI_neededDefenders()
 	const int iHappyPerUnit = player.getHappyPerMilitaryUnit();
 	if (iHappyPerUnit != 0)
 	{
-		const int iHappiness = happyLevel() / 100 - unhappyLevel(0) / 100;
+		const int iHappiness = netHappiness(0);
 		if (iHappiness < 0)
 		{
 			iDefenders -= iHappyPerUnit * iHappiness / (1 + GET_TEAM(getTeam()).getAtWarCount(true));
@@ -7002,7 +7002,7 @@ int CvCityAI::AI_neededHappinessDefenders() const
 	if (GET_PLAYER(getOwner()).getHappyPerMilitaryUnit() > 0)
 	{
 		int iCurrent = plot()->plotCount(PUF_isMilitaryHappiness, -1, -1, NULL, getOwner(), NO_TEAM);
-		int iHappiness = happyLevel() / 100 - unhappyLevel(0) / 100;
+		int iHappiness = netHappiness(0);
 		int iBaseHappiness = iHappiness - GET_PLAYER(getOwner()).getHappyPerMilitaryUnit() * iCurrent;
 
 		if (iBaseHappiness < 0)
@@ -7547,7 +7547,7 @@ int CvCityAI::AI_clearFeatureValue(int iIndex) const
 	int iHealthValue = 0;
 	if (kFeatureInfo.getHealthPercent() != 0)
 	{
-		const int iHealth = goodHealth() / 100 - badHealth() / 100;
+		const int iHealth = netHealth();
 
 		//speed up Jungle Clearing
 		const int iMultiplier = kFeatureInfo.getHealthPercent() > 0 ? 6 : 10;
@@ -7941,7 +7941,7 @@ void CvCityAI::AI_getYieldMultipliers(int& iFoodMultiplier, int& iProductionMult
 
 	const int iFoodDifference = iFoodTotal - iExtraFoodForGrowth - iTargetSize * getFoodConsumedPerPopulation() / 100;
 
-	iDesiredFoodChange = -iFoodDifference + std::max(0, badHealth() / 100 - goodHealth() / 100);
+	iDesiredFoodChange = -iFoodDifference + std::max(0, -netHealth());
 	if (iDesiredFoodChange > 3 && iTargetSize > getPopulation())
 	{
 		iDesiredFoodChange = (iDesiredFoodChange + 3) / 2;
@@ -8190,7 +8190,7 @@ int CvCityAI::AI_getImprovementValue(const CvPlot* pPlot, ImprovementTypes eImpr
 
 	if (improvement.getHappiness() != 0)
 	{
-		int iHappyLevel = happyLevel() / 100 - unhappyLevel(0) / 100;
+		int iHappyLevel = netHappiness(0);
 		if (iHappyLevel - iHappyLevel / 5 < 0)
 		{
 			iValue += 100 * improvement.getHappiness();
@@ -9745,8 +9745,8 @@ int CvCityAI::AI_yieldValueInternal(short* piYields, short* piCommerceYields, bo
 		int iFoodPerTurn = (foodDifference(false) - ((bRemove) ? aiYields[YIELD_FOOD] : 0));
 		int iFoodLevel = getFood();
 		int iFoodToGrow = growthThreshold();
-		int iHealthLevel = goodHealth() / 100 - badHealth(/*bNoAngry*/ false, 0) / 100;
-		int iHappinessLevel = (isNoUnhappiness() ? std::max(3, iHealthLevel + 5) : happyLevel() / 100 - unhappyLevel(0) / 100);
+		int iHealthLevel = netHealth(0);
+		int iHappinessLevel = (isNoUnhappiness() ? std::max(3, iHealthLevel + 5) : netHappiness(0));
 		int iPopulation = getPopulation();
 		int	iExtraPopulationThatCanWork = std::min(iPopulation - range(-iHappinessLevel, 0, iPopulation) + std::min(0, extraFreeSpecialists()), NUM_CITY_PLOTS) - getWorkingPopulation() + ((bRemove) ? 1 : 0);
 
@@ -13573,7 +13573,7 @@ int CvCityAI::healthValue(int iAddedHealth, int iUseHappinessLevel, int iBaseHea
 	if (iAddedHealth != 0)
 	{
 		int iTempHappinessLevel = iUseHappinessLevel;
-		int iTempHealthLevel = (goodHealth() / 100 - badHealth(/*bNoAngry*/ false, std::max(0, (iTempHappinessLevel + 1) / 2)) / 100) + ((getEspionageHealthCounter() + 1) / 2);
+		int iTempHealthLevel = (netHealth(std::max(0, (iTempHappinessLevel + 1) / 2))) + ((getEspionageHealthCounter() + 1) / 2);
 		int iTempCurrentHealthLevel = iBaseHealthLevel;
 		int iTempHealthChangeValue = 0;
 		for (int iI = 0; iI < iAddedHealth; iI++)

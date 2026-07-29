@@ -392,27 +392,19 @@ measure what survives, then cut the genuine residue. The classes below are the u
 - **② Realized-value reads** (`getYieldRate`/`…100`, `getCommerceRate`/`…TimesTimes100`, `getMaintenanceTimes100`,
   `getTotalDefense`/`getDefenseModifier`) — already answerable by the existing group reads; these are a consumer
   move, not new surface.
-- **③a The WELLBEING VERDICT is the next hub, and it is READY — the whole cluster is now unfed.** The four
-  verdicts (`happyLevel` / `unhappyLevel` / `goodHealth` / `badHealth`) are still the full legacy per-source sum:
-  27 / 44 / 15 / 16 distinct terms, nearly all hand-named accumulators maintained by `processBuilding` /
-  `processBonus`. ⚠ **Cutting any ONE leg is the 4c-bis defect** (a converted operand inside an otherwise-legacy
-  expression) — the unit of work is the four verdicts together.
-  ⚑ **Both halves of the readiness check pass.** The DESTINATION exists: `CvCity::getWellbeing` /
-  `CvPlayer::getWellbeing` already serve the four channels, and the opposing-pair nets live once on the calc
-  surface. The DATA exists: **1,628 happiness + 1,351 health authoring entities** across exactly the
-  [modifier.md §2b](../../specs/modifier.md) deposit list (buildings 1,123/1,068 · traits · civics · bonuses ·
-  specialists · features · techs · handicaps · corporations). Nothing authors `anger`/`unhealth` because a
-  negative deposit routes to the opposing channel at FILL — the specced routing, not a gap.
-  ⛔ What must NOT be swept in with it: the RAW-STATE INPUTS (the anger percents, espionage counters, event
-  anger, tax-rate and foreign-culture unhappiness, city-over-limit, vassal, the event-granted `extraHappiness`
-  /`extraHealth`) are folded at the verdict, never re-derived; and the per-source decomposition earns no
-  replacement getter (③ below) — attribution is the ORACLE endpoint's job.
 - **③ Per-SOURCE decomposition terms** (`getBuildingHappiness`, `getBonusGoodHealth`, `getFeatureGoodHappiness`,
-  `getReligionHappiness`, `getSpecialistHappiness`, `getCivicHappiness`, `getMilitaryHappiness`,
-  `getCelebrityHappiness`, `getVassalHappiness`, `getStateReligionHappiness`, …) — the legacy accumulators, cut by
+  `getReligionHappiness`, `getSpecialistHappiness`, `getCivicHappiness`, `getStateReligionHappiness`, …) — the
+  legacy accumulators, cut by
   [DEC-accumulator-cut-uniform](../../architecture/decisions.md#dec-accumulator-cut-uniform). ⛔ They do NOT each
   earn a replacement getter: the group read answers the TOTAL, and per-source attribution is the ORACLE
   endpoint's job, not the read surface's.
+  ⚑ **They are now UNFED AND UNREAD — nothing maintains them and nothing consumes them**, so what is left is the
+  mechanical delete: the member, its `change*`/`get*`, its read + write, and the tag named in
+  `Assets/savemigration.txt`. ⚠ Audit each `change*` BODY for side-effect riders first ([save.md §6](../../specs/save.md)).
+  ⚠ Their last maintainers go with them: `processBonus` and `processSpecialist` are the same
+  accumulator-maintainer shape `processBuilding` already lost, and every read they still make is a compiled
+  deposit (the specialist's wellbeing/yield/commerce/underworld/greatPeopleRate, the bonus's wellbeing and
+  yield/commerce modifiers) — which is also what the remaining `CvCity.cpp` dangling-getter census is mostly made of.
 - **④ The genuine residue needing NEW surface** — the slider math (`getCommerceFromPercent`,
   `getCommerceRateAtSliderPercent`), the espionage counters, the live combat state (`getDefenseDamage`,
   `getLastDefenseDamage`), `getHappinessTimer`, and the `CvPlayer` unit-upkeep family. These are what the
@@ -546,16 +538,10 @@ per-source unit-stat reads whose replacement is not built.
   text is NOT a reason to hesitate on a conversion** — say what changed and move on. The bar is the legacy read
   being gone ([DEC-playability-not-a-gate](../../architecture/decisions.md#dec-playability-not-a-gate): wired
   outranks correct while the tree is red; correctness is endpoint-observable and untestable until green).
-  ⛔ **`setAngerHelp` is NOT a conversion target, and the reason generalizes.** Every one of its ~41 lines reads a
-  LIVE CITY accessor (`getOvercrowdingPercentAnger`, `getBuildingBadHappiness`, `getFeatureBadHappiness`, …) — the
-  city's REALIZED aggregate per source class, not any info's authored entries. `appendEntryLines` renders ONE
-  info's entries, so it cannot serve this: handed a building info it would print that building's own happiness
-  instead of the city's total across all buildings, i.e. wrong numbers. The composer is the sanctioned BLOCK shape
-  (anger channel + happiness channel + the composite total, with a MISC residual for what is unattributed).
-  ⚑ Its real move is UPSTREAM: those getters are the STORED-ACCUMULATOR DRIFT class
-  ([modifier.md §2b](../../specs/modifier.md)) cut by
-  [DEC-accumulator-cut-uniform](../../architecture/decisions.md#dec-accumulator-cut-uniform). When they re-point at
-  the cascade's four wellbeing channels the composer's READS change and its block structure stays.
+  ⛔ **The four WELLBEING composers are not `appendEntryLines` targets, and the reason generalizes.**
+  `appendEntryLines` renders ONE info's entries, so handed a building info it would print that building's own
+  happiness instead of the city's total across all buildings — wrong numbers. They are the sanctioned BLOCK shape
+  (the cascade CHANNEL as one line, one line per raw-state input, a MISC residual, the composite total).
   ⚠ **The test this sharpens:** "getText around a magnitude" marks a sub-block only when the magnitude comes from
   an AUTHORED ENTRY. A realized per-scope aggregate has no entry list to render from, and is a block.
   ⚑ **`setBonusTradeHelp` still holds a WHOLE-DATABASE REVERSE SCAN** — it walks all ~5,200 buildings per hover

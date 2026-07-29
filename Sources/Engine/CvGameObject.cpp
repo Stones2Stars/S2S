@@ -983,9 +983,13 @@ int CvGameObjectCity::getAttribute(AttributeTypes eAttribute) const
 			return m_pCity->healthRate();
 
 		case ATTRIBUTE_HAPPINESS:
-			// ÷100: an ATTRIBUTE is a whole game quantity (the property solver multiplies it per turn,
-			// alongside ATTRIBUTE_POPULATION) -- the discrete boundary, as ATTRIBUTE_HEALTH already is.
-			return m_pCity->happyLevel() / 100;
+		{
+			// An ATTRIBUTE is a whole game quantity (the property solver multiplies it per turn, alongside
+			// ATTRIBUTE_POPULATION), so this is the discrete boundary -- as ATTRIBUTE_HEALTH already is.
+			int aWellbeing[NUM_WELLBEING_CHANNELS];
+			m_pCity->realizedWellbeing(0, aWellbeing);
+			return aWellbeing[WELLBEING_HAPPINESS] / 100;
+		}
 	}
 	return 0;
 }

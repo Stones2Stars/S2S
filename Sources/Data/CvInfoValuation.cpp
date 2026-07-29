@@ -863,3 +863,19 @@ int InfoValuation::resolvedCityLimit(int iBaseCityLimit)
 	}
 	return iBaseCityLimit * GC.getWorldInfo(GC.getMap().getWorldSize()).getCityLimitsScalePercent() / 100;
 }
+
+
+int InfoValuation::netHappiness(const int (&wellbeing)[NUM_WELLBEING_CHANNELS])
+{
+	// modifier.md §2b: happiness sums AGAINST anger. The result is SIGNED -- a surplus of happy faces is as
+	// meaningful as a deficit, and clamping belongs to whichever final-state value wants it (angryPopulation
+	// clamps the deficit; the AI reads the surplus).
+	return (wellbeing[WELLBEING_HAPPINESS] - wellbeing[WELLBEING_ANGER]) / 100;
+}
+
+
+int InfoValuation::netHealth(const int (&wellbeing)[NUM_WELLBEING_CHANNELS])
+{
+	// modifier.md §2b: health sums AGAINST unhealth. Signed, for the same reason.
+	return (wellbeing[WELLBEING_HEALTH] - wellbeing[WELLBEING_UNHEALTH]) / 100;
+}

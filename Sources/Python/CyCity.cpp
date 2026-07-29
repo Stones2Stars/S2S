@@ -425,14 +425,19 @@ int CyCity::getRevIndexPercentAnger() const
 	return m_pCity->getRevIndexPercentAnger();
 }
 
+// The wellbeing reads index the realized channel array; ÷100 here because this is the reader boundary.
 int CyCity::unhappyLevel(int iExtra) const
 {
-	return m_pCity->unhappyLevel(iExtra) / 100;   // ÷100: the Python reader boundary (verdicts are ×100 in-engine)
+	int aWellbeing[NUM_WELLBEING_CHANNELS];
+	m_pCity->realizedWellbeing(iExtra, aWellbeing);
+	return aWellbeing[WELLBEING_ANGER] / 100;
 }
 
 int CyCity::happyLevel() const
 {
-	return m_pCity->happyLevel() / 100;   // ÷100: Python reader boundary
+	int aWellbeing[NUM_WELLBEING_CHANNELS];
+	m_pCity->realizedWellbeing(0, aWellbeing);
+	return aWellbeing[WELLBEING_HAPPINESS] / 100;
 }
 
 int CyCity::angryPopulation(int iExtra) const
@@ -447,17 +452,21 @@ int CyCity::totalFreeSpecialists() const
 
 int CyCity::goodHealth() const
 {
-	return m_pCity->goodHealth() / 100;   // ÷100: Python reader boundary
+	int aWellbeing[NUM_WELLBEING_CHANNELS];
+	m_pCity->realizedWellbeing(0, aWellbeing);
+	return aWellbeing[WELLBEING_HEALTH] / 100;
 }
 
-int CyCity::badHealth(bool bNoAngry) const
+int CyCity::badHealth() const
 {
-	return m_pCity->badHealth(bNoAngry) / 100;   // ÷100: Python reader boundary
+	int aWellbeing[NUM_WELLBEING_CHANNELS];
+	m_pCity->realizedWellbeing(0, aWellbeing);
+	return aWellbeing[WELLBEING_UNHEALTH] / 100;
 }
 
-int CyCity::healthRate(bool bNoAngry, int iExtra) const
+int CyCity::healthRate(int iExtra) const
 {
-	return m_pCity->healthRate(bNoAngry, iExtra);
+	return m_pCity->healthRate(iExtra);
 }
 
 int CyCity::foodConsumption(bool bNoAngry, int iExtra) const

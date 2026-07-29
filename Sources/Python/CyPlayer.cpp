@@ -413,24 +413,33 @@ int CyPlayer::calculateTotalImports(int /*YieldTypes*/ eYield) const
 	return m_pPlayer->calculateTotalImports((YieldTypes)eYield);
 }
 
+// The four Python reads index the ONE group read; ÷100 here because this is the reader boundary.
 int CyPlayer::calculateTotalCityHappiness() const
 {
-	return m_pPlayer->calculateTotalCityHappiness() / 100;   // ÷100: the Python reader boundary
+	int aWellbeing[NUM_WELLBEING_CHANNELS];
+	m_pPlayer->getRealizedCityWellbeing(aWellbeing);
+	return aWellbeing[WELLBEING_HAPPINESS] / 100;
 }
 
 int CyPlayer::calculateTotalCityUnhappiness() const
 {
-	return m_pPlayer->calculateTotalCityUnhappiness() / 100;   // ÷100: Python reader boundary
+	int aWellbeing[NUM_WELLBEING_CHANNELS];
+	m_pPlayer->getRealizedCityWellbeing(aWellbeing);
+	return aWellbeing[WELLBEING_ANGER] / 100;
 }
 
 int CyPlayer::calculateTotalCityHealthiness() const
 {
-	return m_pPlayer->calculateTotalCityHealthiness() / 100;   // ÷100: Python reader boundary
+	int aWellbeing[NUM_WELLBEING_CHANNELS];
+	m_pPlayer->getRealizedCityWellbeing(aWellbeing);
+	return aWellbeing[WELLBEING_HEALTH] / 100;
 }
 
 int CyPlayer::calculateTotalCityUnhealthiness() const
 {
-	return m_pPlayer->calculateTotalCityUnhealthiness() / 100;   // ÷100: Python reader boundary
+	int aWellbeing[NUM_WELLBEING_CHANNELS];
+	m_pPlayer->getRealizedCityWellbeing(aWellbeing);
+	return aWellbeing[WELLBEING_UNHEALTH] / 100;
 }
 
 int64_t CyPlayer::getFinalUnitUpkeep() const

@@ -126,8 +126,8 @@ public:
 	int angryPopulation(int iExtra) const;
 	int totalFreeSpecialists() const;
 	int goodHealth() const;
-	int badHealth(bool bNoAngry) const;
-	int healthRate(bool bNoAngry, int iExtra) const;
+	int badHealth() const;
+	int healthRate(int iExtra) const;
 	int foodConsumption(bool bNoAngry, int iExtra) const;
 	int foodDifference(bool bBottom) const;
 	int growthThreshold() const;

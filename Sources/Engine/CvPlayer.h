@@ -341,11 +341,9 @@ public:
 	int calculateTotalExports(YieldTypes eYield) const;
 	int calculateTotalImports(YieldTypes eYield) const;
 
-	int calculateTotalCityHappiness() const;
-	int calculateTotalCityUnhappiness() const;
-
-	int calculateTotalCityHealthiness() const;
-	int calculateTotalCityUnhealthiness() const;
+	// The empire's summed realized city wellbeing -- ONE group read over the four channels (×100), replacing
+	// the four one-channel aggregate functions ([patterns.md] § THE TWO READ ROLES: the getter IS the group).
+	void getRealizedCityWellbeing(int (&wellbeing)[NUM_WELLBEING_CHANNELS]) const;
 
 	int calculateUnitCost(int& iFreeUnits, int& iFreeMilitaryUnits, int& iPaidUnits, int& iPaidMilitaryUnits, int& iBaseUnitCost, int& iMilitaryCost, int& iExtraCost) const;
 

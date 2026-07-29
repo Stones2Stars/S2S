@@ -7672,9 +7672,25 @@ int CvPlayer::calculateTotalYield(YieldTypes eYield) const
 }
 
 
-int CvPlayer::calculateTotalCityHappiness() const
+// The empire's summed realized city wellbeing -- ONE group read over the four channels rather than one
+// aggregate function per channel ([patterns.md] § THE TWO READ ROLES: the getter IS the group). ×100, as the
+// channels are; the reader boundary reduces.
+void CvPlayer::getRealizedCityWellbeing(int (&wellbeing)[NUM_WELLBEING_CHANNELS]) const
 {
-	return algo::accumulate(cities() | transformed(CvCity::fn::happyLevel()), 0);
+	PROFILE_EXTRA_FUNC();
+	for (int iChannelIndex = 0; iChannelIndex < NUM_WELLBEING_CHANNELS; ++iChannelIndex)
+	{
+		wellbeing[iChannelIndex] = 0;
+	}
+	foreach_(const CvCity* pLoopCity, cities())
+	{
+		int aCityWellbeing[NUM_WELLBEING_CHANNELS];
+		pLoopCity->realizedWellbeing(0, aCityWellbeing);
+		for (int iChannelIndex = 0; iChannelIndex < NUM_WELLBEING_CHANNELS; ++iChannelIndex)
+		{
+			wellbeing[iChannelIndex] += aCityWellbeing[iChannelIndex];
+		}
+	}
 }
 
 
@@ -7760,21 +7776,9 @@ int CvPlayer::calculateTotalImports(YieldTypes eYield) const
 }
 
 
-int CvPlayer::calculateTotalCityUnhappiness() const
-{
-	return algo::accumulate(cities() | transformed(CvCity::fn::unhappyLevel()), 0);
-}
 
 
-int CvPlayer::calculateTotalCityHealthiness() const
-{
-	return algo::accumulate(cities() | transformed(CvCity::fn::goodHealth()), 0);
-}
 
-int CvPlayer::calculateTotalCityUnhealthiness() const
-{
-	return algo::accumulate(cities() | transformed(CvCity::fn::badHealth()), 0);
-}
 
 int CvPlayer::calculateUnitSupply() const
 {

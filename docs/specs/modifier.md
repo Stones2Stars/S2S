@@ -254,12 +254,28 @@ The city's **health** and **happiness** levels are the §2 combine over **FOUR O
 `happiness`, `anger`, `health`, `unhealth` — summed in **opposing pairs** at the verdict: happiness against anger,
 health against unhealth. They are four yields like any other, carried on the one uniform package with no special
 storage: a source depositing a negative value is routed to the opposing channel **at fill**, so nothing about the
-combine or the cache is wellbeing-specific. The engine's own accumulators ARE these four channels
-(`happyLevel` / `unhappyLevel` / `goodHealth` / `badHealth` on `CvCity`) — four terms, so the four channels map
-one-to-one with no wellbeing-specific plumbing. The realized verdicts: `healthRate = min(0, health − unhealth)`;
-`angryPopulation = clamp(anger − happiness, 0, pop)`. ⚠ The wellbeing channel oracle went with the route-table
-purge ([http-endpoints](http-endpoints.md)); when the route table is rebuilt it wants one field per named engine
-term, so a divergence localises to a single source.
+combine or the cache is wellbeing-specific.
+
+**⛔ A CHANNEL *IS* THE LEVEL — there is no separate verdict getter, and the distinction that remains is
+DEPOSITS vs REALIZED.** Two reads, and conflating them double-counts:
+
+| read | answers | composes with |
+|---|---|---|
+| the GROUP read (`getWellbeing`) | the DEPOSITS only — the cascade's roll-up over the scope chain | a CANDIDATE's `expectedWellbeing`, which answers in the same vocabulary ([patterns.md](../architecture/patterns.md) § THE TWO READ ROLES) |
+| the REALIZED read (`realizedWellbeing`) | deposits **+** the raw-state inputs below | nothing — it is this city's own level |
+
+The raw-state inputs are folded at the REALIZED read, exactly where the engine folds them, so a consumer never
+re-derives one. A consumer wanting one side of a pair indexes the array; there is **no per-side getter**.
+
+The **opposing-pair NETS** (`InfoValuation::netHappiness` / `netHealth`) live once on the calc surface, are fed
+the four channels rather than an object — which is what lets the same implementation net a city's realized set
+and a candidate's expected delta — and are **signed** (a surplus is as meaningful as a deficit). The realized
+end-state values are the clamps over them, and are a final-state CALCULATION, never a channel or a getter
+([patterns.md](../architecture/patterns.md) rule 6): `healthRate = min(0, health − unhealth)`;
+`angryPopulation = clamp(anger − happiness, 0, pop)`.
+
+⚠ The wellbeing channel oracle went with the route-table purge ([http-endpoints](http-endpoints.md)); when the
+route table is rebuilt it wants one field per named engine term, so a divergence localises to a single source.
 
 **The TARGET/INPUT split (the tradeYield precedent, [validation](validation.md) input rules):**
 
