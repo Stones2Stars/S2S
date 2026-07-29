@@ -436,7 +436,7 @@ measure what survives, then cut the genuine residue. The classes below are the u
   | `getBuildingHappinessChanges` · `isAnyBuildingHappinessChange` (civic) | reverse-landed on the TARGET building at city scope (§2b) |
   | `getFeatureHappinessChangesSparse` (civic) | stays SOURCE-side — the governing-deliverer carve-out (§2b one-term bundling) |
   | `getHappinessPercent`/`getHealthPercent` (specialist / feature) | deposits; the ×100-latent legacy field is already de-scaled by the curator |
-  | `getWorldHappiness`/`getWorldHealth` (project) | ⚠ **MIS-SCOPED DATA, a curator fix** — a project granting to everyone authors the plural target `world.empires`, never `world` scope ([state-repositories.md](../../architecture/state-repositories.md)) |
+  | `getWorldHappiness`/`getWorldHealth` (project) | the data is ALREADY correct — verified: projects author `world.{empires:{flat}}`, the plural-target fan, beside their own `empire.flat`. No curator fix is owed. The `empires` fan is **the one target whose fold IS the deposit** ([modifier.md §5](../../specs/modifier.md)), so it lands in each PLAYER's package and the consumer reads the player's group read — never a project getter |
   | `getLargestCityHappiness` (15) | BLOCKED on ranked-target-selection evaluation (below) |
 
   ⛔ **So the conversion is a CONSUMER collapse, not 17 re-points**: a site asking "what does this ONE source
