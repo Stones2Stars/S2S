@@ -4670,9 +4670,19 @@ int CvCity::unhappyLevel(int iExtra) const
 	{
 		return 0;
 	}
-	int iUnhappiness = 0;
-	int iAngerPercent = 0;
+	const CvPlayer& owner = GET_PLAYER(getOwner());
 
+	// (1) THE DEPOSIT-COMPUTED HALF -- every source that authors wellbeing (buildings, civics, traits, features,
+	// bonuses, specialists, corporations, techs, projects, handicaps) lands in the ANGER channel, because a
+	// negative deposit is routed to the opposing channel AT FILL (modifier.md §2b). So the good/bad split that
+	// the per-source `std::min(0, ...)` terms used to perform is the CHANNEL's now, and re-applying it here
+	// would be a second implementation of the routing.
+	int aWellbeing[NUM_WELLBEING_CHANNELS];
+	getWellbeing(aWellbeing);
+	int iUnhappiness = aWellbeing[WELLBEING_ANGER] / 100;   // ×100 native; reduced once, here at the reader
+
+	// (2) THE ANGER PERCENTS -- runtime timers and ratios no deposit produces, scaled by population.
+	int iAngerPercent = 0;
 	iAngerPercent += getOvercrowdingPercentAnger(iExtra);
 	iAngerPercent += getNoMilitaryPercentAnger();
 	iAngerPercent += getCulturePercentAnger();
@@ -4683,64 +4693,43 @@ int CvCity::unhappyLevel(int iExtra) const
 	iAngerPercent += getWarWearinessPercentAnger();
 	iAngerPercent += getRevRequestPercentAnger(iExtra);
 	iAngerPercent += getRevIndexPercentAnger();
-
 	for (int iI = 0; iI < GC.getNumCivicInfos(); iI++)
 	{
-		iAngerPercent += GET_PLAYER(getOwner()).getCivicPercentAnger((CivicTypes)iI);
+		iAngerPercent += owner.getCivicPercentAnger((CivicTypes)iI);
 	}
+	iUnhappiness += ((iAngerPercent * (getPopulation() + iExtra)) / GC.getPERCENT_ANGER_DIVISOR());
 
-	iUnhappiness = ((iAngerPercent * (getPopulation() + iExtra)) / GC.getPERCENT_ANGER_DIVISOR());
-
-	iUnhappiness -= std::min(0, getLargestCityHappiness());
-	iUnhappiness -= std::min(0, getMilitaryHappiness());
-	iUnhappiness -= std::min(0, getCurrentStateReligionHappiness());
-	iUnhappiness -= std::min(0, getBuildingBadHappiness());
-	iUnhappiness -= std::min(0, getExtraBuildingBadHappiness());
-	iUnhappiness -= std::min(0, getFeatureBadHappiness());
-	iUnhappiness -= std::min(0, getBonusBadHappiness());
-	iUnhappiness -= std::min(0, getReligionBadHappiness());
-	iUnhappiness -= std::min(0, getCommerceHappiness());
-	iUnhappiness -= std::min(0, area()->getBuildingHappiness(getOwner()));
-	iUnhappiness -= std::min(0, GET_PLAYER(getOwner()).getBuildingHappiness());
-	iUnhappiness -= std::min(0, (getExtraHappiness() + GET_PLAYER(getOwner()).getExtraHappiness()));
-	iUnhappiness -= std::min(0, GC.getHandicapInfo(getHandicapType()).getHappyBonus());
+	// (3) THE REMAINING RAW-STATE INPUTS -- saved or derived-from-saved state, legitimate to fold because no
+	// deposit produces them and none is a cascade output (the §2b input list).
 	iUnhappiness += std::max(0, getVassalUnhappiness());
 	iUnhappiness += std::max(0, getEspionageHappinessCounter());
-	iUnhappiness -= std::min(0, getCivicHappiness());
-	iUnhappiness -= std::min(0, getSpecialistUnhappiness() / 100);
-	iUnhappiness -= std::min(0, (GET_PLAYER(getOwner()).getWorldHappiness()));
-	iUnhappiness -= std::min(0, (GET_PLAYER(getOwner()).getProjectHappiness()));
-	iUnhappiness += std::max(0, GET_PLAYER(getOwner()).calculateTaxRateUnhappiness());
-	iUnhappiness -= std::min(0, calculateCorporationHappiness());
+	iUnhappiness += std::max(0, owner.calculateTaxRateUnhappiness());
 	iUnhappiness += std::max(0, getEventAnger());
-	iUnhappiness -= std::min(0, getExtraTechHappinessTotal());
+	iUnhappiness -= std::min(0, getExtraHappiness() + owner.getExtraHappiness());   // event-granted, sanctioned
 
-	int iForeignAnger = GET_PLAYER(getOwner()).getForeignUnhappyPercent();
-	if (iForeignAnger != 0) {
+	int iForeignAnger = owner.getForeignUnhappyPercent();
+	if (iForeignAnger != 0)
+	{
 		iForeignAnger = 100 / iForeignAnger;
 		iForeignAnger = ((100 - plot()->calculateCulturePercent(getOwner())) * iForeignAnger) / 100;
 		iUnhappiness += std::max(0, iForeignAnger);
 	}
 	if (GC.getGame().isOption(GAMEOPTION_MAP_PERSONALIZED))
 	{
-		if (!GET_PLAYER(getOwner()).isNoLandmarkAnger())
+		if (!owner.isNoLandmarkAnger())
 		{
 			iUnhappiness += std::max(0, getLandmarkAnger());
 		}
-		iUnhappiness -= std::min(0, GET_PLAYER(getOwner()).getLandmarkHappiness());
+		iUnhappiness -= std::min(0, owner.getLandmarkHappiness());
 	}
-
-	if (GET_PLAYER(getOwner()).getCityLimit() != 0 &&
-		GET_PLAYER(getOwner()).getCityOverLimitUnhappy() != 0)
+	if (owner.getCityLimit() != 0 && owner.getCityOverLimitUnhappy() != 0)
 	{
-		int overLimitCities = GET_PLAYER(getOwner()).getNumCities() - GET_PLAYER(getOwner()).getCityLimit();
-
-		if (overLimitCities > 0)
+		const int iOverLimitCities = owner.getNumCities() - owner.getCityLimit();
+		if (iOverLimitCities > 0)
 		{
-			iUnhappiness += GET_PLAYER(getOwner()).getCityOverLimitUnhappy() * overLimitCities;
+			iUnhappiness += owner.getCityOverLimitUnhappy() * iOverLimitCities;
 		}
 	}
-
 	return std::max(0, iUnhappiness);
 }
 
@@ -4748,35 +4737,25 @@ int CvCity::unhappyLevel(int iExtra) const
 int CvCity::happyLevel() const
 {
 	PROFILE_FUNC();
+	const CvPlayer& owner = GET_PLAYER(getOwner());
 
-	int iHappiness = 0;
+	// The deposit-computed half (see unhappyLevel for why the per-source good/bad split is gone), plus the
+	// raw-state inputs no deposit produces.
+	int aWellbeing[NUM_WELLBEING_CHANNELS];
+	getWellbeing(aWellbeing);
+	int iHappiness = aWellbeing[WELLBEING_HAPPINESS] / 100;
 
 	iHappiness += std::max(0, getRevSuccessHappiness());
-	iHappiness += std::max(0, getLargestCityHappiness());
-	iHappiness += std::max(0, getMilitaryHappiness());
-	iHappiness += std::max(0, getCurrentStateReligionHappiness());
-	iHappiness += std::max(0, getBuildingGoodHappiness());
-	iHappiness += std::max(0, getExtraBuildingGoodHappiness());
-	iHappiness += std::max(0, getFeatureGoodHappiness());
-	iHappiness += std::max(0, getBonusGoodHappiness());
-	iHappiness += std::max(0, getReligionGoodHappiness());
-	iHappiness += std::max(0, getCommerceHappiness());
-	iHappiness += std::max(0, area()->getBuildingHappiness(getOwner()));
-	iHappiness += std::max(0, GET_PLAYER(getOwner()).getBuildingHappiness());
-	iHappiness += std::max(0, (getExtraHappiness() + GET_PLAYER(getOwner()).getExtraHappiness()));
-	iHappiness += std::max(0, GC.getHandicapInfo(getHandicapType()).getHappyBonus());
 	iHappiness += std::max(0, getVassalHappiness());
-	iHappiness += std::max(0, getCivicHappiness());
-	iHappiness += std::max(0, getSpecialistHappiness() / 100);
-	iHappiness += std::max(0, (GET_PLAYER(getOwner()).getWorldHappiness()));
-	iHappiness += std::max(0, (GET_PLAYER(getOwner()).getProjectHappiness()));
-	iHappiness += std::max(0, calculateCorporationHappiness());
+	iHappiness += std::max(0, getExtraHappiness() + owner.getExtraHappiness());   // event-granted, sanctioned
+	// ⚖ Unit-carried happiness is computed LIVE and added ON TOP, outside every cached sum and every percentage
+	// ([DEC-unit-modifiers-on-top]) -- which is exactly why unit movement dirties no wellbeing cache.
+	iHappiness += std::max(0, getMilitaryHappiness());
 	iHappiness += std::max(0, getCelebrityHappiness());
-	iHappiness += std::max(0, getExtraTechHappinessTotal());
 
 	if (GC.getGame().isOption(GAMEOPTION_MAP_PERSONALIZED))
 	{
-		iHappiness += std::max(0, GET_PLAYER(getOwner()).getLandmarkHappiness());
+		iHappiness += std::max(0, owner.getLandmarkHappiness());
 	}
 	if (getHappinessTimer() > 0)
 	{
@@ -4890,55 +4869,28 @@ int CvCity::totalBadBuildingHealth() const
 int CvCity::goodHealth() const
 {
 	PROFILE_FUNC();
-	const CvPlayer& owner = GET_PLAYER(getOwner());
 
-	int iTotalHealth = 0;
+	int aWellbeing[NUM_WELLBEING_CHANNELS];
+	getWellbeing(aWellbeing);
+	int iTotalHealth = aWellbeing[WELLBEING_HEALTH] / 100;
 
-	iTotalHealth += std::max<int>(0, getFreshWaterGoodHealth());
-	iTotalHealth += std::max<int>(0, getFeatureGoodHealth());
-	iTotalHealth += std::max<int>(0, getBonusGoodHealth());
-	iTotalHealth += std::max<int>(0, totalGoodBuildingHealth());
-	iTotalHealth += std::max<int>(0, getExtraHealth());
-	iTotalHealth += std::max<int>(0, GC.getHandicapInfo(getHandicapType()).getHealthBonus());
-	iTotalHealth += std::max<int>(0, getImprovementGoodHealth() / 100);
-	iTotalHealth += std::max<int>(0, getSpecialistGoodHealth() / 100);
-	iTotalHealth += std::max<int>(0, calculateCorporationHealth());
-	iTotalHealth += std::max<int>(0, getExtraTechHealthTotal());
-	iTotalHealth += std::max<int>(0, owner.getExtraHealth());
-	iTotalHealth += std::max<int>(0, owner.getCivicHealth());
-	iTotalHealth += std::max<int>(0, owner.getCivilizationHealth());
-	iTotalHealth += std::max<int>(0, owner.getWorldHealth());
-	iTotalHealth += std::max<int>(0, owner.getProjectHealth());
-
-	return iTotalHealth;
+	iTotalHealth += std::max(0, getExtraHealth() + GET_PLAYER(getOwner()).getExtraHealth());
+	return std::max(0, iTotalHealth);
 }
 
 
 int CvCity::badHealth(bool bNoAngry, int iExtra) const
 {
 	PROFILE_FUNC();
-	const CvPlayer& owner = GET_PLAYER(getOwner());
 
-	int iTotalHealth = 0;
+	int aWellbeing[NUM_WELLBEING_CHANNELS];
+	getWellbeing(aWellbeing);
+	int iUnhealth = aWellbeing[WELLBEING_UNHEALTH] / 100;
 
-	iTotalHealth -= std::max<int>(0, getEspionageHealthCounter());
-	iTotalHealth += std::min<int>(0, getFeatureBadHealth());
-	iTotalHealth += std::min<int>(0, getBonusBadHealth());
-	iTotalHealth += std::min<int>(0, totalBadBuildingHealth());
-	iTotalHealth += std::min<int>(0, getExtraHealth());
-	iTotalHealth += std::min<int>(0, GC.getHandicapInfo(getHandicapType()).getHealthBonus());
-	iTotalHealth += std::min<int>(0, getExtraBuildingBadHealth());
-	iTotalHealth += std::min<int>(0, getImprovementBadHealth() / 100);
-	iTotalHealth += std::min<int>(0, getSpecialistBadHealth() / 100);
-	iTotalHealth += std::min<int>(0, calculateCorporationHealth());
-	iTotalHealth += std::min<int>(0, getExtraTechHealthTotal());
-	iTotalHealth += std::min<int>(0, owner.getExtraHealth());
-	iTotalHealth += std::min<int>(0, owner.getCivicHealth());
-	iTotalHealth += std::min<int>(0, owner.getCivilizationHealth());
-	iTotalHealth += std::min<int>(0, owner.getWorldHealth());
-	iTotalHealth += std::min<int>(0, owner.getProjectHealth());
+	iUnhealth += std::max(0, getEspionageHealthCounter());
+	iUnhealth -= std::min(0, getExtraHealth() + GET_PLAYER(getOwner()).getExtraHealth());
 
-	return unhealthyPopulation(bNoAngry, iExtra) - iTotalHealth;
+	return unhealthyPopulation(bNoAngry, iExtra) + iUnhealth;
 }
 
 
