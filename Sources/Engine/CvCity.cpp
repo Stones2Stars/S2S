@@ -3498,71 +3498,6 @@ void CvCity::conscript(bool bOnCapture)
 }
 
 
-int CvCity::getBonusHealth(BonusTypes eBonus) const
-{
-	PROFILE_EXTRA_FUNC();
-	int iHealth = GC.getBonusInfo(eBonus).getHealth();
-
-	foreach_(const BuildingTypes eTypeX, getHasBuildings())
-	{
-		if (hasFullyActiveBuilding(eTypeX))
-		{
-			iHealth += GC.getBuildingInfo(eTypeX).getBonusHealthChanges().getValue(eBonus);
-		}
-	}
-	return iHealth;
-}
-
-
-int CvCity::getBonusHappiness(BonusTypes eBonus) const
-{
-	PROFILE_EXTRA_FUNC();
-	int iHappiness = GC.getBonusInfo(eBonus).getHappiness();
-
-	foreach_(const BuildingTypes eTypeX, getHasBuildings())
-	{
-		if (hasFullyActiveBuilding(eTypeX))
-		{
-			iHappiness += GC.getBuildingInfo(eTypeX).getBonusHappinessChanges().getValue(eBonus);
-		}
-	}
-	return iHappiness;
-}
-
-
-int CvCity::getBonusPower(BonusTypes eBonus) const
-{
-	PROFILE_EXTRA_FUNC();
-
-	int iCount = 0;
-	foreach_(const BuildingTypes eTypeX, getHasBuildings())
-	{
-		if (!isDormantBuilding(eTypeX)
-		&& GC.getBuildingInfo(eTypeX).getPowerBonus() == eBonus
-		&& !isDormantBuilding(eTypeX))
-		{
-			iCount++;
-		}
-	}
-	return iCount;
-}
-
-
-int CvCity::getBonusYieldRateModifier(YieldTypes eIndex, BonusTypes eBonus) const
-{
-	PROFILE_EXTRA_FUNC();
-
-	int iModifier = 0;
-	foreach_(const BuildingTypes eTypeX, getHasBuildings())
-	{
-		if (hasFullyActiveBuilding(eTypeX))
-		{
-			iModifier += GC.getBuildingInfo(eTypeX).getBonusYieldModifier(eBonus, eIndex);
-		}
-	}
-	return iModifier;
-}
-
 void CvCity::processBonus(BonusTypes eBonus, int iChange)
 {
 	// ⚖ WHAT REMAINS. This was the maintainer for the bonus-keyed accumulators -- good/bad health and
@@ -9781,38 +9716,6 @@ void CvCity::changePowerYieldRateModifier(YieldTypes eIndex, int iChange)
 }
 
 
-int CvCity::getBonusYieldRateModifier(YieldTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
-	return m_aiBonusYieldRateModifier[eIndex];
-}
-
-
-void CvCity::changeBonusYieldRateModifier(YieldTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
-
-	if (iChange != 0)
-	{
-		m_aiBonusYieldRateModifier[eIndex] += iChange;
-		FASSERT_NOT_NEGATIVE(getYieldRate100(eIndex));
-
-		GET_PLAYER(getOwner()).invalidateYieldRankCache(eIndex);
-
-		if (eIndex == YIELD_COMMERCE)
-		{
-			setCommerceDirty();
-		}
-
-		AI_setAssignWorkDirty(true);
-
-		if (getTeam() == GC.getGame().getActiveTeam())
-		{
-			setInfoDirty(true);
-		}
-	}
-}
-
 void CvCity::setTradeYield(YieldTypes eIndex, int iNewValue)
 {
 	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
@@ -10409,7 +10312,6 @@ int CvCity::getBuildingCommerce100(CommerceTypes eIndex) const
 {
 	return (
 		100 * getBuildingCommerce(eIndex)
-		+ getBonusCommercePercentChanges(eIndex)
 		+ getBuildingCommerceTechChange(eIndex)
 		+ getCommercePerPopFromBuildings(eIndex) * getPopulation()
 	);
@@ -10458,7 +10360,6 @@ int CvCity::getBuildingCommerceByBuilding(CommerceTypes eIndex, BuildingTypes eB
 		{
 			// Toffer - These are cached separately, so should not be counted when caching m_aiBuildingCommerce through this function.			
 			iCommerce += (kBuilding.getCommercePerPopChange(eIndex)
-				+ getBonusCommercePercentChanges(eIndex, eBuilding)
 				+ kTeam.getBuildingCommerceTechChange(eIndex, eBuilding)) / 100;
 		}
 
@@ -17993,99 +17894,6 @@ void CvCity::setBuiltFoodProducedUnit(bool bNewValue)
 	m_bBuiltFoodProducedUnit = bNewValue;
 }
 
-int CvCity::getBonusCommerceRateModifier(CommerceTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-	return m_aiBonusCommerceRateModifier[eIndex];
-}
-
-void CvCity::changeBonusCommerceRateModifier(CommerceTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-
-	if (iChange != 0)
-	{
-		m_aiBonusCommerceRateModifier[eIndex] += iChange;
-		FASSERT_NOT_NEGATIVE(getCommerceRate(eIndex));
-
-		GET_PLAYER(getOwner()).invalidateCommerceRankCache(eIndex);
-
-		setCommerceModifierDirty(eIndex);
-		AI_setAssignWorkDirty(true);
-
-		if (getTeam() == GC.getGame().getActiveTeam())
-		{
-			setInfoDirty(true);
-		}
-	}
-}
-
-int CvCity::getBonusCommerceRateModifier(CommerceTypes eIndex, BonusTypes eBonus) const
-{
-	PROFILE_EXTRA_FUNC();
-	int iModifier = 0;
-	foreach_(const BuildingTypes eTypeX, getHasBuildings())
-	{
-		if (hasFullyActiveBuilding(eTypeX))
-		{
-			iModifier += GC.getBuildingInfo(eTypeX).getBonusCommerceModifier(eBonus, eIndex);
-		}
-	}
-	return iModifier;
-}
-
-
-void CvCity::changeBonusCommercePercentChanges(CommerceTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-
-	if (iChange != 0)
-	{
-		m_aiBonusCommercePercentChanges[eIndex] += iChange;
-		setCommerceDirty(eIndex);
-	}
-}
-
-int CvCity::getBonusCommercePercentChanges(CommerceTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-	return m_aiBonusCommercePercentChanges[eIndex];
-}
-
-int CvCity::getBonusCommercePercentChanges(CommerceTypes eIndex, BonusTypes eBonus) const
-{
-	PROFILE_EXTRA_FUNC();
-	int iPercentCommerce = 0;
-	foreach_(const BuildingTypes eTypeX, getHasBuildings())
-	{
-		if (hasFullyActiveBuilding(eTypeX))
-		{
-			iPercentCommerce += GC.getBuildingInfo(eTypeX).getBonusCommercePercentChanges(eBonus, eIndex);
-		}
-	}
-	return iPercentCommerce;
-}
-
-int CvCity::getBonusCommercePercentChanges(CommerceTypes eIndex, BuildingTypes eBuilding) const
-{
-	PROFILE_EXTRA_FUNC();
-	if (!hasFullyActiveBuilding(eBuilding))
-	{
-		return 0;
-	}
-	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
-	int iPercentCommerce = 0;
-	for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
-	{
-		if (hasBonus((BonusTypes)iI))
-		{
-			iPercentCommerce += kBuilding.getBonusCommercePercentChanges((BonusTypes)iI, eIndex);
-		}
-	}
-	return iPercentCommerce;
-}
-
-
 void CvCity::changeBuildingCommerceTechChange(CommerceTypes eIndex, int iChange)
 {
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
@@ -18662,7 +18470,9 @@ BuildTypes CvCity::findChopBuild(FeatureTypes eFeature) const
 int CvCity::calculateBonusCommerceRateModifier(CommerceTypes eIndex) const
 {
 	PROFILE_EXTRA_FUNC();
-	int iMod = getBonusCommerceRateModifier(eIndex);
+	// The city-side bonus-keyed accumulator is gone with its maintainer; what remains is the PLAYER-level
+	// modifier, which is its own live aggregate.
+	int iMod = 0;
 
 	for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
 	{

@@ -95,10 +95,6 @@ public:
 	int /*UnitTypes*/ getConscriptUnit() const;
 	int flatConscriptAngerLength() const;
 	bool canConscript() const;
-	int getBonusHealth(int /*BonusTypes*/ iBonus) const;
-	int getBonusHappiness(int /*BonusTypes*/ iBonus) const;
-	int getBonusPower(int /*BonusTypes*/ eBonus) const;
-	int getBonusYieldRateModifier(int /*YieldTypes*/ eIndex, int /*BonusTypes*/ eBonus) const;
 	int /* HandicapTypes */ getHandicapType() const;
 	int /* CivilizationTypes */ getCivilizationType() const;
 	int /*LeaderHeadTypes*/ getPersonalityType() const;
@@ -299,7 +295,6 @@ public:
 	int getCommerceHappinessByType(int /*CommerceTypes*/ eIndex) const;
 	int getDomainProductionModifier(int /*DomainTypes*/ eIndex) const;
 
-	int getBonusCommerceRateModifier(int /*CommerceTypes*/ eIndex) const;
 
 	int getArea() const;
 
@@ -312,7 +307,6 @@ public:
 
 	int getNumPopulationEmployed() const;
 
-	int getBonusCommercePercentChanges(int eIndex, int eBuilding) const;
 	int getBaseYieldRateFromBuilding(int iYield, int iBuilding) const;
 
 	bool isAutomatedCanBuild(int /*BuildTypes*/ eIndex) const;

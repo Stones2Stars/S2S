@@ -314,10 +314,6 @@ public:
 	void conscript(bool bOnCapture = false);
 	void emergencyConscript();
 
-	int getBonusHealth(BonusTypes eBonus) const;
-	int getBonusHappiness(BonusTypes eBonus) const;
-	int getBonusPower(BonusTypes eBonus) const;
-	int getBonusYieldRateModifier(YieldTypes eIndex, BonusTypes eBonus) const;
 	void processBonus(BonusTypes eBonus, int iChange);
 
 	void processBuilding(const BuildingTypes eType, const int iChange, const bool bReligiously = false, const bool bAlphaOmega = false);
@@ -1000,8 +996,6 @@ public:
 	int getPowerYieldRateModifier(YieldTypes eIndex) const;
 	void changePowerYieldRateModifier(YieldTypes eIndex, int iChange);
 
-	int getBonusYieldRateModifier(YieldTypes eIndex) const;
-	void changeBonusYieldRateModifier(YieldTypes eIndex, int iChange);
 
 	int getTradeYield(YieldTypes eIndex) const;
 	int totalTradeModifier(const CvCity* pOtherCity = NULL) const;
@@ -1342,14 +1336,11 @@ public:
 	int getBonusDefenseChanges(const BonusTypes eIndex) const;
 	void changeBonusDefenseChanges(const BonusTypes eIndex, const int iChange);
 
-	int getBonusCommerceRateModifier(CommerceTypes eIndex) const;
-	void changeBonusCommerceRateModifier(CommerceTypes eIndex, int iChange);
 	bool isBuiltFoodProducedUnit() const;
 	void setBuiltFoodProducedUnit(bool bNewValue);
 	int getImprovementGoodHealth() const;
 	int getImprovementBadHealth() const;
 	void updateImprovementHealth();
-	int getBonusCommerceRateModifier(CommerceTypes eIndex, BonusTypes eBonus) const;
 	void clearLostProduction();
 	bool isProductionWonder() const;
 	void updateYieldRate(BuildingTypes eType, YieldTypes eYield, int iChange);
@@ -1439,10 +1430,6 @@ public:
 
 	int getAssignedSpecialistCount() const;
 
-	int getBonusCommercePercentChanges(CommerceTypes eIndex) const;
-	int getBonusCommercePercentChanges(CommerceTypes eIndex, BonusTypes eBonus) const;
-	int getBonusCommercePercentChanges(CommerceTypes eIndex, BuildingTypes eType) const;
-	void changeBonusCommercePercentChanges(CommerceTypes eIndex, int iChange);
 
 	void changeBuildingCommerceTechChange(CommerceTypes eIndex, int iChange);
 	int getBuildingCommerceTechChange(CommerceTypes eIndex) const;

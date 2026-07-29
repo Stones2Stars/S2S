@@ -315,26 +315,6 @@ bool CyCity::canConscript() const
 	return m_pCity->canConscript();
 }
 
-int CyCity::getBonusHealth(int /*BonusTypes*/ iBonus) const
-{
-	return m_pCity->getBonusHealth((BonusTypes) iBonus);
-}
-
-int CyCity::getBonusHappiness(int /*BonusTypes*/ iBonus) const
-{
-	return m_pCity->getBonusHappiness((BonusTypes) iBonus);
-}
-
-int CyCity::getBonusPower(int /*BonusTypes*/ eBonus) const
-{
-	return m_pCity->getBonusPower((BonusTypes)eBonus);
-}
-
-int CyCity::getBonusYieldRateModifier(int /*YieldTypes*/ eIndex, int /*BonusTypes*/ eBonus) const
-{
-	return m_pCity->getBonusYieldRateModifier((YieldTypes)eIndex, (BonusTypes)eBonus);
-}
-
 int /*HandicapTypes*/ CyCity::getHandicapType() const
 {
 	return m_pCity->getHandicapType();
@@ -1663,11 +1643,6 @@ void CyCity::changeEventAnger(int iChange)
 int CyCity::getNumPopulationEmployed() const
 {
 	return m_pCity->getNumPopulationEmployed();
-}
-
-int CyCity::getBonusCommercePercentChanges(int eIndex, int eBuilding) const
-{
-	return m_pCity->getBonusCommercePercentChanges((CommerceTypes)eIndex, (BuildingTypes)eBuilding);
 }
 
 int CyCity::getBaseYieldRateFromBuilding(int iYield, int iBuilding) const

@@ -57,10 +57,6 @@ void CvPythonCityLoader::CyCityPythonInterface1(boost::python::class_<CyCity>& i
 		.def("getConscriptUnit", &CyCity::getConscriptUnit, "UnitID () - UnitID for the best unit the city can conscript")
 		.def("flatConscriptAngerLength", &CyCity::flatConscriptAngerLength, "int ()")
 		.def("canConscript", &CyCity::canConscript, "bool () - can the city conscript units?")
-		.def("getBonusHealth", &CyCity::getBonusHealth, "int (BonusID) - total health bonus from BonusID")
-		.def("getBonusHappiness", &CyCity::getBonusHappiness, "int (BonusID) - total happiness bonus from BonusID")
-		.def("getBonusPower", &CyCity::getBonusPower, "int (int /*BonusTypes*/ eBonus)")
-		.def("getBonusYieldRateModifier", &CyCity::getBonusYieldRateModifier, "int (int /*YieldTypes*/ eIndex, int /*BonusTypes*/ eBonus)")
 		.def("getHandicapType", &CyCity::getHandicapType, "HandicapType () - owners difficulty level")
 		.def("getCivilizationType", &CyCity::getCivilizationType, "CivilizationID () - owners CivilizationID")
 		.def("getPersonalityType", &CyCity::getPersonalityType, "int /*LeaderHeadTypes*/ ()")
@@ -393,7 +389,6 @@ void CvPythonCityLoader::CyCityPythonInterface2(boost::python::class_<CyCity>& i
 		.def("changeEventAnger", &CyCity::changeEventAnger, "void (int iChange)")
 		.def("getNumPopulationEmployed", &CyCity::getNumPopulationEmployed, "int ()")
 
-		.def("getBonusCommercePercentChanges", &CyCity::getBonusCommercePercentChanges, "int (eCommerce, eBuilding)")
 		.def("getBaseYieldRateFromBuilding100", &CyCity::getBaseYieldRateFromBuilding, "int (iYield, iBuilding)")
 
 		.def("isAutomatedCanBuild", &CyCity::isAutomatedCanBuild, "bool ()")
