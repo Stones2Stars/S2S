@@ -14796,7 +14796,7 @@ bool CvUnitAI::AI_moveToOurTerritory(int maxMoves)
 //	this rouine determines whether a switch to doing so is appropriate, and if so performs it.
 bool CvUnitAI::checkSwitchToConstruct()
 {
-	if (m_pUnitInfo->getNumBuildings() < 1 && m_pUnitInfo->getNumHeritage() < 1
+	if (m_pUnitInfo->getGrantedBuildings().empty() && m_pUnitInfo->getHeritage().empty()
 	// Don't bail on a poorly defended city.
 	|| !plot()->getPlotCity() && plot()->getNumDefenders(getOwner()) < 2)
 	{
@@ -14932,9 +14932,9 @@ int CvUnitAI::getBestConstructValue(int iMaxCount, int iMaxSingleBuildingCount, 
 
 	const CvPlayerAI& player = GET_PLAYER(getOwner());
 	// Determine the list of building types we could make, based on what already exists
-	for (int iI = 0; iI < m_pUnitInfo->getNumBuildings(); iI++)
+	foreach_(const int iGrantedBuilding, m_pUnitInfo->getGrantedBuildings())
 	{
-		const BuildingTypes eBuilding = static_cast<BuildingTypes>(m_pUnitInfo->getBuildings(iI));
+		const BuildingTypes eBuilding = static_cast<BuildingTypes>(iGrantedBuilding);
 		if (eBuilding != NO_BUILDING
 		&& player.getBuildingAvailabilityAnywhere(eBuilding) == EnablerDomain::STATE_LISTED
 		&& player.AI_getNumBuildingsNeeded(eBuilding, getDomainType() == DOMAIN_SEA) > 0)
@@ -15078,7 +15078,7 @@ bool CvUnitAI::AI_construct(int iMaxCount, int iMaxSingleBuildingCount, int iThr
 {
 	PROFILE_FUNC();
 
-	if (m_pUnitInfo->getNumBuildings() < 1)
+	if (m_pUnitInfo->getGrantedBuildings().empty())
 	{
 		return false;
 	}
@@ -15156,9 +15156,9 @@ int CvUnitAI::getBestHeritageValue(CvPlot*& pBestConstructPlot, CvPlot*& pBestPl
 
 	const CvPlayerAI& player = GET_PLAYER(getOwner());
 	// Determine the list of building types we could make, based on what already exists
-	for (int iI = 0; iI < m_pUnitInfo->getNumHeritage(); iI++)
+	foreach_(const int iHeritage, m_pUnitInfo->getHeritage())
 	{
-		const HeritageTypes eTypeX = static_cast<HeritageTypes>(m_pUnitInfo->getHeritage(iI));
+		const HeritageTypes eTypeX = static_cast<HeritageTypes>(iHeritage);
 		if (player.canAddHeritage(eTypeX))
 		{
 			possibleHeritage[eTypeX] = 0;
@@ -15250,7 +15250,7 @@ bool CvUnitAI::AI_heritage()
 {
 	PROFILE_FUNC();
 
-	if (m_pUnitInfo->getNumHeritage() < 1)
+	if (m_pUnitInfo->getHeritage().empty())
 	{
 		return false;
 	}

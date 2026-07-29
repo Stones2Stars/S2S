@@ -11594,9 +11594,9 @@ void CvGameTextMgr::setBasicUnitHelpWithCity(CvWStringBuffer &szBuffer, UnitType
 
 		//Force Buildings
 		bFirst = true;
-		for (int iI = 0; iI < kUnit.getNumBuildings(); iI++)
+		foreach_(const int iGrantedBuilding, kUnit.getGrantedBuildings())
 		{
-			const BuildingTypes eLoopBuilding = (BuildingTypes)kUnit.getBuildings(iI);
+			const BuildingTypes eLoopBuilding = (BuildingTypes)iGrantedBuilding;
 
 			if (NO_BUILDING != eLoopBuilding)
 			{
@@ -11608,9 +11608,9 @@ void CvGameTextMgr::setBasicUnitHelpWithCity(CvWStringBuffer &szBuffer, UnitType
 		}
 
 		bFirst = true;
-		for (int iI = 0; iI < kUnit.getNumHeritage(); iI++)
+		foreach_(const int iHeritage, kUnit.getHeritage())
 		{
-			const HeritageTypes eTypeX = (HeritageTypes)kUnit.getHeritage(iI);
+			const HeritageTypes eTypeX = (HeritageTypes)iHeritage;
 
 			if (NO_HERITAGE != eTypeX)
 			{

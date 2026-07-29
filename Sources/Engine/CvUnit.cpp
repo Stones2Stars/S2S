@@ -5528,7 +5528,7 @@ bool CvUnit::canAutomate(AutomateTypes eAutomate) const
 		//	Auto-spread (#381): chase heritage/construct targets (tamed/subdued animals
 		//	carrying their herd buildings to the cities that lack the bonus). Only offered
 		//	to units that can actually construct something.
-		if (m_pUnitInfo->getNumBuildings() < 1 && m_pUnitInfo->getNumHeritage() < 1)
+		if (m_pUnitInfo->getGrantedBuildings().empty() && m_pUnitInfo->getHeritage().empty())
 		{
 			return false;
 		}

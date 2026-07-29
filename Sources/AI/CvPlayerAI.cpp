@@ -26620,9 +26620,9 @@ int CvPlayerAI::AI_militaryUnitTradeVal(const CvUnit* pUnit) const
 			const CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
 
 			//	Subdued animals are rated primarily on what they can construct
-			for (int iI = 0; iI < kUnit.getNumBuildings(); iI++)
+			foreach_(const int iGrantedBuilding, kUnit.getGrantedBuildings())
 			{
-				const BuildingTypes eBuilding = (BuildingTypes)kUnit.getBuildings(iI);
+				const BuildingTypes eBuilding = (BuildingTypes)iGrantedBuilding;
 
 				if (getBuildingAvailabilityAnywhere(eBuilding) == EnablerDomain::STATE_LISTED
 				&& AI_getNumBuildingsNeeded(eBuilding, pUnit->getDomainType() == DOMAIN_SEA) > 0)
@@ -26644,9 +26644,9 @@ int CvPlayerAI::AI_militaryUnitTradeVal(const CvUnit* pUnit) const
 			{
 				// This section needs more work, the entire function might need work come to think of it.
 				int iValue = 0;
-				for (int iI = 0; iI < kUnit.getNumHeritage(); iI++)
+				foreach_(const int iHeritage, kUnit.getHeritage())
 				{
-					if (canAddHeritage((HeritageTypes)kUnit.getHeritage(iI)))
+					if (canAddHeritage((HeritageTypes)iHeritage))
 					{
 						iValue += 25;
 					}
