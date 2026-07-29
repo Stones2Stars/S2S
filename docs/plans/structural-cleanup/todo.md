@@ -163,19 +163,15 @@
   today, which is the two-live-surfaces state
   ([DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface)) forbids. Move every consumer,
   delete the old names.
-- **The `Cy*` binding surface is CUT AT THE REGISTRATION, but 7 loader files still stand.** The 23
-  `Cy*Interface*.cpp` files ARE deleted and `CvDLLPython::DLLPublishToPython` no longer defines a single
-  `class_<Cy*>` — so nothing is published. ⚠ **But `Sources/Infrastructure/CvPython*Loader.cpp` was never deleted**
-  (the nuke commit said "interface/loader files" and only trimmed the loaders): six of them still carry
-  **1,324 `.def` bindings** — City 356 · Player 348 · Misc 261 · Unit 137 · GlobalContext 111 · Plot 111 — plus
-  `CvPythonEnumLoader.cpp`. **Verified: ZERO callers of any of their entry points anywhere in the tree**, and
-  fbuild globs recursively, so all seven still COMPILE. They are corpses by the standing rule (a `.def` for a
-  deleted getter is cut on sight; piecemeal cutting is not forbidden) — cut them.
-  ⚑ **One is NOT merely a corpse: `CvPythonEnumLoader` publishes the engine ENUMS**, and enum resolution AND
-  EXTENSION is a first-class requirement of the replacement library
-  ([patterns.md](../../architecture/patterns.md)) — BUG reaches `WidgetTypes`/`InputTypes`/`InterfaceDirtyBits`
-  only this way and MINTS new members at runtime. Deleting it without the library serving that leaves those reads
-  with no path at all, so it is a COVERAGE obligation, not just a deletion.
+- **The `Cy*` binding surface is GONE — what is left is the OBLIGATION it created.** The 23 `Cy*Interface*.cpp`
+  files and all 7 `Sources/Infrastructure/CvPython*Loader.*` pairs are deleted, and
+  `CvDLLPython::DLLPublishToPython` defines no `class_<Cy*>`, so nothing is published.
+  ⛔ **The ENUM surface went with them and is a COVERAGE OBLIGATION the replacement library MUST serve:** the
+  removed `CvPythonEnumLoader` published **1,968 enum values**, and enum resolution AND EXTENSION is first-class
+  ([patterns.md](../../architecture/patterns.md)) — BUG reaches `WidgetTypes` / `InputTypes` /
+  `InterfaceDirtyBits` only that way and MINTS new members at runtime, so a library without it leaves those reads
+  with no path at all and forces the reach-around the one-surface ruling forbids. ⚑ The exact published list is
+  recoverable from git history (the removal commit), which is where it belongs — not kept as dead source.
   What remains to BUILD is the replacement ([Stage 4](#stage-4--the-python-surface-sequenced-after-the-read-surface-settles)),
   and its coverage checklist is measured, not estimated: **285 of the 399 removed info-binding names were still
   called from `Assets/Python`** (heaviest: `RevolutionWatchAdvisor` 50, `PediaBuilding` 38, `CvMainInterface` 31,
