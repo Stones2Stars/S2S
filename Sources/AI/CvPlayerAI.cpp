@@ -10728,7 +10728,9 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 					bValid = true;
 					break;
 				}
-				foreach_(const STD_PAIR(UnitTypes, int)& modifier, kUnitInfo.getUnitAttackModifiers())
+				std::vector<std::pair<int, int> > vsUnitAttack1;
+				InfoValuation::collectKeyedCombat(kUnitInfo.getModifiers(), InfoValuation::COMBAT_TARGET_UNIT, COMBAT_ATTACK, vsUnitAttack1);
+				foreach_(const STD_PAIR(int, int)& modifier, vsUnitAttack1)
 				{
 					if (modifier.second > 0)
 					{
@@ -10866,7 +10868,9 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 					break;
 				}
 
-				foreach_(const STD_PAIR(UnitTypes, int)& modifier, kUnitInfo.getUnitDefenseModifiers())
+				std::vector<std::pair<int, int> > vsUnitDefense1;
+				InfoValuation::collectKeyedCombat(kUnitInfo.getModifiers(), InfoValuation::COMBAT_TARGET_UNIT, COMBAT_DEFENSE, vsUnitDefense1);
+				foreach_(const STD_PAIR(int, int)& modifier, vsUnitDefense1)
 				{
 					if (modifier.second > 0)
 					{
@@ -11395,7 +11399,9 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 					break;
 				}
 				iValue += (iCombatValue / 2);
-				foreach_(const STD_PAIR(UnitTypes, int)& modifier, kUnitInfo.getUnitAttackModifiers())
+				std::vector<std::pair<int, int> > vsUnitAttack2;
+				InfoValuation::collectKeyedCombat(kUnitInfo.getModifiers(), InfoValuation::COMBAT_TARGET_UNIT, COMBAT_ATTACK, vsUnitAttack2);
+				foreach_(const STD_PAIR(int, int)& modifier, vsUnitAttack2)
 				{
 					iValue += ((iCombatValue * modifier.second * AI_getUnitWeight(modifier.first)) / 7500);
 					iValue += ((iCombatValue * (kUnitInfo.isTargetUnit(modifier.first) ? 50 : 0)) / 100);
@@ -11528,7 +11534,9 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 				iValue += (iCombatValue / 2);
 				iValue += ((iCombatValue * kUnitInfo.getCityDefenseModifier()) / 100);
 				iValue /= (kUnitInfo.isOnlyDefensive() ? 2 : 1);
-				foreach_(const STD_PAIR(UnitTypes, int)& modifier, kUnitInfo.getUnitAttackModifiers())
+				std::vector<std::pair<int, int> > vsUnitAttack3;
+				InfoValuation::collectKeyedCombat(kUnitInfo.getModifiers(), InfoValuation::COMBAT_TARGET_UNIT, COMBAT_ATTACK, vsUnitAttack3);
+				foreach_(const STD_PAIR(int, int)& modifier, vsUnitAttack3)
 				{
 					iValue += ((iCombatValue * modifier.second * AI_getUnitWeight(modifier.first)) / 10000);
 					iValue += ((iCombatValue * (kUnitInfo.isDefendAgainstUnit(modifier.first) ? 50 : 0)) / 100);
@@ -29828,8 +29836,8 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		int iTempValue = 0;
 		for (int iI = 0; iI < GC.getNumTerrainInfos(); iI++)
 		{
-			if (kPromotion.getTerrainAttackPercent(iI)
-			||  kPromotion.getTerrainDefensePercent(iI)
+			if (InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_TERRAIN, iI, COMBAT_ATTACK)
+			||  InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_TERRAIN, iI, COMBAT_DEFENSE)
 			||  kPromotion.getTerrainWorkPercent(iI)
 			||  kPromotion.getTerrainDoubleMove(iI))
 			{
@@ -29847,7 +29855,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 				);
 				const bool bOnTerrain = pPlot && pPlot->getTerrainType() == iI;
 
-				iTemp = kPromotion.getTerrainAttackPercent(iI);
+				iTemp = InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_TERRAIN, iI, COMBAT_ATTACK);
 				if (iTemp != 0)
 				{
 					iTemp *= 100 + 2*(pUnit ? pUnit->getExtraTerrainAttackPercent((TerrainTypes)iI) : kUnit.getTerrainAttackModifier(iI));
@@ -29873,7 +29881,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 
 				if (!bNoDefensiveBonus)
 				{
-					iTemp = kPromotion.getTerrainDefensePercent(iI);
+					iTemp = InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_TERRAIN, iI, COMBAT_DEFENSE);
 					if (iTemp != 0)
 					{
 						iTemp *= 100 + 2*(pUnit ? pUnit->getExtraTerrainDefensePercent((TerrainTypes)iI) : kUnit.getTerrainDefenseModifier(iI));
@@ -29949,8 +29957,8 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		int iTempValue = 0;
 		for (int iI = 0; iI < GC.getNumFeatureInfos(); iI++)
 		{
-			if (kPromotion.getFeatureAttackPercent(iI)
-			||  kPromotion.getFeatureDefensePercent(iI)
+			if (InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_FEATURE, iI, COMBAT_ATTACK)
+			||  InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_FEATURE, iI, COMBAT_DEFENSE)
 			||  kPromotion.getFeatureWorkPercent(iI)
 			||  kPromotion.getFeatureDoubleMove(iI))
 			{
@@ -29968,7 +29976,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 				);
 				const bool bOnFeature = pPlot && pPlot->getFeatureType() == iI;
 
-				iTemp = kPromotion.getFeatureAttackPercent(iI);
+				iTemp = InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_FEATURE, iI, COMBAT_ATTACK);
 				if (iTemp != 0)
 				{
 					iTemp *= 100 + 2*(pUnit ? pUnit->getExtraFeatureAttackPercent((FeatureTypes)iI) : kUnit.getFeatureAttackModifier(iI));
@@ -29993,7 +30001,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 
 				if (!bNoDefensiveBonus)
 				{
-					iTemp = kPromotion.getFeatureDefensePercent(iI);
+					iTemp = InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_FEATURE, iI, COMBAT_DEFENSE);
 					if (iTemp != 0)
 					{
 						iTemp *= 100 + 2*(pUnit ? pUnit->getExtraFeatureDefensePercent((FeatureTypes)iI) : kUnit.getFeatureDefenseModifier(iI));
@@ -30068,11 +30076,11 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		{
 			if (pUnit ? pUnit->unitCombatModifier((UnitCombatTypes)iI) >= 0 : kUnit.getUnitCombatModifier(iI) >= 0)
 			{
-				iValue += kPromotion.getUnitCombatModifierPercent(iI) * 2;
+				iValue += InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_UNITCOMBAT, iI, COMBAT_AMOUNT) * 2;
 			}
 			else
 			{
-				iValue += kPromotion.getUnitCombatModifierPercent(iI);
+				iValue += InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_UNITCOMBAT, iI, COMBAT_AMOUNT);
 			}
 		}
 	}

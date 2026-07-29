@@ -120,6 +120,88 @@ namespace
 }
 
 
+
+namespace
+{
+	//	The keyed-combat axis -> its interned segment id, resolved ONCE per axis.
+	int keyedCombatSegment(InfoValuation::CombatTargetAxis eAxis)
+	{
+		static int s_segments[5] = { -2, -2, -2, -2, -2 };   // -2 = not yet resolved, -1 = never authored
+		if (s_segments[eAxis] == -2)
+		{
+			static const char* const kAxisSegments[5] = { "terrain", "feature", "unitCombat", "vsUnit", "domain" };
+			s_segments[eAxis] = modSegmentLookup(kAxisSegments[eAxis]);
+		}
+		return s_segments[eAxis];
+	}
+
+	bool keyedCombatEntryMatches(const CvModEntry& kEntry, int iSegment, int iKind)
+	{
+		return kEntry.family == MODFAM_COMBAT
+			&& kEntry.targetSeg == iSegment
+			&& kEntry.kind == iKind
+			&& kEntry.targetFk >= 0;
+	}
+}
+
+int InfoValuation::keyedCombat(const CvModifiers* modifiers, CombatTargetAxis eAxis, int iTargetFk, int iKind)
+{
+	if (modifiers == NULL || iTargetFk < 0)
+	{
+		return 0;
+	}
+	const int iSegment = keyedCombatSegment(eAxis);
+	if (iSegment < 0)
+	{
+		return 0;
+	}
+	int iPercent = 0;
+	const std::vector<CvModEntry*>& kEntries = modifiers->entries();
+	for (size_t iEntry = 0; iEntry < kEntries.size(); ++iEntry)
+	{
+		const CvModEntry& kEntry = *kEntries[iEntry];
+		if (keyedCombatEntryMatches(kEntry, iSegment, iKind) && kEntry.targetFk == iTargetFk)
+		{
+			iPercent += kEntry.value;
+		}
+	}
+	return iPercent;
+}
+
+void InfoValuation::collectKeyedCombat(const CvModifiers* modifiers, CombatTargetAxis eAxis, int iKind,
+	std::vector<std::pair<int, int> >& targetPercents)
+{
+	targetPercents.clear();
+	if (modifiers == NULL)
+	{
+		return;
+	}
+	const int iSegment = keyedCombatSegment(eAxis);
+	if (iSegment < 0)
+	{
+		return;
+	}
+	const std::vector<CvModEntry*>& kEntries = modifiers->entries();
+	for (size_t iEntry = 0; iEntry < kEntries.size(); ++iEntry)
+	{
+		const CvModEntry& kEntry = *kEntries[iEntry];
+		if (!keyedCombatEntryMatches(kEntry, iSegment, iKind))
+		{
+			continue;
+		}
+		size_t iRow = 0;
+		while (iRow < targetPercents.size() && targetPercents[iRow].first != kEntry.targetFk)
+		{
+			++iRow;
+		}
+		if (iRow == targetPercents.size())
+		{
+			targetPercents.push_back(std::make_pair(kEntry.targetFk, 0));
+		}
+		targetPercents[iRow].second += kEntry.value;
+	}
+}
+
 void InfoValuation::collectHealByUnitCombat(const CvModifiers* modifiers, std::vector<HealByUnitCombat>& healRows)
 {
 	healRows.clear();

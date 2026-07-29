@@ -1070,7 +1070,9 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, 
 			}
 
 			bFirst = true;
-			foreach_(const STD_PAIR(UnitTypes, int)& modifier, pUnit->getUnitInfo().getUnitAttackModifiers())
+			std::vector<std::pair<int, int> > vsUnitAttack1;
+			InfoValuation::collectKeyedCombat(pUnit->getUnitInfo().getModifiers(), InfoValuation::COMBAT_TARGET_UNIT, COMBAT_ATTACK, vsUnitAttack1);
+			foreach_(const STD_PAIR(int, int)& modifier, vsUnitAttack1)
 			{
 				if (!bFirst)
 				{
@@ -1084,12 +1086,14 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, 
 
 				szString.append(
 					gDLL->getText(
-						modifier.second == pUnit->getUnitInfo().getUnitDefenseModifiers().getValue(modifier.first) ? "TXT_KEY_UNITHELP_MOD_VS_TYPE" : "TXT_KEY_UNITHELP_ATTACK_MOD_VS_CLASS",
+						modifier.second == InfoValuation::keyedCombat(pUnit->getUnitInfo().getModifiers(), InfoValuation::COMBAT_TARGET_UNIT, modifier.first, COMBAT_DEFENSE) ? "TXT_KEY_UNITHELP_MOD_VS_TYPE" : "TXT_KEY_UNITHELP_ATTACK_MOD_VS_CLASS",
 						modifier.second, CvWString(GC.getUnitInfo(modifier.first).getType()).c_str(), GC.getUnitInfo(modifier.first).getTextKeyWide()
 					)
 				);
 			}
-			foreach_(const STD_PAIR(UnitTypes, int)& modifier, pUnit->getUnitInfo().getUnitDefenseModifiers())
+			std::vector<std::pair<int, int> > vsUnitDefense1;
+			InfoValuation::collectKeyedCombat(pUnit->getUnitInfo().getModifiers(), InfoValuation::COMBAT_TARGET_UNIT, COMBAT_DEFENSE, vsUnitDefense1);
+			foreach_(const STD_PAIR(int, int)& modifier, vsUnitDefense1)
 			{
 				if (!bFirst)
 				{
@@ -9960,8 +9964,8 @@ void CvGameTextMgr::parsePromotionHelpInternal(CvWStringBuffer &szBuffer, Promot
 			{
 				bIsTerrainDoubleMove = true;
 			}
-			iTerrainAttackPercent += GC.getPromotionInfo(linePromotionsOwned[iJ]).getTerrainAttackPercent(iI);
-			iTerrainDefensePercent += GC.getPromotionInfo(linePromotionsOwned[iJ]).getTerrainDefensePercent(iI);
+			iTerrainAttackPercent += InfoValuation::keyedCombat(GC.getPromotionInfo(linePromotionsOwned[iJ]).getModifiers(), InfoValuation::COMBAT_TARGET_TERRAIN, iI, COMBAT_ATTACK);
+			iTerrainDefensePercent += InfoValuation::keyedCombat(GC.getPromotionInfo(linePromotionsOwned[iJ]).getModifiers(), InfoValuation::COMBAT_TARGET_TERRAIN, iI, COMBAT_DEFENSE);
 			iTerrainWorkPercent += GC.getPromotionInfo(linePromotionsOwned[iJ]).getTerrainWorkPercent(iI);
 		}
 		if (bIsTerrainDoubleMove)
@@ -10004,8 +10008,8 @@ void CvGameTextMgr::parsePromotionHelpInternal(CvWStringBuffer &szBuffer, Promot
 			{
 				bIsFeatureDoubleMove = true;
 			}
-			iFeatureAttackPercent += GC.getPromotionInfo(linePromotionsOwned[iJ]).getFeatureAttackPercent(iI);
-			iFeatureDefensePercent += GC.getPromotionInfo(linePromotionsOwned[iJ]).getFeatureDefensePercent(iI);
+			iFeatureAttackPercent += InfoValuation::keyedCombat(GC.getPromotionInfo(linePromotionsOwned[iJ]).getModifiers(), InfoValuation::COMBAT_TARGET_FEATURE, iI, COMBAT_ATTACK);
+			iFeatureDefensePercent += InfoValuation::keyedCombat(GC.getPromotionInfo(linePromotionsOwned[iJ]).getModifiers(), InfoValuation::COMBAT_TARGET_FEATURE, iI, COMBAT_DEFENSE);
 			iFeatureWorkPercent += GC.getPromotionInfo(linePromotionsOwned[iJ]).getFeatureWorkPercent(iI);
 		}
 		if (bIsFeatureDoubleMove)
@@ -10082,7 +10086,7 @@ void CvGameTextMgr::parsePromotionHelpInternal(CvWStringBuffer &szBuffer, Promot
 			iAvoid += GC.getPromotionInfo(linePromotionsOwned[iJ]).getTrapAvoidanceUnitCombatType(iI);
 			iTrigger += GC.getPromotionInfo(linePromotionsOwned[iJ]).getTrapTriggerUnitCombatType(iI);
 			iFlankingStrengthbyUnitCombatTypeChange += GC.getPromotionInfo(linePromotionsOwned[iJ]).getFlankingStrengthbyUnitCombatTypeChange(iI);
-			iUnitCombatModifierPercent += GC.getPromotionInfo(linePromotionsOwned[iJ]).getUnitCombatModifierPercent(iI);
+			iUnitCombatModifierPercent += InfoValuation::keyedCombat(GC.getPromotionInfo(linePromotionsOwned[iJ]).getModifiers(), InfoValuation::COMBAT_TARGET_UNITCOMBAT, iI, COMBAT_AMOUNT);
 			if (GC.getPromotionInfo(linePromotionsOwned[iJ]).getPromotionLine() != NO_PROMOTIONLINE)
 			{
 				iUnitCombatContractChanceChange += GC.getPromotionLineInfo(GC.getPromotionInfo(linePromotionsOwned[iJ]).getPromotionLine()).getUnitCombatContractChanceChange(iI);
@@ -12979,7 +12983,9 @@ void CvGameTextMgr::setBasicUnitHelpWithCity(CvWStringBuffer &szBuffer, UnitType
 		}
 
 		bFirst = true;
-		foreach_(const STD_PAIR(UnitTypes, int)& modifier, kUnit.getUnitAttackModifiers())
+		std::vector<std::pair<int, int> > vsUnitAttack2;
+		InfoValuation::collectKeyedCombat(kUnit.getModifiers(), InfoValuation::COMBAT_TARGET_UNIT, COMBAT_ATTACK, vsUnitAttack2);
+		foreach_(const STD_PAIR(int, int)& modifier, vsUnitAttack2)
 		{
 			if (!bFirst)
 			{
@@ -12992,14 +12998,16 @@ void CvGameTextMgr::setBasicUnitHelpWithCity(CvWStringBuffer &szBuffer, UnitType
 			}
 			szBuffer.append(
 				gDLL->getText(
-					modifier.second == kUnit.getUnitDefenseModifiers().getValue(modifier.first) ? "TXT_KEY_UNITHELP_MOD_VS_TYPE" : "TXT_KEY_UNITHELP_ATTACK_MOD_VS_CLASS",
+					modifier.second == InfoValuation::keyedCombat(kUnit.getModifiers(), InfoValuation::COMBAT_TARGET_UNIT, modifier.first, COMBAT_DEFENSE) ? "TXT_KEY_UNITHELP_MOD_VS_TYPE" : "TXT_KEY_UNITHELP_ATTACK_MOD_VS_CLASS",
 					modifier.second, CvWString(GC.getUnitInfo(modifier.first).getType()).c_str(), GC.getUnitInfo(modifier.first).getTextKeyWide()
 				)
 			);
 		}
 
 		bFirst = true;
-		foreach_(const STD_PAIR(UnitTypes, int)& modifier, kUnit.getUnitDefenseModifiers())
+		std::vector<std::pair<int, int> > vsUnitDefense2;
+		InfoValuation::collectKeyedCombat(kUnit.getModifiers(), InfoValuation::COMBAT_TARGET_UNIT, COMBAT_DEFENSE, vsUnitDefense2);
+		foreach_(const STD_PAIR(int, int)& modifier, vsUnitDefense2)
 		{
 			if (!bFirst)
 			{

@@ -22,7 +22,8 @@
 //
 
 #include "CvInfoKinds.h"                  // ModifierFamily / kind enums / WellbeingChannel / CvCascUnit / CvCascScope
-#include <vector>                         // the keyed-heal collector's out-list
+#include <vector>                         // the collectors' out-lists
+#include <utility>                        // std::pair -- the keyed-combat (target, percent) rows
 #include "Defines/CvEnums.h"              // NUM_YIELD_TYPES / NUM_COMMERCE_TYPES -- the group out-array extents
 
 class CvModifiers;
@@ -57,6 +58,28 @@ public:
 	//	enumerating the whole UnitCombat registry, which is the keyed-container inversion the rebuild deletes
 	//	(pedia-read-map finding 2). Entries for one combat class are merged into a single row.
 	static void collectHealByUnitCombat(const CvModifiers* modifiers, std::vector<HealByUnitCombat>& healRows);
+
+	//	The KEYED COMBAT axes -- `combat.unit.<axis>.{TARGET}.<kind>` (json §6.1's named-entity key). The axis is
+	//	an enum rather than a segment string so no call site interns one; the segment ids resolve once, here.
+	enum CombatTargetAxis
+	{
+		COMBAT_TARGET_TERRAIN = 0,   // combat.unit.terrain.{TERRAIN_X}
+		COMBAT_TARGET_FEATURE,       // combat.unit.feature.{FEATURE_X}
+		COMBAT_TARGET_UNITCOMBAT,    // combat.unit.unitCombat.{UNITCOMBAT_X}
+		COMBAT_TARGET_UNIT,          // combat.unit.vsUnit.{UNIT_X}
+		COMBAT_TARGET_DOMAIN         // combat.unit.domain.{DOMAIN_X}
+	};
+
+	//	The POINT read: this entity's keyed combat percent against ONE target. Walks the entity's own compiled
+	//	entries -- the handful it authored -- never the target registry ([DEC-single-implementation]; the
+	//	keyed-container inversion is what pedia-read-map finding 2 names as the shape to delete).
+	//	⚠ A PERCENT, so it is NOT scaled ([DEC-fixedpoint-x100]): use it as returned.
+	static int keyedCombat(const CvModifiers* modifiers, CombatTargetAxis eAxis, int iTargetFk, int iKind);
+
+	//	The COLLECT form: every (target, percent) this entity authored on one axis+kind. For a consumer that
+	//	iterates what is there rather than asking about a specific target.
+	static void collectKeyedCombat(const CvModifiers* modifiers, CombatTargetAxis eAxis, int iKind,
+		std::vector<std::pair<int, int> >& targetPercents);
 
 	// THE EVAL-CTX FILL SEAM (contexts.md: "the contexts ARE the eval state"): CityContext::fillEvalCtx
 	// (city/plot) + EmpireContext::fillEvalCtx (player/team) + the plotGroup pass-in (the reserved TRADED-bonus

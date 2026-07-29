@@ -13444,7 +13444,7 @@ int CvUnit::featureDefenseModifier(FeatureTypes eFeature) const
 int CvUnit::unitAttackModifier(UnitTypes eUnit) const
 {
 	FASSERT_BOUNDS(0, GC.getNumUnitInfos(), eUnit);
-	return m_pUnitInfo->getUnitAttackModifiers().getValue(eUnit);
+	return InfoValuation::keyedCombat(m_pUnitInfo->getModifiers(), InfoValuation::COMBAT_TARGET_UNIT, eUnit, COMBAT_ATTACK);
 }
 
 
@@ -13455,7 +13455,7 @@ int CvUnit::unitDefenseModifier(UnitTypes eUnit) const
 		return 0;
 	}
 	FASSERT_BOUNDS(0, GC.getNumUnitInfos(), eUnit);
-	return m_pUnitInfo->getUnitDefenseModifiers().getValue(eUnit);
+	return InfoValuation::keyedCombat(m_pUnitInfo->getModifiers(), InfoValuation::COMBAT_TARGET_UNIT, eUnit, COMBAT_DEFENSE);
 }
 
 
@@ -19130,8 +19130,8 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 
 	for (iI = 0; iI < GC.getNumTerrainInfos(); iI++)
 	{
-		changeExtraTerrainAttackPercent(((TerrainTypes)iI), (kPromotion.getTerrainAttackPercent(iI) * iChange));
-		changeExtraTerrainDefensePercent(((TerrainTypes)iI), (kPromotion.getTerrainDefensePercent(iI) * iChange));
+		changeExtraTerrainAttackPercent(((TerrainTypes)iI), (InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_TERRAIN, iI, COMBAT_ATTACK) * iChange));
+		changeExtraTerrainDefensePercent(((TerrainTypes)iI), (InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_TERRAIN, iI, COMBAT_DEFENSE) * iChange));
 
 		changeExtraTerrainWorkPercent(((TerrainTypes)iI), (kPromotion.getTerrainWorkPercent(iI) * iChange));
 
@@ -19140,8 +19140,8 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 
 	for (iI = 0; iI < GC.getNumFeatureInfos(); iI++)
 	{
-		changeExtraFeatureAttackPercent(((FeatureTypes)iI), (kPromotion.getFeatureAttackPercent(iI) * iChange));
-		changeExtraFeatureDefensePercent(((FeatureTypes)iI), (kPromotion.getFeatureDefensePercent(iI) * iChange));
+		changeExtraFeatureAttackPercent(((FeatureTypes)iI), (InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_FEATURE, iI, COMBAT_ATTACK) * iChange));
+		changeExtraFeatureDefensePercent(((FeatureTypes)iI), (InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_FEATURE, iI, COMBAT_DEFENSE) * iChange));
 
 		changeExtraFeatureWorkPercent(((FeatureTypes)iI), (kPromotion.getFeatureWorkPercent(iI) * iChange));
 
@@ -19223,7 +19223,7 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	const int numUnitCombatInfos = GC.getNumUnitCombatInfos();
 	for (iI = 0; iI < numUnitCombatInfos; iI++)
 	{
-		changeExtraUnitCombatModifier(((UnitCombatTypes)iI), (kPromotion.getUnitCombatModifierPercent(iI) * iChange));
+		changeExtraUnitCombatModifier(((UnitCombatTypes)iI), (InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_UNITCOMBAT, iI, COMBAT_AMOUNT) * iChange));
 		changeExtraFlankingStrengthbyUnitCombatType(((UnitCombatTypes)iI), (kPromotion.getFlankingStrengthbyUnitCombatTypeChange(iI) * iChange));
 		changeExtraTrapDisableUnitCombatType(((UnitCombatTypes)iI), (kPromotion.getTrapDisableUnitCombatType(iI) * iChange));
 		changeExtraTrapAvoidanceUnitCombatType(((UnitCombatTypes)iI), (kPromotion.getTrapAvoidanceUnitCombatType(iI) * iChange));
@@ -25031,13 +25031,13 @@ void CvUnit::doBattleFieldPromotions(CvUnit* pDefender, const CombatDetails& cdD
 				aAttackerAvailablePromotions.push_back(promotionType);
 			}
 			//* attack terrain
-			if (kPromotion.getTerrainAttackPercent((int)pPlot->getTerrainType()) > 0)
+			if (InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_TERRAIN, (int)pPlot->getTerrainType(), COMBAT_ATTACK) > 0)
 			{
 				aAttackerAvailablePromotions.push_back(promotionType);
 			}
 			//* attack feature
 			if (pPlot->getFeatureType() != NO_FEATURE &&
-				kPromotion.getFeatureAttackPercent((int)pPlot->getFeatureType()) > 0)
+				InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_FEATURE, (int)pPlot->getFeatureType(), COMBAT_ATTACK) > 0)
 			{
 				aAttackerAvailablePromotions.push_back(promotionType);
 			}
@@ -25058,7 +25058,7 @@ void CvUnit::doBattleFieldPromotions(CvUnit* pDefender, const CombatDetails& cdD
 				aAttackerAvailablePromotions.push_back(promotionType);
 			}
 			//* unit combat mod
-			if (kPromotion.getUnitCombatModifierPercent((int)pDefender->getUnitCombatType()) > 0)
+			if (InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_UNITCOMBAT, (int)pDefender->getUnitCombatType(), COMBAT_AMOUNT) > 0)
 			{
 				aAttackerAvailablePromotions.push_back(promotionType);
 			}
@@ -25134,13 +25134,13 @@ void CvUnit::doBattleFieldPromotions(CvUnit* pDefender, const CombatDetails& cdD
 			}
 			//TB Combat Mods End
 			//* defend terrain
-			if (!noDefensiveBonus() && (kPromotion.getTerrainDefensePercent((int)pPlot->getTerrainType()) > 0))
+			if (!noDefensiveBonus() && (InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_TERRAIN, (int)pPlot->getTerrainType(), COMBAT_DEFENSE) > 0))
 			{
 				aDefenderAvailablePromotions.push_back(promotionType);
 			}
 			//* defend feature
 			if (!noDefensiveBonus() && (pPlot->getFeatureType() != NO_FEATURE &&
-				kPromotion.getFeatureDefensePercent((int)pPlot->getFeatureType()) > 0))
+				InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_FEATURE, (int)pPlot->getFeatureType(), COMBAT_DEFENSE) > 0))
 			{
 				aDefenderAvailablePromotions.push_back(promotionType);
 			}
@@ -25162,7 +25162,7 @@ void CvUnit::doBattleFieldPromotions(CvUnit* pDefender, const CombatDetails& cdD
 				aDefenderAvailablePromotions.push_back(promotionType);
 			}
 			//* unit combat mod vs attacker unit type
-			if (kPromotion.getUnitCombatModifierPercent((int)getUnitCombatType()) > 0)
+			if (InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_UNITCOMBAT, (int)getUnitCombatType(), COMBAT_AMOUNT) > 0)
 			{
 				aDefenderAvailablePromotions.push_back(promotionType);
 			}

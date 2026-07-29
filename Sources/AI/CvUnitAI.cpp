@@ -28319,7 +28319,7 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 				//	Unit combat modifiers
 				for (int iJ = 0; iJ < GC.getNumUnitCombatInfos(); iJ++)
 				{
-					if (kPromotion.getUnitCombatModifierPercent((UnitCombatTypes)iJ) != 0)
+					if (InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_UNITCOMBAT, (UnitCombatTypes)iJ, COMBAT_AMOUNT) != 0)
 					{
 						//	Future - make this adaptive to the area's known enemy units
 						//	Note - the scaling factor of 5 (implicit in the 500) is because
@@ -28328,9 +28328,9 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 						//	is normalized for actual occurance of units that fudge factor won't be needed
 						int	iUnitCombatWeight = 500 / GC.getNumUnitCombatInfos();
 
-						iResult = (iResult * (100 + (iUnitCombatWeight * kPromotion.getUnitCombatModifierPercent((UnitCombatTypes)iJ)) / 100)) / 100;
+						iResult = (iResult * (100 + (iUnitCombatWeight * InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_UNITCOMBAT, (UnitCombatTypes)iJ, COMBAT_AMOUNT)) / 100)) / 100;
 
-						bPromotionHasAccountedValue |= (kPromotion.getUnitCombatModifierPercent((UnitCombatTypes)iJ) > 0);
+						bPromotionHasAccountedValue |= (InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_UNITCOMBAT, (UnitCombatTypes)iJ, COMBAT_AMOUNT) > 0);
 					}
 				}
 
@@ -28420,7 +28420,7 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 					//	Terrain defense
 					for (int iJ = 0; iJ < GC.getNumTerrainInfos(); iJ++)
 					{
-						if (kPromotion.getTerrainDefensePercent((TerrainTypes)iJ) != 0)
+						if (InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_TERRAIN, (TerrainTypes)iJ, COMBAT_DEFENSE) != 0)
 						{
 							int iNumRevealedAreaTiles = std::max(1, area()->getNumRevealedTiles(getTeam()));
 							int	iNumRevealedAreaThisTerrain = area()->getNumRevealedTerrainTiles(getTeam(), (TerrainTypes)iJ);
@@ -28431,13 +28431,13 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 							//	higher than the raw proportion would apply
 							int	iTerrainWeight = (2 * 1000 * iNumRevealedAreaThisTerrain) / iNumRevealedAreaTiles;
 
-							iResult = (iResult * (10000 + (kPromotion.getTerrainDefensePercent((TerrainTypes)iJ) * iTerrainWeight) / 10)) / 10000;
+							iResult = (iResult * (10000 + (InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_TERRAIN, (TerrainTypes)iJ, COMBAT_DEFENSE) * iTerrainWeight) / 10)) / 10000;
 						}
 					}
 					//	Feature defense
 					for (int iJ = 0; iJ < GC.getNumFeatureInfos(); iJ++)
 					{
-						if (kPromotion.getFeatureDefensePercent((FeatureTypes)iJ) != 0)
+						if (InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_FEATURE, (FeatureTypes)iJ, COMBAT_DEFENSE) != 0)
 						{
 							int iNumRevealedAreaTiles = std::max(1, area()->getNumRevealedTiles(getTeam()));
 							int	iNumRevealedAreaThisFeature = area()->getNumRevealedFeatureTiles(getTeam(), (FeatureTypes)iJ);
@@ -28448,9 +28448,9 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 							//	higher than the raw proportion would apply
 							int	iFeatureWeight = (2 * 1000 * iNumRevealedAreaThisFeature) / iNumRevealedAreaTiles;
 
-							iResult = (iResult * (10000 + (kPromotion.getFeatureDefensePercent((FeatureTypes)iJ) * iFeatureWeight) / 10)) / 10000;
+							iResult = (iResult * (10000 + (InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_FEATURE, (FeatureTypes)iJ, COMBAT_DEFENSE) * iFeatureWeight) / 10)) / 10000;
 
-							bPromotionHasAccountedValue |= (kPromotion.getFeatureDefensePercent((FeatureTypes)iJ) > 0);
+							bPromotionHasAccountedValue |= (InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_FEATURE, (FeatureTypes)iJ, COMBAT_DEFENSE) > 0);
 						}
 					}
 					//	Hills defense
@@ -28568,7 +28568,7 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 					//	Terrain attack
 					for (int iJ = 0; iJ < GC.getNumTerrainInfos(); iJ++)
 					{
-						if (kPromotion.getTerrainAttackPercent((TerrainTypes)iJ) != 0)
+						if (InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_TERRAIN, (TerrainTypes)iJ, COMBAT_ATTACK) != 0)
 						{
 							int iNumRevealedAreaTiles = std::max(1, area()->getNumRevealedTiles(getTeam()));
 							int	iNumRevealedAreaThisTerrain = area()->getNumRevealedTerrainTiles(getTeam(), (TerrainTypes)iJ);
@@ -28579,15 +28579,15 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 							//	higher than the raw proportion would apply
 							int	iTerrainWeight = (2 * 1000 * iNumRevealedAreaThisTerrain) / iNumRevealedAreaTiles;
 
-							iResult = (iResult * (10000 + (kPromotion.getTerrainAttackPercent((TerrainTypes)iJ) * iTerrainWeight) / 10)) / 10000;
+							iResult = (iResult * (10000 + (InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_TERRAIN, (TerrainTypes)iJ, COMBAT_ATTACK) * iTerrainWeight) / 10)) / 10000;
 
-							bPromotionHasAccountedValue |= (kPromotion.getTerrainAttackPercent((TerrainTypes)iJ) > 0);
+							bPromotionHasAccountedValue |= (InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_TERRAIN, (TerrainTypes)iJ, COMBAT_ATTACK) > 0);
 						}
 					}
 					//	Feature attack
 					for (int iJ = 0; iJ < GC.getNumFeatureInfos(); iJ++)
 					{
-						if (kPromotion.getFeatureAttackPercent((FeatureTypes)iJ) != 0)
+						if (InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_FEATURE, (FeatureTypes)iJ, COMBAT_ATTACK) != 0)
 						{
 							int iNumRevealedAreaTiles = std::max(1, area()->getNumRevealedTiles(getTeam()));
 							int	iNumRevealedAreaThisFeature = area()->getNumRevealedFeatureTiles(getTeam(), (FeatureTypes)iJ);
@@ -28598,9 +28598,9 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 							//	higher than the raw proportion would apply
 							int	iFeatureWeight = (2 * 1000 * iNumRevealedAreaThisFeature) / iNumRevealedAreaTiles;
 
-							iResult = (iResult * (10000 + (kPromotion.getFeatureAttackPercent((FeatureTypes)iJ) * iFeatureWeight) / 10)) / 10000;
+							iResult = (iResult * (10000 + (InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_FEATURE, (FeatureTypes)iJ, COMBAT_ATTACK) * iFeatureWeight) / 10)) / 10000;
 
-							bPromotionHasAccountedValue |= (kPromotion.getFeatureAttackPercent((FeatureTypes)iJ) > 0);
+							bPromotionHasAccountedValue |= (InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_FEATURE, (FeatureTypes)iJ, COMBAT_ATTACK) > 0);
 						}
 					}
 					//	Hills attack
