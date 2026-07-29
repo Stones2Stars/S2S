@@ -1435,14 +1435,10 @@ public:
 
 
 
-	int getProjectHappiness() const;
-	void changeProjectHappiness(int iChange);
 
 	int getForceAllTradeRoutes() const;
 	void changeForceAllTradeRoutes(int iChange);
 
-	int getProjectHealth() const;
-	void changeProjectHealth(int iChange);
 
 	inline bool isNoCapitalUnhappiness() const { return m_iNoCapitalUnhappiness > 0; }
 	void changeNoCapitalUnhappiness(int iChange);

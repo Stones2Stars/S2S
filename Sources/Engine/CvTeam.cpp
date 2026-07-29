@@ -4373,8 +4373,6 @@ void CvTeam::processProjectChange(ProjectTypes eIndex, int iChange, int iOldProj
 							}
 						}
 					}
-					player.changeProjectHappiness(kProject.getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_EMPIRE));
-					player.changeProjectHealth(kProject.getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_EMPIRE));
 					player.changeProjectInflation(kProject.getInflationModifier());
 					// The maintenance KINDS at their scope ([DEC-scope-is-an-axis]). The connected-city kind is
 					// gone with the legacy getter: NOTHING in Assets/Data authors a connectedCity maintenance

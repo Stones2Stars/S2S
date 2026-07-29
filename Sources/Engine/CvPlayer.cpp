@@ -26422,26 +26422,6 @@ void CvPlayer::changeExtraCityDefense(int iChange)
 	setExtraCityDefense(getExtraCityDefense() + iChange);
 }
 
-int CvPlayer::getProjectHappiness() const
-{
-	return m_iProjectHappiness;
-}
-
-void CvPlayer::changeProjectHappiness(int iChange)
-{
-	m_iProjectHappiness += iChange;
-}
-
-int CvPlayer::getProjectHealth() const
-{
-	return m_iProjectHealth;
-}
-
-void CvPlayer::changeProjectHealth(int iChange)
-{
-	m_iProjectHealth += iChange;
-}
-
 int CvPlayer::getForceAllTradeRoutes() const
 {
 	return m_iForceAllTradeRoutes;
