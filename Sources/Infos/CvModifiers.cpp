@@ -14,6 +14,23 @@
 #include "CvJsonParse.h"            // jsonClassifyKey / jsonParseScope / jsonIsScopeToken / jsonX100 / jsonResolveId
 #include <algorithm>
 
+namespace
+{
+	//	⛔ A PERCENT IS NOT SCALED (owner). The ×100 exists so an AMOUNT -- a yield, a combat value -- can carry
+	//	two decimals at the edge; a percentage has no decimals to carry, so scaling it buys nothing and costs a
+	//	second identity constant (`100 + Σpercent` would become `10000 + Σpercent` at every site a percent is
+	//	combined). `flat` and `multiplier` DO convert: a flat is an amount, and a multiplier is authored on the
+	//	same two-decimal footing with identity 100 (×1.5 -> 150).
+	int mod_valueForUnit(double dHuman, CvCascUnit eUnit)
+	{
+		if (eUnit == CASC_UNIT_PERCENT)
+		{
+			return (int)(dHuman >= 0 ? dHuman + 0.5 : dHuman - 0.5);
+		}
+		return jsonX100(dHuman);
+	}
+}
+
 CvModifiers::~CvModifiers()
 {
 	clearParsed();
@@ -296,7 +313,7 @@ namespace
 			return NULL;   // not an entry object
 		}
 		CvModEntry* pEntry = new CvModEntry();
-		pEntry->value = jsonX100(valueIt->second.get<double>());
+		pEntry->value = mod_valueForUnit(valueIt->second.get<double>(), eUnit);
 		pEntry->unit = eUnit;
 		pEntry->scope = eScope;
 		picojson::object::const_iterator it;
@@ -367,7 +384,7 @@ namespace
 		CvModEntry* pAiEntry = NULL;
 		if (aiIt->second.is<double>())
 		{
-			pAiEntry = mod_makeBareEntry(jsonX100(aiIt->second.get<double>()), eUnit, eScope);
+			pAiEntry = mod_makeBareEntry(mod_valueForUnit(aiIt->second.get<double>(), eUnit), eUnit, eScope);
 		}
 		else if (aiIt->second.is<picojson::object>())
 		{
@@ -419,7 +436,7 @@ void CvModifiers::parseLeaf(const std::vector<std::string>& segments, const pico
 	const size_t iFirst = m_entries.size();
 	if (leaf.is<double>())   // a bare, always-on value
 	{
-		m_entries.push_back(mod_makeBareEntry(jsonX100(leaf.get<double>()), eUnit, decode.scope));
+		m_entries.push_back(mod_makeBareEntry(mod_valueForUnit(leaf.get<double>(), eUnit), eUnit, decode.scope));
 	}
 	else if (leaf.is<bool>())
 	{
@@ -431,7 +448,7 @@ void CvModifiers::parseLeaf(const std::vector<std::string>& segments, const pico
 		// surfaced through mod_decodeLeaf's diagnostic, never silently dropped.
 		if (decode.targetSeg >= 0 && leaf.get<bool>())
 		{
-			m_entries.push_back(mod_makeBareEntry(jsonX100(1), eUnit, decode.scope));
+			m_entries.push_back(mod_makeBareEntry(mod_valueForUnit(1, eUnit), eUnit, decode.scope));
 		}
 	}
 	else if (leaf.is<picojson::object>())   // a single `{value, unit?, per?, enabled?, disabled?, ai?}` entry (§3.9)
@@ -454,7 +471,7 @@ void CvModifiers::parseLeaf(const std::vector<std::string>& segments, const pico
 		{
 			if (entryList[i].is<double>())   // a bare number in a list = an always-on entry
 			{
-				m_entries.push_back(mod_makeBareEntry(jsonX100(entryList[i].get<double>()), eUnit, decode.scope));
+				m_entries.push_back(mod_makeBareEntry(mod_valueForUnit(entryList[i].get<double>(), eUnit), eUnit, decode.scope));
 				continue;
 			}
 			if (!entryList[i].is<picojson::object>())

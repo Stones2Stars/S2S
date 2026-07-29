@@ -69,12 +69,12 @@ bool UnitFilterIsLimited::isFilteredUnit(const CvPlayer *pPlayer, const CvCity *
 // UI filters on (worker, siege, mounted, hero, spy, ...) is authored as a unit's primary.
 bool UnitFilterIsCombat::isFilteredUnit(const CvPlayer *pPlayer, const CvCity *pCity, UnitTypes eUnit) const
 {
-	return (UnitCombatTypes)(GC.getUnitInfo(eUnit).getCombatClass()) == m_eCombat;
+	return (UnitCombatTypes)(GC.getUnitInfo(eUnit).getUnitCombatType()) == m_eCombat;
 }
 
 bool UnitFilterIsCombats::isFilteredUnit(const CvPlayer *pPlayer, const CvCity *pCity, UnitTypes eUnit) const
 {
-	return algo::any_of_equal(m_eCombats, (UnitCombatTypes)GC.getUnitInfo(eUnit).getCombatClass());
+	return algo::any_of_equal(m_eCombats, (UnitCombatTypes)GC.getUnitInfo(eUnit).getUnitCombatType());
 }
 
 void UnitFilterIsCombats::addCombat(UnitCombatTypes eCombat)
@@ -89,7 +89,7 @@ bool UnitFilterIsCombats::isEmpty() const
 
 bool UnitFilterIsDomain::isFilteredUnit(const CvPlayer *pPlayer, const CvCity *pCity, UnitTypes eUnit) const
 {
-	return GC.getUnitInfo(eUnit).getDomain() == m_eDomain;
+	return GC.getUnitInfo(eUnit).getDomainType() == m_eDomain;
 }
 
 bool UnitFilterIsDefense::isFilteredUnit(const CvPlayer *pPlayer, const CvCity *pCity, UnitTypes eUnit) const

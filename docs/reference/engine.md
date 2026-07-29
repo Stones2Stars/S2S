@@ -100,6 +100,16 @@ save-break); derived data serializes nothing; deleting a changer means auditing 
 - **`<Adapt>` XML tags** dispatch by tag name to a channel (`<Adapt>`→the speed scalar, `<AdaptHammerCost>`,
   `<AdaptUnitYield>`), single evaluator `CvGameObject::adaptValueToGame()`. The option-composed hammer-cost
   derivation is a consuming-system calc (json.md §9 — never an info getter).
+- **`CvGameSpeedScale` (`Sources/Engine/`) is the ONE consuming-system calc for "scale this by game speed"** —
+  `speedPercent()` / `hammerCostPercent()` / `missionYieldPercent()`, each returning a HUMAN percent
+  ([DEC-single-implementation](../architecture/decisions.md#dec-single-implementation)). It exists because the
+  info deliberately cannot serve two of them: `hammerCostPercent` composes `GAMEOPTION_EXP_UPSCALED_BUILDING_AND_UNIT_COSTS`
+  with `UPSCALED_HAMMER_COST_MODIFIER`, and **an info never reads game state** (json.md §9 — a game option gates
+  at the CONSUMING system). ⚠ It converts NOTHING: `CvGameSpeedInfo` serves `speed.world.percent` /
+  `missionYieldMultiplier.world.percent` as straggler scalars (`getScalar(SCALAR_SPEED, CASC_SCOPE_WORLD,
+  CASC_UNIT_PERCENT)`), and a **percent is not scaled**
+  ([DEC-fixedpoint-x100](../architecture/decisions.md#dec-fixedpoint-x100)), so the value is already what every
+  caller wants. ⛔ Do not re-derive either percent at a call site, and do not add a `/100` to "correct" it.
 
 ## Handicaps — two "handicaps", asymmetric
 

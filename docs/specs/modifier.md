@@ -118,7 +118,8 @@ Per `(family, member, unit, target)`, the slot composes the three value units ([
 > **`effective = (base + Σflat) × (100 + Σpercent)/100 × Π(multiplier/100)`**
 
 `flat`s sum into the base; `percent`s (additive deltas) sum then apply once; `multiplier`s compose by product.
-`Σflat`, `Σpercent`, and `Πmultiplier` (stored ×100, identity 100) are each their own accumulated number —
+`Σflat`, `Σpercent`, and `Πmultiplier` (flats + multipliers stored ×100, identity 100; a PERCENT is NOT
+scaled — [DEC-fixedpoint-x100]) are each their own accumulated number —
 **the `unit` is part of the slot KEY (per `(family, member, unit, target)`), so a flat sum and a percent sum
 are SEPARATE slots, never fields of one mixed struct** — the separation is what lets invalidation split
 percent-vs-flat (§1). One `deposit(unit, value)` folds a value into its unit's slot; `effective(base)`

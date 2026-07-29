@@ -4,6 +4,7 @@
 #include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
+#include "Engine/CvGameSpeedScale.h"
 #include "AI/BetterBTSAI.h"
 #include "CvArea.h"
 #include "CvBuildingInfo.h"
@@ -5462,7 +5463,7 @@ bool CvUnit::canScrap() const
 // No need to let return value exceed MAX_INT, shouldn't really happen unless one of the most expensive units is merged many times.
 int CvUnit::calculateScrapValue() const
 {
-	int64_t iCost = getUnitInfo().getProductionCost() * GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getHammerCostPercent();
+	int64_t iCost = getUnitInfo().getProductionCost() * CvGameSpeedScale::hammerCostPercent();
 
 	if (GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS))
 	{
@@ -8953,7 +8954,7 @@ int CvUnit::getDiscoverResearch(const TechTypes eTech) const
 	);
 	if (iResearch > 0)
 	{
-		iResearch *= GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent();
+		iResearch *= CvGameSpeedScale::speedPercent();
 		iResearch /= 100;
 
 		if (eTech != NO_TECH)
@@ -9011,7 +9012,7 @@ int CvUnit::getMaxHurryProduction(const CvCity* pCity) const
 {
 	int iProduction = (m_pUnitInfo->getBaseHurry() + (m_pUnitInfo->getHurryMultiplier() * pCity->getPopulation()));
 
-	iProduction *= GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getHammerCostPercent();
+	iProduction *= CvGameSpeedScale::hammerCostPercent();
 	iProduction /= 100;
 
 	return std::max(0, iProduction);
@@ -9113,7 +9114,7 @@ int CvUnit::getTradeGold(const CvPlot* pPlot) const
 
 	iGold = getModifiedIntValue(iGold, GC.getTRADE_MISSION_END_TOTAL_PERCENT_ADJUSTMENT() + GET_TEAM(getTeam()).getTradeMissionModifier());
 
-	iGold *= GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent();
+	iGold *= CvGameSpeedScale::speedPercent();
 	iGold /= 100;
 
 	return std::max(0, iGold);
@@ -9216,7 +9217,7 @@ int CvUnit::getGreatWorkCulture() const
 {
 	int iCulture = m_pUnitInfo->getGreatWorkCulture();
 
-	iCulture *= GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent();
+	iCulture *= CvGameSpeedScale::speedPercent();
 	iCulture /= 100;
 
 	return std::max(0, iCulture);
@@ -9267,7 +9268,7 @@ bool CvUnit::greatWork()
 		pCity->setOccupationTimer(0);
 
 		const int iCultureToAdd = 100 * getGreatWorkCulture();
-		const int iNumTurnsApplied = GC.getDefineINT("GREAT_WORKS_CULTURE_TURNS") * GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent() / 100;
+		const int iNumTurnsApplied = GC.getDefineINT("GREAT_WORKS_CULTURE_TURNS") * CvGameSpeedScale::speedPercent() / 100;
 
 		for (int i = 0; i < iNumTurnsApplied; ++i)
 		{
@@ -9342,7 +9343,7 @@ int CvUnit::getEspionagePoints() const
 {
 	int iEspionagePoints = m_pUnitInfo->getEspionagePoints();
 
-	iEspionagePoints *= GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent();
+	iEspionagePoints *= CvGameSpeedScale::speedPercent();
 	iEspionagePoints /= 100;
 
 	return std::max(0, iEspionagePoints);
@@ -10374,7 +10375,7 @@ int CvUnit::upgradePrice(UnitTypes eUnit) const
 			iMod += (
 				GC.getHandicapInfo(GC.getGame().getHandicapType()).getAIUnitUpgradePercent() - 100
 				+
-				GC.getHandicapInfo(GC.getGame().getHandicapType()).getAIPerEraModifier() * GET_PLAYER(getOwner()).getCurrentEra()
+				GC.getHandicapInfo(GC.getGame().getHandicapType()).getUnitUpkeepEraModifier() * GET_PLAYER(getOwner()).getCurrentEra()
 			);
 		}
 		iPrice = getModifiedIntValue64(iPrice, iMod);
@@ -15860,7 +15861,7 @@ void CvUnit::calcUpkeep()
 	{
 		return;
 	}
-	int iCalc = 100 * m_pUnitInfo->getBaseUpkeep() + m_iExtraUpkeep100;
+	int iCalc = 100 * m_pUnitInfo->getUpkeepCost() + m_iExtraUpkeep100;
 
 	if (iCalc > 0)
 	{
@@ -24051,7 +24052,7 @@ bool CvUnit::performInquisition()
 						if (GET_PLAYER(getOwner()).getStateReligion() != iJ && buildingX.getPrereqReligion() == iJ)
 						{
 							temp.push_back(eType);
-							iCompensationGold += buildingX.getProductionCost() * GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getHammerCostPercent() / std::max(1, GC.getDefineINT("INQUISITION_BUILDING_GOLD_DIVISOR"));
+							iCompensationGold += buildingX.getProductionCost() * CvGameSpeedScale::hammerCostPercent() / std::max(1, GC.getDefineINT("INQUISITION_BUILDING_GOLD_DIVISOR"));
 							break;
 						}
 					}
@@ -24505,7 +24506,7 @@ void CvUnit::changeCanLeadThroughPeaksCount(int iChange)
 
 int CvUnit::getMaxHurryFood() const
 {
-	return std::max(0, m_pUnitInfo->getBaseFoodChange() * GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getHammerCostPercent() / 100);
+	return std::max(0, m_pUnitInfo->getBaseFoodChange() * CvGameSpeedScale::hammerCostPercent() / 100);
 }
 
 int CvUnit::getHurryFood(const CvPlot* pPlot) const
@@ -24592,7 +24593,7 @@ void CvUnit::setCommander(bool bNewVal)
 	{
 		m_commander = new UnitCompCommander(this, m_pUnitInfo);
 
-		foreach_(const UnitCombatTypes eSubCombat, m_pUnitInfo->getSubCombatTypes())
+		foreach_(const UnitCombatTypes eSubCombat, m_pUnitInfo->getCombatClasses())
 		{
 			if (GC.getUnitCombatInfo(eSubCombat).getQualityBase() > -10)
 			{
@@ -24735,7 +24736,7 @@ void CvUnit::setCommodore(bool bNewVal)
 	{
 		m_commodore = new UnitCompCommodore(this, m_pUnitInfo);
 
-		foreach_(const UnitCombatTypes eSubCombat, m_pUnitInfo->getSubCombatTypes())
+		foreach_(const UnitCombatTypes eSubCombat, m_pUnitInfo->getCombatClasses())
 		{
 			if (GC.getUnitCombatInfo(eSubCombat).getQualityBase() > -10)
 			{
@@ -26256,7 +26257,7 @@ void CvUnit::doSetUnitCombats()
 	{
 		setHasUnitCombat(getUnitCombatType(), true);
 	}
-	foreach_(const UnitCombatTypes eSubCombat, m_pUnitInfo->getSubCombatTypes())
+	foreach_(const UnitCombatTypes eSubCombat, m_pUnitInfo->getCombatClasses())
 	{
 		setHasUnitCombat(eSubCombat, true);
 	}
@@ -27920,7 +27921,7 @@ int CvUnit::workRate(bool bMax) const
 		iWorkMod += (
 			GC.getHandicapInfo(GC.getGame().getHandicapType()).getAIWorkRateModifier()
 			-
-			GC.getHandicapInfo(GC.getGame().getHandicapType()).getAIPerEraModifier() * GET_PLAYER(getOwner()).getCurrentEra()
+			GC.getHandicapInfo(GC.getGame().getHandicapType()).getUnitUpkeepEraModifier() * GET_PLAYER(getOwner()).getCurrentEra()
 		);
 	}
 	return getModifiedIntValue(iRate, iWorkMod);

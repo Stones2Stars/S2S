@@ -3,6 +3,7 @@
 #include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
+#include "Engine/CvGameSpeedScale.h"
 #include "AI/CvGameAI.h"
 #include "Defines/CvGlobals.h"
 #include "CvInfos.h"
@@ -1657,7 +1658,7 @@ void CvInitCore::resetAdvancedStartPoints()
 
 	if (NO_GAMESPEED != getGameSpeed())
 	{
-		iPoints *= GC.getGameSpeedInfo(getGameSpeed()).getSpeedPercent();
+		iPoints *= CvGameSpeedScale::speedPercent();
 		iPoints /= 100;
 	}
 

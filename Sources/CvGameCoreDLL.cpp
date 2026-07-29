@@ -707,6 +707,7 @@ int getModifiedIntValue(const int iValue, const int iMod)
 	}
 	return iValue;
 }
+
 int64_t getModifiedIntValue64(const int64_t iValue, const int iMod)
 {
 	if (iMod > 0)

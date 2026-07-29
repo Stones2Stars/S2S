@@ -971,7 +971,7 @@ bool CvDeal::startTrade(TradeData trade, PlayerTypes eFromPlayer, PlayerTypes eT
 				paeNewCivics[iI] = GET_PLAYER(eFromPlayer).getCivics((CivicOptionTypes)iI);
 			}
 
-			paeNewCivics[GC.getCivicInfo((CivicTypes)trade.m_iData).getCivicOptionType()] = ((CivicTypes)trade.m_iData);
+			paeNewCivics[GC.getCivicInfo((CivicTypes)trade.m_iData).getCivicOption()] = ((CivicTypes)trade.m_iData);
 
 			GET_PLAYER(eFromPlayer).revolution(&paeNewCivics[0], true);
 

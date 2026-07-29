@@ -2,6 +2,7 @@
 #include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
+#include "Engine/CvGameSpeedScale.h"
 #include "CvInfos.h"              // full info-type defs (Specialist/Unit/Color/Yield/Commerce/Civic/Build/Property) -- was reaching via unity leakage
 #include "Engine/CvArea.h"
 #include "CvBuildingInfo.h"
@@ -3514,7 +3515,7 @@ void CvDLLWidgetData::parseDisabledCitizenHelp(CvWidgetDataStruct &widgetDataStr
 
 				if (GC.getBuildingInfo(eLoopBuilding).getSpecialistCount(widgetDataStruct.m_iData1) > 0
 				&& !pHeadSelectedCity->isActiveBuilding(eLoopBuilding) && !isLimitedWonder(eLoopBuilding)
-				&& (GC.getBuildingInfo(eLoopBuilding).getSpecialBuilding() == NO_SPECIALBUILDING || (pHeadSelectedCity->getBuildingAvailability(eLoopBuilding) == EnablerDomain::STATE_LISTED)))
+				&& (GC.getBuildingInfo(eLoopBuilding).getSpecialBuildingType() == NO_SPECIALBUILDING || (pHeadSelectedCity->getBuildingAvailability(eLoopBuilding) == EnablerDomain::STATE_LISTED)))
 				{
 					setListHelp(szBuffer, gDLL->getText("TXT_KEY_REQUIRES"), GC.getBuildingInfo(eLoopBuilding).getDescription(), gDLL->getText("TXT_KEY_OR").c_str(), bFirst);
 					bFirst = false;
@@ -4862,7 +4863,7 @@ void CvDLLWidgetData::parseTradeItem(CvWidgetDataStruct &widgetDataStruct, CvWSt
 			szBuffer.append(gDLL->getText("TXT_KEY_TRADE_STOP_TRADING", GET_TEAM(GET_PLAYER(eWhoFrom).getTeam()).getName().GetCString(), GET_TEAM((TeamTypes)widgetDataStruct.m_iData2).getName().GetCString()));
 			break;
 		case TRADE_CIVIC:
-			szBuffer.append(gDLL->getText("TXT_KEY_TRADE_ADOPT_CIVIC", GC.getCivicOptionInfo((CivicOptionTypes)GC.getCivicInfo((CivicTypes)widgetDataStruct.m_iData2).getCivicOptionType()).getDescription(), GC.getCivicInfo((CivicTypes)widgetDataStruct.m_iData2).getDescription()));
+			szBuffer.append(gDLL->getText("TXT_KEY_TRADE_ADOPT_CIVIC", GC.getCivicOptionInfo((CivicOptionTypes)GC.getCivicInfo((CivicTypes)widgetDataStruct.m_iData2).getCivicOption()).getDescription(), GC.getCivicInfo((CivicTypes)widgetDataStruct.m_iData2).getDescription()));
 			break;
 		case TRADE_RELIGION:
 			szBuffer.append(gDLL->getText("TXT_KEY_TRADE_CONVERT_RELIGION", GC.getReligionInfo((ReligionTypes)widgetDataStruct.m_iData2).getDescription()));
@@ -5137,7 +5138,7 @@ void CvDLLWidgetData::parseNationalityHelp(CvWidgetDataStruct &widgetDataStruct,
 				const int iNetRevoltRisk100 = pHeadSelectedCity->netRevoltRisk(eCulturalOwner);
 				const int iOriginal100 = pHeadSelectedCity->baseRevoltRisk(eCulturalOwner);
 				const int iSpeedAdjustment = GC.getREVOLT_TEST_PROB() * 100 /
-					GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent();
+					CvGameSpeedScale::speedPercent();
 				const int iGarrison = pHeadSelectedCity->unitRevoltRiskModifier(eCulturalOwner);
 
 				if (iNetRevoltRisk100 > 0)

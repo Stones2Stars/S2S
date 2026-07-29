@@ -4,6 +4,7 @@
 #include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
+#include "Engine/CvGameSpeedScale.h"
 #include "Enabler/CvEnablerKernel.h"   // requiresMetForPlayer -- the system-placement gate
 #include "AI/BetterBTSAI.h"
 #include "CvArea.h"
@@ -54,6 +55,38 @@
 #include "CvInfoKinds.h"                // the family + kind vocabulary the group reads walk
 #include "Spine/CvEventSpine.h"   // the DOMAIN emit endpoints -- every state-change choke point below announces through these
 #include <boost/scoped_ptr.hpp>
+#include "Infos/CvClassificationBlock.h"   // CLSD_SKILL + the memoized id bit test
+
+namespace
+{
+	// The json.md §8 SKILL reads this file makes. The consumer holds the memoized generated-id
+	// (the CvUnitFilters precedent): the info exposes only the parameterized group read
+	// getSkills(), never a named getter per key (patterns.md -- a per-key boolean getter is the
+	// shape the rebuild deletes).
+	bool unitCanFound(const CvUnitInfo& kUnit)
+	{
+		static int s_foundSkillId = -1;
+		return kUnit.getSkills()->hasKey(s_foundSkillId, CLSD_SKILL, "found");
+	}
+
+	bool unitIsWorkerTradable(const CvUnitInfo& kUnit)
+	{
+		static int s_workerTradeSkillId = -1;
+		return kUnit.getSkills()->hasKey(s_workerTradeSkillId, CLSD_SKILL, "workerTrade");
+	}
+
+	bool unitIsMilitaryTradable(const CvUnitInfo& kUnit)
+	{
+		static int s_militaryTradeSkillId = -1;
+		return kUnit.getSkills()->hasKey(s_militaryTradeSkillId, CLSD_SKILL, "militaryTrade");
+	}
+
+	bool unitHasNoNonTypeProdMods(const CvUnitInfo& kUnit)
+	{
+		static int s_noNonTypeProdModsSkillId = -1;
+		return kUnit.getSkills()->hasKey(s_noNonTypeProdModsSkillId, CLSD_SKILL, "noNonTypeProdMods");
+	}
+}
 
 //	Koshling - save flag indicating this player has no data in the save as they have never been alive
 #define	PLAYER_UI_FLAG_OMITTED 2
@@ -1829,7 +1862,7 @@ void CvPlayer::resetCivTypeEffects()
 
 	for (int iI = 0; iI < GC.getNumUnitInfos(); ++iI)
 	{
-		if (GC.getUnitInfo((UnitTypes)iI).isFound())
+		if (unitCanFound(GC.getUnitInfo((UnitTypes)iI)))
 		{
 			setUnitExtraCost((UnitTypes)iI, getNewCityProductionValue());
 		}
@@ -2169,7 +2202,7 @@ void CvPlayer::initFreeUnits()
 
 		if (!isHumanPlayer())
 		{
-			iPoints *= GC.getHandicapInfo(getHandicapType()).getAIAdvancedStartPercent();
+			iPoints *= GC.getHandicapInfo(getHandicapType()).getAdvancedStartAiPercent();
 			iPoints /= 100;
 		}
 
@@ -2258,7 +2291,7 @@ bool CvPlayer::addStartUnitAI(const UnitAITypes eUnitAI, const int iCount)
 		if (EnablerKernel::requiresMetForPlayer(*this, EDGEB_UNITS, iI))
 		{
 			int iValue = AI_unitValue((UnitTypes) iI, eUnitAI, NULL);
-			if (iValue > 0 && kUnit.getDefaultUnitAIType() != eUnitAI)
+			if (iValue > 0 && kUnit.getDefaultUnitAI() != eUnitAI)
 			{
 				iValue /= 4;
 			}
@@ -3005,7 +3038,7 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 			{
 				int iOccupationTime = GC.getDefineINT("BASE_OCCUPATION_TURNS") + intSqrt(pNewCity->getPopulation());
 
-				iOccupationTime *= GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent(); // Extra 100x
+				iOccupationTime *= CvGameSpeedScale::speedPercent(); // Extra 100x
 
 				// Normalize: timer at 0 culture, no timer when culture == occupation threshold.
 				// Culture factor scale cut from 1000 to 200 so conquest occupation is ~1/5 as long (#153).
@@ -3283,7 +3316,7 @@ CvUnit* CvPlayer::initUnit(UnitTypes eUnit, int iX, int iY, UnitAITypes eUnitAI,
 	FAssertMsg(pUnit, "Unit is not assigned a valid value");
 	if (pUnit)
 	{
-		pUnit->init(pUnit->getID(), eUnit, ((eUnitAI == NO_UNITAI) ? GC.getUnitInfo(eUnit).getDefaultUnitAIType() : eUnitAI), getID(), iX, iY, eFacingDirection, iBirthmark);
+		pUnit->init(pUnit->getID(), eUnit, ((eUnitAI == NO_UNITAI) ? GC.getUnitInfo(eUnit).getDefaultUnitAI() : eUnitAI), getID(), iX, iY, eFacingDirection, iBirthmark);
 	}
 	return pUnit;
 }
@@ -3430,7 +3463,7 @@ void CvPlayer::disbandUnit()
 							break;
 						}
 
-						iValue /= pLoopUnit->getUnitInfo().getBaseUpkeep() + 1;
+						iValue /= pLoopUnit->getUnitInfo().getUpkeepCost() + 1;
 
 						if (iValue < iBestValue)
 						{
@@ -4373,7 +4406,7 @@ void CvPlayer::verifyCivics()
 			{
 				for (int iJ = 0; iJ < GC.getNumCivicInfos(); iJ++)
 				{
-					if (GC.getCivicInfo((CivicTypes)iJ).getCivicOptionType() == iI)
+					if (GC.getCivicInfo((CivicTypes)iJ).getCivicOption() == iI)
 					{
 						if (canDoCivics((CivicTypes)iJ))
 						{
@@ -5194,7 +5227,7 @@ void CvPlayer::handleDiploEvent(DiploEventTypes eDiploEvent, PlayerTypes ePlayer
 
 			FAssertMsg(GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteCivic() != NO_CIVIC, "getFavoriteCivic() must be valid");
 
-			paeNewCivics[GC.getCivicInfo((CivicTypes)(GC.getLeaderHeadInfo(getPersonalityType())).getFavoriteCivic()).getCivicOptionType()] = ((CivicTypes)(GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteCivic()));
+			paeNewCivics[GC.getCivicInfo((CivicTypes)(GC.getLeaderHeadInfo(getPersonalityType())).getFavoriteCivic()).getCivicOption()] = ((CivicTypes)(GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteCivic()));
 
 			GET_PLAYER(ePlayer).revolution(paeNewCivics, true);
 
@@ -5466,7 +5499,7 @@ bool CvPlayer::canTradeItem(PlayerTypes eWhoTo, TradeData item, bool bTestDenial
 			&& GC.getGame().isOption(GAMEOPTION_ADVANCED_DIPLOMACY)
 			&& GC.getDefineINT("CAN_TRADE_WORKERS") > 0
 			&& GET_TEAM(getTeam()).isHasEmbassy(GET_PLAYER(eWhoTo).getTeam())
-			&& GC.getUnitInfo(pUnitTraded->getUnitType()).isWorkerTrade()
+			&& unitIsWorkerTradable(GC.getUnitInfo(pUnitTraded->getUnitType()))
 			&& pUnitTraded->canMove()
 			&& !GET_PLAYER(eWhoTo).isUnitMaxedOut(pUnitTraded->getUnitType(), GET_PLAYER(eWhoTo).getUnitMaking(pUnitTraded->getUnitType())))
 			{
@@ -5483,7 +5516,7 @@ bool CvPlayer::canTradeItem(PlayerTypes eWhoTo, TradeData item, bool bTestDenial
 			&& GC.getGame().isOption(GAMEOPTION_ADVANCED_DIPLOMACY)
 			&& GC.getDefineINT("NO_MILITARY_UNIT_TRADING") == 0
 			&& GET_TEAM(getTeam()).isHasEmbassy(GET_PLAYER(eWhoTo).getTeam())
-			&& GC.getUnitInfo(pUnitTraded->getUnitType()).isMilitaryTrade())
+			&& unitIsMilitaryTradable(GC.getUnitInfo(pUnitTraded->getUnitType())))
 			{
 				CvCity* pTradingCity = pUnitTraded->plot()->getPlotCity();
 
@@ -6220,7 +6253,7 @@ bool CvPlayer::canReceiveGoody(const CvPlot* pPlot, GoodyTypes eGoody, const CvU
 		}
 
 		if (GC.getGame().isOption(GAMEOPTION_CHALLENGE_ONE_CITY)
-		&& GC.getUnitInfo((UnitTypes)GC.getGoodyInfo(eGoody).getGoodyUnit()).isFound())
+		&& unitCanFound(GC.getUnitInfo((UnitTypes)GC.getGoodyInfo(eGoody).getGoodyUnit())))
 		{
 			return false;
 		}
@@ -6272,7 +6305,7 @@ void CvPlayer::receiveGoody(CvPlot* pPlot, GoodyTypes eGoody, CvUnit* pUnit)
 	{
 		iGold += GC.getGame().getSorenRandNum(GC.getGoodyInfo(eGoody).getGoldRand1(), "Goody Gold 1") + GC.getGame().getSorenRandNum(GC.getGoodyInfo(eGoody).getGoldRand2(), "Goody Gold 2");
 
-		iGold *= GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent();
+		iGold *= CvGameSpeedScale::speedPercent();
 		iGold /= 100;
 
 		changeGold(iGold);
@@ -6593,7 +6626,7 @@ void CvPlayer::found(int iX, int iY, CvUnit *pUnit)
 
 		if (eDefenderUnit != NO_UNIT)
 		{
-			for (int iI = 0; iI < GC.getHandicapInfo(GC.getGame().getHandicapType()).getBarbarianInitialDefenders(); iI++)
+			for (int iI = 0; iI < GC.getHandicapInfo(GC.getGame().getHandicapType()).getBarbarians(BARBARIANS_DEFENDERS, CASC_SCOPE_WORLD); iI++)
 			{
 				initUnit(eDefenderUnit, iX, iY, UNITAI_CITY_DEFENSE, NO_DIRECTION, GC.getGame().getSorenRandNum(10000, "AI Unit Birthmark"));
 			}
@@ -6807,7 +6840,7 @@ int64_t CvPlayer::getBaseUnitCost(const UnitTypes eUnit) const
 	if (iBaseCost > 0)
 	{
 		// We keep the 100 multiplier from the gamespeed modifier on purpose.
-		iBaseCost *= GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getHammerCostPercent();
+		iBaseCost *= CvGameSpeedScale::hammerCostPercent();
 
 		int iMod = 100;
 
@@ -6835,11 +6868,11 @@ int64_t CvPlayer::getBaseUnitCost(const UnitTypes eUnit) const
 		{
 			if (isWorldUnit(eUnit))
 			{
-				iMod = GC.getHandicapInfo(GC.getGame().getHandicapType()).getAIWorldTrainPercent() - 100;
+				iMod = GC.getHandicapInfo(GC.getGame().getHandicapType()).getCostsModifier(COSTS_TRAIN, CASC_SCOPE_WORLD, true) - 100;
 			}
-			else iMod = GC.getHandicapInfo(GC.getGame().getHandicapType()).getAITrainPercent() - 100;
+			else iMod = GC.getHandicapInfo(GC.getGame().getHandicapType()).getCostsModifier(COSTS_TRAIN, CASC_SCOPE_EMPIRE, true) - 100;
 
-			iMod += GC.getHandicapInfo(GC.getGame().getHandicapType()).getAIPerEraModifier() * getCurrentEra();
+			iMod += GC.getHandicapInfo(GC.getGame().getHandicapType()).getUnitUpkeepEraModifier() * getCurrentEra();
 
 			iBaseCost = getModifiedIntValue64(iBaseCost, iMod);
 
@@ -6945,7 +6978,7 @@ int CvPlayer::getProductionNeeded(BuildingTypes eBuilding) const
 
 	uint64_t iProductionNeeded = (uint64_t) 100*iBaseCost;
 
-	iProductionNeeded *= GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getHammerCostPercent();
+	iProductionNeeded *= CvGameSpeedScale::hammerCostPercent();
 	iProductionNeeded /= 100;
 
 	const EraTypes eEra = getCurrentEra();
@@ -6962,13 +6995,13 @@ int CvPlayer::getProductionNeeded(BuildingTypes eBuilding) const
 		int iMod = 0;
 		if (eEra != NO_ERA)
 		{
-			iMod += eEra * GC.getHandicapInfo(GC.getGame().getHandicapType()).getAIPerEraModifier();
+			iMod += eEra * GC.getHandicapInfo(GC.getGame().getHandicapType()).getUnitUpkeepEraModifier();
 		}
 		if (isWorldWonder(eBuilding))
 		{
-			iMod += GC.getHandicapInfo(GC.getGame().getHandicapType()).getAIWorldConstructPercent() - 100;
+			iMod += GC.getHandicapInfo(GC.getGame().getHandicapType()).getCostsModifier(COSTS_CONSTRUCT, CASC_SCOPE_WORLD, true) - 100;
 		}
-		else iMod += GC.getHandicapInfo(GC.getGame().getHandicapType()).getAIConstructPercent() - 100;
+		else iMod += GC.getHandicapInfo(GC.getGame().getHandicapType()).getCostsModifier(COSTS_CONSTRUCT, CASC_SCOPE_EMPIRE, true) - 100;
 
 		if (iMod != 0)
 		{
@@ -7003,7 +7036,7 @@ int CvPlayer::getProductionNeeded(ProjectTypes eProject) const
 	uint64_t iProductionNeeded = (uint64_t)iInitialProduction;
 
 	// Scale up by 100 at this point
-	iProductionNeeded *= GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getHammerCostPercent();
+	iProductionNeeded *= CvGameSpeedScale::hammerCostPercent();
 
 	const EraTypes eEra = getCurrentEra();
 	// Fall back to the current era's create percent when the project has no tech prereq;
@@ -7025,15 +7058,15 @@ int CvPlayer::getProductionNeeded(ProjectTypes eProject) const
 		int iMod = 0;
 		if (eEra != NO_ERA)
 		{
-			iMod += eEra * GC.getHandicapInfo(GC.getGame().getHandicapType()).getAIPerEraModifier();
+			iMod += eEra * GC.getHandicapInfo(GC.getGame().getHandicapType()).getUnitUpkeepEraModifier();
 		}
 		if (isWorldProject(eProject))
 		{
-			iMod += GC.getHandicapInfo(GC.getGame().getHandicapType()).getAIWorldCreatePercent() - 100;
+			iMod += GC.getHandicapInfo(GC.getGame().getHandicapType()).getCostsModifier(COSTS_CREATE, CASC_SCOPE_WORLD, true) - 100;
 		}
 		else
 		{
-			iMod += GC.getHandicapInfo(GC.getGame().getHandicapType()).getAICreatePercent() - 100;
+			iMod += GC.getHandicapInfo(GC.getGame().getHandicapType()).getCostsModifier(COSTS_CREATE, CASC_SCOPE_EMPIRE, true) - 100;
 		}
 		if (iMod != 0)
 		{
@@ -7058,7 +7091,7 @@ int CvPlayer::getProductionModifier(UnitTypes eUnit) const
 	PROFILE_EXTRA_FUNC();
 	int iMultiplier = 0;
 
-	if (!GC.getUnitInfo(eUnit).isNoNonTypeProdMods() && GC.getUnitInfo(eUnit).isMilitaryProduction())
+	if (!unitHasNoNonTypeProdMods(GC.getUnitInfo(eUnit)) && GC.getUnitInfo(eUnit).isMilitaryProduction())
 	{
 		iMultiplier += getMilitaryProductionModifier();
 	}
@@ -7110,7 +7143,7 @@ int CvPlayer::getProductionModifier(BuildingTypes eBuilding) const
 					iMultiplier += kTrait.getBuildingProductionModifier(j).iModifier;
 				}
 			}
-			const SpecialBuildingTypes eSpecialBuilding = GC.getBuildingInfo(eBuilding).getSpecialBuilding();
+			const SpecialBuildingTypes eSpecialBuilding = GC.getBuildingInfo(eBuilding).getSpecialBuildingType();
 
 			if (eSpecialBuilding != NO_SPECIALBUILDING)
 			{
@@ -7475,7 +7508,7 @@ int CvPlayer::getBuildCost(const CvPlot* pPlot, BuildTypes eBuild) const
 				}
 			}
 		}
-		iCost *= GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getHammerCostPercent();
+		iCost *= CvGameSpeedScale::hammerCostPercent();
 		iCost /= 100;
 	}
 	return iCost;
@@ -7785,7 +7818,7 @@ int CvPlayer::calculateUnitSupply(int& iPaidUnits, int& iBaseSupplyCost) const
 				(
 					handicap->getAIUnitSupplyPercent() - 100
 					+
-					handicap->getAIPerEraModifier() * getCurrentEra()
+					handicap->getUnitUpkeepEraModifier() * getCurrentEra()
 				);
 		}
 	}
@@ -7844,7 +7877,7 @@ int CvPlayer::getInflationMod10000() const
 			iMod = (
 				handicap->getAIInflationPercent() - 100
 				+
-				handicap->getAIPerEraModifier() * getCurrentEra()
+				handicap->getUnitUpkeepEraModifier() * getCurrentEra()
 			);
 			if (iMod != 0)
 			{
@@ -8272,7 +8305,7 @@ bool CvPlayer::canDoCivics(CivicTypes eCivic) const
 		return true;
 	}
 
-	if (GC.getGame().isForceCivicOption((CivicOptionTypes)GC.getCivicInfo(eCivic).getCivicOptionType()))
+	if (GC.getGame().isForceCivicOption((CivicOptionTypes)GC.getCivicInfo(eCivic).getCivicOption()))
 	{
 		return GC.getGame().isForceCivic(eCivic);
 	}
@@ -8292,7 +8325,7 @@ bool CvPlayer::canDoCivics(CivicTypes eCivic) const
 		)
 		||
 		(
-			!isHasCivicOption((CivicOptionTypes)GC.getCivicInfo(eCivic).getCivicOptionType())
+			!isHasCivicOption((CivicOptionTypes)GC.getCivicInfo(eCivic).getCivicOption())
 			&& !GET_TEAM(getTeam()).isHasTech(GC.getCivicInfo(eCivic).getTechPrereq())
 		)
 	))
@@ -8322,7 +8355,7 @@ bool CvPlayer::canRevolution(CivicTypes* paeNewCivics) const
 		for (int iI = 0; iI < GC.getNumCivicInfos(); iI++)
 		{
 			if (canDoCivics((CivicTypes)iI)
-			&& getCivics((CivicOptionTypes)GC.getCivicInfo((CivicTypes)iI).getCivicOptionType()) != iI)
+			&& getCivics((CivicOptionTypes)GC.getCivicInfo((CivicTypes)iI).getCivicOption()) != iI)
 			{
 				return true;
 			}
@@ -8400,7 +8433,7 @@ void CvPlayer::revolution(CivicTypes* paeNewCivics, bool bForce)
 
 int CvPlayer::getCivicPercentAnger(CivicTypes eCivic) const
 {
-	if (getCivics((CivicOptionTypes)GC.getCivicInfo(eCivic).getCivicOptionType()) == eCivic)
+	if (getCivics((CivicOptionTypes)GC.getCivicInfo(eCivic).getCivicOption()) == eCivic)
 	{
 		// the divisor is 1000 so 1 percent would be represented by 10.
 		return GC.getCivicInfo(eCivic).getCivicPercentAnger() * 10;
@@ -8791,7 +8824,7 @@ int CvPlayer::getCivicAnarchyLength(CivicTypes* paeNewCivics) const
 		iTotalAnarchyLength -= (iTotalAnarchyLength * (iCount * GC.getDefineINT("CIVIC_ANARCHY_QTY_DISCOUNT"))) / 100;
 	} // CIVIC_ANARCHY_QTY_DISCOUNT: A global define that should be in the range 0-100.
 
-	iTotalAnarchyLength *= GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent();
+	iTotalAnarchyLength *= CvGameSpeedScale::speedPercent();
 	iTotalAnarchyLength /= 100;
 
 	iTotalAnarchyLength += getNumCities() * GC.getWorldInfo(GC.getMap().getWorldSize()).getNumCitiesAnarchyPercent();
@@ -8829,7 +8862,7 @@ int CvPlayer::getReligionAnarchyLength() const
 	}
 	int iAnarchyLength = GC.getDefineINT("BASE_RELIGION_ANARCHY_LENGTH");
 
-	iAnarchyLength *= GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent();
+	iAnarchyLength *= CvGameSpeedScale::speedPercent();
 	iAnarchyLength /= 100;
 
 	iAnarchyLength += (getNumCities() * GC.getWorldInfo(GC.getMap().getWorldSize()).getNumCitiesAnarchyPercent() / 100);
@@ -8977,7 +9010,7 @@ int CvPlayer::greatPeopleThresholdMilitary() const
 
 	iThreshold = getModifiedIntValue64(iThreshold, getGreatGeneralsThresholdModifier());
 	// Weaker than standard scaling.
-	iThreshold = iThreshold * (GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent()+50) / 150;
+	iThreshold = iThreshold * (CvGameSpeedScale::speedPercent()+50) / 150;
 
 	iThreshold /= 100;
 
@@ -8994,7 +9027,7 @@ int CvPlayer::greatPeopleThresholdNonMilitary() const
 
 	iThreshold = getModifiedIntValue64(iThreshold, getGreatPeopleThresholdModifier());
 
-	iThreshold *= GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent();
+	iThreshold *= CvGameSpeedScale::speedPercent();
 	iThreshold /= 10000;
 
 	if (iThreshold >= MAX_INT)
@@ -9680,7 +9713,7 @@ int CvPlayer::getWorkRate(BuildTypes eBuild) const
 		const int iMod = (
 			GC.getHandicapInfo(GC.getGame().getHandicapType()).getAIWorkRateModifier()
 			-
-			GC.getHandicapInfo(GC.getGame().getHandicapType()).getAIPerEraModifier() * getCurrentEra()
+			GC.getHandicapInfo(GC.getGame().getHandicapType()).getUnitUpkeepEraModifier() * getCurrentEra()
 		);
 		if (iMod != 0)
 		{
@@ -10174,7 +10207,7 @@ int64_t CvPlayer::calcFinalUnitUpkeep(const bool bReal) const
 			iCalc *= GC.getHandicapInfo(GC.getGame().getHandicapType()).getAIUnitUpkeepPercent();
 			iCalc /= 100;
 
-			iCalc *= std::max(0, 100 + GC.getHandicapInfo(GC.getGame().getHandicapType()).getAIPerEraModifier() * getCurrentEra());
+			iCalc *= std::max(0, 100 + GC.getHandicapInfo(GC.getGame().getHandicapType()).getUnitUpkeepEraModifier() * getCurrentEra());
 			iCalc /= 100;
 		}
 	}
@@ -10775,7 +10808,7 @@ int CvPlayer::getModifiedWarWearinessPercentAnger(int iWarWearinessPercentAnger)
 		(
 			GC.getHandicapInfo(GC.getGame().getHandicapType()).getAIWarWearinessPercent() - 100
 			+
-			GC.getHandicapInfo(GC.getGame().getHandicapType()).getAIPerEraModifier() * getCurrentEra()
+			GC.getHandicapInfo(GC.getGame().getHandicapType()).getUnitUpkeepEraModifier() * getCurrentEra()
 		);
 		if (iMod != 0)
 		{
@@ -14089,7 +14122,7 @@ int CvPlayer::getSingleCivicUpkeep(CivicTypes eCivic, bool bIgnoreAnarchy) const
 	{
 		return 0;
 	}
-	if (isNoCivicUpkeep((CivicOptionTypes)GC.getCivicInfo(eCivic).getCivicOptionType()))
+	if (isNoCivicUpkeep((CivicOptionTypes)GC.getCivicInfo(eCivic).getCivicOption()))
 	{
 		return 0;
 	}
@@ -14117,7 +14150,7 @@ int CvPlayer::getSingleCivicUpkeep(CivicTypes eCivic, bool bIgnoreAnarchy) const
 		const int iMod = (
 			GC.getHandicapInfo(GC.getGame().getHandicapType()).getAICivicUpkeepPercent() - 100
 			+
-			GC.getHandicapInfo(GC.getGame().getHandicapType()).getAIPerEraModifier() * getCurrentEra()
+			GC.getHandicapInfo(GC.getGame().getHandicapType()).getUnitUpkeepEraModifier() * getCurrentEra()
 		);
 		iUpkeep = getModifiedIntValue(iUpkeep, iMod);
 	}
@@ -14148,7 +14181,7 @@ int64_t CvPlayer::getTreasuryUpkeep() const
 		(iTreasury + 250 * intSqrt64(iTreasury))
 		/
 		// Scale by gamespeed as gold is worth less on slower speeds, expected treasury size is different.
-		(25 * GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent())
+		(25 * CvGameSpeedScale::speedPercent())
 	);
 }
 
@@ -14246,13 +14279,13 @@ void CvPlayer::setCivics(CivicOptionTypes eIndex, CivicTypes eNewValue)
 								if (GET_TEAM(getTeam()).isHasMet(GET_PLAYER((PlayerTypes)iI).getTeam()))
 								{
 
-									szBuffer = gDLL->getText("TXT_KEY_MISC_PLAYER_ADOPTED_CIVIC", getNameKey(), GC.getCivicOptionInfo((CivicOptionTypes)GC.getCivicInfo(getCivics(eIndex)).getCivicOptionType()).getTextKeyWide(), GC.getCivicInfo(getCivics(eIndex)).getTextKeyWide());
+									szBuffer = gDLL->getText("TXT_KEY_MISC_PLAYER_ADOPTED_CIVIC", getNameKey(), GC.getCivicOptionInfo((CivicOptionTypes)GC.getCivicInfo(getCivics(eIndex)).getCivicOption()).getTextKeyWide(), GC.getCivicInfo(getCivics(eIndex)).getTextKeyWide());
 									AddDLLMessage(((PlayerTypes)iI), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_CIVIC_ADOPT", MESSAGE_TYPE_MAJOR_EVENT);
 								}
 							}
 						}
 
-						szBuffer = gDLL->getText("TXT_KEY_MISC_PLAYER_ADOPTED_CIVIC", getNameKey(), GC.getCivicOptionInfo((CivicOptionTypes)GC.getCivicInfo(getCivics(eIndex)).getCivicOptionType()).getTextKeyWide(), GC.getCivicInfo(getCivics(eIndex)).getTextKeyWide());
+						szBuffer = gDLL->getText("TXT_KEY_MISC_PLAYER_ADOPTED_CIVIC", getNameKey(), GC.getCivicOptionInfo((CivicOptionTypes)GC.getCivicInfo(getCivics(eIndex)).getCivicOption()).getTextKeyWide(), GC.getCivicInfo(getCivics(eIndex)).getTextKeyWide());
 						GC.getGame().addReplayMessage(REPLAY_MESSAGE_MAJOR_EVENT, getID(), szBuffer);
 
 						CvEventReporter::getInstance().civicChanged(getID(), eOldCivic, getCivics(eIndex));
@@ -15761,7 +15794,7 @@ int64_t CvPlayer::getEspionageMissionBaseCost(EspionageMissionTypes eMission, Pl
 
 		if (NO_CIVIC != eCivic && canForceCivics(eTargetPlayer, eCivic))
 		{
-			iMissionCost = iBaseMissionCost + kMission.getSwitchCivicCostFactor() * GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent() / 10000;
+			iMissionCost = iBaseMissionCost + kMission.getSwitchCivicCostFactor() * CvGameSpeedScale::speedPercent() / 10000;
 		}
 	}
 	else if (kMission.getSwitchReligionCostFactor() > 0)
@@ -15783,7 +15816,7 @@ int64_t CvPlayer::getEspionageMissionBaseCost(EspionageMissionTypes eMission, Pl
 
 		if (NO_RELIGION != eReligion && canForceReligion(eTargetPlayer, eReligion))
 		{
-			iMissionCost = iBaseMissionCost + kMission.getSwitchReligionCostFactor() * GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent() / 10000;
+			iMissionCost = iBaseMissionCost + kMission.getSwitchReligionCostFactor() * CvGameSpeedScale::speedPercent() / 10000;
 		}
 	}
 	else if (kMission.getDestroyUnitCostFactor() > 0)
@@ -15881,7 +15914,7 @@ int64_t CvPlayer::getEspionageMissionBaseCost(EspionageMissionTypes eMission, Pl
 		// Buy City
 		if (pCity)
 		{
-			iMissionCost = iBaseMissionCost + kMission.getBuyCityCostFactor() * GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent() / 10000;
+			iMissionCost = iBaseMissionCost + kMission.getBuyCityCostFactor() * CvGameSpeedScale::speedPercent() / 10000;
 		}
 	}
 	else if (kMission.getCityInsertCultureCostFactor() > 0)
@@ -15900,7 +15933,7 @@ int64_t CvPlayer::getEspionageMissionBaseCost(EspionageMissionTypes eMission, Pl
 		if (pPlot && !pPlot->isCity()
 		&& (pPlot->getImprovementType() != NO_IMPROVEMENT || pPlot->getRouteType() != NO_ROUTE))
 		{
-			iMissionCost = iBaseMissionCost * GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getHammerCostPercent() / 100;
+			iMissionCost = iBaseMissionCost * CvGameSpeedScale::hammerCostPercent() / 100;
 		}
 	}
 	else if (kMission.getCityPoisonWaterCounter() > 0)
@@ -15938,7 +15971,7 @@ int64_t CvPlayer::getEspionageMissionBaseCost(EspionageMissionTypes eMission, Pl
 	{
 		if (GET_TEAM(getTeam()).getCounterespionageTurnsLeftAgainstTeam(GET_PLAYER(eTargetPlayer).getTeam()) <= 0)
 		{
-			iMissionCost = iBaseMissionCost * GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent() / 100;
+			iMissionCost = iBaseMissionCost * CvGameSpeedScale::speedPercent() / 100;
 		}
 	}
 	else if (kMission.getPlayerAnarchyCounter() > 0)
@@ -15946,7 +15979,7 @@ int64_t CvPlayer::getEspionageMissionBaseCost(EspionageMissionTypes eMission, Pl
 		// Player anarchy timer: can't add more turns of anarchy to player already in the midst of it
 		if (!GET_PLAYER(eTargetPlayer).isAnarchy())
 		{
-			iMissionCost = iBaseMissionCost * GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent() / 100;
+			iMissionCost = iBaseMissionCost * CvGameSpeedScale::speedPercent() / 100;
 		}
 	}
 	else if (kMission.getSabatogeResearchCostFactor() > 0)
@@ -15989,7 +16022,7 @@ int64_t CvPlayer::getEspionageMissionBaseCost(EspionageMissionTypes eMission, Pl
 				{
 					iMissionCost *= 2;
 				}
-				iMissionCost *= GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent();
+				iMissionCost *= CvGameSpeedScale::speedPercent();
 				iMissionCost /= 100;
 			}
 		}
@@ -16020,7 +16053,7 @@ int64_t CvPlayer::getEspionageMissionBaseCost(EspionageMissionTypes eMission, Pl
 				{
 					iMissionCost *= 2;
 				}
-				iMissionCost *= GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent();
+				iMissionCost *= CvGameSpeedScale::speedPercent();
 				iMissionCost /= 100;
 			}
 		}
@@ -16031,7 +16064,7 @@ int64_t CvPlayer::getEspionageMissionBaseCost(EspionageMissionTypes eMission, Pl
 	}
 	else
 	{
-		iMissionCost = iBaseMissionCost * GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent() / 100;
+		iMissionCost = iBaseMissionCost * CvGameSpeedScale::speedPercent() / 100;
 	}
 
 	if (iMissionCost < 0)
@@ -16279,7 +16312,7 @@ bool CvPlayer::doEspionageMission(EspionageMissionTypes eMission, PlayerTypes eT
 				}
 				iPlotCultureAmount = std::max(1, iPlotCultureAmount);
 
-				const int iNumTurnsApplied = GC.getDefineINT("GREAT_WORKS_CULTURE_TURNS") * GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent() / 100;
+				const int iNumTurnsApplied = GC.getDefineINT("GREAT_WORKS_CULTURE_TURNS") * CvGameSpeedScale::speedPercent() / 100;
 
 				if (iNumTurnsApplied > 0)
 				{
@@ -16297,7 +16330,7 @@ bool CvPlayer::doEspionageMission(EspionageMissionTypes eMission, PlayerTypes eT
 			if (kMission.getCityPoisonWaterCounter() > 0)
 			{
 				int iTurns = kMission.getCityPoisonWaterCounter() * (100 + (pSpyUnit ? pSpyUnit->getExtraFriendlyHeal() : 0)) / 100;
-					iTurns *= GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent();
+					iTurns *= CvGameSpeedScale::speedPercent();
 					iTurns /= 100;
 				pCity->changeEspionageHealthCounter(iTurns);
 				bShowExplosion = true;
@@ -16308,7 +16341,7 @@ bool CvPlayer::doEspionageMission(EspionageMissionTypes eMission, PlayerTypes eT
 			if (kMission.getCityUnhappinessCounter() > 0)
 			{
 				int iTurns = kMission.getCityUnhappinessCounter() * (100 + (pSpyUnit ? pSpyUnit->getExtraEnemyHeal() : 0)) / 100;
-					iTurns *= GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent();
+					iTurns *= CvGameSpeedScale::speedPercent();
 					iTurns /= 100;
 				pCity->changeEspionageHappinessCounter(iTurns);
 				bShowExplosion = true;
@@ -16320,7 +16353,7 @@ bool CvPlayer::doEspionageMission(EspionageMissionTypes eMission, PlayerTypes eT
 			if (kMission.getCityRevoltCounter() > 0)
 			{
 				int iTurns = kMission.getCityRevoltCounter() * (100 + (pSpyUnit ? pSpyUnit->getExtraNeutralHeal() :0)) / 100;
-					iTurns *= GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent();
+					iTurns *= CvGameSpeedScale::speedPercent();
 					iTurns /= 100;
 				pCity->changeCultureUpdateTimer(iTurns);
 				pCity->changeOccupationTimer(iTurns);
@@ -16344,7 +16377,7 @@ bool CvPlayer::doEspionageMission(EspionageMissionTypes eMission, PlayerTypes eT
 			// Disable Power
 			if (kMission.isDisablePower())
 			{
-				pCity->changeDisabledPowerTimer(6*GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent()/100);
+				pCity->changeDisabledPowerTimer(6*CvGameSpeedScale::speedPercent()/100);
 				bSomethingHappened = true;
 				strcpy(szSound, "AS2D_BUILD_PLANTNUCLEAR");
 				szBuffer = bCaught ?
@@ -16356,7 +16389,7 @@ bool CvPlayer::doEspionageMission(EspionageMissionTypes eMission, PlayerTypes eT
 			if (kMission.getWarWearinessCounter() > 0)
 			{
 				int iAmount = kMission.getWarWearinessCounter();
-				iAmount *= GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent();
+				iAmount *= CvGameSpeedScale::speedPercent();
 				iAmount /= 100;
 				pCity->changeWarWearinessTimer(iAmount);
 				bSomethingHappened = true;
@@ -16530,7 +16563,7 @@ bool CvPlayer::doEspionageMission(EspionageMissionTypes eMission, PlayerTypes eT
 	// Switch Civic
 	if (NO_PLAYER != eTargetPlayer && kMission.getSwitchCivicCostFactor() > 0)
 	{
-		GET_PLAYER(eTargetPlayer).setCivics((CivicOptionTypes) GC.getCivicInfo((CivicTypes)iExtraData).getCivicOptionType(), (CivicTypes)iExtraData);
+		GET_PLAYER(eTargetPlayer).setCivics((CivicOptionTypes) GC.getCivicInfo((CivicTypes)iExtraData).getCivicOption(), (CivicTypes)iExtraData);
 		GET_PLAYER(eTargetPlayer).setRevolutionTimer(std::max(1, ((100 + GET_PLAYER(eTargetPlayer).getAnarchyModifier()) * GC.getDefineINT("MIN_REVOLUTION_TURNS")) / 100));
 		bSomethingHappened = true;
 		szBuffer = gDLL->getText("TXT_KEY_ESPIONAGE_TARGET_SWITCH_CIVIC", GC.getCivicInfo((CivicTypes)iExtraData).getDescription()).GetCString();
@@ -16548,7 +16581,7 @@ bool CvPlayer::doEspionageMission(EspionageMissionTypes eMission, PlayerTypes eT
 	// Player Anarchy
 	if (NO_PLAYER != eTargetPlayer && kMission.getPlayerAnarchyCounter() > 0)
 	{
-		GET_PLAYER(eTargetPlayer).changeAnarchyTurns(kMission.getPlayerAnarchyCounter() * GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent() / 100);
+		GET_PLAYER(eTargetPlayer).changeAnarchyTurns(kMission.getPlayerAnarchyCounter() * CvGameSpeedScale::speedPercent() / 100);
 		bSomethingHappened = true;
 		strcpy(szSound, "AS2D_REVOLTSTART");
 		szBuffer = bCaught ?
@@ -16563,7 +16596,7 @@ bool CvPlayer::doEspionageMission(EspionageMissionTypes eMission, PlayerTypes eT
 
 		if (NO_TEAM != eTargetTeam)
 		{
-			const int iTurns = kMission.getCounterespionageNumTurns() * GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent() / 100;
+			const int iTurns = kMission.getCounterespionageNumTurns() * CvGameSpeedScale::speedPercent() / 100;
 			GET_TEAM(getTeam()).changeCounterespionageTurnsLeftAgainstTeam(eTargetTeam, iTurns);
 			GET_TEAM(getTeam()).changeCounterespionageModAgainstTeam(eTargetTeam, kMission.getCounterespionageMod() + (pSpyUnit ? 5 * pSpyUnit->currInterceptionProbability() : 0));
 			bSomethingHappened = true;
@@ -17508,7 +17541,7 @@ int CvPlayer::getAdvancedStartRouteCost(RouteTypes eRoute, bool bAdd, const CvPl
 		return -1;
 	}
 
-	iCost *= GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getHammerCostPercent();
+	iCost *= CvGameSpeedScale::hammerCostPercent();
 	iCost /= 100;
 
 	// No invalid plots!
@@ -17579,7 +17612,7 @@ int CvPlayer::getAdvancedStartImprovementCost(ImprovementTypes eImprovement, boo
 	{
 		return -1;
 	}
-	iCost *= GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getHammerCostPercent();
+	iCost *= CvGameSpeedScale::hammerCostPercent();
 	iCost /= 100;
 
 	// Can this Improvement be on our plot?
@@ -18587,7 +18620,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 			for(int i = 0; i < GC.getNumCivicOptionInfos(); i++)
 			{
 				// AIAndy: Check for no civic set or a civic of the wrong category set
-				if ( (m_paeCivics[i] == NO_CIVIC) || (GC.getCivicInfo(m_paeCivics[i]).getCivicOptionType() != (CivicOptionTypes)i ) )
+				if ( (m_paeCivics[i] == NO_CIVIC) || (GC.getCivicInfo(m_paeCivics[i]).getCivicOption() != (CivicOptionTypes)i ) )
 				{
 					m_paeCivics[i] = (CivicTypes)GC.getCivilizationInfo(getCivilizationType()).getCivilizationInitialCivics(i);
 				}
@@ -21581,7 +21614,7 @@ void CvPlayer::applyEvent(EventTypes eEvent, int iEventTriggeredId, bool bUpdate
 			{
 				if (kEvent.isGameSpeedScale())
 				{
-					iValue = iValue * GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent() / 100;
+					iValue = iValue * CvGameSpeedScale::speedPercent() / 100;
 				}
 				GET_TEAM(getTeam()).changeEspionagePointsAgainstTeam(GET_PLAYER(pTriggeredData->m_eOtherPlayer).getTeam(), iValue);
 			}
@@ -21974,7 +22007,7 @@ void CvPlayer::applyEvent(EventTypes eEvent, int iEventTriggeredId, bool bUpdate
 					+
 					kEvent.getAdditionalEventTime((EventTypes)iEvent)
 					*
-					GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent() / 100
+					CvGameSpeedScale::speedPercent() / 100
 				);
 				const EventTriggeredData* pExistingTriggered = getEventCountdown((EventTypes)iEvent);
 
@@ -22170,7 +22203,7 @@ void CvPlayer::applyEvent(EventTypes eEvent, int iEventTriggeredId, bool bUpdate
 
 				if (kEvent.isGameSpeedScale())
 				{
-					iCulture = iCulture * GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent() / 100;
+					iCulture = iCulture * CvGameSpeedScale::speedPercent() / 100;
 				}
 
 				foreach_(CvCity* cityX, cities())
@@ -22358,7 +22391,7 @@ int CvPlayer::getEventCost(EventTypes eEvent, PlayerTypes eOtherPlayer, bool bRa
 
 	if (kEvent.isGameSpeedScale())
 	{
-		iGold = iGold * GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent() / 100;
+		iGold = iGold * CvGameSpeedScale::speedPercent() / 100;
 	}
 
 	const TechTypes eBestTech = getBestEventTech(eEvent, eOtherPlayer);
@@ -24326,7 +24359,7 @@ int CvPlayer::getNewCityProductionValue() const
 	iValue *= 100 + GC.getDefineINT("NEW_CITY_BUILDING_VALUE_MODIFIER");
 	iValue /= 100;
 
-	iValue += GC.getDefineINT("ADVANCED_START_CITY_COST") * GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent() / 100;
+	iValue += GC.getDefineINT("ADVANCED_START_CITY_COST") * CvGameSpeedScale::speedPercent() / 100;
 
 	const int iPopulation = GC.getINITIAL_CITY_POPULATION() + GC.getEraInfo(GC.getGame().getStartEra()).getFreePopulation();
 	for (int i = 1; i <= iPopulation; ++i)
@@ -24345,7 +24378,7 @@ int CvPlayer::getGrowthThreshold(int iPopulation) const
 	{
 		iThreshold += (iPopulation - 1) * GC.getDefineINT("CITY_GROWTH_MULTIPLIER");
 	}
-	iThreshold *= GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent();
+	iThreshold *= CvGameSpeedScale::speedPercent();
 	iThreshold /= 100;
 
 	iThreshold *= GC.getEraInfo(getCurrentEra()).getGrowthPercent();
@@ -24357,7 +24390,7 @@ int CvPlayer::getGrowthThreshold(int iPopulation) const
 		(
 			GC.getHandicapInfo(GC.getGame().getHandicapType()).getAIGrowthPercent() - 100
 			+
-			GC.getHandicapInfo(GC.getGame().getHandicapType()).getAIPerEraModifier() * getCurrentEra()
+			GC.getHandicapInfo(GC.getGame().getHandicapType()).getUnitUpkeepEraModifier() * getCurrentEra()
 		);
 		if (iMod != 0)
 		{
@@ -27743,7 +27776,7 @@ void CvPlayer::doAdvancedEconomy()
 			getModifiedIntValue(
 				(
 						GC.getHURRY_INFLATION_DECAY_RATE()
-					*	GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent()
+					*	CvGameSpeedScale::speedPercent()
 				),
 				getHurryInflationModifier()
 			)
@@ -27901,6 +27934,7 @@ void CvPlayer::changeForeignUnhappyPercent(int iChange) {
 
 // BUG - Reminder Mod - start
 #include "UI/CvMessageControl.h"
+
 void CvPlayer::addReminder(int iGameTurn, CvWString szMessage) const
 {
 	CvMessageControl::getInstance().sendAddReminder(getID(), iGameTurn, szMessage);
@@ -28965,7 +28999,7 @@ uint64_t CvPlayer::getLeaderLevelupNextCultureTotal() const
 		iY--;
 		iY = std::max(1, iY);
 	}
-	return iPromoThreshold * GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent() / 25;
+	return iPromoThreshold * CvGameSpeedScale::speedPercent() / 25;
 }
 
 uint64_t CvPlayer::getLeaderLevelupCultureToEarn() const

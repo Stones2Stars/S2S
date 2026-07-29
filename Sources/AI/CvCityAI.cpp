@@ -1,6 +1,7 @@
 // cityAI.cpp
 
 #include "CvGameCoreDLL.h"
+#include "Engine/CvGameSpeedScale.h"
 #include "BetterBTSAI.h"
 
 #include "Tools/FProfiler.h"
@@ -37,6 +38,21 @@
 #include "CvWorkerAI.h"
 #include "Spine/CvEventSpine.h" // #430 logging consolidation: route [CIT] through the event spine (shadow)
 #include "CvCityLogTags.h" // [CIT] tag enums (shared with CvCity.cpp -- defined once, see header)
+#include "Infos/CvClassificationBlock.h"   // CLSD_SKILL + the memoized id bit test
+
+namespace
+{
+	// The json.md §8 SKILL reads this file makes. The consumer holds the memoized generated-id
+	// (the CvUnitFilters precedent): the info exposes only the parameterized group read
+	// getSkills(), never a named getter per key (patterns.md -- a per-key boolean getter is the
+	// shape the rebuild deletes).
+	bool unitIsSuicide(const CvUnitInfo& kUnit)
+	{
+		static int s_suicideSkillId = -1;
+		return kUnit.getSkills()->hasKey(s_suicideSkillId, CLSD_SKILL, "suicide");
+	}
+}
+
 
 // The compiler intrinsic behind the [CIT/assign/dirty] caller attribution (VC7.1 supports it; PDB-resolvable
 // as an RVA against the DLL module base).
@@ -1099,7 +1115,7 @@ void CvCityAI::AI_chooseProduction()
 	const bool bWasFoodProduction = isFoodProduction();
 	const bool bFinancialTrouble = player.AI_isFinancialTrouble();
 	const bool bCriticalGold = player.AI_hasCriticalGold();
-	const int iHammerCostPercent = GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getHammerCostPercent();
+	const int iHammerCostPercent = CvGameSpeedScale::hammerCostPercent();
 
 	// [CIT/begin] -- decision context for this city's production choice.
 	logCityAI(1, "[CIT/begin] city=%S owner=%d pop=%d danger=%d dangerVal=%d finTrouble=%d critGold=%d foodProd=%d",
@@ -1911,7 +1927,7 @@ void CvCityAI::AI_chooseProduction()
 
 	//#4 Really easy production trumps everything (Less than 5 turns (instead of only 2)
 	int iMaxTurnsUsefull = 2;
-	iMaxTurnsUsefull *= GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getHammerCostPercent();
+	iMaxTurnsUsefull *= CvGameSpeedScale::hammerCostPercent();
 	iMaxTurnsUsefull /= 100;
 
 	if (AI_chooseBuilding(BUILDINGFOCUS_PRODUCTION, iMaxTurnsUsefull))
@@ -4046,7 +4062,7 @@ bool CvCityAI::AI_chooseExperienceBuilding(const UnitAITypes eUnitAI, const int 
 			(
 				area()->getRecentCombatDeathRate(getOwner(), eUnitAI)
 				* GC.getUnitInfo(eBestUnit).getProductionCost()
-				* GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getHammerCostPercent()
+				* CvGameSpeedScale::hammerCostPercent()
 				/ 10000
 				);
 
@@ -4397,7 +4413,7 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, int& iBestValue, bool bAs
 
 		if (unit.getNotUnitAIType(eUnitAI)
 		|| tempCriteria.m_eIgnoreAdvisor != NO_ADVISOR
-		&& tempCriteria.m_eIgnoreAdvisor == unit.getAdvisorType())
+		&& tempCriteria.m_eIgnoreAdvisor == unit.getAdvisor())
 		{
 			continue;
 		}
@@ -4439,7 +4455,7 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, int& iBestValue, bool bAs
 						continue;
 					}
 					bool bFound = false;
-					foreach_(const UnitCombatTypes eSubCombat, unit.getSubCombatTypes())
+					foreach_(const UnitCombatTypes eSubCombat, unit.getCombatClasses())
 					{
 						if (GC.getPromotionInfo((PromotionTypes)iJ).getUnitCombat(eSubCombat))
 						{
@@ -4481,7 +4497,7 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, int& iBestValue, bool bAs
 				}
 			}
 
-			if (unit.isSuicide())
+			if (unitIsSuicide(unit))
 			{
 				iValue /= 3; // much of this is compensated
 			}
@@ -4627,7 +4643,7 @@ bool CvCityAI::AI_scoreBuildingsFromListThreshold(std::vector<ScoredBuilding>& s
 				)
 			)
 		// adviser is not one we are ignoring
-		&&	(eIgnoreAdvisor == NO_ADVISOR || buildingInfo.getAdvisorType() != eIgnoreAdvisor)
+		&&	(eIgnoreAdvisor == NO_ADVISOR || buildingInfo.getAdvisor() != eIgnoreAdvisor)
 		// We can actually build the building -- and this ONE gate answers prerequisites too: a candidate whose
 		// prereqs are unmet is GREYED, never LISTED (enabler.md §3/§6), so automated production needs no
 		// separate prereq test beside it.
@@ -4691,9 +4707,9 @@ bool CvCityAI::AI_scoreBuildingsFromListThreshold(std::vector<ScoredBuilding>& s
 					GOMOverride query = { pObject, GOM_BUILDING, eBuilding, true };
 					queries.push_back(query);
 					query.GOM = GOM_BONUS;
-					foreach_(const BonusModifier& pair, buildingInfo.getFreeBonuses())
+					foreach_(const int iFreeBonus, buildingInfo.getProvides()->bonuses)
 					{
-						query.id = pair.first;
+						query.id = iFreeBonus;
 						queries.push_back(query);
 					}
 
@@ -5528,9 +5544,9 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 					GOMOverride query = { pObject, GOM_BUILDING, eBuilding, true };
 					queries.push_back(query);
 					query.GOM = GOM_BONUS;
-					foreach_(const BonusTypes eFreeBonus, kBuilding.getFreeBonuses() | map_keys)
+					foreach_(const int iFreeBonus, kBuilding.getProvides()->bonuses)
 					{
-						query.id = eFreeBonus;
+						query.id = iFreeBonus;
 						queries.push_back(query);
 					}
 
@@ -5566,7 +5582,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 							bool bUnitIsBonusEnabled = true;
 							if (kUnit.getPrereqAndBonus() != NO_BONUS && !hasBonus((BonusTypes)kUnit.getPrereqAndBonus()))
 							{
-								if (kBuilding.getFreeBonuses().hasValue((BonusTypes)kUnit.getPrereqAndBonus()))
+								if (kBuilding.getProvides()->has((BonusTypes)kUnit.getPrereqAndBonus()))
 								{
 									bUnitIsEnabler = true;
 								}
@@ -5588,7 +5604,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 								{
 									bHasORBonusAlready = true;
 								}
-								else if (kBuilding.getFreeBonuses().hasValue(eXtraFreeBonus))
+								else if (kBuilding.getProvides()->has(eXtraFreeBonus))
 								{
 									bFreeBonusIsORBonus = true;
 								}
@@ -5608,7 +5624,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 
 							if (bUnitIsEnabler)
 							{
-								if (kUnit.getDefaultUnitAIType() != NO_UNITAI && kOwner.AI_totalAreaUnitAIs(pArea, kUnit.getDefaultUnitAIType()) == 0)
+								if (kUnit.getDefaultUnitAI() != NO_UNITAI && kOwner.AI_totalAreaUnitAIs(pArea, kUnit.getDefaultUnitAI()) == 0)
 								{
 									iValue += iNumCitiesInArea;
 								}
@@ -5616,7 +5632,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 								int iAllowedUnitsValue = 0;
 
 								// This forces the AI to build necessary buildings for units.
-								switch (kUnit.getDefaultUnitAIType())
+								switch (kUnit.getDefaultUnitAI())
 								{
 								case UNITAI_UNKNOWN:
 									break;
@@ -5899,15 +5915,17 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 					iValue++;
 				}
 
-				foreach_(const BonusModifier& pair, kBuilding.getFreeBonuses())
+				const CvProvides* pProvides = kBuilding.getProvides();
+				foreach_(const int iFreeBonus, pProvides->bonuses)
 				{
+					const BonusTypes eFreeBonus = (BonusTypes)iFreeBonus;
 					//	If we have spares adding another doesn't do anything that scales by city count - only
 					//	the first one does that.  Furthermore as spares rack up even their trade value decreases
 					iValue += (
-						100 * kOwner.AI_bonusVal(pair.first, 1) * pair.second
-						* (kOwner.getNumTradeableBonuses(pair.first) == 0 ? iNumCities : 1)
+						100 * kOwner.AI_bonusVal(eFreeBonus, 1) * pProvides->countOf(iFreeBonus)
+						* (kOwner.getNumTradeableBonuses(eFreeBonus) == 0 ? iNumCities : 1)
 						)
-						/ (100 * std::max(1, kOwner.getNumTradeableBonuses(pair.first)));
+						/ (100 * std::max(1, kOwner.getNumTradeableBonuses(eFreeBonus)));
 				}
 
 				int iCivicOption = kBuilding.getCivicOption();
@@ -5915,7 +5933,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 				{
 					for (int iI = 0; iI < GC.getNumCivicInfos(); iI++)
 					{
-						if (GC.getCivicInfo((CivicTypes)iI).getCivicOptionType() == iCivicOption && !kOwner.canDoCivics((CivicTypes)iI))
+						if (GC.getCivicInfo((CivicTypes)iI).getCivicOption() == iCivicOption && !kOwner.canDoCivics((CivicTypes)iI))
 						{
 							iValue += kOwner.AI_civicValue((CivicTypes)iI) / 10;
 						}
@@ -6110,7 +6128,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 					if ((getUnitAvailability(eLoopUnit) == EnablerDomain::STATE_LISTED))
 					{
 						const int iModifier = modifier.second;
-						const UnitAITypes eUnitAI = GC.getUnitInfo(eLoopUnit).getDefaultUnitAIType();
+						const UnitAITypes eUnitAI = GC.getUnitInfo(eLoopUnit).getDefaultUnitAI();
 						const UnitTypes eBestUnit = kOwner.bestBuildableUnitForAIType(GC.getUnitInfo(eLoopUnit).getDomainType(), eUnitAI);
 
 						int iBuildCost = 0;
@@ -6294,7 +6312,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 					{
 						// BBAI TODO: Smarter monastary construction, better support for mods
 
-						if (kOwner.AI_totalAreaUnitAIs(pArea, GC.getUnitInfo((UnitTypes)iI).getDefaultUnitAIType()) == 0)
+						if (kOwner.AI_totalAreaUnitAIs(pArea, GC.getUnitInfo((UnitTypes)iI).getDefaultUnitAI()) == 0)
 						{
 							religiousBuildingValue += iNumCitiesInArea;
 						}
@@ -6381,7 +6399,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 				{
 					PROFILE("CvCityAI::AI_buildingValueThresholdOriginal.Votes");
 
-					if (kBuilding.getVoteSourceType() == iI)
+					if (kBuilding.getDiploVoteType() == iI)
 					{
 						int votingSourceValue = 0;
 						if (kBuilding.needStateReligionInCity())
@@ -6468,7 +6486,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 					}
 				}
 
-				if (NO_VOTESOURCE != kBuilding.getVoteSourceType())
+				if (NO_VOTESOURCE != kBuilding.getDiploVoteType())
 				{
 					iValue += 100;
 				}
@@ -6632,9 +6650,9 @@ ProjectTypes CvCityAI::AI_bestProject() const
 
 				const int iTurnsLeft = getProductionTurnsLeft(((ProjectTypes)iI), 0);
 
-				if (!GET_TEAM(getTeam()).isHuman() || iTurnsLeft <= std::max(1, 10 * GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getHammerCostPercent() / 100))
+				if (!GET_TEAM(getTeam()).isHuman() || iTurnsLeft <= std::max(1, 10 * CvGameSpeedScale::hammerCostPercent() / 100))
 				{
-					if (iTurnsLeft <= std::max(1, 20 * GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getHammerCostPercent() / 100)
+					if (iTurnsLeft <= std::max(1, 20 * CvGameSpeedScale::hammerCostPercent() / 100)
 					|| iProductionRank <= std::max(3, GET_PLAYER(getOwner()).getNumCities() / 2))
 					{
 						if (iProductionRank == 1)
@@ -6958,13 +6976,13 @@ int CvCityAI::AI_neededDefenders()
 		return std::max
 		(
 			1,
-			GC.getHandicapInfo(GC.getGame().getHandicapType()).getBarbarianInitialDefenders()
+			GC.getHandicapInfo(GC.getGame().getHandicapType()).getBarbarians(BARBARIANS_DEFENDERS, CASC_SCOPE_WORLD)
 			+ (getPopulation() + 2) / 7
 		);
 	}
 
 	const int iTurn = GC.getGame().getGameTurn();
-	const int iTurnsThreshold = 8 * GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent() / 100;
+	const int iTurnsThreshold = 8 * CvGameSpeedScale::speedPercent() / 100;
 
 	const CvPlayerAI& player = GET_PLAYER(getOwner());
 	int iDefenders = 1;
@@ -8608,7 +8626,7 @@ void CvCityAI::AI_doHurry(bool bForce)
 				return;
 			}
 			// adjust for game speed
-			iMinTurns *= GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getHammerCostPercent();
+			iMinTurns *= CvGameSpeedScale::hammerCostPercent();
 			iMinTurns /= 100;
 		}
 
@@ -9057,10 +9075,10 @@ bool CvCityAI::AI_chooseBuilding(int iFocusFlags, int iMaxTurns, int iMinThresho
 
 	if (iMaxTurns != MAX_INT)
 	{
-		iMaxTurns = std::max(1, iMaxTurns * GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getHammerCostPercent() / 100);
+		iMaxTurns = std::max(1, iMaxTurns * CvGameSpeedScale::hammerCostPercent() / 100);
 	}
 	const std::vector<ScoredBuilding> bestBuildings = AI_bestBuildingsThreshold(iFocusFlags, iMaxTurns, iMinThreshold, false, NO_ADVISOR, bMaximizeFlaggedValue, eProperty);
-	const int stdDesiredQueueTurns = GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getHammerCostPercent() / 20;
+	const int stdDesiredQueueTurns = CvGameSpeedScale::hammerCostPercent() / 20;
 	const int desiredQueueTurns = std::max(1, std::min(stdDesiredQueueTurns, iMaxTurns));
 	bool enqueuedBuilding = false;
 	int nbBuildings = 0;
@@ -11226,13 +11244,13 @@ void CvCityAI::AI_updateSpecialYieldMultiplier()
 	const UnitTypes eProductionUnit = getProductionUnit();
 	if (eProductionUnit != NO_UNIT)
 	{
-		if (GC.getUnitInfo(eProductionUnit).getDefaultUnitAIType() == UNITAI_WORKER_SEA)
+		if (GC.getUnitInfo(eProductionUnit).getDefaultUnitAI() == UNITAI_WORKER_SEA)
 		{
 			m_aiSpecialYieldMultiplier[YIELD_PRODUCTION] += 50;
 			m_aiSpecialYieldMultiplier[YIELD_COMMERCE] -= 50;
 		}
-		if ((GC.getUnitInfo(eProductionUnit).getDefaultUnitAIType() == UNITAI_WORKER) ||
-			(GC.getUnitInfo(eProductionUnit).getDefaultUnitAIType() == UNITAI_SETTLE))
+		if ((GC.getUnitInfo(eProductionUnit).getDefaultUnitAI() == UNITAI_WORKER) ||
+			(GC.getUnitInfo(eProductionUnit).getDefaultUnitAI() == UNITAI_SETTLE))
 
 		{
 			m_aiSpecialYieldMultiplier[YIELD_COMMERCE] -= 50;
@@ -12163,7 +12181,7 @@ int CvCityAI::AI_getPromotionValue(PromotionTypes ePromotion) const
 			else
 			{
 				//TB SubCombat Mod Begin
-				foreach_(const UnitCombatTypes eSubCombat, kUnit.getSubCombatTypes())
+				foreach_(const UnitCombatTypes eSubCombat, kUnit.getCombatClasses())
 				{
 					if (GC.getPromotionInfo(ePromotion).getUnitCombat(eSubCombat))
 					{

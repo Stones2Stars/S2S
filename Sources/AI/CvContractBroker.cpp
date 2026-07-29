@@ -4,6 +4,7 @@
 #include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
+#include "Engine/CvGameSpeedScale.h"
 #include "Engine/CvCity.h"
 #include "CvContractBroker.h"
 #include "CvGameAI.h"
@@ -978,7 +979,7 @@ void CvContractBroker::finalizeTenderContracts()
 										:
 										pCity->getProductionTurnsLeft(eUnit, 1)
 									);
-								iValue *= GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getHammerCostPercent();
+								iValue *= CvGameSpeedScale::hammerCostPercent();
 								iValue /= iTurns;
 
 								//if the nb of turns is too high for a small city, don't consider the unit, unless there are no other options
@@ -1140,7 +1141,7 @@ void CvContractBroker::finalizeTenderContracts()
 				// Queue up the build. Add to queue head if the current build is not a unit,
 				//	implies a local build below the priority of work the city tendered for.
 				const bool bDanger = pBestCity->AI_isDanger();
-				const int iHammerCostPercent = GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getHammerCostPercent();
+				const int iHammerCostPercent = CvGameSpeedScale::hammerCostPercent();
 				//if a production is nearly finished, don't insert a unit, add it to the queue.
 				const int iMaxTurntoLeave = (bDanger && pBestCity->getProductionUnit() == NO_UNIT ? 1 + GC.getGame().getGameSpeedType() / 4 : 1 + iHammerCostPercent / 50);
 				const bool bNearlyFinished = (pBestCity->getProductionTurnsLeft() <= iMaxTurntoLeave || (pBestCity->getProductionTurnsLeft()+3) <= pBestCity->getProductionTurnsLeft(eBestUnit, 1));

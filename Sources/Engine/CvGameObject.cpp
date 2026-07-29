@@ -8,6 +8,7 @@
 //------------------------------------------------------------------------------------------------
 
 #include "CvGameCoreDLL.h"
+#include "Engine/CvGameSpeedScale.h"
 
 #include "Tools/FProfiler.h"
 
@@ -1653,15 +1654,14 @@ void CvGameObjectPlot::disposePythonWrapper(void *pArgument)
 // per-handicap leg was dead data: no handicap XML ever defined Percents.)
 int CvGameObject::adaptValueToGame(AdaptTypes eAdapt, int iValue) const
 {
-	const CvGameSpeedInfo& kSpeed = GC.getGameSpeedInfo(GC.getGame().getGameSpeedType());
 	switch (eAdapt)
 	{
 		case ADAPT_BUILDING_AND_UNIT_COSTS:
-			return iValue * kSpeed.getHammerCostPercent() / 100;
+			return iValue * CvGameSpeedScale::hammerCostPercent() / 100;
 		case ADAPT_UNIT_YIELD:
-			return iValue * kSpeed.getUnitYieldScalePercent() / 100;
+			return iValue * CvGameSpeedScale::missionYieldPercent() / 100;
 		default:
-			return iValue * kSpeed.getSpeedPercent() / 100;
+			return iValue * CvGameSpeedScale::speedPercent() / 100;
 	}
 }
 

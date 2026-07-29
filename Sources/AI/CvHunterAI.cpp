@@ -350,7 +350,7 @@ bool CvHunterAI::hunterMove(CvUnitAI* unit, bool bWithCommander)
 	}
 
 	// Toffer - Non-optimal hunter is temporary, phase them out when appropriate.
-	if (!bWithCommander && !unit->isHuman() && unit->getUnitInfo().getDefaultUnitAIType() != UNITAI_HUNTER)
+	if (!bWithCommander && !unit->isHuman() && unit->getUnitInfo().getDefaultUnitAI() != UNITAI_HUNTER)
 	{
 		// Capacity-based (#395): merged hunters count as their strength equivalent.
 		const int iOwnedHunters = player.AI_totalEffAreaUnitAIs(unit->area(), UNITAI_HUNTER);
@@ -358,7 +358,7 @@ bool CvHunterAI::hunterMove(CvUnitAI* unit, bool bWithCommander)
 		{
 			logHunterAI(2, "[HAI/scrap] unit=%d revert AI (owned=%d)", unit->getID(), iOwnedHunters);
 			eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_HUNTER, HAI_SCRAP_REVERT_OWNED, 2).addI(HAIF_unit, unit->getID()).addI(HAIF_owned, iOwnedHunters));
-			unit->AI_setUnitAIType(unit->getUnitInfo().getDefaultUnitAIType());
+			unit->AI_setUnitAIType(unit->getUnitInfo().getDefaultUnitAI());
 			return true;
 		}
 		if (iOwnedHunters > 1)
@@ -370,7 +370,7 @@ bool CvHunterAI::hunterMove(CvUnitAI* unit, bool bWithCommander)
 			{
 				logHunterAI(2, "[HAI/scrap] unit=%d revert AI (deficit=%d%%)", unit->getID(), iHunterDeficitPercent);
 				eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_HUNTER, HAI_SCRAP_REVERT_DEFICIT, 2).addI(HAIF_unit, unit->getID()).addI(HAIF_deficitPct, iHunterDeficitPercent));
-				unit->AI_setUnitAIType(unit->getUnitInfo().getDefaultUnitAIType());
+				unit->AI_setUnitAIType(unit->getUnitInfo().getDefaultUnitAI());
 				return true;
 			}
 		}

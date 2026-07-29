@@ -28,6 +28,21 @@
 #include "Engine/CvPlayer.h"
 #include "Engine/CvTeam.h"
 #include <map>
+#include "Infos/CvClassificationBlock.h"   // CLSD_SKILL + the memoized id bit test
+
+namespace
+{
+	// The json.md §8 SKILL reads this file makes. The consumer holds the memoized generated-id
+	// (the CvUnitFilters precedent): the info exposes only the parameterized group read
+	// getSkills(), never a named getter per key (patterns.md -- a per-key boolean getter is the
+	// shape the rebuild deletes).
+	bool unitIsUnlimitedException(const CvUnitInfo& kUnit)
+	{
+		static int s_unlimitedExceptionSkillId = -1;
+		return kUnit.getSkills()->hasKey(s_unlimitedExceptionSkillId, CLSD_SKILL, "unlimitedException");
+	}
+}
+
 
 // the source's cascade info per axis (the tech axis redirects the TECH_GAME_START root to cascadeStartNode).
 // Units' HAVE axes per the store's enables.units inversion sources: techs, buildings, bonuses, religions, civics.
@@ -55,7 +70,7 @@ void UnitEnabler::onCityCreated(const CvCity& kCity)
 	for (int u = 0; u < GC.getNumUnitInfos(); ++u)
 	{
 		const CvUnitInfo* ju = (const CvUnitInfo*)InfoRepo<CvUnitInfo>::get().get(u);
-		if (ju != NULL && ju->spawnOnly) d.setStaticExcluded(u, true);   // never trainable (placed by systems)
+		if (ju != NULL && ju->isSpawnOnly()) d.setStaticExcluded(u, true);   // never trainable (placed by systems)
 	}
 	for (int t = 0; t < GC.getNumTechInfos(); ++t)   // the root IS a held tech (the load backfill guarantees it)
 		if (kTeam.isHasTech((TechTypes)t)) EnablerKernel::applyEdges(d, ud_techInfo(t), EDGEB_UNITS, +1);
@@ -218,7 +233,7 @@ static bool ud_capped(const CvInfo* j, int eU, const CvPlayer& kPlayer, bool noN
 	const int wcap = j->allowedCap(ALLOWEDCAP_WORLD);
 	if (wcap >= 0 && GC.getGame().getUnitCreatedCount((UnitTypes)eU) + making >= wcap) return true;
 	const int ecap = j->allowedCap(ALLOWEDCAP_EMPIRE);
-	if (ecap >= 0 && !(noNationalLimit && !GC.getUnitInfo((UnitTypes)eU).isUnlimitedException()))
+	if (ecap >= 0 && !(noNationalLimit && !unitIsUnlimitedException(GC.getUnitInfo((UnitTypes)eU))))
 	{
 		const int era = (int)kPlayer.getCurrentEra();
 		const int cap = (ecap == 5 && era > 0) ? ecap + era * 5 : ecap;   // era-scaled base-5 national cap
@@ -246,7 +261,7 @@ struct UdGateCtx
 static bool ud_isAvailable(int u, UdGateCtx& x)
 {
 	const CvInfo* j = InfoRepo<CvUnitInfo>::get().get(u);
-	if (j != NULL && ((const CvUnitInfo*)j)->spawnOnly) return false;
+	if (j != NULL && ((const CvUnitInfo*)j)->isSpawnOnly()) return false;
 	if (EnablerKernel::obsoletedByHeldTech(j, *x.team)) return false;
 	if (ud_capped(j, u, *x.player, x.noNationalLimit)) return false;
 	if (j != NULL && !cascadeGateOk(j->getGate(), *x.ec, *x.flags)) return false;   // entity-level enabled/disabled
@@ -404,7 +419,7 @@ void UnitEnabler::explain(const CvCity& kCity, int iUnit, Explain& out)
 	ud_setupCtx(kCity, kPlayer, GET_TEAM(kPlayer.getTeam()), waived, ec, flags, x);
 	const CvInfo* j = InfoRepo<CvUnitInfo>::get().get(iUnit);
 	if (j == NULL) return;
-	out.bSpawnOnly = ((const CvUnitInfo*)j)->spawnOnly;
+	out.bSpawnOnly = ((const CvUnitInfo*)j)->isSpawnOnly();
 	out.bObsoleteTech = EnablerKernel::obsoletedByHeldTech(j, *x.team);
 	out.bCapped = ud_capped(j, iUnit, kPlayer, x.noNationalLimit);
 	out.bEntityGateFail = !cascadeGateOk(j->getGate(), ec, flags);

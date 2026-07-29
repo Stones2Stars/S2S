@@ -5,6 +5,7 @@
 #include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
+#include "Engine/CvGameSpeedScale.h"
 #include "Enabler/CvEnablerKernel.h"   // requiresMetForPlayer -- the system-placement gate (barbarian fielding)
 #include "AI/BetterBTSAI.h"
 #include "CvArea.h"
@@ -2977,7 +2978,7 @@ TeamTypes CvGame::getSecretaryGeneral(VoteSourceTypes eVoteSource) const
 	{
 		for (int iBuilding = 0; iBuilding < GC.getNumBuildingInfos(); ++iBuilding)
 		{
-			if (GC.getBuildingInfo((BuildingTypes)iBuilding).getVoteSourceType() == eVoteSource)
+			if (GC.getBuildingInfo((BuildingTypes)iBuilding).getDiploVoteType() == eVoteSource)
 			{
 				for (int iI = 0; iI < MAX_PC_PLAYERS; ++iI)
 				{
@@ -3268,14 +3269,14 @@ int CvGame::calculateReligionPercent(ReligionTypes eReligion) const
 
 int CvGame::goldenAgeLength() const
 {
-	return GC.getGOLDEN_AGE_LENGTH() * GC.getGameSpeedInfo(getGameSpeedType()).getSpeedPercent();
+	return GC.getGOLDEN_AGE_LENGTH() * CvGameSpeedScale::speedPercent();
 }
 
 int CvGame::victoryDelay(VictoryTypes eVictory) const
 {
 	FASSERT_BOUNDS(0, GC.getNumVictoryInfos(), eVictory);
 
-	return GC.getVictoryInfo(eVictory).getVictoryDelayTurns() * GC.getGameSpeedInfo(getGameSpeedType()).getSpeedPercent() / 100;
+	return GC.getVictoryInfo(eVictory).getVictoryDelayTurns() * CvGameSpeedScale::speedPercent() / 100;
 }
 
 
@@ -3285,7 +3286,7 @@ int CvGame::getImprovementUpgradeTime(ImprovementTypes eImprovement) const
 	int iTime = GC.getImprovementInfo(eImprovement).getUpgradeTime();
 	if (iTime < 1) return 0;
 
-	iTime *= GC.getGameSpeedInfo(getGameSpeedType()).getHammerCostPercent();
+	iTime *= CvGameSpeedScale::hammerCostPercent();
 	iTime /= 100;
 
 	iTime *= GC.getEraInfo(getCurrentEra()).getImprovementPercent();
@@ -5201,7 +5202,7 @@ bool CvGame::isForceCivicOption(CivicOptionTypes eCivicOption) const
 	PROFILE_EXTRA_FUNC();
 	for (int iI = 0; iI < GC.getNumCivicInfos(); iI++)
 	{
-		if (GC.getCivicInfo((CivicTypes)iI).getCivicOptionType() == eCivicOption && isForceCivic((CivicTypes)iI))
+		if (GC.getCivicInfo((CivicTypes)iI).getCivicOption() == eCivicOption && isForceCivic((CivicTypes)iI))
 		{
 			return true;
 		}
@@ -6418,7 +6419,7 @@ void CvGame::doSpawns(PlayerTypes ePlayer)
 
 		if (!spawnInfo.getNoSpeedNormalization())
 		{
-			adjustedSpawnRate = adjustedSpawnRate * (GC.getGameSpeedInfo(getGameSpeedType()).getHammerCostPercent()+666) / 300;
+			adjustedSpawnRate = adjustedSpawnRate * (CvGameSpeedScale::hammerCostPercent()+666) / 300;
 		}
 
 		if (isOption(GAMEOPTION_ANIMAL_PEACE_AMONG_NPCS))
@@ -6546,7 +6547,7 @@ void CvGame::doSpawns(PlayerTypes ePlayer)
 					// Spawn a new unit
 					CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
 
-					CvUnit* pUnit = GET_PLAYER(ePlayer).initUnit(eUnit, pPlot->getX(), pPlot->getY(), kUnit.getDefaultUnitAIType(), NO_DIRECTION, getSorenRandNum(10000, "AI Unit Birthmark"));
+					CvUnit* pUnit = GET_PLAYER(ePlayer).initUnit(eUnit, pPlot->getX(), pPlot->getY(), kUnit.getDefaultUnitAI(), NO_DIRECTION, getSorenRandNum(10000, "AI Unit Birthmark"));
 					if (pUnit == NULL)
 					{
 						FErrorMsg("pUnit is expected to be assigned a valid unit object");
@@ -6575,7 +6576,7 @@ void CvGame::doSpawns(PlayerTypes ePlayer)
 							//remove old group volume unitcombat
 							if (eGroupVolume != NO_UNITCOMBAT)
 							{
-								foreach_(const UnitCombatTypes eSubCombat, kUnit.getSubCombatTypes())
+								foreach_(const UnitCombatTypes eSubCombat, kUnit.getCombatClasses())
 								{
 									if (GC.getUnitCombatInfo(eSubCombat).getGroupBase() != -10 && eSubCombat != eGroupVolume)
 									{
@@ -6605,7 +6606,7 @@ void CvGame::doSpawns(PlayerTypes ePlayer)
 					{
 						foreach_(const UnitTypes& spawnGroup, spawnInfo.getSpawnGroups())
 						{
-							pUnit = GET_PLAYER(ePlayer).initUnit(spawnGroup, pPlot->getX(), pPlot->getY(), GC.getUnitInfo(spawnGroup).getDefaultUnitAIType(), NO_DIRECTION, getSorenRandNum(10000, "AI Unit Birthmark"));
+							pUnit = GET_PLAYER(ePlayer).initUnit(spawnGroup, pPlot->getX(), pPlot->getY(), GC.getUnitInfo(spawnGroup).getDefaultUnitAI(), NO_DIRECTION, getSorenRandNum(10000, "AI Unit Birthmark"));
 							FAssertMsg(pUnit != NULL, "pUnit is expected to be assigned a valid unit object");
 							pUnit->finishMoves();
 							spawnCount++;
@@ -6710,7 +6711,7 @@ void CvGame::doGlobalWarming()
 		int iGlobalWarmingProb =
 		(
 			100 * (GC.getDefineINT("GLOBAL_WARMING_PROB") - iGlobalWarmingDefense)
-			/ GC.getGameSpeedInfo(getGameSpeedType()).getSpeedPercent()
+			/ CvGameSpeedScale::speedPercent()
 		);
 
 		for (int iI = 0; iI < iGlobalWarmingValue; iI++)
@@ -6824,7 +6825,7 @@ void CvGame::doGlobalWarming()
 	const int iNuclearWinterValue = getNukesExploded() * GC.getDefineINT("GLOBAL_WARMING_NUKE_WEIGHT") / 100;
 	if (iNuclearWinterValue > 0)
 	{
-		const int iNuclearWinterProb = GC.getDefineINT("NUCLEAR_WINTER_PROB") * 100 / GC.getGameSpeedInfo(getGameSpeedType()).getSpeedPercent();
+		const int iNuclearWinterProb = GC.getDefineINT("NUCLEAR_WINTER_PROB") * 100 / CvGameSpeedScale::speedPercent();
 
 		for (int iI = 0; iI < iNuclearWinterValue; iI++)
 		{
@@ -7012,7 +7013,7 @@ void CvGame::createBarbarianCities(bool bNeanderthal)
 	const int iCivCities = getNumCivCities();
 	if (iCivCities < 1) return;
 
-	const int iBarbPercent = GC.getGameSpeedInfo(getGameSpeedType()).getSpeedPercent();
+	const int iBarbPercent = CvGameSpeedScale::speedPercent();
 	const bool bBarbWorld = isOption(GAMEOPTION_BARBARIAN_WORLD);
 
 	// No barb city spawn the first X turns (difficulty and gamespeed decide X), unless it's a barbarian world.
@@ -7184,7 +7185,7 @@ namespace {
 
 	bool barbarianCityShouldSpawnWorker(CvGame* game, CvCity* city)
 	{
-		return (city->getPopulation() > 1 || game->getGameTurn() - city->getGameTurnAcquired() > 10 * GC.getGameSpeedInfo(game->getGameSpeedType()).getHammerCostPercent() / 100)
+		return (city->getPopulation() > 1 || game->getGameTurn() - city->getGameTurnAcquired() > 10 * CvGameSpeedScale::hammerCostPercent() / 100)
 			&& city->getNumWorkers() == 0
 			&& city->AI_getWorkersNeeded() > 0
 			&& (7 * city->getPopulation()) > game->getSorenRandNum(100, "Barb - workers");
@@ -7742,7 +7743,7 @@ void CvGame::testVictory()
 	PROFILE_FUNC();
 
 	if (getVictory() != NO_VICTORY || getGameState() == GAMESTATE_EXTENDED
-	|| getElapsedGameTurns() <= GC.getGameSpeedInfo(getGameSpeedType()).getSpeedPercent() / 10)
+	|| getElapsedGameTurns() <= CvGameSpeedScale::speedPercent() / 10)
 	{
 		return;
 	}
@@ -7839,7 +7840,7 @@ void CvGame::testVictory()
 			if (getMercyRuleCounter() == 0)
 			{
 				// Ten Turns remain! (on normal gamespeed)
-				setMercyRuleCounter(GC.getGameSpeedInfo(getGameSpeedType()).getSpeedPercent() / 10);
+				setMercyRuleCounter(CvGameSpeedScale::speedPercent() / 10);
 				// Inform Players
 				for (int iI = 0; iI < MAX_PC_PLAYERS; iI++)
 				{
@@ -7954,7 +7955,7 @@ void CvGame::testVictory()
 		for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
 		{
 			const int iV = GC.getBuildingInfo((BuildingTypes)iI).getVictoryPrereq();
-			if (iV != NO_VICTORY && GC.getBuildingInfo((BuildingTypes)iI).getVoteSourceType() != NO_VOTESOURCE)
+			if (iV != NO_VICTORY && GC.getBuildingInfo((BuildingTypes)iI).getDiploVoteType() != NO_VOTESOURCE)
 			{
 				eVictoryUN = (VictoryTypes) iV;
 				break;
@@ -9793,7 +9794,7 @@ void CvGame::doVoteSelection()
 
 		if (getVoteTimer(eVoteSource) <= 0)
 		{
-			setVoteTimer(eVoteSource, GC.getVoteSourceInfo(eVoteSource).getVoteInterval() * GC.getGameSpeedInfo(getGameSpeedType()).getSpeedPercent() / 100);
+			setVoteTimer(eVoteSource, GC.getVoteSourceInfo(eVoteSource).getVoteInterval() * CvGameSpeedScale::speedPercent() / 100);
 
 			for (int iTeam1 = 0; iTeam1 < MAX_PC_TEAMS; ++iTeam1)
 			{
@@ -9925,7 +9926,7 @@ void CvGame::processBuilding(BuildingTypes eBuilding, int iChange)
 
 	for (int iI = 0; iI < GC.getNumVoteSourceInfos(); ++iI)
 	{
-		if (GC.getBuildingInfo(eBuilding).getVoteSourceType() == (VoteSourceTypes)iI)
+		if (GC.getBuildingInfo(eBuilding).getDiploVoteType() == (VoteSourceTypes)iI)
 		{
 			changeDiploVote((VoteSourceTypes)iI, iChange);
 		}
@@ -10065,7 +10066,7 @@ void CvGame::doFinalFive()
 	if (!isGameMultiPlayer() && isOption(GAMEOPTION_CHALLENGE_CUT_LOSERS) && countCivPlayersAlive() > 15) //CALVITIX REMINDER - TO RESTORE
 	{
 		changeCutLosersCounter(1);
-		if (getCutLosersCounter() >= GC.getDefineINT("CUT_LOSERS_TURN_INCREMENT") * GC.getGameSpeedInfo(getGameSpeedType()).getSpeedPercent() / 100)
+		if (getCutLosersCounter() >= GC.getDefineINT("CUT_LOSERS_TURN_INCREMENT") * CvGameSpeedScale::speedPercent() / 100)
 		{
 			CvPlayer& pPlayer = GET_PLAYER(getRankPlayer(countCivPlayersAlive() - 1));
 			if (!pPlayer.isHumanPlayer())
@@ -10125,7 +10126,7 @@ void CvGame::doIncreasingDifficulty()
 			getGameTurn() % (
 				GC.getDefineINT("INCREASING_DIFFICULTY_TURN_CHECK_INCREMENTS")
 				*
-				GC.getGameSpeedInfo(getGameSpeedType()).getSpeedPercent()
+				CvGameSpeedScale::speedPercent()
 				/
 				100
 			)
@@ -11230,7 +11231,7 @@ void CvGame::doFoundCorporation(CorporationTypes eCorporation, bool bForce)
 	const int iCheckTurns = (
 		GC.getDefineINT("CORPORATION_FOUND_CHECK_TURNS")
 		*
-		GC.getGameSpeedInfo(getGameSpeedType()).getSpeedPercent() / 100
+		CvGameSpeedScale::speedPercent() / 100
 	);
 	if (getElapsedGameTurns() % std::max(1, iCheckTurns) != 0 && !bForce)
 	{

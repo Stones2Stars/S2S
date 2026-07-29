@@ -1,6 +1,7 @@
 // unitAI.cpp
 
 #include "CvGameCoreDLL.h"
+#include "Engine/CvGameSpeedScale.h"
 
 #include "Tools/FProfiler.h"
 
@@ -35,6 +36,21 @@
 #endif
 #include "CvWorkerAI.h"
 #include "Spine/CvEventSpine.h" // #430 logging consolidation: route UNT/COM/FND lines through the event spine (shadow)
+#include "Infos/CvClassificationBlock.h"   // CLSD_SKILL + the memoized id bit test
+
+namespace
+{
+	// The json.md §8 SKILL reads this file makes. The consumer holds the memoized generated-id
+	// (the CvUnitFilters precedent): the info exposes only the parameterized group read
+	// getSkills(), never a named getter per key (patterns.md -- a per-key boolean getter is the
+	// shape the rebuild deletes).
+	bool unitIsGreatGeneral(const CvUnitInfo& kUnit)
+	{
+		static int s_greatGeneralSkillId = -1;
+		return kUnit.getSkills()->hasKey(s_greatGeneralSkillId, CLSD_SKILL, "greatGeneral");
+	}
+}
+
 
 // ---------------------------------------------------------------------------
 // #430 logging: [UNT] unit-AI dispatch -> event spine (CvUnitAI / CvSelectionGroupAI).
@@ -1713,7 +1729,7 @@ UnitAITypes CvUnitAI::AI_getUnitAIType() const
 	{
 		FErrorMsg("Unit has no UnitAI!");
 
-		((CvUnitAI*)this)->m_eUnitAIType = m_pUnitInfo->getDefaultUnitAIType();
+		((CvUnitAI*)this)->m_eUnitAIType = m_pUnitInfo->getDefaultUnitAI();
 
 		area()->changeNumAIUnits(getOwner(), m_eUnitAIType, 1);
 		area()->changeEffNumAIUnitsTimes100(getOwner(), m_eUnitAIType, SMeffectiveCount());
@@ -1846,7 +1862,7 @@ void CvUnitAI::AI_animalMove()
 		else if (
 			GC.getGame().getSorenRandNum(10, "Animal Attack")
 			<
-			getMyAggression(GC.getHandicapInfo(GC.getGame().getHandicapType()).getAnimalAttackProb()))
+			getMyAggression(GC.getHandicapInfo(GC.getGame().getHandicapType()).getBarbarians(BARBARIANS_ANIMAL_ATTACK_PROB, CASC_SCOPE_WORLD)))
 		{
 			if (AI_anyAttack(2, 1, 0, false))
 			{
@@ -1857,7 +1873,7 @@ void CvUnitAI::AI_animalMove()
 		else if (
 			GC.getGame().getSorenRandNum(100, "Animal Attack")
 			<
-			GC.getHandicapInfo(GC.getGame().getHandicapType()).getAnimalAttackProb())
+			GC.getHandicapInfo(GC.getGame().getHandicapType()).getBarbarians(BARBARIANS_ANIMAL_ATTACK_PROB, CASC_SCOPE_WORLD))
 		{
 			if (AI_anyAttack(2, 60, 0, false))
 			{
@@ -1880,7 +1896,7 @@ bool CvUnitAI::AI_SettleFirstCity()
 {
 	PROFILE_EXTRA_FUNC();
 	// Afforess & Fuyu - Check for Good City Sites Near Starting Location
-	const int iGameSpeedPercent = GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent();
+	const int iGameSpeedPercent = CvGameSpeedScale::speedPercent();
 	const int iMaxFoundTurn = iGameSpeedPercent / 100;
 
 	if (canMove() && !GET_PLAYER(getOwner()).AI_isPlotCitySite(plot()) && GC.getGame().getElapsedGameTurns() <= iMaxFoundTurn)
@@ -2064,7 +2080,7 @@ void CvUnitAI::AI_settleMove()
 		}
 
 		if (iAreaBestFoundValue == 0 && iOtherBestFoundValue == 0
-		&& GC.getGame().getGameTurn() - getGameTurnCreated() > intSqrt(GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getHammerCostPercent()))
+		&& GC.getGame().getGameTurn() - getGameTurnCreated() > intSqrt(CvGameSpeedScale::hammerCostPercent()))
 		{
 			if (NULL != getTransportUnit())
 			{
@@ -3086,7 +3102,7 @@ void CvUnitAI::AI_attackMove()
 		}
 		else if (area()->getAreaAIType(getTeam()) != AREAAI_DEFENSIVE
 		&& (area()->getCitiesPerPlayer(BARBARIAN_PLAYER) > 0 || area()->getCitiesPerPlayer(NEANDERTHAL_PLAYER) > 0)
-		&& getGroup()->getNumUnits() >= GC.getHandicapInfo(GC.getGame().getHandicapType()).getBarbarianInitialDefenders()
+		&& getGroup()->getNumUnits() >= GC.getHandicapInfo(GC.getGame().getHandicapType()).getBarbarians(BARBARIANS_DEFENDERS, CASC_SCOPE_WORLD)
 		&& AI_goToTargetBarbCity(10)) // Deal with Barbarian pest
 		{
 			return;
@@ -3615,7 +3631,7 @@ void CvUnitAI::AI_attackCityMove()
 		//	the target (before we lose the benefit of surprise)
 		if (plot()->getOwner() == getOwner() || iStepDistToTarget > 3)
 		{
-			int iTargetUnitTrainModifier = GC.getHandicapInfo(GET_PLAYER(pTargetCity->getOwner()).getHandicapType()).getAITrainPercent();
+			int iTargetUnitTrainModifier = GC.getHandicapInfo(GET_PLAYER(pTargetCity->getOwner()).getHandicapType()).getCostsModifier(COSTS_TRAIN, CASC_SCOPE_EMPIRE, true);
 
 			if (iTargetUnitTrainModifier < 100)
 			{
@@ -5166,7 +5182,7 @@ void CvUnitAI::AI_cityDefenseMove()
 	//	defender parked in a city keeps counting toward that city's defense strength.
 	if (noDefensiveBonus())
 	{
-		const UnitAITypes eDefaultAI = m_pUnitInfo->getDefaultUnitAIType();
+		const UnitAITypes eDefaultAI = m_pUnitInfo->getDefaultUnitAI();
 		if (eDefaultAI != NO_UNITAI && eDefaultAI != UNITAI_CITY_DEFENSE)
 		{
 			AI_logAct("cityDefenseMove", "demoteUnsuitedDefender", plot());
@@ -5954,7 +5970,7 @@ void CvUnitAI::AI_hunterEscortMove()
 
 	if (m_contractualState == CONTRACTUAL_STATE_NO_WORK_FOUND)
 	{
-		if (m_pUnitInfo->getDefaultUnitAIType() == UNITAI_EXPLORE)
+		if (m_pUnitInfo->getDefaultUnitAI() == UNITAI_EXPLORE)
 		{
 			if (GET_PLAYER(getOwner()).AI_neededExplorers(area()) > GET_PLAYER(getOwner()).AI_totalAreaUnitAIs(area(), UNITAI_EXPLORE))
 			{
@@ -5962,9 +5978,9 @@ void CvUnitAI::AI_hunterEscortMove()
 				return;
 			}
 		}
-		else if (m_pUnitInfo->getDefaultUnitAIType() != AI_getUnitAIType())
+		else if (m_pUnitInfo->getDefaultUnitAI() != AI_getUnitAIType())
 		{
-			AI_setUnitAIType(m_pUnitInfo->getDefaultUnitAIType());
+			AI_setUnitAIType(m_pUnitInfo->getDefaultUnitAI());
 			return;
 		}
 	}
@@ -11261,7 +11277,7 @@ void CvUnitAI::AI_InfiltratorMove()
 			&& (
 				GC.getGame().getSorenRandNum(
 					5 +
-					7 * GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getHammerCostPercent() / 100,
+					7 * CvGameSpeedScale::hammerCostPercent() / 100,
 					"Leave city to pillage"
 				) == 0
 				) && AI_pillageRange(1, 20))
@@ -11275,7 +11291,7 @@ void CvUnitAI::AI_InfiltratorMove()
 			{
 				// Only enact when it is a long build that has been heavily invested into already
 				const int iEstTurns = plot()->getPlotCity()->getProductionNeeded() / iProduction;
-				const int iLongBuild = 1 + 6 * GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getHammerCostPercent() / 100;
+				const int iLongBuild = 1 + 6 * CvGameSpeedScale::hammerCostPercent() / 100;
 
 				if (iEstTurns >= iLongBuild)
 				{
@@ -14268,7 +14284,7 @@ bool CvUnitAI::AI_discover(const bool bFirstResearchOnly)
 	// Unit can finish the tech this turn.
 
 	if (GET_PLAYER(getOwner()).getResearchTurnsLeft(eTech, true)
-	<= std::max(1, GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent() / 100))
+	<= std::max(1, CvGameSpeedScale::speedPercent() / 100))
 	{
 		return false;
 	}
@@ -14885,10 +14901,10 @@ int CvUnitAI::getBestConstructValue(int iMaxCount, int iMaxSingleBuildingCount, 
 			//	herd buildings out to the cities that LACK the resource, and seeds the
 			//	same-value-everywhere cache below from a city that actually needs it.
 			{
-				bool bAllGrantedBonusesPresent = !GC.getBuildingInfo(buildingType).getFreeBonuses().empty();
-				foreach_(const BonusTypes eFreeBonus, GC.getBuildingInfo(buildingType).getFreeBonuses() | map_keys)
+				bool bAllGrantedBonusesPresent = !GC.getBuildingInfo(buildingType).getProvides()->bonuses.empty();
+				foreach_(const int iFreeBonus, GC.getBuildingInfo(buildingType).getProvides()->bonuses)
 				{
-					if (!pLoopCity->hasBonus(eFreeBonus))
+					if (!pLoopCity->hasBonus((BonusTypes)iFreeBonus))
 					{
 						bAllGrantedBonusesPresent = false;
 						break;
@@ -26800,7 +26816,7 @@ bool CvUnitAI::AI_caravan(bool bAnyCity)
 				{
 					const int iTurnsLeft = pLoopCity->getProductionTurnsLeft() - iPathTurns;
 
-					const int iMinTurns = GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent() / 50;
+					const int iMinTurns = CvGameSpeedScale::speedPercent() / 50;
 
 					if (iTurnsLeft > iMinTurns && iTurnsLeft > iBestValue)
 					{
@@ -26892,7 +26908,7 @@ bool CvUnitAI::AI_command()
 	PROFILE_EXTRA_FUNC();
 
 	if (!GC.getGame().isOption(GAMEOPTION_UNIT_GREAT_COMMANDERS)
-	|| !getUnitInfo().isGreatGeneral()
+	|| !unitIsGreatGeneral(getUnitInfo())
 	|| isCommander())
 	{
 		return false;

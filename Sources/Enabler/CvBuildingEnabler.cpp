@@ -55,7 +55,7 @@ void BuildingEnabler::augmentWaived(const CvPlayer& kPlayer, const CvTeam& kTeam
 	if (!waivedSpecials.empty())
 		for (int b = 0; b < nB; ++b)
 		{
-			const SpecialBuildingTypes sb = GC.getBuildingInfo((BuildingTypes)b).getSpecialBuilding();
+			const SpecialBuildingTypes sb = GC.getBuildingInfo((BuildingTypes)b).getSpecialBuildingType();
 			if (sb != NO_SPECIALBUILDING && waivedSpecials.count((int)sb) != 0) waived.insert(b);
 		}
 }
@@ -103,7 +103,7 @@ static void bd_seedInto(CityEnabler& en, const CvCity& kCity)
 	for (int b = 0; b < GC.getNumBuildingInfos(); ++b)
 	{
 		const CvBuildingInfo* jb = (const CvBuildingInfo*)InfoRepo<CvBuildingInfo>::get().get(b);
-		if (jb != NULL && jb->notConstructible) d.setStaticExcluded(b, true);
+		if (jb != NULL && jb->isNotConstructible()) d.setStaticExcluded(b, true);
 		if (kCity.hasBuilding((BuildingTypes)b))
 		{
 			d.setHeld(b, true);
@@ -142,7 +142,7 @@ void BuildingEnabler::onCityCreated(const CvCity& kCity)
 	for (int b = 0; b < GC.getNumBuildingInfos(); ++b)
 	{
 		const CvBuildingInfo* jb = (const CvBuildingInfo*)InfoRepo<CvBuildingInfo>::get().get(b);
-		if (jb != NULL && jb->notConstructible) d.setStaticExcluded(b, true);
+		if (jb != NULL && jb->isNotConstructible()) d.setStaticExcluded(b, true);
 	}
 	// the TECH_GAME_START root IS a held engine tech (the load backfill guarantees it) -- covered by this loop
 	for (int t = 0; t < GC.getNumTechInfos(); ++t)
@@ -172,7 +172,7 @@ static const std::vector<int>& bd_sbMembers(int iSb)
 		s_specialBuildingMembersBuilt = true;
 		for (int b = 0; b < GC.getNumBuildingInfos(); ++b)
 		{
-			const SpecialBuildingTypes sb = GC.getBuildingInfo((BuildingTypes)b).getSpecialBuilding();
+			const SpecialBuildingTypes sb = GC.getBuildingInfo((BuildingTypes)b).getSpecialBuildingType();
 			if (sb != NO_SPECIALBUILDING) s_specialBuildingMembers[(int)sb].push_back(b);
 		}
 	}
@@ -247,7 +247,7 @@ static bool bd_categoryCapOk(int iB, const CvCity& kCity)
 
 static bool bd_groupCapOk(int iB, const CvPlayer& kPlayer)
 {
-	const SpecialBuildingTypes sb = GC.getBuildingInfo((BuildingTypes)iB).getSpecialBuilding();
+	const SpecialBuildingTypes sb = GC.getBuildingInfo((BuildingTypes)iB).getSpecialBuildingType();
 	if (sb == NO_SPECIALBUILDING) return true;
 	const CvInfo* jg = InfoRepo<CvSpecialBuildingInfo>::get().get((int)sb);
 	const CvAllowed* a = (jg != NULL) ? jg->getAllowed() : NULL;
@@ -506,7 +506,7 @@ void BuildingEnabler::onCityBuildingChanged(const CvCity& kCity, int iBuilding, 
 		// buildings domain carries the counts). A GROUP-capped member's crossing re-gates ALL its group
 		// siblings (the grouped wonders: one member built consumes the shared slot). world/team caps reach ALL
 		// players; empire reaches the owner's -- the widest reach is used (idempotent gate evals).
-		const SpecialBuildingTypes eSb = GC.getBuildingInfo((BuildingTypes)iBuilding).getSpecialBuilding();
+		const SpecialBuildingTypes eSb = GC.getBuildingInfo((BuildingTypes)iBuilding).getSpecialBuildingType();
 		const CvInfo* jg = (eSb != NO_SPECIALBUILDING) ? InfoRepo<CvSpecialBuildingInfo>::get().get((int)eSb) : NULL;
 		const bool bGroupCapped = (jg != NULL && jg->getAllowed() != NULL);
 		if ((jb != NULL && jb->getAllowed() != NULL) || bGroupCapped)

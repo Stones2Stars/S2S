@@ -4,6 +4,7 @@
 #include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
+#include "Engine/CvGameSpeedScale.h"
 #include "AI/BetterBTSAI.h"
 #include "CvArea.h"
 #include "UI/CvArtFileMgr.h"
@@ -807,7 +808,7 @@ bool CvPlot::doBonusDiscovery()
 	const CvMap& map = GC.getMap();
 	const CvTeam& team = GET_TEAM(getTeam());
 	const int iWorldSizeFactor = map.getWorldSize() + 4;
-	const int iGameSpeedFactor = GC.getGameSpeedInfo(game.getGameSpeedType()).getHammerCostPercent();
+	const int iGameSpeedFactor = CvGameSpeedScale::hammerCostPercent();
 	const int iNumBonuses = GC.getNumMapBonuses();
 	// Toffer - Can't check all bonuses for all valid plots every turn
 	//	bWorked is more likely to be true for plots in late game, which is when optimization is most dire.
@@ -916,7 +917,7 @@ void CvPlot::doBonusDepletion()
 	{
 		return;
 	}
-	iOdds *= GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getHammerCostPercent();
+	iOdds *= CvGameSpeedScale::hammerCostPercent();
 	iOdds /= 100;
 	// Bonus density normalization.
 	iOdds *= 25 * (GC.getMap().getWorldSize() + 4);
@@ -1119,7 +1120,7 @@ void CvPlot::checkCityRevolt()
 	const int iRevoltTestProb = (
 		std::max(
 			1,
-			GC.getREVOLT_TEST_PROB()* 100/GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent()
+			GC.getREVOLT_TEST_PROB()* 100/CvGameSpeedScale::speedPercent()
 		)
 	);
 	// Check to check for revolt, rate adjusted by gamespeed, at least 1% minimum.
@@ -1163,7 +1164,7 @@ void CvPlot::checkCityRevolt()
 			{
 				pCity->changeNumRevolts(eCulturalOwner, 1);
 				pCity->changeOccupationTimer(
-					GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent()
+					CvGameSpeedScale::speedPercent()
 					*
 					(GC.getDefineINT("BASE_REVOLT_OCCUPATION_TURNS") + iCityStrength100 * GC.getDefineINT("REVOLT_OCCUPATION_TURNS_PERCENT") / 10000)
 					/
@@ -3477,7 +3478,7 @@ int CvPlot::getBuildTime(BuildTypes eBuild) const
 	iTime *= std::max(0, GC.getTerrainInfo(eTerrain).getBuildModifier() + 100);
 	iTime /= 100;
 
-	iTime *= GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getHammerCostPercent();
+	iTime *= CvGameSpeedScale::hammerCostPercent();
 	iTime /= 100;
 
 	iTime *= GC.getEraInfo(GC.getGame().getStartEra()).getBuildPercent();
@@ -3578,7 +3579,7 @@ int CvPlot::getFeatureProduction(BuildTypes eBuild, TeamTypes eTeam, CvCity** pp
 		iProduction /= 100;
 	}
 
-	iProduction *= GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getHammerCostPercent();
+	iProduction *= CvGameSpeedScale::hammerCostPercent();
 	iProduction /= 100;
 
 	return std::max(0, iProduction);
@@ -10691,7 +10692,7 @@ void CvPlot::doFeature()
 		if (GC.getFeatureInfo(getFeatureType()).getDisappearanceProbability() > 0
 		&&  GC.getFeatureInfo(getFeatureType()).getDisappearanceProbability() >
 			(
-				GC.getGame().getSorenRandNum(100 * GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent(), "Feature Disappearance")
+				GC.getGame().getSorenRandNum(100 * CvGameSpeedScale::speedPercent(), "Feature Disappearance")
 			)
 		) setFeatureType(NO_FEATURE);
 
@@ -10735,7 +10736,7 @@ void CvPlot::doFeature()
 			}
 
 			if(iProbability > 0
-			&& iProbability > GC.getGame().getSorenRandNum(100 * GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent(), "Feature Growth"))
+			&& iProbability > GC.getGame().getSorenRandNum(100 * CvGameSpeedScale::speedPercent(), "Feature Growth"))
 			{
 				setFeatureType((FeatureTypes)iI);
 				TCHAR szSound[1024] = "AS2D_FEATUREGROWTH";
@@ -10777,7 +10778,7 @@ void CvPlot::doCulture()
 	// Toffer - Decay culture for players that no longer adds culture to this plot
 	// Blaze - or uses equilibrium culture gameoption
 	{
-		const int decayPermille = GC.getTILE_CULTURE_DECAY_PERCENT() * 1000 / GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent();
+		const int decayPermille = GC.getTILE_CULTURE_DECAY_PERCENT() * 1000 / CvGameSpeedScale::speedPercent();
 
 		for (int i = 0; i < MAX_PLAYERS; i++)
 		{

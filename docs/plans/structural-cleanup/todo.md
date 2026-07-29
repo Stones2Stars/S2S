@@ -89,6 +89,17 @@
   spec, so it wants a pass of its own before any of its data is re-homed.
 - **Constraints → `requires` / `allowed`** — `terrainImpassable`, `featureImpassable`, `requiresFlatlands`,
   `validTerrains`, `minAreaSize`, `distanceToLand`, the `found*` gates.
+- **`diploVoteType` (3, BUILDING) is a §9 FK RELATIONSHIP parked in `identity`.** Apostolic Palace →
+  `DIPLOVOTE_POPE`, Congress of Vienna → `DIPLOVOTE_CVIENNA`, United Nations → `DIPLOVOTE_UN`: the building IS
+  that voting body. json.md §2/§9 already list **`voteSource`** as a top-level bespoke section, and this is the
+  exact shape `shrine: RELIGION_X` / `headquarters: CORPORATION_X` already have (*"a top-level section, not an
+  `identity` marker — the relationship IS the data"*) — the info even holds it beside them
+  (`m_iShrineReligion` / `m_iHeadquartersCorporation` / `m_iDiploVoteType`). So the curator emits it one key too
+  low (`curate_building.py` maps `DiploVoteType` → `identity.diploVoteType`); it re-homes to the top-level
+  `voteSource` section and the member re-maps from there, curator + regen in the same work item
+  ([DEC-recurate-on-decision](../../architecture/decisions.md#dec-recurate-on-decision)).
+  ⚠ Naming rides with it: the getter is `getDiploVoteType()` today, which names the legacy XML tag rather than
+  the spec's section.
 - **Keys with a home already specced** — `tradeable` (910, TECH) is the `canTrade` block
   ([capabilities.md](../../specs/capabilities.md)); `commerceDoubleTime` is a second deposit gated on
   `existedFor` ([json.md §3](../../specs/json.md)); `advancedStart` is already flagged *"parked in identity …
@@ -387,14 +398,53 @@ at the point it meets a human-scale operand.
 ⚑ **The `ai` sub-object in the data IS the `bAiAudience` argument** (`diplomacy.empire.declareWar.ai.percent`
 → `bAiAudience = true`); a leaf with no `ai` sibling reads `false`. Do not sum the two planes.
 
-## The GAMESPEED hammer-cost consumer calc — genuinely unbuilt
+## The CONSUMER REWIRE census — the compiler's worklist, and how to regenerate it
 
-`CvGameSpeedInfo` states outright that the option-gated `AdaptHammerCost` derivation (speed percent × the
-upscaled-costs define under `GAMEOPTION_EXP_UPSCALED_BUILDING_AND_UNIT_COSTS`) is **NOT served by the info** —
-"a game option gates AT THE CONSUMING SYSTEM". No shared consumer-side calc exists, so its readers currently
-have nothing to call. It wants ONE implementation on the calc surface
-([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation)), not a re-derivation
-per call site. Killed at the `CvTeamAI` war-timing sites meanwhile (war timing is unscaled by game speed there).
+> The delete-driven cut left the consumers dangling on purpose (the compiler is the census,
+> [DEC-playability-not-a-gate](../../architecture/decisions.md#dec-playability-not-a-gate)). This section is
+> how to WORK that census without being misled by it. It is not a count to drive to zero — it is a method.
+
+**Regenerate it, never trust a stale number:**
+
+```
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" Assert build   # from Sources/
+grep -o "error C2039: '[^']*' : is not a member of '[^']*'" <log> | sort -u
+```
+
+⛔ **THE CENSUS UNDER-REPORTS, AND BY AN ORDER OF MAGNITUDE — MSVC stops at 100 errors per translation unit
+(`C1003`), so a symbol's error count is NOT its call-site count.** Measured: the gamespeed getters reported
+**18** error sites and had **135** real ones; `getFreeBonuses` reported 53 errors across **16** sites. So:
+**always `grep -rn` the symbol across `Sources/` before estimating, and re-census after every fix** — clearing
+one symbol reveals previously-hidden errors in the same TU, which is why the raw error TOTAL barely moves and
+is a useless progress metric. Count DISTINCT `(member, class)` pairs instead.
+
+**The disposition test, in order — this is the part that matters:**
+
+1. **`grep` the owning info's header for a successor FIRST.** The rebuilt infos are named for the JSON
+   ([patterns.md § An info is STYLED FOR THE JSON](../../architecture/patterns.md)), so a "missing member" is
+   most often a RENAMED one, and the fix is a verified re-point, never a deletion. Worked cases: the building's
+   `getVoteSourceType` → `getDiploVoteType` (the member was there all along, named for its `diploVoteType`
+   data key); `getFreeBonuses` → `getProvides()` (json §5a names `iNumFreeBonuses` as exactly what
+   `provides.bonuses` replaced).
+2. **If no successor exists, check whether the DATA is still authored.** If it is, the info is missing a member
+   and that is the defect — not the call site.
+3. **Only if neither holds is the term genuinely dead.** Then DELETE it (never comment it out —
+   [DEC-no-rollerskate-evidence](../../architecture/decisions.md#dec-no-rollerskate-evidence)) and record what
+   was lost here.
+
+⛔ **A BLANKET RENAME ACROSS `Sources/` IS THE TRAP, and it has already fired.** Several info getter names are
+ALSO live methods on the game objects — **`CvUnit::getDomainType()` is `DllExport`, i.e. EXE-BOUND** ([engine.md
+§ Is a symbol really EXE-bound?](../../reference/engine.md)), and `getUnitCombatType()` is live on
+`CvUnit`/`CvSelectionGroup`/`CyUnit`. A textual sweep renames those too and silently breaks working code, which
+is the same hazard [§Vision](#vision) flags for `getInvisibleType`/`getSeeInvisibleType`. **Distinguishing them
+is SEMANTIC (what is the receiver?), not textual** — so for any name that is also a live method, do not sweep:
+leave it and let the compiler name the info-side sites individually.
+
+**Where a whole family is genuinely unbuilt, it belongs in its own section below, not in this census.** The
+unit plane is the standing example — `CvUnitInfo` carries the largest dangling set, and much of it
+(`getPrereq*`, `getTrainCondition`, `getTrainRequirements`, `getMaxGlobalInstances`) is not a rename at all but
+the `getRequires()` / `getAllowed()` SECTION objects the consumers have not been re-expressed onto, plus the
+per-source unit-stat reads whose replacement is not built.
 
 ## Stage 4 — the consumer cut (sequenced LAST; see the roadmap's ORDER ruling)
 

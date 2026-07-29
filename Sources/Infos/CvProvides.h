@@ -33,6 +33,20 @@ public:
 		return it != bonusCount.end() ? it->second : 1;
 	}
 
+	// Does this entity supply that bonus at all? The PRESENCE half of the §5a read (vicinity is
+	// presence-only, so it reads the keys); `countOf` answers the quantity half.
+	bool has(int iBonusId) const
+	{
+		for (std::vector<int>::const_iterator it = bonuses.begin(); it != bonuses.end(); ++it)
+		{
+			if (*it == iBonusId)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
 	bool isEmpty() const { return bonuses.empty(); }
 	void clearParsed() { bonuses.clear(); bonusCount.clear(); }   // the clear-first half of the full-registry section re-map
 

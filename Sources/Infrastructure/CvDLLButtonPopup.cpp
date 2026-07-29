@@ -1488,7 +1488,7 @@ bool CvDLLButtonPopup::launchChooseTechPopup(CvPopup* pPopup, CvPopupInfo &info)
 	(
 		eBestTech == NO_TECH ? NO_TECH
 		:
-		player.AI_bestTech(1, iDiscover > 0, true, eBestTech, (AdvisorTypes)GC.getTechInfo(eBestTech).getAdvisorType())
+		player.AI_bestTech(1, iDiscover > 0, true, eBestTech, (AdvisorTypes)GC.getTechInfo(eBestTech).getAdvisor())
 	);
 	const CvTeam& team = GET_TEAM(player.getTeam());
 
@@ -1506,7 +1506,7 @@ bool CvDLLButtonPopup::launchChooseTechPopup(CvPopup* pPopup, CvPopupInfo &info)
 
 				if (eTechX == eBestTech || eTechX == eNextBestTech)
 				{
-					szBuffer += gDLL->getText("TXT_KEY_POPUP_RECOMMENDED_ONLY_ADV", GC.getAdvisorInfo((AdvisorTypes)(GC.getTechInfo(eTechX).getAdvisorType())).getTextKeyWide());
+					szBuffer += gDLL->getText("TXT_KEY_POPUP_RECOMMENDED_ONLY_ADV", GC.getAdvisorInfo((AdvisorTypes)(GC.getTechInfo(eTechX).getAdvisor())).getTextKeyWide());
 				}
 				CvString szButton;
 
@@ -2701,7 +2701,7 @@ bool CvDLLButtonPopup::launchSelectDiscoveryTechPopup(CvPopup* pPopup, CvPopupIn
 			"TXT_KEY_POPUP_RECOMMENDED",
 			GC.getTechInfo(eTechAI).getDescription(),
 			player.getResearchTurnsLeft(eTechAI, true),
-			GC.getAdvisorInfo((AdvisorTypes)GC.getTechInfo(eTechAI).getAdvisorType()).getTextKeyWide()
+			GC.getAdvisorInfo((AdvisorTypes)GC.getTechInfo(eTechAI).getAdvisor()).getTextKeyWide()
 		),
 		GC.getTechInfo(eTechAI).getButton(), static_cast<int>(eTechAI), WIDGET_PEDIA_JUMP_TO_TECH,
 		static_cast<int>(eTechAI), -1, true, POPUP_LAYOUT_STRETCH, DLL_FONT_LEFT_JUSTIFY

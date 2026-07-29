@@ -12,12 +12,27 @@
 
 ---
 
-## 1. The model — integer ×100 EVERYWHERE, human only at the IN and OUT boundaries
+## 1. The model — integer ×100 for AMOUNTS, human only at the IN and OUT boundaries
 
-×100 fixed-point with 2 decimals is the engine's **native representation everywhere** — the cascade, the realized
-getters, and the consumers all carry ×100. No floats anywhere — this is OOS-load-bearing (Civ4 MP is deterministic
-lockstep; CPU-dependent float math desyncs). `V100 = round(human × 100)`, so `1.00 → 100`, `7 → 700`, `0.5 → 50`;
-`FIXED_ONE = 100`.
+×100 fixed-point is the engine's **native representation for every AMOUNT** — a yield, a combat value, any
+magnitude — carried that way through the cascade, the realized getters and the consumers. No floats anywhere —
+this is OOS-load-bearing (Civ4 MP is deterministic lockstep; CPU-dependent float math desyncs).
+`V100 = round(human × 100)`, so `1.00 → 100`, `7 → 700`, `0.5 → 50`; `FIXED_ONE = 100`.
+
+> **⛔ THE ×100 EXISTS FOR ONE REASON — TWO DECIMALS ON AN AMOUNT (owner).** *"The reason for multiplying int
+> values by 100 is so we can have 2 decimals… so we can express anything with 2 decimals at edge."* That is the
+> whole of it, and it is what decides where the scale applies.
+>
+> **⛔ A PERCENTAGE IS THEREFORE NOT SCALED (owner): *"percentages should not have decimals."*** A percent is a
+> whole number, so it has no decimals to carry and the ×100 buys nothing. Scaling it costs a **second identity
+> constant**: `100 + Σpercent` becomes `10000 + Σpercent` at every site a percent is combined, and that magic
+> `10000` then has to be threaded through every consumer — which is exactly the fudge-factor class §4c-bis exists
+> to reject. `flat` and `multiplier` DO convert (a flat is an amount; a multiplier is authored on the same
+> two-decimal footing, identity 100 → `×1.5` = `150`).
+>
+> ⚑ **This is NOT a per-channel carve-out** ([DEC-fixedpoint-x100](../../architecture/decisions.md#dec-fixedpoint-x100)'s
+> uniformity still binds): the rule is per **UNIT** and applies identically to every family. No channel gets a
+> special case; `percent` simply is not a two-decimal quantity in any of them.
 
 Human numbers exist at exactly **two boundaries** — nobody in between guesses scales, and **no getter has a ×100
 "variant"** (there is no `getX()` + `getX100()` pair; the getter simply IS ×100):
@@ -27,7 +42,7 @@ Human numbers exist at exactly **two boundaries** — nobody in between guesses 
 | **XML** (legacy, frozen) | the inherited data — MIXED scales (some fields `*Changes100`, some normal) | the mess we're leaving |
 | **CURATOR** (`Tools/Migration/`) | resolve the XML per-100-vs-normal ambiguity → emit **uniform human-readable** numbers to JSON | reads ×100 XML, writes human |
 | **JSON** (`Assets/Data/**`) | human numbers only (`7`, `25`, `1.5`) — **no ×100, no scale markers** | NO |
-| **readJson** (the IN boundary) | the **entire** human→×100 conversion + percent semantics, once at load | converts → ×100 |
+| **readJson** (the IN boundary) | the **entire** human→×100 conversion, once at load, keyed on the authored UNIT (amounts convert; percents do not) | converts amounts → ×100 |
 | **CASCADE + getters + consumers** (the engine) | pure integer ×100 math; the realized getters return ×100 and every consumer carries it | ×100 throughout |
 | **READERS** (the OUT boundary) | ×100 → human, once: any READER (UI / the `/computed` HTTP fields / the `Cy*` Python wrappers) does its own trivial `÷100`. A value that is physically a **whole game count** (angry citizens, a food modifier) reduces at the **point of use** that consumes it as a whole number — that use is itself a reader | converts ← ×100 |
 
@@ -55,16 +70,23 @@ stays ×100 and its own reader reduces. The conversion METHOD is §4c-bis below;
 
 **Consequence:** a ×100 value in a JSON file is a **curator bug** — it leaked an integer-math
 representation onto the human surface. Because the curator absorbs all scale mixing once, readJson has
-ZERO per-field scale knowledge (a blanket ×100). The per-field registry below is therefore a
+ZERO per-FIELD scale knowledge — it reads only the authored **UNIT** (`flat`/`percent`/`multiplier`, which the
+data states outright), never which field it belongs to. The per-field registry below is therefore a
 **curator-only, used-once** checklist — it must not leak into readJson or the cascade.
 
 ## 2. The unit table (what readJson does)
 
-| JSON (human) | meaning | internal (×100) | combine |
+| JSON (human) | meaning | internal | combine |
 |---|---|---|---|
-| `flat: 7` (or `7.5`) | additive +7.00 / +7.50 | `700` / `750` | summed: `Σflat100` |
-| `percent: 25` | +25.00% | `2500` | summed: `Σpct100` |
-| `multiplier: 2` (or `1.5`) | ×2.00 / ×1.50 | `200` / `150` | product: `Π(mult100/100)` |
+| `flat: 7` (or `7.5`) | additive +7.00 / +7.50 | `700` / `750` (×100 — an AMOUNT) | summed: `Σflat100` |
+| `percent: 25` | +25% | **`25` — NOT scaled** (a percent has no decimals) | summed: `Σpercent`, applied as `(100 + Σpercent)/100` |
+| `multiplier: 2` (or `1.5`) | ×2.00 / ×1.50 | `200` / `150` (×100 — identity 100) | product: `Π(mult100/100)` |
+
+⛔ **readJson is the ONE place that knows this, and a CALCULATION never scales (owner):** *"you should not need
+to scale any value inside any actual calculation — it is literally readJson's job to ensure it's scaled."* The
+unit-aware conversion lives at the parse edge (`CvModifiers.cpp`, the entry-value sites); every consumer then
+receives what it can use directly. A `/100` or a `×100` appearing inside a calculation to make two operands
+agree is the defect, never the fix.
 
 ## 3. How to figure a field's scale (the method — do NOT eyeball the name)
 

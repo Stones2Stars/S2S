@@ -4,6 +4,7 @@
 #include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
+#include "Engine/CvGameSpeedScale.h"
 #include "CvArea.h"
 #include "CvBuildingInfo.h"
 #include "Enabler/CvEnablerKernel.h"   // obsoletedByHeldTech -- obsoletion is DERIVED from the held techs
@@ -994,7 +995,7 @@ void CvTeam::processBuilding(BuildingTypes eBuilding, int iChange, bool bReligio
 	{
 		for (int i = 0; i < GC.getNumVoteSourceInfos(); ++i)
 		{
-			if (GC.getBuildingInfo(eBuilding).getVoteSourceType() == i)
+			if (GC.getBuildingInfo(eBuilding).getDiploVoteType() == i)
 			{
 				changeForceTeamVoteEligibilityCount((VoteSourceTypes)i, (GC.getBuildingInfo(eBuilding).isForceTeamVoteEligible()) ? iChange : 0);
 			}
@@ -2632,7 +2633,7 @@ int CvTeam::getResearchCost(TechTypes eTech) const
 	iCost *= GC.getTECH_COST_MODIFIER();
 	iCost /= 100;
 
-	iCost *= GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent();
+	iCost *= CvGameSpeedScale::speedPercent();
 	iCost /= 100;
 
 	iCost *= GC.getEraInfo((EraTypes)GC.getTechInfo(eTech).getEra()).getResearchPercent();
@@ -2647,9 +2648,9 @@ int CvTeam::getResearchCost(TechTypes eTech) const
 	{
 		iMod +=
 			(
-				GC.getHandicapInfo(GC.getGame().getHandicapType()).getAIResearchPercent() - 100
+				GC.getHandicapInfo(GC.getGame().getHandicapType()).getCostsModifier(COSTS_RESEARCH, CASC_SCOPE_EMPIRE, true) - 100
 				+
-				GC.getHandicapInfo(GC.getGame().getHandicapType()).getAIPerEraModifier() * GET_PLAYER(getLeaderID()).getCurrentEra()
+				GC.getHandicapInfo(GC.getGame().getHandicapType()).getUnitUpkeepEraModifier() * GET_PLAYER(getLeaderID()).getCurrentEra()
 			);
 	}
 	if (GC.getGame().isOption(GAMEOPTION_TECH_UPSCALED_COSTS))
@@ -5310,7 +5311,7 @@ void CvTeam::setHasTech(TechTypes eTech, bool bNewValue, PlayerTypes ePlayer, bo
 						{
 							for (int iK = 0; iK < GC.getNumCivicInfos(); iK++)
 							{
-								if (GC.getCivicInfo((CivicTypes)iK).getCivicOptionType() == iJ
+								if (GC.getCivicInfo((CivicTypes)iK).getCivicOption() == iJ
 								&& GC.getCivicInfo((CivicTypes)iK).getTechPrereq() == eTech)
 								{
 									eCivicOptionType = (CivicOptionTypes)iJ;
@@ -5757,8 +5758,8 @@ void CvTeam::processTech(TechTypes eTech, int iChange, bool bAnnounce)
 		// special-building GROUP's.
 		const CvBuildingInfo& kObsBuilding = GC.getBuildingInfo((BuildingTypes)iI);
 		const bool bByOwnTech = kObsBuilding.getObsoleteTech() == eTech;
-		const bool bByGroupTech = kObsBuilding.getSpecialBuilding() != NO_SPECIALBUILDING
-			&& GC.getSpecialBuildingInfo(kObsBuilding.getSpecialBuilding()).getObsoleteTech() == eTech;
+		const bool bByGroupTech = kObsBuilding.getSpecialBuildingType() != NO_SPECIALBUILDING
+			&& GC.getSpecialBuildingInfo(kObsBuilding.getSpecialBuildingType()).getObsoleteTech() == eTech;
 
 		// The stored counter used to dedupe the two paths via `bWasObsolete`; the DERIVED counterfactual does it
 		// now -- act only if no OTHER held tech had already obsoleted this building ([DEC-derived-never-trusted]).

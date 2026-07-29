@@ -11,11 +11,18 @@
 
 ### DEC-fixedpoint-x100
 
-×100 fixed-point is the engine's NATIVE representation EVERYWHERE — the cascade, the realized getters, and the
-consumers all carry ×100. JSON is human; human→×100 converts once at readJson (the IN boundary); ×100→human converts
+×100 fixed-point is the engine's NATIVE representation for every **AMOUNT** — the cascade, the realized getters, and
+the consumers all carry ×100. **The ×100 exists for ONE reason: so an amount can carry TWO DECIMALS at the edge
+(owner).** JSON is human; human→×100 converts once at readJson (the IN boundary); ×100→human converts
 only at the OUT boundary — any READER (UI / `/computed` HTTP fields / `Cy*` Python) does a trivial `÷100`.
 **NO getter reduces, and there are NO discrete carve-outs — EVERY channel works the same way (owner ruling; this
-uniformity is the core of the rework).** A value that is physically a whole game count (angry citizens, a food
+uniformity is the core of the rework).**
+⛔ **A PERCENTAGE IS NOT SCALED (owner): *"percentages should not have decimals."*** It is a whole number, so the
+×100 buys nothing and costs a second identity constant (`100 + Σpercent` → `10000 + Σpercent`) at every combine.
+This is **per-UNIT, not per-channel** — it applies identically everywhere, so the uniformity above is intact.
+⛔ **readJson OWNS the scale and a CALCULATION never scales (owner):** *"you should not need to scale any value
+inside any actual calculation — it is literally readJson's job to ensure it's scaled."* A `/100` or `×100` added
+inside a calculation to make two operands agree is the defect, not the fix. A value that is physically a whole game count (angry citizens, a food
 modifier) reduces at the POINT OF USE that consumes it as a whole number, never inside the getter that every other
 consumer reads. **No getter has a ×100 "variant"** (never a `getX`+`getX100` pair); reducing at the getter forces that
 split and lets the cascade be shoehorned into legacy-shaped getters — the half-migration reflex. **Blast radius never

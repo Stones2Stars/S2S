@@ -2,6 +2,7 @@
 #include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
+#include "Engine/CvGameSpeedScale.h"
 #include "AI/BetterBTSAI.h" // logCityAI ([CIT/produced] / [CIT/waste] production-pipeline logging)
 #include "CvArea.h"
 #include "UI/CvArtFileMgr.h"
@@ -43,6 +44,33 @@
 #include "Infrastructure/CvDLLEngineIFaceBase.h"
 #endif
 #include "UI/CityOutputHistory.h"
+#include "Infos/CvClassificationBlock.h"   // CLSD_SKILL + the memoized id bit test
+
+namespace
+{
+	// The json.md §8 SKILL reads this file makes. The consumer holds the memoized generated-id
+	// (the CvUnitFilters precedent): the info exposes only the parameterized group read
+	// getSkills(), never a named getter per key (patterns.md -- a per-key boolean getter is the
+	// shape the rebuild deletes).
+	bool unitNeedsStateReligion(const CvUnitInfo& kUnit)
+	{
+		static int s_stateReligionSkillId = -1;
+		return kUnit.getSkills()->hasKey(s_stateReligionSkillId, CLSD_SKILL, "stateReligion");
+	}
+
+	bool unitIsFoodProduction(const CvUnitInfo& kUnit)
+	{
+		static int s_foodSkillId = -1;
+		return kUnit.getSkills()->hasKey(s_foodSkillId, CLSD_SKILL, "food");
+	}
+
+	bool unitHasNoNonTypeProdMods(const CvUnitInfo& kUnit)
+	{
+		static int s_noNonTypeProdModsSkillId = -1;
+		return kUnit.getSkills()->hasKey(s_noNonTypeProdModsSkillId, CLSD_SKILL, "noNonTypeProdMods");
+	}
+}
+
 
 //Disable this passed in initialization list warning, as it is only stored in the constructor of CvBuildingList and not used
 #pragma warning( disable : 4355 )
@@ -1155,7 +1183,7 @@ bool CvCity::isRecentlyAcquired() const
 	(
 		(GC.getGame().getGameTurn() - getGameTurnAcquired())
 		<
-		12 * GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent() / 100
+		12 * CvGameSpeedScale::speedPercent() / 100
 	);
 }
 
@@ -1954,7 +1982,7 @@ bool CvCity::isPlotTrainable(UnitTypes eUnit, bool bTestVisible) const
 		const CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
 		const CvPlayer& pPlayer = GET_PLAYER(getOwner());
 
-		if (kUnit.isStateReligion() && pPlayer.getStateReligion() != NO_RELIGION && !isHasReligion(pPlayer.getStateReligion()))
+		if (unitNeedsStateReligion(kUnit) && pPlayer.getStateReligion() != NO_RELIGION && !isHasReligion(pPlayer.getStateReligion()))
 		{
 			return false;
 		}
@@ -1964,7 +1992,7 @@ bool CvCity::isPlotTrainable(UnitTypes eUnit, bool bTestVisible) const
 			const BuildingTypes eBuildingX = (BuildingTypes)kUnit.getPrereqAndBuilding(iI);
 			if (!GET_TEAM(getTeam()).isObsoleteBuilding(eBuildingX) && !isActiveBuilding(eBuildingX))
 			{
-				const SpecialBuildingTypes eSpecialBuilding = GC.getBuildingInfo(eBuildingX).getSpecialBuilding();
+				const SpecialBuildingTypes eSpecialBuilding = GC.getBuildingInfo(eBuildingX).getSpecialBuildingType();
 
 				if (eSpecialBuilding == NO_SPECIALBUILDING || !pPlayer.isSpecialBuildingNotRequired(eSpecialBuilding))
 				{
@@ -2234,7 +2262,7 @@ bool CvCity::isProductionUnitCombat(int iIndex) const
 		switch (order->eOrderType)
 		{
 		case ORDER_TRAIN:
-			return GC.getUnitInfo(order->getUnitType()).hasUnitCombat((UnitCombatTypes)iIndex);
+			return GC.getUnitInfo(order->getUnitType()).hasCombatClass((UnitCombatTypes)iIndex);
 		case ORDER_CONSTRUCT:
 			return false;
 		case ORDER_CREATE:
@@ -2329,7 +2357,7 @@ int CvCity::getProductionExperience(UnitTypes eUnit) const
 				iExperience += kPlayer.getUnitCombatFreeExperience(combatType);
 			}
 
-			foreach_(const UnitCombatTypes eSubCombat, kUnit.getSubCombatTypes())
+			foreach_(const UnitCombatTypes eSubCombat, kUnit.getCombatClasses())
 			{
 				iExperience += getUnitCombatFreeExperience(eSubCombat);
 				iExperience += kPlayer.getUnitCombatFreeExperience(eSubCombat);
@@ -2612,7 +2640,7 @@ bool CvCity::isFoodProduction() const
 
 bool CvCity::isFoodProduction(UnitTypes eUnit) const
 {
-	return GC.getUnitInfo(eUnit).isFoodProduction()
+	return unitIsFoodProduction(GC.getUnitInfo(eUnit))
 		|| GET_PLAYER(getOwner()).isMilitaryFoodProduction()
 		&& GC.getUnitInfo(eUnit).isMilitaryProduction();
 }
@@ -2988,7 +3016,7 @@ int CvCity::getProductionModifier(UnitTypes eUnit) const
 
 	iMultiplier += getUnitProductionModifier(eUnit);
 	iMultiplier += GET_PLAYER(getOwner()).getUnitProductionModifier(eUnit);
-	if (!unit.isNoNonTypeProdMods())
+	if (!unitHasNoNonTypeProdMods(unit))
 	{
 		iMultiplier += getDomainProductionModifier(unit.getDomainType());
 		if (unit.getUnitCombatType() != NO_UNITCOMBAT)
@@ -2996,7 +3024,7 @@ int CvCity::getProductionModifier(UnitTypes eUnit) const
 			iMultiplier += GET_PLAYER(getOwner()).getUnitCombatProductionModifier((UnitCombatTypes)(unit.getUnitCombatType()));
 			iMultiplier += getUnitCombatProductionModifier((UnitCombatTypes)(unit.getUnitCombatType()));
 
-			foreach_(const UnitCombatTypes eSubCombat, unit.getSubCombatTypes())
+			foreach_(const UnitCombatTypes eSubCombat, unit.getCombatClasses())
 			{
 				iMultiplier += GET_PLAYER(getOwner()).getUnitCombatProductionModifier(eSubCombat);
 				iMultiplier += getUnitCombatProductionModifier(eSubCombat);
@@ -3329,7 +3357,7 @@ int CvCity::getConscriptPopulation() const
 
 int CvCity::flatConscriptAngerLength() const
 {
-	return std::max(1, GC.getCONSCRIPT_ANGER_DIVISOR() * GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent() / 100);
+	return std::max(1, GC.getCONSCRIPT_ANGER_DIVISOR() * CvGameSpeedScale::speedPercent() / 100);
 }
 
 
@@ -3722,14 +3750,17 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 			}
 		}
 
-		foreach_(const BonusModifier& pair, kBuilding.getFreeBonuses())
+		const CvProvides* pProvides = kBuilding.getProvides();
+		foreach_(const int iFreeBonus, pProvides->bonuses)
 		{
-			changeFreeBonus(pair.first, pair.second * iChange);
-			clearVicinityBonusCache(pair.first);
-			clearRawVicinityBonusCache(pair.first);
+			const BonusTypes eFreeBonus = (BonusTypes)iFreeBonus;
+			const int iSuppliedDelta = pProvides->countOf(iFreeBonus) * iChange;
+			changeFreeBonus(eFreeBonus, iSuppliedDelta);
+			clearVicinityBonusCache(eFreeBonus);
+			clearRawVicinityBonusCache(eFreeBonus);
 			// the event carries the applied local DELTA (a city can hold several of a bonus locally --
 			// a presence-flip gate would hide the 1->2/2->1 transitions and undercount downstream)
-			emitVicinityBonusChanged(getID(), getOwner(), (int)pair.first, pair.second * iChange);
+			emitVicinityBonusChanged(getID(), getOwner(), iFreeBonus, iSuppliedDelta);
 		}
 
 
@@ -4194,7 +4225,7 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 			changeGreatPeopleUnitRate(eGreatPeopleUnit, kBuilding.getGreatPeopleRateChange() * iChange);
 		}
 
-		const SpecialBuildingTypes eSpecialBuilding = kBuilding.getSpecialBuilding();
+		const SpecialBuildingTypes eSpecialBuilding = kBuilding.getSpecialBuildingType();
 		if (eSpecialBuilding != NO_SPECIALBUILDING)
 		{
 			owner.changeBuildingGroupCount(eSpecialBuilding, iChange);
@@ -4603,7 +4634,7 @@ int CvCity::getRevRequestPercentAnger(int iExtra) const
 	}
 
 	int iAnger = GC.getHURRY_ANGER_DIVISOR();
-	iAnger *= GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent();
+	iAnger *= CvGameSpeedScale::speedPercent();
 	iAnger /= 100;
 
 	iAnger = std::max(1, iAnger);
@@ -4645,7 +4676,7 @@ int CvCity::getRevSuccessHappiness() const
 
 	int iHappy = GC.getHURRY_ANGER_DIVISOR();
 
-	iHappy *= GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent();
+	iHappy *= CvGameSpeedScale::speedPercent();
 	iHappy /= 100;
 	iHappy = std::max(1, iHappy);
 
@@ -5247,7 +5278,7 @@ int CvCity::hurryProduction(HurryTypes eHurry) const
 int CvCity::flatHurryAngerLength() const
 {
 	int iAnger = GC.getHURRY_ANGER_DIVISOR();
-	iAnger *= GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent();
+	iAnger *= CvGameSpeedScale::speedPercent();
 	iAnger /= 100;
 	iAnger *= std::max(0, 100 + getHurryAngerModifier());
 	iAnger /= 100;
@@ -7674,7 +7705,7 @@ int CvCity::getAdditionalHappinessByCivic(CivicTypes eCivic, bool bDifferenceToC
 	PROFILE_EXTRA_FUNC();
 	if (bDifferenceToCurrent)
 	{
-		return getAdditionalHappinessByCivic(eCivic, false, bCivicOptionVacuum, eStateReligion, iExtraPop, iMilitaryHappinessUnits) - getAdditionalHappinessByCivic(GET_PLAYER(getOwner()).getCivics((CivicOptionTypes)(GC.getCivicInfo(eCivic).getCivicOptionType())), false, bCivicOptionVacuum, eStateReligion, iExtraPop, iMilitaryHappinessUnits);
+		return getAdditionalHappinessByCivic(eCivic, false, bCivicOptionVacuum, eStateReligion, iExtraPop, iMilitaryHappinessUnits) - getAdditionalHappinessByCivic(GET_PLAYER(getOwner()).getCivics((CivicOptionTypes)(GC.getCivicInfo(eCivic).getCivicOption())), false, bCivicOptionVacuum, eStateReligion, iExtraPop, iMilitaryHappinessUnits);
 	}
 
 	if (eCivic == NO_CIVIC)
@@ -7690,7 +7721,7 @@ int CvCity::getAdditionalHappinessByCivic(CivicTypes eCivic, bool bDifferenceToC
 	}
 	if (!bCivicOptionVacuum && !kCivic.isStateReligion() && kOwner.getStateReligionCount() == 1)
 	{
-		if (GC.getCivicInfo(kOwner.getCivics((CivicOptionTypes)(kCivic.getCivicOptionType()))).isStateReligion())
+		if (GC.getCivicInfo(kOwner.getCivics((CivicOptionTypes)(kCivic.getCivicOption()))).isStateReligion())
 		{
 			eStateReligion = NO_RELIGION;
 		}
@@ -7723,12 +7754,12 @@ int CvCity::getAdditionalHappinessByCivic(CivicTypes eCivic, bool bDifferenceToC
 		iAngerPercent += getDefyResolutionPercentAnger(iExtraPop);
 		int iOldWarWearinessAngerPercent;
 		if (!bCivicOptionVacuum && kOwner.getWarWearinessPercentAnger() != 0
-			&& GC.getCivicInfo(kOwner.getCivics((CivicOptionTypes)(kCivic.getCivicOptionType()))).getWarWearinessModifier() != 0)
+			&& GC.getCivicInfo(kOwner.getCivics((CivicOptionTypes)(kCivic.getCivicOption()))).getWarWearinessModifier() != 0)
 		{
 			//int CvCity::getWarWearinessPercentAnger() const
 			iOldWarWearinessAngerPercent = kOwner.getWarWearinessPercentAnger();
 
-			iOldWarWearinessAngerPercent *= std::max(0, (getWarWearinessModifier() + kOwner.getWarWearinessModifier() - GC.getCivicInfo(kOwner.getCivics((CivicOptionTypes)(kCivic.getCivicOptionType()))).getWarWearinessModifier() + 100));
+			iOldWarWearinessAngerPercent *= std::max(0, (getWarWearinessModifier() + kOwner.getWarWearinessModifier() - GC.getCivicInfo(kOwner.getCivics((CivicOptionTypes)(kCivic.getCivicOption()))).getWarWearinessModifier() + 100));
 			iOldWarWearinessAngerPercent /= 100;
 		}
 		else
@@ -7750,7 +7781,7 @@ int CvCity::getAdditionalHappinessByCivic(CivicTypes eCivic, bool bDifferenceToC
 			//int CvCity::getWarWearinessPercentAnger() const
 			int iNewWarWearinessAngerPercent = kOwner.getWarWearinessPercentAnger();
 
-			iNewWarWearinessAngerPercent *= std::max(0, (getWarWearinessModifier() + kOwner.getWarWearinessModifier() + kCivic.getWarWearinessModifier() - ((bCivicOptionVacuum) ? 0 : GC.getCivicInfo(kOwner.getCivics((CivicOptionTypes)(kCivic.getCivicOptionType()))).getWarWearinessModifier()) + 100));
+			iNewWarWearinessAngerPercent *= std::max(0, (getWarWearinessModifier() + kOwner.getWarWearinessModifier() + kCivic.getWarWearinessModifier() - ((bCivicOptionVacuum) ? 0 : GC.getCivicInfo(kOwner.getCivics((CivicOptionTypes)(kCivic.getCivicOption()))).getWarWearinessModifier()) + 100));
 			iNewWarWearinessAngerPercent /= 100;
 			iAngerPercent -= iOldWarWearinessAngerPercent;
 			iAngerPercent += iNewWarWearinessAngerPercent;
@@ -7845,7 +7876,7 @@ int CvCity::getAdditionalHealthByCivic(CivicTypes eCivic, int& iGood, int& iBad,
 		int iHealthNew = getAdditionalHealthByCivic(eCivic, iGood, iBad, iBadBuilding, false, iExtraPop, bCivicOptionVacuum, iIgnoreNoUnhealthyPopulationCount, iIgnoreBuildingOnlyHealthyCount);
 
 		int iTempGood = 0; int iTempBad = 0; int iTempBadBuilding = 0;
-		int iHealthOld = getAdditionalHealthByCivic(GET_PLAYER(getOwner()).getCivics((CivicOptionTypes)(GC.getCivicInfo(eCivic).getCivicOptionType())), iTempGood, iTempBad, iTempBadBuilding, false, iExtraPop, bCivicOptionVacuum, iIgnoreNoUnhealthyPopulationCount, iIgnoreBuildingOnlyHealthyCount);
+		int iHealthOld = getAdditionalHealthByCivic(GET_PLAYER(getOwner()).getCivics((CivicOptionTypes)(GC.getCivicInfo(eCivic).getCivicOption())), iTempGood, iTempBad, iTempBadBuilding, false, iExtraPop, bCivicOptionVacuum, iIgnoreNoUnhealthyPopulationCount, iIgnoreBuildingOnlyHealthyCount);
 		iGood -= iTempGood;
 		iBad -= iTempBad;
 		iBadBuilding -= iTempBadBuilding; //can become negative
@@ -7864,11 +7895,11 @@ int CvCity::getAdditionalHealthByCivic(CivicTypes eCivic, int& iGood, int& iBad,
 
 	if (!bCivicOptionVacuum)
 	{
-		if (kOwner.isCivic(eCivic) || GC.getCivicInfo(kOwner.getCivics((CivicOptionTypes)kCivic.getCivicOptionType())).isNoUnhealthyPopulation())
+		if (kOwner.isCivic(eCivic) || GC.getCivicInfo(kOwner.getCivics((CivicOptionTypes)kCivic.getCivicOption())).isNoUnhealthyPopulation())
 		{
 			iIgnoreNoUnhealthyPopulationCount++;
 		}
-		if (kOwner.isCivic(eCivic) || GC.getCivicInfo(kOwner.getCivics((CivicOptionTypes)kCivic.getCivicOptionType())).isBuildingOnlyHealthy())
+		if (kOwner.isCivic(eCivic) || GC.getCivicInfo(kOwner.getCivics((CivicOptionTypes)kCivic.getCivicOption())).isBuildingOnlyHealthy())
 		{
 			iIgnoreBuildingOnlyHealthyCount++;
 		}
@@ -8044,7 +8075,7 @@ int CvCity::getAdditionalHappinessByBuilding(BuildingTypes eBuilding, int& iGood
 	// Bonus
 	foreach_(const BonusModifier& modifier, kBuilding.getBonusHappinessChanges())
 	{
-		if ((hasBonus(modifier.first) || kBuilding.getFreeBonuses().hasValue(modifier.first)))
+		if ((hasBonus(modifier.first) || kBuilding.getProvides()->has(modifier.first)))
 		{
 			addGoodOrBad(modifier.second, iGood, iBad);
 		}
@@ -8219,7 +8250,7 @@ int CvCity::getAdditionalHealthByBuilding(BuildingTypes eBuilding, int& iGood, i
 	// Bonus
 	foreach_(const BonusModifier& modifier, kBuilding.getBonusHealthChanges())
 	{
-		if ((hasBonus(modifier.first) || kBuilding.getFreeBonuses().hasValue(modifier.first)))
+		if ((hasBonus(modifier.first) || kBuilding.getProvides()->has(modifier.first)))
 		{
 			addGoodOrBad(modifier.second, iGood, iBad);
 		}
@@ -8697,7 +8728,7 @@ int CvCity::flatDefyResolutionAngerLength() const
 {
 	int iAnger = GC.getDEFY_RESOLUTION_ANGER_DIVISOR();
 
-	iAnger *= GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent();
+	iAnger *= CvGameSpeedScale::speedPercent();
 	iAnger /= 100;
 
 	return std::max(1, iAnger);
@@ -12693,7 +12724,7 @@ bool CvCity::isBuildingProductionDecay(BuildingTypes eIndex) const
 		&& (
 			100 * getDelayOnBuilding(eIndex)
 			>=
-			GC.getBUILDING_PRODUCTION_DECAY_TIME() * GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent()
+			GC.getBUILDING_PRODUCTION_DECAY_TIME() * CvGameSpeedScale::speedPercent()
 		)
 	);
 }
@@ -12711,7 +12742,7 @@ int CvCity::getBuildingProductionDecay(BuildingTypes eIndex) const
 int CvCity::getBuildingProductionDecayTurns(BuildingTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eIndex);
-	return std::max(1, 1 + (GC.getBUILDING_PRODUCTION_DECAY_TIME() * GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent() + 99) / 100 - getDelayOnBuilding(eIndex));
+	return std::max(1, 1 + (GC.getBUILDING_PRODUCTION_DECAY_TIME() * CvGameSpeedScale::speedPercent() + 99) / 100 - getDelayOnBuilding(eIndex));
 }
 
 
@@ -12887,7 +12918,7 @@ bool CvCity::isUnitProductionDecay(UnitTypes eIndex) const
 		&& (
 			100 * getDelayOnUnit(eIndex)
 			>=
-			GC.getUNIT_PRODUCTION_DECAY_TIME() * GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent()
+			GC.getUNIT_PRODUCTION_DECAY_TIME() * CvGameSpeedScale::speedPercent()
 		)
 	);
 }
@@ -12905,7 +12936,7 @@ int CvCity::getUnitProductionDecay(UnitTypes eIndex) const
 int CvCity::getUnitProductionDecayTurns(UnitTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, GC.getNumUnitInfos(), eIndex);
-	return std::max(1, 1 + (GC.getUNIT_PRODUCTION_DECAY_TIME() * GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent() + 99) / 100 - getDelayOnUnit(eIndex));
+	return std::max(1, 1 + (GC.getUNIT_PRODUCTION_DECAY_TIME() * CvGameSpeedScale::speedPercent() + 99) / 100 - getDelayOnUnit(eIndex));
 }
 
 
@@ -13622,9 +13653,9 @@ void CvCity::setupBuilding(const CvBuildingInfo& kBuilding, const BuildingTypes 
 	{
 		GC.getGame().changeNumBuildings(eType, iChange);
 
-		if (kBuilding.needStateReligionInCity() && kBuilding.getVoteSourceType() > -1)
+		if (kBuilding.needStateReligionInCity() && kBuilding.getDiploVoteType() > -1)
 		{
-			const VoteSourceTypes eVoteSource = (VoteSourceTypes) kBuilding.getVoteSourceType();
+			const VoteSourceTypes eVoteSource = (VoteSourceTypes) kBuilding.getDiploVoteType();
 			if (eVoteSource > NO_VOTESOURCE && GC.getGame().getVoteSourceReligion(eVoteSource) == NO_RELIGION)
 			{
 				GC.getGame().setVoteSourceReligion(eVoteSource, GET_PLAYER(getOwner()).getStateReligion(), true);
@@ -14621,7 +14652,7 @@ void CvCity::pushOrder(OrderTypes eOrder, int iData1, int iData2, bool bSave, bo
 			{
 				const uint16_t iAIType = EXTERNAL_ORDER_IDATA(iData2);
 				const UnitAITypes AIType = (iAIType == 0xFFFF) ?
-					GC.getUnitInfo(unitType).getDefaultUnitAIType()
+					GC.getUnitInfo(unitType).getDefaultUnitAI()
 					:
 					static_cast<UnitAITypes>(iAIType)
 					;
@@ -14693,7 +14724,7 @@ void CvCity::pushOrder(OrderTypes eOrder, int iData1, int iData2, bool bSave, bo
 
 				owner.changeBuildingMaking(buildingType, 1);
 
-				const SpecialBuildingTypes eSpecialBuilding = GC.getBuildingInfo(buildingType).getSpecialBuilding();
+				const SpecialBuildingTypes eSpecialBuilding = GC.getBuildingInfo(buildingType).getSpecialBuildingType();
 				if (eSpecialBuilding != NO_SPECIALBUILDING)
 				{
 					owner.changeBuildingGroupMaking(eSpecialBuilding, 1);
@@ -15048,7 +15079,7 @@ void CvCity::popOrder(int orderIndex, bool bFinish, bool bChoose, bool bResolveL
 
 			owner.changeBuildingMaking(eConstructBuilding, -1);
 
-			const SpecialBuildingTypes eSpecialBuilding = GC.getBuildingInfo(eConstructBuilding).getSpecialBuilding();
+			const SpecialBuildingTypes eSpecialBuilding = GC.getBuildingInfo(eConstructBuilding).getSpecialBuildingType();
 			if (eSpecialBuilding != NO_SPECIALBUILDING)
 			{
 				owner.changeBuildingGroupMaking(eSpecialBuilding, -1);
@@ -15596,7 +15627,7 @@ bool CvCity::doCheckProduction()
 					{
 						area()->changeNumTrainAIUnits(getOwner(), order.getUnitAIType(), -1);
 						player.AI_changeNumTrainAIUnits(order.getUnitAIType(), -1);
-						order.setUnitAIType(GC.getUnitInfo(eUpgradeUnit).getDefaultUnitAIType());
+						order.setUnitAIType(GC.getUnitInfo(eUpgradeUnit).getDefaultUnitAI());
 						area()->changeNumTrainAIUnits(getOwner(), order.getUnitAIType(), 1);
 						player.AI_changeNumTrainAIUnits(order.getUnitAIType(), 1);
 					}
@@ -15753,7 +15784,7 @@ void CvCity::doDecay()
 			{
 				tickDelayOnBuilding(eTypeX);
 
-				const int iGameSpeedPercent = GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent();
+				const int iGameSpeedPercent = CvGameSpeedScale::speedPercent();
 				if (100 * getDelayOnBuilding(eTypeX) > GC.getBUILDING_PRODUCTION_DECAY_TIME()* iGameSpeedPercent)
 				{
 					decayBuilding.push_back(
@@ -15784,7 +15815,7 @@ void CvCity::doDecay()
 			{
 				tickDelayOnUnit(eUnitX);
 
-				const int iGameSpeedPercent = GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent();
+				const int iGameSpeedPercent = CvGameSpeedScale::speedPercent();
 				if (100 * getDelayOnUnit(eUnitX) > GC.getUNIT_PRODUCTION_DECAY_TIME() * iGameSpeedPercent)
 				{
 					decayUnit.push_back(
@@ -15866,7 +15897,7 @@ void CvCity::doReligion()
 							(
 								GC.getRELIGION_SPREAD_RAND()
 								*
-								GC.getGameSpeedInfo(GAME.getGameSpeedType()).getSpeedPercent()
+								CvGameSpeedScale::speedPercent()
 								/
 								100
 							);
@@ -15945,7 +15976,7 @@ void CvCity::doReligion()
 						(
 							GC.getRELIGION_SPREAD_RAND()
 							*
-							GC.getGameSpeedInfo(GAME.getGameSpeedType()).getSpeedPercent()
+							CvGameSpeedScale::speedPercent()
 							/
 							100
 						);
@@ -16331,7 +16362,7 @@ void CvCity::read(FDataStreamBase* pStream)
 			bDeleteNode = (orderData.getUnitType() == NO_UNIT);
 			if (!bDeleteNode && orderData.getUnitAIType() == static_cast<UnitAITypes>(0xFF))
 			{
-				orderData.unit.AIType = GC.getUnitInfo(orderData.getUnitType()).getDefaultUnitAIType();
+				orderData.unit.AIType = GC.getUnitInfo(orderData.getUnitType()).getDefaultUnitAI();
 			}
 			break;
 		};
@@ -18631,7 +18662,7 @@ void CvCity::cheat(bool bCtrl, bool bAlt, bool bShift)
 	{
 		if (bCtrl)
 		{
-			changeCulture(getOwner(), GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent(), true, true);
+			changeCulture(getOwner(), CvGameSpeedScale::speedPercent(), true, true);
 		}
 		else if (bShift)
 		{
@@ -19024,7 +19055,7 @@ int CvCity::getLandmarkAnger() const
 		iAnger++;
 	}
 	int iDivisor = std::max(1, GC.getLANDMARK_ANGER_DIVISOR());
-	iDivisor *= GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent();
+	iDivisor *= CvGameSpeedScale::speedPercent();
 	iDivisor /= 100;
 
 	iAnger += getLandmarkAngerTimer() / std::max(1, iDivisor);
@@ -20032,7 +20063,7 @@ static bool bonusAvailableFromBuildings(BonusTypes eBonus)
 		{
 			foreach_(const CvBuildingInfo* pBuilding, GC.getBuildingInfos())
 			{
-				if (pBuilding->getFreeBonuses().hasValue((BonusTypes)iI))
+				if (pBuilding->getProvides()->has(iI))
 				{
 					bBonusAvailability[iI] = true;
 					break;
@@ -20106,7 +20137,7 @@ bool CvCity::hasVicinityBonus(BonusTypes eBonus) const
 		{
 			for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
 			{
-				if (GC.getBuildingInfo((BuildingTypes)iI).getFreeBonuses().hasValue(eBonus) && isActiveBuilding((BuildingTypes)iI))
+				if (GC.getBuildingInfo((BuildingTypes)iI).getProvides()->has(eBonus) && isActiveBuilding((BuildingTypes)iI))
 				{
 					bResult = true;
 					break;
@@ -20189,7 +20220,7 @@ bool CvCity::hasRawVicinityBonus(BonusTypes eBonus) const
 		for (int iI = 0; iI < numBuildingInfos; ++iI)
 		{
 			const CvBuildingInfo& kBuilding = GC.getBuildingInfo((BuildingTypes)iI);
-			if (kBuilding.getFreeBonuses().hasValue(eBonus) && isActiveBuilding((BuildingTypes)iI))
+			if (kBuilding.getProvides()->has(eBonus) && isActiveBuilding((BuildingTypes)iI))
 			{
 				if (!GC.getGame().isMPOption(MPOPTION_SIMULTANEOUS_TURNS))
 				{
@@ -20514,7 +20545,7 @@ void CvCity::doCorporation()
 			iRandThreshold /= 1 + getCorporationCount() / 2;
 
 			int iRand = GC.getCORPORATION_SPREAD_RAND();
-			iRand *= GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent();
+			iRand *= CvGameSpeedScale::speedPercent();
 			iRand /= 100;
 			iRand = GC.getGame().getSorenRandNum(iRand, "Corporation Spread");
 			if (iRand < iRandThreshold)
@@ -20567,7 +20598,7 @@ void CvCity::doCorporation()
 				const int iRand =
 				(
 					GC.getCORPORATION_SPREAD_RAND()
-					* GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent()
+					* CvGameSpeedScale::speedPercent()
 					/ 100
 				);
 				if (GC.getGame().getSorenRandNum(iRand, "Corporation Decay") < iDiff)
@@ -20759,7 +20790,7 @@ void CvCity::doWarWeariness()
 	if (getEventAnger() > 0)
 	{
 		int iTurnCheck = 10;
-		iTurnCheck *= GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent();
+		iTurnCheck *= CvGameSpeedScale::speedPercent();
 		iTurnCheck /= 100;
 		if (GC.getGame().getElapsedGameTurns() % iTurnCheck == 0)
 		{

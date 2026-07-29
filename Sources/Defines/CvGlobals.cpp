@@ -3372,11 +3372,11 @@ void cvInternalGlobals::buildConstructibilityEnablerIndex()
 	for (int iB = 0; iB < iNumBuildings; iB++)
 	{
 		const CvBuildingInfo& kB = getBuildingInfo(static_cast<BuildingTypes>(iB));
-		foreach_(const BonusModifier& kFree, kB.getFreeBonuses())
+		foreach_(const int iFreeBonus, kB.getProvides()->bonuses)
 		{
-			if (kFree.first >= 0 && kFree.first < iNumBonuses)
+			if (iFreeBonus >= 0 && iFreeBonus < iNumBonuses)
 			{
-				aBonusFreeGivers[kFree.first].push_back(static_cast<BuildingTypes>(iB));
+				aBonusFreeGivers[iFreeBonus].push_back(static_cast<BuildingTypes>(iB));
 			}
 		}
 	}
@@ -3622,12 +3622,12 @@ void cvInternalGlobals::checkInitialCivics()
 			//No Initial Civic Found
 			const CivicTypes eCivic = (CivicTypes)civ.getCivilizationInitialCivics(iJ);
 
-			if (eCivic == NO_CIVIC || getCivicInfo(eCivic).getCivicOptionType() != iJ)
+			if (eCivic == NO_CIVIC || getCivicInfo(eCivic).getCivicOption() != iJ)
 			{
 				bool bFound = false;
 				for (int iK = 0; iK < getNumCivicInfos(); iK++)
 				{
-					if (getCivicInfo((CivicTypes)iK).getCivicOptionType() == iJ
+					if (getCivicInfo((CivicTypes)iK).getCivicOption() == iJ
 					&&  getCivicInfo((CivicTypes)iK).getTechPrereq() == NO_TECH)
 					{
 						bFound = true;

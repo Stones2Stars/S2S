@@ -1179,7 +1179,7 @@ int	CvArea::getRecentCombatDeathRate(PlayerTypes ePlayer, UnitAITypes eUnitAITyp
 		foreach_(const CombatResultRecord& record, turnResults)
 		{
 			if (record.eLoser == ePlayer
-			&& (eUnitAIType == NO_UNITAI || record.eDefeatedUnitType != NO_UNIT && GC.getUnitInfo(record.eDefeatedUnitType).getDefaultUnitAIType() == eUnitAIType))
+			&& (eUnitAIType == NO_UNITAI || record.eDefeatedUnitType != NO_UNIT && GC.getUnitInfo(record.eDefeatedUnitType).getDefaultUnitAI() == eUnitAIType))
 			{
 				totalDeaths++;
 			}
