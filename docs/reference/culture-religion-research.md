@@ -63,8 +63,13 @@
   corp, × pop/avgPop.
 - **Dormancy gate** (city): `isHasCorporation && isActiveCorporation && !tech-obsolete && ≥1 prereq bonus present`.
   Going inactive: yields/commerce → 0; `getPrereqCorporation` buildings disabled. **Maintenance** = `Σ
-  HeadquarterCommerce·100 + getMaintenance·numBonuses·worldSize/100`, × `(17+pop)/18`, × handicap (²/8000 Advanced);
+  headquartersCommerce + perBonusRate·worldSize/100`, × `(17+pop)/18`, × handicap (²/8000 Advanced);
   rebels pay 50%.
+  ⚑ **The per-bonus rate and the owned-bonus COUNT are ONE authored deposit, never two reads.** The rate carries
+  a `per:{anyOf: consumed bonuses}` scaler ([json.md §3.7](../specs/json.md)), so the valuation resolves the rate
+  and the city's count of those bonuses together — summing the count by hand re-implements the scaler the entry
+  already states. The corp's active gate rides the same entry's `{HAS_CORPORATION: SELF}` condition. Its set half
+  (which bonuses, for the spread/dormancy gate) is `getConsumedBonuses()`, the union of those `per.anyOf` ids.
   > **⚖ Cascade boundary (owner ruling): corp active/dormant is ENGINE-DRIVEN SPREAD STATE — an engine-owned INPUT the
   > modifier cascade READS, never a cascade-computed dormancy verdict.** Corporations spawn and spread themselves per
   > turn like religion (autonomously under `GAMEOPTION_ADVANCED_REALISTIC_CORPORATIONS`), so "is this corp active in

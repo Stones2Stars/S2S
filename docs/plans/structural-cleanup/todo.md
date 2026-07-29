@@ -342,17 +342,15 @@ measure what survives, then cut the genuine residue. The classes below are the u
     so summing both DOUBLE-COUNTS; and `homeArea`/`otherArea`/`connectedCity` are never kinds — they are the
     condition-as-member shape [json.md §6](../../specs/json.md) names, and once the *where* is a predicate the
     home/other twin collapses into one function.
-    **What is LEFT is the CORPORATION per-bonus rate**, and it is NOT a point-getter re-point.
-    `CvCorporationInfo` deliberately carries **no per-group point getters** — every entry a corporation
-    authors is CONDITIONED (`{HAS_CORPORATION: SELF}` with a `per:{anyOf: consumed bonuses}` scaler), so
-    nothing folds into an unconditioned sum (its header states this as the census shape). The legacy site
-    hand-rolls exactly what that scaler already expresses: it walks `getPrereqBonuses()` summing
-    `getNumBonuses`, then multiplies by the flat rate. So the rate and the bonus loop are ONE arithmetic
-    cluster and convert together through the valuation, never operand-by-operand
-    ([fixed-point-and-scales §4c-bis](../../specs/curators/fixed-point-and-scales.md)).
-    ⚠ `getPrereqBonuses` has a successor for the set half — `getConsumedBonuses()` (the same `per:{anyOf}`
-    union) — so the dormancy/spread gates that only need the SET re-point directly; only the maintenance
-    magnitude needs the valuation.
+    **The maintenance CHAIN is off legacy** (the handicap config reads, the colony cap, the corporation
+    per-bonus rate). What is LEFT of that cluster belongs to two OTHER sections, not to maintenance: the
+    corp-HQ commerce read in `CvCity::getBuildingCommerceByBuilding` sits inside an **×1 human twin** of a
+    ×100 value, so re-pointing it alone would need a `÷100` — it converts WITH the commerce cluster, never
+    ahead of it ([fixed-point-and-scales §4c-bis](../../specs/curators/fixed-point-and-scales.md)); and the
+    two `CvCityAI` HQ-commerce reads are ordinary AI consumer debt, sequenced with the AI cut.
+    ⚑ **The still-open `getPrereqBonuses` → `getConsumedBonuses()` re-point is a CENSUS case, not a sweep**
+    — see the blanket-rename warning in
+    [the consumer rewire census](#the-consumer-rewire-census--the-compilers-worklist-and-how-to-regenerate-it).
   - **The CIVIC half carries 6- and 9-argument legacy signatures**
     (`getAdditionalHappinessByCivic(eCivic, bDifferenceToCurrent, bCivicOptionVacuum, eStateReligion, iExtraPop,
     iMilitaryHappinessUnits)`; `getAdditionalHealthByCivic` with `iIgnoreNoUnhealthyPopulationCount` /
@@ -513,6 +511,11 @@ ALSO live methods on the game objects — **`CvUnit::getDomainType()` is `DllExp
 is the same hazard [§Vision](#vision) flags for `getInvisibleType`/`getSeeInvisibleType`. **Distinguishing them
 is SEMANTIC (what is the receiver?), not textual** — so for any name that is also a live method, do not sweep:
 leave it and let the compiler name the info-side sites individually.
+⚠ **And the collision is not only info-vs-game-object — it happens INFO-to-INFO.** `getPrereqBonuses` is DELETED
+on `CvCorporationInfo` (successor: `getConsumedBonuses()`, the `per:{anyOf}` union its per-bonus deposits scale
+over) while remaining a **live member read on `CvBuildInfo`** — so the same name is a re-point on one receiver
+and correct working code on the other, across ~33 sites in `CvGame` / `CvPlayer` / `CvPlot` / `CvUnit` /
+`CvGameTextMgr` / `CvDLLWidgetData` / `CvPlayerAI`. Convert by receiver, one site at a time.
 
 **Where a whole family is genuinely unbuilt, it belongs in its own section below, not in this census.** The
 unit plane is the standing example — `CvUnitInfo` carries the largest dangling set, and much of it

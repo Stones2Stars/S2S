@@ -6218,22 +6218,24 @@ int CvCity::calculateCorporationMaintenanceTimes100() const
 int CvCity::calculateCorporationMaintenanceTimes100(CorporationTypes eCorporation) const
 {
 	PROFILE_EXTRA_FUNC();
-	int iMaintenance = 0;
+	const CvCorporationInfo& kCorporation = GC.getCorporationInfo(eCorporation);
+	const CvPlayer& owner = GET_PLAYER(getOwner());
 
+	int iMaintenance = 0;
 	for (int iCommerce = 0; iCommerce < NUM_COMMERCE_TYPES; ++iCommerce)
 	{
-		iMaintenance += 100 * GC.getCorporationInfo(eCorporation).getHeadquarterCommerce(iCommerce);
+		iMaintenance += kCorporation.getHeadquartersCommerce((CommerceTypes)iCommerce);
 	}
 
-	// Bonus Maintenance
-	int iNumBonuses = 0;
-	foreach_(const BonusTypes eBonus, GC.getCorporationInfo(eCorporation).getPrereqBonuses())
-	{
-		iNumBonuses += getNumBonuses(eBonus);
-	}
+	// ⚖ ONE call replaces the rate AND the hand-rolled bonus loop beside it. The per-bonus upkeep is a SINGLE
+	// authored deposit whose rate carries a `per:{anyOf: consumed bonuses}` scaler, so the valuation resolves
+	// the rate and this city's owned count of those bonuses together (json.md §3.7) -- summing them by hand
+	// re-implemented the scaler the entry already states. The corp's own active gate rides the entry's
+	// {HAS_CORPORATION: SELF} condition, evaluated through the ONE evaluator.
 	iMaintenance +=
 	(
-		GC.getCorporationInfo(eCorporation).getMaintenance() * iNumBonuses
+		kCorporation.expectedModifier(MODFAM_MAINTENANCE, MAINTENANCE_CORPORATION, CASC_UNIT_FLAT,
+			getCityContext(), owner.getEmpireContext(), plotGroup(getOwner()))
 		* GC.getWorldInfo(GC.getMap().getWorldSize()).getCorporationMaintenancePercent()
 		/ 100
 	);
@@ -6254,7 +6256,6 @@ int CvCity::calculateCorporationMaintenanceTimes100(CorporationTypes eCorporatio
 		iMaintenance /= 100;
 	}
 
-	const CvPlayer& owner = GET_PLAYER(getOwner());
 	// National Modifier
 	iMaintenance = getModifiedIntValue(iMaintenance, owner.getCorporationMaintenanceModifier() + GET_TEAM(getTeam()).getCorporationMaintenanceModifier());
 
@@ -10451,8 +10452,8 @@ int CvCity::getBaseCommerceRateFromBuilding(CommerceTypes eIndex, BuildingTypes 
 	}
 	if (kBuilding.getGlobalCorporationCommerce() != NO_CORPORATION)
 	{
-		iExtraRate100 += 100 * (
-			GC.getCorporationInfo((CorporationTypes)kBuilding.getGlobalCorporationCommerce()).getHeadquarterCommerce(eIndex)
+		iExtraRate100 += (
+			GC.getCorporationInfo((CorporationTypes)kBuilding.getGlobalCorporationCommerce()).getHeadquartersCommerce(eIndex)
 			*
 			GC.getGame().countCorporationLevels((CorporationTypes)kBuilding.getGlobalCorporationCommerce())
 		);
@@ -19015,25 +19016,22 @@ int64_t CvCity::calcCorporateMaintenance() const
 	{
 		if (isActiveCorporation((CorporationTypes)iI) && GET_PLAYER(getOwner()).isActiveCorporation((CorporationTypes)iI))
 		{
-			const CorporationTypes eCorporation = (CorporationTypes)iI;
+			const CvCorporationInfo& kCorporation = GC.getCorporationInfo((CorporationTypes)iI);
 
 			int64_t iCorpTaxes = 0;
 
 			for (int iCommerce = 0; iCommerce < NUM_COMMERCE_TYPES; ++iCommerce)
 			{
-				iCorpTaxes += 100 * GC.getCorporationInfo(eCorporation).getHeadquarterCommerce(iCommerce);
+				iCorpTaxes += kCorporation.getHeadquartersCommerce((CommerceTypes)iCommerce);
 			}
 
-			int iNumBonuses = 0;
-			foreach_(const BonusTypes eBonus, GC.getCorporationInfo(eCorporation).getPrereqBonuses())
-			{
-				iNumBonuses += getNumBonuses(eBonus);
-			}
-
+			// The per-bonus rate and this city's owned count of the consumed bonuses are ONE authored deposit
+			// (the `per:{anyOf}` scaler) -- the same fold as calculateCorporationMaintenanceTimes100.
 			iCorpTaxes +=
 			(
-				GC.getCorporationInfo(eCorporation).getMaintenance() * iNumBonuses *
-				GC.getWorldInfo(GC.getMap().getWorldSize()).getCorporationMaintenancePercent()
+				kCorporation.expectedModifier(MODFAM_MAINTENANCE, MAINTENANCE_CORPORATION, CASC_UNIT_FLAT,
+					getCityContext(), GET_PLAYER(getOwner()).getEmpireContext(), plotGroup(getOwner()))
+				* GC.getWorldInfo(GC.getMap().getWorldSize()).getCorporationMaintenancePercent()
 				/ 100
 			);
 			const int iAveragePopulation = GC.getGame().getTotalPopulation() / std::max(1, GC.getGame().getNumCivCities());
