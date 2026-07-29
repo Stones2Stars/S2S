@@ -50,7 +50,7 @@ void CvOutcomeInfo::mapFrom(const picojson::value& entity)
 	m_promotionOdds.clear();
 	m_aePrereqBuildings.clear();
 	m_aeReplaceOutcomes.clear();
-	m_szMessageText.clear();
+	m_szMessageKey.clear();
 	m_bCapture = false;
 	m_ePrereqTech = NO_TECH;
 	m_eObsoleteTech = NO_TECH;
@@ -62,7 +62,7 @@ void CvOutcomeInfo::mapFrom(const picojson::value& entity)
 		it = pkIdentity->find("message");
 		if (it != pkIdentity->end() && it->second.is<std::string>())
 		{
-			m_szMessageText = CvWString(it->second.get<std::string>().c_str());
+			m_szMessageKey = CvWString(it->second.get<std::string>().c_str());
 		}
 	}
 

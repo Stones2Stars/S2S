@@ -63,7 +63,7 @@ public:
 	const std::map<int, int>& getPromotionOdds() const { return m_promotionOdds; }
 
 	// ======================= 4. INTRINSIC -- bare typed reads (identity / FKs / the tier list) ===============
-	const CvWString& getMessageText() const { return m_szMessageText; }
+	const CvWString& getMessageKey() const { return m_szMessageKey; }
 	bool isCapture() const             { return m_bCapture; }
 	TechTypes  getPrereqTech() const   { return m_ePrereqTech; }    // TECH_* FK
 	TechTypes  getObsoleteTech() const { return m_eObsoleteTech; }  // TECH_* FK
@@ -80,7 +80,7 @@ private:
 	bool m_abTerritory[NUM_OUTCOME_TERRITORIES];
 	bool m_abPlacement[NUM_OUTCOME_PLACEMENTS];
 	std::map<int, int> m_promotionOdds;
-	CvWString m_szMessageText;
+	CvWString m_szMessageKey;
 	bool m_bCapture;
 	TechTypes m_ePrereqTech;
 	TechTypes m_eObsoleteTech;

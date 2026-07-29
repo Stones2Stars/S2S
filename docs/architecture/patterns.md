@@ -217,6 +217,17 @@ group's natural index** — never N individual getters for a groupable set. This
        from the enabler. This IS the AI's *"what do I gain from building this?"* read.
   4. **Intrinsic** — bare typed reads (`getAirlift`, the shrine/corpHQ FKs, flavours), plus `getScalar(SCALAR_X)`
      for the 1–2-entry stragglers (genuinely lone unconditioned values).
+     > **⛔ A TEXT read NAMES WHICH SIDE OF THE BOUNDARY IT IS ON — `*Key()` returns a TXT_KEY, the bare form
+     > returns RESOLVED TEXT (owner).** *"Update these text namings to actually specify that you are getting a
+     > key, not the actual text — so we are clear when text is fetched, or when key is fetched."* TXT is an
+     > unmigrated system the JSON only REFERENCES ([json.md §7](../specs/json.md)), so an INFO holds keys and
+     > resolution belongs to the text manager; a name that hides which one you are holding is how a raw key ends
+     > up rendered to a player, or a resolved string ends up fed back into `getText`.
+     > ⚑ The convention is already the tree's: `getCivilopediaKey`/`getHelpKey`/`getStrategyKey`/
+     > `getShortDescriptionKey`/`getAdjectiveKey` return keys beside the `DllExport` bare forms that return text.
+     > ⚠ The four bare EXE-bound reads (`getTextKeyWide`, `getDescription`, `getText`, `getHelp` on
+     > `CvInfoBase`) are FIXED BY ABI and are not renameable — check `DllExport` before proposing any text
+     > rename ([engine.md § Is a symbol really EXE-bound?](../reference/engine.md)).
   5. **The per-entry TEXT render (owner: "so that tooltips work properly")** — every compiled entry renders
      itself as ONE localized detail line (`+25% Production — while Coal connected`), the `detailLines` pattern
      of the combat calculator (`CvCombatModel::computeCombatPreview`'s itemised per-modifier breakdown),

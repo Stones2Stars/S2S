@@ -1011,7 +1011,7 @@ bool CvOutcome::execute(CvUnit &kUnit, PlayerTypes eDefeatedUnitPlayer, UnitType
 		pUnitInfo = &kUnit.getUnitInfo()
 	);
 
-	CvWString& szMessage = GC.getOutcomeInfo(getType()).getMessageText();
+	CvWString& szMessage = GC.getOutcomeInfo(getType()).getMessageKey();
 	bool bNothing = true;
 	if (!szMessage.empty())
 	{
