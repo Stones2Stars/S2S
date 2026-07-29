@@ -914,11 +914,6 @@ int CyCity::getMaxTradeRoutes() const
 	return m_pCity->getMaxTradeRoutes();
 }
 
-void CyCity::changeExtraTradeRoutes(int iChange)
-{
-	m_pCity->changeExtraTradeRoutes(iChange);
-}
-
 int CyCity::getTradeRouteModifier() const
 {
 	return m_pCity->getTradeRouteModifier();
@@ -932,11 +927,6 @@ int CyCity::getForeignTradeRouteModifier() const
 int CyCity::getBuildingDefense() const
 {
 	return m_pCity->getBuildingDefense();
-}
-
-int CyCity::getFreeExperience() const
-{
-	return m_pCity->getFreeExperience();
 }
 
 int CyCity::getMaxAirlift() const
@@ -967,11 +957,6 @@ int CyCity::getDefenseDamage() const
 void CyCity::changeDefenseDamage(int iChange)
 {
 	m_pCity->changeDefenseDamage(iChange);
-}
-
-int CyCity::getNaturalDefense() const
-{
-	return m_pCity->getNaturalDefense();
 }
 
 int CyCity::getTotalDefense(bool bIgnoreBuilding) const
@@ -1234,11 +1219,6 @@ int CyCity::getCommerceHappinessByType(int /*CommerceTypes*/ eIndex) const
 	return m_pCity->getCommerceHappinessByType((CommerceTypes) eIndex) / 100;
 }
 
-int CyCity::getDomainFreeExperience(int /*DomainTypes*/ eIndex) const
-{
-	return m_pCity->getDomainFreeExperience((DomainTypes)eIndex);
-}
-
 int CyCity::getDomainProductionModifier(int /*DomainTypes*/ eIndex) const
 {
 	return m_pCity->getDomainProductionModifier((DomainTypes)eIndex);
@@ -1493,11 +1473,6 @@ void CyCity::changeReligionInfluence(int /*ReligionTypes*/ iIndex, int iChange)
 int CyCity::getStateReligionHappiness(int /*ReligionTypes*/ eIndex) const
 {
 	return m_pCity->getStateReligionHappiness((ReligionTypes) eIndex);
-}
-
-int CyCity::getSpecialistFreeExperience() const
-{
-	return m_pCity->getSpecialistFreeExperience();
 }
 
 int CyCity::getEspionageDefenseModifier() const

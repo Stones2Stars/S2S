@@ -30,25 +30,51 @@ public:
 	virtual const CvModifiers* getModifiers()    const { return &m_modifiers; }
 	virtual const CvModifiers* getWhenObsolete() const { return &m_whenObsolete; }
 	virtual const CvClassificationBlock* getAttributes()   const { return &m_attributes; }
+	virtual const CvClassificationBlock* getAmenities()    const { return &m_amenities; }
 	virtual const CvClassificationBlock* getCapabilities() const { return &m_capabilities; }
 
 	// ======================= 2. CLASSIFICATION -- O(1) bitset tests, hold-vs-provide in the NAME (json §8) ====
-	// What the building HAS (held city-scope intrinsics: nukeImmune, zoneOfControl, governmentCenter, ...).
+	// What the BUILDING ITSELF is/does (teamShare, destroyedOnCapture, orbital) -- never what it confers.
 	bool hasAttribute(int iAttributeId) const { return m_attributes.hasId(iAttributeId); }
 	bool hasAttributes() const                { return !m_attributes.isEmpty(); }
-	// The named reads over that bitset, one per authored key a consumer asks for BY MEANING (the
-	// patterns.md exemplar: a coherent read over the JSON-derived structure, never a legacy scalar).
-	bool providesPower() const CLS_HAS(m_attributes, CLSD_ATTRIBUTE, "providesPower")
-	// Each named for the AUTHORED KEY's meaning, never the legacy getter it replaces: `borderObstacle` carries
-	// no "area" (a landmass is not a scope), and `destroyedOnCapture` says what happens rather than what does
-	// not (the legacy spelling was the negative, isNeverCapture).
+	// What it CONFERS on its city -- the grantor side of the city's amenity fold.
+	bool providesAmenity(int iAmenityId) const { return m_amenities.hasId(iAmenityId); }
+	bool providesAmenities() const             { return !m_amenities.isEmpty(); }
+	// The named reads, each over the block that actually OWNS it. Named for the AUTHORED KEY's meaning, never the
+	// legacy getter replaced: `borderObstacle` carries no "area" (a landmass is not a scope), and
+	// `destroyedOnCapture` says what happens rather than what does not (the legacy spelling was the negative,
+	// isNeverCapture).
+	// ⚠ TRANSITIONAL: these per-key reads are the same getter-per-channel shape patterns.md calls the disease.
+	// They collapse onto the parameterized block read AFTER GREEN (owner); do not grow the set as a habit.
 	bool isTeamShare() const             CLS_HAS(m_attributes, CLSD_ATTRIBUTE, "teamShare")
-	bool isZoneOfControl() const         CLS_HAS(m_attributes, CLSD_ATTRIBUTE, "zoneOfControl")
-	bool isCapital() const               CLS_HAS(m_attributes, CLSD_ATTRIBUTE, "capital")
-	bool isBorderObstacle() const        CLS_HAS(m_attributes, CLSD_ATTRIBUTE, "borderObstacle")
-	bool isForceAllTradeRoutes() const   CLS_HAS(m_attributes, CLSD_ATTRIBUTE, "forceAllTradeRoutes")
+	bool isOrbital() const               CLS_HAS(m_attributes, CLSD_ATTRIBUTE, "orbital")
 	bool isOrbitalInfrastructure() const CLS_HAS(m_attributes, CLSD_ATTRIBUTE, "orbitalInfrastructure")
 	bool isDestroyedOnCapture() const    CLS_HAS(m_attributes, CLSD_ATTRIBUTE, "destroyedOnCapture")
+
+	// What the building CONFERS ON ITS CITY (json §8 `amenities`) -- city-HELD, grantor-PROVIDED. ⛔ These are
+	// the GRANTOR side only: a consumer asks the CITY (whose fold refcounts every grantor), never each building.
+	bool providesPower() const           CLS_HAS(m_amenities, CLSD_AMENITY, "providesPower")
+	bool providesFreshWater() const      CLS_HAS(m_amenities, CLSD_AMENITY, "providesFreshWater")
+	bool isNukeImmune() const            CLS_HAS(m_amenities, CLSD_AMENITY, "nukeImmune")
+	bool isGovernmentCenter() const      CLS_HAS(m_amenities, CLSD_AMENITY, "governmentCenter")
+	bool isZoneOfControl() const         CLS_HAS(m_amenities, CLSD_AMENITY, "zoneOfControl")
+	bool isCapital() const               CLS_HAS(m_amenities, CLSD_AMENITY, "capital")
+	bool isBorderObstacle() const        CLS_HAS(m_amenities, CLSD_AMENITY, "borderObstacle")
+	bool isForceAllTradeRoutes() const   CLS_HAS(m_amenities, CLSD_AMENITY, "forceAllTradeRoutes")
+	bool isProtectedCulture() const      CLS_HAS(m_amenities, CLSD_AMENITY, "protectedCulture")
+	// The legacy iWorkableRadius carried no information -- every authoring was the same 3, and the radius itself
+	// is culture-driven state -- so what a building says is "this CITY reaches its third ring early".
+	bool addsThirdRing() const           CLS_HAS(m_amenities, CLSD_AMENITY, "adds3rdRing")
+	// The WHOLESALE DISABLES (owner): a hard off-switch, not a modifier -- while such a grantor is present the
+	// city's whole anger / unhealthy-population / non-building-health side ceases to exist (modifier.md §2b).
+	// ⚑ `abolishedAnger` names the MECHANIC, never the WHERE: the legacy pair spelled it `bNoUnhappiness` on a
+	// building and `bNoCapitalUnhappiness` on a civic -- two names for ONE gate, the second baking its condition
+	// into the key ([DEC-conditions-are-predicates]). Both carriers now confer the SAME amenity.
+	// No shipped BUILDING authors it -- deliberately, the mechanic being wildly overpowered -- so this read is
+	// false today; the chain is wired and lights up the moment data authors one.
+	bool isAbolishedAnger() const        CLS_HAS(m_amenities, CLSD_AMENITY, "abolishedAnger")
+	bool isNoUnhealthyPopulation() const CLS_HAS(m_amenities, CLSD_AMENITY, "abolishedUnhealthFromPopulation")
+	bool isBuildingOnlyHealthy() const   CLS_HAS(m_amenities, CLSD_AMENITY, "abolishedUnhealthFromBuildings")
 	// What the building PROVIDES to the empire (grantor-provided capabilities: setCultureRate, ...).
 	bool providesCapability(int iCapabilityId) const { return m_capabilities.hasId(iCapabilityId); }
 	bool providesCapabilities() const                { return !m_capabilities.isEmpty(); }
@@ -82,6 +108,13 @@ public:
 	// the group's kind enum; the canonical authored unit resolves in the vocabulary (infoKindUnit), never here.
 	int getDefense(DefenseKind eKind, CvCascScope eScope) const
 	{ return m_modifiers.sum(MODFAM_DEFENSE, eKind, eScope, infoDefenseUnit(eKind)); }
+	// Maintenance is authored on BOTH units at city scope, so it takes the flat-vs-modifier PAIR the yields and
+	// commerce take -- the split lives in the NAME, never a scale suffix. The flat plane is the dominant one: a
+	// building whose upkeep is a gold AMOUNT authors `maintenance.city.flat` (the negative-gold fold,
+	// economy.md), which is what the vocabulary's own scope-split verdict reports (infoKindUnit answers FLAT for
+	// MAINTENANCE_AMOUNT at city). A percent-only surface leaves that plane unreadable.
+	int getFlatMaintenance(MaintenanceKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_MAINTENANCE, eKind, eScope, CASC_UNIT_FLAT); }
 	int getMaintenanceModifier(MaintenanceKind eKind, CvCascScope eScope) const
 	{ return m_modifiers.sum(MODFAM_MAINTENANCE, eKind, eScope, CASC_UNIT_PERCENT); }
 	int getTradeRoute(TradeRouteKind eKind, CvCascScope eScope) const
@@ -159,6 +192,7 @@ protected:
 	virtual CvModifiers* mutModifiers()    { return &m_modifiers; }
 	virtual CvModifiers* mutWhenObsolete() { return &m_whenObsolete; }
 	virtual CvClassificationBlock* mutAttributes()   { return &m_attributes; }
+	virtual CvClassificationBlock* mutAmenities()    { return &m_amenities; }
 	virtual CvClassificationBlock* mutCapabilities() { return &m_capabilities; }
 
 private:
@@ -171,6 +205,7 @@ private:
 	CvModifiers m_modifiers;
 	CvModifiers m_whenObsolete;
 	CvClassificationBlock m_attributes;
+	CvClassificationBlock m_amenities;
 	CvClassificationBlock m_capabilities;
 
 	// --- the intrinsic identity members (materialized once at mapFrom; getters are bare reads) ---

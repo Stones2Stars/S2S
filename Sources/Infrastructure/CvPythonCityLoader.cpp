@@ -178,18 +178,15 @@ void CvPythonCityLoader::CyCityPythonInterface1(boost::python::class_<CyCity>& i
 		.def("getSpaceProductionModifier", &CyCity::getSpaceProductionModifier, "int ()")
 		.def("getExtraTradeRoutes", &CyCity::getExtraTradeRoutes, "int () - returns the number of extra trade routes this city has")
 		.def("getMaxTradeRoutes", &CyCity::getMaxTradeRoutes, "int () - returns the number of extra trade routes this city has")
-		.def("changeExtraTradeRoutes", &CyCity::changeExtraTradeRoutes, "void (iChange) - Change the number of trade routes this city has")
 		.def("getTradeRouteModifier", &CyCity::getTradeRouteModifier, "int ()")
 		.def("getForeignTradeRouteModifier", &CyCity::getForeignTradeRouteModifier, "int ()")
 		.def("getBuildingDefense", &CyCity::getBuildingDefense, "int () - building defense")
-		.def("getFreeExperience", &CyCity::getFreeExperience, "int () - # of free experience newly trained units receive")
 		.def("getMaxAirlift", &CyCity::getMaxAirlift, "int ()")
 		.def("getAirModifier", &CyCity::getAirModifier, "int () - returns the air defense modifier")
 		.def("getNukeModifier", &CyCity::getNukeModifier, "int ()")
 		.def("isPower", &CyCity::isPower, "bool ()")
 		.def("getDefenseDamage", &CyCity::getDefenseDamage, "int () - value of damage city defenses can receive")
 		.def("changeDefenseDamage", &CyCity::changeDefenseDamage, "void (iChange) - adjust damage value by iChange")
-		.def("getNaturalDefense", &CyCity::getNaturalDefense, "int ()")
 		.def("getTotalDefense", &CyCity::getTotalDefense, "int (bool bIgnoreBuilding)")
 		.def("getDefenseModifier", &CyCity::getDefenseModifier, "int (bool bIgnoreBuilding)")
 
@@ -282,7 +279,6 @@ void CvPythonCityLoader::CyCityPythonInterface2(boost::python::class_<CyCity>& i
 		.def("getCorporationYieldByCorporation", &CyCity::getCorporationYieldByCorporation, "int (int /*YieldTypes*/, CorporationType) - YieldTypes effect from CorporationType")
 		.def("getCommerceRateModifier", &CyCity::getCommerceRateModifier, "int (int /*CommerceTypes*/) - indicates the total rate modifier on CommerceType")
 		.def("getCommerceHappinessByType", &CyCity::getCommerceHappinessByType, "int (int /*CommerceTypes*/) - happiness from CommerceType")
-		.def("getDomainFreeExperience", &CyCity::getDomainFreeExperience, "int (int /*DomainTypes*/)")
 		.def("getDomainProductionModifier", &CyCity::getDomainProductionModifier, "int (int /*DomainTypes*/)")
 		.def("getCulture", &CyCity::getCulture, "int /*PlayerTypes*/ ()")
 		.def("getCultureTimes100", &CyCity::getCultureTimes100, "int /*PlayerTypes*/ ()")
@@ -327,7 +323,6 @@ void CvPythonCityLoader::CyCityPythonInterface2(boost::python::class_<CyCity>& i
 
 		.def("getStateReligionHappiness", &CyCity::getStateReligionHappiness, "int (int /*ReligionTypes*/ ReligionID)")
 
-		.def("getSpecialistFreeExperience", &CyCity::getSpecialistFreeExperience, "int ()")
 		.def("getEspionageDefenseModifier", &CyCity::getEspionageDefenseModifier, "int ()")
 
 		.def("isWorkingPlot", &CyCity::isWorkingPlot, "bool (iIndex) - true if a worker is working this city's pPlot")

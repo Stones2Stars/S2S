@@ -147,9 +147,13 @@ slot does pure integer math and never sees the human boundary.
 > ([DEC-done-is-observable](../architecture/decisions.md#dec-done-is-observable)) + turn time
 > ([DEC-turn-time-is-king](../architecture/decisions.md#dec-turn-time-is-king)): [validation](validation.md).
 
-**Two non-additive combine modes, declared as FAMILY metadata (never per-deposit):** a `min` member that floors
-the combined total (e.g. `defense`); `combine: max|min` for worst/best-across-sources (anarchy turns,
-`naturalDefense`). Authors write signed values; the mode wires the combiner.
+**Non-additive combine, declared as FAMILY metadata (never per-deposit):** a `min` member that floors the
+combined total (e.g. `defense`'s floor kind). Authors write signed values; the mode wires the combiner.
+⛔ **`naturalDefense` is NOT one of these and never was a kind.** There is no natural-defense channel: BUILDINGS
+and CULTURE LEVELS author the SAME `defense.city.amount`, so the cascade holds one additive stack and the legacy
+`max(buildingDefense, naturalDefense)` has no counterpart — a data-led behaviour change, not a combiner to
+build. ⚠ A worst/best-across-sources mode is therefore **unimplemented and currently unneeded**; do not read
+this paragraph as licence to add one speculatively — mint it if and when a family's data actually needs it.
 
 > **⚖ THE FREE-AMOUNT SIGN CONVENTION (owner) — one convention per kind, never a per-source flip.** The
 > `upkeep.freeMilitary` / `upkeep.freeCivilian` kinds carry **free-amount semantics throughout**: a POSITIVE entry
@@ -303,8 +307,15 @@ term, so a divergence localises to a single source.
   event/unattributed residual. Wiring these as proper cascade event grants is **event-rework scope** (#425 events
   stay Python / the F3 grants apply-loop), NOT a modifier-cut ride-in to fix here.
 - **GATE FLAGS** — `isNoUnhappiness` / `isNoCapitalUnhappiness` / `isNoUnhealthyPopulation` /
-  `isBuildingOnlyHealthy` zero their side wholesale; building `attributes` (json §8) carry them
-  post-classification-wiring; until then they are read as state.
+  `isBuildingOnlyHealthy` zero their side wholesale. They are **HARD OFF-SWITCHES, never modifiers (owner)**:
+  while such a building is present *"unhappiness does not exist in the city"* — the side ceases to exist rather
+  than being reduced. The building half lives in `attributes` (json §8) as a held city-scope intrinsic, read by
+  `CvBuildingInfo::isNoUnhappiness()` and its siblings and counted city-side (`changeNoUnhappinessCount`).
+  ⛔ **ZERO buildings author one, and that is DELIBERATE, not a data gap — the mechanic is "wildly overpowered"
+  (owner).** So the chain is wired and every read answers false: it is live-but-inert HEADROOM (the
+  corporation-obsolete class, [culture-religion-research.md](../reference/culture-religion-research.md)).
+  Finding a wired chain with no authorings is therefore never licence to author one, and equally never a reason
+  to purge the flag as unused.
 - **`unhealthyPopulation`** (= `max(0, pop − angryPop)` unless flagged) enters the BAD side as the engine's
   population term — a state-derived input (it reads the happiness verdict; the calc computes it from its own
   happiness result, never reads the engine's).
@@ -506,6 +517,20 @@ A deposit lands in one of three ways ([json](json.md) §6.1):
   retires all the legacy per-plot-type / per-tile accumulators.
 - **named-entity key** (`improvements.{FARM}`, `terrains.{…}`, `buildings.{…}`) — a deposit onto a specific
   named target, kept on the source (the deliveryguy, §4).
+
+> **⛔ A KEYED DEPOSIT IS READ AS AN ENTRY-LIST READ OVER THE LIVE SOURCES — never off a scope package.** Outside
+> PLOT scope a keyed entry deliberately does **not** fold into the scope's Σflat/Σpercent slots (only the plot's own
+> substrate keys resolve there, §2 plot-as-base; the `empires` fan is the one target whose fold IS the deposit). So
+> a consumer answering *"how much does this source give THIS target"* asks each live source what IT deposits onto
+> that key — the city's OPERATING buildings, its assigned specialists × count, the empire's held traits — and sums.
+> ⚑ **Why it is a rule and not a detail: folding a keyed entry into the scope slot is silently, plausibly WRONG.**
+> A building's `experience.city.unitCombats.{UNITCOMBAT_MELEE}` folded scope-wide would hand EVERY unit trained
+> there the melee-only experience — a number that looks reasonable, breaks no invariant, and nothing catches. The
+> package answers the scope-wide leg; the keyed axes are read beside it.
+> ⚠ The read is per-source and cheap because it iterates the handful an entity AUTHORED
+> ([DEC-materialize-at-mapfrom](../architecture/decisions.md#dec-materialize-at-mapfrom)); it is never a walk of a
+> keyed container the info no longer holds, which is the own-data inversion
+> ([pedia-read-map](../reference/pedia-read-map.md) finding 2).
 
 ---
 

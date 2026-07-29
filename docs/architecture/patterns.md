@@ -135,9 +135,10 @@ the JSON model drives the info's shape; the legacy variable set is gone, not for
 
 - **The realized exemplar is already in-tree — generalize it.** The classification blocks are styled for the JSON:
   `m_attributes` is a **JSON-derived bitset** (the `ClassificationRegistry` ids minted from the authored
-  `attributes` block, [DEC-classification-infos](decisions.md#dec-classification-infos)), and `isZoneOfControl()`
-  is `CLS_HAS(m_attributes, "zoneOfControl")` — a coherent read over that structure, never a legacy
-  `m_bZoneOfControl`. Every block gets this shape.
+  `attributes` block, [DEC-classification-infos](decisions.md#dec-classification-infos)), and
+  `isDestroyedOnCapture()` is `CLS_HAS(m_attributes, CLSD_ATTRIBUTE, "destroyedOnCapture")` — a coherent read
+  over that structure, never a legacy `m_bDestroyedOnCapture`. Every block gets this shape, one member per block
+  the entity authors (`m_attributes` beside `m_amenities` on a building, [json.md §8](../specs/json.md)).
 - **The defect the rebuild removes** is the legacy-named scalar-per-field with a comment mapping it back to a JSON
   address (`m_iDamageToAttacker` ← `defense.city.counterDamage.damage`; `m_aiRiverPlotYieldChange[]` ←
   `<yield>.city.plots` flats). Those are JSON parsed and **scattered into individually-named legacy variables**;
@@ -204,6 +205,18 @@ group's natural index** — never N individual getters for a groupable set. This
      entity HAS is `hasAttribute(id)`/`hasAttributes()` (building) and `hasSkill(id)`/`hasTag(id)` (unit); what it
      PROVIDES to something else is `providesCapability(id)`/`providesCapabilities()` (to the empire) and
      `providesSkill(id)` (a grantor handing a skill on).
+     > **⚖ THE PARAMETERIZED READ IS THE DESTINATION; THE PER-KEY NAMED GETTERS ARE TRANSITIONAL (owner) —
+     > "all these individual getters should be replaced with one parameterized read, but we can do that after
+     > green."** The per-key `CLS_HAS` reads (`isNukeImmune()` / `isGovernmentCenter()` / …) are the same
+     > getter-per-channel shape this section calls the disease, kept only because consumers need something to
+     > compile against while the tree is red. ⛔ So do NOT grow the named set as a habit, and do NOT read its
+     > existence as the sanctioned shape — it collapses onto `hasAttribute(id)` in a pass of its own.
+     > ⚠ **The blocker is REAL and is what that pass has to solve: there is no compile-time id to pass.** The
+     > classification categories are OPEN BY DESIGN and their ids are **minted at LOAD** from the union of
+     > authored keys ([DEC-classification-infos](decisions.md#dec-classification-infos)) — which is precisely why
+     > `CLS_HAS` exists at all (it memoizes a per-site id lookup). A caller-facing `hasAttribute(ATTRIBUTE_X)`
+     > therefore needs a resolved-id vocabulary the open registry does not hand out at compile time, so the pass
+     > is a design decision about that vocabulary, never a mechanical rename.
   3. **Modifier groups — three reads per group, all over the LOAD-COMPILED forms:**
      - the **straight point read** over the compiled unconditioned sum — `getDefense(DefenseKind eKind,
        ScopeKind eScope)` → one array load, **0 calculation** (kind and scope separate arguments,

@@ -209,6 +209,11 @@ enum SpineDomainEvent
 	                                  // iA=bFirst (1 = genuine first acquisition, 0 = conquest transfer / load restore)
 	SEVT_RELIGION_CHANGED       = 9,  // CvCity::setHasReligion: iType=Religion, iC=owner, iSrcLoc=cityId, iA=has
 	SEVT_CORPORATION_CHANGED    = 10, // CvCity::setHasCorporation: iType=Corp, iC=owner, iSrcLoc=cityId, iA=has
+	// ⚖ The city's obtained-bonus PRESENCE CROSSING ONLY (0 <-> non-zero), by owner ruling -- NOT every count move.
+	// processNumBonusChange calls processBonus solely when the has-verdict crosses zero, so a count going 2 -> 3
+	// announces nothing, deliberately: a per-count fact would drag in attribution edge cases (WHICH city or source
+	// added this copy) that the crossing sidesteps entirely. ⛔ Do NOT "fix" the missing count fact -- it is a scope
+	// boundary, not a gap. A count-threshold reader (a `min: 3` atom) is knowingly outside it for now.
 	SEVT_BONUS_CHANGED          = 11, // CvCity::processBonus/doVicinityBonus: iType=Bonus, iC=owner, iSrcLoc=cityId, iB=change
 	SEVT_POPULATION_CHANGED     = 12, // CvCity::setPopulation: iC=owner, iSrcLoc=cityId, iA=newPop
 	SEVT_SPECIALIST_CHANGED     = 13, // CvCity::setSpecialistCount: iType=Specialist, iC=owner, iSrcLoc=cityId, iB=delta
@@ -288,7 +293,7 @@ enum SpineDomainEvent
 	// sweep behind this fact -- a missed emit must stay visibly wrong (DEC-no-self-heal).
 	SEVT_VICINITY_BONUS_CHANGED = 39,
 	// a present building's PROCESSED (operating-contribution) state flipped -- construction/destruction's
-	// processing leg AND a dormancy disable/enable flip (setDisabledBuilding -> processBuilding). DISTINCT from
+	// processing leg AND a dormancy active<->dormant flip (both reach processBuilding). DISTINCT from
 	// SEVT_BUILDING_CHANGED (the PRESENCE fact, emitted at CvCity::setHasBuilding): events are facts, and a
 	// process flip is NOT a presence change -- conflating them fed the enabler domains fake has-flips (the
 	// 62-phantom-in-tree over-offer). Consumed by the modifier invalidation (package dirties + the operating-set
@@ -411,8 +416,9 @@ enum SpineDomainEvent
 	// fact covers them; a second emit there would announce the same change per radius plot.
 	// iA = old cityId (-1 = none), iB = new cityId (-1 = none), iC = owner, iSrcLoc = plotId. DOMAIN.
 	SEVT_PLOT_CITY_CHANGED = 60,
-	// The city's GOVERNMENT-CENTRE verdict flipped (CvCity::changeGovernmentCenterCount, at its existing count
-	// crossing) -- the palace/counterpart buildings that make a city a maintenance origin. DISTINCT from
+	// The city's GOVERNMENT-CENTRE verdict flipped -- the palace/counterpart buildings that make a city a
+	// maintenance origin. The verdict is the city's AMENITY FOLD, so the crossing is announced by the contexts'
+	// consumer around the fold that moved it (ContextConsumer::announceAmenityCrossings). DISTINCT from
 	// SEVT_CAPITAL_CHANGED: a capital is always a government centre, but a government centre need not be capital.
 	// iA = 1 now a government centre / 0 no longer, iC = owner, iSrcLoc = cityId. DOMAIN.
 	SEVT_GOVERNMENT_CENTER_CHANGED = 61,

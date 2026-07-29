@@ -410,6 +410,7 @@ public:
 	int getTotalBuildingSourcedProperty(PropertyTypes eProperty) const;
 	int getTotalUnitSourcedProperty(PropertyTypes eProperty) const;
 	bool isActiveBuilding(BuildingTypes eIndex) const;
+	bool isDormantBuilding(BuildingTypes eIndex) const;
 	bool hasActiveWorldWonder() const;
 
 	int getNumActiveWorldWonders() const;
@@ -531,7 +532,6 @@ public:
 	void changeNumBuildings(int iChange);
 
 	bool isGovernmentCenter() const;
-	void changeGovernmentCenterCount(int iChange);
 
 	int getSavedMaintenanceByBuilding(BuildingTypes eType) const;
 	int getSavedMaintenanceTimes100ByBuilding(BuildingTypes eType) const;
@@ -675,17 +675,15 @@ public:
 	int getHappinessTimer() const;
 	void changeHappinessTimer(int iChange);
 
-	int getNoUnhappinessCount() const;
 	bool isNoUnhappiness() const;
-	void changeNoUnhappinessCount(int iChange);
 
-	int getNoUnhealthyPopulationCount() const;
 	bool isNoUnhealthyPopulation() const;
-	void changeNoUnhealthyPopulationCount(int iChange);
+	// The CITY-ONLY halves of the two composed verdicts above, for the what-if health calc, which weighs the city's
+	// own amenity against the owner's separately and so must not read the OR.
+	bool cityHasNoUnhealthyPopulation() const;
+	bool cityHasBuildingOnlyHealthy() const;
 
-	int getBuildingOnlyHealthyCount() const;
 	bool isBuildingOnlyHealthy() const;
-	void changeBuildingOnlyHealthyCount(int iChange);
 
 	int getFood() const;
 	void setFood(int iNewValue);
@@ -695,7 +693,6 @@ public:
 	void changeFoodKept(int iChange);
 
 	int getFoodKeptPercent() const;
-	void changeFoodKeptPercent(int iChange);
 
 	int getMaxProductionOverflow() const;
 
@@ -714,7 +711,6 @@ public:
 	void changeSpaceProductionModifier(int iChange);
 
 	int getExtraTradeRoutes() const;
-	void changeExtraTradeRoutes(int iChange);
 
 	int getMaxTradeRoutes() const;
 
@@ -725,14 +721,11 @@ public:
 	void changeForeignTradeRouteModifier(int iChange);
 
 	int getBuildingDefense() const;
-	void changeBuildingDefense(int iChange);
 
 	int getBuildingBombardDefense() const;
 	void changeBuildingBombardDefense(int iChange);
 	int getAdditionalBombardDefenseByBuilding(BuildingTypes eType) const;
 
-	int getFreeExperience() const;
-	void changeFreeExperience(int iChange);
 
 	int getCurrAirlift() const;
 	void setCurrAirlift(int iNewValue);
@@ -883,7 +876,9 @@ public:
 	void setLastDefenseDamage(int iNewValue);
 
 	bool isBombardable(const CvUnit* pUnit) const;
-	int getNaturalDefense() const;
+	int cascadeValue(ModifierFamily eFamily, int eKind) const;   // ANY (family,kind) slot; unit per infoKindUnit
+	int keyedExperience(int iTargetSegment, int iTargetFk) const;   // the keyed experience.<scope>.{unitCombats|domains} legs
+	int cascadeDefense(int eKind) const;
 	int getTotalDefense(bool bIgnoreBuilding) const;
 	int getDefenseModifier(bool bIgnoreBuilding) const;
 
@@ -987,8 +982,6 @@ public:
 	void changeBuildingExtraYield(YieldTypes eYield, int iChange);
 	int getBuildingExtraYield(YieldTypes eYield) const;
 
-	void changeBuildingYieldModifier(YieldTypes eYield, int iChange);
-	int getBuildingYieldModifier(YieldTypes eYield) const;
 
 	void changeBuildingCommerceModifier(CommerceTypes eIndex, int iChange);
 	int getBuildingCommerceModifier(CommerceTypes eIndex) const;
@@ -1086,8 +1079,6 @@ public:
 	void changeCommercePerPopFromBuildings(const CommerceTypes eIndex, const int iChange);
 	int getCommercePerPopFromBuildings(const CommerceTypes eIndex) const;
 
-	int getDomainFreeExperience(DomainTypes eIndex) const;
-	void changeDomainFreeExperience(DomainTypes eIndex, int iChange);
 
 	int getDomainProductionModifier(DomainTypes eIndex) const;
 	void changeDomainProductionModifier(DomainTypes eIndex, int iChange);
@@ -1212,16 +1203,11 @@ public:
 	int getStateReligionHappiness(ReligionTypes eIndex) const;
 	void changeStateReligionHappiness(ReligionTypes eIndex, int iChange);
 
-	int getUnitCombatFreeExperience(UnitCombatTypes eIndex) const;
-	void changeUnitCombatFreeExperience(UnitCombatTypes eIndex, int iChange);
 
 	bool isFreePromotion(PromotionTypes eIndex) const;
 
-	int getSpecialistFreeExperience() const;
-	void changeSpecialistFreeExperience(int iChange);
 
 	int getEspionageDefenseModifier() const;
-	void changeEspionageDefenseModifier(int iChange);
 
 	bool isWorkingPlot(int iIndex) const;
 	bool isWorkingPlot(const CvPlot* pPlot) const;
@@ -1394,7 +1380,6 @@ public:
 	bool hasVicinityBonus(BonusTypes eBonus) const;
 	void clearRawVicinityBonusCache(BonusTypes eBonus);
 	bool hasRawVicinityBonus(BonusTypes eBonus) const;
-	void checkBuildings(bool bAlertOwner = true);
 	void doVicinityBonus();
 	bool isDevelopingCity() const;
 
@@ -1403,16 +1388,12 @@ public:
 	int getUnitCombatExtraStrength(UnitCombatTypes eIndex) const;
 	void changeUnitCombatExtraStrength(UnitCombatTypes eIndex, int iChange);
 
-	void setDisabledBuilding(const BuildingTypes eIndex, const bool bNewValue, const bool bProcess = true);
-	bool isDisabledBuilding(const short iIndex) const;
 
-	void setReligiouslyLimitedBuilding(BuildingTypes eIndex, bool bNewValue);
-	bool isReligiouslyLimitedBuilding(BuildingTypes eIndex) const;
+
 
 	bool isZoneOfControl() const;
 
 	int getAdjacentDamagePercent() const;
-	void changeAdjacentDamagePercent(int iChange);
 
 	int getWorkableRadiusOverride() const;
 	void setWorkableRadiusOverride(int iNewVal);
@@ -1672,7 +1653,6 @@ protected:
 	int m_iNumTeamWonders;
 	int m_iNumNationalWonders;
 	int m_iNumBuildings;
-	int m_iGovernmentCenterCount;
 	mutable int m_iMaintenance;
 	int m_iMaintenanceModifier;
 	int m_iWarWearinessModifier;
@@ -1690,12 +1670,8 @@ protected:
 	int m_iMilitaryHappinessUnits;
 	int m_iExtraHappiness;
 	int m_iExtraHealth;
-	int m_iNoUnhappinessCount;
-	int m_iNoUnhealthyPopulationCount;
-	int m_iBuildingOnlyHealthyCount;
 	int m_iFood;
 	int m_iFoodKept;
-	int m_iFoodKeptPercent;
 
 	int m_iOverflowProduction;
 	int m_iFeatureProduction;
@@ -1710,7 +1686,6 @@ protected:
 	bool m_bBuiltFoodProducedUnit;
 	bool m_bResetTechs;
 	int m_iLandmarkAngerTimer;
-	int m_iAdjacentDamagePercent;
 	int m_iWorkableRadiusOverride;
 	int m_iProtectedCultureCount;
 	int m_iDisabledPowerTimer;
@@ -1735,7 +1710,6 @@ protected:
 	mutable bool* m_pabHasRawVicinityBonus;
 
 	bool* m_bHasBuildings;
-	bool* m_pabReligiouslyDisabledBuilding;
 	int* m_paiUnitCombatExtraStrength;
 	bool* m_pabAutomatedCanBuild;
 
@@ -1755,10 +1729,8 @@ protected:
 
 	int m_iMilitaryProductionModifier;
 	int m_iSpaceProductionModifier;
-	int m_iExtraTradeRoutes;
 	int m_iTradeRouteModifier;
 	int m_iForeignTradeRouteModifier;
-	int m_iFreeExperience;
 	int m_iCurrAirlift;
 	int m_iMaxAirlift;
 	int m_iAirModifier;
@@ -1769,8 +1741,6 @@ protected:
 	int m_iOccupationTimer;
 	int m_iCultureUpdateTimer;
 	int m_iCitySizeBoost;
-	int m_iSpecialistFreeExperience;
-	int m_iEspionageDefenseModifier;
 	int m_iSpecialistInsidiousness;
 	int m_iSpecialistInvestigation;
 	// Mutable as its used in caching
@@ -1812,28 +1782,20 @@ protected:
 	//TB Building Tags
 	int m_iExtraLocalCaptureProbabilityModifier;
 	int m_iExtraLocalCaptureResistanceModifier;
-	int m_iExtraLocalDynamicDefense;
-	int m_iExtraRiverDefensePenalty;
-	int m_iExtraBuildingDefenseRecoverySpeedModifier;
 	int m_iModifiedBuildingDefenseRecoverySpeedCap;
-	int m_iExtraCityDefenseRecoverySpeedModifier;
 
 	int** m_ppaaiLocalSpecialistExtraYield;
 	int** m_ppaaiLocalSpecialistExtraCommerce;
 	int m_iPrioritySpecialist;
 	int* m_paiSpecialistBannedCount;
 	int* m_paiHealUnitCombatTypeVolume;
-	int m_iExtraInsidiousness;
-	int m_iExtraInvestigation;
 
-	int* m_buildingYieldMod;
 	int* m_aiYieldRateModifier;
 	int* m_aiPowerYieldRateModifier;
 	int* m_aiTradeYield;
 	mutable bool* m_abCommerceRateDirty;
 	int* m_aiProductionToCommerceModifier;
 	int* m_aiCommerceRateModifier;
-	int* m_aiDomainFreeExperience;
 	int* m_aiDomainProductionModifier;
 	int* m_aiCulture;
 	int* m_aiNumRevolts;
@@ -1858,7 +1820,6 @@ protected:
 	int* m_paiFreeSpecialistCountUnattributed;
 	int* m_paiImprovementFreeSpecialists;
 	int* m_paiReligionInfluence;
-	int* m_paiUnitCombatFreeExperience;
 
 	bool* m_pabWorkingPlot;
 	bool* m_pabHasReligion;
@@ -1998,40 +1959,28 @@ public:
 	void updateSpecialistHappinessHealthFromTech();
 
 	int getExtraLocalDynamicDefense() const;
-	void setExtraLocalDynamicDefense(int iValue);
-	void changeExtraLocalDynamicDefense(int iChange);
 
 	int getExtraRiverDefensePenalty() const;
-	void setExtraRiverDefensePenalty(int iValue);
-	void changeExtraRiverDefensePenalty(int iChange);
 
 	int getExtraMinDefense() const;
 	void setExtraMinDefense(int iValue);
 	void changeExtraMinDefense(int iChange);
 
 	int getExtraBuildingDefenseRecoverySpeedModifier() const;
-	void setExtraBuildingDefenseRecoverySpeedModifier(int iValue);
-	void changeExtraBuildingDefenseRecoverySpeedModifier(int iChange);
 
 	int getModifiedBuildingDefenseRecoverySpeedCap() const;
 	void setModifiedBuildingDefenseRecoverySpeedCap(int iValue);
 	void changeModifiedBuildingDefenseRecoverySpeedCap(int iChange);
 
 	int getExtraCityDefenseRecoverySpeedModifier() const;
-	void setExtraCityDefenseRecoverySpeedModifier(int iValue);
-	void changeExtraCityDefenseRecoverySpeedModifier(int iChange);
 
 
 	int cityDefenseRecoveryRate() const;
 	int getInvestigationTotal(bool bActual = false) const;
 
 	int getExtraInsidiousness() const;
-	void setExtraInsidiousness(int iValue);
-	void changeExtraInsidiousness(int iChange);
 
 	int getExtraInvestigation() const;
-	void setExtraInvestigation(int iValue);
-	void changeExtraInvestigation(int iChange);
 
 	int getSpecialistInsidiousness() const;
 	void changeSpecialistInsidiousness(int iChange);
@@ -2048,7 +1997,6 @@ public:
 private:
 	mutable stdext::hash_map<UnitTypes,UnitTypes> m_eCachedAllUpgradesResults;
 	mutable stdext::hash_map<UnitTypes,UnitTypes> m_eCachedAllUpgradesResultsRoot;
-	mutable int m_totalCommerceRateModifier[NUM_COMMERCE_TYPES];
 
 	mutable std::map<int,int> m_buildingSourcedPropertyCache;
 	mutable std::map<int,int> m_unitSourcedPropertyCache;

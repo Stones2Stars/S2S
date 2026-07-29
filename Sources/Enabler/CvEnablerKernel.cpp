@@ -499,6 +499,13 @@ static void ek_recheckActiveSet(const CvCity* pCity, const std::vector<int>& see
 		}
 		if (nowObs != wasObs) { if (nowObs) f.obsolete.insert(b); else f.obsolete.erase(b); }
 		if (now == was) continue;
+		// ⚖ ANNOUNCE THE OPERATE CROSSING. This is the play-time twin of the load seed's emit: the verdict is the
+		// enabler's, so the enabler announces it, at the one place it changes. Consumers keyed on the operating
+		// fact -- the city's amenity fold, the modifier's marks -- see a dormancy flip exactly as they see a
+		// construction, which is what makes a dormant building stop contributing.
+		// ⛔ It is NOT a duplicate of the building-PRESENCE fact: presence cannot tell dormant from operating
+		// (event-spine.md), and this fires only on a genuine active<->dormant change (`now == was` returned above).
+		emitBuildingProcessed(pCity->getID(), pCity->getOwner(), b, now ? 1 : -1);
 		const std::vector<int>* prov = ek_provides(b);
 		if (now)
 		{
@@ -686,7 +693,7 @@ void EnablerKernel::onBonusAccessChangedActive(const CvCity* pCity, int eBonus)
 // F5: a property crossed one of its operate-band thresholds in pCity (the property-engine watermark detected it) ->
 // re-check ONLY the buildings whose requires.operate consumes THAT property's band into the authoritative operating
 // set. Direction-less by design: ek_classifyBuilding re-reads the live value against the band, so high/low is
-// redundant. Mirrors onBonusAccessChangedActive; the per-turn checkBuildings then applies the flip via setDisabledBuilding.
+// redundant. Mirrors onBonusAccessChangedActive; the operate fixpoint below is the authoritative verdict.
 void EnablerKernel::onPropertyBandHitActive(const CvCity* pCity, int eProperty)
 {
 	buildActiveIndex();
@@ -748,6 +755,17 @@ void EnablerKernel::seedOperatingBuildings(const CvCity* pCity)
 {
 	if (pCity == NULL) return;
 	recomputeOperatingSetInto(pCity, pCity->m_operatingBuildings);
+	// ANNOUNCE the computed verdict: every building this seed just resolved as OPERATING becomes processed-in.
+	// Without it the operating axis is silent on a load -- processBuilding is a play-time path, so a consumer
+	// keyed on the operating fact (the city's amenity fold) could never build. ⛔ This is NOT the banned
+	// state-walking pseudo-emit (superseded-ideas #13): that fabricates PRESENCE facts by walking already-populated
+	// objects, whereas the operate verdict is DERIVED and is being computed right here -- the fact is announced by
+	// the derivation that produces it, which is the ordinary emit contract.
+	const std::set<int>& kActive = pCity->m_operatingBuildings.active;
+	for (std::set<int>::const_iterator it = kActive.begin(); it != kActive.end(); ++it)
+	{
+		emitBuildingProcessed(pCity->getID(), pCity->getOwner(), *it, 1);
+	}
 }
 
 const OperatingBuildings& EnablerKernel::operatingBuildings(const CvCity* pCity)

@@ -849,7 +849,7 @@ void CvTeam::shareItems(TeamTypes eTeam)
 			{
 				foreach_(const BuildingTypes eTypeX, cityX->getHasBuildings())
 				{
-					if (cityX->isDisabledBuilding(eTypeX))
+					if (cityX->isDormantBuilding(eTypeX))
 					{
 						continue;
 					}
@@ -4998,7 +4998,6 @@ void CvTeam::setHasTech(TechTypes eTech, bool bNewValue, PlayerTypes ePlayer, bo
 				for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
 				{
 					cityX->changeBuildingExtraYield((YieldTypes)iJ, iChange * cityX->getBuildingYieldTechChange((YieldTypes)iJ, eTech));
-					cityX->changeBuildingYieldModifier((YieldTypes)iJ, iChange * cityX->getBuildingYieldTechModifier((YieldTypes)iJ, eTech));
 				}
 				// A new tech can effect best plot build decisions so mark stale in all cities
 				cityX->AI_markBestBuildValuesStale();

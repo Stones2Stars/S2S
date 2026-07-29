@@ -24,6 +24,9 @@
 #include "CvCondition.h"    // CASC_PRED_* -- the shared HAS_/IS_ plot predicate ids plotAttrs keys on
 #include "Defines/CvGlobals.h"            // GC -- the bonus / religion domain sizes the derivations walk
 #include "Conditions/CvConditionEval.h"   // CvCascadeEvalCtx -- fillEvalCtx
+#include "Infos/CvBuildingInfo.h"         // the grantor's `amenities` block (the city-local grantor)
+#include "Infos/CvCivicInfo.h"            // the EMPIRE-scope grantor's `amenities` block
+#include "Infos/CvClassificationRegistry.h"   // cachedKeyId -- the by-key amenity read's memoized id resolve
 
 void CityContext::onPlotChanged(const CvPlot* plot, int sign)
 {
@@ -56,6 +59,8 @@ void CityContext::clear() const
 	m_areaTileCount = 0;
 	m_maxAdjacentWaterTiles = 0;
 	m_holyCityCount = 0;
+	amenities.clear();
+	empireAmenities.clear();
 }
 
 // ---- the ONE derivation per stored block ------------------------------------------------------------------------
@@ -213,6 +218,110 @@ void CityContext::refreshHolyCity() const
 		if (m_city->isHolyCity((ReligionTypes)eReligion))
 		{
 			++m_holyCityCount;
+		}
+	}
+}
+
+
+// The AMENITY FOLD -- the city's clean feature list, built from what its grantors CONFER on it (json §8).
+//
+// ⚖ A DELTA, NOT A RE-DERIVATION (owner: "listen to events and see 'oh yes this provides an amenity', then add
+// it"). That is what makes it self-contained: it reads NOTHING -- not the city, not the enabler. A rebuild would
+// have to walk the enabler's operating set, and the contexts' consumer registers BEFORE the enabler
+// (contexts -> enabler -> modifier, since the enabler gates THROUGH these stores), so at load that set does not
+// exist yet. Listening sidesteps the ordering entirely: the store builds itself from the same facts at load
+// (CvCity::read's per-building emit) and at play (setHasBuilding).
+//
+// ⛔ COUNTS, not bits: several grantors can confer the SAME amenity, so each contributes +1 and a departure
+// decrements -- losing one power plant must not darken a city that has two.
+void CityContext::onBuildingChanged(int eBuilding, int sign) const
+{
+	if (eBuilding < 0)
+	{
+		return;
+	}
+	foldAmenities(GC.getBuildingInfo((BuildingTypes)eBuilding).getAmenities(), sign);
+}
+
+// The EMPIRE-scope grantors. A civic confers on EVERY city of the empire (json §8: "a city or cities"), so the
+// city carries what its owner currently has adopted.
+//
+// ⚖ WITHDRAW-THEN-REFOLD, because a CONDITIONED grant cannot be un-added by re-evaluating its gate: once the city
+// stops being the capital, asking "does IS_CAPITAL hold?" answers NO and would subtract nothing, stranding the +1
+// forever ([DEC-no-self-heal] -- nothing would ever correct it). Replaying the RECORDED contribution instead is
+// exact whatever the condition was, and needs no memory of the verdict.
+//
+// ⚑ Reading the player's OWN adopted civics is a FORWARD of raw, object-owned O(1) state -- the HAVE axis every
+// context forwards -- not the banned re-derivation, which is a store reading ANOTHER SYSTEM's built state (the
+// enabler's operating set). The same read `rebuildPoliciesFor` already makes for the policy union.
+void CityContext::refreshEmpireAmenities() const
+{
+	if (m_city == NULL)
+	{
+		return;
+	}
+	// (1) withdraw exactly what was last contributed -- the recorded counts, not a re-evaluated gate
+	for (std::map<int, int>::const_iterator it = empireAmenities.m.begin(); it != empireAmenities.m.end(); ++it)
+	{
+		amenities.add(it->first, -(it->second));
+	}
+	empireAmenities.clear();
+
+	// (2) re-fold from current state, recording the new contribution so it stays withdrawable
+	const CvPlayer& kOwner = GET_PLAYER(m_city->getOwner());
+	const int iNumCivicOptions = GC.getNumCivicOptionInfos();
+	for (int iCivicOption = 0; iCivicOption < iNumCivicOptions; ++iCivicOption)
+	{
+		const CivicTypes eCivic = kOwner.getCivics((CivicOptionTypes)iCivicOption);
+		if (eCivic == NO_CIVIC)
+		{
+			continue;
+		}
+		foldAmenities(GC.getCivicInfo(eCivic).getAmenities(), +1, &empireAmenities);
+	}
+}
+
+bool CityContext::hasAmenityKey(int& iIdCache, const char* szKey) const
+{
+	return amenities.has(ClassificationRegistry::cachedKeyId(iIdCache, CLSD_AMENITY, szKey));
+}
+
+void CityContext::foldAmenities(const CvClassificationBlock* pBlock, int sign, ContextDict* pRecordInto) const
+{
+	if (pBlock == NULL || sign == 0)
+	{
+		return;
+	}
+	// Walk what the GRANTOR carries (the index IS the generated id), never every minted amenity id.
+	const std::vector<char>& kGranted = pBlock->grantedById();
+	CvCascadeEvalCtx ec;
+	bool bCtxFilled = false;
+	for (int iAmenityId = 0; iAmenityId < (int)kGranted.size(); ++iAmenityId)
+	{
+		if (kGranted[iAmenityId] == 0)
+		{
+			continue;
+		}
+		// A CONDITIONED grant (the §3.9 entry form) is gated on THIS city -- `abolishedAnger` is conferred on the
+		// CAPITAL only. Evaluated on the grant AND on the repeal (owner), through the ONE evaluator: the same
+		// verdict decides the +1 and the -1, so a conditioned grant can never fold in and fail to fold out.
+		const CvCondition* pGate = pBlock->conditionForId(iAmenityId);
+		if (pGate != NULL)
+		{
+			if (!bCtxFilled)
+			{
+				fillEvalCtx(ec);
+				bCtxFilled = true;
+			}
+			if (!cascadeEvalCondition(pGate, ec, CvCascadeEvalFlags()))
+			{
+				continue;
+			}
+		}
+		amenities.add(iAmenityId, sign);
+		if (pRecordInto != NULL)
+		{
+			pRecordInto->add(iAmenityId, sign);
 		}
 	}
 }

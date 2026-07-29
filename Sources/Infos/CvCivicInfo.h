@@ -22,12 +22,19 @@ public:
 	virtual const CvEdges*     getEdges()     const { return &m_edges; }
 	virtual const CvModifiers* getModifiers() const { return &m_modifiers; }
 	virtual const CvClassificationBlock* getPolicies()  const { return &m_policies; }
+	virtual const CvClassificationBlock* getAmenities() const { return &m_amenities; }
 
 	// ======================= 2. CLASSIFICATION -- O(1) bitset tests, hold-vs-provide in the NAME (json §9) ====
 	// A civic PROVIDES a policy to the empire while adopted (the grantor direction -- the empire HOLDS it;
 	// EmpireContext.policies is the derived union over the live grantors).
 	bool providesPolicy(int iPolicyId) const { return m_policies.hasId(iPolicyId); }
 	bool providesPolicies() const            { return !m_policies.isEmpty(); }
+	// A civic also PROVIDES amenities -- to every CITY of the empire rather than to the empire itself (json §8:
+	// "a city or cities"). The city HOLDS the fold; this is only the grantor's side of it. A civic's grant may be
+	// CONDITIONED (`abolishedAnger` while IS_CAPITAL), which is why the block carries the §3.9 entry form and the
+	// fold evaluates it per receiving city.
+	bool providesAmenity(int iAmenityId) const { return m_amenities.hasId(iAmenityId); }
+	bool providesAmenities() const             { return !m_amenities.isEmpty(); }
 
 	// ======================= 3. MODIFIER GROUPS -- point reads over the compiled sums ========================
 	// (Conditioned-list access + the expected* what-if valuations are the base CvInfo surface.)
@@ -107,6 +114,7 @@ protected:
 	virtual CvTriggers*  mutTriggers()  { return &m_triggers; }
 	virtual CvModifiers* mutModifiers() { return &m_modifiers; }
 	virtual CvClassificationBlock* mutPolicies()  { return &m_policies; }
+	virtual CvClassificationBlock* mutAmenities() { return &m_amenities; }
 
 private:
 	// --- the composed section units ---
@@ -114,6 +122,7 @@ private:
 	CvTriggers  m_triggers;
 	CvModifiers m_modifiers;
 	CvClassificationBlock m_policies;
+	CvClassificationBlock m_amenities;
 
 	// --- the intrinsic identity members (materialized once at mapFrom) ---
 	int m_iCivicOption;

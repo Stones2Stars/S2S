@@ -10911,7 +10911,7 @@ void CvPlot::processArea(CvArea* pArea, int iChange)
 
 		foreach_(const BuildingTypes eTypeX, pCity->getHasBuildings())
 		{
-			if (pCity->isDisabledBuilding(eTypeX))
+			if (pCity->isDormantBuilding(eTypeX))
 			{
 				continue;
 			}
@@ -10919,7 +10919,7 @@ void CvPlot::processArea(CvArea* pArea, int iChange)
 
 			pArea->changePower(eOwner, building.getPowerValue() * iChange);
 
-			if (!pCity->isReligiouslyLimitedBuilding(eTypeX))
+			if (!pCity->isDormantBuilding(eTypeX))
 			{
 				if (building.getAreaHealth() > 0)
 				{

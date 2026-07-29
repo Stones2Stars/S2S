@@ -22,16 +22,20 @@
 #include <string>
 #include <set>
 #include <vector>
+#include <map>
+#include <string>
 
 namespace picojson { class value; }
+class CvCondition;   // the §3.9 entry-form gate a conditioned grant carries
 
-// The five §8/§9 classification domains -- one generated-info category each (ClassificationRegistry mints the
-// SKILL_/TAG_/ATTRIBUTE_/CAPABILITY_/POLICY_ infos from the union of authored keys).
+// The §8/§9 classification domains -- one generated-info category each (ClassificationRegistry mints the
+// SKILL_/TAG_/ATTRIBUTE_/AMENITY_/CHARACTERISTIC_/CAPABILITY_/POLICY_ infos from the union of authored keys).
 enum ClsDomain
 {
 	CLSD_SKILL = 0,     // unit `skills`
 	CLSD_TAG,           // unit `tags`
-	CLSD_ATTRIBUTE,     // building `attributes`
+	CLSD_ATTRIBUTE,     // building `attributes` -- what the BUILDING itself is/does (held)
+	CLSD_AMENITY,       // `amenities` -- CITY-held, grantor-PROVIDED (building/civic/trait/tech hand it to a city)
 	CLSD_CHARACTERISTIC,// plot substrate `characteristics` (terrain/feature/improvement/route)
 	CLSD_CAPABILITY,    // empire `capabilities`
 	CLSD_POLICY,        // empire `policies`
@@ -62,7 +66,7 @@ public:
 	const std::set<std::string>& allFalse() const { return m_falseNames; }
 	bool isEmpty() const { return m_names.empty() && m_falseNames.empty(); }
 	void clearParsed()   // the clear-first half of the full-registry section re-map
-	{ m_names.clear(); m_falseNames.clear(); m_byId.clear(); m_falseById.clear(); }
+	{ m_names.clear(); m_falseNames.clear(); m_byId.clear(); m_falseById.clear(); m_condByName.clear(); m_condById.clear(); }
 
 	// ---- the generated-id plane (ClassificationRegistry) ----
 	// Fill the by-id bitsets from the name sets via the domain's key->id registry; sized to the domain count.
@@ -75,6 +79,14 @@ public:
 	// NOT merged -- a tag is pure membership and nothing revokes one ([tags.md]).
 	void mergeGrantedIds(const CvClassificationBlock& kOther);
 	bool hasId(int iId) const { return iId >= 0 && iId < (int)m_byId.size() && m_byId[iId] != 0; }
+	// The GRANT plane BY GENERATED ID -- the index IS the id. Exposed for a HOLDER that aggregates its grantors'
+	// blocks (the city's amenity fold), which must walk what a grantor carries rather than probe every minted id.
+	// Empty until resolveIds has run.
+	const std::vector<char>& grantedById() const { return m_byId; }
+	// The §3.9 entry-form GATE for a granted id, or NULL when the grant is unconditional. A HOLDER folding this
+	// grantor evaluates it per receiver, on the grant AND on the repeal.
+	const CvCondition* conditionForId(int iId) const
+	{ return (iId >= 0 && iId < (int)m_condById.size()) ? m_condById[iId] : NULL; }
 	bool hasFalseId(int iId) const { return iId >= 0 && iId < (int)m_falseById.size() && m_falseById[iId] != 0; }
 	// The getter read behind CLS_HAS: O(1) once resolved; the pre-resolve load window reads the string set.
 	bool hasKey(int& iIdCache, int eDomain, const char* szKey) const;
@@ -88,6 +100,8 @@ private:
 	std::set<std::string> m_falseNames;   // FALSE-valued (revoke)
 	std::vector<char> m_byId;             // [generated id] -> carried (grant plane)
 	std::vector<char> m_falseById;        // [generated id] -> carried (revoke plane)
+	std::map<std::string, const CvCondition*> m_condByName;   // entry-form gates, by authored key (load window)
+	std::vector<const CvCondition*> m_condById;               // the same, on the id plane the holder reads
 	CvClassificationBlock(const CvClassificationBlock&);              // noncopyable (held by-value on the noncopyable info)
 	CvClassificationBlock& operator=(const CvClassificationBlock&);
 };

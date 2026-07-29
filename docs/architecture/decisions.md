@@ -333,6 +333,16 @@ active). **The reseed emit ENDPOINTS + the bracket exist; on `cascade-rebuild` t
 re-wired** ([event-spine.md](../specs/event-spine.md) build status).
 **Home:** [event-spine.md](../specs/event-spine.md).
 
+### DEC-close-event-gaps-now
+
+An event gap is CLOSED THE MOMENT IT IS FOUND — never recorded as a todo and left. Binds all three forms: a
+missing EMIT, a missing FIELD on an existing fact (the old-value case), and a missing CONSUMER ROUTE (the fact
+fires and the store that needs it ignores it). All three leave a stored value permanently wrong with nothing to
+re-derive it ([DEC-no-self-heal](#dec-no-self-heal)), so the todo entry naming the hook IS the duration of the
+bug. Closing costs almost nothing while the trace is in hand and never gets cheaper. It does not license
+guessing a structure — surface a genuine design question — but the gap still closes in the same work item.
+Sharpens the emit-liberally ruling. **Home:** [event-spine.md](../specs/event-spine.md).
+
 ### DEC-verify-in-game-not-reshadow
 
 Parity + shadow are CLOSED — their job is FINISHED and they are NOT to be re-run, re-invoked, or used to frame any
@@ -445,11 +455,13 @@ address and a spelled-out getter parameter — never a fragment of an enum/membe
 
 ### DEC-classification-infos
 
-The §8/§9 classification categories (skills / tags / attributes / characteristics / capabilities / policies) exist as
-RUNTIME-GENERATED INFOS: one info per distinct authored block key, minted at load into the global infotype map
-(`SKILL_`/`TAG_`/`ATTRIBUTE_`/`CHARACTERISTIC_`/`CAPABILITY_`/`POLICY_` + UPPER_SNAKE of the camelCase key) and its category's
-InfoRepo — referenceable like any authored info, with every entity's blocks resolved to by-id bitsets. Nothing is
-hand-authored per category; the registry derives from the data. **Home:** [json.md §8](../specs/json.md).
+The §8/§9 classification categories (skills / tags / attributes / amenities / characteristics / capabilities / policies)
+exist as RUNTIME-GENERATED INFOS: one info per distinct authored block key, minted at load into the global infotype map
+(`SKILL_`/`TAG_`/`ATTRIBUTE_`/`AMENITY_`/`CHARACTERISTIC_`/`CAPABILITY_`/`POLICY_` + UPPER_SNAKE of the camelCase key) and its
+category's InfoRepo — referenceable like any authored info, with every entity's blocks resolved to by-id bitsets. Nothing is
+hand-authored per category; the registry derives from the data. ⚠ A **HOLDER'S** side is not always a bitset: where several
+grantors can confer the same key the holder stores an id→COUNT dictionary instead (the city's `amenities`, json.md §8) —
+the by-id resolution is what is uniform, not the storage width. **Home:** [json.md §8](../specs/json.md).
 
 ### DEC-enabler-not-cascade
 

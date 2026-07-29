@@ -167,12 +167,15 @@ the one cross-scope roll-up (`InfoValuation::realizedAt*`), plus the endpoint or
 ⚠ An agent reading only that the group reads exist would conclude the access surface is done and build on a
 half-migration.
 
-⚖ **The `CvCity`/`CvPlayer` getter consolidation is KNOWN and WILL be done — it is simply NOT the primary focus
-(owner).** It is not deferred and not optional ([DEC-no-deferred](../../architecture/decisions.md#dec-no-deferred)
-still binds: it is a failure to fix, not a backlog entry); what the ruling settles is ORDER. Getting all core
-systems and their STRUCTURE in place comes first, because plugging holes while structure is missing means plugging
-them with the only thing standing there — legacy (the banner's structure-first rule). Pick this up when the
-structure is complete, not as the opening move.
+⚖ **The `CvCity` / `CvPlayer` / `CvPlot` consumer work PROCEEDS NOW — the wait is over (owner): "we *have* most
+of the structure, there is no point waiting … delaying the changes in CvCity, CvPlayer and CvPlot at this stage
+achieves very little."** The structure-first rule earned its keep while the core systems were missing — plugging
+holes then meant plugging them with the only thing standing there, legacy — but the machines are in place, so
+holding these back now buys nothing and leaves legacy breathing behind a gate that has already been passed.
+⛔ So a `CvCity`/`CvPlayer`/`CvPlot` consumer or counter is NOT to be deferred on ordering grounds any more; the
+standing rules that still bind are the ones about HOW (a NEW surface rather than a re-shaped legacy one,
+[DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface), and the delete-driven cut with
+the compiler as census).
 ⚑ **And a fair few of those getters CONSOLIDATE ON THEIR OWN (owner): they are INFO-BACKED reads, so restructuring
 the infos already collapses them** — the count is not a worklist of independent items. ⛔ Do not plan a per-getter
 sweep for work that falls out of wiring the rebuilt infos through; measure what actually survives that first, then

@@ -22,7 +22,7 @@ class CvEraInfo; class CvHandicapInfo; class CvSpecialBuildingInfo; class CvProp
 // The five GENERATED classification categories (ClassificationRegistry mints SKILL_/TAG_/ATTRIBUTE_/CAPABILITY_/
 // POLICY_ infos from the union of authored §8/§9 block keys) -- JSON-derived, no XML shell, plain-CvInfo payload.
 class CvSkillClsTag; class CvTagClsTag; class CvAttributeClsTag; class CvCapabilityClsTag; class CvPolicyClsTag;
-class CvCharacteristicClsTag;
+class CvCharacteristicClsTag; class CvAmenityClsTag;
 
 // #430 option B: ALIAS the tag's singleton to the engine's GC.m_pa<X>Info array -- the repo becomes a VIEW over the
 // read()+mapFrom'd objects getXInfo returns (one object, no separate store). The reinterpret is layout-safe: both are
@@ -82,6 +82,7 @@ CASCADE_INFOREPO_ALIAS(CvWorldInfo,         m_paWorldInfo)        // #430 item 1
 CASCADE_INFOREPO_OWNED(CvSkillClsTag)        // the five generated classification categories (ClassificationRegistry)
 CASCADE_INFOREPO_OWNED(CvTagClsTag)
 CASCADE_INFOREPO_OWNED(CvAttributeClsTag)
+CASCADE_INFOREPO_OWNED(CvAmenityClsTag)
 CASCADE_INFOREPO_OWNED(CvCapabilityClsTag)
 CASCADE_INFOREPO_OWNED(CvCharacteristicClsTag)
 CASCADE_INFOREPO_OWNED(CvPolicyClsTag)

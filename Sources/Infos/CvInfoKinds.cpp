@@ -184,10 +184,12 @@ namespace
 		{ "corporation", CHANNEL_CORPORATION },
 		{ 0, 0 } };
 
+	// ⛔ `insidiousness` / `investigation` are NOT espionage members (owner): they are the UNDERWORLD family --
+	// the in-city criminal contest, a criminal's stealth against an investigator's catch. Espionage never
+	// "becomes" insidiousness; the two mechanics merely ride some of the same units. MEMBERS_UNDERWORLD owns
+	// both words, so a member name resolves to exactly one family.
 	const InfoMemberRow MEMBERS_ESPIONAGE[] = {
 		{ "goldenAge", ESPIONAGE_GOLDEN_AGE },
-		{ "insidiousness", ESPIONAGE_INSIDIOUSNESS },
-		{ "investigation", ESPIONAGE_INVESTIGATION },
 		{ 0, 0 } };
 
 	const InfoMemberRow MEMBERS_DEFENSE[] = {

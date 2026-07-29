@@ -177,8 +177,8 @@ enum EspionageKind
 {
 	ESPIONAGE_AMOUNT = 0,
 	ESPIONAGE_GOLDEN_AGE,
-	ESPIONAGE_INSIDIOUSNESS,
-	ESPIONAGE_INVESTIGATION,
+	// ⛔ NO insidiousness / investigation here: those are MODFAM_UNDERWORLD (the in-city criminal contest),
+	// a separate mechanic that shares no stat with espionage.
 	NUM_ESPIONAGE_KINDS
 };
 const int ESPIONAGE_SCOPES = INFO_SCOPE_BIT(CASC_SCOPE_CITY) | INFO_SCOPE_BIT(CASC_SCOPE_EMPIRE) | INFO_SCOPE_BIT(CASC_SCOPE_UNIT);

@@ -350,7 +350,7 @@ static bool ev_evalPredicate(const CvCascadeEvalCtx& ctx, const CvCascadeEvalFla
 	// Fresh water is target-relative (json §3.5): on a PLOT target the tile's own access; with a CITY in
 	// context ALSO the city's fresh-water ACCESS counter (providesFreshWater buildings feed it via
 	// changeFreshWater) -- the engine's own dormancy leg is plot()->isFreshWater() || hasFreshWater()
-	// (checkBuildings), so a plot-only read wrongly dorms every city fed by a provider building (the
+	// so a plot-only read wrongly dorms every city fed by a provider building (the
 	// AQUEDUCT/WATER_TOWER chain -- the worked-plot yield collapse).
 	case CASC_PRED_HAS_FRESHWATER:  return (plotContext != NULL && plotContext->hasFreshWater())
 	                                     || (cityContext != NULL && cityContext->hasFreshWaterAccess());

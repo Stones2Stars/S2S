@@ -1051,28 +1051,16 @@ void CvPlayerAI::AI_doTurnUnitsPost()
 					&& (pPlotCity->getUnitAvailability(unitX->getUnitType()) == EnablerDomain::STATE_LISTED)
 					&& (!unitX->canDefend() || !AI_getAnyPlotDanger(unitPlot, 2, false)))
 					{
-						int iCityExp = 0;
-						if (unitX->getExperience() > 0)
+						// "Would a fresh unit of this type start with at least as much experience as this one has?"
+						// ONE call: the city already answers exactly that, so this block's term-by-term
+						// re-derivation of it was a second implementation of the same calculation
+						// ([DEC-single-implementation]). Both sides are ×100, so nothing converts here.
+						int iCityExp100 = 0;
+						if (unitX->getExperience100() > 0)
 						{
-							iCityExp = (
-								getFreeExperience() //civics & wonders
-								+ pPlotCity->getFreeExperience()
-								+ pPlotCity->getSpecialistFreeExperience()
-								+ pPlotCity->getDomainFreeExperience(unitX->getDomainType())
-								+ pPlotCity->getUnitCombatFreeExperience(unitX->getUnitCombatType())
-							);
-							foreach_(const UnitCombatTypes eSubCombat, unitX->getUnitInfo().getCombatClasses())
-							{
-								iCityExp += pPlotCity->getUnitCombatFreeExperience(eSubCombat);
-							}
-							// Afforess - also include wonder, religion & civic experience
-							if (getStateReligion() != NO_RELIGION && pPlotCity->isHasReligion(getStateReligion()))
-							{
-								iCityExp += getStateReligionFreeExperience(); //religions
-							}
-							iCityExp = std::max(0, iCityExp);
+							iCityExp100 = pPlotCity->getProductionExperience(unitX->getUnitType());
 						}
-						if (unitX->getExperience() <= iCityExp)
+						if (unitX->getExperience100() <= iCityExp100)
 						{
 							if (unitX->hasCargo())
 							{
@@ -15381,7 +15369,7 @@ int CvPlayerAI::AI_religionValue(ReligionTypes eReligion) const
 
 			foreach_(const BuildingTypes eTypeX, pHolyCity->getHasBuildings())
 			{
-				if (pHolyCity->isDisabledBuilding(eTypeX))
+				if (pHolyCity->isDormantBuilding(eTypeX))
 				{
 					continue;
 				}
@@ -15602,7 +15590,7 @@ EspionageMissionTypes CvPlayerAI::AI_bestPlotEspionage(CvPlot* pSpyPlot, PlayerT
 							}
 							foreach_(const BuildingTypes eTypeX, pCity->getHasBuildings())
 							{
-								if (pCity->isDisabledBuilding(eTypeX))
+								if (pCity->isDormantBuilding(eTypeX))
 								{
 									continue;
 								}
@@ -16185,7 +16173,7 @@ int CvPlayerAI::AI_espionageVal(PlayerTypes eTargetPlayer, EspionageMissionTypes
 		{
 			foreach_(const BuildingTypes eTypeX, pCity->getHasBuildings())
 			{
-				if (!pCity->isDisabledBuilding(eTypeX))
+				if (!pCity->isDormantBuilding(eTypeX))
 				{
 					if (GC.getBuildingInfo(eTypeX).isPrereqPower())
 					{
@@ -22692,7 +22680,7 @@ int CvPlayerAI::AI_getStrategyHash() const
 					foreach_(const BuildingTypes eTypeX, holyCity->getHasBuildings())
 					{
 						if (GC.getBuildingInfo(eTypeX).getGlobalReligionCommerce() == eStateReligion
-						&& !holyCity->isDisabledBuilding(eTypeX))
+						&& !holyCity->isDormantBuilding(eTypeX))
 						{
 							if (holyCity->isActiveBuilding(eTypeX))
 							{
@@ -26181,7 +26169,7 @@ void CvPlayerAI::AI_setPushReligiousVictory()
 			foreach_(const BuildingTypes eTypeX, holyCity->getHasBuildings())
 			{
 				if (GC.getBuildingInfo(eTypeX).getGlobalReligionCommerce() == eStateReligion
-				&& !holyCity->isDisabledBuilding(eTypeX))
+				&& !holyCity->isDormantBuilding(eTypeX))
 				{
 					iPercentThreshold /= 2;
 					break;

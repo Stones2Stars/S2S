@@ -319,6 +319,7 @@ public:
 	int getProductionNeeded(BuildingTypes eBuilding) const;
 	int getProductionNeeded(ProjectTypes eProject) const;
 	int getProductionModifier(UnitTypes eUnit) const;
+	int keyedExperience(int iTargetSegment, int iTargetFk) const;   // the empire half of CvCity::keyedExperience
 	int getProductionModifier(BuildingTypes eBuilding) const;
 	int getProductionModifier(ProjectTypes eProject) const;
 
@@ -534,8 +535,6 @@ public:
 	int getMaxPlayerBuildingProductionModifier() const;
 	void changeMaxPlayerBuildingProductionModifier(int iChange);
 
-	int getFreeExperience() const;
-	void changeFreeExperience(int iChange);
 
 	int getFeatureProductionModifier() const;
 	void changeFeatureProductionModifier(int iChange);
@@ -777,8 +776,6 @@ public:
 	int getStateReligionBuildingProductionModifier() const;
 	void changeStateReligionBuildingProductionModifier(int iChange);
 
-	int getStateReligionFreeExperience() const;
-	void changeStateReligionFreeExperience(int iChange);
 
 	DllExport CvCity* getCapitalCity() const;
 	void setCapitalCity(CvCity* pNewCapitalCity);
@@ -1532,8 +1529,6 @@ public:
 	TeamTypes getPledgedSecretaryGeneralVote() const;
 	void setPledgedSecretaryGeneralVote(TeamTypes eIndex);
 
-	int getUnitCombatFreeExperience(const UnitCombatTypes eIndex) const;
-	void changeUnitCombatFreeExperience(const UnitCombatTypes eIndex, const int iChange);
 
 	int getBuildingProductionModifier(const BuildingTypes eIndex) const;
 	void changeBuildingProductionModifier(const BuildingTypes eIndex, const int iChange);
@@ -1748,7 +1743,6 @@ protected:
 	int m_iNationalHurryAngerModifier;
 	int m_iNationalEnemyWarWearinessModifier;
 	int m_iNationalBombardDefenseModifier;
-	int* m_paiNationalDomainFreeExperience;
 	int* m_paiNationalDomainProductionModifier;
 	int* m_paiNationalTechResearchModifier;
 	int m_iFixedBordersCount;
@@ -1758,9 +1752,6 @@ protected:
 	int* m_paiEraAdvanceFreeSpecialistCount;
 	int m_iNationalCityStartCulture;
 	int m_iNationalAirUnitCapacity;
-	int m_iCapitalXPModifier;
-	int m_iStateReligionHolyCityXPModifier;
-	int m_iNonStateReligionHolyCityXPModifier;
 	int m_iNationalCityStartBonusPopulation;
 	int m_iNationalMissileRangeChange;
 	int m_iNationalFlightOperationRangeChange;
@@ -1933,7 +1924,6 @@ protected:
 	int m_iMaxGlobalBuildingProductionModifier;
 	int m_iMaxTeamBuildingProductionModifier;
 	int m_iMaxPlayerBuildingProductionModifier;
-	int m_iFreeExperience;
 	int m_iFeatureProductionModifier;
 	int m_iWorkerSpeedModifier;
 	int m_iImprovementUpgradeRateModifier;
@@ -2006,7 +1996,6 @@ protected:
 	int m_iNoNonStateReligionSpreadCount;
 	int m_iStateReligionUnitProductionModifier;
 	int m_iStateReligionBuildingProductionModifier;
-	int m_iStateReligionFreeExperience;
 	int m_iCapitalCityID;
 	int m_iCitiesLost;
 	int m_iWinsVsBarbs;
@@ -2297,9 +2286,6 @@ public:
 	void setNationalBombardDefenseModifier(int iNewValue);
 	void changeNationalBombardDefenseModifier(int iChange);
 
-	int getNationalDomainFreeExperience(DomainTypes eIndex) const;
-	void setNationalDomainFreeExperience(DomainTypes eIndex, int iNewValue);
-	void changeNationalDomainFreeExperience(DomainTypes eIndex, int iChange);
 
 	int getNationalDomainProductionModifier(DomainTypes eIndex) const;
 	void setNationalDomainProductionModifier(DomainTypes eIndex, int iNewValue);
@@ -2326,17 +2312,8 @@ public:
 	void setNationalAirUnitCapacity(int iValue);
 	void changeNationalAirUnitCapacity(int iChange);
 
-	int getCapitalXPModifier() const;
-	void setCapitalXPModifier(int iValue);
-	void changeCapitalXPModifier(int iChange);
 
-	int getStateReligionHolyCityXPModifier() const;
-	void setStateReligionHolyCityXPModifier(int iValue);
-	void changeStateReligionHolyCityXPModifier(int iChange);
 
-	int getNonStateReligionHolyCityXPModifier() const;
-	void setNonStateReligionHolyCityXPModifier(int iValue);
-	void changeNonStateReligionHolyCityXPModifier(int iChange);
 
 	int getNationalCityStartBonusPopulation() const;
 	void setNationalCityStartBonusPopulation(int iValue);
@@ -2497,7 +2474,6 @@ private:
 	std::map<short, int> m_unitCombatProductionMod;
 	std::map<short, int> m_greatPeopleRateforUnit;
 	std::map<short, char> m_goldenAgeOnBirthOfGreatPersonCount;
-	std::map<short, short> m_unitCombatFreeXP;
 
 	int m_iNumAnarchyTurns;
 	int m_iNumCivicSwitches;

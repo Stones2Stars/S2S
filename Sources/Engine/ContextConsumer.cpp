@@ -91,10 +91,47 @@ public:
 		// ---- the EMPIRE store: the enacted-policy union over the player's live civics + held traits ----
 		// PLAYER_INIT matters in its own right: the initial trait assignment writes the has-array directly rather
 		// than going through the trait setter, so the init fact is the only announcement those traits ever make.
-		case SEVT_CIVIC_ADOPTED:
 		case SEVT_TRAIT_CHANGED:
 		case SEVT_PLAYER_INIT:
 			rebuildPoliciesFor(kEvent.iC);
+			break;
+		// A civic SWAP moves what the empire confers on every one of its cities (json §8), so the empire half of each
+		// city's amenity fold is re-derived.
+		// ⛔ Play-time ONLY. At load the civic facts fire from CvPlayer::read, and the TRAIT ones fire AFTER the
+		// cities deserialize -- so an unguarded fan would double-count against the load build below, which derives
+		// the owner's standing grantors per city once the stream has ended.
+		case SEVT_CIVIC_ADOPTED:
+			rebuildPoliciesFor(kEvent.iC);
+			if (!spineGameLoadInProgress())
+			{
+				refreshEmpireAmenitiesForPlayer(kEvent.iC);
+			}
+			break;
+		// THE CAPITAL MOVED -- a conditioned grant's GATE changed for two cities at once (the one that stopped being
+		// the capital and the one that became it), while the grantor set did not move at all. Without this the
+		// `abolishedAnger` a capital was given would simply stay with it forever ([DEC-no-self-heal] -- a stored
+		// value nothing re-derives). Re-deriving the whole empire half covers both cities without the fact needing
+		// to name the OLD capital.
+		case SEVT_CAPITAL_CHANGED:
+			if (!spineGameLoadInProgress())
+			{
+				refreshEmpireAmenitiesForPlayer(kEvent.iC);
+			}
+			break;
+		// A city CHANGED HANDS -- its empire-conferred amenities belong to a different set of civics now, and the
+		// grantor facts will never restate themselves for it. Without this a conquered city keeps whatever its
+		// PREVIOUS owner's civics conferred, permanently. iC = the new owner, iSrcLoc = the city; a disposal
+		// (NO_PLAYER) has nothing to re-derive. Guarded to play: the load build covers every city already, and at
+		// load this fires from CvCity::read against a city that is still being read.
+		case SEVT_CITY_OWNER_CHANGED:
+			if (!spineGameLoadInProgress() && kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS)
+			{
+				const CvCity* pCity = cityFor(kEvent.iC, kEvent.iSrcLoc);
+				if (pCity != NULL)
+				{
+					pCity->getCityContext().refreshEmpireAmenities();
+				}
+			}
 			break;
 
 		// ---- the CITY stores ----
@@ -118,6 +155,15 @@ public:
 		// A tech can open or close a bonus's TechCityTrade gate, which is the gate the stored count applies.
 		case SEVT_TECH_CHANGED:
 			refreshTradedForPlayer(kEvent.iC);
+			break;
+		// A grantor's OPERATING contribution turned on or off: fold its amenities in or out (+1 / -1). The
+		// OPERATING axis is the right one -- a DORMANT grantor confers nothing (enabler.md §3.2) -- and it now
+		// fires in BOTH phases: processBuilding at play (construction/destruction AND a dormancy flip), and the
+		// enabler's load seed announcing the verdict it just computed. So the store builds itself with no
+		// load-phase special case. ⛔ NOT the presence fact: presence cannot tell dormant from operating, and at
+		// play both would fire for one construction (a double count). iB carries the sign.
+		case SEVT_BUILDING_PROCESSED:
+			foldAmenitiesFor(kEvent.iC, kEvent.iSrcLoc, kEvent.iType, kEvent.iB);
 			break;
 		// A religion's holy city moved: the bare IS_HOLY_CITY verdict flips for the city that gained or lost it.
 		case SEVT_HOLY_CITY_CHANGED:
@@ -237,6 +283,36 @@ private:
 		}
 	}
 
+	// ⚖ THE VERDICT CROSSING IS THE FACT, so whoever owns the verdict announces it. That used to be
+	// CvCity::changeGovernmentCenterCount (a per-flag counter emitting at its own 0-crossing); the verdict is now
+	// the amenity FOLD, so the crossing is watched around every fold that can move it. ⛔ The fact itself does NOT
+	// change — one emit, at the genuine change — which is what keeps the counter's removal from opening an event
+	// gap ([DEC-close-event-gaps-now]). The AI work-dirty rider the deleted changers carried rides here too
+	// (save.md §6: a deleted changer's side effects must survive at the surviving trigger).
+	static void announceAmenityCrossings(const CvCity* pCity, bool bWasGovernmentCentre)
+	{
+		if (pCity == NULL)
+		{
+			return;
+		}
+		const bool bIsGovernmentCentre = pCity->isGovernmentCenter();
+		if (bIsGovernmentCentre != bWasGovernmentCentre)
+		{
+			emitGovernmentCenterChanged(pCity->getID(), pCity->getOwner(), bIsGovernmentCentre);
+		}
+	}
+
+	static void foldAmenitiesFor(int iOwner, int iCityId, int iBuilding, int iSign)
+	{
+		const CvCity* pCity = cityFor(iOwner, iCityId);
+		if (pCity != NULL)
+		{
+			const bool bWasGovernmentCentre = pCity->isGovernmentCenter();
+			pCity->getCityContext().onBuildingChanged(iBuilding, iSign);
+			announceAmenityCrossings(pCity, bWasGovernmentCentre);
+		}
+	}
+
 	static void refreshAllStoresForCity(int iOwner, int iCityId)
 	{
 		const CvCity* pCity = cityFor(iOwner, iCityId);
@@ -249,6 +325,10 @@ private:
 		kContext.refreshTradedBonuses();
 		kContext.refreshAreaFacts();
 		kContext.refreshHolyCity();
+		// A city founded mid-game starts empty, so it folds the empire-scope grantors its owner ALREADY has --
+		// the same half the load build covers, at the other moment a city starts existing. Its own buildings
+		// arrive later as ordinary per-building facts.
+		kContext.refreshEmpireAmenities();
 	}
 
 	// The RADIUS-CITY INVERSE: which cities can see this plot. The workable fat cross is symmetric, so the cities
@@ -350,6 +430,29 @@ private:
 		}
 	}
 
+	// Re-derive the EMPIRE half of every one of this player's cities' amenity folds. ONE entry point for every fact
+	// that can move it -- a civic swapped (the grantor set changed) or the capital moved (a conditioned grant's gate
+	// changed for two cities). ⚖ Uniform rather than a per-fact delta because a CONDITIONED grant is not reversible
+	// by re-evaluating its gate: the withdraw-then-refold inside re-plays the recorded contribution instead.
+	// Both driving facts are RARE, so the whole-empire fan costs nothing at its real frequency.
+	static void refreshEmpireAmenitiesForPlayer(int iPlayer)
+	{
+		if (iPlayer < 0 || iPlayer >= MAX_PLAYERS)
+		{
+			return;
+		}
+		CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iPlayer);
+		if (!kPlayer.isAlive())
+		{
+			return;
+		}
+		int iLoop = 0;
+		for (const CvCity* pCity = kPlayer.firstCity(&iLoop); pCity != NULL; pCity = kPlayer.nextCity(&iLoop))
+		{
+			pCity->getCityContext().refreshEmpireAmenities();
+		}
+	}
+
 	// The LOAD build -- the one full pass over every city's blocks, run once at the end of the load stream.
 	static void refreshAllStoresForAllCities()
 	{
@@ -368,6 +471,11 @@ private:
 				kContext.refreshTradedBonuses();
 				kContext.refreshAreaFacts();
 				kContext.refreshHolyCity();
+				// The BUILDING half of the amenity fold needs no pass here -- it is a delta off the per-building
+				// facts, which the save read already emitted. The EMPIRE half does: the civic facts fired from
+				// CvPlayer::read, before this city existed to fan to, so the city folds its owner's standing
+				// civics once, here.
+				kContext.refreshEmpireAmenities();
 			}
 		}
 	}

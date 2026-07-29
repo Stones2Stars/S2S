@@ -1867,7 +1867,7 @@ bool CvDLLButtonPopup::launchDoEspionageTargetPopup(CvPopup* pPopup, CvPopupInfo
 		{
 			foreach_(const BuildingTypes eType, pCity->getHasBuildings())
 			{
-				if (kPlayer.canDoEspionageMission(eMission, eTargetPlayer, pPlot, eType, pUnit) && !pCity->isDisabledBuilding(eType))
+				if (kPlayer.canDoEspionageMission(eMission, eTargetPlayer, pPlot, eType, pUnit) && !pCity->isDormantBuilding(eType))
 				{
 					gDLL->getInterfaceIFace()->popupAddGenericButton(
 						pPopup, gDLL->getText(

@@ -220,6 +220,35 @@
 
 ## Not built yet
 
+- **The PLAYER-ALERT consumer, and the alerts owed to it.** Alerts belong on the spine facts, never re-inlined at
+  a mutation site ([event-spine.md](../../specs/event-spine.md)). Owed so far, from legacy mutators already cut:
+  the building **dormancy** pair — *"disabled by religion"* / *"restored"* (`TXT_KEY_CITY_RELIGIOUSLY_DISABLED_BUILDINGS`
+  / `..._RESTORED_BUILDINGS`), which died with `setReligiouslyLimitedBuilding`; and the generic
+  building-shut-down alert that rode `checkBuildings`' `bAlertOwner` leg. Both re-attach to the OPERATE CROSSING
+  the enabler now announces (`emitBuildingProcessed` at the active↔dormant transition), which is one fact for
+  both cases and knows the direction from its sign.
+  ⚑ Expect this list to GROW as each remaining legacy mutator is cut — collect them and add them together on the
+  facts, rather than re-inlining one at a time.
+
+- **The amenity CONSUMER side** — the grantor block, the `AMENITY_` mint, the curator split and
+  `CityContext.amenities` (the id→COUNT fold off the building facts) are in; what is NOT is re-pointing the
+  consumers onto the CITY read and retiring the per-flag `CvCity` counters (`changeGovernmentCenterCount` +
+  siblings) with the bespoke per-attribute predicates/facts built three times over
+  ([contexts.md](../../architecture/contexts.md)).
+  ⚑ Sequencing: the per-key named `CLS_HAS` getters on `CvBuildingInfo` are transitional and collapse onto the
+  parameterized read **after green** (owner); its blocker is that classification ids are load-minted, so there is
+  no compile-time id to pass ([patterns.md § THE GETTER SETUP](../../architecture/patterns.md)).
+- **TRAIT and TECH amenity grantors carry NO storage** — `CvTraitInfo` / `CvTechInfo` have no `m_amenities`, so
+  the base `getAmenities()` returns NULL for them. ⚑ This is deliberate and is NOT a silent hole any more: zero
+  traits and zero techs author the block today, and readJson now REPORTS an entity authoring a classification
+  block its type cannot hold, so the day one does the load says so. Add the member (and its fold leg, which is
+  the civic one verbatim) when data arrives — not before.
+- **A conditioned amenity on a BUILDING grantor does not re-fold when its condition moves.** The empire half is
+  covered (`SEVT_CAPITAL_CHANGED` re-derives it), but a conditioned grant authored on a BUILDING is folded at
+  `SEVT_BUILDING_PROCESSED` and never revisited, so a gate that later flips strands it. ⚑ No data hits this yet
+  — every building grant is unconditional — and the fix is the same withdraw-then-refold, recorded per grantor
+  rather than per scope. It wants the condition-dependency route the modifier consumer already derives
+  (`DepositIndex::dependencyForPredicate`) so only the affected cities re-fold.
 - **The endpoint route table** beyond the six stored-vs-oracle documents — it stays empty until the access surface
   can be read THROUGH, never restored to reach around it ([http-endpoints.md](../../specs/http-endpoints.md)).
 - **The Python data-fetching library** — see Stage 4 below.
@@ -481,10 +510,55 @@ per-source unit-stat reads whose replacement is not built.
 - **The AI call sites** — the largest consumer of the info surface, deliberately last. A dangling AI call site is
   intended output, not a defect to fix on sight.
 - **`CvGameTextMgr` composers onto rendered entry lines** — the per-entry renderer exists
-  (`Sources/UI/CvEntryText`) and `CvGameTextMgr::appendEntryLines` is the shared consumer. The unit /
-  unitcombat / promotion / vision / movement families have moved; the remaining info-help composers
-  (`setBuildingHelp`, `setBonusHelp`, `setTechHelp`, `setProjectHelp`, `parseTraits`, `parseCivicInfo`, …)
-  still hand-assemble from getters.
+  (`Sources/UI/CvEntryText`) and `CvGameTextMgr::appendEntryLines` is the shared consumer. The composers with
+  NO conversion at all are **`setBonusHelp`**, **`setAngerHelp`** and **`parsePromotionHelpInternal`**; the rest
+  have had their family renders converted and what remains in them is blocks, caps, edges and costs.
+  ⚠ **`parsePromotionHelpInternal` is not a plain conversion** — it ACCRUES values across a promotion line
+  (summing the lower-priority promotions in the same line), so it needs summed values rather than per-entry
+  lines. That is a genuine composite BLOCK, and converting it means first giving the accrual a real home; do not
+  force it through `appendEntryLines`.
+  ⛔ **THE POINT OF THE SWEEP IS THE LEGACY PURGE, NOT THE PROSE (owner): "we just want to make sure that we
+  don't rely on legacy, and have legacy purged, when creating tooltips."** So the acceptance test on a composer
+  is *does it still READ a legacy getter*, never *does it read nicely* — a composer that renders identically but
+  reaches `kCivic.getBuildingHappinessChanges(i)` is NOT done, and one whose wording changed but whose legacy
+  reads are gone IS ([DEC-no-legacy-masking](../../architecture/decisions.md#dec-no-legacy-masking): a surviving
+  legacy read masks the hole its replacement has not filled). ⚑ That is also why a conversion DELETES rather than
+  ports: each converted band removes the legacy accessor call with it.
+  ⚖ **DISPLAY defects in these tooltips are END-STAGE, not sweep work (owner): "how tooltips are rendered is
+  fairly irrelevant right now, these are bugs we catch at the end."** Recorded so they are not re-discovered as
+  blockers: (a) the CITY-SCREEN anger/happiness tooltip has been unusably tall **for years** — `setAngerHelp` 41
+  lines + `setHappyHelp` 22, so the top is clipped off-screen below 4K; (b) the intended direction is a WIDER
+  tooltip with SIDE-BY-SIDE blocks rather than one tall column, and (c) per-building / per-source breakdowns are
+  wanted content — the length is a LAYOUT problem, never a reason to drop detail. ⛔ Do not start a tooltip
+  layout pass as part of the composer sweep.
+  ⚑ **The eventual tooltip SET is DEMAND-DRIVEN (owner): "we will figure out what tooltips we need, and what we
+  miss, from community requests and playtests."** So a legacy tooltip line removed by a cut is not a regression
+  to restore — legacy parity is not the target. Drop it, say what went, move on.
+  ⚑ **The REASON it waits, which is what makes the rule hold (owner): "I don't want us to chase visual perfection
+  before we can — well — SEE things."** A red tree renders nothing, so any judgement about how a tooltip looks is
+  unverifiable guesswork, and time spent on it buys a result nobody can confirm. ⛔ Corollary: **altered visible
+  text is NOT a reason to hesitate on a conversion** — say what changed and move on. The bar is the legacy read
+  being gone ([DEC-playability-not-a-gate](../../architecture/decisions.md#dec-playability-not-a-gate): wired
+  outranks correct while the tree is red; correctness is endpoint-observable and untestable until green).
+  ⛔ **`setAngerHelp` is NOT a conversion target, and the reason generalizes.** Every one of its ~41 lines reads a
+  LIVE CITY accessor (`getOvercrowdingPercentAnger`, `getBuildingBadHappiness`, `getFeatureBadHappiness`, …) — the
+  city's REALIZED aggregate per source class, not any info's authored entries. `appendEntryLines` renders ONE
+  info's entries, so it cannot serve this: handed a building info it would print that building's own happiness
+  instead of the city's total across all buildings, i.e. wrong numbers. The composer is the sanctioned BLOCK shape
+  (anger channel + happiness channel + the composite total, with a MISC residual for what is unattributed).
+  ⚑ Its real move is UPSTREAM: those getters are the STORED-ACCUMULATOR DRIFT class
+  ([modifier.md §2b](../../specs/modifier.md)) cut by
+  [DEC-accumulator-cut-uniform](../../architecture/decisions.md#dec-accumulator-cut-uniform). When they re-point at
+  the cascade's four wellbeing channels the composer's READS change and its block structure stays.
+  ⚠ **The test this sharpens:** "getText around a magnitude" marks a sub-block only when the magnitude comes from
+  an AUTHORED ENTRY. A realized per-scope aggregate has no entry list to render from, and is a block.
+  ⚑ **`setBonusTradeHelp` still holds a WHOLE-DATABASE REVERSE SCAN** — it walks all ~5,200 buildings per hover
+  asking each for `getBonusHappinessChanges()/getBonusHealthChanges()` keyed by this bonus, to render "which
+  buildings pay off with me". That is the reverse lookup [DEC-one-reverse-view](../../architecture/decisions.md#dec-one-reverse-view)
+  exists to delete (`EDGEF_RELATED` on the bonus, populated at readJson), NOT a renderer swap — the entries live
+  on the BUILDING, so `appendEntryLines` over the bonus cannot reach them. It is the same own-data inversion the
+  pedia census names ([pedia-read-map.md](../../reference/pedia-read-map.md) finding 2), and it wants the edge
+  families readable from a composer before it can go.
   ⚑ Each move DELETES composer code rather than porting it: a rendered line already carries magnitude,
   unit, target, scope, per-scaler and conditions, so a new channel needs no composer edit at all.
   ⛔ **The bound: the BLOCKS stay, the SUB-BLOCKS go** — a block composes several SOURCES, so choosing them

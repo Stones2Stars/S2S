@@ -226,18 +226,15 @@ public:
 	int getSpaceProductionModifier() const;
 	int getExtraTradeRoutes() const;
 	int getMaxTradeRoutes() const;
-	void changeExtraTradeRoutes(int iChange);
 	int getTradeRouteModifier() const;
 	int getForeignTradeRouteModifier() const;
 	int getBuildingDefense() const;
-	int getFreeExperience() const;
 	int getMaxAirlift() const;
 	int getAirModifier() const;
 	int getNukeModifier() const;
 	bool isPower() const;
 	int getDefenseDamage() const;
 	void changeDefenseDamage(int iChange);
-	int getNaturalDefense() const;
 	int getTotalDefense(bool bIgnoreBuilding) const;
 	int getDefenseModifier(bool bIgnoreBuilding) const;
 
@@ -300,7 +297,6 @@ public:
 	int getCorporationYieldByCorporation(int /*YieldTypes*/ eIndex, int /*CorporationTypes*/ iCorporation) const;
 	int getCommerceRateModifier(int /*CommerceTypes*/ eIndex) const;
 	int getCommerceHappinessByType(int /*CommerceTypes*/ eIndex) const;
-	int getDomainFreeExperience(int /*DomainTypes*/ eIndex) const;
 	int getDomainProductionModifier(int /*DomainTypes*/ eIndex) const;
 
 	int getBonusCommerceRateModifier(int /*CommerceTypes*/ eIndex) const;
@@ -383,7 +379,6 @@ public:
 
 	int getStateReligionHappiness(int /*ReligionTypes*/ eIndex) const;
 
-	int getSpecialistFreeExperience() const;
 	int getEspionageDefenseModifier() const;
 
 	bool isWorkingPlot(const CyPlot& kPlot) const;

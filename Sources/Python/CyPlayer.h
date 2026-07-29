@@ -202,7 +202,6 @@ public:
 	int getGreatPeopleRateModifier() const;
 	int getGreatGeneralRateModifier() const;
 
-	int getFreeExperience() const;
 	int getFeatureProductionModifier() const;
 	int getWorkerSpeedModifier() const;
 	int getMilitaryProductionModifier() const;
@@ -252,7 +251,6 @@ public:
 	void changeStateReligionUnitProductionModifier(int iChange);
 	int getStateReligionBuildingProductionModifier() const;
 	void changeStateReligionBuildingProductionModifier(int iChange);
-	int getStateReligionFreeExperience() const;
 	CyCity* getCapitalCity() const;
 	int getCitiesLost() const;
 

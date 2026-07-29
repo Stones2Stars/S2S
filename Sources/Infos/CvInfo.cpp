@@ -115,6 +115,7 @@ void CvInfo::clearSections()
 	if (CvClassificationBlock* u = mutSkills())       u->clearParsed();
 	if (CvClassificationBlock* u = mutTags())         u->clearParsed();
 	if (CvClassificationBlock* u = mutAttributes())   u->clearParsed();
+	if (CvClassificationBlock* u = mutAmenities())    u->clearParsed();
 	if (CvClassificationBlock* u = mutCharacteristics()) u->clearParsed();
 	if (CvClassificationBlock* u = mutCapabilities()) u->clearParsed();
 	if (CvClassificationBlock* u = mutPolicies())     u->clearParsed();
@@ -127,6 +128,7 @@ void CvInfo::resolveClassificationIds()
 	if (CvClassificationBlock* u = mutSkills())       u->resolveIds(CLSD_SKILL);
 	if (CvClassificationBlock* u = mutTags())         u->resolveIds(CLSD_TAG);
 	if (CvClassificationBlock* u = mutAttributes())   u->resolveIds(CLSD_ATTRIBUTE);
+	if (CvClassificationBlock* u = mutAmenities())    u->resolveIds(CLSD_AMENITY);
 	if (CvClassificationBlock* u = mutCharacteristics()) u->resolveIds(CLSD_CHARACTERISTIC);
 	if (CvClassificationBlock* u = mutCapabilities()) u->resolveIds(CLSD_CAPABILITY);
 	if (CvClassificationBlock* u = mutPolicies())     u->resolveIds(CLSD_POLICY);
@@ -158,13 +160,18 @@ void CvInfo::mapSections(const picojson::value& entity)
 		const std::string& k = it->first;
 		const picojson::value& v = it->second;
 
-		// the §8/§9 flat-bool classification blocks (keyed extras stay subclass-parsed from the same section)
-		if (k == "skills")            { if (CvClassificationBlock* u = mutSkills())       u->parse(v); continue; }
-		if (k == "tags")              { if (CvClassificationBlock* u = mutTags())         u->parse(v); continue; }
-		if (k == "attributes")        { if (CvClassificationBlock* u = mutAttributes())   u->parse(v); continue; }
-		if (k == "characteristics")   { if (CvClassificationBlock* u = mutCharacteristics()) u->parse(v); continue; }
-		if (k == "capabilities")      { if (CvClassificationBlock* u = mutCapabilities()) u->parse(v); continue; }
-		if (k == "policies")          { if (CvClassificationBlock* u = mutPolicies())     u->parse(v); continue; }
+		// The §8/§9 flat-bool classification blocks (keyed extras stay subclass-parsed from the same section).
+		// ⛔ An entity authoring a block its type has NO MEMBER for is REPORTED, never swallowed: the reader
+		// accounts every top-level key to exactly one consumer, so a block with nowhere to land is a loud
+		// load-time report like any other unconsumed key (the fail-loud coverage rule, patterns.md § The ONE
+		// reader). Silence here is what let a civic's authored `amenities` load, resolve and reach nothing.
+		if (k == "skills")            { if (CvClassificationBlock* u = mutSkills())          u->parse(v); else jsonNoteUnconsumed(m_szType.GetCString(), k); continue; }
+		if (k == "tags")              { if (CvClassificationBlock* u = mutTags())            u->parse(v); else jsonNoteUnconsumed(m_szType.GetCString(), k); continue; }
+		if (k == "attributes")        { if (CvClassificationBlock* u = mutAttributes())      u->parse(v); else jsonNoteUnconsumed(m_szType.GetCString(), k); continue; }
+		if (k == "amenities")         { if (CvClassificationBlock* u = mutAmenities())       u->parse(v); else jsonNoteUnconsumed(m_szType.GetCString(), k); continue; }
+		if (k == "characteristics")   { if (CvClassificationBlock* u = mutCharacteristics()) u->parse(v); else jsonNoteUnconsumed(m_szType.GetCString(), k); continue; }
+		if (k == "capabilities")      { if (CvClassificationBlock* u = mutCapabilities())    u->parse(v); else jsonNoteUnconsumed(m_szType.GetCString(), k); continue; }
+		if (k == "policies")          { if (CvClassificationBlock* u = mutPolicies())        u->parse(v); else jsonNoteUnconsumed(m_szType.GetCString(), k); continue; }
 
 		switch (jsonClassifyKey(k, v.is<picojson::object>()))
 		{

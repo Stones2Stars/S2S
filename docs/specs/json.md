@@ -46,7 +46,7 @@ of them.
 | **Provisions** | `grants` · `triggers` · `provides` | `grants` = pure payload on the source's considered action; `triggers` = trigger → chance → action (happening-fired / rolled / state-conditioned effects); `provides` = a continuous in-vicinity SUPPLY while active (e.g. a building or map bonus that makes a `BONUS_*` available in the city) |
 | **Effects** | every **modifier family** key (`food`, `production`, `happiness`, …, one per `PROPERTY_*`) | per-turn magnitudes this deposits onto targets |
 | **Intrinsic** ("what am I") | `identity` (incl. all TEXT) · `cost` · `ui` · `world` · `sound` · `ai` | empire-agnostic self-description, art, audio, AI metadata |
-| **Classification** | `skills` (UNIT, mutable abilities) · `tags` (UNIT, immutable type membership) · `state` (UNIT, transient) · `attributes` (BUILDING, held city-scope intrinsics) · `characteristics` (PLOT SUBSTRATE, held plot-scope intrinsics) · `capabilities` (TEAM, grantor-provided) | §8 — the classification model; scope carried by the section name |
+| **Classification** | `skills` (UNIT, mutable abilities) · `tags` (UNIT, immutable type membership) · `state` (UNIT, transient) · `attributes` (BUILDING, what the building itself is/does) · `amenities` (CITY-held, grantor-provided) · `characteristics` (PLOT SUBSTRATE, held plot-scope intrinsics) · `capabilities` (TEAM, grantor-provided) | §8 — the classification model; scope carried by the section name |
 | **Applicability** | entity-level `enabled` · `disabled` | the whole entity applies only while `enabled` holds and `disabled` does not (the §3.9 pair at entity level) — the canonical whole-entity game-option gate: `"enabled": "GAMEOPTION_X"` |
 | **Auxiliary / bespoke** | `policies` · `succession` · `excludes` · `produces` · `condition` · `effect` · `outcomes` · `mapGeneration` · `replacedBy` · `promotionLine` · `buildUp` · `shrine` · `headquarters` · `properties` · `voteSource` · `threshold` · `role` · `victory` · `targetLevel` · `conversion` · `cityFounding` · `unitCapability` · `canTrade` (tech → the trade-table/deal system: tradeable items + agreements — `techs`/`openBorders`/`rightOfPassage`/`embassy`/`bonuses`/…) · `canTradeOn` (tech → trade-route system; terrain refs) · `canWorkOn` (tech → the city `canWork` gate; workable plot classes — `water`/`peaks`/…) — all three [capabilities.md](capabilities.md) | data read by their own systems, not the cascade |
 
@@ -651,7 +651,23 @@ The full address of a deposit:
 - **Split families** — one concept per key: yields are `food`/`production`/`commerce`; commerce splits into
   `gold`/`research`/`culture`/`espionage`; each property is its own family (`PROPERTY_CRIME`, …).
 - **Grouped families** keep `<member>` parts (`maintenance`, `defense`, …): `maintenance` uses a `distance`
-  member; `defense` uses an `amount` member (the additive defense %), with a `min` member for the floor.
+  member; `defense` uses an `amount` member, with a `min` member for the floor.
+  ⚑ **`defense.amount` SUMS LIKE A FLAT and is APPLIED as a percentage (owner: "it is not a percentage in
+  calculations, it's a flat sum added as a percentage for the defense calc") — which is exactly what the
+  `percent` unit already means** (§3.6 / [modifier.md §2](modifier.md): percents are ADDITIVE DELTAS that sum
+  and apply ONCE, never a per-source multiplier). So it authors `percent` and accumulates on the percent side;
+  the value is measured in defense points, not scaled ([DEC-fixedpoint-x100](../architecture/decisions.md#dec-fixedpoint-x100):
+  a percent is never ×100).
+  ⚑ **The stack has a FLOOR and NO CEILING — verified, because the absence is load-bearing.** The floor is the
+  `min` kind (`getExtraMinDefense`), applied at the realized read. There is **no cap of any kind** on accumulated
+  defense: the contribution sites are unbounded `+=`, the total is unclamped, and the only `max`-shaped constant
+  nearby — `MAX_CITY_DEFENSE_DAMAGE` — bounds DAMAGE DEALT TO defense (and is the decay denominator), a
+  different axis entirely. ⚠ So an unbounded additive stack is the correct model here; do not "restore" a
+  ceiling on the assumption that one was lost in the cut, and do not read the damage constant as one.
+  ⛔ **There is NO separate natural-defense kind, and no max-combine.** `DEFENSE_AMOUNT` is one channel that
+  BUILDINGS (153) and CULTURE LEVELS (18) both author, so the cascade holds ONE additive stack. The legacy
+  `max(buildingDefense, naturalDefense)` has no counterpart here and does not survive the cut — a deliberate,
+  data-led behaviour change ([validation.md](validation.md): the spec leads), not an omission to restore.
 - **⛔ THE MEMBER TRIAGE TEST — a member is a KIND only if it answers *WHICH component does this modify* (owner).**
   `defense.bombardDefense` and `maintenance.distance` name components, so they are genuine kinds. A member that
   answers **WHEN or WHERE** the value applies is a **condition-as-member rollerskate** — the predicate simply has
@@ -680,8 +696,18 @@ The full address of a deposit:
   gold, hurry gold/pop) is engine-computed from planes 1 × 2; its formula parameters are world/handicap config, never
   vocabulary.
 - **`underworld` is the in-city criminal contest** (criminals burrow, investigators drag them out): kinds
-  `insidiousness` + `investigation`, city scope. ⚠ **`detection` is RESERVED for the hide-and-seek plane** — the
+  `insidiousness` + `investigation`, at **city AND unit scope** — the city is the arena, the unit carries the
+  stat (`UNITCOMBAT_CRIMINAL` vs `UNITCOMBAT_LAW_ENFORCEMENT`, resolved by
+  `CvUnit::doInsidiousnessVSInvestigationCheck`). ⚠ **`detection` is RESERVED for the hide-and-seek plane** — the
   map-level spotting of hidden units is a different system with its own future block, and must not be folded in here.
+  > **⛔ UNDERWORLD IS NOT ESPIONAGE, AND THE LINE IS THE DEFINITION OF ESPIONAGE (owner): "espionage is only
+  > things that SPY UNITS can do", plus the espionage-POINT ratios that govern how much of an opponent you can
+  > see.** A criminal hiding from an investigator is neither, so `insidiousness`/`investigation` are underworld
+  > on BOTH planes and espionage carries only its commerce channel. ⛔ Do not re-file them by proximity: several
+  > unit types carry both, which is exactly what makes the mistake easy.
+  > ⚑ This was mis-filed independently in THREE curators while two others had it right — the signature of a
+  > boundary that was never written down. It is written down here now; a member name resolves to exactly one
+  > family (the espionage kind-enum no longer carries these words at all).
 - The **unit plane** has its own family set (`strength`, `withdrawal`, `firstStrike`, `bombard`, `collateral`,
   `air`, `heal`, `movement`, `experience`, `workRate`, `cargo`, `vision`, `capture`, …); a `unit`-scope deposit is
   a self-accumulator.
@@ -822,13 +848,89 @@ empire's active set is **derived on query** — an enabler-style union over the 
 HAVE axis); "provides" is the data direction, not an apply event, so a capability lapses with its last live source —
 headroom only: in practice no capability is ever disabled today. See [capabilities.md](capabilities.md).
 
-A **building** additionally has its own **`attributes`** block — the building's **HELD**, immutable, **city-scope**
-intrinsic capabilities: `nukeImmune`, `zoneOfControl`, `governmentCenter`, `providesFreshWater`, `borderObstacle`, …
-Plain booleans, like `skills`/`capabilities`, and again the section name carries the scope (building). The
-**hold-vs-provide distinction is load-bearing**: `attributes` are what the building *is/does itself* (held), while
-its `capabilities` are what it *hands to the empire* (provided) — the opposite direction. So a building's
-`nukeImmune` is an `attribute` (the building holds it), but its `setCultureRate` is a `capability` (the building
-provides the slider to the empire).
+A **building** additionally has its own **`attributes`** block — what the building **IS or DOES ITSELF**, held and
+immutable: `teamShare`, `destroyedOnCapture`, `orbital`, `orbitalInfrastructure`. Plain booleans, like
+`skills`/`capabilities`, and again the section name carries the scope (building). The **hold-vs-provide
+distinction is load-bearing**, and it runs in three directions: `attributes` are the building's own property,
+`capabilities` are what it *hands to the empire*, and `amenities` (below) are what it *hands to its own city*. So
+`destroyedOnCapture` is an `attribute` (a fact about the building), `setCultureRate` is a `capability` (handed to
+the empire), and `nukeImmune` is an `amenity` (it makes the CITY immune — the building is not the thing protected).
+
+A **CITY** has its own **`amenities`** block — the **city-HELD, grantor-PROVIDED** counterpart, standing to the
+city exactly as `capabilities` stands to the empire. The hold-vs-provide axis otherwise stops one scope short:
+`attributes` is what the building *is/does itself*, `capabilities` is what it *hands to the empire*, and
+`amenities` is what it *hands to its own CITY* — which is what most authored keys actually do. The two split
+by asking whose property it is:
+
+- **`attributes` — about the BUILDING** — `teamShare` · `destroyedOnCapture` · `orbital` · `orbitalInfrastructure`.
+- **`amenities` — conferred on the CITY** — `nukeImmune` · `governmentCenter` · `providesFreshWater` ·
+  `providesPower` · `abolishedAnger` · `abolishedUnhealthFromPopulation` · `abolishedUnhealthFromBuildings` ·
+  `adds3rdRing` · `borderObstacle` · `forceAllTradeRoutes` · `capital` · `protectedCulture` · `zoneOfControl`.
+
+> **⚖ THE WELLBEING OFF-SWITCHES ARE ONE NAMED FAMILY — `abolished<Channel>` optionally `From<Source>` (owner:
+> "a group of names that all tell the same story for different targets").** They are HARD off-switches, not
+> modifiers ([modifier.md §2b](modifier.md)): the side ceases to exist rather than being reduced. The unqualified
+> form abolishes the channel from EVERY source; a `From<Source>` suffix narrows it to one:
+>
+> | key | abolishes |
+> |---|---|
+> | `abolishedAnger` | anger, all sources |
+> | `abolishedUnhealth` | unhealth, all sources |
+> | `abolishedUnhealthFromPopulation` | the population term only |
+> | `abolishedUnhealthFromBuildings` | the building term only |
+>
+> ⚑ It extends to the remaining wellbeing sources (features, bonuses, corporations, specialists — §2b's deposit
+> list) without coining a new spelling each time, which is the whole point of the family: a reader meeting an
+> unfamiliar one already knows what it does.
+> ⛔ **The legacy spellings it retires each hid something in the NAME.** `noUnhappiness`/`noUnhealthyPopulation`
+> used the `no…` negation; `buildingOnlyHealthy` named a CONSEQUENCE ("buildings are only ever healthy") rather
+> than the mechanic; and `noCapitalUnhappiness` baked the WHERE in — which is the condition-as-member shape
+> [DEC-conditions-are-predicates](../architecture/decisions.md#dec-conditions-are-predicates) retires, and it is
+> now `abolishedAnger` gated `IS_CAPITAL`. ⛔ A future narrowing is a PREDICATE or a target, never a new key
+> spelling.
+
+⚑ **The grantor is not only a building, and the SCOPE says how far it reaches (owner: "a city or cities").** A
+building's `amenities` land on its OWN city; a civic / trait / tech authoring the same block reaches EVERY city
+of the empire — the ordinary scope spine (§3.2), on the same derived-union-over-live-sources mechanic
+`capabilities` uses, so no new machinery and no per-grantor special case.
+
+> **⛔ STORED AS AN ID→COUNT DICTIONARY, NEVER A BITSET (owner) — absent or 0 is false, anything else true.**
+> *Several* sources can confer the same amenity, so the city holds a COUNT per amenity id and a removal
+> decrements it: losing one power plant must not darken a city that has two. A bitset cannot express that — an
+> "amenity removed" fact would clear a bit another live source still justifies. ⚑ This is the existing
+> `ContextDict` (`id → count`, `has(id)` ≡ `count > 0`, [contexts.md](../architecture/contexts.md)), the same
+> refcount shape the enabler's membership formula and the operating set's provided-bonus counts already use —
+> and the semantic legacy had right all along in its per-flag counters. The city read is therefore O(1) and the
+> ⛔ **REMOVAL-WINS trap is structurally absent**, exactly as it is for enabler membership.
+> ⚑ **AND THE DICTIONARY IMMEDIATELY SOLVES VOLUMETRIC (owner) — a second payoff, free.** Because the slot is
+> already an int rather than a bit, an amenity that later becomes a QUANTITY (power CAPACITY a city draws
+> against, rather than a yes/no) needs **no reshape** — only a change in what the number means. That is the
+> reasoning [contexts.md](../architecture/contexts.md) already applies to power specifically ("power carries 0/1
+> today but stays `int` so a future volumetric model needs no reshape"), generalized to the whole block. ⛔ So
+> the count is never to be "optimized" into a bitset on the grounds that every value happens to be 0 or 1 today.
+>
+> ⚠ `nukeImmune` is the standing exhibit for why the split is load-bearing: the same key means two DIFFERENT
+> mechanics on two carriers — a BUILDING's makes its **city** immune (so it is an `amenity`), while a plot
+> substrate's means the **feature itself** survives (a `characteristic`). One word, two mechanics, kept
+> separable only by the blocks being distinct.
+
+> **⚖ A GRANT MAY BE CONDITIONED — the ENTRY carries it, never the KEY (owner: "make the block carry the
+> condition").** A classification entry's value may be the §3.9 entry object instead of a bare `true`, so a
+> grantor states *when* its grant applies:
+>
+> ```jsonc
+> "amenities": { "abolishedAnger": { "enabled": "IS_CAPITAL" } }   // a civic: the CAPITAL only
+> ```
+>
+> ⛔ **The condition is evaluated PER RECEIVER, at FOLD time, on the grant AND on the repeal** — not once at
+> load. A city that gains or loses capital status must therefore re-fold, exactly as one that gains or loses the
+> grantor does; a gate read only on arrival strands the amenity wherever it last landed.
+> ⚑ **This is what retires a WHERE baked into a key NAME.** The legacy `noCapitalUnhappiness` encoded its
+> condition in its spelling — the condition-as-member shape
+> [DEC-conditions-are-predicates](../architecture/decisions.md#dec-conditions-are-predicates) retires — so it is
+> ONE key, `abolishedAnger`, gated by `IS_CAPITAL`, never a second key meaning "the same thing but over there".
+> ⛔ And the reverse is equally binding: dropping the condition to keep the block a plain bitset would abolish
+> anger in EVERY city. A shape whose only faithful reading is the wrong behaviour must not ship.
 
 The **PLOT SUBSTRATE** has its own **`characteristics`** block — the **HELD**, immutable, **plot-scope** intrinsics
 of whatever IS the plot: **terrain · feature · improvement · route**, all four carriers, one block and one registry
@@ -901,8 +1003,9 @@ NOT `grants` (it is held-while-active, not a one-shot handout).
 "combatClasses": [ "UNITCOMBAT_SPECIES_HUMAN", "…" ],       // UNIT: sub combat classes -> ROOT
 "strength": { "unit": { "flat": 26 } },                     // UNIT base STRENGTH (a modifier family, not identity.base; absent if it can't attack/defend)
 "movement": { "unit": { "flat": 1 } },                      // UNIT base MOVES (the movement subsystem, not identity.base)
-"attributes":   { "nukeImmune": true, "zoneOfControl": true }, // BUILDING, held city-scope intrinsic
-"capabilities": { "moveOnWater": true, "setCultureRate": true } // empire-HELD, grantor-PROVIDED (tech/civic/building)
+"attributes":   { "teamShare": true, "destroyedOnCapture": true }, // BUILDING: what it IS/DOES itself (held)
+"amenities":    { "nukeImmune": true, "providesPower": true },     // city-HELD, grantor-PROVIDED (id->COUNT on the city)
+"capabilities": { "moveOnWater": true, "setCultureRate": true }    // empire-HELD, grantor-PROVIDED (tech/civic/building)
 ```
 
 > **⚖ The classification categories are RUNTIME-GENERATED INFOS ([DEC-classification-infos]).** Every distinct
@@ -1057,7 +1160,7 @@ marble; +10 culture, doubling after it has stood 1000 turns.*
 
 **Top-level keys** — `type` · `identity` · `cost` · `ui` · `world` · `sound` · `ai` · `enables` · `obsoletes` ·
 `replaces` · `disables` · `requires` · `allowed` · `grants` · `triggers` · `skills` · `tags` · `state` · `attributes` ·
-`characteristics` · `capabilities` · `shrine` · `headquarters` · *(modifier families)* · *(auxiliary/bespoke, §9)*
+`amenities` · `characteristics` · `capabilities` · `shrine` · `headquarters` · *(modifier families)* · *(auxiliary/bespoke, §9)*
 
 **Scope (singular)** — `world › team › empire › city › plot{improvement|feature|terrain|route} › building|specialist|unit` · off-spine `self` = the entity's own build
 **Target (plural)** — `plots · units · cities · areas · empires` = all of that kind in the scope, predicate-filtered

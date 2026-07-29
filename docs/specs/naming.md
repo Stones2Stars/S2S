@@ -59,7 +59,8 @@ not yet ported (still authored in `Assets/XML`, referenced from JSON by id). Ver
 | `WORLDSIZE_` | a world size (map dimensions + per-size config) | ✅ `worlds/` |
 | `SKILL_` | a unit skill (`SKILL_BLITZ`) | ⚙ runtime-GENERATED — minted at load from the union of authored `skills` block keys (json.md §8, `ClassificationRegistry`); no data folder |
 | `TAG_` | a unit tag (`TAG_MILITARY`) | ⚙ runtime-GENERATED (from `tags` block keys) |
-| `ATTRIBUTE_` | a building attribute (`ATTRIBUTE_NUKE_IMMUNE`) | ⚙ runtime-GENERATED (from `attributes` block keys) |
+| `ATTRIBUTE_` | a building attribute (`ATTRIBUTE_TEAM_SHARE`) | ⚙ runtime-GENERATED (from `attributes` block keys) |
+| `AMENITY_` | a city-held, grantor-provided amenity (`AMENITY_PROVIDES_POWER`) | ⚙ runtime-GENERATED (from `amenities` block keys; grantors: building/civic/trait/tech) |
 | `CHARACTERISTIC_` | a plot-substrate characteristic (`CHARACTERISTIC_ACTS_AS_CITY`) | ⚙ runtime-GENERATED (from `characteristics` block keys; carriers: terrain/feature/improvement/route) |
 | `CAPABILITY_` | an empire capability (`CAPABILITY_SET_SCIENCE_RATE`) | ⚙ runtime-GENERATED (from `capabilities` block keys) |
 | `POLICY_` | an empire policy (`POLICY_NO_FOREIGN_TRADE`) | ⚙ runtime-GENERATED (from `policies` block keys) |

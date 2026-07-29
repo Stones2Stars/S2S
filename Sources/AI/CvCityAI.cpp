@@ -5249,8 +5249,9 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 								MODFAM_DEFENSE, DEFENSE_AMOUNT, CASC_UNIT_PERCENT,
 								getCityContext(), kOwner.getEmpireContext(), plotGroup(getOwner())) / 100;
 
-						iValue +=
-							std::max(0, std::min(iDefensePercent + getBuildingDefense() - getNaturalDefense() - 10, iDefensePercent)) / 4;
+						// The building/natural offset modelled a max that no longer exists (ONE additive stack),
+						// so the candidate's own contribution is the whole of what it is worth here.
+						iValue += std::max(0, iDefensePercent) / 4;
 					}
 
 

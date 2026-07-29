@@ -771,11 +771,6 @@ int CyPlayer::getGreatGeneralRateModifier() const
 	return m_pPlayer->getGreatGeneralRateModifier();
 }
 
-int CyPlayer::getFreeExperience() const
-{
-	return m_pPlayer->getFreeExperience();
-}
-
 int CyPlayer::getFeatureProductionModifier() const
 {
 	return m_pPlayer->getFeatureProductionModifier();
@@ -954,11 +949,6 @@ int CyPlayer::getStateReligionBuildingProductionModifier() const
 void CyPlayer::changeStateReligionBuildingProductionModifier(int iChange)
 {
 	m_pPlayer->changeStateReligionBuildingProductionModifier(iChange);
-}
-
-int CyPlayer::getStateReligionFreeExperience() const
-{
-	return m_pPlayer->getStateReligionFreeExperience();
 }
 
 int CyPlayer::getCitiesLost() const

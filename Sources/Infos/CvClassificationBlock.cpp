@@ -6,6 +6,7 @@
 #include "CvGameCoreDLL.h"   // PCH umbrella -- picojson
 #include "CvClassificationBlock.h"
 #include "CvClassificationRegistry.h"
+#include "CvJsonConditionParse.h"   // cascadeParseCondition -- the §3.9 entry-form gate
 
 void CvClassificationBlock::parse(const picojson::value& v)
 {
@@ -24,6 +25,21 @@ void CvClassificationBlock::parse(const picojson::value& v)
 	const picojson::object& o = v.get<picojson::object>();
 	for (picojson::object::const_iterator it = o.begin(); it != o.end(); ++it)
 	{
+		// The §3.9 ENTRY form: an OBJECT value carries the grant's own gate ({"enabled": <condition>}), so a
+		// grantor can confer a key only where the condition holds -- the capital-only `abolishedAnger` is the
+		// live case. The key still joins the GRANT plane (it is held, conditionally); the condition is stored
+		// beside it and evaluated by the HOLDER when it folds the grant in or out.
+		if (it->second.is<picojson::object>())
+		{
+			m_names.insert(it->first);
+			const picojson::object& e = it->second.get<picojson::object>();
+			picojson::object::const_iterator en = e.find("enabled");
+			if (en != e.end())
+			{
+				m_condByName[it->first] = cascadeParseCondition(en->second);
+			}
+			continue;
+		}
 		if (!it->second.is<bool>()) continue;
 		if (it->second.get<bool>()) m_names.insert(it->first);
 		else m_falseNames.insert(it->first);
@@ -35,10 +51,17 @@ void CvClassificationBlock::resolveIds(int eDomain)
 	const int n = ClassificationRegistry::count(eDomain);
 	m_byId.assign(n, 0);
 	m_falseById.assign(n, 0);
+	m_condById.assign(n, (const CvCondition*)NULL);
 	for (std::set<std::string>::const_iterator it = m_names.begin(); it != m_names.end(); ++it)
 	{
 		const int id = ClassificationRegistry::keyId(eDomain, *it);
-		if (id >= 0 && id < n) m_byId[id] = 1;
+		if (id >= 0 && id < n)
+		{
+			m_byId[id] = 1;
+			// carry the entry-form gate onto the id plane the holder reads
+			std::map<std::string, const CvCondition*>::const_iterator c = m_condByName.find(*it);
+			if (c != m_condByName.end()) m_condById[id] = c->second;
+		}
 	}
 	for (std::set<std::string>::const_iterator it = m_falseNames.begin(); it != m_falseNames.end(); ++it)
 	{

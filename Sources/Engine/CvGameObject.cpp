@@ -724,7 +724,7 @@ void CvGameObjectCity::foreachManipulator(ManipCallbackFn func) const
 	// Building manipulators apply to cities
 	foreach_(const BuildingTypes eTypeX, m_pCity->getHasBuildings())
 	{
-		if (!m_pCity->isReligiouslyLimitedBuilding(eTypeX) && !m_pCity->isDisabledBuilding(eTypeX))
+		if (m_pCity->hasFullyActiveBuilding(eTypeX))
 		{
 			func(GC.getBuildingInfo(eTypeX).getPropertyManipulators());
 		}

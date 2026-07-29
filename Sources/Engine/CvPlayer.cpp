@@ -256,7 +256,6 @@ m_cachedBonusCount(NULL)
 	m_pabHasTrait = NULL;
 	m_aiLessYieldThreshold = new int[NUM_YIELD_TYPES];
 
-	m_paiNationalDomainFreeExperience = NULL;
 	m_paiNationalDomainProductionModifier = NULL;
 	m_paiNationalTechResearchModifier = NULL;
 
@@ -695,7 +694,6 @@ void CvPlayer::uninit()
 	SAFE_DELETE_ARRAY(m_paiImprovementUpgradeRateModifierSpecific);
 	SAFE_DELETE_ARRAY(m_paiBuildWorkerSpeedModifierSpecific);
 	SAFE_DELETE_ARRAY(m_pabHasTrait);
-	SAFE_DELETE_ARRAY(m_paiNationalDomainFreeExperience);
 	SAFE_DELETE_ARRAY(m_paiNationalDomainProductionModifier);
 	SAFE_DELETE_ARRAY(m_paiNationalTechResearchModifier);
 	SAFE_DELETE_ARRAY2(m_ppaaiSpecialistExtraCommerce, GC.getNumSpecialistInfos());
@@ -726,7 +724,6 @@ void CvPlayer::uninit()
 	m_buildingCostMod.clear();
 	m_unitProductionMod.clear();
 	m_unitCombatProductionMod.clear();
-	m_unitCombatFreeXP.clear();
 	m_researchQueue.clear();
 	m_cityNames.clear();
 	m_myHeritage.clear();
@@ -1162,7 +1159,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iMaxGlobalBuildingProductionModifier = 0;
 	m_iMaxTeamBuildingProductionModifier = 0;
 	m_iMaxPlayerBuildingProductionModifier = 0;
-	m_iFreeExperience = 0;
 	m_iFeatureProductionModifier = 0;
 	m_iWorkerSpeedModifier = 0;
 	m_iImprovementUpgradeRateModifier = 0;
@@ -1236,7 +1232,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iNoNonStateReligionSpreadCount = 0;
 	m_iStateReligionUnitProductionModifier = 0;
 	m_iStateReligionBuildingProductionModifier = 0;
-	m_iStateReligionFreeExperience = 0;
 	m_iCapitalCityID = FFreeList::INVALID_INDEX;
 	m_iCitiesLost = 0;
 	m_iWinsVsBarbs = 0;
@@ -1284,9 +1279,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 
 	m_iNationalCityStartCulture = 0;
 	m_iNationalAirUnitCapacity = 0;
-	m_iCapitalXPModifier = 0;
-	m_iStateReligionHolyCityXPModifier = 0;
-	m_iNonStateReligionHolyCityXPModifier = 0;
 	m_iNationalCityStartBonusPopulation = 0;
 	m_iNationalMissileRangeChange = 0;
 	m_iNationalFlightOperationRangeChange = 0;
@@ -1635,11 +1627,9 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 		}
 
 		STATIC_ASSERT(NUM_DOMAIN_TYPES > 0, value_should_be_greater_than_zero);
-		m_paiNationalDomainFreeExperience = new int[NUM_DOMAIN_TYPES];
 		m_paiNationalDomainProductionModifier = new int[NUM_DOMAIN_TYPES];
 		for (iI = 0; iI < NUM_DOMAIN_TYPES; iI++)
 		{
-			m_paiNationalDomainFreeExperience[iI] = 0;
 			m_paiNationalDomainProductionModifier[iI] = 0;
 		}
 
@@ -2779,7 +2769,7 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 
 		foreach_(const BuildingTypes eTypeX, pOldCity->getHasBuildings())
 		{
-			if (GC.getBuildingInfo(eTypeX).getOccupationTimeModifier() != 0 && !pOldCity->isDisabledBuilding(eTypeX))
+			if (GC.getBuildingInfo(eTypeX).getOccupationTimeModifier() != 0 && !pOldCity->isDormantBuilding(eTypeX))
 			{
 				iOccupationTimeModifier += GC.getBuildingInfo(eTypeX).getOccupationTimeModifier();
 			}
@@ -3060,7 +3050,6 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 			}
 		}
 
-		pNewCity->checkBuildings(false);
 		pNewCity->updateEspionageVisibility(false);
 
 		// Owner change (acquire half), announced once the acquisition setup is complete (buildings / religions /
@@ -7115,6 +7104,30 @@ int CvPlayer::getProductionModifier(UnitTypes eUnit) const
 	return iMultiplier;
 }
 
+
+// The EMPIRE half of the keyed experience read (CvCity::keyedExperience is the city's, and calls this): the held
+// traits' `experience.empire.{unitCombats|domains}.{TARGET}` deposits. Civics author only the scope-wide flat, so
+// they need no leg here -- the package roll-up already carries them.
+int CvPlayer::keyedExperience(int iTargetSegment, int iTargetFk) const
+{
+	PROFILE_EXTRA_FUNC();
+	if (iTargetSegment < 0 || iTargetFk < 0)
+	{
+		return 0;
+	}
+	int iExperience = 0;
+
+	for (int iI = 0; iI < GC.getNumTraitInfos(); iI++)
+	{
+		if (hasTrait((TraitTypes)iI))
+		{
+			iExperience += InfoValuation::keyedTarget(
+				GC.getTraitInfo((TraitTypes)iI).getModifiers(), MODFAM_EXPERIENCE, -1, iTargetSegment, iTargetFk);
+		}
+	}
+	return iExperience;
+}
+
 int CvPlayer::getProductionModifier(BuildingTypes eBuilding) const
 {
 	PROFILE_EXTRA_FUNC();
@@ -7260,7 +7273,6 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, CvArea* pAr
 	changeAnarchyModifier(kBuilding.getAnarchyModifier() * iChange);
 	changeGoldenAgeModifier(kBuilding.getGoldenAgeModifier() * iChange);
 	changeHurryModifier(kBuilding.getGlobalHurryModifier() * iChange);
-	changeFreeExperience(kBuilding.getGlobalFreeExperience() * iChange);
 	changeWarWearinessModifier(kBuilding.getGlobalWarWearinessModifier() * iChange);
 	pArea->changeFreeSpecialist(getID(), (kBuilding.getAreaFreeSpecialist() * iChange));
 	changeFreeSpecialist(kBuilding.getGlobalFreeSpecialist() * iChange);
@@ -9622,18 +9634,6 @@ void CvPlayer::changeMaxPlayerBuildingProductionModifier(int iChange)
 }
 
 
-int CvPlayer::getFreeExperience() const
-{
-	return m_iFreeExperience;
-}
-
-
-void CvPlayer::changeFreeExperience(int iChange)
-{
-	m_iFreeExperience += iChange;
-}
-
-
 int CvPlayer::getFeatureProductionModifier() const
 {
 	return m_iFeatureProductionModifier;
@@ -11142,18 +11142,6 @@ void CvPlayer::changeStateReligionBuildingProductionModifier(int iChange)
 			gDLL->getInterfaceIFace()->setDirty(CityInfo_DIRTY_BIT, true);
 		}
 	}
-}
-
-
-int CvPlayer::getStateReligionFreeExperience() const
-{
-	return m_iStateReligionFreeExperience;
-}
-
-
-void CvPlayer::changeStateReligionFreeExperience(int iChange)
-{
-	m_iStateReligionFreeExperience += iChange;
 }
 
 
@@ -14230,7 +14218,6 @@ void CvPlayer::setCivics(CivicOptionTypes eIndex, CivicTypes eNewValue)
 		}
 		foreach_ (CvCity* city, cities())
 		{
-			city->checkBuildings();
 			if (bUpdateHappiness)
 				city->updateFeatureHappiness();
 			if (bUpdateHealth)
@@ -15870,7 +15857,7 @@ int64_t CvPlayer::getEspionageMissionBaseCost(EspionageMissionTypes eMission, Pl
 				int iCost = MAX_INT;
 				foreach_(const BuildingTypes eTypeX, pCity->getHasBuildings())
 				{
-					if (canSpyDestroyBuilding(eTargetPlayer, eTypeX) && !pCity->isDisabledBuilding(eTypeX))
+					if (canSpyDestroyBuilding(eTargetPlayer, eTypeX) && !pCity->isDormantBuilding(eTypeX))
 					{
 						const int iValue = getProductionNeeded(eTypeX);
 
@@ -17926,7 +17913,6 @@ void CvPlayer::processCivics(const CivicTypes eCivic, const int iChange, const b
 		changeHomeAreaMaintenanceModifier(kCivic.getHomeAreaMaintenanceModifier() * iChange);
 		changeOtherAreaMaintenanceModifier(kCivic.getOtherAreaMaintenanceModifier() * iChange);
 
-		changeFreeExperience(kCivic.getFreeExperience() * iChange);
 		changeWorkerSpeedModifier(kCivic.getWorkerSpeedModifier() * iChange);
 		changeImprovementUpgradeRateModifier(kCivic.getImprovementUpgradeRateModifier() * iChange);
 		changeMilitaryProductionModifier(kCivic.getMilitaryProductionModifier() * iChange);
@@ -17941,7 +17927,6 @@ void CvPlayer::processCivics(const CivicTypes eCivic, const int iChange, const b
 		changeTradeRoutes(kCivic.getTradeRoutes() * iChange);
 		changeStateReligionUnitProductionModifier(kCivic.getStateReligionUnitProductionModifier() * iChange);
 		changeStateReligionBuildingProductionModifier(kCivic.getStateReligionBuildingProductionModifier() * iChange);
-		changeStateReligionFreeExperience(kCivic.getStateReligionFreeExperience() * iChange);
 		changeExpInBorderModifier(kCivic.getExpInBorderModifier() * iChange);
 
 		changeUpgradeAnywhere((kCivic.isUpgradeAnywhere())? iChange : 0);
@@ -18215,7 +18200,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iMaxGlobalBuildingProductionModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iMaxTeamBuildingProductionModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iMaxPlayerBuildingProductionModifier);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iFreeExperience);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iFeatureProductionModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iWorkerSpeedModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iImprovementUpgradeRateModifier);
@@ -18271,7 +18255,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNoNonStateReligionSpreadCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iStateReligionUnitProductionModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iStateReligionBuildingProductionModifier);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iStateReligionFreeExperience);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iCapitalCityID);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iCitiesLost);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iWinsVsBarbs);
@@ -19186,7 +19169,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNationalHurryAngerModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNationalEnemyWarWearinessModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNationalBombardDefenseModifier);
-		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_DOMAIN_TYPES, m_paiNationalDomainFreeExperience);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_DOMAIN_TYPES, m_paiNationalDomainProductionModifier);
 		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_TECHS, GC.getNumTechInfos(), m_paiNationalTechResearchModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iFixedBordersCount);
@@ -19201,9 +19183,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiEraAdvanceFreeSpecialistCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNationalCityStartCulture);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNationalAirUnitCapacity);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iCapitalXPModifier);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iStateReligionHolyCityXPModifier);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iNonStateReligionHolyCityXPModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNationalCityStartBonusPopulation);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNationalMissileRangeChange);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNationalFlightOperationRangeChange);
@@ -19258,7 +19237,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 			short iType;
 			char cCount;
 			int iCount;
-			short sCount;
 			uint16_t sCountU;
 			uint32_t iCountU;
 			// Bonus counters
@@ -19471,19 +19449,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 				}
 			}
 
-			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "iUnitCombatFreeXPSize");
-			while (iSize-- > 0)
-			{
-				WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iType, "iUnitCombatFreeXPType");
-				WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &sCount, "iUnitCombatFreeXPCount");
-				iType = static_cast<short>(wrapper.getNewClassEnumValue(REMAPPED_CLASS_TYPE_COMBATINFOS, iType, true));
-
-				if (iType > -1)
-				{
-					m_unitCombatFreeXP.insert(std::make_pair(iType, sCount));
-				}
-			}
-
 			// Unit counters
 			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "UnitCountSMSize");
 			while (iSize-- > 0)
@@ -19666,7 +19631,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iMaxGlobalBuildingProductionModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iMaxTeamBuildingProductionModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iMaxPlayerBuildingProductionModifier);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iFreeExperience);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iFeatureProductionModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iWorkerSpeedModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iImprovementUpgradeRateModifier);
@@ -19722,7 +19686,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNoNonStateReligionSpreadCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iStateReligionUnitProductionModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iStateReligionBuildingProductionModifier);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iStateReligionFreeExperience);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCapitalCityID);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCitiesLost);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iWinsVsBarbs);
@@ -20163,7 +20126,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNationalHurryAngerModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNationalEnemyWarWearinessModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNationalBombardDefenseModifier);
-		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_DOMAIN_TYPES, m_paiNationalDomainFreeExperience);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_DOMAIN_TYPES, m_paiNationalDomainProductionModifier);
 		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_TECHS, GC.getNumTechInfos(), m_paiNationalTechResearchModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iFixedBordersCount);
@@ -20178,9 +20140,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiEraAdvanceFreeSpecialistCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNationalCityStartCulture);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNationalAirUnitCapacity);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCapitalXPModifier);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iStateReligionHolyCityXPModifier);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNonStateReligionHolyCityXPModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNationalCityStartBonusPopulation);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNationalMissileRangeChange);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNationalFlightOperationRangeChange);
@@ -20326,12 +20285,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 			{
 				WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", it->first, "iUnitCombatProductionModType");
 				WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", it->second, "iUnitCombatProductionModCount");
-			}
-			WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", (short)m_unitCombatFreeXP.size(), "iUnitCombatFreeXPSize");
-			for (std::map<short, short>::const_iterator it = m_unitCombatFreeXP.begin(), itEnd = m_unitCombatFreeXP.end(); it != itEnd; ++it)
-			{
-				WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", it->first, "iUnitCombatFreeXPType");
-				WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", it->second, "iUnitCombatFreeXPCount");
 			}
 			// Unit counters
 			WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", (short)m_unitCountSM.size(), "UnitCountSMSize");
@@ -26218,37 +26171,6 @@ int CvPlayer::getBonusMintedPercent(const BonusTypes eBonus) const
 }
 
 
-void CvPlayer::changeUnitCombatFreeExperience(const UnitCombatTypes eIndex, const int iChange)
-{
-	FASSERT_BOUNDS(0, GC.getNumUnitCombatInfos(), eIndex);
-	if (iChange == 0)
-	{
-		return;
-	}
-	std::map<short, short>::const_iterator itr = m_unitCombatFreeXP.find((short)eIndex);
-
-	if (itr == m_unitCombatFreeXP.end())
-	{
-		m_unitCombatFreeXP.insert(std::make_pair((short)eIndex, iChange));
-	}
-	else if (itr->second == -iChange)
-	{
-		m_unitCombatFreeXP.erase(itr->first);
-	}
-	else // change mod
-	{
-		m_unitCombatFreeXP[itr->first] += iChange;
-	}
-}
-
-int CvPlayer::getUnitCombatFreeExperience(const UnitCombatTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, GC.getNumUnitCombatInfos(), eIndex);
-	std::map<short, short>::const_iterator itr = m_unitCombatFreeXP.find((short)eIndex);
-	return itr != m_unitCombatFreeXP.end() ? itr->second : 0;
-}
-
-
 void CvPlayer::changeBuildingProductionModifier(const BuildingTypes eIndex, const int iChange)
 {
 	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eIndex);
@@ -26975,7 +26897,7 @@ void CvPlayer::recalculateResourceConsumption(BonusTypes eBonus)
 		for (std::vector<BuildingTypes>::const_iterator bldIt = hasBuildings.begin(); bldIt != hasBuildings.end(); ++bldIt)
 		{
 			BuildingTypes eTypeX = *bldIt;
-			if (cityX->isDisabledBuilding(eTypeX))
+			if (cityX->isDormantBuilding(eTypeX))
 				continue;
 
 			const CvBuildingInfo& buildingX = GC.getBuildingInfo(eTypeX);
@@ -27152,7 +27074,7 @@ void CvPlayer::recalculateAllResourceConsumption()
 		for (std::vector<BuildingTypes>::const_iterator bldIt = hasBuildings.begin(); bldIt != hasBuildings.end(); ++bldIt)
 		{
 			const BuildingTypes eTypeX = *bldIt;
-			if (cityX->isDisabledBuilding(eTypeX))
+			if (cityX->isDormantBuilding(eTypeX))
 				continue;
 
 			const CvBuildingInfo& buildingX = GC.getBuildingInfo(eTypeX);
@@ -28049,7 +27971,6 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 	changeNumCitiesMaintenanceModifier(iChange*GC.getTraitInfo(eTrait).getNumCitiesMaintenanceModifier());
 	changeCorporationMaintenanceModifier(iChange*GC.getTraitInfo(eTrait).getCorporationMaintenanceModifier());
 	changeStateReligionGreatPeopleRateModifier(iChange*GC.getTraitInfo(eTrait).getStateReligionGreatPeopleRateModifier());
-	changeFreeExperience(iChange*GC.getTraitInfo(eTrait).getFreeExperience());
 	changeBaseFreeUnitUpkeepCivilian(iChange*GC.getTraitInfo(eTrait).getFreeUnitUpkeepCivilian());
 	changeBaseFreeUnitUpkeepMilitary(iChange*GC.getTraitInfo(eTrait).getFreeUnitUpkeepMilitary());
 	changeFreeUnitUpkeepCivilianPopPercent(iChange*GC.getTraitInfo(eTrait).getFreeUnitUpkeepCivilianPopPercent());
@@ -28064,7 +27985,6 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 	changeNonStateReligionHappiness(iChange*GC.getTraitInfo(eTrait).getNonStateReligionHappiness());
 	changeStateReligionUnitProductionModifier(iChange*GC.getTraitInfo(eTrait).getStateReligionUnitProductionModifier());
 	changeStateReligionBuildingProductionModifier(iChange*GC.getTraitInfo(eTrait).getStateReligionBuildingProductionModifier());
-	changeStateReligionFreeExperience(iChange*GC.getTraitInfo(eTrait).getStateReligionFreeExperience());
 	changeExpInBorderModifier(iChange*GC.getTraitInfo(eTrait).getExpInBorderModifier());
 	changeTraitExtraCityDefense(iChange*GC.getTraitInfo(eTrait).getCityDefenseBonus());
 	changeMilitaryProductionModifier(iChange*GC.getTraitInfo(eTrait).getMilitaryProductionModifier());
@@ -28085,9 +28005,6 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 	changePopulationgrowthratepercentage(GC.getTraitInfo(eTrait).getGlobalPopulationgrowthratepercentage(),(iChange==1));
 	changeNationalCityStartCulture(GC.getTraitInfo(eTrait).getCityStartCulture() * iChange);
 	changeNationalAirUnitCapacity(GC.getTraitInfo(eTrait).getGlobalAirUnitCapacity() * iChange);
-	changeCapitalXPModifier(GC.getTraitInfo(eTrait).getCapitalXPModifier() * iChange);
-	changeStateReligionHolyCityXPModifier(GC.getTraitInfo(eTrait).getHolyCityofStateReligionXPModifier() * iChange);
-	changeNonStateReligionHolyCityXPModifier(GC.getTraitInfo(eTrait).getHolyCityofNonStateReligionXPModifier() * iChange);
 	changeNationalCityStartBonusPopulation(GC.getTraitInfo(eTrait).getBonusPopulationinNewCities() * iChange);
 	changeNationalMissileRangeChange(GC.getTraitInfo(eTrait).getMissileRange() * iChange);
 	changeNationalFlightOperationRangeChange(GC.getTraitInfo(eTrait).getFlightOperationRange() * iChange);
@@ -28171,11 +28088,6 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 		changeGoldenAgeOnBirthOfGreatPersonCount(eGreatPeopleUnit, iChange);
 	}
 
-	foreach_(const DomainModifier2& pair, GC.getTraitInfo(eTrait).getDomainFreeExperience())
-	{
-		changeNationalDomainFreeExperience(pair.first, pair.second * iChange);
-	}
-
 	foreach_(const DomainModifier2& pair, GC.getTraitInfo(eTrait).getDomainProductionModifiers())
 	{
 		changeNationalDomainProductionModifier(pair.first, pair.second * iChange);
@@ -28184,18 +28096,6 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 	foreach_(const TechModifier& pair, GC.getTraitInfo(eTrait).getTechResearchModifiers())
 	{
 		changeNationalTechResearchModifier(pair.first, pair.second * iChange);
-	}
-
-	for (int iI = 0; iI < GC.getTraitInfo(eTrait).getNumUnitCombatFreeExperiences(); iI++)
-	{
-		if ((UnitCombatTypes)GC.getTraitInfo(eTrait).getUnitCombatFreeExperience(iI).eUnitCombat != NO_UNITCOMBAT)
-		{
-			UnitCombatTypes eUnitCombat = ((UnitCombatTypes)GC.getTraitInfo(eTrait).getUnitCombatFreeExperience(iI).eUnitCombat);
-			if (GC.getTraitInfo(eTrait).getUnitCombatFreeExperience(iI).iModifier != 0)
-			{
-				changeUnitCombatFreeExperience(eUnitCombat, iChange*GC.getTraitInfo(eTrait).getUnitCombatFreeExperience(iI).iModifier);
-			}
-		}
 	}
 
 	for (int iI = 0; iI < GC.getTraitInfo(eTrait).getNumUnitCombatProductionModifiers(); iI++)
@@ -29303,24 +29203,6 @@ void CvPlayer::changeNationalBombardDefenseModifier(int iChange)
 	setNationalBombardDefenseModifier(getNationalBombardDefenseModifier() + iChange);
 }
 
-int CvPlayer::getNationalDomainFreeExperience(DomainTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, NUM_DOMAIN_TYPES, eIndex);
-	return m_paiNationalDomainFreeExperience[eIndex];
-}
-
-void CvPlayer::setNationalDomainFreeExperience(DomainTypes eIndex, int iValue)
-{
-	FASSERT_BOUNDS(0, NUM_DOMAIN_TYPES, eIndex);
-
-	m_paiNationalDomainFreeExperience[eIndex] = iValue;
-}
-
-void CvPlayer::changeNationalDomainFreeExperience(DomainTypes eIndex, int iChange)
-{
-	setNationalDomainFreeExperience(eIndex, (getNationalDomainFreeExperience(eIndex) + iChange));
-}
-
 int CvPlayer::getNationalDomainProductionModifier(DomainTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, NUM_DOMAIN_TYPES, eIndex);
@@ -29460,51 +29342,6 @@ void CvPlayer::setNationalAirUnitCapacity(int iValue)
 void CvPlayer::changeNationalAirUnitCapacity(int iChange)
 {
 	setNationalAirUnitCapacity(getNationalAirUnitCapacity() + iChange);
-}
-
-int CvPlayer::getCapitalXPModifier() const
-{
-	return m_iCapitalXPModifier;
-}
-
-void CvPlayer::setCapitalXPModifier(int iValue)
-{
-	m_iCapitalXPModifier = iValue;
-}
-
-void CvPlayer::changeCapitalXPModifier(int iChange)
-{
-	setCapitalXPModifier(getCapitalXPModifier() + iChange);
-}
-
-int CvPlayer::getStateReligionHolyCityXPModifier() const
-{
-	return m_iStateReligionHolyCityXPModifier;
-}
-
-void CvPlayer::setStateReligionHolyCityXPModifier(int iValue)
-{
-	m_iStateReligionHolyCityXPModifier = iValue;
-}
-
-void CvPlayer::changeStateReligionHolyCityXPModifier(int iChange)
-{
-	setStateReligionHolyCityXPModifier(getStateReligionHolyCityXPModifier() + iChange);
-}
-
-int CvPlayer::getNonStateReligionHolyCityXPModifier() const
-{
-	return m_iNonStateReligionHolyCityXPModifier;
-}
-
-void CvPlayer::setNonStateReligionHolyCityXPModifier(int iValue)
-{
-	m_iNonStateReligionHolyCityXPModifier = iValue;
-}
-
-void CvPlayer::changeNonStateReligionHolyCityXPModifier(int iChange)
-{
-	setNonStateReligionHolyCityXPModifier(getNonStateReligionHolyCityXPModifier() + iChange);
 }
 
 int CvPlayer::getNationalCityStartBonusPopulation() const

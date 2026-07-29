@@ -174,7 +174,19 @@ reads objects). **Build order:** spine + the modifier scope accumulator → logg
   ([state-repositories.md](../architecture/state-repositories.md)); the event reseed replaced that pass, so the
   endpoint has no honest caller. Open follow-ups (the tile-driven vicinity backstop; the per-city enabler
   priming that preceded the reseed emits): [todo.md](../plans/structural-cleanup/todo.md).
-  **Registered consumers today:** the broad FILE logging consumer, the `/events` STREAM consumer, the **trigger
+  **⚖ PLAYER ALERTS ARE A SPINE CONSUMER, RE-ADDED ON THE FACT (owner) — never re-inlined at a mutation site.**
+The legacy notifications ("a building shut down", "a building was restored") were emitted from inside the
+setter that changed the state, which is why they die with every legacy mutator that gets cut — and why they
+cannot simply be kept: the setter they lived in is the duplicate being removed. They come back as a CONSUMER of
+the DOMAIN fact that already announces the change (the operate crossing, the owner change, …), exactly as
+logging and the `/events` stream are consumers.
+⚑ **This is a growing list, not a one-off:** each legacy mutator cut takes its alerts with it, and they are
+re-added together on the facts rather than one at a time inside whatever replaced the setter. What is currently
+owed is tracked in [todo.md](../plans/structural-cleanup/todo.md).
+⛔ An alert re-inlined into a machine's apply path is the same mistake in a new place: it makes a UI concern a
+condition of the state change, and it is invisible to anything else that wanted to know.
+
+**Registered consumers today:** the broad FILE logging consumer, the `/events` STREAM consumer, the **trigger
   engine** (`Triggers/CvTriggerEngine` -- the ONE payload machine, grants folded in as the null-condition case:
   resolver AND appliers built (`tr_applyTechFirstDiscover` / `tr_applyBuildingFirstBuild` / `tr_applyPerTurn` /
   `tr_applyCityPerTurn` / `tr_applySpawn` / `tr_applyFullHeal` / `tr_promoteFromEntries`), dispatched from
@@ -231,6 +243,39 @@ weighing whether some mutation "deserves" an event, the answer is EMIT. The cost
 MISSING emit is a silently wrong value that no compiler and no runtime catches, found only by someone noticing a
 number is off; a SURPLUS emit costs one consumer branch that declines to act. Never agonize over the judgement —
 if it moves state, it emits.
+
+**⛔ AN EVENT GAP IS CLOSED THE MOMENT IT IS FOUND — NEVER RECORDED AND LEFT (owner).** Finding one is not a
+discovery to write down; it *is* the work item, and it is done now. This is stronger than the ruling above, and
+it binds the same way whichever form the hole takes: a **missing emit** (nothing announces the fact), a
+**missing FIELD** on an existing fact (the old-value case above — it fires but cannot be acted on), or a
+**missing CONSUMER ROUTE** (the fact is on the wire and the store that needs it ignores it). All three leave a
+stored value permanently wrong and none self-heals
+([DEC-no-self-heal](../architecture/decisions.md#dec-no-self-heal)) — so a todo entry reading *"`SEVT_X` is the
+hook"* is a value that stays wrong for exactly as long as that entry sits there.
+⚑ **Why it is a hard rule and not a priority call:** closing one costs almost nothing while the trace is in
+front of you, and it never gets cheaper — the next agent must re-derive which fact was missing, which consumer
+wanted it, and why. Deferring converts a few minutes of wiring into a re-investigation.
+⚠ It does NOT license guessing a structure: if the route needs a design decision the specs do not answer,
+surface that — but the gap still closes in the same work item.
+
+> **⚖ THE COUNTER-CASE, so the rule is not misapplied: a deliberately-drawn SCOPE BOUNDARY is not a gap.** The
+> worked instance is the city's **obtained-bonus** fact (`SEVT_BONUS_CHANGED`), which announces the **PRESENCE
+> CROSSING ONLY** — 0 ⇄ non-zero — because `processNumBonusChange` reaches `processBonus` solely when the
+> has-verdict crosses zero. A count moving 2 → 3 therefore announces nothing, and **that is the ruling, not an
+> oversight (owner):** a per-count fact would force the engine to start *"processing all sorts of extra edge
+> cases about what city added the bonus"* — attribution the crossing sidesteps entirely.
+> ⚠ What is knowingly outside the boundary: a count-THRESHOLD reader (a `min: 3` requires-atom, a `per`
+> count-scaler) does not re-evaluate on a move between non-zero counts. Accepted for now.
+> ⚑ **The REVISIT TRIGGER is named, and it is VOLUMETRIC (owner)** — when a resource stops being present/absent
+> and becomes a QUANTITY a city draws against, the crossing stops being sufficient and this reopens. ⚠ But it
+> reopens **as part of that work, never ahead of it**: *"then we also have to implement a ton of other things"*.
+> Volumetric is a model-wide change (the same direction the amenity id→COUNT dictionary is already shaped for,
+> [json.md §8](json.md)), so a per-count fact added early buys nothing and pays the attribution cost now.
+> ⛔ Do not treat the named trigger as a licence to start: it marks WHEN, not a standing invitation.
+> ⛔ So do **not** add a per-count bonus fact, and do not read the absence of one as a hole to close — it would
+> also be a near-duplicate of the crossing fact on every 0 ⇄ 1 transition. **The test that separates the two: a
+> gap is a fact nobody DECIDED to leave out.** Ask whether the omission is recorded as a decision; if it is,
+> the rule above does not apply to it.
 
 ⚠ **The ruling is about EMITS, and it does NOT extend to MARKS — their cost shapes are opposite.** A surplus
 emit is ~free; a surplus MARK is a real package REBUILD that was not needed, paid on the turn path at event

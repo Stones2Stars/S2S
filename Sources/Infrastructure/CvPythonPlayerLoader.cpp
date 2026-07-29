@@ -285,7 +285,6 @@ void CvPythonPlayerLoader::CyPlayerPythonInterface3(boost::python::class_<CyPlay
 		.def("getGreatGeneralsThresholdModifier", &CyPlayer::getGreatGeneralsThresholdModifier, "int ()")
 		.def("changeGreatGeneralsThresholdModifier", &CyPlayer::changeGreatGeneralsThresholdModifier, "void (int iChange)")
 
-		.def("getFreeExperience", &CyPlayer::getFreeExperience, "int ()")
 		.def("getFeatureProductionModifier", &CyPlayer::getFeatureProductionModifier, "int ()")
 		.def("getWorkerSpeedModifier", &CyPlayer::getWorkerSpeedModifier, "int ()")
 		.def("getMilitaryProductionModifier", &CyPlayer::getMilitaryProductionModifier, "int ()")
@@ -331,7 +330,6 @@ void CvPythonPlayerLoader::CyPlayerPythonInterface3(boost::python::class_<CyPlay
 		.def("changeStateReligionUnitProductionModifier", &CyPlayer::changeStateReligionUnitProductionModifier, "void (int iChange)")
 		.def("getStateReligionBuildingProductionModifier", &CyPlayer::getStateReligionBuildingProductionModifier, "int ()")
 		.def("changeStateReligionBuildingProductionModifier", &CyPlayer::changeStateReligionBuildingProductionModifier, "void (int iChange)")
-		.def("getStateReligionFreeExperience", &CyPlayer::getStateReligionFreeExperience, "int ()")
 		.def("getCapitalCity", &CyPlayer::getCapitalCity, boost::python::return_value_policy<boost::python::manage_new_object>(), "CyCity* (int iID)")
 		.def("getCitiesLost", &CyPlayer::getCitiesLost, "int ()")
 

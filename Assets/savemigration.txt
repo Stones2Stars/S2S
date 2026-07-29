@@ -614,3 +614,124 @@ CvCity::m_paiDamageAttackingUnitCombatCount
 | building raises its city's lookout), built by the spine like every other channel, so there is nothing to store.
 CvCity::m_iLineOfSight
 ========================
+| The four city-scope AMENITY counters. Each was a serialized per-flag counter fed by ONE site
+| (CvCity::processBuilding) and read by one boolean verdict -- the hand-named scalar shape DEC-uniform-cache-shape
+| calls a defect, and the reason a new attribute cost an engine change (a counter, a fact, a predicate) rather
+| than being pure data. The verdict is now the CITY'S AMENITY FOLD (CityContext::amenities, json §8): an
+| id->count dictionary folded from each grantor's `amenities` block off SEVT_BUILDING_PROCESSED, so it is DERIVED
+| and serializes nothing (DEC-derived-never-trusted). REPLACEMENT: CityContext::hasAmenityKey via the
+| CITY_HAS_AMENITY macro -- governmentCenter / abolishedAnger / noUnhealthyPopulation / buildingOnlyHealthy.
+| The SEVT_GOVERNMENT_CENTER_CHANGED fact the first counter emitted survives: the contexts' consumer watches the
+| verdict across the fold and emits the same crossing (ContextConsumer::announceAmenityCrossings).
+CvCity::m_iGovernmentCenterCount
+CvCity::m_iNoUnhappinessCount
+CvCity::m_iNoUnhealthyPopulationCount
+CvCity::m_iBuildingOnlyHealthyCount
+========================
+| The legacy DORMANCY store. m_vDisabledBuildings was a serialized per-city list of buildings the engine had
+| switched off, maintained by CvCity::checkBuildings -- a 283-line per-turn pass that RE-DERIVED the active/dormant
+| verdict for every building of every city from legacy prereq getters (missing bonus, fresh water, civics, war,
+| power, population, religion bans). That is the camouflaged ride-in DEC-calc-zero-ride-in exists to ban: the
+| verdict is a pure function of `requires.operate` and belongs to the ENABLER, which computes it into
+| CvCity::m_operatingBuildings (OperatingBuildings::active, enabler.md §3.2) and serves it on the
+| /computed/enabler/operating/{stored,oracle} routes. A second, serialized copy of a derived verdict is exactly
+| what save.md §5 forbids. REPLACEMENT: the enabler's operating set; dormant == present && !active.
+| Bracket-free decorated tags, so both drain by exact name.
+CvCity::DisabledBuildingsSize
+CvCity::DisabledBuildingsIndex
+========================
+| The RELIGIOUSLY-DISABLED building array. A per-building bool store holding a SECOND copy of an operate verdict:
+| a building whose religion prereq was lost got switched off here, with its own apply and its own player alert.
+| A religion requirement is an ordinary `requires.operate` clause, so the verdict belongs to the enabler's operate
+| fixpoint, which already re-gates it off SEVT_RELIGION_CHANGED. Derived state, so it serializes nothing
+| (DEC-derived-never-trusted); hasFullyActiveBuilding collapses onto isActiveBuilding because there is no longer a
+| second axis to compose. REPLACEMENT: CvCity::isActiveBuilding -> OperatingBuildings::active.
+CvCity::m_pabReligiouslyDisabledBuilding
+========================
+| The BUILDING yield-modifier accumulator. A serialized per-yield int the city maintained by += as buildings came
+| and went, and one of SEVEN hand-named accumulators (bonus / building / event / player / power / area / capital)
+| that getBaseYieldRateModifier then ADDED TOGETHER. Addition is associative, so the split bought nothing the
+| result could see -- it only meant seven serialized stores that could each drift from the data. They are ordinary
+| `<yield>.<scope>.percent` deposits now, folded by the ONE cross-scope roll-up (InfoValuation::rolledLegsAtCity)
+| over the city's chain, with the power / capital / area legs expressed as ordinary conditioned deposits rather
+| than re-tested at the read. Derived, so it serializes nothing (DEC-derived-never-trusted).
+CvCity::m_buildingYieldMod
+========================
+| The per-commerce rate-modifier accumulator. Same shape as the yield twin: a serialized += store that was one of
+| seven terms getTotalCommerceRateModifier summed -- and that read then SUBTRACTED two of them back out, because
+| the events/buildings terms were folded into the player's generic modifier AND tracked separately for the UI, so
+| the hub had to undo its own double-count. One accumulator per channel per scope removes the dedup entirely. The
+| value is the cascade's `<commerce>.<scope>.percent`, folded by InfoValuation::rolledLegsAtCity. Derived, so it
+| serializes nothing (DEC-derived-never-trusted). The hand-rolled MIN_INT dirty cache went with it: a read is a
+| bare fetch and the package is spine-invalidated (DEC-uniform-cache-shape).
+CvCity::m_aiCommerceRateModifier
+========================
+| The BUILDING-DEFENSE accumulator. A serialized += store of the city's buildings' defense contribution, which
+| getTotalDefense then weighed against the CULTURE LEVEL's via max(building, natural) before adding the player and
+| bonus terms. There is no natural-defense channel to weigh against: DEFENSE_AMOUNT is ONE channel that buildings
+| (153 files) and culture levels (18) both author, so the cascade holds one additive stack and the max has no
+| counterpart -- a data-led behaviour change, not a lost clamp. The stack has a FLOOR (the `min` kind,
+| getExtraMinDefense) and deliberately NO ceiling. REPLACEMENT: InfoValuation::rolledLegsAtCity over
+| MODFAM_DEFENSE/DEFENSE_AMOUNT; the buildings' own share is computed from the enabler's operating set for the
+| bIgnoreBuilding what-if, so a dormant building defends nothing. Derived, serializes nothing.
+CvCity::m_iBuildingDefense
+========================
+| The remaining per-kind DEFENSE accumulators. Five serialized ints, each a += store of one defense KIND that the
+| vocabulary already names (adjacent damage, dynamic defense, river-attack penalty, and the building/city defense
+| recovery rates). Same shape as the AMOUNT accumulator above and cut the same way: the value is the cascade's
+| `defense.<scope>.<kind>` folded by InfoValuation::rolledLegsAtCity, with the FLAT-vs-PERCENT verdict taken from
+| infoDefenseUnit so it is decided ONCE beside the kind enum rather than per getter. Derived, serializes nothing.
+CvCity::m_iAdjacentDamagePercent
+CvCity::m_iExtraLocalDynamicDefense
+CvCity::m_iExtraRiverDefensePenalty
+CvCity::m_iExtraBuildingDefenseRecoverySpeedModifier
+CvCity::m_iExtraCityDefenseRecoverySpeedModifier
+========================
+| Five single-kind CITY accumulators, each a serialized += store of one (family, kind) slot the cascade owns:
+| espionage defense, the UNDERWORLD pair (insidiousness / investigation -- the in-city criminal contest, json §6;
+| NOT espionage, which carries same-named stats on the separate UNIT plane), the extra trade-route count, and the
+| food-kept percent. All now read InfoValuation::rolledLegsAtCity via CvCity::cascadeValue, whose FLAT-vs-PERCENT
+| leg comes from infoKindUnit -- the vocabulary's verdict, decided once beside the kind enums instead of per
+| getter. The foodKept [0,99] clamp is a real rule of the mechanic and survives at the read. Derived, serializes
+| nothing (DEC-derived-never-trusted).
+CvCity::m_iEspionageDefenseModifier
+CvCity::m_iExtraInsidiousness
+CvCity::m_iExtraInvestigation
+CvCity::m_iExtraTradeRoutes
+CvCity::m_iFoodKeptPercent
+========================
+| The FREE-EXPERIENCE cluster: EIGHT serialized accumulators across CvCity and CvPlayer that getProductionExperience
+| then ADDED TOGETHER -- the city and player flat XP, the city's specialist XP, the per-DOMAIN and per-UNITCOMBAT
+| keyed stores on each scope, and the state-religion XP. Addition is associative, so the split bought nothing the
+| result could see; it only meant eight stores that could each drift from the data, fed by info getters that no
+| longer exist on any rebuilt info (building getFreeExperience / getGlobalFreeExperience / getDomainFreeExperience /
+| getUnitCombatFreeExperience, civic + trait getFreeExperience, specialist getExperience, corporation getFreeXP).
+| REPLACEMENT: the scope-wide legs are ONE InfoValuation::rolledLegsAtCity over MODFAM_EXPERIENCE/EXPERIENCE_AMOUNT
+| (the roll-up sums the city and empire halves already); the KEYED axes stay entry-list reads via
+| CvCity::keyedExperience over the enabler's operating set + assigned specialists + held traits, because a keyed
+| entry deliberately never folds into a scope package (folding it would hand every unit the melee-only XP).
+| Derived, serializes nothing (DEC-derived-never-trusted).
+CvCity::m_iFreeExperience
+CvCity::m_iSpecialistFreeExperience
+CvCity::m_aiDomainFreeExperience
+CvCity::m_paiUnitCombatFreeExperience
+CvPlayer::m_iFreeExperience
+CvPlayer::m_iStateReligionFreeExperience
+CvPlayer::m_paiNationalDomainFreeExperience
+| The player's per-unitcombat free XP was a variable-length block. Bracket-free decorated tags, so all three drain
+| by exact name (the CvCity::DisabledBuildingsSize precedent).
+CvPlayer::iUnitCombatFreeXPSize
+CvPlayer::iUnitCombatFreeXPType
+CvPlayer::iUnitCombatFreeXPCount
+========================
+| The three XP PERCENT members, and the reason they are a clean delete rather than a re-home: each was a hand-named
+| accumulator wrapped in a HARDCODED gate at the read (capital-or-government-centre, state-religion holy city,
+| non-state holy city) -- the condition-as-member shape DEC-conditions-are-predicates retires. The DATA already
+| authors exactly that as `experience.empire.percent` carrying `enabled: "IS_CAPITAL"` and the composed holy-city
+| pair, evaluated at the package fold, so the percent tier came back for free and no gate survives in the getter.
+| Two of the three had NO feeder at all and answered 0 permanently; the third read a trait getter that is gone.
+| REPLACEMENT: the percent leg of the same rolledLegsAtCity read. Derived, serializes nothing.
+CvPlayer::m_iCapitalXPModifier
+CvPlayer::m_iStateReligionHolyCityXPModifier
+CvPlayer::m_iNonStateReligionHolyCityXPModifier
+========================

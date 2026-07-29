@@ -47,7 +47,12 @@
 
 class CvPlot;
 class CvCity;
+class CvClassificationBlock;   // a grantor's §8 `amenities` block, folded by pointer (never included here)
 struct CvCascadeEvalCtx;
+
+// The city-side twin of CLS_HAS: a one-line getter body reading the city's amenity FOLD by key, with the
+// load-minted id memoized per call site. The city is what a gate asks (contexts.md) -- never each grantor.
+#define CITY_HAS_AMENITY(ctx, key) { static int s_amenityId = -1; return (ctx).hasAmenityKey(s_amenityId, key); }
 
 class CityContext
 {
@@ -65,6 +70,35 @@ public:
 	// (Engine/ContextConsumer -- DEC-spine-reseed).
 	void onPlotChanged(const CvPlot* plot, int sign);
 
+	// --- STORED: the city's AMENITIES -- what its grantors CONFER ON IT (json §8) -----------------------------------
+	// The clean feature list every gate checks (owner): a consumer asks the CITY, never each building in turn.
+	// ⛔ An id->COUNT dictionary, NOT a bitset, and the count is load-bearing: SEVERAL grantors can confer the same
+	// amenity, so a removal DECREMENTS -- losing one power plant must not darken a city that has two. (The same
+	// refcount shape as OperatingBuildings::providedCount, for the same reason.) `has` is therefore count > 0.
+	// ⚑ It also makes VOLUMETRIC free: the slot is already an int, so an amenity that later becomes a QUANTITY
+	// needs no reshape, only a change in what the number means.
+	mutable ContextDict amenities;
+	// A grantor ARRIVED (sign +1) / LEFT (sign -1): fold its `amenities` (+/-1 each) into the dictionary. A pure
+	// DELTA -- it reads NOTHING, which is the point: a whole-dictionary re-derivation would have to read the
+	// enabler's operating set, and this consumer registers BEFORE the enabler (contexts -> enabler -> modifier),
+	// so at load that set does not exist yet. Listening instead means the store simply builds itself from the
+	// facts, at load (CvCity::read's per-building emit) and at play (setHasBuilding), with no phase ordering.
+	void onBuildingChanged(int eBuilding, int sign) const;
+	// The ONE fold implementation, over any grantor's block (DEC-single-implementation): a BUILDING confers on its
+	// own city, a CIVIC on every city of the empire, and both land here so the conditioned-entry evaluation and the
+	// refcounting exist exactly once. `pBlock` NULL or `sign` 0 is a no-op. `pRecordInto`, when given, receives the
+	// same delta -- that is what makes a fold REVERSIBLE without remembering the gate verdict it was made under.
+	void foldAmenities(const CvClassificationBlock* pBlock, int sign, ContextDict* pRecordInto = NULL) const;
+	// What the EMPIRE-scope grantors currently contribute to THIS city, held separately from `amenities` purely so
+	// the contribution can be withdrawn EXACTLY. ⛔ It is not a second source of truth: `amenities` stays the read.
+	mutable ContextDict empireAmenities;
+	// Re-derive the empire half: withdraw exactly what was last contributed, then re-fold from current state.
+	// ⚖ This is the "unfold the old, refold the new" idiom `plotAttrs` already uses, and it is what makes a
+	// CONDITIONED grant reversible -- the withdrawal replays the RECORDED contribution rather than re-evaluating a
+	// gate whose answer has since changed, so a city that stops being the capital loses exactly what being the
+	// capital gave it. Cheap because it is driven by RARE facts (a civic swap, a capital move), never a read.
+	void refreshEmpireAmenities() const;
+
 	// --- MAINTENANCE: called ONLY by the contexts' spine consumer (Engine/ContextConsumer) --------------------------
 	// Each re-derives its WHOLE store from the bound city through the SAME engine accessors a read used to call --
 	// ONCE per change instead of once per read, and one uniform derivation rather than a bespoke per-event delta.
@@ -75,6 +109,7 @@ public:
 	void refreshTradedBonuses() const;     // the gated network count (the TechCityTrade + minted relay)
 	void refreshAreaFacts() const;         // the city's area ID + the coastal water-body size
 	void refreshHolyCity() const;          // how many religions hold this city as their holy city
+	// (The amenity fold is NOT here: it is a DELTA, not a re-derivation -- see onBuildingChanged above.)
 
 	void clear() const;   // m_city is a binding, not cleared
 
@@ -96,6 +131,15 @@ public:
 	int  areaSize() const;                    // the AREA_SIZE counter, served from the maintained area facts
 	bool isCoastal(int iMinWaterSize) const;  // the HAS_COAST minArea city form: the largest ADJACENT water body >= iMinWaterSize
 	bool isHolyCityAny() const;               // bare IS_HOLY_CITY -- this city is some religion's holy city
+	// The city's amenity reads -- O(1) over the fold. `hasAmenity` is the gate every consumer wants;
+	// `amenityCount` exposes HOW MANY grantors confer it (the refcount, and the volumetric slot).
+	bool hasAmenity(int iAmenityId) const   { return amenities.has(iAmenityId); }
+	int  amenityCount(int iAmenityId) const { return amenities.count(iAmenityId); }
+	// The BY-KEY read, for a caller that has a name rather than an id. Same shape as CLS_HAS on the info side and
+	// for the same reason: amenity ids are MINTED AT LOAD, so there is no compile-time id to pass
+	// ([DEC-classification-infos]) -- the caller keeps a static cache the registry fills once.
+	//   bool CvCity::isGovernmentCenter() const CITY_HAS_AMENITY(getCityContext(), "governmentCenter")
+	bool hasAmenityKey(int& iIdCache, const char* szKey) const;
 
 	// --- FORWARDED: the RAW data CvCity already holds O(1) -- a stored copy would duplicate it. Out-of-line (.cpp) ---
 	int  population() const;                  // CvCity::getPopulation            (m_iPopulation)

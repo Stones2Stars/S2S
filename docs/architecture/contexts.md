@@ -24,6 +24,25 @@ becomes DISTINGUISHABLE: *"so that an info can say 'yes, I will actually deliver
 A context that merely forwards to its bound object delivers none of that — it is the same pointer hop with an
 extra name, so the design collapses into "pass the god-object like always."
 
+> **⚖ THERE SHOULD VIRTUALLY NEVER BE AN ORDERING PROBLEM — EVERYTHING IS POPULATED BY THE REPLAY OF SPINE
+> EVENTS (owner).** That is what makes consumer registration order almost irrelevant: each consumer builds its
+> own state from the SAME fact stream, so no consumer waits on another's build.
+> ⛔ **The anti-pattern that manufactures ordering is a store that RE-DERIVES by READING another system's built
+> state.** It cannot run until that system is built, which instantly turns registration order into a dependency —
+> and the dependencies go both ways (the enabler gates THROUGH these stores, so a store reading the enabler is
+> circular). ⇒ **A store LISTENS and applies a delta; it does not read a set and recount.** The city's
+> `amenities` fold is the worked case: as a delta off the per-building fact it builds itself identically at load
+> (the save read's own emits) and at play, with no phase ordering; written as a re-derivation over the enabler's
+> operating set it could not build at load at all.
+> ⚠ **The exception is a HARD COUNTER, and it is SERIALIZED STATE (owner): a city's POPULATION, its CULTURE, its
+> STORED PRODUCTION — "these kinds of things have to obviously just be serialized out."** They cannot realistically
+> have events, and they need none: they are not derived from anything, so they come back off the save directly and
+> are FORWARDED (below) rather than stored. That raises no ordering question at all.
+> ⇒ The three-way test, and the exception confirms the split rather than bending it: **DERIVED ⇒ built by the
+> event replay, never serialized** ([DEC-derived-never-trusted](decisions.md#dec-derived-never-trusted)); **genuine
+> non-derivable state ⇒ serialized, and forwarded live** ([save.md §5](../specs/save.md) — a serialized store
+> survives ONLY for state no derivation can produce); a context never stores the second kind.
+
 The split is by **DERIVED vs RAW**, not by convenience:
 
 - **STORE — every DERIVED fact the evaluation reads.** Predicate verdicts, aggregates, unions: computed ONCE by
@@ -69,7 +88,7 @@ event-driven — never a read-time scan, and never left on the old accessor as a
 
 | context | owner | STORES (unique aggregate) | FORWARDS (read through the bound object / its owner) |
 |---|---|---|---|
-| **CityContext** | `CvCity` | `plotAttrs` — per-predicate plot COUNTS (the fold of member plots' bits) · **the VICINITY BONUSES available in the city** (owner) — the §5a radius union, MAP half (see the split below) · the **TRADED count** (the gated network number) · the **AREA facts** (area id, its tile count, the coastal water-body size) · the **holy-city count** | population, power, religion presence, holy-city-of, corporation, capital, government-centre, fresh-water access, property value (raw, `CvCity`-owned, O(1)); state religion (→ owner `CvPlayer`); **the CURRENT REALIZED YIELDS** (owner) — the city's own O(1) group read, forwarded so a valuation can resolve a percent against a real base (below); **the CURRENT REALIZED COMMERCE** — `CvCity::getCommerces`, the per-commerce SPLIT of that commerce yield by the empire's sliders plus each channel's own deposits ([modifier.md §2a](../specs/modifier.md)), forwarded for the same reason |
+| **CityContext** | `CvCity` | `plotAttrs` — per-predicate plot COUNTS (the fold of member plots' bits) · **`amenities`** — the `AMENITY_*` id→COUNT fold over the city's OPERATING buildings + the empire-scope grantors (json §8; the count is load-bearing — see the callout below) · **the VICINITY BONUSES available in the city** (owner) — the §5a radius union, MAP half (see the split below) · the **TRADED count** (the gated network number) · the **AREA facts** (area id, its tile count, the coastal water-body size) · the **holy-city count** | population, power, religion presence, holy-city-of, corporation, capital, government-centre, fresh-water access, property value (raw, `CvCity`-owned, O(1)); state religion (→ owner `CvPlayer`); **the CURRENT REALIZED YIELDS** (owner) — the city's own O(1) group read, forwarded so a valuation can resolve a percent against a real base (below); **the CURRENT REALIZED COMMERCE** — `CvCity::getCommerces`, the per-commerce SPLIT of that commerce yield by the empire's sliders plus each channel's own deposits ([modifier.md §2a](../specs/modifier.md)), forwarded for the same reason |
 | **EmpireContext** | `CvPlayer` | `policies` — the empire's enacted-policy set (the derived UNION over live civics'/traits' policy blocks, stored nowhere else) | state religion (single enum → `CvPlayer::getStateReligion`), civics/traits/heritages presence, the team-held facts; **the CURRENT REALIZED COMMERCE** — `CvPlayer::getCommerces`, the four empire RECEIVER totals: the city-yields forward's empire twin, so an empire-scope percent resolves against a real base; **the COMMERCE SLIDER PERCENTAGES** (owner) — the player's gold / research / culture / espionage rates, the `GOLD_RATE`/`RESEARCH_RATE`/`CULTURE_RATE`/`ESPIONAGE_RATE` tokens ([json.md §3.1](../specs/json.md)); a group keyed by `CommerceTypes`, forwarded because `CvPlayer` owns them O(1) |
 
 ⛔ **THE VICINITY SPLIT — the context holds the MAP half, the enabler holds the BUILDING half.** The §5a in-vicinity
@@ -84,6 +103,58 @@ supply is a union of two independently-owned halves, and storing either one twic
 
 The reader unions the two. A mirror of the building half on the context would also *drift*, because the enabler
 mutates its set in place as the fixpoint ripples.
+
+⚖ **`CityContext.amenities` — THE CITY'S OWN FEATURE LIST, AND THE CITY IS WHAT GETS CHECKED (owner).** A
+grantor's `amenities` block ([json.md §8](../specs/json.md)) is static info data; what a consumer actually asks
+is *"does THIS CITY have this?"*. So the city holds the FOLD — over its **operating** buildings, plus the
+empire-scope grantors (civic / trait / tech) that reach every city — and every gate reads it O(1). ⛔ A consumer
+must never loop the city's buildings asking each one, and a grantor's per-key named getter is not the consumer
+surface: the fold is the ONE reader of the grantor side
+([DEC-single-implementation](decisions.md#dec-single-implementation)), alongside display/pedia.
+
+> **⛔ IT IS A ContextDict (id→COUNT), NOT A BITSET (owner) — absent or 0 is false, anything else true.** Several
+> grantors can confer the SAME amenity, so a removal DECREMENTS rather than clears: *losing one power plant must
+> not darken a city that has two.* A bitset cannot express that — an "amenity removed" fact would clear a bit
+> another live grantor still justifies. ⚑ So it is the ordinary `ContextDict` this doc already specifies
+> (`has(id)` ≡ `count > 0`), the same refcount shape the enabler's membership formula and the operating set's
+> provided-bonus counts use, and the semantic legacy already had in its per-flag counters.
+
+⚑ **This is the `plotAttrs` shape one level up, and it is why it fits with no new machinery:** `plotAttrs` is
+literally the sum of its member plots' bits, so the two granularities cannot drift; the amenity fold is the
+same relationship between a city and its grantors. It rides the building-changed and the active↔dormant
+crossing facts the enabler already announces — DORMANCY is the reason it must be the OPERATING set rather than
+the present one, since a dormant building confers nothing ([enabler.md §3.2](../specs/enabler.md)).
+
+> **⚖ THE FOLD HAS TWO LEGS, BECAUSE THE GRANTORS SIT AT DIFFERENT SCOPES — one implementation, two triggers.**
+> A BUILDING confers on its OWN city, so its leg is a pure delta off the per-building fact and needs nothing
+> else. A CIVIC confers on EVERY city of the empire ([json.md §8](../specs/json.md)), and that leg cannot ride
+> the grantor fact alone: **at load the civic facts fire from `CvPlayer::read` BEFORE the cities deserialize**,
+> so there is no city to fan to. It therefore folds from the other side — **when a CITY starts existing** (the
+> load build, and city-founded) it folds what its owner already holds — while the grantor fact fans the delta
+> (`−`old, `+`new) over the cities that already stand.
+> ⚠ **Both halves are needed, and the load ordering is NOT uniform across grantors:** the civic reseed emits
+> before the cities, but the TRAIT reseed emits *after* them. So the play-time fan is guarded to the non-load
+> path — unguarded, a trait would be counted twice against the load build.
+> ⚑ Reading the owner's adopted civics there is a **FORWARD of raw, object-owned state**, not the banned
+> re-derivation. What is forbidden is a store reading ANOTHER SYSTEM's built state (the enabler's operating
+> set) — that is what manufactures an ordering dependency; `policies` already makes exactly this read.
+
+⚑ **The path is NOT missing — it is BUILT, three times over, BESPOKE. That is the actual defect.** The
+building→city→gate chain already runs end to end for a handful of attributes, each with its own hand-named
+`CvCity` counter, its own DOMAIN fact and its own predicate: **`governmentCenter`**
+(`changeGovernmentCenterCount` → `SEVT_GOVERNMENT_CENTER_CHANGED` → `CASC_PRED_IS_GOVERNMENT_CENTER`, evaluated
+as `cityContext->isGovernmentCenter()`), **`providesPower`** (`HAS_POWER`) and **fresh water**
+(`SEVT_CITY_FRESH_WATER_CHANGED`). ⇒ The generalization has a PROVEN shape and needs no new mechanism — what it
+needs is to be made generic over the attribute id.
+
+⛔ **So what this retires is a real defect, not a tidy-up:** one hand-named counter per flag
+(`changeGovernmentCenterCount`, `changeNoUnhappinessCount`, `changeNoUnhealthyPopulationCount`,
+`changeBuildingOnlyHealthyCount`, …), each with its own maintenance path — exactly the hand-named scalar shape
+[DEC-uniform-cache-shape](decisions.md#dec-uniform-cache-shape) calls a DEFECT, and precisely why a NEW attribute
+costs an engine change today (a counter, a fact, a predicate) instead of being pure data. One id-keyed set plus
+one parameterized fact replaces the whole family, after which an authored attribute needs no engine work at all —
+which is the open-registry promise ([DEC-classification-infos](decisions.md#dec-classification-infos)) finally
+reaching the consumer side.
 | **PlotContext** | `CvPlot` | the `CASC_PRED_*` verdict **BITSET** — the OWN-PLOT block (water/land/relief/hills/peak/river/irrigation/feature-present/landmark/owned/**worked**) plus the ADJACENCY block (coast, fresh-water) | the RAW substrate a parameterized predicate keys on — terrain/feature/improvement/route/bonus ids, owner, latitude, nature yield — plus city-presence, the one verdict with no mutation event a bit could be maintained from (→ `CvPlot`); **the plot's CURRENT REALIZED YIELDS** — `CvPlot::getYields`, the whole isolated per-plot base package as a bare cache fetch (distinct from `natureYield`, the pre-improvement leg that COMPUTES per call) |
 
 **Pass by reference/pointer, never by value (owner).** Passing a bound context is far cheaper than snapshotting
