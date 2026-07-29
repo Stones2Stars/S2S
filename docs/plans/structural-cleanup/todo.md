@@ -392,15 +392,21 @@ measure what survives, then cut the genuine residue. The classes below are the u
 - **② Realized-value reads** (`getYieldRate`/`…100`, `getCommerceRate`/`…TimesTimes100`, `getMaintenanceTimes100`,
   `getTotalDefense`/`getDefenseModifier`) — already answerable by the existing group reads; these are a consumer
   move, not new surface.
-- **③a The BONUS wellbeing pair is mid-cut and the remainder is named.** `CvCity::getBonusHappiness` (the
-  per-source decomposition) and `CvCity::processBonus` (the `m_iBonusGood/BadHappiness` accumulator maintainer)
-  lost their TRAIT leg: a trait's bonus-gated wellbeing is authored as a CONDITIONED deposit
-  (`happiness.empire.flat` + `enabled:{BONUS_X, min:1}`), so it is the cascade's to evaluate and re-summing it
-  into a legacy accumulator would double it once the channel lands. ⚠ The BUILDING leg still reads
-  `CvBuildingInfo::getBonusHappinessChanges` (a live keyed map) and still feeds the accumulators, so the pair is
-  a genuine partial state until the wellbeing channel cut takes it whole by
-  [DEC-accumulator-cut-uniform](../../architecture/decisions.md#dec-accumulator-cut-uniform). ⛔ Do NOT "repair"
-  it by re-adding a trait read — the decomposition earns no replacement getter (③ below).
+- **③a The WELLBEING VERDICT is the next hub, and it is READY — the whole cluster is now unfed.** The four
+  verdicts (`happyLevel` / `unhappyLevel` / `goodHealth` / `badHealth`) are still the full legacy per-source sum:
+  27 / 44 / 15 / 16 distinct terms, nearly all hand-named accumulators maintained by `processBuilding` /
+  `processBonus`. ⚠ **Cutting any ONE leg is the 4c-bis defect** (a converted operand inside an otherwise-legacy
+  expression) — the unit of work is the four verdicts together.
+  ⚑ **Both halves of the readiness check pass.** The DESTINATION exists: `CvCity::getWellbeing` /
+  `CvPlayer::getWellbeing` already serve the four channels, and the opposing-pair nets live once on the calc
+  surface. The DATA exists: **1,628 happiness + 1,351 health authoring entities** across exactly the
+  [modifier.md §2b](../../specs/modifier.md) deposit list (buildings 1,123/1,068 · traits · civics · bonuses ·
+  specialists · features · techs · handicaps · corporations). Nothing authors `anger`/`unhealth` because a
+  negative deposit routes to the opposing channel at FILL — the specced routing, not a gap.
+  ⛔ What must NOT be swept in with it: the RAW-STATE INPUTS (the anger percents, espionage counters, event
+  anger, tax-rate and foreign-culture unhappiness, city-over-limit, vassal, the event-granted `extraHappiness`
+  /`extraHealth`) are folded at the verdict, never re-derived; and the per-source decomposition earns no
+  replacement getter (③ below) — attribution is the ORACLE endpoint's job.
 - **③ Per-SOURCE decomposition terms** (`getBuildingHappiness`, `getBonusGoodHealth`, `getFeatureGoodHappiness`,
   `getReligionHappiness`, `getSpecialistHappiness`, `getCivicHappiness`, `getMilitaryHappiness`,
   `getCelebrityHappiness`, `getVassalHappiness`, `getStateReligionHappiness`, …) — the legacy accumulators, cut by
