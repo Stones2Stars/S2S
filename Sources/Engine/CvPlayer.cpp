@@ -1609,7 +1609,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 		}
 
 		//TB Traits end
-		FAssertMsg(m_ppaaiImprovementYieldChange==NULL, "about to leak memory, CvPlayer::m_ppaaiImprovementYieldChange");
 		//TB Traits begin
 		FAssertMsg(m_paiImprovementUpgradeRateModifierSpecific==NULL, "about to leak memory, CvPlayer::m_paiImprovementUpgradeRateModifierSpecific");
 		m_paiImprovementUpgradeRateModifierSpecific = new int [GC.getNumImprovementInfos()];
@@ -1618,7 +1617,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 		{
 			for (iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
 			{
-				m_ppaaiImprovementYieldChange[iI][iJ] = 0;
 			}
 			//TB Traits begin
 			m_paiImprovementUpgradeRateModifierSpecific[iI] = 0;
@@ -14244,35 +14242,6 @@ void CvPlayer::changeExtraSpecialistYield(SpecialistTypes eIndex1, YieldTypes eI
 }
 
 
-int CvPlayer::getImprovementYieldChange(ImprovementTypes eIndex1, YieldTypes eIndex2) const
-{
-	FASSERT_BOUNDS(0, GC.getNumImprovementInfos(), eIndex1);
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex2);
-	return m_ppaaiImprovementYieldChange[eIndex1][eIndex2];
-}
-
-
-void CvPlayer::changeImprovementYieldChange(ImprovementTypes eIndex1, YieldTypes eIndex2, int iChange)
-{
-	FASSERT_BOUNDS(0, GC.getNumImprovementInfos(), eIndex1);
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex2);
-
-	if (iChange != 0)
-	{
-		m_ppaaiImprovementYieldChange[eIndex1][eIndex2] += iChange;
-		updateYield();
-	}
-}
-
-//	When a node is updated in the cycle we assume it won't have chnaged
-//	position by more than SEARCH_HORIZON nodes unless bFarMove is true.
-//	This is basically just saying that we expect groups which have not moved very far
-//	to still be near the units they weer near before they moved, and dramatuically
-//	allows us to reduce serach times.  In the evnt of the assumtpion being incorrect
-//	the only fall-out is that units will select in not quite the most convenient order
-#define	REINSERT_SEARCH_HORIZON	5
-
-// XXX should pUnit be a CvSelectionGroup???
 void CvPlayer::updateGroupCycle(CvUnit* pUnit, bool bFarMove)
 {
 	PROFILE_FUNC();

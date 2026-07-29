@@ -111,7 +111,6 @@ m_Properties(this)
 
 	m_pabHasTech = NULL;
 
-	m_ppaaiImprovementYieldChange = NULL;
 
 	m_ppiBuildingSpecialistChange = NULL;
 	m_ppiBuildingCommerceModifier = NULL;
@@ -213,7 +212,6 @@ void CvTeam::uninit()
 	SAFE_DELETE_ARRAY(m_aiVictoryCountdown);
 	SAFE_DELETE_ARRAY(m_aiForceTeamVoteEligibilityCount);
 	SAFE_DELETE_ARRAY(m_pabHasTech);
-	SAFE_DELETE_ARRAY2(m_ppaaiImprovementYieldChange, GC.getNumImprovementInfos());
 	SAFE_DELETE_ARRAY2(m_ppiBuildingSpecialistChange, GC.getNumBuildingInfos());
 	SAFE_DELETE_ARRAY2(m_ppiBuildingCommerceModifier, GC.getNumBuildingInfos());
 }
@@ -370,14 +368,10 @@ void CvTeam::reset(TeamTypes eID, bool bConstructorCall)
 			m_pabHasTech[iI] = false;
 		}
 
-		FAssertMsg(m_ppaaiImprovementYieldChange == NULL, "about to leak memory, CvTeam::m_ppaaiImprovementYieldChange");
-		m_ppaaiImprovementYieldChange = new int* [GC.getNumImprovementInfos()];
 		for (iI = 0; iI < GC.getNumImprovementInfos(); iI++)
 		{
-			m_ppaaiImprovementYieldChange[iI] = new int[NUM_YIELD_TYPES];
 			for (iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
 			{
-				m_ppaaiImprovementYieldChange[iI][iJ] = 0;
 			}
 		}
 
@@ -5383,27 +5377,6 @@ void CvTeam::setNoTradeTech(const short iTech, const bool bNewValue)
 }
 
 
-int CvTeam::getImprovementYieldChange(ImprovementTypes eIndex1, YieldTypes eIndex2) const
-{
-	FASSERT_BOUNDS(0, GC.getNumImprovementInfos(), eIndex1);
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex2);
-	return m_ppaaiImprovementYieldChange[eIndex1][eIndex2];
-}
-
-void CvTeam::changeImprovementYieldChange(ImprovementTypes eIndex1, YieldTypes eIndex2, int iChange)
-{
-	FASSERT_BOUNDS(0, GC.getNumImprovementInfos(), eIndex1);
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex2);
-
-	if (iChange != 0)
-	{
-		m_ppaaiImprovementYieldChange[eIndex1][eIndex2] += iChange;
-
-		updateYield();
-	}
-}
-
-
 int CvTeam::getBuildingYieldTechChange(const YieldTypes eYield, const BuildingTypes eBuilding) const
 {
 	PROFILE_EXTRA_FUNC();
@@ -6281,15 +6254,11 @@ void CvTeam::read(FDataStreamBase* pStream)
 	{
 		int	newIndex = wrapper.getNewClassEnumValue(REMAPPED_CLASS_TYPE_IMPROVEMENTS, i, true);
 
-		if (newIndex != -1)
-		{
-			WRAPPER_READ_ARRAY(wrapper, "CvTeam", NUM_YIELD_TYPES, m_ppaaiImprovementYieldChange[newIndex]);
-		}
-		else
-		{
-			//	Consume the values
-			WRAPPER_SKIP_ELEMENT(wrapper, "CvTeam", m_ppaaiImprovementYieldChange[i], SAVE_VALUE_ANY);
-		}
+		//	Drain: the member is gone, so BOTH branches consume. The loop STAYS -- a bracketed per-element
+		//	tag cannot be soft-removed via savemigration.txt, because the normalized dictionary name differs
+		//	from the source literal and the entry would silently fail to drain (save.md §3/§4).
+		(void)newIndex;
+		WRAPPER_SKIP_ELEMENT(wrapper, "CvTeam", m_ppaaiImprovementYieldChange[i], SAVE_VALUE_ANY);
 	}
 
 	// Toffer - Read vectors
@@ -6451,11 +6420,6 @@ void CvTeam::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_TECHS, GC.getNumTechInfos(), m_paiTechCount);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_VICTORIES, GC.getNumVictoryInfos(), m_aiVictoryCountdown);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_TECHS, GC.getNumTechInfos(), m_pabHasTech);
-
-	for (int iI = 0; iI < GC.getNumImprovementInfos(); iI++)
-	{
-		WRAPPER_WRITE_ARRAY(wrapper, "CvTeam", NUM_YIELD_TYPES, m_ppaaiImprovementYieldChange[iI]);
-	}
 
 	// Toffer - Write vectors
 	{

@@ -1190,8 +1190,6 @@ public:
 	int getExtraSpecialistYield(SpecialistTypes eIndex1, YieldTypes eIndex2) const;
 	void changeExtraSpecialistYield(SpecialistTypes eIndex1, YieldTypes eIndex2, int iChange);
 
-	int getImprovementYieldChange(ImprovementTypes eIndex1, YieldTypes eIndex2) const;
-	void changeImprovementYieldChange(ImprovementTypes eIndex1, YieldTypes eIndex2, int iChange);
 
 	void updateGroupCycle(CvUnit* pUnit, bool bFarMove);
 	CLLNode<int>* removeGroupCycle(int iID);

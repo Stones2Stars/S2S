@@ -388,8 +388,6 @@ public:
 	bool isNoTradeTech(short iTech) const;
 	void setNoTradeTech(short iTech, bool bNewValue);
 
-	int getImprovementYieldChange(ImprovementTypes eIndex1, YieldTypes eIndex2) const;
-	void changeImprovementYieldChange(ImprovementTypes eIndex1, YieldTypes eIndex2, int iChange);
 
 	int getBuildingYieldTechChange(const YieldTypes eYield, const BuildingTypes eBuilding) const;
 	int getBuildingYieldTechModifier(const YieldTypes eYield, const BuildingTypes eBuilding) const;
@@ -524,7 +522,6 @@ protected:
 	int** m_ppiBuildingSpecialistChange;
 	int** m_ppiBuildingCommerceModifier;
 	int** m_ppiBuildingYieldModifier;
-	int** m_ppaaiImprovementYieldChange;
 
 	int* m_aiStolenVisibilityTimer;
 	int* m_aiWarWearinessTimes100;
