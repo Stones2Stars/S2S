@@ -36,7 +36,7 @@
   }
  },
  "shrine": "RELIGION_SCIENTOLOGY",
- "attributes": {
+ "amenities": {
   "nukeImmune": true
  },
  "ui": {

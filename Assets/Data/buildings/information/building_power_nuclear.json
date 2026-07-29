@@ -29,8 +29,10 @@
   }
  },
  "attributes": {
-  "providesPower": true,
   "destroyedOnCapture": true
+ },
+ "amenities": {
+  "providesPower": true
  },
  "world": {
   "art": {

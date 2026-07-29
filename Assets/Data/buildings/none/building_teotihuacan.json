@@ -56,7 +56,7 @@
   }
  },
  "shrine": "RELIGION_NAGHUALISM",
- "attributes": {
+ "amenities": {
   "nukeImmune": true
  },
  "ui": {

@@ -46,7 +46,7 @@
   }
  },
  "headquarters": "CORPORATION_SAFARI",
- "attributes": {
+ "amenities": {
   "nukeImmune": true
  },
  "world": {

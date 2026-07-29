@@ -79,7 +79,7 @@
   "production": 1945,
   "hurryModifier": 10000
  },
- "attributes": {
+ "amenities": {
   "adds3rdRing": true
  },
  "world": {

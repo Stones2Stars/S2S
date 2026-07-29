@@ -41,7 +41,7 @@
   }
  },
  "headquarters": "CORPORATION_ULTSOLDIER",
- "attributes": {
+ "amenities": {
   "nukeImmune": true
  },
  "world": {

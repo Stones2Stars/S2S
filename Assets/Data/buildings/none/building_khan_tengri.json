@@ -24,7 +24,7 @@
   }
  },
  "shrine": "RELIGION_TENGRIISM",
- "attributes": {
+ "amenities": {
   "nukeImmune": true
  },
  "ui": {

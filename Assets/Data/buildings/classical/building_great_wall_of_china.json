@@ -75,9 +75,11 @@
   ]
  },
  "attributes": {
-  "nukeImmune": true,
-  "borderObstacle": true,
   "teamShare": true
+ },
+ "amenities": {
+  "nukeImmune": true,
+  "borderObstacle": true
  },
  "ui": {
   "art": {

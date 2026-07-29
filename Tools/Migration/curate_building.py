@@ -47,7 +47,7 @@ from collections import OrderedDict
 import engine
 import boolexpr
 from curate_common import put_art, emit_art, FAMILY_ORDER, de_i, fold_text_to_identity, gate_entity, wipe_entity_json, skip_inert, scale_vision
-from curate_unit import TAG_BY_UNITCOMBAT   # the ONE unitcombat->tag map (a building's free-promotion condition keys on it)
+from curate_common import TAG_BY_UNITCOMBAT   # the ONE unitcombat->tag map (a building's free-promotion condition keys on it)
 from store import Store, REPO
 
 # ---- scalar/percent modifier families: tag -> (family, scope, member|None, unit). Corrected scopes from the
@@ -188,22 +188,36 @@ YIELD_FAMILIES = {
 # intrinsic capability bools. HELD (the building is/does this itself) — the opposite of `capabilities` (PROVIDED to
 # the empire). Plain b-flag -> clean name: true (false omitted). Emitted under the `attributes` section.
 CAP_ATTRIBUTES = {
-    "bNukeImmune": "nukeImmune", "bZoneOfControl": "zoneOfControl",
-    "bProtectedCulture": "protectedCulture", "bBorderObstacle": "borderObstacle", "bNoUnhappiness": "noUnhappiness",
-    "bNoUnhealthyPopulation": "noUnhealthyPopulation", "bBuildingOnlyHealthy": "buildingOnlyHealthy",
-    "bForceAllTradeRoutes": "forceAllTradeRoutes",
-    "bQuarantine": "quarantine", "bMapCentering": "mapCentering",
-    "bTeamShare": "teamShare", "bOrbital": "orbital", "bOrbitalInfrastructure": "orbitalInfrastructure",
-    "bGovernmentCenter": "governmentCenter", "bCapital": "capital",
-    "bProvidesFreshWater": "providesFreshWater",  # fresh water is NOT a BONUS_, so an attribute, NOT `provides`
-    # bPower = the building PROVIDES power (a power plant -- legacy CvCity::processBuilding changePowerCount leg).
-    # HELD intrinsic like providesFreshWater; power is NOT a BONUS_, so an attribute, NOT `provides`. Distinct from
-    # bPrereqPower (NEEDS power -> requires.operate HAS_POWER); the two were once collapsed into one HAS_POWER
-    # requires atom, making ~800 buildings read as power plants (the circular-power defect).
-    "bPower": "providesPower",
-    # bNeverCapture (the 17th attribute, owner ruling 2026-07-01): the building is destroyed/not-transferred when its
-    # city is captured (CvPlayer.cpp:2565) -- a real HELD building attribute, RENAMED for clarity to `destroyedOnCapture`.
+    # bNeverCapture (owner ruling 2026-07-01): the BUILDING is destroyed/not-transferred when its city is captured
+    # (CvPlayer.cpp:2565) -- RENAMED for clarity to `destroyedOnCapture`.
     "bNeverCapture": "destroyedOnCapture",
+    "bTeamShare": "teamShare",
+    "bOrbital": "orbital", "bOrbitalInfrastructure": "orbitalInfrastructure",
+    # ⚠ DATA-DEAD and UNCLASSIFIED, deliberately left here rather than guessed into `amenities`: bQuarantine has no
+    # authoring at all, and the building-side bMapCentering is schema-only (the live grantor is TECH_GEOMETRY, and
+    # centering is an empire CAPABILITY, not a city amenity -- capabilities.md). Neither emits anything today; each
+    # moves only on evidence.
+    "bQuarantine": "quarantine", "bMapCentering": "mapCentering",
+}
+
+# building `amenities` block (json §8): what the building CONFERS ON ITS CITY -- city-HELD, grantor-PROVIDED, the
+# exact counterpart of `capabilities` (which a grantor hands to the EMPIRE). The test that splits this table from
+# CAP_ATTRIBUTES above is WHOSE PROPERTY IT IS: `destroyedOnCapture` is the building's own fate, while `nukeImmune`
+# makes the CITY immune. ⚑ The city stores these as an id→COUNT dictionary, so several grantors conferring the same
+# amenity refcount rather than collide (losing one power plant must not darken a city that has two).
+CAP_AMENITIES = {
+    "bNukeImmune": "nukeImmune", "bZoneOfControl": "zoneOfControl",
+    "bProtectedCulture": "protectedCulture", "bBorderObstacle": "borderObstacle", "bNoUnhappiness": "abolishedAnger",
+    "bNoUnhealthyPopulation": "abolishedUnhealthFromPopulation",
+    "bBuildingOnlyHealthy": "abolishedUnhealthFromBuildings",
+    "bForceAllTradeRoutes": "forceAllTradeRoutes",
+    "bGovernmentCenter": "governmentCenter", "bCapital": "capital",
+    "bProvidesFreshWater": "providesFreshWater",  # fresh water is NOT a BONUS_, so an amenity, NOT `provides`
+    # bPower = the building PROVIDES power (a power plant -- legacy CvCity::processBuilding changePowerCount leg).
+    # Power is NOT a BONUS_, so an amenity, NOT `provides`. Distinct from bPrereqPower (NEEDS power ->
+    # requires.operate HAS_POWER); the two were once collapsed into one HAS_POWER requires atom, making ~800
+    # buildings read as power plants (the circular-power defect).
+    "bPower": "providesPower",
 }
 # capability/marker bools that STAY in identity (owner ruling 2026-07-01):
 #  - autoBuild/noInstanceLimit/forceNoPrereqScaling/centerInCity: buildability/placement markers (json §7), NOT
@@ -1364,7 +1378,7 @@ _RESERVED_TOPLEVEL = frozenset((
     "type", "identity", "cost", "ui", "world", "sound", "ai",
     "enables", "obsoletes", "obsoletedBy", "replaces", "disables",
     "requires", "allowed", "grants", "triggers", "provides",
-    "skills", "tags", "state", "attributes", "capabilities",
+    "skills", "tags", "state", "attributes", "amenities", "capabilities",
     "shrine", "headquarters", "enabled", "disabled", "whenObsolete",
     "description", "help", "civilopedia", "strategy", "adjective",
     "shortDescription", "quote", "message",
@@ -1525,19 +1539,23 @@ def curate(typ, rec, store):
         # consumer left and its clauses must move where they are still read (see fold_build_into_operate).
         requires = fold_build_into_operate(requires)
 
-    # --- attributes (HELD city-scope intrinsics, json §8) + the remaining identity markers ---
+    # --- attributes (what the BUILDING itself is/does) + amenities (what it CONFERS ON ITS CITY), json §8 ---
     attributes = OrderedDict()
     for tag, name in CAP_ATTRIBUTES.items():
         if _bool(rec, tag):
             attributes[name] = True
-    # iWorkableRadius -> the `adds3rdRing` ATTRIBUTE (owner). The legacy field is a numeric OVERRIDE of the
+    amenities = OrderedDict()
+    for tag, name in CAP_AMENITIES.items():
+        if _bool(rec, tag):
+            amenities[name] = True
+    # iWorkableRadius -> the `adds3rdRing` AMENITY (owner). The legacy field is a numeric OVERRIDE of the
     # city radius, but it carries no information: every one of the 12 authorings is exactly 3, and the city
     # radius is PURE STATE driven by culture expansion (culture grants 2 at the low tiers, 3 from ILLUSTRIOUS),
-    # so what a building actually says is the boolean "this city gets the third ring early". Held, immutable,
-    # city-scope -> `attributes` (json.md par.8). ⚑ Only METROPOLITAN_ADMINISTRATION (renaissance) does real
-    # work with it; the other 11 are transhuman-and-later, by which point culture already grants 3.
+    # so what a building actually says is the boolean "this city gets the third ring early". That is a property
+    # of the CITY, conferred by the building -> `amenities`. ⚑ Only METROPOLITAN_ADMINISTRATION (renaissance)
+    # does real work with it; the other 11 are transhuman-and-later, by which point culture already grants 3.
     if (_int(rec, "iWorkableRadius") or 0) >= 3:
-        attributes["adds3rdRing"] = True
+        amenities["adds3rdRing"] = True
     for tag, name in CAP_IDENTITY.items():
         if _bool(rec, tag):
             identity[name] = True
@@ -1602,7 +1620,9 @@ def curate(typ, rec, store):
         out["ai"] = ai
     gate_entity(out, gate_on, gate_off)
     if attributes:
-        out["attributes"] = attributes           # BUILDING held city-scope intrinsics (json §8)
+        out["attributes"] = attributes           # what the BUILDING itself is/does (json §8)
+    if amenities:
+        out["amenities"] = amenities             # what it CONFERS ON ITS CITY (json §8)
     if capabilities:
         out["capabilities"] = capabilities        # PROVIDED to the empire (commerce sliders, json §8)
     emit_art(out, art_blocks)
@@ -1699,7 +1719,7 @@ PROPERTY_INFOS_XML = os.path.join(REPO, "Assets", "XML", "GameInfo", "CIV4Proper
 # top-level reserved (non-family) keys -- everything else on a band object is a modifier family to increment.
 RESERVED_NONFAMILY = {"type", "description", "civilopedia", "help", "enables", "obsoletedBy", "replacedBy", "requires",
                       "allowed", "provides", "grants", "triggers", "cost", "ai", "enabled", "disabled", "ui", "world",
-                      "sound", "identity", "attributes", "capabilities", "shrine", "headquarters"}
+                      "sound", "identity", "attributes", "amenities", "capabilities", "shrine", "headquarters"}
 
 
 def property_band_buildings():
@@ -1855,7 +1875,7 @@ def main():
     has = lambda k: sum(1 for o in results.values() if k in o)
     STRUCT = {"type", "description", "civilopedia", "help", "enables", "obsoletes", "replaces", "requires",
               "allowed", "provides", "cost", "ai", "enabled", "disabled", "ui", "world", "sound", "identity",
-              "attributes", "capabilities", "shrine", "headquarters", "grants", "triggers", "obsoletedBy"}
+              "attributes", "amenities", "capabilities", "shrine", "headquarters", "grants", "triggers", "obsoletedBy"}
     seen = sorted({f for o in results.values() for f in o if f not in STRUCT})
     print("BuildingInfo curated: %d" % n)
     for k in ("enables", "obsoletes", "replaces", "requires", "allowed", "cost", "ai", "identity"):

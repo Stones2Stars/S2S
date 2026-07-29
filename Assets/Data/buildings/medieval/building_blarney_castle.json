@@ -102,7 +102,7 @@
   "complexityModifier": 1,
   "hurryModifier": 100
  },
- "attributes": {
+ "amenities": {
   "nukeImmune": true
  },
  "ui": {

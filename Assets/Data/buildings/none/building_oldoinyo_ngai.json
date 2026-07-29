@@ -31,7 +31,7 @@
   }
  },
  "shrine": "RELIGION_NGAIISM",
- "attributes": {
+ "amenities": {
   "nukeImmune": true
  },
  "ui": {

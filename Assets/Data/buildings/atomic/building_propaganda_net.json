@@ -70,9 +70,11 @@
   ]
  },
  "attributes": {
-  "nukeImmune": true,
-  "teamShare": true,
-  "destroyedOnCapture": true
+  "destroyedOnCapture": true,
+  "teamShare": true
+ },
+ "amenities": {
+  "nukeImmune": true
  },
  "ui": {
   "art": {

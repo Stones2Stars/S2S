@@ -41,7 +41,7 @@
   }
  },
  "shrine": "RELIGION_JUDAISM",
- "attributes": {
+ "amenities": {
   "nukeImmune": true
  },
  "ui": {

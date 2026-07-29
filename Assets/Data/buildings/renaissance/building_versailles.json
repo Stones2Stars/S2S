@@ -64,8 +64,10 @@
   ]
  },
  "attributes": {
+  "teamShare": true
+ },
+ "amenities": {
   "nukeImmune": true,
-  "teamShare": true,
   "governmentCenter": true
  },
  "ui": {

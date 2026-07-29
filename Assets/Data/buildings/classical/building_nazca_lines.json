@@ -52,7 +52,7 @@
   "sizeModifier": 3,
   "hurryModifier": 100
  },
- "attributes": {
+ "amenities": {
   "nukeImmune": true
  },
  "ui": {

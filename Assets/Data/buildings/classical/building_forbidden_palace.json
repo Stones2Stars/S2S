@@ -75,8 +75,10 @@
   ]
  },
  "attributes": {
-  "governmentCenter": true,
   "destroyedOnCapture": true
+ },
+ "amenities": {
+  "governmentCenter": true
  },
  "ui": {
   "art": {

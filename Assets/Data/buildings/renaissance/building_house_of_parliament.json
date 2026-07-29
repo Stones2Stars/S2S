@@ -88,9 +88,11 @@
   ]
  },
  "attributes": {
-  "nukeImmune": true,
-  "governmentCenter": true,
   "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true,
+  "governmentCenter": true
  },
  "ui": {
   "art": {

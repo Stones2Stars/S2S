@@ -36,7 +36,7 @@
   }
  },
  "shrine": "RELIGION_CHRISTIANITY",
- "attributes": {
+ "amenities": {
   "nukeImmune": true
  },
  "ui": {

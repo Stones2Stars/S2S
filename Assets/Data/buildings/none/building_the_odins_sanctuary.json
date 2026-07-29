@@ -45,7 +45,7 @@
   }
  },
  "shrine": "RELIGION_ASATRU",
- "attributes": {
+ "amenities": {
   "nukeImmune": true
  },
  "ui": {

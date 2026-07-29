@@ -56,7 +56,7 @@
   }
  },
  "headquarters": "CORPORATION_RED",
- "attributes": {
+ "amenities": {
   "nukeImmune": true
  },
  "world": {

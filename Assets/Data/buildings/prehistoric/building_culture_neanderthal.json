@@ -100,7 +100,7 @@
   "production": 60,
   "hurryModifier": 200
  },
- "attributes": {
+ "amenities": {
   "nukeImmune": true
  },
  "ui": {

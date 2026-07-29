@@ -39,7 +39,7 @@
   }
  },
  "shrine": "RELIGION_ZOROASTRIANISM",
- "attributes": {
+ "amenities": {
   "nukeImmune": true
  },
  "ui": {

@@ -36,7 +36,7 @@
  "cost": {
   "production": 200
  },
- "attributes": {
+ "amenities": {
   "providesPower": true
  },
  "world": {

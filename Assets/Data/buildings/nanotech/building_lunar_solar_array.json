@@ -45,7 +45,7 @@
   "production": 7800,
   "hurryModifier": 1000000
  },
- "attributes": {
+ "amenities": {
   "providesPower": true
  },
  "ui": {

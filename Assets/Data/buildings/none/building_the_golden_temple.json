@@ -50,7 +50,7 @@
   }
  },
  "shrine": "RELIGION_SIKHISM",
- "attributes": {
+ "amenities": {
   "nukeImmune": true
  },
  "ui": {

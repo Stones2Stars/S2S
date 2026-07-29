@@ -46,7 +46,7 @@
   }
  },
  "headquarters": "CORPORATION_EMPCLOTH",
- "attributes": {
+ "amenities": {
   "nukeImmune": true
  },
  "world": {

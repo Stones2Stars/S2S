@@ -36,7 +36,7 @@
   }
  },
  "shrine": "RELIGION_SHINTO",
- "attributes": {
+ "amenities": {
   "nukeImmune": true
  },
  "ui": {

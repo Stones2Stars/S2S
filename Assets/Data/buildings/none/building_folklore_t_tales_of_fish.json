@@ -114,8 +114,10 @@
   "complexityModifier": 2
  },
  "attributes": {
-  "nukeImmune": true,
   "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
  },
  "world": {
   "art": {

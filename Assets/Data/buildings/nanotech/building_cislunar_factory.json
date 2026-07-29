@@ -82,9 +82,11 @@
   ]
  },
  "attributes": {
-  "nukeImmune": true,
-  "orbital": true,
-  "destroyedOnCapture": true
+  "destroyedOnCapture": true,
+  "orbital": true
+ },
+ "amenities": {
+  "nukeImmune": true
  },
  "world": {
   "art": {

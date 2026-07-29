@@ -61,9 +61,11 @@
   ]
  },
  "attributes": {
-  "nukeImmune": true,
-  "forceAllTradeRoutes": true,
   "teamShare": true
+ },
+ "amenities": {
+  "nukeImmune": true,
+  "forceAllTradeRoutes": true
  },
  "ui": {
   "art": {

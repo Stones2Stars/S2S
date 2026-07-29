@@ -46,7 +46,7 @@
   }
  },
  "headquarters": "CORPORATION_MOONBEAN",
- "attributes": {
+ "amenities": {
   "nukeImmune": true
  },
  "world": {

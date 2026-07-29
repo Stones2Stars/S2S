@@ -86,7 +86,7 @@
   "complexityModifier": 1,
   "hurryModifier": 100
  },
- "attributes": {
+ "amenities": {
   "providesFreshWater": true
  },
  "world": {

@@ -65,8 +65,10 @@
   "hurryModifier": 100
  },
  "attributes": {
-  "nukeImmune": true,
   "orbital": true
+ },
+ "amenities": {
+  "nukeImmune": true
  },
  "ui": {
   "art": {

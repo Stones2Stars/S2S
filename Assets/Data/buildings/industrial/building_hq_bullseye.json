@@ -51,7 +51,7 @@
   }
  },
  "headquarters": "CORPORATION_BULLSEYE",
- "attributes": {
+ "amenities": {
   "nukeImmune": true
  },
  "world": {

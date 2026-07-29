@@ -36,7 +36,7 @@
   }
  },
  "shrine": "RELIGION_BUDDHISM",
- "attributes": {
+ "amenities": {
   "nukeImmune": true
  },
  "ui": {

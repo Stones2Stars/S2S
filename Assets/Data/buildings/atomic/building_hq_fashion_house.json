@@ -46,7 +46,7 @@
   }
  },
  "headquarters": "CORPORATION_FASHION",
- "attributes": {
+ "amenities": {
   "nukeImmune": true
  },
  "world": {

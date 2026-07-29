@@ -211,8 +211,7 @@ LANDMARK_YIELD = "LandmarkYieldChanges"   # flat split yield gated on landmark i
 POLICIES = {
     "bStateReligion": "stateReligion", "bNoForeignTrade": "noForeignTrade", "bNoCorporations": "noCorporations",
     "bNoForeignCorporations": "noForeignCorporations", "bFreeSpeech": "freeSpeech", "bFixedBorders": "fixedBorders",
-    "bMilitaryFoodProduction": "militaryFoodProduction", "bBuildingOnlyHealthy": "buildingOnlyHealthy",
-    "bNoUnhealthyPopulation": "noUnhealthyPopulation", "bNoCapitalUnhappiness": "noCapitalUnhappiness",
+    "bMilitaryFoodProduction": "militaryFoodProduction",
     "bNoLandmarkAnger": "noLandmarkAnger", "bCommunism": "communism", "bCanDoElection": "canDoElection",
     "bUpgradeAnywhere": "upgradeAnywhere", "bNoNonStateReligionSpread": "noNonStateReligionSpread",
     "bAllowInquisitions": "allowInquisitions", "bDisallowInquisitions": "disallowInquisitions",
@@ -223,6 +222,23 @@ POLICIES = {
     "bAllReligionsActive": "allReligionsActive", "bBansNonStateReligions": "bansNonStateReligions",
     "bFreedomFighter": "freedomFighter",
 }
+# --- the CITY-scope wellbeing gates -> `amenities` (json §8), NOT `policies`. A policy is a pure empire STATE;
+# these confer something on a CITY, so they are amenities the civic grants to its cities. ⚑ `abolishedAnger` is
+# the mechanic named WITHOUT the WHERE: the legacy `bNoCapitalUnhappiness` baked "capital" into the key, which is
+# the condition-as-member shape [DEC-conditions-are-predicates] retires. It is the SAME gate the building side
+# confers, so both carriers author the SAME key -- one mechanic, one name.
+CITY_AMENITIES = {
+    "bNoUnhealthyPopulation": "abolishedUnhealthFromPopulation",
+    "bBuildingOnlyHealthy": "abolishedUnhealthFromBuildings",
+}
+# CONDITIONED amenities: the value is the §3.9 entry object rather than a bare true, so the grant carries its own
+# gate. `bNoCapitalUnhappiness` is `abolishedAnger` RESTRICTED TO THE CAPITAL -- the legacy key baked the WHERE
+# into its NAME ([DEC-conditions-are-predicates]); the mechanic is the same gate the building side confers, and
+# the capital part is a CONDITION. Evaluated per city when the fold grants AND when it repeals.
+CITY_AMENITIES_COND = {
+    "bNoCapitalUnhappiness": ("abolishedAnger", "IS_CAPITAL"),
+}
+
 # --- capability LIST fields -> enables.{key}; each entry is <XType> + a bool value-element. ---
 ENABLE_LISTS = {"SpecialistValids": "specialists", "Hurrys": "hurries", "SpecialBuildingNotRequireds": "specialBuildingsWaived"}
 TEXT = {"Description": "description", "Civilopedia": "civilopedia", "Help": "help", "Strategy": "strategy"}
@@ -352,6 +368,7 @@ def _properties(node, props):
 
 def curate(typ, rec, store):
     text, fam, props, policies, enables, grants, art_blocks, identity, ai = {}, {}, {}, {}, {}, {}, {}, {}, {}
+    amenities = {}
     leftover = []
     # ruling 26 pre-read: the over-limit deposit needs to know whether THIS civic carries a base limit (the
     # SOURCE-resolved CITY_LIMIT token reads the depositing civic's own limit; a V with no own limit has no
@@ -532,6 +549,13 @@ def curate(typ, rec, store):
         elif tag in POLICIES:
             if t in ("1", "true", "True"):
                 policies[POLICIES[tag]] = True
+        elif tag in CITY_AMENITIES:
+            if t in ("1", "true", "True"):
+                amenities[CITY_AMENITIES[tag]] = True
+        elif tag in CITY_AMENITIES_COND:
+            if t in ("1", "true", "True"):
+                key, cond = CITY_AMENITIES_COND[tag]
+                amenities[key] = OrderedDict([("enabled", cond)])
         elif tag in ENABLE_LISTS:
             lst = _enable_list(c)
             if lst:
@@ -591,6 +615,8 @@ def curate(typ, rec, store):
         out[prop] = props[prop]
     if policies:
         out["policies"] = OrderedDict((k, policies[k]) for k in sorted(policies))
+    if amenities:
+        out["amenities"] = OrderedDict((k, amenities[k]) for k in sorted(amenities))
     if grants:
         out["grants"] = grants
     if ai:
@@ -618,7 +644,7 @@ def main():
     print("CivicInfo curated: %d" % len(results))
     fams = sorted({k for o in results.values() for k in o
                    if k not in ("type", "description", "civilopedia", "help", "strategy", "enables",
-                                "policies", "grants", "ai", "ui", "world", "sound", "identity")})
+                                "policies", "amenities", "grants", "ai", "ui", "world", "sound", "identity")})
     print("  families/props seen: %s" % ", ".join(fams))
     if all_leftover:
         print("  !! leftover-to-identity (review): %s" % ", ".join(sorted(all_leftover)))

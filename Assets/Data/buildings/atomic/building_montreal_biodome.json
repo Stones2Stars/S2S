@@ -106,8 +106,10 @@
   "hurryModifier": 100
  },
  "attributes": {
-  "nukeImmune": true,
   "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
  },
  "ui": {
   "art": {

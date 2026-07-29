@@ -27,9 +27,11 @@
   }
  },
  "attributes": {
-  "nukeImmune": true,
-  "providesPower": true,
   "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true,
+  "providesPower": true
  },
  "world": {
   "art": {

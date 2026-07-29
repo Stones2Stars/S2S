@@ -41,7 +41,7 @@
   }
  },
  "shrine": "RELIGION_ANDEANISM",
- "attributes": {
+ "amenities": {
   "nukeImmune": true
  },
  "ui": {

@@ -44,8 +44,10 @@
  },
  "shrine": "RELIGION_HELLENISM",
  "attributes": {
-  "nukeImmune": true,
   "teamShare": true
+ },
+ "amenities": {
+  "nukeImmune": true
  },
  "ui": {
   "art": {

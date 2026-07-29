@@ -49,7 +49,7 @@
   }
  ],
  "shrine": "RELIGION_CONFUCIANISM",
- "attributes": {
+ "amenities": {
   "nukeImmune": true
  },
  "ui": {

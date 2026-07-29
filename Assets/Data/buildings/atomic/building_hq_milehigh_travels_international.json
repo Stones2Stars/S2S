@@ -51,7 +51,7 @@
   }
  },
  "headquarters": "CORPORATION_MILEHIGH",
- "attributes": {
+ "amenities": {
   "nukeImmune": true
  },
  "world": {

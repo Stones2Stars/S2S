@@ -65,7 +65,7 @@
   "complexityModifier": 2,
   "hurryModifier": 100
  },
- "attributes": {
+ "amenities": {
   "providesPower": true
  },
  "world": {

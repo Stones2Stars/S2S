@@ -28,7 +28,7 @@
   "production": 3065,
   "hurryModifier": 10000
  },
- "attributes": {
+ "amenities": {
   "providesPower": true
  },
  "world": {

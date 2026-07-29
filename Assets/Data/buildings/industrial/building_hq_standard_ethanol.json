@@ -46,7 +46,7 @@
   }
  },
  "headquarters": "CORPORATION_3",
- "attributes": {
+ "amenities": {
   "nukeImmune": true
  },
  "world": {

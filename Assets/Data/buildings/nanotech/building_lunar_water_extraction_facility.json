@@ -46,7 +46,7 @@
   "production": 100,
   "hurryModifier": 10000
  },
- "attributes": {
+ "amenities": {
   "providesFreshWater": true
  },
  "world": {

@@ -66,8 +66,10 @@
   "hurryModifier": 300
  },
  "attributes": {
-  "nukeImmune": true,
   "teamShare": true
+ },
+ "amenities": {
+  "nukeImmune": true
  },
  "ui": {
   "art": {

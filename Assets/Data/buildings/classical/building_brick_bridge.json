@@ -104,10 +104,5 @@
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ]
- },
- "PROPERTY_FLAMMABILITY": {
-  "city": {
-   "flat": -3
-  }
  }
 }

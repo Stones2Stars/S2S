@@ -46,7 +46,7 @@
   }
  },
  "headquarters": "CORPORATION_MOBBY",
- "attributes": {
+ "amenities": {
   "nukeImmune": true
  },
  "world": {

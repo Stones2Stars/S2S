@@ -84,7 +84,7 @@
   "production": 1296,
   "hurryModifier": 200
  },
- "attributes": {
+ "amenities": {
   "nukeImmune": true
  },
  "world": {

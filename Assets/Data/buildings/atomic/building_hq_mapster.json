@@ -46,7 +46,7 @@
   }
  },
  "headquarters": "CORPORATION_MAPSTER",
- "attributes": {
+ "amenities": {
   "nukeImmune": true
  },
  "world": {

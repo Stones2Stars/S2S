@@ -55,7 +55,7 @@
    }
   ]
  },
- "attributes": {
+ "amenities": {
   "zoneOfControl": true
  },
  "world": {
@@ -76,10 +76,5 @@
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ]
- },
- "PROPERTY_FLAMMABILITY": {
-  "city": {
-   "flat": -12
-  }
  }
 }

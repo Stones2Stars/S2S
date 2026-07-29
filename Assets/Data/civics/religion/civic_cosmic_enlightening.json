@@ -108,9 +108,13 @@
  },
  "policies": {
   "allowInquisitions": true,
-  "noCapitalUnhappiness": true,
   "noNonStateReligionSpread": true,
   "stateReligion": true
+ },
+ "amenities": {
+  "abolishedAnger": {
+   "enabled": "IS_CAPITAL"
+  }
  },
  "grants": {
   "revolution": 25

@@ -44,7 +44,7 @@
   }
  },
  "shrine": "RELIGION_KEMETISM",
- "attributes": {
+ "amenities": {
   "nukeImmune": true
  },
  "ui": {
