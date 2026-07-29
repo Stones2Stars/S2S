@@ -6662,11 +6662,7 @@ void CvGame::doGlobalWarming()
 		{
 			foreach_(const CvCity* pCity, player.cities())
 			{
-				iGlobalWarmingValue -=
-				(
-					pCity->totalBadBuildingHealth() * iUnhealthWeight +
-					pCity->getBonusBadHealth() * iBonusWeight
-				);
+				iGlobalWarmingValue -= pCity->totalBadBuildingHealth() * iUnhealthWeight;
 			}
 		}
 	}

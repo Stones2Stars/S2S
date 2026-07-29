@@ -507,7 +507,6 @@ public:
 	int getBaseGreatPeopleRate() const;
 	int getGreatPeopleRate() const;
 	int getTotalGreatPeopleRateModifier() const;
-	void changeBaseGreatPeopleRate(int iChange);
 
 	int getGreatPeopleRateModifier() const;
 	void changeGreatPeopleRateModifier(int iChange);
@@ -607,10 +606,6 @@ public:
 	void changeBuildingGoodHealth(int iChange);
 	void changeBuildingBadHealth(int iChange);
 
-	int getBonusGoodHealth() const;
-	int getBonusBadHealth() const;
-	void changeBonusGoodHealth(int iChange);
-	void changeBonusBadHealth(int iChange);
 
 	int getMilitaryHappiness() const;
 	int getMilitaryHappinessUnits() const;
@@ -646,10 +641,6 @@ public:
 	int getFeatureBadHappiness() const;
 	void updateFeatureHappiness(bool bLimited = false);
 
-	int getBonusGoodHappiness() const;
-	int getBonusBadHappiness() const;
-	void changeBonusGoodHappiness(int iChange);
-	void changeBonusBadHappiness(int iChange);
 
 	int getReligionGoodHappiness() const;
 	int getReligionBadHappiness() const;
@@ -1355,14 +1346,6 @@ public:
 	void changeBonusCommerceRateModifier(CommerceTypes eIndex, int iChange);
 	bool isBuiltFoodProducedUnit() const;
 	void setBuiltFoodProducedUnit(bool bNewValue);
-	int getSpecialistGoodHealth() const;
-	int getSpecialistBadHealth() const;
-	int getSpecialistHappiness() const;
-	int getSpecialistUnhappiness() const;
-	void changeSpecialistGoodHealth(int iChange);
-	void changeSpecialistBadHealth(int iChange);
-	void changeSpecialistHappiness(int iChange);
-	void changeSpecialistUnhappiness(int iChange);
 	int getImprovementGoodHealth() const;
 	int getImprovementBadHealth() const;
 	void updateImprovementHealth();

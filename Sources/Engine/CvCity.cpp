@@ -3565,78 +3565,11 @@ int CvCity::getBonusYieldRateModifier(YieldTypes eIndex, BonusTypes eBonus) cons
 
 void CvCity::processBonus(BonusTypes eBonus, int iChange)
 {
-	PROFILE_FUNC();
-	{
-		const int iBaseValue = GC.getBonusInfo(eBonus).getHealth();
-		int iGoodValue = std::max(0, iBaseValue);
-		int iBadValue = std::min(0, iBaseValue);
-
-		foreach_(const BuildingTypes eTypeX, getHasBuildings())
-		{
-			if (hasFullyActiveBuilding(eTypeX))
-			{
-				const int iValue = GC.getBuildingInfo(eTypeX).getBonusHealthChanges().getValue(eBonus);
-
-				if (iValue >= 0)
-				{
-					iGoodValue += iValue;
-				}
-				else iBadValue += iValue;
-			}
-		}
-
-		changeBonusGoodHealth(iGoodValue * iChange);
-		changeBonusBadHealth(iBadValue * iChange);
-	}
-
-	{
-		const int iBaseValue = GC.getBonusInfo(eBonus).getHappiness();
-		int iGoodValue = std::max(0, iBaseValue);
-		int iBadValue = std::min(0, iBaseValue);
-
-		foreach_(const BuildingTypes eTypeX, getHasBuildings())
-		{
-			if (hasFullyActiveBuilding(eTypeX))
-			{
-				const int iValue = GC.getBuildingInfo(eTypeX).getBonusHappinessChanges().getValue(eBonus);
-
-				if (iValue >= 0)
-				{
-					iGoodValue += iValue;
-				}
-				else iBadValue += iValue;
-			}
-		}
-		changeBonusGoodHappiness(iGoodValue * iChange);
-		changeBonusBadHappiness(iBadValue * iChange);
-	}
-
-	changePowerCount(getBonusPower(eBonus) * iChange);
-
-	for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
-	{
-		changeBonusYieldRateModifier(((YieldTypes)iI), (getBonusYieldRateModifier(((YieldTypes)iI), eBonus) * iChange));
-	}
-
-	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
-	{
-		changeBonusCommerceRateModifier(((CommerceTypes)iI), (getBonusCommerceRateModifier(((CommerceTypes)iI), eBonus) * iChange));
-		changeBonusCommercePercentChanges(((CommerceTypes)iI), (getBonusCommercePercentChanges(((CommerceTypes)iI), eBonus) * iChange));
-	}
-	foreach_(const BuildingTypes eTypeX, getHasBuildings())
-	{
-		if (!isDormantBuilding(eTypeX)
-		&& GC.getBuildingInfo(eTypeX).getVicinityBonusYieldChanges(NO_BONUS, NO_YIELD) != 0
-		&& !isDormantBuilding(eTypeX))
-		{
-			for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
-			{
-				updateYieldRate(eTypeX, (YieldTypes)iJ, getBuildingYieldChange(eTypeX, (YieldTypes)iJ) + GC.getBuildingInfo(eTypeX).getBonusYieldChanges(eBonus, iJ) * iChange);
-			}
-		}
-	}
-
-	// #430 event spine: announce the bonus change (iChange is the applied delta).
+	// ⚖ WHAT REMAINS. This was the maintainer for the bonus-keyed accumulators -- good/bad health and
+	// happiness, the yield and commerce modifiers, and the bonus-conditioned power count -- each of them a
+	// WHOLE-DATABASE building scan summing a bonus-keyed building field. Those fields are compiled DEPOSITS
+	// now, folded per scope by the cascade, so re-summing them city-side would be a second, drifting copy
+	// ([DEC-accumulator-cut-uniform]) -- and the scans go with them.
 	emitBonusChanged(getID(), getOwner(), (int)eBonus, iChange);
 }
 
@@ -3806,62 +3739,12 @@ void CvCity::processProcess(ProcessTypes eProcess, int iChange)
 void CvCity::processSpecialist(SpecialistTypes eSpecialist, int iChange)
 {
 	PROFILE_EXTRA_FUNC();
-	UnitTypes eGreatPeopleUnit = (UnitTypes)GC.getSpecialistInfo(eSpecialist).getGreatPeopleUnitType();
-
-	if (eGreatPeopleUnit != NO_UNIT)
-	{
-		changeGreatPeopleUnitRate(eGreatPeopleUnit, GC.getSpecialistInfo(eSpecialist).getGreatPeopleRateChange() * iChange);
-	}
-
-	changeBaseGreatPeopleRate(GC.getSpecialistInfo(eSpecialist).getGreatPeopleRateChange() * iChange);
-
-	for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
-	{
-		changeSpecialistYieldTotal((YieldTypes)iI, (GC.getSpecialistInfo(eSpecialist).getYieldChange(iI) + GET_PLAYER(getOwner()).getSpecialistYieldPercentChanges(eSpecialist, (YieldTypes)iI) / 100) * iChange);
-	}
-
-	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
-	{
-		//changeSpecialistCommerce(((CommerceTypes)iI), (GC.getSpecialistInfo(eSpecialist).getCommerceChange(iI) * iChange));
-		//TB Adjustment note: this makes the math a bit more accurate to the intention.  However, in this and the previous version
-		//there is a potential for small mathematical error that is easily righted via a recalc.  IF a Player's SpecialistCommercePercentChanges adjusts since
-		//the specialist was initially processed in and the specialist is then processed out, you will get an incorrect removal because the
-		//commerce the specialist added was not updated when the Player's percent modifier to that value changed.  Again, small error and easily righted via a recalc.
-		//If this proves to become a bigger issue than I think it will, we'll need to call a mini-recalculation on this value in each city for the player
-		//every time an adjustment to SpecialistCommercePercentChanges takes place.  That would be the patient and correct way to address this.
-		if (GC.getSpecialistInfo(eSpecialist).getCommerceChange(iI) != 0)
-		{
-			int iCommerceChangeTotal = (100 * GC.getSpecialistInfo(eSpecialist).getCommerceChange(iI));
-			int iCommerceChangeModifierTotal = (iCommerceChangeTotal * GET_PLAYER(getOwner()).getSpecialistCommercePercentChanges(eSpecialist, (CommerceTypes)iI)) / 100;
-			iCommerceChangeTotal += iCommerceChangeModifierTotal;
-			changeSpecialistCommerceTimes100(((CommerceTypes)iI), iCommerceChangeTotal * iChange);
-		}
-		//Without reanalyzing, it looks like the above will omit Specialist Extra Commerce values from % modifiers to commerce percent changes?  hmm...  I think something may be fishy here.
-	}
-
+	// A specialist's entire output -- its yields, commerce, wellbeing, underworld stats and great-people rate --
+	// is a compiled DEPOSIT the cascade folds, so nothing is accumulated city-side any more. What remains is the
+	// eager updaters, which other call sites drive too and which are not this function's to own.
 	updateExtraSpecialistYield();
 	updateExtraSpecialistCommerce();
 	updateSpecialistHappinessHealthFromTech();
-
-	if (GC.getSpecialistInfo(eSpecialist).getHealthPercent() > 0)
-	{
-		changeSpecialistGoodHealth(GC.getSpecialistInfo(eSpecialist).getHealthPercent() * iChange);
-	}
-	else
-	{
-		changeSpecialistBadHealth(GC.getSpecialistInfo(eSpecialist).getHealthPercent() * iChange);
-	}
-	if (GC.getSpecialistInfo(eSpecialist).getHappinessPercent() > 0)
-	{
-		changeSpecialistHappiness(GC.getSpecialistInfo(eSpecialist).getHappinessPercent() * iChange);
-	}
-	else
-	{
-		changeSpecialistUnhappiness(GC.getSpecialistInfo(eSpecialist).getHappinessPercent() * iChange);
-	}
-
-	changeSpecialistInsidiousness(GC.getSpecialistInfo(eSpecialist).getInsidiousness() * iChange);
-	changeSpecialistInvestigation(GC.getSpecialistInfo(eSpecialist).getInvestigation() * iChange);
 }
 
 
@@ -5770,7 +5653,12 @@ void CvCity::changeNumGreatPeople(int iChange)
 
 int CvCity::getBaseGreatPeopleRate() const
 {
-	return std::max(0, m_iBaseGreatPeopleRate) + GET_PLAYER(getOwner()).getNationalGreatPeopleRate();
+	// A FRESH GATHER from the cascade's greatPeopleRate channel, replacing the serialized per-source
+	// accumulator ([DEC-accumulator-cut-uniform]). ×100 native, and GPP is a whole count, so the single ÷100
+	// is here at the discrete boundary. The empire term is the player's own aggregate and rides on top.
+	const int iChannel = CascadeChannelRegistry::channelLookup(MODFAM_GREAT_PEOPLE_RATE, (int)CHANNEL_AMOUNT, -1);
+	return std::max(0, InfoValuation::realizedAtCity(*this, iChannel) / 100)
+		+ GET_PLAYER(getOwner()).getNationalGreatPeopleRate();
 }
 
 
@@ -5801,12 +5689,6 @@ int CvCity::getTotalGreatPeopleRateModifier() const
 	}
 
 	return std::max(0, iModifier);
-}
-
-
-void CvCity::changeBaseGreatPeopleRate(int iChange)
-{
-	m_iBaseGreatPeopleRate += iChange;
 }
 
 
@@ -6977,45 +6859,6 @@ void CvCity::changeBuildingBadHealth(int iChange)
 }
 
 
-int CvCity::getBonusGoodHealth() const
-{
-	return m_iBonusGoodHealth;
-}
-
-int CvCity::getBonusBadHealth() const
-{
-	return m_iBonusBadHealth;
-}
-
-void CvCity::changeBonusGoodHealth(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iBonusGoodHealth += iChange;
-		AI_setAssignWorkDirty(true);
-
-		if (getTeam() == GC.getGame().getActiveTeam())
-		{
-			setInfoDirty(true);
-		}
-	}
-}
-
-void CvCity::changeBonusBadHealth(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iBonusBadHealth += iChange;
-		AI_setAssignWorkDirty(true);
-
-		if (getTeam() == GC.getGame().getActiveTeam())
-		{
-			setInfoDirty(true);
-		}
-	}
-}
-
-
 int CvCity::getMilitaryHappinessUnits() const
 {
 	return m_iMilitaryHappinessUnits;
@@ -7963,38 +7806,6 @@ void CvCity::updateFeatureHappiness(bool bLimited)
 		{
 			AI_setAssignWorkDirty(true);
 		}
-	}
-}
-
-
-int CvCity::getBonusGoodHappiness() const
-{
-	return m_iBonusGoodHappiness;
-}
-
-
-int CvCity::getBonusBadHappiness() const
-{
-	return m_iBonusBadHappiness;
-}
-
-
-void CvCity::changeBonusGoodHappiness(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iBonusGoodHappiness += iChange;
-		AI_setAssignWorkDirty(true);
-	}
-}
-
-
-void CvCity::changeBonusBadHappiness(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iBonusBadHappiness += iChange;
-		AI_setAssignWorkDirty(true);
 	}
 }
 
@@ -18065,87 +17876,6 @@ void CvCity::clearLostProduction()
 {
 	m_iLostProductionModified = 0;
 	m_iGoldFromLostProduction = 0;
-}
-
-int CvCity::getSpecialistGoodHealth() const
-{
-	return m_iSpecialistGoodHealth;
-}
-
-int CvCity::getSpecialistBadHealth() const
-{
-	return m_iSpecialistBadHealth;
-}
-
-int CvCity::getSpecialistHappiness() const
-{
-	return m_iSpecialistHappiness;
-}
-
-int CvCity::getSpecialistUnhappiness() const
-{
-	return m_iSpecialistUnhappiness;
-}
-
-void CvCity::changeSpecialistGoodHealth(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iSpecialistGoodHealth += iChange;
-
-		AI_setAssignWorkDirty(true);
-
-		if (getTeam() == GC.getGame().getActiveTeam())
-		{
-			setInfoDirty(true);
-		}
-	}
-}
-
-void CvCity::changeSpecialistBadHealth(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iSpecialistBadHealth += iChange;
-
-		AI_setAssignWorkDirty(true);
-
-		if (getTeam() == GC.getGame().getActiveTeam())
-		{
-			setInfoDirty(true);
-		}
-	}
-}
-
-void CvCity::changeSpecialistHappiness(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iSpecialistHappiness += iChange;
-
-		AI_setAssignWorkDirty(true);
-
-		if (getTeam() == GC.getGame().getActiveTeam())
-		{
-			setInfoDirty(true);
-		}
-	}
-}
-
-
-void CvCity::changeSpecialistUnhappiness(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iSpecialistUnhappiness += iChange;
-
-		AI_setAssignWorkDirty(true);
-
-		if (getTeam() == GC.getGame().getActiveTeam())
-		{
-			setInfoDirty(true);
-		}
-	}
 }
 
 int CvCity::getImprovementGoodHealth() const
