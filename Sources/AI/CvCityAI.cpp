@@ -1020,15 +1020,18 @@ int CvCityAI::AI_specialistValue(SpecialistTypes eSpecialist, bool bAvoidGrowth,
 		}
 	}
 
-	int iExperience = (GC.getSpecialistInfo(eSpecialist).getExperience() * 2);
-	for (int iI = 0; iI < GC.getSpecialistInfo(eSpecialist).getNumUnitCombatExperienceTypes(); iI++)
+	// Keyed XP: this specialist trains the combat classes it names, so walk THOSE, not a
+	// scope-wide sum (modifier.md §5 -- folding a keyed deposit would credit every class).
+	int iExperience = 0;
+	for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
 	{
-		if (GC.getSpecialistInfo(eSpecialist).getUnitCombatExperienceType(iI).eUnitCombat != NO_UNITCOMBAT)
+		const int iKeyed = GC.getSpecialistInfo(eSpecialist).getExperienceForUnitCombat(iI);
+		if (iKeyed != 0)
 		{
-			iExperience += (GC.getSpecialistInfo(eSpecialist).getUnitCombatExperienceType(iI).iModifier);
-			if (isProductionUnit() && isProductionUnitCombat((int)GC.getSpecialistInfo(eSpecialist).getUnitCombatExperienceType(iI).eUnitCombat))
+			iExperience += iKeyed;
+			if (isProductionUnit() && isProductionUnitCombat(iI))
 			{
-				iExperience += (2 * (GC.getSpecialistInfo(eSpecialist).getUnitCombatExperienceType(iI).iModifier));
+				iExperience += 2 * iKeyed;
 			}
 		}
 	}

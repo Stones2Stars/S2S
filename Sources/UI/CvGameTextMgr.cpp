@@ -6498,24 +6498,12 @@ void CvGameTextMgr::parseSpecialistHelpActual(CvWStringBuffer &szHelpString, Spe
 		listCommerceChange(szHelpString, CvWString::format(L"\n%c", gDLL->getSymbolID(BULLET_CHAR)), L"", aiCommerces);
 	}
 
-	if (GC.getSpecialistInfo(eSpecialist).getExperience() > 0)
-	{
-		szHelpString.append(NEWLINE);
-		szHelpString.append(gDLL->getText("TXT_KEY_SPECIALISTHELP_EXPERIENCE", GC.getSpecialistInfo(eSpecialist).getExperience()));
-	}
-
 	for (int iI = GC.getNumUnitCombatInfos() - 1; iI > -1; iI--)
 	{
 		const UnitCombatTypes eUnitCombat = static_cast<UnitCombatTypes>(iI);
 
 		int iUnitCombatExperience = 0;
-		for (int iJ = 0; iJ < GC.getSpecialistInfo(eSpecialist).getNumUnitCombatExperienceTypes(); iJ++)
-		{
-			if (GC.getSpecialistInfo(eSpecialist).getUnitCombatExperienceType(iJ).eUnitCombat == eUnitCombat)
-			{
-				iUnitCombatExperience += GC.getSpecialistInfo(eSpecialist).getUnitCombatExperienceType(iJ).iModifier;
-			}
-		}
+		iUnitCombatExperience = GC.getSpecialistInfo(eSpecialist).getExperienceForUnitCombat(eUnitCombat);
 		if (iUnitCombatExperience > 0)
 		{
 			szHelpString.append(NEWLINE);
@@ -6729,29 +6717,15 @@ void CvGameTextMgr::parseFreeSpecialistHelp(CvWStringBuffer &szHelpString, const
 			}
 			szHelpString.append(szCommerceString);
 
-			if (GC.getSpecialistInfo(eSpecialist).getExperience() != 0)
-			{
-				if (!szYield.isEmpty() || !szCommerceString.isEmpty())
-				{
-					szHelpString.append(L", ");
-				}
-				szHelpString.append(gDLL->getText("TXT_KEY_SPECIALISTHELP_EXPERIENCE_SHORT", iNumSpecialists * GC.getSpecialistInfo(eSpecialist).getExperience()));
-			}
 
 			for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
 			{
 				int iUnitCombatExperience = 0;
 				const UnitCombatTypes eUnitCombat = ((UnitCombatTypes)iI);
-				for (int iJ = 0; iJ < GC.getSpecialistInfo(eSpecialist).getNumUnitCombatExperienceTypes(); iJ++)
-				{
-					if (GC.getSpecialistInfo(eSpecialist).getUnitCombatExperienceType(iJ).eUnitCombat == eUnitCombat)
-					{
-						iUnitCombatExperience += GC.getSpecialistInfo(eSpecialist).getUnitCombatExperienceType(iJ).iModifier;
-					}
-				}
+				iUnitCombatExperience = GC.getSpecialistInfo(eSpecialist).getExperienceForUnitCombat(eUnitCombat);
 				if (iUnitCombatExperience > 0)
 				{
-					if (!szYield.isEmpty() || !szCommerceString.isEmpty() || GC.getSpecialistInfo(eSpecialist).getExperience() != 0)
+					if (!szYield.isEmpty() || !szCommerceString.isEmpty())
 					{
 						szHelpString.append(L", ");
 					}

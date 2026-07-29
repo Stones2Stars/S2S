@@ -8,6 +8,7 @@
 #include "CvGameCoreDLL.h"
 #include "AI/CvGameAI.h"   // folder-consolidation: keeps the unity batch self-sufficient (unchanged from the poco era)
 #include "CvSpecialistInfo.h"
+#include "CvModEntry.h"
 #include "CvJsonParse.h"               // jsonChildObj / jsonIdBool / jsonIdStr / jsonReadFlavours / jsonResolveId
 #include "Property/CvPropertyBridge.h" // the shared PROPERTY_* family -> manipulator walk
 
@@ -35,6 +36,23 @@ void CvSpecialistInfo::mapFrom(const picojson::value& entity)
 	m_bVisible = false;
 	m_aiCategories.clear();
 	m_flavours.clear();
+
+	// the KEYED experience plane: experience.city.unitCombats.{UNITCOMBAT_*}.flat -- scanned ONCE from the
+	// compiled entries (the sanctioned load-time scan source). Read per target; never folded scope-wide.
+	m_unitCombatExperience.clear();
+	{
+		const int iUnitCombatsSeg = modSegmentLookup("unitCombats");
+		const std::vector<CvModEntry*>& entries = m_modifiers.entries();
+		for (size_t iEntry = 0; iEntry < entries.size(); ++iEntry)
+		{
+			const CvModEntry* pEntry = entries[iEntry];
+			if (pEntry->family == MODFAM_EXPERIENCE && pEntry->targetSeg == iUnitCombatsSeg
+			&&  pEntry->targetFk >= 0 && iUnitCombatsSeg >= 0)
+			{
+				m_unitCombatExperience[pEntry->targetFk] += pEntry->value;
+			}
+		}
+	}
 	m_szTexture.clear();
 
 	// PROPERTY_* per-turn SOURCES: a specialist's <PROPERTY_X>.city.flat (the doctor's disease cut, the

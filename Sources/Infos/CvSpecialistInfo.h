@@ -55,6 +55,14 @@ public:
 	}
 	int getExperience(ExperienceKind eKind, CvCascScope eScope) const
 	{ return m_modifiers.sum(MODFAM_EXPERIENCE, eKind, eScope, infoKindUnit(MODFAM_EXPERIENCE, eKind, eScope)); }
+	// experience.city.unitCombats.{UNITCOMBAT_*}.flat -- the XP this specialist gives units of ONE combat
+	// class. A KEYED deposit, so it is read per target and NEVER folded scope-wide (modifier.md §5: that
+	// fold hands every unit the one class's XP). Materialized at mapFrom; 0 = none.
+	int getExperienceForUnitCombat(int iUnitCombat) const
+	{
+		std::map<int, int>::const_iterator it = m_unitCombatExperience.find(iUnitCombat);
+		return it != m_unitCombatExperience.end() ? it->second : 0;
+	}
 	int getUnderworld(UnderworldKind eKind, CvCascScope eScope) const
 	{ return m_modifiers.sum(MODFAM_UNDERWORLD, eKind, eScope, CASC_UNIT_FLAT); }
 	// (greatPeopleRate is a 1-kind straggler: the base getScalar(SCALAR_GREAT_PEOPLE_RATE) covers it. The
@@ -81,6 +89,7 @@ protected:
 	virtual CvModifiers* mutModifiers() { return &m_modifiers; }
 
 private:
+	std::map<int, int> m_unitCombatExperience;   // keyed experience, materialized at mapFrom
 	// --- the composed section unit ---
 	CvModifiers m_modifiers;
 
