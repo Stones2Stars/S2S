@@ -147,13 +147,15 @@
 > Contract: [patterns.md § THE PYTHON READ BOUNDARY](../../architecture/patterns.md). Read maps:
 > [pedia-read-map.md](../../reference/pedia-read-map.md) · [python-read-map.md](../../reference/python-read-map.md).
 >
-> ⛔ **"Stage 4" names the DISCONNECT, not a phase you must wait for.** ADD to the library whenever a read makes
-> sense, and clear Python-side compile debt as you meet it — parking it spends the census budget the rest of the
-> worklist needs ([roadmap.md](roadmap.md)). ⛔ Never borrow legacy as a "temporary solution" for a read the
-> library does not answer yet: add the read.
+> ⛔ **"Stage 4" is a grouping, NOT a phase to wait for — nothing gates the disconnect.** A dead legacy Python
+> getter is an OUTLAW, shot on sight; cutting wrong is cheap and is how a real dependency gets named
+> ([roadmap.md](roadmap.md)). ADD to the library whenever a read makes sense, and clear Python-side compile debt
+> as you meet it — parking it spends the census budget the rest of the worklist needs. ⛔ Never borrow legacy as
+> a "temporary solution" for a read the library does not answer yet: add the read.
 
-- Build the ONE data-fetching library COMPLETE, then disconnect the `Cy*` surface whole. Build it for the pedia
-  (a SHAPE oracle, NOT a coverage oracle — the appendix is enumerable).
+- Build the ONE data-fetching library toward COMPLETE (its end state, not a gate on cutting). Build it for the
+  pedia (a SHAPE oracle, NOT a coverage oracle — the appendix is enumerable).
+- Shoot the dead `Cy*` bindings on sight as the compiler names them.
 - Serve enum resolution AND EXTENSION as a first-class operation — BUG reaches three engine enums only that way
   and MINTS new members at runtime, so a library without it forces the banned reach-around.
 - Move the `CvGameTextMgr` composers onto rendered entry lines (`appendEntryLines`).

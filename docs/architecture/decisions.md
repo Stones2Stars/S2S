@@ -277,7 +277,10 @@ The `Cy*` info-binding contract (the boost::python `.def` surface) is NOT a fixe
 forced the JSON pocos to mirror the entire legacy `CvXInfo` field contract (a stub per legacy field). Redesign the
 boundary around the cascade/JSON model + rewire the Python info-CONSUMERS; fix the stub-fed wrong values. DISTINCT
 from the computed-getter flip strategy (which keeps those contracts and rewires bodies, not call sites). Python
-gameplay stays Python. **Home:** [roadmap.md](../plans/structural-cleanup/roadmap.md).
+gameplay stays Python. ⛔ **NOTHING GATES THE DISCONNECT** — a dead legacy binding is an OUTLAW, shot on sight,
+and the replacement library's COMPLETENESS is its END STATE, never a permission slip to cut; reading it as a gate
+inverts the ruling into a shield for the surface being removed.
+**Home:** [roadmap.md](../plans/structural-cleanup/roadmap.md).
 
 ### DEC-new-getter-surface
 

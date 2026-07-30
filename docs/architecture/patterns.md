@@ -478,9 +478,14 @@ Four words carry the whole requirement:
 
 - **ONE SURFACE.** A single library IS the Python-facing read boundary — not the per-type `Cy*` interfaces it
   replaces, not a widened binding, never two live surfaces for one read.
-- **COMPLETE.** Every read Python performs today has an answer **before** the legacy surface is disconnected.
-  Completeness is the GATE, not an aspiration: one gap forces a reach-around into legacy, and that reach-around
-  IS the second live surface the ruling forbids — the half-migration re-created at the last seam.
+- **COMPLETE.** The END STATE is that every read Python performs has an answer here, so no gap forces a
+  reach-around into legacy — that reach-around IS the second live surface the ruling forbids, the half-migration
+  re-created at the last seam.
+  ⛔ **But completeness is the DESTINATION, never a GATE ON CUTTING (owner) — the disconnect is not gated at
+  all.** A dead legacy binding is an OUTLAW and is shot on sight; reading this word as "cut only once the library
+  is complete" inverts the ruling into a shield for the surface being removed. **The cut is the forcing function
+  that DRIVES completeness** (below: killing it removes the option to shortcut), so it never waits on it — and
+  when the library cannot answer a read, the move is to ADD the read, never to borrow legacy meanwhile.
 - **DATA FETCHING, not gameplay.** It serves reads/payloads; Python-authoritative gameplay (Revolution, events)
   stays Python and becomes a CONSUMER of it.
 - **⛔ ENUM OPERATIONS ARE FIRST CLASS** — name→type/enum resolution is a supported operation, covering

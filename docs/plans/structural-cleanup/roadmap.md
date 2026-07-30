@@ -272,30 +272,32 @@ The rest of the boundary every consumer meets:
   **The cut is FULL (owner): the new coherent surface is built and every consumer rewired onto it in the same
   pass, the legacy getter names disconnected — never a thin-compat layer left breathing.** The red tree makes the
   blast radius free to absorb; a change that left consumers untouched would be the half-migration tell.
-- **⚖ WHAT IS GATED IS THE *DISCONNECT*, NEVER THE BUILDING (owner).** The game-object and AI getter cut is the
-  MORE PRESSING half, and the `Cy*` surface is cut away only once the library is **COMPLETE**
-  ([patterns.md § THE PYTHON READ BOUNDARY](../../architecture/patterns.md)) — but that completeness gate governs
-  the CUT, and nothing else.
-  ⛔ **It is NOT a reason to avoid the Python library.** ADD TO IT WHENEVER A READ MAKES SENSE — it is built
-  incrementally, like everything else, and a read added early is the library getting closer to complete rather
-  than work done out of order.
-  ⛔ **The failure this exists to prevent is the opposite of avoidance: reaching for LEGACY as a "temporary
-  solution" because the library does not answer something yet.** That is the half-migration in its purest form
-  ([DEC-no-legacy-masking](../../architecture/decisions.md#dec-no-legacy-masking)) — a legacy read taken to fill
-  a gap masks the gap and outlives the excuse. When the library cannot answer a read, the move is to ADD the
-  read to the library, never to borrow legacy while waiting.
-  ⛔ **AND "we do Python later" MUST NOT BE ALLOWED TO PARK THOUSANDS OF COMPILER ERRORS (owner) — that
-  CLOGS THE CENSUS EVERYTHING ELSE DEPENDS ON.** MSVC stops at 100 errors per translation unit, so parked
-  Python-side errors SPEND the reporting budget the real worklist needs, and the surviving errors are whichever
-  happened to compile first — the census stops naming the work and starts hiding it. Python debt is therefore
-  not cheap-to-defer, it is the most expensive kind to defer. Clear it as you meet it: ADD the read to the
-  library, or cut the dead binding on sight ([DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed)
-  — for a `Cy` binding to a getter that no longer exists, deletion is the only fix).
-- **The new Python surface — ONE COMPLETE DATA-FETCHING LIBRARY (owner), built as its own STEP** before the
-  legacy `Cy*` surface is CUT AWAY ([DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed)): ONE
-  surface replacing the scattered per-type `Cy*` interfaces, COMPLETE against the census (screens + pedia +
-  the Python-authoritative systems) so no read is left needing a reach-around into legacy — a gap re-creates
-  the two live surfaces the ruling forbids. Data fetching only; Python gameplay stays Python and consumes it.
+- **⛔ NOTHING GATES THE DISCONNECT — A DEAD LEGACY PYTHON GETTER IS AN OUTLAW, SHOT ON SIGHT (owner).** There is
+  no sequencing, no permission, no "wait until the library answers it": a binding to a getter that no longer
+  exists is a dangling reference the compiler already named, and for a `Cy` binding the ONLY fix is DELETION
+  ([DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed) forbids re-pointing or widening).
+  ⚑ **Cutting wrong is CHEAP** — *"if we delete a working binding, we re-add it; or more probably, REPLACE it"* —
+  so a cut is not merely reversible, it is how a genuine requirement gets DISCOVERED and named. Piecemeal cutting
+  is fine; what is banned is bending anything to keep the old surface functional.
+  ⛔ **So COMPLETENESS IS THE LIBRARY'S END STATE, NEVER A GATE ON CUTTING.** Reading it as "cut only once the
+  library is complete" inverts the ruling into a shield for the very surface being removed — and produces the
+  three failures below. **The cut is the FORCING FUNCTION that drives completeness; it does not wait on it.**
+  ⛔ **Failure 1 — avoiding the library.** ADD TO IT WHENEVER A READ MAKES SENSE. It is built incrementally like
+  everything else, and a read added early is the library getting closer to complete, never work out of order.
+  ⛔ **Failure 2 — borrowing LEGACY as a "temporary solution"** because the library does not answer something
+  yet. That is the half-migration in its purest form
+  ([DEC-no-legacy-masking](../../architecture/decisions.md#dec-no-legacy-masking)): a legacy read taken to fill a
+  gap MASKS the gap and outlives the excuse. Add the read instead.
+  ⛔ **Failure 3 — "we do Python later", parking thousands of compiler errors. This CLOGS THE CENSUS EVERYTHING
+  ELSE DEPENDS ON (owner).** MSVC stops at 100 errors per translation unit, so parked Python-side errors SPEND
+  the reporting budget the real worklist needs, and which errors survive is decided by whatever compiled first —
+  the census stops naming the work and starts hiding it. Python debt is the most expensive kind to defer, not the
+  cheapest. Clear it as you meet it.
+- **The new Python surface — ONE COMPLETE DATA-FETCHING LIBRARY (owner)** replacing the scattered per-type `Cy*`
+  interfaces ([DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed)). COMPLETE against the census
+  (screens + pedia + the Python-authoritative systems) is the END STATE it is built toward, so that no read is
+  left needing a reach-around into legacy — a surviving gap re-creates the two live surfaces the ruling forbids.
+  Data fetching only; Python gameplay stays Python and consumes it.
   Not a widened binding, not a shim beside it. Detail + acceptance: [todo.md](todo.md).
 - **The endpoint route table**, which reads the same uniform getters as everything else.
 
