@@ -3568,7 +3568,6 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 
 	changeMaxAirlift(kBuilding.getAirlift() * iChange);
 	changeAirUnitCapacity(kBuilding.getAirUnitCapacity() * iChange);
-	changeMaintenanceModifier(kBuilding.getMaintenanceModifier(MAINTENANCE_AMOUNT, CASC_SCOPE_CITY) * iChange);
 
 	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 	{
