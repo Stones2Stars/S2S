@@ -4,84 +4,7 @@
 #include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
-#include "Infos/CvClassificationBlock.h"   // CLSD_SKILL + the memoized id bit test
-
-namespace
-{
-	// The json.md §8 SKILL reads this file makes on a PROMOTION / UNITCOMBAT info. The consumer holds
-	// the memoized generated-id (the CvUnitFilters precedent); the info exposes only the parameterized
-	// group read getSkills(), never a named getter per key.
-	bool skillCelebrity(const CvClassificationBlock* skills)
-	{
-		static int s_celebritySkillId = -1;
-		return skills->hasKey(s_celebritySkillId, CLSD_SKILL, "celebrity");
-	}
-	bool skillStealthDefense(const CvClassificationBlock* skills)
-	{
-		static int s_stealthDefenseSkillId = -1;
-		return skills->hasKey(s_stealthDefenseSkillId, CLSD_SKILL, "stealthDefense");
-	}
-	bool skillDefenseOnly(const CvClassificationBlock* skills)
-	{
-		static int s_defenseOnlySkillId = -1;
-		return skills->hasKey(s_defenseOnlySkillId, CLSD_SKILL, "defenseOnly");
-	}
-	bool skillAlwaysHeal(const CvClassificationBlock* skills)
-	{
-		static int s_alwaysHealSkillId = -1;
-		return skills->hasKey(s_alwaysHealSkillId, CLSD_SKILL, "alwaysHeal");
-	}
-	bool skillImmuneToFirstStrikes(const CvClassificationBlock* skills)
-	{
-		static int s_immuneToFirstStrikesSkillId = -1;
-		return skills->hasKey(s_immuneToFirstStrikesSkillId, CLSD_SKILL, "immuneToFirstStrikes");
-	}
-	bool skillDefensiveVictoryMove(const CvClassificationBlock* skills)
-	{
-		static int s_defensiveVictoryMoveSkillId = -1;
-		return skills->hasKey(s_defensiveVictoryMoveSkillId, CLSD_SKILL, "defensiveVictoryMove");
-	}
-	bool skillOffensiveVictoryMove(const CvClassificationBlock* skills)
-	{
-		static int s_offensiveVictoryMoveSkillId = -1;
-		return skills->hasKey(s_offensiveVictoryMoveSkillId, CLSD_SKILL, "offensiveVictoryMove");
-	}
-	bool skillFreeDrop(const CvClassificationBlock* skills)
-	{
-		static int s_freeDropSkillId = -1;
-		return skills->hasKey(s_freeDropSkillId, CLSD_SKILL, "freeDrop");
-	}
-	bool skillOneUp(const CvClassificationBlock* skills)
-	{
-		static int s_oneUpSkillId = -1;
-		return skills->hasKey(s_oneUpSkillId, CLSD_SKILL, "oneUp");
-	}
-	bool skillPillageEspionage(const CvClassificationBlock* skills)
-	{
-		static int s_pillageEspionageSkillId = -1;
-		return skills->hasKey(s_pillageEspionageSkillId, CLSD_SKILL, "pillageEspionage");
-	}
-	bool skillPillageMarauder(const CvClassificationBlock* skills)
-	{
-		static int s_pillageMarauderSkillId = -1;
-		return skills->hasKey(s_pillageMarauderSkillId, CLSD_SKILL, "pillageMarauder");
-	}
-	bool skillPillageOnMove(const CvClassificationBlock* skills)
-	{
-		static int s_pillageOnMoveSkillId = -1;
-		return skills->hasKey(s_pillageOnMoveSkillId, CLSD_SKILL, "pillageOnMove");
-	}
-	bool skillPillageOnVictory(const CvClassificationBlock* skills)
-	{
-		static int s_pillageOnVictorySkillId = -1;
-		return skills->hasKey(s_pillageOnVictorySkillId, CLSD_SKILL, "pillageOnVictory");
-	}
-	bool skillPillageResearch(const CvClassificationBlock* skills)
-	{
-		static int s_pillageResearchSkillId = -1;
-		return skills->hasKey(s_pillageResearchSkillId, CLSD_SKILL, "pillageResearch");
-	}
-}
+#include "Infos/CvSkillReads.h"   // the ONE shared surface for the json.md §8 skill reads
 
 #include "Data/CvInfoValuation.h"   // InfoValuation::collectHealByUnitCombat + HealByUnitCombat
 #include "Engine/CvGameSpeedScale.h"
@@ -123,54 +46,6 @@ namespace
 // The json.md §8 SKILL reads this file makes. The consumer holds the memoized generated-id
 // (the CvUnitFilters precedent): the info exposes only the parameterized group read getSkills(),
 // never a named getter per key (patterns.md -- a per-key boolean getter is the shape the rebuild deletes).
-namespace
-{
-	bool unitIsNoNonOwnedCityEntry(const CvUnitInfo& kUnit)
-	{
-		static int s_noNonOwnedCityEntryId = -1;
-		return kUnit.getSkills()->hasKey(s_noNonOwnedCityEntryId, CLSD_SKILL, "noNonOwnedCityEntry");
-	}
-	bool unitIsOnlyDefensive(const CvUnitInfo& kUnit)
-	{
-		static int s_onlyDefensiveId = -1;
-		return kUnit.getSkills()->hasKey(s_onlyDefensiveId, CLSD_SKILL, "onlyDefensive");
-	}
-	bool unitIsInquisitor(const CvUnitInfo& kUnit)
-	{
-		static int s_inquisitorId = -1;
-		return kUnit.getSkills()->hasKey(s_inquisitorId, CLSD_SKILL, "inquisitor");
-	}
-	bool unitCanPillage(const CvUnitInfo& kUnit)
-	{
-		static int s_pillageId = -1;
-		return kUnit.getSkills()->hasKey(s_pillageId, CLSD_SKILL, "pillage");
-	}
-	bool unitIsAlwaysHostile(const CvUnitInfo& kUnit)
-	{
-		static int s_alwaysHostileId = -1;
-		return kUnit.getSkills()->hasKey(s_alwaysHostileId, CLSD_SKILL, "alwaysHostile");
-	}
-	bool unitIsSuicide(const CvUnitInfo& kUnit)
-	{
-		static int s_suicideId = -1;
-		return kUnit.getSkills()->hasKey(s_suicideId, CLSD_SKILL, "suicide");
-	}
-	bool unitCanSabotage(const CvUnitInfo& kUnit)
-	{
-		static int s_sabotageId = -1;
-		return kUnit.getSkills()->hasKey(s_sabotageId, CLSD_SKILL, "sabotage");
-	}
-	bool unitCanDestroy(const CvUnitInfo& kUnit)
-	{
-		static int s_destroyId = -1;
-		return kUnit.getSkills()->hasKey(s_destroyId, CLSD_SKILL, "destroy");
-	}
-	bool unitCanStealPlans(const CvUnitInfo& kUnit)
-	{
-		static int s_stealPlansId = -1;
-		return kUnit.getSkills()->hasKey(s_stealPlansId, CLSD_SKILL, "stealPlans");
-	}
-}
 #endif
 
 static CvEntity* g_dummyEntity = NULL;
@@ -4783,7 +4658,7 @@ bool CvUnit::canEnterPlot(const CvPlot* pPlot, MoveCheck::flags flags /*= MoveCh
 	}
 
 	//ls612: For units that can't enter non-Owned Cities
-	if (unitIsNoNonOwnedCityEntry(*m_pUnitInfo) && pPlot->isCity() && (pPlot->getOwner() != getOwner()))
+	if (CvSkillReads::noNonOwnedCityEntry(*m_pUnitInfo.getSkills()) && pPlot->isCity() && (pPlot->getOwner() != getOwner()))
 	{
 		return false;
 	}
@@ -4980,7 +4855,7 @@ bool CvUnit::canEnterPlot(const CvPlot* pPlot, MoveCheck::flags flags /*= MoveCh
 	{
 		if (!bIgnoreTileLimit)
 		{
-			if (!unitIsOnlyDefensive(getUnitInfo()) && baseCombatStr() > 0)
+			if (!CvSkillReads::onlyDefensive(getUnitInfo().getSkills()) && baseCombatStr() > 0)
 			{
 				if (getDomainType() == DOMAIN_LAND && !pPlot->isWater() || getDomainType() == DOMAIN_SEA && pPlot->isWater() || getDomainType() == DOMAIN_AIR)
 				{
@@ -4992,7 +4867,7 @@ bool CvUnit::canEnterPlot(const CvPlot* pPlot, MoveCheck::flags flags /*= MoveCh
 						if (pLoopUnit->getTeam() == getTeam())
 						{
 							//Ignore workers, Missionaries, etc...
-							if (!unitIsOnlyDefensive(pLoopUnit->getUnitInfo()) && pLoopUnit->baseCombatStr() > 0)
+							if (!CvSkillReads::onlyDefensive(pLoopUnit->getUnitInfo().getSkills()) && pLoopUnit->baseCombatStr() > 0)
 							{
 								//No counting cargo for ships, or harbors
 								if (pLoopUnit->getDomainType() == getDomainType())
@@ -5260,7 +5135,7 @@ bool CvUnit::canAutomate(AutomateTypes eAutomate) const
 	/*                                                                                              */
 	/*  Clicking on the Automate button with an Inquisitor causes a CTD                             */
 	/************************************************************************************************/
-	if (unitIsInquisitor(*m_pUnitInfo))
+	if (CvSkillReads::inquisitor(*m_pUnitInfo.getSkills()))
 	{
 		return false;
 	}
@@ -5346,7 +5221,7 @@ bool CvUnit::canAutomate(AutomateTypes eAutomate) const
 		break;
 
 	case AUTOMATE_PILLAGE:
-		if (!unitCanPillage(getUnitInfo()))
+		if (!CvSkillReads::pillage(getUnitInfo().getSkills()))
 		{
 			return false;
 		}
@@ -5398,7 +5273,7 @@ bool CvUnit::canAutomate(AutomateTypes eAutomate) const
 		{
 			return false;
 		}
-		if (!isHiddenNationality() || !unitIsAlwaysHostile(*m_pUnitInfo))
+		if (!isHiddenNationality() || !CvSkillReads::alwaysHostile(*m_pUnitInfo.getSkills()))
 		{
 			return false;
 		}
@@ -6998,7 +6873,7 @@ bool CvUnit::canRecon() const
 		return false;
 	}
 
-	if (unitIsSuicide(*m_pUnitInfo))
+	if (CvSkillReads::suicide(*m_pUnitInfo.getSkills()))
 	{
 		return false;
 	}
@@ -7497,7 +7372,7 @@ bool CvUnit::bombard()
 
 bool CvUnit::canPillage(const CvPlot* pPlot) const
 {
-	if (pPlot == NULL || !unitCanPillage(*m_pUnitInfo))
+	if (pPlot == NULL || !CvSkillReads::pillage(*m_pUnitInfo.getSkills()))
 	{
 		return false;
 	}
@@ -7778,7 +7653,7 @@ bool CvUnit::canPlunder(const CvPlot* pPlot, bool bTestVisible) const
 		return false;
 	}
 
-	if (!unitCanPillage(*m_pUnitInfo))
+	if (!CvSkillReads::pillage(*m_pUnitInfo.getSkills()))
 	{
 		return false;
 	}
@@ -7911,7 +7786,7 @@ int CvUnit::sabotageProb(const CvPlot* pPlot, ProbabilityTypes eProbStyle) const
 
 bool CvUnit::canSabotage(const CvPlot* pPlot, bool bTestVisible) const
 {
-	if (!unitCanSabotage(*m_pUnitInfo))
+	if (!CvSkillReads::sabotage(*m_pUnitInfo.getSkills()))
 	{
 		return false;
 	}
@@ -8084,7 +7959,7 @@ int CvUnit::destroyProb(const CvPlot* pPlot, ProbabilityTypes eProbStyle) const
 
 bool CvUnit::canDestroy(const CvPlot* pPlot, bool bTestVisible) const
 {
-	if (!unitCanDestroy(*m_pUnitInfo))
+	if (!CvSkillReads::destroy(*m_pUnitInfo.getSkills()))
 	{
 		return false;
 	}
@@ -8245,7 +8120,7 @@ int CvUnit::stealPlansProb(const CvPlot* pPlot, ProbabilityTypes eProbStyle) con
 
 bool CvUnit::canStealPlans(const CvPlot* pPlot, bool bTestVisible) const
 {
-	if (!(unitCanStealPlans(*m_pUnitInfo)))
+	if (!(CvSkillReads::stealPlans(*m_pUnitInfo.getSkills())))
 	{
 		return false;
 	}
@@ -10973,7 +10848,7 @@ bool CvUnit::isNoBadGoodies() const
 
 bool CvUnit::isOnlyDefensive() const
 {
-	return m_iOnlyDefensiveCount + unitIsOnlyDefensive(*m_pUnitInfo);
+	return m_iOnlyDefensiveCount + CvSkillReads::onlyDefensive(*m_pUnitInfo.getSkills());
 }
 
 void CvUnit::changeOnlyDefensiveCount(int iChange)
@@ -12982,7 +12857,7 @@ bool CvUnit::isNukeImmune() const
 
 bool CvUnit::isInquisitor() const
 {
-	return unitIsInquisitor(*m_pUnitInfo);
+	return CvSkillReads::inquisitor(*m_pUnitInfo.getSkills());
 }
 
 
@@ -18009,7 +17884,7 @@ bool CvUnit::isPromotionValid(PromotionTypes ePromotion, bool bFree, bool bKeepC
 	}
 
 	//Disable Looter Promos for units that cannot pillage
-	if (promo.getPillageChange() > 0 && !unitCanPillage(*m_pUnitInfo))
+	if (promo.getPillageChange() > 0 && !CvSkillReads::pillage(*m_pUnitInfo.getSkills()))
 	{
 		return false;
 	}
@@ -18379,7 +18254,7 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 	changeExperiencePercent(kUnitCombat.getExperiencePercent() * iChange);//no merge/split (modified but not multiplicative)
 	changeKamikazePercent((kUnitCombat.getKamikazePercent()) * iChange);//no merge/split
 	changeAirCombatLimitChange((kUnitCombat.getAirCombatLimitChange()) * iChange);//no merge/split
-	changeCelebrityHappy(((skillCelebrity(kUnitCombat.getSkills()) ? 1 : 0)) * iChange);//no merge/split
+	changeCelebrityHappy(((CvSkillReads::celebrity(kUnitCombat.getSkills()) ? 1 : 0)) * iChange);//no merge/split
 	changeCollateralDamageLimitChange((kUnitCombat.getFlatCollateral(COLLATERAL_LIMIT, CASC_SCOPE_UNIT) / 100) * iChange);//no merge/split
 	changeCollateralDamageMaxUnitsChange((kUnitCombat.getFlatCollateral(COLLATERAL_MAX_UNITS, CASC_SCOPE_UNIT) / 100) * iChange);//no merge/split
 	changeCombatLimitChange((kUnitCombat.getFlatCombat(COMBAT_LIMIT, CASC_SCOPE_UNIT) / 100) * iChange);//no merge/split
@@ -18431,22 +18306,22 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 	//
 
 	//booleans //no merge/split
-	changeDefensiveVictoryMoveCount((skillDefensiveVictoryMove(kUnitCombat.getSkills())) ? iChange : 0);//no merge/split
-	changeFreeDropCount((skillFreeDrop(kUnitCombat.getSkills())) ? iChange : 0);//no merge/split
-	changeOffensiveVictoryMoveCount((skillOffensiveVictoryMove(kUnitCombat.getSkills())) ? iChange : 0);//no merge/split
-	changeOneUpCount((skillOneUp(kUnitCombat.getSkills())) ? iChange : 0);//no merge/split
-	changePillageEspionageCount((skillPillageEspionage(kUnitCombat.getSkills())) ? iChange : 0);//no merge/split
-	changePillageMarauderCount((skillPillageMarauder(kUnitCombat.getSkills())) ? iChange : 0);//no merge/split
-	changePillageOnMoveCount((skillPillageOnMove(kUnitCombat.getSkills())) ? iChange : 0);//no merge/split
-	changePillageOnVictoryCount((skillPillageOnVictory(kUnitCombat.getSkills())) ? iChange : 0);//no merge/split
-	changePillageResearchCount((skillPillageResearch(kUnitCombat.getSkills())) ? iChange : 0);//no merge/split
+	changeDefensiveVictoryMoveCount((CvSkillReads::defensiveVictoryMove(kUnitCombat.getSkills())) ? iChange : 0);//no merge/split
+	changeFreeDropCount((CvSkillReads::freeDrop(kUnitCombat.getSkills())) ? iChange : 0);//no merge/split
+	changeOffensiveVictoryMoveCount((CvSkillReads::offensiveVictoryMove(kUnitCombat.getSkills())) ? iChange : 0);//no merge/split
+	changeOneUpCount((CvSkillReads::oneUp(kUnitCombat.getSkills())) ? iChange : 0);//no merge/split
+	changePillageEspionageCount((CvSkillReads::pillageEspionage(kUnitCombat.getSkills())) ? iChange : 0);//no merge/split
+	changePillageMarauderCount((CvSkillReads::pillageMarauder(kUnitCombat.getSkills())) ? iChange : 0);//no merge/split
+	changePillageOnMoveCount((CvSkillReads::pillageOnMove(kUnitCombat.getSkills())) ? iChange : 0);//no merge/split
+	changePillageOnVictoryCount((CvSkillReads::pillageOnVictory(kUnitCombat.getSkills())) ? iChange : 0);//no merge/split
+	changePillageResearchCount((CvSkillReads::pillageResearch(kUnitCombat.getSkills())) ? iChange : 0);//no merge/split
 	changeBlitzCount((kUnitCombat.isBlitz()) ? iChange : 0);//no merge/split
 	changeAmphibCount((kUnitCombat.isAmphib()) ? iChange : 0);//no merge/split
 	changeRiverCount((kUnitCombat.isRiver()) ? iChange : 0);//no merge/split
 	changeEnemyRouteCount((kUnitCombat.isEnemyRoute()) ? iChange : 0);//no merge/split
-	changeAlwaysHealCount((skillAlwaysHeal(kUnitCombat.getSkills())) ? iChange : 0);
+	changeAlwaysHealCount((CvSkillReads::alwaysHeal(kUnitCombat.getSkills())) ? iChange : 0);
 	changeHillsDoubleMoveCount((kUnitCombat.isHillsDoubleMove()) ? iChange : 0);
-	changeImmuneToFirstStrikesCount((skillImmuneToFirstStrikes(kUnitCombat.getSkills())) ? iChange : 0);
+	changeImmuneToFirstStrikesCount((CvSkillReads::immuneToFirstStrikes(kUnitCombat.getSkills())) ? iChange : 0);
 	changeAlwaysInvisibleCount((kUnitCombat.isAlwaysInvisible()) ? iChange : 0);
 	changeStampedeCount((kUnitCombat.isStampedeChange()) ? iChange : 0);
 	changeStampedeCount((kUnitCombat.isRemoveStampede()) ? -iChange : 0);
@@ -18477,8 +18352,8 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 	changeExtraInvestigation(kUnitCombat.getInvestigationChange() * iChange);
 	changeExtraStealthStrikes(kUnitCombat.getStealthStrikesChange() * iChange);
 	changeExtraStealthCombatModifier(kUnitCombat.getStealthCombatModifierChange() * iChange);
-	changeStealthDefenseCount((skillStealthDefense(kUnitCombat.getSkills()) ? 1 : 0) * iChange);
-	changeOnlyDefensiveCount((skillDefenseOnly(kUnitCombat.getSkills()) ? 1 : 0) * iChange);
+	changeStealthDefenseCount((CvSkillReads::stealthDefense(kUnitCombat.getSkills()) ? 1 : 0) * iChange);
+	changeOnlyDefensiveCount((CvSkillReads::defenseOnly(kUnitCombat.getSkills()) ? 1 : 0) * iChange);
 	changeNoInvisibilityCount(kUnitCombat.getNoInvisibilityChange() * iChange);
 	changeNoCaptureCount(kUnitCombat.getNoCaptureChange() * iChange);
 
@@ -18761,7 +18636,7 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	changeAmphibCount((kPromotion.isAmphib()) ? iChange : 0);
 	changeRiverCount((kPromotion.isRiver()) ? iChange : 0);
 	changeEnemyRouteCount((kPromotion.isEnemyRoute()) ? iChange : 0);
-	changeAlwaysHealCount((skillAlwaysHeal(kPromotion.getSkills())) ? iChange : 0);
+	changeAlwaysHealCount((CvSkillReads::alwaysHeal(kPromotion.getSkills())) ? iChange : 0);
 	changeHillsDoubleMoveCount((kPromotion.isHillsDoubleMove()) ? iChange : 0);
 
 	changeCanMovePeaksCount((kPromotion.isCanMovePeaks()) ? iChange : 0);
@@ -18783,20 +18658,20 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
     	m_commodore->changeCommandRange(kPromotion.getCommandRange() * iChange);
     }
 
-	changeImmuneToFirstStrikesCount((skillImmuneToFirstStrikes(kPromotion.getSkills())) ? iChange : 0);
+	changeImmuneToFirstStrikesCount((CvSkillReads::immuneToFirstStrikes(kPromotion.getSkills())) ? iChange : 0);
 
-	changeDefensiveVictoryMoveCount((skillDefensiveVictoryMove(kPromotion.getSkills())) ? iChange : 0);
-	changeFreeDropCount((skillFreeDrop(kPromotion.getSkills())) ? iChange : 0);
-	changeOffensiveVictoryMoveCount((skillOffensiveVictoryMove(kPromotion.getSkills())) ? iChange : 0);
+	changeDefensiveVictoryMoveCount((CvSkillReads::defensiveVictoryMove(kPromotion.getSkills())) ? iChange : 0);
+	changeFreeDropCount((CvSkillReads::freeDrop(kPromotion.getSkills())) ? iChange : 0);
+	changeOffensiveVictoryMoveCount((CvSkillReads::offensiveVictoryMove(kPromotion.getSkills())) ? iChange : 0);
 
-	changeOneUpCount((skillOneUp(kPromotion.getSkills())) ? iChange : 0);
-	changePillageEspionageCount((skillPillageEspionage(kPromotion.getSkills())) ? iChange : 0);
-	changePillageMarauderCount((skillPillageMarauder(kPromotion.getSkills())) ? iChange : 0);
-	changePillageOnMoveCount((skillPillageOnMove(kPromotion.getSkills())) ? iChange : 0);
-	changePillageOnVictoryCount((skillPillageOnVictory(kPromotion.getSkills())) ? iChange : 0);
-	changePillageResearchCount((skillPillageResearch(kPromotion.getSkills())) ? iChange : 0);
+	changeOneUpCount((CvSkillReads::oneUp(kPromotion.getSkills())) ? iChange : 0);
+	changePillageEspionageCount((CvSkillReads::pillageEspionage(kPromotion.getSkills())) ? iChange : 0);
+	changePillageMarauderCount((CvSkillReads::pillageMarauder(kPromotion.getSkills())) ? iChange : 0);
+	changePillageOnMoveCount((CvSkillReads::pillageOnMove(kPromotion.getSkills())) ? iChange : 0);
+	changePillageOnVictoryCount((CvSkillReads::pillageOnVictory(kPromotion.getSkills())) ? iChange : 0);
+	changePillageResearchCount((CvSkillReads::pillageResearch(kPromotion.getSkills())) ? iChange : 0);
 	changeAirCombatLimitChange((kPromotion.getAirCombatLimitChange()) * iChange);
-	changeCelebrityHappy(((skillCelebrity(kPromotion.getSkills()) ? 1 : 0)) * iChange);
+	changeCelebrityHappy(((CvSkillReads::celebrity(kPromotion.getSkills()) ? 1 : 0)) * iChange);
 	changeCollateralDamageLimitChange((kPromotion.getFlatCollateral(COLLATERAL_LIMIT, CASC_SCOPE_UNIT) / 100) * iChange);
 	changeCollateralDamageMaxUnitsChange((kPromotion.getFlatCollateral(COLLATERAL_MAX_UNITS, CASC_SCOPE_UNIT) / 100) * iChange);
 	changeCombatLimitChange((kPromotion.getFlatCombat(COMBAT_LIMIT, CASC_SCOPE_UNIT) / 100) * iChange);
@@ -18965,8 +18840,8 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	changeAssassinCount(kPromotion.getAssassinChange() * iChange);
 	changeExtraStealthStrikes(kPromotion.getStealthStrikesChange() * iChange);
 	changeExtraStealthCombatModifier(kPromotion.getStealthCombatModifierChange() * iChange);
-	changeStealthDefenseCount((skillStealthDefense(kPromotion.getSkills()) ? 1 : 0) * iChange);
-	changeOnlyDefensiveCount((skillDefenseOnly(kPromotion.getSkills()) ? 1 : 0) * iChange);
+	changeStealthDefenseCount((CvSkillReads::stealthDefense(kPromotion.getSkills()) ? 1 : 0) * iChange);
+	changeOnlyDefensiveCount((CvSkillReads::defenseOnly(kPromotion.getSkills()) ? 1 : 0) * iChange);
 	changeNoInvisibilityCount(kPromotion.getNoInvisibilityChange() * iChange);
 	changeExtraTrapDamageMax(kPromotion.getTrapDamageMax() * iChange);
 	changeExtraTrapDamageMin(kPromotion.getTrapDamageMin() * iChange);
@@ -21926,7 +21801,7 @@ bool CvUnit::isPotentialEnemy(TeamTypes eTeam, const CvPlot* pPlot, const CvUnit
 
 bool CvUnit::isSuicide() const
 {
-	return unitIsSuicide(*m_pUnitInfo) || getKamikazePercent() != 0;
+	return CvSkillReads::suicide(*m_pUnitInfo.getSkills()) || getKamikazePercent() != 0;
 }
 
 int CvUnit::getDropRange() const
@@ -22150,7 +22025,7 @@ int CvUnit::getRenderPriority(UnitSubEntityTypes eUnitSubEntity, int iMeshGroupT
 
 bool CvUnit::isAlwaysHostile(const CvPlot* pPlot) const
 {
-	if (!unitIsAlwaysHostile(*m_pUnitInfo) && getHiddenNationalityCount() < 1)
+	if (!CvSkillReads::alwaysHostile(*m_pUnitInfo.getSkills()) && getHiddenNationalityCount() < 1)
 	{
 		return false;
 	}
@@ -23088,7 +22963,7 @@ int CvUnit::doPillageInfluence()
 
 bool CvUnit::canPerformInquisition(const CvPlot* pPlot) const
 {
-	if (!unitIsInquisitor(*m_pUnitInfo))
+	if (!CvSkillReads::inquisitor(*m_pUnitInfo.getSkills()))
 	{
 		return false;
 	}
@@ -23444,7 +23319,7 @@ bool CvUnit::canClaimTerritory(const CvPlot* pPlot) const
 		return false;
 	}
 
-	if (isNPC() || unitIsAlwaysHostile(*m_pUnitInfo) || isHiddenNationality() || !unitCanPillage(*m_pUnitInfo))
+	if (isNPC() || CvSkillReads::alwaysHostile(*m_pUnitInfo.getSkills()) || isHiddenNationality() || !CvSkillReads::pillage(*m_pUnitInfo.getSkills()))
 	{
 		return false;
 	}

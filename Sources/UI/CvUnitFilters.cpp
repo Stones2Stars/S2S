@@ -14,7 +14,7 @@
 #include "Defines/CvGlobals.h"
 #include "AI/CvPlayerAI.h"
 #include "CvUnitInfo.h"               // the rebuilt unit poco: combatClass / domain / the skills bitset
-#include "CvClassificationBlock.h"    // CLSD_SKILL + the memoized generated-id bit test behind the skill reads
+#include "CvSkillReads.h"   // the ONE shared surface for the json.md §8 skill reads
 
 void UnitFilterBase::Activate()
 {
@@ -94,10 +94,8 @@ bool UnitFilterIsDomain::isFilteredUnit(const CvPlayer *pPlayer, const CvCity *p
 
 bool UnitFilterIsDefense::isFilteredUnit(const CvPlayer *pPlayer, const CvCity *pCity, UnitTypes eUnit) const
 {
-	// `onlyDefensive` is a unit SKILL on the rebuilt surface, so the read is the classification bitset's
-	// memoized generated-id test -- the CLS_HAS idiom, never a per-call string lookup.
-	static int s_onlyDefensiveSkillId = -1;
-	return GC.getUnitInfo(eUnit).getSkills()->hasKey(s_onlyDefensiveSkillId, CLSD_SKILL, "onlyDefensive");
+	// `onlyDefensive` is a unit SKILL on the rebuilt surface, read through the ONE shared skill surface.
+	return CvSkillReads::onlyDefensive(GC.getUnitInfo(eUnit).getSkills());
 }
 
 UnitFilterList::UnitFilterList(const CvPlayer *pPlayer, const CvCity *pCity)

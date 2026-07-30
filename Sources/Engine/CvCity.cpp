@@ -47,7 +47,8 @@
 #include "Infrastructure/CvDLLEngineIFaceBase.h"
 #endif
 #include "UI/CityOutputHistory.h"
-#include "Infos/CvClassificationBlock.h"   // CLSD_SKILL + the memoized id bit test
+#include "Infos/CvClassificationBlock.h"   // CLSD_TAG + the memoized id bit test
+#include "Infos/CvSkillReads.h"   // the ONE shared surface for the json.md §8 skill reads
 
 // The json.md §8 classification reads this file makes. The consumer holds the memoized generated-id
 // (the CvUnitFilters precedent): the info exposes only the parameterized group read, never a named
@@ -78,31 +79,6 @@ namespace
 			}
 			total[iRow].second += sourceRows[iSource].second * iMultiplicity;
 		}
-	}
-}
-
-namespace
-{
-	// The json.md §8 SKILL reads this file makes. The consumer holds the memoized generated-id
-	// (the CvUnitFilters precedent): the info exposes only the parameterized group read
-	// getSkills(), never a named getter per key (patterns.md -- a per-key boolean getter is the
-	// shape the rebuild deletes).
-	bool unitNeedsStateReligion(const CvUnitInfo& kUnit)
-	{
-		static int s_stateReligionSkillId = -1;
-		return kUnit.getSkills()->hasKey(s_stateReligionSkillId, CLSD_SKILL, "stateReligion");
-	}
-
-	bool unitIsFoodProduction(const CvUnitInfo& kUnit)
-	{
-		static int s_foodSkillId = -1;
-		return kUnit.getSkills()->hasKey(s_foodSkillId, CLSD_SKILL, "food");
-	}
-
-	bool unitHasNoNonTypeProdMods(const CvUnitInfo& kUnit)
-	{
-		static int s_noNonTypeProdModsSkillId = -1;
-		return kUnit.getSkills()->hasKey(s_noNonTypeProdModsSkillId, CLSD_SKILL, "noNonTypeProdMods");
 	}
 }
 
@@ -2672,7 +2648,7 @@ bool CvCity::isFoodProduction() const
 
 bool CvCity::isFoodProduction(UnitTypes eUnit) const
 {
-	return unitIsFoodProduction(GC.getUnitInfo(eUnit))
+	return CvSkillReads::food(GC.getUnitInfo(eUnit).getSkills())
 		|| GET_PLAYER(getOwner()).isMilitaryFoodProduction()
 		&& GC.getUnitInfo(eUnit).isMilitaryProduction();
 }
@@ -3059,7 +3035,7 @@ int CvCity::getProductionModifier(UnitTypes eUnit) const
 	const int iUnitsSegment = InfoValuation::keyedTargetSegment("units");
 	const int iDomainsSegment = InfoValuation::keyedTargetSegment("domains");
 	const int iUnitCombatsSegment = InfoValuation::keyedTargetSegment("unitCombats");
-	const bool bTypeMods = !unitHasNoNonTypeProdMods(kUnit);
+	const bool bTypeMods = !CvSkillReads::noNonTypeProdMods(kUnit.getSkills());
 
 	const std::set<int>& kActive = m_operatingBuildings.active;
 	for (std::set<int>::const_iterator it = kActive.begin(); it != kActive.end(); ++it)

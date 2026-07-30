@@ -15,94 +15,7 @@
 #include "Engine/CvGameCoreUtils.h"
 #include "CvGameCoreDLL.h"
 #include "Engine/CvTraitSelection.h"
-#include "Infos/CvClassificationBlock.h"   // CLSD_SKILL + the memoized id bit test
-
-namespace
-{
-	// The json.md §8 SKILL reads this file makes on a PROMOTION / UNITCOMBAT info. The consumer holds
-	// the memoized generated-id (the CvUnitFilters precedent); the info exposes only the parameterized
-	// group read getSkills(), never a named getter per key.
-	bool skillDcmFighterEngage(const CvClassificationBlock* skills)
-	{
-		static int s_dcmFighterEngageSkillId = -1;
-		return skills->hasKey(s_dcmFighterEngageSkillId, CLSD_SKILL, "dcmFighterEngage");
-	}
-	bool skillCollateralImmune(const CvClassificationBlock* skills)
-	{
-		static int s_collateralImmuneSkillId = -1;
-		return skills->hasKey(s_collateralImmuneSkillId, CLSD_SKILL, "collateralImmune");
-	}
-	bool skillCelebrity(const CvClassificationBlock* skills)
-	{
-		static int s_celebritySkillId = -1;
-		return skills->hasKey(s_celebritySkillId, CLSD_SKILL, "celebrity");
-	}
-	bool skillStealthDefense(const CvClassificationBlock* skills)
-	{
-		static int s_stealthDefenseSkillId = -1;
-		return skills->hasKey(s_stealthDefenseSkillId, CLSD_SKILL, "stealthDefense");
-	}
-	bool skillDefenseOnly(const CvClassificationBlock* skills)
-	{
-		static int s_defenseOnlySkillId = -1;
-		return skills->hasKey(s_defenseOnlySkillId, CLSD_SKILL, "defenseOnly");
-	}
-	bool skillAlwaysHeal(const CvClassificationBlock* skills)
-	{
-		static int s_alwaysHealSkillId = -1;
-		return skills->hasKey(s_alwaysHealSkillId, CLSD_SKILL, "alwaysHeal");
-	}
-	bool skillImmuneToFirstStrikes(const CvClassificationBlock* skills)
-	{
-		static int s_immuneToFirstStrikesSkillId = -1;
-		return skills->hasKey(s_immuneToFirstStrikesSkillId, CLSD_SKILL, "immuneToFirstStrikes");
-	}
-	bool skillDefensiveVictoryMove(const CvClassificationBlock* skills)
-	{
-		static int s_defensiveVictoryMoveSkillId = -1;
-		return skills->hasKey(s_defensiveVictoryMoveSkillId, CLSD_SKILL, "defensiveVictoryMove");
-	}
-	bool skillOffensiveVictoryMove(const CvClassificationBlock* skills)
-	{
-		static int s_offensiveVictoryMoveSkillId = -1;
-		return skills->hasKey(s_offensiveVictoryMoveSkillId, CLSD_SKILL, "offensiveVictoryMove");
-	}
-	bool skillFreeDrop(const CvClassificationBlock* skills)
-	{
-		static int s_freeDropSkillId = -1;
-		return skills->hasKey(s_freeDropSkillId, CLSD_SKILL, "freeDrop");
-	}
-	bool skillOneUp(const CvClassificationBlock* skills)
-	{
-		static int s_oneUpSkillId = -1;
-		return skills->hasKey(s_oneUpSkillId, CLSD_SKILL, "oneUp");
-	}
-	bool skillPillageEspionage(const CvClassificationBlock* skills)
-	{
-		static int s_pillageEspionageSkillId = -1;
-		return skills->hasKey(s_pillageEspionageSkillId, CLSD_SKILL, "pillageEspionage");
-	}
-	bool skillPillageMarauder(const CvClassificationBlock* skills)
-	{
-		static int s_pillageMarauderSkillId = -1;
-		return skills->hasKey(s_pillageMarauderSkillId, CLSD_SKILL, "pillageMarauder");
-	}
-	bool skillPillageOnMove(const CvClassificationBlock* skills)
-	{
-		static int s_pillageOnMoveSkillId = -1;
-		return skills->hasKey(s_pillageOnMoveSkillId, CLSD_SKILL, "pillageOnMove");
-	}
-	bool skillPillageOnVictory(const CvClassificationBlock* skills)
-	{
-		static int s_pillageOnVictorySkillId = -1;
-		return skills->hasKey(s_pillageOnVictorySkillId, CLSD_SKILL, "pillageOnVictory");
-	}
-	bool skillPillageResearch(const CvClassificationBlock* skills)
-	{
-		static int s_pillageResearchSkillId = -1;
-		return skills->hasKey(s_pillageResearchSkillId, CLSD_SKILL, "pillageResearch");
-	}
-}
+#include "Infos/CvSkillReads.h"   // the ONE shared surface for the json.md §8 skill reads
 
 #include "Data/CvInfoValuation.h"   // InfoValuation::collectHealByUnitCombat + HealByUnitCombat
 #include "Engine/CvGameSpeedScale.h"
@@ -1379,7 +1292,7 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, 
 
 			if (GC.isDCM_FIGHTER_ENGAGE())
 			{
-				if (skillDcmFighterEngage(GC.getUnitInfo(pUnit->getUnitType()).getSkills()))
+				if (CvSkillReads::dcmFighterEngage(GC.getUnitInfo(pUnit->getUnitType()).getSkills()))
 				{
 					szString.append(NEWLINE);
 					szString.append(gDLL->getText("TXT_KEY_IS_FIGHTER_ENGAGE"));
@@ -1821,7 +1734,7 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, 
 				//Collateral Resistance
 			//	skills.md: the legacy per-source keying (SIEGE / ASSAULT_MECH / ROBOT -- all the siege
 			//	variant) COLLAPSES to one boolean, so the per-unitcombat enumeration goes with it.
-			if (skillCollateralImmune(pUnit->getUnitInfo().getSkills()))
+			if (CvSkillReads::collateralImmune(pUnit->getUnitInfo().getSkills()))
 			{
 				szString.append(NEWLINE);
 				szString.append(gDLL->getText("TXT_KEY_UNITHELP_COLLATERAL_IMMUNE_ALL"));
@@ -3134,7 +3047,7 @@ void CvGameTextMgr::setPlotListHelp(CvWStringBuffer &szString, CvPlot* pPlot, bo
 					szString.append(CvWString::format(L"%c", gDLL->getSymbolID(STRENGTH_CHAR)));
 				}
 
-				if (kPlayer.getID() != GC.getGame().getActivePlayer() && !unitHasHiddenNationality(kUnit))
+				if (kPlayer.getID() != GC.getGame().getActivePlayer() && !CvSkillReads::hiddenNationality(kUnit.getSkills()))
 				{
 					szString.append(L", ");
 
@@ -6872,7 +6785,7 @@ void CvGameTextMgr::parsePromotionHelpInternal(CvWStringBuffer &szBuffer, Promot
 		{
 			bIsNoSelfHeal = true;
 		}
-		if (skillAlwaysHeal(promoX.getSkills()))
+		if (CvSkillReads::alwaysHeal(promoX.getSkills()))
 		{
 			bIsAlwaysHeal = true;
 		}
@@ -6927,7 +6840,7 @@ void CvGameTextMgr::parsePromotionHelpInternal(CvWStringBuffer &szBuffer, Promot
 		{
 			bIsFliesToMoveSubtract = true;
 		}
-		if (skillImmuneToFirstStrikes(promoX.getSkills()))
+		if (CvSkillReads::immuneToFirstStrikes(promoX.getSkills()))
 		{
 			bIsImmuneToFirstStrikes = true;
 		}
@@ -6947,39 +6860,39 @@ void CvGameTextMgr::parsePromotionHelpInternal(CvWStringBuffer &szBuffer, Promot
 		{
 			bIsParalyze = true;
 		}
-		if (skillDefensiveVictoryMove(promoX.getSkills()))
+		if (CvSkillReads::defensiveVictoryMove(promoX.getSkills()))
 		{
 			bIsDefensiveVictoryMove = true;
 		}
-		if (skillFreeDrop(promoX.getSkills()))
+		if (CvSkillReads::freeDrop(promoX.getSkills()))
 		{
 			bIsFreeDrop = true;
 		}
-		if (skillOffensiveVictoryMove(promoX.getSkills()))
+		if (CvSkillReads::offensiveVictoryMove(promoX.getSkills()))
 		{
 			bIsOffensiveVictoryMove = true;
 		}
-		if (skillOneUp(promoX.getSkills()))
+		if (CvSkillReads::oneUp(promoX.getSkills()))
 		{
 			bIsOneUp = true;
 		}
-		if (skillPillageEspionage(promoX.getSkills()))
+		if (CvSkillReads::pillageEspionage(promoX.getSkills()))
 		{
 			bIsPillageEspionage = true;
 		}
-		if (skillPillageMarauder(promoX.getSkills()))
+		if (CvSkillReads::pillageMarauder(promoX.getSkills()))
 		{
 			bIsPillageMarauder = true;
 		}
-		if (skillPillageOnMove(promoX.getSkills()))
+		if (CvSkillReads::pillageOnMove(promoX.getSkills()))
 		{
 			bIsPillageOnMove = true;
 		}
-		if (skillPillageOnVictory(promoX.getSkills()))
+		if (CvSkillReads::pillageOnVictory(promoX.getSkills()))
 		{
 			bIsPillageOnVictory = true;
 		}
-		if (skillPillageResearch(promoX.getSkills()))
+		if (CvSkillReads::pillageResearch(promoX.getSkills()))
 		{
 			bIsPillageResearch = true;
 		}
@@ -7320,8 +7233,8 @@ void CvGameTextMgr::parsePromotionHelpInternal(CvWStringBuffer &szBuffer, Promot
 		iAssassinChange += promoX.getAssassinChange();
 		iStealthStrikesChange += promoX.getStealthStrikesChange();
 		iStealthCombatModifierChange += promoX.getStealthCombatModifierChange();
-		iStealthDefenseChange += (skillStealthDefense(promoX.getSkills()) ? 1 : 0);
-		iDefenseOnlyChange += (skillDefenseOnly(promoX.getSkills()) ? 1 : 0);
+		iStealthDefenseChange += (CvSkillReads::stealthDefense(promoX.getSkills()) ? 1 : 0);
+		iDefenseOnlyChange += (CvSkillReads::defenseOnly(promoX.getSkills()) ? 1 : 0);
 		if (bHideSeek)
 		{
 			iNoInvisibilityChange += promoX.getNoInvisibilityChange();
@@ -7340,7 +7253,7 @@ void CvGameTextMgr::parsePromotionHelpInternal(CvWStringBuffer &szBuffer, Promot
 		iMaxHPChange += promoX.getMaxHPChange();
 		iStrengthModifier += promoX.getStrengthModifier();
 		iAirCombatLimitChange += promoX.getAirCombatLimitChange();
-		iCelebrityHappy += (skillCelebrity(promoX.getSkills()) ? 1 : 0);
+		iCelebrityHappy += (CvSkillReads::celebrity(promoX.getSkills()) ? 1 : 0);
 		iCollateralDamageLimitChange += promoX.getFlatCollateral(COLLATERAL_LIMIT, CASC_SCOPE_UNIT) / 100;
 		iCollateralDamageMaxUnitsChange += promoX.getFlatCollateral(COLLATERAL_MAX_UNITS, CASC_SCOPE_UNIT) / 100;
 		iCombatLimitChange += promoX.getFlatCombat(COMBAT_LIMIT, CASC_SCOPE_UNIT) / 100;
@@ -11651,7 +11564,7 @@ void CvGameTextMgr::setBasicUnitHelpWithCity(CvWStringBuffer &szBuffer, UnitType
 		}
 
 		//Hidden Nationality
-		if (unitHasHiddenNationality(kUnit))
+		if (CvSkillReads::hiddenNationality(kUnit.getSkills()))
 		{
 			szBuffer.append(NEWLINE);
 			szBuffer.append(gDLL->getText("TXT_KEY_UNITHELP_HIDDEN_NATIONALITY"));
@@ -19181,10 +19094,10 @@ void CvGameTextMgr::setUnitCombatHelp(CvWStringBuffer& szBuffer, UnitCombatTypes
 		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_AIR_LIMIT_CHANGE", info.getAirCombatLimitChange()));
 	}
 
-	if ((skillCelebrity(info.getSkills()) ? 1 : 0) != 0)
+	if ((CvSkillReads::celebrity(info.getSkills()) ? 1 : 0) != 0)
 	{
 		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_CELEBRITY", (skillCelebrity(info.getSkills()) ? 1 : 0)));
+		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_CELEBRITY", (CvSkillReads::celebrity(info.getSkills()) ? 1 : 0)));
 	}
 
 
@@ -19357,17 +19270,17 @@ void CvGameTextMgr::setUnitCombatHelp(CvWStringBuffer& szBuffer, UnitCombatTypes
 			szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_STEALTH_COMBAT_MODIFIER", info.getStealthCombatModifierChange()));
 		}
 
-		if ((skillStealthDefense(info.getSkills()) ? 1 : 0) != 0)
+		if ((CvSkillReads::stealthDefense(info.getSkills()) ? 1 : 0) != 0)
 		{
 			szBuffer.append(NEWLINE);
-			szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_STEALTH_DEFENSE_CHANGE", (skillStealthDefense(info.getSkills()) ? 1 : 0)));
+			szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_STEALTH_DEFENSE_CHANGE", (CvSkillReads::stealthDefense(info.getSkills()) ? 1 : 0)));
 		}
 	}
 
-	if ((skillDefenseOnly(info.getSkills()) ? 1 : 0) != 0)
+	if ((CvSkillReads::defenseOnly(info.getSkills()) ? 1 : 0) != 0)
 	{
 		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_DEFENSE_ONLY_CHANGE", (skillDefenseOnly(info.getSkills()) ? 1 : 0)));
+		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_DEFENSE_ONLY_CHANGE", (CvSkillReads::defenseOnly(info.getSkills()) ? 1 : 0)));
 	}
 
 	if (info.getNoInvisibilityChange() != 0 && GC.getGame().isOption(GAMEOPTION_COMBAT_HIDE_SEEK))
@@ -19388,13 +19301,13 @@ void CvGameTextMgr::setUnitCombatHelp(CvWStringBuffer& szBuffer, UnitCombatTypes
 	}
 
 	//booleans
-	if (skillDefensiveVictoryMove(info.getSkills()))
+	if (CvSkillReads::defensiveVictoryMove(info.getSkills()))
 	{
 		szBuffer.append(NEWLINE);
 		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_DV_MOVE"));
 	}
 
-	if (skillFreeDrop(info.getSkills()))
+	if (CvSkillReads::freeDrop(info.getSkills()))
 	{
 		szBuffer.append(NEWLINE);
 		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_FREE_DROP"));
@@ -19403,43 +19316,43 @@ void CvGameTextMgr::setUnitCombatHelp(CvWStringBuffer& szBuffer, UnitCombatTypes
 		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_DROP_SIGHT_UNSEEN"));
 	}
 
-	if (skillOffensiveVictoryMove(info.getSkills()))
+	if (CvSkillReads::offensiveVictoryMove(info.getSkills()))
 	{
 		szBuffer.append(NEWLINE);
 		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_OV_MOVE"));
 	}
 
-	if (skillOneUp(info.getSkills()))
+	if (CvSkillReads::oneUp(info.getSkills()))
 	{
 		szBuffer.append(NEWLINE);
 		szBuffer.append(gDLL->getText("TXT_KEY_UNITHELP_ONEUP"));
 	}
 
-	if (skillPillageEspionage(info.getSkills()))
+	if (CvSkillReads::pillageEspionage(info.getSkills()))
 	{
 		szBuffer.append(NEWLINE);
 		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_ESPIONAGE_PILLAGE"));
 	}
 
-	if (skillPillageMarauder(info.getSkills()))
+	if (CvSkillReads::pillageMarauder(info.getSkills()))
 	{
 		szBuffer.append(NEWLINE);
 		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_MARAUDER_PILLAGE"));
 	}
 
-	if (skillPillageOnMove(info.getSkills()))
+	if (CvSkillReads::pillageOnMove(info.getSkills()))
 	{
 		szBuffer.append(NEWLINE);
 		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_MOVING_PILLAGE"));
 	}
 
-	if (skillPillageOnVictory(info.getSkills()))
+	if (CvSkillReads::pillageOnVictory(info.getSkills()))
 	{
 		szBuffer.append(NEWLINE);
 		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_VICTORY_PILLAGE"));
 	}
 
-	if (skillPillageResearch(info.getSkills()))
+	if (CvSkillReads::pillageResearch(info.getSkills()))
 	{
 		szBuffer.append(NEWLINE);
 		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_RESEARCH_PILLAGE"));
@@ -19474,7 +19387,7 @@ void CvGameTextMgr::setUnitCombatHelp(CvWStringBuffer& szBuffer, UnitCombatTypes
 		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_ENEMY_ROADS"));
 	}
 
-	if (skillAlwaysHeal(info.getSkills()))
+	if (CvSkillReads::alwaysHeal(info.getSkills()))
 	{
 		szBuffer.append(NEWLINE);
 
@@ -19491,7 +19404,7 @@ void CvGameTextMgr::setUnitCombatHelp(CvWStringBuffer& szBuffer, UnitCombatTypes
 		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_HILLS_MOVE"));
 	}
 
-	if (skillImmuneToFirstStrikes(info.getSkills()))
+	if (CvSkillReads::immuneToFirstStrikes(info.getSkills()))
 	{
 		szBuffer.append(NEWLINE);
 		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_IMMUNE_FIRST_STRIKES"));
@@ -22728,15 +22641,6 @@ void CvGameTextMgr::parseGreatGeneralHelp(CvWStringBuffer &szBuffer, CvPlayer& k
 // The json.md §8 classification reads this file makes. The consumer holds the memoized generated-id
 // (the CvUnitFilters precedent): the info exposes only the parameterized group read, never a named
 // getter per key (patterns.md -- a per-key boolean getter is the shape the rebuild deletes).
-namespace
-{
-	bool unitHasHiddenNationality(const CvUnitInfo& kUnit)
-	{
-		static int s_hiddenNationalityId = -1;
-		return kUnit.getSkills()->hasKey(s_hiddenNationalityId, CLSD_SKILL, "hiddenNationality");
-	}
-}
-
 void CvGameTextMgr::buildCityBillboardIconString( CvWStringBuffer& szBuffer, CvCity* pCity)
 {
 	citEmitBillboardPoll(8, pCity->getID());

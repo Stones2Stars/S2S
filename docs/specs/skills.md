@@ -104,7 +104,7 @@ Owner-ruled or curator-grounded with a clear meaning.
 | `sabotage` | can perform sabotage |
 | `stealPlans` | can steal plans (espionage mission) |
 | `suicide` | destroyed after attacking |
-| `tradable` | can be traded with another empire — consolidates the legacy `militaryTrade` + `workerTrade` (curator fold) |
+| `tradable` | can be traded with another empire — the ONE key for the trade-away ability, replacing the legacy `militaryTrade` / `workerTrade` split (a unit is tradable or it is not; who may receive it is the deal system's question, not the unit's) |
 | `unlimitedException` | exempt from instance-cap limits |
 | `upgradeAnywhere` | can upgrade regardless of location |
 | `zoneOfControl` | exerts a zone of control |

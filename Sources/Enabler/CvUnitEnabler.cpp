@@ -28,20 +28,7 @@
 #include "Engine/CvPlayer.h"
 #include "Engine/CvTeam.h"
 #include <map>
-#include "Infos/CvClassificationBlock.h"   // CLSD_SKILL + the memoized id bit test
-
-namespace
-{
-	// The json.md §8 SKILL reads this file makes. The consumer holds the memoized generated-id
-	// (the CvUnitFilters precedent): the info exposes only the parameterized group read
-	// getSkills(), never a named getter per key (patterns.md -- a per-key boolean getter is the
-	// shape the rebuild deletes).
-	bool unitIsUnlimitedException(const CvUnitInfo& kUnit)
-	{
-		static int s_unlimitedExceptionSkillId = -1;
-		return kUnit.getSkills()->hasKey(s_unlimitedExceptionSkillId, CLSD_SKILL, "unlimitedException");
-	}
-}
+#include "Infos/CvSkillReads.h"   // the ONE shared surface for the json.md §8 skill reads
 
 
 // the source's cascade info per axis (the tech axis redirects the TECH_GAME_START root to cascadeStartNode).
@@ -233,7 +220,7 @@ static bool ud_capped(const CvInfo* j, int eU, const CvPlayer& kPlayer, bool noN
 	const int wcap = j->allowedCap(ALLOWEDCAP_WORLD);
 	if (wcap >= 0 && GC.getGame().getUnitCreatedCount((UnitTypes)eU) + making >= wcap) return true;
 	const int ecap = j->allowedCap(ALLOWEDCAP_EMPIRE);
-	if (ecap >= 0 && !(noNationalLimit && !unitIsUnlimitedException(GC.getUnitInfo((UnitTypes)eU))))
+	if (ecap >= 0 && !(noNationalLimit && !CvSkillReads::unlimitedException(GC.getUnitInfo((UnitTypes)eU).getSkills())))
 	{
 		const int era = (int)kPlayer.getCurrentEra();
 		const int cap = (ecap == 5 && era > 0) ? ecap + era * 5 : ecap;   // era-scaled base-5 national cap

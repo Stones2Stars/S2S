@@ -1,84 +1,7 @@
 // unitAI.cpp
 
 #include "CvGameCoreDLL.h"
-#include "Infos/CvClassificationBlock.h"   // CLSD_SKILL + the memoized id bit test
-
-namespace
-{
-	// The json.md §8 SKILL reads this file makes on a PROMOTION / UNITCOMBAT info. The consumer holds
-	// the memoized generated-id (the CvUnitFilters precedent); the info exposes only the parameterized
-	// group read getSkills(), never a named getter per key.
-	bool skillCelebrity(const CvClassificationBlock* skills)
-	{
-		static int s_celebritySkillId = -1;
-		return skills->hasKey(s_celebritySkillId, CLSD_SKILL, "celebrity");
-	}
-	bool skillStealthDefense(const CvClassificationBlock* skills)
-	{
-		static int s_stealthDefenseSkillId = -1;
-		return skills->hasKey(s_stealthDefenseSkillId, CLSD_SKILL, "stealthDefense");
-	}
-	bool skillDefenseOnly(const CvClassificationBlock* skills)
-	{
-		static int s_defenseOnlySkillId = -1;
-		return skills->hasKey(s_defenseOnlySkillId, CLSD_SKILL, "defenseOnly");
-	}
-	bool skillAlwaysHeal(const CvClassificationBlock* skills)
-	{
-		static int s_alwaysHealSkillId = -1;
-		return skills->hasKey(s_alwaysHealSkillId, CLSD_SKILL, "alwaysHeal");
-	}
-	bool skillImmuneToFirstStrikes(const CvClassificationBlock* skills)
-	{
-		static int s_immuneToFirstStrikesSkillId = -1;
-		return skills->hasKey(s_immuneToFirstStrikesSkillId, CLSD_SKILL, "immuneToFirstStrikes");
-	}
-	bool skillDefensiveVictoryMove(const CvClassificationBlock* skills)
-	{
-		static int s_defensiveVictoryMoveSkillId = -1;
-		return skills->hasKey(s_defensiveVictoryMoveSkillId, CLSD_SKILL, "defensiveVictoryMove");
-	}
-	bool skillOffensiveVictoryMove(const CvClassificationBlock* skills)
-	{
-		static int s_offensiveVictoryMoveSkillId = -1;
-		return skills->hasKey(s_offensiveVictoryMoveSkillId, CLSD_SKILL, "offensiveVictoryMove");
-	}
-	bool skillFreeDrop(const CvClassificationBlock* skills)
-	{
-		static int s_freeDropSkillId = -1;
-		return skills->hasKey(s_freeDropSkillId, CLSD_SKILL, "freeDrop");
-	}
-	bool skillOneUp(const CvClassificationBlock* skills)
-	{
-		static int s_oneUpSkillId = -1;
-		return skills->hasKey(s_oneUpSkillId, CLSD_SKILL, "oneUp");
-	}
-	bool skillPillageEspionage(const CvClassificationBlock* skills)
-	{
-		static int s_pillageEspionageSkillId = -1;
-		return skills->hasKey(s_pillageEspionageSkillId, CLSD_SKILL, "pillageEspionage");
-	}
-	bool skillPillageMarauder(const CvClassificationBlock* skills)
-	{
-		static int s_pillageMarauderSkillId = -1;
-		return skills->hasKey(s_pillageMarauderSkillId, CLSD_SKILL, "pillageMarauder");
-	}
-	bool skillPillageOnMove(const CvClassificationBlock* skills)
-	{
-		static int s_pillageOnMoveSkillId = -1;
-		return skills->hasKey(s_pillageOnMoveSkillId, CLSD_SKILL, "pillageOnMove");
-	}
-	bool skillPillageOnVictory(const CvClassificationBlock* skills)
-	{
-		static int s_pillageOnVictorySkillId = -1;
-		return skills->hasKey(s_pillageOnVictorySkillId, CLSD_SKILL, "pillageOnVictory");
-	}
-	bool skillPillageResearch(const CvClassificationBlock* skills)
-	{
-		static int s_pillageResearchSkillId = -1;
-		return skills->hasKey(s_pillageResearchSkillId, CLSD_SKILL, "pillageResearch");
-	}
-}
+#include "Infos/CvSkillReads.h"   // the ONE shared surface for the json.md §8 skill reads
 
 #include "Data/CvInfoValuation.h"   // InfoValuation::collectHealByUnitCombat + HealByUnitCombat
 #include "Engine/CvGameSpeedScale.h"
@@ -118,20 +41,6 @@ namespace
 #endif
 #include "CvWorkerAI.h"
 #include "Spine/CvEventSpine.h" // #430 logging consolidation: route UNT/COM/FND lines through the event spine (shadow)
-#include "Infos/CvClassificationBlock.h"   // CLSD_SKILL + the memoized id bit test
-
-namespace
-{
-	// The json.md §8 SKILL reads this file makes. The consumer holds the memoized generated-id
-	// (the CvUnitFilters precedent): the info exposes only the parameterized group read
-	// getSkills(), never a named getter per key (patterns.md -- a per-key boolean getter is the
-	// shape the rebuild deletes).
-	bool unitIsGreatGeneral(const CvUnitInfo& kUnit)
-	{
-		static int s_greatGeneralSkillId = -1;
-		return kUnit.getSkills()->hasKey(s_greatGeneralSkillId, CLSD_SKILL, "greatGeneral");
-	}
-}
 
 
 // ---------------------------------------------------------------------------
@@ -26988,7 +26897,7 @@ bool CvUnitAI::AI_command()
 	PROFILE_EXTRA_FUNC();
 
 	if (!GC.getGame().isOption(GAMEOPTION_UNIT_GREAT_COMMANDERS)
-	|| !unitIsGreatGeneral(getUnitInfo())
+	|| !CvSkillReads::greatGeneral(getUnitInfo().getSkills())
 	|| isCommander())
 	{
 		return false;
@@ -28475,7 +28384,7 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 					}
 
 					//	First strike immunity
-					if (skillImmuneToFirstStrikes(kPromotion.getSkills()))
+					if (CvSkillReads::immuneToFirstStrikes(kPromotion.getSkills()))
 					{
 						int		iFirstStrikeWeight = 120;	//	Future - make this adaptive to known enemy units
 
@@ -28485,7 +28394,7 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 					}
 
 					//	Consider healing as part of defense
-					if (skillAlwaysHeal(kPromotion.getSkills()))
+					if (CvSkillReads::alwaysHeal(kPromotion.getSkills()))
 					{
 						int		iAlwaysHealWeight = 140;
 
@@ -28524,7 +28433,7 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 					}
 
 					//Extra Lives (should double the value of the unit...)
-					if (skillOneUp(kPromotion.getSkills()))
+					if (CvSkillReads::oneUp(kPromotion.getSkills()))
 					{
 						int iOneUpWeight = 200;
 
@@ -28534,7 +28443,7 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 					}
 
 					// Defensive Victory Moves
-					if (skillDefensiveVictoryMove(kPromotion.getSkills()))
+					if (CvSkillReads::defensiveVictoryMove(kPromotion.getSkills()))
 					{
 						int iDefensiveVictoryMoveWeight = 140;
 
@@ -28558,7 +28467,7 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 				{
 					//Team Project (2)
 						// Offensive Victory Moves
-					if (skillOffensiveVictoryMove(kPromotion.getSkills()))
+					if (CvSkillReads::offensiveVictoryMove(kPromotion.getSkills()))
 					{
 						//may want to include Blitz into this factor somehow
 						int iOffensiveVictoryMoveWeight = 140;
@@ -28669,7 +28578,7 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 				{
 					//Team Project (2)
 										// Free Drop (takes no movement to perform an air drop)
-					if (skillFreeDrop(kPromotion.getSkills()))
+					if (CvSkillReads::freeDrop(kPromotion.getSkills()))
 					{
 						int iFreeDropWeight = 110;
 
@@ -28678,7 +28587,7 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 						bPromotionHasAccountedValue = true;
 					}
 					// Pillage Espionage
-					if (skillPillageEspionage(kPromotion.getSkills()))
+					if (CvSkillReads::pillageEspionage(kPromotion.getSkills()))
 					{
 						int iPillageEspionageWeight = 110;
 
@@ -28687,7 +28596,7 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 						bPromotionHasAccountedValue = true;
 					}
 					// Pillage Research
-					if (skillPillageResearch(kPromotion.getSkills()))
+					if (CvSkillReads::pillageResearch(kPromotion.getSkills()))
 					{
 						int iPillageResearchWeight = 110;
 
@@ -28696,7 +28605,7 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 						bPromotionHasAccountedValue = true;
 					}
 					// Pillage Marauder
-					if (skillPillageMarauder(kPromotion.getSkills()))
+					if (CvSkillReads::pillageMarauder(kPromotion.getSkills()))
 					{
 						int iPillageMarauderWeight = 115;
 
@@ -28705,7 +28614,7 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 						bPromotionHasAccountedValue = true;
 					}
 					// PillageOnMove
-					if (skillPillageOnMove(kPromotion.getSkills()))
+					if (CvSkillReads::pillageOnMove(kPromotion.getSkills()))
 					{
 						int iPillageOnMoveWeight = 115;
 
@@ -28714,7 +28623,7 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 						bPromotionHasAccountedValue = true;
 					}
 					// PillageOnVictory
-					if (skillPillageOnVictory(kPromotion.getSkills()))
+					if (CvSkillReads::pillageOnVictory(kPromotion.getSkills()))
 					{
 						int iPillageOnVictoryWeight = 115;
 
@@ -28723,11 +28632,11 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 						bPromotionHasAccountedValue = true;
 					}
 					//	Celebrity Happy
-					if ((skillCelebrity(kPromotion.getSkills()) ? 1 : 0) != 0)
+					if ((CvSkillReads::celebrity(kPromotion.getSkills()) ? 1 : 0) != 0)
 					{
-						iResult = (iResult * (100 + ((skillCelebrity(kPromotion.getSkills()) ? 1 : 0) * 10))) / 100;
+						iResult = (iResult * (100 + ((CvSkillReads::celebrity(kPromotion.getSkills()) ? 1 : 0) * 10))) / 100;
 
-						bPromotionHasAccountedValue |= ((skillCelebrity(kPromotion.getSkills()) ? 1 : 0) > 0);
+						bPromotionHasAccountedValue |= ((CvSkillReads::celebrity(kPromotion.getSkills()) ? 1 : 0) > 0);
 					}
 					//	Drop Range
 					if (kPromotion.getMovement(MOVEMENT_DROP_RANGE, CASC_SCOPE_UNIT) / 100 != 0)
@@ -29641,7 +29550,7 @@ bool CvUnitAI::AI_selectStatus(bool bStack, CvUnit* pUnit)
 				{
 					//Keep things as thin as possible here - program in as new statuses are introduced
 					//Stay the Hand
-					int iTemp = (skillDefenseOnly(kPromotion.getSkills()) ? 1 : 0);
+					int iTemp = (CvSkillReads::defenseOnly(kPromotion.getSkills()) ? 1 : 0);
 					if (iTemp != 0)
 					{
 						if (eMissionAI == MISSIONAI_SPREAD ||
@@ -29668,7 +29577,7 @@ bool CvUnitAI::AI_selectStatus(bool bStack, CvUnit* pUnit)
 					}
 
 					//Stealth Defense
-					iTemp = (skillStealthDefense(kPromotion.getSkills()) ? 1 : 0);
+					iTemp = (CvSkillReads::stealthDefense(kPromotion.getSkills()) ? 1 : 0);
 					if (iTemp != 0)
 					{
 						if (eUnitAI == UNITAI_SETTLE ||

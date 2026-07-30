@@ -56,38 +56,7 @@
 #include "CvInfoKinds.h"                // the family + kind vocabulary the group reads walk
 #include "Spine/CvEventSpine.h"   // the DOMAIN emit endpoints -- every state-change choke point below announces through these
 #include <boost/scoped_ptr.hpp>
-#include "Infos/CvClassificationBlock.h"   // CLSD_SKILL + the memoized id bit test
-
-namespace
-{
-	// The json.md §8 SKILL reads this file makes. The consumer holds the memoized generated-id
-	// (the CvUnitFilters precedent): the info exposes only the parameterized group read
-	// getSkills(), never a named getter per key (patterns.md -- a per-key boolean getter is the
-	// shape the rebuild deletes).
-	bool unitCanFound(const CvUnitInfo& kUnit)
-	{
-		static int s_foundSkillId = -1;
-		return kUnit.getSkills()->hasKey(s_foundSkillId, CLSD_SKILL, "found");
-	}
-
-	bool unitIsWorkerTradable(const CvUnitInfo& kUnit)
-	{
-		static int s_workerTradeSkillId = -1;
-		return kUnit.getSkills()->hasKey(s_workerTradeSkillId, CLSD_SKILL, "workerTrade");
-	}
-
-	bool unitIsMilitaryTradable(const CvUnitInfo& kUnit)
-	{
-		static int s_militaryTradeSkillId = -1;
-		return kUnit.getSkills()->hasKey(s_militaryTradeSkillId, CLSD_SKILL, "militaryTrade");
-	}
-
-	bool unitHasNoNonTypeProdMods(const CvUnitInfo& kUnit)
-	{
-		static int s_noNonTypeProdModsSkillId = -1;
-		return kUnit.getSkills()->hasKey(s_noNonTypeProdModsSkillId, CLSD_SKILL, "noNonTypeProdMods");
-	}
-}
+#include "Infos/CvSkillReads.h"   // the ONE shared surface for the json.md §8 skill reads
 
 //	Koshling - save flag indicating this player has no data in the save as they have never been alive
 #define	PLAYER_UI_FLAG_OMITTED 2
@@ -1823,7 +1792,7 @@ void CvPlayer::resetCivTypeEffects()
 
 	for (int iI = 0; iI < GC.getNumUnitInfos(); ++iI)
 	{
-		if (unitCanFound(GC.getUnitInfo((UnitTypes)iI)))
+		if (CvSkillReads::found(GC.getUnitInfo((UnitTypes)iI).getSkills()))
 		{
 			setUnitExtraCost((UnitTypes)iI, getNewCityProductionValue());
 		}
@@ -5388,7 +5357,7 @@ bool CvPlayer::canTradeItem(PlayerTypes eWhoTo, TradeData item, bool bTestDenial
 			&& GC.getGame().isOption(GAMEOPTION_ADVANCED_DIPLOMACY)
 			&& GC.getDefineINT("CAN_TRADE_WORKERS") > 0
 			&& GET_TEAM(getTeam()).isHasEmbassy(GET_PLAYER(eWhoTo).getTeam())
-			&& unitIsWorkerTradable(GC.getUnitInfo(pUnitTraded->getUnitType()))
+			&& CvSkillReads::workerTrade(GC.getUnitInfo(pUnitTraded->getUnitType()).getSkills())
 			&& pUnitTraded->canMove()
 			&& !GET_PLAYER(eWhoTo).isUnitMaxedOut(pUnitTraded->getUnitType(), GET_PLAYER(eWhoTo).getUnitMaking(pUnitTraded->getUnitType())))
 			{
@@ -5405,7 +5374,7 @@ bool CvPlayer::canTradeItem(PlayerTypes eWhoTo, TradeData item, bool bTestDenial
 			&& GC.getGame().isOption(GAMEOPTION_ADVANCED_DIPLOMACY)
 			&& GC.getDefineINT("NO_MILITARY_UNIT_TRADING") == 0
 			&& GET_TEAM(getTeam()).isHasEmbassy(GET_PLAYER(eWhoTo).getTeam())
-			&& unitIsMilitaryTradable(GC.getUnitInfo(pUnitTraded->getUnitType())))
+			&& CvSkillReads::militaryTrade(GC.getUnitInfo(pUnitTraded->getUnitType()).getSkills()))
 			{
 				CvCity* pTradingCity = pUnitTraded->plot()->getPlotCity();
 
@@ -6145,7 +6114,7 @@ bool CvPlayer::canReceiveGoody(const CvPlot* pPlot, GoodyTypes eGoody, const CvU
 		}
 
 		if (GC.getGame().isOption(GAMEOPTION_CHALLENGE_ONE_CITY)
-		&& unitCanFound(GC.getUnitInfo((UnitTypes)GC.getGoodyInfo(eGoody).getGoodyUnit())))
+		&& CvSkillReads::found(GC.getUnitInfo((UnitTypes)GC.getGoodyInfo(eGoody).getGoodyUnit()).getSkills()))
 		{
 			return false;
 		}
@@ -6987,7 +6956,7 @@ int CvPlayer::getProductionModifier(UnitTypes eUnit) const
 	PROFILE_EXTRA_FUNC();
 	int iMultiplier = 0;
 
-	if (!unitHasNoNonTypeProdMods(GC.getUnitInfo(eUnit)) && GC.getUnitInfo(eUnit).isMilitaryProduction())
+	if (!CvSkillReads::noNonTypeProdMods(GC.getUnitInfo(eUnit).getSkills()) && GC.getUnitInfo(eUnit).isMilitaryProduction())
 	{
 		iMultiplier += getMilitaryProductionModifier();
 	}

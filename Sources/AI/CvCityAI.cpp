@@ -39,33 +39,11 @@
 #include "CvWorkerAI.h"
 #include "Spine/CvEventSpine.h" // #430 logging consolidation: route [CIT] through the event spine (shadow)
 #include "CvCityLogTags.h" // [CIT] tag enums (shared with CvCity.cpp -- defined once, see header)
-#include "Infos/CvClassificationBlock.h"   // CLSD_SKILL + the memoized id bit test
+#include "Infos/CvSkillReads.h"   // the ONE shared surface for the json.md §8 skill reads
 
 // The json.md §8 classification reads this file makes. The consumer holds the memoized generated-id
 // (the CvUnitFilters precedent): the info exposes only the parameterized group read, never a named
 // getter per key (patterns.md -- a per-key boolean getter is the shape the rebuild deletes).
-namespace
-{
-	bool unitIgnoresBuildingDefense(const CvUnitInfo& kUnit)
-	{
-		static int s_ignoreBuildingDefenseId = -1;
-		return kUnit.getSkills()->hasKey(s_ignoreBuildingDefenseId, CLSD_SKILL, "ignoreBuildingDefense");
-	}
-}
-
-namespace
-{
-	// The json.md §8 SKILL reads this file makes. The consumer holds the memoized generated-id
-	// (the CvUnitFilters precedent): the info exposes only the parameterized group read
-	// getSkills(), never a named getter per key (patterns.md -- a per-key boolean getter is the
-	// shape the rebuild deletes).
-	bool unitIsSuicide(const CvUnitInfo& kUnit)
-	{
-		static int s_suicideSkillId = -1;
-		return kUnit.getSkills()->hasKey(s_suicideSkillId, CLSD_SKILL, "suicide");
-	}
-}
-
 
 // The compiler intrinsic behind the [CIT/assign/dirty] caller attribution (VC7.1 supports it; PDB-resolvable
 // as an RVA against the DLL module base).
@@ -4512,7 +4490,7 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, int& iBestValue, bool bAs
 				}
 			}
 
-			if (unitIsSuicide(unit))
+			if (CvSkillReads::suicide(unit.getSkills()))
 			{
 				iValue /= 3; // much of this is compensated
 			}
@@ -5239,7 +5217,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 
 				if (!bAreaAlone)
 				{
-					if ((GC.getGame().getBestLandUnit() == NO_UNIT) || !(unitIgnoresBuildingDefense(GC.getUnitInfo(GC.getGame().getBestLandUnit()))))
+					if ((GC.getGame().getBestLandUnit() == NO_UNIT) || !(CvSkillReads::ignoreBuildingDefense(GC.getUnitInfo(GC.getGame().getBestLandUnit()).getSkills())))
 					{
 						// The candidate's whole defense contribution is ONE valuation read: the compiled defense
 						// sum PLUS its bonus-conditioned entries, resolved against the bonuses this city

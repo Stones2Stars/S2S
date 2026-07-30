@@ -217,6 +217,13 @@ group's natural index** — never N individual getters for a groupable set. This
      > `CLS_HAS` exists at all (it memoizes a per-site id lookup). A caller-facing `hasAttribute(ATTRIBUTE_X)`
      > therefore needs a resolved-id vocabulary the open registry does not hand out at compile time, so the pass
      > is a design decision about that vocabulary, never a mechanical rename.
+     > ⛔ **The CONSUMER side of that read has exactly ONE home — `CvSkillReads` (`Infos/CvSkillReads.{h,cpp}`),
+     > a static-methods class holding the memoized id per key.** `CLS_HAS` is for a getter BODY on an info; a
+     > CONSUMER asking "does this promotion/unitcombat/unit carry skill X" goes through the shared surface and
+     > never writes its own memoized-id helper. ⚑ This is the DRY law's own worked case rather than a
+     > preference: because the helper was file-local, four translation units independently reimplemented the
+     > same family (56 definitions over 35 keys) — precisely the *"the next consumer can't see it, so it
+     > reimplements it"* mechanism rule 4 names. A block-less info answers FALSE, so the read is total.
   3. **Modifier groups — three reads per group, all over the LOAD-COMPILED forms:**
      - the **straight point read** over the compiled unconditioned sum — `getDefense(DefenseKind eKind,
        ScopeKind eScope)` → one array load, **0 calculation** (kind and scope separate arguments,

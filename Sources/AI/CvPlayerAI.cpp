@@ -1,74 +1,7 @@
 // playerAI.cpp
 
 #include "CvGameCoreDLL.h"
-#include "Infos/CvClassificationBlock.h"   // CLSD_SKILL + the memoized id bit test
-
-namespace
-{
-	// The json.md §8 SKILL reads this file makes on a PROMOTION / UNITCOMBAT info. The consumer holds
-	// the memoized generated-id (the CvUnitFilters precedent); the info exposes only the parameterized
-	// group read getSkills(), never a named getter per key.
-	bool skillCelebrity(const CvClassificationBlock* skills)
-	{
-		static int s_celebritySkillId = -1;
-		return skills->hasKey(s_celebritySkillId, CLSD_SKILL, "celebrity");
-	}
-	bool skillAlwaysHeal(const CvClassificationBlock* skills)
-	{
-		static int s_alwaysHealSkillId = -1;
-		return skills->hasKey(s_alwaysHealSkillId, CLSD_SKILL, "alwaysHeal");
-	}
-	bool skillImmuneToFirstStrikes(const CvClassificationBlock* skills)
-	{
-		static int s_immuneToFirstStrikesSkillId = -1;
-		return skills->hasKey(s_immuneToFirstStrikesSkillId, CLSD_SKILL, "immuneToFirstStrikes");
-	}
-	bool skillDefensiveVictoryMove(const CvClassificationBlock* skills)
-	{
-		static int s_defensiveVictoryMoveSkillId = -1;
-		return skills->hasKey(s_defensiveVictoryMoveSkillId, CLSD_SKILL, "defensiveVictoryMove");
-	}
-	bool skillOffensiveVictoryMove(const CvClassificationBlock* skills)
-	{
-		static int s_offensiveVictoryMoveSkillId = -1;
-		return skills->hasKey(s_offensiveVictoryMoveSkillId, CLSD_SKILL, "offensiveVictoryMove");
-	}
-	bool skillFreeDrop(const CvClassificationBlock* skills)
-	{
-		static int s_freeDropSkillId = -1;
-		return skills->hasKey(s_freeDropSkillId, CLSD_SKILL, "freeDrop");
-	}
-	bool skillOneUp(const CvClassificationBlock* skills)
-	{
-		static int s_oneUpSkillId = -1;
-		return skills->hasKey(s_oneUpSkillId, CLSD_SKILL, "oneUp");
-	}
-	bool skillPillageEspionage(const CvClassificationBlock* skills)
-	{
-		static int s_pillageEspionageSkillId = -1;
-		return skills->hasKey(s_pillageEspionageSkillId, CLSD_SKILL, "pillageEspionage");
-	}
-	bool skillPillageMarauder(const CvClassificationBlock* skills)
-	{
-		static int s_pillageMarauderSkillId = -1;
-		return skills->hasKey(s_pillageMarauderSkillId, CLSD_SKILL, "pillageMarauder");
-	}
-	bool skillPillageOnMove(const CvClassificationBlock* skills)
-	{
-		static int s_pillageOnMoveSkillId = -1;
-		return skills->hasKey(s_pillageOnMoveSkillId, CLSD_SKILL, "pillageOnMove");
-	}
-	bool skillPillageOnVictory(const CvClassificationBlock* skills)
-	{
-		static int s_pillageOnVictorySkillId = -1;
-		return skills->hasKey(s_pillageOnVictorySkillId, CLSD_SKILL, "pillageOnVictory");
-	}
-	bool skillPillageResearch(const CvClassificationBlock* skills)
-	{
-		static int s_pillageResearchSkillId = -1;
-		return skills->hasKey(s_pillageResearchSkillId, CLSD_SKILL, "pillageResearch");
-	}
-}
+#include "Infos/CvSkillReads.h"   // the ONE shared surface for the json.md §8 skill reads
 
 #include "Data/CvInfoValuation.h"   // InfoValuation::collectHealByUnitCombat + HealByUnitCombat
 #include "Engine/CvGameSpeedScale.h"
@@ -27178,7 +27111,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		}
 
 		//Loyalty
-		if (skillAlwaysHeal(kPromotion.getSkills()))
+		if (CvSkillReads::alwaysHeal(kPromotion.getSkills()))
 		{
 			iValue += 15;
 		}
@@ -27295,7 +27228,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//#6 Effects for Promotions that have Amphibious ??
-	if (skillOneUp(kPromotion.getSkills()))
+	if (CvSkillReads::oneUp(kPromotion.getSkills()))
 	{
 		if (eUnitAI == UNITAI_RESERVE
 		||  eUnitAI == UNITAI_COUNTER
@@ -27311,7 +27244,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//#7 Effects for Promotions that have Defensive Victory Move
-	if (skillDefensiveVictoryMove(kPromotion.getSkills()))
+	if (CvSkillReads::defensiveVictoryMove(kPromotion.getSkills()))
 	{
 		if (eUnitAI == UNITAI_RESERVE
 		||  eUnitAI == UNITAI_COUNTER
@@ -27329,7 +27262,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//#8 Effects for Promotions that have Free Drop
-	if (skillFreeDrop(kPromotion.getSkills()))
+	if (CvSkillReads::freeDrop(kPromotion.getSkills()))
 	{
 		if (eUnitAI == UNITAI_PILLAGE || eUnitAI == UNITAI_ATTACK)
 		{
@@ -27339,7 +27272,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//#9 Effects for Promotions that have Offensive Victory Move
-	if (skillOffensiveVictoryMove(kPromotion.getSkills()))
+	if (CvSkillReads::offensiveVictoryMove(kPromotion.getSkills()))
 	{
 		if ((eUnitAI == UNITAI_PILLAGE) ||
 				(eUnitAI == UNITAI_ATTACK) ||
@@ -27462,7 +27395,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	//#15 Effects for Promotions with isPillages...
 	{
 		iTemp = 0;
-		if (skillPillageEspionage(kPromotion.getSkills()))
+		if (CvSkillReads::pillageEspionage(kPromotion.getSkills()))
 		{
 			if (pUnit)
 			{
@@ -27502,7 +27435,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		iValue += iTemp;
 
 		iTemp = 0;
-		if (skillPillageMarauder(kPromotion.getSkills()))
+		if (CvSkillReads::pillageMarauder(kPromotion.getSkills()))
 		{
 			if (pUnit)
 			{
@@ -27542,7 +27475,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		iValue += iTemp;
 
 		iTemp = 0;
-		if (skillPillageOnMove(kPromotion.getSkills()))
+		if (CvSkillReads::pillageOnMove(kPromotion.getSkills()))
 		{
 			if (pUnit)
 			{
@@ -27566,7 +27499,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		iValue += iTemp;
 
 		iTemp = 0;
-		if (skillPillageOnVictory(kPromotion.getSkills()))
+		if (CvSkillReads::pillageOnVictory(kPromotion.getSkills()))
 		{
 			if (pUnit)
 			{
@@ -27590,7 +27523,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		iValue += iTemp;
 
 		iTemp = 0;
-		if (skillPillageResearch(kPromotion.getSkills()))
+		if (CvSkillReads::pillageResearch(kPromotion.getSkills()))
 		{
 			if (pUnit)
 			{
@@ -27647,7 +27580,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//#17 Effects for Promotions that have Happyness Bonus...
-	iTemp = (skillCelebrity(kPromotion.getSkills()) ? 1 : 0);
+	iTemp = (CvSkillReads::celebrity(kPromotion.getSkills()) ? 1 : 0);
 	if (iTemp != 0)
 	{
 		if (eUnitAI == UNITAI_CITY_DEFENSE
@@ -28440,7 +28373,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//#37 Effects for Promotions on Always Heal...
-	if (skillAlwaysHeal(kPromotion.getSkills()))
+	if (CvSkillReads::alwaysHeal(kPromotion.getSkills()))
 	{
 		if ((eUnitAI == UNITAI_EXPLORE) ||
 			(eUnitAI == UNITAI_HUNTER) ||
@@ -28546,7 +28479,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//#43 Effects for Promotions that immunise to 1st Strikes...
-	if (skillImmuneToFirstStrikes(kPromotion.getSkills())
+	if (CvSkillReads::immuneToFirstStrikes(kPromotion.getSkills())
 		&& (pUnit == NULL || !pUnit->immuneToFirstStrikes()))
 	{
 		if ((eUnitAI == UNITAI_ATTACK_CITY) ||
@@ -30701,7 +30634,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 
 		//Loyalty
-		if (skillAlwaysHeal(kUnitCombat.getSkills()))
+		if (CvSkillReads::alwaysHeal(kUnitCombat.getSkills()))
 		{
 			iValue += 15;
 		}
@@ -30750,7 +30683,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 	}
 
-	if (skillOneUp(kUnitCombat.getSkills()))
+	if (CvSkillReads::oneUp(kUnitCombat.getSkills()))
 	{
 		if ((eUnitAI == UNITAI_RESERVE) ||
 			  (eUnitAI == UNITAI_COUNTER) ||
@@ -30768,7 +30701,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 	}
 
-	if (skillDefensiveVictoryMove(kUnitCombat.getSkills()))
+	if (CvSkillReads::defensiveVictoryMove(kUnitCombat.getSkills()))
 	{
 		if ((eUnitAI == UNITAI_RESERVE) ||
 			  (eUnitAI == UNITAI_COUNTER) ||
@@ -30791,7 +30724,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 	}
 
 	iTemp = 0;
-	if (skillFreeDrop(kUnitCombat.getSkills()))
+	if (CvSkillReads::freeDrop(kUnitCombat.getSkills()))
 	{
 		if ((eUnitAI == UNITAI_PILLAGE) ||
 				(eUnitAI == UNITAI_ATTACK))
@@ -30804,7 +30737,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 	}
 
-	if (skillOffensiveVictoryMove(kUnitCombat.getSkills()))
+	if (CvSkillReads::offensiveVictoryMove(kUnitCombat.getSkills()))
 	{
 		if ((eUnitAI == UNITAI_PILLAGE) ||
 				(eUnitAI == UNITAI_ATTACK) ||
@@ -30829,7 +30762,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 	iValue += iTemp;
 
 	iTemp = 0;
-	if (skillPillageEspionage(kUnitCombat.getSkills()))
+	if (CvSkillReads::pillageEspionage(kUnitCombat.getSkills()))
 	{
 		if (pUnit)
 		{
@@ -30861,7 +30794,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 	}
 
-	if (skillPillageMarauder(kUnitCombat.getSkills()))
+	if (CvSkillReads::pillageMarauder(kUnitCombat.getSkills()))
 	{
 		if (pUnit)
 		{
@@ -30882,7 +30815,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		else iTemp += 2;
 	}
 
-	if (skillPillageOnMove(kUnitCombat.getSkills()))
+	if (CvSkillReads::pillageOnMove(kUnitCombat.getSkills()))
 	{
 		if (pUnit)
 		{
@@ -30902,7 +30835,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		else iTemp++;
 	}
 
-	if (skillPillageOnVictory(kUnitCombat.getSkills()))
+	if (CvSkillReads::pillageOnVictory(kUnitCombat.getSkills()))
 	{
 		if (pUnit)
 		{
@@ -30922,7 +30855,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		else iTemp += 4;
 	}
 
-	if (skillPillageResearch(kUnitCombat.getSkills()))
+	if (CvSkillReads::pillageResearch(kUnitCombat.getSkills()))
 	{
 		if (pUnit)
 		{
@@ -30974,7 +30907,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 	}
 
-	iTemp = (skillCelebrity(kUnitCombat.getSkills()) ? 1 : 0);
+	iTemp = (CvSkillReads::celebrity(kUnitCombat.getSkills()) ? 1 : 0);
 	int iTempTemp = 0;
 	if (iTemp > 0)
 	{
@@ -31580,7 +31513,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		iValue += iTemp;
 	}
 
-	if (skillAlwaysHeal(kUnitCombat.getSkills()))
+	if (CvSkillReads::alwaysHeal(kUnitCombat.getSkills()))
 	{
 		if ((eUnitAI == UNITAI_EXPLORE) ||
 			(eUnitAI == UNITAI_HUNTER) ||
@@ -31681,7 +31614,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		iValue += 75;
 	}
 
-	if (skillImmuneToFirstStrikes(kUnitCombat.getSkills())
+	if (CvSkillReads::immuneToFirstStrikes(kUnitCombat.getSkills())
 		&& (pUnit == NULL || !pUnit->immuneToFirstStrikes()))
 	{
 		if ((eUnitAI == UNITAI_ATTACK_CITY) ||
