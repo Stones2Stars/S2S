@@ -624,17 +624,43 @@ names the picking logic, not availability.
 takes the maintained planes, overlays "as if this tech were held" (which contributes that tech's `enables` edges),
 re-applies the §7.1 membership formula, and repeats — walking outward until it reaches the target. That is the
 whole of both features: queuing beyond the tree is one such step, the easiest path is the cheapest chain of them.
-**This is an EXISTING pattern, not a new one:** the raw membership reads (`enableCount` / `removeCount`) are
-public precisely so a composite gate can OVERLAY per-instance planes on the maintained ones before applying the
-formula — exactly what the promotions level-up gate already does (§7.1's carve-out). The picking logic is a second
-consumer of that same shape.
+The raw membership reads (`enableCount` / `removeCount`) are public precisely so a composite gate can OVERLAY
+per-instance planes on the maintained ones before applying the formula; `EnablerOverlay` is the ONE
+implementation of that shape and every hypothetical asker is a consumer of it, never a second overlay.
 ⛔ The overlay is the CALLER's, held in the caller's own scratch: it never writes the maintained planes. A
 hypothetical that mutated the domain would leave the real frontier describing a game state that never happened.
+⛔ **The formula itself is NOT re-implemented alongside it** — the overlay and the maintained refresh resolve
+membership through the same `EnablerDomain::isMember` ([DEC-single-implementation](../architecture/decisions.md#dec-single-implementation)).
+A second copy would diverge the first time the formula gained a term, and a hypothetical that disagrees with the
+frontier it is overlaid on is worse than no hypothetical at all.
 
-**⚖ `iMaxPathLength` IS THE AI'S RESEARCH SEARCH DEPTH, and it wants to be a real AI variable (owner).** It
-bounds both the candidate walk and every path-length test in the tech pick, so making it per-AI (personality /
-strategy) is the ONE knob that tunes how far ahead an AI commits. It belongs to the picking logic, like
-everything else in this section — never to the enabler.
+⚖ **A WHAT-IF ASKS BOTH HALVES, AND THEY ARE ASKED SEPARATELY.** *"Would I be able to build X if I adopted this
+civic"* resolves as **membership** (`EnablerOverlay` over the enable/remove planes) **AND** the **gate**
+(`requiresMetInCity` with the hypothetical). A candidate can be gate-satisfiable under a hypothetical and still
+not be in the tree, and the reverse — so collapsing the two into one test silently answers a different question.
+⚑ Adopting a civic is a **SWAP**, so each side states both halves: the civic held and the one it displaces
+dropped. An empty option slot displaces nothing.
+
+⛔ **A BONUS IS NOT AN OVERLAY SOURCE, and the overlay refuses one.** The curator authors bonus `enables` edges
+(the reverse-mapped view of the target's retained `requires` atom) but the runtime never counts them — the bonus
+axis is GATE-ONLY (§8 resolved forks). Folding them would hand the hypothetical an edge class the maintained
+planes have never had, so every HIDDEN candidate whose inbound edge is that bonus would read as newly unlocked
+when acquiring it changes no membership whatsoever. *"Would this bonus let me build X"* is a **`requires`-GATE**
+question — re-evaluate the candidate's `requires` with the bonus injected into the eval ctx — and it is a
+separate mechanism from this one, never a widening of it.
+
+**⚖ THE RESEARCH SEARCH DEPTH IS A LEADER VARIABLE (owner).** It bounds both the candidate walk and every
+path-length test in the tech pick, so it is the ONE knob that tunes how far ahead an AI commits — and it is
+therefore PERSONALITY, never a constant. It is authored as `ai.personality.researchSearchDepth` on the
+LEADERHEAD; an unauthored leader takes the default, so per-leader values are pure data.
+⚑ **This is the dial that governs BEELINING**, which is why it is worth having at all: the depth is exactly how
+many hops past the researchable frontier a single distant unlock can pull an AI, so it is the lever on the
+over-valued-enablement problem ([AGENTS.md](../../AGENTS.md) § AI valuation of ENABLEMENT — relaxing enablement
+pull is only ever an improvement).
+⚠ **The picker's other depth arguments are OVERRIDES, not depths** — a human's picker and a committed
+culture-victory AI both ask for the immediate best (depth 1) rather than a plan, and neither becomes
+personality-driven.
+It belongs to the picking logic, like everything else in this section — never to the enabler.
 
 **⚖ THE "EVER" QUESTION IS THE PICKING LOGIC'S, AND IT ALREADY OWNS IT.** HIDDEN conflates *"nothing enables it
 YET"* with *"it can never be offered"*, and a research QUEUE asks precisely that difference — a target is chosen

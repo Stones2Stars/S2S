@@ -40,6 +40,10 @@
   `on`/`relation`/`distance`, instead of parking them verbatim.
 - Author the leader→trait assignments. The chain is wired and the slots are authorable; the CONTENT is
   community-owned, so this closes by AUTHORING and never by reconstructing the tables the curator dropped.
+- Author per-leader `ai.personality.researchSearchDepth` ([enabler.md §8](../../specs/enabler.md)). Same shape as
+  the trait assignments: the read is wired and an unauthored leader takes the default, so this closes by
+  AUTHORING. ⚑ It is the beelining dial — a leader that should not commit five techs deep for one unlock is
+  expressed HERE, as data, rather than by weakening the enablement valuation for everyone.
 - Retire the legacy `largestCity` member once ranked-target-selection EVALUATION lands.
 - Re-home `stronglyRestricted` to a `requires.build` civ-membership gate, when NPC civilizations are wired.
 - Move corp-HQ revenue (`HeadquarterCommerces`) with the corporation rework.
@@ -81,7 +85,10 @@
   readJson already reports an entity authoring a block its type cannot hold.
 - The endpoint route table, beyond the stored-vs-oracle documents — it stays empty until the access surface can
   be read THROUGH ([http-endpoints.md](../../specs/http-endpoints.md)).
-- The `requires` RENDERER — `CvEntryText` renders modifier entries and conditions only.
+- The `requires` BLOCK COMPOSER — deciding heading, ordering and which clauses compose one block, which is the
+  text manager's own job ([patterns.md](../../architecture/patterns.md) THE DIVISION OF LABOUR). ⚠ The CONDITION
+  renderer it calls already exists and takes exactly what `CvRequires` holds, so this is a composer to write,
+  never a renderer to build — reading it as the latter overstates the dependency and parks work that is doable.
 - A home for pedia category / sort metadata ([pedia-read-map.md](../../reference/pedia-read-map.md) finding 4).
 - Ranked-target-selection EVALUATION ([parked/ranked-target-selection.md](../parked/ranked-target-selection.md))
   — a ranked entry applies unranked until it lands.
@@ -105,9 +112,21 @@
   valuation's free-specialist term dangles.
 - Decide where the YIELD what-if's supersession-netting lives — the enabler owns `replacedBy`, or the call site
   composes two valuations. ⛔ Not by widening `expected*` with a replaced-buildings argument.
-- Build the AS-IF-ADOPTED valuation the CIVIC what-if needs: a caller-held overlay on the context the valuation
-  evaluates against, mirroring the enabler's hypothetical-HAVE overlay ([enabler.md §8](../../specs/enabler.md)).
-  Until it exists, `AI_civicValue`'s keyed terms are a visible hole.
+- Watch civic-choice STABILITY now that the cross-category half-value damper is gone (owner: drop it; if the
+  problem shows, add it back properly). ⚠ It existed because civic valuations are linearly combined across
+  categories, so a building gated by civics in two options could be counted at full value from both. If choices
+  start oscillating, the principled fix is a `civics` id set on `CascadeCondDeps` — which is what the removed
+  whole-civic-database sweep was reconstructing by hand — never restoring that sweep.
+- Build the GATE twin of that overlay — re-evaluating a candidate's `requires` with a hypothetical HAVE injected
+  into the eval ctx, which is what answers "would this BONUS let me build X". ⛔ It is NOT the membership
+  overlay and must not be folded into it: the bonus axis is GATE-ONLY
+  ([enabler.md §8](../../specs/enabler.md) resolved forks), so a bonus changes no membership and the overlay
+  refuses one outright. ⚠ The data DOES carry bonus `enables` edges the runtime ignores, so an overlay that
+  accepted a bonus would manufacture unlocks the real frontier never grants — which is why the refusal is
+  structural rather than a documented caution.
+- ⛔ Neither is a VALUATION question, and filing them as one is what sent a reader looking for a magnitude
+  machine that was never the dependency: both ask AVAILABILITY under a hypothetical HAVE, which is the
+  enabler's ([DEC-enabler-not-cascade](../../architecture/decisions.md#dec-enabler-not-cascade)).
 - Re-express the specialist EXPERIENCE reads as the ENTRY-LIST read over the specialist's own authored entries.
   ⛔ Not an arity fix — folding a keyed entry scope-wide is the silently-plausible-wrong case
   ([modifier.md §5](../../specs/modifier.md)).
@@ -206,8 +225,11 @@
 - Point the AI production decision at the maintained LISTED set, and collapse the `AI_chooseProduction`
   focus-ladder into ONE unified scoring pass ([enabler.md §6/§8](../../specs/enabler.md)). The collapse is an
   AI-architecture change, not a per-loop rewrite.
-- Build the bonus VALUATION `AI_baseBonusVal` needs; its per-bonus building loop waits on that machine, not on a
-  driver swap. ⛔ Converting the driver ahead of the valuation wires the loop to a surface that cannot answer it.
+- Move `AI_baseBonusVal`'s per-kind loops off the whole-database driver onto the frontier, and off the dead
+  prereq getters onto the bonus's own `EDGEF_REQUIRED_BY` ([DEC-one-reverse-view](../../architecture/decisions.md#dec-one-reverse-view)).
+  ⚠ Its "would this bonus UNLOCK this" half needs the AS-IF-HELD overlay above and dangles until that lands;
+  the rest does not wait on it. ⛔ The two halves are separable — treating the whole loop as blocked parks
+  convertible work behind a dependency only part of it has.
 - Give the OBJECT a player-level held-building aggregate for the HELD-building sweeps
   ([tally.md](../../specs/tally.md): let an object care about itself) — never a side-store.
 - Restore the members `AI_techValue`'s remaining sweeps read, then drive them from the tech's own edges.
