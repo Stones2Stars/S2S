@@ -70,10 +70,12 @@ The damage numbers were so small that entire armies camped outside cities for ce
 performing the ritual potshot as institutional proof of effort — the *"yay, we did
 something at least"* clause, fired across three hundred kilometers, dealing zero.
 
-*Status: turned off by the owner in self-defense. Scheduled to return as a siege-only
-mechanic (#410), where "bombarding the adjacent tile" abstracts to conducting siege
-operations against fortifications you are actually encamped at — the one reading where
-the fiction and the mechanics agree.*
+*Status: DROPPED — the mechanic is removed whole rather than repaired, and ranged bombard
+returns as a ground-up redesign; the DCM plane it rode in on is dead outright. The siege-only
+reading (#410) — "bombarding the adjacent tile" abstracting to siege operations against
+fortifications you are actually encamped at — is the destination, and nothing of the old shape
+survives to be built on. It had also stopped being fed years ago: the damage values still sit
+in the legacy XML and nothing reads them.*
 
 ---
 
@@ -108,7 +110,9 @@ No commitment, no completion, no retreat. Just vibes, attrition, and the unshake
 institutional conviction that the potshots will, eventually, maybe, do something.
 
 *Status: the acceptance test for the #410 army model — that stack must either requisition
-assault troops or go home.*
+assault troops or go home. The potshot half is now DROPPED outright: it was not merely useless
+but load-bearing in the wrong direction, since firing counted as the turn's decision and so
+pre-empted the commit-or-withdraw choice entirely.*
 
 ---
 
