@@ -272,6 +272,25 @@ The rest of the boundary every consumer meets:
   **The cut is FULL (owner): the new coherent surface is built and every consumer rewired onto it in the same
   pass, the legacy getter names disconnected — never a thin-compat layer left breathing.** The red tree makes the
   blast radius free to absorb; a change that left consumers untouched would be the half-migration tell.
+- **⚖ WHAT IS GATED IS THE *DISCONNECT*, NEVER THE BUILDING (owner).** The game-object and AI getter cut is the
+  MORE PRESSING half, and the `Cy*` surface is cut away only once the library is **COMPLETE**
+  ([patterns.md § THE PYTHON READ BOUNDARY](../../architecture/patterns.md)) — but that completeness gate governs
+  the CUT, and nothing else.
+  ⛔ **It is NOT a reason to avoid the Python library.** ADD TO IT WHENEVER A READ MAKES SENSE — it is built
+  incrementally, like everything else, and a read added early is the library getting closer to complete rather
+  than work done out of order.
+  ⛔ **The failure this exists to prevent is the opposite of avoidance: reaching for LEGACY as a "temporary
+  solution" because the library does not answer something yet.** That is the half-migration in its purest form
+  ([DEC-no-legacy-masking](../../architecture/decisions.md#dec-no-legacy-masking)) — a legacy read taken to fill
+  a gap masks the gap and outlives the excuse. When the library cannot answer a read, the move is to ADD the
+  read to the library, never to borrow legacy while waiting.
+  ⛔ **AND "we do Python later" MUST NOT BE ALLOWED TO PARK THOUSANDS OF COMPILER ERRORS (owner) — that
+  CLOGS THE CENSUS EVERYTHING ELSE DEPENDS ON.** MSVC stops at 100 errors per translation unit, so parked
+  Python-side errors SPEND the reporting budget the real worklist needs, and the surviving errors are whichever
+  happened to compile first — the census stops naming the work and starts hiding it. Python debt is therefore
+  not cheap-to-defer, it is the most expensive kind to defer. Clear it as you meet it: ADD the read to the
+  library, or cut the dead binding on sight ([DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed)
+  — for a `Cy` binding to a getter that no longer exists, deletion is the only fix).
 - **The new Python surface — ONE COMPLETE DATA-FETCHING LIBRARY (owner), built as its own STEP** before the
   legacy `Cy*` surface is CUT AWAY ([DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed)): ONE
   surface replacing the scattered per-type `Cy*` interfaces, COMPLETE against the census (screens + pedia +

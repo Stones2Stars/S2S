@@ -631,6 +631,11 @@ consumer of that same shape.
 ⛔ The overlay is the CALLER's, held in the caller's own scratch: it never writes the maintained planes. A
 hypothetical that mutated the domain would leave the real frontier describing a game state that never happened.
 
+**⚖ `iMaxPathLength` IS THE AI'S RESEARCH SEARCH DEPTH, and it wants to be a real AI variable (owner).** It
+bounds both the candidate walk and every path-length test in the tech pick, so making it per-AI (personality /
+strategy) is the ONE knob that tunes how far ahead an AI commits. It belongs to the picking logic, like
+everything else in this section — never to the enabler.
+
 **⚖ THE "EVER" QUESTION IS THE PICKING LOGIC'S, AND IT ALREADY OWNS IT.** HIDDEN conflates *"nothing enables it
 YET"* with *"it can never be offered"*, and a research QUEUE asks precisely that difference — a target is chosen
 now and researched later, so "not currently offerable" is not a refusal. ⛔ That is **not a gap in the tri-state

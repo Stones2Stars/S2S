@@ -275,6 +275,30 @@ group's natural index** — never N individual getters for a groupable set. This
      > which sources belong together, that is the block and it is right.
      > ⛔ So a whole-entity "render every family at once" dump is NOT the shape — it flattens the composition
      > the blocks exist to express, which is why the surface is per-family.
+     >
+     > **⛔ THE ACCEPTANCE TEST ON A COMPOSER IS *DOES IT STILL READ A LEGACY GETTER*, NEVER *DOES IT READ
+     > NICELY* (owner): "we just want to make sure that we don't rely on legacy, and have legacy purged, when
+     > creating tooltips."** A composer that renders identically but still reaches a legacy accessor is NOT
+     > done; one whose wording changed but whose legacy reads are gone IS
+     > ([DEC-no-legacy-masking](decisions.md#dec-no-legacy-masking) — a surviving legacy read masks the hole its
+     > replacement has not filled). ⚑ That is why a conversion DELETES rather than ports: each converted band
+     > removes its legacy accessor call with it.
+     > ⛔ **Altered visible text is therefore never a reason to hesitate** — say what changed and move on.
+     >
+     > **⚖ HOW A TOOLTIP LOOKS IS END-STAGE, NOT SWEEP WORK (owner): "how tooltips are rendered is fairly
+     > irrelevant right now, these are bugs we catch at the end."** ⚑ The reason it holds rather than being
+     > mere sequencing: *"I don't want us to chase visual perfection before we can — well — SEE things."* A red
+     > tree renders nothing, so any judgement about appearance is unverifiable guesswork. ⛔ Do not start a
+     > tooltip layout pass as part of a composer sweep.
+     > ⚑ **And the eventual tooltip SET is DEMAND-DRIVEN (owner): "we will figure out what tooltips we need,
+     > and what we miss, from community requests and playtests."** So a legacy tooltip line removed by a cut is
+     > not a regression to restore — legacy parity is not the target here.
+     >
+     > **⚖ THE DLL DOES NOT CONVERT FOR DISPLAY — THE CONSUMER CONVERTS ITSELF (owner: "let python convert
+     > themselves").** A composer doing `(float)value / 100 / denominator` to print `%.2f` is the DLL performing
+     > the presentation layer's arithmetic, and it puts FLOAT in the DLL for a value the engine holds as an
+     > integer. ⚠ Not an OOS risk while it is display-only — which is exactly why it survives unnoticed — but it
+     > is the wrong side of the boundary: remove it as each composer moves, and never copy it into a new one.
 
   ```cpp
   // SECTIONS — whole typed objects

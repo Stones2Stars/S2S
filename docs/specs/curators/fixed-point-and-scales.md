@@ -191,6 +191,14 @@ multiply.
 > (×100 — the reader reduces). So "this getter set is ×100, reduce at the reader" is never a safe blanket; it
 > zeroes every percent it touches. **Ask the KIND's unit, never the family's or the getter's name.**
 >
+> **⛔ MOVEMENT IS ALREADY A PER-100 VALUE — `MOVE_DENOMINATOR` is its fixed point, and always was (owner).**
+> That is why routes author 5–100: they are denominator units expressing PART STEPS. So the cascade's ×100
+> sits on top of a denominator the mechanic already had, and the family slot holds **two scales, each ×100'd**
+> — terrain/feature as whole moves (1–6), routes as denominator units (5–100).
+> ⛔ Do NOT "finish" this by carrying ×100 deeper into the resolver: that compounds the double-scaling instead
+> of resolving it. What has to be decided FIRST is which single denominator movement speaks in, and that is a
+> CURATOR question (does terrain author denominator units too?), never a consumer sweep.
+>
 > ⚑ **The worked case, both ways round, on ONE family (handicap).** `DIPLOMACY_DECLARE_WAR` is a percent, so a
 > blanket `÷100` would have turned a 90% AI war probability into **0** — the difficulty setting silently
 > switched off. `BARBARIANS_DEFENDERS` is a flat, and reading it raw returned the authored **8 as 800**: a loop
