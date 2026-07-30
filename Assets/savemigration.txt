@@ -26,6 +26,10 @@
 | downstream read (proven 2026-07-02: gutted tech lists). List it.  |
 |-------------------------------------------------------------------|
 
+| CvUnit::m_iImmobileTimer -- REPLACED by the unit STATUS store (STATUS_PARALYZED). A status is the same thing
+| the timer was -- an applied counter ticking down per turn -- so the timer is the legacy shape of it, not a
+| separate field. REPLACEMENT: CvUnit::m_aiStatusTurns, serialized in its place.
+CvUnit::m_iImmobileTimer
 ========================
 2026-07-20 — #430 delete-driven legacy cut (CvPlayer civic/trait/project/world wellbeing feeders): the 8 stored
 player-scope wellbeing accumulators fully removed (no member, no read, no write). The getters now read fresh

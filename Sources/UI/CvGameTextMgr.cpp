@@ -586,10 +586,10 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, 
 		szString.append(szTempBuffer);
 	}
 
-	if (pUnit->getImmobileTimer() > 0)
+	if (pUnit->hasStatus(STATUS_PARALYZED))
 	{
 		szString.append(L", ");
-		szString.append(gDLL->getText("TXT_KEY_UNITHELP_IMMOBILE", pUnit->getImmobileTimer()));
+		szString.append(gDLL->getText("TXT_KEY_UNITHELP_IMMOBILE", pUnit->getStatus(STATUS_PARALYZED)));
 	}
 
 	if (bDebugMode && bShift)
@@ -6739,7 +6739,6 @@ void CvGameTextMgr::parsePromotionHelpInternal(CvWStringBuffer &szBuffer, Promot
 	bool bIsImmuneToFirstStrikes = false;
 	bool bIsStampedeChange = false;
 	bool bIsOnslaughtChange = false;
-	bool bIsParalyze = false;
 	bool bIsDefensiveVictoryMove = false;
 	bool bIsFreeDrop = false;
 	bool bIsOffensiveVictoryMove = false;
@@ -6832,10 +6831,6 @@ void CvGameTextMgr::parsePromotionHelpInternal(CvWStringBuffer &szBuffer, Promot
 		if (CvSkillReads::onslaught(promoX.getSkills()))
 		{
 			bIsOnslaughtChange = true;
-		}
-		if (promoX.isParalyze())
-		{
-			bIsParalyze = true;
 		}
 		if (CvSkillReads::defensiveVictoryMove(promoX.getSkills()))
 		{
@@ -6977,11 +6972,6 @@ void CvGameTextMgr::parsePromotionHelpInternal(CvWStringBuffer &szBuffer, Promot
 	{
 		szBuffer.append(pcNewline);
 		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_ONSLAUGHT"));
-	}
-	if (bIsParalyze)
-	{
-		szBuffer.append(pcNewline);
-		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_PARALYZE"));
 	}
 	if (bIsDefensiveVictoryMove)
 	{

@@ -10,6 +10,7 @@
 #include "Cascade/CvUnitResolved.h"   // the UNIT plane's resolved values (state-repositories.md)
 #include "CvProperties.h"
 #include "CvUnitComponents.h"
+#include "Engine/CvUnitStatus.h"   // UnitStatus -- the status enum + the per-turn-counter model
 
 #pragma warning( disable: 4251 )		// needs to have dll-interface to be used by clients of class
 
@@ -1392,9 +1393,20 @@ public:
 	bool canApplyEvent(EventTypes eEvent) const;
 	void applyEvent(EventTypes eEvent);
 
-	int getImmobileTimer() const;
-	void setImmobileTimer(int iNewValue);
-	void changeImmobileTimer(int iChange);
+
+	// --- UNIT STATUS (json.md §8; the enum + the model: Engine/CvUnitStatus.h) ---
+	// An id -> TURNS-REMAINING dictionary. Something applies a status, it ticks down every turn, it is over at
+	// zero -- so the gate is simply "is the counter above zero". SERIALIZED: a status is applied by an event and
+	// counts down on its own, so nothing can re-derive it from live state (save.md §5 -- a store survives
+	// exactly for genuine non-derivable state).
+	int getStatus(UnitStatus eStatus) const;              // turns remaining, 0 when not held
+	bool hasStatus(UnitStatus eStatus) const;             // the gate -- turns remaining > 0
+	void setStatus(UnitStatus eStatus, int iTurns);       // apply/replace; <= 0 clears
+	void changeStatus(UnitStatus eStatus, int iChange);   // extend/shorten; floors at cleared
+	void doStatusTurn();                                  // the per-turn decrement of every held status
+	// ⛔ NO per-status named accessor. `hasStatus(STATUS_PARALYZED)` IS the read -- a named twin per status is
+	// the per-channel getter shape this rebuild deletes (patterns.md: the getter is the GROUP, and the enum is
+	// the consumer's vocabulary), and it would have to be hand-added for every status ever identified.
 
 	bool isCanRespawn() const;
 	void setCanRespawn(bool bNewValue);
@@ -1666,7 +1678,10 @@ protected:
 	int m_iKamikazePercent;
 	int m_iBaseCombat;
 	DirectionTypes m_eFacingDirection;
-	int m_iImmobileTimer;
+	// UnitStatus -> TURNS REMAINING. Dense over the hand-maintained enum, which IS the dictionary while
+	// the key set is fixed and small -- and it serializes under ONE named array tag rather than repeated
+	// per-entry tags. It becomes a real id-keyed map if/when statuses become load-minted STATUS_* infos.
+	int m_aiStatusTurns[NUM_UNIT_STATUSES];
 
 	bool m_bCanRespawn;
 	bool m_bSurvivor;

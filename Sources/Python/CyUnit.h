@@ -135,8 +135,6 @@ public:
 	int getPillageChange() const;
 	int getUpgradeDiscount() const;
 
-	int getImmobileTimer() const;
-	void setImmobileTimer(int iNewValue);
 
 	bool isMadeAttack() const;
 	void setMadeAttack(bool bNewValue);

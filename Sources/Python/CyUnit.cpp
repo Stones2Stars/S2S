@@ -483,16 +483,6 @@ int CyUnit::getUpgradeDiscount() const
 	return m_pUnit->getUpgradeDiscount();
 }
 
-int CyUnit::getImmobileTimer() const
-{
-	return m_pUnit->getImmobileTimer();
-}
-
-void CyUnit::setImmobileTimer(int iNewValue)
-{
-	m_pUnit->setImmobileTimer(iNewValue);
-}
-
 bool CyUnit::isMadeAttack() const
 {
 	return m_pUnit->isMadeAttack();

@@ -609,7 +609,10 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 	m_iExperiencePercent = 0;
 	m_iKamikazePercent = 0;
 	m_eFacingDirection = DIRECTION_SOUTH;
-	m_iImmobileTimer = 0;
+	for (int iStatus = 0; iStatus < NUM_UNIT_STATUSES; ++iStatus)
+	{
+		m_aiStatusTurns[iStatus] = 0;
+	}
 
 	m_bCanRespawn = false; // Koshling - intentionally not saved - m_bCanrespawn should never persist in saves
 	// as it is used only within a combat round and set upon unit death IF the unit has outstanding oneUpCount.
@@ -879,7 +882,10 @@ CvUnit& CvUnit::operator=(const CvUnit& other)
 	m_iExperiencePercent = other.m_iExperiencePercent;
 	m_iKamikazePercent = other.m_iKamikazePercent;
 	m_eFacingDirection = other.m_eFacingDirection;
-	m_iImmobileTimer = other.m_iImmobileTimer;
+	for (int iStatus = 0; iStatus < NUM_UNIT_STATUSES; ++iStatus)
+	{
+		m_aiStatusTurns[iStatus] = other.m_aiStatusTurns[iStatus];
+	}
 	m_bCanRespawn = other.m_bCanRespawn;
 	m_bSurvivor = other.m_bSurvivor;
 	m_bMadeAttack = other.m_bMadeAttack;
@@ -1167,7 +1173,10 @@ void CvUnit::convert(CvUnit* pUnit, const bool bKillOriginal)
 	const int iCurrentHPCap = pUnit->getMaxHP()-1;
 	setDamage(std::min(iCurrentHPCap, pUnit->getDamage()));
 	setMoves(pUnit->getMoves());
-	setImmobileTimer(pUnit->getImmobileTimer());
+	for (int iStatus = 0; iStatus < NUM_UNIT_STATUSES; ++iStatus)
+	{
+		setStatus((UnitStatus)iStatus, pUnit->getStatus((UnitStatus)iStatus));
+	}
 
 	m_eOriginalOwner = pUnit->getOriginalOwner();
 	m_eNewDomainCargo = pUnit->getDomainCargo();
@@ -1781,7 +1790,7 @@ void CvUnit::doTurn()
 		m_iSleepTimer = 0;
 	}
 
-	changeImmobileTimer(-1);
+	doStatusTurn();
 	//TB Combat Mods (Att&DefCounter)
 	if (getAttackCount()>0)
 	{
@@ -10670,7 +10679,7 @@ int CvUnit::movesLeft() const
 
 bool CvUnit::canMove() const
 {
-	return !isDead() && getMoves() < maxMoves() && getImmobileTimer() < 1;
+	return !isDead() && getMoves() < maxMoves() && !hasStatus(STATUS_PARALYZED);
 }
 
 bool CvUnit::hasMoved()	const
@@ -12222,7 +12231,7 @@ bool CvUnit::canStealthDefend(const CvUnit* victim) const
 		&&  canFight()
 		&&  hasStealthDefense()
 		&& !isCargo()
-		&&  getImmobileTimer() < 1
+		&& !hasStatus(STATUS_PARALYZED)
 		&&  isInvisible(victim->getTeam(), false, false)
 		&& !victim->isInvisible(getTeam(), false, false)
 		&& !canCoexistWithAttacker(*victim, true)
@@ -16416,26 +16425,41 @@ void CvUnit::rotateFacingDirectionCounterClockwise()
 	setFacingDirection(eNewDirection);
 }
 
-int CvUnit::getImmobileTimer() const
+// --- UNIT STATUS (Engine/CvUnitStatus.h) -- an applied counter that ticks down and is over at zero. ---
+
+int CvUnit::getStatus(UnitStatus eStatus) const
 {
-	return m_iImmobileTimer;
+	FASSERT_BOUNDS(0, NUM_UNIT_STATUSES, eStatus);
+	return m_aiStatusTurns[eStatus];
 }
 
-void CvUnit::setImmobileTimer(int iNewValue)
+// The gate IS the counter: held while there are turns left. There is no separate present/absent plane, so
+// expiry needs no second fact -- reaching zero IS the status ending.
+bool CvUnit::hasStatus(UnitStatus eStatus) const
 {
-	if (iNewValue != m_iImmobileTimer)
-	{
-		m_iImmobileTimer = iNewValue;
-
-		setInfoBarDirty(true);
-	}
+	return getStatus(eStatus) > 0;
 }
 
-void CvUnit::changeImmobileTimer(int iChange)
+void CvUnit::setStatus(UnitStatus eStatus, int iTurns)
 {
-	if (iChange != 0)
+	FASSERT_BOUNDS(0, NUM_UNIT_STATUSES, eStatus);
+	m_aiStatusTurns[eStatus] = std::max(0, iTurns);
+}
+
+void CvUnit::changeStatus(UnitStatus eStatus, int iChange)
+{
+	setStatus(eStatus, getStatus(eStatus) + iChange);
+}
+
+// One tick per turn for every held status; a status reaching zero is simply no longer held.
+void CvUnit::doStatusTurn()
+{
+	for (int iStatus = 0; iStatus < NUM_UNIT_STATUSES; ++iStatus)
 	{
-		setImmobileTimer(std::max(0, m_iImmobileTimer + iChange));
+		if (m_aiStatusTurns[iStatus] > 0)
+		{
+			--m_aiStatusTurns[iStatus];
+		}
 	}
 }
 
@@ -18574,10 +18598,6 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	emitUnitPromotionChanged(getID(), (int)getOwner(), (int)eIndex, iChange);
 
 
-	if (kPromotion.isParalyze() && bAdding)
-	{
-		setImmobileTimer(1);
-	}
 
 	if ( kPromotion.changesMoveThroughPlots() )
 	{
@@ -19363,7 +19383,6 @@ void CvUnit::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvUnit", &m_iKamikazePercent);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iBaseCombat);
 	WRAPPER_READ(wrapper, "CvUnit", (int*)&m_eFacingDirection);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iImmobileTimer);
 
 	WRAPPER_READ(wrapper, "CvUnit", &m_bMadeAttack);
 	WRAPPER_READ(wrapper, "CvUnit", &m_bMadeInterception);
@@ -19417,6 +19436,7 @@ void CvUnit::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvUnit", &m_transportUnit.iID);
 
 	WRAPPER_READ_ARRAY(wrapper, "CvUnit", NUM_DOMAIN_TYPES, m_aiExtraDomainModifier);
+	WRAPPER_READ_ARRAY(wrapper, "CvUnit", NUM_UNIT_STATUSES, m_aiStatusTurns);
 
 	WRAPPER_READ_STRING(wrapper, "CvUnit", m_szName);
 	WRAPPER_READ_STRING(wrapper, "CvUnit", m_szScriptData);
@@ -20357,7 +20377,6 @@ void CvUnit::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iKamikazePercent);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iBaseCombat);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_eFacingDirection);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iImmobileTimer);
 
 	WRAPPER_WRITE(wrapper, "CvUnit", m_bMadeAttack);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_bMadeInterception);
@@ -20378,6 +20397,7 @@ void CvUnit::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvUnit", m_transportUnit.iID);
 
 	WRAPPER_WRITE_ARRAY(wrapper, "CvUnit", NUM_DOMAIN_TYPES, m_aiExtraDomainModifier);
+	WRAPPER_WRITE_ARRAY(wrapper, "CvUnit", NUM_UNIT_STATUSES, m_aiStatusTurns);
 
 	WRAPPER_WRITE_STRING(wrapper, "CvUnit", m_szName);
 	WRAPPER_WRITE_STRING(wrapper, "CvUnit", m_szScriptData);
@@ -21925,7 +21945,7 @@ void CvUnit::applyEvent(EventTypes eEvent)
 
 	if (kEvent.getUnitImmobileTurns() > 0)
 	{
-		changeImmobileTimer(kEvent.getUnitImmobileTurns());
+		changeStatus(STATUS_PARALYZED, kEvent.getUnitImmobileTurns());
 
 
 		CvWString szText = gDLL->getText("TXT_KEY_EVENT_UNIT_IMMOBILE", getNameKey(), kEvent.getUnitImmobileTurns());
@@ -29566,7 +29586,7 @@ void CvUnit::setTrap(CvUnit* pUnit)
 
 bool CvUnit::isArmed() const
 {
-	return m_bIsArmed || getImmobileTimer() > 0;
+	return m_bIsArmed || hasStatus(STATUS_PARALYZED);
 }
 
 void CvUnit::doTrap(CvUnit* pUnit)
