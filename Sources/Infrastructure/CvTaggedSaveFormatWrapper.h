@@ -282,6 +282,13 @@ private:
 	void		WriteClassMappingTable(RemappedClassType classType);
 	void		WriteClassMappingTables();
 	bool		Expect(const char* name, SaveValueType type);
+	//	⚖ WIDENING-AWARE Expect: also matches a NARROWER stored form of the same quantity, so widening a
+	//	member's type is NOT save-breaking. A save tuple carries its type code, and the plain Expect above
+	//	demands an exact match -- which is why changing a member's type has historically broken saves. The
+	//	reader is the right place to absorb that: one rule here retires the per-field migration every widened
+	//	member would otherwise need (save.md §8). On a match the caller reads m_iNextElementType to learn
+	//	which form the stream actually holds, and converts.
+	bool		Expect(const char* name, SaveValueType type, SaveValueType eAlsoAcceptNarrow);
 	void		SkipElement();
 	void		ConsumeBytes(int numBytes) const;
 	void		ReadDictionaryElement();

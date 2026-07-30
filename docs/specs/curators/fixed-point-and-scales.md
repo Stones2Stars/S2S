@@ -101,10 +101,11 @@ than extended.
 has to be reasoned about. The per-unit rule governs what is STORED (where the memory cost is), never the local
 arithmetic.
 
-⚠ **The cascade plane costs NOTHING to widen** — it serializes nothing
-([DEC-derived-never-trusted](../../architecture/decisions.md#dec-derived-never-trusted)), so there is no save
-migration on it at all. Width only becomes a save question for a **serialized** amount field, where changing the
-type code under a reused name is one of the five real breaks ([save.md §8](../save.md)).
+⚠ **Widening costs no save work at all.** The cascade plane serializes nothing
+([DEC-derived-never-trusted](../../architecture/decisions.md#dec-derived-never-trusted)), and a **serialized**
+field widens SOFTLY because the save READER absorbs the narrower stored form — keep the member, the name and the
+tag ([save.md §8](../save.md)). So width is decided on the merits of the value, never traded against migration
+cost.
 
 ## 2. The unit table (what readJson does)
 

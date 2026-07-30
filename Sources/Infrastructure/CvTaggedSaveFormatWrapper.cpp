@@ -3141,9 +3141,20 @@ void CvTaggedSaveFormatWrapper::Read(const char* name, int64_t* ll)
 	{
 		DEBUG_TRACE2("Read long long, name %s\n", name)
 
-		if (Expect(name, SAVE_VALUE_TYPE_LONG_LONG))
+		//	An older save holds this member as a 32-bit INT: read it narrow and widen. Widening a member is
+		//	therefore soft, exactly as adding or removing one is.
+		if (Expect(name, SAVE_VALUE_TYPE_LONG_LONG, SAVE_VALUE_TYPE_INT))
 		{
-			m_stream->Read(sizeof(int64_t), (char*)ll);
+			if (m_iNextElementType == SAVE_VALUE_TYPE_INT)
+			{
+				int32_t iNarrow = 0;
+				m_stream->Read(&iNarrow);
+				*ll = iNarrow;
+			}
+			else
+			{
+				m_stream->Read(sizeof(int64_t), (char*)ll);
+			}
 		}
 	}
 	else
@@ -3181,7 +3192,8 @@ void CvTaggedSaveFormatWrapper::Read(const char* name, int count, int64_t values
 	{
 		DEBUG_TRACE3("Read long long array, name %s, count=%d\n", name, count)
 
-		if (Expect(name, SAVE_VALUE_TYPE_LONG_LONG_ARRAY))
+		//	An older save holds this array as 32-bit INTs: read it narrow and widen element by element.
+		if (Expect(name, SAVE_VALUE_TYPE_LONG_LONG_ARRAY, SAVE_VALUE_TYPE_INT_ARRAY))
 		{
 			int num;
 
@@ -3192,7 +3204,19 @@ void CvTaggedSaveFormatWrapper::Read(const char* name, int count, int64_t values
 				//	Incompatible save
 				HandleIncompatibleSave(CvString::format("Save format is not compatible (%s)", name).c_str());
 			}
-			m_stream->Read(count * sizeof(int64_t), (char*)values);
+			if (m_iNextElementType == SAVE_VALUE_TYPE_INT_ARRAY)
+			{
+				std::vector<int32_t> aNarrow(count, 0);
+				m_stream->Read(count, &aNarrow[0]);
+				for (int iI = 0; iI < count; iI++)
+				{
+					values[iI] = aNarrow[iI];
+				}
+			}
+			else
+			{
+				m_stream->Read(count * sizeof(int64_t), (char*)values);
+			}
 		}
 	}
 	else
@@ -3905,6 +3929,12 @@ namespace {
 bool
 CvTaggedSaveFormatWrapper::Expect(const char* name, SaveValueType type)
 {
+	return Expect(name, type, type);
+}
+
+bool
+CvTaggedSaveFormatWrapper::Expect(const char* name, SaveValueType type, SaveValueType eAlsoAcceptNarrow)
+{
 	PROFILE_FUNC();
 
 #ifdef TEMP_DEBUGGING_SUPPORT
@@ -3977,7 +4007,8 @@ CvTaggedSaveFormatWrapper::Expect(const char* name, SaveValueType type)
 			return false;
 		}
 	}
-	else if ( (m_iNextElementType == type || type == SAVE_VALUE_ANY) && m_nestingDepth == m_streamNestingDepth )
+	else if ( (m_iNextElementType == type || m_iNextElementType == eAlsoAcceptNarrow || type == SAVE_VALUE_ANY)
+	       && m_nestingDepth == m_streamNestingDepth )
 	{
 		CvString	normalizedName = NormalizeName(name);
 

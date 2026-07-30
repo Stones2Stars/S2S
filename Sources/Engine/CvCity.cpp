@@ -2406,7 +2406,7 @@ int CvCity::getProductionExperience(UnitTypes eUnit) const
 			kPlayer, CascadeChannelRegistry::channelLookup(MODFAM_STATE_RELIGION, STATE_RELIGION_FREE_EXPERIENCE, -1));
 	}
 
-	return (int)std::max(0L, lExperience * (100 + lPercentSum) / 100);
+	return (int)std::max<int64_t>(0, lExperience * (100 + lPercentSum) / 100);
 }
 
 void CvCity::addProductionExperience(CvUnit* pUnit, bool bConscript)
@@ -6633,13 +6633,28 @@ int CvCity::getBuildingHealth(BuildingTypes eBuilding) const
 	return iHealth;
 }
 
+// ⚖ ONE valuation replaces the four hand-summed legacy terms. `expectedWellbeing` resolves what this building
+// actually delivers HERE -- its authored health, its per-POPULATION entries (a §3.7 `per` count-scaler on the
+// same deposit, never the separate `healthPercentPerPopulation` member the legacy read), and any conditioned
+// entries -- through the ONE evaluator against this city's contexts.
+// ⚑ Good and bad health are ONE signed authored number, not two fields: modifier.md §2b routes a negative
+// health deposit to the opposing UNHEALTH channel at fill, so the split falls out of the group read.
+// ⚠ The group answers ×100 ([DEC-fixedpoint-x100]); these two getters are whole-health-point readers, so the
+// ÷100 belongs here, at the point of use. `getBuildingHealthChange` stays: it is EVENT/VOTE-granted one-shot
+// state, not a derivable deposit ([state-repositories.md] -- events in a recompute cache is the banned shape).
+void CvCity::buildingWellbeing(BuildingTypes eBuilding, int (&wellbeing)[NUM_WELLBEING_CHANNELS]) const
+{
+	GC.getBuildingInfo(eBuilding).expectedWellbeing(
+		getCityContext(), GET_PLAYER(getOwner()).getEmpireContext(), plotGroup(getOwner()), wellbeing);
+}
+
 int CvCity::getBuildingGoodHealth(BuildingTypes eBuilding) const
 {
-	int iHealth = std::max(0, GC.getBuildingInfo(eBuilding).getHealth());
-	iHealth += std::max(0, getBuildingHealthChange(eBuilding));
-	iHealth += std::max(0, GET_PLAYER(getOwner()).getExtraBuildingHealth(eBuilding));
-	iHealth += std::max(0, (GC.getBuildingInfo(eBuilding).getHealthPercentPerPopulation() * getPopulation()) / 100);
+	int aiWellbeing[NUM_WELLBEING_CHANNELS];
+	buildingWellbeing(eBuilding, aiWellbeing);
 
+	int iHealth = aiWellbeing[WELLBEING_HEALTH] / 100;
+	iHealth += std::max(0, getBuildingHealthChange(eBuilding));
 	return iHealth;
 }
 
@@ -6649,12 +6664,12 @@ int CvCity::getBuildingBadHealth(BuildingTypes eBuilding) const
 	{
 		return 0;
 	}
+	int aiWellbeing[NUM_WELLBEING_CHANNELS];
+	buildingWellbeing(eBuilding, aiWellbeing);
 
-	int iHealth = std::min(0, GC.getBuildingInfo(eBuilding).getHealth());
+	// The channels are POSITIVE magnitudes; this getter's callers expect the bad side signed NEGATIVE.
+	int iHealth = -(aiWellbeing[WELLBEING_UNHEALTH] / 100);
 	iHealth += std::min(0, getBuildingHealthChange(eBuilding));
-	iHealth += std::min(0, GET_PLAYER(getOwner()).getExtraBuildingHealth(eBuilding));
-	iHealth += std::min(0, (GC.getBuildingInfo(eBuilding).getHealthPercentPerPopulation() * getPopulation()) / 100);
-
 	return iHealth;
 }
 
@@ -6685,12 +6700,15 @@ void CvCity::changeMilitaryHappinessUnits(int iChange)
 int CvCity::getBuildingHappiness(BuildingTypes eBuilding) const
 {
 	PROFILE_EXTRA_FUNC();
-	const CvBuildingInfo& info = GC.getBuildingInfo(eBuilding);
+	// The building's own authored happiness, resolved HERE through the ONE valuation -- which carries its
+	// per-POPULATION entries too, so the hand-multiplied `happinessPercentPerPopulation` term is gone with the
+	// member it read (a `per<X>`-named member IS a §3.7 count-scaler, never a kind -- json.md §6). Happiness and
+	// anger are ONE signed authored number (modifier.md §2b), so the net is the answer this getter wants.
+	int aiOwnWellbeing[NUM_WELLBEING_CHANNELS];
+	buildingWellbeing(eBuilding, aiOwnWellbeing);
 	int iHappiness =
 	(
-		info.getHappiness()
-		+
-		info.getHappinessPercentPerPopulation() * getPopulation() / 100
+		(aiOwnWellbeing[WELLBEING_HAPPINESS] - aiOwnWellbeing[WELLBEING_ANGER]) / 100
 		+
 		getBuildingHappyChange(eBuilding)
 		+
@@ -6938,11 +6956,6 @@ int CvCity::getAdditionalHappinessByBuilding(BuildingTypes eBuilding, int& iGood
 		}
 	}
 
-	if (kBuilding.getHappinessPercentPerPopulation() > 0)
-	{
-		addGoodOrBad(kBuilding.getHappinessPercentPerPopulation() * getPopulation() / 100, iGood, iBad);
-	}
-
 	int iSpecialistExtraHappy = 0;
 
 	for (int iI = 1; iI < kBuilding.getFreeSpecialist() + 1; iI++)
@@ -7001,8 +7014,13 @@ int CvCity::getAdditionalHealthByBuilding(BuildingTypes eBuilding, int& iGood, i
 	const int iStarting = iGood - iBad;
 	const int iStartingBad = iBad;
 
-	// Basic
-	addGoodOrBad(kBuilding.getHealth(), iGood, iBad);
+	// The building's OWN authored health, resolved HERE through the ONE valuation -- which also carries its
+	// per-POPULATION entries, so the hand-multiplied healthPercentPerPopulation term further down is gone with
+	// the member it read: a `per<X>`-named member IS a §3.7 `per` count-scaler on the same deposit, never a kind
+	// of its own (json.md §6). Good and bad are one signed number (modifier.md §2b), split by addGoodOrBad.
+	int aiOwnWellbeing[NUM_WELLBEING_CHANNELS];
+	buildingWellbeing(eBuilding, aiOwnWellbeing);
+	addGoodOrBad((aiOwnWellbeing[WELLBEING_HEALTH] - aiOwnWellbeing[WELLBEING_UNHEALTH]) / 100, iGood, iBad);
 
 	// Building
 	addGoodOrBad(getBuildingHealthChange(eBuilding), iGood, iBad);
@@ -7079,11 +7097,6 @@ int CvCity::getAdditionalHealthByBuilding(BuildingTypes eBuilding, int& iGood, i
 		{
 			addGoodOrBad(-getBuildingHealth(eBuildingX), iGood, iBad);
 		}
-	}
-
-	if (kBuilding.getHealthPercentPerPopulation() > 0)
-	{
-		addGoodOrBad(kBuilding.getHealthPercentPerPopulation() * getPopulation() / 100, iGood, iBad);
 	}
 
 	int iSpecialistExtraHealth = 0;
@@ -14601,27 +14614,9 @@ void CvCity::read(FDataStreamBase* pStream)
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiProductionToCommerceModifier);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiCommerceRateModifier);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_DOMAIN_TYPES, m_aiDomainProductionModifier);
-	// WIDENING MIGRATION (save.md §8). Culture moved int -> int64_t, which is a type-code change, so it cannot
-	// reuse its old tag. The wide tag is read into the member; the OLD 32-bit tag is read into a scratch array
-	// and seeds it when the wide one was absent -- which is exactly what makes an old save land on its real
-	// value instead of a default. Both directions are safe: on a new save the legacy tag is absent and its
-	// scratch stays 0, and seeding a genuine 0 over a 0 is a no-op.
-	{
-		int aiLegacyCulture[MAX_PLAYERS];
-		for (int iI = 0; iI < MAX_PLAYERS; iI++)
-		{
-			aiLegacyCulture[iI] = 0;
-		}
-		WRAPPER_READ_ARRAY_DECORATED(wrapper, "CvCity", MAX_PLAYERS, aiLegacyCulture, "m_aiCulture");
-		WRAPPER_READ_ARRAY_DECORATED(wrapper, "CvCity", MAX_PLAYERS, m_aiCulture, "m_aiCulturePerPlayer");
-		for (int iI = 0; iI < MAX_PLAYERS; iI++)
-		{
-			if (m_aiCulture[iI] == 0 && aiLegacyCulture[iI] != 0)
-			{
-				m_aiCulture[iI] = aiLegacyCulture[iI];
-			}
-		}
-	}
+	// Widening a member is SOFT: the reader absorbs the narrower stored form (save.md §8), so this keeps
+	// its own tag and an old save's 32-bit culture is read and widened in place.
+	WRAPPER_READ_ARRAY(wrapper, "CvCity", MAX_PLAYERS, m_aiCulture);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", MAX_PLAYERS, m_aiNumRevolts);
 
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", MAX_PLAYERS, m_abEverOwned);
@@ -15327,7 +15322,7 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiCommerceRateModifier);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_DOMAIN_TYPES, m_aiDomainProductionModifier);
 
-	WRAPPER_WRITE_ARRAY_DECORATED(wrapper, "CvCity", MAX_PLAYERS, m_aiCulture, "m_aiCulturePerPlayer");
+	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", MAX_PLAYERS, m_aiCulture);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", MAX_PLAYERS, m_aiNumRevolts);
 
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", MAX_PLAYERS, m_abEverOwned);

@@ -12928,7 +12928,8 @@ void CvGameTextMgr::setBuildingHelp(CvWStringBuffer &szBuffer, const BuildingTyp
 					?
 					pCity->getBuildingGoodHealth(eBuilding)
 					:
-					kBuilding.getHealth() + (player ? player->getExtraBuildingHealth(eBuilding) : 0)
+					kBuilding.getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_CITY) / 100
+					+ (player ? player->getExtraBuildingHealth(eBuilding) : 0)
 				);
 				if (iHealth != 0)
 				{
@@ -13412,67 +13413,11 @@ void CvGameTextMgr::setBuildingHelp(CvWStringBuffer &szBuffer, const BuildingTyp
 			szBuffer.append(gDLL->getText("TXT_KEY_BUILDINGHELP_POPULATION_EMPLOYED", kBuilding.getNumPopulationEmployed()));
 		}
 
-		if (kBuilding.getHealthPercentPerPopulation() != 0)
-		{
-			szBuffer.append(NEWLINE);
-			int iHealthPercent = kBuilding.getHealthPercentPerPopulation();
-			if (iHealthPercent % 100 == 0)
-			{
-				szTempBuffer = CvWString::format(L"%c%s%d%c%s", gDLL->getSymbolID(BULLET_CHAR),
-				iHealthPercent > 0 ? L"+" : L"",
-				abs(iHealthPercent / 100),
-				(iHealthPercent > 0 ? gDLL->getSymbolID(HEALTHY_CHAR) : gDLL->getSymbolID(UNHEALTHY_CHAR)),
-				gDLL->getText("TXT_KEY_MISC_PER_CITIZEN").GetCString());
-			}
-			else if (iHealthPercent % 10 == 0)
-			{
-				szTempBuffer = CvWString::format(L"%c%s%.1f%c%s", gDLL->getSymbolID(BULLET_CHAR),
-				iHealthPercent > 0 ? L"+" : L"",
-				abs(iHealthPercent) * 0.01f,
-				(iHealthPercent > 0 ? gDLL->getSymbolID(HEALTHY_CHAR) : gDLL->getSymbolID(UNHEALTHY_CHAR)),
-				gDLL->getText("TXT_KEY_MISC_PER_CITIZEN").GetCString());
-			}
-			else
-			{
-				szTempBuffer = CvWString::format(L"%c%s%.2f%c%s", gDLL->getSymbolID(BULLET_CHAR),
-				iHealthPercent > 0 ? L"+" : L"",
-				abs(iHealthPercent) * 0.01f,
-				(iHealthPercent > 0 ? gDLL->getSymbolID(HEALTHY_CHAR) : gDLL->getSymbolID(UNHEALTHY_CHAR)),
-				gDLL->getText("TXT_KEY_MISC_PER_CITIZEN").GetCString());
-			}
-			szBuffer.append(szTempBuffer);
-		}
-
-		if (kBuilding.getHappinessPercentPerPopulation() != 0)
-		{
-			szBuffer.append(NEWLINE);
-			int iHappinessPercent = kBuilding.getHappinessPercentPerPopulation();
-			if (iHappinessPercent % 100 == 0)
-			{
-				szTempBuffer = CvWString::format(L"%c%s%d%c%s", gDLL->getSymbolID(BULLET_CHAR),
-				iHappinessPercent > 0 ? L"+" : L"",
-				abs(iHappinessPercent / 100),
-				(iHappinessPercent > 0 ? gDLL->getSymbolID(HAPPY_CHAR) : gDLL->getSymbolID(UNHAPPY_CHAR)),
-				gDLL->getText("TXT_KEY_MISC_PER_CITIZEN").GetCString());
-			}
-			else if (iHappinessPercent % 10 == 0)
-			{
-				szTempBuffer = CvWString::format(L"%c%s%.1f%c%s", gDLL->getSymbolID(BULLET_CHAR),
-				iHappinessPercent > 0 ? L"+" : L"",
-				abs(iHappinessPercent) * 0.01f,
-				(iHappinessPercent > 0 ? gDLL->getSymbolID(HAPPY_CHAR) : gDLL->getSymbolID(UNHAPPY_CHAR)),
-				gDLL->getText("TXT_KEY_MISC_PER_CITIZEN").GetCString());
-			}
-			else
-			{
-				szTempBuffer = CvWString::format(L"%c%s%.2f%c%s", gDLL->getSymbolID(BULLET_CHAR),
-				iHappinessPercent > 0 ? L"+" : L"",
-				abs(iHappinessPercent) * 0.01f,
-				(iHappinessPercent > 0 ? gDLL->getSymbolID(HAPPY_CHAR) : gDLL->getSymbolID(UNHAPPY_CHAR)),
-				gDLL->getText("TXT_KEY_MISC_PER_CITIZEN").GetCString());
-			}
-			szBuffer.append(szTempBuffer);
-		}
+		// The per-POPULATION wellbeing help is GONE with the members it read. A `per<X>`-named member is a
+		// §3.7 `per` count-scaler on the ordinary happiness/health deposit, never a kind of its own, so it
+		// renders as that entry's own line through the ONE per-entry renderer -- not as a hand-built block
+		// doing float arithmetic (`* 0.01f`) in the DLL to print a fraction, which is the presentation
+		// layer's job on the other side of the boundary (patterns.md § THE DIVISION OF LABOUR).
 
 		if (bCivilopediaText || GC.getGame().isOption(GAMEOPTION_UNSUPPORTED_REVOLUTION))
 		{

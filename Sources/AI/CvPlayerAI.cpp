@@ -5777,9 +5777,10 @@ int CvPlayerAI::AI_techBuildingValue(TechTypes eTech, int iPathLength, bool& bEn
 
 				// if we're close to pop domination, we love medicine!
 				// don't adjust for negative modifiers to prevent ignoring assembly line, etc.
-				if (AI_isDoVictoryStrategy(AI_VICTORY_DOMINATION3) && kLoopBuilding.getHealth() > 0)
+				const int iOwnHealth = kLoopBuilding.getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_CITY) / 100;
+				if (AI_isDoVictoryStrategy(AI_VICTORY_DOMINATION3) && iOwnHealth > 0)
 				{
-					iBuildingValue += kLoopBuilding.getHealth() * 150;
+					iBuildingValue += iOwnHealth * 150;
 				}
 
 				if (iPathLength <= 1 && kLoopBuilding.getPrereqAndTech() == eTech

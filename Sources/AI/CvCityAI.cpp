@@ -12463,7 +12463,6 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 			|| kBuilding.isNoUnhealthyPopulation()
 			|| kBuilding.isBuildingOnlyHealthy()
 			|| !kBuilding.getBonusHealthChanges().empty()
-			|| kBuilding.getHealthPercentPerPopulation() > 0
 			|| GET_PLAYER(getOwner()).getExtraBuildingHealth(eBuilding) > 0)
 		{
 			return true;

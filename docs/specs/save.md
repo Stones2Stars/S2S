@@ -184,7 +184,7 @@ save-breaks that remain:
 
 1. a same-tag field whose **meaning** changed (silent wrong load);
 2. a legacy raw enum-indexed int array that **shrinks**;
-3. a **type-code** change under a reused name;
+3. a **NARROWING** type-code change under a reused name (widening is soft — §8);
 4. a deleted field with **no** `savemigration.txt` entry (the §3 stale-tag desync);
 5. removing an **`EVENT_TRIGGER` / `VOTE_SOURCE` / `VOTE`** Type — the four `FFreeListTrashArray` identity reads
    above, hard until the drop mechanism exists. **This one is a REAL `@SAVEBREAK`** (so the `EVENTTRIGGER_*`
@@ -192,34 +192,32 @@ save-breaks that remain:
 
 Everything else — field add, field remove, rename, reorder, and **every other** Type removal — is soft.
 
-## 8. WIDENING a serialized field — read-old / write-new
+## 8. WIDENING a serialized field is SOFT — the READER absorbs the narrower form ⭐
 
-A save tuple is `(id, type-code, value)` (§1), so widening a member's type under the **same tag** is a
-**type-code change under a reused name** — real save-break #3 in the list above, not a soft change. `RENAME`
-(§3) remaps a tag NAME and answers nothing about its TYPE.
+A save tuple carries a **type code** (§1), and `Expect` used to demand an exact match — which is why changing a
+member's type has historically broken saves, and why it broke them *silently* (a mismatched tag is skipped, the
+member keeps its default, and a plausible wrong number loads).
 
-⚑ **Most width changes never reach this section at all.** Derived state serializes nothing (§5), so the whole
-cascade plane — packages, receiver sums, every calc accumulator — widens with **zero** migration
-([fixed-point-and-scales.md §1b](curators/fixed-point-and-scales.md)). This applies only to a **serialized**
-field that genuinely needs the range.
+**That is fixed in the ONE place it belongs: the reader.** `Expect` takes an optional NARROWER type it will also
+accept, and the 64-bit reads pass their 32-bit twin (`SAVE_VALUE_TYPE_INT` / `SAVE_VALUE_TYPE_INT_ARRAY`). On a
+match the read inspects `m_iNextElementType` to see which form the stream actually holds and converts. So:
 
-**The procedure, built from the primitives already here — no new machinery:**
+- **Widening `int` → `int64_t` needs NOTHING.** Keep the member, keep its name, keep its tag. An old save's
+  32-bit value is read and widened in place; a new save writes the wide form.
+- **No new tag, no scratch array, no seeding pass, and no `savemigration.txt` entry** — nothing is orphaned,
+  because nothing was removed.
 
-1. Give the widened member a **NEW tag** and write only that. On an old save the new tag is absent, `Expect()`
-   returns false and the member keeps its default — the ordinary soft-ADD (§2).
-2. **Read the OLD tag too**, into a local of the ORIGINAL type. On a new save it is absent and the local keeps
-   its default; on an old save it carries the value.
-3. If the new tag was absent and the old one present, **seed the member from the local**.
-4. Once the old tag is no longer read anywhere, retire it by the ordinary soft-remove (§3) — full-delete the
-   read and name the tag in `Assets/savemigration.txt`.
+⚑ **Why the reader and not the field:** the alternative is a read-old/write-new dance in every widened member —
+a per-field transitional shape, repeated forever, that each future reader has to recognise. One rule in the
+reader retires the whole class ([DEC-proper-once](../architecture/decisions.md#dec-proper-once)). It is the same
+move `savemigration.txt` already makes for removal and rename: the format absorbs the change centrally rather
+than every field carrying its own migration.
 
-Steps 1–3 are what make an old save land on the **correct value** rather than a default; step 4 is the cleanup
-that follows, and until it happens the old tag is genuinely read, so it is NOT an orphan and needs no
-`savemigration.txt` line yet.
+⚠ **This covers WIDENING ONLY — a wider stored value into a narrower member is still a break**, and correctly so:
+there is no safe conversion, only truncation. The direction is one-way by design.
 
-⛔ **Do not widen in place and hope.** A same-tag type-code change is the silent-wrong-load class: it does not
-fail loudly, it loads a wrong number.
-
+⚠ Widening changes what the FIELD can hold, never what it MEANS. A same-tag field whose *meaning* changed is
+still real save-break #1 (the silent-wrong-load class) and this does nothing for it.
 ## See also
 
 - [state-repositories.md](../architecture/state-repositories.md) — the derived-cache model that rests on §5.

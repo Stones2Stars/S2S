@@ -1292,6 +1292,14 @@ public:
 	int getBuildingHealthChange(BuildingTypes eType) const;
 	void setBuildingHealthChange(BuildingTypes eType, int iChange);
 
+	// What ONE building delivers to this city's wellbeing, resolved through the ONE valuation against this
+	// city's contexts (modifier.md §2b: four channels, the sign routing applied at fill). The two health
+	// readers below split that one signed authored number; neither reads an info's health member, because
+	// there is none to read -- a building's wellbeing IS its authored deposits.
+	void buildingWellbeing(BuildingTypes eBuilding, int (&wellbeing)[NUM_WELLBEING_CHANNELS]) const;
+	int getBuildingGoodHealth(BuildingTypes eBuilding) const;
+	int getBuildingBadHealth(BuildingTypes eBuilding) const;
+
 	PlayerTypes getLiberationPlayer(bool bConquest) const;
 	void liberate(bool bConquest);
 
