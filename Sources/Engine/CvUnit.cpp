@@ -10434,7 +10434,7 @@ InvisibleTypes CvUnit::getSeeInvisibleType(int i) const
 
 int CvUnit::flavorValue(FlavorTypes eFlavor) const
 {
-	return m_pUnitInfo->getFlavorValue(eFlavor);
+	return m_pUnitInfo->getFlavour((int)eFlavor);
 }
 
 

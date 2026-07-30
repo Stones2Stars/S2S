@@ -4858,7 +4858,7 @@ int CvCityAI::AI_buildingValue(BuildingTypes eBuilding, int iFocusFlags, bool bF
 			const int numFlavors = GC.getNumFlavorTypes();
 			for (int i = 0; i < numFlavors; ++i)
 			{
-				iValue += kOwner.AI_getFlavorValue(static_cast<FlavorTypes>(i)) * kBuilding.getFlavorValue(i);
+				iValue += kOwner.AI_getFlavorValue(static_cast<FlavorTypes>(i)) * kBuilding.getFlavorValue(static_cast<FlavorTypes>(i));
 			}
 			return std::max(1, iValue);
 		}
@@ -4876,7 +4876,7 @@ int CvCityAI::AI_buildingValue(BuildingTypes eBuilding, int iFocusFlags, bool bF
 		int iFlavorTotal = 0;
 		for (int i = 0; i < numFlavors; ++i)
 		{
-			const int iFlavorAdd = kOwner.AI_getFlavorValue(static_cast<FlavorTypes>(i)) * kBuilding.getFlavorValue(i);
+			const int iFlavorAdd = kOwner.AI_getFlavorValue(static_cast<FlavorTypes>(i)) * kBuilding.getFlavorValue(static_cast<FlavorTypes>(i));
 			iValue += iFlavorAdd;
 			iFlavorTotal += iFlavorAdd;
 			if (iFlavorAdd != 0)
@@ -5404,8 +5404,8 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 				// The KEYED happiness deposits ([modifier.md §5]): an entry-list read over what this building
 				// authors onto NAMED other buildings -- never folded scope-wide. ×100 at the slot, human here.
 				std::vector<std::pair<int, int> > kKeyedHappy;
-				kBuilding.getModifiers()->targetedSums(MODFAM_HAPPINESS, CHANNEL_AMOUNT, CASC_SCOPE_CITY,
-					CASC_UNIT_FLAT, kKeyedHappy);
+				kBuilding.getModifiers()->targetedSums(MODFAM_HAPPINESS, CHANNEL_AMOUNT, CASC_SCOPE_EMPIRE,
+					CASC_UNIT_FLAT, modSegmentLookup("buildings"), kKeyedHappy);
 				for (size_t iKeyed = 0; iKeyed < kKeyedHappy.size(); ++iKeyed)
 				{
 					const BuildingTypes eKeyedBuilding = (BuildingTypes)kKeyedHappy[iKeyed].first;
@@ -12439,20 +12439,14 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 	}
 	if ((iFocusFlags & BUILDINGFOCUS_HAPPY) != 0)
 	{
-		foreach_(const TechModifier & modifier, kBuilding.getTechHappinessChanges())
-		{
-			if (GET_TEAM(getTeam()).isHasTech(modifier.first) && modifier.second > 0)
-			{
-				return true;
-			}
-		}
+		// ⛔ No TECH-keyed happiness read: zero authorings anywhere (keyed happiness is empire.buildings).
 		// Does this building do ANYTHING for happiness? The keyed deposits (onto named buildings/bonuses) are an
 		// entry-list read ([modifier.md §5]); war weariness is one SCALAR whose city and former "global" spellings
 		// are the same slot at two scopes ([DEC-scope-is-an-axis]), so the empire read covers what the second
 		// getter used to answer.
 		std::vector<std::pair<int, int> > kKeyedHappy;
-		kBuilding.getModifiers()->targetedSums(MODFAM_HAPPINESS, CHANNEL_AMOUNT, CASC_SCOPE_CITY,
-			CASC_UNIT_FLAT, kKeyedHappy);
+		kBuilding.getModifiers()->targetedSums(MODFAM_HAPPINESS, CHANNEL_AMOUNT, CASC_SCOPE_EMPIRE,
+			CASC_UNIT_FLAT, modSegmentLookup("buildings"), kKeyedHappy);
 		if (kBuilding.getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_CITY) > 0
 			|| kBuilding.getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_EMPIRE) > 0
 			|| kBuilding.isAbolishedAnger()

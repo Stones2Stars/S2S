@@ -93,18 +93,19 @@ public:
 	// (happiness.<scope>.buildings.{B}, experience.city.unitCombats.{UC}, <yield>.<scope>.improvements.{I}).
 	// ⛔ A keyed entry deliberately does NOT fold into the scope's point slot -- folding it scope-wide is
 	// silently, plausibly WRONG (a melee-only experience bonus handed to every unit trained here), so this is
-	// an ENTRY-LIST read by design. Cheap: it walks the handful this entity AUTHORED, never a keyed container
+	// an ENTRY-LIST read by design. iTargetSeg is the AXIS token (`buildings` / `improvements` / ...): without
+	// it the read mixes axes, since every named target resolves a targetFk. Cheap: it walks the handful this entity AUTHORED, never a keyed container
 	// the info no longer holds. Fills a CALLER-OWNED array of (targetFk, ×100 value), unconditioned entries
 	// only -- the same audience + condition semantics as the point sum above.
 	void targetedSums(ModifierFamily eFamily, int iKind, CvCascScope eScope, CvCascUnit eUnit,
-		std::vector<std::pair<int, int> >& kOut, CvModAudience eAudience) const;
+		int iTargetSeg, std::vector<std::pair<int, int> >& kOut, CvModAudience eAudience) const;
 	void targetedSums(ModifierFamily eFamily, int iKind, CvCascScope eScope, CvCascUnit eUnit,
-		std::vector<std::pair<int, int> >& kOut, bool bIncludeAiOnly = false) const;
+		int iTargetSeg, std::vector<std::pair<int, int> >& kOut, bool bIncludeAiOnly = false) const;
 	// The point form of the same read: the sum this source deposits onto ONE named target.
 	int targetedSum(ModifierFamily eFamily, int iKind, CvCascScope eScope, CvCascUnit eUnit,
-		int iTargetFk, CvModAudience eAudience) const;
+		int iTargetSeg, int iTargetFk, CvModAudience eAudience) const;
 	int targetedSum(ModifierFamily eFamily, int iKind, CvCascScope eScope, CvCascUnit eUnit,
-		int iTargetFk, bool bIncludeAiOnly = false) const;
+		int iTargetSeg, int iTargetFk, bool bIncludeAiOnly = false) const;
 	int propertySum(int iPropertyFk, CvCascScope eScope, CvCascUnit eUnit, bool bIncludeAiOnly = false) const;
 
 private:

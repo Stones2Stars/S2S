@@ -7214,8 +7214,8 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, CvArea* pAr
 	// The KEYED happiness deposits ([modifier.md §5]): an entry-list read over what this building
 	// authors onto NAMED other buildings -- never folded scope-wide. ×100 at the slot, human here.
 	std::vector<std::pair<int, int> > kKeyedHappy;
-	kBuilding.getModifiers()->targetedSums(MODFAM_HAPPINESS, CHANNEL_AMOUNT, CASC_SCOPE_CITY,
-		CASC_UNIT_FLAT, kKeyedHappy);
+	kBuilding.getModifiers()->targetedSums(MODFAM_HAPPINESS, CHANNEL_AMOUNT, CASC_SCOPE_EMPIRE,
+		CASC_UNIT_FLAT, modSegmentLookup("buildings"), kKeyedHappy);
 	for (size_t iKeyed = 0; iKeyed < kKeyedHappy.size(); ++iKeyed)
 	{
 		const BuildingTypes eKeyedBuilding = (BuildingTypes)kKeyedHappy[iKeyed].first;
@@ -26378,8 +26378,7 @@ void CvPlayer::recalculateResourceConsumption(BonusTypes eBonus)
 
 			const CvBuildingInfo& buildingX = GC.getBuildingInfo(eTypeX);
 			iConsumption += (
-					buildingX.getModifiers()->targetedSum(MODFAM_HAPPINESS, CHANNEL_AMOUNT, CASC_SCOPE_CITY,
-						CASC_UNIT_FLAT, eBonus) * 12 / 100
+					0   // bonus-keyed happiness: ZERO authorings anywhere in the data (the axis is empire.buildings)
 				+	buildingX.getBonusHealthChanges().getValue(eBonus) * 8
 				+	buildingX.getBonusDefenseChanges(eBonus)
 			);
@@ -26559,8 +26558,7 @@ void CvPlayer::recalculateAllResourceConsumption()
 			foreach_(const BonusTypes eBonus, buildingX.getConsumptionRelevantBonuses())
 			{
 				int iValue = (
-						buildingX.getModifiers()->targetedSum(MODFAM_HAPPINESS, CHANNEL_AMOUNT, CASC_SCOPE_CITY,
-						CASC_UNIT_FLAT, eBonus) * 12 / 100
+						0   // bonus-keyed happiness: ZERO authorings (the axis is empire.buildings)
 					+	buildingX.getBonusHealthChanges().getValue(eBonus) * 8
 					+	buildingX.getBonusDefenseChanges(eBonus)
 				);

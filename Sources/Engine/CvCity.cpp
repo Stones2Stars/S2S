@@ -6559,8 +6559,8 @@ int CvCity::getAdditionalHappinessByBuilding(BuildingTypes eBuilding, int& iGood
 	// The KEYED happiness deposits ([modifier.md §5]): an entry-list read over what this building
 	// authors onto NAMED other buildings -- never folded scope-wide. ×100 at the slot, human here.
 	std::vector<std::pair<int, int> > kKeyedHappy;
-	kBuilding.getModifiers()->targetedSums(MODFAM_HAPPINESS, CHANNEL_AMOUNT, CASC_SCOPE_CITY,
-		CASC_UNIT_FLAT, kKeyedHappy);
+	kBuilding.getModifiers()->targetedSums(MODFAM_HAPPINESS, CHANNEL_AMOUNT, CASC_SCOPE_EMPIRE,
+		CASC_UNIT_FLAT, modSegmentLookup("buildings"), kKeyedHappy);
 	for (size_t iKeyed = 0; iKeyed < kKeyedHappy.size(); ++iKeyed)
 	{
 		const BuildingTypes eKeyedBuilding = (BuildingTypes)kKeyedHappy[iKeyed].first;
@@ -6581,19 +6581,8 @@ int CvCity::getAdditionalHappinessByBuilding(BuildingTypes eBuilding, int& iGood
 	}
 
 	// Bonus
-	// The KEYED happiness deposits onto named BONUSES ([modifier.md §5]) -- the same entry-list read as the
-	// building-keyed one above; the target axis is what differs, never the mechanism. ×100 at the slot.
-	std::vector<std::pair<int, int> > kKeyedBonusHappy;
-	kBuilding.getModifiers()->targetedSums(MODFAM_HAPPINESS, CHANNEL_AMOUNT, CASC_SCOPE_CITY,
-		CASC_UNIT_FLAT, kKeyedBonusHappy);
-	for (size_t iKeyed = 0; iKeyed < kKeyedBonusHappy.size(); ++iKeyed)
-	{
-		const BonusTypes eKeyedBonus = (BonusTypes)kKeyedBonusHappy[iKeyed].first;
-		if ((hasBonus(eKeyedBonus) || kBuilding.getProvides()->has(eKeyedBonus)))
-		{
-			addGoodOrBad(kKeyedBonusHappy[iKeyed].second / 100, iGood, iBad);
-		}
-	}
+	// ⛔ No BONUS-keyed happiness read: the axis has ZERO authorings across the whole data set (keyed happiness
+	// authors `empire.buildings` only). The loop existed for data that does not exist.
 
 	// ⛔ No per-commerce-rate loop: a slider rate is a §3.1 count-scaler TOKEN, so that happiness is an ordinary
 	// deposit carrying a `per` and is already inside the wellbeing read -- adding it here would double it.
@@ -6650,13 +6639,7 @@ int CvCity::getAdditionalHappinessByBuilding(BuildingTypes eBuilding, int& iGood
 	const int iPop = getPopulation();
 	iAngryPop += range(iAngerBalance + iBad - iGood, 0, iPop) - range(iAngerBalance, 0, iPop);
 
-	foreach_(const TechModifier& modifier, kBuilding.getTechHappinessChanges())
-	{
-		if (GET_TEAM(getTeam()).isHasTech(modifier.first))
-		{
-			addGoodOrBad(modifier.second, iGood, iBad);
-		}
-	}
+	// ⛔ No TECH-keyed happiness read: zero authorings anywhere (keyed happiness is empire.buildings).
 
 	for (int iI = 0; iI < kBuilding.getNumReplacedBuilding(); iI++)
 	{

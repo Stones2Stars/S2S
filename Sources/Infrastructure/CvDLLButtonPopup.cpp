@@ -2718,7 +2718,7 @@ bool CvDLLButtonPopup::launchSelectDiscoveryTechPopup(CvPopup* pPopup, CvPopupIn
 		{
 			for (int iJ = GC.getNumFlavorTypes() - 1; iJ > -1; iJ--)
 			{
-				if (GC.getTechInfo(eTechX).getFlavorValue(iJ) * GC.getUnitInfo(unit->getUnitType()).getFlavorValue(iJ) > 0)
+				if (GC.getTechInfo(eTechX).getFlavorValue(iJ) * GC.getUnitInfo(unit->getUnitType()).getFlavour(iJ) > 0)
 				{
 					gDLL->getInterfaceIFace()->popupAddGenericButton(
 						pPopup,
