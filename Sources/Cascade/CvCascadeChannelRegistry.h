@@ -89,6 +89,10 @@ public:
 	static int64_t scopeChannelBit(CvCascScope eScope, int iChannel);
 	// The whole scope's package-channel mask (every authored channel bit; receiver bits excluded).
 	static int64_t scopeAllChannelsMask(CvCascScope eScope);
+	// The OR of ONE FAMILY's channel bits at a scope -- so a consumer can ask "did this rebuild touch my
+	// family here?" against the SAME index-derived mask the rebuild was routed by, never a hand-kept list
+	// ([state-repositories.md]: the dirty flags fall out of the deposit addresses).
+	static int64_t scopeFamilyMask(CvCascScope eScope, ModifierFamily eFamily);
 
 	// ---- the RECEIVER slots (one consuming scope per channel; culture the lone dual-consumer) ----
 

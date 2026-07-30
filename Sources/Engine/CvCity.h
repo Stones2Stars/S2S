@@ -1977,8 +1977,8 @@ private:
 	// uniformly, so it forces a bespoke invalidation path per field, which is how ~33 of them accumulated).
 	// Recompute-only and NEVER serialized ([DEC-derived-never-trusted] / [save.md §5]) -- dirty-on-construct
 	// means a loaded game recomputes from current state rather than trusting a save's stale number.
-	mutable CvDerivedCache<CvCity, int, 1> m_maintenance;
-	void recomputeMaintenance(int* aOut) const;
+	mutable CvDerivedCache<CvCity, int, 1> m_maintenanceComponents;
+	void recomputeMaintenanceComponents(int* aOut) const;
 
 
 

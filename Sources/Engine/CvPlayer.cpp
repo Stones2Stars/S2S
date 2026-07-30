@@ -704,6 +704,13 @@ void CvPlayer::uninit()
 void CvPlayer::refreshCascadePackage(int64_t iMask) const
 {
 	CascadeGather::refreshEmpire(*this, iMask);
+	// An EMPIRE-scope maintenance percent rolls DOWN into every city's realized value, so the total moves. The
+	// cities need no mark of their own: their read composes the roll-up live ([modifier.md] §1), which is what
+	// keeps a lower scope from storing an upper scope's sums.
+	if ((iMask & CascadeChannelRegistry::scopeFamilyMask(CASC_SCOPE_EMPIRE, MODFAM_MAINTENANCE)) != 0)
+	{
+		markMaintenanceDirty();
+	}
 }
 
 // The ENABLER's per-player lifecycle start (enabler.md 7.1): size every player-held domain and apply its static

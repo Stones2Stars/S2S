@@ -371,6 +371,20 @@ int64_t CascadeChannelRegistry::scopeAllChannelsMask(CvCascScope eScope)
 	return iMask;
 }
 
+int64_t CascadeChannelRegistry::scopeFamilyMask(CvCascScope eScope, ModifierFamily eFamily)
+{
+	const int iCount = scopeChannelCount(eScope);
+	int64_t iMask = 0;
+	for (int iSlot = 0; iSlot < iCount; ++iSlot)
+	{
+		if (channelFamily(scopeSlotChannel(eScope, iSlot)) == eFamily)
+		{
+			iMask |= cr_channelBitOf(iSlot);
+		}
+	}
+	return iMask;
+}
+
 int CascadeChannelRegistry::scopeReceiverCount(CvCascScope eScope)
 {
 	if (!cr_isPackageScope(eScope))

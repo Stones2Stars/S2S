@@ -86,6 +86,13 @@ namespace
 void CvCity::refreshCascadePackage(int64_t iMask) const
 {
 	CascadeGather::refreshCity(*this, iMask);
+	// The empire TOTAL is the Σ of its cities' REALIZED maintenance, so a maintenance channel rebuilding here
+	// moves it. Tested against the SAME index-derived mask that routed the rebuild -- precise, never a blanket
+	// mark ("emit liberally, mark precisely": a surplus mark is a real rebuild paid on the turn path).
+	if ((iMask & CascadeChannelRegistry::scopeFamilyMask(CASC_SCOPE_CITY, MODFAM_MAINTENANCE)) != 0)
+	{
+		GET_PLAYER(getOwner()).markMaintenanceDirty();
+	}
 }
 
 // ---- THE CITY'S AVAILABILITY READS (see CvCity.h for the role + the grammar). Every one is a BARE O(1) fetch of
@@ -662,7 +669,7 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_cityContext.bind(this);   // bind the per-city context to its owner (the pointer IS this city; forwarding reads it)
 	// bind the CITY-scope cascade package (all-dirty from bind: a loaded/new city recomputes on first read)
 	m_cascadePackage.bind(CASC_SCOPE_CITY, this, &CvCity::refreshCascadePackage, (int)eOwner, iID);
-	m_maintenance.bind(this, &CvCity::recomputeMaintenance);
+	m_maintenanceComponents.bind(this, &CvCity::recomputeMaintenanceComponents);
 	// The enabler's per-city state starts EMPTY and UN-READY: the domains are init'd by their domain enabler at
 	// this city's lifecycle start and filled by DOMAIN events thereafter ([DEC-spine-reseed]) -- never from the
 	// save. Clearing here is load-bearing because a CvCity is RECYCLED out of an FFreeListTrashArray: without it
@@ -5860,7 +5867,11 @@ int CvCity::getSavedMaintenanceTimes100ByBuilding(BuildingTypes eBuilding) const
 	const int iModOld = maintenancePercentStack(MAINTENANCE_AMOUNT);
 	const int iBaseOld = calculateBaseMaintenanceTimes100();
 
-	return getModifiedIntValue(iBaseOld, iModOld) - getModifiedIntValue(iBaseOld + iDirectMaintenance, iModOld + iModifier);
+	return (int)(
+		InfoValuation::realizedChannel(iBaseOld, iModOld, CASC_UNIT_FLAT)
+		-
+		InfoValuation::realizedChannel(iBaseOld + iDirectMaintenance, iModOld + iModifier, CASC_UNIT_FLAT)
+	);
 }
 // BUG - Building Saved Maintenance - end
 
@@ -5879,9 +5890,9 @@ int CvCity::getDistanceMaintenanceSavedByCivic(CivicTypes eCivic) const
 	}
 	const int iFinalMod = maintenancePercentStack(MAINTENANCE_AMOUNT);
 	return (
-		getModifiedIntValue(calculateDistanceMaintenanceTimes100(), iFinalMod)
+		InfoValuation::realizedChannel(calculateDistanceMaintenanceTimes100(), iFinalMod, CASC_UNIT_FLAT)
 		-
-		getModifiedIntValue(calculateDistanceMaintenanceTimes100(iMod), iFinalMod)
+		InfoValuation::realizedChannel(calculateDistanceMaintenanceTimes100(iMod), iFinalMod, CASC_UNIT_FLAT)
 	);
 }
 
@@ -5900,9 +5911,9 @@ int CvCity::getNumCitiesMaintenanceSavedByCivic(CivicTypes eCivic) const
 	}
 	const int iFinalMod = maintenancePercentStack(MAINTENANCE_AMOUNT);
 	return (
-		getModifiedIntValue(calculateNumCitiesMaintenanceTimes100(), iFinalMod)
+		InfoValuation::realizedChannel(calculateNumCitiesMaintenanceTimes100(), iFinalMod, CASC_UNIT_FLAT)
 		-
-		getModifiedIntValue(calculateNumCitiesMaintenanceTimes100(iMod), iFinalMod)
+		InfoValuation::realizedChannel(calculateNumCitiesMaintenanceTimes100(iMod), iFinalMod, CASC_UNIT_FLAT)
 	);
 }
 
@@ -5929,9 +5940,9 @@ int CvCity::getAreaMaintenanceSavedByCivic(CivicTypes eCivic) const
 	const int iBaseMaintenance = calculateBaseMaintenanceTimes100();
 	const int iEffectiveMaintenanceMod = maintenancePercentStack(MAINTENANCE_AMOUNT);
 	return (
-		getModifiedIntValue(iBaseMaintenance, iEffectiveMaintenanceMod)
+		InfoValuation::realizedChannel(iBaseMaintenance, iEffectiveMaintenanceMod, CASC_UNIT_FLAT)
 		-
-		getModifiedIntValue(iBaseMaintenance, iEffectiveMaintenanceMod + iMod)
+		InfoValuation::realizedChannel(iBaseMaintenance, iEffectiveMaintenanceMod + iMod, CASC_UNIT_FLAT)
 	);
 }
 
@@ -5958,12 +5969,22 @@ int CvCity::getMaintenanceTimes100() const
 	{
 		return 0;
 	}
-	return m_maintenance.get(0);
+	// ⛔ THE DOWNWARD ROLL IS REALIZED AT READ ([modifier.md] §1), which is precisely why the percent stack is
+	// NOT cached here: a lower scope that stored an upper scope's sums would force downward invalidation
+	// fan-out and "break the principle of the cascade in the first place" ([state-repositories.md]). So an
+	// empire- or team-scope maintenance percent moving needs NO city mark at all -- its own package is marked
+	// at its own scope and this read picks it up on the next fetch.
+	// What IS cached is only the four ENGINE COMPONENTS, which depend on city/player state and on no package.
+	long iFlatSum = 0;
+	long iPercentSum = 0;
+	maintenanceLegs((int)MAINTENANCE_AMOUNT, iFlatSum, iPercentSum);
+	return (int)InfoValuation::realizedChannel(
+		m_maintenanceComponents.get(0) + iFlatSum, iPercentSum, CASC_UNIT_FLAT);
 }
 
 void CvCity::markMaintenanceDirty() const
 {
-	m_maintenance.markDirty();
+	m_maintenanceComponents.markDirty();
 	// The empire total is the Σ of its members' realized values, so a member moving marks it too. ONE
 	// direction only: the receiving scope never fans back down into the members it sums.
 	GET_PLAYER(getOwner()).markMaintenanceDirty();
@@ -5988,9 +6009,16 @@ int CvCity::maintenancePercentStack(int iKind) const
 
 // The recompute the MARK runs ([state-repositories.md]: the mark rebuilds; a read never does). It fully defines
 // its output on every call -- the component's contract rule 2, which is what makes an early return safe.
-void CvCity::recomputeMaintenance(int* aOut) const
+// ⚑ It caches ONLY the four components the cascade does not model -- expensive (the distance leg walks the
+// owner's cities for a government centre) and dependent on no package, so caching them stores nothing that
+// belongs to an upper scope. Everything cascade-shaped composes at the READ above.
+void CvCity::recomputeMaintenanceComponents(int* aOut) const
 {
-	aOut[0] = getModifiedIntValue(calculateBaseMaintenanceTimes100(), maintenancePercentStack(MAINTENANCE_AMOUNT));
+	aOut[0] =
+		calculateDistanceMaintenanceTimes100()
+		+ calculateNumCitiesMaintenanceTimes100()
+		+ calculateColonyMaintenanceTimes100()
+		+ calculateCorporationMaintenanceTimes100();
 }
 
 int CvCity::calculateDistanceMaintenance() const
@@ -6025,7 +6053,7 @@ int CvCity::calculateDistanceMaintenanceTimes100(int iExtraDistanceModifier) con
 			// differed only by adding the hand-named coastal accumulator. "while coastal" is a CONDITION on an
 			// ordinary distance deposit ([DEC-conditions-are-predicates]), so the stack already carries the
 			// coastal-gated entries, evaluated against THIS city by the ONE evaluator.
-			iValue = getModifiedIntValue(iValue, iDistanceStack);
+			iValue = (int)InfoValuation::realizedChannel(iValue, iDistanceStack, CASC_UNIT_FLAT);
 
 			// Toffer: Is this scaling rational?
 			// It may be more probable that players would settle cities further away from capital on bigger
@@ -6094,7 +6122,8 @@ int CvCity::calculateNumCitiesMaintenanceTimes100(int iExtraModifier) const
 		iNumCitiesMaint += iNumVassalCities * iNumCitiesPercent / (3 + iVassals);
 	}
 
-	iNumCitiesMaint = getModifiedIntValue(iNumCitiesMaint, maintenancePercentStack((int)MAINTENANCE_NUM_CITIES) + iExtraModifier);
+	iNumCitiesMaint = (int)InfoValuation::realizedChannel(
+		iNumCitiesMaint, maintenancePercentStack((int)MAINTENANCE_NUM_CITIES) + iExtraModifier, CASC_UNIT_FLAT);
 
 	iNumCitiesMaint *= GC.getHandicapInfo(getHandicapType()).getMaintenanceModifier(MAINTENANCE_NUM_CITIES, CASC_SCOPE_EMPIRE);
 	iNumCitiesMaint /= 100;
@@ -6220,7 +6249,8 @@ int CvCity::calculateCorporationMaintenanceTimes100(CorporationTypes eCorporatio
 
 	// National Modifier
 	// ONE read: the roll-up already spans team + empire + city, so the hand-summed player + team legs merge.
-	iMaintenance = getModifiedIntValue(iMaintenance, maintenancePercentStack((int)MAINTENANCE_CORPORATION));
+	iMaintenance = (int)InfoValuation::realizedChannel(
+		iMaintenance, maintenancePercentStack((int)MAINTENANCE_CORPORATION), CASC_UNIT_FLAT);
 
 	FASSERT_NOT_NEGATIVE(iMaintenance);
 
@@ -6239,18 +6269,7 @@ int CvCity::calculateBaseMaintenanceTimes100() const
 	long iFlatSum = 0;
 	long iPercentSum = 0;
 	maintenanceLegs((int)MAINTENANCE_AMOUNT, iFlatSum, iPercentSum);
-
-	return (
-		(int)iFlatSum
-		+
-		calculateDistanceMaintenanceTimes100()
-		+
-		calculateNumCitiesMaintenanceTimes100()
-		+
-		calculateColonyMaintenanceTimes100()
-		+
-		calculateCorporationMaintenanceTimes100()
-	);
+	return (int)iFlatSum + m_maintenanceComponents.get(0);
 }
 
 
@@ -18433,7 +18452,11 @@ int64_t CvCity::calcCorporateMaintenance() const
 				iCorpTaxes *= getPopulation();
 				iCorpTaxes /= iAveragePopulation;
 			}
-			iCorpTaxes = getModifiedIntValue64(iCorpTaxes, maintenancePercentStack((int)MAINTENANCE_CORPORATION));
+			// The additive-linear §2 combine at 64-bit width. realizedChannel is the ONE implementation of the
+			// shape, but it takes `long` -- 32-bit on this toolchain -- and a corporate-tax total does not fit
+			// that, so the same arithmetic is spelled here rather than narrowing the value to reach it.
+			const int iCorpStack = maintenancePercentStack((int)MAINTENANCE_CORPORATION);
+			iCorpTaxes = iCorpTaxes * std::max(0, 100 + iCorpStack) / 100;
 
 			iCorpTaxes *= GC.getHandicapInfo(getHandicapType()).getMaintenanceModifier(MAINTENANCE_CORPORATION, CASC_SCOPE_EMPIRE);
 			iCorpTaxes /= 100;

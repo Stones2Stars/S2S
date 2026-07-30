@@ -41,6 +41,18 @@
 void CvTeam::refreshCascadePackage(int64_t iMask) const
 {
 	CascadeGather::refreshTeam(*this, iMask);
+	// A TEAM-scope maintenance percent reaches every member's cities the same way -- mark each member's total.
+	if ((iMask & CascadeChannelRegistry::scopeFamilyMask(CASC_SCOPE_TEAM, MODFAM_MAINTENANCE)) != 0)
+	{
+		for (int iPlayer = 0; iPlayer < MAX_PC_PLAYERS; ++iPlayer)
+		{
+			const CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iPlayer);
+			if (kPlayer.isAlive() && kPlayer.getTeam() == getID())
+			{
+				kPlayer.markMaintenanceDirty();
+			}
+		}
+	}
 }
 
 // The capability union's refresh delegate -- the one-line delegation to the ONE derivation
