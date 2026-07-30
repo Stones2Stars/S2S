@@ -16425,7 +16425,7 @@ void CvUnit::rotateFacingDirectionCounterClockwise()
 	setFacingDirection(eNewDirection);
 }
 
-// --- UNIT STATUS (Engine/CvUnitStatus.h) -- an applied counter that ticks down and is over at zero. ---
+// --- UNIT STATUS (Engine/CvStatus.h) -- an applied counter that ticks down and is over at zero. ---
 
 int CvUnit::getStatus(UnitStatus eStatus) const
 {

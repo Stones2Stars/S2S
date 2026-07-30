@@ -10,7 +10,7 @@
 #include "Cascade/CvUnitResolved.h"   // the UNIT plane's resolved values (state-repositories.md)
 #include "CvProperties.h"
 #include "CvUnitComponents.h"
-#include "Engine/CvUnitStatus.h"   // UnitStatus -- the status enum + the per-turn-counter model
+#include "Engine/CvStatus.h"   // UnitStatus + the status model (an applied counter, ticking down)
 
 #pragma warning( disable: 4251 )		// needs to have dll-interface to be used by clients of class
 
@@ -1394,7 +1394,7 @@ public:
 	void applyEvent(EventTypes eEvent);
 
 
-	// --- UNIT STATUS (json.md §8; the enum + the model: Engine/CvUnitStatus.h) ---
+	// --- UNIT STATUS (json.md §8; the enum + the model: Engine/CvStatus.h) ---
 	// An id -> TURNS-REMAINING dictionary. Something applies a status, it ticks down every turn, it is over at
 	// zero -- so the gate is simply "is the counter above zero". SERIALIZED: a status is applied by an event and
 	// counts down on its own, so nothing can re-derive it from live state (save.md §5 -- a store survives

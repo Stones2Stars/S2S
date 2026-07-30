@@ -8,6 +8,24 @@ namings); the **system** is the [json spec](json.md) §8. Sibling of [skills.md]
 > registries ([json.md §8](json.md)) the member set grows as states are identified from the data — an ongoing
 > activity, not a gap to close.
 
+> **⚖ STATUS IS A SCOPE CONCEPT, NOT A UNIT ONE (owner).** A unit is PARALYZED, a PLAYER is in a GOLDEN AGE, a
+> CITY is CELEBRATING — all three are the same mechanic: applied, ticking down every turn, over at zero. So each
+> scope that carries statuses gets its own enum and the identical store / accessor / tick shape on its owner
+> (`Engine/CvStatus.h`), instead of every timer being a hand-named member with its own getter, setter,
+> decrement and save field. ⚑ That is the whole value: the legacy engine wrote this mechanic out longhand once
+> per timer.
+> ⚠ **A status change is not always a bare decrement.** Where crossing zero has CONSEQUENCES — a golden age
+> starting cancels anarchy, announces its fact and re-yields — the crossing keeps its side-effect surface; the
+> store replaces the hand-named counter, never the crossing logic ([save.md §6](save.md): audit a changer's
+> whole body before cutting it).
+
+> ⚖ **A DURATION-1 STATUS IS THE NATURAL SHAPE FOR "WHILE X HOLDS" (owner).** We Love the King/Emperor Day is a
+> ONE-TURN status re-applied every turn by a trigger while its conditions match — so it lapses by simply not
+> being re-applied, and needs no separate clear. The trigger owns the TEST; the counter owns the ENDING.
+> ⛔ **Its legacy trigger wiring STAYS (owner):** re-homing that per-turn condition test is funky, so the status
+> owns the storage and the read while the existing code owns deciding whether the conditions match. That is a
+> ruled carve-out, not a half-migration to finish opportunistically.
+
 ## What a state is (recap)
 - **A SPECIFIC COUNTER, DECREMENTED EVERY TURN (owner)** — applied to the unit, ticking down, over at zero.
   Unlike a *mutable* skill (persists until changed) or an *immutable* tag (set at creation).
