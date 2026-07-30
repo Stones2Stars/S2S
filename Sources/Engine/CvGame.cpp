@@ -490,7 +490,6 @@ void CvGame::onFinalInitialized(const bool bNewGame)
 	{
 		if (GET_TEAM((TeamTypes)iI).isAlive())
 		{
-			GET_TEAM((TeamTypes)iI).cacheAdjacentResearch();
 		}
 	}
 

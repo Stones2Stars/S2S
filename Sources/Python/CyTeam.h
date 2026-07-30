@@ -149,8 +149,6 @@ public:
 	bool isHasTech(int /*TechTypes*/ iIndex) const;
 	void setHasTech(int /*TechTypes*/ eIndex, bool bNewValue, int /*PlayerTypes*/ ePlayer, bool bFirst, bool bAnnounce);
 	bool isNoTradeTech(int /*TechType */ iIndex) const;
-	int getNumAdjacentResearch() const;
-	int getAdjacentResearch(int i) const;
 
 
 	int getBuildingCommerceTechChange(int eIndex, int eBuilding) const;

@@ -360,9 +360,11 @@ TechTypes getDiscoveryTech(const UnitTypes eUnit, const PlayerTypes ePlayer)
 	TechTypes eBestTech = NO_TECH;
 	int iBestValue = 0;
 
-	foreach_(const TechTypes eTechX, team.getAdjacentResearch())
+	std::vector<int> researchableTechs;
+	player.getAvailableTechs(researchableTechs);
+	foreach_(const int iTechX, researchableTechs)
 	{
-		if ((player.getTechAvailability(eTechX) == EnablerDomain::STATE_LISTED))
+		const TechTypes eTechX = (TechTypes)iTechX;
 		{
 			int iValue = 0;
 

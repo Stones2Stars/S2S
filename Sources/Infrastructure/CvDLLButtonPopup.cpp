@@ -1495,11 +1495,12 @@ bool CvDLLButtonPopup::launchChooseTechPopup(CvPopup* pPopup, CvPopupInfo &info)
 	int iNumTechs = 0;
 	for (int iPass = 0; iPass < 2; iPass++)
 	{
-		foreach_(const TechTypes eTechX, team.getAdjacentResearch())
+		std::vector<int> researchableTechs;
+		player.getAvailableTechs(researchableTechs);
+		foreach_(const int iTechX, researchableTechs)
 		{
-			FAssertMsg((player.getTechAvailability(eTechX) >= EnablerDomain::STATE_GREYED), CvString::format("tech = %S (%d)", GC.getTechInfo(eTechX).getDescription(), (int)eTechX).c_str());
-
-			if ((eTechX == eBestTech || eTechX == eNextBestTech) == (iPass == 0) && (player.getTechAvailability(eTechX) == EnablerDomain::STATE_LISTED))
+			const TechTypes eTechX = (TechTypes)iTechX;
+			if ((eTechX == eBestTech || eTechX == eNextBestTech) == (iPass == 0))
 			{
 				CvWString szBuffer;
 				szBuffer.Format(L"%s (%d)", GC.getTechInfo(eTechX).getDescription(), ((iDiscover > 0) ? 0 : player.getResearchTurnsLeft(eTechX, true)));
@@ -2708,9 +2709,12 @@ bool CvDLLButtonPopup::launchSelectDiscoveryTechPopup(CvPopup* pPopup, CvPopupIn
 	);
 	const CvTeam& team = GET_TEAM(player.getTeam());
 
-	foreach_(const TechTypes eTechX, team.getAdjacentResearch())
+	std::vector<int> researchableTechs;
+	player.getAvailableTechs(researchableTechs);
+	foreach_(const int iTechX, researchableTechs)
 	{
-		if (eTechX != eTechAI && (player.getTechAvailability(eTechX) == EnablerDomain::STATE_LISTED))
+		const TechTypes eTechX = (TechTypes)iTechX;
+		if (eTechX != eTechAI)
 		{
 			for (int iJ = GC.getNumFlavorTypes() - 1; iJ > -1; iJ--)
 			{

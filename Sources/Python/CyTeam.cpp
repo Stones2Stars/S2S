@@ -568,14 +568,6 @@ bool CyTeam::isNoTradeTech(int /*TechTypes*/ iIndex) const
 	return m_pTeam->isNoTradeTech((TechTypes)iIndex);
 }
 
-int CyTeam::getNumAdjacentResearch() const
-{
-	return m_pTeam->getAdjacentResearch().size();
-}
-int CyTeam::getAdjacentResearch(int i) const
-{
-	return m_pTeam->getAdjacentResearch()[i];
-}
 
 int CyTeam::getBuildingCommerceTechChange(int eIndex, int eBuilding) const
 {

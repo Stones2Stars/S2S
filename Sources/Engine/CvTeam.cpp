@@ -161,7 +161,6 @@ void CvTeam::init(TeamTypes eID)
 
 	if (GC.getGame().isFinalInitialized())
 	{
-		cacheAdjacentResearch(); // Mid-game re-initialization
 		//logging::logMsg("C2C.log", "   Checking for declarations of war against reset team %d\n", (int)getID());
 
 		const bool bMinorCiv = isMinorCiv();
@@ -405,7 +404,6 @@ void CvTeam::reset(TeamTypes eID, bool bConstructorCall)
 				m_ppiBuildingCommerceModifier[iI][iJ] = 0;
 			}
 		}
-		m_adjacentResearch.clear();
 		m_Properties.clear();
 
 		AI_reset(false);
@@ -1004,9 +1002,11 @@ void CvTeam::doTurn()
 	// We may need new rules here for aliens and such, but there's really no need to do anything for animals regarding technology unless we want to represent evolution somehow... lol.
 	if (isHominid())
 	{
-		foreach_(const TechTypes eTechX, getAdjacentResearch())
+		std::vector<int> researchableTechs;
+		GET_PLAYER(getLeaderID()).getAvailableTechs(researchableTechs);
+		foreach_(const int iTechX, researchableTechs)
 		{
-			if (GET_PLAYER(getLeaderID()).getTechAvailability(eTechX) == EnablerDomain::STATE_LISTED)
+			const TechTypes eTechX = (TechTypes)iTechX;
 			{
 				int iPossibleCount = 0;
 				int iCount = 0;
@@ -4797,50 +4797,6 @@ bool CvTeam::isInvisibleSeerUnlocked(InvisibleTypes eInvisible) const
 }
 
 
-void CvTeam::cacheAdjacentResearch()
-{
-	PROFILE_EXTRA_FUNC();
-	//OutputDebugString(CvString::format("cacheAdjacentResearch team=%d\n", getID()).c_str());
-	if (isNPC() && !isHominid())
-	{
-		return; // Animal NPC's can't research anyway.
-	}
-	m_adjacentResearch.clear();
-
-	const CvPlayer& leader = GET_PLAYER(getLeaderID());
-
-	for (int iI = 0; iI < GC.getNumTechInfos(); iI++)
-	{
-		if ((leader.getTechAvailability((TechTypes)iI) >= EnablerDomain::STATE_GREYED))
-		{
-			m_adjacentResearch.push_back((TechTypes)iI);
-			//OutputDebugString(CvString::format("\tcacheAdjacentResearch tech=%d\n", iI).c_str());
-		}
-	}
-}
-
-void CvTeam::setAdjacentResearch(const TechTypes eTech, const bool bNewValue)
-{
-	if (isNPC() && !isHominid())
-	{
-		return; // Animal NPC's can't research anyway.
-	}
-	//OutputDebugString(CvString::format("setAdjacentResearch team=%d, tech=%d, bNewValue=%d\n", getID(), (int)eTech, (int)bNewValue).c_str());
-	std::vector<TechTypes>::iterator itr = find(m_adjacentResearch.begin(), m_adjacentResearch.end(), eTech);
-
-	if (bNewValue)
-	{
-		if (itr == m_adjacentResearch.end())
-		{
-			m_adjacentResearch.push_back(eTech);
-		}
-	}
-	else if (itr != m_adjacentResearch.end())
-	{
-		m_adjacentResearch.erase(itr);
-	}
-}
-
 void CvTeam::announceTechToPlayers(TechTypes eIndex, bool bPartial)
 {
 	PROFILE_EXTRA_FUNC();
@@ -4984,21 +4940,6 @@ void CvTeam::setHasTech(TechTypes eTech, bool bNewValue, PlayerTypes ePlayer, bo
 
 	if (isHasTech(eTech))
 	{
-		if (GC.getGame().isFinalInitialized())
-		{
-			// Toffer - Tracking of this cache causes issues during game initialization.
-			//	A sweeping cache update will be done at when the game is finally initialized anyway.
-			setAdjacentResearch(eTech, false);
-
-			foreach_(const TechTypes eTechX, kTech.getLeadsToTechs())
-			{
-				if (GET_PLAYER(getLeaderID()).getTechAvailability(eTechX) >= EnablerDomain::STATE_GREYED)
-				{
-					setAdjacentResearch(eTechX, true);
-				}
-			}
-		}
-
 		for (int iI = 0; iI < MAX_PLAYERS; iI++)
 		{
 			CvPlayerAI& player = GET_PLAYER((PlayerTypes)iI);
@@ -5137,22 +5078,8 @@ void CvTeam::setHasTech(TechTypes eTech, bool bNewValue, PlayerTypes ePlayer, bo
 		{
 			const bool bGlobal = kTech.isGlobal();
 
-			if (bGlobal)
-			{
-				for (int iI = 0; iI < MAX_TEAMS; iI++)
-				{
-					if (iI != getID() && GET_TEAM((TeamTypes)iI).isAlive())
-					{
-						const std::vector<TechTypes>& adjacentResearch = GET_TEAM((TeamTypes)iI).getAdjacentResearch();
-
-						if (find(adjacentResearch.begin(), adjacentResearch.end(), eTech) != adjacentResearch.end())
-						{
-							GET_TEAM((TeamTypes)iI).setAdjacentResearch(eTech, false);
-						}
-					}
-				}
-			}
-
+			// NB a world-unique tech being invented drops it from every other team's frontier too -- the
+			// enabler does that off the tech fact, so nothing is hand-maintained for it here.
 			for (int iI = 0; iI < MAX_PC_PLAYERS; iI++)
 			{
 				CvPlayerAI& playerX = GET_PLAYER((PlayerTypes)iI);
@@ -5327,7 +5254,6 @@ void CvTeam::setHasTech(TechTypes eTech, bool bNewValue, PlayerTypes ePlayer, bo
 	else
 	{
 		// Rarely are techs removed, probably worldbuilder.
-		cacheAdjacentResearch(); // Harder to remove than add.
 	}
 }
 

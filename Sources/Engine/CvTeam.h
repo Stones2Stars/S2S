@@ -566,11 +566,7 @@ public:
 
 // Toffer - Cache current research choices.
 private:
-	std::vector<TechTypes> m_adjacentResearch;
 public:
-	void cacheAdjacentResearch();
-	void setAdjacentResearch(const TechTypes eTech, const bool bNewValue);
-	const std::vector<TechTypes>& getAdjacentResearch() const { return m_adjacentResearch; }
 };
 
 #endif

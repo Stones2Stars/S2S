@@ -6116,9 +6116,12 @@ bool CvPlayer::canReceiveGoody(const CvPlot* pPlot, GoodyTypes eGoody, const CvU
 	bool bFound = false;
 	if (GC.getGoodyInfo(eGoody).isTech())
 	{
-		foreach_(const TechTypes eTechX, GET_TEAM(getTeam()).getAdjacentResearch())
+		// The enabler's LISTED tech set IS the researchable one -- no mirror, no verdict filter.
+		std::vector<int> researchableTechs;
+		getAvailableTechs(researchableTechs);
+		foreach_(const int iTechX, researchableTechs)
 		{
-			if (GC.getTechInfo(eTechX).isGoodyTech() && (getTechAvailability(eTechX) == EnablerDomain::STATE_LISTED))
+			if (GC.getTechInfo((TechTypes)iTechX).isGoodyTech())
 			{
 				bFound = true;
 				break;
@@ -6289,9 +6292,12 @@ void CvPlayer::receiveGoody(CvPlot* pPlot, GoodyTypes eGoody, CvUnit* pUnit)
 		int iBestValue = 0;
 		TechTypes eBestTech = NO_TECH;
 
-		foreach_(const TechTypes eTechX, GET_TEAM(getTeam()).getAdjacentResearch())
+		std::vector<int> researchableTechs;
+		getAvailableTechs(researchableTechs);
+		foreach_(const int iTechX, researchableTechs)
 		{
-			if (GC.getTechInfo(eTechX).isGoodyTech() && (getTechAvailability(eTechX) == EnablerDomain::STATE_LISTED))
+			const TechTypes eTechX = (TechTypes)iTechX;
+			if (GC.getTechInfo(eTechX).isGoodyTech())
 			{
 				const int iValue = (1 + GC.getGame().getSorenRandNum(10000, "Goody Tech"));
 
@@ -8108,12 +8114,12 @@ bool CvPlayer::isNoResearchAvailable() const
 	{
 		return false;
 	}
-	foreach_(const TechTypes eTechX, GET_TEAM(getTeam()).getAdjacentResearch())
+	// Anything on the enabler's LISTED tech frontier means there IS something to research.
+	std::vector<int> researchableTechs;
+	getAvailableTechs(researchableTechs);
+	if (!researchableTechs.empty())
 	{
-		if ((getTechAvailability(eTechX) == EnablerDomain::STATE_LISTED))
-		{
-			return false;
-		}
+		return false;
 	}
 	return true;
 }
@@ -8519,12 +8525,6 @@ void CvPlayer::foundReligion(ReligionTypes eReligion, ReligionTypes eSlotReligio
 			if (isResearchingTech(info->getTechPrereq()))
 			{
 				popResearch(info->getTechPrereq());
-			}
-			const std::vector<TechTypes>& adjacentResearch = GET_TEAM(getTeam()).getAdjacentResearch();
-
-			if (find(adjacentResearch.begin(), adjacentResearch.end(), info->getTechPrereq()) != adjacentResearch.end())
-			{
-				GET_TEAM(getTeam()).setAdjacentResearch(info->getTechPrereq(), false);
 			}
 		}
 	}

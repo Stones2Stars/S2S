@@ -4439,10 +4439,12 @@ int CvPlayerAI::AI_averageCurrentTechValue(TechTypes eRelativeTo, bool bAsync)
 
 	//	Determine the sample to use - we use the researchable techs closest in base cost to the one we are seeking to compare with the average
 	std::vector<TechResearchDist> researchCosts;
-	foreach_(const TechTypes eTechX, team.getAdjacentResearch())
+	std::vector<int> researchableTechs;
+	getAvailableTechs(researchableTechs);
+	foreach_(const int iTechX, researchableTechs)
 	{
-		FAssertMsg((getTechAvailability(eTechX) >= EnablerDomain::STATE_GREYED), CvString::format("team %d - tech: %S (%d)", getTeam(), GC.getTechInfo(eTechX).getDescription(), (int)eTechX).c_str());
-		if (eTechX != eRelativeTo && (getTechAvailability(eTechX) == EnablerDomain::STATE_LISTED))
+		const TechTypes eTechX = (TechTypes)iTechX;
+		if (eTechX != eRelativeTo)
 		{
 			researchCosts.push_back(TechResearchDist(eTechX, std::abs(team.getResearchCost(eTechX) - iCost)));
 		}
