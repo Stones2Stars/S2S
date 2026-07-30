@@ -443,9 +443,23 @@ public:
     through their own lazy dirty-check, so the package refreshes first by construction and a sum can never sit
     stale behind a clean package.
   - **Which scope receives a channel is spec'd, not chosen per site:** one consuming scope per channel
-    (food/production → city; gold/research/espionage → empire), with **culture the lone dual-consumer** (the city
-    sums it for plot culture + border expansion, the empire for civ culture + traits — two independent sums over
-    the same packages).
+    (food/production → city; gold/research/espionage/**maintenance** → empire), with **culture the lone
+    dual-consumer** (the city sums it for plot culture + border expansion, the empire for civ culture + traits —
+    two independent sums over the same packages).
+    ⚑ **MAINTENANCE is the one NON-commerce receiver, and it is what makes the rule general rather than a
+    commerce habit.** The empire's total maintenance is the Σ over its cities of each city's realized
+    maintenance — precisely the cross-scope receiver shape above — so it is a SLOT in the empire's own package
+    cache, never a hand-named cache beside it ([DEC-uniform-cache-shape](decisions.md#dec-uniform-cache-shape):
+    a named field cannot be addressed by a derived mask, so it forces its own bespoke invalidation path).
+    ⚠ Its per-city quantity is the one a package cannot answer alone: a city's realized maintenance folds the
+    four ENGINE components (distance / numCities / colony / corporation) and declines wholesale under
+    WLTKD/disorder ([economy.md](../reference/economy.md)). So the Σ asks the CITY for its realized value —
+    which is what "the Σ of its members' REALIZED values" already says — and the oracle recomputes both halves
+    from source rather than reading either off the stored surface.
+    ⚠ **A receiver read is therefore NOT interchangeable with a rolled-legs read on the same channel.** The
+    cross-scope roll-up answers a receiver channel with its maintained SUM, so a consumer that wants the
+    channel's percent STACK at that scope must read the legs directly — asking the roll-up would hand back the
+    realized total instead, silently and plausibly.
 - **⚖ TWO DISTINCT KINDS OF DERIVED CACHE — do not conflate them:**
   - **The yield + percent packages are an INPUT/OUTPUT (value) cache** — memoize the computed number,
     dirty-invalidate on a source event, recompute from inputs on next read. This is what `CvDerivedCache` is FOR.

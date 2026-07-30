@@ -5789,7 +5789,7 @@ void CvGameTextMgr::setCityBarHelp(CvWStringBuffer &szString, CvCity* pCity)
 	szString.append(NEWLINE);
 	szString.append(gDLL->getText("INTERFACE_CITY_MAINTENANCE"));
 
-	int iMaintenance = bBaseValues ? pCity->calculateBaseMaintenanceTimes100() : pCity->getMaintenanceTimes100();
+	int iMaintenance = (int)(bBaseValues ? pCity->calculateBaseMaintenanceTimes100() : pCity->getMaintenanceTimes100());
 
 	szString.append(CvWString::format(L" -%d.%02d %c", iMaintenance/100, iMaintenance%100, GC.getCommerceInfo(COMMERCE_GOLD).getChar()));
 
@@ -20991,7 +20991,7 @@ void CvGameTextMgr::buildFinanceCityMaintString(CvWStringBuffer& szBuffer, Playe
 		szBuffer.append(NEWLINE);
 		szBuffer.append(gDLL->getText("TXT_KEY_MISC_BUILDING_MAINT_FLOAT", szMaint.GetCString()));
 	}
-	const int iTotal = player.getTotalMaintenance();
+	const int iTotal = (int)player.getTotalMaintenance();
 	if (iTotal != 0)
 	{
 		szBuffer.append(NEWLINE);

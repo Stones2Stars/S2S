@@ -862,7 +862,7 @@ int64_t CyPlayer::getCorporateMaintenance() const
 
 int CyPlayer::getTotalMaintenance() const
 {
-	return m_pPlayer->getTotalMaintenance();
+	return (int)m_pPlayer->getTotalMaintenance();
 }
 
 int CyPlayer::getLevelExperienceModifier() const

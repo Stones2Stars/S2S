@@ -5865,7 +5865,7 @@ int CvCity::getSavedMaintenanceTimes100ByBuilding(BuildingTypes eBuilding) const
 		return 0;
 	}
 	const int iModOld = maintenancePercentStack(MAINTENANCE_AMOUNT);
-	const int iBaseOld = calculateBaseMaintenanceTimes100();
+	const int64_t iBaseOld = calculateBaseMaintenanceTimes100();
 
 	return (int)(
 		InfoValuation::realizedChannel(iBaseOld, iModOld, CASC_UNIT_FLAT)
@@ -5889,7 +5889,7 @@ int CvCity::getDistanceMaintenanceSavedByCivic(CivicTypes eCivic) const
 		return 0;
 	}
 	const int iFinalMod = maintenancePercentStack(MAINTENANCE_AMOUNT);
-	return (
+	return (int)(
 		InfoValuation::realizedChannel(calculateDistanceMaintenanceTimes100(), iFinalMod, CASC_UNIT_FLAT)
 		-
 		InfoValuation::realizedChannel(calculateDistanceMaintenanceTimes100(iMod), iFinalMod, CASC_UNIT_FLAT)
@@ -5910,7 +5910,7 @@ int CvCity::getNumCitiesMaintenanceSavedByCivic(CivicTypes eCivic) const
 		return 0;
 	}
 	const int iFinalMod = maintenancePercentStack(MAINTENANCE_AMOUNT);
-	return (
+	return (int)(
 		InfoValuation::realizedChannel(calculateNumCitiesMaintenanceTimes100(), iFinalMod, CASC_UNIT_FLAT)
 		-
 		InfoValuation::realizedChannel(calculateNumCitiesMaintenanceTimes100(iMod), iFinalMod, CASC_UNIT_FLAT)
@@ -5937,9 +5937,9 @@ int CvCity::getAreaMaintenanceSavedByCivic(CivicTypes eCivic) const
 	{
 		return 0;
 	}
-	const int iBaseMaintenance = calculateBaseMaintenanceTimes100();
+	const int64_t iBaseMaintenance = calculateBaseMaintenanceTimes100();
 	const int iEffectiveMaintenanceMod = maintenancePercentStack(MAINTENANCE_AMOUNT);
-	return (
+	return (int)(
 		InfoValuation::realizedChannel(iBaseMaintenance, iEffectiveMaintenanceMod, CASC_UNIT_FLAT)
 		-
 		InfoValuation::realizedChannel(iBaseMaintenance, iEffectiveMaintenanceMod + iMod, CASC_UNIT_FLAT)
@@ -5952,12 +5952,25 @@ int CvCity::getAreaMaintenanceSavedByCivic(CivicTypes eCivic) const
 // re-applied every turn by its trigger ([state.md] / [CvStatus.h]), so marking on it would thrash the cache
 // every single turn over a value that never moved. The stored number stays the real one and the READ declines
 // to take it -- which is also why the read stays a bare fetch either way.
-int CvCity::getMaintenance() const
+int64_t CvCity::getMaintenance() const
 {
 	return getMaintenanceTimes100() / 100;
 }
 
-int CvCity::getMaintenanceTimes100() const
+int64_t CvCity::getMaintenanceTimes100() const
+{
+	int64_t iFlatSum = 0;
+	int64_t iPercentSum = 0;
+	maintenanceLegs((int)MAINTENANCE_AMOUNT, iFlatSum, iPercentSum);
+	return maintenanceFromLegs(m_maintenanceComponents.get(0), iFlatSum, iPercentSum);
+}
+
+void CvCity::recomputeMaintenanceComponentsInto(int64_t* aOut) const
+{
+	m_maintenanceComponents.recomputeInto(aOut);
+}
+
+int64_t CvCity::maintenanceFromLegs(int64_t iComponents, int64_t iFlatSum, int64_t iPercentSum) const
 {
 	// ⚖ DISORDER SUPPRESSES IT THE SAME WAY (owner) -- a city in disorder produces no output, so it takes no
 	// maintenance either. It is the same read-time decline, for the same reason: both are transient conditions
@@ -5975,18 +5988,15 @@ int CvCity::getMaintenanceTimes100() const
 	// empire- or team-scope maintenance percent moving needs NO city mark at all -- its own package is marked
 	// at its own scope and this read picks it up on the next fetch.
 	// What IS cached is only the four ENGINE COMPONENTS, which depend on city/player state and on no package.
-	int64_t iFlatSum = 0;
-	int64_t iPercentSum = 0;
-	maintenanceLegs((int)MAINTENANCE_AMOUNT, iFlatSum, iPercentSum);
-	return (int)InfoValuation::realizedChannel(
-		m_maintenanceComponents.get(0) + iFlatSum, iPercentSum, CASC_UNIT_FLAT);
+	return InfoValuation::realizedChannel(iComponents + iFlatSum, iPercentSum, CASC_UNIT_FLAT);
 }
 
 void CvCity::markMaintenanceDirty() const
 {
 	m_maintenanceComponents.markDirty();
-	// The empire total is the Σ of its members' realized values, so a member moving marks it too. ONE
-	// direction only: the receiving scope never fans back down into the members it sums.
+	// The empire total is the Σ of its members' realized values, so a member moving marks that RECEIVER SLOT --
+	// the same cache holding a different slot ([DEC-uniform-cache-shape]), never a second cache beside the
+	// package. ONE direction only: the receiving scope never fans back down into the members it sums.
 	GET_PLAYER(getOwner()).markMaintenanceDirty();
 }
 
@@ -6012,7 +6022,7 @@ int CvCity::maintenancePercentStack(int iKind) const
 // ⚑ It caches ONLY the four components the cascade does not model -- expensive (the distance leg walks the
 // owner's cities for a government centre) and dependent on no package, so caching them stores nothing that
 // belongs to an upper scope. Everything cascade-shaped composes at the READ above.
-void CvCity::recomputeMaintenanceComponents(int* aOut) const
+void CvCity::recomputeMaintenanceComponents(int64_t* aOut) const
 {
 	aOut[0] =
 		calculateDistanceMaintenanceTimes100()
@@ -6264,12 +6274,12 @@ int CvCity::calculateCorporationMaintenanceTimes100(CorporationTypes eCorporatio
 // city's chain like every other deposit. The legacy term re-derived it by scanning every building the city
 // holds for a negative gold commerce and flipping its sign -- a whole-database scan of data the cascade
 // already carries, and a second derivation of one number ([DEC-single-implementation]).
-int CvCity::calculateBaseMaintenanceTimes100() const
+int64_t CvCity::calculateBaseMaintenanceTimes100() const
 {
 	int64_t iFlatSum = 0;
 	int64_t iPercentSum = 0;
 	maintenanceLegs((int)MAINTENANCE_AMOUNT, iFlatSum, iPercentSum);
-	return (int)iFlatSum + m_maintenanceComponents.get(0);
+	return iFlatSum + m_maintenanceComponents.get(0);
 }
 
 

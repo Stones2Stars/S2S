@@ -675,12 +675,12 @@ bool CyCity::isGovernmentCenter() const
 
 int CyCity::getMaintenance() const
 {
-	return m_pCity->getMaintenance();
+	return (int)m_pCity->getMaintenance();
 }
 
 int CyCity::getMaintenanceTimes100() const
 {
-	return m_pCity->getMaintenanceTimes100();
+	return (int)m_pCity->getMaintenanceTimes100();
 }
 
 int CyCity::calculateDistanceMaintenance() const

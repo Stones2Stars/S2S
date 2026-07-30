@@ -16,7 +16,7 @@
 //	channels get LOCAL slot indices in first-sight order; the package's dirty bit for a channel IS its local
 //	index; RECEIVER sum slots (the realized totals the scope CONSUMES -- [DEC-uniform-cache-shape]: a receiver
 //	is the same cache holding a different slot) take a FIXED region at the TOP of the 64-bit space (bits
-//	59..62; bit 63 is the over-budget tripwire). The contract is ORDER-INDEPENDENT BY CONSTRUCTION: channel
+//	58..62; bit 63 is the over-budget tripwire). The contract is ORDER-INDEPENDENT BY CONSTRUCTION: channel
 //	slots are append-only (an assigned index never moves) and receiver bits are position constants, so a mask
 //	computed or applied at ANY point of the load stays valid across later minting -- a receiver bit can never
 //	come to denote a channel slot. City and empire exceed 32 channels, so every bit space is 64-bit (int64_t).
@@ -97,13 +97,16 @@ public:
 	// ---- the RECEIVER slots (one consuming scope per channel; culture the lone dual-consumer) ----
 
 	// How many receiver sum slots eScope carries (city: food/production/commerce/culture; empire:
-	// gold/research/culture/espionage; every other scope: 0).
+	// gold/research/culture/espionage/maintenance; every other scope: 0). MAINTENANCE is the one
+	// NON-commerce receiver: the empire's total is the Σ of its cities' realized maintenance, which is what a
+	// cross-scope receiver total IS ([state-repositories.md]) -- so it is a slot here rather than a hand-named
+	// cache beside the package ([DEC-uniform-cache-shape]).
 	static int scopeReceiverCount(CvCascScope eScope);
 	// The receiver slot of a channel at its consuming scope; -1 = eScope does not consume iChannel.
 	static int scopeReceiverIndex(CvCascScope eScope, int iChannel);
 	// The channel a receiver slot realizes; -1 = out of range.
 	static int scopeReceiverChannel(CvCascScope eScope, int iReceiverIndex);
-	// The receiver sum's dirty bit at its consuming scope (a FIXED top-region position, 1 << (59 +
+	// The receiver sum's dirty bit at its consuming scope (a FIXED top-region position, 1 << (58 +
 	// receiverIndex) -- independent of the scope's channel count); 0 = none.
 	static int64_t scopeReceiverBit(CvCascScope eScope, int iChannel);
 	// The whole scope's receiver-bit mask.

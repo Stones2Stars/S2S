@@ -104,9 +104,26 @@ namespace
 	}
 
 	// The spec'd receiver table (state-repositories.md: one consuming scope per channel -- food/production ->
-	// city; gold/research/espionage -> empire; CULTURE the lone dual-consumer; the commerce YIELD is the city's
-	// slider input, consumed city-side with the other rates). Minted once, lazily -- the receiver channels are
-	// the engine channels and exist regardless of which scopes author them.
+	// city; gold/research/espionage/MAINTENANCE -> empire; CULTURE the lone dual-consumer; the commerce YIELD is
+	// the city's slider input, consumed city-side with the other rates). Minted once, lazily -- the receiver
+	// channels are the engine channels and exist regardless of which scopes author them.
+	// ⚑ MAINTENANCE is a receiver like any other, and the reason is the RULING rather than the family: a
+	// cross-scope receiver total is the Σ of its members' REALIZED values ([state-repositories.md]), and the
+	// empire's maintenance is exactly that Σ over its cities. It is therefore the same cache holding a different
+	// slot -- never a hand-named scalar beside the package, which is the shape
+	// [DEC-uniform-cache-shape] calls a DEFECT precisely because it forces its own bespoke invalidation path.
+	// ⚠ It is the FIRST non-commerce receiver, so it is also the first to exercise the gather's plain-rate
+	// branch instead of the commerce split.
+	void cr_addReceivers(CascadeScopeLayout& kLayout, const ModifierFamily* aFamilies, int iCount)
+	{
+		for (int iIndex = 0; iIndex < iCount; ++iIndex)
+		{
+			const int iChannel = cr_mint(aFamilies[iIndex], (int)CHANNEL_AMOUNT, -1, false);
+			kLayout.receiverSlots.insert(std::make_pair(iChannel, (int)kLayout.receiverChannels.size()));
+			kLayout.receiverChannels.push_back(iChannel);
+		}
+	}
+
 	bool s_bReceiversInitialized = false;
 	void cr_initReceivers()
 	{
@@ -116,18 +133,11 @@ namespace
 		}
 		s_bReceiversInitialized = true;
 		const ModifierFamily CITY_RECEIVES[] = { MODFAM_FOOD, MODFAM_PRODUCTION, MODFAM_COMMERCE, MODFAM_CULTURE };
-		const ModifierFamily EMPIRE_RECEIVES[] = { MODFAM_GOLD, MODFAM_RESEARCH, MODFAM_CULTURE, MODFAM_ESPIONAGE };
-		CascadeScopeLayout& cityLayout = s_layouts[(int)CASC_SCOPE_CITY];
-		CascadeScopeLayout& empireLayout = s_layouts[(int)CASC_SCOPE_EMPIRE];
-		for (int iIndex = 0; iIndex < 4; ++iIndex)
-		{
-			const int iCityChannel = cr_mint(CITY_RECEIVES[iIndex], (int)CHANNEL_AMOUNT, -1, false);
-			cityLayout.receiverChannels.push_back(iCityChannel);
-			cityLayout.receiverSlots.insert(std::make_pair(iCityChannel, iIndex));
-			const int iEmpireChannel = cr_mint(EMPIRE_RECEIVES[iIndex], (int)CHANNEL_AMOUNT, -1, false);
-			empireLayout.receiverChannels.push_back(iEmpireChannel);
-			empireLayout.receiverSlots.insert(std::make_pair(iEmpireChannel, iIndex));
-		}
+		const ModifierFamily EMPIRE_RECEIVES[] = {
+			MODFAM_GOLD, MODFAM_RESEARCH, MODFAM_CULTURE, MODFAM_ESPIONAGE, MODFAM_MAINTENANCE
+		};
+		cr_addReceivers(s_layouts[(int)CASC_SCOPE_CITY], CITY_RECEIVES, 4);
+		cr_addReceivers(s_layouts[(int)CASC_SCOPE_EMPIRE], EMPIRE_RECEIVES, 5);
 	}
 
 	// THE BIT CONTRACT IS ORDER-INDEPENDENT BY CONSTRUCTION: receiver bits live in a FIXED region at the TOP
@@ -136,11 +146,12 @@ namespace
 	// meaning is stable for the process lifetime -- a mask computed or applied at any point of the load
 	// (a cached SourceRoute, a package's already-set dirty bits) stays valid across later minting. Budget:
 	// the measured channel sets (city 40 / empire 50 authored + the wellbeing sign twins) fit under the
-	// 59-slot channel region; the spec'd receiver tables are 4 slots per consuming scope (bits 59..62).
+	// 58-slot channel region; the spec'd receiver tables are 4 slots at CITY and 5 at EMPIRE (bits 58..62),
+	// the region sized by the LARGER of the two so one position constant serves both scopes.
 	// Bit 63 stays the over-budget tripwire.
 	enum
 	{
-		CASCADE_RECEIVER_BIT_FIRST = 59,
+		CASCADE_RECEIVER_BIT_FIRST = 58,
 		CASCADE_TRIPWIRE_BIT = 63
 	};
 
@@ -161,8 +172,8 @@ namespace
 		return (int64_t)1 << iSlotIndex;
 	}
 
-	// A RECEIVER slot's bit at its FIXED position (the spec'd receiver tables carry 4 entries per consuming
-	// scope; the region holds exactly 4 -- a 5th spec'd receiver trips the assert, never a silent alias).
+	// A RECEIVER slot's bit at its FIXED position (the spec'd receiver tables carry 4 entries at CITY and 5 at
+	// EMPIRE; the region holds exactly 5 -- a 6th spec'd receiver trips the assert, never a silent alias).
 	int64_t cr_receiverBitOf(int iReceiverIndex)
 	{
 		if (iReceiverIndex < 0)

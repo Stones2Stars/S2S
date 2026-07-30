@@ -541,8 +541,18 @@ public:
 	// ⛔ A BARE FETCH of the derived cache -- never a gate test, never a recompute on the read path (the
 	// `ensure()`-on-read protocol is tombstoned BY NAME, [superseded-ideas #14]). The MARK is what rebuilds:
 	// markMaintenanceDirty() marks AND recomputes, which is the invariant that lets this read be bare.
-	int getMaintenance() const;
-	int getMaintenanceTimes100() const;
+	int64_t getMaintenance() const;
+	int64_t getMaintenanceTimes100() const;
+	// The ONE composition of the realized value, FED its inputs rather than fetching them: the stored read
+	// passes its cache slot and the packages' stored legs; the ORACLE passes a fresh recompute and freshly
+	// gathered legs. Feeding it is what lets the oracle stay independent while both paths share one
+	// composition ([DEC-single-implementation]) -- a version that fetched its own legs would drag the oracle
+	// onto the stored surface it exists to check. The status gate lives here: it reads live city state, which
+	// is the same on both paths.
+	int64_t maintenanceFromLegs(int64_t iComponents, int64_t iFlatSum, int64_t iPercentSum) const;
+	// The ORACLE's components: the same recompute over a CALLER-OWNED buffer, reading nothing off the stored
+	// slot ([state-repositories.md] -- serving into SCRATCH is what makes "never repairs" structural).
+	void recomputeMaintenanceComponentsInto(int64_t* aOut) const;
 	void markMaintenanceDirty() const;
 	// The city's ONE additive maintenance percent stack, rolled over the scope chain the city sits under
 	// (team + empire + city) by the cross-scope roll-up. It replaces the hand-summed city + player + area +
@@ -560,7 +570,10 @@ public:
 	int calculateColonyMaintenanceTimes100() const;
 	int calculateCorporationMaintenanceTimes100(CorporationTypes eCorporation) const;
 	int calculateCorporationMaintenanceTimes100() const;
-	int calculateBaseMaintenanceTimes100() const;
+	// The Σ of the four engine components. It ACCUMULATES at ×100, so it carries 64 bits
+	// ([fixed-point-and-scales.md §1b]); the four component formulas beneath it are bounded per-city leaf
+	// values and stay `int`, which is the same per-unit rule applied one level down.
+	int64_t calculateBaseMaintenanceTimes100() const;
 
 	int getWarWearinessModifier() const;
 	void changeWarWearinessModifier(int iChange);
@@ -1985,8 +1998,8 @@ private:
 	// uniformly, so it forces a bespoke invalidation path per field, which is how ~33 of them accumulated).
 	// Recompute-only and NEVER serialized ([DEC-derived-never-trusted] / [save.md §5]) -- dirty-on-construct
 	// means a loaded game recomputes from current state rather than trusting a save's stale number.
-	mutable CvDerivedCache<CvCity, int, 1> m_maintenanceComponents;
-	void recomputeMaintenanceComponents(int* aOut) const;
+	mutable CvDerivedCache<CvCity, int64_t, 1> m_maintenanceComponents;
+	void recomputeMaintenanceComponents(int64_t* aOut) const;
 
 
 

@@ -5045,7 +5045,7 @@ void CvDLLWidgetData::parseMaintenanceHelp(CvWidgetDataStruct &widgetDataStruct,
 			}
 
 			szBuffer.append(SEPARATOR);
-			int iTotal = pHeadSelectedCity->getMaintenanceTimes100();
+			int iTotal = (int)pHeadSelectedCity->getMaintenanceTimes100();
 
 			CvWString szMaint = CvWString::format(L"%d.%02d", iTotal/100, iTotal%100);
 			szBuffer.append(NEWLINE);

@@ -15,7 +15,10 @@ supply + corporate maintenance.
   components the cascade does not model are distance (distance×pop, 0 at the government center), numCities
   (`(n−1)·72·(pop+13)/13`, vassal-divided), colony and corporation; everything else is ordinary cascade.
   The city's realized value is the standardized `CvDerivedCache` — mark-driven, **never serialized**, and the
-  read is a bare fetch. The empire total is the receiver Σ over its cities' realized values.
+  read is a bare fetch. **The empire total is a RECEIVER SLOT in the player's own package cache** — the Σ over
+  its cities' realized values, marked by whatever moved a member
+  ([state-repositories.md](../architecture/state-repositories.md)). It is the one non-commerce receiver, and it
+  carries no cache of its own: a receiver is the same cache holding a different slot.
   > **⛔ THE ONE SPECIAL CASE MAINTENANCE HAS OVER ANY OTHER CASCADE CHANNEL (owner): a city emits 0 instead of
   > its package while **WE LOVE THE KING DAY** or **DISORDER** holds.** The package is sent out to the rest of
   > the cascade only if no status negates it.

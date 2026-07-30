@@ -1073,7 +1073,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_empireContext.bind(this);   // bind the per-player empire context to its owner (forwarding reads it)
 	// bind the EMPIRE-scope cascade package (all-dirty from bind: a loaded/new player recomputes on first read)
 	m_cascadePackage.bind(CASC_SCOPE_EMPIRE, this, &CvPlayer::refreshCascadePackage, (int)eID, -1);
-	m_totalMaintenance.bind(this, &CvPlayer::recomputeTotalMaintenance);
 	// The enabler's domains start EMPTY and UN-READY -- init'd by their domain enablers at this player's
 	// lifecycle start, then filled by DOMAIN events ([DEC-spine-reseed]); never read from the save. Cleared here
 	// because a player slot is REUSED across games.
@@ -10299,29 +10298,30 @@ void CvPlayer::changeBuildingOnlyHealthyCount(int iChange, bool bLimited)
 // total sits precisely between those two failures.
 int CvPlayer::maintenancePercentStack(int iKind) const
 {
-	return InfoValuation::realizedAtEmpire(
-		*this, CascadeChannelRegistry::channelLookup(MODFAM_MAINTENANCE, iKind, -1));
+	const int iChannel = CascadeChannelRegistry::channelLookup(MODFAM_MAINTENANCE, iKind, -1);
+	if (iChannel < 0)
+	{
+		return 0;
+	}
+	int64_t iPercentSum = 0;
+	if (getTeam() != NO_TEAM)
+	{
+		iPercentSum += GET_TEAM(getTeam()).getCascadePackage().readPercent(iChannel);
+	}
+	iPercentSum += getCascadePackage().readPercent(iChannel);
+	return (int)iPercentSum;
 }
 
 void CvPlayer::markMaintenanceDirty() const
 {
-	m_totalMaintenance.markDirty();
+	getCascadePackage().markSum(
+		CascadeChannelRegistry::channelLookup(MODFAM_MAINTENANCE, (int)MAINTENANCE_AMOUNT, -1));
 }
 
-void CvPlayer::recomputeTotalMaintenance(int* aOut) const
+int64_t CvPlayer::getTotalMaintenance() const
 {
-	PROFILE_EXTRA_FUNC();
-	long iTotal = 0;
-	foreach_(const CvCity* cityX, cities())
-	{
-		iTotal += cityX->getMaintenanceTimes100();
-	}
-	aOut[0] = (int)iTotal;
-}
-
-int CvPlayer::getTotalMaintenance() const
-{
-	return m_totalMaintenance.get(0) / 100;
+	return getCascadePackage().readSum(
+		CascadeChannelRegistry::channelLookup(MODFAM_MAINTENANCE, (int)MAINTENANCE_AMOUNT, -1)) / 100;
 }
 
 

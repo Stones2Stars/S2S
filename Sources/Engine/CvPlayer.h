@@ -230,12 +230,13 @@ public:
 	void updatePlotGroups(const CvArea* possibleNewInAreaOnly = NULL, bool reInitialize = false);
 
 	void updateYield();
-	// The empire's realized maintenance TOTAL, on the ONE derived-cache component -- the RECEIVER sum over its
-	// member cities' realized values ([state-repositories.md]). Never serialized, never a per-read city walk.
 	// The empire's additive maintenance stack for one KIND (team + empire), the empire twin of the city read.
+	// ⛔ It reads the rolled LEGS directly rather than going through InfoValuation::realizedAtEmpire: that
+	// helper answers a RECEIVER channel with its maintained sum, and maintenance is now one -- so routing this
+	// through it would silently hand back the empire's realized TOTAL where a percent stack was asked for.
 	int maintenancePercentStack(int iKind) const;
+	// Marks the empire's maintenance RECEIVER slot -- what a member city's realized value moving invalidates.
 	void markMaintenanceDirty() const;
-	void recomputeTotalMaintenance(int* aOut) const;
 
 	void updateFeatureHappiness(bool bLimited = false);
 	void updateReligionHappiness(bool bLimited = false);
@@ -677,8 +678,12 @@ public:
 
 
 
-	int getTotalMaintenance() const;
-	mutable CvDerivedCache<CvPlayer, int, 1> m_totalMaintenance;
+	// The empire's realized maintenance TOTAL: a bare fetch of its package's RECEIVER slot -- the Σ of its
+	// member cities' realized values, which is what a cross-scope receiver total IS
+	// ([state-repositories.md]). It carries no cache of its own: a receiver is the same cache holding a
+	// different slot, and a hand-named one beside the package is the shape [DEC-uniform-cache-shape] calls a
+	// DEFECT, because it forces a bespoke invalidation path no derived mask can reach.
+	int64_t getTotalMaintenance() const;
 
 	int getUpkeepModifier() const;
 	void changeUpkeepModifier(int iChange);

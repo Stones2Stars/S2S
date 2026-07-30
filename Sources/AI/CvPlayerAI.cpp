@@ -5716,7 +5716,7 @@ int CvPlayerAI::AI_techBuildingValue(TechTypes eTech, int iPathLength, bool& bEn
 					iTempValue = 0;
 					foreach_(const CvCity * pLoopCity, cities())
 					{
-						iTempValue += pLoopCity->getMaintenanceTimes100();
+						iTempValue += (int)pLoopCity->getMaintenanceTimes100();
 						iCount++;
 						if (iCount > 4)
 						{

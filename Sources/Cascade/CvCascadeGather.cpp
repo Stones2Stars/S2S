@@ -852,9 +852,10 @@ namespace
 
 	// The empire's realized totals: per receiver channel, the Σ over the player's cities of the CITY's realized
 	// value of that channel -- and nothing beside the Σ (the double-count constraint stated at the commerce
-	// section above). Every empire receiver the spec'd table carries is a COMMERCE channel, so the per-city
-	// quantity is the commerce split; the plain rate combine stands as the answer for any receiver that is not
-	// a commerce channel, since "the city's realized value" is what the Σ takes either way.
+	// section above). A COMMERCE receiver's per-city quantity is the commerce split; MAINTENANCE is the one
+	// receiver whose realized value the packages cannot answer alone (it folds the engine components and the
+	// status gate), so it asks the city; and the plain rate combine stands for anything else, since "the
+	// city's realized value" is what the Σ takes in every case.
 	void gt_rebuildEmpireSums(const CvPlayer& player, int64_t iReceiverBits, std::vector<int64_t>& sumSlots)
 	{
 		const int iReceivers = CascadeChannelRegistry::scopeReceiverCount(CASC_SCOPE_EMPIRE);
@@ -865,12 +866,21 @@ namespace
 			{
 				continue;
 			}
-			const int iCommerce = infoFamilyCommerce(CascadeChannelRegistry::channelFamily(iChannel));
+			const ModifierFamily eFamily = CascadeChannelRegistry::channelFamily(iChannel);
+			const int iCommerce = infoFamilyCommerce(eFamily);
 			int64_t iTotal = 0;
 			for (CvPlayer::city_iterator cityIterator = player.beginCities(); cityIterator != player.endCities(); ++cityIterator)
 			{
 				const CvCity* pLoopCity = *cityIterator;
-				if (iCommerce >= 0)
+				if (eFamily == MODFAM_MAINTENANCE)
+				{
+					// ⚑ MAINTENANCE is the one receiver whose per-city quantity is NOT a package combine: the
+					// city's realized value folds the four ENGINE COMPONENTS and declines wholesale under
+					// WLTKD/disorder. The Σ takes the member's REALIZED value ([state-repositories.md]), so it
+					// asks the city for exactly that rather than re-deriving a partial one here.
+					iTotal += pLoopCity->getMaintenanceTimes100();
+				}
+				else if (iCommerce >= 0)
 				{
 					CascadeCityCommerceTerms kCommerceTerms;
 					gt_collectStoredCityCommerceTerms(*pLoopCity, iChannel, kCommerceTerms);
@@ -887,7 +897,10 @@ namespace
 			}
 			if (iReceiver < (int)sumSlots.size())
 			{
-				sumSlots[iReceiver] = (int)iTotal;
+				// The slot is int64 and so is the Σ: a receiver total accumulates across every member city at
+				// ×100, which is the case [fixed-point-and-scales.md §1b] says carries 64 bits. Narrowing here
+				// would throw that away at the last step, on the plane (culture) already known to overflow.
+				sumSlots[iReceiver] = iTotal;
 			}
 		}
 	}
@@ -921,8 +934,22 @@ namespace
 				{
 					continue;
 				}
-				const int iCommerce = infoFamilyCommerce(CascadeChannelRegistry::channelFamily(iChannel));
-				if (iCommerce >= 0)
+				const ModifierFamily eFamily = CascadeChannelRegistry::channelFamily(iChannel);
+				const int iCommerce = infoFamilyCommerce(eFamily);
+				if (eFamily == MODFAM_MAINTENANCE)
+				{
+					// The same per-city quantity the rebuild sums, computed FROM SOURCE on both halves: the
+					// engine components recomputed into this run's own scratch, and the freshly gathered legs
+					// from the city document above. Reading either off the stored surface is what would make
+					// the oracle partly built on the state it exists to check ([state-repositories.md]).
+					int64_t iComponents = 0;
+					pLoopCity->recomputeMaintenanceComponentsInto(&iComponents);
+					int64_t iRolledFlat = 0;
+					int64_t iRolledPercent = 0;
+					gt_collectFreshCityRolledLegs(iChannel, kCityDocument, kInputs, iRolledFlat, iRolledPercent);
+					aTotals[iReceiver] += pLoopCity->maintenanceFromLegs(iComponents, iRolledFlat, iRolledPercent);
+				}
+				else if (iCommerce >= 0)
 				{
 					CascadeCityCommerceTerms kCommerceTerms;
 					gt_collectFreshCityCommerceTerms(*pLoopCity, iChannel, cityEvalCtx, kCityDocument, kInputs, kCommerceTerms);
@@ -938,7 +965,7 @@ namespace
 		}
 		for (int iReceiver = 0; iReceiver < iReceivers && iReceiver < (int)sumSlots.size(); ++iReceiver)
 		{
-			sumSlots[iReceiver] = (int)aTotals[iReceiver];
+			sumSlots[iReceiver] = aTotals[iReceiver];
 		}
 	}
 }

@@ -5644,7 +5644,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 			if (((iFocusFlags & BUILDINGFOCUS_MAINTENANCE) || (iFocusFlags & BUILDINGFOCUS_GOLD) || iPass > 0)
 			&& kBuilding.getCommerceChange(COMMERCE_GOLD) < 0 && GC.getTREAT_NEGATIVE_GOLD_AS_MAINTENANCE())
 			{
-				const int iBaseMaintenance = getMaintenanceTimes100();
+				const int iBaseMaintenance = (int)getMaintenanceTimes100();
 				const int iMaintenanceMod = maintenancePercentStack((int)MAINTENANCE_AMOUNT);
 
 				const int iCost =
