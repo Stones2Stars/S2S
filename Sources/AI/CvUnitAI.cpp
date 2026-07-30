@@ -245,7 +245,7 @@ static bool shouldAvoidLowOddsRiverAttack(const CvUnitAI& kAttacker, const CvPlo
 	{
 		return false;
 	}
-	if (!CvTagReads::isDomain(kAttacker.getTags(), DOMAIN_LAND) || kAttacker.isRiver())
+	if (kAttacker.getDomainType() != DOMAIN_LAND || kAttacker.isRiver())
 	{
 		return false;
 	}
