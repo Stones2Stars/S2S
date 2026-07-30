@@ -112,6 +112,13 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <C
     failed.)
 - **Quick compile check after an edit:** `Assert build` from `Sources/`.
   Incremental is ~30s; a clean rebuild is several minutes (~25 unity batches × ~30s).
+  - **⛔ DO NOT BUILD UNLESS YOU ARE HUNTING BUGS (owner).** Building is not a checkpoint, not a way to "confirm"
+    an edit, and not something a change is finished with — the tree is deliberately red
+    ([DEC-playability-not-a-gate](docs/architecture/decisions.md#dec-playability-not-a-gate)), so a build tells
+    you almost nothing you did not already know and costs minutes of the owner's wall clock every time.
+    Run one when you are ACTUALLY chasing a compiler error, and otherwise verify the way the red tree demands:
+    **read what you changed** and grep the census for the symbols you touched. ⚑ The trap is that the line above
+    reads as an invitation — "quick compile check after an edit" describes the tool, not a habit to acquire.
   - **⛔ MSVC STOPS AT 100 ERRORS PER TRANSLATION UNIT (`fatal error C1003`), so on the deliberately-red tree a
     grep for YOUR files in the build log PROVES NOTHING.** The unity batches truncate, and which files get to
     report is a function of how the earlier ones consumed the budget — so an edit of yours can be silently
