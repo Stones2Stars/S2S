@@ -1,5 +1,7 @@
 {
  "type": "LEADER_HUAYNA_CAPAC",
+ "traits": [],
+ "complexTraits": [],
  "ai": {
   "flavours": [
    {
@@ -230,7 +232,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_LEADER_HUAYNA_CAPAC"
+   "define": "ART_DEF_LEADER_HUAYNA_CAPAC"
   }
  },
  "sound": {

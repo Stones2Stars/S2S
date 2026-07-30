@@ -1,5 +1,7 @@
 {
  "type": "LEADER_CHIEF_HEAD_HUNTER",
+ "traits": [],
+ "complexTraits": [],
  "ai": {
   "flavours": [
    {
@@ -222,7 +224,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_LEADER_CHIEF_HEAD_HUNTER"
+   "define": "ART_DEF_LEADER_CHIEF_HEAD_HUNTER"
   }
  },
  "sound": {

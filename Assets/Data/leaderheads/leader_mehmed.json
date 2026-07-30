@@ -1,5 +1,7 @@
 {
  "type": "LEADER_MEHMED",
+ "traits": [],
+ "complexTraits": [],
  "ai": {
   "flavours": [
    {
@@ -234,7 +236,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_LEADER_MEHMED"
+   "define": "ART_DEF_LEADER_MEHMED"
   }
  },
  "sound": {

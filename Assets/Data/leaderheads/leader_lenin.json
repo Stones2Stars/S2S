@@ -1,5 +1,7 @@
 {
  "type": "LEADER_LENIN",
+ "traits": [],
+ "complexTraits": [],
  "ai": {
   "flavours": [
    {
@@ -218,7 +220,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_LEADER_LENIN"
+   "define": "ART_DEF_LEADER_LENIN"
   }
  },
  "sound": {

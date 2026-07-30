@@ -1,5 +1,7 @@
 {
  "type": "LEADER_SITTING_BULL",
+ "traits": [],
+ "complexTraits": [],
  "ai": {
   "flavours": [
    {
@@ -223,7 +225,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_LEADER_SITTING_BULL"
+   "define": "ART_DEF_LEADER_SITTING_BULL"
   }
  },
  "sound": {

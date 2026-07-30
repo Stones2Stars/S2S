@@ -1,5 +1,7 @@
 {
  "type": "LEADER_KIM",
+ "traits": [],
+ "complexTraits": [],
  "ai": {
   "flavours": [
    {
@@ -218,7 +220,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_LEADER_KIM"
+   "define": "ART_DEF_LEADER_KIM"
   }
  },
  "sound": {

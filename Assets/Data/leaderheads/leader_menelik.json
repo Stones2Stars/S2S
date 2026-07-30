@@ -1,5 +1,7 @@
 {
  "type": "LEADER_MENELIK",
+ "traits": [],
+ "complexTraits": [],
  "ai": {
   "flavours": [
    {
@@ -221,7 +223,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_LEADER_MENELIK"
+   "define": "ART_DEF_LEADER_MENELIK"
   }
  },
  "sound": {

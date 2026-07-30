@@ -19,7 +19,8 @@
      "value": 200,
      "unit": "IS_CAMOUFLAGE"
     }
-   ]
+   ],
+   "flat": 100
   }
  },
  "ui": {

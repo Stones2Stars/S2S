@@ -30,12 +30,13 @@ Non-ai:
 - bNPC                         -> ai.npc (barbarian/NPC leader; an AI classification; 3 leaders).
 - Description / Civilopedia    -> text.
 
-TRAITS -> STRIPPED for now (owner ruling 2026-07-01). ALL leader trait assignments — `Traits`, `DefaultTraits`,
-`DefaultComplexTraits` (simple AND complex) — are DROPPED; **no leader carries traits in the JSON**. The
-leader<->trait mapping (incl. the simple->complex mirroring, which depends on the simple<->complex correspondence
-the TRAIT pass deliberately dropped) is handed to a dedicated POST-MIGRATION pass; whoever does it re-adds a
-`grants.traits` emit here. Pre-cutover the game still runs traits off XML, so stripping the JSON assignments is
-safe — it just marks them TODO. (Mid-game trait-type swapping is also catastrophic — see WorldBuilder-safe-swap #438.)
+TRAITS -> the SLOTS are emitted, the ASSIGNMENTS are not (owner). Every leader carries an always-present
+`traits: []` + `complexTraits: []` pair, and the curator never fills them: **who has which trait is CONTENT the
+community owns**, so it is authored, not reconstructed from the legacy `Traits`/`DefaultTraits`/
+`DefaultComplexTraits` tables (whose simple->complex mirroring depended on a correspondence the TRAIT pass
+deliberately dropped). Emitting the empty arrays is the point — an absent key hides the capability, an empty one
+shows a modder exactly where an assignment goes and keeps the shape stable once one lands.
+(Mid-game trait-type swapping is catastrophic — see WorldBuilder-safe-swap #438.)
 
   python3 curate_leaderhead.py --sample LEADER_ALEXANDER LEADER_GANDHI LEADER_BARBARIAN
   python3 curate_leaderhead.py --write
@@ -120,8 +121,9 @@ FAVORITES = {"FavoriteCivic": "civic", "FavoriteReligion": "religion"}
 MUSIC = {"DiplomacyIntroMusicPeace": "diploIntroMusicPeace", "DiplomacyMusicPeace": "diploMusicPeace",
          "DiplomacyIntroMusicWar": "diploIntroMusicWar", "DiplomacyMusicWar": "diploMusicWar"}
 TEXT = {"Description": "description", "Civilopedia": "civilopedia"}
-# ALL leader trait assignments STRIPPED for now (owner 2026-07-01) -> DROP; the leader<->trait mapping is a
-# post-migration pass (re-add a `grants.traits` emit + the TRAITS map then). No leader carries traits meanwhile.
+# The legacy trait ASSIGNMENTS are dropped (owner): the leader<->trait mapping is community-owned content, not
+# something the curator reconstructs. What IS emitted is the empty `traits`/`complexTraits` SLOT pair (see
+# curate()) -- the assignment lands there when a modder or the trait pass authors it.
 DROP = {"Type", "Traits", "DefaultTraits", "DefaultComplexTraits"}
 
 AI_ORDER = ["npc", "flavours", "personality", "war", "victory", "trade", "attitude", "refuse",
@@ -236,6 +238,15 @@ def curate(typ, rec):
 
     out = OrderedDict()
     out["type"] = typ
+    # The leader<->trait ASSIGNMENT is CONTENT the community owns (traits are content-LOCKED), so the curator
+    # emits the SLOTS and never fills them: one ALWAYS-PRESENT array per trait set, empty. An absent key is
+    # undiscoverable -- a modder cannot tell the capability exists without reading the engine -- while an empty
+    # one is an invitation to author into (json.md: the data reads cold). Same rule as unit `tags`: mandatory
+    # even when empty, so nothing about the shape changes when an assignment lands.
+    # The two sets are separate because the ACTIVE one is chosen at runtime by GAMEOPTION_LEADER_COMPLEX_TRAITS
+    # (modifier.md §4) -- `traits` is the simple set, `complexTraits` the complex/Thunderbrd one.
+    out["traits"] = []
+    out["complexTraits"] = []
     for k in ("description", "civilopedia"):
         if k in text:
             out[k] = text[k]

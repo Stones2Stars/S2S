@@ -1,5 +1,7 @@
 {
  "type": "LEADER_JOANOFARC",
+ "traits": [],
+ "complexTraits": [],
  "ai": {
   "flavours": [
    {
@@ -230,7 +232,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_LEADER_JOANOFARC"
+   "define": "ART_DEF_LEADER_JOANOFARC"
   }
  },
  "sound": {

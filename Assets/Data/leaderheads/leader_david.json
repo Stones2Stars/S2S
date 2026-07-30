@@ -1,5 +1,7 @@
 {
  "type": "LEADER_DAVID",
+ "traits": [],
+ "complexTraits": [],
  "ai": {
   "flavours": [
    {
@@ -224,7 +226,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_LEADER_DAVID"
+   "define": "ART_DEF_LEADER_DAVID"
   }
  },
  "sound": {

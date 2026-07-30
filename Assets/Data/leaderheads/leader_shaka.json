@@ -1,5 +1,7 @@
 {
  "type": "LEADER_SHAKA",
+ "traits": [],
+ "complexTraits": [],
  "ai": {
   "flavours": [
    {
@@ -225,7 +227,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_LEADER_SHAKA"
+   "define": "ART_DEF_LEADER_SHAKA"
   }
  },
  "sound": {

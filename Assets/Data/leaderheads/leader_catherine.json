@@ -1,5 +1,7 @@
 {
  "type": "LEADER_CATHERINE",
+ "traits": [],
+ "complexTraits": [],
  "ai": {
   "flavours": [
    {
@@ -227,7 +229,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_LEADER_CATHERINE"
+   "define": "ART_DEF_LEADER_CATHERINE"
   }
  },
  "sound": {

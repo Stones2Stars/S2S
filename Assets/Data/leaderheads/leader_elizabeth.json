@@ -1,5 +1,7 @@
 {
  "type": "LEADER_ELIZABETH",
+ "traits": [],
+ "complexTraits": [],
  "ai": {
   "flavours": [
    {
@@ -229,7 +231,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_LEADER_ELIZABETH"
+   "define": "ART_DEF_LEADER_ELIZABETH"
   }
  },
  "sound": {

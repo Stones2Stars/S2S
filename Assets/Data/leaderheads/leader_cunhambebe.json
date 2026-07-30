@@ -1,5 +1,7 @@
 {
  "type": "LEADER_CUNHAMBEBE",
+ "traits": [],
+ "complexTraits": [],
  "ai": {
   "flavours": [
    {
@@ -224,7 +226,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_LEADER_CUNHAMBEBE"
+   "define": "ART_DEF_LEADER_CUNHAMBEBE"
   }
  },
  "sound": {

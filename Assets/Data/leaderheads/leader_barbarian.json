@@ -1,5 +1,7 @@
 {
  "type": "LEADER_BARBARIAN",
+ "traits": [],
+ "complexTraits": [],
  "ai": {
   "npc": true,
   "personality": {
@@ -12,7 +14,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_LEADER_BARBARIAN"
+   "define": "ART_DEF_LEADER_BARBARIAN"
   }
  },
  "sound": {

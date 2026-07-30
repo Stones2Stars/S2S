@@ -93,5 +93,10 @@
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ]
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "empire": {
+   "flat": -8
+  }
  }
 }

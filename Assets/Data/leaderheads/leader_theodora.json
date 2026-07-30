@@ -1,5 +1,7 @@
 {
  "type": "LEADER_THEODORA",
+ "traits": [],
+ "complexTraits": [],
  "ai": {
   "flavours": [
    {
@@ -219,7 +221,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_LEADER_THEODORA"
+   "define": "ART_DEF_LEADER_THEODORA"
   }
  },
  "sound": {

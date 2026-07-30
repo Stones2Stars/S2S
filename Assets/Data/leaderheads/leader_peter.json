@@ -1,5 +1,7 @@
 {
  "type": "LEADER_PETER",
+ "traits": [],
+ "complexTraits": [],
  "ai": {
   "flavours": [
    {
@@ -234,7 +236,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_LEADER_PETER"
+   "define": "ART_DEF_LEADER_PETER"
   }
  },
  "sound": {

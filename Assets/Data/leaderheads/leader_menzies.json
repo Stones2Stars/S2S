@@ -1,5 +1,7 @@
 {
  "type": "LEADER_MENZIES",
+ "traits": [],
+ "complexTraits": [],
  "ai": {
   "flavours": [
    {
@@ -224,7 +226,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_LEADER_MENZIES"
+   "define": "ART_DEF_LEADER_MENZIES"
   }
  },
  "sound": {

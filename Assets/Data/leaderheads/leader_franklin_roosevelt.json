@@ -1,5 +1,7 @@
 {
  "type": "LEADER_FRANKLIN_ROOSEVELT",
+ "traits": [],
+ "complexTraits": [],
  "ai": {
   "flavours": [
    {
@@ -228,7 +230,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_LEADER_FRANKLIN_ROOSEVELT"
+   "define": "ART_DEF_LEADER_FRANKLIN_ROOSEVELT"
   }
  },
  "sound": {

@@ -1,5 +1,7 @@
 {
  "type": "LEADER_SOLOMON",
+ "traits": [],
+ "complexTraits": [],
  "ai": {
   "flavours": [
    {
@@ -215,7 +217,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_LEADER_SOLOMON"
+   "define": "ART_DEF_LEADER_SOLOMON"
   }
  },
  "sound": {

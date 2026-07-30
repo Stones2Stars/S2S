@@ -1,5 +1,7 @@
 {
  "type": "LEADER_HANNIBAL",
+ "traits": [],
+ "complexTraits": [],
  "ai": {
   "flavours": [
    {
@@ -230,7 +232,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_LEADER_HANNIBAL"
+   "define": "ART_DEF_LEADER_HANNIBAL"
   }
  },
  "sound": {

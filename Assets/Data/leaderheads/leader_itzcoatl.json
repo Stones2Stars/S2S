@@ -1,5 +1,7 @@
 {
  "type": "LEADER_ITZCOATL",
+ "traits": [],
+ "complexTraits": [],
  "ai": {
   "flavours": [
    {
@@ -219,7 +221,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_LEADER_ITZCOATL"
+   "define": "ART_DEF_LEADER_ITZCOATL"
   }
  },
  "sound": {

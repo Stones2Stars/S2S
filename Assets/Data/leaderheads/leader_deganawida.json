@@ -1,5 +1,7 @@
 {
  "type": "LEADER_DEGANAWIDA",
+ "traits": [],
+ "complexTraits": [],
  "ai": {
   "flavours": [
    {
@@ -228,7 +230,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_LEADER_DEGANAWIDA"
+   "define": "ART_DEF_LEADER_DEGANAWIDA"
   }
  },
  "sound": {

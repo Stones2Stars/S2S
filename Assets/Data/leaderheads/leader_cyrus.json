@@ -1,5 +1,7 @@
 {
  "type": "LEADER_CYRUS",
+ "traits": [],
+ "complexTraits": [],
  "ai": {
   "flavours": [
    {
@@ -226,7 +228,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_LEADER_CYRUS"
+   "define": "ART_DEF_LEADER_CYRUS"
   }
  },
  "sound": {

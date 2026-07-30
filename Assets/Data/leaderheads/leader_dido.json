@@ -1,5 +1,7 @@
 {
  "type": "LEADER_DIDO",
+ "traits": [],
+ "complexTraits": [],
  "ai": {
   "flavours": [
    {
@@ -227,7 +229,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_LEADER_DIDO"
+   "define": "ART_DEF_LEADER_DIDO"
   }
  },
  "sound": {

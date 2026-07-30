@@ -1,5 +1,7 @@
 {
  "type": "LEADER_ABUBAKR",
+ "traits": [],
+ "complexTraits": [],
  "ai": {
   "flavours": [
    {
@@ -220,7 +222,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_LEADER_ABUBAKR"
+   "define": "ART_DEF_LEADER_ABUBAKR"
   }
  },
  "sound": {

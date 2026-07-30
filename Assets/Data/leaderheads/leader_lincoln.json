@@ -1,5 +1,7 @@
 {
  "type": "LEADER_LINCOLN",
+ "traits": [],
+ "complexTraits": [],
  "ai": {
   "flavours": [
    {
@@ -232,7 +234,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_LEADER_LINCOLN"
+   "define": "ART_DEF_LEADER_LINCOLN"
   }
  },
  "sound": {

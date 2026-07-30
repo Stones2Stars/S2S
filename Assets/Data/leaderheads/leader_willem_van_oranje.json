@@ -1,5 +1,7 @@
 {
  "type": "LEADER_WILLEM_VAN_ORANJE",
+ "traits": [],
+ "complexTraits": [],
  "ai": {
   "flavours": [
    {
@@ -229,7 +231,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_LEADER_WILLEM_VAN_ORANJE"
+   "define": "ART_DEF_LEADER_WILLEM_VAN_ORANJE"
   }
  },
  "sound": {

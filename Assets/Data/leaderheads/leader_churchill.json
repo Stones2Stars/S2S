@@ -1,5 +1,7 @@
 {
  "type": "LEADER_CHURCHILL",
+ "traits": [],
+ "complexTraits": [],
  "ai": {
   "flavours": [
    {
@@ -226,7 +228,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_LEADER_CHURCHILL"
+   "define": "ART_DEF_LEADER_CHURCHILL"
   }
  },
  "sound": {

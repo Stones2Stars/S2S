@@ -1,5 +1,7 @@
 {
  "type": "LEADER_BASIL",
+ "traits": [],
+ "complexTraits": [],
  "ai": {
   "flavours": [
    {
@@ -221,7 +223,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_LEADER_BASIL"
+   "define": "ART_DEF_LEADER_BASIL"
   }
  },
  "sound": {

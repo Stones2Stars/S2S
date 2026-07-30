@@ -1,5 +1,7 @@
 {
  "type": "LEADER_GENGHIS_KHAN",
+ "traits": [],
+ "complexTraits": [],
  "ai": {
   "flavours": [
    {
@@ -225,7 +227,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_LEADER_GENGHIS_KHAN"
+   "define": "ART_DEF_LEADER_GENGHIS_KHAN"
   }
  },
  "sound": {

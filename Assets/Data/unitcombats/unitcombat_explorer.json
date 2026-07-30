@@ -35,7 +35,8 @@
      "value": 100,
      "unit": "IS_CAMOUFLAGE"
     }
-   ]
+   ],
+   "flat": 100
   }
  },
  "sizeMatters": {

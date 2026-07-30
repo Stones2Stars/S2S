@@ -1,5 +1,7 @@
 {
  "type": "LEADER_STALIN",
+ "traits": [],
+ "complexTraits": [],
  "ai": {
   "flavours": [
    {
@@ -231,7 +233,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_LEADER_STALIN"
+   "define": "ART_DEF_LEADER_STALIN"
   }
  },
  "sound": {

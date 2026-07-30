@@ -1,5 +1,7 @@
 {
  "type": "LEADER_GANDHI",
+ "traits": [],
+ "complexTraits": [],
  "ai": {
   "flavours": [
    {
@@ -209,7 +211,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_LEADER_GANDHI"
+   "define": "ART_DEF_LEADER_GANDHI"
   }
  },
  "sound": {

@@ -1,5 +1,7 @@
 {
  "type": "LEADER_FREDERICK",
+ "traits": [],
+ "complexTraits": [],
  "ai": {
   "flavours": [
    {
@@ -222,7 +224,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_LEADER_FREDERICK"
+   "define": "ART_DEF_LEADER_FREDERICK"
   }
  },
  "sound": {

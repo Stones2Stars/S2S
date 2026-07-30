@@ -1,5 +1,7 @@
 {
  "type": "LEADER_GREEN_MAN",
+ "traits": [],
+ "complexTraits": [],
  "ai": {
   "npc": true,
   "war": {
@@ -10,7 +12,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_LEADER_GREEN_MAN"
+   "define": "ART_DEF_LEADER_GREEN_MAN"
   }
  },
  "sound": {

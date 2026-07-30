@@ -1,5 +1,7 @@
 {
  "type": "LEADER_NEANDERTHAL",
+ "traits": [],
+ "complexTraits": [],
  "ai": {
   "npc": true,
   "personality": {
@@ -12,7 +14,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_LEADER_NEANDERTHAL"
+   "define": "ART_DEF_LEADER_NEANDERTHAL"
   }
  },
  "sound": {
