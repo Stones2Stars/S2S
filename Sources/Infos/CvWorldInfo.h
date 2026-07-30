@@ -46,8 +46,6 @@ public:
 	int getMaxConscriptModifier() const { return m_iMaxConscriptModifier; }
 	int getWarWearinessModifier() const { return m_iWarWearinessModifier; }
 	int getTradeProfitPercent() const { return m_iTradeProfitPercent; }
-	int getDistanceMaintenancePercent() const { return m_iDistanceMaintenancePercent; }
-	int getColonyMaintenancePercent() const { return m_iColonyMaintenancePercent; }
 	int getCorporationMaintenancePercent() const { return m_iCorporationMaintenancePercent; }
 	int getNumCitiesAnarchyPercent() const { return m_iNumCitiesAnarchyPercent; }
 	int getAdvancedStartPointsMod() const { return m_iAdvancedStartPointsMod; }
@@ -66,8 +64,6 @@ private:
 	int m_iMaxConscriptModifier;
 	int m_iWarWearinessModifier;
 	int m_iTradeProfitPercent;
-	int m_iDistanceMaintenancePercent;
-	int m_iColonyMaintenancePercent;
 	int m_iCorporationMaintenancePercent;
 	int m_iNumCitiesAnarchyPercent;
 	int m_iAdvancedStartPointsMod;

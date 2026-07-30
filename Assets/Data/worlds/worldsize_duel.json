@@ -13,8 +13,6 @@
   "featureGrainChange": -1,
   "oceanMinAreaSize": 6,
   "tradeProfitPercent": 1000,
-  "distanceMaintenancePercent": 106,
-  "colonyMaintenancePercent": 80,
   "corporationMaintenancePercent": 500,
   "numCitiesAnarchyPercent": 50,
   "advancedStartPointsMod": 75,

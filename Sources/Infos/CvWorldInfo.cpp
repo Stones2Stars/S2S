@@ -22,8 +22,6 @@ CvWorldInfo::CvWorldInfo()
 	, m_iMaxConscriptModifier(0)
 	, m_iWarWearinessModifier(0)
 	, m_iTradeProfitPercent(0)
-	, m_iDistanceMaintenancePercent(0)
-	, m_iColonyMaintenancePercent(0)
 	, m_iCorporationMaintenancePercent(0)
 	, m_iNumCitiesAnarchyPercent(0)
 	, m_iAdvancedStartPointsMod(0)
@@ -64,8 +62,6 @@ void CvWorldInfo::mapFrom(const picojson::value& entity)
 	m_iMaxConscriptModifier         = jsonIdInt(identityObj, "maxConscriptModifier");
 	m_iWarWearinessModifier         = jsonIdInt(identityObj, "warWearinessModifier");
 	m_iTradeProfitPercent           = jsonIdInt(identityObj, "tradeProfitPercent");
-	m_iDistanceMaintenancePercent   = jsonIdInt(identityObj, "distanceMaintenancePercent");
-	m_iColonyMaintenancePercent     = jsonIdInt(identityObj, "colonyMaintenancePercent");
 	m_iCorporationMaintenancePercent = jsonIdInt(identityObj, "corporationMaintenancePercent");
 	m_iNumCitiesAnarchyPercent      = jsonIdInt(identityObj, "numCitiesAnarchyPercent");
 	m_iAdvancedStartPointsMod       = jsonIdInt(identityObj, "advancedStartPointsMod");

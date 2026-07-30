@@ -18160,7 +18160,7 @@ int64_t CvCity::calcCorporateMaintenance() const
 			}
 
 			// The per-bonus rate and this city's owned count of the consumed bonuses are ONE authored deposit
-			// (the `per:{anyOf}` scaler) -- the same fold as calculateCorporationMaintenanceTimes100.
+			// (the `per:{anyOf}` scaler) -- the corp upkeep deposit's own fold.
 			iCorpTaxes +=
 			(
 				kCorporation.expectedModifier(MODFAM_MAINTENANCE, MAINTENANCE_CORPORATION, CASC_UNIT_FLAT,

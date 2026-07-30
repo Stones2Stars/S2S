@@ -8,8 +8,6 @@
   "gridHeight": 16,
   "oceanMinAreaSize": 14,
   "tradeProfitPercent": 370,
-  "distanceMaintenancePercent": 100,
-  "colonyMaintenancePercent": 80,
   "corporationMaintenancePercent": 100,
   "numCitiesAnarchyPercent": 18,
   "advancedStartPointsMod": 100,

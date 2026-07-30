@@ -13,8 +13,6 @@
   "terrainGrainChange": 1,
   "featureGrainChange": 1,
   "tradeProfitPercent": 230,
-  "distanceMaintenancePercent": 96,
-  "colonyMaintenancePercent": 80,
   "corporationMaintenancePercent": 50,
   "numCitiesAnarchyPercent": 13,
   "advancedStartPointsMod": 125,

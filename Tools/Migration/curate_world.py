@@ -28,10 +28,6 @@ Emitted keys (identity.<key> = legacy tag -- consumption site, scale verdict):
 - `tradeProfitPercent` = iTradeProfitPercent -- per-plot-distance trade-profit rate: min'd against the
   population term and scaled by the TRADE_PROFIT_PERCENT define into the x100 profit
   (CvCity.cpp:11598 getBaseTradeProfit). The authored number IS the human knob -- emitted as-is.
-- `distanceMaintenancePercent` = iDistanceMaintenancePercent -- % scale on the distance-maintenance
-  component (CvCity.cpp:7674 *pct/100). Human percent.
-- `colonyMaintenancePercent` = iColonyMaintenancePercent -- % scale on the colony-maintenance component
-  (CvCity.cpp:7778 *pct/100). Human percent.
 - `corporationMaintenancePercent` = iCorporationMaintenancePercent -- % scale on BOTH the corporation
   maintenance component (CvCity.cpp:7837) and the corporation yields/commerces-produced output
   (CvCity.cpp:12601/12626 -- the "world corp maintenance pct" of fixed-point-and-scales.md 4c). Human percent.
@@ -51,9 +47,6 @@ CyInfoInterface bindings; the XML keeps them as curator input, revival = re-add 
 - iNumFreeBuildingBonuses -- the BTS "world default" for building free-bonus counts; S2S buildings author
   explicit per-building ExtraFreeBonus counts (curate_building.py), the world-default path does not exist
   in the DLL (no member, no getter). NOT emitted.
-(The legacy class additionally carried two member-only dead fields never authored by the XML --
-iNumCitiesMaintenancePercent, whose only consumer is commented out at CvCity.cpp:7713, and
-iCommandersLevelThresholdsPercent, with no consumer at all. Nothing to emit; the poco drops both.)
 
 Zero-valued entries are dropped (0 is every emitted member's poco default except cityLimitsScalePercent,
 whose authored values are never 0) -- lossless, mirroring curate_handicap.
@@ -83,8 +76,6 @@ CONFIG_FIELDS = OrderedDict([
     ("iMaxConscriptModifier",          "maxConscriptModifier"),
     ("iWarWearinessModifier",          "warWearinessModifier"),
     ("iTradeProfitPercent",            "tradeProfitPercent"),
-    ("iDistanceMaintenancePercent",    "distanceMaintenancePercent"),
-    ("iColonyMaintenancePercent",      "colonyMaintenancePercent"),
     ("iCorporationMaintenancePercent", "corporationMaintenancePercent"),
     ("iNumCitiesAnarchyPercent",       "numCitiesAnarchyPercent"),
     ("iAdvancedStartPointsMod",        "advancedStartPointsMod"),
@@ -92,7 +83,11 @@ CONFIG_FIELDS = OrderedDict([
 ])
 
 # authored-but-dead legacy tags (docstring): consumed nowhere in the DLL or the Python bindings -- retired.
-DEAD_FIELDS = ("iUnitNameModifier", "iNumFreeBuildingBonuses")
+# Dropped outright, never parked in `identity`: identity carries no effects (json.md 7), so a dead effect
+# routed there would land in the one block that must not hold it. The two maintenance percents scaled
+# engine formulas that no longer exist -- maintenance is authored deposits now (economy.md).
+DEAD_FIELDS = ("iUnitNameModifier", "iNumFreeBuildingBonuses",
+               "iDistanceMaintenancePercent", "iColonyMaintenancePercent")
 
 HOIST_TEXT = {"Description": "description", "Help": "help"}
 
