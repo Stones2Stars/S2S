@@ -217,6 +217,23 @@
 - Point the AI production decision at the maintained LISTED set, and collapse the `AI_chooseProduction`
   focus-ladder into ONE unified scoring pass ([enabler.md §6/§8](../../specs/enabler.md)). The collapse is an
   AI-architecture change, not a per-loop rewrite.
+- ⛔ **FIND AND FIX EVERY AI EVALUATION LOOP THAT SCANS A WHOLE REGISTRY (owner).** They do not merely cost
+  time — they *will not work any more*, and they are *not needed*. A scan asks the entity database a question
+  the maintained state already answers, so it now walks ids whose backing reads are gone and re-derives what
+  something else owns.
+  ⚑ **The population splits in two, and the halves have DIFFERENT answers — do not treat them alike:**
+  - a loop over an **enabler domain** (units / buildings / techs / civics / projects / processes / promotions /
+    builds) reads the maintained FRONTIER instead — `listedIds` / `getAvailable*` / the tri-state
+    ([enabler.md §6](../../specs/enabler.md): the AI's decisions iterate ONLY the frontier).
+  - a loop over any OTHER registry (unitcombats / specialists / terrains / features / bonuses / religions /
+    properties / invisibles) is the OWN-DATA INVERSION — it asks every id whether the entity deposits onto it,
+    when the entity's own compiled entries name the handful it authored. `InfoValuation::collectKeyedTarget` /
+    `collectKeyedCombat` are that read ([modifier.md §5](../../specs/modifier.md);
+    [pedia-read-map.md](../../reference/pedia-read-map.md) finding 2).
+  ⛔ **The COMPILER WILL NEVER NAME ONE.** Every such loop compiles clean today and always will, so this class
+  is invisible to the error-driven sweep and only closes by being looked for. ⚠ A loop calling a gate with
+  WHAT-IF args cannot simply swap to the frontier — the frontier answers the CURRENT verdict, so those want the
+  as-if-held overlay or the gate twin instead.
 - Move `AI_baseBonusVal`'s per-kind loops off the whole-database driver onto the frontier, and off the dead
   prereq getters onto the bonus's own `EDGEF_REQUIRED_BY` ([DEC-one-reverse-view](../../architecture/decisions.md#dec-one-reverse-view)).
   ⚠ Its "would this bonus UNLOCK this" half needs the AS-IF-HELD overlay above and dangles until that lands;
