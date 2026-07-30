@@ -230,6 +230,13 @@
     when the entity's own compiled entries name the handful it authored. `InfoValuation::collectKeyedTarget` /
     `collectKeyedCombat` are that read ([modifier.md §5](../../specs/modifier.md);
     [pedia-read-map.md](../../reference/pedia-read-map.md) finding 2).
+  ⛔ **THE EXCEPTION IS PLOTS — a plot loop is NOT this class and must not be swept (owner).** There is no
+  enabler structure for plots and there is deliberately not going to be one: a maintained set over ~10k plots
+  is waste, and the decisions that walk plots already have to
+  ([enabler.md §7.1](../../specs/enabler.md), the worker-builds carve-out — the plot-validity half stays a
+  LIVE per-plot gate). So iterating plots is the correct shape, not a scan to convert; what a plot loop must
+  not do is ask a per-plot question the CityContext already folds
+  ([contexts.md](../../architecture/contexts.md): `plotAttrs` is the fold of its member plots' bits).
   ⛔ **The COMPILER WILL NEVER NAME ONE.** Every such loop compiles clean today and always will, so this class
   is invisible to the error-driven sweep and only closes by being looked for. ⚠ A loop calling a gate with
   WHAT-IF args cannot simply swap to the frontier — the frontier answers the CURRENT verdict, so those want the
