@@ -1068,16 +1068,16 @@ public:
 	int getDomainProductionModifier(DomainTypes eIndex) const;
 	void changeDomainProductionModifier(DomainTypes eIndex, int iChange);
 
-	int getCulture(PlayerTypes eIndex) const;
-	int getCultureTimes100(PlayerTypes eIndex) const;
-	int countTotalCultureTimes100() const;
+	int64_t getCulture(PlayerTypes eIndex) const;
+	int64_t getCultureTimes100(PlayerTypes eIndex) const;
+	int64_t countTotalCultureTimes100() const;
 	PlayerTypes findHighestCulture() const;
 	int calculateCulturePercent(PlayerTypes eIndex) const;
 	int calculateTeamCulturePercent(TeamTypes eIndex) const;
-	void setCulture(PlayerTypes eIndex, int iNewValue, bool bPlots, bool bUpdatePlotGroups, bool bNationalSet = false);
-	void setCultureTimes100(PlayerTypes eIndex, int iNewValue, bool bPlots, bool bUpdatePlotGroups, bool bNationalSet = false);
-	void changeCulture(PlayerTypes eIndex, int iChange, bool bPlots, bool bUpdatePlotGroups);
-	void changeCultureTimes100(PlayerTypes eIndex, int iChange, bool bPlots, bool bUpdatePlotGroups);
+	void setCulture(PlayerTypes eIndex, int64_t iNewValue, bool bPlots, bool bUpdatePlotGroups, bool bNationalSet = false);
+	void setCultureTimes100(PlayerTypes eIndex, int64_t iNewValue, bool bPlots, bool bUpdatePlotGroups, bool bNationalSet = false);
+	void changeCulture(PlayerTypes eIndex, int64_t iChange, bool bPlots, bool bUpdatePlotGroups);
+	void changeCultureTimes100(PlayerTypes eIndex, int64_t iChange, bool bPlots, bool bUpdatePlotGroups);
 
 	int getNumRevolts(PlayerTypes eIndex) const;
 	void changeNumRevolts(PlayerTypes eIndex, int iChange);
@@ -1770,7 +1770,7 @@ protected:
 	int* m_aiProductionToCommerceModifier;
 	int* m_aiCommerceRateModifier;
 	int* m_aiDomainProductionModifier;
-	int* m_aiCulture;
+	int64_t* m_aiCulture;   // per-player culture, x100 and NEVER decaying -- an AMOUNT, so 64-bit
 	int* m_aiNumRevolts;
 
 	bool* m_abEverOwned;

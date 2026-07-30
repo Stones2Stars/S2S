@@ -2747,7 +2747,7 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 		}
 
 		bool abEverOwned[MAX_PLAYERS];
-		int aiCulture[MAX_PLAYERS];
+		int64_t aiCulture[MAX_PLAYERS];
 
 		for (int iI = 0; iI < MAX_PLAYERS; iI++)
 		{
@@ -15450,7 +15450,7 @@ int64_t CvPlayer::getEspionageMissionBaseCost(EspionageMissionTypes eMission, Pl
 		// Insert Culture into City
 		if (pPlot && pPlot->getCulture(getID()) > 0)
 		{
-			int iCultureAmount = kMission.getCityInsertCultureAmountFactor() *  pCity->countTotalCultureTimes100();
+			int64_t iCultureAmount = kMission.getCityInsertCultureAmountFactor() *  pCity->countTotalCultureTimes100();
 			iCultureAmount /= 10000;
 			iCultureAmount = std::max(1, iCultureAmount);
 			iMissionCost = iBaseMissionCost + (kMission.getCityInsertCultureCostFactor() * iCultureAmount) / 100;
@@ -15823,7 +15823,7 @@ bool CvPlayer::doEspionageMission(EspionageMissionTypes eMission, PlayerTypes eT
 			{
 				szBuffer = gDLL->getText("TXT_KEY_ESPIONAGE_TARGET_CITY_CULTURE_INSERTED", pCity->getNameKey()).GetCString();
 
-				const int iCultureAmount = std::max(1, kMission.getCityInsertCultureAmountFactor() * pCity->countTotalCultureTimes100() / 10000);
+				const int64_t iCultureAmount = std::max<int64_t>(1, kMission.getCityInsertCultureAmountFactor() * pCity->countTotalCultureTimes100() / 10000);
 
 				int iPlotCulture = pCity->plot()->countTotalCulture();
 				int iPlotCultureAmount;

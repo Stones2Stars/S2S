@@ -319,7 +319,7 @@ CvCity::CvCity()
 	m_aiCommerceRateModifier = new int[NUM_COMMERCE_TYPES];
 	m_aiDomainProductionModifier = new int[NUM_DOMAIN_TYPES];
 
-	m_aiCulture = new int[MAX_PLAYERS];
+	m_aiCulture = new int64_t[MAX_PLAYERS];
 	m_aiNumRevolts = new int[MAX_PLAYERS];
 	m_abEverOwned = new bool[MAX_PLAYERS];
 	m_abTradeRoute = new bool[MAX_PLAYERS];
@@ -8342,7 +8342,7 @@ int CvCity::getCultureThreshold() const
 {
 	PROFILE_EXTRA_FUNC();
 	const GameSpeedTypes eSpeed = GC.getGame().getGameSpeedType();
-	const int iCulture = getCultureTimes100(getOwner()) / 100;
+	const int64_t iCulture = getCultureTimes100(getOwner()) / 100;
 	const int iNumCultureLevels = GC.getNumCultureLevelInfos();
 
 	for (int i = 0; i < iNumCultureLevels; i++)
@@ -8456,7 +8456,7 @@ void CvCity::updateCultureLevel(bool bUpdatePlotGroups)
 	if (!isOccupation())
 	{
 		const GameSpeedTypes eSpeed = GAME.getGameSpeedType();
-		const int iCulture = getCultureTimes100(getOwner()) / 100;
+		const int64_t iCulture = getCultureTimes100(getOwner()) / 100;
 
 		// Will set culture level to that indexed by xml, but only if matches option of current game
 		for (int iI = GC.getNumCultureLevelInfos() - 1; iI > 0; iI--)
@@ -10527,23 +10527,28 @@ void CvCity::changeDomainProductionModifier(DomainTypes eIndex, int iChange)
 }
 
 
-int CvCity::getCulture(PlayerTypes eIndex) const
+// ⚑ The `< 0 ? MAX_INT` saturating guards these two getters used to carry were the FOSSIL of a live 32-bit
+// overflow: city culture accumulates getCommerceRateTimes100(CULTURE) every turn and NEVER decays, so on a
+// long game it wrapped negative and the guards detected the wrap and clamped. That silently corrupted every
+// consumer of the value -- culture percent, cultural ownership, the level thresholds -- because a saturated
+// total is not the total. The storage is 64-bit now, so there is no wrap to detect and nothing to clamp.
+int64_t CvCity::getCulture(PlayerTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, MAX_PLAYERS, eIndex);
-	return (m_aiCulture[eIndex] < 0 ? MAX_INT / 100 : m_aiCulture[eIndex] / 100);
+	return m_aiCulture[eIndex] / 100;
 }
 
-int CvCity::getCultureTimes100(PlayerTypes eIndex) const
+int64_t CvCity::getCultureTimes100(PlayerTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, MAX_PLAYERS, eIndex);
-	return (m_aiCulture[eIndex] < 0 ? MAX_INT : m_aiCulture[eIndex]);
+	return m_aiCulture[eIndex];
 }
 
 
-int CvCity::countTotalCultureTimes100() const
+int64_t CvCity::countTotalCultureTimes100() const
 {
 	PROFILE_EXTRA_FUNC();
-	int iTotalCulture = 0;
+	int64_t iTotalCulture = 0;
 
 	for (int iI = 0; iI < MAX_PLAYERS; iI++)
 	{
@@ -10559,14 +10564,14 @@ int CvCity::countTotalCultureTimes100() const
 PlayerTypes CvCity::findHighestCulture() const
 {
 	PROFILE_EXTRA_FUNC();
-	int iBestValue = 0;
+	int64_t iBestValue = 0;
 	PlayerTypes eBestPlayer = NO_PLAYER;
 
 	for (int iI = 0; iI < MAX_PLAYERS; iI++)
 	{
 		if (GET_PLAYER((PlayerTypes)iI).isAlive())
 		{
-			const int iValue = getCultureTimes100((PlayerTypes)iI);
+			const int64_t iValue = getCultureTimes100((PlayerTypes)iI);
 
 			if (iValue > iBestValue)
 			{
@@ -10607,16 +10612,18 @@ int CvCity::calculateTeamCulturePercent(TeamTypes eIndex) const
 }
 
 
-void CvCity::setCulture(PlayerTypes eIndex, int iNewValue, bool bPlots, bool bUpdatePlotGroups, bool bNationalSet)
+// The saturating `> MAX_INT / 100 ? MAX_INT` clamp is gone with the overflow it existed for -- 64-bit storage
+// has nothing to saturate against, and a clamped culture total is not the total.
+void CvCity::setCulture(PlayerTypes eIndex, int64_t iNewValue, bool bPlots, bool bUpdatePlotGroups, bool bNationalSet)
 {
-	setCultureTimes100(eIndex, (iNewValue > MAX_INT / 100) ? MAX_INT : 100 * iNewValue, bPlots, bUpdatePlotGroups, bNationalSet);
+	setCultureTimes100(eIndex, 100 * iNewValue, bPlots, bUpdatePlotGroups, bNationalSet);
 }
 
-void CvCity::setCultureTimes100(PlayerTypes eIndex, int iNewValue, bool bPlots, bool bUpdatePlotGroups, bool bNationalSet)
+void CvCity::setCultureTimes100(PlayerTypes eIndex, int64_t iNewValue, bool bPlots, bool bUpdatePlotGroups, bool bNationalSet)
 {
 	FASSERT_BOUNDS(0, MAX_PLAYERS, eIndex);
 
-	const int iOldCulture = getCultureTimes100(eIndex);
+	const int64_t iOldCulture = getCultureTimes100(eIndex);
 
 	if (iOldCulture != iNewValue)
 	{
@@ -10647,16 +10654,16 @@ void CvCity::setCultureTimes100(PlayerTypes eIndex, int iNewValue, bool bPlots, 
 }
 
 
-void CvCity::changeCulture(PlayerTypes eIndex, int iChange, bool bPlots, bool bUpdatePlotGroups)
+void CvCity::changeCulture(PlayerTypes eIndex, int64_t iChange, bool bPlots, bool bUpdatePlotGroups)
 {
 	changeCultureTimes100(eIndex, 100 * iChange, bPlots, bUpdatePlotGroups);
 }
 
-void CvCity::changeCultureTimes100(PlayerTypes eIndex, int iChange, bool bPlots, bool bUpdatePlotGroups)
+void CvCity::changeCultureTimes100(PlayerTypes eIndex, int64_t iChange, bool bPlots, bool bUpdatePlotGroups)
 {
 	if (iChange == 0) return;
 
-	const int iOld = getCultureTimes100(eIndex);
+	const int64_t iOld = getCultureTimes100(eIndex);
 
 	if (iChange > 99)
 	{
@@ -14594,7 +14601,27 @@ void CvCity::read(FDataStreamBase* pStream)
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiProductionToCommerceModifier);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiCommerceRateModifier);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_DOMAIN_TYPES, m_aiDomainProductionModifier);
-	WRAPPER_READ_ARRAY(wrapper, "CvCity", MAX_PLAYERS, m_aiCulture);
+	// WIDENING MIGRATION (save.md §8). Culture moved int -> int64_t, which is a type-code change, so it cannot
+	// reuse its old tag. The wide tag is read into the member; the OLD 32-bit tag is read into a scratch array
+	// and seeds it when the wide one was absent -- which is exactly what makes an old save land on its real
+	// value instead of a default. Both directions are safe: on a new save the legacy tag is absent and its
+	// scratch stays 0, and seeding a genuine 0 over a 0 is a no-op.
+	{
+		int aiLegacyCulture[MAX_PLAYERS];
+		for (int iI = 0; iI < MAX_PLAYERS; iI++)
+		{
+			aiLegacyCulture[iI] = 0;
+		}
+		WRAPPER_READ_ARRAY_DECORATED(wrapper, "CvCity", MAX_PLAYERS, aiLegacyCulture, "m_aiCulture");
+		WRAPPER_READ_ARRAY_DECORATED(wrapper, "CvCity", MAX_PLAYERS, m_aiCulture, "m_aiCulturePerPlayer");
+		for (int iI = 0; iI < MAX_PLAYERS; iI++)
+		{
+			if (m_aiCulture[iI] == 0 && aiLegacyCulture[iI] != 0)
+			{
+				m_aiCulture[iI] = aiLegacyCulture[iI];
+			}
+		}
+	}
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", MAX_PLAYERS, m_aiNumRevolts);
 
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", MAX_PLAYERS, m_abEverOwned);
@@ -15300,7 +15327,7 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiCommerceRateModifier);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_DOMAIN_TYPES, m_aiDomainProductionModifier);
 
-	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", MAX_PLAYERS, m_aiCulture);
+	WRAPPER_WRITE_ARRAY_DECORATED(wrapper, "CvCity", MAX_PLAYERS, m_aiCulture, "m_aiCulturePerPlayer");
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", MAX_PLAYERS, m_aiNumRevolts);
 
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", MAX_PLAYERS, m_abEverOwned);
@@ -16809,7 +16836,7 @@ void CvCity::liberate(bool bConquest)
 	}
 	GC.getGame().addReplayMessage(REPLAY_MESSAGE_MAJOR_EVENT, eOwner, szBuffer, getX(), getY(), GC.getCOLOR_HIGHLIGHT_TEXT());
 
-	const int iCulture = getCultureTimes100(eOwner);
+	const int64_t iCulture = getCultureTimes100(eOwner);
 	const CvPlot* cityPlot = plot();
 	GET_PLAYER(ePlayer).acquireCity(this, false, true, true); // Invalidates this city object. this::kill() is called.
 	GET_PLAYER(ePlayer).AI_changeMemoryCount(eOwner, MEMORY_LIBERATED_CITIES, 1);
@@ -16869,7 +16896,7 @@ PlayerTypes CvCity::getLiberationPlayer(bool bConquest) const
 		}
 	}
 
-	const int iTotalCultureTimes100 = countTotalCultureTimes100();
+	const int64_t iTotalCultureTimes100 = countTotalCultureTimes100();
 	PlayerTypes eBestPlayer = NO_PLAYER;
 	int iBestValue = 0;
 
@@ -16888,7 +16915,7 @@ PlayerTypes CvCity::getLiberationPlayer(bool bConquest) const
 					iCapitalDistance *= 2;
 				}
 
-				int iCultureTimes100 = getCultureTimes100((PlayerTypes)iI);
+				int64_t iCultureTimes100 = getCultureTimes100((PlayerTypes)iI);
 
 				if (bConquest && iI == getOriginalOwner())
 				{
