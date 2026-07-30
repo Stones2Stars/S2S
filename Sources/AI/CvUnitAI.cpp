@@ -1769,7 +1769,11 @@ int CvUnitAI::AI_sacrificeValue(const CvPlot* pPlot) const
 	if (getDomainType() == DOMAIN_AIR)
 	{
 		int iValue = 128 * (100 + currInterceptionProbability());
-		if (m_pUnitInfo->getNukeRange() != -1)
+		// ⚠ The legacy sentinel is GONE: getNukeRange() answered -1 for "not a nuke", while the compiled sum
+		// answers 0 when nothing is authored -- so the old `!= -1` test would now hold for EVERY air unit and
+		// hand each one the nuke bonus. The question is "does this carry a nuke range at all", and all seven
+		// authoring units carry a positive one.
+		if ((m_pUnitInfo->getAir(AIR_NUKE_RANGE, CASC_SCOPE_UNIT) / 100) > 0)
 		{
 			iValue += 25000;
 		}
@@ -22797,7 +22801,7 @@ bool CvUnitAI::AI_pickup(UnitAITypes eUnitAI, bool bCountProduction, int iMaxPat
 						if (pCity->getProductionTurnsLeft() < 4)
 						{
 							const CvUnitInfo& kUnitInfo = GC.getUnitInfo(pCity->getProductionUnit());
-							if ((kUnitInfo.getDomainType() != DOMAIN_AIR) || kUnitInfo.getAirRange() > 0)
+							if ((kUnitInfo.getDomainType() != DOMAIN_AIR) || (kUnitInfo.getAir(AIR_RANGE, CASC_SCOPE_UNIT) / 100) > 0)
 							{
 								iCount++;
 							}
@@ -22881,7 +22885,7 @@ bool CvUnitAI::AI_pickup(UnitAITypes eUnitAI, bool bCountProduction, int iMaxPat
 					if (bCountProduction && (pLoopCity->getProductionUnitAI() == eUnitAI))
 					{
 						const CvUnitInfo& kUnitInfo = GC.getUnitInfo(pLoopCity->getProductionUnit());
-						if ((kUnitInfo.getDomainType() != DOMAIN_AIR) || kUnitInfo.getAirRange() > 0)
+						if ((kUnitInfo.getDomainType() != DOMAIN_AIR) || (kUnitInfo.getAir(AIR_RANGE, CASC_SCOPE_UNIT) / 100) > 0)
 						{
 							iValue++;
 							iCount++;

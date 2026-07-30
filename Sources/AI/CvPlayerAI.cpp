@@ -10659,7 +10659,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 		{
 			if (!bisNegativePropertyUnit && (kUnitInfo.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) > 0 && !CvSkillReads::onlyDefensive(kUnitInfo.getSkills()))
 			{
-				if (kUnitInfo.getInterceptionProbability() > 0 || kUnitInfo.getNumTargetUnits() > 0)
+				if (kUnitInfo.getAir(AIR_INTERCEPT, CASC_SCOPE_UNIT) > 0 || kUnitInfo.getNumTargetUnits() > 0)
 				{
 					bValid = true;
 					break;
@@ -10798,7 +10798,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 		{
 			if ((kUnitInfo.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) > 0 && !bisNegativePropertyUnit && !CvSkillReads::noDefensiveBonus(kUnitInfo.getSkills()))
 			{
-				if (kUnitInfo.getInterceptionProbability() > 0)
+				if (kUnitInfo.getAir(AIR_INTERCEPT, CASC_SCOPE_UNIT) > 0)
 				{
 					bValid = true;
 					break;
@@ -10885,7 +10885,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 		}
 		case UNITAI_ICBM:
 		{
-			if (kUnitInfo.getNukeRange() != -1)
+			if ((kUnitInfo.getAir(AIR_NUKE_RANGE, CASC_SCOPE_UNIT) / 100) != -1)
 			{
 				bValid = true;
 			}
@@ -10973,7 +10973,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 		}
 		case UNITAI_DEFENSE_AIR:
 		{
-			if (kUnitInfo.getInterceptionProbability() > 0)
+			if (kUnitInfo.getAir(AIR_INTERCEPT, CASC_SCOPE_UNIT) > 0)
 			{
 				bValid = true;
 			}
@@ -10981,7 +10981,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 		}
 		case UNITAI_CARRIER_AIR:
 		{
-			if (kUnitInfo.getAirCombat() > 0 && kUnitInfo.getInterceptionProbability() > 0)
+			if (kUnitInfo.getAirCombat() > 0 && kUnitInfo.getAir(AIR_INTERCEPT, CASC_SCOPE_UNIT) > 0)
 			{
 				bValid = true;
 			}
@@ -11374,9 +11374,9 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 				iValue += ((iCombatValue * ((kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100) - 1)) / 4);  //Calvitix /2
 				iValue += ((iCombatValue * kUnitInfo.getScalar(SCALAR_WITHDRAWAL, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT)) / 100);
 
-				if (kUnitInfo.getInterceptionProbability() > 0)
+				if (kUnitInfo.getAir(AIR_INTERCEPT, CASC_SCOPE_UNIT) > 0)
 				{
-					int iTempValue = kUnitInfo.getInterceptionProbability();
+					int iTempValue = kUnitInfo.getAir(AIR_INTERCEPT, CASC_SCOPE_UNIT);
 
 					iTempValue *= 25 + std::min(175, GET_TEAM(getTeam()).AI_getRivalAirPower());
 					iTempValue /= 100;
@@ -11499,9 +11499,9 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 					iValue += ((iCombatValue * 50) / 100);
 				}
 
-				if (kUnitInfo.getInterceptionProbability() > 0)
+				if (kUnitInfo.getAir(AIR_INTERCEPT, CASC_SCOPE_UNIT) > 0)
 				{
-					int iTempValue = kUnitInfo.getInterceptionProbability();
+					int iTempValue = kUnitInfo.getAir(AIR_INTERCEPT, CASC_SCOPE_UNIT);
 
 					iTempValue *= 25 + std::min(125, GET_TEAM(getTeam()).AI_getRivalAirPower());
 					iTempValue /= 50;
@@ -11596,18 +11596,18 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 			}
 			case UNITAI_ICBM:
 			{
-				if (kUnitInfo.getNukeRange() != -1)
+				if ((kUnitInfo.getAir(AIR_NUKE_RANGE, CASC_SCOPE_UNIT) / 100) != -1)
 				{
-					int iTempValue = 40 + (kUnitInfo.getNukeRange() * 40);
-					if (kUnitInfo.getAirRange() == 0)
+					int iTempValue = 40 + ((kUnitInfo.getAir(AIR_NUKE_RANGE, CASC_SCOPE_UNIT) / 100) * 40);
+					if ((kUnitInfo.getAir(AIR_RANGE, CASC_SCOPE_UNIT) / 100) == 0)
 					{
 						iValue += iTempValue;
 					}
 					else
 					{
-						iValue += (iTempValue * std::min(10, kUnitInfo.getAirRange())) / 10;
+						iValue += (iTempValue * std::min(10, (kUnitInfo.getAir(AIR_RANGE, CASC_SCOPE_UNIT) / 100))) / 10;
 					}
-					iValue += (iTempValue * (60 + kUnitInfo.getEvasionProbability())) / 100;
+					iValue += (iTempValue * (60 + kUnitInfo.getAir(AIR_EVASION, CASC_SCOPE_UNIT))) / 100;
 				}
 				break;
 			}
@@ -11634,7 +11634,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 			{
 				iValue += iCombatValue;
 				iValue += iCombatValue * ((kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100) - 1) / 4;
-				iValue += kUnitInfo.getInterceptionProbability() * 3;
+				iValue += kUnitInfo.getAir(AIR_INTERCEPT, CASC_SCOPE_UNIT) * 3;
 				if (kUnitInfo.getNumSeeInvisibleTypes() > 0)
 				{
 					iValue += 200;
@@ -11704,28 +11704,28 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 				iValue += iCombatValue;
 				iValue += (kUnitInfo.getCollateralModifier(COLLATERAL_DAMAGE, CASC_SCOPE_UNIT) * iCombatValue) / 100;
 				iValue += 4 * kUnitInfo.getFlatBombard(BOMBARD_AIR_BOMB_RATE, CASC_SCOPE_UNIT) / 100;
-				iValue += (iCombatValue * (100 + 2 * kUnitInfo.getCollateralModifier(COLLATERAL_DAMAGE, CASC_SCOPE_UNIT)) * kUnitInfo.getAirRange()) / 100;
+				iValue += (iCombatValue * (100 + 2 * kUnitInfo.getCollateralModifier(COLLATERAL_DAMAGE, CASC_SCOPE_UNIT)) * (kUnitInfo.getAir(AIR_RANGE, CASC_SCOPE_UNIT) / 100)) / 100;
 				break;
 			}
 			case UNITAI_DEFENSE_AIR:
 			{
 				iValue += iCombatValue;
-				iValue += (kUnitInfo.getInterceptionProbability() * 3);
-				iValue += (kUnitInfo.getAirRange() * iCombatValue);
+				iValue += (kUnitInfo.getAir(AIR_INTERCEPT, CASC_SCOPE_UNIT) * 3);
+				iValue += ((kUnitInfo.getAir(AIR_RANGE, CASC_SCOPE_UNIT) / 100) * iCombatValue);
 				break;
 			}
 			case UNITAI_CARRIER_AIR:
 			{
 				iValue += (iCombatValue);
-				iValue += (kUnitInfo.getInterceptionProbability() * 2);
-				iValue += (kUnitInfo.getAirRange() * iCombatValue);
+				iValue += (kUnitInfo.getAir(AIR_INTERCEPT, CASC_SCOPE_UNIT) * 2);
+				iValue += ((kUnitInfo.getAir(AIR_RANGE, CASC_SCOPE_UNIT) / 100) * iCombatValue);
 				break;
 			}
 			case UNITAI_MISSILE_AIR:
 			{
 				iValue += iCombatValue;
 				iValue += 4 * kUnitInfo.getFlatBombard(BOMBARD_AIR_BOMB_RATE, CASC_SCOPE_UNIT) / 100;
-				iValue += kUnitInfo.getAirRange() * iCombatValue;
+				iValue += (kUnitInfo.getAir(AIR_RANGE, CASC_SCOPE_UNIT) / 100) * iCombatValue;
 				break;
 			}
 			case UNITAI_INVESTIGATOR:
@@ -22446,7 +22446,7 @@ int CvPlayerAI::AI_getStrategyHash() const
 			// Mobile anti-air and artillery flags only meant for land units
 			if (CvTagReads::isDomain(unit.getTags(), DOMAIN_LAND) && iMoves > 1)
 			{
-				if (unit.getInterceptionProbability() > 25)
+				if (unit.getAir(AIR_INTERCEPT, CASC_SCOPE_UNIT) > 25)
 				{
 					bHasMobileAntiair = true;
 				}
@@ -22455,12 +22455,12 @@ int CvPlayerAI::AI_getStrategyHash() const
 					bHasMobileArtillery = true;
 				}
 			}
-			if (unit.getAirRange() > 1 && !unit.isSuicide()
+			if ((unit.getAir(AIR_RANGE, CASC_SCOPE_UNIT) / 100) > 1 && !unit.isSuicide()
 			&& unit.getFlatBombard(BOMBARD_AIR_BOMB_RATE, CASC_SCOPE_UNIT) / 100 > 10 && unit.getAirCombat() > 0)
 			{
 				bHasBomber = true;
 			}
-			if (unit.getNukeRange() > 0)
+			if ((unit.getAir(AIR_NUKE_RANGE, CASC_SCOPE_UNIT) / 100) > 0)
 			{
 				iNukeCount++;
 			}
@@ -27069,7 +27069,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		//Security
 		iValue += kPromotion.getFlatVision(VISION_STRENGTH, CASC_SCOPE_UNIT) * 10 / VISION_OPEN_GROUND_COST;
 		//Lean towards more security if security is already present
-		iValue += (kPromotion.getInterceptChange() + (pUnit == NULL ? kUnit.getInterceptionProbability() : pUnit->currInterceptionProbability()));
+		iValue += (kPromotion.getInterceptChange() + (pUnit == NULL ? kUnit.getAir(AIR_INTERCEPT, CASC_SCOPE_UNIT) : pUnit->currInterceptionProbability()));
 		//total 20, 30, 40 points
 
 		//Escape
@@ -30535,7 +30535,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		//Security
 		iValue += kUnitCombat.getFlatVision(VISION_STRENGTH, CASC_SCOPE_UNIT) * 10 / VISION_OPEN_GROUND_COST;
 		//Lean towards more security if security is already present
-		iValue += (kUnitCombat.getInterceptChange() + (pUnit == NULL ? kUnit.getInterceptionProbability() : pUnit->currInterceptionProbability()));
+		iValue += (kUnitCombat.getInterceptChange() + (pUnit == NULL ? kUnit.getAir(AIR_INTERCEPT, CASC_SCOPE_UNIT) : pUnit->currInterceptionProbability()));
 		//total 20, 30, 40 points
 
 		//Escape

@@ -5613,7 +5613,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 							iAllowedUnitsValue += 10;
 							break;
 						case UNITAI_ICBM:
-							iAllowedUnitsValue += (kUnit.getNukeRange() != -1 ? kUnit.getNukeRange() * 50 : 0);
+							iAllowedUnitsValue += ((kUnit.getAir(AIR_NUKE_RANGE, CASC_SCOPE_UNIT) / 100) != -1 ? (kUnit.getAir(AIR_NUKE_RANGE, CASC_SCOPE_UNIT) / 100) * 50 : 0);
 							break;
 						}
 						if (bWarPlan)
