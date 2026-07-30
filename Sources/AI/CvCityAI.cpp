@@ -1,6 +1,7 @@
 // cityAI.cpp
 
 #include "CvGameCoreDLL.h"
+#include "Infos/CvTagReads.h"   // the ONE shared unit-TAG read surface (the domain view; tags.md)
 #include "Engine/CvGameSpeedScale.h"
 #include "BetterBTSAI.h"
 
@@ -5648,7 +5649,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 					UnitCombatTypes eCombatType = (UnitCombatTypes)kUnitInfo.getCombatClass();
 
 					if (eCombatType != NO_UNITCOMBAT
-						&& kUnitInfo.getDomainType() == DOMAIN_SEA)
+						&& CvTagReads::isDomain(kUnitInfo.getTags(), DOMAIN_SEA))
 					{
 						iValue += ((InfoValuation::keyedTarget(kBuilding.getModifiers(), MODFAM_EXPERIENCE, -1,
 							InfoValuation::keyedTargetSegment("unitCombats"), (int)eCombatType) / 100) * (bMetAnyCiv ? 6 : 3));
@@ -6025,7 +6026,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 					{
 						const int iModifier = modifier.second;
 						const UnitAITypes eUnitAI = GC.getUnitInfo(eLoopUnit).getDefaultUnitAI();
-						const UnitTypes eBestUnit = kOwner.bestBuildableUnitForAIType(GC.getUnitInfo(eLoopUnit).getDomainType(), eUnitAI);
+						const UnitTypes eBestUnit = kOwner.bestBuildableUnitForAIType(CvTagReads::domainOf(GC.getUnitInfo(eLoopUnit).getTags()), eUnitAI);
 
 						int iBuildCost = 0;
 						if (eBestUnit == NO_UNIT)
@@ -8490,7 +8491,7 @@ void CvCityAI::AI_doHurry(bool bForce)
 			if (bDanger)
 			{
 				if (
-					GC.getUnitInfo(eProductionUnit).getDomainType() == DOMAIN_LAND
+					CvTagReads::isDomain(GC.getUnitInfo(eProductionUnit).getTags(), DOMAIN_LAND)
 				&&	(GC.getUnitInfo(eProductionUnit).getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) > 0)
 				{
 					bEssential = true;

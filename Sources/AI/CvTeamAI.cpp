@@ -4,6 +4,7 @@
 #include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
+#include "Infos/CvTagReads.h"   // the ONE shared unit-TAG read surface (the domain view; tags.md)
 #include "BetterBTSAI.h"
 #include "Engine/CvArea.h"
 #include "CvBuildingInfo.h"
@@ -2165,7 +2166,7 @@ int CvTeamAI::AI_getRivalAirPower( ) const
 	{
 		const CvUnitInfo& kUnit = GC.getUnitInfo((UnitTypes)iI);
 
-		if (kUnit.getDomainType() == DOMAIN_AIR && kUnit.getAirCombat() > 0)
+		if (CvTagReads::isDomain(kUnit.getTags(), DOMAIN_AIR) && kUnit.getAirCombat() > 0)
 		{
 			for(int iTeamX = 0; iTeamX < MAX_PC_TEAMS; iTeamX++)
 			{

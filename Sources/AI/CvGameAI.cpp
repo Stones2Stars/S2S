@@ -1,5 +1,6 @@
 // gameAI.cpp
 #include "CvGameCoreDLL.h"
+#include "Infos/CvTagReads.h"   // the ONE shared unit-TAG read surface (the domain view; tags.md)
 
 #include "Tools/FProfiler.h"
 
@@ -85,7 +86,7 @@ int CvGameAI::AI_combatValue(const UnitTypes eUnit) const
 	int iValue = 100;
 	const CvUnitInfo& unit = GC.getUnitInfo(eUnit);
 
-	if (unit.getDomainType() == DOMAIN_AIR)
+	if (CvTagReads::isDomain(unit.getTags(), DOMAIN_AIR))
 	{
 		iValue *= unit.getAirCombat();
 	}

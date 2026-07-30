@@ -2,6 +2,7 @@
 
 #include "CvGameCoreDLL.h"
 #include "Infos/CvSkillReads.h"   // the ONE shared surface for the json.md §8 skill reads
+#include "Infos/CvTagReads.h"   // the ONE shared unit-TAG read surface (the domain view; tags.md)
 
 #include "Data/CvInfoValuation.h"   // InfoValuation::collectHealByUnitCombat + HealByUnitCombat
 #include "Engine/CvGameSpeedScale.h"
@@ -244,7 +245,7 @@ static bool shouldAvoidLowOddsRiverAttack(const CvUnitAI& kAttacker, const CvPlo
 	{
 		return false;
 	}
-	if (kAttacker.getDomainType() != DOMAIN_LAND || kAttacker.isRiver())
+	if (!CvTagReads::isDomain(kAttacker.getTags(), DOMAIN_LAND) || kAttacker.isRiver())
 	{
 		return false;
 	}
@@ -22799,7 +22800,7 @@ bool CvUnitAI::AI_pickup(UnitAITypes eUnitAI, bool bCountProduction, int iMaxPat
 						if (pCity->getProductionTurnsLeft() < 4)
 						{
 							const CvUnitInfo& kUnitInfo = GC.getUnitInfo(pCity->getProductionUnit());
-							if ((kUnitInfo.getDomainType() != DOMAIN_AIR) || (kUnitInfo.getAir(AIR_RANGE, CASC_SCOPE_UNIT) / 100) > 0)
+							if ((!CvTagReads::isDomain(kUnitInfo.getTags(), DOMAIN_AIR)) || (kUnitInfo.getAir(AIR_RANGE, CASC_SCOPE_UNIT) / 100) > 0)
 							{
 								iCount++;
 							}
@@ -22883,7 +22884,7 @@ bool CvUnitAI::AI_pickup(UnitAITypes eUnitAI, bool bCountProduction, int iMaxPat
 					if (bCountProduction && (pLoopCity->getProductionUnitAI() == eUnitAI))
 					{
 						const CvUnitInfo& kUnitInfo = GC.getUnitInfo(pLoopCity->getProductionUnit());
-						if ((kUnitInfo.getDomainType() != DOMAIN_AIR) || (kUnitInfo.getAir(AIR_RANGE, CASC_SCOPE_UNIT) / 100) > 0)
+						if ((!CvTagReads::isDomain(kUnitInfo.getTags(), DOMAIN_AIR)) || (kUnitInfo.getAir(AIR_RANGE, CASC_SCOPE_UNIT) / 100) > 0)
 						{
 							iValue++;
 							iCount++;
