@@ -28330,9 +28330,18 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 				if ((eFlags & UNITVALUE_FLAGS_DEFENSIVE) != 0)
 				{
 					//	Terrain defense
-					for (int iJ = 0; iJ < GC.getNumTerrainInfos(); iJ++)
+					// The promotion's OWN authored rows, not the TerrainTypes registry: a keyed read walks what the
+					// entity authored ([DEC-single-implementation]; the own-data inversion pedia-read-map finding 2
+					// names). The body is unchanged -- iJ still names the target.
+					std::vector<std::pair<int, int> > kTerrainDefense;
+					InfoValuation::collectKeyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_TERRAIN,
+						COMBAT_DEFENSE, kTerrainDefense);
+					for (size_t iRow = 0; iRow < kTerrainDefense.size(); ++iRow)
 					{
-						if (InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_TERRAIN, (TerrainTypes)iJ, COMBAT_DEFENSE) != 0)
+						const int iJ = kTerrainDefense[iRow].first;
+						// A collected row can still SUM to zero (opposing entries on one target), so the guard the
+						// registry sweep used is kept -- it just no longer doubles as the "did it author this" test.
+						if (kTerrainDefense[iRow].second != 0)
 						{
 							int iNumRevealedAreaTiles = std::max(1, area()->getNumRevealedTiles(getTeam()));
 							int	iNumRevealedAreaThisTerrain = area()->getNumRevealedTerrainTiles(getTeam(), (TerrainTypes)iJ);
@@ -28347,9 +28356,18 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 						}
 					}
 					//	Feature defense
-					for (int iJ = 0; iJ < GC.getNumFeatureInfos(); iJ++)
+					// The promotion's OWN authored rows, not the FeatureTypes registry: a keyed read walks what the
+					// entity authored ([DEC-single-implementation]; the own-data inversion pedia-read-map finding 2
+					// names). The body is unchanged -- iJ still names the target.
+					std::vector<std::pair<int, int> > kFeatureDefense;
+					InfoValuation::collectKeyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_FEATURE,
+						COMBAT_DEFENSE, kFeatureDefense);
+					for (size_t iRow = 0; iRow < kFeatureDefense.size(); ++iRow)
 					{
-						if (InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_FEATURE, (FeatureTypes)iJ, COMBAT_DEFENSE) != 0)
+						const int iJ = kFeatureDefense[iRow].first;
+						// A collected row can still SUM to zero (opposing entries on one target), so the guard the
+						// registry sweep used is kept -- it just no longer doubles as the "did it author this" test.
+						if (kFeatureDefense[iRow].second != 0)
 						{
 							int iNumRevealedAreaTiles = std::max(1, area()->getNumRevealedTiles(getTeam()));
 							int	iNumRevealedAreaThisFeature = area()->getNumRevealedFeatureTiles(getTeam(), (FeatureTypes)iJ);
@@ -28478,9 +28496,18 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 					}
 
 					//	Terrain attack
-					for (int iJ = 0; iJ < GC.getNumTerrainInfos(); iJ++)
+					// The promotion's OWN authored rows, not the TerrainTypes registry: a keyed read walks what the
+					// entity authored ([DEC-single-implementation]; the own-data inversion pedia-read-map finding 2
+					// names). The body is unchanged -- iJ still names the target.
+					std::vector<std::pair<int, int> > kTerrainAttack;
+					InfoValuation::collectKeyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_TERRAIN,
+						COMBAT_ATTACK, kTerrainAttack);
+					for (size_t iRow = 0; iRow < kTerrainAttack.size(); ++iRow)
 					{
-						if (InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_TERRAIN, (TerrainTypes)iJ, COMBAT_ATTACK) != 0)
+						const int iJ = kTerrainAttack[iRow].first;
+						// A collected row can still SUM to zero (opposing entries on one target), so the guard the
+						// registry sweep used is kept -- it just no longer doubles as the "did it author this" test.
+						if (kTerrainAttack[iRow].second != 0)
 						{
 							int iNumRevealedAreaTiles = std::max(1, area()->getNumRevealedTiles(getTeam()));
 							int	iNumRevealedAreaThisTerrain = area()->getNumRevealedTerrainTiles(getTeam(), (TerrainTypes)iJ);
@@ -28497,9 +28524,18 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 						}
 					}
 					//	Feature attack
-					for (int iJ = 0; iJ < GC.getNumFeatureInfos(); iJ++)
+					// The promotion's OWN authored rows, not the FeatureTypes registry: a keyed read walks what the
+					// entity authored ([DEC-single-implementation]; the own-data inversion pedia-read-map finding 2
+					// names). The body is unchanged -- iJ still names the target.
+					std::vector<std::pair<int, int> > kFeatureAttack;
+					InfoValuation::collectKeyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_FEATURE,
+						COMBAT_ATTACK, kFeatureAttack);
+					for (size_t iRow = 0; iRow < kFeatureAttack.size(); ++iRow)
 					{
-						if (InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_FEATURE, (FeatureTypes)iJ, COMBAT_ATTACK) != 0)
+						const int iJ = kFeatureAttack[iRow].first;
+						// A collected row can still SUM to zero (opposing entries on one target), so the guard the
+						// registry sweep used is kept -- it just no longer doubles as the "did it author this" test.
+						if (kFeatureAttack[iRow].second != 0)
 						{
 							int iNumRevealedAreaTiles = std::max(1, area()->getNumRevealedTiles(getTeam()));
 							int	iNumRevealedAreaThisFeature = area()->getNumRevealedFeatureTiles(getTeam(), (FeatureTypes)iJ);
