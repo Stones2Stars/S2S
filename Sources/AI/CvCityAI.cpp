@@ -11926,7 +11926,7 @@ bool CvCityAI::AI_trainInquisitor()
 	for (std::vector<int>::const_iterator it = vecTrainable.begin(), itEnd = vecTrainable.end(); it != itEnd; ++it)
 	{
 		const UnitTypes eUnit = (UnitTypes)*it;
-		if (GC.getUnitInfo(eUnit).isInquisitor()
+		if (CvSkillReads::inquisitor(GC.getUnitInfo(eUnit).getSkills())
 			&& GC.getUnitInfo(eUnit).getProductionCost() < iUnitCost)
 		{
 			eBestUnit = eUnit;
@@ -13761,7 +13761,7 @@ bool CvCityAI::AI_meetsUnitSelectionCriteria(UnitTypes eUnit, const CvUnitSelect
 		{
 			const CvUnitInfo& kUnitInfo = GC.getUnitInfo(eUnit);
 
-			if (kUnitInfo.isFound())
+			if (CvSkillReads::found(kUnitInfo.getSkills()))
 			{
 				return false;
 			}

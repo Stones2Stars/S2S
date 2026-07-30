@@ -52,7 +52,13 @@ public:
 	static bool ignoreBuildingDefense(const CvClassificationBlock* skills);
 	static bool ignoreNoEntryLevel(const CvClassificationBlock* skills);
 	static bool ignoreZoneOfControl(const CvClassificationBlock* skills);
+	// ⚠ Answers BOTH authored spellings of the one skill (`firstStrikeImmune` / `immuneToFirstStrikes`,
+	// [skills.md] §1) -- see the definition; a consumer asks the question, never a spelling.
 	static bool immuneToFirstStrikes(const CvClassificationBlock* skills);
+	static bool noBadGoodies(const CvClassificationBlock* skills);
+	static bool noCapture(const CvClassificationBlock* skills);
+	static bool noDefensiveBonus(const CvClassificationBlock* skills);
+	static bool blendIntoCity(const CvClassificationBlock* skills);
 	static bool inquisitor(const CvClassificationBlock* skills);
 	static bool noNonOwnedCityEntry(const CvClassificationBlock* skills);
 	static bool noNonTypeProdMods(const CvClassificationBlock* skills);

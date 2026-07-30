@@ -41,7 +41,10 @@ SKILL_READ(hillsDoubleMove,        "hillsDoubleMove")
 SKILL_READ(ignoreBuildingDefense,  "ignoreBuildingDefense")
 SKILL_READ(ignoreNoEntryLevel,     "ignoreNoEntryLevel")
 SKILL_READ(ignoreZoneOfControl,    "ignoreZoneOfControl")
-SKILL_READ(immuneToFirstStrikes,   "immuneToFirstStrikes")
+SKILL_READ(noBadGoodies,           "noBadGoodies")
+SKILL_READ(noCapture,              "noCapture")
+SKILL_READ(noDefensiveBonus,       "noDefensiveBonus")
+SKILL_READ(blendIntoCity,          "blendIntoCity")
 SKILL_READ(inquisitor,             "inquisitor")
 SKILL_READ(noNonOwnedCityEntry,    "noNonOwnedCityEntry")
 SKILL_READ(noNonTypeProdMods,      "noNonTypeProdMods")
@@ -68,3 +71,21 @@ SKILL_READ(unlimitedException,     "unlimitedException")
 SKILL_READ(zoneOfControl,          "zoneOfControl")
 
 #undef SKILL_READ
+
+// ⚠ ONE skill, TWO authored spellings ([skills.md] §1 lists them as a single entry:
+// "firstStrikeImmune / immuneToFirstStrikes"). Both are live in the data, and the shorter spelling carries the
+// large majority, so a read of either alone answers false for most of the units that hold it. This is the ONE
+// place that knows about the pair ([DEC-single-implementation]); a consumer asks the question, not a spelling.
+// ⛔ Do NOT "simplify" this back to a single key until the curator emits one -- unifying the SPELLING is a data
+// change, and until it lands, dropping either half silently loses those authorings.
+bool CvSkillReads::immuneToFirstStrikes(const CvClassificationBlock* skills)
+{
+	static int s_idShort = -1;
+	static int s_idLong = -1;
+	if (skills == NULL)
+	{
+		return false;
+	}
+	return skills->hasKey(s_idShort, CLSD_SKILL, "firstStrikeImmune")
+		|| skills->hasKey(s_idLong, CLSD_SKILL, "immuneToFirstStrikes");
+}
