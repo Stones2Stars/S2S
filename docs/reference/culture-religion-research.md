@@ -8,6 +8,22 @@
 - **Accrual:** `doCulture` adds `getCommerceRateTimes100(CULTURE)` to `m_aiCulture[owner]`; `doPlotCulture` spreads
   to a Chebyshev square of radius `cultureLevel`, linear dropoff via `CITY_CULTURE_DENSITY_FACTOR` (min 1).
   Improvement culture radiates **flat** within `getCultureRange()`.
+  > **⛔ CULTURE IS 64-BIT, AND THE REASON IS A BUG THAT WAS LIVE IN SHIPPING SAVES (owner: late-game overflow is
+  > real).** City culture accumulates the ×100 rate every turn and **never decays**, so on a long game it wrapped
+  > `int`; plot culture only decays *proportionally*, so it settles at an equilibrium that scales with the city
+  > feeding it rather than being bounded. Both are `int64_t`, per-player, at both scopes
+  > ([fixed-point-and-scales.md §1b](../specs/curators/fixed-point-and-scales.md): an AMOUNT accumulates, so it
+  > carries 64 bits).
+  > ⚑ **It degraded SILENTLY, which is why it survived:** the getters carried `< 0 ? MAX_INT` guards that detected
+  > the wrap and saturated, so a pinned city kept returning a plausible number. Everything downstream then read a
+  > total that was not the total — `calculateCulturePercent`, `calculateCulturalOwner`, the level thresholds.
+  > ⚠ **CONSEQUENCE ON AN EXISTING SAVE (owner) — recorded so it is not mistaken for a regression:** a city that
+  > had pinned now reports its real culture, which shifts **tile ownership and revolt risk** the first time such a
+  > save is loaded. That is the fix landing ([validation.md](../specs/validation.md): an intentional divergence is
+  > named and shown, never a mystery).
+  > ⛔ The per-PLAYER dimension is load-bearing and is not a candidate for "simplifying" to one total: cultural
+  > OWNERSHIP is a contest, so every consumer asks how much culture a SPECIFIC player has here. A single number
+  > would say a place has culture without saying whose.
 - **Decay:** `max(0, culture·(1000−decayPermille)/1000)`, `decayPermille = TILE_CULTURE_DECAY_PERCENT·1000/speedPercent`;
   ×15 when the plot is out of any city's culture range; a value >1 cannot decay below 1.
 - **Ownership** (`calculateCulturalOwner`): keep the current owner when `hasFixedBorders() &&
