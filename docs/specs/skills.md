@@ -151,7 +151,6 @@ consuming code (high confidence unless noted), not general knowledge.
 | `offensiveVictoryMove` | expends a full move point after a successful attack |
 | `oneUp` | ❌ **DEAD?** — believed unused; possible entertainer city-revolt-reduction use (verify); else drop |
 | `onslaught` | can chain attacks in a turn after a no-damage kill while defenders remain |
-| `paralyze` | immobilises the unit — `CvUnit::processPromotion` calls `setImmobileTimer(1)` the moment the promotion is ADDED, and an EVENT is what grants it (owner). ⚠ **It is a SKILL today and the read is live**: the faking mechanism is a STATUS promotion, so the flag sits on the promotion and the engine acts on it. Its eventual home is the transient-[state](state.md) block, which is not built — so this is *"a state faked as a skill"*, **not a dead key**. ⛔ Nothing authors it (the legacy tag exists only in the SCHEMA), which is live-but-inert HEADROOM and never a reason to purge the read |
 | `pillageMarauder` | gains gold from pillaging / combat pillage |
 | `rBombardDirect` | (unit-combat) exempt from first-defender deprioritisation in ranged-bombard targeting |
 | `rBombardForceAbility` | lets a defensive-only unit still ranged-bombard (overrides `isOnlyDefensive`) |

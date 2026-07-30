@@ -61,7 +61,6 @@ public:
 	static bool oneUp(const CvClassificationBlock* skills);
 	static bool onlyDefensive(const CvClassificationBlock* skills);
 	static bool onslaught(const CvClassificationBlock* skills);
-	static bool paralyze(const CvClassificationBlock* skills);
 	static bool pillage(const CvClassificationBlock* skills);
 	static bool pillageEspionage(const CvClassificationBlock* skills);
 	static bool pillageMarauder(const CvClassificationBlock* skills);

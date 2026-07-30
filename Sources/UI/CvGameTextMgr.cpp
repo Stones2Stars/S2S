@@ -6833,7 +6833,7 @@ void CvGameTextMgr::parsePromotionHelpInternal(CvWStringBuffer &szBuffer, Promot
 		{
 			bIsOnslaughtChange = true;
 		}
-		if (CvSkillReads::paralyze(promoX.getSkills()))
+		if (promoX.isParalyze())
 		{
 			bIsParalyze = true;
 		}

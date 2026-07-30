@@ -46,7 +46,7 @@ of them.
 | **Provisions** | `grants` · `triggers` · `provides` | `grants` = pure payload on the source's considered action; `triggers` = trigger → chance → action (happening-fired / rolled / state-conditioned effects); `provides` = a continuous in-vicinity SUPPLY while active (e.g. a building or map bonus that makes a `BONUS_*` available in the city) |
 | **Effects** | every **modifier family** key (`food`, `production`, `happiness`, …, one per `PROPERTY_*`) | per-turn magnitudes this deposits onto targets |
 | **Intrinsic** ("what am I") | `identity` (incl. all TEXT) · `cost` · `ui` · `world` · `sound` · `ai` | empire-agnostic self-description, art, audio, AI metadata |
-| **Classification** | `skills` (UNIT, mutable abilities) · `tags` (UNIT, immutable type membership) · `state` (UNIT, transient) · `attributes` (BUILDING, what the building itself is/does) · `amenities` (CITY-held, grantor-provided) · `characteristics` (PLOT SUBSTRATE, held plot-scope intrinsics) · `capabilities` (TEAM, grantor-provided) | §8 — the classification model; scope carried by the section name |
+| **Classification** | `skills` (UNIT, mutable abilities) · `tags` (UNIT, immutable type membership) · `status` (UNIT, a per-turn counter -- applied, ticks down, over) · `attributes` (BUILDING, what the building itself is/does) · `amenities` (CITY-held, grantor-provided) · `characteristics` (PLOT SUBSTRATE, held plot-scope intrinsics) · `capabilities` (TEAM, grantor-provided) | §8 — the classification model; scope carried by the section name |
 | **Applicability** | entity-level `enabled` · `disabled` | the whole entity applies only while `enabled` holds and `disabled` does not (the §3.9 pair at entity level) — the canonical whole-entity game-option gate: `"enabled": "GAMEOPTION_X"` |
 | **Auxiliary / bespoke** | `policies` · `succession` · `excludes` · `produces` · `condition` · `effect` · `outcomes` · `mapGeneration` · `replacedBy` · `promotionLine` · `buildUp` · `shrine` · `headquarters` · `properties` · `voteSource` · `threshold` · `role` · `victory` · `targetLevel` · `conversion` · `cityFounding` · `unitCapability` · `canTrade` (tech → the trade-table/deal system: tradeable items + agreements — `techs`/`openBorders`/`rightOfPassage`/`embassy`/`bonuses`/…) · `canTradeOn` (tech → trade-route system; terrain refs) · `canWorkOn` (tech → the city `canWork` gate; workable plot classes — `water`/`peaks`/…) — all three [capabilities.md](capabilities.md) | data read by their own systems, not the cascade |
 
@@ -855,6 +855,24 @@ distinction is load-bearing**, and it runs in three directions: `attributes` are
 `capabilities` are what it *hands to the empire*, and `amenities` (below) are what it *hands to its own city*. So
 `destroyedOnCapture` is an `attribute` (a fact about the building), `setCultureRate` is a `capability` (handed to
 the empire), and `nukeImmune` is an `amenity` (it makes the CITY immune — the building is not the thing protected).
+
+> **⚖ A UNIT CARRIES `status`, AND A STATUS IS A PER-TURN COUNTER (owner).** It is **a specific counter that gets
+> DECREMENTED EVERY TURN** — applied to the unit, ticking down, and over when it reaches zero. That is the whole
+> of what separates it from the unit's other blocks.
+> ⚑ **So it is an id→COUNT like a city's `amenities`, but the COUNT MEANS SOMETHING ELSE, and the difference is
+> the model:** an amenity's count is a REFCOUNT of live grantors (it moves when a grantor is added or repealed,
+> which is what events do to it), while a status's count is **TURNS REMAINING** and moves on its own, every
+> turn, with no grantor involved after the moment it was applied. ⛔ Do not fold the two onto one mechanism on
+> the strength of both being id→COUNT: one expires, the other is held.
+> ⚑ **The READ is therefore the ordinary `ContextDict` one (owner): the status HOLDS while its value is above
+> zero** — `hasStatus(id)` ≡ `count > 0` ([contexts.md](../architecture/contexts.md)), so nothing needs a
+> separate present/absent plane beside the counter. Expiry is the counter reaching 0, not a second fact.
+> ⛔ A status is emphatically **NOT a [skill](skills.md)**: a skill is an ability the unit HAS, a status is a
+> condition something PUT ON it, for a number of turns.
+> ⚑ The worked case is **`paralyze`** (immobilises the unit — `setImmobileTimer`), applied by an EVENT through a
+> status pseudo-promotion: the promotion is the DELIVERY mechanism, never the holder, so the flag must never
+> land in a `skills` block. ⚠ It has been mis-filed as a skill more than once, so the curator no longer maps it
+> — an unmapped tag reports LOUDLY rather than emitting into the wrong block. Glossary: [state.md](state.md).
 
 A **CITY** has its own **`amenities`** block — the **city-HELD, grantor-PROVIDED** counterpart, standing to the
 city exactly as `capabilities` stands to the empire. The hold-vs-provide axis otherwise stops one scope short:

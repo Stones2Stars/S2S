@@ -43,7 +43,10 @@
 - Retire the legacy `largestCity` member once ranked-target-selection EVALUATION lands.
 - Re-home `stronglyRestricted` to a `requires.build` civ-membership gate, when NPC civilizations are wired.
 - Move corp-HQ revenue (`HeadquarterCommerces`) with the corporation rework.
-- Move `paralyze` to the `state` block, once the greenfield `state` model is BUILT ([state.md](../../specs/state.md)).
+- Build the unit `status` block — a per-turn counter, applied then ticking down
+  ([json.md §8](../../specs/json.md) · [state.md](../../specs/state.md)). `paralyze` is its first member and its
+  reads (`CvUnit::processPromotion`'s immobilise, the promotion help line) DANGLE until it exists — that is the
+  census naming the missing machine, not debt to paper over with a skill.
 - Map the flagged unitcombat remainder — map the obvious, flag the unsure, never blunt-purge
   ([unitcombat-tag-mapping.md](unitcombat-tag-mapping.md)).
 

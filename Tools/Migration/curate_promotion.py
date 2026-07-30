@@ -165,7 +165,10 @@ CAP_BOOL = {
     # promotion grants the unit SKILL; TECH_MOUNTAINEERING grants the empire CAPABILITY under the SAME name.
     "bPillageResearch": "pillageResearch", "bCanMovePeaks": "canPassPeaks",
     "bCanLeadThroughPeaks": "canLeadThroughPeaks", "bZoneOfControl": "zoneOfControl",
-    "bOnslaughtChange": "onslaught", "bParalyze": "paralyze", "bNoSelfHeal": "noSelfHeal",
+    "bOnslaughtChange": "onslaught", "bNoSelfHeal": "noSelfHeal",
+    # bParalyze is NOT a skill -- paralyze is a unit STATUS (json.md par.8), so it must never land in
+    # `skills`. It has no emit home until the status block exists; unmapped, it reports as an
+    # UNHANDLED tag, which is the loud outcome we want if a promotion ever authors one.
 }
 # grant/revoke pairs -> name: true (Add/grant) or false (Subtract/Remove).
 CAP_PAIR = {
