@@ -1365,7 +1365,7 @@ bool CvUnit::scheduleDeath(bool bDelay, PlayerTypes ePlayer, bool bMessaged)
 		{
 			CvEventReporter::getInstance().unitKilled(this, ePlayer);
 
-			if (NO_UNIT != getLeaderUnitType() || GC.getUnitInfo(getUnitType()).getMaxGlobalInstances() == 1)
+			if (NO_UNIT != getLeaderUnitType() || GC.getUnitInfo(getUnitType()).getAllowed()->cap(ALLOWEDCAP_WORLD) == 1)
 			{
 				for (int iI = 0; iI < MAX_PC_PLAYERS; iI++)
 				{

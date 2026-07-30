@@ -14294,7 +14294,7 @@ namespace {
 	bool isLegendary(const CvUnit* unit)
 	{
 		const CvUnitInfo& unitInfo = GC.getUnitInfo(unit->getUnitType());
-		return (unitInfo.getMaxGlobalInstances() > 0 && unitInfo.getMaxGlobalInstances() <= 3)
+		return (unitInfo.getAllowed()->cap(ALLOWEDCAP_WORLD) > 0 && unitInfo.getAllowed()->cap(ALLOWEDCAP_WORLD) <= 3)
 			|| (GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS) && unit->qualityRank() > 8);
 	}
 }
@@ -14324,7 +14324,7 @@ bool CvUnitAI::AI_leadLegend()
 			iCombatStrength *= 10 + (pLoopUnit->getExperience() * 2);
 			iCombatStrength /= 15;
 
-			iCombatStrength *= 10 - GC.getUnitInfo(pLoopUnit->getUnitType()).getMaxGlobalInstances();
+			iCombatStrength *= 10 - GC.getUnitInfo(pLoopUnit->getUnitType()).getAllowed()->cap(ALLOWEDCAP_WORLD);
 			iCombatStrength /= 3;
 
 			if (iCombatStrength > iBestStrength)
@@ -14409,8 +14409,8 @@ bool CvUnitAI::AI_lead(std::vector<UnitAITypes>& aeUnitAITypes)
 			bool bValid = false;
 			bool bLegend = false;
 
-			if (GC.getUnitInfo(pLoopUnit->getUnitType()).getMaxGlobalInstances() > 0
-			&& GC.getUnitInfo(pLoopUnit->getUnitType()).getMaxGlobalInstances() < 7)
+			if (GC.getUnitInfo(pLoopUnit->getUnitType()).getAllowed()->cap(ALLOWEDCAP_WORLD) > 0
+			&& GC.getUnitInfo(pLoopUnit->getUnitType()).getAllowed()->cap(ALLOWEDCAP_WORLD) < 7)
 			{
 				if (canLead(pLoopUnit->plot(), pLoopUnit->getID()) > 0)
 				{
@@ -14451,7 +14451,7 @@ bool CvUnitAI::AI_lead(std::vector<UnitAITypes>& aeUnitAITypes)
 
 								if (bLegend)
 								{
-									iCombatStrength *= 10 - GC.getUnitInfo(pLoopUnit->getUnitType()).getMaxGlobalInstances();
+									iCombatStrength *= 10 - GC.getUnitInfo(pLoopUnit->getUnitType()).getAllowed()->cap(ALLOWEDCAP_WORLD);
 									iCombatStrength /= 3;
 								}
 

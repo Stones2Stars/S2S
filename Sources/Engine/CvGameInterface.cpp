@@ -2651,7 +2651,7 @@ void CvGame::cheatSpaceship() const
 			}
 
 			//cheat one space component
-			if (kTeam.getProjectCount(eProject) < kProject.getMaxTeamInstances())
+			if (kTeam.getProjectCount(eProject) < kProject.getAllowed()->cap(ALLOWEDCAP_TEAM))
 			{
 				kTeam.changeProjectCount(eProject, 1);
 

@@ -13017,7 +13017,7 @@ bool CvPlayer::isUnitMaxedOut(const UnitTypes eIndex, const int iExtra) const
 		return false;
 	}
 	// NB: the national-unit cap is ERA-SCALED below (iMaxUnits), so a stale assert against the
-	// raw getMaxPlayerInstances() base wrongly fired thousands of times per turn (e.g. 7 assassins
+	// raw getAllowed()->cap(ALLOWEDCAP_EMPIRE) base wrongly fired thousands of times per turn (e.g. 7 assassins
 	// vs base 5 in a later era where the real cap is >=15). The meaningful check is against the
 	// scaled cap and lives just before the return.
 
@@ -13025,7 +13025,7 @@ bool CvPlayer::isUnitMaxedOut(const UnitTypes eIndex, const int iExtra) const
 //    this scale will be used for national units only... the idea is to start them 5 at prehistoric and scale by 5 per age...
 //     as an alternative to the 10% per unit cost increase but unlimited
 //     might have to use separate indicator but this will do for now for testing purposes
-   int iMaxUnits = GC.getUnitInfo(eIndex).getMaxPlayerInstances();
+   int iMaxUnits = GC.getUnitInfo(eIndex).getAllowed()->cap(ALLOWEDCAP_EMPIRE);
 
    if (iMaxUnits == 5)
    {
@@ -13287,16 +13287,16 @@ bool CvPlayer::isBuildingMaxedOut(BuildingTypes eIndex, int iExtra) const
 		return false;
 	}
 
-	FAssertMsg(getBuildingCount(eIndex) <= (GC.getBuildingInfo(eIndex).getMaxPlayerInstances() + GC.getBuildingInfo(eIndex).getExtraPlayerInstances()),
+	FAssertMsg(getBuildingCount(eIndex) <= (GC.getBuildingInfo(eIndex).getAllowed()->cap(ALLOWEDCAP_EMPIRE) + GC.getBuildingInfo(eIndex).getExtraPlayerInstances()),
 		CvString::format("BuildingCount for %s is expected to be less than or match the number of max player instances plus extra player instances (%d <= %d + %d)",
 			GC.getBuildingInfo(eIndex).getType(),
 			getBuildingCount(eIndex),
-			GC.getBuildingInfo(eIndex).getMaxPlayerInstances(),
+			GC.getBuildingInfo(eIndex).getAllowed()->cap(ALLOWEDCAP_EMPIRE),
 			GC.getBuildingInfo(eIndex).getExtraPlayerInstances()
 		).c_str()
 	);
 
-	return ((getBuildingCount(eIndex) + iExtra) >= (GC.getBuildingInfo(eIndex).getMaxPlayerInstances() + GC.getBuildingInfo(eIndex).getExtraPlayerInstances()));
+	return ((getBuildingCount(eIndex) + iExtra) >= (GC.getBuildingInfo(eIndex).getAllowed()->cap(ALLOWEDCAP_EMPIRE) + GC.getBuildingInfo(eIndex).getExtraPlayerInstances()));
 }
 
 bool CvPlayer::isBuildingGroupMaxedOut(SpecialBuildingTypes eIndex, int iExtra) const

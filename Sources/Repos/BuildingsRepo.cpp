@@ -42,7 +42,7 @@ void BuildingsRepo::rebuild()
 		{
 			m_byReligion[iReligion].push_back((BuildingTypes)iI);
 		}
-		if (kBuilding.getMaxGlobalInstances() != -1)
+		if (kBuilding.getAllowed()->cap(ALLOWEDCAP_WORLD) != -1)
 		{
 			m_worldWonders.push_back((BuildingTypes)iI);
 		}

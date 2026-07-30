@@ -4204,9 +4204,9 @@ bool CvTeam::isProjectMaxedOut(ProjectTypes eIndex, int iExtra) const
 		return false;
 	}
 
-	FAssertMsg(getProjectCount(eIndex) <= GC.getProjectInfo(eIndex).getMaxTeamInstances(), "Current Project count is expected to not exceed the maximum number of instances for this project");
+	FAssertMsg(getProjectCount(eIndex) <= GC.getProjectInfo(eIndex).getAllowed()->cap(ALLOWEDCAP_TEAM), "Current Project count is expected to not exceed the maximum number of instances for this project");
 
-	return ((getProjectCount(eIndex) + iExtra) >= GC.getProjectInfo(eIndex).getMaxTeamInstances());
+	return ((getProjectCount(eIndex) + iExtra) >= GC.getProjectInfo(eIndex).getAllowed()->cap(ALLOWEDCAP_TEAM));
 }
 
 bool CvTeam::isProjectAndArtMaxedOut(ProjectTypes eIndex) const
@@ -4214,7 +4214,7 @@ bool CvTeam::isProjectAndArtMaxedOut(ProjectTypes eIndex) const
 	PROFILE_EXTRA_FUNC();
 	FASSERT_BOUNDS(0, GC.getNumProjectInfos(), eIndex);
 
-	if (getProjectCount(eIndex) >= GC.getProjectInfo(eIndex).getMaxTeamInstances())
+	if (getProjectCount(eIndex) >= GC.getProjectInfo(eIndex).getAllowed()->cap(ALLOWEDCAP_TEAM))
 	{
 		int count = getProjectCount(eIndex);
 		for (int i = 0; i < count; i++)
@@ -4449,9 +4449,9 @@ bool CvTeam::isBuildingMaxedOut(BuildingTypes eIndex, int iExtra) const
 		return false;
 	}
 
-	FAssertMsg(getBuildingCount(eIndex) <= GC.getBuildingInfo(eIndex).getMaxTeamInstances(), "The current building count is expected not to exceed the maximum number of instances allowed for this team");
+	FAssertMsg(getBuildingCount(eIndex) <= GC.getBuildingInfo(eIndex).getAllowed()->cap(ALLOWEDCAP_TEAM), "The current building count is expected not to exceed the maximum number of instances allowed for this team");
 
-	return ((getBuildingCount(eIndex) + iExtra) >= GC.getBuildingInfo(eIndex).getMaxTeamInstances());
+	return ((getBuildingCount(eIndex) + iExtra) >= GC.getBuildingInfo(eIndex).getAllowed()->cap(ALLOWEDCAP_TEAM));
 }
 
 
@@ -6431,7 +6431,7 @@ int CvTeam::getProjectPartNumber(ProjectTypes eProject, bool bAssert) const
 	}
 
 	//return the last one
-	return std::min(iNumBuilt, GC.getProjectInfo(eProject).getMaxTeamInstances() - 1);
+	return std::min(iNumBuilt, GC.getProjectInfo(eProject).getAllowed()->cap(ALLOWEDCAP_TEAM) - 1);
 }
 
 bool CvTeam::hasLaunched() const
@@ -6763,7 +6763,7 @@ int64_t CvTeam::getTotalVictoryScore() const
 
 	for (int iK = 0; iK < GC.getNumBuildingInfos(); iK++)
 	{
-		if (GC.getBuildingInfo((BuildingTypes)iK).getMaxGlobalInstances() == 1)
+		if (GC.getBuildingInfo((BuildingTypes)iK).getAllowed()->cap(ALLOWEDCAP_WORLD) == 1)
 		{
 			globalWonderScore++;
 		}

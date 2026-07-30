@@ -24,7 +24,7 @@ public:
 	// Returns an empty vector for NO_RELIGION or out-of-range eReligion.
 	const std::vector<BuildingTypes>& byReligion(ReligionTypes eReligion) const;
 
-	// Buildings with getMaxGlobalInstances() != -1 (i.e. isWorldWonder).
+	// Buildings with getAllowed()->cap(ALLOWEDCAP_WORLD) != -1 (i.e. isWorldWonder).
 	const std::vector<BuildingTypes>& worldWonders() const;
 
 	// Buildings with getFreeStartEra() != NO_ERA.

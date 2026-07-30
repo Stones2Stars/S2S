@@ -5120,9 +5120,9 @@ bool CvGame::isUnitMaxedOut(UnitTypes eIndex, int iExtra) const
 	{
 		return false;
 	}
-	FAssertMsg(getUnitCreatedCount(eIndex) <= GC.getUnitInfo(eIndex).getMaxGlobalInstances(), "Index is expected to be within maximum bounds (invalid Index)");
+	FAssertMsg(getUnitCreatedCount(eIndex) <= GC.getUnitInfo(eIndex).getAllowed()->cap(ALLOWEDCAP_WORLD), "Index is expected to be within maximum bounds (invalid Index)");
 
-	return getUnitCreatedCount(eIndex) + iExtra >= GC.getUnitInfo(eIndex).getMaxGlobalInstances();
+	return getUnitCreatedCount(eIndex) + iExtra >= GC.getUnitInfo(eIndex).getAllowed()->cap(ALLOWEDCAP_WORLD);
 }
 
 
@@ -5142,7 +5142,7 @@ bool CvGame::isBuildingMaxedOut(BuildingTypes eIndex, int iExtra) const
 		return false;
 	}
 
-	return ((getBuildingCreatedCount(eIndex) + iExtra) >= GC.getBuildingInfo(eIndex).getMaxGlobalInstances());
+	return ((getBuildingCreatedCount(eIndex) + iExtra) >= GC.getBuildingInfo(eIndex).getAllowed()->cap(ALLOWEDCAP_WORLD));
 }
 
 
@@ -5170,9 +5170,9 @@ bool CvGame::isProjectMaxedOut(ProjectTypes eIndex, int iExtra) const
 		return false;
 	}
 
-	FAssertMsg(getProjectCreatedCount(eIndex) <= GC.getProjectInfo(eIndex).getMaxGlobalInstances(), "Index is expected to be within maximum bounds (invalid Index)");
+	FAssertMsg(getProjectCreatedCount(eIndex) <= GC.getProjectInfo(eIndex).getAllowed()->cap(ALLOWEDCAP_WORLD), "Index is expected to be within maximum bounds (invalid Index)");
 
-	return ((getProjectCreatedCount(eIndex) + iExtra) >= GC.getProjectInfo(eIndex).getMaxGlobalInstances());
+	return ((getProjectCreatedCount(eIndex) + iExtra) >= GC.getProjectInfo(eIndex).getAllowed()->cap(ALLOWEDCAP_WORLD));
 }
 
 

@@ -15726,7 +15726,7 @@ int CvPlayerAI::AI_espionageVal(PlayerTypes eTargetPlayer, EspionageMissionTypes
 		{
 			const CvProjectInfo& kProject = GC.getProjectInfo((ProjectTypes)iData);
 
-			iValue += getProductionNeeded((ProjectTypes)iData) * ((kProject.getMaxTeamInstances() == 1) ? 3 : 2);
+			iValue += getProductionNeeded((ProjectTypes)iData) * ((kProject.getAllowed()->cap(ALLOWEDCAP_TEAM) == 1) ? 3 : 2);
 		}
 	}
 
@@ -15742,7 +15742,7 @@ int CvPlayerAI::AI_espionageVal(PlayerTypes eTargetPlayer, EspionageMissionTypes
 				if (pCity->getProductionProject() != NO_PROJECT)
 				{
 					const CvProjectInfo& kProject = GC.getProjectInfo(pCity->getProductionProject());
-					iValue += iTempValue * ((kProject.getMaxTeamInstances() == 1) ? 4 : 2);
+					iValue += iTempValue * ((kProject.getAllowed()->cap(ALLOWEDCAP_TEAM) == 1) ? 4 : 2);
 				}
 				else if (pCity->getProductionBuilding() != NO_BUILDING)
 				{
