@@ -17,6 +17,7 @@
 #include "CvGameObject.h"
 #include "CityContext.h"
 #include "CvCascadePackage.h"   // the CITY-scope cascade package + receiver sums (state-repositories.md)
+#include "Infrastructure/CvDerivedCache.h"  // the ONE derived-cache component (mark-driven, never serialized)
 #include "Enabler/CvEnabler.h"              // CityEnabler -- the per-city buildings/units tri-state domains
 #include "Enabler/CvOperatingBuildings.h"   // the ACTIVE-building set the modifier reads (enabler.md §3.2)
 
@@ -537,11 +538,18 @@ public:
 	int getSavedMaintenanceByBuilding(BuildingTypes eType) const;
 	int getSavedMaintenanceTimes100ByBuilding(BuildingTypes eType) const;
 
+	// ⛔ A BARE FETCH of the derived cache -- never a gate test, never a recompute on the read path (the
+	// `ensure()`-on-read protocol is tombstoned BY NAME, [superseded-ideas #14]). The MARK is what rebuilds:
+	// markMaintenanceDirty() marks AND recomputes, which is the invariant that lets this read be bare.
 	int getMaintenance() const;
 	int getMaintenanceTimes100() const;
-	int getEffectiveMaintenanceModifier() const;
-	void updateMaintenance() const;
-	void setMaintenanceDirty(const bool bDirty, const bool bPlayer = true) const;
+	void markMaintenanceDirty() const;
+	// The city's ONE additive maintenance percent stack, rolled over the scope chain the city sits under
+	// (team + empire + city) by the cross-scope roll-up. It replaces the hand-summed city + player + area +
+	// connected-city legs: there is no area scope ([state-repositories.md]), an `area` modifier authors at
+	// EMPIRE, and the connected-city leg was never a KIND -- it is a CONDITION on an ordinary deposit
+	// ([DEC-conditions-are-predicates]).
+	int maintenancePercentStack() const;
 	int calculateDistanceMaintenance() const;
 	int calculateNumCitiesMaintenance() const;
 	int calculateColonyMaintenance() const;
@@ -552,9 +560,6 @@ public:
 	int calculateCorporationMaintenanceTimes100(CorporationTypes eCorporation) const;
 	int calculateCorporationMaintenanceTimes100() const;
 	int calculateBaseMaintenanceTimes100() const;
-	int calculateBuildingMaintenanceTimes100() const;
-	int getMaintenanceModifier() const;
-	void changeMaintenanceModifier(int iChange);
 
 	int getWarWearinessModifier() const;
 	void changeWarWearinessModifier(int iChange);
@@ -1613,8 +1618,6 @@ protected:
 	int m_iNumTeamWonders;
 	int m_iNumNationalWonders;
 	int m_iNumBuildings;
-	mutable int m_iMaintenance;
-	int m_iMaintenanceModifier;
 	int m_iWarWearinessModifier;
 	int m_iHurryAngerModifier;
 	int m_iHealRate;
@@ -1967,7 +1970,14 @@ private:
 
 	bool m_bIsGreatWallSeed;
 	bool m_bVisibilitySetup;
-	mutable bool m_bMaintenanceDirty;
+
+	// The city's realized MAINTENANCE, on the ONE standardized derived-cache component -- never a hand-rolled
+	// dirty-flag/value pair beside it ([DEC-uniform-cache-shape]: a hand-named scalar cannot be addressed
+	// uniformly, so it forces a bespoke invalidation path per field, which is how ~33 of them accumulated).
+	// Recompute-only and NEVER serialized ([DEC-derived-never-trusted] / [save.md §5]) -- dirty-on-construct
+	// means a loaded game recomputes from current state rather than trusting a save's stale number.
+	mutable CvDerivedCache<CvCity, int, 1> m_maintenance;
+	void recomputeMaintenance(int* aOut) const;
 
 
 

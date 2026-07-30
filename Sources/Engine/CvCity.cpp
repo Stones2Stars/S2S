@@ -585,7 +585,7 @@ void CvCity::init(int iID, PlayerTypes eOwner, int iX, int iY, bool bBumpUnits, 
 	updateFeatureHealth();
 	updateFeatureHappiness();
 
-	player.setMaintenanceDirty(true);
+	player.markMaintenanceDirty();
 
 	GC.getMap().updateWorkingCity();
 
@@ -662,6 +662,7 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_cityContext.bind(this);   // bind the per-city context to its owner (the pointer IS this city; forwarding reads it)
 	// bind the CITY-scope cascade package (all-dirty from bind: a loaded/new city recomputes on first read)
 	m_cascadePackage.bind(CASC_SCOPE_CITY, this, &CvCity::refreshCascadePackage, (int)eOwner, iID);
+	m_maintenance.bind(this, &CvCity::recomputeMaintenance);
 	// The enabler's per-city state starts EMPTY and UN-READY: the domains are init'd by their domain enabler at
 	// this city's lifecycle start and filled by DOMAIN events thereafter ([DEC-spine-reseed]) -- never from the
 	// save. Clearing here is load-bearing because a CvCity is RECYCLED out of an FFreeListTrashArray: without it
@@ -698,8 +699,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_iNumTeamWonders = 0;
 	m_iNumNationalWonders = 0;
 	m_iNumBuildings = 0;
-	m_iMaintenance = 0;
-	m_iMaintenanceModifier = 0;
 	m_iWarWearinessModifier = 0;
 	m_iHurryAngerModifier = 0;
 	m_iHealRate = 0;
@@ -766,7 +765,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_bWallOverride = false;
 	m_bInfoDirty = true;
 	m_bLayoutDirty = false;
-	m_bMaintenanceDirty = false;
 	m_bPlundered = false;
 	m_bPopProductionProcess = false;
 
@@ -1295,7 +1293,7 @@ void CvCity::kill(bool bUpdatePlotGroups, bool bUpdateCulture)
 		}
 	}
 
-	kOwner.setMaintenanceDirty(true);
+	kOwner.markMaintenanceDirty();
 
 	GC.getMap().updateWorkingCity();
 
@@ -3634,7 +3632,7 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 	{
 		checkReligiousDisabling(eBuilding, owner);
 	}
-	setMaintenanceDirty(true);
+	markMaintenanceDirty();
 	setLayoutDirty(true);
 
 	// #430 event spine: announce the PROCESSED (operating-contribution) flip -- fires on construction/destruction's
@@ -5353,7 +5351,7 @@ void CvCity::setPopulation(int iNewValue, bool bNormal)
 		) AI_setChooseProductionDirty(true);
 	}
 	plot()->updateYield();
-	owner.setMaintenanceDirty(true);
+	owner.markMaintenanceDirty();
 
 	owner.AI_makeAssignWorkDirty();
 
@@ -5860,7 +5858,7 @@ int CvCity::getSavedMaintenanceTimes100ByBuilding(BuildingTypes eBuilding) const
 	{
 		return 0;
 	}
-	const int iModOld = getEffectiveMaintenanceModifier();
+	const int iModOld = maintenancePercentStack();
 	const int iBaseOld = calculateBaseMaintenanceTimes100();
 
 	return getModifiedIntValue(iBaseOld, iModOld) - getModifiedIntValue(iBaseOld + iDirectMaintenance, iModOld + iModifier);
@@ -5880,7 +5878,7 @@ int CvCity::getDistanceMaintenanceSavedByCivic(CivicTypes eCivic) const
 	{
 		return 0;
 	}
-	const int iFinalMod = getEffectiveMaintenanceModifier();
+	const int iFinalMod = maintenancePercentStack();
 	return (
 		getModifiedIntValue(calculateDistanceMaintenanceTimes100(), iFinalMod)
 		-
@@ -5901,7 +5899,7 @@ int CvCity::getNumCitiesMaintenanceSavedByCivic(CivicTypes eCivic) const
 	{
 		return 0;
 	}
-	const int iFinalMod = getEffectiveMaintenanceModifier();
+	const int iFinalMod = maintenancePercentStack();
 	return (
 		getModifiedIntValue(calculateNumCitiesMaintenanceTimes100(), iFinalMod)
 		-
@@ -5930,7 +5928,7 @@ int CvCity::getAreaMaintenanceSavedByCivic(CivicTypes eCivic) const
 		return 0;
 	}
 	const int iBaseMaintenance = calculateBaseMaintenanceTimes100();
-	const int iEffectiveMaintenanceMod = getEffectiveMaintenanceModifier();
+	const int iEffectiveMaintenanceMod = maintenancePercentStack();
 	return (
 		getModifiedIntValue(iBaseMaintenance, iEffectiveMaintenanceMod)
 		-
@@ -5938,61 +5936,52 @@ int CvCity::getAreaMaintenanceSavedByCivic(CivicTypes eCivic) const
 	);
 }
 
+// ⚖ WE LOVE THE KING DAY SUPPRESSES THE CONSUMPTION OF THE VALUE, NOT ITS CONTENTS (owner) -- the ONE special
+// case maintenance carries over any other cascade channel: *"a city maintenance should just emit 0 instead of
+// the cascade block"* while the status holds. It is deliberately NOT a cache input: WLTKD is a ONE-TURN status
+// re-applied every turn by its trigger ([state.md] / [CvStatus.h]), so marking on it would thrash the cache
+// every single turn over a value that never moved. The stored number stays the real one and the READ declines
+// to take it -- which is also why the read stays a bare fetch either way.
 int CvCity::getMaintenance() const
 {
-	if (m_bMaintenanceDirty)
-	{
-		updateMaintenance();
-	}
-	return m_iMaintenance / 100;
+	return getMaintenanceTimes100() / 100;
 }
 
 int CvCity::getMaintenanceTimes100() const
 {
-	if (m_bMaintenanceDirty)
+	// ⚖ DISORDER SUPPRESSES IT THE SAME WAY (owner) -- a city in disorder produces no output, so it takes no
+	// maintenance either. It is the same read-time decline, for the same reason: both are transient conditions
+	// the city is IN, never inputs the stored value was built from.
+	// ⚑ `isDisorder()` is itself the OR of two ticking counters -- the city's occupation timer and the player's
+	// anarchy turns -- i.e. a CITY status and a PLAYER status composed into one verdict ([CvStatus.h]). Once
+	// those two counters move onto the status store this reads off it and nothing else here changes.
+	if (hasStatus(CITYSTATUS_WE_LOVE_THE_KING_DAY) || isDisorder())
 	{
-		updateMaintenance();
+		return 0;
 	}
-	return m_iMaintenance;
+	return m_maintenance.get(0);
 }
 
-int CvCity::getEffectiveMaintenanceModifier() const
+void CvCity::markMaintenanceDirty() const
 {
-	int iModifier = getMaintenanceModifier() + GET_PLAYER(getOwner()).getMaintenanceModifier() + area()->getTotalAreaMaintenanceModifier(getOwner());
-
-	if (isConnectedToCapital() && !isCapital())
-	{
-		iModifier += GET_PLAYER(getOwner()).getConnectedCityMaintenanceModifier();
-	}
-	return iModifier;
+	m_maintenance.markDirty();
 }
 
-void CvCity::setMaintenanceDirty(const bool bDirty, const bool bPlayer) const
+int CvCity::maintenancePercentStack() const
 {
-	m_bMaintenanceDirty = bDirty;
-
-	if (bPlayer)
-	{
-		GET_PLAYER(getOwner()).setMaintenanceDirty(bDirty, false);
-	}
+	long iFlatSum = 0;
+	long iPercentSum = 0;
+	InfoValuation::rolledLegsAtCity(
+		*this, CascadeChannelRegistry::channelLookup(MODFAM_MAINTENANCE, (int)MAINTENANCE_AMOUNT, -1),
+		iFlatSum, iPercentSum);
+	return (int)iPercentSum;
 }
 
-void CvCity::updateMaintenance() const
+// The recompute the MARK runs ([state-repositories.md]: the mark rebuilds; a read never does). It fully defines
+// its output on every call -- the component's contract rule 2, which is what makes an early return safe.
+void CvCity::recomputeMaintenance(int* aOut) const
 {
-	m_bMaintenanceDirty = false;
-
-	int iNewMaintenance = 0;
-	if (!isDisorder() && !isWeLoveTheKingDay() && getPopulation() > 0)
-	{
-		iNewMaintenance = getModifiedIntValue(calculateBaseMaintenanceTimes100(), getEffectiveMaintenanceModifier());
-	}
-
-	if (m_iMaintenance != iNewMaintenance)
-	{
-		FASSERT_NOT_NEGATIVE(iNewMaintenance);
-
-		m_iMaintenance = iNewMaintenance;
-	}
+	aOut[0] = getModifiedIntValue(calculateBaseMaintenanceTimes100(), maintenancePercentStack());
 }
 
 int CvCity::calculateDistanceMaintenance() const
@@ -6236,32 +6225,22 @@ int CvCity::calculateCorporationMaintenanceTimes100(CorporationTypes eCorporatio
 	return owner.isRebel() ? iMaintenance / 2 : iMaintenance;
 }
 
-int CvCity::calculateBuildingMaintenanceTimes100() const
-{
-	PROFILE_EXTRA_FUNC();
-	if (GC.getTREAT_NEGATIVE_GOLD_AS_MAINTENANCE())
-	{
-		int iResult = 0;
-
-		foreach_(const BuildingTypes eTypeX, getHasBuildings())
-		{
-			if (GC.getBuildingInfo(eTypeX).getCommerceChange(COMMERCE_GOLD) < 0
-			&& !isDormantBuilding(eTypeX)
-			&& !isDormantBuilding(eTypeX))
-			{
-				iResult -= GC.getBuildingInfo(eTypeX).getCommerceChange(COMMERCE_GOLD);
-			}
-		}
-		// Rebels pay less maintenance
-		return GET_PLAYER(getOwner()).isRebel() ? 50 * iResult : 100 * iResult;
-	}
-	return 0;
-}
-
+// The base the percent stack scales: the cascade's own AUTHORED flats plus the four components the cascade
+// does not model. ⚑ The building term is NOT one of them any more -- a building whose upkeep is a gold amount
+// authors `maintenance.city.flat` (the negative-gold fold, [economy.md]), so it arrives in the FLAT LEG of the
+// city's chain like every other deposit. The legacy term re-derived it by scanning every building the city
+// holds for a negative gold commerce and flipping its sign -- a whole-database scan of data the cascade
+// already carries, and a second derivation of one number ([DEC-single-implementation]).
 int CvCity::calculateBaseMaintenanceTimes100() const
 {
+	long iFlatSum = 0;
+	long iPercentSum = 0;
+	InfoValuation::rolledLegsAtCity(
+		*this, CascadeChannelRegistry::channelLookup(MODFAM_MAINTENANCE, (int)MAINTENANCE_AMOUNT, -1),
+		iFlatSum, iPercentSum);
+
 	return (
-		calculateBuildingMaintenanceTimes100()
+		(int)iFlatSum
 		+
 		calculateDistanceMaintenanceTimes100()
 		+
@@ -6271,22 +6250,6 @@ int CvCity::calculateBaseMaintenanceTimes100() const
 		+
 		calculateCorporationMaintenanceTimes100()
 	);
-}
-
-
-int CvCity::getMaintenanceModifier() const
-{
-	return m_iMaintenanceModifier;
-}
-
-
-void CvCity::changeMaintenanceModifier(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iMaintenanceModifier += iChange;
-		setMaintenanceDirty(true);
-	}
 }
 
 
@@ -8199,7 +8162,7 @@ void CvCity::setWeLoveTheKingDay(bool bNewValue)
 		setStatus(CITYSTATUS_WE_LOVE_THE_KING_DAY, bNewValue ? 1 : 0);
 
 		CvPlayer& owner = GET_PLAYER(getOwner());
-		setMaintenanceDirty(true);
+		markMaintenanceDirty();
 
 		CivicTypes eCivic = NO_CIVIC;
 
@@ -10334,7 +10297,7 @@ void CvCity::updateCorporation()
 	{
 		updateCorporationCommerce((CommerceTypes)iI);
 	}
-	setMaintenanceDirty(true);
+	markMaintenanceDirty();
 }
 
 
@@ -12516,7 +12479,7 @@ void CvCity::checkReligiousDisablingAllBuildings()
 	{
 		checkReligiousDisabling((BuildingTypes)iJ, player);
 	}
-	setMaintenanceDirty(true);
+	markMaintenanceDirty();
 	updateReligionHappiness();
 	updateReligionCommerce();
 }
@@ -12569,7 +12532,7 @@ void CvCity::applyReligionModifiers(const ReligionTypes eIndex, const bool bValu
 	foreach_(const BuildingTypes eTypeX, getHasBuildings())
 	{
 	}
-	setMaintenanceDirty(true);
+	markMaintenanceDirty();
 	updateReligionHappiness();
 	updateReligionCommerce();
 }
@@ -14541,8 +14504,6 @@ void CvCity::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvCity", &m_iNumTeamWonders);
 	WRAPPER_READ(wrapper, "CvCity", &m_iNumNationalWonders);
 	WRAPPER_READ(wrapper, "CvCity", &m_iNumBuildings);
-	WRAPPER_READ(wrapper, "CvCity", &m_iMaintenance);
-	WRAPPER_READ(wrapper, "CvCity", &m_iMaintenanceModifier);
 	WRAPPER_READ(wrapper, "CvCity", &m_iWarWearinessModifier);
 	WRAPPER_READ(wrapper, "CvCity", &m_iHurryAngerModifier);
 	WRAPPER_READ(wrapper, "CvCity", &m_iHealRate);
@@ -15257,8 +15218,6 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvCity", m_iNumTeamWonders);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iNumNationalWonders);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iNumBuildings);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iMaintenance);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iMaintenanceModifier);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iWarWearinessModifier);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iHurryAngerModifier);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iHealRate);

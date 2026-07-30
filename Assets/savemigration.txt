@@ -34,6 +34,19 @@ CvUnit::m_iImmobileTimer
 | (CITYSTATUS_WE_LOVE_THE_KING_DAY). WLTKD is a ONE-TURN status re-applied each turn while its conditions
 | hold, so the bool was its legacy shape. REPLACEMENT: CvCity::m_aiStatusTurns, serialized in its place.
 CvCity::m_bWeLoveTheKingDay
+|
+| CvCity maintenance -- the DERIVED value and its hand-named modifier accumulator.
+| m_iMaintenance was a SERIALIZED derived value read back through an ensure-on-read getter -- both halves are
+| defects: derived data serializes NOTHING (save.md 5 / DEC-derived-never-trusted) and a read is a BARE FETCH
+| unconditionally (the ensure() protocol is tombstoned BY NAME, superseded-ideas 14). It is now the standardized
+| CvDerivedCache component on the city: mark-driven, recompute-only, never serialized.
+| m_iMaintenanceModifier was one hand-named scalar per channel -- the shape DEC-uniform-cache-shape calls a DEFECT
+| because it cannot be addressed uniformly and so forces its own bespoke invalidation path.
+| REPLACEMENT: the maintenance channel of the city's cascade package -- the flat leg carries the authored
+| maintenance.city.flat deposits (incl. the negative-gold building fold) and the percent leg IS the modifier
+| stack, both read through the ONE cross-scope roll-up (InfoValuation::rolledLegsAtCity).
+CvCity::m_iMaintenance
+CvCity::m_iMaintenanceModifier
 ========================
 2026-07-20 — #430 delete-driven legacy cut (CvPlayer civic/trait/project/world wellbeing feeders): the 8 stored
 player-scope wellbeing accumulators fully removed (no member, no read, no write). The getters now read fresh
@@ -752,4 +765,17 @@ CvPlayer::m_iNonStateReligionHolyCityXPModifier
 | stays represented (it folds into the feature happiness terms).
 CvCity::m_iImprovementGoodHealth
 CvCity::m_iImprovementBadHealth
+|
+| CvCity maintenance -- the DERIVED value and its hand-named modifier accumulator.
+| m_iMaintenance was a SERIALIZED derived value read back through an ensure-on-read getter -- both halves are
+| defects: derived data serializes NOTHING (save.md 5 / DEC-derived-never-trusted) and a read is a BARE FETCH
+| unconditionally (the ensure() protocol is tombstoned BY NAME, superseded-ideas 14). It is now the standardized
+| CvDerivedCache component on the city: mark-driven, recompute-only, never serialized.
+| m_iMaintenanceModifier was one hand-named scalar per channel -- the shape DEC-uniform-cache-shape calls a
+| DEFECT: it cannot be addressed uniformly, so it forces its own bespoke invalidation path.
+| REPLACEMENT: the maintenance channel of the city's cascade package -- the flat leg carries the authored
+| maintenance.city.flat deposits (incl. the negative-gold building fold) and the percent leg IS the modifier
+| stack, both read through the ONE cross-scope roll-up (InfoValuation::rolledLegsAtCity).
+CvCity::m_iMaintenance
+CvCity::m_iMaintenanceModifier
 ========================
