@@ -792,14 +792,14 @@ public:
 	bool hasYield() const;
 	int getYieldWithBuild(BuildTypes eBuild, YieldTypes eYield, bool bWithUpgrade) const;
 
-	int getCulture(PlayerTypes eIndex) const;
-	int countTotalCulture() const;
-	int countFriendlyCulture(TeamTypes eTeam) const;
+	int64_t getCulture(PlayerTypes eIndex) const;
+	int64_t countTotalCulture() const;
+	int64_t countFriendlyCulture(TeamTypes eTeam) const;
 	PlayerTypes findHighestCulturePlayer(const bool bCountLegacyCulture = true, const bool bCountLastTurn = true) const;
 	int calculateCulturePercent(PlayerTypes eIndex, int iExtraDigits = 0) const;
 	int calculateTeamCulturePercent(TeamTypes eIndex) const;
-	void setCulture(PlayerTypes eIndex, int iNewValue, bool bUpdate, bool bUpdatePlotGroups, const bool bDecay = false);
-	void changeCulture(PlayerTypes eIndex, int iChange, bool bUpdate);
+	void setCulture(PlayerTypes eIndex, int64_t iNewValue, bool bUpdate, bool bUpdatePlotGroups, const bool bDecay = false);
+	void changeCulture(PlayerTypes eIndex, int64_t iChange, bool bUpdate);
 	int countNumAirUnits(TeamTypes eTeam) const;
 	int countNumAirUnitCargoVolume(TeamTypes eTeam) const;
 	int airUnitSpaceAvailable(TeamTypes eTeam) const;
@@ -1046,7 +1046,9 @@ protected:
 
 	short* m_baseYields;
 	bst::array<short, NUM_YIELD_TYPES> m_aExtraYield;
-	std::vector<std::pair<PlayerTypes,int> > m_aiCulture;
+	// Plot culture accumulates the spread from city culture at ×100 and only DECAYS proportionally, so it is
+	// the same accumulating AMOUNT its city-scope source is -- 64-bit for the same reason.
+	std::vector<std::pair<PlayerTypes,int64_t> > m_aiCulture;
 	std::vector<PlotTeamVisibilityIntensity> m_aPlotTeamVisibilityIntensity;
 	unsigned int* m_aiFoundValue;
 	char* m_aiPlayerCityRadiusCount;

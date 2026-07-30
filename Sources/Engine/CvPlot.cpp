@@ -287,7 +287,7 @@ void CvPlot::uninit()
 
 	//	Don't use 'clear' - we want to release the memory so we need to
 	//	ensure the capcity goes to 0
-	std::vector<std::pair<PlayerTypes,int> >().swap(m_aiCulture);
+	std::vector<std::pair<PlayerTypes,int64_t> >().swap(m_aiCulture);
 
 	SAFE_DELETE_ARRAY(m_aiFoundValue);
 
@@ -8348,12 +8348,12 @@ bool CvPlot::hasYield() const
 }
 
 
-int CvPlot::getCulture(PlayerTypes eIndex) const
+int64_t CvPlot::getCulture(PlayerTypes eIndex) const
 {
 	PROFILE_EXTRA_FUNC();
 	FASSERT_BOUNDS(0, MAX_PLAYERS, eIndex);
 
-	for (std::vector<std::pair<PlayerTypes,int> >::const_iterator itr = m_aiCulture.begin(); itr != m_aiCulture.end(); ++itr)
+	for (std::vector<std::pair<PlayerTypes,int64_t> >::const_iterator itr = m_aiCulture.begin(); itr != m_aiCulture.end(); ++itr)
 	{
 		if ((*itr).first == eIndex)
 		{
@@ -8365,10 +8365,10 @@ int CvPlot::getCulture(PlayerTypes eIndex) const
 }
 
 
-int CvPlot::countTotalCulture() const
+int64_t CvPlot::countTotalCulture() const
 {
 	PROFILE_EXTRA_FUNC();
-	int iTotalCulture = 0;
+	int64_t iTotalCulture = 0;
 
 	for (int iI = 0; iI < MAX_PLAYERS; ++iI)
 	{
@@ -8424,7 +8424,7 @@ int CvPlot::calculateCulturePercent(PlayerTypes eIndex, int iExtraDigits) const
 {
 	PROFILE_FUNC();
 
-	const int iTotalCulture = countTotalCulture();
+	const int64_t iTotalCulture = countTotalCulture();
 
 	if (iTotalCulture > 0)
 	{
@@ -8450,7 +8450,7 @@ int CvPlot::calculateTeamCulturePercent(TeamTypes eIndex) const
 }
 
 
-void CvPlot::setCulture(PlayerTypes eIndex, int iNewValue, bool bUpdate, bool bUpdatePlotGroups, const bool bDecay)
+void CvPlot::setCulture(PlayerTypes eIndex, int64_t iNewValue, bool bUpdate, bool bUpdatePlotGroups, const bool bDecay)
 {
 	PROFILE_FUNC();
 
@@ -8547,7 +8547,7 @@ void CvPlot::setCulture(PlayerTypes eIndex, int iNewValue, bool bUpdate, bool bU
 }
 
 
-void CvPlot::changeCulture(PlayerTypes eIndex, int iChange, bool bUpdate)
+void CvPlot::changeCulture(PlayerTypes eIndex, int64_t iChange, bool bUpdate)
 {
 	if (0 != iChange)
 	{
@@ -11149,7 +11149,7 @@ void CvPlot::read(FDataStreamBase* pStream)
 	}
 	//	Force the capacity to the size() since we need to mto minimize memory usage
 	//	and adding cultures is rare
-	std::vector<std::pair<PlayerTypes,int> >(m_aiCulture).swap(m_aiCulture);
+	std::vector<std::pair<PlayerTypes,int64_t> >(m_aiCulture).swap(m_aiCulture);
 
 	SAFE_DELETE_ARRAY(m_aiFoundValue);
 	char cFoundValuesPresent;
@@ -12531,10 +12531,10 @@ bool CvPlot::canTrain(UnitTypes eUnit, bool bTestVisible) const
 	return true;
 }
 
-int CvPlot::countFriendlyCulture(TeamTypes eTeam) const
+int64_t CvPlot::countFriendlyCulture(TeamTypes eTeam) const
 {
 	PROFILE_EXTRA_FUNC();
-	int iTotalCulture = 0;
+	int64_t iTotalCulture = 0;
 
 	for (int iPlayer = 0; iPlayer < MAX_PLAYERS; ++iPlayer)
 	{

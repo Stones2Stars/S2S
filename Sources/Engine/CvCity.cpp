@@ -10599,11 +10599,12 @@ PlayerTypes CvCity::findHighestCulture() const
 
 int CvCity::calculateCulturePercent(PlayerTypes eIndex) const
 {
-	const int iTotalCulture = countTotalCultureTimes100();
+	const int64_t iTotalCulture = countTotalCultureTimes100();
 
 	if (iTotalCulture > 0)
 	{
-		return getCultureTimes100(eIndex) * 100 / iTotalCulture;
+		// A PERCENT is the answer, so it stays int -- but the operands must not narrow on the way in.
+		return (int)(getCultureTimes100(eIndex) * 100 / iTotalCulture);
 	}
 	return 0;
 }
