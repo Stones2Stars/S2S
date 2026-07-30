@@ -289,6 +289,7 @@ void CvLeaderHeadInfo::mapFrom(const picojson::value& entity)
 			m_iEspionageWeight     = jsonIdInt(*pPersonality, "espionageWeight");
 			m_iWonderConstructRand = jsonIdInt(*pPersonality, "wonderConstructRand");
 			m_iBuildUnitProb       = jsonIdInt(*pPersonality, "buildUnitProb");
+			m_iResearchSearchDepth = jsonIdInt(*pPersonality, "researchSearchDepth", DEFAULT_RESEARCH_SEARCH_DEPTH);
 			m_iFreedomAppreciation = jsonIdInt(*pPersonality, "freedomAppreciation");
 			m_iVassalPowerModifier = jsonIdInt(*pPersonality, "vassalPowerModifier");
 		}
@@ -403,6 +404,9 @@ void CvLeaderHeadInfo::resetMapped()
 	m_iEspionageWeight = 0;
 	m_iWonderConstructRand = 0;
 	m_iBuildUnitProb = 0;
+	// NOT 0 -- a zero depth would search nothing at all. An entity with no `ai.personality` block never reaches
+	// the mapFrom read above, so the unauthored default has to be established here too.
+	m_iResearchSearchDepth = DEFAULT_RESEARCH_SEARCH_DEPTH;
 	m_iFreedomAppreciation = 0;
 	m_iVassalPowerModifier = 0;
 	m_iMaxWarRand = 0;

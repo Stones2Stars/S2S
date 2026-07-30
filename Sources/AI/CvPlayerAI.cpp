@@ -6,6 +6,7 @@
 #include "Data/CvInfoValuation.h"   // InfoValuation::collectHealByUnitCombat + HealByUnitCombat
 #include "Engine/CvGameSpeedScale.h"
 #include "Enabler/CvEnablerKernel.h"   // the compiled enables edges + the one gate (tech valuation)
+#include "Enabler/CvEnablerOverlay.h"  // the AS-IF-HELD membership overlay -- the civic what-if's membership half
 #include "Engine/CvArea.h"
 #include "CvBonusInfo.h"
 #include "CvBuildingInfo.h"
@@ -6549,7 +6550,16 @@ void CvPlayerAI::AI_chooseResearch()
 
 	if (getCurrentResearch() == NO_TECH)
 	{
-		const TechTypes eBestTech = AI_bestTech(isHumanPlayer() ? 1 : (AI_isDoVictoryStrategy(AI_VICTORY_CULTURE3) ? 1 : 3));
+		// HOW FAR AHEAD THIS LEADER COMMITS is the leader's own knob (enabler.md par.8: the research search depth
+		// is a personality variable, not a constant) -- and it is the dial that governs BEELINING, since the
+		// depth is exactly how many hops past the researchable frontier a single distant unlock can pull the AI
+		// (AGENTS.md, AI valuation of ENABLEMENT).
+		// ⚠ The two 1s are deliberate OVERRIDES of that knob rather than depths in their own right: a human's
+		// picker offers the immediate best rather than a plan, and a culture-victory AI is already committed and
+		// does not look ahead. Neither becomes personality-driven by this change.
+		const int iSearchDepth = GC.getLeaderHeadInfo(getPersonalityType()).getResearchSearchDepth();
+		const TechTypes eBestTech = AI_bestTech(
+			isHumanPlayer() || AI_isDoVictoryStrategy(AI_VICTORY_CULTURE3) ? 1 : iSearchDepth);
 
 		if (eBestTech != NO_TECH)
 		{
@@ -9812,18 +9822,20 @@ DenialTypes CvPlayerAI::AI_bonusTrade(BonusTypes eBonus, PlayerTypes ePlayer) co
 	{
 		return NO_DENIAL;
 	}
-	// The capital's LISTED frontier IS the trainable set -- no scan, no verdict filter (enabler.md par.6).
-	std::vector<int> trainableUnits;
-	pCapitalCity->getAvailableUnits(trainableUnits);
-	foreach_(const int iI, trainableUnits)
-	{
-		if (!GC.getGame().canEverTrain((UnitTypes)iI))
-		{
-			continue;
-		}
+	// WHICH UNITS NEED THIS BONUS? -- the bonus's own load-populated requires-reverse index answers it
+	// directly ([DEC-one-reverse-view]), the same read the building half below makes. The capital then
+	// answers "can I train it THERE" as a bare O(1) tri-state fetch (enabler.md par.8), so neither half
+	// scans: walking the trainable set and asking each unit the reverse question was the whole-database
+	// scan the reverse index exists to delete.
+	std::set<int> dependentUnits;
+	EnablerKernel::addEdge(EnablerKernel::infoFor(EDGEB_BONUSES, (int)eBonus), EDGEF_REQUIRED_BY, EDGEB_UNITS, dependentUnits);
 
-		if (GC.getUnitInfo((UnitTypes)iI).getPrereqAndBonus() == eBonus
-		|| algo::any_of_equal(GC.getUnitInfo((UnitTypes)iI).getPrereqOrBonuses(), eBonus))
+	for (std::set<int>::const_iterator itDependent = dependentUnits.begin(); itDependent != dependentUnits.end(); ++itDependent)
+	{
+		const UnitTypes eLoopUnit = static_cast<UnitTypes>(*itDependent);
+
+		if (GC.getGame().canEverTrain(eLoopUnit)
+		&& pCapitalCity->getUnitAvailability(eLoopUnit) == EnablerDomain::STATE_LISTED)
 		{
 			bStrategic = true;
 			break;
@@ -13815,153 +13827,83 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 	{
 		const CivicTypes eCurrentCivic = getCivics((CivicOptionTypes)kCivic.getCivicOption());
 
-		// WHICH BUILDINGS GATE ON THESE CIVICS? -- each civic's own load-populated requires-reverse index names
-		// them ([DEC-one-reverse-view]); the union of the two IS the candidate set, so the per-candidate reverse
-		// test is gone. It replaces a sweep of every building in the database that ran a FULL AI_buildingValue
-		// per survivor, once per civic valued -- the whole-database scan enabler.md §6 exists to delete.
-		std::set<int> civicGatedBuildings;
-		EnablerKernel::addEdge(EnablerKernel::infoFor(EDGEB_CIVICS, (int)eCivic), EDGEF_REQUIRED_BY, EDGEB_BUILDINGS, civicGatedBuildings);
+		// THE CANDIDATE SET HAS TWO LEGS, and the second was absent entirely:
+		//   GATED   -- buildings whose `requires` NAMES either civic (EDGEF_REQUIRED_BY): the GATE question.
+		//   ENABLED -- buildings either civic's `enables` proposes (EDGEF_ENABLES): the MEMBERSHIP question.
+		// Both come off each civic's own load-populated edge families ([DEC-one-reverse-view]), so no candidate
+		// is found by scanning the building database. ⚑ Most shipped civics author `enables.buildings`, so
+		// omitting the ENABLED leg left this valuation blind to every building a civic straightforwardly
+		// unlocks -- a missing TERM in the AI's civic choice, not a tidiness gap.
+		std::set<int> civicCandidates;
+		const CvInfo* pProposedCivic = EnablerKernel::infoFor(EDGEB_CIVICS, (int)eCivic);
+		EnablerKernel::addEdge(pProposedCivic, EDGEF_REQUIRED_BY, EDGEB_BUILDINGS, civicCandidates);
+		EnablerKernel::addEdge(pProposedCivic, EDGEF_ENABLES, EDGEB_BUILDINGS, civicCandidates);
 
-		if (eCurrentCivic != NO_CIVIC)
+		const CvInfo* pCurrentCivic = (eCurrentCivic != NO_CIVIC)
+			? EnablerKernel::infoFor(EDGEB_CIVICS, (int)eCurrentCivic) : NULL;
+
+		if (pCurrentCivic != NULL)
 		{
-			EnablerKernel::addEdge(EnablerKernel::infoFor(EDGEB_CIVICS, (int)eCurrentCivic), EDGEF_REQUIRED_BY, EDGEB_BUILDINGS, civicGatedBuildings);
+			EnablerKernel::addEdge(pCurrentCivic, EDGEF_REQUIRED_BY, EDGEB_BUILDINGS, civicCandidates);
+			EnablerKernel::addEdge(pCurrentCivic, EDGEF_ENABLES, EDGEB_BUILDINGS, civicCandidates);
 		}
 
-		for (std::set<int>::const_iterator itGated = civicGatedBuildings.begin(); itGated != civicGatedBuildings.end(); ++itGated)
+		// THE TWO WORLDS, built ONCE for the whole loop rather than re-derived per candidate. Adopting a civic
+		// is a SWAP, so each side states both halves -- the civic held AND the one it displaces dropped.
+		// `bCivicOptionVacuum` means the slot is currently empty, so there is nothing to displace and the
+		// "without" world is simply the proposed civic absent.
+		CvCascadeHypothetical kWith;
+		kWith.present[EDGEB_CIVICS].insert((int)eCivic);
+		CvCascadeHypothetical kWithout;
+		kWithout.absent[EDGEB_CIVICS].insert((int)eCivic);
+
+		if (eCurrentCivic != NO_CIVIC && !bCivicOptionVacuum)
 		{
-			const BuildingTypes eLoopBuilding = static_cast<BuildingTypes>(*itGated);
-			bool bValidCivicsWith = true;
-			bool bValidCivicsWithout = true;
-			bool bCivicIsEnabler = false;
+			kWith.absent[EDGEB_CIVICS].insert((int)eCurrentCivic);
+			kWithout.present[EDGEB_CIVICS].insert((int)eCurrentCivic);
+		}
 
-			if (GC.getBuildingInfo(eLoopBuilding).getPrereqAndTech() == NO_TECH || GC.getTechInfo((TechTypes)GC.getBuildingInfo(eLoopBuilding).getPrereqAndTech()).getEra() <= getCurrentEra())
+		// The MEMBERSHIP half of each world -- what each civic's own `enables` edges put in the tree.
+		// ⛔ Membership and the gate are asked SEPARATELY on purpose: a candidate can be gate-satisfiable under a
+		// hypothetical and still not be in the tree, and the reverse ([enabler.md] par.1 -- `requires` NEVER
+		// changes membership). Collapsing them into one test would silently answer a different question.
+		EnablerOverlay kOverlayWith;
+		kOverlayWith.addHave(pProposedCivic, EDGEB_CIVICS, (int)eCivic);
+		EnablerOverlay kOverlayWithout;
+		kOverlayWithout.addHave(pCurrentCivic, EDGEB_CIVICS, (int)eCurrentCivic);
+
+		const EnablerDomain& kCapitalBuildings = pCapital->m_enabler.buildings;
+
+		for (std::set<int>::const_iterator itCandidate = civicCandidates.begin();
+			itCandidate != civicCandidates.end(); ++itCandidate)
+		{
+			const BuildingTypes eLoopBuilding = static_cast<BuildingTypes>(*itCandidate);
+
+			if (GC.getGame().isBuildingMaxedOut(eLoopBuilding) && getBuildingCount(eLoopBuilding) == 0)
 			{
-				if (!GC.getGame().isBuildingMaxedOut(eLoopBuilding) || getBuildingCount(eLoopBuilding) > 0)
-				{
-					bool bValidWith = false;
-					bool bValidWithout = false;
-					bool bHasMultipleEnablingCivicCategories = false;
-					CivicOptionTypes eEnablingCategory = NO_CIVICOPTION;
-
-					for (int iJ = 0; iJ < GC.getNumCivicInfos(); iJ++)
-					{
-						if (GC.getBuildingInfo(eLoopBuilding).isPrereqAndCivics(iJ))
-						{
-							if (eEnablingCategory == NO_CIVICOPTION)
-							{
-								eEnablingCategory = (CivicOptionTypes)GC.getCivicInfo((CivicTypes)iJ).getCivicOption();
-							}
-							else
-							{
-								bHasMultipleEnablingCivicCategories = true;
-							}
-
-							if (eCivic != iJ)
-							{
-								if (kCivic.getCivicOption() == GC.getCivicInfo((CivicTypes)iJ).getCivicOption())
-								{
-									bValidCivicsWith = false;
-									bValidCivicsWithout = (!bCivicOptionVacuum && eCurrentCivic == iJ);
-								}
-								else
-								{
-									if (!isCivic((CivicTypes)iJ))
-									{
-										bValidCivicsWith = false;
-										bValidCivicsWithout = false;
-									}
-								}
-							}
-							else
-							{
-								bCivicIsEnabler = true;
-								bValidCivicsWithout = false;
-							}
-						}
-					}
-					//Make sure we have the correct prereq Or Civics. We need just one
-					if (bValidCivicsWith || bValidCivicsWithout)
-					{
-						bool bHasOrCivicReq = false;
-
-						for (int iJ = 0; iJ < GC.getNumCivicInfos(); iJ++)
-						{
-							if (GC.getBuildingInfo(eLoopBuilding).isPrereqOrCivics(iJ))
-							{
-								if (eEnablingCategory == NO_CIVICOPTION)
-								{
-									eEnablingCategory = (CivicOptionTypes)GC.getCivicInfo((CivicTypes)iJ).getCivicOption();
-								}
-								else
-								{
-									bHasMultipleEnablingCivicCategories = true;
-								}
-
-								bHasOrCivicReq = true;
-
-								if (kCivic.getCivicOption() != GC.getCivicInfo((CivicTypes)iJ).getCivicOption())
-								{
-									if (isCivic((CivicTypes)iJ))
-									{
-										bValidWithout = true;
-										bValidWith = true;
-									}
-								}
-								else if (eCivic == (CivicTypes)iJ)
-								{
-									bValidWith = true;
-									bCivicIsEnabler = true;
-								}
-								else
-								{
-									bValidWithout |= (!bCivicOptionVacuum && eCurrentCivic == iJ);
-								}
-							}
-						}
-
-						if (bHasOrCivicReq)
-						{
-							bValidCivicsWith &= bValidWith;
-							bValidCivicsWithout &= bValidWithout;
-						}
-					}
-
-					iTempValue = 0;
-					int iValueDivisor = 1;
-
-					if (GC.getBuildingInfo(eLoopBuilding).getPrereqAndTech() != NO_TECH &&
-						!pTeam.isHasTech((TechTypes)GC.getBuildingInfo(eLoopBuilding).getPrereqAndTech()))
-					{
-						iValueDivisor = 2;
-					}
-
-					const int iNumInstancesToScore = isLimitedWonder(eLoopBuilding) ? 1 : std::max(getNumCities(), getBuildingCount(eLoopBuilding) + getNumCities() / 4);
-
-					//	If the building is enabled by multiple categories just count it at half value always
-					//	This isn't strictly accurate, but because civic evaluation works by linarly combining
-					//	evaluations in different categories, cross-category couplings like this have to give
-					//	stable result or else civic choices will oscillate
-					if (bHasMultipleEnablingCivicCategories && bValidCivicsWith && bCivicIsEnabler)
-					{
-						//Estimate value from capital city
-						iTempValue = (pCapital->AI_buildingValue(eLoopBuilding, 0) * iNumInstancesToScore) / (12 * iValueDivisor);
-						
-					}
-					else if (bValidCivicsWith && !bValidCivicsWithout)
-					{
-						//Estimate value from capital city
-						iTempValue = (pCapital->AI_buildingValue(eLoopBuilding, 0) * iNumInstancesToScore) / (6 * iValueDivisor);
-						
-					}
-					else if (!bValidCivicsWith && bValidCivicsWithout)
-					{
-						//Loses us the ability to construct the building
-						iTempValue = -(pCapital->AI_buildingValue(eLoopBuilding, 0) * iNumInstancesToScore) / (6 * iValueDivisor);
-						
-					}
-					iValue += iTempValue;
-				}
+				continue;
 			}
+			// AVAILABLE in a world = in its tree AND its `requires` passes there. Both halves resolve through
+			// the ONE membership formula and the ONE evaluator, so nothing here re-derives what a civic
+			// prerequisite means -- which is exactly what the hand-rolled pair of civic sweeps used to do.
+			const bool bValidWith =
+				kOverlayWith.inTree(kCapitalBuildings, EDGEB_BUILDINGS, (int)eLoopBuilding)
+				&& EnablerKernel::requiresMetInCity(*pCapital, EDGEB_BUILDINGS, (int)eLoopBuilding, false, &kWith);
+
+			const bool bValidWithout =
+				kOverlayWithout.inTree(kCapitalBuildings, EDGEB_BUILDINGS, (int)eLoopBuilding)
+				&& EnablerKernel::requiresMetInCity(*pCapital, EDGEB_BUILDINGS, (int)eLoopBuilding, false, &kWithout);
+
+			if (bValidWith == bValidWithout)
+			{
+				continue;   // the swap changes nothing for this building
+			}
+			const int iNumInstancesToScore = isLimitedWonder(eLoopBuilding)
+				? 1 : std::max(getNumCities(), getBuildingCount(eLoopBuilding) + getNumCities() / 4);
+			const int iBuildingValue = (pCapital->AI_buildingValue(eLoopBuilding, 0) * iNumInstancesToScore) / 6;
+
+			// Gains the ability to construct it, or loses it.
+			iValue += bValidWith ? iBuildingValue : -iBuildingValue;
 		}
 
 		//TB Note: I hope I did this ok... I broke it down a little since the bools used in the building example were not termed to provide very strong clarity enough to 'get' what they were accomplishing

@@ -102,6 +102,11 @@ class CvLeaderHeadInfo : public CvInfo
 {
 public:
 
+	// The research search depth an unauthored leader uses -- the value the picking logic hardcoded before the
+	// knob existed, so replacing the hardcode changes no behaviour on its own. ONE named home, read by both the
+	// mapFrom default and resetMapped, so the two can never drift into disagreeing about "unauthored".
+	enum { DEFAULT_RESEARCH_SEARCH_DEPTH = 3 };
+
 	CvLeaderHeadInfo();
 
 	virtual void mapFrom(const picojson::value& entity);
@@ -145,6 +150,14 @@ public:
 	int getBuildUnitProb() const { return m_iBuildUnitProb; }
 	int getFreedomAppreciation() const { return m_iFreedomAppreciation; }
 	int getVassalPowerModifier() const { return m_iVassalPowerModifier; }
+	// THE RESEARCH SEARCH DEPTH -- how many hops beyond the researchable frontier this leader will look when
+	// picking a tech ([enabler.md] par.8: "the ONE knob that tunes how far ahead an AI commits", owner). It
+	// belongs to the PICKING logic, never to the enabler, and it is personality rather than a constant: a
+	// deeper search is what produces beelining, so this is the dial that governs it
+	// ([AGENTS.md] AI valuation of ENABLEMENT -- relaxing enablement pull is only ever an improvement).
+	// Absent in data ⇒ DEFAULT_RESEARCH_SEARCH_DEPTH, so an unauthored leader behaves exactly as the
+	// hardcode it replaces and per-leader values are pure data when the community authors them.
+	int getResearchSearchDepth() const { return m_iResearchSearchDepth; }
 	// ai.war.* -- the war-planning knobs (distinct quantities authored as bare scalars, not a keyed set).
 	int getMaxWarRand() const { return m_iMaxWarRand; }
 	int getMaxWarNearbyPowerRatio() const { return m_iMaxWarNearbyPowerRatio; }
@@ -201,6 +214,7 @@ private:
 	int m_iEspionageWeight;
 	int m_iWonderConstructRand;
 	int m_iBuildUnitProb;
+	int m_iResearchSearchDepth;
 	int m_iFreedomAppreciation;
 	int m_iVassalPowerModifier;
 	int m_iMaxWarRand;
