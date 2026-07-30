@@ -22,6 +22,7 @@
 #include "CvBonusInfo.h"
 #include "CvInfos.h"
 #include "CvHeritageInfo.h"
+#include "CvProcessInfo.h"
 #include "CvUnitCombatInfo.h"
 #include "CvTraitInfo.h"
 #include "Enabler/CvCapabilities.h"     // the empire capability union + the authored-key vocabulary
@@ -2549,12 +2550,16 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 		}
 		else
 		{
-			for (int iI = 0; (iGreed < 140 && iI < GC.getNumProcessInfos()); iI++)
+			// The maintained PROCESS frontier is already gate-passed, so the availability test disappears with
+			// the scan ([enabler.md] §6: the AI's decisions iterate ONLY the frontier).
+			std::vector<int> availableProcesses;
+			getAvailableProcesses(availableProcesses);
+
+			for (std::vector<int>::const_iterator itProcess = availableProcesses.begin();
+				iGreed < 140 && itProcess != availableProcesses.end(); ++itProcess)
 			{
-				if (canMaintain((ProcessTypes)iI))
-				{
-					iGreed = std::max(iGreed, 100 + 20 * std::min(2, (GC.getProcessInfo((ProcessTypes)iI).getProductionToCommerce(COMMERCE_CULTURE, CASC_SCOPE_CITY) / 100)));
-				}
+				const CvProcessInfo& kProcess = GC.getProcessInfo((ProcessTypes)*itProcess);
+				iGreed = std::max(iGreed, 100 + 20 * std::min(2, (kProcess.getProductionToCommerce(COMMERCE_CULTURE, CASC_SCOPE_CITY) / 100)));
 			}
 
 			for (int iI = 0; (iGreed < 140 && iI < GC.getNumSpecialistInfos()); iI++)
@@ -2578,10 +2583,17 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 	// culture building process
 	if (!bEasyCulture)
 	{
-		for (int iJ = 0; iJ < GC.getNumProcessInfos(); iJ++)
+		// The hand-rederived tech gate goes with the scan: a LISTED process is one the enabler has already
+		// gated, so the only question left is what the process converts into ([enabler.md] §6).
+		std::vector<int> availableProcesses;
+		getAvailableProcesses(availableProcesses);
+
+		for (std::vector<int>::const_iterator itProcess = availableProcesses.begin();
+			itProcess != availableProcesses.end(); ++itProcess)
 		{
-			if (GET_TEAM(getTeam()).isHasTech(GC.getProcessInfo((ProcessTypes)iJ).getTechPrereq())
-			&& GC.getProcessInfo((ProcessTypes)iJ).getProductionToCommerce(COMMERCE_CULTURE, CASC_SCOPE_CITY) > 0)
+			const CvProcessInfo& kProcess = GC.getProcessInfo((ProcessTypes)*itProcess);
+
+			if (kProcess.getProductionToCommerce(COMMERCE_CULTURE, CASC_SCOPE_CITY) > 0)
 			{
 				bEasyCulture = true;
 				break;
@@ -5378,16 +5390,21 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 
 	if (bIsGoodProcess && bFinancialTrouble)
 	{
+		// The maintained frontier replaces the scan + its hand-rederived tech gate ([enabler.md] §6).
 		bool bHaveGoodProcess = false;
-		for (int iJ = 0; iJ < GC.getNumProcessInfos(); iJ++)
+		std::vector<int> availableProcesses;
+		getAvailableProcesses(availableProcesses);
+
+		for (std::vector<int>::const_iterator itProcess = availableProcesses.begin();
+			itProcess != availableProcesses.end(); ++itProcess)
 		{
-			if (kTeam.isHasTech(GC.getProcessInfo((ProcessTypes)iJ).getTechPrereq()))
+			const CvProcessInfo& kProcess = GC.getProcessInfo((ProcessTypes)*itProcess);
+
+			if ((kProcess.getProductionToCommerce(COMMERCE_GOLD, CASC_SCOPE_CITY)
+				+ kProcess.getProductionToCommerce(COMMERCE_RESEARCH, CASC_SCOPE_CITY)) > 0)
 			{
-				bHaveGoodProcess = (GC.getProcessInfo((ProcessTypes)iJ).getProductionToCommerce(COMMERCE_GOLD, CASC_SCOPE_CITY) + GC.getProcessInfo((ProcessTypes)iJ).getProductionToCommerce(COMMERCE_RESEARCH, CASC_SCOPE_CITY)) > 0;
-				if (bHaveGoodProcess)
-				{
-					break;
-				}
+				bHaveGoodProcess = true;
+				break;
 			}
 		}
 		if (!bHaveGoodProcess)
