@@ -146,6 +146,14 @@ public:
 	// Counts/configs/FKs/flags are plain typed values (the identity.cityLimit convention: a config is human, a
 	// MAGNITUDE is ×100 -- the two ×100 members here are the commerce magnitudes).
 	int getWorth() const                    { return m_iWorth; }                    // AI trade/conquest valuation config
+	// ai.flavours -- FLAVOR_* id -> weight (sparse; absent = 0). json §7 `ai` METADATA: it never affects rules,
+	// only how the AI weights this building. Same shape + shared reader as CvLeaderHeadInfo's.
+	int getFlavorValue(FlavorTypes eFlavor) const;
+	// freeSpecialists.city.any -- the GENERIC free-specialist slots this building grants ([modifier.md §6]:
+	// the count-by-type leaf, where the key IS the type or `any`). The AMOUNT is the cascade's half of the
+	// two-part seam; PLACEMENT stays the engine's. Materialized at mapFrom from the compiled entry list, so
+	// this is a bare member read ([DEC-materialize-at-mapfrom]) and human-scaled (the COUNT unit stores ×100).
+	int getFreeSpecialistsAny() const { return m_iFreeSpecialistsAny; }
 	int getMilitaryWorth() const            { return m_iMilitaryWorth; }
 	int getConquestProbability() const      { return m_iConquestProbability; }      // survive-conquest percent config
 	int getVisibilityPriority() const       { return m_iVisibilityPriority; }
@@ -235,6 +243,8 @@ private:
 	std::vector<int> m_aiMapCategories;
 	std::vector<int> m_aiEnabledCivilizations;
 	std::map<int, int> m_victoryThresholds;
+	std::map<int, int> m_flavours;                  // ai.flavours: FLAVOR_* id -> weight
+	int m_iFreeSpecialistsAny;                      // freeSpecialists.city.any (human count)
 	int m_aiStateReligionCommerce[NUM_COMMERCE_TYPES];
 	int m_aiCommerceDoubleTime[NUM_COMMERCE_TYPES];
 	// Fed from the PROPERTY_* families (CascadePropertyBridge::bridgeFamilies -- property-audit.md).

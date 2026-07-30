@@ -4557,7 +4557,10 @@ const std::vector<CvCity::ScoredBuilding> CvCityAI::AI_bestBuildingsThreshold(in
 	for (std::vector<int>::const_iterator it = vecConstructible.begin(), itEnd = vecConstructible.end(); it != itEnd; ++it)
 	{
 		const BuildingTypes eBuilding = (BuildingTypes)*it;
-		if (!GET_PLAYER(getOwner()).isBuildingMaxedOut(eBuilding, GC.getBuildingInfo(eBuilding).getExtraPlayerInstances()))
+		// The `allowed` cap IS the authored real number ([json.md §4.4]) -- there is no "extra instances" term to
+		// add on top of it any more, so the cap is asked plainly. (The enabler applies the same self-caps in its
+		// own gate; this stays only as the AI's cheap pre-filter.)
+		if (!GET_PLAYER(getOwner()).isBuildingMaxedOut(eBuilding))
 		{
 			possibles.push_back(eBuilding);
 		}
@@ -4651,29 +4654,29 @@ bool CvCityAI::AI_scoreBuildingsFromListThreshold(std::vector<ScoredBuilding>& s
 			{
 				iValue = AI_buildingValueThreshold(eBuilding, iFocusFlags, iMinThreshold, bMaximizeFlaggedValue);
 
-				// If the building also gives a free building then factor that in as well
-				const BuildingTypes eFreeBuilding = buildingInfo.getFreeBuilding();
-				if (eFreeBuilding != NO_BUILDING && eFreeBuilding != NO_BUILDING)
-				{
-					// Add value of the free building taking into account our focus, and scale it by the number of cities that don't
-					// yet have the building.
-					iValue += (AI_buildingValue(eFreeBuilding, iFocusFlags) * (player.getNumCities() - player.getBuildingCountPlusMaking(eFreeBuilding)));
-				}
-
-				// If this new building replaces an old one, subtract the old value.
+				// If this new building supersedes an old one, subtract the old value. The superseded set is a
+				// FORWARD EDGE FETCH off the candidate's own compiled `replaces` edge -- the same shape the
+				// `enables` walk below uses ([DEC-one-reverse-view]: an info already carries its own edges), not
+				// a legacy keyed table.
 				if (iValue > 0)
 				{
 					PROFILE("CvCityAI::AI_bestBuildingThreshold.Replacement");
 
-					for (int iI = 0; iI < buildingInfo.getNumReplacedBuilding(); iI++)
+					const CvEdges* pReplaceEdges = buildingInfo.getEdges();
+					const std::vector<int>* pReplaced =
+						(pReplaceEdges != NULL) ? pReplaceEdges->find(EDGEF_REPLACES, EDGEB_BUILDINGS) : NULL;
+					if (pReplaced != NULL)
 					{
-						const BuildingTypes eBuildingX = static_cast<BuildingTypes>(buildingInfo.getReplacedBuilding(iI));
-
-						if (isActiveBuilding(eBuildingX))
+						for (std::vector<int>::const_iterator it = pReplaced->begin(); it != pReplaced->end(); ++it)
 						{
-							PROFILE("AI_bestBuildingThreshold.Replace");
+							const BuildingTypes eBuildingX = static_cast<BuildingTypes>(*it);
 
-							iValue -= AI_buildingValueThreshold(eBuildingX, iFocusFlags, iMinThreshold, bMaximizeFlaggedValue, true);
+							if (isActiveBuilding(eBuildingX))
+							{
+								PROFILE("AI_bestBuildingThreshold.Replace");
+
+								iValue -= AI_buildingValueThreshold(eBuildingX, iFocusFlags, iMinThreshold, bMaximizeFlaggedValue, true);
+							}
 						}
 					}
 				}
@@ -4703,23 +4706,6 @@ bool CvCityAI::AI_scoreBuildingsFromListThreshold(std::vector<ScoredBuilding>& s
 						iValue += AI_buildingValueThreshold(eDependent, iFocusFlags, 0, false, true) / 2;
 					}
 				}
-			}
-
-			// If the buildings provides a free area building as well then adjust the score up
-			const BuildingTypes eFreeAreaBuilding = buildingInfo.getFreeAreaBuilding();
-			if (eFreeAreaBuilding != NO_BUILDING)
-			{
-				// Score is weighted by the number of cities that don't have the free building
-				int weighting = player.getNumCities() - player.getBuildingCountPlusMaking(eFreeAreaBuilding);
-				// Scaled by the ratio of cities in the area / total, giving a guess as to how important this area is in general
-				weighting = (100 * weighting * area()->getCitiesPerPlayer(getOwner())) / player.getNumCities();
-				// If we have none of the free buildings at all then also increase the score weighting
-				if (!hasBuilding(eFreeAreaBuilding))
-				{
-					weighting++;
-				}
-				// Finally scale by the actual value of the free building based on our focus
-				iValue += (AI_buildingValue(eFreeAreaBuilding, iFocusFlags) * weighting) / 100;
 			}
 
 			// If we got here, and the building value is above zero, then it certainly
@@ -4956,6 +4942,32 @@ int CvCityAI::AI_buildingValueThresholdOriginal(BuildingTypes eBuilding, int iFo
 	return iResult;
 }
 
+// The candidate's expected contribution to ONE (family, kind) slot AS EXPERIENCED IN THIS CITY, in the HUMAN
+// scale the surrounding AI weights are written in. It is the [patterns.md] VALUATION PROTOCOL in one place: the
+// live contexts go in and the resolved DELTA comes out, so a conditioned deposit is evaluated against this
+// city's actual state instead of contributing blind, and the enabler's operating verdict is fed in for free.
+//
+// ⚖ The ×100 reduction is decided PER UNIT, never per family ([fixed-point-and-scales.md] THE OUT BOUNDARY):
+// a FLAT is an AMOUNT carried ×100 and reduces here, a PERCENT is a whole number and must NOT -- a blanket
+// family-wide ÷100 would silently zero every percent slot it touched. The canonical unit comes from the
+// vocabulary (`infoKindUnit`), so no call site has to know which side of that split its kind sits on.
+static int cai_expectedHere(const CvBuildingInfo& kBuilding, ModifierFamily eFamily, int iKind,
+	const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup* plotGroup)
+{
+	const CvCascUnit eUnit = infoKindUnit(eFamily, iKind, CASC_SCOPE_CITY);
+	const int iRaw = kBuilding.expectedModifier(eFamily, iKind, eUnit, cityContext, empireContext, plotGroup);
+	return (eUnit == CASC_UNIT_PERCENT) ? iRaw : iRaw / 100;
+}
+
+// The scalar-straggler twin of cai_expectedHere. Same contract, same PER-UNIT reduction: a percent scalar
+// is a whole number and passes through, a flat is ×100 and reduces here.
+static int cai_expectedScalarHere(const CvBuildingInfo& kBuilding, InfoScalar eScalar, CvCascUnit eUnit,
+	const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup* plotGroup)
+{
+	const int iRaw = kBuilding.expectedScalar(eScalar, eUnit, cityContext, empireContext, plotGroup);
+	return (eUnit == CASC_UNIT_PERCENT) ? iRaw : iRaw / 100;
+}
+
 int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding, int iFocusFlags, int iThreshold, bool bMaximizeFlaggedValue, bool bIgnoreCanBuildReplacement, bool bForTech)
 {
 	PROFILE_FUNC();
@@ -5100,10 +5112,10 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 		int iSpecialistExtraHealth = 0;
 		int iSpecialistExtraHappy = 0;
 
-		if (kBuilding.getNumPopulationEmployed() > 0)
-		{
-			removeWorstCitizenActualEffects(kBuilding.getNumPopulationEmployed(), iSpecialistGreatPeopleRate, iSpecialistExtraHappy, iSpecialistExtraHealth, paiFreeSpecialistYield, paiFreeSpecialistCommerce);
-		}
+		// ⛔ The employed-population discount is GONE with its field: `iNumPopulationEmployed` exists only in the
+		// building SCHEMA and is authored by ZERO buildings, so this branch could never fire. (The employed-
+		// population COMPOSITION is a live concern elsewhere -- it is one of the dormancy verdict's runtime legs,
+		// [enabler.md §8] -- but that is the operate gate, not this valuation.)
 
 		int aiFreeSpecialistYield[NUM_YIELD_TYPES];
 		for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
@@ -5120,7 +5132,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 		SAFE_DELETE_ARRAY(paiFreeSpecialistCommerce);
 		SAFE_DELETE_ARRAY(paiFreeSpecialistYield);
 
-		for (int iI = 1; iI < kBuilding.getFreeSpecialist() + 1; iI++)
+		for (int iI = 1; iI < kBuilding.getFreeSpecialistsAny() + 1; iI++)
 		{
 			const SpecialistTypes eNewSpecialist = getBestSpecialist(iI);
 			if (eNewSpecialist == NO_SPECIALIST) break;
@@ -5166,26 +5178,11 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 			return 0;
 		}
 
-		if (!bIgnoreCanBuildReplacement)
-		{
-			PROFILE("CvCityAI::AI_buildingValueThresholdOriginal.Replacements");
-
-			for (int iI = 0; iI < kBuilding.getNumReplacementBuilding(); ++iI)
-			{
-				if ((getBuildingAvailability((BuildingTypes)kBuilding.getReplacementBuilding(iI)) == EnablerDomain::STATE_LISTED))
-				{
-					return 0;
-				}
-			}
-		}
-
-		foreach_(const ReligionModifier & pair, kBuilding.getReligionChanges())
-		{
-			if (!kTeam.hasHolyCity(pair.first))
-			{
-				return 0;
-			}
-		}
+		// ⛔ The "is a building that replaces me already available?" re-derivation is GONE -- the ENABLER
+		// already answers it. Building replacement IS dormancy ([enabler.md §2/§3]), and `bd_gate` gates out a
+		// candidate whose `dormantTriggers` successor is present in the city (plus the HIDE_REPLACED option's
+		// reachable-successor case). Asking it again here was a second implementation of that gate
+		// ([DEC-single-implementation]) reading a legacy getter to do it.
 
 		int iPass1Value = 0;
 
@@ -5200,8 +5197,15 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 			{
 				iPass1Value = iValue;
 			}
-			iValue -= kBuilding.getInsidiousness();
-			iValue += kBuilding.getInvestigation();
+			// The in-city criminal contest ([json.md §6] `underworld`): insidiousness is what the candidate
+			// hands the criminals, investigation what it hands the law. Asked as the WHAT-IF against this
+			// city's live contexts, so a conditioned entry resolves here rather than contributing blind.
+			iValue -= kBuilding.expectedModifier(
+				MODFAM_UNDERWORLD, UNDERWORLD_INSIDIOUSNESS, CASC_UNIT_FLAT,
+				getCityContext(), kOwner.getEmpireContext(), plotGroup(getOwner())) / 100;
+			iValue += kBuilding.expectedModifier(
+				MODFAM_UNDERWORLD, UNDERWORLD_INVESTIGATION, CASC_UNIT_FLAT,
+				getCityContext(), kOwner.getEmpireContext(), plotGroup(getOwner())) / 100;
 
 			if ((iFocusFlags & BUILDINGFOCUS_WORLDWONDER) || (iPass > 0))
 			{
@@ -5256,56 +5260,51 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 					bool bLandWar = bDefense || pArea->getAreaAIType(getTeam()) == AREAAI_OFFENSIVE || pArea->getAreaAIType(getTeam()) == AREAAI_MASSING;
 					bool bDanger = AI_isDanger();
 
+					// The DEFENSE family, asked as the what-if against this city ([json.md §6]: one family, kinds
+					// name the component). Each kind resolves through the ONE valuation with the live contexts,
+					// so an empire- or team-scope defense deposit is already folded into the answer experienced
+					// HERE and needs no separate all-cities term.
 					if (bDanger || bLandWar)
 					{
-						iValue += kBuilding.getAdjacentDamagePercent() * 10;
+						iValue += cai_expectedHere(kBuilding, MODFAM_DEFENSE, DEFENSE_ADJACENT_DAMAGE,
+							getCityContext(), kOwner.getEmpireContext(), plotGroup(getOwner())) * 10;
 					}
-
 
 					iValue += kBuilding.isProtectedCulture() ? 50 : 0;
-					iValue += kBuilding.getOccupationTimeModifier() / 20;
 
-					if (kBuilding.getNoEntryDefenseLevel() > 0 && kBuilding.getNoEntryDefenseLevel() < getTotalDefense(false))
+					const int iNoEntry = cai_expectedHere(kBuilding, MODFAM_DEFENSE, DEFENSE_NO_ENTRY_LEVEL,
+						getCityContext(), kOwner.getEmpireContext(), plotGroup(getOwner()));
+					if (iNoEntry > 0 && iNoEntry < getTotalDefense(false))
 					{
-						iValue += getTotalDefense(false) - kBuilding.getNoEntryDefenseLevel() / 2;
-					}
-					if (kBuilding.getNumUnitFullHeal() > 0)
-					{
-						iValue += kBuilding.getNumUnitFullHeal() * 50;
+						iValue += getTotalDefense(false) - iNoEntry / 2;
 					}
 
-					iValue += kBuilding.getBombardDefenseModifier() / 4;
+					iValue += cai_expectedHere(kBuilding, MODFAM_DEFENSE, DEFENSE_BOMBARD,
+						getCityContext(), kOwner.getEmpireContext(), plotGroup(getOwner())) / 4;
 
 					if (GC.getGame().isOption(GAMEOPTION_COMBAT_SURROUND_DESTROY))
 					{
-						iValue += kBuilding.getLocalDynamicDefense() / 2;
+						iValue += cai_expectedHere(kBuilding, MODFAM_DEFENSE, DEFENSE_DYNAMIC,
+							getCityContext(), kOwner.getEmpireContext(), plotGroup(getOwner())) / 2;
 					}
-					iValue += kBuilding.getLocalCaptureProbabilityModifier() / 6;
-					iValue += kBuilding.getLocalCaptureResistanceModifier() / 3;
-					iValue -= kBuilding.getRiverDefensePenalty() / 2;
-					iValue += kBuilding.getMinDefense();
-					iValue += kBuilding.getBuildingDefenseRecoverySpeedModifier() / 20;
-					iValue += kBuilding.getCityDefenseRecoverySpeedModifier() / 5;
+					iValue -= cai_expectedHere(kBuilding, MODFAM_DEFENSE, DEFENSE_RIVER_PENALTY,
+						getCityContext(), kOwner.getEmpireContext(), plotGroup(getOwner())) / 2;
+					iValue += cai_expectedHere(kBuilding, MODFAM_DEFENSE, DEFENSE_MIN,
+						getCityContext(), kOwner.getEmpireContext(), plotGroup(getOwner()));
+					iValue += cai_expectedHere(kBuilding, MODFAM_DEFENSE, DEFENSE_BUILDING_RECOVERY,
+						getCityContext(), kOwner.getEmpireContext(), plotGroup(getOwner())) / 20;
+					iValue += cai_expectedHere(kBuilding, MODFAM_DEFENSE, DEFENSE_CITY_RECOVERY,
+						getCityContext(), kOwner.getEmpireContext(), plotGroup(getOwner())) / 5;
 				}
 
-				iValue += kBuilding.getNationalCaptureResistanceModifier();
-
-				//TB Note: Once we have improved methods of evaluating the value of a given combat class and an ability to evaluate the strength
-				//of a given combat class as it exists in volume among perceived or real enemies, we need to update the following to something
-				//more intricate and accurate.  These are just semi-sufficient patches 'for now'.
-				for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
-				{
-					iValue += kBuilding.getUnitCombatDefenseAgainstModifier(iI) / 2;
-				}
-
-				iValue += -kBuilding.getAirModifier() / 4;
-				iValue += -kBuilding.getNukeModifier() / 4;
-
-				iValue += ((kBuilding.getAllCityDefenseModifier() * iNumCities) / 5);
+				iValue += -cai_expectedHere(kBuilding, MODFAM_DEFENSE, DEFENSE_AIR,
+					getCityContext(), kOwner.getEmpireContext(), plotGroup(getOwner())) / 4;
+				iValue += -cai_expectedHere(kBuilding, MODFAM_DEFENSE, DEFENSE_NUKE,
+					getCityContext(), kOwner.getEmpireContext(), plotGroup(getOwner())) / 4;
 
 				iValue += kBuilding.getAirlift() * 25;
 
-				if (kBuilding.isAreaBorderObstacle() && !GC.getGame().isOption(GAMEOPTION_BARBARIAN_NONE))
+				if (kBuilding.isBorderObstacle() && !GC.getGame().isOption(GAMEOPTION_BARBARIAN_NONE))
 				{
 					int iTempValue = iNumCitiesInArea * 3 / 2;
 					//The great wall is much more valuable with more barbarian activity.
@@ -5319,14 +5318,15 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 
 			if ((iFocusFlags & BUILDINGFOCUS_ESPIONAGE) || (iPass > 0))
 			{
-				iValue += kBuilding.getEspionageDefenseModifier() / 8;
+				iValue += cai_expectedScalarHere(kBuilding, SCALAR_ESPIONAGE_DEFENSE, CASC_UNIT_FLAT,
+					getCityContext(), kOwner.getEmpireContext(), plotGroup(getOwner())) / 8;
 			}
 
 
 			if (((iFocusFlags & BUILDINGFOCUS_HAPPY) || iPass > 0)
 			// If we're evaluating a building we already have (e.g. - for civic enabling/disabling)
 			//	and it gives no unhealthy and that's the reason we have it, count it!
-			&& (!isNoUnhappiness() || isActiveBuilding(eBuilding) && kBuilding.isNoUnhappiness()))
+			&& (!isNoUnhappiness() || isActiveBuilding(eBuilding) && kBuilding.isAbolishedAnger()))
 			{
 				PROFILE("CvCityAI::AI_buildingValueThresholdOriginal.Happy");
 
@@ -5346,7 +5346,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 
 				//Fuyu ToDo: How to handle Globe Theater national wonder?
 				//For now just give massive boost if city is high food yet not one of the main production or commerce cities
-				if (kBuilding.isNoUnhappiness() && bIsLimitedWonder)
+				if (kBuilding.isAbolishedAnger() && bIsLimitedWonder)
 				{
 					iValue += (iAngryPopulation * 10) + getPopulation();
 					aiYieldRank[YIELD_FOOD] = findBaseYieldRateRank(YIELD_FOOD);
@@ -5368,14 +5368,18 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 					iValue += happynessValue(iBuildingActualHappiness, iBaseHappinessLevel, iBaseHealthLevel);
 				}
 
-				iValue += (-kBuilding.getHurryAngerModifier() * getHurryPercentAnger()) / 100;
+				iValue += (-cai_expectedScalarHere(kBuilding, SCALAR_HURRY_ANGER_MODIFIER, CASC_UNIT_PERCENT,
+					getCityContext(), kOwner.getEmpireContext(), plotGroup(getOwner())) * getHurryPercentAnger()) / 100;
 
 				for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 				{
 					iValue += (kBuilding.getCommerceHappiness(iI) * iHappyModifier) / 4;
 				}
 
-				int iWarWearinessModifer = kBuilding.getWarWearinessModifier();
+				// ⚖ ONE read: `expected*` folds team/empire scope into the answer experienced HERE, so the city and
+				// the former "global" war-weariness deposits arrive together -- the scope axis is not a second getter.
+				int iWarWearinessModifer = cai_expectedScalarHere(kBuilding, SCALAR_WAR_WEARINESS, CASC_UNIT_PERCENT,
+					getCityContext(), kOwner.getEmpireContext(), plotGroup(getOwner()));
 				if (iWarWearinessModifer != 0)
 				{
 					if (!kTeam.isAtWar())
@@ -5390,7 +5394,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 				iValue += (kBuilding.getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_EMPIRE) * (iNumCities - 1) * 8);
 
 				int iWarWearinessPercentAnger = kOwner.getWarWearinessPercentAnger();
-				int iGlobalWarWearinessModifer = kBuilding.getGlobalWarWearinessModifier();
+				int iGlobalWarWearinessModifer = 0;   // folded into the read above (scope is an axis, not a getter)
 				if (iGlobalWarWearinessModifer != 0)
 				{
 					iValue += (-(((iGlobalWarWearinessModifer * iWarWearinessPercentAnger / 100) / GC.getPERCENT_ANGER_DIVISOR())) * (iNumCities - 1));
@@ -5855,7 +5859,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 
 				iValue += kBuilding.getAirUnitCapacity() * (getPopulation() * 2 + 10);
 				iValue += -kBuilding.getNukeModifier() / (bMetAnyCiv ? 10 : 20);
-				iValue += kBuilding.getFreeSpecialist() * 16;
+				iValue += kBuilding.getFreeSpecialistsAny() * 16;
 				iValue += kBuilding.getAreaFreeSpecialist() * iNumCitiesInArea * 12;
 				iValue += kBuilding.getGlobalFreeSpecialist() * iNumCities * 12;
 				iValue += kBuilding.getWorkerSpeedModifier() * kOwner.AI_getNumAIUnits(UNITAI_WORKER) / 10;
@@ -12285,7 +12289,7 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 	}
 
 	//	Some things cause us to consider the building in any role
-	if (kBuilding.getFreeSpecialist() > 0 ||
+	if (kBuilding.getFreeSpecialistsAny() > 0 ||
 		kBuilding.getAreaFreeSpecialist() > 0 ||
 		kBuilding.getGlobalFreeSpecialist() > 0 ||
 		(kBuilding.getPropertyManipulators() != NULL && kBuilding.getPropertyManipulators()->getNumSources() > 0))
@@ -12438,7 +12442,7 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 		if (kBuilding.getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_CITY) > 0
 			|| kBuilding.getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_EMPIRE) > 0
 			|| kBuilding.getStateReligionHappiness() > 0
-			|| kBuilding.isNoUnhappiness()
+			|| kBuilding.isAbolishedAnger()
 			|| kBuilding.getWarWearinessModifier() < 0
 			|| kBuilding.getGlobalWarWearinessModifier() < 0
 			|| kBuilding.getCommerceHappiness(NO_COMMERCE) > 0

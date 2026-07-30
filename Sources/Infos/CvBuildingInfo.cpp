@@ -11,6 +11,7 @@
 
 CvBuildingInfo::CvBuildingInfo()
 	: m_iWorth(0)
+	, m_iFreeSpecialistsAny(0)
 	, m_iMilitaryWorth(0)
 	, m_iConquestProbability(0)
 	, m_iVisibilityPriority(0)
@@ -73,6 +74,11 @@ namespace
 	}
 }
 
+int CvBuildingInfo::getFlavorValue(FlavorTypes eFlavor) const
+{
+	return mapValueOrDefault(m_flavours, (int)eFlavor);
+}
+
 void CvBuildingInfo::mapFrom(const picojson::value& entity)
 {
 	CvInfo::mapFrom(entity);   // core reading (type / text keys) + the section dispatch (compiles m_modifiers)
@@ -81,6 +87,8 @@ void CvBuildingInfo::mapFrom(const picojson::value& entity)
 	m_aiMapCategories.clear();
 	m_aiEnabledCivilizations.clear();
 	m_victoryThresholds.clear();
+	m_flavours.clear();
+	m_iFreeSpecialistsAny = 0;
 
 	// PROPERTY_* per-turn SOURCES: a building's <PROPERTY_X>.city.flat (the crime/disease/pollution cuts and
 	// adders that make the solver's numbers move) deposits in ITS OWN city -- NO_RELATION, the legacy building
@@ -118,6 +126,29 @@ void CvBuildingInfo::mapFrom(const picojson::value& entity)
 	const picojson::object* pIdentity = jsonChildObj(entityObj, "identity");
 	const picojson::object& identity = (pIdentity != NULL) ? *pIdentity : kEmptyIdentity;
 	m_iWorth = jsonIdInt(identity, "worth");
+	// json §7 `ai` METADATA (flavours) -- AI weighting only, never a rule. Shared reader, same as the
+	// leaderhead's; absent block leaves the map empty, so an absent flavour reads 0.
+	{
+		const picojson::object* pAiMeta = jsonChildObj(entityObj, "ai");
+		if (pAiMeta != NULL) { jsonReadFlavours(*pAiMeta, m_flavours); }
+	}
+
+	// freeSpecialists.city.`any` -- the generic slot count. Read off the compiled entry list ONCE here (the
+	// one sanctioned load-time scan source, patterns.md § Materialize at mapFrom): a keyed/count-by-type leaf
+	// is an entry-list read by design and never folds into a point-read slot ([modifier.md §5]).
+	{
+		m_iFreeSpecialistsAny = 0;
+		const int iAnySeg = modSegmentLookup("any");
+		const std::vector<CvModEntry*>& kEntries = m_modifiers.entries();
+		for (size_t iEntry = 0; iEntry < kEntries.size(); ++iEntry)
+		{
+			const CvModEntry* pEntry = kEntries[iEntry];
+			if (pEntry->family != MODFAM_FREE_SPECIALISTS || pEntry->scope != CASC_SCOPE_CITY) continue;
+			if (iAnySeg < 0) continue;
+			if (pEntry->targetSeg != iAnySeg && pEntry->memberSeg != iAnySeg) continue;
+			m_iFreeSpecialistsAny += pEntry->value / 100;   // the COUNT unit is stored ×100
+		}
+	}
 	m_iMilitaryWorth = jsonIdInt(identity, "militaryWorth");
 	m_iConquestProbability = jsonIdInt(identity, "conquestProbability");
 	m_iVisibilityPriority = jsonIdInt(identity, "visibilityPriority");
