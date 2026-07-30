@@ -5785,7 +5785,10 @@ int CvPlayerAI::AI_techBuildingValue(TechTypes eTech, int iPathLength, bool& bEn
 					iBuildingValue += iOwnHealth * 150;
 				}
 
-				if (iPathLength <= 1 && kLoopBuilding.getPrereqAndTech() == eTech
+				// The loop is driven by eTech's own `enables.buildings`, so "is eTech this building's prereq"
+				// asked what the driver already guarantees -- and asked it through a getter the rebuilt info
+				// does not carry. Membership in the edge set IS the answer.
+				if (iPathLength <= 1
 				&& getTotalPopulation() > 5 && isWorldWonder(eLoopBuilding)
 				&& !GC.getGame().isBuildingMaxedOut(eLoopBuilding))
 				{
@@ -6067,7 +6070,9 @@ int CvPlayerAI::AI_techUnitValue(TechTypes eTech, int iPathLength, bool& bEnable
 			const CvUnitInfo& unitX = GC.getUnitInfo(eUnitX);
 			iValue += 200;
 
-			if (unitX.getPrereqAndTech() == eTech)
+			// Same as the building loop above: this loop IS eTech's `enables.units`, so the old
+			// "is eTech this unit's prereq" test was the driver's own guarantee restated. Kept as a scope
+			// block so the accumulation below reads unchanged.
 			{
 				int iUnitValue = 0;
 				int iNavalValue = 0;
@@ -25047,9 +25052,11 @@ void CvPlayerAI::AI_doEnemyUnitData()
 	{
 		if (aiUnitCounts[iI] > 0)
 		{
-			TechTypes eTech = (TechTypes)GC.getUnitInfo((UnitTypes)iI).getPrereqAndTech();
-
-			int iEraDiff = (eTech == NO_TECH) ? 4 : std::min(4, getCurrentEra() - GC.getTechInfo(eTech).getEra());
+			// The unit's ERA is derived at load from its first prereq-tech atom (CvUnitInfo::deriveAtRegistryComplete),
+			// so the era question is asked of the unit directly instead of hopping through a prereq getter to
+			// reach the tech's era -- one read where there were two, and the hop's getter no longer exists.
+			const int iUnitEra = GC.getUnitInfo((UnitTypes)iI).getEra();
+			int iEraDiff = (iUnitEra == NO_ERA) ? 4 : std::min(4, getCurrentEra() - iUnitEra);
 
 			if (iEraDiff > 1)
 			{
@@ -25102,10 +25109,22 @@ int CvPlayerAI::AI_calculateUnitAIViability(UnitAITypes eUnitAI, DomainTypes eDo
 	{
 		const CvUnitInfo& kUnitInfo = GC.getUnitInfo((UnitTypes)iI);
 
-		if (kUnitInfo.getDomainType() == eDomain)
+		// The DOMAIN is a tag now ([tags.md]: DOMAIN_* stays the engine enum movement and stacking are wired to,
+		// while the classification view answers "what IS this unit"). ⚑ If a second consumer needs this mapping,
+		// it belongs as one composition on CvTagReads rather than a copy here.
+		const CvClassificationBlock* pUnitTags = kUnitInfo.getTags();
+		const bool bDomainMatches =
+			   (eDomain == DOMAIN_SEA  && CvTagReads::seaUnit(pUnitTags))
+			|| (eDomain == DOMAIN_LAND && CvTagReads::landUnit(pUnitTags))
+			|| (eDomain == DOMAIN_AIR  && CvTagReads::airUnit(pUnitTags));
+
+		if (bDomainMatches)
 		{
-			TechTypes eTech = (TechTypes)kUnitInfo.getPrereqAndTech();
-			if (m_aiUnitWeights[iI] > 0 || GET_TEAM(getTeam()).isHasTech((eTech)))
+			// "Do we hold what unlocks it" is the enabler's membership verdict, not a prereq-tech lookup: a unit
+			// is in CAN GET exactly when something held enables it, which is the question the old isHasTech
+			// asked one edge at a time.
+			if (m_aiUnitWeights[iI] > 0
+			|| getUnitAvailabilityAnywhere((UnitTypes)iI) >= EnablerDomain::STATE_GREYED)
 			{
 				if (kUnitInfo.getUnitAIType(eUnitAI))
 				{
@@ -26903,6 +26922,18 @@ int CvPlayerAI::AI_militaryBonusVal(BonusTypes eBonus)
 	PROFILE_EXTRA_FUNC();
 	int iValue = 0;
 
+	// Only the units whose `requires` names this bonus can be carried by it ([DEC-one-reverse-view]); the
+	// trainable union below is then the "and I could actually field it" half.
+	std::set<int> dependentUnits;
+	EnablerKernel::addEdge(EnablerKernel::infoFor(EDGEB_BONUSES, (int)eBonus),
+		EDGEF_REQUIRED_BY, EDGEB_UNITS, dependentUnits);
+
+	CvCascadeHypothetical kMilWith;
+	kMilWith.present[EDGEB_BONUSES].insert((int)eBonus);
+	CvCascadeHypothetical kMilWithout;
+	kMilWithout.absent[EDGEB_BONUSES].insert((int)eBonus);
+	const CvCity* pCapital = getCapitalCity();
+
 	// the trainable-anywhere UNION, not a per-id fan over the whole database (types x cities). The accumulation
 	// below is commutative, so iteration order does not affect the total.
 	std::vector<int> vecTrainable;
@@ -26911,29 +26942,20 @@ int CvPlayerAI::AI_militaryBonusVal(BonusTypes eBonus)
 	{
 		{
 			const int iI = *it;
-			if (GC.getUnitInfo((UnitTypes)iI).getPrereqAndBonus() == eBonus)
+
+			// Does this bonus carry the unit, or merely appear among its options? The gate answers both at once
+			// (the same read the bonus-trade and base-bonus valuations make): trainable with the bonus and not
+			// without it means the bonus is LOAD-BEARING here. The old pair of tests reconstructed that from the
+			// AND/OR prereq lists and then divided by the alternatives already held -- which is precisely the
+			// case where the verdict does NOT change, and now simply scores nothing.
+			if (dependentUnits.count(iI) == 0 || pCapital == NULL)
+			{
+				continue;
+			}
+			if (EnablerKernel::requiresMetInCity(*pCapital, EDGEB_UNITS, iI, false, &kMilWith)
+			&& !EnablerKernel::requiresMetInCity(*pCapital, EDGEB_UNITS, iI, false, &kMilWithout))
 			{
 				iValue += 1000;
-			}
-
-			int iHasOrBonusCount = 0;
-			bool bFound = false;
-
-			foreach_(const BonusTypes ePrereqBonus, GC.getUnitInfo((UnitTypes)iI).getPrereqOrBonuses())
-			{
-				if (ePrereqBonus == eBonus)
-				{
-					bFound = true;
-				}
-				else if (hasBonus(ePrereqBonus))
-				{
-					iHasOrBonusCount++;
-				}
-			}
-			if (bFound)
-			{
-				iValue += 300;
-				iValue /= std::max(1, iHasOrBonusCount);
 			}
 		}
 	}
