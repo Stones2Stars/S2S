@@ -11894,9 +11894,10 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 		const AreaAITypes eAreaAI = pArea->getAreaAIType(getTeam());
 		if (eAreaAI == AREAAI_ASSAULT || eAreaAI == AREAAI_ASSAULT_MASSING)
 		{
-			for (int iI = 0; iI < GC.getNumPromotionInfos(); iI++)
+			// The unit's OWN granted promotions -- the handful it authored, not the whole registry.
+			foreach_(const int iGrantedPromotion, kUnitInfo.getGrantedPromotions())
 			{
-				if (kUnitInfo.getFreePromotions(iI) && GC.getPromotionInfo((PromotionTypes)iI).isAmphib())
+				if (GC.getPromotionInfo((PromotionTypes)iGrantedPromotion).isAmphib())
 				{
 					iValue *= 133;
 					iValue /= 100;
@@ -23839,7 +23840,7 @@ UnitTypes CvPlayerAI::AI_bestAdvancedStartUnitAI(const CvPlot* pPlot, UnitAIType
 
 				for (int iJ = 0; iJ < GC.getNumPromotionInfos(); iJ++)
 				{
-					if (kUnit.getFreePromotions(iJ))
+					if (kUnit.grantsPromotion(iJ))
 					{
 						iPromotionValue += 15;
 					}

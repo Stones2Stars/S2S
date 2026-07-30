@@ -208,6 +208,7 @@ public:
 	bool grantsPromotion(int iPromotion) const { return vectorHas(m_aiGrantedPromotions, iPromotion); }
 	const std::vector<int>& getGrantedGreatPeople() const { return m_aiGrantedGreatPeople; } // grants.greatPeople
 	const std::vector<int>& getGrantedBuildings() const { return m_aiGrantedBuildings; }     // grants.buildings
+	bool grantsBuilding(int iBuilding) const { return vectorHas(m_aiGrantedBuildings, iBuilding); }
 	// grants.greatPersonAction.<act>.{base,multiplier} -- the GP mission-payload magnitudes (the par.8
 	// `missions` carve-out's data, parked under grants today).
 	int getDiscoverBase() const { return m_iDiscoverBase; }

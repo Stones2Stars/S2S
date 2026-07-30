@@ -964,7 +964,7 @@ int CvCityAI::AI_specialistValue(SpecialistTypes eSpecialist, bool bAvoidGrowth,
 						foreach_(const BuildingTypes eBuilding, GC.getReligionInfo(eReligion).getShrineBuildings())
 						{
 							// if this unit builds or forceBuilds this building
-							if (GC.getUnitInfo(eGreatPeopleUnit).getHasBuilding(eBuilding))
+							if (GC.getUnitInfo(eGreatPeopleUnit).grantsBuilding(eBuilding))
 							{
 								bNeedProphet = true;
 								iBestSpreadValue = std::max(iBestSpreadValue, GC.getGame().countReligionLevels(eReligion));
@@ -3273,7 +3273,7 @@ void CvCityAI::AI_chooseProduction()
 				if (eBestAttackSeaUnit != NO_UNIT)
 				{
 					int iDivisor = 2;
-					if (GC.getUnitInfo(eBestAttackSeaUnit).getBombardRate() == 0)
+					if (GC.getUnitInfo(eBestAttackSeaUnit).getBombardModifier(BOMBARD_RATE, CASC_SCOPE_UNIT) == 0)
 					{
 						iDivisor = 5;
 					}
@@ -3397,7 +3397,6 @@ void CvCityAI::AI_chooseProduction()
 						player.AI_bestCityUnitAIValue(UNITAI_MISSILE_CARRIER_SEA, NULL, &eBestMissileCarrierUnit);
 						if (eBestMissileCarrierUnit != NO_UNIT)
 						{
-							FAssert(GC.getUnitInfo(eBestMissileCarrierUnit).getDomainCargo() == DOMAIN_AIR);
 
 							int iMissileCarrierAirNeeded = iMissileCarriers * GC.getUnitInfo(eBestMissileCarrierUnit).getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100;
 
@@ -3428,7 +3427,6 @@ void CvCityAI::AI_chooseProduction()
 			player.AI_bestCityUnitAIValue(UNITAI_CARRIER_SEA, NULL, &eBestCarrierUnit);
 			if (eBestCarrierUnit != NO_UNIT)
 			{
-				FAssert(GC.getUnitInfo(eBestCarrierUnit).getDomainCargo() == DOMAIN_AIR);
 
 				const int iCarrierAirNeeded = iCarriers * GC.getUnitInfo(eBestCarrierUnit).getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100;
 
@@ -4435,7 +4433,7 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, int& iBestValue, bool bAs
 			for (int iJ = GC.getNumPromotionInfos() - 1; iJ > -1; iJ--)
 			{
 				// Unit
-				if (unit.getFreePromotions(iJ))
+				if (unit.grantsPromotion(iJ))
 				{
 					iPromotionValue += 15;
 					continue;
