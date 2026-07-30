@@ -103,13 +103,6 @@
 
 - Move the what-if valuation consumers onto `expected*` — the AI candidate weighting and the build-list hover
   tooltip are ONE call ([patterns.md](../../architecture/patterns.md) THE VALUATION PROTOCOL).
-- Build the KEYED entry-list read a consumer needs ([modifier.md §5](../../specs/modifier.md)): asking what a
-  source deposits onto ONE named target (a building's happiness onto another building, a per-commerce happiness,
-  a per-unitcombat strength). ⛔ Not by folding a keyed entry into the scope package — that hands every unit the
-  melee-only bonus and nothing catches it. The AI building valuation dangles on exactly these until it exists.
-- Build the `freeSpecialists` AMOUNT read — the cascade half of the two-part seam
-  ([modifier.md §6](../../specs/modifier.md)). The family is minted and authored; nothing reads it, so the
-  valuation's free-specialist term dangles.
 - Decide where the YIELD what-if's supersession-netting lives — the enabler owns `replacedBy`, or the call site
   composes two valuations. ⛔ Not by widening `expected*` with a replaced-buildings argument.
 - Watch civic-choice STABILITY now that the cross-category half-value damper is gone (owner: drop it; if the
@@ -182,19 +175,18 @@
 - Shoot the dead `Cy*` bindings on sight as the compiler names them.
 - Serve enum resolution AND EXTENSION as a first-class operation — BUG reaches three engine enums only that way
   and MINTS new members at runtime, so a library without it forces the banned reach-around.
-- Move the `CvGameTextMgr` composers onto rendered entry lines (`appendEntryLines`).
-  ⛔ `parsePromotionHelpInternal` HAND-ROLLS ITS OWN LINE ACCRUAL — a loop summing each owned rung's getters,
-  which is a second implementation of `CvPromotionAccrual::sum`
-  ([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation)). Collapse the loop onto
-  that surface, switching on the composer's existing `bAccrueLines` (accrued for a UNIT, the promotion's own
-  getter for the pedia — the two reads the accrual header separates).
-  ⚠ Re-pointing individual reads INSIDE that loop is the trap: the site then reads as migrated while still
-  bypassing the one accrual.
+- REBUILD the emptied `CvGameTextMgr` composers on `appendEntryLines` + the requires block composer. The bodies
+  that read legacy getters were CUT, not migrated, so this is writing them fresh — never "moving" one, and never
+  restoring a body to see what it used to say.
+  ⚑ DEMAND-DRIVEN and END-STAGE (owner): the tooltip set comes from playtests and community requests, and a red
+  tree renders nothing, so appearance is unverifiable guesswork until it is green
+  ([patterns.md](../../architecture/patterns.md) THE DIVISION OF LABOUR). ⛔ Do not open a layout pass.
+  ⛔ A composer's acceptance test is that it reads NO legacy getter, never that it reads nicely.
   ⛔ The four WELLBEING composers are NOT `appendEntryLines` targets — a realized per-scope aggregate has no
-  entry list to render from, and is a BLOCK ([patterns.md](../../architecture/patterns.md) THE DIVISION OF LABOUR).
-- Replace `setBonusTradeHelp`'s whole-database reverse scan with the bonus's own `EDGEF_RELATED`
-  ([DEC-one-reverse-view](../../architecture/decisions.md#dec-one-reverse-view)) — the entries live on the
-  BUILDING, so this is not a renderer swap.
+  entry list to render from, and is a BLOCK. A bonus's "what needs me" block reads the bonus's own
+  `EDGEF_RELATED` ([DEC-one-reverse-view](../../architecture/decisions.md#dec-one-reverse-view)), never a
+  database scan; a promotion's per-unit lines read `CvPromotionAccrual::sum`, never a re-rolled rung loop
+  ([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation)).
 - Re-point the unit consumer getters onto `resolvedValue()`.
 - Re-point the unit power-value plane's readers.
 
