@@ -6415,9 +6415,9 @@ int CvPlayerAI::AI_techUnitValue(TechTypes eTech, int iPathLength, bool& bEnable
 					{
 						iAssaultValue += 1000 * std::max(0, AI_unitImpassableCount(eUnitX) - AI_unitImpassableCount(eExistingUnit));
 
-						const int iOld = GC.getUnitInfo(eExistingUnit).getMoves() * GC.getUnitInfo(eExistingUnit).getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100;
+						const int iOld = (GC.getUnitInfo(eExistingUnit).getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100) * GC.getUnitInfo(eExistingUnit).getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100;
 
-						iAssaultValue += 800 * (unitX.getMoves() * unitX.getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100 - iOld) / std::max(1, iOld);
+						iAssaultValue += 800 * ((unitX.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100) * unitX.getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100 - iOld) / std::max(1, iOld);
 					}
 
 					if (iAssaultValue > 0)
@@ -10562,7 +10562,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 		}
 		case UNITAI_HUNTER_ESCORT:
 		{
-			if (!bisNegativePropertyUnit && kUnitInfo.getCombat() > 0 && kUnitInfo.getMoves() > 0)
+			if (!bisNegativePropertyUnit && kUnitInfo.getCombat() > 0 && (kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100) > 0)
 			{
 				bValid = true;
 				bUndefinedValid = true;
@@ -10596,7 +10596,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 		}
 		case UNITAI_ESCORT:
 		{
-			if (!bisNegativePropertyUnit && kUnitInfo.getCombat() > 0 && kUnitInfo.getMoves() > 0)//Note: add a hero filter - a lot of them are being trained for this.
+			if (!bisNegativePropertyUnit && kUnitInfo.getCombat() > 0 && (kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100) > 0)//Note: add a hero filter - a lot of them are being trained for this.
 			{
 				bValid = true;
 				bUndefinedValid = true;
@@ -10835,7 +10835,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 		}
 		case UNITAI_PARADROP:
 		{
-			if (kUnitInfo.getDropRange() > 0)
+			if ((kUnitInfo.getMovement(MOVEMENT_DROP_RANGE, CASC_SCOPE_UNIT) / 100) > 0)
 			{
 				bValid = true;
 			}
@@ -11047,13 +11047,13 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 			}
 			case UNITAI_SETTLE:
 			{
-				iValue += (kUnitInfo.getMoves() * 100);
+				iValue += ((kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100) * 100);
 				break;
 			}
 			case UNITAI_WORKER:
 			{
 				iValue += kUnitInfo.getNumBuilds();
-				iValue += (kUnitInfo.getMoves()-1) * iValue / 2;
+				iValue += ((kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100)-1) * iValue / 2;
 				//	Scale by how fast a worker works - the extra '4' is a fudge factor
 				//	to make worker values (somewhat) comparable to military unit values
 				//	now that we have workers that can upgrade to military and we need to
@@ -11074,7 +11074,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 				iValue += iCombatValue;
 				{
 					const int iFastMoverMultiplier = AI_isDoStrategy(AI_STRATEGY_FASTMOVERS) ? 3 : 1;
-					iValue += ((iCombatValue * (kUnitInfo.getMoves() - 1) * iFastMoverMultiplier) / 3);
+					iValue += ((iCombatValue * ((kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100) - 1) * iFastMoverMultiplier) / 3);
 				}
 				iValue += ((iCombatValue * kUnitInfo.getWithdrawalProbability()) / 100);
 
@@ -11276,7 +11276,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 					iValue += ((iCombatValue * kUnitInfo.getCityAttackModifier()) / 50);
 					{
 						const int iFastMoverMultiplier = AI_isDoStrategy(AI_STRATEGY_FASTMOVERS) ? 4 : 1;
-						iValue += ((iCombatValue * (kUnitInfo.getMoves() - 1) * iFastMoverMultiplier) / 4); // K-Mod put in -1 !
+						iValue += ((iCombatValue * ((kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100) - 1) * iFastMoverMultiplier) / 4); // K-Mod put in -1 !
 					}
 					iValue += ((iCombatValue * kUnitInfo.getWithdrawalProbability()) / 100);
 				}
@@ -11287,7 +11287,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 			{
 				iValue += iCombatValue;
 				iValue += ((iCombatValue * kUnitInfo.getCollateralModifier(COLLATERAL_DAMAGE, CASC_SCOPE_UNIT)) / 50);
-				iValue += ((iCombatValue * (kUnitInfo.getMoves()-1)) / 4);
+				iValue += ((iCombatValue * ((kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100)-1)) / 4);
 				iValue += ((iCombatValue * kUnitInfo.getWithdrawalProbability()) / 25);
 				iValue += ((iCombatValue * kUnitInfo.getCityAttackModifier()) / 100);// was -= ???
 				break;
@@ -11296,7 +11296,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 			{
 				iValue -= AI_unitPropertyValue(eUnit) / 30;	//	Bad properties are good for pillagers
 				iValue += iCombatValue;
-				iValue += ((iCombatValue * (kUnitInfo.getMoves() - 1)) /4); //Calvitix Try to limit impact of moves
+				iValue += ((iCombatValue * ((kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100) - 1)) /4); //Calvitix Try to limit impact of moves
 				break;
 			}
 			case UNITAI_RESERVE:
@@ -11314,7 +11314,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 				{
 					iValue += ((iCombatValue * itCombat->second * AI_getUnitCombatWeight((UnitCombatTypes)itCombat->first)) / 12000);
 				}
-				iValue += ((iCombatValue * (kUnitInfo.getMoves() - 1) ) / 4);  //Calvitix  old value /2
+				iValue += ((iCombatValue * ((kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100) - 1) ) / 4);  //Calvitix  old value /2
 				break;
 			}
 			case UNITAI_PILLAGE_COUNTER:
@@ -11326,7 +11326,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 					break;
 				}
 				iValue += iCombatValue;
-				iValue += ((iCombatValue * (kUnitInfo.getMoves() - 1)) / 4);  // Calvitix 2
+				iValue += ((iCombatValue * ((kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100) - 1)) / 4);  // Calvitix 2
 				break;
 			}
 			case UNITAI_COUNTER:
@@ -11371,7 +11371,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 					}
 				}
 
-				iValue += ((iCombatValue * (kUnitInfo.getMoves() - 1)) / 4);  //Calvitix /2
+				iValue += ((iCombatValue * ((kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100) - 1)) / 4);  //Calvitix /2
 				iValue += ((iCombatValue * kUnitInfo.getWithdrawalProbability()) / 100);
 
 				if (kUnitInfo.getInterceptionProbability() > 0)
@@ -11512,7 +11512,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 			}
 			case UNITAI_EXPLORE:
 			{
-				iValue += kUnitInfo.getMoves() * kUnitInfo.getMoves() * (100 + iCombatValue) / 4;
+				iValue += (kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100) * (kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100) * (100 + iCombatValue) / 4;
 				if (CvSkillReads::noBadGoodies(kUnitInfo.getSkills()))
 				{
 					iValue *= 2;
@@ -11524,8 +11524,8 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 			{
 				//Calvitix try to limit impact of moves
 				iValue += iCombatValue;
-				iValue += iCombatValue * (kUnitInfo.getMoves() - 1) / 2;
-				//iValue += iCombatValue * kUnitInfo.getMoves();
+				iValue += iCombatValue * ((kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100) - 1) / 2;
+				//iValue += iCombatValue * (kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100);
 				iValue = (
 					getModifiedIntValue(
 						iValue,
@@ -11545,13 +11545,13 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 			{
 				//Calvitix try to limit impact of moves
 				iValue += iCombatValue;
-				iValue += iCombatValue * (kUnitInfo.getMoves() - 1) / 2; //Only extra moves gives +50% bonus
+				iValue += iCombatValue * ((kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100) - 1) / 2; //Only extra moves gives +50% bonus
 
 				break;
 			}
 			case UNITAI_MISSIONARY:
 			{
-				iValue += (kUnitInfo.getMoves() * 100);
+				iValue += ((kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100) * 100);
 				if (getStateReligion() != NO_RELIGION)
 				{
 					if (kUnitInfo.getReligionSpreadStrength(getStateReligion()) > 0)
@@ -11614,26 +11614,26 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 			case UNITAI_WORKER_SEA:
 			{
 				iValue += 50 * kUnitInfo.getNumBuilds();
-				iValue += kUnitInfo.getMoves() * 100;
+				iValue += (kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100) * 100;
 				break;
 			}
 			case UNITAI_ATTACK_SEA:
 			{
 				iValue += iCombatValue;
-				iValue += iCombatValue * (kUnitInfo.getMoves() - 1) / 2; //Calvitix 50% bonus per extra moves
+				iValue += iCombatValue * ((kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100) - 1) / 2; //Calvitix 50% bonus per extra moves
 				iValue += kUnitInfo.getBombardModifier(BOMBARD_RATE, CASC_SCOPE_UNIT) * 4;
 				break;
 			}
 			case UNITAI_RESERVE_SEA:
 			{
 				iValue += iCombatValue;
-				iValue += iCombatValue * (kUnitInfo.getMoves() - 1) / 2;
+				iValue += iCombatValue * ((kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100) - 1) / 2;
 				break;
 			}
 			case UNITAI_ESCORT_SEA:
 			{
 				iValue += iCombatValue;
-				iValue += iCombatValue * (kUnitInfo.getMoves() - 1) / 4;
+				iValue += iCombatValue * ((kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100) - 1) / 4;
 				iValue += kUnitInfo.getInterceptionProbability() * 3;
 				if (kUnitInfo.getNumSeeInvisibleTypes() > 0)
 				{
@@ -11659,7 +11659,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 						}
 					}
 				}
-				iValue += (kUnitInfo.getMoves() * iExploreValue);
+				iValue += ((kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100) * iExploreValue);
 				if (CvSkillReads::alwaysHostile(kUnitInfo.getSkills()))
 				{
 					iValue /= 2;
@@ -11673,7 +11673,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 			case UNITAI_SPY_SEA:
 			{
 				iValue += (iCombatValue / 2);
-				iValue += (kUnitInfo.getMoves() * 200);
+				iValue += ((kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100) * 200);
 				iValue += (kUnitInfo.getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100 * 300);
 				// Never build galley transports when ocean faring ones exist (issue mainly for Carracks)
 				iValue /= (1 + AI_unitImpassableCount(eUnit));
@@ -11682,21 +11682,21 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 			case UNITAI_CARRIER_SEA:
 			{
 				iValue += iCombatValue;
-				iValue += (kUnitInfo.getMoves() * 50);
+				iValue += ((kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100) * 50);
 				iValue += (kUnitInfo.getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100 * 400);
 				break;
 			}
 			case UNITAI_MISSILE_CARRIER_SEA:
 			{
 				iValue += iCombatValue;
-				iValue += iCombatValue * (kUnitInfo.getMoves() - 1) /4 ;
+				iValue += iCombatValue * ((kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100) - 1) /4 ;
 				iValue += (25 + iCombatValue) * (3 + (kUnitInfo.getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100));
 				break;
 			}
 			case UNITAI_PIRATE_SEA:
 			{
 				iValue += iCombatValue;
-				iValue += (iCombatValue * (kUnitInfo.getMoves() - 1) /2);
+				iValue += (iCombatValue * ((kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100) - 1) /2);
 				break;
 			}
 			case UNITAI_ATTACK_AIR:
@@ -11764,7 +11764,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 			{
 				const InvisibleTypes eVisibilityRequested = criteria ? criteria->m_eVisibility : NO_INVISIBLE;
 				iValue += iCombatValue;
-				iValue += (kUnitInfo.getMoves() - 1) * 30 / 100;
+				iValue += ((kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100) - 1) * 30 / 100;
 				if (eVisibilityRequested != NO_INVISIBLE)
 				{
 					if (GC.getGame().isOption(GAMEOPTION_COMBAT_HIDE_SEEK))
@@ -11805,7 +11805,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 				iValue += iCombatValue;
 				//obsolete - for every 10 pts of combat value, make each move pt count for 1 more than a base 1 each.
 				//Try 
-				iValue += (kUnitInfo.getMoves()-1) * iCombatValue / 5;
+				iValue += ((kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100)-1) * iCombatValue / 5;
 				//Combat weaknesses are very bad
 				for (int iI = 0; iI < GC.getNumTerrainInfos(); iI++)
 				{
@@ -22425,7 +22425,7 @@ int CvPlayerAI::AI_getStrategyHash() const
 		{
 			const UnitTypes eUnitX = static_cast<UnitTypes>(*it);
 			const CvUnitInfo& unit = GC.getUnitInfo(eUnitX);
-			const int iMoves = unit.getMoves();
+			const int iMoves = (unit.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100);
 
 			if (unit.hasUnitAI(UNITAI_RESERVE)
 			|| unit.hasUnitAI(UNITAI_ATTACK_CITY)
@@ -27021,7 +27021,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	const CvPromotionInfo& kPromotion = GC.getPromotionInfo(ePromotion);
 	const CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
 	const CvPlot* pPlot = pUnit ? pUnit->plot() : NULL;
-	const int iMoves = pUnit ? pUnit->maxMoves() : kUnit.getMoves();
+	const int iMoves = pUnit ? pUnit->maxMoves() : (kUnit.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100);
 	const bool bNoDefensiveBonus = !pUnit && kUnit.isNoDefensiveBonus() || pUnit && pUnit->noDefensiveBonus();
 
 	if (eUnitAI == NO_UNITAI)
@@ -30503,7 +30503,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 	const CvUnitCombatInfo& kUnitCombat = GC.getUnitCombatInfo(eUnitCombat);
 	const CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
 
-	const int iMoves = pUnit ? pUnit->maxMoves() : kUnit.getMoves();
+	const int iMoves = pUnit ? pUnit->maxMoves() : (kUnit.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100);
 
 	if (eUnitAI == NO_UNITAI)
 	{
