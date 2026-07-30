@@ -174,7 +174,6 @@ public:
 	int calculateDistanceMaintenance() const;
 	int calculateNumCitiesMaintenance() const;
 	int calculateColonyMaintenanceTimes100() const;
-	int getMaintenanceModifier() const;
 	int getWarWearinessModifier() const;
 
 	int getEspionageHealthCounter() const;

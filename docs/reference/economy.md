@@ -11,10 +11,31 @@
 supply + corporate maintenance.
 
 - **Treasury tax** (anti-hoarding): `(gold + 250·√gold) / (25 · gameSpeedPercent)`.
-- **City maintenance** = the modified base; suppressed on disorder/WLTK. Base = distance (distance×pop, 0
-  at the government center) + numCities `((n−1)·72·(pop+13)/13`, vassal-divided) + colony + corporation +
-  building-gold (when `TREAT_NEGATIVE_GOLD_AS_MAINTENANCE`). Effective modifier = city + player + area +
-  (connected & ¬capital ? connectedMod : 0).
+- **City maintenance** = `(cascade flats + the four engine components) × the cascade percent stack`. The
+  components the cascade does not model are distance (distance×pop, 0 at the government center), numCities
+  (`(n−1)·72·(pop+13)/13`, vassal-divided), colony and corporation; everything else is ordinary cascade.
+  The city's realized value is the standardized `CvDerivedCache` — mark-driven, **never serialized**, and the
+  read is a bare fetch. The empire total is the receiver Σ over its cities' realized values.
+  > **⛔ THE ONE SPECIAL CASE MAINTENANCE HAS OVER ANY OTHER CASCADE CHANNEL (owner): a city emits 0 instead of
+  > its package while **WE LOVE THE KING DAY** or **DISORDER** holds.** The package is sent out to the rest of
+  > the cascade only if no status negates it.
+  > ⚑ **It suppresses the CONSUMPTION of the value, never its contents — so neither is a cache input and neither
+  > marks it.** WLTKD is a ONE-TURN status re-applied every turn by its trigger ([state.md](../specs/state.md)),
+  > so marking on it would thrash the cache every single turn over a number that never moved. The stored value
+  > stays the real one and the read declines to contribute it.
+  > ⚑ `isDisorder()` is itself the OR of two ticking counters — the city's occupation timer and the player's
+  > anarchy turns — i.e. a CITY status and a PLAYER status composed into one verdict
+  > ([CvStatus.h](../../Sources/Engine/CvStatus.h)). The legacy `population > 0` guard is dropped: it is not
+  > part of the model.
+  > ⚖ **There is NO effective-modifier sum to maintain, and no area surface.** The percent stack IS the
+  > roll-up over the chain the city sits under (team + empire + city), so the hand-summed city + player + area +
+  > connected-city legs collapse into one read. Three of those legs were never kinds but CONDITIONS wearing a
+  > member's name ([DEC-conditions-are-predicates](../architecture/decisions.md#dec-conditions-are-predicates)):
+  > `coastalDistance` is *while coastal*, `connectedCity` is *while connected to the capital*, and
+  > `homeArea`/`otherArea` IS `IS_HOME_AREA` — *"maintenance increases in another area"* is literally
+  > "this city's area is not the capital's" ([json.md §3.5](../specs/json.md)), which is why `CvArea` carries no
+  > maintenance surface at all (a landmass is not an ownable scope,
+  > [state-repositories.md](../architecture/state-repositories.md)).
   ⚑ **The COLONY cap is a RATIO OF THE DISTANCE component, not a gold amount** — the engine reads it as
   `min(colony, cap × distanceMaintenance100 / 100)`, so the handicap range 80…480 means 0.8×…4.8×. It is
   therefore a **percent** (`maintenance.empire.colony.cap.percent`) and carries no scale

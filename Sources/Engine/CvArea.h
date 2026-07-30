@@ -98,10 +98,7 @@ public:
 	int getBestFoundValue(PlayerTypes eIndex) const;
 	void setBestFoundValue(PlayerTypes eIndex, int iNewValue);
 
-	int getMaintenanceModifier(PlayerTypes eIndex) const;
-	void changeMaintenanceModifier(PlayerTypes eIndex, int iChange);
 
-	int getTotalAreaMaintenanceModifier(PlayerTypes ePlayer) const;
 
 	bool isHomeArea(PlayerTypes eIndex) const;
 	void setHomeArea(PlayerTypes ePlayer, CvArea* pOldHomeArea);
@@ -181,7 +178,6 @@ protected:
 	int* m_aiPopulationPerPlayer;
 	int* m_aiPower;
 	int* m_aiBestFoundValue;
-	int* m_aiMaintenanceModifier;
 	int* m_aiNumRevealedTiles;
 	int* m_aiCleanPowerCount;
 	int* m_aiBorderObstacleCount;

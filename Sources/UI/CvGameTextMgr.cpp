@@ -10012,10 +10012,10 @@ void CvGameTextMgr::setTechHelp(CvWStringBuffer &szBuffer, TechTypes eTech, bool
 		szBuffer.append(gDLL->getText("TXT_KEY_CORPORATIONS_REVENUE", kTech.getCorporationRevenueModifier()));
 	}
 
-	if (kTech.getCorporationMaintenanceModifier() != 0)
+	if (kTech.getMaintenanceModifier(MAINTENANCE_CORPORATION, CASC_SCOPE_EMPIRE) != 0)
 	{
 		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_TECHHELP_CORPORATION_MAINTENANCE", kTech.getCorporationMaintenanceModifier()));
+		szBuffer.append(gDLL->getText("TXT_KEY_TECHHELP_CORPORATION_MAINTENANCE", kTech.getMaintenanceModifier(MAINTENANCE_CORPORATION, CASC_SCOPE_EMPIRE)));
 	}
 
 	if (kTech.isEnablesDesertFarming())
@@ -17609,7 +17609,7 @@ void CvGameTextMgr::setCorporationHelpCity(CvWStringBuffer &szBuffer, Corporatio
 			if (i == COMMERCE_GOLD)
 			{
 				iMaintenance += pCity->calculateCorporationMaintenanceTimes100(eCorporation);
-				iMaintenance = getModifiedIntValue(iMaintenance, pCity->getMaintenanceModifier());
+				iMaintenance = getModifiedIntValue(iMaintenance, pCity->maintenancePercentStack((int)MAINTENANCE_AMOUNT));
 
 				iCommerce -= iMaintenance;
 			}
@@ -21003,13 +21003,16 @@ void CvGameTextMgr::buildFinanceCityMaintString(CvWStringBuffer& szBuffer, Playe
 	{
 		if (!pLoopCity->isDisorder() && !pLoopCity->isWeLoveTheKingDay() && pLoopCity->getPopulation() > 0)
 		{
-			const int iMod = pLoopCity->getEffectiveMaintenanceModifier();
+			const int iMod = pLoopCity->maintenancePercentStack((int)MAINTENANCE_AMOUNT);
 
 			iDistanceMaint += getModifiedIntValue(pLoopCity->calculateDistanceMaintenanceTimes100(), iMod);
 			iNumCityMaint += getModifiedIntValue(pLoopCity->calculateNumCitiesMaintenanceTimes100(), iMod);
 			iColonyMaint += getModifiedIntValue(pLoopCity->calculateColonyMaintenanceTimes100(), iMod);
 			iCorporationMaint += getModifiedIntValue(pLoopCity->calculateCorporationMaintenanceTimes100(), iMod);
-			iBuildingMaint += getModifiedIntValue(pLoopCity->calculateBuildingMaintenanceTimes100(), iMod);
+			long iBuildingFlat = 0;
+			long iBuildingPercent = 0;
+			pLoopCity->maintenanceLegs((int)MAINTENANCE_AMOUNT, iBuildingFlat, iBuildingPercent);
+			iBuildingMaint += getModifiedIntValue((int)iBuildingFlat, iMod);
 		}
 	}
 
@@ -25974,40 +25977,31 @@ void CvGameTextMgr::setFlagHelp(CvWStringBuffer &szBuffer)
 
 void CvGameTextMgr::buildMaintenanceModifiersString(CvWStringBuffer &szBuffer, TechTypes eTech, bool bList)
 {
-	if (GC.getTechInfo(eTech).getMaintenanceModifier() != 0)
+	if (GC.getTechInfo(eTech).getMaintenanceModifier(MAINTENANCE_AMOUNT, CASC_SCOPE_EMPIRE) != 0)
 	{
 		if (bList)
 		{
 			szBuffer.append(NEWLINE);
 		}
-		szBuffer.append(gDLL->getText("TXT_KEY_TECHHELP_MAINT_MOD", GC.getTechInfo(eTech).getMaintenanceModifier()));
+		szBuffer.append(gDLL->getText("TXT_KEY_TECHHELP_MAINT_MOD", GC.getTechInfo(eTech).getMaintenanceModifier(MAINTENANCE_AMOUNT, CASC_SCOPE_EMPIRE)));
 	}
 
-	if (GC.getTechInfo(eTech).getDistanceMaintenanceModifier() != 0)
+	if (GC.getTechInfo(eTech).getMaintenanceModifier(MAINTENANCE_DISTANCE, CASC_SCOPE_EMPIRE) != 0)
 	{
 		if (bList)
 		{
 			szBuffer.append(NEWLINE);
 		}
-		szBuffer.append(gDLL->getText("TXT_KEY_TECHHELP_DISTANCE_MAINT_MOD", GC.getTechInfo(eTech).getDistanceMaintenanceModifier()));
+		szBuffer.append(gDLL->getText("TXT_KEY_TECHHELP_DISTANCE_MAINT_MOD", GC.getTechInfo(eTech).getMaintenanceModifier(MAINTENANCE_DISTANCE, CASC_SCOPE_EMPIRE)));
 	}
 
-	if (GC.getTechInfo(eTech).getNumCitiesMaintenanceModifier() != 0)
+	if (GC.getTechInfo(eTech).getMaintenanceModifier(MAINTENANCE_NUM_CITIES, CASC_SCOPE_EMPIRE) != 0)
 	{
 		if (bList)
 		{
 			szBuffer.append(NEWLINE);
 		}
-		szBuffer.append(gDLL->getText("TXT_KEY_TECHHELP_NUM_CITIES_MAINT_MOD", GC.getTechInfo(eTech).getNumCitiesMaintenanceModifier()));
-	}
-
-	if (GC.getTechInfo(eTech).getCoastalDistanceMaintenanceModifier() != 0)
-	{
-		if (bList)
-		{
-			szBuffer.append(NEWLINE);
-		}
-		szBuffer.append(gDLL->getText("TXT_KEY_COASTAL_DISTANCE_MAINT_MOD", GC.getTechInfo(eTech).getCoastalDistanceMaintenanceModifier()));
+		szBuffer.append(gDLL->getText("TXT_KEY_TECHHELP_NUM_CITIES_MAINT_MOD", GC.getTechInfo(eTech).getMaintenanceModifier(MAINTENANCE_NUM_CITIES, CASC_SCOPE_EMPIRE)));
 	}
 }
 

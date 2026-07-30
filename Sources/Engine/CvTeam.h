@@ -218,8 +218,6 @@ public:
 	int getCorporationRevenueModifier() const;
 	void changeCorporationRevenueModifier(int iChange);
 
-	int getCorporationMaintenanceModifier() const;
-	void changeCorporationMaintenanceModifier(int iChange);
 
 	int getTechExtraBuildingHappiness(BuildingTypes eIndex) const;
 
@@ -497,7 +495,6 @@ protected:
 	int m_iForeignTradeModifier;
 	int m_iTradeMissionModifier;
 	int m_iCorporationRevenueModifier;
-	int m_iCorporationMaintenanceModifier;
 	int m_iLastRoundOfValidImprovementCacheUpdate;
 	int m_iVassalPower;
 	int m_iMasterPower;

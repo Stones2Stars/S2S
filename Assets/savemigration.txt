@@ -778,4 +778,28 @@ CvCity::m_iImprovementBadHealth
 | stack, both read through the ONE cross-scope roll-up (InfoValuation::rolledLegsAtCity).
 CvCity::m_iMaintenance
 CvCity::m_iMaintenanceModifier
+|
+| CvPlayer / CvTeam / CvArea maintenance -- the hand-named modifier accumulators and the empire TOTAL.
+| Eight per-player scalars, one per (kind x scope) of the maintenance family, plus the team's corporation twin
+| and CvArea's per-player array. Each is the hand-named-scalar shape DEC-uniform-cache-shape calls a DEFECT:
+| it cannot be addressed uniformly, so every one forced its own bespoke invalidation path.
+| Three of them were never KINDS at all but CONDITIONS wearing a member's name (DEC-conditions-are-predicates):
+| coastalDistance is `while coastal`, connectedCity is `while connected to the capital`, and homeArea/otherArea
+| is the IS_HOME_AREA predicate -- json.md 3.5 names that last pair explicitly as the maintenance authoring it
+| retires. CvArea's whole surface existed to express `maintenance increases away from the capital's area`,
+| which IS that predicate, so there is no area scope to keep (state-repositories.md: a landmass is not ownable).
+| m_iTotalMaintenance was a SERIALIZED derived total behind an ensure-on-read getter -- both halves defects.
+| REPLACEMENT: the maintenance channels of the cascade packages, read through the ONE cross-scope roll-up. The
+| empire total is now the standardized CvDerivedCache receiver sum over its cities' realized values.
+CvPlayer::m_iMaintenanceModifier
+CvPlayer::m_iCoastalDistanceMaintenanceModifier
+CvPlayer::m_iConnectedCityMaintenanceModifier
+CvPlayer::m_iDistanceMaintenanceModifier
+CvPlayer::m_iNumCitiesMaintenanceModifier
+CvPlayer::m_iCorporationMaintenanceModifier
+CvPlayer::m_iHomeAreaMaintenanceModifier
+CvPlayer::m_iOtherAreaMaintenanceModifier
+CvPlayer::m_iTotalMaintenance
+CvTeam::m_iCorporationMaintenanceModifier
+CvArea::m_aiMaintenanceModifier
 ========================

@@ -1066,6 +1066,7 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_empireContext.bind(this);   // bind the per-player empire context to its owner (forwarding reads it)
 	// bind the EMPIRE-scope cascade package (all-dirty from bind: a loaded/new player recomputes on first read)
 	m_cascadePackage.bind(CASC_SCOPE_EMPIRE, this, &CvPlayer::refreshCascadePackage, (int)eID, -1);
+	m_totalMaintenance.bind(this, &CvPlayer::recomputeTotalMaintenance);
 	// The enabler's domains start EMPTY and UN-READY -- init'd by their domain enablers at this player's
 	// lifecycle start, then filled by DOMAIN events ([DEC-spine-reseed]); never read from the save. Cleared here
 	// because a player slot is REUSED across games.
@@ -1147,15 +1148,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iExpInBorderModifier = 0;
 	m_iBuildingOnlyHealthyCount = 0;
 
-	m_iMaintenanceModifier = 0;
-	m_iCoastalDistanceMaintenanceModifier = 0;
-	m_iConnectedCityMaintenanceModifier = 0;
-	m_iDistanceMaintenanceModifier = 0;
-	m_iNumCitiesMaintenanceModifier = 0;
-	m_iCorporationMaintenanceModifier = 0;
-	m_iHomeAreaMaintenanceModifier = 0;
-	m_iOtherAreaMaintenanceModifier = 0;
-	m_iTotalMaintenance = 0;
 
 	m_iUpkeepModifier = 0;
 	m_iLevelExperienceModifier = 0;
@@ -1707,7 +1699,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iMinTaxIncome = 0;
 	m_iMaxTaxIncome = 0;
 
-	m_bMaintenanceDirty = false;
 	m_orbitalInfrastructureCountDirty = true;
 	m_iFocusPlotX = -1;
 	m_iFocusPlotY = -1;
@@ -7139,11 +7130,6 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, CvArea* pAr
 			changeHasCivicOptionCount(((CivicOptionTypes)kBuilding.getCivicOption()), iChange);
 		}
 	}
-	changeMaintenanceModifier(kBuilding.getGlobalMaintenanceModifier() * iChange);
-	changeDistanceMaintenanceModifier(kBuilding.getDistanceMaintenanceModifier() * iChange);
-	changeNumCitiesMaintenanceModifier(kBuilding.getNumCitiesMaintenanceModifier() * iChange);
-	changeCoastalDistanceMaintenanceModifier(kBuilding.getCoastalDistanceMaintenanceModifier() * iChange);
-	changeConnectedCityMaintenanceModifier(kBuilding.getConnectedCityMaintenanceModifier() * iChange);
 
 	changeGreatPeopleRateModifier(kBuilding.getGlobalGreatPeopleRateModifier() * iChange);
 	changeGreatGeneralRateModifier(kBuilding.getGreatGeneralRateModifier() * iChange);
@@ -7195,19 +7181,6 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, CvArea* pAr
 	changeRevIdxNational(kBuilding.getRevIdxNational() * iChange);
 
 	pArea->changeBorderObstacleCount(getTeam(), kBuilding.isBorderObstacle() ? iChange : 0);
-
-	pArea->changeMaintenanceModifier(getID(), (kBuilding.getAreaMaintenanceModifier() * iChange));
-
-	if (kBuilding.getOtherAreaMaintenanceModifier() != 0)
-	{
-		foreach_(CvArea * pLoopArea, GC.getMap().areas())
-		{
-			if (pLoopArea != pArea)
-			{
-				pLoopArea->changeMaintenanceModifier(getID(), (kBuilding.getOtherAreaMaintenanceModifier()  * iChange));
-			}
-		}
-	}
 
 	for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
 	{
@@ -10311,132 +10284,37 @@ void CvPlayer::changeBuildingOnlyHealthyCount(int iChange, bool bLimited)
 }
 
 
-void CvPlayer::setMaintenanceDirty(const bool bDirty, const bool bCities) const
+// The empire's maintenance TOTAL -- the RECEIVER shape ([state-repositories.md]): a cross-scope receiver total is
+// the sum of its MEMBERS' REALIZED values and NOTHING beside it. The empire's own maintenance deposits roll DOWN
+// and are therefore already inside every city's realized value, so adding an empire package on top would count
+// each empire-scope deposit once per city PLUS once more.
+// ⛔ It is a CACHED sum, never a per-read walk over the cities and never a legacy push accumulator -- the cached
+// total sits precisely between those two failures.
+int CvPlayer::maintenancePercentStack(int iKind) const
+{
+	return InfoValuation::realizedAtEmpire(
+		*this, CascadeChannelRegistry::channelLookup(MODFAM_MAINTENANCE, iKind, -1));
+}
+
+void CvPlayer::markMaintenanceDirty() const
+{
+	m_totalMaintenance.markDirty();
+}
+
+void CvPlayer::recomputeTotalMaintenance(int* aOut) const
 {
 	PROFILE_EXTRA_FUNC();
-	m_bMaintenanceDirty = bDirty;
-
-	if (bCities)
+	long iTotal = 0;
+	foreach_(const CvCity* cityX, cities())
 	{
-		foreach_(CvCity* cityX, cities())
-		{
-			cityX->setMaintenanceDirty(bDirty, false);
-		}
+		iTotal += cityX->getMaintenanceTimes100();
 	}
-}
-
-void CvPlayer::updateMaintenance() const
-{
-	PROFILE_EXTRA_FUNC();
-	m_iTotalMaintenance = 0;
-
-	foreach_(CvCity* cityX, cities())
-	{
-		m_iTotalMaintenance += cityX->getMaintenanceTimes100();
-	}
-	m_bMaintenanceDirty = false;
-
-	FASSERT_NOT_NEGATIVE(m_iTotalMaintenance);
-}
-
-int CvPlayer::getMaintenanceModifier()
-{
-	return m_iMaintenanceModifier;
-}
-
-void CvPlayer::changeMaintenanceModifier(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iMaintenanceModifier += iChange;
-		setMaintenanceDirty(true);
-	}
-}
-
-int CvPlayer::getCoastalDistanceMaintenanceModifier() const
-{
-	return m_iCoastalDistanceMaintenanceModifier;
-}
-
-void CvPlayer::changeCoastalDistanceMaintenanceModifier(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iCoastalDistanceMaintenanceModifier += iChange;
-		setMaintenanceDirty(true);
-	}
-}
-
-int CvPlayer::getConnectedCityMaintenanceModifier()
-{
-	return m_iConnectedCityMaintenanceModifier;
-}
-
-void CvPlayer::changeConnectedCityMaintenanceModifier(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iConnectedCityMaintenanceModifier += iChange;
-		setMaintenanceDirty(true);
-	}
-}
-
-void CvPlayer::changeDistanceMaintenanceModifier(const int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iDistanceMaintenanceModifier += iChange;
-		setMaintenanceDirty(true);
-	}
-}
-
-void CvPlayer::changeNumCitiesMaintenanceModifier(const int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iNumCitiesMaintenanceModifier += iChange;
-		setMaintenanceDirty(true);
-	}
-}
-
-void CvPlayer::changeCorporationMaintenanceModifier(const int iChange, const bool bLimited)
-{
-	if (iChange != 0)
-	{
-		m_iCorporationMaintenanceModifier += iChange;
-
-		if (!bLimited)
-		{
-			setMaintenanceDirty(true);
-		}
-	}
-}
-
-void CvPlayer::changeHomeAreaMaintenanceModifier(const int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iHomeAreaMaintenanceModifier += iChange;
-		setMaintenanceDirty(true);
-	}
-}
-
-void CvPlayer::changeOtherAreaMaintenanceModifier(const int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iOtherAreaMaintenanceModifier += iChange;
-		setMaintenanceDirty(true);
-	}
+	aOut[0] = (int)iTotal;
 }
 
 int CvPlayer::getTotalMaintenance() const
 {
-	if (m_bMaintenanceDirty)
-	{
-		updateMaintenance();
-	}
-	return m_iTotalMaintenance / 100;
+	return m_totalMaintenance.get(0) / 100;
 }
 
 
@@ -10808,7 +10686,7 @@ void CvPlayer::changeStateReligionCount(int iChange, bool bLimited)
 
 		if (!bLimited)
 		{
-			setMaintenanceDirty(true);
+			markMaintenanceDirty();
 		}
 
 		updateReligionHappiness(bLimited);
@@ -10977,7 +10855,7 @@ void CvPlayer::setCapitalCity(CvCity* pNewCapitalCity)
 			}
 		}
 
-		setMaintenanceDirty(true);
+		markMaintenanceDirty();
 		updateTradeRoutes();
 
 		if (pOldCapitalCity)
@@ -17576,10 +17454,6 @@ void CvPlayer::processCivics(const CivicTypes eCivic, const int iChange, const b
 		changeDomesticGreatGeneralRateModifier(kCivic.getDomesticGreatGeneralRateModifier() * iChange);
 		changeStateReligionGreatPeopleRateModifier(kCivic.getStateReligionGreatPeopleRateModifier() * iChange);
 
-		changeDistanceMaintenanceModifier(kCivic.getDistanceMaintenanceModifier() * iChange);
-		changeNumCitiesMaintenanceModifier(kCivic.getNumCitiesMaintenanceModifier() * iChange);
-		changeHomeAreaMaintenanceModifier(kCivic.getHomeAreaMaintenanceModifier() * iChange);
-		changeOtherAreaMaintenanceModifier(kCivic.getOtherAreaMaintenanceModifier() * iChange);
 
 		changeWorkerSpeedModifier(kCivic.getWorkerSpeedModifier() * iChange);
 		changeImprovementUpgradeRateModifier(kCivic.getImprovementUpgradeRateModifier() * iChange);
@@ -17752,7 +17626,6 @@ void CvPlayer::processCivics(const CivicTypes eCivic, const int iChange, const b
 	changeBuildingOnlyHealthyCount(kCivic.isBuildingOnlyHealthy() * iChange, bLimited);
 
 	changePopulationgrowthratepercentage(kCivic.getPopulationgrowthratepercentage(), iChange == 1);
-	changeCorporationMaintenanceModifier(kCivic.getCorporationMaintenanceModifier() * iChange, bLimited);
 	changeMilitaryFoodProductionCount(kCivic.isMilitaryFoodProduction() * iChange, bLimited);
 
 	changeNoForeignTradeCount(kCivic.isNoForeignTrade() * iChange, bLimited);
@@ -17898,13 +17771,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNoUnhealthyPopulationCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExpInBorderModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iBuildingOnlyHealthyCount);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iMaintenanceModifier);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iCoastalDistanceMaintenanceModifier);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iConnectedCityMaintenanceModifier);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iDistanceMaintenanceModifier);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iNumCitiesMaintenanceModifier);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iCorporationMaintenanceModifier);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iTotalMaintenance);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iUpkeepModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iLevelExperienceModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraHealth);
@@ -19147,8 +19013,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 				m_iNumMilitaryUnits = iMilitary;
 			}
 		}
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iHomeAreaMaintenanceModifier);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iOtherAreaMaintenanceModifier);
 
 		{
 			m_myHeritage.clear();
@@ -19329,13 +19193,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNoUnhealthyPopulationCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExpInBorderModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iBuildingOnlyHealthyCount);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iMaintenanceModifier);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCoastalDistanceMaintenanceModifier);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iConnectedCityMaintenanceModifier);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iDistanceMaintenanceModifier);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNumCitiesMaintenanceModifier);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCorporationMaintenanceModifier);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iTotalMaintenance);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iUpkeepModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iLevelExperienceModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraHealth);
@@ -19962,8 +19819,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 				WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", it->second, "UnitCountSM");
 			}
 		}
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iHomeAreaMaintenanceModifier);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iOtherAreaMaintenanceModifier);
 		{
 			uint iSize = m_myHeritage.size();
 			WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", iSize, "numHeritage");
@@ -27079,7 +26934,7 @@ void CvPlayer::setHandicap(int iNewVal, bool bAdjustGameHandicap)
 		{
 			GC.getGame().averageHandicaps();
 		}
-		setMaintenanceDirty(true);
+		markMaintenanceDirty();
 		setUnitUpkeepDirty();
 	}
 }
@@ -27571,9 +27426,6 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 	changeImprovementUpgradeRateModifier(iChange*GC.getTraitInfo(eTrait).getImprovementUpgradeRateModifier());
 	changeWorkerSpeedModifier(iChange*GC.getTraitInfo(eTrait).getWorkerSpeedModifier());
 	changeMaxConscript(iChange*GC.getTraitInfo(eTrait).getMaxConscript());
-	changeDistanceMaintenanceModifier(iChange*GC.getTraitInfo(eTrait).getDistanceMaintenanceModifier());
-	changeNumCitiesMaintenanceModifier(iChange*GC.getTraitInfo(eTrait).getNumCitiesMaintenanceModifier());
-	changeCorporationMaintenanceModifier(iChange*GC.getTraitInfo(eTrait).getCorporationMaintenanceModifier());
 	changeStateReligionGreatPeopleRateModifier(iChange*GC.getTraitInfo(eTrait).getStateReligionGreatPeopleRateModifier());
 	changeBaseFreeUnitUpkeepCivilian(iChange*GC.getTraitInfo(eTrait).getFreeUnitUpkeepCivilian());
 	changeBaseFreeUnitUpkeepMilitary(iChange*GC.getTraitInfo(eTrait).getFreeUnitUpkeepMilitary());
@@ -29710,10 +29562,6 @@ void CvPlayer::processTech(const TechTypes eTech, const int iChange)
 	changeTradeRoutes(tech.getTradeRoutes() * iChange);
 	changeExtraHealth(tech.getHealth() * iChange);
 	changeExtraHappiness(tech.getHappiness() * iChange);
-	changeDistanceMaintenanceModifier(tech.getDistanceMaintenanceModifier() * iChange);
-	changeNumCitiesMaintenanceModifier(tech.getNumCitiesMaintenanceModifier() * iChange);
-	changeMaintenanceModifier(tech.getMaintenanceModifier() * iChange);
-	changeCoastalDistanceMaintenanceModifier(tech.getCoastalDistanceMaintenanceModifier() * iChange);
 	changeAssets(tech.getAssetValue() * iChange);
 	changeTechPower(tech.getPowerValue() * iChange);
 	changeTechScore(getScoreValueOfTech(eTech) * iChange);

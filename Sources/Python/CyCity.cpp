@@ -698,10 +698,6 @@ int CyCity::calculateColonyMaintenanceTimes100() const
 	return m_pCity->calculateColonyMaintenanceTimes100();
 }
 
-int CyCity::getMaintenanceModifier() const
-{
-	return m_pCity->getMaintenanceModifier();
-}
 
 int CyCity::getWarWearinessModifier() const
 {

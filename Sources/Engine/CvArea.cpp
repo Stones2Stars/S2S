@@ -29,7 +29,6 @@ CvArea::CvArea()
 	m_aiPopulationPerPlayer = new int[MAX_PLAYERS];
 	m_aiPower = new int[MAX_PLAYERS];
 	m_aiBestFoundValue = new int[MAX_PLAYERS];
-	m_aiMaintenanceModifier = new int[MAX_PLAYERS];
 	m_abHomeArea = new bool[MAX_PLAYERS];
 
 	m_aiNumRevealedTiles = new int[MAX_TEAMS];
@@ -79,7 +78,6 @@ CvArea::~CvArea()
 	SAFE_DELETE_ARRAY(m_aiPopulationPerPlayer);
 	SAFE_DELETE_ARRAY(m_aiPower);
 	SAFE_DELETE_ARRAY(m_aiBestFoundValue);
-	SAFE_DELETE_ARRAY(m_aiMaintenanceModifier);
 	SAFE_DELETE_ARRAY(m_abHomeArea);
 	SAFE_DELETE_ARRAY(m_aiNumRevealedTiles);
 	SAFE_DELETE_ARRAY(m_aiCleanPowerCount);
@@ -130,7 +128,6 @@ void CvArea::reset(int iID, bool bWater, bool bConstructorCall)
 		m_aiPopulationPerPlayer[iI] = 0;
 		m_aiPower[iI] = 0;
 		m_aiBestFoundValue[iI] = 0;
-		m_aiMaintenanceModifier[iI] = 0;
 		m_abHomeArea[iI] = 0;
 		m_aTargetCities[iI].reset();
 
@@ -211,7 +208,6 @@ void CvArea::read(FDataStreamBase* pStream)
 	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiPopulationPerPlayer);
 	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiPower);
 	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiBestFoundValue);
-	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiMaintenanceModifier);
 	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_abHomeArea);
 
 	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_TEAMS, m_aiNumRevealedTiles);
@@ -292,7 +288,6 @@ void CvArea::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiPopulationPerPlayer);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiPower);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiBestFoundValue);
-	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiMaintenanceModifier);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_abHomeArea);
 
 	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_TEAMS, m_aiNumRevealedTiles);
@@ -665,23 +660,6 @@ void CvArea::setBestFoundValue(PlayerTypes eIndex, int iNewValue)
 }
 
 
-int CvArea::getMaintenanceModifier(PlayerTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, MAX_PLAYERS, eIndex);
-	return m_aiMaintenanceModifier[eIndex];
-}
-
-void CvArea::changeMaintenanceModifier(PlayerTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, MAX_PLAYERS, eIndex);
-	if (iChange != 0)
-	{
-		m_aiMaintenanceModifier[eIndex] += iChange;
-		GET_PLAYER(eIndex).setMaintenanceDirty(true);
-	}
-}
-
-
 bool CvArea::isHomeArea(PlayerTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, MAX_PLAYERS, eIndex);
@@ -704,16 +682,6 @@ void CvArea::setHomeArea(PlayerTypes ePlayer, CvArea* pOldHomeArea)
 		m_abHomeArea[ePlayer] = true;
 	}
 }
-
-int CvArea::getTotalAreaMaintenanceModifier(PlayerTypes ePlayer) const
-{
-	if (isHomeArea(ePlayer))
-	{
-		return getMaintenanceModifier(ePlayer) + GET_PLAYER(ePlayer).getHomeAreaMaintenanceModifier();
-	}
-	return getMaintenanceModifier(ePlayer) + GET_PLAYER(ePlayer).getOtherAreaMaintenanceModifier();
-}
-
 
 int CvArea::getNumRevealedTiles(TeamTypes eIndex) const
 {

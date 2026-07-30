@@ -4999,7 +4999,7 @@ void CvDLLWidgetData::parseMaintenanceHelp(CvWidgetDataStruct &widgetDataStruct,
 			szBuffer.assign(gDLL->getText("TXT_KEY_MISC_MAINT_INFO"));
 			szBuffer.append(NEWLINE);
 
-			const int iMod = pHeadSelectedCity->getEffectiveMaintenanceModifier();
+			const int iMod = pHeadSelectedCity->maintenancePercentStack((int)MAINTENANCE_AMOUNT);
 
 			int iMaintenanceValue = getModifiedIntValue(pHeadSelectedCity->calculateDistanceMaintenanceTimes100(), iMod);
 			if (iMaintenanceValue != 0)
@@ -5033,7 +5033,10 @@ void CvDLLWidgetData::parseMaintenanceHelp(CvWidgetDataStruct &widgetDataStruct,
 				szBuffer.append(gDLL->getText("TXT_KEY_MISC_CORPORATION_MAINT_FLOAT", szMaint.GetCString()));
 			}
 
-			iMaintenanceValue = getModifiedIntValue(pHeadSelectedCity->calculateBuildingMaintenanceTimes100(), iMod);
+			long iBuildingFlat = 0;
+			long iBuildingPercent = 0;
+			pHeadSelectedCity->maintenanceLegs((int)MAINTENANCE_AMOUNT, iBuildingFlat, iBuildingPercent);
+			iMaintenanceValue = getModifiedIntValue((int)iBuildingFlat, iMod);
 			if (iMaintenanceValue != 0)
 			{
 				CvWString szMaint = CvWString::format(L"%d.%02d", iMaintenanceValue/100, iMaintenanceValue%100);
@@ -5048,12 +5051,9 @@ void CvDLLWidgetData::parseMaintenanceHelp(CvWidgetDataStruct &widgetDataStruct,
 			szBuffer.append(NEWLINE);
 			szBuffer.append(gDLL->getText("TXT_KEY_MISC_TOTAL_MAINT_FLOAT", szMaint.GetCString()));
 
-			iMaintenanceValue = pHeadSelectedCity->getMaintenanceModifier() + GET_PLAYER(pHeadSelectedCity->getOwner()).getMaintenanceModifier() + pHeadSelectedCity->area()->getTotalAreaMaintenanceModifier(GET_PLAYER(pHeadSelectedCity->getOwner()).getID());
-
-			if (pHeadSelectedCity->isConnectedToCapital() && !(pHeadSelectedCity->isCapital()))
-			{
-				iMaintenanceValue += GET_PLAYER(pHeadSelectedCity->getOwner()).getConnectedCityMaintenanceModifier();
-			}
+			// The SAME stack the components above were scaled by -- this line used to re-derive it a second time,
+			// in a different order, which is the scope-mismatch duplicate the calc map records.
+			iMaintenanceValue = iMod;
 			if (iMaintenanceValue != 0)
 			{
 				wchar_t szTempBuffer[1024];

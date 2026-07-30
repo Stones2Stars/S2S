@@ -5710,7 +5710,7 @@ int CvPlayerAI::AI_techBuildingValue(TechTypes eTech, int iPathLength, bool& bEn
 					iValue += 300;
 				}
 
-				if (kLoopBuilding.getMaintenanceModifier() < 0)
+				if (kLoopBuilding.getMaintenanceModifier(MAINTENANCE_AMOUNT, CASC_SCOPE_CITY) < 0)
 				{
 					int iCount = 0;
 					iTempValue = 0;
@@ -5724,7 +5724,7 @@ int CvPlayerAI::AI_techBuildingValue(TechTypes eTech, int iPathLength, bool& bEn
 						}
 					}
 					iTempValue /= std::max(1, iCount);
-					iTempValue *= -kLoopBuilding.getMaintenanceModifier();
+					iTempValue *= -kLoopBuilding.getMaintenanceModifier(MAINTENANCE_AMOUNT, CASC_SCOPE_CITY);
 					iTempValue /= 10 * 100;
 
 					iValue += iTempValue;
@@ -5750,7 +5750,7 @@ int CvPlayerAI::AI_techBuildingValue(TechTypes eTech, int iPathLength, bool& bEn
 
 				if (bFinancialTrouble)
 				{
-					iBuildingValue -= kLoopBuilding.getMaintenanceModifier() * 15;
+					iBuildingValue -= kLoopBuilding.getMaintenanceModifier(MAINTENANCE_AMOUNT, CASC_SCOPE_CITY) * 15;
 					iBuildingValue += kLoopBuilding.getYieldModifier(YIELD_COMMERCE) * 8;
 					iBuildingValue += kLoopBuilding.getCommerceModifier(COMMERCE_GOLD) * 15;
 				}
@@ -13374,11 +13374,11 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 	//Fuyu: Only if wars ongoing, as suggested by Munch - modified by Koshling to just be an increase then
 	
 	iValue += iTempValue / (bWarPlan || isMinorCiv() ? 3 : 1);
-	iTempValue = -(kCivic.getDistanceMaintenanceModifier() * std::max(0, getNumCities() - 3) / 8);
+	iTempValue = -(kCivic.getMaintenanceModifier(MAINTENANCE_DISTANCE, CASC_SCOPE_EMPIRE) * std::max(0, getNumCities() - 3) / 8);
 
 	
 	iValue += iTempValue;
-	iTempValue = -(kCivic.getNumCitiesMaintenanceModifier() * std::max(0, getNumCities() - 3) / 8);
+	iTempValue = -(kCivic.getMaintenanceModifier(MAINTENANCE_NUM_CITIES, CASC_SCOPE_EMPIRE) * std::max(0, getNumCities() - 3) / 8);
 
 	
 	iValue += iTempValue;
@@ -14703,7 +14703,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 
 	//#4: Corporations
 
-	int iCorpMaintenanceMod = kCivic.getCorporationMaintenanceModifier();
+	int iCorpMaintenanceMod = kCivic.getMaintenanceModifier(MAINTENANCE_CORPORATION, CASC_SCOPE_EMPIRE);
 	iTempValue = 0;
 	if (kCivic.isNoCorporations() || kCivic.isNoForeignCorporations() || iCorpMaintenanceMod != 0)
 	{
@@ -14764,15 +14764,15 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 			}
 
 			//FAssertMsg((iCorpMaintenanceMod== 0), "NoCorporation civics are not supposed to be have a maintenace modifier");
-			//subtracting value from already applied kPlayer.getCorporationMaintenanceModifier()
-			if ((getCorporationMaintenanceModifier() + iCorpMaintenanceMod) != 0)
+			//subtracting value from the empire's already-applied corporation-maintenance stack
+			if ((maintenancePercentStack((int)MAINTENANCE_CORPORATION) + iCorpMaintenanceMod) != 0)
 			{
 				iTempCorporationValue = 0;
-				iTempCorporationValue -= (-(getCorporationMaintenanceModifier() + iCorpMaintenanceMod) * (iHQCount * (25 + getNumCities() * 2) + iOwnCorpCount * 7)) / 25;
+				iTempCorporationValue -= (-(maintenancePercentStack((int)MAINTENANCE_CORPORATION) + iCorpMaintenanceMod) * (iHQCount * (25 + getNumCities() * 2) + iOwnCorpCount * 7)) / 25;
 				iTempValue += iTempCorporationValue / (2 * (1 + iTempNoCorporationsCount));
 
 				iTempCorporationValue = 0;
-				iTempCorporationValue -= (-(getCorporationMaintenanceModifier() + iCorpMaintenanceMod) * (iForeignCorpCount * 7)) / 25;
+				iTempCorporationValue -= (-(maintenancePercentStack((int)MAINTENANCE_CORPORATION) + iCorpMaintenanceMod) * (iForeignCorpCount * 7)) / 25;
 				iTempValue += iTempCorporationValue / (2 * (1 + ((kCivic.isNoForeignCorporations()) ? 1 : 0) + iTempNoForeignCorporationsCount + iTempNoCorporationsCount));
 			}
 		}
@@ -14781,10 +14781,10 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 			iTempCorporationValue = iForeignCorpCount * 3;
 			iTempValue += iTempCorporationValue / (1 + iTempNoForeignCorporationsCount + iTempNoCorporationsCount);
 
-			if ((getCorporationMaintenanceModifier() + iCorpMaintenanceMod) != 0)
+			if ((maintenancePercentStack((int)MAINTENANCE_CORPORATION) + iCorpMaintenanceMod) != 0)
 			{
 				iTempCorporationValue = 0;
-				iTempCorporationValue -= -(getCorporationMaintenanceModifier() + iCorpMaintenanceMod) * iForeignCorpCount * 7 / 25;
+				iTempCorporationValue -= -(maintenancePercentStack((int)MAINTENANCE_CORPORATION) + iCorpMaintenanceMod) * iForeignCorpCount * 7 / 25;
 				iTempValue += iTempCorporationValue / (2 * (1 + iTempNoForeignCorporationsCount + iTempNoCorporationsCount));
 			}
 		}
@@ -25541,7 +25541,7 @@ bool CvPlayerAI::AI_isCivicCanChangeOtherValues(CivicTypes eCivicSelected, Relig
 	}
 
 	//corporation
-	if (kCivicSelected.isNoCorporations() || kCivicSelected.isNoForeignCorporations() || kCivicSelected.getCorporationMaintenanceModifier() != 0)
+	if (kCivicSelected.isNoCorporations() || kCivicSelected.isNoForeignCorporations() || kCivicSelected.getMaintenanceModifier(MAINTENANCE_CORPORATION, CASC_SCOPE_EMPIRE) != 0)
 	{
 		return true;
 	}
@@ -25628,9 +25628,9 @@ bool CvPlayerAI::AI_isCivicValueRecalculationRequired(CivicTypes eCivic, CivicTy
 	}
 
 	//corporation
-	if (kCivic.isNoCorporations() || kCivic.isNoForeignCorporations() || kCivic.getCorporationMaintenanceModifier() != 0)
+	if (kCivic.isNoCorporations() || kCivic.isNoForeignCorporations() || kCivic.getMaintenanceModifier(MAINTENANCE_CORPORATION, CASC_SCOPE_EMPIRE) != 0)
 	{
-		if (kCivicSelected.isNoCorporations() || kCivicSelected.isNoForeignCorporations() || kCivicSelected.getCorporationMaintenanceModifier() != 0)
+		if (kCivicSelected.isNoCorporations() || kCivicSelected.isNoForeignCorporations() || kCivicSelected.getMaintenanceModifier(MAINTENANCE_CORPORATION, CASC_SCOPE_EMPIRE) != 0)
 		{
 			return true;
 		}

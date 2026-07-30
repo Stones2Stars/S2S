@@ -549,12 +549,13 @@ public:
 	// connected-city legs: there is no area scope ([state-repositories.md]), an `area` modifier authors at
 	// EMPIRE, and the connected-city leg was never a KIND -- it is a CONDITION on an ordinary deposit
 	// ([DEC-conditions-are-predicates]).
-	int maintenancePercentStack() const;
+	int maintenancePercentStack(int iKind) const;
+	void maintenanceLegs(int iKind, long& flatSum, long& percentSum) const;
 	int calculateDistanceMaintenance() const;
 	int calculateNumCitiesMaintenance() const;
 	int calculateColonyMaintenance() const;
 	int calculateCorporationMaintenance() const;
-	int calculateDistanceMaintenanceTimes100(int iExtraDistanceModifier = 0, int iExtraCoastalDistanceModifier = 0) const;
+	int calculateDistanceMaintenanceTimes100(int iExtraDistanceModifier = 0) const;
 	int calculateNumCitiesMaintenanceTimes100(int iExtraModifier = 0) const;
 	int calculateColonyMaintenanceTimes100() const;
 	int calculateCorporationMaintenanceTimes100(CorporationTypes eCorporation) const;

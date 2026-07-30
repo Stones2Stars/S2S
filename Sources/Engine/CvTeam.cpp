@@ -244,7 +244,6 @@ void CvTeam::reset(TeamTypes eID, bool bConstructorCall)
 	m_iTradeModifier = 0;
 	m_iTradeMissionModifier = 0;
 	m_iCorporationRevenueModifier = 0;
-	m_iCorporationMaintenanceModifier = 0;
 	m_iVassalPower = 0;
 	m_iMasterPower = 0;
 	m_iEnemyWarWearinessModifier = 0;
@@ -4011,7 +4010,7 @@ void CvTeam::setVassal(TeamTypes eIndex, bool bNewValue, bool bCapitulated)
 		{
 			if (GET_PLAYER((PlayerTypes)i).isAliveAndTeam(eIndex))
 			{
-				GET_PLAYER((PlayerTypes)i).setMaintenanceDirty(true);
+				GET_PLAYER((PlayerTypes)i).markMaintenanceDirty();
 			}
 		}
 
@@ -4364,9 +4363,6 @@ void CvTeam::processProjectChange(ProjectTypes eIndex, int iChange, int iOldProj
 					// The maintenance KINDS at their scope ([DEC-scope-is-an-axis]). The connected-city kind is
 					// gone with the legacy getter: NOTHING in Assets/Data authors a connectedCity maintenance
 					// modifier, so the leg only ever added zero.
-					player.changeMaintenanceModifier(kProject.getMaintenanceModifier(MAINTENANCE_AMOUNT, CASC_SCOPE_EMPIRE));
-					player.changeDistanceMaintenanceModifier(kProject.getMaintenanceModifier(MAINTENANCE_DISTANCE, CASC_SCOPE_EMPIRE));
-					player.changeNumCitiesMaintenanceModifier(kProject.getMaintenanceModifier(MAINTENANCE_NUM_CITIES, CASC_SCOPE_EMPIRE));
 
 					for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
 					{
@@ -5554,11 +5550,6 @@ void CvTeam::processTech(TechTypes eTech, int iChange, bool bAnnounce)
 		changeCorporationRevenueModifier(tech.getCorporationRevenueModifier() * iChange);
 	}
 
-	if (tech.getCorporationMaintenanceModifier() != 0)
-	{
-		changeCorporationMaintenanceModifier(tech.getCorporationMaintenanceModifier() * iChange);
-	}
-
 	if (tech.isEnablesDesertFarming())
 	{
 		setLastRoundOfValidImprovementCacheUpdate();
@@ -6226,7 +6217,6 @@ void CvTeam::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvTeam", &m_iTradeModifier);
 	WRAPPER_READ(wrapper, "CvTeam", &m_iTradeMissionModifier);
 	WRAPPER_READ(wrapper, "CvTeam", &m_iCorporationRevenueModifier);
-	WRAPPER_READ(wrapper, "CvTeam", &m_iCorporationMaintenanceModifier);
 
 	WRAPPER_READ_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_abEmbassy);
 	WRAPPER_READ_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_abLimitedBorders);
@@ -6362,7 +6352,6 @@ void CvTeam::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvTeam", m_iTradeModifier);
 	WRAPPER_WRITE(wrapper, "CvTeam", m_iTradeMissionModifier);
 	WRAPPER_WRITE(wrapper, "CvTeam", m_iCorporationRevenueModifier);
-	WRAPPER_WRITE(wrapper, "CvTeam", m_iCorporationMaintenanceModifier);
 
 	WRAPPER_WRITE_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_abEmbassy);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_abLimitedBorders);
@@ -6732,28 +6721,6 @@ void CvTeam::changeCorporationRevenueModifier(int iChange)
 	if (iChange != 0)
 	{
 		m_iCorporationRevenueModifier += iChange;
-
-		for (int i = 0; i < MAX_PC_PLAYERS; ++i)
-		{
-			if (GET_PLAYER((PlayerTypes)i).isAliveAndTeam(getID()))
-			{
-				algo::for_each(GET_PLAYER((PlayerTypes)i).cities(), CvCity::fn::updateCorporation());
-			}
-		}
-	}
-}
-
-int CvTeam::getCorporationMaintenanceModifier() const
-{
-	return m_iCorporationMaintenanceModifier;
-}
-
-void CvTeam::changeCorporationMaintenanceModifier(int iChange)
-{
-	PROFILE_EXTRA_FUNC();
-	if (iChange != 0)
-	{
-		m_iCorporationMaintenanceModifier += iChange;
 
 		for (int i = 0; i < MAX_PC_PLAYERS; ++i)
 		{

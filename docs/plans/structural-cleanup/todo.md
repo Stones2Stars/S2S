@@ -60,11 +60,6 @@
   ⛔ Do NOT sweep the neighbouring `getInvisibleType` / `getSeeInvisibleType` calls: those are live `CvUnit`
   methods sitting in the same blocks.
 - Replace the per-type hide-and-seek help text with the detection entry's own render.
-- **NUKE the maintenance dirty-flag cluster ON SIGHT** — `m_bMaintenanceDirty` + `setMaintenanceDirty` across
-  `CvCity` / `CvPlayer` / `CvArea`, and above all the **ENSURE-ON-READ** it feeds: `getMaintenance` /
-  `getMaintenanceTimes100` recompute inside the getter, which is the `ensure()` protocol tombstoned BY NAME
-  ([superseded-ideas #14](../../architecture/superseded-ideas.md) — a read is a BARE FETCH, unconditionally).
-  The city flag fans into the player's, so it is ONE cluster.
 - Cut `CvCity`'s other hand-rolled dirty caches — demolition fodder, never conversion targets.
 - Retire the direct `gDLL->logMsg` / BetterBTSAI log-helper call sites and the log-level globals they gate,
   wholesale as each domain migrates onto the spine — never tidied in place.

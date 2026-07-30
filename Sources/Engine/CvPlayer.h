@@ -18,6 +18,7 @@
 #include "CvProperties.h"
 #include "EmpireContext.h"
 #include "CvCascadePackage.h"   // the EMPIRE-scope cascade package + receiver sums (state-repositories.md)
+#include "Infrastructure/CvDerivedCache.h"  // the ONE derived-cache component (mark-driven, never serialized)
 #include "Enabler/CvEnabler.h"  // PlayerEnabler -- the per-player tri-state domains (enabler.md §7.1)
 #include "AI/CvSelectionGroupAI.h"
 #include "UI/CvTalkingHeadMessage.h"
@@ -229,8 +230,12 @@ public:
 	void updatePlotGroups(const CvArea* possibleNewInAreaOnly = NULL, bool reInitialize = false);
 
 	void updateYield();
-	void updateMaintenance() const;
-	void setMaintenanceDirty(const bool bDirty, const bool bCities = true) const;
+	// The empire's realized maintenance TOTAL, on the ONE derived-cache component -- the RECEIVER sum over its
+	// member cities' realized values ([state-repositories.md]). Never serialized, never a per-read city walk.
+	// The empire's additive maintenance stack for one KIND (team + empire), the empire twin of the city read.
+	int maintenancePercentStack(int iKind) const;
+	void markMaintenanceDirty() const;
+	void recomputeTotalMaintenance(int* aOut) const;
 
 	void updateFeatureHappiness(bool bLimited = false);
 	void updateReligionHappiness(bool bLimited = false);
@@ -664,31 +669,16 @@ public:
 	bool isBuildingOnlyHealthy() const;
 
 
-	int getMaintenanceModifier();
-	void changeMaintenanceModifier(int iChange);
-	int getCoastalDistanceMaintenanceModifier() const;
-	void changeCoastalDistanceMaintenanceModifier(int iChange);
-	int getConnectedCityMaintenanceModifier();
-	void changeConnectedCityMaintenanceModifier(int iChange);
 
 	void changeBuildingOnlyHealthyCount(int iChange, bool bLimited = false);
 
-	inline int getDistanceMaintenanceModifier() const { return m_iDistanceMaintenanceModifier; }
-	void changeDistanceMaintenanceModifier(const int iChange);
 
-	inline int getNumCitiesMaintenanceModifier() const { return m_iNumCitiesMaintenanceModifier; }
-	void changeNumCitiesMaintenanceModifier(const int iChange);
 
-	inline int getCorporationMaintenanceModifier() const { return m_iCorporationMaintenanceModifier; }
-	void changeCorporationMaintenanceModifier(const int iChange, const bool bLimited = false);
 
-	inline int getHomeAreaMaintenanceModifier() const { return m_iHomeAreaMaintenanceModifier; }
-	void changeHomeAreaMaintenanceModifier(const int iChange);
 
-	inline int getOtherAreaMaintenanceModifier() const { return m_iOtherAreaMaintenanceModifier; }
-	void changeOtherAreaMaintenanceModifier(const int iChange);
 
 	int getTotalMaintenance() const;
+	mutable CvDerivedCache<CvPlayer, int, 1> m_totalMaintenance;
 
 	int getUpkeepModifier() const;
 	void changeUpkeepModifier(int iChange);
@@ -1935,15 +1925,6 @@ protected:
 	int m_iExpInBorderModifier;
 	int m_iBuildingOnlyHealthyCount;
 
-	int m_iMaintenanceModifier;
-	int m_iCoastalDistanceMaintenanceModifier;
-	int m_iConnectedCityMaintenanceModifier;
-	int m_iDistanceMaintenanceModifier;
-	int m_iNumCitiesMaintenanceModifier;
-	int m_iCorporationMaintenanceModifier;
-	int m_iHomeAreaMaintenanceModifier;
-	int m_iOtherAreaMaintenanceModifier;
-	mutable int m_iTotalMaintenance;
 
 	int m_iUpkeepModifier;
 	int m_iLevelExperienceModifier;
@@ -2458,7 +2439,6 @@ private:
 
 	mutable bst::scoped_ptr<CvUpgradeCache> m_upgradeCache;
 
-	mutable bool m_bMaintenanceDirty;
 	mutable bool m_orbitalInfrastructureCountDirty;
 	mutable int m_orbitalInfrastructureCount;
 	mutable int* m_cachedBonusCount;

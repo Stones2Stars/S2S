@@ -5645,7 +5645,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 			&& kBuilding.getCommerceChange(COMMERCE_GOLD) < 0 && GC.getTREAT_NEGATIVE_GOLD_AS_MAINTENANCE())
 			{
 				const int iBaseMaintenance = getMaintenanceTimes100();
-				const int iMaintenanceMod = getEffectiveMaintenanceModifier();
+				const int iMaintenanceMod = maintenancePercentStack((int)MAINTENANCE_AMOUNT);
 
 				const int iCost =
 				(
@@ -5655,7 +5655,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 						-
 						getModifiedIntValue(
 							iBaseMaintenance - kBuilding.getCommerceChange(COMMERCE_GOLD) * 100,
-							iMaintenanceMod + kBuilding.getMaintenanceModifier()
+							iMaintenanceMod + kBuilding.getMaintenanceModifier(MAINTENANCE_AMOUNT, CASC_SCOPE_CITY)
 						)
 					)
 				);
@@ -12503,14 +12503,15 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 	}
 	if ((iFocusFlags & BUILDINGFOCUS_MAINTENANCE) != 0)
 	{
-		if (kBuilding.getMaintenanceModifier() < 0 ||
-			kBuilding.getGlobalMaintenanceModifier() < 0 ||
-			kBuilding.getAreaMaintenanceModifier() < 0 ||
-			kBuilding.getOtherAreaMaintenanceModifier() < 0 ||
-			kBuilding.getDistanceMaintenanceModifier() < 0 ||
-			kBuilding.getNumCitiesMaintenanceModifier() < 0 ||
-			kBuilding.getCoastalDistanceMaintenanceModifier() < 0 ||
-			kBuilding.getConnectedCityMaintenanceModifier())
+		// The kinds that SURVIVE: the scope-wide amount (city + empire) and the three components. The coastal,
+		// connected-city, area and other-area "kinds" are gone -- each was a CONDITION wearing a member's name
+		// ([DEC-conditions-are-predicates]). A building that helps only while coastal / connected / abroad now
+		// says so as a conditioned deposit on the ordinary kind, so this same test still catches it.
+		if (kBuilding.getMaintenanceModifier(MAINTENANCE_AMOUNT, CASC_SCOPE_CITY) < 0
+		|| kBuilding.getMaintenanceModifier(MAINTENANCE_AMOUNT, CASC_SCOPE_EMPIRE) < 0
+		|| kBuilding.getMaintenanceModifier(MAINTENANCE_DISTANCE, CASC_SCOPE_EMPIRE) < 0
+		|| kBuilding.getMaintenanceModifier(MAINTENANCE_NUM_CITIES, CASC_SCOPE_EMPIRE) < 0
+		|| kBuilding.getMaintenanceModifier(MAINTENANCE_CORPORATION, CASC_SCOPE_EMPIRE) < 0)
 		{
 			return true;
 		}
