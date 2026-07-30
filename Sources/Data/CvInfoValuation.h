@@ -120,11 +120,13 @@ public:
 	// The three yield channels' FLAT group ({food,production,commerce}.<scope>.flat).
 	static void expectedFlatYields(const CvModifiers* modifiers,
 		const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup* plotGroup,
-		int (&flatYields)[NUM_YIELD_TYPES]);
+		int (&flatYields)[NUM_YIELD_TYPES],
+		const CvCascadeHypothetical* pHypothetical = NULL);
 	// The three yield channels' PERCENT group ({food,production,commerce}.<scope>.percent -- the §2a additive stack's slice).
 	static void expectedYieldModifiers(const CvModifiers* modifiers,
 		const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup* plotGroup,
-		int (&yieldModifiers)[NUM_YIELD_TYPES]);
+		int (&yieldModifiers)[NUM_YIELD_TYPES],
+		const CvCascadeHypothetical* pHypothetical = NULL);
 	// The PLOT yield group, two legs summed per channel: (1) the `plots`-target deposits ({channel}.<scope>.plots
 	// -- json §6.1), each value × the count of the city's radius plots matching its predicate, read from
 	// cityContext.plotAttrs (COUNTS, never objects); (2) the info's OWN untargeted plot-scope output
@@ -133,17 +135,20 @@ public:
 	// plotBaseYields with a plot-bound ctx directly).
 	static void expectedPlotYields(const CvModifiers* modifiers,
 		const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup* plotGroup,
-		int (&plotYields)[NUM_YIELD_TYPES]);
+		int (&plotYields)[NUM_YIELD_TYPES],
+		const CvCascadeHypothetical* pHypothetical = NULL);
 	// The four commerce channels' FLAT group ({gold,research,culture,espionage}.<scope>.flat).
 	static void expectedFlatCommerce(const CvModifiers* modifiers,
 		const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup* plotGroup,
-		int (&flatCommerce)[NUM_COMMERCE_TYPES]);
+		int (&flatCommerce)[NUM_COMMERCE_TYPES],
+		const CvCascadeHypothetical* pHypothetical = NULL);
 	// The four wellbeing channels (modifier.md §2b): the authored happiness/health deposits, each contribution
 	// SIGN-ROUTED to its channel (a negative happiness value lands as positive anger -- a routing rule, never a
 	// storage shape). Every channel of the out-array carries a POSITIVE magnitude.
 	static void expectedWellbeing(const CvModifiers* modifiers,
 		const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup* plotGroup,
-		int (&wellbeing)[NUM_WELLBEING_CHANNELS]);
+		int (&wellbeing)[NUM_WELLBEING_CHANNELS],
+		const CvCascadeHypothetical* pHypothetical = NULL);
 
 	// The GROUPED/SCALAR-family analogue (the same walk for one (family, kind, unit) slot): the experienced-here
 	// ×100 answer for a defense kind, a maintenance modifier, an InfoScalar slot, ... -- the per-info

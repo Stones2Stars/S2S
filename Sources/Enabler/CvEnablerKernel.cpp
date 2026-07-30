@@ -603,6 +603,11 @@ void EnablerKernel::scanCondDeps(const CvCondition* c, CascadeCondDeps& d, bool 
 		case CASC_PRED_STATE_RELIGION_IN_CITY:
 		case CASC_PRED_STATE_RELIGION:
 		case CASC_PRED_IS_STATE_RELIGION_HOLY_CITY: d.stateReligion = true; break;
+		// COASTAL is a `requires` CONDITION in the JSON model, never a property of the entity -- a rebuilt info
+		// carries no isWater(), because "needs a coast" is something the city must supply, not something the
+		// building IS. A consumer weighting a coastal-only candidate by how much coastline the empire has reads
+		// it from HERE rather than re-walking the tree ([DEC-single-implementation]).
+		case CASC_PRED_HAS_COAST:               d.coastal = true; break;
 		case CASC_PRED_HAS_BONUS:               if (c->id >= 0) d.bonuses.insert(c->id); if (bMarkDynamic) d.dynamic = true; break;
 		default:                                if (bMarkDynamic) d.dynamic = true; break;   // IS_CAPITAL / counts / plot / connection -- read LIVE at eval
 		}

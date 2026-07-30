@@ -654,10 +654,12 @@ int InfoValuation::realizedAtTeam(const CvTeam& team, int iChannel)
 
 void InfoValuation::expectedFlatYields(const CvModifiers* modifiers,
 	const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup* plotGroup,
-	int (&flatYields)[NUM_YIELD_TYPES])
+	int (&flatYields)[NUM_YIELD_TYPES],
+	const CvCascadeHypothetical* pHypothetical)
 {
 	CvCascadeEvalCtx evalCtx;
 	fillEvalCtx(cityContext, empireContext, plotGroup, evalCtx);
+	evalCtx.hypothetical = pHypothetical;
 	for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
 	{
 		flatYields[iYield] = (int)groupSum(modifiers, infoYieldFamily(iYield), CHANNEL_AMOUNT, CASC_UNIT_FLAT, evalCtx);
@@ -666,10 +668,12 @@ void InfoValuation::expectedFlatYields(const CvModifiers* modifiers,
 
 void InfoValuation::expectedYieldModifiers(const CvModifiers* modifiers,
 	const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup* plotGroup,
-	int (&yieldModifiers)[NUM_YIELD_TYPES])
+	int (&yieldModifiers)[NUM_YIELD_TYPES],
+	const CvCascadeHypothetical* pHypothetical)
 {
 	CvCascadeEvalCtx evalCtx;
 	fillEvalCtx(cityContext, empireContext, plotGroup, evalCtx);
+	evalCtx.hypothetical = pHypothetical;
 	for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
 	{
 		yieldModifiers[iYield] = (int)groupSum(modifiers, infoYieldFamily(iYield), CHANNEL_AMOUNT, CASC_UNIT_PERCENT, evalCtx);
@@ -678,7 +682,8 @@ void InfoValuation::expectedYieldModifiers(const CvModifiers* modifiers,
 
 void InfoValuation::expectedPlotYields(const CvModifiers* modifiers,
 	const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup* plotGroup,
-	int (&plotYields)[NUM_YIELD_TYPES])
+	int (&plotYields)[NUM_YIELD_TYPES],
+	const CvCascadeHypothetical* pHypothetical)
 {
 	for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
 	{
@@ -690,6 +695,7 @@ void InfoValuation::expectedPlotYields(const CvModifiers* modifiers,
 	}
 	CvCascadeEvalCtx evalCtx;
 	fillEvalCtx(cityContext, empireContext, plotGroup, evalCtx);
+	evalCtx.hypothetical = pHypothetical;
 	for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
 	{
 		// leg 1: the plots-TARGET deposits, scaled by the plotAttrs counts (a building's radius buff);
@@ -702,10 +708,12 @@ void InfoValuation::expectedPlotYields(const CvModifiers* modifiers,
 
 void InfoValuation::expectedFlatCommerce(const CvModifiers* modifiers,
 	const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup* plotGroup,
-	int (&flatCommerce)[NUM_COMMERCE_TYPES])
+	int (&flatCommerce)[NUM_COMMERCE_TYPES],
+	const CvCascadeHypothetical* pHypothetical)
 {
 	CvCascadeEvalCtx evalCtx;
 	fillEvalCtx(cityContext, empireContext, plotGroup, evalCtx);
+	evalCtx.hypothetical = pHypothetical;
 	for (int iCommerce = 0; iCommerce < NUM_COMMERCE_TYPES; ++iCommerce)
 	{
 		flatCommerce[iCommerce] = (int)groupSum(modifiers, infoCommerceFamily(iCommerce), CHANNEL_AMOUNT, CASC_UNIT_FLAT, evalCtx);
@@ -714,7 +722,8 @@ void InfoValuation::expectedFlatCommerce(const CvModifiers* modifiers,
 
 void InfoValuation::expectedWellbeing(const CvModifiers* modifiers,
 	const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup* plotGroup,
-	int (&wellbeing)[NUM_WELLBEING_CHANNELS])
+	int (&wellbeing)[NUM_WELLBEING_CHANNELS],
+	const CvCascadeHypothetical* pHypothetical)
 {
 	for (int iChannel = 0; iChannel < NUM_WELLBEING_CHANNELS; ++iChannel)
 	{
@@ -726,6 +735,7 @@ void InfoValuation::expectedWellbeing(const CvModifiers* modifiers,
 	}
 	CvCascadeEvalCtx evalCtx;
 	fillEvalCtx(cityContext, empireContext, plotGroup, evalCtx);
+	evalCtx.hypothetical = pHypothetical;
 	const bool bAiAudience = val_aiAudience(evalCtx);
 	// The two AUTHORED families, each sign-routed onto its channel pair (modifier.md §2b: a negative deposit is
 	// routed to the opposing channel -- at THIS fill; the info's storage stays the two signed families).

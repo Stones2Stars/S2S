@@ -42,6 +42,8 @@ struct EnBucketSets
 struct CascadeCondDeps
 {
 	bool pop, power, religion, corp, goldenAge, stateReligion, civicAny;
+	bool coastal;             // the entity needs a COAST (CASC_PRED_HAS_COAST) -- a requires CONDITION in the
+	                          // JSON model, never an entity property, so a rebuilt info carries no isWater()
 	bool dynamic;             // a non-HAVE atom (live state no event carries) -- only set under bMarkDynamic
 	std::set<int> techs;      // specific TECH_ ids referenced
 	std::set<int> bonuses;    // specific BONUS_ ids referenced (presence or HAS_BONUS predicate)
@@ -49,7 +51,7 @@ struct CascadeCondDeps
 	std::set<int> units;      // specific UNIT_ ids referenced -- only collected under bTrackUnits
 	std::map<int, std::pair<int, int> > propertyBands;  // PROPERTY_ id -> the operate band [min,max] (F5: -1 = unset)
 	CascadeCondDeps() : pop(false), power(false), religion(false), corp(false), goldenAge(false),
-		stateReligion(false), civicAny(false), dynamic(false) {}
+		stateReligion(false), civicAny(false), coastal(false), dynamic(false) {}
 };
 
 class EnablerDomain;

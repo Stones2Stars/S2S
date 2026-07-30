@@ -9348,240 +9348,201 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus, bool bForTrade) const
 
 			{
 				PROFILE("CvPlayerAI::AI_baseBonusVal::recalculate Building Value");
-				for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
-				{
-					const BuildingTypes eBuildingX = static_cast<BuildingTypes>(iI);
+					// WHICH BUILDINGS CARE ABOUT THIS BONUS? -- the same two legs as the unit half above, off the
+					// bonus's own load-populated edge families ([DEC-one-reverse-view]): RELATED catches every
+					// compiled reference INCLUDING a deposit's `enabled` condition (which is where a
+					// bonus-conditioned yield/commerce/wellbeing deposit lives), REQUIRED_BY the subset it can
+					// UNLOCK. The whole-database sweep this replaces ran a findPathLength per surviving building.
+					std::set<int> relatedBuildings;
+					std::set<int> gatedBuildings;
+					const CvInfo* pBonusInfoB = EnablerKernel::infoFor(EDGEB_BONUSES, (int)eBonus);
+					EnablerKernel::addEdge(pBonusInfoB, EDGEF_RELATED, EDGEB_BUILDINGS, relatedBuildings);
+					EnablerKernel::addEdge(pBonusInfoB, EDGEF_REQUIRED_BY, EDGEB_BUILDINGS, gatedBuildings);
 
-					if (!GET_TEAM(getTeam()).isObsoleteBuilding(eBuildingX))
+					CvCascadeHypothetical kBldWith;
+					kBldWith.present[EDGEB_BONUSES].insert((int)eBonus);
+					CvCascadeHypothetical kBldWithout;
+					kBldWithout.absent[EDGEB_BONUSES].insert((int)eBonus);
+
+					for (std::set<int>::const_iterator itBuilding = relatedBuildings.begin();
+						itBuilding != relatedBuildings.end(); ++itBuilding)
 					{
+						const BuildingTypes eBuildingX = static_cast<BuildingTypes>(*itBuilding);
+
+						if (GET_TEAM(getTeam()).isObsoleteBuilding(eBuildingX)
+						|| !GC.getGame().canEverConstruct(eBuildingX))
+						{
+							continue;
+						}
 						const CvBuildingInfo& kLoopBuilding = GC.getBuildingInfo(eBuildingX);
-						bool bCanConstruct = false;
+						const bool bCanConstruct = getBuildingAvailabilityAnywhere(eBuildingX) >= EnablerDomain::STATE_GREYED;
 
-						if (bJustNonTradeBuildings || bForTrade)
+						if ((bJustNonTradeBuildings || bForTrade) && bCanConstruct == bJustNonTradeBuildings)
 						{
-							bCanConstruct = getBuildingAvailabilityAnywhere(eBuildingX) >= EnablerDomain::STATE_GREYED;
+							continue;
+						}
+						if (pCapital == NULL)
+						{
+							continue;   // every read below is the capital's what-if
+						}
+						const CityContext& kCityCtx = pCapital->getCityContext();
+						const EmpireContext& kEmpireCtx = getEmpireContext();
+						const CvPlotGroup* pCapitalGroup = pCapital->plotGroup(getID());
 
-							if (bCanConstruct == bJustNonTradeBuildings)
+						// (1) WHAT THE BONUS IS WORTH THROUGH THIS BUILDING -- the DELTA across the groups it
+						// deposits into, between holding the bonus and not. This replaces a dozen bespoke
+						// getBonus<Channel>Changes / getBonus<Channel>Modifier reads with the ONE valuation asked
+						// twice ([patterns.md] THE VALUATION PROTOCOL): a bonus-conditioned deposit resolves
+						// under each hypothetical, so nothing here re-derives which entries the bonus gates.
+						// ⚠ The per-city weighting the legacy terms applied by hand is gone with them -- the
+						// valuation already answers "here, in this city", which is what those divisors were
+						// reconstructing from an empire-wide number.
+						int iTempValue = 0;
+						{
+							int aiWith[NUM_YIELD_TYPES];
+							int aiWithout[NUM_YIELD_TYPES];
+							kLoopBuilding.expectedFlatYields(kCityCtx, kEmpireCtx, pCapitalGroup, aiWith, &kBldWith);
+							kLoopBuilding.expectedFlatYields(kCityCtx, kEmpireCtx, pCapitalGroup, aiWithout, &kBldWithout);
+							for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
 							{
-								continue;
+								iTempValue += (aiWith[iYield] - aiWithout[iYield]) * 6 / 100;   // ×100 flat -> whole
+							}
+							kLoopBuilding.expectedYieldModifiers(kCityCtx, kEmpireCtx, pCapitalGroup, aiWith, &kBldWith);
+							kLoopBuilding.expectedYieldModifiers(kCityCtx, kEmpireCtx, pCapitalGroup, aiWithout, &kBldWithout);
+							for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+							{
+								iTempValue += (aiWith[iYield] - aiWithout[iYield]) / 2;   // a percent is unscaled
 							}
 						}
-						const TechTypes eBuildingTech = (TechTypes)kLoopBuilding.getPrereqAndTech();
-						int iBuildingTechDistance = MAX_INT;
-
-						if (eBuildingTech == NO_TECH)
 						{
-							iBuildingTechDistance = 0;
-						}
-						else if (GC.getTechInfo(eBuildingTech).getEra() <= getCurrentEra() + 1)
-						{
-							iBuildingTechDistance = findPathLength((TechTypes)kLoopBuilding.getPrereqAndTech(), false);
-						}
-
-						if (iBuildingTechDistance < 15)
-						{
-							if (!bJustNonTradeBuildings && !bForTrade)
+							int aiWith[NUM_COMMERCE_TYPES];
+							int aiWithout[NUM_COMMERCE_TYPES];
+							kLoopBuilding.expectedFlatCommerce(kCityCtx, kEmpireCtx, pCapitalGroup, aiWith, &kBldWith);
+							kLoopBuilding.expectedFlatCommerce(kCityCtx, kEmpireCtx, pCapitalGroup, aiWithout, &kBldWithout);
+							for (int iCommerce = 0; iCommerce < NUM_COMMERCE_TYPES; ++iCommerce)
 							{
-								bCanConstruct = getBuildingAvailabilityAnywhere(eBuildingX) >= EnablerDomain::STATE_GREYED;
-							}
-							bool bCouldConstruct = false;
-							bool bCanConstructAnyway = true;
-
-							if (kLoopBuilding.getPrereqAndBonus() != NO_BONUS)
-							{
-								if (kLoopBuilding.getPrereqAndBonus() == eBonus)
-								{
-									bCouldConstruct = true;
-									bCanConstructAnyway = false;
-								}
-								else if (!hasBonus((BonusTypes)kLoopBuilding.getPrereqAndBonus()))
-								{
-									bCanConstructAnyway = false;
-								}
-							}
-
-							if (bCouldConstruct || bCanConstructAnyway)
-							{
-								bool bHasOR = false;
-								bool bGetsOR = false;
-								bool bRequiresOR = false;
-
-								foreach_(const BonusTypes ePrereqBonus, kLoopBuilding.getPrereqOrBonuses())
-								{
-									bRequiresOR = true;
-
-									if (ePrereqBonus == eBonus)
-									{
-										bGetsOR = true;
-									}
-									else if (hasBonus(ePrereqBonus))
-									{
-										bHasOR = true;
-										break;
-									}
-								}
-								if (bRequiresOR)
-								{
-									if (!bHasOR)
-									{
-										bCanConstructAnyway = false;
-									}
-									else if (bGetsOR)
-									{
-										bCouldConstruct |= bCanConstructAnyway;
-									}
-								}
-							}
-
-							if (bCouldConstruct || bCanConstructAnyway)
-							{
-								int iTempValue = kLoopBuilding.getBonusProductionModifier(eBonus) / 10;
-
-								if (kLoopBuilding.getPowerBonus() == eBonus)
-								{
-									iTempValue += 60;
-								}
-								const int iBuildingCount = std::max(1, getBuildingCount(eBuildingX));
-
-								for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
-								{
-									iTempValue += kLoopBuilding.getBonusYieldModifier(eBonus, iJ) / 2;
-									if (kLoopBuilding.getPowerBonus() == eBonus)
-									{
-										iTempValue += kLoopBuilding.getPowerYieldModifier(iJ);
-									}
-									// Remember, these are all divided by 10 at the end...
-									// Divide by number of cities as this is supposed to be a per-city value.
-									iTempValue += (kLoopBuilding.getBonusYieldChanges(eBonus, iJ) * iBuildingCount * 60) / std::max(1, getNumCities());
-									iTempValue += (kLoopBuilding.getBonusYieldModifier(eBonus, iJ) * iBuildingCount * 10) / std::max(1, getNumCities());
-								}
-
-								for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
-								{
-									//	Percent modifier on commerce estimate per city as that modifer applied to the player's total commerce divided by num cities
-									iTempValue += kLoopBuilding.getBonusCommercePercentChanges(eBonus, iJ) * iBuildingCount * getCommerceRate((CommerceTypes)iJ) / (10 * std::max(1, getNumCities() * getNumCities()));
-									iTempValue += kLoopBuilding.getBonusCommerceModifier(eBonus, iJ) * iBuildingCount * 10 / std::max(1, getNumCities());
-								}
-								iTempValue += iBuildingCount * kLoopBuilding.getBonusHappinessChanges().getValue(eBonus) * 120 / std::max(1, getNumCities());
-								iTempValue += iBuildingCount * kLoopBuilding.getBonusHealthChanges().getValue(eBonus) * 80 / std::max(1, getNumCities());
-								iTempValue += iBuildingCount * kLoopBuilding.getBonusDefenseChanges(eBonus) * 10 / std::max(1, getNumCities());
-
-								int iTempNonTradeValue = 0;
-								int iTempTradeValue = 0;
-								// determine whether we have the tech for this building
-								{
-									bool bHasTechForBuilding = kTeam.isHasTech((TechTypes)kLoopBuilding.getPrereqAndTech());
-									if (bHasTechForBuilding)
-									{
-										foreach_(const TechTypes ePrereqTech, kLoopBuilding.getPrereqAndTechs())
-										{
-											if (!kTeam.isHasTech(ePrereqTech))
-											{
-												bHasTechForBuilding = false;
-											}
-										}
-									}
-									// It only has worth if we can potentially build it.
-									// When statement is False it is accurate, it may be true in some cases where we will never be able to build
-									if (!bHasTechForBuilding || bCanConstruct || kLoopBuilding.getPrereqStateReligion() > -1)
-									{
-										if (bCouldConstruct && !bCanConstructAnyway)
-										{
-											iTempNonTradeValue += 100;
-										}
-										if (bCanConstruct)
-										{
-											// double value if we can build it right now
-											iTempNonTradeValue += iTempValue;
-											iTempNonTradeValue *= 2;
-											iTempTradeValue += 2 * iTempValue;
-										}
-									}
-								}
-								iTempValue = 0;
-
-								// if non-limited water building, weight by coastal cities
-								if (kLoopBuilding.isWater() && !isLimitedWonder(eBuildingX))
-								{
-									iTempNonTradeValue *= iCoastalCityCount;
-									iTempNonTradeValue /= std::max(1, iCityCount / 2);
-
-									iTempTradeValue *= iCoastalCityCount;
-									iTempTradeValue /= std::max(1, iCityCount / 2);
-								}
-
-								if (iTempNonTradeValue > 0 || iTempTradeValue > 0)
-								{
-									int	iTechDistance = iBuildingTechDistance;
-
-									//	Without some more checks we are over-assessing religious buildings a lot
-									//	so if there is a religion pre-req make some basic checks on the availability of
-									//	the religion
-									const ReligionTypes eReligion = (ReligionTypes)kLoopBuilding.getPrereqReligion();
-									if (eReligion != NO_RELIGION)
-									{
-										// Trade is short term - don't assume useful religion spread,
-										//	just weight by the cities that have the religion already
-										iTempTradeValue = iTempTradeValue * getHasReligionCount(eReligion) / iCityCountNonZero;
-
-										iTechDistance = std::max(iTechDistance, findPathLength(GC.getReligionInfo(eReligion).getTechPrereq(), false));
-									}
-
-									// Similarly corporations
-									const CorporationTypes eCorporation = (CorporationTypes)kLoopBuilding.getPrereqCorporation();
-									if (eCorporation != NO_CORPORATION)
-									{
-										// Trade is short term - don't assume useful corporation spread - just weight by the cities that have it already
-										iTempTradeValue = iTempTradeValue * getHasCorporationCount(eCorporation) / iCityCountNonZero;
-
-										const TechTypes eCorpTech = GC.getCorporationInfo(eCorporation).getTechPrereq();
-										if (eCorpTech > NO_TECH)
-										{
-											iTechDistance = std::max(iTechDistance, findPathLength(eCorpTech, false));
-										}
-									}
-
-									if (iTempNonTradeValue > 0 && !bCanConstruct)
-									{
-										// If building this is dependent (directly or otherwise) on a tech, assess how
-										//	distant that tech is
-										iTempNonTradeValue = (iTempNonTradeValue * 15) / (10 + iTechDistance);
-									}
-									iTempTradeValue = (iTempTradeValue * 15) / (10 + iTechDistance);
-								}
-								//Special Wonder Considerations...
-								if (isLimitedWonder(eBuildingX) && bCanConstruct)
-								{
-									// World wonders we are competing for so boost them higher
-									const int iWonderModifier = (isWorldWonder(eBuildingX) ? 3 : 1) * kLoopBuilding.getBonusProductionModifier(eBonus);
-									iTempTradeValue = iTempTradeValue * iWonderModifier / 100;
-									iTempNonTradeValue = iTempNonTradeValue * iWonderModifier / 100;
-								}
-
-								// Trades are short-term - if we can't construct the building now assume we won't be able to do so for the duration of the trade
-								if (!bCanConstruct)
-								{
-									iTempTradeValue = 0;
-								}
-								// Buildings will beconme diabled once their pre-reqs are no longer present so give them less weight for temporary trades
-								iValue += iTempNonTradeValue;
-								iTradeValue += iTempTradeValue / 3;
+								iTempValue += (aiWith[iCommerce] - aiWithout[iCommerce]) * 6 / 100;
 							}
 						}
+						{
+							// The wellbeing pair nets before weighting: a bonus that brings +2 happy and +1 angry
+							// through this building is worth the +1, never the +2 ([modifier.md] §2b -- the
+							// opposing channels net at the verdict, and the net is what a valuation weighs).
+							int aiWith[NUM_WELLBEING_CHANNELS];
+							int aiWithout[NUM_WELLBEING_CHANNELS];
+							kLoopBuilding.expectedWellbeing(kCityCtx, kEmpireCtx, pCapitalGroup, aiWith, &kBldWith);
+							kLoopBuilding.expectedWellbeing(kCityCtx, kEmpireCtx, pCapitalGroup, aiWithout, &kBldWithout);
+							const int iHappyDelta = (aiWith[WELLBEING_HAPPINESS] - aiWithout[WELLBEING_HAPPINESS])
+								- (aiWith[WELLBEING_ANGER] - aiWithout[WELLBEING_ANGER]);
+							const int iHealthDelta = (aiWith[WELLBEING_HEALTH] - aiWithout[WELLBEING_HEALTH])
+								- (aiWith[WELLBEING_UNHEALTH] - aiWithout[WELLBEING_UNHEALTH]);
+							iTempValue += iHappyDelta * 12 / 100;
+							iTempValue += iHealthDelta * 8 / 100;
+						}
+						// Build-speed and defense, the two remaining channels the legacy terms weighted.
+						iTempValue += (kLoopBuilding.expectedModifier(MODFAM_BUILD_RATE, BUILD_RATE_AMOUNT,
+								CASC_UNIT_PERCENT, kCityCtx, kEmpireCtx, pCapitalGroup, &kBldWith)
+							- kLoopBuilding.expectedModifier(MODFAM_BUILD_RATE, BUILD_RATE_AMOUNT,
+								CASC_UNIT_PERCENT, kCityCtx, kEmpireCtx, pCapitalGroup, &kBldWithout)) / 10;
+
+						iTempValue += (kLoopBuilding.expectedModifier(MODFAM_DEFENSE, DEFENSE_AMOUNT,
+								CASC_UNIT_PERCENT, kCityCtx, kEmpireCtx, pCapitalGroup, &kBldWith)
+							- kLoopBuilding.expectedModifier(MODFAM_DEFENSE, DEFENSE_AMOUNT,
+								CASC_UNIT_PERCENT, kCityCtx, kEmpireCtx, pCapitalGroup, &kBldWithout)) / 10;
+
+						// (2) DOES IT UNLOCK THE BUILDING? -- the gate in both worlds, exactly as the unit half.
+						const bool bUnlocks = gatedBuildings.count((int)eBuildingX) != 0
+							&& EnablerKernel::requiresMetInCity(*pCapital, EDGEB_BUILDINGS, (int)eBuildingX, false, &kBldWith)
+							&& !EnablerKernel::requiresMetInCity(*pCapital, EDGEB_BUILDINGS, (int)eBuildingX, false, &kBldWithout);
+
+						int iTempNonTradeValue = 0;
+						int iTempTradeValue = 0;
+
+						if (bUnlocks)
+						{
+							iTempNonTradeValue += 100;
+						}
+						if (bCanConstruct)
+						{
+							// Double weight on something we could put up right now.
+							iTempNonTradeValue += iTempValue;
+							iTempNonTradeValue *= 2;
+							iTempTradeValue += 2 * iTempValue;
+						}
+
+						// A non-limited COASTAL building is worth what the coastline can host. "Needs a coast" is
+						// a `requires` CONDITION in the JSON model, not a property of the building -- a rebuilt
+						// info carries no isWater() -- so the ONE scanner answers it off the same tree the tech
+						// distance below reads.
+						CascadeCondDeps kBldDeps;
+						EnablerKernel::scanCondDeps(kLoopBuilding.getRequires()->build, kBldDeps, false, false);
+
+						if (kBldDeps.coastal && !isLimitedWonder(eBuildingX))
+						{
+							iTempNonTradeValue *= iCoastalCityCount;
+							iTempNonTradeValue /= std::max(1, iCityCount / 2);
+							iTempTradeValue *= iCoastalCityCount;
+							iTempTradeValue /= std::max(1, iCityCount / 2);
+						}
+
+						if (iTempNonTradeValue > 0 || iTempTradeValue > 0)
+						{
+							// How far off is the building at all? Its `requires` names the techs -- the same scan
+							// as above -- which also retires the separate religion and corporation legs the old
+							// code carried: their tech gates are atoms in the same tree and arrive with it.
+							int iTechDistance = 0;
+
+							for (std::set<int>::const_iterator itTech = kBldDeps.techs.begin();
+								itTech != kBldDeps.techs.end(); ++itTech)
+							{
+								iTechDistance = std::max(iTechDistance, findPathLength((TechTypes)*itTech, false));
+							}
+							if (iTempNonTradeValue > 0 && !bCanConstruct)
+							{
+								iTempNonTradeValue = (iTempNonTradeValue * 15) / (10 + iTechDistance);
+							}
+							iTempTradeValue = (iTempTradeValue * 15) / (10 + iTechDistance);
+						}
+						// Trades are short-term: if we cannot construct it now, assume we will not for the duration.
+						if (!bCanConstruct)
+						{
+							iTempTradeValue = 0;
+						}
+						iValue += iTempNonTradeValue;
+						iTradeValue += iTempTradeValue / 3;
 					}
-				}
 			}
 
 			if (!bJustNonTradeBuildings)
 			{
 				PROFILE("CvPlayerAI::AI_baseBonusVal::recalculate Project Value");
 
-				for (int iI = 0; iI < GC.getNumProjectInfos(); iI++)
+				// Only the projects that reference this bonus at all -- the same RELATED leg the unit and building
+				// halves drive off ([DEC-one-reverse-view]), which for a project is where a bonus-conditioned
+				// buildRate deposit lives.
+				std::set<int> relatedProjects;
+				EnablerKernel::addEdge(EnablerKernel::infoFor(EDGEB_BONUSES, (int)eBonus),
+					EDGEF_RELATED, EDGEB_PROJECTS, relatedProjects);
+
+				for (std::set<int>::const_iterator itProject = relatedProjects.begin();
+					itProject != relatedProjects.end() && pCapital != NULL; ++itProject)
 				{
-					const ProjectTypes eProject = static_cast<ProjectTypes>(iI);
+					const ProjectTypes eProject = static_cast<ProjectTypes>(*itProject);
 					const CvProjectInfo& kLoopProject = GC.getProjectInfo(eProject);
 
-					int iTempValue = kLoopProject.getBonusProductionModifier(eBonus) / 10;
+					// The build-speed the bonus brings: the buildRate delta between holding it and not, the same
+					// read the unit and building halves make.
+					CvCascadeHypothetical kPrjWith;
+					kPrjWith.present[EDGEB_BONUSES].insert((int)eBonus);
+					CvCascadeHypothetical kPrjWithout;
+					kPrjWithout.absent[EDGEB_BONUSES].insert((int)eBonus);
+
+					int iTempValue = (kLoopProject.expectedModifier(MODFAM_BUILD_RATE, BUILD_RATE_AMOUNT,
+							CASC_UNIT_PERCENT, pCapital->getCityContext(), getEmpireContext(),
+							pCapital->plotGroup(getID()), &kPrjWith)
+						- kLoopProject.expectedModifier(MODFAM_BUILD_RATE, BUILD_RATE_AMOUNT,
+							CASC_UNIT_PERCENT, pCapital->getCityContext(), getEmpireContext(),
+							pCapital->plotGroup(getID()), &kPrjWithout)) / 10;
 
 					if (iTempValue > 0)
 					{

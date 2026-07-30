@@ -169,15 +169,20 @@ public:
 	// (a what-if NEVER evaluates requires). One-line delegations onto the ONE calc unit (InfoValuation,
 	// [DEC-single-implementation]) -- declared on the base so EVERY rebuilt info serves the same read. ---
 	void expectedFlatYields(const CityContext& cityContext, const EmpireContext& empireContext,
-		const CvPlotGroup* plotGroup, int (&flatYields)[NUM_YIELD_TYPES]) const;
+		const CvPlotGroup* plotGroup, int (&flatYields)[NUM_YIELD_TYPES],
+		const CvCascadeHypothetical* pHypothetical = NULL) const;
 	void expectedYieldModifiers(const CityContext& cityContext, const EmpireContext& empireContext,
-		const CvPlotGroup* plotGroup, int (&yieldModifiers)[NUM_YIELD_TYPES]) const;
+		const CvPlotGroup* plotGroup, int (&yieldModifiers)[NUM_YIELD_TYPES],
+		const CvCascadeHypothetical* pHypothetical = NULL) const;
 	void expectedPlotYields(const CityContext& cityContext, const EmpireContext& empireContext,
-		const CvPlotGroup* plotGroup, int (&plotYields)[NUM_YIELD_TYPES]) const;
+		const CvPlotGroup* plotGroup, int (&plotYields)[NUM_YIELD_TYPES],
+		const CvCascadeHypothetical* pHypothetical = NULL) const;
 	void expectedFlatCommerce(const CityContext& cityContext, const EmpireContext& empireContext,
-		const CvPlotGroup* plotGroup, int (&flatCommerce)[NUM_COMMERCE_TYPES]) const;
+		const CvPlotGroup* plotGroup, int (&flatCommerce)[NUM_COMMERCE_TYPES],
+		const CvCascadeHypothetical* pHypothetical = NULL) const;
 	void expectedWellbeing(const CityContext& cityContext, const EmpireContext& empireContext,
-		const CvPlotGroup* plotGroup, int (&wellbeing)[NUM_WELLBEING_CHANNELS]) const;
+		const CvPlotGroup* plotGroup, int (&wellbeing)[NUM_WELLBEING_CHANNELS],
+		const CvCascadeHypothetical* pHypothetical = NULL) const;
 	// The grouped/scalar-family analogues -- the same walk for one vocabulary slot (a defense kind, a
 	// maintenance modifier, an InfoScalar straggler), axes spelled out exactly as the point reads'.
 	//

@@ -39,33 +39,38 @@ void CvInfo::modifierConditionedRange(ModifierFamily eFamily, size_t& iBeginOut,
 
 // --- the per-group what-if endpoints: one-line delegations onto the ONE calc unit (InfoValuation) ---
 void CvInfo::expectedFlatYields(const CityContext& cityContext, const EmpireContext& empireContext,
-	const CvPlotGroup* plotGroup, int (&flatYields)[NUM_YIELD_TYPES]) const
+	const CvPlotGroup* plotGroup, int (&flatYields)[NUM_YIELD_TYPES],
+	const CvCascadeHypothetical* pHypothetical) const
 {
-	InfoValuation::expectedFlatYields(getModifiers(), cityContext, empireContext, plotGroup, flatYields);
+	InfoValuation::expectedFlatYields(getModifiers(), cityContext, empireContext, plotGroup, flatYields, pHypothetical);
 }
 
 void CvInfo::expectedYieldModifiers(const CityContext& cityContext, const EmpireContext& empireContext,
-	const CvPlotGroup* plotGroup, int (&yieldModifiers)[NUM_YIELD_TYPES]) const
+	const CvPlotGroup* plotGroup, int (&yieldModifiers)[NUM_YIELD_TYPES],
+	const CvCascadeHypothetical* pHypothetical) const
 {
-	InfoValuation::expectedYieldModifiers(getModifiers(), cityContext, empireContext, plotGroup, yieldModifiers);
+	InfoValuation::expectedYieldModifiers(getModifiers(), cityContext, empireContext, plotGroup, yieldModifiers, pHypothetical);
 }
 
 void CvInfo::expectedPlotYields(const CityContext& cityContext, const EmpireContext& empireContext,
-	const CvPlotGroup* plotGroup, int (&plotYields)[NUM_YIELD_TYPES]) const
+	const CvPlotGroup* plotGroup, int (&plotYields)[NUM_YIELD_TYPES],
+	const CvCascadeHypothetical* pHypothetical) const
 {
-	InfoValuation::expectedPlotYields(getModifiers(), cityContext, empireContext, plotGroup, plotYields);
+	InfoValuation::expectedPlotYields(getModifiers(), cityContext, empireContext, plotGroup, plotYields, pHypothetical);
 }
 
 void CvInfo::expectedFlatCommerce(const CityContext& cityContext, const EmpireContext& empireContext,
-	const CvPlotGroup* plotGroup, int (&flatCommerce)[NUM_COMMERCE_TYPES]) const
+	const CvPlotGroup* plotGroup, int (&flatCommerce)[NUM_COMMERCE_TYPES],
+	const CvCascadeHypothetical* pHypothetical) const
 {
-	InfoValuation::expectedFlatCommerce(getModifiers(), cityContext, empireContext, plotGroup, flatCommerce);
+	InfoValuation::expectedFlatCommerce(getModifiers(), cityContext, empireContext, plotGroup, flatCommerce, pHypothetical);
 }
 
 void CvInfo::expectedWellbeing(const CityContext& cityContext, const EmpireContext& empireContext,
-	const CvPlotGroup* plotGroup, int (&wellbeing)[NUM_WELLBEING_CHANNELS]) const
+	const CvPlotGroup* plotGroup, int (&wellbeing)[NUM_WELLBEING_CHANNELS],
+	const CvCascadeHypothetical* pHypothetical) const
 {
-	InfoValuation::expectedWellbeing(getModifiers(), cityContext, empireContext, plotGroup, wellbeing);
+	InfoValuation::expectedWellbeing(getModifiers(), cityContext, empireContext, plotGroup, wellbeing, pHypothetical);
 }
 
 int CvInfo::expectedModifier(ModifierFamily eFamily, int iKind, CvCascUnit eUnit,
