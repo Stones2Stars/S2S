@@ -10526,6 +10526,15 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 	bool bisPositivePropertyUnit = (iGeneralPropertyValue > 0);
 	bool bUndefinedValid = false, bValid = false;
 
+	// The unit's OWN keyed vs-unitcombat entries -- the handful it authored, walked ONCE for the whole function
+	// instead of asking every unitcombat id whether this unit deposits onto it (the own-data inversion,
+	// [pedia-read-map] finding 2). ⚠ `combat.unit.unitCombat.{UNITCOMBAT_X}.percent` carries no member segment,
+	// which compiles to kind 0 -- the scope-wide COMBAT_AMOUNT -- NOT to an unkinded entry; the collect form
+	// matches the kind exactly, so anything else here silently reads nothing.
+	std::vector<std::pair<int, int> > vsUnitCombat;
+	InfoValuation::collectKeyedCombat(kUnitInfo.getModifiers(), InfoValuation::COMBAT_TARGET_UNITCOMBAT,
+		COMBAT_AMOUNT, vsUnitCombat);
+
 	//if (eUnitAI != UNITAI_PROPERTY_CONTROL && eUnitAI != UNITAI_SEE_INVISIBLE && bisPositivePropertyUnit)
 	//{
 	//	return 0;
@@ -10665,19 +10674,19 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 						break;
 					}
 				}
-				for (int iI = 0; !bValid && iI < GC.getNumUnitCombatInfos(); iI++)
+				// Both halves are the unit's OWN authored data, so the question is asked of what it carries rather
+				// than of every unitcombat id.
+				foreach_(const STD_PAIR(int, int)& combatModifier, vsUnitCombat)
 				{
-					if (kUnitInfo.getUnitCombatModifier(iI) > 0)
+					if (combatModifier.second > 0)
 					{
 						bValid = true;
 						break;
 					}
-
-					if (kUnitInfo.getTargetUnitCombat(iI))
-					{
-						bValid = true;
-						break;
-					}
+				}
+				if (!bValid && !kUnitInfo.getTargetUnitCombats().empty())
+				{
+					bValid = true;
 				}
 				for (int iI = 0; !bValid && iI < GC.getNumUnitInfos(); iI++)
 				{
@@ -10688,7 +10697,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 					}
 
 					const int iUnitCombat = kUnitInfo.getCombatClass();
-					if (NO_UNITCOMBAT != iUnitCombat && GC.getUnitInfo((UnitTypes)iI).getDefenderUnitCombat(iUnitCombat))
+					if (NO_UNITCOMBAT != iUnitCombat && GC.getUnitInfo((UnitTypes)iI).hasDefenderUnitCombat(iUnitCombat))
 					{
 						bValid = true;
 						break;
@@ -10805,9 +10814,9 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 						break;
 					}
 				}
-				for (int iI = 0; !bValid && iI < GC.getNumUnitCombatInfos(); iI++)
+				foreach_(const STD_PAIR(int, int)& combatModifier, vsUnitCombat)
 				{
-					if (kUnitInfo.getUnitCombatModifier(iI) > 0)
+					if (combatModifier.second > 0)
 					{
 						bValid = true;
 						break;
@@ -11083,9 +11092,10 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 				}
 
 				//	Combat modifiers matter for attack units
-				for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
+				for (std::vector<std::pair<int, int> >::const_iterator itCombat = vsUnitCombat.begin();
+					itCombat != vsUnitCombat.end(); ++itCombat)
 				{
-					iValue += ((iCombatValue * kUnitInfo.getUnitCombatModifier(iI) * AI_getUnitCombatWeight((UnitCombatTypes)iI)) / 10000);
+					iValue += ((iCombatValue * itCombat->second * AI_getUnitCombatWeight((UnitCombatTypes)itCombat->first)) / 10000);
 				}
 
 				break;
@@ -11295,12 +11305,10 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 				}
 				iValue += iCombatValue;
 				iValue += ((iCombatValue * kUnitInfo.getCollateralDamage()) / 200);
-				for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
+				for (std::vector<std::pair<int, int> >::const_iterator itCombat = vsUnitCombat.begin();
+					itCombat != vsUnitCombat.end(); ++itCombat)
 				{
-					//			int iCombatModifier = kUnitInfo.getUnitCombatModifier(iI);
-					//			iCombatModifier = (iCombatModifier < 40) ? iCombatModifier : (40 + (iCombatModifier - 40) / 2);
-					//			iValue += ((iCombatValue * iCombatModifier) / 100);
-					iValue += ((iCombatValue * kUnitInfo.getUnitCombatModifier(iI) * AI_getUnitCombatWeight((UnitCombatTypes)iI)) / 12000);
+					iValue += ((iCombatValue * itCombat->second * AI_getUnitCombatWeight((UnitCombatTypes)itCombat->first)) / 12000);
 				}
 				iValue += ((iCombatValue * (kUnitInfo.getMoves() - 1) ) / 4);  //Calvitix  old value /2
 				break;
@@ -11333,13 +11341,17 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 					iValue += ((iCombatValue * modifier.second * AI_getUnitWeight(modifier.first)) / 7500);
 					iValue += ((iCombatValue * (kUnitInfo.isTargetUnit(modifier.first) ? 50 : 0)) / 100);
 				}
-				for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
+				for (std::vector<std::pair<int, int> >::const_iterator itCombat = vsUnitCombat.begin();
+					itCombat != vsUnitCombat.end(); ++itCombat)
 				{
-					//			int iCombatModifier = kUnitInfo.getUnitCombatModifier(iI);
-					//			iCombatModifier = (iCombatModifier < 40) ? iCombatModifier : (40 + (iCombatModifier - 40) / 2);
-					//			iValue += ((iCombatValue * iCombatModifier) / 100);
-					iValue += ((iCombatValue * kUnitInfo.getUnitCombatModifier(iI) * AI_getUnitCombatWeight((UnitCombatTypes)iI)) / 10000);
-					iValue += ((iCombatValue * (kUnitInfo.getTargetUnitCombat(iI) ? 50 : 0)) / 100);
+					iValue += ((iCombatValue * itCombat->second * AI_getUnitCombatWeight((UnitCombatTypes)itCombat->first)) / 10000);
+				}
+				// The TARGETS set is the unit's own authored list, so it is walked rather than asked per id.
+				const std::set<int>& kTargetCombats = kUnitInfo.getTargetUnitCombats();
+				for (std::set<int>::const_iterator itTarget = kTargetCombats.begin();
+					itTarget != kTargetCombats.end(); ++itTarget)
+				{
+					iValue += ((iCombatValue * 50) / 100);
 				}
 				for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
 				{
@@ -11349,7 +11361,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 					}
 
 					const int iUnitCombat = kUnitInfo.getCombatClass();
-					if (NO_UNITCOMBAT != iUnitCombat && GC.getUnitInfo((UnitTypes)iI).getDefenderUnitCombat(iUnitCombat))
+					if (NO_UNITCOMBAT != iUnitCombat && GC.getUnitInfo((UnitTypes)iI).hasDefenderUnitCombat(iUnitCombat))
 					{
 						iValue += (50 * iCombatValue) / 100;
 					}
@@ -11386,9 +11398,10 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 				//	Combat modifiers matter for defensive units
 
 
-				for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
+				for (std::vector<std::pair<int, int> >::const_iterator itCombat = vsUnitCombat.begin();
+					itCombat != vsUnitCombat.end(); ++itCombat)
 				{
-					iValue += iCombatValue * kUnitInfo.getUnitCombatModifier(iI) * AI_getUnitCombatWeight((UnitCombatTypes)iI) / 12000;
+					iValue += iCombatValue * itCombat->second * AI_getUnitCombatWeight((UnitCombatTypes)itCombat->first) / 12000;
 				}
 
 				//  ls612: consider that a unit with OnlyDefensive is less useful
@@ -11417,9 +11430,10 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 				/*iValue += AI_unitPropertyValue(eUnit)/(ePropertyRequested != NO_PROPERTY ? 30 : 60);*/
 				//	Combat modifiers matter for defensive units
 
-				for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
+				for (std::vector<std::pair<int, int> >::const_iterator itCombat = vsUnitCombat.begin();
+					itCombat != vsUnitCombat.end(); ++itCombat)
 				{
-					iValue += iCombatValue * kUnitInfo.getUnitCombatModifier(iI) * AI_getUnitCombatWeight((UnitCombatTypes)iI) / 6000;
+					iValue += iCombatValue * itCombat->second * AI_getUnitCombatWeight((UnitCombatTypes)itCombat->first) / 6000;
 				}
 				//  ls612: consider that a unit with OnlyDefensive is less useful
 
@@ -11468,10 +11482,17 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 					iValue += ((iCombatValue * modifier.second * AI_getUnitWeight(modifier.first)) / 10000);
 					iValue += ((iCombatValue * (kUnitInfo.isDefendAgainstUnit(modifier.first) ? 50 : 0)) / 100);
 				}
-				for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
+				for (std::vector<std::pair<int, int> >::const_iterator itCombat = vsUnitCombat.begin();
+					itCombat != vsUnitCombat.end(); ++itCombat)
 				{
-					iValue += ((iCombatValue * kUnitInfo.getUnitCombatModifier(iI) * AI_getUnitCombatWeight((UnitCombatTypes)iI)) / 10000);
-					iValue += ((iCombatValue * (kUnitInfo.getDefenderUnitCombat(iI) ? 50 : 0)) / 100);
+					iValue += ((iCombatValue * itCombat->second * AI_getUnitCombatWeight((UnitCombatTypes)itCombat->first)) / 10000);
+				}
+				// The DEFENDERS set is likewise the unit's own authored list.
+				const std::set<int>& kDefenderCombats = kUnitInfo.getDefenderUnitCombats();
+				for (std::set<int>::const_iterator itDefender = kDefenderCombats.begin();
+					itDefender != kDefenderCombats.end(); ++itDefender)
+				{
+					iValue += ((iCombatValue * 50) / 100);
 				}
 
 				if (kUnitInfo.getInterceptionProbability() > 0)
@@ -11504,8 +11525,9 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 				iValue = (
 					getModifiedIntValue(
 						iValue,
-						  kUnitInfo.getAnimalCombatModifier()
-						+ kUnitInfo.getUnitCombatModifier(GC.getUNITCOMBAT_ANIMAL())
+						  kUnitInfo.getCombatModifier(COMBAT_ANIMAL, CASC_SCOPE_UNIT)
+						+ InfoValuation::keyedCombat(kUnitInfo.getModifiers(),
+							InfoValuation::COMBAT_TARGET_UNITCOMBAT, GC.getUNITCOMBAT_ANIMAL(), COMBAT_AMOUNT)
 					)
 				);
 
@@ -11807,9 +11829,9 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 						iValue += iFeatureModifier / 5;
 					}
 				}
-				for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
+				foreach_(const STD_PAIR(int, int)& combatEntry, vsUnitCombat)
 				{
-					const int iCombatModifier = kUnitInfo.getUnitCombatModifier(iI);
+					const int iCombatModifier = combatEntry.second;
 					if (iCombatModifier < 0)
 					{
 						iValue = getModifiedIntValue(iValue, iCombatModifier);
@@ -29968,16 +29990,22 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 
 	if ((pUnit && pUnit->canFight() || !pUnit && kUnit.getCombat() > 0))
 	{
-		for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
+		// The PROMOTION's own authored vs-unitcombat entries drive this term: where it deposits nothing the
+		// value is zero on both branches, so the handful it authored replaces the whole unitcombat registry.
+		std::vector<std::pair<int, int> > promotionVsCombat;
+		InfoValuation::collectKeyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_UNITCOMBAT,
+			COMBAT_AMOUNT, promotionVsCombat);
+
+		foreach_(const STD_PAIR(int, int)& combatEntry, promotionVsCombat)
 		{
-			if (pUnit ? pUnit->unitCombatModifier((UnitCombatTypes)iI) >= 0 : kUnit.getUnitCombatModifier(iI) >= 0)
-			{
-				iValue += InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_UNITCOMBAT, iI, COMBAT_AMOUNT) * 2;
-			}
-			else
-			{
-				iValue += InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_UNITCOMBAT, iI, COMBAT_AMOUNT);
-			}
+			const int iUnitCombat = combatEntry.first;
+			// A unit that is not already WEAK against this class values the promotion double.
+			const bool bNotWeakAgainst = pUnit
+				? pUnit->unitCombatModifier((UnitCombatTypes)iUnitCombat) >= 0
+				: InfoValuation::keyedCombat(kUnit.getModifiers(), InfoValuation::COMBAT_TARGET_UNITCOMBAT,
+					iUnitCombat, COMBAT_AMOUNT) >= 0;
+
+			iValue += bNotWeakAgainst ? combatEntry.second * 2 : combatEntry.second;
 		}
 	}
 

@@ -79,13 +79,20 @@ public:
 
 	//	The COLLECT form: every (target, percent) this entity authored on one axis+kind. For a consumer that
 	//	iterates what is there rather than asking about a specific target.
+	//	⛔ THE KIND IS MATCHED EXACTLY HERE -- unlike the point reads, this form has NO `iKind < 0` wildcard, so a
+	//	kind that does not match reads NOTHING and the consumer silently scores zero. Pass the kind the address
+	//	actually compiles to (below): a MEMBER-LESS address is kind 0, never a negative.
 	static void collectKeyedCombat(const CvModifiers* modifiers, CombatTargetAxis eAxis, int iKind,
 		std::vector<std::pair<int, int> >& targetPercents);
 
 	//	The GENERAL keyed point read that `keyedCombat` above is one specialization of: sum this entity's own
 	//	compiled deposits onto ONE named target, for ANY family whose §6.1 address ends in a named-entity key
 	//	(`buildRate.<scope>.{units|buildings|unitCombats|specialBuildings}.{TARGET}`, and its siblings).
-	//	`iKind < 0` matches any kind, which is what a keyed address carrying no member segment compiles to.
+	//	`iKind < 0` matches ANY kind -- a wildcard for a caller that does not care which member it hit.
+	//	⛔ It is NOT the kind a member-less address carries: `<family>.<scope>.{TARGET}.<unit>` with no member
+	//	segment compiles to KIND 0, the scope-wide amount (`CvModifiers.cpp` mod_decodeLeaf). Reading the wildcard
+	//	as "what a keyless address compiles to" is the trap -- it happens to work here, and reads nothing at all
+	//	on the exact-match COLLECT forms above.
 	//	⚠ Returns the value AS COMPILED -- a percent is NOT scaled ([DEC-fixedpoint-x100]).
 	static int keyedTarget(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind,
 		int iTargetSegment, int iTargetFk);
