@@ -147,6 +147,13 @@ static bool ev_bonusPresent(const CvCascadeEvalCtx& ctx, int eBonus, CvCascConne
 	}
 }
 
+// The AS-IF-HELD hypothetical applied to ONE have-atom's live answer (CvConditionEval.h): absent wins, then
+// present, then the live scope. With no hypothetical bound this is a single null test on the ordinary path.
+static bool ev_hypothetical(const CvCascadeEvalCtx& ctx, EnEdgeBucket eBucket, int iId, bool bLive)
+{
+	return ctx.hypothetical == NULL ? bLive : ctx.hypothetical->has((int)eBucket, iId, bLive);
+}
+
 // ---- Present (StoneBase) -- bare presence by type prefix --------------------------------------------------------
 
 static bool ev_present(const CvCascadeEvalCtx& ctx, const CvCondition* a)
@@ -157,7 +164,13 @@ static bool ev_present(const CvCascadeEvalCtx& ctx, const CvCondition* a)
 	const EmpireContext* empireContext = ev_empireContext(ctx);
 	// team-held facts read through the player's EmpireContext (team is deliberately not a context, contexts.md)
 	if (en_starts(t, "TECH_"))     return empireContext != NULL && empireContext->teamHasTech(id);
-	if (en_starts(t, "CIVIC_"))    return empireContext != NULL && empireContext->hasCivic(id);
+	// CIVIC_ and BONUS_ route their live answer through the AS-IF-HELD hypothetical (CvConditionEval.h), because
+	// those are the two axes a what-if actually asks about: "if I adopted this civic" and "if I had this bonus".
+	// ⚑ The wrapper is the EXTENSION POINT -- a new kind joins by wrapping its own branch, which is why the
+	// hypothetical is keyed by bucket rather than by a second prefix router beside this one. A kind nobody asks a
+	// what-if about is deliberately NOT wrapped: an unused injection path is one nothing exercises.
+	if (en_starts(t, "CIVIC_"))    return ev_hypothetical(ctx, EDGEB_CIVICS, id,
+		empireContext != NULL && empireContext->hasCivic(id));
 	if (en_starts(t, "TRAIT_"))    return empireContext != NULL && empireContext->hasTrait(id);
 	if (en_starts(t, "RELIGION_")) return cityContext != NULL && id >= 0 && cityContext->hasReligion(id);
 	if (en_starts(t, "HERITAGE_")) return empireContext != NULL && empireContext->hasHeritage(id);
@@ -174,7 +187,8 @@ static bool ev_present(const CvCascadeEvalCtx& ctx, const CvCondition* a)
 	// game/world-scope facts have no context by design (the scope set is plot/city/player, contexts.md)
 	if (en_starts(t, "VICTORY_"))  return id >= 0 && GC.getGame().isVictoryValid((VictoryTypes)id);
 	if (en_starts(t, "GAMEOPTION_")) return id >= 0 && GC.getGame().isOption((GameOptionTypes)id);
-	if (en_starts(t, "BONUS_"))    return ev_bonusPresent(ctx, id, a->connection, a->vicinity);
+	if (en_starts(t, "BONUS_"))    return ev_hypothetical(ctx, EDGEB_BONUSES, id,
+		ev_bonusPresent(ctx, id, a->connection, a->vicinity));
 	if (en_starts(t, "MAPCATEGORY_")) return true;   // map-category gate: not modelled (json §3.5 in-flight) -> ignored
 	// plot-substrate vicinity scans (owned, culture-grown radius)
 	if (en_starts(t, "FEATURE_"))     return ev_cityPlotHas(cityContext, evp_feature, a);

@@ -112,7 +112,13 @@ public:
 	// the candidate is HIDDEN until the unlock lands.
 	// bVisible relaxes the GREYABLE clauses (a connectable resource, an unadopted civic -- enabler.md §6), so a
 	// caller can tell "satisfied here" from "satisfiable here" without inventing a heuristic for the difference.
-	static bool requiresMetInCity(const CvCity& kCity, EnEdgeBucket eBucket, int iId, bool bVisible = false);
+	// pHypothetical (optional) is the AS-IF-HELD gate twin (CvConditionEval.h): the caller's "…and suppose I also
+	// held X, and no longer held Y" applied to this one evaluation. It is the GATE half of a what-if; the
+	// MEMBERSHIP half is EnablerOverlay. A caller asking both must ask both — a candidate can be gate-satisfiable
+	// under a hypothetical and still not be in the tree, and vice versa (enabler.md par.1: `requires` never
+	// changes membership).
+	static bool requiresMetInCity(const CvCity& kCity, EnEdgeBucket eBucket, int iId, bool bVisible = false,
+		const CvCascadeHypothetical* pHypothetical = NULL);
 
 	// allowed cap gate: current tally count vs each scope cap (world/team/empire).
 	static bool allowedOk(const CvInfo* j, int iId, const CvPlayer& kPlayer, bool bUnit, EnEdgeBucket eBucket = NO_EDGEB);

@@ -91,6 +91,16 @@ public:
 	int enableCount(int iId) const;
 	int removeCount(int iId) const;
 
+	// THE MEMBERSHIP FORMULA ITSELF, exposed so it exists exactly ONCE ([DEC-single-implementation]). The
+	// maintained refresh() and the AS-IF-HELD overlay (CvEnablerOverlay.h) both resolve membership through
+	// this, so a hypothetical can never drift from the real frontier it is overlaid on -- a second copy would
+	// diverge silently the first time the formula gained a term, and the hypothetical would then describe a
+	// game state the frontier does not agree with.
+	static bool isMember(int iEnable, int iRemove, bool bHeld, bool bStaticExcluded)
+	{
+		return iEnable > 0 && iRemove == 0 && !bHeld && !bStaticExcluded;
+	}
+
 	// FRONTIER ITERATION (enabler.md par.6 -- the AI's production/research decisions iterate ONLY this small
 	// offered set, never the whole entity database; the F2b consumer sweep). One O(N) byte-scan fills `out` with
 	// the matching ids, replacing a caller's per-id whole-database gate probe. `out` is caller-owned (cleared

@@ -182,7 +182,8 @@ bool EnablerKernel::requiresMetForPlayer(const CvPlayer& kPlayer, EnEdgeBucket e
 }
 
 // The city twin (see the header). Same ONE evaluator, over a ctx the city + empire contexts fill.
-bool EnablerKernel::requiresMetInCity(const CvCity& kCity, EnEdgeBucket eBucket, int iId, bool bVisible)
+bool EnablerKernel::requiresMetInCity(const CvCity& kCity, EnEdgeBucket eBucket, int iId, bool bVisible,
+	const CvCascadeHypothetical* pHypothetical)
 {
 	const CvInfo* j = infoFor(eBucket, iId);
 	if (j == NULL) return false;
@@ -190,6 +191,9 @@ bool EnablerKernel::requiresMetInCity(const CvCity& kCity, EnEdgeBucket eBucket,
 	kCity.getCityContext().fillEvalCtx(ec);                                  // city+plot
 	GET_PLAYER(kCity.getOwner()).getEmpireContext().fillEvalCtx(ec);         // player+team
 	wireOperatingBuildings(&kCity, ec);
+	// The what-if rides the ctx the contexts filled -- it OVERRIDES individual have-atom answers and touches
+	// nothing else, so every other read stays the real city's.
+	ec.hypothetical = pHypothetical;
 	CvCascadeEvalFlags gateFlags;
 	gateFlags.strictStateReligionForBuild = true;
 	if (!cascadeGateOk(j->getGate(), ec, gateFlags)) return false;

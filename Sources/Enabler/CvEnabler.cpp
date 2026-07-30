@@ -29,8 +29,9 @@ void EnablerDomain::reset()
 // requires-gate verdict (FLAG_GATE_FAILED) only splits a member's state LISTED/GREYED -- never membership.
 void EnablerDomain::refresh(int iId)
 {
-	const bool bIn = m_aiEnable[iId] > 0 && m_aiRemove[iId] == 0
-		&& (m_aFlags[iId] & (unsigned char)(FLAG_HELD | FLAG_STATIC_EXCLUDED)) == 0;
+	const bool bIn = isMember((int)m_aiEnable[iId], (int)m_aiRemove[iId],
+		(m_aFlags[iId] & (unsigned char)FLAG_HELD) != 0,
+		(m_aFlags[iId] & (unsigned char)FLAG_STATIC_EXCLUDED) != 0);
 	m_aState[iId] = !bIn ? (unsigned char)STATE_HIDDEN
 		: ((m_aFlags[iId] & (unsigned char)FLAG_GATE_FAILED) != 0 ? (unsigned char)STATE_GREYED
 		                                                          : (unsigned char)STATE_LISTED);

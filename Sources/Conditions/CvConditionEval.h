@@ -11,6 +11,7 @@
 //
 
 #include "CvCondition.h"
+#include "CvEdges.h"   // EnEdgeBucket / NUM_EDGEB -- the interned bucket vocabulary the hypothetical keys on
 #include <set>
 
 class CvCity;
@@ -19,6 +20,37 @@ class CvPlot;
 class CvUnit;
 class CvTeam;
 class CvPlotGroup;
+
+// THE AS-IF-HELD HYPOTHETICAL -- the GATE twin of the membership overlay (Enabler/CvEnablerOverlay.h). A caller
+// asking "would this candidate's `requires` pass if I ALSO held X, and no longer held Y" fills this and hands it
+// to the evaluator; every HAVE atom of a covered kind answers from it before the live scope is asked.
+//
+// ⛔ CALLER-OWNED, and NULL on every ordinary evaluation -- exactly the discipline the membership overlay keeps
+// (it never writes the maintained planes; this never writes a context). A hypothetical that mutated a context
+// store would leave every other reader evaluating against a game state that never happened, and with no
+// self-heal anywhere ([DEC-no-self-heal]) nothing would put it back.
+//
+// ⚖ WHY IT IS SEPARATE FROM THE MEMBERSHIP OVERLAY rather than one class: a HAVE changes two different things
+// and only one of them is this. Whether a candidate is IN THE TREE is the membership formula over the enable/
+// remove planes; whether a tree member is ATTAINABLE is its `requires` gate (enabler.md par.1 -- `requires` never
+// changes membership). The BONUS axis is the case that forces the split: a bonus is GATE-ONLY, so it has no
+// membership meaning at all and the overlay refuses one, while this is precisely where it does its work.
+//
+// ⚠ ABSENT WINS over present, mirroring the membership formula's removal-wins rule, so the two halves of one
+// what-if can never disagree about whether the caller holds something.
+struct CvCascadeHypothetical
+{
+	std::set<int> present[NUM_EDGEB];   // treat as HELD even though the live scope does not hold it
+	std::set<int> absent[NUM_EDGEB];    // treat as NOT held even though the live scope does (the swap's other half)
+
+	bool has(int eBucket, int iId, bool bLive) const
+	{
+		if (iId < 0 || eBucket < 0 || eBucket >= NUM_EDGEB) return bLive;
+		if (absent[eBucket].count(iId) != 0) return false;
+		if (present[eBucket].count(iId) != 0) return true;
+		return bLive;
+	}
+};
 
 // The eval context = the live engine objects (StoneBase's `(EvalState s, PlotContext? p)`), FILLED BY THE
 // CONTEXTS (CityContext::fillEvalCtx = city/plot, EmpireContext::fillEvalCtx = player/team -- contexts.md: the
@@ -70,7 +102,10 @@ struct CvCascadeEvalCtx
 	// by cascadeCountCityReligions while it evaluates the filter predicate; -1 outside that loop. The
 	// IS_STATE_RELIGION predicate reads it against the player's state religion.
 	int religion;
-	CvCascadeEvalCtx() : city(NULL), player(NULL), team(NULL), plot(NULL), unit(NULL), plotGroup(NULL), waivedPrereqBuildings(NULL), activeBuildings(NULL), obsoleteBuildings(NULL), vicinityProvidedBonuses(NULL), buildingAtomsPresence(false), religion(-1) {}
+	// The AS-IF-HELD hypothetical (above) -- NULL on every ordinary evaluation, so the normal path pays one
+	// null test. Set ONLY by a caller asking a what-if, and never stored anywhere.
+	const CvCascadeHypothetical* hypothetical;
+	CvCascadeEvalCtx() : city(NULL), player(NULL), team(NULL), plot(NULL), unit(NULL), plotGroup(NULL), waivedPrereqBuildings(NULL), activeBuildings(NULL), obsoleteBuildings(NULL), vicinityProvidedBonuses(NULL), buildingAtomsPresence(false), religion(-1), hypothetical(NULL) {}
 };
 
 // Evaluator flags (StoneBase's init-only props). For a `requires.build` gate set strictStateReligionForBuild=true.
