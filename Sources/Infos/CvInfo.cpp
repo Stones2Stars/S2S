@@ -69,18 +69,22 @@ void CvInfo::expectedWellbeing(const CityContext& cityContext, const EmpireConte
 }
 
 int CvInfo::expectedModifier(ModifierFamily eFamily, int iKind, CvCascUnit eUnit,
-	const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup* plotGroup) const
+	const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup* plotGroup,
+	const CvCascadeHypothetical* pHypothetical) const
 {
-	return InfoValuation::expectedSum(getModifiers(), eFamily, iKind, eUnit, cityContext, empireContext, plotGroup);
+	return InfoValuation::expectedSum(getModifiers(), eFamily, iKind, eUnit, cityContext, empireContext, plotGroup,
+		pHypothetical);
 }
 
 int CvInfo::expectedScalar(InfoScalar eScalar, CvCascUnit eUnit,
-	const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup* plotGroup) const
+	const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup* plotGroup,
+	const CvCascadeHypothetical* pHypothetical) const
 {
 	ModifierFamily eFamily = MODFAM_NONE;
 	int iKind = -1;
 	infoScalarSlot(eScalar, eFamily, iKind);
-	return InfoValuation::expectedSum(getModifiers(), eFamily, iKind, eUnit, cityContext, empireContext, plotGroup);
+	return InfoValuation::expectedSum(getModifiers(), eFamily, iKind, eUnit, cityContext, empireContext, plotGroup,
+		pHypothetical);
 }
 
 // #430: the 23 replaced infos load via LoadGlobalClassInfoJson (CvXMLLoadUtilitySet) -> mapFrom(json) directly; there

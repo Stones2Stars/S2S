@@ -28,6 +28,11 @@ public:
 	static bool civilian(const CvClassificationBlock* tags);
 	static bool spy(const CvClassificationBlock* tags);
 	static bool wild(const CvClassificationBlock* tags);
+	// The DOMAIN view (tags.md): `DOMAIN_*` remains the engine enum movement and stacking are wired to; these
+	// answer the classification question "what IS this unit" that a rebuilt CvUnitInfo carries no getter for.
+	static bool seaUnit(const CvClassificationBlock* tags);
+	static bool landUnit(const CvClassificationBlock* tags);
+	static bool airUnit(const CvClassificationBlock* tags);
 
 private:
 	CvTagReads();                                    // organization only -- never instantiated

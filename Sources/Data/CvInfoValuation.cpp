@@ -796,10 +796,14 @@ void InfoValuation::expectedWellbeing(const CvModifiers* modifiers,
 }
 
 int InfoValuation::expectedSum(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind, CvCascUnit eUnit,
-	const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup* plotGroup)
+	const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup* plotGroup,
+	const CvCascadeHypothetical* pHypothetical)
 {
 	CvCascadeEvalCtx evalCtx;
 	fillEvalCtx(cityContext, empireContext, plotGroup, evalCtx);
+	// The what-if rides the ctx the contexts filled: it overrides individual have-atom answers and nothing else,
+	// so every other read the conditioned tail makes stays the real city's.
+	evalCtx.hypothetical = pHypothetical;
 	return (int)groupSum(modifiers, eFamily, iKind, eUnit, evalCtx);
 }
 

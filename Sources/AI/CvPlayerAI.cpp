@@ -7,6 +7,7 @@
 #include "Engine/CvGameSpeedScale.h"
 #include "Enabler/CvEnablerKernel.h"   // the compiled enables edges + the one gate (tech valuation)
 #include "Enabler/CvEnablerOverlay.h"  // the AS-IF-HELD membership overlay -- the civic what-if's membership half
+#include "CvTagReads.h"                // the ONE shared unit-TAG read surface (the domain view; tags.md)
 #include "Engine/CvArea.h"
 #include "CvBonusInfo.h"
 #include "CvBuildingInfo.h"
@@ -9223,125 +9224,124 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus, bool bForTrade) const
 
 				{
 					PROFILE("CvPlayerAI::AI_baseBonusVal::recalculate Unit Value");
-					for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
+					// WHICH UNITS CARE ABOUT THIS BONUS? -- the bonus's own load-populated edge families answer
+					// both halves, so neither is a database scan ([DEC-one-reverse-view]):
+					//   RELATED     -- every unit referencing it on any compiled surface, INCLUDING a deposit's
+					//                  `enabled` condition, which is how a buildRate GATED on the bonus is found
+					//                  at all (a gated deposit is no part of `requires`, so the gate index alone
+					//                  would miss every production-speed effect).
+					//   REQUIRED_BY -- the subset whose `requires` names it: the only units it can UNLOCK.
+					std::set<int> relatedUnits;
+					std::set<int> gatedUnits;
+					const CvInfo* pBonusInfo = EnablerKernel::infoFor(EDGEB_BONUSES, (int)eBonus);
+					EnablerKernel::addEdge(pBonusInfo, EDGEF_RELATED, EDGEB_UNITS, relatedUnits);
+					EnablerKernel::addEdge(pBonusInfo, EDGEF_REQUIRED_BY, EDGEB_UNITS, gatedUnits);
+
+					// The two worlds. Both halves below are the DELTA between them, which is what makes this a
+					// valuation of the BONUS rather than of the unit ([patterns.md] THE VALUATION PROTOCOL).
+					CvCascadeHypothetical kWithBonus;
+					kWithBonus.present[EDGEB_BONUSES].insert((int)eBonus);
+					CvCascadeHypothetical kWithoutBonus;
+					kWithoutBonus.absent[EDGEB_BONUSES].insert((int)eBonus);
+
+					for (std::set<int>::const_iterator itUnit = relatedUnits.begin();
+						itUnit != relatedUnits.end(); ++itUnit)
 					{
-						const CvUnitInfo& kLoopUnit = GC.getUnitInfo((UnitTypes)iI);
+						const UnitTypes eLoopUnit = static_cast<UnitTypes>(*itUnit);
+						const CvUnitInfo& kLoopUnit = GC.getUnitInfo(eLoopUnit);
 
-						//	Don't consider units more than one era ahead of us
-						if (kLoopUnit.getPrereqAndTech() != NO_TECH)
+						if (!GC.getGame().canEverTrain(eLoopUnit))
 						{
-							const CvTechInfo& prereqTech = GC.getTechInfo((TechTypes)kLoopUnit.getPrereqAndTech());
-
-							if (prereqTech.getEra() > (int)getCurrentEra() + 1)
-							{
-								continue;
-							}
+							continue;
 						}
+						int iTempValue = 0;
 
-						int iBonusORVal = 0;
-						int	iHasOther = 0;
-
-						foreach_(const BonusTypes ePrereqBonus, kLoopUnit.getPrereqOrBonuses())
-						{
-							if (ePrereqBonus == eBonus)
-							{
-								iBonusORVal = 40;
-							}
-							else if (getNumAvailableBonuses(ePrereqBonus) > 0)
-							{
-								iHasOther += getNumAvailableBonuses(ePrereqBonus);
-							}
-						}
-
-						while (iHasOther-- > 0)
-						{
-							iBonusORVal /= 4;
-						}
-
-						int iTempValue = iBonusORVal + kLoopUnit.getBonusProductionModifier(eBonus) / 10;
-
-						if (kLoopUnit.getPrereqAndBonus() == eBonus)
+						// (1) DOES IT UNLOCK THE UNIT? -- ask the gate in both worlds. This replaces the AND/OR
+						// prereq-bonus bookkeeping wholesale: the old code scored 50 for a sole required bonus
+						// and 40 for one of several, quartered per alternative already held, all reconstructed
+						// from prereq getters. The gate answers it directly -- a bonus that leaves the verdict
+						// unchanged (because an alternative covers it) contributes nothing, which is what the
+						// quartering was approximating.
+						if (pCapital != NULL && gatedUnits.count((int)eLoopUnit) != 0
+						&& EnablerKernel::requiresMetInCity(*pCapital, EDGEB_UNITS, (int)eLoopUnit, false, &kWithBonus)
+						&& !EnablerKernel::requiresMetInCity(*pCapital, EDGEB_UNITS, (int)eLoopUnit, false, &kWithoutBonus))
 						{
 							iTempValue += 50;
 						}
 
-						if (iTempValue > 0)
+						// (2) DOES IT BUILD THE UNIT FASTER? -- the buildRate delta between the two worlds. The
+						// authored shape is `buildRate.self.percent` gated on the bonus, so the conditioned tail
+						// resolving under each hypothetical IS the answer; nothing here re-derives which entries
+						// the bonus gates.
+						if (pCapital != NULL)
 						{
-							const bool bIsWater = kLoopUnit.getDomainType() == DOMAIN_SEA;
+							const int iRateWith = kLoopUnit.expectedModifier(MODFAM_BUILD_RATE, BUILD_RATE_AMOUNT,
+								CASC_UNIT_PERCENT, pCapital->getCityContext(), getEmpireContext(),
+								pCapital->plotGroup(getID()), &kWithBonus);
+							const int iRateWithout = kLoopUnit.expectedModifier(MODFAM_BUILD_RATE, BUILD_RATE_AMOUNT,
+								CASC_UNIT_PERCENT, pCapital->getCityContext(), getEmpireContext(),
+								pCapital->plotGroup(getID()), &kWithoutBonus);
 
-							// if non-limited water unit, weight by coastal cities
-							if (bIsWater && !isLimitedUnit((UnitTypes)iI))
-							{
-								iTempValue *= std::min(iCoastalCityCount * 2, iCityCount);	// double coastal cities, cap at total cities
-								iTempValue /= iCityCountNonZero;
-							}
-							int iTempTradeValue = 0;
-
-							// is it a water unit and no coastal cities
-							if (bIsWater && pCoastalCity == NULL)
-							{
-								//	worthless
-								iTempValue = 2;
-
-								iTempTradeValue = iTempValue;
-							}
-							else if (getUnitAvailabilityAnywhere((UnitTypes)iI) == EnablerDomain::STATE_LISTED)
-							{
-								// is it a water unit and no coastal cities or our coastal city cannot build because its obsolete
-								// Obsolete here = the city does not OFFER it, which the upgrade-tree dormancy already folds
-								// into the verdict (enabler.md §8: a LISTED unit is one whose upgrade chain does not dorm it).
-								if ((bIsWater && pCoastalCity->getUnitAvailability((UnitTypes)iI) != EnablerDomain::STATE_LISTED) ||
-									(pCapital != NULL && pCapital->getUnitAvailability((UnitTypes)iI) != EnablerDomain::STATE_LISTED))
-								{
-									// its worthless
-									iTempValue = 2;
-								}
-								// otherwise, value units we could build if we had this bonus double
-								else
-								{
-									iTempValue *= 2;
-								}
-								iTempTradeValue = iTempValue;
-							}
-							else // Trades are short-term - if we can't train the unit now assume we won't be able to do so for the duration of the trade
-							{
-								iTempTradeValue = 0;
-							}
-
-							if (iTempValue > 0)
-							{
-								int	iTechDistance = 0;
-
-								// If building this is dependent (directly or otherwise) on a tech, assess how
-								//	distant that tech is
-								if (kLoopUnit.getPrereqAndTech() != NO_TECH)
-								{
-									iTechDistance = std::max(iTechDistance, findPathLength((TechTypes)kLoopUnit.getPrereqAndTech(), false));
-								}
-								//	Without some more checks we are over-assessing religious buildings a lot
-								//	so if there is a religion pre-req make some basic checks on the availability of
-								//	the religion
-								if (kLoopUnit.getPrereqReligion() != NO_RELIGION)
-								{
-									const CvReligionInfo& kReligion = GC.getReligionInfo((ReligionTypes)kLoopUnit.getPrereqReligion());
-
-									iTechDistance = std::max(iTechDistance, findPathLength(kReligion.getTechPrereq(), false));
-								}
-								//	Similarly corporations
-								if (kLoopUnit.getPrereqCorporation() != NO_RELIGION)
-								{
-									const CvCorporationInfo& kCorporation = GC.getCorporationInfo((CorporationTypes)kLoopUnit.getPrereqCorporation());
-
-									iTechDistance = std::max(iTechDistance, findPathLength(kCorporation.getTechPrereq(), false));
-								}
-
-								iTempValue = (iTempValue * 15) / (10 + iTechDistance);
-								iTempTradeValue = (iTempTradeValue * 15) / (10 + iTechDistance);
-							}
-
-							iValue += iTempValue;
-							iTradeValue += iTempTradeValue;
+							iTempValue += (iRateWith - iRateWithout) / 10;
 						}
+
+						if (iTempValue <= 0)
+						{
+							continue;
+						}
+						// A sea unit is worth what the empire's COASTLINE can use, not what its city count says.
+						// The domain is a TAG now ([tags.md]: DOMAIN_* is the engine enum, `seaUnit` the
+						// queryable identity), so this asks the unit what it IS rather than an info getter.
+						const bool bIsWater = CvTagReads::seaUnit(kLoopUnit.getTags());
+
+						if (bIsWater && !isLimitedUnit(eLoopUnit))
+						{
+							iTempValue *= std::min(iCoastalCityCount * 2, iCityCount);
+							iTempValue /= iCityCountNonZero;
+						}
+						int iTempTradeValue = 0;
+
+						if (bIsWater && pCoastalCity == NULL)
+						{
+							iTempValue = 2;   // worthless with no coast to sail from
+							iTempTradeValue = iTempValue;
+						}
+						else if (getUnitAvailabilityAnywhere(eLoopUnit) == EnablerDomain::STATE_LISTED)
+						{
+							// Obsolete here = the city does not OFFER it, which the upgrade-tree dormancy already
+							// folds into the verdict (enabler.md par.8: a LISTED unit is one whose upgrade chain
+							// does not dorm it).
+							if ((bIsWater && pCoastalCity->getUnitAvailability(eLoopUnit) != EnablerDomain::STATE_LISTED)
+							|| (pCapital != NULL && pCapital->getUnitAvailability(eLoopUnit) != EnablerDomain::STATE_LISTED))
+							{
+								iTempValue = 2;
+							}
+							else iTempValue *= 2;   // we could build it if we had this bonus
+
+							iTempTradeValue = iTempValue;
+						}
+						// Trades are short-term: if we cannot train it now, assume we will not for the duration.
+						else iTempTradeValue = 0;
+
+						// HOW FAR OFF IS THE UNIT AT ALL? The techs it needs are atoms in its `requires` tree, read
+						// through the ONE scanner
+						// ([DEC-single-implementation]) rather than a prereq getter -- which is also why the
+						// religion/corporation legs the old code carried separately are gone: their tech gates are
+						// atoms in the same tree and arrive here already.
+						CascadeCondDeps kUnitDeps;
+						EnablerKernel::scanCondDeps(kLoopUnit.getRequires()->build, kUnitDeps, false, false);
+						int iTechDistance = 0;
+
+						for (std::set<int>::const_iterator itTech = kUnitDeps.techs.begin();
+							itTech != kUnitDeps.techs.end(); ++itTech)
+						{
+							iTechDistance = std::max(iTechDistance, findPathLength((TechTypes)*itTech, false));
+						}
+						iTempValue = (iTempValue * 15) / (10 + iTechDistance);
+						iTempTradeValue = (iTempTradeValue * 15) / (10 + iTechDistance);
+
+						iValue += iTempValue;
+						iTradeValue += iTempTradeValue;
 					}
 				}
 			}

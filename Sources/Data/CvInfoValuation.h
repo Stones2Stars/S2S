@@ -31,6 +31,7 @@ class CityContext;
 class EmpireContext;
 class CvPlotGroup;
 struct CvCascadeEvalCtx;
+struct CvCascadeHypothetical;   // the AS-IF-HELD gate twin expectedSum optionally evaluates the conditioned tail under
 // the scope objects the cross-scope roll-up reads packages off (declarations only -- the engine headers stay
 // out of this header; the roll-up bodies include them)
 class CvPlot;
@@ -147,8 +148,15 @@ public:
 	// The GROUPED/SCALAR-family analogue (the same walk for one (family, kind, unit) slot): the experienced-here
 	// ×100 answer for a defense kind, a maintenance modifier, an InfoScalar slot, ... -- the per-info
 	// expectedScalar/expectedModifier endpoints delegate here with their vocabulary axes spelled out.
+	//
+	// pHypothetical (optional) is the AS-IF-HELD gate twin (CvConditionEval.h): the conditioned tail is evaluated
+	// as though the caller also held / no longer held the named ids. ⚑ It is what makes "what would this be
+	// WORTH if I had X" answerable in the ONE valuation, so a caller asks the DELTA between two calls instead of
+	// re-deriving which entries a bonus gates ([patterns.md] THE VALUATION PROTOCOL -- contexts in, delta out).
+	// ⚠ It reaches ONLY the conditioned entries; the unconditioned compiled sums are what they are.
 	static int expectedSum(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind, CvCascUnit eUnit,
-		const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup* plotGroup);
+		const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup* plotGroup,
+		const CvCascadeHypothetical* pHypothetical = NULL);
 
 	// The ctx-taking core the endpoints share (fill the ctx ONCE per endpoint, fold each channel through this):
 	// Σ over the folded scopes of the compiled unconditioned sums (audience-resolved) + the family's conditioned

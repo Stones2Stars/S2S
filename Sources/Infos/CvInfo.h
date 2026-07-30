@@ -40,6 +40,7 @@ namespace picojson { class value; }   // mapFrom's input -- full definition via 
 class CityContext;    // the per-scope live-state contexts the expected* what-if endpoints take (contexts.md)
 class EmpireContext;
 class CvPlotGroup;    // the trade-network object -- the reserved explicit traded-bonus source (json §3.4)
+struct CvCascadeHypothetical;   // the AS-IF-HELD gate twin the expected* endpoints optionally evaluate under
 
 // Base = CvHotkeyInfo (owner ruling 2026-07-08: "A is fine, we dont care if everything can have a hotkey"). CvHotkeyInfo
 // : CvInfoBase, so every poco is still a CvInfoBase (getType/getDescription/...); the 8 action types (Building/Corporation/
@@ -179,10 +180,17 @@ public:
 		const CvPlotGroup* plotGroup, int (&wellbeing)[NUM_WELLBEING_CHANNELS]) const;
 	// The grouped/scalar-family analogues -- the same walk for one vocabulary slot (a defense kind, a
 	// maintenance modifier, an InfoScalar straggler), axes spelled out exactly as the point reads'.
+	//
+	// pHypothetical (optional) is the AS-IF-HELD gate twin (CvConditionEval.h): the CONDITIONED tail evaluates as
+	// though the caller also held / no longer held the named ids, so "what would this be worth if I had X" is the
+	// DELTA between two calls rather than a second implementation of which entries X gates.
+	// ⚠ It moves the conditioned entries ONLY -- an unconditioned compiled sum is unconditional by definition.
 	int expectedModifier(ModifierFamily eFamily, int iKind, CvCascUnit eUnit,
-		const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup* plotGroup) const;
+		const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup* plotGroup,
+		const CvCascadeHypothetical* pHypothetical = NULL) const;
 	int expectedScalar(InfoScalar eScalar, CvCascUnit eUnit,
-		const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup* plotGroup) const;
+		const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup* plotGroup,
+		const CvCascadeHypothetical* pHypothetical = NULL) const;
 
 protected:
 	// --- the load-time WRITE targets (mapFrom-only; the composition declaration). A derived info composes a unit
