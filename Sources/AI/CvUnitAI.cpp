@@ -21596,7 +21596,7 @@ bool CvUnitAI::AI_irrigateTerritory()
 
 						if (bLeaveForests && pLoopPlot->getFeatureType() != NO_FEATURE
 						&& GC.getBuildInfo(eBestTempBuild).isFeatureRemove(pLoopPlot->getFeatureType())
-						&& GC.getFeatureInfo(pLoopPlot->getFeatureType()).getYieldChange(YIELD_PRODUCTION) > 0)
+						&& GC.getFeatureInfo(pLoopPlot->getFeatureType()).getFlatYield(YIELD_PRODUCTION, CASC_SCOPE_PLOT) > 0)
 						{
 							bValid = false;
 						}
@@ -21744,7 +21744,7 @@ bool CvUnitAI::AI_fortTerritory(bool bCanal, bool bAirbase)
 
 					if (bLeaveForests && pLoopPlot->getFeatureType() != NO_FEATURE
 					&& GC.getBuildInfo(eBestTempBuild).isFeatureRemove(pLoopPlot->getFeatureType())
-					&& GC.getFeatureInfo(pLoopPlot->getFeatureType()).getYieldChange(YIELD_PRODUCTION) > 0)
+					&& GC.getFeatureInfo(pLoopPlot->getFeatureType()).getFlatYield(YIELD_PRODUCTION, CASC_SCOPE_PLOT) > 0)
 					{
 						bValid = false;
 					}
@@ -22130,7 +22130,7 @@ BuildTypes CvUnitAI::AI_betterPlotBuild(const CvPlot* pPlot, BuildTypes eBuild) 
 		const CvFeatureInfo& kFeatureInfo = GC.getFeatureInfo(eFeature);
 		if (kOriginalBuildInfo.isFeatureRemove(eFeature))
 		{
-			if (kOriginalBuildInfo.getImprovement() == NO_IMPROVEMENT || !pPlot->isBeingWorked() || kFeatureInfo.getYieldChange(YIELD_FOOD) + kFeatureInfo.getYieldChange(YIELD_PRODUCTION) <= 0)
+			if (kOriginalBuildInfo.getImprovement() == NO_IMPROVEMENT || !pPlot->isBeingWorked() || kFeatureInfo.getFlatYield(YIELD_FOOD, CASC_SCOPE_PLOT) + kFeatureInfo.getFlatYield(YIELD_PRODUCTION, CASC_SCOPE_PLOT) <= 0)
 			{
 				bClearFeature = true;
 			}

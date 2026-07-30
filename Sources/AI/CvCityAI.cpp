@@ -10514,7 +10514,7 @@ void CvCityAI::AI_findBestImprovementForPlot(const CvPlot* pPlot, plotInfo* plot
 			bIgnoreFeature = true;
 
 			// check if feature is forest
-			if (!plotHasBonus && currentFeature->getYieldChange(YIELD_PRODUCTION) > 0)
+			if (!plotHasBonus && currentFeature->getFlatYield(YIELD_PRODUCTION, CASC_SCOPE_PLOT) > 0)
 			{
 				if (gameOptionLeaveForestOn)
 				{

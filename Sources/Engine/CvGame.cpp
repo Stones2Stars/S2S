@@ -1658,8 +1658,8 @@ void CvGame::normalizeRemoveBadFeatures()
 					CvPlot* pLoopPlot = plotCity(pStartingPlot->getX(), pStartingPlot->getY(), iJ);
 
 					if (pLoopPlot != NULL && pLoopPlot->getFeatureType() != NO_FEATURE
-					&& GC.getFeatureInfo(pLoopPlot->getFeatureType()).getYieldChange(YIELD_FOOD) <= 0
-					&& GC.getFeatureInfo(pLoopPlot->getFeatureType()).getYieldChange(YIELD_PRODUCTION) <= 0)
+					&& GC.getFeatureInfo(pLoopPlot->getFeatureType()).getFlatYield(YIELD_FOOD, CASC_SCOPE_PLOT) <= 0
+					&& GC.getFeatureInfo(pLoopPlot->getFeatureType()).getFlatYield(YIELD_PRODUCTION, CASC_SCOPE_PLOT) <= 0)
 					{
 						pLoopPlot->setFeatureType(NO_FEATURE);
 					}
@@ -1672,8 +1672,8 @@ void CvGame::normalizeRemoveBadFeatures()
 					const int iDistance = plotDistance(pStartingPlot->getX(), pStartingPlot->getY(), pLoopPlot->getX(), pLoopPlot->getY());
 
 					if (iDistance <= iMaxRange && pLoopPlot->getFeatureType() != NO_FEATURE
-					&& GC.getFeatureInfo(pLoopPlot->getFeatureType()).getYieldChange(YIELD_FOOD) <= 0
-					&& GC.getFeatureInfo(pLoopPlot->getFeatureType()).getYieldChange(YIELD_PRODUCTION) <= 0)
+					&& GC.getFeatureInfo(pLoopPlot->getFeatureType()).getFlatYield(YIELD_FOOD, CASC_SCOPE_PLOT) <= 0
+					&& GC.getFeatureInfo(pLoopPlot->getFeatureType()).getFlatYield(YIELD_PRODUCTION, CASC_SCOPE_PLOT) <= 0)
 					{
 						if (pLoopPlot->isWater())
 						{
@@ -1784,7 +1784,7 @@ void CvGame::normalizeAddFoodBonuses()
 
 				if (eBonus != NO_BONUS)
 				{
-					if (GC.getBonusInfo(eBonus).getYieldChange(YIELD_FOOD) > 0)
+					if (GC.getBonusInfo(eBonus).getFlatYield(YIELD_FOOD, CASC_SCOPE_PLOT) > 0)
 					{
 						if (GC.getBonusInfo(eBonus).getTechCityTrade() == NO_TECH || GC.getTechInfo((TechTypes)GC.getBonusInfo(eBonus).getTechCityTrade()).getEra() <= getStartEra())
 						{
@@ -1821,7 +1821,7 @@ void CvGame::normalizeAddFoodBonuses()
 					const BonusTypes eBonus = GC.getMapBonus(iK);
 					const CvBonusInfo& bonus = GC.getBonusInfo(eBonus);
 
-					if (bonus.isNormalize() && bonus.getYieldChange(YIELD_FOOD) > 0
+					if (bonus.isNormalize() && bonus.getFlatYield(YIELD_FOOD, CASC_SCOPE_PLOT) > 0
 					&& (bonus.getTechCityTrade() == NO_TECH || GC.getTechInfo((TechTypes)bonus.getTechCityTrade()).getEra() <= getStartEra())
 					&& plotX->canHaveBonus(eBonus, bIgnoreLatitude))
 					{
@@ -1904,8 +1904,8 @@ void CvGame::normalizeAddGoodTerrain()
 				{
 					for (int iK = 0; iK < GC.getNumFeatureInfos(); iK++)
 					{
-						if (GC.getFeatureInfo((FeatureTypes)iK).getYieldChange(YIELD_FOOD) >= 0
-						&&  GC.getFeatureInfo((FeatureTypes)iK).getYieldChange(YIELD_PRODUCTION) > 0
+						if (GC.getFeatureInfo((FeatureTypes)iK).getFlatYield(YIELD_FOOD, CASC_SCOPE_PLOT) >= 0
+						&&  GC.getFeatureInfo((FeatureTypes)iK).getFlatYield(YIELD_PRODUCTION, CASC_SCOPE_PLOT) > 0
 						&&  GC.getFeatureInfo((FeatureTypes)iK).isTerrain(plot->getTerrainType()))
 						{
 							plot->setFeatureType((FeatureTypes)iK);
@@ -1986,7 +1986,7 @@ void CvGame::normalizeAddExtras()
 								for (int iK = 0; iK < GC.getNumFeatureInfos(); iK++)
 								{
 									if (GC.getFeatureInfo((FeatureTypes)iK).getAppearanceProbability() > -1
-									&& GC.getFeatureInfo((FeatureTypes)iK).getYieldChange(YIELD_FOOD) + GC.getFeatureInfo((FeatureTypes)iK).getYieldChange(YIELD_PRODUCTION) > 0
+									&& GC.getFeatureInfo((FeatureTypes)iK).getFlatYield(YIELD_FOOD, CASC_SCOPE_PLOT) + GC.getFeatureInfo((FeatureTypes)iK).getFlatYield(YIELD_PRODUCTION, CASC_SCOPE_PLOT) > 0
 									&& plotX->canHaveFeature((FeatureTypes)iK))
 									{
 										plotX->setFeatureType((FeatureTypes)iK);
@@ -2063,7 +2063,7 @@ void CvGame::normalizeAddExtras()
 										const BonusTypes eBonus = GC.getMapBonus(iK);
 										const CvBonusInfo& bonus = GC.getBonusInfo(eBonus);
 
-										if (bonus.isNormalize() && bonus.getYieldChange(YIELD_FOOD) >= 0 && bonus.getYieldChange(YIELD_PRODUCTION) >= 0
+										if (bonus.isNormalize() && bonus.getFlatYield(YIELD_FOOD, CASC_SCOPE_PLOT) >= 0 && bonus.getFlatYield(YIELD_PRODUCTION, CASC_SCOPE_PLOT) >= 0
 										&& (bonus.getTechCityTrade() == NO_TECH || GC.getTechInfo((TechTypes)bonus.getTechCityTrade()).getEra() <= getStartEra())
 										&& GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).isHasTech((TechTypes)bonus.getTechReveal()))
 										{
@@ -2089,7 +2089,7 @@ void CvGame::normalizeAddExtras()
 											const BonusTypes eBonus = GC.getMapBonus(iK);
 											const CvBonusInfo& bonus = GC.getBonusInfo(eBonus);
 
-											if (bonus.isNormalize() && bonus.getYieldChange(YIELD_FOOD) >= 0 && bonus.getYieldChange(YIELD_PRODUCTION) >= 0
+											if (bonus.isNormalize() && bonus.getFlatYield(YIELD_FOOD, CASC_SCOPE_PLOT) >= 0 && bonus.getFlatYield(YIELD_PRODUCTION, CASC_SCOPE_PLOT) >= 0
 											&& (bonus.getTechCityTrade() == NO_TECH || GC.getTechInfo((TechTypes)(bonus.getTechCityTrade())).getEra() <= getStartEra()))
 											{
 												if ((iPass == 0) ? CvMapGenerator::GetInstance().canPlaceBonusAt(eBonus, plotX->getX(), plotX->getY(), bIgnoreLatitude) : plotX->canHaveBonus(eBonus, bIgnoreLatitude))
@@ -2124,7 +2124,7 @@ void CvGame::normalizeAddExtras()
 						for (int iK = 0; iK < GC.getNumFeatureInfos(); iK++)
 						{
 							if (GC.getFeatureInfo((FeatureTypes)iK).getAppearanceProbability() > -1
-							&& GC.getFeatureInfo((FeatureTypes)iK).getYieldChange(YIELD_FOOD) + GC.getFeatureInfo((FeatureTypes)iK).getYieldChange(YIELD_PRODUCTION) > 0
+							&& GC.getFeatureInfo((FeatureTypes)iK).getFlatYield(YIELD_FOOD, CASC_SCOPE_PLOT) + GC.getFeatureInfo((FeatureTypes)iK).getFlatYield(YIELD_PRODUCTION, CASC_SCOPE_PLOT) > 0
 							&& plotX->canHaveFeature((FeatureTypes)iK))
 							{
 								plotX->setFeatureType((FeatureTypes)iK);

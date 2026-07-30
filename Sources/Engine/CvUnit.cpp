@@ -3781,16 +3781,16 @@ bool CvUnit::isActionRecommended(int iAction) const
 						// If it gives yields
 						if (pWorkingCity != NULL)
 						{
-							if (improvement.getYieldChange(YIELD_COMMERCE) > 0)
+							if (improvement.getFlatYield(YIELD_COMMERCE, CASC_SCOPE_PLOT) > 0)
 							{
 								return true;
 							}
 							// Food is only interesting on flatland/water
-							if (improvement.getYieldChange(YIELD_FOOD) > 0 && !pPlot->isHills() && !pPlot->isAsPeak())
+							if (improvement.getFlatYield(YIELD_FOOD, CASC_SCOPE_PLOT) > 0 && !pPlot->isHills() && !pPlot->isAsPeak())
 							{
 								return true;
 							}
-							if (improvement.getYieldChange(YIELD_PRODUCTION) > 0)
+							if (improvement.getFlatYield(YIELD_PRODUCTION, CASC_SCOPE_PLOT) > 0)
 							{
 								return true;
 							}

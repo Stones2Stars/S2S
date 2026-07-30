@@ -2501,7 +2501,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 				BonusTypes eBonus = pLoopPlot->getBonusType(getTeam());
 
 				if (eBonus != NO_BONUS
-				&& (getNumTradeableBonuses(eBonus) == 0 || AI_bonusVal(eBonus) > 10 || GC.getBonusInfo(eBonus).getYieldChange(YIELD_FOOD) > 0))
+				&& (getNumTradeableBonuses(eBonus) == 0 || AI_bonusVal(eBonus) > 10 || GC.getBonusInfo(eBonus).getFlatYield(YIELD_FOOD, CASC_SCOPE_PLOT) > 0))
 				{
 					bHasGoodBonus = true;
 					break;
@@ -2810,7 +2810,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 
 					iValue += (iTempValue + 10);
 
-					if (iI != CITY_HOME_PLOT && eFeature != NO_FEATURE && GC.getFeatureInfo(eFeature).getYieldChange(YIELD_FOOD) < 0)
+					if (iI != CITY_HOME_PLOT && eFeature != NO_FEATURE && GC.getFeatureInfo(eFeature).getFlatYield(YIELD_FOOD, CASC_SCOPE_PLOT) < 0)
 					{
 						iResourceValue -= 30;
 					}
@@ -5166,7 +5166,7 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 
 			//Fuyu - Tech Value for Feature Remove - bonus for early worker logic
 			if ((GC.getFeatureInfo(FeatureTypes(iJ)).getWellbeingModifier(WELLBEING_HEALTH, CASC_SCOPE_PLOT) < 0) ||
-				((GC.getFeatureInfo(FeatureTypes(iJ)).getYieldChange(YIELD_FOOD) + GC.getFeatureInfo(FeatureTypes(iJ)).getYieldChange(YIELD_PRODUCTION) + GC.getFeatureInfo(FeatureTypes(iJ)).getYieldChange(YIELD_COMMERCE)) < 0))
+				((GC.getFeatureInfo(FeatureTypes(iJ)).getFlatYield(YIELD_FOOD, CASC_SCOPE_PLOT) + GC.getFeatureInfo(FeatureTypes(iJ)).getFlatYield(YIELD_PRODUCTION, CASC_SCOPE_PLOT) + GC.getFeatureInfo(FeatureTypes(iJ)).getFlatYield(YIELD_COMMERCE, CASC_SCOPE_PLOT)) < 0))
 			{
 				if (getNumCities() <= 3)
 				{
