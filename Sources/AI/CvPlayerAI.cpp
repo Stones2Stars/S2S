@@ -6859,11 +6859,11 @@ int CvPlayerAI::AI_getAttitudeVal(PlayerTypes ePlayer, bool bForced) const
 
 	if (iRankDifference > 0)
 	{
-		iAttitude += ((GC.getLeaderHeadInfo(getPersonalityType()).getWorseRankDifferenceAttitudeChange() * iRankDifference) / (GC.getGame().countCivPlayersEverAlive() + 1));
+		iAttitude += ((GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeChange(DIPLO_RELATION_WORSE_RANK_DIFFERENCE) * iRankDifference) / (GC.getGame().countCivPlayersEverAlive() + 1));
 	}
 	else
 	{
-		iAttitude += ((GC.getLeaderHeadInfo(getPersonalityType()).getBetterRankDifferenceAttitudeChange() * -(iRankDifference)) / (GC.getGame().countCivPlayersEverAlive() + 1));
+		iAttitude += ((GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeChange(DIPLO_RELATION_BETTER_RANK_DIFFERENCE) * -(iRankDifference)) / (GC.getGame().countCivPlayersEverAlive() + 1));
 	}
 
 	if ((GC.getGame().getPlayerRank(getID()) >= (GC.getGame().countCivPlayersEverAlive() / 2)) &&
@@ -6874,7 +6874,7 @@ int CvPlayerAI::AI_getAttitudeVal(PlayerTypes ePlayer, bool bForced) const
 
 	if (GET_TEAM(GET_PLAYER(ePlayer).getTeam()).AI_getWarSuccess(getTeam()) > GET_TEAM(getTeam()).AI_getWarSuccess(GET_PLAYER(ePlayer).getTeam()))
 	{
-		iAttitude += GC.getLeaderHeadInfo(getPersonalityType()).getLostWarAttitudeChange();
+		iAttitude += GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeChange(DIPLO_RELATION_LOST_WAR);
 	}
 
 	iAttitude += AI_getTraitAttitude(ePlayer);
@@ -7050,7 +7050,7 @@ int CvPlayerAI::AI_getBetterRankDifferenceAttitude(PlayerTypes ePlayer) const
 
 	if (iRankDifference > 0)
 	{
-		return GC.getLeaderHeadInfo(getPersonalityType()).getBetterRankDifferenceAttitudeChange() * iRankDifference / (GC.getGame().countCivPlayersEverAlive() + 1);
+		return GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeChange(DIPLO_RELATION_BETTER_RANK_DIFFERENCE) * iRankDifference / (GC.getGame().countCivPlayersEverAlive() + 1);
 	}
 
 	return 0;
@@ -7076,7 +7076,7 @@ int CvPlayerAI::AI_getWorseRankDifferenceAttitude(PlayerTypes ePlayer) const
 
 	if (iRankDifference > 0)
 	{
-		return GC.getLeaderHeadInfo(getPersonalityType()).getWorseRankDifferenceAttitudeChange() * iRankDifference / (GC.getGame().countCivPlayersEverAlive() + 1);
+		return GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeChange(DIPLO_RELATION_WORSE_RANK_DIFFERENCE) * iRankDifference / (GC.getGame().countCivPlayersEverAlive() + 1);
 	}
 
 	return 0;
@@ -7122,7 +7122,7 @@ int CvPlayerAI::AI_getLostWarAttitude(PlayerTypes ePlayer) const
 
 	if (GET_TEAM(eTeam).AI_getWarSuccess(getTeam()) > GET_TEAM(getTeam()).AI_getWarSuccess(eTeam))
 	{
-		return GC.getLeaderHeadInfo(getPersonalityType()).getLostWarAttitudeChange();
+		return GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeChange(DIPLO_RELATION_LOST_WAR);
 	}
 
 	return 0;
@@ -7184,7 +7184,7 @@ int CvPlayerAI::AI_getCloseBordersAttitude(PlayerTypes ePlayer) const
 		/* BETTER_BTS_AI_MOD					   END												  */
 		/************************************************************************************************/
 
-		m_aiCloseBordersAttitudeCache[ePlayer] = ((GC.getLeaderHeadInfo(getPersonalityType()).getCloseBordersAttitudeChange() * iPercent) / 100);
+		m_aiCloseBordersAttitudeCache[ePlayer] = ((GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeChange(DIPLO_RELATION_CLOSE_BORDERS) * iPercent) / 100);
 	}
 
 	return m_aiCloseBordersAttitudeCache[ePlayer];
@@ -7200,10 +7200,10 @@ int CvPlayerAI::AI_getWarAttitude(PlayerTypes ePlayer) const
 		iAttitude -= 3;
 	}
 
-	if (GC.getLeaderHeadInfo(getPersonalityType()).getAtWarAttitudeDivisor() != 0)
+	if (GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeDivisor(DIPLO_RELATION_AT_WAR) != 0)
 	{
-		int iAttitudeChange = (GET_TEAM(getTeam()).AI_getAtWarCounter(GET_PLAYER(ePlayer).getTeam()) / GC.getLeaderHeadInfo(getPersonalityType()).getAtWarAttitudeDivisor());
-		iAttitude += range(iAttitudeChange, -(abs(GC.getLeaderHeadInfo(getPersonalityType()).getAtWarAttitudeChangeLimit())), abs(GC.getLeaderHeadInfo(getPersonalityType()).getAtWarAttitudeChangeLimit()));
+		int iAttitudeChange = (GET_TEAM(getTeam()).AI_getAtWarCounter(GET_PLAYER(ePlayer).getTeam()) / GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeDivisor(DIPLO_RELATION_AT_WAR));
+		iAttitude += range(iAttitudeChange, -(abs(GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeChangeLimit(DIPLO_RELATION_AT_WAR))), abs(GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeChangeLimit(DIPLO_RELATION_AT_WAR)));
 	}
 
 	return iAttitude;
@@ -7212,10 +7212,10 @@ int CvPlayerAI::AI_getWarAttitude(PlayerTypes ePlayer) const
 
 int CvPlayerAI::AI_getPeaceAttitude(PlayerTypes ePlayer) const
 {
-	if (GC.getLeaderHeadInfo(getPersonalityType()).getAtPeaceAttitudeDivisor() != 0)
+	if (GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeDivisor(DIPLO_RELATION_AT_PEACE) != 0)
 	{
-		int iAttitudeChange = (GET_TEAM(getTeam()).AI_getAtPeaceCounter(GET_PLAYER(ePlayer).getTeam()) / GC.getLeaderHeadInfo(getPersonalityType()).getAtPeaceAttitudeDivisor());
-		return range(iAttitudeChange, -(abs(GC.getLeaderHeadInfo(getPersonalityType()).getAtPeaceAttitudeChangeLimit())), abs(GC.getLeaderHeadInfo(getPersonalityType()).getAtPeaceAttitudeChangeLimit()));
+		int iAttitudeChange = (GET_TEAM(getTeam()).AI_getAtPeaceCounter(GET_PLAYER(ePlayer).getTeam()) / GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeDivisor(DIPLO_RELATION_AT_PEACE));
+		return range(iAttitudeChange, -(abs(GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeChangeLimit(DIPLO_RELATION_AT_PEACE))), abs(GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeChangeLimit(DIPLO_RELATION_AT_PEACE)));
 	}
 
 	return 0;
@@ -7228,17 +7228,17 @@ int CvPlayerAI::AI_getSameReligionAttitude(PlayerTypes ePlayer) const
 
 	if ((getStateReligion() != NO_RELIGION) && (getStateReligion() == GET_PLAYER(ePlayer).getStateReligion()))
 	{
-		iAttitude += GC.getLeaderHeadInfo(getPersonalityType()).getSameReligionAttitudeChange();
+		iAttitude += GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeChange(DIPLO_RELATION_SAME_RELIGION);
 
 		if (hasHolyCity(getStateReligion()))
 		{
 			iAttitude++;
 		}
 
-		if (GC.getLeaderHeadInfo(getPersonalityType()).getSameReligionAttitudeDivisor() != 0)
+		if (GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeDivisor(DIPLO_RELATION_SAME_RELIGION) != 0)
 		{
-			int iAttitudeChange = (AI_getSameReligionCounter(ePlayer) / GC.getLeaderHeadInfo(getPersonalityType()).getSameReligionAttitudeDivisor());
-			iAttitude += range(iAttitudeChange, -(abs(GC.getLeaderHeadInfo(getPersonalityType()).getSameReligionAttitudeChangeLimit())), abs(GC.getLeaderHeadInfo(getPersonalityType()).getSameReligionAttitudeChangeLimit()));
+			int iAttitudeChange = (AI_getSameReligionCounter(ePlayer) / GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeDivisor(DIPLO_RELATION_SAME_RELIGION));
+			iAttitude += range(iAttitudeChange, -(abs(GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeChangeLimit(DIPLO_RELATION_SAME_RELIGION))), abs(GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeChangeLimit(DIPLO_RELATION_SAME_RELIGION)));
 		}
 	}
 
@@ -7252,17 +7252,17 @@ int CvPlayerAI::AI_getDifferentReligionAttitude(PlayerTypes ePlayer) const
 
 	if ((getStateReligion() != NO_RELIGION) && (GET_PLAYER(ePlayer).getStateReligion() != NO_RELIGION) && (getStateReligion() != GET_PLAYER(ePlayer).getStateReligion()))
 	{
-		iAttitude += GC.getLeaderHeadInfo(getPersonalityType()).getDifferentReligionAttitudeChange();
+		iAttitude += GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeChange(DIPLO_RELATION_DIFFERENT_RELIGION);
 
 		if (hasHolyCity(getStateReligion()))
 		{
 			iAttitude--;
 		}
 
-		if (GC.getLeaderHeadInfo(getPersonalityType()).getDifferentReligionAttitudeDivisor() != 0)
+		if (GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeDivisor(DIPLO_RELATION_DIFFERENT_RELIGION) != 0)
 		{
-			int iAttitudeChange = (AI_getDifferentReligionCounter(ePlayer) / GC.getLeaderHeadInfo(getPersonalityType()).getDifferentReligionAttitudeDivisor());
-			iAttitude += range(iAttitudeChange, -(abs(GC.getLeaderHeadInfo(getPersonalityType()).getDifferentReligionAttitudeChangeLimit())), abs(GC.getLeaderHeadInfo(getPersonalityType()).getDifferentReligionAttitudeChangeLimit()));
+			int iAttitudeChange = (AI_getDifferentReligionCounter(ePlayer) / GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeDivisor(DIPLO_RELATION_DIFFERENT_RELIGION));
+			iAttitude += range(iAttitudeChange, -(abs(GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeChangeLimit(DIPLO_RELATION_DIFFERENT_RELIGION))), abs(GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeChangeLimit(DIPLO_RELATION_DIFFERENT_RELIGION)));
 		}
 	}
 
@@ -7276,10 +7276,10 @@ int CvPlayerAI::AI_getBonusTradeAttitude(PlayerTypes ePlayer) const
 
 	if (!atWar(getTeam(), GET_PLAYER(ePlayer).getTeam()))
 	{
-		if (GC.getLeaderHeadInfo(getPersonalityType()).getBonusTradeAttitudeDivisor() != 0)
+		if (GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeDivisor(DIPLO_RELATION_BONUS_TRADE) != 0)
 		{
-			iAttitudeChange = (AI_getBonusTradeCounter(ePlayer) / GC.getLeaderHeadInfo(getPersonalityType()).getBonusTradeAttitudeDivisor());
-			return range(iAttitudeChange, -(abs(GC.getLeaderHeadInfo(getPersonalityType()).getBonusTradeAttitudeChangeLimit())), abs(GC.getLeaderHeadInfo(getPersonalityType()).getBonusTradeAttitudeChangeLimit()));
+			iAttitudeChange = (AI_getBonusTradeCounter(ePlayer) / GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeDivisor(DIPLO_RELATION_BONUS_TRADE));
+			return range(iAttitudeChange, -(abs(GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeChangeLimit(DIPLO_RELATION_BONUS_TRADE))), abs(GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeChangeLimit(DIPLO_RELATION_BONUS_TRADE)));
 		}
 	}
 
@@ -7291,10 +7291,10 @@ int CvPlayerAI::AI_getOpenBordersAttitude(PlayerTypes ePlayer) const
 {
 	if (!atWar(getTeam(), GET_PLAYER(ePlayer).getTeam()))
 	{
-		if (GC.getLeaderHeadInfo(getPersonalityType()).getOpenBordersAttitudeDivisor() != 0)
+		if (GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeDivisor(DIPLO_RELATION_OPEN_BORDERS) != 0)
 		{
-			int iAttitudeChange = (GET_TEAM(getTeam()).AI_getOpenBordersCounter(GET_PLAYER(ePlayer).getTeam()) / GC.getLeaderHeadInfo(getPersonalityType()).getOpenBordersAttitudeDivisor());
-			return range(iAttitudeChange, -(abs(GC.getLeaderHeadInfo(getPersonalityType()).getOpenBordersAttitudeChangeLimit())), abs(GC.getLeaderHeadInfo(getPersonalityType()).getOpenBordersAttitudeChangeLimit()));
+			int iAttitudeChange = (GET_TEAM(getTeam()).AI_getOpenBordersCounter(GET_PLAYER(ePlayer).getTeam()) / GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeDivisor(DIPLO_RELATION_OPEN_BORDERS));
+			return range(iAttitudeChange, -(abs(GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeChangeLimit(DIPLO_RELATION_OPEN_BORDERS))), abs(GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeChangeLimit(DIPLO_RELATION_OPEN_BORDERS)));
 		}
 	}
 
@@ -7306,15 +7306,15 @@ int CvPlayerAI::AI_getDefensivePactAttitude(PlayerTypes ePlayer) const
 {
 	if (getTeam() != GET_PLAYER(ePlayer).getTeam() && (GET_TEAM(getTeam()).isVassal(GET_PLAYER(ePlayer).getTeam()) || GET_TEAM(GET_PLAYER(ePlayer).getTeam()).isVassal(getTeam())))
 	{
-		return GC.getLeaderHeadInfo(getPersonalityType()).getDefensivePactAttitudeChangeLimit();
+		return GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeChangeLimit(DIPLO_RELATION_DEFENSIVE_PACT);
 	}
 
 	if (!atWar(getTeam(), GET_PLAYER(ePlayer).getTeam()))
 	{
-		if (GC.getLeaderHeadInfo(getPersonalityType()).getDefensivePactAttitudeDivisor() != 0)
+		if (GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeDivisor(DIPLO_RELATION_DEFENSIVE_PACT) != 0)
 		{
-			int iAttitudeChange = (GET_TEAM(getTeam()).AI_getDefensivePactCounter(GET_PLAYER(ePlayer).getTeam()) / GC.getLeaderHeadInfo(getPersonalityType()).getDefensivePactAttitudeDivisor());
-			return range(iAttitudeChange, -(abs(GC.getLeaderHeadInfo(getPersonalityType()).getDefensivePactAttitudeChangeLimit())), abs(GC.getLeaderHeadInfo(getPersonalityType()).getDefensivePactAttitudeChangeLimit()));
+			int iAttitudeChange = (GET_TEAM(getTeam()).AI_getDefensivePactCounter(GET_PLAYER(ePlayer).getTeam()) / GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeDivisor(DIPLO_RELATION_DEFENSIVE_PACT));
+			return range(iAttitudeChange, -(abs(GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeChangeLimit(DIPLO_RELATION_DEFENSIVE_PACT))), abs(GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeChangeLimit(DIPLO_RELATION_DEFENSIVE_PACT)));
 		}
 	}
 
@@ -7366,13 +7366,13 @@ int CvPlayerAI::AI_getShareWarAttitude(PlayerTypes ePlayer) const
 	{
 		if (GET_TEAM(getTeam()).AI_shareWar(GET_PLAYER(ePlayer).getTeam()))
 		{
-			iAttitude += GC.getLeaderHeadInfo(getPersonalityType()).getShareWarAttitudeChange();
+			iAttitude += GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeChange(DIPLO_RELATION_SHARE_WAR);
 		}
 
-		if (GC.getLeaderHeadInfo(getPersonalityType()).getShareWarAttitudeDivisor() != 0)
+		if (GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeDivisor(DIPLO_RELATION_SHARE_WAR) != 0)
 		{
-			int iAttitudeChange = (GET_TEAM(getTeam()).AI_getShareWarCounter(GET_PLAYER(ePlayer).getTeam()) / GC.getLeaderHeadInfo(getPersonalityType()).getShareWarAttitudeDivisor());
-			iAttitude += range(iAttitudeChange, -(abs(GC.getLeaderHeadInfo(getPersonalityType()).getShareWarAttitudeChangeLimit())), abs(GC.getLeaderHeadInfo(getPersonalityType()).getShareWarAttitudeChangeLimit()));
+			int iAttitudeChange = (GET_TEAM(getTeam()).AI_getShareWarCounter(GET_PLAYER(ePlayer).getTeam()) / GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeDivisor(DIPLO_RELATION_SHARE_WAR));
+			iAttitude += range(iAttitudeChange, -(abs(GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeChangeLimit(DIPLO_RELATION_SHARE_WAR))), abs(GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeChangeLimit(DIPLO_RELATION_SHARE_WAR)));
 		}
 	}
 
@@ -7388,12 +7388,12 @@ int CvPlayerAI::AI_getFavoriteCivicAttitude(PlayerTypes ePlayer) const
 	{
 		if (isCivic((CivicTypes)GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteCivic()) && GET_PLAYER(ePlayer).isCivic((CivicTypes)GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteCivic()))
 		{
-			iAttitude += GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteCivicAttitudeChange();
+			iAttitude += GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeChange(DIPLO_RELATION_FAVORITE_CIVIC);
 
-			if (GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteCivicAttitudeDivisor() != 0)
+			if (GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeDivisor(DIPLO_RELATION_FAVORITE_CIVIC) != 0)
 			{
-				int iAttitudeChange = (AI_getFavoriteCivicCounter(ePlayer) / GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteCivicAttitudeDivisor());
-				iAttitude += range(iAttitudeChange, -(abs(GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteCivicAttitudeChangeLimit())), abs(GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteCivicAttitudeChangeLimit()));
+				int iAttitudeChange = (AI_getFavoriteCivicCounter(ePlayer) / GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeDivisor(DIPLO_RELATION_FAVORITE_CIVIC));
+				iAttitude += range(iAttitudeChange, -(abs(GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeChangeLimit(DIPLO_RELATION_FAVORITE_CIVIC))), abs(GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeChangeLimit(DIPLO_RELATION_FAVORITE_CIVIC)));
 			}
 		}
 	}
@@ -7816,7 +7816,7 @@ PlayerVoteTypes CvPlayerAI::AI_diploVote(const VoteSelectionSubData& kVoteData, 
 
 
 				if (!bValid && !bDefy && !bPropose
-				&& GET_TEAM(getTeam()).AI_getAttitude(eSecretaryGeneral) > GC.getLeaderHeadInfo(getPersonalityType()).getVassalRefuseAttitudeThreshold())
+				&& GET_TEAM(getTeam()).AI_getAttitude(eSecretaryGeneral) > GC.getLeaderHeadInfo(getPersonalityType()).getRefuseAttitudeThreshold(REFUSAL_VASSAL))
 				{
 					// Influence by secretary
 					if (NO_DENIAL == GET_TEAM(getTeam()).AI_makePeaceTrade(ePeaceTeam, eSecretaryGeneral))
@@ -7844,12 +7844,12 @@ PlayerVoteTypes CvPlayerAI::AI_diploVote(const VoteSelectionSubData& kVoteData, 
 				else if (iWarsLosing > iWarsWinning)
 				{
 					// Feel pity for team that is losing (if like them enough to not declare war on them)
-					bValid = (GET_TEAM(getTeam()).AI_getAttitude(ePeaceTeam) >= GC.getLeaderHeadInfo(getPersonalityType()).getDeclareWarThemRefuseAttitudeThreshold());
+					bValid = (GET_TEAM(getTeam()).AI_getAttitude(ePeaceTeam) >= GC.getLeaderHeadInfo(getPersonalityType()).getRefuseAttitudeThreshold(REFUSAL_DECLARE_WAR_THEM));
 				}
 				else
 				{
 					// Stop a team that is winning (if don't like them enough to join them in war)
-					bValid = (GET_TEAM(getTeam()).AI_getAttitude(ePeaceTeam) < GC.getLeaderHeadInfo(getPersonalityType()).getDeclareWarRefuseAttitudeThreshold());
+					bValid = (GET_TEAM(getTeam()).AI_getAttitude(ePeaceTeam) < GC.getLeaderHeadInfo(getPersonalityType()).getRefuseAttitudeThreshold(REFUSAL_DECLARE_WAR));
 				}
 
 				if (!bValid && bFriendlyToSecretary && !GET_TEAM(getTeam()).isVassal(ePeaceTeam))
@@ -7927,7 +7927,7 @@ PlayerVoteTypes CvPlayerAI::AI_diploVote(const VoteSelectionSubData& kVoteData, 
 							||
 							GET_TEAM(getTeam()).AI_getAttitude(eSecretaryGeneral)
 							>
-							GC.getLeaderHeadInfo(getPersonalityType()).getDeclareWarRefuseAttitudeThreshold()
+							GC.getLeaderHeadInfo(getPersonalityType()).getRefuseAttitudeThreshold(REFUSAL_DECLARE_WAR)
 						)
 					)
 					{
@@ -7969,7 +7969,7 @@ PlayerVoteTypes CvPlayerAI::AI_diploVote(const VoteSelectionSubData& kVoteData, 
 					{
 						if( eSecretaryGeneral == NO_TEAM || GET_TEAM(getTeam()).AI_getAttitude(eWarTeam) > GET_TEAM(getTeam()).AI_getAttitude(eSecretaryGeneral) )
 						{
-							if( GET_TEAM(getTeam()).AI_getAttitude(eWarTeam) > GC.getLeaderHeadInfo(getPersonalityType()).getDefensivePactRefuseAttitudeThreshold() )
+							if( GET_TEAM(getTeam()).AI_getAttitude(eWarTeam) > GC.getLeaderHeadInfo(getPersonalityType()).getRefuseAttitudeThreshold(REFUSAL_DEFENSIVE_PACT) )
 							{
 								int iDefyRand = GC.getLeaderHeadInfo(getPersonalityType()).getBasePeaceWeight();
 								iDefyRand /= (GC.getGame().isOption(GAMEOPTION_AI_AGGRESSIVE) ? 2 : 1);
@@ -8370,7 +8370,7 @@ bool CvPlayerAI::AI_considerOffer(PlayerTypes ePlayer, const CLinkList<TradeData
 
 		if (myTeam.isVassal(dealer.getTeam()) && CvDeal::isVassalTributeDeal(pOurList))
 		{
-			if (AI_getAttitude(ePlayer, false) > GC.getLeaderHeadInfo(getPersonalityType()).getVassalRefuseAttitudeThreshold()
+			if (AI_getAttitude(ePlayer, false) > GC.getLeaderHeadInfo(getPersonalityType()).getRefuseAttitudeThreshold(REFUSAL_VASSAL)
 			// OR I'm at war OR dealer has any defensive pact
 			|| myTeam.isAtWar() || dealerTeam.getDefensivePactCount() != 0)
 			{
@@ -9858,20 +9858,20 @@ DenialTypes CvPlayerAI::AI_bonusTrade(BonusTypes eBonus, PlayerTypes ePlayer) co
 			return DENIAL_MYSTERY;
 		}
 
-		if (eAttitude <= GC.getLeaderHeadInfo(getPersonalityType()).getStrategicBonusRefuseAttitudeThreshold())
+		if (eAttitude <= GC.getLeaderHeadInfo(getPersonalityType()).getRefuseAttitudeThreshold(REFUSAL_STRATEGIC_BONUS))
 		{
 			return DENIAL_ATTITUDE;
 		}
 	}
 
 	if (GC.getBonusInfo(eBonus).getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_EMPIRE) / 100 > 0
-	&& eAttitude <= GC.getLeaderHeadInfo(getPersonalityType()).getHappinessBonusRefuseAttitudeThreshold())
+	&& eAttitude <= GC.getLeaderHeadInfo(getPersonalityType()).getRefuseAttitudeThreshold(REFUSAL_HAPPINESS_BONUS))
 	{
 		return DENIAL_ATTITUDE;
 	}
 
 	if (GC.getBonusInfo(eBonus).getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_EMPIRE) / 100 > 0
-	&& eAttitude <= GC.getLeaderHeadInfo(getPersonalityType()).getHealthBonusRefuseAttitudeThreshold())
+	&& eAttitude <= GC.getLeaderHeadInfo(getPersonalityType()).getRefuseAttitudeThreshold(REFUSAL_HEALTH_BONUS))
 	{
 		return DENIAL_ATTITUDE;
 	}
@@ -10334,7 +10334,7 @@ DenialTypes CvPlayerAI::AI_civicTrade(CivicTypes eCivic, PlayerTypes ePlayer) co
 		return DENIAL_JOKING;
 	}
 
-	if (AI_getAttitude(ePlayer) <= GC.getLeaderHeadInfo(getPersonalityType()).getAdoptCivicRefuseAttitudeThreshold())
+	if (AI_getAttitude(ePlayer) <= GC.getLeaderHeadInfo(getPersonalityType()).getRefuseAttitudeThreshold(REFUSAL_ADOPT_CIVIC))
 	{
 		return DENIAL_ATTITUDE;
 	}
@@ -10404,7 +10404,7 @@ DenialTypes CvPlayerAI::AI_religionTrade(ReligionTypes eReligion, PlayerTypes eP
 		}
 	}
 
-	if (AI_getAttitude(ePlayer) <= GC.getLeaderHeadInfo(getPersonalityType()).getConvertReligionRefuseAttitudeThreshold())
+	if (AI_getAttitude(ePlayer) <= GC.getLeaderHeadInfo(getPersonalityType()).getRefuseAttitudeThreshold(REFUSAL_CONVERT_RELIGION))
 	{
 		return DENIAL_ATTITUDE;
 	}
@@ -21519,7 +21519,7 @@ int CvPlayerAI::AI_getCultureVictoryStage() const
 	}
 
 	//If AIWeight for cultural is 0, no stage
-	if (GC.getLeaderHeadInfo(getPersonalityType()).getCultureVictoryWeight() == 0)
+	if (GC.getLeaderHeadInfo(getPersonalityType()).getVictoryWeight(VICTORY_PURSUIT_CULTURE) == 0)
 	{
 		return 0;
 	}
@@ -21594,7 +21594,7 @@ int CvPlayerAI::AI_getCultureVictoryStage() const
 		}
 	}
 
-	int iValue = GC.getLeaderHeadInfo(getPersonalityType()).getCultureVictoryWeight();
+	int iValue = GC.getLeaderHeadInfo(getPersonalityType()).getVictoryWeight(VICTORY_PURSUIT_CULTURE);
 
 	iValue += (GC.getGame().isOption(GAMEOPTION_AI_AGGRESSIVE) ? -20 : 0);
 
@@ -21659,7 +21659,7 @@ int CvPlayerAI::AI_getSpaceVictoryStage() const
 	}
 
 	//If AIWeight for Space Vict. is 0, no stage
-	if (GC.getLeaderHeadInfo(getPersonalityType()).getSpaceVictoryWeight() == 0)
+	if (GC.getLeaderHeadInfo(getPersonalityType()).getVictoryWeight(VICTORY_PURSUIT_SPACE) == 0)
 	{
 		return 0;
 	}
@@ -21773,7 +21773,7 @@ int CvPlayerAI::AI_getSpaceVictoryStage() const
 
 	// If can't build Apollo yet, then consider making player push for this victory type
 	{
-		iValue = GC.getLeaderHeadInfo(getPersonalityType()).getSpaceVictoryWeight();
+		iValue = GC.getLeaderHeadInfo(getPersonalityType()).getVictoryWeight(VICTORY_PURSUIT_SPACE);
 
 		if (GET_TEAM(getTeam()).isAVassal())
 		{
@@ -21814,7 +21814,7 @@ int CvPlayerAI::AI_getConquestVictoryStage() const
 	}
 
 	//If AIWeight for Conquest Vict. is 0, no stage
-	if (GC.getLeaderHeadInfo(getPersonalityType()).getConquestVictoryWeight() == 0)
+	if (GC.getLeaderHeadInfo(getPersonalityType()).getVictoryWeight(VICTORY_PURSUIT_CONQUEST) == 0)
 	{
 		return 0;
 	}
@@ -21912,7 +21912,7 @@ int CvPlayerAI::AI_getConquestVictoryStage() const
 
 	// Check for whether we are inclined to pursue a conquest strategy
 	{
-		iValue = GC.getLeaderHeadInfo(getPersonalityType()).getConquestVictoryWeight();
+		iValue = GC.getLeaderHeadInfo(getPersonalityType()).getVictoryWeight(VICTORY_PURSUIT_CONQUEST);
 
 		iValue += (GC.getGame().isOption(GAMEOPTION_AI_AGGRESSIVE) ? 20 : 0);
 
@@ -21951,7 +21951,7 @@ int CvPlayerAI::AI_getDominationVictoryStage() const
 	}
 
 	//If AIWeight for Conquest Vict. is 0, no stage
-	if (GC.getLeaderHeadInfo(getPersonalityType()).getDominationVictoryWeight() == 0)
+	if (GC.getLeaderHeadInfo(getPersonalityType()).getVictoryWeight(VICTORY_PURSUIT_DOMINATION) == 0)
 	{
 		return 0;
 	}
@@ -22001,7 +22001,7 @@ int CvPlayerAI::AI_getDominationVictoryStage() const
 
 	// Check for whether we are inclined to pursue a domination strategy
 	{
-		iValue = GC.getLeaderHeadInfo(getPersonalityType()).getDominationVictoryWeight();
+		iValue = GC.getLeaderHeadInfo(getPersonalityType()).getVictoryWeight(VICTORY_PURSUIT_DOMINATION);
 
 		iValue += (GC.getGame().isOption(GAMEOPTION_AI_AGGRESSIVE) ? 20 : 0);
 
@@ -22032,7 +22032,7 @@ int CvPlayerAI::AI_getDiplomacyVictoryStage() const
 	}
 
 	//If AIWeight for Conquest Vict. is 0, no stage
-	if (GC.getLeaderHeadInfo(getPersonalityType()).getDiplomacyVictoryWeight() == 0)
+	if (GC.getLeaderHeadInfo(getPersonalityType()).getVictoryWeight(VICTORY_PURSUIT_DIPLOMACY) == 0)
 	{
 		return 0;
 	}
@@ -22072,7 +22072,7 @@ int CvPlayerAI::AI_getDiplomacyVictoryStage() const
 
 	// Check for whether we are inclined to pursue a diplomacy strategy
 	{
-		iValue = GC.getLeaderHeadInfo(getPersonalityType()).getDiplomacyVictoryWeight();
+		iValue = GC.getLeaderHeadInfo(getPersonalityType()).getVictoryWeight(VICTORY_PURSUIT_DIPLOMACY);
 
 		iValue += (GC.getGame().isOption(GAMEOPTION_AI_AGGRESSIVE) ? -20 : 0);
 
@@ -26879,7 +26879,7 @@ TeamTypes CvPlayerAI::AI_bestJoinWarTeam(PlayerTypes eOtherPlayer) const
 			(
 				playerOther.isHumanPlayer()
 				||
-				playerOther.AI_getAttitude(getID()) > GC.getLeaderHeadInfo(playerOther.getPersonalityType()).getDeclareWarRefuseAttitudeThreshold()
+				playerOther.AI_getAttitude(getID()) > GC.getLeaderHeadInfo(playerOther.getPersonalityType()).getRefuseAttitudeThreshold(REFUSAL_DECLARE_WAR)
 				&&
 				playerOther.AI_getAttitude((PlayerTypes)iI) < ATTITUDE_PLEASED
 				)

@@ -16707,11 +16707,11 @@ int CvCity::getMusicScriptId() const
 	const EraTypes eCurEra = GET_PLAYER(getOwner()).getCurrentEra();
 	if (bIsHappy)
 	{
-		return (kLeaderInfo.getDiploPeaceMusicScriptIds(eCurEra));
+		return (kLeaderInfo.getDiploMusicScriptId(DIPLO_MUSIC_PEACE, eCurEra));
 	}
 	else
 	{
-		return (kLeaderInfo.getDiploWarMusicScriptIds(eCurEra));
+		return (kLeaderInfo.getDiploMusicScriptId(DIPLO_MUSIC_WAR, eCurEra));
 	}
 }
 

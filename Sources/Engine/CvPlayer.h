@@ -1543,7 +1543,6 @@ public:
 
 	bool hasValidBuildings(TechTypes eTech) const;
 
-	void checkAIStrategy();
 
 	void setCityCommerceModifierDirty(CommerceTypes eCommerce);
 

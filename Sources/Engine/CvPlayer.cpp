@@ -24706,11 +24706,11 @@ int CvPlayer::getIntroMusicScriptId(PlayerTypes eForPlayer) const
 	const CvLeaderHeadInfo& kLeader = GC.getLeaderHeadInfo(getLeaderType());
 	if (GET_TEAM(kForPlayer.getTeam()).isAtWar(getTeam()))
 	{
-		return kLeader.getDiploWarIntroMusicScriptIds(eEra);
+		return kLeader.getDiploMusicScriptId(DIPLO_MUSIC_WAR_INTRO, eEra);
 	}
 	else
 	{
-		return kLeader.getDiploPeaceIntroMusicScriptIds(eEra);
+		return kLeader.getDiploMusicScriptId(DIPLO_MUSIC_PEACE_INTRO, eEra);
 	}
 }
 
@@ -24721,11 +24721,11 @@ int CvPlayer::getMusicScriptId(PlayerTypes eForPlayer) const
 	const CvLeaderHeadInfo& kLeader = GC.getLeaderHeadInfo(getLeaderType());
 	if (GET_TEAM(kForPlayer.getTeam()).isAtWar(getTeam()))
 	{
-		return kLeader.getDiploWarMusicScriptIds(eEra);
+		return kLeader.getDiploMusicScriptId(DIPLO_MUSIC_WAR, eEra);
 	}
 	else
 	{
-		return kLeader.getDiploPeaceMusicScriptIds(eEra);
+		return kLeader.getDiploMusicScriptId(DIPLO_MUSIC_PEACE, eEra);
 	}
 }
 
@@ -25460,11 +25460,6 @@ DenialTypes CvPlayer::AI_corporationTrade(CorporationTypes eCorporation, PlayerT
 		return DENIAL_NO_GAIN;
 	}
 
-	if (AI_getAttitude(ePlayer) <= GC.getLeaderHeadInfo(getPersonalityType()).getCorporationRefuseAttitudeThreshold())
-	{
-		return DENIAL_ATTITUDE;
-	}
-
 	return NO_DENIAL;
 }
 
@@ -25494,11 +25489,6 @@ DenialTypes CvPlayer::AI_secretaryGeneralTrade(VoteSourceTypes eVoteSource, Play
 	if (GC.getGame().isTeamVoteEligible(getTeam(), eVoteSource))
 	{
 		return DENIAL_JOKING;
-	}
-
-	if (AI_getAttitude(ePlayer) <= GC.getLeaderHeadInfo(getPersonalityType()).getSecretaryGeneralVoteRefuseAttitudeThreshold())
-	{
-		return DENIAL_ATTITUDE;
 	}
 
 	return NO_DENIAL;
@@ -25550,11 +25540,6 @@ DenialTypes CvPlayer::AI_workerTrade(const CvUnit* pUnit, PlayerTypes ePlayer) c
 
 	const AttitudeTypes eAttitude = AI_getAttitude(ePlayer);
 
-	if (eAttitude <= GC.getLeaderHeadInfo(getPersonalityType()).getWorkerRefuseAttitudeThreshold())
-	{
-		return DENIAL_ATTITUDE;
-	}
-
 	return NO_DENIAL;
 }
 
@@ -25604,11 +25589,6 @@ DenialTypes CvPlayer::AI_militaryUnitTrade(const CvUnit* pUnit, PlayerTypes ePla
 	if (pUnit->nukeRange() > 0 && GET_PLAYER(ePlayer).getNumNukeUnits() == 0)
 	{
 		return DENIAL_JOKING;
-	}
-
-	if (AI_getAttitude(ePlayer) <= GC.getLeaderHeadInfo(getPersonalityType()).getMilitaryUnitRefuseAttitudeThreshold())
-	{
-		return DENIAL_ATTITUDE;
 	}
 
 	return NO_DENIAL;
@@ -26734,28 +26714,6 @@ bool CvPlayer::hasValidBuildings(TechTypes eTech) const
 		return false;
 	}
 	return true;
-}
-
-void CvPlayer::checkAIStrategy()
-{
-	const bool bValidStrategy = (
-	(GC.getLeaderHeadInfo(getPersonalityType()).getCultureVictoryWeight() != 0) 	||
-	(GC.getLeaderHeadInfo(getPersonalityType()).getSpaceVictoryWeight() != 0) 		||
-	(GC.getLeaderHeadInfo(getPersonalityType()).getConquestVictoryWeight() != 0)	||
-	(GC.getLeaderHeadInfo(getPersonalityType()).getDominationVictoryWeight() != 0)	||
-	(GC.getLeaderHeadInfo(getPersonalityType()).getDiplomacyVictoryWeight() != 0)
-	);
-
-	//The XML for this leader's strategies are empty, we need to create some
-	if (!bValidStrategy)
-	{
-		//TODO: Make this based off of leaders traits
-		GC.getLeaderHeadInfo(getPersonalityType()).setCultureVictoryWeight(GC.getGame().getSorenRandNum(100, "AI Strategy"));
-		GC.getLeaderHeadInfo(getPersonalityType()).setSpaceVictoryWeight(GC.getGame().getSorenRandNum(100, "AI Strategy"));
-		GC.getLeaderHeadInfo(getPersonalityType()).setConquestVictoryWeight(GC.getGame().getSorenRandNum(100, "AI Strategy"));
-		GC.getLeaderHeadInfo(getPersonalityType()).setDominationVictoryWeight(GC.getGame().getSorenRandNum(100, "AI Strategy"));
-		GC.getLeaderHeadInfo(getPersonalityType()).setDiplomacyVictoryWeight(GC.getGame().getSorenRandNum(100, "AI Strategy"));
-	}
 }
 
 int CvPlayer::getBuildingCommerceChange(BuildingTypes eType, CommerceTypes CommerceType) const

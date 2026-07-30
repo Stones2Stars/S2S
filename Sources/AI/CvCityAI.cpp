@@ -1227,8 +1227,8 @@ void CvCityAI::AI_chooseProduction()
 
 	bool bGetBetterUnits = player.AI_isDoStrategy(AI_STRATEGY_GET_BETTER_UNITS);
 	bool bAggressiveAI = GC.getGame().isOption(GAMEOPTION_AI_AGGRESSIVE);
-	bool bIsWarMonger = GC.getLeaderHeadInfo(player.getPersonalityType()).getConquestVictoryWeight() > 35;
-	bool bIsPeacefull = GC.getLeaderHeadInfo(player.getPersonalityType()).getConquestVictoryWeight() <= 20;
+	bool bIsWarMonger = GC.getLeaderHeadInfo(player.getPersonalityType()).getVictoryWeight(VICTORY_PURSUIT_CONQUEST) > 35;
+	bool bIsPeacefull = GC.getLeaderHeadInfo(player.getPersonalityType()).getVictoryWeight(VICTORY_PURSUIT_CONQUEST) <= 20;
 
 	int iMaxPropertyUnitsPercent = 20;
 	if (bIsPeacefull)
