@@ -2277,19 +2277,24 @@ void CvGame::startFlyoutMenu(const CvPlot* pPlot, std::vector<CvFlyoutMenuData>&
 	{
 		szBuffer = gDLL->getText("TXT_KEY_CHANGE_PRODUCTION");
 		aFlyoutItems.push_back(CvFlyoutMenuData(NO_FLYOUT, -1, -1, -1, szBuffer));
-		for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
+		// The flyout offers the city's frontier, taken whole -- the enabler already excludes what is queued
+		// and what fails its gate, so a scan of every unit/building filtered by verdict is the same set the
+		// long way round (enabler.md par.6).
+		std::vector<int> trainableUnits;
+		pCity->getAvailableUnits(trainableUnits);
+		foreach_(const int iI, trainableUnits)
 		{
-			if ((pCity->getUnitAvailability((UnitTypes) iI) == EnablerDomain::STATE_LISTED))
 			{
 				szBuffer.Format(L"%s (%d)", GC.getUnitInfo((UnitTypes) iI).getDescription(), pCity->getProductionTurnsLeft((UnitTypes) iI, 0));
 				aFlyoutItems.push_back(CvFlyoutMenuData(FLYOUT_TRAIN, (UnitTypes) iI, pPlot->getX(), pPlot->getY(), szBuffer));
 			}
 		}
 
-		for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
+		std::vector<int> constructableBuildings;
+		pCity->getAvailableBuildings(constructableBuildings);
+		foreach_(const int iI, constructableBuildings)
 		{
 			const BuildingTypes eLoopBuilding = static_cast<BuildingTypes>(iI);
-			if ((pCity->getBuildingAvailability(eLoopBuilding) == EnablerDomain::STATE_LISTED))
 			{
 				szBuffer.Format(L"%s (%d)", GC.getBuildingInfo(eLoopBuilding).getDescription(), pCity->getProductionTurnsLeft(eLoopBuilding, 0));
 				aFlyoutItems.push_back(CvFlyoutMenuData(FLYOUT_CONSTRUCT, eLoopBuilding, pPlot->getX(), pPlot->getY(), szBuffer));

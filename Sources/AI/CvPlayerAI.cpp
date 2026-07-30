@@ -9876,10 +9876,12 @@ DenialTypes CvPlayerAI::AI_bonusTrade(BonusTypes eBonus, PlayerTypes ePlayer) co
 	{
 		return NO_DENIAL;
 	}
-	for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
+	// The capital's LISTED frontier IS the trainable set -- no scan, no verdict filter (enabler.md par.6).
+	std::vector<int> trainableUnits;
+	pCapitalCity->getAvailableUnits(trainableUnits);
+	foreach_(const int iI, trainableUnits)
 	{
-		if (!GC.getGame().canEverTrain((UnitTypes)iI)
-		|| pCapitalCity->getUnitAvailability((UnitTypes)iI) != EnablerDomain::STATE_LISTED)
+		if (!GC.getGame().canEverTrain((UnitTypes)iI))
 		{
 			continue;
 		}

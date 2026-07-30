@@ -3369,11 +3369,14 @@ UnitTypes CvCity::getConscriptUnit() const
 	UnitTypes eBestUnit = NO_UNIT;
 
 	int iBestValue = 0;
-	for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
+	// The enabler hands back the finished TRAINABLE set, so there is no database scan and no verdict filter
+	// (enabler.md par.6: the AI's decisions iterate ONLY the frontier).
+	std::vector<int> trainableUnits;
+	getAvailableUnits(trainableUnits);
+	foreach_(const int iI, trainableUnits)
 	{
-		if ((getUnitAvailability((UnitTypes) iI) == EnablerDomain::STATE_LISTED))
 		{
-			int iValue = GC.getUnitInfo((UnitTypes) iI).getConscriptionValue();
+			int iValue = GC.getUnitInfo((UnitTypes) iI).getConscription();
 			if (iValue > iBestValue)
 			{
 				iBestValue = iValue;
