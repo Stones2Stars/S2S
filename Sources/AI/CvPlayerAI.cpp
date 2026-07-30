@@ -11273,7 +11273,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 				if ((bHasBombardValue && !bNoBombardValue) || !bHasBombardValue)
 				{
 					// Effect army composition to have more collateral/bombard units
-					iValue += ((iCombatValue * kUnitInfo.getCityAttackModifier()) / 50);
+					iValue += ((iCombatValue * kUnitInfo.getCombatModifier(COMBAT_CITY_ATTACK, CASC_SCOPE_UNIT)) / 50);
 					{
 						const int iFastMoverMultiplier = AI_isDoStrategy(AI_STRATEGY_FASTMOVERS) ? 4 : 1;
 						iValue += ((iCombatValue * ((kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100) - 1) * iFastMoverMultiplier) / 4); // K-Mod put in -1 !
@@ -11289,7 +11289,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 				iValue += ((iCombatValue * kUnitInfo.getCollateralModifier(COLLATERAL_DAMAGE, CASC_SCOPE_UNIT)) / 50);
 				iValue += ((iCombatValue * ((kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100)-1)) / 4);
 				iValue += ((iCombatValue * kUnitInfo.getScalar(SCALAR_WITHDRAWAL, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT)) / 25);
-				iValue += ((iCombatValue * kUnitInfo.getCityAttackModifier()) / 100);// was -= ???
+				iValue += ((iCombatValue * kUnitInfo.getCombatModifier(COMBAT_CITY_ATTACK, CASC_SCOPE_UNIT)) / 100);// was -= ???
 				break;
 			}
 			case UNITAI_PILLAGE:
@@ -11395,7 +11395,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 					break;
 				}
 				iValue += ((iCombatValue * 3) / 2);
-				iValue += ((iCombatValue * kUnitInfo.getCityDefenseModifier()) / 25);
+				iValue += ((iCombatValue * kUnitInfo.getCombatModifier(COMBAT_CITY_DEFENSE, CASC_SCOPE_UNIT)) / 25);
 				//	The '30' scaling is empirical based on what seems reasonable for crime fighting units
 				// this is causing the AI to select prop control for defense.
 				/*iValue += AI_unitPropertyValue(eUnit)/(ePropertyRequested != NO_PROPERTY ? 30 : 60);*/
@@ -11428,7 +11428,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 					break;
 				}
 				iValue += ((iCombatValue * 3) / 2);
-				iValue += ((iCombatValue * kUnitInfo.getCityDefenseModifier()) / 75);
+				iValue += ((iCombatValue * kUnitInfo.getCombatModifier(COMBAT_CITY_DEFENSE, CASC_SCOPE_UNIT)) / 75);
 				//	The '30' scaling is empirical based on what seems reasonable for crime fighting units
 				// this is causing the AI to select prop control for defense.
 				/*iValue += AI_unitPropertyValue(eUnit)/(ePropertyRequested != NO_PROPERTY ? 30 : 60);*/
@@ -11477,7 +11477,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 					break;
 				}
 				iValue += (iCombatValue / 2);
-				iValue += ((iCombatValue * kUnitInfo.getCityDefenseModifier()) / 100);
+				iValue += ((iCombatValue * kUnitInfo.getCombatModifier(COMBAT_CITY_DEFENSE, CASC_SCOPE_UNIT)) / 100);
 				iValue /= (CvSkillReads::onlyDefensive(kUnitInfo.getSkills()) ? 2 : 1);
 				std::vector<std::pair<int, int> > vsUnitAttack3;
 				InfoValuation::collectKeyedCombat(kUnitInfo.getModifiers(), InfoValuation::COMBAT_TARGET_UNIT, COMBAT_ATTACK, vsUnitAttack3);
@@ -11807,9 +11807,13 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 				//Try 
 				iValue += ((kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100)-1) * iCombatValue / 5;
 				//Combat weaknesses are very bad
-				for (int iI = 0; iI < GC.getNumTerrainInfos(); iI++)
+				// The unit's OWN keyed vs-terrain entries -- the handful it authored, not every id in the registry.
+				std::vector<std::pair<int, int> > vsTerrain;
+				InfoValuation::collectKeyedCombat(kUnitInfo.getModifiers(), InfoValuation::COMBAT_TARGET_TERRAIN,
+					COMBAT_DEFENSE, vsTerrain);
+				foreach_(const STD_PAIR(int, int)& defenseEntry, vsTerrain)
 				{
-					const int iTerrainModifier = kUnitInfo.getTerrainDefenseModifier(iI);
+					const int iTerrainModifier = defenseEntry.second;
 					if (iTerrainModifier < 0)
 					{
 						iValue = getModifiedIntValue(iValue, iTerrainModifier);
@@ -11820,9 +11824,13 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 						iValue += iTerrainModifier / 5;
 					}
 				}
-				for (int iI = 0; iI < GC.getNumFeatureInfos(); iI++)
+				// The unit's OWN keyed vs-feature entries -- the handful it authored, not every id in the registry.
+				std::vector<std::pair<int, int> > vsFeature;
+				InfoValuation::collectKeyedCombat(kUnitInfo.getModifiers(), InfoValuation::COMBAT_TARGET_FEATURE,
+					COMBAT_DEFENSE, vsFeature);
+				foreach_(const STD_PAIR(int, int)& defenseEntry, vsFeature)
 				{
-					const int iFeatureModifier = kUnitInfo.getFeatureDefenseModifier(iI);
+					const int iFeatureModifier = defenseEntry.second;
 					if (iFeatureModifier < 0)
 					{
 						iValue = getModifiedIntValue(iValue, iFeatureModifier);
@@ -11847,7 +11855,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 					}
 				}
 				//General defense, if the unit has it, is very good. Very bad if penalized.
-				iValue = getModifiedIntValue(iValue, kUnitInfo.getDefenseCombatModifier());
+				iValue = getModifiedIntValue(iValue, kUnitInfo.getCombatModifier(COMBAT_DEFENSE, CASC_SCOPE_UNIT));
 
 				if (CvSkillReads::noDefensiveBonus(kUnitInfo.getSkills()))
 				{
@@ -28882,7 +28890,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 			iTemp = kPromotion.getCombatModifier(COMBAT_CITY_DEFENSE, CASC_SCOPE_UNIT);
 			if (iTemp != 0)
 			{
-				iTemp *= 100 + 2*(kUnit.getCityDefenseModifier() + (pUnit ? pUnit->getExtraCityDefensePercent() : 0));
+				iTemp *= 100 + 2*(kUnit.getCombatModifier(COMBAT_CITY_DEFENSE, CASC_SCOPE_UNIT) + (pUnit ? pUnit->getExtraCityDefensePercent() : 0));
 
 				if (pPlot && pPlot->isCity(true))
 				{
@@ -29469,7 +29477,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	{
 		if (eUnitAI == UNITAI_ATTACK || eUnitAI == UNITAI_ATTACK_CITY || eUnitAI == UNITAI_ATTACK_CITY_LEMMING)
 		{
-			iTemp *= 100 + kUnit.getCityAttackModifier() + (pUnit ? 2*pUnit->getExtraCityAttackPercent() : 0);
+			iTemp *= 100 + kUnit.getCombatModifier(COMBAT_CITY_ATTACK, CASC_SCOPE_UNIT) + (pUnit ? 2*pUnit->getExtraCityAttackPercent() : 0);
 			iTemp /= 100;
 			if (eUnitAI == UNITAI_ATTACK_CITY || eUnitAI == UNITAI_ATTACK_CITY_LEMMING)
 			{
@@ -29747,7 +29755,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 					iTemp = InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_TERRAIN, iI, COMBAT_DEFENSE);
 					if (iTemp != 0)
 					{
-						iTemp *= 100 + 2*(pUnit ? pUnit->getExtraTerrainDefensePercent((TerrainTypes)iI) : kUnit.getTerrainDefenseModifier(iI));
+						iTemp *= 100 + 2*(pUnit ? pUnit->getExtraTerrainDefensePercent((TerrainTypes)iI) : InfoValuation::keyedCombat(kUnit.getModifiers(), InfoValuation::COMBAT_TARGET_TERRAIN, iI, COMBAT_DEFENSE));
 
 						if (bOnTerrain)
 						{
@@ -29867,7 +29875,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 					iTemp = InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_FEATURE, iI, COMBAT_DEFENSE);
 					if (iTemp != 0)
 					{
-						iTemp *= 100 + 2*(pUnit ? pUnit->getExtraFeatureDefensePercent((FeatureTypes)iI) : kUnit.getFeatureDefenseModifier(iI));
+						iTemp *= 100 + 2*(pUnit ? pUnit->getExtraFeatureDefensePercent((FeatureTypes)iI) : InfoValuation::keyedCombat(kUnit.getModifiers(), InfoValuation::COMBAT_TARGET_FEATURE, iI, COMBAT_DEFENSE));
 
 						if (bOnFeature)
 						{
@@ -30364,10 +30372,10 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		}
 	}
 
-	iTemp = kPromotion.getDefenseCombatModifierChange();
+	iTemp = kPromotion.getCombatModifier(COMBAT_DEFENSE, CASC_SCOPE_UNIT);
 	if (iTemp != 0)
 	{
-		iTemp *= 100 + 2*(pUnit ? pUnit->getExtraDefenseCombatModifier() : kUnit.getDefenseCombatModifier());
+		iTemp *= 100 + 2*(pUnit ? pUnit->getExtraDefenseCombatModifier() : kUnit.getCombatModifier(COMBAT_DEFENSE, CASC_SCOPE_UNIT));
 		iTemp /= 100;
 
 		if (bForBuildUp
@@ -32547,7 +32555,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 	iTemp = kUnitCombat.getCombatModifier(COMBAT_CITY_DEFENSE, CASC_SCOPE_UNIT);
 	if (iTemp != 0)
 	{
-		iExtra = kUnit.getCityDefenseModifier() + (pUnit == NULL ? 0 : pUnit->getExtraCityDefensePercent() * 2);
+		iExtra = kUnit.getCombatModifier(COMBAT_CITY_DEFENSE, CASC_SCOPE_UNIT) + (pUnit == NULL ? 0 : pUnit->getExtraCityDefensePercent() * 2);
 		iTemp *= 100 + iExtra;
 		iTemp /= 100;
 		if ((eUnitAI == UNITAI_CITY_DEFENSE) ||
@@ -33041,10 +33049,10 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 	}
 
-	iTemp = kUnitCombat.getDefenseCombatModifierChange();
+	iTemp = kUnitCombat.getCombatModifier(COMBAT_DEFENSE, CASC_SCOPE_UNIT);
 	if (iTemp != 0)
 	{
-		iExtra = pUnit == NULL ? kUnit.getDefenseCombatModifier() : pUnit->getExtraDefenseCombatModifier();
+		iExtra = pUnit == NULL ? kUnit.getCombatModifier(COMBAT_DEFENSE, CASC_SCOPE_UNIT) : pUnit->getExtraDefenseCombatModifier();
 		iTemp *= (100 + iExtra * 2);
 		iTemp /= 100;
 
