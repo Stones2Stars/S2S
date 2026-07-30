@@ -22479,7 +22479,7 @@ int CvPlayerAI::AI_getStrategyHash() const
 					bHasMobileArtillery = true;
 				}
 			}
-			if ((unit.getAir(AIR_RANGE, CASC_SCOPE_UNIT) / 100) > 1 && !unit.isSuicide()
+			if ((unit.getAir(AIR_RANGE, CASC_SCOPE_UNIT) / 100) > 1 && !CvSkillReads::suicide(unit.getSkills())
 			&& unit.getFlatBombard(BOMBARD_AIR_BOMB_RATE, CASC_SCOPE_UNIT) / 100 > 10 && unit.getAirCombat() > 0)
 			{
 				bHasBomber = true;

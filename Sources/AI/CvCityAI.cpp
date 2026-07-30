@@ -4428,7 +4428,7 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, int& iBestValue, bool bAs
 
 			// KOSHLING - this need rework to take actual promotion values. *** TODO ***
 			// May need some caching to do so at appropriate performance levels.
-			const int iCombatType = unit.getUnitCombatType();
+			const int iCombatType = unit.getCombatClass();
 			int iPromotionValue = 0;
 			for (int iJ = GC.getNumPromotionInfos() - 1; iJ > -1; iJ--)
 			{
