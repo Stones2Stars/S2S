@@ -6164,7 +6164,7 @@ int CvPlayerAI::AI_techUnitValue(TechTypes eTech, int iPathLength, bool& bEnable
 				case UNITAI_ATTACK_CITY:
 					iMilitaryValue += ((bWarPlan) ? 800 : 400);
 					iMilitaryValue += (AI_isDoStrategy(AI_STRATEGY_DAGGER) ? 800 : 0);
-					if (unitX.getBombardRate() > 0)
+					if (unitX.getBombardModifier(BOMBARD_RATE, CASC_SCOPE_UNIT) > 0)
 					{
 						iMilitaryValue += 200;
 
@@ -22450,13 +22450,13 @@ int CvPlayerAI::AI_getStrategyHash() const
 				{
 					bHasMobileAntiair = true;
 				}
-				if (unit.getBombardRate() > 10)
+				if (unit.getBombardModifier(BOMBARD_RATE, CASC_SCOPE_UNIT) > 10)
 				{
 					bHasMobileArtillery = true;
 				}
 			}
 			if (unit.getAirRange() > 1 && !unit.isSuicide()
-			&& unit.getBombRate() > 10 && unit.getAirCombat() > 0)
+			&& unit.getFlatBombard(BOMBARD_AIR_BOMB_RATE, CASC_SCOPE_UNIT) / 100 > 10 && unit.getAirCombat() > 0)
 			{
 				bHasBomber = true;
 			}
@@ -29037,7 +29037,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 
 	//TB Combat Mods End
 
-	iTemp = kPromotion.getCollateralDamageChange();
+	iTemp = kPromotion.getCollateralModifier(COLLATERAL_DAMAGE, CASC_SCOPE_UNIT);
 	if (iTemp != 0)
 	{
 		iTemp *= 100 + 2*(pUnit ? pUnit->getExtraCollateralDamage() : kUnit.getCollateralModifier(COLLATERAL_DAMAGE, CASC_SCOPE_UNIT));
@@ -29054,7 +29054,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		else iValue += iTemp / 6;
 	}
 
-	iTemp = kPromotion.getBombardRateChange();
+	iTemp = kPromotion.getBombardModifier(BOMBARD_RATE, CASC_SCOPE_UNIT);
 	if (iTemp != 0)
 	{
 		if (eUnitAI == UNITAI_ATTACK_CITY ||
@@ -29396,7 +29396,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		iValue += 75;
 	}
 
-	if (kPromotion.isAttackOnlyCitiesAdd())
+	if (CvSkillReads::attackOnlyCities(kPromotion.getSkills()))
 	{
 		if (pUnit)
 		{
@@ -29414,25 +29414,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		}
 	}
 
-	if (kPromotion.isAttackOnlyCitiesSubtract())
-	{
-		if (pUnit)
-		{
-			if (pUnit->canAttack())
-			{
-				if (pUnit->canAttackOnlyCities())
-				{
-					iValue += 50;
-				}
-				else
-				{
-					iValue += 1;
-				}
-			}
-		}
-	}
-
-	if (kPromotion.isIgnoreNoEntryLevelAdd())
+	if (CvSkillReads::ignoreNoEntryLevel(kPromotion.getSkills()))
 	{
 		if (pUnit)
 		{
@@ -29450,27 +29432,9 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		}
 	}
 
-	if (kPromotion.isIgnoreNoEntryLevelSubtract())
-	{
-		if (pUnit)
-		{
-			if (pUnit->canAttack() && !pUnit->canAttackOnlyCities())
-			{
-				if (pUnit->canIgnoreNoEntryLevel())
-				{
-					iValue -= 20;
-				}
-				else
-				{
-					iValue -= 5;
-				}
-			}
-		}
-	}
-
 	if (pUnit != NULL && GC.getGame().isOption(GAMEOPTION_UNSUPPORTED_ZONE_OF_CONTROL))
 	{
-		if (kPromotion.isIgnoreZoneofControlAdd())
+		if (CvSkillReads::ignoreZoneOfControl(kPromotion.getSkills()))
 		{
 			if (pUnit->canIgnoreZoneofControl())
 			{
@@ -29481,20 +29445,9 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 				iValue += 25;
 			}
 		}
-		if (kPromotion.isIgnoreZoneofControlSubtract())
-		{
-			if (pUnit->canIgnoreZoneofControl())
-			{
-				iValue -= 25;
-			}
-			else
-			{
-				iValue -= 5;
-			}
-		}
 	}
 
-	if (kPromotion.isFliesToMoveAdd())
+	if (CvSkillReads::fliesToMove(kPromotion.getSkills()))
 	{
 		if (pUnit)
 		{
@@ -29508,22 +29461,6 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 			}
 		}
 	}
-
-	if (kPromotion.isFliesToMoveSubtract())
-	{
-		if (pUnit)
-		{
-			if (pUnit->canFliesToMove())
-			{
-				iValue -= 75;
-			}
-			else
-			{
-				iValue -= 5;
-			}
-		}
-	}
-
 
 	//TB Combat Mods
 	//TB Modification note:adjusted City Attack promo value to balance better against withdraw promos for city attack ai units.
@@ -29641,7 +29578,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		}
 	}
 
-	iTemp = kPromotion.getCollateralDamageProtection();
+	iTemp = kPromotion.getCollateralModifier(COLLATERAL_PROTECTION, CASC_SCOPE_UNIT);
 	if (iTemp != 0)
 	{
 		if ((eUnitAI == UNITAI_CITY_DEFENSE) ||
@@ -32150,7 +32087,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 
 	//TB Combat Mods End
 
-	iTemp = kUnitCombat.getCollateralDamageChange();
+	iTemp = kUnitCombat.getCollateralModifier(COLLATERAL_DAMAGE, CASC_SCOPE_UNIT);
 	if (iTemp != 0)
 	{
 		iExtra = pUnit == NULL ? kUnit.getCollateralModifier(COLLATERAL_DAMAGE, CASC_SCOPE_UNIT) : pUnit->getExtraCollateralDamage(); //collateral has no strong synergy (not like retreat)
@@ -32171,7 +32108,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 	}
 
-	iTemp = kUnitCombat.getBombardRateChange();
+	iTemp = kUnitCombat.getBombardModifier(BOMBARD_RATE, CASC_SCOPE_UNIT);
 	if (iTemp != 0)
 	{
 		if (eUnitAI == UNITAI_ATTACK_CITY ||
@@ -32540,16 +32477,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 
 		if (pUnit->canAttack())
 		{
-			if (kUnitCombat.isAttackOnlyCitiesSubtract())
-			{
-				if (pUnit->canAttackOnlyCities())
-				{
-					iValue += 50;
-				}
-				else iValue += 1;
-			}
-
-			if (kUnitCombat.isAttackOnlyCitiesAdd())
+			if (CvSkillReads::attackOnlyCities(kUnitCombat.getSkills()))
 			{
 				if (pUnit->canAttackOnlyCities())
 				{
@@ -32560,7 +32488,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 
 			if (!pUnit->canAttackOnlyCities())
 			{
-				if (kUnitCombat.isIgnoreNoEntryLevelAdd())
+				if (CvSkillReads::ignoreNoEntryLevel(kUnitCombat.getSkills()))
 				{
 					if (pUnit->canIgnoreNoEntryLevel())
 					{
@@ -32569,20 +32497,12 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 					else iValue += 20;
 				}
 
-				if (kUnitCombat.isIgnoreNoEntryLevelSubtract())
-				{
-					if (pUnit->canIgnoreNoEntryLevel())
-					{
-						iValue -= 20;
-					}
-					else iValue -= 5;
-				}
 			}
 		}
 
 		if (GC.getGame().isOption(GAMEOPTION_UNSUPPORTED_ZONE_OF_CONTROL))
 		{
-			if (kUnitCombat.isIgnoreZoneofControlAdd())
+			if (CvSkillReads::ignoreZoneOfControl(kUnitCombat.getSkills()))
 			{
 				if (pUnit->canIgnoreZoneofControl())
 				{
@@ -32590,17 +32510,9 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 				}
 				else iValue += 25;
 			}
-			if (kUnitCombat.isIgnoreZoneofControlSubtract())
-			{
-				if (pUnit->canIgnoreZoneofControl())
-				{
-					iValue -= 25;
-				}
-				else iValue -= 5;
-			}
 		}
 
-		if (kUnitCombat.isFliesToMoveAdd())
+		if (CvSkillReads::fliesToMove(kUnitCombat.getSkills()))
 		{
 			if (pUnit->canFliesToMove())
 			{
@@ -32609,14 +32521,6 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 			else iValue += 100;
 		}
 
-		if (kUnitCombat.isFliesToMoveSubtract())
-		{
-			if (pUnit->canFliesToMove())
-			{
-				iValue -= 75;
-			}
-			else iValue -= 5;
-		}
 	}
 
 
@@ -32800,7 +32704,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 	}
 
-	iTemp = kUnitCombat.getCollateralDamageProtection();
+	iTemp = kUnitCombat.getCollateralModifier(COLLATERAL_PROTECTION, CASC_SCOPE_UNIT);
 	if (iTemp != 0)
 	{
 		if ((eUnitAI == UNITAI_CITY_DEFENSE) ||
