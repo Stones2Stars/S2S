@@ -6232,78 +6232,29 @@ void CvGameTextMgr::parseLeaderTraits(CvWStringBuffer &szHelpString, LeaderHeadT
 		);
 
 
-		int iNumCoreDefaultTraits = GC.getLeaderHeadInfo(eLeader).getNumDefaultTraits();
-		int iNumDefaultComplexTraits = GC.getLeaderHeadInfo(eLeader).getNumDefaultComplexTraits();
-		TraitTypes eTrait = NO_TRAIT;
-
-		if (GC.getGame().isOption(GAMEOPTION_LEADER_COMPLEX_TRAITS) && iNumDefaultComplexTraits > 0)
+		// The leader's authored assignment for whichever trait set is ACTIVE (CvTraitSelection owns the
+		// GAMEOPTION_LEADER_COMPLEX_TRAITS composition), rendered in order.
+		foreach_(const int iTrait, CvTraitSelection::leaderTraits(GC.getLeaderHeadInfo(eLeader)))
 		{
-			for (int iI = 0; iI < iNumDefaultComplexTraits; ++iI)
+			const TraitTypes eTrait = (TraitTypes)iTrait;
+			if (!CvTraitSelection::isSelectable(GC.getTraitInfo(eTrait), true))
 			{
-				if (GC.getLeaderHeadInfo(eLeader).isDefaultComplexTrait(iI))
-				{
-					eTrait = TraitTypes(GC.getLeaderHeadInfo(eLeader).getDefaultComplexTrait(iI));
-					if (GC.getGame().isTraitValid(eTrait, true))
-					{
-						if (!bFirst)
-						{
-							if (bDawnOfMan)
-								szHelpString.append(L", ");
-							else if (bCivilopediaText)
-								szHelpString.append(L"\n\n");
-							else szHelpString.append(L"\n");
-						}
-						else bFirst = false;
-
-						parseTraits(szHelpString, eTrait, bDawnOfMan);
-					}
-				}
+				continue;
 			}
-		}
-		else if (iNumCoreDefaultTraits > 0)
-		{
-			for (int iI = 0; iI < iNumCoreDefaultTraits; ++iI)
+			if (!bFirst)
 			{
-				if (GC.getLeaderHeadInfo(eLeader).isDefaultTrait(iI))
-				{
-					eTrait = TraitTypes(GC.getLeaderHeadInfo(eLeader).getDefaultTrait(iI));
-					if (GC.getGame().isTraitValid(eTrait, true))
-					{
-						if (!bFirst)
-						{
-							if (bDawnOfMan)
-								szHelpString.append(L", ");
-							else if (bCivilopediaText)
-								szHelpString.append(L"\n\n");
-							else szHelpString.append(L"\n");
-						}
-						else bFirst = false;
+				if (bDawnOfMan)
+					szHelpString.append(L", ");
+				else if (bCivilopediaText)
+					szHelpString.append(L"
 
-						parseTraits(szHelpString, eTrait, bDawnOfMan);
-					}
-				}
+");
+				else szHelpString.append(L"
+");
 			}
-		}
-		else
-		{
-			for (int iI = 0; iI < GC.getNumTraitInfos(); ++iI)
-			{
-				eTrait = TraitTypes(iI);
-				if (GC.getLeaderHeadInfo(eLeader).hasTrait(eTrait) && GC.getGame().isTraitValid(eTrait, true))
-				{
-					if (!bFirst)
-					{
-						if (bDawnOfMan)
-							szHelpString.append(L", ");
-						else if (bCivilopediaText)
-							szHelpString.append(L"\n\n");
-						else szHelpString.append(L"\n");
-					}
-					else bFirst = false;
+			else bFirst = false;
 
-					parseTraits(szHelpString, eTrait, bDawnOfMan);
-				}
-			}
+			parseTraits(szHelpString, eTrait, bDawnOfMan);
 		}
 	}
 	else //	Random leader
@@ -6323,63 +6274,21 @@ void CvGameTextMgr::parseLeaderShortTraits(CvWStringBuffer &szHelpString, Leader
 		FAssertMsg((GC.getNumTraitInfos() > 0),
 			"GC.getNumTraitInfos() is less than or equal to zero but is expected to be larger than zero in CvSimpleCivPicker::setLeaderText");
 
-		int iNumCoreDefaultTraits = GC.getLeaderHeadInfo(eLeader).getNumDefaultTraits();
-		int iNumDefaultComplexTraits = GC.getLeaderHeadInfo(eLeader).getNumDefaultComplexTraits();
-		TraitTypes eTrait = NO_TRAIT;
 		bool bFirst = true;
 
-		if (GC.getGame().isOption(GAMEOPTION_LEADER_COMPLEX_TRAITS) && iNumDefaultComplexTraits > 0)
+		// The leader's authored assignment for whichever trait set is ACTIVE (CvTraitSelection owns the
+		// GAMEOPTION_LEADER_COMPLEX_TRAITS composition).
+		foreach_(const int iTrait, CvTraitSelection::leaderTraits(GC.getLeaderHeadInfo(eLeader)))
 		{
-			for (int iI = 0; iI < iNumDefaultComplexTraits; ++iI)
+			const TraitTypes eTrait = (TraitTypes)iTrait;
+			if (CvTraitSelection::isSelectable(GC.getTraitInfo(eTrait), true))
 			{
-				if (GC.getLeaderHeadInfo(eLeader).isDefaultTrait(iI))
+				if (!bFirst)
 				{
-					eTrait = TraitTypes(GC.getLeaderHeadInfo(eLeader).getDefaultComplexTrait(iI));
-					if (CvTraitSelection::isSelectable(GC.getTraitInfo(eTrait), true))
-					{
-						if (!bFirst)
-						{
-							szHelpString.append(L"/");
-						}
-						szHelpString.append(gDLL->getText(GC.getTraitInfo(eTrait).getShortDescriptionKey()));
-						bFirst = false;
-					}
+					szHelpString.append(L"/");
 				}
-			}
-		}
-		else if (iNumCoreDefaultTraits > 0)
-		{
-			for (int iI = 0; iI < iNumCoreDefaultTraits; ++iI)
-			{
-				if (GC.getLeaderHeadInfo(eLeader).isDefaultTrait(iI))
-				{
-					eTrait = TraitTypes(GC.getLeaderHeadInfo(eLeader).getDefaultTrait(iI));
-					if (CvTraitSelection::isSelectable(GC.getTraitInfo(eTrait), true))
-					{
-						if (!bFirst)
-						{
-							szHelpString.append(L"/");
-						}
-						szHelpString.append(gDLL->getText(GC.getTraitInfo(eTrait).getShortDescriptionKey()));
-						bFirst = false;
-					}
-				}
-			}
-		}
-		else
-		{
-			for (int iI = 0; iI < GC.getNumTraitInfos(); ++iI)
-			{
-				eTrait = ((TraitTypes)iI);
-				if (GC.getLeaderHeadInfo(eLeader).hasTrait(eTrait) && CvTraitSelection::isSelectable(GC.getTraitInfo(eTrait), true))
-				{
-					if (!bFirst)
-					{
-						szHelpString.append(L"/");
-					}
-					szHelpString.append(gDLL->getText(GC.getTraitInfo(eTrait).getShortDescriptionKey()));
-					bFirst = false;
-				}
+				szHelpString.append(gDLL->getText(GC.getTraitInfo(eTrait).getShortDescriptionKey()));
+				bFirst = false;
 			}
 		}
 	}

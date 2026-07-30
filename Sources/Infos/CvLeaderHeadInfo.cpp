@@ -256,6 +256,13 @@ void CvLeaderHeadInfo::mapFrom(const picojson::value& entity)
 	}
 	const picojson::object& entityObj = entity.get<picojson::object>();
 
+	// --- the authored trait ASSIGNMENTS (root `traits` / `complexTraits`, TRAIT_* FKs) ---
+	// Both slots are always present in the data and normally EMPTY: the assignment is community-owned
+	// content a modder authors, not something the curator reconstructs. Which set is ACTIVE is decided by
+	// the CONSUMER (CvTraitSelection::leaderTraits) -- an info never reads a game option.
+	jsonReadIdList(entityObj, "traits", m_aiTraits);
+	jsonReadIdList(entityObj, "complexTraits", m_aiComplexTraits);
+
 	// --- world.art.icon -> the EXE-bound leaderhead portrait ArtDefineTag ---
 	if (const picojson::object* pWorldArt = jsonWorldArt(entityObj))
 	{
@@ -456,6 +463,8 @@ void CvLeaderHeadInfo::resetMapped()
 
 	m_flavours.clear();
 	m_improvementWeights.clear();
+	m_aiTraits.clear();
+	m_aiComplexTraits.clear();
 	for (int iMusic = 0; iMusic < NUM_LEADER_DIPLO_MUSIC; ++iMusic)
 	{
 		m_diploMusicScriptIds[iMusic].clear();

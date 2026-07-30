@@ -447,42 +447,15 @@ void CvPlayer::initMore(PlayerTypes eID, LeaderHeadTypes ePersonality, bool bSet
 	}
 	FAssertMsg(GC.getNumTraitInfos() > 0, "GC.getNumTraitInfos() is less than or equal to zero but is expected to be larger than zero in CvPlayer::init");
 	{
-		const int iNumCoreDefaultTraits = GC.getLeaderHeadInfo(ePersonality).getNumDefaultTraits();
-		const int iNumDefaultComplexTraits = GC.getLeaderHeadInfo(ePersonality).getNumDefaultComplexTraits();
-
-		if (GC.getGame().isOption(GAMEOPTION_LEADER_COMPLEX_TRAITS) && iNumDefaultComplexTraits > 0)
+		// The leader's authored assignment for whichever trait set is ACTIVE -- the
+		// GAMEOPTION_LEADER_COMPLEX_TRAITS composition lives in the calc, not here.
+		foreach_(const int iTrait, CvTraitSelection::leaderTraits(GC.getLeaderHeadInfo(ePersonality)))
 		{
-			for (int iI = 0; iI < iNumDefaultComplexTraits; ++iI)
+			const TraitTypes eTrait = (TraitTypes)iTrait;
+			if (CvTraitSelection::isSelectable(GC.getTraitInfo(eTrait), true))
 			{
-				const TraitTypes eTrait = TraitTypes(GC.getLeaderHeadInfo(ePersonality).getDefaultComplexTrait(iI));
-				if (CvTraitSelection::isSelectable(GC.getTraitInfo(eTrait), true))
-				{
-					m_pabHasTrait[eTrait] = true;
-					processTrait(eTrait, 1);
-				}
-			}
-		}
-		else if (iNumCoreDefaultTraits > 0)
-		{
-			for (int iI = 0; iI < iNumCoreDefaultTraits; ++iI)
-			{
-				const TraitTypes eTrait = TraitTypes(GC.getLeaderHeadInfo(ePersonality).getDefaultTrait(iI));
-				if (CvTraitSelection::isSelectable(GC.getTraitInfo(eTrait), true))
-				{
-					m_pabHasTrait[eTrait] = true;
-					processTrait(eTrait, 1);
-				}
-			}
-		}
-		else
-		{
-			for (int iI = 0; iI < GC.getNumTraitInfos(); iI++)
-			{
-				if (GC.getLeaderHeadInfo(ePersonality).hasTrait((TraitTypes)iI) && CvTraitSelection::isSelectable(GC.getTraitInfo((TraitTypes)iI), true))
-				{
-					m_pabHasTrait[(TraitTypes)iI] = true;
-					processTrait((TraitTypes)iI, 1);
-				}
+				m_pabHasTrait[eTrait] = true;
+				processTrait(eTrait, 1);
 			}
 		}
 	}
@@ -1876,49 +1849,15 @@ void CvPlayer::changeLeader(LeaderHeadTypes eNewLeader)
 
 	const LeaderHeadTypes eLeader = (LeaderHeadTypes)(int)getLeaderType();
 
-	int iNumCoreDefaultTraits = GC.getLeaderHeadInfo(eLeader).getNumDefaultTraits();
-	int iNumDefaultComplexTraits = GC.getLeaderHeadInfo(eLeader).getNumDefaultComplexTraits();
-	TraitTypes eTrait = NO_TRAIT;
-
-	if (GC.getGame().isOption(GAMEOPTION_LEADER_COMPLEX_TRAITS) && iNumDefaultComplexTraits > 0)
+	// The leader's authored assignment for whichever trait set is ACTIVE -- the
+	// GAMEOPTION_LEADER_COMPLEX_TRAITS composition lives in the calc, not here.
+	foreach_(const int iTrait, CvTraitSelection::leaderTraits(GC.getLeaderHeadInfo(eLeader)))
 	{
-		for (int iI = 0; iI < iNumDefaultComplexTraits; ++iI)
+		const TraitTypes eTrait = (TraitTypes)iTrait;
+		if (CvTraitSelection::isSelectable(GC.getTraitInfo(eTrait), true))
 		{
-			if (GC.getLeaderHeadInfo(eLeader).isDefaultComplexTrait(iI))
-			{
-				eTrait = TraitTypes(GC.getLeaderHeadInfo(eLeader).getDefaultComplexTrait(iI));
-				if (CvTraitSelection::isSelectable(GC.getTraitInfo(eTrait), true))
-				{
-					m_pabHasTrait[eTrait] = true;
-					processTrait(eTrait, 1);
-				}
-			}
-		}
-	}
-	else if (iNumCoreDefaultTraits > 0)
-	{
-		for (int iI = 0; iI < iNumCoreDefaultTraits; ++iI)
-		{
-			if (GC.getLeaderHeadInfo(eLeader).isDefaultTrait(iI))
-			{
-				eTrait = TraitTypes(GC.getLeaderHeadInfo(eLeader).getDefaultTrait(iI));
-				if (CvTraitSelection::isSelectable(GC.getTraitInfo(eTrait), true))
-				{
-					m_pabHasTrait[eTrait] = true;
-					processTrait(eTrait, 1);
-				}
-			}
-		}
-	}
-	else
-	{
-		for (int iI = 0; iI < GC.getNumTraitInfos(); iI++)
-		{
-			if (GC.getLeaderHeadInfo(eLeader).hasTrait((TraitTypes)iI) && CvTraitSelection::isSelectable(GC.getTraitInfo((TraitTypes)iI), true))
-			{
-				m_pabHasTrait[(TraitTypes)iI] = true;
-				processTrait((TraitTypes)iI, 1);
-			}
+			m_pabHasTrait[eTrait] = true;
+			processTrait(eTrait, 1);
 		}
 	}
 

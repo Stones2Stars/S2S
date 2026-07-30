@@ -157,20 +157,14 @@
 - **The FLAGGED unitcombat remainder** — the taxonomy families (weapon/size/species/quality/group) and the
   ambiguous individual classes; map the obvious, flag the unsure, never blunt-purge
   ([unitcombat-tag-mapping.md](unitcombat-tag-mapping.md)).
-- **The leader↔trait SLOTS now exist and are empty by design — what is missing is the READ, and ~24 dangling
-  errors hang off it.** Every leaderhead carries `traits: []` + `complexTraits: []` (owner: emitted *"so that
-  modders can add the traits for themselves"*); the curator never fills them, because who has which trait is
-  **community-owned CONTENT**, not something reconstructed from the legacy tables.
-  ⛔ **So the blocker is no longer the data SHAPE — it is that nothing READS the slot.** `CvLeaderHeadInfo` holds
-  no trait member, so `getNumDefaultTraits` / `getDefaultTrait` / `getNumDefaultComplexTraits` /
-  `getDefaultComplexTrait` / `isDefaultTrait` / the leaderhead-side `hasTrait` dangle, and the initial-trait
-  assignment in `CvPlayer::initMore` / `initFreeUnits` has nothing to consume. **A modder filling the array today
-  would see NO effect** — that is the hole to close: a member + a read on the info, and the assignment consumers
-  re-expressed onto it, with the ACTIVE set chosen by `GAMEOPTION_LEADER_COMPLEX_TRAITS`
-  ([modifier.md §4](../../specs/modifier.md)) rather than by which array a call site happens to name.
-  ⛔ Do NOT restore the legacy getter NAMES to do it ([DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface)).
-  ⚠ `CvPlayer::hasTrait` is a LIVE method that collides by name — only the `GC.getLeaderHeadInfo(...).hasTrait(...)`
-  receiver is dangling, so this is not sweepable textually.
+- **Leader↔trait ASSIGNMENTS are authorable but nothing ships one.** The chain is wired end to end — the
+  leaderhead carries `traits: []` + `complexTraits: []`, the info FK-resolves both at `mapFrom`, and
+  `CvTraitSelection::leaderTraits` picks the ACTIVE list by `GAMEOPTION_LEADER_COMPLEX_TRAITS` for the
+  assignment and display consumers — so filling a slot now works. What is missing is the **CONTENT**: all 119
+  leaders author empty arrays, so every leader currently starts traitless.
+  ⚑ That is the intended shape, not a defect to code around: who has which trait is community-owned
+  (owner — the slots exist *"so that modders can add the traits for themselves"*), so the gap closes by
+  AUTHORING, never by reconstructing the legacy tables the curator deliberately dropped.
 - **`stronglyRestricted` → a `requires.build` civ-membership gate** — pending NPC civilizations being wired.
 - **Property pulses** — a shared property-source cleaner so spatial sources emit as trigger entries carrying
   `on`/`relation`/`distance`, instead of being parked verbatim. Pure DATA and unblocked; the ENGINE spatial

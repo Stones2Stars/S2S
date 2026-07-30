@@ -6,6 +6,18 @@
 #include "CvTraitSelection.h"
 #include "CvGame.h"
 #include "Infos/CvTraitInfo.h"
+#include "Infos/CvLeaderHeadInfo.h"
+
+const std::vector<int>& CvTraitSelection::leaderTraits(const CvLeaderHeadInfo& kLeader)
+{
+	// The COMPLEX set answers only while its option is live AND the leader actually authored one; a leader
+	// with just `traits` keeps working under either option rather than coming up traitless (header).
+	if (GC.getGame().isOption(GAMEOPTION_LEADER_COMPLEX_TRAITS) && !kLeader.getComplexTraits().empty())
+	{
+		return kLeader.getComplexTraits();
+	}
+	return kLeader.getTraits();
+}
 
 bool CvTraitSelection::isSelectable(const CvTraitInfo& kTrait, bool bGameStart)
 {

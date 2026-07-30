@@ -26,6 +26,7 @@
 
 #include "CvInfo.h"   // JSON-info base (mapFrom); on /I -> bare include
 #include <map>
+#include <vector>
 
 namespace picojson { class value; }
 
@@ -169,6 +170,14 @@ public:
 	int getFavoriteCivic() const { return m_iFavoriteCivic; }
 	int getFavoriteReligion() const { return m_iFavoriteReligion; }
 
+	// The leader's authored trait ASSIGNMENTS -- one list per trait set, TRAIT_* FKs, both ALWAYS PRESENT and
+	// EMPTY until authored (who has which trait is community-owned content, so the curator emits the slot and
+	// never fills it). Served as the two raw lists because an INFO NEVER READS GAME STATE: which set is ACTIVE
+	// is a GAMEOPTION_LEADER_COMPLEX_TRAITS composition, and that belongs to the consuming-system calc
+	// (CvTraitSelection::leaderTraits) -- never here, and never re-derived per call site.
+	const std::vector<int>& getTraits() const { return m_aiTraits; }
+	const std::vector<int>& getComplexTraits() const { return m_aiComplexTraits; }
+
 	// world.art.icon -- the EXE-bound leaderhead portrait plane (ART_DEF_* tag resolved via ARTFILEMGR).
 	const char* getArtDefineTag() const { return m_szArtDefineTag; }
 	DllExport const CvArtInfoLeaderhead* getArtInfo() const;
@@ -216,6 +225,10 @@ private:
 	int m_iFavoriteCivic;
 	int m_iFavoriteReligion;
 	CvString m_szArtDefineTag;
+
+	// --- the authored trait assignments (TRAIT_* FKs; empty until a modder or the trait pass fills them) ---
+	std::vector<int> m_aiTraits;          // root `traits`        -- the SIMPLE set's assignment
+	std::vector<int> m_aiComplexTraits;   // root `complexTraits` -- the COMPLEX set's assignment
 
 	// --- the grouped tables (fixed arrays where the axis is a compile-time enum) ---
 	int m_aiAttitudeChange[NUM_LEADER_DIPLO_RELATIONS];

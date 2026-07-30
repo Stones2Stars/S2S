@@ -20,10 +20,21 @@
 //
 
 class CvTraitInfo;
+class CvLeaderHeadInfo;
 
 class CvTraitSelection
 {
 public:
+	// WHICH of a leader's two authored trait lists is ACTIVE, composing GAMEOPTION_LEADER_COMPLEX_TRAITS.
+	//
+	// The leaderhead serves both raw lists and picks neither -- an info never reads a game option -- so the
+	// choice lives here, once, rather than being re-derived at each assignment site (it was inlined twice in
+	// CvPlayer, which is how these drift).
+	//
+	// ⚑ A leader that authors ONLY `traits` uses them under BOTH options. That is deliberate: the slots exist
+	// so modders can fill them, and the forgiving read means authoring the simple set alone still works in a
+	// complex game, rather than silently leaving a leader traitless.
+	static const std::vector<int>& leaderTraits(const CvLeaderHeadInfo& kLeader);
 	// Whether the trait may be held under the LIVE game options.
 	//
 	// `bGameStart` distinguishes the two asks: INITIAL assignment (a leader's starting traits, the
