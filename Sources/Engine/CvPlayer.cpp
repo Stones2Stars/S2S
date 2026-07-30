@@ -23295,27 +23295,15 @@ int CvPlayer::getVotes(VoteTypes eVote, VoteSourceTypes eVoteSource) const
 
 	if (eVote != NO_VOTE)
 	{
-		if (!GC.getVoteInfo(eVote).isVoteSourceType(eVoteSource))
+		if (!GC.getVoteInfo(eVote).hasVoteSource(eVoteSource))
 		{
 			return 0;
 		}
 
-		if (GC.getVoteInfo(eVote).isCivVoting())
-		{
-			if (NO_RELIGION == eReligion || getHasReligionCount(eReligion) > 0)
-			{
-				iVotes = 1;
-			}
-		}
-		else if (GC.getVoteInfo(eVote).isCityVoting())
-		{
-			if (NO_RELIGION != eReligion)
-			{
-				iVotes = (int64_t)getHasReligionCount(eReligion);
-			}
-			else iVotes = (int64_t)getNumCities();
-		}
-		else if (NO_RELIGION == eReligion)
+		// A vote's weight is POPULATION -- the per-civ and per-city tallies are not modelled, because nothing
+		// ever asked for them: every vote in the shipped data declined both, so those branches never ran and
+		// the data carries no way to say otherwise.
+		if (NO_RELIGION == eReligion)
 		{
 			iVotes = (int64_t)getTotalPopulation();
 		}
@@ -23323,7 +23311,7 @@ int CvPlayer::getVotes(VoteTypes eVote, VoteSourceTypes eVoteSource) const
 
 		if (NO_RELIGION != eReligion && getStateReligion() == eReligion)
 		{
-			iVotes *= (100 + GC.getVoteInfo(eVote).getStateReligionVotePercent());
+			iVotes *= (100 + GC.getVoteInfo(eVote).getThreshold(VOTE_THRESHOLD_STATE_RELIGION_PERCENT));
 			iVotes /= 100;
 		}
 	}
@@ -23353,7 +23341,7 @@ bool CvPlayer::canDoResolution(VoteSourceTypes eVoteSource, const VoteSelectionS
 		}
 	}
 
-	if (GC.getVoteInfo(kData.eVote).isOpenBorders())
+	if (GC.getVoteInfo(kData.eVote).effectApplies(VOTE_EFFECT_OPEN_BORDERS))
 	{
 		for (int iTeam2 = 0; iTeam2 < MAX_PC_TEAMS; ++iTeam2)
 		{
@@ -23371,7 +23359,7 @@ bool CvPlayer::canDoResolution(VoteSourceTypes eVoteSource, const VoteSelectionS
 			}
 		}
 	}
-	else if (GC.getVoteInfo(kData.eVote).isDefensivePact())
+	else if (GC.getVoteInfo(kData.eVote).effectApplies(VOTE_EFFECT_DEFENSIVE_PACT))
 	{
 		for (int iTeam2 = 0; iTeam2 < MAX_PC_TEAMS; ++iTeam2)
 		{
@@ -23382,7 +23370,7 @@ bool CvPlayer::canDoResolution(VoteSourceTypes eVoteSource, const VoteSelectionS
 			}
 		}
 	}
-	else if (GC.getVoteInfo(kData.eVote).isForcePeace())
+	else if (GC.getVoteInfo(kData.eVote).effectApplies(VOTE_EFFECT_FORCE_PEACE))
 	{
 		FAssert(NO_PLAYER != kData.ePlayer);
 		CvPlayer& kPlayer = GET_PLAYER(kData.ePlayer);
@@ -23411,7 +23399,7 @@ bool CvPlayer::canDoResolution(VoteSourceTypes eVoteSource, const VoteSelectionS
 			}
 		}
 	}
-	else if (GC.getVoteInfo(kData.eVote).isForceWar())
+	else if (GC.getVoteInfo(kData.eVote).effectApplies(VOTE_EFFECT_FORCE_WAR))
 	{
 		FAssert(NO_PLAYER != kData.ePlayer);
 		CvPlayer& kPlayer = GET_PLAYER(kData.ePlayer);
@@ -23437,7 +23425,7 @@ bool CvPlayer::canDoResolution(VoteSourceTypes eVoteSource, const VoteSelectionS
 			}
 		}
 	}
-	else if (GC.getVoteInfo(kData.eVote).isForceNoTrade())
+	else if (GC.getVoteInfo(kData.eVote).effectApplies(VOTE_EFFECT_FORCE_NO_TRADE))
 	{
 		FAssert(NO_PLAYER != kData.ePlayer);
 		CvPlayer& kPlayer = GET_PLAYER(kData.ePlayer);
@@ -23448,7 +23436,7 @@ bool CvPlayer::canDoResolution(VoteSourceTypes eVoteSource, const VoteSelectionS
 		}
 
 	}
-	else if (GC.getVoteInfo(kData.eVote).isAssignCity())
+	else if (GC.getVoteInfo(kData.eVote).effectApplies(VOTE_EFFECT_ASSIGN_CITY))
 	{
 		if (GET_TEAM(GET_PLAYER(kData.eOtherPlayer).getTeam()).isVassal(GET_PLAYER(kData.ePlayer).getTeam()))
 		{
@@ -23467,7 +23455,7 @@ bool CvPlayer::canDefyResolution(VoteSourceTypes eVoteSource, const VoteSelectio
 		return false;
 	}
 
-	if (GC.getVoteInfo(kData.eVote).isOpenBorders())
+	if (GC.getVoteInfo(kData.eVote).effectApplies(VOTE_EFFECT_OPEN_BORDERS))
 	{
 		for (int iTeam = 0; iTeam < MAX_PC_TEAMS; ++iTeam)
 		{
@@ -23484,7 +23472,7 @@ bool CvPlayer::canDefyResolution(VoteSourceTypes eVoteSource, const VoteSelectio
 			}
 		}
 	}
-	else if (GC.getVoteInfo(kData.eVote).isDefensivePact())
+	else if (GC.getVoteInfo(kData.eVote).effectApplies(VOTE_EFFECT_DEFENSIVE_PACT))
 	{
 		for (int iTeam = 0; iTeam < MAX_PC_TEAMS; ++iTeam)
 		{
@@ -23501,11 +23489,11 @@ bool CvPlayer::canDefyResolution(VoteSourceTypes eVoteSource, const VoteSelectio
 			}
 		}
 	}
-	else if (GC.getVoteInfo(kData.eVote).isForceNoTrade())
+	else if (GC.getVoteInfo(kData.eVote).effectApplies(VOTE_EFFECT_FORCE_NO_TRADE))
 	{
 		return true;
 	}
-	else if (GC.getVoteInfo(kData.eVote).isForceWar())
+	else if (GC.getVoteInfo(kData.eVote).effectApplies(VOTE_EFFECT_FORCE_WAR))
 	{
 		if (!::atWar(getTeam(), GET_PLAYER(kData.ePlayer).getTeam()))
 		{
@@ -23524,7 +23512,7 @@ bool CvPlayer::canDefyResolution(VoteSourceTypes eVoteSource, const VoteSelectio
 /************************************************************************************************/
 		}
 	}
-	else if (GC.getVoteInfo(kData.eVote).isForcePeace())
+	else if (GC.getVoteInfo(kData.eVote).effectApplies(VOTE_EFFECT_FORCE_PEACE))
 	{
 		if (GET_PLAYER(kData.ePlayer).getTeam() == getTeam())
 		{
@@ -23536,7 +23524,7 @@ bool CvPlayer::canDefyResolution(VoteSourceTypes eVoteSource, const VoteSelectio
 			return true;
 		}
 	}
-	else if (GC.getVoteInfo(kData.eVote).isAssignCity())
+	else if (GC.getVoteInfo(kData.eVote).effectApplies(VOTE_EFFECT_ASSIGN_CITY))
 	{
 		if (kData.ePlayer == getID())
 		{

@@ -7450,7 +7450,7 @@ PlayerVoteTypes CvPlayerAI::AI_diploVote(const VoteSelectionSubData& kVoteData, 
 		}
 		int iBestValue;
 
-		if (GC.getVoteInfo(eVote).isVictory())
+		if ((GC.getVoteInfo(eVote).getRole() == VOTE_ROLE_VICTORY))
 		{
 			iBestValue = 7;
 		}
@@ -7500,7 +7500,7 @@ PlayerVoteTypes CvPlayerAI::AI_diploVote(const VoteSelectionSubData& kVoteData, 
 	{
 		const CivicTypes eCivic = (CivicTypes)iI;
 
-		if (GC.getVoteInfo(eVote).isForceCivic(iI) && !isCivic(eCivic))
+		if (GC.getVoteInfo(eVote).forcesCivic(iI) && !isCivic(eCivic))
 		{
 			const CivicTypes eBestCivic = AI_bestCivic((CivicOptionTypes)GC.getCivicInfo(eCivic).getCivicOption());
 
@@ -7544,7 +7544,7 @@ PlayerVoteTypes CvPlayerAI::AI_diploVote(const VoteSelectionSubData& kVoteData, 
 		}
 	}
 
-	if (bValid && GC.getVoteInfo(eVote).isNoNukes())
+	if (bValid && GC.getVoteInfo(eVote).effectApplies(VOTE_EFFECT_NO_NUKES))
 	{
 		int iVoteBanThreshold = GET_TEAM(getTeam()).getNukeInterception() / 3;
 		iVoteBanThreshold += GC.getLeaderHeadInfo(getPersonalityType()).getBuildUnitProb();
@@ -7599,7 +7599,7 @@ PlayerVoteTypes CvPlayerAI::AI_diploVote(const VoteSelectionSubData& kVoteData, 
 		}
 	}
 
-	if (bValid && GC.getVoteInfo(eVote).isFreeTrade())
+	if (bValid && GC.getVoteInfo(eVote).effectApplies(VOTE_EFFECT_FREE_TRADE))
 	{
 		if (bFriendlyToSecretary)
 		{
@@ -7633,7 +7633,7 @@ PlayerVoteTypes CvPlayerAI::AI_diploVote(const VoteSelectionSubData& kVoteData, 
 
 	if (bValid)
 	{
-		if (GC.getVoteInfo(eVote).isOpenBorders())
+		if (GC.getVoteInfo(eVote).effectApplies(VOTE_EFFECT_OPEN_BORDERS))
 		{
 			if (bFriendlyToSecretary)
 			{
@@ -7651,7 +7651,7 @@ PlayerVoteTypes CvPlayerAI::AI_diploVote(const VoteSelectionSubData& kVoteData, 
 				}
 			}
 		}
-		else if (GC.getVoteInfo(eVote).isDefensivePact())
+		else if (GC.getVoteInfo(eVote).effectApplies(VOTE_EFFECT_DEFENSIVE_PACT))
 		{
 			if (bFriendlyToSecretary)
 			{
@@ -7670,7 +7670,7 @@ PlayerVoteTypes CvPlayerAI::AI_diploVote(const VoteSelectionSubData& kVoteData, 
 				}
 			}
 		}
-		else if (GC.getVoteInfo(eVote).isForcePeace())
+		else if (GC.getVoteInfo(eVote).effectApplies(VOTE_EFFECT_FORCE_PEACE))
 		{
 			FAssert(kVoteData.ePlayer != NO_PLAYER);
 			TeamTypes ePeaceTeam = GET_PLAYER(kVoteData.ePlayer).getTeam();
@@ -7859,7 +7859,7 @@ PlayerVoteTypes CvPlayerAI::AI_diploVote(const VoteSelectionSubData& kVoteData, 
 				}
 			}
 		}
-		else if (GC.getVoteInfo(eVote).isForceNoTrade())
+		else if (GC.getVoteInfo(eVote).effectApplies(VOTE_EFFECT_FORCE_NO_TRADE))
 		{
 			FAssert(kVoteData.ePlayer != NO_PLAYER);
 			TeamTypes eEmbargoTeam = GET_PLAYER(kVoteData.ePlayer).getTeam();
@@ -7893,7 +7893,7 @@ PlayerVoteTypes CvPlayerAI::AI_diploVote(const VoteSelectionSubData& kVoteData, 
 				bValid = (GET_TEAM(getTeam()).AI_getAttitude(eEmbargoTeam) < ATTITUDE_CAUTIOUS);
 			}
 		}
-		else if (GC.getVoteInfo(eVote).isForceWar())
+		else if (GC.getVoteInfo(eVote).effectApplies(VOTE_EFFECT_FORCE_WAR))
 		{
 			FAssert(kVoteData.ePlayer != NO_PLAYER);
 			TeamTypes eWarTeam = GET_PLAYER(kVoteData.ePlayer).getTeam();
@@ -7985,7 +7985,7 @@ PlayerVoteTypes CvPlayerAI::AI_diploVote(const VoteSelectionSubData& kVoteData, 
 				*/
 			}
 		}
-		else if (GC.getVoteInfo(eVote).isAssignCity())
+		else if (GC.getVoteInfo(eVote).effectApplies(VOTE_EFFECT_ASSIGN_CITY))
 		{
 			bValid = false;
 

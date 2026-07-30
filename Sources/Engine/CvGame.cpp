@@ -2966,7 +2966,7 @@ TeamTypes CvGame::findHighestVoteTeam(const VoteTriggeredData& kData) const
 
 int CvGame::getVoteRequired(VoteTypes eVote, VoteSourceTypes eVoteSource) const
 {
-	return countPossibleVote(eVote, eVoteSource) * GC.getVoteInfo(eVote).getPopulationThreshold() / 100;
+	return countPossibleVote(eVote, eVoteSource) * GC.getVoteInfo(eVote).getThreshold(VOTE_THRESHOLD_POPULATION) / 100;
 }
 
 
@@ -2998,7 +2998,7 @@ TeamTypes CvGame::getSecretaryGeneral(VoteSourceTypes eVoteSource) const
 	{
 		for (int iI = 0; iI < GC.getNumVoteInfos(); iI++)
 		{
-			if (GC.getVoteInfo((VoteTypes)iI).isVoteSourceType(eVoteSource)
+			if (GC.getVoteInfo((VoteTypes)iI).hasVoteSource(eVoteSource)
 			&&  GC.getVoteInfo((VoteTypes)iI).getRole() == VOTE_ROLE_SECRETARY_GENERAL
 			&& isVotePassed((VoteTypes)iI))
 			{
@@ -3014,7 +3014,7 @@ bool CvGame::canHaveSecretaryGeneral(VoteSourceTypes eVoteSource) const
 	PROFILE_EXTRA_FUNC();
 	for (int iI = 0; iI < GC.getNumVoteInfos(); iI++)
 	{
-		if (GC.getVoteInfo((VoteTypes)iI).isVoteSourceType(eVoteSource) && GC.getVoteInfo((VoteTypes)iI).getRole() == VOTE_ROLE_SECRETARY_GENERAL)
+		if (GC.getVoteInfo((VoteTypes)iI).hasVoteSource(eVoteSource) && GC.getVoteInfo((VoteTypes)iI).getRole() == VOTE_ROLE_SECRETARY_GENERAL)
 		{
 			return true;
 		}
@@ -3029,7 +3029,7 @@ void CvGame::clearSecretaryGeneral(VoteSourceTypes eVoteSource)
 	{
 		const CvVoteInfo& kVote = GC.getVoteInfo((VoteTypes)j);
 
-		if (kVote.isVoteSourceType(eVoteSource) && kVote.getRole() == VOTE_ROLE_SECRETARY_GENERAL)
+		if (kVote.hasVoteSource(eVoteSource) && kVote.getRole() == VOTE_ROLE_SECRETARY_GENERAL)
 		{
 			VoteTriggeredData kData;
 			kData.eVoteSource = eVoteSource;
@@ -4261,12 +4261,12 @@ bool CvGame::isValidVoteSelection(VoteSourceTypes eVoteSource, const VoteSelecti
 			++iNumVoters;
 		}
 	}
-	if (iNumVoters  < GC.getVoteInfo(kData.eVote).getMinVoters())
+	if (iNumVoters  < GC.getVoteInfo(kData.eVote).getThreshold(VOTE_THRESHOLD_MIN_VOTERS))
 	{
 		return false;
 	}
 
-	if (GC.getVoteInfo(kData.eVote).isOpenBorders())
+	if (GC.getVoteInfo(kData.eVote).effectApplies(VOTE_EFFECT_OPEN_BORDERS))
 	{
 		bool bOpenWithEveryone = true;
 		for (int iTeam1 = 0; iTeam1 < MAX_PC_TEAMS; ++iTeam1)
@@ -4289,7 +4289,7 @@ bool CvGame::isValidVoteSelection(VoteSourceTypes eVoteSource, const VoteSelecti
 		}
 		if (bOpenWithEveryone) return false;
 	}
-	else if (GC.getVoteInfo(kData.eVote).isDefensivePact())
+	else if (GC.getVoteInfo(kData.eVote).effectApplies(VOTE_EFFECT_DEFENSIVE_PACT))
 	{
 		bool bPactWithEveryone = true;
 		for (int iTeam1 = 0; iTeam1 < MAX_PC_TEAMS; ++iTeam1)
@@ -4315,7 +4315,7 @@ bool CvGame::isValidVoteSelection(VoteSourceTypes eVoteSource, const VoteSelecti
 			return false;
 		}
 	}
-	else if (GC.getVoteInfo(kData.eVote).isForcePeace())
+	else if (GC.getVoteInfo(kData.eVote).effectApplies(VOTE_EFFECT_FORCE_PEACE))
 	{
 		const CvPlayer& kPlayer = GET_PLAYER(kData.ePlayer);
 
@@ -4346,7 +4346,7 @@ bool CvGame::isValidVoteSelection(VoteSourceTypes eVoteSource, const VoteSelecti
 			return false;
 		}
 	}
-	else if (GC.getVoteInfo(kData.eVote).isForceNoTrade())
+	else if (GC.getVoteInfo(kData.eVote).effectApplies(VOTE_EFFECT_FORCE_NO_TRADE))
 	{
 		if (GET_PLAYER(kData.ePlayer).isFullMember(eVoteSource))
 		{
@@ -4370,7 +4370,7 @@ bool CvGame::isValidVoteSelection(VoteSourceTypes eVoteSource, const VoteSelecti
 			return false;
 		}
 	}
-	else if (GC.getVoteInfo(kData.eVote).isForceWar())
+	else if (GC.getVoteInfo(kData.eVote).effectApplies(VOTE_EFFECT_FORCE_WAR))
 	{
 		const CvPlayer& kPlayer = GET_PLAYER(kData.ePlayer);
 		const CvTeam& kTeam = GET_TEAM(kPlayer.getTeam());
@@ -4426,7 +4426,7 @@ bool CvGame::isValidVoteSelection(VoteSourceTypes eVoteSource, const VoteSelecti
 			}
 		}
 	}
-	else if (GC.getVoteInfo(kData.eVote).isAssignCity())
+	else if (GC.getVoteInfo(kData.eVote).effectApplies(VOTE_EFFECT_ASSIGN_CITY))
 	{
 		const CvPlayer& kPlayer = GET_PLAYER(kData.ePlayer);
 		if (kPlayer.isFullMember(eVoteSource) || !kPlayer.isVotingMember(eVoteSource))
@@ -5793,7 +5793,7 @@ void CvGame::castVote(PlayerTypes eOwnerIndex, int iVoteId, PlayerVoteTypes ePla
 	const VoteTriggeredData* pTriggeredData = getVoteTriggered(iVoteId);
 	if (NULL != pTriggeredData)
 	{
-		if (GC.getVoteInfo(pTriggeredData->kVoteOption.eVote).isAssignCity())
+		if (GC.getVoteInfo(pTriggeredData->kVoteOption.eVote).effectApplies(VOTE_EFFECT_ASSIGN_CITY))
 		{
 			FAssert(pTriggeredData->kVoteOption.ePlayer != NO_PLAYER);
 			CvPlayer& kCityPlayer = GET_PLAYER(pTriggeredData->kVoteOption.ePlayer);
@@ -7986,19 +7986,19 @@ void CvGame::processVote(const VoteTriggeredData& kData, int iChange)
 	const CvVoteInfo& kVote = GC.getVoteInfo(kData.kVoteOption.eVote);
 
 	changeTradeRoutes(kVote.getTradeRoutes() * iChange);
-	changeFreeTradeCount(kVote.isFreeTrade() ? iChange : 0);
-	changeNoNukesCount(kVote.isNoNukes() ? iChange : 0);
+	changeFreeTradeCount(kVote.effectApplies(VOTE_EFFECT_FREE_TRADE) ? iChange : 0);
+	changeNoNukesCount(kVote.effectApplies(VOTE_EFFECT_NO_NUKES) ? iChange : 0);
 
 	for (int iI = 0; iI < GC.getNumCivicInfos(); iI++)
 	{
-		changeForceCivicCount((CivicTypes)iI, kVote.isForceCivic(iI) ? iChange : 0);
+		changeForceCivicCount((CivicTypes)iI, kVote.forcesCivic(iI) ? iChange : 0);
 	}
 
 	if (iChange <= 0)
 	{
 		return;
 	}
-	if (kVote.isOpenBorders())
+	if (kVote.effectApplies(VOTE_EFFECT_OPEN_BORDERS))
 	{
 		for (int i1 = 0; i1 < MAX_PC_PLAYERS; ++i1)
 		{
@@ -8016,7 +8016,7 @@ void CvGame::processVote(const VoteTriggeredData& kData, int iChange)
 		}
 		setVoteOutcome(kData, NO_PLAYER_VOTE);
 	}
-	else if (kVote.isDefensivePact())
+	else if (kVote.effectApplies(VOTE_EFFECT_DEFENSIVE_PACT))
 	{
 		for (int i1 = 0; i1 < MAX_PC_PLAYERS; ++i1)
 		{
@@ -8034,7 +8034,7 @@ void CvGame::processVote(const VoteTriggeredData& kData, int iChange)
 		}
 		setVoteOutcome(kData, NO_PLAYER_VOTE);
 	}
-	else if (kVote.isForcePeace())
+	else if (kVote.effectApplies(VOTE_EFFECT_FORCE_PEACE))
 	{
 		FAssert(NO_PLAYER != kData.kVoteOption.ePlayer);
 		CvPlayer& kPlayer = GET_PLAYER(kData.kVoteOption.ePlayer);
@@ -8050,7 +8050,7 @@ void CvGame::processVote(const VoteTriggeredData& kData, int iChange)
 		}
 		setVoteOutcome(kData, NO_PLAYER_VOTE);
 	}
-	else if (kVote.isForceNoTrade())
+	else if (kVote.effectApplies(VOTE_EFFECT_FORCE_NO_TRADE))
 	{
 		FAssert(NO_PLAYER != kData.kVoteOption.ePlayer);
 		CvPlayer& kPlayer = GET_PLAYER(kData.kVoteOption.ePlayer);
@@ -8068,7 +8068,7 @@ void CvGame::processVote(const VoteTriggeredData& kData, int iChange)
 
 		setVoteOutcome(kData, NO_PLAYER_VOTE);
 	}
-	else if (kVote.isForceWar())
+	else if (kVote.effectApplies(VOTE_EFFECT_FORCE_WAR))
 	{
 		FAssert(NO_PLAYER != kData.kVoteOption.ePlayer);
 		CvPlayer& kPlayer = GET_PLAYER(kData.kVoteOption.ePlayer);
@@ -8085,7 +8085,7 @@ void CvGame::processVote(const VoteTriggeredData& kData, int iChange)
 
 		setVoteOutcome(kData, NO_PLAYER_VOTE);
 	}
-	else if (kVote.isAssignCity())
+	else if (kVote.effectApplies(VOTE_EFFECT_ASSIGN_CITY))
 	{
 		FAssert(NO_PLAYER != kData.kVoteOption.ePlayer);
 		CvCity* pCity = GET_PLAYER(kData.kVoteOption.ePlayer).getCity(kData.kVoteOption.iCityId);
@@ -9382,7 +9382,7 @@ VoteSelectionData* CvGame::addVoteSelection(VoteSourceTypes eVoteSource)
 
 		for (int iI = 0; iI < GC.getNumVoteInfos(); iI++)
 		{
-			if (GC.getVoteInfo((VoteTypes)iI).isVoteSourceType(eVoteSource))
+			if (GC.getVoteInfo((VoteTypes)iI).hasVoteSource(eVoteSource))
 			{
 				if (isChooseElection((VoteTypes)iI))
 				{
@@ -9392,7 +9392,7 @@ VoteSelectionData* CvGame::addVoteSelection(VoteSourceTypes eVoteSource)
 					kData.ePlayer = NO_PLAYER;
 					kData.eOtherPlayer = NO_PLAYER;
 
-					if (GC.getVoteInfo(kData.eVote).isOpenBorders())
+					if (GC.getVoteInfo(kData.eVote).effectApplies(VOTE_EFFECT_OPEN_BORDERS))
 					{
 						if (isValidVoteSelection(eVoteSource, kData))
 						{
@@ -9400,7 +9400,7 @@ VoteSelectionData* CvGame::addVoteSelection(VoteSourceTypes eVoteSource)
 							pData->aVoteOptions.push_back(kData);
 						}
 					}
-					else if (GC.getVoteInfo(kData.eVote).isDefensivePact())
+					else if (GC.getVoteInfo(kData.eVote).effectApplies(VOTE_EFFECT_DEFENSIVE_PACT))
 					{
 						if (isValidVoteSelection(eVoteSource, kData))
 						{
@@ -9408,7 +9408,7 @@ VoteSelectionData* CvGame::addVoteSelection(VoteSourceTypes eVoteSource)
 							pData->aVoteOptions.push_back(kData);
 						}
 					}
-					else if (GC.getVoteInfo(kData.eVote).isForcePeace())
+					else if (GC.getVoteInfo(kData.eVote).effectApplies(VOTE_EFFECT_FORCE_PEACE))
 					{
 						for (int iTeam1 = 0; iTeam1 < MAX_PC_TEAMS; ++iTeam1)
 						{
@@ -9426,7 +9426,7 @@ VoteSelectionData* CvGame::addVoteSelection(VoteSourceTypes eVoteSource)
 							}
 						}
 					}
-					else if (GC.getVoteInfo(kData.eVote).isForceNoTrade())
+					else if (GC.getVoteInfo(kData.eVote).effectApplies(VOTE_EFFECT_FORCE_NO_TRADE))
 					{
 						for (int iTeam1 = 0; iTeam1 < MAX_PC_TEAMS; ++iTeam1)
 						{
@@ -9444,7 +9444,7 @@ VoteSelectionData* CvGame::addVoteSelection(VoteSourceTypes eVoteSource)
 							}
 						}
 					}
-					else if (GC.getVoteInfo(kData.eVote).isForceWar())
+					else if (GC.getVoteInfo(kData.eVote).effectApplies(VOTE_EFFECT_FORCE_WAR))
 					{
 						for (int iTeam1 = 0; iTeam1 < MAX_PC_TEAMS; ++iTeam1)
 						{
@@ -9462,7 +9462,7 @@ VoteSelectionData* CvGame::addVoteSelection(VoteSourceTypes eVoteSource)
 							}
 						}
 					}
-					else if (GC.getVoteInfo(kData.eVote).isAssignCity())
+					else if (GC.getVoteInfo(kData.eVote).effectApplies(VOTE_EFFECT_ASSIGN_CITY))
 					{
 						for (int iPlayer1 = 0; iPlayer1 < MAX_PC_PLAYERS; ++iPlayer1)
 						{
@@ -9831,7 +9831,7 @@ void CvGame::doVoteSelection()
 
 					for (int iJ = 0; iJ < GC.getNumVoteInfos(); iJ++)
 					{
-						if (GC.getVoteInfo((VoteTypes)iJ).getRole() == VOTE_ROLE_SECRETARY_GENERAL && GC.getVoteInfo((VoteTypes)iJ).isVoteSourceType(iI))
+						if (GC.getVoteInfo((VoteTypes)iJ).getRole() == VOTE_ROLE_SECRETARY_GENERAL && GC.getVoteInfo((VoteTypes)iJ).hasVoteSource(iI))
 						{
 							VoteSelectionSubData kOptionData;
 							kOptionData.iCityId = -1;
