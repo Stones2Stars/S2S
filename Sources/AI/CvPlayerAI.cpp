@@ -10488,7 +10488,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 
 	const CvUnitInfo& kUnitInfo = GC.getUnitInfo(eUnit);
 
-	if (kUnitInfo.getDomainType() != AI_unitAIDomainType(eUnitAI) && eUnitAI != UNITAI_ICBM)
+	if (!CvTagReads::isDomain(kUnitInfo.getTags(), AI_unitAIDomainType(eUnitAI)) && eUnitAI != UNITAI_ICBM)
 	{
 		return 0;
 	}
@@ -11118,7 +11118,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 					for (int iJ = 0; iJ < GC.getNumUnitInfos(); iJ++)
 					{
 						UnitTypes eLoopUnit = (UnitTypes)iJ;
-						if (GC.getUnitInfo(eLoopUnit).getDomainType() == DOMAIN_LAND)
+						if (CvTagReads::isDomain(GC.getUnitInfo(eLoopUnit).getTags(), DOMAIN_LAND))
 						{
 							int iUnitCount = getUnitCount(eLoopUnit);
 							int iBombardRate = GC.getUnitInfo(eLoopUnit).getBombardRate();
@@ -22401,7 +22401,7 @@ int CvPlayerAI::AI_getStrategyHash() const
 				}
 			}
 			// Mobile anti-air and artillery flags only meant for land units
-			if (unit.getDomainType() == DOMAIN_LAND && iMoves > 1)
+			if (CvTagReads::isDomain(unit.getTags(), DOMAIN_LAND) && iMoves > 1)
 			{
 				if (unit.getInterceptionProbability() > 25)
 				{
@@ -24904,7 +24904,7 @@ int CvPlayerAI::AI_calculateTotalBombard(DomainTypes eDomain) const
 	{
 		const CvUnitInfo& kUnit = GC.getUnitInfo((UnitTypes)iI);
 
-		if (kUnit.getDomainType() == eDomain)
+		if (CvTagReads::isDomain(kUnit.getTags(), eDomain))
 		{
 			const int iBombRate = kUnit.getBombRate();
 			// #410: breakdown is not bombard -- war planning must not count phantom
@@ -25064,8 +25064,16 @@ void CvPlayerAI::AI_doEnemyUnitData()
 				aiUnitCounts[iI] *= 3 - iEraDiff;
 				aiUnitCounts[iI] /= 3;
 			}
-			FAssert(aiDomainSums[GC.getUnitInfo((UnitTypes)iI).getDomainType()] > 0);
-			m_aiUnitWeights[iI] += (5000 * aiUnitCounts[iI]) / std::max(1, aiDomainSums[GC.getUnitInfo((UnitTypes)iI).getDomainType()]);
+			// The domain as a VALUE, to index the per-domain sums accumulated above. ⚠ Guarded rather than
+			// indexed blind: a unit whose tags block has not been filled answers NO_DOMAIN, and subscripting
+			// with that would read off the front of the array -- the honest failure is to skip it.
+			const DomainTypes eUnitDomain = CvTagReads::domainOf(GC.getUnitInfo((UnitTypes)iI).getTags());
+
+			if (eUnitDomain != NO_DOMAIN)
+			{
+				FAssert(aiDomainSums[eUnitDomain] > 0);
+				m_aiUnitWeights[iI] += (5000 * aiUnitCounts[iI]) / std::max(1, aiDomainSums[eUnitDomain]);
+			}
 		}
 	}
 
@@ -25110,15 +25118,8 @@ int CvPlayerAI::AI_calculateUnitAIViability(UnitAITypes eUnitAI, DomainTypes eDo
 		const CvUnitInfo& kUnitInfo = GC.getUnitInfo((UnitTypes)iI);
 
 		// The DOMAIN is a tag now ([tags.md]: DOMAIN_* stays the engine enum movement and stacking are wired to,
-		// while the classification view answers "what IS this unit"). ⚑ If a second consumer needs this mapping,
-		// it belongs as one composition on CvTagReads rather than a copy here.
-		const CvClassificationBlock* pUnitTags = kUnitInfo.getTags();
-		const bool bDomainMatches =
-			   (eDomain == DOMAIN_SEA  && CvTagReads::seaUnit(pUnitTags))
-			|| (eDomain == DOMAIN_LAND && CvTagReads::landUnit(pUnitTags))
-			|| (eDomain == DOMAIN_AIR  && CvTagReads::airUnit(pUnitTags));
-
-		if (bDomainMatches)
+		// while the classification view answers "what IS this unit"). ⚑
+		if (CvTagReads::isDomain(kUnitInfo.getTags(), eDomain))
 		{
 			// "Do we hold what unlocks it" is the enabler's membership verdict, not a prereq-tech lookup: a unit
 			// is in CAN GET exactly when something held enables it, which is the question the old isHasTech

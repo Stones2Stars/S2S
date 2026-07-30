@@ -26,3 +26,22 @@ TAG_READ(landUnit, "landUnit")
 TAG_READ(airUnit,  "airUnit")
 
 #undef TAG_READ
+
+bool CvTagReads::isDomain(const CvClassificationBlock* tags, DomainTypes eDomain)
+{
+	switch (eDomain)
+	{
+	case DOMAIN_SEA:  return seaUnit(tags);
+	case DOMAIN_LAND: return landUnit(tags);
+	case DOMAIN_AIR:  return airUnit(tags);
+	default:          return false;   // IMMOBILE and any future domain carry no tag of their own yet
+	}
+}
+
+DomainTypes CvTagReads::domainOf(const CvClassificationBlock* tags)
+{
+	if (landUnit(tags)) return DOMAIN_LAND;
+	if (seaUnit(tags))  return DOMAIN_SEA;
+	if (airUnit(tags))  return DOMAIN_AIR;
+	return NO_DOMAIN;
+}
