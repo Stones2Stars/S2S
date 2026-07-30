@@ -451,9 +451,13 @@ public:
     maintenance — precisely the cross-scope receiver shape above — so it is a SLOT in the empire's own package
     cache, never a hand-named cache beside it ([DEC-uniform-cache-shape](decisions.md#dec-uniform-cache-shape):
     a named field cannot be addressed by a derived mask, so it forces its own bespoke invalidation path).
-    ⚠ Its per-city quantity is the one a package cannot answer alone: a city's realized maintenance folds the
-    four ENGINE components (distance / numCities / colony / corporation) and declines wholesale under
-    WLTKD/disorder ([economy.md](../reference/economy.md)). So the Σ asks the CITY for its realized value —
+    ⚠ Its per-city quantity is the one a package cannot answer alone: a city's realized maintenance composes the
+    three component KINDS (distance / numCities / colony) each against its own modifiers, takes the `amount`
+    stack over the total, and declines wholesale under WLTKD/disorder ([economy.md](../reference/economy.md)).
+    ⛔ **`MAINTENANCE_CORPORATION` is NOT one of them** — corporate maintenance is its own pre-inflation expense
+    beside total maintenance, so the city total SKIPS that kind. Its deposit is a city-scope FLAT and therefore
+    sits in the city's package like any other: a read that folded every maintenance kind would charge the same
+    corporate gold twice in one expense total, plausibly and silently. So the Σ asks the CITY for its realized value —
     which is what "the Σ of its members' REALIZED values" already says — and the oracle recomputes both halves
     from source rather than reading either off the stored surface.
     ⚠ **A receiver read is therefore NOT interchangeable with a rolled-legs read on the same channel.** The

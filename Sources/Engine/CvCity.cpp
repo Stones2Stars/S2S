@@ -5909,13 +5909,22 @@ int64_t CvCity::getMaintenanceTimes100() const
 	// already was -- a sum to an endpoint.
 	// ⚖ TWO TIERS, and the order is the mechanic: each COMPONENT kind resolves against its OWN modifiers (the
 	// handicaps author `maintenance.empire.<kind>.percent`, so a difficulty setting scales the distance leg
-	// without touching the corporation one), and the TOTAL then takes the empire-wide `amount` stack. Flattening
+	// without touching the city-count one), and the TOTAL then takes the empire-wide `amount` stack. Flattening
 	// the two would apply every kind's modifier to every other kind's cost.
 	int64_t iBase = 0;
 	for (int iKind = 0; iKind < (int)NUM_MAINTENANCE_KINDS; ++iKind)
 	{
 		// AMOUNT is the total's own stack, applied below.
 		if (iKind == (int)MAINTENANCE_AMOUNT)
+		{
+			continue;
+		}
+		// ⛔ CORPORATION IS NOT A CITY-MAINTENANCE COMPONENT -- it is its OWN pre-inflation expense
+		// (`calcCorporateMaintenance` -> `CvPlayer::getCorporateMaintenance`, one of the six additive components
+		// `calculatePreInflatedCosts` sums, [economy.md]). Its authored deposit is a CITY-scope flat, so it lands
+		// in this package like any other and reads here perfectly plausibly -- summing it would charge the same
+		// corporate gold TWICE in one expense total, silently.
+		if (iKind == (int)MAINTENANCE_CORPORATION)
 		{
 			continue;
 		}
@@ -6414,11 +6423,6 @@ int CvCity::getBuildingHappiness(BuildingTypes eBuilding) const
 		+
 		GET_PLAYER(getOwner()).getExtraBuildingHappiness(eBuilding)
 	);
-
-	if (info.getReligionType() != NO_RELIGION && info.getReligionType() == GET_PLAYER(getOwner()).getStateReligion())
-	{
-		iHappiness += info.getStateReligionHappiness();
-	}
 
 	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 	{

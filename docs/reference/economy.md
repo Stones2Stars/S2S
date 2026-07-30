@@ -22,6 +22,12 @@ supply + corporate maintenance.
   every kind's modifier to every other kind's cost.
   ⚑ **The rebel discount is ONE authored entry** (`maintenance.empire.percent −50, enabled: "IS_REBEL"`),
   replacing the four separate hardcoded halvings.
+  ⛔ **THE COMPONENTS ARE THOSE THREE — `MAINTENANCE_CORPORATION` IS NOT A CITY COMPONENT.** Corporate
+  maintenance is its own pre-inflation expense (the sixth component above, `calcCorporateMaintenance`), so the
+  city total SKIPS that kind. ⚠ The trap is that its authored deposit is a **city-scope FLAT** (the corp's own
+  per-city gold amount) and therefore lands in the city's package exactly like the other three — so a read that
+  loops every maintenance kind picks it up, looks entirely reasonable, and charges the same corporate gold
+  TWICE in one expense total. Skip the kind explicitly; do not infer the component set from the enum.
   ⚠ **This EXPRESSES THE INTENT, it does not reproduce the legacy curve (owner ruling).** Size-scaling went
   multiplicative → additive; the colony quadratic and the corp handicap square went linear; the 2,000,000 cap
   and the vassal-cities term are gone. A behaviour change is a fact to state and weigh
