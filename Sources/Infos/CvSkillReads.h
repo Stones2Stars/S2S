@@ -30,38 +30,53 @@ class CvSkillReads
 public:
 	static bool alwaysHeal(const CvClassificationBlock* skills);
 	static bool alwaysHostile(const CvClassificationBlock* skills);
+	static bool amphib(const CvClassificationBlock* skills);
+	static bool attackOnlyCities(const CvClassificationBlock* skills);
+	static bool blitz(const CvClassificationBlock* skills);
+	static bool canLeadThroughPeaks(const CvClassificationBlock* skills);
+	static bool canPassPeaks(const CvClassificationBlock* skills);
 	static bool celebrity(const CvClassificationBlock* skills);
 	static bool collateralImmune(const CvClassificationBlock* skills);
 	static bool dcmFighterEngage(const CvClassificationBlock* skills);
 	static bool defenseOnly(const CvClassificationBlock* skills);
 	static bool defensiveVictoryMove(const CvClassificationBlock* skills);
 	static bool destroy(const CvClassificationBlock* skills);
+	static bool enemyRoute(const CvClassificationBlock* skills);
+	static bool fliesToMove(const CvClassificationBlock* skills);
 	static bool food(const CvClassificationBlock* skills);
 	static bool found(const CvClassificationBlock* skills);
 	static bool freeDrop(const CvClassificationBlock* skills);
 	static bool greatGeneral(const CvClassificationBlock* skills);
 	static bool hiddenNationality(const CvClassificationBlock* skills);
+	static bool hillsDoubleMove(const CvClassificationBlock* skills);
 	static bool ignoreBuildingDefense(const CvClassificationBlock* skills);
+	static bool ignoreNoEntryLevel(const CvClassificationBlock* skills);
+	static bool ignoreZoneOfControl(const CvClassificationBlock* skills);
 	static bool immuneToFirstStrikes(const CvClassificationBlock* skills);
 	static bool inquisitor(const CvClassificationBlock* skills);
 	static bool noNonOwnedCityEntry(const CvClassificationBlock* skills);
 	static bool noNonTypeProdMods(const CvClassificationBlock* skills);
+	static bool noSelfHeal(const CvClassificationBlock* skills);
 	static bool offensiveVictoryMove(const CvClassificationBlock* skills);
 	static bool oneUp(const CvClassificationBlock* skills);
 	static bool onlyDefensive(const CvClassificationBlock* skills);
+	static bool onslaught(const CvClassificationBlock* skills);
 	static bool pillage(const CvClassificationBlock* skills);
 	static bool pillageEspionage(const CvClassificationBlock* skills);
 	static bool pillageMarauder(const CvClassificationBlock* skills);
 	static bool pillageOnMove(const CvClassificationBlock* skills);
 	static bool pillageOnVictory(const CvClassificationBlock* skills);
 	static bool pillageResearch(const CvClassificationBlock* skills);
+	static bool river(const CvClassificationBlock* skills);
 	static bool sabotage(const CvClassificationBlock* skills);
+	static bool stampede(const CvClassificationBlock* skills);
 	static bool stateReligion(const CvClassificationBlock* skills);
 	static bool stealPlans(const CvClassificationBlock* skills);
 	static bool stealthDefense(const CvClassificationBlock* skills);
 	static bool suicide(const CvClassificationBlock* skills);
 	static bool tradable(const CvClassificationBlock* skills);
 	static bool unlimitedException(const CvClassificationBlock* skills);
+	static bool zoneOfControl(const CvClassificationBlock* skills);
 
 private:
 	CvSkillReads();                                  // organization only -- never instantiated

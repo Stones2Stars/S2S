@@ -6732,19 +6732,13 @@ void CvGameTextMgr::parsePromotionHelpInternal(CvWStringBuffer &szBuffer, Promot
 	bool bIsCanMovePeaks = false;
 	bool bIsCanLeadThroughPeaks = false;
 	bool bIsAttackOnlyCitiesAdd = false;
-	bool bIsAttackOnlyCitiesSubtract = false;
 	bool bIsIgnoreNoEntryLevelAdd = false;
-	bool bIsIgnoreNoEntryLevelSubtract = false;
 	bool bIsIgnoreZoneofControlAdd = false;
-	bool bIsIgnoreZoneofControlSubtract = false;
 	bool bIsFliesToMoveAdd = false;
-	bool bIsFliesToMoveSubtract = false;
 	bool bIsZoneOfControl = false;
 	bool bIsImmuneToFirstStrikes = false;
 	bool bIsStampedeChange = false;
-	bool bIsRemoveStampede = false;
 	bool bIsOnslaughtChange = false;
-	bool bIsParalyze = false;
 	bool bIsDefensiveVictoryMove = false;
 	bool bIsFreeDrop = false;
 	bool bIsOffensiveVictoryMove = false;
@@ -6759,19 +6753,19 @@ void CvGameTextMgr::parsePromotionHelpInternal(CvWStringBuffer &szBuffer, Promot
 	{
 		const CvPromotionInfo& promoX = GC.getPromotionInfo(linePromotionsOwned[iI]);
 
-		if (promoX.isBlitz())
+		if (CvSkillReads::blitz(promoX.getSkills()))
 		{
 			bIsBlitz = true;
 		}
-		if (promoX.isAmphib())
+		if (CvSkillReads::amphib(promoX.getSkills()))
 		{
 			bIsAmphib = true;
 		}
-		if (promoX.isRiver())
+		if (CvSkillReads::river(promoX.getSkills()))
 		{
 			bIsRiver = true;
 		}
-		if (promoX.isEnemyRoute())
+		if (CvSkillReads::enemyRoute(promoX.getSkills()))
 		{
 			bIsEnemyRoute = true;
 		}
@@ -6783,7 +6777,7 @@ void CvGameTextMgr::parsePromotionHelpInternal(CvWStringBuffer &szBuffer, Promot
 		{
 			bIsPrereqNormInvisible = true;
 		}
-		if (promoX.isNoSelfHeal())
+		if (CvSkillReads::noSelfHeal(promoX.getSkills()))
 		{
 			bIsNoSelfHeal = true;
 		}
@@ -6791,76 +6785,52 @@ void CvGameTextMgr::parsePromotionHelpInternal(CvWStringBuffer &szBuffer, Promot
 		{
 			bIsAlwaysHeal = true;
 		}
-		if (promoX.isHillsDoubleMove())
+		if (CvSkillReads::hillsDoubleMove(promoX.getSkills()))
 		{
 			bIsHillsDoubleMove = true;
 		}
-		if (promoX.isCanMovePeaks())
+		if (CvSkillReads::canPassPeaks(promoX.getSkills()))
 		{
 			bIsCanMovePeaks = true;
 		}
-		if (promoX.isCanLeadThroughPeaks())
+		if (CvSkillReads::canLeadThroughPeaks(promoX.getSkills()))
 		{
 			bIsCanLeadThroughPeaks = true;
 		}
-		if (promoX.isAttackOnlyCitiesAdd())
+		if (CvSkillReads::attackOnlyCities(promoX.getSkills()))
 		{
 			bIsAttackOnlyCitiesAdd = true;
 		}
-		if (promoX.isAttackOnlyCitiesSubtract())
-		{
-			bIsAttackOnlyCitiesSubtract = true;
-		}
-		if (promoX.isIgnoreNoEntryLevelAdd())
+		if (CvSkillReads::ignoreNoEntryLevel(promoX.getSkills()))
 		{
 			bIsIgnoreNoEntryLevelAdd = true;
 		}
-		if (promoX.isIgnoreNoEntryLevelSubtract())
-		{
-			bIsIgnoreNoEntryLevelSubtract = true;
-		}
 		if (GC.getGame().isOption(GAMEOPTION_UNSUPPORTED_ZONE_OF_CONTROL))
 		{
-			if (promoX.isIgnoreZoneofControlAdd())
+			if (CvSkillReads::ignoreZoneOfControl(promoX.getSkills()))
 			{
 				bIsIgnoreZoneofControlAdd = true;
 			}
-			if (promoX.isIgnoreZoneofControlSubtract())
-			{
-				bIsIgnoreZoneofControlSubtract = true;
-			}
-			if (promoX.isZoneOfControl())
+			if (CvSkillReads::zoneOfControl(promoX.getSkills()))
 			{
 				bIsZoneOfControl = true;
 			}
 		}
-		if (promoX.isFliesToMoveAdd())
+		if (CvSkillReads::fliesToMove(promoX.getSkills()))
 		{
 			bIsFliesToMoveAdd = true;
-		}
-		if (promoX.isFliesToMoveSubtract())
-		{
-			bIsFliesToMoveSubtract = true;
 		}
 		if (CvSkillReads::immuneToFirstStrikes(promoX.getSkills()))
 		{
 			bIsImmuneToFirstStrikes = true;
 		}
-		if (promoX.isStampedeChange())
+		if (CvSkillReads::stampede(promoX.getSkills()))
 		{
 			bIsStampedeChange = true;
 		}
-		if (promoX.isRemoveStampede())
-		{
-			bIsRemoveStampede = true;
-		}
-		if (promoX.isOnslaughtChange())
+		if (CvSkillReads::onslaught(promoX.getSkills()))
 		{
 			bIsOnslaughtChange = true;
-		}
-		if (promoX.isParalyze())
-		{
-			bIsParalyze = true;
 		}
 		if (CvSkillReads::defensiveVictoryMove(promoX.getSkills()))
 		{
@@ -6973,30 +6943,15 @@ void CvGameTextMgr::parsePromotionHelpInternal(CvWStringBuffer &szBuffer, Promot
 		szBuffer.append(pcNewline);
 		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_ATTACK_ONLY_CITIES_ADD"));
 	}
-	if (bIsAttackOnlyCitiesSubtract)
-	{
-		szBuffer.append(pcNewline);
-		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_ATTACK_ONLY_CITIES_SUBTRACT"));
-	}
 	if (bIsIgnoreNoEntryLevelAdd)
 	{
 		szBuffer.append(pcNewline);
 		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_IGNORE_NO_ENTRY_LEVEL_ADD"));
 	}
-	if (bIsIgnoreNoEntryLevelSubtract)
-	{
-		szBuffer.append(pcNewline);
-		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_IGNORE_NO_ENTRY_LEVEL_SUBTRACT"));
-	}
 	if (bIsIgnoreZoneofControlAdd)
 	{
 		szBuffer.append(pcNewline);
 		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_IGNORE_ZONE_OF_CONTROL_ADD"));
-	}
-	if (bIsIgnoreZoneofControlSubtract)
-	{
-		szBuffer.append(pcNewline);
-		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_IGNORE_ZONE_OF_CONTROL_SUBTRACT"));
 	}
 	if (bIsZoneOfControl)
 	{
@@ -7008,30 +6963,15 @@ void CvGameTextMgr::parsePromotionHelpInternal(CvWStringBuffer &szBuffer, Promot
 		szBuffer.append(pcNewline);
 		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_FLIES_TO_MOVE_ADD"));
 	}
-	if (bIsFliesToMoveSubtract)
-	{
-		szBuffer.append(pcNewline);
-		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_FLIES_TO_MOVE_SUBTRACT"));
-	}
 	if (bIsStampedeChange)
 	{
 		szBuffer.append(pcNewline);
 		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_STAMPEDE"));
 	}
-	if (bIsRemoveStampede)
-	{
-		szBuffer.append(pcNewline);
-		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_REMOVE_STAMPEDE"));
-	}
 	if (bIsOnslaughtChange)
 	{
 		szBuffer.append(pcNewline);
 		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_ONSLAUGHT"));
-	}
-	if (bIsParalyze)
-	{
-		szBuffer.append(pcNewline);
-		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_PARALYZE"));
 	}
 	if (bIsDefensiveVictoryMove)
 	{
