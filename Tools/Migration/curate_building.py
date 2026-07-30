@@ -359,7 +359,10 @@ TARGET_KEYED = {
     "ReligionChanges":               ("religion", "city", None, None, "flat"),
     "UnitCombatFreeExperiences":     ("experience", "city", "unitCombats", None, "flat"),
     "DomainFreeExperiences":         ("experience", "city", "domains", None, "flat"),
-    "UnitCombatExtraStrengths":      ("combat", "city", "unitCombats", None, "flat"),   # strength-MODIFYING -> combat (ruling 5)
+    "UnitCombatExtraStrengths":      ("combat", "city", "unitCombats", None, "percent"),  # strength-MODIFYING -> combat (ruling 5).
+    # PERCENT, not flat: the engine folds it into iExtraModifier (= getExtraCombatPercent), the combat
+    # percent stack, and only while the unit stands in the city. Same shape as defense.amount -- it sums
+    # like a flat and APPLIES as a percentage, which is exactly what the `percent` unit means (json.md §6).
     "UnitProductionModifiers":       ("buildRate", "city", "units", None, "percent"),
     "UnitCombatProdModifiers":       ("buildRate", "city", "unitCombats", None, "percent"),
     "DomainProductionModifiers":     ("buildRate", "city", "domains", None, "percent"),

@@ -5246,14 +5246,23 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 					}
 
 
-					foreach_(const UnitCombatModifier2 & modifier, kBuilding.getUnitCombatExtraStrength())
+					// The COMBAT family keyed on the `unitCombats` axis ([modifier.md §5]) -- what a fortification
+					// hands the defenders of one combat class. `strength` is the BASE and `combat` is what MODIFIES
+					// it (json.md §6), so this is a combat deposit, never a strength one. It is a PERCENT: the
+					// engine folds it into iExtraModifier (the combat percent stack) and only while the unit
+					// stands in the city -- so it is unscaled, exactly like defense.amount.
+					std::vector<std::pair<int, int> > kKeyedCombat;
+					kBuilding.getModifiers()->targetedSums(MODFAM_COMBAT, COMBAT_AMOUNT, CASC_SCOPE_CITY,
+						CASC_UNIT_PERCENT, modSegmentLookup("unitCombats"), kKeyedCombat);
+					for (size_t iKeyed = 0; iKeyed < kKeyedCombat.size(); ++iKeyed)
 					{
+						const UnitCombatTypes eKeyedCombat = (UnitCombatTypes)kKeyedCombat[iKeyed].first;
 						const int iValidUnitCount = algo::count_if(
 							plot()->units(),
 							bind(CvUnit::getTeam, _1) == getTeam() &&
-							bind(CvUnit::getUnitCombatType, _1) == modifier.first
+							bind(CvUnit::getUnitCombatType, _1) == eKeyedCombat
 						);
-						iValue += iValidUnitCount * modifier.second / 6;
+						iValue += iValidUnitCount * kKeyedCombat[iKeyed].second / 6;
 					}
 
 					bool bDefense = pArea->getAreaAIType(getTeam()) == AREAAI_DEFENSIVE;
@@ -12417,7 +12426,8 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 			kBuilding.isNeverCapture() ||
 			kBuilding.isNukeImmune() ||
 			GC.getGame().isOption(GAMEOPTION_UNSUPPORTED_ZONE_OF_CONTROL) && kBuilding.isZoneOfControl() ||
-			!kBuilding.getUnitCombatExtraStrength().empty() ||
+			kBuilding.getModifiers()->targetedSum(MODFAM_COMBAT, COMBAT_AMOUNT, CASC_SCOPE_CITY,
+				CASC_UNIT_PERCENT, modSegmentLookup("unitCombats"), -1) != 0 ||
 			kBuilding.getAdjacentDamagePercent() > 0 ||
 			kBuilding.isProtectedCulture() ||
 			kBuilding.getOccupationTimeModifier() > 0 ||

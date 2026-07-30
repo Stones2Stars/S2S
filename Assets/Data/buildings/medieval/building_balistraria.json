@@ -34,10 +34,10 @@
   "city": {
    "unitCombats": {
     "UNITCOMBAT_ARCHER": {
-     "flat": 50
+     "percent": 50
     },
     "UNITCOMBAT_GUN": {
-     "flat": 25
+     "percent": 25
     }
    }
   }
