@@ -10596,7 +10596,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 		}
 		case UNITAI_WORKER:
 		{
-			if (kUnitInfo.getNumBuilds() > 0)
+			if ((int)kUnitInfo.getBuilds().size() > 0)
 			{
 				bValid = true;
 			}
@@ -10901,7 +10901,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 		}
 		case UNITAI_WORKER_SEA:
 		{
-			if (kUnitInfo.getNumBuilds() > 0)
+			if ((int)kUnitInfo.getBuilds().size() > 0)
 			{
 				bValid = true;
 			}
@@ -11060,7 +11060,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 			}
 			case UNITAI_WORKER:
 			{
-				iValue += kUnitInfo.getNumBuilds();
+				iValue += (int)kUnitInfo.getBuilds().size();
 				iValue += ((kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100)-1) * iValue / 2;
 				//	Scale by how fast a worker works - the extra '4' is a fudge factor
 				//	to make worker values (somewhat) comparable to military unit values
@@ -11621,7 +11621,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 			}
 			case UNITAI_WORKER_SEA:
 			{
-				iValue += 50 * kUnitInfo.getNumBuilds();
+				iValue += 50 * (int)kUnitInfo.getBuilds().size();
 				iValue += (kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100) * 100;
 				break;
 			}
@@ -27061,7 +27061,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//#2 Effects that depend on unitAI role Spy
-	if (kUnit.isSpy())
+	if (CvTagReads::spy(kUnit.getTags()))
 	{
 		//Readjust promotion choices favoring security, deception, logistics, escape, improvise,
 		//filling in other promotions very lightly because the AI does not yet have situational awareness
@@ -30520,7 +30520,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		eUnitAI = kUnit.getDefaultUnitAI();
 	}
 
-	if (kUnit.isSpy())
+	if (CvTagReads::spy(kUnit.getTags()))
 	{
 
 		//Readjust promotion choices favouring security, deception, logistics, escape, improvise,

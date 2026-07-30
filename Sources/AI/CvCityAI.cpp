@@ -937,9 +937,9 @@ int CvCityAI::AI_specialistValue(SpecialistTypes eSpecialist, bool bAvoidGrowth,
 			if (eGreatPeopleUnit != NO_UNIT)
 			{
 				const CvUnitInfo& kUnitInfo = GC.getUnitInfo(eGreatPeopleUnit);
-				if (kUnitInfo.getGreatWorkCulture() > 0)
+				if (kUnitInfo.getGreatWorkBase() > 0)
 				{
-					iTempValue += kUnitInfo.getGreatWorkCulture() / ((GET_PLAYER(getOwner()).AI_isDoVictoryStrategy(AI_VICTORY_CULTURE3)) ? 200 : 350);
+					iTempValue += kUnitInfo.getGreatWorkBase() / ((GET_PLAYER(getOwner()).AI_isDoVictoryStrategy(AI_VICTORY_CULTURE3)) ? 200 : 350);
 				}
 			}
 		}

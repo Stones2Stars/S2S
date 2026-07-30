@@ -318,7 +318,7 @@ void CvUnit::init(int iID, UnitTypes eUnit, UnitAITypes eUnitAI, PlayerTypes eOw
 			setCityOfOrigin(plot()->getPlotCity());
 		}
 
-		if (m_pUnitInfo->getNumBuilds() > 0)
+		if ((int)m_pUnitInfo->getBuilds().size() > 0)
 		{
 			m_worker = new UnitCompWorker();
 		}
@@ -8887,7 +8887,7 @@ bool CvUnit::trade()
 
 int CvUnit::getGreatWorkCulture() const
 {
-	int iCulture = m_pUnitInfo->getGreatWorkCulture();
+	int iCulture = m_pUnitInfo->getGreatWorkBase();
 
 	iCulture *= CvGameSpeedScale::speedPercent();
 	iCulture /= 100;
@@ -27591,7 +27591,7 @@ void CvUnit::changeExtraBuildType(bool bChange, BuildTypes eBuild)
 		{
 			m_worker->setExtraBuild(eBuild, false);
 
-			if (m_pUnitInfo->getNumBuilds() == 0 && m_worker->getExtraBuilds().size() == 0)
+			if ((int)m_pUnitInfo->getBuilds().size() == 0 && m_worker->getExtraBuilds().size() == 0)
 			{
 				CvCity* city = GET_PLAYER(getOwner()).getCity(m_worker->getAssignedCity());
 				if (city)
