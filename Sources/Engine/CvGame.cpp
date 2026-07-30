@@ -2847,13 +2847,13 @@ int CvGame::getAdjustedLandPercent(VictoryTypes eVictory) const
 
 bool CvGame::isTeamVote(VoteTypes eVote) const
 {
-	return (GC.getVoteInfo(eVote).isSecretaryGeneral() || GC.getVoteInfo(eVote).isVictory());
+	return (GC.getVoteInfo(eVote).getRole() == VOTE_ROLE_SECRETARY_GENERAL || GC.getVoteInfo(eVote).getRole() == VOTE_ROLE_VICTORY);
 }
 
 
 bool CvGame::isChooseElection(VoteTypes eVote) const
 {
-	return !(GC.getVoteInfo(eVote).isSecretaryGeneral());
+	return !(GC.getVoteInfo(eVote).getRole() == VOTE_ROLE_SECRETARY_GENERAL);
 }
 
 
@@ -3000,7 +3000,7 @@ TeamTypes CvGame::getSecretaryGeneral(VoteSourceTypes eVoteSource) const
 		for (int iI = 0; iI < GC.getNumVoteInfos(); iI++)
 		{
 			if (GC.getVoteInfo((VoteTypes)iI).isVoteSourceType(eVoteSource)
-			&&  GC.getVoteInfo((VoteTypes)iI).isSecretaryGeneral()
+			&&  GC.getVoteInfo((VoteTypes)iI).getRole() == VOTE_ROLE_SECRETARY_GENERAL
 			&& isVotePassed((VoteTypes)iI))
 			{
 				return (TeamTypes)getVoteOutcome((VoteTypes)iI);
@@ -3015,7 +3015,7 @@ bool CvGame::canHaveSecretaryGeneral(VoteSourceTypes eVoteSource) const
 	PROFILE_EXTRA_FUNC();
 	for (int iI = 0; iI < GC.getNumVoteInfos(); iI++)
 	{
-		if (GC.getVoteInfo((VoteTypes)iI).isVoteSourceType(eVoteSource) && GC.getVoteInfo((VoteTypes)iI).isSecretaryGeneral())
+		if (GC.getVoteInfo((VoteTypes)iI).isVoteSourceType(eVoteSource) && GC.getVoteInfo((VoteTypes)iI).getRole() == VOTE_ROLE_SECRETARY_GENERAL)
 		{
 			return true;
 		}
@@ -3030,7 +3030,7 @@ void CvGame::clearSecretaryGeneral(VoteSourceTypes eVoteSource)
 	{
 		const CvVoteInfo& kVote = GC.getVoteInfo((VoteTypes)j);
 
-		if (kVote.isVoteSourceType(eVoteSource) && kVote.isSecretaryGeneral())
+		if (kVote.isVoteSourceType(eVoteSource) && kVote.getRole() == VOTE_ROLE_SECRETARY_GENERAL)
 		{
 			VoteTriggeredData kData;
 			kData.eVoteSource = eVoteSource;
@@ -4193,7 +4193,7 @@ void CvGame::changeDiploVote(VoteSourceTypes eVoteSource, int iChange)
 bool CvGame::canDoResolution(VoteSourceTypes eVoteSource, const VoteSelectionSubData& kData) const
 {
 	PROFILE_EXTRA_FUNC();
-	const bool bVictory = GC.getVoteInfo(kData.eVote).isVictory();
+	const bool bVictory = GC.getVoteInfo(kData.eVote).getRole() == VOTE_ROLE_VICTORY;
 
 	if (bVictory)
 	{
@@ -7634,7 +7634,7 @@ bool CvGame::testVictory(VictoryTypes eVictory, TeamTypes eTeam, bool* pbEndScor
 		bValid = false;
 		for (int iK = 0; iK < GC.getNumVoteInfos(); iK++)
 		{
-			if (GC.getVoteInfo((VoteTypes)iK).isVictory() && getVoteOutcome((VoteTypes)iK) == eTeam)
+			if (GC.getVoteInfo((VoteTypes)iK).getRole() == VOTE_ROLE_VICTORY && getVoteOutcome((VoteTypes)iK) == eTeam)
 			{
 				bValid = true;
 				break;
@@ -9774,7 +9774,7 @@ void CvGame::doVoteResults()
 			}
 		}
 
-		if (!bPassed && GC.getVoteInfo(eVote).isSecretaryGeneral())
+		if (!bPassed && GC.getVoteInfo(eVote).getRole() == VOTE_ROLE_SECRETARY_GENERAL)
 		{
 			setSecretaryGeneralTimer(eVoteSource, 0);
 		}
@@ -9832,7 +9832,7 @@ void CvGame::doVoteSelection()
 
 					for (int iJ = 0; iJ < GC.getNumVoteInfos(); iJ++)
 					{
-						if (GC.getVoteInfo((VoteTypes)iJ).isSecretaryGeneral() && GC.getVoteInfo((VoteTypes)iJ).isVoteSourceType(iI))
+						if (GC.getVoteInfo((VoteTypes)iJ).getRole() == VOTE_ROLE_SECRETARY_GENERAL && GC.getVoteInfo((VoteTypes)iJ).isVoteSourceType(iI))
 						{
 							VoteSelectionSubData kOptionData;
 							kOptionData.iCityId = -1;
