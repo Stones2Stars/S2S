@@ -23,6 +23,13 @@ namings); the **system** is the [json spec](json.md) §8. Sibling of [skills.md]
   its own. Same shape, different model; do not merge the mechanisms.
 - Historically NOT a data block — a pseudo-promotion or a Python event stands in for it.
 
+> **⚖ OPEN BY DESIGN — when we find more, we add more (owner).** The `UnitStatus` enum is a HAND-MAINTAINED
+> list and identifying new statuses is an ongoing activity for the life of the mod, exactly as it is for
+> [tags](tags.md): a new member is a one-line addition, and **more arriving is the normal state, never a gap to
+> close**. ⛔ So this glossary is never "incomplete" against a finish line, and the short list is not a backlog.
+> ⚑ That nothing but an EVENT applies one today, and that no data authors one, is likewise BY DESIGN — the
+> standardization is the deliverable; the empty authoring surface is the model working.
+
 ## States
 | state | meaning | legacy mechanism |
 |---|---|---|
