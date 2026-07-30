@@ -6685,28 +6685,30 @@ void CvGameTextMgr::parsePromotionHelpInternal(CvWStringBuffer &szBuffer, Promot
 	const PromotionLineTypes ePromoLine = promo.getPromotionLine();
 	const CvPromotionLineInfo* promoLine = ePromoLine != NO_PROMOTIONLINE ? &GC.getPromotionLineInfo(ePromoLine) : NULL;
 
-	// If this is not the display for the hover help on the actual promotion action button
-	// then we want to accrue stats from all implied promotions earlier in the same line into the help text
-	std::vector<PromotionTypes>	linePromotionsOwned;
-	linePromotionsOwned.push_back(ePromotion);
+	// WHICH rungs this render sums over -- the two questions patterns.md keeps apart:
+	//   bAccrueLines -- the promotion ON A UNIT, so the answer is what the unit ACTUALLY HAS: the whole ladder
+	//                   down its line, because holding a rung implies the rungs beneath it.
+	//   !bAccrueLines -- the promotion ITSELF (the pedia page, the action button), so its own contribution only.
+	// The accrued membership is materialized at load (CvPromotionInfo::getLineAccrual, derived once by the
+	// reverse pass); it always holds at least this promotion, and a STATUS promotion holds only itself because a
+	// status line is parallel states rather than a ladder.
+	// ⚑ This replaced a scan of EVERY promotion in the game, run on every hover.
+	std::vector<PromotionTypes> linePromotionsOwned;
+	if (bAccrueLines)
+	{
+		const std::vector<int>& accrual = promo.getLineAccrual();
+		for (size_t iRung = 0; iRung < accrual.size(); ++iRung)
+		{
+			linePromotionsOwned.push_back((PromotionTypes)accrual[iRung]);
+		}
+	}
+	else
+	{
+		linePromotionsOwned.push_back(ePromotion);
+	}
 
 	if (ePromoLine != NO_PROMOTIONLINE)
 	{
-		if (bAccrueLines)
-		{
-			//	Afflication, equipment and status promos don't accrue values from lower elements of the same line
-			if (!promo.isStatus())
-			{
-				for (int iI = GC.getNumPromotionInfos() - 1; iI > -1; iI--)
-				{
-					if (GC.getPromotionInfo((PromotionTypes)iI).getPromotionLine() == ePromoLine
-					&&  GC.getPromotionInfo((PromotionTypes)iI).getLinePriority() < iLinePriority)
-					{
-						linePromotionsOwned.push_back((PromotionTypes)iI);
-					}
-				}
-			}
-		}
 		szBuffer.append(pcNewline);
 		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_LINE", promoLine->getDescription()));
 

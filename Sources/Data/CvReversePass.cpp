@@ -1215,6 +1215,72 @@ namespace
 	// hence a post-map sub-pass here rather than a mapFrom read. Materializing them makes both getters bare
 	// member reads; the alternative (resolve-on-first-read behind a memo) would put a cache AND a dirty flag on
 	// an info, which the INFO DATA-OUT contract forbids by construction (patterns.md).
+	// A promotion LINE is a ladder and holding a rung implies the rungs beneath it, so what a UNIT actually has
+	// from a promotion is the SUM down its line. That sum's membership is static data (a promotion's line and
+	// rank never move), so it materializes here, once -- the display used to rebuild it by scanning every
+	// promotion in the game on EVERY tooltip hover.
+	//
+	// The grouping is done ONCE here rather than by each promotion, which is the same shape rp_deriveUnitPlane
+	// uses: where a derivation needs a cross-registry fact, the PASS computes it and FEEDS it in, so no info
+	// re-derives what another can hand it.
+	void rp_derivePromotionLineAccrual()
+	{
+		const int iNumPromotions = GC.getNumPromotionInfos();
+
+		// line -> (priority, promotion id), so each promotion's lower rungs are a sorted lookup rather than a scan.
+		std::map<int, std::vector<std::pair<int, int> > > lineMembers;
+		for (int iPromotion = 0; iPromotion < iNumPromotions; ++iPromotion)
+		{
+			const CvInfo* pData = InfoRepo<CvPromotionInfo>::get().get(iPromotion);
+			if (pData == NULL)
+			{
+				continue;
+			}
+			const CvPromotionInfo& kPromotion = *static_cast<const CvPromotionInfo*>(pData);
+			// A STATUS promotion is a parallel state, never a ladder rung -- it must not gather siblings.
+			if (kPromotion.getPromotionLine() == NO_PROMOTIONLINE || kPromotion.isStatus())
+			{
+				continue;
+			}
+			lineMembers[(int)kPromotion.getPromotionLine()].push_back(
+				std::make_pair(kPromotion.getLinePriority(), iPromotion));
+		}
+		for (std::map<int, std::vector<std::pair<int, int> > >::iterator it = lineMembers.begin();
+			it != lineMembers.end(); ++it)
+		{
+			std::sort(it->second.begin(), it->second.end());   // ascending priority
+		}
+
+		std::vector<int> accrual;
+		for (int iPromotion = 0; iPromotion < iNumPromotions; ++iPromotion)
+		{
+			CvInfo* pData = const_cast<CvInfo*>(InfoRepo<CvPromotionInfo>::get().get(iPromotion));
+			if (pData == NULL)
+			{
+				continue;
+			}
+			CvPromotionInfo* pPromotion = static_cast<CvPromotionInfo*>(pData);
+
+			accrual.clear();
+			accrual.push_back(iPromotion);   // ALWAYS itself first -- so every accrual is non-empty and no reader branches
+
+			if (pPromotion->getPromotionLine() != NO_PROMOTIONLINE && !pPromotion->isStatus())
+			{
+				const std::vector<std::pair<int, int> >& members = lineMembers[(int)pPromotion->getPromotionLine()];
+				const int iOwnPriority = pPromotion->getLinePriority();
+				// descending, so the accrual reads top rung first
+				for (int iMember = (int)members.size() - 1; iMember >= 0; --iMember)
+				{
+					if (members[iMember].first < iOwnPriority && members[iMember].second != iPromotion)
+					{
+						accrual.push_back(members[iMember].second);
+					}
+				}
+			}
+			pPromotion->deriveAtRegistryComplete(accrual);
+		}
+	}
+
 	void rp_deriveHeritagePrereqs()
 	{
 		const int iNumHeritages = GC.getNumHeritageInfos();
@@ -1365,6 +1431,7 @@ void reversePassRun()
 	rp_buildRequiredBy();
 	rp_sortUniqueAll();
 	rp_deriveUnitPlane();
+	rp_derivePromotionLineAccrual();
 	rp_deriveHeritagePrereqs();
 	rp_derivePromotionLineMembers();
 	rp_derivePromotionQualification();   // reads the line members above

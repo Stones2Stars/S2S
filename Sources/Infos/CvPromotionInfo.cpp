@@ -278,3 +278,17 @@ void CvPromotionInfo::setDisqualifiedUnitCombatTypes()
 		}
 	}
 }
+
+// The LINE ACCRUAL -- see the header. The reverse pass hands over the finished ordered list (it groups every
+// line ONCE, so no promotion re-scans the registry for its siblings); this only takes ownership of it.
+//
+// ⚑ Materializing it here is what kills a WHOLE-DATABASE SCAN PER TOOLTIP: the display used to rebuild a
+// promotion's line by walking every promotion in the game on every hover. That walk is load-time work over
+// static data -- a promotion's line and rank never move -- so it belongs exactly here
+// ([DEC-materialize-at-mapfrom]: the getter is a bare member read).
+//
+// clear-first, like every other idempotent load-time derivation: the postmenu full-registry pass re-runs it.
+void CvPromotionInfo::deriveAtRegistryComplete(const std::vector<int>& aiLineAccrual)
+{
+	m_aiLineAccrual = aiLineAccrual;
+}

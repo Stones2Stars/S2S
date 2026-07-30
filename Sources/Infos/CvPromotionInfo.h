@@ -130,6 +130,29 @@ public:
 	// par.9 promotionLine link: the top-level {LINE: rank} object.
 	PromotionLineTypes getPromotionLine() const { return m_ePromotionLine; }
 	int getLinePriority() const { return m_iLinePriority; }
+
+	// --- THE LINE ACCRUAL: this promotion PLUS every lower-priority promotion in its own line, this one first. ---
+	//
+	// A promotion line is a LADDER, and holding a rung IMPLIES the rungs beneath it -- each level's
+	// `requires.build` names the level below (ACCURACY3 -> ACCURACY2 -> ACCURACY), so a unit carrying the top
+	// of a line carries the whole chain and its EFFECTIVE value is the chain's SUM.
+	//
+	// ⚑ THAT IS WHY THERE ARE TWO READS, and they answer different questions: the promotion's OWN getters say
+	// what THIS rung contributes (what the pedia shows about the promotion itself), while the accrual says what
+	// a UNIT HOLDING IT ACTUALLY HAS (what the unit's tooltip shows). Neither is the other's approximation.
+	//
+	// ⛔ A STATUS promotion accrues only ITSELF: status / affliction / equipment lines are parallel states, not
+	// a ladder, so summing them would invent a compounding that does not exist. A promotion with no line
+	// likewise accrues only itself, which is why every promotion has a NON-EMPTY accrual and no reader needs an
+	// is-there-a-line branch.
+	//
+	// Derived by deriveAtRegistryComplete: it reads OTHER promotions, so it cannot be a mapFrom read (the twin
+	// of CvUnitInfo::m_aiUpgradeChain). The getter is a bare member read; the SUM over it is
+	// CvPromotionAccrual ([DEC-single-implementation]), never open-coded at a consumer.
+	const std::vector<int>& getLineAccrual() const { return m_aiLineAccrual; }
+	// Fed the finished ordered list by the reverse pass, which groups the lines ONCE rather than having every
+	// promotion re-scan the registry for its siblings.
+	void deriveAtRegistryComplete(const std::vector<int>& aiLineAccrual);
 	// ai.unitCombatWeights {UC:int} -- AI metadata rows.
 	int getNumAIWeightsByUnitCombat() const { return (int)m_aAIWeights.size(); }
 	const UnitCombatModifier& getAIWeightByUnitCombat(int iIndex) const { return m_aAIWeights[iIndex]; }
@@ -207,6 +230,9 @@ private:
 	std::vector<int> m_aiFeatureDoubleMove;
 	PromotionLineTypes m_ePromotionLine;
 	int m_iLinePriority;
+	// Load-derived (deriveAtRegistryComplete), never JSON-mapped: this promotion followed by every lower-priority
+	// promotion in its line, descending. Always holds at least this promotion.
+	std::vector<int> m_aiLineAccrual;
 	std::vector<UnitCombatModifier> m_aAIWeights;
 	std::string m_szSound;
 	bool m_bChangesMoveThroughPlots;

@@ -1051,6 +1051,19 @@ Data read by a specific system, not the cascade. Use only when the entity needs 
   (NB `nonStateReligionCommerce` was *suspected* an effect but is VERIFIED a pure STATE — a Free-Church permission that
   non-state religions' `stateReligionCommerce` applies — so it correctly STAYS a policy.)*
 - **`succession`** — `{ upgradesTo, promotionLine, priority }` (manual upgrade / promotion-line link).
+- **`promotionLine`** (PROMOTION) — `{ PROMOTIONLINE_X: rank }`, the promotion's rung on a named ladder.
+  **⚖ A LINE IS A LADDER, AND HOLDING A RUNG IMPLIES THE RUNGS BENEATH IT** — each level's `requires.build`
+  names the level below (`ACCURACY3` → `ACCURACY2` → `ACCURACY`), so a unit carrying the top of a line carries
+  the whole chain. ⇒ **What that unit HAS from the promotion is the SUM down the line**, not the rung's own
+  value.
+  ⚑ **That is why there are TWO reads, answering different questions** — the promotion's own getters say what
+  THIS RUNG contributes (what the pedia says *about* a promotion), and the line accrual says what a unit
+  HOLDING it actually has (what the unit's tooltip shows). Neither approximates the other; a consumer picking
+  the wrong one displays a number the unit does not have. The accrual's membership is derived ONCE at load and
+  summed in exactly one place ([DEC-single-implementation](../architecture/decisions.md#dec-single-implementation)),
+  never rebuilt per read.
+  ⛔ **A STATUS promotion accrues only ITSELF** — status / affliction / equipment lines are parallel states
+  rather than a ladder, so summing them would invent a compounding that does not exist.
 - **`excludes`** — same-tier mutual exclusion (conflicting traits).
 - **`produces`** — a Build's outcome FKs (what laying it creates).
 - **`replacedBy`** — a conditional whole-entity swap (an alternate Info under a culture level / game option; e.g.
