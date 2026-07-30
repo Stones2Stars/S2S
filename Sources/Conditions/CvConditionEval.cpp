@@ -226,6 +226,14 @@ static bool ev_countCore(const CvCascadeEvalCtx& ctx, const std::string& t, int 
 	if (t == "CITY")       { iOut = empireContext != NULL ? empireContext->numCities() : 0; return true; }
 	if (t == "TEAM")       { iOut = empireContext != NULL ? empireContext->teamMemberCount() : 0; return true; }
 	if (t == "AREA_SIZE")  { iOut = cityContext != NULL ? cityContext->areaSize() : 0; return true; }
+	// the §3.1 DISTANCE_TO_GOVERNMENT_CENTER city counter: plot distance to the owner's NEAREST government
+	// centre, 0 in one. Served from the maintained CityContext store -- the min-over-cities walk the legacy
+	// distance-maintenance formula did per read is now an event-maintained int ([contexts.md]).
+	if (t == "DISTANCE_TO_GOVERNMENT_CENTER")
+	{
+		iOut = cityContext != NULL ? cityContext->governmentCenterDistance() : 0;
+		return true;
+	}
 	if (t == "ERA")        { iOut = empireContext != NULL ? empireContext->currentEra() + 1 : 0; return true; }   // 1..X counter
 	// the §3.1 commerce SLIDER-RATE counters (ruling 20: the player's current slider percents as plain counters
 	// -- "happiness per 10% culture rate" / "anger per gold rate" author as ordinary per-scaled deposits)
@@ -367,6 +375,7 @@ static bool ev_evalPredicate(const CvCascadeEvalCtx& ctx, const CvCascadeEvalFla
 	case CASC_PRED_IS_GOVERNMENT_CENTER:  return cityContext != NULL && cityContext->isGovernmentCenter();
 	case CASC_PRED_HAS_POWER:             return cityContext != NULL && cityContext->isPowered();
 	case CASC_PRED_IS_GOLDEN_AGE:         return empireContext != NULL && empireContext->isGoldenAge();
+	case CASC_PRED_IS_REBEL:              return empireContext != NULL && empireContext->isRebel();
 	case CASC_PRED_IS_ANARCHY:            return empireContext != NULL && empireContext->isAnarchy();   // #430 outcome gate
 	case CASC_PRED_IS_OWNED:              return plotContext != NULL && plotContext->isOwned();         // #430 outcome gate (plot in owned territory)
 	case CASC_PRED_NO_NUKES:              return GC.getGame().isNoNukes();

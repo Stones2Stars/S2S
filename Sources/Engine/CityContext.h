@@ -58,7 +58,8 @@ class CityContext
 {
 public:
 	CityContext()
-		: m_city(NULL), m_areaId(-1), m_areaTileCount(0), m_maxAdjacentWaterTiles(0), m_holyCityCount(0) {}
+		: m_city(NULL), m_areaId(-1), m_areaTileCount(0), m_maxAdjacentWaterTiles(0), m_holyCityCount(0),
+		  m_governmentCenterDistance(0) {}
 	void bind(const CvCity* c) { m_city = c; }   // set once by the owning CvCity; the pointer IS the owner (never dangles)
 
 	// --- STORED: the uniquely-owned aggregate -- the HAS_/IS_ plot-predicate COUNTS, event-maintained (onPlotChanged) ---
@@ -109,6 +110,10 @@ public:
 	void refreshTradedBonuses() const;     // the gated network count (the TechCityTrade + minted relay)
 	void refreshAreaFacts() const;         // the city's area ID + the coastal water-body size
 	void refreshHolyCity() const;          // how many religions hold this city as their holy city
+	// Distance to the owner's nearest government centre. Re-derived for EVERY city of a player when a
+	// government centre appears or goes, and for one city when it is founded or changes hands -- the fan-out is
+	// bounded by the city count and the facts driving it are rare.
+	void refreshGovernmentCenterDistance() const;
 	// (The amenity fold is NOT here: it is a DELTA, not a re-derivation -- see onBuildingChanged above.)
 
 	void clear() const;   // m_city is a binding, not cleared
@@ -129,6 +134,11 @@ public:
 	int  tradedBonusCount(int eBonus) const;
 	int  areaId() const;                      // the city's area ID -- never a CvArea* and never a per-read area() chase
 	int  areaSize() const;                    // the AREA_SIZE counter, served from the maintained area facts
+	// The DISTANCE_TO_GOVERNMENT_CENTER counter: plot distance to the NEAREST government centre of this city's
+	// owner, 0 in a government centre itself. STORED rather than forwarded because deriving it walks the owner's
+	// cities -- precisely the per-read scan contexts.md exists to delete, and it is asked once per maintenance
+	// rebuild per city. A city with no government centre anywhere answers 0 (nothing to be distant from).
+	int  governmentCenterDistance() const;
 	bool isCoastal(int iMinWaterSize) const;  // the HAS_COAST minArea city form: the largest ADJACENT water body >= iMinWaterSize
 	bool isHolyCityAny() const;               // bare IS_HOLY_CITY -- this city is some religion's holy city
 	// The city's amenity reads -- O(1) over the fold. `hasAmenity` is the gate every consumer wants;
@@ -216,6 +226,9 @@ private:
 	// (isCoastal(N) == m_maxAdjacentWaterTiles >= N), so a new authored minArea needs no new store.
 	mutable int m_maxAdjacentWaterTiles;
 	mutable int m_holyCityCount;               // how many religions hold this city as their holy city
+	// Plot distance to the owner's NEAREST government centre (0 here, or with none anywhere). One int answers
+	// the whole distance-maintenance leg; it moves only on a government-centre crossing or a city gained/lost.
+	mutable int m_governmentCenterDistance;
 };
 
 #endif // CV_CITY_CONTEXT_H

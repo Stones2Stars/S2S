@@ -62,6 +62,9 @@ enum CvCascPredKind
 	// city / player
 	CASC_PRED_IS_CAPITAL, CASC_PRED_IS_GOVERNMENT_CENTER, CASC_PRED_HAS_POWER, CASC_PRED_HAS_STATE_RELIGION, CASC_PRED_STATE_RELIGION_IN_CITY, CASC_PRED_IS_GOLDEN_AGE, CASC_PRED_IS_STATE_RELIGION_HOLY_CITY,
 	CASC_PRED_IS_ANARCHY, CASC_PRED_IS_OWNED,   // #430 outcome gates: player in anarchy; plot is in owned territory
+	// The player is in REVOLT against a parent civ. A genuine empire STATE other families will want, minted as a
+	// predicate rather than left as an arithmetic branch inside one formula ([DEC-conditions-are-predicates]).
+	CASC_PRED_IS_REBEL,
 	// the §3.7 counted-kind RELIGION filter's per-religion test (ruling 23: `religion: "!IS_STATE_RELIGION"`):
 	// evaluated against the COUNTED religion (ctx.religion) -- true iff it is the owner's state religion
 	CASC_PRED_IS_STATE_RELIGION,

@@ -165,6 +165,13 @@ public:
 		case SEVT_BUILDING_PROCESSED:
 			foldAmenitiesFor(kEvent.iC, kEvent.iSrcLoc, kEvent.iType, kEvent.iB);
 			break;
+		// A government centre appeared or went: EVERY city of that player re-measures its distance to the nearest
+		// one, because the nearest may now be this city or may have just stopped being a centre. The fan-out is
+		// the whole point -- one rare fact, one bounded re-derivation, instead of the per-read min-over-cities
+		// walk the legacy distance formula did ([contexts.md]).
+		case SEVT_GOVERNMENT_CENTER_CHANGED:
+			refreshGovernmentCenterDistanceForPlayer(kEvent.iC);
+			break;
 		// A religion's holy city moved: the bare IS_HOLY_CITY verdict flips for the city that gained or lost it.
 		case SEVT_HOLY_CITY_CHANGED:
 			refreshHolyCityFor(kEvent.iC, kEvent.iSrcLoc);
@@ -325,6 +332,7 @@ private:
 		kContext.refreshTradedBonuses();
 		kContext.refreshAreaFacts();
 		kContext.refreshHolyCity();
+		kContext.refreshGovernmentCenterDistance();
 		// A city founded mid-game starts empty, so it folds the empire-scope grantors its owner ALREADY has --
 		// the same half the load build covers, at the other moment a city starts existing. Its own buildings
 		// arrive later as ordinary per-building facts.
@@ -413,6 +421,26 @@ private:
 		}
 	}
 
+	// Every city of ONE player re-measures. A city gaining or losing government-centre status moves the answer
+	// for all of its siblings, never only for itself.
+	static void refreshGovernmentCenterDistanceForPlayer(int iOwner)
+	{
+		if (iOwner < 0 || iOwner >= MAX_PLAYERS)
+		{
+			return;
+		}
+		CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iOwner);
+		if (!kPlayer.isAlive())
+		{
+			return;
+		}
+		int iLoop = 0;
+		for (const CvCity* pCity = kPlayer.firstCity(&iLoop); pCity != NULL; pCity = kPlayer.nextCity(&iLoop))
+		{
+			pCity->getCityContext().refreshGovernmentCenterDistance();
+		}
+	}
+
 	static void refreshAreaFactsForAllCities()
 	{
 		for (int iPlayer = 0; iPlayer < MAX_PLAYERS; ++iPlayer)
@@ -471,6 +499,9 @@ private:
 				kContext.refreshTradedBonuses();
 				kContext.refreshAreaFacts();
 				kContext.refreshHolyCity();
+				// AFTER the loop would be wrong only if it read another city's store; it reads government-centre
+				// STATUS, which the save read has already set on every city by now, so measuring here is safe.
+				kContext.refreshGovernmentCenterDistance();
 				// The BUILDING half of the amenity fold needs no pass here -- it is a delta off the per-building
 				// facts, which the save read already emitted. The EMPIRE half does: the civic facts fired from
 				// CvPlayer::read, before this city existed to fan to, so the city folds its owner's standing

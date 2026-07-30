@@ -57,6 +57,7 @@ void CityContext::clear() const
 	m_tradedBonuses.clear();
 	m_areaId = -1;
 	m_areaTileCount = 0;
+	m_governmentCenterDistance = 0;
 	m_maxAdjacentWaterTiles = 0;
 	m_holyCityCount = 0;
 	amenities.clear();
@@ -205,6 +206,38 @@ void CityContext::refreshAreaFacts() const
 
 // Re-derive the holy-city count. The bare IS_HOLY_CITY read walked every religion info per call asking the game
 // registry; the count answers it with one comparison.
+// The DISTANCE_TO_GOVERNMENT_CENTER store. It re-derives WHOLE on any fact that can move it (a government
+// centre appearing or going, a city gained or lost) rather than per-event deltas -- the one-derivation shape
+// every other block here uses. The min over the owner's government centres is what the legacy distance
+// formula computed PER READ; holding it is the whole point ([contexts.md]: cost tracks EVENT volume, never
+// read volume).
+void CityContext::refreshGovernmentCenterDistance() const
+{
+	m_governmentCenterDistance = 0;
+	if (m_city == NULL)
+	{
+		return;
+	}
+	if (m_city->isGovernmentCenter())
+	{
+		return;
+	}
+	int iNearest = -1;
+	foreach_(const CvCity* pLoopCity, GET_PLAYER(m_city->getOwner()).cities())
+	{
+		if (pLoopCity == m_city || !pLoopCity->isGovernmentCenter())
+		{
+			continue;
+		}
+		const int iDistance = plotDistance(m_city->getX(), m_city->getY(), pLoopCity->getX(), pLoopCity->getY());
+		if (iNearest < 0 || iDistance < iNearest)
+		{
+			iNearest = iDistance;
+		}
+	}
+	m_governmentCenterDistance = (iNearest > 0) ? iNearest : 0;
+}
+
 void CityContext::refreshHolyCity() const
 {
 	m_holyCityCount = 0;
@@ -369,6 +402,7 @@ bool CityContext::hasVicinityBonus(int eBonus) const
 int  CityContext::tradedBonusCount(int eBonus) const { return eBonus >= 0 ? m_tradedBonuses.count(eBonus) : 0; }
 int  CityContext::areaId() const                     { return m_areaId; }
 int  CityContext::areaSize() const                   { return m_areaTileCount; }
+int  CityContext::governmentCenterDistance() const   { return m_governmentCenterDistance; }
 // A water body always has at least one tile, so the > 0 test is what distinguishes "no adjacent water at all" from a
 // zero threshold -- without it a landlocked city would read coastal at iMinWaterSize 0.
 bool CityContext::isCoastal(int iMinWaterSize) const { return m_maxAdjacentWaterTiles > 0 && m_maxAdjacentWaterTiles >= iMinWaterSize; }

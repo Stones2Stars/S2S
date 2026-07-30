@@ -51,6 +51,7 @@ public:
 	bool hasHeritage(int eHeritage) const;    // CvPlayer::hasHeritage
 	bool isGoldenAge() const;                 // CvPlayer::isGoldenAge (IS_GOLDEN_AGE)
 	bool isAnarchy() const;                   // CvPlayer::isAnarchy (IS_ANARCHY)
+	bool isRebel() const;                     // CvPlayer::isRebel (IS_REBEL)
 	int  numCities() const;                   // CvPlayer::getNumCities (the CITY counter)
 	int  currentEra() const;                  // CvPlayer::getCurrentEra (the ERA counter's engine value; 0-based)
 	int  commerceRate(int eCommerce) const;   // CvPlayer::getCommercePercent (the <CHANNEL>_RATE slider counters)

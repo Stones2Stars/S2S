@@ -32,6 +32,7 @@ bool EmpireContext::hasTrait(int eTrait) const     { return m_player != NULL && 
 bool EmpireContext::hasHeritage(int eHeritage) const { return m_player != NULL && eHeritage >= 0 && m_player->hasHeritage((HeritageTypes)eHeritage); }
 bool EmpireContext::isGoldenAge() const            { return m_player != NULL && m_player->isGoldenAge(); }
 bool EmpireContext::isAnarchy() const              { return m_player != NULL && m_player->isAnarchy(); }
+bool EmpireContext::isRebel() const                { return m_player != NULL && m_player->isRebel(); }
 int  EmpireContext::numCities() const              { return m_player != NULL ? m_player->getNumCities() : 0; }
 int  EmpireContext::currentEra() const             { return m_player != NULL ? (int)m_player->getCurrentEra() : 0; }
 int  EmpireContext::commerceRate(int eCommerce) const { return m_player != NULL ? m_player->getCommercePercent((CommerceTypes)eCommerce) : 0; }
