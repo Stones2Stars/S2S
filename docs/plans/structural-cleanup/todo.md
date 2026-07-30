@@ -44,6 +44,13 @@
   the trait assignments: the read is wired and an unauthored leader takes the default, so this closes by
   AUTHORING. ⚑ It is the beelining dial — a leader that should not commit five techs deep for one unlock is
   expressed HERE, as data, rather than by weakening the enablement valuation for everyone.
+- Author a PROJECT's victory MEMBERSHIP, which the curator drops. The legacy `VictoryPrereq` tag said "this
+  project belongs to, and needs, this victory condition"; nothing in the emitted JSON carries it, and
+  `victory.thresholds` is a DIFFERENT concept (how much this project contributes), so a project that is part of a
+  victory but contributes no threshold has no representation at all. The spec already answers the shape — it is
+  the entity-level applicability gate over a world-scope victory atom
+  ([json.md §2](../../specs/json.md) Applicability, [DEC-entity-gate](../../architecture/decisions.md#dec-entity-gate)),
+  never a revived `getVictoryPrereq`. ⚠ Its AI consumer dangles until this lands; that is the census working.
 - Retire the legacy `largestCity` member once ranked-target-selection EVALUATION lands.
 - Re-home `stronglyRestricted` to a `requires.build` civ-membership gate, when NPC civilizations are wired.
 - Move corp-HQ revenue (`HeadquarterCommerces`) with the corporation rework.
