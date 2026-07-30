@@ -195,7 +195,7 @@ public:
 	// channel's own pieces; StoneBase's CommerceSplit calc package). A city's realized gold / research / culture /
 	// espionage rate is NOT a fifth receiver slot: the city receives the COMMERCE YIELD, and the empire's slider
 	// percentages split that yield across the four channels, each channel adding its own deposits on top.
-	//   rate100 = commerceYieldRate x sliderPercent/100 x max(0, 100 + channelPercentSum/100)/100
+	//   rate100 = commerceYieldRate x sliderPercent/100 x max(0, 100 + channelPercentSum)/100
 	//             + channelDeposits
 	//             + (productionYieldRate/100) x (productionToCommerce/100)
 	// TIER 1 (BASE, multiplied by the ONE additive stack): the slider share of the commerce yield AND the §2a
@@ -208,8 +208,8 @@ public:
 	// truncation order, mirrored verbatim).
 	// SCALES: every magnitude is ×100 EXCEPT `iSliderPercent`, which is the player's plain slider counter 0..100
 	// (json §3.1's GOLD_RATE / RESEARCH_RATE / CULTURE_RATE / ESPIONAGE_RATE tokens, read through
-	// EmpireContext::commerceRates); `channelPercentSum` and `productionToCommerce` are ×100 as stored, so both
-	// carry their own ÷100 here.
+	// EmpireContext::commerceRates) and `channelPercentSum`, which is a PLAIN percent like every stored stack
+	// ([DEC-fixedpoint-x100]). `productionToCommerce` IS ×100 and carries its own ÷100 here.
 	// ⚠ CULTURE is the lone dual consumer: its `channelDeposits` is the city's MAINTAINED RECEIVER SUM (the
 	// combine the gather already wrote), not a roll-up -- so the receiver sum passes through untouched and only
 	// the commerce yield is slider-scaled. Scaling a receiver sum by a slider would re-scale a realized total.
@@ -233,9 +233,10 @@ public:
 	// getter: a PERCENT-unit channel (the maintenance modifier, buildRate, combat, ...) has no flat plane of its
 	// own, so its realized value IS the ONE additive percent stack (modifier.md §2a); a FLAT-unit channel is the
 	// flat sum that stack scales. A kind the census records as DUAL takes its dominant plane as the base and the
-	// opposing plane as the scaler, which is exactly what the §2 combine says. Both answers are ×100 native
-	// ([DEC-fixedpoint-x100]); the ÷100 on the percent operand is the fixed-point scale of a ×100 percent used
-	// as a multiplier, the same conversion cityRate's callers apply.
+	// opposing plane as the scaler, which is exactly what the §2 combine says. A FLAT answer is ×100 native
+	// ([DEC-fixedpoint-x100]); the PERCENT operand carries no scale of its own -- a percentage has no decimals
+	// to carry, so readJson never scales one and every stored stack is a plain percent that meets the identity
+	// constant 100 directly. cityRate combines its own stack identically: ONE convention on this surface.
 	// ⚠ NOT a duplicate of cityRate: that is the §2a RATE specialization (two tiers + the specialist layer) the
 	// receiver sums are built from; this is the generic §2 slot combine every other channel answers by.
 	static long realizedChannel(long flatSum, long percentSum, CvCascUnit eCanonicalUnit);

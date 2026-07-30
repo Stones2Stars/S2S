@@ -486,11 +486,9 @@ long InfoValuation::cityRate(long base, long specialists, int iPercentSum, long 
 	// whole units before re-scaling (the engine's getExtraYield100 order -- a documented integer-truncation
 	// gotcha mirrored verbatim, never "fixed").
 	//
-	// ⛔ SCALE CONTRACT: iPercentSum is a PLAIN percent (25 = +25%), NOT the ×100 stored sum -- the caller
-	// divides before calling. It differs deliberately from realizedChannel below, which takes the ×100 sum and
-	// de-scales internally, so the two neighbours on this surface do NOT share a convention: stated here because
-	// passing the stored sum instead would read +25% as +2500% and the signature alone cannot say which is
-	// wanted (no name carries a scale, [DEC-fixedpoint-x100]).
+	// SCALE: iPercentSum is a plain percent (25 = +25%), which is what a percent IS everywhere on this surface --
+	// readJson does not scale one ([DEC-fixedpoint-x100]: a percentage has no decimals to carry), so the stored
+	// sums are plain too and every consumer combines them the same way.
 	long iModifier = 100 + (long)iPercentSum;
 	if (iModifier < 0)
 	{
@@ -506,8 +504,8 @@ long InfoValuation::commerceSplit(long commerceYieldRate, int iSliderPercent, lo
 	// ÷100 is the percent-to-fraction conversion, not a fixed-point de-scale.
 	long iShare = commerceYieldRate * (long)iSliderPercent / 100;
 	// The ONE additive stack (modifier.md §2a), floored at zero exactly as the yield rate's is -- a stack below
-	// -100% zeroes the share, it never flips its sign. The stored percents are ×100, hence the second ÷100.
-	long iModifier = 100 + channelPercentSum / 100;
+	// -100% zeroes the share, it never flips its sign. A stored percent is PLAIN, so it combines directly.
+	long iModifier = 100 + channelPercentSum;
 	if (iModifier < 0)
 	{
 		iModifier = 0;
@@ -543,7 +541,7 @@ long InfoValuation::realizedChannel(long flatSum, long percentSum, CvCascUnit eC
 	// A FLAT-unit channel is the flat sum the stack scales: the §2 combine with no external base and multiplier
 	// deposits identity. The stack floors at zero exactly as the §2a rate's does -- a stack below -100% zeroes
 	// the value, it never flips its sign.
-	long iModifier = 100 + percentSum / 100;
+	long iModifier = 100 + percentSum;
 	if (iModifier < 0)
 	{
 		iModifier = 0;

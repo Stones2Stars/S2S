@@ -575,7 +575,7 @@ namespace
 	struct CascadeCityCombineTerms
 	{
 		long baseFlat;     // TIER 1: the worked-plot Sigma + the empire/team flats rolled down (modifier.md §2a)
-		long percentSum;   // the ONE additive percent stack (x100): city + empire + team
+		long percentSum;   // the ONE additive percent stack (PLAIN percents): city + empire + team
 		long cityFlat;     // TIER 2: the city package's flat tier, added AFTER the percentages
 
 		CascadeCityCombineTerms() : baseFlat(0), percentSum(0), cityFlat(0) {}
@@ -650,7 +650,7 @@ namespace
 					eFamily, iKind, CASC_UNIT_FLAT, CASC_SCOPE_CITY, evalCtx);
 			}
 		}
-		return InfoValuation::cityRate(kTerms.baseFlat, iSpecialists, (int)(kTerms.percentSum / 100), kTerms.cityFlat);
+		return InfoValuation::cityRate(kTerms.baseFlat, iSpecialists, (int)kTerms.percentSum, kTerms.cityFlat);
 	}
 
 	// ---- THE PER-CITY QUANTITY AN EMPIRE RECEIVER SUMS -- the COMMERCE SPLIT (modifier.md §2a's commerce
@@ -709,7 +709,7 @@ namespace
 	{
 		long commerceYieldRate;     // TIER 1: the city's realized COMMERCE yield -- what the slider divides
 		long productionYieldRate;   // TIER 2: the city's realized PRODUCTION yield -- what the process converts
-		long channelPercentSum;     // the ONE additive stack (×100) of THIS channel over the city's chain, for the
+		long channelPercentSum;     // the ONE additive stack (plain percents) of THIS channel over the city's chain, for the
 		                            // slider share alone: the deposits below already met that stack
 		long channelDeposits;       // this channel's own realized deposits, ALREADY scaled by the stack
 
