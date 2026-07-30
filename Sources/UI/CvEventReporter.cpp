@@ -47,7 +47,6 @@ bool CvEventReporter::kbdEvent(int evt, int key, int iCursorX, int iCursorY)
 
 	if ( !bResult )
 	{
-		//	Trap ctrl-shift-TAB to cycle viewports for testing purposes
 		if (gDLL->ctrlKey() && gDLL->shiftKey() && evt == 7 && key == 41 )
 		{
 			static bool bClearSigns = true;
@@ -114,7 +113,6 @@ bool CvEventReporter::kbdEvent(int evt, int key, int iCursorX, int iCursorY)
 			GC.getCurrentViewport()->panDown();
 			bResult = true;
 		}
-		//	Trap escape as a way out of advisor screens (can't find another way to trap this)
 		if ( evt == 7 && key == 1 )
 		{
 			GC.getCurrentViewport()->closeAdvisor(-1,-1,-1,-1,-1);

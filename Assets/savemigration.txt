@@ -789,4 +789,8 @@ CvPlayer::m_iOtherAreaMaintenanceModifier
 CvPlayer::m_iTotalMaintenance
 CvTeam::m_iCorporationMaintenanceModifier
 CvArea::m_aiMaintenanceModifier
+CvUnit::m_iExtraTrapDamageMax
+CvUnit::m_iExtraTrapDamageMin
+CvUnit::m_iExtraTrapComplexity
+CvUnit::m_iTriggerBeforeAttackCount
 ========================

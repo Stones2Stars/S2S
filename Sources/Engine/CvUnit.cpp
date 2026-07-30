@@ -58,12 +58,7 @@ static bool		 g_bUseDummyEntities = false;
 
 //	static buffers allocated once and used during read and write only
 int*	CvUnit::g_paiTempPromotionFreeCount = NULL;
-int*	CvUnit::g_paiTempTrapImmunityUnitCombatCount = NULL;
 int*	CvUnit::g_paiTempTargetUnitCombatCount = NULL;
-int*	CvUnit::g_paiTempExtraTrapDisableUnitCombatType = NULL;
-int*	CvUnit::g_paiTempExtraTrapAvoidanceUnitCombatType = NULL;
-int*	CvUnit::g_paiTempExtraTrapTriggerUnitCombatType = NULL;
-int*	CvUnit::g_paiTempTrapSetWithPromotionCount = NULL;
 int*	CvUnit::g_paiTempPromotionFromTraitCount = NULL;
 bool*	CvUnit::g_pabTempValidBuildUp = NULL;
 int*	CvUnit::g_paiTempExtraUnitCombatModifier = NULL;
@@ -142,12 +137,7 @@ m_Properties(this)
 	{
 		//	Allocate static buffers to be used during read and write
 		g_paiTempPromotionFreeCount = new int[GC.getNumPromotionInfos()];
-		g_paiTempTrapImmunityUnitCombatCount = new int[GC.getNumUnitCombatInfos()]();
 		g_paiTempTargetUnitCombatCount = new int[GC.getNumUnitCombatInfos()]();
-		g_paiTempExtraTrapDisableUnitCombatType = new int[GC.getNumUnitCombatInfos()]();
-		g_paiTempExtraTrapAvoidanceUnitCombatType = new int[GC.getNumUnitCombatInfos()]();
-		g_paiTempExtraTrapTriggerUnitCombatType = new int[GC.getNumUnitCombatInfos()]();
-		g_paiTempTrapSetWithPromotionCount = new int[GC.getNumPromotionInfos()];
 		g_paiTempPromotionFromTraitCount = new int [GC.getNumPromotionInfos()];
 		g_pabTempValidBuildUp = new bool[GC.getNumPromotionLineInfos()];
 		g_paiTempExtraUnitCombatModifier = new int[GC.getNumUnitCombatInfos()];
@@ -557,7 +547,6 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 	m_iSMStrength = 0;
 	m_iOnslaughtCount = 0;
 	m_iExtraEndurance = 0;
-	m_iExtraPoisonProbabilityModifier = 0;
 	m_iRetrainsAvailable = 0;
 	m_iQualityBaseTotal = 0;
 	m_iGroupBaseTotal = 0;
@@ -698,12 +687,8 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 	m_iOnlyDefensiveCount = 0;
 	m_iNoInvisibilityCount = 0;
 	m_iNoCaptureCount = 0;
-	m_iExtraTrapDamageMax = 0;
-	m_iExtraTrapDamageMin = 0;
-	m_iExtraTrapComplexity = 0;
 	m_iExtraNumTriggers = 0;
 	m_iNumTimesTriggered = 0;
-	m_iTriggerBeforeAttackCount = 0;
 	m_iExtraNoDefensiveBonusCount = 0;
 	m_iExtraGatherHerdCount = 0;
 	m_bIsArmed = false;
@@ -834,7 +819,6 @@ CvUnit& CvUnit::operator=(const CvUnit& other)
 	m_iSMStrength = other.m_iSMStrength;
 	m_iOnslaughtCount = other.m_iOnslaughtCount;
 	m_iExtraEndurance = other.m_iExtraEndurance;
-	m_iExtraPoisonProbabilityModifier = other.m_iExtraPoisonProbabilityModifier;
 	m_iRetrainsAvailable = other.m_iRetrainsAvailable;
 	m_iQualityBaseTotal = other.m_iQualityBaseTotal;
 	m_iGroupBaseTotal = other.m_iGroupBaseTotal;
@@ -954,12 +938,8 @@ CvUnit& CvUnit::operator=(const CvUnit& other)
 	m_iOnlyDefensiveCount = other.m_iOnlyDefensiveCount;
 	m_iNoInvisibilityCount = other.m_iNoInvisibilityCount;
 	m_iNoCaptureCount = other.m_iNoCaptureCount;
-	m_iExtraTrapDamageMax = other.m_iExtraTrapDamageMax;
-	m_iExtraTrapDamageMin = other.m_iExtraTrapDamageMin;
-	m_iExtraTrapComplexity = other.m_iExtraTrapComplexity;
 	m_iExtraNumTriggers = other.m_iExtraNumTriggers;
 	m_iNumTimesTriggered = other.m_iNumTimesTriggered;
-	m_iTriggerBeforeAttackCount = other.m_iTriggerBeforeAttackCount;
 	m_iExtraNoDefensiveBonusCount = other.m_iExtraNoDefensiveBonusCount;
 	m_iExtraGatherHerdCount = other.m_iExtraGatherHerdCount;
 	m_bIsArmed = other.m_bIsArmed;
@@ -4969,7 +4949,6 @@ void CvUnit::attack(CvPlot* pPlot, bool bStealth, bool bNoCache)
 	m_combatResult.iTurnCount = 0;
 
 	//TB Combat Mods begin
-	pPlot->doPreAttackTraps(this);
 
 	if (!isDead())
 	{
@@ -5629,10 +5608,6 @@ bool CvUnit::canLoadOntoUnit(const CvUnit* pUnit, const CvPlot* pPlot) const
 		return false;
 	}
 
-	if (isArmedTrap())
-	{
-		return false;
-	}
 
 	if (pUnit->getUnitType() == getUnitType())
 	{
@@ -5816,19 +5791,6 @@ bool CvUnit::canUnload() const
 		return false;
 	}
 
-	if (isTrap())
-	{
-		const TerrainTypes eTerrain = kPlot.getTerrainType();
-		if (eTerrain != NO_TERRAIN)
-		{
-			return false;
-		}
-		const FeatureTypes eFeature = kPlot.getFeatureType();
-		if (eFeature != NO_FEATURE)
-		{
-			return false;
-		}
-	}
 
 	if (m_pUnitInfo != NULL && !isMapCategory(kPlot, *m_pUnitInfo))
 	{
@@ -5880,13 +5842,6 @@ void CvUnit::unload()
 	CvUnit* pUnit = getTransportUnit();
 	setTransportUnit(NULL);
 
-	if (isTrap())
-	{
-		if (plot()->isFriendlyCity(*this, false))
-		{
-			setTrap(pUnit);
-		}
-	}
 }
 
 
@@ -6743,131 +6698,6 @@ bool CvUnit::canNukeAt(const CvPlot* pPlot, int iX, int iY) const
 	return true;
 }
 
-bool CvUnit::nuke(int iX, int iY, bool bTrap)
-{
-	PROFILE_EXTRA_FUNC();
-
-	if (!canNukeAt(plot(), iX, iY))
-	{
-		return false;
-	}
-	CvPlot* nukePlot = GC.getMap().plot(iX, iY);
-
-	if (!bTrap && airBaseCombatStr() != 0 && interceptTest(nukePlot))
-	{
-		return true;
-	}
-	const PlayerTypes eMyOwner = getOwner();
-	CvPlayerAI& myOwner = GET_PLAYER(eMyOwner);
-
-	bool nukedTeams[MAX_PC_TEAMS];
-
-	for (int iI = 0; iI < MAX_PC_TEAMS; iI++)
-	{
-		nukedTeams[iI] = isNukeVictim(nukePlot, (TeamTypes)iI, nukeRange());
-	}
-
-	if (!bTrap)
-	{
-		int iBestInterception = 0;
-		TeamTypes eBestTeam = NO_TEAM;
-
-		for (int iI = 0; iI < MAX_PC_TEAMS; iI++)
-		{
-			if (nukedTeams[iI] && GET_TEAM((TeamTypes)iI).getNukeInterception() > iBestInterception)
-			{
-				iBestInterception = GET_TEAM((TeamTypes)iI).getNukeInterception();
-				eBestTeam = (TeamTypes)iI;
-			}
-		}
-
-		iBestInterception *= 100 - m_pUnitInfo->getEvasionProbability();
-		iBestInterception /= 100;
-
-		if (airBaseCombatStr() != 0)
-		{
-			setReconPlot(nukePlot);
-		}
-
-		if (GC.getGame().getSorenRandNum(100, "Nuke") < iBestInterception)
-		{
-			for (int iI = 0; iI < MAX_PC_PLAYERS; iI++)
-			{
-				if (GET_PLAYER((PlayerTypes)iI).isAlive())
-				{
-					AddDLLMessage(
-						(PlayerTypes)iI, iI == eMyOwner, GC.getEVENT_MESSAGE_TIME(),
-						gDLL->getText(
-							"TXT_KEY_MISC_NUKE_INTERCEPTED",
-							myOwner.getNameKey(), getNameKey(),
-							GET_TEAM(eBestTeam).getName().GetCString()
-						),
-						"AS2D_NUKE_INTERCEPTED", MESSAGE_TYPE_MAJOR_EVENT, getButton(),
-						GC.getCOLOR_RED(), nukePlot->getX(), nukePlot->getY(), true, true
-					);
-				}
-			}
-			// Nuke entity mission
-			// Add the intercepted mission (defender is not NULL)
-			addMission(CvMissionDefinition(MISSION_NUKE, nukePlot, this, this));
-
-			kill(true, NO_PLAYER, true);
-
-			return true; // Intercepted!!! (XXX need special event for this...)
-		}
-	}
-
-	if (nukePlot->isActiveVisible(false) && !isUsingDummyEntities() && isInViewport())
-	{
-		if (airBaseCombatStr() != 0)
-		{
-			addMission(CvAirMissionDefinition(MISSION_AIRSTRIKE, nukePlot, this));
-
-			if (GC.getInfoTypeForString("EFFECT_JETFIGHTER_NUKE_EXPLODE") != -1)
-			{
-				gDLL->getEngineIFace()->TriggerEffect((EffectTypes)GC.getInfoTypeForString("EFFECT_JETFIGHTER_NUKE_EXPLODE"), nukePlot->getPoint(), 0);
-				gDLL->getInterfaceIFace()->playGeneralSound("AS2D_NUKE_EXPLODES", nukePlot->getPoint());
-			}
-		}
-		else // Nuke entity mission
-		{
-			// Add the non-intercepted mission (defender is NULL)
-			addMission(CvMissionDefinition(MISSION_NUKE, nukePlot, this));
-		}
-	}
-
-	setMadeAttack(true);
-	setAttackPlot(nukePlot, false);
-
-	nukeDiplomacy(nukedTeams);
-
-	const CvWString szBuffer =
-	(
-		bTrap
-		?
-		gDLL->getText("TXT_KEY_MISC_NUKE_TRAP", getNameKey(), myOwner.getNameKey())
-		:
-		gDLL->getText("TXT_KEY_MISC_NUKE_LAUNCHED", myOwner.getNameKey(), getNameKey())
-	);
-
-	for (int iI = 0; iI < MAX_PC_PLAYERS; iI++)
-	{
-		if (GET_PLAYER((PlayerTypes)iI).isAlive())
-		{
-			AddDLLMessage(
-				(PlayerTypes)iI, iI == eMyOwner, GC.getEVENT_MESSAGE_TIME(),
-				szBuffer, "AS2D_NUKE_EXPLODES", MESSAGE_TYPE_MAJOR_EVENT,
-				getButton(), GC.getCOLOR_RED(), nukePlot->getX(), nukePlot->getY(), true, true
-			);
-		}
-	}
-
-	if (isSuicide())
-	{
-		kill(true);
-	}
-	return true;
-}
 
 
 bool CvUnit::canRecon() const
@@ -10099,10 +9929,6 @@ int CvUnit::canLead(const CvPlot* pPlot, int iUnitId) const
 		return 0;
 	}
 
-	if (isTrap())
-	{
-		return 0;
-	}
 
 	int iNumUnits = 0;
 	const CvUnitInfo& kUnitInfo = getUnitInfo();
@@ -11033,53 +10859,6 @@ bool CvUnit::canUnitCoexistWithArrivingUnit(const CvUnit& enemyUnit) const
 		}
 	}
 
-	if (!isArmedTrap() && !enemyUnit.isArmedTrap())
-	{
-		if (!canAttack() && !enemyUnit.canAttack())
-		{
-			return true;
-		}
-		if (enemyUnit.isBarbCoExist() && isHominid() || enemyUnit.isHominid() && isBarbCoExist())
-		{
-			return true;
-		}
-
-		if (enemyUnit.isInvisible(getTeam(), false, false) && enemyUnit.isOnlyDefensive() || isInvisible(enemyUnit.getTeam(), false, false) && isOnlyDefensive())
-		{
-			return true;
-		}
-
-		if (GC.getGame().isOption(GAMEOPTION_COMBAT_AMNESTY))
-		{
-			const bool bBorderValid =
-				GET_TEAM(getTeam()).isOpenBorders(enemyUnit.getTeam())
-				||
-				GET_TEAM(getTeam()).isLimitedBorders(enemyUnit.getTeam());
-
-			if (bBorderValid)
-			{
-				if (plot()->getOwner() == getOwner() && isHiddenNationality())
-				{
-					if (!enemyUnit.canAttack() || enemyUnit.isPassage())
-					{
-						return true;
-					}
-				}
-				else if (plot()->getOwner() == enemyUnit.getOwner() && enemyUnit.isHiddenNationality())
-				{
-					if (!canAttack() || isPassage())
-					{
-						return true;
-					}
-				}
-			}
-		}
-
-		if (plot()->isCity(false) && (isBlendIntoCity() || enemyUnit.isBlendIntoCity()))
-		{
-			return true;
-		}
-	}
 
 	// if is loaded and is not attacking
 	if (isCargo()
@@ -12211,10 +11990,6 @@ bool CvUnit::canAmbush(const CvUnit& defender, const bool bAssassinate) const
 
 bool CvUnit::canDefend(const CvPlot* pPlot) const
 {
-	if (!canFight() || isTrap() || isCargo())
-	{
-		return false;
-	}
 	if (!pPlot) pPlot = plot();
 
 	if (!pPlot->isValidDomainForAction(*this) && !GC.getLAND_UNITS_CAN_ATTACK_WATER_CITIES())
@@ -13086,7 +12861,6 @@ int CvUnit::enduranceTotal() const
 
 int CvUnit::poisonProbabilityModifierTotal() const
 {
-	return m_pUnitInfo->getPoisonProbabilityModifier() + getExtraPoisonProbabilityModifier();
 }
 //TB Combat Mods End
 
@@ -13754,7 +13528,6 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
 		if (!bInit && pOldPlot && canFight() && !isCargo())
 		{
 			///TB: This next portion is to reset the plot list of the new plot before moving on after units may (probably were) have been destroyed in combat there.
-			//This might be necessary for the trap segment below, to rerun this.
 			OutputDebugString(CvString::format("%S (%d) CvUnit::setXY (%d,%d)\n", getDescription().c_str(), m_iID, m_iX, m_iY).c_str());
 			foreach_(CvUnit* unitX, pNewPlot->units_safe())
 			{
@@ -13763,10 +13536,6 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
 
 				if ((isEnemy(unitX->getTeam(), pNewPlot) || unitX->isEnemy(getTeam())) && !unitX->canCoexistWithAttacker(*this, true))
 				{
-					if (unitX->isArmedTrap())
-					{
-						unitX->doTrap(this);
-					}
 					else if (!unitX->canDefend(pNewPlot) && !unitX->isInvisible(getTeam(), false) && !unitX->isCargo())
 					{
 						//TB NOTE: This is where units that can't defend themselves are auto-captured IF the unit has a defined capture tag and cannot defend.
@@ -15966,32 +15735,7 @@ void CvUnit::changeExtraEndurance(int iChange)
 	FASSERT_NOT_NEGATIVE(m_iExtraEndurance);
 }
 
-int CvUnit::getExtraPoisonProbabilityModifier(bool bIgnoreCommanders, bool bIgnoreCommodores) const
-{
-	if (!bIgnoreCommanders && !isCommander())
-	{
-		const CvUnit* pCommander = getCommander();
-		if (pCommander)
-		{
-			return m_iExtraPoisonProbabilityModifier + pCommander->m_iExtraPoisonProbabilityModifier;
-		}
-	}
-	if (!bIgnoreCommodores && !isCommodore())
-    	{
-    		const CvUnit* pCommodore = getCommodore();
-    		if (pCommodore)
-    		{
-    			return m_iExtraPoisonProbabilityModifier + pCommodore->m_iExtraPoisonProbabilityModifier;
-    		}
-    	}
-	return m_iExtraPoisonProbabilityModifier;
-}
 
-void CvUnit::changeExtraPoisonProbabilityModifier(int iChange)
-{
-	m_iExtraPoisonProbabilityModifier += iChange;
-	FASSERT_NOT_NEGATIVE(m_iExtraPoisonProbabilityModifier);
-}
 
 //TB Combat Mods End
 int CvUnit::getExtraCollateralDamage() const
@@ -18401,10 +18145,6 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 		changeFeatureDoubleMoveCount(((FeatureTypes)kUnitCombat.getFeatureDoubleMoveChangeType(iI)), iChange);
 	}
 
-	for (iI = 0; iI < kUnitCombat.getNumTrapImmunityUnitCombatTypes(); iI++)
-	{
-		changeTrapImmunityUnitCombatCount((UnitCombatTypes)kUnitCombat.getTrapImmunityUnitCombatType(iI), iChange);
-	}
 
 	// int vector utilizing pairing without delayed resolution
 	for (iI = 0; iI < GC.getNumInvisibleInfos(); iI++)
@@ -18501,10 +18241,6 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 		changeExtraFlankingStrengthbyUnitCombatType(((UnitCombatTypes)kUnitCombat.getFlankingStrengthbyUnitCombatTypeChange(iI).eUnitCombat), kUnitCombat.getFlankingStrengthbyUnitCombatTypeChange(iI).iModifier * iChange);
 	}
 
-	for (iI = 0; iI < kUnitCombat.getNumTrapAvoidanceUnitCombatTypes(); iI++)
-	{
-		changeExtraTrapAvoidanceUnitCombatType(((UnitCombatTypes)kUnitCombat.getTrapAvoidanceUnitCombatType(iI).eUnitCombat), kUnitCombat.getTrapAvoidanceUnitCombatType(iI).iModifier * iChange);
-	}
 
 	if (bSM && bByPromo)
 	{
@@ -18744,7 +18480,6 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	changeAnimalIgnoresBordersCount(kPromotion.getAnimalIgnoresBordersChange() * iChange);
 	changeOnslaughtCount((kPromotion.isOnslaughtChange()) ? iChange : 0);
 	changeExtraEndurance(kPromotion.getEnduranceChange() * iChange);
-	changeExtraPoisonProbabilityModifier(kPromotion.getPoisonProbabilityModifierChange() * iChange);
 
 	changeExtraCaptureProbabilityModifier(kPromotion.getCapture(CAPTURE_PROBABILITY, CASC_SCOPE_UNIT) / 100 * iChange);
 	changeExtraCaptureResistanceModifier(kPromotion.getCapture(CAPTURE_RESISTANCE, CASC_SCOPE_UNIT) / 100 * iChange);
@@ -18863,11 +18598,7 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	changeStealthDefenseCount((CvSkillReads::stealthDefense(kPromotion.getSkills()) ? 1 : 0) * iChange);
 	changeOnlyDefensiveCount((CvSkillReads::defenseOnly(kPromotion.getSkills()) ? 1 : 0) * iChange);
 	changeNoInvisibilityCount(kPromotion.getNoInvisibilityChange() * iChange);
-	changeExtraTrapDamageMax(kPromotion.getTrapDamageMax() * iChange);
-	changeExtraTrapDamageMin(kPromotion.getTrapDamageMin() * iChange);
-	changeExtraTrapComplexity(kPromotion.getTrapComplexity() * iChange);
 	changeExtraNumTriggers(kPromotion.getNumTriggers() * iChange);
-	changeTriggerBeforeAttackCount(kPromotion.getTriggerBeforeAttackChange() * iChange);
 	changeHiddenNationalityCount(kPromotion.getHiddenNationalityChange() * iChange);
 
 	// the promotion's SM rank deltas live in its sizeMatters section (json.md par.9: Promotion carries the
@@ -18933,15 +18664,7 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 		changeNegatesInvisibleCount((InvisibleTypes)kPromotion.getNegatesInvisibilityType(iI), iChange);
 	}
 
-	for (iI = 0; iI < kPromotion.getNumTrapSetWithPromotionTypes(); iI++)
-	{
-		changeTrapSetWithPromotionCount((PromotionTypes)kPromotion.getTrapSetWithPromotionType(iI), iChange);
-	}
 
-	for (iI = 0; iI < kPromotion.getNumTrapImmunityUnitCombatTypes(); iI++)
-	{
-		changeTrapImmunityUnitCombatCount((UnitCombatTypes)kPromotion.getTrapImmunityUnitCombatType(iI), iChange);
-	}
 
 	for (iI = 0; iI < kPromotion.getNumTargetUnitCombatTypes(); iI++)
 	{
@@ -18998,9 +18721,6 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	{
 		changeExtraUnitCombatModifier(((UnitCombatTypes)iI), (InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_UNITCOMBAT, iI, COMBAT_AMOUNT) * iChange));
 		changeExtraFlankingStrengthbyUnitCombatType(((UnitCombatTypes)iI), (kPromotion.getFlankingStrengthbyUnitCombatTypeChange(iI) * iChange));
-		changeExtraTrapDisableUnitCombatType(((UnitCombatTypes)iI), (kPromotion.getTrapDisableUnitCombatType(iI) * iChange));
-		changeExtraTrapAvoidanceUnitCombatType(((UnitCombatTypes)iI), (kPromotion.getTrapAvoidanceUnitCombatType(iI) * iChange));
-		changeExtraTrapTriggerUnitCombatType(((UnitCombatTypes)iI), (kPromotion.getTrapTriggerUnitCombatType(iI) * iChange));
 	}
 
 	for (iI = 0; iI < kPromotion.getNumSubCombatChangeTypes(); iI++)
@@ -19576,7 +19296,6 @@ void CvUnit::read(FDataStreamBase* pStream)
 	// Read compressed data format
 	for (int iI = 0; iI < GC.getNumPromotionInfos(); iI++)
 	{
-		g_paiTempTrapSetWithPromotionCount[iI] = 0;
 		g_paiTempPromotionFromTraitCount[iI] = 0;
 	}
 	do
@@ -19589,7 +19308,6 @@ void CvUnit::read(FDataStreamBase* pStream)
 
 			if ( iNewIndex != NO_PROMOTION )
 			{
-				WRAPPER_READ_DECORATED(wrapper, "CvUnit", &g_paiTempTrapSetWithPromotionCount[iNewIndex], "trapSetWithPromotionType");
 				WRAPPER_READ_DECORATED(wrapper, "CvUnit", &g_paiTempPromotionFromTraitCount[iNewIndex], "promotionFromTraitCount");
 			}
 		}
@@ -19603,7 +19321,6 @@ void CvUnit::read(FDataStreamBase* pStream)
 		{
 			PromotionKeyedInfo* info = findOrCreatePromotionKeyedInfo((PromotionTypes)iI);
 
-			info->m_iTrapSetWithPromotionCount = g_paiTempTrapSetWithPromotionCount[iI];
 			info->m_iPromotionFromTraitCount = g_paiTempPromotionFromTraitCount[iI];
 		}
 	}
@@ -19673,7 +19390,6 @@ void CvUnit::read(FDataStreamBase* pStream)
 		}
 	}
 
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraPoisonProbabilityModifier);
 
 	// Read compressed data format
 	for (int iI = 0; iI < GC.getNumPromotionLineInfos(); iI++)
@@ -20095,12 +19811,8 @@ void CvUnit::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvUnit", &m_bRevealed);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iOnlyDefensiveCount);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iNoInvisibilityCount);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraTrapDamageMax);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraTrapDamageMin);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraTrapComplexity);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraNumTriggers);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iNumTimesTriggered);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iTriggerBeforeAttackCount);
 	WRAPPER_READ(wrapper, "CvUnit", &m_bIsArmed);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iHiddenNationalityCount);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iNoCaptureCount);
@@ -20142,11 +19854,7 @@ void CvUnit::read(FDataStreamBase* pStream)
 	{
 		WRAPPER_READ_DECORATED(wrapper, "CvUnit", &g_paiTempHealUnitCombatTypeVolume[iI], "healUnitCombatTypeVolume");
 		WRAPPER_READ_DECORATED(wrapper, "CvUnit", &g_paiTempHealUnitCombatTypeAdjacentVolume[iI], "healUnitCombatTypeAdjacentVolume");
-		WRAPPER_READ_DECORATED(wrapper, "CvUnit", &g_paiTempTrapImmunityUnitCombatCount[iI], "trapImmunityUnitCombatCount");
 		WRAPPER_READ_DECORATED(wrapper, "CvUnit", &g_paiTempTargetUnitCombatCount[iI], "targetUnitCombatCount");
-		WRAPPER_READ_DECORATED(wrapper, "CvUnit", &g_paiTempExtraTrapDisableUnitCombatType[iI], "extraTrapDisableUnitCombatType");
-		WRAPPER_READ_DECORATED(wrapper, "CvUnit", &g_paiTempExtraTrapAvoidanceUnitCombatType[iI], "extraTrapAvoidanceUnitCombatType");
-		WRAPPER_READ_DECORATED(wrapper, "CvUnit", &g_paiTempExtraTrapTriggerUnitCombatType[iI], "extraTrapTriggerUnitCombatType");
 
 		if (g_paiTempHealUnitCombatTypeVolume[iI] != 0
 		||  g_paiTempHealUnitCombatTypeAdjacentVolume[iI] != 0
@@ -20160,11 +19868,7 @@ void CvUnit::read(FDataStreamBase* pStream)
 
 			info->m_iHealUnitCombatTypeVolume = g_paiTempHealUnitCombatTypeVolume[iI];
 			info->m_iHealUnitCombatTypeAdjacentVolume = g_paiTempHealUnitCombatTypeAdjacentVolume[iI];
-			info->m_iTrapImmunityUnitCombatCount = g_paiTempTrapImmunityUnitCombatCount[iI];
 			info->m_iTargetUnitCombatCount = g_paiTempTargetUnitCombatCount[iI];
-			info->m_iExtraTrapDisableUnitCombatType = g_paiTempExtraTrapDisableUnitCombatType[iI];
-			info->m_iExtraTrapAvoidanceUnitCombatType = g_paiTempExtraTrapAvoidanceUnitCombatType[iI];
-			info->m_iExtraTrapTriggerUnitCombatType = g_paiTempExtraTrapTriggerUnitCombatType[iI];
 		}
 	}
 	{
@@ -20222,16 +19926,13 @@ void CvUnit::read(FDataStreamBase* pStream)
 			m_worker = new UnitCompWorker();
 			short iExtraWorkPercent = 0;
 			int iExtraHillsWorkPercent = 0;
-			int iExtraPeaksWorkPercent = 0;
 			int iAssignedCity = -1;
 			WRAPPER_READ_DECORATED(wrapper, "CvUnit", &iExtraWorkPercent, "m_iExtraWorkPercent");
 			WRAPPER_READ_DECORATED(wrapper, "CvUnit", &iExtraHillsWorkPercent, "m_iExtraHillsWorkPercent");
-			WRAPPER_READ_DECORATED(wrapper, "CvUnit", &iExtraPeaksWorkPercent, "m_iExtraPeaksWorkPercent");
 			WRAPPER_READ_DECORATED(wrapper, "CvUnit", &iAssignedCity, "m_iAssignedCity");
 
 			m_worker->changeWorkModifier(iExtraWorkPercent);
 			m_worker->changeHillsWorkModifier(iExtraHillsWorkPercent + m_pUnitInfo->getHillsWorkModifier());
-			m_worker->changePeaksWorkModifier(iExtraPeaksWorkPercent + m_pUnitInfo->getPeaksWorkModifier());
 			m_worker->setCityAssignment(iAssignedCity);
 
 			short iSize = 0;
@@ -20479,7 +20180,6 @@ void CvUnit::write(FDataStreamBase* pStream)
 		}
 	}
 
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraPoisonProbabilityModifier);
 
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iRetrainsAvailable);
 	//TB Combat Mods end
@@ -20762,12 +20462,8 @@ void CvUnit::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvUnit", m_bRevealed);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iOnlyDefensiveCount);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iNoInvisibilityCount);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraTrapDamageMax);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraTrapDamageMin);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraTrapComplexity);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraNumTriggers);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iNumTimesTriggered);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iTriggerBeforeAttackCount);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_bIsArmed);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iHiddenNationalityCount);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iNoCaptureCount);
@@ -20801,11 +20497,7 @@ void CvUnit::write(FDataStreamBase* pStream)
 
 		WRAPPER_WRITE_DECORATED(wrapper, "CvUnit", info ? info->m_iHealUnitCombatTypeVolume : 0, "healUnitCombatTypeVolume");
 		WRAPPER_WRITE_DECORATED(wrapper, "CvUnit", info ? info->m_iHealUnitCombatTypeAdjacentVolume : 0, "healUnitCombatTypeAdjacentVolume");
-		WRAPPER_WRITE_DECORATED(wrapper, "CvUnit", info ? info->m_iTrapImmunityUnitCombatCount : 0, "trapImmunityUnitCombatCount");
 		WRAPPER_WRITE_DECORATED(wrapper, "CvUnit", info ? info->m_iTargetUnitCombatCount : 0, "targetUnitCombatCount");
-		WRAPPER_WRITE_DECORATED(wrapper, "CvUnit", info ? info->m_iExtraTrapDisableUnitCombatType : 0, "extraTrapDisableUnitCombatType");
-		WRAPPER_WRITE_DECORATED(wrapper, "CvUnit", info ? info->m_iExtraTrapAvoidanceUnitCombatType : 0, "extraTrapAvoidanceUnitCombatType");
-		WRAPPER_WRITE_DECORATED(wrapper, "CvUnit", info ? info->m_iExtraTrapTriggerUnitCombatType : 0, "extraTrapTriggerUnitCombatType");
 	}
 
 	WRAPPER_WRITE_DECORATED(wrapper, "CvUnit", isCommander(), "m_bCommander");
@@ -20829,7 +20521,6 @@ void CvUnit::write(FDataStreamBase* pStream)
 	{
 		WRAPPER_WRITE_DECORATED(wrapper, "CvUnit", m_worker->getWorkModifier(), "m_iExtraWorkPercent");
 		WRAPPER_WRITE_DECORATED(wrapper, "CvUnit", m_worker->getHillsWorkModifier() - m_pUnitInfo->getHillsWorkModifier(), "m_iExtraHillsWorkPercent");
-		WRAPPER_WRITE_DECORATED(wrapper, "CvUnit", m_worker->getPeaksWorkModifier() - m_pUnitInfo->getPeaksWorkModifier(), "m_iExtraPeaksWorkPercent");
 		WRAPPER_WRITE_DECORATED(wrapper, "CvUnit", m_worker->getAssignedCity(), "m_iAssignedCity");
 
 		const std::vector<BuildTypes>& extraBuilds = m_worker->getExtraBuilds();
@@ -29272,67 +28963,15 @@ void CvUnit::doSetDefaultStatuses()
 	}
 }
 
-int CvUnit::trapDamageMaxTotal() const
-{
-	int iAnswer = m_pUnitInfo->getTrapDamageMax();
-	iAnswer += getExtraTrapDamageMax();
 
-	return iAnswer;
-}
 
-int CvUnit::getExtraTrapDamageMax() const
-{
-	return m_iExtraTrapDamageMax;
-}
 
-void CvUnit::changeExtraTrapDamageMax(int iChange)
-{
-	m_iExtraTrapDamageMax += iChange;
-}
 
-int CvUnit::trapDamageMinTotal() const
-{
-	int iAnswer = m_pUnitInfo->getTrapDamageMin();
-	iAnswer += getExtraTrapDamageMin();
 
-	return iAnswer;
-}
 
-int CvUnit::getExtraTrapDamageMin() const
-{
-	return m_iExtraTrapDamageMin;
-}
 
-void CvUnit::changeExtraTrapDamageMin(int iChange)
-{
-	m_iExtraTrapDamageMin += iChange;
-}
 
-int CvUnit::trapComplexityTotal() const
-{
-	int iAnswer = m_pUnitInfo->getTrapComplexity();
-	iAnswer += getExtraTrapComplexity();
 
-	return iAnswer;
-}
-
-int CvUnit::getExtraTrapComplexity() const
-{
-	return m_iExtraTrapComplexity;
-}
-
-void CvUnit::changeExtraTrapComplexity(int iChange)
-{
-	m_iExtraTrapComplexity += iChange;
-}
-
-int CvUnit::trapNumTriggers() const
-{
-	int iAnswer = m_pUnitInfo->getNumTriggers();
-	iAnswer += getExtraNumTriggers();
-
-	return iAnswer;
-}
 
 int CvUnit::getExtraNumTriggers() const
 {
@@ -29344,13 +28983,6 @@ void CvUnit::changeExtraNumTriggers(int iChange)
 	m_iExtraNumTriggers += iChange;
 }
 
-int CvUnit::trapNumTriggersRemaining() const
-{
-	int iAnswer = trapNumTriggers();
-	iAnswer -= getNumTimesTriggered();
-
-	return iAnswer;
-}
 
 int CvUnit::getNumTimesTriggered() const
 {
@@ -29362,82 +28994,15 @@ void CvUnit::changeNumTimesTriggered(int iChange)
 	m_iNumTimesTriggered += iChange;
 }
 
-bool CvUnit::isTriggerBeforeAttack() const
-{
-	int iAnswer = 0;
-	if (m_pUnitInfo->isTriggerBeforeAttack())
-	{
-		iAnswer++;
-	}
-	iAnswer += getTriggerBeforeAttackCount();
 
-	return (iAnswer > 0);
-}
 
-int CvUnit::getTriggerBeforeAttackCount() const
-{
-	return m_iTriggerBeforeAttackCount;
-}
 
-void CvUnit::changeTriggerBeforeAttackCount(int iChange)
-{
-	m_iTriggerBeforeAttackCount += iChange;
-}
 
-int CvUnit::getTrapSetWithPromotionCount(PromotionTypes ePromotion) const
-{
-	FASSERT_BOUNDS(0, GC.getNumPromotionInfos(), ePromotion);
 
-	const PromotionKeyedInfo* info = findPromotionKeyedInfo(ePromotion);
-
-	return info == NULL ? 0 : info->m_iTrapSetWithPromotionCount;
-}
-
-bool CvUnit::hasTrapSetWithPromotion(PromotionTypes ePromotion) const
-{
-	FASSERT_BOUNDS(0, GC.getNumPromotionInfos(), ePromotion);
-	return (getTrapSetWithPromotionCount(ePromotion) > 0);
-}
-
-void CvUnit::changeTrapSetWithPromotionCount(PromotionTypes ePromotion, int iChange)
-{
-	FASSERT_BOUNDS(0, GC.getNumPromotionInfos(), ePromotion);
-
-	if (iChange != 0)
-	{
-		PromotionKeyedInfo* info = findOrCreatePromotionKeyedInfo(ePromotion);
-
-		info->m_iTrapSetWithPromotionCount += iChange;
-	}
-}
 //
 
-int CvUnit::getTrapImmunityUnitCombatCount(UnitCombatTypes eUnitCombat) const
-{
-	FASSERT_BOUNDS(0, GC.getNumUnitCombatInfos(), eUnitCombat);
 
-	const UnitCombatKeyedInfo* info = findUnitCombatKeyedInfo(eUnitCombat);
 
-	return info ? info->m_iTrapImmunityUnitCombatCount : 0;
-}
-
-bool CvUnit::hasTrapImmunityUnitCombat(UnitCombatTypes eUnitCombat) const
-{
-	FASSERT_BOUNDS(0, GC.getNumUnitCombatInfos(), eUnitCombat);
-	return (getTrapImmunityUnitCombatCount(eUnitCombat) > 0);
-}
-
-void CvUnit::changeTrapImmunityUnitCombatCount(UnitCombatTypes eUnitCombat, int iChange)
-{
-	FASSERT_BOUNDS(0, GC.getNumUnitCombatInfos(), eUnitCombat);
-
-	if (iChange != 0)
-	{
-		UnitCombatKeyedInfo* info = findOrCreateUnitCombatKeyedInfo(eUnitCombat);
-
-		info->m_iTrapImmunityUnitCombatCount += iChange;
-	}
-}
 
 bool CvUnit::hasTargetUnitCombat(UnitCombatTypes eUnitCombat) const
 {
@@ -29457,265 +29022,29 @@ void CvUnit::changeTargetUnitCombatCount(UnitCombatTypes eUnitCombat, int iChang
 	}
 }
 
-int CvUnit::trapDisableUnitCombatTotal(UnitCombatTypes eCombatType) const
-{
-	return std::max(0, m_pUnitInfo->getTrapDisableUnitCombatType(eCombatType) + getExtraTrapDisableUnitCombatType(eCombatType));
-}
 
-int CvUnit::getExtraTrapDisableUnitCombatType(UnitCombatTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, GC.getNumUnitCombatInfos(), eIndex);
 
-	const UnitCombatKeyedInfo* info = findUnitCombatKeyedInfo(eIndex);
 
-	return info ? info->m_iExtraTrapDisableUnitCombatType : 0;
-}
-
-void CvUnit::changeExtraTrapDisableUnitCombatType(UnitCombatTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, GC.getNumUnitCombatInfos(), eIndex);
-
-	if (iChange != 0)
-	{
-		UnitCombatKeyedInfo* info = findOrCreateUnitCombatKeyedInfo(eIndex);
-
-		info->m_iExtraTrapDisableUnitCombatType += iChange;
-	}
-}
-
-bool CvUnit::hasExtraTrapDisableUnitCombatType(UnitCombatTypes eIndex) const
-{
-	return (getExtraTrapDisableUnitCombatType(eIndex) != 0);
-}
 //
 
-int CvUnit::trapAvoidanceUnitCombatTotal(UnitCombatTypes eCombatType) const
-{
-	int iAmount = m_pUnitInfo->getTrapAvoidanceUnitCombatType(eCombatType);
 
-	iAmount += getExtraTrapAvoidanceUnitCombatType(eCombatType);
 
-	return std::max(0,iAmount);
-}
 
-int CvUnit::getExtraTrapAvoidanceUnitCombatType(UnitCombatTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, GC.getNumUnitCombatInfos(), eIndex);
 
-	const UnitCombatKeyedInfo* info = findUnitCombatKeyedInfo(eIndex);
 
-	return  info ? info->m_iExtraTrapAvoidanceUnitCombatType : 0;
-}
 
-void CvUnit::changeExtraTrapAvoidanceUnitCombatType(UnitCombatTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, GC.getNumUnitCombatInfos(), eIndex);
 
-	if (iChange != 0)
-	{
-		UnitCombatKeyedInfo* info = findOrCreateUnitCombatKeyedInfo(eIndex);
 
-		info->m_iExtraTrapAvoidanceUnitCombatType += iChange;
-	}
-}
 
-bool CvUnit::hasExtraTrapAvoidanceUnitCombatType(UnitCombatTypes eIndex) const
-{
-	return (getExtraTrapAvoidanceUnitCombatType(eIndex) != 0);
-}
 
-int CvUnit::trapTriggerUnitCombatTotal(UnitCombatTypes eCombatType) const
-{
-	int iAmount = m_pUnitInfo->getTrapTriggerUnitCombatType(eCombatType);
-
-	iAmount += getExtraTrapTriggerUnitCombatType(eCombatType);
-
-	return std::max(0,iAmount);
-}
-
-int CvUnit::getExtraTrapTriggerUnitCombatType(UnitCombatTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, GC.getNumUnitCombatInfos(), eIndex);
-
-	const UnitCombatKeyedInfo* info = findUnitCombatKeyedInfo(eIndex);
-
-	return info ? info->m_iExtraTrapTriggerUnitCombatType : 0;
-}
-
-void CvUnit::changeExtraTrapTriggerUnitCombatType(UnitCombatTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, GC.getNumUnitCombatInfos(), eIndex);
-
-	if (iChange != 0)
-	{
-		UnitCombatKeyedInfo* info = findOrCreateUnitCombatKeyedInfo(eIndex);
-
-		info->m_iExtraTrapTriggerUnitCombatType += iChange;
-	}
-}
-
-bool CvUnit::hasExtraTrapTriggerUnitCombatType(UnitCombatTypes eIndex) const
-{
-	return (getExtraTrapTriggerUnitCombatType(eIndex) != 0);
-}
-
-bool CvUnit::isTrap() const
-{
-	return (trapNumTriggers() > 0);
-}
-
-bool CvUnit::isArmedTrap() const
-{
-	return (isTrap() && isArmed());
-}
-
-// pUnit is the unit setting the trap
-void CvUnit::setTrap(CvUnit* pUnit)
-{
-	PROFILE_EXTRA_FUNC();
-	m_bIsArmed = true;
-	for (int iI = 0; iI < GC.getNumPromotionInfos(); iI++)
-	{
-		if (pUnit->hasTrapSetWithPromotion((PromotionTypes)iI)
-		&& canAcquirePromotion((PromotionTypes)iI, PromotionRequirements::ForFree))
-		{
-			setHasPromotion((PromotionTypes)iI, true, true, false, false);
-		}
-	}
-}
 
 bool CvUnit::isArmed() const
 {
 	return m_bIsArmed || hasStatus(STATUS_PARALYZED);
 }
 
-void CvUnit::doTrap(CvUnit* pUnit)
-{
-	PROFILE_EXTRA_FUNC();
-	//pUnit is the unit moving onto the trap
-	if (!isArmed())
-	{
-		return;
-	}
 
-	//Establish Base Trigger Chance, Avoidance, Disable and Immunities.
-	bool bImmune = false;
-	int iTriggerPercent = 0;
-	int iTrapAvoidance = 0;
-	int iTrapDisable = 0;
-	int iTrapComplexity = trapComplexityTotal();
-	UnitCombatTypes eUnitCombat = NO_UNITCOMBAT;
 
-	for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
-	{
-		if (isHasUnitCombat((UnitCombatTypes)iI))
-		{
-			eUnitCombat = (UnitCombatTypes)iI;
-			if (pUnit->hasTrapImmunityUnitCombat(eUnitCombat))
-			{
-				bImmune = true;
-			}
-			if (pUnit->trapAvoidanceUnitCombatTotal(eUnitCombat) > iTrapAvoidance)
-			{
-				iTrapAvoidance = pUnit->trapAvoidanceUnitCombatTotal(eUnitCombat);
-			}
-			if (pUnit->trapDisableUnitCombatTotal(eUnitCombat) > iTrapDisable)
-			{
-				iTrapDisable = pUnit->trapDisableUnitCombatTotal(eUnitCombat);
-			}
-		}
-		if (pUnit->isHasUnitCombat((UnitCombatTypes)iI))
-		{
-			eUnitCombat = (UnitCombatTypes)iI;
-			if (trapTriggerUnitCombatTotal(eUnitCombat) > 0)
-			{
-				//Cumulative so that multiple factors can come into play programmed on the trap itself (size/volume in addition to a base amount)
-				iTriggerPercent += trapTriggerUnitCombatTotal(eUnitCombat);
-			}
-		}
-	}
-	//final trigger chance is reduced by the avoidance ability
-	iTriggerPercent -= iTrapAvoidance;
-
-	//Establish % chance to disable: Ability to disable this type of trap minus the complexity factor of the trap (which can be as low as 0 for very easily disabled traps)
-	iTrapDisable -= iTrapComplexity;
-	bool bTrapDisabled = false;
-	if (!isInvisible(pUnit->getTeam(),false,false))
-	{
-		//Step 1: Disable check
-		if (iTrapDisable > 0)
-		{
-			if (GC.getGame().getSorenRandNum(100, "Trap Disable Check") < iTrapDisable)
-			{
-				bTrapDisabled = doTrapDisable(pUnit);
-			}
-		}
-	}
-	if (!bTrapDisabled)
-	{
-		//Step 1: Trigger check
-		if (iTriggerPercent > 0)
-		{
-			if (GC.getGame().getSorenRandNum(100, "Trap Trigger Check") < iTriggerPercent)
-			{
-				doTrapTrigger(pUnit, bImmune);
-			}
-		}
-	}
-}
-
-void CvUnit::doTrapTrigger(CvUnit* pUnit, bool bImmune)
-{
-	PROFILE_EXTRA_FUNC();
-	CvWString szBuffer;
-	int iTrapDmgMin = trapDamageMinTotal();
-	int iTrapDmgMax = trapDamageMaxTotal();
-	int iTrapDmg = 0;
-	int iTrapDmgRange = iTrapDmgMax - iTrapDmgMin;
-	changeNumTimesTriggered(1);
-	// dodge/precision dodge-check and armor mitigation removed; trap triggers unless immune.
-	if (!bImmune)
-	{
-		//Trap deals damage, inflicts affliction, and/or nuclear effect
-		//damage
-		if (iTrapDmgMax > 0)
-		{
-			iTrapDmg = GC.getGame().getSorenRandNum(iTrapDmgRange, "Trap Damage Check");
-			iTrapDmg += iTrapDmgMin;
-			if (iTrapDmg > 0)
-			{
-				pUnit->changeDamage(iTrapDmg, getOwner());
-				//message
-
-				const CvWString szBuffer = gDLL->getText("TXT_KEY_MISC_TRAP_TRIGGERED_DAMAGE_SUFFERED", pUnit->getNameKey(), getNameKey(), iTrapDmg);
-				AddDLLMessage(pUnit->getOwner(), true, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_POSITIVE_DINK", MESSAGE_TYPE_INFO, NULL, GC.getCOLOR_RED(), getX(), getY());
-				const CvWString szBuffer2 = gDLL->getText("TXT_KEY_MISC_TRAP_TRIGGERED_DAMAGE_INFLICTED", getNameKey(), pUnit->getNameKey(), iTrapDmg);
-				AddDLLMessage(getOwner(), true, GC.getEVENT_MESSAGE_TIME(), szBuffer2, "AS2D_POSITIVE_DINK", MESSAGE_TYPE_INFO, NULL, GC.getCOLOR_GREEN(), getX(), getY());
-			}
-		}
-		//nuclear
-		if (nukeRange() == 0 && plot() != NULL)
-		{
-			nuke(getX(), getY(), true);
-		}
-	}
-
-	if (trapNumTriggersRemaining() <= 0)
-	{
-		kill(false, getOwner());
-	}
-}
-
-bool CvUnit::doTrapDisable(CvUnit* pUnit)
-{
-	if (!pUnit->isNoCapture() && m_pUnitInfo->getUnitCaptureType() != NO_UNIT)
-	{
-		setCapturingPlayer(pUnit->getOwner());
-		setCapturingUnit(pUnit);
-	}
-	kill(false, pUnit->getOwner(), true);
-	return true;
-}
 
 void CvUnit::changeHiddenNationalityCount(int iValue)
 {

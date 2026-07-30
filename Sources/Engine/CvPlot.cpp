@@ -12886,26 +12886,6 @@ bool CvPlot::hasStealthDefender(const CvUnit* victim, const bool bReveal)
 }
 
 
-void CvPlot::doPreAttackTraps(CvUnit* pAttacker)
-{
-	PROFILE_EXTRA_FUNC();
-
-	if (!pAttacker)
-	{
-		return;
-	}
-	foreach_(CvUnit* unitX, units())
-	{
-		if (unitX->isArmedTrap()
-		&& !unitX->isDead()
-		&&  unitX->isEnemy(pAttacker->getTeam(), this, pAttacker)
-		&&  unitX->isTriggerBeforeAttack()
-		&& !unitX->canUnitCoexistWithArrivingUnit(*pAttacker))
-		{
-			unitX->doTrap(pAttacker);
-		}
-	}
-}
 // /UncutDragon
 
 

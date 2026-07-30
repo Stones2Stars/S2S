@@ -185,7 +185,6 @@ class PromotionKeyedInfo
 public:
 	PromotionKeyedInfo() :	m_bHasPromotion(false),
 							m_iPromotionFreeCount(0),
-							m_iTrapSetWithPromotionCount(0),
 							m_iPromotionFromTraitCount(0)
 	{
 	}
@@ -194,14 +193,12 @@ public:
 	{
 		return (!m_bHasPromotion &&
 			m_iPromotionFreeCount == 0 &&
-			m_iTrapSetWithPromotionCount == 0 &&
 			m_iPromotionFromTraitCount == 0);
 	}
 
 	//TB Combat Mods Begin
 	bool	m_bHasPromotion;
 	int		m_iPromotionFreeCount;
-	int		m_iTrapSetWithPromotionCount;
 	int		m_iPromotionFromTraitCount;
 };
 
@@ -281,13 +278,8 @@ public:
 								m_iHealUnitCombatTypeVolume(0),
 								m_iHealUnitCombatTypeAdjacentVolume(0),
 								m_iHealAsDamage(0),
-								m_iTrapImmunityUnitCombatCount(0),
-								m_iTargetUnitCombatCount(0),
-								m_iExtraTrapDisableUnitCombatType(0),
-								m_iExtraTrapAvoidanceUnitCombatType(0),
-								m_iExtraTrapTriggerUnitCombatType(0)
-	{
-	}
+								m_iTargetUnitCombatCount(0)
+	{}
 
 	bool Empty() const
 	{
@@ -297,11 +289,7 @@ public:
 			m_iHealUnitCombatTypeVolume == 0 &&
 			m_iHealUnitCombatTypeAdjacentVolume == 0 &&
 			m_iHealAsDamage == 0 &&
-			m_iTrapImmunityUnitCombatCount == 0 &&
-			m_iTargetUnitCombatCount == 0 &&
-			m_iExtraTrapDisableUnitCombatType == 0 &&
-			m_iExtraTrapAvoidanceUnitCombatType == 0 &&
-			m_iExtraTrapTriggerUnitCombatType == 0);
+			m_iTargetUnitCombatCount == 0);
 	}
 
 	bool m_bHasUnitCombat;
@@ -310,11 +298,7 @@ public:
 	int m_iHealUnitCombatTypeVolume;
 	int m_iHealUnitCombatTypeAdjacentVolume;
 	int m_iHealAsDamage;
-	int	m_iTrapImmunityUnitCombatCount;
 	int	m_iTargetUnitCombatCount;
-	int	m_iExtraTrapDisableUnitCombatType;
-	int	m_iExtraTrapAvoidanceUnitCombatType;
-	int	m_iExtraTrapTriggerUnitCombatType;
 };
 // SAVEBREAK@
 
@@ -601,7 +585,6 @@ public:
 	bool isNukeVictim(const CvPlot* pPlot, const TeamTypes eTeam, int iRange) const;
 	bool canNuke() const;
 	bool canNukeAt(const CvPlot* pPlot, int iX, int iY) const;
-	bool nuke(int iX, int iY, bool bTrap = false);
 
 	bool canRecon() const;
 	bool canReconAt(const CvPlot* pPlot, int iX, int iY) const;
@@ -1193,8 +1176,6 @@ public:
 	void changeExtraEndurance (int iChange);
 
 
-	int getExtraPoisonProbabilityModifier (bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
-	void changeExtraPoisonProbabilityModifier (int iChange);
 	//TB Combat Mods End
 
 	int getExtraCollateralDamage() const;
@@ -1612,18 +1593,13 @@ protected:
 	int m_iNoCaptureCount;
 	int m_iExtraNoDefensiveBonusCount;
 	int m_iExtraGatherHerdCount;
-	int m_iExtraTrapDamageMax;
-	int m_iExtraTrapDamageMin;
-	int m_iExtraTrapComplexity;
 	int m_iExtraNumTriggers;
 	int m_iNumTimesTriggered;
-	int m_iTriggerBeforeAttackCount;
 	int m_iHiddenNationalityCount;
 	bool m_bIsArmed;
 	bool m_bHasAnyInvisibility;
 	bool m_bRevealed;
 	int m_iExtraEndurance;
-	int m_iExtraPoisonProbabilityModifier;
 	int m_iRetrainsAvailable;
 	int m_iQualityBaseTotal;
 	int m_iGroupBaseTotal;
@@ -2239,63 +2215,25 @@ public:
 
 	void doSetDefaultStatuses();
 
-	int trapDamageMaxTotal() const;
-	int getExtraTrapDamageMax() const;
-	void changeExtraTrapDamageMax(int iChange);
 
-	int trapDamageMinTotal() const;
-	int getExtraTrapDamageMin() const;
-	void changeExtraTrapDamageMin(int iChange);
 
-	int trapComplexityTotal() const;
-	int getExtraTrapComplexity() const;
-	void changeExtraTrapComplexity(int iChange);
 
-	int trapNumTriggers() const;
 	int getExtraNumTriggers() const;
 	void changeExtraNumTriggers(int iChange);
 
-	int trapNumTriggersRemaining() const;
 	int getNumTimesTriggered() const;
 	void changeNumTimesTriggered(int iChange);
 
-	bool isTriggerBeforeAttack() const;
-	int getTriggerBeforeAttackCount() const;
-	void changeTriggerBeforeAttackCount(int iChange);
 
-	int getTrapSetWithPromotionCount(PromotionTypes ePromotion) const;
-	bool hasTrapSetWithPromotion(PromotionTypes ePromotion) const;
-	void changeTrapSetWithPromotionCount(PromotionTypes ePromotion, int iChange);
 
-	int getTrapImmunityUnitCombatCount(UnitCombatTypes eUnitCombat) const;
-	bool hasTrapImmunityUnitCombat(UnitCombatTypes eUnitCombat) const;
-	void changeTrapImmunityUnitCombatCount(UnitCombatTypes eUnitCombat, int iChange);
 
 	bool hasTargetUnitCombat(UnitCombatTypes eUnitCombat) const;
 	void changeTargetUnitCombatCount(UnitCombatTypes eUnitCombat, int iChange);
 
-	int trapDisableUnitCombatTotal(UnitCombatTypes eCombatType) const;
-	int getExtraTrapDisableUnitCombatType(UnitCombatTypes eIndex) const;
-	void changeExtraTrapDisableUnitCombatType(UnitCombatTypes eIndex, int iChange);
-	bool hasExtraTrapDisableUnitCombatType(UnitCombatTypes eIndex) const;
 
-	int trapAvoidanceUnitCombatTotal(UnitCombatTypes eCombatType) const;
-	int getExtraTrapAvoidanceUnitCombatType(UnitCombatTypes eIndex) const;
-	void changeExtraTrapAvoidanceUnitCombatType(UnitCombatTypes eIndex, int iChange);
-	bool hasExtraTrapAvoidanceUnitCombatType(UnitCombatTypes eIndex) const;
 
-	int trapTriggerUnitCombatTotal(UnitCombatTypes eCombatType) const;
-	int getExtraTrapTriggerUnitCombatType(UnitCombatTypes eIndex) const;
-	void changeExtraTrapTriggerUnitCombatType(UnitCombatTypes eIndex, int iChange);
-	bool hasExtraTrapTriggerUnitCombatType(UnitCombatTypes eIndex) const;
 
-	bool isTrap() const;
-	bool isArmedTrap() const;
-	void setTrap(CvUnit* pUnit);
 	bool isArmed() const;
-	void doTrap(CvUnit* pUnit);
-	void doTrapTrigger(CvUnit* pUnit, bool bImmune);
-	bool doTrapDisable(CvUnit* pUnit);
 
 	void changeHiddenNationalityCount(int iValue);
 	int getHiddenNationalityCount() const;
@@ -2323,12 +2261,7 @@ public:
 private:
 	//	static buffers allocated once and used during read and write only
 	static int*	g_paiTempPromotionFreeCount;
-	static int*	g_paiTempTrapImmunityUnitCombatCount;
 	static int*	g_paiTempTargetUnitCombatCount;
-	static int*	g_paiTempExtraTrapDisableUnitCombatType;
-	static int*	g_paiTempExtraTrapAvoidanceUnitCombatType;
-	static int*	g_paiTempExtraTrapTriggerUnitCombatType;
-	static int*	g_paiTempTrapSetWithPromotionCount;
 	static int* g_paiTempPromotionFromTraitCount;
 	static bool*	g_pabTempValidBuildUp;
 	static int*	g_paiTempExtraUnitCombatModifier;

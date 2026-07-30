@@ -1126,7 +1126,6 @@ public:
 	) const;
 	bool hasStealthDefender(const CvUnit* victim, const bool bReveal = false);
 
-	void doPreAttackTraps(CvUnit* pAttacker);
 
 	void countCommander(bool bNewVal, const CvUnit* pUnit);
 	void countCommodore(bool bNewVal, const CvUnit* pUnit);
