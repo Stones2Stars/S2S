@@ -29300,7 +29300,7 @@ int CvPlayer::getTypicalUnitValue(UnitAITypes eUnitAI) const
 	for (std::vector<int>::const_iterator it = vecTrainable.begin(), itEnd = vecTrainable.end(); it != itEnd; ++it)
 	{
 		const int iI = *it;
-		if (GC.getUnitInfo((UnitTypes)iI).getUnitAIType(eUnitAI))
+		if (GC.getUnitInfo((UnitTypes)iI).hasUnitAI(eUnitAI))
 		{
 			const int iValue = GC.getGame().AI_combatValue((UnitTypes)iI);
 			if (iValue > iHighestValue)

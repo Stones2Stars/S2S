@@ -10319,7 +10319,7 @@ bool CvUnit::upgrade(UnitTypes eUnit)
 	//	Preserve the AI type if that is possible
 	UnitAITypes eUnitAI = AI_getUnitAIType();
 
-	if ( !GC.getUnitInfo(eUnit).getUnitAIType(eUnitAI) )
+	if ( !GC.getUnitInfo(eUnit).hasUnitAI(eUnitAI) )
 	{
 		eUnitAI = NO_UNITAI;	//	Will cause it to initialize with its default
 	}

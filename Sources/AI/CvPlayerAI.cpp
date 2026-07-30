@@ -6349,11 +6349,11 @@ int CvPlayerAI::AI_techUnitValue(TechTypes eTech, int iPathLength, bool& bEnable
 
 				if (AI_isDoStrategy(AI_STRATEGY_ALERT1))
 				{
-					if (unitX.getUnitAIType(UNITAI_COLLATERAL))
+					if (unitX.hasUnitAI(UNITAI_COLLATERAL))
 					{
 						iUnitValue += 500;
 					}
-					if (unitX.getUnitAIType(UNITAI_CITY_DEFENSE))
+					if (unitX.hasUnitAI(UNITAI_CITY_DEFENSE))
 					{
 						iUnitValue += 10 * GC.getGame().AI_combatValue(eUnitX);
 					}
@@ -6361,11 +6361,11 @@ int CvPlayerAI::AI_techUnitValue(TechTypes eTech, int iPathLength, bool& bEnable
 
 				if (AI_isDoStrategy(AI_STRATEGY_TURTLE) && iPathLength <= 1)
 				{
-					if (unitX.getUnitAIType(UNITAI_COLLATERAL))
+					if (unitX.hasUnitAI(UNITAI_COLLATERAL))
 					{
 						iUnitValue += 1000;
 					}
-					if (unitX.getUnitAIType(UNITAI_CITY_DEFENSE))
+					if (unitX.hasUnitAI(UNITAI_CITY_DEFENSE))
 					{
 						iUnitValue += 20 * GC.getGame().AI_combatValue(eUnitX);
 					}
@@ -6373,20 +6373,20 @@ int CvPlayerAI::AI_techUnitValue(TechTypes eTech, int iPathLength, bool& bEnable
 
 				if (AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST3))
 				{
-					if (unitX.getUnitAIType(UNITAI_ATTACK_CITY))
+					if (unitX.hasUnitAI(UNITAI_ATTACK_CITY))
 					{
 						iUnitValue += 15 * GC.getGame().AI_combatValue(eUnitX);
 					}
 				}
 				else if (AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST1))
 				{
-					if (unitX.getUnitAIType(UNITAI_ATTACK_CITY))
+					if (unitX.hasUnitAI(UNITAI_ATTACK_CITY))
 					{
 						iUnitValue += 5 * GC.getGame().AI_combatValue(eUnitX);
 					}
 				}
 
-				if (unitX.getUnitAIType(UNITAI_ASSAULT_SEA) && iCoastalCities > 0)
+				if (unitX.hasUnitAI(UNITAI_ASSAULT_SEA) && iCoastalCities > 0)
 				{
 					int iAssaultValue = 0;
 					UnitTypes eExistingUnit = NO_UNIT;
@@ -6441,7 +6441,7 @@ int CvPlayerAI::AI_techUnitValue(TechTypes eTech, int iPathLength, bool& bEnable
 					}
 				}
 
-				if (pCapitalCity != NULL && unitX.getUnitAIType(UNITAI_SETTLER_SEA))
+				if (pCapitalCity != NULL && unitX.hasUnitAI(UNITAI_SETTLER_SEA))
 				{
 					UnitTypes eExistingUnit = NO_UNIT;
 					int iBestAreaValue = 0;
@@ -10493,7 +10493,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 		return 0;
 	}
 
-	if (kUnitInfo.getNotUnitAIType(eUnitAI) && (criteria == NULL || !criteria->m_bIgnoreNotUnitAIs))
+	if (kUnitInfo.hasNotUnitAI(eUnitAI) && (criteria == NULL || !criteria->m_bIgnoreNotUnitAIs))
 	{
 		return 0;
 	}
@@ -10985,7 +10985,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 		default: FErrorMsg("error");
 	}
 
-	if (!bValid || !bUndefinedValid && !kUnitInfo.getUnitAIType(eUnitAI))
+	if (!bValid || !bUndefinedValid && !kUnitInfo.hasUnitAI(eUnitAI))
 	{
 		return 0;
 	}
@@ -22384,10 +22384,10 @@ int CvPlayerAI::AI_getStrategyHash() const
 			const CvUnitInfo& unit = GC.getUnitInfo(eUnitX);
 			const int iMoves = unit.getMoves();
 
-			if (unit.getUnitAIType(UNITAI_RESERVE)
-			|| unit.getUnitAIType(UNITAI_ATTACK_CITY)
-			|| unit.getUnitAIType(UNITAI_COUNTER)
-			|| unit.getUnitAIType(UNITAI_PILLAGE))
+			if (unit.hasUnitAI(UNITAI_RESERVE)
+			|| unit.hasUnitAI(UNITAI_ATTACK_CITY)
+			|| unit.hasUnitAI(UNITAI_COUNTER)
+			|| unit.hasUnitAI(UNITAI_PILLAGE))
 			{
 				iAttackUnitCount++;
 
@@ -23255,7 +23255,7 @@ int CvPlayerAI::AI_goldToUpgradeAllUnits(int iExpThreshold) const
 			{
 				const UnitTypes eUnitY = (UnitTypes)iUnitX;
 				// is it better?
-				if (!GC.getUnitInfo(eUnitY).getNotUnitAIType(eUnitAIType)
+				if (!GC.getUnitInfo(eUnitY).hasNotUnitAI(eUnitAIType)
 				&& unitX->canUpgrade(eUnitY)
 				&& AI_unitValue(eUnitY, eUnitAIType, pUnitArea) > iUnitValue)
 				{
@@ -25127,7 +25127,7 @@ int CvPlayerAI::AI_calculateUnitAIViability(UnitAITypes eUnitAI, DomainTypes eDo
 			if (m_aiUnitWeights[iI] > 0
 			|| getUnitAvailabilityAnywhere((UnitTypes)iI) >= EnablerDomain::STATE_GREYED)
 			{
-				if (kUnitInfo.getUnitAIType(eUnitAI))
+				if (kUnitInfo.hasUnitAI(eUnitAI))
 				{
 					iBestUnitAIStrength = std::max(iBestUnitAIStrength, kUnitInfo.getCombat());
 				}

@@ -7272,7 +7272,7 @@ void CvGame::createBarbarianUnits()
 				{
 					int iValue = 500 + getSorenRandNum(500, "Barb Unit Selection");
 
-					if (kUnit.getUnitAIType(eBarbUnitAI))
+					if (kUnit.hasUnitAI(eBarbUnitAI))
 					{
 						iValue += 200;
 					}
@@ -11630,7 +11630,7 @@ void CvGame::loadPirateShip(CvUnit* pUnit)
 			{
 				int iValue = 1 + getSorenRandNum(1000, "Barb Unit Selection");
 
-				if (unitInfo.getUnitAIType(UNITAI_ATTACK))
+				if (unitInfo.hasUnitAI(UNITAI_ATTACK))
 				{
 					iValue += 250;
 				}

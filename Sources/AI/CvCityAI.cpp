@@ -4404,7 +4404,7 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, int& iBestValue, bool bAs
 		}
 		const CvUnitInfo& unit = GC.getUnitInfo(eUnitX);
 
-		if (unit.getNotUnitAIType(eUnitAI)
+		if (unit.hasNotUnitAI(eUnitAI)
 		|| tempCriteria.m_eIgnoreAdvisor != NO_ADVISOR
 		&& tempCriteria.m_eIgnoreAdvisor == unit.getAdvisor())
 		{

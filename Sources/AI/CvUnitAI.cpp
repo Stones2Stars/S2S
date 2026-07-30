@@ -1018,7 +1018,7 @@ bool CvUnitAI::AI_upgrade()
 		{
 			const UnitTypes eUnitX = (UnitTypes)iUnitX;
 
-			if (!GC.getUnitInfo(eUnitX).getNotUnitAIType(eUnitAI)
+			if (!GC.getUnitInfo(eUnitX).hasNotUnitAI(eUnitAI)
 			&& canUpgrade(eUnitX)
 			&& kPlayer.AI_unitValue(eUnitX, eUnitAI, pArea) >= iCurrentValue)
 			{

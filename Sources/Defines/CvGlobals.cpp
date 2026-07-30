@@ -3316,7 +3316,7 @@ void cvInternalGlobals::buildInvisibleSeerIndex()
 	{
 		const CvUnitInfo& kUnit = getUnitInfo(static_cast<UnitTypes>(iI));
 
-		if (kUnit.getProductionCost() < 0 || !kUnit.getUnitAIType(UNITAI_SEE_INVISIBLE))
+		if (kUnit.getProductionCost() < 0 || !kUnit.hasUnitAI(UNITAI_SEE_INVISIBLE))
 		{
 			continue;
 		}
