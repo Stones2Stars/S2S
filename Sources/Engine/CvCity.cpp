@@ -757,7 +757,10 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_bBombarded = false;
 	m_bDrafted = false;
 	m_bAirliftTargeted = false;
-	m_bWeLoveTheKingDay = false;
+	for (int iStatus = 0; iStatus < NUM_CITY_STATUSES; ++iStatus)
+	{
+		m_aiStatusTurns[iStatus] = 0;
+	}
 	m_bCitizensAutomated = true;
 	m_bProductionAutomated = false;
 	m_bWallOverride = false;
@@ -1349,6 +1352,9 @@ void CvCity::doTurn()
 {
 	PROFILE("CvCity::doTurn()");
 	PERF_SCOPE("city.doTurn", getOwner());
+
+	// Statuses tick FIRST, so a status re-applied later this turn by its own condition survives.
+	doStatusTurn();
 
 	// [CIT/proplevel] -- per-city property snapshot at the start of each turn (crime/disease/
 	// education/...), so property TRENDS are trackable from the log over turns -- hard to eyeball
@@ -8143,9 +8149,44 @@ void CvCity::setPlundered(bool bNewValue)
 }
 
 
+// --- CITY STATUS (Engine/CvStatus.h) -- see CvUnit for the same shape one scope down. ---
+
+int CvCity::getStatus(CityStatus eStatus) const
+{
+	FASSERT_BOUNDS(0, NUM_CITY_STATUSES, eStatus);
+	return m_aiStatusTurns[eStatus];
+}
+
+bool CvCity::hasStatus(CityStatus eStatus) const
+{
+	return getStatus(eStatus) > 0;
+}
+
+void CvCity::setStatus(CityStatus eStatus, int iTurns)
+{
+	FASSERT_BOUNDS(0, NUM_CITY_STATUSES, eStatus);
+	m_aiStatusTurns[eStatus] = std::max(0, iTurns);
+}
+
+void CvCity::changeStatus(CityStatus eStatus, int iChange)
+{
+	setStatus(eStatus, getStatus(eStatus) + iChange);
+}
+
+void CvCity::doStatusTurn()
+{
+	for (int iStatus = 0; iStatus < NUM_CITY_STATUSES; ++iStatus)
+	{
+		if (m_aiStatusTurns[iStatus] > 0)
+		{
+			--m_aiStatusTurns[iStatus];
+		}
+	}
+}
+
 bool CvCity::isWeLoveTheKingDay() const
 {
-	return m_bWeLoveTheKingDay;
+	return hasStatus(CITYSTATUS_WE_LOVE_THE_KING_DAY);
 }
 
 
@@ -8154,7 +8195,8 @@ void CvCity::setWeLoveTheKingDay(bool bNewValue)
 	PROFILE_EXTRA_FUNC();
 	if (isWeLoveTheKingDay() != bNewValue)
 	{
-		m_bWeLoveTheKingDay = bNewValue;
+		// A ONE-TURN status: the condition block below re-applies it every turn while it holds.
+		setStatus(CITYSTATUS_WE_LOVE_THE_KING_DAY, bNewValue ? 1 : 0);
 
 		CvPlayer& owner = GET_PLAYER(getOwner());
 		setMaintenanceDirty(true);
@@ -14542,7 +14584,7 @@ void CvCity::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvCity", &m_bBombarded);
 	WRAPPER_READ(wrapper, "CvCity", &m_bDrafted);
 	WRAPPER_READ(wrapper, "CvCity", &m_bAirliftTargeted);
-	WRAPPER_READ(wrapper, "CvCity", &m_bWeLoveTheKingDay);
+	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_CITY_STATUSES, m_aiStatusTurns);
 	WRAPPER_READ(wrapper, "CvCity", &m_bCitizensAutomated);
 	WRAPPER_READ(wrapper, "CvCity", &m_bProductionAutomated);
 	WRAPPER_READ(wrapper, "CvCity", &m_bWallOverride);
@@ -15255,7 +15297,7 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvCity", m_bBombarded);
 	WRAPPER_WRITE(wrapper, "CvCity", m_bDrafted);
 	WRAPPER_WRITE(wrapper, "CvCity", m_bAirliftTargeted);
-	WRAPPER_WRITE(wrapper, "CvCity", m_bWeLoveTheKingDay);
+	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_CITY_STATUSES, m_aiStatusTurns);
 	WRAPPER_WRITE(wrapper, "CvCity", m_bCitizensAutomated);
 	WRAPPER_WRITE(wrapper, "CvCity", m_bProductionAutomated);
 	WRAPPER_WRITE(wrapper, "CvCity", m_bWallOverride);

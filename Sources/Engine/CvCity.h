@@ -8,6 +8,7 @@
 #include "Infrastructure/LinkedList.h"
 #include "Infrastructure/CvDLLEntity.h"
 #include "CvGameObject.h"
+#include "Engine/CvStatus.h"   // CityStatus + the status model (an applied counter, ticking down)
 #include "CvProperties.h"
 #include "UI/CvBuildingList.h"
 #include "UI/CvUnitList.h"
@@ -883,6 +884,14 @@ public:
 	bool isWeLoveTheKingDay() const;
 	void setWeLoveTheKingDay(bool bNewValue);
 
+	// --- CITY STATUS (Engine/CvStatus.h) -- an applied counter, ticking down, over at zero. The same shape
+	// CvUnit carries one scope down; the gate IS the counter, so there is no per-status named accessor.
+	int getStatus(CityStatus eStatus) const;
+	bool hasStatus(CityStatus eStatus) const;
+	void setStatus(CityStatus eStatus, int iTurns);
+	void changeStatus(CityStatus eStatus, int iChange);
+	void doStatusTurn();
+
 	bool isCitizensAutomated() const;
 	void setCitizensAutomated(bool bNewValue);
 
@@ -1711,7 +1720,9 @@ protected:
 	bool m_bBombarded;
 	bool m_bDrafted;
 	bool m_bAirliftTargeted;
-	bool m_bWeLoveTheKingDay;
+	// CityStatus -> TURNS REMAINING. Replaces the hand-named WLTKD bool: WLTKD is a ONE-TURN status re-applied
+	// each turn while its conditions hold, so the bool was its legacy shape (state.md).
+	int m_aiStatusTurns[NUM_CITY_STATUSES];
 	bool m_bCitizensAutomated;
 	bool m_bProductionAutomated;
 	bool m_bWallOverride;
