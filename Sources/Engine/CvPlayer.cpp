@@ -14015,7 +14015,6 @@ void CvPlayer::setCivics(CivicOptionTypes eIndex, CivicTypes eNewValue)
 			if (bUpdateHappiness)
 				city->updateFeatureHappiness();
 			if (bUpdateHealth)
-				city->updateImprovementHealth();
 		}
 
 		GC.getGame().updateSecretaryGeneral();

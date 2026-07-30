@@ -1093,7 +1093,7 @@ bool CvUnitAI::AI_upgrade()
 	// Watch for odd problems this might introduce elsewhere though.
 	const CvUnitInfo& unitInfo = GC.getUnitInfo(getUnitType());
 
-	std::vector<int> upgradeChain = unitInfo.getUnitUpgradeChain();
+	std::vector<int> upgradeChain = unitInfo.getUpgradeChain();
 
 	if (!upgradeChain.empty())
 	{

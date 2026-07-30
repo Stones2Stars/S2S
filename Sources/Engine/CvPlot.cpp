@@ -6938,11 +6938,11 @@ void CvPlot::setTerrainType(TerrainTypes eNewValue, bool bRecalculate, bool bReb
 		{
 			if (eNewValue != NO_TERRAIN)
 			{
-				yieldChange[iI] += GC.getTerrainInfo(eNewValue).getYield((YieldTypes)iI);
+				yieldChange[iI] += GC.getTerrainInfo(eNewValue).getFlatYield((YieldTypes)iI, CASC_SCOPE_PLOT) / 100;
 			}
 			if (eOldTerrain != NO_TERRAIN)
 			{
-				yieldChange[iI] -= GC.getTerrainInfo(eOldTerrain).getYield((YieldTypes)iI);
+				yieldChange[iI] -= GC.getTerrainInfo(eOldTerrain).getFlatYield((YieldTypes)iI, CASC_SCOPE_PLOT) / 100;
 			}
 		}
 		changeBaseYield(yieldChange);
@@ -7002,7 +7002,7 @@ void CvPlot::setFeatureType(FeatureTypes eNewValue, int iVariety, bool bImprovem
 	if (GC.getGame().isOption(GAMEOPTION_MAP_PERSONALIZED))
 	{
 		if (getOwner() != NO_PLAYER
-		&& (eNewValue == NO_FEATURE || GC.getFeatureInfo(eNewValue).getHealthPercent() < 0)
+		&& (eNewValue == NO_FEATURE || GC.getFeatureInfo(eNewValue).getWellbeingModifier(WELLBEING_HEALTH, CASC_SCOPE_PLOT) < 0)
 		&& (getLandmarkType() == LANDMARK_FOREST || getLandmarkType() == LANDMARK_JUNGLE))
 		{
 			for (int iI = 0; iI < NUM_CITY_PLOTS; ++iI)
@@ -7486,7 +7486,6 @@ void CvPlot::setImprovementType(ImprovementTypes eNewImprovement)
 				if (pLoopCity != NULL)
 				{
 					pLoopCity->updateFeatureHappiness();
-					pLoopCity->updateImprovementHealth();
 
 					//	Changed improvement status might change city best build opinions
 					pLoopCity->AI_markBestBuildValuesStale();
@@ -8006,7 +8005,7 @@ void CvPlot::recalculateBaseYield()
 		}
 		if (eTerrain != NO_TERRAIN)
 		{
-			iYield += GC.getTerrainInfo(eTerrain).getYield((YieldTypes)iI);
+			iYield += GC.getTerrainInfo(eTerrain).getFlatYield((YieldTypes)iI, CASC_SCOPE_PLOT) / 100;
 		}
 		if (eFeature != NO_FEATURE)
 		{

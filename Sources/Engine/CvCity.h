@@ -1309,9 +1309,6 @@ public:
 
 	bool isBuiltFoodProducedUnit() const;
 	void setBuiltFoodProducedUnit(bool bNewValue);
-	int getImprovementGoodHealth() const;
-	int getImprovementBadHealth() const;
-	void updateImprovementHealth();
 	void clearLostProduction();
 	bool isProductionWonder() const;
 	void updateYieldRate(BuildingTypes eType, YieldTypes eYield, int iChange);
@@ -1627,8 +1624,6 @@ protected:
 	int m_iOverflowProduction;
 	int m_iFeatureProduction;
 
-	int m_iImprovementGoodHealth;
-	int m_iImprovementBadHealth;
 	int m_iLostProductionModified;
 	int m_iGoldFromLostProduction;
 	int m_iCiv;

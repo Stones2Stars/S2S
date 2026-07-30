@@ -610,7 +610,6 @@ void CvCity::init(int iID, PlayerTypes eOwner, int iX, int iY, bool bBumpUnits, 
 
 	updateFreshWaterHealth();
 	updateFeatureHealth();
-	updateImprovementHealth();
 	updateFeatureHappiness();
 
 	player.setMaintenanceDirty(true);
@@ -763,8 +762,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_iSpecialistInvestigation = 0;
 	m_icachedPropertyNeedsTurn = 0;
 	m_fPopulationgrowthratepercentageLog = 0.0;
-	m_iImprovementGoodHealth = 0;
-	m_iImprovementBadHealth = 0;
 	m_iCiv = NO_CIVILIZATION;
 	m_iLandmarkAngerTimer = 0;
 	m_iFreshWater = 0;
@@ -2990,20 +2987,20 @@ void CvCity::changeProduction(int iChange)
 		const CvProcessInfo& kProcess = GC.getProcessInfo(getProductionProcess());
 
 		//	Add gold and espionage directly to player totals
-		GET_PLAYER(getOwner()).changeGold((kProcess.getProductionToCommerceModifier(COMMERCE_GOLD) * iChange) / 100);
-		GET_PLAYER(getOwner()).doEspionageOneOffPoints((kProcess.getProductionToCommerceModifier(COMMERCE_ESPIONAGE) * iChange) / 100);
+		GET_PLAYER(getOwner()).changeGold((kProcess.getProductionToCommerce(COMMERCE_GOLD, CASC_SCOPE_CITY) * iChange) / 100);
+		GET_PLAYER(getOwner()).doEspionageOneOffPoints((kProcess.getProductionToCommerce(COMMERCE_ESPIONAGE, CASC_SCOPE_CITY) * iChange) / 100);
 
 		//	Research accrues to the team
 		const TechTypes eCurrentTech = GET_PLAYER(getOwner()).getCurrentResearch();
 		if (eCurrentTech != NO_TECH)
 		{
 			GET_TEAM(getTeam()).changeResearchProgress(eCurrentTech,
-				(kProcess.getProductionToCommerceModifier(COMMERCE_RESEARCH) * iChange) / 100,
+				(kProcess.getProductionToCommerce(COMMERCE_RESEARCH, CASC_SCOPE_CITY) * iChange) / 100,
 				getOwner());
 		}
 
 		//	Culture to the city itself
-		changeCulture(getOwner(), (kProcess.getProductionToCommerceModifier(COMMERCE_CULTURE) * iChange) / 100, false, false);
+		changeCulture(getOwner(), (kProcess.getProductionToCommerce(COMMERCE_CULTURE, CASC_SCOPE_CITY) * iChange) / 100, false, false);
 	}
 }
 
@@ -3664,7 +3661,7 @@ void CvCity::processProcess(ProcessTypes eProcess, int iChange)
 	PROFILE_EXTRA_FUNC();
 	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 	{
-		changeProductionToCommerceModifier(((CommerceTypes)iI), (GC.getProcessInfo(eProcess).getProductionToCommerceModifier(iI) * iChange));
+		changeProductionToCommerceModifier(((CommerceTypes)iI), (GC.getProcessInfo(eProcess).getProductionToCommerce((CommerceTypes)iI, CASC_SCOPE_CITY) * iChange));
 	}
 }
 
@@ -6480,7 +6477,7 @@ void CvCity::calculateFeatureHealthPercent(int& iGood, int& iBad) const
 
 		if (eFeature != NO_FEATURE)
 		{
-			const int iHealth = GC.getFeatureInfo(eFeature).getHealthPercent();
+			const int iHealth = GC.getFeatureInfo(eFeature).getWellbeingModifier(WELLBEING_HEALTH, CASC_SCOPE_PLOT);
 
 			if (iHealth > 0)
 			{
@@ -6520,7 +6517,7 @@ void CvCity::calculateFeatureHealthPercentChange(int& iGood, int& iBad, CvPlot* 
 
 		if (eFeature != NO_FEATURE)
 		{
-			const int iHealth = GC.getFeatureInfo(eFeature).getHealthPercent();
+			const int iHealth = GC.getFeatureInfo(eFeature).getWellbeingModifier(WELLBEING_HEALTH, CASC_SCOPE_PLOT);
 
 			if (iHealth != 0)
 			{
@@ -6560,7 +6557,7 @@ int CvCity::getAdditionalHealthByFeature(FeatureTypes eFeature, int iChange, int
 {
 	FASSERT_BOUNDS(0, GC.getNumFeatureInfos(), eFeature);
 
-	const int iHealth = GC.getFeatureInfo(eFeature).getHealthPercent();
+	const int iHealth = GC.getFeatureInfo(eFeature).getWellbeingModifier(WELLBEING_HEALTH, CASC_SCOPE_PLOT);
 
 	if (iHealth > 0)
 	{
@@ -6982,7 +6979,7 @@ int CvCity::getAdditionalHappinessByBuilding(BuildingTypes eBuilding, int& iGood
 		const SpecialistTypes eNewSpecialist = getBestSpecialist(iI);
 		if (eNewSpecialist == NO_SPECIALIST) break;
 
-		iSpecialistExtraHappy += GC.getSpecialistInfo(eNewSpecialist).getHappinessPercent();
+		iSpecialistExtraHappy += GC.getSpecialistInfo(eNewSpecialist).getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_CITY);
 	}
 	iSpecialistExtraHappy /= 100;
 	addGoodOrBad(iSpecialistExtraHappy, iGood, iBad);
@@ -7125,7 +7122,7 @@ int CvCity::getAdditionalHealthByBuilding(BuildingTypes eBuilding, int& iGood, i
 		const SpecialistTypes eNewSpecialist = getBestSpecialist(iI);
 		if (eNewSpecialist == NO_SPECIALIST) break;
 
-		iSpecialistExtraHealth += GC.getSpecialistInfo(eNewSpecialist).getHealthPercent();
+		iSpecialistExtraHealth += GC.getSpecialistInfo(eNewSpecialist).getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_CITY);
 	}
 	iSpecialistExtraHealth /= 100;
 	addGoodOrBad(iSpecialistExtraHealth, iGood, iBad);
@@ -8388,7 +8385,6 @@ void CvCity::setCultureLevel(CultureLevelTypes eNewValue, bool bUpdatePlotGroups
 		// Afforess - Update Health and Happiness when culture expands
 		updateFeatureHappiness();
 		updateFeatureHealth();
-		updateImprovementHealth();
 
 		// Alert people if max culture level acquired in a known city
 		if (getCultureThreshold() == -1)
@@ -8432,7 +8428,7 @@ void CvCity::setCultureLevel(CultureLevelTypes eNewValue, bool bUpdatePlotGroups
 
 		//Stop Build Culture
 		if (isHuman() && !isProductionAutomated() && isProductionProcess()
-		&& GC.getProcessInfo(getProductionProcess()).getProductionToCommerceModifier(COMMERCE_CULTURE) > 0)
+		&& GC.getProcessInfo(getProductionProcess()).getProductionToCommerce(COMMERCE_CULTURE, CASC_SCOPE_CITY) > 0)
 		{
 			m_bPopProductionProcess = true;
 		}
@@ -14667,8 +14663,6 @@ void CvCity::read(FDataStreamBase* pStream)
 		// simply moved to where the verdict is now decided.)
 	}
 
-	WRAPPER_READ(wrapper, "CvCity", &m_iImprovementGoodHealth);
-	WRAPPER_READ(wrapper, "CvCity", &m_iImprovementBadHealth);
 	WRAPPER_READ(wrapper, "CvCity", &m_iEventAnger);
 
 	WRAPPER_READ(wrapper, "CvCity", &m_fPopulationgrowthratepercentageLog);
@@ -15306,8 +15300,6 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_RELIGIONS, GC.getNumReligionInfos(), m_pabHasReligion);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_CORPORATIONS, GC.getNumCorporationInfos(), m_pabHasCorporation);
 
-	WRAPPER_WRITE(wrapper, "CvCity", m_iImprovementGoodHealth);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iImprovementBadHealth);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iEventAnger);
 	WRAPPER_WRITE(wrapper, "CvCity", m_fPopulationgrowthratepercentageLog);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_pabHadVicinityBonus);
@@ -17209,71 +17201,6 @@ void CvCity::clearLostProduction()
 	m_iGoldFromLostProduction = 0;
 }
 
-int CvCity::getImprovementGoodHealth() const
-{
-	return m_iImprovementGoodHealth;
-}
-
-
-int CvCity::getImprovementBadHealth() const
-{
-	return m_iImprovementBadHealth;
-}
-
-void CvCity::updateImprovementHealth()
-{
-	PROFILE_EXTRA_FUNC();
-	const CvPlayer& player = GET_PLAYER(getOwner());
-
-	int iNewGoodHealthPercent = 0;
-	int iNewBadHealthPercent = 0;
-	foreach_(CvPlot* pLoopPlot, plots())
-	{
-		if (pLoopPlot->getOwner() != NO_PLAYER && pLoopPlot->getOwner() == getOwner())
-		{
-			const ImprovementTypes eImprovement = pLoopPlot->getImprovementType();
-
-			if (eImprovement != NO_IMPROVEMENT)
-			{
-				int iHealthPercent = GC.getImprovementInfo(eImprovement).getHealthPercent();
-
-				for (int iJ = 0; iJ < GC.getNumCivicOptionInfos(); iJ++)
-				{
-					if (player.getCivics((CivicOptionTypes)iJ) != NO_CIVIC)
-					{
-						iHealthPercent += GC.getCivicInfo(player.getCivics((CivicOptionTypes)iJ)).getImprovementHealthPercentChanges(eImprovement);
-					}
-				}
-
-				if (iHealthPercent > 0)
-				{
-					iNewGoodHealthPercent += iHealthPercent;
-				}
-				else if (iHealthPercent < 0)
-				{
-					iNewBadHealthPercent += iHealthPercent;
-				}
-			}
-		}
-	}
-
-	if (m_iImprovementGoodHealth != iNewGoodHealthPercent || m_iImprovementBadHealth != iNewBadHealthPercent)
-	{
-		m_iImprovementGoodHealth = iNewGoodHealthPercent;
-		m_iImprovementBadHealth = iNewBadHealthPercent;
-		FAssert(getImprovementGoodHealth() >= 0);
-		FAssert(getImprovementBadHealth() <= 0);
-
-		AI_setAssignWorkDirty(true);
-
-		if (getTeam() == GC.getGame().getActiveTeam())
-		{
-			setInfoDirty(true);
-		}
-	}
-}
-
-
 int CvCity::getLandmarkAngerTimer() const
 {
 	return m_iLandmarkAngerTimer;
@@ -18818,8 +18745,8 @@ void CvCity::removeWorstCitizenActualEffects(int iNumCitizens, int& iGreatPeople
 		if (paeRemovedSpecailists[iI] != NO_SPECIALIST)
 		{
 			const CvSpecialistInfo& kSpecialist = GC.getSpecialistInfo(paeRemovedSpecailists[iI]);
-			iHappiness -= kSpecialist.getHappinessPercent();
-			iHealthiness -= kSpecialist.getHealthPercent();
+			iHappiness -= kSpecialist.getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_CITY);
+			iHealthiness -= kSpecialist.getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_CITY);
 			iGreatPeopleRate -= kSpecialist.getGreatPeopleRateChange();
 			for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
 			{

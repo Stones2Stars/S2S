@@ -1048,8 +1048,8 @@ int CvCityAI::AI_specialistValue(SpecialistTypes eSpecialist, bool bAvoidGrowth,
 		iValue += ((getMilitaryProductionModifier() * iExperience * 10) / 100);
 	}
 
-	int iSpecialistHealth = GC.getSpecialistInfo(eSpecialist).getHealthPercent() / 100;
-	int iSpecialistHappiness = GC.getSpecialistInfo(eSpecialist).getHappinessPercent() / 100;
+	int iSpecialistHealth = GC.getSpecialistInfo(eSpecialist).getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_CITY) / 100;
+	int iSpecialistHappiness = GC.getSpecialistInfo(eSpecialist).getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_CITY) / 100;
 	int iHappinessLevel = netHappiness(1) + getEspionageHappinessCounter();
 	int iHealthLevel = netHealth(std::max(0, (iHappinessLevel + 1) / 2)) + getEspionageHealthCounter();
 
@@ -5156,8 +5156,8 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 				aiFreeSpecialistCommerce[iJ] += kOwner.specialistCommerce(eNewSpecialist, (CommerceTypes)iJ);
 			}
 			iSpecialistGreatPeopleRate += kSpecialist.getGreatPeopleRateChange();
-			iSpecialistExtraHealth += kSpecialist.getHealthPercent();
-			iSpecialistExtraHappy += kSpecialist.getHappinessPercent();
+			iSpecialistExtraHealth += kSpecialist.getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_CITY);
+			iSpecialistExtraHappy += kSpecialist.getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_CITY);
 		}
 		iSpecialistExtraHappy /= 100;
 		iSpecialistExtraHealth /= 100;
@@ -6718,7 +6718,7 @@ int64_t CvCityAI::AI_processValue(ProcessTypes eProcess, CommerceTypes eCommerce
 		{
 			continue;
 		}
-		int64_t iTempValue = GC.getProcessInfo(eProcess).getProductionToCommerceModifier(eCommerce);
+		int64_t iTempValue = GC.getProcessInfo(eProcess).getProductionToCommerce(eCommerce, CASC_SCOPE_CITY);
 
 		iTempValue *= GET_PLAYER(getOwner()).AI_commerceWeight(eCommerce, this); // scaled by 100 at this point
 		if (iTempValue == 0) continue; // weight may very well be 0 if commerce is worthless.
@@ -7546,13 +7546,13 @@ int CvCityAI::AI_clearFeatureValue(int iIndex) const
 	}
 
 	int iHealthValue = 0;
-	if (kFeatureInfo.getHealthPercent() != 0)
+	if (kFeatureInfo.getWellbeingModifier(WELLBEING_HEALTH, CASC_SCOPE_PLOT) != 0)
 	{
 		const int iHealth = netHealth();
 
 		//speed up Jungle Clearing
-		const int iMultiplier = kFeatureInfo.getHealthPercent() > 0 ? 6 : 10;
-		iHealthValue += (iMultiplier * kFeatureInfo.getHealthPercent()) / std::max(3, 1 + iHealth);
+		const int iMultiplier = kFeatureInfo.getWellbeingModifier(WELLBEING_HEALTH, CASC_SCOPE_PLOT) > 0 ? 6 : 10;
+		iHealthValue += (iMultiplier * kFeatureInfo.getWellbeingModifier(WELLBEING_HEALTH, CASC_SCOPE_PLOT)) / std::max(3, 1 + iHealth);
 
 		if (iHealthValue > 0 && !pPlot->isBeingWorked())
 		{
@@ -8200,8 +8200,6 @@ int CvCityAI::AI_getImprovementValue(const CvPlot* pPlot, ImprovementTypes eImpr
 		}
 		else iValue += 20 * improvement.getHappiness();
 	}
-
-	iValue += improvement.getHealthPercent();
 
 	if (!isHuman())
 	{
@@ -10524,7 +10522,7 @@ void CvCityAI::AI_findBestImprovementForPlot(const CvPlot* pPlot, plotInfo* plot
 				{
 					bValid = false;
 				}
-				else if (healthRate() < 0 && currentFeature->getHealthPercent() > 0)
+				else if (healthRate() < 0 && currentFeature->getWellbeingModifier(WELLBEING_HEALTH, CASC_SCOPE_PLOT) > 0)
 				{
 					bValid = false;
 				}
@@ -11032,8 +11030,8 @@ int CvCityAI::AI_countGoodSpecialists(bool bHealthy) const
 		iValue += 15 * kPlayer.specialistCommerce(eSpecialist, COMMERCE_CULTURE);
 		iValue += 25 * GC.getSpecialistInfo(eSpecialist).getGreatPeopleRateChange();
 
-		iValue += GC.getSpecialistInfo(eSpecialist).getHealthPercent();
-		iValue += GC.getSpecialistInfo(eSpecialist).getHappinessPercent();
+		iValue += GC.getSpecialistInfo(eSpecialist).getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_CITY);
+		iValue += GC.getSpecialistInfo(eSpecialist).getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_CITY);
 		iValue += GC.getSpecialistInfo(eSpecialist).getInvestigation();
 		iValue -= GC.getSpecialistInfo(eSpecialist).getInsidiousness();
 
@@ -12139,39 +12137,6 @@ SpecialistTypes CvCity::getBestSpecialist(int iExtra) const
 	}
 
 	return eBestSpecialist;
-}
-
-int CvCityAI::AI_calculateActualImprovementHealth(ImprovementTypes eImprovement) const
-{
-	PROFILE_EXTRA_FUNC();
-	if (eImprovement == NO_IMPROVEMENT)
-	{
-		return 0;
-	}
-	const CvPlayer& player = GET_PLAYER(getOwner());
-
-	int iHealthPercent = GC.getImprovementInfo(eImprovement).getHealthPercent();
-
-	for (int i = 0; i < GC.getNumCivicOptionInfos(); i++)
-	{
-		if (player.getCivics((CivicOptionTypes)i) != NO_CIVIC)
-		{
-			iHealthPercent += GC.getCivicInfo(player.getCivics((CivicOptionTypes)i)).getImprovementHealthPercentChanges(eImprovement);
-		}
-	}
-	// Toffer - Double rounding error is on purpose here, don't merge the two divisions into one.
-	// e.g. this would be wrong: (iBadHealthPercent + iHealthPercent - iBadHealthPercent) / 100
-	if (iHealthPercent < 0)
-	{
-		const int iBadHealthPercent = getImprovementBadHealth();
-		return (iBadHealthPercent + iHealthPercent) / 100 - iBadHealthPercent / 100;
-	}
-	else if (iHealthPercent > 0)
-	{
-		const int iGoodHealthPercent = getImprovementGoodHealth();
-		return (iGoodHealthPercent + iHealthPercent) / 100 - iGoodHealthPercent / 100;
-	}
-	return 0;
 }
 
 bool CvCityAI::AI_isMilitaryProductionCity() const

@@ -10438,7 +10438,7 @@ CvCity* CvUnit::getUpgradeCity(bool bSearch) const
 	int iBestSearchValue = MAX_INT;
 	CvCity* pBestUpgradeCity = NULL;
 
-	foreach_(int iUnitX, GC.getUnitInfo(m_eUnitType).getUnitUpgradeChain())
+	foreach_(int iUnitX, GC.getUnitInfo(m_eUnitType).getUpgradeChain())
 	{
 		const UnitTypes eUnitX = (UnitTypes)iUnitX;
 

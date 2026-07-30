@@ -636,7 +636,6 @@ public:
 	bool AI_isEmphasizeAvoidUnhealthyCitizens() const;
 	bool AI_buildCaravan();
 	int AI_getPromotionValue(PromotionTypes ePromotion) const;
-	int AI_calculateActualImprovementHealth(ImprovementTypes eImprovement) const;
 	int AI_getMilitaryProductionRateRank() const;
 	bool AI_isMilitaryProductionCity() const;
 	void AI_setMilitaryProductionCity(bool bNewVal);

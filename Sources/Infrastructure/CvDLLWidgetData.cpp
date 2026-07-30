@@ -2707,7 +2707,7 @@ void CvDLLWidgetData::parseActionHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 					if ( (NO_TERRAIN != ePlotTerrain) && bIsTerrainChange)
 					{
 						iYield += GC.getTerrainInfo((TerrainTypes)GC.getBuildInfo(eBuild).getTerrainChange()).getYield(iI);
-						iYield -= GC.getTerrainInfo(ePlotTerrain).getYield(iI);
+						iYield -= GC.getTerrainInfo(ePlotTerrain).getFlatYield((YieldTypes)iI, CASC_SCOPE_PLOT) / 100;
 					}
 
 					if (iYield != 0)
@@ -2947,7 +2947,7 @@ void CvDLLWidgetData::parseActionHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 					// BUG - Feature Health
 					if (pMissionPlot->isCityRadius() && getBugOptionBOOL("MiscHover__RemoveFeatureHealthEffects", true, "BUG_REMOVE_FEATURE_HEALTH_EFFECTS"))
 					{
-						int iHealthPercent = GC.getFeatureInfo(ePlotFeature).getHealthPercent();
+						int iHealthPercent = GC.getFeatureInfo(ePlotFeature).getWellbeingModifier(WELLBEING_HEALTH, CASC_SCOPE_PLOT);
 
 						if (iHealthPercent != 0)
 						{
@@ -3114,14 +3114,14 @@ void CvDLLWidgetData::parseActionHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 								szBuffer.append(NEWLINE);
 								szBuffer.append(gDLL->getText("TXT_KEY_ACTION_PROVIDES_BONUS", GC.getBonusInfo(ePlotBonus).getTextKeyWide()));
 
-								if (GC.getBonusInfo(ePlotBonus).getHealth() != 0)
+								if (GC.getBonusInfo(ePlotBonus).getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_EMPIRE) / 100 != 0)
 								{
-									szBuffer.append(CvWString::format(L" (+%d%c)", abs(GC.getBonusInfo(ePlotBonus).getHealth()), ((GC.getBonusInfo(ePlotBonus).getHealth() > 0) ? gDLL->getSymbolID(HEALTHY_CHAR) : gDLL->getSymbolID(UNHEALTHY_CHAR))));
+									szBuffer.append(CvWString::format(L" (+%d%c)", abs(GC.getBonusInfo(ePlotBonus).getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_EMPIRE) / 100), ((GC.getBonusInfo(ePlotBonus).getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_EMPIRE) / 100 > 0) ? gDLL->getSymbolID(HEALTHY_CHAR) : gDLL->getSymbolID(UNHEALTHY_CHAR))));
 								}
 
-								if (GC.getBonusInfo(ePlotBonus).getHappiness() != 0)
+								if (GC.getBonusInfo(ePlotBonus).getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_EMPIRE) / 100 != 0)
 								{
-									szBuffer.append(CvWString::format(L" (+%d%c)", abs(GC.getBonusInfo(ePlotBonus).getHappiness()), ((GC.getBonusInfo(ePlotBonus).getHappiness() > 0) ? gDLL->getSymbolID(HAPPY_CHAR) : gDLL->getSymbolID(UNHAPPY_CHAR))));
+									szBuffer.append(CvWString::format(L" (+%d%c)", abs(GC.getBonusInfo(ePlotBonus).getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_EMPIRE) / 100), ((GC.getBonusInfo(ePlotBonus).getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_EMPIRE) / 100 > 0) ? gDLL->getSymbolID(HAPPY_CHAR) : gDLL->getSymbolID(UNHAPPY_CHAR))));
 								}
 							}
 						}

@@ -838,7 +838,7 @@ namespace {
 
 		UnitUpgradeScore operator()(CvUnit* unit) const
 		{
-			const std::vector<int>& upgradeChain = GC.getUnitInfo(unit->getUnitType()).getUnitUpgradeChain();
+			const std::vector<int>& upgradeChain = GC.getUnitInfo(unit->getUnitType()).getUpgradeChain();
 			bst::function<UnitUpgradeScore(int upgradeUnit)> sdsd = bind(scoreUpgradePrice, unit, _1);
 			return algo::max_element(upgradeChain | transformed(sdsd)).get_value_or(UnitUpgradeScore());
 		}
@@ -907,7 +907,7 @@ void CvPlayerAI::AI_doTurnUnitsPost()
 					if (iExperience > unit->getExperience100())
 						continue;
 
-					foreach_(int iUpgrade, GC.getUnitInfo(unit->getUnitType()).getUnitUpgradeChain())
+					foreach_(int iUpgrade, GC.getUnitInfo(unit->getUnitType()).getUpgradeChain())
 					{
 						if (unit->canUpgrade((UnitTypes)iUpgrade))
 						{
@@ -2618,7 +2618,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 			{
 				if (canMaintain((ProcessTypes)iI))
 				{
-					iGreed = std::max(iGreed, 100 + 20 * std::min(2, (GC.getProcessInfo((ProcessTypes)iI).getProductionToCommerceModifier(COMMERCE_CULTURE) / 100)));
+					iGreed = std::max(iGreed, 100 + 20 * std::min(2, (GC.getProcessInfo((ProcessTypes)iI).getProductionToCommerce(COMMERCE_CULTURE, CASC_SCOPE_CITY) / 100)));
 				}
 			}
 
@@ -2646,7 +2646,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 		for (int iJ = 0; iJ < GC.getNumProcessInfos(); iJ++)
 		{
 			if (GET_TEAM(getTeam()).isHasTech(GC.getProcessInfo((ProcessTypes)iJ).getTechPrereq())
-			&& GC.getProcessInfo((ProcessTypes)iJ).getProductionToCommerceModifier(COMMERCE_CULTURE) > 0)
+			&& GC.getProcessInfo((ProcessTypes)iJ).getProductionToCommerce(COMMERCE_CULTURE, CASC_SCOPE_CITY) > 0)
 			{
 				bEasyCulture = true;
 				break;
@@ -2843,7 +2843,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 			{
 				if (eFeature != NO_FEATURE && iI != CITY_HOME_PLOT)
 				{
-					iHealth += GC.getFeatureInfo(eFeature).getHealthPercent();
+					iHealth += GC.getFeatureInfo(eFeature).getWellbeingModifier(WELLBEING_HEALTH, CASC_SCOPE_PLOT);
 
 					iSpecialFoodPlus += std::max(0, aiYield[YIELD_FOOD] - GC.getFOOD_CONSUMPTION_PER_POPULATION());
 				}
@@ -5228,7 +5228,7 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 			iBuildValue += 100;
 
 			//Fuyu - Tech Value for Feature Remove - bonus for early worker logic
-			if ((GC.getFeatureInfo(FeatureTypes(iJ)).getHealthPercent() < 0) ||
+			if ((GC.getFeatureInfo(FeatureTypes(iJ)).getWellbeingModifier(WELLBEING_HEALTH, CASC_SCOPE_PLOT) < 0) ||
 				((GC.getFeatureInfo(FeatureTypes(iJ)).getYieldChange(YIELD_FOOD) + GC.getFeatureInfo(FeatureTypes(iJ)).getYieldChange(YIELD_PRODUCTION) + GC.getFeatureInfo(FeatureTypes(iJ)).getYieldChange(YIELD_COMMERCE)) < 0))
 			{
 				if (getNumCities() <= 3)
@@ -5422,7 +5422,7 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 
 		for (int iK = 0; iK < NUM_COMMERCE_TYPES; iK++)
 		{
-			iTempValue = (GC.getProcessInfo(eLoopProcess).getProductionToCommerceModifier(iK) * 4);
+			iTempValue = (GC.getProcessInfo(eLoopProcess).getProductionToCommerce((CommerceTypes)iK, CASC_SCOPE_CITY) * 4);
 
 			iTempValue *= AI_commerceWeight((CommerceTypes)iK);
 			iTempValue /= 100;
@@ -5446,7 +5446,7 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 		{
 			if (kTeam.isHasTech(GC.getProcessInfo((ProcessTypes)iJ).getTechPrereq()))
 			{
-				bHaveGoodProcess = (GC.getProcessInfo((ProcessTypes)iJ).getProductionToCommerceModifier(COMMERCE_GOLD) + GC.getProcessInfo((ProcessTypes)iJ).getProductionToCommerceModifier(COMMERCE_RESEARCH)) > 0;
+				bHaveGoodProcess = (GC.getProcessInfo((ProcessTypes)iJ).getProductionToCommerce(COMMERCE_GOLD, CASC_SCOPE_CITY) + GC.getProcessInfo((ProcessTypes)iJ).getProductionToCommerce(COMMERCE_RESEARCH, CASC_SCOPE_CITY)) > 0;
 				if (bHaveGoodProcess)
 				{
 					break;
@@ -9269,8 +9269,9 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus, bool bForTrade) const
 
 			if (!bJustNonTradeBuildings)
 			{
-				iValue += (GC.getBonusInfo(eBonus).getHappiness() * 100);
-				iValue += (GC.getBonusInfo(eBonus).getHealth() * 100);
+				// The legacy weight was human ×100, which is exactly what the ×100-native read already is.
+				iValue += GC.getBonusInfo(eBonus).getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_EMPIRE);
+				iValue += GC.getBonusInfo(eBonus).getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_EMPIRE);
 
 				iTradeValue = iValue;
 
@@ -9930,13 +9931,13 @@ DenialTypes CvPlayerAI::AI_bonusTrade(BonusTypes eBonus, PlayerTypes ePlayer) co
 		}
 	}
 
-	if (GC.getBonusInfo(eBonus).getHappiness() > 0
+	if (GC.getBonusInfo(eBonus).getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_EMPIRE) / 100 > 0
 	&& eAttitude <= GC.getLeaderHeadInfo(getPersonalityType()).getHappinessBonusRefuseAttitudeThreshold())
 	{
 		return DENIAL_ATTITUDE;
 	}
 
-	if (GC.getBonusInfo(eBonus).getHealth() > 0
+	if (GC.getBonusInfo(eBonus).getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_EMPIRE) / 100 > 0
 	&& eAttitude <= GC.getLeaderHeadInfo(getPersonalityType()).getHealthBonusRefuseAttitudeThreshold())
 	{
 		return DENIAL_ATTITUDE;
@@ -20827,7 +20828,7 @@ int CvPlayerAI::AI_eventValue(EventTypes eEvent, const EventTriggeredData& kTrig
 			if (pPlot->getFeatureType() != NO_FEATURE)
 			{
 				//*grumble* who tied feature production to builds rather than the feature...
-				iOldFeatureValue = GC.getFeatureInfo(pPlot->getFeatureType()).getHealthPercent();
+				iOldFeatureValue = GC.getFeatureInfo(pPlot->getFeatureType()).getWellbeingModifier(WELLBEING_HEALTH, CASC_SCOPE_PLOT);
 
 				if (kEvent.getFeatureChange() > 0)
 				{
@@ -20835,7 +20836,7 @@ int CvPlayerAI::AI_eventValue(EventTypes eEvent, const EventTriggeredData& kTrig
 					FAssert(eFeature != NO_FEATURE);
 					if (eFeature != NO_FEATURE)
 					{
-						iNewFeatureValue = GC.getFeatureInfo(eFeature).getHealthPercent();
+						iNewFeatureValue = GC.getFeatureInfo(eFeature).getWellbeingModifier(WELLBEING_HEALTH, CASC_SCOPE_PLOT);
 					}
 				}
 
@@ -23404,7 +23405,7 @@ int CvPlayerAI::AI_goldToUpgradeAllUnits(int iExpThreshold) const
 			const CvArea* pUnitArea = unitX->area();
 			const int iUnitValue = AI_unitValue(eUnitType, eUnitAIType, pUnitArea);
 
-			foreach_(int iUnitX, GC.getUnitInfo(eUnitType).getUnitUpgradeChain())
+			foreach_(int iUnitX, GC.getUnitInfo(eUnitType).getUpgradeChain())
 			{
 				const UnitTypes eUnitY = (UnitTypes)iUnitX;
 				// is it better?

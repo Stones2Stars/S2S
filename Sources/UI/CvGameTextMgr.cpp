@@ -6569,9 +6569,9 @@ void CvGameTextMgr::parseSpecialistHelpActual(CvWStringBuffer &szHelpString, Spe
 		}
 	}
 
-	if (GC.getSpecialistInfo(eSpecialist).getHealthPercent() != 0)
+	if (GC.getSpecialistInfo(eSpecialist).getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_CITY) != 0)
 	{
-		float fValue = (float)abs(GC.getSpecialistInfo(eSpecialist).getHealthPercent());
+		float fValue = (float)abs(GC.getSpecialistInfo(eSpecialist).getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_CITY));
 		if (fmod(fValue,100) == 0)
 		{
 			szTempBuffer.Format(L"%.0f", fValue/100);
@@ -6585,7 +6585,7 @@ void CvGameTextMgr::parseSpecialistHelpActual(CvWStringBuffer &szHelpString, Spe
 			szTempBuffer.Format(L"%.2f", fValue/100);
 		}
 		CvWString szFirstBuffer;
-		szFirstBuffer.Format(L"%s%s", NEWLINE, gDLL->getText("TXT_KEY_SPECIALISTHELP_PERCENT", szTempBuffer.GetCString(), (GC.getSpecialistInfo(eSpecialist).getHealthPercent() > 0 ? gDLL->getSymbolID(HEALTHY_CHAR) : gDLL->getSymbolID(UNHEALTHY_CHAR))).c_str());
+		szFirstBuffer.Format(L"%s%s", NEWLINE, gDLL->getText("TXT_KEY_SPECIALISTHELP_PERCENT", szTempBuffer.GetCString(), (GC.getSpecialistInfo(eSpecialist).getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_CITY) > 0 ? gDLL->getSymbolID(HEALTHY_CHAR) : gDLL->getSymbolID(UNHEALTHY_CHAR))).c_str());
 		szHelpString.append(szFirstBuffer);
 	}
 	for (int iI = 0; iI < GC.getNumTechInfos(); iI++)
@@ -6618,9 +6618,9 @@ void CvGameTextMgr::parseSpecialistHelpActual(CvWStringBuffer &szHelpString, Spe
 			}
 		}
 	}
-	if (GC.getSpecialistInfo(eSpecialist).getHappinessPercent() != 0)
+	if (GC.getSpecialistInfo(eSpecialist).getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_CITY) != 0)
 	{
-		float fValue = (float)abs(GC.getSpecialistInfo(eSpecialist).getHappinessPercent());
+		float fValue = (float)abs(GC.getSpecialistInfo(eSpecialist).getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_CITY));
 		if (fmod(fValue,100) == 0)
 		{
 			szTempBuffer.Format(L"%.0f", fValue/100);
@@ -6634,7 +6634,7 @@ void CvGameTextMgr::parseSpecialistHelpActual(CvWStringBuffer &szHelpString, Spe
 			szTempBuffer.Format(L"%.2f", fValue/100);
 		}
 		CvWString szFirstBuffer;
-		szFirstBuffer.Format(L"%s%s", NEWLINE, gDLL->getText("TXT_KEY_SPECIALISTHELP_PERCENT", szTempBuffer.GetCString(), (GC.getSpecialistInfo(eSpecialist).getHappinessPercent() > 0 ? gDLL->getSymbolID(HAPPY_CHAR) : gDLL->getSymbolID(UNHAPPY_CHAR))).c_str());
+		szFirstBuffer.Format(L"%s%s", NEWLINE, gDLL->getText("TXT_KEY_SPECIALISTHELP_PERCENT", szTempBuffer.GetCString(), (GC.getSpecialistInfo(eSpecialist).getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_CITY) > 0 ? gDLL->getSymbolID(HAPPY_CHAR) : gDLL->getSymbolID(UNHAPPY_CHAR))).c_str());
 		szHelpString.append(szFirstBuffer);
 	}
 
@@ -6771,9 +6771,9 @@ void CvGameTextMgr::parseFreeSpecialistHelp(CvWStringBuffer &szHelpString, const
 			}
 			CvWString szTempBuffer;
 			CvWString szFirstBuffer;
-			if (GC.getSpecialistInfo(eSpecialist).getHealthPercent() != 0)
+			if (GC.getSpecialistInfo(eSpecialist).getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_CITY) != 0)
 			{
-				float fValue = (float)abs(iNumSpecialists * GC.getSpecialistInfo(eSpecialist).getHealthPercent());
+				float fValue = (float)abs(iNumSpecialists * GC.getSpecialistInfo(eSpecialist).getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_CITY));
 				if (fmod(fValue,100) == 0)
 				{
 					szTempBuffer.Format(L"%.0f", fValue/100);
@@ -6786,7 +6786,7 @@ void CvGameTextMgr::parseFreeSpecialistHelp(CvWStringBuffer &szHelpString, const
 				{
 					szTempBuffer.Format(L"%.2f", fValue/100);
 				}
-				szFirstBuffer.Format(L"%s%s, ", gDLL->getText("TXT_KEY_SPECIALISTHELP_PERCENT", szTempBuffer.GetCString(), (GC.getSpecialistInfo(eSpecialist).getHealthPercent() > 0 ? gDLL->getSymbolID(HEALTHY_CHAR) : gDLL->getSymbolID(UNHEALTHY_CHAR))).c_str());
+				szFirstBuffer.Format(L"%s%s, ", gDLL->getText("TXT_KEY_SPECIALISTHELP_PERCENT", szTempBuffer.GetCString(), (GC.getSpecialistInfo(eSpecialist).getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_CITY) > 0 ? gDLL->getSymbolID(HEALTHY_CHAR) : gDLL->getSymbolID(UNHEALTHY_CHAR))).c_str());
 				szHelpString.append(szFirstBuffer);
 			}
 
@@ -6820,9 +6820,9 @@ void CvGameTextMgr::parseFreeSpecialistHelp(CvWStringBuffer &szHelpString, const
 					}
 				}
 			}
-			if (GC.getSpecialistInfo(eSpecialist).getHappinessPercent() != 0)
+			if (GC.getSpecialistInfo(eSpecialist).getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_CITY) != 0)
 			{
-				float fValue = (float)abs(iNumSpecialists * GC.getSpecialistInfo(eSpecialist).getHappinessPercent());
+				float fValue = (float)abs(iNumSpecialists * GC.getSpecialistInfo(eSpecialist).getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_CITY));
 				if (fmod(fValue,100) == 0)
 				{
 					szTempBuffer.Format(L"%.0f", fValue/100);
@@ -6835,7 +6835,7 @@ void CvGameTextMgr::parseFreeSpecialistHelp(CvWStringBuffer &szHelpString, const
 				{
 					szTempBuffer.Format(L"%.2f", fValue/100);
 				}
-				szFirstBuffer.Format(L"%s%s, ", gDLL->getText("TXT_KEY_SPECIALISTHELP_PERCENT", szTempBuffer.GetCString(), (GC.getSpecialistInfo(eSpecialist).getHappinessPercent() > 0 ? gDLL->getSymbolID(HAPPY_CHAR) : gDLL->getSymbolID(UNHAPPY_CHAR))).c_str());
+				szFirstBuffer.Format(L"%s%s, ", gDLL->getText("TXT_KEY_SPECIALISTHELP_PERCENT", szTempBuffer.GetCString(), (GC.getSpecialistInfo(eSpecialist).getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_CITY) > 0 ? gDLL->getSymbolID(HAPPY_CHAR) : gDLL->getSymbolID(UNHAPPY_CHAR))).c_str());
 				szHelpString.append(szFirstBuffer);
 			}
 		}
@@ -13488,15 +13488,15 @@ void CvGameTextMgr::setBuildingHelp(CvWStringBuffer &szBuffer, const BuildingTyp
 		szBuffer.append(NEWLINE);
 		szBuffer.append(gDLL->getText("TXT_KEY_BUILDINGHELP_PROVIDES", pProvides->countOf(iFreeBonus), CvWString(kBonus.getType()).c_str(), kBonus.getTextKeyWide(), kBonus.getChar()));
 
-		if (kBonus.getHealth() != 0)
+		if (kBonus.getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_EMPIRE) / 100 != 0)
 		{
-			szTempBuffer.Format(L", +%d%c", abs(kBonus.getHealth()), (kBonus.getHealth() > 0) ? gDLL->getSymbolID(HEALTHY_CHAR): gDLL->getSymbolID(UNHEALTHY_CHAR));
+			szTempBuffer.Format(L", +%d%c", abs(kBonus.getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_EMPIRE) / 100), (kBonus.getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_EMPIRE) / 100 > 0) ? gDLL->getSymbolID(HEALTHY_CHAR): gDLL->getSymbolID(UNHEALTHY_CHAR));
 			szBuffer.append(szTempBuffer);
 		}
 
-		if (kBonus.getHappiness() != 0)
+		if (kBonus.getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_EMPIRE) / 100 != 0)
 		{
-			szTempBuffer.Format(L", +%d%c", abs(kBonus.getHappiness()), (kBonus.getHappiness() > 0) ? gDLL->getSymbolID(HAPPY_CHAR) : gDLL->getSymbolID(UNHAPPY_CHAR));
+			szTempBuffer.Format(L", +%d%c", abs(kBonus.getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_EMPIRE) / 100), (kBonus.getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_EMPIRE) / 100 > 0) ? gDLL->getSymbolID(HAPPY_CHAR) : gDLL->getSymbolID(UNHAPPY_CHAR));
 			szBuffer.append(szTempBuffer);
 		}
 
@@ -16440,10 +16440,10 @@ void CvGameTextMgr::setProcessHelp(CvWStringBuffer &szBuffer, ProcessTypes eProc
 
 	for (int iI = 0; iI < NUM_COMMERCE_TYPES; ++iI)
 	{
-		if (GC.getProcessInfo(eProcess).getProductionToCommerceModifier(iI) != 0)
+		if (GC.getProcessInfo(eProcess).getProductionToCommerce((CommerceTypes)iI, CASC_SCOPE_CITY) != 0)
 		{
 			szBuffer.append(NEWLINE);
-			szBuffer.append(gDLL->getText("TXT_KEY_PROCESS_CONVERTS", GC.getProcessInfo(eProcess).getProductionToCommerceModifier(iI), GC.getYieldInfo(YIELD_PRODUCTION).getChar(), GC.getCommerceInfo((CommerceTypes) iI).getChar()));
+			szBuffer.append(gDLL->getText("TXT_KEY_PROCESS_CONVERTS", GC.getProcessInfo(eProcess).getProductionToCommerce((CommerceTypes)iI, CASC_SCOPE_CITY), GC.getYieldInfo(YIELD_PRODUCTION).getChar(), GC.getCommerceInfo((CommerceTypes) iI).getChar()));
 		}
 	}
 }
@@ -20037,74 +20037,6 @@ void CvGameTextMgr::setImprovementHelp(CvWStringBuffer &szBuffer, ImprovementTyp
 		szBuffer.append(gDLL->getText("TXT_KEY_IMPROVEMENTHELP_DEFENSE_MODIFIER", info.getDefense(DEFENSE_AMOUNT, CASC_SCOPE_PLOT)));
 	}
 
-	if (0 != info.getHealthPercent())
-	{
-		const int iHealthPercent = info.getHealthPercent();
-		szBuffer.append(NEWLINE);
-		if (iHealthPercent % 100 == 0)
-		{
-			szBuffer.append
-			(
-				CvWString::format
-				(
-					L"%c%s%d%c%s",
-					gDLL->getSymbolID(BULLET_CHAR),
-					iHealthPercent > 0 ? L"+" : L"",
-					abs(iHealthPercent / 100),
-					(
-						iHealthPercent > 0
-						?
-						gDLL->getSymbolID(HEALTHY_CHAR)
-						:
-						gDLL->getSymbolID(UNHEALTHY_CHAR)
-					),
-					gDLL->getText("TXT_KEY_MISC_ICON_CHANGE_NEARBY_CITIES_1").GetCString()
-				)
-			);
-		}
-		else if (iHealthPercent % 10 == 0)
-		{
-			szBuffer.append
-			(
-				CvWString::format
-				(
-					L"%c%s%.1f%c%s",
-					gDLL->getSymbolID(BULLET_CHAR),
-					iHealthPercent > 0 ? L"+" : L"",
-					abs(iHealthPercent) * 0.01f,
-					(
-						iHealthPercent > 0
-						?
-						gDLL->getSymbolID(HEALTHY_CHAR)
-						:
-						gDLL->getSymbolID(UNHEALTHY_CHAR)
-					),
-					gDLL->getText("TXT_KEY_MISC_ICON_CHANGE_NEARBY_CITIES_1").GetCString()
-				)
-			);
-		}
-		else
-		{
-			szBuffer.append
-			(
-				CvWString::format
-				(
-					L"%c%s%.2f%c%s",
-					gDLL->getSymbolID(BULLET_CHAR),
-					iHealthPercent > 0 ? L"+" : L"",
-					abs(iHealthPercent) * 0.01f,
-					(
-						iHealthPercent > 0
-						?
-						gDLL->getSymbolID(HEALTHY_CHAR)
-						:
-						gDLL->getSymbolID(UNHEALTHY_CHAR)
-					),
-					gDLL->getText("TXT_KEY_MISC_ICON_CHANGE_NEARBY_CITIES_1").GetCString()
-				)
-			);
-		}
-	}
 	if (0 != info.getHappiness())
 	{
 		szBuffer.append(NEWLINE);
@@ -20919,12 +20851,12 @@ void CvGameTextMgr::setFeatureHelp(CvWStringBuffer &szBuffer, FeatureTypes eFeat
 	appendEntryLines(szBuffer, feature, MODFAM_MOVEMENT);
 
 	CvWString szHealth;
-	szHealth.Format(L"%.2f", 0.01f * abs(feature.getHealthPercent()));
-	if (feature.getHealthPercent() > 0)
+	szHealth.Format(L"%.2f", 0.01f * abs(feature.getWellbeingModifier(WELLBEING_HEALTH, CASC_SCOPE_PLOT)));
+	if (feature.getWellbeingModifier(WELLBEING_HEALTH, CASC_SCOPE_PLOT) > 0)
 	{
 		szBuffer.append(gDLL->getText("TXT_KEY_FEATUREHRLP_GOOD_HEALTH", szHealth.GetCString()));
 	}
-	else if (feature.getHealthPercent() < 0)
+	else if (feature.getWellbeingModifier(WELLBEING_HEALTH, CASC_SCOPE_PLOT) < 0)
 	{
 		szBuffer.append(gDLL->getText("TXT_KEY_FEATUREHELP_BAD_HEALTH", szHealth.GetCString()));
 	}
@@ -21004,7 +20936,7 @@ void CvGameTextMgr::setTerrainHelp(CvWStringBuffer &szBuffer, TerrainTypes eTerr
 
 		for (int iI = 0; iI < NUM_YIELD_TYPES; ++iI)
 		{
-			aiYields[iI] = terrain.getYield(iI);
+			aiYields[iI] = terrain.getFlatYield((YieldTypes)iI, CASC_SCOPE_PLOT) / 100;
 		}
 		setYieldChangeHelp(szBuffer, L"", L"", L"", aiYields);
 	}

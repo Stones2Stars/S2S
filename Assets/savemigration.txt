@@ -734,4 +734,14 @@ CvPlayer::iUnitCombatFreeXPCount
 CvPlayer::m_iCapitalXPModifier
 CvPlayer::m_iStateReligionHolyCityXPModifier
 CvPlayer::m_iNonStateReligionHolyCityXPModifier
+|
+| CvCity improvement-health accumulators -- CUT with the mechanic itself.
+| The improvement HEALTH term is a deliberate BALANCE-CUT (modifier.md 2b / curate_improvement.py): legacy
+| iHealthPercent is dropped from the data, and the civic per-improvement leg that summed beside it has neither
+| a getter on any info nor a single authoring. So both feeders are gone and updateImprovementHealth could only
+| ever compute 0 -- the members, their getters, the maintainer and its four call sites go with it.
+| REPLACEMENT: none, by ruling -- the term does not survive the cut. Improvement HAPPINESS is unaffected and
+| stays represented (it folds into the feature happiness terms).
+CvCity::m_iImprovementGoodHealth
+CvCity::m_iImprovementBadHealth
 ========================
