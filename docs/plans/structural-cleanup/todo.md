@@ -473,6 +473,17 @@ grep -o "error C2039: '[^']*' : is not a member of '[^']*'" <log> | sort -u
 one symbol reveals previously-hidden errors in the same TU, which is why the raw error TOTAL barely moves and
 is a useless progress metric. Count DISTINCT `(member, class)` pairs instead.
 
+⛔ **MEASURED: SEVEN TUs ARE TRUNCATED, and they are the seven that matter** — `CvCityAI`, `CvPlayerAI`,
+`CvCity`, `CvGame`, `CvPlayer`, `CvTeam`, `CvGameTextMgr`. Concretely, `CvCity.cpp` stops reporting at **line
+6866** of ~19k, so roughly two thirds of its errors are INVISIBLE. Consequences that bite:
+- **A symbol can be broken with NO error shown at all.** `CvCity::m_paiFreeBonus` was used at line 10875 while
+  declared in no header — no diagnostic, because the cap had already been hit. It was found by tracing a
+  `Cy` wrapper that happened to sit in an untruncated TU.
+- **The ranking is biased toward whatever errors appear EARLY in those files**, so "the top of the census" is
+  not "the biggest problem".
+⇒ Work a truncated TU from its FIRST error downward (each fix reveals the next), and treat `grep -rn` over
+`Sources/` as the authority for whether a symbol is gone. ⛔ Never conclude a file is clean from its absence.
+
 ⛔ **AND THE PAIR COUNT IS UNRELIABLE IN BOTH DIRECTIONS — a DROP is not progress either.** The unity batches
 group several files per TU, so deleting code anywhere in a batch changes how the 100-error budget is spent and
 therefore WHICH files get to report at all. A symbol can vanish from the census while every one of its call

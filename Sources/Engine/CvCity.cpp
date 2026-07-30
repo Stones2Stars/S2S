@@ -369,6 +369,8 @@ CvCity::CvCity()
 
 
 	m_cachedPropertyNeeds = NULL;
+	m_paiFreeBonus = NULL;
+	m_paiFreeBonusEvents = NULL;
 	m_pabHadVicinityBonus = NULL;
 	m_pabHasVicinityBonus = NULL;
 	m_pabHadRawVicinityBonus = NULL;
@@ -658,6 +660,8 @@ void CvCity::uninit()
 	SAFE_DELETE_ARRAY(m_pabHadVicinityBonus);
 	SAFE_DELETE_ARRAY(m_pabHasVicinityBonus);
 	SAFE_DELETE_ARRAY(m_pabHadRawVicinityBonus);
+	SAFE_DELETE_ARRAY(m_paiFreeBonus);
+	SAFE_DELETE_ARRAY(m_paiFreeBonusEvents);
 	SAFE_DELETE_ARRAY(m_pabHasRawVicinityBonus);
 	SAFE_DELETE_ARRAY(m_pabHasVicinityBonusCached);
 	SAFE_DELETE_ARRAY(m_pabHasRawVicinityBonusCached);
@@ -1021,10 +1025,14 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 
 		m_pabHadVicinityBonus = new bool[GC.getNumBonusInfos()];
 		m_pabHadRawVicinityBonus = new bool[GC.getNumBonusInfos()];
+		m_paiFreeBonus = new int[GC.getNumBonusInfos()];
+		m_paiFreeBonusEvents = new int[GC.getNumBonusInfos()];
 		for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
 		{
 			m_pabHadVicinityBonus[iI] = false;
 			m_pabHadRawVicinityBonus[iI] = false;
+			m_paiFreeBonus[iI] = 0;
+			m_paiFreeBonusEvents[iI] = 0;
 		}
 
 		m_cachedPropertyNeeds = new int[GC.getNumPropertyInfos()];
@@ -10872,7 +10880,9 @@ void CvCity::setScriptData(std::string szNewValue)
 int CvCity::getFreeBonus(BonusTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, GC.getNumBonusInfos(), eIndex);
-	return m_paiFreeBonus[eIndex];
+	// The derived building supply PLUS the persisted event/WB grants -- the two halves the retired mixed
+	// ledger used to conflate (savemigration.txt; the reader sums, exactly as the building-commerce split does).
+	return m_paiFreeBonus[eIndex] + m_paiFreeBonusEvents[eIndex];
 }
 
 
@@ -10886,6 +10896,25 @@ void CvCity::changeFreeBonus(BonusTypes eIndex, int iChange)
 
 		plot()->updatePlotGroupBonus(false);
 		m_paiFreeBonus[eIndex] += iChange;
+		FASSERT_NOT_NEGATIVE(getFreeBonus(eIndex));
+		plot()->updatePlotGroupBonus(true);
+
+		GET_PLAYER(getOwner()).endDeferredPlotGroupBonusCalculation();
+	}
+}
+
+void CvCity::changeFreeBonusEvent(BonusTypes eIndex, int iChange)
+{
+	FASSERT_BOUNDS(0, GC.getNumBonusInfos(), eIndex);
+
+	if (iChange != 0)
+	{
+		// Same network bracket as the derived half -- the plot group has to see the supply change either way;
+		// only WHERE the delta is stored differs (this half is saved, that half is rebuilt from events).
+		GET_PLAYER(getOwner()).startDeferredPlotGroupBonusCalculation();
+
+		plot()->updatePlotGroupBonus(false);
+		m_paiFreeBonusEvents[eIndex] += iChange;
 		FASSERT_NOT_NEGATIVE(getFreeBonus(eIndex));
 		plot()->updatePlotGroupBonus(true);
 
@@ -14917,6 +14946,8 @@ void CvCity::read(FDataStreamBase* pStream)
 	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvCity", REMAPPED_CLASS_TYPE_PROPERTIES, GC.getNumPropertyInfos(), m_paiAidRate);
 	WRAPPER_READ(wrapper, "CvCity", &m_iQuarantinedCount);
 	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvCity", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_pabHadRawVicinityBonus);
+	// The EVENT/WB half only -- the building half is derived and rebuilt by the reseed (save.md par.5).
+	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvCity", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_paiFreeBonusEvents);
 	WRAPPER_READ(wrapper, "CvCity", &m_bPropertyControlBuildingQueued);
 
 	// Absent in older saves (stays 0; specialists are then still baked flat into m_aiExtraYield
@@ -15413,6 +15444,7 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_PROPERTIES, GC.getNumPropertyInfos(), m_paiAidRate);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iQuarantinedCount);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_pabHadRawVicinityBonus);
+	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_paiFreeBonusEvents);
 	WRAPPER_WRITE(wrapper, "CvCity", m_bPropertyControlBuildingQueued);
 
 

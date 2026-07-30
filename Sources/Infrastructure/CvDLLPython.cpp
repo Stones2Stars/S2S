@@ -2,6 +2,7 @@
 #include "Python/CyIterator.h"
 #include "CvPython.h"
 #include "Python/CyCity.h"
+#include "Python/CyEnabler.h"
 #include "Python/CyGlobalContext.h"
 #include "Python/CyPlayer.h"
 #include "Python/CyPlot.h"
@@ -85,8 +86,10 @@ DllExport void DLLPublishToPython()
 	SCyDebug::installInPython();
 
 	//
-	// large interfaces which can be split across files if need be
+	// The NEW uniform read surface. Not a widened Cy* binding -- an id-based surface with no dependency on the
+	// legacy wrappers, so they can be cut away without touching it ([DEC-cy-not-fixed]).
 	//
+	CyEnabler::pythonPublish();
 
 
 

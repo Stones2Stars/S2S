@@ -1091,6 +1091,9 @@ public:
 
 	int getFreeBonus(BonusTypes eIndex) const;
 	void changeFreeBonus(BonusTypes eIndex, int iChange);
+	// The event/WorldBuilder grant path (persisted, see the member note). Distinct from changeFreeBonus, which
+	// is the derived building supply -- routing a one-shot grant through that one would lose it on reload.
+	void changeFreeBonusEvent(BonusTypes eIndex, int iChange);
 
 	void processNumBonusChange(BonusTypes eIndex, int iOldValue, int iNewValue);
 	void endDeferredBonusProcessing();
@@ -1647,6 +1650,15 @@ protected:
 	int m_iFreshWater;
 
 
+	// The free-bonus supply, split by NATURE (savemigration.txt: the old mixed ledger was retired).
+	//   m_paiFreeBonus       -- the BUILDING half. Derived: maintained as buildings process their
+	//                           `provides.bonuses`, so it serializes NOTHING and rebuilds from the reseed.
+	//   m_paiFreeBonusEvents -- the EVENT/WorldBuilder half. Genuine one-shot NON-DERIVABLE state (save.md §5:
+	//                           the one class that legitimately serializes), so it is SAVED separately. A
+	//                           recompute cache would wipe it -- the m_aBuildingCommerceChangeEvents precedent.
+	// getFreeBonus() sums the two.
+	int* m_paiFreeBonus;
+	int* m_paiFreeBonusEvents;
 	mutable int* m_cachedPropertyNeeds;
 	bool* m_pabHadVicinityBonus;
 	bool* m_pabHadRawVicinityBonus;

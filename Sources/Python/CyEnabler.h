@@ -68,6 +68,10 @@ public:
 	// == ENABLER_LISTED, one wanting "in the tree somewhere" compares >= ENABLER_GREYED.
 	int getUnitAvailabilityAnywhere(int iPlayer, int /*UnitTypes*/ eUnit) const;
 	int getBuildingAvailabilityAnywhere(int iPlayer, int /*BuildingTypes*/ eBuilding) const;
+
+	// Publishes this surface + the three tri-state constants a script compares against
+	// (ENABLER_HIDDEN / ENABLER_GREYED / ENABLER_LISTED). Called from DLLPublishToPython.
+	static void pythonPublish();
 };
 
 #endif // CyEnabler_h__

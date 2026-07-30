@@ -163,3 +163,39 @@ int CyEnabler::getBuildingAvailabilityAnywhere(int iPlayer, int eBuilding) const
 	const CvPlayer* p = cye_player(iPlayer);
 	return p ? (int)p->getBuildingAvailabilityAnywhere((BuildingTypes)eBuilding) : (int)EnablerDomain::STATE_HIDDEN;
 }
+
+// The publication. ONE class, id-based, no CyCity/CyPlayer anywhere in the signature -- so the legacy
+// wrappers can be cut away without touching this ([DEC-cy-not-fixed]: the replacement is a NEW surface,
+// never a widened binding).
+void CyEnabler::pythonPublish()
+{
+	python::class_<CyEnabler>("CyEnabler")
+		// CITY domains -- construction and training on one plane
+		.def("getBuildingAvailability",         &CyEnabler::getBuildingAvailability)
+		.def("getUnitAvailability",             &CyEnabler::getUnitAvailability)
+		.def("isBuildingContinuable",           &CyEnabler::isBuildingContinuable)
+		.def("getAvailableBuildings",           &CyEnabler::getAvailableBuildings)
+		.def("getAvailableUnits",               &CyEnabler::getAvailableUnits)
+		// PLAYER domains
+		.def("getTechAvailability",             &CyEnabler::getTechAvailability)
+		.def("getCivicAvailability",            &CyEnabler::getCivicAvailability)
+		.def("getProjectAvailability",          &CyEnabler::getProjectAvailability)
+		.def("getProcessAvailability",          &CyEnabler::getProcessAvailability)
+		.def("getAvailableTechs",               &CyEnabler::getAvailableTechs)
+		.def("getAvailableCivics",              &CyEnabler::getAvailableCivics)
+		.def("getAvailableProjects",            &CyEnabler::getAvailableProjects)
+		.def("getAvailableProcesses",           &CyEnabler::getAvailableProcesses)
+		// the two carve-outs -- the UNLOCKED half only (the live half is evaluated at its decision point)
+		.def("getBuildUnlocked",                &CyEnabler::getBuildUnlocked)
+		.def("getPromotionUnlocked",            &CyEnabler::getPromotionUnlocked)
+		// the empire-wide FAN (the BEST state any of the player's cities holds)
+		.def("getUnitAvailabilityAnywhere",     &CyEnabler::getUnitAvailabilityAnywhere)
+		.def("getBuildingAvailabilityAnywhere", &CyEnabler::getBuildingAvailabilityAnywhere)
+		;
+
+	// The tri-state, exposed as constants rather than left as bare ints: the verdict is returned WHOLE, so a
+	// script needs the names to say what it means (== LISTED for "offered", >= GREYED for "in the tree").
+	python::scope().attr("ENABLER_HIDDEN") = (int)EnablerDomain::STATE_HIDDEN;
+	python::scope().attr("ENABLER_GREYED") = (int)EnablerDomain::STATE_GREYED;
+	python::scope().attr("ENABLER_LISTED") = (int)EnablerDomain::STATE_LISTED;
+}
