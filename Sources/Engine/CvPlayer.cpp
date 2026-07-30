@@ -57,6 +57,7 @@
 #include "Spine/CvEventSpine.h"   // the DOMAIN emit endpoints -- every state-change choke point below announces through these
 #include <boost/scoped_ptr.hpp>
 #include "Infos/CvSkillReads.h"   // the ONE shared surface for the json.md §8 skill reads
+#include "Infos/CvTagReads.h"   // the ONE shared surface for the json.md §8 tag reads
 
 //	Koshling - save flag indicating this player has no data in the save as they have never been alive
 #define	PLAYER_UI_FLAG_OMITTED 2
@@ -5357,7 +5358,8 @@ bool CvPlayer::canTradeItem(PlayerTypes eWhoTo, TradeData item, bool bTestDenial
 			&& GC.getGame().isOption(GAMEOPTION_ADVANCED_DIPLOMACY)
 			&& GC.getDefineINT("CAN_TRADE_WORKERS") > 0
 			&& GET_TEAM(getTeam()).isHasEmbassy(GET_PLAYER(eWhoTo).getTeam())
-			&& CvSkillReads::workerTrade(GC.getUnitInfo(pUnitTraded->getUnitType()).getSkills())
+			&& CvSkillReads::tradable(GC.getUnitInfo(pUnitTraded->getUnitType()).getSkills())
+			&& CvTagReads::civilian(GC.getUnitInfo(pUnitTraded->getUnitType()).getTags())
 			&& pUnitTraded->canMove()
 			&& !GET_PLAYER(eWhoTo).isUnitMaxedOut(pUnitTraded->getUnitType(), GET_PLAYER(eWhoTo).getUnitMaking(pUnitTraded->getUnitType())))
 			{
@@ -5374,7 +5376,8 @@ bool CvPlayer::canTradeItem(PlayerTypes eWhoTo, TradeData item, bool bTestDenial
 			&& GC.getGame().isOption(GAMEOPTION_ADVANCED_DIPLOMACY)
 			&& GC.getDefineINT("NO_MILITARY_UNIT_TRADING") == 0
 			&& GET_TEAM(getTeam()).isHasEmbassy(GET_PLAYER(eWhoTo).getTeam())
-			&& CvSkillReads::militaryTrade(GC.getUnitInfo(pUnitTraded->getUnitType()).getSkills()))
+			&& CvSkillReads::tradable(GC.getUnitInfo(pUnitTraded->getUnitType()).getSkills())
+			&& CvTagReads::military(GC.getUnitInfo(pUnitTraded->getUnitType()).getTags()))
 			{
 				CvCity* pTradingCity = pUnitTraded->plot()->getPlotCity();
 

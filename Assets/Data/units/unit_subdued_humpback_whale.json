@@ -20,7 +20,7 @@
  "skills": [
   "onlyDefensive",
   "renderBelowWater",
-  "militaryTrade"
+  "tradable"
  ],
  "tags": [
   "seaUnit"

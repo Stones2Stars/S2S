@@ -60,7 +60,7 @@
   "pillage",
   "ignoreBuildingDefense",
   "ignoreTerrainCost",
-  "militaryTrade"
+  "tradable"
  ],
  "tags": [
   "military",

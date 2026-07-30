@@ -82,7 +82,7 @@
   "pillage",
   "ignoreBuildingDefense",
   "mechanized",
-  "militaryTrade",
+  "tradable",
   "collateralImmune"
  ],
  "tags": [

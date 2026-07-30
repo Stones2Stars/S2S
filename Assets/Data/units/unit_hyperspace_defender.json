@@ -33,7 +33,7 @@
   "pillage",
   "ignoreBuildingDefense",
   "onlyDefensive",
-  "militaryTrade"
+  "tradable"
  ],
  "tags": [
   "military"

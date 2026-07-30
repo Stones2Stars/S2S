@@ -57,7 +57,7 @@
  "skills": [
   "noDefensiveBonus",
   "firstStrikeImmune",
-  "militaryTrade"
+  "tradable"
  ],
  "tags": [
   "landUnit"

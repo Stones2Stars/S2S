@@ -217,8 +217,9 @@ group's natural index** — never N individual getters for a groupable set. This
      > `CLS_HAS` exists at all (it memoizes a per-site id lookup). A caller-facing `hasAttribute(ATTRIBUTE_X)`
      > therefore needs a resolved-id vocabulary the open registry does not hand out at compile time, so the pass
      > is a design decision about that vocabulary, never a mechanical rename.
-     > ⛔ **The CONSUMER side of that read has exactly ONE home — `CvSkillReads` (`Infos/CvSkillReads.{h,cpp}`),
-     > a static-methods class holding the memoized id per key.** `CLS_HAS` is for a getter BODY on an info; a
+     > ⛔ **The CONSUMER side of that read has exactly ONE home per domain — `CvSkillReads` and `CvTagReads`
+     > (`Infos/CvSkillReads.{h,cpp}` / `Infos/CvTagReads.{h,cpp}`), static-methods classes holding the memoized
+     > id per key.** `CLS_HAS` is for a getter BODY on an info; a
      > CONSUMER asking "does this promotion/unitcombat/unit carry skill X" goes through the shared surface and
      > never writes its own memoized-id helper. ⚑ This is the DRY law's own worked case rather than a
      > preference: because the helper was file-local, four translation units independently reimplemented the

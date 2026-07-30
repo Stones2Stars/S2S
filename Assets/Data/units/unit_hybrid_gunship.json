@@ -107,7 +107,7 @@
   "canMoveAllTerrain",
   "ignoreBuildingDefense",
   "ignoreTerrainCost",
-  "militaryTrade"
+  "tradable"
  ],
  "tags": [
   "military",

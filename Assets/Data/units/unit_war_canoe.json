@@ -76,7 +76,7 @@
   "pillage",
   "mechanized",
   "renderBelowWater",
-  "militaryTrade"
+  "tradable"
  ],
  "tags": [
   "military",

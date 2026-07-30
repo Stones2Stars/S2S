@@ -50,7 +50,7 @@
   "firstStrikeImmune",
   "mechanized",
   "onlyDefensive",
-  "militaryTrade"
+  "tradable"
  ],
  "tags": [
   "military",

@@ -45,7 +45,7 @@
   "ignoreBuildingDefense",
   "mechanized",
   "suicide",
-  "militaryTrade"
+  "tradable"
  ],
  "tags": [
   "military",

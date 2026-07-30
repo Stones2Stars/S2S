@@ -95,7 +95,7 @@
  "skills": [
   "food",
   "onlyDefensive",
-  "workerTrade"
+  "tradable"
  ],
  "tags": [
   "worker",

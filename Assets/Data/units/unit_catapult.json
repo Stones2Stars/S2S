@@ -73,7 +73,7 @@
   "noDefensiveBonus",
   "pillage",
   "mechanized",
-  "militaryTrade",
+  "tradable",
   "collateralImmune"
  ],
  "tags": [

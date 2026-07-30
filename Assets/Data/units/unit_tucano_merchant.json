@@ -205,7 +205,7 @@
   "noCapture",
   "onlyDefensive",
   "rivalTerritory",
-  "militaryTrade"
+  "tradable"
  ],
  "tags": [
   "merchant",

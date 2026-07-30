@@ -98,7 +98,7 @@
   "noDefensiveBonus",
   "pillage",
   "mechanized",
-  "militaryTrade"
+  "tradable"
  ],
  "tags": [
   "military",

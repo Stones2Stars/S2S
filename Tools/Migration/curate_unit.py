@@ -110,10 +110,15 @@ CAP_BOOL = {
     "bPassage": "passage", "bRivalTerritory": "rivalTerritory",   # bRBombardForceAbility DROPs with the DCM-range removal
     "bSabotage": "sabotage", "bStateReligion": "stateReligion", "bStealPlans": "stealPlans",
     "bStealthDefense": "stealthDefense", "bSuicide": "suicide", "bUnlimitedException": "unlimitedException",
-    "bUpgradeAnywhere": "upgradeAnywhere", "bWorkerTrade": "workerTrade", "bAttackOnlyCities": "attackOnlyCities",
+    "bUpgradeAnywhere": "upgradeAnywhere", "bWorkerTrade": "tradable", "bAttackOnlyCities": "attackOnlyCities",
     "bIgnoreNoEntryLevel": "ignoreNoEntryLevel", "bFliesToMove": "fliesToMove", "bFreeDrop": "freeDrop",
     "bDCMFighterEngage": "dcmFighterEngage", "bRenderBelowWater": "renderBelowWater",
-    "bMilitaryTrade": "militaryTrade", "bNoSelfHeal": "noSelfHeal",   # mirror curate_promotion CAP_BOOL (unit no-self-heal skill)
+    # bWorkerTrade + bMilitaryTrade BOTH fold onto `tradable` (skills.md): a unit is tradable or it is not.
+    # The legacy pair named the DEAL SLOT rather than the unit -- 279 of the 678 `bMilitaryTrade` units are not
+    # military at all (merchants, scouts, pack animals) -- and which slot a trade goes through is the deal
+    # system's question, gated on its own case in CvPlayer::canTradeItem. The dict keys on the OUTPUT name, so
+    # the two sources dedup into one skill.
+    "bMilitaryTrade": "tradable", "bNoSelfHeal": "noSelfHeal",   # mirror curate_promotion CAP_BOOL (unit no-self-heal skill)
     "bNoRevealMap": "noRevealMap",   # goody-hut gate (CvUnit): unit reveals no map on a hut result
 }
 # count-int capabilities (>0 -> has it)

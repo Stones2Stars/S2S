@@ -44,7 +44,6 @@ public:
 	static bool ignoreBuildingDefense(const CvClassificationBlock* skills);
 	static bool immuneToFirstStrikes(const CvClassificationBlock* skills);
 	static bool inquisitor(const CvClassificationBlock* skills);
-	static bool militaryTrade(const CvClassificationBlock* skills);
 	static bool noNonOwnedCityEntry(const CvClassificationBlock* skills);
 	static bool noNonTypeProdMods(const CvClassificationBlock* skills);
 	static bool offensiveVictoryMove(const CvClassificationBlock* skills);
@@ -61,8 +60,8 @@ public:
 	static bool stealPlans(const CvClassificationBlock* skills);
 	static bool stealthDefense(const CvClassificationBlock* skills);
 	static bool suicide(const CvClassificationBlock* skills);
+	static bool tradable(const CvClassificationBlock* skills);
 	static bool unlimitedException(const CvClassificationBlock* skills);
-	static bool workerTrade(const CvClassificationBlock* skills);
 
 private:
 	CvSkillReads();                                  // organization only -- never instantiated

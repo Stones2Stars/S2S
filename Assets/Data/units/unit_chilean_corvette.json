@@ -111,7 +111,7 @@
   "ignoreBuildingDefense",
   "mechanized",
   "renderBelowWater",
-  "militaryTrade"
+  "tradable"
  ],
  "tags": [
   "military",

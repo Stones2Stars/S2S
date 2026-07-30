@@ -55,7 +55,7 @@
  "skills": [
   "noDefensiveBonus",
   "onlyDefensive",
-  "militaryTrade"
+  "tradable"
  ],
  "tags": [
   "landUnit"

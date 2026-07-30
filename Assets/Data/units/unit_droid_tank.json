@@ -69,7 +69,7 @@
   "noDefensiveBonus",
   "pillage",
   "ignoreBuildingDefense",
-  "militaryTrade"
+  "tradable"
  ],
  "tags": [
   "military",

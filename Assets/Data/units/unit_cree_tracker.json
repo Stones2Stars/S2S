@@ -102,7 +102,7 @@
  },
  "skills": [
   "pillage",
-  "militaryTrade"
+  "tradable"
  ],
  "tags": [
   "landUnit",

@@ -90,7 +90,7 @@
  "skills": [
   "noCapture",
   "onlyDefensive",
-  "militaryTrade"
+  "tradable"
  ],
  "tags": [
   "military",

@@ -98,7 +98,7 @@
   "noCapture",
   "mechanized",
   "onlyDefensive",
-  "militaryTrade"
+  "tradable"
  ],
  "tags": [
   "military",

@@ -102,7 +102,7 @@
   "ignoreZoneOfControl",
   "noNonOwnedCityEntry",
   "ignoreNoEntryLevel",
-  "militaryTrade"
+  "tradable"
  ],
  "tags": [
   "military",

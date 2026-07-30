@@ -86,7 +86,7 @@
  "skills": [
   "pillage",
   "ignoreTerrainCost",
-  "militaryTrade"
+  "tradable"
  ],
  "tags": [
   "military",

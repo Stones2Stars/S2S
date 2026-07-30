@@ -18,20 +18,12 @@
 #include "CvImprovementInfo.h"
 #include "CvBonusInfo.h"
 #include "CvSpawnInfo.h"
-#include "CvClassificationBlock.h"   // CLSD_TAG + the memoized id bit test
+#include "CvTagReads.h"   // the ONE shared surface for the json.md §8 tag reads
 
 // The json.md §8 TAG read this file makes. `wild` is its own tag (UNITCOMBAT_WILD, 198 units), so the
 // spawn test stays EXACT rather than widening to `animal` and sweeping tamed animals in with it. The
 // info's tag bitset is already the fold of the unit's own tags with its combat classes'
 // (deriveAtRegistryComplete), so the combat-class-authored tag reads straight off the unit.
-namespace
-{
-	bool unitIsWildAnimal(const CvUnitInfo& kUnit)
-	{
-		static int s_wildTagId = -1;
-		return kUnit.getTags()->hasKey(s_wildTagId, CLSD_TAG, "wild");
-	}
-}
 
 
 //======================================================================================================
@@ -298,7 +290,7 @@ bool CvSpawnInfo::getTreatAsBarbarian() const
 
 bool CvSpawnInfo::getNeutralOnly() const
 {
-	if (unitIsWildAnimal(GC.getUnitInfo(getUnitType())) && GC.getGame().isOption(GAMEOPTION_ANIMAL_DANGEROUS))
+	if (CvTagReads::wild(GC.getUnitInfo(getUnitType()).getTags()) && GC.getGame().isOption(GAMEOPTION_ANIMAL_DANGEROUS))
 	{
 		return false;
 	}

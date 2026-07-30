@@ -82,7 +82,7 @@
   "ignoreTerrainCost",
   "mechanized",
   "dcmFighterEngage",
-  "militaryTrade"
+  "tradable"
  ],
  "tags": [
   "military",

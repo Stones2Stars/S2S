@@ -41,7 +41,7 @@
   "canMoveImpassable",
   "ignoreBuildingDefense",
   "ignoreTerrainCost",
-  "militaryTrade"
+  "tradable"
  ],
  "tags": [
   "military",

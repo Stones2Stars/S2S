@@ -89,7 +89,7 @@
   "canMoveAllTerrain",
   "ignoreTerrainCost",
   "mechanized",
-  "militaryTrade"
+  "tradable"
  ],
  "tags": [
   "military",

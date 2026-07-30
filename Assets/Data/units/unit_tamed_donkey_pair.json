@@ -59,7 +59,7 @@
  },
  "skills": [
   "onlyDefensive",
-  "militaryTrade"
+  "tradable"
  ],
  "tags": [
   "landUnit"

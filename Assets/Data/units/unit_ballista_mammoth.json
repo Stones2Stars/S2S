@@ -73,7 +73,7 @@
  "skills": [
   "noDefensiveBonus",
   "pillage",
-  "militaryTrade"
+  "tradable"
  ],
  "tags": [
   "military",

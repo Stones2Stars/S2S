@@ -83,7 +83,7 @@
   "ignoreBuildingDefense",
   "ignoreTerrainCost",
   "dcmFighterEngage",
-  "militaryTrade"
+  "tradable"
  ],
  "tags": [
   "military",

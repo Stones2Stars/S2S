@@ -96,7 +96,7 @@
   "ignoreTerrainCost",
   "mechanized",
   "renderBelowWater",
-  "militaryTrade"
+  "tradable"
  ],
  "tags": [
   "military",

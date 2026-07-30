@@ -81,7 +81,7 @@
   "noDefensiveBonus",
   "ignoreTerrainCost",
   "passage",
-  "militaryTrade"
+  "tradable"
  ],
  "tags": [
   "military",

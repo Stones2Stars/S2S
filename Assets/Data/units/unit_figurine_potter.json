@@ -206,7 +206,7 @@
   "noNonTypeProdMods",
   "onlyDefensive",
   "rivalTerritory",
-  "militaryTrade"
+  "tradable"
  ],
  "tags": [
   "merchant",

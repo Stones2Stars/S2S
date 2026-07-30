@@ -79,7 +79,7 @@
   "mechanized",
   "attackOnlyCities",
   "ignoreNoEntryLevel",
-  "militaryTrade",
+  "tradable",
   "collateralImmune"
  ],
  "tags": [

@@ -31,7 +31,7 @@
   "noBadGoodies",
   "passage",
   "upgradeAnywhere",
-  "militaryTrade"
+  "tradable"
  ],
  "tags": [
   "landUnit",

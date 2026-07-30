@@ -58,7 +58,7 @@
  "skills": [
   "pillage",
   "ignoreBuildingDefense",
-  "militaryTrade"
+  "tradable"
  ],
  "tags": [
   "military",

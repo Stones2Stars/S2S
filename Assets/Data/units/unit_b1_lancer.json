@@ -87,7 +87,7 @@
  "skills": [
   "ignoreBuildingDefense",
   "mechanized",
-  "militaryTrade"
+  "tradable"
  ],
  "tags": [
   "military",

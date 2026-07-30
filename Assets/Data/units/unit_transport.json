@@ -56,7 +56,7 @@
   "mechanized",
   "onlyDefensive",
   "renderBelowWater",
-  "militaryTrade"
+  "tradable"
  ],
  "tags": [
   "military",

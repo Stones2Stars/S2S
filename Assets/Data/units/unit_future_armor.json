@@ -100,7 +100,7 @@
   "ignoreBuildingDefense",
   "ignoreTerrainCost",
   "mechanized",
-  "militaryTrade"
+  "tradable"
  ],
  "tags": [
   "military",

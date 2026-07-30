@@ -86,7 +86,7 @@
   "ignoreBuildingDefense",
   "ignoreTerrainCost",
   "mechanized",
-  "militaryTrade",
+  "tradable",
   "collateralImmune"
  ],
  "tags": [

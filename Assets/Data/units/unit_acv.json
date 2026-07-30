@@ -59,7 +59,7 @@
  },
  "skills": [
   "noDefensiveBonus",
-  "militaryTrade"
+  "tradable"
  ],
  "tags": [
   "military",

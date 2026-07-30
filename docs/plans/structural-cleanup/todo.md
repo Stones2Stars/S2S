@@ -19,20 +19,6 @@
 ## Data — curator batches
 
 - `culture.unit.garrison` · `costs.empire.perInstance` — flagged in-code, awaiting their batch.
-- **The `tradable` skill fold has NOT happened** — [skills.md](../../specs/skills.md) names ONE key for the
-  trade-away ability, but `curate_unit.py` still emits the legacy split (`bWorkerTrade` → `workerTrade`,
-  `bMilitaryTrade` → `militaryTrade`; **678 units author `militaryTrade`, 27 `workerTrade`, and ZERO author
-  `tradable`**). So the two consumer reads in `CvPlayer` correctly read the legacy keys today. Fold them in the
-  curator, regen, and collapse the two reads onto one
-  ([DEC-recurate-on-decision](../../architecture/decisions.md#dec-recurate-on-decision)).
-  ⚠ **The split is not a spelling — the KEY is currently carrying the unit-KIND discrimination, so a naive fold
-  widens what may be traded.** Verified in `CvPlayer::canTradeItem`: `TRADE_WORKER` gates on `workerTrade` (plus
-  `CAN_TRADE_WORKERS`, an embassy and a unit-max test) and `TRADE_MILITARY_UNIT` on `militaryTrade` (plus
-  `NO_MILITARY_UNIT_TRADING`, an embassy and a connected-city rule) — and **neither case tests what kind of unit
-  it is**, so collapsing both onto `tradable` would let a military unit trade through the WORKER case.
-  ⚑ The fold is still right, and the missing half already exists: `tradable` answers *may this be traded at
-  all*, and the existing `worker` / `military` **TAGS** ([tags.md](../../specs/tags.md)) answer *as what* — one
-  `IS_WORKER` / `IS_MILITARY` predicate per case. Land those gates in the same work item as the curator fold.
 - The ruling-16 trigger-plane set (`survivor`, `cityCapture`, `combat.subdueAnimal`, `combat.nukeInterception`) —
   each attaches to its trigger's `chance`; authoring shapes finalize with the trigger system's build-out.
   ⚠ **One CONSUMER is already dangling on this and must not be unblocked by minting a kind:**

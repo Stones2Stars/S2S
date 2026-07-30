@@ -77,7 +77,7 @@
   "noDefensiveBonus",
   "pillage",
   "ignoreBuildingDefense",
-  "militaryTrade",
+  "tradable",
   "collateralImmune"
  ],
  "tags": [

@@ -104,7 +104,7 @@ Owner-ruled or curator-grounded with a clear meaning.
 | `sabotage` | can perform sabotage |
 | `stealPlans` | can steal plans (espionage mission) |
 | `suicide` | destroyed after attacking |
-| `tradable` | can be traded with another empire — the ONE key for the trade-away ability, replacing the legacy `militaryTrade` / `workerTrade` split (a unit is tradable or it is not; who may receive it is the deal system's question, not the unit's) |
+| `tradable` | can be traded with another empire. **ONE key** — a unit is tradable or it is not. ⛔ The legacy `workerTrade` / `militaryTrade` pair named the DEAL SLOT, not the unit (279 of its 678 `militaryTrade` units are not military at all — merchants, scouts, pack animals), so both fold onto this. **WHICH slot a trade goes through is filtered at the deal case** on the unit's own `civilian` / `military` [tag](tags.md), never by a second skill |
 | `unlimitedException` | exempt from instance-cap limits |
 | `upgradeAnywhere` | can upgrade regardless of location |
 | `zoneOfControl` | exerts a zone of control |

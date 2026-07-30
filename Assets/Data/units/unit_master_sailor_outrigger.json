@@ -43,7 +43,7 @@
   "noBadGoodies",
   "rivalTerritory",
   "renderBelowWater",
-  "militaryTrade"
+  "tradable"
  ],
  "tags": [
   "military",

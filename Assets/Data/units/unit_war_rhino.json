@@ -64,7 +64,7 @@
   "noDefensiveBonus",
   "pillage",
   "stampede",
-  "militaryTrade"
+  "tradable"
  ],
  "tags": [
   "military",

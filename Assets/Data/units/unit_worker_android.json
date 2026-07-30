@@ -83,7 +83,7 @@
  },
  "skills": [
   "ignoreTerrainCost",
-  "workerTrade"
+  "tradable"
  ],
  "tags": [
   "worker",

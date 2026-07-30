@@ -70,7 +70,7 @@
   "ignoreBuildingDefense",
   "mechanized",
   "dcmFighterEngage",
-  "militaryTrade"
+  "tradable"
  ],
  "tags": [
   "military",

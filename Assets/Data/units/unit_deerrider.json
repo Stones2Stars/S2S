@@ -134,7 +134,7 @@
   "noDefensiveBonus",
   "pillage",
   "firstStrikeImmune",
-  "militaryTrade"
+  "tradable"
  ],
  "tags": [
   "military",

@@ -49,18 +49,13 @@
 #include "UI/CityOutputHistory.h"
 #include "Infos/CvClassificationBlock.h"   // CLSD_TAG + the memoized id bit test
 #include "Infos/CvSkillReads.h"   // the ONE shared surface for the json.md §8 skill reads
+#include "Infos/CvTagReads.h"   // the ONE shared surface for the json.md §8 tag reads
 
 // The json.md §8 classification reads this file makes. The consumer holds the memoized generated-id
 // (the CvUnitFilters precedent): the info exposes only the parameterized group read, never a named
 // getter per key (patterns.md -- a per-key boolean getter is the shape the rebuild deletes).
 namespace
 {
-	bool unitIsSpy(const CvUnitInfo& kUnit)
-	{
-		static int s_spyTagId = -1;
-		return kUnit.getTags()->hasKey(s_spyTagId, CLSD_TAG, "spy");
-	}
-
 	// Fold one source's collected (targetFk, value) rows into a running total, scaled by that source's live
 	// multiplicity (a specialist's assigned count; 1 for a presence source).
 	void mergeKeyedRows(std::vector<std::pair<int, int> >& total,
@@ -2371,7 +2366,7 @@ int CvCity::getProductionExperience(UnitTypes eUnit) const
 	{
 		const CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
 
-		if (unitIsSpy(kUnit) && !GC.isSS_ENABLED())
+		if (CvTagReads::spy(kUnit.getTags()) && !GC.isSS_ENABLED())
 		{
 			return 0;
 		}
