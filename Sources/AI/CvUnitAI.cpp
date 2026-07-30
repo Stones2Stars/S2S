@@ -1769,10 +1769,8 @@ int CvUnitAI::AI_sacrificeValue(const CvPlot* pPlot) const
 	if (getDomainType() == DOMAIN_AIR)
 	{
 		int iValue = 128 * (100 + currInterceptionProbability());
-		// ⚠ The legacy sentinel is GONE: getNukeRange() answered -1 for "not a nuke", while the compiled sum
-		// answers 0 when nothing is authored -- so the old `!= -1` test would now hold for EVERY air unit and
-		// hand each one the nuke bonus. The question is "does this carry a nuke range at all", and all seven
-		// authoring units carry a positive one.
+		// ⚠ A unit that authors no nuke range reads 0, never a negative sentinel -- so "carries a nuke" is a
+		// POSITIVE test. Every authoring unit carries a positive range, so this is the whole question.
 		if ((m_pUnitInfo->getAir(AIR_NUKE_RANGE, CASC_SCOPE_UNIT) / 100) > 0)
 		{
 			iValue += 25000;
