@@ -5932,9 +5932,12 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 
 				if (!bAreaAlone)
 				{
-					for (int iI = 0; iI < kBuilding.getNumHealUnitCombatTypes(); iI++)
+					// The building's OWN keyed heal rows; the amounts are ×100 and reduce here.
+					std::vector<HealByUnitCombat> healRows;
+					InfoValuation::collectHealByUnitCombat(kBuilding.getModifiers(), healRows);
+					for (size_t iRow = 0; iRow < healRows.size(); ++iRow)
 					{
-						iValue += kBuilding.getHealUnitCombatType(iI).iHeal / 4;
+						iValue += (healRows[iRow].iHeal / 100) / 4;
 					}
 					iValue += kBuilding.getHealRateChange() / 2;
 					for (int iI = 0; iI < kBuilding.getNumAidRateChanges(); iI++)

@@ -378,7 +378,15 @@ Unchanged in principle, but note the surface it depends on is currently purged:
    - **HEAL stays KEEP-legacy.** *"As long as units and buildings still heal units, I'm happy; it needs a broader
      rework to make sense anyway."* So #430 builds no heal model, and heal is **EXEMPT from exact parity** — the
      acceptance bar is behavioural and two-sided: heal must not be LOST (a rate collapsing toward 0) and must not
-     be WILDLY OVERPOWERED (a ×100 or double-count). ⚑ **The redesign is a COUPLED CLUSTER, not standalone:** it
+     be WILDLY OVERPOWERED (a ×100 or double-count).
+     ⛔ **THE CARVE-OUT IS THE MECHANIC, NOT THE FEED (owner): *"we don't change how heal works, but we have to
+     change how the data is fed to heal."*** So a heal READ moves onto the rebuilt info like every other read —
+     the keyed rows through the ONE collect, the support amount through its kind — while the arithmetic that
+     consumes them is left exactly as it stands. ⚠ Reading "KEEP-legacy" as "leave the heal reads alone" is the
+     misreading to avoid: it would strand them on getters that no longer exist, which is not keeping the mechanic
+     working, it is breaking it. ⚑ And the feed is precisely where this carve-out's own acceptance bar bites —
+     the amounts are ×100, so the reader reduces at its point of use; that IS the "wildly overpowered" half of
+     the bar, not a separate concern. ⚑ **The redesign is a COUPLED CLUSTER, not standalone:** it
      depends on dismantling the unit-combat complexity (the per-UnitCombat heal-as-type dimension is a symptom of
      it) and on tags being fleshed out. Doing it earlier would just re-encode the current mess — a dependency
      order, not a punt.

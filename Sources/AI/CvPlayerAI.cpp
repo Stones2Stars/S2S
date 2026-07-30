@@ -10445,33 +10445,41 @@ int CvPlayerAI::AI_unitHealerValue(UnitTypes eUnit, UnitCombatTypes eUnitCombat)
 {
 	PROFILE_EXTRA_FUNC();
 	int iValue = 0;
-	const int iNumHealUnitCombatTypes = GC.getUnitInfo(eUnit).getNumHealUnitCombatTypes();
+	const CvUnitInfo& kUnitInfo = GC.getUnitInfo(eUnit);
+
+	// The unit's OWN keyed heal rows -- the handful of combat classes it authored, collected ONCE instead of
+	// re-fetching the info per index. The MECHANIC below is unchanged; only the feed moved.
+	// ⚠ Both amounts are ×100 and reduce to whole heal points HERE. That is the whole risk in this carve-out:
+	// heal must come out neither lost nor ×100 ([roadmap.md] -- the heal acceptance bar is two-sided).
+	std::vector<HealByUnitCombat> healRows;
+	InfoValuation::collectHealByUnitCombat(kUnitInfo.getModifiers(), healRows);
+	const int iNumHealUnitCombatTypes = (int)healRows.size();
+
 	if (eUnitCombat != NO_UNITCOMBAT)
 	{
-		for (int iI = 0; iI < iNumHealUnitCombatTypes; iI++)
+		for (int iRow = 0; iRow < iNumHealUnitCombatTypes; iRow++)
 		{
-			UnitCombatTypes eHealUnitCombat = (UnitCombatTypes)GC.getUnitInfo(eUnit).getHealUnitCombatType(iI).eUnitCombat;
-			if (eHealUnitCombat == eUnitCombat)
+			if (healRows[iRow].iUnitCombat == (int)eUnitCombat)
 			{
-				iValue += GC.getUnitInfo(eUnit).getHealUnitCombatType(iI).iHeal;
-				iValue += GC.getUnitInfo(eUnit).getHealUnitCombatType(iI).iAdjacentHeal;
+				iValue += healRows[iRow].iHeal / 100;
+				iValue += healRows[iRow].iAdjacentHeal / 100;
 			}
 		}
 	}
 	else if (iNumHealUnitCombatTypes > 0)
 	{
 		int iAverage = 0;
-		for (int iI = 0; iI < iNumHealUnitCombatTypes; iI++)
+		for (int iRow = 0; iRow < iNumHealUnitCombatTypes; iRow++)
 		{
-			iAverage += GC.getUnitInfo(eUnit).getHealUnitCombatType(iI).iHeal;
-			iAverage += GC.getUnitInfo(eUnit).getHealUnitCombatType(iI).iAdjacentHeal;
+			iAverage += healRows[iRow].iHeal / 100;
+			iAverage += healRows[iRow].iAdjacentHeal / 100;
 		}
 		iAverage /= iNumHealUnitCombatTypes;
 		iValue += iAverage;
 		iValue += iNumHealUnitCombatTypes;
 	}
 
-	iValue *= GC.getUnitInfo(eUnit).getNumHealSupport();
+	iValue *= kUnitInfo.getFlatHeal(HEAL_SUPPORT, CASC_SCOPE_UNIT) / 100;
 
 	return iValue;
 }
@@ -28109,7 +28117,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//#31 Effects for Promotions on num of Heal supported...
-	iTemp = kPromotion.getNumHealSupport();
+	iTemp = (kPromotion.getFlatHeal(HEAL_SUPPORT, CASC_SCOPE_UNIT) / 100);
 	if (iTemp > 0)
 	{
 		if (pUnit)
@@ -28230,7 +28238,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 			//	the deposits are ×100 amounts; this weighting consumes whole hit points
 			iTemp = healRows[iRow].iHeal / 100;
 			iTemp += healRows[iRow].iAdjacentHeal / 100;
-			iTemp += kPromotion.getNumHealSupport();
+			iTemp += (kPromotion.getFlatHeal(HEAL_SUPPORT, CASC_SCOPE_UNIT) / 100);
 
 			if (iTemp > 0)
 			{
@@ -28241,7 +28249,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 					iTemp += (pUnit->getSameTileHeal() * 2);
 					iTemp += ((pUnit->getAdjacentTileHeal() * 2) / 3);
 
-					iTemp *= (pUnit->getNumHealSupportTotal() + kPromotion.getNumHealSupport());
+					iTemp *= (pUnit->getNumHealSupportTotal() + (kPromotion.getFlatHeal(HEAL_SUPPORT, CASC_SCOPE_UNIT) / 100));
 				}
 				if ((eUnitAI == UNITAI_HEALER) ||
 					(eUnitAI == UNITAI_HEALER_SEA))
@@ -28291,7 +28299,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 					iBoost += pUnit->getHealUnitCombatTypeTotal(eHealUnitCombat);
 				}
 			}
-			iBoost *= (pUnit->getNumHealSupportTotal() + kPromotion.getNumHealSupport());
+			iBoost *= (pUnit->getNumHealSupportTotal() + (kPromotion.getFlatHeal(HEAL_SUPPORT, CASC_SCOPE_UNIT) / 100));
 			iTemp += iBoost;
 		}
 		if ((eUnitAI == UNITAI_HEALER) ||
@@ -28330,7 +28338,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 					iBoost += pUnit->getHealUnitCombatTypeAdjacentTotal(eHealUnitCombat);
 				}
 			}
-			iBoost *= (pUnit->getNumHealSupportTotal() + kPromotion.getNumHealSupport());
+			iBoost *= (pUnit->getNumHealSupportTotal() + (kPromotion.getFlatHeal(HEAL_SUPPORT, CASC_SCOPE_UNIT) / 100));
 			iTemp += iBoost;
 		}
 		if ((eUnitAI == UNITAI_HEALER) ||
@@ -31275,7 +31283,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		pPlot = pUnit->plot();
 	}
 
-	iTemp = kUnitCombat.getNumHealSupport();
+	iTemp = (kUnitCombat.getFlatHeal(HEAL_SUPPORT, CASC_SCOPE_UNIT) / 100);
 	if (iTemp > 0)
 	{
 		if (pUnit)
@@ -31370,7 +31378,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 					iBoost += pUnit->getHealUnitCombatTypeTotal(eHealUnitCombat);
 				}
 			}
-			iBoost *= (pUnit->getNumHealSupportTotal() + kUnitCombat.getNumHealSupport());
+			iBoost *= (pUnit->getNumHealSupportTotal() + (kUnitCombat.getFlatHeal(HEAL_SUPPORT, CASC_SCOPE_UNIT) / 100));
 			iTemp += iBoost;
 		}
 		if ((eUnitAI == UNITAI_HEALER) ||
@@ -31408,7 +31416,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 					iBoost += pUnit->getHealUnitCombatTypeAdjacentTotal(eHealUnitCombat);
 				}
 			}
-			iBoost *= (pUnit->getNumHealSupportTotal() + kUnitCombat.getNumHealSupport());
+			iBoost *= (pUnit->getNumHealSupportTotal() + (kUnitCombat.getFlatHeal(HEAL_SUPPORT, CASC_SCOPE_UNIT) / 100));
 			iTemp += iBoost;
 		}
 		if ((eUnitAI == UNITAI_HEALER) ||
