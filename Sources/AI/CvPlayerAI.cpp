@@ -10625,7 +10625,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 			// rider, not stack-softening capability; counting it made breakdown-only
 			// siege (battering rams etc.) a valid COLLATERAL pick it could never play.
 			if (kUnitInfo.getCombat() > 0 && !kUnitInfo.isOnlyDefensive()
-			&& kUnitInfo.getCollateralDamage() > 0)
+			&& kUnitInfo.getCollateralModifier(COLLATERAL_DAMAGE, CASC_SCOPE_UNIT) > 0)
 			{
 				bValid = true;
 			}
@@ -11129,13 +11129,16 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 				// rate drove the AI to overbuild the breakdown-only siege line and march
 				// "siege capability" it could never schedule. Breakdown-only units are
 				// now valued as the plain attackers they actually are.
-				if (kUnitInfo.getBombardRate() > 0 || (kUnitInfo.getCollateralDamageMaxUnits() > 0 && kUnitInfo.getCollateralDamage() > 0))
+				// A presence test, so the ×100 flat needs no reduction here.
+				if (kUnitInfo.getBombardModifier(BOMBARD_RATE, CASC_SCOPE_UNIT) > 0
+				|| (kUnitInfo.getFlatCollateral(COLLATERAL_MAX_UNITS, CASC_SCOPE_UNIT) > 0
+					&& kUnitInfo.getCollateralModifier(COLLATERAL_DAMAGE, CASC_SCOPE_UNIT) > 0))
 				{
 					// Army composition needs to scale with army size, bombard unit potency
 
 					//modified AI_calculateTotalBombard(DOMAIN_LAND) code
 					int iTotalBombard = 0;
-					int iThisBombard = kUnitInfo.getBombardRate();
+					int iThisBombard = kUnitInfo.getBombardModifier(BOMBARD_RATE, CASC_SCOPE_UNIT);
 					int iSiegeUnits = 0;
 					int iSiegeImmune = 0;
 					int iTotalSiegeMaxUnits = 0;
@@ -11148,27 +11151,27 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 						if (CvTagReads::isDomain(GC.getUnitInfo(eLoopUnit).getTags(), DOMAIN_LAND))
 						{
 							int iUnitCount = getUnitCount(eLoopUnit);
-							int iBombardRate = GC.getUnitInfo(eLoopUnit).getBombardRate();
+							int iBombardRate = GC.getUnitInfo(eLoopUnit).getBombardModifier(BOMBARD_RATE, CASC_SCOPE_UNIT);
 
 							if (iBombardRate > 0)
 							{
-								iTotalBombard += ((iBombardRate * iUnitCount * ((GC.getUnitInfo(eLoopUnit).isIgnoreBuildingDefense()) ? 3 : 2)) / 2);
+								iTotalBombard += ((iBombardRate * iUnitCount * ((CvSkillReads::ignoreBuildingDefense(GC.getUnitInfo(eLoopUnit).getSkills())) ? 3 : 2)) / 2);
 							}
 
-							int iBombRate = GC.getUnitInfo(eLoopUnit).getBombRate();
+							int iBombRate = GC.getUnitInfo(eLoopUnit).getFlatBombard(BOMBARD_AIR_BOMB_RATE, CASC_SCOPE_UNIT) / 100;
 							if (iBombRate > 0)
 							{
 								iThisBombard += iBombRate;
 								iTotalBombard += iBombRate * iUnitCount;
 							}
 
-							int iCollateralDamageMaxUnits = GC.getUnitInfo(eLoopUnit).getCollateralDamageMaxUnits();
-							if (iCollateralDamageMaxUnits > 0 && GC.getUnitInfo(eLoopUnit).getCollateralDamage() > 0)
+							int iCollateralDamageMaxUnits = GC.getUnitInfo(eLoopUnit).getFlatCollateral(COLLATERAL_MAX_UNITS, CASC_SCOPE_UNIT) / 100;
+							if (iCollateralDamageMaxUnits > 0 && GC.getUnitInfo(eLoopUnit).getCollateralModifier(COLLATERAL_DAMAGE, CASC_SCOPE_UNIT) > 0)
 							{
 								iTotalSiegeMaxUnits += iCollateralDamageMaxUnits * iUnitCount;
 								iSiegeUnits += iUnitCount;
 							}
-							else if (GC.getUnitInfo(eLoopUnit).getUnitCombatCollateralImmune((UnitCombatTypes)kUnitInfo.getCombatClass()))
+							else if (CvSkillReads::collateralImmune(GC.getUnitInfo(eLoopUnit).getSkills()))
 							{
 								iSiegeImmune += iUnitCount;
 							}
@@ -11191,15 +11194,21 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 
 					int iMAX_HIT_POINTS = GC.getMAX_HIT_POINTS();
 
+					// `limit` and `maxUnits` are FLAT kinds, so they arrive ×100 and are reduced to whole units
+					// HERE -- both are mixed with plain counts below ([fixed-point-and-scales]: a value consumed
+					// as a whole number reduces at its point of use, leaving the arithmetic untouched).
+					const int iCollateralLimit = kUnitInfo.getFlatCollateral(COLLATERAL_LIMIT, CASC_SCOPE_UNIT) / 100;
+					const int iCollateralMaxUnits = kUnitInfo.getFlatCollateral(COLLATERAL_MAX_UNITS, CASC_SCOPE_UNIT) / 100;
+
 					int iCollateralDamageMaxUnitsWeight = (100 * (iNumOffensiveUnits - iSiegeUnits)) / std::max(1, iTotalSiegeMaxUnits);
 					iCollateralDamageMaxUnitsWeight = std::min(100, iCollateralDamageMaxUnitsWeight);
 					//to decrease value further for units with low damage limits:
-					int iCollateralDamageLimitWeight = 100 * iMAX_HIT_POINTS - std::max(0, ((iMAX_HIT_POINTS - kUnitInfo.getCollateralDamageLimit()) * (100 - iCollateralDamageMaxUnitsWeight)));
+					int iCollateralDamageLimitWeight = 100 * iMAX_HIT_POINTS - std::max(0, ((iMAX_HIT_POINTS - iCollateralLimit) * (100 - iCollateralDamageMaxUnitsWeight)));
 					iCollateralDamageLimitWeight /= iMAX_HIT_POINTS;
 
-					int iCollateralValue = iCombatValue * kUnitInfo.getCollateralDamage() * GC.getDefineINT("COLLATERAL_COMBAT_DAMAGE");
+					int iCollateralValue = iCombatValue * kUnitInfo.getCollateralModifier(COLLATERAL_DAMAGE, CASC_SCOPE_UNIT) * GC.getDefineINT("COLLATERAL_COMBAT_DAMAGE");
 					iCollateralValue /= 100;
-					iCollateralValue *= std::max(100, (kUnitInfo.getCollateralDamageMaxUnits() * iCollateralDamageMaxUnitsWeight));
+					iCollateralValue *= std::max(100, (iCollateralMaxUnits * iCollateralDamageMaxUnitsWeight));
 					iCollateralValue /= 100;
 					iCollateralValue *= iCollateralDamageLimitWeight;
 					iCollateralValue /= 100;
@@ -11208,12 +11217,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 
 					if (!bNoBombardValue && !AI_isDoStrategy(AI_STRATEGY_AIR_BLITZ))
 					{
-						/* original code
-						int iBombardValue = kUnitInfo.getBombardRate() * 4;
-						*/
-						int iBombardValue = /*kUnitInfo.getBombardRate()*/ iThisBombard * ((kUnitInfo.isIgnoreBuildingDefense() || kUnitInfo.isIgnoreNoEntryLevel()) ? 3 : 2);
-						//int iTotalBombardValue = 4 * iTotalBombard;
-						//int iNumBombardUnits = 2 * iTotalBombard / iBombardValue;
+						int iBombardValue = iThisBombard * ((CvSkillReads::ignoreBuildingDefense(kUnitInfo.getSkills()) || CvSkillReads::ignoreNoEntryLevel(kUnitInfo.getSkills())) ? 3 : 2);
 						int iAIDesiredBombardFraction = std::max(5, GC.getDefineINT("BBAI_BOMBARD_ATTACK_STACK_FRACTION")); /*default: 15*/
 						int iActualBombardFraction = (100 * 2 * iTotalBombard) / (iBombardValue * std::max(1, iNumOffensiveUnits));
 						iActualBombardFraction = std::min(100, iActualBombardFraction);
@@ -11260,7 +11264,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 				//TB Adjust: If the unit doesn't have any bombard value, it can still be beneficial to have collateral damage (Rhinos for example)
 				if (!bHasBombardValue)
 				{
-					iValue += ((iCombatValue * kUnitInfo.getCollateralDamage()) / 200);
+					iValue += ((iCombatValue * kUnitInfo.getCollateralModifier(COLLATERAL_DAMAGE, CASC_SCOPE_UNIT)) / 200);
 				}
 				//TB Adjust: If the unit has bombard value(bHasBombardValue) AND the stack still wants bombard units(!bNoBombardValue) (or the unit doesn't have any bombard value anyhow) then basic modifiers apply.
 				//This is intended to keep bombarding siege units from evaluating stronger than normal invading units like swordsman for the basic NON-Bombard stack fill needs.
@@ -11282,7 +11286,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 			case UNITAI_COLLATERAL:
 			{
 				iValue += iCombatValue;
-				iValue += ((iCombatValue * kUnitInfo.getCollateralDamage()) / 50);
+				iValue += ((iCombatValue * kUnitInfo.getCollateralModifier(COLLATERAL_DAMAGE, CASC_SCOPE_UNIT)) / 50);
 				iValue += ((iCombatValue * (kUnitInfo.getMoves()-1)) / 4);
 				iValue += ((iCombatValue * kUnitInfo.getWithdrawalProbability()) / 25);
 				iValue += ((iCombatValue * kUnitInfo.getCityAttackModifier()) / 100);// was -= ???
@@ -11304,7 +11308,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 					break;
 				}
 				iValue += iCombatValue;
-				iValue += ((iCombatValue * kUnitInfo.getCollateralDamage()) / 200);
+				iValue += ((iCombatValue * kUnitInfo.getCollateralModifier(COLLATERAL_DAMAGE, CASC_SCOPE_UNIT)) / 200);
 				for (std::vector<std::pair<int, int> >::const_iterator itCombat = vsUnitCombat.begin();
 					itCombat != vsUnitCombat.end(); ++itCombat)
 				{
@@ -11617,7 +11621,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 			{
 				iValue += iCombatValue;
 				iValue += iCombatValue * (kUnitInfo.getMoves() - 1) / 2; //Calvitix 50% bonus per extra moves
-				iValue += kUnitInfo.getBombardRate() * 4;
+				iValue += kUnitInfo.getBombardModifier(BOMBARD_RATE, CASC_SCOPE_UNIT) * 4;
 				break;
 			}
 			case UNITAI_RESERVE_SEA:
@@ -11698,9 +11702,9 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 			case UNITAI_ATTACK_AIR:
 			{
 				iValue += iCombatValue;
-				iValue += (kUnitInfo.getCollateralDamage() * iCombatValue) / 100;
-				iValue += 4 * kUnitInfo.getBombRate();
-				iValue += (iCombatValue * (100 + 2 * kUnitInfo.getCollateralDamage()) * kUnitInfo.getAirRange()) / 100;
+				iValue += (kUnitInfo.getCollateralModifier(COLLATERAL_DAMAGE, CASC_SCOPE_UNIT) * iCombatValue) / 100;
+				iValue += 4 * kUnitInfo.getFlatBombard(BOMBARD_AIR_BOMB_RATE, CASC_SCOPE_UNIT) / 100;
+				iValue += (iCombatValue * (100 + 2 * kUnitInfo.getCollateralModifier(COLLATERAL_DAMAGE, CASC_SCOPE_UNIT)) * kUnitInfo.getAirRange()) / 100;
 				break;
 			}
 			case UNITAI_DEFENSE_AIR:
@@ -11720,7 +11724,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 			case UNITAI_MISSILE_AIR:
 			{
 				iValue += iCombatValue;
-				iValue += 4 * kUnitInfo.getBombRate();
+				iValue += 4 * kUnitInfo.getFlatBombard(BOMBARD_AIR_BOMB_RATE, CASC_SCOPE_UNIT) / 100;
 				iValue += kUnitInfo.getAirRange() * iCombatValue;
 				break;
 			}
@@ -24945,17 +24949,21 @@ int CvPlayerAI::AI_calculateTotalBombard(DomainTypes eDomain) const
 
 		if (CvTagReads::isDomain(kUnit.getTags(), eDomain))
 		{
-			const int iBombRate = kUnit.getBombRate();
+			// ⚠ The two bombard kinds carry DIFFERENT units within the one family ([fixed-point-and-scales]:
+			// ask the KIND's unit, never the family's). `rate` is a PERCENT and is unscaled; `airBombRate` is a
+			// FLAT and is ×100, so it reduces here to join the other on one scale -- which leaves the sum below
+			// untouched. Reading `rate` off the flat side instead would answer 0 for every unit that authors it.
+			const int iBombRate = kUnit.getFlatBombard(BOMBARD_AIR_BOMB_RATE, CASC_SCOPE_UNIT) / 100;
 			// #410: breakdown is not bombard -- war planning must not count phantom
 			// siege capability that can only be cashed by dying in an assault.
-			int iBombardRate = kUnit.getBombardRate();
+			int iBombardRate = kUnit.getBombardModifier(BOMBARD_RATE, CASC_SCOPE_UNIT);
 
 			if (iBombardRate > 0 || iBombRate > 0)
 			{
 				int iNumUnits = getUnitCount((UnitTypes)iI);
 				if (iBombardRate > 0)
 				{
-					if (kUnit.isIgnoreBuildingDefense())
+					if (CvSkillReads::ignoreBuildingDefense(kUnit.getSkills()))
 					{
 						iBombardRate *= 3;
 						iBombardRate /= 2;
@@ -29032,7 +29040,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	iTemp = kPromotion.getCollateralDamageChange();
 	if (iTemp != 0)
 	{
-		iTemp *= 100 + 2*(pUnit ? pUnit->getExtraCollateralDamage() : kUnit.getCollateralDamage());
+		iTemp *= 100 + 2*(pUnit ? pUnit->getExtraCollateralDamage() : kUnit.getCollateralModifier(COLLATERAL_DAMAGE, CASC_SCOPE_UNIT));
 		iTemp /= 100;
 
 		if (eUnitAI == UNITAI_COLLATERAL)
@@ -32145,7 +32153,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 	iTemp = kUnitCombat.getCollateralDamageChange();
 	if (iTemp != 0)
 	{
-		iExtra = pUnit == NULL ? kUnit.getCollateralDamage() : pUnit->getExtraCollateralDamage(); //collateral has no strong synergy (not like retreat)
+		iExtra = pUnit == NULL ? kUnit.getCollateralModifier(COLLATERAL_DAMAGE, CASC_SCOPE_UNIT) : pUnit->getExtraCollateralDamage(); //collateral has no strong synergy (not like retreat)
 		iTemp *= (100 + iExtra);
 		iTemp /= 100;
 
