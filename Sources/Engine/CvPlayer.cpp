@@ -7211,9 +7211,16 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, CvArea* pAr
 		changeCommerceFlexibleCount(((CommerceTypes)iI), (kBuilding.isCommerceFlexible(iI)) ? iChange : 0);
 	}
 
-	foreach_(const BuildingModifier2& pair, kBuilding.getBuildingHappinessChanges())
+	// The KEYED happiness deposits ([modifier.md §5]): an entry-list read over what this building
+	// authors onto NAMED other buildings -- never folded scope-wide. ×100 at the slot, human here.
+	std::vector<std::pair<int, int> > kKeyedHappy;
+	kBuilding.getModifiers()->targetedSums(MODFAM_HAPPINESS, CHANNEL_AMOUNT, CASC_SCOPE_CITY,
+		CASC_UNIT_FLAT, kKeyedHappy);
+	for (size_t iKeyed = 0; iKeyed < kKeyedHappy.size(); ++iKeyed)
 	{
-		changeExtraBuildingHappiness(pair.first, pair.second * iChange);
+		const BuildingTypes eKeyedBuilding = (BuildingTypes)kKeyedHappy[iKeyed].first;
+		const int iKeyedHappy = kKeyedHappy[iKeyed].second / 100;
+		changeExtraBuildingHappiness(eKeyedBuilding, iKeyedHappy * iChange);
 	}
 	foreach_(const BuildingModifier2& modifier, kBuilding.getGlobalBuildingProductionModifiers())
 	{
@@ -8607,7 +8614,7 @@ void CvPlayer::foundCorporation(CorporationTypes eCorporation)
 			int iValue = 10;
 			iValue += pLoopCity->getPopulation();
 
-			foreach_(const BonusTypes eBonus, GC.getCorporationInfo(eCorporation).getPrereqBonuses())
+			foreach_(const BonusTypes eBonus, GC.getCorporationInfo(eCorporation).getConsumedBonuses())
 			{
 				iValue += 10 * pLoopCity->getNumBonuses(eBonus);
 			}
@@ -25313,7 +25320,7 @@ CvCity* CvPlayer::getBestHQCity(CorporationTypes eCorporation) const
 				}
 
 				bool bFoundBonus = false;
-				foreach_(const BonusTypes eBonus, GC.getCorporationInfo(eCorporation).getPrereqBonuses())
+				foreach_(const BonusTypes eBonus, GC.getCorporationInfo(eCorporation).getConsumedBonuses())
 				{
 					if (pLoopCity->hasBonus(eBonus))
 					{
@@ -25339,7 +25346,7 @@ CvCity* CvPlayer::getBestHQCity(CorporationTypes eCorporation) const
 				iValue += 100;
 			}
 
-			foreach_(const BonusTypes eBonus, GC.getCorporationInfo(eCorporation).getPrereqBonuses())
+			foreach_(const BonusTypes eBonus, GC.getCorporationInfo(eCorporation).getConsumedBonuses())
 			{
 				if (pLoopCity->hasBonus(eBonus))
 				{
@@ -25413,7 +25420,7 @@ DenialTypes CvPlayer::AI_corporationTrade(CorporationTypes eCorporation, PlayerT
 		//If we don't have the corporation
 		if (!(pLoopCity->isHasCorporation(eCorporation)))
 		{
-			foreach_(const BonusTypes eBonus, GC.getCorporationInfo(eCorporation).getPrereqBonuses())
+			foreach_(const BonusTypes eBonus, GC.getCorporationInfo(eCorporation).getConsumedBonuses())
 			{
 				bRequiresBonus = true;
 				//if the city can have the corporation
@@ -26371,7 +26378,8 @@ void CvPlayer::recalculateResourceConsumption(BonusTypes eBonus)
 
 			const CvBuildingInfo& buildingX = GC.getBuildingInfo(eTypeX);
 			iConsumption += (
-					buildingX.getBonusHappinessChanges().getValue(eBonus) * 12
+					buildingX.getModifiers()->targetedSum(MODFAM_HAPPINESS, CHANNEL_AMOUNT, CASC_SCOPE_CITY,
+						CASC_UNIT_FLAT, eBonus) * 12 / 100
 				+	buildingX.getBonusHealthChanges().getValue(eBonus) * 8
 				+	buildingX.getBonusDefenseChanges(eBonus)
 			);
@@ -26551,7 +26559,8 @@ void CvPlayer::recalculateAllResourceConsumption()
 			foreach_(const BonusTypes eBonus, buildingX.getConsumptionRelevantBonuses())
 			{
 				int iValue = (
-						buildingX.getBonusHappinessChanges().getValue(eBonus) * 12
+						buildingX.getModifiers()->targetedSum(MODFAM_HAPPINESS, CHANNEL_AMOUNT, CASC_SCOPE_CITY,
+						CASC_UNIT_FLAT, eBonus) * 12 / 100
 					+	buildingX.getBonusHealthChanges().getValue(eBonus) * 8
 					+	buildingX.getBonusDefenseChanges(eBonus)
 				);

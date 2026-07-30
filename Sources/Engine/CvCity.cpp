@@ -6424,10 +6424,10 @@ int CvCity::getBuildingHappiness(BuildingTypes eBuilding) const
 		GET_PLAYER(getOwner()).getExtraBuildingHappiness(eBuilding)
 	);
 
-	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
-	{
-		iHappiness += info.getCommerceHappiness(iI) * GET_PLAYER(getOwner()).getCommercePercent((CommerceTypes)iI) / 100;
-	}
+	// ⛔ The per-commerce-rate happiness loop is GONE, not lost: a slider rate is a §3.1 count-scaler TOKEN
+	// (GOLD_RATE / RESEARCH_RATE / CULTURE_RATE / ESPIONAGE_RATE), so "happiness per 10% culture rate" is an
+	// ordinary happiness deposit carrying a `per`, already resolved into the wellbeing read above. Re-adding it
+	// here would count it twice.
 
 	return iHappiness;
 }
@@ -6556,9 +6556,16 @@ int CvCity::getAdditionalHappinessByBuilding(BuildingTypes eBuilding, int& iGood
 	addGoodOrBad(getBuildingHappyChange(eBuilding), iGood, iBad);
 
 	// Other Building
-	foreach_(const BuildingModifier2& pair, kBuilding.getBuildingHappinessChanges())
+	// The KEYED happiness deposits ([modifier.md §5]): an entry-list read over what this building
+	// authors onto NAMED other buildings -- never folded scope-wide. ×100 at the slot, human here.
+	std::vector<std::pair<int, int> > kKeyedHappy;
+	kBuilding.getModifiers()->targetedSums(MODFAM_HAPPINESS, CHANNEL_AMOUNT, CASC_SCOPE_CITY,
+		CASC_UNIT_FLAT, kKeyedHappy);
+	for (size_t iKeyed = 0; iKeyed < kKeyedHappy.size(); ++iKeyed)
 	{
-		addGoodOrBad(pair.second * (isActiveBuilding(pair.first) + (eBuilding == pair.first ? 1 : 0)), iGood, iBad);
+		const BuildingTypes eKeyedBuilding = (BuildingTypes)kKeyedHappy[iKeyed].first;
+		const int iKeyedHappy = kKeyedHappy[iKeyed].second / 100;
+		addGoodOrBad(iKeyedHappy * (isActiveBuilding(eKeyedBuilding) + (eBuilding == eKeyedBuilding ? 1 : 0)), iGood, iBad);
 	}
 
 	// Player Building
@@ -6574,27 +6581,28 @@ int CvCity::getAdditionalHappinessByBuilding(BuildingTypes eBuilding, int& iGood
 	}
 
 	// Bonus
-	foreach_(const BonusModifier& modifier, kBuilding.getBonusHappinessChanges())
+	// The KEYED happiness deposits onto named BONUSES ([modifier.md §5]) -- the same entry-list read as the
+	// building-keyed one above; the target axis is what differs, never the mechanism. ×100 at the slot.
+	std::vector<std::pair<int, int> > kKeyedBonusHappy;
+	kBuilding.getModifiers()->targetedSums(MODFAM_HAPPINESS, CHANNEL_AMOUNT, CASC_SCOPE_CITY,
+		CASC_UNIT_FLAT, kKeyedBonusHappy);
+	for (size_t iKeyed = 0; iKeyed < kKeyedBonusHappy.size(); ++iKeyed)
 	{
-		if ((hasBonus(modifier.first) || kBuilding.getProvides()->has(modifier.first)))
+		const BonusTypes eKeyedBonus = (BonusTypes)kKeyedBonusHappy[iKeyed].first;
+		if ((hasBonus(eKeyedBonus) || kBuilding.getProvides()->has(eKeyedBonus)))
 		{
-			addGoodOrBad(modifier.second, iGood, iBad);
+			addGoodOrBad(kKeyedBonusHappy[iKeyed].second / 100, iGood, iBad);
 		}
 	}
 
-	// Commerce
-	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
-	{
-		int iCommerceHappiness = kBuilding.getCommerceHappiness(iI);
+	// ⛔ No per-commerce-rate loop: a slider rate is a §3.1 count-scaler TOKEN, so that happiness is an ordinary
+	// deposit carrying a `per` and is already inside the wellbeing read -- adding it here would double it.
 
-		if (iCommerceHappiness != 0)
-		{
-			addGoodOrBad(iCommerceHappiness * GET_PLAYER(getOwner()).getCommercePercent((CommerceTypes)iI) / 100, iGood, iBad);
-		}
-	}
-
-	// War Weariness Modifier
-	int iWarWearinessModifier = kBuilding.getWarWearinessModifier() + kBuilding.getGlobalWarWearinessModifier();
+	// War Weariness Modifier -- ONE scalar at two scopes ([DEC-scope-is-an-axis]); the city and the former
+	// "global" getter were the same slot, so both scopes are read rather than two members.
+	int iWarWearinessModifier =
+		kBuilding.getScalar(SCALAR_WAR_WEARINESS, CASC_SCOPE_CITY, CASC_UNIT_PERCENT)
+		+ kBuilding.getScalar(SCALAR_WAR_WEARINESS, CASC_SCOPE_EMPIRE, CASC_UNIT_PERCENT);
 	if (iWarWearinessModifier != 0)
 	{
 		int iBaseAngerPercent = 0;
@@ -9946,7 +9954,7 @@ int CvCity::getCorporationYieldByCorporation(YieldTypes eIndex, CorporationTypes
 	}
 	int iYield = GC.getCorporationInfo(eCorporation).getYieldChange(eIndex) * 100;
 
-	foreach_(const BonusTypes eBonus, GC.getCorporationInfo(eCorporation).getPrereqBonuses())
+	foreach_(const BonusTypes eBonus, GC.getCorporationInfo(eCorporation).getConsumedBonuses())
 	{
 		if (getNumBonuses(eBonus) > 0)
 		{
@@ -9968,7 +9976,7 @@ int CvCity::getCorporationCommerceByCorporation(CommerceTypes eIndex, Corporatio
 	}
 	int iCommerce = GC.getCorporationInfo(eCorporation).getCommerceChange(eIndex) * 100;
 
-	foreach_(const BonusTypes eBonus, GC.getCorporationInfo(eCorporation).getPrereqBonuses())
+	foreach_(const BonusTypes eBonus, GC.getCorporationInfo(eCorporation).getConsumedBonuses())
 	{
 		if (getNumBonuses(eBonus) > 0)
 		{
@@ -10068,7 +10076,7 @@ void CvCity::updateCorporationBonus()
 			{
 				bool bConsumes = false;
 
-				foreach_(const BonusTypes eBonusConsumed, GC.getCorporationInfo((CorporationTypes)iCorp).getPrereqBonuses())
+				foreach_(const BonusTypes eBonusConsumed, GC.getCorporationInfo((CorporationTypes)iCorp).getConsumedBonuses())
 				{
 					if (eBonusConsumed != iBonusProduced) // ignore circular xml definiton error.
 					{
@@ -10774,7 +10782,7 @@ bool CvCity::isCorporationBonus(BonusTypes eBonus) const
 	{
 		if (GET_PLAYER(getOwner()).isActiveCorporation((CorporationTypes)iCorp)
 		&& isHasCorporation((CorporationTypes)iCorp)
-		&& algo::any_of_equal(GC.getCorporationInfo((CorporationTypes)iCorp).getPrereqBonuses(), eBonus))
+		&& algo::any_of_equal(GC.getCorporationInfo((CorporationTypes)iCorp).getConsumedBonuses(), eBonus))
 		{
 			return true;
 		}
@@ -10808,7 +10816,7 @@ bool CvCity::isActiveCorporation(CorporationTypes eCorporation) const
 	bool bRequiresBonus = false;
 	bool bHasRequiredBonus = false;
 
-	foreach_(const BonusTypes eBonus, GC.getCorporationInfo(eCorporation).getPrereqBonuses())
+	foreach_(const BonusTypes eBonus, GC.getCorporationInfo(eCorporation).getConsumedBonuses())
 	{
 		bRequiresBonus = true;
 		if (getNumBonuses(eBonus) > 0)
@@ -12553,7 +12561,7 @@ void CvCity::setHasCorporation(CorporationTypes eIndex, bool bNewValue, bool bAn
 
 							CvWString szBonusList;
 							bool bFirst = true;
-							foreach_(const BonusTypes eBonus, GC.getCorporationInfo(eIndex).getPrereqBonuses())
+							foreach_(const BonusTypes eBonus, GC.getCorporationInfo(eIndex).getConsumedBonuses())
 							{
 								CvWString szTemp;
 								szTemp.Format(L"%s", GC.getBonusInfo(eBonus).getDescription());
@@ -18076,7 +18084,7 @@ int CvCity::getCorporationInfluence(CorporationTypes eCorporation) const
 	int iBonusesConsumed = 0;
 	int iNumAvailBonuses = 0;
 	//Influence scales based on the number of resources a corporation consumes
-	foreach_(const BonusTypes eBonus, GC.getCorporationInfo(eCorporation).getPrereqBonuses())
+	foreach_(const BonusTypes eBonus, GC.getCorporationInfo(eCorporation).getConsumedBonuses())
 	{
 		iBonusesConsumed++;
 		iNumAvailBonuses += getNumBonuses(eBonus);
@@ -18096,7 +18104,7 @@ int CvCity::getCorporationInfluence(CorporationTypes eCorporation) const
 
 	if (iBonusesConsumed > 0)
 	{
-		foreach_(const BonusTypes eBonus, GC.getCorporationInfo(eCorporation).getPrereqBonuses())
+		foreach_(const BonusTypes eBonus, GC.getCorporationInfo(eCorporation).getConsumedBonuses())
 		{
 			if (hasBonus(eBonus))
 			{

@@ -9702,7 +9702,7 @@ int CvPlayerAI::AI_corporationBonusVal(BonusTypes eBonus) const
 		{
 			iCorpCount += getNumCities() / 6 + 1;
 			const CvCorporationInfo& kCorp = GC.getCorporationInfo((CorporationTypes)iCorporation);
-			foreach_(const BonusTypes ePrereqBonus, kCorp.getPrereqBonuses())
+			foreach_(const BonusTypes ePrereqBonus, kCorp.getConsumedBonuses())
 			{
 				if (eBonus == ePrereqBonus)
 				{
@@ -12629,7 +12629,7 @@ int CvPlayerAI::AI_corporationValue(CorporationTypes eCorporation, const CvCity*
 		const int iBonusCount = pCity->getNumBonuses(eBonus);
 		if (iBonusCount > 0)
 		{
-			foreach_(const BonusTypes ePrereqBonus, kCorp.getPrereqBonuses())
+			foreach_(const BonusTypes ePrereqBonus, kCorp.getConsumedBonuses())
 			{
 				if (eBonus == ePrereqBonus)
 				{

@@ -5373,7 +5373,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 
 				for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 				{
-					iValue += (kBuilding.getCommerceHappiness(iI) * iHappyModifier) / 4;
+					// per-rate happiness rides the ordinary deposit's `per` scaler now (§3.1 rate tokens).
 				}
 
 				// ⚖ ONE read: `expected*` folds team/empire scope into the answer experienced HERE, so the city and
@@ -5401,9 +5401,16 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 					iValue += (-iGlobalWarWearinessModifer * iHappyModifier) / 16;
 				}
 
-				foreach_(const BuildingModifier2 & pair, kBuilding.getBuildingHappinessChanges())
+				// The KEYED happiness deposits ([modifier.md §5]): an entry-list read over what this building
+				// authors onto NAMED other buildings -- never folded scope-wide. ×100 at the slot, human here.
+				std::vector<std::pair<int, int> > kKeyedHappy;
+				kBuilding.getModifiers()->targetedSums(MODFAM_HAPPINESS, CHANNEL_AMOUNT, CASC_SCOPE_CITY,
+					CASC_UNIT_FLAT, kKeyedHappy);
+				for (size_t iKeyed = 0; iKeyed < kKeyedHappy.size(); ++iKeyed)
 				{
-					iValue += (pair.second * (kOwner.getBuildingCount(pair.first) - hasBuilding(pair.first)) * 8);
+					const BuildingTypes eKeyedBuilding = (BuildingTypes)kKeyedHappy[iKeyed].first;
+					const int iKeyedHappy = kKeyedHappy[iKeyed].second / 100;
+					iValue += (iKeyedHappy * (kOwner.getBuildingCount(eKeyedBuilding) - hasBuilding(eKeyedBuilding)) * 8);
 				}
 
 				if (GC.getGame().isOption(GAMEOPTION_UNSUPPORTED_REVOLUTION))
@@ -12439,15 +12446,19 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 				return true;
 			}
 		}
+		// Does this building do ANYTHING for happiness? The keyed deposits (onto named buildings/bonuses) are an
+		// entry-list read ([modifier.md §5]); war weariness is one SCALAR whose city and former "global" spellings
+		// are the same slot at two scopes ([DEC-scope-is-an-axis]), so the empire read covers what the second
+		// getter used to answer.
+		std::vector<std::pair<int, int> > kKeyedHappy;
+		kBuilding.getModifiers()->targetedSums(MODFAM_HAPPINESS, CHANNEL_AMOUNT, CASC_SCOPE_CITY,
+			CASC_UNIT_FLAT, kKeyedHappy);
 		if (kBuilding.getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_CITY) > 0
 			|| kBuilding.getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_EMPIRE) > 0
-			|| kBuilding.getStateReligionHappiness() > 0
 			|| kBuilding.isAbolishedAnger()
-			|| kBuilding.getWarWearinessModifier() < 0
-			|| kBuilding.getGlobalWarWearinessModifier() < 0
-			|| kBuilding.getCommerceHappiness(NO_COMMERCE) > 0
-			|| !kBuilding.getBonusHappinessChanges().empty()
-			|| !kBuilding.getBuildingHappinessChanges().empty()
+			|| kBuilding.getScalar(SCALAR_WAR_WEARINESS, CASC_SCOPE_CITY, CASC_UNIT_PERCENT) < 0
+			|| kBuilding.getScalar(SCALAR_WAR_WEARINESS, CASC_SCOPE_EMPIRE, CASC_UNIT_PERCENT) < 0
+			|| !kKeyedHappy.empty()
 			|| GET_PLAYER(getOwner()).getExtraBuildingHappiness(eBuilding) > 0)
 		{
 			return true;

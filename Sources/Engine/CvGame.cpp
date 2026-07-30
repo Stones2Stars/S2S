@@ -6916,7 +6916,7 @@ void CvGame::doHeadquarters()
 				&& kLoopTeam.isHasTech(eTechPrereq)
 				&& kLoopTeam.getNumCities() > 0)
 				{
-					foreach_(const BonusTypes eBonus, kCorporation.getPrereqBonuses())
+					foreach_(const BonusTypes eBonus, kCorporation.getConsumedBonuses())
 					{
 						if (kLoopTeam.hasBonus(eBonus))
 						{
@@ -6949,7 +6949,7 @@ void CvGame::doHeadquarters()
 
 					if (playerX.isAliveAndTeam(eBestTeam) && playerX.getNumCities() > 0)
 					{
-						foreach_(const BonusTypes eBonus, kCorporation.getPrereqBonuses())
+						foreach_(const BonusTypes eBonus, kCorporation.getConsumedBonuses())
 						{
 							if (playerX.hasBonus(eBonus))
 							{
@@ -9252,9 +9252,9 @@ bool CvGame::isCompetingCorporation(CorporationTypes eCorporation1, CorporationT
 	if (GC.getCorporationInfo(eCorporation1).isCompetingCorporation(eCorporation2) || GC.getCorporationInfo(eCorporation2).isCompetingCorporation(eCorporation1))
 		return true;
 
-	foreach_(const BonusTypes eBonus, GC.getCorporationInfo(eCorporation1).getPrereqBonuses())
+	foreach_(const BonusTypes eBonus, GC.getCorporationInfo(eCorporation1).getConsumedBonuses())
 	{
-		if (algo::any_of_equal(GC.getCorporationInfo(eCorporation2).getPrereqBonuses(), eBonus))
+		if (algo::any_of_equal(GC.getCorporationInfo(eCorporation2).getConsumedBonuses(), eBonus))
 		{
 			return true;
 		}

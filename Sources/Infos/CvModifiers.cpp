@@ -137,6 +137,56 @@ int CvModifiers::propertySum(int iPropertyFk, CvCascScope eScope, CvCascUnit eUn
 	return iSum;
 }
 
+// The keyed entry-list read ([modifier.md §5]). Unconditioned entries only, mirroring the point sum: a
+// conditioned keyed entry resolves against a live context and is the valuation's job, not a static sum.
+void CvModifiers::targetedSums(ModifierFamily eFamily, int iKind, CvCascScope eScope, CvCascUnit eUnit,
+	std::vector<std::pair<int, int> >& kOut, CvModAudience eAudience) const
+{
+	kOut.clear();
+	for (size_t iEntry = 0; iEntry < m_entries.size(); ++iEntry)
+	{
+		const CvModEntry* pEntry = m_entries[iEntry];
+		if (pEntry->family != eFamily || pEntry->scope != eScope || pEntry->unit != eUnit) continue;
+		if (pEntry->targetFk < 0) continue;                       // untargeted -- the point slot answers it
+		if (iKind >= 0 && pEntry->kind != iKind) continue;
+		if (pEntry->enabled != NULL || pEntry->disabled != NULL) continue;   // conditioned -> the valuation
+		if (pEntry->aiOnly && eAudience == MOD_AUDIENCE_HUMAN) continue;
+		if (!pEntry->aiOnly && eAudience == MOD_AUDIENCE_AI_ONLY) continue;
+		size_t iFound = kOut.size();
+		for (size_t iSeek = 0; iSeek < kOut.size(); ++iSeek)
+		{
+			if (kOut[iSeek].first == pEntry->targetFk) { iFound = iSeek; break; }
+		}
+		if (iFound == kOut.size()) kOut.push_back(std::make_pair(pEntry->targetFk, 0));
+		kOut[iFound].second += pEntry->value;
+	}
+}
+
+void CvModifiers::targetedSums(ModifierFamily eFamily, int iKind, CvCascScope eScope, CvCascUnit eUnit,
+	std::vector<std::pair<int, int> >& kOut, bool bIncludeAiOnly) const
+{
+	targetedSums(eFamily, iKind, eScope, eUnit, kOut, bIncludeAiOnly ? MOD_AUDIENCE_INCLUSIVE : MOD_AUDIENCE_HUMAN);
+}
+
+int CvModifiers::targetedSum(ModifierFamily eFamily, int iKind, CvCascScope eScope, CvCascUnit eUnit,
+	int iTargetFk, CvModAudience eAudience) const
+{
+	if (iTargetFk < 0) return 0;
+	std::vector<std::pair<int, int> > kPairs;
+	targetedSums(eFamily, iKind, eScope, eUnit, kPairs, eAudience);
+	for (size_t i = 0; i < kPairs.size(); ++i)
+	{
+		if (kPairs[i].first == iTargetFk) return kPairs[i].second;
+	}
+	return 0;
+}
+
+int CvModifiers::targetedSum(ModifierFamily eFamily, int iKind, CvCascScope eScope, CvCascUnit eUnit,
+	int iTargetFk, bool bIncludeAiOnly) const
+{
+	return targetedSum(eFamily, iKind, eScope, eUnit, iTargetFk, bIncludeAiOnly ? MOD_AUDIENCE_INCLUSIVE : MOD_AUDIENCE_HUMAN);
+}
+
 int CvModifiers::propertySum(int iPropertyFk, CvCascScope eScope, CvCascUnit eUnit, bool bIncludeAiOnly) const
 {
 	return propertySum(iPropertyFk, eScope, eUnit, bIncludeAiOnly ? MOD_AUDIENCE_INCLUSIVE : MOD_AUDIENCE_HUMAN);
