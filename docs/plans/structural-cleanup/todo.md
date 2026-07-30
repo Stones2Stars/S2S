@@ -43,10 +43,11 @@
 - Retire the legacy `largestCity` member once ranked-target-selection EVALUATION lands.
 - Re-home `stronglyRestricted` to a `requires.build` civ-membership gate, when NPC civilizations are wired.
 - Move corp-HQ revenue (`HeadquarterCommerces`) with the corporation rework.
-- Build the unit `status` block — a per-turn counter, applied then ticking down
-  ([json.md §8](../../specs/json.md) · [state.md](../../specs/state.md)). `paralyze` is its first member and its
-  reads (`CvUnit::processPromotion`'s immobilise, the promotion help line) DANGLE until it exists — that is the
-  census naming the missing machine, not debt to paper over with a skill.
+- Build the unit `status` block — a per-turn counter, applied then ticking down, read as `count > 0`
+  ([json.md §8](../../specs/json.md) · [state.md](../../specs/state.md)). ⛔ It is GREENFIELD: authored fresh,
+  NEVER migrated from a legacy field, so there is no curator mapping to write. `paralyze` is its first member,
+  and the two legacy reads still standing (`CvUnit::processPromotion`'s immobilise, the promotion help line) are
+  dangling on a shape that is not coming back — they are re-expressed on the status block, not converted.
 - Map the flagged unitcombat remainder — map the obvious, flag the unsure, never blunt-purge
   ([unitcombat-tag-mapping.md](unitcombat-tag-mapping.md)).
 

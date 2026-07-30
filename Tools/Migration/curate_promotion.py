@@ -166,9 +166,9 @@ CAP_BOOL = {
     "bPillageResearch": "pillageResearch", "bCanMovePeaks": "canPassPeaks",
     "bCanLeadThroughPeaks": "canLeadThroughPeaks", "bZoneOfControl": "zoneOfControl",
     "bOnslaughtChange": "onslaught", "bNoSelfHeal": "noSelfHeal",
-    # bParalyze is NOT a skill -- paralyze is a unit STATUS (json.md par.8), so it must never land in
-    # `skills`. It has no emit home until the status block exists; unmapped, it reports as an
-    # UNHANDLED tag, which is the loud outcome we want if a promotion ever authors one.
+    # bParalyze is NOT MAPPED AT ALL (owner). paralyze is a unit STATUS (json.md par.8), and the status block is
+    # GREENFIELD -- authored fresh, never migrated from a legacy field (state.md). So this is not a tag waiting
+    # for a home: there is nothing here to convert. It must never land in `skills`, which is where it used to go.
 }
 # grant/revoke pairs -> name: true (Add/grant) or false (Subtract/Remove).
 CAP_PAIR = {
