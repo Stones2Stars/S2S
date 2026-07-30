@@ -18574,7 +18574,7 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	emitUnitPromotionChanged(getID(), (int)getOwner(), (int)eIndex, iChange);
 
 
-	if (kPromotion.isParalyze() && bAdding)
+	if (CvSkillReads::paralyze(kPromotion.getSkills()) && bAdding)
 	{
 		setImmobileTimer(1);
 	}

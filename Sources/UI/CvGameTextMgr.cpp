@@ -6739,6 +6739,7 @@ void CvGameTextMgr::parsePromotionHelpInternal(CvWStringBuffer &szBuffer, Promot
 	bool bIsImmuneToFirstStrikes = false;
 	bool bIsStampedeChange = false;
 	bool bIsOnslaughtChange = false;
+	bool bIsParalyze = false;
 	bool bIsDefensiveVictoryMove = false;
 	bool bIsFreeDrop = false;
 	bool bIsOffensiveVictoryMove = false;
@@ -6831,6 +6832,10 @@ void CvGameTextMgr::parsePromotionHelpInternal(CvWStringBuffer &szBuffer, Promot
 		if (CvSkillReads::onslaught(promoX.getSkills()))
 		{
 			bIsOnslaughtChange = true;
+		}
+		if (CvSkillReads::paralyze(promoX.getSkills()))
+		{
+			bIsParalyze = true;
 		}
 		if (CvSkillReads::defensiveVictoryMove(promoX.getSkills()))
 		{
@@ -6972,6 +6977,11 @@ void CvGameTextMgr::parsePromotionHelpInternal(CvWStringBuffer &szBuffer, Promot
 	{
 		szBuffer.append(pcNewline);
 		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_ONSLAUGHT"));
+	}
+	if (bIsParalyze)
+	{
+		szBuffer.append(pcNewline);
+		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_PARALYZE"));
 	}
 	if (bIsDefensiveVictoryMove)
 	{
