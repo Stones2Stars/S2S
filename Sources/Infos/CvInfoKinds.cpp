@@ -215,9 +215,6 @@ namespace
 		{ "distance", MAINTENANCE_DISTANCE },
 		{ "corporation", MAINTENANCE_CORPORATION },
 		{ "colony", MAINTENANCE_COLONY },
-		{ "colony.cap", MAINTENANCE_CAP },   // the authored nesting (12 handicaps: colony:{cap:N, percent:M} --
-		                                     // cap is a bare-number leaf under colony, dotted by the walk; no
-		                                     // bare `cap` member exists in the census)
 		{ 0, 0 } };
 
 	const InfoMemberRow MEMBERS_COSTS[] = {
@@ -786,13 +783,6 @@ CvCascUnit infoKindUnit(ModifierFamily eFamily, int iKind, CvCascScope eScope)
 		if (iKind == (int)MAINTENANCE_CORPORATION || iKind == (int)MAINTENANCE_AMOUNT)
 		{
 			return (eScope == CASC_SCOPE_CITY) ? CASC_UNIT_FLAT : CASC_UNIT_PERCENT;
-		}
-		if (iKind == (int)MAINTENANCE_CAP)
-		{
-			// colony:{cap:{percent:N}} -- the cap bounds the colony component as a RATIO OF DISTANCE
-			// maintenance (`cap * distanceMaintenance100 / 100`), so it is a percent like every sibling and
-			// the sub-member says which component it bounds.
-			return CASC_UNIT_PERCENT;
 		}
 		return CASC_UNIT_PERCENT;
 	case MODFAM_CAPTURE:

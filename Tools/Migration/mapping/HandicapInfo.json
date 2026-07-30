@@ -5,7 +5,6 @@
   "channels": {
     "iAdvancedStartPointsMod": {"scope": "player", "channel": "advancedStartPoints", "kind": "percent"},
     "iUnitUpkeepPercent": {"scope": "player", "channel": "unitUpkeep", "kind": "percent"},
-    "iMaxColonyMaintenance": {"scope": "player", "channel": "maintenance", "kind": "percent"},
     "iDistanceMaintenancePercent": {"scope": "player", "channel": "maintenance", "kind": "percent"},
     "iNumCitiesMaintenancePercent": {"scope": "player", "channel": "maintenance", "kind": "percent"},
     "iColonyMaintenancePercent": {"scope": "player", "channel": "maintenance", "kind": "percent"},

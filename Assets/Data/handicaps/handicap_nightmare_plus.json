@@ -2,16 +2,13 @@
  "type": "HANDICAP_NIGHTMARE_PLUS",
  "maintenance": {
   "empire": {
-   "colony": {
-    "cap": {
-     "percent": 480
-    },
-    "percent": 240
-   },
    "distance": {
     "percent": 240
    },
    "numCities": {
+    "percent": 240
+   },
+   "colony": {
     "percent": 240
    },
    "corporation": {

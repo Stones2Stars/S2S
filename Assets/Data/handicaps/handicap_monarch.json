@@ -2,16 +2,13 @@
  "type": "HANDICAP_MONARCH",
  "maintenance": {
   "empire": {
-   "colony": {
-    "cap": {
-     "percent": 280
-    },
-    "percent": 140
-   },
    "distance": {
     "percent": 140
    },
    "numCities": {
+    "percent": 140
+   },
+   "colony": {
     "percent": 140
    },
    "corporation": {

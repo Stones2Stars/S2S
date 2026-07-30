@@ -11,11 +11,24 @@
 supply + corporate maintenance.
 
 - **Treasury tax** (anti-hoarding): `(gold + 250·√gold) / (25 · gameSpeedPercent)`.
-- **City maintenance** = `(cascade flats + the four engine components) × the cascade percent stack`. The
-  components the cascade does not model are distance (distance×pop, 0 at the government center), numCities
-  (`(n−1)·72·(pop+13)/13`, vassal-divided), colony and corporation; everything else is ordinary cascade.
-  The city's realized value is the standardized `CvDerivedCache` — mark-driven, **never serialized**, and the
-  read is a bare fetch. **The empire total is a RECEIVER SLOT in the player's own package cache** — the Σ over
+- **City maintenance is ORDINARY CASCADE, end to end — there are no engine components left.** Distance, city
+  count and colonial separation are AUTHORED DEPOSITS on `TECH_GAME_START`'s `maintenance` block (the universal
+  start node every civ holds — the same baseline home `canTradeOn` uses, [capabilities.md](../specs/capabilities.md)):
+  distance scales `per: DISTANCE_TO_GOVERNMENT_CENTER`, city count `per: {CITY, empire, above: 1}`, and colony
+  rides `enabled: "!IS_HOME_AREA"` — the predicate [json.md §3.5](../specs/json.md) minted for exactly this.
+  ⚖ **TWO TIERS, and the order is the mechanic:** each component KIND resolves against its OWN modifiers (a
+  handicap authors `maintenance.empire.distance.percent`, so difficulty scales the distance leg without touching
+  the corporation one), and the TOTAL then takes the empire-wide `amount` stack. Flattening the two would apply
+  every kind's modifier to every other kind's cost.
+  ⚑ **The rebel discount is ONE authored entry** (`maintenance.empire.percent −50, enabled: "IS_REBEL"`),
+  replacing the four separate hardcoded halvings.
+  ⚠ **This EXPRESSES THE INTENT, it does not reproduce the legacy curve (owner ruling).** Size-scaling went
+  multiplicative → additive; the colony quadratic and the corp handicap square went linear; the 2,000,000 cap
+  and the vassal-cities term are gone. A behaviour change is a fact to state and weigh
+  ([validation.md](../specs/validation.md): the spec leads), never a curve to preserve for its own sake.
+  The city's realized value is a BARE PACKAGE READ — nothing about maintenance is cached at the city any more,
+  because there is no longer a formula whose result would need caching. **The empire total is a RECEIVER SLOT in
+  the player's own package cache** — the Σ over
   its cities' realized values, marked by whatever moved a member
   ([state-repositories.md](../architecture/state-repositories.md)). It is the one non-commerce receiver, and it
   carries no cache of its own: a receiver is the same cache holding a different slot.
@@ -39,11 +52,11 @@ supply + corporate maintenance.
   > "this city's area is not the capital's" ([json.md §3.5](../specs/json.md)), which is why `CvArea` carries no
   > maintenance surface at all (a landmass is not an ownable scope,
   > [state-repositories.md](../architecture/state-repositories.md)).
-  ⚑ **The COLONY cap is a RATIO OF THE DISTANCE component, not a gold amount** — the engine reads it as
-  `min(colony, cap × distanceMaintenance100 / 100)`, so the handicap range 80…480 means 0.8×…4.8×. It is
-  therefore a **percent** (`maintenance.empire.colony.cap.percent`) and carries no scale
-  ([DEC-fixedpoint-x100](../architecture/decisions.md#dec-fixedpoint-x100)); treating it as a count ×100s it
-  and the `min()` silently stops binding, which reads as a difficulty scaler quietly going flat.
+  ⛔ **The COLONY CAP is GONE — data, kind and getter.** It bounded the colony component as a RATIO of the
+  distance component, a cross-component bound the entry grammar cannot express, so it went with the quadratic.
+  The `MAINTENANCE_CAP` kind, `CvHandicapInfo::getColonyMaintenanceCap` and the `iMaxColonyMaintenance` curator
+  row are all deleted; the curator DROPS the legacy tag rather than parking it in `identity`, which carries no
+  effects ([json.md §7](../specs/json.md)).
 - **Civic upkeep** = `max(0,(pop+offset)·popPct/100) + max(0,(cities+offset)·cityPct/100)`, handicap-scaled.
 - **Inflation** = `100 · hurriedCount · handicapInflationPct/100`, × civic/tech/building/event/rebel chain; decays per `HURRY_INFLATION_DECAY_RATE`.
 - **Per-turn order:** `verifyGoldCommercePercent` (silently raises the gold slider on deficit) → `doGold` (strike +

@@ -5782,7 +5782,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 				if (kBuilding.isGovernmentCenter())
 				{
 					FAssert(!kBuilding.isCapital());
-					iValue += ((calculateDistanceMaintenance() - 3) * iNumCitiesInArea);
+					iValue += (int)((maintenanceOfKind(MAINTENANCE_DISTANCE) / 100 - 3) * iNumCitiesInArea);
 				}
 
 				if (kBuilding.isMapCentering())
@@ -10586,7 +10586,7 @@ int CvCityAI::AI_cityValue() const
 		+
 		getYieldRate100(YIELD_PRODUCTION)
 		-
-		3 * calculateColonyMaintenanceTimes100()
+		3 * (int)maintenanceOfKind(MAINTENANCE_COLONY)
 		);
 }
 

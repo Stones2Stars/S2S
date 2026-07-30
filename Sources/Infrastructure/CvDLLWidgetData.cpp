@@ -5001,7 +5001,7 @@ void CvDLLWidgetData::parseMaintenanceHelp(CvWidgetDataStruct &widgetDataStruct,
 
 			const int iMod = pHeadSelectedCity->maintenancePercentStack((int)MAINTENANCE_AMOUNT);
 
-			int iMaintenanceValue = getModifiedIntValue(pHeadSelectedCity->calculateDistanceMaintenanceTimes100(), iMod);
+			int iMaintenanceValue = (int)pHeadSelectedCity->maintenanceOfKind(MAINTENANCE_DISTANCE);
 			if (iMaintenanceValue != 0)
 			{
 				CvWString szMaint = CvWString::format(L"%d.%02d", iMaintenanceValue/100, iMaintenanceValue%100);
@@ -5009,7 +5009,7 @@ void CvDLLWidgetData::parseMaintenanceHelp(CvWidgetDataStruct &widgetDataStruct,
 				szBuffer.append(gDLL->getText("TXT_KEY_MISC_NUM_MAINT_FLOAT", szMaint.GetCString()) + ((GET_PLAYER(pHeadSelectedCity->getOwner()).getNumGovernmentCenters() > 0) ? gDLL->getText("TXT_KEY_MISC_DISTANCE_FROM_PALACE") : gDLL->getText("TXT_KEY_MISC_NO_PALACE_PENALTY")));
 			}
 
-			iMaintenanceValue = getModifiedIntValue(pHeadSelectedCity->calculateNumCitiesMaintenanceTimes100(), iMod);
+			iMaintenanceValue = (int)pHeadSelectedCity->maintenanceOfKind(MAINTENANCE_NUM_CITIES);
 			if (iMaintenanceValue != 0)
 			{
 				CvWString szMaint = CvWString::format(L"%d.%02d", iMaintenanceValue/100, iMaintenanceValue%100);
@@ -5017,7 +5017,7 @@ void CvDLLWidgetData::parseMaintenanceHelp(CvWidgetDataStruct &widgetDataStruct,
 				szBuffer.append(gDLL->getText("TXT_KEY_MISC_NUM_CITIES_FLOAT", szMaint.GetCString()));
 			}
 
-			iMaintenanceValue = getModifiedIntValue(pHeadSelectedCity->calculateColonyMaintenanceTimes100(), iMod);
+			iMaintenanceValue = (int)pHeadSelectedCity->maintenanceOfKind(MAINTENANCE_COLONY);
 			if (iMaintenanceValue != 0)
 			{
 				CvWString szMaint = CvWString::format(L"%d.%02d", iMaintenanceValue/100, iMaintenanceValue%100);
@@ -5025,7 +5025,7 @@ void CvDLLWidgetData::parseMaintenanceHelp(CvWidgetDataStruct &widgetDataStruct,
 				szBuffer.append(gDLL->getText("TXT_KEY_MISC_COLONY_MAINT_FLOAT", szMaint.GetCString()));
 			}
 
-			iMaintenanceValue = getModifiedIntValue(pHeadSelectedCity->calculateCorporationMaintenanceTimes100(), iMod);
+			iMaintenanceValue = (int)pHeadSelectedCity->maintenanceOfKind(MAINTENANCE_CORPORATION);
 			if (iMaintenanceValue != 0)
 			{
 				CvWString szMaint = CvWString::format(L"%d.%02d", iMaintenanceValue/100, iMaintenanceValue%100);

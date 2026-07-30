@@ -572,14 +572,11 @@ def cityAdvise(CyCity, iPlayer):
 
 							CvBuildingInfoX = GC.getBuildingInfo(iBuildingX)
 
-							iValue = CvBuildingInfoX.getMaintenanceModifier()
-							if iValue >= iBestValue: continue
-
 							if CyCity.canConstruct(iBuildingX, False, False, False):
 
-								iBestValue = iValue
 								iBestBuilding = iBuildingX
 								CvBuildingInfo = CvBuildingInfoX
+								break
 
 						if CvBuildingInfo:
 							popupInfo = CyPopupInfo()

@@ -2,16 +2,13 @@
  "type": "HANDICAP_WARLORD",
  "maintenance": {
   "empire": {
-   "colony": {
-    "cap": {
-     "percent": 160
-    },
-    "percent": 80
-   },
    "distance": {
     "percent": 80
    },
    "numCities": {
+    "percent": 80
+   },
+   "colony": {
     "percent": 80
    },
    "corporation": {

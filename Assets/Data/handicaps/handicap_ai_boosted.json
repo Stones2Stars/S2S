@@ -2,16 +2,13 @@
  "type": "HANDICAP_AI_BOOSTED",
  "maintenance": {
   "empire": {
-   "colony": {
-    "cap": {
-     "percent": 300
-    },
-    "percent": 140
-   },
    "distance": {
     "percent": 160
    },
    "numCities": {
+    "percent": 140
+   },
+   "colony": {
     "percent": 140
    },
    "corporation": {

@@ -2,16 +2,13 @@
  "type": "HANDICAP_SETTLER",
  "maintenance": {
   "empire": {
-   "colony": {
-    "cap": {
-     "percent": 80
-    },
-    "percent": 40
-   },
    "distance": {
     "percent": 40
    },
    "numCities": {
+    "percent": 40
+   },
+   "colony": {
     "percent": 40
    },
    "corporation": {

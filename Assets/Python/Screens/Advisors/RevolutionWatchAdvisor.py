@@ -641,9 +641,6 @@ class RevolutionWatchAdvisor:
 			or info.getGlobalTradeRoutes() > 0 or info.getForeignTradeRouteModifier() > 0:
 				icon += self.tradeIcon
 
-			if info.getMaintenanceModifier() < 0:
-				icon += self.commerceIcon
-
 			if info.isNoUnhappiness():
 				icon += self.happyIcon
 

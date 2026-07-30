@@ -2,16 +2,13 @@
  "type": "HANDICAP_NOBLE",
  "maintenance": {
   "empire": {
-   "colony": {
-    "cap": {
-     "percent": 200
-    },
-    "percent": 100
-   },
    "distance": {
     "percent": 100
    },
    "numCities": {
+    "percent": 100
+   },
+   "colony": {
     "percent": 100
    },
    "corporation": {

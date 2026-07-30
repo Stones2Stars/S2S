@@ -2,16 +2,13 @@
  "type": "HANDICAP_CHIEFTAIN",
  "maintenance": {
   "empire": {
-   "colony": {
-    "cap": {
-     "percent": 120
-    },
-    "percent": 60
-   },
    "distance": {
     "percent": 60
    },
    "numCities": {
+    "percent": 60
+   },
+   "colony": {
     "percent": 60
    },
    "corporation": {

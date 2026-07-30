@@ -5789,7 +5789,7 @@ void CvGameTextMgr::setCityBarHelp(CvWStringBuffer &szString, CvCity* pCity)
 	szString.append(NEWLINE);
 	szString.append(gDLL->getText("INTERFACE_CITY_MAINTENANCE"));
 
-	int iMaintenance = (int)(bBaseValues ? pCity->calculateBaseMaintenanceTimes100() : pCity->getMaintenanceTimes100());
+	int iMaintenance = (int)pCity->getMaintenanceTimes100();
 
 	szString.append(CvWString::format(L" -%d.%02d %c", iMaintenance/100, iMaintenance%100, GC.getCommerceInfo(COMMERCE_GOLD).getChar()));
 
@@ -17553,7 +17553,7 @@ void CvGameTextMgr::setCorporationHelpCity(CvWStringBuffer &szBuffer, Corporatio
 			iCommerce /= 100;
 			if (i == COMMERCE_GOLD)
 			{
-				iMaintenance += pCity->calculateCorporationMaintenanceTimes100(eCorporation);
+				iMaintenance += (int)pCity->maintenanceOfKind(MAINTENANCE_CORPORATION);
 				iMaintenance = getModifiedIntValue(iMaintenance, pCity->maintenancePercentStack((int)MAINTENANCE_AMOUNT));
 
 				iCommerce -= iMaintenance;
@@ -20950,10 +20950,10 @@ void CvGameTextMgr::buildFinanceCityMaintString(CvWStringBuffer& szBuffer, Playe
 		{
 			const int iMod = pLoopCity->maintenancePercentStack((int)MAINTENANCE_AMOUNT);
 
-			iDistanceMaint += getModifiedIntValue(pLoopCity->calculateDistanceMaintenanceTimes100(), iMod);
-			iNumCityMaint += getModifiedIntValue(pLoopCity->calculateNumCitiesMaintenanceTimes100(), iMod);
-			iColonyMaint += getModifiedIntValue(pLoopCity->calculateColonyMaintenanceTimes100(), iMod);
-			iCorporationMaint += getModifiedIntValue(pLoopCity->calculateCorporationMaintenanceTimes100(), iMod);
+			iDistanceMaint += (int)pLoopCity->maintenanceOfKind(MAINTENANCE_DISTANCE);
+			iNumCityMaint += (int)pLoopCity->maintenanceOfKind(MAINTENANCE_NUM_CITIES);
+			iColonyMaint += (int)pLoopCity->maintenanceOfKind(MAINTENANCE_COLONY);
+			iCorporationMaint += (int)pLoopCity->maintenanceOfKind(MAINTENANCE_CORPORATION);
 			int64_t iBuildingFlat = 0;
 			int64_t iBuildingPercent = 0;
 			pLoopCity->maintenanceLegs((int)MAINTENANCE_AMOUNT, iBuildingFlat, iBuildingPercent);

@@ -1153,8 +1153,6 @@ class Revolution:
 				cityDistCommBonus += iCityCulterModifier
 				cityDistCommBonus += iCityGoldModifier / 2
 
-			iCityMaintenanceModifier = pCity.getMaintenanceModifier()
-			cityDistCommBonus -= iCityMaintenanceModifier
 			bCityisPower = pCity.isPower()
 			if bCityisPower :
 				cityDistCommBonus += 150
@@ -1258,7 +1256,7 @@ class Revolution:
 			localRevIdx += colonyIdx
 			revIdxHist['Colony'] = [colonyIdx] + revIdxHist['Colony'][0:RevDefs.revIdxHistLen-1]
 
-			if( self.LOG_DEBUG and iGameTurn%25 == 0 ) : print "[REV] Revolt: %s location effects: [%d,%d], maintenance: [%.2f,%.2f], modifier: %d, gcent: %d" % (pCity.getName(),locationRevIdx,colonyIdx,pCity.getMaintenanceTimes100()/100.0,pCity.calculateColonyMaintenanceTimes100()/100.0,pCity.getMaintenanceModifier(),pCity.isGovernmentCenter())
+			if( self.LOG_DEBUG and iGameTurn%25 == 0 ) : print "[REV] Revolt: %s location effects: [%d,%d], maintenance: %.2f, gcent: %d" % (pCity.getName(),locationRevIdx,colonyIdx,pCity.getMaintenanceTimes100()/100.0,pCity.isGovernmentCenter())
 
 			# Religion
 			relIdx = 0

@@ -27,9 +27,7 @@ THE HUMAN/AI DUALITY (the core awkwardness — read this before touching the dat
 
 WHAT EACH FAMILY MEANS (current behaviour — the meanings that must survive the later rework):
 - `maintenance.empire.{distance,numCities,colony,corporation}.percent` — % scale on each gold city-maintenance
-  COMPONENT (mirrors CvCity::calculateBaseMaintenance). `colony.cap.percent` caps the colony component, and it
-  caps it as a RATIO OF DISTANCE maintenance (`cap * distanceMaintenance100 / 100`) — so it is a percent like
-  its siblings, and the sub-member says WHICH component it bounds.
+  COMPONENT (each component kind resolves against its own modifiers; the total then takes the empire `amount` stack).
 - `upkeep.empire.{unit,civic,inflation,supply}.percent` — % scale on recurring gold upkeep costs.
   unit/civic/inflation are DUAL (base + ai); supply is AI-ONLY.
 - `happiness.empire.flat` / `health.empire.flat` — flat happy/health bonus in every city of the owner.
@@ -81,10 +79,6 @@ FAMILIES = {
     "iNumCitiesMaintenancePercent":   ("maintenance", "empire", "numCities",   "percent", None),
     "iColonyMaintenancePercent":      ("maintenance", "empire", "colony",      "percent", None),
     "iCorporationMaintenancePercent": ("maintenance", "empire", "corporation", "percent", None),
-    # The colony cap is a RATIO of the distance-maintenance component, not a gold amount: the engine reads it as
-    # `min(colonyMaint, cap * distanceMaintenance100 / 100)`, so 80..480 across the handicaps means 0.8x..4.8x.
-    # It is therefore a PERCENT (a whole number, never scaled), and `cap` is a sub-MEMBER of `colony`.
-    "iMaxColonyMaintenance":          ("maintenance", "empire", "colony.cap",  "percent", None),
     # --- upkeep: recurring gold upkeep costs ---
     "iUnitUpkeepPercent":             ("upkeep", "empire", "unit",      "percent", None),
     "iAIUnitUpkeepPercent":           ("upkeep", "empire", "unit",      "percent", "ai"),
@@ -205,8 +199,8 @@ FAMILY_ORDER = ["maintenance", "upkeep", "happiness", "health", "growth", "costs
 def _put(fam, family, scope, member, unit, audience, val):
     """Deposit into a family section: <family>.<scope>[.<member>][.ai].<unit> = val.
 
-    A member may be DOTTED (`colony.cap`) to address a sub-member, matching the kind table's own spelling
-    (`{"colony.cap", MAINTENANCE_CAP}`); each segment nests one level, so a sub-member and its parent's own
+    A member may be DOTTED to address a sub-member, matching the kind table's own spelling;
+    each segment nests one level, so a sub-member and its parent's own
     unit leaf share the parent node."""
     node = fam.setdefault(family, {}).setdefault(scope, {})
     for segment in (member.split(".") if member else []):
@@ -236,6 +230,13 @@ def _deposit_per_era_ramp(fam, per_era_value):
         else:
             node["percent"] = [existing] + new_entries
 
+
+# Tags whose MECHANIC is dead. They are DROPPED outright rather than routed to `identity`: identity carries no
+# effects (json.md §7), so parking a dead effect there would re-home it into the one block that must not hold it.
+#   iMaxColonyMaintenance -- the colony cap bounded the colony component as a RATIO of the distance component,
+#   a cross-component bound the entry grammar cannot express; it went with the quadratic when maintenance was
+#   re-expressed as ordinary deposits (economy.md).
+KILLED_TAGS = {"iMaxColonyMaintenance"}
 
 def curate(typ, rec):
     text_fields, fam, grants, identity, ai, leftover = {}, {}, {}, {}, {}, []
@@ -270,6 +271,8 @@ def curate(typ, rec):
                     continue
                 prop, scope, unit, value = conv
                 _put(fam, prop, scope, None, unit, None, value)   # family = the property type (split, no wrapper)
+        elif tag in KILLED_TAGS:
+            continue                                      # the mechanic is dead -- dropped, never parked in identity
         elif tag == "Goodies":
             g = engine.generic(c)
             if g:

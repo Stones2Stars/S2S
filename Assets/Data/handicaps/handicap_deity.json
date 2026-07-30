@@ -2,16 +2,13 @@
  "type": "HANDICAP_DEITY",
  "maintenance": {
   "empire": {
-   "colony": {
-    "cap": {
-     "percent": 400
-    },
-    "percent": 200
-   },
    "distance": {
     "percent": 200
    },
    "numCities": {
+    "percent": 200
+   },
+   "colony": {
     "percent": 200
    },
    "corporation": {

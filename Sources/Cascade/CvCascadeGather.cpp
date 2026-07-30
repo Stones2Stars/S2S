@@ -826,7 +826,7 @@ namespace
 			}
 			CascadeCityCombineTerms kTerms;
 			gt_collectStoredCityTerms(city, iChannel, kTerms);
-			sumSlots[iReceiver] = (int)gt_cityRateFromTerms(city, iChannel, evalCtx, kTerms);
+			sumSlots[iReceiver] = gt_cityRateFromTerms(city, iChannel, evalCtx, kTerms);
 		}
 	}
 
@@ -874,10 +874,10 @@ namespace
 				const CvCity* pLoopCity = *cityIterator;
 				if (eFamily == MODFAM_MAINTENANCE)
 				{
-					// ⚑ MAINTENANCE is the one receiver whose per-city quantity is NOT a package combine: the
-					// city's realized value folds the four ENGINE COMPONENTS and declines wholesale under
-					// WLTKD/disorder. The Σ takes the member's REALIZED value ([state-repositories.md]), so it
-					// asks the city for exactly that rather than re-deriving a partial one here.
+					// ⚑ MAINTENANCE's per-city quantity is the city's REALIZED value, which the plain combine
+					// below cannot answer: the status gate (WLTKD / disorder) suppresses the whole contribution
+					// at the READ, and it is live city state no package carries. The Σ takes the member's
+					// realized value ([state-repositories.md]), so it asks the city for exactly that.
 					iTotal += pLoopCity->getMaintenanceTimes100();
 				}
 				else if (iCommerce >= 0)
@@ -936,20 +936,7 @@ namespace
 				}
 				const ModifierFamily eFamily = CascadeChannelRegistry::channelFamily(iChannel);
 				const int iCommerce = infoFamilyCommerce(eFamily);
-				if (eFamily == MODFAM_MAINTENANCE)
-				{
-					// The same per-city quantity the rebuild sums, computed FROM SOURCE on both halves: the
-					// engine components recomputed into this run's own scratch, and the freshly gathered legs
-					// from the city document above. Reading either off the stored surface is what would make
-					// the oracle partly built on the state it exists to check ([state-repositories.md]).
-					int64_t iComponents = 0;
-					pLoopCity->recomputeMaintenanceComponentsInto(&iComponents);
-					int64_t iRolledFlat = 0;
-					int64_t iRolledPercent = 0;
-					gt_collectFreshCityRolledLegs(iChannel, kCityDocument, kInputs, iRolledFlat, iRolledPercent);
-					aTotals[iReceiver] += pLoopCity->maintenanceFromLegs(iComponents, iRolledFlat, iRolledPercent);
-				}
-				else if (iCommerce >= 0)
+				if (iCommerce >= 0)
 				{
 					CascadeCityCommerceTerms kCommerceTerms;
 					gt_collectFreshCityCommerceTerms(*pLoopCity, iChannel, cityEvalCtx, kCityDocument, kInputs, kCommerceTerms);

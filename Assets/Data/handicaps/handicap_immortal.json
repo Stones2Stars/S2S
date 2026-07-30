@@ -2,16 +2,13 @@
  "type": "HANDICAP_IMMORTAL",
  "maintenance": {
   "empire": {
-   "colony": {
-    "cap": {
-     "percent": 360
-    },
-    "percent": 180
-   },
    "distance": {
     "percent": 180
    },
    "numCities": {
+    "percent": 180
+   },
+   "colony": {
     "percent": 180
    },
    "corporation": {

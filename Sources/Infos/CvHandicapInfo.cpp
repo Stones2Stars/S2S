@@ -110,14 +110,6 @@ int CvHandicapInfo::getScalarModifier(InfoScalar eScalar, CvCascScope eScope, bo
 	return gameStartBase(eFamily, iKind, eScope, CASC_UNIT_PERCENT, bAiAudience);
 }
 
-int CvHandicapInfo::getColonyMaintenanceCap() const
-{
-	// the (MAINTENANCE, CAP, EMPIRE, PERCENT) compiled slot -- the dotted "colony.cap" member row. Routed
-	// through the one game-start-base read like every sibling point getter (no per-ERA cap entry is authored,
-	// so the tail contributes 0).
-	return gameStartBase(MODFAM_MAINTENANCE, (int)MAINTENANCE_CAP, CASC_SCOPE_EMPIRE, CASC_UNIT_PERCENT, false);
-}
-
 
 // ======================= mapFrom -- the ONE load hook (idempotent by contract) ============================
 

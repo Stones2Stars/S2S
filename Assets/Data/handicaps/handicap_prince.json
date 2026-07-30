@@ -2,16 +2,13 @@
  "type": "HANDICAP_PRINCE",
  "maintenance": {
   "empire": {
-   "colony": {
-    "cap": {
-     "percent": 240
-    },
-    "percent": 120
-   },
    "distance": {
     "percent": 120
    },
    "numCities": {
+    "percent": 120
+   },
+   "colony": {
     "percent": 120
    },
    "corporation": {

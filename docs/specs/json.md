@@ -73,6 +73,9 @@ modifier targets — **not separate shapes.** Learn them once.
   foreign share authors as the `100 −` telescoping pair, never an inverse unit),
   **`CITY_LIMIT`** (SOURCE-resolved: the depositing civic's own city limit — its base-limit config × the
   world-size scale percent; the `per.above` threshold for the over-limit unhappiness class),
+  **`DISTANCE_TO_GOVERNMENT_CENTER`** (plot distance from the city to its owner's NEAREST government centre,
+  0 in one — the driver of distance maintenance; served from a maintained `CityContext` store, never a
+  per-read walk),
   **`TARGET_NUM_CITIES`** (the world-size's
   expected city count — `CvWorldInfo.getTargetNumCities`, e.g. 2/3/4/6/8/11/14/18 per world size; a runtime-resolved
   world constant, used as a `max:` in ranked selection §3.3), **`WORLD_WONDER`** / **`NATIONAL_WONDER`** /
@@ -247,6 +250,8 @@ IGNORED**, never treated as false — retiring a system never spuriously disable
     the plain negation `"!IS_HOME_AREA"`, never a second predicate. Retires the `homeArea`/`otherArea`
     condition-as-member authoring on `maintenance` — a maintenance modifier scoped to home/other areas authors as an
     ordinary conditioned deposit on this predicate) ·
+    **`IS_REBEL`** (the city's owner is in revolt against a parent civ — the empire-state gate the rebel
+    maintenance discount authors on, replacing four hardcoded halvings with one conditioned deposit) ·
     **`IS_HOLY_CITY`** (the *bare* form = the city is a holy city of **any** religion — `CvCity::isHolyCity()`; the
     parameterized `{IS_HOLY_CITY: RELIGION_X}` below keys a specific religion) · **`IS_STATE_RELIGION_HOLY_CITY`** (the
     city is the holy city **of the player's state religion** — `isHolyCity(stateReligion)`; distinct from

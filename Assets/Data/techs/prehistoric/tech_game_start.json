@@ -498,5 +498,58 @@
   "civilopedia": "TXT_KEY_TECH_DUMMY_PEDIA",
   "era": "C2C_ERA_PREHISTORIC",
   "disable": true
+ },
+ "maintenance": {
+  "city": {
+   "distance": {
+    "flat": [
+     {
+      "value": 0.85,
+      "per": {
+       "type": "DISTANCE_TO_GOVERNMENT_CENTER"
+      }
+     },
+     {
+      "value": 0.1,
+      "per": {
+       "type": "POPULATION"
+      }
+     }
+    ]
+   },
+   "numCities": {
+    "flat": [
+     {
+      "value": 1,
+      "per": {
+       "type": "CITY",
+       "scope": "empire",
+       "above": 1
+      }
+     }
+    ]
+   },
+   "colony": {
+    "flat": [
+     {
+      "value": 0.5,
+      "per": {
+       "type": "CITY",
+       "scope": "empire",
+       "above": 1
+      },
+      "enabled": "!IS_HOME_AREA"
+     }
+    ]
+   }
+  },
+  "empire": {
+   "percent": [
+    {
+     "value": -50,
+     "enabled": "IS_REBEL"
+    }
+   ]
+  }
  }
 }
