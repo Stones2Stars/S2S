@@ -2946,10 +2946,6 @@ void CvUnitAI::AI_attackMove()
 				// RevolutionDCM - ranged bombardment AI
 				// In theory trebs can be set to UNITAI_ATTACK
 				// Dale - RB: Field Bombard START
-				if (AI_RbombardUnit(1, 50, 3, 1, 120))
-				{
-					return;
-				}
 				// RevolutionDCM - end
 
 				if (AI_anyAttack(1, 45, 3))
@@ -4033,11 +4029,6 @@ void CvUnitAI::AI_attackCityMove()
 	// BBAI TODO: Stack v stack combat ... definitely want to do in own territory, but what about enemy territory?
 	if (getGroup()->hasCollateralDamage() && plot()->getOwner() == getOwner())
 	{
-		if (AI_RbombardUnit(1, 50, 3, 2, 130))
-		{
-			return;
-		}
-
 		if (AI_anyAttack(1, 45, 3, false))
 		{
 			return;
@@ -4045,11 +4036,6 @@ void CvUnitAI::AI_attackCityMove()
 
 		if (!bReadyToAttack)
 		{
-			if (AI_RbombardUnit(getGroup()->getMinimumRBombardRange(), 30, 5, 2, 110))
-			{
-				return;
-			}
-
 			if (AI_anyAttack(1, 25, 5))
 			{
 				return;
@@ -4462,11 +4448,6 @@ void CvUnitAI::AI_collateralMove()
 		return;
 	}
 
-	if (AI_RbombardUnit(1, 50, 3, 1, 100))
-	{
-		return;
-	}
-
 	if (AI_anyAttack(1, 45, 3))
 	{
 		return;
@@ -4477,22 +4458,12 @@ void CvUnitAI::AI_collateralMove()
 		return;
 	}
 
-	if (AI_RbombardUnit(1, 40, 3, 0, 100))
-	{
-		return;
-	}
-
 	if (AI_anyAttack(1, 35, 3))
 	{
 		return;
 	}
 
 	if (AI_anyAttack(1, 30, 4))
-	{
-		return;
-	}
-
-	if (AI_RbombardUnit(1, 25, 5, 0, 80))
 	{
 		return;
 	}
@@ -4515,11 +4486,6 @@ void CvUnitAI::AI_collateralMove()
 		}
 	}
 
-	if (AI_RbombardUnit(getGroup()->getMinimumRBombardRange(), 40, 3, 0, 100))
-	{
-		return;
-	}
-
 	if (AI_anyAttack(2, 55, 3))
 	{
 		return;
@@ -4536,11 +4502,6 @@ void CvUnitAI::AI_collateralMove()
 	}
 
 	if (AI_protect(50, 8))
-	{
-		return;
-	}
-
-	if (AI_RbombardPlot(getDCMBombRange(), 20))
 	{
 		return;
 	}
@@ -5228,11 +5189,7 @@ void CvUnitAI::AI_cityDefenseMove()
 	/************************************************************************************************/
 		// RevolutionDCM - new field bombard AI
 		// Dale - RB: Field Bombard START
-		//if (AI_RbombardCity())
-		//{
-		//	return;
-		//}
-		// Dale - RB: Field Bombard END
+		//		// Dale - RB: Field Bombard END
 
 	/************************************************************************************************/
 	/* DCM									 END												  */
@@ -7581,17 +7538,8 @@ void CvUnitAI::AI_attackSeaMove()
 		return;
 	}
 
-	// RevolutionDCM - sea bombard AI formally DCM 1.7 AI_RbombardCity()
 	// Dale - RB: Field Bombard START
-	//if (AI_RbombardCity())
-	//{
-	//	return;
-	//}
-	//if (AI_RbombardNaval())
-	//{
-	//	return;
-	//}
-	// Dale - RB: Field Bombard END
+	//	//	// Dale - RB: Field Bombard END
 
 	{
 		PROFILE("CvUnitAI::AI_attackSeaMove.BasicAttacks");
@@ -8912,10 +8860,6 @@ void CvUnitAI::AI_assaultSeaMove()
 		}
 	}
 	//If all else fails
-	if (AI_RbombardNaval())
-	{
-		return;
-	}
 	// Dale - RB: Field Bombard END
 
 	if (bIsBarbarian)
@@ -13420,11 +13364,6 @@ bool CvUnitAI::AI_afterAttack()
 		return true;
 	}
 
-	if (AI_RbombardPlot(getDCMBombRange(), 60))
-	{
-		return true;
-	}
-
 	if (AI_pillageRange(1))
 	{
 		return true;
@@ -13441,11 +13380,6 @@ bool CvUnitAI::AI_afterAttack()
 	}
 
 	if (AI_goody(1))
-	{
-		return true;
-	}
-
-	if (AI_RbombardPlot(getDCMBombRange(), 0))
 	{
 		return true;
 	}
@@ -18167,7 +18101,6 @@ bool CvUnitAI::AI_bombardCity()
 	//		/*																							  */
 	//		/************************************************************************************************/
 	//				// RevolutionDCM - ranged bombard AI wraps standard bombard
-	//		if (!AI_RbombardCity(pBombardCity))
 	//		{
 	//			// vanilla behaviour
 	//			getGroup()->pushMission(MISSION_BOMBARD);
@@ -19136,10 +19069,6 @@ bool CvUnitAI::AI_seaBombardRange(int iMaxRange)
 			// if we are at the plot from which to bombard, and we have a unit that can bombard this turn, do it
 			if (bBombardUnitCanBombardNow && pGroup->canBombard(pBestBombardPlot))
 			{
-				if (AI_RbombardNaval())
-				{
-					return true;
-				}
 				getGroup()->pushMission(MISSION_BOMBARD, -1, -1, 0, false, false, MISSIONAI_BLOCKADE, pBestBombardPlot);
 
 				// if city bombarded enough, wake up any units that were waiting to bombard this city
@@ -25167,7 +25096,6 @@ bool CvUnitAI::AI_followBombard()
 		// and keep attackers otherwise for city attacks.(sorta)
 		// But it's opposite... it should check mission bombard first
 		// then check rbombard
-		//if (!AI_RbombardCity(bombardTarget(plot())))
 		//{
 		//	// vanilla behaviour
 		//	getGroup()->pushMission(MISSION_BOMBARD);
@@ -25178,10 +25106,6 @@ bool CvUnitAI::AI_followBombard()
 			return true;
 		}
 
-		if (AI_RbombardCity(bombardTarget(plot())))
-		{
-			return true;
-		}
 		// RevolutionDCM - end
 	}
 	/************************************************************************************************/
@@ -26232,271 +26156,9 @@ void CvUnitAI::write(FDataStreamBase* pStream)
 // Dale - RB: Field Bombard START
 // RevolutionDCM - ranged bombardment
 // returns true if a mission was pushed...
-bool CvUnitAI::AI_RbombardPlot(int iRange, int iBonusValueThreshold)
-{
-	PROFILE_FUNC();
-
-	if (!GC.isDCM_RANGE_BOMBARD())
-	{
-		return false;
-	}
-	int iBestValue = 0;
-	const CvPlot* pBestPlot = NULL;
-
-	foreach_(const CvPlot * plotX, plot()->rect(iRange, iRange))
-	{
-		if (AI_plotValid(plotX) && !plotX->isCity() && plotX->getTeam() != getTeam()
-		&& plotX->getImprovementType() != NO_IMPROVEMENT
-		&& getGroup()->canBombardAtRanged(plot(), plotX->getX(), plotX->getY()))
-		{
-			int iValue = 0;
-			if (iBonusValueThreshold > 0)
-			{
-				const ImprovementTypes eImprovement = plotX->getRevealedImprovementType(getTeam());
-
-				if (eImprovement != NO_IMPROVEMENT)
-				{
-					iValue = std::max(0, GC.getImprovementInfo(eImprovement).getPillageGold() - 10); // cottages = 0, hamlets = 5, villages = 10, towns = 15
-					iValue *= 100;
-					iValue /= 15; // cottages = 0, hamlets = 33, villages = 67, towns = 100
-					if (plotX->getWorkingCity() == NULL)
-					{
-						iValue *= 50;
-						iValue /= 100;
-					}
-					if (iValue < iBonusValueThreshold) iValue = 0;
-				}
-			}
-			else iValue = AI_pillageValue(plotX, 0); // returns any improvement with highest pillage value
-
-
-			if (iValue > iBestValue)
-			{
-				iBestValue = iValue;
-				pBestPlot = plotX;
-			}
-		}
-	}
-	if (pBestPlot != NULL)
-	{
-		FAssertMsg(pBestPlot->getNumVisibleEnemyCombatUnits(getOwner()) > 0, "Can't bombard without units in target plot");
-		getGroup()->pushMission(MISSION_RBOMBARD, pBestPlot->getX(), pBestPlot->getY());
-		return true;
-	}
-	return false;
-}
-
 // Returns true if a mission was pushed...
-bool CvUnitAI::AI_RbombardUnit(int iRange, int iHighestOddsThreshold, int iMinStack, int iSeigeDiff, int iPowerThreshold, bool bCity)
-{
-	// iRange = bombard range to consider
-	// iHighestOddsThreshold = the highest chance of successful attack
-	// iMinStack = the minimum stack size to bombard
-	// iSeigeDiff = the difference in range bombard capable seige, us to them
-	// iPowerThreshold = comparison of stack strengths as a percent ration with 100 being equality
-
-	PROFILE_FUNC();
-
-	int iPrelimValue;
-
-	if (!GC.isDCM_RANGE_BOMBARD())
-	{
-		return false;
-	}
-
-	const int iSearchRange = AI_searchRange(iRange);
-
-	int iBestValue = 999; // looking for the odds at or below iHighestOddsThreshold
-	const CvPlot* pBestPlot = NULL;
-
-	foreach_(const CvPlot * pLoopPlot, plot()->rect(iSearchRange, iSearchRange))
-	{
-		if (AI_plotValid(pLoopPlot) && (!pLoopPlot->isCity() || bCity))
-		{
-			if (getGroup()->canBombardAtRanged(plot(), pLoopPlot->getX(), pLoopPlot->getY()))
-			{
-				if (pLoopPlot->isVisibleEnemyUnit(this) || AI_potentialEnemy(pLoopPlot->getTeam()))
-				{
-					if (pLoopPlot->getNumVisiblePotentialEnemyDefenders(this) >= iMinStack)
-					{
-						for (int iPlayer = 0; iPlayer < MAX_PLAYERS; iPlayer++)
-						{
-							const TeamTypes eEnemyTeam = GET_PLAYER((PlayerTypes)iPlayer).getTeam();
-							if (GET_TEAM(eEnemyTeam).isAtWar(getTeam()))
-							{
-								if (pLoopPlot->getAverageEnemyDamage(eEnemyTeam) < getGroup()->getMinimumRBombardDamageLimit())
-								{
-									int iEnemyCount = pLoopPlot->getNumVisibleEnemyCombatUnits((PlayerTypes)iPlayer);
-
-									iPrelimValue = pLoopPlot->getAverageEnemyStrength(eEnemyTeam);
-									iPrelimValue *= pLoopPlot->getAverageEnemyDamage(eEnemyTeam);
-									iPrelimValue /= 100;
-									iPrelimValue += std::min(getGroup()->getRBombardDamageMaxUnits(), iEnemyCount);
-									iPrelimValue *= iEnemyCount;
-								}
-							}
-						}
-						const CvUnit* pDefender = pLoopPlot->getBestDefender(NO_PLAYER, getOwner(), this, true);
-						if (pDefender != NULL && pDefender->isRbombardable(iMinStack))
-						{
-							int iValue = AI_attackOdds(pLoopPlot, true);
-							if (iValue <= iHighestOddsThreshold)
-							{
-								int ourSeige = getRbombardSeigeCount(plot());
-								int theirSeige = pDefender->getRbombardSeigeCount(pLoopPlot);
-								if ((ourSeige - theirSeige) >= iSeigeDiff)
-								{
-									int ourStrength = GET_PLAYER(getOwner()).AI_getOurPlotStrength(plot(), iRange, false, false) * 100;
-									int theirStrength = GET_PLAYER(getOwner()).AI_getEnemyPlotStrength(plot(), iRange, false, false);
-									if (theirStrength <= 0)
-									{
-										theirStrength = 1;
-									}
-									int strengthRatio = (ourStrength / theirStrength);
-									if ((strengthRatio >= iPowerThreshold) && (theirStrength > 1))
-									{
-										iValue -= iPrelimValue;
-										if (iValue < iBestValue)
-										{
-											iBestValue = iValue;
-											pBestPlot = pLoopPlot;
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-	if (pBestPlot != NULL)
-	{
-		FAssertMsg(pBestPlot->getNumVisibleEnemyCombatUnits(getOwner()) > 0, "Can't bombard without units in target plot");
-		getGroup()->pushMission(MISSION_RBOMBARD, pBestPlot->getX(), pBestPlot->getY());
-		return true;
-	}
-	return false;
-}
-
 // Returns true if a mission was pushed...
-bool CvUnitAI::AI_RbombardCity(const CvCity* pCity)
-{
-	PROFILE_FUNC();
-
-	if (!GC.isDCM_RANGE_BOMBARD() || pCity == NULL)
-	{
-		return false;
-	}
-
-	const CvPlot* pPlot = pCity->plot();
-	if (pPlot == NULL)
-	{
-		return false; // ok will never happen but anyway...
-	}
-
-	if (!getGroup()->canBombardAtRanged(plot(), pPlot->getX(), pPlot->getY()))
-	{
-		return false;
-	}
-
-	if (AI_RbombardUnit(std::min(2, getGroup()->getMinimumRBombardRange()), 65, 2, 0, 0, true))
-	{
-		return true;
-	}
-	/*pDefender = pPlot->getBestDefender(NO_PLAYER, getOwner(), this, true);
-	if (pDefender != NULL)
-	{
-		if (collateralDamageMaxUnits() > pPlot->getNumUnits())
-		{
-			if (pDefender->isRbombardable(3) && getGroup()->getBombardTurns(pCity) < 3)
-			{
-				getGroup()->pushMission(MISSION_RBOMBARD, pPlot->getX(),pPlot->getY());
-				return true;
-			}
-		}
-	}*/
-	return false;
-}
-
-// RevolutionDCM - sea bombard AI identical to DCM 1.7 AI_RbombardCity() AI
 // Returns true if a mission was pushed...
-bool CvUnitAI::AI_RbombardNaval()
-{
-	PROFILE_FUNC();
-
-	if (!canRBombard())
-	{
-		return false;
-	}
-
-	const int iSearchRange = getGroup()->getMinimumRBombardRange();
-	int iBestValue = 0;
-	const CvPlot* pBestPlot = NULL;
-
-	foreach_(const CvPlot * pLoopPlot, plot()->rect(iSearchRange, iSearchRange))
-	{
-		if (!atPlot(pLoopPlot) && getGroup()->canBombardAtRanged(plot(), pLoopPlot->getX(), pLoopPlot->getY()))
-		{
-			const int iEnemyCount = pLoopPlot->getNumVisibleEnemyCombatUnits(getOwner());
-
-			// We definitely can't do a bombard mission unless there is enemy present, and we won't do one unless the targets are worth it
-			if (iEnemyCount > 0 && pLoopPlot->getAverageEnemyDamage(getTeam()) < getGroup()->getMinimumRBombardDamageLimit())
-			{
-				int iValue = pLoopPlot->getAverageEnemyStrength(getTeam());
-				iValue *= pLoopPlot->getAverageEnemyDamage(getTeam());
-				iValue /= 100;
-				iValue += std::min(getGroup()->getRBombardDamageMaxUnits(), iEnemyCount);
-				iValue *= iEnemyCount;
-
-				CvCity* pCity = pLoopPlot->getPlotCity();
-				if (pCity != NULL)
-				{
-					//iValue += std::max(0, (std::min((pCity->getDefenseDamage() + airBombCurrRate()), GC.getMAX_CITY_DEFENSE_DAMAGE()) - pCity->getDefenseDamage()));
-					iValue *= 5;
-					if (pCity->AI_isDanger())
-					{
-						iValue *= 2;
-					}
-					if (pCity == pCity->area()->getTargetCity(getOwner()))
-					{
-						iValue *= 3;
-					}
-				}
-
-				//TBHERE
-				int iPotentialAttackers = GET_PLAYER(getOwner()).AI_adjacentPotentialAttackers(pLoopPlot);//pLoopPlot->getNumVisibleEnemyDefenders(NO_PLAYER);
-				if (iPotentialAttackers > 0 || pLoopPlot->isAdjacentTeam(getTeam()))
-				{
-					const CvUnit* pDefender = pLoopPlot->getBestDefender(NO_PLAYER, getOwner(), this, true);
-
-					if (pDefender != NULL && pDefender->canDefend() && iValue > 0)
-					{
-						//iDamage = GC.getGame().getSorenRandNum(rBombardDamage(), "AI Bombard");
-						//iValue = std::max(0, (std::min((pDefender->getDamage() + iDamage), rBombardDamage()) - pDefender->getDamage()));
-						//iValue += ((((iDamage * collateralDamage()) / 100) * std::min((pLoopPlot->getNumVisibleEnemyDefenders(this) - 1), collateralDamageMaxUnits())) / 2);
-						iValue *= (3 + iPotentialAttackers);
-						iValue /= 4;
-					}
-				}
-				iValue *= GC.getGame().getSorenRandNum(20, "AI Ranged Bombard Selection(Naval)");
-				if (iValue > iBestValue)
-				{
-					iBestValue = iValue;
-					pBestPlot = pLoopPlot;
-				}
-			}
-		}
-	}
-
-	if (pBestPlot != NULL)
-	{
-		FAssertMsg(pBestPlot->getNumVisibleEnemyCombatUnits(getOwner()) > 0, "Can't bombard without units in target plot");
-		getGroup()->pushMission(MISSION_RBOMBARD, pBestPlot->getX(), pBestPlot->getY());
-		return true;
-	}
-	return false;
-}
 // Dale - RB: Field Bombard END
 // RevolutionDCM - end
 

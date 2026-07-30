@@ -172,3 +172,15 @@
     mint kinds for the old shape ([DEC-proper-once](decisions.md#dec-proper-once)).
     ⚠ NOT the same thing as the ordinary `bombard` FAMILY (`bombard.unit.rate` / `airBombRate`), which is live,
     authored and STAYS.
+    ⚖ **WHAT IS KEPT vs DROPPED — the cut is by MECHANIC, never by name (owner).** Only the RANGED-ATTACK
+    version drops. The DEFENCE-GRINDING bombard stays exactly as it is: a unit adjacent to a city wearing its
+    defences down (`MISSION_BOMBARD` → `bombardRate` → `getDefenseDamage`), and **NAVAL units keep the bombards
+    they have** (owner). ⛔ The two are ONE LETTER APART in the AI — `AI_bombardCity` is the vanilla defence
+    grinder and STAYS, `AI_RbombardCity` was ranged and is gone — and the naval decision path called BOTH in
+    sequence, so a name-led sweep takes the defence grinder with it. Removing the ranged call simply drops
+    control onto the `MISSION_BOMBARD` push already beneath it.
+    ⚖ **WHAT THE REDESIGN OWES (owner):** *"we basically want vanilla civ bombard back"* as the baseline, and
+    **ranged attack has to DO SOMETHING to be worthwhile** — the retired failure is not that ranged existed, it
+    is that it dealt ~nothing while still satisfying the turn, so a redesign that reintroduces a near-zero-damage
+    ranged action has reproduced the bug. ⚑ Naval shore bombardment is a DELIBERATE divergence from vanilla,
+    which did not allow it: *"we want them to, otherwise they are pretty damn worthless."*

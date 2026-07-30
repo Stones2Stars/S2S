@@ -1737,7 +1737,6 @@ protected:
      *   3. Returns true if bombardment was performed.
      * // RevolutionDCM
      */
-    bool AI_RbombardPlot(int iRange, int iBonusValueThreshold);
 
     /**
      * Attempts a ranged bombardment on a unit.
@@ -1747,7 +1746,6 @@ protected:
      *   2. Performs bombardment if possible.
      *   3. Returns true if bombardment was performed.
      */
-	bool AI_RbombardUnit(int iRange, int iHighestOddsThreshold, int iMinStack, int iSeigeDiff, int iPowerThreshold, bool bCity = false);
 
     /**
      * Attempts a ranged bombardment on a city.
@@ -1757,7 +1755,6 @@ protected:
      *   2. Performs bombardment if possible.
      *   3. Returns true if bombardment was performed.
      */
-	bool AI_RbombardCity(const CvCity* pCity);
 
     /**
      * Attempts a naval ranged bombardment.
@@ -1767,7 +1764,6 @@ protected:
      *   2. Performs bombardment if possible.
      *   3. Returns true if bombardment was performed.
      */
-	bool AI_RbombardNaval();
 
     /**
      * Attempts a fighter engagement.
