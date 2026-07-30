@@ -10562,7 +10562,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 		}
 		case UNITAI_HUNTER_ESCORT:
 		{
-			if (!bisNegativePropertyUnit && kUnitInfo.getCombat() > 0 && (kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100) > 0)
+			if (!bisNegativePropertyUnit && (kUnitInfo.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) > 0 && (kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100) > 0)
 			{
 				bValid = true;
 				bUndefinedValid = true;
@@ -10596,7 +10596,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 		}
 		case UNITAI_ESCORT:
 		{
-			if (!bisNegativePropertyUnit && kUnitInfo.getCombat() > 0 && (kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100) > 0)//Note: add a hero filter - a lot of them are being trained for this.
+			if (!bisNegativePropertyUnit && (kUnitInfo.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) > 0 && (kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100) > 0)//Note: add a hero filter - a lot of them are being trained for this.
 			{
 				bValid = true;
 				bUndefinedValid = true;
@@ -10605,7 +10605,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 		}
 		case UNITAI_ATTACK:
 		{
-			if (kUnitInfo.getCombat() > 0 && !CvSkillReads::onlyDefensive(kUnitInfo.getSkills()))
+			if ((kUnitInfo.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) > 0 && !CvSkillReads::onlyDefensive(kUnitInfo.getSkills()))
 			{
 				bValid = true;
 			}
@@ -10613,7 +10613,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 		}
 		case UNITAI_ATTACK_CITY:
 		{
-			if (kUnitInfo.getCombat() > 0 && !CvSkillReads::onlyDefensive(kUnitInfo.getSkills()) && !CvSkillReads::noCapture(kUnitInfo.getSkills()))
+			if ((kUnitInfo.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) > 0 && !CvSkillReads::onlyDefensive(kUnitInfo.getSkills()) && !CvSkillReads::noCapture(kUnitInfo.getSkills()))
 			{
 				bValid = true;
 			}
@@ -10624,7 +10624,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 			// #410: breakdown chance no longer qualifies -- it is a city-assault death
 			// rider, not stack-softening capability; counting it made breakdown-only
 			// siege (battering rams etc.) a valid COLLATERAL pick it could never play.
-			if (kUnitInfo.getCombat() > 0 && !CvSkillReads::onlyDefensive(kUnitInfo.getSkills())
+			if ((kUnitInfo.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) > 0 && !CvSkillReads::onlyDefensive(kUnitInfo.getSkills())
 			&& kUnitInfo.getCollateralModifier(COLLATERAL_DAMAGE, CASC_SCOPE_UNIT) > 0)
 			{
 				bValid = true;
@@ -10633,7 +10633,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 		}
 		case UNITAI_PILLAGE:
 		{
-			if (kUnitInfo.getCombat() > 0 && !CvSkillReads::onlyDefensive(kUnitInfo.getSkills()))
+			if ((kUnitInfo.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) > 0 && !CvSkillReads::onlyDefensive(kUnitInfo.getSkills()))
 			{
 				bValid = true;
 			}
@@ -10641,7 +10641,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 		}
 		case UNITAI_RESERVE:
 		{
-			if (!bisNegativePropertyUnit && kUnitInfo.getCombat() > 0 && !CvSkillReads::onlyDefensive(kUnitInfo.getSkills()))
+			if (!bisNegativePropertyUnit && (kUnitInfo.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) > 0 && !CvSkillReads::onlyDefensive(kUnitInfo.getSkills()))
 			{
 				bValid = true;
 			}
@@ -10649,7 +10649,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 		}
 		case UNITAI_PILLAGE_COUNTER:
 		{
-			if (kUnitInfo.getCombat() > 0 && !CvSkillReads::onlyDefensive(kUnitInfo.getSkills()))
+			if ((kUnitInfo.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) > 0 && !CvSkillReads::onlyDefensive(kUnitInfo.getSkills()))
 			{
 				bValid = true;
 			}
@@ -10657,7 +10657,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 		}
 		case UNITAI_COUNTER:
 		{
-			if (!bisNegativePropertyUnit && kUnitInfo.getCombat() > 0 && !CvSkillReads::onlyDefensive(kUnitInfo.getSkills()))
+			if (!bisNegativePropertyUnit && (kUnitInfo.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) > 0 && !CvSkillReads::onlyDefensive(kUnitInfo.getSkills()))
 			{
 				if (kUnitInfo.getInterceptionProbability() > 0 || kUnitInfo.getNumTargetUnits() > 0)
 				{
@@ -10788,7 +10788,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 		}
 		case UNITAI_CITY_DEFENSE:
 		{
-			if (!bisNegativePropertyUnit && kUnitInfo.getCombat() > 0 && !CvSkillReads::noDefensiveBonus(kUnitInfo.getSkills()))
+			if (!bisNegativePropertyUnit && (kUnitInfo.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) > 0 && !CvSkillReads::noDefensiveBonus(kUnitInfo.getSkills()))
 			{
 				bValid = true;
 			}
@@ -10796,7 +10796,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 		}
 		case UNITAI_CITY_COUNTER:
 		{
-			if (kUnitInfo.getCombat() > 0 && !bisNegativePropertyUnit && !CvSkillReads::noDefensiveBonus(kUnitInfo.getSkills()))
+			if ((kUnitInfo.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) > 0 && !bisNegativePropertyUnit && !CvSkillReads::noDefensiveBonus(kUnitInfo.getSkills()))
 			{
 				if (kUnitInfo.getInterceptionProbability() > 0)
 				{
@@ -10843,7 +10843,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 		}
 		case UNITAI_EXPLORE:
 		{
-			if (!bisPositivePropertyUnit && kUnitInfo.getCombat() > 0)
+			if (!bisPositivePropertyUnit && (kUnitInfo.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) > 0)
 			{
 				bValid = true;
 				bUndefinedValid = true;
@@ -10901,7 +10901,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 		}
 		case UNITAI_ATTACK_SEA:
 		{
-			if (kUnitInfo.getCombat() > 0)
+			if ((kUnitInfo.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) > 0)
 			{
 				bValid = true;
 			}
@@ -10909,7 +10909,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 		}
 		case UNITAI_RESERVE_SEA:
 		{
-			if (kUnitInfo.getCombat() > 0)
+			if ((kUnitInfo.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) > 0)
 			{
 				bValid = true;
 			}
@@ -10917,7 +10917,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 		}
 		case UNITAI_ESCORT_SEA:
 		{
-			if (kUnitInfo.getCombat() > 0)
+			if ((kUnitInfo.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) > 0)
 			{
 				bValid = true;
 			}
@@ -10925,7 +10925,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 		}
 		case UNITAI_EXPLORE_SEA:
 		{
-			if (kUnitInfo.getCombat() > 0)
+			if ((kUnitInfo.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) > 0)
 			{
 				bValid = true;
 			}
@@ -11076,7 +11076,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 					const int iFastMoverMultiplier = AI_isDoStrategy(AI_STRATEGY_FASTMOVERS) ? 3 : 1;
 					iValue += ((iCombatValue * ((kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100) - 1) * iFastMoverMultiplier) / 3);
 				}
-				iValue += ((iCombatValue * kUnitInfo.getWithdrawalProbability()) / 100);
+				iValue += ((iCombatValue * kUnitInfo.getScalar(SCALAR_WITHDRAWAL, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT)) / 100);
 
 				if (kUnitInfo.getCombatLimit() < 100)
 				{
@@ -11278,7 +11278,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 						const int iFastMoverMultiplier = AI_isDoStrategy(AI_STRATEGY_FASTMOVERS) ? 4 : 1;
 						iValue += ((iCombatValue * ((kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100) - 1) * iFastMoverMultiplier) / 4); // K-Mod put in -1 !
 					}
-					iValue += ((iCombatValue * kUnitInfo.getWithdrawalProbability()) / 100);
+					iValue += ((iCombatValue * kUnitInfo.getScalar(SCALAR_WITHDRAWAL, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT)) / 100);
 				}
 
 				break;
@@ -11288,7 +11288,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 				iValue += iCombatValue;
 				iValue += ((iCombatValue * kUnitInfo.getCollateralModifier(COLLATERAL_DAMAGE, CASC_SCOPE_UNIT)) / 50);
 				iValue += ((iCombatValue * ((kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100)-1)) / 4);
-				iValue += ((iCombatValue * kUnitInfo.getWithdrawalProbability()) / 25);
+				iValue += ((iCombatValue * kUnitInfo.getScalar(SCALAR_WITHDRAWAL, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT)) / 25);
 				iValue += ((iCombatValue * kUnitInfo.getCityAttackModifier()) / 100);// was -= ???
 				break;
 			}
@@ -11372,7 +11372,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 				}
 
 				iValue += ((iCombatValue * ((kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100) - 1)) / 4);  //Calvitix /2
-				iValue += ((iCombatValue * kUnitInfo.getWithdrawalProbability()) / 100);
+				iValue += ((iCombatValue * kUnitInfo.getScalar(SCALAR_WITHDRAWAL, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT)) / 100);
 
 				if (kUnitInfo.getInterceptionProbability() > 0)
 				{
@@ -21443,7 +21443,7 @@ int CvPlayerAI::AI_cultureVictoryTechValue(TechTypes eTech) const
 
 	for (std::set<int>::const_iterator itUnlockedUnit = unlockedUnits.begin(); itUnlockedUnit != unlockedUnits.end(); ++itUnlockedUnit)
 	{
-		int iTempValue = (GC.getUnitInfo(static_cast<UnitTypes>(*itUnlockedUnit)).getCombat() * 100) / std::max(1, (GC.getGame().getBestLandUnitCombat()));
+		int iTempValue = ((GC.getUnitInfo(static_cast<UnitTypes>(*itUnlockedUnit)).getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) * 100) / std::max(1, (GC.getGame().getBestLandUnitCombat()));
 		iTempValue *= bAnyWarplan ? 2 : 1;
 
 		iValue += iTempValue / 3;
@@ -22436,11 +22436,11 @@ int CvPlayerAI::AI_getStrategyHash() const
 
 				if (iMoves == 1)
 				{
-					iBestSlowUnitCombat = std::max(iBestSlowUnitCombat, unit.getCombat());
+					iBestSlowUnitCombat = std::max(iBestSlowUnitCombat, (unit.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100));
 				}
 				else if (iMoves > 1)
 				{
-					iBestFastUnitCombat = std::max(iBestFastUnitCombat, unit.getCombat());
+					iBestFastUnitCombat = std::max(iBestFastUnitCombat, (unit.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100));
 				}
 			}
 			// Mobile anti-air and artillery flags only meant for land units
@@ -25176,9 +25176,9 @@ int CvPlayerAI::AI_calculateUnitAIViability(UnitAITypes eUnitAI, DomainTypes eDo
 			{
 				if (kUnitInfo.hasUnitAI(eUnitAI))
 				{
-					iBestUnitAIStrength = std::max(iBestUnitAIStrength, kUnitInfo.getCombat());
+					iBestUnitAIStrength = std::max(iBestUnitAIStrength, (kUnitInfo.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100));
 				}
-				iBestOtherStrength = std::max(iBestOtherStrength, kUnitInfo.getCombat());
+				iBestOtherStrength = std::max(iBestOtherStrength, (kUnitInfo.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100));
 			}
 		}
 	}
@@ -26432,7 +26432,7 @@ int CvPlayerAI::strengthOfBestUnitAI(DomainTypes eDomain, UnitAITypes eUnitAITyp
 
 	if (eBestUnit != NO_UNIT)
 	{
-		return GC.getUnitInfo(eBestUnit).getCombat();
+		return (GC.getUnitInfo(eBestUnit).getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100);
 	}
 	// We cannot build any! Take the average of any we already have.
 	int iTotal = 0;
@@ -26442,7 +26442,7 @@ int CvPlayerAI::strengthOfBestUnitAI(DomainTypes eDomain, UnitAITypes eUnitAITyp
 		if (eUnitAIType == NO_UNITAI || pLoopUnit->AI_getUnitAIType() == eUnitAIType)
 		{
 			iCount++;
-			iTotal += pLoopUnit->getUnitInfo().getCombat();
+			iTotal += (pLoopUnit->getUnitInfo().getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100);
 		}
 	}
 	if (iCount > 0)
@@ -28776,7 +28776,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	iTemp = kPromotion.getWithdrawalChange();
 	if (iTemp != 0)
 	{
-		iExtra = (kUnit.getWithdrawalProbability() + (pUnit == NULL ? 0 : pUnit->getExtraWithdrawal() * 4));
+		iExtra = (kUnit.getScalar(SCALAR_WITHDRAWAL, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT) + (pUnit == NULL ? 0 : pUnit->getExtraWithdrawal() * 4));
 		iTemp *= (100 + iExtra);
 		iTemp /= 100;
 		if (eUnitAI == UNITAI_ATTACK_CITY ||
@@ -29933,7 +29933,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 
-	if ((pUnit && pUnit->canFight() || !pUnit && kUnit.getCombat() > 0))
+	if ((pUnit && pUnit->canFight() || !pUnit && (kUnit.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) > 0))
 	{
 		// The PROMOTION's own authored vs-unitcombat entries drive this term: where it deposits nothing the
 		// value is zero on both branches, so the handful it authored replaces the whole unitcombat registry.
@@ -31807,7 +31807,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 	iTemp = kUnitCombat.getWithdrawalChange();
 	if (iTemp != 0)
 	{
-		iExtra = kUnit.getWithdrawalProbability() + (pUnit ? pUnit->getExtraWithdrawal() * 4 : 0);
+		iExtra = kUnit.getScalar(SCALAR_WITHDRAWAL, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT) + (pUnit ? pUnit->getExtraWithdrawal() * 4 : 0);
 		iTemp *= 100 + iExtra;
 		iTemp /= 100;
 		if (eUnitAI == UNITAI_ATTACK_CITY ||

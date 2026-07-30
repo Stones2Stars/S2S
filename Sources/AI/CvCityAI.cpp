@@ -1155,7 +1155,7 @@ void CvCityAI::AI_chooseProduction()
 			// if building a combat unit, and we have nearly no defenders, keep building it
 			const UnitTypes eProductionUnit = getProductionUnit();
 			if (eProductionUnit != NO_UNIT && plot()->getNumDefenders(eOwner) < 2
-				&& GC.getUnitInfo(eProductionUnit).getCombat() > 0)
+				&& (GC.getUnitInfo(eProductionUnit).getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) > 0)
 			{
 				return;
 			}
@@ -5557,7 +5557,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 						case UNITAI_UNKNOWN:
 							break;
 						case UNITAI_ANIMAL:
-							iAllowedUnitsValue += kUnit.getCombat() / 5;
+							iAllowedUnitsValue += (kUnit.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) / 5;
 							break;
 						case UNITAI_SETTLE:
 						case UNITAI_SETTLER_SEA:
@@ -5589,7 +5589,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 						case UNITAI_MISSILE_AIR:
 						case UNITAI_PARADROP:
 						case UNITAI_ATTACK_CITY_LEMMING:
-							iAllowedUnitsValue += std::max(6, (kUnit.getCombat() * kUnit.getCombat())) / 5 + (kUnit.getAirCombat() * kUnit.getAirCombat()) / 5;
+							iAllowedUnitsValue += std::max(6, ((kUnit.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) * (kUnit.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100))) / 5 + (kUnit.getAirCombat() * kUnit.getAirCombat()) / 5;
 							break;
 						case UNITAI_INVESTIGATOR:
 						case UNITAI_PROPERTY_CONTROL:
@@ -8491,7 +8491,7 @@ void CvCityAI::AI_doHurry(bool bForce)
 			{
 				if (
 					GC.getUnitInfo(eProductionUnit).getDomainType() == DOMAIN_LAND
-				&&	GC.getUnitInfo(eProductionUnit).getCombat() > 0)
+				&&	(GC.getUnitInfo(eProductionUnit).getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) > 0)
 				{
 					bEssential = true;
 				}
@@ -10628,7 +10628,7 @@ bool CvCityAI::AI_doPanic()
 		{
 			if (getProductionUnit() != NO_UNIT)
 			{
-				if (getProductionProgress() > 0 && GC.getUnitInfo(getProductionUnit()).getCombat() > 0)
+				if (getProductionProgress() > 0 && (GC.getUnitInfo(getProductionUnit()).getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) > 0)
 				{
 					AI_doHurry(true);
 					return true;

@@ -91,7 +91,7 @@ int CvGameAI::AI_combatValue(const UnitTypes eUnit) const
 	}
 	else
 	{
-		iValue *= unit.getCombat();
+		iValue *= (unit.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100);
 		//TB Combat Mods Begin
 		// TOOD: rethink these calculations
 		//iValue += (((100 * unit.getDamageModifier())/100)/5);
