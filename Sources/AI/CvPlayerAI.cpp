@@ -10421,17 +10421,24 @@ int CvPlayerAI::AI_unitImpassableCount(UnitTypes eUnit) const
 {
 	PROFILE_EXTRA_FUNC();
 	int iCount = 0;
-	foreach_(const TerrainTypes impassableTerrain, GC.getUnitInfo(eUnit).getImpassableTerrains())
+	const CvUnitInfo& kUnitInfo = GC.getUnitInfo(eUnit);
+	// The passable-tech map is keyed by the substrate id; a substrate with no entry has no tech that opens
+	// it, which is the same verdict the old sentinel carried.
+	const std::map<int, int>& kTerrainPassable = kUnitInfo.getTerrainPassableTechs();
+	foreach_(const int iImpassableTerrain, kUnitInfo.getTerrainImpassable())
 	{
-		const TechTypes eTech = (TechTypes)GC.getUnitInfo(eUnit).getTerrainPassableTech(impassableTerrain);
+		const std::map<int, int>::const_iterator itTech = kTerrainPassable.find(iImpassableTerrain);
+		const TechTypes eTech = (itTech == kTerrainPassable.end()) ? NO_TECH : (TechTypes)itTech->second;
 		if (NO_TECH == eTech || !GET_TEAM(getTeam()).isHasTech(eTech))
 		{
 			iCount++;
 		}
 	}
-	foreach_(const FeatureTypes impassableFeature, GC.getUnitInfo(eUnit).getImpassableFeatures())
+	const std::map<int, int>& kFeaturePassable = kUnitInfo.getFeaturePassableTechs();
+	foreach_(const int iImpassableFeature, kUnitInfo.getFeatureImpassable())
 	{
-		const TechTypes eTech = (TechTypes)GC.getUnitInfo(eUnit).getFeaturePassableTech(impassableFeature);
+		const std::map<int, int>::const_iterator itTech = kFeaturePassable.find(iImpassableFeature);
+		const TechTypes eTech = (itTech == kFeaturePassable.end()) ? NO_TECH : (TechTypes)itTech->second;
 		if (NO_TECH == eTech || !GET_TEAM(getTeam()).isHasTech(eTech))
 		{
 			iCount++;
@@ -10667,7 +10674,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 		{
 			if (!bisNegativePropertyUnit && (kUnitInfo.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) > 0 && !CvSkillReads::onlyDefensive(kUnitInfo.getSkills()))
 			{
-				if (kUnitInfo.getAir(AIR_INTERCEPT, CASC_SCOPE_UNIT) > 0 || kUnitInfo.getNumTargetUnits() > 0)
+				if (kUnitInfo.getAir(AIR_INTERCEPT, CASC_SCOPE_UNIT) > 0 || (int)kUnitInfo.getTargetUnits().size() > 0)
 				{
 					bValid = true;
 					break;
@@ -11351,7 +11358,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 				foreach_(const STD_PAIR(int, int)& modifier, vsUnitAttack2)
 				{
 					iValue += ((iCombatValue * modifier.second * AI_getUnitWeight(modifier.first)) / 7500);
-					iValue += ((iCombatValue * (kUnitInfo.isTargetUnit(modifier.first) ? 50 : 0)) / 100);
+					iValue += ((iCombatValue * (kUnitInfo.hasTargetUnit(modifier.first) ? 50 : 0)) / 100);
 				}
 				for (std::vector<std::pair<int, int> >::const_iterator itCombat = vsUnitCombat.begin();
 					itCombat != vsUnitCombat.end(); ++itCombat)
@@ -27038,7 +27045,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	const CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
 	const CvPlot* pPlot = pUnit ? pUnit->plot() : NULL;
 	const int iMoves = pUnit ? pUnit->maxMoves() : (kUnit.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100);
-	const bool bNoDefensiveBonus = !pUnit && kUnit.isNoDefensiveBonus() || pUnit && pUnit->noDefensiveBonus();
+	const bool bNoDefensiveBonus = !pUnit && CvSkillReads::noDefensiveBonus(kUnit.getSkills()) || pUnit && pUnit->noDefensiveBonus();
 
 	if (eUnitAI == NO_UNITAI)
 	{

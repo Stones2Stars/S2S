@@ -51,6 +51,12 @@
   the entity-level applicability gate over a world-scope victory atom
   ([json.md §2](../../specs/json.md) Applicability, [DEC-entity-gate](../../architecture/decisions.md#dec-entity-gate)),
   never a revived `getVictoryPrereq`. ⚠ Its AI consumer dangles until this lands; that is the census working.
+- Settle what FLANKING is keyed BY, then move its consumers. The legacy getter is keyed by UNITCOMBAT
+  (`getFlankingStrengthbyUnitCombatType`, read in a loop over that registry) while the authored data keys by
+  UNIT — `combat.unit.flankingUnit.{UNIT_X}`, which is where all of it lives. So the two sides disagree about
+  the axis, and re-pointing the consumer would silently answer a different question rather than the same one.
+  ⚑ [skills.md §1](../../specs/skills.md) ties flanking to `targets` (per-combat-class), which is the reading
+  the DATA does not match — so this is a model question to answer before any consumer moves, not a rename.
 - Carry the RANGED-BOMBARD / DCM plane into the data, or kill it deliberately. The legacy records author
   `iRBombardDamage` / `iRBombardDamageLimit` / `iRBombardDamageMaxUnits` / `iDCMBombRange` / `iDCMBombAccuracy`
   with real values, and the curator emits NOTHING for any of them — there is no key, no kind and no authored

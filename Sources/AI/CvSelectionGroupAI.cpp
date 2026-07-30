@@ -5,6 +5,7 @@
 
 #include "CvGameCoreDLL.h"
 #include "CvUnitInfo.h"
+#include "Data/CvInfoValuation.h"   // the ONE keyed-combat read (own-data, never the target registry)
 #include "BetterBTSAI.h"
 #include "Engine/CvCity.h"
 #include "Defines/CvGlobals.h"
@@ -738,8 +739,8 @@ static bool isClearlySuperior(CvUnit* pUnit, CvUnit* pOtherUnit, const CvPlot* p
 
 	for (int i = GC.getNumUnitCombatInfos() - 1; i > -1; i--)
 	{
-		iTotalCombatMods += kUnit.getUnitCombatModifier(i);
-		iOtherTotalCombatMods += kOtherUnit.getUnitCombatModifier(i);
+		iTotalCombatMods += InfoValuation::keyedCombat(kUnit.getModifiers(), InfoValuation::COMBAT_TARGET_UNITCOMBAT, i, COMBAT_AMOUNT);
+		iOtherTotalCombatMods += InfoValuation::keyedCombat(kOtherUnit.getModifiers(), InfoValuation::COMBAT_TARGET_UNITCOMBAT, i, COMBAT_AMOUNT);
 	}
 
 	for (std::map<UnitCombatTypes, UnitCombatKeyedInfo>::const_iterator it = pUnit->getUnitCombatKeyedInfo().begin(), end = pUnit->getUnitCombatKeyedInfo().end(); it != end; ++it)
