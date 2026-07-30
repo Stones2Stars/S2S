@@ -10491,7 +10491,7 @@ CvCity* CvUnit::getUpgradeCity(UnitTypes eUnit, bool bSearch, int* iSearchValue)
 			return NULL;
 		}
 	}
-	else if (kUnitInfo.getCargoSpace() < getCargo())
+	else if (kUnitInfo.getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100 < getCargo())
 	{
 		return NULL;
 	}
@@ -10687,7 +10687,7 @@ UnitTypes CvUnit::getCaptureUnitType() const
 
 UnitCombatTypes CvUnit::getUnitCombatType() const
 {
-	return (UnitCombatTypes) m_pUnitInfo->getUnitCombatType();
+	return (UnitCombatTypes) m_pUnitInfo->getCombatClass();
 }
 
 
@@ -13372,7 +13372,7 @@ int CvUnit::cargoSpace() const
 		}
 		return iCargoCapacity;
 	}
-	int iCargoCapacity = m_pUnitInfo->getCargoSpace() + m_iCargoCapacity;
+	int iCargoCapacity = m_pUnitInfo->getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100 + m_iCargoCapacity;
 
 	if (getDomainType() == DOMAIN_SEA)
 	{
@@ -17948,7 +17948,7 @@ bool CvUnit::isPromotionValid(PromotionTypes ePromotion, bool bFree, bool bKeepC
 		return true;
 	}
 
-	if (m_pUnitInfo->getUnitCombatType() == NO_UNITCOMBAT)
+	if (m_pUnitInfo->getCombatClass() == NO_UNITCOMBAT)
 	{
 		return false;
 	}
@@ -29965,7 +29965,7 @@ void CvUnit::defineReligion()
 				}
 				else
 				{
-					eUnitCombat = (UnitCombatTypes)m_pUnitInfo->getUnitCombatType();
+					eUnitCombat = (UnitCombatTypes)m_pUnitInfo->getCombatClass();
 
 					if (eUnitCombat == NO_UNITCOMBAT) continue;
 				}

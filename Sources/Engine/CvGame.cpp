@@ -1720,7 +1720,7 @@ void CvGame::normalizeRemoveBadTerrain()
 			{
 				continue;
 			}
-			if (GC.getTerrainInfo(plotX->getTerrainType()).getYield(YIELD_FOOD) + GC.getTerrainInfo(plotX->getTerrainType()).getYield(YIELD_PRODUCTION) < 2)
+			if (GC.getTerrainInfo(plotX->getTerrainType()).getFlatYield(YIELD_FOOD, CASC_SCOPE_PLOT) / 100 + GC.getTerrainInfo(plotX->getTerrainType()).getFlatYield(YIELD_PRODUCTION, CASC_SCOPE_PLOT) / 100 < 2)
 			{
 				const CvFeatureInfo* feature = plotX->getFeatureType() == NO_FEATURE ? NULL : &GC.getFeatureInfo(plotX->getFeatureType());
 				const CvBonusInfo* bonus = plotX->getBonusType() == NO_BONUS ? NULL : &GC.getBonusInfo(plotX->getBonusType());
@@ -1732,8 +1732,8 @@ void CvGame::normalizeRemoveBadTerrain()
 					{
 						const CvTerrainInfo& terrainK = GC.getTerrainInfo((TerrainTypes)iK);
 
-						if (!terrainK.isWaterTerrain() && terrainK.getYield(YIELD_FOOD) > 0
-						&& terrainK.getYield(YIELD_FOOD) + terrainK.getYield(YIELD_PRODUCTION) > 1)
+						if (!terrainK.isWaterTerrain() && terrainK.getFlatYield(YIELD_FOOD, CASC_SCOPE_PLOT) / 100 > 0
+						&& terrainK.getFlatYield(YIELD_FOOD, CASC_SCOPE_PLOT) / 100 + terrainK.getFlatYield(YIELD_PRODUCTION, CASC_SCOPE_PLOT) / 100 > 1)
 						{
 							eTerrain = (TerrainTypes)iK;
 							if (!getSorenRandNum(3, "variance"))
@@ -1893,7 +1893,7 @@ void CvGame::normalizeAddGoodTerrain()
 					for (int iK = 0; iK < GC.getNumTerrainInfos(); iK++)
 					{
 						if (!GC.getTerrainInfo((TerrainTypes)iK).isWaterTerrain()
-						&& GC.getTerrainInfo((TerrainTypes)iK).getYield(YIELD_FOOD) >= iConsumption)
+						&& GC.getTerrainInfo((TerrainTypes)iK).getFlatYield(YIELD_FOOD, CASC_SCOPE_PLOT) / 100 >= iConsumption)
 						{
 							plot->setTerrainType((TerrainTypes)iK);
 							bChanged = true;
@@ -7277,7 +7277,7 @@ void CvGame::createBarbarianUnits()
 					{
 						iValue += 200;
 					}
-					iValue += kUnit.getCargoSpace() * (25 + getSorenRandNum(25, "Cargo Space Value"));
+					iValue += kUnit.getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100 * (25 + getSorenRandNum(25, "Cargo Space Value"));
 
 					if (iValue > iBestValue)
 					{

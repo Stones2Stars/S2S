@@ -2706,7 +2706,7 @@ void CvDLLWidgetData::parseActionHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 					// Yield delta from terrain change
 					if ( (NO_TERRAIN != ePlotTerrain) && bIsTerrainChange)
 					{
-						iYield += GC.getTerrainInfo((TerrainTypes)GC.getBuildInfo(eBuild).getTerrainChange()).getYield(iI);
+						iYield += GC.getTerrainInfo((TerrainTypes)GC.getBuildInfo(eBuild).getTerrainChange()).getFlatYield((YieldTypes)iI, CASC_SCOPE_PLOT) / 100;
 						iYield -= GC.getTerrainInfo(ePlotTerrain).getFlatYield((YieldTypes)iI, CASC_SCOPE_PLOT) / 100;
 					}
 
@@ -2790,12 +2790,6 @@ void CvDLLWidgetData::parseActionHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 						szBuffer.append(gDLL->getText("TXT_KEY_REQUIRES_LINK", CvWString(GC.getTechInfo(GC.getBuildInfo(eBuild).getTechPrereq()).getType()).c_str(), GC.getTechInfo(GC.getBuildInfo(eBuild).getTechPrereq()).getTextKeyWide()));
 					}
 
-					if (GC.getBuildInfo(eBuild).getObsoleteTech() != NO_TECH && team.isHasTech(GC.getBuildInfo(eBuild).getObsoleteTech()))
-					{
-						szBuffer.append(NEWLINE);
-						szBuffer.append(gDLL->getText("TXT_KEY_BUILDINGHELP_OBSOLETE_WITH", CvWString(GC.getTechInfo(GC.getBuildInfo(eBuild).getObsoleteTech()).getType()).GetCString(), GC.getTechInfo(GC.getBuildInfo(eBuild).getObsoleteTech()).getTextKeyWide()));
-					}
-
 					foreach_(const BonusTypes prereqBonus, GC.getBuildInfo(eBuild).getPrereqBonuses())
 					{
 						if (!(pMissionPlot->isAdjacentPlotGroupConnectedBonus(pHeadSelectedUnit->getOwner(), prereqBonus)))
@@ -2861,25 +2855,20 @@ void CvDLLWidgetData::parseActionHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 								// If the plot feature requires a different tech than the base tile itself AND we don't have that tech
 								if (GC.getBuildInfo(eBuild).getTechPrereq() != featureTechRequired && !team.isHasTech(featureTechRequired))
 								{
-									// If the base never obsoletes OR we don't have the tech which obsoletes it
-									if (GC.getBuildInfo(eBuild).getObsoleteTech() == NO_TECH
-									|| !team.isHasTech(GC.getBuildInfo(eBuild).getObsoleteTech()))
-									{
-										szBuffer.append(NEWLINE);
+									szBuffer.append(NEWLINE);
 
-										// If the feature blocks the improvement from ever being constructable or not, different messages
-										// WORKAROUND FOR IDENTIFYING DUMMY_TECH PREREQ FEATURE BLOCKING IN CIV4BuildInfos, REALLY SHOULD BE BETTER SOMEHOW
-										if (GC.getTechInfo(featureTechRequired).isDisable())
-										{
-											szBuffer.append(gDLL->getText("TXT_KEY_BUILDHELP_PLOT_BLOCKED",
-												GC.getFeatureInfo(ePlotFeature).getTextKeyWide()));
-										}
-										else
-										{
-											szBuffer.append(gDLL->getText("TXT_KEY_REQUIRES_LINK",
-												CvWString(GC.getTechInfo(featureTechRequired).getType()).GetCString(),
-												GC.getTechInfo(featureTechRequired).getTextKeyWide()));
-										}
+									// If the feature blocks the improvement from ever being constructable or not, different messages
+									// WORKAROUND FOR IDENTIFYING DUMMY_TECH PREREQ FEATURE BLOCKING IN CIV4BuildInfos, REALLY SHOULD BE BETTER SOMEHOW
+									if (GC.getTechInfo(featureTechRequired).isDisable())
+									{
+										szBuffer.append(gDLL->getText("TXT_KEY_BUILDHELP_PLOT_BLOCKED",
+											GC.getFeatureInfo(ePlotFeature).getTextKeyWide()));
+									}
+									else
+									{
+										szBuffer.append(gDLL->getText("TXT_KEY_REQUIRES_LINK",
+											CvWString(GC.getTechInfo(featureTechRequired).getType()).GetCString(),
+											GC.getTechInfo(featureTechRequired).getTextKeyWide()));
 									}
 								}
 							}
@@ -2899,9 +2888,7 @@ void CvDLLWidgetData::parseActionHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 								if (terrainTechRequired != NO_TECH
 									&& terrainTechRequired != featureTechRequired
 									&& terrainTechRequired != GC.getBuildInfo(eBuild).getTechPrereq()
-									&& !team.isHasTech(terrainTechRequired)
-									&& (GC.getBuildInfo(eBuild).getObsoleteTech() == NO_TECH
-										|| !team.isHasTech(GC.getBuildInfo(eBuild).getObsoleteTech())))
+									&& !team.isHasTech(terrainTechRequired))
 								{
 									szBuffer.append(NEWLINE);
 									// If the terrain blocks the improvement from ever being constructable or not, different messages

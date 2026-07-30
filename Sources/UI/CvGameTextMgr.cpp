@@ -11236,7 +11236,7 @@ void CvGameTextMgr::setBasicUnitHelpWithCity(CvWStringBuffer &szBuffer, UnitType
 	if (bTBUnitView2)
 	{
 		{
-			const int iCargoValue = kUnit.getCargoSpace();
+			const int iCargoValue = kUnit.getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100;
 			//Cargo
 			if (iCargoValue > 0)
 			{
@@ -11680,7 +11680,7 @@ void CvGameTextMgr::setBasicUnitHelpWithCity(CvWStringBuffer &szBuffer, UnitType
 				}
 				else
 				{
-					eUnitCombat = (UnitCombatTypes)kUnit.getUnitCombatType();
+					eUnitCombat = (UnitCombatTypes)kUnit.getCombatClass();
 
 					if (eUnitCombat == NO_UNITCOMBAT) continue;
 				}
@@ -12336,9 +12336,9 @@ void CvGameTextMgr::setBasicUnitHelpWithCity(CvWStringBuffer &szBuffer, UnitType
 	{
 		const uint16_t iDisplayCount = inspectUnitCombatCounters->getCount(eUnit);
 		uint16_t iPotentialDisplays = 0;
-		if (kUnit.getUnitCombatType() != NO_UNITCOMBAT)
+		if (kUnit.getCombatClass() != NO_UNITCOMBAT)
 		{
-			if (game.isValidByGameOption(GC.getUnitCombatInfo((UnitCombatTypes)kUnit.getUnitCombatType())))
+			if (game.isValidByGameOption(GC.getUnitCombatInfo((UnitCombatTypes)kUnit.getCombatClass())))
 			{
 				iPotentialDisplays++;
 			}
@@ -12361,7 +12361,7 @@ void CvGameTextMgr::setBasicUnitHelpWithCity(CvWStringBuffer &szBuffer, UnitType
 			}
 			else
 			{
-				eUnitCombat = (UnitCombatTypes)kUnit.getUnitCombatType();
+				eUnitCombat = (UnitCombatTypes)kUnit.getCombatClass();
 
 				if (eUnitCombat == NO_UNITCOMBAT) continue;
 			}
@@ -12396,17 +12396,17 @@ void CvGameTextMgr::setBasicUnitHelpWithCity(CvWStringBuffer &szBuffer, UnitType
 	}
 	else if (bTBUnitView3 || bCivilopediaText)
 	{
-		if (kUnit.getUnitCombatType() != NO_UNITCOMBAT)
+		if (kUnit.getCombatClass() != NO_UNITCOMBAT)
 		{
 			bool bFirst = true;
 			CvWStringBuffer szPeekBuffer;
-			setUnitCombatHelp(szPeekBuffer, (UnitCombatTypes)kUnit.getUnitCombatType(), true);
+			setUnitCombatHelp(szPeekBuffer, (UnitCombatTypes)kUnit.getCombatClass(), true);
 			if (!szPeekBuffer.isEmpty())
 			{
 				szBuffer.append(NEWLINE);
 				szBuffer.append(DOUBLE_SEPARATOR);
 				szBuffer.append(NEWLINE);
-				szBuffer.append(GC.getUnitCombatInfo((UnitCombatTypes)kUnit.getUnitCombatType()).getDescription());
+				szBuffer.append(GC.getUnitCombatInfo((UnitCombatTypes)kUnit.getCombatClass()).getDescription());
 				szBuffer.append(szPeekBuffer);
 				szBuffer.append(DOUBLE_SEPARATOR);
 				bFirst = false;

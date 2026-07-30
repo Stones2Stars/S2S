@@ -157,6 +157,17 @@
 - **The FLAGGED unitcombat remainder** — the taxonomy families (weapon/size/species/quality/group) and the
   ambiguous individual classes; map the obvious, flag the unsure, never blunt-purge
   ([unitcombat-tag-mapping.md](unitcombat-tag-mapping.md)).
+- **The LEADER↔TRAIT ASSIGNMENT data does not exist yet, and ~24 dangling errors hang off that.**
+  `CvLeaderHeadInfo` is **TRAITLESS BY DESIGN** (owner ruling, stated in its own header): the curator strips
+  every leader↔trait assignment, and *"assignment returns as authored data serving a fresh read"* — but that
+  authoring has not landed. Verified: all **119 leaderheads author only `type`/`ai`/`world`/`sound`/`identity`**.
+  So `getNumDefaultTraits` / `getDefaultTrait` / `getNumDefaultComplexTraits` / `getDefaultComplexTrait` /
+  `isDefaultTrait` / the leaderhead-side `hasTrait` are dangling with NO successor and NO data — the initial-trait
+  assignment in `CvPlayer::initMore` / `initFreeUnits` has nothing to read.
+  ⛔ **Do NOT "fix" these by re-adding trait members to the leaderhead** — that reverses the ruling that stripped
+  them. The item is the DATA (plus the fresh read it serves); the call sites follow it.
+  ⚠ `CvPlayer::hasTrait` is a LIVE method that collides by name — only the `GC.getLeaderHeadInfo(...).hasTrait(...)`
+  receiver is dangling, so this is not sweepable textually.
 - **`stronglyRestricted` → a `requires.build` civ-membership gate** — pending NPC civilizations being wired.
 - **Property pulses** — a shared property-source cleaner so spatial sources emit as trigger entries carrying
   `on`/`relation`/`distance`, instead of being parked verbatim. Pure DATA and unblocked; the ENGINE spatial

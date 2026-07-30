@@ -6455,9 +6455,9 @@ int CvPlayerAI::AI_techUnitValue(TechTypes eTech, int iPathLength, bool& bEnable
 					{
 						iAssaultValue += 1000 * std::max(0, AI_unitImpassableCount(eUnitX) - AI_unitImpassableCount(eExistingUnit));
 
-						const int iOld = GC.getUnitInfo(eExistingUnit).getMoves() * GC.getUnitInfo(eExistingUnit).getCargoSpace();
+						const int iOld = GC.getUnitInfo(eExistingUnit).getMoves() * GC.getUnitInfo(eExistingUnit).getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100;
 
-						iAssaultValue += 800 * (unitX.getMoves() * unitX.getCargoSpace() - iOld) / std::max(1, iOld);
+						iAssaultValue += 800 * (unitX.getMoves() * unitX.getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100 - iOld) / std::max(1, iOld);
 					}
 
 					if (iAssaultValue > 0)
@@ -10754,7 +10754,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 						break;
 					}
 
-					const int iUnitCombat = kUnitInfo.getUnitCombatType();
+					const int iUnitCombat = kUnitInfo.getCombatClass();
 					if (NO_UNITCOMBAT != iUnitCombat && GC.getUnitInfo((UnitTypes)iI).getDefenderUnitCombat(iUnitCombat))
 					{
 						bValid = true;
@@ -10992,7 +10992,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 		case UNITAI_ASSAULT_SEA:
 		case UNITAI_SETTLER_SEA:
 		{
-			if (kUnitInfo.getCargoSpace() > 0 && kUnitInfo.getSpecialCargo() == NO_SPECIALUNIT)
+			if (kUnitInfo.getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100 > 0 && kUnitInfo.getSpecialCargo() == NO_SPECIALUNIT)
 			{
 				bValid = true;
 			}
@@ -11007,7 +11007,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 			// ASSAULT_SEA/SETTLER_SEA case above). This previously gated on CvSpecialUnitInfo's
 			// CarrierUnitAITypes, but that data never loaded (loader/XML tag mismatch) and the loop
 			// passed eUnitAI instead of its own counter — so it was always false (dead). See #194.
-			if (kUnitInfo.getCargoSpace() > 0 && kUnitInfo.getSpecialCargo() != NO_SPECIALUNIT)
+			if (kUnitInfo.getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100 > 0 && kUnitInfo.getSpecialCargo() != NO_SPECIALUNIT)
 			{
 				bValid = true;
 			}
@@ -11225,7 +11225,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 								iTotalSiegeMaxUnits += iCollateralDamageMaxUnits * iUnitCount;
 								iSiegeUnits += iUnitCount;
 							}
-							else if (GC.getUnitInfo(eLoopUnit).getUnitCombatCollateralImmune((UnitCombatTypes)kUnitInfo.getUnitCombatType()))
+							else if (GC.getUnitInfo(eLoopUnit).getUnitCombatCollateralImmune((UnitCombatTypes)kUnitInfo.getCombatClass()))
 							{
 								iSiegeImmune += iUnitCount;
 							}
@@ -11415,7 +11415,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 						iValue += (50 * iCombatValue) / 100;
 					}
 
-					const int iUnitCombat = kUnitInfo.getUnitCombatType();
+					const int iUnitCombat = kUnitInfo.getCombatClass();
 					if (NO_UNITCOMBAT != iUnitCombat && GC.getUnitInfo((UnitTypes)iI).getDefenderUnitCombat(iUnitCombat))
 					{
 						iValue += (50 * iCombatValue) / 100;
@@ -11715,7 +11715,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 			{
 				iValue += (iCombatValue / 2);
 				iValue += (kUnitInfo.getMoves() * 200);
-				iValue += (kUnitInfo.getCargoSpace() * 300);
+				iValue += (kUnitInfo.getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100 * 300);
 				// Never build galley transports when ocean faring ones exist (issue mainly for Carracks)
 				iValue /= (1 + AI_unitImpassableCount(eUnit));
 				break;
@@ -11724,14 +11724,14 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 			{
 				iValue += iCombatValue;
 				iValue += (kUnitInfo.getMoves() * 50);
-				iValue += (kUnitInfo.getCargoSpace() * 400);
+				iValue += (kUnitInfo.getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100 * 400);
 				break;
 			}
 			case UNITAI_MISSILE_CARRIER_SEA:
 			{
 				iValue += iCombatValue;
 				iValue += iCombatValue * (kUnitInfo.getMoves() - 1) /4 ;
-				iValue += (25 + iCombatValue) * (3 + (kUnitInfo.getCargoSpace()));
+				iValue += (25 + iCombatValue) * (3 + (kUnitInfo.getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100));
 				break;
 			}
 			case UNITAI_PIRATE_SEA:
@@ -23923,7 +23923,7 @@ UnitTypes CvPlayerAI::AI_bestAdvancedStartUnitAI(const CvPlot* pPlot, UnitAIType
 				//only 1 promotion per source is counted (ie protective isn't counted twice)
 				int iPromotionValue = 0;
 
-				const UnitCombatTypes eUnitCombat = (UnitCombatTypes)kUnit.getUnitCombatType();
+				const UnitCombatTypes eUnitCombat = (UnitCombatTypes)kUnit.getCombatClass();
 
 				for (int iJ = 0; iJ < GC.getNumPromotionInfos(); iJ++)
 				{
@@ -24535,7 +24535,7 @@ void CvPlayerAI::AI_doAdvancedStart(bool bNoExit)
 						if (getAdvancedStartVisibilityCost(pLoopPlot2) > 0)
 						{
 							// Mildly maphackery but any smart human can see the terrain type of a tile.
-							int iFoodYield = GC.getTerrainInfo(pLoopPlot2->getTerrainType()).getYield(YIELD_FOOD);
+							int iFoodYield = GC.getTerrainInfo(pLoopPlot2->getTerrainType()).getFlatYield(YIELD_FOOD, CASC_SCOPE_PLOT) / 100;
 							if (pLoopPlot2->getFeatureType() != NO_FEATURE)
 							{
 								iFoodYield += GC.getFeatureInfo(pLoopPlot2->getFeatureType()).getYieldChange(YIELD_FOOD);
@@ -25230,7 +25230,7 @@ void CvPlayerAI::AI_doEnemyUnitData()
 	{
 		if (m_aiUnitWeights[iI] > 0)
 		{
-			int ctype = GC.getUnitInfo((UnitTypes)iI).getUnitCombatType();
+			int ctype = GC.getUnitInfo((UnitTypes)iI).getCombatClass();
 			if (ctype >= 0 && ctype < GC.getNumUnitCombatInfos())
 			{
 				m_aiUnitCombatWeights[ctype] += m_aiUnitWeights[iI];

@@ -6806,7 +6806,7 @@ int64_t CvPlayer::getBaseUnitCost(const UnitTypes eUnit) const
 		iBaseCost /= 100;
 
 		// Trade units aren't impacted by SM production reduction due to ROI oddities. They can't merge anyway, so...
-		if (GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS) && GC.getUnitInfo(eUnit).getUnitCombatType() != GC.getInfoTypeForString("UNITCOMBAT_TRADE"))
+		if (GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS) && GC.getUnitInfo(eUnit).getCombatClass() != GC.getInfoTypeForString("UNITCOMBAT_TRADE"))
 		{
 			iMod = GC.getUNIT_PRODUCTION_PERCENT_SM();
 		}
@@ -7476,9 +7476,7 @@ bool CvPlayer::isRouteValid(RouteTypes eRoute, BuildTypes eRouteBuild, const CvP
 	// Player in general; have tech reqs and not obsolete?
 	if (pPlot == NULL)
 	{
-		if (!GET_TEAM(getTeam()).isHasTech(GC.getBuildInfo(eRouteBuild).getTechPrereq())
-		|| GC.getBuildInfo(eRouteBuild).getObsoleteTech() != NO_TECH
-		&& GET_TEAM(getTeam()).isHasTech(GC.getBuildInfo(eRouteBuild).getObsoleteTech()))
+		if (!GET_TEAM(getTeam()).isHasTech(GC.getBuildInfo(eRouteBuild).getTechPrereq()))
 		{
 			return false;
 		}
@@ -17403,11 +17401,6 @@ int CvPlayer::getAdvancedStartImprovementCost(ImprovementTypes eImprovement, boo
 	foreach_(const BuildTypes& eBuild, GC.getImprovementInfo(eImprovement).getBuildTypes())
 	{
 		if (!GET_TEAM(getTeam()).isHasTech(GC.getBuildInfo(eBuild).getTechPrereq()))
-		{
-			return -1;
-		}
-		if (GC.getBuildInfo(eBuild).getObsoleteTech() != NO_TECH
-		&& GET_TEAM(getTeam()).isHasTech(GC.getBuildInfo(eBuild).getObsoleteTech()))
 		{
 			return -1;
 		}

@@ -10267,7 +10267,7 @@ void CvUnitAI::AI_attackAirMove()
 			kPlayer.AI_bestAreaUnitAIValue(UNITAI_CARRIER_SEA, NULL, &eBestCarrierUnit);
 			if (eBestCarrierUnit != NO_UNIT)
 			{
-				int iCarrierAirNeeded = iCarriers * GC.getUnitInfo(eBestCarrierUnit).getCargoSpace();
+				int iCarrierAirNeeded = iCarriers * GC.getUnitInfo(eBestCarrierUnit).getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100;
 				if (kPlayer.AI_totalUnitAIs(UNITAI_CARRIER_AIR) < iCarrierAirNeeded)
 				{
 					AI_setUnitAIType(UNITAI_CARRIER_AIR);

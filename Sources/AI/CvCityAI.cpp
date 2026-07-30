@@ -1707,7 +1707,7 @@ void CvCityAI::AI_chooseProduction()
 						int iBestSeaAssaultCapacity = 0;
 						if (eBestAssaultUnit != NO_UNIT)
 						{
-							iBestSeaAssaultCapacity = GC.getUnitInfo(eBestAssaultUnit).getCargoSpace();
+							iBestSeaAssaultCapacity = GC.getUnitInfo(eBestAssaultUnit).getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100;
 						}
 
 						if (iBestSeaAssaultCapacity > 0)
@@ -3233,7 +3233,7 @@ void CvCityAI::AI_chooseProduction()
 			int iBestSeaAssaultCapacity = 0;
 			if (eBestAssaultUnit != NO_UNIT)
 			{
-				iBestSeaAssaultCapacity = GC.getUnitInfo(eBestAssaultUnit).getCargoSpace();
+				iBestSeaAssaultCapacity = GC.getUnitInfo(eBestAssaultUnit).getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100;
 			}
 
 			int iAreaAttackCityUnits = player.AI_totalAreaUnitAIs(pArea, UNITAI_ATTACK_CITY);
@@ -3420,10 +3420,10 @@ void CvCityAI::AI_chooseProduction()
 						{
 							FAssert(GC.getUnitInfo(eBestMissileCarrierUnit).getDomainCargo() == DOMAIN_AIR);
 
-							int iMissileCarrierAirNeeded = iMissileCarriers * GC.getUnitInfo(eBestMissileCarrierUnit).getCargoSpace();
+							int iMissileCarrierAirNeeded = iMissileCarriers * GC.getUnitInfo(eBestMissileCarrierUnit).getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100;
 
 							if ((player.AI_totalUnitAIs(UNITAI_MISSILE_AIR) < iMissileCarrierAirNeeded) ||
-								(bPrimaryArea && (player.AI_totalAreaUnitAIs(pArea, UNITAI_MISSILE_CARRIER_SEA) * GC.getUnitInfo(eBestMissileCarrierUnit).getCargoSpace() < player.AI_totalAreaUnitAIs(pArea, UNITAI_MISSILE_AIR))))
+								(bPrimaryArea && (player.AI_totalAreaUnitAIs(pArea, UNITAI_MISSILE_CARRIER_SEA) * GC.getUnitInfo(eBestMissileCarrierUnit).getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100 < player.AI_totalAreaUnitAIs(pArea, UNITAI_MISSILE_AIR))))
 							{
 								// Don't always build missiles, more likely if really low
 								if (AI_chooseUnit("need missiles", UNITAI_MISSILE_AIR, (player.AI_totalUnitAIs(UNITAI_MISSILE_AIR) < iMissileCarrierAirNeeded / 2) ? 50 : 20))
@@ -3451,7 +3451,7 @@ void CvCityAI::AI_chooseProduction()
 			{
 				FAssert(GC.getUnitInfo(eBestCarrierUnit).getDomainCargo() == DOMAIN_AIR);
 
-				const int iCarrierAirNeeded = iCarriers * GC.getUnitInfo(eBestCarrierUnit).getCargoSpace();
+				const int iCarrierAirNeeded = iCarriers * GC.getUnitInfo(eBestCarrierUnit).getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100;
 
 				// Reduce chances if city gives no air experience
 				if (player.AI_totalUnitAIs(UNITAI_CARRIER_AIR) < iCarrierAirNeeded
@@ -5647,7 +5647,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 				{
 					const UnitTypes eUnitX = (UnitTypes)*it;
 					const CvUnitInfo& kUnitInfo = GC.getUnitInfo(eUnitX);
-					UnitCombatTypes eCombatType = (UnitCombatTypes)kUnitInfo.getUnitCombatType();
+					UnitCombatTypes eCombatType = (UnitCombatTypes)kUnitInfo.getCombatClass();
 
 					if (eCombatType != NO_UNITCOMBAT
 						&& kUnitInfo.getDomainType() == DOMAIN_SEA)
@@ -12066,11 +12066,11 @@ int CvCityAI::AI_getPromotionValue(PromotionTypes ePromotion) const
 		const UnitTypes eUnitX = (UnitTypes)*it;
 		const CvUnitInfo& kUnit = GC.getUnitInfo(eUnitX);
 
-		if (kUnit.getUnitCombatType() != NO_UNITCOMBAT)
+		if (kUnit.getCombatClass() != NO_UNITCOMBAT)
 		{
 			bool bUnitCanGetPromotion = false;
 
-			if (GC.getPromotionInfo(ePromotion).getUnitCombat(kUnit.getUnitCombatType()))
+			if (GC.getPromotionInfo(ePromotion).getUnitCombat(kUnit.getCombatClass()))
 			{
 				bUnitCanGetPromotion = true;
 			}

@@ -3067,9 +3067,9 @@ int CvCity::getProductionModifier(UnitTypes eUnit) const
 			continue;   // the unit opts out of every non-TYPE production modifier (the `noNonTypeProdMods` skill)
 		}
 		iMultiplier += InfoValuation::keyedTarget(pModifiers, MODFAM_BUILD_RATE, -1, iDomainsSegment, (int)kUnit.getDomainType());
-		if (kUnit.getUnitCombatType() != NO_UNITCOMBAT)
+		if (kUnit.getCombatClass() != NO_UNITCOMBAT)
 		{
-			iMultiplier += InfoValuation::keyedTarget(pModifiers, MODFAM_BUILD_RATE, -1, iUnitCombatsSegment, (int)kUnit.getUnitCombatType());
+			iMultiplier += InfoValuation::keyedTarget(pModifiers, MODFAM_BUILD_RATE, -1, iUnitCombatsSegment, (int)kUnit.getCombatClass());
 			foreach_(const UnitCombatTypes eSubCombat, kUnit.getCombatClasses())
 			{
 				iMultiplier += InfoValuation::keyedTarget(pModifiers, MODFAM_BUILD_RATE, -1, iUnitCombatsSegment, (int)eSubCombat);

@@ -33,7 +33,7 @@ int UnitGroupingSingle::getGroupUnit(const CvPlayer *pPlayer, const CvCity *pCit
 int UnitGroupingCombat::getGroupUnit(const CvPlayer *pPlayer, const CvCity *pCity, UnitTypes eUnit) const
 {
 	// root `combatClass` -- the unit's PRIMARY combat-class FK (the sub-classes are a separate list).
-	return GC.getUnitInfo(eUnit).getUnitCombatType();
+	return GC.getUnitInfo(eUnit).getCombatClass();
 }
 
 int UnitGroupingDomain::getGroupUnit(const CvPlayer *pPlayer, const CvCity *pCity, UnitTypes eUnit) const

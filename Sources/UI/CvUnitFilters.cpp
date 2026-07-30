@@ -69,12 +69,12 @@ bool UnitFilterIsLimited::isFilteredUnit(const CvPlayer *pPlayer, const CvCity *
 // UI filters on (worker, siege, mounted, hero, spy, ...) is authored as a unit's primary.
 bool UnitFilterIsCombat::isFilteredUnit(const CvPlayer *pPlayer, const CvCity *pCity, UnitTypes eUnit) const
 {
-	return (UnitCombatTypes)(GC.getUnitInfo(eUnit).getUnitCombatType()) == m_eCombat;
+	return (UnitCombatTypes)(GC.getUnitInfo(eUnit).getCombatClass()) == m_eCombat;
 }
 
 bool UnitFilterIsCombats::isFilteredUnit(const CvPlayer *pPlayer, const CvCity *pCity, UnitTypes eUnit) const
 {
-	return algo::any_of_equal(m_eCombats, (UnitCombatTypes)GC.getUnitInfo(eUnit).getUnitCombatType());
+	return algo::any_of_equal(m_eCombats, (UnitCombatTypes)GC.getUnitInfo(eUnit).getCombatClass());
 }
 
 void UnitFilterIsCombats::addCombat(UnitCombatTypes eCombat)
