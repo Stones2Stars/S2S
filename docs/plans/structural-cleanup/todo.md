@@ -57,13 +57,15 @@
   the axis, and re-pointing the consumer would silently answer a different question rather than the same one.
   ⚑ [skills.md §1](../../specs/skills.md) ties flanking to `targets` (per-combat-class), which is the reading
   the DATA does not match — so this is a model question to answer before any consumer moves, not a rename.
-- Carry the RANGED-BOMBARD / DCM plane into the data, or kill it deliberately. The legacy records author
-  `iRBombardDamage` / `iRBombardDamageLimit` / `iRBombardDamageMaxUnits` / `iDCMBombRange` / `iDCMBombAccuracy`
-  with real values, and the curator emits NOTHING for any of them — there is no key, no kind and no authored
-  entry anywhere in `Assets/Data`, so every consumer of the plane reads a member that cannot exist. ⚠ Unlike the
-  schema-only tags (which no record ever authored and are simply deleted), this data is real, so the choice is a
-  RULING: mint the kinds and curate it, or drop the mechanic on purpose and delete its consumers. ⛔ Do not
-  invent kinds for it inside a consumer sweep.
+- Finish removing RANGED BOMBARD and DCM (owner: *"dcm is stone dead, and we need to redesign ranged bombard
+  from the ground up, so drop it"*). The engine mechanic, its unit/promotion/unitcombat data, the DCM globals
+  and the AI valuation terms all go; the curator already emits nothing for the plane, so no data work rides
+  with it. ⛔ Do NOT mint kinds for it and do NOT preserve the current shape as a starting point — the redesign
+  is ground-up, so anything kept "to build on" is a shape the new model has to fight
+  ([DEC-proper-once](../../architecture/decisions.md#dec-proper-once)).
+  ⚑ WHY it is a removal rather than a repair, recorded so it is not re-litigated: it does not merely fail, it
+  BREAKS the AI — the bombard step is a turn-satisfying terminal, so a stack that plinks stops deciding and
+  never reaches the commit-or-withdraw choice (the #410 pseudo-progress class, [AGENTS.md](../../../AGENTS.md)).
 - Retire the legacy `largestCity` member once ranked-target-selection EVALUATION lands.
 - Re-home `stronglyRestricted` to a `requires.build` civ-membership gate, when NPC civilizations are wired.
 - Move corp-HQ revenue (`HeadquarterCommerces`) with the corporation rework.

@@ -207,7 +207,23 @@
 </article>
 
 <article class="entry">
-  <h2>6. Strength by Committee</h2>
+  <h2>6. The Thousand-Year Plink</h2>
+  <div class="score-row"><span class="score">74 cp</span><span class="meter"><i style="width:74%"></i></span></div>
+  <p>Ranged bombard was wired as a <em>terminal</em> in the unit decision cascade: a stack that
+  could lob something at a city did so, reported success, and stopped deciding. The damage is near
+  zero. The decision that would have committed the assault — or withdrawn — is never reached,
+  because the plink already satisfied the turn.</p>
+  <p>So the besieging army arrives, plinks, and settles in. Next turn it plinks again. Whole eras
+  pass. The defenders heal faster than the bombardment lands. And behind all of it, the numbers
+  driving the thing were never carried into the new data at all — the legacy XML still lists the
+  damage values, and nothing reads them — so the AI has been diligently optimising a siege whose
+  payload was quietly zero the entire time.</p>
+  <p>Two thousand years of covering fire, in support of an attack nobody ever ordered.</p>
+  <p class="status">Status: dropped — the mechanic is removed whole and ranged bombard will be
+  redesigned from the ground up rather than repaired. DCM went with it.</p>
+</article>
+<article class="entry">
+  <h2>7. Strength by Committee</h2>
   <div class="score-row"><span class="score">72 cp</span><span class="meter"><i style="width:72%"></i></span></div>
   <p>Ask a simple question — "how strong is this unit against that one?" — and the engine cannot
   tell you where the answer came from. A unit's combat strength is built by pouring <strong>~40
@@ -237,7 +253,7 @@
 </article>
 
 <article class="entry">
-  <h2>7. The Unkillable Peasant</h2>
+  <h2>8. The Unkillable Peasant</h2>
   <div class="score-row"><span class="score">71 cp</span><span class="meter"><i style="width:71%"></i></span></div>
   <p><code>getCombatOdds</code> floored per-round damage to 0 against ~zero-strength
   defenders, making a dying militiaman <strong>mathematically immortal</strong>. The AI
@@ -250,7 +266,7 @@
 </article>
 
 <article class="entry">
-  <h2>8. The Bear Patrol</h2>
+  <h2>9. The Bear Patrol</h2>
   <div class="score-row"><span class="score">62 cp</span><span class="meter"><i style="width:62%"></i></span></div>
   <p>The world's city defenders kept abandoning their posts to duel wildlife. Garrison
   sorties fire at a <strong>55% odds bar</strong> against any "enemy" within reach — and
@@ -271,7 +287,7 @@
 </article>
 
 <article class="entry">
-  <h2>9. The Eternal Anesthesiologist</h2>
+  <h2>10. The Eternal Anesthesiologist</h2>
   <div class="score-row"><span class="score">60 cp</span><span class="meter"><i style="width:60%"></i></span></div>
   <p><code>AI_heal</code> returned <code>true</code> for a heal no-op when the unit
   <em>couldn't heal</em>, so units re-decided "heal in city" <strong>49–196 times per
@@ -282,7 +298,7 @@
 </article>
 
 <article class="entry">
-  <h2>10. The Wonder That Builds Character</h2>
+  <h2>11. The Wonder That Builds Character</h2>
   <div class="score-row"><span class="score">59 cp</span><span class="meter"><i style="width:59%"></i></span></div>
   <p>A National Wonder reaches into your civilization and hands it a personality. Build the
   right one and you don't get a bonus — you acquire a <em>trait</em>, the same kind of thing
@@ -305,7 +321,7 @@
 </article>
 
 <article class="entry">
-  <h2>11. The Trait in a Trenchcoat</h2>
+  <h2>12. The Trait in a Trenchcoat</h2>
   <div class="score-row"><span class="score">58 cp</span><span class="meter"><i style="width:58%"></i></span></div>
   <p>There is no such thing as a "complex trait." There are 64 ordinary traits, each of
   which is secretly <em>two</em> traits standing on each other's shoulders in one
@@ -330,7 +346,7 @@
 </article>
 
 <article class="entry">
-  <h2>12. The Settler's Phantom Mortgage</h2>
+  <h2>13. The Settler's Phantom Mortgage</h2>
   <div class="score-row"><span class="score">57 cp</span><span class="meter"><i style="width:57%"></i></span></div>
   <p>Open a settler's <code>UnitInfo</code>, change its production cost, build a settler. The
   price barely moves. The number you edited (<code>iCost</code>) is real, but it is a sliver —
@@ -363,7 +379,7 @@
 </article>
 
 <article class="entry">
-  <h2>13. International Civil Asset Forfeiture</h2>
+  <h2>14. International Civil Asset Forfeiture</h2>
   <div class="score-row"><span class="score">55 cp</span><span class="meter"><i style="width:55%"></i></span></div>
   <p>Foreign police cars were observed parked on the human player's <strong>resource
   tiles</strong>, mission hover proudly reading <em>"Maintain property control."</em> The
@@ -386,7 +402,7 @@
 </article>
 
 <article class="entry">
-  <h2>14. The Merger With No Undo (Bring a Boat)</h2>
+  <h2>15. The Merger With No Undo (Bring a Boat)</h2>
   <div class="score-row"><span class="score">54 cp</span><span class="meter"><i style="width:54%"></i></span></div>
   <p>Size Matters lets you fuse three units into one bigger one. The merge stamped the new
   unit with an <em>inhibit-split</em> flag — and the only line in the entire codebase that
@@ -408,7 +424,7 @@
 </article>
 
 <article class="entry">
-  <h2>15. The .vcxproj of Lies</h2>
+  <h2>16. The .vcxproj of Lies</h2>
   <div class="score-row"><span class="score">47 cp</span><span class="meter"><i style="width:47%"></i></span></div>
   <p>The Visual Studio project file confidently states <code>PlatformToolset: v142</code>.
   The actual compiler is the <strong>Microsoft Visual C++ Toolkit 2003</strong> (MSVC 7.1).

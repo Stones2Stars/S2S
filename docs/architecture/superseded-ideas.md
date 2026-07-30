@@ -159,3 +159,16 @@
     ⚠ **NOT the same thing as the UNIT skill of the same name** (`CvUnitInfo::isFlatMovementCost`, "every tile
     costs 1 movement", [skills.md](../specs/skills.md)) — a different mechanic, which STAYS.
     **Never reinstate the route-side one.**
+24. **RANGED BOMBARD + the whole DCM plane** (`iRBombardDamage`/`…Limit`/`…MaxUnits`, `iDCMBombRange`/
+    `iDCMBombAccuracy`, `canRBombard`, `AI_RbombardUnit`/`AI_RbombardPlot`, the `DCM_*` globals)
+    *(dead — owner: "dcm is stone dead, and we need to redesign ranged bombard from the ground up, so drop
+    it")*. It **broke the AI** rather than merely underperforming: the bombard step was a turn-satisfying
+    TERMINAL, so a stack that could plink did, reported progress, and never reached the commit-or-withdraw
+    decision — armies camped outside cities for eras feeding near-zero-damage strikes (the #410 pseudo-progress
+    class, [AGENTS.md](../../AGENTS.md)). The data had already stopped arriving: legacy records still author the
+    damage values and the curator emits NO key, NO kind and NO entry for any of them, so every consumer read a
+    member that could not exist. ⛔ **Ranged bombard RETURNS as a ground-up redesign, so nothing here is a
+    starting point** — do not revive the members, the AI terminals or the DCM globals to "build on", and do not
+    mint kinds for the old shape ([DEC-proper-once](decisions.md#dec-proper-once)).
+    ⚠ NOT the same thing as the ordinary `bombard` FAMILY (`bombard.unit.rate` / `airBombRate`), which is live,
+    authored and STAYS.
