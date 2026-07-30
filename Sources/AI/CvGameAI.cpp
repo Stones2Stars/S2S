@@ -95,10 +95,10 @@ int CvGameAI::AI_combatValue(const UnitTypes eUnit) const
 		iValue *= (unit.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100);
 		//TB Combat Mods Begin
 		// TOOD: rethink these calculations
-		//iValue += (((100 * unit.getDamageModifier())/100)/5);
+		//iValue += (((100 * unit.getCombatModifier(COMBAT_DAMAGE_MODIFIER, CASC_SCOPE_UNIT))/100)/5);
 		//TB Combat Mods End
 
-		iValue *= 100 + (2 * unit.getFirstStrikes() + unit.getChanceFirstStrikes()) * GC.getCOMBAT_DAMAGE() / 5;
+		iValue *= 100 + (2 * (unit.getScalar(SCALAR_FIRST_STRIKES, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) + (unit.getScalar(SCALAR_FIRST_STRIKE_CHANCES, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100)) * GC.getCOMBAT_DAMAGE() / 5;
 		iValue /= 100;
 	}
 

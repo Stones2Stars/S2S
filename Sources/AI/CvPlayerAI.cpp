@@ -28704,7 +28704,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 
 	//#53 Effects for Promotions that Give 1st strikes...
 	iTemp = kPromotion.getScalar(SCALAR_FIRST_STRIKES, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100 * 2;
-	iTemp += kPromotion.getChanceFirstStrikesChange();
+	iTemp += (kPromotion.getScalar(SCALAR_FIRST_STRIKE_CHANCES, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100);
 	if (iTemp != 0)
 	{
 		if ((eUnitAI == UNITAI_RESERVE) ||
@@ -28717,7 +28717,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 				(eUnitAI == UNITAI_ESCORT_SEA))
 		{
 			iTemp *= 25;
-			iExtra = pUnit == NULL ? kUnit.getChanceFirstStrikes() + kUnit.getFirstStrikes() * 2 : pUnit->getExtraChanceFirstStrikes() + pUnit->getExtraFirstStrikes() * 2;
+			iExtra = pUnit == NULL ? (kUnit.getScalar(SCALAR_FIRST_STRIKE_CHANCES, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) + (kUnit.getScalar(SCALAR_FIRST_STRIKES, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) * 2 : pUnit->getExtraChanceFirstStrikes() + pUnit->getExtraFirstStrikes() * 2;
 			iTemp *= 100 + iExtra * 15;
 			iTemp /= 100;
 			iValue += iTemp;
@@ -28730,7 +28730,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 
 
 	//#54 Effects for Promotions that Give Stealth strikes...
-	iTemp = kPromotion.getStealthStrikesChange() * 2;
+	iTemp = (kPromotion.getFlatCombat(COMBAT_STEALTH_STRIKES, CASC_SCOPE_UNIT) / 100) * 2;
 	int iInvisFactor = 0;
 	if (iTemp != 0)
 	{
@@ -28768,7 +28768,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 				(eUnitAI == UNITAI_INFILTRATOR))
 		{
 			iTemp *= 25;
-			iExtra = pUnit == NULL ? kUnit.getStealthStrikes() * 2 : pUnit->getExtraStealthStrikes() * 2;
+			iExtra = pUnit == NULL ? (kUnit.getFlatCombat(COMBAT_STEALTH_STRIKES, CASC_SCOPE_UNIT) / 100) * 2 : pUnit->getExtraStealthStrikes() * 2;
 			iTemp *= 100 + iExtra * 15;
 			iTemp /= 100;
 
@@ -28869,19 +28869,13 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		iTemp /= 400;
 		iValue += iTemp;
 	}
-	iTemp = kPromotion.getDamageModifierChange();
+	iTemp = kPromotion.getCombatModifier(COMBAT_DAMAGE_MODIFIER, CASC_SCOPE_UNIT);
 	if (iTemp != 0)
 	{
-		iExtra = pUnit == NULL ? kUnit.getDamageModifier() : pUnit->damageModifierTotal();
+		iExtra = pUnit == NULL ? kUnit.getCombatModifier(COMBAT_DAMAGE_MODIFIER, CASC_SCOPE_UNIT) : pUnit->damageModifierTotal();
 		iTemp *= (100 + iExtra);
 		iTemp /= 100;
 		iValue += iTemp;
-	}
-
-	iTemp = kPromotion.getEnduranceChange();
-	if (iTemp != 0)
-	{
-		iValue += (iTemp + (100 + 2*(pUnit ? pUnit->enduranceTotal() : kUnit.getEndurance()))) / 10;
 	}
 
 	if (!bNoDefensiveBonus)
@@ -28916,7 +28910,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 			iTemp = kPromotion.getCombatModifier(COMBAT_HILLS_DEFENSE, CASC_SCOPE_UNIT);
 			if (iTemp != 0)
 			{
-				iTemp *= 100 + 2*(kUnit.getHillsDefenseModifier() + (pUnit ? pUnit->getExtraHillsDefensePercent() : 0));
+				iTemp *= 100 + 2*(kUnit.getCombatModifier(COMBAT_HILLS_DEFENSE, CASC_SCOPE_UNIT) + (pUnit ? pUnit->getExtraHillsDefensePercent() : 0));
 
 				if (pPlot && pPlot->isHills())
 				{
@@ -28960,10 +28954,10 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		}
 	}
 
-	iTemp = kPromotion.getUnnerveChange();
+	iTemp = kPromotion.getCombatModifier(COMBAT_UNNERVE, CASC_SCOPE_UNIT);
 	if (iTemp != 0)
 	{
-		iTemp *= 100 + 2*(kUnit.getUnnerve() + (pUnit ? pUnit->getExtraUnnerve() : 0));
+		iTemp *= 100 + 2*(kUnit.getCombatModifier(COMBAT_UNNERVE, CASC_SCOPE_UNIT) + (pUnit ? pUnit->getExtraUnnerve() : 0));
 
 		if (eUnitAI == UNITAI_COUNTER
 		||  eUnitAI == UNITAI_ATTACK
@@ -28974,10 +28968,10 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		else iValue += iTemp / 800;
 	}
 
-	iTemp = kPromotion.getEncloseChange();
+	iTemp = kPromotion.getCombatModifier(COMBAT_ENCLOSE, CASC_SCOPE_UNIT);
 	if (iTemp != 0)
 	{
-		iTemp *= 100 + 2*(kUnit.getEnclose() + (pUnit ? pUnit->getExtraEnclose() : 0));
+		iTemp *= 100 + 2*(kUnit.getCombatModifier(COMBAT_ENCLOSE, CASC_SCOPE_UNIT) + (pUnit ? pUnit->getExtraEnclose() : 0));
 
 		if (eUnitAI == UNITAI_COUNTER
 		||  eUnitAI == UNITAI_ATTACK
@@ -28989,10 +28983,10 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		else iValue += iTemp / 100;
 	}
 
-	iTemp = kPromotion.getLungeChange();
+	iTemp = kPromotion.getCombatModifier(COMBAT_LUNGE, CASC_SCOPE_UNIT);
 	if (iTemp != 0)
 	{
-		iTemp *= 100 + 2*(kUnit.getLunge() + (pUnit ? pUnit->getExtraLunge() : 0));
+		iTemp *= 100 + 2*(kUnit.getCombatModifier(COMBAT_LUNGE, CASC_SCOPE_UNIT) + (pUnit ? pUnit->getExtraLunge() : 0));
 
 		if (eUnitAI == UNITAI_COUNTER
 		||  eUnitAI == UNITAI_ATTACK
@@ -29004,10 +28998,10 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		else iValue += iTemp / 400;
 	}
 
-	iTemp = kPromotion.getDynamicDefenseChange();
+	iTemp = kPromotion.getCombatModifier(COMBAT_DYNAMIC_DEFENSE, CASC_SCOPE_UNIT);
 	if (iTemp != 0)
 	{
-		iTemp *= 100 + 2*(kUnit.getDynamicDefense() + (pUnit ? pUnit->getExtraDynamicDefense() : 0));
+		iTemp *= 100 + 2*(kUnit.getCombatModifier(COMBAT_DYNAMIC_DEFENSE, CASC_SCOPE_UNIT) + (pUnit ? pUnit->getExtraDynamicDefense() : 0));
 
 		if (eUnitAI == UNITAI_CITY_DEFENSE
 		||  eUnitAI == UNITAI_CITY_SPECIAL
@@ -29490,7 +29484,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	iTemp = kPromotion.getCombatModifier(COMBAT_HILLS_ATTACK, CASC_SCOPE_UNIT);
 	if (iTemp != 0)
 	{
-		iTemp *= 100 + 2*(pUnit ? pUnit->getExtraHillsAttackPercent() : kUnit.getHillsAttackModifier());
+		iTemp *= 100 + 2*(pUnit ? pUnit->getExtraHillsAttackPercent() : kUnit.getCombatModifier(COMBAT_HILLS_ATTACK, CASC_SCOPE_UNIT));
 		iTemp /= 100;
 		if (eUnitAI == UNITAI_ATTACK || eUnitAI == UNITAI_COUNTER)
 		{
@@ -29729,7 +29723,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 				iTemp = InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_TERRAIN, iI, COMBAT_ATTACK);
 				if (iTemp != 0)
 				{
-					iTemp *= 100 + 2*(pUnit ? pUnit->getExtraTerrainAttackPercent((TerrainTypes)iI) : kUnit.getTerrainAttackModifier(iI));
+					iTemp *= 100 + 2*(pUnit ? pUnit->getExtraTerrainAttackPercent((TerrainTypes)iI) : InfoValuation::keyedCombat(kUnit.getModifiers(), InfoValuation::COMBAT_TARGET_TERRAIN, iI, COMBAT_ATTACK));
 
 					if (bOnTerrain)
 					{
@@ -29850,7 +29844,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 				iTemp = InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_FEATURE, iI, COMBAT_ATTACK);
 				if (iTemp != 0)
 				{
-					iTemp *= 100 + 2*(pUnit ? pUnit->getExtraFeatureAttackPercent((FeatureTypes)iI) : kUnit.getFeatureAttackModifier(iI));
+					iTemp *= 100 + 2*(pUnit ? pUnit->getExtraFeatureAttackPercent((FeatureTypes)iI) : InfoValuation::keyedCombat(kUnit.getModifiers(), InfoValuation::COMBAT_TARGET_FEATURE, iI, COMBAT_ATTACK));
 
 					if (bOnFeature)
 					{
@@ -30347,10 +30341,10 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		}
 	}
 
-	iTemp = kPromotion.getAttackCombatModifierChange();
+	iTemp = kPromotion.getCombatModifier(COMBAT_ATTACK, CASC_SCOPE_UNIT);
 	if (iTemp != 0)
 	{
-		iTemp *= 100 + 2*(pUnit ? pUnit->getExtraAttackCombatModifier() : kUnit.getAttackCombatModifier());
+		iTemp *= 100 + 2*(pUnit ? pUnit->getExtraAttackCombatModifier() : kUnit.getCombatModifier(COMBAT_ATTACK, CASC_SCOPE_UNIT));
 		iTemp /= 100;
 		if ((eUnitAI == UNITAI_ATTACK) ||
 			(eUnitAI == UNITAI_ATTACK_CITY) ||
@@ -30412,10 +30406,10 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		}
 	}
 
-	iTemp = kPromotion.getReligiousCombatModifierChange();
+	iTemp = kPromotion.getCombatModifier(COMBAT_RELIGIOUS, CASC_SCOPE_UNIT);
 	if (iTemp != 0)
 	{
-		iTemp *= 100 + 2*(pUnit ? pUnit->getExtraReligiousCombatModifier() : kUnit.getReligiousCombatModifier());
+		iTemp *= 100 + 2*(pUnit ? pUnit->getExtraReligiousCombatModifier() : kUnit.getCombatModifier(COMBAT_RELIGIOUS, CASC_SCOPE_UNIT));
 		iTemp /= 100;
 
 		if (eUnitAI == UNITAI_ATTACK
@@ -31737,7 +31731,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 	}
 
 	iTemp = kUnitCombat.getScalar(SCALAR_FIRST_STRIKES, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100 * 2;
-	iTemp += kUnitCombat.getChanceFirstStrikesChange();
+	iTemp += (kUnitCombat.getScalar(SCALAR_FIRST_STRIKE_CHANCES, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100);
 	if (iTemp != 0)
 	{
 		if ((eUnitAI == UNITAI_RESERVE) ||
@@ -31750,7 +31744,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 				(eUnitAI == UNITAI_ESCORT_SEA))
 		{
 			iTemp *= 25;
-			iExtra = pUnit ? pUnit->getExtraChanceFirstStrikes() + pUnit->getExtraFirstStrikes() * 2 : kUnit.getChanceFirstStrikes() + kUnit.getFirstStrikes() * 2;
+			iExtra = pUnit ? pUnit->getExtraChanceFirstStrikes() + pUnit->getExtraFirstStrikes() * 2 : (kUnit.getScalar(SCALAR_FIRST_STRIKE_CHANCES, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) + (kUnit.getScalar(SCALAR_FIRST_STRIKES, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) * 2;
 			iTemp *= 100 + iExtra * 15;
 			iTemp /= 100;
 			iValue += iTemp;
@@ -31762,7 +31756,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 	}
 
 
-	iTemp = kUnitCombat.getStealthStrikesChange() * 2;
+	iTemp = (kUnitCombat.getFlatCombat(COMBAT_STEALTH_STRIKES, CASC_SCOPE_UNIT) / 100) * 2;
 	int iInvisFactor = 0;
 	if (iTemp != 0)
 	{
@@ -31800,7 +31794,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 				(eUnitAI == UNITAI_INFILTRATOR))
 		{
 			iTemp *= 25;
-			iExtra = pUnit ? pUnit->getExtraStealthStrikes() * 2 : kUnit.getStealthStrikes() * 2;
+			iExtra = pUnit ? pUnit->getExtraStealthStrikes() * 2 : (kUnit.getFlatCombat(COMBAT_STEALTH_STRIKES, CASC_SCOPE_UNIT) / 100) * 2;
 			iTemp *= 100 + iExtra * 15;
 			iTemp /= 100;
 
@@ -31976,21 +31970,12 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 			iValue += iTemp;
 		}
 	}
-	iTemp = kUnitCombat.getDamageModifierChange();
+	iTemp = kUnitCombat.getCombatModifier(COMBAT_DAMAGE_MODIFIER, CASC_SCOPE_UNIT);
 	if (iTemp != 0)
 	{
-		iExtra = pUnit == NULL ? kUnit.getDamageModifier() : pUnit->damageModifierTotal();
+		iExtra = pUnit == NULL ? kUnit.getCombatModifier(COMBAT_DAMAGE_MODIFIER, CASC_SCOPE_UNIT) : pUnit->damageModifierTotal();
 		iTemp *= (100 + iExtra);
 		iTemp /= 100;
-		iValue += iTemp;
-	}
-
-	iTemp = kUnitCombat.getEnduranceChange();
-	if (iTemp != 0)
-	{
-		iExtra = pUnit == NULL ? kUnit.getEndurance() : pUnit->enduranceTotal();
-		iTemp += iExtra;
-		iTemp *= 10;
 		iValue += iTemp;
 	}
 
@@ -32012,14 +31997,14 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 	}
 
-	iTemp = kUnitCombat.getUnnerveChange();
+	iTemp = kUnitCombat.getCombatModifier(COMBAT_UNNERVE, CASC_SCOPE_UNIT);
 	if (iTemp != 0)
 	{
 		if ((eUnitAI == UNITAI_COUNTER) ||
 			  (eUnitAI == UNITAI_ATTACK) ||
 			  (eUnitAI == UNITAI_PILLAGE))
 		{
-			iExtra = kUnit.getUnnerve() + (pUnit == NULL ? 0 : pUnit->getExtraUnnerve() * 2);
+			iExtra = kUnit.getCombatModifier(COMBAT_UNNERVE, CASC_SCOPE_UNIT) + (pUnit == NULL ? 0 : pUnit->getExtraUnnerve() * 2);
 			iValue += ((iTemp / 2) * (100 + iExtra) / 100);
 		}
 		else
@@ -32028,7 +32013,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 	}
 
-	iTemp = kUnitCombat.getEncloseChange();
+	iTemp = kUnitCombat.getCombatModifier(COMBAT_ENCLOSE, CASC_SCOPE_UNIT);
 	if (iTemp != 0)
 	{
 		if ((eUnitAI == UNITAI_COUNTER) ||
@@ -32036,7 +32021,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 			  (eUnitAI == UNITAI_ATTACK_CITY) ||
 			  (eUnitAI == UNITAI_PILLAGE))
 		{
-			iExtra = kUnit.getEnclose() + (pUnit == NULL ? 0 : pUnit->getExtraEnclose() * 2);
+			iExtra = kUnit.getCombatModifier(COMBAT_ENCLOSE, CASC_SCOPE_UNIT) + (pUnit == NULL ? 0 : pUnit->getExtraEnclose() * 2);
 			iValue += ((iTemp * 5) * (100 + iExtra) / 100);
 		}
 		else
@@ -32045,7 +32030,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 	}
 
-	iTemp = kUnitCombat.getLungeChange();
+	iTemp = kUnitCombat.getCombatModifier(COMBAT_LUNGE, CASC_SCOPE_UNIT);
 	if (iTemp != 0)
 	{
 		if ((eUnitAI == UNITAI_COUNTER) ||
@@ -32053,7 +32038,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 			  (eUnitAI == UNITAI_ATTACK_CITY ||
 				  (eUnitAI == UNITAI_PILLAGE)))
 		{
-			iExtra = kUnit.getLunge() + (pUnit == NULL ? 0 : pUnit->getExtraLunge() * 2);
+			iExtra = kUnit.getCombatModifier(COMBAT_LUNGE, CASC_SCOPE_UNIT) + (pUnit == NULL ? 0 : pUnit->getExtraLunge() * 2);
 			iValue += (iTemp * (100 + iExtra) / 100);
 		}
 		else
@@ -32062,7 +32047,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 	}
 
-	iTemp = kUnitCombat.getDynamicDefenseChange();
+	iTemp = kUnitCombat.getCombatModifier(COMBAT_DYNAMIC_DEFENSE, CASC_SCOPE_UNIT);
 	if (iTemp != 0)
 	{
 		if ((eUnitAI == UNITAI_CITY_DEFENSE) ||
@@ -32076,7 +32061,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 			  (eUnitAI == UNITAI_ESCORT_SEA) ||
 			  (eUnitAI == UNITAI_ESCORT))
 		{
-			iExtra = kUnit.getDynamicDefense() + (pUnit == NULL ? 0 : pUnit->getExtraDynamicDefense() * 2);
+			iExtra = kUnit.getCombatModifier(COMBAT_DYNAMIC_DEFENSE, CASC_SCOPE_UNIT) + (pUnit == NULL ? 0 : pUnit->getExtraDynamicDefense() * 2);
 			iValue += (iTemp * (100 + iExtra) / 100);
 		}
 		else
@@ -32579,7 +32564,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 	iTemp = kUnitCombat.getCombatModifier(COMBAT_HILLS_ATTACK, CASC_SCOPE_UNIT);
 	if (iTemp != 0)
 	{
-		iExtra = pUnit == NULL ? kUnit.getHillsAttackModifier() : pUnit->getExtraHillsAttackPercent();
+		iExtra = pUnit == NULL ? kUnit.getCombatModifier(COMBAT_HILLS_ATTACK, CASC_SCOPE_UNIT) : pUnit->getExtraHillsAttackPercent();
 		iTemp *= (100 + iExtra * 2);
 		iTemp /= 100;
 		if ((eUnitAI == UNITAI_ATTACK) ||
@@ -32596,7 +32581,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 	iTemp = kUnitCombat.getCombatModifier(COMBAT_HILLS_DEFENSE, CASC_SCOPE_UNIT);
 	if (iTemp != 0)
 	{
-		iExtra = (kUnit.getHillsDefenseModifier() + (pUnit == NULL ? 0 : pUnit->getExtraHillsDefensePercent() * 2));
+		iExtra = (kUnit.getCombatModifier(COMBAT_HILLS_DEFENSE, CASC_SCOPE_UNIT) + (pUnit == NULL ? 0 : pUnit->getExtraHillsDefensePercent() * 2));
 		iTemp *= (100 + iExtra);
 		iTemp /= 100;
 		if (eUnitAI == UNITAI_CITY_DEFENSE ||
@@ -33023,10 +33008,10 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 	}
 
-	iTemp = kUnitCombat.getAttackCombatModifierChange();
+	iTemp = kUnitCombat.getCombatModifier(COMBAT_ATTACK, CASC_SCOPE_UNIT);
 	if (iTemp != 0)
 	{
-		iExtra = pUnit == NULL ? kUnit.getAttackCombatModifier() : pUnit->getExtraAttackCombatModifier();
+		iExtra = pUnit == NULL ? kUnit.getCombatModifier(COMBAT_ATTACK, CASC_SCOPE_UNIT) : pUnit->getExtraAttackCombatModifier();
 		iTemp *= (100 + iExtra * 2);
 		iTemp /= 100;
 		if ((eUnitAI == UNITAI_ATTACK) ||
@@ -33097,10 +33082,10 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 	}
 
-	iTemp = kUnitCombat.getReligiousCombatModifierChange();
+	iTemp = kUnitCombat.getCombatModifier(COMBAT_RELIGIOUS, CASC_SCOPE_UNIT);
 	if (iTemp != 0)
 	{
-		iExtra = pUnit == NULL ? kUnit.getReligiousCombatModifier() : pUnit->getExtraReligiousCombatModifier();
+		iExtra = pUnit == NULL ? kUnit.getCombatModifier(COMBAT_RELIGIOUS, CASC_SCOPE_UNIT) : pUnit->getExtraReligiousCombatModifier();
 		iTemp *= (100 + iExtra * 2);
 		iTemp /= 100;
 
