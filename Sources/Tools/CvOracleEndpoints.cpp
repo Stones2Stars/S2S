@@ -83,7 +83,11 @@ namespace
 
 	// A dictionary keyed by CHANNEL NAME rather than by local slot index: the index is minted per scope at
 	// load and means nothing to an external consumer, while the name is stable and diffable.
-	picojson::value oe_renderChannelMap(const CvCascadeSlotValues& kValues, const std::vector<int>& aSlots, bool bReceiver)
+	// Templated over the slot WIDTH, because the two dictionaries no longer share one: an AMOUNT accumulates and
+	// carries 64 bits, a PERCENT is a small whole number and stays 32 (CvCascadePackage.h). One implementation
+	// still renders both -- the alternative, a per-width copy, is the duplication a width seam always invites.
+	template <class SlotType>
+	picojson::value oe_renderChannelMap(const CvCascadeSlotValues& kValues, const std::vector<SlotType>& aSlots, bool bReceiver)
 	{
 		picojson::value::object kMap;
 		for (size_t iSlot = 0; iSlot < aSlots.size(); ++iSlot)

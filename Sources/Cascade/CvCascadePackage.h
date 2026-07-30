@@ -42,9 +42,13 @@ struct CvCascadePackage
 	CvCascScope scope;                     // which layout this package lives on (set at bind)
 	int identityFirst;                     // the SERVED identity, interpreted per scope (CvCascadeSlotValues.h)
 	int identitySecond;                    // its second axis: city id / team id / plot y (-1 = none)
-	mutable std::vector<int> flat;      // dictionary 1: the channel-indexed x100 flat sums (local slots)
-	mutable std::vector<int> percent;   // dictionary 2: the channel-indexed x100 percent sums (local slots)
-	mutable std::vector<int> sum;       // the receiver slots: the realized x100 totals this scope consumes
+	// ⛔ WIDTH IS PER UNIT, exactly as SCALE is ([DEC-fixedpoint-x100]). An AMOUNT accumulates -- across
+	// sources, across scopes, at ×100 -- so it carries 64 bits; a PERCENT is a small whole number by ruling
+	// (no decimals, hence no ×100), so it has nothing to accumulate into and stays 32. Widening only the
+	// amount side is what lets the combine keep its shape while the overflow ceiling disappears.
+	mutable std::vector<int64_t> flat;   // dictionary 1: the channel-indexed x100 flat sums (local slots)
+	mutable std::vector<int> percent;    // dictionary 2: the channel-indexed percent sums (local slots)
+	mutable std::vector<int64_t> sum;    // the receiver slots: the realized x100 totals this scope consumes
 	CvDerivedCacheSet<TOwner, int64_t> set;   // THE dirty protocol -- the one component, 64-bit mask form
 
 	CvCascadePackage() : scope(CASC_SCOPE_CITY), identityFirst(-1), identitySecond(-1) {}
@@ -71,7 +75,7 @@ struct CvCascadePackage
 	// ---- emit gets found ([DEC-no-self-heal]). A never-authored channel answers 0 without any storage
 	// ---- existing anywhere. ----
 
-	int readFlat(int iChannel) const
+	int64_t readFlat(int iChannel) const
 	{
 		const int iSlot = CascadeChannelRegistry::scopeSlotIndex(scope, iChannel);
 		if (iSlot < 0)
@@ -91,7 +95,7 @@ struct CvCascadePackage
 		return iSlot < (int)percent.size() ? percent[iSlot] : 0;
 	}
 
-	int readSum(int iChannel) const
+	int64_t readSum(int iChannel) const
 	{
 		const int iReceiver = CascadeChannelRegistry::scopeReceiverIndex(scope, iChannel);
 		if (iReceiver < 0)
@@ -132,7 +136,7 @@ struct CvCascadePackage
 	// ---- untouched. It is also what makes the load drain order-free: every banked mark rebuilds its own
 	// ---- inputs first, whatever order the drain walks the owners in. ----
 
-	int sourceFlat(int iChannel) const
+	int64_t sourceFlat(int iChannel) const
 	{
 		const int iSlot = CascadeChannelRegistry::scopeSlotIndex(scope, iChannel);
 		if (iSlot < 0)
@@ -154,7 +158,7 @@ struct CvCascadePackage
 		return iSlot < (int)percent.size() ? percent[iSlot] : 0;
 	}
 
-	int sourceSum(int iChannel) const
+	int64_t sourceSum(int iChannel) const
 	{
 		const int iReceiver = CascadeChannelRegistry::scopeReceiverIndex(scope, iChannel);
 		if (iReceiver < 0)
@@ -207,9 +211,9 @@ struct CvCascadePackage
 		}
 	}
 	// Slot write access for the gather (refs into the mutable storage; game-thread only).
-	int& slotFlat(int iSlotIndex) const { return flat[iSlotIndex]; }
+	int64_t& slotFlat(int iSlotIndex) const { return flat[iSlotIndex]; }
 	int& slotPercent(int iSlotIndex) const { return percent[iSlotIndex]; }
-	int& slotSum(int iReceiverIndex) const { return sum[iReceiverIndex]; }
+	int64_t& slotSum(int iReceiverIndex) const { return sum[iReceiverIndex]; }
 
 private:
 	CvCascadePackage(const CvCascadePackage&);              // noncopyable (the set binds an owner pointer)

@@ -50,12 +50,12 @@ public:
 	// TWO CARRIER SHAPES, ONE FORMULA: the cascade-side CascadeDeposit record and the info-side CvModEntry (the
 	// expected* valuation walks entries directly) adapt into the SAME perApply core below -- the §3.7
 	// arithmetic exists once (DEC-single-implementation), only the field plumbing differs per carrier.
-	static long perScale(const CascadeDeposit& dep, const CvCascadeEvalCtx& ec, long value);
-	static long perScale(const CvModEntry& entry, const CvCascadeEvalCtx& evalCtx, long value);
+	static int64_t perScale(const CascadeDeposit& dep, const CvCascadeEvalCtx& ec, int64_t value);
+	static int64_t perScale(const CvModEntry& entry, const CvCascadeEvalCtx& evalCtx, int64_t value);
 	// The shared §3.7 formula core both carriers feed: value × (max(0, count − above) / each), the above leg
 	// only when carried (bAboveResolved; bAboveIsCityLimit applies the world-size scale to the source-resolved
 	// base -- ruling 26). Exposed so the formula is never re-derived by a third carrier.
-	static long perApply(long value, long iCount, int iEach, bool bHasAbove, int iAboveBase, bool bAboveIsCityLimit);
+	static int64_t perApply(int64_t value, int64_t iCount, int iEach, bool bHasAbove, int iAboveBase, bool bAboveIsCityLimit);
 
 	// Σ a unit's UNCONDITIONED magnitudes at a scope-wide address (no enabled/disabled) -- the entity's INTRINSIC base.
 	// Human int (value/100). ⚠ The LAST address-string read on this surface: the property plane's channel bridge

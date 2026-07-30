@@ -153,14 +153,14 @@ public:
 	// The ctx-taking core the endpoints share (fill the ctx ONCE per endpoint, fold each channel through this):
 	// Σ over the folded scopes of the compiled unconditioned sums (audience-resolved) + the family's conditioned
 	// tail (kind/unit-matched, untargeted, gated via the ONE evaluator, per-resolved via the ONE §3.7 resolver).
-	static long groupSum(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind, CvCascUnit eUnit,
+	static int64_t groupSum(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind, CvCascUnit eUnit,
 		const CvCascadeEvalCtx& evalCtx);
 
 	// The SCOPE-RESTRICTED sibling of groupSum -- ONE info's (family, kind, unit) contribution AT one scope
 	// (unconditioned slot sum + the conditioned tail at that scope). The package plane's per-source fold and
 	// the receiver combine's specialist term read through this ([DEC-single-implementation]: the gather never
 	// grows a second per-info fold beside the valuation's).
-	static long groupSumAt(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind, CvCascUnit eUnit,
+	static int64_t groupSumAt(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind, CvCascUnit eUnit,
 		CvCascScope eScope, const CvCascadeEvalCtx& evalCtx);
 
 	// ONE substrate info's OWN untargeted PLOT-scope output of a channel family, for the ctx's TARGET plot
@@ -168,7 +168,7 @@ public:
 	// reverse-landed conditioned entries (a building/civic/tech boost keyed to this substrate lands HERE,
 	// CvReversePass) -- evaluated under PLOT-EVAL semantics (a bare {HAS_BONUS:X} reads THIS plot,
 	// bonusFromPlot; the groupSumAt sibling evaluates city-relative and cannot serve the substrate leg).
-	static long plotOwnYield(const CvModifiers* modifiers, ModifierFamily eFamily, const CvCascadeEvalCtx& evalCtx);
+	static int64_t plotOwnYield(const CvModifiers* modifiers, ModifierFamily eFamily, const CvCascadeEvalCtx& evalCtx);
 
 	// THE ISOLATED PLOT-AS-BASE CALC (modifier.md §2 plot note -- "a plot's yield is ONE base package, resolved
 	// in isolation BEFORE the city modifiers"; the wave-B substrate valuation leg): the target plot's base-yield
@@ -189,7 +189,7 @@ public:
 	// before re-scaling (the engine's documented integer-truncation order, mirrored verbatim). The receiver
 	// sum rebuild (CascadeGather) and every realized-rate consumer call THIS one function -- the combine
 	// exists once, on the calc surface.
-	static long cityRate(long base, long specialists, int iPercentSum, long extra);
+	static int64_t cityRate(int64_t base, int64_t specialists, int iPercentSum, int64_t extra);
 
 	// THE PER-COMMERCE SPLIT (modifier.md §2a's commerce paragraph -- the §2a two-tier shape carried by the
 	// channel's own pieces; StoneBase's CommerceSplit calc package). A city's realized gold / research / culture /
@@ -213,8 +213,8 @@ public:
 	// ⚠ CULTURE is the lone dual consumer: its `channelDeposits` is the city's MAINTAINED RECEIVER SUM (the
 	// combine the gather already wrote), not a roll-up -- so the receiver sum passes through untouched and only
 	// the commerce yield is slider-scaled. Scaling a receiver sum by a slider would re-scale a realized total.
-	static long commerceSplit(long commerceYieldRate, int iSliderPercent, long channelPercentSum,
-		long channelDeposits, long productionYieldRate, int iProductionToCommerce);
+	static int64_t commerceSplit(int64_t commerceYieldRate, int iSliderPercent, int64_t channelPercentSum,
+		int64_t channelDeposits, int64_t productionYieldRate, int iProductionToCommerce);
 
 	// ---- THE CROSS-SCOPE ROLL-UP -- the GAME-OBJECT read role's realized answer (patterns.md § THE TWO READ
 	// ---- ROLES: *"what do I HAVE, right now?"*, the live-state twin of the expected* what-if walk above; the
@@ -239,7 +239,7 @@ public:
 	// constant 100 directly. cityRate combines its own stack identically: ONE convention on this surface.
 	// ⚠ NOT a duplicate of cityRate: that is the §2a RATE specialization (two tiers + the specialist layer) the
 	// receiver sums are built from; this is the generic §2 slot combine every other channel answers by.
-	static long realizedChannel(long flatSum, long percentSum, CvCascUnit eCanonicalUnit);
+	static int64_t realizedChannel(int64_t flatSum, int64_t percentSum, CvCascUnit eCanonicalUnit);
 
 	// The realized ×100 value of one channel AT one scope object -- the entry every game-object group read
 	// folds per channel. The object IS the scope (patterns.md rule 5: scope is never an argument on this role),
@@ -266,7 +266,7 @@ public:
 	// un-combined; a consumer that re-walked the chain itself would be a second description of the chain.
 	// ⛔ The flat leg is NOT a realized answer: a channel the city CONSUMES answers its maintained receiver sum,
 	// which is realizedAtCity's preference and is deliberately absent here. iChannel < 0 answers both legs 0.
-	static void rolledLegsAtCity(const CvCity& city, int iChannel, long& flatSum, long& percentSum);
+	static void rolledLegsAtCity(const CvCity& city, int iChannel, int64_t& flatSum, int64_t& percentSum);
 	static int realizedAtEmpire(const CvPlayer& player, int iChannel);
 	static int realizedAtTeam(const CvTeam& team, int iChannel);
 
@@ -278,18 +278,18 @@ public:
 	// channelBase% is the channel's engine identity (CvYieldInfo::getTradeModifier -- commerce 100,
 	// food/production 0); the modifier sum is the per-channel TRADE_ROUTE_MODIFIER_FOOD+eYield kind, summed over
 	// the player's live sources. Engine transcription: CvCity::calculateTradeYield (profit × mod[ch] / 100).
-	static long tradeRouteChannelYield(long routeYield, int iChannelBasePercent, int iChannelModifierPercentSum);
+	static int64_t tradeRouteChannelYield(int64_t routeYield, int iChannelBasePercent, int iChannelModifierPercentSum);
 
 	// THE FAMILY-COMBINE FLOOR (modifier.md §2 "a `min` member that floors the combined total" -- declared as
 	// FAMILY metadata, never per-deposit): apply the (family, kind) slot's ruled combine floor to a summed group
 	// total. Consumes infoCombineFloorAtZero (ruling 28: upkeep.freeMilitary/freeCivilian -- Σfree floored at 0
 	// as a GROUP; signed free-amount entries sum first, the floor applies once here).
-	static long combinedGroupSum(ModifierFamily eFamily, int iKind, long sum);
+	static int64_t combinedGroupSum(ModifierFamily eFamily, int iKind, int64_t sum);
 
 	// THE FREE-UPKEEP NET (modifier.md §2a sibling; ruling 28's second, ENGINE-side floor): net class upkeep =
 	// max(0, upkeep − free). `freeAmount` is the ALREADY-FLOORED group total (combinedGroupSum above) -- the two
 	// floors are distinct by design (free >= 0, then net >= 0; engine CvPlayer.cpp:10295/:10315).
-	static long netUpkeepAfterFree(long upkeep, long freeAmount);
+	static int64_t netUpkeepAfterFree(int64_t upkeep, int64_t freeAmount);
 
 	// THE RESOLVED CITY LIMIT (ruling 26): the engine-side read of a civic's base city-limit config -- base ×
 	// the world-size scale percent, gated on GAMEOPTION_EXP_OVEREXPANSION_PENALTIES exactly as the archived

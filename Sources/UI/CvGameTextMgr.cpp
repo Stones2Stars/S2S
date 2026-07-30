@@ -21009,8 +21009,8 @@ void CvGameTextMgr::buildFinanceCityMaintString(CvWStringBuffer& szBuffer, Playe
 			iNumCityMaint += getModifiedIntValue(pLoopCity->calculateNumCitiesMaintenanceTimes100(), iMod);
 			iColonyMaint += getModifiedIntValue(pLoopCity->calculateColonyMaintenanceTimes100(), iMod);
 			iCorporationMaint += getModifiedIntValue(pLoopCity->calculateCorporationMaintenanceTimes100(), iMod);
-			long iBuildingFlat = 0;
-			long iBuildingPercent = 0;
+			int64_t iBuildingFlat = 0;
+			int64_t iBuildingPercent = 0;
 			pLoopCity->maintenanceLegs((int)MAINTENANCE_AMOUNT, iBuildingFlat, iBuildingPercent);
 			iBuildingMaint += getModifiedIntValue((int)iBuildingFlat, iMod);
 		}

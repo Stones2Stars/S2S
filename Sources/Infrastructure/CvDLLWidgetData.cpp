@@ -5033,8 +5033,8 @@ void CvDLLWidgetData::parseMaintenanceHelp(CvWidgetDataStruct &widgetDataStruct,
 				szBuffer.append(gDLL->getText("TXT_KEY_MISC_CORPORATION_MAINT_FLOAT", szMaint.GetCString()));
 			}
 
-			long iBuildingFlat = 0;
-			long iBuildingPercent = 0;
+			int64_t iBuildingFlat = 0;
+			int64_t iBuildingPercent = 0;
 			pHeadSelectedCity->maintenanceLegs((int)MAINTENANCE_AMOUNT, iBuildingFlat, iBuildingPercent);
 			iMaintenanceValue = getModifiedIntValue((int)iBuildingFlat, iMod);
 			if (iMaintenanceValue != 0)

@@ -84,7 +84,7 @@ namespace
 	// The shared plots-TARGET fold for one channel family: Σ over the family's plots-target flat entries of
 	// value × plotAttrs-count(predicate), audience-gated. Walks entries() (a targeted entry never
 	// point-folds, and an UNconditioned targeted entry is not in the conditioned list either).
-	long val_plotsTarget(const CvModifiers* modifiers, ModifierFamily eFamily,
+	int64_t val_plotsTarget(const CvModifiers* modifiers, ModifierFamily eFamily,
 		const CvCascadeEvalCtx& evalCtx, const CityContext& cityContext)
 	{
 		const int iPlotsSeg = modSegmentLookup("plots");
@@ -92,7 +92,7 @@ namespace
 		{
 			return 0;   // never authored anywhere
 		}
-		long iTotal = 0;
+		int64_t iTotal = 0;
 		const std::vector<CvModEntry*>& entries = modifiers->entries();
 		for (size_t i = 0; i < entries.size(); ++i)
 		{
@@ -113,7 +113,7 @@ namespace
 			{
 				continue;   // a plots entry's `enabled` is the per-plot FILTER (json §6.1); `disabled` stays a gate
 			}
-			iTotal += (long)pEntry->value * val_plotPredicateCount(pEntry->enabled, cityContext);
+			iTotal += (int64_t)pEntry->value * val_plotPredicateCount(pEntry->enabled, cityContext);
 		}
 		return iTotal;
 	}
@@ -305,7 +305,7 @@ void InfoValuation::fillEvalCtx(const CityContext& cityContext, const EmpireCont
 	}
 }
 
-long InfoValuation::groupSum(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind, CvCascUnit eUnit,
+int64_t InfoValuation::groupSum(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind, CvCascUnit eUnit,
 	const CvCascadeEvalCtx& evalCtx)
 {
 	if (modifiers == NULL)
@@ -313,7 +313,7 @@ long InfoValuation::groupSum(const CvModifiers* modifiers, ModifierFamily eFamil
 		return 0;
 	}
 	const bool bAiAudience = val_aiAudience(evalCtx);
-	long iTotal = 0;
+	int64_t iTotal = 0;
 	// (1) the compiled unconditioned sums, fetched straight -- one slot load per folded scope, 0 calculation
 	for (int iScopeIdx = 0; iScopeIdx < NUM_VAL_FOLD_SCOPES; ++iScopeIdx)
 	{
@@ -356,7 +356,7 @@ long InfoValuation::groupSum(const CvModifiers* modifiers, ModifierFamily eFamil
 	return iTotal;
 }
 
-long InfoValuation::groupSumAt(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind, CvCascUnit eUnit,
+int64_t InfoValuation::groupSumAt(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind, CvCascUnit eUnit,
 	CvCascScope eScope, const CvCascadeEvalCtx& evalCtx)
 {
 	if (modifiers == NULL)
@@ -364,7 +364,7 @@ long InfoValuation::groupSumAt(const CvModifiers* modifiers, ModifierFamily eFam
 		return 0;
 	}
 	const bool bAiAudience = val_aiAudience(evalCtx);
-	long iTotal = modifiers->sum(eFamily, iKind, eScope, eUnit, bAiAudience);
+	int64_t iTotal = modifiers->sum(eFamily, iKind, eScope, eUnit, bAiAudience);
 	size_t iBegin = 0;
 	size_t iEnd = 0;
 	modifiers->conditionedRange(eFamily, iBegin, iEnd);
@@ -397,7 +397,7 @@ long InfoValuation::groupSumAt(const CvModifiers* modifiers, ModifierFamily eFam
 	return iTotal;
 }
 
-long InfoValuation::plotOwnYield(const CvModifiers* modifiers, ModifierFamily eFamily, const CvCascadeEvalCtx& evalCtx)
+int64_t InfoValuation::plotOwnYield(const CvModifiers* modifiers, ModifierFamily eFamily, const CvCascadeEvalCtx& evalCtx)
 {
 	if (modifiers == NULL)
 	{
@@ -405,7 +405,7 @@ long InfoValuation::plotOwnYield(const CvModifiers* modifiers, ModifierFamily eF
 	}
 	const bool bAiAudience = val_aiAudience(evalCtx);
 	// (1) the compiled unconditioned PLOT slot, fetched straight
-	long iTotal = modifiers->sum(eFamily, CHANNEL_AMOUNT, CASC_SCOPE_PLOT, CASC_UNIT_FLAT, bAiAudience);
+	int64_t iTotal = modifiers->sum(eFamily, CHANNEL_AMOUNT, CASC_SCOPE_PLOT, CASC_UNIT_FLAT, bAiAudience);
 	// (2) the plot-scope conditioned tail -- incl. the reverse-landed entries (CvReversePass lands a source's
 	// substrate-keyed boost HERE at plot scope) -- under PLOT-EVAL semantics: a bare {HAS_BONUS:X} reads the
 	// ctx's TARGET plot (bonusFromPlot), exactly the isolated plot-as-base reading of modifier.md §2.
@@ -459,19 +459,19 @@ void InfoValuation::plotBaseYields(const CvModifiers* terrainModifiers, const Cv
 	for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
 	{
 		const ModifierFamily eFamily = infoYieldFamily(iYield);
-		long iNature = plotOwnYield(terrainModifiers, eFamily, evalCtx)
+		int64_t iNature = plotOwnYield(terrainModifiers, eFamily, evalCtx)
 		                + plotOwnYield(featureModifiers, eFamily, evalCtx)
 		                + plotOwnYield(bonusModifiers, eFamily, evalCtx);
 		if (iNature < 0)
 		{
 			iNature = 0;
 		}
-		long iImprovement = plotOwnYield(improvementModifiers, eFamily, evalCtx);
+		int64_t iImprovement = plotOwnYield(improvementModifiers, eFamily, evalCtx);
 		if (iImprovement < -iNature)
 		{
 			iImprovement = -iNature;   // floored at −nature (modifier.md §2a basePlotYield row)
 		}
-		long iTotal = iNature + iImprovement + plotOwnYield(routeModifiers, eFamily, evalCtx);
+		int64_t iTotal = iNature + iImprovement + plotOwnYield(routeModifiers, eFamily, evalCtx);
 		if (iTotal < 0)
 		{
 			iTotal = 0;
@@ -480,7 +480,7 @@ void InfoValuation::plotBaseYields(const CvModifiers* terrainModifiers, const Cv
 	}
 }
 
-long InfoValuation::cityRate(long base, long specialists, int iPercentSum, long extra)
+int64_t InfoValuation::cityRate(int64_t base, int64_t specialists, int iPercentSum, int64_t extra)
 {
 	// modifier.md §2a: ONE additive percent stack applied once, floored at zero; the EXTRA tier truncates to
 	// whole units before re-scaling (the engine's getExtraYield100 order -- a documented integer-truncation
@@ -489,7 +489,7 @@ long InfoValuation::cityRate(long base, long specialists, int iPercentSum, long 
 	// SCALE: iPercentSum is a plain percent (25 = +25%), which is what a percent IS everywhere on this surface --
 	// readJson does not scale one ([DEC-fixedpoint-x100]: a percentage has no decimals to carry), so the stored
 	// sums are plain too and every consumer combines them the same way.
-	long iModifier = 100 + (long)iPercentSum;
+	int64_t iModifier = 100 + (int64_t)iPercentSum;
 	if (iModifier < 0)
 	{
 		iModifier = 0;
@@ -497,15 +497,15 @@ long InfoValuation::cityRate(long base, long specialists, int iPercentSum, long 
 	return (base + specialists) * iModifier / 100 + 100 * (extra / 100);
 }
 
-long InfoValuation::commerceSplit(long commerceYieldRate, int iSliderPercent, long channelPercentSum,
-	long channelDeposits, long productionYieldRate, int iProductionToCommerce)
+int64_t InfoValuation::commerceSplit(int64_t commerceYieldRate, int iSliderPercent, int64_t channelPercentSum,
+	int64_t channelDeposits, int64_t productionYieldRate, int iProductionToCommerce)
 {
 	// TIER 1 -- the slider share of the COMMERCE yield. The slider is a plain 0..100 counter (json §3.1), so the
 	// ÷100 is the percent-to-fraction conversion, not a fixed-point de-scale.
-	long iShare = commerceYieldRate * (long)iSliderPercent / 100;
+	int64_t iShare = commerceYieldRate * (int64_t)iSliderPercent / 100;
 	// The ONE additive stack (modifier.md §2a), floored at zero exactly as the yield rate's is -- a stack below
 	// -100% zeroes the share, it never flips its sign. A stored percent is PLAIN, so it combines directly.
-	long iModifier = 100 + channelPercentSum;
+	int64_t iModifier = 100 + channelPercentSum;
 	if (iModifier < 0)
 	{
 		iModifier = 0;
@@ -513,7 +513,7 @@ long InfoValuation::commerceSplit(long commerceYieldRate, int iSliderPercent, lo
 	// TIER 2 -- the process conversion, added AFTER the percentages and never multiplied by them. The production
 	// yield truncates to whole hammers BEFORE the conversion scales it (the engine's order, mirrored verbatim);
 	// the conversion rate is ×100, so it de-scales to the authored human percent.
-	long iProcessConversion = (productionYieldRate / 100) * ((long)iProductionToCommerce / 100);
+	int64_t iProcessConversion = (productionYieldRate / 100) * ((int64_t)iProductionToCommerce / 100);
 	return iShare * iModifier / 100 + channelDeposits + iProcessConversion;
 }
 
@@ -530,7 +530,7 @@ namespace
 	}
 }
 
-long InfoValuation::realizedChannel(long flatSum, long percentSum, CvCascUnit eCanonicalUnit)
+int64_t InfoValuation::realizedChannel(int64_t flatSum, int64_t percentSum, CvCascUnit eCanonicalUnit)
 {
 	// A PERCENT-unit channel has no flat plane of its own: the ONE additive stack IS its realized value
 	// (modifier.md §2a -- purely additive, applied once wherever it later scales something).
@@ -541,7 +541,7 @@ long InfoValuation::realizedChannel(long flatSum, long percentSum, CvCascUnit eC
 	// A FLAT-unit channel is the flat sum the stack scales: the §2 combine with no external base and multiplier
 	// deposits identity. The stack floors at zero exactly as the §2a rate's does -- a stack below -100% zeroes
 	// the value, it never flips its sign.
-	long iModifier = 100 + percentSum;
+	int64_t iModifier = 100 + percentSum;
 	if (iModifier < 0)
 	{
 		iModifier = 0;
@@ -560,12 +560,12 @@ int InfoValuation::realizedAtPlot(const CvPlot& plot, int iChannel)
 	// scope's percent must never reach it -- that percent applies once, later, to the city's already-summed
 	// base, and applying it here as well would scale the same magnitude twice. The plot carries no receiver
 	// slot (nothing is consumed at plot scope), so there is no maintained sum to prefer over the combine.
-	const long iFlatSum = plot.getCascadePackage().readFlat(iChannel);
-	const long iPercentSum = plot.getCascadePackage().readPercent(iChannel);
+	const int64_t iFlatSum = plot.getCascadePackage().readFlat(iChannel);
+	const int64_t iPercentSum = plot.getCascadePackage().readPercent(iChannel);
 	return (int)realizedChannel(iFlatSum, iPercentSum, val_channelCanonicalUnit(iChannel, CASC_SCOPE_PLOT));
 }
 
-void InfoValuation::rolledLegsAtCity(const CvCity& city, int iChannel, long& flatSum, long& percentSum)
+void InfoValuation::rolledLegsAtCity(const CvCity& city, int iChannel, int64_t& flatSum, int64_t& percentSum)
 {
 	flatSum = 0;
 	percentSum = 0;
@@ -602,8 +602,8 @@ int InfoValuation::realizedAtCity(const CvCity& city, int iChannel)
 	{
 		return city.getCascadePackage().readSum(iChannel);
 	}
-	long iFlatSum = 0;
-	long iPercentSum = 0;
+	int64_t iFlatSum = 0;
+	int64_t iPercentSum = 0;
 	rolledLegsAtCity(city, iChannel, iFlatSum, iPercentSum);
 	return (int)realizedChannel(iFlatSum, iPercentSum, val_channelCanonicalUnit(iChannel, CASC_SCOPE_CITY));
 }
@@ -624,8 +624,8 @@ int InfoValuation::realizedAtEmpire(const CvPlayer& player, int iChannel)
 	// AREA is deliberately absent from the empire chain: an area-scope value belongs to ONE area while an empire
 	// spans several, so it is read by each CITY for its own area id -- folding it here would credit every city
 	// with every area's deposits.
-	long iFlatSum = 0;
-	long iPercentSum = 0;
+	int64_t iFlatSum = 0;
+	int64_t iPercentSum = 0;
 	// The TEAM leg exists only while the player is on one (an unassigned player slot is on none), so its chain
 	// is its own package alone rather than an invalid index.
 	if (player.getTeam() != NO_TEAM)
@@ -647,8 +647,8 @@ int InfoValuation::realizedAtTeam(const CvTeam& team, int iChannel)
 	}
 	// TEAM is the top scope carrying a package (WORLD is CONFIG and has none -- state-repositories.md), so its
 	// chain is itself alone.
-	const long iFlatSum = team.getCascadePackage().readFlat(iChannel);
-	const long iPercentSum = team.getCascadePackage().readPercent(iChannel);
+	const int64_t iFlatSum = team.getCascadePackage().readFlat(iChannel);
+	const int64_t iPercentSum = team.getCascadePackage().readPercent(iChannel);
 	return (int)realizedChannel(iFlatSum, iPercentSum, val_channelCanonicalUnit(iChannel, CASC_SCOPE_TEAM));
 }
 
@@ -782,7 +782,7 @@ void InfoValuation::expectedWellbeing(const CvModifiers* modifiers,
 			{
 				continue;
 			}
-			const long iValue = MMKernel::perScale(*pEntry, evalCtx, pEntry->value);
+			const int64_t iValue = MMKernel::perScale(*pEntry, evalCtx, pEntry->value);
 			if (iValue >= 0)
 			{
 				wellbeing[GOOD_OF[iPair]] += (int)iValue;
@@ -805,7 +805,7 @@ int InfoValuation::expectedSum(const CvModifiers* modifiers, ModifierFamily eFam
 
 // ---- the §2a fold seams (see the header docs; pure statics, inputs in / ×100 out) ----
 
-long InfoValuation::tradeRouteChannelYield(long routeYield, int iChannelBasePercent, int iChannelModifierPercentSum)
+int64_t InfoValuation::tradeRouteChannelYield(int64_t routeYield, int iChannelBasePercent, int iChannelModifierPercentSum)
 {
 	// modifier.md §2a (the tradeYield BASE input fold), ruling 27: the per-channel modifier rides ON TOP of the
 	// engine's incoming route yield -- profit × (base% + Σmod) / 100, the channel identity on the base percent
@@ -822,11 +822,11 @@ long InfoValuation::tradeRouteChannelYield(long routeYield, int iChannelBasePerc
 	// ×100 and one ÷10000 takes both back down. Converting at the edge means a caller passes what it HAS and
 	// cannot get the scale wrong; pushing it outward would put a scale contract on every consumer of the fold,
 	// which is how a +50% modifier becomes +5000%.
-	const long iCombinedPercent100 = (long)iChannelBasePercent * 100 + (long)iChannelModifierPercentSum;
+	const int64_t iCombinedPercent100 = (int64_t)iChannelBasePercent * 100 + (int64_t)iChannelModifierPercentSum;
 	return routeYield * iCombinedPercent100 / 10000;
 }
 
-long InfoValuation::combinedGroupSum(ModifierFamily eFamily, int iKind, long sum)
+int64_t InfoValuation::combinedGroupSum(ModifierFamily eFamily, int iKind, int64_t sum)
 {
 	// modifier.md §2: non-additive combine modes are FAMILY metadata -- the ruled floor rows live beside the
 	// vocabulary (infoCombineFloorAtZero); this is the ONE site that applies them to a summed group total.
@@ -837,11 +837,11 @@ long InfoValuation::combinedGroupSum(ModifierFamily eFamily, int iKind, long sum
 	return sum;
 }
 
-long InfoValuation::netUpkeepAfterFree(long upkeep, long freeAmount)
+int64_t InfoValuation::netUpkeepAfterFree(int64_t upkeep, int64_t freeAmount)
 {
 	// ruling 28's ENGINE-side second floor: net class upkeep = max(0, upkeep − free). `freeAmount` arrives
 	// already group-floored (combinedGroupSum) -- the two floors are distinct by design.
-	const long iNet = upkeep - freeAmount;
+	const int64_t iNet = upkeep - freeAmount;
 	return iNet > 0 ? iNet : 0;
 }
 

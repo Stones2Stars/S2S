@@ -60,7 +60,7 @@ bool MMKernel::audienceOk(bool bAiOnly, const CvCascadeEvalCtx& evalCtx)
 // pattern: never zero and never over-apply silently). Both carrier adapters below feed this ONE formula.
 // SCALE: `value` is ×100 and `iCount`/`iThreshold` are plain COUNTS, so the product stays ×100; the threshold's
 // own × scalePercent / 100 is a count × HUMAN percent -- no two ×100 operands ever meet here.
-long MMKernel::perApply(long value, long iCount, int iEach, bool bHasAbove, int iAboveBase, bool bAboveIsCityLimit)
+int64_t MMKernel::perApply(int64_t value, int64_t iCount, int iEach, bool bHasAbove, int iAboveBase, bool bAboveIsCityLimit)
 {
 	if (bHasAbove)
 	{
@@ -82,7 +82,7 @@ long MMKernel::perApply(long value, long iCount, int iEach, bool bHasAbove, int 
 // condition count-atoms (DEC-single-implementation, never a parallel count path). A deposit without a per is
 // returned byte-identical; an UNRESOLVED SELF token (json §3.1 -- the push could not resolve the owning entity)
 // SKIPS the multiply entirely (counting it 0 would wrongly zero the contribution).
-long MMKernel::perScale(const CascadeDeposit& dep, const CvCascadeEvalCtx& ec, long value)
+int64_t MMKernel::perScale(const CascadeDeposit& dep, const CvCascadeEvalCtx& ec, int64_t value)
 {
 	// the §3.7 `religion:` counted-kind filter (ruling 23) composes multiplicatively with the per: the value
 	// scales by the count of the city's religions matching the filter (0 matches -> 0 contribution, exactly
@@ -94,7 +94,7 @@ long MMKernel::perScale(const CascadeDeposit& dep, const CvCascadeEvalCtx& ec, l
 	if (!dep.hasPer) return value;
 	if (dep.perTokenSeg >= 0 && dep.perTokenSeg == mmk_seg("SELF", s_segmentSelf)) return value;   // unresolved SELF
 	const CvCascScope eScope = (CvCascScope)dep.perScope;   // push-resolved: authored, else the deposit's own scope
-	long iCount = 0;
+	int64_t iCount = 0;
 	if (dep.perAnyOf != NULL && dep.perAnyOfTypes != NULL)   // per.anyOf: the SUMMED count of every listed type (json §3.7)
 	{
 		for (size_t i = 0; i < dep.perAnyOf->size() && i < dep.perAnyOfTypes->size(); ++i)
@@ -118,7 +118,7 @@ long MMKernel::perScale(const CascadeDeposit& dep, const CvCascadeEvalCtx& ec, l
 // count goes through the ONE cascadeCountOf core and the formula through the ONE perApply. Token spellings
 // (SELF / CITY_LIMIT) ride the entry as strings; comparing them here is the bounded per-decision tail walk,
 // never a hot-path address lookup (the cascade-side record path above stays int-only).
-long MMKernel::perScale(const CvModEntry& entry, const CvCascadeEvalCtx& evalCtx, long value)
+int64_t MMKernel::perScale(const CvModEntry& entry, const CvCascadeEvalCtx& evalCtx, int64_t value)
 {
 	if (entry.religionQual != NULL)
 	{
@@ -127,7 +127,7 @@ long MMKernel::perScale(const CvModEntry& entry, const CvCascadeEvalCtx& evalCtx
 	if (!entry.hasPer) return value;
 	if (entry.perTypeId < 0 && entry.perType == "SELF") return value;   // unresolved SELF (json §3.1)
 	const CvCascScope eScope = (entry.perScope >= 0) ? (CvCascScope)entry.perScope : entry.scope;   // json §3.7 default
-	long iCount = 0;
+	int64_t iCount = 0;
 	if (!entry.perAnyOf.empty() && !entry.perAnyOfTypes.empty())
 	{
 		for (size_t i = 0; i < entry.perAnyOf.size() && i < entry.perAnyOfTypes.size(); ++i)

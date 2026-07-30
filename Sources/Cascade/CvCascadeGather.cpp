@@ -68,11 +68,11 @@ namespace
 
 	// Land one applying value in its slot -- wellbeing sign-routes to the twin channel at fill
 	// (modifier.md §2b: a negative happiness deposit lands as positive anger; a routing rule, never storage).
-	void gt_landValue(CvCascScope eScope, int64_t iWantedBits, int iChannel, bool bPercentSide, long iValue,
-		std::vector<int>& flatSlots, std::vector<int>& percentSlots)
+	void gt_landValue(CvCascScope eScope, int64_t iWantedBits, int iChannel, bool bPercentSide, int64_t iValue,
+		std::vector<int64_t>& flatSlots, std::vector<int>& percentSlots)
 	{
 		int iLandChannel = iChannel;
-		long iLandValue = iValue;
+		int64_t iLandValue = iValue;
 		if (iValue < 0)
 		{
 			const int iTwin = CascadeChannelRegistry::wellbeingTwin(iChannel);
@@ -91,10 +91,21 @@ namespace
 		{
 			return;   // this channel is not being refreshed -- its slot keeps its standing value
 		}
-		std::vector<int>& slots = bPercentSide ? percentSlots : flatSlots;
-		if (iSlot < (int)slots.size())
+		// ⛔ The two dictionaries no longer share a WIDTH (CvCascadePackage.h: width is per UNIT -- an amount
+		// accumulates across sources and scopes at ×100, a percent is a small whole number that does not), so
+		// the landing branches instead of selecting one reference across both. ⚑ The `(int)` cast that used to
+		// sit on this line was the truncation: every accumulated amount was narrowed to 32 bits on its way
+		// INTO storage, so widening the slot alone would have changed nothing.
+		if (bPercentSide)
 		{
-			slots[iSlot] += (int)iLandValue;
+			if (iSlot < (int)percentSlots.size())
+			{
+				percentSlots[iSlot] += (int)iLandValue;
+			}
+		}
+		else if (iSlot < (int)flatSlots.size())
+		{
+			flatSlots[iSlot] += iLandValue;
 		}
 	}
 
@@ -106,7 +117,7 @@ namespace
 	// BASE with its own percent layer at the receiver combine, never the city package's flat tier.
 	void gt_foldInfo(const CvModifiers* pModifiers, int iMultiplier, CvCascScope eScope, int64_t iWantedBits,
 		const CvCascadeEvalCtx& evalCtx, const CvPlot* pKeyPlot, int iPureSign, bool bSkipRateChannels,
-		std::vector<int>& flatSlots, std::vector<int>& percentSlots)
+		std::vector<int64_t>& flatSlots, std::vector<int>& percentSlots)
 	{
 		if (pModifiers == NULL || pModifiers->empty() || iMultiplier == 0)
 		{
@@ -238,7 +249,7 @@ namespace
 				continue;   // the conditioned evaluation at rebuild cadence -- the dormancy model (modifier.md §3)
 			}
 			// the ONE §3.7 resolver applies the per scaler AND the religion: counted-kind filter
-			long iValue = MMKernel::perScale(*pEntry, evalCtx, pEntry->value);
+			int64_t iValue = MMKernel::perScale(*pEntry, evalCtx, pEntry->value);
 			iValue *= iMultiplier;
 			gt_landValue(eScope, iWantedBits, iChannel, bPercentSide, iValue, flatSlots, percentSlots);
 		}
@@ -246,7 +257,7 @@ namespace
 
 	// Zero every masked channel slot in both dictionaries (contract rule 2: a refresh fully defines its
 	// output; a partial write leaves stale values behind a clean flag).
-	void gt_beginRefill(CvCascScope eScope, int64_t iWantedBits, std::vector<int>& flatSlots, std::vector<int>& percentSlots)
+	void gt_beginRefill(CvCascScope eScope, int64_t iWantedBits, std::vector<int64_t>& flatSlots, std::vector<int>& percentSlots)
 	{
 		const int iChannels = CascadeChannelRegistry::scopeChannelCount(eScope);
 		for (int iSlot = 0; iSlot < iChannels; ++iSlot)
@@ -273,7 +284,7 @@ namespace
 	// which SCOPE'S entries fold is the eScope parameter; the source SET is the player's.
 	void gt_foldPlayerSources(const CvPlayer& player, CvCascScope eScope, int64_t iWantedBits,
 		const CvCascadeEvalCtx& evalCtx, const CvPlot* pKeyPlot,
-		std::vector<int>& flatSlots, std::vector<int>& percentSlots)
+		std::vector<int64_t>& flatSlots, std::vector<int>& percentSlots)
 	{
 		for (int iOption = 0; iOption < GC.getNumCivicOptionInfos(); ++iOption)
 		{
@@ -358,7 +369,7 @@ namespace
 	// ---- pure function of the game and terminates unconditionally. Only the RECEIVER SUM legs below consume
 	// ---- other scopes -- which is what bounds the oracle's recursion (see gt_freshEmpireDocument). ----
 
-	void gt_gatherPlotChannels(const CvPlot& plot, int64_t iWantedBits, std::vector<int>& flatSlots, std::vector<int>& percentSlots)
+	void gt_gatherPlotChannels(const CvPlot& plot, int64_t iWantedBits, std::vector<int64_t>& flatSlots, std::vector<int>& percentSlots)
 	{
 		gt_beginRefill(CASC_SCOPE_PLOT, iWantedBits, flatSlots, percentSlots);
 
@@ -418,7 +429,7 @@ namespace
 	}
 
 	void gt_gatherCityChannels(const CvCity& city, int64_t iWantedBits, const CvCascadeEvalCtx& evalCtx,
-		std::vector<int>& flatSlots, std::vector<int>& percentSlots)
+		std::vector<int64_t>& flatSlots, std::vector<int>& percentSlots)
 	{
 		gt_beginRefill(CASC_SCOPE_CITY, iWantedBits, flatSlots, percentSlots);
 
@@ -451,13 +462,13 @@ namespace
 	}
 
 	void gt_gatherEmpireChannels(const CvPlayer& player, int64_t iWantedBits, const CvCascadeEvalCtx& evalCtx,
-		std::vector<int>& flatSlots, std::vector<int>& percentSlots)
+		std::vector<int64_t>& flatSlots, std::vector<int>& percentSlots)
 	{
 		gt_beginRefill(CASC_SCOPE_EMPIRE, iWantedBits, flatSlots, percentSlots);
 		gt_foldPlayerSources(player, CASC_SCOPE_EMPIRE, iWantedBits, evalCtx, NULL, flatSlots, percentSlots);
 	}
 
-	void gt_gatherTeamChannels(const CvTeam& team, int64_t iWantedBits, std::vector<int>& flatSlots, std::vector<int>& percentSlots)
+	void gt_gatherTeamChannels(const CvTeam& team, int64_t iWantedBits, std::vector<int64_t>& flatSlots, std::vector<int>& percentSlots)
 	{
 		gt_beginRefill(CASC_SCOPE_TEAM, iWantedBits, flatSlots, percentSlots);
 
@@ -574,9 +585,9 @@ namespace
 	// property) belong to their own combines.
 	struct CascadeCityCombineTerms
 	{
-		long baseFlat;     // TIER 1: the worked-plot Sigma + the empire/team flats rolled down (modifier.md §2a)
-		long percentSum;   // the ONE additive percent stack (PLAIN percents): city + empire + team
-		long cityFlat;     // TIER 2: the city package's flat tier, added AFTER the percentages
+		int64_t baseFlat;     // TIER 1: the worked-plot Sigma + the empire/team flats rolled down (modifier.md §2a)
+		int64_t percentSum;   // the ONE additive percent stack (PLAIN percents): city + empire + team
+		int64_t cityFlat;     // TIER 2: the city package's flat tier, added AFTER the percentages
 
 		CascadeCityCombineTerms() : baseFlat(0), percentSum(0), cityFlat(0) {}
 	};
@@ -632,12 +643,12 @@ namespace
 	// at read"), through the ONE §2a rate shape (InfoValuation::cityRate). The SPECIALIST term is computed here
 	// on both paths: it folds live assigned counts through the per-scope group fold and consumes no package, so
 	// there is nothing about it for the two paths to differ on.
-	long gt_cityRateFromTerms(const CvCity& city, int iChannel, const CvCascadeEvalCtx& evalCtx,
+	int64_t gt_cityRateFromTerms(const CvCity& city, int iChannel, const CvCascadeEvalCtx& evalCtx,
 		const CascadeCityCombineTerms& kTerms)
 	{
 		// each assigned specialist's own output, folded per §2a with the city sources' per-specialist boosts
 		// riding its conditioned entries (the ONE per-scope group fold)
-		long iSpecialists = 0;
+		int64_t iSpecialists = 0;
 		const ModifierFamily eFamily = CascadeChannelRegistry::channelFamily(iChannel);
 		const int iKind = CascadeChannelRegistry::channelKind(iChannel);
 		for (int iSpecialist = 0; iSpecialist < GC.getNumSpecialistInfos(); ++iSpecialist)
@@ -672,7 +683,7 @@ namespace
 	// one event stays irrelevant. The worked plots are deliberately absent (a plot never enters an upper scope's
 	// chain -- modifier.md §2 plot-as-base), and the city's own flats sit INSIDE the rolled sum rather than in a
 	// post-percent tier: for commerce every term but the process conversion is scaled by the percent stack.
-	void gt_collectStoredCityRolledLegs(const CvCity& city, int iChannel, long& flatSum, long& percentSum)
+	void gt_collectStoredCityRolledLegs(const CvCity& city, int iChannel, int64_t& flatSum, int64_t& percentSum)
 	{
 		flatSum = 0;
 		percentSum = 0;
@@ -689,7 +700,7 @@ namespace
 	// The ORACLE's twin of the chain above, off the documents this run recomputed from source -- not one stored
 	// slot is read (state-repositories.md: independence is the entire value of the oracle).
 	void gt_collectFreshCityRolledLegs(int iChannel, const CvCascadeSlotValues& kCityDocument,
-		const CascadeOracleCityInputs& kInputs, long& flatSum, long& percentSum)
+		const CascadeOracleCityInputs& kInputs, int64_t& flatSum, int64_t& percentSum)
 	{
 		flatSum = 0;
 		percentSum = 0;
@@ -707,11 +718,11 @@ namespace
 	// gt_cityCommerceFromTerms below, which is a call onto InfoValuation::commerceSplit and nothing else).
 	struct CascadeCityCommerceTerms
 	{
-		long commerceYieldRate;     // TIER 1: the city's realized COMMERCE yield -- what the slider divides
-		long productionYieldRate;   // TIER 2: the city's realized PRODUCTION yield -- what the process converts
-		long channelPercentSum;     // the ONE additive stack (plain percents) of THIS channel over the city's chain, for the
+		int64_t commerceYieldRate;     // TIER 1: the city's realized COMMERCE yield -- what the slider divides
+		int64_t productionYieldRate;   // TIER 2: the city's realized PRODUCTION yield -- what the process converts
+		int64_t channelPercentSum;     // the ONE additive stack (plain percents) of THIS channel over the city's chain, for the
 		                            // slider share alone: the deposits below already met that stack
-		long channelDeposits;       // this channel's own realized deposits, ALREADY scaled by the stack
+		int64_t channelDeposits;       // this channel's own realized deposits, ALREADY scaled by the stack
 
 		CascadeCityCommerceTerms() : commerceYieldRate(0), productionYieldRate(0), channelPercentSum(0), channelDeposits(0) {}
 	};
@@ -721,7 +732,7 @@ namespace
 	// InfoValuation::realizedAtCity applies on the read path; re-rolling it would be a second derivation of a
 	// total the gather already wrote. Which side of the channel IS the answer comes from the census verdict
 	// declared beside the vocabulary (infoKindUnit), never re-decided here.
-	long gt_channelDepositsFromLegs(int iChannel, long iRolledFlat, long iRolledPercent)
+	int64_t gt_channelDepositsFromLegs(int iChannel, int64_t iRolledFlat, int64_t iRolledPercent)
 	{
 		const ModifierFamily eFamily = CascadeChannelRegistry::channelFamily(iChannel);
 		const int iKind = CascadeChannelRegistry::channelKind(iChannel);
@@ -734,8 +745,8 @@ namespace
 		const int iProductionYieldChannel = CascadeChannelRegistry::channelLookup(infoYieldFamily((int)YIELD_PRODUCTION), (int)CHANNEL_AMOUNT, -1);
 		kTerms.commerceYieldRate = city.getCascadePackage().sourceSum(iCommerceYieldChannel);
 		kTerms.productionYieldRate = city.getCascadePackage().sourceSum(iProductionYieldChannel);
-		long iRolledFlat = 0;
-		long iRolledPercent = 0;
+		int64_t iRolledFlat = 0;
+		int64_t iRolledPercent = 0;
 		gt_collectStoredCityRolledLegs(city, iChannel, iRolledFlat, iRolledPercent);
 		kTerms.channelPercentSum = iRolledPercent;
 		if (CascadeChannelRegistry::scopeReceiverIndex(CASC_SCOPE_CITY, iChannel) >= 0)
@@ -760,8 +771,8 @@ namespace
 		CascadeCityCombineTerms kProductionYieldTerms;
 		gt_collectFreshCityTerms(iProductionYieldChannel, kCityDocument, kInputs, kProductionYieldTerms);
 		kTerms.productionYieldRate = gt_cityRateFromTerms(city, iProductionYieldChannel, evalCtx, kProductionYieldTerms);
-		long iRolledFlat = 0;
-		long iRolledPercent = 0;
+		int64_t iRolledFlat = 0;
+		int64_t iRolledPercent = 0;
 		gt_collectFreshCityRolledLegs(iChannel, kCityDocument, kInputs, iRolledFlat, iRolledPercent);
 		kTerms.channelPercentSum = iRolledPercent;
 		if (CascadeChannelRegistry::scopeReceiverIndex(CASC_SCOPE_CITY, iChannel) >= 0)
@@ -780,7 +791,7 @@ namespace
 	// the process conversion are read here on BOTH paths: each is live player/city state consuming no package,
 	// so there is nothing about them for the two paths to differ on (the same reason gt_cityRateFromTerms owns
 	// the specialist term). The slider is a plain 0..100 counter, never a ×100 magnitude.
-	long gt_cityCommerceFromTerms(const CvCity& city, int iCommerce, const CascadeCityCommerceTerms& kTerms)
+	int64_t gt_cityCommerceFromTerms(const CvCity& city, int iCommerce, const CascadeCityCommerceTerms& kTerms)
 	{
 		int aiCommerceRates[NUM_COMMERCE_TYPES];
 		GET_PLAYER(city.getOwner()).getEmpireContext().commerceRates(aiCommerceRates);
@@ -799,7 +810,7 @@ namespace
 	// ---- through their marks), the oracle's are recomputed in full. ----
 
 	void gt_rebuildCitySums(const CvCity& city, int64_t iReceiverBits, const CvCascadeEvalCtx& evalCtx,
-		std::vector<int>& sumSlots)
+		std::vector<int64_t>& sumSlots)
 	{
 		const int iReceivers = CascadeChannelRegistry::scopeReceiverCount(CASC_SCOPE_CITY);
 		for (int iReceiver = 0; iReceiver < iReceivers; ++iReceiver)
@@ -835,7 +846,7 @@ namespace
 			}
 			CascadeCityCombineTerms kTerms;
 			gt_collectFreshCityTerms(iChannel, kCityDocument, kInputs, kTerms);
-			kCityDocument.sum[iReceiver] = (int)gt_cityRateFromTerms(city, iChannel, evalCtx, kTerms);
+			kCityDocument.sum[iReceiver] = gt_cityRateFromTerms(city, iChannel, evalCtx, kTerms);
 		}
 	}
 
@@ -844,7 +855,7 @@ namespace
 	// section above). Every empire receiver the spec'd table carries is a COMMERCE channel, so the per-city
 	// quantity is the commerce split; the plain rate combine stands as the answer for any receiver that is not
 	// a commerce channel, since "the city's realized value" is what the Σ takes either way.
-	void gt_rebuildEmpireSums(const CvPlayer& player, int64_t iReceiverBits, std::vector<int>& sumSlots)
+	void gt_rebuildEmpireSums(const CvPlayer& player, int64_t iReceiverBits, std::vector<int64_t>& sumSlots)
 	{
 		const int iReceivers = CascadeChannelRegistry::scopeReceiverCount(CASC_SCOPE_EMPIRE);
 		for (int iReceiver = 0; iReceiver < iReceivers; ++iReceiver)
@@ -855,7 +866,7 @@ namespace
 				continue;
 			}
 			const int iCommerce = infoFamilyCommerce(CascadeChannelRegistry::channelFamily(iChannel));
-			long iTotal = 0;
+			int64_t iTotal = 0;
 			for (CvPlayer::city_iterator cityIterator = player.beginCities(); cityIterator != player.endCities(); ++cityIterator)
 			{
 				const CvCity* pLoopCity = *cityIterator;
@@ -885,10 +896,10 @@ namespace
 	// realized rate consumes -- then summed, over the same per-city quantity the rebuild sums. The rebuild's
 	// shortcut for a channel the city also receives (read that city's stored sum) has no counterpart here: the
 	// quantity is the city's realized value either way, and the oracle computes it rather than trusting it.
-	void gt_oracleEmpireSums(const CvPlayer& player, std::vector<int>& sumSlots)
+	void gt_oracleEmpireSums(const CvPlayer& player, std::vector<int64_t>& sumSlots)
 	{
 		const int iReceivers = CascadeChannelRegistry::scopeReceiverCount(CASC_SCOPE_EMPIRE);
-		std::vector<long> aTotals;
+		std::vector<int64_t> aTotals;
 		aTotals.assign((size_t)((iReceivers > 0) ? iReceivers : 0), 0);
 		for (CvPlayer::city_iterator cityIterator = player.beginCities(); cityIterator != player.endCities(); ++cityIterator)
 		{

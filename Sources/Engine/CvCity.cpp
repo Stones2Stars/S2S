@@ -173,8 +173,8 @@ void CvCity::getCommerces(int (&commerces)[NUM_COMMERCE_TYPES]) const
 	{
 		const CommerceTypes eCommerce = (CommerceTypes)iCommerce;
 		const int iChannel = CascadeChannelRegistry::channelLookup(infoCommerceFamily(iCommerce), (int)CHANNEL_AMOUNT, -1);
-		long iChannelFlatSum = 0;      // not this read's answer -- the deposits term comes through the roll-up below,
-		long iChannelPercentSum = 0;   // which prefers a consumed channel's maintained receiver sum (culture)
+		int64_t iChannelFlatSum = 0;      // not this read's answer -- the deposits term comes through the roll-up below,
+		int64_t iChannelPercentSum = 0;   // which prefers a consumed channel's maintained receiver sum (culture)
 		InfoValuation::rolledLegsAtCity(*this, iChannel, iChannelFlatSum, iChannelPercentSum);
 		int iProductionToCommerce = 0;
 		if (eProcess != NO_PROCESS)
@@ -2366,12 +2366,12 @@ int CvCity::getProductionExperience(UnitTypes eUnit) const
 	PROFILE_EXTRA_FUNC();
 	const CvPlayer& kPlayer = GET_PLAYER(getOwner());
 
-	long lFlatSum = 0;
-	long lPercentSum = 0;
+	int64_t lFlatSum = 0;
+	int64_t lPercentSum = 0;
 	InfoValuation::rolledLegsAtCity(
 		*this, CascadeChannelRegistry::channelLookup(MODFAM_EXPERIENCE, EXPERIENCE_AMOUNT, -1), lFlatSum, lPercentSum);
 
-	long lExperience = lFlatSum;
+	int64_t lExperience = lFlatSum;
 
 	if (eUnit != NO_UNIT)
 	{
@@ -5975,8 +5975,8 @@ int CvCity::getMaintenanceTimes100() const
 	// empire- or team-scope maintenance percent moving needs NO city mark at all -- its own package is marked
 	// at its own scope and this read picks it up on the next fetch.
 	// What IS cached is only the four ENGINE COMPONENTS, which depend on city/player state and on no package.
-	long iFlatSum = 0;
-	long iPercentSum = 0;
+	int64_t iFlatSum = 0;
+	int64_t iPercentSum = 0;
 	maintenanceLegs((int)MAINTENANCE_AMOUNT, iFlatSum, iPercentSum);
 	return (int)InfoValuation::realizedChannel(
 		m_maintenanceComponents.get(0) + iFlatSum, iPercentSum, CASC_UNIT_FLAT);
@@ -5993,7 +5993,7 @@ void CvCity::markMaintenanceDirty() const
 // The two LEGS of one maintenance KIND over the city's own chain (team + empire + city). ONE description of
 // the chain, shared by every maintenance read here -- a consumer that re-walked it would be a second
 // description of the same thing ([DEC-single-implementation]).
-void CvCity::maintenanceLegs(int iKind, long& flatSum, long& percentSum) const
+void CvCity::maintenanceLegs(int iKind, int64_t& flatSum, int64_t& percentSum) const
 {
 	InfoValuation::rolledLegsAtCity(
 		*this, CascadeChannelRegistry::channelLookup(MODFAM_MAINTENANCE, iKind, -1), flatSum, percentSum);
@@ -6001,8 +6001,8 @@ void CvCity::maintenanceLegs(int iKind, long& flatSum, long& percentSum) const
 
 int CvCity::maintenancePercentStack(int iKind) const
 {
-	long iFlatSum = 0;
-	long iPercentSum = 0;
+	int64_t iFlatSum = 0;
+	int64_t iPercentSum = 0;
 	maintenanceLegs(iKind, iFlatSum, iPercentSum);
 	return (int)iPercentSum;
 }
@@ -6266,8 +6266,8 @@ int CvCity::calculateCorporationMaintenanceTimes100(CorporationTypes eCorporatio
 // already carries, and a second derivation of one number ([DEC-single-implementation]).
 int CvCity::calculateBaseMaintenanceTimes100() const
 {
-	long iFlatSum = 0;
-	long iPercentSum = 0;
+	int64_t iFlatSum = 0;
+	int64_t iPercentSum = 0;
 	maintenanceLegs((int)MAINTENANCE_AMOUNT, iFlatSum, iPercentSum);
 	return (int)iFlatSum + m_maintenanceComponents.get(0);
 }
@@ -7949,8 +7949,8 @@ bool CvCity::isBombardable(const CvUnit* pUnit) const
 int CvCity::cascadeValue(ModifierFamily eFamily, int eKind) const
 {
 	const int iChannel = CascadeChannelRegistry::channelLookup(eFamily, eKind, -1);
-	long lFlatSum = 0;
-	long lPercentSum = 0;
+	int64_t lFlatSum = 0;
+	int64_t lPercentSum = 0;
 	InfoValuation::rolledLegsAtCity(*this, iChannel, lFlatSum, lPercentSum);
 	return infoKindUnit(eFamily, eKind, CASC_SCOPE_CITY) == CASC_UNIT_PERCENT ? (int)lPercentSum : (int)lFlatSum;
 }
@@ -7969,8 +7969,8 @@ int CvCity::cascadeDefense(int eKind) const { return cascadeValue(MODFAM_DEFENSE
 int CvCity::getTotalDefense(bool bIgnoreBuilding) const
 {
 	const int iChannel = CascadeChannelRegistry::channelLookup(MODFAM_DEFENSE, (int)DEFENSE_AMOUNT, -1);
-	long lFlatSum = 0;
-	long lPercentSum = 0;
+	int64_t lFlatSum = 0;
+	int64_t lPercentSum = 0;
 	InfoValuation::rolledLegsAtCity(*this, iChannel, lFlatSum, lPercentSum);
 	if (bIgnoreBuilding)
 	{
@@ -9042,8 +9042,8 @@ int CvCity::getYieldBySpecialist(YieldTypes eIndex, SpecialistTypes eSpecialist)
 int CvCity::getBaseYieldRateModifier(YieldTypes eIndex, int iExtra) const
 {
 	const int iChannel = CascadeChannelRegistry::channelLookup(infoYieldFamily(eIndex), (int)CHANNEL_AMOUNT, -1);
-	long lFlatSum = 0;
-	long lPercentSum = 0;
+	int64_t lFlatSum = 0;
+	int64_t lPercentSum = 0;
 	InfoValuation::rolledLegsAtCity(*this, iChannel, lFlatSum, lPercentSum);
 	return std::max(0, 100 + iExtra + (int)lPercentSum);
 }
@@ -9737,8 +9737,8 @@ int CvCity::getCommerceRateAtSliderPercent(CommerceTypes eIndex, int iSliderPerc
 int CvCity::getTotalCommerceRateModifier(CommerceTypes eIndex) const
 {
 	const int iChannel = CascadeChannelRegistry::channelLookup(infoCommerceFamily(eIndex), (int)CHANNEL_AMOUNT, -1);
-	long lFlatSum = 0;
-	long lPercentSum = 0;
+	int64_t lFlatSum = 0;
+	int64_t lPercentSum = 0;
 	InfoValuation::rolledLegsAtCity(*this, iChannel, lFlatSum, lPercentSum);
 	return std::max(1, 100 + (int)lPercentSum);
 }

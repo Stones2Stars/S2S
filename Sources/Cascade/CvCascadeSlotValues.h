@@ -29,16 +29,19 @@ struct CvCascadeSlotValues
 	CvCascScope scope;
 	int identityFirst;                 // per scope: city owner | player id | -1 | plot x
 	int identitySecond;                // per scope: city id | -1 | team id | plot y
-	std::vector<int> flat;             // dictionary 1, by the scope's LOCAL slot index: the x100 flat sums
-	std::vector<int> percent;          // dictionary 2, same indexing: the x100 percent sums
-	std::vector<int> sum;              // the receiver slots: the realized x100 totals this scope consumes
+	// Mirrors the package's per-unit widths exactly (CvCascadePackage.h): amounts 64, percents 32. The two
+	// served documents are diffed field by field, so a width that differed here would silently truncate one
+	// side of the comparison.
+	std::vector<int64_t> flat;         // dictionary 1, by the scope's LOCAL slot index: the x100 flat sums
+	std::vector<int> percent;          // dictionary 2, same indexing: the percent sums
+	std::vector<int64_t> sum;          // the receiver slots: the realized x100 totals this scope consumes
 
 	CvCascadeSlotValues() : scope(CASC_SCOPE_CITY), identityFirst(-1), identitySecond(-1) {}
 
 	// Read one CHANNEL's value out of this document (the local slot index is the scope's own; a channel this
 	// scope never carries answers 0, exactly as a package read would). The oracle's combine reads its
 	// cross-scope inputs this way -- off freshly recomputed documents, never off a stored package.
-	int flatForChannel(int iChannel) const
+	int64_t flatForChannel(int iChannel) const
 	{
 		const int iSlot = CascadeChannelRegistry::scopeSlotIndex(scope, iChannel);
 		if (iSlot < 0 || iSlot >= (int)flat.size())

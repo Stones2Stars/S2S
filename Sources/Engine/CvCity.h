@@ -550,7 +550,7 @@ public:
 	// EMPIRE, and the connected-city leg was never a KIND -- it is a CONDITION on an ordinary deposit
 	// ([DEC-conditions-are-predicates]).
 	int maintenancePercentStack(int iKind) const;
-	void maintenanceLegs(int iKind, long& flatSum, long& percentSum) const;
+	void maintenanceLegs(int iKind, int64_t& flatSum, int64_t& percentSum) const;
 	int calculateDistanceMaintenance() const;
 	int calculateNumCitiesMaintenance() const;
 	int calculateColonyMaintenance() const;

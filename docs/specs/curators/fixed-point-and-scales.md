@@ -74,6 +74,38 @@ ZERO per-FIELD scale knowledge — it reads only the authored **UNIT** (`flat`/`
 data states outright), never which field it belongs to. The per-field registry below is therefore a
 **curator-only, used-once** checklist — it must not leak into readJson or the cascade.
 
+## 1b. ⛔ WIDTH IS PER UNIT TOO — amounts are 64-bit, percents are 32
+
+Scale is decided per UNIT (§1); so is **width**, for the same reason and along the same line.
+
+- **An AMOUNT accumulates** — across sources, across scopes, at ×100 — so it carries **`int64_t`**: the package's
+  flat dictionary and its receiver sums, and every accumulator, parameter and return on the calc surface.
+- **A PERCENT does not accumulate into anything** — it is a small whole number by ruling (no decimals, hence no
+  ×100), so it stays **`int`**. Widening it would buy nothing and cost storage on every scope object.
+
+⛔ **`long` IS NOT A WIDER TYPE HERE.** On the frozen VC7.1/x86 toolchain `long` is 32 bits — the tree typedefs
+`int64_t` as `long long` for exactly that reason. A `long` accumulator therefore *reads* as deliberate headroom
+and provides none, which is precisely how the ceiling stayed invisible: the calc surface was written in `long`
+throughout and was int32 the whole time.
+
+⚑ **The tell that the ceiling was already being hit is a PARALLEL 64-BIT TWIN.** `getModifiedIntValue64`,
+`intSqrt64`, `intPow64`, `applySMRank64` exist beside their 32-bit originals, and the money plane
+(`calculatePreInflatedCosts` / `getFinalExpense` / `getInflationCost` / `calcCorporateMaintenance` /
+`getHurryGold` / `getRealPopulation`) is already `int64_t`. That is the same signature as a surviving fudge
+factor (§4c-bis), one level up: **a duplicated surface exists because two WIDTHS meet**, exactly as a magic
+constant exists because two SCALES meet. Widening the amount plane is what lets those twins be deleted rather
+than extended.
+
+⚖ **Storage is per-unit; the CALC SURFACE is 64-bit throughout.** Inside a calculation every intermediate is
+`int64_t` regardless of which side it came from, so no intermediate can overflow and no mixed-width promotion
+has to be reasoned about. The per-unit rule governs what is STORED (where the memory cost is), never the local
+arithmetic.
+
+⚠ **The cascade plane costs NOTHING to widen** — it serializes nothing
+([DEC-derived-never-trusted](../../architecture/decisions.md#dec-derived-never-trusted)), so there is no save
+migration on it at all. Width only becomes a save question for a **serialized** amount field, where changing the
+type code under a reused name is one of the five real breaks ([save.md §8](../save.md)).
+
 ## 2. The unit table (what readJson does)
 
 | JSON (human) | meaning | internal | combine |
