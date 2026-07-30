@@ -1074,8 +1074,8 @@ int CvCityAI::AI_specialistValue(SpecialistTypes eSpecialist, bool bAvoidGrowth,
 	//TB Insidiousness/Investigation
 	int iNumCriminals = plot()->getNumCriminals();
 	int iMultiplier = (iNumCriminals * iNumCriminals);
-	int iInvestigate = GC.getSpecialistInfo(eSpecialist).getInvestigation();
-	int iInsidious = GC.getSpecialistInfo(eSpecialist).getInsidiousness();
+	int iInvestigate = (GC.getSpecialistInfo(eSpecialist).getUnderworld(UNDERWORLD_INVESTIGATION, CASC_SCOPE_CITY) / 100);
+	int iInsidious = (GC.getSpecialistInfo(eSpecialist).getUnderworld(UNDERWORLD_INSIDIOUSNESS, CASC_SCOPE_CITY) / 100);
 	iValue += iInvestigate + (iMultiplier * iInvestigate);
 	iValue -= (iInsidious + (iMultiplier * iInsidious));
 
@@ -6363,9 +6363,9 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 
 			if (iFocusFlags & BUILDINGFOCUS_INVESTIGATION)
 			{
-				iValue += kBuilding.getInvestigation() * 10;
+				iValue += (kBuilding.getUnderworld(UNDERWORLD_INVESTIGATION, CASC_SCOPE_CITY) / 100) * 10;
 			}
-			else iValue += kBuilding.getInvestigation() * 5;
+			else iValue += (kBuilding.getUnderworld(UNDERWORLD_INVESTIGATION, CASC_SCOPE_CITY) / 100) * 5;
 
 
 			if (iPass > 0)
@@ -11034,8 +11034,8 @@ int CvCityAI::AI_countGoodSpecialists(bool bHealthy) const
 
 		iValue += GC.getSpecialistInfo(eSpecialist).getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_CITY);
 		iValue += GC.getSpecialistInfo(eSpecialist).getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_CITY);
-		iValue += GC.getSpecialistInfo(eSpecialist).getInvestigation();
-		iValue -= GC.getSpecialistInfo(eSpecialist).getInsidiousness();
+		iValue += (GC.getSpecialistInfo(eSpecialist).getUnderworld(UNDERWORLD_INVESTIGATION, CASC_SCOPE_CITY) / 100);
+		iValue -= (GC.getSpecialistInfo(eSpecialist).getUnderworld(UNDERWORLD_INSIDIOUSNESS, CASC_SCOPE_CITY) / 100);
 
 		if (iValue >= (bHealthy ? 200 : 300))
 		{

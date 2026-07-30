@@ -10731,7 +10731,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 		}
 		case UNITAI_INVESTIGATOR:
 		{
-			if (kUnitInfo.getInvestigation() > 0 && !bisNegativePropertyUnit)
+			if ((kUnitInfo.getUnderworld(UNDERWORLD_INVESTIGATION, CASC_SCOPE_UNIT) / 100) > 0 && !bisNegativePropertyUnit)
 			{
 				bValid = true;
 			}
@@ -11739,13 +11739,13 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 			case UNITAI_INVESTIGATOR:
 			{
 				iValue += iCombatValue;
-				iValue *= kUnitInfo.getInvestigation();
+				iValue *= (kUnitInfo.getUnderworld(UNDERWORLD_INVESTIGATION, CASC_SCOPE_UNIT) / 100);
 				break;
 			}
 			case UNITAI_INFILTRATOR:
 			{
 				iValue += iCombatValue;
-				iValue *= kUnitInfo.getInsidiousness();
+				iValue *= (kUnitInfo.getUnderworld(UNDERWORLD_INSIDIOUSNESS, CASC_SCOPE_UNIT) / 100);
 				if (GC.getGame().isOption(GAMEOPTION_COMBAT_HIDE_SEEK))
 				{
 					for (int iI = 0; iI < GC.getNumInvisibleInfos(); iI++)

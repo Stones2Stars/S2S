@@ -86,6 +86,10 @@ public:
 	{ return m_modifiers.sum(MODFAM_CARGO, eKind, eScope, CASC_UNIT_FLAT); }
 	int getEspionage(EspionageKind eKind, CvCascScope eScope) const
 	{ return m_modifiers.sum(MODFAM_ESPIONAGE, eKind, eScope, CASC_UNIT_FLAT); }
+	// `underworld` is authored at UNIT scope as well as city ([json.md] §6: the in-city criminal contest --
+	// the city is the arena, the unit carries the stat). Both kinds are flats.
+	int getUnderworld(UnderworldKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_UNDERWORLD, eKind, eScope, CASC_UNIT_FLAT); }
 	int getExperienceModifier(ExperienceKind eKind, CvCascScope eScope) const
 	{ return m_modifiers.sum(MODFAM_EXPERIENCE, eKind, eScope, CASC_UNIT_PERCENT); }
 	int getUpkeepModifier(UpkeepKind eKind, CvCascScope eScope) const

@@ -93,6 +93,10 @@ public:
 	{ return m_modifiers.sum(MODFAM_HEAL, eKind, eScope, CASC_UNIT_PERCENT); }
 	int getEspionage(EspionageKind eKind, CvCascScope eScope) const
 	{ return m_modifiers.sum(MODFAM_ESPIONAGE, eKind, eScope, CASC_UNIT_FLAT); }
+	// `underworld` is authored at UNIT scope as well as city ([json.md] §6: the in-city criminal contest --
+	// the city is the arena, the unit carries the stat). Both kinds are flats.
+	int getUnderworld(UnderworldKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_UNDERWORLD, eKind, eScope, CASC_UNIT_FLAT); }
 	// buildRate.self entries are bonus-conditioned (the legacy BonusProductionModifiers) -- the conditioned
 	// list carries them; this point read serves any unconditioned residue.
 	int getBuildRateModifier(BuildRateKind eKind, CvCascScope eScope) const

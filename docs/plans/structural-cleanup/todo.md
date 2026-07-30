@@ -51,6 +51,13 @@
   the entity-level applicability gate over a world-scope victory atom
   ([json.md §2](../../specs/json.md) Applicability, [DEC-entity-gate](../../architecture/decisions.md#dec-entity-gate)),
   never a revived `getVictoryPrereq`. ⚠ Its AI consumer dangles until this lands; that is the census working.
+- Carry the RANGED-BOMBARD / DCM plane into the data, or kill it deliberately. The legacy records author
+  `iRBombardDamage` / `iRBombardDamageLimit` / `iRBombardDamageMaxUnits` / `iDCMBombRange` / `iDCMBombAccuracy`
+  with real values, and the curator emits NOTHING for any of them — there is no key, no kind and no authored
+  entry anywhere in `Assets/Data`, so every consumer of the plane reads a member that cannot exist. ⚠ Unlike the
+  schema-only tags (which no record ever authored and are simply deleted), this data is real, so the choice is a
+  RULING: mint the kinds and curate it, or drop the mechanic on purpose and delete its consumers. ⛔ Do not
+  invent kinds for it inside a consumer sweep.
 - Retire the legacy `largestCity` member once ranked-target-selection EVALUATION lands.
 - Re-home `stronglyRestricted` to a `requires.build` civ-membership gate, when NPC civilizations are wired.
 - Move corp-HQ revenue (`HeadquarterCommerces`) with the corporation rework.
