@@ -129,6 +129,13 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <C
 
 - XML: `Tools/XmlValidator.exe -a`.
 - Python callbacks: `Tools/XMLTools/verify-python-callbacks.py`.
+- **Worklist docs: `python Tools/verify-worklist-docs.py`** — fails `todo.md` / `roadmap.md` when they carry
+  STATE (counts, censuses, `file:line`, recorded verifications, completion markers). ⚑ It exists because
+  [DEC-spec-plus-todo](docs/architecture/decisions.md#dec-spec-plus-todo) was in place and ignored anyway: the
+  todo grew to 785 lines of state and began handing out work that no longer existed, its entries anchored on
+  symbols long deleted. **A rule has to be remembered; a check does not** — the same move that made the
+  duplicated skill reads unsayable rather than forbidden. ⛔ Run it after editing either doc, and if it fires,
+  DELETE the state or move the durable ruling into its owning spec — never widen the tool to accept it.
 
 ### Adding a new source subdirectory
 

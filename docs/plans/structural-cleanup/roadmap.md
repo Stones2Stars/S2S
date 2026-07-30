@@ -187,13 +187,13 @@ migration worklist — [DEC-new-getter-surface](../../architecture/decisions.md#
 
 The rest of the boundary every consumer meets:
 
-- **The DELETION of the legacy getter set** — **622 declarations / 586 distinct names, measured** (wellbeing alone
-  is 23%; 235 name a SOURCE and 255 carry a target-id argument — two axes the package does not have). They are a
-  DELETION LIST plus a COVERAGE CHECKLIST, never a per-getter migration worklist. Two owner rulings fix the
-  direction of what replaces them:
+- **The DELETION of the legacy channel-shaped getter set** on `CvCity`/`CvPlayer`. They are a DELETION LIST plus
+  a COVERAGE CHECKLIST, never a per-getter migration worklist. ⚠ Two axes of that set the package does NOT have:
+  a getter naming its SOURCE, and a getter carrying a target-id argument — so neither converts by re-pointing.
+  Two owner rulings fix the direction of what replaces them:
   - **⛔ NOT the existing getters — ONE NEW COHERENT SURFACE, STANDARDIZED ACROSS THE INFOS (owner).** The design
-    task is **not** "find a replacement for each of the 622": no legacy getter name, signature, or shape survives
-    into it. The 622 are a **DELETION LIST plus a COVERAGE CHECKLIST** — the set of values that must be answerable
+    task is **not** "find a replacement for each one": no legacy getter name, signature, or shape survives
+    into it. They are a **DELETION LIST plus a COVERAGE CHECKLIST** — the set of values that must be answerable
     somewhere on the new surface — and nothing more. The shape comes from ONE standard, taken from the info
     exemplar ([patterns.md § THE GETTER SETUP](../../architecture/patterns.md)) and applied as uniformly as it can
     be made to go: per-GROUP reads parameterized over the group's natural index, ×100 native with no `100` in any
