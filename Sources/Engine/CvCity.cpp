@@ -1985,14 +1985,19 @@ int CvCity::findCommerceRateRank(CommerceTypes eCommerce) const
 		getCommerces(aiOwnCommerces);
 		int iRate = aiOwnCommerces[eCommerce];
 
-		const int iRank = 1 + algo::count_if(GET_PLAYER(getOwner()).cities(),
-			int aiOwnCommerces[NUM_COMMERCE_TYPES];
-			getCommerces(aiOwnCommerces);
-			CvCity::fn::aiOwnCommerces[eCommerce] > iRate
-			int aiOwnCommerces[NUM_COMMERCE_TYPES];
-			getCommerces(aiOwnCommerces);
-			|| (CvCity::fn::aiOwnCommerces[eCommerce] == iRate && CvCity::fn::getID() < getID())
-		);
+		// A rank is a comparison ACROSS cities, so it is scale-invariant and reads the group value directly.
+		// The retired per-channel functor row has no successor: each city answers through its own group read.
+		int iRank = 1;
+		foreach_(const CvCity* pLoopCity, GET_PLAYER(getOwner()).cities())
+		{
+			int aiLoopCommerces[NUM_COMMERCE_TYPES];
+			pLoopCity->getCommerces(aiLoopCommerces);
+			const int iLoopRate = aiLoopCommerces[eCommerce];
+			if (iLoopRate > iRate || (iLoopRate == iRate && pLoopCity->getID() < getID()))
+			{
+				iRank++;
+			}
+		}
 		m_abCommerceRankValid[eCommerce] = true;
 		m_aiCommerceRank[eCommerce] = iRank;
 	}

@@ -1474,17 +1474,11 @@ void CvGameTextMgr::setCityBarHelp(CvWStringBuffer &szString, CvCity* pCity)
 	for (iI = 0; iI < NUM_COMMERCE_TYPES; ++iI)
 	{
 		// BUG - Base Values - start
-		if (bBaseValues)
-		{
-			iRate = aiCityCommerces[(CommerceTypes)iI];
-		}
-		else
-		{
-			// unchanged
-			int aiCityCommerces[NUM_COMMERCE_TYPES];
-			pCity->getCommerces(aiCityCommerces);
-			iRate = aiCityCommerces[(CommerceTypes)iI];
-		}
+		// The base-vs-realized branch is GONE: both halves answer the same value once the base tier stops
+		// being a separate accessor, so the flag no longer distinguishes anything here.
+		int aiCityCommerces[NUM_COMMERCE_TYPES];
+		pCity->getCommerces(aiCityCommerces);
+		iRate = aiCityCommerces[(CommerceTypes)iI];
 		// BUG - Base Values - end
 
 		if (iRate != 0)

@@ -17460,14 +17460,8 @@ void CvPlayerAI::AI_doCivics()
 						int aiOwnCommerces[NUM_COMMERCE_TYPES];
 						getCommerces(aiOwnCommerces);
 						int iTotalEconomyTurnValue = (aiOwnCommerces[COMMERCE_GOLD] / 100 +
-													  int aiOwnCommerces[NUM_COMMERCE_TYPES];
-													  getCommerces(aiOwnCommerces);
 													  aiOwnCommerces[COMMERCE_RESEARCH] / 100 +
-													  int aiOwnCommerces[NUM_COMMERCE_TYPES];
-													  getCommerces(aiOwnCommerces);
 													  aiOwnCommerces[COMMERCE_CULTURE] / 100 +
-													  int aiOwnCommerces[NUM_COMMERCE_TYPES];
-													  getCommerces(aiOwnCommerces);
 													  aiOwnCommerces[COMMERCE_ESPIONAGE] / 100 +
 													  2 * calculateTotalYield(YIELD_PRODUCTION));
 						int	iPerTurnEstimatedIncrease = (iBestCivicsValue - iCurCivicsValue);

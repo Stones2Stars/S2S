@@ -7918,10 +7918,10 @@ int CvPlayer::calculateBaseNetResearch(TechTypes eTech) const
 			return GC.getDefineINT("BASE_RESEARCH_RATE") + aiOwnCommerces[COMMERCE_RESEARCH] / 100;
 		}
 	}
+	int aiEmpireCommerces[NUM_COMMERCE_TYPES];
+	getCommerces(aiEmpireCommerces);
 	int iCalcResearch = getModifiedIntValue(
-		int aiOwnCommerces[NUM_COMMERCE_TYPES];
-		getCommerces(aiOwnCommerces);
-		GC.getDefineINT("BASE_RESEARCH_RATE") + aiOwnCommerces[COMMERCE_RESEARCH] / 100,
+		GC.getDefineINT("BASE_RESEARCH_RATE") + aiEmpireCommerces[COMMERCE_RESEARCH] / 100,
 		getNationalTechResearchModifier(eTech) + calculateResearchModifier(eTech)
 	);
 	if (iCalcResearch < MIN_TOL_FALSE_RESEARCH)

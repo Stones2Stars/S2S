@@ -3063,8 +3063,6 @@ void CvCityAI::AI_chooseProduction()
 	// EXPERIENCE is deliberately kept OUT of the unified BUILDINGFOCUS_ECONOMY pass and decided here. Land XP is
 	// the broad base (it tends to cover all units; domain-specific buildings like the Stable add mounted XP on
 	// top); the exact per-domain mechanic is ambiguous today and out of scope, so this stays on the land base.
-	int aiCityYields[NUM_YIELD_TYPES];
-	getYields(aiCityYields);
 	if (getDomainExperience(DOMAIN_LAND) == 0 && aiCityYields[YIELD_PRODUCTION] / 100 > 4	&& AI_chooseBuilding(BUILDINGFOCUS_EXPERIENCE, (eCurrentEra > 1) ? 0 : 7, 33))
 	{
 		return;
@@ -10648,13 +10646,11 @@ int CvCityAI::AI_cityValue() const
 	}
 	int aiRealizedYields[NUM_YIELD_TYPES];
 	getYields(aiRealizedYields);
+	int aiOwnCommerces[NUM_COMMERCE_TYPES];
+	getCommerces(aiOwnCommerces);
 	return (
-		int aiOwnCommerces[NUM_COMMERCE_TYPES];
-		getCommerces(aiOwnCommerces);
 		aiOwnCommerces[COMMERCE_GOLD]
 		+
-		int aiOwnCommerces[NUM_COMMERCE_TYPES];
-		getCommerces(aiOwnCommerces);
 		aiOwnCommerces[COMMERCE_RESEARCH]
 		+
 		aiRealizedYields[YIELD_PRODUCTION]
