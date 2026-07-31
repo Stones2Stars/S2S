@@ -151,7 +151,6 @@ public:
 	bool isNoTradeTech(int /*TechType */ iIndex) const;
 
 
-	int getBuildingCommerceTechChange(int eIndex, int eBuilding) const;
 
 	int getVictoryCountdown(int /*VictoryTypes*/ eVictory) const;
 	int getVictoryDelay(int /*VictoryTypes*/ eVictory) const;

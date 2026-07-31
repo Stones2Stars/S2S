@@ -8407,8 +8407,6 @@ int CvCity::getBaseYieldRateFromBuilding(const YieldTypes eYield, const Building
 		+
 		building.getYieldPerPopChange(eYield) * getPopulation()
 		+
-		GET_TEAM(getTeam()).getBuildingYieldTechChange(eYield, eBuilding)
-		+
 		getBuildingYieldChange(eBuilding, eYield)
 	);
 }
@@ -9481,7 +9479,6 @@ int CvCity::getBuildingCommerce100(CommerceTypes eIndex) const
 {
 	return (
 		100 * getBuildingCommerce(eIndex)
-		+ getBuildingCommerceTechChange(eIndex)
 		+ getCommercePerPopFromBuildings(eIndex) * getPopulation()
 	);
 }
@@ -9528,8 +9525,7 @@ int CvCity::getBuildingCommerceByBuilding(CommerceTypes eIndex, BuildingTypes eB
 		if (bFull)
 		{
 			// Toffer - These are cached separately, so should not be counted when caching m_aiBuildingCommerce through this function.			
-			iCommerce += (kBuilding.getCommercePerPopChange(eIndex)
-				+ kTeam.getBuildingCommerceTechChange(eIndex, eBuilding)) / 100;
+			iCommerce += kBuilding.getCommercePerPopChange(eIndex) / 100;
 		}
 
 		const ReligionTypes eRel = (ReligionTypes)kBuilding.getReligion();
@@ -16988,107 +16984,6 @@ void CvCity::setBuiltFoodProducedUnit(bool bNewValue)
 {
 	m_bBuiltFoodProducedUnit = bNewValue;
 }
-
-void CvCity::changeBuildingCommerceTechChange(CommerceTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-
-	if (iChange != 0)
-	{
-		m_aiBuildingCommerceTechChange[eIndex] += iChange;
-	}
-}
-
-
-int CvCity::getBuildingCommerceTechChange(CommerceTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-	return m_aiBuildingCommerceTechChange[eIndex];
-}
-
-int CvCity::getBuildingCommerceTechChange(CommerceTypes eIndex, TechTypes eTech) const
-{
-	PROFILE_EXTRA_FUNC();
-	int iCommerce100 = 0;
-	foreach_(const BuildingTypes eTypeX, getHasBuildings())
-	{
-		if (hasFullyActiveBuilding(eTypeX))
-		{
-			foreach_(const TechCommerceArray& pair, GC.getBuildingInfo(eTypeX).getTechCommerceChanges())
-			{
-				if (eTech == pair.first)
-				{
-					iCommerce100 += pair.second[eIndex];
-				}
-			}
-		}
-	}
-	return iCommerce100;
-}
-
-
-int CvCity::getBuildingCommerceTechModifier(CommerceTypes eYield, TechTypes eTech) const
-{
-	PROFILE_EXTRA_FUNC();
-	int iMod = 0;
-	foreach_(const BuildingTypes eTypeX, getHasBuildings())
-	{
-		if (hasFullyActiveBuilding(eTypeX))
-		{
-			foreach_(const TechCommerceArray& pair, GC.getBuildingInfo(eTypeX).getTechCommerceModifiers())
-			{
-				if (eTech == pair.first)
-				{
-					iMod += pair.second[eYield];
-				}
-			}
-		}
-	}
-	return iMod;
-}
-
-
-int CvCity::getBuildingYieldTechChange(YieldTypes eYield, TechTypes eTech) const
-{
-	PROFILE_EXTRA_FUNC();
-	int iYield100 = 0;
-	foreach_(const BuildingTypes eTypeX, getHasBuildings())
-	{
-		if (hasFullyActiveBuilding(eTypeX))
-		{
-			foreach_(const TechArray& pair, GC.getBuildingInfo(eTypeX).getTechYieldChanges())
-			{
-				if (eTech == pair.first)
-				{
-					iYield100 += pair.second[eYield];
-				}
-			}
-		}
-	}
-	return iYield100;
-}
-
-
-int CvCity::getBuildingYieldTechModifier(YieldTypes eYield, TechTypes eTech) const
-{
-	PROFILE_EXTRA_FUNC();
-	int iMod = 0;
-	foreach_(const BuildingTypes eTypeX, getHasBuildings())
-	{
-		if (hasFullyActiveBuilding(eTypeX))
-		{
-			foreach_(const TechArray& pair, GC.getBuildingInfo(eTypeX).getTechYieldModifiers())
-			{
-				if (eTech == pair.first)
-				{
-					iMod += pair.second[eYield];
-				}
-			}
-		}
-	}
-	return iMod;
-}
-
 
 void CvCity::changeUnitProductionModifier(const UnitTypes eUnit, const int iChange)
 {

@@ -386,11 +386,6 @@ public:
 	void setNoTradeTech(short iTech, bool bNewValue);
 
 
-	int getBuildingYieldTechChange(const YieldTypes eYield, const BuildingTypes eBuilding) const;
-	int getBuildingYieldTechModifier(const YieldTypes eYield, const BuildingTypes eBuilding) const;
-	int getBuildingCommerceTechChange(const CommerceTypes eIndex, const BuildingTypes eBuilding) const;
-	int getBuildingCommerceTechModifier(const CommerceTypes eIndex, const BuildingTypes eBuilding) const;
-
 	void addPropertiesAllCities(const CvProperties* pProp);
 	void subtractPropertiesAllCities(const CvProperties* pProp);
 

@@ -6509,7 +6509,7 @@ int CvCityAI::AI_buildingYieldValue(YieldTypes eYield, BuildingTypes eBuilding, 
 		kBuilding.expectedYieldModifiers(
 			getCityContext(), kOwner.getEmpireContext(), plotGroup(getOwner()), aYieldModifiers);
 
-		int iMod = aYieldModifiers[eYield] / 100 + GET_TEAM(getTeam()).getBuildingYieldTechModifier(eYield, eBuilding);
+		int iMod = aYieldModifiers[eYield] / 100;
 
 		// The candidate would switch the city's POWER on, which is not its own deposit but a state flip that
 		// lets the city's power-gated modifier apply. `providesPower` is the authored attribute (json §8).
@@ -12346,7 +12346,6 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 		(
 			buildingModifiesGenericYields
 			|| kBuilding.getYieldModifier(YIELD_COMMERCE) > 0
-			|| GET_TEAM(getTeam()).getBuildingYieldTechModifier(YIELD_COMMERCE, eBuilding) > 0
 			|| kBuilding.getPowerYieldModifier(YIELD_COMMERCE) > 0
 			|| kBuilding.getRiverPlotYieldChange(YIELD_COMMERCE) > 0
 			|| getBaseYieldRateFromBuilding(YIELD_COMMERCE, eBuilding) > 0
@@ -12359,7 +12358,6 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 		if (buildingModifiesGenericYields
 			|| bHasTradeRouteValue
 			|| kBuilding.getScalar(SCALAR_FOOD_KEPT, CASC_SCOPE_CITY, CASC_UNIT_PERCENT) > 0
-			|| GET_TEAM(getTeam()).getBuildingYieldTechModifier(YIELD_FOOD, eBuilding) > 0
 			|| kBuilding.getYieldModifier(YIELD_FOOD) > 0
 			|| kBuilding.getRiverPlotYieldChange(YIELD_FOOD) > 0
 			|| getBaseYieldRateFromBuilding(YIELD_FOOD, eBuilding) > 0)
@@ -12372,7 +12370,6 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 		if (buildingModifiesGenericYields
 			|| bHasTradeRouteValue
 			|| kBuilding.getYieldModifier(YIELD_PRODUCTION) > 0
-			|| GET_TEAM(getTeam()).getBuildingYieldTechModifier(YIELD_PRODUCTION, eBuilding) > 0
 			|| kBuilding.getPowerYieldModifier(YIELD_PRODUCTION) > 0
 			|| kBuilding.getRiverPlotYieldChange(YIELD_PRODUCTION) > 0
 			|| kBuilding.getHurryCostModifier() < 0
@@ -12395,8 +12392,7 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 			kBuilding.getCommerceModifier(COMMERCE_GOLD) > 0 ||
 			kBuilding.getCommerceModifier(COMMERCE_GOLD, CASC_SCOPE_EMPIRE) > 0 ||
 			kBuilding.getSpecialistExtraCommerce(COMMERCE_GOLD) > 0 ||
-			kBuilding.getStateReligionCommerce(COMMERCE_GOLD) > 0 ||
-			GET_TEAM(getTeam()).getBuildingCommerceTechModifier(COMMERCE_GOLD, eBuilding) > 0)
+			kBuilding.getStateReligionCommerce(COMMERCE_GOLD) > 0)
 		{
 			return true;
 		}
@@ -12411,8 +12407,7 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 			kBuilding.getCommerceModifier(COMMERCE_RESEARCH) > 0 ||
 			kBuilding.getCommerceModifier(COMMERCE_RESEARCH, CASC_SCOPE_EMPIRE) > 0 ||
 			kBuilding.getSpecialistExtraCommerce(COMMERCE_RESEARCH) > 0 ||
-			kBuilding.getStateReligionCommerce(COMMERCE_RESEARCH) > 0 ||
-			GET_TEAM(getTeam()).getBuildingCommerceTechModifier(COMMERCE_RESEARCH, eBuilding) > 0)
+			kBuilding.getStateReligionCommerce(COMMERCE_RESEARCH) > 0)
 		{
 			return true;
 		}
@@ -12426,8 +12421,7 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 			kBuilding.getCommerceModifier(COMMERCE_CULTURE) > 0 ||
 			kBuilding.getCommerceModifier(COMMERCE_CULTURE, CASC_SCOPE_EMPIRE) > 0 ||
 			kBuilding.getSpecialistExtraCommerce(COMMERCE_CULTURE) > 0 ||
-			kBuilding.getStateReligionCommerce(COMMERCE_CULTURE) > 0 ||
-			GET_TEAM(getTeam()).getBuildingCommerceTechModifier(COMMERCE_CULTURE, eBuilding) > 0)
+			kBuilding.getStateReligionCommerce(COMMERCE_CULTURE) > 0)
 		{
 			return true;
 		}
@@ -12568,8 +12562,7 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 			kBuilding.getCommerceModifier(COMMERCE_ESPIONAGE) > 0 ||
 			kBuilding.getCommerceModifier(COMMERCE_ESPIONAGE, CASC_SCOPE_EMPIRE) > 0 ||
 			kBuilding.getSpecialistExtraCommerce(COMMERCE_ESPIONAGE) > 0 ||
-			kBuilding.getStateReligionCommerce(COMMERCE_ESPIONAGE) > 0 ||
-			GET_TEAM(getTeam()).getBuildingCommerceTechModifier(COMMERCE_ESPIONAGE, eBuilding) > 0)
+			kBuilding.getStateReligionCommerce(COMMERCE_ESPIONAGE) > 0)
 		{
 			return true;
 		}
@@ -12629,10 +12622,7 @@ int CvCityAI::getBuildingCommerceValue(BuildingTypes eBuilding, int iI, int* aiF
 		getCityContext(), kOwner.getEmpireContext(), plotGroup(getOwner()), aYieldModifiers);
 
 	const int iSemiModifiedBase = (
-		getPlotYield(YIELD_COMMERCE) * (
-			aYieldModifiers[YIELD_COMMERCE] / 100
-			+ GET_TEAM(getTeam()).getBuildingYieldTechModifier(YIELD_COMMERCE, eBuilding)
-		)
+		getPlotYield(YIELD_COMMERCE) * (aYieldModifiers[YIELD_COMMERCE] / 100)
 	);
 	int iTempValue = iSemiModifiedBase * kOwner.getCommercePercent((CommerceTypes)iI) / 3000;
 
@@ -12671,8 +12661,7 @@ int CvCityAI::getBuildingCommerceValue(BuildingTypes eBuilding, int iI, int* aiF
 	const int iCommerceModifier =
 		kBuilding.expectedModifier(
 			infoCommerceFamily((CommerceTypes)iI), CHANNEL_AMOUNT, CASC_UNIT_PERCENT,
-			getCityContext(), kOwner.getEmpireContext(), plotGroup(getOwner())) / 100
-		+ GET_TEAM(getTeam()).getBuildingCommerceTechModifier((CommerceTypes)iI, eBuilding);
+			getCityContext(), kOwner.getEmpireContext(), plotGroup(getOwner())) / 100;
 
 	if (aiBaseCommerceRate[iI] == MAX_INT)
 	{

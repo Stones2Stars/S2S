@@ -1417,14 +1417,6 @@ public:
 	int getAssignedSpecialistCount() const;
 
 
-	void changeBuildingCommerceTechChange(CommerceTypes eIndex, int iChange);
-	int getBuildingCommerceTechChange(CommerceTypes eIndex) const;
-	int getBuildingCommerceTechChange(CommerceTypes eIndex, TechTypes eTech) const;
-	int getBuildingCommerceTechModifier(CommerceTypes eYield, TechTypes eTech) const;
-
-	int getBuildingYieldTechChange(YieldTypes eYield, TechTypes eTech) const;
-	int getBuildingYieldTechModifier(YieldTypes eYield, TechTypes eTech) const;
-
 	bool isAutomatedCanBuild(BuildTypes eBuild) const;
 	void setAutomatedCanBuild(BuildTypes eBuild, bool bNewValue);
 

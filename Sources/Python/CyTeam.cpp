@@ -569,11 +569,6 @@ bool CyTeam::isNoTradeTech(int /*TechTypes*/ iIndex) const
 }
 
 
-int CyTeam::getBuildingCommerceTechChange(int eIndex, int eBuilding) const
-{
-	return m_pTeam->getBuildingCommerceTechChange((CommerceTypes)eIndex, (BuildingTypes)eBuilding);
-}
-
 int CyTeam::getVictoryCountdown(int /*VictoryTypes*/ eVictory) const
 {
 	return m_pTeam->getVictoryCountdown((VictoryTypes)eVictory);

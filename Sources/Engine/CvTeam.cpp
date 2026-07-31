@@ -4933,17 +4933,6 @@ void CvTeam::setHasTech(TechTypes eTech, bool bNewValue, PlayerTypes ePlayer, bo
 
 			foreach_(CvCity * cityX, player.cities())
 			{
-				// Toffer - Buildings may change commerce output with tech.
-				//	Not part of processTech to avoid it applying twice during recalc, would apply in processBuilding first then in processTech again after.
-				for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
-				{
-					cityX->changeBuildingCommerceTechChange((CommerceTypes)iJ, iChange * cityX->getBuildingCommerceTechChange((CommerceTypes)iJ, eTech));
-					cityX->changeBuildingCommerceModifier((CommerceTypes)iJ, iChange * cityX->getBuildingCommerceTechModifier((CommerceTypes)iJ, eTech));
-				}
-				for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
-				{
-					cityX->changeBuildingExtraYield((YieldTypes)iJ, iChange * cityX->getBuildingYieldTechChange((YieldTypes)iJ, eTech));
-				}
 				// A new tech can effect best plot build decisions so mark stale in all cities
 				cityX->AI_markBestBuildValuesStale();
 			}
@@ -5297,65 +5286,6 @@ void CvTeam::setNoTradeTech(const short iTech, const bool bNewValue)
 	}
 }
 
-
-int CvTeam::getBuildingYieldTechChange(const YieldTypes eYield, const BuildingTypes eBuilding) const
-{
-	PROFILE_EXTRA_FUNC();
-	int iYield100 = 0;
-	foreach_(const TechArray & pair, GC.getBuildingInfo(eBuilding).getTechYieldChanges())
-	{
-		if (isHasTech(pair.first))
-		{
-			iYield100 += pair.second[eYield];
-		}
-	}
-	return iYield100;
-}
-
-
-int CvTeam::getBuildingYieldTechModifier(const YieldTypes eYield, const BuildingTypes eBuilding) const
-{
-	PROFILE_EXTRA_FUNC();
-	int iMod = 0;
-	foreach_(const TechArray & pair, GC.getBuildingInfo(eBuilding).getTechYieldModifiers())
-	{
-		if (isHasTech(pair.first))
-		{
-			iMod += pair.second[eYield];
-		}
-	}
-	return iMod;
-}
-
-
-int CvTeam::getBuildingCommerceTechChange(const CommerceTypes eIndex, const BuildingTypes eBuilding) const
-{
-	PROFILE_EXTRA_FUNC();
-	int iCommerce100 = 0;
-	foreach_(const TechCommerceArray & pair, GC.getBuildingInfo(eBuilding).getTechCommerceChanges())
-	{
-		if (isHasTech(pair.first))
-		{
-			iCommerce100 += pair.second[eIndex];
-		}
-	}
-	return iCommerce100;
-}
-
-
-int CvTeam::getBuildingCommerceTechModifier(const CommerceTypes eIndex, const BuildingTypes eBuilding) const
-{
-	PROFILE_EXTRA_FUNC();
-	int iMod = 0;
-	foreach_(const TechCommerceArray & pair, GC.getBuildingInfo(eBuilding).getTechCommerceModifiers())
-	{
-		if (isHasTech(pair.first))
-		{
-			iMod += pair.second[eIndex];
-		}
-	}
-	return iMod;
-}
 
 // Protected Functions...
 
