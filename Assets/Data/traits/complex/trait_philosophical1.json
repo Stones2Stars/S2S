@@ -1,0 +1,162 @@
+{
+ "type": "TRAIT_PHILOSOPHICAL1",
+ "excludes": [
+  "TRAIT_POPULIST1"
+ ],
+ "production": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_ENGINEER": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_ENGINEER": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_CITIZEN": {
+     "flat": -1
+    },
+    "SPECIALIST_SLAVES": {
+     "flat": -1
+    },
+    "SPECIALIST_SETTLED_CITIZEN": {
+     "flat": -1
+    },
+    "SPECIALIST_SETTLED_SLAVE": {
+     "flat": -1
+    },
+    "SPECIALIST_ANDROID_WORKER": {
+     "flat": -1
+    }
+   },
+   "cities": {
+    "flat": [
+     {
+      "value": 1,
+      "per": {
+       "type": "SPECIALIST",
+       "scope": "city"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "flat": 1,
+   "percent": 5
+  }
+ },
+ "research": {
+  "empire": {
+   "flat": 1,
+   "percent": 5
+  }
+ },
+ "growth": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": 50,
+   "flat": 2
+  }
+ },
+ "freeSpecialists": {
+  "empire": {
+   "any": [
+    {
+     "value": 1,
+     "per": {
+      "type": "NATIONAL_WONDER",
+      "scope": "city"
+     }
+    }
+   ]
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": 10
+   }
+  }
+ },
+ "hurry": {
+  "empire": {
+   "anger": {
+    "percent": 10
+   }
+  }
+ },
+ "durations": {
+  "empire": {
+   "civicAnarchy": {
+    "percent": 5
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 4,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_PHILOSOPHICAL",
+  "priority": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": -1
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitPhilosophical.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_COMPLEX_PHILOSOPHICAL1",
+  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_PHILOSOPHICAL1_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_PHILOSOPHICAL_STRATEGY",
+  "impurePropertyManipulators": true
+ }
+}

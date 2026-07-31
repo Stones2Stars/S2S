@@ -1,0 +1,293 @@
+{
+ "type": "TRAIT_FINANCIAL3",
+ "excludes": [
+  "TRAIT_GREEDY1"
+ ],
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_COMMUNICATIONS_SATELLITE": {
+     "percent": 25
+    },
+    "BUILDING_E_BANK": {
+     "percent": 25
+    },
+    "BUILDING_DIGITAL_OFFICES": {
+     "percent": 25
+    },
+    "BUILDING_MARKET_RESEARCH": {
+     "percent": 25
+    },
+    "BUILDING_DIGITAL_ADVERTISING_FIRM": {
+     "percent": 25
+    },
+    "BUILDING_E_STOCK_MARKET": {
+     "percent": 25
+    },
+    "BUILDING_COMMERCIAL_SPACEPORT": {
+     "percent": 25
+    },
+    "BUILDING_MEGATOWER_MALL_LEVEL": {
+     "percent": 25
+    },
+    "BUILDING_MEGATOWER_OFFICE_LEVEL": {
+     "percent": 25
+    },
+    "BUILDING_CORPORATE_HIVE": {
+     "percent": 25
+    },
+    "BUILDING_SHOPPING_DRONE_CONTROL_CENTER": {
+     "percent": 25
+    },
+    "BUILDING_TELEPORT_BOOTH": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "researchRate": {
+  "empire": {
+   "techs": {
+    "TECH_SPACE_TOURISM": {
+     "percent": 20
+    },
+    "TECH_MEDIA_PSYCHOLOGY": {
+     "percent": 20
+    },
+    "TECH_ONLINE_COMMUNITY": {
+     "percent": 20
+    },
+    "TECH_DIGITIZATION": {
+     "percent": 20
+    },
+    "TECH_COMMERCIAL_SPACEFLIGHT": {
+     "percent": 20
+    },
+    "TECH_DIRECT_MERCHANDISING": {
+     "percent": 20
+    },
+    "TECH_NANO_ARCHITECTURE": {
+     "percent": 20
+    },
+    "TECH_MEGACORPORATIONS": {
+     "percent": 20
+    },
+    "TECH_AUGMENTED_CONSUMABLES": {
+     "percent": 20
+    },
+    "TECH_LUNAR_TOURISM": {
+     "percent": 20
+    },
+    "TECH_MEDIA_HIVEMIND": {
+     "percent": 20
+    },
+    "TECH_AUTOMATED_URBANIZATION": {
+     "percent": 20
+    },
+    "TECH_PLANETARY_ECONOMICS": {
+     "percent": 20
+    },
+    "TECH_LUNAR_TRADE": {
+     "percent": 20
+    },
+    "TECH_PLANETARY_TRADE": {
+     "percent": 20
+    },
+    "TECH_KNOWLEDGE_MERCANTILISM": {
+     "percent": 20
+    },
+    "TECH_CLOSED_ECONOMIES": {
+     "percent": 20
+    },
+    "TECH_INTERSTELLAR_TRADE": {
+     "percent": 20
+    },
+    "TECH_SPACETIME_ECONOMICS": {
+     "percent": 20
+    },
+    "TECH_CONTROLLED_INFLATION": {
+     "percent": 20
+    },
+    "TECH_NONSTANDARD_MATHEMATICS": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_MERCHANT": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_MERCHANT": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "flat": 6,
+   "percent": [
+    5,
+    {
+     "value": 5,
+     "enabled": "IS_CAPITAL"
+    }
+   ],
+   "specialists": {
+    "SPECIALIST_NOBLE": {
+     "flat": 2
+    },
+    "SPECIALIST_ANDROID_WORKER": {
+     "flat": 1
+    }
+   },
+   "cities": {
+    "flat": [
+     {
+      "value": 1,
+      "per": {
+       "type": "SPECIALIST",
+       "scope": "city"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "growth": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": 10,
+   "units": {
+    "UNIT_MERCHANT": {
+     "flat": 6
+    }
+   }
+  }
+ },
+ "experience": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "espionageDefense": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "corporation": {
+    "percent": -30
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": -20
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": -15
+  }
+ },
+ "improvementUpgradeRate": {
+  "empire": {
+   "percent": -25
+  }
+ },
+ "durations": {
+  "empire": {
+   "civicAnarchy": {
+    "percent": 5
+   }
+  }
+ },
+ "defense": {
+  "empire": {
+   "amount": {
+    "percent": -5
+   },
+   "bombardDefense": {
+    "percent": -5
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 2,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_FINANCIAL",
+  "priority": 3
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": -3
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 19
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": -2
+   },
+   {
+    "FLAVOR_ESPIONAGE": -1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitFinancial3.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_COMPLEX_FINANCIAL3",
+  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_FINANCIAL3_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_FINANCIAL_STRATEGY",
+  "impurePropertyManipulators": true
+ },
+ "costs": {
+  "empire": {
+   "hurry": {
+    "percent": -25
+   }
+  }
+ }
+}

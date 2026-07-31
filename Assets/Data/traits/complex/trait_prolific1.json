@@ -1,0 +1,109 @@
+{
+ "type": "TRAIT_PROLIFIC1",
+ "enables": {
+  "traitsAnd": [
+   "TRAIT_PROLIFIC2"
+  ]
+ },
+ "excludes": [
+  "TRAIT_GRIM1"
+ ],
+ "food": {
+  "empire": {
+   "flat": 1,
+   "percent": 5
+  }
+ },
+ "commerce": {
+  "empire": {
+   "flat": 1,
+   "percent": 5
+  }
+ },
+ "gold": {
+  "empire": {
+   "flat": -1,
+   "percent": -5,
+   "specialists": {
+    "SPECIALIST_MERCHANT": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_MERCHANT": {
+     "flat": -1
+    },
+    "SPECIALIST_NOBLE": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "growth": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "hurry": {
+  "empire": {
+   "anger": {
+    "percent": 25
+   }
+  }
+ },
+ "cityFounding": {
+  "empire": {
+   "startCulture": {
+    "flat": 5
+   },
+   "startPopulation": {
+    "flat": 1
+   }
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_PROLIFIC",
+  "priority": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 0
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": -1
+   },
+   {
+    "FLAVOR_GOLD": -4
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 13
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitProlific.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_PROLIFIC1",
+  "civilopedia": "TXT_KEY_TRAIT_PROLIFIC1_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_PROLIFIC_STRATEGY"
+ }
+}

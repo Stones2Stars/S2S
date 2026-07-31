@@ -1,0 +1,161 @@
+{
+ "type": "TRAIT_GRIM3",
+ "excludes": [
+  "TRAIT_PROLIFIC1"
+ ],
+ "food": {
+  "empire": {
+   "flat": -1,
+   "percent": -5
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "military": {
+    "percent": -15
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "flat": -1,
+   "percent": -5
+  }
+ },
+ "gold": {
+  "empire": {
+   "flat": 1,
+   "percent": 5,
+   "specialists": {
+    "SPECIALIST_LAWYER": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_STATESMAN": {
+     "flat": 1
+    },
+    "SPECIALIST_NOBLE": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": -1,
+   "cities": {
+    "flat": -1,
+    "max": "TARGET_NUM_CITIES",
+    "orderedByDescending": "CITY_SIZE"
+   }
+  }
+ },
+ "growth": {
+  "empire": {
+   "percent": 20
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": -10
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": 15
+  }
+ },
+ "conscript": {
+  "empire": {
+   "flat": -2
+  }
+ },
+ "capture": {
+  "empire": {
+   "probability": {
+    "percent": -10
+   },
+   "resistance": {
+    "percent": -20
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 10
+   },
+   "numCities": {
+    "percent": 10
+   }
+  }
+ },
+ "hurry": {
+  "empire": {
+   "anger": {
+    "percent": 25
+   }
+  }
+ },
+ "goldenAge": {
+  "empire": {
+   "percent": -10
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": 10
+   }
+  }
+ },
+ "defense": {
+  "empire": {
+   "amount": {
+    "percent": 15
+   }
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_GRIM",
+  "priority": -3
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": -3
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 12
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitGrim3.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_GRIM3",
+  "civilopedia": "TXT_KEY_TRAIT_GRIM3_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_GRIM_STRATEGY",
+  "negativeTrait": true
+ }
+}

@@ -1,0 +1,229 @@
+{
+ "type": "TRAIT_SEAFARING",
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_NAVAL_ACADEMY": {
+     "percent": 20
+    },
+    "BUILDING_DRYDOCK": {
+     "percent": 20
+    },
+    "BUILDING_NAVAL_YARD": {
+     "percent": 20
+    },
+    "BUILDING_BOATYARD": {
+     "percent": 20
+    },
+    "BUILDING_MARINA": {
+     "percent": 20
+    },
+    "BUILDING_SAIL_WEAVER": {
+     "percent": 20
+    },
+    "BUILDING_SHIPWRIGHT": {
+     "percent": 20
+    },
+    "BUILDING_FISHERMANS_HUT": {
+     "percent": 20
+    },
+    "BUILDING_FISH_TRAPS": {
+     "percent": 20
+    },
+    "BUILDING_SHIPYARD": {
+     "percent": 20
+    },
+    "BUILDING_RIVER_PORT": {
+     "percent": 20
+    },
+    "BUILDING_RIVER_AUTHORITY": {
+     "percent": 20
+    },
+    "BUILDING_STEAMBOAT_PORT": {
+     "percent": 20
+    },
+    "BUILDING_LIGHTHOUSE": {
+     "percent": 20
+    },
+    "BUILDING_FACTORY_SAILS": {
+     "percent": 20
+    },
+    "BUILDING_MANUFACTURING_DISTRICT": {
+     "percent": 20
+    },
+    "BUILDING_AQUAFARM": {
+     "percent": 20
+    },
+    "BUILDING_FERRY_TERMINAL": {
+     "percent": 20
+    },
+    "BUILDING_RIVER_ADMINISTRATION": {
+     "percent": 20
+    },
+    "BUILDING_OCEAN_ADMINISTRATION": {
+     "percent": 20
+    }
+   },
+   "units": {
+    "UNIT_WORKBOAT": {
+     "percent": 25
+    },
+    "UNIT_NEANDERTHAL_WORKBOAT": {
+     "percent": 25
+    },
+    "UNIT_WORKBOAT_CLASSIC": {
+     "percent": 25
+    },
+    "UNIT_WORKBOAT_MIDDLE": {
+     "percent": 25
+    },
+    "UNIT_WORKBOAT_MODERN": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": -20
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": 10
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": "HAS_COAST"
+    }
+   ]
+  }
+ },
+ "workRate": {
+  "empire": {
+   "builds": {
+    "BUILD_BEACON_CORAL": {
+     "percent": 50
+    },
+    "BUILD_BEACON_REEF": {
+     "percent": 50
+    },
+    "BUILD_LIGHTHOUSE_CORAL": {
+     "percent": 50
+    },
+    "BUILD_LIGHTHOUSE_REEF": {
+     "percent": 50
+    },
+    "BUILD_HARVEST_KELP": {
+     "percent": 50
+    },
+    "BUILD_HARVEST_KELP_KILL": {
+     "percent": 50
+    }
+   }
+  }
+ },
+ "improvementUpgradeRate": {
+  "empire": {
+   "improvements": {
+    "IMPROVEMENT_BEACON_CORAL": {
+     "percent": 50
+    },
+    "IMPROVEMENT_BEACON_REEF": {
+     "percent": 50
+    },
+    "IMPROVEMENT_SEED_CAMP": {
+     "percent": -40
+    }
+   }
+  }
+ },
+ "defense": {
+  "empire": {
+   "amount": {
+    "percent": -20
+   }
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_AMPHIBIOUS"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_ASSAULT_MECH",
+       "UNITCOMBAT_CLONES",
+       "UNITCOMBAT_GUN",
+       "UNITCOMBAT_HELICOPTER",
+       "UNITCOMBAT_HITECH",
+       "UNITCOMBAT_MELEE"
+      ]
+     }
+    }
+   }
+  },
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_NAVIGATION1"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_DIESEL_SHIPS",
+       "UNITCOMBAT_NUCLEAR_SHIPS",
+       "UNITCOMBAT_STEAM_SHIPS",
+       "UNITCOMBAT_SUBMARINE",
+       "UNITCOMBAT_WOODEN_SHIPS"
+      ]
+     }
+    }
+   }
+  }
+ ],
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_SEAFARING"
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 7
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_GOLD": 1
+   }
+  ],
+  "behaviour": {
+   "coastalAIInfluence": true
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitSeafaring.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_SEAFARING",
+  "civilopedia": "TXT_KEY_TRAIT_SEAFARING_PEDIA",
+  "shortDescription": "TXT_KEY_TRAIT_SEAFARING_SHORT"
+ }
+}

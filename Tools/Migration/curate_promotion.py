@@ -599,7 +599,7 @@ def main():
     if args.write:
         base = os.path.join(REPO, "Assets", "Data", "promotions")
         os.makedirs(base, exist_ok=True)
-        wipe_entity_json(base, recurse=False)   # drop-before-rewrite (keeps _order.json)
+        wipe_entity_json(base, recurse=False, expected=len(results))   # drop-before-rewrite (keeps _order.json)
         for typ, obj in results.items():
             with open(os.path.join(base, typ.lower() + ".json"), "w") as fp:
                 json.dump(obj, fp, indent=1, ensure_ascii=False)

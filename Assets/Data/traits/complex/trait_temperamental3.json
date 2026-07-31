@@ -1,0 +1,133 @@
+{
+ "type": "TRAIT_TEMPERAMENTAL3",
+ "excludes": [
+  "TRAIT_CHARISMATIC1"
+ ],
+ "production": {
+  "empire": {
+   "flat": -1,
+   "percent": -5
+  }
+ },
+ "commerce": {
+  "empire": {
+   "flat": -1,
+   "percent": -5
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": -2,
+   "cities": {
+    "flat": -1,
+    "max": "TARGET_NUM_CITIES",
+    "orderedByDescending": "CITY_SIZE"
+   }
+  }
+ },
+ "experience": {
+  "empire": {
+   "levelModifier": {
+    "percent": 10
+   }
+  }
+ },
+ "conscript": {
+  "empire": {
+   "flat": -2
+  }
+ },
+ "espionageDefense": {
+  "empire": {
+   "percent": 20
+  }
+ },
+ "hurry": {
+  "empire": {
+   "anger": {
+    "percent": 25
+   }
+  }
+ },
+ "goldenAge": {
+  "empire": {
+   "percent": -20
+  }
+ },
+ "durations": {
+  "empire": {
+   "civicAnarchy": {
+    "percent": -30
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": 20
+   },
+   "attitude": {
+    "flat": -2
+   },
+   "enemyWarWeariness": {
+    "percent": 20
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": -1,
+    "per": {
+     "type": "POPULATION",
+     "each": 2,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_TEMPERAMENTAL",
+  "priority": -3
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   },
+   {
+    "FLAVOR_ESPIONAGE": -1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitTemperamental3.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_COMPLEX_TEMPERAMENTAL3",
+  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_TEMPERAMENTAL3_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_TEMPERAMENTAL_STRATEGY",
+  "negativeTrait": true,
+  "impurePropertyManipulators": true
+ }
+}

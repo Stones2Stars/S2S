@@ -1,0 +1,118 @@
+{
+ "type": "TRAIT_CHARISMATIC",
+ "excludes": [
+  "TRAIT_TEMPERAMENTAL"
+ ],
+ "production": {
+  "empire": {
+   "flat": 1,
+   "percent": 5
+  }
+ },
+ "commerce": {
+  "empire": {
+   "flat": 1,
+   "percent": 5
+  }
+ },
+ "espionage": {
+  "empire": {
+   "flat": -2,
+   "percent": -10,
+   "specialists": {
+    "SPECIALIST_NOBLE": {
+     "flat": -1
+    },
+    "SPECIALIST_CELEBRITY": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 2,
+   "cities": {
+    "flat": [
+     {
+      "value": 1,
+      "unit": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "experience": {
+  "empire": {
+   "levelModifier": {
+    "percent": -20
+   }
+  }
+ },
+ "conscript": {
+  "empire": {
+   "flat": 2
+  }
+ },
+ "espionageDefense": {
+  "empire": {
+   "percent": -20
+  }
+ },
+ "goldenAge": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": -20
+   },
+   "attitude": {
+    "flat": 2
+   }
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_CHARISMATIC"
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 9
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 4
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 7
+   },
+   {
+    "FLAVOR_ESPIONAGE": -8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitCharismatic.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_COMPLEX_CHARISMATIC",
+  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_CHARISMATIC_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_CHARISMATIC_STRATEGY"
+ }
+}

@@ -1,0 +1,112 @@
+{
+ "type": "TRAIT_BARBARIC",
+ "buildRate": {
+  "empire": {
+   "military": {
+    "percent": 15
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": -10
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": -10
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": -10
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "experience": {
+  "empire": {
+   "flat": 2
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "attitude": {
+    "flat": -2
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 3,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_COMBAT1"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_GUN",
+       "UNITCOMBAT_MELEE"
+      ]
+     }
+    }
+   }
+  }
+ ],
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_BARBARIC"
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": -1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 3
+   },
+   {
+    "FLAVOR_MILITARY": -3
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitBarbaric.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_BARBARIC",
+  "civilopedia": "TXT_KEY_TRAIT_BARBARIC_PEDIA",
+  "shortDescription": "TXT_KEY_TRAIT_BARBARIC_SHORT",
+  "negativeTrait": true,
+  "impurePromotions": true
+ }
+}

@@ -1,0 +1,256 @@
+{
+ "type": "TRAIT_SPIRITUAL",
+ "production": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_PRIEST": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_ZIGGURAT": {
+     "percent": 20
+    },
+    "BUILDING_CRISTO_REDENTOR": {
+     "percent": 20
+    },
+    "BUILDING_SEMINARY": {
+     "percent": 20
+    },
+    "BUILDING_UNIVERSAL_CHURCH": {
+     "percent": 20
+    },
+    "BUILDING_CANDLEMAKERS_SHOP": {
+     "percent": 20
+    },
+    "BUILDING_GRAVEYARD": {
+     "percent": 20
+    },
+    "BUILDING_MAUSOLEUM": {
+     "percent": 20
+    },
+    "BUILDING_TUMULUS": {
+     "percent": 20
+    },
+    "BUILDING_TEMPLE_OF_OSIRIS": {
+     "percent": 20
+    },
+    "BUILDING_TEMPLE_OF_ISIS": {
+     "percent": 20
+    },
+    "BUILDING_TEMPLE_OF_SETH": {
+     "percent": 20
+    },
+    "BUILDING_TLALOCS_ALTAR": {
+     "percent": 20
+    },
+    "BUILDING_FACTORY_CANDLES": {
+     "percent": 20
+    },
+    "BUILDING_MANUFACTURING_DISTRICT": {
+     "percent": 20
+    },
+    "BUILDING_FUNERARY_SERVICES": {
+     "percent": 20
+    },
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT": {
+     "percent": 20
+    },
+    "BUILDING_ANCIENT_CUSTOMS": {
+     "percent": 20
+    }
+   },
+   "specialBuildings": {
+    "SPECIALBUILDING_TEMPLE": {
+     "percent": 100
+    },
+    "SPECIALBUILDING_MONASTERY": {
+     "percent": 25
+    },
+    "SPECIALBUILDING_MONASTERY_II": {
+     "percent": 25
+    },
+    "SPECIALBUILDING_CATHEDRAL": {
+     "percent": 10
+    },
+    "SPECIALBUILDING_PANTHEON": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_PRIEST": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_SCIENTIST": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "buildings": {
+    "BUILDING_JEWISH_MONASTERY": {
+     "flat": 1
+    },
+    "BUILDING_CHRISTIAN_MONASTERY": {
+     "flat": 1
+    },
+    "BUILDING_ISLAMIC_MONASTERY": {
+     "flat": 1
+    },
+    "BUILDING_HINDU_MONASTERY": {
+     "flat": 1
+    },
+    "BUILDING_BUDDHIST_MONASTERY": {
+     "flat": 1
+    },
+    "BUILDING_CONFUCIAN_MONASTERY": {
+     "flat": 1
+    },
+    "BUILDING_TAOIST_MONASTERY": {
+     "flat": 1
+    },
+    "BUILDING_HELLENIC_GYMNASIA": {
+     "flat": 1
+    },
+    "BUILDING_ZOROASTRIAN_SHRINE": {
+     "flat": 1
+    },
+    "BUILDING_TEMPLE_OF_CHONS": {
+     "flat": 1
+    },
+    "BUILDING_CALMACEC": {
+     "flat": 1
+    },
+    "BUILDING_NATURE_CIRCLE_OF_POWER": {
+     "flat": 1
+    },
+    "BUILDING_JAIN_MONASTERY": {
+     "flat": 1
+    },
+    "BUILDING_TEMPLE_OF_AN": {
+     "flat": 1
+    },
+    "BUILDING_LDS_MISSIONARY_TRAINING_CENTRE": {
+     "flat": 1
+    },
+    "BUILDING_SCIENTOLOGY_MONASTERY": {
+     "flat": 1
+    },
+    "BUILDING_INVOCATION_HUT": {
+     "flat": 1
+    },
+    "BUILDING_SHINTO_MONASTERY": {
+     "flat": 1
+    },
+    "BUILDING_DIVINE_MONUMENT": {
+     "flat": 1
+    },
+    "BUILDING_BAHAI_MONASTERY": {
+     "flat": 1
+    },
+    "BUILDING_ASATRU_MONASTERY": {
+     "flat": 1
+    },
+    "BUILDING_ANDEAN_MONASTERY": {
+     "flat": 1
+    }
+   },
+   "cities": {
+    "flat": [
+     {
+      "value": -3,
+      "religion": "!IS_STATE_RELIGION"
+     }
+    ]
+   }
+  }
+ },
+ "durations": {
+  "empire": {
+   "religiousAnarchy": {
+    "percent": -75
+   }
+  }
+ },
+ "stateReligion": {
+  "empire": {
+   "greatPeopleRate": {
+    "percent": 30
+   },
+   "happiness": {
+    "flat": 2
+   },
+   "buildingProduction": {
+    "percent": 15
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "holyCityGood": {
+    "flat": 1
+   },
+   "goodReligionMod": {
+    "percent": 0.5
+   }
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_SPIRITUAL"
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 6
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitSpiritual.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_SPIRITUAL",
+  "civilopedia": "TXT_KEY_TRAIT_SPIRITUAL_PEDIA",
+  "shortDescription": "TXT_KEY_TRAIT_SPIRITUAL_SHORT",
+  "maxAnarchy": 0
+ }
+}

@@ -1916,7 +1916,7 @@ def main():
                 print("\n(%s not found)" % nm)
     if args.write:
         base = os.path.join(REPO, "Assets", "Data", "buildings")
-        wipe_entity_json(base, recurse=True)   # drop-before-rewrite: stale/dropped types don't linger (keeps _order.json)
+        wipe_entity_json(base, recurse=True, expected=len(results))   # drop-before-rewrite: stale/dropped types don't linger (keeps _order.json)
         for typ, obj in results.items():
             folder = os.path.join(base, era_of.get(typ, "none"))
             os.makedirs(folder, exist_ok=True)
@@ -1924,7 +1924,7 @@ def main():
                 json.dump(obj, fp, indent=1, ensure_ascii=False)
         sbdir = os.path.join(REPO, "Assets", "Data", "specialbuildings")
         os.makedirs(sbdir, exist_ok=True)
-        wipe_entity_json(sbdir, recurse=False)
+        wipe_entity_json(sbdir, recurse=False, expected=len(sb_results))
         for typ, obj in sb_results.items():
             with open(os.path.join(sbdir, typ.lower() + ".json"), "w") as fp:
                 json.dump(obj, fp, indent=1, ensure_ascii=False)

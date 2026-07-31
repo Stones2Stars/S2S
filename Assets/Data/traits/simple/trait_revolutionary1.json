@@ -1,0 +1,103 @@
+{
+ "type": "TRAIT_REVOLUTIONARY1",
+ "enables": {
+  "traitsAnd": [
+   "TRAIT_REVOLUTIONARY2"
+  ]
+ },
+ "gold": {
+  "empire": {
+   "flat": -1,
+   "percent": -10
+  }
+ },
+ "espionage": {
+  "empire": {
+   "flat": 1,
+   "percent": 20
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "domestic": {
+    "percent": 30
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": 1
+   },
+   "national": {
+    "flat": 1
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 5,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_INSTIGATOR1"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_SPY"
+      ]
+     }
+    }
+   }
+  }
+ ],
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_REVOLUTIONARY",
+  "priority": -1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 2
+   },
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_ESPIONAGE": -5
+   },
+   {
+    "FLAVOR_MILITARY": -3
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitRevolutionary.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_REVOLUTIONARY0",
+  "civilopedia": "TXT_KEY_TRAIT_REVOLUTIONARY_PEDIA",
+  "shortDescription": "TXT_KEY_TRAIT_REVOLUTIONARY_SHORT",
+  "negativeTrait": true,
+  "impurePromotions": true
+ }
+}

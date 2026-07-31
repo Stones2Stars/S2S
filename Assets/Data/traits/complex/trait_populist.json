@@ -1,0 +1,236 @@
+{
+ "type": "TRAIT_POPULIST",
+ "excludes": [
+  "TRAIT_PHILOSOPHICAL"
+ ],
+ "production": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_ENGINEER": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_ENGINEER": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_LAWYER": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_STATESMAN": {
+     "flat": -1
+    },
+    "SPECIALIST_CITIZEN": {
+     "flat": 1
+    },
+    "SPECIALIST_SLAVES": {
+     "flat": 1
+    },
+    "SPECIALIST_SETTLED_CITIZEN": {
+     "flat": 1
+    },
+    "SPECIALIST_SETTLED_SLAVE": {
+     "flat": 1
+    },
+    "SPECIALIST_ANDROID_WORKER": {
+     "flat": 1
+    }
+   },
+   "cities": {
+    "flat": [
+     {
+      "value": -1,
+      "per": {
+       "type": "SPECIALIST",
+       "scope": "city"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "flat": -1,
+   "percent": -5,
+   "specialists": {
+    "SPECIALIST_MERCHANT": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_MERCHANT": {
+     "flat": -1
+    },
+    "SPECIALIST_NOBLE": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "flat": -1,
+   "percent": -5,
+   "specialists": {
+    "SPECIALIST_SCIENTIST": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_SCIENTIST": {
+     "flat": -1
+    },
+    "SPECIALIST_DOCTOR": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_DOCTOR": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_ARTIST": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_ARTIST": {
+     "flat": -1
+    },
+    "SPECIALIST_CELEBRITY": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_SPY": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_SPY": {
+     "flat": -1
+    },
+    "SPECIALIST_INVESTIGATOR": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_SLEUTH": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "cities": {
+    "flat": 1,
+    "max": "TARGET_NUM_CITIES",
+    "orderedByDescending": "CITY_SIZE"
+   }
+  }
+ },
+ "growth": {
+  "empire": {
+   "percent": -10
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": -40
+  }
+ },
+ "freeSpecialists": {
+  "empire": {
+   "any": -1
+  }
+ },
+ "conscript": {
+  "empire": {
+   "flat": 4
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": -20
+   }
+  }
+ },
+ "durations": {
+  "empire": {
+   "civicAnarchy": {
+    "percent": -10
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": -1,
+    "per": {
+     "type": "POPULATION",
+     "each": 4,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": {
+    "value": -1,
+    "per": {
+     "type": "POPULATION",
+     "each": 2,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_POPULIST"
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": -2
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   },
+   {
+    "FLAVOR_ESPIONAGE": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitPopulist.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_COMPLEX_POPULIST",
+  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_POPULIST_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_POPULIST_STRATEGY",
+  "negativeTrait": true,
+  "impurePropertyManipulators": true
+ }
+}

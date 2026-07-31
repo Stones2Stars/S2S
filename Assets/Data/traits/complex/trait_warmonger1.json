@@ -1,0 +1,141 @@
+{
+ "type": "TRAIT_WARMONGER1",
+ "enables": {
+  "traitsAnd": [
+   "TRAIT_WARMONGER2"
+  ]
+ },
+ "excludes": [
+  "TRAIT_PACIFIST1"
+ ],
+ "buildRate": {
+  "empire": {
+   "military": {
+    "percent": 25
+   }
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "conscript": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": 10
+   },
+   "freeMilitary": {
+    "flat": [
+     {
+      "value": 15,
+      "per": {
+       "type": "POPULATION",
+       "each": 100
+      }
+     }
+    ]
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": -40
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": {
+    "value": -1,
+    "per": {
+     "type": "POPULATION",
+     "each": 2,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "policies": {
+  "militaryFoodProduction": true
+ },
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_COMBAT1"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_COMBATANT",
+       "UNITCOMBAT_NAVAL_COMBATANT"
+      ]
+     }
+    }
+   }
+  }
+ ],
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_WARMONGER",
+  "priority": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 14
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 0
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": -6
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitWarmonger.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_WARMONGER1",
+  "civilopedia": "TXT_KEY_TRAIT_WARMONGER1_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_WARMONGER_STRATEGY",
+  "impurePropertyManipulators": true
+ },
+ "costs": {
+  "empire": {
+   "upgrade": {
+    "percent": -25
+   }
+  }
+ }
+}

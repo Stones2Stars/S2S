@@ -1,0 +1,442 @@
+{
+ "type": "TRAIT_AERIAL3",
+ "production": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_GREAT_MILITARY_INSTRUCTOR": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_TEST_PILOT_INSTITUTE": {
+     "percent": 25
+    },
+    "BUILDING_COMMUNICATIONS_SATELLITE": {
+     "percent": 25
+    },
+    "BUILDING_FLIGHT_SIMULATOR": {
+     "percent": 25
+    },
+    "BUILDING_FACTORY_UNMANNED_AIRCRAFTS": {
+     "percent": 25
+    },
+    "BUILDING_ORBITAL_HOTEL": {
+     "percent": 25
+    },
+    "BUILDING_WIND_FARM": {
+     "percent": 25
+    },
+    "BUILDING_WIND_TURBINE_HIGHWAY": {
+     "percent": 25
+    },
+    "BUILDING_ANTI_MISSILE_BATTERIES": {
+     "percent": 25
+    },
+    "BUILDING_CO2_RESERVOIR": {
+     "percent": 25
+    },
+    "BUILDING_COMMERCIAL_SPACEPORT": {
+     "percent": 25
+    },
+    "BUILDING_MILITARY_SPACEPORT": {
+     "percent": 25
+    },
+    "BUILDING_CISLUNAR_LABS": {
+     "percent": 25
+    },
+    "BUILDING_ORBITAL_TARGETS": {
+     "percent": 25
+    },
+    "BUILDING_FACTORY_HYPOSPRAYS": {
+     "percent": 25
+    },
+    "BUILDING_MEGATOWER_AIR_SCRUBBER_CROWN_SECTION": {
+     "percent": 25
+    },
+    "BUILDING_MEGATOWER_WIND_POWER_CROWN_SECTION": {
+     "percent": 25
+    },
+    "BUILDING_CISLUNAR_MICROSATELLITE_CONSTELLATION": {
+     "percent": 25
+    },
+    "BUILDING_CISLUNAR_DRYDOCK": {
+     "percent": 25
+    },
+    "BUILDING_CISLUNAR_FACTORY": {
+     "percent": 25
+    },
+    "BUILDING_HOLOGRAPHIC_FLIGHT_SIMULATOR": {
+     "percent": 25
+    },
+    "BUILDING_JETSTREAM_POWER_PLANT": {
+     "percent": 25
+    },
+    "BUILDING_METHANE_POWER_PLANT": {
+     "percent": 25
+    },
+    "BUILDING_SKYROAD_CONTROL_TOWER": {
+     "percent": 25
+    },
+    "BUILDING_SKYROAD_STATION": {
+     "percent": 25
+    },
+    "BUILDING_AEROSPACE_COMPLEX": {
+     "percent": 25
+    },
+    "BUILDING_ANTIGRAV_VEHICLE_DEALERSHIP": {
+     "percent": 25
+    },
+    "BUILDING_GARBAGE_SPACEPORT": {
+     "percent": 25
+    },
+    "BUILDING_FACTORY_LEVITATION_GENERATORS": {
+     "percent": 25
+    },
+    "BUILDING_FACTORY_ANTI_GRAVITY_FIELD_GENERATORS": {
+     "percent": 25
+    },
+    "BUILDING_CISLUNAR_NANOSATELLITE_CONSTELLATION": {
+     "percent": 25
+    },
+    "BUILDING_OZONE_GENERATOR": {
+     "percent": 25
+    },
+    "BUILDING_INTERSTELLAR_SPEEDWAY": {
+     "percent": 25
+    },
+    "BUILDING_MILITARY_INDUSTRIAL_COMPLEX": {
+     "percent": 25
+    },
+    "BUILDING_ARCOLOGY_SHIELDING": {
+     "percent": 25
+    },
+    "BUILDING_ADVANCED_SHIELDING": {
+     "percent": 25
+    },
+    "BUILDING_MEDICAL_MEGACOMPLEX": {
+     "percent": 25
+    },
+    "BUILDING_TELEPORT_BOOTH": {
+     "percent": 25
+    },
+    "BUILDING_NANOTECH_COMPLEX": {
+     "percent": 25
+    },
+    "BUILDING_RENEWABLE_MEGACOMPLEX": {
+     "percent": 25
+    },
+    "BUILDING_HE3_FUSION_POWER_PLANT": {
+     "percent": 25
+    },
+    "BUILDING_ANTIMATTER_INITIATED_FUSION_PLANT": {
+     "percent": 25
+    },
+    "BUILDING_QUANTUM_VACUUM_POWER_PLANT": {
+     "percent": 25
+    },
+    "BUILDING_TOURISM_MEGACOMPLEX": {
+     "percent": 25
+    }
+   },
+   "domains": {
+    "DOMAIN_AIR": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "researchRate": {
+  "empire": {
+   "techs": {
+    "TECH_STEALTH": {
+     "percent": 20
+    },
+    "TECH_ION_PROPULSION": {
+     "percent": 20
+    },
+    "TECH_UNMANNED_AIR_VEHICLES": {
+     "percent": 20
+    },
+    "TECH_MAGNETIC_LEVITATION": {
+     "percent": 20
+    },
+    "TECH_SOLAR_PROPULSION": {
+     "percent": 20
+    },
+    "TECH_COMMERCIAL_SPACEFLIGHT": {
+     "percent": 20
+    },
+    "TECH_RAILGUN": {
+     "percent": 20
+    },
+    "TECH_MICROGENERATORS": {
+     "percent": 20
+    },
+    "TECH_COILGUN": {
+     "percent": 20
+    },
+    "TECH_JOVIAN_EXPLORATION": {
+     "percent": 20
+    },
+    "TECH_HYPERSONIC_FLIGHT": {
+     "percent": 20
+    },
+    "TECH_MASS_DRIVER": {
+     "percent": 20
+    },
+    "TECH_MAGNETIC_SAILS": {
+     "percent": 20
+    },
+    "TECH_SKYROADS": {
+     "percent": 20
+    },
+    "TECH_ORBITAL_FLIGHT": {
+     "percent": 20
+    },
+    "TECH_LEVITATION": {
+     "percent": 20
+    },
+    "TECH_WEIGHTLESS_FLIGHT": {
+     "percent": 20
+    },
+    "TECH_ANTI_GRAVITY_FIELDS": {
+     "percent": 20
+    },
+    "TECH_ASTROGATION_CONSTELLATION": {
+     "percent": 20
+    },
+    "TECH_ORBITAL_MEGASTRUCTURES": {
+     "percent": 20
+    },
+    "TECH_FRICTIONLESS_FLIGHT": {
+     "percent": 20
+    },
+    "TECH_WEATHER_CONTROL": {
+     "percent": 20
+    },
+    "TECH_LAUNCH_ARCOLOGY": {
+     "percent": 20
+    },
+    "TECH_FUSION_SPACECRAFT": {
+     "percent": 20
+    },
+    "TECH_GRAVITY_CONTROL": {
+     "percent": 20
+    },
+    "TECH_ACNP_PROPULSION": {
+     "percent": 20
+    },
+    "TECH_ANTIMATTER_ROCKETS": {
+     "percent": 20
+    },
+    "TECH_JOVIAN_TERRAFORMING": {
+     "percent": 20
+    },
+    "TECH_STELLAR_ENGINE": {
+     "percent": 20
+    },
+    "TECH_HYPERLANES": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_GREAT_MILITARY_INSTRUCTOR": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "cities": {
+    "flat": -1,
+    "max": "TARGET_NUM_CITIES",
+    "orderedByDescending": "CITY_SIZE"
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "units": {
+    "UNIT_GREAT_GENERAL": {
+     "flat": 6
+    }
+   }
+  }
+ },
+ "experience": {
+  "empire": {
+   "domains": {
+    "DOMAIN_AIR": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "capture": {
+  "empire": {
+   "resistance": {
+    "percent": -20
+   }
+  }
+ },
+ "air": {
+  "empire": {
+   "range": {
+    "flat": 2
+   }
+  }
+ },
+ "range": {
+  "empire": {
+   "flat": 2
+  }
+ },
+ "cargo": {
+  "empire": {
+   "missileCargo": {
+    "flat": 2
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": -10
+   },
+   "numCities": {
+    "percent": 15
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": 10
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "flat": 1,
+   "max": {
+    "flat": 1
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": -25
+  }
+ },
+ "improvementUpgradeRate": {
+  "empire": {
+   "percent": -25
+  }
+ },
+ "unitCapability": {
+  "empire": {
+   "airUnitCapacity": {
+    "flat": 2
+   }
+  }
+ },
+ "defense": {
+  "empire": {
+   "bombardDefense": {
+    "percent": 5
+   }
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": {
+    "value": 2,
+    "per": {
+     "type": "POPULATION",
+     "each": 3,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_AERIAL_SUPERIORITY"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_ANTIMATTER_SPACESHIP",
+       "UNITCOMBAT_BOMBERS",
+       "UNITCOMBAT_EARLY_BOMBERS",
+       "UNITCOMBAT_EARLY_FIGHTERS",
+       "UNITCOMBAT_EARLY_SPACESHIP",
+       "UNITCOMBAT_JET_FIGHTERS",
+       "UNITCOMBAT_NUCLEAR_SPACESHIP",
+       "UNITCOMBAT_ORBITAL_AIRCRAFT",
+       "UNITCOMBAT_SOLAR_SAIL_SPACESHIP",
+       "UNITCOMBAT_STEALTH",
+       "UNITCOMBAT_SUPERSONIC_PLANES",
+       "UNITCOMBAT_WORMHOLE_SPACESHIP"
+      ]
+     }
+    }
+   }
+  }
+ ],
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_AERIAL",
+  "priority": 3
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 15
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GOLD": 4
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": -5
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitAerial3.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_AERIAL3",
+  "civilopedia": "TXT_KEY_TRAIT_AERIAL3_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_AERIAL_STRATEGY",
+  "impurePropertyManipulators": true
+ }
+}

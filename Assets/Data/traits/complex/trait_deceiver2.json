@@ -1,0 +1,279 @@
+{
+ "type": "TRAIT_DECEIVER2",
+ "enables": {
+  "traitsAnd": [
+   "TRAIT_DECEIVER3"
+  ]
+ },
+ "excludes": [
+  "TRAIT_NAIVE1"
+ ],
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_SPY_SAFE_HOUSE": {
+     "percent": 25
+    },
+    "BUILDING_GUARD_STATION": {
+     "percent": 25
+    },
+    "BUILDING_JAIL": {
+     "percent": 25
+    },
+    "BUILDING_SHERIFFS_OFFICE": {
+     "percent": 25
+    },
+    "BUILDING_DETECTIVE_AGENCY": {
+     "percent": 25
+    },
+    "BUILDING_CITY_MORGUE": {
+     "percent": 25
+    },
+    "BUILDING_POLICE_STATION": {
+     "percent": 25
+    },
+    "BUILDING_SECURITY_BUREAU": {
+     "percent": 25
+    },
+    "BUILDING_INTELLIGENCE_AGENCY": {
+     "percent": 25
+    },
+    "BUILDING_INTERROGATION_BUILDING": {
+     "percent": 25
+    },
+    "BUILDING_COAST_GUARD_STATION": {
+     "percent": 25
+    },
+    "BUILDING_LETHAL_INJECTION": {
+     "percent": 25
+    },
+    "BUILDING_GENTLEMANS_CLUB": {
+     "percent": 25
+    },
+    "BUILDING_POLICE_PRECINCT": {
+     "percent": 25
+    },
+    "BUILDING_AI_POLICE_FORCE": {
+     "percent": 25
+    },
+    "BUILDING_ANDROID_BROTHEL": {
+     "percent": 25
+    },
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT": {
+     "percent": 25
+    }
+   },
+   "unitCombats": {
+    "UNITCOMBAT_SPY": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "researchRate": {
+  "empire": {
+   "techs": {
+    "TECH_POLITICAL_PHILOSOPHY": {
+     "percent": 20
+    },
+    "TECH_CONSTITUTION": {
+     "percent": 20
+    },
+    "TECH_DEPUTIZATION": {
+     "percent": 20
+    },
+    "TECH_CRIMINOLOGY": {
+     "percent": 20
+    },
+    "TECH_PSYCHOLOGY": {
+     "percent": 20
+    },
+    "TECH_ENCRYPTION_MACHINES": {
+     "percent": 20
+    },
+    "TECH_COMMUNISM": {
+     "percent": 20
+    },
+    "TECH_DECRYPTION_MACHINES": {
+     "percent": 20
+    },
+    "TECH_FASCISM": {
+     "percent": 20
+    },
+    "TECH_COAST_GUARD": {
+     "percent": 20
+    },
+    "TECH_LEGALIZED_GAMBLING": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_INVESTIGATOR": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_SLEUTH": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "flat": 4,
+   "percent": [
+    5,
+    {
+     "value": 5,
+     "enabled": "IS_CAPITAL"
+    }
+   ],
+   "specialists": {
+    "SPECIALIST_SPY": {
+     "flat": 2
+    },
+    "SPECIALIST_GREAT_SPY": {
+     "flat": 2
+    }
+   },
+   "cities": {
+    "flat": [
+     {
+      "value": 1,
+      "per": {
+       "type": "SPECIALIST",
+       "scope": "city"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "units": {
+    "UNIT_GREAT_SPY": {
+     "flat": 4
+    }
+   }
+  }
+ },
+ "experience": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_SPY": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "capture": {
+  "empire": {
+   "resistance": {
+    "percent": -20
+   }
+  }
+ },
+ "espionageDefense": {
+  "empire": {
+   "percent": 20
+  }
+ },
+ "durations": {
+  "empire": {
+   "civicAnarchy": {
+    "percent": 5
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "attitude": {
+    "flat": -1
+   },
+   "enemyWarWeariness": {
+    "percent": -10
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": {
+    "value": -1,
+    "per": {
+     "type": "POPULATION",
+     "each": 4,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_DECEIVER2"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_SPY"
+      ]
+     }
+    }
+   }
+  }
+ ],
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_DECEIVER",
+  "priority": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": -2
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GOLD": 0
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": -4
+   },
+   {
+    "FLAVOR_ESPIONAGE": 18
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitDeceiver2.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_COMPLEX_DECEIVER2",
+  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_DECEIVER2_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_DECEIVER_STRATEGY",
+  "impurePropertyManipulators": true
+ }
+}

@@ -1,0 +1,253 @@
+{
+ "type": "TRAIT_IMPERIALIST1",
+ "excludes": [
+  "TRAIT_MEEK1"
+ ],
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_CARPENTER": {
+     "percent": 25
+    },
+    "BUILDING_BARRACKS": {
+     "percent": 25
+    },
+    "BUILDING_SIEGE_WEAPONS_WORKSHOP": {
+     "percent": 25
+    },
+    "BUILDING_CITADEL": {
+     "percent": 25
+    },
+    "BUILDING_BALLISTA_TURRET": {
+     "percent": 25
+    },
+    "BUILDING_ARCHERY_RANGE": {
+     "percent": 25
+    },
+    "BUILDING_GARRISON": {
+     "percent": 25
+    },
+    "BUILDING_MILITARY_BASE": {
+     "percent": 25
+    },
+    "BUILDING_CANNON_TURRET": {
+     "percent": 25
+    },
+    "BUILDING_SHOOTING_CLUB": {
+     "percent": 25
+    },
+    "BUILDING_FIRING_RANGE": {
+     "percent": 25
+    },
+    "BUILDING_AUTOMATED_FIRING_RANGE": {
+     "percent": 25
+    },
+    "BUILDING_ORBITAL_TARGETS": {
+     "percent": 25
+    },
+    "BUILDING_IMPERIAL_FORTRESS": {
+     "percent": 25
+    }
+   },
+   "unitCombats": {
+    "UNITCOMBAT_SIEGE": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "researchRate": {
+  "empire": {
+   "techs": {
+    "TECH_WOODWORKING": {
+     "percent": 20
+    },
+    "TECH_WARFARE": {
+     "percent": 20
+    },
+    "TECH_THE_WHEEL": {
+     "percent": 20
+    },
+    "TECH_MILITARY_TRAINING": {
+     "percent": 20
+    },
+    "TECH_ANCIENT_BALLISTICS": {
+     "percent": 20
+    },
+    "TECH_SIEGE_WARFARE": {
+     "percent": 20
+    },
+    "TECH_ENGINEERING": {
+     "percent": 20
+    },
+    "TECH_YEOMANRY": {
+     "percent": 20
+    },
+    "TECH_ALCHEMY": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_GREAT_MILITARY_INSTRUCTOR": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_ADMIRAL": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "experience": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_SIEGE": {
+     "flat": 2
+    }
+   },
+   "percent": [
+    {
+     "value": 5,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "conscript": {
+  "empire": {
+   "flat": 3
+  }
+ },
+ "capture": {
+  "empire": {
+   "probability": {
+    "percent": 10
+   },
+   "resistance": {
+    "percent": 10
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": -10
+   },
+   "numCities": {
+    "percent": -10
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "freeMilitary": {
+    "flat": [
+     {
+      "value": 15,
+      "per": {
+       "type": "POPULATION",
+       "each": 100
+      }
+     }
+    ]
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "attitude": {
+    "flat": -1
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 2,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "policies": {
+  "draftsOnCityCapture": true
+ },
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_IMPERIALIST1"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_COMBATANT"
+      ]
+     }
+    }
+   }
+  }
+ ],
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_IMPERIALIST",
+  "priority": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 12
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 0
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": -3
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitImperialist.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_COMPLEX_IMPERIALIST1",
+  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_IMPERIALIST1_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_IMPERIALIST_STRATEGY",
+  "impurePropertyManipulators": true
+ },
+ "costs": {
+  "empire": {
+   "upgrade": {
+    "percent": 5
+   }
+  }
+ }
+}

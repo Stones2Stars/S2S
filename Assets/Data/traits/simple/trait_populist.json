@@ -1,0 +1,91 @@
+{
+ "type": "TRAIT_POPULIST",
+ "production": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "extraYieldThreshold": {
+  "empire": {
+   "food": {
+    "flat": 8
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": 25
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": -1
+   },
+   "national": {
+    "flat": 1
+   }
+  }
+ },
+ "defense": {
+  "empire": {
+   "amount": {
+    "percent": -10
+   }
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_POPULIST"
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": -2
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_MILITARY": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitPopulist.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_POPULIST",
+  "civilopedia": "TXT_KEY_TRAIT_POPULIST_PEDIA",
+  "shortDescription": "TXT_KEY_TRAIT_POPULIST_SHORT",
+  "negativeTrait": true
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "food": {
+     "percent": 60
+    },
+    "commerce": {
+     "percent": -30
+    }
+   }
+  }
+ }
+}

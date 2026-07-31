@@ -1,0 +1,160 @@
+{
+ "type": "TRAIT_DECEIVER1",
+ "enables": {
+  "traitsAnd": [
+   "TRAIT_DECEIVER2"
+  ]
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_BROTHEL": {
+     "percent": 20
+    },
+    "BUILDING_CRYOGENIC_PRISON": {
+     "percent": 20
+    },
+    "BUILDING_JAIL": {
+     "percent": 20
+    },
+    "BUILDING_POLICE_STATION": {
+     "percent": 20
+    },
+    "BUILDING_SECURITY_CENTER": {
+     "percent": 20
+    },
+    "BUILDING_INTELLIGENCE_AGENCY": {
+     "percent": 20
+    },
+    "BUILDING_INTERROGATION_BUILDING": {
+     "percent": 20
+    },
+    "BUILDING_POLICE_ACADEMY": {
+     "percent": 20
+    },
+    "BUILDING_SHERIFFS_OFFICE": {
+     "percent": 20
+    },
+    "BUILDING_POLICE_BOX": {
+     "percent": 20
+    },
+    "BUILDING_CHECKPOINT": {
+     "percent": 20
+    },
+    "BUILDING_THIEVES_HIDEOUT": {
+     "percent": 20
+    },
+    "BUILDING_POACHERS_CAMP": {
+     "percent": 20
+    },
+    "BUILDING_ASSASSINS_DEN": {
+     "percent": 20
+    },
+    "BUILDING_SMUGGLERS_SHANTY": {
+     "percent": 20
+    },
+    "BUILDING_CHOP_SHOP": {
+     "percent": 20
+    },
+    "BUILDING_DRUGLORDS_MANSON": {
+     "percent": 20
+    },
+    "BUILDING_REEDUCATION_CENTER": {
+     "percent": 20
+    },
+    "BUILDING_GENTLEMANS_CLUB": {
+     "percent": 20
+    },
+    "BUILDING_ANDROID_BROTHEL": {
+     "percent": 20
+    },
+    "BUILDING_POLICE_PRECINCT": {
+     "percent": 20
+    },
+    "BUILDING_CYBERNETIC_PRISON": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "flat": 3,
+   "specialists": {
+    "SPECIALIST_SPY": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "attitude": {
+    "flat": -2
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": -1
+   },
+   "national": {
+    "flat": -10
+   }
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_DECEPTION1"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_SPY"
+      ]
+     }
+    }
+   }
+  },
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_SECURITY1"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_SPY"
+      ]
+     }
+    }
+   }
+  }
+ ],
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_DECEIVER",
+  "priority": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_ESPIONAGE": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitDeceptive.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_DECEIVER0",
+  "civilopedia": "TXT_KEY_TRAIT_DECEIVER_PEDIA",
+  "shortDescription": "TXT_KEY_TRAIT_DECEIVER_SHORT"
+ }
+}

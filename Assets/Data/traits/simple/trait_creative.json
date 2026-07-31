@@ -1,0 +1,231 @@
+{
+ "type": "TRAIT_CREATIVE",
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_MADRASSA": {
+     "percent": 20
+    },
+    "BUILDING_PAVILION": {
+     "percent": 20
+    },
+    "BUILDING_ARTIST_COLONY": {
+     "percent": 20
+    },
+    "BUILDING_OPERA_HOUSE": {
+     "percent": 20
+    },
+    "BUILDING_COLOSSEUM": {
+     "percent": 20
+    },
+    "BUILDING_ODEON": {
+     "percent": 20
+    },
+    "BUILDING_BROADCAST_TOWER": {
+     "percent": 20
+    },
+    "BUILDING_COMMUNICATION_TOWER": {
+     "percent": 20
+    },
+    "BUILDING_RADIOPLEX": {
+     "percent": 20
+    },
+    "BUILDING_SCHOOL_OF_RHETORIC": {
+     "percent": 20
+    },
+    "BUILDING_CARNIVAL": {
+     "percent": 20
+    },
+    "BUILDING_SEAL_MAKER": {
+     "percent": 20
+    },
+    "BUILDING_DRAMA_SCHOOL": {
+     "percent": 20
+    },
+    "BUILDING_MUSIC_SCHOOL": {
+     "percent": 20
+    },
+    "BUILDING_CAVE_PAINTINGS": {
+     "percent": 20
+    },
+    "BUILDING_THEATRE": {
+     "percent": 20
+    },
+    "BUILDING_MOVIE_THEATRE": {
+     "percent": 20
+    },
+    "BUILDING_VIRTUAL_REALITY_THEATER": {
+     "percent": 20
+    },
+    "BUILDING_MIND_CONTROL_CENTER": {
+     "percent": 20
+    },
+    "BUILDING_LIBRARY": {
+     "percent": 20
+    },
+    "BUILDING_MUSEUM": {
+     "percent": 20
+    },
+    "BUILDING_HO_TRAI_LIBRARY": {
+     "percent": 20
+    },
+    "BUILDING_ARENA": {
+     "percent": 20
+    },
+    "BUILDING_HIPPODROME": {
+     "percent": 20
+    },
+    "BUILDING_BALL_COURT": {
+     "percent": 20
+    },
+    "BUILDING_DANCE_HALL": {
+     "percent": 20
+    },
+    "BUILDING_ART_PATRONAGE": {
+     "percent": 20
+    },
+    "BUILDING_MINOR_LEAGUE_STADIUM": {
+     "percent": 20
+    },
+    "BUILDING_MAJOR_LEAGUE_STADIUM": {
+     "percent": 20
+    },
+    "BUILDING_NETWORK_NODE": {
+     "percent": 20
+    },
+    "BUILDING_FRESCO_MURAL": {
+     "percent": 20
+    },
+    "BUILDING_ROYAL_TOURNAMENT": {
+     "percent": 20
+    },
+    "BUILDING_SPEEDWAY": {
+     "percent": 20
+    },
+    "BUILDING_NIGHT_CLUB": {
+     "percent": 20
+    },
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT": {
+     "percent": 20
+    },
+    "BUILDING_HYPERMARKET": {
+     "percent": 20
+    },
+    "BUILDING_LYCEUM": {
+     "percent": 20
+    },
+    "BUILDING_ELEMENTARY_SCHOOL": {
+     "percent": 20
+    },
+    "BUILDING_HOLOGRAPHIC_SCHOOL": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "flat": 3,
+   "percent": [
+    20,
+    {
+     "value": 20,
+     "enabled": "IS_CAPITAL"
+    }
+   ],
+   "specialists": {
+    "SPECIALIST_NOBLE": {
+     "flat": 2
+    },
+    "SPECIALIST_ARTIST": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "buildings": {
+    "BUILDING_MADRASSA": {
+     "flat": 1
+    },
+    "BUILDING_SCULPTORS_WORKSHOP": {
+     "flat": 1
+    },
+    "BUILDING_FACTORY_SCULPTURES": {
+     "flat": 1
+    },
+    "BUILDING_LIBRARY": {
+     "flat": 1
+    },
+    "BUILDING_MUSEUM": {
+     "flat": 1
+    },
+    "BUILDING_HO_TRAI_LIBRARY": {
+     "flat": 1
+    },
+    "BUILDING_MANUFACTURING_DISTRICT": {
+     "flat": 1
+    }
+   },
+   "cities": {
+    "flat": 2,
+    "max": "TARGET_NUM_CITIES",
+    "orderedByDescending": "CITY_SIZE"
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": 20
+  }
+ },
+ "conscript": {
+  "empire": {
+   "flat": -5
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": 10
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": 25
+   }
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_CREATIVE"
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 10
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitCreative.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_CREATIVE",
+  "civilopedia": "TXT_KEY_TRAIT_CREATIVE_PEDIA",
+  "shortDescription": "TXT_KEY_TRAIT_CREATIVE_SHORT"
+ }
+}

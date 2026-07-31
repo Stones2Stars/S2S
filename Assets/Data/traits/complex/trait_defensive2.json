@@ -1,0 +1,249 @@
+{
+ "type": "TRAIT_DEFENSIVE2",
+ "enables": {
+  "traitsAnd": [
+   "TRAIT_DEFENSIVE3"
+  ]
+ },
+ "excludes": [
+  "TRAIT_COWARDLY1"
+ ],
+ "buildRate": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_COMBATANT": {
+     "percent": 10
+    },
+    "UNITCOMBAT_NAVAL_COMBATANT": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_GREAT_MILITARY_INSTRUCTOR": {
+     "flat": 2
+    },
+    "SPECIALIST_GREAT_ADMIRAL": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "experience": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_COMBATANT": {
+     "flat": 3
+    },
+    "UNITCOMBAT_NAVAL_COMBATANT": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "conscript": {
+  "empire": {
+   "flat": 4
+  }
+ },
+ "capture": {
+  "empire": {
+   "probability": {
+    "percent": -15
+   },
+   "resistance": {
+    "percent": 30
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "freeCivilian": {
+    "flat": 10
+   },
+   "unitCivilian": {
+    "percent": -10
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "workRate": {
+  "empire": {
+   "builds": {
+    "BUILD_FORT": {
+     "percent": 25
+    },
+    "BUILD_COMMAND_BUNKER": {
+     "percent": 25
+    },
+    "BUILD_COMMAND_CENTER": {
+     "percent": 25
+    },
+    "BUILD_AQUATIC_FORCEFIELD": {
+     "percent": 25
+    },
+    "BUILD_AQUATIC_ANTI_AIR_DEFENSE": {
+     "percent": 25
+    },
+    "BUILD_ABATIS_THORN_HEDGE_KILL": {
+     "percent": 25
+    },
+    "BUILD_WOODEN_PALISADE": {
+     "percent": 25
+    },
+    "BUILD_WOODEN_PALISADE_KILL": {
+     "percent": 25
+    },
+    "BUILD_FORTIFIED_CAVE": {
+     "percent": 25
+    },
+    "BUILD_FORTIFIED_CAVE_KILL": {
+     "percent": 25
+    },
+    "BUILD_FORTIFIED_CAVE_WITH_CACHE": {
+     "percent": 25
+    },
+    "BUILD_WOODEN_WATCHTOWER": {
+     "percent": 25
+    },
+    "BUILD_WOODEN_WATCHTOWER_KILL": {
+     "percent": 25
+    },
+    "BUILD_STONE_WATCHTOWER": {
+     "percent": 25
+    },
+    "BUILD_STEEL_WATCHTOWER": {
+     "percent": 25
+    },
+    "BUILD_RADAR_TOWER": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "improvementUpgradeRate": {
+  "empire": {
+   "improvements": {
+    "IMPROVEMENT_ABATIS_THORN_HEDGE": {
+     "percent": 50
+    },
+    "IMPROVEMENT_WOODEN_PALISADE": {
+     "percent": 50
+    },
+    "IMPROVEMENT_FORTIFIED_CAVE": {
+     "percent": 50
+    },
+    "IMPROVEMENT_FORTIFIED_CAVE_WITH_CACHE": {
+     "percent": 50
+    },
+    "IMPROVEMENT_FORT": {
+     "percent": 50
+    },
+    "IMPROVEMENT_COMMAND_BUNKER": {
+     "percent": 50
+    },
+    "IMPROVEMENT_WOODEN_WATCHTOWER": {
+     "percent": 50
+    },
+    "IMPROVEMENT_STONE_WATCHTOWER": {
+     "percent": 100
+    },
+    "IMPROVEMENT_STEEL_WATCHTOWER": {
+     "percent": 100
+    },
+    "IMPROVEMENT_RADAR_TOWER": {
+     "percent": 100
+    }
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": -30
+   },
+   "enemyWarWeariness": {
+    "percent": -30
+   }
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_DEFENSIVE2"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_COMBATANT",
+       "UNITCOMBAT_NAVAL_COMBATANT"
+      ]
+     }
+    }
+   }
+  }
+ ],
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_DEFENSIVE",
+  "priority": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 13
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 0
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": 0
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitDefensive2.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_DEFENSIVE2",
+  "civilopedia": "TXT_KEY_TRAIT_DEFENSIVE2_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_DEFENSIVE_STRATEGY"
+ },
+ "costs": {
+  "empire": {
+   "upgrade": {
+    "percent": 10
+   }
+  }
+ }
+}

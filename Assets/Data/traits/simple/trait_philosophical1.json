@@ -1,0 +1,110 @@
+{
+ "type": "TRAIT_PHILOSOPHICAL1",
+ "enables": {
+  "traitsAnd": [
+   "TRAIT_PHILOSOPHICAL2"
+  ]
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_CLONING_LABORATORY": {
+     "percent": 20
+    },
+    "BUILDING_CONVENTION_CENTRE": {
+     "percent": 20
+    },
+    "BUILDING_UNIVERSITY": {
+     "percent": 20
+    },
+    "BUILDING_BATH_HOUSE": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_ARTIST": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_ARTIST": {
+     "flat": 1
+    },
+    "SPECIALIST_SCIENTIST": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": 75
+  }
+ },
+ "goldenAge": {
+  "empire": {
+   "percent": 25
+  }
+ },
+ "durations": {
+  "empire": {
+   "civicAnarchy": {
+    "percent": 20
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": 20
+   }
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_PHILOSOPHICAL",
+  "priority": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   },
+   {
+    "FLAVOR_CULTURE": 4
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   },
+   {
+    "FLAVOR_MILITARY": -2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitPhilosophical.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_PHILOSOPHICAL0",
+  "civilopedia": "TXT_KEY_TRAIT_PHILOSOPHICAL_PEDIA",
+  "shortDescription": "TXT_KEY_TRAIT_PHILOSOPHICAL_SHORT"
+ }
+}

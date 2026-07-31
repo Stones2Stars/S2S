@@ -1,0 +1,86 @@
+{
+ "type": "TRAIT_ISOLATIONIST1",
+ "enables": {
+  "traitsAnd": [
+   "TRAIT_ISOLATIONIST2"
+  ]
+ },
+ "production": {
+  "empire": {
+   "percent": 15
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": -15
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 20
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "flat": -1,
+   "modifier": {
+    "food": {
+     "percent": -30
+    },
+    "commerce": {
+     "percent": -20
+    }
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "national": {
+    "flat": 1
+   }
+  }
+ },
+ "defense": {
+  "empire": {
+   "amount": {
+    "percent": 15
+   }
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_ISOLATIONIST",
+  "priority": -1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 4
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_CULTURE": 4
+   },
+   {
+    "FLAVOR_PRODUCTION": -2
+   },
+   {
+    "FLAVOR_MILITARY": -1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitIsolationist.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_ISOLATIONIST0",
+  "civilopedia": "TXT_KEY_TRAIT_ISOLATIONIST_PEDIA",
+  "shortDescription": "TXT_KEY_TRAIT_ISOLATIONIST_SHORT",
+  "negativeTrait": true
+ }
+}

@@ -1,0 +1,302 @@
+{
+ "type": "TRAIT_NEGLIGENT3",
+ "excludes": [
+  "TRAIT_PROTECTIVE1"
+ ],
+ "food": {
+  "empire": {
+   "goldenAge": {
+    "flat": 2
+   }
+  }
+ },
+ "production": {
+  "empire": {
+   "goldenAge": {
+    "flat": 2
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_ENCRYPTED_FIREWALL": {
+     "percent": -25
+    },
+    "BUILDING_ANTI_MISSILE_BATTERIES": {
+     "percent": -25
+    },
+    "BUILDING_AUTOMATED_DEFENSES": {
+     "percent": -25
+    },
+    "BUILDING_METAMATERIAL_WALLS": {
+     "percent": -25
+    },
+    "BUILDING_RAILGUN_BATTERY": {
+     "percent": -25
+    },
+    "BUILDING_LASER_BATTERY": {
+     "percent": -25
+    },
+    "BUILDING_NANOBOT_WALLS": {
+     "percent": -25
+    },
+    "BUILDING_WIRELESS_ELECTRIC_FENCE": {
+     "percent": -25
+    },
+    "BUILDING_SUPERSTRONG_ALLOY_WALLS": {
+     "percent": -25
+    },
+    "BUILDING_DOWNDRAFT_TOWER": {
+     "percent": -25
+    },
+    "BUILDING_ARCOLOGY": {
+     "percent": -25
+    },
+    "BUILDING_SMART_DUST_WALLS": {
+     "percent": -25
+    },
+    "BUILDING_ARCOLOGY_SHIELDING": {
+     "percent": -25
+    },
+    "BUILDING_ADVANCED_SHIELDING": {
+     "percent": -25
+    },
+    "BUILDING_ANTI_MATTER_BATTERY": {
+     "percent": -25
+    },
+    "BUILDING_MEGASTRONG_ALLOY_WALLS": {
+     "percent": -25
+    },
+    "BUILDING_HOUSING_COLONY_ARCOLOGY": {
+     "percent": -25
+    },
+    "BUILDING_LAUNCH_ARCOLOGY": {
+     "percent": -25
+    },
+    "BUILDING_RENEWABLE_MEGACOMPLEX": {
+     "percent": -25
+    }
+   }
+  }
+ },
+ "researchRate": {
+  "empire": {
+   "techs": {
+    "TECH_CYBERWARFARE": {
+     "percent": -20
+    },
+    "TECH_MILITARY_ROBOTICS": {
+     "percent": -20
+    },
+    "TECH_METAMATERIALS": {
+     "percent": -20
+    },
+    "TECH_RAILGUN": {
+     "percent": -20
+    },
+    "TECH_FUSION": {
+     "percent": -20
+    },
+    "TECH_NANOROBOTICS": {
+     "percent": -20
+    },
+    "TECH_WIRELESS_ELECTRICITY": {
+     "percent": -20
+    },
+    "TECH_SUPERSTRONG_ALLOYS": {
+     "percent": -20
+    },
+    "TECH_MEGASTRUCTURE_ENGINEERING": {
+     "percent": -20
+    },
+    "TECH_SMART_DUST": {
+     "percent": -20
+    },
+    "TECH_SHIELDING": {
+     "percent": -20
+    },
+    "TECH_ADVANCED_SHIELDING": {
+     "percent": -20
+    },
+    "TECH_WEAPONIZED_ANTIMATTER": {
+     "percent": -20
+    },
+    "TECH_MEGASTRONG_ALLOYS": {
+     "percent": -20
+    }
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "goldenAge": {
+    "flat": 2
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "goldenAge": {
+    "flat": 1
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "goldenAge": {
+    "flat": 1
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "goldenAge": {
+    "flat": 1
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "goldenAge": {
+    "flat": 1
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": -2
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "domestic": {
+    "percent": -30
+   }
+  }
+ },
+ "experience": {
+  "empire": {
+   "inBorder": {
+    "percent": -25
+   }
+  }
+ },
+ "conscript": {
+  "empire": {
+   "flat": -6
+  }
+ },
+ "espionageDefense": {
+  "empire": {
+   "percent": -20
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": -30
+   },
+   "numCities": {
+    "percent": -35
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "freeCivilian": {
+    "flat": [
+     {
+      "value": -15,
+      "per": {
+       "type": "POPULATION",
+       "each": 100
+      }
+     }
+    ]
+   }
+  }
+ },
+ "goldenAge": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": -15
+   }
+  }
+ },
+ "defense": {
+  "empire": {
+   "amount": {
+    "percent": -25
+   },
+   "bombardDefense": {
+    "percent": -25
+   }
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_NEGLIGENT3"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_COMBATANT"
+      ]
+     }
+    }
+   }
+  }
+ ],
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_NEGLIGENT",
+  "priority": -3
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 17
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": -1
+   },
+   {
+    "FLAVOR_GOLD": -3
+   },
+   {
+    "FLAVOR_SCIENCE": 0
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitNegligent3.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_NEGLIGENT3",
+  "civilopedia": "TXT_KEY_TRAIT_NEGLIGENT3_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_NEGLIGENT_STRATEGY",
+  "negativeTrait": true
+ }
+}

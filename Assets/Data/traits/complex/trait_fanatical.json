@@ -1,0 +1,329 @@
+{
+ "type": "TRAIT_FANATICAL",
+ "excludes": [
+  "TRAIT_ANTI_CLERICAL",
+  "TRAIT_PIOUS",
+  "TRAIT_SPIRITUAL"
+ ],
+ "food": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_PRIEST": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_PROPHET": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "researchRate": {
+  "empire": {
+   "techs": {
+    "TECH_HINDUISM": {
+     "percent": -25
+    },
+    "TECH_JUDAISM": {
+     "percent": -25
+    },
+    "TECH_BUDDHISM": {
+     "percent": -25
+    },
+    "TECH_CONFUCIANISM": {
+     "percent": -25
+    },
+    "TECH_TAOISM": {
+     "percent": -25
+    },
+    "TECH_CHRISTIANITY": {
+     "percent": -25
+    },
+    "TECH_ISLAM": {
+     "percent": -25
+    },
+    "TECH_DRUIDIC_TRADITIONS": {
+     "percent": -25
+    },
+    "TECH_SHAMANISM": {
+     "percent": -25
+    },
+    "TECH_TENGRIISM": {
+     "percent": -25
+    },
+    "TECH_MESOPOTAMISM": {
+     "percent": -25
+    },
+    "TECH_YORUBA": {
+     "percent": -25
+    },
+    "TECH_ANDEANISM": {
+     "percent": -25
+    },
+    "TECH_NGAIISM": {
+     "percent": -25
+    },
+    "TECH_SHINTO": {
+     "percent": -25
+    },
+    "TECH_KEMETISM": {
+     "percent": -25
+    },
+    "TECH_CANAANISM": {
+     "percent": -25
+    },
+    "TECH_RODNOVERA": {
+     "percent": -25
+    },
+    "TECH_ASATRU": {
+     "percent": -25
+    },
+    "TECH_HELLENISM": {
+     "percent": -25
+    },
+    "TECH_NAGHUALISM": {
+     "percent": -25
+    },
+    "TECH_JAINISM": {
+     "percent": -25
+    },
+    "TECH_VOODOO": {
+     "percent": -25
+    },
+    "TECH_SIKHISM": {
+     "percent": -25
+    },
+    "TECH_BAHAI": {
+     "percent": -25
+    },
+    "TECH_MORMON": {
+     "percent": -25
+    },
+    "TECH_CAO_DAI": {
+     "percent": -25
+    },
+    "TECH_SCIENTOLOGY": {
+     "percent": -25
+    }
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "gold": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_PRIEST": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_PROPHET": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_PRIEST": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_PROPHET": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_PRIEST": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_PROPHET": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_PRIEST": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_PROPHET": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "cities": {
+    "flat": [
+     {
+      "value": -1,
+      "religion": "!IS_STATE_RELIGION"
+     }
+    ]
+   },
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_INCENSE",
+      "scope": "empire",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": -10
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "experience": {
+  "empire": {
+   "percent": [
+    {
+     "value": -10,
+     "enabled": {
+      "all": [
+       "IS_HOLY_CITY",
+       "!IS_STATE_RELIGION_HOLY_CITY"
+      ]
+     }
+    }
+   ]
+  }
+ },
+ "durations": {
+  "empire": {
+   "religiousAnarchy": {
+    "percent": 300
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "attitude": {
+    "flat": -2
+   }
+  }
+ },
+ "stateReligion": {
+  "empire": {
+   "greatPeopleRate": {
+    "percent": 10
+   },
+   "unitProduction": {
+    "percent": 5
+   },
+   "buildingProduction": {
+    "percent": 5
+   },
+   "holyCityXP": {
+    "percent": 10
+   },
+   "spreadProbability": {
+    "percent": 10
+   },
+   "nonStateSpreadProbability": {
+    "percent": -30
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "holyCityGood": {
+    "flat": 5
+   },
+   "holyCityBad": {
+    "flat": 10
+   },
+   "badReligionMod": {
+    "percent": 40
+   },
+   "goodReligionMod": {
+    "percent": 20
+   }
+  }
+ },
+ "policies": {
+  "allowInquisitions": true,
+  "bansNonStateReligions": true
+ },
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_DEVOTION"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_CIVILIAN",
+       "UNITCOMBAT_COMBATANT",
+       "UNITCOMBAT_EXPLORER",
+       "UNITCOMBAT_NAVAL_COMBATANT"
+      ]
+     }
+    }
+   }
+  }
+ ],
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_ZEALOUS"
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 0
+   },
+   {
+    "FLAVOR_RELIGION": 8
+   },
+   {
+    "FLAVOR_PRODUCTION": -1
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitZealot.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_ZEALOUS",
+  "civilopedia": "TXT_KEY_TRAIT_ZEALOUS_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_ZEALOUS_STRATEGY",
+  "negativeTrait": true,
+  "impurePromotions": true
+ }
+}

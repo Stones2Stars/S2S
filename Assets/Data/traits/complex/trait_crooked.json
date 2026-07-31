@@ -1,0 +1,596 @@
+{
+ "type": "TRAIT_CROOKED",
+ "excludes": [
+  "TRAIT_LAWFUL"
+ ],
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_THIEVES_HIDEOUT": {
+     "percent": 25
+    },
+    "BUILDING_POISON_CRAFTER": {
+     "percent": 25
+    },
+    "BUILDING_FIGHTING_PIT": {
+     "percent": 25
+    },
+    "BUILDING_MERCENARY_STABLES": {
+     "percent": 25
+    },
+    "BUILDING_GAMBLING_DEN": {
+     "percent": 25
+    },
+    "BUILDING_TAVERN": {
+     "percent": 25
+    },
+    "BUILDING_SMUGGLERS_SHANTY": {
+     "percent": 25
+    },
+    "BUILDING_MERCENARY_CAMP": {
+     "percent": 25
+    },
+    "BUILDING_ASSASSINS_DEN": {
+     "percent": 25
+    },
+    "BUILDING_CIGAR_ROLLERS_SHOP": {
+     "percent": 25
+    },
+    "BUILDING_INSURANCE_OFFICE": {
+     "percent": 25
+    },
+    "BUILDING_GAMBLING_HALL": {
+     "percent": 25
+    },
+    "BUILDING_GUILD_HALL": {
+     "percent": 25
+    },
+    "BUILDING_LOAN_SHARK": {
+     "percent": 25
+    },
+    "BUILDING_PUB": {
+     "percent": 25
+    },
+    "BUILDING_COMMERCIAL_PORT": {
+     "percent": 25
+    },
+    "BUILDING_HIGHWAYMANS_HIDEOUT": {
+     "percent": 25
+    },
+    "BUILDING_CONSPIRATORS_HIDEOUT": {
+     "percent": 25
+    },
+    "BUILDING_PIRATES_COVE": {
+     "percent": 25
+    },
+    "BUILDING_ACCOUNTING_FIRM": {
+     "percent": 25
+    },
+    "BUILDING_SNAKE_OIL_SALES": {
+     "percent": 25
+    },
+    "BUILDING_DIVE_BAR": {
+     "percent": 25
+    },
+    "BUILDING_LIQUOR_STORE": {
+     "percent": 25
+    },
+    "BUILDING_TATTOO_PARLOR": {
+     "percent": 25
+    },
+    "BUILDING_SALOON": {
+     "percent": 25
+    },
+    "BUILDING_POACHERS_CAMP": {
+     "percent": 25
+    },
+    "BUILDING_SPEAKEASY": {
+     "percent": 25
+    },
+    "BUILDING_CHOP_SHOP": {
+     "percent": 25
+    },
+    "BUILDING_FANATIC_COMPOUND": {
+     "percent": 25
+    },
+    "BUILDING_MOB_STOREFRONT": {
+     "percent": 25
+    },
+    "BUILDING_REBEL_CAMP": {
+     "percent": 25
+    },
+    "BUILDING_PAWN_SHOP": {
+     "percent": 25
+    },
+    "BUILDING_DRUGLORDS_MANSON": {
+     "percent": 25
+    },
+    "BUILDING_JAZZ_CLUB": {
+     "percent": 25
+    },
+    "BUILDING_NIGHT_CLUB": {
+     "percent": 25
+    },
+    "BUILDING_TERRORISTS_COMPOUND": {
+     "percent": 25
+    },
+    "BUILDING_VIP_CLUB": {
+     "percent": 25
+    },
+    "BUILDING_MOTORCYCLE_CLUB": {
+     "percent": 25
+    },
+    "BUILDING_KARAOKE_CLUB": {
+     "percent": 25
+    },
+    "BUILDING_COMPUTER_NETWORK": {
+     "percent": 25
+    },
+    "BUILDING_CASINO": {
+     "percent": 25
+    },
+    "BUILDING_COMEDY_CLUB": {
+     "percent": 25
+    },
+    "BUILDING_GENTLEMANS_CLUB": {
+     "percent": 25
+    },
+    "BUILDING_PACHINKO_ARCADE": {
+     "percent": 25
+    },
+    "BUILDING_LSD_LAB": {
+     "percent": 25
+    },
+    "BUILDING_ECSTASY_LAB": {
+     "percent": 25
+    },
+    "BUILDING_METH_LAB": {
+     "percent": 25
+    },
+    "BUILDING_BLACK_HAT_HIDEOUT": {
+     "percent": 25
+    },
+    "BUILDING_BLACKNET": {
+     "percent": 25
+    },
+    "BUILDING_ANDROID_BROTHEL": {
+     "percent": 25
+    },
+    "BUILDING_TELEPORT_BOOTH": {
+     "percent": 25
+    },
+    "BUILDING_GALACTIC_CANTINA": {
+     "percent": 25
+    },
+    "BUILDING_ARENA": {
+     "percent": 25
+    },
+    "BUILDING_COLOSSEUM": {
+     "percent": 25
+    },
+    "BUILDING_MINOR_LEAGUE_STADIUM": {
+     "percent": 25
+    },
+    "BUILDING_MAJOR_LEAGUE_STADIUM": {
+     "percent": 25
+    },
+    "BUILDING_BLOCKCHAIN_FINANCIAL_SERVICES": {
+     "percent": 25
+    },
+    "BUILDING_INTERNATIONAL_PORT": {
+     "percent": 25
+    },
+    "BUILDING_MATERIALS_CONGLOMERATE": {
+     "percent": 25
+    },
+    "BUILDING_OCEAN_ADMINISTRATION": {
+     "percent": 25
+    },
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT": {
+     "percent": 25
+    },
+    "BUILDING_HYPERMARKET": {
+     "percent": 25
+    },
+    "BUILDING_ALTERNATIVE_MEDICINE": {
+     "percent": 25
+    },
+    "BUILDING_HEALTHCARE_MEGACOMPLEX": {
+     "percent": 25
+    }
+   },
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "percent": 20
+    },
+    "UNITCOMBAT_LAW_ENFORCEMENT": {
+     "percent": -20
+    }
+   }
+  }
+ },
+ "researchRate": {
+  "empire": {
+   "techs": {
+    "TECH_DECEPTION": {
+     "percent": 20
+    },
+    "TECH_THEFT": {
+     "percent": 20
+    },
+    "TECH_POISON_CRAFTING": {
+     "percent": 20
+    },
+    "TECH_SLAVERY": {
+     "percent": 20
+    },
+    "TECH_FERMENTATION": {
+     "percent": 20
+    },
+    "TECH_PIRACY": {
+     "percent": 20
+    },
+    "TECH_CODE_OF_LAWS": {
+     "percent": 20
+    },
+    "TECH_DRUG_TRADE": {
+     "percent": 20
+    },
+    "TECH_INSURANCE": {
+     "percent": 20
+    },
+    "TECH_USURY": {
+     "percent": 20
+    },
+    "TECH_GUILDS": {
+     "percent": 20
+    },
+    "TECH_POLITICAL_PHILOSOPHY": {
+     "percent": 20
+    },
+    "TECH_STOCK_BROKERING": {
+     "percent": 20
+    },
+    "TECH_ELIXIRS_AND_TONICS": {
+     "percent": 20
+    },
+    "TECH_DEPUTIZATION": {
+     "percent": 20
+    },
+    "TECH_FASCISM": {
+     "percent": 20
+    },
+    "TECH_GUERRILLA_WARFARE": {
+     "percent": 20
+    },
+    "TECH_CONSUMERISM": {
+     "percent": 20
+    },
+    "TECH_GLOBALIZATION": {
+     "percent": 20
+    },
+    "TECH_ELECTRONICS": {
+     "percent": 20
+    },
+    "TECH_MASS_MEDIA": {
+     "percent": 20
+    },
+    "TECH_PERSONAL_COMPUTERS": {
+     "percent": 20
+    },
+    "TECH_COMPUTER_NETWORKS": {
+     "percent": 20
+    },
+    "TECH_LEGALIZED_GAMBLING": {
+     "percent": 20
+    },
+    "TECH_COUNTERCULTURE": {
+     "percent": 20
+    },
+    "TECH_URBAN_CULTURE": {
+     "percent": 20
+    },
+    "TECH_COMMUNICATION_NETWORKS": {
+     "percent": 20
+    },
+    "TECH_PERSONAL_ROBOTS": {
+     "percent": 20
+    },
+    "TECH_TELEPORTATION": {
+     "percent": 20
+    },
+    "TECH_ASTROANTHROPOLOGY": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_SPY": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_SPY": {
+     "flat": -1
+    },
+    "SPECIALIST_INVESTIGATOR": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_SLEUTH": {
+     "flat": -1
+    },
+    "SPECIALIST_LAWYER": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_STATESMAN": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_MERCHANT": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_MERCHANT": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_LAWYER": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_STATESMAN": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "espionage": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_INVESTIGATOR": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_SLEUTH": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": [
+    -1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HEMP",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_OPIUM",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PEYOTE",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_LSD",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_METHAMPHETAMINE",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_ECSTASY",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_ALCOHOL",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_TOBACCO",
+      "scope": "empire",
+      "min": 1
+     }
+    }
+   ],
+   "cities": {
+    "flat": -1,
+    "max": "TARGET_NUM_CITIES",
+    "orderedByDescending": "CITY_SIZE"
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "domestic": {
+    "percent": -10
+   }
+  }
+ },
+ "experience": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 2
+    },
+    "UNITCOMBAT_LAW_ENFORCEMENT": {
+     "flat": -2
+    }
+   },
+   "inBorder": {
+    "percent": -10
+   }
+  }
+ },
+ "espionageDefense": {
+  "empire": {
+   "percent": -20
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 20
+   },
+   "numCities": {
+    "percent": 20
+   },
+   "corporation": {
+    "percent": 20
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": 10
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": 20
+   },
+   "attitude": {
+    "flat": -1
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": 1
+   }
+  }
+ },
+ "defense": {
+  "empire": {
+   "amount": {
+    "percent": -10
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 1,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_CROOKED"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_CRIMINAL"
+      ]
+     }
+    }
+   }
+  }
+ ],
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_CROOKED"
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": -1
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_SCIENCE": 0
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": 6
+   },
+   {
+    "FLAVOR_ESPIONAGE": 3
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitCrooked.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_CROOKED",
+  "civilopedia": "TXT_KEY_TRAIT_CROOKED_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_CROOKED_STRATEGY",
+  "negativeTrait": true
+ }
+}

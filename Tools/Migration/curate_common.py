@@ -841,11 +841,19 @@ def run(cfg, boosts_config, store=None, post_process=None):
     return store, result
 
 
-def wipe_entity_json(dir_path, recurse=False):
+def wipe_entity_json(dir_path, recurse=False, expected=None):
     """Drop-before-rewrite (owner ruling 2026-07-21): clear an entity folder's generated JSON before a --write so a
     type no longer emitted (dropped at the store, renamed, or merged away) does NOT linger as a stale file. PRESERVES
     any side/manifest file whose name starts with '_' (e.g. _order.json, the _additions overlay dir). recurse=True
-    also clears one level of subfolders -- the era-foldered layout (buildings/<era>/, and any thin curator with eras)."""
+    also clears one level of subfolders -- the era-foldered layout (buildings/<era>/, and any thin curator with eras).
+
+    ⛔ A curator that produced NOTHING never clears. Zero entities is a curator FAILURE (no input, a moved
+    source, a content-LOCKED type that no longer curates) -- never an instruction to empty the folder. Without
+    this the drop-before-rewrite silently deletes hand-maintained content, which is exactly what it did to the
+    370 content-LOCKED trait files."""
+    if expected == 0:
+        print("REFUSED to clear %s: the curator produced 0 entities (nothing to rewrite)." % dir_path)
+        return
     if not os.path.isdir(dir_path):
         return
     for name in os.listdir(dir_path):
@@ -889,7 +897,7 @@ def main(cfg, boosts_config, out_dir, post_process=None, synthesize=None):
             else:
                 print("\n(%s not found)" % nm)
     if args.write:
-        wipe_entity_json(out_dir, recurse=True)   # drop-before-rewrite (all thin curators route through here)
+        wipe_entity_json(out_dir, recurse=True, expected=n)   # drop-before-rewrite (all thin curators route through here)
         for typ, (obj, era) in result.items():
             folder = os.path.join(out_dir, era) if era else out_dir
             os.makedirs(folder, exist_ok=True)

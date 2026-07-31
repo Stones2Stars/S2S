@@ -701,6 +701,12 @@ def main():
 
         # Fresh dirs so types that are no longer emitted standalone (the replacement records, now MERGED into
         # complex/<base>) don't linger as stale files.
+        # ⛔ But NEVER when the curator produced nothing: traits are content-LOCKED and hand-maintained
+        # (modifier.md), so a zero result means there is no input to rewrite from -- clearing would destroy the
+        # authored set rather than refresh it.
+        if not results:
+            print("REFUSED to clear the trait folders: the curator produced 0 entities.")
+            return
         for sub in ("simple", "complex"):
             d = os.path.join(out_dir, sub)
             if os.path.isdir(d):

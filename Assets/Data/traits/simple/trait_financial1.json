@@ -1,0 +1,131 @@
+{
+ "type": "TRAIT_FINANCIAL1",
+ "enables": {
+  "traitsAnd": [
+   "TRAIT_FINANCIAL2"
+  ]
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_COMMERCIAL_PORT": {
+     "percent": 20
+    },
+    "BUILDING_COMMERCIAL_AIRPORT": {
+     "percent": 20
+    },
+    "BUILDING_TAX_OFFICE": {
+     "percent": 20
+    },
+    "BUILDING_INTERNATIONAL_PORT": {
+     "percent": 20
+    },
+    "BUILDING_OCEAN_ADMINISTRATION": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_MERCHANT": {
+     "flat": 1
+    }
+   },
+   "percent": 5
+  }
+ },
+ "extraYieldThreshold": {
+  "empire": {
+   "commerce": {
+    "flat": 5
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "cities": {
+    "flat": -2,
+    "max": "TARGET_NUM_CITIES",
+    "orderedByDescending": "CITY_SIZE"
+   }
+  }
+ },
+ "conscript": {
+  "empire": {
+   "flat": -10
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "corporation": {
+    "percent": -30
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "builds": {
+    "BUILD_COTTAGE": {
+     "percent": 30
+    },
+    "BUILD_HAMLET": {
+     "percent": 30
+    },
+    "BUILD_VILLAGE": {
+     "percent": 30
+    },
+    "BUILD_TOWN": {
+     "percent": 30
+    },
+    "BUILD_SUBURBS": {
+     "percent": 30
+    }
+   }
+  }
+ },
+ "defense": {
+  "empire": {
+   "amount": {
+    "percent": -20
+   }
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_FINANCIAL",
+  "priority": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_MILITARY": -2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitFinancial.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_FINANCIAL0",
+  "civilopedia": "TXT_KEY_TRAIT_FINANCIAL_PEDIA",
+  "shortDescription": "TXT_KEY_TRAIT_FINANCIAL_SHORT"
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "commerce": {
+     "percent": 10
+    }
+   }
+  }
+ }
+}

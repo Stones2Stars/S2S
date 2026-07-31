@@ -1,0 +1,146 @@
+{
+ "type": "TRAIT_EXPANSIVE",
+ "excludes": [
+  "TRAIT_MINIMALIST"
+ ],
+ "food": {
+  "empire": {
+   "flat": 1,
+   "percent": 5
+  }
+ },
+ "production": {
+  "empire": {
+   "flat": 1,
+   "percent": 5
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "worldWonder": {
+    "percent": -20
+   },
+   "unitCombats": {
+    "UNITCOMBAT_SETTLER": {
+     "percent": 100
+    },
+    "UNITCOMBAT_WORKER": {
+     "percent": 50
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "flat": -2,
+   "percent": -10,
+   "specialists": {
+    "SPECIALIST_CELEBRITY": {
+     "flat": -1
+    },
+    "SPECIALIST_NOBLE": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "cities": {
+    "flat": 2,
+    "max": "TARGET_NUM_CITIES",
+    "orderedByDescending": "CITY_SIZE"
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": -30
+   },
+   "numCities": {
+    "percent": -30
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "freeCivilian": {
+    "flat": [
+     {
+      "value": 15,
+      "per": {
+       "type": "POPULATION",
+       "each": 100
+      }
+     }
+    ]
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 50
+  }
+ },
+ "improvementUpgradeRate": {
+  "empire": {
+   "percent": 200
+  }
+ },
+ "revolution": {
+  "empire": {
+   "distanceModifier": {
+    "percent": -10
+   }
+  }
+ },
+ "defense": {
+  "empire": {
+   "amount": {
+    "percent": -10
+   }
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_EXPANSIVE"
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": -1
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_SCIENCE": -8
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": 16
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitExpansive.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_COMPLEX_EXPANSIVE",
+  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_EXPANSIVE_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_EXPANSIVE_STRATEGY"
+ }
+}

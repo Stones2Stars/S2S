@@ -1,0 +1,414 @@
+{
+ "type": "TRAIT_GLUTTONOUS",
+ "excludes": [
+  "TRAIT_AGRICULTURAL"
+ ],
+ "food": {
+  "empire": {
+   "improvements": {
+    "IMPROVEMENT_SEED_CAMP": {
+     "flat": -1
+    },
+    "IMPROVEMENT_WINDMILL": {
+     "flat": -1
+    },
+    "IMPROVEMENT_WATERMILL": {
+     "flat": -1
+    },
+    "IMPROVEMENT_PLANTATION": {
+     "flat": -1
+    },
+    "IMPROVEMENT_WINERY": {
+     "flat": -1
+    },
+    "IMPROVEMENT_GROUNDWATER_WELL": {
+     "flat": -1
+    },
+    "IMPROVEMENT_FRUIT_GATHERING_CAMP": {
+     "flat": -1
+    },
+    "IMPROVEMENT_GRAPE_GATHERING_CAMP": {
+     "flat": -1
+    },
+    "IMPROVEMENT_PLANT_GATHERING_CAMP": {
+     "flat": -1
+    },
+    "IMPROVEMENT_FRUIT_PICKING_CAMP": {
+     "flat": -1
+    },
+    "IMPROVEMENT_GRAPE_PICKING_CAMP": {
+     "flat": -1
+    },
+    "IMPROVEMENT_PLANT_PICKING_CAMP": {
+     "flat": -1
+    },
+    "IMPROVEMENT_ORCHARD": {
+     "flat": -1
+    },
+    "IMPROVEMENT_MUSHROOM_GATHERER": {
+     "flat": -1
+    },
+    "IMPROVEMENT_FARM": {
+     "flat": -1
+    },
+    "IMPROVEMENT_VERTICAL_FARM": {
+     "flat": -1
+    },
+    "IMPROVEMENT_LUMBERJACK": {
+     "flat": -1
+    },
+    "IMPROVEMENT_THATCH_CUTTER": {
+     "flat": -1
+    },
+    "IMPROVEMENT_JUNGLE_CAMP": {
+     "flat": -1
+    },
+    "IMPROVEMENT_WETLANDS_CAMP": {
+     "flat": -1
+    },
+    "IMPROVEMENT_DESERT_CAMP": {
+     "flat": -1
+    },
+    "IMPROVEMENT_HYDRO_DAM": {
+     "flat": -1
+    },
+    "IMPROVEMENT_MODERN_WINDMILL": {
+     "flat": -1
+    },
+    "IMPROVEMENT_LUMBERMILL": {
+     "flat": -1
+    },
+    "IMPROVEMENT_TREEFARM": {
+     "flat": -1
+    },
+    "IMPROVEMENT_HYBRID_FOREST": {
+     "flat": -1
+    }
+   },
+   "flat": -1,
+   "specialists": {
+    "SPECIALIST_CITIZEN": {
+     "flat": -1
+    },
+    "SPECIALIST_SLAVES": {
+     "flat": -1
+    },
+    "SPECIALIST_ANDROID_WORKER": {
+     "flat": -1
+    },
+    "SPECIALIST_SETTLED_SLAVE": {
+     "flat": -1
+    },
+    "SPECIALIST_SETTLED_CITIZEN": {
+     "flat": -1
+    },
+    "SPECIALIST_NOBLE": {
+     "flat": -1
+    }
+   },
+   "percent": -10
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "military": {
+    "percent": -20
+   }
+  }
+ },
+ "researchRate": {
+  "empire": {
+   "techs": {
+    "TECH_GATHERING": {
+     "percent": -20
+    },
+    "TECH_COOKING": {
+     "percent": -20
+    },
+    "TECH_GROUND_STONE": {
+     "percent": -20
+    },
+    "TECH_SLASH_AND_BURN": {
+     "percent": -20
+    },
+    "TECH_AGRICULTURE": {
+     "percent": -20
+    },
+    "TECH_BREAD_MAKING": {
+     "percent": -20
+    },
+    "TECH_FUNGICULTURE": {
+     "percent": -20
+    },
+    "TECH_APICULTURE": {
+     "percent": -20
+    },
+    "TECH_ORCHARDS": {
+     "percent": -20
+    },
+    "TECH_FERMENTATION": {
+     "percent": -20
+    },
+    "TECH_IRRIGATION": {
+     "percent": -20
+    },
+    "TECH_GARDENING": {
+     "percent": -20
+    },
+    "TECH_CALENDAR": {
+     "percent": -20
+    },
+    "TECH_FLORISTRY": {
+     "percent": -20
+    },
+    "TECH_FEUDALISM": {
+     "percent": -20
+    },
+    "TECH_WINDMILLS": {
+     "percent": -20
+    },
+    "TECH_CROP_ROTATION": {
+     "percent": -20
+    },
+    "TECH_AGRICULTURAL_TOOLS": {
+     "percent": -20
+    },
+    "TECH_WEATHER_FORECASTING": {
+     "percent": -20
+    },
+    "TECH_FOOD_PRESERVATION": {
+     "percent": -20
+    },
+    "TECH_AGRICULTURAL_ENGINEERING": {
+     "percent": -20
+    },
+    "TECH_REFRIGERATION": {
+     "percent": -20
+    },
+    "TECH_AGRICHEMICALS": {
+     "percent": -20
+    },
+    "TECH_HYDROPONICS": {
+     "percent": -20
+    },
+    "TECH_ASTRO_ENVIRONMENTAL_SYSTEMS": {
+     "percent": -20
+    },
+    "TECH_BIOMATERIALS": {
+     "percent": -20
+    },
+    "TECH_ECOLOGICAL_ENGINEERING": {
+     "percent": -20
+    },
+    "TECH_ACCELERATED_GERMINATION": {
+     "percent": -20
+    },
+    "TECH_ARTIFICIAL_PHOTOSYNTHESIS": {
+     "percent": -20
+    },
+    "TECH_BOTANICAL_ALCHEMY": {
+     "percent": -20
+    },
+    "TECH_WEATHER_CONTROL": {
+     "percent": -20
+    },
+    "TECH_EXTRATERRESTRIAL_AGRICULTURE": {
+     "percent": -20
+    },
+    "TECH_PARATERRAFORMING": {
+     "percent": -20
+    },
+    "TECH_PLANETARY_TERRAFORMING": {
+     "percent": -20
+    },
+    "TECH_ECOSYNTHESIS": {
+     "percent": -20
+    }
+   }
+  }
+ },
+ "lessYieldThreshold": {
+  "empire": {
+   "food": {
+    "flat": 7
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1,
+   "cities": {
+    "flat": 1,
+    "max": "TARGET_NUM_CITIES",
+    "orderedByDescending": "CITY_SIZE"
+   }
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": 20
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "numCities": {
+    "percent": 20
+   },
+   "corporation": {
+    "percent": -20
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "builds": {
+    "BUILD_SEED_CAMP_KILL": {
+     "percent": -50
+    },
+    "BUILD_SEED_CAMP": {
+     "percent": -50
+    },
+    "BUILD_FARM": {
+     "percent": -50
+    },
+    "BUILD_PLANTATION": {
+     "percent": -50
+    },
+    "BUILD_WINERY": {
+     "percent": -50
+    },
+    "BUILD_FRUIT_GATHERING_CAMP_KILL": {
+     "percent": -50
+    },
+    "BUILD_GRAPE_GATHERING_CAMP_KILL": {
+     "percent": -50
+    },
+    "BUILD_PLANT_GATHERING_CAMP_KILL": {
+     "percent": -50
+    },
+    "BUILD_FRUIT_PICKING_CAMP": {
+     "percent": -50
+    },
+    "BUILD_GRAPE_PICKING_CAMP": {
+     "percent": -50
+    },
+    "BUILD_PLANT_PICKING_CAMP": {
+     "percent": -50
+    },
+    "BUILD_ORCHARD": {
+     "percent": -50
+    },
+    "BUILD_MUSHROOM_GATHERER_KILL": {
+     "percent": -50
+    },
+    "BUILD_MUSHROOM_GATHERER": {
+     "percent": -50
+    },
+    "BUILD_VERTICAL_FARM": {
+     "percent": -50
+    }
+   }
+  }
+ },
+ "improvementUpgradeRate": {
+  "empire": {
+   "improvements": {
+    "IMPROVEMENT_SEED_CAMP": {
+     "percent": -100
+    },
+    "IMPROVEMENT_PLANTATION": {
+     "percent": -100
+    },
+    "IMPROVEMENT_WINERY": {
+     "percent": -100
+    },
+    "IMPROVEMENT_FRUIT_GATHERING_CAMP": {
+     "percent": -100
+    },
+    "IMPROVEMENT_GRAPE_GATHERING_CAMP": {
+     "percent": -100
+    },
+    "IMPROVEMENT_FRUIT_PICKING_CAMP": {
+     "percent": -100
+    },
+    "IMPROVEMENT_GRAPE_PICKING_CAMP": {
+     "percent": -100
+    },
+    "IMPROVEMENT_PLANT_PICKING_CAMP": {
+     "percent": -100
+    },
+    "IMPROVEMENT_ORCHARD": {
+     "percent": -100
+    },
+    "IMPROVEMENT_MUSHROOM_GATHERER": {
+     "percent": -100
+    },
+    "IMPROVEMENT_FARM": {
+     "percent": -100
+    }
+   }
+  }
+ },
+ "goldenAge": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "durations": {
+  "empire": {
+   "civicAnarchy": {
+    "percent": -20
+   }
+  }
+ },
+ "policies": {
+  "militaryFoodProduction": true
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_GLUTTONOUS"
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 0
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": 0
+   },
+   {
+    "FLAVOR_SCIENCE": 0
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": 15
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitGluttonous.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_GLUTTONOUS",
+  "civilopedia": "TXT_KEY_TRAIT_GLUTTONOUS_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_GLUTTONOUS_STRATEGY",
+  "negativeTrait": true
+ }
+}

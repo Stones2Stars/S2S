@@ -1,0 +1,206 @@
+{
+ "type": "TRAIT_PHILOSOPHICAL3",
+ "excludes": [
+  "TRAIT_POPULIST1"
+ ],
+ "commerce": {
+  "empire": {
+   "cities": {
+    "flat": [
+     {
+      "value": 1,
+      "per": {
+       "type": "SPECIALIST",
+       "scope": "city"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "flat": 1,
+   "percent": 5,
+   "specialists": {
+    "SPECIALIST_MERCHANT": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_MERCHANT": {
+     "flat": 1
+    },
+    "SPECIALIST_NOBLE": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "flat": 1,
+   "percent": 5,
+   "specialists": {
+    "SPECIALIST_SCIENTIST": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_SCIENTIST": {
+     "flat": 1
+    },
+    "SPECIALIST_DOCTOR": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_DOCTOR": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_ARTIST": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_ARTIST": {
+     "flat": 1
+    },
+    "SPECIALIST_CELEBRITY": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_SPY": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_SPY": {
+     "flat": 1
+    },
+    "SPECIALIST_INVESTIGATOR": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_SLEUTH": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "growth": {
+  "empire": {
+   "percent": 15
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": 50,
+   "flat": 6
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": 20
+  }
+ },
+ "freeSpecialists": {
+  "empire": {
+   "any": [
+    {
+     "value": 1,
+     "per": {
+      "type": "TEAM_WONDER",
+      "scope": "city"
+     }
+    }
+   ]
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": 10
+   }
+  }
+ },
+ "hurry": {
+  "empire": {
+   "anger": {
+    "percent": 25
+   }
+  }
+ },
+ "durations": {
+  "empire": {
+   "civicAnarchy": {
+    "percent": 15
+   }
+  }
+ },
+ "stateReligion": {
+  "empire": {
+   "spreadProbability": {
+    "percent": -10
+   },
+   "nonStateSpreadProbability": {
+    "percent": -10
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 4,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_PHILOSOPHICAL",
+  "priority": 3
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_RELIGION": -1
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   },
+   {
+    "FLAVOR_ESPIONAGE": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitPhilosophical3.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_COMPLEX_PHILOSOPHICAL3",
+  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_PHILOSOPHICAL3_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_PHILOSOPHICAL_STRATEGY",
+  "impurePropertyManipulators": true
+ }
+}
