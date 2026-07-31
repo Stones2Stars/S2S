@@ -195,3 +195,13 @@
     is that it dealt ~nothing while still satisfying the turn, so a redesign that reintroduces a near-zero-damage
     ranged action has reproduced the bug. ⚑ Naval shore bombardment is a DELIBERATE divergence from vanilla,
     which did not allow it: *"we want them to, otherwise they are pretty damn worthless."*
+25. **The PER-INSTANCE unit build-cost ramp** (`iInstanceCostModifier` → `costs.empire.perInstance` with
+    `per:{SELF}`, consumed in `CvPlayer::getProductionNeeded(UnitTypes)` as
+    `productionNeeded × unitCount(eUnit) × modifier`) *(dead — owner: the concept "is dumb in the first place,
+    it was made as a balancing mechanic, but all it did was make units unreasonably expensive")*. Each unit of a
+    type already owned raised the hammer cost of the next one. ⚑ **The data shows it was never balanced at all:
+    a flat 5% on ALL 582 authoring units** — no per-unit tuning existed to preserve, so the drop loses no design
+    intent. Curator emit, the 582 authorings, and the engine consumer are removed; the legacy XML tag stays
+    listed in the curator's HANDLED set as knowingly dropped. ⚠ NOT the same thing as unit UPKEEP scaling
+    (`cost.upkeep` → `upkeep.unit.extra`), which is a different family and STAYS. **Never re-add a
+    count-scaled build-cost ramp**; if unit proliferation needs a brake, it is a fresh design decision, not this.

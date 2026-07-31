@@ -58,9 +58,8 @@ public:
 	// ======================= 3. MODIFIER GROUPS -- point reads over the compiled sums =======================
 	// (Conditioned-list access + the expected* what-if valuations are the base CvInfo surface. The census
 	// stragglers -- strength [ruling 5: the BASE value only, strength.unit.flat] / withdrawal / firstStrike
-	// strikes + chances / range -- read through the base getScalar. The batch-pending unkinded members --
-	// culture.unit.garrison, costs.empire.perInstance -- mint NO getter until their vocabulary/curator calls
-	// land (reported). The mixed-unit groups keep the flat-vs-modifier split in the NAME, the
+	// strikes + chances / range -- read through the base getScalar. The batch-pending unkinded member
+	// culture.unit.garrison mints NO getter until its vocabulary/curator call lands (reported). The mixed-unit groups keep the flat-vs-modifier split in the NAME, the
 	// getFlatYield/getYieldModifier convention.)
 	int getFlatCombat(CombatKind eKind, CvCascScope eScope) const
 	{ return m_modifiers.sum(MODFAM_COMBAT, eKind, eScope, CASC_UNIT_FLAT); }

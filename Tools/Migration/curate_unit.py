@@ -15,7 +15,7 @@ THE BASE/DEPOSIT SPLIT (owner §0.6 + ranking #34: "base -> identity, deltas are
   collateral/air/capture/espionage/heal. Same vocab as Promotion (the *Change suffix dropped on the unit).
 
 PASS 1 (this file): identity.base + the §5 scalar families + requires.build + store enables/obsoletes + cost
-(+iInstanceCostModifier -> costs.empire.perInstance per:{SELF}) + grants + succession (upgradesTo) + capabilities + ai +
++ grants + succession (upgradesTo) + capabilities + ai +
 COVERAGE CHECK. PASS 2 (deferred, shows as UNHANDLED): vs-keyed combat (Terrain/Feature/UnitCombat/Domain/Unit mods),
 the vision/LOS resolver, KillOutcomes/Actions -> `outcomes` (the clean VERB-PER-PAYLOAD vocabulary, emit_outcomes),
 GP-action magnitudes (discover/hurry/trade/greatWork -> grants/outcomes), PropertyManipulators, BonusProductionModifiers.
@@ -158,8 +158,7 @@ GRANT_LIST = {"FreePromotions": "promotions", "GreatPeoples": "greatPeople"}
 # `builds` (owner ruling): the per-unit-type list of BUILD_* a unit can PERFORM is NOT a one-shot grant/provision
 # handed out -- it is the unit's build REPERTOIRE. So it lives in its OWN top-level `builds` block, not under grants.
 # ---- cost ----
-COST = {"iCost": "production", "iBaseUpkeep": "upkeep", "iHurryCostModifier": "hurryCostModifier",
-        "iInstanceCostModifier": None}  # iInstanceCostModifier -> costs.empire.perInstance per:{SELF} (special)
+COST = {"iCost": "production", "iBaseUpkeep": "upkeep", "iHurryCostModifier": "hurryCostModifier"}
 # ---- identity scalars / lists / config ----
 ID_SCALAR = {"iAsset": "worth", "iPower": "militaryWorth", "iXPValueAttack": "xpValueAttack",
              "iXPValueDefense": "xpValueDefense", "iConscription": "conscription", "iAggression": "aggression",
@@ -1107,11 +1106,6 @@ def curate(typ, rec, store):
         v = _int(rec, tag)
         if v is not None and v != 0 and v != -1:
             cost[key] = v
-    # iInstanceCostModifier -> costs.empire.perInstance per:{type:SELF} (the priority count-scaled cost case)
-    icm = _int(rec, "iInstanceCostModifier")
-    if icm:
-        fams.setdefault("costs", OrderedDict()).setdefault("empire", OrderedDict())["perInstance"] = \
-            OrderedDict([("percent", icm), ("per", _atom("SELF", "empire"))])
     # spawn-only nature: legacy marks NON-player-buildable units (wildlife/spawned) with the iCost == -1 SENTINEL
     # (the CvPlayer::canTrain getProductionCost()==-1 gate). Translate that dumb sentinel into an explicit clean
     # flag — the cascade gates buildability on this, never on a -1 cost. NB settlers carry NO iCost tag (their
@@ -1277,7 +1271,10 @@ HANDLED = (set(BASE) | set(UNIT_FAMILIES) | set(CAP_BOOL) | set(CAP_COUNT) | set
            | PASS2_TAGS | {"Buildings",   # -> outcomes.actions[] `constructs` verb (MISSION_CONSTRUCT, owner 2026-07-21)
                            "Type", "Combat", "SubCombatTypes",   # -> root combatClass / combatClasses (owner 2026-07-20)
                            "iCombat", "iMoves",   # -> strength / movement families (owner 2026-07-20)
-                           "Flavors", "iAIWeight", "iInstanceCostModifier", "bGoldenAge",
+                           "Flavors", "iAIWeight", "bGoldenAge",
+                           # DROPPED, not re-homed: the per-instance build-cost ramp is a killed mechanic
+                           # (owner) -- see superseded-ideas. Listed here so coverage knows it is accounted for.
+                           "iInstanceCostModifier",
                            "DefaultUnitAI", "UnitMeshGroups", "FreePromotions", "Builds",
                            "ReligionSpreads", "CorporationSpreads",   # -> spread.religion / spread.corporation (own block)
                            "GroupSpawnUnitCombatTypes",   # -> groupSpawn (own block, struct rows)

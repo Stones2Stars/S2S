@@ -6737,20 +6737,6 @@ int CvPlayer::getProductionNeeded(UnitTypes eUnit) const
 		}
 		return 1;
 	}
-	// Toffer - I split this last modifier away from the rest as it is only interesting when intending to create a new unit.
-	//	When upgrading a unit we need the cost of the unit to be upgraded, in the interest of getting rid of it rather than creating a new unit.
-	//	So when upgerading, we only want this last modifier to apply to the unit it is going to upgrade to when comparing their hammer costs to derive the gold cost of the upgrade.
-	{
-		const int iInstanceCostModifier = GC.getUnitInfo(eUnit).getInstanceCostModifier();
-		if (iInstanceCostModifier != 0)
-		{
-			if (GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS))
-			{
-				iProductionNeeded = getModifiedIntValue64(iProductionNeeded, getUnitCountSM(eUnit) * iInstanceCostModifier);
-			}
-			else iProductionNeeded = getModifiedIntValue64(iProductionNeeded, getUnitCount(eUnit) * iInstanceCostModifier);
-		}
-	}
 	iProductionNeeded /= 100;
 
 	if (iProductionNeeded >= MAX_INT)

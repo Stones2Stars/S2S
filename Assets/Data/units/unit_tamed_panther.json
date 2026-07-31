@@ -24,17 +24,6 @@
    "percent": 35
   }
  },
- "costs": {
-  "empire": {
-   "perInstance": {
-    "percent": 5,
-    "per": {
-     "type": "SELF",
-     "scope": "empire"
-    }
-   }
-  }
- },
  "skills": [
   "noDefensiveBonus",
   "tradable"

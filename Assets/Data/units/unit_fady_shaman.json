@@ -62,17 +62,6 @@
    }
   }
  },
- "costs": {
-  "empire": {
-   "perInstance": {
-    "percent": 5,
-    "per": {
-     "type": "SELF",
-     "scope": "empire"
-    }
-   }
-  }
- },
  "PROPERTY_DISEASE": {
   "city": {
    "flat": -8

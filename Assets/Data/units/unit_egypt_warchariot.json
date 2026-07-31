@@ -63,17 +63,6 @@
    "percent": 25
   }
  },
- "costs": {
-  "empire": {
-   "perInstance": {
-    "percent": 5,
-    "per": {
-     "type": "SELF",
-     "scope": "empire"
-    }
-   }
-  }
- },
  "skills": [
   "noDefensiveBonus",
   "pillage",

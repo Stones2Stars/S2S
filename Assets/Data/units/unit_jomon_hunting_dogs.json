@@ -55,17 +55,6 @@
    "flat": 4
   }
  },
- "costs": {
-  "empire": {
-   "perInstance": {
-    "percent": 5,
-    "per": {
-     "type": "SELF",
-     "scope": "empire"
-    }
-   }
-  }
- },
  "skills": [
   "noCapture",
   "noDefensiveBonus",

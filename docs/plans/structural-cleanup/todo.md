@@ -22,7 +22,7 @@
 
 ## Data — curator
 
-- Curate `culture.unit.garrison` and `costs.empire.perInstance` (flagged in-code, awaiting their batch).
+- Curate `culture.unit.garrison` (flagged in-code, awaiting its batch).
 - Attach the ruling-16 trigger-plane set (`survivor`, `cityCapture`, `combat.subdueAnimal`,
   `combat.nukeInterception`, `diplomacy.techShare`) to its trigger's `chance`
   ([triggers.md](../../specs/triggers.md)).
