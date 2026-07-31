@@ -4,6 +4,7 @@
 #include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
+#include "Infos/CvTagReads.h"
 #include "Infos/CvSkillReads.h"   // the ONE shared surface for the json.md §8 skill reads
 
 #include "Data/CvInfoValuation.h"   // InfoValuation::collectHealByUnitCombat + HealByUnitCombat
@@ -4623,7 +4624,7 @@ bool CvUnit::canEnterPlot(const CvPlot* pPlot, MoveCheck::flags flags /*= MoveCh
 	}
 
 	//ls612: For units that can't enter non-Owned Cities
-	if (CvSkillReads::noNonOwnedCityEntry(*m_pUnitInfo.getSkills()) && pPlot->isCity() && (pPlot->getOwner() != getOwner()))
+	if (CvSkillReads::noNonOwnedCityEntry(getUnitInfo().getSkills()) && pPlot->isCity() && (pPlot->getOwner() != getOwner()))
 	{
 		return false;
 	}
@@ -5099,7 +5100,7 @@ bool CvUnit::canAutomate(AutomateTypes eAutomate) const
 	/*                                                                                              */
 	/*  Clicking on the Automate button with an Inquisitor causes a CTD                             */
 	/************************************************************************************************/
-	if (CvSkillReads::inquisitor(*m_pUnitInfo.getSkills()))
+	if (CvSkillReads::inquisitor(getUnitInfo().getSkills()))
 	{
 		return false;
 	}
@@ -5237,7 +5238,7 @@ bool CvUnit::canAutomate(AutomateTypes eAutomate) const
 		{
 			return false;
 		}
-		if (!isHiddenNationality() || !CvSkillReads::alwaysHostile(*m_pUnitInfo.getSkills()))
+		if (!isHiddenNationality() || !CvSkillReads::alwaysHostile(getUnitInfo().getSkills()))
 		{
 			return false;
 		}
@@ -6699,7 +6700,7 @@ bool CvUnit::canRecon() const
 		return false;
 	}
 
-	if (CvSkillReads::suicide(*m_pUnitInfo.getSkills()))
+	if (CvSkillReads::suicide(getUnitInfo().getSkills()))
 	{
 		return false;
 	}
@@ -7198,7 +7199,7 @@ bool CvUnit::bombard()
 
 bool CvUnit::canPillage(const CvPlot* pPlot) const
 {
-	if (pPlot == NULL || !CvSkillReads::pillage(*m_pUnitInfo.getSkills()))
+	if (pPlot == NULL || !CvSkillReads::pillage(getUnitInfo().getSkills()))
 	{
 		return false;
 	}
@@ -7479,7 +7480,7 @@ bool CvUnit::canPlunder(const CvPlot* pPlot, bool bTestVisible) const
 		return false;
 	}
 
-	if (!CvSkillReads::pillage(*m_pUnitInfo.getSkills()))
+	if (!CvSkillReads::pillage(getUnitInfo().getSkills()))
 	{
 		return false;
 	}
@@ -7612,7 +7613,7 @@ int CvUnit::sabotageProb(const CvPlot* pPlot, ProbabilityTypes eProbStyle) const
 
 bool CvUnit::canSabotage(const CvPlot* pPlot, bool bTestVisible) const
 {
-	if (!CvSkillReads::sabotage(*m_pUnitInfo.getSkills()))
+	if (!CvSkillReads::sabotage(getUnitInfo().getSkills()))
 	{
 		return false;
 	}
@@ -7785,7 +7786,7 @@ int CvUnit::destroyProb(const CvPlot* pPlot, ProbabilityTypes eProbStyle) const
 
 bool CvUnit::canDestroy(const CvPlot* pPlot, bool bTestVisible) const
 {
-	if (!CvSkillReads::destroy(*m_pUnitInfo.getSkills()))
+	if (!CvSkillReads::destroy(getUnitInfo().getSkills()))
 	{
 		return false;
 	}
@@ -7946,7 +7947,7 @@ int CvUnit::stealPlansProb(const CvPlot* pPlot, ProbabilityTypes eProbStyle) con
 
 bool CvUnit::canStealPlans(const CvPlot* pPlot, bool bTestVisible) const
 {
-	if (!(CvSkillReads::stealPlans(*m_pUnitInfo.getSkills())))
+	if (!(CvSkillReads::stealPlans(getUnitInfo().getSkills())))
 	{
 		return false;
 	}
@@ -9965,7 +9966,7 @@ int CvUnit::canGiveExperience(const CvPlot* pPlot) const
 			if (pUnit != this
 			&& pUnit->getOwner() == getOwner()
 			&& pUnit->canAcquirePromotionAny()
-			&& !pUnit->getUnitInfo().isGreatGeneral()
+			&& !CvSkillReads::greatGeneral(pUnit->getUnitInfo().getSkills())
 			&& !pUnit->isTrap())
 			{
 				++iNumUnits;
@@ -10667,13 +10668,13 @@ bool CvUnit::isAnimal() const
 
 bool CvUnit::isNoBadGoodies() const
 {
-	return m_pUnitInfo->isNoBadGoodies();
+	return CvSkillReads::noBadGoodies(getUnitInfo().getSkills());
 }
 
 
 bool CvUnit::isOnlyDefensive() const
 {
-	return m_iOnlyDefensiveCount + CvSkillReads::onlyDefensive(*m_pUnitInfo.getSkills());
+	return m_iOnlyDefensiveCount + CvSkillReads::onlyDefensive(getUnitInfo().getSkills());
 }
 
 void CvUnit::changeOnlyDefensiveCount(int iChange)
@@ -10689,7 +10690,7 @@ bool CvUnit::isNoCapture() const
 	{
 		iCount++;
 	}
-	if (m_pUnitInfo->isNoCapture())
+	if (CvSkillReads::noCapture(getUnitInfo().getSkills()))
 	{
 		iCount++;
 	}
@@ -10699,42 +10700,42 @@ bool CvUnit::isNoCapture() const
 
 bool CvUnit::isRivalTerritory() const
 {
-	return m_pUnitInfo->isRivalTerritory();
+	return CvSkillReads::rivalTerritory(getUnitInfo().getSkills());
 }
 
 
 bool CvUnit::isMilitaryHappiness() const
 {
-	return m_pUnitInfo->isMilitaryHappiness();
+	return CvTagReads::military(getUnitInfo().getTags());
 }
 
 bool CvUnit::isMilitaryBranch() const
 {
-	return m_pUnitInfo->isMilitarySupport();
+	return CvTagReads::military(getUnitInfo().getTags());
 }
 
 
 bool CvUnit::isInvestigate() const
 {
-	return m_pUnitInfo->isInvestigate();
+	return CvSkillReads::investigate(getUnitInfo().getSkills());
 }
 
 
 bool CvUnit::isCounterSpy() const
 {
-	return m_pUnitInfo->isCounterSpy();
+	return CvSkillReads::counterSpy(getUnitInfo().getSkills());
 }
 
 
 bool CvUnit::isSpy() const
 {
-	return m_pUnitInfo->isSpy();
+	return CvTagReads::spy(getUnitInfo().getTags());
 }
 
 
 bool CvUnit::isFound() const
 {
-	return m_pUnitInfo->isFound();
+	return CvSkillReads::found(getUnitInfo().getSkills());
 }
 
 bool CvUnit::isGoldenAge() const
@@ -10743,7 +10744,7 @@ bool CvUnit::isGoldenAge() const
 	{
 		return false;
 	}
-	return m_pUnitInfo->isGoldenAge();
+	return CvSkillReads::goldenAge(getUnitInfo().getSkills());
 }
 
 bool CvUnit::canCoexistAlwaysOnPlot(const CvPlot& onPlot) const
@@ -12400,13 +12401,13 @@ bool CvUnit::isRanged() const
 
 bool CvUnit::alwaysInvisible() const
 {
-	return m_pUnitInfo->isInvisible() || getAlwaysInvisibleCount() > 0;
+	return CvSkillReads::alwaysInvisible(getUnitInfo().getSkills()) || getAlwaysInvisibleCount() > 0;
 }
 
 
 bool CvUnit::immuneToFirstStrikes() const
 {
-	return (m_pUnitInfo->isFirstStrikeImmune() || (getImmuneToFirstStrikesCount() > 0));
+	return (CvSkillReads::immuneToFirstStrikes(getUnitInfo().getSkills()) || (getImmuneToFirstStrikesCount() > 0));
 }
 
 
@@ -12427,7 +12428,7 @@ void CvUnit::changeExtraNoDefensiveBonusCount(int iChange)
 
 bool CvUnit::ignoreBuildingDefense() const
 {
-	return m_pUnitInfo->isIgnoreBuildingDefense();
+	return CvSkillReads::ignoreBuildingDefense(getUnitInfo().getSkills());
 }
 
 
@@ -12615,7 +12616,7 @@ bool CvUnit::isNukeImmune() const
 
 bool CvUnit::isInquisitor() const
 {
-	return CvSkillReads::inquisitor(*m_pUnitInfo.getSkills());
+	return CvSkillReads::inquisitor(getUnitInfo().getSkills());
 }
 
 
@@ -16622,7 +16623,7 @@ void CvUnit::setCombatUnit(CvUnit* pCombatUnit, bool bAttacking, bool bQuick, bo
 bool CvUnit::showSeigeTower(const CvUnit* pDefender) const
 {
 	return getDomainType() == DOMAIN_LAND
-		&& !m_pUnitInfo->isIgnoreBuildingDefense()
+		&& !CvSkillReads::ignoreBuildingDefense(getUnitInfo().getSkills())
 		&& pDefender->plot()->getPlotCity()
 		&& pDefender->plot()->getPlotCity()->getBuildingDefense() > 0
 		&& cityAttackModifier() >= GC.getDefineINT("MIN_CITY_ATTACK_MODIFIER_FOR_SIEGE_TOWER");
@@ -17642,7 +17643,7 @@ bool CvUnit::isPromotionValid(PromotionTypes ePromotion, bool bFree, bool bKeepC
 	}
 
 	//Disable Looter Promos for units that cannot pillage
-	if (promo.getPillageChange() > 0 && !CvSkillReads::pillage(*m_pUnitInfo.getSkills()))
+	if (promo.getPillageChange() > 0 && !CvSkillReads::pillage(getUnitInfo().getSkills()))
 	{
 		return false;
 	}
@@ -21313,7 +21314,7 @@ bool CvUnit::isPotentialEnemy(TeamTypes eTeam, const CvPlot* pPlot, const CvUnit
 
 bool CvUnit::isSuicide() const
 {
-	return CvSkillReads::suicide(*m_pUnitInfo.getSkills()) || getKamikazePercent() != 0;
+	return CvSkillReads::suicide(getUnitInfo().getSkills()) || getKamikazePercent() != 0;
 }
 
 int CvUnit::getDropRange() const
@@ -21537,7 +21538,7 @@ int CvUnit::getRenderPriority(UnitSubEntityTypes eUnitSubEntity, int iMeshGroupT
 
 bool CvUnit::isAlwaysHostile(const CvPlot* pPlot) const
 {
-	if (!CvSkillReads::alwaysHostile(*m_pUnitInfo.getSkills()) && getHiddenNationalityCount() < 1)
+	if (!CvSkillReads::alwaysHostile(getUnitInfo().getSkills()) && getHiddenNationalityCount() < 1)
 	{
 		return false;
 	}
@@ -22141,7 +22142,7 @@ int CvUnit::doPillageInfluence()
 
 bool CvUnit::canPerformInquisition(const CvPlot* pPlot) const
 {
-	if (!CvSkillReads::inquisitor(*m_pUnitInfo.getSkills()))
+	if (!CvSkillReads::inquisitor(getUnitInfo().getSkills()))
 	{
 		return false;
 	}
@@ -22497,7 +22498,7 @@ bool CvUnit::canClaimTerritory(const CvPlot* pPlot) const
 		return false;
 	}
 
-	if (isNPC() || CvSkillReads::alwaysHostile(*m_pUnitInfo.getSkills()) || isHiddenNationality() || !CvSkillReads::pillage(*m_pUnitInfo.getSkills()))
+	if (isNPC() || CvSkillReads::alwaysHostile(getUnitInfo().getSkills()) || isHiddenNationality() || !CvSkillReads::pillage(getUnitInfo().getSkills()))
 	{
 		return false;
 	}

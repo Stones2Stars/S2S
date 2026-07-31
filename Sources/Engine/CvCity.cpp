@@ -2699,7 +2699,7 @@ bool CvCity::isFoodProduction(UnitTypes eUnit) const
 {
 	return CvSkillReads::food(GC.getUnitInfo(eUnit).getSkills())
 		|| GET_PLAYER(getOwner()).isMilitaryFoodProduction()
-		&& GC.getUnitInfo(eUnit).isMilitaryProduction();
+		&& CvTagReads::military(GC.getUnitInfo(eUnit).getTags());
 }
 
 namespace {

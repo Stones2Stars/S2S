@@ -6928,7 +6928,7 @@ int CvPlayer::getProductionModifier(UnitTypes eUnit) const
 	PROFILE_EXTRA_FUNC();
 	int iMultiplier = 0;
 
-	if (!CvSkillReads::noNonTypeProdMods(GC.getUnitInfo(eUnit).getSkills()) && GC.getUnitInfo(eUnit).isMilitaryProduction())
+	if (!CvSkillReads::noNonTypeProdMods(GC.getUnitInfo(eUnit).getSkills()) && CvTagReads::military(GC.getUnitInfo(eUnit).getTags()))
 	{
 		iMultiplier += getMilitaryProductionModifier();
 	}

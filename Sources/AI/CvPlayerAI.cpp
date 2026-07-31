@@ -592,7 +592,7 @@ void CvPlayerAI::AI_doTurnPre()
 					{
 						iCount++;
 
-						if (GC.getUnitInfo(pLoopUnit->getUnitType()).isMilitarySupport())
+						if (CvTagReads::military(GC.getUnitInfo(pLoopUnit->getUnitType()).getTags()))
 						{
 							iMilitary++;
 						}
