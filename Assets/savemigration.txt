@@ -917,3 +917,11 @@ CvTeam::m_iNukeInterception
 | the tally now serves (docs/specs/tally.md, docs/specs/triggers.md). The legacy `isHasMet` filter is
 | dropped by ruling and re-addable later as an ordinary predicate.
 CvTeam::m_aiTechShareCount
+
+| The team accumulator for the corp revenue modifier: a serialized incremental total fed only by processTech
+| from a static info field -- the STORED-ACCUMULATOR DRIFT class ([DEC-accumulator-cut-uniform]).
+| REPLACEMENT: CascadeCapabilities::corporationRevenueModifier -- the per-team derived-on-query union over the
+| held techs' `commerce.<scope>.corporation` deposits (ruling 15), which was already built and already the
+| ruled home ("never the legacy team accumulator"). The deleted changer's updateCorporation rider survives at
+| the processTech trigger site ([save.md] §6).
+CvTeam::m_iCorporationRevenueModifier

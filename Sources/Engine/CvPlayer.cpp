@@ -4,6 +4,7 @@
 #include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
+#include "Enabler/CvCapabilities.h"
 #include "CvTraitSelection.h"
 #include "Engine/CvGameSpeedScale.h"
 #include "Enabler/CvEnablerKernel.h"   // requiresMetForPlayer -- the system-placement gate
@@ -26691,7 +26692,7 @@ int CvPlayer::getCorporationInfluence(CorporationTypes eIndex) const
 	}
 	int iInfluence = 100;
 
-	iInfluence += GET_TEAM(getTeam()).getCorporationRevenueModifier() / 2;
+	iInfluence += CascadeCapabilities::corporationRevenueModifier(getTeam()) / 2;
 
 	//Find the prereq tech for corporate HQ
 	TechTypes ePrereqTech = GC.getCorporationInfo(eIndex).getTechPrereq();

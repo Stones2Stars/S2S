@@ -2,6 +2,7 @@
 #include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
+#include "Enabler/CvCapabilities.h"
 #include "Engine/CvGameSpeedScale.h"
 #include "AI/BetterBTSAI.h" // logCityAI ([CIT/produced] / [CIT/waste] production-pipeline logging)
 #include "CvArea.h"
@@ -9399,7 +9400,7 @@ int CvCity::getCorporationCommerceByCorporation(CommerceTypes eIndex, Corporatio
 			);
 		}
 	}
-	return (getModifiedIntValue(iCommerce, GET_TEAM(getTeam()).getCorporationRevenueModifier()) + 99) / 100;
+	return (getModifiedIntValue(iCommerce, CascadeCapabilities::corporationRevenueModifier(getTeam())) + 99) / 100;
 }
 
 void CvCity::updateCorporationCommerce(CommerceTypes eIndex)
