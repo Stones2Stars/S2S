@@ -34,16 +34,10 @@ class RevDCMOptionsTab(BugOptionsTab.BugOptionsTab):
 			screen.attachHSeparator(right, right + "SepInterface2")
 
 			#DCM options
-			self.addLabel(screen, left, "RevDCM__RevDCM_siege", TRNSLTR.getText("TXT_KEY_REVDCMTAB_SIEGE_OPTIONS", ()))
-			col1, col2 = self.addMultiColumnLayout(screen, right, 2, "DCM_Siege_Events")
-			self.addCheckbox(screen, col1, "RevDCM__DCM_RANGE_BOMBARD")
-			self.addCheckbox(screen, col2, "RevDCM__DCM_OPP_FIRE")
-
 			self.addLabel(screen, left, "RevDCM__RevDCM_air", TRNSLTR.getText("TXT_KEY_REVDCMTAB_AIRFORCE_OPTIONS", ()))
-			col1, col2, col3 = self.addMultiColumnLayout(screen, right, 3, "DCM_Air_Events")
+			col1, col2 = self.addMultiColumnLayout(screen, right, 2, "DCM_Air_Events")
 			self.addCheckbox(screen, col1, "RevDCM__DCM_ACTIVE_DEFENSE")
 			self.addCheckbox(screen, col2, "RevDCM__DCM_FIGHTER_ENGAGE")
-			self.addCheckbox(screen, col3, "RevDCM__DCM_AIR_BOMBING")
 
 			screen.attachHSeparator(left, left + "SepDCM1")
 			screen.attachHSeparator(right, right + "SepDCM2")

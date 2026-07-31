@@ -57,15 +57,17 @@
   the axis, and re-pointing the consumer would silently answer a different question rather than the same one.
   ⚑ [skills.md §1](../../specs/skills.md) ties flanking to `targets` (per-combat-class), which is the reading
   the DATA does not match — so this is a model question to answer before any consumer moves, not a rename.
-- Finish removing RANGED BOMBARD and DCM (owner: *"dcm is stone dead, and we need to redesign ranged bombard
-  from the ground up, so drop it"*). The engine mechanic, its unit/promotion/unitcombat data, the DCM globals
-  and the AI valuation terms all go; the curator already emits nothing for the plane, so no data work rides
-  with it. ⛔ Do NOT mint kinds for it and do NOT preserve the current shape as a starting point — the redesign
-  is ground-up, so anything kept "to build on" is a shape the new model has to fight
-  ([DEC-proper-once](../../architecture/decisions.md#dec-proper-once)).
-  ⚑ WHY it is a removal rather than a repair, recorded so it is not re-litigated: it does not merely fail, it
-  BREAKS the AI — the bombard step is a turn-satisfying terminal, so a stack that plinks stops deciding and
-  never reaches the commit-or-withdraw choice (the #410 pseudo-progress class, [AGENTS.md](../../../AGENTS.md)).
+- Rule on `MISSION_RANGE_ATTACK` (`canRangeStrike` / `rangeStrike` / `INTERFACEMODE_RANGE_ATTACK`). It is a
+  SECOND ranged-attack mechanic, distinct from the removed ranged bombard and sitting beside it in every mission
+  switch — so the bombard cut did NOT cover it and must not be assumed to have.
+  ⚑ What decides it is already ruled: *"if it uses the ranged attack, and is not an airplane, it goes — vanilla
+  airplanes have ranged attack"* ([superseded-ideas](../../architecture/superseded-ideas.md) #24). `canRangeStrike`
+  REFUSES `DOMAIN_AIR` outright while running on the air-range/air-combat stats, i.e. it is a non-airplane ranged
+  attack — the surviving member of exactly the class ranged bombard was removed for.
+- Rename the `dcmFighterEngage` skill and the `DCM_FIGHTER_ENGAGE` global off the mod-provenance prefix. The
+  mechanic is the vanilla airplane ranged attack and STAYS; only the name carries `dcm`, and a live mechanic
+  wearing a dead plane's prefix is what makes the next sweep mis-scope it
+  ([skills.md](../../specs/skills.md)).
 - Retire the legacy `largestCity` member once ranked-target-selection EVALUATION lands.
 - Re-home `stronglyRestricted` to a `requires.build` civ-membership gate, when NPC civilizations are wired.
 - Move corp-HQ revenue (`HeadquarterCommerces`) with the corporation rework.
@@ -148,6 +150,27 @@
 - Make `CvCity::getNumBonuses` a BARE FETCH of a maintained per-city count ([enabler.md §8](../../specs/enabler.md)
   open item 2). ⛔ Every per-read re-plumbing of this is the wrong axis and has been backed out before.
   ⚠ `CityContext::tradedBonusCount` re-derives on refresh and is on the wrong side of it too.
+- Wire the `SPECIALIST` count domain into the ONE count core, so a `per: "SPECIALIST"` deposit scales instead of
+  falling through to the presence fallback and contributing nothing. It is json.md §3.7's own first worked
+  example and buildings, civics and traits all author it, so the deposits are live data reading zero today.
+  ⚑ The shape is already ruled ([tally.md](../../specs/tally.md)): give the OBJECT the aggregate and forward it
+  through `CityContext`, never a tally side-store. ⚠ The count the legacy multiplier used is assigned **plus
+  typed-free** specialists, so the city's assigned-only population counter is NOT the number — forwarding it
+  would under-count silently.
+- Restore a home for the city's TYPED FREE specialist counts. The getter and setter reference a member the city
+  no longer declares, and the setter computes its new value, fires its side effects and then stores nothing —
+  so the typed-free ledger reads empty whatever is granted into it. ⛔ Decide it WITH the free-specialist
+  AMOUNT item below rather than separately: the two are one seam ([modifier.md §6](../../specs/modifier.md)),
+  and re-adding the member alone would restore a legacy accumulator.
+- Make the empire GREAT-GENERAL rate a RECEIVER SUM over the player's cities, not an empire-package read.
+  ⚑ Great general is NOT great people (owner): great PEOPLE accrue per city, while great general points are
+  **summed from cities** plus battlefield experience into the player's own counter — so the empire figure is the
+  cross-scope receiver shape ([state-repositories.md](../../architecture/state-repositories.md): a receiver total
+  is the Σ of its MEMBERS' realized values), not the team+empire roll-up.
+  ⚠ Until it exists the empire read sees only the civic/trait deposits and MISSES the city-authored building
+  ones, i.e. it under-counts silently rather than failing — so this is a wrong number, not a dangling site.
+  ⛔ Do NOT "fix" it by re-scoping the building data to empire: the city authoring is correct, the SUM is what
+  is missing. (Great people's own city/empire split is right as it stands and is not part of this.)
 - Move the realized-value reads onto the existing group reads (a consumer move, no new surface).
 - Delete the per-SOURCE decomposition accumulators: member, `change*`/`get*`, read + write, and the tag named in
   `savemigration.txt` ([DEC-accumulator-cut-uniform](../../architecture/decisions.md#dec-accumulator-cut-uniform)).
@@ -155,7 +178,15 @@
   ⛔ They do NOT each earn a replacement getter — the group read answers the TOTAL, and per-source attribution is
   the ORACLE's job. Their last maintainers (`processBonus`, `processSpecialist`) go with them.
 - Design the genuine residue that needs NEW surface: the slider math, the espionage counters, the live combat
-  state, `getHappinessTimer`, and the `CvPlayer` unit-upkeep family.
+  state, `getHappinessTimer`, the `CvPlayer` unit-upkeep family, and the FREE-SPECIALIST AMOUNT.
+  ⚑ The free-specialist amount is CASCADE RESPONSIBILITY (owner) — so the empire/area figure is NOT an info read
+  to restore, and a per-scope getter must not be added to the building info to satisfy the call sites. What is
+  missing is the cascade read: `MODFAM_FREE_SPECIALISTS` exists in the vocabulary and the building materializes
+  only its `city.any` leaf, so nothing answers the summed amount over the scope chain. Until it exists the
+  push accumulators (`CvPlayer::m_iFreeSpecialist` + the area twin, fed from building/civic/trait `processX`)
+  and their consumers dangle — that is the census working ([modifier.md §6](../../specs/modifier.md): the AMOUNT
+  is the cascade's half of the two-part seam, PLACEMENT stays the engine's).
+  ⚠ The accumulators are NOT serialized, so this cut carries no `savemigration.txt` step.
 - Hoist the per-commerce valuation in `getBuildingCommerceValue` — it runs once per (candidate × channel) where
   the caller already threads other per-candidate arrays for exactly this reason.
 

@@ -3939,7 +3939,9 @@ int CvCity::getWarWearinessPercentAnger() const
 {
 	int iAnger = GET_PLAYER(getOwner()).getWarWearinessPercentAnger();
 
-	iAnger *= std::max(0, (getWarWearinessModifier() + GET_PLAYER(getOwner()).getWarWearinessModifier() + 100));
+	int aiScalars[NUM_INFO_SCALARS];
+	GET_PLAYER(getOwner()).getScalars(aiScalars);
+	iAnger *= std::max(0, (getWarWearinessModifier() + aiScalars[SCALAR_WAR_WEARINESS] + 100));
 	iAnger /= 100;
 
 	iAnger *= std::max(0, (getWarWearinessTimer() + 100));
@@ -4222,7 +4224,7 @@ int CvCity::totalFreeSpecialists() const
 	{
 		return 0;
 	}
-	int iCount = getFreeSpecialist() + area()->getFreeSpecialist(getOwner()) + GET_PLAYER(getOwner()).getFreeSpecialist();
+	int iCount = getFreeSpecialist() + GET_PLAYER(getOwner()).getFreeSpecialist();
 
 	for (int iI = 0; iI < GC.getNumImprovementInfos(); ++iI)
 	{
@@ -4289,9 +4291,9 @@ int CvCity::totalBadBuildingHealth() const
 	{
 		return 0;
 	}
+	//	The area leg is gone with the area scope, and the player leg with the empire accumulator: an
+	//	empire-scope deposit rolls DOWN into this city's realized value rather than being summed separately.
 	return getBuildingBadHealth()
-		+ area()->getBuildingBadHealth(getOwner())
-		+ GET_PLAYER(getOwner()).getBuildingBadHealth()
 		+ getExtraBuildingBadHealth()
 		+ std::min(0, calculatePopulationHealth());
 }
@@ -4480,7 +4482,9 @@ int CvCity::getHurryCostModifier(int iBaseModifier, int iExtraMod) const
 	{
 		iModifier = getModifiedIntValue(iModifier, iExtraMod);
 	}
-	iModifier = getModifiedIntValue(iModifier, GET_PLAYER(getOwner()).getHurryModifier());
+	int aiCostKinds[NUM_COSTS_KINDS];
+	GET_PLAYER(getOwner()).getCostKinds(aiCostKinds);
+	iModifier = getModifiedIntValue(iModifier, aiCostKinds[COSTS_HURRY]);
 	iModifier = getModifiedIntValue(iModifier, GET_PLAYER(getOwner()).getHurryCostModifier());
 
 	return std::max(1, iModifier); // Avoid potential divide by 0s
@@ -5585,7 +5589,9 @@ int CvCity::getTotalGreatPeopleRateModifier() const
 {
 	const CvPlayer& owner = GET_PLAYER(getOwner());
 
-	int iModifier = 100 + getGreatPeopleRateModifier() + owner.getGreatPeopleRateModifier();
+	int aiScalars[NUM_INFO_SCALARS];
+	owner.getScalars(aiScalars);
+	int iModifier = 100 + getGreatPeopleRateModifier() + aiScalars[SCALAR_GREAT_PEOPLE_RATE];
 
 	if (owner.getStateReligion() != NO_RELIGION && isHasReligion(owner.getStateReligion()))
 	{
@@ -5684,7 +5690,7 @@ int CvCity::getAdditionalBaseGreatPeopleRateByBuilding(BuildingTypes eBuilding) 
 	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eBuilding);
 
 	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
-	int iExtraRate = kBuilding.getGreatPeopleRateChange();
+	int iExtraRate = kBuilding.getScalar(SCALAR_GREAT_PEOPLE_RATE, CASC_SCOPE_CITY, CASC_UNIT_FLAT) / 100;
 
 	// Specialists
 	for (int iI = 0; iI < GC.getNumSpecialistInfos(); ++iI)
@@ -5700,7 +5706,7 @@ int CvCity::getAdditionalBaseGreatPeopleRateByBuilding(BuildingTypes eBuilding) 
 		const SpecialistTypes eNewSpecialist = getBestSpecialist(iI);
 		if (eNewSpecialist == NO_SPECIALIST) break;
 
-		iExtraRate += GC.getSpecialistInfo(eNewSpecialist).getGreatPeopleRateChange();
+		iExtraRate += GC.getSpecialistInfo(eNewSpecialist).getScalar(SCALAR_GREAT_PEOPLE_RATE, CASC_SCOPE_CITY, CASC_UNIT_FLAT) / 100;
 
 	}
 
@@ -5731,7 +5737,7 @@ int CvCity::getAdditionalGreatPeopleRateModifierByBuilding(BuildingTypes eBuildi
 
 	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
 
-	return kBuilding.getGreatPeopleRateModifier() + kBuilding.getGlobalGreatPeopleRateModifier();
+	return kBuilding.getScalar(SCALAR_GREAT_PEOPLE_RATE, CASC_SCOPE_CITY, CASC_UNIT_PERCENT) + kBuilding.getScalar(SCALAR_GREAT_PEOPLE_RATE, CASC_SCOPE_EMPIRE, CASC_UNIT_PERCENT);
 }
 
 
@@ -5757,7 +5763,7 @@ int CvCity::getAdditionalBaseGreatPeopleRateBySpecialist(SpecialistTypes eSpecia
 {
 	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eSpecialist);
 
-	return iChange * GC.getSpecialistInfo(eSpecialist).getGreatPeopleRateChange();
+	return iChange * (GC.getSpecialistInfo(eSpecialist).getScalar(SCALAR_GREAT_PEOPLE_RATE, CASC_SCOPE_CITY, CASC_UNIT_FLAT) / 100);
 }
 // BUG - Specialist Additional Great People - end
 
@@ -6550,7 +6556,7 @@ int CvCity::getAdditionalHappinessByBuilding(BuildingTypes eBuilding, int& iGood
 	int iStartingBad = iBad;
 
 	// Basic
-	addGoodOrBad(kBuilding.getHappiness(), iGood, iBad);
+	addGoodOrBad(kBuilding.getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_CITY) / 100, iGood, iBad);
 
 	// Building
 	addGoodOrBad(getBuildingHappyChange(eBuilding), iGood, iBad);
@@ -6575,7 +6581,7 @@ int CvCity::getAdditionalHappinessByBuilding(BuildingTypes eBuilding, int& iGood
 	addGoodOrBad(kBuilding.getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_EMPIRE), iGood, iBad);
 
 	// Religion
-	if (kBuilding.getReligionType() != NO_RELIGION && kBuilding.getReligionType() == GET_PLAYER(getOwner()).getStateReligion())
+	if (kBuilding.getReligion() != NO_RELIGION && kBuilding.getReligion() == GET_PLAYER(getOwner()).getStateReligion())
 	{
 		iGood += kBuilding.getStateReligionHappiness();
 	}
@@ -6612,7 +6618,9 @@ int CvCity::getAdditionalHappinessByBuilding(BuildingTypes eBuilding, int& iGood
 		int iCurrentUnhappiness = iCurrentAngerPercent * getPopulation() / GC.getPERCENT_ANGER_DIVISOR();
 
 		int iNewWarAngerPercent = GET_PLAYER(getOwner()).getWarWearinessPercentAnger();
-		iNewWarAngerPercent *= std::max(0, (iWarWearinessModifier + getWarWearinessModifier() + GET_PLAYER(getOwner()).getWarWearinessModifier() + 100));
+		int aiWarScalars[NUM_INFO_SCALARS];
+		GET_PLAYER(getOwner()).getScalars(aiWarScalars);
+		iNewWarAngerPercent *= std::max(0, (iWarWearinessModifier + getWarWearinessModifier() + aiWarScalars[SCALAR_WAR_WEARINESS] + 100));
 		iNewWarAngerPercent /= 100;
 		int iNewAngerPercent = iBaseAngerPercent + iNewWarAngerPercent;
 		int iNewUnhappiness = iNewAngerPercent * getPopulation() / GC.getPERCENT_ANGER_DIVISOR();
@@ -6626,7 +6634,7 @@ int CvCity::getAdditionalHappinessByBuilding(BuildingTypes eBuilding, int& iGood
 		iBad = iStartingBad;
 	}
 	// No Unhappiness
-	else if (kBuilding.isNoUnhappiness())
+	else if (kBuilding.isAbolishedAnger())
 	{
 		// override extra unhappiness and completely negate all existing unhappiness
 		// The building negates ALL unhappiness: the removal it offers is the whole ANGER side.
@@ -6709,10 +6717,15 @@ int CvCity::getAdditionalHealthByBuilding(BuildingTypes eBuilding, int& iGood, i
 	const int iStarting = iGood - iBad;
 	const int iStartingBad = iBad;
 
-	// The building's OWN authored health, resolved HERE through the ONE valuation -- which also carries its
-	// per-POPULATION entries, so the hand-multiplied healthPercentPerPopulation term further down is gone with
-	// the member it read: a `per<X>`-named member IS a §3.7 `per` count-scaler on the same deposit, never a kind
-	// of its own (json.md §6). Good and bad are one signed number (modifier.md §2b), split by addGoodOrBad.
+	// The building's authored health as experienced HERE, through the ONE valuation: it folds every scope this
+	// city sits under (world/team/empire/city) AND evaluates the conditioned tail against this city's contexts,
+	// so the bonus-gated, tech-gated and `per`-scaled entries all resolve inside this one call.
+	// ⚠ It is therefore the WHOLE deposit-derived answer -- adding any per-source or per-scope leg beside it
+	// counts that leg twice. Good and bad are one signed number (modifier.md §2b), split by addGoodOrBad.
+	// ⚠ The ÷100 is a CLUSTER BOUNDARY, not a sanctioned shape: iGood/iBad are still human whole points here
+	// (they mix with population and food below), so this reduces to meet them. It goes when the yield/food/
+	// wellbeing cluster converts as a unit -- a scale conversion inside a calculation is the defect, never the
+	// fix ([DEC-fixedpoint-x100]; fixed-point-and-scales.md § CONVERT BY ARITHMETIC CLUSTER). Do not copy it.
 	int aiOwnWellbeing[NUM_WELLBEING_CHANNELS];
 	buildingWellbeing(eBuilding, aiOwnWellbeing);
 	addGoodOrBad((aiOwnWellbeing[WELLBEING_HEALTH] - aiOwnWellbeing[WELLBEING_UNHEALTH]) / 100, iGood, iBad);
@@ -6722,9 +6735,6 @@ int CvCity::getAdditionalHealthByBuilding(BuildingTypes eBuilding, int& iGood, i
 
 	// Player Building
 	addGoodOrBad(GET_PLAYER(getOwner()).getExtraBuildingHealth(eBuilding), iGood, iBad);
-
-	// Empire -- the legacy AREA and GLOBAL fields fold to ONE slot (no area scope), so this reads once.
-	addGoodOrBad(kBuilding.getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_EMPIRE), iGood, iBad);
 
 	// No Unhealthiness from Buildings
 	if (isBuildingOnlyHealthy())
@@ -6736,15 +6746,6 @@ int CvCity::getAdditionalHealthByBuilding(BuildingTypes eBuilding, int& iGood, i
 	{
 		// undo bad from this and all existing buildings
 		iBad = iStartingBad + totalBadBuildingHealth();
-	}
-
-	// Bonus
-	foreach_(const BonusModifier& modifier, kBuilding.getBonusHealthChanges())
-	{
-		if ((hasBonus(modifier.first) || kBuilding.getProvides()->has(modifier.first)))
-		{
-			addGoodOrBad(modifier.second, iGood, iBad);
-		}
 	}
 
 	// No Unhealthiness from Population
@@ -6773,14 +6774,6 @@ int CvCity::getAdditionalHealthByBuilding(BuildingTypes eBuilding, int& iGood, i
 		if (iFood < 0)
 		{
 			iStarvation += std::max(iFood, iSpoiledFood);
-		}
-	}
-
-	foreach_(const TechModifier& modifier, kBuilding.getTechHealthChanges())
-	{
-		if (GET_TEAM(getTeam()).isHasTech(modifier.first))
-		{
-			addGoodOrBad(modifier.second, iGood, iBad);
 		}
 	}
 
@@ -9539,7 +9532,7 @@ int CvCity::getBuildingCommerceByBuilding(CommerceTypes eIndex, BuildingTypes eB
 				+ kTeam.getBuildingCommerceTechChange(eIndex, eBuilding)) / 100;
 		}
 
-		const ReligionTypes eRel = (ReligionTypes)kBuilding.getReligionType();
+		const ReligionTypes eRel = (ReligionTypes)kBuilding.getReligion();
 		if (eRel != NO_RELIGION && eRel == kOwner.getStateReligion())
 			iCommerce += kOwner.getStateReligionBuildingCommerce(eIndex);
 
@@ -9640,8 +9633,8 @@ int CvCity::getBaseCommerceRateFromBuilding(CommerceTypes eIndex, BuildingTypes 
 	}
 	iExtraRate100 += 100 * getBuildingCommerceChange(eBuilding, eIndex);
 
-	if (kBuilding.getReligionType() != NO_RELIGION
-	&& kBuilding.getReligionType() == GET_PLAYER(getOwner()).getStateReligion())
+	if (kBuilding.getReligion() != NO_RELIGION
+	&& kBuilding.getReligion() == GET_PLAYER(getOwner()).getStateReligion())
 	{
 		iExtraRate100 += 100 * GET_PLAYER(getOwner()).getStateReligionBuildingCommerce(eIndex);
 	}
@@ -9744,7 +9737,7 @@ int CvCity::getAdditionalCommerceRateModifierByBuilding(CommerceTypes eIndex, Bu
 	}
 	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
 
-	int iMod = kBuilding.getCommerceModifier(eIndex) + kBuilding.getGlobalCommerceModifier(eIndex);
+	int iMod = kBuilding.getCommerceModifier(eIndex, CASC_SCOPE_CITY) + kBuilding.getCommerceModifier(eIndex, CASC_SCOPE_EMPIRE);
 
 	foreach_(const TechCommerceArray& pair, kBuilding.getTechCommerceModifiers())
 	{
@@ -11964,12 +11957,12 @@ void CvCity::setupBuilding(const CvBuildingInfo& kBuilding, const BuildingTypes 
 	//great wall
 	if (bFirst) // Not city copy on owner change, actually built or destroyed.
 	{
-		if (kBuilding.isAreaBorderObstacle())
+		if (kBuilding.isBorderObstacle())
 		{
 			bool bHas = false;
 			foreach_(const BuildingTypes eTypeX, getHasBuildings())
 			{
-				if (eType != eTypeX && GC.getBuildingInfo(eTypeX).isAreaBorderObstacle() && !isDormantBuilding(eTypeX))
+				if (eType != eTypeX && GC.getBuildingInfo(eTypeX).isBorderObstacle() && !isDormantBuilding(eTypeX))
 				{
 					bHas = true;
 					break;
@@ -12014,7 +12007,7 @@ bool CvCity::processGreatWall(bool bIn, bool bForce, bool bSeeded)
 	{
 		foreach_(const BuildingTypes eTypeX, getHasBuildings())
 		{
-			if (GC.getBuildingInfo(eTypeX).isAreaBorderObstacle() && !isDormantBuilding(eTypeX))
+			if (GC.getBuildingInfo(eTypeX).isBorderObstacle() && !isDormantBuilding(eTypeX))
 			{
 				bHasGreatWall = true;
 				break;
@@ -12229,7 +12222,7 @@ void CvCity::checkReligiousDisabling(const BuildingTypes eBuilding, const CvPlay
 	}
 	const CvBuildingInfo& building = GC.getBuildingInfo(eBuilding);
 
-	const ReligionTypes eReligion = (ReligionTypes)building.getReligionType();
+	const ReligionTypes eReligion = (ReligionTypes)building.getReligion();
 	const ReligionTypes eReligionReq = (ReligionTypes)building.getPrereqReligion();
 
 	// If building is not of a religious nature
@@ -17460,9 +17453,9 @@ int CvCity::getAdditionalDefenseByBuilding(BuildingTypes eBuilding) const
 			iExtraRate += kBuilding.getBonusDefenseChanges(iJ);
 		}
 	}
-	if (kBuilding.getAllCityDefenseModifier() != 0)
+	if (kBuilding.getDefense(DEFENSE_AMOUNT, CASC_SCOPE_EMPIRE) != 0)
 	{
-		iExtraRate += kBuilding.getAllCityDefenseModifier();
+		iExtraRate += kBuilding.getDefense(DEFENSE_AMOUNT, CASC_SCOPE_EMPIRE);
 	}
 
 	// If this new building replaces an old one, subtract the old defense rate from the new one.
@@ -17482,7 +17475,7 @@ int CvCity::getAdditionalDefenseByBuilding(BuildingTypes eBuilding) const
 					iExtraRate -= info.getBonusDefenseChanges(iJ);
 				}
 			}
-			iExtraRate -= info.getAllCityDefenseModifier();
+			iExtraRate -= info.getDefense(DEFENSE_AMOUNT, CASC_SCOPE_EMPIRE);
 		}
 	}
 
@@ -18496,7 +18489,7 @@ void CvCity::removeWorstCitizenActualEffects(int iNumCitizens, int& iGreatPeople
 			const CvSpecialistInfo& kSpecialist = GC.getSpecialistInfo(paeRemovedSpecailists[iI]);
 			iHappiness -= kSpecialist.getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_CITY);
 			iHealthiness -= kSpecialist.getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_CITY);
-			iGreatPeopleRate -= kSpecialist.getGreatPeopleRateChange();
+			iGreatPeopleRate -= kSpecialist.getScalar(SCALAR_GREAT_PEOPLE_RATE, CASC_SCOPE_CITY, CASC_UNIT_FLAT) / 100;
 			for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
 			{
 				//Team Project (1)

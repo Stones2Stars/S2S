@@ -5719,9 +5719,9 @@ int CvPlayerAI::AI_techBuildingValue(TechTypes eTech, int iPathLength, bool& bEn
 				}
 
 				//the granary effect is SO powerful it deserves special code
-				if (kLoopBuilding.getFoodKept() > 0)
+				if (kLoopBuilding.getScalar(SCALAR_FOOD_KEPT, CASC_SCOPE_CITY, CASC_UNIT_PERCENT) > 0)
 				{
-					iBuildingValue += (15 * kLoopBuilding.getFoodKept());
+					iBuildingValue += (15 * kLoopBuilding.getScalar(SCALAR_FOOD_KEPT, CASC_SCOPE_CITY, CASC_UNIT_PERCENT));
 				}
 
 				if (kLoopBuilding.getAirlift() > 0)
@@ -5775,7 +5775,7 @@ int CvPlayerAI::AI_techBuildingValue(TechTypes eTech, int iPathLength, bool& bEn
 				}
 
 				// if this is a religious building, its not as useful
-				const ReligionTypes eReligion = (ReligionTypes)kLoopBuilding.getReligionType();
+				const ReligionTypes eReligion = (ReligionTypes)kLoopBuilding.getReligion();
 				if (eReligion != NO_RELIGION)
 				{
 

@@ -161,7 +161,6 @@ public:
 	int getAirUnitCapacity() const          { return m_iAirUnitCapacity; }
 	int getWorkableRadius() const           { return m_iWorkableRadius; }
 	int getMaxPlayerInstancesExtra() const  { return m_iMaxPlayerInstancesExtra; }
-	int getDcmAirbombMission() const        { return m_iDcmAirbombMission; }
 	bool isCenterInCity() const             { return m_bCenterInCity; }
 	bool isNotConstructible() const         { return m_bNotConstructible; }         // json §7: excluded from the queue
 	bool isAutoBuild() const                { return m_bAutoBuild; }                // json §7: autoBuild ⊂ notConstructible
@@ -225,7 +224,6 @@ private:
 	int m_iAirUnitCapacity;
 	int m_iWorkableRadius;
 	int m_iMaxPlayerInstancesExtra;
-	int m_iDcmAirbombMission;
 	bool m_bCenterInCity;
 	bool m_bNotConstructible;
 	bool m_bAutoBuild;

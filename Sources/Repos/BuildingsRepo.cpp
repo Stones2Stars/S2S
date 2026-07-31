@@ -37,7 +37,7 @@ void BuildingsRepo::rebuild()
 	{
 		const CvBuildingInfo& kBuilding = GC.getBuildingInfo((BuildingTypes)iI);
 
-		const int iReligion = kBuilding.getReligionType();
+		const int iReligion = kBuilding.getReligion();
 		if (iReligion >= 0 && iReligion < iNumReligions)
 		{
 			m_byReligion[iReligion].push_back((BuildingTypes)iI);

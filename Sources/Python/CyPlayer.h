@@ -196,14 +196,9 @@ public:
 	int getAnarchyTurns() const;
 	bool isAnarchy() const;
 	void changeAnarchyTurns(int iChange);
-	int getAnarchyModifier() const;
-	int getGoldenAgeModifier() const;
 	void changeGreatGeneralsThresholdModifier(int iChange);
-	int getGreatPeopleRateModifier() const;
-	int getGreatGeneralRateModifier() const;
 
 	int getFeatureProductionModifier() const;
-	int getWorkerSpeedModifier() const;
 	int getMilitaryProductionModifier() const;
 	int getSpaceProductionModifier() const;
 
@@ -236,9 +231,7 @@ public:
 	int getExtraHappiness() const;
 	void changeExtraHappiness(int iChange);
 
-	int getBuildingHappiness() const;
 	int getWarWearinessPercentAnger() const;
-	int getWarWearinessModifier() const;
 	int getCoastalTradeRoutes() const;
 	void changeCoastalTradeRoutes(int iChange);
 	int getTradeRoutes() const;

@@ -906,14 +906,6 @@ bool CvSelectionGroup::canStartMission(int iMission, int iData1, int iData2, CvP
 				}
 				break;
 			}
-			case MISSION_RBOMBARD:
-			{
-				if (GC.isDCM_RANGE_BOMBARD() && unitX->canBombardAtRanged(pPlot, iData1, iData2))
-				{
-					return true;
-				}
-				break;
-			}
 			case MISSION_RANGE_ATTACK:
 			{
 				if (unitX->canRangeStrikeAt(pPlot, iData1, iData2))
@@ -1597,17 +1589,6 @@ bool CvSelectionGroup::startMission()
 							if (pLoopUnit->bombard())
 							{
 								bAction = true;
-							}
-							break;
-						}
-						case MISSION_RBOMBARD:
-						{
-							if(GC.isDCM_RANGE_BOMBARD())
-							{
-								if (pLoopUnit->bombardRanged(headMissionQueueNode()->m_data.iData1, headMissionQueueNode()->m_data.iData2))
-								{
-									bAction = true;
-								}
 							}
 							break;
 						}
@@ -2578,14 +2559,6 @@ bool CvSelectionGroup::canDoInterfaceMode(InterfaceModeTypes eInterfaceMode)
 				}
 				break;
 			}
-			case INTERFACEMODE_BOMBARD:
-			{
-				if (pLoopUnit->canRBombard())
-				{
-					return true;
-				}
-				break;
-			}
 			case INTERFACEMODE_FENGAGE:
 			{
 				if (pLoopUnit->canFEngage() && GC.isDCM_FIGHTER_ENGAGE())
@@ -2653,10 +2626,6 @@ bool CvSelectionGroup::canDoInterfaceModeAt(InterfaceModeTypes eInterfaceMode, C
 			case INTERFACEMODE_REBASE:
 			{
 				return pLoopUnit->canEnterPlot(pPlot);
-			}
-			case INTERFACEMODE_BOMBARD:
-			{
-				return GC.isDCM_RANGE_BOMBARD() && pLoopUnit->canBombardAtRanged(pLoopUnit->plot(), pPlot->getX(), pPlot->getY());
 			}
 			case INTERFACEMODE_FENGAGE:
 			{
@@ -2980,11 +2949,6 @@ bool CvSelectionGroup::canBombard(const CvPlot* pPlot, bool bCheckCanReduceOnly)
 		{
 			return true;
 		}
-		// Dale - RB: Field Bombard
-		if (!bCheckCanReduceOnly && pLoopUnit->canRBombard())
-		{
-			return true;
-		}
 	}
 
 	return false;
@@ -2993,61 +2957,6 @@ bool CvSelectionGroup::canBombard(const CvPlot* pPlot, bool bCheckCanReduceOnly)
 bool CvSelectionGroup::canPillage(const CvPlot* pPlot) const
 {
 	return algo::any_of(units(), CvUnit::fn::canPillage(pPlot));
-}
-
-bool CvSelectionGroup::canBombardAtRanged(const CvPlot* pPlot, int iX, int iY) const
-{
-	return algo::any_of(units(), CvUnit::fn::canBombardAtRanged(pPlot, iX, iY));
-}
-
-int CvSelectionGroup::getMinimumRBombardDamageLimit() const
-{
-	PROFILE_EXTRA_FUNC();
-	int iLowest = MAX_INT;
-	foreach_(const CvUnit* pLoopUnit, units())
-	{
-		const int iTemp = pLoopUnit->rBombardDamageLimit();
-		if (iTemp > 0 && iTemp < iLowest)
-		{
-			iLowest = iTemp;
-		}
-	}
-
-	return (iLowest != MAX_INT) ? iLowest : 0;
-}
-
-int CvSelectionGroup::getMinimumRBombardRange() const
-{
-	PROFILE_EXTRA_FUNC();
-	int iLowest = MAX_INT;
-	foreach_(const CvUnit* pLoopUnit, units())
-	{
-		if (pLoopUnit->rBombardDamageLimit() > 0)
-		{
-			const int iRange = pLoopUnit->getDCMBombRange();
-			if (iRange < iLowest)
-			{
-				iLowest = iRange;
-			}
-		}
-	}
-
-	return (iLowest != MAX_INT) ? iLowest : 0;
-}
-
-int CvSelectionGroup::getRBombardDamageMaxUnits() const
-{
-	PROFILE_EXTRA_FUNC();
-	int iHighest = 0;
-	foreach_(const CvUnit* pLoopUnit, units())
-	{
-		if (pLoopUnit->rBombardDamageLimit() > iHighest)
-		{
-			iHighest = pLoopUnit->rBombardDamageMaxUnits();
-		}
-	}
-
-	return iHighest;
 }
 
 //
@@ -5693,7 +5602,6 @@ void CvSelectionGroup::read(FDataStreamBase* pStream)
 			case MISSION_PARADROP:
 			case MISSION_AIRBOMB:
 			case MISSION_RANGE_ATTACK:
-			case MISSION_RBOMBARD:
 			case MISSION_FENGAGE:
 			case MISSION_CLAIM_TERRITORY:
 				//	Fixup for viewports, old versions of which can leave things un-normalized

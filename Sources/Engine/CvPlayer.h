@@ -493,14 +493,9 @@ public:
 	int getMinAnarchyTurns() const;
 	void updateMinAnarchyTurns();
 
-	int getAnarchyModifier() const;
-	void changeAnarchyModifier(int iChange);
+	int anarchyModifierScalar() const;
 
-	int getGoldenAgeModifier() const;
-	void changeGoldenAgeModifier(int iChange);
 
-	int getHurryModifier() const;
-	void changeHurryModifier(int iChange);
 
 	void createGreatPeople(UnitTypes eGreatPersonUnit, bool bIncrementThreshold, bool bIncrementExperience, int iX, int iY);
 
@@ -516,14 +511,8 @@ public:
 	int getGreatGeneralsThresholdModifier() const;
 	void changeGreatGeneralsThresholdModifier(int iChange);
 
-	int getGreatPeopleRateModifier() const;
-	void changeGreatPeopleRateModifier(int iChange);
 
-	int getGreatGeneralRateModifier() const;
-	void changeGreatGeneralRateModifier(int iChange);
 
-	int getDomesticGreatGeneralRateModifier() const;
-	void changeDomesticGreatGeneralRateModifier(int iChange);
 
 	int getStateReligionGreatPeopleRateModifier() const;
 	void changeStateReligionGreatPeopleRateModifier(int iChange);
@@ -541,8 +530,6 @@ public:
 	int getFeatureProductionModifier() const;
 	void changeFeatureProductionModifier(int iChange);
 
-	int getWorkerSpeedModifier() const;
-	void changeWorkerSpeedModifier(int iChange);
 	int getWorkRate(BuildTypes eBuild) const;
 	int getImprovementUpgradeRateModifier() const;
 	void changeImprovementUpgradeRateModifier(int iChange);
@@ -553,8 +540,6 @@ public:
 	int getSpaceProductionModifier() const;
 	void changeSpaceProductionModifier(int iChange);
 
-	int getCityDefenseModifier() const;
-	void changeCityDefenseModifier(int iChange);
 
 	bool isNonStateReligionCommerce() const;
 	void changeNonStateReligionCommerce(int iNewValue);
@@ -589,8 +574,6 @@ public:
 	bool isInquisitionConditions() const;
 	void setInquisitionConditions();
 
-	int getUnitUpgradePriceModifier() const;
-	void changeUnitUpgradePriceModifier(int iChange);
 
 	bool canFoundReligion() const;
 
@@ -706,8 +689,6 @@ public:
 	void updateWarWearinessPercentAnger();
 	int getModifiedWarWearinessPercentAnger(int iWarWearinessPercentAnger) const;
 
-	int getWarWearinessModifier() const;
-	void changeWarWearinessModifier(int iChange, bool bLimited = false);
 
 	int getFreeSpecialist() const;
 	void changeFreeSpecialist(int iChange);
@@ -1040,8 +1021,6 @@ public:
 	int getCommerceRateModifierfromEvents(CommerceTypes eIndex) const;
 	void changeCommerceRateModifierfromEvents(CommerceTypes eIndex, int iChange);
 
-	int getCommerceRateModifierfromBuildings(CommerceTypes eIndex) const;
-	void changeCommerceRateModifierfromBuildings(CommerceTypes eIndex, int iChange);
 
 	int getCapitalCommerceRateModifier(CommerceTypes eIndex) const;
 	void changeCapitalCommerceRateModifier(CommerceTypes eIndex, int iChange);
@@ -1438,21 +1417,10 @@ public:
 	void setDistantUnitSupportCostModifier(int iNewValue);
 	void changeDistantUnitSupportCostModifier(int iChange);
 
-	int getExtraCityDefense() const;
-	void setExtraCityDefense(int iNewValue);
-	void changeExtraCityDefense(int iChange);
 
-	int getBuildingInflation() const;
-	void changeBuildingInflation(int iChange);
 
-	int getProjectInflation() const;
-	void changeProjectInflation(int iChange);
 
-	int getTechInflation() const;
-	void changeTechInflation(int iChange);
 
-	int getCivicInflation() const;
-	void changeCivicInflation(int iChange);
 
 	int getHurryCostModifier() const;
 	void changeHurryCostModifier(int iChange);
@@ -1675,7 +1643,6 @@ protected:
 	int m_iForeignTradeRouteModifier;
 	int m_iNoLandmarkAngerCount;
 	int m_iLandmarkHappiness;
-	int m_iExtraCityDefense;
 	int m_iDistantUnitSupportCostModifier;
 	int m_iReligionSpreadRate;
 	int m_iTaxRateUnhappiness;
@@ -1694,7 +1661,6 @@ protected:
 	//TB Traits
 	int* m_paiImprovementUpgradeRateModifierSpecific;
 	int* m_paiBuildWorkerSpeedModifierSpecific;
-	int m_iTraitExtraCityDefense;
 	bool* m_pabHasTrait;
 	int m_iLeaderHeadLevel;
 	int m_iNationalEspionageDefense;
@@ -1741,10 +1707,6 @@ protected:
 	int m_iAmbushingTargetUnit;
 	bool m_bAssassinate;
 
-	int m_iBuildingInflation;
-	int m_iProjectInflation;
-	int m_iTechInflation;
-	int m_iCivicInflation;
 	int m_iHurryCostModifier;
 	int m_iHurryInflationModifier;
 	int m_iHurryCount;
@@ -1871,26 +1833,18 @@ protected:
 	int m_iAnarchyTurns;
 	int m_iMaxAnarchyTurns;
 	int m_iMinAnarchyTurns;
-	int m_iAnarchyModifier;
-	int m_iGoldenAgeModifier;
-	int m_iGlobalHurryModifier;
 	int m_iGreatPeopleCreated;
 	int m_iGreatGeneralsCreated;
 	int m_iGreatPeopleThresholdModifier;
 	int m_iGreatGeneralsThresholdModifier;
-	int m_iGreatPeopleRateModifier;
-	int m_iGreatGeneralRateModifier;
-	int m_iDomesticGreatGeneralRateModifier;
 	int m_iStateReligionGreatPeopleRateModifier;
 	int m_iMaxGlobalBuildingProductionModifier;
 	int m_iMaxTeamBuildingProductionModifier;
 	int m_iMaxPlayerBuildingProductionModifier;
 	int m_iFeatureProductionModifier;
-	int m_iWorkerSpeedModifier;
 	int m_iImprovementUpgradeRateModifier;
 	int m_iMilitaryProductionModifier;
 	int m_iSpaceProductionModifier;
-	int m_iCityDefenseModifier;
 
 	int m_iNonStateReligionCommerceCount;
 	int m_iUpgradeAnywhereCount;
@@ -1904,7 +1858,6 @@ protected:
 	float m_fRevIdxGoodReligionMod;
 	bool m_bInquisitionConditions;
 
-	int m_iUnitUpgradePriceModifier;
 
 	int m_iNumNukeUnits;
 	int m_iNumOutsideUnits;
@@ -1936,7 +1889,6 @@ protected:
 	int m_iExtraHappiness;
 	int m_iExtraHappinessUnattributed;
 	int m_iWarWearinessPercentAnger;
-	int m_iWarWearinessModifier;
 	int m_iNoForeignTradeCount;
 	int m_iNoCorporationsCount;
 	int m_iNoForeignCorporationsCount;
@@ -2029,7 +1981,6 @@ protected:
 	int* m_aiCommercePercent;
 	int* m_aiCommerceRateModifier;
 	int* m_aiCommerceRateModifierfromEvents;
-	int* m_aiCommerceRateModifierfromBuildings;
 	int* m_aiCapitalCommerceRateModifier;
 	int* m_aiGoldPerTurnByPlayer;
 	int* m_aiEspionageSpendingWeightAgainstTeam;
@@ -2193,9 +2144,6 @@ public:
 	int getFreeCityYield(YieldTypes eIndex) const;
 	void changeFreeCityYield(YieldTypes eIndex, int iChange);
 
-	int getTraitExtraCityDefense() const;
-	void setTraitExtraCityDefense(int iNewValue);
-	void changeTraitExtraCityDefense(int iChange);
 
 	void setHasTrait(TraitTypes eIndex, bool bNewValue);
 	bool canLearnTrait(TraitTypes eIndex, bool isSelectingNegative = false) const;

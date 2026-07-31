@@ -548,7 +548,7 @@ const int UNDERWORLD_SCOPES = INFO_SCOPE_BIT(CASC_SCOPE_CITY);
 //
 enum InfoScalar
 {
-	SCALAR_ANARCHY = 0,               // anarchy.city %
+	SCALAR_ANARCHY = 0,               // anarchy.empire % -- a building anywhere shortens the empire's anarchy
 	SCALAR_CONSCRIPT,                 // conscript.empire flat
 	SCALAR_CULTURE_DISTANCE,          // cultureDistance.plot flat
 	SCALAR_ESPIONAGE_DEFENSE,         // espionageDefense (city flat / empire %)

@@ -755,39 +755,14 @@ void CyPlayer::changeAnarchyTurns(int iChange)
 	m_pPlayer->changeAnarchyTurns(iChange);
 }
 
-int CyPlayer::getAnarchyModifier() const
-{
-	return m_pPlayer->getAnarchyModifier();
-}
-
-int CyPlayer::getGoldenAgeModifier() const
-{
-	return m_pPlayer->getGoldenAgeModifier();
-}
-
 void CyPlayer::changeGreatGeneralsThresholdModifier(int iChange)
 {
 	m_pPlayer->changeGreatGeneralsThresholdModifier(iChange);
 }
 
-int CyPlayer::getGreatPeopleRateModifier() const
-{
-	return m_pPlayer->getGreatPeopleRateModifier();
-}
-
-int CyPlayer::getGreatGeneralRateModifier() const
-{
-	return m_pPlayer->getGreatGeneralRateModifier();
-}
-
 int CyPlayer::getFeatureProductionModifier() const
 {
 	return m_pPlayer->getFeatureProductionModifier();
-}
-
-int CyPlayer::getWorkerSpeedModifier() const
-{
-	return m_pPlayer->getWorkerSpeedModifier();
 }
 
 int CyPlayer::getMilitaryProductionModifier() const
@@ -890,19 +865,10 @@ void CyPlayer::changeExtraHappiness(int iChange)
 	m_pPlayer->changeExtraHappiness(iChange, true);
 }
 
-int CyPlayer::getBuildingHappiness() const
-{
-	return m_pPlayer->getBuildingHappiness();
-}
 
 int CyPlayer::getWarWearinessPercentAnger() const
 {
 	return m_pPlayer->getWarWearinessPercentAnger();
-}
-
-int CyPlayer::getWarWearinessModifier() const
-{
-	return m_pPlayer->getWarWearinessModifier();
 }
 
 int CyPlayer::getCoastalTradeRoutes() const

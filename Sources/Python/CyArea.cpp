@@ -137,12 +137,6 @@ bool CyArea::isBorderObstacle(TeamTypes eIndex) const
 	return (pArea != NULL) ? pArea->isBorderObstacle(eIndex) : false;
 }
 
-int CyArea::getYieldRateModifier(PlayerTypes eIndex1, YieldTypes eIndex2) const
-{
-	const CvArea* pArea = getArea();
-	return (pArea != NULL) ? pArea->getYieldRateModifier(eIndex1, eIndex2) : 0;
-}
-
 int CyArea::getNumBonuses(BonusTypes eBonus) const
 {
 	const CvArea* pArea = getArea();

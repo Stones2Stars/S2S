@@ -3720,7 +3720,6 @@ void CvGameTextMgr::buildFinanceInflationString(CvWStringBuffer& szBuffer, Playe
 		const long long iPreInflation = kPlayer.calculatePreInflatedCosts();
 		szBuffer.append(gDLL->getText("TXT_KEY_FINANCE_ADVISOR_INFLATION_0", iPreInflation));
 		szBuffer.append(gDLL->getText("TXT_KEY_FINANCE_ADVISOR_INFLATION_1", iInflationRateInt, iInflationRateDec, iInflationCost));
-		szBuffer.append(gDLL->getText("TXT_KEY_FINANCE_ADVISOR_SOURCES_OF_INFLATION", kPlayer.getCivicInflation(), kPlayer.getTechInflation(), kPlayer.getBuildingInflation(), kPlayer.getProjectInflation(), kPlayer.getHurriedCount()));
 	}
 }
 

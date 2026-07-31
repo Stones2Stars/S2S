@@ -489,45 +489,6 @@ void CvGame::updateColoredPlots()
         	}
         }
 
-		// Dale - RB: Field Bombard START
-		if (GC.isDCM_RANGE_BOMBARD())
-		{
-			int iMaxAirRange = 0;
-
-			foreach_(const CvUnit* pSelectedUnit, gDLL->getInterfaceIFace()->getSelectionList()->units())
-			{
-				FAssert(pSelectedUnit);
-
-				iMaxAirRange = std::max(iMaxAirRange, pSelectedUnit->getDCMBombRange());
-			}
-
-			if (iMaxAirRange > 0)
-			{
-				const CvSelectionGroup* pGroup = pHeadSelectedUnit->getGroup();
-
-				foreach_(const CvPlot* plotX, pPlot->rect(iMaxAirRange, iMaxAirRange))
-				{
-					if (plotX->isVisible(pHeadSelectedUnit->getTeam(), false) && plotDistance(pPlot->getX(), pPlot->getY(), plotX->getX(), plotX->getY()) <= iMaxAirRange)
-					{
-						NiColorA color(GC.getColorInfo(GC.getCOLOR_WHITE()).getColor());
-
-						if (pGroup->canBombardAtRanged(pPlot, plotX->getX(), plotX->getY()))
-						{
-							if (plotX->getNumVisibleEnemyCombatUnits(eOwner))
-							{
-								color.r = 0.0f;
-								color.b = 0.0f;
-							}
-							else color.b = 0.0f;
-						}
-						else color.a = 0.33f;
-
-						gDLL->getEngineIFace()->addColoredPlot(plotX->getViewportX(), plotX->getViewportY(), color, PLOT_STYLE_TARGET, PLOT_LANDSCAPE_LAYER_BASE);
-					}
-				}
-			}
-		}
-		// Dale - RB: Field Bombard END
 
 		if (pHeadSelectedUnit->getDomainType() == DOMAIN_AIR)
 		{
@@ -1263,7 +1224,6 @@ void CvGame::selectionListGameNetMessageInternal(int eMessage, int iData2, int i
 						case MISSION_AIRLIFT:
 						case MISSION_AIRBOMB:
 						case MISSION_RANGE_ATTACK:
-						case MISSION_RBOMBARD:
 						case MISSION_FENGAGE:
 						case MISSION_CLAIM_TERRITORY:
 						{

@@ -475,8 +475,6 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 
 	m_iHealUnitCombatCount = 0;
 
-	m_iDCMBombRange = 0;
-	m_iDCMBombAccuracy = 0;
 
 	m_iID = iID;
 	if (!bIdentityChange)
@@ -503,7 +501,6 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 	m_iFortifyTurns = 0;
 	m_iBuildUpTurns = 0;
 	m_iBlitzCount = 0;
-	m_iRBombardForceAbilityCount = 0;
 	m_iAmphibCount = 0;
 	m_iRiverCount = 0;
 	m_iEnemyRouteCount = 0;
@@ -573,17 +570,6 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 	m_iSMAssetValue = 0;
 	m_iSMPowerValue = 0;
 	m_iSMHPValue = 0;
-	m_iExtraRBombardDamage = 0;
-	m_iExtraRBombardDamageLimit = 0;
-	m_iExtraRBombardDamageMaxUnits = 0;
-	m_iExtraDCMBombRange = 0;
-	m_iExtraDCMBombAccuracy = 0;
-	m_iBaseRBombardDamage = 0;
-	m_iBaseRBombardDamageLimit = 0;
-	m_iBaseRBombardDamageMaxUnits = 0;
-	m_iBaseDCMBombRange = 0;
-	m_iBaseDCMBombAccuracy = 0;
-	m_iBombardDirectCount = 0;
 	//TB Combat Mods End
 	m_iExtraBombardRate = 0;
 	m_iSMBombardRate = 0;
@@ -753,8 +739,6 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 CvUnit& CvUnit::operator=(const CvUnit& other)
 {
 	m_iHealUnitCombatCount = other.m_iHealUnitCombatCount;
-	m_iDCMBombRange = other.m_iDCMBombRange;
-	m_iDCMBombAccuracy = other.m_iDCMBombAccuracy;
 	//m_iID = other.m_iID;
 	//if (!bIdentityChange)
 	//{
@@ -780,7 +764,6 @@ CvUnit& CvUnit::operator=(const CvUnit& other)
 	m_iFortifyTurns = other.m_iFortifyTurns;
 	m_iBuildUpTurns = other.m_iBuildUpTurns;
 	m_iBlitzCount = other.m_iBlitzCount;
-	m_iRBombardForceAbilityCount = other.m_iRBombardForceAbilityCount;
 	m_iAmphibCount = other.m_iAmphibCount;
 	m_iRiverCount = other.m_iRiverCount;
 	m_iEnemyRouteCount = other.m_iEnemyRouteCount;
@@ -843,17 +826,6 @@ CvUnit& CvUnit::operator=(const CvUnit& other)
 	m_iSMAssetValue = other.m_iSMAssetValue;
 	m_iSMPowerValue = other.m_iSMPowerValue;
 	m_iSMHPValue = other.m_iSMHPValue;
-	m_iExtraRBombardDamage = other.m_iExtraRBombardDamage;
-	m_iExtraRBombardDamageLimit = other.m_iExtraRBombardDamageLimit;
-	m_iExtraRBombardDamageMaxUnits = other.m_iExtraRBombardDamageMaxUnits;
-	m_iExtraDCMBombRange = other.m_iExtraDCMBombRange;
-	m_iExtraDCMBombAccuracy = other.m_iExtraDCMBombAccuracy;
-	m_iBaseRBombardDamage = other.m_iBaseRBombardDamage;
-	m_iBaseRBombardDamageLimit = other.m_iBaseRBombardDamageLimit;
-	m_iBaseRBombardDamageMaxUnits = other.m_iBaseRBombardDamageMaxUnits;
-	m_iBaseDCMBombRange = other.m_iBaseDCMBombRange;
-	m_iBaseDCMBombAccuracy = other.m_iBaseDCMBombAccuracy;
-	m_iBombardDirectCount = other.m_iBombardDirectCount;
 	m_iExtraBombardRate = other.m_iExtraBombardRate;
 	m_iSMBombardRate = other.m_iSMBombardRate;
 	m_iSMAirBombBaseRate = other.m_iSMAirBombBaseRate;
@@ -10037,7 +10009,9 @@ int CvUnit::upgradePrice(UnitTypes eUnit) const
 		return 1;
 	}
 	{
-		int iMod = GET_PLAYER(getOwner()).getUnitUpgradePriceModifier();
+		int aiCostKinds[NUM_COSTS_KINDS];
+		GET_PLAYER(getOwner()).getCostKinds(aiCostKinds);
+		int iMod = aiCostKinds[COSTS_UPGRADE];
 		if (!isHuman())
 		{
 			iMod += (
@@ -10631,9 +10605,6 @@ BuildTypes CvUnit::getBuildType() const
 		case MISSION_LEAD:
 		case MISSION_ESPIONAGE:
 		case MISSION_DIE_ANIMATION:
-		// Dale - AB: Bombing
-		// Dale - RB: Field Bombard
-		case MISSION_RBOMBARD:
 		// Dale - FE: Fighters
 		case MISSION_FENGAGE:
 		// ! Dale
@@ -10691,22 +10662,6 @@ void CvUnit::changeOnlyDefensiveCount(int iChange)
 	m_iOnlyDefensiveCount += iChange;
 }
 
-
-bool CvUnit::hasRBombardForceAbility() const
-{
-	bool bForce = (m_pUnitInfo->isRBombardForceAbility() || (getRBombardForceAbilityCount() > 0));
-	return bForce;
-}
-
-int CvUnit::getRBombardForceAbilityCount() const
-{
-	return m_iRBombardForceAbilityCount;
-}
-
-void CvUnit::changeRBombardForceAbilityCount(int iChange)
-{
-	m_iRBombardForceAbilityCount += iChange;
-}
 
 bool CvUnit::isNoCapture() const
 {
@@ -14290,13 +14245,16 @@ void CvUnit::changeExperience100(int iChange, int iMax, bool bFromCombat, bool b
 
 		CvPlayer& kPlayer = GET_PLAYER(getOwner());
 
+		int aiScalars[NUM_INFO_SCALARS];
+		kPlayer.getScalars(aiScalars);
+
 		int iMod = getExperiencePercent();
-		int iModGG = kPlayer.getGreatGeneralRateModifier();
+		int iModGG = aiScalars[SCALAR_GREAT_GENERAL_RATE];
 
 		if (bInBorders)
 		{
 			iMod += kPlayer.getExpInBorderModifier();
-			iModGG += kPlayer.getDomesticGreatGeneralRateModifier() + kPlayer.getExpInBorderModifier();
+			iModGG += aiScalars[SCALAR_GREAT_GENERAL_RATE_DOMESTIC] + kPlayer.getExpInBorderModifier();
 		}
 		iChange = getModifiedIntValue(iChange, iMod);
 
@@ -17251,10 +17209,6 @@ bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion, bool bIgnoreHas, boo
 	{
 		return false;
 	}
-	if (promo.isRBombardPrereq() && !canRBombard(true))
-	{
-		return false;
-	}
 	const CvPlot* pPlot = plot();
 	if ((m_pUnitInfo != NULL && pPlot != NULL) && (!isMapCategory(*pPlot, promo) || !isMapCategory(*m_pUnitInfo, promo)))
 	{
@@ -18065,12 +18019,6 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 	changeBarbCoExistCount(kUnitCombat.getBarbCoExistChange() * iChange);
 	changeBlendIntoCityCount(kUnitCombat.getBlendIntoCityChange() * iChange);
 	//
-	changeBaseRBombardDamage(kUnitCombat.getRBombardDamageBase() * iChange, bAdding, eIndex);//no merge/split
-	changeBaseRBombardDamageLimit(kUnitCombat.getRBombardDamageLimitBase() * iChange, bAdding, eIndex);//no merge/split
-	changeBaseRBombardDamageMaxUnits(kUnitCombat.getRBombardDamageMaxUnitsBase() * iChange, bAdding, eIndex);//no merge/split
-	changeBaseDCMBombRange(kUnitCombat.getDCMBombRangeBase() * iChange, bAdding, eIndex);//no merge/split
-	changeBaseDCMBombAccuracy(kUnitCombat.getDCMBombAccuracyBase() * iChange, bAdding, eIndex);//no merge/split
-	changeBombardDirectCount((kUnitCombat.isRBombardDirect()) ? iChange : 0);
 	//
 
 	//booleans //no merge/split
@@ -18112,7 +18060,6 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 	changeCanLeadThroughPeaksCount((kUnitCombat.isCanLeadThroughPeaks()) ? iChange : 0);
 	changeZoneOfControlCount((kUnitCombat.isZoneOfControl()) ? iChange : 0);
 	changeCannotMergeSplitCount((kUnitCombat.isCannotMergeSplit()) ? iChange : 0);
-	changeRBombardForceAbilityCount((kUnitCombat.isRBombardForceAbility()) ? iChange : 0);
 	changeNoSelfHealCount((kUnitCombat.isNoSelfHeal()) ? iChange : 0);
 	changeExtraSelfHealModifier(kUnitCombat.getHealModifier(HEAL_SELF_MODIFIER, CASC_SCOPE_UNIT) * iChange);
 	changeExtraNumHealSupport(kUnitCombat.getNumHealSupport() * iChange);
@@ -18582,11 +18529,6 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	changeExtraCombatModifierPerVolumeMore(kPromotion.getCombatModifierPerVolumeMoreChange() * iChange);//no merge/split
 	changeExtraCombatModifierPerVolumeLess(kPromotion.getCombatModifierPerVolumeLessChange() * iChange);//no merge/split
 
-	changeExtraRBombardDamage(kPromotion.getRBombardDamageChange() * iChange);
-	changeExtraRBombardDamageLimit(kPromotion.getRBombardDamageLimitChange() * iChange);
-	changeExtraRBombardDamageMaxUnits(kPromotion.getRBombardDamageMaxUnitsChange() * iChange);
-	changeExtraDCMBombRange(kPromotion.getDCMBombRangeChange() * iChange);
-	changeExtraDCMBombAccuracy(kPromotion.getDCMBombAccuracyChange() * iChange);
 	changeNoSelfHealCount((kPromotion.isNoSelfHeal()) ? iChange : 0);
 	changeExtraSelfHealModifier(kPromotion.getHealModifier(HEAL_SELF_MODIFIER, CASC_SCOPE_UNIT) * iChange);
 	changeExtraNumHealSupport(kPromotion.getNumHealSupport() * iChange);
@@ -19045,8 +18987,6 @@ void CvUnit::read(FDataStreamBase* pStream)
 
 	WRAPPER_READ_OBJECT_START(wrapper);
 
-	WRAPPER_READ(wrapper, "CvUnit", &m_iDCMBombRange);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iDCMBombAccuracy);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iID);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iGroupID);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iHotKeyNumber);
@@ -19527,18 +19467,6 @@ void CvUnit::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvUnit", &m_iSMAirBombBaseRate);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iSMBaseWorkRate);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iSMRevoltProtection);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraRBombardDamage);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraRBombardDamageLimit);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraRBombardDamageMaxUnits);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraDCMBombRange);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraDCMBombAccuracy);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iBaseRBombardDamage);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iBaseRBombardDamageLimit);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iBaseRBombardDamageMaxUnits);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iBaseDCMBombRange);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iBaseDCMBombAccuracy);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iBombardDirectCount);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iRBombardForceAbilityCount);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraCombatModifierPerSizeMore);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraCombatModifierPerSizeLess);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraCombatModifierPerVolumeMore);
@@ -20022,8 +19950,6 @@ void CvUnit::write(FDataStreamBase* pStream)
 
 	WRAPPER_WRITE_OBJECT_START(wrapper);
 
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iDCMBombRange);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iDCMBombAccuracy);
 
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iID);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iGroupID);
@@ -20246,18 +20172,6 @@ void CvUnit::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iSMAirBombBaseRate);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iSMBaseWorkRate);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iSMRevoltProtection);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraRBombardDamage);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraRBombardDamageLimit);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraRBombardDamageMaxUnits);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraDCMBombRange);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraDCMBombAccuracy);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iBaseRBombardDamage);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iBaseRBombardDamageLimit);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iBaseRBombardDamageMaxUnits);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iBaseDCMBombRange);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iBaseDCMBombAccuracy);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iBombardDirectCount);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iRBombardForceAbilityCount);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraCombatModifierPerSizeMore);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraCombatModifierPerSizeLess);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraCombatModifierPerVolumeMore);
@@ -20685,155 +20599,6 @@ void CvUnit::collateralCombat(const CvPlot* pPlot, CvUnit* pSkipUnit)
 			gDLL->getText("TXT_KEY_MISC_YOU_INFLICT_COL_DMG", getNameKey(), iDamageCount),
 			"AS2D_COLLATERAL", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_GREEN(), pSkipUnit->getX(), pSkipUnit->getY()
 		);
-	}
-}
-
-void CvUnit::rBombardCombat(const CvPlot* pPlot, CvUnit* pFirstUnit)
-{
-	PROFILE_EXTRA_FUNC();
-	const int iRBombardStrength = (getDomainType() == DOMAIN_AIR ? airBaseCombatStr() : baseCombatStr()) * rBombardDamage() / 100;
-
-	if (iRBombardStrength == 0)
-	{
-		return;
-	}
-	CvCity* pCity = pPlot->getPlotCity();
-
-	const int iPossibleTargets = std::min(pPlot->getNumVisiblePotentialEnemyDefenders(this), rBombardDamageMaxUnits());
-
-
-	std::map<CvUnit*, int>::iterator it;
-	std::map<CvUnit*, int> mapUnitDamage;
-
-	foreach_(CvUnit* pLoopUnit, pPlot->units())
-	{
-		if (pLoopUnit->isEnemy(getTeam(), pPlot, this) && !pLoopUnit->isInvisible(getTeam(), false) && pLoopUnit->canDefend())
-		{
-			int iValue = pLoopUnit->getHP() * (1 + GC.getGame().getSorenRandNum(100, "Ranged Bombard Damage"));
-
-			//Favor striking the bigger targets
-			if (GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS))
-			{
-				iValue *= pLoopUnit->getSizeMattersSpacialOffsetValue() + 10;
-			}
-
-			//Favor the first defender on the front lines less
-			if (!isRBombardDirect() && pLoopUnit == pFirstUnit)
-			{
-				iValue /= 10;
-			}
-			mapUnitDamage[pLoopUnit] = iValue;
-		}
-	}
-
-	PlayerTypes eBUPlayer = NO_PLAYER;
-	DomainTypes eBUDomain = NO_DOMAIN;
-	CvUnit* pBestUnit = NULL;
-	int iDamageCount = 0;
-	int iCount = 0;
-
-	while (iCount < iPossibleTargets)
-	{
-		int iBestValue = 0;
-		pBestUnit = NULL;
-
-		for (it = mapUnitDamage.begin(); it != mapUnitDamage.end(); ++it)
-		{
-			if (it->second > iBestValue)
-			{
-				iBestValue = it->second;
-				pBestUnit = it->first;
-			}
-		}
-
-		if (pBestUnit == NULL)
-		{
-			break;
-		}
-		eBUPlayer = pBestUnit->getOwner();
-		eBUDomain = pBestUnit->getDomainType();
-
-		mapUnitDamage.erase(pBestUnit);
-		//TB SubCombat Mod Begin
-		bool isCollateralImmune = false;
-
-		for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
-		{
-			const UnitCombatTypes eType = static_cast<UnitCombatTypes>(iI);
-
-			if (pBestUnit->isHasUnitCombat(eType) && pBestUnit->getUnitInfo().getUnitCombatCollateralImmune(eType))
-			{
-				isCollateralImmune = true;
-				break;
-			}
-		}
-		//TB SubCombat Mod End (with the exception of the following reference to 'isCollateralImmune'
-		if (!isCollateralImmune)
-		{
-			const int iTheirStrength = pBestUnit->baseCombatStr();
-			const int iStrengthFactor = (iRBombardStrength + iTheirStrength + 1) / 2;
-
-			int iRBombardDamage = 100 * GC.getDefineINT("COLLATERAL_COMBAT_DAMAGE");
-
-			iRBombardDamage *= iStrengthFactor + iRBombardStrength;
-			iRBombardDamage /= iStrengthFactor + iTheirStrength;
-
-			int iCollatDef = std::max(0, std::min(pBestUnit->getCollateralDamageProtection(), 100));
-			// Reduce bombard damage based on collatoral damage protection factor
-			iRBombardDamage -= (iRBombardDamage * iCollatDef) / 100;
-			//TB Combat Mods end
-
-			if (pCity != NULL)
-			{
-				iRBombardDamage *= 100 + pCity->getAirModifier();
-				iRBombardDamage /= 100;
-			}
-
-			iRBombardDamage /= 100;
-
-			iRBombardDamage = std::max(0, iRBombardDamage);
-
-			//Save data for the message:
-
-			const int iMaxDamage = std::min(rBombardDamageLimit(), rBombardDamageLimit() * (iRBombardStrength + iStrengthFactor) / (iTheirStrength + iStrengthFactor));
-
-			const int iUnitDamage = std::max(pBestUnit->getDamage(), std::min(pBestUnit->getDamage() + iRBombardDamage, iMaxDamage));
-
-			if (pBestUnit->getDamage() != iUnitDamage)
-			{
-// BUG - Combat Events - start
-				int iDamageDone = iUnitDamage - pBestUnit->getDamage();
-				pBestUnit->setDamage(iUnitDamage, getOwner());
-				//TB Combat Mod begin
-				//TB Combat Mod end
-				CvEventReporter::getInstance().combatLogCollateral(this, pBestUnit, iDamageDone);
-// BUG - Combat Events - end
-				iDamageCount++;
-			}
-		}
-		iCount++;
-	}
-
-	if (pBestUnit == NULL)
-	{
-		return;
-	}
-	if (iDamageCount > 0  && pPlot->getX() != -1 && pPlot->getY() != -1)
-	{
-		AddDLLMessage(
-			eBUPlayer, (eBUDomain != DOMAIN_AIR), GC.getEVENT_MESSAGE_TIME(),
-			gDLL->getText("TXT_KEY_MISC_YOU_SUFFER_COL_DMG", iDamageCount),
-			"AS2D_COLLATERAL", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_RED(), pPlot->getX(), pPlot->getY(), true, true
-		);
-		AddDLLMessage(
-			getOwner(), true, GC.getEVENT_MESSAGE_TIME(),
-			gDLL->getText("TXT_KEY_MISC_YOU_INFLICT_COL_DMG", getNameKey(), iDamageCount),
-			"AS2D_COLLATERAL", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_GREEN(), pPlot->getX(), pPlot->getY()
-		);
-	}
-	else
-	{
-		FAssertMsg(pPlot->getX() != -1 && pPlot->getY() != -1, "Unit's X or Y is out of valid range in Ranged Assault");
 	}
 }
 
@@ -21868,340 +21633,6 @@ int CvUnit::getSelectionSoundScript() const
 }
 
 
-
-// Dale - RB: Field Bombard
-bool CvUnit::canRBombard(bool bEver) const
-{
-	if (!GC.isDCM_RANGE_BOMBARD())
-	{
-		return false;
-	}
-
-	//No longer evaluates the unit itself so much as its Combat Classes (the weapon ones are the source of the ability)
-	if (getBaseDCMBombRange() < 1)
-	{
-        return false;
-	}
-
-	if (isOnlyDefensive() && !hasRBombardForceAbility())
-	{
-		return false;
-	}
-
-	if (getDomainType() == DOMAIN_AIR)
-	{
-		return false;
-	}
-
-	if (isMadeAttack() && !bEver)
-	{
-		return false;
-	}
-
-	if (isCargo() && !bEver)
-	{
-		return false;
-	}
-
-	return true;
-}
-
-bool CvUnit::canBombardAtRanged(const CvPlot* pPlot, int iX, int iY) const
-{
-	if (!canRBombard() || iX < 0 || iY < 0)
-	{
-		return false;
-	}
-	CvPlot* pTargetPlot = GC.getMap().plot(iX, iY);
-
-	if (plotDistance(pPlot->getX(), pPlot->getY(), pTargetPlot->getX(), pTargetPlot->getY()) > getDCMBombRange())
-	{
-		return false;
-	}
-	const bool bNotMyTerritory = pTargetPlot->getTeam() != getTeam();
-
-	if (pTargetPlot->isOwned() && bNotMyTerritory && !atWar(pTargetPlot->getTeam(), getTeam()))
-	{
-		return false;
-	}
-
-	if (pTargetPlot->getNumVisiblePotentialEnemyDefenders(this) > 0)
-	{
-		return true;
-	}
-	if (bNotMyTerritory)
-	{
-		if (pTargetPlot->isImprovementDestructible())
-		{
-			return true;
-		}
-		CvCity* pCity = pTargetPlot->getPlotCity();
-
-		if (pCity != NULL && pCity->isBombardable(this))
-		{
-			return true;
-		}
-	}
-	return false;
-}
-
-// RevolutionDCM - significant chances to this function
-bool CvUnit::bombardRanged(int iX, int iY, bool sAttack)
-{
-	if (!canBombardAtRanged(plot(), iX, iY))
-	{
-		return false;
-	}
-	CvPlot* pPlot = GC.getMap().plot(iX, iY);
-
-	if (pPlot == NULL)
-	{
-		return false;
-	}
-	CvWString szBuffer;
-
-	CvUnit* pLoopUnit = NULL;
-	CvCity* pCity = pPlot->getPlotCity();
-
-	if (pCity != NULL)
-	{
-		pLoopUnit = pPlot->getBestDefender(NO_PLAYER, getOwner(), this, true);
-		if (pLoopUnit != NULL)
-		{
-			//TB Combat Mod adjustment
-			//We have Bombard Defense Values in the city and it would be best if it came into play rather than a static modifier
-			//Also... why would we want a city that still has better stronger defenses to be MORE vulnerable to bombard attack??? Eugh...
-			const int iBombardDefense =
-			(
-				pCity->getBuildingBombardDefense()
-				*
-				pCity->getDefenseModifier(false) / std::max(1, pCity->getTotalDefense(false))
-			);
-			// standard odds made worse if greater than one tile out
-			const int odds = 100 + iBombardDefense + (plotDistance(getX(), getY(), pPlot->getX(), pPlot->getY()) - 1) * 30;
-
-			// RevolutionDCM - change proposal to ranged bombardment. Only collateral damage can be issued.
-			if (GC.getGame().getSorenRandNum(odds, "Bombard Accuracy") <= getDCMBombAccuracy())
-			{
-				{
-
-					szBuffer = gDLL->getText("TXT_KEY_HAS_RANGED_BOMBARD_ATTACKED", getNameKey());
-					AddDLLMessage(getOwner(), true, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_GREEN(), getX(), getY());
-					szBuffer = gDLL->getText("TXT_KEY_HAS_BEEN_RANGED_BOMBARD_ATTACKED", getNameKey());
-					AddDLLMessage(pLoopUnit->getOwner(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_RED(), getX(), getY(), true, true);
-				}
-				rBombardCombat(pPlot, pLoopUnit);
-				changeExperience100(100, -1, true, pLoopUnit->getOwner() == getOwner());
-			}
-			else
-			{
-
-				szBuffer = gDLL->getText("TXT_KEY_MISC_YOU_BOMB_MISSED", getNameKey());
-				AddDLLMessage(getOwner(), true, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_RED(), getX(), getY());
-				szBuffer = gDLL->getText("TXT_KEY_MISC_ENEMY_BOMB_MISSED", getNameKey());
-				AddDLLMessage(pLoopUnit->getOwner(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_GREEN(), getX(), getY(), true, true);
-			}
-		}
-	}
-	else
-	{
-		// Field bombard case.
-		pLoopUnit = pPlot->getBestDefender(NO_PLAYER, getOwner(), this, true);
-		if (pLoopUnit != NULL)
-		{
-			// standard odds made worse if greater than one tile out
-			const int odds = 100 + 30*(plotDistance(getX(), getY(), pPlot->getX(), pPlot->getY()) - 1);
-
-			//RevolutionDCM - change proposal to ranged bombardment. Only collateral damage can be issued.
-			if (GC.getGame().getSorenRandNum(odds, "Bombard Accuracy") <= getDCMBombAccuracy())
-			{
-				{
-
-					szBuffer = gDLL->getText("TXT_KEY_HAS_RANGED_BOMBARD_ATTACKED", getNameKey());
-					AddDLLMessage(getOwner(), true, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_GREEN(), getX(), getY());
-					szBuffer = gDLL->getText("TXT_KEY_HAS_BEEN_RANGED_BOMBARD_ATTACKED", getNameKey());
-					AddDLLMessage(pLoopUnit->getOwner(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_RED(), getX(), getY(), true, true);
-				}
-				rBombardCombat(pPlot, pLoopUnit);
-				changeExperience100(100, -1, true, pLoopUnit->getOwner() == getOwner());
-			}
-			else
-			{
-
-				szBuffer = gDLL->getText("TXT_KEY_MISC_YOU_BOMB_MISSED", getNameKey());
-				AddDLLMessage(getOwner(), true, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_RED(), getX(), getY());
-				szBuffer = gDLL->getText("TXT_KEY_MISC_ENEMY_BOMB_MISSED", getNameKey());
-				AddDLLMessage(pLoopUnit->getOwner(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_GREEN(), getX(), getY(), true, true);
-			}
-		}
-		// Plot bombardment
-		else if (pPlot->getImprovementType() != NO_IMPROVEMENT)
-		{
-			if (
-				GC.getGame().getSorenRandNum(getBombardRate(), "Bomb - Offense")
-				>=
-				GC.getGame().getSorenRandNum(GC.getImprovementInfo(pPlot->getImprovementType()).getAirBombDefense(), "Bomb - Defense")
-			)
-			{
-				{
-
-					szBuffer = gDLL->getText("TXT_KEY_MISC_YOU_UNIT_DESTROYED_IMP", getNameKey(), GC.getImprovementInfo(pPlot->getImprovementType()).getTextKeyWide());
-					AddDLLMessage(getOwner(), true, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_PILLAGE", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_GREEN(), pPlot->getX(), pPlot->getY());
-					if (pPlot->isOwned())
-					{
-						szBuffer = gDLL->getText("TXT_KEY_MISC_YOU_IMP_WAS_DESTROYED", GC.getImprovementInfo(pPlot->getImprovementType()).getTextKeyWide(), getNameKey(), GET_PLAYER(getOwner()).getCivilizationAdjectiveKey());
-						AddDLLMessage(pPlot->getOwner(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_PILLAGE", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_RED(), pPlot->getX(), pPlot->getY(), true, true);
-					}
-				}
-				pPlot->setImprovementType(GC.getImprovementInfo(pPlot->getImprovementType()).getImprovementPillage());
-				changeExperience100(100, -1, true);
-			}
-			else
-			{
-
-				szBuffer = gDLL->getText("TXT_KEY_MISC_YOU_UNIT_FAIL_DESTROY_IMP", getNameKey(), GC.getImprovementInfo(pPlot->getImprovementType()).getTextKeyWide());
-				AddDLLMessage(getOwner(), true, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMB_FAILS", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_RED(), pPlot->getX(), pPlot->getY());
-			}
-		}
-	}
-
-	if (!sAttack)
-	{
-		setMadeAttack(true);
-		changeMoves(GC.getMOVE_DENOMINATOR());
-	}
-
-	addMission(CvMissionDefinition(MISSION_BOMBARD, pPlot, this, pLoopUnit, GC.getMissionInfo(MISSION_RBOMBARD).getTime()* gDLL->getSecsPerTurn()));
-
-	return true;
-}
-
-// RevolutionDCM - ranged bombard
-// Estimate if a unit stack is worth range bombarding
-bool CvUnit::isRbombardable(int iMinStack) const
-{
-	PROFILE_EXTRA_FUNC();
-	int collateralCount = 0;
-	int averageDamage = 0;
-	int averageProtection = 0;
-	int seigeCount = 0;
-
-	CvUnit* nextUnit = NULL;
-	int unitCount = plot()->getNumUnits();
-	if (unitCount >= iMinStack)
-	{
-		for (int i = 0; i < unitCount; i++)
-		{
-			nextUnit = plot()->getUnitByIndex(i);
-			if (nextUnit != NULL)
-			{
-				if (nextUnit->canRBombard())
-				{
-					seigeCount++;
-				}
-				averageDamage += nextUnit->getDamage();
-				//TB Combat Mods begin (fortified collateral defense) Reference to iCollatDef was nextUnit->getCollateralDamageProtection()
-				//int iFortDef = nextUnit->fortifyCollateralDefenseModifier();
-				//int iFortDefzero = iFortDef < 0 ? 0 : iFortDef;
-				int iStdDef = nextUnit->getCollateralDamageProtection();
-				int iUncheckedDef = /*iFortDefzero +*/ iStdDef;
-				int iUncheckedDefzero = iUncheckedDef < 0 ? 0 : iUncheckedDef;
-				int iCollatDef = iUncheckedDefzero > 100 ? 100 : iUncheckedDefzero;
-				averageProtection += iCollatDef;
-				//TB Combat Mods end
-			}
-		}
-		if (unitCount > 0)
-		{
-			collateralCount = unitCount - seigeCount;
-			averageDamage /= unitCount;
-			averageProtection /= unitCount;
-			if (collateralCount > 1 && collateralCount < 8 && averageDamage < 40 && averageProtection < 10)
-			{
-				return true;
-			}
-		}
-	}
-	return false;
-}
-
-int CvUnit::getRbombardSeigeCount(const CvPlot* pPlot) const
-{
-	return pPlot ? algo::count_if(pPlot->units(), CvUnit::fn::canRBombard()) : 0;
-}
-
-void CvUnit::doOpportunityFire()
-{
-	PROFILE_EXTRA_FUNC();
-	//TB Notes regarding Opportunity Fire:
-	//While the mechanism has been updated to only target the strongest adjacent unit with this opportunity fire, there is still some work here to do.
-	//There is absolutely zero resistability to this damage and no potential for failure to strike, making it far more powerful than any player determined
-	//action.  Once I get to focusing in on the Bombard function and adding some more dynamics there to address the above noted issues,
-	//I'll have to enforce those mechanisms onto this Opportunity Fire process as well.
-	int iUnitDamage = 0;
-	int iVolumeDefenders = 0;
-	int iBestUnitStr = 0;
-	int ipDefenderStr = 0;
-	CvPlot* pAttackPlot = NULL;
-	CvUnit* pDefender = NULL;
-	CvWString szBuffer;
-	CvUnit* pBestUnit;
-
-	if (!GC.isDCM_OPP_FIRE() || getBombardRate() <= 0 || getDCMBombRange() <= 0)
-	{
-		return;
-	}
-
-	if (getFortifyTurns() > 0)
-	{
-		foreach_(CvPlot* pLoopPlot, plot()->adjacent())
-		{
-			iVolumeDefenders = pLoopPlot->getNumUnits();
-			if (iVolumeDefenders > 0)
-			{
-				pBestUnit = NULL;
-				pBestUnit = pLoopPlot->getBestDefender(NO_PLAYER, getOwner(), this, true);
-				if (pBestUnit != NULL)
-				{
-					iBestUnitStr = pBestUnit->currCombatStr(pLoopPlot, this);
-					if (pDefender != NULL)
-					{
-						if (iBestUnitStr > ipDefenderStr)
-						{
-							pDefender = pBestUnit;
-							pAttackPlot = pLoopPlot;
-							ipDefenderStr = pDefender->currCombatStr(pLoopPlot, this);
-						}
-					}
-					else
-					{
-						pDefender = pBestUnit;
-						pAttackPlot = pLoopPlot;
-						ipDefenderStr = pDefender->currCombatStr(pLoopPlot, this);
-					}
-				}
-			}
-		}
-		if (pDefender != NULL)
-		{
-			iUnitDamage = (GC.getGame().getSorenRandNum(getBombardRate(), "Bombard damage") * 5);
-			pDefender->changeDamage(iUnitDamage, getOwner());
-			//TB Combat Mod begin
-			//TB Combat Mod end
-
-			{
-				szBuffer = gDLL->getText("TXT_KEY_MISC_YOU_OPP_FIRE", getNameKey(), pDefender->getNameKey());
-				AddDLLMessage(getOwner(), true, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_OUR_WITHDRAWL", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_GREEN(), pAttackPlot->getX(), pAttackPlot->getY(), true, true);
-				szBuffer = gDLL->getText("TXT_KEY_MISC_ENEMY_OPP_FIRE", getNameKey(), pDefender->getNameKey());
-				AddDLLMessage(pDefender->getOwner(), true, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_THEIR_WITHDRAWL", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_RED(), pAttackPlot->getX(), pAttackPlot->getY(), true, true);
-			}
-
-			// Bombard entity mission
-			addMission(CvMissionDefinition(MISSION_BOMBARD, pAttackPlot, this, pDefender));
-		}
-	}
-}
-// ! Dale - SA: Opp Fire
 
 // Dale - SA: Active Defense
 void CvUnit::doActiveDefense()
@@ -24267,36 +23698,6 @@ bool CvUnit::canKeepPromotion(PromotionTypes ePromotion, bool bAssertFree, bool 
 		||
 		promo.isForOffset()
 	);
-
-	if (promo.isRBombardPrereq() && !canRBombard(true))
-	{
-		if (bMessageOnFalse)
-		{
-			if (bPromo && !bIsFreePromotion)
-			{
-				AddDLLMessage(
-					getOwner(), true, GC.getEVENT_MESSAGE_TIME(),
-					gDLL->getText(
-						"TXT_KEY_MISC_OBSOLETED_PROMOTION_RBOMBARD_CAN_RETRAIN",
-						getNameKey(), promo.getDescription()
-					),
-					"AS2D_POSITIVE_DINK", MESSAGE_TYPE_INFO, NULL, GC.getCOLOR_GREEN(), getX(), getY()
-				);
-			}
-			else
-			{
-				AddDLLMessage(
-					getOwner(), true, GC.getEVENT_MESSAGE_TIME(),
-					gDLL->getText(
-						"TXT_KEY_MISC_OBSOLETED_PROMOTION_RBOMBARD_NO_RETRAIN",
-						getNameKey(), promo.getDescription()
-					),
-					"AS2D_POSITIVE_DINK", MESSAGE_TYPE_INFO, NULL, GC.getCOLOR_RED(), getX(), getY()
-				);
-			}
-		}
-		return false;
-	}
 
 	if (promo.isCargoPrereq() && !isCarrier())
 	{
@@ -26622,7 +26023,9 @@ int CvUnit::workRate(bool bMax) const
 	{
 		return 0;
 	}
-	int iWorkMod = getWorkModifier() + GET_PLAYER(getOwner()).getWorkerSpeedModifier();
+	int aiScalars[NUM_INFO_SCALARS];
+	GET_PLAYER(getOwner()).getScalars(aiScalars);
+	int iWorkMod = getWorkModifier() + aiScalars[SCALAR_WORK_RATE];
 
 	const CvPlot* pPlot = plot();
 	for (int iI = 0; iI < GC.getNumFeatureInfos(); iI++)
@@ -26804,356 +26207,6 @@ void CvUnit::setSMValues(bool bForLoad)
 		setTransportUnit(pTransportUnit);
 	}
 }
-
-int CvUnit::rBombardDamage() const
-{
-	return std::max(0, m_pUnitInfo->getRBombardDamage() + getBaseRBombardDamage() + getExtraRBombardDamage());
-}
-
-int CvUnit::getExtraRBombardDamage() const
-{
-	if (!isCommander())
-	{
-		const CvUnit* pCommander = getCommander();
-		if (pCommander)
-		{
-			return m_iExtraRBombardDamage + pCommander->m_iExtraRBombardDamage;
-		}
-	}
-	if (!isCommodore())
-    {
-    	const CvUnit* pCommodore = getCommodore();
-    	if (pCommodore)
-    	{
-    		return m_iExtraRBombardDamage + pCommodore->m_iExtraRBombardDamage;
-    	}
-    }
-	return m_iExtraRBombardDamage;
-}
-
-void CvUnit::changeExtraRBombardDamage(int iChange)
-{
-	m_iExtraRBombardDamage += iChange;
-	FASSERT_NOT_NEGATIVE(m_iExtraRBombardDamage);
-}
-
-int CvUnit::getBaseRBombardDamage() const
-{
-	return m_iBaseRBombardDamage;
-}
-
-void CvUnit::changeBaseRBombardDamage(int iChange, bool bAdding, UnitCombatTypes eUnitCombat)
-{
-	PROFILE_EXTRA_FUNC();
-	if (bAdding && iChange > m_iBaseRBombardDamage)
-	{
-		m_iBaseRBombardDamage = iChange;
-	}
-	int iBestValue = 0;
-	if (!bAdding && iChange == m_iBaseRBombardDamage)
-	{
-		for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
-		{
-			if ((UnitCombatTypes)iI != eUnitCombat && isHasUnitCombat((UnitCombatTypes)iI))
-			{
-				const int iValue = GC.getUnitCombatInfo((UnitCombatTypes)iI).getRBombardDamageBase();
-
-				if (iValue > iBestValue)
-				{
-					iBestValue = iValue;
-				}
-			}
-		}
-		m_iBaseRBombardDamage = iBestValue;
-	}
-	FASSERT_NOT_NEGATIVE(getBaseRBombardDamage());
-}
-
-int CvUnit::rBombardDamageLimit() const
-{
-	return
-	(
-		std::max
-		(
-			0,
-			(
-				m_pUnitInfo->getRBombardDamageLimit()
-				+ getBaseRBombardDamageLimit()
-				+ getExtraRBombardDamageLimit()
-			)
-			* GC.getMAX_HIT_POINTS() / 100
-		)
-	);
-}
-
-int CvUnit::getExtraRBombardDamageLimit() const
-{
-	if (!isCommander())
-	{
-		const CvUnit* pCommander = getCommander();
-		if (pCommander)
-		{
-			return m_iExtraRBombardDamageLimit + pCommander->m_iExtraRBombardDamageLimit;
-		}
-	}
-	if (!isCommodore())
-    	{
-    		const CvUnit* pCommodore = getCommodore();
-    		if (pCommodore)
-    		{
-    			return m_iExtraRBombardDamageLimit + pCommodore->m_iExtraRBombardDamageLimit;
-    		}
-    	}
-	return m_iExtraRBombardDamageLimit;
-}
-
-void CvUnit::changeExtraRBombardDamageLimit(int iChange)
-{
-	m_iExtraRBombardDamageLimit += iChange;
-	FASSERT_NOT_NEGATIVE(m_iExtraRBombardDamageLimit);
-}
-
-int CvUnit::getBaseRBombardDamageLimit() const
-{
-	return m_iBaseRBombardDamageLimit;
-}
-
-void CvUnit::changeBaseRBombardDamageLimit(int iChange, bool bAdding, UnitCombatTypes eUnitCombat)
-{
-	PROFILE_EXTRA_FUNC();
-	if (bAdding && iChange > m_iBaseRBombardDamageLimit)
-	{
-		m_iBaseRBombardDamageLimit = iChange;
-	}
-	int iBestValue = 0;
-	if (!bAdding && iChange == m_iBaseRBombardDamageLimit)
-	{
-		for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
-		{
-			if ((UnitCombatTypes)iI != eUnitCombat && isHasUnitCombat((UnitCombatTypes)iI))
-			{
-				const int iValue = GC.getUnitCombatInfo((UnitCombatTypes)iI).getRBombardDamageLimitBase();
-
-				if (iValue > iBestValue)
-				{
-					iBestValue = iValue;
-				}
-			}
-		}
-		m_iBaseRBombardDamageLimit = iBestValue;
-	}
-	FASSERT_NOT_NEGATIVE(getBaseRBombardDamageLimit());
-}
-
-int CvUnit::rBombardDamageMaxUnits() const
-{
-	return
-	(
-		std::max
-		(
-			0,
-			m_pUnitInfo->getRBombardDamageMaxUnits()
-			+ getBaseRBombardDamageMaxUnits()
-			+ getExtraRBombardDamageMaxUnits()
-		)
-	);
-}
-
-int CvUnit::getExtraRBombardDamageMaxUnits() const
-{
-	if (!isCommander())
-	{
-		const CvUnit* pCommander = getCommander();
-		if (pCommander)
-		{
-			return m_iExtraRBombardDamageMaxUnits + pCommander->m_iExtraRBombardDamageMaxUnits;
-		}
-	}
-	if (!isCommodore())
-    	{
-    		const CvUnit* pCommodore = getCommodore();
-    		if (pCommodore)
-    		{
-    			return m_iExtraRBombardDamageMaxUnits + pCommodore->m_iExtraRBombardDamageMaxUnits;
-    		}
-    	}
-	return m_iExtraRBombardDamageMaxUnits;
-}
-
-void CvUnit::changeExtraRBombardDamageMaxUnits(int iChange)
-{
-	m_iExtraRBombardDamageMaxUnits += iChange;
-	FASSERT_NOT_NEGATIVE(m_iExtraRBombardDamageMaxUnits);
-}
-
-int CvUnit::getBaseRBombardDamageMaxUnits() const
-{
-	return m_iBaseRBombardDamageMaxUnits;
-}
-
-void CvUnit::changeBaseRBombardDamageMaxUnits(int iChange, bool bAdding, UnitCombatTypes eUnitCombat)
-{
-	PROFILE_EXTRA_FUNC();
-	if (bAdding && iChange > m_iBaseRBombardDamageMaxUnits)
-	{
-		m_iBaseRBombardDamageMaxUnits = iChange;
-	}
-	int iBestValue = 0;
-	if (!bAdding && iChange == m_iBaseRBombardDamageMaxUnits)
-	{
-		for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
-		{
-			if ((UnitCombatTypes)iI != eUnitCombat && isHasUnitCombat((UnitCombatTypes)iI))
-			{
-				const int iValue = GC.getUnitCombatInfo((UnitCombatTypes)iI).getRBombardDamageMaxUnitsBase();
-
-				if (iValue > iBestValue)
-				{
-					iBestValue = iValue;
-				}
-			}
-		}
-		m_iBaseRBombardDamageMaxUnits = iBestValue;
-	}
-	FASSERT_NOT_NEGATIVE(getBaseRBombardDamageMaxUnits());
-}
-
-int CvUnit::getDCMBombRange() const
-{
-	return std::max(0, m_pUnitInfo->getDCMBombRange() + getBaseDCMBombRange() + getExtraDCMBombRange());
-}
-
-int CvUnit::getExtraDCMBombRange() const
-{
-	if (!isCommander())
-	{
-		const CvUnit* pCommander = getCommander();
-		if (pCommander)
-		{
-			return m_iExtraDCMBombRange + pCommander->m_iExtraDCMBombRange;
-		}
-	}
-	if (!isCommodore())
-    	{
-    		const CvUnit* pCommodore = getCommodore();
-    		if (pCommodore)
-    		{
-    			return m_iExtraDCMBombRange + pCommodore->m_iExtraDCMBombRange;
-    		}
-    	}
-	return m_iExtraDCMBombRange;
-}
-
-void CvUnit::changeExtraDCMBombRange(int iChange)
-{
-	m_iExtraDCMBombRange += iChange;
-}
-
-int CvUnit::getBaseDCMBombRange() const
-{
-	return m_iBaseDCMBombRange;
-}
-
-void CvUnit::changeBaseDCMBombRange(int iChange, bool bAdding, UnitCombatTypes eUnitCombat)
-{
-	PROFILE_EXTRA_FUNC();
-	if (bAdding && iChange > m_iBaseDCMBombRange)
-	{
-		m_iBaseDCMBombRange = iChange;
-	}
-	int iBestValue = 0;
-	if (!bAdding && iChange == m_iBaseDCMBombRange)
-	{
-		for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
-		{
-			if ((UnitCombatTypes)iI != eUnitCombat && isHasUnitCombat((UnitCombatTypes)iI))
-			{
-				const int iValue = GC.getUnitCombatInfo((UnitCombatTypes)iI).getDCMBombRangeBase();
-
-				if (iValue > iBestValue)
-				{
-					iBestValue = iValue;
-				}
-			}
-		}
-		m_iBaseDCMBombRange = iBestValue;
-	}
-	FASSERT_NOT_NEGATIVE(getBaseDCMBombRange());
-}
-
-int CvUnit::getDCMBombAccuracy() const
-{
-	return std::max(0, m_pUnitInfo->getDCMBombAccuracy() + getBaseDCMBombAccuracy() + getExtraDCMBombAccuracy());
-}
-
-int CvUnit::getExtraDCMBombAccuracy() const
-{
-	if (!isCommander())
-	{
-		const CvUnit* pCommander = getCommander();
-		if (pCommander)
-		{
-			return m_iExtraDCMBombAccuracy + pCommander->m_iExtraDCMBombAccuracy;
-		}
-	}
-	if (!isCommodore())
-    	{
-    		const CvUnit* pCommodore = getCommodore();
-    		if (pCommodore)
-    		{
-    			return m_iExtraDCMBombAccuracy + pCommodore->m_iExtraDCMBombAccuracy;
-    		}
-    	}
-	return m_iExtraDCMBombAccuracy;
-}
-
-void CvUnit::changeExtraDCMBombAccuracy(int iChange)
-{
-	m_iExtraDCMBombAccuracy += iChange;
-}
-
-int CvUnit::getBaseDCMBombAccuracy() const
-{
-	return m_iBaseDCMBombAccuracy;
-}
-
-void CvUnit::changeBaseDCMBombAccuracy(int iChange, bool bAdding, UnitCombatTypes eUnitCombat)
-{
-	PROFILE_EXTRA_FUNC();
-	if (bAdding && iChange > m_iBaseDCMBombAccuracy)
-	{
-		m_iBaseDCMBombAccuracy = iChange;
-	}
-	int iBestValue = 0;
-	if (!bAdding && iChange == m_iBaseDCMBombAccuracy)
-	{
-		for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
-		{
-			if ((UnitCombatTypes)iI != eUnitCombat && isHasUnitCombat((UnitCombatTypes)iI))
-			{
-				const int iValue = GC.getUnitCombatInfo((UnitCombatTypes)iI).getDCMBombAccuracyBase();
-
-				if (iValue > iBestValue)
-				{
-					iBestValue = iValue;
-				}
-			}
-		}
-		m_iBaseDCMBombAccuracy = iBestValue;
-	}
-	FASSERT_NOT_NEGATIVE(getBaseDCMBombAccuracy());
-}
-
-bool CvUnit::isRBombardDirect() const
-{
-	return m_iBombardDirectCount > 0;
-}
-
-void CvUnit::changeBombardDirectCount(int iChange)
-{
-	m_iBombardDirectCount += iChange;
-}
-
 
 int CvUnit::getNoSelfHealCount() const
 {

@@ -884,7 +884,7 @@ int CvCityAI::AI_specialistValue(SpecialistTypes eSpecialist, bool bAvoidGrowth,
 
 	int iValue = AI_yieldValue(aiYields, aiCommerceYields, bAvoidGrowth, bRemove);
 
-	int iGreatPeopleRate = GC.getSpecialistInfo(eSpecialist).getGreatPeopleRateChange();
+	int iGreatPeopleRate = GC.getSpecialistInfo(eSpecialist).getScalar(SCALAR_GREAT_PEOPLE_RATE, CASC_SCOPE_CITY, CASC_UNIT_FLAT) / 100;
 	if (iGreatPeopleRate != 0)
 	{
 		int iEmphasisCount = 0;
@@ -913,7 +913,9 @@ int CvCityAI::AI_specialistValue(SpecialistTypes eSpecialist, bool bAvoidGrowth,
 		}
 
 		// Scale up value for civs/civics with bonuses
-		iGreatPeopleRate *= (100 + GET_PLAYER(getOwner()).getGreatPeopleRateModifier());
+		int aiScalars[NUM_INFO_SCALARS];
+		GET_PLAYER(getOwner()).getScalars(aiScalars);
+		iGreatPeopleRate *= (100 + aiScalars[SCALAR_GREAT_PEOPLE_RATE]);
 		iGreatPeopleRate /= 100;
 
 		int iTempValue = (iGreatPeopleRate * iGPPValue);
@@ -5144,7 +5146,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 			{
 				aiFreeSpecialistCommerce[iJ] += kOwner.specialistCommerce(eNewSpecialist, (CommerceTypes)iJ);
 			}
-			iSpecialistGreatPeopleRate += kSpecialist.getGreatPeopleRateChange();
+			iSpecialistGreatPeopleRate += kSpecialist.getScalar(SCALAR_GREAT_PEOPLE_RATE, CASC_SCOPE_CITY, CASC_UNIT_FLAT) / 100;
 			iSpecialistExtraHealth += kSpecialist.getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_CITY);
 			iSpecialistExtraHappy += kSpecialist.getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_CITY);
 		}
@@ -5423,32 +5425,42 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 
 				if (GC.getGame().isOption(GAMEOPTION_UNSUPPORTED_REVOLUTION))
 				{
-					if (kBuilding.getRevIdxLocal() != 0)
+					//	The city index and the national index are two distinct KINDS, both delivered at the
+					//	building's own city scope. The two flats are served ×100 while the rev index is a whole
+					//	game count, so the reader reduces here; distanceModifier is a percent kind and is 1:1.
+					const int iBuildingRevIdxLocal =
+						kBuilding.getRevolution(REVOLUTION_LOCAL, CASC_SCOPE_CITY) / 100;
+					const int iBuildingRevIdxNational =
+						kBuilding.getRevolution(REVOLUTION_NATIONAL, CASC_SCOPE_CITY) / 100;
+					const int iBuildingRevIdxDistanceModifier =
+						kBuilding.getRevolution(REVOLUTION_DISTANCE_MODIFIER, CASC_SCOPE_CITY);
+
+					if (iBuildingRevIdxLocal != 0)
 					{
 						int localRevIdx = getLocalRevIndex();
 
 						//	Use the more serious of the before and after values if this building were to be built
-						if (kBuilding.getRevIdxLocal() > 0)
+						if (iBuildingRevIdxLocal > 0)
 						{
-							localRevIdx += kBuilding.getRevIdxLocal();
+							localRevIdx += iBuildingRevIdxLocal;
 						}
 						//	Treat instability seriously as it goes up - not just linear
 						int localRevScaling = (localRevIdx < 0 ? 0 : std::min(localRevIdx * localRevIdx / 50 + localRevIdx / 2, 100));
 
-						iValue -= (kBuilding.getRevIdxLocal() * localRevScaling) / 4;
+						iValue -= (iBuildingRevIdxLocal * localRevScaling) / 4;
 					}
-					if (kBuilding.getRevIdxNational() != 0)
+					if (iBuildingRevIdxNational != 0)
 					{
-						iValue -= (8 * kOwner.getNumCities()) * kBuilding.getRevIdxNational();
+						iValue -= (8 * kOwner.getNumCities()) * iBuildingRevIdxNational;
 					}
-					if (kBuilding.getRevIdxDistanceModifier() != 0 && (!getCityContext().isCapital()))
+					if (iBuildingRevIdxDistanceModifier != 0 && (!getCityContext().isCapital()))
 					{
 						const CvCity* pCapital = kOwner.getCapitalCity();
 						if (pCapital != NULL)
 						{
 							int iCapitalDistance = ::plotDistance(getX(), getY(), pCapital->getX(), pCapital->getY());
 							int iOldCapitalDistance = iCapitalDistance;
-							iCapitalDistance *= 100 + kBuilding.getRevIdxDistanceModifier();
+							iCapitalDistance *= 100 + iBuildingRevIdxDistanceModifier;
 							iCapitalDistance /= 100;
 
 							iValue += ((iOldCapitalDistance - iCapitalDistance) * (10 + std::max(0, getLocalRevIndex())));
@@ -5780,14 +5792,14 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 						iValue += 50;
 					}
 				}
-				iValue -= kBuilding.getRiverDefensePenalty() / 4;
+				iValue -= kBuilding.getDefense(DEFENSE_RIVER_PENALTY, CASC_SCOPE_CITY) / 100 / 4;
 
-				if (kBuilding.getDomesticGreatGeneralRateModifier() != 0)
+				if (kBuilding.getScalar(SCALAR_GREAT_GENERAL_RATE_DOMESTIC, CASC_SCOPE_CITY, CASC_UNIT_PERCENT) != 0)
 				{
-					iValue += (kBuilding.getDomesticGreatGeneralRateModifier() / 10);
+					iValue += (kBuilding.getScalar(SCALAR_GREAT_GENERAL_RATE_DOMESTIC, CASC_SCOPE_CITY, CASC_UNIT_PERCENT) / 10);
 				}
 
-				if (kBuilding.isAreaBorderObstacle() && !pArea->isBorderObstacle(getTeam())
+				if (kBuilding.isBorderObstacle() && !pArea->isBorderObstacle(getTeam())
 				&& !GC.getGame().isOption(GAMEOPTION_BARBARIAN_NONE))
 				{
 					iValue += iNumCitiesInArea;
@@ -5834,7 +5846,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 					}
 				}
 
-				int iGreatPeopleRateModifier = kBuilding.getGreatPeopleRateModifier();
+				int iGreatPeopleRateModifier = kBuilding.getScalar(SCALAR_GREAT_PEOPLE_RATE, CASC_SCOPE_CITY, CASC_UNIT_PERCENT);
 				if (iGreatPeopleRateModifier > 0)
 				{
 					const int iGreatPeopleRate = getBaseGreatPeopleRate();
@@ -5853,19 +5865,19 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 					}
 				}
 
-				iValue += kBuilding.getGlobalGreatPeopleRateModifier() * iNumCities / 8;
-				iValue += kBuilding.getAnarchyModifier() / (-4);
-				iValue += kBuilding.getGlobalHurryModifier() * (-2);
+				iValue += kBuilding.getScalar(SCALAR_GREAT_PEOPLE_RATE, CASC_SCOPE_EMPIRE, CASC_UNIT_PERCENT) * iNumCities / 8;
+				iValue += kBuilding.getScalar(SCALAR_ANARCHY, CASC_SCOPE_EMPIRE, CASC_UNIT_PERCENT) / (-4);
+				iValue += kBuilding.getCostsModifier(COSTS_HURRY, CASC_SCOPE_EMPIRE) * (-2);
 				iValue += (kBuilding.getExperience(EXPERIENCE_AMOUNT, CASC_SCOPE_EMPIRE) / 100) * iNumCities * (bMetAnyCiv ? 6 : 3);
 
 				if (bCanPopRush)
 				{
-					iValue += kBuilding.getFoodKept() / 2;
+					iValue += kBuilding.getScalar(SCALAR_FOOD_KEPT, CASC_SCOPE_CITY, CASC_UNIT_PERCENT) / 2;
 				}
 
 				iValue += kBuilding.getAirlift() * (getPopulation() * 3 + 10);
 
-				int iAirDefense = -kBuilding.getAirModifier();
+				int iAirDefense = -kBuilding.getDefense(DEFENSE_AIR, CASC_SCOPE_CITY);
 				if (iAirDefense > 0
 					&& (kOwner.AI_totalUnitAIs(UNITAI_DEFENSE_AIR) > 0 && kOwner.AI_totalUnitAIs(UNITAI_ATTACK_AIR) > 0 || kOwner.AI_totalUnitAIs(UNITAI_MISSILE_AIR) > 0))
 				{
@@ -5873,11 +5885,11 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 				}
 
 				iValue += kBuilding.getAirUnitCapacity() * (getPopulation() * 2 + 10);
-				iValue += -kBuilding.getNukeModifier() / (bMetAnyCiv ? 10 : 20);
+				iValue += -kBuilding.getDefense(DEFENSE_NUKE, CASC_SCOPE_CITY) / (bMetAnyCiv ? 10 : 20);
 				iValue += kBuilding.getFreeSpecialistsAny() * 16;
 				iValue += kBuilding.getAreaFreeSpecialist() * iNumCitiesInArea * 12;
 				iValue += kBuilding.getGlobalFreeSpecialist() * iNumCities * 12;
-				iValue += kBuilding.getWorkerSpeedModifier() * kOwner.AI_getNumAIUnits(UNITAI_WORKER) / 10;
+				iValue += kBuilding.getScalar(SCALAR_WORK_RATE, CASC_SCOPE_EMPIRE, CASC_UNIT_PERCENT) * kOwner.AI_getNumAIUnits(UNITAI_WORKER) / 10;
 
 				int iMilitaryProductionModifier = kBuilding.getMilitaryProductionModifier();
 
@@ -5926,7 +5938,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 
 				// prefer to build great people buildings in places that already have some GP points
 
-				iValue += (kBuilding.getGreatPeopleRateChange() + iSpecialistGreatPeopleRate) * 10 * (1 + getBaseGreatPeopleRate() / 2);
+				iValue += (kBuilding.getScalar(SCALAR_GREAT_PEOPLE_RATE, CASC_SCOPE_CITY, CASC_UNIT_FLAT) / 100 + iSpecialistGreatPeopleRate) * 10 * (1 + getBaseGreatPeopleRate() / 2);
 
 				if (!bAreaAlone)
 				{
@@ -5937,7 +5949,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 					{
 						iValue += (healRows[iRow].iHeal / 100) / 4;
 					}
-					iValue += kBuilding.getHealRateChange() / 2;
+					iValue += kBuilding.getHeal(HEAL_AMOUNT, CASC_SCOPE_CITY) / 100 / 2;
 					for (int iI = 0; iI < kBuilding.getNumAidRateChanges(); iI++)
 					{
 						iValue += kBuilding.getAidRateChange(iI).iChange / 3;//Update
@@ -5982,7 +5994,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 				}
 
 				iValue += kBuilding.getFreeTechs() * 80;
-				iValue += kBuilding.getEnemyWarWearinessModifier() / 2;
+				iValue += kBuilding.getScalar(SCALAR_ENEMY_WAR_WEARINESS, CASC_SCOPE_CITY, CASC_UNIT_PERCENT) / 2;
 
 				for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
 				{
@@ -6336,7 +6348,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 				{
 					iValue += AI_buildingYieldValue(YIELD_FOOD, eBuilding, kBuilding, bForeignTrade, aiFreeSpecialistYield[YIELD_FOOD]);
 
-					iValue += kBuilding.getFoodKept();
+					iValue += kBuilding.getScalar(SCALAR_FOOD_KEPT, CASC_SCOPE_CITY, CASC_UNIT_PERCENT);
 				}
 
 				if (iFocusFlags & BUILDINGFOCUS_PRODUCTION)
@@ -11028,7 +11040,7 @@ int CvCityAI::AI_countGoodSpecialists(bool bHealthy) const
 		iValue += 40 * kPlayer.specialistCommerce(eSpecialist, COMMERCE_GOLD);
 		iValue += 20 * kPlayer.specialistCommerce(eSpecialist, COMMERCE_ESPIONAGE);
 		iValue += 15 * kPlayer.specialistCommerce(eSpecialist, COMMERCE_CULTURE);
-		iValue += 25 * GC.getSpecialistInfo(eSpecialist).getGreatPeopleRateChange();
+		iValue += 25 * (GC.getSpecialistInfo(eSpecialist).getScalar(SCALAR_GREAT_PEOPLE_RATE, CASC_SCOPE_CITY, CASC_UNIT_FLAT) / 100);
 
 		iValue += GC.getSpecialistInfo(eSpecialist).getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_CITY);
 		iValue += GC.getSpecialistInfo(eSpecialist).getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_CITY);
@@ -11163,7 +11175,7 @@ void CvCityAI::AI_updateSpecialYieldMultiplier()
 			m_aiSpecialYieldMultiplier[YIELD_PRODUCTION] += 50;
 			m_aiSpecialYieldMultiplier[YIELD_COMMERCE] -= 25;
 		}
-		m_aiSpecialYieldMultiplier[YIELD_PRODUCTION] += std::max(-25, GC.getBuildingInfo(eProductionBuilding).getFoodKept());
+		m_aiSpecialYieldMultiplier[YIELD_PRODUCTION] += std::max(-25, GC.getBuildingInfo(eProductionBuilding).getScalar(SCALAR_FOOD_KEPT, CASC_SCOPE_CITY, CASC_UNIT_PERCENT));
 
 		if (GC.getBuildingInfo(eProductionBuilding).getCommerceChange(COMMERCE_CULTURE) > 0
 			|| GC.getBuildingInfo(eProductionBuilding).getCommercePerPopChange(COMMERCE_CULTURE) > 0)
@@ -12346,7 +12358,7 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 	{
 		if (buildingModifiesGenericYields
 			|| bHasTradeRouteValue
-			|| kBuilding.getFoodKept() > 0
+			|| kBuilding.getScalar(SCALAR_FOOD_KEPT, CASC_SCOPE_CITY, CASC_UNIT_PERCENT) > 0
 			|| GET_TEAM(getTeam()).getBuildingYieldTechModifier(YIELD_FOOD, eBuilding) > 0
 			|| kBuilding.getYieldModifier(YIELD_FOOD) > 0
 			|| kBuilding.getRiverPlotYieldChange(YIELD_FOOD) > 0
@@ -12381,7 +12393,7 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 			kBuilding.getCommerceChange(COMMERCE_GOLD) > 0 ||
 			kBuilding.getCommercePerPopChange(COMMERCE_GOLD) > 0 ||
 			kBuilding.getCommerceModifier(COMMERCE_GOLD) > 0 ||
-			kBuilding.getGlobalCommerceModifier(COMMERCE_GOLD) > 0 ||
+			kBuilding.getCommerceModifier(COMMERCE_GOLD, CASC_SCOPE_EMPIRE) > 0 ||
 			kBuilding.getSpecialistExtraCommerce(COMMERCE_GOLD) > 0 ||
 			kBuilding.getStateReligionCommerce(COMMERCE_GOLD) > 0 ||
 			GET_TEAM(getTeam()).getBuildingCommerceTechModifier(COMMERCE_GOLD, eBuilding) > 0)
@@ -12397,7 +12409,7 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 			kBuilding.getCommerceChange(COMMERCE_RESEARCH) > 0 ||
 			kBuilding.getCommercePerPopChange(COMMERCE_RESEARCH) > 0 ||
 			kBuilding.getCommerceModifier(COMMERCE_RESEARCH) > 0 ||
-			kBuilding.getGlobalCommerceModifier(COMMERCE_RESEARCH) > 0 ||
+			kBuilding.getCommerceModifier(COMMERCE_RESEARCH, CASC_SCOPE_EMPIRE) > 0 ||
 			kBuilding.getSpecialistExtraCommerce(COMMERCE_RESEARCH) > 0 ||
 			kBuilding.getStateReligionCommerce(COMMERCE_RESEARCH) > 0 ||
 			GET_TEAM(getTeam()).getBuildingCommerceTechModifier(COMMERCE_RESEARCH, eBuilding) > 0)
@@ -12412,7 +12424,7 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 			kBuilding.getCommerceChange(COMMERCE_CULTURE) > 0 ||
 			kBuilding.getCommercePerPopChange(COMMERCE_CULTURE) > 0 ||
 			kBuilding.getCommerceModifier(COMMERCE_CULTURE) > 0 ||
-			kBuilding.getGlobalCommerceModifier(COMMERCE_CULTURE) > 0 ||
+			kBuilding.getCommerceModifier(COMMERCE_CULTURE, CASC_SCOPE_EMPIRE) > 0 ||
 			kBuilding.getSpecialistExtraCommerce(COMMERCE_CULTURE) > 0 ||
 			kBuilding.getStateReligionCommerce(COMMERCE_CULTURE) > 0 ||
 			GET_TEAM(getTeam()).getBuildingCommerceTechModifier(COMMERCE_CULTURE, eBuilding) > 0)
@@ -12424,7 +12436,7 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 	{
 		if (kBuilding.getDefenseModifier() > 0 ||
 			kBuilding.getBombardDefenseModifier() > 0 ||
-			kBuilding.getAllCityDefenseModifier() > 0 ||
+			kBuilding.getDefense(DEFENSE_AMOUNT, CASC_SCOPE_EMPIRE) > 0 ||
 			kBuilding.isNeverCapture() ||
 			kBuilding.isNukeImmune() ||
 			GC.getGame().isOption(GAMEOPTION_UNSUPPORTED_ZONE_OF_CONTROL) && kBuilding.isZoneOfControl() ||
@@ -12432,15 +12444,15 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 				CASC_UNIT_PERCENT, modSegmentLookup("unitCombats"), -1) != 0 ||
 			kBuilding.getAdjacentDamagePercent() > 0 ||
 			kBuilding.isProtectedCulture() ||
-			kBuilding.getOccupationTimeModifier() > 0 ||
+			kBuilding.getScalar(SCALAR_OCCUPATION_TIME, CASC_SCOPE_CITY, CASC_UNIT_PERCENT) > 0 ||
 			kBuilding.getNoEntryDefenseLevel() > 0 ||
 			kBuilding.getNumUnitFullHeal() > 0 ||
-			kBuilding.isAreaBorderObstacle() ||
+			kBuilding.isBorderObstacle() ||
 			GC.getGame().isOption(GAMEOPTION_COMBAT_SURROUND_DESTROY) && kBuilding.getLocalDynamicDefense() > 0 ||
 			kBuilding.getLocalCaptureProbabilityModifier() > 0 ||
 			kBuilding.getLocalCaptureResistanceModifier() > 0 ||
 			kBuilding.getNationalCaptureResistanceModifier() > 0 ||
-			kBuilding.getRiverDefensePenalty() < 0 ||
+			kBuilding.getDefense(DEFENSE_RIVER_PENALTY, CASC_SCOPE_CITY) < 0 ||
 			kBuilding.getMinDefense() > 0 ||
 			kBuilding.getBuildingDefenseRecoverySpeedModifier() > 0 ||
 			kBuilding.getCityDefenseRecoverySpeedModifier() > 0 ||
@@ -12554,7 +12566,7 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 			kBuilding.getCommerceChange(COMMERCE_ESPIONAGE) > 0 ||
 			kBuilding.getCommercePerPopChange(COMMERCE_ESPIONAGE) > 0 ||
 			kBuilding.getCommerceModifier(COMMERCE_ESPIONAGE) > 0 ||
-			kBuilding.getGlobalCommerceModifier(COMMERCE_ESPIONAGE) > 0 ||
+			kBuilding.getCommerceModifier(COMMERCE_ESPIONAGE, CASC_SCOPE_EMPIRE) > 0 ||
 			kBuilding.getSpecialistExtraCommerce(COMMERCE_ESPIONAGE) > 0 ||
 			kBuilding.getStateReligionCommerce(COMMERCE_ESPIONAGE) > 0 ||
 			GET_TEAM(getTeam()).getBuildingCommerceTechModifier(COMMERCE_ESPIONAGE, eBuilding) > 0)
@@ -12748,7 +12760,7 @@ int CvCityAI::getBuildingCommerceValue(BuildingTypes eBuilding, int iI, int* aiF
 	}
 	iResult += iCommerceMultiplierValue;
 
-	iResult += kBuilding.getGlobalCommerceModifier(iI) * GET_PLAYER(getOwner()).getCommerceRate((CommerceTypes)iI) / 8;
+	iResult += kBuilding.getCommerceModifier((CommerceTypes)iI, CASC_SCOPE_EMPIRE) * GET_PLAYER(getOwner()).getCommerceRate((CommerceTypes)iI) / 8;
 	iResult += kBuilding.getSpecialistExtraCommerce(iI) * kOwner.getTotalPopulation() / 3;
 	{
 		const ReligionTypes eStateReligion = kOwner.getStateReligion();
@@ -13808,7 +13820,7 @@ const {
 
 	if (iFoodDifference > 0)
 	{
-		iValue += kBuilding.getFoodKept() / 2;
+		iValue += kBuilding.getScalar(SCALAR_FOOD_KEPT, CASC_SCOPE_CITY, CASC_UNIT_PERCENT) / 2;
 	}
 	for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
 	{

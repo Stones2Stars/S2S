@@ -148,6 +148,19 @@ techs are monotonic, no `operate`.
 > (`enables.routesAnd` / `enables.traitsAnd`), the OR-list to another (`enables.routes` / `enables.traitsOr`), and
 > the load pass rebuilds each forward getter separately. *(The tech case reconstructs from the child's retained
 > `requires.build.all`/`.any` instead — same goal, the two reconstruction sources.)*
+>
+> ⚖ **WHAT DECIDES RECONSTRUCT-vs-EDGE-FAMILIES: CAN THE THING PHYSICALLY MOVE? (owner)** A **ROUTE** is pinned to
+> its plot, so a static forward list on the info describes something that cannot change place — reconstruction is
+> coherent, and the route side KEEPS it. A **UNIT** physically moves, so its consumers read the unit's own **edge
+> families** rather than a reconstructed forward list, and no `unitsAnd` bucket is minted for one.
+> ⛔ Apply this test to any future forward-view question; it is not a per-case preference.
+> ⚠ **The cost to price in: an edge family is ONE MERGED BUCKET.** `EDGEF_RELATED` lands every authored family's
+> references together, so a unit's `EDGEB_BONUSES` does NOT preserve the mandatory-vs-one-of split, and its
+> `EDGEB_TECHS` mixes ENABLING techs with OBSOLETING ones. A consumer with **ANY** semantics is safe (a superset
+> only loosens); a consumer with **ALL** semantics is NOT — reading a merged bucket as "every one of these is
+> required" silently demands a unit's own obsoleting tech before it may be trained. Keep the exact predicate over
+> the family ([DEC-one-reverse-view](../architecture/decisions.md#dec-one-reverse-view)); where ALL semantics are
+> genuinely needed the answer is the owning info's own `requires` section, never the merged family.
 
 **Empire/team-scope constructables need NO new machinery** (the scope spine already has team/empire): stage-gates
 via `enables` (the space line), doctrine bans via `disables` + empire modifiers. An empire-scope building

@@ -794,3 +794,97 @@ CvUnit::m_iExtraTrapDamageMin
 CvUnit::m_iExtraTrapComplexity
 CvUnit::m_iTriggerBeforeAttackCount
 ========================
+| RANGED ATTACK (ranged bombard) + OPPORTUNITY FIRE -- the mechanic is REMOVED, and unlike every other entry in
+| this file there is NO REPLACEMENT to name. Ranged bombard did not merely underperform, it BROKE the AI: the
+| bombard step was a turn-satisfying TERMINAL, so a stack that could plink did, reported progress, and never
+| reached the commit-or-withdraw decision (the #410 pseudo-progress class). Opportunity fire went with it -- it
+| gated on the same getDCMBombRange() stat, and its own author's comment records that it has "absolutely zero
+| resistability ... far more powerful than any player determined action".
+| The five stat quartets (damage / damageLimit / damageMaxUnits / bombRange / bombAccuracy, each value+Extra+Base)
+| additionally carried a changeBase* body that LOOPED THE WHOLE UNITCOMBAT REGISTRY -- the whole-registry scan
+| class -- so they die with the mechanic rather than converting.
+| Ranged bombard RETURNS as a ground-up redesign (superseded-ideas #24); nothing here is a starting point for it.
+| KEPT and untouched: the defence-grinding bombard (MISSION_BOMBARD / bombardRate / getDefenseDamage), naval
+| included, and the airplane ranged attack (fighter engage, active defense).
+CvUnit::m_iDCMBombRange
+CvUnit::m_iDCMBombAccuracy
+CvUnit::m_iExtraRBombardDamage
+CvUnit::m_iExtraRBombardDamageLimit
+CvUnit::m_iExtraRBombardDamageMaxUnits
+CvUnit::m_iExtraDCMBombRange
+CvUnit::m_iExtraDCMBombAccuracy
+CvUnit::m_iBaseRBombardDamage
+CvUnit::m_iBaseRBombardDamageLimit
+CvUnit::m_iBaseRBombardDamageMaxUnits
+CvUnit::m_iBaseDCMBombRange
+CvUnit::m_iBaseDCMBombAccuracy
+CvUnit::m_iBombardDirectCount
+CvUnit::m_iRBombardForceAbilityCount
+========================
+| The PLAYER-side CITY-DEFENSE cluster -- three serialized accumulators with, between them, ZERO net consumers.
+| m_iCityDefenseModifier was written only by processBuilding and read only by its own composite getter, which
+| also folded m_iExtraCityDefense (civic-fed) and m_iTraitExtraCityDefense (trait-fed) -- so once CvCity moved
+| its defense read onto the rolled cascade value (cascadeDefense), the whole cluster was write-only state.
+| Each is the hand-named-scalar shape DEC-uniform-cache-shape calls a DEFECT: it cannot be addressed by a
+| derived mask, so every one forced its own bespoke push path out of processBuilding/processCivics/processTrait.
+| REPLACEMENT: the defense channel of the cascade packages, read through the ONE cross-scope roll-up -- the
+| empire leg rolls DOWN into each city's realized defense rather than being summed into a player total.
+CvPlayer::m_iCityDefenseModifier
+CvPlayer::m_iExtraCityDefense
+CvPlayer::m_iTraitExtraCityDefense
+========================
+| The four per-SOURCE INFLATION accumulators -- one hand-named scalar per source kind (civic / tech / building /
+| project), each with its own push out of processCivics / processTech / processBuilding / CvTeam, all summed in
+| ONE place. They do not each earn a replacement getter: the group read answers the TOTAL and per-source
+| attribution is the ORACLE's job, so all four collapse into the empire-scope inflation channel read through
+| CvPlayer::getScalars()[SCALAR_INFLATION].
+| Three of them could only ever read ZERO: iInflationModifier (the building/tech/project tag) is authored in NO
+| legacy XML at all -- only the CIVIC tag iInflation is real, and it is now inflation.empire.percent.
+| The EVENT-granted m_iInflationModifier is NOT part of this and STAYS -- applyEvent is its only writer, which
+| makes it genuine one-shot persisted state rather than a derivable deposit.
+| The finance advisor's per-source breakdown line goes with them (attribution is not a getter's job).
+CvPlayer::m_iCivicInflation
+CvPlayer::m_iTechInflation
+CvPlayer::m_iBuildingInflation
+CvPlayer::m_iProjectInflation
+========================
+| The player ANARCHY modifier -- a hand-named accumulator processBuilding pushed into per building, read by the
+| revolution/conversion timers and the civic + religion anarchy lengths. Every consumer is player-level, so the
+| deposit is EMPIRE scope; the curator had it at city, which no consumer could ever have read.
+| REPLACEMENT: CvPlayer::anarchyModifierScalar() -- the empire-scope anarchy percent through the ONE roll-up.
+CvPlayer::m_iAnarchyModifier
+========================
+| Six more player push-accumulators, each pushed into from processBuilding / processCivics / processTrait and
+| read at a handful of engine sites. They are the hand-named-scalar shape DEC-uniform-cache-shape calls a
+| DEFECT: not addressable by a derived mask, so every one carried its own bespoke push path per source kind.
+| Having several WRITERS never made them live -- an accumulator whose whole job is to accumulate a legacy value
+| IS legacy, so the writer set is deleted with it rather than re-pointed.
+| REPLACEMENT: the empire-scope group reads -- CvPlayer::getScalars() for goldenAgeLength / warWeariness /
+| greatGeneralRate / greatGeneralRateDomestic, and CvPlayer::getCostKinds() for the hurry and upgrade prices.
+CvPlayer::m_iGoldenAgeModifier
+CvPlayer::m_iGlobalHurryModifier
+CvPlayer::m_iUnitUpgradePriceModifier
+CvPlayer::m_iWarWearinessModifier
+CvPlayer::m_iGreatGeneralRateModifier
+CvPlayer::m_iDomesticGreatGeneralRateModifier
+========================
+| The player WORKER-SPEED modifier -- four legacy pushes (building / civic / trait / tech) into one hand-named
+| scalar. workRate is authored at EMPIRE by every source, so the empire-scope read answers it whole.
+| REPLACEMENT: CvPlayer::getScalars()[SCALAR_WORK_RATE].
+CvPlayer::m_iWorkerSpeedModifier
+========================
+| The player GREAT-PEOPLE-RATE modifier -- three legacy pushes (building / civic / trait) into a hand-named
+| scalar. The empire-scope authorings answer through the roll-up.
+| The CITY-scope accumulator is a DIFFERENT thing and stays: great people accrue PER CITY, which is where the
+| bulk of the data is authored. (Great GENERAL is neither -- its points are summed FROM cities into the player
+| counter, so it wants a receiver sum; see todo.md.)
+| REPLACEMENT: CvPlayer::getScalars()[SCALAR_GREAT_PEOPLE_RATE].
+CvPlayer::m_iGreatPeopleRateModifier
+========================
+| The player COMMERCE-RATE-MODIFIER-FROM-BUILDINGS array -- a WRITE-ONLY accumulator: pushed into from
+| processBuilding and from the project path, and read by nothing at all.
+| ⚑ Its project writer was a half-migration in miniature -- already reading the NEW
+| getCommerceModifier(channel, CASC_SCOPE_EMPIRE) while still pushing the result into this legacy array.
+| REPLACEMENT: none needed -- the empire commerce percents answer through the roll-up where they are consumed.
+CvPlayer::m_aiCommerceRateModifierfromBuildings
+========================

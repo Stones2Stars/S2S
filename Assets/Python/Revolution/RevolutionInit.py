@@ -198,15 +198,6 @@ class RevolutionInit:
 		# DCM
 		revComponentsText += sectionFormat + TRNSLTR.getText("TXT_KEY_OPTIONS_DCM",())
 
-		if RevDCMOpt.isDCM_RANGE_BOMBARD():
-			temp += szNewLineTab + TRNSLTR.getText("TXT_KEY_BUG_OPT_REVDCM__DCM_RANGE_BOMBARD_TEXT",())
-
-		if RevDCMOpt.isDCM_OPP_FIRE():
-			temp += szNewLineTab + TRNSLTR.getText("TXT_KEY_BUG_OPT_REVDCM__DCM_OPP_FIRE_TEXT",())
-
-		if RevDCMOpt.isDCM_AIR_BOMBING():
-			temp += szNewLineTab + TRNSLTR.getText("TXT_KEY_BUG_OPT_REVDCM__DCM_AIR_BOMBING_TEXT",())
-
 		if RevDCMOpt.isDCM_ACTIVE_DEFENSE():
 			temp += szNewLineTab + TRNSLTR.getText("TXT_KEY_BUG_OPT_REVDCM__DCM_ACTIVE_DEFENSE_TEXT",())
 

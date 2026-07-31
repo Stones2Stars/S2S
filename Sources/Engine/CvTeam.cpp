@@ -1961,27 +1961,32 @@ int CvTeam::getNumNukeUnits() const
 bool CvTeam::isUnitBonusEnabledByTech(const CvUnitInfo& unit, const bool bNoWorldBonuses) const
 {
 	PROFILE_EXTRA_FUNC();
-	if (unit.getPrereqAndBonus() != NO_BONUS)
+	// The gating bonuses come from the unit's OWN edge family. The curator inverts a unit's bonus prereqs onto
+	// the BONUS's `enables.units`, and the readJson reverse pass lands the reference back on the unit, so after
+	// load the unit already carries the bonuses it gates on ([DEC-one-reverse-view]) -- no reconstructed forward
+	// getter on the info, and no per-call walk of the requires tree.
+	// ⚑ A UNIT reads its edges rather than a reconstructed list because a unit physically MOVES; a route is
+	// pinned to its plot, which is why the route side keeps its forward reconstruction (owner).
+	// ⚠ The family is ONE merged bucket, so the legacy mandatory-bonus / one-of-list split is not expressed: every
+	// gating bonus is read as ONE-OF. That is the deliberately PERMISSIVE reading, and this is the barbarian /
+	// start-unit spawn picker, where NPC gate looseness is ruled acceptable (roadmap.md § Scope decisions).
+	const CvEdges* pEdges = unit.getEdges();
+	const std::vector<int>* pGatingBonuses = (pEdges != NULL) ? pEdges->find(EDGEF_RELATED, EDGEB_BONUSES) : NULL;
+	if (pGatingBonuses == NULL || pGatingBonuses->empty())
 	{
-		if (!isHasTech((TechTypes)GC.getBonusInfo((BonusTypes)unit.getPrereqAndBonus()).getTechCityTrade())
-		|| bNoWorldBonuses // Toffer - TODO - Add maxGlobalInstances tag to CvBonusInfo.
-		&& GC.getBonusInfo((BonusTypes)unit.getPrereqAndBonus()).getBonusClassType() == GC.getInfoTypeForString("BONUSCLASS_CULTURE"))
+		return true;   // no bonus gates this unit
+	}
+	for (size_t iBonus = 0; iBonus < pGatingBonuses->size(); ++iBonus)
+	{
+		const CvBonusInfo& kBonus = GC.getBonusInfo((BonusTypes)(*pGatingBonuses)[iBonus]);
+		if (isHasTech((TechTypes)kBonus.getTechCityTrade())
+		// Toffer - TODO - Add maxGlobalInstances tag to CvBonusInfo.
+		&& (!bNoWorldBonuses || kBonus.getBonusClassType() != GC.getInfoTypeForString("BONUSCLASS_CULTURE")))
 		{
-			return false;
+			return true;
 		}
 	}
-	bool bMet = true;
-	foreach_(const BonusTypes ePrereqBonus, unit.getPrereqOrBonuses())
-	{
-		if (isHasTech((TechTypes)GC.getBonusInfo(ePrereqBonus).getTechCityTrade())
-		&& (!bNoWorldBonuses || GC.getBonusInfo(ePrereqBonus).getBonusClassType() != GC.getInfoTypeForString("BONUSCLASS_CULTURE")))
-		{
-			bMet = true;
-			break;
-		}
-		bMet = false;
-	}
-	return bMet;
+	return false;
 }
 
 
@@ -4371,14 +4376,12 @@ void CvTeam::processProjectChange(ProjectTypes eIndex, int iChange, int iOldProj
 							}
 						}
 					}
-					player.changeProjectInflation(kProject.getInflationModifier());
 					// The maintenance KINDS at their scope ([DEC-scope-is-an-axis]). The connected-city kind is
 					// gone with the legacy getter: NOTHING in Assets/Data authors a connectedCity maintenance
 					// modifier, so the leg only ever added zero.
 
 					for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
 					{
-						player.changeCommerceRateModifierfromBuildings(((CommerceTypes)iJ), kProject.getCommerceModifier((CommerceTypes)iJ, CASC_SCOPE_EMPIRE));
 					}
 				}
 				player.changeTradeRoutes(kProject.getWorldTradeRoutes());
@@ -4779,26 +4782,27 @@ bool CvTeam::isHasTech(TechTypes eIndex) const
 bool CvTeam::isInvisibleSeerUnlocked(InvisibleTypes eInvisible) const
 {
 	PROFILE_EXTRA_FUNC();
+	// A seer's gating techs come from its OWN edge family, like every other unit-side forward read (a unit
+	// physically moves, so it reads its edges rather than a reconstructed list -- enabler.md §2).
+	// ⚑ The read is deliberately COARSE, and that IS the question: this answers "can we see this invisibility
+	// type at all", not "is a specific seer trainable here". The intent line above already discards resources
+	// and buildings as availability noise -- once a counter tech is in, closing the rest is the team's problem.
+	// ⚠ So the merged family is read as ONE-OF, never as all-of: it lands enabling and obsoleting techs in the
+	// same bucket, so an all-of reading would demand a seer's own obsoleting tech before it counted as seeing.
 	foreach_(const UnitTypes eSeer, GC.getUnitsSeeingInvisible(eInvisible))
 	{
-		const CvUnitInfo& kSeer = GC.getUnitInfo(eSeer);
-
-		if (!isHasTech((TechTypes)kSeer.getPrereqAndTech()))
+		const CvEdges* pEdges = GC.getUnitInfo(eSeer).getEdges();
+		const std::vector<int>* pGatingTechs = (pEdges != NULL) ? pEdges->find(EDGEF_RELATED, EDGEB_TECHS) : NULL;
+		if (pGatingTechs == NULL || pGatingTechs->empty())
 		{
-			continue;
+			return true;   // no tech gates this seer
 		}
-		bool bHasAllTechs = true;
-		foreach_(const TechTypes eTechX, kSeer.getPrereqAndTechs())
+		for (size_t iTech = 0; iTech < pGatingTechs->size(); ++iTech)
 		{
-			if (!isHasTech(eTechX))
+			if (isHasTech((TechTypes)(*pGatingTechs)[iTech]))
 			{
-				bHasAllTechs = false;
-				break;
+				return true;
 			}
-		}
-		if (bHasAllTechs)
-		{
-			return true;
 		}
 	}
 	return false;

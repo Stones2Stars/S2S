@@ -865,18 +865,6 @@
 			<Button>Art/Interface/Buttons/Actions/Airbomb_strat.dds</Button>
 		</MissionInfo>
 		<MissionInfo>
-			<Type>MISSION_RBOMBARD</Type>
-			<Description>TXT_KEY_MISSION_RBOMBARD</Description>
-			<Help>TXT_KEY_MISSION_RBOMBARD_HELP</Help>
-			<Waypoint>NONE</Waypoint>
-			<EntityEventType>ENTITY_EVENT_BOMBARD</EntityEventType>
-			<iTime>10</iTime>
-			<bTarget>0</bTarget>
-			<bBuild>0</bBuild>
-			<bSound>1</bSound>
-			<Button>art/Buttons/Missions/RangedAttack1Button.dds</Button>
-		</MissionInfo>
-		<MissionInfo>
 			<Type>MISSION_FENGAGE</Type>
 			<Description>TXT_KEY_MISSION_FENGAGE</Description>
 			<Help>TXT_KEY_MISSION_FENGAGE_HELP</Help>

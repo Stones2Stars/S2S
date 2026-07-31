@@ -122,8 +122,6 @@ public:
 	CvCity* getTargetCity(PlayerTypes eIndex) const;
 	void setTargetCity(PlayerTypes eIndex, const CvCity* pNewValue);
 
-	int getYieldRateModifier(PlayerTypes eIndex1, YieldTypes eIndex2) const;
-	void changeYieldRateModifier(PlayerTypes eIndex1, YieldTypes eIndex2, int iChange);
 
 	int getNumTrainAIUnits(PlayerTypes eIndex1, UnitAITypes eIndex2) const;
 	void changeNumTrainAIUnits(PlayerTypes eIndex1, UnitAITypes eIndex2, int iChange);

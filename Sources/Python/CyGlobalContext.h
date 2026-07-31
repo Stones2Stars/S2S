@@ -189,8 +189,6 @@ public:
 	void setDefineINT( const char * szName, int iValue ) { return GC.setDefineINT( szName, iValue ); }
 	void setDefineFLOAT( const char * szName, float fValue ) { return GC.setDefineFLOAT( szName, fValue ); }
 
-	bool isDCM_RANGE_BOMBARD() const { return GC.isDCM_RANGE_BOMBARD(); }
-	bool isDCM_OPP_FIRE() const { return GC.isDCM_OPP_FIRE(); }
 	bool isDCM_ACTIVE_DEFENSE() const { return GC.isDCM_ACTIVE_DEFENSE(); }
 	bool isDCM_FIGHTER_ENGAGE() const { return GC.isDCM_FIGHTER_ENGAGE(); }
 

@@ -7707,7 +7707,10 @@ bool CvGame::testVictory(VictoryTypes eVictory, TeamTypes eTeam, bool* pbEndScor
 	{
 		for (int iK = 0; iK < GC.getNumBuildingInfos(); iK++)
 		{
-			if (GC.getBuildingInfo((BuildingTypes)iK).getVictoryThreshold(eVictory) > GET_TEAM(eTeam).getBuildingCount((BuildingTypes)iK))
+			const std::map<int, int>& victoryThresholds = GC.getBuildingInfo((BuildingTypes)iK).getVictoryThresholds();
+			const std::map<int, int>::const_iterator itVictoryThreshold = victoryThresholds.find((int)eVictory);
+			if (itVictoryThreshold != victoryThresholds.end()
+			&& itVictoryThreshold->second > GET_TEAM(eTeam).getBuildingCount((BuildingTypes)iK))
 			{
 				bValid = false;
 				break;

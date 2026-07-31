@@ -159,8 +159,10 @@
     ⚠ **NOT the same thing as the UNIT skill of the same name** (`CvUnitInfo::isFlatMovementCost`, "every tile
     costs 1 movement", [skills.md](../specs/skills.md)) — a different mechanic, which STAYS.
     **Never reinstate the route-side one.**
-24. **RANGED BOMBARD + the whole DCM plane** (`iRBombardDamage`/`…Limit`/`…MaxUnits`, `iDCMBombRange`/
-    `iDCMBombAccuracy`, `canRBombard`, `AI_RbombardUnit`/`AI_RbombardPlot`, the `DCM_*` globals)
+24. **RANGED BOMBARD and OPPORTUNITY FIRE** (`MISSION_RBOMBARD` + `INTERFACEMODE_BOMBARD`, `canRBombard`/
+    `canBombardAtRanged`/`bombardRanged`/`rBombardCombat`, the `rBombardDamage`/`…Limit`/`…MaxUnits` +
+    `DCMBombRange`/`DCMBombAccuracy` stat quartets, `doOpportunityFire`, and the `DCM_RANGE_BOMBARD` /
+    `DCM_OPP_FIRE` / `DCM_RB_*` / `DCM_AIR_BOMBING` globals with their BUG options)
     *(dead — owner: "dcm is stone dead, and we need to redesign ranged bombard from the ground up, so drop
     it")*. It **broke the AI** rather than merely underperforming: the bombard step was a turn-satisfying
     TERMINAL, so a stack that could plink did, reported progress, and never reached the commit-or-withdraw
@@ -172,13 +174,22 @@
     mint kinds for the old shape ([DEC-proper-once](decisions.md#dec-proper-once)).
     ⚠ NOT the same thing as the ordinary `bombard` FAMILY (`bombard.unit.rate` / `airBombRate`), which is live,
     authored and STAYS.
-    ⚖ **WHAT IS KEPT vs DROPPED — the cut is by MECHANIC, never by name (owner).** Only the RANGED-ATTACK
-    version drops. The DEFENCE-GRINDING bombard stays exactly as it is: a unit adjacent to a city wearing its
-    defences down (`MISSION_BOMBARD` → `bombardRate` → `getDefenseDamage`), and **NAVAL units keep the bombards
-    they have** (owner). ⛔ The two are ONE LETTER APART in the AI — `AI_bombardCity` is the vanilla defence
-    grinder and STAYS, `AI_RbombardCity` was ranged and is gone — and the naval decision path called BOTH in
-    sequence, so a name-led sweep takes the defence grinder with it. Removing the ranged call simply drops
-    control onto the `MISSION_BOMBARD` push already beneath it.
+    ⚖ **THE RULE THAT DECIDES THE BOUNDARY (owner): *"if it uses the ranged attack, and is not an airplane, it
+    goes — vanilla airplanes have ranged attack."*** That is the whole test, and it is what makes the split
+    re-derivable instead of memorized: **AIRPLANE ranged attack is vanilla and STAYS** (fighter engage — a
+    first-class `MISSION_FENGAGE` with its own interface mode and pedia concept; and ACTIVE DEFENSE, which runs
+    on `airStrikeTarget`/`airCombatDamage`/`MISSION_AIRSTRIKE`). **Non-airplane ranged attack GOES.**
+    ⚖ **KEPT vs DROPPED — the cut is by MECHANIC, never by name (owner).** The DEFENCE-GRINDING bombard stays
+    exactly as it is: a unit adjacent to a city wearing its defences down (`MISSION_BOMBARD` → `bombardRate` →
+    `getDefenseDamage`), and **NAVAL units keep the bombards they have** (owner). ⛔ **Three naming traps sit on
+    this boundary, and each has already misled a sweep:** `AI_bombardCity` (defence grinder, STAYS) is ONE LETTER
+    from `AI_RbombardCity` (ranged, gone) and the naval path called BOTH in sequence; **`INTERFACEMODE_BOMBARD`
+    was the RANGED targeting mode despite its name**, while `INTERFACEMODE_AIRBOMB` is the vanilla one that
+    stays; and the `dcm` prefix marks mod PROVENANCE, not membership — `dcmFighterEngage` is a live vanilla
+    mechanic wearing it. Decide every one of these by what the code DOES, never by what it is called.
+    ⚑ Opportunity fire went with ranged bombard because it *gated on the same `getDCMBombRange()` stat*, and its
+    own author's comment records why it deserved to: *"absolutely zero resistability to this damage and no
+    potential for failure to strike, making it far more powerful than any player determined action."*
     ⚖ **WHAT THE REDESIGN OWES (owner):** *"we basically want vanilla civ bombard back"* as the baseline, and
     **ranged attack has to DO SOMETHING to be worthwhile** — the retired failure is not that ranged existed, it
     is that it dealt ~nothing while still satisfying the turn, so a redesign that reintroduces a near-zero-damage

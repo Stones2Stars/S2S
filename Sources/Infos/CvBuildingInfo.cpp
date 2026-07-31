@@ -19,7 +19,6 @@ CvBuildingInfo::CvBuildingInfo()
 	, m_iAirUnitCapacity(0)
 	, m_iWorkableRadius(0)
 	, m_iMaxPlayerInstancesExtra(0)
-	, m_iDcmAirbombMission(0)
 	, m_bCenterInCity(false)
 	, m_bNotConstructible(false)
 	, m_bAutoBuild(false)
@@ -156,7 +155,6 @@ void CvBuildingInfo::mapFrom(const picojson::value& entity)
 	m_iAirUnitCapacity = jsonIdInt(identity, "airUnitCapacity");
 	m_iWorkableRadius = jsonIdInt(identity, "workableRadius");
 	m_iMaxPlayerInstancesExtra = jsonIdInt(identity, "maxPlayerInstancesExtra");
-	m_iDcmAirbombMission = jsonIdInt(identity, "dcmAirbombMission");
 	m_bCenterInCity = jsonIdBool(identity, "centerInCity");
 	m_bNotConstructible = jsonIdBool(identity, "notConstructible");
 	m_bAutoBuild = jsonIdBool(identity, "autoBuild");

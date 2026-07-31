@@ -224,7 +224,9 @@ void CvArea::read(FDataStreamBase* pStream)
 
 	for (int iI = 0; iI < MAX_PLAYERS; iI++)
 	{
-		WRAPPER_READ_ARRAY(wrapper, "CvArea", NUM_YIELD_TYPES, m_aaiYieldRateModifier[iI]);
+		//	Drain-only: the area yield modifier is dead (a landmass is not an ownable scope), but its bracketed
+		//	per-element tag cannot be soft-removed by name, so the member stays declared to name the drain.
+		WRAPPER_SKIP_ELEMENT(wrapper, "CvArea", m_aaiYieldRateModifier[iI], SAVE_VALUE_TYPE_INT_ARRAY);
 	}
 	for (int iI = 0; iI < MAX_PLAYERS; iI++)
 	{
@@ -302,10 +304,6 @@ void CvArea::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvArea", m_aTargetCities[iI].iID);
 	}
 
-	for (int iI = 0; iI < MAX_PLAYERS; iI++)
-	{
-		WRAPPER_WRITE_ARRAY(wrapper, "CvArea", NUM_YIELD_TYPES, m_aaiYieldRateModifier[iI]);
-	}
 	for (int iI = 0; iI < MAX_PLAYERS; iI++)
 	{
 		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvArea", REMAPPED_CLASS_TYPE_UNITAIS, NUM_UNITAI_TYPES, m_aaiNumTrainAIUnits[iI]);
@@ -864,39 +862,6 @@ void CvArea::setTargetCity(PlayerTypes eIndex, const CvCity* pNewValue)
 		m_aTargetCities[eIndex] = pNewValue->getIDInfo();
 	}
 	else m_aTargetCities[eIndex].reset();
-}
-
-
-int CvArea::getYieldRateModifier(PlayerTypes eIndex1, YieldTypes eIndex2) const
-{
-	FASSERT_BOUNDS(0, MAX_PLAYERS, eIndex1);
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex2);
-	return m_aaiYieldRateModifier[eIndex1][eIndex2];
-}
-
-
-void CvArea::changeYieldRateModifier(PlayerTypes eIndex1, YieldTypes eIndex2, int iChange)
-{
-	FASSERT_BOUNDS(0, MAX_PLAYERS, eIndex1);
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex2);
-
-	if (iChange != 0)
-	{
-		m_aaiYieldRateModifier[eIndex1][eIndex2] += iChange;
-
-		GET_PLAYER(eIndex1).invalidateYieldRankCache(eIndex2);
-
-		if (eIndex2 == YIELD_COMMERCE)
-		{
-		}
-
-		GET_PLAYER(eIndex1).AI_makeAssignWorkDirty();
-
-		if (GET_PLAYER(eIndex1).getTeam() == GC.getGame().getActiveTeam())
-		{
-			gDLL->getInterfaceIFace()->setDirty(CityInfo_DIRTY_BIT, true);
-		}
-	}
 }
 
 

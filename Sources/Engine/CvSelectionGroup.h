@@ -137,10 +137,6 @@ public:
 	bool hasBombardCapability() const;
 	bool hasCollateralDamage() const;
 	bool canPillage(const CvPlot* pPlot) const;
-	bool canBombardAtRanged(const CvPlot* pPlot, int iX, int iY) const;
-	int getMinimumRBombardDamageLimit() const;
-	int getMinimumRBombardRange() const;
-	int getRBombardDamageMaxUnits() const;
 
 	int getBombardTurns(const CvCity* pCity ) const;
 	// Not const - Can generate a move-to mission if bGo is true

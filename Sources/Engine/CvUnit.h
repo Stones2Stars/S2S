@@ -749,9 +749,6 @@ public:
 	bool isOnlyDefensive() const;
 	void changeOnlyDefensiveCount(int iChange);
 
-	bool hasRBombardForceAbility() const;
-	int getRBombardForceAbilityCount() const;
-	void changeRBombardForceAbilityCount(int iChange);
 
 	bool isNoCapture() const;
 	bool isRivalTerritory() const;
@@ -1402,18 +1399,6 @@ public:
 
 	bool verifyStackValid();
 
-// Dale - AB: Bombing START
-// Dale - RB: Field Bombard START
-	bool canRBombard(bool bEver = false) const;
-	bool canBombardAtRanged(const CvPlot* pPlot, int iX, int iY) const;
-	bool bombardRanged(int iX, int iY, bool sAttack = false);
-
-// RevolutionDCM - ranged bombard
-	bool isRbombardable(int iMinStack) const;
-	int getRbombardSeigeCount(const CvPlot* pPlot) const;
-
-// Dale - SA: Opp Fire
-	void doOpportunityFire();
 
 // Dale - SA: Active Defense
 	void doActiveDefense();
@@ -1466,8 +1451,6 @@ public:
 	void forceInvalidCoordinates();
 
 protected:
-	int m_iDCMBombRange;
-	int m_iDCMBombAccuracy;
 	int m_iHealUnitCombatCount;
 
 	DomainTypes m_eNewDomainCargo;
@@ -1529,7 +1512,6 @@ protected:
 	int m_iFortifyTurns;
 	int m_iBuildUpTurns;
 	int m_iBlitzCount;
-	int m_iRBombardForceAbilityCount;
 	int m_iAmphibCount;
 	int m_iRiverCount;
 	int m_iEnemyRouteCount;
@@ -1628,17 +1610,6 @@ protected:
 	int m_iSMAssetValue;
 	int m_iSMPowerValue;
 	int m_iSMHPValue;
-	int m_iExtraRBombardDamage;
-	int m_iExtraRBombardDamageLimit;
-	int m_iExtraRBombardDamageMaxUnits;
-	int m_iExtraDCMBombRange;
-	int m_iExtraDCMBombAccuracy;
-	int m_iBaseRBombardDamage;
-	int m_iBaseRBombardDamageLimit;
-	int m_iBaseRBombardDamageMaxUnits;
-	int m_iBaseDCMBombRange;
-	int m_iBaseDCMBombAccuracy;
-	int m_iBombardDirectCount;
 	//TB Combat Mods End
 	int m_iExtraBombardRate;
 	int m_iSMBombardRate;
@@ -1717,7 +1688,6 @@ protected:
 
 	bool canAdvance(const CvPlot* pPlot, int iThreshold) const;
 	void collateralCombat(const CvPlot* pPlot, CvUnit* pSkipUnit = NULL);
-	void rBombardCombat(const CvPlot* pPlot, CvUnit* pFirstUnit = NULL);
 	void flankingStrikeCombat(const CvPlot* pPlot, int iAttackerStrength, int iAttackerFirepower, int iDefenderOdds, int iDefenderDamage, CvUnit* pSkipUnit);
 
 	bool interceptTest(const CvPlot* pPlot);
@@ -1802,7 +1772,6 @@ public:
 
 	void checkPromotionObsoletion();
 	void processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial = false);
-
 
 
 	bool canKeepPromotion(PromotionTypes ePromotion, bool bAssertFree = false, bool bMessageOnFalse = false) const;
@@ -2016,37 +1985,6 @@ public:
 	bool canPerformActionSM() const;
 	void setSMValues(bool bForLoad = false);
 
-	int rBombardDamage() const;
-	int getExtraRBombardDamage() const;
-	void changeExtraRBombardDamage(int iChange);
-	int getBaseRBombardDamage() const;
-	void changeBaseRBombardDamage(int iChange, bool bAdding, UnitCombatTypes eUnitCombat);
-
-	int rBombardDamageLimit() const;
-	int getExtraRBombardDamageLimit() const;
-	void changeExtraRBombardDamageLimit(int iChange);
-	int getBaseRBombardDamageLimit() const;
-	void changeBaseRBombardDamageLimit(int iChange, bool bAdding, UnitCombatTypes eUnitCombat);
-
-	int rBombardDamageMaxUnits() const;
-	int getExtraRBombardDamageMaxUnits() const;
-	void changeExtraRBombardDamageMaxUnits(int iChange);
-	int getBaseRBombardDamageMaxUnits() const;
-	void changeBaseRBombardDamageMaxUnits(int iChange, bool bAdding, UnitCombatTypes eUnitCombat);
-
-	int getDCMBombRange() const;
-	int getExtraDCMBombRange() const;
-	void changeExtraDCMBombRange(int iChange);
-	int getBaseDCMBombRange() const;
-	void changeBaseDCMBombRange(int iChange, bool bAdding, UnitCombatTypes eUnitCombat);
-
-	int getDCMBombAccuracy() const;
-	int getExtraDCMBombAccuracy() const;
-	void changeExtraDCMBombAccuracy(int iChange);
-	int getBaseDCMBombAccuracy() const;
-	void changeBaseDCMBombAccuracy(int iChange, bool bAdding, UnitCombatTypes eUnitCombat);
-	bool isRBombardDirect() const;
-	void changeBombardDirectCount(int iChange);
 
 	int getNoSelfHealCount() const;
 	bool hasNoSelfHeal() const;
@@ -2216,8 +2154,6 @@ public:
 	void doSetDefaultStatuses();
 
 
-
-
 	int getExtraNumTriggers() const;
 	void changeExtraNumTriggers(int iChange);
 
@@ -2225,12 +2161,8 @@ public:
 	void changeNumTimesTriggered(int iChange);
 
 
-
-
 	bool hasTargetUnitCombat(UnitCombatTypes eUnitCombat) const;
 	void changeTargetUnitCombatCount(UnitCombatTypes eUnitCombat, int iChange);
-
-
 
 
 	bool isArmed() const;
@@ -2298,7 +2230,6 @@ public:
 	//
 	struct fn {
 		DECLARE_MAP_FUNCTOR(CvUnit, void, doActiveDefense);
-		DECLARE_MAP_FUNCTOR(CvUnit, void, doOpportunityFire);
 		DECLARE_MAP_FUNCTOR(CvUnit, void, setSMValues);
 		DECLARE_MAP_FUNCTOR(CvUnit, void, checkPromotionObsoletion);
 		DECLARE_MAP_FUNCTOR(CvUnit, void, reloadEntity);
@@ -2318,7 +2249,6 @@ public:
 		DECLARE_MAP_FUNCTOR_2(CvUnit, void, doSetFreePromotions, bool, TraitTypes);
 		DECLARE_MAP_FUNCTOR_2(CvUnit, void, updatePlunder, int, bool);
 
-		DECLARE_MAP_FUNCTOR_CONST(CvUnit, bool, canRBombard);
 		DECLARE_MAP_FUNCTOR_CONST(CvUnit, bool, isNukeImmune);
 		DECLARE_MAP_FUNCTOR_CONST(CvUnit, bool, isGroupHead);
 		DECLARE_MAP_FUNCTOR_CONST(CvUnit, bool, isUsingDummyEntities);
@@ -2385,7 +2315,6 @@ public:
 		DECLARE_MAP_FUNCTOR_CONST_2(CvUnit, bool, canUpgrade, UnitTypes, bool);
 
 		DECLARE_MAP_FUNCTOR_CONST_3(CvUnit, bool, canEnterArea, TeamTypes, const CvArea*, bool);
-		DECLARE_MAP_FUNCTOR_CONST_3(CvUnit, bool, canBombardAtRanged, const CvPlot*, int, int);
 		DECLARE_MAP_FUNCTOR_CONST_3(CvUnit, int, getTriggerValue, EventTriggerTypes /*eTrigger*/, const CvPlot* /*pPlot*/, bool /*bCheckPlot*/);
 	};
 };

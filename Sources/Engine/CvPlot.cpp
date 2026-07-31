@@ -10917,25 +10917,11 @@ void CvPlot::processArea(CvArea* pArea, int iChange)
 			}
 			const CvBuildingInfo& building = GC.getBuildingInfo(eTypeX);
 
-			pArea->changePower(eOwner, building.getPowerValue() * iChange);
-
-			if (!pCity->isDormantBuilding(eTypeX))
-			{
-				if (building.getAreaHealth() > 0)
-				{
-					pArea->changeBuildingGoodHealth(eOwner, building.getAreaHealth() * iChange);
-				}
-				else pArea->changeBuildingBadHealth(eOwner, building.getAreaHealth() * iChange);
-
-				pArea->changeBuildingHappiness(eOwner, building.getAreaHappiness() * iChange);
-				pArea->changeFreeSpecialist(eOwner, building.getAreaFreeSpecialist() * iChange);
-
-				for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
-				{
-					pArea->changeYieldRateModifier(eOwner, (YieldTypes)iJ, building.getAreaYieldModifier(iJ) * iChange);
-				}
-			}
-			pArea->changeBorderObstacleCount(pCity->getTeam(), iChange * building.isAreaBorderObstacle());
+			//	Area carries MILITARY power only. The wellbeing / yield / free-specialist legs are gone with
+			//	the area SCOPE itself: the curator folds iArea* and iGlobal* into the same <family>.empire slot,
+			//	because a landmass is shared by several empires and so is not ownable (state-repositories.md).
+			pArea->changePower(eOwner, building.getMilitaryWorth() * iChange);
+			pArea->changeBorderObstacleCount(pCity->getTeam(), iChange * building.isBorderObstacle());
 		}
 
 		for (int iI = 0; iI < NUM_UNITAI_TYPES; ++iI)

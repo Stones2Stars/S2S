@@ -51,7 +51,6 @@ public:
 	bool isCleanPower(TeamTypes eIndex) const;
 	bool isBorderObstacle(TeamTypes eIndex) const;
 
-	int getYieldRateModifier(PlayerTypes eIndex1, YieldTypes eIndex2) const;
 
 	int getNumBonuses(BonusTypes eBonus) const;
 	int getNumTotalBonuses() const;

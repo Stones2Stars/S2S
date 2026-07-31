@@ -25095,7 +25095,6 @@ bool CvUnitAI::AI_followBombard()
 		// TBHERE : This is opposite.  I like the solution above to limit the units that will try this
 		// and keep attackers otherwise for city attacks.(sorta)
 		// But it's opposite... it should check mission bombard first
-		// then check rbombard
 		//{
 		//	// vanilla behaviour
 		//	getGroup()->pushMission(MISSION_BOMBARD);

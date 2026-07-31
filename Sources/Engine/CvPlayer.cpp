@@ -181,7 +181,6 @@ m_cachedBonusCount(NULL)
 	m_aiCommercePercent = new int[NUM_COMMERCE_TYPES];
 	m_aiCommerceRateModifier = new int[NUM_COMMERCE_TYPES];
 	m_aiCommerceRateModifierfromEvents = new int[NUM_COMMERCE_TYPES];
-	m_aiCommerceRateModifierfromBuildings = new int[NUM_COMMERCE_TYPES];
 	m_aiCapitalCommerceRateModifier = new int[NUM_COMMERCE_TYPES];
 	m_aiGoldPerTurnByPlayer = new int[MAX_PLAYERS];
 	m_aiEspionageSpendingWeightAgainstTeam = new int[MAX_TEAMS];
@@ -298,7 +297,6 @@ CvPlayer::~CvPlayer()
 	SAFE_DELETE_ARRAY(m_aiCommercePercent);
 	SAFE_DELETE_ARRAY(m_aiCommerceRateModifier);
 	SAFE_DELETE_ARRAY(m_aiCommerceRateModifierfromEvents);
-	SAFE_DELETE_ARRAY(m_aiCommerceRateModifierfromBuildings);
 	SAFE_DELETE_ARRAY(m_aiCapitalCommerceRateModifier);
 	SAFE_DELETE_ARRAY(m_aiGoldPerTurnByPlayer);
 	SAFE_DELETE_ARRAY(m_aiEspionageSpendingWeightAgainstTeam);
@@ -1095,26 +1093,18 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iAnarchyTurns = 0;
 	m_iMaxAnarchyTurns = 0;
 	m_iMinAnarchyTurns = 0;
-	m_iAnarchyModifier = 0;
-	m_iGoldenAgeModifier = 0;
-	m_iGlobalHurryModifier = 0;
 	m_iGreatPeopleCreated = 0;
 	m_iGreatGeneralsCreated = 0;
 	m_iGreatPeopleThresholdModifier = 0;
 	m_iGreatGeneralsThresholdModifier = 0;
-	m_iGreatPeopleRateModifier = 0;
-	m_iGreatGeneralRateModifier = 0;
-	m_iDomesticGreatGeneralRateModifier = 0;
 	m_iStateReligionGreatPeopleRateModifier = 0;
 	m_iMaxGlobalBuildingProductionModifier = 0;
 	m_iMaxTeamBuildingProductionModifier = 0;
 	m_iMaxPlayerBuildingProductionModifier = 0;
 	m_iFeatureProductionModifier = 0;
-	m_iWorkerSpeedModifier = 0;
 	m_iImprovementUpgradeRateModifier = 0;
 	m_iMilitaryProductionModifier = 0;
 	m_iSpaceProductionModifier = 0;
-	m_iCityDefenseModifier = 0;
 
 	m_iNonStateReligionCommerceCount = 0;
 	m_iUpgradeAnywhereCount = 0;
@@ -1127,7 +1117,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_fRevIdxBadReligionMod = 0;
 	m_fRevIdxGoodReligionMod = 0;
 	m_bInquisitionConditions = false;
-	m_iUnitUpgradePriceModifier = 0;
 	m_iCityLimit = 0;
 	m_iCityOverLimitUnhappy = 0;
 	m_iForeignUnhappyPercent = 0;
@@ -1161,7 +1150,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iExtraHappiness = 0;
 	m_iExtraHappinessUnattributed = 0;
 	m_iWarWearinessPercentAnger = 0;
-	m_iWarWearinessModifier = 0;
 	m_iNoForeignTradeCount = 0;
 	m_iNoCorporationsCount = 0;
 	m_iNoForeignCorporationsCount = 0;
@@ -1206,7 +1194,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iCivicAnarchyModifier = 0;
 	m_iReligiousAnarchyModifier = 0;
 	m_iAIAttitudeModifier = 0;
-	m_iTraitExtraCityDefense = 0;
 	m_iLeaderHeadLevel = 0;
 	m_iNationalEspionageDefense = 0;
 	m_iInquisitionCount = 0;
@@ -1294,12 +1281,10 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iEnslavementChance = 0;
 	m_iForeignTradeRouteModifier = 0;
 	m_iTaxRateUnhappiness = 0;
-	m_iUnitUpgradePriceModifier = 0;
 
 	// Afforess Food Threshold Modifier 08/16/09
 	m_fPopulationgrowthratepercentageLog = 0;
 
-	m_iExtraCityDefense = 0;
 	m_iDistantUnitSupportCostModifier = 0;
 	m_iReligionSpreadRate = 0;
 
@@ -1308,10 +1293,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 
 	m_bShowLandmarks = true;
 
-	m_iBuildingInflation = 0;
-	m_iCivicInflation = 0;
-	m_iProjectInflation = 0;
-	m_iTechInflation = 0;
 
 	m_iHurryCostModifier = 0;
 	m_iHurryInflationModifier = 0;
@@ -1355,7 +1336,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 		m_aiCommercePercent[iI] = 0;
 		m_aiCommerceRateModifier[iI] = 0;
 		m_aiCommerceRateModifierfromEvents[iI] = 0;
-		m_aiCommerceRateModifierfromBuildings[iI] = 0;
 		m_aiCapitalCommerceRateModifier[iI] = 0;
 	}
 
@@ -2672,9 +2652,9 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 
 		foreach_(const BuildingTypes eTypeX, pOldCity->getHasBuildings())
 		{
-			if (GC.getBuildingInfo(eTypeX).getOccupationTimeModifier() != 0 && !pOldCity->isDormantBuilding(eTypeX))
+			if (GC.getBuildingInfo(eTypeX).getScalar(SCALAR_OCCUPATION_TIME, CASC_SCOPE_CITY, CASC_UNIT_PERCENT) != 0 && !pOldCity->isDormantBuilding(eTypeX))
 			{
-				iOccupationTimeModifier += GC.getBuildingInfo(eTypeX).getOccupationTimeModifier();
+				iOccupationTimeModifier += GC.getBuildingInfo(eTypeX).getScalar(SCALAR_OCCUPATION_TIME, CASC_SCOPE_CITY, CASC_UNIT_PERCENT);
 			}
 		}
 
@@ -4052,10 +4032,6 @@ void CvPlayer::doTurn()
 		algo::for_each(cities_safe(), CvCity::fn::doTurn());
 	}
 
-	if (GC.isDCM_OPP_FIRE())
-	{
-		algo::for_each(units(), CvUnit::fn::doOpportunityFire());
-	}
 	if (GC.isDCM_ACTIVE_DEFENSE())
 	{
 		algo::for_each(units(), CvUnit::fn::doActiveDefense());
@@ -4157,10 +4133,6 @@ void CvPlayer::doMultiMapTurn()
 		algo::for_each(cities_safe(), CvCity::fn::doTurn());
 	}
 
-	if (GC.isDCM_OPP_FIRE())
-	{
-		algo::for_each(units(), CvUnit::fn::doOpportunityFire());
-	}
 	if (GC.isDCM_ACTIVE_DEFENSE())
 	{
 		algo::for_each(units(), CvUnit::fn::doActiveDefense());
@@ -6664,7 +6636,7 @@ bool CvPlayer::isProductionMaxedBuilding(BuildingTypes building, bool bAcquireCi
 		return true;
 	}
 
-	if (isBuildingMaxedOut(building, (bAcquireCity ? GC.getBuildingInfo(building).getExtraPlayerInstances() : 0)))
+	if (isBuildingMaxedOut(building, (bAcquireCity ? GC.getBuildingInfo(building).getMaxPlayerInstancesExtra() : 0)))
 	{
 		return true;
 	}
@@ -7137,21 +7109,12 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, CvArea* pAr
 		}
 	}
 
-	changeGreatPeopleRateModifier(kBuilding.getGlobalGreatPeopleRateModifier() * iChange);
-	changeGreatGeneralRateModifier(kBuilding.getGreatGeneralRateModifier() * iChange);
-	changeDomesticGreatGeneralRateModifier(kBuilding.getDomesticGreatGeneralRateModifier() * iChange);
-	changeAnarchyModifier(kBuilding.getAnarchyModifier() * iChange);
-	changeGoldenAgeModifier(kBuilding.getGoldenAgeModifier() * iChange);
-	changeHurryModifier(kBuilding.getGlobalHurryModifier() * iChange);
-	changeWarWearinessModifier(kBuilding.getGlobalWarWearinessModifier() * iChange);
-	pArea->changeFreeSpecialist(getID(), (kBuilding.getAreaFreeSpecialist() * iChange));
 	changeFreeSpecialist(kBuilding.getGlobalFreeSpecialist() * iChange);
 	changeCoastalTradeRoutes(kBuilding.getCoastalTradeRoutes() * iChange);
 	changeTradeRoutes(kBuilding.getGlobalTradeRoutes() * iChange);
 
 	changePopulationgrowthratepercentage(kBuilding.getGlobalPopulationgrowthratepercentage(), (iChange==1));
 	changeForceAllTradeRoutes(kBuilding.isForceAllTradeRoutes() * iChange);
-	changeBuildingInflation(kBuilding.getInflationModifier() * iChange);
 	{
 		const int iWorldTradeRoute = kBuilding.getWorldTradeRoutes() * iChange;
 		if (iWorldTradeRoute != 0)
@@ -7163,27 +7126,8 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, CvArea* pAr
 		}
 	}
 
-	// ⚠ The legacy AREA and GLOBAL wellbeing fields now compile to the SAME slot: the curator folds both
-	// iAreaHealth/iAreaHappiness and iGlobalHealth/iGlobalHappiness into <family>.empire.flat, because a landmass
-	// is not an ownable scope (state-repositories.md -- there is no area scope). So this reads the empire value
-	// ONCE and the AREA leg is gone; feeding both accumulators from one slot would double every such building.
-	// ⚠ Deliberate behaviour change, the ruled one: the legacy area term stopped at the coastline, the empire
-	// term does not (the iAreaFreeSpecialist precedent, legacy-value-calc-map).
-	const int iEmpireHealth = kBuilding.getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_EMPIRE);
-	if (iEmpireHealth > 0)
-	{
-		changeBuildingGoodHealth(iEmpireHealth * iChange);
-	}
-	else
-	{
-		changeBuildingBadHealth(iEmpireHealth * iChange);
-	}
-	changeBuildingHappiness(kBuilding.getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_EMPIRE) * iChange);
-	changeWorkerSpeedModifier(kBuilding.getWorkerSpeedModifier() * iChange);
 	changeSpaceProductionModifier(kBuilding.getGlobalSpaceProductionModifier() * iChange);
-	changeCityDefenseModifier(kBuilding.getAllCityDefenseModifier() * iChange);
 
-	changeUnitUpgradePriceModifier(kBuilding.getUnitUpgradePriceModifier() * iChange);
 	changeRevIdxNational(kBuilding.getRevIdxNational() * iChange);
 
 	pArea->changeBorderObstacleCount(getTeam(), kBuilding.isBorderObstacle() ? iChange : 0);
@@ -7191,7 +7135,6 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, CvArea* pAr
 	for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
 	{
 		changeSeaPlotYield(((YieldTypes)iI), (kBuilding.getGlobalSeaPlotYieldChange(iI) * iChange));
-		pArea->changeYieldRateModifier(getID(), ((YieldTypes)iI), (kBuilding.getAreaYieldModifier(iI) * iChange));
 		changeYieldRateModifier(((YieldTypes)iI), (kBuilding.getGlobalYieldModifier(iI) * iChange));
 	}
 
@@ -7205,7 +7148,6 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, CvArea* pAr
 
 	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 	{
-		changeCommerceRateModifierfromBuildings(((CommerceTypes)iI), (kBuilding.getGlobalCommerceModifier(iI) * iChange));
 		changeSpecialistExtraCommerce(((CommerceTypes)iI), (kBuilding.getSpecialistExtraCommerce(iI) * iChange));
 		changeStateReligionBuildingCommerce(((CommerceTypes)iI), (kBuilding.getStateReligionCommerce(iI) * iChange));
 		changeCommerceFlexibleCount(((CommerceTypes)iI), (kBuilding.isCommerceFlexible(iI)) ? iChange : 0);
@@ -7714,12 +7656,15 @@ int CvPlayer::getInflationMod10000() const
 	iInflationPerTurnTimes10000 *= GC.getHandicapInfo(getHandicapType()).getUpkeepModifier(UPKEEP_INFLATION, CASC_SCOPE_EMPIRE, false);
 	iInflationPerTurnTimes10000 /= 100;
 
+	//	The four hand-named per-SOURCE accumulators collapsed into the ONE empire-scope inflation channel --
+	//	per-source attribution is the oracle's job, never a getter's. The EVENT-granted modifier stays: it is
+	//	genuine one-shot persisted state, not a derivable deposit.
+	int aiScalars[NUM_INFO_SCALARS];
+	getScalars(aiScalars);
+
 	int iMod = (
 		m_iInflationModifier
-		+ getCivicInflation()
-		+ getProjectInflation()
-		+ getTechInflation()
-		+ getBuildingInflation()
+		+ aiScalars[SCALAR_INFLATION]
 		- 100 * isRebel()
 	);
 
@@ -8282,7 +8227,7 @@ void CvPlayer::revolution(CivicTypes* paeNewCivics, bool bForce)
 
 	NoteCivicsSwitched(iCivicChanges);
 
-	setRevolutionTimer(std::max(1, ((100 + getAnarchyModifier()) * GC.getDefineINT("MIN_REVOLUTION_TURNS")) / 100) + iAnarchyLength);
+	setRevolutionTimer(std::max(1, ((100 + anarchyModifierScalar()) * GC.getDefineINT("MIN_REVOLUTION_TURNS")) / 100) + iAnarchyLength);
 
 	if (getID() == GC.getGame().getActivePlayer())
 	{
@@ -8377,7 +8322,7 @@ void CvPlayer::convert(ReligionTypes eReligion)
 	//TB set religion - this will work even after Ideas project is implemented which will add the religion unitcombat to the unit trained in a city that has a primary faith.  If a Religion defining unitcombat is on the unit, giving the unit the state religion will be overridden.  (The discord between state religion and unit religion may also be programmed to later impact the unit morale when morale is implemented)
 	algo::for_each(units(), CvUnit::fn::defineReligion());
 
-	setConversionTimer(std::max(1, ((100 + getAnarchyModifier()) * GC.getDefineINT("MIN_CONVERSION_TURNS")) / 100) + iAnarchyLength);
+	setConversionTimer(std::max(1, ((100 + anarchyModifierScalar()) * GC.getDefineINT("MIN_CONVERSION_TURNS")) / 100) + iAnarchyLength);
 }
 
 
@@ -8683,7 +8628,7 @@ int CvPlayer::getCivicAnarchyLength(CivicTypes* paeNewCivics) const
 
 	iTotalAnarchyLength += getNumCities() * GC.getWorldInfo(GC.getMap().getWorldSize()).getNumCitiesAnarchyPercent();
 
-	iTotalAnarchyLength *= getAnarchyModifier() + 100;
+	iTotalAnarchyLength *= anarchyModifierScalar() + 100;
 	iTotalAnarchyLength /= 100;
 
 	iTotalAnarchyLength *= getCivicAnarchyModifier() + 100;
@@ -8721,7 +8666,7 @@ int CvPlayer::getReligionAnarchyLength() const
 
 	iAnarchyLength += (getNumCities() * GC.getWorldInfo(GC.getMap().getWorldSize()).getNumCitiesAnarchyPercent() / 100);
 
-	iAnarchyLength = ((iAnarchyLength * std::max(0, (getAnarchyModifier() + 100))) / 100);
+	iAnarchyLength = ((iAnarchyLength * std::max(0, (anarchyModifierScalar() + 100))) / 100);
 
 	if (iAnarchyLength == 0)
 	{
@@ -9166,7 +9111,9 @@ void CvPlayer::changeGoldenAgeTurns(int iChange)
 
 int CvPlayer::getGoldenAgeLength() const
 {
-	return std::max(1, getModifiedIntValue(GC.getGame().goldenAgeLength(), getGoldenAgeModifier()) / 100);
+	int aiScalars[NUM_INFO_SCALARS];
+	getScalars(aiScalars);
+	return std::max(1, getModifiedIntValue(GC.getGame().goldenAgeLength(), aiScalars[SCALAR_GOLDEN_AGE_LENGTH]) / 100);
 }
 
 int CvPlayer::getNumUnitGoldenAges() const
@@ -9321,47 +9268,14 @@ void CvPlayer::updateMinAnarchyTurns()
 }
 
 
-int CvPlayer::getAnarchyModifier() const
+//	The empire-scope anarchy percent, read through the ONE roll-up. It replaces a hand-named accumulator that
+//	processBuilding pushed per building; the deposits now answer for themselves.
+int CvPlayer::anarchyModifierScalar() const
 {
-	return m_iAnarchyModifier;
+	int aiScalars[NUM_INFO_SCALARS];
+	getScalars(aiScalars);
+	return aiScalars[SCALAR_ANARCHY];
 }
-
-
-void CvPlayer::changeAnarchyModifier(int iChange)
-{
-	if (0 != iChange)
-	{
-		m_iAnarchyModifier += iChange;
-
-		setRevolutionTimer(std::max(0, ((100 + iChange) * getRevolutionTimer()) / 100));
-		setConversionTimer(std::max(0, ((100 + iChange) * getConversionTimer()) / 100));
-	}
-}
-
-
-int CvPlayer::getGoldenAgeModifier() const
-{
-	return m_iGoldenAgeModifier;
-}
-
-
-void CvPlayer::changeGoldenAgeModifier(int iChange)
-{
-	m_iGoldenAgeModifier += iChange;
-}
-
-
-int CvPlayer::getHurryModifier() const
-{
-	return m_iGlobalHurryModifier;
-}
-
-
-void CvPlayer::changeHurryModifier(int iChange)
-{
-	m_iGlobalHurryModifier += iChange;
-}
-
 
 int CvPlayer::getGreatPeopleCreated() const
 {
@@ -9405,42 +9319,6 @@ int CvPlayer::getGreatGeneralsThresholdModifier() const
 void CvPlayer::changeGreatGeneralsThresholdModifier(int iChange)
 {
 	m_iGreatGeneralsThresholdModifier += iChange;
-}
-
-
-int CvPlayer::getGreatPeopleRateModifier() const
-{
-	return m_iGreatPeopleRateModifier;
-}
-
-
-void CvPlayer::changeGreatPeopleRateModifier(int iChange)
-{
-	m_iGreatPeopleRateModifier += iChange;
-}
-
-
-int CvPlayer::getGreatGeneralRateModifier() const
-{
-	return m_iGreatGeneralRateModifier;
-}
-
-
-void CvPlayer::changeGreatGeneralRateModifier(int iChange)
-{
-	m_iGreatGeneralRateModifier += iChange;
-}
-
-
-int CvPlayer::getDomesticGreatGeneralRateModifier() const
-{
-	return (GC.getDefineINT("COMBAT_EXPERIENCE_IN_BORDERS_PERCENT") + m_iDomesticGreatGeneralRateModifier);
-}
-
-
-void CvPlayer::changeDomesticGreatGeneralRateModifier(int iChange)
-{
-	m_iDomesticGreatGeneralRateModifier += iChange;
 }
 
 
@@ -9504,17 +9382,6 @@ void CvPlayer::changeFeatureProductionModifier(int iChange)
 }
 
 
-int CvPlayer::getWorkerSpeedModifier() const
-{
-	return m_iWorkerSpeedModifier;
-}
-
-
-void CvPlayer::changeWorkerSpeedModifier(int iChange)
-{
-	m_iWorkerSpeedModifier += iChange;
-}
-
 // BUG - Partial Builds - start
 /*
  * Returns the work rate for the best available unit that can build <eBuild> the fastest.
@@ -9547,7 +9414,9 @@ int CvPlayer::getWorkRate(BuildTypes eBuild) const
 			}
 		}
 	}
-	iRate = getModifiedIntValue(iRate, getWorkerSpeedModifier() + getBuildWorkerSpeedModifierSpecific(eBuild));
+	int aiScalars[NUM_INFO_SCALARS];
+	getScalars(aiScalars);
+	iRate = getModifiedIntValue(iRate, aiScalars[SCALAR_WORK_RATE] + getBuildWorkerSpeedModifierSpecific(eBuild));
 
 	if (isNormalAI())
 	{
@@ -9599,18 +9468,6 @@ int CvPlayer::getSpaceProductionModifier() const
 void CvPlayer::changeSpaceProductionModifier(int iChange)
 {
 	m_iSpaceProductionModifier += iChange;
-}
-
-
-int CvPlayer::getCityDefenseModifier() const
-{
-	return m_iCityDefenseModifier + getExtraCityDefense() + getTraitExtraCityDefense();
-}
-
-
-void CvPlayer::changeCityDefenseModifier(int iChange)
-{
-	m_iCityDefenseModifier += iChange;
 }
 
 
@@ -9785,17 +9642,6 @@ bool CvPlayer::isInquisitionConditions() const
 //		}
 //	}
 //}
-
-
-int CvPlayer::getUnitUpgradePriceModifier() const
-{
-	return m_iUnitUpgradePriceModifier;
-}
-
-void CvPlayer::changeUnitUpgradePriceModifier(int iChange)
-{
-	m_iUnitUpgradePriceModifier += iChange;
-}
 
 
 bool CvPlayer::canFoundReligion() const
@@ -10467,26 +10313,6 @@ int CvPlayer::getModifiedWarWearinessPercentAnger(int iWarWearinessPercentAnger)
 		}
 	}
 	return iWarWearinessPercentAnger;
-}
-
-
-int CvPlayer::getWarWearinessModifier() const
-{
-	return m_iWarWearinessModifier;
-}
-
-
-void CvPlayer::changeWarWearinessModifier(int iChange, bool bLimited)
-{
-	if (iChange != 0)
-	{
-		m_iWarWearinessModifier += iChange;
-
-		if (!bLimited)
-		{
-			AI_makeAssignWorkDirty();
-		}
-	}
 }
 
 
@@ -12568,30 +12394,6 @@ void CvPlayer::changeCommerceRateModifierfromEvents(CommerceTypes eIndex, int iC
 	}
 }
 
-int CvPlayer::getCommerceRateModifierfromBuildings(CommerceTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-	return m_aiCommerceRateModifierfromBuildings[eIndex];
-}
-
-void CvPlayer::changeCommerceRateModifierfromBuildings(CommerceTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-
-	if (iChange != 0)
-	{
-		//Totals into Buildings to split for display
-		m_aiCommerceRateModifierfromBuildings[eIndex] = std::min(m_aiCommerceRateModifierfromBuildings[eIndex] + iChange, MAX_COMMERCE_RATE_MODIFIER_VALUE);
-		//Also totals into generic Rate Modifier total
-		m_aiCommerceRateModifier[eIndex] = std::min(m_aiCommerceRateModifier[eIndex] + iChange, MAX_COMMERCE_RATE_MODIFIER_VALUE);
-
-		setCityCommerceModifierDirty(eIndex);
-
-		AI_makeAssignWorkDirty();
-	}
-}
-
-
 int CvPlayer::getCapitalCommerceRateModifier(CommerceTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
@@ -13287,16 +13089,16 @@ bool CvPlayer::isBuildingMaxedOut(BuildingTypes eIndex, int iExtra) const
 		return false;
 	}
 
-	FAssertMsg(getBuildingCount(eIndex) <= (GC.getBuildingInfo(eIndex).getAllowed()->cap(ALLOWEDCAP_EMPIRE) + GC.getBuildingInfo(eIndex).getExtraPlayerInstances()),
+	FAssertMsg(getBuildingCount(eIndex) <= (GC.getBuildingInfo(eIndex).getAllowed()->cap(ALLOWEDCAP_EMPIRE) + GC.getBuildingInfo(eIndex).getMaxPlayerInstancesExtra()),
 		CvString::format("BuildingCount for %s is expected to be less than or match the number of max player instances plus extra player instances (%d <= %d + %d)",
 			GC.getBuildingInfo(eIndex).getType(),
 			getBuildingCount(eIndex),
 			GC.getBuildingInfo(eIndex).getAllowed()->cap(ALLOWEDCAP_EMPIRE),
-			GC.getBuildingInfo(eIndex).getExtraPlayerInstances()
+			GC.getBuildingInfo(eIndex).getMaxPlayerInstancesExtra()
 		).c_str()
 	);
 
-	return ((getBuildingCount(eIndex) + iExtra) >= (GC.getBuildingInfo(eIndex).getAllowed()->cap(ALLOWEDCAP_EMPIRE) + GC.getBuildingInfo(eIndex).getExtraPlayerInstances()));
+	return ((getBuildingCount(eIndex) + iExtra) >= (GC.getBuildingInfo(eIndex).getAllowed()->cap(ALLOWEDCAP_EMPIRE) + GC.getBuildingInfo(eIndex).getMaxPlayerInstancesExtra()));
 }
 
 bool CvPlayer::isBuildingGroupMaxedOut(SpecialBuildingTypes eIndex, int iExtra) const
@@ -16099,7 +15901,7 @@ bool CvPlayer::doEspionageMission(EspionageMissionTypes eMission, PlayerTypes eT
 	if (NO_PLAYER != eTargetPlayer && kMission.getSwitchCivicCostFactor() > 0)
 	{
 		GET_PLAYER(eTargetPlayer).setCivics((CivicOptionTypes) GC.getCivicInfo((CivicTypes)iExtraData).getCivicOption(), (CivicTypes)iExtraData);
-		GET_PLAYER(eTargetPlayer).setRevolutionTimer(std::max(1, ((100 + GET_PLAYER(eTargetPlayer).getAnarchyModifier()) * GC.getDefineINT("MIN_REVOLUTION_TURNS")) / 100));
+		GET_PLAYER(eTargetPlayer).setRevolutionTimer(std::max(1, ((100 + GET_PLAYER(eTargetPlayer).anarchyModifierScalar()) * GC.getDefineINT("MIN_REVOLUTION_TURNS")) / 100));
 		bSomethingHappened = true;
 		szBuffer = gDLL->getText("TXT_KEY_ESPIONAGE_TARGET_SWITCH_CIVIC", GC.getCivicInfo((CivicTypes)iExtraData).getDescription()).GetCString();
 	}
@@ -16110,7 +15912,7 @@ bool CvPlayer::doEspionageMission(EspionageMissionTypes eMission, PlayerTypes eT
 		szBuffer = gDLL->getText("TXT_KEY_ESPIONAGE_TARGET_SWITCH_RELIGION", GC.getReligionInfo((ReligionTypes)iExtraData).getDescription()).GetCString();
 
 		GET_PLAYER(eTargetPlayer).setLastStateReligion((ReligionTypes)iExtraData);
-		GET_PLAYER(eTargetPlayer).setConversionTimer(std::max(1, ((100 + GET_PLAYER(eTargetPlayer).getAnarchyModifier()) * GC.getDefineINT("MIN_CONVERSION_TURNS")) / 100));
+		GET_PLAYER(eTargetPlayer).setConversionTimer(std::max(1, ((100 + GET_PLAYER(eTargetPlayer).anarchyModifierScalar()) * GC.getDefineINT("MIN_CONVERSION_TURNS")) / 100));
 		bSomethingHappened = true;
 	}
 	// Player Anarchy
@@ -17463,13 +17265,9 @@ void CvPlayer::processCivics(const CivicTypes eCivic, const int iChange, const b
 	}
 	else
 	{
-		changeGreatPeopleRateModifier(kCivic.getGreatPeopleRateModifier() * iChange);
-		changeGreatGeneralRateModifier(kCivic.getGreatGeneralRateModifier() * iChange);
-		changeDomesticGreatGeneralRateModifier(kCivic.getDomesticGreatGeneralRateModifier() * iChange);
 		changeStateReligionGreatPeopleRateModifier(kCivic.getStateReligionGreatPeopleRateModifier() * iChange);
 
 
-		changeWorkerSpeedModifier(kCivic.getWorkerSpeedModifier() * iChange);
 		changeImprovementUpgradeRateModifier(kCivic.getImprovementUpgradeRateModifier() * iChange);
 		changeMilitaryProductionModifier(kCivic.getMilitaryProductionModifier() * iChange);
 		changeBaseFreeUnitUpkeepCivilian(kCivic.getFreeUnitUpkeepCivilian() * iChange);
@@ -17551,10 +17349,8 @@ void CvPlayer::processCivics(const CivicTypes eCivic, const int iChange, const b
 		changeReligionSpreadRate(kCivic.getReligionSpreadRate() * iChange);
 		changeCorporationSpreadModifier(kCivic.getCorporationSpreadRate() * iChange);
 		changeDistantUnitSupportCostModifier(kCivic.getDistantUnitSupportCostModifier() * iChange);
-		changeExtraCityDefense(kCivic.getExtraCityDefense() * iChange);
 		changeExtraFreedomFighters(kCivic.getFreedomFighterChange() * iChange);
 		changeEnslavementChance(kCivic.getEnslavementChance() * iChange);
-		changeCivicInflation(kCivic.getInflationModifier() * iChange);
 		changeHurryCostModifier(kCivic.getHurryCostModifier() * iChange);
 		changeHurryInflationModifier(kCivic.getHurryInflationModifier() * iChange);
 		changeLandmarkHappiness(kCivic.getLandmarkHappiness() * iChange);
@@ -17663,7 +17459,6 @@ void CvPlayer::processCivics(const CivicTypes eCivic, const int iChange, const b
 	changeCityOverLimitUnhappy((kCivic.hasCityOverLimitAnger() ? 1 : 0) * iChange);
 	changeForeignUnhappyPercent(kCivic.getForeignerUnhappyPercent() * iChange);
 
-	changeWarWearinessModifier(kCivic.getWarWearinessModifier() * iChange, bLimited);
 
 	//TB Civics Tags
 	changeAllReligionsActiveCount((kCivic.isAllReligionsActive())? iChange : 0);
@@ -17741,26 +17536,18 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iStrikeTurns);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iAnarchyTurns);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iMaxAnarchyTurns);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iAnarchyModifier);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iGoldenAgeModifier);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iGlobalHurryModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iGreatPeopleCreated);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iGreatGeneralsCreated);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iGreatPeopleThresholdModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iGreatGeneralsThresholdModifier);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iGreatPeopleRateModifier);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iGreatGeneralRateModifier);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iDomesticGreatGeneralRateModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iStateReligionGreatPeopleRateModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iMaxGlobalBuildingProductionModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iMaxTeamBuildingProductionModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iMaxPlayerBuildingProductionModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iFeatureProductionModifier);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iWorkerSpeedModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iImprovementUpgradeRateModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iMilitaryProductionModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iSpaceProductionModifier);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iCityDefenseModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNonStateReligionCommerceCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iUpgradeAnywhereCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iRevIdxLocal);
@@ -17772,7 +17559,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_fRevIdxBadReligionMod);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_fRevIdxGoodReligionMod);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_bInquisitionConditions);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iUnitUpgradePriceModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNumNukeUnits);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNumOutsideUnits);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNumMilitaryUnits);
@@ -17791,7 +17577,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraHappiness);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraHappinessUnattributed);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iWarWearinessPercentAnger);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iWarWearinessModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNoForeignTradeCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNoCorporationsCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNoForeignCorporationsCount);
@@ -17958,17 +17743,12 @@ void CvPlayer::read(FDataStreamBase* pStream)
 
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iReligionSpreadRate);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iDistantUnitSupportCostModifier);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraCityDefense);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iEnslavementChance);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNoCapitalUnhappiness);
 
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiLandmarkYield);
 
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iForceAllTradeRoutes);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iBuildingInflation);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iProjectInflation);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iTechInflation);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iCivicInflation);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iHurryCostModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iHurryInflationModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iHurryCount);
@@ -18696,7 +18476,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 				WRAPPER_SKIP_ELEMENT(wrapper, "CvPlayer", m_ppaaiSpecialistExtraCommerce[iI], SAVE_VALUE_TYPE_INT_ARRAY);
 			}
 		}
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iTraitExtraCityDefense);
 		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_TRAITS, GC.getNumTraitInfos(), m_pabHasTrait);
 		// Reseed: the player's held traits (a wholesale-array read, so the per-fact loop lives HERE, inside read()).
 		for (int iTrait = 0; iTrait < GC.getNumTraitInfos(); ++iTrait)
@@ -18750,7 +18529,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iSplittingUnit);
 
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommerceRateModifierfromEvents);
-		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommerceRateModifierfromBuildings);
 
 		WRAPPER_READ(wrapper, "CvPlayer", (int*)&m_eGreatGeneralTypetoAssign);
 
@@ -19163,26 +18941,18 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iStrikeTurns);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iAnarchyTurns);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iMaxAnarchyTurns);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iAnarchyModifier);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iGoldenAgeModifier);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iGlobalHurryModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iGreatPeopleCreated);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iGreatGeneralsCreated);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iGreatPeopleThresholdModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iGreatGeneralsThresholdModifier);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iGreatPeopleRateModifier);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iGreatGeneralRateModifier);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iDomesticGreatGeneralRateModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iStateReligionGreatPeopleRateModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iMaxGlobalBuildingProductionModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iMaxTeamBuildingProductionModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iMaxPlayerBuildingProductionModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iFeatureProductionModifier);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iWorkerSpeedModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iImprovementUpgradeRateModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iMilitaryProductionModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iSpaceProductionModifier);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCityDefenseModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNonStateReligionCommerceCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iUpgradeAnywhereCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iRevIdxLocal);
@@ -19194,7 +18964,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_fRevIdxBadReligionMod);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_fRevIdxGoodReligionMod);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_bInquisitionConditions);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iUnitUpgradePriceModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNumNukeUnits);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNumOutsideUnits);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNumMilitaryUnits);
@@ -19213,7 +18982,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraHappiness);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraHappinessUnattributed);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iWarWearinessPercentAnger);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iWarWearinessModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNoForeignTradeCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNoCorporationsCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNoForeignCorporationsCount);
@@ -19301,17 +19069,12 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_fPopulationgrowthratepercentageLog);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iReligionSpreadRate);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iDistantUnitSupportCostModifier);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraCityDefense);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iEnslavementChance);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNoCapitalUnhappiness);
 
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiLandmarkYield);
 
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iForceAllTradeRoutes);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iBuildingInflation);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iProjectInflation);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iTechInflation);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCivicInflation);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iHurryCostModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iHurryInflationModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iHurryCount);
@@ -19655,7 +19418,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		{
 			WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_ppaaiSpecialistExtraCommerce[iI]);
 		}
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iTraitExtraCityDefense);
 		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_TRAITS, GC.getNumTraitInfos(), m_pabHasTrait);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iLeaderHeadLevel);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNationalEspionageDefense);
@@ -19698,7 +19460,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iSplittingUnit);
 
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommerceRateModifierfromEvents);
-		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommerceRateModifierfromBuildings);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_eGreatGeneralTypetoAssign);
 
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iFocusPlotX);
@@ -25998,21 +25759,6 @@ void CvPlayer::changeDistantUnitSupportCostModifier(int iChange)
 	setDistantUnitSupportCostModifier(getDistantUnitSupportCostModifier() + iChange);
 }
 
-int CvPlayer::getExtraCityDefense() const
-{
-	return m_iExtraCityDefense;
-}
-
-void CvPlayer::setExtraCityDefense(int iValue)
-{
-	m_iExtraCityDefense = iValue;
-}
-
-void CvPlayer::changeExtraCityDefense(int iChange)
-{
-	setExtraCityDefense(getExtraCityDefense() + iChange);
-}
-
 int CvPlayer::getForceAllTradeRoutes() const
 {
 	return m_iForceAllTradeRoutes;
@@ -26605,46 +26351,6 @@ void CvPlayer::recalculateAllResourceConsumption()
 	{
 		m_paiResourceConsumption[iI] = aiConsumption[iI];
 	}
-}
-
-int CvPlayer::getBuildingInflation() const
-{
-	return m_iBuildingInflation;
-}
-
-void CvPlayer::changeBuildingInflation(int iChange)
-{
-	m_iBuildingInflation += iChange;
-}
-
-int CvPlayer::getProjectInflation() const
-{
-	return m_iProjectInflation;
-}
-
-void CvPlayer::changeProjectInflation(int iChange)
-{
-	m_iProjectInflation += iChange;
-}
-
-int CvPlayer::getTechInflation() const
-{
-	return m_iTechInflation;
-}
-
-void CvPlayer::changeTechInflation(int iChange)
-{
-	m_iTechInflation += iChange;
-}
-
-int CvPlayer::getCivicInflation() const
-{
-	return m_iCivicInflation;
-}
-
-void CvPlayer::changeCivicInflation(int iChange)
-{
-	m_iCivicInflation += iChange;
 }
 
 int CvPlayer::getHurryCostModifier() const
@@ -27324,9 +27030,6 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 
 	changeUpkeepModifier(iChange*GC.getTraitInfo(eTrait).getUpkeepModifier());
 	changeLevelExperienceModifier(iChange*GC.getTraitInfo(eTrait).getLevelExperienceModifier());
-	changeGreatPeopleRateModifier(iChange*GC.getTraitInfo(eTrait).getGreatPeopleRateModifier());
-	changeGreatGeneralRateModifier(iChange*GC.getTraitInfo(eTrait).getGreatGeneralRateModifier());
-	changeDomesticGreatGeneralRateModifier(iChange*GC.getTraitInfo(eTrait).getDomesticGreatGeneralRateModifier());
 
 	changeMaxGlobalBuildingProductionModifier(iChange*GC.getTraitInfo(eTrait).getMaxGlobalBuildingProductionModifier());
 	changeMaxTeamBuildingProductionModifier(iChange*GC.getTraitInfo(eTrait).getMaxTeamBuildingProductionModifier());
@@ -27380,11 +27083,9 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 	{
 		updateMinAnarchyTurns();
 	}
-	changeWarWearinessModifier(iChange*GC.getTraitInfo(eTrait).getWarWearinessAccumulationModifier());
 	changeCivicAnarchyModifier(iChange*GC.getTraitInfo(eTrait).getCivicAnarchyTimeModifier());
 	changeReligiousAnarchyModifier(iChange*GC.getTraitInfo(eTrait).getReligiousAnarchyTimeModifier());
 	changeImprovementUpgradeRateModifier(iChange*GC.getTraitInfo(eTrait).getImprovementUpgradeRateModifier());
-	changeWorkerSpeedModifier(iChange*GC.getTraitInfo(eTrait).getWorkerSpeedModifier());
 	changeMaxConscript(iChange*GC.getTraitInfo(eTrait).getMaxConscript());
 	changeStateReligionGreatPeopleRateModifier(iChange*GC.getTraitInfo(eTrait).getStateReligionGreatPeopleRateModifier());
 	changeBaseFreeUnitUpkeepCivilian(iChange*GC.getTraitInfo(eTrait).getFreeUnitUpkeepCivilian());
@@ -27402,18 +27103,15 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 	changeStateReligionUnitProductionModifier(iChange*GC.getTraitInfo(eTrait).getStateReligionUnitProductionModifier());
 	changeStateReligionBuildingProductionModifier(iChange*GC.getTraitInfo(eTrait).getStateReligionBuildingProductionModifier());
 	changeExpInBorderModifier(iChange*GC.getTraitInfo(eTrait).getExpInBorderModifier());
-	changeTraitExtraCityDefense(iChange*GC.getTraitInfo(eTrait).getCityDefenseBonus());
 	changeMilitaryProductionModifier(iChange*GC.getTraitInfo(eTrait).getMilitaryProductionModifier());
 	changeAIAttitudeModifier(iChange*GC.getTraitInfo(eTrait).getAttitudeModifier());
 	changeNationalEspionageDefense(iChange*GC.getTraitInfo(eTrait).getEspionageDefense());
 	changeMaxTradeRoutesAdjustment(iChange*GC.getTraitInfo(eTrait).getMaxTradeRoutesChange());
-	changeGoldenAgeModifier(GC.getTraitInfo(eTrait).getGoldenAgeDurationModifier() * iChange);
 	changeNationalHurryAngerModifier(GC.getTraitInfo(eTrait).getHurryAngerModifier() * iChange);
 	changeHurryCostModifier(GC.getTraitInfo(eTrait).getHurryCostModifier() * iChange);
 	changeForeignTradeRouteModifier(GC.getTraitInfo(eTrait).getForeignTradeRouteModifier() * iChange);
 	changeNationalEnemyWarWearinessModifier(GC.getTraitInfo(eTrait).getEnemyWarWearinessModifier() * iChange);
 	changeNationalBombardDefenseModifier(GC.getTraitInfo(eTrait).getBombardDefense() * iChange);
-	changeUnitUpgradePriceModifier(GC.getTraitInfo(eTrait).getUnitUpgradePriceModifier() * iChange);
 	changeCoastalTradeRoutes(GC.getTraitInfo(eTrait).getCoastalTradeRoutes() * iChange);
 	changeMilitaryFoodProductionCount((GC.getTraitInfo(eTrait).isMilitaryFoodProduction()) ? iChange : 0);
 	changeInquisitionCount((GC.getTraitInfo(eTrait).isAllowsInquisitions())? iChange : 0);
@@ -27961,21 +27659,6 @@ void CvPlayer::changeFreeCityYield(YieldTypes eIndex, int iChange)
 
 		algo::for_each(cities(), CvCity::fn::onYieldChange());
 	}
-}
-
-int CvPlayer::getTraitExtraCityDefense() const
-{
-	return m_iTraitExtraCityDefense;
-}
-
-void CvPlayer::setTraitExtraCityDefense(int iValue)
-{
-	m_iTraitExtraCityDefense = iValue;
-}
-
-void CvPlayer::changeTraitExtraCityDefense(int iChange)
-{
-	setTraitExtraCityDefense(getTraitExtraCityDefense() + iChange);
 }
 
 void CvPlayer::setHasTrait(TraitTypes eIndex, bool bNewValue)
@@ -29518,14 +29201,12 @@ void CvPlayer::processTech(const TechTypes eTech, const int iChange)
 	const CvTechInfo& tech = GC.getTechInfo(eTech);
 
 	changeFeatureProductionModifier(tech.getFeatureProductionModifier() * iChange);
-	changeWorkerSpeedModifier(tech.getWorkerSpeedModifier() * iChange);
 	changeTradeRoutes(tech.getTradeRoutes() * iChange);
 	changeExtraHealth(tech.getHealth() * iChange);
 	changeExtraHappiness(tech.getHappiness() * iChange);
 	changeAssets(tech.getAssetValue() * iChange);
 	changeTechPower(tech.getPowerValue() * iChange);
 	changeTechScore(getScoreValueOfTech(eTech) * iChange);
-	changeTechInflation(tech.getInflationModifier() * iChange);
 
 	for (int i = 0; i < NUM_COMMERCE_TYPES; i++)
 	{

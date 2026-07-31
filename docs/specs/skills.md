@@ -138,7 +138,7 @@ consuming code (high confidence unless noted), not general knowledge.
 | skill | what it does |
 |---|---|
 | `counterSpy` | espionage counter-agent — cuts enemy spy-mission success on/near its plot, intercepts spies (+XP) |
-| `dcmFighterEngage` | can fly the DCM fighter-intercept (FEngage) mission (option-gated) |
+| `dcmFighterEngage` | can fly the fighter-intercept (FEngage) mission (option-gated). ⚠ The `dcm` prefix is MOD PROVENANCE on a live mechanic, not part of what it does -- fighter engage is the airplane ranged attack and stays; the key wants renaming |
 | `defenders` | per-`UnitCombat` list — unit is a valid target for attackers of those combat types (+ AI value) |
 | `defenseOnly` | stackable count feeding `isOnlyDefensive()` (with the static `onlyDefensive` bool) — blocks initiating attacks |
 | `defensiveVictoryMove` | free move after winning a defensive battle |
@@ -152,8 +152,6 @@ consuming code (high confidence unless noted), not general knowledge.
 | `oneUp` | ❌ **DEAD?** — believed unused; possible entertainer city-revolt-reduction use (verify); else drop |
 | `onslaught` | can chain attacks in a turn after a no-damage kill while defenders remain |
 | `pillageMarauder` | gains gold from pillaging / combat pillage |
-| `rBombardDirect` | (unit-combat) exempt from first-defender deprioritisation in ranged-bombard targeting |
-| `rBombardForceAbility` | lets a defensive-only unit still ranged-bombard (overrides `isOnlyDefensive`) |
 | `stampede` | can chain attacks after a kill while more defenders share the plot (grant/revoke, §4) |
 | `stateReligion` | buildable only in a city that has the player's state religion |
 | `stealthDefense` | stealth ambusher — first-strike vs attackers, suppresses their move cost (option-gated, `COMBAT_WITHOUT_WARNING`) |
