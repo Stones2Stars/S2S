@@ -205,21 +205,25 @@
     listed in the curator's HANDLED set as knowingly dropped. ⚠ NOT the same thing as unit UPKEEP scaling
     (`cost.upkeep` → `upkeep.unit.extra`), which is a different family and STAYS. **Never re-add a
     count-scaled build-cost ramp**; if unit proliferation needs a brake, it is a fresh design decision, not this.
-26. **The per-unit upkeep PERCENTAGE stages** — the promotion/unit-combat `upkeep.unit.modifier`
-    (`iUpkeepModifier`, 119 promotions + 10 unit-combats, mostly +10% but up to +50%) and the Size-Matters rank
-    multiplier `m_iUpkeepMultiplierSM` *(dead — owner: "extra upkeep per unit is fundamentally dumb, it does not
-    work in the game because it never lets you build units in sufficient quantities, especially with size
-    matters … when it adds 5% or 20% or whatever it is extra, it gets unreasonable, because the cost spirals so
-    fast")*.
-    ⚑ **The spiral was literal, not rhetorical:** the SM multiplier COMPOUNDED — `(100 + m) × 150/100 − 100`
-    applied once per group-rank offset in a loop — so three ranks is ×3.375 before the additive promotion
-    percentages are applied on top. That is why fielding an army at scale became impossible.
-    ⚖ **FLAT upkeep STAYS and is the whole model now** (owner: *"a unit can have base upkeep, 1 gold per
-    instance of the unit"*): `cost.upkeep` plus any flat `upkeep.unit.extra`. What died is multiplying it.
-    ⚠ NOT the empire-scope upkeep modifiers — the TRAIT/civic one (`upkeep.empire.civic`, `CvPlayer::
-    m_iUpkeepModifier`) and the HANDICAP scaling are different mechanics at a different scope and are untouched.
-    The `UPKEEP_MODIFIER` kind is retired with the mechanic; both members were serialized, so both are named in
-    `Assets/savemigration.txt` with NO replacement recorded, deliberately.
-    **Never re-add a percentage multiplier on per-unit upkeep**; if unit spam needs a brake it is a fresh design
-    decision, not this.
-
+26. **The per-unit upkeep PERCENTAGE stacked on top of Size Matters** — the promotion/unit-combat
+    `upkeep.unit.modifier` (`iUpkeepModifier`, 119 promotions + 10 unit-combats, mostly +10% but up to +50%)
+    multiplying the same upkeep the SM rank multiplier (`m_iUpkeepMultiplierSM`) already scaled *(dead —
+    owner)*. Both stages are removed; unit upkeep is FLAT.
+    ⛔ **THE SM MULTIPLIER WAS NOT THE FAULT, and blaming it is the wrong lesson to take (owner).** Size Matters
+    FUSES 3 equal units into 1 bigger one, so a bigger unit costing more upkeep *"makes sense"*. The arithmetic
+    agrees: the multiplier is ×1.5 per rank while a rank represents 3 fused units, i.e. a fused unit paid 1.5×
+    the upkeep of one unit while BEING three — a discount against fielding them separately, not a punishment.
+    ⚑ **The failure was COMPOSITION:** *"the problem came from when you added the per unit scaling in the mix as
+    well, then it got real out of hand"*. A defensible per-size cost and an unbounded per-unit percentage
+    multiplied each other, and the product is what made armies unaffordable.
+    ⚖ **FLAT is an INTERIM, not the destination (owner): *"we want to have unit maintenance make more sense in
+    the future, so we leave it like this for now"*.** Unit maintenance is owed a coherent redesign; this removal
+    clears the incoherent version rather than settling the model. A standing example of what that redesign must
+    address: **FREE UNITS did not take Size Matters into account** — the free-unit allowance counted units
+    while SM changed what a unit IS.
+    ⚠ NOT the empire-scope upkeep modifiers — the TRAIT/civic one (`upkeep.empire.civic`,
+    `CvPlayer::m_iUpkeepModifier`) and the HANDICAP scaling are different mechanics at a different scope and are
+    untouched. The `UPKEEP_MODIFIER` kind is retired with the mechanic; both members were serialized, so both are
+    named in `Assets/savemigration.txt` with NO replacement recorded, deliberately.
+    ⛔ So: **do not re-add a percentage multiplier on per-unit upkeep**, and equally **do not "restore" the SM
+    multiplier on the belief it was the problem** — it goes back, if at all, as part of the maintenance redesign.

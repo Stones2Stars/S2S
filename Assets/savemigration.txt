@@ -941,8 +941,9 @@ CvTeam::m_iForeignTradeModifier
 | The trade-mission total. REPLACEMENT: the empire roll-up of tradeMission (authored tradeMission.empire.percent),
 | read at CvUnit's trade-mission gold.
 CvTeam::m_iTradeMissionModifier
-| The per-unit upkeep PERCENTAGE stages. NO REPLACEMENT -- the mechanic is DEAD (superseded-ideas: the
-| percentage spiral). Unit upkeep is now flat only: base (cost.upkeep) + any flat extra (upkeep.unit.extra).
-| Nothing serves these values because nothing should; do not re-home them.
+| The per-unit upkeep PERCENTAGE stages. NO REPLACEMENT -- both are removed (superseded-ideas #26: a per-unit
+| percentage multiplying the Size-Matters rank cost). Unit upkeep is FLAT: base (cost.upkeep) + any flat extra
+| (upkeep.unit.extra). Nothing serves these values because nothing should. NB flat is an INTERIM pending the
+| unit-maintenance redesign (roadmap Scope decisions) -- that rework decides the model, not a re-home of these.
 CvUnit::m_iUpkeepModifier
 CvUnit::m_iUpkeepMultiplierSM

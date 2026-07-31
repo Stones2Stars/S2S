@@ -400,6 +400,13 @@ Unchanged in principle, but note the surface it depends on is currently purged:
      order, not a punt.
    - **The CORPORATION system** — a principle-level rework of the corp MODEL (owner: *"don't like how corporations
      work in principle"*), its own deliberate piece of work; the corp-HQ revenue rides it.
+   - **UNIT MAINTENANCE** — owner: *"we want to have unit maintenance make more sense in the future, so we leave
+     it like this for now"*. Per-unit upkeep is FLAT today (base + flat extra) because the percentage stages that
+     multiplied it were removed ([superseded-ideas](../../architecture/superseded-ideas.md) #26) — that cleared an
+     incoherent model, it did not settle a coherent one. ⚑ The named exhibit of what the redesign must resolve:
+     **FREE UNITS did not take Size Matters into account**, so the free-unit allowance counted units while SM
+     changed what a unit IS. ⛔ Until that rework is taken, do not re-introduce a per-unit upkeep multiplier of
+     any kind — including "restoring" the SM one, which was NOT the thing that broke.
    - **NPC build-lockdown** (`stronglyRestricted`) — ⚖ losing it during the enabler flip is **ACCEPTED**: *"I truly
      don't care about NPC barbarians or neanderthals being locked down or not… we may after all want to do it in a
      better manner anyway."* So it is never a reason to preserve a legacy gate clause.
