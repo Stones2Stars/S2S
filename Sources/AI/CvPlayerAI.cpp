@@ -1,7 +1,8 @@
 // playerAI.cpp
 
 #include "CvGameCoreDLL.h"
-#include "Infos/CvClassificationIds.h"   // the generated SKILL_/TAG_/CAPABILITY_ id table
+#include "Infos/CvClassificationIds.h"
+#include "Cascade/CvUnitResolved.h"   // URS_WITHDRAWAL -- the unit resolved plane   // the generated SKILL_/TAG_/CAPABILITY_ id table
 #include "Infos/CvGrants.h"
 #include "Infos/CvTriggers.h"
 
@@ -28831,7 +28832,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	iTemp = kPromotion.getWithdrawalChange();
 	if (iTemp != 0)
 	{
-		iExtra = (kUnit.getScalar(SCALAR_WITHDRAWAL, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT) + (pUnit == NULL ? 0 : pUnit->getExtraWithdrawal() * 4));
+		iExtra = (kUnit.getScalar(SCALAR_WITHDRAWAL, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT) + (pUnit == NULL ? 0 : pUnit->resolvedValue(URS_WITHDRAWAL) * 4));
 		iTemp *= (100 + iExtra);
 		iTemp /= 100;
 		if (eUnitAI == UNITAI_ATTACK_CITY ||
@@ -31795,7 +31796,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 	iTemp = kUnitCombat.getWithdrawalChange();
 	if (iTemp != 0)
 	{
-		iExtra = kUnit.getScalar(SCALAR_WITHDRAWAL, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT) + (pUnit ? pUnit->getExtraWithdrawal() * 4 : 0);
+		iExtra = kUnit.getScalar(SCALAR_WITHDRAWAL, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT) + (pUnit ? pUnit->resolvedValue(URS_WITHDRAWAL) * 4 : 0);
 		iTemp *= 100 + iExtra;
 		iTemp /= 100;
 		if (eUnitAI == UNITAI_ATTACK_CITY ||

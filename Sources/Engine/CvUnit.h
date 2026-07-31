@@ -1090,8 +1090,6 @@ public:
 
 
 
-	int getExtraWithdrawal() const;
-	void changeExtraWithdrawal(int iChange);
 
 	//TB Combat Mods Start
 
@@ -1532,6 +1530,11 @@ protected:
 	int m_iNumTimesTriggered;
 	int m_iHiddenNationalityCount;
 	bool m_bIsArmed;
+	// Within-frame ONLY, never serialized: the sea-pillage interceptor exchange makes this unit formally the
+	// attacker while it is really the DEFENDER, which allows no withdrawal. Set for the duration of that one
+	// attack. It is a separate flag rather than a write to the resolved value, because a derived cache must
+	// never be snapshot-and-restored (superseded-ideas #19).
+	bool m_bSuppressWithdrawal;
 	bool m_bHasAnyInvisibility;
 	bool m_bRevealed;
 	int m_iExtraEndurance;
@@ -1968,7 +1971,6 @@ public:
 	void doHNCapture();
 	void removeHNCapturePromotion();
 
-	void processLoadedSpecialUnit(bool bChange, SpecialUnitTypes eSpecialUnit);
 
 	bool hasBuild(BuildTypes eBuild) const;
 	void changeExtraBuildType(bool bChange, BuildTypes eBuild);

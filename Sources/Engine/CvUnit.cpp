@@ -683,6 +683,9 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 	m_iExtraNoDefensiveBonusCount = 0;
 	m_iExtraGatherHerdCount = 0;
 	m_bIsArmed = false;
+	// A CvUnit is RECYCLED out of an FFreeListTrashArray, so this must be cleared here or a new unit
+	// inherits the previous occupant's suppression.
+	m_bSuppressWithdrawal = false;
 	m_eCurrentBuildUpType = NO_PROMOTIONLINE;
 
 	m_eCapturingUnit.reset();
@@ -918,6 +921,7 @@ CvUnit& CvUnit::operator=(const CvUnit& other)
 	m_iExtraNoDefensiveBonusCount = other.m_iExtraNoDefensiveBonusCount;
 	m_iExtraGatherHerdCount = other.m_iExtraGatherHerdCount;
 	m_bIsArmed = other.m_bIsArmed;
+	m_bSuppressWithdrawal = false;   // within-frame state, never carried across units
 	m_eCurrentBuildUpType = other.m_eCurrentBuildUpType;
 	m_eCapturingUnit = other.m_eCapturingUnit;
 	m_combatUnit = other.m_combatUnit;
@@ -7267,10 +7271,13 @@ bool CvUnit::pillage(const bool bAutoPillage)
 		{
 			setMadeAttack(false);
 
-			int iWithdrawal = withdrawalProbability();
-			changeExtraWithdrawal(-iWithdrawal); // no withdrawal since we are really the defender
+			// We are formally the attacker here but really the DEFENDER, so this exchange allows no
+			// withdrawal. A within-frame flag says so for the duration of the attack -- never a write to
+			// the resolved value, which is a derived cache and must not be snapshot-and-restored
+			// (superseded-ideas #19).
+			m_bSuppressWithdrawal = true;
 			attack(pInterceptor->plot());
-			changeExtraWithdrawal(iWithdrawal);
+			m_bSuppressWithdrawal = false;
 
 			return false;
 		}
@@ -12624,7 +12631,11 @@ int CvUnit::evasionProbability() const
 
 int CvUnit::withdrawalProbability() const
 {
-	const int iProbability = m_pUnitInfo->getScalar(SCALAR_WITHDRAWAL, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT) + getExtraWithdrawal() /*+ escapeModifier()*/;
+	if (m_bSuppressWithdrawal)
+	{
+		return 0;
+	}
+	const int iProbability = m_pUnitInfo->getScalar(SCALAR_WITHDRAWAL, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT) + resolvedValue(URS_WITHDRAWAL);
 
 	if (shouldUseWithdrawalOddsCap())
 	{
@@ -15064,16 +15075,6 @@ void CvUnit::changeExtraAirRange(int iChange)
 	m_iExtraAirRange += iChange;
 }
 
-int CvUnit::getExtraWithdrawal() const
-{
-	return m_iExtraWithdrawal;
-}
-
-void CvUnit::changeExtraWithdrawal(int iChange)
-{
-	m_iExtraWithdrawal += iChange;
-}
-
 //TB Combat Mods Begin
 // Toffer - Upkeep
 void CvUnit::calcUpkeep()
@@ -15868,10 +15869,6 @@ void CvUnit::setTransportUnit(CvUnit* pTransportUnit)
 			{
 				pOldTransportUnit->changeCargo(-1);
 			}
-			if (getSpecialUnitType() != NO_SPECIALUNIT)
-			{
-				pOldTransportUnit->processLoadedSpecialUnit(false, getSpecialUnitType());
-			}
 		}
 
 		if (pTransportUnit != NULL)
@@ -15903,10 +15900,6 @@ void CvUnit::setTransportUnit(CvUnit* pTransportUnit)
 			else
 			{
 				pTransportUnit->changeCargo(1);
-			}
-			if (getSpecialUnitType() != NO_SPECIALUNIT)
-			{
-				pTransportUnit->processLoadedSpecialUnit(true, getSpecialUnitType());
 			}
 			pTransportUnit->getGroup()->setActivityType(ACTIVITY_AWAKE);
 		}
@@ -17156,7 +17149,6 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 	changeExtraMoves(kUnitCombat.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split diff
 	changeExtraMoveDiscount(kUnitCombat.getMoveDiscountChange() * iChange);//no merge/split diff
 	changeExtraAirRange(kUnitCombat.getAirRangeChange() * iChange);//no merge/split diff
-	changeExtraWithdrawal(kUnitCombat.getWithdrawalChange() * iChange);//no merge/split diff
 	changeCargoSpace(kUnitCombat.getCargoChange() * iChange);//no merge/split diff (since this mechanism is either a base setter or is for non-SM or non-player on SM.
 
 	changeSMCargoSpace(kUnitCombat.getSMCargoChange() * iChange);//merge/split volumetric
@@ -17596,7 +17588,6 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	changeExtraMoves(kPromotion.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100 * iChange);
 	changeExtraMoveDiscount(kPromotion.getMoveDiscountChange() * iChange);
 	changeExtraAirRange(kPromotion.getAirRangeChange() * iChange);
-	changeExtraWithdrawal(kPromotion.getWithdrawalChange() * iChange);
 	//TB Combat Mods Begin
 
 
@@ -25686,14 +25677,6 @@ void CvUnit::removeHNCapturePromotion()
 	}
 }
 
-void CvUnit::processLoadedSpecialUnit(bool bChange, SpecialUnitTypes eSpecialUnit)
-{
-	const CvSpecialUnitInfo& kSpecialUnit = GC.getSpecialUnitInfo(eSpecialUnit);
-	const int iChange = (bChange ? 1 : -1);
-
-	changeExtraCombatPercent(kSpecialUnit.getCombatModifier(COMBAT_AMOUNT, CASC_SCOPE_UNIT) * iChange);
-	changeExtraWithdrawal(kSpecialUnit.getWithdrawalChange() * iChange);
-}
 
 bool CvUnit::hasBuild(BuildTypes eBuild) const
 {

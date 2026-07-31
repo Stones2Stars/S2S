@@ -227,3 +227,19 @@
     named in `Assets/savemigration.txt` with NO replacement recorded, deliberately.
     ⛔ So: **do not re-add a percentage multiplier on per-unit upkeep**, and equally **do not "restore" the SM
     multiplier on the belief it was the problem** — it goes back, if at all, as part of the maintenance redesign.
+27. **The CARRIED-CARGO stat contribution** (`CvUnit::processLoadedSpecialUnit` — a loaded `SPECIALUNIT_*`
+    applying its own combat percent and withdrawal change to the TRANSPORT, refreshed on every load/unload)
+    *(dead — owner: *"it creates complexity for no real gain"*)*. Only `SPECIALUNIT_CAPTIVE` ever authored it
+    (`combat.unit.percent −5`, `withdrawal.unit.percent −10` — a hauling-prisoners malus), and it had ALREADY
+    stopped working: both of its `change*` calls wrote to members the accumulator cut had deleted, so the
+    penalty applied to nothing.
+    ⚑ **Why it does not come back as a live fold, which is the tempting move:** cargo is neither a promotion nor
+    a combat-class change, so the unit RESOLVED plane cannot gather it — nothing would ever dirty the slot — and
+    the correct shape would therefore be a per-read walk of the transport's cargo
+    ([DEC-unit-modifiers-on-top](decisions.md#dec-unit-modifiers-on-top): a modifier that TRAVELS is folded live
+    on top). That is real per-read work on the combat path for one authored entity.
+    ⚖ **It is also on the way out wholesale (owner): land units carrying other land units "and all those
+    shenanigans" go post-rework**, so the mechanic this served is itself scheduled for removal.
+    ⚠ **The authored data STAYS in `specialunit_captive.json` and is now read by nothing** — do not read its
+    presence as a wiring gap to close. ⛔ Never re-add `processLoadedSpecialUnit`, and do not re-home its two
+    stats onto the resolved plane.
