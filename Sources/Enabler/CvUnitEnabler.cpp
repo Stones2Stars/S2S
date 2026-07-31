@@ -308,9 +308,8 @@ static bool ud_verdict(int u, UdGateCtx& x)
 	}
 	// the superseder removal: the poco's m_superseding (the curated replacedBy.units), never j->edge
 	const CvUnitInfo* ju = (const CvUnitInfo*)j;
-	for (int i = 0; i < ju->getNumSupersedingUnits(); ++i)
+	foreach_(const int sup, ju->getReplacedByUnits())
 	{
-		const int sup = ju->getSupersedingUnit(i);
 		if (sup >= 0 && ud_availMemo(sup, x)) return false;
 	}
 	return true;
@@ -420,9 +419,8 @@ void UnitEnabler::explain(const CvCity& kCity, int iUnit, Explain& out)
 		out.bUpgradeDormant = dormant;
 	}
 	const CvUnitInfo* ju = (const CvUnitInfo*)j;
-	for (int i = 0; i < ju->getNumSupersedingUnits(); ++i)
+	foreach_(const int sup, ju->getReplacedByUnits())
 	{
-		const int sup = ju->getSupersedingUnit(i);
 		if (sup >= 0 && ud_availMemo(sup, x)) { out.bSuperseded = true; out.iSupersededBy = sup; break; }
 	}
 }

@@ -12080,10 +12080,10 @@ bool CvCityAI::AI_buildCaravan()
 		{
 			const int iI = trainableUnits[iAt];
 
-			if (GC.getUnitInfo((UnitTypes)iI).getBaseHurry() > iBestHurry)
+			if (GC.getUnitInfo((UnitTypes)iI).getHurryBase() > iBestHurry)
 			{
 				{
-					iBestHurry = GC.getUnitInfo((UnitTypes)iI).getBaseHurry();
+					iBestHurry = GC.getUnitInfo((UnitTypes)iI).getHurryBase();
 					eBestUnit = (UnitTypes)iI;
 				}
 			}

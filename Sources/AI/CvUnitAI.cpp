@@ -14489,7 +14489,7 @@ bool CvUnitAI::AI_join(int iMaxCount)
 				{
 					const SpecialistTypes eType = static_cast<SpecialistTypes>(iI);
 
-					if (m_pUnitInfo->getGreatPeoples(eType))
+					if (m_pUnitInfo->grantsGreatPerson(eType))
 					{
 						const int iCount = cityX->getSpecialistCount(eType);
 						if (iCount >= iMaxCount)
@@ -22381,7 +22381,7 @@ bool CvUnitAI::AI_travelToUpgradeCity()
 	PROFILE_FUNC();
 
 	// Check if unit is not a dead end, that there exist a better unit in the game that it one day can upgrade into.
-	if (GC.getUnitInfo(getUnitType()).getNumUnitUpgrades() <= 0)
+	if (GC.getUnitInfo(getUnitType()).getUpgradesTo().empty())
 	{
 		return false;
 	}

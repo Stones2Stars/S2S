@@ -165,9 +165,23 @@ public:
 	// Neanderthal/NPC restriction class). The asking side resolves its own civilization -- an info never
 	// learns what an owner is (patterns.md INFO DATA-OUT).
 	const std::vector<int>& getEnabledCivilizations() const { return m_aiEnabledCivilizations; }
+	// The WHITELIST rule, in ONE place: empty means every civilization, so a restriction only ever NARROWS.
+	// ⚠ Takes a CIVILIZATION, never a player -- the asking side resolves its own (an info never learns what an
+	// owner is). A caller holding a player passes GET_PLAYER(id).getCivilizationType().
+	bool isEnabledForCivilization(int iCivilization) const
+	{ return m_aiEnabledCivilizations.empty() || vectorHas(m_aiEnabledCivilizations, iCivilization); }
+	// Is this unit restricted to SOME civilization at all (the Neanderthal/NPC class)? -- the whitelist's
+	// existence, asked by a spawner that has no civilization in hand.
+	bool isCivilizationRestricted() const { return !m_aiEnabledCivilizations.empty(); }
 	// identity.{feature|terrain}PassableTechs -- substrate id -> the tech that opens passage (-1 = none).
 	const std::map<int, int>& getFeaturePassableTechs() const { return m_featurePassableTechs; }
 	const std::map<int, int>& getTerrainPassableTechs() const { return m_terrainPassableTechs; }
+	// The POINT reads over those two maps -- the keyed-group `value(id)` shape ([contexts.md] COUNTS, not
+	// objects), the same form getReligionSpreadStrength takes. A mover asks about the ONE substrate it is
+	// standing on; it never walks the terrain/feature database asking which entries this unit has a tech for.
+	// ABSENT answers NO_TECH (-1), which is what the passability gate tests for -- never 0, a real tech id.
+	int getFeaturePassableTech(int iFeature) const { return mapValueOrDefault(m_featurePassableTechs, iFeature, -1); }
+	int getTerrainPassableTech(int iTerrain) const { return mapValueOrDefault(m_terrainPassableTechs, iTerrain, -1); }
 
 	// --- the par.8 combat targeting/immunity keyed sets (json par.8: value-carrying keyed targeting is the
 	// combat family's, not a skill). The family-scoped target tokens compile the maps as targeted COUNT
@@ -205,6 +219,7 @@ public:
 	const std::vector<int>& getGrantedPromotions() const { return m_aiGrantedPromotions; }   // grants.promotions
 	bool grantsPromotion(int iPromotion) const { return vectorHas(m_aiGrantedPromotions, iPromotion); }
 	const std::vector<int>& getGrantedGreatPeople() const { return m_aiGrantedGreatPeople; } // grants.greatPeople
+	bool grantsGreatPerson(int iSpecialist) const { return vectorHas(m_aiGrantedGreatPeople, iSpecialist); }
 	const std::vector<int>& getGrantedBuildings() const { return m_aiGrantedBuildings; }     // grants.buildings
 	bool grantsBuilding(int iBuilding) const { return vectorHas(m_aiGrantedBuildings, iBuilding); }
 	// grants.greatPersonAction.<act>.{base,multiplier} -- the GP mission-payload magnitudes (the par.8

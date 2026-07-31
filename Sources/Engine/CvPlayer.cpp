@@ -115,9 +115,9 @@ private:
 		{
 			const UnitTypes unitType = static_cast<UnitTypes>(iUnit);
 			const CvUnitInfo& unitInfo = GC.getUnitInfo(unitType);
-			for(int i = 0; i < unitInfo.getNumUnitUpgrades(); i++)
+			foreach_(const int iUpgrade, unitInfo.getUpgradesTo())
 			{
-				const UnitTypes eUpgradeType = static_cast<UnitTypes>(unitInfo.getUnitUpgrade(i));
+				const UnitTypes eUpgradeType = static_cast<UnitTypes>(iUpgrade);
 				const bool bBlockedGeneralAdmiralSwap =
 					(unitType == eGreatGeneral && eUpgradeType == eGreatAdmiral)
 					|| (unitType == eGreatAdmiral && eUpgradeType == eGreatGeneral);
@@ -2156,7 +2156,7 @@ bool CvPlayer::addStartUnitAI(const UnitAITypes eUnitAI, const int iCount)
 		{
 			continue;
 		}
-		if (!kUnit.isCivilizationUnit(getID()))
+		if (!kUnit.isEnabledForCivilization(getCivilizationType()))
 		{
 			continue; // is a Civ unit, but not for this player.
 		}
@@ -6681,9 +6681,9 @@ int64_t CvPlayer::getBaseUnitCost(const UnitTypes eUnit) const
 		int iMod = 100;
 
         EraTypes eEra = (EraTypes)GC.getGame().getStartEra();
-        if (GC.getUnitInfo(eUnit).getEraInfo() != NO_ERA)
+        if (GC.getUnitInfo(eUnit).getEra() != NO_ERA)
         {
-            eEra = (EraTypes)GC.getUnitInfo(eUnit).getEraInfo();
+            eEra = (EraTypes)GC.getUnitInfo(eUnit).getEra();
         }
         iMod = GC.getEraInfo(eEra).getCostsModifier(COSTS_TRAIN, CASC_SCOPE_WORLD);
 
@@ -16606,7 +16606,7 @@ int CvPlayer::getAdvancedStartUnitCost(UnitTypes eUnit, bool bAdd, const CvPlot*
 
 			if (pPlot->getFeatureType() != NO_FEATURE)
 			{
-				if (algo::any_of_equal(GC.getUnitInfo(eUnit).getImpassableFeatures(), pPlot->getFeatureType()))
+				if (GC.getUnitInfo(eUnit).isFeatureImpassable(pPlot->getFeatureType()))
 				{
 					const TechTypes eTech = (TechTypes)GC.getUnitInfo(eUnit).getFeaturePassableTech(pPlot->getFeatureType());
 					if (NO_TECH == eTech || !GET_TEAM(getTeam()).isHasTech(eTech))
@@ -16617,7 +16617,7 @@ int CvPlayer::getAdvancedStartUnitCost(UnitTypes eUnit, bool bAdd, const CvPlot*
 			}
 			else
 			{
-				if (algo::any_of_equal(GC.getUnitInfo(eUnit).getImpassableTerrains(), pPlot->getTerrainType()))
+				if (GC.getUnitInfo(eUnit).isTerrainImpassable(pPlot->getTerrainType()))
 				{
 					const TechTypes eTech = (TechTypes)GC.getUnitInfo(eUnit).getTerrainPassableTech(pPlot->getTerrainType());
 					if (NO_TECH == eTech || !GET_TEAM(getTeam()).isHasTech(eTech))

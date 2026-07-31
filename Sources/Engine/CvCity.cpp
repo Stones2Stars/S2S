@@ -16732,9 +16732,9 @@ bool CvCity::canUpgradeUnit(UnitTypes eUnit) const
 {
 	PROFILE_FUNC();
 
-	for (int iI = 0; iI < GC.getUnitInfo(eUnit).getNumUnitUpgrades(); iI++)
+	foreach_(const int iUpgrade, GC.getUnitInfo(eUnit).getUpgradesTo())
 	{
-		const UnitTypes eUpgradeUnit = (UnitTypes)GC.getUnitInfo(eUnit).getUnitUpgrade(iI);
+		const UnitTypes eUpgradeUnit = (UnitTypes)iUpgrade;
 
 		if (GC.getGame().isUnitMaxedOut(eUpgradeUnit) || GET_PLAYER(getOwner()).isUnitMaxedOut(eUpgradeUnit))
 		{ // if the upgrade unit is maxed out, I assume you can construct them, and already have constructed the max

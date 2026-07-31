@@ -322,7 +322,7 @@ void CvUnit::init(int iID, UnitTypes eUnit, UnitAITypes eUnitAI, PlayerTypes eOw
 		{
 			m_worker = new UnitCompWorker();
 		}
-		const int iNumNames = m_pUnitInfo->getNumUnitNames();
+		const int iNumNames = static_cast<int>(m_pUnitInfo->getUniqueNames().size());
 
 		if (GC.getGame().getUnitCreatedCount(getUnitType()) < iNumNames)
 		{
@@ -330,7 +330,7 @@ void CvUnit::init(int iID, UnitTypes eUnit, UnitAITypes eUnitAI, PlayerTypes eOw
 
 			for (int iI = 0; iI < iNumNames; iI++)
 			{
-				CvWString szName = gDLL->getText(m_pUnitInfo->getUnitNames((iI + iOffset) % iNumNames));
+				CvWString szName = gDLL->getText(m_pUnitInfo->getUniqueNames()[(iI + iOffset) % iNumNames].c_str());
 
 				if (!GC.getGame().isGreatPersonBorn(szName))
 				{
@@ -4506,7 +4506,7 @@ bool CvUnit::canEnterPlot(const CvPlot* pPlot, MoveCheck::flags flags /*= MoveCh
 	{
 		if (pPlot->getFeatureType() != NO_FEATURE)
 		{
-			if (algo::any_of_equal(m_pUnitInfo->getImpassableFeatures(), pPlot->getFeatureType()))
+			if (m_pUnitInfo->isFeatureImpassable(pPlot->getFeatureType()))
 			{
 				const TechTypes eTech = (TechTypes)m_pUnitInfo->getFeaturePassableTech(pPlot->getFeatureType());
 				if (NO_TECH == eTech || !GET_TEAM(getTeam()).isHasTech(eTech))
@@ -4519,8 +4519,8 @@ bool CvUnit::canEnterPlot(const CvPlot* pPlot, MoveCheck::flags flags /*= MoveCh
 			}
 		}
 
-		if (pPlot->isAsPeak() && m_pUnitInfo->isTerrainImpassableType(GC.getTERRAIN_PEAK())
-		|| pPlot->isHills() && m_pUnitInfo->isTerrainImpassableType(GC.getTERRAIN_HILL()))
+		if (pPlot->isAsPeak() && m_pUnitInfo->isTerrainImpassable(GC.getTERRAIN_PEAK())
+		|| pPlot->isHills() && m_pUnitInfo->isTerrainImpassable(GC.getTERRAIN_HILL()))
 		{
 			const TechTypes eTech = (TechTypes)m_pUnitInfo->getTerrainPassableTech(pPlot->getTerrainType());
 			if (NO_TECH == eTech || !GET_TEAM(getTeam()).isHasTech(eTech))
@@ -4534,7 +4534,7 @@ bool CvUnit::canEnterPlot(const CvPlot* pPlot, MoveCheck::flags flags /*= MoveCh
 				}
 			}
 		}
-		if (algo::any_of_equal(m_pUnitInfo->getImpassableTerrains(), pPlot->getTerrainType()))
+		if (m_pUnitInfo->isTerrainImpassable(pPlot->getTerrainType()))
 		{
 			const TechTypes eTech = (TechTypes)m_pUnitInfo->getTerrainPassableTech(pPlot->getTerrainType());
 			if (NO_TECH == eTech || !GET_TEAM(getTeam()).isHasTech(eTech))
@@ -4614,12 +4614,6 @@ bool CvUnit::canEnterPlot(const CvPlot* pPlot, MoveCheck::flags flags /*= MoveCh
 		case DOMAIN_IMMOBILE: return false;
 
 		default: FErrorMsg("error");
-	}
-
-	if ((m_pUnitInfo->getPassableRouteNeeded(0) || m_pUnitInfo->getPassableRouteNeeded(1))
-	&& (!m_pUnitInfo->getPassableRouteNeeded(pPlot->getRouteType()) || !pPlot->isRoute()))
-	{
-		return false;
 	}
 
 	//ls612: For units that can't enter non-Owned Cities
@@ -5247,7 +5241,7 @@ bool CvUnit::canAutomate(AutomateTypes eAutomate) const
 		{
 			return false;
 		}
-		if (m_pUnitInfo->getBaseHurry() <= 0)
+		if (m_pUnitInfo->getHurryBase() <= 0)
 		{
 			return false;
 		}
@@ -5303,7 +5297,7 @@ bool CvUnit::canAutomate(AutomateTypes eAutomate) const
 		}
 		break;
 	case AUTOMATE_UPGRADING:
-		if (m_pUnitInfo->getNumUnitUpgrades() == 0)
+		if (m_pUnitInfo->getUpgradesTo().empty())
 		{
 			return false;
 		}
@@ -5317,7 +5311,7 @@ bool CvUnit::canAutomate(AutomateTypes eAutomate) const
 		}
 		break;
 	case AUTOMATE_CANCEL_UPGRADING:
-		if (m_pUnitInfo->getNumUnitUpgrades() == 0)
+		if (m_pUnitInfo->getUpgradesTo().empty())
 		{
 			return false;
 		}
@@ -5691,7 +5685,7 @@ bool CvUnit::shouldLoadOnMove(const CvPlot* pPlot) const
 		break;
 	}
 
-	if (algo::any_of_equal(m_pUnitInfo->getImpassableTerrains(), pPlot->getTerrainType()))
+	if (m_pUnitInfo->isTerrainImpassable(pPlot->getTerrainType()))
 	{
 		const TechTypes eTech = (TechTypes)m_pUnitInfo->getTerrainPassableTech(pPlot->getTerrainType());
 		if (NO_TECH == eTech || !GET_TEAM(getTeam()).isHasTech(eTech))
@@ -8430,7 +8424,7 @@ bool CvUnit::canJoin(const CvPlot* pPlot, SpecialistTypes eSpecialist) const
 		return false;
 	}
 
-	if (!m_pUnitInfo->getGreatPeoples(eSpecialist))
+	if (!m_pUnitInfo->grantsGreatPerson(eSpecialist))
 	{
 		return false;
 	}
@@ -8608,7 +8602,7 @@ TechTypes CvUnit::getDiscoveryTech() const
 int CvUnit::getDiscoverResearch(const TechTypes eTech) const
 {
 	int iResearch = (
-		m_pUnitInfo->getBaseDiscover() +
+		m_pUnitInfo->getDiscoverBase() +
 		m_pUnitInfo->getDiscoverMultiplier() * GET_TEAM(getTeam()).getTotalPopulation()
 	);
 	if (iResearch > 0)
@@ -8669,7 +8663,7 @@ bool CvUnit::discover(TechTypes eTech)
 
 int CvUnit::getMaxHurryProduction(const CvCity* pCity) const
 {
-	int iProduction = (m_pUnitInfo->getBaseHurry() + (m_pUnitInfo->getHurryMultiplier() * pCity->getPopulation()));
+	int iProduction = (m_pUnitInfo->getHurryBase() + (m_pUnitInfo->getHurryMultiplier() * pCity->getPopulation()));
 
 	iProduction *= CvGameSpeedScale::hammerCostPercent();
 	iProduction /= 100;
@@ -8756,7 +8750,7 @@ int CvUnit::getTradeGold(const CvPlot* pPlot) const
 
 	int iMult = m_pUnitInfo->getTradeMultiplier();
 
-	int iGold = m_pUnitInfo->getBaseTrade() + iMult * ((pCapitalCity != NULL) ? pCity->calculateTradeProfit(pCapitalCity) : 0);
+	int iGold = m_pUnitInfo->getTradeBase() + iMult * ((pCapitalCity != NULL) ? pCity->calculateTradeProfit(pCapitalCity) : 0);
 
 	iGold *= (pPlot->getOwner() != getOwner() ? iMult : 1);
 
@@ -10384,7 +10378,7 @@ SpecialUnitTypes CvUnit::getSpecialUnitType() const
 
 UnitTypes CvUnit::getCaptureUnitType() const
 {
-	return m_pUnitInfo->getUnitCaptureType();
+	return m_pUnitInfo->getCaptures();
 }
 
 
@@ -10400,7 +10394,7 @@ DomainTypes CvUnit::getDomainType() const
         {
                 return DOMAIN_LAND;
         }
-        return m_pUnitInfo->getDomainType();
+        return m_pUnitInfo->getDomain();
 }
 
 
@@ -13513,7 +13507,7 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
 					else if (!unitX->canDefend(pNewPlot) && !unitX->isInvisible(getTeam(), false) && !unitX->isCargo())
 					{
 						//TB NOTE: This is where units that can't defend themselves are auto-captured IF the unit has a defined capture tag and cannot defend.
-						if (!isNoCapture() && NO_UNIT != unitX->getUnitInfo().getUnitCaptureType())
+						if (!isNoCapture() && NO_UNIT != unitX->getUnitInfo().getCaptures())
 						{
 							if (isHiddenNationality() || unitX->isHiddenNationality())
 							{
