@@ -50,7 +50,6 @@
   "civilopedia": "TXT_KEY_BUILDING_HEALTH_SPA_PEDIA",
   "notConstructible": true,
   "worth": 5,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

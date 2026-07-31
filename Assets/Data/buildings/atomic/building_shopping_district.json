@@ -330,7 +330,6 @@
   "civilopedia": "TXT_KEY_BUILDING_SHOPPING_DISTRICT_PEDIA",
   "worth": 6,
   "conquestProbability": 33,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,
   "mapCategories": [

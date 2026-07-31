@@ -91,7 +91,6 @@
   "civilopedia": "TXT_KEY_BUILDING_MODERN_STABLE_PEDIA",
   "worth": 2,
   "militaryWorth": 3,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1,
   "mapCategories": [

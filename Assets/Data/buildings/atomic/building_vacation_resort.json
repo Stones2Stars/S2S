@@ -79,7 +79,6 @@
   "civilopedia": "TXT_KEY_BUILDING_VACATION_RESORT_PEDIA",
   "worth": 4,
   "conquestProbability": 25,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -114,7 +114,6 @@
   "description": "TXT_KEY_BUILDING_RESEARCH_INSTITUTE",
   "civilopedia": "TXT_KEY_BUILDING_RESEARCH_INSTITUTE_PEDIA",
   "worth": 8,
-  "dcmAirbombMission": 2,
   "greatPeopleUnitType": "UNIT_SCIENTIST",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

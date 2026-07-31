@@ -98,7 +98,6 @@
   "civilopedia": "TXT_KEY_BUILDING_PAWN_SHOP_PEDIA",
   "worth": 2,
   "conquestProbability": 75,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,
   "mapCategories": [

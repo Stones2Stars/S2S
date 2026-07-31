@@ -91,7 +91,9 @@
  },
  "revolution": {
   "city": {
-   "flat": -20
+   "local": {
+    "flat": -20
+   }
   }
  },
  "cost": {
@@ -135,7 +137,6 @@
   "worth": 4,
   "militaryWorth": 5,
   "conquestProbability": 100,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

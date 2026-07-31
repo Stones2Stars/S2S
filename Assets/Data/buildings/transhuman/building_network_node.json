@@ -113,7 +113,6 @@
   "civilopedia": "TXT_KEY_BUILDING_NETWORK_NODE_PEDIA",
   "worth": 15,
   "conquestProbability": 75,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_CULTURE",
   "visibilityPriority": 1,
   "mapCategories": [

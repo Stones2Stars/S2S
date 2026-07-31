@@ -166,7 +166,6 @@
   "description": "TXT_KEY_BUILDING_POLICE_PRECINCT",
   "civilopedia": "TXT_KEY_BUILDING_POLICE_PRECINCT_PEDIA",
   "militaryWorth": 2,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1,
   "mapCategories": [

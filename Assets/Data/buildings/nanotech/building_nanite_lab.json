@@ -61,7 +61,6 @@
   "civilopedia": "TXT_KEY_BUILDING_NANITE_LAB_PEDIA",
   "worth": 20,
   "militaryWorth": 25,
-  "dcmAirbombMission": 3,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,
   "mapCategories": [

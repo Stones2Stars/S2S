@@ -85,7 +85,6 @@
   "civilopedia": "TXT_KEY_BUILDING_LAW_SCHOOL_PEDIA",
   "worth": 4,
   "conquestProbability": 75,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1,
   "mapCategories": [

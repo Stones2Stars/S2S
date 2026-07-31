@@ -118,7 +118,6 @@
   "description": "TXT_KEY_BUILDING_POLICE_ACADEMY",
   "civilopedia": "TXT_KEY_BUILDING_POLICE_ACADEMY_PEDIA",
   "worth": 1,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1,
   "mapCategories": [

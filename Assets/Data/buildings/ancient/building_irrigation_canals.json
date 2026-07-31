@@ -80,7 +80,6 @@
   "civilopedia": "TXT_KEY_BUILDING_IRRIGATION_CANALS_PEDIA",
   "worth": 3,
   "conquestProbability": 90,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_GROWTH",
   "visibilityPriority": 1,
   "mapCategories": [

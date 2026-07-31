@@ -87,7 +87,6 @@
   "description": "TXT_KEY_BUILDING_EXPRESSWAY",
   "civilopedia": "TXT_KEY_BUILDING_EXPRESSWAY_PEDIA",
   "worth": 7,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,
   "mapCategories": [

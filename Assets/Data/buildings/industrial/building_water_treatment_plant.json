@@ -74,7 +74,6 @@
   "civilopedia": "TXT_KEY_BUILDING_WATER_TREATMENT_PLANT_PEDIA",
   "worth": 3,
   "conquestProbability": 33,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

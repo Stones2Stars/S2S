@@ -99,7 +99,6 @@
   "civilopedia": "TXT_KEY_BUILDING_CHECKPOINT_PEDIA",
   "worth": 6,
   "militaryWorth": 3,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1,
   "mapCategories": [

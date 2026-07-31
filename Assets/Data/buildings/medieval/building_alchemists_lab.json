@@ -108,7 +108,6 @@
   "description": "TXT_KEY_BUILDING_ALCHEMISTS_LAB",
   "civilopedia": "TXT_KEY_BUILDING_ALCHEMISTS_LAB_PEDIA",
   "worth": 4,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

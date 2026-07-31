@@ -95,7 +95,6 @@
   "civilopedia": "TXT_KEY_BUILDING_FIRING_RANGE_PEDIA",
   "worth": 3,
   "militaryWorth": 5,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -208,7 +208,6 @@
   "civilopedia": "TXT_KEY_BUILDING_COMMERCIAL_PORT_PEDIA",
   "worth": 4,
   "conquestProbability": 100,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,
   "mapCategories": [

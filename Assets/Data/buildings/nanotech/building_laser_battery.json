@@ -110,7 +110,6 @@
   "civilopedia": "TXT_KEY_BUILDING_LASER_BATTERY_PEDIA",
   "worth": 8,
   "militaryWorth": 8,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1000,
   "mapCategories": [

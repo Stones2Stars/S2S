@@ -96,7 +96,6 @@
   "worth": 3,
   "militaryWorth": 3,
   "conquestProbability": 100,
-  "dcmAirbombMission": 2,
   "greatPeopleUnitType": "UNIT_GREAT_GENERAL",
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1,

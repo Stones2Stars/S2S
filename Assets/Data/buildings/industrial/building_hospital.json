@@ -183,7 +183,6 @@
   "civilopedia": "TXT_KEY_BUILDING_HOSPITAL_PEDIA",
   "worth": 5,
   "conquestProbability": 75,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_GROWTH",
   "visibilityPriority": 1,
   "mapCategories": [

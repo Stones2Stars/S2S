@@ -117,7 +117,6 @@
   "description": "TXT_KEY_BUILDING_SCHOOL_OF_SCRIBES",
   "civilopedia": "TXT_KEY_BUILDING_SCHOOL_OF_SCRIBES_PEDIA",
   "worth": 3,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

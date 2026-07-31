@@ -280,7 +280,6 @@
   "worth": 6,
   "militaryWorth": 2,
   "conquestProbability": 75,
-  "dcmAirbombMission": 3,
   "advisor": "ADVISOR_GROWTH",
   "visibilityPriority": 1,
   "mapCategories": [

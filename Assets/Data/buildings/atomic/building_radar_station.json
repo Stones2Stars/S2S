@@ -69,7 +69,6 @@
   "civilopedia": "TXT_KEY_BUILDING_RADAR_STATION_PEDIA",
   "worth": 1,
   "conquestProbability": 33,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1,
   "mapCategories": [

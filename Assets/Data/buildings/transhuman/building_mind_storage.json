@@ -76,7 +76,6 @@
   "civilopedia": "TXT_KEY_BUILDING_MIND_STORAGE_PEDIA",
   "centerInCity": true,
   "worth": 10,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_GROWTH",
   "visibilityPriority": 2,
   "mapCategories": [

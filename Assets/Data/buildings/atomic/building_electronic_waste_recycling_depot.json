@@ -112,7 +112,6 @@
   "description": "TXT_KEY_BUILDING_ELECTRONIC_WASTE_RECYCLING_DEPOT",
   "civilopedia": "TXT_KEY_BUILDING_ELECTRONIC_WASTE_RECYCLING_DEPOT_PEDIA",
   "worth": 6,
-  "dcmAirbombMission": 3,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,
   "mapCategories": [

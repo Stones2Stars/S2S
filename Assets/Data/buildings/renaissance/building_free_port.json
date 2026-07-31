@@ -74,7 +74,6 @@
   "description": "TXT_KEY_BUILDING_FREE_PORT",
   "civilopedia": "TXT_KEY_BUILDING_FREE_PORT_PEDIA",
   "worth": 3,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,
   "mapCategories": [

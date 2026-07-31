@@ -95,7 +95,6 @@
   "civilopedia": "TXT_KEY_BUILDING_CEMENT_MILL_PEDIA",
   "worth": 6,
   "militaryWorth": 20,
-  "dcmAirbombMission": 3,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,
   "mapCategories": [

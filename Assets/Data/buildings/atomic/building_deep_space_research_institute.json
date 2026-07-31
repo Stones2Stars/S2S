@@ -89,7 +89,6 @@
   "description": "TXT_KEY_BUILDING_DEEP_SPACE_RESEARCH_INSTITUTE",
   "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_RESEARCH_INSTITUTE_PEDIA",
   "worth": 6,
-  "dcmAirbombMission": 2,
   "specialBuildingType": "SPECIALBUILDING_DEEP_SPACE_RESEARCH_INSTITUTE",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

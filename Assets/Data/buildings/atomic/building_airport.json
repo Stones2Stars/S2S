@@ -92,7 +92,6 @@
   "worth": 5,
   "airlift": 1,
   "airUnitCapacity": 4,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,
   "mapCategories": [

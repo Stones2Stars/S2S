@@ -76,7 +76,6 @@
   "civilopedia": "TXT_KEY_BUILDING_ARCHERY_RANGE_PEDIA",
   "worth": 2,
   "militaryWorth": 3,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1,
   "mapCategories": [

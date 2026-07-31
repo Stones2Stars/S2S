@@ -72,7 +72,6 @@
   "civilopedia": "TXT_KEY_BUILDING_CONVENTION_CENTRE_PEDIA",
   "worth": 8,
   "conquestProbability": 75,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_CULTURE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -100,7 +100,6 @@
   "civilopedia": "TXT_KEY_BUILDING_HO_TRAI_LIBRARY_PEDIA",
   "worth": 3,
   "conquestProbability": 100,
-  "dcmAirbombMission": 2,
   "greatPeopleUnitType": "UNIT_SCIENTIST",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

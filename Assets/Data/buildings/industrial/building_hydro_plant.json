@@ -98,7 +98,6 @@
   "description": "TXT_KEY_BUILDING_HYDRO_PLANT",
   "civilopedia": "TXT_KEY_BUILDING_HYDRO_PLANT_PEDIA",
   "conquestProbability": 75,
-  "dcmAirbombMission": 3,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -53,7 +53,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MARTIAN_FROST_CANNON",
   "civilopedia": "TXT_KEY_BUILDING_MARTIAN_FROST_CANNON_PEDIA",
-  "dcmAirbombMission": 1,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

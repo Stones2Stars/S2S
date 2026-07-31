@@ -90,7 +90,6 @@
   "description": "TXT_KEY_BUILDING_RADIOPLEX",
   "civilopedia": "TXT_KEY_BUILDING_RADIOPLEX_PEDIA",
   "worth": 5,
-  "dcmAirbombMission": 2,
   "specialBuildingType": "SPECIALBUILDING_PUNK_DIESEL",
   "advisor": "ADVISOR_CULTURE",
   "visibilityPriority": "1.0",

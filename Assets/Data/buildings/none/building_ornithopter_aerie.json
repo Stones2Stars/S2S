@@ -78,7 +78,6 @@
   "civilopedia": "TXT_KEY_BUILDING_ORNITHOPTER_AERIE_PEDIA",
   "worth": 5,
   "airUnitCapacity": 2,
-  "dcmAirbombMission": 2,
   "specialBuildingType": "SPECIALBUILDING_PUNK_CLOCK",
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": "1.0",

@@ -65,7 +65,6 @@
   "civilopedia": "TXT_KEY_BUILDING_CLONING_LABORATORY_PEDIA",
   "worth": 6,
   "conquestProbability": 75,
-  "dcmAirbombMission": 2,
   "specialBuildingType": "SPECIALBUILDING_CLONING_LABORATORY",
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1,

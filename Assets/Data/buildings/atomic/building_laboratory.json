@@ -119,7 +119,6 @@
   "civilopedia": "TXT_KEY_BUILDING_LABORATORY_PEDIA",
   "worth": 6,
   "conquestProbability": 75,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -87,7 +87,6 @@
   "description": "TXT_KEY_BUILDING_AUTOMATED_DEFENSES",
   "civilopedia": "TXT_KEY_BUILDING_AUTOMATED_DEFENSES_PEDIA",
   "worth": 8,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1,
   "mapCategories": [

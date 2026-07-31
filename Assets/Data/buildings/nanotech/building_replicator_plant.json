@@ -91,7 +91,6 @@
   "civilopedia": "TXT_KEY_BUILDING_REPLICATOR_PLANT_PEDIA",
   "worth": 20,
   "militaryWorth": 25,
-  "dcmAirbombMission": 3,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1,
   "mapCategories": [

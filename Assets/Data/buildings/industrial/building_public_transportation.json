@@ -102,7 +102,6 @@
   "description": "TXT_KEY_BUILDING_PUBLIC_TRANSPORTATION",
   "civilopedia": "TXT_KEY_BUILDING_PUBLIC_TRANSPORTATION_PEDIA",
   "worth": 5,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_GROWTH",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -54,7 +54,6 @@
   "description": "TXT_KEY_BUILDING_PLANNING_OFFICE",
   "civilopedia": "TXT_KEY_BUILDING_PLANNING_OFFICE_PEDIA",
   "worth": 3,
-  "dcmAirbombMission": 3,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,
   "mapCategories": [

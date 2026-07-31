@@ -127,7 +127,6 @@
   "civilopedia": "TXT_KEY_BUILDING_BOMBARD_TOWER_PEDIA",
   "worth": 4,
   "militaryWorth": 4,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1000,
   "mapCategories": [

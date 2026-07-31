@@ -74,7 +74,6 @@
   "civilopedia": "TXT_KEY_BUILDING_INSURANCE_OFFICE_PEDIA",
   "worth": 5,
   "conquestProbability": 75,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,
   "mapCategories": [

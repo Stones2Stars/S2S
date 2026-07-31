@@ -126,7 +126,6 @@
   "centerInCity": true,
   "worth": 4,
   "conquestProbability": 75,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_GROWTH",
   "visibilityPriority": 10240000,
   "mapCategories": [

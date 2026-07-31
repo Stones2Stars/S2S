@@ -123,7 +123,6 @@
   "description": "TXT_KEY_BUILDING_HEALTH_FOOD_STORE",
   "civilopedia": "TXT_KEY_BUILDING_HEALTH_FOOD_STORE_PEDIA",
   "worth": 5,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

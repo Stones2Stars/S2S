@@ -136,7 +136,6 @@
   "description": "TXT_KEY_BUILDING_LIBRARY",
   "civilopedia": "TXT_KEY_BUILDING_LIBRARY_PEDIA",
   "worth": 3,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

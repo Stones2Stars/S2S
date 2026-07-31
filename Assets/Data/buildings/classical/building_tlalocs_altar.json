@@ -79,7 +79,6 @@
   "civilopedia": "TXT_KEY_BUILDING_TLALOCS_ALTAR_PEDIA",
   "worth": 5,
   "conquestProbability": 100,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_RELIGION",
   "visibilityPriority": 1,
   "mapCategories": [

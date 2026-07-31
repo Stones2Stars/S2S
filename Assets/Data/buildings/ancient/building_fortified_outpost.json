@@ -122,7 +122,6 @@
   "civilopedia": "TXT_KEY_BUILDING_FORTIFIED_OUTPOST_PEDIA",
   "worth": 2,
   "militaryWorth": 2,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1000,
   "mapCategories": [

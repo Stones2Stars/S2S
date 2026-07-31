@@ -82,7 +82,6 @@
   "civilopedia": "TXT_KEY_BUILDING_PARADISE_GARDEN_PEDIA",
   "worth": 3,
   "conquestProbability": 30,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_CULTURE",
   "visibilityPriority": 1,
   "mapCategories": [

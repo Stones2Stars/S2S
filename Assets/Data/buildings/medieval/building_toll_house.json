@@ -71,7 +71,6 @@
   "civilopedia": "TXT_KEY_BUILDING_TOLL_HOUSE_PEDIA",
   "worth": 4,
   "conquestProbability": 75,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,
   "mapCategories": [

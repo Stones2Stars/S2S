@@ -92,7 +92,6 @@
   "civilopedia": "TXT_KEY_BUILDING_GUILD_HALL_PEDIA",
   "worth": 4,
   "militaryWorth": 5,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

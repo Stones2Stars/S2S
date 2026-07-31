@@ -126,7 +126,6 @@
   ],
   "worth": 2,
   "militaryWorth": 2,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1000,
   "mapCategories": [

@@ -79,7 +79,6 @@
   "description": "TXT_KEY_BUILDING_NANO_RESEARCH_DEPARTMENT",
   "civilopedia": "TXT_KEY_BUILDING_NANO_RESEARCH_DEPARTMENT_PEDIA",
   "worth": 12,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

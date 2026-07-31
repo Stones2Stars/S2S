@@ -67,7 +67,9 @@
  },
  "revolution": {
   "city": {
-   "flat": -15
+   "local": {
+    "flat": -15
+   }
   }
  },
  "PROPERTY_CRIME": {
@@ -105,7 +107,6 @@
   "description": "TXT_KEY_BUILDING_MIND_CONTROL_CENTER",
   "civilopedia": "TXT_KEY_BUILDING_MIND_CONTROL_CENTER_PEDIA",
   "worth": 3,
-  "dcmAirbombMission": 3,
   "advisor": "ADVISOR_CULTURE",
   "visibilityPriority": 1,
   "mapCategories": [

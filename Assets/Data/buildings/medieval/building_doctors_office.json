@@ -123,7 +123,6 @@
   "civilopedia": "TXT_KEY_BUILDING_DOCTORS_OFFICE_PEDIA",
   "worth": 4,
   "conquestProbability": 75,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_GROWTH",
   "visibilityPriority": 1,
   "mapCategories": [

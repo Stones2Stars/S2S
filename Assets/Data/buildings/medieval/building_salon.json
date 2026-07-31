@@ -83,7 +83,6 @@
   "civilopedia": "TXT_KEY_BUILDING_SALON_PEDIA",
   "worth": 5,
   "conquestProbability": 100,
-  "dcmAirbombMission": 2,
   "greatPeopleUnitType": "UNIT_SCIENTIST",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

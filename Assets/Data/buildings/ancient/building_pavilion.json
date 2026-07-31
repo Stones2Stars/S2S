@@ -76,7 +76,6 @@
   "description": "TXT_KEY_BUILDING_PAVILION",
   "civilopedia": "TXT_KEY_BUILDING_PAVILION_PEDIA",
   "worth": 4,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_CULTURE",
   "visibilityPriority": 1,
   "mapCategories": [

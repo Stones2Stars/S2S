@@ -119,14 +119,20 @@ SCALAR_FAMILIES = {
     "iAreaFreeSpecialist": ("freeSpecialists", "empire", None, "any"),   # area abolished -> empire
     "iGlobalFreeSpecialist": ("freeSpecialists", "empire", None, "any"),
     # misc city
-    "iAnarchyModifier": ("anarchy", "city", None, "percent"),
+    # EMPIRE, not city: a building anywhere shortens the whole empire's anarchy -- every consumer is
+    # player-level (revolution/conversion timers, civic + religion anarchy length). There is no city-scope
+    # anarchy concept at all.
+    "iAnarchyModifier": ("anarchy", "empire", None, "percent"),
     "iGoldenAgeModifier": ("goldenAge", "empire", None, "percent"),
     "iOccupationTimeModifier": ("occupationTime", "city", None, "percent"),
     "iPopulationgrowthratepercentage": ("populationGrowthRate", "city", None, "percent"),
     "iGlobalPopulationgrowthratepercentage": ("populationGrowthRate", "empire", None, "percent"),
     # revolution
-    "iRevIdxLocal": ("revolution", "city", None, "flat"),
-    "iRevIdxNational": ("revolution", "empire", None, "flat"),
+    # local and national are two distinct KINDS (the city index vs the national index), never one kind at two
+    # scopes -- the enum specifies both, and the civic/trait curators already emit them as members. A building
+    # delivers from its own city, so the SCOPE is city for both and the MEMBER says which index it moves.
+    "iRevIdxLocal": ("revolution", "city", "local", "flat"),
+    "iRevIdxNational": ("revolution", "city", "national", "flat"),
     "iRevIdxDistanceModifier": ("revolution", "city", "distanceModifier", "percent"),
     # underworld (renamed from copsAndRobbers, ruling 3 info-rebuild.md): the in-city criminal game -- criminal
     # stealth (insidiousness) vs city catch (investigation) -> the makeWanted/arrest mechanic (verified
@@ -236,7 +242,7 @@ ID_SCALAR = {
     "iAsset": "worth", "iPower": "militaryWorth", "iConquestProb": "conquestProbability",
     "iAirlift": "airlift", "iAirUnitCapacity": "airUnitCapacity",
     "iNumPopulationEmployed": "populationEmployed",
-    "iExtraPlayerInstances": "maxPlayerInstancesExtra", "iDCMAirbombMission": "dcmAirbombMission",
+    "iExtraPlayerInstances": "maxPlayerInstancesExtra",
     "ExtendsBuilding": "extends", "ProductionContinueBuilding": "productionContinue",
     "GreatPeopleUnitType": "greatPeopleUnitType", "DiploVoteType": "diploVoteType",
     "SpecialBuildingType": "specialBuildingType",  # FK to the per-player-capped SpecialBuilding GROUP (#31)
@@ -253,6 +259,8 @@ COST = {"iCost": "production", "iCostSizeModifier": "sizeModifier", "iCostCountM
 # ---- DROP / DEFER tables ----
 # DEAD (§8-i, confirmed zero consumers) + meltdown (excluded-module-only data, not emitted).
 DROP_DEAD = {"iMaxPopulationAllowed", "iMaxPopulationChange", "iDCMNukesOkay", "bDCMNukesOkay", "iNukeExplosionRand",
+    # dead with the DCM air-bombing plane: emitted onto 261 buildings and read by NOTHING (no getDcmAirbombMission consumer)
+    "iDCMAirbombMission",
     # dead, re-verified 2026-06-20 (zero consumers): building field unwired -- live pillage-gold is the promotion PillageChange
     "iPillageGoldModifier",
     # dead, re-verified 2026-06-20: the repel combat mechanic was REMOVED from the engine (CvCombatModel.cpp:294); field is a vestige (only debug TestCode.py reads getLocalRepel)

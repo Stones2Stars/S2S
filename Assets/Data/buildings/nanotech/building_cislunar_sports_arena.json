@@ -105,7 +105,6 @@
   "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_SPORTS_ARENA_PEDIA",
   "worth": 12,
   "militaryWorth": 5,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,
   "mapCategories": [

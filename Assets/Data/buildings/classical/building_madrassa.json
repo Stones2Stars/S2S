@@ -67,7 +67,6 @@
   "description": "TXT_KEY_BUILDING_MADRASSA",
   "civilopedia": "TXT_KEY_BUILDING_MADRASSA_PEDIA",
   "worth": 5,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

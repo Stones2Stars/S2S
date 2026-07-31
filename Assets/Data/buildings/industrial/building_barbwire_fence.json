@@ -86,7 +86,6 @@
   "civilopedia": "TXT_KEY_BUILDING_BARBWIRE_FENCE_PEDIA",
   "centerInCity": true,
   "militaryWorth": 3,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1000,
   "mapCategories": [

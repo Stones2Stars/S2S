@@ -62,7 +62,9 @@
  },
  "revolution": {
   "city": {
-   "flat": 30
+   "local": {
+    "flat": 30
+   }
   }
  },
  "underworld": {

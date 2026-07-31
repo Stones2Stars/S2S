@@ -203,7 +203,6 @@
   "civilopedia": "TXT_KEY_BUILDING_MARKET_PEDIA",
   "worth": 3,
   "conquestProbability": 75,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,
   "mapCategories": [

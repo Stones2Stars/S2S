@@ -115,7 +115,6 @@
   "civilopedia": "TXT_KEY_BUILDING_LIGHTHOUSE_PEDIA",
   "worth": 3,
   "conquestProbability": 75,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_GROWTH",
   "visibilityPriority": 1,
   "mapCategories": [

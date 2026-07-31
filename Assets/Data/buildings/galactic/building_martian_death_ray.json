@@ -52,7 +52,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MARTIAN_DEATH_RAY",
   "civilopedia": "TXT_KEY_BUILDING_MARTIAN_DEATH_RAY_PEDIA",
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

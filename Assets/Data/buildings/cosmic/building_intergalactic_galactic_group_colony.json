@@ -53,7 +53,9 @@
  },
  "revolution": {
   "city": {
-   "flat": -5
+   "local": {
+    "flat": -5
+   }
   }
  },
  "cost": {

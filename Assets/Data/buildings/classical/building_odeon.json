@@ -61,7 +61,6 @@
   "description": "TXT_KEY_BUILDING_ODEON",
   "civilopedia": "TXT_KEY_BUILDING_ODEON_PEDIA",
   "worth": 5,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,
   "mapCategories": [

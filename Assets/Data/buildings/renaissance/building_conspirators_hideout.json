@@ -51,11 +51,13 @@
  },
  "revolution": {
   "city": {
-   "flat": 15
+   "local": {
+    "flat": 15
+   }
   }
  },
  "anarchy": {
-  "city": {
+  "empire": {
    "percent": -2
   }
  },
@@ -126,7 +128,6 @@
   "civilopedia": "TXT_KEY_BUILDING_CONSPIRATORS_HIDEOUT_PEDIA",
   "worth": 2,
   "conquestProbability": 75,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,
   "mapCategories": [

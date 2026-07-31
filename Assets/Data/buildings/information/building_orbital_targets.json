@@ -97,7 +97,6 @@
   "civilopedia": "TXT_KEY_BUILDING_ORBITAL_TARGETS_PEDIA",
   "worth": 5,
   "militaryWorth": 15,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1,
   "mapCategories": [

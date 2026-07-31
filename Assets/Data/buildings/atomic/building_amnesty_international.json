@@ -27,7 +27,9 @@
  },
  "revolution": {
   "city": {
-   "flat": 1
+   "local": {
+    "flat": 1
+   }
   }
  },
  "cost": {

@@ -103,7 +103,6 @@
   "civilopedia": "TXT_KEY_BUILDING_BIOLOGICAL_WARFARE_LAB_PEDIA",
   "worth": 6,
   "conquestProbability": 75,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1,
   "mapCategories": [

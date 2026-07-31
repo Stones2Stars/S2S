@@ -109,7 +109,6 @@
   "civilopedia": "TXT_KEY_BUILDING_BLACK_HAT_HIDEOUT_PEDIA",
   "worth": 2,
   "conquestProbability": 75,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -121,7 +121,6 @@
   "description": "TXT_KEY_BUILDING_CIDER_HOUSE",
   "civilopedia": "TXT_KEY_BUILDING_CIDER_HOUSE_PEDIA",
   "worth": 3,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,
   "mapCategories": [

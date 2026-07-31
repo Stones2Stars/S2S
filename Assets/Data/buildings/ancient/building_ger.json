@@ -78,7 +78,6 @@
   "civilopedia": "TXT_KEY_BUILDING_GER_PEDIA",
   "worth": 2,
   "militaryWorth": 4,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1,
   "mapCategories": [

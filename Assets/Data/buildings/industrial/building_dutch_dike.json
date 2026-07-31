@@ -111,7 +111,6 @@
   "civilopedia": "TXT_KEY_BUILDING_DUTCH_DIKE_PEDIA",
   "worth": 4,
   "militaryWorth": 2,
-  "dcmAirbombMission": 2,
   "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

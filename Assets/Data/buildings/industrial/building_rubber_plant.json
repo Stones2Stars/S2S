@@ -94,7 +94,6 @@
   "civilopedia": "TXT_KEY_BUILDING_RUBBER_PLANT_PEDIA",
   "worth": 6,
   "militaryWorth": 30,
-  "dcmAirbombMission": 3,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1,
   "mapCategories": [

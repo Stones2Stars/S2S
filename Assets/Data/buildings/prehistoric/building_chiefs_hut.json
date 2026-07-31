@@ -68,7 +68,9 @@
  },
  "revolution": {
   "city": {
-   "flat": -10
+   "local": {
+    "flat": -10
+   }
   }
  },
  "warWeariness": {

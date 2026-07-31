@@ -15,7 +15,9 @@
  },
  "revolution": {
   "city": {
-   "flat": -15
+   "local": {
+    "flat": -15
+   }
   }
  },
  "PROPERTY_CRIME": {

@@ -99,7 +99,6 @@
   "worth": 20,
   "militaryWorth": 25,
   "conquestProbability": 75,
-  "dcmAirbombMission": 3,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,
   "mapCategories": [

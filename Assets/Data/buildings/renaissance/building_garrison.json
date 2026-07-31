@@ -110,7 +110,6 @@
   "civilopedia": "TXT_KEY_BUILDING_GARRISON_PEDIA",
   "worth": 4,
   "militaryWorth": 5,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1,
   "mapCategories": [

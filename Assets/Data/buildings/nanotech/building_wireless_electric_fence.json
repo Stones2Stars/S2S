@@ -88,7 +88,6 @@
   "centerInCity": true,
   "worth": 1,
   "militaryWorth": 4,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1000,
   "mapCategories": [

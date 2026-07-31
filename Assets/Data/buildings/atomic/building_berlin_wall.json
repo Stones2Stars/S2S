@@ -46,8 +46,10 @@
   }
  },
  "revolution": {
-  "empire": {
-   "flat": 40
+  "city": {
+   "national": {
+    "flat": 40
+   }
   }
  },
  "greatPeopleRate": {

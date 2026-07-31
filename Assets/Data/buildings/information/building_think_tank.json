@@ -68,7 +68,6 @@
   "description": "TXT_KEY_BUILDING_THINK_TANK",
   "civilopedia": "TXT_KEY_BUILDING_THINK_TANK_PEDIA",
   "worth": 4,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1,
   "mapCategories": [

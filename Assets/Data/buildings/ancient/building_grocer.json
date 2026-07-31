@@ -137,7 +137,6 @@
   "civilopedia": "TXT_KEY_BUILDING_GROCER_PEDIA",
   "worth": 4,
   "conquestProbability": 75,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_GROWTH",
   "visibilityPriority": 1,
   "mapCategories": [

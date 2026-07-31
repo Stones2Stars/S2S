@@ -134,7 +134,6 @@
   "militaryWorth": 4,
   "airlift": 1,
   "airUnitCapacity": 5,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -75,7 +75,6 @@
   "description": "TXT_KEY_BUILDING_ANTI_MISSILE_BATTERIES",
   "civilopedia": "TXT_KEY_BUILDING_ANTI_MISSILE_BATTERIES_PEDIA",
   "worth": 1,
-  "dcmAirbombMission": 2,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1,
   "mapCategories": [
