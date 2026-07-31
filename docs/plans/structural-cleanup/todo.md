@@ -151,14 +151,21 @@
   ⚖ **It LISTENS TO THE EVENT SPINE, and no AI loop ever touches it (owner)** — a consumer marking off the
   facts, exactly as the player alerts re-attach to the fact rather than being re-inlined at a mutation site
   ([event-spine.md](../../specs/event-spine.md)). So this is a ROUTING job, never a judgement re-made per site.
-  ⚖ **The ruled set (owner): a PLOT UPGRADED in the city · a BUILDING FINISHED that makes actual changes to
-  specialists or plots · POP ADDED · a CIVIC change · a TRAIT change.**
-  ⚑ **`CvCity::canWork`'s own gates name what that set does not cover, and they are the authority** — the
-  workable-PLOT SET (working-city reassignment; the radius growing with culture / `adds3rdRing`, which adds
-  tiles that were never candidates and which no yield fact announces), the water-work TEAM capability, and
-  `hasYield` appearing or vanishing — which is the INVERSE of "upgraded": pillage, bonus depletion, a chop.
-  Symmetric cases likewise: pop REMOVED, a building with those effects DESTROYED, and golden age starting or
-  ending (it moves per-plot yields through the threshold bonus, [golden-age.md](../../reference/golden-age.md)).
+  ⚑ **Every trigger below is ALREADY a DOMAIN fact, so this needs NO new emits** (owner) — the whole plot
+  substrate, the building/population/civic/trait facts, the culture-level fact and the working-city fact all
+  announce today. ⛔ So do not open this expecting an emit-surface prerequisite: what is missing is the
+  consumer, and the work is deciding which facts it acts on.
+  ⚖ **The ruled set (owner): a PLOT CHANGED inside the city's WORKABLE SET — not an upgrade only · a BUILDING
+  FINISHED that makes actual changes to specialists or plots · POP ADDED · a CIVIC change · a TRAIT change.**
+  ⚑ Stating the plot leg as *changed* rather than *upgraded* is what makes it complete: pillage, bonus
+  depletion and a chop are the same fact in the other direction, and the substrate already announces each per
+  plot. The filter is MEMBERSHIP of the workable set, which the city context already folds
+  ([contexts.md](../../architecture/contexts.md)).
+  ⚑ **`CvCity::canWork`'s gates name what even that does not reach** — the workable SET ITSELF moving
+  (working-city reassignment; the radius growing with culture / `adds3rdRing`, adding tiles that were never
+  candidates, which no per-plot fact announces) and the water-work TEAM capability. Symmetric cases likewise:
+  pop REMOVED, such a building DESTROYED, and golden age starting or ending (it moves per-plot yields through
+  the threshold bonus, [golden-age.md](../../reference/golden-age.md)).
   ⛔ **Two gates are UNIT-MOVEMENT driven and must NOT ride the same routing** — an enemy unit sieging a plot
   and a naval blockade. Unit movement never dirties a cache
   ([DEC-unit-modifiers-on-top](../../architecture/decisions.md#dec-unit-modifiers-on-top)), so routing these
