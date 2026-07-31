@@ -1130,8 +1130,6 @@ public:
 	int getSMStrength () const;
 	void setSMStrength ();
 
-	int getAnimalIgnoresBordersCount() const;
-	void changeAnimalIgnoresBordersCount(int iChange);
 
 	int getOnslaughtCount() const;
 	bool mayOnslaught() const;

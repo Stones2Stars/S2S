@@ -243,3 +243,18 @@
     ⚠ **The authored data STAYS in `specialunit_captive.json` and is now read by nothing** — do not read its
     presence as a wiring gap to close. ⛔ Never re-add `processLoadedSpecialUnit`, and do not re-home its two
     stats onto the resolved plane.
+28. **The `PROMOTIONLINE_FERAL` TERRITORY LADDER** — three per-unit tiers of animal border-ignoring
+    (`canAnimalIgnoresBorders` / `…Improvements` / `…Cities`, tested as a stored count `> 0` / `> 1` / `> 2`,
+    fed by `PROMOTION_FERAL2` (+1) and `PROMOTION_FERAL3` (+2) *(dead — owner: where animals may go is decided
+    by the GAME OPTIONS entirely)*. `GAMEOPTION_ANIMAL_STAY_OUT` bars them from national borders,
+    `GAMEOPTION_ANIMAL_DANGEROUS` admits them to borders and improved tiles; **FERAL2 and FERAL3 no longer
+    differ on territory.**
+    ⚑ **The ladder was already unrecoverable from the data, which is what forced the question:** a skill is a
+    pure boolean ENABLER carrying no value ([skills.md](../specs/skills.md)), so the curator collapsed the
+    legacy `+1` and `+2` alike to a plain grant — the rung distinction does not survive into the JSON at all.
+    ⚠ The FERAL promotions and `PROMOTIONLINE_FERAL` **stay** and still author the skill; only the per-unit
+    TERRITORY tiering is gone. ⛔ So do not read those authorings as a wiring gap, and do not reconstruct the
+    tier from the promotion rung — the rung is available (the line models it, and the accrual sums down it),
+    which is exactly why it looks like a fix and is not one.
+    ⚠ Consequence to know rather than rediscover: nothing now grants an animal CITY entry except
+    `ANIMAL_DANGEROUS`, whose own help text stops at improved tiles.

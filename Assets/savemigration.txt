@@ -500,20 +500,13 @@ CvPlayer::m_bHasLanguage                 (bool)
 ========================
 
 ========================
-2026-07-11 — animal border-ignore: the stored count is removed and drained. The intent is that it derives from
-the GAME OPTIONS (ANIMAL_STAY_OUT / ANIMAL_DANGEROUS) plus the unit's own `animalIgnoresBorders` SKILL, rather
-than a promotion-fed counter.
-!! STILL OWED, do not read this entry as finished: getAnimalIgnoresBordersCount / changeAnimalIgnoresBordersCount
-   still stand on CvUnit and both apply sites (processPromotion / processUnitCombat) still write through them,
-   against a member that no longer exists.
-!! The promotion-granted leg has NO home yet. CvUnit still carries a per-skill counter for the other ~53 skills
-   and there is no general "does this unit hold skill X, folded over its promotions and combat classes" read --
-   so this one was cut ahead of the mechanism that replaces it. Reviving a counter is not the fix; the fold is,
-   and it serves all of them at once.
-!! Note the TIERS: canAnimalIgnoresImprovements / canAnimalIgnoresCities test the count > 1 and > 2. A skill
-   carries no value (skills.md), so those tiers can no longer come from data at all -- the legacy +2 authoring
-   collapsed to a plain grant. Under the intent above they are option-derived only, which is a real behaviour
-   change to state when this lands, not a regression to chase.
+2026-07-11 — animal border-ignore: the stored count is removed and drained, and where wild animals may go is now
+decided by the GAME OPTIONS (owner ruling) -- ANIMAL_STAY_OUT bars them from national borders outright,
+ANIMAL_DANGEROUS admits them to borders and improved tiles. The count, its changer and both apply folds
+(processPromotion / processUnitCombat) are gone; nothing is owed.
+The unit's OWN authored `animalIgnoresBorders` skill still reads on the borders tier as HEADROOM -- inert today,
+since only promotions and a unit-combat author it and an info read cannot see those.
+The per-unit TIERS are dropped with it: see superseded-ideas (the PROMOTIONLINE_FERAL territory ladder).
 
 CvUnit::m_iAnimalIgnoresBordersCount     (int)
 ========================

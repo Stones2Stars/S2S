@@ -12773,44 +12773,32 @@ int CvUnit::dynamicDefenseTotal() const
 	return std::max(0, iData);
 }
 
+//	Where wild animals may go is decided by the GAME OPTIONS (owner) -- ANIMAL_STAY_OUT bars them from national
+//	borders outright, ANIMAL_DANGEROUS lets them into borders and onto improved tiles. It is deliberately NOT a
+//	per-unit tier any more: the tiers were rungs of PROMOTIONLINE_FERAL read through a stored count, and a skill
+//	carries no value (skills.md), so FERAL2 and FERAL3 no longer differ on territory.
 bool CvUnit::canAnimalIgnoresBorders() const
 {
 	if (GC.getGame().isOption(GAMEOPTION_ANIMAL_STAY_OUT))
 	{
 		return false;
 	}
-    if (GC.getGame().isOption(GAMEOPTION_ANIMAL_DANGEROUS))
-    {
-        return true;
-    }
-	return getAnimalIgnoresBordersCount() > 0;
+	//	The unit's OWN authored skill is headroom: no unit type authors it today (only promotions and a
+	//	unit-combat do, which this read cannot see), so this leg is inert until one does.
+	return GC.getGame().isOption(GAMEOPTION_ANIMAL_DANGEROUS)
+		|| getUnitInfo().hasSkill(CLS_SKILL_ANIMAL_IGNORES_BORDERS);
 }
 
 bool CvUnit::canAnimalIgnoresImprovements() const
 {
-	if (GC.getGame().isOption(GAMEOPTION_ANIMAL_STAY_OUT))
-	{
-		return false;
-	}
-	if (GC.getGame().isOption(GAMEOPTION_ANIMAL_DANGEROUS))
-	{
-		return true;
-	}
-	return getAnimalIgnoresBordersCount() > 1;
-
+	return !GC.getGame().isOption(GAMEOPTION_ANIMAL_STAY_OUT)
+		&& GC.getGame().isOption(GAMEOPTION_ANIMAL_DANGEROUS);
 }
 
 bool CvUnit::canAnimalIgnoresCities() const
 {
-	if (GC.getGame().isOption(GAMEOPTION_ANIMAL_STAY_OUT))
-	{
-		return false;
-	}
-	if (GC.getGame().isOption(GAMEOPTION_ANIMAL_DANGEROUS))
-	{
-		return true;
-	}
-	return getAnimalIgnoresBordersCount() > 2;
+	return !GC.getGame().isOption(GAMEOPTION_ANIMAL_STAY_OUT)
+		&& GC.getGame().isOption(GAMEOPTION_ANIMAL_DANGEROUS);
 }
 
 bool CvUnit::canOnslaught() const
@@ -15182,16 +15170,6 @@ void CvUnit::changeFliesToMoveCount(int iChange)
 	m_iFliesToMoveCount += iChange;
 }
 
-int CvUnit::getAnimalIgnoresBordersCount() const
-{
-	return (getUnitInfo().hasSkill(CLS_SKILL_ANIMAL_IGNORES_BORDERS) ? 1 : 0) + m_iAnimalIgnoresBordersCount;
-}
-
-void CvUnit::changeAnimalIgnoresBordersCount(int iChange)
-{
-	m_iAnimalIgnoresBordersCount += iChange;
-}
-
 int CvUnit::getOnslaughtCount() const
 {
 	return m_iOnslaughtCount;
@@ -17242,7 +17220,6 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 	changeAlwaysInvisibleCount((kUnitCombat.isAlwaysInvisible()) ? iChange : 0);
 	changeStampedeCount((kUnitCombat.isStampedeChange()) ? iChange : 0);
 	changeStampedeCount((kUnitCombat.isRemoveStampede()) ? -iChange : 0);
-	changeAnimalIgnoresBordersCount(kUnitCombat.getAnimalIgnoresBordersChange() * iChange);
 	changeOnslaughtCount((kUnitCombat.isOnslaughtChange()) ? iChange : 0);
 	changeAttackOnlyCitiesCount((kUnitCombat.isAttackOnlyCitiesAdd()) ? iChange : 0);
 	changeAttackOnlyCitiesCount((kUnitCombat.isAttackOnlyCitiesSubtract()) ? -iChange : 0);
@@ -17605,7 +17582,6 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	{
 		bSMrecalc = true;
 	}
-	changeAnimalIgnoresBordersCount(kPromotion.getAnimalIgnoresBordersChange() * iChange);
 	changeOnslaughtCount((kPromotion.isOnslaughtChange()) ? iChange : 0);
 	changeExtraEndurance(kPromotion.getEnduranceChange() * iChange);
 
