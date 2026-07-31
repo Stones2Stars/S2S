@@ -7980,7 +7980,8 @@ bool CvPlayer::canEverResearch(TechTypes eTech) const
 	// ([DEC-single-implementation]); the plane IS the answer.
 	if (m_enabler.techs.isStaticExcluded(eTech)
 	|| !GC.getGame().canEverResearch(eTech)
-	|| GC.getTechInfo(eTech).isGlobal() && (isNPC() || GC.getGame().countKnownTechNumTeams(eTech) > 0))
+	|| GC.getTechInfo(eTech).getAllowed()->cap(ALLOWEDCAP_WORLD) > 0
+		&& (isNPC() || GC.getGame().countKnownTechNumTeams(eTech) > 0))
 	{
 		return false;
 	}
@@ -17038,7 +17039,9 @@ int CvPlayer::getAdvancedStartImprovementCost(ImprovementTypes eImprovement, boo
 int CvPlayer::getAdvancedStartTechCost(TechTypes eTech, bool bAdd) const
 {
 	PROFILE_EXTRA_FUNC();
-	if (eTech == NO_TECH || 0 == getNumCities() || GC.getTechInfo(eTech).isGlobal())
+	// A world-unique tech (the §4.4 WORLD self-cap) is not purchasable at advanced start.
+	if (eTech == NO_TECH || 0 == getNumCities()
+	|| GC.getTechInfo(eTech).getAllowed()->cap(ALLOWEDCAP_WORLD) > 0)
 	{
 		return -1;
 	}

@@ -11397,13 +11397,6 @@ bool CvGame::canEverResearch(TechTypes eTech) const
 			}
 		}
 	}
-	if (GC.getTechInfo(eTech).getPrereqGameOption() != NO_GAMEOPTION)
-	{
-		if (!isOption((GameOptionTypes)GC.getTechInfo(eTech).getPrereqGameOption()))
-		{
-			return false;
-		}
-	}
 	return true;
 }
 

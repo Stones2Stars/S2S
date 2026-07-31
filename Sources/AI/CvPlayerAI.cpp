@@ -1,6 +1,8 @@
 // playerAI.cpp
 
 #include "CvGameCoreDLL.h"
+#include "Infos/CvGrants.h"
+#include "Infos/CvTriggers.h"
 #include "Infos/CvSkillReads.h"   // the ONE shared surface for the json.md §8 skill reads
 
 #include "Data/CvInfoValuation.h"   // InfoValuation::collectHealByUnitCombat + HealByUnitCombat
@@ -4880,9 +4882,13 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 		iValue += -(GC.getRouteInfo((RouteTypes)iI).getTechMovementChange(eTech) * 100);
 	}
 
-	for (int iI = 0; iI < NUM_DOMAIN_TYPES; iI++)
+	// The keyed entry list -- the handful this tech authored, never a walk of the domain enum ([modifier.md] §5).
+	std::vector<std::pair<int, int> > kDomainMoves;
+	InfoValuation::collectKeyedTarget(kTech.getModifiers(), MODFAM_DOMAIN_MOVES, 0,
+		InfoValuation::keyedTargetSegment("domains"), kDomainMoves, CASC_SCOPE_EMPIRE);
+	for (size_t iD = 0; iD < kDomainMoves.size(); ++iD)
 	{
-		iValue += (kTech.getDomainExtraMoves(iI) * 200);
+		iValue += kDomainMoves[iD].second * 200;
 	}
 
 	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
@@ -5557,7 +5563,12 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 
 			int iFreeStuffValue = 0;
 
-			if ((UnitTypes)kTech.getFirstFreeUnit() != NO_UNIT)
+			// The first-discoverer provisions the grants machine hands over: `grants` compiles onto the trigger
+			// plane as the CONSIDERED-ACTION entry ([triggers.md]).
+			const CvGrants* pTechGrants = kTech.getTriggers() ? kTech.getTriggers()->consideredGrant() : NULL;
+			const int iFirstFreeTechs = pTechGrants ? pTechGrants->pulse("freeTechs") : 0;
+
+			if (pTechGrants && pTechGrants->firstListId("firstFreeUnit") != -1)
 			{
 				int iGreatPeopleRandom = ((bAsync) ? GC.getASyncRand().get(3200, "AI Research Great People ASYNC") : GC.getGame().getSorenRandNum(3200, "AI Research Great People"));
 				iFreeStuffValue += iGreatPeopleRandom;
@@ -5575,9 +5586,9 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 			//	Free techs are REALLY valuable - as an estimate we assume they are at least as valuable as the enabling tech
 			//	since we'll be able to choose anything accessible once it is researched and up to twice as much as that on a
 			//	random scale
-			if (kTech.getFirstFreeTechs() > 0)
+			if (iFirstFreeTechs > 0)
 			{
-				int	iPercentageMultiplier = kTech.getFirstFreeTechs() * ((bCapitalAlone ? 150 : 100) + (bAsync ? GC.getASyncRand().get(100, "AI Research Free Tech ASYNC") : GC.getGame().getSorenRandNum(100, "AI Research Free Tech")));
+				int	iPercentageMultiplier = iFirstFreeTechs * ((bCapitalAlone ? 150 : 100) + (bAsync ? GC.getASyncRand().get(100, "AI Research Free Tech ASYNC") : GC.getGame().getSorenRandNum(100, "AI Research Free Tech")));
 
 				iFreeStuffValue += (iValue * iPercentageMultiplier) / 100;
 			}
@@ -25886,7 +25897,10 @@ bool CvPlayerAI::AI_isFirstTech(TechTypes eTech) const
 		}
 	}
 	if (GC.getGame().countKnownTechNumTeams(eTech) == 0
-	&& ((UnitTypes)GC.getTechInfo(eTech).getFirstFreeUnit() != NO_UNIT || GC.getTechInfo(eTech).getFirstFreeTechs() > 0))
+	&& (GC.getTechInfo(eTech).getTriggers() != NULL
+		&& GC.getTechInfo(eTech).getTriggers()->consideredGrant() != NULL
+		&& (GC.getTechInfo(eTech).getTriggers()->consideredGrant()->firstListId("firstFreeUnit") != -1
+			|| GC.getTechInfo(eTech).getTriggers()->consideredGrant()->pulse("freeTechs") > 0)))
 	{
 		return true;
 	}

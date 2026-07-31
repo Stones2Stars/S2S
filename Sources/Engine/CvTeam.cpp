@@ -4,6 +4,8 @@
 #include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
+#include "Infos/CvGrants.h"
+#include "Infos/CvTriggers.h"
 #include "Engine/CvGameSpeedScale.h"
 #include "CvArea.h"
 #include "CvBuildingInfo.h"
@@ -5027,7 +5029,8 @@ void CvTeam::setHasTech(TechTypes eTech, bool bNewValue, PlayerTypes ePlayer, bo
 			}
 		}
 		{
-			const bool bGlobal = kTech.isGlobal();
+			// A world-unique tech is one carrying the §4.4 WORLD self-cap -- "at most N of me anywhere".
+			const bool bGlobal = kTech.getAllowed()->cap(ALLOWEDCAP_WORLD) > 0;
 
 			// NB a world-unique tech being invented drops it from every other team's frontier too -- the
 			// enabler does that off the tech fact, so nothing is hand-maintained for it here.
@@ -5064,13 +5067,18 @@ void CvTeam::setHasTech(TechTypes eTech, bool bNewValue, PlayerTypes ePlayer, bo
 			// GRANTS MACHINE off the emit above -- emit() dispatches synchronously, so they have already landed by
 			// the time control reaches here. What stays is the non-grant residue: the AI research-queue rider (a
 			// free tech invalidates a queued research plan) and the "first to tech" announcements.
-			if (kTech.getFirstFreeUnit() != NO_UNIT || kTech.getFirstFreeTechs() > 0
+			// `grants` compiles onto the trigger plane as the CONSIDERED-ACTION entry ([triggers.md]); a tech
+			// that grants nothing has no such entry.
+			const CvGrants* pGrants = kTech.getTriggers() ? kTech.getTriggers()->consideredGrant() : NULL;
+			const int iFreeTechs = pGrants ? pGrants->pulse("freeTechs") : 0;
+			const bool bFreeUnit = pGrants && pGrants->firstListId("firstFreeUnit") != -1;
+			if (bFreeUnit || iFreeTechs > 0
 			|| (GC.getGame().isOption(GAMEOPTION_RELIGION_DIVINE_PROPHETS)
 				&& GET_PLAYER(ePlayer).getTechFreeProphet(eTech) != NO_UNIT))
 			{
 				bClearResearchQueueAI = true;
 			}
-			if (kTech.getFirstFreeTechs() > 0)
+			if (iFreeTechs > 0)
 			{
 				CvWString szBuffer;
 				for (int iI = 0; iI < MAX_PC_PLAYERS; iI++)
@@ -5422,9 +5430,15 @@ void CvTeam::processTech(TechTypes eTech, int iChange, bool bAnnounce)
 		changeRouteChange(((RouteTypes)iI), (GC.getRouteInfo((RouteTypes)iI).getTechMovementChange(eTech) * iChange));
 	}
 
-	for (int iI = 0; iI < NUM_DOMAIN_TYPES; iI++)
+	// domainMoves is authored KEYED (domainMoves.empire.domains.{DOMAIN}), so it reads as the entry list over
+	// the handful this tech names -- never a walk of the domain enum ([modifier.md] §5). The team's extraMoves
+	// counter stays: it also carries the circumnavigation award, which is no deposit's.
+	std::vector<std::pair<int, int> > kDomainMoves;
+	InfoValuation::collectKeyedTarget(tech.getModifiers(), MODFAM_DOMAIN_MOVES, 0,
+		InfoValuation::keyedTargetSegment("domains"), kDomainMoves, CASC_SCOPE_EMPIRE);
+	for (size_t iD = 0; iD < kDomainMoves.size(); ++iD)
 	{
-		changeExtraMoves(((DomainTypes)iI), (tech.getDomainExtraMoves(iI) * iChange));
+		changeExtraMoves((DomainTypes)kDomainMoves[iD].first, kDomainMoves[iD].second * iChange);
 	}
 
 	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
