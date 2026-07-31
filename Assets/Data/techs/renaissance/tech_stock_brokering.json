@@ -25,19 +25,25 @@
    ]
   }
  },
- "tradeRouteYield": {
+ "commerce": {
   "empire": {
-   "percent": 10
+   "corporation": {
+    "percent": 15
+   }
   }
  },
- "corporationRevenue": {
+ "maintenance": {
   "empire": {
-   "percent": 15
+   "corporation": {
+    "percent": -5
+   }
   }
  },
- "corporationMaintenance": {
+ "tradeRoutes": {
   "empire": {
-   "percent": -5
+   "modifier": {
+    "percent": 10
+   }
   }
  },
  "cost": {

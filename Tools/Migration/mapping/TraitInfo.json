@@ -49,7 +49,7 @@
     "iTradeRoutes": {"scope": "city", "channel": "tradeRoutes", "kind": "flat"},
     "iStateReligionUnitProductionModifier": {"scope": "player", "channel": "stateReligionUnitProduction", "kind": "percent"},
     "iStateReligionFreeExperience": {"scope": "player", "channel": "stateReligionExperience", "kind": "flat"},
-    "iForeignTradeRouteModifier": {"scope": "player", "channel": "foreignTradeRoute", "kind": "percent"},
+    "iForeignTradeRouteModifier": {"scope": "empire", "channel": "tradeRoutes", "member": "modifier", "kind": "percent", "enabled": "IS_FOREIGN"},
     "fRevIdxGoodReligionMod": {"scope": "player", "channel": "revoltIndexGoodReligion", "kind": "percent"},
     "fRevIdxBadReligionMod": {"scope": "player", "channel": "revoltIndexBadReligion", "kind": "percent"},
     "CommerceChanges": {"scope": "city", "channel": "commerce", "kind": "flat", "valueKeys": ["gold", "research", "culture", "espionage"]},

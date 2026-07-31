@@ -239,6 +239,38 @@ def _merge_val(a, b):
     return b
 
 
+def _deposit(node, unit, val, enabled=None):
+    """Write ONE deposit into its slot, honouring the json.md §3.9 entry shape.
+
+    An UNCONDITIONED value stays a bare number. A CONDITIONED one becomes `{value, enabled}`, and a slot holding
+    both composes as the entry LIST -- never a sum, because summing a gated value into an ungated one would apply
+    it unconditionally. The list IS the formula mechanism (§3.9), so this needs no expression syntax.
+
+    ⛔ A condition is a PREDICATE, never a family of its own ([DEC-conditions-are-predicates]). Without this, a
+    conditioned legacy field has nowhere to go but an invented family name the reader does not know -- which is
+    exactly how foreignTradeRoute* came to exist.
+    """
+    if enabled is None:
+        prior = node.get(unit)
+        if prior is not None and _has_condition(prior):
+            node[unit] = ([val] + prior) if isinstance(prior, list) else [val, prior]
+        else:
+            node[unit] = val                     # unconditioned: unchanged behaviour
+        return
+    entry = {"value": val, "enabled": enabled}
+    prior = node.get(unit)
+    if prior is None:
+        node[unit] = entry
+    else:
+        node[unit] = (prior if isinstance(prior, list) else [prior]) + [entry]
+
+
+def _has_condition(v):
+    if isinstance(v, list):
+        return any(_has_condition(x) for x in v)
+    return isinstance(v, dict) and ("enabled" in v or "disabled" in v)
+
+
 def _boost_entries(node, keys, unit):
     """(refType, unit, value) per entry. Key child = the conditioner ref (<PrereqTech>/<TechType>/
     <BonusType>/any *Type); value = the remaining child(ren). Handles C2C's inconsistent key tags."""
@@ -631,18 +663,19 @@ def apply_channel(families, spec, c, enabler_block=None):
         if not engine.is_int(t) or int(t) == 0:
             return
         val = int(t)
+    enabled = spec.get("enabled")              # a PREDICATE gating this deposit (§3.9) -- available to every mapping
     if isinstance(val, dict):                  # named members (food/gold/…)
         for member, v in val.items():
             if family in SPLIT_FAMILIES:       # split: the member IS the family (food.scope.unit) — no wrapper
-                families.setdefault(member, {}).setdefault(scope, {})[kind] = v
+                _deposit(families.setdefault(member, {}).setdefault(scope, {}), kind, v, enabled)
             else:                              # grouped concept: family.scope.member.unit (vicinityYield, …)
-                families.setdefault(family, {}).setdefault(scope, {}).setdefault(member, {})[kind] = v
+                _deposit(families.setdefault(family, {}).setdefault(scope, {}).setdefault(member, {}), kind, v, enabled)
     else:                                      # scalar family: family.scope[.member].unit
         node = families.setdefault(family, {}).setdefault(scope, {})
         member = spec.get("member")            # explicit grouped member (maintenance.distance, movement.cost, …)
         if member:
             node = node.setdefault(member, {})
-        node[kind] = val
+        _deposit(node, kind, val, enabled)
 
 
 class EntityConfig:

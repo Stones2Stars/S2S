@@ -25,16 +25,17 @@
  "tradeRoutes": {
   "city": {
    "flat": 1
-  }
- },
- "tradeRouteYield": {
+  },
   "empire": {
-   "percent": 5
-  }
- },
- "foreignTradeRouteYield": {
-  "empire": {
-   "percent": 10
+   "modifier": {
+    "percent": [
+     5,
+     {
+      "value": 10,
+      "enabled": "IS_FOREIGN"
+     }
+    ]
+   }
   }
  },
  "tradeMission": {
