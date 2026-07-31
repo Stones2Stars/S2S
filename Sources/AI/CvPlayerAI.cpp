@@ -14261,21 +14261,6 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 					//iCityHappy += getHappyPerMilitaryUnit() * iMilitaryHappinessDefenders;
 				}
 			}
-			//eBestReligion may not be state religion but is treated as if it was
-			if (eBestReligion != NO_RELIGION && isStateReligion() && getStateReligion() != eBestReligion)
-			{
-				if (getStateReligion() != NO_RELIGION && pLoopCity->isHasReligion(getStateReligion()))
-				{
-					iCityHappy -= getStateReligionHappiness();
-					iCityHappy += getNonStateReligionHappiness();
-				}
-				if (pLoopCity->isHasReligion(eBestReligion))
-				{
-					iCityHappy -= getNonStateReligionHappiness();
-					iCityHappy += getStateReligionHappiness();
-				}
-			}
-
 			if (!bCivicOptionVacuum)
 			{
 				//int iCivicOptionHappy;

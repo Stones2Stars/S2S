@@ -13536,10 +13536,7 @@ bool CvUnitAI::AI_spreadReligion()
 					{
 						if (GET_PLAYER((PlayerTypes)iI).getStateReligion() == NO_RELIGION)
 						{
-							if (1 > GET_PLAYER((PlayerTypes)iI).getNonStateReligionHappiness())
-							{
-								iPlayerMultiplierPercent += 600;
-							}
+							iPlayerMultiplierPercent += 600;
 						}
 						else if (GET_PLAYER((PlayerTypes)iI).getStateReligion() == eReligion)
 						{

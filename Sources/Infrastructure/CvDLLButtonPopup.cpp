@@ -1206,19 +1206,6 @@ bool CvDLLButtonPopup::launchChangeReligionPopup(CvPopup* pPopup, CvPopupInfo &i
 
 	CvWString szBuffer;
 	szBuffer = gDLL->getText("TXT_KEY_POPUP_RELIGION_SPREAD", GC.getReligionInfo(eReligion).getTextKeyWide());
-	if (activePlayer.getStateReligionHappiness() != 0)
-	{
-		if (activePlayer.getStateReligionHappiness() > 0)
-		{
-			szBuffer += gDLL->getText("TXT_KEY_POPUP_CONVERTING_EFFECTS",
-				activePlayer.getStateReligionHappiness(), gDLL->getSymbolID(HAPPY_CHAR), GC.getReligionInfo(eReligion).getChar());
-		}
-		else
-		{
-			szBuffer += gDLL->getText("TXT_KEY_POPUP_CONVERTING_EFFECTS",
-				-activePlayer.getStateReligionHappiness(), gDLL->getSymbolID(UNHAPPY_CHAR), GC.getReligionInfo(eReligion).getChar());
-		}
-	}
 	szBuffer += gDLL->getText("TXT_KEY_POPUP_LIKE_TO_CONVERT");
 	gDLL->getInterfaceIFace()->popupSetBodyString(pPopup, szBuffer);
 

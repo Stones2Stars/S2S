@@ -370,8 +370,6 @@ void CvPlayer::initMore(PlayerTypes eID, LeaderHeadTypes ePersonality, bool bSet
 	changeFreeUnitUpkeepCivilianPopPercent(GC.getBASE_FREE_UNITS_UPKEEP_CIVILIAN_PER_100_POP());
 	changeFreeUnitUpkeepMilitaryPopPercent(GC.getBASE_FREE_UNITS_UPKEEP_MILITARY_PER_100_POP());
 	changeTradeRoutes(GC.getINITIAL_TRADE_ROUTES());
-	changeStateReligionHappiness(GC.getINITIAL_STATE_RELIGION_HAPPINESS());
-	changeNonStateReligionHappiness(GC.getINITIAL_NON_STATE_RELIGION_HAPPINESS());
 
 	for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
 	{
@@ -4360,11 +4358,6 @@ void CvPlayer::updateYield()
 void CvPlayer::updateFeatureHappiness(bool bLimited)
 {
 	algo::for_each(cities(), CvCity::fn::updateFeatureHappiness(bLimited));
-}
-
-void CvPlayer::updateReligionHappiness(bool bLimited)
-{
-	algo::for_each(cities(), CvCity::fn::updateReligionHappiness(bLimited));
 }
 
 void CvPlayer::updateExtraSpecialistYield()
@@ -10522,8 +10515,6 @@ void CvPlayer::changeStateReligionCount(int iChange, bool bLimited)
 			markMaintenanceDirty();
 		}
 
-		updateReligionHappiness(bLimited);
-
 		if (!bLimited)
 		{
 			updateReligionCommerce();
@@ -11799,7 +11790,6 @@ void CvPlayer::setLastStateReligion(const ReligionTypes eNewReligion)
 		// The state-religion switch, past the no-change guard and after the field commit.
 		emitStateReligionChanged(getID(), (int)eNewReligion);
 
-		updateReligionHappiness();
 		updateReligionCommerce();
 
 		GC.getGame().updateSecretaryGeneral();
@@ -17433,8 +17423,6 @@ void CvPlayer::processCivics(const CivicTypes eCivic, const int iChange, const b
 
 	changeStateReligionCount(kCivic.isStateReligion() * iChange, bLimited);
 	changeNoNonStateReligionSpreadCount(kCivic.isNoNonStateReligionSpread() * iChange);
-	changeStateReligionHappiness(kCivic.getStateReligionHappiness() * iChange, bLimited);
-	changeNonStateReligionHappiness(kCivic.getNonStateReligionHappiness() * iChange, bLimited);
 
 	changeRevIdxLocal(kCivic.getRevIdxLocal() * iChange);
 	changeRevIdxNational(kCivic.getRevIdxNational() * iChange);
@@ -27079,8 +27067,6 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 	changeLargestCityHappiness(iChange*GC.getTraitInfo(eTrait).getLargestCityHappiness());
 	changeFreeSpecialist(iChange*GC.getTraitInfo(eTrait).getFreeSpecialist());
 	changeTradeRoutes(iChange*GC.getTraitInfo(eTrait).getTradeRoutes());
-	changeStateReligionHappiness(iChange*GC.getTraitInfo(eTrait).getStateReligionHappiness());
-	changeNonStateReligionHappiness(iChange*GC.getTraitInfo(eTrait).getNonStateReligionHappiness());
 	changeStateReligionUnitProductionModifier(iChange*GC.getTraitInfo(eTrait).getStateReligionUnitProductionModifier());
 	changeStateReligionBuildingProductionModifier(iChange*GC.getTraitInfo(eTrait).getStateReligionBuildingProductionModifier());
 	changeExpInBorderModifier(iChange*GC.getTraitInfo(eTrait).getExpInBorderModifier());

@@ -901,11 +901,6 @@ bool CyPlayer::isStateReligion() const
 	return m_pPlayer->isStateReligion();
 }
 
-int CyPlayer::getStateReligionHappiness() const
-{
-	return m_pPlayer->getStateReligionHappiness();
-}
-
 int CyPlayer::getStateReligionUnitProductionModifier() const
 {
 	return m_pPlayer->getStateReligionUnitProductionModifier();

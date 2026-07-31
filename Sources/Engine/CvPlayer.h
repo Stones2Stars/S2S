@@ -239,7 +239,6 @@ public:
 	void markMaintenanceDirty() const;
 
 	void updateFeatureHappiness(bool bLimited = false);
-	void updateReligionHappiness(bool bLimited = false);
 
 	void updateExtraSpecialistYield();
 	void updateBuildingCommerce();

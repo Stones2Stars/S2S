@@ -182,7 +182,6 @@ public:
 
 	int getMilitaryHappinessUnits() const;
 	int getBuildingHappiness(int iBuilding) const;
-	int getReligionHappiness(int iReligion) const;
 	int getExtraHappiness() const;
 	int getExtraHealth() const;
 	void changeExtraHappiness(int iChange);

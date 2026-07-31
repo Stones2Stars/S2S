@@ -615,8 +615,6 @@ public:
 	void updateFeatureHappiness(bool bLimited = false);
 
 
-	int getReligionHappiness(ReligionTypes eReligion) const;
-	void updateReligionHappiness(bool bLimited = false);
 
 	int getExtraHappiness() const;
 	void changeExtraHappiness(int iChange);
@@ -2003,7 +2001,6 @@ public:
 		DECLARE_MAP_FUNCTOR_1(CvCity, void, updateExtraBuildingHappiness, bool);
 		DECLARE_MAP_FUNCTOR_1(CvCity, void, updateExtraBuildingHealth, bool);
 		DECLARE_MAP_FUNCTOR_1(CvCity, void, updateFeatureHappiness, bool);
-		DECLARE_MAP_FUNCTOR_1(CvCity, void, updateReligionHappiness, bool);
 		DECLARE_MAP_FUNCTOR_1(CvCity, void, setCommerceModifierDirty, CommerceTypes);
 		DECLARE_MAP_FUNCTOR_1(CvCity, void, setLayoutDirty, bool);
 		DECLARE_MAP_FUNCTOR_1(CvCity, void, AI_setAssignWorkDirty, bool);

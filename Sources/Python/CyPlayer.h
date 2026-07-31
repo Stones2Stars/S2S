@@ -239,7 +239,6 @@ public:
 	void changeRevolutionTimer(int addTime);
 
 	bool isStateReligion() const;
-	int getStateReligionHappiness() const;
 	int getStateReligionUnitProductionModifier() const;
 	void changeStateReligionUnitProductionModifier(int iChange);
 	int getStateReligionBuildingProductionModifier() const;

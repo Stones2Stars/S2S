@@ -6922,62 +6922,6 @@ void CvCity::updateFeatureHappiness(bool bLimited)
 }
 
 
-int CvCity::getReligionHappiness(ReligionTypes eReligion) const
-{
-	if (isHasReligion(eReligion))
-	{
-		if (eReligion == GET_PLAYER(getOwner()).getStateReligion())
-		{
-			return GET_PLAYER(getOwner()).getStateReligionHappiness();
-		}
-		return GET_PLAYER(getOwner()).getNonStateReligionHappiness();
-	}
-	return 0;
-}
-
-
-void CvCity::updateReligionHappiness(bool bLimited)
-{
-	PROFILE_EXTRA_FUNC();
-	int iNewReligionGoodHappiness = 0;
-	int iNewReligionBadHappiness = 0;
-
-	for (int iI = 0; iI < GC.getNumReligionInfos(); iI++)
-	{
-		int iChange = getReligionHappiness((ReligionTypes)iI);
-
-		if (iChange > 0)
-		{
-			iNewReligionGoodHappiness += iChange;
-		}
-		else
-		{
-			iNewReligionBadHappiness += iChange;
-		}
-	}
-
-	if (getReligionGoodHappiness() != iNewReligionGoodHappiness)
-	{
-		FASSERT_NOT_NEGATIVE(getReligionGoodHappiness());
-
-		if (!bLimited)
-		{
-			AI_setAssignWorkDirty(true);
-		}
-	}
-
-	if (getReligionBadHappiness() != iNewReligionBadHappiness)
-	{
-		FAssert(getReligionBadHappiness() <= 0);
-
-		if (!bLimited)
-		{
-			AI_setAssignWorkDirty(true);
-		}
-	}
-}
-
-
 int CvCity::getExtraHappiness() const
 {
 	return m_iExtraHappiness;
@@ -12141,7 +12085,6 @@ void CvCity::checkReligiousDisablingAllBuildings()
 		checkReligiousDisabling((BuildingTypes)iJ, player);
 	}
 	markMaintenanceDirty();
-	updateReligionHappiness();
 	updateReligionCommerce();
 }
 
@@ -12194,7 +12137,6 @@ void CvCity::applyReligionModifiers(const ReligionTypes eIndex, const bool bValu
 	{
 	}
 	markMaintenanceDirty();
-	updateReligionHappiness();
 	updateReligionCommerce();
 }
 

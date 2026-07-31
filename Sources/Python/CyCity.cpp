@@ -723,11 +723,6 @@ int CyCity::getBuildingHappiness(int /*BuildingTypes*/ eBuilding) const
 	return m_pCity->getBuildingHappiness((BuildingTypes)eBuilding);
 }
 
-int CyCity::getReligionHappiness(int /*ReligionTypes*/ eReligion) const
-{
-	return m_pCity->getReligionHappiness((ReligionTypes)eReligion);
-}
-
 int CyCity::getExtraHappiness() const
 {
 	return m_pCity->getExtraHappiness();
