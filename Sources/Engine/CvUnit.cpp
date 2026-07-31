@@ -12647,7 +12647,7 @@ int CvUnit::withdrawalProbability() const
 //TB Combat Mods Begin
 int CvUnit::attackCombatModifierTotal() const
 {
-	return (m_pUnitInfo->getAttackCombatModifier() + getExtraAttackCombatModifier());
+	return (resolvedValue(URS_COMBAT_ATTACK));
 }
 
 int CvUnit::defenseCombatModifierTotal() const
@@ -12657,12 +12657,12 @@ int CvUnit::defenseCombatModifierTotal() const
 		return 0;
 	}
 
-	return (m_pUnitInfo->getDefenseCombatModifier() + getExtraDefenseCombatModifier());
+	return (resolvedValue(URS_COMBAT_DEFENSE));
 }
 
 int CvUnit::vsBarbsModifier() const
 {
-	return (m_pUnitInfo->getVSBarbs() + getExtraVSBarbs());
+	return (resolvedValue(URS_VS_BARBS));
 }
 
 int CvUnit::religiousCombatModifierTotal(ReligionTypes eReligion, bool bDisplay) const
@@ -12671,11 +12671,11 @@ int CvUnit::religiousCombatModifierTotal(ReligionTypes eReligion, bool bDisplay)
 	{
 		if (bDisplay || getReligion() != eReligion)
 		{
-			return (m_pUnitInfo->getReligiousCombatModifier() + getExtraReligiousCombatModifier());
+			return (resolvedValue(URS_RELIGIOUS_COMBAT));
 		}
 		else if (getReligion() == eReligion)
 		{
-			return -(m_pUnitInfo->getReligiousCombatModifier() + getExtraReligiousCombatModifier());
+			return -(resolvedValue(URS_RELIGIOUS_COMBAT));
 		}
 	}
 	return 0;
@@ -12683,7 +12683,7 @@ int CvUnit::religiousCombatModifierTotal(ReligionTypes eReligion, bool bDisplay)
 
 int CvUnit::damageModifierTotal() const
 {
-	return std::max(-95, (m_pUnitInfo->getDamageModifier() + getExtraDamageModifier()));
+	return std::max(-95, (resolvedValue(URS_DAMAGE_MODIFIER)));
 }
 
 int CvUnit::costModifierTotal() const
@@ -12750,22 +12750,22 @@ bool CvUnit::canFliesToMove() const
 
 int CvUnit::unnerveTotal() const
 {
-	return std::max(0, m_pUnitInfo->getUnnerve() + getExtraUnnerve());
+	return std::max(0, resolvedValue(URS_UNNERVE));
 }
 
 int CvUnit::encloseTotal() const
 {
-	return std::max(0, m_pUnitInfo->getEnclose() + getExtraEnclose());
+	return std::max(0, resolvedValue(URS_ENCLOSE));
 }
 
 int CvUnit::lungeTotal() const
 {
-	return std::max(0, m_pUnitInfo->getLunge() + getExtraLunge());
+	return std::max(0, resolvedValue(URS_LUNGE));
 }
 
 int CvUnit::dynamicDefenseTotal() const
 {
-	int iData = m_pUnitInfo->getDynamicDefense() + getExtraDynamicDefense();
+	int iData = resolvedValue(URS_DYNAMIC_DEFENSE);
 
 	if (plot()->isCity(false, getTeam()))
 	{
@@ -12853,7 +12853,7 @@ int CvUnit::collateralDamageMaxUnits() const
 
 int CvUnit::cityAttackModifier() const
 {
-	return m_pUnitInfo->getCityAttackModifier() + getExtraCityAttackPercent();
+	return resolvedValue(URS_CITY_ATTACK);
 }
 
 int CvUnit::cityDefenseModifier() const
@@ -12862,7 +12862,7 @@ int CvUnit::cityDefenseModifier() const
 	{
 		return 0;
 	}
-	return (m_pUnitInfo->getCityDefenseModifier() + getExtraCityDefensePercent());
+	return (resolvedValue(URS_CITY_DEFENSE));
 }
 
 int CvUnit::cityDefenseVSOpponent(const CvUnit* pOpponent) const
@@ -12891,13 +12891,13 @@ int CvUnit::cityDefenseVSOpponent(const CvUnit* pOpponent) const
 
 int CvUnit::animalCombatModifier() const
 {
-	return m_pUnitInfo->getAnimalCombatModifier();
+	return resolvedValue(URS_ANIMAL_COMBAT);
 }
 
 
 int CvUnit::hillsAttackModifier() const
 {
-	return (m_pUnitInfo->getHillsAttackModifier() + getExtraHillsAttackPercent());
+	return (resolvedValue(URS_HILLS_ATTACK));
 }
 
 
@@ -12907,7 +12907,7 @@ int CvUnit::hillsDefenseModifier() const
 	{
 		return 0;
 	}
-	return (m_pUnitInfo->getHillsDefenseModifier() + getExtraHillsDefensePercent());
+	return (resolvedValue(URS_HILLS_DEFENSE));
 }
 
 
@@ -13504,7 +13504,7 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
 
 				if ((isEnemy(unitX->getTeam(), pNewPlot) || unitX->isEnemy(getTeam())) && !unitX->canCoexistWithAttacker(*this, true))
 				{
-					else if (!unitX->canDefend(pNewPlot) && !unitX->isInvisible(getTeam(), false) && !unitX->isCargo())
+					if (!unitX->canDefend(pNewPlot) && !unitX->isInvisible(getTeam(), false) && !unitX->isCargo())
 					{
 						//TB NOTE: This is where units that can't defend themselves are auto-captured IF the unit has a defined capture tag and cannot defend.
 						if (!isNoCapture() && NO_UNIT != unitX->getUnitInfo().getCaptures())
@@ -24227,7 +24227,7 @@ void CvUnit::changeExtraTaunt(int iChange)
 
 int CvUnit::tauntTotal() const
 {
-	return std::max(0, m_pUnitInfo->getTaunt() + m_iExtraTaunt);
+	return std::max(0, resolvedValue(URS_TAUNT));
 }
 
 int CvUnit::getExtraCombatModifierPerSizeMore() const
