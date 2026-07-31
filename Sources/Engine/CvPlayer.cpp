@@ -8,6 +8,7 @@
 #include "Enabler/CvCapabilities.h"
 #include "CvTraitSelection.h"
 #include "Engine/CvGameSpeedScale.h"
+#include "Engine/CvBuildCostScale.h"   // the building cost-band composition (one place)
 #include "Enabler/CvEnablerKernel.h"   // requiresMetForPlayer -- the system-placement gate
 #include "AI/BetterBTSAI.h"
 #include "CvArea.h"
@@ -6749,56 +6750,19 @@ int CvPlayer::getProductionNeeded(UnitTypes eUnit) const
 
 int CvPlayer::getProductionNeeded(BuildingTypes eBuilding) const
 {
-
-	int iBaseCost = GC.getBuildingInfo(eBuilding).getProductionCost();
+	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+	int iBaseCost = kBuilding.getCost();
 	if (iBaseCost < 1)
 	{
 		return -1;
 	}
+	// The building's own authored cost BANDS, composed in ONE place (CvBuildCostScale) rather than inline here:
+	// it reads a GAME OPTION, so it cannot sit on the info (json.md par.9), and the derivation had been ambiguous
+	// enough to be worth naming. Integer percent -- the float multiplier it replaces was an OOS hazard on a path
+	// every build decision runs.
+	iBaseCost = iBaseCost * CvBuildCostScale::buildingCostPercent(kBuilding) / 100;
 
-    const int iCostBySize = GC.getBuildingInfo(eBuilding).getProductionCostSize();
-    const int iCostByCount = GC.getBuildingInfo(eBuilding).getProductionCostCount();
-    const int iCostByMaterials = GC.getBuildingInfo(eBuilding).getProductionCostMaterials();
-    const int iCostByComplexity = GC.getBuildingInfo(eBuilding).getProductionCostComplexity();
-
-    // Calculate total modifier
-    float totalModifier = 1.0f;
-
-    if (iCostBySize == 0) {
-        totalModifier -= 0.2f;
-    } else if (iCostBySize == 2) {
-        totalModifier += 0.15f;
-    } else if (iCostBySize == 3) {
-        totalModifier += 0.3f;
-    }
-
-    if (iCostByCount == 0) {
-        totalModifier -= 0.05f;
-    } else if (iCostByCount == 2) {
-        totalModifier += 0.15f;
-    }
-
-    if (iCostByMaterials == 0) {
-        totalModifier -= 0.1f;
-    } else if (iCostByMaterials == 2) {
-        totalModifier += 0.15f;
-    }
-
-    if (iCostByComplexity == 0) {
-        totalModifier -= 0.2f;
-    } else if (iCostByComplexity == 2) {
-        totalModifier += 0.2f;
-    }
-
-    //iBaseCost = static_cast<int>(iBaseCost);
-
-    // Apply total modifier to base cost
-    if(GC.getGame().isOption(GAMEOPTION_REALISTIC_BUILDING_COST)){
-		FAssert(iBaseCost * totalModifier < MAX_INT);
-        iBaseCost = static_cast<int>(iBaseCost * totalModifier);
-    }
-
-	uint64_t iProductionNeeded = (uint64_t) 100*iBaseCost;
+uint64_t iProductionNeeded = (uint64_t) 100*iBaseCost;
 
 	iProductionNeeded *= CvGameSpeedScale::hammerCostPercent();
 	iProductionNeeded /= 100;
