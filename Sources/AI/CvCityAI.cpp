@@ -23,6 +23,9 @@
 #include "CvPlayerAI.h"
 #include "Enabler/CvEnablerKernel.h"     // the §5a vicinity union -- the enabler + context halves, one home
 #include "Data/CvInfoValuation.h"        // keyedTarget / collectKeyedTarget -- the keyed entry-list reads
+#include "Data/CvDepositRead.h"          // MMKernel -- applies / audienceOk / perScale (the ONE leaf surface)
+#include "Infos/CvModEntry.h"            // the compiled §3.9 entry an entry-list read walks
+#include "Conditions/CvConditionEval.h"  // CvCascadeEvalCtx
 #include "Infos/CvInfoKinds.h"           // the family/kind/unit vocabulary the valuation reads are keyed on
 #include "Engine/CvPlot.h"
 #include "Infrastructure/CvPython.h"
@@ -5113,11 +5116,6 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 		int iSpecialistExtraHealth = 0;
 		int iSpecialistExtraHappy = 0;
 
-		// ⛔ The employed-population discount is GONE with its field: `iNumPopulationEmployed` exists only in the
-		// building SCHEMA and is authored by ZERO buildings, so this branch could never fire. (The employed-
-		// population COMPOSITION is a live concern elsewhere -- it is one of the dormancy verdict's runtime legs,
-		// [enabler.md §8] -- but that is the operate gate, not this valuation.)
-
 		int aiFreeSpecialistYield[NUM_YIELD_TYPES];
 		for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
 		{
@@ -5996,17 +5994,41 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 				iValue += kBuilding.getFreeTechs() * 80;
 				iValue += kBuilding.getScalar(SCALAR_ENEMY_WAR_WEARINESS, CASC_SCOPE_CITY, CASC_UNIT_PERCENT) / 2;
 
-				for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
+				// The building's FREE-SPECIALIST deposits, read as the ENTRY LIST they are authored as
+				// (modifier.md §5/§6 -- a keyed/count-by-type leaf is an entry-list read by design). ONE walk
+				// answers both shapes the family carries: a TYPED slot (`freeSpecialists.city.{SPECIALIST_X}`)
+				// and a GENERIC slot scaled by a count (`.any` carrying a §3.7 `per`) -- so the scan over every
+				// specialist id disappears, because the entry already names the handful this building authored
+				// ([contexts.md]: the authored entry IS the answer the per-id loop was reconstructing).
 				{
-					if (kBuilding.getFreeSpecialistCount(iI) > 0)
-					{
-						iValue += AI_specialistValue(((SpecialistTypes)iI), false, false) * kBuilding.getFreeSpecialistCount(iI) / 50;
-					}
-				}
+					CvCascadeEvalCtx freeSpecialistCtx;
+					InfoValuation::fillEvalCtx(getCityContext(), kOwner.getEmpireContext(), NULL, freeSpecialistCtx);
 
-				foreach_(const ImprovementModifier & pair, kBuilding.getImprovementFreeSpecialists())
-				{
-					iValue += pair.second * countNumImprovedPlots(pair.first, true) * 50;
+					const std::vector<CvModEntry*>& kFreeSpecialistEntries = kBuilding.getModifiers()->entries();
+					for (size_t iFreeSpecialist = 0; iFreeSpecialist < kFreeSpecialistEntries.size(); ++iFreeSpecialist)
+					{
+						const CvModEntry* pFreeSpecialistEntry = kFreeSpecialistEntries[iFreeSpecialist];
+						if (pFreeSpecialistEntry->family != MODFAM_FREE_SPECIALISTS) continue;
+						if (pFreeSpecialistEntry->scope != CASC_SCOPE_CITY) continue;
+						if (!MMKernel::applies(pFreeSpecialistEntry->enabled, pFreeSpecialistEntry->disabled, freeSpecialistCtx)) continue;
+						if (!MMKernel::audienceOk(pFreeSpecialistEntry->aiOnly, freeSpecialistCtx)) continue;
+
+						// The §3.7 scaler through the ONE resolver; the count unit is stored ×100.
+						const int iSlots = (int)(MMKernel::perScale(*pFreeSpecialistEntry, freeSpecialistCtx,
+							pFreeSpecialistEntry->value) / 100);
+						if (iSlots <= 0)
+						{
+							continue;
+						}
+						if (pFreeSpecialistEntry->targetFk >= 0)
+						{
+							iValue += AI_specialistValue((SpecialistTypes)pFreeSpecialistEntry->targetFk, false, false) * iSlots / 50;
+						}
+						else
+						{
+							iValue += iSlots * 50;
+						}
+					}
 				}
 
 				for (int iI = 0; iI < NUM_DOMAIN_TYPES; iI++)
@@ -6160,41 +6182,6 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 						{//If the modifier is less than -100, avoid it like the plague
 							iValue -= 100;
 						}
-					}
-				}
-
-				foreach_(const BuildingModifier2 & modifier, kBuilding.getGlobalBuildingCostModifiers())
-				{
-					const BuildingTypes eLoopBuilding = modifier.first;
-					if (kOwner.getBuildingAvailabilityAnywhere(eLoopBuilding) == EnablerDomain::STATE_LISTED)
-					{
-						const int iOriginalCost = kOwner.getProductionNeeded(eLoopBuilding);
-						int iPlayerMod = kOwner.getBuildingCostModifier(eLoopBuilding);
-
-						int iNewCost = 0;
-						// Reverse old modifier
-						if (iPlayerMod < 0)
-						{
-							iNewCost = iOriginalCost * (-1 * iPlayerMod + 100) / 100;
-						}
-						else if (iPlayerMod > 0)
-						{
-							iNewCost = iOriginalCost * 100 / (100 + iPlayerMod);
-						}
-						iPlayerMod += modifier.second;
-						// Apply new modifier
-						if (iPlayerMod < 0)
-						{
-							iNewCost = iOriginalCost * 100 / (-1 * iPlayerMod + 100);
-						}
-						else if (iPlayerMod > 0)
-						{
-							iNewCost = iOriginalCost * (100 + iPlayerMod) / 100;
-						}
-
-						const int iCount = count_if(kOwner.cities(), !CvCity::fn::hasBuilding(eLoopBuilding));
-
-						iValue += (iOriginalCost - iNewCost) * iCount / 10;
 					}
 				}
 
@@ -6402,11 +6389,20 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 					)
 				);
 
-				foreach_(const ReligionModifier & pair, kBuilding.getReligionChanges())
+				// The building's per-religion deposits, read off its OWN compiled entries: the religion FK sits
+				// directly under the scope (`religion.city.{RELIGION_X}`), so the keyed read takes no container
+				// token ([modifier.md §5] -- a keyed deposit is an entry-list read over what the source authored).
 				{
-					if (kTeam.hasHolyCity(pair.first))
+					std::vector<std::pair<int, int> > kReligionRows;
+					InfoValuation::collectKeyedTarget(kBuilding.getModifiers(), MODFAM_RELIGION, -1, -1,
+						kReligionRows, (int)CASC_SCOPE_CITY);
+					for (size_t iReligionRow = 0; iReligionRow < kReligionRows.size(); ++iReligionRow)
 					{
-						iValue += (pair.second * (eStateReligion == pair.first ? 10 : 1));
+						const ReligionTypes eReligion = (ReligionTypes)kReligionRows[iReligionRow].first;
+						if (kTeam.hasHolyCity(eReligion))
+						{
+							iValue += kReligionRows[iReligionRow].second * (eStateReligion == eReligion ? 10 : 1);
+						}
 					}
 				}
 

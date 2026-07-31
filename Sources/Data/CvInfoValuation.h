@@ -104,6 +104,14 @@ public:
 	//	the handful the entity AUTHORED instead of the whole target registry, which is the own-data inversion
 	//	pedia-read-map finding 2 names as the shape to delete.
 	//	⚠ Values come back AS COMPILED (a flat is ×100, a percent is not -- [DEC-fixedpoint-x100]).
+	//	⚖ iTargetSegment is matched EXACTLY, and -1 is a REAL ADDRESS SHAPE, not a failure: a named-entity key
+	//	may sit directly under the scope with no plural container token (`religion.city.{RELIGION_X}` -- the
+	//	address decode routes an underscored segment to targetFk and leaves targetSeg unset), so -1 selects
+	//	precisely those. Serving both shapes here is what keeps this the ONE keyed read
+	//	([DEC-single-implementation]) instead of every direct-keyed consumer hand-rolling an entry walk.
+	//	⛔ So NEVER forward a FAILED `keyedTargetSegment` lookup into this parameter -- that also returns -1, and
+	//	it would silently select the direct-keyed entries instead of answering "nothing was authored there".
+	//	Pass the intent: a container token you know the address carries, or -1 because the address carries none.
 	//	iScope filters to entries AUTHORED at one scope (-1 = any), the same shape as iKind's filter. It matters
 	//	wherever the same family+target is authored at two scopes with two different consumers -- `buildRate`
 	//	keyed by buildings is the live case (a city-scope row speeds the build HERE, an empire-scope row speeds

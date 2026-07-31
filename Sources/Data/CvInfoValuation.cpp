@@ -152,7 +152,7 @@ void InfoValuation::collectKeyedTarget(const CvModifiers* modifiers, ModifierFam
 	int iTargetSegment, std::vector<std::pair<int, int> >& targetValues, int iScope)
 {
 	targetValues.clear();
-	if (modifiers == NULL || iTargetSegment < 0)
+	if (modifiers == NULL)
 	{
 		return;
 	}

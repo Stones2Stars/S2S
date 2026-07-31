@@ -145,6 +145,11 @@ void CvBuildingInfo::mapFrom(const picojson::value& entity)
 			if (pEntry->family != MODFAM_FREE_SPECIALISTS || pEntry->scope != CASC_SCOPE_CITY) continue;
 			if (iAnySeg < 0) continue;
 			if (pEntry->targetSeg != iAnySeg && pEntry->memberSeg != iAnySeg) continue;
+			// A CONDITIONED entry -- above all one carrying a §3.7 `per` count-scaler -- has no value until it is
+			// resolved against a city, so it can never fold into this unconditional slot: the answer depends on
+			// how many of something that city has. Folding one grants the slots everywhere and unconditionally.
+			// `isConditioned` is the model's own test (the twin of `isPointFoldable`), so the two cannot drift.
+			if (pEntry->isConditioned()) continue;
 			m_iFreeSpecialistsAny += pEntry->value / 100;   // the COUNT unit is stored ×100
 		}
 	}

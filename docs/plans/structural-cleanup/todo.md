@@ -98,6 +98,15 @@
   gone, but whose accessors and consumers were left standing in its own class. They are compile errors that the
   per-TU error cap hides, so the census only names them a few at a time — sweep them from the migration ledger
   instead of waiting. `CvUnit`, `CvCity` and `CvPlayer` carry the bulk.
+- Wire the COUNT a building's per-improvement free-specialist deposit scales by. The read is wired through the
+  ONE `per` resolver, but the count it resolves against does not count correctly yet, so those entries
+  contribute 0 — wired, not right, which is the ordering while the tree is red
+  ([roadmap.md](roadmap.md) WIRED OUTRANKS CORRECT); the value is checked from the cascade over HTTP once green.
+  ⚑ The defect is the same one the TRAIT per-specialist deposits had: the deposit does not state its plural
+  TARGET, so the count resolves at the wrong granularity. The trait emit passes `target="cities"`; the
+  building's improvement-scaled free-specialist emit passes no target at all, so nothing expresses "each city,
+  by its OWN count". ⛔ Fixing only the reader is inert — that was proven on the trait side, where the address
+  had to carry the target before any reader change could do anything ([modifier.md §5](../../specs/modifier.md)).
 - Repair the `savemigration.txt` REPLACEMENT-OBLIGATION notes that no longer resolve. Each note records WHICH
   named replacement now serves a cut value; where that replacement was archived or never built, the field is
   gone from every save and the value has NO source, which nothing catches ([AGENTS.md](../../../AGENTS.md)).
