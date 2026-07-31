@@ -195,14 +195,14 @@ static const char* CJK_EDGES[] = { "enables", "obsoletes", "replaces", "disables
 // Intrinsic (§7) + auxiliary/bespoke (§9) + the §8 classification blocks -- everything the base's DISPATCH does not
 // route to a section unit (a subclass / another system owns it). `policies`/`capabilities`/`skills`/`tags`/`state`/
 // `attributes` sit here because their FLAT-BOOL halves are dispatched to the subclass's CvClassificationBlock units by the
-// subclass itself (keyed skill extras stay typed subclass members); the bespoke `shrine`/`headquarters` FK sections +
-// era `worldGen` likewise.
+// subclass itself (keyed skill extras stay typed subclass members); the bespoke `shrine`/`headquarters` FK sections
+// likewise.
 static const char* CJK_INTRINSIC_KEYS[] = {
 	"type", "text", "description", "help", "civilopedia", "message", "quote", "strategy", "adjective", "shortDescription",
 	"cost", "ui", "world", "sound", "identity", "ai",
 	"policies", "succession", "excludes", "produces", "condition", "effect",
 	"vision", "outcomes", "mapGeneration", "replacedBy", "capabilities", "skills", "tags", "state", "attributes", "characteristics", "builds",
-	"promotionLine", "buildUp", "shrine", "headquarters", "worldGen", "properties", "voteSource", "threshold", "role", "victory",
+	"promotionLine", "buildUp", "shrine", "headquarters", "properties", "voteSource", "threshold", "role", "victory",
 	"targetLevel", "conversion", "cityFounding", "unitCapability",
 	"canTrade", "canTradeOn", "canWorkOn",   // tech bespoke blocks (owner 2026-07-02, json.md §2 / capabilities.md)
 	"spread",   // UNIT spread strength block: spread.religion/spread.corporation keyed maps (owner 2026-07-11 -- clearer than burying under timed `grants`)

@@ -82,13 +82,11 @@ ART = {"Button", "AudioUnitVictoryScript", "AudioUnitDefeatScript", "EraInfoSoun
        "CitySoundscapes", "iSoundtrackSpace", "bFirstSoundtrackFirst"}
 IDENTITY = {"iHistoricalStartYear": "historicalStartYear", "iHistoricalEndYear": "historicalEndYear",
             "iNormalSpeedTurns": "normalSpeedTurns", "iAdvancedStartPoints": "advancedStart"}
-# barbarian/goody WORLD-STATE gates -> a bespoke `worldGen` block: LIVE C++ world-RULE gates (goody/barb
-# placement), NOT identity/modifiers. 0/false in every era -> not emitted (zero-drop), so the ERA GATE on each
-# rule never fired and its readers are gone -- dead-as-an-era-field, the bNoAnimals disposition. The C++ rules
-# themselves are untouched. The mapping stays so future data has a landing place, but nothing reads it: a
-# world-state-gate CONCEPT needs its own design before that block means anything.
-WORLDGEN = {"bNoGoodies": "noGoodies", "bNoBarbUnits": "noBarbUnits", "bNoBarbCities": "noBarbCities"}
-DROP = {"bNoAnimals"}
+# DROP -- DEAD AS ERA FIELDS. The C++ world rules these named (goody placement, barb-unit and barb-city spawn,
+# animal spawning) are LIVE and untouched; what is dead is the ERA GATE on them, because no era has ever set
+# one, so the gate never fired and has no consumer. A world-state-gate concept, if ever wanted, is designed
+# with a reader rather than reserved as an empty block.
+DROP = {"bNoAnimals", "bNoGoodies", "bNoBarbUnits", "bNoBarbCities"}
 FAMILY_ORDER = ["costs", "growth", "greatPeopleRate", "durations", "eventChance", "maintenance"]
 
 
@@ -100,7 +98,7 @@ def _put(fam, family, scope, member, unit, val):
 
 
 def curate(typ, rec, order):
-    text, fam, grants, art_blocks, identity, world_gen, leftover = {}, {}, {}, {}, {}, {}, []
+    text, fam, grants, art_blocks, identity, leftover = {}, {}, {}, {}, {}, []
     identity["order"] = order   # the era's sequence index (engine enum / XML order) — eras are ORDERED data, defined
     #                              in the JSON so consumers resolve era-thresholds (byEra cumulative) from curated data, not /state.
     for c in rec:
@@ -127,9 +125,6 @@ def curate(typ, rec, order):
         elif tag in IDENTITY:
             if t or list(c):
                 identity[IDENTITY[tag]] = engine.generic(c)
-        elif tag in WORLDGEN:
-            if t in ("1", "true", "True"):                 # world-RULE gate ON -> worldGen (0/false today -> zero-drop)
-                world_gen[WORLDGEN[tag]] = True
         else:
             if list(c) or t:                              # boolean world-gates land here if ever set (default false -> skip)
                 if tag[:1] == "b":
@@ -153,8 +148,6 @@ def curate(typ, rec, order):
             out[family] = fam[family]
     if grants:
         out["grants"] = grants
-    if world_gen:
-        out["worldGen"] = world_gen
     cc.emit_art(out, art_blocks)
     if identity:
         out["identity"] = identity

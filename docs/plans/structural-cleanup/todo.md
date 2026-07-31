@@ -72,10 +72,6 @@
   wearing a dead plane's prefix is what makes the next sweep mis-scope it
   ([skills.md](../../specs/skills.md)).
 - Retire the legacy `largestCity` member once ranked-target-selection EVALUATION lands.
-- Design the WORLD-STATE GATE concept, or drop its curator routing. The era `worldGen` block
-  (`noGoodies`/`noBarbUnits`/`noBarbCities`) is a landing place with no reader: the C++ rules are live but no
-  era ever set one, so the era gate never fired and its consumers are cut. Authoring data there today does
-  nothing ([curate_era.py](../../../Tools/Migration/curate_era.py)).
 - Re-home `stronglyRestricted` to a `requires.build` civ-membership gate, when NPC civilizations are wired.
 - Move corp-HQ revenue (`HeadquarterCommerces`) with the corporation rework.
 - Retire `DOMAIN_IMMOBILE`. Immobile is not a domain ([json.md §7](../../specs/json.md)) — a domain is the
