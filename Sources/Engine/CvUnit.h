@@ -844,9 +844,9 @@ public:
 	bool isNukeImmune() const;
 	bool isInquisitor() const;
 
-	int maxInterceptionProbability(bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
+	int maxInterceptionProbability() const;
 	int currInterceptionProbability() const;
-	int evasionProbability(bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
+	int evasionProbability() const;
 	int withdrawalProbability() const;
 //TB Combat Mods Begin
 	int attackCombatModifierTotal() const;
@@ -1086,10 +1086,10 @@ public:
 	int getExtraAirRange() const;
 	void changeExtraAirRange(int iChange);
 
-	int getExtraIntercept(bool bIgnoreCommanders = false,bool bIgnoreCommodores = false) const;
+	int getExtraIntercept() const;
 	void changeExtraIntercept(int iChange);
 
-	int getExtraEvasion(bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
+	int getExtraEvasion() const;
 	void changeExtraEvasion(int iChange);
 
 	int getExtraFirstStrikes() const;
@@ -1098,23 +1098,23 @@ public:
 	int getExtraChanceFirstStrikes() const;
 	void changeExtraChanceFirstStrikes(int iChange);
 
-	int getExtraWithdrawal(bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
+	int getExtraWithdrawal() const;
 	void changeExtraWithdrawal(int iChange);
 
 	//TB Combat Mods Start
-	int getExtraAttackCombatModifier (bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
+	int getExtraAttackCombatModifier () const;
 	void changeExtraAttackCombatModifier (int iChange);
 
-	int getExtraDefenseCombatModifier (bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
+	int getExtraDefenseCombatModifier () const;
 	void changeExtraDefenseCombatModifier (int iChange);
 
-	int getExtraVSBarbs (bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
+	int getExtraVSBarbs () const;
 	void changeExtraVSBarbs (int iChange);
 
-	int getExtraReligiousCombatModifier(bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
+	int getExtraReligiousCombatModifier() const;
 	void changeExtraReligiousCombatModifier(int iChange);
 
-	int getExtraDamageModifier (bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
+	int getExtraDamageModifier () const;
 	void changeExtraDamageModifier (int iChange);
 
 	void changeExtraUpkeep(const int iChange);
@@ -1148,16 +1148,16 @@ public:
 	void changeFliesToMoveCount(int iChange);
 
 
-	int getExtraUnnerve (bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
+	int getExtraUnnerve () const;
 	void changeExtraUnnerve (int iChange);
 
-	int getExtraEnclose (bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
+	int getExtraEnclose () const;
 	void changeExtraEnclose (int iChange);
 
-	int getExtraLunge (bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
+	int getExtraLunge () const;
 	void changeExtraLunge (int iChange);
 
-	int getExtraDynamicDefense (bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
+	int getExtraDynamicDefense () const;
 	void changeExtraDynamicDefense (int iChange);
 
 	int getExtraStrength () const;
@@ -1173,7 +1173,7 @@ public:
 	bool mayOnslaught() const;
 	void changeOnslaughtCount(int iChange);
 
-	int getExtraEndurance (bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
+	int getExtraEndurance () const;
 	void changeExtraEndurance (int iChange);
 
 
