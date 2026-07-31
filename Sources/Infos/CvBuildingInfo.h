@@ -29,6 +29,15 @@ public:
 	virtual const CvProvides*  getProvides()     const { return &m_provides; }
 	virtual const CvModifiers* getModifiers()    const { return &m_modifiers; }
 	virtual const CvModifiers* getWhenObsolete() const { return &m_whenObsolete; }
+	// obsoletedBy.techs -- authored TARGET-side (enabler.md §2: nothing authors tech.obsoletes.buildings), so
+	// the obsoleting tech IS this edge rather than a member. Reads [0]: an AUTHORED edge list keeps its data
+	// order, which `CvEdges::sortUnique` deliberately leaves alone for exactly these first-element getters.
+	// Same shape as the sibling `CvSpecialBuildingInfo::getObsoleteTech`, which names this read as its twin.
+	TechTypes getObsoleteTech() const
+	{
+		const std::vector<int>* pTechs = edge(EDGEF_OBSOLETED_BY, EDGEB_TECHS);
+		return (TechTypes)((pTechs != NULL && !pTechs->empty()) ? (*pTechs)[0] : NO_TECH);
+	}
 	virtual const CvClassificationBlock* getAttributes()   const { return &m_attributes; }
 	virtual const CvClassificationBlock* getAmenities()    const { return &m_amenities; }
 	virtual const CvClassificationBlock* getCapabilities() const { return &m_capabilities; }
