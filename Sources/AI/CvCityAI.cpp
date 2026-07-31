@@ -6030,14 +6030,20 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 					}
 				}
 				iValue += forcedTradeRoutesValue;
-				foreach_(const UnitModifier2 & modifier, kBuilding.getUnitProductionModifiers())
+				// The unit-keyed buildRate deposits, read as the ENTRY-LIST over what this building AUTHORED
+				// (modifier.md §5) -- the handful of units it names, never the unit registry. A percent comes
+				// back unscaled ([DEC-fixedpoint-x100]), so it feeds the cost arithmetic exactly as before.
+				std::vector<std::pair<int, int> > keyedUnitBuildRates;
+				InfoValuation::collectKeyedTarget(kBuilding.getModifiers(), MODFAM_BUILD_RATE, -1,
+					InfoValuation::keyedTargetSegment("units"), keyedUnitBuildRates);
+				for (size_t iRow = 0; iRow < keyedUnitBuildRates.size(); ++iRow)
 				{
 					int unitProductionModifierValue = 0;
-					const UnitTypes eLoopUnit = modifier.first;
+					const UnitTypes eLoopUnit = (UnitTypes)keyedUnitBuildRates[iRow].first;
 
 					if ((getUnitAvailability(eLoopUnit) == EnablerDomain::STATE_LISTED))
 					{
-						const int iModifier = modifier.second;
+						const int iModifier = keyedUnitBuildRates[iRow].second;
 						const UnitAITypes eUnitAI = GC.getUnitInfo(eLoopUnit).getDefaultUnitAI();
 						const UnitTypes eBestUnit = kOwner.bestBuildableUnitForAIType(CvTagReads::domainOf(GC.getUnitInfo(eLoopUnit).getTags()), eUnitAI);
 

@@ -7138,14 +7138,6 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, CvArea* pAr
 		changeYieldRateModifier(((YieldTypes)iI), (kBuilding.getGlobalYieldModifier(iI) * iChange));
 	}
 
-	foreach_(const ImprovementArray& pair, kBuilding.getGlobalImprovementYieldChanges())
-	{
-		for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
-		{
-			changeImprovementYieldChange(pair.first, ((YieldTypes)iI), (pair.second[iI] * iChange));
-		}
-	}
-
 	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 	{
 		changeSpecialistExtraCommerce(((CommerceTypes)iI), (kBuilding.getSpecialistExtraCommerce(iI) * iChange));
@@ -17337,14 +17329,6 @@ void CvPlayer::processCivics(const CivicTypes eCivic, const int iChange, const b
 			changeFreeSpecialistCount((SpecialistTypes)iI, (kCivic.getFreeSpecialistCount(iI) * iChange));
 		}
 
-		for (int iI = 0; iI < GC.getNumImprovementInfos(); iI++)
-		{
-			for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
-			{
-				changeImprovementYieldChange(((ImprovementTypes)iI), ((YieldTypes)iJ), (kCivic.getImprovementYieldChanges(iI, iJ) * iChange));
-			}
-		}
-
 		changeForeignTradeRouteModifier(kCivic.getForeignTradeRouteModifier() * iChange);
 		changeReligionSpreadRate(kCivic.getReligionSpreadRate() * iChange);
 		changeCorporationSpreadModifier(kCivic.getCorporationSpreadRate() * iChange);
@@ -27065,14 +27049,6 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 	//		changeNoCivicUpkeepCount(((CivicOptionTypes)iI), iChange);
 	//	}
 	//}
-
-	for (int iI = 0; iI < GC.getNumImprovementInfos(); iI++)
-	{
-		for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
-		{
-			changeImprovementYieldChange(((ImprovementTypes)iI), ((YieldTypes)iJ), (GC.getTraitInfo(eTrait).getImprovementYieldChange(iI, iJ) * iChange));
-		}
-	}
 
 	//TB Traits begin
 	if (GC.getTraitInfo(eTrait).getMaxAnarchy() > -1)

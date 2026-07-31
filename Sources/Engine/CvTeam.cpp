@@ -5610,14 +5610,6 @@ void CvTeam::processTech(TechTypes eTech, int iChange, bool bAnnounce)
 		}
 	}
 
-	for (int iI = 0; iI < GC.getNumImprovementInfos(); iI++)
-	{
-		for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
-		{
-			changeImprovementYieldChange(((ImprovementTypes)iI), ((YieldTypes)iJ), (GC.getImprovementInfo((ImprovementTypes)iI).getTechYieldChanges(eTech, iJ) * iChange));
-		}
-	}
-
 	for (int iI = 0; iI < MAX_PLAYERS; iI++)
 	{
 		CvPlayer& playerX = GET_PLAYER((PlayerTypes)iI);

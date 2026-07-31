@@ -150,9 +150,12 @@
 - Make `CvCity::getNumBonuses` a BARE FETCH of a maintained per-city count ([enabler.md §8](../../specs/enabler.md)
   open item 2). ⛔ Every per-read re-plumbing of this is the wrong axis and has been backed out before.
   ⚠ `CityContext::tradedBonusCount` re-derives on refresh and is on the wrong side of it too.
-- Wire the `SPECIALIST` count domain into the ONE count core, so a `per: "SPECIALIST"` deposit scales instead of
-  falling through to the presence fallback and contributing nothing. It is json.md §3.7's own first worked
-  example and buildings, civics and traits all author it, so the deposits are live data reading zero today.
+- Wire the missing COUNT DOMAINS into the ONE count core, so a `per:` deposit over them scales instead of
+  falling through to the presence fallback and contributing 0 (or 1) instead of N. Two are known live:
+  `SPECIALIST` — json.md §3.7's own first worked example, authored by buildings, civics and traits — and
+  `IMPROVEMENT` at city scope, which the per-improvement free-specialist scaler needs (the count wanted is
+  improved plots worked by this city, so a presence fallback answers 1 where the legacy term answered the
+  plot count). ⚠ Both are live authored data reading the wrong number today, not headroom.
   ⚑ The shape is already ruled ([tally.md](../../specs/tally.md)): give the OBJECT the aggregate and forward it
   through `CityContext`, never a tally side-store. ⚠ The count the legacy multiplier used is assigned **plus
   typed-free** specialists, so the city's assigned-only population counter is NOT the number — forwarding it
