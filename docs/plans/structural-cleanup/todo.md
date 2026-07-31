@@ -145,7 +145,15 @@
   re-inlined at a mutation site ([event-spine.md](../../specs/event-spine.md)). Expect the owed list to GROW as
   each legacy mutator is cut; add them together on the facts.
 - The amenity CONSUMER side: re-point consumers onto the CITY read and retire the per-flag `CvCity` counters and
-  their bespoke per-attribute predicates/facts ([contexts.md](../../architecture/contexts.md)).
+  their bespoke per-attribute predicates/facts ([contexts.md](../../architecture/contexts.md)). The apply sites
+  are the `process*` functions, whose remaining pushes are largely this family — `changeZoCCount`,
+  `changeProtectedCultureCount`, `setWorkableRadiusOverride` — against keys the data already authors
+  (`zoneOfControl`, `protectedCulture`, `adds3rdRing`).
+  ⚠ **The workable-radius one is a live BUG, not just an unmigrated shape, and it is the case that proves the
+  model:** it is a plain SET rather than a refcount, so a city holding TWO radius buildings and losing one sets
+  the override to 0 and loses the ring a live grantor still justifies — exactly the failure the id→COUNT
+  dictionary exists to prevent. ⚑ It also carries a VALUE (the radius) rather than presence, which that
+  dictionary already handles, being an int slot rather than a bit.
 - Re-fold a conditioned amenity on a BUILDING grantor when its condition moves (the empire half is covered).
   It wants the condition-dependency route the modifier consumer already derives.
 - Add `m_amenities` (and its fold leg) to `CvTraitInfo` / `CvTechInfo` WHEN data authors one — not before.
