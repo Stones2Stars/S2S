@@ -80,6 +80,12 @@
 > loop) is [roadmap.md § LEGACY STILL BREATHING](roadmap.md). ⚠ KNOWN-INCOMPLETE — legacy found anywhere else is
 > killed on the same terms. ⛔ Never record a found legacy surface as acceptable or "kept until X".
 
+- Retire the building-COST-modifier accumulator and move its readers. Its writer is already gone: the curator
+  re-homed the legacy source-keyed cost map onto the TARGET, as a conditioned own-cost entry gated on
+  possessing the source, so nothing feeds the accumulator and every reader now sees zero. The value lives in
+  the target building's OWN `costs` entries, so the readers ask the target rather than a player-side map.
+  ⚠ Distinct from its buildRate sibling, which stays source-keyed and converts to an entry-list read — the two
+  look alike and do not resolve the same way.
 - Finish the HALF-CUT accessors: a member whose declaration, serialization and `savemigration.txt` tag are all
   gone, but whose accessors and consumers were left standing in its own class. They are compile errors that the
   per-TU error cap hides, so the census only names them a few at a time — sweep them from the migration ledger
