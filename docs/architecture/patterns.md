@@ -206,26 +206,35 @@ group's natural index** — never N individual getters for a groupable set. This
      entity HAS is `hasAttribute(id)`/`hasAttributes()` (building) and `hasSkill(id)`/`hasTag(id)` (unit); what it
      PROVIDES to something else is `providesCapability(id)`/`providesCapabilities()` (to the empire) and
      `providesSkill(id)` (a grantor handing a skill on).
-     > **⚖ THE PARAMETERIZED READ IS THE DESTINATION; THE PER-KEY NAMED GETTERS ARE TRANSITIONAL (owner) —
-     > "all these individual getters should be replaced with one parameterized read, but we can do that after
-     > green."** The per-key `CLS_HAS` reads (`isNukeImmune()` / `isGovernmentCenter()` / …) are the same
-     > getter-per-channel shape this section calls the disease, kept only because consumers need something to
-     > compile against while the tree is red. ⛔ So do NOT grow the named set as a habit, and do NOT read its
-     > existence as the sanctioned shape — it collapses onto `hasAttribute(id)` in a pass of its own.
-     > ⚠ **The blocker is REAL and is what that pass has to solve: there is no compile-time id to pass.** The
-     > classification categories are OPEN BY DESIGN and their ids are **minted at LOAD** from the union of
-     > authored keys ([DEC-classification-infos](decisions.md#dec-classification-infos)) — which is precisely why
-     > `CLS_HAS` exists at all (it memoizes a per-site id lookup). A caller-facing `hasAttribute(ATTRIBUTE_X)`
-     > therefore needs a resolved-id vocabulary the open registry does not hand out at compile time, so the pass
-     > is a design decision about that vocabulary, never a mechanical rename.
-     > ⛔ **The CONSUMER side of that read has exactly ONE home per domain — `CvSkillReads` and `CvTagReads`
-     > (`Infos/CvSkillReads.{h,cpp}` / `Infos/CvTagReads.{h,cpp}`), static-methods classes holding the memoized
-     > id per key.** `CLS_HAS` is for a getter BODY on an info; a
-     > CONSUMER asking "does this promotion/unitcombat/unit carry skill X" goes through the shared surface and
-     > never writes its own memoized-id helper. ⚑ This is the DRY law's own worked case rather than a
-     > preference: because the helper was file-local, four translation units independently reimplemented the
-     > same family (56 definitions over 35 keys) — precisely the *"the next consumer can't see it, so it
-     > reimplements it"* mechanism rule 4 names. A block-less info answers FALSE, so the read is total.
+     > **⛔ THE PARAMETERIZED READ IS THE CONSUMER SURFACE — a consumer NEVER asks for a key by name (owner).** A
+     > consumer asks `kUnitInfo.hasSkill(CLS_SKILL_BLITZ)`; the id is a compile-time constant from the
+     > **generated** `Infos/CvClassificationIds.h`. Seven reads on `CvInfo` cover every domain
+     > (`hasSkill` / `hasTag` / `hasAttribute` / `providesAmenity` / `hasCharacteristic` / `providesCapability` /
+     > `providesPolicy`, plus `revokesSkill` for the §4 revoke plane), each a NULL-safe `clsHasId` over the
+     > block — so a block-less info answers FALSE and the read is total.
+     > ⛔ **A new authored key is a REGENERATED TABLE ENTRY, never a new function.** Do not add a named getter,
+     > and do not re-introduce a per-key read class: that shape is what this replaced.
+     > ⚑ **How the open registry still hands out a compile-time id** — the blocker was never the openness, it was
+     > that the id ORDER was DISCOVERED at load. `Tools/Migration/curate_classification_ids.py` enumerates the
+     > authored keys and pins the order, exactly as `curate_order.py` pins category id order in `_order.json`;
+     > `ClassificationRegistry::buildAndResolve` SEEDS from that table before minting, so the constant IS the
+     > runtime id. The category stays OPEN ([DEC-classification-infos](decisions.md#dec-classification-infos)): a
+     > key authored but absent from the table still mints at load, appended after the seeded block — regenerating
+     > merely promotes it to a constant. Nothing serializes, so a regenerated table is save-neutral.
+     > ⚠ **The constants carry a reserved `CLS_` namespace** (`CLS_TAG_MILITARY`), while the runtime INFOTYPE
+     > STRING stays `TAG_MILITARY`. The property engine already owns global `TagTypes` / `AttributeTypes` in
+     > `CvEnums.h` and is owner-locked; more decisively, an OPEN registry means any future authored key could
+     > collide with any engine enumerator, so the namespace closes that class by construction.
+     > ⚑ A **spec-named key that no data authors yet** (the skills.md §1/§2 headroom — `noSelfHeal`, `freeDrop`,
+     > …) is seeded from the generator's small `HEADROOM` list so a legitimate consumer still compiles and simply
+     > reads false; it leaves that list the moment data authors it.
+     >
+     > ⚠ **What REMAINS of the old shape: the info-side named `CLS_HAS` getter BODIES** (`CvBuildingInfo::isNukeImmune()`,
+     > `isGovernmentCenter()`, `CvFeatureInfo::isNoCity()`, …). They are the same getter-per-key disease and
+     > collapse onto the parameterized read the same way — but ⛔ **NOT by a name sweep.** Their names COLLIDE with
+     > live game-object methods (`CvCity::isCapital`, `CvUnit::isNukeImmune`, `CvCity::isGovernmentCenter`), so
+     > which receiver a call site holds is a SEMANTIC question, exactly as it is for the unit skill composites.
+     > A textual rename destroys the game-object half. Convert them per site, receiver-checked.
   3. **Modifier groups — three reads per group, all over the LOAD-COMPILED forms:**
      - the **straight point read** over the compiled unconditioned sum — `getDefense(DefenseKind eKind,
        ScopeKind eScope)` → one array load, **0 calculation** (kind and scope separate arguments,

@@ -3,10 +3,9 @@
 
 
 #include "Tools/FProfiler.h"
+#include "Infos/CvClassificationIds.h"   // the generated SKILL_/TAG_/CAPABILITY_ id table
 
 #include "CvGameCoreDLL.h"
-#include "Infos/CvSkillReads.h"
-#include "Infos/CvTagReads.h"
 #include "Engine/CvGameSpeedScale.h"
 #include "Enabler/CvEnablerKernel.h"   // requiresMetForPlayer -- the system-placement gate (barbarian fielding)
 #include "AI/BetterBTSAI.h"
@@ -2735,7 +2734,7 @@ bool CvGame::selectionListIgnoreBuildingDefense() const
 
 	if (!bIgnoreBuilding && !bAttackLandUnit && getBestLandUnit() != NO_UNIT)
 	{
-		bIgnoreBuilding = CvSkillReads::ignoreBuildingDefense(GC.getUnitInfo(getBestLandUnit()).getSkills());
+		bIgnoreBuilding = GC.getUnitInfo(getBestLandUnit()).hasSkill(CLS_SKILL_IGNORE_BUILDING_DEFENSE);
 	}
 	return bIgnoreBuilding;
 }
@@ -4747,7 +4746,7 @@ void CvGame::setHandicapType(HandicapTypes eHandicap)
 		{
 			for (int i = 0; i < GC.getNumUnitInfos(); i++)
 			{
-				if (CvSkillReads::found(GC.getUnitInfo((UnitTypes)i).getSkills()))
+				if (GC.getUnitInfo((UnitTypes)i).hasSkill(CLS_SKILL_FOUND))
 				{
 					for (int j = 0; j < MAX_PLAYERS; j++)
 					{
@@ -6236,7 +6235,7 @@ void enumSpawnPlots(const CvSpawnInfo& spawnInfo, std::vector<CvPlot*>* plots)
 	const bool bFlatLand = spawnInfo.getFlatlands();
 	const bool bFreshWaterOnly = spawnInfo.getFreshWaterOnly();
 	const bool bNotInView = spawnInfo.getNotInView();
-	const bool bWildAnimal = CvTagReads::wild(unitInfo.getTags());
+	const bool bWildAnimal = unitInfo.hasTag(CLS_TAG_WILD);
 	const bool bAnimalBarred = spawnInfo.getNeutralOnly() || bWildAnimal && GC.getGame().isOption(GAMEOPTION_ANIMAL_STAY_OUT);
 
 	const PlayerTypes ePlayer = spawnInfo.getPlayer();
@@ -6266,7 +6265,7 @@ void enumSpawnPlots(const CvSpawnInfo& spawnInfo, std::vector<CvPlot*>* plots)
 					pPlot->isOwned()
 					&&
 					(
-						!CvSkillReads::animalIgnoresBorders(unitInfo.getSkills())
+						!unitInfo.hasSkill(CLS_SKILL_ANIMAL_IGNORES_BORDERS)
 
 						|| pPlot->getImprovementType() != NO_IMPROVEMENT
 					)
@@ -7160,7 +7159,7 @@ void CvGame::createBarbarianCities(bool bNeanderthal)
 namespace {
 	bool isValidBarbarianSpawnUnit(const CvArea* area, const CvUnitInfo& unitInfo, const UnitTypes unitType)
 	{
-		return unitInfo.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) > 0 && !CvSkillReads::onlyDefensive(unitInfo.getSkills())
+		return unitInfo.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) > 0 && !unitInfo.hasSkill(CLS_SKILL_ONLY_DEFENSIVE)
 			// Make sure its the correct unit type for the area type (land or water)
 			&& (area->isWater() && unitInfo.getDomain() == DOMAIN_SEA || !area->isWater() && unitInfo.getDomain() == DOMAIN_LAND)
 			// Barbs don't need the bonus, but the bonus must be enabled by tech
@@ -11593,7 +11592,7 @@ bool CvGame::canEverSpread(CorporationTypes eCorporation) const
 namespace {
 	bool validBarbarianShipUnit(const CvUnitInfo& unitInfo, const UnitTypes unitType)
 	{
-		return unitInfo.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) > 0 && !CvSkillReads::onlyDefensive(unitInfo.getSkills())
+		return unitInfo.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) > 0 && !unitInfo.hasSkill(CLS_SKILL_ONLY_DEFENSIVE)
 			&& unitInfo.getDomain() == DOMAIN_LAND
 			&& GET_TEAM(BARBARIAN_TEAM).isUnitBonusEnabledByTech(unitInfo, true)
 			&& !unitInfo.isCivilizationUnit()

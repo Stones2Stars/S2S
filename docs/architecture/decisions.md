@@ -462,7 +462,12 @@ The §8/§9 classification categories (skills / tags / attributes / amenities / 
 exist as RUNTIME-GENERATED INFOS: one info per distinct authored block key, minted at load into the global infotype map
 (`SKILL_`/`TAG_`/`ATTRIBUTE_`/`AMENITY_`/`CHARACTERISTIC_`/`CAPABILITY_`/`POLICY_` + UPPER_SNAKE of the camelCase key) and its
 category's InfoRepo — referenceable like any authored info, with every entity's blocks resolved to by-id bitsets. Nothing is
-hand-authored per category; the registry derives from the data. ⚠ A **HOLDER'S** side is not always a bitset: where several
+hand-authored per category; the registry derives from the data. **The id ORDER is PINNED by a generated table**
+(`Tools/Migration/curate_classification_ids.py` → `Infos/CvClassificationIds.h`, the `_order.json` precedent) which the
+registry SEEDS from before minting, so each `CLS_<DOMAIN>_<KEY>` constant IS the runtime id and the whole consumer surface
+is ONE parameterized read per domain (`info.hasSkill(CLS_SKILL_BLITZ)`) rather than a getter per key. Openness is intact —
+a key absent from the table still mints at load, appended after the seeded block — and nothing serializes, so regenerating
+is save-neutral. ⚠ A **HOLDER'S** side is not always a bitset: where several
 grantors can confer the same key the holder stores an id→COUNT dictionary instead (the city's `amenities`, json.md §8) —
 the by-id resolution is what is uniform, not the storage width. **Home:** [json.md §8](../specs/json.md).
 

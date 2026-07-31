@@ -89,6 +89,24 @@ public:
 	virtual const CvClassificationBlock* getCapabilities() const { return NULL; }   // §8 (grantors)
 	virtual const CvClassificationBlock* getPolicies()     const { return NULL; }   // §9 (civics/traits)
 
+	// ⚖ THE PARAMETERIZED CLASSIFICATION READ -- ONE per domain, for every info ([patterns.md] § THE GETTER
+	// SETUP: "all these individual getters should be replaced with one parameterized read"). The id argument is
+	// a compile-time constant from the GENERATED CvClassificationIds.h, which the ClassificationRegistry seeds
+	// from, so `kUnitInfo.hasSkill(CLS_SKILL_BLITZ)` is an O(1) bit test with no per-key surface anywhere.
+	// ⛔ This is what replaced the per-key read classes (a static method per key, ~60 of them each). Do NOT
+	// re-introduce one: a new key is a regenerated table entry, never a new function.
+	// ⚠ A block-less info answers FALSE -- the accessors above default to NULL, so the guard is the read's.
+	// The name encodes HOLD-vs-PROVIDE (json.md §8): what the entity HAS vs what it hands onward.
+	bool hasSkill(int iSkillId) const                  { return clsHasId(getSkills(), iSkillId); }
+	bool hasTag(int iTagId) const                      { return clsHasId(getTags(), iTagId); }
+	bool hasAttribute(int iAttributeId) const          { return clsHasId(getAttributes(), iAttributeId); }
+	bool providesAmenity(int iAmenityId) const         { return clsHasId(getAmenities(), iAmenityId); }
+	bool hasCharacteristic(int iCharacteristicId) const{ return clsHasId(getCharacteristics(), iCharacteristicId); }
+	bool providesCapability(int iCapabilityId) const   { return clsHasId(getCapabilities(), iCapabilityId); }
+	bool providesPolicy(int iPolicyId) const           { return clsHasId(getPolicies(), iPolicyId); }
+	// The REVOKE plane (skills.md §4 grant/revoke: a promotion authoring `stampede: false` takes the ability away).
+	bool revokesSkill(int iSkillId) const              { return clsHasFalseId(getSkills(), iSkillId); }
+
 	// §8/§9 classification id-plane resolve -- fills each carried block's by-id bitsets from the generated
 	// ClassificationRegistry (SKILL_/TAG_/ATTRIBUTE_/CAPABILITY_/POLICY_). Called by the registry's
 	// buildAndResolve after minting (LOAD-ONLY; the info touches its own protected mut* blocks).

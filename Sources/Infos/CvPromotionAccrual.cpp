@@ -21,13 +21,13 @@ int CvPromotionAccrual::sum(const CvPromotionInfo& kPromotion, ModifierFamily eF
 	return iTotal;
 }
 
-bool CvPromotionAccrual::skill(const CvPromotionInfo& kPromotion, SkillRead fnRead)
+bool CvPromotionAccrual::skill(const CvPromotionInfo& kPromotion, int iSkillId)
 {
 	const std::vector<int>& accrual = kPromotion.getLineAccrual();
 	for (size_t iRung = 0; iRung < accrual.size(); ++iRung)
 	{
 		const CvPromotionInfo& kRung = GC.getPromotionInfo((PromotionTypes)accrual[iRung]);
-		if (fnRead(kRung.getSkills()))
+		if (kRung.hasSkill(iSkillId))
 		{
 			return true;
 		}

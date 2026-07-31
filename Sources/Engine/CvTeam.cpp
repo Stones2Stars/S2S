@@ -2,6 +2,7 @@
 
 
 #include "Tools/FProfiler.h"
+#include "Infos/CvClassificationIds.h"   // the generated SKILL_/TAG_/CAPABILITY_ id table
 
 #include "CvGameCoreDLL.h"
 #include "Infos/CvGrants.h"
@@ -9,7 +10,6 @@
 #include "Engine/CvGameSpeedScale.h"
 #include "CvArea.h"
 #include "CvBuildingInfo.h"
-#include "Infos/CvCapabilityReads.h"
 #include "Enabler/CvEnablerKernel.h"   // obsoletedByHeldTech -- obsoletion is DERIVED from the held techs
 #include "Repos/InfoRepo.h"
 #include "CvBonusInfo.h"
@@ -4911,7 +4911,7 @@ void CvTeam::setHasTech(TechTypes eTech, bool bNewValue, PlayerTypes ePlayer, bo
 				player.AI_updateBonusValue();
 			}
 		}
-		if (CvCapabilityReads::hasWholeMapRevealed(kTech.getCapabilities()))
+		if (kTech.providesCapability(CLS_CAPABILITY_HAS_WHOLE_MAP_REVEALED))
 		{
 			GC.getMap().setRevealedPlots(getID(), true, true);
 		}
@@ -5358,18 +5358,18 @@ void CvTeam::processTech(TechTypes eTech, int iChange, bool bAnnounce)
 	// grant carries, so they ask the grantor.
 	const CvClassificationBlock* caps = tech.getCapabilities();
 
-	if (CvCapabilityReads::canSeeFurtherFromWater(caps))
+	if (clsHasId(caps, CLS_CAPABILITY_CAN_SEE_FURTHER_FROM_WATER))
 	{
 		GC.getMap().updateSight(false);
 		GC.getMap().updateSight(true);
 	}
 
-	if (iChange > 0 && CvCapabilityReads::hasCenteredMap(caps))
+	if (iChange > 0 && clsHasId(caps, CLS_CAPABILITY_HAS_CENTERED_MAP))
 	{
 		setMapCentering(true);
 	}
 
-	if (CvCapabilityReads::canPassPeaks(caps))
+	if (clsHasId(caps, CLS_CAPABILITY_CAN_PASS_PEAKS))
 	{
 		//	Koshling - makes peaks workable which chnages the yield calculation
 		updateYield();
@@ -5395,12 +5395,12 @@ void CvTeam::processTech(TechTypes eTech, int iChange, bool bAnnounce)
 		}
 	}
 
-	if (CvCapabilityReads::canFarmDesert(caps))
+	if (clsHasId(caps, CLS_CAPABILITY_CAN_FARM_DESERT))
 	{
 		setLastRoundOfValidImprovementCacheUpdate();
 	}
 
-	if (CvCapabilityReads::canBuildBridges(caps))
+	if (clsHasId(caps, CLS_CAPABILITY_CAN_BUILD_BRIDGES))
 	{
 		if (GC.IsGraphicsInitialized())
 		{
@@ -5408,13 +5408,13 @@ void CvTeam::processTech(TechTypes eTech, int iChange, bool bAnnounce)
 		}
 	}
 
-	if (CvCapabilityReads::canSpreadIrrigation(caps))
+	if (clsHasId(caps, CLS_CAPABILITY_CAN_SPREAD_IRRIGATION))
 	{
 		GC.getMap().updateIrrigated();
 		setLastRoundOfValidImprovementCacheUpdate();
 	}
 
-	if (CvCapabilityReads::canIgnoreIrrigation(caps))
+	if (clsHasId(caps, CLS_CAPABILITY_CAN_IGNORE_IRRIGATION))
 	{
 		setLastRoundOfValidImprovementCacheUpdate();
 	}
@@ -5441,16 +5441,20 @@ void CvTeam::processTech(TechTypes eTech, int iChange, bool bAnnounce)
 		changeExtraMoves((DomainTypes)kDomainMoves[iD].first, kDomainMoves[iD].second * iChange);
 	}
 
-	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
+	// A commerce-slider capability arriving re-renders the slider UI. The three flexible channels are asked
+	// directly -- GOLD has no slider, being the residual of the other three ([capabilities.md]) -- so no walk of
+	// the commerce enum is involved: the loop this replaces never used its index, and its body was identical for
+	// every channel.
+	if (getID() == GC.getGame().getActiveTeam()
+	&& (clsHasId(caps, CLS_CAPABILITY_CAN_SET_SCIENCE_RATE)
+	 || clsHasId(caps, CLS_CAPABILITY_CAN_SET_CULTURE_RATE)
+	 || clsHasId(caps, CLS_CAPABILITY_CAN_SET_ESPIONAGE_RATE)))
 	{
-		if (CvCapabilityReads::canSetCommerceRate(caps, iI) && getID() == GC.getGame().getActiveTeam())
-		{
-			gDLL->getInterfaceIFace()->setDirty(PercentButtons_DIRTY_BIT, true);
-			gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
-		}
+		gDLL->getInterfaceIFace()->setDirty(PercentButtons_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
 	}
 
-	if (CvCapabilityReads::hasRiverTrade(caps))
+	if (clsHasId(caps, CLS_CAPABILITY_HAS_RIVER_TRADE))
 	{
 		for (int iI = 0; iI < MAX_PLAYERS; iI++)
 		{

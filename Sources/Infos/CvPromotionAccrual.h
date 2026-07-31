@@ -40,10 +40,9 @@ public:
 	static int sum(const CvPromotionInfo& kPromotion, ModifierFamily eFamily, int iKind,
 	               CvCascScope eScope, CvCascUnit eUnit);
 
-	// The compounded SKILL verdict: does ANY rung in the accrual carry it? Takes one of the CvSkillReads
-	// functions, so the key vocabulary stays in its own single home rather than being duplicated here.
-	typedef bool (*SkillRead)(const CvClassificationBlock* skills);
-	static bool skill(const CvPromotionInfo& kPromotion, SkillRead fnRead);
+	// The compounded SKILL verdict: does ANY rung in the accrual carry it? Takes the generated SKILL_* id
+	// (CvClassificationIds.h), so no key vocabulary lives here -- or anywhere else.
+	static bool skill(const CvPromotionInfo& kPromotion, int iSkillId);
 
 private:
 	CvPromotionAccrual();                                        // organization only -- never instantiated

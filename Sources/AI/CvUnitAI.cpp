@@ -1,8 +1,7 @@
 // unitAI.cpp
 
 #include "CvGameCoreDLL.h"
-#include "Infos/CvSkillReads.h"   // the ONE shared surface for the json.md §8 skill reads
-#include "Infos/CvTagReads.h"   // the ONE shared unit-TAG read surface (the domain view; tags.md)
+#include "Infos/CvClassificationIds.h"   // the generated SKILL_/TAG_/CAPABILITY_ id table
 
 #include "Data/CvInfoValuation.h"   // InfoValuation::collectHealByUnitCombat + HealByUnitCombat
 #include "Engine/CvGameSpeedScale.h"
@@ -26558,7 +26557,7 @@ bool CvUnitAI::AI_command()
 	PROFILE_EXTRA_FUNC();
 
 	if (!GC.getGame().isOption(GAMEOPTION_UNIT_GREAT_COMMANDERS)
-	|| !CvSkillReads::greatGeneral(getUnitInfo().getSkills())
+	|| !getUnitInfo().hasSkill(CLS_SKILL_GREAT_GENERAL)
 	|| isCommander())
 	{
 		return false;
@@ -28063,7 +28062,7 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 					}
 
 					//	First strike immunity
-					if (CvSkillReads::immuneToFirstStrikes(kPromotion.getSkills()))
+					if ((kPromotion.hasSkill(CLS_SKILL_IMMUNE_TO_FIRST_STRIKES) || kPromotion.hasSkill(CLS_SKILL_FIRST_STRIKE_IMMUNE)))
 					{
 						int		iFirstStrikeWeight = 120;	//	Future - make this adaptive to known enemy units
 
@@ -28073,7 +28072,7 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 					}
 
 					//	Consider healing as part of defense
-					if (CvSkillReads::alwaysHeal(kPromotion.getSkills()))
+					if (kPromotion.hasSkill(CLS_SKILL_ALWAYS_HEAL))
 					{
 						int		iAlwaysHealWeight = 140;
 
@@ -28112,7 +28111,7 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 					}
 
 					//Extra Lives (should double the value of the unit...)
-					if (CvSkillReads::oneUp(kPromotion.getSkills()))
+					if (kPromotion.hasSkill(CLS_SKILL_ONE_UP))
 					{
 						int iOneUpWeight = 200;
 
@@ -28122,7 +28121,7 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 					}
 
 					// Defensive Victory Moves
-					if (CvSkillReads::defensiveVictoryMove(kPromotion.getSkills()))
+					if (kPromotion.hasSkill(CLS_SKILL_DEFENSIVE_VICTORY_MOVE))
 					{
 						int iDefensiveVictoryMoveWeight = 140;
 
@@ -28146,7 +28145,7 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 				{
 					//Team Project (2)
 						// Offensive Victory Moves
-					if (CvSkillReads::offensiveVictoryMove(kPromotion.getSkills()))
+					if (kPromotion.hasSkill(CLS_SKILL_OFFENSIVE_VICTORY_MOVE))
 					{
 						//may want to include Blitz into this factor somehow
 						int iOffensiveVictoryMoveWeight = 140;
@@ -28275,7 +28274,7 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 				{
 					//Team Project (2)
 										// Free Drop (takes no movement to perform an air drop)
-					if (CvSkillReads::freeDrop(kPromotion.getSkills()))
+					if (kPromotion.hasSkill(CLS_SKILL_FREE_DROP))
 					{
 						int iFreeDropWeight = 110;
 
@@ -28284,7 +28283,7 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 						bPromotionHasAccountedValue = true;
 					}
 					// Pillage Espionage
-					if (CvSkillReads::pillageEspionage(kPromotion.getSkills()))
+					if (kPromotion.hasSkill(CLS_SKILL_PILLAGE_ESPIONAGE))
 					{
 						int iPillageEspionageWeight = 110;
 
@@ -28293,7 +28292,7 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 						bPromotionHasAccountedValue = true;
 					}
 					// Pillage Research
-					if (CvSkillReads::pillageResearch(kPromotion.getSkills()))
+					if (kPromotion.hasSkill(CLS_SKILL_PILLAGE_RESEARCH))
 					{
 						int iPillageResearchWeight = 110;
 
@@ -28302,7 +28301,7 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 						bPromotionHasAccountedValue = true;
 					}
 					// Pillage Marauder
-					if (CvSkillReads::pillageMarauder(kPromotion.getSkills()))
+					if (kPromotion.hasSkill(CLS_SKILL_PILLAGE_MARAUDER))
 					{
 						int iPillageMarauderWeight = 115;
 
@@ -28311,7 +28310,7 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 						bPromotionHasAccountedValue = true;
 					}
 					// PillageOnMove
-					if (CvSkillReads::pillageOnMove(kPromotion.getSkills()))
+					if (kPromotion.hasSkill(CLS_SKILL_PILLAGE_ON_MOVE))
 					{
 						int iPillageOnMoveWeight = 115;
 
@@ -28320,7 +28319,7 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 						bPromotionHasAccountedValue = true;
 					}
 					// PillageOnVictory
-					if (CvSkillReads::pillageOnVictory(kPromotion.getSkills()))
+					if (kPromotion.hasSkill(CLS_SKILL_PILLAGE_ON_VICTORY))
 					{
 						int iPillageOnVictoryWeight = 115;
 
@@ -28329,11 +28328,11 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 						bPromotionHasAccountedValue = true;
 					}
 					//	Celebrity Happy
-					if ((CvSkillReads::celebrity(kPromotion.getSkills()) ? 1 : 0) != 0)
+					if ((kPromotion.hasSkill(CLS_SKILL_CELEBRITY) ? 1 : 0) != 0)
 					{
-						iResult = (iResult * (100 + ((CvSkillReads::celebrity(kPromotion.getSkills()) ? 1 : 0) * 10))) / 100;
+						iResult = (iResult * (100 + ((kPromotion.hasSkill(CLS_SKILL_CELEBRITY) ? 1 : 0) * 10))) / 100;
 
-						bPromotionHasAccountedValue |= ((CvSkillReads::celebrity(kPromotion.getSkills()) ? 1 : 0) > 0);
+						bPromotionHasAccountedValue |= ((kPromotion.hasSkill(CLS_SKILL_CELEBRITY) ? 1 : 0) > 0);
 					}
 					//	Drop Range
 					if (kPromotion.getMovement(MOVEMENT_DROP_RANGE, CASC_SCOPE_UNIT) / 100 != 0)
@@ -29247,7 +29246,7 @@ bool CvUnitAI::AI_selectStatus(bool bStack, CvUnit* pUnit)
 				{
 					//Keep things as thin as possible here - program in as new statuses are introduced
 					//Stay the Hand
-					int iTemp = (CvSkillReads::defenseOnly(kPromotion.getSkills()) ? 1 : 0);
+					int iTemp = (kPromotion.hasSkill(CLS_SKILL_DEFENSE_ONLY) ? 1 : 0);
 					if (iTemp != 0)
 					{
 						if (eMissionAI == MISSIONAI_SPREAD ||
@@ -29274,7 +29273,7 @@ bool CvUnitAI::AI_selectStatus(bool bStack, CvUnit* pUnit)
 					}
 
 					//Stealth Defense
-					iTemp = (CvSkillReads::stealthDefense(kPromotion.getSkills()) ? 1 : 0);
+					iTemp = (kPromotion.hasSkill(CLS_SKILL_STEALTH_DEFENSE) ? 1 : 0);
 					if (iTemp != 0)
 					{
 						if (eUnitAI == UNITAI_SETTLE ||

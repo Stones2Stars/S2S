@@ -51,10 +51,8 @@ public:
 
 	// ======================= 2. CLASSIFICATION -- O(1) bitset tests, hold-vs-provide in the NAME (json §8) ====
 	// What the BUILDING ITSELF is/does (teamShare, destroyedOnCapture, orbital) -- never what it confers.
-	bool hasAttribute(int iAttributeId) const { return m_attributes.hasId(iAttributeId); }
 	bool hasAttributes() const                { return !m_attributes.isEmpty(); }
 	// What it CONFERS on its city -- the grantor side of the city's amenity fold.
-	bool providesAmenity(int iAmenityId) const { return m_amenities.hasId(iAmenityId); }
 	bool providesAmenities() const             { return !m_amenities.isEmpty(); }
 	// The named reads, each over the block that actually OWNS it. Named for the AUTHORED KEY's meaning, never the
 	// legacy getter replaced: `borderObstacle` carries no "area" (a landmass is not a scope), and
@@ -92,7 +90,6 @@ public:
 	bool isNoUnhealthyPopulation() const CLS_HAS(m_amenities, CLSD_AMENITY, "abolishedUnhealthFromPopulation")
 	bool isBuildingOnlyHealthy() const   CLS_HAS(m_amenities, CLSD_AMENITY, "abolishedUnhealthFromBuildings")
 	// What the building PROVIDES to the empire (grantor-provided capabilities: setCultureRate, ...).
-	bool providesCapability(int iCapabilityId) const { return m_capabilities.hasId(iCapabilityId); }
 	bool providesCapabilities() const                { return !m_capabilities.isEmpty(); }
 
 	// ======================= 3. MODIFIER GROUPS -- point reads over the compiled sums ========================

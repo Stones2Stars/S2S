@@ -40,7 +40,6 @@ public:
 	// ======================= 2. CLASSIFICATION -- O(1) bitset tests, hold-vs-provide in the NAME (json §8) ====
 	// A tech PROVIDES a capability to the empire while held (the grantor direction; capabilities.md -- the
 	// empire's active set is the derived-on-query union CascadeCapabilities maintains).
-	bool providesCapability(int iCapabilityId) const { return m_capabilities.hasId(iCapabilityId); }
 	bool providesCapabilities() const                { return !m_capabilities.isEmpty(); }
 	// The bespoke capability-plane SIBLING blocks (capabilities.md; json §2 auxiliary): typed sections the
 	// trade-table / trade-route / canWork systems union over live sources. Open string registries by design

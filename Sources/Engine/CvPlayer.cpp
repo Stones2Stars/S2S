@@ -2,6 +2,7 @@
 
 
 #include "Tools/FProfiler.h"
+#include "Infos/CvClassificationIds.h"   // the generated SKILL_/TAG_/CAPABILITY_ id table
 
 #include "CvGameCoreDLL.h"
 #include "Enabler/CvCapabilities.h"
@@ -57,8 +58,6 @@
 #include "CvInfoKinds.h"                // the family + kind vocabulary the group reads walk
 #include "Spine/CvEventSpine.h"   // the DOMAIN emit endpoints -- every state-change choke point below announces through these
 #include <boost/scoped_ptr.hpp>
-#include "Infos/CvSkillReads.h"   // the ONE shared surface for the json.md §8 skill reads
-#include "Infos/CvTagReads.h"   // the ONE shared surface for the json.md §8 tag reads
 
 //	Koshling - save flag indicating this player has no data in the save as they have never been alive
 #define	PLAYER_UI_FLAG_OMITTED 2
@@ -1769,7 +1768,7 @@ void CvPlayer::resetCivTypeEffects()
 
 	for (int iI = 0; iI < GC.getNumUnitInfos(); ++iI)
 	{
-		if (CvSkillReads::found(GC.getUnitInfo((UnitTypes)iI).getSkills()))
+		if (GC.getUnitInfo((UnitTypes)iI).hasSkill(CLS_SKILL_FOUND))
 		{
 			setUnitExtraCost((UnitTypes)iI, getNewCityProductionValue());
 		}
@@ -5323,8 +5322,8 @@ bool CvPlayer::canTradeItem(PlayerTypes eWhoTo, TradeData item, bool bTestDenial
 			&& GC.getGame().isOption(GAMEOPTION_ADVANCED_DIPLOMACY)
 			&& GC.getDefineINT("CAN_TRADE_WORKERS") > 0
 			&& GET_TEAM(getTeam()).isHasEmbassy(GET_PLAYER(eWhoTo).getTeam())
-			&& CvSkillReads::tradable(GC.getUnitInfo(pUnitTraded->getUnitType()).getSkills())
-			&& CvTagReads::civilian(GC.getUnitInfo(pUnitTraded->getUnitType()).getTags())
+			&& GC.getUnitInfo(pUnitTraded->getUnitType()).hasSkill(CLS_SKILL_TRADABLE)
+			&& GC.getUnitInfo(pUnitTraded->getUnitType()).hasTag(CLS_TAG_CIVILIAN)
 			&& pUnitTraded->canMove()
 			&& !GET_PLAYER(eWhoTo).isUnitMaxedOut(pUnitTraded->getUnitType(), GET_PLAYER(eWhoTo).getUnitMaking(pUnitTraded->getUnitType())))
 			{
@@ -5341,8 +5340,8 @@ bool CvPlayer::canTradeItem(PlayerTypes eWhoTo, TradeData item, bool bTestDenial
 			&& GC.getGame().isOption(GAMEOPTION_ADVANCED_DIPLOMACY)
 			&& GC.getDefineINT("NO_MILITARY_UNIT_TRADING") == 0
 			&& GET_TEAM(getTeam()).isHasEmbassy(GET_PLAYER(eWhoTo).getTeam())
-			&& CvSkillReads::tradable(GC.getUnitInfo(pUnitTraded->getUnitType()).getSkills())
-			&& CvTagReads::military(GC.getUnitInfo(pUnitTraded->getUnitType()).getTags()))
+			&& GC.getUnitInfo(pUnitTraded->getUnitType()).hasSkill(CLS_SKILL_TRADABLE)
+			&& GC.getUnitInfo(pUnitTraded->getUnitType()).hasTag(CLS_TAG_MILITARY))
 			{
 				CvCity* pTradingCity = pUnitTraded->plot()->getPlotCity();
 
@@ -6086,7 +6085,7 @@ bool CvPlayer::canReceiveGoody(const CvPlot* pPlot, GoodyTypes eGoody, const CvU
 		}
 
 		if (GC.getGame().isOption(GAMEOPTION_CHALLENGE_ONE_CITY)
-		&& CvSkillReads::found(GC.getUnitInfo((UnitTypes)GC.getGoodyInfo(eGoody).getGoodyUnit()).getSkills()))
+		&& GC.getUnitInfo((UnitTypes)GC.getGoodyInfo(eGoody).getGoodyUnit()).hasSkill(CLS_SKILL_FOUND))
 		{
 			return false;
 		}
@@ -6928,7 +6927,7 @@ int CvPlayer::getProductionModifier(UnitTypes eUnit) const
 	PROFILE_EXTRA_FUNC();
 	int iMultiplier = 0;
 
-	if (!CvSkillReads::noNonTypeProdMods(GC.getUnitInfo(eUnit).getSkills()) && CvTagReads::military(GC.getUnitInfo(eUnit).getTags()))
+	if (!GC.getUnitInfo(eUnit).hasSkill(CLS_SKILL_NO_NON_TYPE_PROD_MODS) && GC.getUnitInfo(eUnit).hasTag(CLS_TAG_MILITARY))
 	{
 		iMultiplier += getMilitaryProductionModifier();
 	}
@@ -16600,7 +16599,7 @@ int CvPlayer::getAdvancedStartUnitCost(UnitTypes eUnit, bool bAdd, const CvPlot*
 				return -1;
 			}
 
-			if (pPlot->isImpassable() && !CvSkillReads::canMoveImpassable(GC.getUnitInfo(eUnit).getSkills()))
+			if (pPlot->isImpassable() && !GC.getUnitInfo(eUnit).hasSkill(CLS_SKILL_CAN_MOVE_IMPASSABLE))
 			{
 				return -1;
 			}

@@ -89,7 +89,6 @@ public:
 
 	bool isActsAsCity() const CLS_HAS(m_characteristics, CLSD_CHARACTERISTIC, "actsAsCity")
 	virtual const CvClassificationBlock* getCharacteristics() const { return &m_characteristics; }
-	bool hasCharacteristic(int iId) const { return m_characteristics.hasId(iId); }
 	bool isZOCSource() const CLS_HAS(m_characteristics, CLSD_CHARACTERISTIC, "zoneOfControl")
 
 	bool isMilitaryStructure() const { return m_bMilitaryStructure; }

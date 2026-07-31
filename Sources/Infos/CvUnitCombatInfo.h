@@ -43,7 +43,6 @@ public:
 	// The class's IDENTITY tags -- what it says its carrier IS, as opposed to the good/bad-AGAINST stats it
 	// holds ([engine.md] UnitCombat). This is the tag's ONE home: CvUnitInfo::deriveAtRegistryComplete unions a
 	// unit's combat classes' tags into the unit's own at load, so no unit carries a baked copy to go stale.
-	bool hasTag(int iTagId) const { return m_tags.hasId(iTagId); }
 	bool hasTags() const { return !m_tags.isEmpty(); }
 
 	// ======================= 3. MODIFIER GROUPS -- point reads over the compiled sums =======================

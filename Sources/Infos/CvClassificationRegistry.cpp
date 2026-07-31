@@ -5,6 +5,7 @@
 
 #include "CvGameCoreDLL.h"
 #include "CvClassificationRegistry.h"
+#include "CvClassificationIds.h"   // the GENERATED seed table (curate_classification_ids.py)
 #include "CvInfo.h"
 #include "Repos/InfoRepo.h"
 
@@ -155,6 +156,17 @@ int ClassificationRegistry::mint(int eDomain, const std::string& szKey)
 
 void ClassificationRegistry::buildAndResolve(const std::vector<CvInfo*>& infos)
 {
+	// SEED from the GENERATED compile-time table FIRST, in table order. Minting is append-only from empty, so a
+	// seeded key takes exactly its table index -- which is what makes CvClassificationIds.h's constants BE the
+	// runtime ids, and therefore what lets every consumer read `info.hasSkill(CLS_SKILL_BLITZ)` instead of carrying a
+	// memoized id per key ([patterns.md] § THE GETTER SETUP).
+	// ⚑ The categories stay OPEN ([DEC-classification-infos]): the mint loop below still adds any authored key
+	// absent from the table, appended after the seeded block, so authoring a new key needs no engine change --
+	// regenerating the table merely promotes it to a compile-time constant.
+	for (int d = 0; d < NUM_CLS_DOMAINS; ++d)
+		for (const char* const* pKey = CLS_SEED_KEYS[d]; *pKey != NULL; ++pKey)
+			mint(d, *pKey);
+
 	// re-assert the GC infotype entries for everything already minted (a mod re-load can rebuild the infos map
 	// while this registry's append-only state survives the process)
 	for (int d = 0; d < NUM_CLS_DOMAINS; ++d)

@@ -72,7 +72,6 @@ public:
 	int getAdvancedStartRemoveCost() const { return m_iAdvancedStartRemoveCost; }    // cost.advancedStartRemoveCost
 
 	virtual const CvClassificationBlock* getCharacteristics() const { return &m_characteristics; }
-	bool hasCharacteristic(int iId) const { return m_characteristics.hasId(iId); }
 
 	bool isImpassable() const { return m_bImpassable; }
 	bool isNoCity() const CLS_HAS(m_characteristics, CLSD_CHARACTERISTIC, "unfoundable")

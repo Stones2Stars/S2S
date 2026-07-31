@@ -106,6 +106,19 @@ private:
 	CvClassificationBlock& operator=(const CvClassificationBlock&);
 };
 
+// The NULL-safe id reads every info's parameterized classification getter delegates to (CvInfo::hasSkill and
+// its siblings). A block-less info -- the CvInfo accessor default -- carries nothing, so the guard lives HERE
+// rather than at each of the ~200 call sites.
+inline bool clsHasId(const CvClassificationBlock* block, int iId)
+{
+	return block != NULL && block->hasId(iId);
+}
+
+inline bool clsHasFalseId(const CvClassificationBlock* block, int iId)
+{
+	return block != NULL && block->hasFalseId(iId);
+}
+
 // The unit-plane derived move-through-plots verdict (the ONE implementation, DEC-single-implementation --
 // promotion + unitcombat both materialize it at mapFrom over their skill block + par.8 keyed doubleMove FK
 // lists; string-plane skill reads are LOAD-TIME ONLY, the poco getters stay bare member reads): does holding

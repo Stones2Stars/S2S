@@ -5,6 +5,7 @@
 //
 
 #include "CvGameCoreDLL.h"
+#include "Infos/CvClassificationIds.h"   // the generated SKILL_/TAG_/CAPABILITY_ id table
 #include "Enabler/CvUnitEnabler.h"
 #include "Enabler/CvEnabler.h"            // EnablerDomain/CityEnabler -- the standardized per-city domain (CvCity::m_enabler)
 #include "Enabler/CvEnablerKernel.h"      // EnablerKernel::applyEdges / obsoletedByHeldTech / scanCondDeps / wireOperatingBuildings
@@ -28,7 +29,6 @@
 #include "Engine/CvPlayer.h"
 #include "Engine/CvTeam.h"
 #include <map>
-#include "Infos/CvSkillReads.h"   // the ONE shared surface for the json.md §8 skill reads
 
 
 // the source's cascade info per axis (the tech axis redirects the TECH_GAME_START root to cascadeStartNode).
@@ -220,7 +220,7 @@ static bool ud_capped(const CvInfo* j, int eU, const CvPlayer& kPlayer, bool noN
 	const int wcap = j->allowedCap(ALLOWEDCAP_WORLD);
 	if (wcap >= 0 && GC.getGame().getUnitCreatedCount((UnitTypes)eU) + making >= wcap) return true;
 	const int ecap = j->allowedCap(ALLOWEDCAP_EMPIRE);
-	if (ecap >= 0 && !(noNationalLimit && !CvSkillReads::unlimitedException(GC.getUnitInfo((UnitTypes)eU).getSkills())))
+	if (ecap >= 0 && !(noNationalLimit && !GC.getUnitInfo((UnitTypes)eU).hasSkill(CLS_SKILL_UNLIMITED_EXCEPTION)))
 	{
 		const int era = (int)kPlayer.getCurrentEra();
 		const int cap = (ecap == 5 && era > 0) ? ecap + era * 5 : ecap;   // era-scaled base-5 national cap

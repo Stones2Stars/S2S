@@ -8,13 +8,13 @@
 //------------------------------------------------------------------------------------------------
 
 #include "Tools/FProfiler.h"
+#include "Infos/CvClassificationIds.h"   // the generated SKILL_/TAG_/CAPABILITY_ id table
 
 #include "CvGameCoreDLL.h"
 #include "Engine/CvCity.h"
 #include "Defines/CvGlobals.h"
 #include "AI/CvPlayerAI.h"
 #include "CvUnitInfo.h"               // the rebuilt unit poco: combatClass / domain / the skills bitset
-#include "CvSkillReads.h"   // the ONE shared surface for the json.md §8 skill reads
 
 void UnitFilterBase::Activate()
 {
@@ -95,7 +95,7 @@ bool UnitFilterIsDomain::isFilteredUnit(const CvPlayer *pPlayer, const CvCity *p
 bool UnitFilterIsDefense::isFilteredUnit(const CvPlayer *pPlayer, const CvCity *pCity, UnitTypes eUnit) const
 {
 	// `onlyDefensive` is a unit SKILL on the rebuilt surface, read through the ONE shared skill surface.
-	return CvSkillReads::onlyDefensive(GC.getUnitInfo(eUnit).getSkills());
+	return GC.getUnitInfo(eUnit).hasSkill(CLS_SKILL_ONLY_DEFENSIVE);
 }
 
 UnitFilterList::UnitFilterList(const CvPlayer *pPlayer, const CvCity *pCity)

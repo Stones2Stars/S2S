@@ -52,9 +52,7 @@ public:
 	// ======================= 2. CLASSIFICATION -- O(1) bitset tests, hold-vs-provide in the NAME (json par.8) ==
 	// What the unit HAS: its mutable abilities (skills) and its immutable type membership (tags). The ids are
 	// the ClassificationRegistry's runtime-minted SKILL_*/TAG_* infos.
-	bool hasSkill(int iSkillId) const { return m_skills.hasId(iSkillId); }
 	bool hasSkills() const { return !m_skills.isEmpty(); }
-	bool hasTag(int iTagId) const { return m_tags.hasId(iTagId); }
 	bool hasTags() const { return !m_tags.isEmpty(); }
 
 	// ======================= 3. MODIFIER GROUPS -- point reads over the compiled sums =======================

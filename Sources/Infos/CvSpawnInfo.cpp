@@ -2,6 +2,7 @@
 //  FILE:    CvSpawnInfo.cpp
 //------------------------------------------------------------------------------------------------
 #include "CvGameCoreDLL.h"
+#include "Infos/CvClassificationIds.h"   // the generated SKILL_/TAG_/CAPABILITY_ id table
 #include "UI/CvArtFileMgr.h"
 #include "CvBuildingInfo.h"
 #include "CvHeritageInfo.h"
@@ -18,7 +19,6 @@
 #include "CvImprovementInfo.h"
 #include "CvBonusInfo.h"
 #include "CvSpawnInfo.h"
-#include "CvTagReads.h"   // the ONE shared surface for the json.md §8 tag reads
 
 // The json.md §8 TAG read this file makes. `wild` is its own tag (UNITCOMBAT_WILD, 198 units), so the
 // spawn test stays EXACT rather than widening to `animal` and sweeping tamed animals in with it. The
@@ -290,7 +290,7 @@ bool CvSpawnInfo::getTreatAsBarbarian() const
 
 bool CvSpawnInfo::getNeutralOnly() const
 {
-	if (CvTagReads::wild(GC.getUnitInfo(getUnitType()).getTags()) && GC.getGame().isOption(GAMEOPTION_ANIMAL_DANGEROUS))
+	if (GC.getUnitInfo(getUnitType()).hasTag(CLS_TAG_WILD) && GC.getGame().isOption(GAMEOPTION_ANIMAL_DANGEROUS))
 	{
 		return false;
 	}

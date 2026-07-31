@@ -27,7 +27,6 @@ public:
 
 	// ======================= 2. CLASSIFICATION -- O(1) bitset tests, hold-vs-provide in the NAME (json §9) ====
 	// A trait PROVIDES a policy to the empire while held (the grantor direction, exactly the civic's).
-	bool providesPolicy(int iPolicyId) const { return m_policies.hasId(iPolicyId); }
 	bool providesPolicies() const            { return !m_policies.isEmpty(); }
 
 	// ======================= 3. MODIFIER GROUPS -- point reads over the compiled sums ========================

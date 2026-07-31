@@ -1,15 +1,14 @@
 // playerAI.cpp
 
 #include "CvGameCoreDLL.h"
+#include "Infos/CvClassificationIds.h"   // the generated SKILL_/TAG_/CAPABILITY_ id table
 #include "Infos/CvGrants.h"
 #include "Infos/CvTriggers.h"
-#include "Infos/CvSkillReads.h"   // the ONE shared surface for the json.md §8 skill reads
 
 #include "Data/CvInfoValuation.h"   // InfoValuation::collectHealByUnitCombat + HealByUnitCombat
 #include "Engine/CvGameSpeedScale.h"
 #include "Enabler/CvEnablerKernel.h"   // the compiled enables edges + the one gate (tech valuation)
 #include "Enabler/CvEnablerOverlay.h"  // the AS-IF-HELD membership overlay -- the civic what-if's membership half
-#include "CvTagReads.h"                // the ONE shared unit-TAG read surface (the domain view; tags.md)
 #include "Engine/CvArea.h"
 #include "CvBonusInfo.h"
 #include "CvBuildingInfo.h"
@@ -592,7 +591,7 @@ void CvPlayerAI::AI_doTurnPre()
 					{
 						iCount++;
 
-						if (CvTagReads::military(GC.getUnitInfo(pLoopUnit->getUnitType()).getTags()))
+						if (GC.getUnitInfo(pLoopUnit->getUnitType()).hasTag(CLS_TAG_MILITARY))
 						{
 							iMilitary++;
 						}
@@ -10545,7 +10544,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 	}
 
 	// Special settler rule
-	if (eUnitAI != UNITAI_SETTLE && CvSkillReads::found(kUnitInfo.getSkills()))
+	if (eUnitAI != UNITAI_SETTLE && kUnitInfo.hasSkill(CLS_SKILL_FOUND))
 	{
 		return 0;
 	}
@@ -10583,7 +10582,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 		}
 		case UNITAI_HUNTER:
 		{
-			if (CvSkillReads::onlyDefensive(kUnitInfo.getSkills()))
+			if (kUnitInfo.hasSkill(CLS_SKILL_ONLY_DEFENSIVE))
 			{
 				break; // Hard disqualification for hunters.
 			}
@@ -10609,7 +10608,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 		}
 		case UNITAI_SETTLE:
 		{
-			if (CvSkillReads::found(kUnitInfo.getSkills()))
+			if (kUnitInfo.hasSkill(CLS_SKILL_FOUND))
 			{
 				bValid = true;
 			}
@@ -10634,7 +10633,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 		}
 		case UNITAI_ATTACK:
 		{
-			if ((kUnitInfo.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) > 0 && !CvSkillReads::onlyDefensive(kUnitInfo.getSkills()))
+			if ((kUnitInfo.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) > 0 && !kUnitInfo.hasSkill(CLS_SKILL_ONLY_DEFENSIVE))
 			{
 				bValid = true;
 			}
@@ -10642,7 +10641,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 		}
 		case UNITAI_ATTACK_CITY:
 		{
-			if ((kUnitInfo.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) > 0 && !CvSkillReads::onlyDefensive(kUnitInfo.getSkills()) && !CvSkillReads::noCapture(kUnitInfo.getSkills()))
+			if ((kUnitInfo.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) > 0 && !kUnitInfo.hasSkill(CLS_SKILL_ONLY_DEFENSIVE) && !kUnitInfo.hasSkill(CLS_SKILL_NO_CAPTURE))
 			{
 				bValid = true;
 			}
@@ -10653,7 +10652,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 			// #410: breakdown chance no longer qualifies -- it is a city-assault death
 			// rider, not stack-softening capability; counting it made breakdown-only
 			// siege (battering rams etc.) a valid COLLATERAL pick it could never play.
-			if ((kUnitInfo.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) > 0 && !CvSkillReads::onlyDefensive(kUnitInfo.getSkills())
+			if ((kUnitInfo.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) > 0 && !kUnitInfo.hasSkill(CLS_SKILL_ONLY_DEFENSIVE)
 			&& kUnitInfo.getCollateralModifier(COLLATERAL_DAMAGE, CASC_SCOPE_UNIT) > 0)
 			{
 				bValid = true;
@@ -10662,7 +10661,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 		}
 		case UNITAI_PILLAGE:
 		{
-			if ((kUnitInfo.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) > 0 && !CvSkillReads::onlyDefensive(kUnitInfo.getSkills()))
+			if ((kUnitInfo.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) > 0 && !kUnitInfo.hasSkill(CLS_SKILL_ONLY_DEFENSIVE))
 			{
 				bValid = true;
 			}
@@ -10670,7 +10669,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 		}
 		case UNITAI_RESERVE:
 		{
-			if (!bisNegativePropertyUnit && (kUnitInfo.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) > 0 && !CvSkillReads::onlyDefensive(kUnitInfo.getSkills()))
+			if (!bisNegativePropertyUnit && (kUnitInfo.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) > 0 && !kUnitInfo.hasSkill(CLS_SKILL_ONLY_DEFENSIVE))
 			{
 				bValid = true;
 			}
@@ -10678,7 +10677,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 		}
 		case UNITAI_PILLAGE_COUNTER:
 		{
-			if ((kUnitInfo.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) > 0 && !CvSkillReads::onlyDefensive(kUnitInfo.getSkills()))
+			if ((kUnitInfo.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) > 0 && !kUnitInfo.hasSkill(CLS_SKILL_ONLY_DEFENSIVE))
 			{
 				bValid = true;
 			}
@@ -10686,7 +10685,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 		}
 		case UNITAI_COUNTER:
 		{
-			if (!bisNegativePropertyUnit && (kUnitInfo.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) > 0 && !CvSkillReads::onlyDefensive(kUnitInfo.getSkills()))
+			if (!bisNegativePropertyUnit && (kUnitInfo.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) > 0 && !kUnitInfo.hasSkill(CLS_SKILL_ONLY_DEFENSIVE))
 			{
 				if (kUnitInfo.getAir(AIR_INTERCEPT, CASC_SCOPE_UNIT) > 0 || (int)kUnitInfo.getTargetUnits().size() > 0)
 				{
@@ -10760,7 +10759,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 		}
 		case UNITAI_INFILTRATOR:
 		{
-			if (CvSkillReads::blendIntoCity(kUnitInfo.getSkills()))
+			if (kUnitInfo.hasSkill(CLS_SKILL_BLEND_INTO_CITY))
 			{
 				bValid = true;
 			}
@@ -10817,7 +10816,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 		}
 		case UNITAI_CITY_DEFENSE:
 		{
-			if (!bisNegativePropertyUnit && (kUnitInfo.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) > 0 && !CvSkillReads::noDefensiveBonus(kUnitInfo.getSkills()))
+			if (!bisNegativePropertyUnit && (kUnitInfo.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) > 0 && !kUnitInfo.hasSkill(CLS_SKILL_NO_DEFENSIVE_BONUS))
 			{
 				bValid = true;
 			}
@@ -10825,7 +10824,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 		}
 		case UNITAI_CITY_COUNTER:
 		{
-			if ((kUnitInfo.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) > 0 && !bisNegativePropertyUnit && !CvSkillReads::noDefensiveBonus(kUnitInfo.getSkills()))
+			if ((kUnitInfo.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) > 0 && !bisNegativePropertyUnit && !kUnitInfo.hasSkill(CLS_SKILL_NO_DEFENSIVE_BONUS))
 			{
 				if (kUnitInfo.getAir(AIR_INTERCEPT, CASC_SCOPE_UNIT) > 0)
 				{
@@ -10986,7 +10985,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 		}
 		case UNITAI_PIRATE_SEA:
 		{
-			if (CvSkillReads::alwaysHostile(kUnitInfo.getSkills()) && CvSkillReads::hiddenNationality(kUnitInfo.getSkills()))
+			if (kUnitInfo.hasSkill(CLS_SKILL_ALWAYS_HOSTILE) && kUnitInfo.hasSkill(CLS_SKILL_HIDDEN_NATIONALITY))
 			{
 				bValid = true;
 			}
@@ -10994,7 +10993,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 		}
 		case UNITAI_ATTACK_AIR:
 		{
-			if (kUnitInfo.getAirCombat() > 0 && !CvSkillReads::suicide(kUnitInfo.getSkills()))
+			if (kUnitInfo.getAirCombat() > 0 && !kUnitInfo.hasSkill(CLS_SKILL_SUICIDE))
 			{
 				bValid = true;
 			}
@@ -11018,7 +11017,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 		}
 		case UNITAI_MISSILE_AIR:
 		{
-			if (kUnitInfo.getAirCombat() > 0 && CvSkillReads::suicide(kUnitInfo.getSkills()))
+			if (kUnitInfo.getAirCombat() > 0 && kUnitInfo.hasSkill(CLS_SKILL_SUICIDE))
 			{
 				bValid = true;
 			}
@@ -11114,7 +11113,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 				//	Also useful if attack stacks can make use of defensive terrain, though
 				//	its not a huge factor since we can assume some defensive units will be
 				//	along for the ride
-				if (CvSkillReads::noDefensiveBonus(kUnitInfo.getSkills()))
+				if (kUnitInfo.hasSkill(CLS_SKILL_NO_DEFENSIVE_BONUS))
 				{
 					iValue *= 4;
 					iValue /= 5;
@@ -11140,12 +11139,12 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 
 				int iTempValue = ((iCombatValue * iCombatValue) / 75) + (iCombatValue / 2);
 				iValue += iTempValue;
-				if (CvSkillReads::noDefensiveBonus(kUnitInfo.getSkills()))
+				if (kUnitInfo.hasSkill(CLS_SKILL_NO_DEFENSIVE_BONUS))
 				{
 					iValue -= iTempValue / 4;
 				}
 
-				if (CvSkillReads::immuneToFirstStrikes(kUnitInfo.getSkills()))
+				if ((kUnitInfo.hasSkill(CLS_SKILL_IMMUNE_TO_FIRST_STRIKES) || kUnitInfo.hasSkill(CLS_SKILL_FIRST_STRIKE_IMMUNE)))
 				{
 					iValue += (iTempValue * 8) / 100;
 				}
@@ -11184,7 +11183,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 
 							if (iBombardRate > 0)
 							{
-								iTotalBombard += ((iBombardRate * iUnitCount * ((CvSkillReads::ignoreBuildingDefense(GC.getUnitInfo(eLoopUnit).getSkills())) ? 3 : 2)) / 2);
+								iTotalBombard += ((iBombardRate * iUnitCount * ((GC.getUnitInfo(eLoopUnit).hasSkill(CLS_SKILL_IGNORE_BUILDING_DEFENSE)) ? 3 : 2)) / 2);
 							}
 
 							int iBombRate = GC.getUnitInfo(eLoopUnit).getFlatBombard(BOMBARD_AIR_BOMB_RATE, CASC_SCOPE_UNIT) / 100;
@@ -11200,7 +11199,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 								iTotalSiegeMaxUnits += iCollateralDamageMaxUnits * iUnitCount;
 								iSiegeUnits += iUnitCount;
 							}
-							else if (CvSkillReads::collateralImmune(GC.getUnitInfo(eLoopUnit).getSkills()))
+							else if (GC.getUnitInfo(eLoopUnit).hasSkill(CLS_SKILL_COLLATERAL_IMMUNE))
 							{
 								iSiegeImmune += iUnitCount;
 							}
@@ -11246,7 +11245,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 
 					if (!bNoBombardValue && !AI_isDoStrategy(AI_STRATEGY_AIR_BLITZ))
 					{
-						int iBombardValue = iThisBombard * ((CvSkillReads::ignoreBuildingDefense(kUnitInfo.getSkills()) || CvSkillReads::ignoreNoEntryLevel(kUnitInfo.getSkills())) ? 3 : 2);
+						int iBombardValue = iThisBombard * ((kUnitInfo.hasSkill(CLS_SKILL_IGNORE_BUILDING_DEFENSE) || kUnitInfo.hasSkill(CLS_SKILL_IGNORE_NO_ENTRY_LEVEL)) ? 3 : 2);
 						int iAIDesiredBombardFraction = std::max(5, GC.getDefineINT("BBAI_BOMBARD_ATTACK_STACK_FRACTION")); /*default: 15*/
 						int iActualBombardFraction = (100 * 2 * iTotalBombard) / (iBombardValue * std::max(1, iNumOffensiveUnits));
 						iActualBombardFraction = std::min(100, iActualBombardFraction);
@@ -11439,7 +11438,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 
 				//  ls612: consider that a unit with OnlyDefensive is less useful
 
-				if (CvSkillReads::onlyDefensive(kUnitInfo.getSkills()))
+				if (kUnitInfo.hasSkill(CLS_SKILL_ONLY_DEFENSIVE))
 				{
 					iValue *= 4;
 					iValue /= 5;
@@ -11470,7 +11469,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 				}
 				//  ls612: consider that a unit with OnlyDefensive is less useful
 
-				if (CvSkillReads::onlyDefensive(kUnitInfo.getSkills()))
+				if (kUnitInfo.hasSkill(CLS_SKILL_ONLY_DEFENSIVE))
 				{
 					iValue *= 4;
 					iValue /= 5;
@@ -11507,7 +11506,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 				}
 				iValue += (iCombatValue / 2);
 				iValue += ((iCombatValue * kUnitInfo.getCombatModifier(COMBAT_CITY_DEFENSE, CASC_SCOPE_UNIT)) / 100);
-				iValue /= (CvSkillReads::onlyDefensive(kUnitInfo.getSkills()) ? 2 : 1);
+				iValue /= (kUnitInfo.hasSkill(CLS_SKILL_ONLY_DEFENSIVE) ? 2 : 1);
 				std::vector<std::pair<int, int> > vsUnitAttack3;
 				InfoValuation::collectKeyedCombat(kUnitInfo.getModifiers(), InfoValuation::COMBAT_TARGET_UNIT, COMBAT_ATTACK, vsUnitAttack3);
 				foreach_(const STD_PAIR(int, int)& modifier, vsUnitAttack3)
@@ -11542,7 +11541,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 			case UNITAI_EXPLORE:
 			{
 				iValue += (kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100) * (kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100) * (100 + iCombatValue) / 4;
-				if (CvSkillReads::noBadGoodies(kUnitInfo.getSkills()))
+				if (kUnitInfo.hasSkill(CLS_SKILL_NO_BAD_GOODIES))
 				{
 					iValue *= 2;
 				}
@@ -11689,7 +11688,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 					}
 				}
 				iValue += ((kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100) * iExploreValue);
-				if (CvSkillReads::alwaysHostile(kUnitInfo.getSkills()))
+				if (kUnitInfo.hasSkill(CLS_SKILL_ALWAYS_HOSTILE))
 				{
 					iValue /= 2;
 				}
@@ -11886,11 +11885,11 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 				//General defense, if the unit has it, is very good. Very bad if penalized.
 				iValue = getModifiedIntValue(iValue, kUnitInfo.getCombatModifier(COMBAT_DEFENSE, CASC_SCOPE_UNIT));
 
-				if (CvSkillReads::noDefensiveBonus(kUnitInfo.getSkills()))
+				if (kUnitInfo.hasSkill(CLS_SKILL_NO_DEFENSIVE_BONUS))
 				{
 					iValue /= 4;
 				}
-				if (CvSkillReads::onlyDefensive(kUnitInfo.getSkills()))
+				if (kUnitInfo.hasSkill(CLS_SKILL_ONLY_DEFENSIVE))
 				{
 					iValue *= 3;
 					iValue /= 2;
@@ -22506,7 +22505,7 @@ int CvPlayerAI::AI_getStrategyHash() const
 					bHasMobileArtillery = true;
 				}
 			}
-			if ((unit.getAir(AIR_RANGE, CASC_SCOPE_UNIT) / 100) > 1 && !CvSkillReads::suicide(unit.getSkills())
+			if ((unit.getAir(AIR_RANGE, CASC_SCOPE_UNIT) / 100) > 1 && !unit.hasSkill(CLS_SKILL_SUICIDE)
 			&& unit.getFlatBombard(BOMBARD_AIR_BOMB_RATE, CASC_SCOPE_UNIT) / 100 > 10 && unit.getAirCombat() > 0)
 			{
 				bHasBomber = true;
@@ -25016,7 +25015,7 @@ int CvPlayerAI::AI_calculateTotalBombard(DomainTypes eDomain) const
 				int iNumUnits = getUnitCount((UnitTypes)iI);
 				if (iBombardRate > 0)
 				{
-					if (CvSkillReads::ignoreBuildingDefense(kUnit.getSkills()))
+					if (kUnit.hasSkill(CLS_SKILL_IGNORE_BUILDING_DEFENSE))
 					{
 						iBombardRate *= 3;
 						iBombardRate /= 2;
@@ -27078,7 +27077,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	const CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
 	const CvPlot* pPlot = pUnit ? pUnit->plot() : NULL;
 	const int iMoves = pUnit ? pUnit->maxMoves() : (kUnit.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100);
-	const bool bNoDefensiveBonus = !pUnit && CvSkillReads::noDefensiveBonus(kUnit.getSkills()) || pUnit && pUnit->noDefensiveBonus();
+	const bool bNoDefensiveBonus = !pUnit && kUnit.hasSkill(CLS_SKILL_NO_DEFENSIVE_BONUS) || pUnit && pUnit->noDefensiveBonus();
 
 	if (eUnitAI == NO_UNITAI)
 	{
@@ -27101,7 +27100,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//#2 Effects that depend on unitAI role Spy
-	if (CvTagReads::spy(kUnit.getTags()))
+	if (kUnit.hasTag(CLS_TAG_SPY))
 	{
 		//Readjust promotion choices favoring security, deception, logistics, escape, improvise,
 		//filling in other promotions very lightly because the AI does not yet have situational awareness
@@ -27141,7 +27140,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		}
 
 		//Loyalty
-		if (CvSkillReads::alwaysHeal(kPromotion.getSkills()))
+		if (kPromotion.hasSkill(CLS_SKILL_ALWAYS_HEAL))
 		{
 			iValue += 15;
 		}
@@ -27258,7 +27257,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//#6 Effects for Promotions that have Amphibious ??
-	if (CvSkillReads::oneUp(kPromotion.getSkills()))
+	if (kPromotion.hasSkill(CLS_SKILL_ONE_UP))
 	{
 		if (eUnitAI == UNITAI_RESERVE
 		||  eUnitAI == UNITAI_COUNTER
@@ -27274,7 +27273,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//#7 Effects for Promotions that have Defensive Victory Move
-	if (CvSkillReads::defensiveVictoryMove(kPromotion.getSkills()))
+	if (kPromotion.hasSkill(CLS_SKILL_DEFENSIVE_VICTORY_MOVE))
 	{
 		if (eUnitAI == UNITAI_RESERVE
 		||  eUnitAI == UNITAI_COUNTER
@@ -27292,7 +27291,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//#8 Effects for Promotions that have Free Drop
-	if (CvSkillReads::freeDrop(kPromotion.getSkills()))
+	if (kPromotion.hasSkill(CLS_SKILL_FREE_DROP))
 	{
 		if (eUnitAI == UNITAI_PILLAGE || eUnitAI == UNITAI_ATTACK)
 		{
@@ -27302,7 +27301,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//#9 Effects for Promotions that have Offensive Victory Move
-	if (CvSkillReads::offensiveVictoryMove(kPromotion.getSkills()))
+	if (kPromotion.hasSkill(CLS_SKILL_OFFENSIVE_VICTORY_MOVE))
 	{
 		if ((eUnitAI == UNITAI_PILLAGE) ||
 				(eUnitAI == UNITAI_ATTACK) ||
@@ -27425,7 +27424,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	//#15 Effects for Promotions with isPillages...
 	{
 		iTemp = 0;
-		if (CvSkillReads::pillageEspionage(kPromotion.getSkills()))
+		if (kPromotion.hasSkill(CLS_SKILL_PILLAGE_ESPIONAGE))
 		{
 			if (pUnit)
 			{
@@ -27465,7 +27464,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		iValue += iTemp;
 
 		iTemp = 0;
-		if (CvSkillReads::pillageMarauder(kPromotion.getSkills()))
+		if (kPromotion.hasSkill(CLS_SKILL_PILLAGE_MARAUDER))
 		{
 			if (pUnit)
 			{
@@ -27505,7 +27504,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		iValue += iTemp;
 
 		iTemp = 0;
-		if (CvSkillReads::pillageOnMove(kPromotion.getSkills()))
+		if (kPromotion.hasSkill(CLS_SKILL_PILLAGE_ON_MOVE))
 		{
 			if (pUnit)
 			{
@@ -27529,7 +27528,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		iValue += iTemp;
 
 		iTemp = 0;
-		if (CvSkillReads::pillageOnVictory(kPromotion.getSkills()))
+		if (kPromotion.hasSkill(CLS_SKILL_PILLAGE_ON_VICTORY))
 		{
 			if (pUnit)
 			{
@@ -27553,7 +27552,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		iValue += iTemp;
 
 		iTemp = 0;
-		if (CvSkillReads::pillageResearch(kPromotion.getSkills()))
+		if (kPromotion.hasSkill(CLS_SKILL_PILLAGE_RESEARCH))
 		{
 			if (pUnit)
 			{
@@ -27610,7 +27609,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//#17 Effects for Promotions that have Happyness Bonus...
-	iTemp = (CvSkillReads::celebrity(kPromotion.getSkills()) ? 1 : 0);
+	iTemp = (kPromotion.hasSkill(CLS_SKILL_CELEBRITY) ? 1 : 0);
 	if (iTemp != 0)
 	{
 		if (eUnitAI == UNITAI_CITY_DEFENSE
@@ -28403,7 +28402,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//#37 Effects for Promotions on Always Heal...
-	if (CvSkillReads::alwaysHeal(kPromotion.getSkills()))
+	if (kPromotion.hasSkill(CLS_SKILL_ALWAYS_HEAL))
 	{
 		if ((eUnitAI == UNITAI_EXPLORE) ||
 			(eUnitAI == UNITAI_HUNTER) ||
@@ -28509,7 +28508,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//#43 Effects for Promotions that immunise to 1st Strikes...
-	if (CvSkillReads::immuneToFirstStrikes(kPromotion.getSkills())
+	if ((kPromotion.hasSkill(CLS_SKILL_IMMUNE_TO_FIRST_STRIKES) || kPromotion.hasSkill(CLS_SKILL_FIRST_STRIKE_IMMUNE))
 		&& (pUnit == NULL || !pUnit->immuneToFirstStrikes()))
 	{
 		if ((eUnitAI == UNITAI_ATTACK_CITY) ||
@@ -29402,7 +29401,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		iValue += 75;
 	}
 
-	if (CvSkillReads::attackOnlyCities(kPromotion.getSkills()))
+	if (kPromotion.hasSkill(CLS_SKILL_ATTACK_ONLY_CITIES))
 	{
 		if (pUnit)
 		{
@@ -29420,7 +29419,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		}
 	}
 
-	if (CvSkillReads::ignoreNoEntryLevel(kPromotion.getSkills()))
+	if (kPromotion.hasSkill(CLS_SKILL_IGNORE_NO_ENTRY_LEVEL))
 	{
 		if (pUnit)
 		{
@@ -29440,7 +29439,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 
 	if (pUnit != NULL && GC.getGame().isOption(GAMEOPTION_UNSUPPORTED_ZONE_OF_CONTROL))
 	{
-		if (CvSkillReads::ignoreZoneOfControl(kPromotion.getSkills()))
+		if (kPromotion.hasSkill(CLS_SKILL_IGNORE_ZONE_OF_CONTROL))
 		{
 			if (pUnit->canIgnoreZoneofControl())
 			{
@@ -29453,7 +29452,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		}
 	}
 
-	if (CvSkillReads::fliesToMove(kPromotion.getSkills()))
+	if (kPromotion.hasSkill(CLS_SKILL_FLIES_TO_MOVE))
 	{
 		if (pUnit)
 		{
@@ -30516,7 +30515,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		eUnitAI = kUnit.getDefaultUnitAI();
 	}
 
-	if (CvTagReads::spy(kUnit.getTags()))
+	if (kUnit.hasTag(CLS_TAG_SPY))
 	{
 
 		//Readjust promotion choices favouring security, deception, logistics, escape, improvise,
@@ -30557,7 +30556,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 
 		//Loyalty
-		if (CvSkillReads::alwaysHeal(kUnitCombat.getSkills()))
+		if (kUnitCombat.hasSkill(CLS_SKILL_ALWAYS_HEAL))
 		{
 			iValue += 15;
 		}
@@ -30606,7 +30605,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 	}
 
-	if (CvSkillReads::oneUp(kUnitCombat.getSkills()))
+	if (kUnitCombat.hasSkill(CLS_SKILL_ONE_UP))
 	{
 		if ((eUnitAI == UNITAI_RESERVE) ||
 			  (eUnitAI == UNITAI_COUNTER) ||
@@ -30624,7 +30623,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 	}
 
-	if (CvSkillReads::defensiveVictoryMove(kUnitCombat.getSkills()))
+	if (kUnitCombat.hasSkill(CLS_SKILL_DEFENSIVE_VICTORY_MOVE))
 	{
 		if ((eUnitAI == UNITAI_RESERVE) ||
 			  (eUnitAI == UNITAI_COUNTER) ||
@@ -30647,7 +30646,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 	}
 
 	iTemp = 0;
-	if (CvSkillReads::freeDrop(kUnitCombat.getSkills()))
+	if (kUnitCombat.hasSkill(CLS_SKILL_FREE_DROP))
 	{
 		if ((eUnitAI == UNITAI_PILLAGE) ||
 				(eUnitAI == UNITAI_ATTACK))
@@ -30660,7 +30659,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 	}
 
-	if (CvSkillReads::offensiveVictoryMove(kUnitCombat.getSkills()))
+	if (kUnitCombat.hasSkill(CLS_SKILL_OFFENSIVE_VICTORY_MOVE))
 	{
 		if ((eUnitAI == UNITAI_PILLAGE) ||
 				(eUnitAI == UNITAI_ATTACK) ||
@@ -30685,7 +30684,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 	iValue += iTemp;
 
 	iTemp = 0;
-	if (CvSkillReads::pillageEspionage(kUnitCombat.getSkills()))
+	if (kUnitCombat.hasSkill(CLS_SKILL_PILLAGE_ESPIONAGE))
 	{
 		if (pUnit)
 		{
@@ -30717,7 +30716,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 	}
 
-	if (CvSkillReads::pillageMarauder(kUnitCombat.getSkills()))
+	if (kUnitCombat.hasSkill(CLS_SKILL_PILLAGE_MARAUDER))
 	{
 		if (pUnit)
 		{
@@ -30738,7 +30737,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		else iTemp += 2;
 	}
 
-	if (CvSkillReads::pillageOnMove(kUnitCombat.getSkills()))
+	if (kUnitCombat.hasSkill(CLS_SKILL_PILLAGE_ON_MOVE))
 	{
 		if (pUnit)
 		{
@@ -30758,7 +30757,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		else iTemp++;
 	}
 
-	if (CvSkillReads::pillageOnVictory(kUnitCombat.getSkills()))
+	if (kUnitCombat.hasSkill(CLS_SKILL_PILLAGE_ON_VICTORY))
 	{
 		if (pUnit)
 		{
@@ -30778,7 +30777,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		else iTemp += 4;
 	}
 
-	if (CvSkillReads::pillageResearch(kUnitCombat.getSkills()))
+	if (kUnitCombat.hasSkill(CLS_SKILL_PILLAGE_RESEARCH))
 	{
 		if (pUnit)
 		{
@@ -30830,7 +30829,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 	}
 
-	iTemp = (CvSkillReads::celebrity(kUnitCombat.getSkills()) ? 1 : 0);
+	iTemp = (kUnitCombat.hasSkill(CLS_SKILL_CELEBRITY) ? 1 : 0);
 	int iTempTemp = 0;
 	if (iTemp > 0)
 	{
@@ -31436,7 +31435,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		iValue += iTemp;
 	}
 
-	if (CvSkillReads::alwaysHeal(kUnitCombat.getSkills()))
+	if (kUnitCombat.hasSkill(CLS_SKILL_ALWAYS_HEAL))
 	{
 		if ((eUnitAI == UNITAI_EXPLORE) ||
 			(eUnitAI == UNITAI_HUNTER) ||
@@ -31537,7 +31536,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		iValue += 75;
 	}
 
-	if (CvSkillReads::immuneToFirstStrikes(kUnitCombat.getSkills())
+	if ((kUnitCombat.hasSkill(CLS_SKILL_IMMUNE_TO_FIRST_STRIKES) || kUnitCombat.hasSkill(CLS_SKILL_FIRST_STRIKE_IMMUNE))
 		&& (pUnit == NULL || !pUnit->immuneToFirstStrikes()))
 	{
 		if ((eUnitAI == UNITAI_ATTACK_CITY) ||
@@ -32339,7 +32338,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 
 		if (pUnit->canAttack())
 		{
-			if (CvSkillReads::attackOnlyCities(kUnitCombat.getSkills()))
+			if (kUnitCombat.hasSkill(CLS_SKILL_ATTACK_ONLY_CITIES))
 			{
 				if (pUnit->canAttackOnlyCities())
 				{
@@ -32350,7 +32349,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 
 			if (!pUnit->canAttackOnlyCities())
 			{
-				if (CvSkillReads::ignoreNoEntryLevel(kUnitCombat.getSkills()))
+				if (kUnitCombat.hasSkill(CLS_SKILL_IGNORE_NO_ENTRY_LEVEL))
 				{
 					if (pUnit->canIgnoreNoEntryLevel())
 					{
@@ -32364,7 +32363,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 
 		if (GC.getGame().isOption(GAMEOPTION_UNSUPPORTED_ZONE_OF_CONTROL))
 		{
-			if (CvSkillReads::ignoreZoneOfControl(kUnitCombat.getSkills()))
+			if (kUnitCombat.hasSkill(CLS_SKILL_IGNORE_ZONE_OF_CONTROL))
 			{
 				if (pUnit->canIgnoreZoneofControl())
 				{
@@ -32374,7 +32373,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 			}
 		}
 
-		if (CvSkillReads::fliesToMove(kUnitCombat.getSkills()))
+		if (kUnitCombat.hasSkill(CLS_SKILL_FLIES_TO_MOVE))
 		{
 			if (pUnit->canFliesToMove())
 			{

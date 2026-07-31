@@ -2,9 +2,9 @@
 
 
 #include "Tools/FProfiler.h"
+#include "Infos/CvClassificationIds.h"   // the generated SKILL_/TAG_/CAPABILITY_ id table
 
 #include "CvGameCoreDLL.h"
-#include "Infos/CvTagReads.h"   // the ONE shared unit-TAG read surface (the domain view; tags.md)
 #include "BetterBTSAI.h"
 #include "Engine/CvArea.h"
 #include "CvBuildingInfo.h"

@@ -1,7 +1,7 @@
 // cityAI.cpp
 
 #include "CvGameCoreDLL.h"
-#include "Infos/CvTagReads.h"   // the ONE shared unit-TAG read surface (the domain view; tags.md)
+#include "Infos/CvClassificationIds.h"   // the generated SKILL_/TAG_/CAPABILITY_ id table
 #include "Engine/CvGameSpeedScale.h"
 #include "BetterBTSAI.h"
 
@@ -43,7 +43,6 @@
 #include "CvWorkerAI.h"
 #include "Spine/CvEventSpine.h" // #430 logging consolidation: route [CIT] through the event spine (shadow)
 #include "CvCityLogTags.h" // [CIT] tag enums (shared with CvCity.cpp -- defined once, see header)
-#include "Infos/CvSkillReads.h"   // the ONE shared surface for the json.md §8 skill reads
 
 // The json.md §8 classification reads this file makes. The consumer holds the memoized generated-id
 // (the CvUnitFilters precedent): the info exposes only the parameterized group read, never a named
@@ -4504,7 +4503,7 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, int& iBestValue, bool bAs
 				}
 			}
 
-			if (CvSkillReads::suicide(unit.getSkills()))
+			if (unit.hasSkill(CLS_SKILL_SUICIDE))
 			{
 				iValue /= 3; // much of this is compensated
 			}
@@ -5232,7 +5231,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 
 				if (!bAreaAlone)
 				{
-					if ((GC.getGame().getBestLandUnit() == NO_UNIT) || !(CvSkillReads::ignoreBuildingDefense(GC.getUnitInfo(GC.getGame().getBestLandUnit()).getSkills())))
+					if ((GC.getGame().getBestLandUnit() == NO_UNIT) || !(GC.getUnitInfo(GC.getGame().getBestLandUnit()).hasSkill(CLS_SKILL_IGNORE_BUILDING_DEFENSE)))
 					{
 						// The candidate's whole defense contribution is ONE valuation read: the compiled defense
 						// sum PLUS its bonus-conditioned entries, resolved against the bonuses this city
@@ -11981,7 +11980,7 @@ bool CvCityAI::AI_trainInquisitor()
 	for (std::vector<int>::const_iterator it = vecTrainable.begin(), itEnd = vecTrainable.end(); it != itEnd; ++it)
 	{
 		const UnitTypes eUnit = (UnitTypes)*it;
-		if (CvSkillReads::inquisitor(GC.getUnitInfo(eUnit).getSkills())
+		if (GC.getUnitInfo(eUnit).hasSkill(CLS_SKILL_INQUISITOR)
 			&& GC.getUnitInfo(eUnit).getProductionCost() < iUnitCost)
 		{
 			eBestUnit = eUnit;
@@ -13829,7 +13828,7 @@ bool CvCityAI::AI_meetsUnitSelectionCriteria(UnitTypes eUnit, const CvUnitSelect
 		{
 			const CvUnitInfo& kUnitInfo = GC.getUnitInfo(eUnit);
 
-			if (CvSkillReads::found(kUnitInfo.getSkills()))
+			if (kUnitInfo.hasSkill(CLS_SKILL_FOUND))
 			{
 				return false;
 			}

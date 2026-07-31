@@ -27,13 +27,11 @@ public:
 	// ======================= 2. CLASSIFICATION -- O(1) bitset tests, hold-vs-provide in the NAME (json §9) ====
 	// A civic PROVIDES a policy to the empire while adopted (the grantor direction -- the empire HOLDS it;
 	// EmpireContext.policies is the derived union over the live grantors).
-	bool providesPolicy(int iPolicyId) const { return m_policies.hasId(iPolicyId); }
 	bool providesPolicies() const            { return !m_policies.isEmpty(); }
 	// A civic also PROVIDES amenities -- to every CITY of the empire rather than to the empire itself (json §8:
 	// "a city or cities"). The city HOLDS the fold; this is only the grantor's side of it. A civic's grant may be
 	// CONDITIONED (`abolishedAnger` while IS_CAPITAL), which is why the block carries the §3.9 entry form and the
 	// fold evaluates it per receiving city.
-	bool providesAmenity(int iAmenityId) const { return m_amenities.hasId(iAmenityId); }
 	bool providesAmenities() const             { return !m_amenities.isEmpty(); }
 
 	// ======================= 3. MODIFIER GROUPS -- point reads over the compiled sums ========================
