@@ -1145,6 +1145,25 @@ Data read by a specific system, not the cascade. Use only when the entity needs 
   (`getExtraQuality`/`Group`/`Size` — live engine state, **never** data). Block absent ⇒ the entity carries no SM
   data. *(This is the pattern for every game-option-specific system — each gets its own block, e.g. `hideAndSeek`
   when `GAMEOPTION_COMBAT_HIDE_AND_SEEK` returns.)*
+
+  > **⚖ TRAINING A UNIT ABOVE ITS BASE RANK IS AN OFFSET, `base + x` — NEVER AN ABSOLUTE RANK (owner).** A base
+  > group rank is DERIVED per unit from its combat classes, so an absolute number means a different thing for
+  > every unit — and a DOWNGRADE for one whose base already exceeds it — while an offset stays correct when
+  > re-tagging a combat class moves that base. ⚑ The engine already agrees: its merge ceiling
+  > (`CvUnit::eraGroupMergeLimit`) was written in exactly this form long before the build side wanted it, which
+  > is why an absolute rank would have contradicted the live cap rather than merely read oddly.
+  > ⚑ **The ERA bounds `x`** — it decides how many merges are reachable — so the offer is per-ERA while the base
+  > is per-UNIT. Two sources, one number; collapsing them into an absolute rank loses both.
+  > ⚖ **WHY IT EXISTS: the merge GRIND, not the cost (owner)** — merging hundreds of units by hand in the late
+  > game is the problem, and building at `base + x` is the shortcut past it. ⇒ **The cost is therefore the
+  > EQUIVALENCE, not a free choice:** it must come out the same as building `3^x` units and merging them, or the
+  > shortcut is a trap or an exploit. That falls straight out of the rank geometry above (`count / 3^(rank−1)`),
+  > so it is derived rather than balanced.
+  > ⛔ It is a QUANTITY term, NOT a training-PACE percent: the Size-Matters pace discount still applies on top,
+  > because a directly-built ranked unit IS the merged result and that discount exists precisely because units
+  > merge. The ceiling, the offer range and the equivalent cost are ONE implementation (`CvSizeMattersRank`),
+  > shared with the merge gate so the two can never disagree
+  > ([DEC-single-implementation](../architecture/decisions.md#dec-single-implementation)).
 - **bespoke** object-sections, each read by its own system: `promotionLine` · `buildUp` · `shrine` · `headquarters` ·
   `spread` · `properties` · `voteSource` · `threshold` · `role` · `victory` · `targetLevel` · `conversion` ·
   `cityFounding` · `unitCapability`.

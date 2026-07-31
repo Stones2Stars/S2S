@@ -9,6 +9,7 @@
 #include "CvTraitSelection.h"
 #include "Engine/CvGameSpeedScale.h"
 #include "Engine/CvBuildCostScale.h"   // the option-gated build-cost compositions (one place)
+#include "Engine/CvSizeMattersRank.h"  // the rank-up ceiling + its build-and-merge equivalent cost
 #include "Enabler/CvEnablerKernel.h"   // requiresMetForPlayer -- the system-placement gate
 #include "AI/BetterBTSAI.h"
 #include "CvArea.h"
@@ -6666,7 +6667,7 @@ bool CvPlayer::isProductionMaxedProject(ProjectTypes eProject) const
 }
 
 
-int64_t CvPlayer::getBaseUnitCost(const UnitTypes eUnit) const
+int64_t CvPlayer::getBaseUnitCost(const UnitTypes eUnit, const int iRankUps) const
 {
 	int64_t iBaseCost = GC.getUnitInfo(eUnit).getProductionCost();
 
@@ -6721,12 +6722,17 @@ int64_t CvPlayer::getBaseUnitCost(const UnitTypes eUnit) const
 	}
 	// The getUnitExtraCost() is where we get the cost for a settler unit (that's ALL this does).
 	// The cost scales to GROWTH factors rather than training factors; gamespeed and other relevant modifiers are factored in.
-	return iBaseCost + 100 * getUnitExtraCost(eUnit);
+	iBaseCost += 100 * getUnitExtraCost(eUnit);
+
+	// Training ABOVE the unit's own base group rank costs what building-and-merging that many would -- applied
+	// LAST, over the finished per-unit cost, because that IS the equivalence being priced (CvSizeMattersRank).
+	// A multiplier of 1 at iRankUps 0 leaves every ordinary build untouched.
+	return iBaseCost * CvSizeMattersRank::rankUpCostMultiplier(GC.getUnitInfo(eUnit), iRankUps);
 }
 
-int CvPlayer::getProductionNeeded(UnitTypes eUnit) const
+int CvPlayer::getProductionNeeded(UnitTypes eUnit, const int iRankUps) const
 {
-	int64_t iProductionNeeded = getBaseUnitCost(eUnit);
+	int64_t iProductionNeeded = getBaseUnitCost(eUnit, iRankUps);
 	if (iProductionNeeded < 1)
 	{
 		if (iProductionNeeded < 0)
