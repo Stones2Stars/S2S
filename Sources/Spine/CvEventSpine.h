@@ -479,7 +479,67 @@ enum SpineDomainEvent
 	// bury units that walk away. Both transitions announce, so a consumer never keeps a survivor marked dying.
 	// iType = unit TYPE, iA = unit id, iB = 1 scheduled / 0 cleared, iC = owner, iSrcLoc = the plot it stands
 	// on (-1 = none). DOMAIN.
-	SEVT_UNIT_DEATH_SCHEDULED = 71
+	SEVT_UNIT_DEATH_SCHEDULED = 71,
+	// A GAME OPTION flipped (CvGame::setOption / setModderGameOption). DOMAIN: an option is synced setup state that
+	// every consumer's verdicts are built on, and it is the ONE axis an entity-level gate reads
+	// ([DEC-entity-gate]) -- a whole-entity game-option bar authors as `enabled`/`disabled`, so a flip can change
+	// ANY entity's applicability at once.
+	// ⚑ WHY IT MUST EXIST even though options are "fixed at setup": WorldBuilder can toggle one at will, and the
+	// roadmap's WB requirement is that an arbitrary WB mutation emits exactly as the normal path does, with no WB
+	// special case. Without this fact every maintained gate verdict silently keeps the pre-flip answer, and NOTHING
+	// re-derives it ([DEC-no-self-heal]) -- the enabler's tri-state is a bare fetch by design.
+	// ⚠ TWO ID SPACES ride one fact, so iB DISAMBIGUATES (the SEVT_PROPERTY_CHANGED shape -- a game-option id and a
+	// modder-option id are otherwise the same int). Minting two near-identical facts would buy nothing.
+	// iType = the option id, iA = the new value (0/1 for a game option; the int for a modder option), iB =
+	// GameOptionSpace, iC = -1, iSrcLoc = -1. DOMAIN.
+	SEVT_GAME_OPTION_CHANGED = 72,
+	// A PLAYER's difficulty changed (CvPlayer::setHandicap) -- the per-player, SAVED handicap, moved in play by
+	// FLEXIBLE DIFFICULTY. DOMAIN, and a genuine cascade input rather than mere observability: the gather folds the
+	// handicap's OWN modifier families into that player's packages (CvCascadeGather), so without this fact every
+	// handicap-derived deposit keeps the OLD difficulty's value permanently.
+	// ⚠ DISTINCT from the game handicap below and NOT a duplicate of it: this is the player's own saved value
+	// (human-facing economics), the other is the derived average that drives AI advantages (engine.md).
+	// iType = the new handicap, iA = the old handicap, iC = player, iSrcLoc = -1. DOMAIN.
+	SEVT_PLAYER_HANDICAP_CHANGED = 73,
+	// The GAME handicap changed (CvGame::setHandicapType) -- the integer average over alive HUMAN players, which
+	// every getAI* advantage reads (engine.md: AI advantages scale with the HUMAN's difficulty, never the AI's).
+	// Derived, never saved, recomputed by averageHandicaps, so it needs no in-read reseed half.
+	// iType = the new handicap, iA = the old handicap, iC = -1 (no owning player), iSrcLoc = -1. DOMAIN.
+	SEVT_GAME_HANDICAP_CHANGED = 74,
+	// A GLOBAL DEFINE changed (cvInternalGlobals::setDefineINT / setDefineFLOAT / setDefineSTRING). DOMAIN: a
+	// define is MP-SYNCED state (the setter routes through sendGlobalDefineUpdate and every client re-caches), and
+	// the DLL reads it through cached accessors that this same call refreshes.
+	// ⚑ This is the LIVE-OPTION bridge: a BUG option declared in Assets/Config/<mod>.xml fires a Python callback
+	// on change -> GC.setDefineINT -> cacheGlobals(), so a user can flip an engine tunable AT ANY TIME mid-game.
+	// It was the one mutation of that class with no fact at all, which made a live option unreactable by
+	// construction; with it, a consumer that needs to answer a define change finally can.
+	// ⚠ EMITTED ONLY ON THE GENUINE LOCAL SET. The `bUpdate` path SENDS a net message instead of setting, and
+	// CvGlobalDefineUpdate::Execute calls straight back in with bUpdate=false -- so emitting on both paths would
+	// double-announce one change on the initiating machine. It fires AFTER cacheGlobals(), so a consumer reading a
+	// cached accessor sees the NEW value.
+	// ⚠ A define is STRING-KEYED with no id space, so the NAME rides as a render field (the SEVT_NAME_CHANGE
+	// precedent: a rare fact may carry a resolved string, the emit render being synchronous on the game thread).
+	// A machine consumer therefore keys on that field, not on the ints.
+	// iType = -1 (no id space), iA = the new INT value (0 for the float/string kinds), iB = GlobalDefineKind,
+	// iC = -1, iSrcLoc = -1. DOMAIN.
+	SEVT_GLOBAL_DEFINE_CHANGED = 75
+};
+
+//	WHICH typed setter produced a SEVT_GLOBAL_DEFINE_CHANGED fact (its iB) -- the value's kind decides which render
+//	field carries it, since only the INT form fits the DOMAIN ints.
+enum GlobalDefineKind
+{
+	GLOBALDEFINE_INT = 0,
+	GLOBALDEFINE_FLOAT = 1,
+	GLOBALDEFINE_STRING = 2
+};
+
+//	WHICH option id space a SEVT_GAME_OPTION_CHANGED fact speaks (its iB). The two are separate registries with
+//	overlapping int ranges: GAMEOPTION_* is what an entity gate reads, MODDERGAMEOPTION_* is engine-side tuning.
+enum GameOptionSpace
+{
+	GAMEOPTSPACE_GAME = 0,     // GameOptionTypes   -- GAMEOPTION_*
+	GAMEOPTSPACE_MODDER = 1    // ModderGameOptionTypes -- MODDERGAMEOPTION_*
 };
 
 //	Which entity's display name changed (the iType of a SEVT_NAME_CHANGE event). The logging consumer resolves the
@@ -570,6 +630,16 @@ void emitUnitCreatedCountChanged(int iUnitType, int iNewCount, int iDelta);
 void emitTeamMembersChanged(int iTeam, int iNewCount, int iDelta);
 //	An area's tile count changed (AREA_SIZE + the city max-adjacent-water store).
 void emitAreaTilesChanged(int iArea, int iNewCount, int iDelta);
+//	A game option flipped. eSpace = GameOptionSpace -- WHICH id space iOption speaks (see SEVT_GAME_OPTION_CHANGED).
+void emitGameOptionChanged(int iOption, int iNewValue, int eSpace);
+//	Difficulty changed. The PLAYER one is the saved per-player handicap (flexible difficulty moves it in play and the
+//	cascade folds its modifiers); the GAME one is the derived human average behind every getAI* advantage.
+void emitPlayerHandicapChanged(int iPlayer, int iNewHandicap, int iOldHandicap);
+void emitGameHandicapChanged(int iNewHandicap, int iOldHandicap);
+//	A global define changed -- the LIVE-OPTION bridge (see SEVT_GLOBAL_DEFINE_CHANGED). ONE endpoint for the three
+//	typed setters; eKind = GlobalDefineKind says which of the value arguments is the real one. szName/szValue are
+//	borrowed for the SYNCHRONOUS emit only and are never copied.
+void emitGlobalDefineChanged(const char* szName, int eKind, int iValue, float fValue, const char* szValue);
 void emitNukesChanged(int iPlayer, int iState);   // a player's nuke state: 0 disabled / 1 enabled / 2 banned
 void emitCultureLevelChanged(int iCity, int iOwner, int iNewLevel, int iOldLevel);   // culture level old->new (+ the radius/vicinity growth it drives)
 void emitHolyCityChanged(int iCity, int iOwner, int iReligion, bool bIsHoly);   // a city gained(true)/lost(false) a religion's holy-city designation

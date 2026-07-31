@@ -29,6 +29,7 @@
 #include "CvProcessInfo.h"
 #include "CvPromotionInfo.h"
 #include "CvBuildInfo.h"
+#include "CvCorporationInfo.h"   // the CAN-I-EVER bar reads a corporation's own entity gate
 #include "Engine/CvGame.h"
 
 // The enables buckets this pass generates over (one HAVE traversal fills them all).
@@ -51,6 +52,10 @@ const CvInfo* EnablerKernel::infoFor(EnEdgeBucket eBucket, int id)
 	case EDGEB_CIVICS:     return InfoRepo<CvCivicInfo>::get().get(id);
 	case EDGEB_PROMOTIONS: return InfoRepo<CvPromotionInfo>::get().get(id);
 	case EDGEB_BUILDS:     return InfoRepo<CvBuildInfo>::get().get(id);
+	// Corporations are NOT an enabler domain (they spread, they are not offered from a queue -- the engine drives
+	// that state, culture-religion-research.md), but the bucket must resolve so the CAN-I-EVER bar can read a
+	// corporation's own entity gate.
+	case EDGEB_CORPORATIONS: return InfoRepo<CvCorporationInfo>::get().get(id);
 	// The BONUS axis is GATE-ONLY (enabler.md §8 resolved forks): a bonus never drives tree membership, but its
 	// EDGEF_REQUIRED_BY dependents ARE what a bonus event re-gates, so the bucket must resolve to read them.
 	case EDGEB_BONUSES:    return InfoRepo<CvBonusInfo>::get().get(id);
@@ -170,6 +175,25 @@ bool EnablerKernel::requiresMet(const CvInfo* j, const CvCascadeEvalCtx& ec, boo
 }
 
 // The system-placement gate (see the header for the role it plays and why it is not the availability read).
+bool EnablerKernel::everAvailable(EnEdgeBucket eBucket, int iId)
+{
+	if (iId < 0)
+	{
+		return false;
+	}
+	const CvInfo* j = infoFor(eBucket, iId);
+	if (j == NULL)
+	{
+		return true;   // nothing to read a bar off -- an unresolvable bucket never bars
+	}
+	// A bare ctx is the POINT: every authored entity gate is a GAMEOPTION_ condition, which reads the live game
+	// options directly and consults no scope context. Asking at game scope is what makes the answer the same for
+	// every player and city, which is what "ever" means.
+	CvCascadeEvalCtx ec;
+	CvCascadeEvalFlags gateFlags;
+	return cascadeGateOk(j->getGate(), ec, gateFlags);
+}
+
 bool EnablerKernel::requiresMetForPlayer(const CvPlayer& kPlayer, EnEdgeBucket eBucket, int iId)
 {
 	const CvInfo* j = infoFor(eBucket, iId);

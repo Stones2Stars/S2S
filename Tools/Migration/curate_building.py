@@ -1340,10 +1340,16 @@ def _amount_buildings(rec):
 
 
 def gate_building(rec):
-    """The entity-level enabled/disabled option gate (owner 2026-07-08; zero buildings author the legacy tags
+    """The entity-level enabled/disabled option gate (owner 2026-07-08; zero buildings author the legacy XML tags
     today -- kept so a future authoring lands in the canonical form, never a bespoke section)."""
     on = _typelist(rec, "PrereqGameOption") or ([_txt(rec, "PrereqGameOption")] if _txt(rec, "PrereqGameOption") else [])
     noton = _typelist(rec, "NotGameOption") or ([_txt(rec, "NotGameOption")] if _txt(rec, "NotGameOption") else [])
+    # A corporation FOUNDER is unbuildable under ADVANCED_REALISTIC_CORPORATIONS, because under that option the
+    # GAME founds corporations itself (CvGame::doFoundCorporation) rather than a player constructing the HQ. The
+    # legacy engine hardcoded this beside its FoundsCorporation read; it is a whole-entity game-option bar, so its
+    # home is the entity gate ([DEC-entity-gate]) -- data, evaluated by the one evaluator, with no engine branch.
+    if _txt(rec, "FoundsCorporation"):
+        noton.append("GAMEOPTION_ADVANCED_REALISTIC_CORPORATIONS")
     return [x for x in on if x], [x for x in noton if x]
 
 

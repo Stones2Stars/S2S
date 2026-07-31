@@ -174,7 +174,46 @@ reads objects). **Build order:** spine + the modifier scope accumulator → logg
   ([state-repositories.md](../architecture/state-repositories.md)); the event reseed replaced that pass, so the
   endpoint has no honest caller. Open follow-ups (the tile-driven vicinity backstop; the per-city enabler
   priming that preceded the reseed emits): [todo.md](../plans/structural-cleanup/todo.md).
-  **⚖ PLAYER ALERTS ARE A SPINE CONSUMER, RE-ADDED ON THE FACT (owner) — never re-inlined at a mutation site.**
+    **GAME OPTIONS and DIFFICULTY announce** — the two facts every maintained verdict is built on but nothing used
+  to announce. **`SEVT_GAME_OPTION_CHANGED`** (`CvGame::setOption` / `setModderGameOption`, both unguarded so the
+  emit supplies the flip guard): an option is the ONE axis an entity-level gate reads
+  ([DEC-entity-gate](../architecture/decisions.md#dec-entity-gate)), and options are read BELOW that level too
+  (civics carry option-gated production / happiness / commerce deposits), so a flip moves gate verdicts AND
+  deposits at once. ⚠ It carries TWO id spaces, so `iB` = `GameOptionSpace` disambiguates them (the
+  `SEVT_PROPERTY_CHANGED` shape — a game-option id and a modder-option id are otherwise the same int).
+  **`SEVT_PLAYER_HANDICAP_CHANGED`** (`CvPlayer::setHandicap`) is a genuine cascade input rather than
+  observability: the gather folds the handicap's own modifier families into that player's packages, so
+  **FLEXIBLE DIFFICULTY moving it silently froze every handicap-derived deposit at the old difficulty** with
+  nothing to re-derive it. **`SEVT_GAME_HANDICAP_CHANGED`** (`CvGame::setHandicapType`) is its DISTINCT twin, not
+  a duplicate — the derived average over alive humans that every `getAI*` advantage reads
+  ([engine.md](../reference/engine.md): AI advantages scale with the HUMAN's difficulty), derived and never saved,
+  so it needs no in-read half.
+  **`SEVT_GLOBAL_DEFINE_CHANGED`** completes that surface from the other side — the three
+  `cvInternalGlobals::setDefine*` setters, i.e. the **LIVE-OPTION bridge**: a BUG option fires a Python callback →
+  `GC.setDefineINT` → `cacheGlobals()`, so a user can flip an engine tunable at any time mid-game. It was the one
+  mutation of that class with no fact at all, which made a live option unreactable by construction.
+  ⚠ It announces ONLY on the genuine LOCAL set: the `bUpdate` path sends a net message and
+  `CvGlobalDefineUpdate::Execute` calls straight back in with `bUpdate=false`, so announcing on both paths would
+  double-emit one change on the initiating machine. And a define is STRING-KEYED with no id space, so the NAME
+  rides as a render field (the `SEVT_NAME_CHANGE` precedent) and a machine consumer keys on that, not the ints.
+  ⛔ Its existence does NOT make a live option something authored data may gate on — that ruling
+  ([python-read-map.md](../reference/python-read-map.md)) is about a value moving under static data and is
+  unchanged; the fact closes reactability only.
+  ⚑ **Only the GAME space routes anywhere, and the two spaces differ in KIND, not just in id range.** A
+  `GAMEOPTION_` is fixed at setup, which is what lets an entity gate depend on it; a `MODDERGAMEOPTION_` is set
+  from the BUG menu at any time (`setModderGameOption` + a net message for MP sync), so it is a LIVE option
+  wearing a confusingly similar name. Authored data honours that split — **no** authored gate or condition names a
+  `MODDERGAMEOPTION_` — so a modder flip (a slider such as the leader-promotion culture threshold
+  `MODDERGAMEOPTION_NEXT_TRAIT_CULTURE_REQ_PERCENT`) moves no verdict and no deposit. It still EMITS, being a
+  genuine synced state change; it simply marks nothing. That is "emit liberally, mark precisely" as a routing rule
+  rather than a slogan. ⛔ Separating the two by grep needs a negative lookbehind — `MODDERGAMEOPTION_` contains
+  `GAMEOPTION_`, so a naive scan conflates them.
+  ⚑ Both option and difficulty route to **WHOLESALE** consumer work (the enabler re-gates every city; the modifier
+  marks the affected player's packages whole) — the `SEVT_AREAS_RECALCULATED` shape, sanctioned for the same
+  reason: the fact names no source to route from, so no finer derivation exists, and it is not the banned
+  self-heal, which papers over a MISSED invalidation rather than announcing a genuine wholesale one.
+
+**⚖ PLAYER ALERTS ARE A SPINE CONSUMER, RE-ADDED ON THE FACT (owner) — never re-inlined at a mutation site.**
 The legacy notifications ("a building shut down", "a building was restored") were emitted from inside the
 setter that changed the state, which is why they die with every legacy mutator that gets cut — and why they
 cannot simply be kept: the setter they lived in is the duplicate being removed. They come back as a CONSUMER of

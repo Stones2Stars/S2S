@@ -425,7 +425,7 @@ void UnitEnabler::explain(const CvCity& kCity, int iUnit, Explain& out)
 	}
 }
 
-void UnitEnabler::onLoadFinished()
+void UnitEnabler::gateAllCities()
 {
 	for (int iP = 0; iP < MAX_PLAYERS; iP++)
 	{
@@ -433,6 +433,11 @@ void UnitEnabler::onLoadFinished()
 		foreach_(const CvCity* pCity, kPlayer.cities())
 			gateCity(*pCity);
 	}
+}
+
+void UnitEnabler::onLoadFinished()
+{
+	gateAllCities();
 }
 
 void UnitEnabler::onCityGateClass(const CvCity& kCity, int eClass)

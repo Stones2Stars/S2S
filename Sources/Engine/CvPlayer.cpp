@@ -26601,12 +26601,17 @@ void CvPlayer::setHandicap(int iNewVal, bool bAdjustGameHandicap)
 
 	if (iNewVal != getHandicapType())
 	{
+		const int iOld = (int)getHandicapType();
 		GC.getInitCore().setHandicap(getID(), (HandicapTypes)iNewVal);
 
 		if (bAdjustGameHandicap)
 		{
 			GC.getGame().averageHandicaps();
 		}
+		// The handicap is a MODIFIER SOURCE (the gather folds its families into this player's packages), so a
+		// difficulty move -- flexible difficulty's whole job -- must re-mark them or every handicap-derived
+		// deposit keeps the old difficulty's value with nothing to re-derive it ([DEC-no-self-heal]).
+		emitPlayerHandicapChanged((int)getID(), iNewVal, iOld);
 		markMaintenanceDirty();
 		setUnitUpkeepDirty();
 	}

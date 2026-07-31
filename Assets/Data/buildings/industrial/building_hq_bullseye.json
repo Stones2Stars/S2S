@@ -51,6 +51,7 @@
   }
  },
  "headquarters": "CORPORATION_BULLSEYE",
+ "disabled": "GAMEOPTION_ADVANCED_REALISTIC_CORPORATIONS",
  "amenities": {
   "nukeImmune": true
  },

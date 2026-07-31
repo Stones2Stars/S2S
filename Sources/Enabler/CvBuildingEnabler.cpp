@@ -412,16 +412,21 @@ void BuildingEnabler::gateCity(const CvCity& kCity)
 		if (d.inTree(b)) bd_gate(kCity, kPlayer, waived, d, b);
 }
 
-void BuildingEnabler::onLoadFinished()
+void BuildingEnabler::gateAllCities()
 {
-	// the par.7.1 order rule's "gate once after the stream ends" option: every city's full gate pass, exactly
-	// once, against the fully-loaded state (fires from GAME_LOAD_FINISHED at the end of onFinalInitialized).
 	for (int iP = 0; iP < MAX_PLAYERS; iP++)
 	{
 		const CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iP);
 		foreach_(const CvCity* pCity, kPlayer.cities())
 			gateCity(*pCity);
 	}
+}
+
+void BuildingEnabler::onLoadFinished()
+{
+	// the par.7.1 order rule's "gate once after the stream ends" option: every city's full gate pass, exactly
+	// once, against the fully-loaded state (fires from GAME_LOAD_FINISHED at the end of onFinalInitialized).
+	gateAllCities();
 }
 
 void BuildingEnabler::onCityGateClass(const CvCity& kCity, int eClass)

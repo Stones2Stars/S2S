@@ -681,10 +681,12 @@ but have **no pedia page**, so pedia-driven work would not serve them at all. Th
    That is the difference in kind: a **game option** is chosen at game setup and fixed for the game (so JSON may
    gate an entity on it, [DEC-entity-gate](../architecture/decisions.md#dec-entity-gate)); a **live option**
    is a user setting changeable mid-game. They are NOT to be folded into `GAMEOPTION_*` on the assumption that
-   they are strays. Two consequences worth knowing rather than re-deriving: JSON cannot gate on a live option
-   (nothing static may depend on a value that moves under it), and a flip carries **no DOMAIN event** — if the
-   cascade ever needs to react to one, that is the emit-endpoint shape already ledgered for game-option flips.
-   The writes themselves belong to the contrib stacks' own reworks, not here.
+   they are strays. The consequence worth knowing rather than re-deriving: **JSON cannot gate on a live option** —
+   nothing static may depend on a value that moves under it.
+   ⚑ A flip DOES announce: `SEVT_GLOBAL_DEFINE_CHANGED` ([event-spine.md](../specs/event-spine.md)) fires from the
+   three `cvInternalGlobals::setDefine*` setters, so a consumer that needs to answer one can. That closes the
+   reactability gap; it does not license gating authored data on a live option, which is a separate ruling and
+   unchanged. The writes themselves belong to the contrib stacks' own reworks, not here.
 
 3b. **A natural-disaster mechanic whose whole effect is loss of a plot improvement is authored as a §5 TRIGGER,
    never as a Python event — RULED (owner).** `trigger → chance → action` with the `destroy` verb

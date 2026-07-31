@@ -292,9 +292,6 @@ public:
 	int getModderGameOption(ModderGameOptionTypes eIndex) const;
 	void setModderGameOption(ModderGameOptionTypes eIndex, int iNewValue);
 
-	bool canEverConstruct(BuildingTypes iBuilding) const;
-	bool canEverTrain(UnitTypes iUnit) const;
-	bool canEverSpread(CorporationTypes iCorporation) const;
 
 	const char* getC2CVersion() const;
 

@@ -325,6 +325,12 @@ enum SpineDomainField
 	SPF_HERITAGE, SPF_ERA, SPF_TAGS, SPF_COMMERCE,
 	// the property fact: WHAT changed + WHICH KIND of object carries it (the kind is what makes SPF_ID readable)
 	SPF_PROPERTY, SPF_OBJECT_KIND,
+	// the game-option fact: WHICH option + which id SPACE it speaks (the space is what makes the id readable),
+	// and the difficulty fact's handicap
+	SPF_OPTION, SPF_OPTION_SPACE, SPF_HANDICAP,
+	// the global-define fact: the string KEY (a define has no id space, so the name IS the identity) + the
+	// float/string value forms the DOMAIN ints cannot carry
+	SPF_DEFINE, SPF_VALUE_F, SPF_VALUE_STR,
 	// the unit plane's two dirty triggers + the scoped ids the non-city/plot facts hang on
 	SPF_PROMOTION, SPF_UNITCOMBAT, SPF_UNIT_ID, SPF_TEAM, SPF_AREA, SPF_TIMER,
 	// the load-pipeline diagnostic fields (SEVT_LOAD_PIPELINE)
@@ -404,6 +410,10 @@ static const char* spineDomainPrefix(int iEventId)
 	case SEVT_PLOT_LANDMARK_CHANGED:  return "[SPINE] plotLandmarkChanged";
 	case SEVT_PLOT_WORKED_CHANGED:    return "[SPINE] plotWorkedChanged";
 	case SEVT_AREAS_RECALCULATED:     return "[SPINE] areasRecalculated";
+	case SEVT_GAME_OPTION_CHANGED:    return "[SPINE] gameOptionChanged";
+	case SEVT_PLAYER_HANDICAP_CHANGED: return "[SPINE] playerHandicapChanged";
+	case SEVT_GAME_HANDICAP_CHANGED:  return "[SPINE] gameHandicapChanged";
+	case SEVT_GLOBAL_DEFINE_CHANGED:  return "[SPINE] globalDefineChanged";
 	case SEVT_GAME_LOAD_STARTED:      return "[SPINE] gameLoadStarted";
 	case SEVT_GAME_LOAD_FINISHED:     return "[SPINE] gameLoadFinished";
 	case SEVT_CACHE_INVALIDATE:       return "[CASCADE] invalidate";
@@ -443,6 +453,12 @@ static const char* spineDomainFieldInfo(int iFieldTag, SpineFieldType* peType)
 	case SPF_VALUE:       *peType = SFT_INT;         return "value";
 	case SPF_COUNT:       *peType = SFT_INT;         return "count";
 	case SPF_ON:          *peType = SFT_INT;         return "on";
+	case SPF_DEFINE:        *peType = SFT_STR;       return "define";
+	case SPF_VALUE_F:       *peType = SFT_FLOAT;     return "valueF";
+	case SPF_VALUE_STR:     *peType = SFT_STR;       return "valueStr";
+	case SPF_OPTION:        *peType = SFT_INT;       return "option";
+	case SPF_OPTION_SPACE:  *peType = SFT_INT;       return "optionSpace";
+	case SPF_HANDICAP:      *peType = SFT_INT;       return "handicap";
 	case SPF_OLD_VALUE:   *peType = SFT_INT;         return "oldValue";
 	case SPF_NEW_VALUE:   *peType = SFT_INT;         return "newValue";
 	case SPF_NAME_KIND:   *peType = SFT_STR;         return "kind";
@@ -1109,6 +1125,52 @@ void emitAreasRecalculated()
 {
 	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_AREAS_RECALCULATED, -1, 0, 0, -1, -1);
 	e.iDomainTag = SD_SPINE;
+	eventSpine().emit(e);
+}
+
+void emitGameOptionChanged(int iOption, int iNewValue, int eSpace)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_GAME_OPTION_CHANGED, iOption, iNewValue, eSpace, -1, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OPTION, iOption).addI(SPF_VALUE, iNewValue).addI(SPF_OPTION_SPACE, eSpace);
+	eventSpine().emit(e);
+}
+
+void emitPlayerHandicapChanged(int iPlayer, int iNewHandicap, int iOldHandicap)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLAYER_HANDICAP_CHANGED, iNewHandicap, iOldHandicap, 0, iPlayer, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iPlayer).addI(SPF_HANDICAP, iNewHandicap).addI(SPF_OLD_VALUE, iOldHandicap);
+	eventSpine().emit(e);
+}
+
+void emitGameHandicapChanged(int iNewHandicap, int iOldHandicap)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_GAME_HANDICAP_CHANGED, iNewHandicap, iOldHandicap, 0, -1, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_HANDICAP, iNewHandicap).addI(SPF_OLD_VALUE, iOldHandicap);
+	eventSpine().emit(e);
+}
+
+void emitGlobalDefineChanged(const char* szName, int eKind, int iValue, float fValue, const char* szValue)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_GLOBAL_DEFINE_CHANGED, -1, iValue, eKind, -1, -1);
+	e.iDomainTag = SD_SPINE;
+	// The NAME is the define's whole identity (it has no id space), so it always rides; the value goes in
+	// whichever field its KIND can actually carry.
+	e.addStr(SPF_DEFINE, szName).addI(SPF_OPTION_SPACE, eKind);
+	if (eKind == GLOBALDEFINE_FLOAT)
+	{
+		e.addF(SPF_VALUE_F, fValue);
+	}
+	else if (eKind == GLOBALDEFINE_STRING)
+	{
+		e.addStr(SPF_VALUE_STR, szValue != NULL ? szValue : "");
+	}
+	else
+	{
+		e.addI(SPF_VALUE, iValue);
+	}
 	eventSpine().emit(e);
 }
 

@@ -7,6 +7,7 @@
 #include "AI/CvGameAI.h"
 #include "CvGlobals.h"
 #include "Tools/CvHttpServer.h"
+#include "Spine/CvEventSpine.h"   // emitGlobalDefineChanged -- the live-option bridge announces
 #include "CvImprovementInfo.h"
 #include "CvBonusInfo.h"
 #include "CvInfos.h"
@@ -2645,6 +2646,10 @@ const char* cvInternalGlobals::getDefineSTRING(const char* szName, const char* s
 	return szDefault;
 }
 
+// ⚠ The three setters announce ONLY on the genuine LOCAL set (the `else` branch). The `bUpdate` path sends a net
+// message instead of writing, and CvGlobalDefineUpdate::Execute calls straight back in with bUpdate=false -- so
+// announcing on both paths would double-emit one change on the initiating machine (the spine's ONE bar is
+// duplicates). The emit follows cacheGlobals() so a consumer reading a cached accessor sees the NEW value.
 void cvInternalGlobals::setDefineINT(const char* szName, int iValue, bool bUpdate)
 {
 	if (getDefineINT(szName) != iValue)
@@ -2657,6 +2662,11 @@ void cvInternalGlobals::setDefineINT(const char* szName, int iValue, bool bUpdat
 
 		cacheEnumGlobals();
 		cacheGlobals();
+
+		if (!bUpdate)
+		{
+			emitGlobalDefineChanged(szName, GLOBALDEFINE_INT, iValue, 0.0f, NULL);
+		}
 	}
 }
 
@@ -2671,6 +2681,11 @@ void cvInternalGlobals::setDefineFLOAT(const char* szName, float fValue, bool bU
 		else m_VarSystem->SetValue(szName, fValue);
 
 		cacheGlobals();
+
+		if (!bUpdate)
+		{
+			emitGlobalDefineChanged(szName, GLOBALDEFINE_FLOAT, 0, fValue, NULL);
+		}
 	}
 }
 
@@ -2685,6 +2700,11 @@ void cvInternalGlobals::setDefineSTRING(const char* szName, const char* szValue,
 		else m_VarSystem->SetValue(szName, szValue);
 
 		cacheGlobals(); // TO DO : we should not cache all globals at each single set
+
+		if (!bUpdate)
+		{
+			emitGlobalDefineChanged(szName, GLOBALDEFINE_STRING, 0, 0.0f, szValue);
+		}
 	}
 }
 

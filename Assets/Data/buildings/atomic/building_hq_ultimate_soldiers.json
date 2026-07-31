@@ -41,6 +41,7 @@
   }
  },
  "headquarters": "CORPORATION_ULTSOLDIER",
+ "disabled": "GAMEOPTION_ADVANCED_REALISTIC_CORPORATIONS",
  "amenities": {
   "nukeImmune": true
  },

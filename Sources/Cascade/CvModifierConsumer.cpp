@@ -370,6 +370,30 @@ namespace
 			const CvPlayer* pPlayer = mc_player(kEvent.iC);
 			switch (kEvent.iEventId)
 			{
+			// ---- the two NON-deposit-addressed facts: a source's basis moved, not a deposit ----
+			// A GAME OPTION flipped. Options are read BELOW the entity-gate level too -- civics carry
+			// option-gated production / happiness / commerce deposits -- so a flip changes what live sources
+			// deposit, for every player at once, with no per-source route to derive it from.
+			// ⚠ The GAME space ONLY -- no authored deposit condition names a MODDERGAMEOPTION_, so a modder-option
+			// flip changes no deposit and marking for it would be a blanket bought with nothing.
+			case SEVT_GAME_OPTION_CHANGED:
+				if (kEvent.iB == GAMEOPTSPACE_GAME)
+				{
+					for (int iP = 0; iP < MAX_PLAYERS; iP++)
+					{
+						const CvPlayer& kPlayerX = GET_PLAYER((PlayerTypes)iP);
+						if (kPlayerX.isAlive())
+						{
+							mc_markPlayerWhole(&kPlayerX, szSource);
+						}
+					}
+				}
+				break;
+			// A player's DIFFICULTY moved (flexible difficulty). The handicap is a modifier SOURCE the gather
+			// folds per scope, so this one player's whole basis re-derives.
+			case SEVT_PLAYER_HANDICAP_CHANGED:
+				mc_markPlayerWhole(pPlayer, szSource);
+				break;
 			// ---- source-carrying state changes: the mask IS the source's compiled route ----
 			case SEVT_BUILDING_PROCESSED:   // the operating-contribution flip -- deposits flow only while processed
 			{
@@ -912,6 +936,33 @@ namespace
 			pPlayer->getCascadePackage().markMask(CascadeChannelRegistry::scopeAllReceiversMask(CASC_SCOPE_EMPIRE));
 			mc_invalidate(CASC_SCOPE_EMPIRE, (int)pPlayer->getID(), (int)pPlayer->getID(),
 				CascadeChannelRegistry::scopeAllReceiversMask(CASC_SCOPE_EMPIRE), szSource);
+		}
+
+		// A whole PLAYER's deposit basis moved -- every package it owns re-derives (its cities' channels + sums and
+		// its own empire channels + sums). The two callers are the facts that move a source the gather folds at
+		// EVERY scope rather than at a deposit-addressed one:
+		//   - a DIFFICULTY change: the gather folds the handicap's own modifier families into this player's
+		//     packages (CvCascadeGather), so flexible difficulty moving the handicap moves that whole basis;
+		//   - a GAME OPTION flip, per player (below).
+		// ⚠ This IS a whole-scope blanket, and it is the SANCTIONED kind: the fact is not deposit-addressed, so no
+		// union of per-source routes can express it -- exactly the SEVT_AREAS_RECALCULATED shape. It is NOT the
+		// banned self-heal, which papers over a MISSED invalidation ([DEC-no-self-heal]); this ANNOUNCES a genuine
+		// wholesale one. Both callers are also vanishingly rare (a WB toggle, a flexible-difficulty step), so the
+		// "emit liberally, mark precisely" cost argument does not bite: there is nothing finer to derive.
+		static void mc_markPlayerWhole(const CvPlayer* pPlayer, const char* szSource)
+		{
+			if (pPlayer == NULL)
+			{
+				return;
+			}
+			for (CvPlayer::city_iterator it = pPlayer->beginCities(); it != pPlayer->endCities(); ++it)
+			{
+				(*it)->getCascadePackage().markMask(
+					CascadeChannelRegistry::scopeAllChannelsMask(CASC_SCOPE_CITY)
+					| CascadeChannelRegistry::scopeAllReceiversMask(CASC_SCOPE_CITY));
+			}
+			mc_markEmpireWhole(pPlayer, szSource);
+			mc_markAllPlayerSums(pPlayer, szSource);
 		}
 
 		// An empire changed composition wholesale (conquest): its empire package + sums re-derive.

@@ -335,10 +335,11 @@ public:
 	void doFoundCorporation(CorporationTypes eCorporation, bool bForce);
 	int getAverageCorporationInfluence(const CvCity* pCity, const CorporationTypes eCorporation) const;
 
+	// The TECH permanent bar stays a game-scope read: NO_FUTURE is a game option composed against a tech's own
+	// era/repeat data, which no entity gate carries. Its building/unit/corporation siblings moved to the enabler
+	// (EnablerKernel::everAvailable) -- an availability verdict belongs to the availability machine
+	// ([DEC-enabler-not-cascade]), and their bars are entity gates rather than a composition.
 	bool canEverResearch(TechTypes eTech) const;
-	bool canEverConstruct(BuildingTypes eBuilding) const;
-	bool canEverTrain(UnitTypes eUnit) const;
-	bool canEverSpread(CorporationTypes eCorporation) const;
 	bool canNPCFieldUnit(UnitTypes eUnit) const;
 
 	int getFlexibleDifficultyTimer(PlayerTypes eIndex) const;

@@ -3,6 +3,7 @@
 
 #include "Tools/FProfiler.h"
 #include "Conditions/CvConditionEval.h"   // cascadeGateOk -- the entity-level enabled/disabled pair
+#include "Enabler/CvEnablerKernel.h"      // everAvailable -- the CAN-I-EVER bar (the corp spread gate)
 #include "Infos/CvClassificationIds.h"   // the generated SKILL_/TAG_/CAPABILITY_ id table
 
 #include "CvGameCoreDLL.h"
@@ -8263,7 +8264,7 @@ bool CvUnit::canSpreadCorporation(const CvPlot* pPlot, CorporationTypes eCorpora
 			return false;
 		}
 	}
-	if (!GC.getGame().canEverSpread(eCorporation))
+	if (!EnablerKernel::everAvailable(EDGEB_CORPORATIONS, (int)eCorporation))
 	{
 		return false;
 	}

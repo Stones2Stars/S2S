@@ -689,6 +689,35 @@ The split, stated once: **the enabler answers CAN-I-NOW (the tri-state); the pic
 BY WHAT PATH.** The two membership bars that ARE the enabler's — `identity.disable` and a civilization's own
 never-researchable list — are static for a player's life and sit on the static-exclusion plane at `initDomain`.
 
+⚖ **BUT WHERE THE BAR *IS* AN ENTITY GATE, THE EVER QUESTION IS THE ENABLER'S — AND SO IS THE OPTION READ
+(owner).** *"For all unit/promotions that rely on game options, and anything else the enabler deals with, it is
+the enabler's job to call `hasGameOption`."* A whole-entity game-option bar authors as the entity-level
+`enabled`/`disabled` pair ([DEC-entity-gate](../architecture/decisions.md#dec-entity-gate)), so answering "is this
+barred for the whole game" is just evaluating that gate — availability data, read by the availability machine.
+`EnablerKernel::everAvailable(bucket, id)` is that ONE implementation, parameterized over the domain axis rather
+than split per domain, and it is where the option read lives for every entity-gated domain.
+
+- **It is TOTAL by construction.** `CvInfo::getGate()` is declared on the BASE returning `NULL` and
+  `cascadeGateOk(NULL, …)` is true, so a domain whose data authors no gate answers "never barred" and a
+  newly-authored gate lights up as pure DATA — no engine change, no per-domain variant.
+- **Evaluated against a bare ctx, deliberately.** Every authored entity gate in the tree is a `GAMEOPTION_` leaf,
+  which reads the live options and consults no scope context — which is precisely what makes the verdict the same
+  for every player and city, i.e. what "ever" means.
+- ⚑ **The verdict is STABLE for the game, and that is load-bearing (owner): nothing the enabler gates rides a
+  BUG/live option.** A game option is fixed at setup, whereas a live option (`setDefineINT`) is changeable
+  mid-game and its flip carries **no DOMAIN event** — so a maintained verdict gating on one would go permanently
+  stale with nothing to re-derive it ([DEC-no-self-heal](../architecture/decisions.md#dec-no-self-heal)). The last
+  enabler-facing live options went with the ranged-bombard removal
+  ([superseded-ideas #24](../architecture/superseded-ideas.md)), so the hazard is absent from this surface rather
+  than merely avoided. ⛔ Do not gate an enabler entity on a live option; if one is ever wanted, it needs its emit
+  first.
+
+⛔ **TECHS stay the picking logic's, and the reason is the distinction to apply elsewhere: their bar is a
+COMPOSITION, not a gate.** `CvGame::canEverResearch` composes `NO_FUTURE` against the tech's own era and `isRepeat`
+data — a consuming-system calc ([engine.md](../reference/engine.md)), which no entity gate carries and which an
+info structurally cannot answer. Run that test on any future "ever" bar: a plain entity gate is the enabler's; a
+composition over game state plus authored data belongs at the consuming system.
+
 ⚠ The two **carve-out** domains answer the UNLOCKED half only, and a consumer treating either as the whole verdict
 over-offers: a BUILD's plot-validity half and a PROMOTION's per-unit applicability are evaluated LIVE at their
 decision points (§7.1). The TEAM's capability reads are not here — `CascadeCapabilities` is already that query

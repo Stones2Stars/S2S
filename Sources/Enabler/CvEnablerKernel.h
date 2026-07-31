@@ -92,6 +92,22 @@ public:
 	// bVisible=true relaxes the GREYABLE clauses (connectable resource / unadopted civic) for the visible frontier (enabler.md §6).
 	static bool requiresMet(const CvInfo* j, const CvCascadeEvalCtx& ec, bool bVisible = false);
 
+	// THE CAN-I-EVER BAR (enabler.md par.8) -- "is this entity barred for the WHOLE GAME, whoever asks, whatever
+	// they hold?" It is the PERMANENT half the tri-state deliberately does not model: HIDDEN conflates "nothing
+	// enables it YET" with "it can never be offered", and a valuation asking what an unlock is WORTH needs the
+	// second. The picking-side twin of CvPlayer::canEverResearch, which carries the same shape for techs.
+	//
+	// The bar IS the entity-level gate ([DEC-entity-gate]) and nothing else: a whole-entity game-option gate
+	// authors as `enabled`/`disabled`, so the option read lives HERE, once, for every domain the enabler deals
+	// with -- never as a per-entity point getter on the info (an info never reads game state, json.md par.9).
+	// Evaluated against a bare ctx BY DESIGN: every authored gate is a GAMEOPTION_ leaf, which reads the live
+	// options and needs no scope context. A game option is fixed at setup, so the verdict is stable for the game.
+	//
+	// TOTAL over every bucket: CvInfo::getGate() is declared on the BASE returning NULL and cascadeGateOk(NULL)
+	// is true, so an entity carrying no gate answers "never barred" and a newly-authored gate lights up as pure
+	// DATA. ⛔ Do not add a per-domain variant -- the bucket parameter IS the domain axis.
+	static bool everAvailable(EnEdgeBucket eBucket, int iId);
+
 	// THE SYSTEM-PLACEMENT GATE -- `requires` for a caller that PLACES an entity rather than offering it through a
 	// city's production queue: the trigger plane's spawns, the barbarian fielding filter, event/WB placements.
 	//

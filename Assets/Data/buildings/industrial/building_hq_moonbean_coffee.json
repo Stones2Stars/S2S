@@ -46,6 +46,7 @@
   }
  },
  "headquarters": "CORPORATION_MOONBEAN",
+ "disabled": "GAMEOPTION_ADVANCED_REALISTIC_CORPORATIONS",
  "amenities": {
   "nukeImmune": true
  },

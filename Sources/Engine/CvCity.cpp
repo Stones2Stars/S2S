@@ -17270,7 +17270,7 @@ void CvCity::doCorporation()
 		{
 			continue;
 		}
-		if (!isHasCorporation((CorporationTypes)iI) && GC.getGame().canEverSpread((CorporationTypes)iI))
+		if (!isHasCorporation((CorporationTypes)iI) && EnablerKernel::everAvailable(EDGEB_CORPORATIONS, iI))
 		{
 			if (kOwner.isNoCorporations() || kOwner.isNoForeignCorporations() && GC.getGame().getHeadquarters((CorporationTypes)iI)->getOwner() != ePlayer)
 			{

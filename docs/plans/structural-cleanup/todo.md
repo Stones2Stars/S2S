@@ -169,6 +169,38 @@
 
 ## Not built yet
 
+- Give GAME OPTIONS and CONFIG VALUES a standardized read surface (owner: *"having standardized getters for
+  gameoption, and config values is not a bad idea"*). The reads are scattered — `isOption` sites, string-keyed
+  `getDefineINT`/`getDefineFLOAT` lookups, and modder-option reads — and the string-keyed half is the same
+  per-call map walk [DEC-materialize-at-mapfrom](../../architecture/decisions.md#dec-materialize-at-mapfrom)
+  already killed on the info side. Shape it like its two existing instances, `CvGameSpeedScale` and
+  `CvTraitSelection` ([engine.md](../../reference/engine.md) § Consuming-system calcs): a purely-organizational
+  static-methods class, one getter per group parameterized over the group's index
+  ([patterns.md](../../architecture/patterns.md)).
+  ⛔ **Three kinds, and collapsing them is the defect the surface must prevent, not a tidiness question.** A GAME
+  OPTION (`GAMEOPTION_*`) is fixed at setup, so JSON may gate on it
+  ([DEC-entity-gate](../../architecture/decisions.md#dec-entity-gate)); a CONFIG value is authored data on eras /
+  gamespeeds / handicaps (read from its sources, never cached behind a dirty protocol —
+  [state-repositories.md](../../architecture/state-repositories.md): WORLD is CONFIG); a LIVE option is
+  user-changeable **mid-game**, which is why nothing STATIC may depend on one — a value that moves under authored
+  data is not something authored data can be gated on. One undifferentiated `getSetting` would erase the
+  distinction at exactly the point a reader needs it.
+  ⚠ **`MODDERGAMEOPTION_*` is a LIVE option, not a game option — the NAME says otherwise and that is the trap.**
+  It is set from the BUG menu at any time (`Afforess/ANewDawnSettings.py` → `setModderGameOption` + a net message
+  for MP sync), so it belongs with `setDefineINT` on the live side despite sharing a prefix with the setup-fixed
+  kind. Tunables are still MIGRATING into it — the leader-promotion culture threshold moved out of XML into a BUG
+  option — so the boundary matters going forward, not just historically. Authored data honours it today, but
+  nothing ENFORCES it: add a readJson check refusing a `MODDERGAMEOPTION_` condition, so the split is unsayable
+  to violate rather than remembered.
+  ⛔ **Grepping the two apart needs a negative lookbehind** — `MODDERGAMEOPTION_` CONTAINS `GAMEOPTION_`, so a
+  naive scan reports every modder option as a game option and silently overstates the second.
+  ⚑ A live-option flip now ANNOUNCES (`SEVT_GLOBAL_DEFINE_CHANGED`), so a consumer that must answer one finally
+  can — but that closes the *reactability* hole only. It does not make a live option a legitimate gate for static
+  data, and reading "it emits now" as permission to author against one is the misreading to avoid.
+  ⚠ HANDICAP is two values, not one, and a single `getHandicap()` silently picks the wrong one half the time: the
+  per-player handicap (saved) drives human-facing economics, while every `getAI*` advantage reads the GAME handicap
+  (the average of alive humans) — [engine.md](../../reference/engine.md). Keep them separately named.
+
 - The PLAYER-ALERT consumer, and the alerts owed to it — they re-attach to the OPERATE CROSSING fact, never
   re-inlined at a mutation site ([event-spine.md](../../specs/event-spine.md)). Expect the owed list to GROW as
   each legacy mutator is cut; add them together on the facts.
@@ -230,7 +262,6 @@
 - A home for pedia category / sort metadata ([pedia-read-map.md](../../reference/pedia-read-map.md) finding 4).
 - Ranked-target-selection EVALUATION ([parked/ranked-target-selection.md](../parked/ranked-target-selection.md))
   — a ranked entry applies unranked until it lands.
-- A DOMAIN event on a game-option flip, if/when WorldBuilder option toggling is in scope.
 - The Python data-fetching library (below).
 
 ## The GETTER cut — game objects + AI
@@ -384,17 +415,6 @@
 
 - Give the UNIT frontier an incremental path — events that do not affect it currently blanket-dirty it, forcing a
   full re-walk. The operating-building fixpoint rides the same triggers.
-- Move the "can this EVER be built/trained/spread" question to the ENABLER side. `CvGame::canEverConstruct` /
-  `canEverTrain` / `canEverSpread` answer an AVAILABILITY question in the wrong machine, hand-rolled on legacy
-  prereq getters that are cut ([DEC-enabler-not-cascade](../../architecture/decisions.md#dec-enabler-not-cascade):
-  the cascade is the MAGNITUDE machine and owns none of this). ⚑ The enabler already owns the shape for techs --
-  `CvPlayer::canEverResearch`, the single implementation carrying the PERMANENT bars
-  ([enabler.md §8](../../specs/enabler.md)) -- so this is extending an existing surface, not inventing one.
-  ⛔ Do NOT repair the current bodies in place by wiring the condition evaluator into `CvGame`: that answers an
-  enabler question inside the cascade's evaluator and leaves the duplicate standing. Their game-option halves are
-  the entity gate ([DEC-entity-gate](../../architecture/decisions.md#dec-entity-gate)); the corporation/building
-  prereq halves are `requires` atoms and need the condition read, not a point getter.
-  ⚠ ~10 AI consumers plus a `Cy` binding read them, so the consumers move with the surface.
 - Point the AI production decision at the maintained LISTED set, and collapse the `AI_chooseProduction`
   focus-ladder into ONE unified scoring pass ([enabler.md §6/§8](../../specs/enabler.md)). The collapse is an
   AI-architecture change, not a per-loop rewrite.

@@ -4740,7 +4740,9 @@ void CvGame::setHandicapType(HandicapTypes eHandicap)
 	PROFILE_EXTRA_FUNC();
 	if (m_eHandicap != eHandicap)
 	{
+		const int iOld = (int)m_eHandicap;
 		m_eHandicap = eHandicap;
+		emitGameHandicapChanged((int)eHandicap, iOld);
 
 		if (eHandicap != NO_HANDICAP)
 		{
@@ -5067,7 +5069,14 @@ bool CvGame::isOption(GameOptionTypes eIndex) const
 
 void CvGame::setOption(GameOptionTypes eIndex, bool bEnabled)
 {
+	// The setter forwards unguarded, so the FLIP guard lives here: a fact is a CHANGE, and re-announcing a
+	// no-op would re-gate every maintained verdict for nothing.
+	const bool bWas = GC.getInitCore().getOption(eIndex);
 	GC.getInitCore().setOption(eIndex, bEnabled);
+	if (bWas != bEnabled)
+	{
+		emitGameOptionChanged((int)eIndex, bEnabled ? 1 : 0, GAMEOPTSPACE_GAME);
+	}
 }
 
 
@@ -11202,7 +11211,11 @@ int CvGame::getModderGameOption(ModderGameOptionTypes eIndex) const
 void CvGame::setModderGameOption(ModderGameOptionTypes eIndex, int iNewValue)
 {
 	FASSERT_BOUNDS(0, NUM_MODDERGAMEOPTION_TYPES, eIndex);
-	m_aiModderGameOption[eIndex] = iNewValue;
+	if (m_aiModderGameOption[eIndex] != iNewValue)
+	{
+		m_aiModderGameOption[eIndex] = iNewValue;
+		emitGameOptionChanged((int)eIndex, iNewValue, GAMEOPTSPACE_MODDER);
+	}
 }
 
 void CvGame::doFoundCorporations()
@@ -11219,7 +11232,7 @@ void CvGame::doFoundCorporation(CorporationTypes eCorporation, bool bForce)
 {
 	PROFILE_EXTRA_FUNC();
 	if (!isOption(GAMEOPTION_ADVANCED_REALISTIC_CORPORATIONS)
-	|| !canEverSpread(eCorporation)
+	|| !EnablerKernel::everAvailable(EDGEB_CORPORATIONS, (int)eCorporation)
 	|| getHeadquarters(eCorporation) != NULL)
 	{
 		return;
@@ -11237,7 +11250,7 @@ void CvGame::doFoundCorporation(CorporationTypes eCorporation, bool bForce)
 	{
 		for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
 		{
-			if (canEverTrain((UnitTypes)iI) && GC.getUnitInfo((UnitTypes)iI).getCorporationSpreadStrength(eCorporation) > 0)
+			if (EnablerKernel::everAvailable(EDGEB_UNITS, iI) && GC.getUnitInfo((UnitTypes)iI).getCorporationSpreadStrength(eCorporation) > 0)
 			{
 				return;
 			}
@@ -11475,43 +11488,6 @@ int CvGame::getNumWonders() const
 	return m_iNumWonders;
 }
 
-bool CvGame::canEverConstruct(BuildingTypes eBuilding) const
-{
-	if (eBuilding == NO_BUILDING)
-	{
-		return false;
-	}
-	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
-
-	if (kBuilding.getPrereqGameOption() != NO_GAMEOPTION && !isOption((GameOptionTypes)kBuilding.getPrereqGameOption()))
-	{
-		return false;
-	}
-
-	if (kBuilding.getNotGameOption() != NO_GAMEOPTION && isOption((GameOptionTypes)kBuilding.getNotGameOption()))
-	{
-		return false;
-	}
-
-	if (kBuilding.getPrereqCorporation() != NO_CORPORATION && !canEverSpread((CorporationTypes)kBuilding.getPrereqCorporation()))
-	{
-		return false;
-	}
-
-	if (kBuilding.getFoundsCorporation() != NO_CORPORATION)
-	{
-		if (!canEverSpread((CorporationTypes)kBuilding.getFoundsCorporation()))
-		{
-			return false;
-		}
-		if (isOption(GAMEOPTION_ADVANCED_REALISTIC_CORPORATIONS))
-		{
-			return false;
-		}
-	}
-	return true;
-}
-
 // NPC eligibility gate. NPCs spawn virtually anywhere, so an NPC unit nobody can detect
 // is uncounterable wherever it appears; a PC player's invisible unit must instead travel
 // from its owner's territory, which is an investment and an exposure. Hence: NPC players
@@ -11537,54 +11513,6 @@ bool CvGame::canNPCFieldUnit(UnitTypes eUnit) const
 		{
 			return false;
 		}
-	}
-	return true;
-}
-
-bool CvGame::canEverTrain(UnitTypes eUnit) const
-{
-	PROFILE_EXTRA_FUNC();
-	if (eUnit == NO_UNIT)
-	{
-		return false;
-	}
-	const CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
-
-	if (kUnit.getPrereqGameOption() != NO_GAMEOPTION && !isOption((GameOptionTypes)kUnit.getPrereqGameOption()))
-	{
-		return false;
-	}
-
-	if (kUnit.getNotGameOption() != NO_GAMEOPTION && isOption((GameOptionTypes)kUnit.getNotGameOption()))
-	{
-		return false;
-	}
-
-	if (kUnit.getPrereqCorporation() != NO_CORPORATION && !canEverSpread((CorporationTypes)kUnit.getPrereqCorporation()))
-	{
-		return false;
-	}
-
-	for (int iI = 0; iI < kUnit.getNumPrereqAndBuildings(); ++iI)
-	{
-		if (!canEverConstruct((BuildingTypes)kUnit.getPrereqAndBuilding(iI)))
-		{
-			return false;
-		}
-	}
-	return true;
-}
-
-bool CvGame::canEverSpread(CorporationTypes eCorporation) const
-{
-	if (eCorporation == NO_CORPORATION)
-	{
-		return false;
-	}
-	if (GC.getCorporationInfo(eCorporation).getPrereqGameOption() != NO_GAMEOPTION
-	&& !isOption((GameOptionTypes)GC.getCorporationInfo(eCorporation).getPrereqGameOption()))
-	{
-		return false;
 	}
 	return true;
 }

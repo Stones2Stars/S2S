@@ -59,6 +59,9 @@ public:
 	// half-read state); GAME_LOAD_FINISHED runs one full gate pass per city. Play-time follows the pure
 	// per-event option: gate-on-entry + touched re-gates in each applier, the FK axes via EDGEF_REQUIRED_BY.
 	static void gateCity(const CvCity& kCity);   // the one-city full gate pass (load-end + city creation)
+	// EVERY city's full gate pass. Two callers, both WHOLESALE facts with no finer route to derive: the load end,
+	// and a GAME OPTION flip (an option is the entity gate's one axis, so a flip can move ANY entity's verdict).
+	static void gateAllCities();
 	static void onLoadFinished();                // SEVT_GAME_LOAD_FINISHED: gate every city once
 	// The CLASS re-gates: event classes with no FK reverse edge (no info to home a REQUIRED_BY on) re-gate the
 	// load-compiled list of candidates whose requires reference that class (EnablerKernel::scanCondDeps).

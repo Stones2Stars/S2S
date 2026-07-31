@@ -5707,7 +5707,7 @@ int CvPlayerAI::AI_techBuildingValue(TechTypes eTech, int iPathLength, bool& bEn
 	{
 		const BuildingTypes eLoopBuilding = static_cast<BuildingTypes>(*itUnlocked);
 
-		if (GC.getGame().canEverConstruct(eLoopBuilding))
+		if (EnablerKernel::everAvailable(EDGEB_BUILDINGS, (int)eLoopBuilding))
 		{
 			const CvBuildingInfo& kLoopBuilding = GC.getBuildingInfo(eLoopBuilding);
 			{   // membership IS the edge -- being in this set is exactly "the tech unlocks it"
@@ -6098,7 +6098,7 @@ int CvPlayerAI::AI_techUnitValue(TechTypes eTech, int iPathLength, bool& bEnable
 	{
 		const UnitTypes eUnitX = static_cast<UnitTypes>(*itUnlocked);
 
-		if (GC.getGame().canEverTrain(eUnitX))
+		if (EnablerKernel::everAvailable(EDGEB_UNITS, (int)eUnitX))
 		{
 			const CvUnitInfo& unitX = GC.getUnitInfo(eUnitX);
 			iValue += 200;
@@ -9276,7 +9276,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus, bool bForTrade) const
 						const UnitTypes eLoopUnit = static_cast<UnitTypes>(*itUnit);
 						const CvUnitInfo& kLoopUnit = GC.getUnitInfo(eLoopUnit);
 
-						if (!GC.getGame().canEverTrain(eLoopUnit))
+						if (!EnablerKernel::everAvailable(EDGEB_UNITS, (int)eLoopUnit))
 						{
 							continue;
 						}
@@ -9396,7 +9396,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus, bool bForTrade) const
 						const BuildingTypes eBuildingX = static_cast<BuildingTypes>(*itBuilding);
 
 						if (GET_TEAM(getTeam()).isObsoleteBuilding(eBuildingX)
-						|| !GC.getGame().canEverConstruct(eBuildingX))
+						|| !EnablerKernel::everAvailable(EDGEB_BUILDINGS, (int)eBuildingX))
 						{
 							continue;
 						}
@@ -9821,7 +9821,7 @@ DenialTypes CvPlayerAI::AI_bonusTrade(BonusTypes eBonus, PlayerTypes ePlayer) co
 	{
 		const UnitTypes eLoopUnit = static_cast<UnitTypes>(*itDependent);
 
-		if (GC.getGame().canEverTrain(eLoopUnit)
+		if (EnablerKernel::everAvailable(EDGEB_UNITS, (int)eLoopUnit)
 		&& pCapitalCity->getUnitAvailability(eLoopUnit) == EnablerDomain::STATE_LISTED)
 		{
 			bStrategic = true;
@@ -9843,7 +9843,7 @@ DenialTypes CvPlayerAI::AI_bonusTrade(BonusTypes eBonus, PlayerTypes ePlayer) co
 			const BuildingTypes eLoopBuilding = static_cast<BuildingTypes>(*itDependent);
 
 			if (!GET_TEAM(getTeam()).isObsoleteBuilding(eLoopBuilding)
-			&& GC.getGame().canEverConstruct(eLoopBuilding))
+			&& EnablerKernel::everAvailable(EDGEB_BUILDINGS, (int)eLoopBuilding))
 			{
 				bStrategic = true;
 				break;
@@ -12148,7 +12148,7 @@ int CvPlayerAI::AI_neededMissionaries(const CvArea* pArea, ReligionTypes eReligi
 
 	for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
 	{
-		if (GC.getGame().canEverTrain((UnitTypes)iI)
+		if (EnablerKernel::everAvailable(EDGEB_UNITS, iI)
 		&& GC.getUnitInfo((UnitTypes)iI).getDefaultUnitAI() == UNITAI_MISSIONARY
 		&& GC.getUnitInfo((UnitTypes)iI).getAdvisor() == 1)
 		{

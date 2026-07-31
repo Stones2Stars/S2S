@@ -1124,21 +1124,6 @@ void CyGame::setModderGameOption(ModderGameOptionTypes eIndex, int iNewValue)
 	m_pGame.setModderGameOption(eIndex, iNewValue);
 }
 
-bool CyGame::canEverConstruct(BuildingTypes iBuilding) const
-{
-	return m_pGame.canEverConstruct(iBuilding);
-}
-
-bool CyGame::canEverTrain(UnitTypes iUnit) const
-{
-	return m_pGame.canEverTrain(iUnit);
-}
-
-bool CyGame::canEverSpread(CorporationTypes iCorporation) const
-{
-	return m_pGame.canEverSpread(iCorporation);
-}
-
 const char* CyGame::getC2CVersion() const
 {
 	return GC.getDefineSTRING("C2C_VERSION");

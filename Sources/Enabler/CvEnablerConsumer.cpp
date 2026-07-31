@@ -200,6 +200,23 @@ private:
 			BuildingEnabler::onLoadFinished();
 			UnitEnabler::onLoadFinished();
 			break;
+		// ---- a GAME OPTION flipped: re-gate EVERY city ----
+		// The entity-level gate is read at gate time and an option is its ONE axis ([DEC-entity-gate]), so a flip
+		// can move any candidate's verdict at once -- and the tri-state is a BARE FETCH, so nothing would ever
+		// re-derive it ([DEC-no-self-heal]). Wholesale is the honest derivation here rather than a blanket hiding
+		// a missed route: the fact names no source to route from (the SEVT_AREAS_RECALCULATED shape), and a flip
+		// is WorldBuilder-rare, so it costs nothing at its real frequency.
+		// ⚠ The GAME space ONLY. Authored data references no MODDERGAMEOPTION_ at all -- every gate and every
+		// condition in the tree names a real GAMEOPTION_ -- so a modder-option flip (a BUG-menu slider like the
+		// leader-promotion culture threshold) moves no verdict, and re-gating every city for it would be a blanket
+		// bought with nothing. Emit liberally, GATE precisely.
+		case SEVT_GAME_OPTION_CHANGED:
+			if (kEvent.iB == GAMEOPTSPACE_GAME)
+			{
+				BuildingEnabler::gateAllCities();
+				UnitEnabler::gateAllCities();
+			}
+			break;
 		default: break;
 		}
 	}

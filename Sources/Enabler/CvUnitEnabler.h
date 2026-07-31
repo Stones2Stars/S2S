@@ -39,6 +39,9 @@ public:
 	// removal, the uc_reachable upgrade-tree dormancy) as the domain's gate verdict. LOAD gates once at
 	// GAME_LOAD_FINISHED (the par.7.1 "gate once after the stream ends" option). ====
 	static void gateCity(const CvCity& kCity);
+	// EVERY city's full gate pass -- the load end, and a GAME OPTION flip (the entity gate's one axis; units are
+	// the domain that actually authors option gates today, so a flip genuinely moves trainability).
+	static void gateAllCities();
 	static void onLoadFinished();
 	enum GateClass { GATE_POP = 0, GATE_POWER = 1, GATE_GOLDEN_AGE = 2, GATE_STATE_RELIGION = 3, GATE_DYNAMIC = 4, NUM_GATE_CLASSES = 5 };
 	static void onCityGateClass(const CvCity& kCity, int eClass);
