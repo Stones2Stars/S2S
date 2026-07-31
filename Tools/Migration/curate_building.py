@@ -170,13 +170,13 @@ SCALAR_FAMILIES = {
     # applied as a percentage and never scaled. Emitting it `flat` would ×100 it at readJson and the realized
     # max() would compare a scaled floor against an unscaled stack.
     "iMinDefense": ("defense", "city", "min", "percent"),
-    "iNoEntryDefenseLevel": ("defense", "city", "noEntryLevel", "flat"),
-    "iLocalDynamicDefense": ("defense", "city", "dynamicDefense", "flat"),
-    "iRiverDefensePenalty": ("defense", "city", "riverDefensePenalty", "flat"),
+    "iNoEntryDefenseLevel": ("defense", "city", "noEntryLevel", "percent"),
+    "iLocalDynamicDefense": ("defense", "city", "dynamicDefense", "percent"),
+    "iRiverDefensePenalty": ("defense", "city", "riverDefensePenalty", "percent"),
     "iBuildingDefenseRecoverySpeedModifier": ("defense", "city", "buildingDefenseRecovery", "percent"),
     "iCityDefenseRecoverySpeedModifier": ("defense", "city", "cityDefenseRecovery", "percent"),
-    "iDamageAttackerChance": ("defense", "city", "damageAttackerChance", "flat"),
-    "iDamageToAttacker": ("defense", "city", "damageToAttacker", "flat"),
+    "iDamageAttackerChance": ("defense", "city", "damageAttackerChance", "percent"),
+    "iDamageToAttacker": ("defense", "city", "damageToAttacker", "percent"),
     "iAdjacentDamagePercent": ("defense", "city", "adjacentDamage", "percent"),
 }
 # scope-wide yield/commerce families: tag -> (scope, keys, kind). SPLIT into per-identifier families (food/gold/…).
@@ -371,7 +371,7 @@ TARGET_KEYED = {
     # Specialist{Yield,Commerce}Changes + Local* -> NOT here: a building boosting a specialist is the SPECIALIST's
     # OWN output conditioned by the building's presence (own-output home, modifier.md §6.5, owner 2026-06-20), so it
     # lives ON THE SPECIALIST -- emitted by curate_specialist's SPECIALIST_BOOSTS, dropped at the building.
-    "BonusDefenseChanges":           ("defense", "city", "bonuses", None, "flat"),
+    "BonusDefenseChanges":           ("defense", "city", "bonuses", None, "percent"),
     "ReligionChanges":               ("religion", "city", None, None, "flat"),
     "UnitCombatFreeExperiences":     ("experience", "city", "unitCombats", None, "flat"),
     "DomainFreeExperiences":         ("experience", "city", "domains", None, "flat"),
@@ -384,7 +384,7 @@ TARGET_KEYED = {
     "DomainProductionModifiers":     ("buildRate", "city", "domains", None, "percent"),
     "BuildingProductionModifiers":   ("buildRate", "city", "buildings", None, "percent"),
     "GlobalBuildingProductionModifiers": ("buildRate", "empire", "buildings", None, "percent"),
-    "UnitCombatDefenseAgainstModifiers": ("defense", "city", "unitCombats", None, "flat"),
+    "UnitCombatDefenseAgainstModifiers": ("defense", "city", "unitCombats", None, "percent"),
     # ImprovementFreeSpecialists -> NOT keyed here: it's a conditioner (improvement presence), handled as a
     # conditioned `freeSpecialists.city.any` deposit in the body (modifier.md §6.7).
 }

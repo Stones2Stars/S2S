@@ -68,7 +68,7 @@
     "percent": 20
    },
    "dynamicDefense": {
-    "flat": 50
+    "percent": 50
    },
    "adjacentDamage": {
     "percent": 35

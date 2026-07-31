@@ -33,7 +33,7 @@
  "defense": {
   "city": {
    "noEntryLevel": {
-    "flat": 30
+    "percent": 30
    }
   }
  },

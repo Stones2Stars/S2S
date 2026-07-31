@@ -665,13 +665,26 @@ The full address of a deposit:
   a percent is never ×100).
   ⚑ **The stack has a FLOOR and NO CEILING — verified, because the absence is load-bearing.** The floor is the
   `min` kind (`getExtraMinDefense`), applied at the realized read.
-  ⛔ **A FLOOR CARRIES THE UNIT OF WHAT IT FLOORS, so `min` authors `percent` exactly as `amount` does** — the
-  realized read is `max(min, amount-stack × damage-decay)`, which only means anything while the two share a
-  unit. Authoring it `flat` scales it ×100 at readJson and the `max()` then compares a scaled floor against an
-  unscaled stack — a floor 100× too high, which no compiler and no smoke test catches
-  ([fixed-point-and-scales.md §4d](curators/fixed-point-and-scales.md): a mis-scaled config value produces a
-  game that runs perfectly while playing by different numbers). ⚑ The general rule the case states: a kind's
-  unit follows the quantity it PARTICIPATES IN, never the shape it happens to look like in the legacy XML.
+  ⛔ **THE WHOLE FAMILY IS `percent` — EVERY member, no exceptions to remember (owner).** The values are
+  *technically* flat additive sums, and they are APPLIED as a percentage — *"it does increase combat of
+  defending units by the percentage anyway"* — and **defense never carries decimals**, so the ×100 that the
+  `flat` unit exists to buy ([DEC-fixedpoint-x100](../architecture/decisions.md#dec-fixedpoint-x100): the
+  scaling exists ONLY to carry two decimals) is worth exactly nothing here. ⚑ **Uniformity is the requirement,
+  not the label** — *"it does not really matter at the end of the day, as long as all defense modifiers do the
+  same thing."*
+  ⚖ **THE DECISION TEST, and it generalizes to every family (owner): does it SUM, or does it COMPOSE?** *"We
+  are summing percentages; it would have been different if they were multiplicative."* An additive delta that
+  sums and applies once is `percent` (unscaled); a factor that composes by product is `multiplier` (×100,
+  identity 100) — §3.6. ⛔ Decide a kind's unit by that question, NEVER by the shape the legacy XML tag
+  happened to have: the tags that read like modifiers were curated `percent` and the rest `flat`, which is the
+  name-eyeballing [fixed-point-and-scales.md §3](curators/fixed-point-and-scales.md) bans outright.
+  ⚠ **The mixed state that ruling ends was a live ×100**, and it is the shape to recognise elsewhere: the UNIT
+  plane authors every defense member `percent`, while the CITY plane had `dynamicDefense` as `flat` — and
+  `dynamicDefenseTotal` SUMS the city value into the unit one. A single non-uniform member inside a family that
+  adds across a seam is a silent 100×, not a tidiness question.
+  ⚑ The one member outside the rule is the **`air` PLOT leg**, and it is outside because it is not a summed
+  modifier at all: it is the magnitude fed to the opposed `getSorenRandNum` air-bombard dice, so nothing sums
+  it and the test above does not reach it (the city `airDefense` percent is an ordinary member).
   There is **no cap of any kind** on accumulated
   defense: the contribution sites are unbounded `+=`, the total is unclamped, and the only `max`-shaped constant
   nearby — `MAX_CITY_DEFENSE_DAMAGE` — bounds DAMAGE DEALT TO defense (and is the decay denominator), a

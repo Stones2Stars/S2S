@@ -701,13 +701,12 @@ CvCascUnit infoDefenseUnit(DefenseKind eKind, CvCascScope eScope)
 {
 	switch (eKind)
 	{
-	case DEFENSE_NO_ENTRY_LEVEL:
-	case DEFENSE_DYNAMIC:
-	case DEFENSE_RIVER_PENALTY:
-		return CASC_UNIT_FLAT;
-	case DEFENSE_COUNTER_DAMAGE:
-	case DEFENSE_COUNTER_DAMAGE_CHANCE:
-		return CASC_UNIT_COUNT;   // authored as bare numbers inside the nested counterDamage block
+	// ⚖ THE WHOLE FAMILY IS PERCENT (owner): defense is technically a flat additive sum, but it is APPLIED as a
+	// percentage -- it raises a defending unit's combat by that percentage -- and it never carries decimals, so
+	// the ×100 an amount would buy is worth nothing here. Uniformity is the requirement rather than the label:
+	// the UNIT plane already authors every defense member percent (144 unit cityDefense, 41 dynamicDefense, …),
+	// and `dynamicDefenseTotal` sums the CITY value into the UNIT one, so a single flat member in the family is a
+	// live ×100 across that seam. One unit, no mixing sites, no compensating constants.
 	case DEFENSE_AIR:
 		// the SCOPE-SPLIT kind (reconciliation item 7): plot = the FLAT rolled magnitude (101 improvement
 		// `air` flats; the opposed getSorenRandNum(airBombCurrRate) vs getSorenRandNum(defense) dice,

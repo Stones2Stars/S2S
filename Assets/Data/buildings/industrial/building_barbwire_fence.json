@@ -43,7 +43,7 @@
     "percent": 5
    },
    "noEntryLevel": {
-    "flat": 18
+    "percent": 18
    },
    "adjacentDamage": {
     "percent": 20

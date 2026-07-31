@@ -103,7 +103,7 @@
  "defense": {
   "city": {
    "riverDefensePenalty": {
-    "flat": 50
+    "percent": 50
    }
   }
  },
