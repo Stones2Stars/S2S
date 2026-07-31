@@ -7156,13 +7156,14 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, CvArea* pAr
 		const int iKeyedHappy = kKeyedHappy[iKeyed].second / 100;
 		changeExtraBuildingHappiness(eKeyedBuilding, iKeyedHappy * iChange);
 	}
-	foreach_(const BuildingModifier2& modifier, kBuilding.getGlobalBuildingProductionModifiers())
+	// The EMPIRE-scope building-keyed buildRate rows this building authored (modifier.md §5 entry-list read).
+	std::vector<std::pair<int, int> > kKeyedBuildRate;
+	InfoValuation::collectKeyedTarget(kBuilding.getModifiers(), MODFAM_BUILD_RATE, -1,
+		InfoValuation::keyedTargetSegment("buildings"), kKeyedBuildRate, (int)CASC_SCOPE_EMPIRE);
+	for (size_t iKeyed = 0; iKeyed < kKeyedBuildRate.size(); ++iKeyed)
 	{
-		changeBuildingProductionModifier(modifier.first, modifier.second * iChange);
-	}
-	foreach_(const BuildingModifier2& modifier, kBuilding.getGlobalBuildingCostModifiers())
-	{
-		changeBuildingCostModifier(modifier.first, modifier.second * iChange);
+		changeBuildingProductionModifier((BuildingTypes)kKeyedBuildRate[iKeyed].first,
+			kKeyedBuildRate[iKeyed].second * iChange);
 	}
 
 	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
@@ -17299,9 +17300,13 @@ void CvPlayer::processCivics(const CivicTypes eCivic, const int iChange, const b
 			changeSpecialistExtraCommerce(((CommerceTypes)iI), (kCivic.getSpecialistExtraCommerce(iI) * iChange));
 		}
 
-		foreach_(const BuildingModifier2& modifier, kCivic.getBuildingProductionModifiers())
+		std::vector<std::pair<int, int> > kCivicBuildRate;
+		InfoValuation::collectKeyedTarget(kCivic.getModifiers(), MODFAM_BUILD_RATE, -1,
+			InfoValuation::keyedTargetSegment("buildings"), kCivicBuildRate, (int)CASC_SCOPE_EMPIRE);
+		for (size_t iKeyed = 0; iKeyed < kCivicBuildRate.size(); ++iKeyed)
 		{
-			changeBuildingProductionModifier(modifier.first, modifier.second * iChange);
+			changeBuildingProductionModifier((BuildingTypes)kCivicBuildRate[iKeyed].first,
+				kCivicBuildRate[iKeyed].second * iChange);
 		}
 
 		foreach_(const BuildingModifier2& change, kCivic.getBuildingHappinessChangesSparse())

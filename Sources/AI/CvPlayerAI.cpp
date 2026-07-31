@@ -13701,11 +13701,15 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 	iValue += iTempValue;
 
 	iTempValue = 0;
-	foreach_(const BuildingModifier2 & modifier, kCivic.getBuildingProductionModifiers())
+	// The building-keyed buildRate rows this civic authored, read off its own entries (modifier.md §5).
+	std::vector<std::pair<int, int> > kCivicBuildRate;
+	InfoValuation::collectKeyedTarget(kCivic.getModifiers(), MODFAM_BUILD_RATE, -1,
+		InfoValuation::keyedTargetSegment("buildings"), kCivicBuildRate, (int)CASC_SCOPE_EMPIRE);
+	for (size_t iKeyed = 0; iKeyed < kCivicBuildRate.size(); ++iKeyed)
 	{
-		iTempValue += (modifier.second * 2) / 5;
+		iTempValue += (kCivicBuildRate[iKeyed].second * 2) / 5;
 	}
-	
+
 	iValue += iTempValue;
 
 	iTempValue = 0;

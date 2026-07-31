@@ -104,8 +104,12 @@ public:
 	//	the handful the entity AUTHORED instead of the whole target registry, which is the own-data inversion
 	//	pedia-read-map finding 2 names as the shape to delete.
 	//	⚠ Values come back AS COMPILED (a flat is ×100, a percent is not -- [DEC-fixedpoint-x100]).
+	//	iScope filters to entries AUTHORED at one scope (-1 = any), the same shape as iKind's filter. It matters
+	//	wherever the same family+target is authored at two scopes with two different consumers -- `buildRate`
+	//	keyed by buildings is the live case (a city-scope row speeds the build HERE, an empire-scope row speeds
+	//	it in every city), so an unfiltered read would hand each consumer the other's rows as well.
 	static void collectKeyedTarget(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind,
-		int iTargetSegment, std::vector<std::pair<int, int> >& targetValues);
+		int iTargetSegment, std::vector<std::pair<int, int> >& targetValues, int iScope = -1);
 
 	//	The interner lookup for a keyed target token, resolved ONCE per call site rather than per entry.
 	//	Returns -1 when the segment was never authored anywhere, which makes every keyed read answer 0.

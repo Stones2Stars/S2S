@@ -6115,12 +6115,16 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 					}
 				}
 
-				foreach_(const BuildingModifier2 & modifier, kBuilding.getBuildingProductionModifiers())
+				// The CITY-scope building-keyed buildRate rows this building authored -- what it speeds up HERE.
+				std::vector<std::pair<int, int> > kCityBuildRate;
+				InfoValuation::collectKeyedTarget(kBuilding.getModifiers(), MODFAM_BUILD_RATE, -1,
+					InfoValuation::keyedTargetSegment("buildings"), kCityBuildRate, (int)CASC_SCOPE_CITY);
+				for (size_t iKeyed = 0; iKeyed < kCityBuildRate.size(); ++iKeyed)
 				{
-					const BuildingTypes eLoopBuilding = modifier.first;
+					const BuildingTypes eLoopBuilding = (BuildingTypes)kCityBuildRate[iKeyed].first;
 					if ((getBuildingAvailability(eLoopBuilding) == EnablerDomain::STATE_LISTED))
 					{
-						const int iModifier = modifier.second;
+						const int iModifier = kCityBuildRate[iKeyed].second;
 						if (iModifier > -100)
 						{
 							const int iOriginalCost = getHurryCost(eLoopBuilding);
@@ -6134,12 +6138,16 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 					}
 				}
 
-				foreach_(const BuildingModifier2 & modifier, kBuilding.getGlobalBuildingProductionModifiers())
+				// The EMPIRE-scope rows -- what it speeds up in every city.
+				std::vector<std::pair<int, int> > kEmpireBuildRate;
+				InfoValuation::collectKeyedTarget(kBuilding.getModifiers(), MODFAM_BUILD_RATE, -1,
+					InfoValuation::keyedTargetSegment("buildings"), kEmpireBuildRate, (int)CASC_SCOPE_EMPIRE);
+				for (size_t iKeyed = 0; iKeyed < kEmpireBuildRate.size(); ++iKeyed)
 				{
-					const BuildingTypes eLoopBuilding = modifier.first;
+					const BuildingTypes eLoopBuilding = (BuildingTypes)kEmpireBuildRate[iKeyed].first;
 					if (kOwner.getBuildingAvailabilityAnywhere(eLoopBuilding) == EnablerDomain::STATE_LISTED)
 					{
-						const int iModifier = modifier.second;
+						const int iModifier = kEmpireBuildRate[iKeyed].second;
 
 						if (iModifier > -100)
 						{
