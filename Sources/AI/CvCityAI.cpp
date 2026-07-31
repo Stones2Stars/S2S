@@ -5825,7 +5825,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 					iValue += (int)((maintenanceOfKind(MAINTENANCE_DISTANCE) / 100 - 3) * iNumCitiesInArea);
 				}
 
-				if (kBuilding.isMapCentering())
+				if (kBuilding.providesCapability(CLS_CAPABILITY_HAS_CENTERED_MAP))
 				{
 					iValue++;
 				}
@@ -6196,7 +6196,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 					}
 				}
 
-				if (kBuilding.isProvidesFreshWater() && !plot()->isFreshWater())
+				if (kBuilding.providesAmenity(CLS_AMENITY_PROVIDES_FRESH_WATER) && !plot()->isFreshWater())
 				{
 					int freshWaterValue = 0;
 					foreach_(const CvPlot * pLoopPlot, plots(NUM_CITY_PLOTS_1, true))

@@ -10464,7 +10464,7 @@ int CvUnit::sight(const CvPlot* pPlot) const
 int CvUnit::baseMoves() const
 {
 	return (
-		m_pUnitInfo->getMoves()
+		(m_pUnitInfo->getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100)
 		+ getExtraMoves()
 		+ (getDomainType() != DOMAIN_AIR ? GET_TEAM(getTeam()).getExtraMoves(getDomainType()) : 0)
 	);
@@ -12622,7 +12622,7 @@ int CvUnit::evasionProbability() const
 
 int CvUnit::withdrawalProbability() const
 {
-	const int iProbability = m_pUnitInfo->getWithdrawalProbability() + getExtraWithdrawal() /*+ escapeModifier()*/;
+	const int iProbability = m_pUnitInfo->getScalar(SCALAR_WITHDRAWAL, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT) + getExtraWithdrawal() /*+ escapeModifier()*/;
 
 	if (shouldUseWithdrawalOddsCap())
 	{
@@ -12827,12 +12827,12 @@ int CvUnit::collateralDamage() const
 
 int CvUnit::collateralDamageLimit() const
 {
-	return std::max(0, (m_pUnitInfo->getCollateralDamageLimit() + getCollateralDamageLimitChange()) * GC.getMAX_HIT_POINTS() / 100);
+	return std::max(0, ((m_pUnitInfo->getFlatCollateral(COLLATERAL_LIMIT, CASC_SCOPE_UNIT) / 100) + getCollateralDamageLimitChange()) * GC.getMAX_HIT_POINTS() / 100);
 }
 
 int CvUnit::collateralDamageMaxUnits() const
 {
-	return std::max(0, (m_pUnitInfo->getCollateralDamageMaxUnits() + getCollateralDamageMaxUnitsChange()));
+	return std::max(0, ((m_pUnitInfo->getFlatCollateral(COLLATERAL_MAX_UNITS, CASC_SCOPE_UNIT) / 100) + getCollateralDamageMaxUnitsChange()));
 }
 
 
