@@ -6266,13 +6266,11 @@ void enumSpawnPlots(const CvSpawnInfo& spawnInfo, std::vector<CvPlot*>* plots)
 					pPlot->isOwned()
 					&&
 					(
-						!unitInfo.canAnimalIgnoresBorders()
+						!CvSkillReads::animalIgnoresBorders(unitInfo.getSkills())
 
 						|| pPlot->getImprovementType() != NO_IMPROVEMENT
-						&& !unitInfo.canAnimalIgnoresImprovements()
 					)
 					|| pPlot->isCity(true)
-					&& !unitInfo.canAnimalIgnoresCities()
 				)
 			) continue;
 

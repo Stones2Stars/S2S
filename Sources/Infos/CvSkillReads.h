@@ -30,27 +30,37 @@ class CvSkillReads
 public:
 	static bool alwaysHeal(const CvClassificationBlock* skills);
 	static bool alwaysHostile(const CvClassificationBlock* skills);
+	static bool alwaysInvisible(const CvClassificationBlock* skills);
 	static bool amphib(const CvClassificationBlock* skills);
+	static bool animalIgnoresBorders(const CvClassificationBlock* skills);
 	static bool attackOnlyCities(const CvClassificationBlock* skills);
 	static bool blitz(const CvClassificationBlock* skills);
 	static bool canLeadThroughPeaks(const CvClassificationBlock* skills);
+	static bool canMoveAllTerrain(const CvClassificationBlock* skills);
+	static bool canMoveImpassable(const CvClassificationBlock* skills);
 	static bool canPassPeaks(const CvClassificationBlock* skills);
 	static bool celebrity(const CvClassificationBlock* skills);
 	static bool collateralImmune(const CvClassificationBlock* skills);
+	static bool counterSpy(const CvClassificationBlock* skills);
 	static bool dcmFighterEngage(const CvClassificationBlock* skills);
 	static bool defenseOnly(const CvClassificationBlock* skills);
 	static bool defensiveVictoryMove(const CvClassificationBlock* skills);
 	static bool destroy(const CvClassificationBlock* skills);
 	static bool enemyRoute(const CvClassificationBlock* skills);
+	// ⚠ The UNIT skill "every tile costs 1 movement" -- NOT the retired route-side flat-movement mechanic of the
+	// same name ([superseded-ideas] #23); that one is dead, this one stays.
+	static bool flatMovementCost(const CvClassificationBlock* skills);
 	static bool fliesToMove(const CvClassificationBlock* skills);
 	static bool food(const CvClassificationBlock* skills);
 	static bool found(const CvClassificationBlock* skills);
 	static bool freeDrop(const CvClassificationBlock* skills);
+	static bool goldenAge(const CvClassificationBlock* skills);
 	static bool greatGeneral(const CvClassificationBlock* skills);
 	static bool hiddenNationality(const CvClassificationBlock* skills);
 	static bool hillsDoubleMove(const CvClassificationBlock* skills);
 	static bool ignoreBuildingDefense(const CvClassificationBlock* skills);
 	static bool ignoreNoEntryLevel(const CvClassificationBlock* skills);
+	static bool ignoreTerrainCost(const CvClassificationBlock* skills);
 	static bool ignoreZoneOfControl(const CvClassificationBlock* skills);
 	// ⚠ Answers BOTH authored spellings of the one skill (`firstStrikeImmune` / `immuneToFirstStrikes`,
 	// [skills.md] §1) -- see the definition; a consumer asks the question, never a spelling.
@@ -60,9 +70,14 @@ public:
 	static bool noDefensiveBonus(const CvClassificationBlock* skills);
 	static bool blendIntoCity(const CvClassificationBlock* skills);
 	static bool inquisitor(const CvClassificationBlock* skills);
+	static bool investigate(const CvClassificationBlock* skills);
 	static bool noNonOwnedCityEntry(const CvClassificationBlock* skills);
 	static bool noNonTypeProdMods(const CvClassificationBlock* skills);
 	static bool noSelfHeal(const CvClassificationBlock* skills);
+	// ⚠ The UNIT's own immunity. A BUILDING's `nukeImmune` is an AMENITY making its CITY immune, and a plot
+	// substrate's is a CHARACTERISTIC meaning the feature survives -- one word, three carriers, three mechanics
+	// ([json.md] §8). This read answers only the unit's.
+	static bool nukeImmune(const CvClassificationBlock* skills);
 	static bool offensiveVictoryMove(const CvClassificationBlock* skills);
 	static bool oneUp(const CvClassificationBlock* skills);
 	static bool onlyDefensive(const CvClassificationBlock* skills);
@@ -73,6 +88,7 @@ public:
 	static bool pillageOnMove(const CvClassificationBlock* skills);
 	static bool pillageOnVictory(const CvClassificationBlock* skills);
 	static bool pillageResearch(const CvClassificationBlock* skills);
+	static bool rivalTerritory(const CvClassificationBlock* skills);
 	static bool river(const CvClassificationBlock* skills);
 	static bool sabotage(const CvClassificationBlock* skills);
 	static bool stampede(const CvClassificationBlock* skills);

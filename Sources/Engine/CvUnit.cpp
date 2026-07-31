@@ -12413,7 +12413,7 @@ bool CvUnit::immuneToFirstStrikes() const
 
 bool CvUnit::noDefensiveBonus() const
 {
-	return m_pUnitInfo->isNoDefensiveBonus() + getExtraNoDefensiveBonusCount() > 0;
+	return CvSkillReads::noDefensiveBonus(getUnitInfo().getSkills()) || getExtraNoDefensiveBonusCount() > 0;
 }
 
 int CvUnit::getExtraNoDefensiveBonusCount() const
@@ -12434,23 +12434,23 @@ bool CvUnit::ignoreBuildingDefense() const
 
 bool CvUnit::canMoveImpassable() const
 {
-	return (m_pUnitInfo->isCanMoveImpassable() || canFliesToMove());
+	return (CvSkillReads::canMoveImpassable(getUnitInfo().getSkills()) || canFliesToMove());
 }
 
 bool CvUnit::canMoveAllTerrain() const
 {
-	return (m_pUnitInfo->isCanMoveAllTerrain() || canFliesToMove());
+	return (CvSkillReads::canMoveAllTerrain(getUnitInfo().getSkills()) || canFliesToMove());
 }
 
 bool CvUnit::flatMovementCost() const
 {
 	//soon as the pathing engine can handle it this should be uncommented.
-	return (/*canFliesToMove() ||*/ m_pUnitInfo->isFlatMovementCost());
+	return (/*canFliesToMove() ||*/ CvSkillReads::flatMovementCost(getUnitInfo().getSkills()));
 }
 
 bool CvUnit::ignoreTerrainCost() const
 {
-	return (m_pUnitInfo->isIgnoreTerrainCost() || canFliesToMove());
+	return (CvSkillReads::ignoreTerrainCost(getUnitInfo().getSkills()) || canFliesToMove());
 }
 
 bool CvUnit::isNeverInvisible() const
@@ -12610,7 +12610,7 @@ bool CvUnit::isInvisible(TeamTypes eTeam, bool bDebug, bool bCheckCargo) const
 
 bool CvUnit::isNukeImmune() const
 {
-	return m_pUnitInfo->isNukeImmune();
+	return CvSkillReads::nukeImmune(getUnitInfo().getSkills());
 }
 
 
@@ -15676,7 +15676,7 @@ void CvUnit::changeExtraDynamicDefense(int iChange)
 
 int CvUnit::getAnimalIgnoresBordersCount() const
 {
-	return m_pUnitInfo->canAnimalIgnoresBorders() + m_iAnimalIgnoresBordersCount;
+	return (CvSkillReads::animalIgnoresBorders(getUnitInfo().getSkills()) ? 1 : 0) + m_iAnimalIgnoresBordersCount;
 }
 
 void CvUnit::changeAnimalIgnoresBordersCount(int iChange)

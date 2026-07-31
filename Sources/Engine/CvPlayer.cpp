@@ -16600,7 +16600,7 @@ int CvPlayer::getAdvancedStartUnitCost(UnitTypes eUnit, bool bAdd, const CvPlot*
 				return -1;
 			}
 
-			if (pPlot->isImpassable() && !GC.getUnitInfo(eUnit).isCanMoveImpassable())
+			if (pPlot->isImpassable() && !CvSkillReads::canMoveImpassable(GC.getUnitInfo(eUnit).getSkills()))
 			{
 				return -1;
 			}
