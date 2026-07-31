@@ -12,6 +12,7 @@ See docs/specs/modifier.md (the flat-family modifier model + deliveryguy/inversi
 (the JSON shapes this produces).
 """
 import argparse
+import atexit
 import json
 import os
 import re
@@ -841,6 +842,58 @@ def run(cfg, boosts_config, store=None, post_process=None):
     return store, result
 
 
+# ---------------------------------------------------------------------------
+# THE ADDITIONS OVERLAY IS PART OF THE WRITE -- not a step to remember (owner)
+# ---------------------------------------------------------------------------
+# `_additions/<type>.json` is deep-merged ON TOP of the curated JSON as the final offline step, and a per-entity
+# `--write` CLEARS its folder before rewriting -- so running one curator alone used to silently drop that entity's
+# overlay, leaving the committed data and a fresh regen disagreeing. It happened more than once, because it relied
+# on the runner remembering to re-run the overlay afterwards.
+#
+# ⚑ So the re-apply is hooked to the ONE act every writer performs -- clearing its folder -- and runs at process
+# exit over exactly the folders this run rewrote. That is what makes skipping it UNSAYABLE rather than forbidden:
+# there is no ordering to get wrong and no curator to edit when a new one is added. The merge itself stays the ONE
+# implementation in `curate_additions` ([DEC-single-implementation]); this only decides WHEN it runs.
+#
+# Idempotent by construction (a deep-merge of the same partial is a no-op), so `curate_all`'s closing
+# `curate_additions --write` still runs and still lands the same bytes. A `--sample`/dry run clears nothing, so it
+# registers nothing and the overlay is not applied.
+_REWRITTEN_ENTITY_DIRS = set()
+
+
+def _reapply_additions_overlay():
+    """Re-merge `_additions/<type>.json` into every entity folder this process rewrote."""
+    if not _REWRITTEN_ENTITY_DIRS:
+        return
+    try:
+        import curate_additions as _add
+    except Exception as e:                                    # never let the overlay hook break a curate run
+        print("WARNING: additions overlay NOT re-applied (%s) -- run curate_additions.py --write" % e)
+        return
+    for dir_path in sorted(_REWRITTEN_ENTITY_DIRS):
+        type_name = os.path.basename(dir_path.rstrip(os.sep))
+        af = os.path.join(_add.ADDITIONS, type_name + ".json")
+        if not os.path.isfile(af):
+            continue
+        adds = json.load(open(af, encoding="utf-8"), object_pairs_hook=OrderedDict)
+        applied = missing = 0
+        for entity_id, partial in adds.items():
+            ef = _add.find_entity_file(dir_path, entity_id)
+            if ef is None:
+                print("  ADDITIONS MISSING: %s not found under %s/" % (entity_id, type_name))
+                missing += 1
+                continue
+            d = json.load(open(ef, encoding="utf-8"), object_pairs_hook=OrderedDict)
+            _add.deep_merge(d, partial)
+            with open(ef, "w", encoding="utf-8") as f:        # match the curators' exact serialization
+                json.dump(d, f, indent=1, ensure_ascii=False)
+            applied += 1
+        print("additions overlay: %s -- %d applied, %d missing" % (type_name, applied, missing))
+
+
+atexit.register(_reapply_additions_overlay)
+
+
 def wipe_entity_json(dir_path, recurse=False, expected=None):
     """Drop-before-rewrite (owner ruling 2026-07-21): clear an entity folder's generated JSON before a --write so a
     type no longer emitted (dropped at the store, renamed, or merged away) does NOT linger as a stale file. PRESERVES
@@ -865,6 +918,8 @@ def wipe_entity_json(dir_path, recurse=False, expected=None):
                         os.remove(os.path.join(p, fn))
         elif name.endswith(".json") and not name.startswith("_"):
             os.remove(p)
+    # This folder is about to be rewritten, so its additions overlay must land again (above).
+    _REWRITTEN_ENTITY_DIRS.add(os.path.abspath(dir_path))
 
 
 def main(cfg, boosts_config, out_dir, post_process=None, synthesize=None):

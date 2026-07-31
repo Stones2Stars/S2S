@@ -36,8 +36,22 @@ curator's docstring + body. To read the map for an entity, **read its curator.**
 > **The GAME never knows curation OR additions exist** (owner: *"the c++ should not know or care that the json is
 > now different from xml; the game does not, and should not know that there is such a thing as curation"*) — the
 > whole Python pipeline (curators + additions re-apply) is a **separate offline entity** that merely PRODUCES the
-> `Assets/Data` JSON the engine loads. The `_additions` files are the reviewable/revertible source layer; **re-run
-> `curate_additions.py --write` after ANY re-curate** so the additions always land last.
+> `Assets/Data` JSON the engine loads. The `_additions` files are the reviewable/revertible source layer.
+>
+> **⚖ THE RE-APPLY IS PART OF THE WRITE — there is no step to remember (owner: *"it probably should be part of
+> core loop"*).** A per-entity `--write` CLEARS its folder before rewriting, so running one curator alone used to
+> silently drop that entity's overlay and leave the committed data disagreeing with a fresh regen. It was a
+> documented instruction ("re-run `curate_additions.py` after any re-curate") and it was missed **more than once**
+> — which is the point: a rule has to be remembered, a check does not ([AGENTS.md](../../../AGENTS.md)).
+> So `curate_common` hooks the re-apply to the ONE act every writer performs — clearing its folder
+> (`wipe_entity_json`) — and runs it at process exit over exactly the folders that run rewrote. **Any curator,
+> run any way, lands its overlay**; a newly-added curator inherits it with no wiring, and there is no ordering to
+> get wrong. The merge stays the ONE implementation in `curate_additions`
+> ([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation)); the hook only decides
+> WHEN it runs, and re-merging the same partial is a no-op, so `curate_all`'s closing pass still lands the same
+> bytes.
+> ⚠ A `--sample`/dry run clears nothing, so it registers nothing and applies no overlay — reading a sample still
+> shows the pre-overlay curator output, which is what you want when checking the CURATOR.
 
 ## ⛔ THE CURATOR SKIPS DEAD THINGS — a MECHANISM, never a hand-kept list (owner)
 
