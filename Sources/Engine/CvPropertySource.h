@@ -29,6 +29,14 @@ public:
 	RelationTypes getRelation() const;
 	int getRelationData() const;
 
+	// CONSTRUCTION-time setters, used only by the CvPropertyManipulators builders that assemble a source. The
+	// property engine is self-contained (engine.md), so these configure a source as it is created -- they are
+	// not a mutable runtime surface and nothing calls them after the manipulator list is built.
+	void setObjectType(GameObjectTypes eObjectType) { m_eObjectType = eObjectType; }
+	void setRelation(RelationTypes eRelation) { m_eRelation = eRelation; }
+	void setRelationData(int iRelationData) { m_iRelationData = iRelationData; }
+	void setActive(const BoolExpr* pExprActive) { m_pExprActive = pExprActive; }
+
 	virtual bool isActive(const CvGameObject* pObject) const;
 
 	virtual PropertySourceTypes getType() const = 0;

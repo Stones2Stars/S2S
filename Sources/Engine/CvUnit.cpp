@@ -9930,7 +9930,6 @@ int CvUnit::canLead(const CvPlot* pPlot, int iUnitId) const
 		{
 			if (pUnit != this &&
 				pUnit->getOwner() == getOwner() &&
-				!pUnit->isTrap() &&
 				!pUnit->isCommander() &&
 				!pUnit->isCommodore() &&
 				pUnit->canPromote((PromotionTypes)kUnitInfo.getLeaderPromotion(), getID()))
@@ -9943,7 +9942,6 @@ int CvUnit::canLead(const CvPlot* pPlot, int iUnitId) const
 	{
 		const CvUnit* pUnit = GET_PLAYER(getOwner()).getUnit(iUnitId);
 		if (pUnit && pUnit != this &&
-			!pUnit->isTrap() &&
 			pUnit->canPromote((PromotionTypes)kUnitInfo.getLeaderPromotion(), getID()))
 		{
 			iNumUnits = 1;
@@ -9965,8 +9963,7 @@ int CvUnit::canGiveExperience(const CvPlot* pPlot) const
 			if (pUnit != this
 			&& pUnit->getOwner() == getOwner()
 			&& pUnit->canAcquirePromotionAny()
-			&& !pUnit->getUnitInfo().hasSkill(CLS_SKILL_GREAT_GENERAL)
-			&& !pUnit->isTrap())
+			&& !pUnit->getUnitInfo().hasSkill(CLS_SKILL_GREAT_GENERAL))
 			{
 				++iNumUnits;
 			}
@@ -9991,7 +9988,7 @@ bool CvUnit::giveExperience()
 			int i = 0;
 			foreach_(CvUnit* pUnit, pPlot->units())
 			{
-				if (pUnit != this && pUnit->getOwner() == getOwner() && !pUnit->isTrap()
+				if (pUnit != this && pUnit->getOwner() == getOwner()
 				&& !pUnit->isCommander() && !pUnit->isCommodore() && pUnit->canAcquirePromotionAny())
 				{
 					pUnit->changeExperience(i < (iTotalExperience % iNumUnits) ? iMinExperiencePerUnit + 1 : iMinExperiencePerUnit);

@@ -3495,18 +3495,11 @@ bool CvSelectionGroup::groupAttack(int iX, int iY, int iFlags, bool& bFailedAlre
 			}
 			else
 			{
-				bool bFoundBombard = false;
-
-				OutputDebugString("Attempting to bombard tough plot\n");
-				foreach_(CvUnit* pLoopUnit, units())
-				{
-					if (pLoopUnit->canBombardAtRanged(plot(), pDestPlot->getX(), pDestPlot->getY()))
-					{
-						bFoundBombard = true;
-						pLoopUnit->bombardRanged(pDestPlot->getX(), pDestPlot->getY(), false);
-					}
-				}
-				bBombardExhausted = !bFoundBombard;
+				// There is no ranged-bombard step to try before committing: the mechanic is removed, and its
+				// return is a ground-up redesign rather than a revival of this call
+				// (superseded-ideas #24). The stack falls through to the sacrifice pick on the next pass,
+				// which is exactly where this branch already led once no unit could bombard.
+				bBombardExhausted = true;
 				continue;
 			}
 		}

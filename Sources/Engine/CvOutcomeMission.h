@@ -34,8 +34,6 @@ public:
 	void buildDisplayString(CvWStringBuffer& szBuffer, const CvUnit* pUnit) const;
 	void execute(CvUnit* pUnit) const;
 
-	bool read(CvXMLLoadUtility* pXML);
-	void copyNonDefaults(CvOutcomeMission* pOutcomeMission);
 
 	void getCheckSum(uint32_t& iSum) const;
 

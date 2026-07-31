@@ -19,6 +19,13 @@
   behaviour, so it is an owner call ([save.md §3](../../specs/save.md)).
 - Decide whether the `…Times100` on AI unit counts and plot strength is swept with the scale conversion — same
   shape, different nature (fractional SizeMatters counts, not a modifier channel).
+- Rule on the river-attack term for a CITY defender (`CvUnit::getDefenderCombatValues`). Its two branches
+  disagree: attacking across a river hands an ordinary defender `-RIVER_ATTACK_MODIFIER`, while the city branch
+  is `min(0, riverDefensePenalty - RIVER_ATTACK_MODIFIER)` — capped at zero, so a city defender can never
+  receive that bonus and the building value only bites if authored below the define. Every authoring is above
+  it, so the term is inert whatever its scale. ⛔ Not an agent fix: changing it changes combat, which
+  [validation.md](../../specs/validation.md) makes a per-case owner authorization, so the choice (drop the
+  mechanic, or correct the branch to reduce the crossing penalty) is yours.
 - Build RANKED-UP Size-Matters units from the build menu, so a late-game player is not merging hundreds of
   units by hand — ⚖ **not wanted yet (owner): the task is bigger than it looks, so it waits until we want it.**
   The MODEL is settled and spec'd ([json.md §9](../../specs/json.md)) — `base + x`, the era bounding `x`, and

@@ -7544,10 +7544,13 @@ int CvCityAI::AI_clearFeatureValue(int iIndex) const
 
 	const CvFeatureInfo& kFeatureInfo = GC.getFeatureInfo(eFeature);
 
+	// The plot flats are ×100 native, so each weight reduces at its point of use -- and BEFORE the ÷100 rather
+	// than after, so a fractional yield is not truncated twice. The rest of this score is unscaled (the health
+	// term is a percent, and the bonuses below are flat constants), so carrying ×100 further would be a 100×.
 	int iValue = 0;
-	iValue += kFeatureInfo.getYieldChange(YIELD_FOOD) * 100;
-	iValue += kFeatureInfo.getYieldChange(YIELD_PRODUCTION) * 60;
-	iValue += kFeatureInfo.getYieldChange(YIELD_COMMERCE) * 40;
+	iValue += kFeatureInfo.getFlatYield(YIELD_FOOD, CASC_SCOPE_PLOT) * 100 / 100;
+	iValue += kFeatureInfo.getFlatYield(YIELD_PRODUCTION, CASC_SCOPE_PLOT) * 60 / 100;
+	iValue += kFeatureInfo.getFlatYield(YIELD_COMMERCE, CASC_SCOPE_PLOT) * 40 / 100;
 
 	if (iValue > 0 && pPlot->isBeingWorked())
 	{
@@ -7685,7 +7688,7 @@ int CvCityAI::AI_getGoodTileCount() const
 					aiFinalYields[iJ] = pLoopPlot->getYield((YieldTypes)iJ);
 					if (pLoopPlot->getFeatureType() != NO_FEATURE)
 					{
-						aiFinalYields[iJ] += std::max(0, -GC.getFeatureInfo(pLoopPlot->getFeatureType()).getYieldChange((YieldTypes)iJ));
+						aiFinalYields[iJ] += std::max(0, -GC.getFeatureInfo(pLoopPlot->getFeatureType()).getFlatYield((YieldTypes)iJ, CASC_SCOPE_PLOT) / 100);
 					}
 				}
 			}
@@ -7775,7 +7778,7 @@ int CvCityAI::AI_countWorkedPoorTiles() const
 					aiFinalYields[iJ] = pLoopPlot->getYield((YieldTypes)iJ);
 					if (pLoopPlot->getFeatureType() != NO_FEATURE)
 					{
-						aiFinalYields[iJ] += std::max(0, -GC.getFeatureInfo(pLoopPlot->getFeatureType()).getYieldChange((YieldTypes)iJ));
+						aiFinalYields[iJ] += std::max(0, -GC.getFeatureInfo(pLoopPlot->getFeatureType()).getFlatYield((YieldTypes)iJ, CASC_SCOPE_PLOT) / 100);
 					}
 				}
 			}
@@ -7905,7 +7908,7 @@ void CvCityAI::AI_getYieldMultipliers(int& iFoodMultiplier, int& iProductionMult
 					aiFinalYields[iJ] = pLoopPlot->getYield((YieldTypes)iJ);
 					if (pLoopPlot->getFeatureType() != NO_FEATURE)
 					{
-						aiFinalYields[iJ] += std::max(0, -GC.getFeatureInfo(pLoopPlot->getFeatureType()).getYieldChange((YieldTypes)iJ));
+						aiFinalYields[iJ] += std::max(0, -GC.getFeatureInfo(pLoopPlot->getFeatureType()).getFlatYield((YieldTypes)iJ, CASC_SCOPE_PLOT) / 100);
 					}
 				}
 			}

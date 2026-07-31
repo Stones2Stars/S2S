@@ -20607,7 +20607,7 @@ bool CvUnitAI::AI_specialSeaTransportMissionary()
 							iValue += 3;
 						}
 
-						if (GET_PLAYER(getOwner()).hasHolyCityeLoopReligion)
+						if (GET_PLAYER(getOwner()).hasHolyCity(eLoopReligion))
 						{
 							iValue++;
 						}
@@ -20623,7 +20623,7 @@ bool CvUnitAI::AI_specialSeaTransportMissionary()
 					const CorporationTypes eLoopCorporation = static_cast<CorporationTypes>(itSpread->first);
 					if (pMissionaryUnit->canSpreadCorporation(pLoopPlot, eLoopCorporation))
 					{
-						if (GET_PLAYER(getOwner()).hasHeadquarterseLoopCorporation)
+						if (GET_PLAYER(getOwner()).hasHeadquarters(eLoopCorporation))
 						{
 							iCorpValue += 3;
 						}
@@ -28551,11 +28551,11 @@ bool CvUnitAI::AI_foundReligion()
 				const ReligionTypes eLoopReligion = static_cast<ReligionTypes>(itSpread->first);
 				if (canSpread(plot(), eLoopReligion))
 				{
-					if (!GC.getGame().isReligionFoundedeLoopReligion)
+					if (!GC.getGame().isReligionFounded(eLoopReligion))
 					{
 						for (iJ = 0; iJ < GC.getNumFlavorTypes(); iJ++)
 						{
-							value += std::max(1, GET_PLAYER(getOwner()).AI_getFlavorValue((FlavorTypes)iJ)) * std::max(1, GC.getReligionInfoeLoopReligion.getFlavorValue((FlavorTypes)iJ));
+							value += std::max(1, GET_PLAYER(getOwner()).AI_getFlavorValue((FlavorTypes)iJ)) * std::max(1, GC.getReligionInfo(eLoopReligion).getFlavorValue((FlavorTypes)iJ));
 						}
 						if (value > bestValue)
 						{
@@ -28586,11 +28586,11 @@ bool CvUnitAI::AI_foundReligion()
 				const ReligionTypes eLoopReligion = static_cast<ReligionTypes>(itSpread->first);
 				if (canSpread(plot(), eLoopReligion))
 				{
-					if (!GC.getGame().isReligionFoundedeLoopReligion)
+					if (!GC.getGame().isReligionFounded(eLoopReligion))
 					{
 						for (iJ = 0; iJ < GC.getNumFlavorTypes(); iJ++)
 						{
-							value += (GET_PLAYER(getOwner()).AI_getFlavorValue((FlavorTypes)iJ) + 1) * (GC.getReligionInfoeLoopReligion.getFlavorValue((FlavorTypes)iJ) + 1);
+							value += (GET_PLAYER(getOwner()).AI_getFlavorValue((FlavorTypes)iJ) + 1) * (GC.getReligionInfo(eLoopReligion).getFlavorValue((FlavorTypes)iJ) + 1);
 							if (value > bestValue)
 							{
 								eBestReligion = eLoopReligion;

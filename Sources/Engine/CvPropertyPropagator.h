@@ -30,6 +30,16 @@ public:
 	int getTargetRelationData() const;
 	GameObjectTypes getTargetObjectType() const;
 
+	// CONSTRUCTION-time setters -- the CvPropertyManipulators builders' half of the getters above (see the
+	// twin note on CvPropertySource); nothing mutates a propagator once the manipulator list is assembled.
+	void setObjectType(GameObjectTypes eObjectType) { m_eObjectType = eObjectType; }
+	void setRelation(RelationTypes eRelation) { m_eRelation = eRelation; }
+	void setRelationData(int iRelationData) { m_iRelationData = iRelationData; }
+	void setTargetObjectType(GameObjectTypes eTargetObjectType) { m_eTargetObjectType = eTargetObjectType; }
+	void setTargetRelation(RelationTypes eTargetRelation) { m_eTargetRelation = eTargetRelation; }
+	void setTargetRelationData(int iTargetRelationData) { m_iTargetRelationData = iTargetRelationData; }
+	void setActive(const BoolExpr* pExprActive) { m_pExprActive = pExprActive; }
+
 	bool isActive(const CvGameObject* pObject) const;
 	void getTargetObjects(const CvGameObject* pObject, std::vector<const CvGameObject*>& apGameObjects) const;
 

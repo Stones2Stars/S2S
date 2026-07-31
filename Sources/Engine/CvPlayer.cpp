@@ -7296,7 +7296,9 @@ RouteTypes CvPlayer::getBestRoute(const CvPlot* pPlot, bool bConnect, const CvUn
 int CvPlayer::calculatePlotRouteYieldDifference(const CvPlot* pPlot, const RouteTypes eRoute, YieldTypes eYield) const
 {
 	// We're always gaining the yield type from the proposed route to place; might need to subtract existing route/improvement yields though.
-	int iYield = GC.getRouteInfo(eRoute).getYieldChange(eYield);
+	// x100 native throughout: getImprovementYield materializes a flat too, so every term here shares one
+	// scale and the CALLER reduces (its `100 * human` is exactly this x100 value).
+	int iYield = GC.getRouteInfo(eRoute).getFlatYield(eYield, CASC_SCOPE_PLOT);
 
 	bool bIsImprovement = false;
 	bool bIsRoute = false;
@@ -7307,11 +7309,11 @@ int CvPlayer::calculatePlotRouteYieldDifference(const CvPlot* pPlot, const Route
 	{
 		iYield += GC.getRouteInfo(eRoute).getImprovementYield(pPlot->getImprovementType(), (YieldTypes)(eYield))
 			   -  GC.getRouteInfo(pPlot->getRouteType()).getImprovementYield(pPlot->getImprovementType(), (YieldTypes)(eYield))
-			   -  GC.getRouteInfo(pPlot->getRouteType()).getYieldChange(eYield);
+			   -  GC.getRouteInfo(pPlot->getRouteType()).getFlatYield(eYield, CASC_SCOPE_PLOT);
 	}
 	else if (bIsRoute)
 	{
-		iYield -=  GC.getRouteInfo(pPlot->getRouteType()).getYieldChange(eYield);
+		iYield -=  GC.getRouteInfo(pPlot->getRouteType()).getFlatYield(eYield, CASC_SCOPE_PLOT);
 	}
 	else if (bIsImprovement)
 	{
@@ -7364,7 +7366,8 @@ RouteTypes CvPlayer::getBestRouteInternal(const CvPlot* pPlot, bool bConnect, co
 				{
 					iYieldSum += calculatePlotRouteYieldDifference(pPlot, eRoute, ((YieldTypes)i));
 				}
-				iValue += 100 * iYieldSum;
+				// iYieldSum is x100, which IS the old `100 * humanYield` -- the reduce and the weight cancel.
+				iValue += iYieldSum;
 
 				iValue -= GC.getBuildInfo((BuildTypes)iI).getGoldCost();
 
