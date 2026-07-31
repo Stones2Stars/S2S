@@ -359,6 +359,16 @@ group's natural index** — never N individual getters for a groupable set. This
   `100` suffix; the name says the VALUE, never the scale (always ×100). A reader wanting human does ÷100 at the
   boundary. The split lives in the flat-vs-modifier member name (`getFlatYield` vs `getYieldModifier`), never a
   scale suffix.
+- **⚑ A LEGACY `Global*` / `Area*` / `National*` PREFIX IS A SCOPE FRAGMENT — its successor is the SAME kind read
+  with a scope ARGUMENT.** This is the single most common disposition in the compiler census, and reading it as a
+  missing member instead sends an agent looking for a getter that was never meant to come back:
+  `getGlobalYieldModifier` → `getYieldModifier(eYield, CASC_SCOPE_EMPIRE)`, `getCommerceChange` →
+  `getFlatCommerce(eCommerce, CASC_SCOPE_CITY)`, `getGlobalFreeSpecialist` / `getAreaFreeSpecialist` →
+  `getFreeSpecialistsAny(CASC_SCOPE_EMPIRE)` (area authors at EMPIRE — a landmass is not a scope,
+  [state-repositories.md](state-repositories.md)). The name lost the fragment because scope became an axis
+  ([DEC-scope-is-an-axis](decisions.md#dec-scope-is-an-axis)); nothing was removed.
+  ⚠ Confirm the KIND enum at the call site rather than pattern-matching the name — the prefix tells you the
+  SCOPE, never which kind the value is, and a wrong kind compiles clean and reports a plausible wrong number.
 - **Extensible by DATA, not by new members/getters.** A new scalar family is a new `m_scalars` enum entry; a new
   property is a new id in `m_properties`; a new attribute is a new bitset key. The getter surface does not grow.
 - Intrinsic self-description (`getAirlift`, `getMaxStartEra`, the shrine/corpHQ FKs, flavours) stays a bare typed
