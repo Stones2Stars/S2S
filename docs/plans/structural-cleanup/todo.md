@@ -148,9 +148,28 @@
   needs a way to be told the best plots to work may have moved — so this is a CALL-SITE question, never a
   removal. `AI_setAssignWorkDirty` is called from across the engine while `AI_updateAssignWork` re-runs the FULL
   assignment for every dirty city, so the flips are a turn-time cost in their own right.
+  ⚖ **It LISTENS TO THE EVENT SPINE, and no AI loop ever touches it (owner)** — a consumer marking off the
+  facts, exactly as the player alerts re-attach to the fact rather than being re-inlined at a mutation site
+  ([event-spine.md](../../specs/event-spine.md)). So this is a ROUTING job, never a judgement re-made per site.
+  ⚖ **The ruled set (owner): a PLOT UPGRADED in the city · a BUILDING FINISHED that makes actual changes to
+  specialists or plots · POP ADDED · a CIVIC change · a TRAIT change.**
+  ⚑ **`CvCity::canWork`'s own gates name what that set does not cover, and they are the authority** — the
+  workable-PLOT SET (working-city reassignment; the radius growing with culture / `adds3rdRing`, which adds
+  tiles that were never candidates and which no yield fact announces), the water-work TEAM capability, and
+  `hasYield` appearing or vanishing — which is the INVERSE of "upgraded": pillage, bonus depletion, a chop.
+  Symmetric cases likewise: pop REMOVED, a building with those effects DESTROYED, and golden age starting or
+  ending (it moves per-plot yields through the threshold bonus, [golden-age.md](../../reference/golden-age.md)).
+  ⛔ **Two gates are UNIT-MOVEMENT driven and must NOT ride the same routing** — an enemy unit sieging a plot
+  and a naval blockade. Unit movement never dirties a cache
+  ([DEC-unit-modifiers-on-top](../../architecture/decisions.md#dec-unit-modifiers-on-top)), so routing these
+  like the rest reinstates per-move churn; decide them deliberately rather than discovering it in a profile.
+  ⛔ **The BUILDING leg is conditional, and that is the whole difficulty: it is not "a building completed", it
+  is "a building that actually changes specialist slots or plot output".** A building completing changes
+  nothing about which plots are best unless it authors that, so the test reads the building's OWN compiled
+  entries; firing on every completion is exactly the spray being removed.
   ⚑ The instrument is already built and needs nothing added: the setter emits the caller's module-relative
-  return address on every false→true transition, so the culprits resolve offline against the PDB. Read that
-  before changing any site — the answer is which FACTS genuinely move a plot's value, not a judgement per call.
+  return address on every false→true transition, so what fires TODAY resolves offline against the PDB — read it
+  to find what to remove, now that what to KEEP is settled.
   ⛔ Do NOT re-add a flip to replace a cut maintainer's gated one: the legacy calls fire only when a value
   actually CHANGED, so an ungated stand-in adds to the very churn the instrument is measuring.
 - The amenity CONSUMER side: re-point consumers onto the CITY read and retire the per-flag `CvCity` counters and
