@@ -117,7 +117,6 @@ FAMILIES = {
     "iHillsWorkModifier":           ("workRate", "hills", "percent"),
     "iPeaksWorkModifier":           ("workRate", "peaks", "percent"),
     "iCargoChange":                 ("cargo", "space", "flat"),
-    "iUpkeepModifier":              ("upkeep", "modifier", "percent"),
     "iExtraUpkeep100":              ("upkeep", "extra", "flat"),       # x100 legacy (calcUpkeep100) -> de-scaled to human in the applier (tag endswith 100); member renamed off the 100 (cold-modder)
     # ruling 18: the upgrade DISCOUNT folds into the ONE costs family, kind upgrade, at UNIT scope -- verified a
     # percent of the upgrade price (CvUnit.cpp:10367 `iPrice -= iPrice × min(100, discount)/100`). The sign is

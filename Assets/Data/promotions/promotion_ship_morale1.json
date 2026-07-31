@@ -6,13 +6,6 @@
    "PROMOTION_SHIP_TACTICS1"
   ]
  },
- "upkeep": {
-  "unit": {
-   "modifier": {
-    "percent": 10
-   }
-  }
- },
  "combat": {
   "unit": {
    "percent": 5

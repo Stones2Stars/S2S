@@ -565,8 +565,6 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 	m_iExtraCombatModifierPerVolumeMore = 0;
 	m_iExtraCombatModifierPerVolumeLess = 0;
 	m_iExtraMaxHP = 0;
-	m_iUpkeepModifier = 0;
-	m_iUpkeepMultiplierSM = 0;
 	m_iSMAssetValue = 0;
 	m_iSMPowerValue = 0;
 	m_iSMHPValue = 0;
@@ -825,8 +823,6 @@ CvUnit& CvUnit::operator=(const CvUnit& other)
 	m_iExtraCombatModifierPerVolumeMore = other.m_iExtraCombatModifierPerVolumeMore;
 	m_iExtraCombatModifierPerVolumeLess = other.m_iExtraCombatModifierPerVolumeLess;
 	m_iExtraMaxHP = other.m_iExtraMaxHP;
-	m_iUpkeepModifier = other.m_iUpkeepModifier;
-	m_iUpkeepMultiplierSM = other.m_iUpkeepMultiplierSM;
 	m_iSMAssetValue = other.m_iSMAssetValue;
 	m_iSMPowerValue = other.m_iSMPowerValue;
 	m_iSMHPValue = other.m_iSMHPValue;
@@ -15229,68 +15225,21 @@ int CvUnit::getExtraUpkeep() const
 	return m_iExtraUpkeep100;
 }
 
-void CvUnit::changeUpkeepModifier(const int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iUpkeepModifier += iChange;
-		calcUpkeep();
-	}
-}
-
-int CvUnit::getUpkeepModifier() const
-{
-	return m_iUpkeepModifier;
-}
-
-int CvUnit::getUpkeepMultiplierSM() const
-{
-	return m_iUpkeepMultiplierSM;
-}
-
-void CvUnit::calcUpkeepMultiplierSM(const int iGroupOffset)
-{
-	PROFILE_EXTRA_FUNC();
-	m_iUpkeepMultiplierSM = 0;
-
-	if (iGroupOffset > 0)
-	{
-		for (int iI = 0; iI < iGroupOffset; iI++)
-		{
-			m_iUpkeepMultiplierSM = (100 + m_iUpkeepMultiplierSM) * 150 / 100 - 100;
-		}
-	}
-	else if (iGroupOffset < 0)
-	{
-		for (int iI = 0; iI < -iGroupOffset; iI++)
-		{
-			m_iUpkeepMultiplierSM = (100 + m_iUpkeepMultiplierSM) * 150 / 100 - 100;
-		}
-		m_iUpkeepMultiplierSM = -m_iUpkeepMultiplierSM;
-	}
-	calcUpkeep();
-}
-
 void CvUnit::calcUpkeep()
 {
 	if (isNPC())
 	{
 		return;
 	}
-	int iCalc = 100 * m_pUnitInfo->getUpkeepCost() + m_iExtraUpkeep100;
-
-	if (iCalc > 0)
+	// Flat only, by ruling: a unit costs its base upkeep plus any flat extra. The percentage stages that
+	// used to multiply this (the promotion/unit-combat upkeep modifier and the Size-Matters rank
+	// multiplier) are GONE -- see superseded-ideas.
+	const int iCalc = 100 * m_pUnitInfo->getUpkeepCost() + m_iExtraUpkeep100;
+	const int iOldUpkeep = m_iUpkeep100;
+	m_iUpkeep100 = std::max(0, iCalc);
+	if (m_iUpkeep100 != iOldUpkeep)
 	{
-		iCalc = getModifiedIntValue(iCalc, m_iUpkeepModifier);
-		iCalc = getModifiedIntValue(iCalc, m_iUpkeepMultiplierSM);
-
-		const int iOldUpkeep = m_iUpkeep100;
-
-		// Update player total
-		if (m_iUpkeep100 != iOldUpkeep)
-		{
-			GET_PLAYER(getOwner()).changeUnitUpkeep(m_iUpkeep100 - iOldUpkeep, isMilitaryBranch());
-		}
+		GET_PLAYER(getOwner()).changeUnitUpkeep(m_iUpkeep100 - iOldUpkeep, isMilitaryBranch());
 	}
 }
 
@@ -17541,7 +17490,6 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 		const int iClassGroupBase = kUnitCombat.getSizeMatters().groupBase;
 		if (bAdding && iClassGroupBase > -10)
 		{
-			calcUpkeepMultiplierSM(iClassGroupBase - getGroupBaseTotal());
 		}
 	}
 
@@ -17828,7 +17776,6 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 	}
 
 	changeExtraUpkeep(kUnitCombat.getExtraUpkeep() * iChange);
-	changeUpkeepModifier(kUnitCombat.getUpkeepModifier() * iChange);
 
 	establishBuildups();
 
@@ -18031,7 +17978,6 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	changeExtraDamageModifier(kPromotion.getDamageModifierChange() * iChange);
 
 	changeExtraUpkeep(kPromotion.getExtraUpkeep() * iChange);
-	changeUpkeepModifier(kPromotion.getUpkeepModifier() * iChange);
 
 	changeStampedeCount((kPromotion.isStampedeChange()) ? iChange : 0);
 	changeStampedeCount((kPromotion.isRemoveStampede()) ? -iChange : 0);
@@ -19402,8 +19348,6 @@ void CvUnit::read(FDataStreamBase* pStream)
 	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvUnit", REMAPPED_CLASS_TYPE_RELIGIONS, (int*)&m_eReligionType);
 	WRAPPER_READ(wrapper, "CvUnit", &m_bIsReligionLocked);
 
-	WRAPPER_READ(wrapper, "CvUnit", &m_iUpkeepModifier);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iUpkeepMultiplierSM);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iBuildUpTurns);
 
 	for (int iI = GC.getNumUnitCombatInfos() - 1; iI > -1; iI--)
@@ -20029,8 +19973,6 @@ void CvUnit::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE_CLASS_ENUM(wrapper, "CvUnit", REMAPPED_CLASS_TYPE_RELIGIONS, m_eReligionType);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_bIsReligionLocked);
 
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iUpkeepModifier);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iUpkeepMultiplierSM);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iBuildUpTurns);
 
 	for (int iI = GC.getNumUnitCombatInfos() - 1; iI > -1; iI--)

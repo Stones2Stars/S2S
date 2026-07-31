@@ -5,13 +5,6 @@
    "PROMOTION_SLAVE_MASTER2"
   ]
  },
- "upkeep": {
-  "unit": {
-   "modifier": {
-    "percent": 10
-   }
-  }
- },
  "capture": {
   "unit": {
    "probability": {

@@ -20,13 +20,6 @@
    ]
   }
  },
- "upkeep": {
-  "unit": {
-   "modifier": {
-    "percent": 10
-   }
-  }
- },
  "withdrawal": {
   "unit": {
    "percent": 20

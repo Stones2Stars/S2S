@@ -5,13 +5,6 @@
    "PROMOTION_UNQUESTIONING_OBEDIENCE2"
   ]
  },
- "upkeep": {
-  "unit": {
-   "modifier": {
-    "percent": 10
-   }
-  }
- },
  "combat": {
   "unit": {
    "percent": 1

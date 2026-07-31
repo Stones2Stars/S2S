@@ -1,12 +1,5 @@
 {
  "type": "PROMOTION_COVERT_OPERATIONS3",
- "upkeep": {
-  "unit": {
-   "modifier": {
-    "percent": 10
-   }
-  }
- },
  "vision": {
   "unit": {
    "concealment": {

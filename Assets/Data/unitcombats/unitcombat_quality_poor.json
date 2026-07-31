@@ -5,13 +5,6 @@
    "percent": 30
   }
  },
- "upkeep": {
-  "unit": {
-   "modifier": {
-    "percent": -50
-   }
-  }
- },
  "vision": {
   "unit": {
    "detection": {

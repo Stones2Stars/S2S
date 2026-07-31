@@ -19,13 +19,6 @@
    ]
   }
  },
- "upkeep": {
-  "unit": {
-   "modifier": {
-    "percent": 30
-   }
-  }
- },
  "firstStrike": {
   "unit": {
    "chance": {

@@ -17,13 +17,6 @@
    ]
   }
  },
- "upkeep": {
-  "unit": {
-   "modifier": {
-    "percent": 10
-   }
-  }
- },
  "heal": {
   "unit": {
    "enemy": {

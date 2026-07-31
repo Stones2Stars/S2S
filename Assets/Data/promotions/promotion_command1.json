@@ -17,13 +17,6 @@
    ]
   }
  },
- "upkeep": {
-  "unit": {
-   "modifier": {
-    "percent": 10
-   }
-  }
- },
  "promotionLine": {
   "PROMOTIONLINE_COMMAND": 1
  },

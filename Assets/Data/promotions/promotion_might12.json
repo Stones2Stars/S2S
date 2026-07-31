@@ -1,12 +1,5 @@
 {
  "type": "PROMOTION_MIGHT12",
- "upkeep": {
-  "unit": {
-   "modifier": {
-    "percent": 25
-   }
-  }
- },
  "combat": {
   "unit": {
    "flat": 25

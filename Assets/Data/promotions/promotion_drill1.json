@@ -12,13 +12,6 @@
    "PROMOTION_TRENCH1"
   ]
  },
- "upkeep": {
-  "unit": {
-   "modifier": {
-    "percent": 20
-   }
-  }
- },
  "firstStrike": {
   "unit": {
    "chance": {

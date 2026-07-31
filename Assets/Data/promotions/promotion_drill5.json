@@ -7,13 +7,6 @@
    ]
   }
  },
- "upkeep": {
-  "unit": {
-   "modifier": {
-    "percent": 60
-   }
-  }
- },
  "firstStrike": {
   "unit": {
    "strikes": {

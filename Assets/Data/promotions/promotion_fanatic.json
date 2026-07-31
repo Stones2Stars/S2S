@@ -12,13 +12,6 @@
    ]
   }
  },
- "upkeep": {
-  "unit": {
-   "modifier": {
-    "percent": -75
-   }
-  }
- },
  "combat": {
   "unit": {
    "percent": 20,

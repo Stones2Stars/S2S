@@ -272,7 +272,6 @@ namespace
 
 	const InfoMemberRow MEMBERS_UPKEEP[] = {
 		{ "civic", UPKEEP_CIVIC },
-		{ "modifier", UPKEEP_MODIFIER },
 		{ "freeMilitary", UPKEEP_FREE_MILITARY },
 		{ "freeCivilian", UPKEEP_FREE_CIVILIAN },
 		{ "unitMilitary", UPKEEP_UNIT_MILITARY },

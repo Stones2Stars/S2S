@@ -5,13 +5,6 @@
    "percent": 75
   }
  },
- "upkeep": {
-  "unit": {
-   "modifier": {
-    "percent": -200
-   }
-  }
- },
  "enabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",
  "sizeMatters": {
   "qualityBase": 0

@@ -28855,23 +28855,6 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//TB Combat Mods Begin
-	//#58 Effects for Promotions that Change Upkeep...
-	iTemp = kPromotion.getUpkeepModifier();
-	if (iTemp != 0)
-	{
-		if ((eUnitAI == UNITAI_HEALER) ||
-			(eUnitAI == UNITAI_HEALER_SEA) ||
-			(eUnitAI == UNITAI_PROPERTY_CONTROL) ||
-			(eUnitAI == UNITAI_PROPERTY_CONTROL_SEA) ||
-			(eUnitAI == UNITAI_INVESTIGATOR) ||
-			(eUnitAI == UNITAI_INFILTRATOR) ||
-			(eUnitAI == UNITAI_SEE_INVISIBLE))
-		{
-			iTemp *= 2;
-		}
-		iValue -= iTemp;
-	}
-
 	iTemp = kPromotion.getCombatModifier(COMBAT_DAMAGE_MODIFIER, CASC_SCOPE_UNIT);
 	if (iTemp != 0)
 	{
@@ -31836,7 +31819,6 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 	}
 
 	//TB Combat Mods Begin
-	iValue -= kUnitCombat.getUpkeepModifier();
 
 	iTemp = kUnitCombat.getCombatModifier(COMBAT_DAMAGE_MODIFIER, CASC_SCOPE_UNIT);
 	if (iTemp != 0)

@@ -1118,13 +1118,9 @@ public:
 	void changeExtraDamageModifier (int iChange);
 
 	void changeExtraUpkeep(const int iChange);
-	void changeUpkeepModifier(const int iChange);
-	void calcUpkeepMultiplierSM(const int iGroupOffset);
 	void calcUpkeep();
 	void recalculateUnitUpkeep();
 	int getExtraUpkeep() const;
-	int getUpkeepModifier() const;
-	int getUpkeepMultiplierSM() const;
 	int getUpkeep() const;
 
 	int getStampedeCount() const;
@@ -1608,8 +1604,6 @@ protected:
 	int m_iExtraCombatModifierPerVolumeLess;
 	int m_iExtraMaxHP;
 
-	int m_iUpkeepModifier;
-	int m_iUpkeepMultiplierSM;
 
 	int m_iSMAssetValue;
 	int m_iSMPowerValue;

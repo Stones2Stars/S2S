@@ -18,13 +18,6 @@
    ]
   }
  },
- "upkeep": {
-  "unit": {
-   "modifier": {
-    "percent": 10
-   }
-  }
- },
  "promotionLine": {
   "PROMOTIONLINE_SHIP_OPERATIONS": 2
  },
