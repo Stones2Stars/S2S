@@ -38,6 +38,13 @@ public:
 		const std::vector<int>* pTechs = edge(EDGEF_OBSOLETED_BY, EDGEB_TECHS);
 		return (TechTypes)((pTechs != NULL && !pTechs->empty()) ? (*pTechs)[0] : NO_TECH);
 	}
+	// The one-shot POPULATION and FREE-TECH payloads this building hands over on its CONSIDERED ACTION --
+	// `grants.population` at city vs empire scope, and `grants.freeTechs` ([json.md §5] numeric pulses).
+	// Materialized at mapFrom as HUMAN counts ([DEC-materialize-at-mapfrom]): the pulses are ×100 at parse and
+	// the key handles are interned once, so neither a scale nor a string lookup ever reaches a read.
+	int getPopulationChange() const { return m_iPopulationChange; }
+	int getGlobalPopulationChange() const { return m_iGlobalPopulationChange; }
+	int getFreeTechs() const { return m_iFreeTechs; }
 	virtual const CvClassificationBlock* getAttributes()   const { return &m_attributes; }
 	virtual const CvClassificationBlock* getAmenities()    const { return &m_amenities; }
 	virtual const CvClassificationBlock* getCapabilities() const { return &m_capabilities; }
@@ -251,6 +258,9 @@ private:
 	std::vector<int> m_aiEnabledCivilizations;
 	std::map<int, int> m_victoryThresholds;
 	std::map<int, int> m_flavours;                  // ai.flavours: FLAVOR_* id -> weight
+	int m_iPopulationChange;
+	int m_iGlobalPopulationChange;
+	int m_iFreeTechs;
 	int m_iFreeSpecialistsAny;                      // freeSpecialists.city.any (human count)
 	int m_aiStateReligionCommerce[NUM_COMMERCE_TYPES];
 	int m_aiCommerceDoubleTime[NUM_COMMERCE_TYPES];

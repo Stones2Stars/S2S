@@ -11,6 +11,9 @@
 
 CvBuildingInfo::CvBuildingInfo()
 	: m_iWorth(0)
+	, m_iPopulationChange(0)
+	, m_iGlobalPopulationChange(0)
+	, m_iFreeTechs(0)
 	, m_iFreeSpecialistsAny(0)
 	, m_iMilitaryWorth(0)
 	, m_iConquestProbability(0)
@@ -87,6 +90,9 @@ void CvBuildingInfo::mapFrom(const picojson::value& entity)
 	m_aiEnabledCivilizations.clear();
 	m_victoryThresholds.clear();
 	m_flavours.clear();
+	m_iPopulationChange = 0;
+	m_iGlobalPopulationChange = 0;
+	m_iFreeTechs = 0;
 	m_iFreeSpecialistsAny = 0;
 
 	// PROPERTY_* per-turn SOURCES: a building's <PROPERTY_X>.city.flat (the crime/disease/pollution cuts and
@@ -130,6 +136,19 @@ void CvBuildingInfo::mapFrom(const picojson::value& entity)
 	{
 		const picojson::object* pAiMeta = jsonChildObj(entityObj, "ai");
 		if (pAiMeta != NULL) { jsonReadFlavours(*pAiMeta, m_flavours); }
+	}
+
+	// The considered-action PULSES, materialized as HUMAN counts: `grants.population` per scope and
+	// `grants.freeTechs`. Interned key handles, resolved once ([DEC-materialize-at-mapfrom]); the pulses are
+	// ×100 at parse, so the /100 here is the single human boundary and no reader repeats it.
+	{
+		static const int iKeyPopulation = CvGrants::key("population");
+		static const int iKeyFreeTechs  = CvGrants::key("freeTechs");
+		static const int iKeyScopeCity  = CvGrants::key("city");
+		static const int iKeyScopeEmpire = CvGrants::key("empire");
+		m_iPopulationChange       = grantScopedPulse(iKeyPopulation, iKeyScopeCity) / 100;
+		m_iGlobalPopulationChange = grantScopedPulse(iKeyPopulation, iKeyScopeEmpire) / 100;
+		m_iFreeTechs              = grantPulse(iKeyFreeTechs) / 100;
 	}
 
 	// freeSpecialists.city.`any` -- the generic slot count. Read off the compiled entry list ONCE here (the

@@ -131,6 +131,10 @@ public:
 	const std::vector<int>* grantList(int iBucketKey) const                   // NULL when absent; CvGrants::key handle
 	{ const CvGrants* g = consideredGrants(); return g ? g->list(iBucketKey) : NULL; }
 	int grantPulse(int iChannelKey) const { const CvGrants* g = consideredGrants(); return g ? g->pulse(iChannelKey) : 0; }
+	// The SCOPED twin: a channel authored per scope (`grants.population` at city vs empire). Values are ×100 at
+	// parse like every pulse, so a reader takes /100 for the human count.
+	int grantScopedPulse(int iChannelKey, int iScopeKey) const
+	{ const CvGrants* g = consideredGrants(); return g ? g->scopedPulse(iChannelKey, iScopeKey) : 0; }
 	bool grantFlag(int iFlagKey) const       { const CvGrants* g = consideredGrants(); return g ? g->flag(iFlagKey) : false; }
 
 	// The FREE-PROMOTION payload, read off the `triggers` onTurnEnd promote entries -- for consumers that DISPLAY
