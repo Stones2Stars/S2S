@@ -144,6 +144,15 @@
 - The PLAYER-ALERT consumer, and the alerts owed to it — they re-attach to the OPERATE CROSSING fact, never
   re-inlined at a mutation site ([event-spine.md](../../specs/event-spine.md)). Expect the owed list to GROW as
   each legacy mutator is cut; add them together on the facts.
+- Decide WHERE the citizen-assignment re-check is asked for. The mechanism itself is right and stays — the AI
+  needs a way to be told the best plots to work may have moved — so this is a CALL-SITE question, never a
+  removal. `AI_setAssignWorkDirty` is called from across the engine while `AI_updateAssignWork` re-runs the FULL
+  assignment for every dirty city, so the flips are a turn-time cost in their own right.
+  ⚑ The instrument is already built and needs nothing added: the setter emits the caller's module-relative
+  return address on every false→true transition, so the culprits resolve offline against the PDB. Read that
+  before changing any site — the answer is which FACTS genuinely move a plot's value, not a judgement per call.
+  ⛔ Do NOT re-add a flip to replace a cut maintainer's gated one: the legacy calls fire only when a value
+  actually CHANGED, so an ungated stand-in adds to the very churn the instrument is measuring.
 - The amenity CONSUMER side: re-point consumers onto the CITY read and retire the per-flag `CvCity` counters and
   their bespoke per-attribute predicates/facts ([contexts.md](../../architecture/contexts.md)). The apply sites
   are the `process*` functions, whose remaining pushes are largely this family — `changeZoCCount`,
