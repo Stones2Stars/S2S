@@ -752,7 +752,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_iWarWearinessTimer = 0;
 	m_iEventAnger = 0;
 	m_iMinimumDefenseLevel = 0;
-	m_iNumPopulationEmployed = 0;
 	m_iHealthPercentPerPopulation = 0;
 	m_iHappinessPercentPerPopulation = 0;
 	m_iQuarantinedCount = 0;
@@ -4213,7 +4212,9 @@ int CvCity::angryPopulation(int iExtra) const
 
 int CvCity::visiblePopulation() const
 {
-	return getPopulation() - angryPopulation() - getWorkingPopulation() - getNumPopulationEmployed();
+	// Only PLOTS and SPECIALISTS can be staffed by population, so pop − angry IS the employed set and the two
+	// staffed kinds partition it: what is left after the tile-workers is the specialist pool.
+	return getPopulation() - angryPopulation() - getWorkingPopulation();
 }
 
 
@@ -5710,19 +5711,6 @@ int CvCity::getAdditionalBaseGreatPeopleRateByBuilding(BuildingTypes eBuilding) 
 
 	}
 
-	if (kBuilding.getNumPopulationEmployed() > 0)
-	{
-		int* paiCommerce = new int[NUM_COMMERCE_TYPES];
-		int* paiYield = new int[NUM_YIELD_TYPES];
-		int iGreatPeopleRate;
-		int iHappiness;
-		int iHealthiness;
-		removeWorstCitizenActualEffects(kBuilding.getNumPopulationEmployed(), iGreatPeopleRate, iHappiness, iHealthiness, paiYield, paiCommerce);
-		SAFE_DELETE_ARRAY(paiCommerce);
-		SAFE_DELETE_ARRAY(paiYield);
-		iExtraRate += iGreatPeopleRate;
-	}
-
 	return iExtraRate;
 }
 
@@ -6671,19 +6659,6 @@ int CvCity::getAdditionalHappinessByBuilding(BuildingTypes eBuilding, int& iGood
 	iSpecialistExtraHappy /= 100;
 	addGoodOrBad(iSpecialistExtraHappy, iGood, iBad);
 
-	if (kBuilding.getNumPopulationEmployed() > 0)
-	{
-		int* paiCommerce = new int[NUM_COMMERCE_TYPES];
-		int* paiYield = new int[NUM_YIELD_TYPES];
-		int iGreatPeopleRate;
-		int iHappiness;
-		int iHealthiness;
-		removeWorstCitizenActualEffects(kBuilding.getNumPopulationEmployed(), iGreatPeopleRate, iHappiness, iHealthiness, paiYield, paiCommerce);
-		SAFE_DELETE_ARRAY(paiCommerce);
-		SAFE_DELETE_ARRAY(paiYield);
-		addGoodOrBad(iHappiness, iGood, iBad);
-	}
-
 	return iGood - iBad - iStarting;
 }
 
@@ -6799,18 +6774,6 @@ int CvCity::getAdditionalHealthByBuilding(BuildingTypes eBuilding, int& iGood, i
 	iSpecialistExtraHealth /= 100;
 	addGoodOrBad(iSpecialistExtraHealth, iGood, iBad);
 
-	if (kBuilding.getNumPopulationEmployed() > 0)
-	{
-		int* paiCommerce = new int[NUM_COMMERCE_TYPES];
-		int* paiYield = new int[NUM_YIELD_TYPES];
-		int iGreatPeopleRate;
-		int iHappiness;
-		int iHealthiness;
-		removeWorstCitizenActualEffects(kBuilding.getNumPopulationEmployed(), iGreatPeopleRate, iHappiness, iHealthiness, paiYield, paiCommerce);
-		SAFE_DELETE_ARRAY(paiCommerce);
-		SAFE_DELETE_ARRAY(paiYield);
-		addGoodOrBad(iHealthiness, iGood, iBad);
-	}
 	return iGood - iBad - iStarting;
 }
 
@@ -8640,20 +8603,6 @@ int CvCity::getAdditionalExtraYieldByBuilding(YieldTypes eIndex, BuildingTypes e
 		iExtraYield += specialistYield(eNewSpecialist, eIndex);
 	}
 
-	// This could potentially affect base yield, but let's always pretend there's a specialist to remove.
-	if (building.getNumPopulationEmployed() > 0)
-	{
-		int* paiCommerce = new int[NUM_COMMERCE_TYPES];
-		int* paiYield = new int[NUM_YIELD_TYPES];
-		int iGreatPeopleRate;
-		int iHappiness;
-		int iHealthiness;
-		removeWorstCitizenActualEffects(building.getNumPopulationEmployed(), iGreatPeopleRate, iHappiness, iHealthiness, paiYield, paiCommerce);
-		iExtraYield += paiYield[eIndex];
-		SAFE_DELETE_ARRAY(paiCommerce);
-		SAFE_DELETE_ARRAY(paiYield);
-	}
-
 	return iExtraYield;
 }
 
@@ -9667,19 +9616,6 @@ int CvCity::getBaseCommerceRateFromBuilding(CommerceTypes eIndex, BuildingTypes 
 		if (eNewSpecialist == NO_SPECIALIST) break;
 
 		iExtraRate100 += 100 * GET_PLAYER(getOwner()).specialistCommerce(eNewSpecialist, eIndex);
-	}
-
-	if (kBuilding.getNumPopulationEmployed() > 0)
-	{
-		int* paiCommerce = new int[NUM_COMMERCE_TYPES];
-		int* paiYield = new int[NUM_YIELD_TYPES];
-		int iGreatPeopleRate;
-		int iHappiness;
-		int iHealthiness;
-		removeWorstCitizenActualEffects(kBuilding.getNumPopulationEmployed(), iGreatPeopleRate, iHappiness, iHealthiness, paiYield, paiCommerce);
-		iExtraRate100 += 100 * paiCommerce[eIndex];
-		SAFE_DELETE_ARRAY(paiCommerce);
-		SAFE_DELETE_ARRAY(paiYield);
 	}
 
 	// Toffer - The rest are already scaled up two orders of magnitude.
@@ -11352,7 +11288,7 @@ void CvCity::alterSpecialistCount(SpecialistTypes eIndex, int iChange)
 
 int CvCity::getMaxSpecialistCount() const
 {
-	return totalFreeSpecialists() + getPopulation() - angryPopulation() - getNumPopulationEmployed();
+	return totalFreeSpecialists() + getPopulation() - angryPopulation();
 }
 
 int CvCity::getMaxSpecialistCount(SpecialistTypes eIndex) const
@@ -14428,7 +14364,6 @@ void CvCity::read(FDataStreamBase* pStream)
 	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvCity", REMAPPED_CLASS_TYPE_BUILDS, GC.getNumBuildInfos(), m_pabAutomatedCanBuild);
 
 	WRAPPER_READ(wrapper, "CvCity", &m_iMinimumDefenseLevel);
-	WRAPPER_READ(wrapper, "CvCity", &m_iNumPopulationEmployed);
 	WRAPPER_READ(wrapper, "CvCity", &m_iHappinessPercentPerPopulation);
 	WRAPPER_READ(wrapper, "CvCity", &m_iHealthPercentPerPopulation);
 
@@ -15050,7 +14985,6 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_BUILDS, GC.getNumBuildInfos(), m_pabAutomatedCanBuild);
 
 	WRAPPER_WRITE(wrapper, "CvCity", m_iMinimumDefenseLevel);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iNumPopulationEmployed);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iHappinessPercentPerPopulation);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iHealthPercentPerPopulation);
 
@@ -18269,22 +18203,6 @@ int CvCity::getMinimumDefenseLevel() const
 void CvCity::setMinimumDefenseLevel(int iNewValue)
 {
 	m_iMinimumDefenseLevel = iNewValue;
-}
-
-int CvCity::getNumPopulationEmployed() const
-{
-	return m_iNumPopulationEmployed;
-}
-
-void CvCity::setNumPopulationEmployed(int iNewValue)
-{
-	m_iNumPopulationEmployed = iNewValue;
-}
-
-void CvCity::changeNumPopulationEmployed(int iChange)
-{
-	setNumPopulationEmployed(iChange + getNumPopulationEmployed());
-	FASSERT_NOT_NEGATIVE(getNumPopulationEmployed());
 }
 
 void CvCity::removeWorstCitizenActualEffects(int iNumCitizens, int& iGreatPeopleRate, int& iHappiness, int& iHealthiness, int*& aiYields, int*& aiCommerces) const

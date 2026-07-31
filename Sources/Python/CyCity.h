@@ -301,7 +301,6 @@ public:
 
 	void changeEventAnger(int iChange);
 
-	int getNumPopulationEmployed() const;
 
 	int getBaseYieldRateFromBuilding(int iYield, int iBuilding) const;
 

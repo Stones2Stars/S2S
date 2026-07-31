@@ -1403,9 +1403,6 @@ public:
 
 	SpecialistTypes getBestSpecialist(int iExtra) const;
 
-	int getNumPopulationEmployed() const;
-	void setNumPopulationEmployed(int iNewValue);
-	void changeNumPopulationEmployed(int iNewValue);
 
 	void removeWorstCitizenActualEffects(int iNumCitizens, int& iGreatPeopleRate, int& iHappiness, int& iHealthiness, int*& aiYields, int*& aiCommerces) const;
 
@@ -1642,7 +1639,6 @@ protected:
 	int m_iDisabledPowerTimer;
 	int m_iWarWearinessTimer;
 	int m_iMinimumDefenseLevel;
-	int m_iNumPopulationEmployed;
 	int m_iHappinessPercentPerPopulation;
 	int m_iHealthPercentPerPopulation;
 

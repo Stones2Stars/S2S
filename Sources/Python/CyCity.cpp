@@ -1615,11 +1615,6 @@ void CyCity::changeEventAnger(int iChange)
 	m_pCity->changeEventAnger(iChange);
 }
 
-int CyCity::getNumPopulationEmployed() const
-{
-	return m_pCity->getNumPopulationEmployed();
-}
-
 int CyCity::getBaseYieldRateFromBuilding(int iYield, int iBuilding) const
 {
 	return m_pCity->getBaseYieldRateFromBuilding((YieldTypes)iYield, (BuildingTypes)iBuilding);

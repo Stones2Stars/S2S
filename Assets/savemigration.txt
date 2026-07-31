@@ -888,3 +888,10 @@ CvPlayer::m_iGreatPeopleRateModifier
 | REPLACEMENT: none needed -- the empire commerce percents answer through the roll-up where they are consumed.
 CvPlayer::m_aiCommerceRateModifierfromBuildings
 ========================
+
+| A city-side counter for population staffing a BUILDING. Only PLOTS and SPECIALISTS can be
+| staffed by population, so it had no coherent place in the citizen accounting: pop minus angry
+| is already the whole employed set, split between tile-workers and specialists.
+| It was never wired -- no writer existed, so it read 0 for the life of every save.
+| REPLACEMENT: none -- the quantity it named is not part of the model.
+CvCity::m_iNumPopulationEmployed
