@@ -1011,7 +1011,6 @@ public:
 	void changeCommercePercent(CommerceTypes eIndex, int iChange);
 
 	int getTotalCityBaseCommerceRate(CommerceTypes eIndex) const;
-	int getCommerceRate(CommerceTypes eIndex) const;
 	void changeCommerceRate(CommerceTypes eIndex, int iChange);
 
 	int getCommerceRateModifier(CommerceTypes eIndex) const;

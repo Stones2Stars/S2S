@@ -288,7 +288,6 @@ public:
 	int getYieldRateModifier(YieldTypes eIndex) const;
 	int getCommercePercent(int /*CommerceTypes*/ eIndex) const;
 	void changeCommercePercent(CommerceTypes eIndex, int iChange);
-	int getCommerceRate(CommerceTypes eIndex) const;
 	int getCommerceRateModifier(CommerceTypes eIndex) const;
 	int getCapitalCommerceRateModifier(CommerceTypes eIndex) const;
 	int getSpecialistExtraCommerce(CommerceTypes eIndex) const;

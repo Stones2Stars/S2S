@@ -95,10 +95,20 @@ load-time seed, no incremental maintenance, no rebuild, and no shadow**:
 
 ## 5. Status
 
-The standardized accessor reads **buildings + units** (the object aggregates `CvPlayer::getBuildingCount` /
-`getUnitCount`) at **empire / team / world** (empire = the object's own O(1) aggregate; team/world summed over alive
-players on read). The other count domains (tech / civic / religion / bonus / project / specialist) are not yet wired —
-a `requires`/`per` atom over those reads 0 until its domain is added. Under the read-not-store model a **domain is now
+The standardized accessor reads **buildings + units + techs + specialists + unit-tags** at **empire / team /
+world**. Buildings/units read the player's own O(1) aggregate at empire and sum over alive players above it.
+
+**TECHS are the worked case for "give the OBJECT the aggregate, then READ it".** A tech is TEAM-held, so its
+count is over TEAMS, never players: **world** reads the engine's existing `CvGame::countKnownTechNumTeams`
+(ever-alive teams holding it — techs are monotonic, so held == ever-held), and **team/empire** are the asking
+side's held FLAG (0 or 1), empire resolving through its player's team. ⚑ Nothing new was stored to wire it: the
+aggregate already existed on `CvGame` and the tally simply reads it — which is the whole read-not-store rule
+working, and why "the domain is not wired" is never the same statement as "no counter exists". ⛔ Check for the
+engine's own aggregate BEFORE concluding a domain needs building.
+
+The remaining count domains (civic / religion / bonus / project) are not yet wired — a `requires`/`per` atom over
+those reads 0 until its domain is added. *(Cross-scope RELIGION_X already answers from `countReligionLevels` at
+the evaluator, ahead of a tally domain of its own.)* Under the read-not-store model a **domain is now
 just: the object-side accessor it reads + its type-prefix routing + the roll-up** — **no** side-store, emit-driven
 maintenance, rebuild scan, or shadow id (those were the duplicate-store model's burden). Where an object lacks the
 aggregate, give the object the accessor (it "cares about itself"). City/plot reads go direct to the live object regardless.

@@ -8069,10 +8069,6 @@ void CvPlot::updateYield()
 			FASSERT_NOT_NEGATIVE(iNewYield);
 
 
-			if (bWorked)
-			{
-				pWorkingCity->changePlotYield((YieldTypes)iI, iNewYield - iOldYield);
-			}
 			bChange = true;
 		}
 	}
@@ -8080,6 +8076,12 @@ void CvPlot::updateYield()
 	{
 		if (pWorkingCity)
 		{
+			// The plot's own substrate facts mark its package AND the city sums those packages feed; only the
+			// UI-side rider the retired push maintainer carried belongs here.
+			if (bWorked)
+			{
+				pWorkingCity->onYieldChange();
+			}
 			pWorkingCity->AI_setAssignWorkDirty(true);
 		}
 		updateSymbols();

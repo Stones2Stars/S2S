@@ -187,8 +187,6 @@ public:
 	int getTotalLand(bool bCheckVassals = true) const;
 	void changeTotalLand(int iChange);
 
-	int getNukeInterception() const;
-	void changeNukeInterception(int iChange);
 
 	int getForceTeamVoteEligibilityCount(VoteSourceTypes eVoteSource) const;
 	bool isForceTeamVoteEligible(VoteSourceTypes eVoteSource) const;
@@ -303,8 +301,6 @@ public:
 	void changeWarWeariness(TeamTypes eIndex, int iChange);
 	void changeWarWearinessTimes100(TeamTypes eIndex, int iChange);
 
-	bool isTechShare(int iIndex) const;
-	void changeTechShareCount(int iIndex, int iChange);
 
 	bool isCommerceFlexible(CommerceTypes eIndex) const;
 
@@ -485,7 +481,6 @@ protected:
 	int m_iNumCities;
 	int m_iTotalPopulation;
 	int m_iTotalLand;
-	int m_iNukeInterception;
 	int m_iTradeModifier;
 	int m_iForeignTradeModifier;
 	int m_iTradeMissionModifier;
@@ -516,7 +511,6 @@ protected:
 
 	int* m_aiStolenVisibilityTimer;
 	int* m_aiWarWearinessTimes100;
-	int* m_aiTechShareCount;
 	int* m_aiExtraMoves;
 	int* m_aiForceTeamVoteEligibilityCount;
 	int* m_paiRouteChange;
@@ -538,8 +532,6 @@ protected:
 	std::map<short, uint32_t> m_unitCount;
 
 	void doWarWeariness();
-	void updateTechShare(TechTypes eTech);
-	void updateTechShare();
 	void testCircumnavigated();
 	void processTech(TechTypes eTech, int iChange, bool bAnnounce = false);
 	void cancelDefensivePacts();

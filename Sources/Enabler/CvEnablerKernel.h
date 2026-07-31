@@ -176,6 +176,14 @@ public:
 	// place by the targeted on*Active hooks above, so a missed propagation stays visibly wrong
 	// ([DEC-no-self-heal]) until an external reader diffs this set against the endpoint oracle's recompute.
 	static const OperatingBuildings& operatingBuildings(const CvCity* pCity);
+
+	// "If eCandidate stood here, which of this city's ACTIVE buildings would it send DORMANT?" -- the WHAT half
+	// of a supersession-aware what-if; the caller then asks the VALUATION what each is worth and nets it out
+	// (two calls, one per system: availability is the enabler's, magnitude the cascade's --
+	// [DEC-enabler-not-cascade]). No hypothetical evaluation is involved and none is needed: "B dorms while X is
+	// present" is STATIC authored data (B's requires.operate dormant trigger), so this is the load-built
+	// dormant-trigger index intersected with the standing ACTIVE set -- both already maintained, nothing scanned.
+	static void dormedByBuilding(const CvCity* pCity, int eCandidate, std::vector<int>& kOut);
 	// Convenience: point ec.activeBuildings / ec.vicinityProvidedBonuses at the standing sets
 	// (feeds cascadeIsBuildingActive + ev_vicinityHas; no per-call set copies).
 	static void wireOperatingBuildings(const CvCity* pCity, CvCascadeEvalCtx& ec);

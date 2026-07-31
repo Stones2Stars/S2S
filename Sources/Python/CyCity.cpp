@@ -1068,19 +1068,9 @@ int CyCity::getCultureThreshold() const
 	return m_pCity->getCultureThreshold();
 }
 
-int CyCity::getPlotYield(int /*YieldTypes*/ eIndex) const
-{
-	return m_pCity->getPlotYield((YieldTypes)eIndex);
-}
-
 int CyCity::getBaseYieldRateModifier(int /*YieldTypes*/ eIndex, int iExtra) const
 {
 	return m_pCity->getBaseYieldRateModifier((YieldTypes)eIndex, iExtra);
-}
-
-int CyCity::getYieldRate(int /*YieldTypes*/ eIndex) const
-{
-	return m_pCity->getYieldRate((YieldTypes)eIndex);
 }
 
 int CyCity::getYieldRateModifier(int /*YieldTypes*/ eIndex) const
@@ -1110,21 +1100,6 @@ int CyCity::calculateTradeProfit(const CyCity& kCity) const
 int CyCity::calculateTradeYield(int /*YieldTypes*/ eIndex, int iTradeProfit) const
 {
 	return m_pCity->calculateTradeYield((YieldTypes)eIndex, iTradeProfit);
-}
-
-int CyCity::getCommerceRate(int /*CommerceTypes*/ eIndex) const
-{
-	return m_pCity->getCommerceRate((CommerceTypes)eIndex);
-}
-
-int CyCity::getCommerceRateTimes100(int /*CommerceTypes*/ eIndex) const
-{
-	return m_pCity->getCommerceRateTimes100((CommerceTypes)eIndex);
-}
-
-int CyCity::getBaseCommerceRate(int /*CommerceTypes*/ eIndex) const
-{
-	return m_pCity->getBaseCommerceRate((CommerceTypes)eIndex);
 }
 
 int CyCity::getProductionToCommerceModifier(int /*CommerceTypes*/ eIndex) const

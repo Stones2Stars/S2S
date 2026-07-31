@@ -299,6 +299,9 @@ static bool ev_countCore(const CvCascadeEvalCtx& ctx, const std::string& t, int 
 		// across cities is the tally's job -- one place holding the count of all specialists in scope.
 		if (t == "SPECIALIST") { iOut = cascadeTally().specialistCount(ent, sc); return true; }
 		if (en_starts(t, "BUILDING_") && id >= 0) { iOut = cascadeTally().buildingCount(ent, id, sc); return true; }
+		// TECH_X as a COUNT: how many teams hold it (world) / does this side hold it (team, empire). The count
+		// domain a `techShare`-style threshold reads -- "known by N other teams" is `{TECH_X, world, min: N}`.
+		if (en_starts(t, "TECH_") && id >= 0) { iOut = cascadeTally().techCount(ent, id, sc); return true; }
 		if (en_starts(t, "UNIT_") && id >= 0)
 		{
 			iOut = (sc == CASCADE_COUNT_WORLD) ? GC.getGame().getUnitCreatedCount((UnitTypes)id)

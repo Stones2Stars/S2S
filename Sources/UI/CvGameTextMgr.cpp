@@ -1240,9 +1240,12 @@ void CvGameTextMgr::setCityBarHelp(CvWStringBuffer &szString, CvCity* pCity)
 		int iBaseProductionDiffNoFood;
 		if (bBaseValues)
 		{
-			//TB Traits begin
-			iBaseProductionDiffNoFood = pCity->getBaseYieldRate(YIELD_PRODUCTION) + pCity->getSpecialistYieldTotal(YIELD_PRODUCTION) + pCity->getExtraYield(YIELD_PRODUCTION);
-			//TB Traits end
+			// The city's REALIZED production in ONE read: the cascade folds the worked-plot Σ, the specialists
+			// and the flat tier itself (modifier.md §2a), so the hand-assembled tiers are gone. ÷100 at the
+			// reader -- the cascade carries ×100 natively ([DEC-fixedpoint-x100]).
+			int aiRealizedYields[NUM_YIELD_TYPES];
+			pCity->getYields(aiRealizedYields);
+			iBaseProductionDiffNoFood = aiRealizedYields[YIELD_PRODUCTION] / 100;
 		}
 		else
 		{
@@ -1307,9 +1310,12 @@ void CvGameTextMgr::setCityBarHelp(CvWStringBuffer &szString, CvCity* pCity)
 		int iBaseProductionDiffNoFood;
 		if (bBaseValues)
 		{
-			//TB Traits begin
-			iBaseProductionDiffNoFood = pCity->getBaseYieldRate(YIELD_PRODUCTION) + pCity->getSpecialistYieldTotal(YIELD_PRODUCTION) + pCity->getExtraYield(YIELD_PRODUCTION);
-			//TB Traits end
+			// The city's REALIZED production in ONE read: the cascade folds the worked-plot Σ, the specialists
+			// and the flat tier itself (modifier.md §2a), so the hand-assembled tiers are gone. ÷100 at the
+			// reader -- the cascade carries ×100 natively ([DEC-fixedpoint-x100]).
+			int aiRealizedYields[NUM_YIELD_TYPES];
+			pCity->getYields(aiRealizedYields);
+			iBaseProductionDiffNoFood = aiRealizedYields[YIELD_PRODUCTION] / 100;
 		}
 		else
 		{
@@ -1450,16 +1456,12 @@ void CvGameTextMgr::setCityBarHelp(CvWStringBuffer &szString, CvCity* pCity)
 	// BUG - Commerce - start
 	if (getBugOptionBOOL("CityBar__Commerce", true, "BUG_CITYBAR_COMMERCE"))
 	{
-		if (bBaseValues)
-		{
-			//TB Traits begin
-			iRate = pCity->getBaseYieldRate(YIELD_COMMERCE) + pCity->getSpecialistYieldTotal(YIELD_COMMERCE) + pCity->getExtraYield(YIELD_COMMERCE);
-			//TB Traits end
-		}
-		else
-		{
-			iRate = pCity->getYieldRate(YIELD_COMMERCE);
-		}
+		// The city's REALIZED commerce yield in ONE read (see the production sites above); ÷100 at the reader.
+		// ⚠ The base-vs-realized branch is GONE: both halves answered the same value once the base tier stopped
+		// being a separate accessor, so the flag no longer distinguishes anything here.
+		int aiRealizedYields[NUM_YIELD_TYPES];
+		pCity->getYields(aiRealizedYields);
+		iRate = aiRealizedYields[YIELD_COMMERCE] / 100;
 		if (iRate != 0)
 		{
 			szTempBuffer.Format(L"%d %c", iRate, GC.getYieldInfo(YIELD_COMMERCE).getChar());
@@ -1474,12 +1476,14 @@ void CvGameTextMgr::setCityBarHelp(CvWStringBuffer &szString, CvCity* pCity)
 		// BUG - Base Values - start
 		if (bBaseValues)
 		{
-			iRate = pCity->getBaseCommerceRateTimes100((CommerceTypes)iI);
+			iRate = aiCityCommerces[(CommerceTypes)iI];
 		}
 		else
 		{
 			// unchanged
-			iRate = pCity->getCommerceRateTimes100((CommerceTypes)iI);
+			int aiCityCommerces[NUM_COMMERCE_TYPES];
+			pCity->getCommerces(aiCityCommerces);
+			iRate = aiCityCommerces[(CommerceTypes)iI];
 		}
 		// BUG - Base Values - end
 
@@ -1560,7 +1564,9 @@ void CvGameTextMgr::setCityBarHelp(CvWStringBuffer &szString, CvCity* pCity)
 					GC.getCultureLevelInfo(pCity->getCultureLevel()).getLevel()
 				)
 			);
-			const int iCultureRate = pCity->getCommerceRateTimes100(COMMERCE_CULTURE);
+			int aiCityCommerces[NUM_COMMERCE_TYPES];
+			pCity->getCommerces(aiCityCommerces);
+			const int iCultureRate = aiCityCommerces[COMMERCE_CULTURE];
 			if (iCultureRate > 0)
 			{
 				// all values are *100
@@ -3897,7 +3903,10 @@ void CvGameTextMgr::setFoodHelp(CvWStringBuffer &szBuffer, CvCity& city)
 {
 	FAssertMsg(NO_PLAYER != city.getOwner(), "City must have an owner");
 
-	int iRate = city.getYieldRate(YIELD_FOOD);
+	// A displayed whole-food figure, so the rate reduces at this reader ([DEC-fixedpoint-x100]).
+	int aiRealizedYields[NUM_YIELD_TYPES];
+	city.getYields(aiRealizedYields);
+	int iRate = aiRealizedYields[YIELD_FOOD] / 100;
 
 	// shows Base Food and lists all modifiers
 	setYieldHelp(szBuffer, city, YIELD_FOOD);

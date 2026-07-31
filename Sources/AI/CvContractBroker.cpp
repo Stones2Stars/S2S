@@ -739,7 +739,13 @@ void CvContractBroker::advertiseTender(const CvCity* pCity, int iMinPriority)
 
 	int iNumTenders = 1; // par d�faut
 
-	iNumTenders = 1 + (pCity->getPopulation() / 10) + (pCity->getYieldRate(YIELD_PRODUCTION) / 100);
+	// Mixed with a whole population count, so the rate reduces at this use; the /100 below is the tender
+	// formula's own scaling of whole hammers, not a scale conversion.
+	int aiRealizedYields[NUM_YIELD_TYPES];
+	pCity->getYields(aiRealizedYields);
+	const int iProductionRate = aiRealizedYields[YIELD_PRODUCTION] / 100;
+
+	iNumTenders = 1 + (pCity->getPopulation() / 10) + (iProductionRate / 100);
 	if (pCity->isCapital())
 	{
 		iNumTenders+=2;
@@ -750,7 +756,7 @@ void CvContractBroker::advertiseTender(const CvCity* pCity, int iMinPriority)
 
 	log(1, "[CTB/tender] city=%S (%d) advertising %d tender slot(s) for unit builds minPriority=%d (pop=%d prod=%d capital=%d)",
 		pCity->getName().GetCString(), pCity->getID(), iNumTenders, iMinPriority,
-		pCity->getPopulation(), pCity->getYieldRate(YIELD_PRODUCTION), pCity->isCapital() ? 1 : 0);
+		pCity->getPopulation(), iProductionRate, pCity->isCapital() ? 1 : 0);
 	// FLAG: pre-composed wide-string (%S city name) -- left on legacy only
 
 	for (int i = 0; i < iNumTenders; i++)

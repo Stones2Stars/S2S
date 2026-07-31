@@ -7,6 +7,7 @@
 #include "CvGameCoreDLL.h"
 #include "Tally/CvTally.h"
 #include "AI/CvPlayerAI.h"   // GET_PLAYER + getBuildingCount/getUnitCount (the object-owned aggregate) + getTeam/isAlive
+#include "AI/CvTeamAI.h"     // GET_TEAM + isHasTech -- techs are TEAM-held, so the tech count reads the team
 #include "Engine/CvCity.h"   // specialistCount -- the per-player city iterate + getSpecialistPopulation()
 #include "Engine/CvUnit.h"   // countUnitsWithTag -- the per-player unit iterate + getUnitInfo()
 #include "CvUnitInfo.h"      // getTags() (the unit tag bitset)
@@ -80,6 +81,32 @@ int CvCascadeTally::unitCount(int iEntity, int iUnit, CascadeCountScope eScope) 
 		}
 	}
 	return iSum;
+}
+
+int CvCascadeTally::techCount(int iEntity, int iTech, CascadeCountScope eScope) const
+{
+	if (iTech < 0)
+	{
+		return 0;
+	}
+	const TechTypes eTech = (TechTypes)iTech;
+	// WORLD: the engine already owns this aggregate -- read it, never re-derive it by walking teams.
+	if (eScope == CASCADE_COUNT_WORLD)
+	{
+		return GC.getGame().countKnownTechNumTeams(eTech);
+	}
+	// TEAM / EMPIRE: a tech is TEAM-held, so the asking side's answer is a held FLAG, not a sum. EMPIRE resolves
+	// through the player's team -- the same "team facts route through the empire" rule the contexts use.
+	TeamTypes eTeam = NO_TEAM;
+	if (eScope == CASCADE_COUNT_TEAM)
+	{
+		eTeam = (iEntity >= 0 && iEntity < MAX_TEAMS) ? (TeamTypes)iEntity : NO_TEAM;
+	}
+	else if (iEntity >= 0 && iEntity < MAX_PLAYERS)
+	{
+		eTeam = GET_PLAYER((PlayerTypes)iEntity).getTeam();
+	}
+	return (eTeam != NO_TEAM && GET_TEAM(eTeam).isHasTech(eTech)) ? 1 : 0;
 }
 
 int CvCascadeTally::specialistCount(int iEntity, CascadeCountScope eScope) const

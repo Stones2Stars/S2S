@@ -249,16 +249,6 @@ int CyTeam::getTotalLand() const
 	return m_pTeam->getTotalLand();
 }
 
-int CyTeam::getNukeInterception() const
-{
-	return m_pTeam->getNukeInterception();
-}
-
-void CyTeam::changeNukeInterception(int iChange)
-{
-	m_pTeam->changeNukeInterception(iChange);
-}
-
 int CyTeam::getForceTeamVoteEligibilityCount(int /*VoteSourceTypes*/ eVoteSource) const
 {
 	return m_pTeam->getForceTeamVoteEligibilityCount((VoteSourceTypes)eVoteSource);

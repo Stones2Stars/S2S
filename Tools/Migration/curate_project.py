@@ -39,8 +39,14 @@ Modeling calls made this pass (light-batch-classification.json + the C++):
   SpecialBuildingValid flag (CvGame::makeSpecialBuildingValid) — it UNLOCKS constructibility, hands out no
   instance, so it is an `enables` edge (the specialBuildings enables bucket, json.md §4.1), NOT a grant.
 
-Family/member names for nukeInterception (combat) and techShare (diplomacy) are PROVISIONAL (owner: nail down
-later); techShare sits with handicap's diplomacy.noTechTrade/techTradeKnown tech-diffusion members.
+nukeInterception (combat) is PROVISIONAL and belongs to the ruling-16 trigger-plane set.
+
+techShare is RULED (owner): it is NOT a diplomacy magnitude and never was. "If 2 civs have the tech, then whoever
+has the wonder also gets the tech" -- the 2 is the FIRE CONDITION of an onTechResearched trigger whose action
+grants the tech, not an amount anything accumulates (it never combines with another techShare). It therefore
+re-homes to the TRIGGER plane and loses its DIPLOMACY_TECH_SHARE kind; the emission below is the shape being
+retired, kept only until the trigger-plane re-home lands (docs/specs/triggers.md, structural-cleanup/todo.md).
+Sole author: PROJECT_ENCYCLOPEDIA.
 
   python3 curate_project.py --sample PROJECT_SDI PROJECT_SS_ENGINE PROJECT_THE_INTERNET
   python3 curate_project.py --write

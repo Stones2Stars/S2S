@@ -24,8 +24,11 @@
 
 - Curate `culture.unit.garrison` and `costs.empire.perInstance` (flagged in-code, awaiting their batch).
 - Attach the ruling-16 trigger-plane set (`survivor`, `cityCapture`, `combat.subdueAnimal`,
-  `combat.nukeInterception`) to its trigger's `chance` ([triggers.md](../../specs/triggers.md)).
-  ⛔ Do not unblock the dangling `getSubdueAnimalBonusAI` consumer by minting a kind for it.
+  `combat.nukeInterception`, `diplomacy.techShare`) to its trigger's `chance`
+  ([triggers.md](../../specs/triggers.md)).
+  ⛔ Do not unblock the dangling `getSubdueAnimalBonusAI` / `getTechShare` consumers by minting a kind for them.
+  ⚠ `techShare` additionally needs its KIND retired: unlike the rest of the set it was minted as
+  `DIPLOMACY_TECH_SHARE`, so the re-home is a curator change AND a vocabulary removal.
 - Give the §3.9 entry grammar a payload-less form so a carrier can state a cargo RESTRICTION with no capacity of
   its own, then author the flagged carriers ([modifier.md §6](../../specs/modifier.md)).
   ⚠ Settle in-game first whether the ancient transports are civilians-only; the owner's recollection is explicitly

@@ -895,3 +895,25 @@ CvPlayer::m_aiCommerceRateModifierfromBuildings
 | It was never wired -- no writer existed, so it read 0 for the life of every save.
 | REPLACEMENT: none -- the quantity it named is not part of the model.
 CvCity::m_iNumPopulationEmployed
+
+========================
+
+| The per-team SDI accumulator, summed from each project's combat.team.nukeInterception as it completed.
+| That member is ruling-16 TRIGGER-PLANE data (a CHANCE -- the odds a nuke is intercepted), deliberately
+| carried unkinded in the vocabulary, so nothing on the modifier surface answers it and no consumer may
+| mint a kind to reach it.
+| REPLACEMENT: the triggers plane -- the authored value becomes the `chance` on its trigger
+| (docs/specs/triggers.md). Until that lands the mechanic is DARK, deliberately: legacy fails loud rather
+| than masking the hole it has not filled.
+CvTeam::m_iNukeInterception
+
+========================
+
+| The per-team tech-share level counts, summed from each project's diplomacy.team.techShare and read by the
+| legacy updateTechShare sharer (acquire a tech once N met teams held it).
+| techShare was a MISCURATE: the N is not a magnitude, it is the fire condition of an onTechResearched
+| trigger whose action grants the tech (owner) -- so the member, its accessors and the sharer all go.
+| REPLACEMENT: the triggers plane, condition `{type: TECH_X, scope: world, min: N}` -- the world tech count
+| the tally now serves (docs/specs/tally.md, docs/specs/triggers.md). The legacy `isHasMet` filter is
+| dropped by ruling and re-addable later as an ordinary predicate.
+CvTeam::m_aiTechShareCount

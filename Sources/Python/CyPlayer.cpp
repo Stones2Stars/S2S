@@ -1096,11 +1096,6 @@ void CyPlayer::changeCommercePercent(CommerceTypes eIndex, int iChange)
 	m_pPlayer->changeCommercePercent(eIndex, iChange);
 }
 
-int CyPlayer::getCommerceRate(CommerceTypes eIndex) const
-{
-	return m_pPlayer->getCommerceRate(eIndex);
-}
-
 int CyPlayer::getCommerceRateModifier(CommerceTypes eIndex) const
 {
 	return m_pPlayer->getCommerceRateModifier(eIndex) + m_pPlayer->getCommerceRateModifierfromEvents(eIndex);

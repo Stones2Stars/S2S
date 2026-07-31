@@ -42,6 +42,12 @@ public:
 	// unit-TYPE count there is no O(1) object aggregate for a tag, so this walks each in-scope alive player's units
 	// testing the unit-info tag bitset (tally.md read-not-store). iTagId = the resolved TAG_* classification id.
 	int countUnitsWithTag(int iEntity, int iTagId, CascadeCountScope eScope = CASCADE_COUNT_EMPIRE) const;
+	// "How many TEAMS hold TECH at SCOPE?" -- techs are TEAM-held, so the count is over teams, never players.
+	// WORLD reads the engine's own aggregate `CvGame::countKnownTechNumTeams` (ever-alive teams holding it; techs
+	// are monotonic, so held == ever-held); TEAM/EMPIRE are the asking team's held flag, 0 or 1. This is the
+	// tally read-not-store rule working as intended -- the aggregate already exists on the object, so the tally
+	// reads it and never re-stores it (tally.md §1/§2).
+	int techCount(int iEntity, int iTech, CascadeCountScope eScope = CASCADE_COUNT_EMPIRE) const;
 	// "How many SPECIALISTS at SCOPE?" -- the json §3.7 `per: SPECIALIST` count domain at its CROSS-CITY scopes.
 	// ⚠ A CITY-scope specialist count never comes here: a local count reads the live CvCity (tally.md §2), and
 	// the city already maintains its specialist population O(1).

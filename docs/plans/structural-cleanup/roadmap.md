@@ -69,6 +69,14 @@ engine game-object classes were reverted to `main`, and the drifted modifier sub
 codebase entirely. This is not a redesign — the design below is unchanged and still authoritative. It is a rebuild
 of the *implementation* against it, once, properly ([DEC-proper-once](../../architecture/decisions.md#dec-proper-once)).
 
+**⚑ THE INFOS WERE RIPPED WHOLE AND REBUILT FROM SCRATCH (owner) — so EVERY compile error is rooted in the INFO
+CONSUMER SURFACE.** That is a GUARANTEE about the census, not an observation about one build: there is no second
+population of unrelated breakage to sort out first, and no subsystem that "also broke" and needs its own theory.
+⇒ A missing member therefore always resolves through the disposition test ([todo.md](todo.md) § How to work the
+compiler census): a RENAMED successor on the rebuilt info · an info genuinely MISSING a member whose data is still
+authored · or a term that is DEAD and goes. ⛔ Reaching for any other explanation is the wasted motion this
+guarantee exists to prevent.
+
 ## Governing principles (ledgered as DECs)
 
 1. **No "deferred."** Anything marked deferred / parked / blocked / "later" / TODO / pending is a

@@ -8250,7 +8250,9 @@ int CvGame::calculateSyncChecksum()
 
 				for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
 				{
-					iMultiplier += (GET_PLAYER((PlayerTypes)iI).getCommerceRate((CommerceTypes)iJ));
+					int aiPlayerCommerces[NUM_COMMERCE_TYPES];
+					GET_PLAYER((PlayerTypes)iI).getCommerces(aiPlayerCommerces);
+					iMultiplier += (aiPlayerCommerces[(CommerceTypes)iJ] / 100);
 				}
 
 				foreach_(const CvCity* pLoopCity, GET_PLAYER((PlayerTypes)iI).cities())

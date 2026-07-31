@@ -258,10 +258,7 @@ public:
 	int /*CultureLevelTypes*/ getCultureLevel() const;
 	int getCultureThreshold() const;
 
-	int getPlotYield(int /*YieldTypes*/ eIndex) const;
-
 	int getBaseYieldRateModifier(int /*YieldTypes*/ eIndex, int iExtra) const;
-	int getYieldRate(int /*YieldTypes*/ eIndex) const;
 	int getYieldRateModifier(int /*YieldTypes*/ eIndex) const;
 
 	int getTradeYield(int /*YieldTypes*/ eIndex) const;
@@ -274,9 +271,6 @@ public:
 	int calculateTradeProfit(const CyCity& kCity) const;
 	int calculateTradeYield(int /*YieldTypes*/ eIndex, int iTradeProfit) const;
 
-	int getCommerceRate(int /*CommerceTypes*/ eIndex) const;
-	int getCommerceRateTimes100(int /*CommerceTypes*/ eIndex) const;
-	int getBaseCommerceRate(int /*CommerceTypes*/ eIndex) const;
 	int getProductionToCommerceModifier(int /*CommerceTypes*/ eIndex) const;
 	int getBuildingCommerceByBuilding(int /*CommerceTypes*/ eIndex, int /*BuildingTypes*/ iBuilding) const;
 	int getSpecialistCommerce(int /*CommerceTypes*/ eIndex) const;

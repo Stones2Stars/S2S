@@ -1037,7 +1037,9 @@ int CvCityAI::AI_specialistValue(SpecialistTypes eSpecialist, bool bAvoidGrowth,
 	int iHappinessLevel = netHappiness(1) + getEspionageHappinessCounter();
 	int iHealthLevel = netHealth(std::max(0, (iHappinessLevel + 1) / 2)) + getEspionageHealthCounter();
 
-	int iBaseFoodDifference = getYieldRate(YIELD_FOOD) - getFoodConsumedByPopulation() - std::max(0, -iHealthLevel);
+	int aiCityYields[NUM_YIELD_TYPES];
+	getYields(aiCityYields);
+	int iBaseFoodDifference = aiCityYields[YIELD_FOOD] / 100 - getFoodConsumedByPopulation() - std::max(0, -iHealthLevel);
 
 	if (iSpecialistHealth != 0)
 	{
@@ -1371,7 +1373,9 @@ void CvCityAI::AI_chooseProduction()
 	}
 
 	const EraTypes eCurrentEra = player.getCurrentEra();
-	const int iCulturePerTurn = getCommerceRate(COMMERCE_CULTURE);
+	int aiOwnCommerces[NUM_COMMERCE_TYPES];
+	getCommerces(aiOwnCommerces);
+	const int iCulturePerTurn = aiOwnCommerces[COMMERCE_CULTURE] / 100;
 	const bool bPrimaryArea = player.AI_isPrimaryArea(pArea);
 
 	const int iTargetCulturePerTurn = AI_calculateTargetCulturePerTurn();
@@ -1647,7 +1651,9 @@ void CvCityAI::AI_chooseProduction()
 			// Offensive rebel units
 			if (bDanger || GC.getGame().getSorenRandNum(100, "AI Build Unit Production") < AI_buildUnitProb())
 			{
-				if (getYieldRate(YIELD_PRODUCTION) > 5 * getPopulation())
+				int aiCityYields[NUM_YIELD_TYPES];
+				getYields(aiCityYields);
+				if (aiCityYields[YIELD_PRODUCTION] / 100 > 5 * getPopulation())
 				{
 					// Air units
 					int iBestDefenseValue = player.AI_bestCityUnitAIValue(UNITAI_DEFENSE_AIR, this);
@@ -2672,7 +2678,9 @@ void CvCityAI::AI_chooseProduction()
 		// BBAI TODO: Check that this works to produce early rushes on tight maps
 		//Building city hunting stack.
 
-		if (getDomainExperience(DOMAIN_LAND) == 0 && getYieldRate(YIELD_PRODUCTION) > 5 * getPopulation()
+		int aiCityYields[NUM_YIELD_TYPES];
+		getYields(aiCityYields);
+		if (getDomainExperience(DOMAIN_LAND) == 0 && aiCityYields[YIELD_PRODUCTION] / 100 > 5 * getPopulation()
 			&& AI_chooseBuilding(BUILDINGFOCUS_EXPERIENCE, (eCurrentEra > 1) ? 0 : 7, 33))
 		{
 			return;
@@ -3025,7 +3033,9 @@ void CvCityAI::AI_chooseProduction()
 	m_iTempBuildPriority--;
 
 	//#49 GOLD/COMMERCE buildings when good prod.
-	if (iDangerValue < 4 && bFinancialTrouble && (isCapital() || getYieldRate(YIELD_PRODUCTION) > std::min(70, std::max(40, iNumCitiesInArea * 6)))	&& AI_chooseProcess(COMMERCE_GOLD))
+	int aiCityYields[NUM_YIELD_TYPES];
+	getYields(aiCityYields);
+	if (iDangerValue < 4 && bFinancialTrouble && (isCapital() || aiCityYields[YIELD_PRODUCTION] / 100 > std::min(70, std::max(40, iNumCitiesInArea * 6)))	&& AI_chooseProcess(COMMERCE_GOLD))
 	{
 		return;
 	}
@@ -3053,7 +3063,9 @@ void CvCityAI::AI_chooseProduction()
 	// EXPERIENCE is deliberately kept OUT of the unified BUILDINGFOCUS_ECONOMY pass and decided here. Land XP is
 	// the broad base (it tends to cover all units; domain-specific buildings like the Stable add mounted XP on
 	// top); the exact per-domain mechanic is ambiguous today and out of scope, so this stays on the land base.
-	if (getDomainExperience(DOMAIN_LAND) == 0 && getYieldRate(YIELD_PRODUCTION) > 4	&& AI_chooseBuilding(BUILDINGFOCUS_EXPERIENCE, (eCurrentEra > 1) ? 0 : 7, 33))
+	int aiCityYields[NUM_YIELD_TYPES];
+	getYields(aiCityYields);
+	if (getDomainExperience(DOMAIN_LAND) == 0 && aiCityYields[YIELD_PRODUCTION] / 100 > 4	&& AI_chooseBuilding(BUILDINGFOCUS_EXPERIENCE, (eCurrentEra > 1) ? 0 : 7, 33))
 	{
 		return;
 	}
@@ -5029,7 +5041,9 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 	const int iBaseHealthLevel =
 		(aCityWellbeing[WELLBEING_HEALTH] - aCityWellbeing[WELLBEING_UNHEALTH]) / 100 + getEspionageHealthCounter();
 
-	int iBaseFoodDifference = getYieldRate(YIELD_FOOD) - getFoodConsumedByPopulation() - std::max(0, -iHealthLevel);
+	int aiCityYields[NUM_YIELD_TYPES];
+	getYields(aiCityYields);
+	int iBaseFoodDifference = aiCityYields[YIELD_FOOD] / 100 - getFoodConsumedByPopulation() - std::max(0, -iHealthLevel);
 
 	int iBadHealthFromBuilding = std::max(0, -iBuildingActualHealth);
 	int iUnhealthyPopulationFromBuilding = std::min(0, -iBaseHealthLevel) + iBadHealthFromBuilding;
@@ -6478,7 +6492,11 @@ int CvCityAI::AI_buildingYieldValue(YieldTypes eYield, BuildingTypes eBuilding, 
 	const CvPlayerAI& kOwner = GET_PLAYER(getOwner());
 	int iValue = tradeRouteValue(kBuilding, eYield, bForeignTrade);
 
-	int iBaseRate = getPlotYield(eYield);
+	// The city's REALIZED yield for this channel, off the cascade's receiver sum; ÷100 at the reader, since the
+	// cascade carries ×100 natively ([DEC-fixedpoint-x100]).
+	int aiRealizedYields[NUM_YIELD_TYPES];
+	getYields(aiRealizedYields);
+	int iBaseRate = aiRealizedYields[eYield] / 100;
 	{
 		// The candidate's whole PLOTS-TARGET contribution in ONE read. Each of the four keyed sweeps this
 		// replaces walked all 21 city plots per candidate PER YIELD to count matching plots by hand; the
@@ -6609,15 +6627,10 @@ int CvCityAI::AI_projectValue(ProjectTypes eProject) const
 	int iValue = 0;
 	const CvProjectInfo& project = GC.getProjectInfo(eProject);
 
-	if (project.getNukeInterception() > 0 && GC.getGame().canTrainNukes())
-	{
-		iValue += project.getNukeInterception() / 10;
-	}
-
-	if (project.getTechShare() > 0 && project.getTechShare() < GET_TEAM(getTeam()).getHasMetCivCount(true))
-	{
-		iValue += 20 / project.getTechShare();
-	}
+	// The nuke-interception and tech-share terms are GONE with their legacy accumulators: both are ruling-16
+	// trigger-plane data (a CHANCE, and a fire threshold), so neither is a magnitude this valuation can read and
+	// neither may be reached by minting a kind. They return as the trigger plane's own valuation input
+	// (docs/specs/triggers.md); until then a project carrying only those loses that slice of its AI value.
 
 	for (int iI = 0; iI < GC.getNumVictoryInfos(); iI++)
 	{
@@ -8281,7 +8294,13 @@ void CvCityAI::AI_updateBestBuild()
 	}
 	m_bestBuildValuesStale = false;
 
-	OutputRatios ratios = OutputRatios(this->getBaseYieldRate(YIELD_FOOD), this->getBaseYieldRate(YIELD_PRODUCTION), this->getBaseYieldRate(YIELD_COMMERCE));
+	// The city's REALIZED yields in ONE read; ÷100 at the reader ([DEC-fixedpoint-x100]).
+	int aiRealizedYields[NUM_YIELD_TYPES];
+	getYields(aiRealizedYields);
+	OutputRatios ratios = OutputRatios(
+		aiRealizedYields[YIELD_FOOD] / 100,
+		aiRealizedYields[YIELD_PRODUCTION] / 100,
+		aiRealizedYields[YIELD_COMMERCE] / 100);
 
 	// these are the current default weights to make AI actually care about food at their plots function is built in such a way
 	// that you can call it several times to adjust the ratio
@@ -8501,7 +8520,10 @@ void CvCityAI::AI_doHurry(bool bForce)
 				{
 					const int iAdditionalProduction = getAdditionalYieldByBuilding(YIELD_PRODUCTION, eProductionBuilding, true);
 
-					if (iAdditionalProduction > 0 && 3 * iAdditionalProduction > 2 * getBaseYieldRate(YIELD_PRODUCTION))
+					int aiRealizedYields[NUM_YIELD_TYPES];
+					getYields(aiRealizedYields);
+					if (iAdditionalProduction > 0
+					&& 3 * iAdditionalProduction > 2 * (aiRealizedYields[YIELD_PRODUCTION] / 100))
 					{
 						iMinTurns = 3;
 					}
@@ -9718,19 +9740,14 @@ int CvCityAI::AI_yieldValueInternal(short* piYields, short* piCommerceYields, bo
 		}
 		else
 		{
-			// Get yield for city after adding/removing the citizen in question
-			//TB Traits begin
-			int iOldCityYield = getBaseYieldRate((YieldTypes)iI);
-			//TB Traits end
-			int iNewCityYield = (bRemove ? (iOldCityYield - piYields[iI]) : (iOldCityYield + piYields[iI]));
+			// The citizen's marginal yield: its own plot yields scaled by the city's modifier. The retired form
+			// took the DIFFERENCE of two whole-city totals purely to capture the modifier's rounding; with the
+			// pre-modifier base no longer a separate read, the same quantity computes directly -- and both the
+			// add and remove branches reduce to this one magnitude.
+			// ⚠ It can differ by the ±1 that difference-of-totals rounding produced. Stated, not hidden: this is
+			// an AI WEIGHTING (the sanctioned heuristic residual), never a realized game value.
 			const int iModifier = getBaseYieldRateModifier((YieldTypes)iI);
-
-			iNewCityYield = iNewCityYield * iModifier / 100;
-			iOldCityYield = iOldCityYield * iModifier / 100;
-
-			// The yield of the citizen in question is the difference of total yields
-			// to account for rounding of modifiers
-			aiYields[iI] = (bRemove ? (iOldCityYield - iNewCityYield) : (iNewCityYield - iOldCityYield));
+			aiYields[iI] = piYields[iI] * iModifier / 100;
 		}
 	}
 
@@ -9775,7 +9792,9 @@ int CvCityAI::AI_yieldValueInternal(short* piYields, short* piCommerceYields, bo
 
 		int iConsumptionByPopulation = getFoodConsumedByPopulation();
 
-		int iAdjustedFoodDifference = (getYieldRate(YIELD_FOOD) + std::min(0, iHealthLevel)) - iConsumptionByPopulation;
+		int aiCityYields[NUM_YIELD_TYPES];
+		getYields(aiCityYields);
+		int iAdjustedFoodDifference = (aiCityYields[YIELD_FOOD] / 100 + std::min(0, iHealthLevel)) - iConsumptionByPopulation;
 
 		// if we not human, allow us to starve to half full if avoiding growth
 		if (!bIgnoreStarvation)
@@ -10044,7 +10063,9 @@ int CvCityAI::AI_yieldValueInternal(short* piYields, short* piCommerceYields, bo
 		{
 			if (foodDifference(false) >= GC.getFOOD_CONSUMPTION_PER_POPULATION())
 			{
-				if (getYieldRate(YIELD_PRODUCTION) < (1 + getPopulation() / 3))
+				int aiCityYields[NUM_YIELD_TYPES];
+				getYields(aiCityYields);
+				if (aiCityYields[YIELD_PRODUCTION] / 100 < (1 + getPopulation() / 3))
 				{
 					iValue += 128 + 8 * aiYields[YIELD_PRODUCTION];
 				}
@@ -10245,7 +10266,9 @@ int CvCityAI::AI_plotValue(const CvPlot* pPlot, bool bAvoidGrowth, bool bRemove,
 {
 	PROFILE_FUNC();
 
-	int iTotalPotential = getYieldRate(YIELD_FOOD) + pPlot->getYield(YIELD_FOOD);
+	int aiCityYields[NUM_YIELD_TYPES];
+	getYields(aiCityYields);
+	int iTotalPotential = aiCityYields[YIELD_FOOD] / 100 + pPlot->getYield(YIELD_FOOD);
 
 	short aiYields[NUM_YIELD_TYPES];
 	for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
@@ -10623,12 +10646,18 @@ int CvCityAI::AI_cityValue() const
 	{
 		return 0;
 	}
+	int aiRealizedYields[NUM_YIELD_TYPES];
+	getYields(aiRealizedYields);
 	return (
-		getCommerceRateTimes100(COMMERCE_GOLD)
+		int aiOwnCommerces[NUM_COMMERCE_TYPES];
+		getCommerces(aiOwnCommerces);
+		aiOwnCommerces[COMMERCE_GOLD]
 		+
-		getCommerceRateTimes100(COMMERCE_RESEARCH)
+		int aiOwnCommerces[NUM_COMMERCE_TYPES];
+		getCommerces(aiOwnCommerces);
+		aiOwnCommerces[COMMERCE_RESEARCH]
 		+
-		getYieldRate100(YIELD_PRODUCTION)
+		aiRealizedYields[YIELD_PRODUCTION]
 		-
 		3 * (int)maintenanceOfKind(MAINTENANCE_COLONY)
 		);
@@ -10782,7 +10811,9 @@ void CvCityAI::AI_buildGovernorChooseProduction()
 
 	if (AI_countNumBonuses(NO_BONUS, false, true, 10, true, true) > 0
 	&& iPop > AI_countNumBonuses(NO_BONUS, true, false, -1, true, true)
-	&& getCommerceRate(COMMERCE_CULTURE) == 0
+	int aiOwnCommerces[NUM_COMMERCE_TYPES];
+	getCommerces(aiOwnCommerces);
+	&& aiOwnCommerces[COMMERCE_CULTURE] / 100 == 0
 	&& AI_chooseBuilding(BUILDINGFOCUS_CULTURE))
 	{
 		return;
@@ -10806,7 +10837,9 @@ void CvCityAI::AI_buildGovernorChooseProduction()
 	const int iCulturePressure = AI_calculateCulturePressure();
 
 	if (iCulturePressure > 100
-		|| iCulturePressure != 0 && getCommerceRateTimes100(COMMERCE_CULTURE) == 0)
+		int aiOwnCommerces[NUM_COMMERCE_TYPES];
+		getCommerces(aiOwnCommerces);
+		|| iCulturePressure != 0 && aiOwnCommerces[COMMERCE_CULTURE] == 0)
 	{
 		if (AI_chooseBuilding(BUILDINGFOCUS_CULTURE, 15))
 		{
@@ -11015,7 +11048,9 @@ int CvCityAI::AI_calculateTargetCulturePerTurn() const
 	{
 		return 0;
 	}
-	int iTarget = getCommerceRate(COMMERCE_CULTURE) + 1;
+	int aiOwnCommerces[NUM_COMMERCE_TYPES];
+	getCommerces(aiOwnCommerces);
+	int iTarget = aiOwnCommerces[COMMERCE_CULTURE] / 100 + 1;
 
 	if (bCompetition)
 	{
@@ -12028,13 +12063,17 @@ bool CvCityAI::AI_buildCaravan()
 	int iAveProduction = 0;
 	foreach_(const CvCity * pLoopCity, GET_PLAYER(getOwner()).cities())
 	{
-		iAveProduction += pLoopCity->getYieldRate(YIELD_PRODUCTION);
+		int aiLoopYields[NUM_YIELD_TYPES];
+		pLoopCity->getYields(aiLoopYields);
+		iAveProduction += aiLoopYields[YIELD_PRODUCTION] / 100;
 	}
 	int iNumCities = GET_PLAYER(getOwner()).getNumCities();
 	iAveProduction /= iNumCities;
 
 	UnitTypes eBestUnit = NO_UNIT;
-	if (((2 * getYieldRate(YIELD_PRODUCTION)) / 3) > iAveProduction)
+	int aiCityYields[NUM_YIELD_TYPES];
+	getYields(aiCityYields);
+	if (((2 * aiCityYields[YIELD_PRODUCTION] / 100) / 3) > iAveProduction)
 	{
 		int iBestHurry = 0;
 		// The city's own trainable frontier, not the unit database. ⚠ Behaviour: the candidate set narrows from
@@ -12061,7 +12100,9 @@ bool CvCityAI::AI_buildCaravan()
 				iOdds *= 2;
 			iOdds /= iNumCities;
 			iOdds *= iAveProduction;
-			iOdds /= std::max(1, getYieldRate(YIELD_PRODUCTION));
+			int aiCityYields[NUM_YIELD_TYPES];
+			getYields(aiCityYields);
+			iOdds /= std::max(1, aiCityYields[YIELD_PRODUCTION] / 100);
 			iOdds = std::max(1, iOdds);
 			if (GC.getGame().getSorenRandNum(iOdds, "Caravan Production") == 0)
 			{
@@ -12179,7 +12220,9 @@ int CvCityAI::AI_getMilitaryProductionRateRank() const
 {
 	PROFILE_FUNC();
 
-	int iRate = getPopulation() + getYieldRate(YIELD_PRODUCTION) - getYieldRate(YIELD_COMMERCE);
+	int aiCityYields[NUM_YIELD_TYPES];
+	getYields(aiCityYields);
+	int iRate = getPopulation() + aiCityYields[YIELD_PRODUCTION] / 100 - aiCityYields[YIELD_COMMERCE] / 100;
 
 	for (int iI = 0; iI < NUM_DOMAIN_TYPES; iI++)
 	{
@@ -12214,7 +12257,9 @@ int CvCityAI::AI_getMilitaryProductionRateRank() const
 
 	foreach_(const CvCity * pLoopCity, GET_PLAYER(getOwner()).cities())
 	{
-		const int iLoopRate = pLoopCity->getPopulation() + pLoopCity->getYieldRate(YIELD_PRODUCTION) - pLoopCity->getYieldRate(YIELD_COMMERCE);
+		int aiLoopYields[NUM_YIELD_TYPES];
+		pLoopCity->getYields(aiLoopYields);
+		const int iLoopRate = pLoopCity->getPopulation() + aiLoopYields[YIELD_PRODUCTION] / 100 - aiLoopYields[YIELD_COMMERCE] / 100;
 		if (iLoopRate > iRate || (iLoopRate == iRate && pLoopCity->getID() < getID()))
 		{
 			iRank++;
@@ -12245,7 +12290,9 @@ int CvCityAI::AI_getNavalMilitaryProductionRateRank() const
 	{
 		return 0;
 	}
-	int iRate = getPopulation() + getYieldRate(YIELD_PRODUCTION) - getYieldRate(YIELD_COMMERCE);
+	int aiCityYields[NUM_YIELD_TYPES];
+	getYields(aiCityYields);
+	int iRate = getPopulation() + aiCityYields[YIELD_PRODUCTION] / 100 - aiCityYields[YIELD_COMMERCE] / 100;
 
 	iRate += getDomainProductionModifier(DOMAIN_SEA) / 10;
 	iRate += getDomainExperience(DOMAIN_SEA) / 100;
@@ -12273,7 +12320,9 @@ int CvCityAI::AI_getNavalMilitaryProductionRateRank() const
 
 	foreach_(const CvCity * pLoopCity, GET_PLAYER(getOwner()).cities())
 	{
-		const int iLoopRate = pLoopCity->getPopulation() + pLoopCity->getYieldRate(YIELD_PRODUCTION) - pLoopCity->getYieldRate(YIELD_COMMERCE);
+		int aiLoopYields[NUM_YIELD_TYPES];
+		pLoopCity->getYields(aiLoopYields);
+		const int iLoopRate = pLoopCity->getPopulation() + aiLoopYields[YIELD_PRODUCTION] / 100 - aiLoopYields[YIELD_COMMERCE] / 100;
 		if (iLoopRate > iRate || (iLoopRate == iRate && pLoopCity->getID() < getID()))
 		{
 			iRank++;
@@ -12596,7 +12645,9 @@ int CvCityAI::getBuildingCommerceValue(BuildingTypes eBuilding, int iI, int* aiF
 	bool bCulturalVictory1 = kOwner.AI_isDoVictoryStrategy(AI_VICTORY_CULTURE1);
 	bool bCulturalVictory3 = kOwner.AI_isDoVictoryStrategy(AI_VICTORY_CULTURE3);
 
-	int iBaseCommerceChange = getBaseCommerceRateFromBuilding((CommerceTypes)iI, eBuilding);
+	// The SAME valuation the build-list tooltip reads -- one call, so the number the AI acts on and the number
+	// the player is shown cannot diverge ([patterns.md] TWO CONSUMERS, ONE CALL). x100, like the term beside it.
+	int iBaseCommerceChange = getAdditionalCommerceByBuilding((CommerceTypes)iI, eBuilding);
 
 	int iResult = 4 * (iBaseCommerceChange + 100 * aiFreeSpecialistCommerce[iI]); // iResult is scaled by 100 at this point
 
@@ -12631,8 +12682,12 @@ int CvCityAI::getBuildingCommerceValue(BuildingTypes eBuilding, int iI, int* aiF
 	kBuilding.expectedYieldModifiers(
 		getCityContext(), kOwner.getEmpireContext(), plotGroup(getOwner()), aYieldModifiers);
 
+	// The city's REALIZED commerce yield (÷100 at the reader) scaled by the CANDIDATE's expected modifier -- the
+	// what-if delta this building would add on top of what the city already makes.
+	int aiRealizedYields[NUM_YIELD_TYPES];
+	getYields(aiRealizedYields);
 	const int iSemiModifiedBase = (
-		getPlotYield(YIELD_COMMERCE) * (aYieldModifiers[YIELD_COMMERCE] / 100)
+		(aiRealizedYields[YIELD_COMMERCE] / 100) * (aYieldModifiers[YIELD_COMMERCE] / 100)
 	);
 	int iTempValue = iSemiModifiedBase * kOwner.getCommercePercent((CommerceTypes)iI) / 3000;
 
@@ -12675,7 +12730,7 @@ int CvCityAI::getBuildingCommerceValue(BuildingTypes eBuilding, int iI, int* aiF
 
 	if (aiBaseCommerceRate[iI] == MAX_INT)
 	{
-		aiBaseCommerceRate[iI] = getBaseCommerceRate((CommerceTypes)iI);
+		aiBaseCommerceRate[iI] = aiOwnCommerces[(CommerceTypes)iI] / 100;
 	}
 	int iBaseCommerceRate = aiBaseCommerceRate[iI];
 	int iCommerceMultiplierValue = iCommerceModifier * iBaseCommerceRate;
@@ -12759,7 +12814,9 @@ int CvCityAI::getBuildingCommerceValue(BuildingTypes eBuilding, int iI, int* aiF
 	}
 	iResult += iCommerceMultiplierValue;
 
-	iResult += kBuilding.getCommerceModifier((CommerceTypes)iI, CASC_SCOPE_EMPIRE) * GET_PLAYER(getOwner()).getCommerceRate((CommerceTypes)iI) / 8;
+	int aiPlayerCommerces[NUM_COMMERCE_TYPES];
+	GET_PLAYER(getOwner()).getCommerces(aiPlayerCommerces);
+	iResult += kBuilding.getCommerceModifier((CommerceTypes)iI, CASC_SCOPE_EMPIRE) * aiPlayerCommerces[(CommerceTypes)iI] / 100 / 8;
 	iResult += kBuilding.getSpecialistExtraCommerce(iI) * kOwner.getTotalPopulation() / 3;
 	{
 		const ReligionTypes eStateReligion = kOwner.getStateReligion();
@@ -12861,7 +12918,9 @@ int CvCityAI::getBuildingCommerceValue(BuildingTypes eBuilding, int iI, int* aiF
 	//	extra weight
 	if (iI == COMMERCE_RESEARCH)
 	{
-		int iPlayerTotal = GET_PLAYER(getOwner()).getCommerceRate(COMMERCE_RESEARCH);
+		int aiPlayerCommerces[NUM_COMMERCE_TYPES];
+		GET_PLAYER(getOwner()).getCommerces(aiPlayerCommerces);
+		int iPlayerTotal = aiPlayerCommerces[COMMERCE_RESEARCH] / 100;
 
 		if (iPlayerTotal < 1)
 		{
@@ -13831,9 +13890,11 @@ const {
 			{
 				foreach_(const CvCity * pLoopCity, kOwner.cities())
 				{
+					int aiLoopCityYields[NUM_YIELD_TYPES];
+					pLoopCity->getYields(aiLoopCityYields);
 					iGlobalYieldModValue +=
 					(
-						pLoopCity->getPlotYield((YieldTypes)iI)
+						(aiLoopCityYields[iI] / 100)
 						*
 						(
 							kBuilding.getGlobalYieldModifier(iI)
@@ -13906,10 +13967,14 @@ const {
 	// Koshling - modify direct production value if the base yield rate for this city (for production)
 	//	is low in relation to the amount this would add
 	//	i.e. - boost the value of extra production especially when we don't already have much
-	if (directYieldValue > getYieldRate(YIELD_PRODUCTION) / 3)
+	int aiCityYields[NUM_YIELD_TYPES];
+	getYields(aiCityYields);
+	if (directYieldValue > aiCityYields[YIELD_PRODUCTION] / 100 / 3)
 	{
 		// directYieldValue is roughly 8*<direct production gain>, so if that implies a net gain of 4% (ish) or more boost the value
-		int iBoost = directYieldValue * 12 - getYieldRate(YIELD_PRODUCTION) * 4;
+		int aiCityYields[NUM_YIELD_TYPES];
+		getYields(aiCityYields);
+		int iBoost = directYieldValue * 12 - aiCityYields[YIELD_PRODUCTION] / 100 * 4;
 
 		// Examples:
 		//	1) City production is 1, building adds 1 (directYieldValue 8), so iBoost is 92 - value almost trebbled

@@ -4740,7 +4740,9 @@ int CvPlayer::countOwnedBonuses(BonusTypes eBonus) const
 		// Count bonuses inside city radius or easily claimed
 		foreach_(const CvCity* pLoopCity, cities())
 		{
-			const bool bCommerceCulture = (pLoopCity->getCommerceRate(COMMERCE_CULTURE) > 0);
+			int aiLoopCommerces[NUM_COMMERCE_TYPES];
+			pLoopCity->getCommerces(aiLoopCommerces);
+			const bool bCommerceCulture = (aiLoopCommerces[COMMERCE_CULTURE] / 100 > 0);
 
 			for (int iJ = 0; iJ < GC.getNumBonusInfos(); iJ++)
 			{
@@ -5914,9 +5916,13 @@ void CvPlayer::findNewCapital()
 		{
 			int iValue = pLoopCity->getPopulation() * 4;
 
-			iValue += pLoopCity->getYieldRate(YIELD_FOOD);
-			iValue += pLoopCity->getYieldRate(YIELD_PRODUCTION) * 3;
-			iValue += pLoopCity->getYieldRate(YIELD_COMMERCE) * 2;
+			// The score mixes yields with whole game COUNTS (population, culture level, religions, great
+			// people), so the rates reduce at this use ([DEC-fixedpoint-x100]).
+			int aiRealizedYields[NUM_YIELD_TYPES];
+			pLoopCity->getYields(aiRealizedYields);
+			iValue += aiRealizedYields[YIELD_FOOD] / 100;
+			iValue += aiRealizedYields[YIELD_PRODUCTION] / 100 * 3;
+			iValue += aiRealizedYields[YIELD_COMMERCE] / 100 * 2;
 			iValue += pLoopCity->getCultureLevel();
 			iValue += pLoopCity->getReligionCount();
 			iValue += pLoopCity->getCorporationCount();
@@ -7454,7 +7460,15 @@ int CvPlayer::getImprovementUpgradeProgressRate(const ImprovementTypes eImprovem
 
 int CvPlayer::calculateTotalYield(YieldTypes eYield) const
 {
-	int TotalYield = ((algo::accumulate(cities() | transformed(CvCity::fn::getYieldRate100(eYield)), 0)) / 100);
+	// Σ over the player's cities of each city's REALIZED rate, off the cascade; ÷100 once at the end.
+	int64_t iTotal100 = 0;
+	foreach_(const CvCity* pLoopCity, cities())
+	{
+		int aiRealizedYields[NUM_YIELD_TYPES];
+		pLoopCity->getYields(aiRealizedYields);
+		iTotal100 += aiRealizedYields[eYield];
+	}
+	int TotalYield = (int)(iTotal100 / 100);
 	if (TotalYield < MIN_TOL_FALSE_ACCUMULATE)
 		return MAX_COMMERCE_RATE_VALUE;
 	return TotalYield;
@@ -7701,8 +7715,19 @@ void CvPlayer::cacheKeyFinanceNumbers()
 
 	foreach_(CvCity* cityX, cities())
 	{
-		m_iMinTaxIncome += cityX->getCommerceRateAtSliderPercent(COMMERCE_GOLD, 0) / 100;
-		m_iMaxTaxIncome += cityX->getCommerceRateAtSliderPercent(COMMERCE_GOLD, 100) / 100;
+		// The tax band is the gold channel evaluated against a HYPOTHETICAL slider set -- the what-if sibling
+		// of the realized read, sharing its one combine ([patterns.md] THE VALUATION PROTOCOL).
+		int aiSliders[NUM_COMMERCE_TYPES];
+		int aiBand[NUM_COMMERCE_TYPES];
+		for (int iCommerce = 0; iCommerce < NUM_COMMERCE_TYPES; ++iCommerce)
+		{
+			aiSliders[iCommerce] = 0;
+		}
+		cityX->expectedCommercesAtSliders(aiSliders, aiBand);
+		m_iMinTaxIncome += aiBand[COMMERCE_GOLD] / 100;
+		aiSliders[COMMERCE_GOLD] = 100;
+		cityX->expectedCommercesAtSliders(aiSliders, aiBand);
+		m_iMaxTaxIncome += aiBand[COMMERCE_GOLD] / 100;
 	}
 }
 
@@ -7756,7 +7781,9 @@ short CvPlayer::getProfitMargin(int iExtraExpense, int iExtraExpenseMod) const
 
 int64_t CvPlayer::calculateBaseNetGold() const
 {
-	return getCommerceRate(COMMERCE_GOLD) + getGoldPerTurn() - getFinalExpense();
+	int aiOwnCommerces[NUM_COMMERCE_TYPES];
+	getCommerces(aiOwnCommerces);
+	return aiOwnCommerces[COMMERCE_GOLD] / 100 + getGoldPerTurn() - getFinalExpense();
 }
 
 int CvPlayer::calculateResearchModifier(TechTypes eTech) const
@@ -7886,11 +7913,15 @@ int CvPlayer::calculateBaseNetResearch(TechTypes eTech) const
 
 		if (eTech == NO_TECH)
 		{
-			return GC.getDefineINT("BASE_RESEARCH_RATE") + getCommerceRate(COMMERCE_RESEARCH);
+			int aiOwnCommerces[NUM_COMMERCE_TYPES];
+			getCommerces(aiOwnCommerces);
+			return GC.getDefineINT("BASE_RESEARCH_RATE") + aiOwnCommerces[COMMERCE_RESEARCH] / 100;
 		}
 	}
 	int iCalcResearch = getModifiedIntValue(
-		GC.getDefineINT("BASE_RESEARCH_RATE") + getCommerceRate(COMMERCE_RESEARCH),
+		int aiOwnCommerces[NUM_COMMERCE_TYPES];
+		getCommerces(aiOwnCommerces);
+		GC.getDefineINT("BASE_RESEARCH_RATE") + aiOwnCommerces[COMMERCE_RESEARCH] / 100,
 		getNationalTechResearchModifier(eTech) + calculateResearchModifier(eTech)
 	);
 	if (iCalcResearch < MIN_TOL_FALSE_RESEARCH)
@@ -7928,7 +7959,9 @@ int CvPlayer::calculateTotalCommerce() const
 	{
 		if (COMMERCE_GOLD != i && COMMERCE_RESEARCH != i)
 		{
-			iTotalCommerce += getCommerceRate((CommerceTypes)i);
+			int aiOwnCommerces[NUM_COMMERCE_TYPES];
+			getCommerces(aiOwnCommerces);
+			iTotalCommerce += aiOwnCommerces[(CommerceTypes)i] / 100;
 		}
 	}
 	return static_cast<int>(std::min<int64_t>(MAX_COMMERCE_VALUE,iTotalCommerce));
@@ -12295,25 +12328,22 @@ void CvPlayer::changeCommercePercent(CommerceTypes eIndex, int iChange)
 	setCommercePercent(eIndex, getCommercePercent(eIndex) + iChange);
 }
 
-int CvPlayer::getCommerceRate(CommerceTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-
-	// A read is a BARE FETCH: no dirty gate, no recompute-on-read (the retired ensure()
-	// protocol, superseded-ideas #14). The empire is this channel's RECEIVER, so its realized
-	// sum IS the answer -- one group read, indexed by the caller, /100 at the reader boundary.
-	int aCommerces[NUM_COMMERCE_TYPES];
-	getCommerces(aCommerces);
-	return aCommerces[eIndex] / 100;
-}
-
 int CvPlayer::getTotalCityBaseCommerceRate(CommerceTypes eIndex) const
 {
 	PROFILE_FUNC();
 
 	if (m_cachedTotalCityBaseCommerceRate[eIndex] == MAX_INT)
 	{
-		m_cachedTotalCityBaseCommerceRate[eIndex] = algo::accumulate(cities() | transformed(CvCity::fn::getBaseCommerceRateTimes100(eIndex)), 0) / 100;
+		// The empire receiver total is the Sigma of its members' REALIZED values
+		// ([state-repositories.md]); the retired base tier was never the quantity wanted here.
+		int64_t iTotal = 0;
+		foreach_(const CvCity* pLoopCity, cities())
+		{
+			int aiLoopCommerces[NUM_COMMERCE_TYPES];
+			pLoopCity->getCommerces(aiLoopCommerces);
+			iTotal += aiLoopCommerces[eIndex];
+		}
+		m_cachedTotalCityBaseCommerceRate[eIndex] = (int)(iTotal / 100);
 		if (m_cachedTotalCityBaseCommerceRate[eIndex] < MIN_TOL_FALSE_ACCUMULATE)
 			m_cachedTotalCityBaseCommerceRate[eIndex] = MAX_COMMERCE_RATE_VALUE;
 	}
@@ -14811,7 +14841,9 @@ void CvPlayer::doEspionageOneOffPoints(int iChange)
 
 void CvPlayer::doEspionagePoints()
 {
-	doEspionageOneOffPoints(getCommerceRate(COMMERCE_ESPIONAGE));
+	int aiRecvCommerces[NUM_COMMERCE_TYPES];
+	doEspionageOneOffPoints(getCommerces(aiRecvCommerces);
+	aiRecvCommerces[COMMERCE_ESPIONAGE] / 100);
 }
 
 int CvPlayer::getEspionageSpending(TeamTypes eAgainstTeam, int iTotal) const
@@ -14847,7 +14879,9 @@ int CvPlayer::getEspionageSpending(TeamTypes eAgainstTeam, int iTotal) const
 		return -1;
 	}
 	int iSpendingValue = 0;
-	int iTotalPoints = (iTotal == -1 ? getCommerceRate(COMMERCE_ESPIONAGE) : iTotal);
+	int aiOwnCommerces[NUM_COMMERCE_TYPES];
+	getCommerces(aiOwnCommerces);
+	int iTotalPoints = (iTotal == -1 ? aiOwnCommerces[COMMERCE_ESPIONAGE] / 100 : iTotal);
 	int iAvailablePoints = iTotalPoints;
 
 	// Split up Espionage Point budget based on weights (if any weights have been assigned)
@@ -26000,8 +26034,10 @@ void CvPlayer::recalculateResourceConsumption(BonusTypes eBonus)
 		const CvCity* cityX = *cityIt;
 		// --- Construction Consumption ---
 		YieldTypes prodYield = YIELD_PRODUCTION;
-		int baseProd = cityX->getBaseYieldRate(prodYield);
-		int prodYieldRate = cityX->getYieldRate(prodYield);
+		int aiRealizedYields[NUM_YIELD_TYPES];
+		cityX->getYields(aiRealizedYields);
+		int baseProd = aiRealizedYields[prodYield] / 100;   // ÷100 at the reader ([DEC-fixedpoint-x100])
+		int prodYieldRate = baseProd;
 
 		BuildingTypes prodBuilding = cityX->getProductionBuilding();
 		UnitTypes prodUnit = cityX->getProductionUnit();
@@ -26056,7 +26092,7 @@ void CvPlayer::recalculateResourceConsumption(BonusTypes eBonus)
 		int aiBaseCommerceRate[NUM_COMMERCE_TYPES];
 		for (int iI = 0; iI < NUM_COMMERCE_TYPES; ++iI)
 		{
-			aiBaseCommerceRate[iI] = cityX->getBaseCommerceRate((CommerceTypes)iI);
+			aiBaseCommerceRate[iI] = aiCityCommerces[(CommerceTypes)iI] / 100;
 		}
 
 		// --- Building Effects ---
@@ -26076,7 +26112,9 @@ void CvPlayer::recalculateResourceConsumption(BonusTypes eBonus)
 
 			for (int iJ = 0; iJ < NUM_YIELD_TYPES; ++iJ)
 			{
-				int baseYield = cityX->getBaseYieldRate((YieldTypes)iJ);
+				int aiRealizedYields[NUM_YIELD_TYPES];
+				cityX->getYields(aiRealizedYields);
+				int baseYield = aiRealizedYields[iJ] / 100;
 				iConsumption += (
 						buildingX.getBonusYieldChanges(eBonus, iJ) * 3
 					+ buildingX.getBonusYieldModifier(eBonus, iJ) * baseYield / 33
@@ -26146,8 +26184,10 @@ void CvPlayer::recalculateAllResourceConsumption()
 	{
 		const CvCity* cityX = *cityIt;
 
-		const int baseProd = cityX->getBaseYieldRate(YIELD_PRODUCTION);
-		const int prodYieldRate = cityX->getYieldRate(YIELD_PRODUCTION);
+		int aiRealizedYields[NUM_YIELD_TYPES];
+		cityX->getYields(aiRealizedYields);
+		const int baseProd = aiRealizedYields[YIELD_PRODUCTION] / 100;
+		const int prodYieldRate = baseProd;
 
 		// --- Construction consumption: the current production item's prereq bonuses get
 		//     the city's production rate added once each (legacy OR-semantics across the
@@ -26225,14 +26265,15 @@ void CvPlayer::recalculateAllResourceConsumption()
 		// --- Base rates once per city (the legacy per-bonus pass re-derived the same
 		//     values once per bonus). ---
 		int aiBaseYieldRate[NUM_YIELD_TYPES];
+		cityX->getYields(aiBaseYieldRate);
 		for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
 		{
-			aiBaseYieldRate[iJ] = cityX->getBaseYieldRate((YieldTypes)iJ);
+			aiBaseYieldRate[iJ] /= 100;   // ÷100 at the reader ([DEC-fixedpoint-x100])
 		}
 		int aiBaseCommerceRate[NUM_COMMERCE_TYPES];
 		for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
 		{
-			aiBaseCommerceRate[iJ] = cityX->getBaseCommerceRate((CommerceTypes)iJ);
+			aiBaseCommerceRate[iJ] = aiCityCommerces[(CommerceTypes)iJ] / 100;
 		}
 
 		// --- Building effects: each built building contributes only to the bonuses its

@@ -153,10 +153,11 @@ void CvCity::getYields(int (&yields)[NUM_YIELD_TYPES]) const
 // the two yields through this city's own group read, the sliders through the OWNER'S EMPIRE CONTEXT (the sliders
 // are empire state and have no other home), the channel's stack through the ONE city chain walk, its deposits
 // through the ONE cross-scope roll-up, and the process conversion off the city's active process.
+// The REALIZED read: the live sliders go in. Its what-if sibling below asks the same question against a
+// HYPOTHETICAL slider set, and both share the ONE gather so neither can drift from the other
+// ([DEC-single-implementation]).
 void CvCity::getCommerces(int (&commerces)[NUM_COMMERCE_TYPES]) const
 {
-	int aiRealizedYields[NUM_YIELD_TYPES];
-	getYields(aiRealizedYields);
 	int aiCommerceRates[NUM_COMMERCE_TYPES];
 	for (int iCommerce = 0; iCommerce < NUM_COMMERCE_TYPES; ++iCommerce)
 	{
@@ -166,6 +167,18 @@ void CvCity::getCommerces(int (&commerces)[NUM_COMMERCE_TYPES]) const
 	{
 		GET_PLAYER(getOwner()).getEmpireContext().commerceRates(aiCommerceRates);
 	}
+	expectedCommercesAtSliders(aiCommerceRates, commerces);
+}
+
+// ⚖ THE SLIDER WHAT-IF. The empire's slider percentages are what divide the city's COMMERCE yield across the four
+// channels (modifier.md §2a), so "what would gold be at 0% / 100%" is answered by feeding the ONE combine a
+// hypothetical slider -- never by exposing the combine's internals through a base-rate accessor.
+void CvCity::expectedCommercesAtSliders(const int (&sliderPercents)[NUM_COMMERCE_TYPES],
+										int (&commerces)[NUM_COMMERCE_TYPES]) const
+{
+	int aiRealizedYields[NUM_YIELD_TYPES];
+	getYields(aiRealizedYields);
+	const int (&aiCommerceRates)[NUM_COMMERCE_TYPES] = sliderPercents;
 	// The EXTRA tier's rate: the city's active process, which is the ONE source of a hammers->commerce conversion
 	// (json §9 `conversion`; a city building anything else converts nothing).
 	const ProcessTypes eProcess = getProductionProcess();
@@ -314,7 +327,6 @@ CvCity::CvCity()
 	m_aiYieldRateModifier = new int[NUM_YIELD_TYPES];
 	m_aiPowerYieldRateModifier = new int[NUM_YIELD_TYPES];
 	m_aiTradeYield = new int[NUM_YIELD_TYPES];
-	m_abCommerceRateDirty = new bool[NUM_COMMERCE_TYPES];
 	m_aiProductionToCommerceModifier = new int[NUM_COMMERCE_TYPES];
 	m_aiCommerceRateModifier = new int[NUM_COMMERCE_TYPES];
 	m_aiDomainProductionModifier = new int[NUM_DOMAIN_TYPES];
@@ -406,7 +418,6 @@ CvCity::~CvCity()
 	SAFE_DELETE_ARRAY(m_aiPowerYieldRateModifier);
 	SAFE_DELETE_ARRAY(m_aiTradeYield);
 
-	SAFE_DELETE_ARRAY(m_abCommerceRateDirty);
 	SAFE_DELETE_ARRAY(m_aiProductionToCommerceModifier);
 	SAFE_DELETE_ARRAY(m_aiCommerceRateModifier);
 	SAFE_DELETE_ARRAY(m_aiDomainProductionModifier);
@@ -810,7 +821,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 
 	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 	{
-		m_abCommerceRateDirty[iI] = false;
 		m_aiProductionToCommerceModifier[iI] = 0;
 		m_aiCommerceRateModifier[iI] = 0;
 		m_abCommerceRankValid[iI] = false;
@@ -1434,7 +1444,9 @@ void CvCity::doTurn()
 
 	// updating after plot culture ensures player always sees correct ownership on plot,
 	// but plot could technically wiggle back and forth during AI turns.
-	{ PERF_SCOPE("city.doPlotCulture", getOwner()); doPlotCulture(getOwner(), getCommerceRate(COMMERCE_CULTURE)); }
+	int aiOwnCommerces[NUM_COMMERCE_TYPES];
+	getCommerces(aiOwnCommerces);
+	{ PERF_SCOPE("city.doPlotCulture", getOwner()); doPlotCulture(getOwner(), aiOwnCommerces[COMMERCE_CULTURE] / 100); }
 
 	//	Force deferred plot group recalculation to happen now before we assess production
 	{ PERF_SCOPE("city.plotGroupRecalc", getOwner()); CvPlot::setDeferredPlotGroupRecalculationMode(false); }
@@ -1909,14 +1921,25 @@ int CvCity::findBaseYieldRateRank(YieldTypes eYield) const
 {
 	if (!m_abBaseYieldRankValid[eYield])
 	{
-		//TB Traits begin
-		const int iRate = getBaseYieldRate(eYield);
-		//TB Traits end
+		// Ranked on the REALIZED yield off the cascade. No ÷100 anywhere here: a comparison is scale-invariant,
+		// so the ×100 values rank identically ([DEC-fixedpoint-x100] -- only a reader that MIXES with a human
+		// number converts).
+		int aiRealizedYields[NUM_YIELD_TYPES];
+		getYields(aiRealizedYields);
+		const int iRate = aiRealizedYields[eYield];
 
-		const int iRank = 1 + algo::count_if(GET_PLAYER(getOwner()).cities(),
-			CvCity::fn::getBaseYieldRate(eYield) > iRate
-			|| (CvCity::fn::getBaseYieldRate(eYield) == iRate && CvCity::fn::getID() < getID())
-		);
+		int iRank = 1;
+		foreach_(const CvCity* pLoopCity, GET_PLAYER(getOwner()).cities())
+		{
+			int aiOtherYields[NUM_YIELD_TYPES];
+			pLoopCity->getYields(aiOtherYields);
+
+			if (aiOtherYields[eYield] > iRate
+			|| (aiOtherYields[eYield] == iRate && pLoopCity->getID() < getID()))
+			{
+				++iRank;
+			}
+		}
 		m_abBaseYieldRankValid[eYield] = true;
 		m_aiBaseYieldRank[eYield] = iRank;
 	}
@@ -1930,12 +1953,23 @@ int CvCity::findYieldRateRank(YieldTypes eYield) const
 
 	if (!m_abYieldRankValid[eYield])
 	{
-		const int iRate = getYieldRate100(eYield);
+		// Ranked on the realized rate off the cascade; no ÷100, a comparison is scale-invariant.
+		int aiRealizedYields[NUM_YIELD_TYPES];
+		getYields(aiRealizedYields);
+		const int iRate = aiRealizedYields[eYield];
 
-		const int iRank = 1 + algo::count_if(GET_PLAYER(getOwner()).cities(),
-			CvCity::fn::getYieldRate100(eYield) > iRate
-			|| (CvCity::fn::getYieldRate100(eYield) == iRate && CvCity::fn::getID() < getID())
-		);
+		int iRank = 1;
+		foreach_(const CvCity* pLoopCity, GET_PLAYER(getOwner()).cities())
+		{
+			int aiOtherYields[NUM_YIELD_TYPES];
+			pLoopCity->getYields(aiOtherYields);
+
+			if (aiOtherYields[eYield] > iRate
+			|| (aiOtherYields[eYield] == iRate && pLoopCity->getID() < getID()))
+			{
+				++iRank;
+			}
+		}
 		m_abYieldRankValid[eYield] = true;
 		m_aiYieldRank[eYield] = iRank;
 	}
@@ -1947,11 +1981,17 @@ int CvCity::findCommerceRateRank(CommerceTypes eCommerce) const
 {
 	if (!m_abCommerceRankValid[eCommerce])
 	{
-		int iRate = getCommerceRateTimes100(eCommerce);
+		int aiOwnCommerces[NUM_COMMERCE_TYPES];
+		getCommerces(aiOwnCommerces);
+		int iRate = aiOwnCommerces[eCommerce];
 
 		const int iRank = 1 + algo::count_if(GET_PLAYER(getOwner()).cities(),
-			CvCity::fn::getCommerceRateTimes100(eCommerce) > iRate
-			|| (CvCity::fn::getCommerceRateTimes100(eCommerce) == iRate && CvCity::fn::getID() < getID())
+			int aiOwnCommerces[NUM_COMMERCE_TYPES];
+			getCommerces(aiOwnCommerces);
+			CvCity::fn::aiOwnCommerces[eCommerce] > iRate
+			int aiOwnCommerces[NUM_COMMERCE_TYPES];
+			getCommerces(aiOwnCommerces);
+			|| (CvCity::fn::aiOwnCommerces[eCommerce] == iRate && CvCity::fn::getID() < getID())
 		);
 		m_abCommerceRankValid[eCommerce] = true;
 		m_aiCommerceRank[eCommerce] = iRank;
@@ -3124,11 +3164,21 @@ int CvCity::getProductionPerTurn(ProductionCalc::flags flags = ProductionCalc::Y
 	{
 		return 0;
 	}
-	const int iFoodProduction = (flags & ProductionCalc::FoodProduction) ? std::max(0, getYieldRate(YIELD_FOOD) - foodConsumption(true)) : 0;
-	const int iOverflow = (flags & ProductionCalc::Overflow) ? getOverflowProduction() + getFeatureProduction() : 0;
-	const int iYield = (flags & ProductionCalc::Yield) ? getBaseYieldRate(YIELD_PRODUCTION) + getSpecialistYieldTotal(YIELD_PRODUCTION) : 0;
+	// The REALIZED yields in ONE read: the cascade folds the worked-plot Σ, the specialists, the percent
+	// stack AND the flat tier itself (modifier.md §2a), so the hand-assembled combine that stood here is gone.
+	// ⚠ Behaviour: the flat tier now rides the Yield flag with the rest of the realized value, where the retired
+	// form added it even when that flag was clear. Stated, not hidden (validation.md: the spec leads).
+	int aiRealizedYields[NUM_YIELD_TYPES];
+	getYields(aiRealizedYields);
 
-	return std::max(1, getExtraYield(YIELD_PRODUCTION) + iOverflow + iFoodProduction + iYield * getBaseYieldRateModifier(YIELD_PRODUCTION) / 100);
+	// Both rates reduce HERE, where the amount plane meets whole HAMMERS and whole food
+	// ([DEC-fixedpoint-x100] -- a reader reduces at its point of use).
+	const int iFoodProduction = (flags & ProductionCalc::FoodProduction)
+		? std::max(0, aiRealizedYields[YIELD_FOOD] / 100 - foodConsumption(true)) : 0;
+	const int iOverflow = (flags & ProductionCalc::Overflow) ? getOverflowProduction() + getFeatureProduction() : 0;
+	const int iYield = (flags & ProductionCalc::Yield) ? aiRealizedYields[YIELD_PRODUCTION] / 100 : 0;
+
+	return std::max(1, iOverflow + iFoodProduction + iYield);
 }
 
 int CvCity::getProductionDifference(const OrderData& orderData, ProductionCalc::flags flags) const
@@ -4333,6 +4383,12 @@ int CvCity::getFoodConsumedPerPopulation(const int iExtra) const
 	return 100 * GC.getFOOD_CONSUMPTION_PER_POPULATION() + (iPop100 - 100) * GC.getFOOD_CONSUMPTION_PER_POPULATION_PERCENT() / 100;
 }
 
+// ⚖ THE FOOD PLANE IS DISCRETE, and that is why the conversion boundary sits where it does. Angry citizens are
+// whole citizens (clamped against getPopulation()), health points are whole, the food BAR is whole, and the
+// growth threshold is whole -- so this whole chain speaks in whole food, and the ONE boundary is where the x100
+// yield RATE enters it (foodDifference). Nothing here is lifted x100 to meet the rate: a compensating constant
+// at a mixing site is the signature of a cluster boundary drawn in the wrong place
+// ([fixed-point-and-scales.md] § CONVERT BY ARITHMETIC CLUSTER).
 int CvCity::getFoodConsumedByPopulation(const int iExtra) const
 {
 	return getPopulationPlusProgress(iExtra) * getFoodConsumedPerPopulation() / 10000;
@@ -4402,13 +4458,20 @@ int CvCity::foodDifference(const bool bBottom, const bool bIncludeWastage, const
 	{
 		return 0;
 	}
+	// THE ONE BOUNDARY of the food cluster: the realized yield is x100, the food plane below is whole (whole
+	// citizens, whole health points, a whole food bar), so the rate reduces exactly HERE and every consumer of
+	// the surplus stays in whole food ([DEC-fixedpoint-x100] -- a reader reduces at its point of use).
+	int aiYields[NUM_YIELD_TYPES];
+	getYields(aiYields);
+	const int iFoodRate = aiYields[YIELD_FOOD] / 100;
+
 	int iDifference;
 
 	if (!bIgnoreFoodBuildOrRev && isFoodProduction())
 	{
-		iDifference = std::min(0, getYieldRate(YIELD_FOOD) - foodConsumption(false, 0, bIncludeWastage));
+		iDifference = std::min(0, iFoodRate - foodConsumption(false, 0, bIncludeWastage));
 	}
-	else iDifference = getYieldRate(YIELD_FOOD) - foodConsumption(false, 0, bIncludeWastage);
+	else iDifference = iFoodRate - foodConsumption(false, 0, bIncludeWastage);
 
 	if (bBottom && getPopulation() == 1 && getFood() == 0)
 	{
@@ -6298,7 +6361,10 @@ int CvCity::getAdditionalSpoiledFood(int iGood, int iBad, int iHealthAdjust) con
  */
 int CvCity::getAdditionalStarvation(int iSpoiledFood, int iFoodAdjust) const
 {
-	int iFood = getYieldRate(YIELD_FOOD) - foodConsumption() + iFoodAdjust;
+	// iSpoiledFood and iFoodAdjust are whole food, so the rate reduces at this use.
+	int aiYields[NUM_YIELD_TYPES];
+	getYields(aiYields);
+	int iFood = aiYields[YIELD_FOOD] / 100 - foodConsumption() + iFoodAdjust;
 
 	if (iSpoiledFood > 0)
 	{
@@ -6731,7 +6797,9 @@ int CvCity::getAdditionalHealthByBuilding(BuildingTypes eBuilding, int& iGood, i
 
 	// Effect on Spoiled Food
 	const int iHealthBalance = netHealth();   // whole health points against a whole food figure
-	int iFood = getYieldRate(YIELD_FOOD) - foodConsumption();
+	int aiWhatIfYields[NUM_YIELD_TYPES];
+	getYields(aiWhatIfYields);
+	int iFood = aiWhatIfYields[YIELD_FOOD] / 100 - foodConsumption();
 	iSpoiledFood -= std::min(0, iHealthBalance + iGood - iBad) - std::min(0, iHealthBalance);
 	if (iSpoiledFood > 0)
 	{
@@ -7204,7 +7272,10 @@ int CvCity::getMaxProductionOverflow() const
 	// The multiplier (turns of base production that may be banked as overflow before
 	// the excess is converted to gold) is a player-configurable BUG option; default 2
 	// reproduces the historical hard-coded behaviour.
-	return getYieldRate(YIELD_PRODUCTION) * getBugOptionINT("CityScreen__ProductionOverflowLimit", 2);
+	// Overflow is banked in whole hammers, so the rate reduces at this use.
+	int aiYields[NUM_YIELD_TYPES];
+	getYields(aiYields);
+	return aiYields[YIELD_PRODUCTION] / 100 * getBugOptionINT("CityScreen__ProductionOverflowLimit", 2);
 }
 
 
@@ -8323,293 +8394,39 @@ int CvCity::getBaseYieldRateFromBuilding(const YieldTypes eYield, const Building
  *
  * Doesn't check if the building can be constructed in this city.
  */
-int CvCity::getAdditionalYieldByBuilding(YieldTypes eIndex, BuildingTypes eBuilding, bool bFilter) const
+int CvCity::getAdditionalYieldByBuilding(YieldTypes eIndex, BuildingTypes eBuilding, bool /*bFilter*/) const
 {
 	PROFILE_EXTRA_FUNC();
-	const CvBuildingInfo& building = GC.getBuildingInfo(eBuilding);
 
-	const int iBase = getBaseYieldRate(eIndex);
-	const int iMod = getBaseYieldRateModifier(eIndex);
+	//	TWO CALLS, one per system -- ask each machine only what it owns (north-star: whose job is this?).
+	//
+	//	1. WHAT  -- the ENABLER answers which ACTIVE buildings this candidate would send dormant. Supersession is
+	//	   an availability fact, and it is authored on the SUPERSEDED building (`requires.operate.dormant` names
+	//	   its successor -- enabler.md §2), never as a "what I replace" list on the candidate.
+	//	2. VALUE -- the VALUATION answers what each one is worth AGAINST THIS CITY, contexts in / delta out
+	//	   (patterns.md § THE VALUATION PROTOCOL). The candidate's gain minus what the superseded stop giving.
+	//
+	//	The hand-assembled `(base + add) * (mod + addMod) - base * mod` combine this replaces is gone with the
+	//	base tier it read: the valuation resolves the percent side against the live context itself.
+	const CvPlayer& kOwner = GET_PLAYER(getOwner());
+	const CvPlotGroup* pPlotGroup = plotGroup(getOwner());
 
-	int iAddBase = getAdditionalBaseYieldByBuilding(eIndex, eBuilding);
-	int iAddExtra = getAdditionalExtraYieldByBuilding(eIndex, eBuilding);
-	int iAddBaseMod = getAdditionalBaseYieldModifierByBuilding(eIndex, eBuilding, bFilter);
+	int aiCandidate[NUM_YIELD_TYPES];
+	GC.getBuildingInfo(eBuilding).expectedFlatYields(
+		getCityContext(), kOwner.getEmpireContext(), pPlotGroup, aiCandidate);
+	int iDelta = aiCandidate[eIndex];
 
-	for (int iI = 0; iI < building.getNumReplacedBuilding(); iI++)
+	std::vector<int> kSuperseded;
+	EnablerKernel::dormedByBuilding(this, (int)eBuilding, kSuperseded);
+	for (size_t iI = 0; iI < kSuperseded.size(); ++iI)
 	{
-		const BuildingTypes eBuildingX = static_cast<BuildingTypes>(building.getReplacedBuilding(iI));
-
-		if (hasFullyActiveBuilding(eBuildingX))
-		{
-			iAddBase -= getAdditionalBaseYieldByBuilding(eIndex, eBuildingX);
-			iAddExtra -= getAdditionalExtraYieldByBuilding(eIndex, eBuildingX);
-			iAddBaseMod -= getAdditionalBaseYieldModifierByBuilding(eIndex, eBuildingX, bFilter);
-		}
+		int aiDormed[NUM_YIELD_TYPES];
+		GC.getBuildingInfo((BuildingTypes)kSuperseded[iI]).expectedFlatYields(
+			getCityContext(), kOwner.getEmpireContext(), pPlotGroup, aiDormed);
+		iDelta -= aiDormed[eIndex];
 	}
-	return
-	(
-		(iBase + iAddBase) * (iMod + iAddBaseMod) / 100
-		-
-		iBase * iMod / 100
-		+
-		iAddExtra
-	);
+	return iDelta / 100;   // ÷100 at the reader ([DEC-fixedpoint-x100])
 }
-
-/*
- * Returns the additional yield rate that adding one of the given buildings will provide.
- *
- * Doesn't check if the building can be constructed in this city.
- */
-int CvCity::getAdditionalBaseYieldByBuilding(YieldTypes eIndex, BuildingTypes eBuilding) const
-{
-	PROFILE_EXTRA_FUNC();
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
-	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eBuilding);
-
-	int iBaseYield = 0;
-
-	const CvBuildingInfo& building = GC.getBuildingInfo(eBuilding);
-
-	if (building.getRiverPlotYieldChange(eIndex) != 0)
-	{
-		const int iChange = building.getRiverPlotYieldChange(eIndex);
-		for (int iI = 0; iI < NUM_CITY_PLOTS; ++iI)
-		{
-			if (isWorkingPlot(iI) && getCityIndexPlot(iI)->isRiver())
-			{
-				iBaseYield += iChange;
-			}
-		}
-	}
-	return iBaseYield;
-}
-
-int CvCity::getAdditionalExtraYieldByBuilding(YieldTypes eIndex, BuildingTypes eBuilding) const
-{
-	PROFILE_EXTRA_FUNC();
-	const CvBuildingInfo& building = GC.getBuildingInfo(eBuilding);
-
-	int iExtraYield = getBaseYieldRateFromBuilding(eIndex, eBuilding) / 100;
-
-	// Trade
-	const int iPlayerTradeYieldModifier = GET_PLAYER(getOwner()).getTradeYieldModifier(eIndex);
-	if (iPlayerTradeYieldModifier > 0 && (building.getTradeRouteModifier() != 0 || building.getForeignTradeRouteModifier() != 0))
-	{
-		int iTotalTradeYield = 0;
-		int iNewTotalTradeYield = 0;
-		// BUG - Fractional Trade Routes - start
-#ifdef _MOD_FRACTRADE
-		int iTradeProfitDivisor = 100;
-#else
-		int iTradeProfitDivisor = 10000;
-#endif
-		// BUG - Fractional Trade Routes - end
-
-		for (int iI = 0; iI < getTradeRoutes(); ++iI)
-		{
-			const CvCity* pCity = getTradeCity(iI);
-			if (pCity)
-			{
-				const int iTradeProfit = getBaseTradeProfit(pCity);
-				int iTradeModifier = totalTradeModifier(pCity);
-
-				iTotalTradeYield += iTradeProfit * iTradeModifier / iTradeProfitDivisor * iPlayerTradeYieldModifier / 100;
-
-				iTradeModifier += building.getTradeRouteModifier();
-				if (pCity->getOwner() != getOwner())
-				{
-					iTradeModifier += building.getForeignTradeRouteModifier();
-				}
-				iNewTotalTradeYield += iTradeProfit * iTradeModifier / iTradeProfitDivisor * iPlayerTradeYieldModifier / 100;
-			}
-		}
-#ifdef _MOD_FRACTRADE
-		iTotalTradeYield /= 100;
-		iNewTotalTradeYield /= 100;
-#endif
-		iExtraYield += iNewTotalTradeYield - iTotalTradeYield;
-	}
-
-	// Specialists
-	for (int iI = 0; iI < GC.getNumSpecialistInfos(); ++iI)
-	{
-		if (building.getFreeSpecialistCount((SpecialistTypes)iI) != 0)
-		{
-			iExtraYield += building.getFreeSpecialistCount((SpecialistTypes)iI) * getYieldBySpecialist(eIndex, (SpecialistTypes)iI);
-		}
-	}
-
-//	// Bonuses
-//	for (int iI = 0; iI < GC.getNumBonusInfos(); ++iI)
-//	{
-//		if (hasBonus((BonusTypes)iI))
-//		{
-//			iExtraYield += building.getBonusYieldChanges(iI, eIndex);
-//		}
-//		if (building.getVicinityBonusYieldChanges(iI, eIndex) != 0 && hasVicinityBonus((BonusTypes)iI))
-//		{
-//			iExtraYield += building.getVicinityBonusYieldChanges(iI, eIndex);
-//		}
-//	}
-
-	for (int iI = 0; iI < GC.getNumBonusInfos(); ++iI)
-    {
-       if (eBuilding == (BuildingTypes)GC.getInfoTypeForString("BUILDING_STORAGE_EMPIRE"))
-       {
-           int iBonusCount = GET_PLAYER(getOwner()).getNumAvailableBonuses((BonusTypes)iI);
-           int iCityCount = GET_PLAYER(getOwner()).getNumCities();
-
-           if (iBonusCount > 0)
-           {
-
-               int fullCap = iBonusCount * 5;
-               int halfCap = iBonusCount * 10;
-
-               int iYield = building.getBonusYieldChanges(iI, eIndex);
-               int totalYield = iBonusCount * iYield;
-
-               if (iCityCount <= fullCap)
-                   {
-                       iExtraYield += totalYield; // 100%
-                   }
-                   else if (iCityCount <= halfCap)
-                   {
-                       iExtraYield += totalYield / 2; // 50%
-                   }
-           }
-
-           if (building.getVicinityBonusYieldChanges(iI, eIndex) != 0
-               && hasVicinityBonus((BonusTypes)iI))
-           {
-               int iVicinityCount = 0;
-               for (int i = 0; i < NUM_CITY_PLOTS; ++i)
-               {
-                   CvPlot* pPlot = getCityIndexPlot(i);
-                   if (pPlot != NULL
-                       && pPlot->getBonusType(getTeam()) == (BonusTypes)iI
-                       && pPlot->getOwner() == getOwner()
-                       && pPlot->getImprovementType() != NO_IMPROVEMENT
-                       && pPlot->isConnectedTo(this)
-                       && pPlot->getWorkingCity() == this)
-                   {
-                       ++iVicinityCount;
-                   }
-               }
-
-               iExtraYield += iVicinityCount * building.getVicinityBonusYieldChanges(iI, eIndex);
-           }
-
-       }
-        else
-        {
-            if (hasBonus((BonusTypes)iI))
-            {
-                iExtraYield += building.getBonusYieldChanges(iI, eIndex);
-            }
-
-            if (building.getVicinityBonusYieldChanges(iI, eIndex) != 0
-               && hasVicinityBonus((BonusTypes)iI))
-            {
-               int iVicinityCount = 0;
-               for (int i = 0; i < NUM_CITY_PLOTS; ++i)
-               {
-                   CvPlot* pPlot = getCityIndexPlot(i);
-                   if (pPlot != NULL
-                       && pPlot->getBonusType(getTeam()) == (BonusTypes)iI
-                       && pPlot->getOwner() == getOwner()
-                       && pPlot->getImprovementType() != NO_IMPROVEMENT
-                       && pPlot->isConnectedTo(this)
-                       && pPlot->getWorkingCity() == this)
-                   {
-                       ++iVicinityCount;
-                   }
-               }
-
-               iExtraYield += iVicinityCount * building.getVicinityBonusYieldChanges(iI, eIndex);
-            }
-        }
-    }
-
-	const int iTradeRoutes = building.getGlobalTradeRoutes() + building.getCoastalTradeRoutes() + building.getTradeRoutes();
-	if (iTradeRoutes != 0)
-	{
-		int* paiTradeYields = new int[NUM_YIELD_TYPES];
-		calculateExtraTradeRouteProfit(iTradeRoutes, paiTradeYields);
-		iExtraYield += paiTradeYields[eIndex];
-		SAFE_DELETE_ARRAY(paiTradeYields);
-	}
-
-	for (int iI = 1; iI < building.getFreeSpecialist() + 1; iI++)
-	{
-		const SpecialistTypes eNewSpecialist = getBestSpecialist(iI);
-		if (eNewSpecialist == NO_SPECIALIST) break;
-		iExtraYield += specialistYield(eNewSpecialist, eIndex);
-	}
-
-	return iExtraYield;
-}
-
-/*
- * Returns the additional yield rate modifier that adding one of the given buildings will provide.
- *
- * Doesn't check if the building can be constructed in this city.
- */
-int CvCity::getAdditionalBaseYieldModifierByBuilding(YieldTypes eYield, BuildingTypes eBuilding, bool bFilter) const
-{
-	PROFILE_EXTRA_FUNC();
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eYield);
-	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eBuilding);
-
-	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
-
-	int iYieldMod = kBuilding.getYieldModifier(eYield);
-
-	if (isPower())
-	{
-		iYieldMod += kBuilding.getPowerYieldModifier(eYield);
-	}
-	else if (kBuilding.isPower() || (kBuilding.getPowerBonus() != NO_BONUS && hasBonus((BonusTypes)kBuilding.getPowerBonus())))
-	{
-		foreach_(const BuildingTypes eTypeX, getHasBuildings())
-		{
-			if (!isDormantBuilding(eTypeX))
-			{
-				iYieldMod += GC.getBuildingInfo(eTypeX).getPowerYieldModifier(eYield);
-			}
-		}
-	}
-
-	if (eYield == YIELD_PRODUCTION && !bFilter)
-	{
-		iYieldMod += kBuilding.getMilitaryProductionModifier() / 2; // AIAndy: It does not make sense to count the production increases for specific domains fully
-		iYieldMod += kBuilding.getSpaceProductionModifier() / 4;
-		iYieldMod += kBuilding.getGlobalSpaceProductionModifier() / 2;
-
-		int iMaxModifier = 0;
-		for (int i = 0; i < NUM_DOMAIN_TYPES; i++)
-		{
-			iMaxModifier = std::max(iMaxModifier, kBuilding.getDomainProductionModifier((DomainTypes)i));
-		}
-		iYieldMod += iMaxModifier / 4;
-	}
-	for (int iI = 0; iI < GC.getNumBonusInfos(); ++iI)
-	{
-		if (hasBonus((BonusTypes)iI))
-		{
-			iYieldMod += kBuilding.getBonusYieldModifier(iI, eYield);
-		}
-	}
-	foreach_(const TechArray& pair, kBuilding.getTechYieldModifiers())
-	{
-		if (GET_TEAM(getTeam()).isHasTech(pair.first))
-		{
-			iYieldMod += pair.second[eYield];
-		}
-	}
-	return iYieldMod;
-}
-
 
 int CvCity::getYieldBySpecialist(YieldTypes eIndex, SpecialistTypes eSpecialist) const
 {
@@ -8639,40 +8456,6 @@ int CvCity::getBaseYieldRateModifier(YieldTypes eIndex, int iExtra) const
 	InfoValuation::rolledLegsAtCity(*this, iChannel, lFlatSum, lPercentSum);
 	return std::max(0, 100 + iExtra + (int)lPercentSum);
 }
-
-int CvCity::getYieldRate(const YieldTypes eYield) const
-{
-	return getYieldRate100(eYield) / 100;
-}
-
-int CvCity::getYieldRate100(const YieldTypes eYield) const
-{
-	PROFILE_FUNC();
-	// Specialist yields receive the city yield modifier exactly like worked tiles (#317);
-	// the remaining extra bucket (corporations, per-building yield changes, flat building
-	// yields, per-pop yields) stays unmodified.
-	return std::min(CITY_MAX_YIELD_RATE,std::max(100,
-		(getBaseYieldRate(eYield) + getSpecialistYieldTotal(eYield)) * getBaseYieldRateModifier(eYield)
-		+ 100 * getExtraYield(eYield)));
-}
-
-int CvCity::getPlotYield(YieldTypes eIndex)	const
-{
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
-	return m_aiBaseYieldRate[eIndex];
-}
-
-void CvCity::changePlotYield(YieldTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
-
-	if (iChange != 0)
-	{
-		m_aiBaseYieldRate[eIndex] += iChange;
-		onYieldChange();
-	}
-}
-
 
 void CvCity::changeBuildingExtraYield(YieldTypes eYield, int iChange)
 {
@@ -8822,7 +8605,11 @@ void CvCity::changePowerYieldRateModifier(YieldTypes eIndex, int iChange)
 	if (iChange != 0)
 	{
 		m_aiPowerYieldRateModifier[eIndex] += iChange;
-		FASSERT_NOT_NEGATIVE(getYieldRate100(eIndex));
+		{
+			int aiRealizedYields[NUM_YIELD_TYPES];
+			getYields(aiRealizedYields);
+			FASSERT_NOT_NEGATIVE(aiRealizedYields[eIndex]);
+		}
 
 		GET_PLAYER(getOwner()).invalidateYieldRankCache(eIndex);
 
@@ -9191,134 +8978,7 @@ void CvCity::updateExtraSpecialistCommerce()
 }
 
 
-int CvCity::getCommerceRate(CommerceTypes eIndex) const
-{
-	return getCommerceRateTimes100(eIndex) / 100;
-}
 
-int CvCity::getCommerceRateTimes100(CommerceTypes eIndex) const
-{
-	PROFILE_FUNC();
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-
-	// A read is a BARE FETCH -- no dirty gate, no recompute-on-read (superseded-ideas #14).
-	// The city is this channel's RECEIVER, so its realized sum IS the answer; x100 native.
-	int aCommerces[NUM_COMMERCE_TYPES];
-	getCommerces(aCommerces);
-	return aCommerces[eIndex];
-}
-
-
-int CvCity::getCommerceFromPercent(CommerceTypes eIndex) const
-{
-	const int iYieldRate = getYieldRate100(YIELD_COMMERCE);
-
-	if (eIndex == COMMERCE_GOLD)
-	{
-		return std::max(
-			0,
-			(
-				iYieldRate * 100
-				- iYieldRate * GET_PLAYER(getOwner()).getCommercePercent(COMMERCE_RESEARCH)
-				- iYieldRate * GET_PLAYER(getOwner()).getCommercePercent(COMMERCE_CULTURE)
-				- iYieldRate * GET_PLAYER(getOwner()).getCommercePercent(COMMERCE_ESPIONAGE)
-			)
-			/ 100
-		);
-	}
-	return iYieldRate * GET_PLAYER(getOwner()).getCommercePercent(eIndex) / 100;
-}
-
-
-int CvCity::getBaseCommerceRate(CommerceTypes eIndex) const
-{
-	return getBaseCommerceRateTimes100(eIndex) / 100;
-}
-
-int CvCity::getBaseCommerceRateTimes100(CommerceTypes eIndex) const
-{
-	PROFILE_FUNC();
-
-	if (m_abCommerceRateDirty[eIndex])
-	{
-	}
-
-	//STEP 1 : Slider + remaining steps.
-	return getCommerceFromPercent(eIndex) + getBaseCommerceRateExtra(eIndex);
-}
-
-int CvCity::getBaseCommerceRateExtra(CommerceTypes eIndex) const
-{
-	//STEP 1 : Slider
-	//STEP 2 : Commerce Changes from specialists
-	int iBaseExtraRate = 100 * (getSpecialistCommerce(eIndex) + getExtraSpecialistCommerceTotal(eIndex));
-
-	//STEP 3 : Religion Commerce
-	iBaseExtraRate += 100 * getReligionCommerce(eIndex);
-
-	//STEP 4 : Corporation Commerce
-	iBaseExtraRate += 100 * getCorporationCommerce(eIndex);
-
-	//STEP 5 : Building Commerce
-	iBaseExtraRate += getBuildingCommerce100(eIndex);
-
-	//STEP 6 : Free City Commerce (player tallied from civics/traits a change value to all cities commerce output)
-	iBaseExtraRate += GET_PLAYER(getOwner()).getExtraCommerce(eIndex);
-
-	//STEP 7 : Minted Commerce
-	if (eIndex == COMMERCE_GOLD)
-	{
-		iBaseExtraRate += getMintedCommerce();
-	}
-
-	//STEP 8 : Golden Age Base Commerce Changes (usually trait driven though it might be interesting to enable this on civics.)
-	if (GET_PLAYER(getOwner()).isGoldenAge())
-	{
-		iBaseExtraRate += 100 * GET_PLAYER(getOwner()).getGoldenAgeCommerce(eIndex);
-	}
-	return iBaseExtraRate;
-}
-
-int CvCity::getCommerceRateAtSliderPercent(CommerceTypes eIndex, int iSliderPercent) const
-{
-	PROFILE_FUNC();
-
-	if (isDisorder())
-	{
-		return 0;
-	}
-	if (m_abCommerceRateDirty[eIndex])
-	{
-	}
-	int iRate = std::min<int>(CITY_MAX_YIELD_RATE100, getYieldRate100(YIELD_COMMERCE));
-	int iExtraRate = std::min<int>(CITY_MAX_YIELD_RATE100, getBaseCommerceRateExtra(eIndex));
-
-	iRate = iRate * iSliderPercent / 100 + iExtraRate;
-
-	// Don't apply rate modifiers to negative commerce or you get counter-intuitive results
-	//	like intelligence agencies making your negative espionage worse!
-	if (iRate < CITY_MAX_YIELD_RATE)
-	{
-		if (iRate > 0)
-		{
-			iRate = iRate * getTotalCommerceRateModifier(eIndex) / 100;
-		}
-		else
-		{
-			iRate = iRate * 100 / getTotalCommerceRateModifier(eIndex);
-		}
-		iRate += getYieldRate(YIELD_PRODUCTION) * getProductionToCommerceModifier(eIndex);
-	}
-
-	// Culture and science cannot be negative
-	if (iRate < 0 && (eIndex == COMMERCE_CULTURE || eIndex == COMMERCE_RESEARCH))
-	{
-		return 0;
-	}
-	if (iRate < MIN_TOL_FALSE_ACCUMULATE)
-		return CITY_MAX_YIELD_RATE;
-	return  std::min(CITY_MAX_YIELD_RATE,iRate);
-}
 
 // ⚖ ONE ADDITIVE STACK, the commerce twin of getBaseYieldRateModifier (modifier.md §2a). The legacy form summed
 // SEVEN accumulators and then SUBTRACTED two of them back out again -- the events/buildings terms were folded
@@ -9460,46 +9120,29 @@ int CvCity::getBuildingCommerceByBuilding(CommerceTypes eIndex, BuildingTypes eB
 int CvCity::getAdditionalCommerceByBuilding(CommerceTypes eIndex, BuildingTypes eBuilding) const
 {
 	PROFILE_EXTRA_FUNC();
-	const int iExtraRateTimes100 = getBaseCommerceRateFromBuilding(eIndex, eBuilding);
-	const int iExtraModifier = getAdditionalCommerceRateModifierByBuilding(eIndex, eBuilding);
+	// THE VALUATION PROTOCOL ([patterns.md]): the live CONTEXTS go in and the resolved DELTA comes out. The
+	// candidate's own compiled entries answer what it would add -- the hand-assembled without/with subtraction
+	// over a base-rate decomposition is gone with the tier it read.
+	const CvPlayer& kOwner = GET_PLAYER(getOwner());
+	const CvPlotGroup* pPlotGroup = plotGroup(getOwner());
 
-	if (iExtraRateTimes100 == 0 && iExtraModifier == 0)
+	int aiCandidate[NUM_COMMERCE_TYPES];
+	GC.getBuildingInfo(eBuilding).expectedFlatCommerce(
+		getCityContext(), kOwner.getEmpireContext(), pPlotGroup, aiCandidate);
+	int iDelta = aiCandidate[eIndex];
+
+	// A candidate that dorms an incumbent nets that incumbent's contribution back out; the ENABLER owns which
+	// buildings it supersedes ([DEC-enabler-not-cascade]).
+	std::vector<int> kSuperseded;
+	EnablerKernel::dormedByBuilding(this, (int)eBuilding, kSuperseded);
+	for (size_t iI = 0; iI < kSuperseded.size(); ++iI)
 	{
-		return 0;
+		int aiDormed[NUM_COMMERCE_TYPES];
+		GC.getBuildingInfo((BuildingTypes)kSuperseded[iI]).expectedFlatCommerce(
+			getCityContext(), kOwner.getEmpireContext(), pPlotGroup, aiDormed);
+		iDelta -= aiDormed[eIndex];
 	}
-	const int iRateTimes100 = getBaseCommerceRateTimes100(eIndex);
-	const int iModifier = getTotalCommerceRateModifier(eIndex);
-
-	const int iCommerceWithoutBuilding =
-	(
-		iRateTimes100 > 0
-		?
-		iRateTimes100 * iModifier / 100
-		:
-		iRateTimes100 * 100 / iModifier
-	);
-	const int iCommerceWithBuilding
-	(
-		iRateTimes100 + iExtraRateTimes100 > 0
-		?
-		(iRateTimes100 + iExtraRateTimes100) * (iModifier + iExtraModifier) / 100
-		:
-		(iRateTimes100 + iExtraRateTimes100) * 100 / (iModifier + iExtraModifier)
-	);
-	int iExtraTimes100 = iCommerceWithBuilding - iCommerceWithoutBuilding;
-
-	const CvBuildingInfo& building = GC.getBuildingInfo(eBuilding);
-
-	for (int iI = 0; iI < building.getNumReplacedBuilding(); iI++)
-	{
-		const BuildingTypes eBuildingX = static_cast<BuildingTypes>(building.getReplacedBuilding(iI));
-
-		if (hasFullyActiveBuilding(eBuildingX))
-		{
-			iExtraTimes100 -= getAdditionalCommerceByBuilding(eIndex, eBuildingX);
-		}
-	}
-	return iExtraTimes100;
+	return iDelta;
 }
 
 /*
@@ -9507,95 +9150,6 @@ int CvCity::getAdditionalCommerceByBuilding(CommerceTypes eIndex, BuildingTypes 
  *
  * Doesn't check if the building can be constructed in this city.
  */
-int CvCity::getBaseCommerceRateFromBuilding(CommerceTypes eIndex, BuildingTypes eBuilding) const
-{
-	PROFILE_EXTRA_FUNC();
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eBuilding);
-
-	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
-
-	int iExtraRate100 = 100 * kBuilding.getCommerceChange(eIndex);
-	if (iExtraRate100 < 0 && eIndex == COMMERCE_GOLD && GC.getTREAT_NEGATIVE_GOLD_AS_MAINTENANCE())
-	{
-		iExtraRate100 = 0;
-	}
-	iExtraRate100 += 100 * getBuildingCommerceChange(eBuilding, eIndex);
-
-	if (kBuilding.getReligion() != NO_RELIGION
-	&& kBuilding.getReligion() == GET_PLAYER(getOwner()).getStateReligion())
-	{
-		iExtraRate100 += 100 * GET_PLAYER(getOwner()).getStateReligionBuildingCommerce(eIndex);
-	}
-
-	if (kBuilding.getGlobalReligionCommerce() != NO_RELIGION)
-	{
-		iExtraRate100 += 100 * (
-			GC.getReligionInfo((ReligionTypes)kBuilding.getGlobalReligionCommerce()).getGlobalReligionCommerce(eIndex)
-			*
-			GC.getGame().countReligionLevels((ReligionTypes)kBuilding.getGlobalReligionCommerce())
-		);
-	}
-	if (kBuilding.getGlobalCorporationCommerce() != NO_CORPORATION)
-	{
-		iExtraRate100 += (
-			GC.getCorporationInfo((CorporationTypes)kBuilding.getGlobalCorporationCommerce()).getHeadquartersCommerce(eIndex)
-			*
-			GC.getGame().countCorporationLevels((CorporationTypes)kBuilding.getGlobalCorporationCommerce())
-		);
-	}
-
-	// Specialists
-	for (int iI = 0; iI < GC.getNumSpecialistInfos(); ++iI)
-	{
-		if (kBuilding.getFreeSpecialistCount((SpecialistTypes)iI) != 0)
-		{
-			iExtraRate100 += 100 * getAdditionalBaseCommerceRateBySpecialist(eIndex, (SpecialistTypes)iI, kBuilding.getFreeSpecialistCount((SpecialistTypes)iI));
-		}
-	}
-
-	for (int iI = 1; iI < kBuilding.getFreeSpecialist() + 1; iI++)
-	{
-		const SpecialistTypes eNewSpecialist = getBestSpecialist(iI);
-		if (eNewSpecialist == NO_SPECIALIST) break;
-
-		iExtraRate100 += 100 * GET_PLAYER(getOwner()).specialistCommerce(eNewSpecialist, eIndex);
-	}
-
-	// Toffer - The rest are already scaled up two orders of magnitude.
-	if (kBuilding.isForceAllTradeRoutes())
-	{
-		const int iCurrentTradeRevenue = GET_PLAYER(getOwner()).calculateTotalExports(YIELD_COMMERCE);
-
-		GET_PLAYER(getOwner()).changeForceAllTradeRoutes(1);
-
-		const int iFutureTradeRevenue = GET_PLAYER(getOwner()).calculateTotalExports(YIELD_COMMERCE);
-
-		GET_PLAYER(getOwner()).changeForceAllTradeRoutes(-1);
-
-		iExtraRate100 += (iFutureTradeRevenue - iCurrentTradeRevenue) * GET_PLAYER(getOwner()).getCommercePercent(eIndex);
-	}
-	iExtraRate100 += getPopulation() * kBuilding.getCommercePerPopChange(eIndex);
-
-	for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
-	{
-		if (hasBonus((BonusTypes)iI))
-		{
-			iExtraRate100 += kBuilding.getBonusCommercePercentChanges(iI, eIndex);
-		}
-	}
-	foreach_(const TechCommerceArray& pair, kBuilding.getTechCommerceChanges())
-	{
-		if (GET_TEAM(getTeam()).isHasTech(pair.first))
-		{
-			iExtraRate100 += pair.second[eIndex];
-		}
-	}
-	return iExtraRate100;
-}
-
-
-
 /*
  * Returns the additional commerce rate modifier constructing the given building will provide.
  *
@@ -10105,7 +9659,9 @@ void CvCity::changeDomainProductionModifier(DomainTypes eIndex, int iChange)
 
 
 // ⚑ The `< 0 ? MAX_INT` saturating guards these two getters used to carry were the FOSSIL of a live 32-bit
-// overflow: city culture accumulates getCommerceRateTimes100(CULTURE) every turn and NEVER decays, so on a
+int aiOwnCommerces[NUM_COMMERCE_TYPES];
+getCommerces(aiOwnCommerces);
+// overflow: city culture accumulates aiOwnCommerces[CULTURE] every turn and NEVER decays, so on a
 // long game it wrapped negative and the guards detected the wrap and clamped. That silently corrupted every
 // consumer of the value -- culture percent, cultural ownership, the level thresholds -- because a saturated
 // total is not the total. The storage is 64-bit now, so there is no wrap to detect and nothing to clamp.
@@ -11452,10 +11008,9 @@ void CvCity::processWorkingPlot(int iPlot, int iChange, bool yieldsOnly)
 			}
 		}
 
-		for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
-		{
-			changePlotYield((YieldTypes)iI, iChange * pPlot->getYield((YieldTypes)iI));
-		}
+		// The worked-plot Σ is the cascade's: emitPlotWorkedChanged above is what marks this city's plot-fed
+		// receiver sums (SEVT_PLOT_WORKED_CHANGED). Only the UI-side rider the retired push carried stays here.
+		onYieldChange();
 	}
 
 	if (isCitySelected())
@@ -13428,7 +12983,9 @@ const std::vector< std::pair<float, float> >& CvCity::getWallOverridePoints() co
 void CvCity::doCulture()
 {
 	PROFILE_FUNC();
-	changeCultureTimes100(getOwner(), getCommerceRateTimes100(COMMERCE_CULTURE), false, true);
+	int aiOwnCommerces[NUM_COMMERCE_TYPES];
+	getCommerces(aiOwnCommerces);
+	changeCultureTimes100(getOwner(), aiOwnCommerces[COMMERCE_CULTURE], false, true);
 }
 
 
@@ -18647,16 +18204,6 @@ void CvCity::changeUnitCombatDefenseAgainstModifierTotal(UnitCombatTypes eIndex,
 
 
 
-int CvCity::getBaseYieldRate(YieldTypes eIndex) const
-{
-	int iBaseYield = getPlotYield(eIndex) + getTradeYield(eIndex) + GET_PLAYER(getOwner()).getFreeCityYield(eIndex);
-
-	if (GET_PLAYER(getOwner()).isGoldenAge() && GET_PLAYER(getOwner()).getGoldenAgeYield(eIndex) > 0)
-	{
-		iBaseYield += GET_PLAYER(getOwner()).getGoldenAgeYield(eIndex);
-	}
-	return iBaseYield;
-}
 
 
 int CvCity::getExtraLocalCaptureProbabilityModifier() const

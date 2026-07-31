@@ -70,9 +70,21 @@ A derived cache in this model is:
 
 **Worked shape (the plot-yield cache):** `getYield()` = `return cached` — a bare fetch, always O(1);
 `updateYield()` is the **trigger** (marks the slot, which is what rebuilds it, and fires the downstream marks the
-old push carried — no push); `CvCity::getPlotYield()` reads the CITY-side worked-plot Σ cache (`CvCity::m_plotYieldSum`, a
-`CvDerivedCache` marked by worked-plot flips + working-plot yield changes) — the push-maintained `m_aiBaseYieldRate`
-is dead. ⛔ The pull must be a CACHE at EVERY level, never a per-read walk: re-summing the radius on every
+old push carried — no push); **⚖ THE SUM OF THE PACKAGES IS CACHED AT ITS TARGET — as a RECEIVER SLOT, never as a member beside it (owner).**
+Each channel has ONE consuming scope (production → city; the commerces further up), and the Σ that lands there is
+cached in that scope's OWN package (`CvCascadePackage::sum`, read `readSum`, marked `markSum`) — **invalidated by
+the EVENT SPINE per YIELD TYPE and LOCATION**, i.e. the derived mask names the channel and the owner it fires on
+(`scopeReceiversFedBy(CASC_SCOPE_CITY, CASC_SCOPE_PLOT)` for the plot-fed city sums). Its inputs are read through
+their own marks (`CvPlot::getCascadePackage().sourceFlat(channel)` — the gather's `baseFlat` plot leg), so an input
+the same event marked rebuilds before it is summed.
+
+⛔ **What is banned is a HAND-NAMED field holding that same number** — a `CvCity::m_plotYieldSum`-shaped member is
+the defect [DEC-uniform-cache-shape](decisions.md#dec-uniform-cache-shape) names (it cannot be addressed by the
+derived mask, so it forces a bespoke invalidation path) and a second maintenance surface for a fact the modifier
+consumer already routes. ⛔ Equally banned is the other direction: re-summing per read. **Cache it — in the slot
+that already exists.** The push-maintained `m_aiBaseYieldRate` is dead, and a legacy tier-1 accessor over it
+(`getPlotYield`) is a DELETION, not a value to re-home: its consumers read the channel at its receiving scope
+([DEC-new-getter-surface](decisions.md#dec-new-getter-surface)). ⛔ The pull must be a CACHE at EVERY level, never a per-read walk: re-summing the radius on every
 `getPlotYield` call turns the game's hottest read O(radius) — measured at 913M plot reads in one turn inside the
 governor's valuation, the cost class this whole doc exists to prevent. The engine's actual base yield thereby equals the build-order-independent value the cascade computes —
 stale-cache divergences resolved **at the source**, behaviour-preserving

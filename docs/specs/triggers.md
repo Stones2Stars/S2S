@@ -65,6 +65,35 @@ enabler's precomputed sets are the THIRD LEG of the eval state, fed in rather th
 operating-set legs sit EMPTY and any condition asking an active-building or vicinity-provides question evaluates
 against nothing and quietly answers false.
 
+> **⚖ A THRESHOLD ON A HAPPENING IS A TRIGGER, NOT A MAGNITUDE — the `techShare` worked case (owner).** Tech
+> sharing reads as a diplomacy number and is not one: *"if 2 civs have the tech, then whoever has the wonder also
+> gets the tech."* The `2` is not an amount anything accumulates — it is the **fire condition of an
+> `onTechResearched` trigger** whose action grants the tech. So it authors on this plane
+> (`trigger` → `chance` → `action`), never as a `diplomacy.<scope>.techShare` deposit, and it carries **no kind**
+> — the same standing as the rest of the trigger-plane set (`survivor`, `cityCapture`, `combat.subdueAnimal`,
+> `combat.nukeInterception`), which `CvInfoKinds.h` keeps deliberately unkinded pending this re-home.
+> ⚑ **The TELL that generalizes** — and it is worth applying to every remaining family member: a number whose
+> value is a **COUNT OF OTHER PARTIES / a threshold that decides WHETHER something happens** is a trigger
+> condition; a number that is **added, scaled or stacked** is a modifier. `techShare: 2` never combines with
+> another `techShare`, which is the giveaway that no channel was ever involved.
+> **The condition form, settled:** `{type: TECH_X, scope: world, min: N}` — the world tech count
+> ([tally.md](tally.md)), evaluated on the tech-acquired happening, with the action granting that tech.
+> ⚖ **The legacy `isHasMet` filter is DROPPED (owner):** `CvTeam::updateTechShare` counted only teams you had
+> MET, and the world count does not — *"it happens sufficiently late in the game that you have normally met all
+> players."* An intentional, owner-ruled divergence, stated rather than reproduced
+> ([validation.md](validation.md): the spec leads).
+> ⚑ **And it is RE-ADDABLE, not lost (owner): *"if we want the met part, we put that in after the fact."*** It
+> comes back as an ordinary CONDITION on the entry — a met predicate — which *extends* the vocabulary rather than
+> reshaping anything ([DEC-conditions-are-predicates](../architecture/decisions.md#dec-conditions-are-predicates):
+> the predicate registry is extensible by design). ⛔ So do NOT preserve the legacy filter now "to keep the option
+> open" — the option is open by construction, and keeping it is the half-migration.
+> ⚠ Two residues of that swap, both harmless but worth knowing rather than rediscovering: the world count is over
+> **EVER-alive** teams, so a dead civ's tech still counts toward the threshold; and it does not exclude the asking
+> team, which is inert here because the trigger only fires for a tech you do NOT hold.
+>
+> ⛔ Its consumer stays DANGLING until the re-home lands — do not restore it by minting or keeping a kind
+> ([todo.md](../plans/structural-cleanup/todo.md)).
+
 ## What the plane must NOT do
 
 - ⛔ **The per-turn applier must NOT apply property pulses.** Their carriers bridge theirs at load; applying them

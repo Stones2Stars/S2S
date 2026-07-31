@@ -76,8 +76,6 @@ public:
 	int getNumCities() const;
 	int getTotalPopulation() const;
 	int getTotalLand() const;
-	int getNukeInterception() const;
-	void changeNukeInterception(int iChange);
 
 	int getForceTeamVoteEligibilityCount(int /*VoteSourceTypes*/ eVoteSource) const;
 	bool isForceTeamVoteEligible(int /*VoteSourceTypes*/ eVoteSource) const;

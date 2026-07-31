@@ -229,10 +229,10 @@ bool EnablerKernel::allowedOk(const CvInfo* j, int iId, const CvPlayer& kPlayer,
 	}
 	if (eBucket == EDGEB_TECHS)
 	{
-		// TECHS read the engine-owned counts too (the tally read-not-store philosophy; the PROJECT precedent
-		// above): world = ever-alive teams holding it (countKnownTechNumTeams -- techs are monotonic, so held
-		// == ever-held); team/empire = the own team's held flag. The live authoring is the 29 world-unique
-		// founder techs (allowed:{world:1}).
+		// TECHS go through the TALLY like every other count domain: counting is the tally's job, so the
+		// world/team/empire resolution lives there ONCE instead of being re-derived here
+		// ([DEC-single-implementation]; tally.md -- a bespoke engine count-loop IS an unwired tally domain).
+		// The live authoring is the 29 world-unique founder techs (allowed:{world:1}).
 		for (int iKind = 0; iKind < NUM_ALLOWEDCAP; ++iKind)
 		{
 			const int iCap = a->cap((EnAllowedCap)iKind);
@@ -240,11 +240,11 @@ bool EnablerKernel::allowedOk(const CvInfo* j, int iId, const CvPlayer& kPlayer,
 			int iCount = -1;
 			if (iKind == ALLOWEDCAP_WORLD)
 			{
-				iCount = GC.getGame().countKnownTechNumTeams((TechTypes)iId);
+				iCount = cascadeTally().techCount((int)kPlayer.getID(), iId, CASCADE_COUNT_WORLD);
 			}
 			else if (iKind == ALLOWEDCAP_TEAM || iKind == ALLOWEDCAP_EMPIRE)
 			{
-				iCount = GET_TEAM(kPlayer.getTeam()).isHasTech((TechTypes)iId) ? 1 : 0;
+				iCount = cascadeTally().techCount((int)kPlayer.getID(), iId, CASCADE_COUNT_EMPIRE);
 			}
 			if (iCount >= 0 && iCount >= iCap) return false;
 		}
@@ -787,6 +787,35 @@ const OperatingBuildings& EnablerKernel::operatingBuildings(const CvCity* pCity)
 	// wrong, which is how the missing hook gets found ([DEC-no-self-heal]); an external reader finds it by
 	// diffing this served set against the endpoint oracle's fresh recompute.
 	return pCity->m_operatingBuildings;
+}
+
+void EnablerKernel::dormedByBuilding(const CvCity* pCity, int eCandidate, std::vector<int>& kOut)
+{
+	kOut.clear();
+	if (pCity == NULL || eCandidate < 0)
+	{
+		return;
+	}
+	buildActiveIndex();
+
+	// The dormant-trigger index is the STATIC half -- "who names eCandidate as the successor that dorms them",
+	// inverted once at load. Nothing here evaluates a condition or asks a what-if.
+	const std::map<int, std::vector<int> >::const_iterator kDormed = s_operateDormantTriggeredBy.find(eCandidate);
+	if (kDormed == s_operateDormantTriggeredBy.end())
+	{
+		return;
+	}
+	// ...and the standing ACTIVE set is the LIVE half: a building that is already dormant or obsolete here
+	// contributes nothing today, so superseding it nets out nothing.
+	const OperatingBuildings& kOperating = operatingBuildings(pCity);
+	for (size_t iI = 0; iI < kDormed->second.size(); ++iI)
+	{
+		const int iBuilding = kDormed->second[iI];
+		if (kOperating.active.count(iBuilding) > 0)
+		{
+			kOut.push_back(iBuilding);
+		}
+	}
 }
 
 bool EnablerKernel::cityHasVicinityBonus(const CvCity* pCity, int eBonus, CvCascVicinity eTier)

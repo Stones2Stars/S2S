@@ -92,7 +92,6 @@ m_Properties(this)
 	m_dataRepository.init(this);
 	m_aiStolenVisibilityTimer = new int[MAX_TEAMS];
 	m_aiWarWearinessTimes100 = new int[MAX_TEAMS];
-	m_aiTechShareCount = new int[MAX_TEAMS];
 	m_aiExtraMoves = new int[NUM_DOMAIN_TYPES];
 
 	m_aiEspionagePointsAgainstTeam = new int[MAX_TEAMS];
@@ -140,7 +139,6 @@ CvTeam::~CvTeam()
 
 	SAFE_DELETE_ARRAY(m_aiStolenVisibilityTimer);
 	SAFE_DELETE_ARRAY(m_aiWarWearinessTimes100);
-	SAFE_DELETE_ARRAY(m_aiTechShareCount);
 	SAFE_DELETE_ARRAY(m_aiExtraMoves);
 	SAFE_DELETE_ARRAY(m_aiEspionagePointsAgainstTeam);
 	SAFE_DELETE_ARRAY(m_aiCounterespionageTurnsLeftAgainstTeam);
@@ -251,7 +249,6 @@ void CvTeam::reset(TeamTypes eID, bool bConstructorCall)
 	m_iNumCities = 0;
 	m_iTotalPopulation = 0;
 	m_iTotalLand = 0;
-	m_iNukeInterception = 0;
 	m_iForeignTradeModifier = 0;
 	m_iTradeModifier = 0;
 	m_iTradeMissionModifier = 0;
@@ -271,7 +268,6 @@ void CvTeam::reset(TeamTypes eID, bool bConstructorCall)
 	{
 		m_aiStolenVisibilityTimer[iI] = 0;
 		m_aiWarWearinessTimes100[iI] = 0;
-		m_aiTechShareCount[iI] = 0;
 		m_aiEspionagePointsAgainstTeam[iI] = 0;
 		m_aiCounterespionageTurnsLeftAgainstTeam[iI] = 0;
 		m_aiCounterespionageModAgainstTeam[iI] = 0;
@@ -292,7 +288,6 @@ void CvTeam::reset(TeamTypes eID, bool bConstructorCall)
 			CvTeam& kLoopTeam = GET_TEAM((TeamTypes)iI);
 			kLoopTeam.m_aiStolenVisibilityTimer[getID()] = 0;
 			kLoopTeam.m_aiWarWearinessTimes100[getID()] = 0;
-			kLoopTeam.m_aiTechShareCount[getID()] = 0;
 			kLoopTeam.m_aiEspionagePointsAgainstTeam[getID()] = 0;
 			kLoopTeam.m_aiCounterespionageTurnsLeftAgainstTeam[getID()] = 0;
 			kLoopTeam.m_aiCounterespionageModAgainstTeam[getID()] = 0;
@@ -3130,18 +3125,6 @@ void CvTeam::changeTotalLand(int iChange)
 }
 
 
-int CvTeam::getNukeInterception() const
-{
-	return m_iNukeInterception;
-}
-
-void CvTeam::changeNukeInterception(int iChange)
-{
-	m_iNukeInterception += iChange;
-	FASSERT_NOT_NEGATIVE(m_iNukeInterception);
-}
-
-
 int CvTeam::getForceTeamVoteEligibilityCount(VoteSourceTypes eVoteSource) const
 {
 	return m_aiForceTeamVoteEligibilityCount[eVoteSource];
@@ -3397,27 +3380,6 @@ void CvTeam::changeWarWearinessTimes100(TeamTypes eOtherTeam, const CvPlot& kPlo
 }
 
 
-bool CvTeam::isTechShare(int iIndex) const
-{
-	FASSERT_BOUNDS(0, MAX_TEAMS, iIndex);
-	return m_aiTechShareCount[iIndex] > 0;
-}
-
-void CvTeam::changeTechShareCount(int iIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, MAX_TEAMS, iIndex);
-
-	if (iChange != 0)
-	{
-		m_aiTechShareCount[iIndex] += iChange;
-		FASSERT_NOT_NEGATIVE(m_aiTechShareCount[iIndex]);
-
-		if (isTechShare(iIndex))
-		{
-			updateTechShare();
-		}
-	}
-}
 
 
 bool CvTeam::isCommerceFlexible(CommerceTypes eIndex) const
@@ -3476,8 +3438,6 @@ void CvTeam::makeHasMet(TeamTypes eIndex, bool bNewDiplo)
 
 		if (!isNPC() && !GET_TEAM(eIndex).isNPC())
 		{
-			updateTechShare();
-
 			if (GET_TEAM(eIndex).isHuman())
 			{
 				for (int iI = 0; iI < MAX_PLAYERS; iI++)
@@ -4329,13 +4289,6 @@ void CvTeam::processProjectChange(ProjectTypes eIndex, int iChange, int iOldProj
 {
 	PROFILE_EXTRA_FUNC();
 	const CvProjectInfo& kProject = GC.getProjectInfo(eIndex);
-
-	changeNukeInterception(kProject.getNukeInterception() * iChange);
-
-	if (kProject.getTechShare() > 0 && kProject.getTechShare() <= MAX_TEAMS)
-	{
-		changeTechShareCount((kProject.getTechShare() - 1), iChange);
-	}
 
 	for (int iI = 0; iI < GC.getNumVictoryInfos(); ++iI)
 	{
@@ -5230,14 +5183,6 @@ void CvTeam::setHasTech(TechTypes eTech, bool bNewValue, PlayerTypes ePlayer, bo
 			}
 		}
 
-		for (int iI = 0; iI < MAX_TEAMS; iI++)
-		{
-			if (iI != getID() && GET_TEAM((TeamTypes)iI).isAlive())
-			{
-				GET_TEAM((TeamTypes)iI).updateTechShare(eTech);
-			}
-		}
-
 		if (bNewValue && bAnnounce && GC.getGame().isFinalInitialized() && !gDLL->GetWorldBuilderMode()
 		&& GET_PLAYER(ePlayer).getCurrentResearch() == NO_TECH && ePlayer == GC.getGame().getActivePlayer())
 		{
@@ -5307,55 +5252,6 @@ void CvTeam::doWarWeariness()
 	}
 }
 
-void CvTeam::updateTechShare(TechTypes eTech)
-{
-	PROFILE_EXTRA_FUNC();
-	if (isHasTech(eTech))
-	{
-		return;
-	}
-
-	int iBestShare = MAX_INT;
-
-	for (int iI = 0; iI < MAX_TEAMS; iI++)
-	{
-		if (isTechShare(iI))
-		{
-			iBestShare = std::min(iBestShare, iI + 1);
-		}
-	}
-
-	if (iBestShare != MAX_INT)
-	{
-		int iCount = 0;
-
-		for (int iI = 0; iI < MAX_PC_TEAMS; iI++)
-		{
-			if (GET_TEAM((TeamTypes)iI).isAlive()
-			&& GET_TEAM((TeamTypes)iI).isHasTech(eTech)
-			&& isHasMet((TeamTypes)iI))
-			{
-				FAssertMsg(iI != getID(), "iI is not expected to be equal with getID()");
-				iCount++;
-			}
-		}
-
-		if (iCount >= iBestShare)
-		{
-			setHasTech(eTech, true, NO_PLAYER, true, true);
-		}
-	}
-}
-
-
-void CvTeam::updateTechShare()
-{
-	PROFILE_EXTRA_FUNC();
-	for (int iI = 0; iI < GC.getNumTechInfos(); iI++)
-	{
-		updateTechShare((TechTypes)iI);
-	}
-}
 
 
 void CvTeam::testCircumnavigated()
@@ -6010,7 +5906,6 @@ void CvTeam::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvTeam", &m_iNumCities);
 	WRAPPER_READ(wrapper, "CvTeam", &m_iTotalPopulation);
 	WRAPPER_READ(wrapper, "CvTeam", &m_iTotalLand);
-	WRAPPER_READ(wrapper, "CvTeam", &m_iNukeInterception);
 	WRAPPER_READ(wrapper, "CvTeam", &m_iVassalPower);
 	WRAPPER_READ(wrapper, "CvTeam", &m_iMasterPower);
 	WRAPPER_READ(wrapper, "CvTeam", &m_iEnemyWarWearinessModifier);
@@ -6039,7 +5934,6 @@ void CvTeam::read(FDataStreamBase* pStream)
 		m_aiWarWearinessTimes100[iI] *= 100;
 	}
 
-	WRAPPER_READ_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_aiTechShareCount);
 	WRAPPER_READ_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_aiEspionagePointsAgainstTeam);
 	WRAPPER_READ_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_aiCounterespionageTurnsLeftAgainstTeam);
 	WRAPPER_READ_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_aiCounterespionageModAgainstTeam);
@@ -6200,7 +6094,6 @@ void CvTeam::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvTeam", m_iNumCities);
 	WRAPPER_WRITE(wrapper, "CvTeam", m_iTotalPopulation);
 	WRAPPER_WRITE(wrapper, "CvTeam", m_iTotalLand);
-	WRAPPER_WRITE(wrapper, "CvTeam", m_iNukeInterception);
 	WRAPPER_WRITE(wrapper, "CvTeam", m_iVassalPower);
 	WRAPPER_WRITE(wrapper, "CvTeam", m_iMasterPower);
 	WRAPPER_WRITE(wrapper, "CvTeam", m_iEnemyWarWearinessModifier);
@@ -6223,7 +6116,6 @@ void CvTeam::write(FDataStreamBase* pStream)
 		m_aiWarWearinessTimes100[iI] *= 100;
 	}
 
-	WRAPPER_WRITE_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_aiTechShareCount);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_aiEspionagePointsAgainstTeam);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_aiCounterespionageTurnsLeftAgainstTeam);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_aiCounterespionageModAgainstTeam);

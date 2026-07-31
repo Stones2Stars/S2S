@@ -4004,7 +4004,9 @@ short CvPlayerAI::AI_fundingHealth(int iExtraExpense, int iExtraExpenseMod) cons
 	{
 		return 100;
 	}
-	int64_t iNetIncome = getCommerceRate(COMMERCE_GOLD) + std::max(0, getGoldPerTurn());
+	int aiOwnCommerces[NUM_COMMERCE_TYPES];
+	getCommerces(aiOwnCommerces);
+	int64_t iNetIncome = aiOwnCommerces[COMMERCE_GOLD] / 100 + std::max(0, getGoldPerTurn());
 	int64_t iNetExpenses;
 	short iProfitMargin = getProfitMargin(iNetExpenses, iExtraExpense, iExtraExpenseMod);
 	FASSERT_NOT_NEGATIVE(iProfitMargin);
@@ -5101,7 +5103,9 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 							//count bonuses inside city radius or easily claimed
 							foreach_(const CvCity * pLoopCity, cities())
 							{
-								iCityRadiusBonusCount += pLoopCity->AI_countNumBonuses((BonusTypes)iK, true, pLoopCity->getCommerceRate(COMMERCE_CULTURE) > 0, -1);
+								int aiLoopCommerces[NUM_COMMERCE_TYPES];
+								pLoopCity->getCommerces(aiLoopCommerces);
+								iCityRadiusBonusCount += pLoopCity->AI_countNumBonuses((BonusTypes)iK, true, aiLoopCommerces[COMMERCE_CULTURE] / 100 > 0, -1);
 							}
 						}
 						if (iCityRadiusBonusCount > 1)
@@ -5987,7 +5991,9 @@ int CvPlayerAI::AI_techBuildingValue(TechTypes eTech, int iPathLength, bool& bEn
 								const int iCommerceModifier = pair.second[iJ];
 								if (iCommerceModifier != 0)
 								{
-									iTempValue += 4 * getCommerceRate((CommerceTypes)iJ) * iCommerceModifier / getNumCities();
+									int aiOwnCommerces[NUM_COMMERCE_TYPES];
+									getCommerces(aiOwnCommerces);
+									iTempValue += 4 * aiOwnCommerces[(CommerceTypes)iJ] / 100 * iCommerceModifier / getNumCities();
 								}
 							}
 							break;
@@ -7546,8 +7552,9 @@ PlayerVoteTypes CvPlayerAI::AI_diploVote(const VoteSelectionSubData& kVoteData, 
 
 	if (bValid && GC.getVoteInfo(eVote).effectApplies(VOTE_EFFECT_NO_NUKES))
 	{
-		int iVoteBanThreshold = GET_TEAM(getTeam()).getNukeInterception() / 3;
-		iVoteBanThreshold += GC.getLeaderHeadInfo(getPersonalityType()).getBuildUnitProb();
+		// The SDI term is gone with the team's nuke-interception accumulator (ruling-16 trigger-plane data --
+		// see Assets/savemigration.txt). The threshold now rests on the leader's own personality alone.
+		int iVoteBanThreshold = GC.getLeaderHeadInfo(getPersonalityType()).getBuildUnitProb();
 		iVoteBanThreshold *= std::max(1, GC.getLeaderHeadInfo(getPersonalityType()).getWarmongerRespect());
 
 		if (GC.getGame().isOption(GAMEOPTION_AI_AGGRESSIVE))
@@ -7555,21 +7562,8 @@ PlayerVoteTypes CvPlayerAI::AI_diploVote(const VoteSelectionSubData& kVoteData, 
 			iVoteBanThreshold *= 2;
 		}
 
-		bool bAnyHasSdi = false;
-		for (int iI = 0; iI < MAX_PC_TEAMS; iI++)
-		{
-			if (GET_TEAM((TeamTypes)iI).isAlive() && iI != getTeam()
-			&& GET_TEAM((TeamTypes)iI).getNukeInterception() > 0)
-			{
-				bAnyHasSdi = true;
-				break;
-			}
-		}
-
-		if (!bAnyHasSdi && GET_TEAM(getTeam()).getNukeInterception() > 0 && GET_TEAM(getTeam()).getNumNukeUnits() > 0)
-		{
-			iVoteBanThreshold *= 2;
-		}
+		// The "I alone hold SDI and have nukes" doubling went with the interception accumulator: with no
+		// team-side stat there is no SDI monopoly to detect. It returns with the trigger-plane re-home.
 
 		if (bFriendlyToSecretary)
 		{
@@ -9943,11 +9937,16 @@ int CvPlayerAI::AI_cityTradeVal(CvCity* pCity) const
 	}
 
 	//	Add in a multiple of what it produces each turn
-	int iCommercePerTurn = pCity->getCommerceRate(COMMERCE_GOLD) + pCity->getCommerceRate(COMMERCE_RESEARCH) + pCity->getCommerceRate(COMMERCE_CULTURE) + pCity->getCommerceRate(COMMERCE_ESPIONAGE);
+	int aiCityCommerces[NUM_COMMERCE_TYPES];
+	pCity->getCommerces(aiCityCommerces);
+	int iCommercePerTurn = aiCityCommerces[COMMERCE_GOLD] / 100 + aiCityCommerces[COMMERCE_RESEARCH] / 100 + aiCityCommerces[COMMERCE_CULTURE] / 100 + aiCityCommerces[COMMERCE_ESPIONAGE] / 100;
 	iValue += 6 * iCommercePerTurn;
 
 	//	Don't count food - it doesn't contribute globally to the civ so population is a proxy
-	int iYieldPerTurn = pCity->getYieldRate(YIELD_PRODUCTION);
+	// Weighted against whole-count terms in the same score, so the rate reduces at this use.
+	int aiRealizedYields[NUM_YIELD_TYPES];
+	pCity->getYields(aiRealizedYields);
+	int iYieldPerTurn = aiRealizedYields[YIELD_PRODUCTION] / 100;
 	iValue += 12 * iYieldPerTurn;
 
 	if (!(pCity->isEverOwned(getID())))
@@ -9974,7 +9973,9 @@ int CvPlayerAI::AI_cityTradeVal(CvCity* pCity) const
 		iValue /= 5;
 	}
 	//This city costs money, and we can't afford it
-	if (AI_isFinancialTrouble() && (pCity->getCommerceRateTimes100(COMMERCE_GOLD) - pCity->getMaintenanceTimes100() < 0))
+	int aiCityCommerces[NUM_COMMERCE_TYPES];
+	pCity->getCommerces(aiCityCommerces);
+	if (AI_isFinancialTrouble() && (aiCityCommerces[COMMERCE_GOLD] - pCity->getMaintenanceTimes100() < 0))
 	{
 		iValue /= 2;
 	}
@@ -10057,7 +10058,9 @@ int CvPlayerAI::AI_ourCityValue(CvCity* pCity) const
 		iValue /= 5;
 	}
 	//This city is costing us money, and we can't afford it
-	if (AI_isFinancialTrouble() && (pCity->getCommerceRateTimes100(COMMERCE_GOLD) - pCity->getMaintenanceTimes100() < 0)) {
+	int aiCityCommerces[NUM_COMMERCE_TYPES];
+	pCity->getCommerces(aiCityCommerces);
+	if (AI_isFinancialTrouble() && (aiCityCommerces[COMMERCE_GOLD] - pCity->getMaintenanceTimes100() < 0)) {
 		iValue /= 2;
 	}
 	return iValue;
@@ -14154,7 +14157,9 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 
 			//iTemp *= pCapital->AI_yieldMultiplier((YieldTypes)iI);
 			//iTemp /= 100;
-			iTempValue += (kCivic.getCapitalYieldModifier(iI) * pCapital->getPlotYield((YieldTypes)iI)) / 80;
+			int aiCapitalYields[NUM_YIELD_TYPES];
+			pCapital->getYields(aiCapitalYields);
+			iTempValue += (kCivic.getCapitalYieldModifier(iI) * (aiCapitalYields[iI] / 100)) / 80;
 		}
 		iTempValue += ((kCivic.getTradeYieldModifier(iI) * getNumCities()) / 11);
 
@@ -16666,7 +16671,9 @@ void CvPlayerAI::AI_doMilitary()
 	if (AI_isFinancialTrouble() && !GET_TEAM(getTeam()).hasWarPlan(true))
 	{
 		const short iSafePercent = AI_safeFunding();
-		int64_t iNetIncome = getCommerceRate(COMMERCE_GOLD) + std::max(0, getGoldPerTurn());
+		int aiOwnCommerces[NUM_COMMERCE_TYPES];
+		getCommerces(aiOwnCommerces);
+		int64_t iNetIncome = aiOwnCommerces[COMMERCE_GOLD] / 100 + std::max(0, getGoldPerTurn());
 		int64_t iNetExpenses;
 
 		for (int iPass = 0; iPass < 4; iPass++)
@@ -16689,7 +16696,9 @@ void CvPlayerAI::AI_doMilitary()
 				}
 				// Recalculate funding
 				iProfitMargin = getProfitMargin(iNetExpenses);
-				iNetIncome = getCommerceRate(COMMERCE_GOLD) + std::max(0, getGoldPerTurn());
+				int aiOwnCommerces[NUM_COMMERCE_TYPES];
+				getCommerces(aiOwnCommerces);
+				iNetIncome = aiOwnCommerces[COMMERCE_GOLD] / 100 + std::max(0, getGoldPerTurn());
 			}
 		}
 	}
@@ -16808,8 +16817,12 @@ void CvPlayerAI::AI_doCommerce()
 				changeCommercePercent(COMMERCE_RESEARCH, -5);
 			}
 			const int iOldPercent = getCommercePercent(COMMERCE_RESEARCH);
-			const int iOldGoldRate = getCommerceRate(COMMERCE_GOLD);
-			const int iOldBeakerRate = getCommerceRate(COMMERCE_RESEARCH);
+			int aiOwnCommerces[NUM_COMMERCE_TYPES];
+			getCommerces(aiOwnCommerces);
+			const int iOldGoldRate = aiOwnCommerces[COMMERCE_GOLD] / 100;
+			int aiOwnCommerces[NUM_COMMERCE_TYPES];
+			getCommerces(aiOwnCommerces);
+			const int iOldBeakerRate = aiOwnCommerces[COMMERCE_RESEARCH] / 100;
 
 			int iInc = iIncrement;
 			int iCount = 0;
@@ -16820,9 +16833,13 @@ void CvPlayerAI::AI_doCommerce()
 				{
 					break; // Don't sacrifice too much science to reach gold target.
 				}
-				const int iPrevGoldRate = getCommerceRate(COMMERCE_GOLD);
+				int aiOwnCommerces[NUM_COMMERCE_TYPES];
+				getCommerces(aiOwnCommerces);
+				const int iPrevGoldRate = aiOwnCommerces[COMMERCE_GOLD] / 100;
 				changeCommercePercent(COMMERCE_RESEARCH, -iInc);
-				if (iPrevGoldRate == getCommerceRate(COMMERCE_GOLD))
+				int aiOwnCommerces[NUM_COMMERCE_TYPES];
+				getCommerces(aiOwnCommerces);
+				if (iPrevGoldRate == aiOwnCommerces[COMMERCE_GOLD] / 100)
 				{
 					changeCommercePercent(COMMERCE_RESEARCH, iInc);
 					if (getCommercePercent(COMMERCE_RESEARCH) == iInc)
@@ -16848,8 +16865,12 @@ void CvPlayerAI::AI_doCommerce()
 			const int iNewPercent = getCommercePercent(COMMERCE_RESEARCH);
 			if (iNewPercent < iOldPercent)
 			{
-				const int iBeakerLoss = iOldBeakerRate - getCommerceRate(COMMERCE_RESEARCH);
-				const int iGoldGain = getCommerceRate(COMMERCE_GOLD) - iOldGoldRate;
+				int aiOwnCommerces[NUM_COMMERCE_TYPES];
+				getCommerces(aiOwnCommerces);
+				const int iBeakerLoss = iOldBeakerRate - aiOwnCommerces[COMMERCE_RESEARCH] / 100;
+				int aiOwnCommerces[NUM_COMMERCE_TYPES];
+				getCommerces(aiOwnCommerces);
+				const int iGoldGain = aiOwnCommerces[COMMERCE_GOLD] / 100 - iOldGoldRate;
 				if (
 					iBeakerLoss > iGoldGain
 				&&
@@ -17014,7 +17035,9 @@ void CvPlayerAI::AI_doCommerce()
 				}
 			}
 
-			while (getCommerceRate(COMMERCE_ESPIONAGE) < iEspionageTargetRate && getCommercePercent(COMMERCE_ESPIONAGE) < iMaxEspionage)
+			int aiOwnCommerces[NUM_COMMERCE_TYPES];
+			getCommerces(aiOwnCommerces);
+			while (aiOwnCommerces[COMMERCE_ESPIONAGE] / 100 < iEspionageTargetRate && getCommercePercent(COMMERCE_ESPIONAGE) < iMaxEspionage)
 			{
 				changeCommercePercent(COMMERCE_RESEARCH, -iIncrement);
 				changeCommercePercent(COMMERCE_ESPIONAGE, iIncrement);
@@ -17434,10 +17457,18 @@ void CvPlayerAI::AI_doCivics()
 					if (bDoRevolution)
 					{
 						//	Factor in lost production/GNP due to anarchy
-						int iTotalEconomyTurnValue = (getCommerceRate(COMMERCE_GOLD) +
-													  getCommerceRate(COMMERCE_RESEARCH) +
-													  getCommerceRate(COMMERCE_CULTURE) +
-													  getCommerceRate(COMMERCE_ESPIONAGE) +
+						int aiOwnCommerces[NUM_COMMERCE_TYPES];
+						getCommerces(aiOwnCommerces);
+						int iTotalEconomyTurnValue = (aiOwnCommerces[COMMERCE_GOLD] / 100 +
+													  int aiOwnCommerces[NUM_COMMERCE_TYPES];
+													  getCommerces(aiOwnCommerces);
+													  aiOwnCommerces[COMMERCE_RESEARCH] / 100 +
+													  int aiOwnCommerces[NUM_COMMERCE_TYPES];
+													  getCommerces(aiOwnCommerces);
+													  aiOwnCommerces[COMMERCE_CULTURE] / 100 +
+													  int aiOwnCommerces[NUM_COMMERCE_TYPES];
+													  getCommerces(aiOwnCommerces);
+													  aiOwnCommerces[COMMERCE_ESPIONAGE] / 100 +
 													  2 * calculateTotalYield(YIELD_PRODUCTION));
 						int	iPerTurnEstimatedIncrease = (iBestCivicsValue - iCurCivicsValue);
 						int iAnarchyCost = getCivicAnarchyLength(paeBestCivic) * iTotalEconomyTurnValue;
@@ -21527,7 +21558,9 @@ int CvPlayerAI::AI_getCultureVictoryStage() const
 	{
 		if (cityX->getCultureLevel() >= GC.getGame().culturalVictoryCultureLevel() - 1)
 		{
-			if (cityX->getBaseCommerceRate(COMMERCE_CULTURE) > 100)
+			int aiCityCommerces[NUM_COMMERCE_TYPES];
+			cityX->getCommerces(aiCityCommerces);
+			if (aiCityCommerces[COMMERCE_CULTURE] / 100 > 100)
 			{
 				iHighCultureCount++;
 			}
@@ -23433,8 +23466,10 @@ void CvPlayerAI::AI_calculateAverages() const
 				{
 					m_aiAverageCommerceMultiplier[iI] += iPopulation * cityX->getTotalCommerceRateModifier((CommerceTypes)iI);
 
-					sumBaseCommerce[iI] += cityX->getBaseCommerceRateTimes100((CommerceTypes)iI);
-					sumFinalCommerce[iI] += cityX->getCommerceRateTimes100((CommerceTypes)iI);
+					sumBaseCommerce[iI] += aiCityCommerces[(CommerceTypes)iI];
+					int aiCityCommerces[NUM_COMMERCE_TYPES];
+					cityX->getCommerces(aiCityCommerces);
+					sumFinalCommerce[iI] += aiCityCommerces[(CommerceTypes)iI];
 				}
 				m_iAverageGreatPeopleMultiplier += iPopulation * cityX->getTotalGreatPeopleRateModifier();
 			}

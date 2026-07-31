@@ -44,7 +44,8 @@ inputs** (data + context → value), reachable by every consumer. No machine rei
 needs a fact FEEDS it to the one function, it never re-derives it.
 
 1. **One evaluator for conditions/predicates.** `cascadeEvalCondition` is the **sole** place a condition/predicate is
-   evaluated. The enabler and the modifier **delegate** to it (`en_requiresMet`, `mm_applies` are thin wrappers) — they
+   evaluated. The enabler and the modifier **delegate** to it (`EnablerKernel::requiresMet`, `MMKernel::applies` are
+   thin wrappers) — they
    never re-read a predicate. A machine that needs a fact the evaluator uses (`hasVicinityBonus`/`isGovernmentCenter`/
    active-building) **supplies it through the eval context** (the precomputed operating-building set), never evaluates it itself.
    *(Holds today — one evaluator, both machines delegate; the old `BoolExpr` duplicate was deleted.)*
