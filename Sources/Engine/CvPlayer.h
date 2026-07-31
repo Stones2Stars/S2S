@@ -1029,9 +1029,7 @@ public:
 	int getSpecialistExtraCommerce(CommerceTypes eIndex) const;
 	void changeSpecialistExtraCommerce(CommerceTypes eIndex, int iChange);
 
-	int getCommerceFlexibleCount(CommerceTypes eIndex) const;
 	bool isCommerceFlexible(CommerceTypes eIndex) const;
-	void changeCommerceFlexibleCount(CommerceTypes eIndex, int iChange);
 
 	int getGoldPerTurnByPlayer(PlayerTypes eIndex) const;
 	void changeGoldPerTurnByPlayer(PlayerTypes eIndex, int iChange);

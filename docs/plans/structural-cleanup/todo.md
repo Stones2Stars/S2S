@@ -113,7 +113,10 @@
   gone, but whose accessors and consumers were left standing in its own class. They are compile errors that the
   per-TU error cap hides, so the census only names them a few at a time — sweep them from the migration ledger
   instead of waiting. `CvCity` and `CvPlayer` carry the remainder.
-  ⚑ The ledger IS the enumeration: intersect its cut tags with the symbols still referenced in the owning class.
+  ⚑ **The COMPILER enumerates them directly, and more cheaply than the ledger does:** a cut member's surviving
+  accessor is a `C2065`/`C3861` on the bare `m_` symbol, not the `C2039` the member-census greps for — so
+  extracting those names gives the exact live set, and every one should also appear in `savemigration.txt` (a
+  name that does NOT is the likelier defect of the two, since it means a member was dropped without its tag).
   ⚠ Check each member's FEEDERS before converting — `resolvedValue` covers a unit's info ∪ promotions ∪
   unit-combat classes and NOTHING else, so a member fed from anywhere else loses that leg silently.
   ⚠ And check the slot's UNIT: a FLAT slot is ×100 and the reader reduces at its point of use, a percent slot

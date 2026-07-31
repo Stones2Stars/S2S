@@ -5794,13 +5794,6 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 
 			if (iPass > 0)
 			{
-				for (int iI = 0; iI < GC.getNumHurryInfos(); iI++)
-				{
-					if (kBuilding.isHurry(iI))
-					{
-						iValue += 50;
-					}
-				}
 				iValue -= kBuilding.getDefense(DEFENSE_RIVER_PENALTY, CASC_SCOPE_CITY) / 100 / 4;
 
 				if (kBuilding.getScalar(SCALAR_GREAT_GENERAL_RATE_DOMESTIC, CASC_SCOPE_CITY, CASC_UNIT_PERCENT) != 0)
@@ -12380,7 +12373,7 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 	{
 		return true;
 	}
-	if (kBuilding.isPower() || (kBuilding.getPowerBonus() != NO_BONUS && hasBonus((BonusTypes)(kBuilding.getPowerBonus()))))
+	if (kBuilding.providesAmenity(CLS_AMENITY_PROVIDES_POWER) || (kBuilding.getPowerBonus() != NO_BONUS && hasBonus((BonusTypes)(kBuilding.getPowerBonus()))))
 	{
 		return true;
 	}
@@ -12879,11 +12872,6 @@ int CvCityAI::getBuildingCommerceValue(BuildingTypes eBuilding, int iI, int* aiF
 			iCorpValue /= 2;
 		}
 		iResult += iCorpValue;
-	}
-
-	if (kBuilding.isCommerceFlexible(iI) && !kOwner.isCommerceFlexible((CommerceTypes)iI))
-	{
-		iResult += 40;
 	}
 
 	if (iI == COMMERCE_GOLD && kOwner.AI_isFinancialTrouble())

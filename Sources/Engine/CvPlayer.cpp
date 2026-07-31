@@ -7088,7 +7088,6 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, CvArea* pAr
 	{
 		changeSpecialistExtraCommerce(((CommerceTypes)iI), (kBuilding.getSpecialistExtraCommerce(iI) * iChange));
 		changeStateReligionBuildingCommerce(((CommerceTypes)iI), (kBuilding.getStateReligionCommerce(iI) * iChange));
-		changeCommerceFlexibleCount(((CommerceTypes)iI), (kBuilding.isCommerceFlexible(iI)) ? iChange : 0);
 	}
 
 	// The KEYED happiness deposits ([modifier.md §5]): an entry-list read over what this building
@@ -7126,11 +7125,6 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, CvArea* pAr
 	//TB Building tags
 	changeExtraNationalCaptureProbabilityModifier(kBuilding.getNationalCaptureProbabilityModifier() * iChange);
 	changeExtraNationalCaptureResistanceModifier(kBuilding.getNationalCaptureResistanceModifier() * iChange);
-
-	for (int iI = 0; iI < GC.getNumHurryInfos(); iI++)
-	{
-		changeHurryCount(((HurryTypes)iI), ((kBuilding.isHurry(iI)) ? iChange : 0));
-	}
 }
 
 
@@ -12223,8 +12217,8 @@ void CvPlayer::setCommercePercent(CommerceTypes eIndex, int iNewValue)
 	{
 		// The slider is synced player state every city's realized per-commerce rate is built on (modifier.md
 		// §2a): a DOMAIN fact, emitted at the mutation site unconditionally -- consumers filter, the emit
-		// surface stays complete. This is the ONE choke point: changeCommercePercent, verifyGoldCommercePercent
-		// and changeCommerceFlexibleCount all reach the value through here.
+		// surface stays complete. This is the ONE choke point: changeCommercePercent and
+		// verifyGoldCommercePercent both reach the value through here.
 		emitCommercePercentChanged(getID(), (int)eIndex, m_aiCommercePercent[eIndex], iOldValue);
 
 		int iTotalCommercePercent = 0;
@@ -12423,12 +12417,6 @@ void CvPlayer::changeSpecialistExtraCommerce(CommerceTypes eIndex, int iChange)
 }
 
 
-int CvPlayer::getCommerceFlexibleCount(CommerceTypes eIndex) const
-{
-	return m_aiCommerceFlexibleCount[eIndex];
-}
-
-
 bool CvPlayer::isCommerceFlexible(CommerceTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
@@ -12437,30 +12425,9 @@ bool CvPlayer::isCommerceFlexible(CommerceTypes eIndex) const
 	{
 		return false;
 	}
-	return GC.getCommerceInfo(eIndex).isFlexiblePercent() || getCommerceFlexibleCount(eIndex) > 0 || GET_TEAM(getTeam()).isCommerceFlexible(eIndex);
-}
-
-
-void CvPlayer::changeCommerceFlexibleCount(CommerceTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-
-	if (iChange != 0)
-	{
-		m_aiCommerceFlexibleCount[eIndex] += iChange;
-		FASSERT_NOT_NEGATIVE(getCommerceFlexibleCount(eIndex));
-
-		if (!isCommerceFlexible(eIndex))
-		{
-			setCommercePercent(eIndex, 0);
-		}
-
-		if (getID() == GC.getGame().getActivePlayer())
-		{
-			gDLL->getInterfaceIFace()->setDirty(PercentButtons_DIRTY_BIT, true);
-			gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
-		}
-	}
+	// The two genuine sources: the commerce's own universal default, and the team's derived capability union
+	// (the tech-granted canSet*Rate keys -- capabilities.md). The runtime conditions above are the player's own.
+	return GC.getCommerceInfo(eIndex).isFlexiblePercent() || GET_TEAM(getTeam()).isCommerceFlexible(eIndex);
 }
 
 
