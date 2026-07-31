@@ -25,8 +25,10 @@
   ceiling, the offer range and the build-and-merge equivalent cost, and `getProductionNeeded(eUnit, iRankUps)`
   prices it. What is missing is the ORDER carrying `x` from the menu to the build, and the trained unit being
   created at `base + x`.
-  ⚠ Decide whether the whole rank TRIPLE moves together — `groupRank` is the merge axis, while quality and size
-  ranks are their own — since merging raises all three on the engine's side.
+  ⛔ The created unit must be INDISTINGUISHABLE from a normally merged one (owner), which fixes HOW: rank is
+  carried by PROMOTIONS, not a stored field, so the build applies its offset through the same
+  `normalizeUnitPromotions` group-upgrade path `CvUnit::mergeUnits` uses — never a bespoke loop beside it.
+  ⚠ Only the GROUP axis moves; quality and size do not rise on a merge.
 
 ## Data — curator
 

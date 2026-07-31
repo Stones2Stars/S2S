@@ -1164,6 +1164,19 @@ Data read by a specific system, not the cascade. Use only when the entity needs 
   > merge. The ceiling, the offer range and the equivalent cost are ONE implementation (`CvSizeMattersRank`),
   > shared with the merge gate so the two can never disagree
   > ([DEC-single-implementation](../architecture/decisions.md#dec-single-implementation)).
+  >
+  > **⚖ A PRE-MERGED BUILT UNIT IS INDISTINGUISHABLE FROM A NORMALLY MERGED ONE (owner)** — that is the
+  > acceptance bar for the build side, and it decides the implementation rather than merely describing the goal.
+  > ⛔ **RANK IS NOT A STORED FIELD — it is carried by PROMOTIONS**, so there is no "set the rank" to write.
+  > `CvUnit::mergeUnits` raises it by applying its offset through `normalizeUnitPromotions` over the
+  > group-upgrade/downgrade promotions, and a built rank-up reaches the same state ONLY by going through that
+  > same application. A bespoke loop beside it is a second implementation of the rank that will drift.
+  > ⚠ **Only the GROUP rank rises on a merge** (its offset starts at 1; the QUALITY offset starts at 0 and
+  > merely carries the sources' own quality promotions forward, and size is not touched). So `base + x` moves
+  > the group axis — do not "complete" it by moving quality and size as well.
+  > ⚑ The rest of the merged object needs no faking: a merge averages its three sources' XP and keeps the
+  > promotions all three shared, and three FRESH units average to fresh XP and share only their free promotions
+  > — so a newly-built ranked unit already equals "three fresh units merged" without inventing any history.
 - **bespoke** object-sections, each read by its own system: `promotionLine` · `buildUp` · `shrine` · `headquarters` ·
   `spread` · `properties` · `voteSource` · `threshold` · `role` · `victory` · `targetLevel` · `conversion` ·
   `cityFounding` · `unitCapability`.
