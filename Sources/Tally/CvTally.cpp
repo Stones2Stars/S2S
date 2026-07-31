@@ -7,6 +7,7 @@
 #include "CvGameCoreDLL.h"
 #include "Tally/CvTally.h"
 #include "AI/CvPlayerAI.h"   // GET_PLAYER + getBuildingCount/getUnitCount (the object-owned aggregate) + getTeam/isAlive
+#include "Engine/CvCity.h"   // specialistCount -- the per-player city iterate + getSpecialistPopulation()
 #include "Engine/CvUnit.h"   // countUnitsWithTag -- the per-player unit iterate + getUnitInfo()
 #include "CvUnitInfo.h"      // getTags() (the unit tag bitset)
 #include "CvClassificationBlock.h" // hasId (the classification bitset O(1) test)
@@ -80,6 +81,26 @@ int CvCascadeTally::unitCount(int iEntity, int iUnit, CascadeCountScope eScope) 
 	}
 	return iSum;
 }
+
+int CvCascadeTally::specialistCount(int iEntity, CascadeCountScope eScope) const
+{
+	// The cross-city specialist count. No player-side O(1) aggregate exists, so this iterates on read over the
+	// in-scope alive players' cities, summing each city's own maintained population (tally.md read-not-store).
+	int iSum = 0;
+	for (int iP = 0; iP < MAX_PLAYERS; ++iP)
+	{
+		const CvPlayer& kP = GET_PLAYER((PlayerTypes)iP);
+		if (tallyPlayerInScope(kP, eScope, iEntity))
+		{
+			foreach_(const CvCity* pLoopCity, kP.cities())
+			{
+				iSum += pLoopCity->getSpecialistPopulation();
+			}
+		}
+	}
+	return iSum;
+}
+
 
 int CvCascadeTally::countUnitsWithTag(int iEntity, int iTagId, CascadeCountScope eScope) const
 {

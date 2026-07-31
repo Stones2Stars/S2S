@@ -220,9 +220,17 @@ static bool ev_countCore(const CvCascadeEvalCtx& ctx, const std::string& t, int 
 	}
 	if (t == "POPULATION") { iOut = cityContext != NULL ? cityContext->population() : 0; return true; }
 	// the §3.7 SPECIALIST count token -- json.md's own first worked example of a `per` scaler. Buildings,
-	// civics and traits all author "+N per specialist"; without this branch every one of them fell to the
-	// presence fallback and multiplied by 0/1 instead of the city's specialist count.
-	if (t == "SPECIALIST") { iOut = cityContext != NULL ? cityContext->specialistCount() : 0; return true; }
+	// civics and traits all author "+N per specialist"; without this the deposits fell to the presence
+	// fallback and multiplied by 0/1 instead of a count.
+	// ⚑ The SCOPE decides which count is meant, exactly as it does for BUILDING_/UNIT_ below: a CITY-scope
+	// scaler is this city's own specialists (a local count reads the live object -- tally.md §2), and a
+	// cross-city one is the tally's roll-up. A `per` with no scope takes the DEPOSIT's scope (json §3.7),
+	// so an empire-scope deposit asks the empire.
+	if (t == "SPECIALIST" && eScope == CASC_SCOPE_CITY)
+	{
+		iOut = cityContext != NULL ? cityContext->specialistCount() : 0;
+		return true;
+	}
 	// the IMPROVEMENT_ count at CITY scope: how many of the city's plots carry it (the per-improvement
 	// free-specialist scaler's multiplier). A presence fallback answered 1 where the count is wanted.
 	// ⚠ CITY scope only -- elsewhere an improvement reference stays the ordinary presence atom.
@@ -287,6 +295,9 @@ static bool ev_countCore(const CvCascadeEvalCtx& ctx, const std::string& t, int 
 		                           : (eScope == CASC_SCOPE_WORLD) ? CASCADE_COUNT_WORLD : CASCADE_COUNT_EMPIRE;
 		const int ent = (eScope == CASC_SCOPE_TEAM) ? (ctx.team ? (int)ctx.team->getID() : 0)
 		                                            : (ctx.player ? (int)ctx.player->getID() : 0);
+		// the SPECIALIST count's AGGREGATE half: a local city count stays local (above), and rolling it up
+		// across cities is the tally's job -- one place holding the count of all specialists in scope.
+		if (t == "SPECIALIST") { iOut = cascadeTally().specialistCount(ent, sc); return true; }
 		if (en_starts(t, "BUILDING_") && id >= 0) { iOut = cascadeTally().buildingCount(ent, id, sc); return true; }
 		if (en_starts(t, "UNIT_") && id >= 0)
 		{
