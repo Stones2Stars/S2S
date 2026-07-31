@@ -163,6 +163,18 @@ public:
 	void triggerPromotions(std::vector<int>& outAlways, std::vector<int>& outConditional) const;
 	bool hasTriggerPromotions() const;
 
+	// The FULL-HEAL payload -- the herbalist shape: a trigger that sets N units to 100% HP. The compiled entry
+	// already carries both halves (healFull + healCount), so this is a bare presence read for a consumer that
+	// SCORES or DISPLAYS the effect, exactly as hasTriggerPromotions is.
+	// ⚠ The heal MECHANIC is a KEEP-legacy carve-out (roadmap § Scope decisions) and nothing here changes it --
+	// the arithmetic that consumes the payload is untouched. What moved is the FEED: the legacy point getter this
+	// replaces read a member the rebuilt info does not carry, because the effect is authored as a `triggers`
+	// entry now ([json.md §5] -- a recurring handout is a trigger, never a grant).
+	// ⚑ IT TOUCHES NO CACHE AND NO CASCADE (owner) -- setting N units to full HP moves no deposit and no derived
+	// value, so the applier needs NO mark and this read needs no eval context. ⛔ Do not wire an invalidation for
+	// it: there is nothing downstream to re-derive, and a mark would be pure per-turn cost for no state change.
+	bool hasTriggerFullHeal() const;
+
 	// --- the compiled modifier point reads (patterns.md § THE GETTER SETUP; kind and scope are separate
 	// arguments per [DEC-scope-is-an-axis]; the unit picks the Σflat vs Σpercent slot, modifier.md §2).
 	// AUDIENCE (json §3.9 `ai`): the default read is HUMAN; bIncludeAiOnly=true adds the ai-sibling sums

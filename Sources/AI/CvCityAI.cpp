@@ -12489,7 +12489,7 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 			kBuilding.providesAmenity(CLS_AMENITY_PROTECTED_CULTURE) ||
 			kBuilding.getScalar(SCALAR_OCCUPATION_TIME, CASC_SCOPE_CITY, CASC_UNIT_PERCENT) > 0 ||
 			kBuilding.getDefense(DEFENSE_NO_ENTRY_LEVEL, CASC_SCOPE_CITY) > 0 ||
-			kBuilding.getNumUnitFullHeal() > 0 ||
+			kBuilding.hasTriggerFullHeal() ||
 			kBuilding.providesAmenity(CLS_AMENITY_BORDER_OBSTACLE) ||
 			GC.getGame().isOption(GAMEOPTION_COMBAT_SURROUND_DESTROY) && kBuilding.getDefense(DEFENSE_DYNAMIC, CASC_SCOPE_CITY) > 0 ||
 			kBuilding.getLocalCaptureProbabilityModifier() > 0 ||

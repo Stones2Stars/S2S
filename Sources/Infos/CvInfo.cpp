@@ -260,6 +260,19 @@ void CvInfo::triggerPromotions(std::vector<int>& outAlways, std::vector<int>& ou
 	}
 }
 
+bool CvInfo::hasTriggerFullHeal() const
+{
+	const CvTriggers* pTriggers = getTriggers();
+	if (pTriggers == NULL) return false;
+	const std::vector<CvTriggerEntry*>& entries = pTriggers->entries();
+	for (size_t i = 0; i < entries.size(); ++i)
+	{
+		// healCount is the unit cap; healFull is what makes it the set-to-100% shape rather than an amount.
+		if (entries[i]->healFull && entries[i]->healCount > 0) return true;
+	}
+	return false;
+}
+
 bool CvInfo::hasTriggerPromotions() const
 {
 	const CvTriggers* pTriggers = getTriggers();

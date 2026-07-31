@@ -48,9 +48,14 @@ buy it, the machine owns it. Consequences that settle most of §5:
 > condition in full ([CvGrants.h](../../../Sources/Infos/CvGrants.h) `CvJsonGrantRepeatable`) — and the
 > collapse members die with the city ledgers. Widening them would be the transitional shim
 > [DEC-proper-once](../architecture/decisions.md#dec-proper-once) bans, applied to a member already condemned.
-> ⚠ Do NOT confuse the two `getNumUnitFullHeal`s: the **info-side** `CvBuildingInfo::getNumUnitFullHeal()` is
-> static data with live READ consumers (AI valuation `CvCityAI.cpp:5473/12752/13255`, pedia
-> `CvGameTextMgr.cpp:15923`) and **STAYS**; only the **city-side** accumulator `CvCity::m_iNumUnitFullHeal` is cut.
+> ⚠ Do NOT confuse the two `getNumUnitFullHeal`s — they are DIFFERENT RECEIVERS with different fates. The
+> **city-side** `CvCity::getNumUnitFullHeal()` is the applier and STAYS (its accumulator was cut; the mechanic
+> was not). The **info-side** read is GONE from the rebuilt info: the effect — the herbalist shape, "set N units
+> to 100% HP" (owner) — is authored as a `triggers` entry ([json.md §5]: a recurring handout is a trigger, never
+> a grant), so its payload lives on the compiled entry (`healFull` + `healCount`) and a consumer that SCORES or
+> DISPLAYS it reads `CvInfo::hasTriggerFullHeal()`.
+> ⚑ **It touches no cache and no cascade (owner)** — setting units to full HP moves no deposit and no derived
+> value, so the applier needs no mark and the read needs no eval context. ⛔ Do not wire an invalidation for it.
 
 ## 1. The classification that decides ownership
 
