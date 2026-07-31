@@ -396,8 +396,8 @@ void CvUnit::init(int iID, UnitTypes eUnit, UnitAITypes eUnitAI, PlayerTypes eOw
 		}
 		else
 		{
-			GET_PLAYER(eOwner).changeAssets(m_pUnitInfo->getAssetValue());
-			GET_PLAYER(eOwner).changeUnitPower(m_pUnitInfo->getPowerValue());
+			GET_PLAYER(eOwner).changeAssets(m_pUnitInfo->getWorth());
+			GET_PLAYER(eOwner).changeUnitPower(m_pUnitInfo->getMilitaryWorth());
 		}
 		//--------------------------------
 		// Init non-saved data
@@ -533,6 +533,7 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 	m_iVictoryStackHeal = 0;
 
 	m_iExtraMoves = 0;
+	m_iUpkeep100 = 0;
 	m_iExtraMoveDiscount = 0;
 	m_iExtraAirRange = 0;
 	//TB Combat Mods Begin
@@ -8466,7 +8467,7 @@ bool CvUnit::join(SpecialistTypes eSpecialist)
 
 bool CvUnit::canConstruct(const CvPlot* pPlot, BuildingTypes eBuilding, bool bTestVisible) const
 {
-	if (eBuilding == NO_BUILDING || !m_pUnitInfo->getHasBuilding(eBuilding))
+	if (eBuilding == NO_BUILDING || !m_pUnitInfo->grantsBuilding(eBuilding))
 	{
 		return false;
 	}
@@ -8541,7 +8542,7 @@ bool CvUnit::construct(BuildingTypes eBuilding)
 
 bool CvUnit::canAddHeritage(const CvPlot* pPlot, const HeritageTypes eType, const bool bTestVisible) const
 {
-	if (eType == NO_HERITAGE || !m_pUnitInfo->getHasHeritage(eType))
+	if (eType == NO_HERITAGE || !vectorHas(m_pUnitInfo->getHeritage(), eType))
 	{
 		return false;
 	}
@@ -12304,13 +12305,13 @@ int CvUnit::experienceNeeded(int iLvlOffset) const
 
 int CvUnit::attackXPValue() const
 {
-	return m_pUnitInfo->getXPValueAttack();
+	return m_pUnitInfo->getXpValueAttack();
 }
 
 
 int CvUnit::defenseXPValue() const
 {
-	return m_pUnitInfo->getXPValueDefense();
+	return m_pUnitInfo->getXpValueDefense();
 }
 
 
@@ -15211,20 +15212,6 @@ void CvUnit::changeExtraDamageModifier(int iChange)
 }
 
 // Toffer - Upkeep
-void CvUnit::changeExtraUpkeep(const int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iExtraUpkeep100 += iChange;
-		calcUpkeep();
-	}
-}
-
-int CvUnit::getExtraUpkeep() const
-{
-	return m_iExtraUpkeep100;
-}
-
 void CvUnit::calcUpkeep()
 {
 	if (isNPC())
@@ -15234,7 +15221,7 @@ void CvUnit::calcUpkeep()
 	// Flat only, by ruling: a unit costs its base upkeep plus any flat extra. The percentage stages that
 	// used to multiply this (the promotion/unit-combat upkeep modifier and the Size-Matters rank
 	// multiplier) are GONE -- see superseded-ideas.
-	const int iCalc = 100 * m_pUnitInfo->getUpkeepCost() + m_iExtraUpkeep100;
+	const int iCalc = 100 * m_pUnitInfo->getUpkeepCost() + resolvedValue(URS_UPKEEP_EXTRA);
 	const int iOldUpkeep = m_iUpkeep100;
 	m_iUpkeep100 = std::max(0, iCalc);
 	if (m_iUpkeep100 != iOldUpkeep)
@@ -15328,28 +15315,6 @@ void CvUnit::setFliesToMoveCount(int iChange)
 void CvUnit::changeFliesToMoveCount(int iChange)
 {
 	m_iFliesToMoveCount += iChange;
-}
-
-int CvUnit::getExtraUnnerve() const
-{
-	return m_iExtraUnnerve;
-}
-
-void CvUnit::changeExtraUnnerve(int iChange)
-{
-	m_iExtraUnnerve += iChange;
-	FASSERT_NOT_NEGATIVE(m_iExtraUnnerve);
-}
-
-int CvUnit::getExtraEnclose() const
-{
-	return m_iExtraEnclose;
-}
-
-void CvUnit::changeExtraEnclose(int iChange)
-{
-	m_iExtraEnclose += iChange;
-	FASSERT_NOT_NEGATIVE(m_iExtraEnclose);
 }
 
 int CvUnit::getExtraLunge() const
@@ -17568,8 +17533,6 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 	changeExtraVSBarbs(kUnitCombat.getVSBarbsChange() * iChange);//no merge/split
 	changeExtraReligiousCombatModifier(kUnitCombat.getReligiousCombatModifierChange() * iChange);//no merge/split
 	changeExtraDamageModifier(kUnitCombat.getDamageModifierChange() * iChange);//no merge/split
-	changeExtraUnnerve(kUnitCombat.getUnnerveChange() * iChange);//no merge/split
-	changeExtraEnclose(kUnitCombat.getEncloseChange() * iChange);//no merge/split
 	changeExtraLunge(kUnitCombat.getLungeChange() * iChange);//no merge/split
 	changeExtraDynamicDefense(kUnitCombat.getDynamicDefenseChange() * iChange);//no merge/split
 	changeExtraStrength(kUnitCombat.getStrengthChange() * iChange);//no merge/split (but included into merge/split mult)
@@ -17775,7 +17738,6 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 		defineReligion();
 	}
 
-	changeExtraUpkeep(kUnitCombat.getExtraUpkeep() * iChange);
 
 	establishBuildups();
 
@@ -17977,7 +17939,6 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	changeExtraReligiousCombatModifier(kPromotion.getReligiousCombatModifierChange() * iChange);
 	changeExtraDamageModifier(kPromotion.getDamageModifierChange() * iChange);
 
-	changeExtraUpkeep(kPromotion.getExtraUpkeep() * iChange);
 
 	changeStampedeCount((kPromotion.isStampedeChange()) ? iChange : 0);
 	changeStampedeCount((kPromotion.isRemoveStampede()) ? -iChange : 0);
@@ -17989,8 +17950,6 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	changeIgnoreZoneofControlCount((kPromotion.isIgnoreZoneofControlSubtract()) ? -iChange : 0);
 	changeFliesToMoveCount((kPromotion.isFliesToMoveAdd()) ? iChange : 0);
 	changeFliesToMoveCount((kPromotion.isFliesToMoveSubtract()) ? -iChange : 0);
-	changeExtraUnnerve(kPromotion.getUnnerveChange() * iChange);
-	changeExtraEnclose(kPromotion.getEncloseChange() * iChange);
 	changeExtraLunge(kPromotion.getLungeChange() * iChange);
 	changeExtraDynamicDefense(kPromotion.getDynamicDefenseChange() * iChange);
 	if (kPromotion.getStrengthChange() != 0)
@@ -25239,13 +25198,13 @@ void CvUnit::setSMHPValue()
 
 int CvUnit::getPowerValueTotal() const
 {
-	return GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS) ? m_iSMPowerValue : m_pUnitInfo->getPowerValue();
+	return GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS) ? m_iSMPowerValue : m_pUnitInfo->getMilitaryWorth();
 }
 
 void CvUnit::setSMPowerValue(bool bForLoad)
 {
 	const int oldSMPowerValue = m_iSMPowerValue;
-	m_iSMPowerValue = applySMRank(m_pUnitInfo->getPowerValue(), getSizeMattersOffsetValue(), GC.getSIZE_MATTERS_MOST_MULTIPLIER());
+	m_iSMPowerValue = applySMRank(m_pUnitInfo->getMilitaryWorth(), getSizeMattersOffsetValue(), GC.getSIZE_MATTERS_MOST_MULTIPLIER());
 	FASSERT_NOT_NEGATIVE(m_iSMPowerValue);
 	if (!bForLoad)
 	{
@@ -25256,7 +25215,7 @@ void CvUnit::setSMPowerValue(bool bForLoad)
 
 int CvUnit::assetValueTotal() const
 {
-	return GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS) ? m_iSMAssetValue : m_pUnitInfo->getAssetValue();
+	return GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS) ? m_iSMAssetValue : m_pUnitInfo->getWorth();
 }
 
 void CvUnit::setSMAssetValue(bool bForLoad)
@@ -25265,7 +25224,7 @@ void CvUnit::setSMAssetValue(bool bForLoad)
 	if (offsetValue != -15) // Special Case for size cat undefined units
 	{
 		const int oldSMAssetValue = m_iSMAssetValue;
-		m_iSMAssetValue = applySMRank(m_pUnitInfo->getAssetValue(), offsetValue, GC.getSIZE_MATTERS_MOST_MULTIPLIER());
+		m_iSMAssetValue = applySMRank(m_pUnitInfo->getWorth(), offsetValue, GC.getSIZE_MATTERS_MOST_MULTIPLIER());
 		if (!bForLoad)
 		{
 			const int iChange = m_iSMAssetValue - oldSMAssetValue;

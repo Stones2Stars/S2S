@@ -359,6 +359,17 @@
 
 - Give the UNIT frontier an incremental path — events that do not affect it currently blanket-dirty it, forcing a
   full re-walk. The operating-building fixpoint rides the same triggers.
+- Move the "can this EVER be built/trained/spread" question to the ENABLER side. `CvGame::canEverConstruct` /
+  `canEverTrain` / `canEverSpread` answer an AVAILABILITY question in the wrong machine, hand-rolled on legacy
+  prereq getters that are cut ([DEC-enabler-not-cascade](../../architecture/decisions.md#dec-enabler-not-cascade):
+  the cascade is the MAGNITUDE machine and owns none of this). ⚑ The enabler already owns the shape for techs --
+  `CvPlayer::canEverResearch`, the single implementation carrying the PERMANENT bars
+  ([enabler.md §8](../../specs/enabler.md)) -- so this is extending an existing surface, not inventing one.
+  ⛔ Do NOT repair the current bodies in place by wiring the condition evaluator into `CvGame`: that answers an
+  enabler question inside the cascade's evaluator and leaves the duplicate standing. Their game-option halves are
+  the entity gate ([DEC-entity-gate](../../architecture/decisions.md#dec-entity-gate)); the corporation/building
+  prereq halves are `requires` atoms and need the condition read, not a point getter.
+  ⚠ ~10 AI consumers plus a `Cy` binding read them, so the consumers move with the surface.
 - Point the AI production decision at the maintained LISTED set, and collapse the `AI_chooseProduction`
   focus-ladder into ONE unified scoring pass ([enabler.md §6/§8](../../specs/enabler.md)). The collapse is an
   AI-architecture change, not a per-loop rewrite.

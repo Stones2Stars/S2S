@@ -28943,7 +28943,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	iTemp = kPromotion.getCombatModifier(COMBAT_UNNERVE, CASC_SCOPE_UNIT);
 	if (iTemp != 0)
 	{
-		iTemp *= 100 + 2*(kUnit.getCombatModifier(COMBAT_UNNERVE, CASC_SCOPE_UNIT) + (pUnit ? pUnit->getExtraUnnerve() : 0));
+		iTemp *= 100 + 2*((pUnit ? pUnit->resolvedValue(URS_UNNERVE) : kUnit.getCombatModifier(COMBAT_UNNERVE, CASC_SCOPE_UNIT)));
 
 		if (eUnitAI == UNITAI_COUNTER
 		||  eUnitAI == UNITAI_ATTACK
@@ -28957,7 +28957,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	iTemp = kPromotion.getCombatModifier(COMBAT_ENCLOSE, CASC_SCOPE_UNIT);
 	if (iTemp != 0)
 	{
-		iTemp *= 100 + 2*(kUnit.getCombatModifier(COMBAT_ENCLOSE, CASC_SCOPE_UNIT) + (pUnit ? pUnit->getExtraEnclose() : 0));
+		iTemp *= 100 + 2*((pUnit ? pUnit->resolvedValue(URS_ENCLOSE) : kUnit.getCombatModifier(COMBAT_ENCLOSE, CASC_SCOPE_UNIT)));
 
 		if (eUnitAI == UNITAI_COUNTER
 		||  eUnitAI == UNITAI_ATTACK
@@ -31854,7 +31854,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 			  (eUnitAI == UNITAI_ATTACK) ||
 			  (eUnitAI == UNITAI_PILLAGE))
 		{
-			iExtra = kUnit.getCombatModifier(COMBAT_UNNERVE, CASC_SCOPE_UNIT) + (pUnit == NULL ? 0 : pUnit->getExtraUnnerve() * 2);
+			iExtra = kUnit.getCombatModifier(COMBAT_UNNERVE, CASC_SCOPE_UNIT) + (pUnit == NULL ? 0 : (pUnit->resolvedValue(URS_UNNERVE) - kUnit.getCombatModifier(COMBAT_UNNERVE, CASC_SCOPE_UNIT)) * 2);
 			iValue += ((iTemp / 2) * (100 + iExtra) / 100);
 		}
 		else
@@ -31871,7 +31871,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 			  (eUnitAI == UNITAI_ATTACK_CITY) ||
 			  (eUnitAI == UNITAI_PILLAGE))
 		{
-			iExtra = kUnit.getCombatModifier(COMBAT_ENCLOSE, CASC_SCOPE_UNIT) + (pUnit == NULL ? 0 : pUnit->getExtraEnclose() * 2);
+			iExtra = kUnit.getCombatModifier(COMBAT_ENCLOSE, CASC_SCOPE_UNIT) + (pUnit == NULL ? 0 : (pUnit->resolvedValue(URS_ENCLOSE) - kUnit.getCombatModifier(COMBAT_ENCLOSE, CASC_SCOPE_UNIT)) * 2);
 			iValue += ((iTemp * 5) * (100 + iExtra) / 100);
 		}
 		else

@@ -1117,10 +1117,8 @@ public:
 	int getExtraDamageModifier () const;
 	void changeExtraDamageModifier (int iChange);
 
-	void changeExtraUpkeep(const int iChange);
 	void calcUpkeep();
 	void recalculateUnitUpkeep();
-	int getExtraUpkeep() const;
 	int getUpkeep() const;
 
 	int getStampedeCount() const;
@@ -1144,11 +1142,7 @@ public:
 	void changeFliesToMoveCount(int iChange);
 
 
-	int getExtraUnnerve () const;
-	void changeExtraUnnerve (int iChange);
 
-	int getExtraEnclose () const;
-	void changeExtraEnclose (int iChange);
 
 	int getExtraLunge () const;
 	void changeExtraLunge (int iChange);
@@ -1544,6 +1538,11 @@ protected:
 	int m_iVictoryStackHeal;
 
 	int m_iExtraMoves;
+	// The unit's stored per-turn upkeep (x100). DERIVED -- recomputed by calcUpkeep from the flat model
+	// (base + the resolved flat extra) and NEVER serialized ([DEC-derived-never-trusted]); the player
+	// total tracks its delta. Its declaration was lost to a half-cut while the body kept using it, which
+	// is what truncated this TU at calcUpkeep.
+	int m_iUpkeep100;
 	int m_iExtraMoveDiscount;
 	int m_iExtraAirRange;
 	//TB Combat Mods Begin
