@@ -738,7 +738,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_iFeatureProduction = 0;
 	m_iMilitaryProductionModifier = 0;
 	m_iSpaceProductionModifier = 0;
-	m_iTradeRouteModifier = 0;
 	m_iForeignTradeRouteModifier = 0;
 	m_iCurrAirlift = 0;
 	m_iMaxAirlift = 0;
@@ -7357,20 +7356,6 @@ int CvCity::getMaxTradeRoutes() const
 
 
 
-int CvCity::getTradeRouteModifier() const
-{
-	return m_iTradeRouteModifier;
-}
-
-void CvCity::changeTradeRouteModifier(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iTradeRouteModifier += iChange;
-
-		updateTradeRoutes();
-	}
-}
 
 int CvCity::getForeignTradeRouteModifier() const
 {
@@ -8658,9 +8643,12 @@ int CvCity::totalTradeModifier(const CvCity* pOtherCity) const
 	PROFILE_EXTRA_FUNC();
 	int iModifier = 100;
 
-	iModifier += getTradeRouteModifier();
+	// The channel-agnostic route-PROFIT stage in ONE read: the roll-up over the chain this city sits under
+	// (team + empire + city), which is what the two plain accumulators were separately accumulating.
+	int aiTradeRoutes[NUM_TRADE_ROUTE_KINDS];
+	getTradeRouteKinds(aiTradeRoutes);
+	iModifier += aiTradeRoutes[TRADE_ROUTE_MODIFIER];
 	iModifier += getPopulationTradeModifier();
-	iModifier += GET_TEAM(getTeam()).getTradeModifier();
 
 	if (isConnectedToCapital())
 	{
@@ -8678,7 +8666,6 @@ int CvCity::totalTradeModifier(const CvCity* pOtherCity) const
 		{
 			iModifier += getForeignTradeRouteModifier();
 			iModifier += GET_PLAYER(getOwner()).getForeignTradeRouteModifier();
-			iModifier += GET_TEAM(getTeam()).getForeignTradeModifier();
 
 			const CvPlayer& kOtherPlayer = GET_PLAYER(pOtherCity->getOwner());
 			const CvPlayer& kPlayer = GET_PLAYER(getOwner());
@@ -13693,7 +13680,6 @@ void CvCity::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvCity", &m_iFeatureProduction);
 	WRAPPER_READ(wrapper, "CvCity", &m_iMilitaryProductionModifier);
 	WRAPPER_READ(wrapper, "CvCity", &m_iSpaceProductionModifier);
-	WRAPPER_READ(wrapper, "CvCity", &m_iTradeRouteModifier);
 	WRAPPER_READ(wrapper, "CvCity", &m_iForeignTradeRouteModifier);
 	WRAPPER_READ(wrapper, "CvCity", &m_iCurrAirlift);
 	WRAPPER_READ(wrapper, "CvCity", &m_iMaxAirlift);
@@ -14406,7 +14392,6 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvCity", m_iFeatureProduction);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iMilitaryProductionModifier);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iSpaceProductionModifier);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iTradeRouteModifier);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iForeignTradeRouteModifier);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iCurrAirlift);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iMaxAirlift);

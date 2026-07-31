@@ -250,9 +250,6 @@ void CvTeam::reset(TeamTypes eID, bool bConstructorCall)
 	m_iNumCities = 0;
 	m_iTotalPopulation = 0;
 	m_iTotalLand = 0;
-	m_iForeignTradeModifier = 0;
-	m_iTradeModifier = 0;
-	m_iTradeMissionModifier = 0;
 	m_iVassalPower = 0;
 	m_iMasterPower = 0;
 	m_iEnemyWarWearinessModifier = 0;
@@ -5376,21 +5373,6 @@ void CvTeam::processTech(TechTypes eTech, int iChange, bool bAnnounce)
 		GC.getGame().makeTechDiscovered(eTech);
 	}
 
-	if (tech.getGlobalTradeModifier() != 0)
-	{
-		changeTradeModifier(tech.getGlobalTradeModifier() * iChange);
-	}
-
-	if (tech.getGlobalForeignTradeModifier() != 0)
-	{
-		changeForeignTradeModifier(tech.getGlobalForeignTradeModifier() * iChange);
-	}
-
-	if (tech.getTradeMissionModifier() != 0)
-	{
-		changeTradeMissionModifier(tech.getTradeMissionModifier() * iChange);
-	}
-
 	// The VALUE is the cascade's -- CascadeCapabilities derives it from the held techs' commerce.corporation
 	// deposits, never a team accumulator. What survives here is the deleted changer's RIDER: a consumer that
 	// BAKES the modifier has to be re-run when it moves ([save.md] §6).
@@ -6058,9 +6040,6 @@ void CvTeam::read(FDataStreamBase* pStream)
 	}
 
 
-	WRAPPER_READ(wrapper, "CvTeam", &m_iForeignTradeModifier);
-	WRAPPER_READ(wrapper, "CvTeam", &m_iTradeModifier);
-	WRAPPER_READ(wrapper, "CvTeam", &m_iTradeMissionModifier);
 
 	WRAPPER_READ_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_abEmbassy);
 	WRAPPER_READ_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_abLimitedBorders);
@@ -6190,9 +6169,6 @@ void CvTeam::write(FDataStreamBase* pStream)
 
 
 
-	WRAPPER_WRITE(wrapper, "CvTeam", m_iForeignTradeModifier);
-	WRAPPER_WRITE(wrapper, "CvTeam", m_iTradeModifier);
-	WRAPPER_WRITE(wrapper, "CvTeam", m_iTradeMissionModifier);
 
 	WRAPPER_WRITE_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_abEmbassy);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_abLimitedBorders);
@@ -6502,55 +6478,6 @@ void CvTeam::ObsoleteCorporations(TechTypes eObsoleteTech)
 	}
 }
 
-int CvTeam::getTradeModifier() const
-{
-	return m_iTradeModifier;
-}
-void CvTeam::changeTradeModifier(int iChange)
-{
-	PROFILE_EXTRA_FUNC();
-	if (iChange != 0)
-	{
-		m_iTradeModifier += iChange;
-		for (int i = 0; i < MAX_PLAYERS; i++)
-		{
-			if (GET_PLAYER((PlayerTypes)i).isAliveAndTeam(getID()))
-			{
-				GET_PLAYER((PlayerTypes)i).updateTradeRoutes();
-			}
-		}
-	}
-}
-
-int CvTeam::getForeignTradeModifier() const
-{
-	return m_iForeignTradeModifier;
-}
-
-void CvTeam::changeForeignTradeModifier(int iChange)
-{
-	PROFILE_EXTRA_FUNC();
-	if (iChange != 0)
-	{
-		m_iForeignTradeModifier += iChange;
-		for (int i = 0; i < MAX_PC_PLAYERS; i++)
-		{
-			if (GET_PLAYER((PlayerTypes)i).isAliveAndTeam(getID()))
-			{
-				GET_PLAYER((PlayerTypes)i).updateTradeRoutes();
-			}
-		}
-	}
-}
-
-int CvTeam::getTradeMissionModifier() const
-{
-	return m_iTradeMissionModifier;
-}
-void CvTeam::changeTradeMissionModifier(int iChange)
-{
-	m_iTradeMissionModifier += iChange;
-}
 
 int64_t CvTeam::getTotalVictoryScore() const
 {

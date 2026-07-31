@@ -204,14 +204,8 @@ public:
 
 	bool isRebaseAnywhere() const;
 
-	int getTradeModifier() const;
-	void changeTradeModifier(int iChange);
 
-	int getForeignTradeModifier() const;
-	void changeForeignTradeModifier(int iChange);
 
-	int getTradeMissionModifier() const;
-	void changeTradeMissionModifier(int iChange);
 
 
 
@@ -479,9 +473,6 @@ protected:
 	int m_iNumCities;
 	int m_iTotalPopulation;
 	int m_iTotalLand;
-	int m_iTradeModifier;
-	int m_iForeignTradeModifier;
-	int m_iTradeMissionModifier;
 	int m_iLastRoundOfValidImprovementCacheUpdate;
 	int m_iVassalPower;
 	int m_iMasterPower;

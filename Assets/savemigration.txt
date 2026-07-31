@@ -925,3 +925,19 @@ CvTeam::m_aiTechShareCount
 | ruled home ("never the legacy team accumulator"). The deleted changer's updateCorporation rider survives at
 | the processTech trigger site ([save.md] §6).
 CvTeam::m_iCorporationRevenueModifier
+
+| The trade-route PROFIT accumulators: serialized incremental totals fed from static info fields -- the
+| STORED-ACCUMULATOR DRIFT class ([DEC-accumulator-cut-uniform]). The city and team plain totals were both
+| accumulating the same channel-agnostic route-profit stage that the cascade roll-up now answers in ONE read
+| (ruling 27); the city one had already lost its feeder and was reading 0.
+| REPLACEMENT: CvCity::getTradeRouteKinds()[TRADE_ROUTE_MODIFIER] -- the team + empire + city roll-up.
+CvCity::m_iTradeRouteModifier
+CvTeam::m_iTradeModifier
+| The team FOREIGN trade total. Its source re-homed to an IS_FOREIGN-CONDITIONED entry on the same
+| tradeRoutes.modifier slot (ruling 11: the foreign variant is a CONDITION, never a kind), which the
+| unconditioned roll-up deliberately excludes -- so this leg reads nothing until the conditioned tail has a
+| read at totalTradeModifier. Exposed rather than masked ([DEC-no-legacy-masking]).
+CvTeam::m_iForeignTradeModifier
+| The trade-mission total. REPLACEMENT: the empire roll-up of tradeMission (authored tradeMission.empire.percent),
+| read at CvUnit's trade-mission gold.
+CvTeam::m_iTradeMissionModifier

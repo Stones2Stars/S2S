@@ -8771,7 +8771,11 @@ int CvUnit::getTradeGold(const CvPlot* pPlot) const
 		iGold /= iMaxDistance;
 	}
 
-	iGold = getModifiedIntValue(iGold, GC.getTRADE_MISSION_END_TOTAL_PERCENT_ADJUSTMENT() + GET_TEAM(getTeam()).getTradeMissionModifier());
+	// tradeMission is authored at EMPIRE scope, so the realized value is the owner's -- one roll-up read in
+	// place of the team accumulator the tech push used to feed.
+	const int iTradeMissionChannel = CascadeChannelRegistry::channelLookup(MODFAM_TRADE_MISSION, 0, -1);
+	const int iTradeMissionMod = InfoValuation::realizedAtEmpire(GET_PLAYER(getOwner()), iTradeMissionChannel);
+	iGold = getModifiedIntValue(iGold, GC.getTRADE_MISSION_END_TOTAL_PERCENT_ADJUSTMENT() + iTradeMissionMod);
 
 	iGold *= CvGameSpeedScale::speedPercent();
 	iGold /= 100;

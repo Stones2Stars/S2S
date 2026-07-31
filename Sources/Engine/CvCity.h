@@ -678,7 +678,6 @@ public:
 	int getMaxTradeRoutes() const;
 
 	int getTradeRouteModifier() const;
-	void changeTradeRouteModifier(int iChange);
 
 	int getForeignTradeRouteModifier() const;
 	void changeForeignTradeRouteModifier(int iChange);
@@ -1667,7 +1666,6 @@ protected:
 
 	int m_iMilitaryProductionModifier;
 	int m_iSpaceProductionModifier;
-	int m_iTradeRouteModifier;
 	int m_iForeignTradeRouteModifier;
 	int m_iCurrAirlift;
 	int m_iMaxAirlift;
