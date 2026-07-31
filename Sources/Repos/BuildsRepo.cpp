@@ -37,7 +37,7 @@ void BuildsRepo::rebuild()
 		if (eImprovement != NO_IMPROVEMENT)
 		{
 			m_improvementBuilds.push_back((BuildTypes)iI);
-			if (GC.getImprovementInfo(eImprovement).getCulture() > 0)
+			if (GC.getImprovementInfo(eImprovement).getFlatCommerce(COMMERCE_CULTURE, CASC_SCOPE_PLOT) > 0)
 			{
 				m_cultureBuilds.push_back((BuildTypes)iI);
 			}

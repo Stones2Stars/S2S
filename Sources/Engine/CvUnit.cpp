@@ -9678,7 +9678,7 @@ bool CvUnit::build(BuildTypes eBuild)
 		const CvBuildInfo& kBuild = GC.getBuildInfo(eBuild);
 		// Super Forts begin *culture*
 		if (kBuild.getImprovement() != NO_IMPROVEMENT
-		&& GC.getImprovementInfo(kBuild.getImprovement()).getCulture() > 0)
+		&& GC.getImprovementInfo(kBuild.getImprovement()).getFlatCommerce(COMMERCE_CULTURE, CASC_SCOPE_PLOT) > 0)
 		{
 			if (plot()->getOwner() == NO_PLAYER)
 			{

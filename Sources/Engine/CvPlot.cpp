@@ -3935,12 +3935,12 @@ void CvPlot::pushCultureFromImprovement(PlayerTypes ePlayer, int iChange, int iR
 void CvPlot::doImprovementCulture(PlayerTypes ePlayer, const CvImprovementInfo& imp)
 {
 	PROFILE_EXTRA_FUNC();
-	if (imp.getCulture() < 1)
+	if (imp.getFlatCommerce(COMMERCE_CULTURE, CASC_SCOPE_PLOT) < 1)
 	{
 		return;
 	}
 	const int iRange = std::max(0, imp.getCultureRange());
-	const int iCulture = imp.getCulture();
+	const int iCulture = imp.getFlatCommerce(COMMERCE_CULTURE, CASC_SCOPE_PLOT) / 100;
 
 	foreach_(CvPlot* plotX, rect(iRange, iRange))
 	{
@@ -6458,7 +6458,7 @@ void CvPlot::setOwner(PlayerTypes eNewValue, bool bCheckUnits, bool bUpdatePlotG
 				if (getImprovementType() != NO_IMPROVEMENT)
 				{
 					GET_PLAYER(getOwner()).changeImprovementCount(getImprovementType(), 1);
-					if (GC.getImprovementInfo(getImprovementType()).getCulture() > 0)
+					if (GC.getImprovementInfo(getImprovementType()).getFlatCommerce(COMMERCE_CULTURE, CASC_SCOPE_PLOT) > 0)
 					{
 						pushCultureFromImprovement(getOwner(), 1, GC.getImprovementInfo(getImprovementType()).getCultureRange(), true);
 					}
@@ -7296,7 +7296,7 @@ void CvPlot::setImprovementCurrentValue()
 			if (!isCityRadius())
 			{
 				iCountervalue += iCounterDefenseValue;
-				iCountervalue += GC.getImprovementInfo(eImprovement).getCulture();
+				iCountervalue += GC.getImprovementInfo(eImprovement).getFlatCommerce(COMMERCE_CULTURE, CASC_SCOPE_PLOT) / 100;
 			}
 			if (isCityRadius() && getWorkingCity() != NULL)
 			{
@@ -7446,7 +7446,7 @@ void CvPlot::setImprovementType(ImprovementTypes eNewImprovement)
 			if (isOwned())
 			{
 				GET_PLAYER(getOwner()).changeImprovementCount(eNewImprovement, 1);
-				if (GC.getImprovementInfo(eNewImprovement).getCulture() > 0)
+				if (GC.getImprovementInfo(eNewImprovement).getFlatCommerce(COMMERCE_CULTURE, CASC_SCOPE_PLOT) > 0)
 				{
 					pushCultureFromImprovement(getOwner(), 1, GC.getImprovementInfo(eNewImprovement).getCultureRange(), true);
 				}

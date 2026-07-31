@@ -7281,7 +7281,7 @@ int CvPlayer::getBuildCost(const CvPlot* pPlot, BuildTypes eBuild) const
 		return 0;
 	}
 
-	int iCost = GC.getBuildInfo(eBuild).getCost();
+	int iCost = GC.getBuildInfo(eBuild).getGoldCost();
 	if (iCost != 0)
 	{
 		if (GC.getBuildInfo(eBuild).getRoute() != NO_ROUTE && pPlot->getRouteType() != NO_ROUTE && GC.getDefineINT("ROUTES_UPGRADE") > 0)
@@ -7290,7 +7290,7 @@ int CvPlayer::getBuildCost(const CvPlot* pPlot, BuildTypes eBuild) const
 			{
 				if (GC.getBuildInfo((BuildTypes)iI).getRoute() == pPlot->getRouteType())
 				{
-					iCost = std::max(0, iCost - GC.getBuildInfo((BuildTypes)iI).getCost());
+					iCost = std::max(0, iCost - GC.getBuildInfo((BuildTypes)iI).getGoldCost());
 					break;
 				}
 			}
@@ -7396,12 +7396,12 @@ RouteTypes CvPlayer::getBestRouteInternal(const CvPlot* pPlot, bool bConnect, co
 			if (bConnect)
 			{
 				iValue  = 1000 * GC.getRouteInfo(eRoute).getValue();
-				iValue -= GC.getBuildInfo((BuildTypes)iI).getCost();
+				iValue -= GC.getBuildInfo((BuildTypes)iI).getGoldCost();
 			}
 			// if AI is in trouble, only consider cost and nothing else
 			else if (AI_isFinancialTrouble())
 			{
-				iValue = 1000 - GC.getBuildInfo((BuildTypes)iI).getCost();
+				iValue = 1000 - GC.getBuildInfo((BuildTypes)iI).getGoldCost();
 			}
 			else
 			{
@@ -7420,7 +7420,7 @@ RouteTypes CvPlayer::getBestRouteInternal(const CvPlot* pPlot, bool bConnect, co
 				}
 				iValue += 100 * iYieldSum;
 
-				iValue -= GC.getBuildInfo((BuildTypes)iI).getCost();
+				iValue -= GC.getBuildInfo((BuildTypes)iI).getGoldCost();
 
 				// Extra movement is dependant on unit speed; iMovement != iFlatMovement, so this isn't a very useful measure...
 				// iValue += std::max(0, baseMoves / std::min(baseMoves, GC.getRouteInfo(eRoute).getFlatMovement(MOVEMENT_MOVES, CASC_SCOPE_PLOT) / 100) - 1);

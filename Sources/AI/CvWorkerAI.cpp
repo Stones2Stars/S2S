@@ -433,7 +433,7 @@ bool considerCandidate(const CandidateContext& ctx,
 		}
 		else
 		{
-			if (!(kImpr.getCulture() > 0 && kImpr.isOutsideBorders())) return false;
+			if (!(kImpr.getFlatCommerce(COMMERCE_CULTURE, CASC_SCOPE_PLOT) > 0 && kImpr.isOutsideBorders())) return false;
 		}
 	}
 
@@ -1125,7 +1125,7 @@ bool CvWorkerAI::improveBonus(CvUnitAI* unit, int allowedMovementTurns)
 				if (!bCityRadius)
 				{
 					iValue += iValueDefense;
-					iValue += kImprovementX.getCulture();
+					iValue += kImprovementX.getFlatCommerce(COMMERCE_CULTURE, CASC_SCOPE_PLOT) / 100;
 				}
 				else if (pLoopPlot->getWorkingCity() != NULL)
 				{

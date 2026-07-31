@@ -12806,7 +12806,7 @@ int CvUnitAI::AI_getPlotDefendersNeeded(const CvPlot* pPlot, int iExtra) const
 
 	iNeeded += (iDefense + 25) / 50;
 
-	if (pPlot->getImprovementType() != NO_IMPROVEMENT && GC.getImprovementInfo(pPlot->getImprovementType()).getCulture() > 0)
+	if (pPlot->getImprovementType() != NO_IMPROVEMENT && GC.getImprovementInfo(pPlot->getImprovementType()).getFlatCommerce(COMMERCE_CULTURE, CASC_SCOPE_PLOT) > 0)
 	{
 		iNeeded = std::max(1 + (GC.getImprovementInfo(pPlot->getImprovementType()).isMilitaryStructure() ? 1 : 0), iNeeded);
 	}
@@ -26232,7 +26232,7 @@ bool CvUnitAI::AI_claimForts(CvReachablePlotSet* pReachablePlots, int iMinValue,
 	for (CvReachablePlotSet::const_iterator itr = pReachablePlots->begin(); itr != pReachablePlots->end(); ++itr)
 	{
 		const CvPlot* pLoopPlot = itr.plot();
-		if (pLoopPlot->getImprovementType() != NO_IMPROVEMENT && GC.getImprovementInfo(pLoopPlot->getImprovementType()).getCulture() > 0)
+		if (pLoopPlot->getImprovementType() != NO_IMPROVEMENT && GC.getImprovementInfo(pLoopPlot->getImprovementType()).getFlatCommerce(COMMERCE_CULTURE, CASC_SCOPE_PLOT) > 0)
 		{
 			if (/*AI_plotValid(pLoopPlot) &&*/ pLoopPlot->area() == area())
 			{
