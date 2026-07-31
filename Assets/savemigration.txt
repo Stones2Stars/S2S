@@ -46,8 +46,8 @@ completed projects' happiness/health.empire = getGlobalHappiness/Health); getWor
 worldWellbeing (game-created projects' happiness/health.world = getWorldHappiness/Health). CvPlayer::getCivicHealth
 keeps its NPC (barbarian) negative-clamp. CvPlayer::getLargestCityHappiness is DELETED ENTIRELY (its sole consumer
 was CvCity::getLargestCityHappiness, re-pointed to CascadeWellbeing::largestCityWellbeing -> hap.iLargest, which
-already applies the population-rank gate at fill). The 8 change* changers + their processCivics / processTrait /
-CvTeam::changeProjectCount trigger sites are gone; the four AI_makeAssignWorkDirty riders drop (the value is read
+already applies the population-rank gate at fill). The 8 change* changers + their processCivics / processTrait / CvTeam::changeProjectCount
+trigger sites are gone; the four AI_makeAssignWorkDirty riders drop (the value is read
 fresh, and the broad civic/trait/project recompute re-dirties via sibling change*/AI_makeProductionDirty). The
 CvHttpServer /computed wellbeing/health/happiness decomposition rows are KEPT (they now read the re-pointed
 cascade getters). Old-save tags drain by name below (no WRAPPER_SKIP_ELEMENT).
@@ -533,7 +533,6 @@ serialized legacy effect accumulators. The verdict is the enabler operate fixpoi
 the load-end cross-city fixpoint reconciles the baseline). The read retires WITH the legacy effect-accumulator
 cluster at the modifier cut, not before (skipping it alone would double-process building effects at load).
 
-CvPlayer::m_ppaaiImprovementYieldChange (per-improvement yield arrays); CvTeam::m_ppaaiImprovementYieldChange
 ========================
 The keyed improvement-yield accumulators (civic/trait/building-global on the player; tech rows on the team) --
 the stored-accumulator drift class (modifier.md par.2b; the engine under-yielded on every improved plot vs the
@@ -544,7 +543,6 @@ event-grant store m_improvementYieldEvents (new tags ImprovementYieldEvents*, so
 Python wonder-event grants, e.g. TSUKIJI; pre-split grants on old saves are accepted drift, the freeBonusEvents
 precedent). The drains flush at the next save-compat break.
 
-CvPlayer::m_ppaaiSpecialistExtraYield; CvPlayer::m_ppaaiSpecialistExtraCommerce
 ========================
 The per-type specialist empire-boost accumulators -- the stored-accumulator drift class. Their building
 feeders were poco STUBS returning 0 (the boosts were curated onto the SPECIALISTS as conditioned empire
@@ -665,14 +663,6 @@ CvCity::m_pabReligiouslyDisabledBuilding
 | than re-tested at the read. Derived, so it serializes nothing (DEC-derived-never-trusted).
 CvCity::m_buildingYieldMod
 ========================
-| The per-commerce rate-modifier accumulator. Same shape as the yield twin: a serialized += store that was one of
-| seven terms getTotalCommerceRateModifier summed -- and that read then SUBTRACTED two of them back out, because
-| the events/buildings terms were folded into the player's generic modifier AND tracked separately for the UI, so
-| the hub had to undo its own double-count. One accumulator per channel per scope removes the dedup entirely. The
-| value is the cascade's `<commerce>.<scope>.percent`, folded by InfoValuation::rolledLegsAtCity. Derived, so it
-| serializes nothing (DEC-derived-never-trusted). The hand-rolled MIN_INT dirty cache went with it: a read is a
-| bare fetch and the package is spine-invalidated (DEC-uniform-cache-shape).
-CvCity::m_aiCommerceRateModifier
 ========================
 | The BUILDING-DEFENSE accumulator. A serialized += store of the city's buildings' defense contribution, which
 | getTotalDefense then weighed against the CULTURE LEVEL's via max(building, natural) before adding the player and

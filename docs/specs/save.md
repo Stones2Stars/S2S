@@ -39,6 +39,18 @@ The field is then FULLY GONE from the object: no member, no read, no write.
   `savemigration.txt` line) makes `Expect()` treat the mismatch as "code ahead of stream," never consume the element,
   and **desync every subsequent read in that object** into silent defaults — the load guts wholesale (proven live:
   empty tech lists, buildingless cities). List the tag and it is soft; forget it and the object is corrupt.
+- **⛔ A LISTED TAG WHOSE MEMBER IS STILL SERIALIZED DRAINS LIVE STATE — and it is MECHANICALLY CHECKABLE.** The
+  drain runs in the header loop and does not care that a live `WRAPPER_READ` was waiting for that tag, so the
+  read finds nothing, the member keeps its default, and the value is silently lost on EVERY load — the inverse
+  of the unlisted-orphan desync, and quieter. The check: intersect the file's bare `Class::m_field` entries with
+  the members still carrying a `WRAPPER_READ`/`WRITE` in their owning class; the intersection must be EMPTY.
+  ⚠ Resolve a hit by asking which side is right, never by reflex — a member whose only writer is `applyEvent` is
+  genuine one-shot event state that CORRECTLY stays serialized (§5), so the ENTRY is the defect; a member the
+  cascade genuinely replaced keeps its entry and loses its read + write.
+  ⚑ The same scan catches the other false-entry class for free: a **bracketed** decorated tag (§3 above) can
+  never match, so an entry for one is inert-but-false and its drain loop (§4) is what is actually doing the work.
+  ⚠ And nothing marks prose as prose except the leading `|`, so a note line that BEGINS with a `Class::` token
+  registers as an entry — keep member names off the start of a wrapped line.
 - **⚑ THE FILE IS ALSO THE REPLACEMENT-OBLIGATION LEDGER — read it that way, never as history.** An entry's note
   records WHY the field could be cut: the value is now served by a NAMED replacement (a cascade gather, a computed
   accessor). If that replacement is later archived, renamed, or never built, the field is already gone from every

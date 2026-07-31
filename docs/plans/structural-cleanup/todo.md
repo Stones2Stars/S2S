@@ -140,10 +140,6 @@
   gone from every save and the value has NO source, which nothing catches ([AGENTS.md](../../../AGENTS.md)).
   The wellbeing cut notes are the known cluster — they name the archived bespoke substrate
   ([superseded-ideas](../../architecture/superseded-ideas.md) #14) rather than what actually serves them now.
-- Reconcile the ledger entries that contradict the tree: a tag listed as CUT whose member is still serialized.
-  Two are DECORATED per-element arrays inside live enum-remapping loops, which [save.md §3](../../specs/save.md)
-  says must never be listed at all (their entries cannot match, so they are inert but false); one is a plain tag
-  whose read and write were never actually deleted, so it writes a tag that the reader then drains.
 - Move every consumer off the hand-named channel-shaped getters on `CvCity`/`CvPlayer`, then delete the old names.
 - Cut the hide-and-seek per-type intensity ACCUMULATORS on `CvUnit` (serialized — the cut carries a
   `savemigration.txt` step; confirm the tag spelling against the stream first). Their replacements are built.
