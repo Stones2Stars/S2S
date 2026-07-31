@@ -1161,9 +1161,10 @@ Data read by a specific system, not the cascade. Use only when the entity needs 
   > so it is derived rather than balanced.
   > ⛔ It is a QUANTITY term, NOT a training-PACE percent: the Size-Matters pace discount still applies on top,
   > because a directly-built ranked unit IS the merged result and that discount exists precisely because units
-  > merge. The ceiling, the offer range and the equivalent cost are ONE implementation (`CvSizeMattersRank`),
-  > shared with the merge gate so the two can never disagree
-  > ([DEC-single-implementation](../architecture/decisions.md#dec-single-implementation)).
+  > merge. ⚠ The ceiling, the offer range and the equivalent cost must be ONE implementation shared with the
+  > merge gate, or the price and the reachable rank can disagree
+  > ([DEC-single-implementation](../architecture/decisions.md#dec-single-implementation)) — note the ceiling
+  > lives on `CvUnit` today, which a build menu cannot ask, having no unit yet.
   >
   > **⚖ A PRE-MERGED BUILT UNIT IS INDISTINGUISHABLE FROM A NORMALLY MERGED ONE (owner)** — that is the
   > acceptance bar for the build side, and it decides the implementation rather than merely describing the goal.

@@ -19,16 +19,11 @@
   behaviour, so it is an owner call ([save.md §3](../../specs/save.md)).
 - Decide whether the `…Times100` on AI unit counts and plot strength is swept with the scale conversion — same
   shape, different nature (fractional SizeMatters counts, not a modifier channel).
-- Carry the RANK-UP `x` on a unit build ORDER, and give the build menu the number-picker that sets it — the
-  point being that a late-game player should not merge hundreds of units by hand (owner). The model is spec'd
-  ([json.md §9](../../specs/json.md)) and the mechanism answers already: `CvSizeMattersRank` serves the
-  ceiling, the offer range and the build-and-merge equivalent cost, and `getProductionNeeded(eUnit, iRankUps)`
-  prices it. What is missing is the ORDER carrying `x` from the menu to the build, and the trained unit being
-  created at `base + x`.
-  ⛔ The created unit must be INDISTINGUISHABLE from a normally merged one (owner), which fixes HOW: rank is
-  carried by PROMOTIONS, not a stored field, so the build applies its offset through the same
-  `normalizeUnitPromotions` group-upgrade path `CvUnit::mergeUnits` uses — never a bespoke loop beside it.
-  ⚠ Only the GROUP axis moves; quality and size do not rise on a merge.
+- Build RANKED-UP Size-Matters units from the build menu, so a late-game player is not merging hundreds of
+  units by hand — ⚖ **not wanted yet (owner): the task is bigger than it looks, so it waits until we want it.**
+  The MODEL is settled and spec'd ([json.md §9](../../specs/json.md)) — `base + x`, the era bounding `x`, and
+  the cost as the build-and-merge equivalence — so this closes by IMPLEMENTING that spec, never by re-deciding
+  it. Nothing else waits on it and no half of it is in the tree.
 
 ## Data — curator
 

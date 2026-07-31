@@ -10,7 +10,6 @@
 
 #include "Data/CvInfoValuation.h"   // InfoValuation::collectHealByUnitCombat + HealByUnitCombat
 #include "Engine/CvGameSpeedScale.h"
-#include "Engine/CvSizeMattersRank.h"   // the merge ceiling -- shared with the build side
 #include "AI/BetterBTSAI.h"
 #include "CvArea.h"
 #include "CvBuildingInfo.h"
@@ -24692,10 +24691,7 @@ UnitTypes CvUnit::getGGExperienceEarnedTowardsType() const
 
 int CvUnit::eraGroupMergeLimit() const
 {
-	// The rule lives on CvSizeMattersRank so the BUILD side can ask it before a unit exists (a build menu
-	// offering a rank-up has no instance to ask) -- one implementation, never a second copy that could drift
-	// from this gate.
-	return CvSizeMattersRank::mergeLimit(*m_pUnitInfo, GET_PLAYER(getOwner()).getCurrentEra());
+	return m_pUnitInfo->getBaseGroupRank() + GET_PLAYER(getOwner()).getCurrentEra() + 1;
 }
 
 int CvUnit::eraGroupSplitLimit() const

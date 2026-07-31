@@ -61,13 +61,9 @@ public:
 	//	([tags.md](../../docs/specs/tags.md): a unit's effective tags are its own ∪ its combat classes').
 	//
 	//	⚠ SIZE-MATTERS RANK IS NOT AN INPUT HERE, deliberately. A rank changes HOW MANY units' worth is being
-	//	built, never the pace each is built at, so a ranked build is a QUANTITY term at the order rather than a
-	//	term in this percent ([json.md §9](../../docs/specs/json.md): the rank is a count axis,
-	//	`count / 3^(groupRank-1)`).
-	//	⛔ And when it lands it is an OFFSET FROM THE UNIT'S OWN BASE (`base + x`), never an absolute rank
-	//	(owner). A base rank is DERIVED per unit from its combat classes, so an absolute number means a
-	//	different thing for every unit -- and a downgrade for one whose base already exceeds it -- while an
-	//	offset stays correct when re-tagging a combat class moves that base.
+	//	built, never the pace each is built at, so a future ranked build is a QUANTITY term at the order rather
+	//	than a term in this percent -- which is why taking a rank parameter now would be modelling it in the
+	//	wrong place ([json.md §9](../../docs/specs/json.md): the rank is a count axis, `count / 3^(groupRank-1)`).
 	static int unitProductionPercent(const CvUnitInfo& kUnit);
 
 private:

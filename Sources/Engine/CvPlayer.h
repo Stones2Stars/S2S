@@ -318,9 +318,7 @@ public:
 	bool isProductionMaxedBuilding(BuildingTypes building, bool bAcquireCity = false) const;
 	bool isProductionMaxedUnit(UnitTypes eUnit) const;
 	bool isProductionMaxedProject(ProjectTypes eProject) const;
-	// iRankUps = how far ABOVE the unit's own derived base group rank it is being trained (0 = ordinarily).
-	// Bounded by CvSizeMattersRank::maxRankUps; costs the equivalent of building-and-merging that many.
-	int getProductionNeeded(UnitTypes eUnit, int iRankUps = 0) const;
+	int getProductionNeeded(UnitTypes eUnit) const;
 	int getProductionNeeded(BuildingTypes eBuilding) const;
 	int getProductionNeeded(ProjectTypes eProject) const;
 	int getProductionModifier(UnitTypes eUnit) const;
@@ -328,7 +326,7 @@ public:
 	int getProductionModifier(BuildingTypes eBuilding) const;
 	int getProductionModifier(ProjectTypes eProject) const;
 
-	int64_t getBaseUnitCost(const UnitTypes eUnit, int iRankUps = 0) const;
+	int64_t getBaseUnitCost(const UnitTypes eUnit) const;
 
 	int getBuildingPrereqBuilding(BuildingTypes eBuilding, BuildingTypes ePrereqBuilding, int iExtra = 0) const;
 	void removeBuilding(BuildingTypes building);
