@@ -29120,13 +29120,13 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		iValue += iTemp * 2;
 	}
 
-	iTemp = kPromotion.getQualityChange();
+	iTemp = kPromotion.getSizeMatters().quality;
 	if (iTemp != 0)
 	{
 		iValue += iTemp * 200;
 	}
 
-	iTemp = kPromotion.getGroupChange();
+	iTemp = kPromotion.getSizeMatters().group;
 	if (iTemp != 0)
 	{
 		iValue += iTemp * 200;
@@ -32038,27 +32038,27 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 
 	if (GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS))
 	{
-		if (kUnitCombat.getQualityBase() > -10)
+		if (kUnitCombat.getSizeMatters().qualityBase > -10)
 		{
-			iTemp = kUnitCombat.getQualityBase() - 5;
+			iTemp = kUnitCombat.getSizeMatters().qualityBase - 5;
 			if (iTemp != 0)
 			{
 				iValue += iTemp * 200;
 			}
 		}
 
-		if (kUnitCombat.getGroupBase() > -10)
+		if (kUnitCombat.getSizeMatters().groupBase > -10)
 		{
-			iTemp = kUnitCombat.getGroupBase() - 5;
+			iTemp = kUnitCombat.getSizeMatters().groupBase - 5;
 			if (iTemp != 0)
 			{
 				iValue += iTemp * 200;
 			}
 		}
 
-		if (kUnitCombat.getSizeBase() > -10)
+		if (kUnitCombat.getSizeMatters().sizeBase > -10)
 		{
-			iTemp = kUnitCombat.getSizeBase() - 5;
+			iTemp = kUnitCombat.getSizeMatters().sizeBase - 5;
 			if (iTemp != 0)
 			{
 				iValue += iTemp * 200;

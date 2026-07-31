@@ -1080,13 +1080,13 @@ void CvUnit::convert(CvUnit* pUnit, const bool bKillOriginal)
 			}
 			if (pUnit->isHasPromotion(ePromoX) && !bIsBuildup)
 			{
-				if (GC.getPromotionInfo(ePromoX).getGroupChange() != 0)
+				if (GC.getPromotionInfo(ePromoX).getSizeMatters().group != 0)
 				{
-					iTotalGroupOffset += GC.getPromotionInfo(ePromoX).getGroupChange();
+					iTotalGroupOffset += GC.getPromotionInfo(ePromoX).getSizeMatters().group;
 				}
-				else if (GC.getPromotionInfo(ePromoX).getQualityChange() != 0)
+				else if (GC.getPromotionInfo(ePromoX).getSizeMatters().quality != 0)
 				{
-					iTotalQualityOffset += GC.getPromotionInfo(ePromoX).getQualityChange();
+					iTotalQualityOffset += GC.getPromotionInfo(ePromoX).getSizeMatters().quality;
 				}
 				else if (!isHasPromotion(ePromoX)) //see note below on this situation with true for bDying
 				{
@@ -16707,7 +16707,7 @@ bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion, bool bIgnoreHas, boo
 		return false;
 	}
 
-	if (!bForOffset && promo.getQualityChange() > 0 && getRetrainsAvailable() > 0)
+	if (!bForOffset && promo.getSizeMatters().quality > 0 && getRetrainsAvailable() > 0)
 	{
 		return false;
 	}
@@ -16816,12 +16816,12 @@ bool CvUnit::isPromotionValid(PromotionTypes ePromotion, bool bFree, bool bKeepC
 		return false;
 	}
 
-	if (isCommander() && (promo.getGroupChange() != 0 || promo.getQualityChange() != 0))
+	if (isCommander() && (promo.getSizeMatters().group != 0 || promo.getSizeMatters().quality != 0))
 	{
 		return false;
 	}
 
-	if (isCommodore() && (promo.getGroupChange() != 0 || promo.getQualityChange() != 0))
+	if (isCommodore() && (promo.getSizeMatters().group != 0 || promo.getSizeMatters().quality != 0))
     	{
     		return false;
     	}
@@ -16835,7 +16835,7 @@ bool CvUnit::isPromotionValid(PromotionTypes ePromotion, bool bFree, bool bKeepC
 	{
 		if (promo.getInterceptChange() + maxInterceptionProbability() > GC.getDefineINT("MAX_INTERCEPTION_PROBABILITY")
 		||	promo.getEvasionChange() + evasionProbability() > GC.getDefineINT("MAX_EVASION_PROBABILITY")
-		||	promo.getQualityChange() > 0 && getExperience() >= experienceNeeded(1))
+		||	promo.getSizeMatters().quality > 0 && getExperience() >= experienceNeeded(1))
 		{
 			return false;
 		}
@@ -21897,7 +21897,7 @@ void CvUnit::setCommander(bool bNewVal)
 
 		foreach_(const UnitCombatTypes eSubCombat, m_pUnitInfo->getCombatClasses())
 		{
-			if (GC.getUnitCombatInfo(eSubCombat).getQualityBase() > -10)
+			if (GC.getUnitCombatInfo(eSubCombat).getSizeMatters().qualityBase > -10)
 			{
 				setHasUnitCombat(eSubCombat, false);
 			}
@@ -22040,7 +22040,7 @@ void CvUnit::setCommodore(bool bNewVal)
 
 		foreach_(const UnitCombatTypes eSubCombat, m_pUnitInfo->getCombatClasses())
 		{
-			if (GC.getUnitCombatInfo(eSubCombat).getQualityBase() > -10)
+			if (GC.getUnitCombatInfo(eSubCombat).getSizeMatters().qualityBase > -10)
 			{
 				setHasUnitCombat(eSubCombat, false);
 			}
@@ -22758,9 +22758,9 @@ void CvUnit::checkPromotionObsoletion()
 			if (
 				isHasUnitCombat(eUnitCombatX)
 			&&	(
-					GC.getUnitCombatInfo(eUnitCombatX).getGroupBase() > -10
+					GC.getUnitCombatInfo(eUnitCombatX).getSizeMatters().groupBase > -10
 					||
-					GC.getUnitCombatInfo(eUnitCombatX).getQualityBase() > -10
+					GC.getUnitCombatInfo(eUnitCombatX).getSizeMatters().qualityBase > -10
 				)
 			)
 			{
@@ -24193,25 +24193,25 @@ bool CvUnit::canSplit() const
 // Helpers
 bool CvUnit::isGroupUpgradePromotion(PromotionTypes promotion) const
 {
-	return GC.getPromotionInfo(promotion).getGroupChange() > 0 &&
+	return GC.getPromotionInfo(promotion).getSizeMatters().group > 0 &&
 		(canAcquirePromotion(promotion, PromotionRequirements::Promote | PromotionRequirements::ForOffset) || canAcquirePromotion(promotion));
 }
 
 bool CvUnit::isGroupDowngradePromotion(PromotionTypes promotion) const
 {
-	return GC.getPromotionInfo(promotion).getGroupChange() < 0 &&
+	return GC.getPromotionInfo(promotion).getSizeMatters().group < 0 &&
 		(canAcquirePromotion(promotion, PromotionRequirements::Promote | PromotionRequirements::ForOffset) || canAcquirePromotion(promotion));
 }
 
 bool CvUnit::isQualityUpgradePromotion(PromotionTypes promotion) const
 {
-	return GC.getPromotionInfo(promotion).getQualityChange() > 0 &&
+	return GC.getPromotionInfo(promotion).getSizeMatters().quality > 0 &&
 		(canAcquirePromotion(promotion, PromotionRequirements::Promote | PromotionRequirements::ForOffset) || canAcquirePromotion(promotion));
 }
 
 bool CvUnit::isQualityDowngradePromotion(PromotionTypes promotion) const
 {
-	return GC.getPromotionInfo(promotion).getQualityChange() < 0 &&
+	return GC.getPromotionInfo(promotion).getSizeMatters().quality < 0 &&
 		(canAcquirePromotion(promotion, PromotionRequirements::Promote | PromotionRequirements::ForOffset) || canAcquirePromotion(promotion));
 }
 
@@ -24327,7 +24327,7 @@ CvUnit* CvUnit::mergeUnits(CvUnit* pUnit1, CvUnit* pUnit2, CvUnit* pUnit3, CvSel
 	for (int iI = 0; iI < GC.getNumPromotionInfos(); iI++)
 	{
 		PromotionTypes ePromotion = ((PromotionTypes)iI);
-		if (GC.getPromotionInfo(ePromotion).getGroupChange() == 0 && GC.getPromotionInfo(ePromotion).getQualityChange() == 0)
+		if (GC.getPromotionInfo(ePromotion).getSizeMatters().group == 0 && GC.getPromotionInfo(ePromotion).getSizeMatters().quality == 0)
 		{
 			if (pUnit1->isHasPromotion(ePromotion) || pUnit2->isHasPromotion(ePromotion) || pUnit3->isHasPromotion(ePromotion))
 			{
@@ -24346,18 +24346,18 @@ CvUnit* CvUnit::mergeUnits(CvUnit* pUnit1, CvUnit* pUnit2, CvUnit* pUnit3, CvSel
 				}
 			}
 		}
-		else if (GC.getPromotionInfo(ePromotion).getQualityChange() != 0)
+		else if (GC.getPromotionInfo(ePromotion).getSizeMatters().quality != 0)
 		{
 			if (pUnit1->isHasPromotion(ePromotion) || pUnit2->isHasPromotion(ePromotion) || pUnit3->isHasPromotion(ePromotion))
 			{
-				iTotalQualityOffset += GC.getPromotionInfo((PromotionTypes)iI).getQualityChange();
+				iTotalQualityOffset += GC.getPromotionInfo((PromotionTypes)iI).getSizeMatters().quality;
 			}
 		}
-		else if (GC.getPromotionInfo(ePromotion).getGroupChange() != 0)
+		else if (GC.getPromotionInfo(ePromotion).getSizeMatters().group != 0)
 		{
 			if (pUnit1->isHasPromotion(ePromotion) || pUnit2->isHasPromotion(ePromotion) || pUnit3->isHasPromotion(ePromotion))
 			{
-				iTotalGroupOffset += GC.getPromotionInfo((PromotionTypes)iI).getGroupChange();
+				iTotalGroupOffset += GC.getPromotionInfo((PromotionTypes)iI).getSizeMatters().group;
 			}
 		}
 	}
@@ -24545,13 +24545,13 @@ void CvUnit::doSplit()
 				continue;
 			}
 
-			if (GC.getPromotionInfo(ePromoX).getQualityChange() != 0)
+			if (GC.getPromotionInfo(ePromoX).getSizeMatters().quality != 0)
 			{
-				iTotalQualityOffset += GC.getPromotionInfo((PromotionTypes)iI).getQualityChange();
+				iTotalQualityOffset += GC.getPromotionInfo((PromotionTypes)iI).getSizeMatters().quality;
 			}
-			else if (GC.getPromotionInfo(ePromoX).getGroupChange() != 0)
+			else if (GC.getPromotionInfo(ePromoX).getSizeMatters().group != 0)
 			{
-				iTotalGroupOffset += GC.getPromotionInfo((PromotionTypes)iI).getGroupChange();
+				iTotalGroupOffset += GC.getPromotionInfo((PromotionTypes)iI).getSizeMatters().group;
 			}
 			else if (GC.getPromotionInfo(ePromoX).isLeader())
 			{

@@ -19,6 +19,15 @@
   behaviour, so it is an owner call ([save.md §3](../../specs/save.md)).
 - Decide whether the `…Times100` on AI unit counts and plot strength is swept with the scale conversion — same
   shape, different nature (fractional SizeMatters counts, not a modifier channel).
+- Settle whether an OBSOLETE building instance is REMOVED or STAYS PRESENT, because two live statements
+  disagree and the swap cut hangs on it. [enabler.md §3.2](../../specs/enabler.md) has the obsolete set going
+  live *"at the swap cut, when an obsolete building STAYS present"* and its `whenObsolete` tree applying in
+  place of its families; the `CvTeam::processTech` comment asserts as an owner ruling that obsolescence is
+  permanent supersession so *"the instance GOES"*. Both cite [json.md §4.2](../../specs/json.md), whose
+  absent-`whenObsolete` default ("fully gone") reads either way — contributing nothing, or not existing.
+  ⚠ Until it is settled the legacy `getObsoletesToBuilding` culture-shell swap has no successor and its four
+  sites (`CvPlayer::acquireCity`, `CvTeam::processTech`) stay dangling. ⛔ Do not pick a side to clear them:
+  removing the swap is what makes the obsolete set live, so guessing here silently decides the model.
 - Rule on the river-attack term for a CITY defender (`CvUnit::getDefenderCombatValues`). Its two branches
   disagree: attacking across a river hands an ordinary defender `-RIVER_ATTACK_MODIFIER`, while the city branch
   is `min(0, riverDefensePenalty - RIVER_ATTACK_MODIFIER)` — capped at zero, so a city defender can never
