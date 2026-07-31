@@ -124,6 +124,7 @@ composition the info structurally cannot.
 |---|---|---|
 | **`CvGameSpeedScale`** (`Sources/Engine/`) | `GAMEOPTION_EXP_UPSCALED_BUILDING_AND_UNIT_COSTS` × `UPSCALED_HAMMER_COST_MODIFIER` over the gamespeed scalars | per-call-site re-derivation of the hammer-cost percent |
 | **`CvTraitSelection`** (`Sources/Engine/`) | `GAMEOPTION_LEADER_NO_NEGATIVE_TRAITS` / `START_NO_POSITIVE_TRAITS` / `LEADER_DEVELOPING` against a trait's alignment + succession rank | the archived `CvTraitInfo::isValidTrait` (an info getter reading game state — the boundary violation itself), **and** the hand-inlined copies of its composition that had spread across `CvPlayer` and `CvGameTextMgr` |
+| **`CvBuildCostScale`** (`Sources/Engine/`) | the two BUILD-cost option verdicts: a building's authored cost BANDS under `GAMEOPTION_REALISTIC_BUILDING_COST`, and a unit's training PACE (`UNIT_PRODUCTION_PERCENT` vs `…_SM`) under `GAMEOPTION_COMBAT_SIZE_MATTERS` | the inline derivations in `CvPlayer::getProductionNeeded(BuildingTypes)` / `getBaseUnitCost` — the building half additionally carried a `float` multiplier on a path every build decision runs (an OOS hazard; the bands are whole percent points, so the integer form is exact) |
 
 ⚑ **The tell that one is needed: the same option composition appearing at more than one call site.** Those copies
 DRIFT — the `CvGameTextMgr` inlines had already lost two legs of the rule (the negative-trait

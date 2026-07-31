@@ -19,6 +19,13 @@
   behaviour, so it is an owner call ([save.md §3](../../specs/save.md)).
 - Decide whether the `…Times100` on AI unit counts and plot strength is swept with the scale conversion — same
   shape, different nature (fractional SizeMatters counts, not a modifier channel).
+- Rule on BUILDING RANKED-UP Size-Matters units — the owner wants a city to be able to train a unit at a rank
+  above its base, and the open half is the ORDER (which rank a build order carries, and the UI that picks it)
+  plus what a rank costs. ⛔ The cost half is NOT a percent: `CvBuildCostScale::unitProductionPercent` answers
+  the PACE each unit is built at, while a rank changes HOW MANY units' worth is being built
+  ([json.md §9](../../specs/json.md): the rank is a count axis, `count / 3^(groupRank−1)`), so modelling it as
+  a training-pace term puts it in the wrong place. ⚠ The ranks themselves are already derived at load from the
+  unit's combat classes, so nothing about the DATA waits on this.
 
 ## Data — curator
 

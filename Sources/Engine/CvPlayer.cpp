@@ -8,7 +8,7 @@
 #include "Enabler/CvCapabilities.h"
 #include "CvTraitSelection.h"
 #include "Engine/CvGameSpeedScale.h"
-#include "Engine/CvBuildCostScale.h"   // the building cost-band composition (one place)
+#include "Engine/CvBuildCostScale.h"   // the option-gated build-cost compositions (one place)
 #include "Enabler/CvEnablerKernel.h"   // requiresMetForPlayer -- the system-placement gate
 #include "AI/BetterBTSAI.h"
 #include "CvArea.h"
@@ -6691,14 +6691,9 @@ int64_t CvPlayer::getBaseUnitCost(const UnitTypes eUnit) const
 		iBaseCost *= iMod;
 		iBaseCost /= 100;
 
-		// Trade units aren't impacted by SM production reduction due to ROI oddities. They can't merge anyway, so...
-		if (GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS) && GC.getUnitInfo(eUnit).getCombatClass() != GC.getInfoTypeForString("UNITCOMBAT_TRADE"))
-		{
-			iMod = GC.getUNIT_PRODUCTION_PERCENT_SM();
-		}
-		else iMod = GC.getUNIT_PRODUCTION_PERCENT();
-
-		iBaseCost *= iMod;
+		// Which authored training pace this unit is built at, composed in ONE place (CvBuildCostScale) rather
+		// than inline here: it reads a GAME OPTION, so it cannot sit on the info (json.md §9).
+		iBaseCost *= CvBuildCostScale::unitProductionPercent(GC.getUnitInfo(eUnit));
 		iBaseCost /= 100;
 
 		if (isNormalAI())
@@ -6713,11 +6708,13 @@ int64_t CvPlayer::getBaseUnitCost(const UnitTypes eUnit) const
 
 			iBaseCost = getModifiedIntValue64(iBaseCost, iMod);
 
-			if(GC.getGame().isOption(GAMEOPTION_BUILDING_COST_AI_25)){
+			if (GC.getGame().isOption(GAMEOPTION_UNIT_COST_AI_25))
+			{
 				iBaseCost = iBaseCost / 4 * 3;
 			}
 
-			if(GC.getGame().isOption(GAMEOPTION_BUILDING_COST_AI_50)){
+			if (GC.getGame().isOption(GAMEOPTION_UNIT_COST_AI_50))
+			{
 				iBaseCost = iBaseCost / 2;
 			}
 		}
