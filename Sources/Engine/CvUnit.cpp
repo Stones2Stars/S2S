@@ -6003,7 +6003,7 @@ int CvUnit::healRate(const CvPlot* pPlot, bool bHealCheck) const
                 {
                     if (pLoopUnit->getTeam() == getTeam() && pLoopUnit->hasHealSupportRemaining())
                     {
-                        if (pLoopUnit->getSameTileHeal() > 0)
+                        if ((pLoopUnit->resolvedValue(URS_HEAL_SAME_TILE) / 100) > 0)
                         {
                             bHealerPresent = true;
                             break;
@@ -6019,7 +6019,7 @@ int CvUnit::healRate(const CvPlot* pPlot, bool bHealCheck) const
                         {
                             if (pLoopUnit->getTeam() == getTeam() && pLoopUnit->hasHealSupportRemaining())
                             {
-                                if (pLoopUnit->getAdjacentTileHeal() > 0)
+                                if ((pLoopUnit->resolvedValue(URS_HEAL_ADJACENT) / 100) > 0)
                                 {
                                     bHealerPresent = true;
                                     break;
@@ -6084,7 +6084,7 @@ int CvUnit::healRate(const CvPlot* pPlot, bool bHealCheck) const
 
 	if (pPlot->isCity(true, getTeam()))
 	{
-		iTotalHeal += GC.getCITY_HEAL_RATE() + (GET_TEAM(getTeam()).isFriendlyTerritory(pPlot->getTeam()) ? getExtraFriendlyHeal() : getExtraNeutralHeal());
+		iTotalHeal += GC.getCITY_HEAL_RATE() + (GET_TEAM(getTeam()).isFriendlyTerritory(pPlot->getTeam()) ? (resolvedValue(URS_HEAL_FRIENDLY) / 100) : (resolvedValue(URS_HEAL_NEUTRAL) / 100));
 
 		const CvCity* pCity = pPlot->getPlotCity();
 
@@ -6099,16 +6099,16 @@ int CvUnit::healRate(const CvPlot* pPlot, bool bHealCheck) const
 		{
 			if (isEnemy(pPlot->getTeam(), pPlot))
 			{
-				iTotalHeal += (GC.getENEMY_HEAL_RATE() + getExtraEnemyHeal());
+				iTotalHeal += (GC.getENEMY_HEAL_RATE() + (resolvedValue(URS_HEAL_ENEMY) / 100));
 			}
 			else
 			{
-				iTotalHeal += (GC.getNEUTRAL_HEAL_RATE() + getExtraNeutralHeal());
+				iTotalHeal += (GC.getNEUTRAL_HEAL_RATE() + (resolvedValue(URS_HEAL_NEUTRAL) / 100));
 			}
 		}
 		else
 		{
-			iTotalHeal += (GC.getFRIENDLY_HEAL_RATE() + getExtraFriendlyHeal());
+			iTotalHeal += (GC.getFRIENDLY_HEAL_RATE() + (resolvedValue(URS_HEAL_FRIENDLY) / 100));
 		}
 	}
 	CvUnit* pHealUnit = NULL;
@@ -6120,7 +6120,7 @@ int CvUnit::healRate(const CvPlot* pPlot, bool bHealCheck) const
 	{
 		if (pLoopUnit->getTeam() == getTeam() && pLoopUnit->hasHealSupportRemaining()) // XXX what about alliances?
 		{
-			const int iHeal = pLoopUnit->getSameTileHeal();
+			const int iHeal = (pLoopUnit->resolvedValue(URS_HEAL_SAME_TILE) / 100);
 
 			if (iHeal > iBestHeal)
 			{
@@ -6136,7 +6136,7 @@ int CvUnit::healRate(const CvPlot* pPlot, bool bHealCheck) const
 		{
 			if (pLoopUnit->getTeam() == getTeam() && pLoopUnit->hasHealSupportRemaining()) // XXX what about alliances?
 			{
-				const int iHeal = pLoopUnit->getAdjacentTileHeal();
+				const int iHeal = (pLoopUnit->resolvedValue(URS_HEAL_ADJACENT) / 100);
 
 				if (iHeal > iBestHeal)
 				{
@@ -6190,7 +6190,7 @@ int CvUnit::getHealRateAsType(const CvPlot* pPlot, bool bHealCheck, UnitCombatTy
 
 	if (pPlot->isCity(true, getTeam()))
 	{
-		iTotalHeal += GC.getCITY_HEAL_RATE() + (GET_TEAM(getTeam()).isFriendlyTerritory(pPlot->getTeam()) ? getExtraFriendlyHeal() : getExtraNeutralHeal());
+		iTotalHeal += GC.getCITY_HEAL_RATE() + (GET_TEAM(getTeam()).isFriendlyTerritory(pPlot->getTeam()) ? (resolvedValue(URS_HEAL_FRIENDLY) / 100) : (resolvedValue(URS_HEAL_NEUTRAL) / 100));
 
 		const CvCity* pCity = pPlot->getPlotCity();
 
@@ -6203,15 +6203,15 @@ int CvUnit::getHealRateAsType(const CvPlot* pPlot, bool bHealCheck, UnitCombatTy
 	{
 		if (GET_TEAM(getTeam()).isFriendlyTerritory(pPlot->getTeam()))
 		{
-			iTotalHeal += GC.getFRIENDLY_HEAL_RATE() + getExtraFriendlyHeal();
+			iTotalHeal += GC.getFRIENDLY_HEAL_RATE() + (resolvedValue(URS_HEAL_FRIENDLY) / 100);
 		}
 		else if (isEnemy(pPlot->getTeam(), pPlot))
 		{
-			iTotalHeal += GC.getENEMY_HEAL_RATE() + getExtraEnemyHeal();
+			iTotalHeal += GC.getENEMY_HEAL_RATE() + (resolvedValue(URS_HEAL_ENEMY) / 100);
 		}
 		else
 		{
-			iTotalHeal += GC.getNEUTRAL_HEAL_RATE() + getExtraNeutralHeal();
+			iTotalHeal += GC.getNEUTRAL_HEAL_RATE() + (resolvedValue(URS_HEAL_NEUTRAL) / 100);
 		}
 	}
 
@@ -6223,9 +6223,9 @@ int CvUnit::getHealRateAsType(const CvPlot* pPlot, bool bHealCheck, UnitCombatTy
 	{
 		if (pLoopUnit->getTeam() == getTeam() && pLoopUnit->hasHealSupportRemaining()) // XXX what about alliances?
 		{
-			const int iHeal = pLoopUnit->getSameTileHeal() + pLoopUnit->getHealUnitCombatTypeTotal(eHealAsType);
+			const int iHeal = (pLoopUnit->resolvedValue(URS_HEAL_SAME_TILE) / 100) + pLoopUnit->getHealUnitCombatTypeTotal(eHealAsType);
 
-			//if (pLoopUnit->getSameTileHeal() > 0 || pLoopUnit->getHealUnitCombatTypeTotal(eHealAsType) > 0)
+			//if ((pLoopUnit->resolvedValue(URS_HEAL_SAME_TILE) / 100) > 0 || pLoopUnit->getHealUnitCombatTypeTotal(eHealAsType) > 0)
 			//{
 			//	iHeal += pLoopUnit->establishModifier();
 			//}
@@ -6243,9 +6243,9 @@ int CvUnit::getHealRateAsType(const CvPlot* pPlot, bool bHealCheck, UnitCombatTy
 		{
 			if (pLoopUnit->getTeam() == getTeam() && pLoopUnit->hasHealSupportRemaining()) // XXX what about alliances?
 			{
-				const int iHeal = pLoopUnit->getAdjacentTileHeal() + pLoopUnit->getHealUnitCombatTypeAdjacentTotal(eHealAsType);
+				const int iHeal = (pLoopUnit->resolvedValue(URS_HEAL_ADJACENT) / 100) + pLoopUnit->getHealUnitCombatTypeAdjacentTotal(eHealAsType);
 
-				//if (pLoopUnit->getAdjacentTileHeal() > 0 || pLoopUnit->getHealUnitCombatTypeAdjacentTotal(eHealAsType) > 0)
+				//if ((pLoopUnit->resolvedValue(URS_HEAL_ADJACENT) / 100) > 0 || pLoopUnit->getHealUnitCombatTypeAdjacentTotal(eHealAsType) > 0)
 				//{
 				//	iHeal += pLoopUnit->establishModifier();
 				//}
@@ -6313,7 +6313,7 @@ int CvUnit::healTurns(const CvPlot* pPlot) const
             {
                 if (pLoopUnit->getTeam() == getTeam() && pLoopUnit->hasHealSupportRemaining())
                 {
-                    if (pLoopUnit->getSameTileHeal() > 0)
+                    if ((pLoopUnit->resolvedValue(URS_HEAL_SAME_TILE) / 100) > 0)
                     {
                         bHealerPresent = true;
                         break;
@@ -6329,7 +6329,7 @@ int CvUnit::healTurns(const CvPlot* pPlot) const
                     {
                         if (pLoopUnit->getTeam() == getTeam() && pLoopUnit->hasHealSupportRemaining())
                         {
-                            if (pLoopUnit->getAdjacentTileHeal() > 0)
+                            if ((pLoopUnit->resolvedValue(URS_HEAL_ADJACENT) / 100) > 0)
                             {
                                 bHealerPresent = true;
                                 break;
@@ -9510,9 +9510,9 @@ int CvUnit::getSpyInterceptPercent(TeamTypes eTargetTeam) const
 	iSuccess += (GC.getDefineINT("ESPIONAGE_INTERCEPT_SPENDING_MAX") * iTargetPoints) / std::max(1, iTargetPoints + iOurPoints);
 
 	//TSHEEP - add evasion attribute to spy chances
-	if (getExtraEvasion())
+	if (resolvedValue(URS_EVASION))
 	{
-		iSuccess -= getExtraEvasion();
+		iSuccess -= resolvedValue(URS_EVASION);
 	}
 
 	if (plot()->isEspionageCounterSpy(eTargetTeam))
@@ -9522,8 +9522,8 @@ int CvUnit::getSpyInterceptPercent(TeamTypes eTargetTeam) const
 		if(plot()->plotCheck(PUF_isCounterSpy, -1, -1, NULL, NO_PLAYER, eTargetTeam))
 		{
 			CvUnit* pCounterUnit = plot()->plotCheck(PUF_isCounterSpy, -1, -1, NULL, NO_PLAYER, eTargetTeam);
-			if(pCounterUnit != NULL && pCounterUnit->getExtraIntercept())
-				iSuccess += pCounterUnit->getExtraIntercept();
+			if(pCounterUnit != NULL && pCounterUnit->resolvedValue(URS_INTERCEPT))
+				iSuccess += pCounterUnit->resolvedValue(URS_INTERCEPT);
 		}
 	}
 
@@ -10941,7 +10941,7 @@ int CvUnit::airBaseCombatStr() const
 
 int CvUnit::baseCombatStrPreCheck() const
 {
-	int iStr = m_iBaseCombat + getExtraStrength();
+	int iStr = m_iBaseCombat + (resolvedValue(URS_STRENGTH_FLAT) / 100);
 
 	if (iStr < 0)
 	{
@@ -10961,7 +10961,7 @@ int CvUnit::baseCombatStrPreCheck() const
 
 int CvUnit::baseAirCombatStrPreCheck() const
 {
-	int iStr = m_pUnitInfo->getAirCombat() + getExtraStrength();
+	int iStr = m_pUnitInfo->getAirCombat() + (resolvedValue(URS_STRENGTH_FLAT) / 100);
 
 	if (iStr < 0)
 	{
@@ -10977,17 +10977,6 @@ int CvUnit::baseAirCombatStrPreCheck() const
 		iStr /= 100;
 	}
 	return iStr;
-}
-
-int CvUnit::getExtraStrength() const
-{
-	return m_iExtraStrength;
-}
-
-void CvUnit::changeExtraStrength(int iChange)
-{
-	m_iExtraStrength += iChange;
-	FASSERT_NOT_NEGATIVE(m_iExtraStrength);
 }
 
 int CvUnit::getSMStrength() const
@@ -11185,7 +11174,7 @@ int CvUnit::maxCombatStr(const CvPlot* pPlot, const CvUnit* pAttacker, CombatDet
 		}
 	}
 
-	int iExtraModifier = getExtraCombatPercent();
+	int iExtraModifier = resolvedValue(URS_STRENGTH_PERCENT);
 	int iModifier = iExtraModifier;
 	if (pCombatDetails != NULL)
 	{
@@ -12017,7 +12006,7 @@ int CvUnit::airMaxCombatStr(const CvUnit* pOther) const
 	{
 		return 0;
 	}
-	int iModifier = getExtraCombatPercent() + getKamikazePercent();
+	int iModifier = resolvedValue(URS_STRENGTH_PERCENT) + getKamikazePercent();
 
 	if (NULL != pOther)
 	{
@@ -15073,78 +15062,6 @@ void CvUnit::changeExtraAirRange(int iChange)
 	m_iExtraAirRange += iChange;
 }
 
-int CvUnit::getExtraIntercept() const
-{
-	return m_iExtraIntercept;
-}
-
-void CvUnit::changeExtraIntercept(int iChange)
-{
-	m_iExtraIntercept += iChange;
-}
-
-int CvUnit::getExtraEvasion() const
-{
-	return m_iExtraEvasion;
-}
-
-void CvUnit::changeExtraEvasion(int iChange)
-{
-	m_iExtraEvasion += iChange;
-}
-
-int CvUnit::getExtraFirstStrikes() const
-{
-	if (!isCommander())
-	{
-		const CvUnit* pCommander = getCommander();
-		if (pCommander)
-		{
-			return std::max(0, m_iExtraFirstStrikes + pCommander->getExtraFirstStrikes());
-		}
-	}
-	if (!isCommodore())
-    	{
-    		const CvUnit* pCommodore = getCommodore();
-    		if (pCommodore)
-    		{
-    			return std::max(0, m_iExtraFirstStrikes + pCommodore->getExtraFirstStrikes());
-    		}
-    	}
-	return std::max(0, m_iExtraFirstStrikes);
-}
-
-void CvUnit::changeExtraFirstStrikes(int iChange)
-{
-	m_iExtraFirstStrikes += iChange;
-}
-
-int CvUnit::getExtraChanceFirstStrikes() const
-{
-	if (!isCommander())
-	{
-		const CvUnit* pCommander = getCommander();
-		if (pCommander)
-		{
-			return std::max(0, m_iExtraChanceFirstStrikes + pCommander->getExtraChanceFirstStrikes());
-		}
-	}
-	if (!isCommodore())
-    	{
-    		const CvUnit* pCommodore = getCommodore();
-    		if (pCommodore)
-    		{
-    			return std::max(0, m_iExtraChanceFirstStrikes + pCommodore->getExtraChanceFirstStrikes());
-    		}
-    	}
-	return std::max(0, m_iExtraChanceFirstStrikes);
-}
-
-void CvUnit::changeExtraChanceFirstStrikes(int iChange)
-{
-	m_iExtraChanceFirstStrikes += iChange;
-}
-
 int CvUnit::getExtraWithdrawal() const
 {
 	return m_iExtraWithdrawal;
@@ -15156,61 +15073,6 @@ void CvUnit::changeExtraWithdrawal(int iChange)
 }
 
 //TB Combat Mods Begin
-int CvUnit::getExtraAttackCombatModifier() const
-{
-	return m_iExtraAttackCombatModifier;
-}
-
-void CvUnit::changeExtraAttackCombatModifier(int iChange)
-{
-	m_iExtraAttackCombatModifier +=iChange;
-}
-
-int CvUnit::getExtraDefenseCombatModifier() const
-{
-	if (noDefensiveBonus())
-	{
-		return 0;
-	}
-	return m_iExtraDefenseCombatModifier;
-}
-
-void CvUnit::changeExtraDefenseCombatModifier(int iChange)
-{
-	m_iExtraDefenseCombatModifier +=iChange;
-}
-
-int CvUnit::getExtraVSBarbs() const
-{
-	return m_iExtraVSBarbs;
-}
-
-void CvUnit::changeExtraVSBarbs(int iChange)
-{
-	m_iExtraVSBarbs += iChange;
-	FASSERT_NOT_NEGATIVE(m_iExtraVSBarbs);
-}
-
-int CvUnit::getExtraReligiousCombatModifier() const
-{
-	return m_iExtraReligiousCombatModifier;
-}
-
-void CvUnit::changeExtraReligiousCombatModifier(int iChange)
-{
-	m_iExtraReligiousCombatModifier += iChange;
-}
-
-int CvUnit::getExtraDamageModifier() const
-{
-	return m_iExtraDamageModifier;
-}
-
-void CvUnit::changeExtraDamageModifier(int iChange)
-{
-	m_iExtraDamageModifier += iChange;
-}
-
 // Toffer - Upkeep
 void CvUnit::calcUpkeep()
 {
@@ -15317,28 +15179,6 @@ void CvUnit::changeFliesToMoveCount(int iChange)
 	m_iFliesToMoveCount += iChange;
 }
 
-int CvUnit::getExtraLunge() const
-{
-	return m_iExtraLunge;
-}
-
-void CvUnit::changeExtraLunge(int iChange)
-{
-	m_iExtraLunge += iChange;
-	FASSERT_NOT_NEGATIVE(m_iExtraLunge);
-}
-
-int CvUnit::getExtraDynamicDefense() const
-{
-	return m_iExtraDynamicDefense;
-}
-
-void CvUnit::changeExtraDynamicDefense(int iChange)
-{
-	m_iExtraDynamicDefense += iChange;
-	FASSERT_NOT_NEGATIVE(m_iExtraDynamicDefense);
-}
-
 int CvUnit::getAnimalIgnoresBordersCount() const
 {
 	return (getUnitInfo().hasSkill(CLS_SKILL_ANIMAL_IGNORES_BORDERS) ? 1 : 0) + m_iAnimalIgnoresBordersCount;
@@ -15382,144 +15222,6 @@ void CvUnit::changeExtraEndurance(int iChange)
 
 
 //TB Combat Mods End
-int CvUnit::getExtraCollateralDamage() const
-{
-	return m_iExtraCollateralDamage;
-}
-
-void CvUnit::changeExtraCollateralDamage(int iChange)
-{
-	m_iExtraCollateralDamage += iChange;
-	FASSERT_NOT_NEGATIVE(m_iExtraCollateralDamage);
-}
-
-int CvUnit::getExtraEnemyHeal() const
-{
-	return m_iExtraEnemyHeal;
-}
-
-void CvUnit::changeExtraEnemyHeal(int iChange)
-{
-	m_iExtraEnemyHeal += iChange;
-}
-
-int CvUnit::getExtraNeutralHeal() const
-{
-	return m_iExtraNeutralHeal;
-}
-
-void CvUnit::changeExtraNeutralHeal(int iChange)
-{
-	m_iExtraNeutralHeal += iChange;
-}
-
-int CvUnit::getExtraFriendlyHeal() const
-{
-	return m_iExtraFriendlyHeal;
-}
-
-
-void CvUnit::changeExtraFriendlyHeal(int iChange)
-{
-	m_iExtraFriendlyHeal += iChange;
-}
-
-int CvUnit::getSameTileHeal() const
-{
-	return m_iSameTileHeal;
-}
-
-void CvUnit::changeSameTileHeal(int iChange)
-{
-	m_iSameTileHeal += iChange;
-	FASSERT_NOT_NEGATIVE(m_iSameTileHeal);
-}
-
-int CvUnit::getAdjacentTileHeal() const
-{
-	return m_iAdjacentTileHeal;
-}
-
-void CvUnit::changeAdjacentTileHeal(int iChange)
-{
-	m_iAdjacentTileHeal += iChange;
-	FASSERT_NOT_NEGATIVE(m_iAdjacentTileHeal);
-}
-
-int CvUnit::getExtraCombatPercent() const
-{
-	return m_iExtraCombatPercent;
-}
-
-void CvUnit::changeExtraCombatPercent(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iExtraCombatPercent += iChange;
-
-		setInfoBarDirty(true);
-	}
-}
-
-int CvUnit::getExtraCityAttackPercent() const
-{
-	return m_iExtraCityAttackPercent;
-}
-
-void CvUnit::changeExtraCityAttackPercent(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iExtraCityAttackPercent += iChange;
-
-		setInfoBarDirty(true);
-	}
-}
-
-int CvUnit::getExtraCityDefensePercent() const
-{
-	return m_iExtraCityDefensePercent;
-}
-
-void CvUnit::changeExtraCityDefensePercent(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iExtraCityDefensePercent += iChange;
-
-		setInfoBarDirty(true);
-	}
-}
-
-int CvUnit::getExtraHillsAttackPercent() const
-{
-	return m_iExtraHillsAttackPercent;
-}
-
-void CvUnit::changeExtraHillsAttackPercent(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iExtraHillsAttackPercent += iChange;
-
-		setInfoBarDirty(true);
-	}
-}
-
-int CvUnit::getExtraHillsDefensePercent() const
-{
-	return m_iExtraHillsDefensePercent;
-}
-
-void CvUnit::changeExtraHillsDefensePercent(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iExtraHillsDefensePercent += iChange;
-
-		setInfoBarDirty(true);
-	}
-}
 
 //WorkRateMod
 int CvUnit::hillsWorkModifier() const
@@ -17461,8 +17163,6 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 	changeExtraMoves(kUnitCombat.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split diff
 	changeExtraMoveDiscount(kUnitCombat.getMoveDiscountChange() * iChange);//no merge/split diff
 	changeExtraAirRange(kUnitCombat.getAirRangeChange() * iChange);//no merge/split diff
-	changeExtraIntercept(kUnitCombat.getInterceptChange() * iChange);//no merge/split diff
-	changeExtraEvasion(kUnitCombat.getEvasionChange() * iChange);//no merge/split diff
 	changeExtraWithdrawal(kUnitCombat.getWithdrawalChange() * iChange);//no merge/split diff
 	changeCargoSpace(kUnitCombat.getCargoChange() * iChange);//no merge/split diff (since this mechanism is either a base setter or is for non-SM or non-player on SM.
 
@@ -17470,20 +17170,7 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 	changeCargoVolume(kUnitCombat.getSMCargoVolumeChange() * iChange);//merge/split volumetric
 	changeCargoVolumeModifier(kUnitCombat.getSMCargoVolumeModifierChange() * iChange);//merge/split volumetric
 
-	changeExtraCollateralDamage(kUnitCombat.getCollateralDamageChange() * iChange);//I suspect no merge/split
 	changeExtraBombardRate(kUnitCombat.getBombardRateChange() * iChange);//no merge/split (affect this volumetrically on the final value)
-	changeExtraFirstStrikes(kUnitCombat.getScalar(SCALAR_FIRST_STRIKES, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100 * iChange);//no merge/split
-	changeExtraChanceFirstStrikes(kUnitCombat.getChanceFirstStrikesChange() * iChange);//no merge/split
-	changeExtraEnemyHeal(kUnitCombat.getFlatHeal(HEAL_ENEMY_TERRITORY, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split (modified but not multiplicative)
-	changeExtraNeutralHeal(kUnitCombat.getFlatHeal(HEAL_NEUTRAL_TERRITORY, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split (modified but not multiplicative)
-	changeExtraFriendlyHeal(kUnitCombat.getFlatHeal(HEAL_FRIENDLY_TERRITORY, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split (modified but not multiplicative)
-	changeSameTileHeal(kUnitCombat.getFlatHeal(HEAL_SAME_TILE, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split (modified but not multiplicative)
-	changeAdjacentTileHeal(kUnitCombat.getFlatHeal(HEAL_ADJACENT_TILE, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split (modified but not multiplicative)
-	changeExtraCombatPercent(kUnitCombat.getCombatModifier(COMBAT_AMOUNT, CASC_SCOPE_UNIT) * iChange);//no merge/split
-	changeExtraCityAttackPercent(kUnitCombat.getCombatModifier(COMBAT_CITY_ATTACK, CASC_SCOPE_UNIT) * iChange);//no merge/split
-	changeExtraCityDefensePercent(kUnitCombat.getCombatModifier(COMBAT_CITY_DEFENSE, CASC_SCOPE_UNIT) * iChange);//no merge/split
-	changeExtraHillsAttackPercent(kUnitCombat.getCombatModifier(COMBAT_HILLS_ATTACK, CASC_SCOPE_UNIT) * iChange);//no merge/split
-	changeExtraHillsDefensePercent(kUnitCombat.getCombatModifier(COMBAT_HILLS_DEFENSE, CASC_SCOPE_UNIT) * iChange);//no merge/split
 	// Assume only worker units can get the relevant unit combats, if not then we'll need a retroactive unitComp late init function.
 	if (isWorker())
 	{
@@ -17528,18 +17215,8 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 	changeVictoryAdjacentHeal((kUnitCombat.getVictoryAdjacentHeal()) * iChange);//no merge/split
 	changeVictoryHeal((kUnitCombat.getVictoryHeal()) * iChange);//no merge/split
 	changeVictoryStackHeal((kUnitCombat.getVictoryStackHeal()) * iChange);//no merge/split
-	changeExtraAttackCombatModifier(kUnitCombat.getAttackCombatModifierChange() * iChange);//no merge/split
-	changeExtraDefenseCombatModifier(kUnitCombat.getDefenseCombatModifierChange() * iChange);//no merge/split
-	changeExtraVSBarbs(kUnitCombat.getVSBarbsChange() * iChange);//no merge/split
-	changeExtraReligiousCombatModifier(kUnitCombat.getReligiousCombatModifierChange() * iChange);//no merge/split
-	changeExtraDamageModifier(kUnitCombat.getDamageModifierChange() * iChange);//no merge/split
-	changeExtraLunge(kUnitCombat.getLungeChange() * iChange);//no merge/split
-	changeExtraDynamicDefense(kUnitCombat.getDynamicDefenseChange() * iChange);//no merge/split
-	changeExtraStrength(kUnitCombat.getStrengthChange() * iChange);//no merge/split (but included into merge/split mult)
 	changeExtraEndurance(kUnitCombat.getEnduranceChange() * iChange);//no merge/split
 	changeExtraPoisonProbabilityModifier(kUnitCombat.getPoisonProbabilityModifierChange() * iChange);//no merge/split
-	changeExtraCaptureProbabilityModifier(kUnitCombat.getCapture(CAPTURE_PROBABILITY, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split
-	changeExtraCaptureResistanceModifier(kUnitCombat.getCapture(CAPTURE_RESISTANCE, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split
 
 	changeExtraBreakdownChance(kUnitCombat.getBreakdownChanceChange() * iChange);//no merge/split (larger/smaller just more/less survivable)
 	changeExtraBreakdownDamage(kUnitCombat.getBreakdownDamageChange() * iChange);//no merge/split
@@ -17605,7 +17282,6 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 	changeExtraInsidiousness(kUnitCombat.getInsidiousnessChange() * iChange);
 	changeExtraInvestigation(kUnitCombat.getInvestigationChange() * iChange);
 	changeExtraStealthStrikes(kUnitCombat.getStealthStrikesChange() * iChange);
-	changeExtraStealthCombatModifier(kUnitCombat.getStealthCombatModifierChange() * iChange);
 	changeStealthDefenseCount((kUnitCombat.hasSkill(CLS_SKILL_STEALTH_DEFENSE) ? 1 : 0) * iChange);
 	changeOnlyDefensiveCount((kUnitCombat.hasSkill(CLS_SKILL_DEFENSE_ONLY) ? 1 : 0) * iChange);
 	changeNoInvisibilityCount(kUnitCombat.getNoInvisibilityChange() * iChange);
@@ -17927,17 +17603,8 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	changeExtraMoves(kPromotion.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100 * iChange);
 	changeExtraMoveDiscount(kPromotion.getMoveDiscountChange() * iChange);
 	changeExtraAirRange(kPromotion.getAirRangeChange() * iChange);
-	changeExtraIntercept(kPromotion.getInterceptChange() * iChange);
-	changeExtraEvasion(kPromotion.getEvasionChange() * iChange);
-	changeExtraFirstStrikes(kPromotion.getScalar(SCALAR_FIRST_STRIKES, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100 * iChange);
-	changeExtraChanceFirstStrikes(kPromotion.getChanceFirstStrikesChange() * iChange);
 	changeExtraWithdrawal(kPromotion.getWithdrawalChange() * iChange);
 	//TB Combat Mods Begin
-	changeExtraAttackCombatModifier(kPromotion.getAttackCombatModifierChange() * iChange);
-	changeExtraDefenseCombatModifier(kPromotion.getDefenseCombatModifierChange() * iChange);
-	changeExtraVSBarbs(kPromotion.getVSBarbsChange() * iChange);
-	changeExtraReligiousCombatModifier(kPromotion.getReligiousCombatModifierChange() * iChange);
-	changeExtraDamageModifier(kPromotion.getDamageModifierChange() * iChange);
 
 
 	changeStampedeCount((kPromotion.isStampedeChange()) ? iChange : 0);
@@ -17950,19 +17617,14 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	changeIgnoreZoneofControlCount((kPromotion.isIgnoreZoneofControlSubtract()) ? -iChange : 0);
 	changeFliesToMoveCount((kPromotion.isFliesToMoveAdd()) ? iChange : 0);
 	changeFliesToMoveCount((kPromotion.isFliesToMoveSubtract()) ? -iChange : 0);
-	changeExtraLunge(kPromotion.getLungeChange() * iChange);
-	changeExtraDynamicDefense(kPromotion.getDynamicDefenseChange() * iChange);
 	if (kPromotion.getStrengthChange() != 0)
 	{
-		changeExtraStrength(kPromotion.getStrengthChange() * iChange);
 		bSMrecalc = true;
 	}
 	changeAnimalIgnoresBordersCount(kPromotion.getAnimalIgnoresBordersChange() * iChange);
 	changeOnslaughtCount((kPromotion.isOnslaughtChange()) ? iChange : 0);
 	changeExtraEndurance(kPromotion.getEnduranceChange() * iChange);
 
-	changeExtraCaptureProbabilityModifier(kPromotion.getCapture(CAPTURE_PROBABILITY, CASC_SCOPE_UNIT) / 100 * iChange);
-	changeExtraCaptureResistanceModifier(kPromotion.getCapture(CAPTURE_RESISTANCE, CASC_SCOPE_UNIT) / 100 * iChange);
 
 	changeExtraBreakdownChance(kPromotion.getBreakdownChanceChange() * iChange);
 	changeExtraBreakdownDamage(kPromotion.getBreakdownDamageChange() * iChange);
@@ -17985,22 +17647,11 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 		bSMrecalc = true;
 	}
 	//TB Combat Mods End
-	changeExtraCollateralDamage(kPromotion.getCollateralDamageChange() * iChange);
 	if (kPromotion.getBombardRateChange() != 0)
 	{
 		changeExtraBombardRate(kPromotion.getBombardRateChange() * iChange);
 		bSMrecalc = true;
 	}
-	changeExtraEnemyHeal(kPromotion.getFlatHeal(HEAL_ENEMY_TERRITORY, CASC_SCOPE_UNIT) / 100 * iChange);
-	changeExtraNeutralHeal(kPromotion.getFlatHeal(HEAL_NEUTRAL_TERRITORY, CASC_SCOPE_UNIT) / 100 * iChange);
-	changeExtraFriendlyHeal(kPromotion.getFlatHeal(HEAL_FRIENDLY_TERRITORY, CASC_SCOPE_UNIT) / 100 * iChange);
-	changeSameTileHeal(kPromotion.getFlatHeal(HEAL_SAME_TILE, CASC_SCOPE_UNIT) / 100 * iChange);
-	changeAdjacentTileHeal(kPromotion.getFlatHeal(HEAL_ADJACENT_TILE, CASC_SCOPE_UNIT) / 100 * iChange);
-	changeExtraCombatPercent(kPromotion.getCombatModifier(COMBAT_AMOUNT, CASC_SCOPE_UNIT) * iChange);
-	changeExtraCityAttackPercent(kPromotion.getCombatModifier(COMBAT_CITY_ATTACK, CASC_SCOPE_UNIT) * iChange);
-	changeExtraCityDefensePercent(kPromotion.getCombatModifier(COMBAT_CITY_DEFENSE, CASC_SCOPE_UNIT) * iChange);
-	changeExtraHillsAttackPercent(kPromotion.getCombatModifier(COMBAT_HILLS_ATTACK, CASC_SCOPE_UNIT) * iChange);
-	changeExtraHillsDefensePercent(kPromotion.getCombatModifier(COMBAT_HILLS_DEFENSE, CASC_SCOPE_UNIT) * iChange);
 	// Assume only worker units can get the relevant promotions, if not then we'll need a retroactive unitComp late init function.
 	if (isWorker())
 	{
@@ -18069,7 +17720,6 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	changeExtraInvestigation(kPromotion.getInvestigationChange() * iChange);
 	changeAssassinCount(kPromotion.getAssassinChange() * iChange);
 	changeExtraStealthStrikes(kPromotion.getStealthStrikesChange() * iChange);
-	changeExtraStealthCombatModifier(kPromotion.getStealthCombatModifierChange() * iChange);
 	changeStealthDefenseCount((kPromotion.hasSkill(CLS_SKILL_STEALTH_DEFENSE) ? 1 : 0) * iChange);
 	changeOnlyDefensiveCount((kPromotion.hasSkill(CLS_SKILL_DEFENSE_ONLY) ? 1 : 0) * iChange);
 	changeNoInvisibilityCount(kPromotion.getNoInvisibilityChange() * iChange);
@@ -23729,7 +23379,7 @@ bool CvUnit::meetsUnitSelectionCriteria(const CvUnitSelectionCriteria* criteria)
 
 		if (criteria->m_bIsHealer)
 		{
-			if (criteria->m_eHealUnitCombat == NO_UNITCOMBAT && ( getSameTileHeal() == 0 && getAdjacentTileHeal() == 0 ))
+			if (criteria->m_eHealUnitCombat == NO_UNITCOMBAT && ( (resolvedValue(URS_HEAL_SAME_TILE) / 100) == 0 && (resolvedValue(URS_HEAL_ADJACENT) / 100) == 0 ))
 			{
 				return false;
 			}
@@ -24058,11 +23708,6 @@ int CvUnit::getExperiencefromWithdrawal(const int iWithdrawalProbability) const
 }
 
 
-void CvUnit::changeExtraCaptureProbabilityModifier(int iChange)
-{
-	m_iExtraCaptureProbabilityModifier += iChange;
-}
-
 int CvUnit::captureProbabilityTotal() const
 {
 	int iData = resolvedValue(URS_CAPTURE_PROBABILITY);
@@ -24076,11 +23721,6 @@ int CvUnit::captureProbabilityTotal() const
 	return std::max(0, iData);
 }
 
-
-void CvUnit::changeExtraCaptureResistanceModifier(int iChange)
-{
-	m_iExtraCaptureResistanceModifier += iChange;
-}
 
 int CvUnit::captureResistanceTotal() const
 {
@@ -25787,7 +25427,7 @@ void CvUnit::setBuildUpType(PromotionLineTypes ePromotionLine, MissionTypes eSle
 	}
 
 	// AI buildup evaluation
-	const bool bCanHeal = getHealUnitCombatCount() > 0 || getSameTileHeal() > 0 || getAdjacentTileHeal() > 0;
+	const bool bCanHeal = getHealUnitCombatCount() > 0 || (resolvedValue(URS_HEAL_SAME_TILE) / 100) > 0 || (resolvedValue(URS_HEAL_ADJACENT) / 100) > 0;
 	const bool bMustHeal = getDamage() > 0;
 	int iBestValue = 0;
 
@@ -27348,24 +26988,9 @@ int CvUnit::stealthCombatModifierTotal() const
 	{
 		return 0;
 	}
-	int iAnswer = m_pUnitInfo->getStealthCombatModifier();
-	iAnswer += getExtraStealthCombatModifier();
+	int iAnswer = resolvedValue(URS_STEALTH);
 
 	return iAnswer;
-}
-
-int CvUnit::getExtraStealthCombatModifier() const
-{
-	if (!GC.getGame().isOption(GAMEOPTION_COMBAT_WITHOUT_WARNING))
-	{
-		return 0;
-	}
-	return m_iExtraStealthCombatModifier;
-}
-
-void CvUnit::changeExtraStealthCombatModifier(int iChange)
-{
-	m_iExtraStealthCombatModifier += iChange;
 }
 
 bool CvUnit::hasStealthDefense() const

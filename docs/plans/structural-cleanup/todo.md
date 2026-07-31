@@ -107,7 +107,25 @@
 - Finish the HALF-CUT accessors: a member whose declaration, serialization and `savemigration.txt` tag are all
   gone, but whose accessors and consumers were left standing in its own class. They are compile errors that the
   per-TU error cap hides, so the census only names them a few at a time — sweep them from the migration ledger
-  instead of waiting. `CvUnit`, `CvCity` and `CvPlayer` carry the bulk.
+  instead of waiting. `CvCity` and `CvPlayer` carry the remainder.
+  ⚑ The ledger IS the enumeration: intersect its cut tags with the symbols still referenced in the owning class.
+  ⚠ Check each member's FEEDERS before converting — `resolvedValue` covers a unit's info ∪ promotions ∪
+  unit-combat classes and NOTHING else, so a member fed from anywhere else loses that leg silently.
+  ⚠ And check the slot's UNIT: a FLAT slot is ×100 and the reader reduces at its point of use, a percent slot
+  does not ([DEC-fixedpoint-x100](../../architecture/decisions.md#dec-fixedpoint-x100)) — the legacy feeds
+  divided at the WRITE, so a bare re-point is 100× on every flat channel.
+- Give the SPECIAL-UNIT combat contribution a home. A special-unit load feeds a unit's combat percent and
+  withdrawal, and it is neither a promotion nor a combat-class change, so the resolved plane does not gather it
+  and there is no fact that would dirty it. Its `processLoadedSpecialUnit` feeds dangle until it has one.
+- Give the sea-pillage interceptor its "attacking as the defender, no withdrawal" path. It currently brackets the
+  attack by mutating the unit's own withdrawal down and back up — a snapshot-and-restore of a cached slot, which
+  is banned outright ([superseded-ideas](../../architecture/superseded-ideas.md) #19). It wants a parameter on
+  the combat path, never a temporary write.
+- Settle whether a unit's STRENGTH MODIFIER is the `combat` amount or its own Size-Matters channel. It has no
+  resolved slot: the legacy member was fed from `getStrengthModifier()` (the merge/split value) alongside a
+  separate `COMBAT_AMOUNT` feed, so the two were distinct in the legacy and the model carries only one of them.
+  ⛔ Do not mint a slot before the model question is answered — [json.md §6](../../specs/json.md) rules
+  `strength` the BASE and `combat` everything that modifies it, which is the reading the two feeds contradict.
 - Wire the COUNT a building's per-improvement free-specialist deposit scales by. The read is wired through the
   ONE `per` resolver, but the count it resolves against does not count correctly yet, so those entries
   contribute 0 — wired, not right, which is the ordering while the tree is red

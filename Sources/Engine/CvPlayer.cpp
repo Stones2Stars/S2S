@@ -15670,7 +15670,7 @@ bool CvPlayer::doEspionageMission(EspionageMissionTypes eMission, PlayerTypes eT
 			// Poison City's Water Supply
 			if (kMission.getCityPoisonWaterCounter() > 0)
 			{
-				int iTurns = kMission.getCityPoisonWaterCounter() * (100 + (pSpyUnit ? pSpyUnit->getExtraFriendlyHeal() : 0)) / 100;
+				int iTurns = kMission.getCityPoisonWaterCounter() * (100 + (pSpyUnit ? (pSpyUnit->resolvedValue(URS_HEAL_FRIENDLY) / 100) : 0)) / 100;
 					iTurns *= CvGameSpeedScale::speedPercent();
 					iTurns /= 100;
 				pCity->changeEspionageHealthCounter(iTurns);
@@ -15681,7 +15681,7 @@ bool CvPlayer::doEspionageMission(EspionageMissionTypes eMission, PlayerTypes eT
 			// Make city Unhappy
 			if (kMission.getCityUnhappinessCounter() > 0)
 			{
-				int iTurns = kMission.getCityUnhappinessCounter() * (100 + (pSpyUnit ? pSpyUnit->getExtraEnemyHeal() : 0)) / 100;
+				int iTurns = kMission.getCityUnhappinessCounter() * (100 + (pSpyUnit ? (pSpyUnit->resolvedValue(URS_HEAL_ENEMY) / 100) : 0)) / 100;
 					iTurns *= CvGameSpeedScale::speedPercent();
 					iTurns /= 100;
 				pCity->changeEspionageHappinessCounter(iTurns);
@@ -15693,7 +15693,7 @@ bool CvPlayer::doEspionageMission(EspionageMissionTypes eMission, PlayerTypes eT
 			// Make city Revolt
 			if (kMission.getCityRevoltCounter() > 0)
 			{
-				int iTurns = kMission.getCityRevoltCounter() * (100 + (pSpyUnit ? pSpyUnit->getExtraNeutralHeal() :0)) / 100;
+				int iTurns = kMission.getCityRevoltCounter() * (100 + (pSpyUnit ? (pSpyUnit->resolvedValue(URS_HEAL_NEUTRAL) / 100) :0)) / 100;
 					iTurns *= CvGameSpeedScale::speedPercent();
 					iTurns /= 100;
 				pCity->changeCultureUpdateTimer(iTurns);

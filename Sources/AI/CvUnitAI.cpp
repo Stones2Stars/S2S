@@ -4954,7 +4954,7 @@ void CvUnitAI::AI_counterMove()
 	}
 	// Super Forts end
 
-	if (getSameTileHeal() + getHealUnitCombatCount() > 0)
+	if ((resolvedValue(URS_HEAL_SAME_TILE) / 100) + getHealUnitCombatCount() > 0)
 	{
 		if (!canAttack())
 		{
@@ -14404,7 +14404,7 @@ bool CvUnitAI::AI_lead(std::vector<UnitAITypes>& aeUnitAITypes)
 								}
 
 								// or the unit with the best healing ability
-								int iHealing = pLoopUnit->getSameTileHeal() + (pLoopUnit->getHealUnitCombatCount() / 2) + pLoopUnit->getAdjacentTileHeal();
+								int iHealing = (pLoopUnit->resolvedValue(URS_HEAL_SAME_TILE) / 100) + (pLoopUnit->getHealUnitCombatCount() / 2) + (pLoopUnit->resolvedValue(URS_HEAL_ADJACENT) / 100);
 								if (iHealing > iBestHealing)
 								{
 									iBestHealing = iHealing;

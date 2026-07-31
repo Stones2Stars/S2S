@@ -1086,36 +1086,18 @@ public:
 	int getExtraAirRange() const;
 	void changeExtraAirRange(int iChange);
 
-	int getExtraIntercept() const;
-	void changeExtraIntercept(int iChange);
 
-	int getExtraEvasion() const;
-	void changeExtraEvasion(int iChange);
 
-	int getExtraFirstStrikes() const;
-	void changeExtraFirstStrikes(int iChange);
 
-	int getExtraChanceFirstStrikes() const;
-	void changeExtraChanceFirstStrikes(int iChange);
 
 	int getExtraWithdrawal() const;
 	void changeExtraWithdrawal(int iChange);
 
 	//TB Combat Mods Start
-	int getExtraAttackCombatModifier () const;
-	void changeExtraAttackCombatModifier (int iChange);
 
-	int getExtraDefenseCombatModifier () const;
-	void changeExtraDefenseCombatModifier (int iChange);
 
-	int getExtraVSBarbs () const;
-	void changeExtraVSBarbs (int iChange);
 
-	int getExtraReligiousCombatModifier() const;
-	void changeExtraReligiousCombatModifier(int iChange);
 
-	int getExtraDamageModifier () const;
-	void changeExtraDamageModifier (int iChange);
 
 	void calcUpkeep();
 	void recalculateUnitUpkeep();
@@ -1144,14 +1126,8 @@ public:
 
 
 
-	int getExtraLunge () const;
-	void changeExtraLunge (int iChange);
 
-	int getExtraDynamicDefense () const;
-	void changeExtraDynamicDefense (int iChange);
 
-	int getExtraStrength () const;
-	void changeExtraStrength (int iChange);
 
 	int getSMStrength () const;
 	void setSMStrength ();
@@ -1169,38 +1145,16 @@ public:
 
 	//TB Combat Mods End
 
-	int getExtraCollateralDamage() const;
-	void changeExtraCollateralDamage(int iChange);
 
-	int getExtraEnemyHeal() const;
-	void changeExtraEnemyHeal(int iChange);
 
-	int getExtraNeutralHeal() const;
-	void changeExtraNeutralHeal(int iChange);
 
-	int getExtraFriendlyHeal() const;
-	void changeExtraFriendlyHeal(int iChange);
 
-	int getSameTileHeal() const;
-	void changeSameTileHeal(int iChange);
 
-	int getAdjacentTileHeal() const;
-	void changeAdjacentTileHeal(int iChange);
 
-	int getExtraCombatPercent() const;
-	void changeExtraCombatPercent(int iChange);
 
-	int getExtraCityAttackPercent() const;
-	void changeExtraCityAttackPercent(int iChange);
 
-	int getExtraCityDefensePercent() const;
-	void changeExtraCityDefensePercent(int iChange);
 
-	int getExtraHillsAttackPercent() const;
-	void changeExtraHillsAttackPercent(int iChange);
 
-	int getExtraHillsDefensePercent() const;
-	void changeExtraHillsDefensePercent(int iChange);
 
 	// WorkRateMod
 	int getWorkModifier() const;
@@ -1802,10 +1756,8 @@ public:
 
 	int getExperiencefromWithdrawal(const int iWithdrawalProbability) const;
 
-	void changeExtraCaptureProbabilityModifier(int iChange);
 	int captureProbabilityTotal() const;
 
-	void changeExtraCaptureResistanceModifier(int iChange);
 	int captureResistanceTotal() const;
 	int surroundedCaptureModifier() const;
 
@@ -2138,8 +2090,6 @@ public:
 	void changeExtraStealthStrikes(int iChange);
 
 	int stealthCombatModifierTotal() const;
-	int getExtraStealthCombatModifier() const;
-	void changeExtraStealthCombatModifier(int iChange);
 
 	bool hasStealthDefense() const;
 	int getStealthDefenseCount() const;
