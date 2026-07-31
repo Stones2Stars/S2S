@@ -356,6 +356,22 @@ on-top model. Enforceable at the curator/validation layer: a `units/**` JSON aut
 `percent` deposit is a data error.
 Ledgered as [DEC-unit-modifiers-on-top](../architecture/decisions.md#dec-unit-modifiers-on-top).
 
+> **⚖ THE COMMANDER RIDES ON TOP OF A UNIT EXACTLY AS A UNIT RIDES ON TOP OF A CITY (owner).** *"Whatever a
+> commander does is on top, it is not part of the unit itself — it is literally the combat calc's job to check
+> if the commander has points left to add to the attack."* So this is the SAME rule one scope down, not a new
+> one: the commander→unit relationship is the unit→city relationship, and everything above applies unchanged.
+> - The unit's RESOLVED values ([state-repositories.md](../architecture/state-repositories.md) UNIT plane) are
+>   **COMMANDER-FREE by construction**: they gather the unit's own info ∪ its promotions ∪ its unit-combat
+>   classes, and nothing else. A commander attaching, detaching or moving is neither a promotion nor a
+>   combat-class change, so it must never be a cache input — there is no fact that would dirty it, and baking it
+>   in yields a plausible, permanently stale number the moment the commander moves.
+> - The commander's contribution is added **LIVE, ON TOP, at the COMBAT CALC**, which is also the only place
+>   that can ask the question the mechanic actually turns on: **has this commander got control points left to
+>   spend on this attack?** A stat read cannot answer that, which is why the fold does not belong in one.
+> ⛔ So a per-unit stat getter that reaches through `getCommander()` and adds the commander's own accumulator is
+> the wrong shape twice over: it puts a traveling modifier inside the unit's own number, and it spends the
+> commander's points without ever checking whether any remain.
+
 **UNIT-driven wellbeing is END-TURN cadence.** The military/unit-count happiness
 term recomputes **once per turn** (the substrate's turn-roll), NEVER per unit move — a per-move dirty hook made
 every post-move rate read pay the wellbeing walk (a measured unit-automation collapse) and is banned. The

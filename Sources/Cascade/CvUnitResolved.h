@@ -30,6 +30,14 @@
 //	changes": SEVT_UNIT_PROMOTION_CHANGED and SEVT_UNIT_COMBAT_CHANGED. Unit MOVEMENT never dirties this (nor any
 //	cache -- [DEC-unit-modifiers-on-top]).
 //
+//	⛔ COMMANDER-FREE BY CONSTRUCTION (owner, [modifier.md] §2b). A COMMANDER's contribution is NOT part of the
+//	unit -- it rides ON TOP, exactly as unit-sourced happiness rides on top of a city. It is deliberately absent
+//	from the held set above, and that is load-bearing rather than an omission: attaching, detaching or moving a
+//	commander is neither a promotion nor a combat-class change, so NO fact would dirty this cache and a folded-in
+//	commander value would be permanently stale the moment the commander moved. The fold belongs to the COMBAT
+//	CALC, which is also the only place that can ask whether the commander has CONTROL POINTS left to spend --
+//	a question a stat read cannot answer.
+//
 
 #include "Infos/CvInfoKinds.h"
 
@@ -65,6 +73,26 @@ enum UnitResolvedSlot
 	URS_VISION,                   // vision.unit.flat              -- the unit's sight STRENGTH (vision.md):
 	                              //   its own base plus its combat classes plus its promotions. Elevation is
 	                              //   NOT here -- that belongs to the ground and is added at read.
+	// The `combat` family -- json.md §6: `strength` is the BASE, `combat` is everything that MODIFIES it. One
+	// slot per KIND, because a consumer asks a specific question ("what is my city-attack?") and the kinds do
+	// not sum with each other.
+	URS_COMBAT_ATTACK,            // combat.unit.attack
+	URS_COMBAT_DEFENSE,           // combat.unit.defense
+	URS_CITY_ATTACK,              // combat.unit.cityAttack
+	URS_CITY_DEFENSE,             // combat.unit.cityDefense
+	URS_HILLS_ATTACK,             // combat.unit.hillsAttack
+	URS_HILLS_DEFENSE,            // combat.unit.hillsDefense
+	URS_ANIMAL_COMBAT,            // combat.unit.animal
+	URS_RELIGIOUS_COMBAT,         // combat.unit.religious
+	URS_VS_BARBS,                 // combat.unit.vsBarbs
+	URS_LUNGE,                    // combat.unit.lunge
+	URS_UNNERVE,                  // combat.unit.unnerve
+	URS_ENCLOSE,                  // combat.unit.enclose
+	URS_TAUNT,                    // combat.unit.taunt
+	URS_DYNAMIC_DEFENSE,          // combat.unit.dynamicDefense
+	URS_DAMAGE_MODIFIER,          // combat.unit.damageModifier
+	URS_STEALTH,                  // combat.unit.stealth
+	URS_STEALTH_STRIKES,          // combat.unit.stealthStrikes
 	NUM_UNIT_RESOLVED_SLOTS
 };
 

@@ -17,12 +17,16 @@ namespace
 	// a family+kind pair, or an InfoScalar straggler (patterns.md's getScalar row). `scalar` >= 0 selects the
 	// straggler form; otherwise (family, kind) is used. The table IS the spec of this plane -- adding a unit
 	// value is a row here, never a new member + getter.
+	// A row may defer the percent-vs-flat verdict to the vocabulary rather than state it: the kinds of one
+	// family do not share a unit, so hand-picking per row is where a silent mis-sum would come from.
+	const CvCascUnit UNIT_CANONICAL = (CvCascUnit)-1;
+
 	struct UnitSlotAddress
 	{
 		int scalar;                 // InfoScalar, or -1
 		ModifierFamily family;
 		int kind;
-		CvCascUnit unit;
+		CvCascUnit unit;            // UNIT_CANONICAL -> ask infoKindUnit for this (family, kind)
 	};
 
 	const UnitSlotAddress g_aSlotAddress[NUM_UNIT_RESOLVED_SLOTS] =
@@ -45,6 +49,26 @@ namespace
 		{ -1,                          MODFAM_UPKEEP,       UPKEEP_EXTRA,           CASC_UNIT_FLAT    }, // URS_UPKEEP_EXTRA
 		{ -1,                          MODFAM_VISION,       VISION_CONCEALMENT,     CASC_UNIT_FLAT    }, // URS_CONCEALMENT
 		{ -1,                          MODFAM_VISION,       VISION_STRENGTH,        CASC_UNIT_FLAT    }, // URS_VISION
+		// The `combat` family. UNIT_CANONICAL rather than a hand-picked unit per row: infoKindUnit already owns
+		// the percent-vs-flat verdict for a kind ([fixed-point-and-scales.md]: ask the KIND's unit, never the
+		// family's), so asking it is what keeps a flat-unit kind from being summed as a percent.
+		{ -1, MODFAM_COMBAT, COMBAT_ATTACK,           UNIT_CANONICAL }, // URS_COMBAT_ATTACK
+		{ -1, MODFAM_COMBAT, COMBAT_DEFENSE,          UNIT_CANONICAL }, // URS_COMBAT_DEFENSE
+		{ -1, MODFAM_COMBAT, COMBAT_CITY_ATTACK,      UNIT_CANONICAL }, // URS_CITY_ATTACK
+		{ -1, MODFAM_COMBAT, COMBAT_CITY_DEFENSE,     UNIT_CANONICAL }, // URS_CITY_DEFENSE
+		{ -1, MODFAM_COMBAT, COMBAT_HILLS_ATTACK,     UNIT_CANONICAL }, // URS_HILLS_ATTACK
+		{ -1, MODFAM_COMBAT, COMBAT_HILLS_DEFENSE,    UNIT_CANONICAL }, // URS_HILLS_DEFENSE
+		{ -1, MODFAM_COMBAT, COMBAT_ANIMAL,           UNIT_CANONICAL }, // URS_ANIMAL_COMBAT
+		{ -1, MODFAM_COMBAT, COMBAT_RELIGIOUS,        UNIT_CANONICAL }, // URS_RELIGIOUS_COMBAT
+		{ -1, MODFAM_COMBAT, COMBAT_VS_BARBS,         UNIT_CANONICAL }, // URS_VS_BARBS
+		{ -1, MODFAM_COMBAT, COMBAT_LUNGE,            UNIT_CANONICAL }, // URS_LUNGE
+		{ -1, MODFAM_COMBAT, COMBAT_UNNERVE,          UNIT_CANONICAL }, // URS_UNNERVE
+		{ -1, MODFAM_COMBAT, COMBAT_ENCLOSE,          UNIT_CANONICAL }, // URS_ENCLOSE
+		{ -1, MODFAM_COMBAT, COMBAT_TAUNT,            UNIT_CANONICAL }, // URS_TAUNT
+		{ -1, MODFAM_COMBAT, COMBAT_DYNAMIC_DEFENSE,  UNIT_CANONICAL }, // URS_DYNAMIC_DEFENSE
+		{ -1, MODFAM_COMBAT, COMBAT_DAMAGE_MODIFIER,  UNIT_CANONICAL }, // URS_DAMAGE_MODIFIER
+		{ -1, MODFAM_COMBAT, COMBAT_STEALTH,          UNIT_CANONICAL }, // URS_STEALTH
+		{ -1, MODFAM_COMBAT, COMBAT_STEALTH_STRIKES,  UNIT_CANONICAL }, // URS_STEALTH_STRIKES
 	};
 
 	// ONE contributor's share of every slot, added in. A bare compiled-sum fetch per slot -- no anatomy walk,
@@ -58,9 +82,15 @@ namespace
 		for (int iSlot = 0; iSlot < NUM_UNIT_RESOLVED_SLOTS; ++iSlot)
 		{
 			const UnitSlotAddress& kAddress = g_aSlotAddress[iSlot];
-			aiOut[iSlot] += (kAddress.scalar >= 0)
-				? pInfo->getScalar((InfoScalar)kAddress.scalar, CASC_SCOPE_UNIT, kAddress.unit)
-				: pInfo->modifier(kAddress.family, kAddress.kind, CASC_SCOPE_UNIT, kAddress.unit);
+			if (kAddress.scalar >= 0)
+			{
+				aiOut[iSlot] += pInfo->getScalar((InfoScalar)kAddress.scalar, CASC_SCOPE_UNIT, kAddress.unit);
+				continue;
+			}
+			const CvCascUnit eUnit = (kAddress.unit == UNIT_CANONICAL)
+				? infoKindUnit(kAddress.family, kAddress.kind, CASC_SCOPE_UNIT)
+				: kAddress.unit;
+			aiOut[iSlot] += pInfo->modifier(kAddress.family, kAddress.kind, CASC_SCOPE_UNIT, eUnit);
 		}
 	}
 }
