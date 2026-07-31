@@ -427,6 +427,27 @@ int  CityContext::propertyValue(int eProperty) const
 		return 0;
 	return m_city->getPropertiesConst()->getValueByProperty((PropertyTypes)eProperty);
 }
+// The §3.7 `per` count domains. FORWARDS, not stores: the city already maintains its specialist
+// population O(1), and the improved-plot count is asked of the city that owns the radius.
+// ⚠ specialistCount answers the ASSIGNED population; the typed-free ledger is not folded in because
+// the city no longer carries that member -- when it is restored, it is added HERE.
+// ⚠ improvedPlotCount walks the city's radius per call. It is evaluated at package-rebuild and
+// per-decision cadence, never on a read path, but the standing target is the id-keyed radius
+// dictionary on this context ([contexts.md]) -- this is the read that wants it.
+int  CityContext::specialistCount() const
+{
+	if (m_city == NULL)
+		return 0;
+	return m_city->getSpecialistPopulation();
+}
+
+int  CityContext::improvedPlotCount(int eImprovement) const
+{
+	if (m_city == NULL || eImprovement < 0)
+		return 0;
+	return m_city->countNumImprovedPlots((ImprovementTypes)eImprovement, false);
+}
+
 int  CityContext::ownCulturePercent() const
 {
 	if (m_city == NULL || m_city->plot() == NULL)

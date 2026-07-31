@@ -167,6 +167,11 @@ public:
 	bool isGovernmentCenter() const;          // CvCity::isGovernmentCenter (the owner-sanctioned engine counter)
 	bool hasFreshWaterAccess() const;         // CvCity::hasFreshWater -- the provider-building-fed ACCESS counter (m_iFreshWater)
 	int  propertyValue(int eProperty) const;  // CvProperties::getValueByProperty (the PROPERTY_ band read)
+	// The §3.7 `per` COUNT domains this scope answers (tally.md: let the OBJECT own the aggregate, the context
+	// forwards it -- never a tally side-store). A per-scaler over these read 0/1 through the presence fallback
+	// before they were wired, so every deposit scaled by one silently contributed nothing.
+	int  specialistCount() const;             // CvCity::getSpecialistPopulation -- the SPECIALIST count token
+	int  improvedPlotCount(int eImprovement) const;   // CvCity::countNumImprovedPlots -- the IMPROVEMENT_ count
 	int  ownCulturePercent() const;           // CULTURE_PERCENTAGE -- see the CONTEXT GAP note below
 	int  owner() const;                       // CvCity::getOwner
 	int  team() const;                        // CvCity::getTeam (the plot-bonus reveal axis)

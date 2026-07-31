@@ -80,6 +80,19 @@
 > loop) is [roadmap.md § LEGACY STILL BREATHING](roadmap.md). ⚠ KNOWN-INCOMPLETE — legacy found anywhere else is
 > killed on the same terms. ⛔ Never record a found legacy surface as acceptable or "kept until X".
 
+- Finish the HALF-CUT accessors: a member whose declaration, serialization and `savemigration.txt` tag are all
+  gone, but whose accessors and consumers were left standing in its own class. They are compile errors that the
+  per-TU error cap hides, so the census only names them a few at a time — sweep them from the migration ledger
+  instead of waiting. `CvUnit`, `CvCity` and `CvPlayer` carry the bulk.
+- Repair the `savemigration.txt` REPLACEMENT-OBLIGATION notes that no longer resolve. Each note records WHICH
+  named replacement now serves a cut value; where that replacement was archived or never built, the field is
+  gone from every save and the value has NO source, which nothing catches ([AGENTS.md](../../../AGENTS.md)).
+  The wellbeing cut notes are the known cluster — they name the archived bespoke substrate
+  ([superseded-ideas](../../architecture/superseded-ideas.md) #14) rather than what actually serves them now.
+- Reconcile the ledger entries that contradict the tree: a tag listed as CUT whose member is still serialized.
+  Two are DECORATED per-element arrays inside live enum-remapping loops, which [save.md §3](../../specs/save.md)
+  says must never be listed at all (their entries cannot match, so they are inert but false); one is a plain tag
+  whose read and write were never actually deleted, so it writes a tag that the reader then drains.
 - Move every consumer off the hand-named channel-shaped getters on `CvCity`/`CvPlayer`, then delete the old names.
 - Cut the hide-and-seek per-type intensity ACCUMULATORS on `CvUnit` (serialized — the cut carries a
   `savemigration.txt` step; confirm the tag spelling against the stream first). Their replacements are built.
@@ -150,12 +163,19 @@
 - Make `CvCity::getNumBonuses` a BARE FETCH of a maintained per-city count ([enabler.md §8](../../specs/enabler.md)
   open item 2). ⛔ Every per-read re-plumbing of this is the wrong axis and has been backed out before.
   ⚠ `CityContext::tradedBonusCount` re-derives on refresh and is on the wrong side of it too.
-- Wire the missing COUNT DOMAINS into the ONE count core, so a `per:` deposit over them scales instead of
-  falling through to the presence fallback and contributing 0 (or 1) instead of N. Two are known live:
-  `SPECIALIST` — json.md §3.7's own first worked example, authored by buildings, civics and traits — and
-  `IMPROVEMENT` at city scope, which the per-improvement free-specialist scaler needs (the count wanted is
-  improved plots worked by this city, so a presence fallback answers 1 where the legacy term answered the
-  plot count). ⚠ Both are live authored data reading the wrong number today, not headroom.
+- Decide WHERE an EMPIRE-scope deposit's `per` scaler resolves when the count it names is CITY-local. The
+  specialist-per bonus is the live case: the source is empire-wide (a building anywhere) but the multiplier is
+  each city's OWN specialist count, so the curator authors it at empire scope while the count only exists per
+  city. The gather folds an empire-scope entry into the EMPIRE package, where no city is bound and the scaler
+  therefore resolves to nothing. ⛔ Do not "fix" it by re-scoping the data to city — the source really is
+  empire-wide; what needs deciding is whether such a scaler resolves at the per-city roll-up instead of at fold
+  time ([modifier.md §1](../../specs/modifier.md): the downward roll is realized AT READ).
+- Give the CityContext its id-keyed RADIUS DICTIONARIES, then move the improvement count onto them. The count
+  domain is wired but walks the city's radius per call; it runs at rebuild/per-decision cadence rather than on a
+  read path, so it is not the banned read-time scan, but the dictionary is the standing target
+  ([contexts.md](../../architecture/contexts.md)) and this read is the one that wants it.
+- Fold the city's TYPED-FREE specialists into the specialist count once that ledger has a home again — the count
+  answers the ASSIGNED population alone until then, and the legacy multiplier counted both.
   ⚑ The shape is already ruled ([tally.md](../../specs/tally.md)): give the OBJECT the aggregate and forward it
   through `CityContext`, never a tally side-store. ⚠ The count the legacy multiplier used is assigned **plus
   typed-free** specialists, so the city's assigned-only population counter is NOT the number — forwarding it

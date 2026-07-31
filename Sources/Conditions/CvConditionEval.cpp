@@ -219,6 +219,18 @@ static bool ev_countCore(const CvCascadeEvalCtx& ctx, const std::string& t, int 
 		return true;
 	}
 	if (t == "POPULATION") { iOut = cityContext != NULL ? cityContext->population() : 0; return true; }
+	// the §3.7 SPECIALIST count token -- json.md's own first worked example of a `per` scaler. Buildings,
+	// civics and traits all author "+N per specialist"; without this branch every one of them fell to the
+	// presence fallback and multiplied by 0/1 instead of the city's specialist count.
+	if (t == "SPECIALIST") { iOut = cityContext != NULL ? cityContext->specialistCount() : 0; return true; }
+	// the IMPROVEMENT_ count at CITY scope: how many of the city's plots carry it (the per-improvement
+	// free-specialist scaler's multiplier). A presence fallback answered 1 where the count is wanted.
+	// ⚠ CITY scope only -- elsewhere an improvement reference stays the ordinary presence atom.
+	if (en_starts(t, "IMPROVEMENT_") && id >= 0 && eScope == CASC_SCOPE_CITY && cityContext != NULL)
+	{
+		iOut = cityContext->improvedPlotCount(id);
+		return true;
+	}
 	// BONUS_ counts are VOLUMETRIC at city scope (json.md par.3.4: presence = min:1 of the same count; the network
 	// count lives on the plot group, read via the city relay -- CityContext::tradedBonusCount). Without this branch
 	// every `per`-scaled bonus deposit (the legacy per-instance BonusYieldChanges class) fell to the 0/1 presence
