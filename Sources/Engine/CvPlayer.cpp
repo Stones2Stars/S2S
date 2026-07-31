@@ -12744,7 +12744,7 @@ bool CvPlayer::isUnitMaxedOut(const UnitTypes eIndex, const int iExtra) const
 		return false;
 	}
 	if (GC.getGame().isOption(GAMEOPTION_NO_NATIONAL_UNIT_LIMIT)
-	&& !GC.getUnitInfo(eIndex).isUnlimitedException())
+	&& !GC.getUnitInfo(eIndex).hasSkill(CLS_SKILL_UNLIMITED_EXCEPTION))
 	{
 		return false;
 	}

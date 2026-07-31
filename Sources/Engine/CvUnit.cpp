@@ -16469,10 +16469,10 @@ bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion, bool bIgnoreHas, boo
 		}
 	}
 
-	for (int iI = 0; iI < promo.getNumSubCombatChangeTypes(); iI++)
+	for (int iI = 0; iI < (int)promo.providesUnitCombats().size(); iI++)
 	{
 		//If we have the unitcombat the promotion will give us already
-		if (isHasUnitCombat((UnitCombatTypes)promo.getSubCombatChangeType(iI)))
+		if (isHasUnitCombat((UnitCombatTypes)promo.providesUnitCombats()[iI]))
 		{
 			return false;
 		}
@@ -16775,9 +16775,9 @@ bool CvUnit::isPromotionValid(PromotionTypes ePromotion, bool bFree, bool bKeepC
 	}
 
 	// Toffer - Promotionline is factored in for the (dis)qualified caches.
-	for (int iI = 0; iI < promo.getNumDisqualifiedUnitCombatTypes(); iI++)
+	for (int iI = 0; iI < (int)promo.getDisqualifiedUnitCombats().size(); iI++)
 	{
-		if (isHasUnitCombat((UnitCombatTypes)promo.getDisqualifiedUnitCombatType(iI)))
+		if (isHasUnitCombat((UnitCombatTypes)promo.getDisqualifiedUnitCombats()[iI]))
 		{
 			return false;
 		}
@@ -16790,10 +16790,10 @@ bool CvUnit::isPromotionValid(PromotionTypes ePromotion, bool bFree, bool bKeepC
 	{
 		bool bValid = bFree;
 
-		for (int iI = promo.getNumQualifiedUnitCombatTypes() - 1; iI > -1; iI--)
+		for (int iI = (int)promo.getQualifiedUnitCombats().size() - 1; iI > -1; iI--)
 		{
 			bValid = false;
-			if (isHasUnitCombat((UnitCombatTypes)promo.getQualifiedUnitCombatType(iI)))
+			if (isHasUnitCombat((UnitCombatTypes)promo.getQualifiedUnitCombats()[iI]))
 			{
 				bValid = true;
 				break;
@@ -17805,9 +17805,9 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 		changeExtraFlankingStrengthbyUnitCombatType(((UnitCombatTypes)iI), (kPromotion.getFlankingStrengthbyUnitCombatTypeChange(iI) * iChange));
 	}
 
-	for (iI = 0; iI < kPromotion.getNumSubCombatChangeTypes(); iI++)
+	for (iI = 0; iI < (int)kPromotion.providesUnitCombats().size(); iI++)
 	{
-		setHasUnitCombat(((UnitCombatTypes)kPromotion.getSubCombatChangeType(iI)), bAdding, true);
+		setHasUnitCombat(((UnitCombatTypes)kPromotion.providesUnitCombats()[iI]), bAdding, true);
 	}
 
 	for (iI = 0; iI < kPromotion.getNumRemovesUnitCombatTypes(); iI++)
