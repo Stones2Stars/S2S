@@ -932,6 +932,10 @@ public:
 	int getGameTurnCreated() const;
 	void setGameTurnCreated(int iNewValue);
 
+	// The unit-combat classes this unit HEALS AS -- its info's own authored `heal.unit.unitCombat.{UNITCOMBAT_X}`
+	// rows, projected off the ONE keyed collect ([DEC-single-implementation]). The heal MECHANIC is untouched;
+	// only its FEED moves onto the rebuilt info (roadmap.md: the carve-out is the mechanic, not the feed).
+	void healAsUnitCombats(std::vector<UnitCombatTypes>& healAsTypes) const;
 	int getHealAsDamage(UnitCombatTypes eHealAsType) const;
 	void changeHealAsDamage(UnitCombatTypes eHealAsType, int iChange, PlayerTypes ePlayer = NO_PLAYER);
 	void setHealAsDamage(UnitCombatTypes eHealAsType, int iNewValue, PlayerTypes ePlayer = NO_PLAYER, bool bNotifyEntity = false);

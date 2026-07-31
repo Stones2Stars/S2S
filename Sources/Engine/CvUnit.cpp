@@ -6043,13 +6043,15 @@ int CvUnit::healRate(const CvPlot* pPlot, bool bHealCheck) const
     }
 
 	//Find what will take the longest to heal and use that rate
-	if (m_pUnitInfo->getNumHealAsTypes() > 0)
+	std::vector<UnitCombatTypes> kHealAsTypes;
+	healAsUnitCombats(kHealAsTypes);
+	if (!kHealAsTypes.empty())
 	{
 		int iWorstNumTurns = -1;
 		int iBestHeal = MAX_INT;
-		for (int iI = m_pUnitInfo->getNumHealAsTypes() - 1; iI > -1; iI--)
+		for (int iI = (int)kHealAsTypes.size() - 1; iI > -1; iI--)
 		{
-			const UnitCombatTypes eHealAsType = (UnitCombatTypes)m_pUnitInfo->getHealAsType(iI);
+			const UnitCombatTypes eHealAsType = kHealAsTypes[iI];
 			const int iHealAsDamage = getHealAsDamage(eHealAsType);
 			if (iHealAsDamage > 0)
 			{
@@ -6169,9 +6171,11 @@ int CvUnit::getHealRateAsType(const CvPlot* pPlot, bool bHealCheck, UnitCombatTy
 	PROFILE_FUNC();
 	{
 		bool bIsValid = false;
-		for (int iI = 0; iI < m_pUnitInfo->getNumHealAsTypes(); iI++)
+		std::vector<UnitCombatTypes> kValidHealAsTypes;
+		healAsUnitCombats(kValidHealAsTypes);
+		for (size_t iHealAs = 0; iHealAs < kValidHealAsTypes.size(); ++iHealAs)
 		{
-			if (m_pUnitInfo->getHealAsType(iI) == eHealAsType)
+			if (kValidHealAsTypes[iHealAs] == eHealAsType)
 			{
 				bIsValid = true;
 				break;
@@ -6262,7 +6266,10 @@ int CvUnit::getHealRateAsType(const CvPlot* pPlot, bool bHealCheck, UnitCombatTy
 	if (pHealUnit != NULL && bHealCheck)
 	{
 		pHealUnit->changeHealSupportUsed(1);
-		pHealUnit->changeExperience100(10 / m_pUnitInfo->getNumHealAsTypes());
+		// The divisor is the HEALER's own heal-as count (this unit's rows), non-zero by the validity gate above.
+		std::vector<UnitCombatTypes> kHealerHealAsTypes;
+		healAsUnitCombats(kHealerHealAsTypes);
+		pHealUnit->changeExperience100(10 / (int)kHealerHealAsTypes.size());
 	}
 	iTotalHeal += iBestHeal;
 
@@ -6345,7 +6352,9 @@ int CvUnit::healTurns(const CvPlot* pPlot) const
         }
     }
 
-	const int iNumHealAs = m_pUnitInfo->getNumHealAsTypes();
+	std::vector<UnitCombatTypes> kHealAsTypes;
+	healAsUnitCombats(kHealAsTypes);
+	const int iNumHealAs = (int)kHealAsTypes.size();
 
 	//Find what will take the longest to heal and use that rate
 	if (iNumHealAs > 0)
@@ -6355,7 +6364,7 @@ int CvUnit::healTurns(const CvPlot* pPlot) const
 
 		for (int iI = 0; iI < iNumHealAs; iI++)
 		{
-			const UnitCombatTypes eHealAsType = (UnitCombatTypes)m_pUnitInfo->getHealAsType(iI);
+			const UnitCombatTypes eHealAsType = kHealAsTypes[iI];
 			const int iHealDamage = getHealAsDamage(eHealAsType);
 			if (iHealDamage > 0)
 			{
@@ -6424,11 +6433,13 @@ void CvUnit::doHeal()
 	PROFILE_EXTRA_FUNC();
 	UnitCombatTypes eHealAsType = NO_UNITCOMBAT;
 
-	if (m_pUnitInfo->getNumHealAsTypes() > 0)
+	std::vector<UnitCombatTypes> kHealAsTypes;
+	healAsUnitCombats(kHealAsTypes);
+	if (!kHealAsTypes.empty())
 	{
-		for (int iI = 0; iI < m_pUnitInfo->getNumHealAsTypes(); iI++)
+		for (size_t iHealAs = 0; iHealAs < kHealAsTypes.size(); ++iHealAs)
 		{
-			eHealAsType = (UnitCombatTypes)m_pUnitInfo->getHealAsType(iI);
+			eHealAsType = kHealAsTypes[iHealAs];
 			if (!isHasUnitCombat(eHealAsType))
 			{
 				setHasUnitCombat(eHealAsType, true);
@@ -14059,9 +14070,11 @@ void CvUnit::setHealAsDamage(UnitCombatTypes eHealAsType, int iNewValue, PlayerT
 	info->m_iHealAsDamage = range(iNewValue, 0, getMaxHP());
 
 	int iHighestDamage = 0;
-	for (int iI = 0; iI < m_pUnitInfo->getNumHealAsTypes(); iI++)
+	std::vector<UnitCombatTypes> kHealAsTypes;
+	healAsUnitCombats(kHealAsTypes);
+	for (size_t iHealAs = 0; iHealAs < kHealAsTypes.size(); ++iHealAs)
 	{
-		const UnitCombatKeyedInfo* info2 = findOrCreateUnitCombatKeyedInfo((UnitCombatTypes)m_pUnitInfo->getHealAsType(iI));
+		const UnitCombatKeyedInfo* info2 = findOrCreateUnitCombatKeyedInfo(kHealAsTypes[iHealAs]);
 		if (info2->m_iHealAsDamage > iHighestDamage)
 		{
 			iHighestDamage = info2->m_iHealAsDamage;
@@ -14094,14 +14107,16 @@ void CvUnit::setDamage(int iNewValue, PlayerTypes ePlayer, bool bNotifyEntity, U
 	PROFILE_EXTRA_FUNC();
 	const int iOldValue = getDamage();
 
-	if (eHealAsType == NO_UNITCOMBAT && !bSecondPass && m_pUnitInfo->getNumHealAsTypes() > 0)
+	std::vector<UnitCombatTypes> kHealAsTypes;
+	healAsUnitCombats(kHealAsTypes);
+	if (eHealAsType == NO_UNITCOMBAT && !bSecondPass && !kHealAsTypes.empty())
 	{
-		for (int iI = 0; iI < m_pUnitInfo->getNumHealAsTypes(); iI++)
+		for (size_t iHealAs = 0; iHealAs < kHealAsTypes.size(); ++iHealAs)
 		{
-			setHealAsDamage((UnitCombatTypes)m_pUnitInfo->getHealAsType(iI), iNewValue, ePlayer, bNotifyEntity);
+			setHealAsDamage(kHealAsTypes[iHealAs], iNewValue, ePlayer, bNotifyEntity);
 		}
 	}
-	else if (eHealAsType != NO_UNITCOMBAT && m_pUnitInfo->getNumHealAsTypes() > 0)
+	else if (eHealAsType != NO_UNITCOMBAT && !kHealAsTypes.empty())
 	{
 		setHealAsDamage(eHealAsType, iNewValue, ePlayer, bNotifyEntity);
 	}
@@ -14138,17 +14153,30 @@ void CvUnit::setDamage(int iNewValue, PlayerTypes ePlayer, bool bNotifyEntity, U
 }
 
 
+void CvUnit::healAsUnitCombats(std::vector<UnitCombatTypes>& healAsTypes) const
+{
+	healAsTypes.clear();
+	std::vector<HealByUnitCombat> healRows;
+	InfoValuation::collectHealByUnitCombat(m_pUnitInfo->getModifiers(), healRows);
+	for (size_t iRow = 0; iRow < healRows.size(); ++iRow)
+	{
+		healAsTypes.push_back((UnitCombatTypes)healRows[iRow].iUnitCombat);
+	}
+}
+
 void CvUnit::changeDamage(int iChange, PlayerTypes ePlayer, UnitCombatTypes eHealAsType)
 {
 	PROFILE_EXTRA_FUNC();
-	if (eHealAsType == NO_UNITCOMBAT && m_pUnitInfo->getNumHealAsTypes() > 0)
+	std::vector<UnitCombatTypes> kHealAsTypes;
+	healAsUnitCombats(kHealAsTypes);
+	if (eHealAsType == NO_UNITCOMBAT && !kHealAsTypes.empty())
 	{
-		for (int iI = 0; iI < m_pUnitInfo->getNumHealAsTypes(); iI++)
+		for (size_t iHealAs = 0; iHealAs < kHealAsTypes.size(); ++iHealAs)
 		{
-			changeHealAsDamage((UnitCombatTypes)m_pUnitInfo->getHealAsType(iI), iChange, ePlayer);
+			changeHealAsDamage(kHealAsTypes[iHealAs], iChange, ePlayer);
 		}
 	}
-	else if (m_pUnitInfo->getNumHealAsTypes() > 0)
+	else if (!kHealAsTypes.empty())
 	{
 		changeHealAsDamage(eHealAsType, iChange, ePlayer);
 	}
