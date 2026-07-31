@@ -4709,7 +4709,7 @@ void CvTeam::resetVictoryProgress()
 			{
 				if (GC.getGame().isVictoryValid((VictoryTypes)iJ))
 				{
-					if (GC.getVictoryInfo((VictoryTypes)iJ).isTotalVictory())
+					if (GC.getVictoryInfo((VictoryTypes)iJ).conditionFlag(VICTORY_CONDITION_TOTAL_VICTORY))
 					{
 						bValid = true;
 						break;

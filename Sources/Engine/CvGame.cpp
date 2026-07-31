@@ -264,7 +264,7 @@ void CvGame::init(HandicapTypes eHandicap)
 		{
 			for (int iI = 0; iI < GC.getNumVictoryInfos(); iI++)
 			{
-				if (isVictoryValid((VictoryTypes)iI) && (GC.getVictoryInfo((VictoryTypes)iI).isEndScore() || GC.getVictoryInfo((VictoryTypes)iI).isTotalVictory()))
+				if (isVictoryValid((VictoryTypes)iI) && (GC.getVictoryInfo((VictoryTypes)iI).conditionFlag(VICTORY_CONDITION_END_SCORE) || GC.getVictoryInfo((VictoryTypes)iI).conditionFlag(VICTORY_CONDITION_TOTAL_VICTORY)))
 				{
 					setMaxTurns(getEstimateEndTurn() - getGameTurn());
 					break;
@@ -280,7 +280,7 @@ void CvGame::init(HandicapTypes eHandicap)
 	// The TV condition overrides the others but requires they be "on"
 	for (int iI = 0; iI < GC.getNumVictoryInfos(); iI++)
 	{
-		if (GC.getVictoryInfo((VictoryTypes)iI).isTotalVictory())
+		if (GC.getVictoryInfo((VictoryTypes)iI).conditionFlag(VICTORY_CONDITION_TOTAL_VICTORY))
 		{
 			if (isVictoryValid((VictoryTypes)iI))
 			{
@@ -297,7 +297,7 @@ void CvGame::init(HandicapTypes eHandicap)
 		//Find the diplomatic victory
 		for (int iI = 0; iI < GC.getNumVictoryInfos(); iI++)
 		{
-			if (GC.getVictoryInfo((VictoryTypes)iI).isDiploVote())
+			if (GC.getVictoryInfo((VictoryTypes)iI).conditionFlag(VICTORY_CONDITION_DIPLO_VOTE))
 			{
 				m_bDiploVictoryEnabled = isVictoryValid((VictoryTypes)iI); // This is to remember what it originally was due to some game rule distinction derived from it.
 				setVictoryValid((VictoryTypes)iI, true);
@@ -687,7 +687,7 @@ void CvGame::setInitialItems()
 		bool bMastery = false;
 		for (int iI = 0; iI < GC.getNumVictoryInfos(); iI++)
 		{
-			if (GC.getVictoryInfo((VictoryTypes)iI).isTotalVictory())
+			if (GC.getVictoryInfo((VictoryTypes)iI).conditionFlag(VICTORY_CONDITION_TOTAL_VICTORY))
 			{
 				if (isVictoryValid((VictoryTypes)iI))
 				{
@@ -700,7 +700,7 @@ void CvGame::setInitialItems()
 		{
 			for (int iI = 0; iI < GC.getNumVictoryInfos(); iI++)
 			{
-				if (GC.getVictoryInfo((VictoryTypes)iI).isConquest())
+				if (GC.getVictoryInfo((VictoryTypes)iI).conditionFlag(VICTORY_CONDITION_CONQUEST))
 				{
 					setVictoryValid((VictoryTypes)iI, false);
 					break;
@@ -7566,7 +7566,7 @@ bool CvGame::testVictory(VictoryTypes eVictory, TeamTypes eTeam, bool* pbEndScor
 
 	bool bValid = true;
 	// Time Victory
-	if (bValid && GC.getVictoryInfo(eVictory).isEndScore())
+	if (bValid && GC.getVictoryInfo(eVictory).conditionFlag(VICTORY_CONDITION_END_SCORE))
 	{
 		if (pbEndScore)
 		{
@@ -7591,7 +7591,7 @@ bool CvGame::testVictory(VictoryTypes eVictory, TeamTypes eTeam, bool* pbEndScor
 		else bValid = false;
 	}
 	// Score Victory
-	if (bValid && GC.getVictoryInfo(eVictory).isTargetScore())
+	if (bValid && GC.getVictoryInfo(eVictory).conditionFlag(VICTORY_CONDITION_TARGET_SCORE))
 	{
 		if (getTargetScore() == 0)
 		{
@@ -7611,7 +7611,7 @@ bool CvGame::testVictory(VictoryTypes eVictory, TeamTypes eTeam, bool* pbEndScor
 		else bValid = false;
 	}
 	// Conquest Victory
-	if (bValid && GC.getVictoryInfo(eVictory).isConquest())
+	if (bValid && GC.getVictoryInfo(eVictory).conditionFlag(VICTORY_CONDITION_CONQUEST))
 	{
 		if (GET_TEAM(eTeam).getNumCities() != 0)
 		{
@@ -7628,7 +7628,7 @@ bool CvGame::testVictory(VictoryTypes eVictory, TeamTypes eTeam, bool* pbEndScor
 		else bValid = false;
 	}
 	// Diplomatic Victory
-	if (bValid && GC.getVictoryInfo(eVictory).isDiploVote())
+	if (bValid && GC.getVictoryInfo(eVictory).conditionFlag(VICTORY_CONDITION_DIPLO_VOTE))
 	{
 		bValid = false;
 		for (int iK = 0; iK < GC.getNumVoteInfos(); iK++)
@@ -7794,7 +7794,7 @@ void CvGame::testVictory()
 	bool bMastery = false;
 	for (int iI = 0; iI < GC.getNumVictoryInfos(); iI++)
 	{
-		if (GC.getVictoryInfo((VictoryTypes)iI).isTotalVictory())
+		if (GC.getVictoryInfo((VictoryTypes)iI).conditionFlag(VICTORY_CONDITION_TOTAL_VICTORY))
 		{
 			if (isVictoryValid((VictoryTypes)iI))
 			{
@@ -9079,7 +9079,7 @@ void CvGame::showEndGameSequence()
 						player.addPopup(pInfo);
 					}
 				}
-				else if (GC.getVictoryInfo(getVictory()).isDiploVote())
+				else if (GC.getVictoryInfo(getVictory()).conditionFlag(VICTORY_CONDITION_DIPLO_VOTE))
 				{
 					pInfo = new CvPopupInfo(BUTTONPOPUP_PYTHON_SCREEN);
 					if (NULL != pInfo)

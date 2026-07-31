@@ -21828,7 +21828,7 @@ int CvPlayerAI::AI_getConquestVictoryStage() const
 	{
 		if (GC.getGame().isVictoryValid((VictoryTypes)iI))
 		{
-			if (GC.getVictoryInfo((VictoryTypes)iI).isConquest())
+			if (GC.getVictoryInfo((VictoryTypes)iI).conditionFlag(VICTORY_CONDITION_CONQUEST))
 			{
 				eConquest = (VictoryTypes)iI;
 				break;
@@ -22046,7 +22046,7 @@ int CvPlayerAI::AI_getDiplomacyVictoryStage() const
 	{
 		if (GC.getGame().isVictoryValid((VictoryTypes)iI))
 		{
-			if (GC.getVictoryInfo((VictoryTypes)iI).isDiploVote())
+			if (GC.getVictoryInfo((VictoryTypes)iI).conditionFlag(VICTORY_CONDITION_DIPLO_VOTE))
 			{
 				veDiplomacy.push_back((VictoryTypes)iI);
 			}
@@ -23024,11 +23024,11 @@ int CvPlayerAI::AI_getStrategyHash() const
 			if (GC.getGame().isVictoryValid((VictoryTypes)iVictory))
 			{
 				iTotalVictories++;
-				if (kVictory.isDiploVote())
+				if (kVictory.conditionFlag(VICTORY_CONDITION_DIPLO_VOTE))
 				{
 					//
 				}
-				else if (kVictory.isEndScore())
+				else if (kVictory.conditionFlag(VICTORY_CONDITION_END_SCORE))
 				{
 					int iHigherCount = 0;
 					int IWeakerCount = 0;
@@ -23088,7 +23088,7 @@ int CvPlayerAI::AI_getStrategyHash() const
 						iWarVictories++;
 					}
 				}
-				else if (kVictory.isConquest())
+				else if (kVictory.conditionFlag(VICTORY_CONDITION_CONQUEST))
 				{
 					int iStrongerCount = 0;
 					for (int iTeam = 0; iTeam < MAX_PC_TEAMS; iTeam++)
