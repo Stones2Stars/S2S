@@ -223,13 +223,7 @@
  },
  "research": {
   "empire": {
-   "flat": [
-    -4,
-    {
-     "value": -1,
-     "per": "SPECIALIST"
-    }
-   ],
+   "flat": -4,
    "percent": [
     -5,
     {
@@ -244,6 +238,17 @@
     "SPECIALIST_GREAT_SCIENTIST": {
      "flat": -2
     }
+   },
+   "cities": {
+    "flat": [
+     {
+      "value": -1,
+      "per": {
+       "type": "SPECIALIST",
+       "scope": "city"
+      }
+     }
+    ]
    }
   }
  },

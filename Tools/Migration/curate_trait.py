@@ -79,6 +79,11 @@ import curate_common as cc
 from curate_common import de_i
 from store import Store, REPO
 
+# The per-specialist count-scaler. The deposit's scope is EMPIRE (the source's reach) while the count it names
+# is CITY-local -- exactly the case json §3.7's object form exists for, so the scope is authored on the scaler
+# itself rather than inherited from the deposit.
+_PER_SPECIALIST_IN_CITY = OrderedDict([("type", "SPECIALIST"), ("scope", "city")])
+
 YIELDS, COMMERCES = engine.YIELDS, engine.COMMERCES
 
 # --- scalar modifier families: tag -> (family, scope, member, unit). member "" => single-concept. ---
@@ -181,12 +186,19 @@ SPLIT_ARRAY = {
     "YieldModifiers":           ("empire", "",          "percent",      YIELDS),
     "TradeYieldModifiers":      ("empire", "tradeRoute","percent",      YIELDS),
     # SeaPlotYieldChanges -> a PLOTS-TARGET fold (owner 2026-06-22): empire.plots.flat {IS_WATER}; handled in the apply loop.
-    "SpecialistExtraYields":    ("empire", "specialist","perSpecialist",YIELDS),
     "GoldenAgeYieldChanges":    ("empire", "goldenAge", "flat",         YIELDS),
     "CommerceChanges":          ("empire", "",          "flat",         COMMERCES),
     "CommerceModifiers":        ("empire", "",          "percent",      COMMERCES),
-    "SpecialistExtraCommerces": ("empire", "specialist","perSpecialist",COMMERCES),
     "GoldenAgeCommerceChanges": ("empire", "goldenAge", "flat",         COMMERCES),
+}
+# --- per-scaler split arrays (json §3.7): the value deposits FLAT, scaled by a count -- {value, per:"SPECIALIST"}
+# (bare-string sugar, each=1). CITY scope, not empire: the deposit LANDS per city and scales by THAT city's
+# specialists, which is the count the engine takes. The trait's empire-wide reach comes from the SOURCE (a held
+# trait folds into every city's package), never from the address -- so the deposit's own scope is the scope driver
+# and the bare `per` defaults to it correctly. tag -> (scope, unit, valueKeys, perToken). ---
+SPLIT_ARRAY_PER = {
+    "SpecialistExtraYields":    ("empire", "flat", YIELDS,    _PER_SPECIALIST_IN_CITY, "cities"),
+    "SpecialistExtraCommerces": ("empire", "flat", COMMERCES, _PER_SPECIALIST_IN_CITY, "cities"),
 }
 # --- CONDITIONED arrays/scalars: emit {family}.<scope>.<unit> as a list entry {value, enabled:<predicate>} instead of
 # a bespoke sub-scope member ([DEC-conditions-are-predicates], owner 2026-06-28). Capital-only modifiers were the
@@ -303,6 +315,23 @@ def _put(fam, family, scope, member, unit, val):
         node[unit] = [val] + cur         # unconditioned scalar FIRST (enabled-absent before conditioned, §3.9 order)
     else:
         node[unit] = val
+
+
+def _put_per(fam, family, scope, unit, value, per, target=None):
+    """Append a PER-SCALED deposit {value, per:<count token>} (json §3.7) to a scope-wide leaf, list-merging like
+    _put_cond so it coexists with a plain scalar on the same leaf. Mirrors curate_civic/_curate_building.
+    `target` names a PLURAL target (json §3.3) the deposit lands on -- `cities` = every city in the scope."""
+    node = fam.setdefault(family, {}).setdefault(scope, {})
+    if target:
+        node = node.setdefault(target, {})
+    entry = OrderedDict([("value", value), ("per", per)])
+    cur = node.get(unit)
+    if cur is None:
+        node[unit] = [entry]
+    elif isinstance(cur, list):
+        cur.append(entry)
+    else:
+        node[unit] = [cur, entry]
 
 
 def _put_cond(fam, family, scope, unit, value, enabled):
@@ -448,6 +477,10 @@ def curate(typ, rec, store):
             scope, member, unit, keys = SPLIT_ARRAY[tag]
             for ident, v in engine.named_array(c, keys).items():   # ident IS the family (split)
                 _put(fam, ident, scope, member, unit, v)
+        elif tag in SPLIT_ARRAY_PER:
+            scope, unit, keys, per_token, target = SPLIT_ARRAY_PER[tag]
+            for ident, v in engine.named_array(c, keys).items():   # ident IS the family (split); count-scaled deposit
+                _put_per(fam, ident, scope, unit, v, per_token, target)
         elif tag in SPLIT_ARRAY_COND:
             scope, unit, keys, pred = SPLIT_ARRAY_COND[tag]
             for ident, v in engine.named_array(c, keys).items():   # ident IS the family (split); predicate-gated deposit

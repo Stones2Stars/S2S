@@ -26,12 +26,17 @@
  "culture": {
   "empire": {
    "percent": 3,
-   "flat": [
-    {
-     "value": 5,
-     "per": "SPECIALIST"
-    }
-   ]
+   "cities": {
+    "flat": [
+     {
+      "value": 5,
+      "per": {
+       "type": "SPECIALIST",
+       "scope": "city"
+      }
+     }
+    ]
+   }
   }
  },
  "health": {

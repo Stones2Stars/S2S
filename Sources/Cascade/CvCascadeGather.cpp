@@ -130,6 +130,7 @@ namespace
 		const int iBonusesSeg = modSegmentLookup("bonuses");
 		const int iRoutesSeg = modSegmentLookup("routes");
 		const int iEmpiresSeg = modSegmentLookup("empires");
+		const int iCitiesSeg = modSegmentLookup("cities");
 		const std::vector<CvModEntry*>& entries = pModifiers->entries();
 		for (size_t iEntry = 0; iEntry < entries.size(); ++iEntry)
 		{
@@ -146,7 +147,17 @@ namespace
 				&& pEntry->scope == CASC_SCOPE_WORLD
 				&& iEmpiresSeg >= 0
 				&& pEntry->targetSeg == iEmpiresSeg);
-			if (pEntry->scope != eScope && !bWorldEmpires)
+			// json §3.3's `cities` plural target, the exact sibling of the `empires` fan one scope down: an
+			// EMPIRE-scope deposit onto EVERY city of the player lands in each CITY's package, because this
+			// city IS one of the targets -- landing it here is the deposit, not a keyed lookup.
+			// ⚑ Folding PER CITY is the whole point: it is what lets the entry's `per` scaler and its
+			// conditions resolve against THIS city. The same deposit summed into the empire package instead
+			// would resolve them once, against no city, and then hand every city that one number.
+			const bool bEmpireCities = (eScope == CASC_SCOPE_CITY
+				&& pEntry->scope == CASC_SCOPE_EMPIRE
+				&& iCitiesSeg >= 0
+				&& pEntry->targetSeg == iCitiesSeg);
+			if (pEntry->scope != eScope && !bWorldEmpires && !bEmpireCities)
 			{
 				continue;
 			}
@@ -177,13 +188,13 @@ namespace
 			// receiver's specialist term).
 			if (pEntry->targetSeg >= 0 || pEntry->targetFk >= 0)
 			{
-				// The `empires` fan is the ONE targeted entry that folds outside plot scope: its target IS
-				// the gathering owner, so landing it here is the deposit, not a keyed lookup.
-				if (!bWorldEmpires && (eScope != CASC_SCOPE_PLOT || pKeyPlot == NULL))
+				// The `empires` and `cities` fans are the targeted entries that fold outside plot scope: their
+				// target IS the gathering owner, so landing it here is the deposit, not a keyed lookup.
+				if (!bWorldEmpires && !bEmpireCities && (eScope != CASC_SCOPE_PLOT || pKeyPlot == NULL))
 				{
 					continue;
 				}
-				if (bWorldEmpires)
+				if (bWorldEmpires || bEmpireCities)
 				{
 					// falls through: the fan IS the fold, no per-target test applies
 				}

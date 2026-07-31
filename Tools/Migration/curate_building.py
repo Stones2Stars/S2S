@@ -50,6 +50,11 @@ from curate_common import put_art, emit_art, FAMILY_ORDER, de_i, fold_text_to_id
 from curate_common import TAG_BY_UNITCOMBAT   # the ONE unitcombat->tag map (a building's free-promotion condition keys on it)
 from store import Store, REPO
 
+# The per-specialist count-scaler. The deposit's scope is EMPIRE (the source's reach) while the count it names
+# is CITY-local -- exactly the case json §3.7's object form exists for, so the scope is authored on the scaler
+# itself rather than inherited from the deposit.
+_PER_SPECIALIST_IN_CITY = OrderedDict([("type", "SPECIALIST"), ("scope", "city")])
+
 # ---- scalar/percent modifier families: tag -> (family, scope, member|None, unit). Corrected scopes from the
 # classification (the mapping's were often wrong). Names PROVISIONAL (reader-pass refines). ----
 SCALAR_FAMILIES = {
@@ -456,10 +461,13 @@ def _inject_cond(fams, family, scope, unit, value, enabled, member=None):
         node[unit] = [cur, entry]
 
 
-def _inject_per(fams, family, scope, unit, value, per):
+def _inject_per(fams, family, scope, unit, value, per, target=None):
     """Like _inject_cond but the deposit carries a `per` count-scaler (json.md S3.7) instead of an `enabled` gate:
-    effect = value * (count(per.type)/per.each). List-aware so it coexists with a plain count on the same leaf."""
+    effect = value * (count(per.type)/per.each). List-aware so it coexists with a plain count on the same leaf.
+    `target` names a PLURAL target (json S3.3) the deposit lands on -- `cities` = every city in the scope."""
     node = fams.setdefault(family, OrderedDict()).setdefault(scope, OrderedDict())
+    if target:
+        node = node.setdefault(target, OrderedDict())
     entry = OrderedDict([("value", value), ("per", per)])
     cur = node.get(unit)
     if cur is None:
@@ -1441,12 +1449,16 @@ def curate(typ, rec, store):
             else:
                 _set_fam(fams, member, scope, None, unit, v)   # member IS the family (split)
     # +commerce per specialist of ALL types (legacy getSpecialistExtraCommerce; each city multiplies by ITS total
-    # specialist count, CvCity.cpp:11810) -> <c>.empire.flat {value, per:"SPECIALIST"} (ruling 4 + json.md §3.7
-    # bare-string sugar). UNIFORM with civic/trait. NB the count the engine takes is CITY-local.
+    # specialist count, CvCity.cpp:11810) -> <c>.city.flat {value, per:"SPECIALIST"} (ruling 4 + json.md §3.7
+    # bare-string sugar). UNIFORM with civic/trait.
+    # CITY scope, not empire: the deposit LANDS per city and scales by THAT city's specialists, which is what the
+    # engine count is. The building's empire-wide reach comes from the SOURCE (the player's owned buildings fold
+    # into every city's package), never from the address -- so the deposit's own scope is the scope driver and the
+    # bare `per` defaults to it correctly. At empire it would fold into the EMPIRE package, where no city is bound.
     sec_node = rec.find("SpecialistExtraCommerces")
     if sec_node is not None:
         for member, v in engine.named_array(sec_node, engine.COMMERCES).items():
-            _inject_per(fams, member, "empire", "flat", v, "SPECIALIST")
+            _inject_per(fams, member, "empire", "flat", v, _PER_SPECIALIST_IN_CITY, target="cities")
     # iOtherAreaMaintenanceModifier -> ordinary conditioned percent deposit on the IS_HOME_AREA predicate
     # (ruling 2; json.md §3.5: "other areas" = the plain negation). NB the legacy engine apply is "every area
     # other than the BUILDING's own" (CvPlayer.cpp:7440-7448); zero buildings author the field today, and the

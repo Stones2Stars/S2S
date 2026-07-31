@@ -26,12 +26,17 @@
  "espionage": {
   "empire": {
    "percent": 25,
-   "flat": [
-    {
-     "value": 1,
-     "per": "SPECIALIST"
-    }
-   ]
+   "cities": {
+    "flat": [
+     {
+      "value": 1,
+      "per": {
+       "type": "SPECIALIST",
+       "scope": "city"
+      }
+     }
+    ]
+   }
   }
  },
  "happiness": {

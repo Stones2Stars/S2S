@@ -118,13 +118,7 @@
  },
  "culture": {
   "empire": {
-   "flat": [
-    -6,
-    {
-     "value": -1,
-     "per": "SPECIALIST"
-    }
-   ],
+   "flat": -6,
    "percent": [
     -5,
     {
@@ -139,6 +133,17 @@
     "SPECIALIST_ANDROID_WORKER": {
      "flat": -1
     }
+   },
+   "cities": {
+    "flat": [
+     {
+      "value": -1,
+      "per": {
+       "type": "SPECIALIST",
+       "scope": "city"
+      }
+     }
+    ]
    }
   }
  },

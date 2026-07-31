@@ -286,13 +286,7 @@
  },
  "gold": {
   "empire": {
-   "flat": [
-    -2,
-    {
-     "value": -1,
-     "per": "SPECIALIST"
-    }
-   ],
+   "flat": -2,
    "percent": [
     -5,
     {
@@ -313,6 +307,17 @@
     "SPECIALIST_SETTLED_SLAVE": {
      "flat": -1
     }
+   },
+   "cities": {
+    "flat": [
+     {
+      "value": -1,
+      "per": {
+       "type": "SPECIALIST",
+       "scope": "city"
+      }
+     }
+    ]
    }
   }
  },

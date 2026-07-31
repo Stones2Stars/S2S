@@ -163,15 +163,6 @@
 - Make `CvCity::getNumBonuses` a BARE FETCH of a maintained per-city count ([enabler.md §8](../../specs/enabler.md)
   open item 2). ⛔ Every per-read re-plumbing of this is the wrong axis and has been backed out before.
   ⚠ `CityContext::tradedBonusCount` re-derives on refresh and is on the wrong side of it too.
-- Rule on WHICH specialist count the per-specialist commerce/yield bonuses mean, then curate to it. Both counts
-  are now answerable — a city-scope scaler reads that city's own specialists, a cross-city one rolls up through
-  the tally — so this is purely a DATA question. The deposits author at EMPIRE scope with a bare `per`, and a
-  bare `per` takes the DEPOSIT's scope ([json.md §3.7](../../specs/json.md)), so they currently ask for the
-  EMPIRE's specialists and every city then experiences that whole amount. The legacy mechanic instead gave each
-  city its OWN specialist count. Matching it needs the scaler to name the city scope explicitly, which the
-  grammar already allows; keeping the empire reading is a deliberate behaviour change to state, not to drift
-  into ([validation.md](../../specs/validation.md): the spec leads). Either way the curator + regen ride the
-  ruling ([DEC-recurate-on-decision](../../architecture/decisions.md#dec-recurate-on-decision)).
 - Give the CityContext its id-keyed RADIUS DICTIONARIES, then move the improvement count onto them. The count
   domain is wired but walks the city's radius per call; it runs at rebuild/per-decision cadence rather than on a
   read path, so it is not the banned read-time scan, but the dictionary is the standing target

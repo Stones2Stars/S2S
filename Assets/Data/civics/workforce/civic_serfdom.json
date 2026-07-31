@@ -31,12 +31,17 @@
      "enabled": "IS_CAPITAL"
     }
    ],
-   "flat": [
-    {
-     "value": 1,
-     "per": "SPECIALIST"
-    }
-   ]
+   "cities": {
+    "flat": [
+     {
+      "value": 1,
+      "per": {
+       "type": "SPECIALIST",
+       "scope": "city"
+      }
+     }
+    ]
+   }
   }
  },
  "research": {

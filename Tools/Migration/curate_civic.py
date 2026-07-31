@@ -53,6 +53,11 @@ import curate_common as cc
 from curate_common import de_i
 from store import Store, REPO
 
+# The per-specialist count-scaler. The deposit's scope is EMPIRE (the source's reach) while the count it names
+# is CITY-local -- exactly the case json §3.7's object form exists for, so the scope is authored on the scaler
+# itself rather than inherited from the deposit.
+_PER_SPECIALIST_IN_CITY = OrderedDict([("type", "SPECIALIST"), ("scope", "city")])
+
 YIELDS, COMMERCES = engine.YIELDS, engine.COMMERCES
 
 # --- scalar modifier families: tag -> (family, scope, member, unit). member "" => single-concept. ---
@@ -161,7 +166,12 @@ SPLIT_ARRAY = {
 # multiplies by ITS total specialist count of ALL types (CvCity.cpp:11810; NB the engine count is CITY-local).
 # tag -> (scope, unit, valueKeys, perToken). ---
 SPLIT_ARRAY_PER = {
-    "SpecialistExtraCommerces": ("empire", "flat", COMMERCES, "SPECIALIST"),
+    # CITY scope, not empire: the deposit LANDS per city and is scaled by THAT city's specialists. The civic's
+    # empire-wide reach comes from the SOURCE (the player's adopted civics fold into every city's package), not
+    # from the address -- so the scope driver is the deposit's own scope and the bare `per` then defaults to it
+    # correctly (json.md §3.7). Authored at empire it would fold into the EMPIRE package, where no city is bound,
+    # ask the tally for the empire-wide specialist count, and hand every city that whole number.
+    "SpecialistExtraCommerces": ("empire", "flat", COMMERCES, _PER_SPECIALIST_IN_CITY, "cities"),
 }
 # --- CONDITIONED split arrays: emit {family}.<scope>.<unit> as a list entry {value, enabled:<predicate>} instead of a
 # bespoke sub-scope member ([DEC-conditions-are-predicates], owner 2026-06-28). Capital-only modifiers were the legacy
@@ -300,10 +310,13 @@ def _put_cond(fam, family, scope, unit, value, enabled, member=None):
         node[unit] = [cur, entry]
 
 
-def _put_per(fam, family, scope, unit, value, per):
+def _put_per(fam, family, scope, unit, value, per, target=None):
     """Append a PER-SCALED deposit {value, per:<count token>} (json §3.7) to a scope-wide leaf, list-merging like
-    _put_cond so it coexists with a plain scalar on the same leaf."""
+    _put_cond so it coexists with a plain scalar on the same leaf.
+    `target` names a PLURAL target (json §3.3) the deposit lands on -- `cities` = every city in the scope."""
     node = fam.setdefault(family, {}).setdefault(scope, {})
+    if target:
+        node = node.setdefault(target, {})
     entry = OrderedDict([("value", value), ("per", per)])
     cur = node.get(unit)
     if cur is None:
@@ -517,9 +530,9 @@ def curate(typ, rec, store):
             for ident, v in engine.named_array(c, keys).items():   # ident IS the family (split); predicate-gated deposit
                 _put_cond(fam, ident, scope, unit, v, pred)
         elif tag in SPLIT_ARRAY_PER:
-            scope, unit, keys, per_token = SPLIT_ARRAY_PER[tag]
+            scope, unit, keys, per_token, target = SPLIT_ARRAY_PER[tag]
             for ident, v in engine.named_array(c, keys).items():   # ident IS the family (split); count-scaled deposit
-                _put_per(fam, ident, scope, unit, v, per_token)
+                _put_per(fam, ident, scope, unit, v, per_token, target)
         elif tag in KEYED:
             family, scope, tt, unit, keys = KEYED[tag]
             for target, val in _keyed_entries(c, keys).items():

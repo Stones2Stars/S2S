@@ -33,12 +33,17 @@
    "flat": 10
   },
   "empire": {
-   "flat": [
-    {
-     "value": 2,
-     "per": "SPECIALIST"
-    }
-   ]
+   "cities": {
+    "flat": [
+     {
+      "value": 2,
+      "per": {
+       "type": "SPECIALIST",
+       "scope": "city"
+      }
+     }
+    ]
+   }
   }
  },
  "buildRate": {

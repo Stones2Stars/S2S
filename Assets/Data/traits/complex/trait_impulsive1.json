@@ -10,12 +10,17 @@
  ],
  "production": {
   "empire": {
-   "flat": [
-    {
-     "value": -1,
-     "per": "SPECIALIST"
-    }
-   ]
+   "cities": {
+    "flat": [
+     {
+      "value": -1,
+      "per": {
+       "type": "SPECIALIST",
+       "scope": "city"
+      }
+     }
+    ]
+   }
   }
  },
  "buildRate": {
