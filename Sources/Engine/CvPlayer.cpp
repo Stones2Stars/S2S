@@ -21333,7 +21333,7 @@ void CvPlayer::applyEvent(EventTypes eEvent, int iEventTriggeredId, bool bUpdate
 		{
 			foreach_(CvCity* pLoopCity, cities())
 			{
-				pLoopCity->changeBuildingCommerceChange(cc.eBuilding, cc.eCommerce, cc.iChange);
+				pLoopCity->recordBuildingCommerceGrant(eEvent, cc.eBuilding, cc.eCommerce, cc.iChange);
 			}
 		}
 

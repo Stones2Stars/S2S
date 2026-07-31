@@ -8,6 +8,7 @@
 #include "CvGameObject.h"
 #include "CvProperties.h"
 #include "CvDerivedData.h"
+#include "CvEventGrants.h"
 #include "CvCascadePackage.h"      // the TEAM-scope cascade package (state-repositories.md)
 #include "Enabler/CvCapabilities.h"   // CascadeTeamCaps -- the derived-on-query capability union (capabilities.md)
 
@@ -44,6 +45,12 @@ public:
 	// PUBLIC + MUTABLE by the same requirement as the enabler domains: CascadeCapabilities is the query surface
 	// and owns the derivation; the team owns only the storage.
 	mutable CascadeTeamCaps m_cascadeTeamCaps;
+
+	// Improvement yields a PYTHON EVENT granted this team (the wonder-event grants). One-shot state, so it is
+	// stored apart from anything derived -- Engine/CvEventGrants.h.
+	CvEventGrantStore m_eventGrants;
+	int getImprovementYieldChange(ImprovementTypes eImprovement, YieldTypes eYield) const;
+	void recordImprovementYieldGrant(int eEvent, ImprovementTypes eImprovement, YieldTypes eYield, int iChange);
 	// The union's refresh delegate (the CvDerivedCacheSet contract) -- delegates to the ONE derivation.
 	void cascadeRefreshCaps(int iMask) const;
 

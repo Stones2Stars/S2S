@@ -15510,7 +15510,7 @@ void CvCity::applyEvent(EventTypes eEvent, const EventTriggeredData* pTriggeredD
 
 	foreach_(const BuildingCommerceChange& cc, kEvent.getBuildingCommerceChanges())
 	{
-		changeBuildingCommerceChange(cc.eBuilding, cc.eCommerce, cc.iChange);
+		recordBuildingCommerceGrant(eEvent, cc.eBuilding, cc.eCommerce, cc.iChange);
 	}
 
 	if (kEvent.getNumBuildingHappyChanges() > 0)
@@ -15701,14 +15701,18 @@ void CvCity::changeBuildingYieldChange(BuildingTypes eBuilding, YieldTypes eYiel
 int CvCity::getBuildingCommerceChange(BuildingTypes eBuilding, CommerceTypes eCommerce) const
 {
 	PROFILE_EXTRA_FUNC();
+	// The derivable half, plus what EVENTS granted -- the two are stored apart because only the first can be
+	// recomputed from live sources; a rebuild would wipe the second if they shared a home.
+	int iChange = m_eventGrants.sum(EVENTGRANT_BUILDING_COMMERCE, eCommerce, eBuilding);
 	foreach_(const BuildingCommerceChange& it, m_aBuildingCommerceChange)
 	{
 		if (it.eBuilding == eBuilding && it.eCommerce == eCommerce)
 		{
-			return it.iChange;
+			iChange += it.iChange;
+			break;
 		}
 	}
-	return 0;
+	return iChange;
 }
 
 void CvCity::setBuildingCommerceChange(BuildingTypes eBuilding, CommerceTypes eCommerce, int iChange)
@@ -15758,6 +15762,16 @@ void CvCity::setBuildingCommerceChange(BuildingTypes eBuilding, CommerceTypes eC
 void CvCity::changeBuildingCommerceChange(BuildingTypes eBuilding, CommerceTypes eCommerce, int iChange)
 {
 	setBuildingCommerceChange(eBuilding, eCommerce, getBuildingCommerceChange(eBuilding, eCommerce) + iChange);
+}
+
+
+void CvCity::recordBuildingCommerceGrant(EventTypes eEvent, BuildingTypes eBuilding, CommerceTypes eCommerce, int iChange)
+{
+	if (iChange != 0)
+	{
+		m_eventGrants.add(EVENTGRANT_BUILDING_COMMERCE, eEvent, eCommerce, eBuilding, iChange);
+		updateBuildingCommerce();
+	}
 }
 
 

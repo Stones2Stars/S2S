@@ -5937,6 +5937,7 @@ void CvTeam::read(FDataStreamBase* pStream)
 	}
 
 	WRAPPER_READ_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_aiStolenVisibilityTimer);
+	EVENT_GRANTS_READ(wrapper, "CvTeam", m_eventGrants);
 
 	//	Format change - we now store 100 times the actual value, but no need to change the save format - just
 	//	convert on load and save
@@ -6111,6 +6112,7 @@ void CvTeam::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvTeam", m_bCapitulated);
 	WRAPPER_WRITE(wrapper, "CvTeam", m_eID);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_aiStolenVisibilityTimer);
+	EVENT_GRANTS_WRITE(wrapper, "CvTeam", m_eventGrants);
 
 	//	Format change - we now store 100 times the actual value, but no need to change the save format - just
 	//	convert on load and save
@@ -6873,3 +6875,16 @@ int CvTeam::getWinForLosingResearchModifier() const
 	return GC.getGame().getWinForLosingResearchModifier(getNumCities(), getTotalPopulation(false));
 }
 
+
+
+// The improvement yield an EVENT granted this team. Nothing derives it, so it lives in the team's own grant
+// store rather than in an accumulator a recompute would wipe (Engine/CvEventGrants.h).
+int CvTeam::getImprovementYieldChange(ImprovementTypes eImprovement, YieldTypes eYield) const
+{
+	return m_eventGrants.sum(EVENTGRANT_IMPROVEMENT_YIELD, eYield, eImprovement);
+}
+
+void CvTeam::recordImprovementYieldGrant(int eEvent, ImprovementTypes eImprovement, YieldTypes eYield, int iChange)
+{
+	m_eventGrants.add(EVENTGRANT_IMPROVEMENT_YIELD, eEvent, eYield, eImprovement, iChange);
+}

@@ -1261,6 +1261,7 @@ public:
 	int getBuildingCommerceChange(BuildingTypes eType, CommerceTypes eCommerce) const;
 	void setBuildingCommerceChange(BuildingTypes eType, CommerceTypes eCommerce, int iChange);
 	void changeBuildingCommerceChange(BuildingTypes eType, CommerceTypes eCommerce, int iChange);
+	void recordBuildingCommerceGrant(EventTypes eEvent, BuildingTypes eBuilding, CommerceTypes eCommerce, int iChange);
 	int getBuildingHappyChange(BuildingTypes eType) const;
 	void setBuildingHappyChange(BuildingTypes eType, int iChange);
 	int getBuildingHealthChange(BuildingTypes eType) const;

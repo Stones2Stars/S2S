@@ -135,6 +135,17 @@
   building's improvement-scaled free-specialist emit passes no target at all, so nothing expresses "each city,
   by its OWN count". ⛔ Fixing only the reader is inert — that was proven on the trait side, where the address
   had to carry the target before any reader change could do anything ([modifier.md §5](../../specs/modifier.md)).
+- Give the PLAYER's improvement-yield change a source again. It is the DERIVABLE half — the recompute over
+  adopted civics, active traits and cascade-active buildings' global rows — so it is a `CvDerivedCacheVec`
+  ([state-repositories.md](../../architecture/state-repositories.md)), never a restored accumulator and never
+  the event store beside it. Its reader dangles until it exists; the TEAM half is already the grant store.
+- Serve the team improvement-yield GRANT through the new Python surface. The wonder events call it from
+  `CvEventManager`, and the binding they called is gone — which is correct
+  ([DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed)): it comes back as the library's own
+  read, never as a restored `CyTeam` binding. Until it does, the engine side stores and serves the value but
+  nothing can grant one.
+  ⚑ Grants recorded without an event id carry `-1` (unattributed) by design — the events rework threads the
+  real id, and the store already carries the field for it.
 - Repair the `savemigration.txt` REPLACEMENT-OBLIGATION notes that no longer resolve. Each note records WHICH
   named replacement now serves a cut value; where that replacement was archived or never built, the field is
   gone from every save and the value has NO source, which nothing catches ([AGENTS.md](../../../AGENTS.md)).

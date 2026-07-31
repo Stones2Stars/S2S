@@ -539,7 +539,8 @@ the stored-accumulator drift class (modifier.md par.2b; the engine under-yielded
 spec oracle). Converted to recompute-from-source CvDerivedCacheVec (never serialized; dirty on construct/load;
 sources: adopted civics + active traits + cascade-ACTIVE buildings' global rows / held techs' improvement rows).
 Reads are DRAINED under the original tags (discarded); writes dropped. The TEAM keeps a separate PERSISTED
-event-grant store m_improvementYieldEvents (new tags ImprovementYieldEvents*, soft-absent on old saves -- the
+event-grant store CvTeam::m_eventGrants, the standardized CvEventGrantStore (Engine/CvEventGrants.h) under its
+own EventGrants* tags, soft-absent on old saves -- the
 Python wonder-event grants, e.g. TSUKIJI; pre-split grants on old saves are accepted drift, the freeBonusEvents
 precedent). The drains flush at the next save-compat break.
 
