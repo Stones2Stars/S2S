@@ -5545,7 +5545,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 					iPromoValue += AI_getPromotionValue((PromotionTypes)aPromoConditional[iP]);
 				}
 				iValue += iPromoValue;
-
+			}
 
 			if ((!isDevelopingCity() || getCityContext().isCapital()))
 			{
