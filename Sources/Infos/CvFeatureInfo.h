@@ -74,10 +74,6 @@ public:
 	virtual const CvClassificationBlock* getCharacteristics() const { return &m_characteristics; }
 
 	bool isImpassable() const { return m_bImpassable; }
-	bool isNoCity() const CLS_HAS(m_characteristics, CLSD_CHARACTERISTIC, "unfoundable")
-	bool isNoImprovement() const CLS_HAS(m_characteristics, CLSD_CHARACTERISTIC, "unimprovable")
-	bool isNoBonus() const CLS_HAS(m_characteristics, CLSD_CHARACTERISTIC, "prohibitsBonus")
-	bool isCountsAsPeak() const CLS_HAS(m_characteristics, CLSD_CHARACTERISTIC, "countsAsPeak")
 	bool isRequiresFlatlands() const { return m_bRequiresFlatlands; }
 	bool isRequiresRiver() const { return m_bRequiresRiver; }
 	bool isNoCoast() const { return m_bNoCoast; }
@@ -85,10 +81,8 @@ public:
 	bool isNoAdjacent() const { return m_bNoAdjacent; }
 	bool isCoastalOnly() const { return m_bCoastalOnly; }
 	bool isVisibleAlways() const { return m_bVisibleAlways; }
-	bool isIgnoreTerrainCulture() const CLS_HAS(m_characteristics, CLSD_CHARACTERISTIC, "ignoreTerrainCulture")
 	bool isCanGrowAnywhere() const { return m_bCanGrowAnywhere; }
 	bool isAddsFreshWater() const { return m_bAddsFreshWater; }
-	bool isNukeImmune() const CLS_HAS(m_characteristics, CLSD_CHARACTERISTIC, "nukeImmune")
 	// isOnlyBad -- COMPUTED over the compiled reads (the BUG city-plot-status test): no positive health, no
 	// fresh water, no positive tile yield.
 	bool isOnlyBad() const;

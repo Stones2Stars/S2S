@@ -6,6 +6,7 @@
 //
 
 #include "CvGameCoreDLL.h"          // PCH umbrella
+#include "Infos/CvClassificationIds.h"   // the generated classification id table
 #include "Triggers/CvTriggerEngine.h"
 #include "Spine/CvEventSpine.h"
 #include "CvInfo.h"             // CvInfo::grantList / grantPulse / grantFlag (the CvGrants unit's read-throughs)
@@ -301,7 +302,7 @@ static void tr_applyBuildingFirstBuild(const CvInfo* j, int iBuilding, int iPlay
 		for (int iI = 0; iI < MAX_PC_PLAYERS; iI++)
 		{
 			// isTeamShare spreads it across the TEAM; otherwise just the owner's own cities.
-			if (!kB.isTeamShare() ? (iI != iPlayer) : !GET_PLAYER((PlayerTypes)iI).isAliveAndTeam(pCity->getTeam())) continue;
+			if (!kB.hasAttribute(CLS_ATTRIBUTE_TEAM_SHARE) ? (iI != iPlayer) : !GET_PLAYER((PlayerTypes)iI).isAliveAndTeam(pCity->getTeam())) continue;
 			foreach_(CvCity* pLoopCity, GET_PLAYER((PlayerTypes)iI).cities())
 			{
 				for (int i = 0; i < iPopEmpire; ++i) pLoopCity->changeFood(pLoopCity->growthThreshold());
@@ -776,7 +777,7 @@ static void tr_resolveCapitalChanged(int iOwner, int iCity)
 		s_iCapitalBuilding = -1;
 		for (int i = 0; i < GC.getNumBuildingInfos(); ++i)
 		{
-			if (GC.getBuildingInfo((BuildingTypes)i).isCapital()) { s_iCapitalBuilding = i; break; }
+			if (GC.getBuildingInfo((BuildingTypes)i).providesAmenity(CLS_AMENITY_CAPITAL)) { s_iCapitalBuilding = i; break; }
 		}
 	}
 	if (s_iCapitalBuilding < 0) return;

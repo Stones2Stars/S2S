@@ -21620,7 +21620,7 @@ bool CvUnitAI::AI_fortTerritory(bool bCanal, bool bAirbase)
 				{
 					const CvImprovementInfo& kImprovement = GC.getImprovementInfo(GC.getBuildInfo(eBuild).getImprovement());
 
-					if ((bCanal && kImprovement.isCanMoveSeaUnits() || kImprovement.isActsAsCity() && kImprovement.getDefense(DEFENSE_AMOUNT, CASC_SCOPE_PLOT) > 0)
+					if ((bCanal && kImprovement.isCanMoveSeaUnits() || kImprovement.hasCharacteristic(CLS_CHARACTERISTIC_ACTS_AS_CITY) && kImprovement.getDefense(DEFENSE_AMOUNT, CASC_SCOPE_PLOT) > 0)
 					&& canBuild(pLoopPlot, eBuild))
 					{
 						++iQualified;
@@ -21630,7 +21630,7 @@ bool CvUnitAI::AI_fortTerritory(bool bCanal, bool bAirbase)
 						{
 							iBuildValue += 2000;
 						}
-						if (kImprovement.isZOCSource())
+						if (kImprovement.hasCharacteristic(CLS_CHARACTERISTIC_ZONE_OF_CONTROL))
 						{
 							iBuildValue += 5000;
 						}
@@ -21640,8 +21640,8 @@ bool CvUnitAI::AI_fortTerritory(bool bCanal, bool bAirbase)
 						{
 							logBuildEvaluation(3, "  AI_fortTerritory cand build=%s impr=%s canMoveSea=%d acts=%d def=%d zoc=%d time=%d score=%d",
 								GC.getBuildInfo(eBuild).getType(), kImprovement.getType(),
-								kImprovement.isCanMoveSeaUnits() ? 1 : 0, kImprovement.isActsAsCity() ? 1 : 0,
-								kImprovement.getDefense(DEFENSE_AMOUNT, CASC_SCOPE_PLOT), kImprovement.isZOCSource() ? 1 : 0,
+								kImprovement.isCanMoveSeaUnits() ? 1 : 0, kImprovement.hasCharacteristic(CLS_CHARACTERISTIC_ACTS_AS_CITY) ? 1 : 0,
+								kImprovement.getDefense(DEFENSE_AMOUNT, CASC_SCOPE_PLOT), kImprovement.hasCharacteristic(CLS_CHARACTERISTIC_ZONE_OF_CONTROL) ? 1 : 0,
 								GC.getBuildInfo(eBuild).getTime(), iBuildValue);
 						}
 
@@ -26318,11 +26318,11 @@ BuildTypes CvUnitAI::AI_findBestFort(const CvPlot* pPlot) const
 					+
 					iElevationPlots * 1000 // Each plot of elevation equals 10% defense mod
 				);
-			if (kImprovement.isActsAsCity())
+			if (kImprovement.hasCharacteristic(CLS_CHARACTERISTIC_ACTS_AS_CITY))
 			{
 				iValue += 5000; // Equals 50% defense mod
 			}
-			if (kImprovement.isZOCSource())
+			if (kImprovement.hasCharacteristic(CLS_CHARACTERISTIC_ZONE_OF_CONTROL))
 			{
 				iValue += 5000; // Equals 50% defense mod
 			}
@@ -26335,7 +26335,7 @@ BuildTypes CvUnitAI::AI_findBestFort(const CvPlot* pPlot) const
 					logBuildEvaluation(3, "  AI_findBestFort cand build=%s impr=%s def=%d vis=%d acts=%d zoc=%d time=%d score=%d",
 						GC.getBuildInfo(eBuild).getType(), kImprovement.getType(),
 						kImprovement.getDefense(DEFENSE_AMOUNT, CASC_SCOPE_PLOT), iElevationPlots,
-						kImprovement.isActsAsCity() ? 1 : 0, kImprovement.isZOCSource() ? 1 : 0,
+						kImprovement.hasCharacteristic(CLS_CHARACTERISTIC_ACTS_AS_CITY) ? 1 : 0, kImprovement.hasCharacteristic(CLS_CHARACTERISTIC_ZONE_OF_CONTROL) ? 1 : 0,
 						GC.getBuildInfo(eBuild).getTime(), iValue);
 				}
 

@@ -2,6 +2,7 @@
 
 
 #include "Tools/FProfiler.h"
+#include "Infos/CvClassificationIds.h"   // the generated classification id table
 
 #include "CvGameCoreDLL.h"
 #include "CvArea.h"
@@ -3160,7 +3161,7 @@ bool CvSelectionGroup::calculateIsStranded()
 		}
 
 		if (plot()->getImprovementType() != NO_IMPROVEMENT
-		&& GC.getImprovementInfo(plot()->getImprovementType()).isActsAsCity()
+		&& GC.getImprovementInfo(plot()->getImprovementType()).hasCharacteristic(CLS_CHARACTERISTIC_ACTS_AS_CITY)
 		&& canDefend())
 		{
 			return false;

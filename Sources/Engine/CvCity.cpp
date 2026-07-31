@@ -3606,7 +3606,7 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 	// drifting copy of data the packages already hold ([DEC-accumulator-cut-uniform]).
 	// What legitimately remains is what is NOT a modifier deposit: the supply this building puts into the city's
 	// vicinity, the engine-side counters and caps, the cross-scope fan-out, and the announcement.
-	if (!bReligiously && kBuilding.isOrbitalInfrastructure())
+	if (!bReligiously && kBuilding.hasAttribute(CLS_ATTRIBUTE_ORBITAL_INFRASTRUCTURE))
 	{
 		owner.noteOrbitalInfrastructureCountDirty();
 	}
@@ -3643,13 +3643,13 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 		changeMaxSpecialistCount((SpecialistTypes)iI, GET_TEAM(getTeam()).getBuildingSpecialistChange(eBuilding, (SpecialistTypes)iI) * iChange);
 	}
 
-	if (kBuilding.isZoneOfControl())
+	if (kBuilding.providesAmenity(CLS_AMENITY_ZONE_OF_CONTROL))
 	{
 		changeZoCCount(iChange);
 	}
 	if (!bReligiously)
 	{
-		if (kBuilding.isProtectedCulture())
+		if (kBuilding.providesAmenity(CLS_AMENITY_PROTECTED_CULTURE))
 		{
 			changeProtectedCultureCount(iChange > 0 ? 1 : -1);
 		}
@@ -3662,7 +3662,7 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 	// The cross-scope fan-out: a team-shared building processes for every team member.
 	for (int iI = 0; iI < MAX_PLAYERS; iI++)
 	{
-		if (GET_PLAYER((PlayerTypes)iI).isAliveAndTeam(getTeam()) && (iI == getOwner() || kBuilding.isTeamShare()))
+		if (GET_PLAYER((PlayerTypes)iI).isAliveAndTeam(getTeam()) && (iI == getOwner() || kBuilding.hasAttribute(CLS_ATTRIBUTE_TEAM_SHARE)))
 		{
 			GET_PLAYER((PlayerTypes)iI).processBuilding(eBuilding, iChange, area(), bReligiously);
 		}
@@ -4830,7 +4830,7 @@ if (!bHasCalculatedNeighbors) return MAX_INT;
 	{
 		// some features cause underlying terrain cost to be ignored; oasis, floodplain, natural wonders
 		const CvFeatureInfo& featureInfo = GC.getFeatureInfo((FeatureTypes)featureType);
-		if (featureInfo.isIgnoreTerrainCulture())
+		if (featureInfo.hasCharacteristic(CLS_CHARACTERISTIC_IGNORE_TERRAIN_CULTURE))
 		{
 			terrainDistance = 0;
 		}
@@ -6692,7 +6692,7 @@ int CvCity::getAdditionalHappinessByBuilding(BuildingTypes eBuilding, int& iGood
 		iBad = iStartingBad;
 	}
 	// No Unhappiness
-	else if (kBuilding.isAbolishedAnger())
+	else if (kBuilding.providesAmenity(CLS_AMENITY_ABOLISHED_ANGER))
 	{
 		// override extra unhappiness and completely negate all existing unhappiness
 		// The building negates ALL unhappiness: the removal it offers is the whole ANGER side.
@@ -6787,14 +6787,14 @@ int CvCity::getAdditionalHealthByBuilding(BuildingTypes eBuilding, int& iGood, i
 		// undo bad from this building
 		iBad = iStartingBad;
 	}
-	if (kBuilding.isBuildingOnlyHealthy())
+	if (kBuilding.providesAmenity(CLS_AMENITY_ABOLISHED_UNHEALTH_FROM_BUILDINGS))
 	{
 		// undo bad from this and all existing buildings
 		iBad = iStartingBad + totalBadBuildingHealth();
 	}
 
 	// No Unhealthiness from Population
-	if (kBuilding.isNoUnhealthyPopulation())
+	if (kBuilding.providesAmenity(CLS_AMENITY_ABOLISHED_UNHEALTH_FROM_POPULATION))
 	{
 		iBad -= getPopulation();
 	}
@@ -9053,7 +9053,7 @@ int CvCity::getBuildingCommerceByBuilding(CommerceTypes eIndex, BuildingTypes eB
 
 		if (iBaseCommerceChange != 0)
 		{
-			if (kBuilding.isOrbital())
+			if (kBuilding.hasAttribute(CLS_ATTRIBUTE_ORBITAL))
 			{
 				const int iOrbitalCities = kOwner.countNumCitiesWithOrbitalInfrastructure();
 				const int iVal = std::min(iBaseCommerceChange * iOrbitalCities, getPopulation());
@@ -11266,7 +11266,7 @@ void CvCity::setupBuilding(const CvBuildingInfo& kBuilding, const BuildingTypes 
 				}
 			}
 
-			if (kBuilding.isCapital())
+			if (kBuilding.providesAmenity(CLS_AMENITY_CAPITAL))
 			{
 				GET_PLAYER(getOwner()).setCapitalCity(this);
 			}
@@ -11291,7 +11291,7 @@ void CvCity::setupBuilding(const CvBuildingInfo& kBuilding, const BuildingTypes 
 
 				if (kBuilding.getGlobalPopulationChange() > 0)
 				{
-					if (kBuilding.isTeamShare())
+					if (kBuilding.hasAttribute(CLS_ATTRIBUTE_TEAM_SHARE))
 					{
 						for (int iI = 0; iI < MAX_PC_PLAYERS; iI++)
 						{
@@ -11380,12 +11380,12 @@ void CvCity::setupBuilding(const CvBuildingInfo& kBuilding, const BuildingTypes 
 	//great wall
 	if (bFirst) // Not city copy on owner change, actually built or destroyed.
 	{
-		if (kBuilding.isBorderObstacle())
+		if (kBuilding.providesAmenity(CLS_AMENITY_BORDER_OBSTACLE))
 		{
 			bool bHas = false;
 			foreach_(const BuildingTypes eTypeX, getHasBuildings())
 			{
-				if (eType != eTypeX && GC.getBuildingInfo(eTypeX).isBorderObstacle() && !isDormantBuilding(eTypeX))
+				if (eType != eTypeX && GC.getBuildingInfo(eTypeX).providesAmenity(CLS_AMENITY_BORDER_OBSTACLE) && !isDormantBuilding(eTypeX))
 				{
 					bHas = true;
 					break;
@@ -11430,7 +11430,7 @@ bool CvCity::processGreatWall(bool bIn, bool bForce, bool bSeeded)
 	{
 		foreach_(const BuildingTypes eTypeX, getHasBuildings())
 		{
-			if (GC.getBuildingInfo(eTypeX).isBorderObstacle() && !isDormantBuilding(eTypeX))
+			if (GC.getBuildingInfo(eTypeX).providesAmenity(CLS_AMENITY_BORDER_OBSTACLE) && !isDormantBuilding(eTypeX))
 			{
 				bHasGreatWall = true;
 				break;
@@ -15579,7 +15579,7 @@ bool CvCity::hasOrbitalInfrastructure() const
 	//ls612: To check if a city gets full benefits from Orbital Buildings
 	for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
 	{
-		if (GC.getBuildingInfo((BuildingTypes)iI).isOrbitalInfrastructure() && isActiveBuilding((BuildingTypes)iI))
+		if (GC.getBuildingInfo((BuildingTypes)iI).hasAttribute(CLS_ATTRIBUTE_ORBITAL_INFRASTRUCTURE) && isActiveBuilding((BuildingTypes)iI))
 		{
 			return true;
 		}

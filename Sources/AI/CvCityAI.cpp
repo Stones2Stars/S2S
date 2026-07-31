@@ -4614,7 +4614,7 @@ bool CvCityAI::AI_scoreBuildingsFromListThreshold(std::vector<ScoredBuilding>& s
 		{
 			FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eBuilding);
 
-			if (GC.getBuildingInfo(eBuilding).isCapital())
+			if (GC.getBuildingInfo(eBuilding).providesAmenity(CLS_AMENITY_CAPITAL))
 			{
 				scoredBuildings.push_back(ScoredBuilding(eBuilding, -getProductionTurnsLeft(eBuilding, 0)));
 			}
@@ -5183,7 +5183,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 			}
 		}
 
-		if (kBuilding.isCapital())
+		if (kBuilding.providesAmenity(CLS_AMENITY_CAPITAL))
 		{
 			return 0;
 		}
@@ -5252,7 +5252,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 
 					if (GC.getGame().isOption(GAMEOPTION_UNSUPPORTED_ZONE_OF_CONTROL))
 					{
-						iValue += kBuilding.isZoneOfControl() ? 50 : 0;
+						iValue += kBuilding.providesAmenity(CLS_AMENITY_ZONE_OF_CONTROL) ? 50 : 0;
 					}
 
 
@@ -5289,7 +5289,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 							getCityContext(), kOwner.getEmpireContext(), plotGroup(getOwner())) * 10;
 					}
 
-					iValue += kBuilding.isProtectedCulture() ? 50 : 0;
+					iValue += kBuilding.providesAmenity(CLS_AMENITY_PROTECTED_CULTURE) ? 50 : 0;
 
 					const int iNoEntry = cai_expectedHere(kBuilding, MODFAM_DEFENSE, DEFENSE_NO_ENTRY_LEVEL,
 						getCityContext(), kOwner.getEmpireContext(), plotGroup(getOwner()));
@@ -5323,7 +5323,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 
 				iValue += kBuilding.getAirlift() * 25;
 
-				if (kBuilding.isBorderObstacle() && !GC.getGame().isOption(GAMEOPTION_BARBARIAN_NONE))
+				if (kBuilding.providesAmenity(CLS_AMENITY_BORDER_OBSTACLE) && !GC.getGame().isOption(GAMEOPTION_BARBARIAN_NONE))
 				{
 					int iTempValue = iNumCitiesInArea * 3 / 2;
 					//The great wall is much more valuable with more barbarian activity.
@@ -5345,7 +5345,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 			if (((iFocusFlags & BUILDINGFOCUS_HAPPY) || iPass > 0)
 			// If we're evaluating a building we already have (e.g. - for civic enabling/disabling)
 			//	and it gives no unhealthy and that's the reason we have it, count it!
-			&& (!isNoUnhappiness() || isActiveBuilding(eBuilding) && kBuilding.isAbolishedAnger()))
+			&& (!isNoUnhappiness() || isActiveBuilding(eBuilding) && kBuilding.providesAmenity(CLS_AMENITY_ABOLISHED_ANGER)))
 			{
 				PROFILE("CvCityAI::AI_buildingValueThresholdOriginal.Happy");
 
@@ -5365,7 +5365,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 
 				//Fuyu ToDo: How to handle Globe Theater national wonder?
 				//For now just give massive boost if city is high food yet not one of the main production or commerce cities
-				if (kBuilding.isAbolishedAnger() && bIsLimitedWonder)
+				if (kBuilding.providesAmenity(CLS_AMENITY_ABOLISHED_ANGER) && bIsLimitedWonder)
 				{
 					iValue += (iAngryPopulation * 10) + getPopulation();
 					aiYieldRank[YIELD_FOOD] = findBaseYieldRateRank(YIELD_FOOD);
@@ -5481,7 +5481,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 			if (((iFocusFlags & BUILDINGFOCUS_HEALTHY) || iPass > 0)
 			// If we're evaluating a building we already have (e.g. - for civic enabling/disabling)
 			//	and it gives no unhealthy and that's the reason we have it, count it!
-			&& (!isNoUnhealthyPopulation() || isActiveBuilding(eBuilding) && kBuilding.isNoUnhealthyPopulation()))
+			&& (!isNoUnhealthyPopulation() || isActiveBuilding(eBuilding) && kBuilding.providesAmenity(CLS_AMENITY_ABOLISHED_UNHEALTH_FROM_POPULATION)))
 			{
 				PROFILE("CvCityAI::AI_buildingValueThresholdOriginal.Healthy");
 
@@ -5808,7 +5808,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 					iValue += (kBuilding.getScalar(SCALAR_GREAT_GENERAL_RATE_DOMESTIC, CASC_SCOPE_CITY, CASC_UNIT_PERCENT) / 10);
 				}
 
-				if (kBuilding.isBorderObstacle() && !pArea->isBorderObstacle(getTeam())
+				if (kBuilding.providesAmenity(CLS_AMENITY_BORDER_OBSTACLE) && !pArea->isBorderObstacle(getTeam())
 				&& !GC.getGame().isOption(GAMEOPTION_BARBARIAN_NONE))
 				{
 					iValue += iNumCitiesInArea;
@@ -5819,9 +5819,9 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 					}
 				}
 
-				if (kBuilding.isGovernmentCenter())
+				if (kBuilding.providesAmenity(CLS_AMENITY_GOVERNMENT_CENTER))
 				{
-					FAssert(!kBuilding.isCapital());
+					FAssert(!kBuilding.providesAmenity(CLS_AMENITY_CAPITAL));
 					iValue += (int)((maintenanceOfKind(MAINTENANCE_DISTANCE) / 100 - 3) * iNumCitiesInArea);
 				}
 
@@ -6052,7 +6052,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 					}
 				}
 				int forcedTradeRoutesValue = 0;
-				if (kBuilding.isForceAllTradeRoutes())
+				if (kBuilding.providesAmenity(CLS_AMENITY_FORCE_ALL_TRADE_ROUTES))
 				{
 					for (int iI = 0; iI < MAX_TEAMS; iI++)
 					{
@@ -6538,7 +6538,7 @@ int CvCityAI::AI_buildingYieldValue(YieldTypes eYield, BuildingTypes eBuilding, 
 
 		// The candidate would switch the city's POWER on, which is not its own deposit but a state flip that
 		// lets the city's power-gated modifier apply. `providesPower` is the authored attribute (json §8).
-		if (!isPower() && kBuilding.providesPower())
+		if (!isPower() && kBuilding.providesAmenity(CLS_AMENITY_PROVIDES_POWER))
 		{
 			iMod += getPowerYieldRateModifier(eYield);
 		}
@@ -8162,7 +8162,7 @@ int CvCityAI::AI_getImprovementValue(const CvPlot* pPlot, ImprovementTypes eImpr
 	{
 		int iMilitaryValue = 3 * improvement.getAirBombDefense();
 
-		if (improvement.isZOCSource()) iMilitaryValue += 200;
+		if (improvement.hasCharacteristic(CLS_CHARACTERISTIC_ZONE_OF_CONTROL)) iMilitaryValue += 200;
 
 		// vision.md §5: an improvement's legacy see-from AND visibility-change are ONE concept now -- its
 		// ELEVATION -- so the two weighted terms collapse into a single one carrying their combined weight.
@@ -12486,16 +12486,16 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 			kBuilding.getBombardDefenseModifier() > 0 ||
 			kBuilding.getDefense(DEFENSE_AMOUNT, CASC_SCOPE_EMPIRE) > 0 ||
 			kBuilding.isNeverCapture() ||
-			kBuilding.isNukeImmune() ||
-			GC.getGame().isOption(GAMEOPTION_UNSUPPORTED_ZONE_OF_CONTROL) && kBuilding.isZoneOfControl() ||
+			kBuilding.providesAmenity(CLS_AMENITY_NUKE_IMMUNE) ||
+			GC.getGame().isOption(GAMEOPTION_UNSUPPORTED_ZONE_OF_CONTROL) && kBuilding.providesAmenity(CLS_AMENITY_ZONE_OF_CONTROL) ||
 			kBuilding.getModifiers()->targetedSum(MODFAM_COMBAT, COMBAT_AMOUNT, CASC_SCOPE_CITY,
 				CASC_UNIT_PERCENT, modSegmentLookup("unitCombats"), -1) != 0 ||
 			kBuilding.getAdjacentDamagePercent() > 0 ||
-			kBuilding.isProtectedCulture() ||
+			kBuilding.providesAmenity(CLS_AMENITY_PROTECTED_CULTURE) ||
 			kBuilding.getScalar(SCALAR_OCCUPATION_TIME, CASC_SCOPE_CITY, CASC_UNIT_PERCENT) > 0 ||
 			kBuilding.getNoEntryDefenseLevel() > 0 ||
 			kBuilding.getNumUnitFullHeal() > 0 ||
-			kBuilding.isBorderObstacle() ||
+			kBuilding.providesAmenity(CLS_AMENITY_BORDER_OBSTACLE) ||
 			GC.getGame().isOption(GAMEOPTION_COMBAT_SURROUND_DESTROY) && kBuilding.getLocalDynamicDefense() > 0 ||
 			kBuilding.getLocalCaptureProbabilityModifier() > 0 ||
 			kBuilding.getLocalCaptureResistanceModifier() > 0 ||
@@ -12521,7 +12521,7 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 			CASC_UNIT_FLAT, modSegmentLookup("buildings"), kKeyedHappy);
 		if (kBuilding.getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_CITY) > 0
 			|| kBuilding.getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_EMPIRE) > 0
-			|| kBuilding.isAbolishedAnger()
+			|| kBuilding.providesAmenity(CLS_AMENITY_ABOLISHED_ANGER)
 			|| kBuilding.getScalar(SCALAR_WAR_WEARINESS, CASC_SCOPE_CITY, CASC_UNIT_PERCENT) < 0
 			|| kBuilding.getScalar(SCALAR_WAR_WEARINESS, CASC_SCOPE_EMPIRE, CASC_UNIT_PERCENT) < 0
 			|| !kKeyedHappy.empty()
@@ -12541,8 +12541,8 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 		}
 		if (kBuilding.getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_CITY) > 0
 			|| kBuilding.getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_EMPIRE) > 0
-			|| kBuilding.isNoUnhealthyPopulation()
-			|| kBuilding.isBuildingOnlyHealthy()
+			|| kBuilding.providesAmenity(CLS_AMENITY_ABOLISHED_UNHEALTH_FROM_POPULATION)
+			|| kBuilding.providesAmenity(CLS_AMENITY_ABOLISHED_UNHEALTH_FROM_BUILDINGS)
 			|| !kBuilding.getBonusHealthChanges().empty()
 			|| GET_PLAYER(getOwner()).getExtraBuildingHealth(eBuilding) > 0)
 		{
@@ -12621,7 +12621,7 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 			return true;
 		}
 	}
-	if ((iFocusFlags & BUILDINGFOCUS_CAPITAL) != 0 && kBuilding.isCapital())
+	if ((iFocusFlags & BUILDINGFOCUS_CAPITAL) != 0 && kBuilding.providesAmenity(CLS_AMENITY_CAPITAL))
 	{
 		return true;
 	}

@@ -5002,7 +5002,7 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 
 			int iImprovementValue = 300;
 
-			iImprovementValue += ((kImprovement.isActsAsCity()) ? 75 : 0);
+			iImprovementValue += ((kImprovement.hasCharacteristic(CLS_CHARACTERISTIC_ACTS_AS_CITY)) ? 75 : 0);
 			iImprovementValue += ((kImprovement.isHillsMakesValid()) ? 100 : 0);
 			iImprovementValue += ((kImprovement.isFreshWaterMakesValid()) ? 200 : 0);
 			iImprovementValue += ((kImprovement.isRiverSideMakesValid()) ? 100 : 0);
@@ -14367,7 +14367,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 
 	//#2: Health
 	if ((getNumCities() > 0) &&
-		(kCivic.isNoUnhealthyPopulation() || kCivic.isBuildingOnlyHealthy()
+		(kCivic.providesAmenity(CLS_AMENITY_ABOLISHED_UNHEALTH_FROM_POPULATION) || kCivic.providesAmenity(CLS_AMENITY_ABOLISHED_UNHEALTH_FROM_BUILDINGS)
 			|| kCivic.getExtraHealth() != 0 || kCivic.isAnyBuildingHealthChange()))
 	{
 		//int CvPlayerAI::AI_getHealthWeight(int iHealth, int iExtraPop) const
@@ -14385,11 +14385,11 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 		int iCivicsBuildingOnlyHealthyCountNow = 0;
 		int iCivicsBuildingOnlyHealthyCountThen = 0;
 
-		if (kCivic.isNoUnhealthyPopulation())
+		if (kCivic.providesAmenity(CLS_AMENITY_ABOLISHED_UNHEALTH_FROM_POPULATION))
 		{
 			iCivicsNoUnhealthyPopulationCountThen++;
 		}
-		if (kCivic.isBuildingOnlyHealthy())
+		if (kCivic.providesAmenity(CLS_AMENITY_ABOLISHED_UNHEALTH_FROM_BUILDINGS))
 		{
 			iCivicsBuildingOnlyHealthyCountThen++;
 		}
@@ -14406,11 +14406,11 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 						continue;
 					else
 					{
-						if (kTempCivic.isNoUnhealthyPopulation())
+						if (kTempCivic.providesAmenity(CLS_AMENITY_ABOLISHED_UNHEALTH_FROM_POPULATION))
 						{
 							iCivicsNoUnhealthyPopulationCountNow++;
 						}
-						if (kTempCivic.isBuildingOnlyHealthy())
+						if (kTempCivic.providesAmenity(CLS_AMENITY_ABOLISHED_UNHEALTH_FROM_BUILDINGS))
 						{
 							iCivicsBuildingOnlyHealthyCountNow++;
 						}
@@ -14418,12 +14418,12 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 				}
 				else
 				{
-					if (kTempCivic.isNoUnhealthyPopulation())
+					if (kTempCivic.providesAmenity(CLS_AMENITY_ABOLISHED_UNHEALTH_FROM_POPULATION))
 					{
 						iCivicsNoUnhealthyPopulationCountNow++;
 						iCivicsNoUnhealthyPopulationCountThen++;
 					}
-					if (kTempCivic.isBuildingOnlyHealthy())
+					if (kTempCivic.providesAmenity(CLS_AMENITY_ABOLISHED_UNHEALTH_FROM_BUILDINGS))
 					{
 						iCivicsBuildingOnlyHealthyCountNow++;
 						iCivicsBuildingOnlyHealthyCountThen++;
@@ -14497,7 +14497,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 			//Health calculation
 			//iGood = 0; iBad = 0; iBadBuilding = 0;
 			//int iHealth = pLoopCity->getAdditionalHealthByCivic(eCivic, iGood, iBad, iBadBuilding, false, iExtraPop, /* bCivicOptionVacuum */ true, iIgnoreNoUnhealthyPopulationCount, iIgnoreBuildingOnlyHealthyCount);
-			if (kCivic.isBuildingOnlyHealthy())
+			if (kCivic.providesAmenity(CLS_AMENITY_ABOLISHED_UNHEALTH_FROM_BUILDINGS))
 			{
 				//iHealth += iTempAdditionalHealthByPlayerBuildingOnlyHealthy;
 				iGood += iTempAdditionalHealthByPlayerBuildingOnlyHealthy;
@@ -14506,12 +14506,12 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 			int iBadTotal = -iBad;
 			int iGoodTotal = iGood;
 
-			if (kCivic.isNoUnhealthyPopulation())
+			if (kCivic.providesAmenity(CLS_AMENITY_ABOLISHED_UNHEALTH_FROM_POPULATION))
 			{
 				iGoodFromNoUnhealthyPopulation = pLoopCity->getAdditionalHealthByPlayerNoUnhealthyPopulation(iExtraPop, iCivicsNoUnhealthyPopulationCountNow);
 			}
 
-			if (kCivic.isBuildingOnlyHealthy())
+			if (kCivic.providesAmenity(CLS_AMENITY_ABOLISHED_UNHEALTH_FROM_BUILDINGS))
 			{
 				iGoodFromBuildingOnlyHealthy = pLoopCity->getAdditionalHealthByPlayerBuildingOnlyHealthy(iCivicsBuildingOnlyHealthyCountNow);
 			}
@@ -14520,9 +14520,9 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 
 			iBadTotal += iBadHealthFromOtherCivics;
 			iGoodTotal += iGoodHealthFromOtherCivics;
-			if (iCivicsNoUnhealthyPopulationCountThen > 0 && !kCivic.isNoUnhealthyPopulation())
+			if (iCivicsNoUnhealthyPopulationCountThen > 0 && !kCivic.providesAmenity(CLS_AMENITY_ABOLISHED_UNHEALTH_FROM_POPULATION))
 				iGoodTotal += iGoodFromNoUnhealthyPopulation;
-			if (iCivicsBuildingOnlyHealthyCountThen > 0 && !kCivic.isBuildingOnlyHealthy())
+			if (iCivicsBuildingOnlyHealthyCountThen > 0 && !kCivic.providesAmenity(CLS_AMENITY_ABOLISHED_UNHEALTH_FROM_BUILDINGS))
 				iGoodTotal += iGoodFromBuildingOnlyHealthy;
 
 			if (iGood > 0)
@@ -14555,12 +14555,12 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 				int iTempValueFromBuildingOnlyHealthy = 0;
 				int iTempValueFromRest;
 				int iGoodFromRest = iGood;
-				if (kCivic.isNoUnhealthyPopulation() && iCivicsNoUnhealthyPopulationCountThen > 1)
+				if (kCivic.providesAmenity(CLS_AMENITY_ABOLISHED_UNHEALTH_FROM_POPULATION) && iCivicsNoUnhealthyPopulationCountThen > 1)
 				{
 					iTempValueFromNoUnhealthyPopulation = (iTempValue * iGoodFromNoUnhealthyPopulation) / (iCivicsNoUnhealthyPopulationCountThen * iGoodTotal);
 					iGoodFromRest -= iGoodFromNoUnhealthyPopulation;
 				}
-				if (kCivic.isBuildingOnlyHealthy() && iCivicsBuildingOnlyHealthyCountThen > 1)
+				if (kCivic.providesAmenity(CLS_AMENITY_ABOLISHED_UNHEALTH_FROM_BUILDINGS) && iCivicsBuildingOnlyHealthyCountThen > 1)
 				{
 					iTempValueFromBuildingOnlyHealthy = (iTempValue * iGoodFromBuildingOnlyHealthy) / (iCivicsBuildingOnlyHealthyCountThen * iGoodTotal);
 					iGoodFromRest -= iGoodFromBuildingOnlyHealthy;
@@ -14628,8 +14628,8 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 
 	//health is handled in CvCity::getAdditionalHealthByCivic
 /*
-	iValue += ((kCivic.isNoUnhealthyPopulation()) ? (getTotalPopulation() / 3) : 0);
-	iValue += ((kCivic.isBuildingOnlyHealthy()) ? (getNumCities() * 3) : 0);
+	iValue += ((kCivic.providesAmenity(CLS_AMENITY_ABOLISHED_UNHEALTH_FROM_POPULATION)) ? (getTotalPopulation() / 3) : 0);
+	iValue += ((kCivic.providesAmenity(CLS_AMENITY_ABOLISHED_UNHEALTH_FROM_BUILDINGS)) ? (getNumCities() * 3) : 0);
 
 	if (kCivic.getExtraHealth() != 0)
 	{
@@ -25310,7 +25310,7 @@ int CvPlayerAI::AI_getPlotAirbaseValue(const CvPlot* pPlot) const
 			}
 			if (pPlot->getImprovementType() != NO_IMPROVEMENT)
 			{
-				if (!GC.getImprovementInfo(pPlot->getImprovementType()).isActsAsCity())
+				if (!GC.getImprovementInfo(pPlot->getImprovementType()).hasCharacteristic(CLS_CHARACTERISTIC_ACTS_AS_CITY))
 				{
 					return 0;
 				}
@@ -25442,7 +25442,7 @@ int CvPlayerAI::AI_getPlotCanalValue(const CvPlot* pPlot) const
 					}
 					if (pPlot->getImprovementType() != NO_IMPROVEMENT)
 					{
-						if (!GC.getImprovementInfo(pPlot->getImprovementType()).isActsAsCity())
+						if (!GC.getImprovementInfo(pPlot->getImprovementType()).hasCharacteristic(CLS_CHARACTERISTIC_ACTS_AS_CITY))
 						{
 							return 0;
 						}
@@ -25552,7 +25552,7 @@ bool CvPlayerAI::AI_isCivicCanChangeOtherValues(CivicTypes eCivicSelected, Relig
 	}
 
 	//health
-	if (kCivicSelected.getExtraHealth() != 0 || kCivicSelected.isNoUnhealthyPopulation() || kCivicSelected.isBuildingOnlyHealthy() || kCivicSelected.isAnyBuildingHealthChange())
+	if (kCivicSelected.getExtraHealth() != 0 || kCivicSelected.providesAmenity(CLS_AMENITY_ABOLISHED_UNHEALTH_FROM_POPULATION) || kCivicSelected.providesAmenity(CLS_AMENITY_ABOLISHED_UNHEALTH_FROM_BUILDINGS) || kCivicSelected.isAnyBuildingHealthChange())
 	{
 		return true;
 	}
@@ -25633,9 +25633,9 @@ bool CvPlayerAI::AI_isCivicValueRecalculationRequired(CivicTypes eCivic, CivicTy
 	}
 
 	//health
-	if (kCivic.getExtraHealth() != 0 || kCivic.isNoUnhealthyPopulation() || kCivic.isBuildingOnlyHealthy() || kCivic.isAnyBuildingHealthChange())
+	if (kCivic.getExtraHealth() != 0 || kCivic.providesAmenity(CLS_AMENITY_ABOLISHED_UNHEALTH_FROM_POPULATION) || kCivic.providesAmenity(CLS_AMENITY_ABOLISHED_UNHEALTH_FROM_BUILDINGS) || kCivic.isAnyBuildingHealthChange())
 	{
-		if (kCivicSelected.getExtraHealth() != 0 || kCivicSelected.isNoUnhealthyPopulation() || kCivicSelected.isBuildingOnlyHealthy() || kCivicSelected.isAnyBuildingHealthChange())
+		if (kCivicSelected.getExtraHealth() != 0 || kCivicSelected.providesAmenity(CLS_AMENITY_ABOLISHED_UNHEALTH_FROM_POPULATION) || kCivicSelected.providesAmenity(CLS_AMENITY_ABOLISHED_UNHEALTH_FROM_BUILDINGS) || kCivicSelected.isAnyBuildingHealthChange())
 		{
 			return true;
 		}
@@ -30432,7 +30432,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	// TB Combat Mods Begin
-	if (GC.getGame().isOption(GAMEOPTION_UNSUPPORTED_ZONE_OF_CONTROL) && kPromotion.isZoneOfControl())
+	if (GC.getGame().isOption(GAMEOPTION_UNSUPPORTED_ZONE_OF_CONTROL) && kPromotion.hasSkill(CLS_SKILL_ZONE_OF_CONTROL))
 	{
 		iValue += 250;
 	}
@@ -32975,7 +32975,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 	}
 
 	// TB Combat Mods Begin
-	if (GC.getGame().isOption(GAMEOPTION_UNSUPPORTED_ZONE_OF_CONTROL) && kUnitCombat.isZoneOfControl())
+	if (GC.getGame().isOption(GAMEOPTION_UNSUPPORTED_ZONE_OF_CONTROL) && kUnitCombat.hasSkill(CLS_SKILL_ZONE_OF_CONTROL))
 	{
 		iValue += 250;
 	}

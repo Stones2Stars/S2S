@@ -6494,7 +6494,7 @@ bool CvUnit::canAirliftAt(const CvPlot* pPlot, int iX, int iY) const
 	if (pTargetPlot->getTeam() != NO_TEAM
 	&& (pTargetPlot->getTeam() == getTeam() || GET_TEAM(pTargetPlot->getTeam()).isVassal(getTeam()))
 	&&  pTargetPlot->getImprovementType() != NO_IMPROVEMENT
-	&& GC.getImprovementInfo(pTargetPlot->getImprovementType()).isActsAsCity())
+	&& GC.getImprovementInfo(pTargetPlot->getImprovementType()).hasCharacteristic(CLS_CHARACTERISTIC_ACTS_AS_CITY))
 	{
 		return true;
 	}
@@ -13705,7 +13705,7 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
 		// Koshling - modified a little to merge Super Forts logic
 		const ImprovementTypes eImprovement = pNewPlot->getImprovementType();
 
-		if (eImprovement != NO_IMPROVEMENT && GC.getImprovementInfo(eImprovement).isActsAsCity() && !isNoCapture()
+		if (eImprovement != NO_IMPROVEMENT && GC.getImprovementInfo(eImprovement).hasCharacteristic(CLS_CHARACTERISTIC_ACTS_AS_CITY) && !isNoCapture()
 		&& !isBlendIntoCity() && !isHiddenNationality() && !myPlayer.isAnimal() && !isCargo())
 		{
 			PROFILE("CvUnit::setXY.NewPlot2.ActAsCity");
@@ -18094,7 +18094,7 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 	}
 	changeCanMovePeaksCount((kUnitCombat.isCanMovePeaks()) ? iChange : 0);
 	changeCanLeadThroughPeaksCount((kUnitCombat.isCanLeadThroughPeaks()) ? iChange : 0);
-	changeZoneOfControlCount((kUnitCombat.isZoneOfControl()) ? iChange : 0);
+	changeZoneOfControlCount((kUnitCombat.hasSkill(CLS_SKILL_ZONE_OF_CONTROL)) ? iChange : 0);
 	changeCannotMergeSplitCount((kUnitCombat.isCannotMergeSplit()) ? iChange : 0);
 	changeNoSelfHealCount((kUnitCombat.isNoSelfHeal()) ? iChange : 0);
 	changeExtraSelfHealModifier(kUnitCombat.getHealModifier(HEAL_SELF_MODIFIER, CASC_SCOPE_UNIT) * iChange);
@@ -18605,7 +18605,7 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	}
 
 
-	if (kPromotion.isZoneOfControl())
+	if (kPromotion.hasSkill(CLS_SKILL_ZONE_OF_CONTROL))
 	{
 		changeZoneOfControlCount(iChange > 0 ? 1 : -1);
 	}

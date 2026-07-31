@@ -894,7 +894,7 @@ bool CvWorkerAI::improveBonus(CvUnitAI* unit, int allowedMovementTurns)
 		{
 			bDoImprove = true;
 		}
-		else if (bCityRadius && (GC.getImprovementInfo(eImprovement).isActsAsCity()
+		else if (bCityRadius && (GC.getImprovementInfo(eImprovement).hasCharacteristic(CLS_CHARACTERISTIC_ACTS_AS_CITY)
 		         || GC.getImprovementInfo(eImprovement).isImprovementBonusTrade(eNonObsoleteBonus)))
 		{
 			// Super Forts: re-evaluate whether a fort should remain on a city-radius plot
@@ -1115,12 +1115,12 @@ bool CvWorkerAI::improveBonus(CvUnitAI* unit, int allowedMovementTurns)
 			}
 
 			// Defense contribution (fort-likes only).
-			if (kImprovementX.isActsAsCity())
+			if (kImprovementX.hasCharacteristic(CLS_CHARACTERISTIC_ACTS_AS_CITY))
 			{
 				const int iDefenseRaw = kImprovementX.getAirBombDefense()
 				                      + kImprovementX.getDefense(DEFENSE_AMOUNT, CASC_SCOPE_PLOT);
 				iValueDefense = iDefenseRaw / W.defenseDivisor;
-				if (kImprovementX.isZOCSource()) iValueDefense += W.zocSourceBonus;
+				if (kImprovementX.hasCharacteristic(CLS_CHARACTERISTIC_ZONE_OF_CONTROL)) iValueDefense += W.zocSourceBonus;
 
 				if (!bCityRadius)
 				{

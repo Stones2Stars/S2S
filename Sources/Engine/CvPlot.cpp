@@ -1216,7 +1216,7 @@ void CvPlot::checkFortRevolt()
 	const CvImprovementInfo& improvement = GC.getImprovementInfo(getImprovementType());
 	const PlayerTypes eOwner = getOwner();
 
-	if (improvement.isActsAsCity() && getOwnershipDuration() > GC.getDefineINT("SUPER_FORTS_DURATION_BEFORE_REVOLT"))
+	if (improvement.hasCharacteristic(CLS_CHARACTERISTIC_ACTS_AS_CITY) && getOwnershipDuration() > GC.getDefineINT("SUPER_FORTS_DURATION_BEFORE_REVOLT"))
 	{
 		// Check for a fort culture flip. Fixed borders altered threshold checked there
 		const PlayerTypes eCulturalOwner = calculateCulturalOwner(false);
@@ -1666,7 +1666,7 @@ void CvPlot::nukeExplosion(int iRange, CvUnit* pNukeUnit)
 		CvCity* city = plotX->getPlotCity();
 
 		if (!city && !plotX->isWater() && !plotX->isImpassable()
-		&& (NO_FEATURE == plotX->getFeatureType() || !GC.getFeatureInfo(plotX->getFeatureType()).isNukeImmune())
+		&& (NO_FEATURE == plotX->getFeatureType() || !GC.getFeatureInfo(plotX->getFeatureType()).hasCharacteristic(CLS_CHARACTERISTIC_NUKE_IMMUNE))
 		&& GC.getGame().getSorenRandNum(100, "Nuke Fallout") < GC.getDefineINT("NUKE_FALLOUT_PROB"))
 		{
 			plotX->setImprovementType(NO_IMPROVEMENT);
@@ -1714,7 +1714,7 @@ void CvPlot::nukeExplosion(int iRange, CvUnit* pNukeUnit)
 
 				foreach_(const BuildingTypes eType, city->getHasBuildings())
 				{
-					if (!GC.getBuildingInfo(eType).isNukeImmune()
+					if (!GC.getBuildingInfo(eType).providesAmenity(CLS_AMENITY_NUKE_IMMUNE)
 					&& GC.getGame().getSorenRandNum(100, "Building Nuked") < GC.getDefineINT("NUKE_BUILDING_DESTRUCTION_PROB"))
 					{
 						temp.push_back(eType);
@@ -2791,7 +2791,7 @@ bool CvPlot::canHaveBonus(BonusTypes eBonus, bool bIgnoreLatitude) const
 
 	const FeatureTypes eFeature = getFeatureType();
 
-	if (eFeature != NO_FEATURE && GC.getFeatureInfo(eFeature).isNoBonus())
+	if (eFeature != NO_FEATURE && GC.getFeatureInfo(eFeature).hasCharacteristic(CLS_CHARACTERISTIC_PROHIBITS_BONUS))
 	{
 		return false;
 	}
@@ -2899,7 +2899,7 @@ bool CvPlot::canHaveImprovement(ImprovementTypes eImprovement, TeamTypes eTeam, 
 	const FeatureTypes eFeature = getFeatureType();
 
 	// Feature forbids
-	if (eFeature != NO_FEATURE && GC.getFeatureInfo(eFeature).isNoImprovement() && !pInfo.getFeatureMakesValid(eFeature))
+	if (eFeature != NO_FEATURE && GC.getFeatureInfo(eFeature).hasCharacteristic(CLS_CHARACTERISTIC_UNIMPROVABLE) && !pInfo.getFeatureMakesValid(eFeature))
 	{
 		return false;
 	}
@@ -3857,7 +3857,7 @@ bool CvPlot::isBombardable(const CvUnit* pUnit) const
 	}
 	else
 	{
-		if(GC.getImprovementInfo(eImprovement).isBombardable())
+		if(GC.getImprovementInfo(eImprovement).hasCharacteristic(CLS_CHARACTERISTIC_BOMBARDABLE))
 		{
 			return (getDefenseDamage() < GC.getImprovementInfo(eImprovement).getDefense(DEFENSE_AMOUNT, CASC_SCOPE_PLOT));
 		}
@@ -5386,9 +5386,9 @@ bool CvPlot::canHaveFeature(FeatureTypes eFeature, bool bOverExistingFeature) co
 	}
 	const CvFeatureInfo& feature = GC.getFeatureInfo(eFeature);
 
-	if (feature.isNoCity() && isCity()
+	if (feature.hasCharacteristic(CLS_CHARACTERISTIC_UNFOUNDABLE) && isCity()
 	|| !feature.isTerrain(getTerrainType())
-	||  feature.isNoBonus() && getBonusType() != NO_BONUS
+	||  feature.hasCharacteristic(CLS_CHARACTERISTIC_PROHIBITS_BONUS) && getBonusType() != NO_BONUS
 	||  feature.isRequiresFlatlands() && isHills()
 	||  feature.isNoCoast() && isCoastal()
 	||  feature.isCoastalOnly() && !isCoastal()
@@ -6573,7 +6573,7 @@ bool CvPlot::isPeak() const
 
 bool CvPlot::isAsPeak() const
 {
-	return isPeak() || getFeatureType() != NO_FEATURE && GC.getFeatureInfo(getFeatureType()).isCountsAsPeak();
+	return isPeak() || getFeatureType() != NO_FEATURE && GC.getFeatureInfo(getFeatureType()).hasCharacteristic(CLS_CHARACTERISTIC_COUNTS_AS_PEAK);
 }
 
 
@@ -7294,7 +7294,7 @@ void CvPlot::setImprovementCurrentValue()
 		{
 			int iCounterDefenseValue = GC.getImprovementInfo(eImprovement).getAirBombDefense()/10;
 			iCounterDefenseValue += GC.getImprovementInfo(eImprovement).getDefense(DEFENSE_AMOUNT, CASC_SCOPE_PLOT)/10;
-			iCounterDefenseValue += (GC.getImprovementInfo(eImprovement).isZOCSource() ? 3 : 0);
+			iCounterDefenseValue += (GC.getImprovementInfo(eImprovement).hasCharacteristic(CLS_CHARACTERISTIC_ZONE_OF_CONTROL) ? 3 : 0);
 			if (!isCityRadius())
 			{
 				iCountervalue += iCounterDefenseValue;
@@ -7497,7 +7497,7 @@ void CvPlot::setImprovementType(ImprovementTypes eNewImprovement)
 
 		gDLL->getInterfaceIFace()->setDirty(GlobeLayer_DIRTY_BIT, true);
 
-		if (NO_IMPROVEMENT != eOldImprovement && GC.getImprovementInfo(eOldImprovement).isActsAsCity())
+		if (NO_IMPROVEMENT != eOldImprovement && GC.getImprovementInfo(eOldImprovement).hasCharacteristic(CLS_CHARACTERISTIC_ACTS_AS_CITY))
 		{
 			verifyUnitValidPlot();
 		}
@@ -10925,7 +10925,7 @@ void CvPlot::processArea(CvArea* pArea, int iChange)
 			//	the area SCOPE itself: the curator folds iArea* and iGlobal* into the same <family>.empire slot,
 			//	because a landmass is shared by several empires and so is not ownable (state-repositories.md).
 			pArea->changePower(eOwner, building.getMilitaryWorth() * iChange);
-			pArea->changeBorderObstacleCount(pCity->getTeam(), iChange * building.isBorderObstacle());
+			pArea->changeBorderObstacleCount(pCity->getTeam(), iChange * building.providesAmenity(CLS_AMENITY_BORDER_OBSTACLE));
 		}
 
 		for (int iI = 0; iI < NUM_UNITAI_TYPES; ++iI)
@@ -12893,7 +12893,7 @@ void CvPlot::setClaimingOwner(PlayerTypes eNewValue)
 
 bool CvPlot::isActsAsCity() const
 {
-	return getImprovementType() != NO_IMPROVEMENT && GC.getImprovementInfo(getImprovementType()).isActsAsCity();
+	return getImprovementType() != NO_IMPROVEMENT && GC.getImprovementInfo(getImprovementType()).hasCharacteristic(CLS_CHARACTERISTIC_ACTS_AS_CITY);
 }
 
 
@@ -13035,7 +13035,7 @@ const CvPlot* CvPlot::isInFortControl(bool bIgnoreObstructions, PlayerTypes eDef
 	{
 		if (getImprovementType() != NO_IMPROVEMENT)
 		{
-			if (GC.getImprovementInfo(getImprovementType()).isZOCSource())
+			if (GC.getImprovementInfo(getImprovementType()).hasCharacteristic(CLS_CHARACTERISTIC_ZONE_OF_CONTROL))
 			{
 				if (hasDefender(true, eDefendingPlayer, eAttackingPlayer))
 				{
@@ -13047,7 +13047,7 @@ const CvPlot* CvPlot::isInFortControl(bool bIgnoreObstructions, PlayerTypes eDef
 	foreach_(const CvPlot* pAdjacentPlot, adjacent()
 	| filtered(CvPlot::fn::getImprovementType() != NO_IMPROVEMENT))
 	{
-		if (GC.getImprovementInfo(pAdjacentPlot->getImprovementType()).isZOCSource())
+		if (GC.getImprovementInfo(pAdjacentPlot->getImprovementType()).hasCharacteristic(CLS_CHARACTERISTIC_ZONE_OF_CONTROL))
 		{
 			if (pAdjacentPlot->hasDefender(true, eDefendingPlayer, eAttackingPlayer))
 			{
@@ -13067,7 +13067,7 @@ PlayerTypes CvPlot::controlsAdjacentZOCSource(TeamTypes eAttackingTeam) const
 	PROFILE_EXTRA_FUNC();
 	if (getImprovementType() != NO_IMPROVEMENT)
 	{
-		if (GC.getImprovementInfo(getImprovementType()).isZOCSource())
+		if (GC.getImprovementInfo(getImprovementType()).hasCharacteristic(CLS_CHARACTERISTIC_ZONE_OF_CONTROL))
 		{
 			foreach_(const CvUnit* pLoopUnit, units())
 			{
@@ -13082,7 +13082,7 @@ PlayerTypes CvPlot::controlsAdjacentZOCSource(TeamTypes eAttackingTeam) const
 	foreach_(const CvPlot* pAdjacentPlot, adjacent()
 	| filtered(CvPlot::fn::getImprovementType() != NO_IMPROVEMENT))
 	{
-		if (GC.getImprovementInfo(pAdjacentPlot->getImprovementType()).isZOCSource())
+		if (GC.getImprovementInfo(pAdjacentPlot->getImprovementType()).hasCharacteristic(CLS_CHARACTERISTIC_ZONE_OF_CONTROL))
 		{
 			foreach_(const CvUnit* pLoopUnit, pAdjacentPlot->units())
 			{

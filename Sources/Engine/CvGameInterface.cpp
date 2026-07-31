@@ -196,7 +196,7 @@ void CvGame::updateColoredPlots()
 						}
 						const FeatureTypes eFeature = plotX->getFeatureType();
 
-						const bool bUnimprovable = eFeature != NO_FEATURE && GC.getFeatureInfo(eFeature).isNoImprovement();
+						const bool bUnimprovable = eFeature != NO_FEATURE && GC.getFeatureInfo(eFeature).hasCharacteristic(CLS_CHARACTERISTIC_UNIMPROVABLE);
 
 						bool bFullyImproved = false;
 						bool bCanBeImproved = false;

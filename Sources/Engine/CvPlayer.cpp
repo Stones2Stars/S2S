@@ -2750,7 +2750,7 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 
 		foreach_(const BuildingTypes eType, pOldCity->getHasBuildings())
 		{
-			if (!GC.getBuildingInfo(eType).isDestroyedOnCapture() && !isProductionMaxedBuilding(eType, true)
+			if (!GC.getBuildingInfo(eType).hasAttribute(CLS_ATTRIBUTE_DESTROYED_ON_CAPTURE) && !isProductionMaxedBuilding(eType, true)
 			&& (!bConquest || bRecapture || GC.getGame().getSorenRandNum(100, "Capture Probability") < GC.getBuildingInfo(eType).getConquestProbability()))
 			{
 				buildingLedger.insert(std::make_pair(eType, pOldCity->getBuildingData(eType)));
@@ -6370,7 +6370,7 @@ bool CvPlayer::canFound(int iX, int iY, bool bTestVisible) const
 		return false;
 	}
 
-	if (pPlot->getFeatureType() != NO_FEATURE && GC.getFeatureInfo(pPlot->getFeatureType()).isNoCity())
+	if (pPlot->getFeatureType() != NO_FEATURE && GC.getFeatureInfo(pPlot->getFeatureType()).hasCharacteristic(CLS_CHARACTERISTIC_UNFOUNDABLE))
 	{
 		return false;
 	}
@@ -7113,7 +7113,7 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, CvArea* pAr
 	changeTradeRoutes(kBuilding.getGlobalTradeRoutes() * iChange);
 
 	changePopulationgrowthratepercentage(kBuilding.getGlobalPopulationgrowthratepercentage(), (iChange==1));
-	changeForceAllTradeRoutes(kBuilding.isForceAllTradeRoutes() * iChange);
+	changeForceAllTradeRoutes(kBuilding.providesAmenity(CLS_AMENITY_FORCE_ALL_TRADE_ROUTES) * iChange);
 	{
 		const int iWorldTradeRoute = kBuilding.getWorldTradeRoutes() * iChange;
 		if (iWorldTradeRoute != 0)
@@ -7129,7 +7129,7 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, CvArea* pAr
 
 	changeRevIdxNational(kBuilding.getRevIdxNational() * iChange);
 
-	pArea->changeBorderObstacleCount(getTeam(), kBuilding.isBorderObstacle() ? iChange : 0);
+	pArea->changeBorderObstacleCount(getTeam(), kBuilding.providesAmenity(CLS_AMENITY_BORDER_OBSTACLE) ? iChange : 0);
 
 	for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
 	{
@@ -17448,8 +17448,8 @@ void CvPlayer::processCivics(const CivicTypes eCivic, const int iChange, const b
 	changeHappyPerMilitaryUnit(kCivic.getHappyPerMilitaryUnit() * iChange,  bLimited);
 
 	changeCivicHealth(kCivic.getExtraHealth() * iChange,  bLimited);
-	changeNoUnhealthyPopulationCount(kCivic.isNoUnhealthyPopulation() * iChange, bLimited);
-	changeBuildingOnlyHealthyCount(kCivic.isBuildingOnlyHealthy() * iChange, bLimited);
+	changeNoUnhealthyPopulationCount(kCivic.providesAmenity(CLS_AMENITY_ABOLISHED_UNHEALTH_FROM_POPULATION) * iChange, bLimited);
+	changeBuildingOnlyHealthyCount(kCivic.providesAmenity(CLS_AMENITY_ABOLISHED_UNHEALTH_FROM_BUILDINGS) * iChange, bLimited);
 
 	changePopulationgrowthratepercentage(kCivic.getPopulationgrowthratepercentage(), iChange == 1);
 	changeMilitaryFoodProductionCount(kCivic.isMilitaryFoodProduction() * iChange, bLimited);

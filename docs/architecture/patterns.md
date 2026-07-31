@@ -229,12 +229,22 @@ group's natural index** — never N individual getters for a groupable set. This
      > …) is seeded from the generator's small `HEADROOM` list so a legitimate consumer still compiles and simply
      > reads false; it leaves that list the moment data authors it.
      >
-     > ⚠ **What REMAINS of the old shape: the info-side named `CLS_HAS` getter BODIES** (`CvBuildingInfo::isNukeImmune()`,
-     > `isGovernmentCenter()`, `CvFeatureInfo::isNoCity()`, …). They are the same getter-per-key disease and
-     > collapse onto the parameterized read the same way — but ⛔ **NOT by a name sweep.** Their names COLLIDE with
-     > live game-object methods (`CvCity::isCapital`, `CvUnit::isNukeImmune`, `CvCity::isGovernmentCenter`), so
-     > which receiver a call site holds is a SEMANTIC question, exactly as it is for the unit skill composites.
-     > A textual rename destroys the game-object half. Convert them per site, receiver-checked.
+     > ⛔ **THE INFO-SIDE NAMED `CLS_HAS` BODIES ARE GONE TOO — the whole per-key shape is retired, both halves.**
+     > ⚠ **What made that conversion delicate is permanent and applies to any future one: the names COLLIDE with
+     > live game-object methods.** `isCapital` is a building AMENITY *and* `CvCity::isCapital`; `isNukeImmune` is a
+     > building amenity, a plot-substrate CHARACTERISTIC *and* `CvUnit::isNukeImmune`; `isGovernmentCenter` is an
+     > amenity *and* a `CvCity` method. Which one a call site means is decided by its RECEIVER, never by the name —
+     > a textual sweep destroys the game-object half. Convert receiver-by-receiver, with an allowlist of
+     > info-typed receivers, and leave everything else standing.
+     >
+     > **⚖ AND FOR AN AMENITY THE RECEIVER IS THE QUESTION ITSELF (json.md §8, [contexts.md](contexts.md)).** An
+     > amenity is CITY-HELD, grantor-PROVIDED, so *"does THIS CITY have it"* is answered by the city's FOLD
+     > (`CityContext::hasAmenity`), never by asking a grantor — and re-pointing such a gate at
+     > `kBuilding.providesAmenity(...)` would leave it doing exactly what it did before while reading as migrated.
+     > ⚑ But the converse is equally true and is what most sites actually are: an **AI VALUATION** (*"what would
+     > building this give me?"*) and a **FOLD APPLY** (`processBuilding`) legitimately ask the GRANTOR — that is
+     > the what-if plane and the fold's own maintenance, where the candidate's own block IS the answer. Classify by
+     > the QUESTION, not by the domain: gate → the city; valuation / apply / display → the grantor.
   3. **Modifier groups — three reads per group, all over the LOAD-COMPILED forms:**
      - the **straight point read** over the compiled unconditioned sum — `getDefense(DefenseKind eKind,
        ScopeKind eScope)` → one array load, **0 calculation** (kind and scope separate arguments,

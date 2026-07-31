@@ -850,7 +850,7 @@ void CvTeam::shareItems(TeamTypes eTeam)
 					{
 						continue;
 					}
-					if (GC.getBuildingInfo(eTypeX).isTeamShare())
+					if (GC.getBuildingInfo(eTypeX).hasAttribute(CLS_ATTRIBUTE_TEAM_SHARE))
 					{
 						for (int iK = 0; iK < MAX_PC_PLAYERS; iK++)
 						{

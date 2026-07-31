@@ -127,11 +127,6 @@
   says must never be listed at all (their entries cannot match, so they are inert but false); one is a plain tag
   whose read and write were never actually deleted, so it writes a tag that the reader then drains.
 - Move every consumer off the hand-named channel-shaped getters on `CvCity`/`CvPlayer`, then delete the old names.
-- Collapse the info-side named `CLS_HAS` getter bodies onto the parameterized classification read
-  ([patterns.md](../../architecture/patterns.md) THE GETTER SETUP) — the consumer surface is already
-  parameterized, these bodies are what is left of the per-key shape. ⛔ NOT a name sweep: their names collide
-  with live game-object methods (`CvCity::isCapital`, `CvUnit::isNukeImmune`, `CvCity::isGovernmentCenter`), so
-  the receiver decides each site and a textual rename destroys the game-object half.
 - Cut the hide-and-seek per-type intensity ACCUMULATORS on `CvUnit` (serialized — the cut carries a
   `savemigration.txt` step; confirm the tag spelling against the stream first). Their replacements are built.
   ⛔ The AI sites SUM inside a loop over every `INVISIBLE_*`, so this is a rewrite, not a rename — a mechanical

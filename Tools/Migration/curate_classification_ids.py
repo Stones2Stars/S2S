@@ -60,6 +60,11 @@ DOMAINS = [
 # glossary, and it leaves the moment data authors it (the data scan below supersedes it automatically).
 HEADROOM = {
     "skills": ["freeDrop", "noSelfHeal", "offensiveVictoryMove", "pillageEspionage", "pillageResearch"],
+    # The wellbeing OFF-SWITCH family ([json.md] §8): the unqualified `abolishedAnger` IS authored, but the two
+    # narrowed forms are authored by NOTHING -- deliberately, because the mechanic is "wildly overpowered"
+    # (owner, [modifier.md] §2b). The chain stays wired and every read answers false: live-but-inert headroom,
+    # never a data gap to fill.
+    "amenities": ["abolishedUnhealthFromPopulation", "abolishedUnhealthFromBuildings"],
 }
 
 

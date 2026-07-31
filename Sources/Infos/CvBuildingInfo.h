@@ -60,25 +60,11 @@ public:
 	// isNeverCapture).
 	// ⚠ TRANSITIONAL: these per-key reads are the same getter-per-channel shape patterns.md calls the disease.
 	// They collapse onto the parameterized block read AFTER GREEN (owner); do not grow the set as a habit.
-	bool isTeamShare() const             CLS_HAS(m_attributes, CLSD_ATTRIBUTE, "teamShare")
-	bool isOrbital() const               CLS_HAS(m_attributes, CLSD_ATTRIBUTE, "orbital")
-	bool isOrbitalInfrastructure() const CLS_HAS(m_attributes, CLSD_ATTRIBUTE, "orbitalInfrastructure")
-	bool isDestroyedOnCapture() const    CLS_HAS(m_attributes, CLSD_ATTRIBUTE, "destroyedOnCapture")
 
 	// What the building CONFERS ON ITS CITY (json §8 `amenities`) -- city-HELD, grantor-PROVIDED. ⛔ These are
 	// the GRANTOR side only: a consumer asks the CITY (whose fold refcounts every grantor), never each building.
-	bool providesPower() const           CLS_HAS(m_amenities, CLSD_AMENITY, "providesPower")
-	bool providesFreshWater() const      CLS_HAS(m_amenities, CLSD_AMENITY, "providesFreshWater")
-	bool isNukeImmune() const            CLS_HAS(m_amenities, CLSD_AMENITY, "nukeImmune")
-	bool isGovernmentCenter() const      CLS_HAS(m_amenities, CLSD_AMENITY, "governmentCenter")
-	bool isZoneOfControl() const         CLS_HAS(m_amenities, CLSD_AMENITY, "zoneOfControl")
-	bool isCapital() const               CLS_HAS(m_amenities, CLSD_AMENITY, "capital")
-	bool isBorderObstacle() const        CLS_HAS(m_amenities, CLSD_AMENITY, "borderObstacle")
-	bool isForceAllTradeRoutes() const   CLS_HAS(m_amenities, CLSD_AMENITY, "forceAllTradeRoutes")
-	bool isProtectedCulture() const      CLS_HAS(m_amenities, CLSD_AMENITY, "protectedCulture")
 	// The legacy iWorkableRadius carried no information -- every authoring was the same 3, and the radius itself
 	// is culture-driven state -- so what a building says is "this CITY reaches its third ring early".
-	bool addsThirdRing() const           CLS_HAS(m_amenities, CLSD_AMENITY, "adds3rdRing")
 	// The WHOLESALE DISABLES (owner): a hard off-switch, not a modifier -- while such a grantor is present the
 	// city's whole anger / unhealthy-population / non-building-health side ceases to exist (modifier.md §2b).
 	// ⚑ `abolishedAnger` names the MECHANIC, never the WHERE: the legacy pair spelled it `bNoUnhappiness` on a
@@ -86,9 +72,6 @@ public:
 	// into the key ([DEC-conditions-are-predicates]). Both carriers now confer the SAME amenity.
 	// No shipped BUILDING authors it -- deliberately, the mechanic being wildly overpowered -- so this read is
 	// false today; the chain is wired and lights up the moment data authors one.
-	bool isAbolishedAnger() const        CLS_HAS(m_amenities, CLSD_AMENITY, "abolishedAnger")
-	bool isNoUnhealthyPopulation() const CLS_HAS(m_amenities, CLSD_AMENITY, "abolishedUnhealthFromPopulation")
-	bool isBuildingOnlyHealthy() const   CLS_HAS(m_amenities, CLSD_AMENITY, "abolishedUnhealthFromBuildings")
 	// What the building PROVIDES to the empire (grantor-provided capabilities: setCultureRate, ...).
 	bool providesCapabilities() const                { return !m_capabilities.isEmpty(); }
 

@@ -87,14 +87,11 @@ public:
 	const std::vector<int>& getFeatureChangeTypes() const { return m_aiFeatureChangeTypes; }
 	bool isFeatureChangeType(int iFeature) const;                       // membership (a FEATURE_ engine id)
 
-	bool isActsAsCity() const CLS_HAS(m_characteristics, CLSD_CHARACTERISTIC, "actsAsCity")
 	virtual const CvClassificationBlock* getCharacteristics() const { return &m_characteristics; }
-	bool isZOCSource() const CLS_HAS(m_characteristics, CLSD_CHARACTERISTIC, "zoneOfControl")
 
 	bool isMilitaryStructure() const { return m_bMilitaryStructure; }
 	bool isCarriesIrrigation() const { return m_bCarriesIrrigation; }
 	bool isOutsideBorders() const { return m_bOutsideBorders; }
-	bool isBombardable() const CLS_HAS(m_characteristics, CLSD_CHARACTERISTIC, "bombardable")
 	bool isExtraterresial() const { return m_bExtraterrestrial; }
 	bool isPlacesBonus() const { return m_bPlacesBonus; }         // identity placement-transform outcome flags
 	bool isPlacesFeature() const { return m_bPlacesFeature; }
