@@ -13424,7 +13424,7 @@ int CvPlayer::getSingleCivicUpkeep(CivicTypes eCivic, bool bIgnoreAnarchy) const
 	{
 		return 0;
 	}
-	if (GC.getCivicInfo(eCivic).getUpkeep() == NO_UPKEEP)
+	if (GC.getCivicInfo(eCivic).getUpkeepLevel() == NO_UPKEEP)
 	{
 		return 0;
 	}
@@ -13434,9 +13434,9 @@ int CvPlayer::getSingleCivicUpkeep(CivicTypes eCivic, bool bIgnoreAnarchy) const
 	}
 	int iUpkeep =
 	(
-		std::max(0, (getTotalPopulation() + GC.getDefineINT("UPKEEP_POPULATION_OFFSET")) * GC.getUpkeepInfo((UpkeepTypes)GC.getCivicInfo(eCivic).getUpkeep()).getPopulationPercent() / 100)
+		std::max(0, (getTotalPopulation() + GC.getDefineINT("UPKEEP_POPULATION_OFFSET")) * GC.getUpkeepInfo((UpkeepTypes)GC.getCivicInfo(eCivic).getUpkeepLevel()).getPopulationPercent() / 100)
 		+
-		std::max(0, (getNumCities() + GC.getDefineINT("UPKEEP_CITY_OFFSET")) * GC.getUpkeepInfo((UpkeepTypes)GC.getCivicInfo(eCivic).getUpkeep()).getCityPercent() / 100)
+		std::max(0, (getNumCities() + GC.getDefineINT("UPKEEP_CITY_OFFSET")) * GC.getUpkeepInfo((UpkeepTypes)GC.getCivicInfo(eCivic).getUpkeepLevel()).getCityPercent() / 100)
 	);
 	iUpkeep = getModifiedIntValue(iUpkeep, getUpkeepModifier());
 
