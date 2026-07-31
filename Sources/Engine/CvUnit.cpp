@@ -2,6 +2,7 @@
 
 
 #include "Tools/FProfiler.h"
+#include "Conditions/CvConditionEval.h"   // cascadeGateOk -- the entity-level enabled/disabled pair
 #include "Infos/CvClassificationIds.h"   // the generated SKILL_/TAG_/CAPABILITY_ id table
 
 #include "CvGameCoreDLL.h"
@@ -16757,30 +16758,21 @@ bool CvUnit::isPromotionValid(PromotionTypes ePromotion, bool bFree, bool bKeepC
 			return false;
 		}
 
-		//Disable via NotOnGameOption tag:
-		for (int iI = 0; iI < promo.getNumNotOnGameOptions(); iI++)
+		// The whole-entity game-option gate -- the promotion's own enabled/disabled pair, and its line's.
+		// The legacy On/NotOnGameOption lists author here now and are served WHOLE by getGate()
+		// ([DEC-entity-gate]); evaluating them through the ONE evaluator is what keeps the option test in a
+		// single place rather than hand-rolled per site.
+		CvCascadeEvalCtx ecGate;
+		GET_PLAYER(getOwner()).getEmpireContext().fillEvalCtx(ecGate);
+		CvCascadeEvalFlags gateFlags;
+		if (!cascadeGateOk(promo.getGate(), ecGate, gateFlags))
 		{
-			if (GC.getGame().isOption((GameOptionTypes)promo.getNotOnGameOption(iI)))
-			{
-				return false;
-			}
+			return false;
 		}
-		for (int iI = 0; iI < promo.getNumOnGameOptions(); iI++)
+		if (promo.getPromotionLine() != NO_PROMOTIONLINE
+		&& !cascadeGateOk(GC.getPromotionLineInfo(promo.getPromotionLine()).getGate(), ecGate, gateFlags))
 		{
-			if (!GC.getGame().isOption((GameOptionTypes)promo.getOnGameOption(iI)))
-			{
-				return false;
-			}
-		}
-		if (promo.getPromotionLine() != NO_PROMOTIONLINE)
-		{
-			for (int iI = 0; iI < GC.getPromotionLineInfo(promo.getPromotionLine()).getNumNotOnGameOptions(); iI++)
-			{
-				if (GC.getGame().isOption((GameOptionTypes)GC.getPromotionLineInfo(promo.getPromotionLine()).getNotOnGameOption(iI)))
-				{
-					return false;
-				}
-			}
+			return false;
 		}
 	}
 	// Very few reasons to deny a unit promotions that are specifically set to be a free for it.
