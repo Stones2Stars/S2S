@@ -7111,7 +7111,7 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, CvArea* pAr
 		}
 	}
 
-	changeSpaceProductionModifier(kBuilding.getGlobalSpaceProductionModifier() * iChange);
+	changeSpaceProductionModifier(kBuilding.getBuildRateModifier(BUILD_RATE_SPACE, CASC_SCOPE_EMPIRE) * iChange);
 
 	changeRevIdxNational(kBuilding.getRevIdxNational() * iChange);
 
@@ -7120,7 +7120,7 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, CvArea* pAr
 	for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
 	{
 		changeSeaPlotYield(((YieldTypes)iI), (kBuilding.getGlobalSeaPlotYieldChange(iI) * iChange));
-		changeYieldRateModifier(((YieldTypes)iI), (kBuilding.getGlobalYieldModifier(iI) * iChange));
+		changeYieldRateModifier(((YieldTypes)iI), (kBuilding.getYieldModifier((YieldTypes)iI, CASC_SCOPE_EMPIRE) * iChange));
 	}
 
 	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)

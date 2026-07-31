@@ -4536,7 +4536,7 @@ int CvCity::getHurryCostModifier(UnitTypes eUnit) const
 
 int CvCity::getHurryCostModifier(BuildingTypes eBuilding) const
 {
-	return getHurryCostModifier(GC.getBuildingInfo(eBuilding).getHurryCostModifier(), getProductionModifier(eBuilding));
+	return getHurryCostModifier(GC.getBuildingInfo(eBuilding).getCostsModifier(COSTS_HURRY, CASC_SCOPE_CITY), getProductionModifier(eBuilding));
 }
 
 int CvCity::getHurryCostModifier(int iBaseModifier, int iExtraMod) const
@@ -7409,7 +7409,7 @@ int CvCity::getAdditionalBombardDefenseByBuilding(BuildingTypes eBuilding) const
 	const int iBaseDefense = getBuildingBombardDefense();
 
 	// cap total bombard defense at 100
-	return std::min(GC.getBuildingInfo(eBuilding).getBombardDefenseModifier() + iBaseDefense, 100) - iBaseDefense;
+	return std::min(GC.getBuildingInfo(eBuilding).getDefense(DEFENSE_BOMBARD, CASC_SCOPE_CITY) + iBaseDefense, 100) - iBaseDefense;
 }
 // BUG - Building Additional Bombard Defense - end
 
@@ -8368,7 +8368,7 @@ int CvCity::getBaseYieldRateFromBuilding(const YieldTypes eYield, const Building
 {
 	const CvBuildingInfo& building = GC.getBuildingInfo(eBuilding);
 	return (
-		building.getYieldChange(eYield) * 100
+		building.getFlatYield(eYield, CASC_SCOPE_CITY)
 		+
 		building.getYieldPerPopChange(eYield) * getPopulation()
 		+
@@ -9043,7 +9043,7 @@ int CvCity::getBuildingCommerceByBuilding(CommerceTypes eIndex, BuildingTypes eB
 
 	if (!isDormantBuilding(eBuilding))
 	{
-		int iBaseCommerceChange = kBuilding.getCommerceChange(eIndex);
+		int iBaseCommerceChange = kBuilding.getFlatCommerce(eIndex, CASC_SCOPE_CITY) / 100;
 
 		if (eIndex == COMMERCE_GOLD && iBaseCommerceChange < 0 && GC.getTREAT_NEGATIVE_GOLD_AS_MAINTENANCE())
 			iBaseCommerceChange = 0;

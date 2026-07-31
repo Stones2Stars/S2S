@@ -5682,7 +5682,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 			}
 
 			if (((iFocusFlags & BUILDINGFOCUS_MAINTENANCE) || (iFocusFlags & BUILDINGFOCUS_GOLD) || iPass > 0)
-			&& kBuilding.getCommerceChange(COMMERCE_GOLD) < 0 && GC.getTREAT_NEGATIVE_GOLD_AS_MAINTENANCE())
+			&& kBuilding.getFlatCommerce(COMMERCE_GOLD, CASC_SCOPE_CITY) < 0 && GC.getTREAT_NEGATIVE_GOLD_AS_MAINTENANCE())
 			{
 				const int iBaseMaintenance = (int)getMaintenanceTimes100();
 				const int iMaintenanceMod = maintenancePercentStack((int)MAINTENANCE_AMOUNT);
@@ -5694,7 +5694,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 						getModifiedIntValue(iBaseMaintenance, iMaintenanceMod)
 						-
 						getModifiedIntValue(
-							iBaseMaintenance - kBuilding.getCommerceChange(COMMERCE_GOLD) * 100,
+							iBaseMaintenance - kBuilding.getFlatCommerce(COMMERCE_GOLD, CASC_SCOPE_CITY),
 							iMaintenanceMod + kBuilding.getMaintenanceModifier(MAINTENANCE_AMOUNT, CASC_SCOPE_CITY)
 						)
 					)
@@ -5900,7 +5900,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 				iValue += kBuilding.getGlobalFreeSpecialist() * iNumCities * 12;
 				iValue += kBuilding.getScalar(SCALAR_WORK_RATE, CASC_SCOPE_EMPIRE, CASC_UNIT_PERCENT) * kOwner.AI_getNumAIUnits(UNITAI_WORKER) / 10;
 
-				int iMilitaryProductionModifier = kBuilding.getMilitaryProductionModifier();
+				int iMilitaryProductionModifier = kBuilding.getBuildRateModifier(BUILD_RATE_MILITARY, CASC_SCOPE_CITY);
 
 				for (int iJ = 0; iJ < kBuilding.getNumUnitCombatProdModifiers(); iJ++)
 				{
@@ -5937,8 +5937,8 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 						iValue -= (iMilitaryProductionModifier * aiYieldRank[YIELD_PRODUCTION]) / 5;
 					}
 				}
-				iValue += kBuilding.getSpaceProductionModifier() / 5;
-				iValue += kBuilding.getGlobalSpaceProductionModifier() * iNumCities / 20;
+				iValue += kBuilding.getBuildRateModifier(BUILD_RATE_SPACE, CASC_SCOPE_CITY) / 5;
+				iValue += kBuilding.getBuildRateModifier(BUILD_RATE_SPACE, CASC_SCOPE_EMPIRE) * iNumCities / 20;
 
 				if (kBuilding.getGreatPeopleUnitType() != NO_UNIT)
 				{
