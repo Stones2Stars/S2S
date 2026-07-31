@@ -17,6 +17,9 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <C
 - **Configs:** `Assert`, `Debug`, `Release`, `FinalRelease`, `Profile`, `ProfileExtra`.
   Output → `Build/<Config>/CvGameCoreDLL.dll` (+ `.pdb`).
 - **Verbs (composable, in order):** `clean`, `build` (incremental), `rebuild` (clean+build), `deploy` (xcopy DLL/PDB into `Assets/`).
+- **Modifier — `nostop` (opt-in):** passes FastBuild's `-nostoponerror` so the build keeps going after a failed
+  object instead of stopping at the first, reporting across far more translation units in one pass. Position in
+  the argument list does not matter (`Assert build nostop`); the `MakeDLL*.bat` shortcuts accept it too.
 
 ## Choosing what to run
 

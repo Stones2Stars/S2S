@@ -10,6 +10,14 @@ $FDB_PATH = Join-Path -Path $TARGET_DIR -ChildPath "CvGameCoreDLL.fdb"
 $FBUILD_ARGS = ("-summary", "-wait", "-wrapper", "-graphdb", "$FDB_PATH", "-continueafterdbmove")
 # $FBUILD_ARGS = ("-summary", "-wait", "-wrapper", "-cache", "-showcmds", "-verbose", "-showdeps")
 
+# Opt-in "nostop": keep building after a failed object so ONE build reports every
+# broken translation unit instead of stopping at the first. It is a modifier rather
+# than an ordered action verb, so it is scanned up front and applies to every
+# build/rebuild in this invocation no matter where in the argument list it appears.
+If ($args -contains "nostop") {
+    $FBUILD_ARGS += "-nostoponerror"
+}
+
 # "Target = $TARGET"
 # "FBUILD_ARGS = $FBUILD_ARGS"
 # "CWD = $CWD"

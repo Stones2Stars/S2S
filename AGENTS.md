@@ -102,6 +102,14 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <C
     performance hunting**, where its optimizations are the thing under test. `Assert` stays the quick compile-check;
     `Release`/`FinalRelease` are for actually running.
 - **Verbs (composable, in order):** `clean`, `build` (incremental), `rebuild` (clean+build), `deploy` (xcopy DLL/PDB into `Assets/`).
+- **Modifier — `nostop` (opt-in, off by default):** passes FastBuild's `-nostoponerror`, so the build keeps going
+  after a failed object instead of stopping at the first one. On the deliberately-red tree the default stops after
+  a fraction of the objects, so a single `nostop` run reports across far more translation units — use it when you
+  want the whole error surface in one pass rather than peeling it one TU at a time. Unlike the verbs it is a
+  modifier, not an ordered action: it is scanned up front and applies to every `build`/`rebuild` in the invocation
+  regardless of position (`... _Build.ps1 Assert build nostop`). The `MakeDLL*.bat` shortcuts forward their extra
+  arguments, so `MakeDLLAssert.bat nostop` works too. ⚠ It changes only how MUCH gets reported, never what
+  compiles — and MSVC's 100-errors-per-TU cap (`C1003`) still truncates each unity batch.
   - **⛔ HARD RULE — KILL THE GAME BEFORE `deploy`.** A running game holds `Assets/CvGameCoreDLL.dll` OPEN, so the
     xcopy fails — but the build still reports `FBuild: OK`, so **the deploy failure is SILENT**. `Assets/` keeps
     the OLD DLL, the game then loads that OLD DLL, and you verify a binary that does not contain your change
