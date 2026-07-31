@@ -4794,14 +4794,14 @@ if (!bHasCalculatedNeighbors) return MAX_INT;
 	// Distance from ground tile type (peak or specific terrain)
 	if (mainPlot->isAsPeak())
 	{
-		terrainDistance += GC.getTerrainInfo(GC.getTERRAIN_PEAK()).getCultureDistance();
+		terrainDistance += GC.getTerrainInfo(GC.getTERRAIN_PEAK()).getScalar(SCALAR_CULTURE_DISTANCE, CASC_SCOPE_PLOT, CASC_UNIT_FLAT) / 100;
 		terrainDistance += !kTeam.isMoveFastPeaks()
 			+ !kTeam.isCanPassPeaks()
 			+ !kTeam.isCanFoundOnPeaks();
 	}
 	else
 	{
-		terrainDistance += GC.getTerrainInfo((TerrainTypes)terrainType).getCultureDistance();
+		terrainDistance += GC.getTerrainInfo((TerrainTypes)terrainType).getScalar(SCALAR_CULTURE_DISTANCE, CASC_SCOPE_PLOT, CASC_UNIT_FLAT) / 100;
 		// Terrain distance increased if can't trade on water terrain, can't see far (optics)
 		if (bIsWater)
 		{
@@ -4815,7 +4815,7 @@ if (!bHasCalculatedNeighbors) return MAX_INT;
 			if (!mainPlot->isFreshWater() && !kTeam.isCanFarmDesert()) terrainDistance += 1;
 			if (mainPlot->isHills())
 			{
-				terrainDistance += GC.getTerrainInfo(GC.getTERRAIN_HILL()).getCultureDistance()
+				terrainDistance += GC.getTerrainInfo(GC.getTERRAIN_HILL()).getScalar(SCALAR_CULTURE_DISTANCE, CASC_SCOPE_PLOT, CASC_UNIT_FLAT) / 100
 					+ !kTeam.isCanFoundOnPeaks()
 					+ !kTeam.isBridgeBuilding();
 			}
@@ -4843,7 +4843,7 @@ if (!bHasCalculatedNeighbors) return MAX_INT;
 			terrainDistance += 1;
 		}
 		// Always add base feature cost
-		terrainDistance += featureInfo.getCultureDistance();
+		terrainDistance += featureInfo.getScalar(SCALAR_CULTURE_DISTANCE, CASC_SCOPE_PLOT, CASC_UNIT_FLAT) / 100;
 	}
 
 	// Route tier modifier

@@ -8,6 +8,7 @@
 #include "CvBuildingInfo.h"
 #include "CvJsonParse.h"   // jsonChildObj / jsonIdInt / jsonIdBool / jsonIdFk / jsonIdStr / jsonResolveId / jsonCommerceMap
 #include "Property/CvPropertyBridge.h" // the shared PROPERTY_* family -> manipulator walk
+#include "UI/CvArtFileMgr.h"    // ARTFILEMGR -- the getArtInfo shim (mirrors CvUnitInfo)
 
 CvBuildingInfo::CvBuildingInfo()
 	: m_iCost(0)
@@ -87,6 +88,11 @@ int CvBuildingInfo::getFlavorValue(FlavorTypes eFlavor) const
 	return mapValueOrDefault(m_flavours, (int)eFlavor);
 }
 
+const CvArtInfoBuilding* CvBuildingInfo::getArtInfo() const
+{
+	return ARTFILEMGR.getBuildingArtInfo(m_szArtDefineTag.c_str());
+}
+
 void CvBuildingInfo::mapFrom(const picojson::value& entity)
 {
 	CvInfo::mapFrom(entity);   // core reading (type / text keys) + the section dispatch (compiles m_modifiers)
@@ -100,6 +106,7 @@ void CvBuildingInfo::mapFrom(const picojson::value& entity)
 	m_iGlobalPopulationChange = 0;
 	m_iFreeTechs = 0;
 	m_iFreeSpecialistsAny = 0;
+	m_szArtDefineTag.clear();
 
 	// PROPERTY_* per-turn SOURCES: a building's <PROPERTY_X>.city.flat (the crime/disease/pollution cuts and
 	// adders that make the solver's numbers move) deposits in ITS OWN city -- NO_RELATION, the legacy building
@@ -108,6 +115,12 @@ void CvBuildingInfo::mapFrom(const picojson::value& entity)
 	// it clears both containers first, per the mapFrom idempotency contract.
 	CascadePropertyBridge::bridgeFamilies(getModifiers(), m_PropertyManipulators, NO_RELATION, 0,
 		&m_PropertyManipulatorsAllCities);
+
+	// world.art.define -- the ART_DEF_* tag getArtInfo resolves through ArtFileMgr (every building authors one).
+	if (const picojson::object* pArt = jsonWorldArt(entity))
+	{
+		jsonIdStr(*pArt, "define", m_szArtDefineTag);
+	}
 
 	if (!entity.is<picojson::object>())
 	{

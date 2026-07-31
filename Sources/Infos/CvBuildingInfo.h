@@ -14,6 +14,8 @@
 #include "CvClassificationBlock.h"   // the §8 held-boolean block + CLS_HAS
 #include <map>
 
+class CvArtInfoBuilding;
+
 class CvBuildingInfo : public CvInfo
 {
 public:
@@ -182,6 +184,10 @@ public:
 	bool isForceNoPrereqScaling() const     { return m_bForceNoPrereqScaling; }
 	int getGreatPeopleUnitType() const      { return m_iGreatPeopleUnitType; }      // UNIT_* FK
 	int getAdvisor() const                  { return m_iAdvisor; }                  // ADVISOR_* FK
+	// world.art.define -- the ART_DEF_* tag this resolves through ArtFileMgr. Art is an UNMIGRATED system
+	// BOUNDARY (json.md par.7): the JSON carries only the tag id and the definitions stay in the ART XML,
+	// so this is a shim onto ARTFILEMGR rather than data the info holds.
+	const CvArtInfoBuilding* getArtInfo() const;
 	int getSpecialBuildingType() const      { return m_iSpecialBuildingType; }      // SPECIALBUILDING_* FK (group cap, json §4.4)
 	int getFreeStartEra() const             { return m_iFreeStartEra; }             // ERA FK
 	int getDiploVoteType() const            { return m_iDiploVoteType; }            // DIPLOVOTE_* FK
@@ -251,6 +257,7 @@ private:
 	bool m_bForceNoPrereqScaling;
 	int m_iGreatPeopleUnitType;
 	int m_iAdvisor;
+	std::string m_szArtDefineTag;
 	int m_iSpecialBuildingType;
 	int m_iFreeStartEra;
 	int m_iDiploVoteType;
