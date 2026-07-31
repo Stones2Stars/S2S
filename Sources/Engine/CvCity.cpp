@@ -328,7 +328,6 @@ CvCity::CvCity()
 	m_aiPowerYieldRateModifier = new int[NUM_YIELD_TYPES];
 	m_aiTradeYield = new int[NUM_YIELD_TYPES];
 	m_aiProductionToCommerceModifier = new int[NUM_COMMERCE_TYPES];
-	m_aiCommerceRateModifier = new int[NUM_COMMERCE_TYPES];
 	m_aiDomainProductionModifier = new int[NUM_DOMAIN_TYPES];
 
 	m_aiCulture = new int64_t[MAX_PLAYERS];
@@ -419,7 +418,6 @@ CvCity::~CvCity()
 	SAFE_DELETE_ARRAY(m_aiTradeYield);
 
 	SAFE_DELETE_ARRAY(m_aiProductionToCommerceModifier);
-	SAFE_DELETE_ARRAY(m_aiCommerceRateModifier);
 	SAFE_DELETE_ARRAY(m_aiDomainProductionModifier);
 	SAFE_DELETE_ARRAY(m_aiCulture);
 	SAFE_DELETE_ARRAY(m_aiNumRevolts);
@@ -821,7 +819,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 	{
 		m_aiProductionToCommerceModifier[iI] = 0;
-		m_aiCommerceRateModifier[iI] = 0;
 		m_abCommerceRankValid[iI] = false;
 		m_aiCommerceRank[iI] = -1;
 	}
@@ -9533,21 +9530,22 @@ void CvCity::updateCorporationBonus()
 	SAFE_DELETE_ARRAY(aiExtraCorpProducedBonus);
 }
 
-//TB NOTE: getCommerceRateModifier and changeCommerceRateModifier now only apply to events.  I'd rename them but it might get more confusing that way.
+// The commerce-rate percent an EVENT granted this city. Every DERIVABLE source rolls up through the cascade
+// (InfoValuation::rolledLegsAtCity); this answers only the one-shot grants, which nothing can recompute.
 int CvCity::getCommerceRateModifier(CommerceTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-	return m_aiCommerceRateModifier[eIndex];
+	return m_eventGrants.sum(EVENTGRANT_COMMERCE_RATE_MODIFIER, eIndex, -1);
 }
 
 
-void CvCity::changeCommerceRateModifier(CommerceTypes eIndex, int iChange)
+void CvCity::recordCommerceRateModifierGrant(EventTypes eEvent, CommerceTypes eIndex, int iChange)
 {
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
 
 	if (iChange != 0)
 	{
-		m_aiCommerceRateModifier[eIndex] += iChange;
+		m_eventGrants.add(EVENTGRANT_COMMERCE_RATE_MODIFIER, eEvent, eIndex, -1, iChange);
 
 		setCommerceModifierDirty(eIndex);
 
@@ -13697,6 +13695,7 @@ void CvCity::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvCity", &m_bDrafted);
 	WRAPPER_READ(wrapper, "CvCity", &m_bAirliftTargeted);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_CITY_STATUSES, m_aiStatusTurns);
+	EVENT_GRANTS_READ(wrapper, "CvCity", m_eventGrants);
 	WRAPPER_READ(wrapper, "CvCity", &m_bCitizensAutomated);
 	WRAPPER_READ(wrapper, "CvCity", &m_bProductionAutomated);
 	WRAPPER_READ(wrapper, "CvCity", &m_bWallOverride);
@@ -13723,7 +13722,6 @@ void CvCity::read(FDataStreamBase* pStream)
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiPowerYieldRateModifier);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiTradeYield);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiProductionToCommerceModifier);
-	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiCommerceRateModifier);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_DOMAIN_TYPES, m_aiDomainProductionModifier);
 	// Widening a member is SOFT: the reader absorbs the narrower stored form (save.md §8), so this keeps
 	// its own tag and an old save's 32-bit culture is read and widened in place.
@@ -14408,6 +14406,7 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvCity", m_bDrafted);
 	WRAPPER_WRITE(wrapper, "CvCity", m_bAirliftTargeted);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_CITY_STATUSES, m_aiStatusTurns);
+	EVENT_GRANTS_WRITE(wrapper, "CvCity", m_eventGrants);
 	WRAPPER_WRITE(wrapper, "CvCity", m_bCitizensAutomated);
 	WRAPPER_WRITE(wrapper, "CvCity", m_bProductionAutomated);
 	WRAPPER_WRITE(wrapper, "CvCity", m_bWallOverride);
@@ -14428,7 +14427,6 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiPowerYieldRateModifier);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiTradeYield);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiProductionToCommerceModifier);
-	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiCommerceRateModifier);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_DOMAIN_TYPES, m_aiDomainProductionModifier);
 
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", MAX_PLAYERS, m_aiCulture);
@@ -15445,7 +15443,7 @@ void CvCity::applyEvent(EventTypes eEvent, const EventTriggeredData* pTriggeredD
 		{
 			if (kEvent.getCommerceModifier(i) != 0)
 			{
-				changeCommerceRateModifier((CommerceTypes)i, kEvent.getCommerceModifier(i));
+				recordCommerceRateModifierGrant(eEvent, (CommerceTypes)i, kEvent.getCommerceModifier(i));
 			}
 		}
 

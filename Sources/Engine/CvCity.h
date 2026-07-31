@@ -6,6 +6,7 @@
 #define CIV4_CITY_H
 
 #include "Infrastructure/LinkedList.h"
+#include "CvEventGrants.h"
 #include "Infrastructure/CvDLLEntity.h"
 #include "CvGameObject.h"
 #include "Engine/CvStatus.h"   // CityStatus + the status model (an applied counter, ticking down)
@@ -1027,7 +1028,7 @@ public:
 	void updateCorporationBonus();
 
 	int getCommerceRateModifier(CommerceTypes eIndex) const;
-	void changeCommerceRateModifier(CommerceTypes eIndex, int iChange);
+	void recordCommerceRateModifierGrant(EventTypes eEvent, CommerceTypes eIndex, int iChange);
 
 	int getCommerceHappinessPer(CommerceTypes eIndex) const;
 	int getCommerceHappinessByType(CommerceTypes eIndex) const;
@@ -1732,7 +1733,6 @@ protected:
 	int* m_aiPowerYieldRateModifier;
 	int* m_aiTradeYield;
 	int* m_aiProductionToCommerceModifier;
-	int* m_aiCommerceRateModifier;
 	int* m_aiDomainProductionModifier;
 	int64_t* m_aiCulture;   // per-player culture, x100 and NEVER decaying -- an AMOUNT, so 64-bit
 	int* m_aiNumRevolts;
@@ -1784,6 +1784,9 @@ protected:
 	std::vector<EventTypes> m_aEventsOccured;
 	std::vector<BuildingYieldChange> m_aBuildingYieldChange;
 	std::vector<BuildingCommerceChange> m_aBuildingCommerceChange;
+
+	// Values PYTHON EVENTS granted to this city -- one-shot state, kept out of every derived accumulator.
+	CvEventGrantStore m_eventGrants;
 	BuildingChangeArray m_aBuildingHappyChange;
 	BuildingChangeArray m_aBuildingHealthChange;
 

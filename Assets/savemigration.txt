@@ -663,6 +663,17 @@ CvCity::m_pabReligiouslyDisabledBuilding
 | than re-tested at the read. Derived, so it serializes nothing (DEC-derived-never-trusted).
 CvCity::m_buildingYieldMod
 ========================
+| The per-commerce rate-modifier accumulator. It summed DERIVABLE sources (buildings/civics/traits/techs) and
+| one-shot EVENT grants into a single serialized store, which is why cutting it needed two replacements, not
+| one. REPLACEMENT (derivable half): the cascade's `<commerce>.<scope>.percent`, folded by
+| InfoValuation::rolledLegsAtCity. REPLACEMENT (event half): CvCity::m_eventGrants, the standardized
+| CvEventGrantStore (Engine/CvEventGrants.h) under its own EventGrants* tags -- an event grant is one-shot state
+| nothing can recompute, so it lives in its own serialized store on the object the event granted to, never
+| rolled into a derived accumulator that a rebuild would wipe.
+| Pre-split grants in an existing save are DEEMED LOST (owner): they were rolled into the dirtied cache rather
+| than stored separately, so there is nothing to migrate out.
+CvCity::m_aiCommerceRateModifier
+========================
 ========================
 | The BUILDING-DEFENSE accumulator. A serialized += store of the city's buildings' defense contribution, which
 | getTotalDefense then weighed against the CULTURE LEVEL's via max(building, natural) before adding the player and
