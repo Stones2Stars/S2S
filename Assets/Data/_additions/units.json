@@ -1,0 +1,7 @@
+{
+ "UNIT_CISLUNAR_INFANTRY":   { "identity": { "domain": "DOMAIN_LAND" } },
+ "UNIT_DEEPSPACE_INFANTRY":  { "identity": { "domain": "DOMAIN_LAND" } },
+ "UNIT_HYPERSPACE_DEFENDER": { "identity": { "domain": "DOMAIN_LAND" } },
+ "UNIT_WORLDSHIP_DEFENDER":  { "identity": { "domain": "DOMAIN_AIR"  } },
+ "UNIT_ICBM":                { "identity": { "domain": "DOMAIN_AIR"  } }
+}

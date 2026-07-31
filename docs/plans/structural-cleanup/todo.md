@@ -71,16 +71,13 @@
 - Retire the legacy `largestCity` member once ranked-target-selection EVALUATION lands.
 - Re-home `stronglyRestricted` to a `requires.build` civ-membership gate, when NPC civilizations are wired.
 - Move corp-HQ revenue (`HeadquarterCommerces`) with the corporation rework.
-- Get the units that author `DOMAIN_IMMOBILE` off the domain axis. Immobile is not a domain
-  ([tags.md](../../specs/tags.md)) — a domain says WHERE a unit operates, so these want their real domain (they
-  are the unmodelled `space` set, plus a silo-launched missile) with not-moving expressed on its own axis. They
-  are the ONLY units carrying no domain tag, so any consumer reading the domain through tags answers NO_DOMAIN
-  for exactly them. ⛔ Do not mint an `immobileUnit` tag to close that — it would re-encode the same mis-modelling
-  one layer up.
-  ⚑ **The ICBM needs nothing authored but its domain.** Every other nuke is `DOMAIN_AIR` + `airUnit` +
-  `suicide`; the ICBM already carries `suicide`, an `air.unit.nukeRange` and a movement flat, and it already
-  holds the `missile` tag through its `UNITCOMBAT_BALLISTIC` sub-class — which by itself means kill-on-use
-  ([skills.md](../../specs/skills.md)). Only `DOMAIN_IMMOBILE` disagrees with its own class.
+- Retire `DOMAIN_IMMOBILE`. Immobile is not a domain ([json.md §7](../../specs/json.md)) — a domain is the
+  MEDIUM a unit operates in — and no unit authors it any more, so nothing keeps the member alive but its
+  consumers: the enum entry, ~21 engine/AI sites, the `CIV4DomainInfos.xml` record, its game text, and a Python
+  read. ⚑ It is TERMINAL in the enum (immediately before `NUM_DOMAIN_TYPES`), so removing it shifts no other id
+  — which matters because `DomainTypes` crosses the ABI through `DllExport CvUnit::getDomainType()`.
+  ⚠ Several sites treat it as a live case rather than a dead one (`isDomain`-style switches, an `FAssert` that
+  ACCEPTS it beside `DOMAIN_LAND`), so this is a per-site read, never a delete-the-case sweep.
 - Map the flagged unitcombat remainder — map the obvious, flag the unsure, never blunt-purge
   ([unitcombat-tag-mapping.md](unitcombat-tag-mapping.md)).
 

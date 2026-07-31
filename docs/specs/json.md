@@ -785,6 +785,11 @@ Empire-agnostic self-description. Read directly — never summed or cascaded.
   domain says where it OPERATES, and answering the second from the tag set means filtering every tag for what
   one field holds. It is exclusive (no unit has two), and crossing a domain is a SKILL — a helicopter is a land
   unit with `canMoveAllTerrain` ([skills.md](skills.md)), never an air one.
+  ⚖ **A DOMAIN IS THE MEDIUM, NOT THE PLACE (owner).** LAND is any solid surface — Earth, Mars, the Moon — so a
+  planetary surface is categorised as land wherever it orbits, and infantry standing on it are LAND units.
+  SPACE is the actual VOID, so only spaceships operate there (and they move over land AND space, the ordinary
+  cross-domain SKILL shape above). ⛔ So "it is in space" is never a reason to give a surface unit a different
+  domain, and a space domain is a question about SPACECRAFT, never about where a foot soldier is deployed.
   ⛔ **AND IT CARRIES NO EFFECTS AT ALL (owner).** Not "few", not "only intrinsic ones" — **none**. A value that
   DOES something has a home already and `identity` is never it:
   - a **held boolean ability** is a classification block — unit `skills`, building `attributes`, empire
