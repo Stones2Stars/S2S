@@ -430,7 +430,7 @@ void CvPlayer::initMore(PlayerTypes eID, LeaderHeadTypes ePersonality, bool bSet
 	// I imagine there's a lot of code that doesn't expect NO_CIVIC to be the set civic though.
 	for (int iI = GC.getNumCivicOptionInfos() - 1; iI > -1; iI--)
 	{
-		setCivics((CivicOptionTypes)iI, (CivicTypes)GC.getCivilizationInfo(getCivilizationType()).getCivilizationInitialCivics(iI));
+		setCivics((CivicOptionTypes)iI, (CivicTypes)GC.getCivilizationInfo(getCivilizationType()).getInitialCivic(iI));
 	}
 }
 
@@ -1749,7 +1749,7 @@ void CvPlayer::resetCivTypeEffects()
 	{
 		for (int iI = 0; iI < GC.getNumCivicOptionInfos(); iI++)
 		{
-			setCivics(((CivicOptionTypes)iI), ((CivicTypes)(GC.getCivilizationInfo(getCivilizationType()).getCivilizationInitialCivics(iI))));
+			setCivics(((CivicOptionTypes)iI), ((CivicTypes)(GC.getCivilizationInfo(getCivilizationType()).getInitialCivic(iI))));
 		}
 
 		for (int iI = 0; iI < GC.getNumEventInfos(); iI++)
@@ -3108,11 +3108,11 @@ void CvPlayer::getCivilizationCityName(CvWString& szBuffer, CivilizationTypes eC
 	{
 		const int iLoopName = ((iI + iRandOffset) % GC.getCivilizationInfo(eCivilization).getNumCityNames());
 
-		CvWString szName = gDLL->getText(GC.getCivilizationInfo(eCivilization).getCityNames(iLoopName));
+		CvWString szName = gDLL->getText(GC.getCivilizationInfo(eCivilization).getCityName(iLoopName));
 
 		if (isCityNameValid(szName, true))
 		{
-			szBuffer = GC.getCivilizationInfo(eCivilization).getCityNames(iLoopName);
+			szBuffer = GC.getCivilizationInfo(eCivilization).getCityName(iLoopName);
 			break;
 		}
 	}
@@ -5940,9 +5940,9 @@ void CvPlayer::findNewCapital()
 	}
 	if (pBestCity)
 	{
-		for (int iI = 0; iI < GC.getCivilizationInfo(getCivilizationType()).getNumCivilizationBuildings(); iI++)
+		for (int iI = 0; iI < (int)GC.getCivilizationInfo(getCivilizationType()).getFreeBuildings().size(); iI++)
 		{
-			pBestCity->changeHasBuilding((BuildingTypes)GC.getCivilizationInfo(getCivilizationType()).getCivilizationBuilding(iI), true);
+			pBestCity->changeHasBuilding(GC.getCivilizationInfo(getCivilizationType()).getFreeBuildings()[iI], true);
 		}
 	}
 	// The relocation is announced AFTER the replacement is chosen -- consumers need a city to put a capital's
@@ -10603,13 +10603,13 @@ void CvPlayer::setCapitalCity(CvCity* pNewCapitalCity)
 		{
 			m_iCapitalCityID = pNewCapitalCity->getID();
 
-			for (int iI = 0; iI < GC.getCivilizationInfo(getCivilizationType()).getNumCivilizationBuildings(); iI++)
+			for (int iI = 0; iI < (int)GC.getCivilizationInfo(getCivilizationType()).getFreeBuildings().size(); iI++)
 			{
-				pNewCapitalCity->changeHasBuilding((BuildingTypes)GC.getCivilizationInfo(getCivilizationType()).getCivilizationBuilding(iI), true);
+				pNewCapitalCity->changeHasBuilding(GC.getCivilizationInfo(getCivilizationType()).getFreeBuildings()[iI], true);
 
 				if (pOldCapitalCity)
 				{
-					pOldCapitalCity->changeHasBuilding((BuildingTypes)GC.getCivilizationInfo(getCivilizationType()).getCivilizationBuilding(iI), false);
+					pOldCapitalCity->changeHasBuilding(GC.getCivilizationInfo(getCivilizationType()).getFreeBuildings()[iI], false);
 				}
 			}
 		}
@@ -13566,7 +13566,7 @@ void CvPlayer::setCivics(CivicOptionTypes eIndex, CivicTypes eNewValue)
 			{
 				if (getCivics(eIndex) != NO_CIVIC)
 				{
-					if (getCivics(eIndex) != GC.getCivilizationInfo(getCivilizationType()).getCivilizationInitialCivics(eIndex))
+					if (getCivics(eIndex) != GC.getCivilizationInfo(getCivilizationType()).getInitialCivic(eIndex))
 					{
 						for (int iI = 0; iI < MAX_PLAYERS; iI++)
 						{
@@ -17846,7 +17846,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 				// AIAndy: Check for no civic set or a civic of the wrong category set
 				if ( (m_paeCivics[i] == NO_CIVIC) || (GC.getCivicInfo(m_paeCivics[i]).getCivicOption() != (CivicOptionTypes)i ) )
 				{
-					m_paeCivics[i] = (CivicTypes)GC.getCivilizationInfo(getCivilizationType()).getCivilizationInitialCivics(i);
+					m_paeCivics[i] = (CivicTypes)GC.getCivilizationInfo(getCivilizationType()).getInitialCivic(i);
 				}
 
 				//	Also need to fix iCityLimits if its definition got changed in an active civic.  The way we do this

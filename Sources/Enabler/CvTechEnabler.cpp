@@ -62,7 +62,7 @@ void TechEnabler::initDomain(const CvPlayer& kPlayer)
 	for (int t = 0; t < GC.getNumTechInfos(); ++t)
 	{
 		if (GC.getTechInfo((TechTypes)t).isDisable()          // identity.disable -- law-ban techs + the root
-		|| kCiv.isCivilizationDisableTechs(t))                // this CIV can never research it
+		|| kCiv.isTechDisabled(t))                // this CIV can never research it
 		{
 			d.setStaticExcluded(t, true);
 		}

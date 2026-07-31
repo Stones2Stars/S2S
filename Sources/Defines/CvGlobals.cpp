@@ -3374,7 +3374,7 @@ void cvInternalGlobals::checkInitialCivics()
 		for (int iJ = getNumCivicOptionInfos() - 1; iJ > -1; iJ--)
 		{
 			//No Initial Civic Found
-			const CivicTypes eCivic = (CivicTypes)civ.getCivilizationInitialCivics(iJ);
+			const CivicTypes eCivic = (CivicTypes)civ.getInitialCivic(iJ);
 
 			if (eCivic == NO_CIVIC || getCivicInfo(eCivic).getCivicOption() != iJ)
 			{
@@ -3385,7 +3385,7 @@ void cvInternalGlobals::checkInitialCivics()
 					&&  getCivicInfo((CivicTypes)iK).getTechPrereq() == NO_TECH)
 					{
 						bFound = true;
-						civ.setCivilizationInitialCivics(iJ, iK);
+						civ.setInitialCivic(iJ, iK);
 						break;
 					}
 				}

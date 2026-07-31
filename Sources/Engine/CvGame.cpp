@@ -1243,7 +1243,7 @@ void CvGame::initFreeState()
 					for (int iK = 0; iK < MAX_PLAYERS; iK++)
 					{
 						if (GET_PLAYER((PlayerTypes)iK).isAliveAndTeam((TeamTypes)iJ)
-						&& GC.getCivilizationInfo(GET_PLAYER((PlayerTypes)iK).getCivilizationType()).isCivilizationFreeTechs(iI))
+						&& GC.getCivilizationInfo(GET_PLAYER((PlayerTypes)iK).getCivilizationType()).isFreeTech(iI))
 						{
 							GET_TEAM((TeamTypes)iJ).setHasTech((TechTypes)iI, true, NO_PLAYER, false, false);
 							break;
@@ -3987,7 +3987,7 @@ void CvGame::initScoreCalculation()
 			for (int iCiv = 0; iCiv < GC.getNumCivilizationInfos(); iCiv++)
 			{
 				if (GC.getCivilizationInfo((CivilizationTypes)iCiv).isPlayable()
-				&&  GC.getCivilizationInfo((CivilizationTypes)iCiv).isCivilizationFreeTechs(i))
+				&&  GC.getCivilizationInfo((CivilizationTypes)iCiv).isFreeTech(i))
 				{
 					m_iInitTech += getScoreValueOfTech((TechTypes)i);
 					break;
@@ -6432,11 +6432,14 @@ void CvGame::doSpawns(PlayerTypes ePlayer)
 
 		if (isOption(GAMEOPTION_ANIMAL_PEACE_AMONG_NPCS))
 		{
-			adjustedSpawnRate *= 100 + GC.getCivilizationInfo(GET_PLAYER(ePlayer).getCivilizationType()).getSpawnRateNPCPeaceModifier();
+			adjustedSpawnRate *= 100 + GC.getCivilizationInfo(GET_PLAYER(ePlayer).getCivilizationType())
+				.getScalar(SCALAR_SPAWN_RATE_NPC_PEACE, CASC_SCOPE_EMPIRE, CASC_UNIT_PERCENT);
 		}
 		else
 		{
-			adjustedSpawnRate *= 100 + GC.getCivilizationInfo(GET_PLAYER(ePlayer).getCivilizationType()).getSpawnRateModifier();
+			// No civ authors a GENERAL spawn-rate modifier -- only the 6 NPC civs author
+			// spawnRate.empire.npcPeace -- so this branch carries no per-civ term.
+			adjustedSpawnRate *= 100;
 		}
 		// Adjust for any rate override
 		adjustedSpawnRate /= spawnInfo.getRateOverride();

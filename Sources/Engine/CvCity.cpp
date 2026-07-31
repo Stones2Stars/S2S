@@ -611,9 +611,9 @@ void CvCity::init(int iID, PlayerTypes eOwner, int iX, int iY, bool bBumpUnits, 
 
 	if (isNPC() || player.getNumCities() == 1)
 	{
-		for (int iI = 0; iI < GC.getCivilizationInfo(getCivilizationType()).getNumCivilizationBuildings(); iI++)
+		for (int iI = 0; iI < (int)GC.getCivilizationInfo(getCivilizationType()).getFreeBuildings().size(); iI++)
 		{
-			changeHasBuilding((BuildingTypes)GC.getCivilizationInfo(getCivilizationType()).getCivilizationBuilding(iI), true);
+			changeHasBuilding(GC.getCivilizationInfo(getCivilizationType()).getFreeBuildings()[iI], true);
 		}
 	}
 

@@ -10343,7 +10343,7 @@ DenialTypes CvPlayerAI::AI_civicTrade(CivicTypes eCivic, PlayerTypes ePlayer) co
 		return DENIAL_FAVORITE_CIVIC;
 	}
 
-	if (GC.getCivilizationInfo(getCivilizationType()).getCivilizationInitialCivics(GC.getCivicInfo(eCivic).getCivicOption()) == eCivic)
+	if (GC.getCivilizationInfo(getCivilizationType()).getInitialCivic(GC.getCivicInfo(eCivic).getCivicOption()) == eCivic)
 	{
 		return DENIAL_JOKING;
 	}
