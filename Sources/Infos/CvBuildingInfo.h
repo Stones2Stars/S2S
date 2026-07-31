@@ -141,6 +141,23 @@ public:
 	// ======================= 4. INTRINSIC -- bare typed reads (the census identity set) ======================
 	// Counts/configs/FKs/flags are plain typed values (the identity.cityLimit convention: a config is human, a
 	// MAGNITUDE is ×100 -- the two ×100 members here are the commerce magnitudes).
+	// --- the `cost` section (json.md §7): WHAT IT COSTS TO MAKE. ⛔ One of the THREE cost planes and not to be
+	// merged with the others: this is the entity's own authored cost; what CHANGES a cost is the `costs` MODIFIER
+	// family (getCostsModifier above); the derived PRICE (upgrade gold, hurry gold/pop) is engine-computed from
+	// the two and is nobody's getter.
+	// ⚑ HUMAN, never ×100 -- a build cost is a plain hammer count, the identity.cityLimit convention (a config is
+	// human, a MAGNITUDE is ×100). The gamespeed/era/handicap scaling is the CONSUMING system's
+	// (CvPlayer::getProductionNeeded), which is why nothing is pre-scaled here.
+	// ⛔ It carries NO -1 SENTINEL. The legacy `iCost == -1` meaning "not player-constructible" is translated by
+	// the curator into the explicit identity.notConstructible flag, and buildability gates on isNotConstructible()
+	// -- never on a raw cost value. An absent cost block is simply 0.
+	int getCost() const                     { return m_iCost; }                     // cost.production
+	int getCostSizeModifier() const         { return m_iCostSizeModifier; }         // cost.sizeModifier
+	int getCostMaterialsModifier() const    { return m_iCostMaterialsModifier; }    // cost.materialsModifier
+	int getCostComplexityModifier() const   { return m_iCostComplexityModifier; }   // cost.complexityModifier
+	int getCostCountModifier() const        { return m_iCostCountModifier; }        // cost.countModifier
+	int getCostHurryModifier() const        { return m_iCostHurryModifier; }        // cost.hurryModifier ("hurrying ME")
+
 	int getWorth() const                    { return m_iWorth; }                    // AI trade/conquest valuation config
 	// ai.flavours -- FLAVOR_* id -> weight (sparse; absent = 0). json §7 `ai` METADATA: it never affects rules,
 	// only how the AI weights this building. Same shape + shared reader as CvLeaderHeadInfo's.
@@ -212,6 +229,12 @@ private:
 	CvClassificationBlock m_capabilities;
 
 	// --- the intrinsic identity members (materialized once at mapFrom; getters are bare reads) ---
+	int m_iCost;
+	int m_iCostSizeModifier;
+	int m_iCostMaterialsModifier;
+	int m_iCostComplexityModifier;
+	int m_iCostCountModifier;
+	int m_iCostHurryModifier;
 	int m_iWorth;
 	int m_iMilitaryWorth;
 	int m_iConquestProbability;

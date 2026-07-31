@@ -10,7 +10,13 @@
 #include "Property/CvPropertyBridge.h" // the shared PROPERTY_* family -> manipulator walk
 
 CvBuildingInfo::CvBuildingInfo()
-	: m_iWorth(0)
+	: m_iCost(0)
+	, m_iCostSizeModifier(0)
+	, m_iCostMaterialsModifier(0)
+	, m_iCostComplexityModifier(0)
+	, m_iCostCountModifier(0)
+	, m_iCostHurryModifier(0)
+	, m_iWorth(0)
 	, m_iPopulationChange(0)
 	, m_iGlobalPopulationChange(0)
 	, m_iFreeTechs(0)
@@ -131,6 +137,19 @@ void CvBuildingInfo::mapFrom(const picojson::value& entity)
 	const picojson::object* pIdentity = jsonChildObj(entityObj, "identity");
 	const picojson::object& identity = (pIdentity != NULL) ? *pIdentity : kEmptyIdentity;
 	m_iWorth = jsonIdInt(identity, "worth");
+	// The `cost` section (json §7) -- fully redefined every (re-)map like every other materialized member, so
+	// an entity that LOSES its cost block on a re-curate reads 0 rather than keeping the previous pass's value.
+	{
+		static const picojson::object kEmptyCost;
+		const picojson::object* pCost = jsonChildObj(entityObj, "cost");
+		const picojson::object& cost = (pCost != NULL) ? *pCost : kEmptyCost;
+		m_iCost                   = jsonIdInt(cost, "production");
+		m_iCostSizeModifier       = jsonIdInt(cost, "sizeModifier");
+		m_iCostMaterialsModifier  = jsonIdInt(cost, "materialsModifier");
+		m_iCostComplexityModifier = jsonIdInt(cost, "complexityModifier");
+		m_iCostCountModifier      = jsonIdInt(cost, "countModifier");
+		m_iCostHurryModifier      = jsonIdInt(cost, "hurryModifier");
+	}
 	// json §7 `ai` METADATA (flavours) -- AI weighting only, never a rule. Shared reader, same as the
 	// leaderhead's; absent block leaves the map empty, so an absent flavour reads 0.
 	{
