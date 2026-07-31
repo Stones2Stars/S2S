@@ -217,7 +217,7 @@ enum SpineDomainEvent
 	SEVT_BONUS_CHANGED          = 11, // CvCity::processBonus/doVicinityBonus: iType=Bonus, iC=owner, iSrcLoc=cityId, iB=change
 	SEVT_POPULATION_CHANGED     = 12, // CvCity::setPopulation: iC=owner, iSrcLoc=cityId, iA=newPop
 	SEVT_SPECIALIST_CHANGED     = 13, // CvCity::setSpecialistCount: iType=Specialist, iC=owner, iSrcLoc=cityId, iB=delta
-	SEVT_POWER_CHANGED          = 14, // CvCity::changePowerCount: iC=owner, iSrcLoc=cityId, iB=delta
+	SEVT_POWER_CHANGED          = 14, // the `providesPower` amenity CROSSING: iC=owner, iSrcLoc=cityId, iB=delta
 	// plot SUBSTRATE changes -- the ACTUAL state changes. Yield is a COMPUTED RESULT of these, never itself an event
 	// (an improvement/terrain/feature/route changed; the yield recomputes downstream). These emit for observability
 	// + consumers, but they are NOT the yield-cache gate: plot yield is pull-computed (updateYield self-dirties).

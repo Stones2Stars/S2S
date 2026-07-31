@@ -519,6 +519,10 @@ event/WB part moved to its own persisted store m_paiFreeBonusEvents (new tag, so
 event grants are accepted drift; the array was stub-era polluted anyway). Read is a named skip; the write now
 carries m_paiFreeBonusEvents.
 
+POWER UPDATE: m_iPowerCount is no longer part of this rebuild at all -- power is an AMENITY (owner), read
+from the city's `providesPower` fold, whose own 0 <-> non-zero crossing emits the fact. Its counter, changer
+and Cy binding are gone; nothing is owed.
+
 CvCity bonus-fed derived cluster: m_paiNumBonuses (class int array), m_iBonusGoodHealth, m_iBonusBadHealth,
 m_iBonusGoodHappiness, m_iBonusBadHappiness, m_aiBonusYieldRateModifier, m_aiBonusCommerceRateModifier,
 m_aiBonusCommercePercentChanges, m_iPowerCount; CvPlotGroup::m_paiNumBonuses (+ its "bonusesPresent" bool)

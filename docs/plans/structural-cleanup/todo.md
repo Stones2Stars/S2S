@@ -252,6 +252,12 @@
   are the `process*` functions, whose remaining pushes are largely this family — `changeZoCCount`,
   `changeProtectedCultureCount`, `setWorkableRadiusOverride` — against keys the data already authors
   (`zoneOfControl`, `protectedCulture`, `adds3rdRing`).
+  ⚑ POWER is converted and is the worked pattern to copy: the fold announces the 0 ⇄ non-zero CROSSING and the
+  existing consumers route on it unchanged. ⛔ The generalization left is the FACT — one parameterized amenity
+  fact carrying the id, replacing the per-attribute ones (government centre, fresh water) as each converts. Do
+  not grow a second bespoke fact per key on the way.
+  ⚠ Check each counter's FEEDERS first: power's had none left in the engine at all (only a dead `CyCity`
+  binding wrote it), so the conversion was a read-swap rather than a migration — the others may not be.
   ⚠ **The workable-radius one is a live BUG, not just an unmigrated shape, and it is the case that proves the
   model:** it is a plain SET rather than a refcount, so a city holding TWO radius buildings and losing one sets
   the override to 0 and loses the ring a live grantor still justifies — exactly the failure the id→COUNT

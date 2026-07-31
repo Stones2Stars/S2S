@@ -7506,9 +7506,12 @@ void CvCity::changeFreeSpecialist(int iChange)
 }
 
 
+//	Power is an AMENITY (owner ruling): `providesPower` on the grantor, folded id->COUNT onto the city
+//	(json.md §8 / contexts.md). The refcount is what makes losing ONE of two power plants leave the city
+//	powered -- the failure a plain counter or a bitset cannot express.
 int CvCity::getPowerCount() const
 {
-	return m_iPowerCount;
+	return m_cityContext.amenityCount(CLS_AMENITY_PROVIDES_POWER);
 }
 
 
@@ -7523,29 +7526,6 @@ bool CvCity::isAreaCleanPower() const
 	return area() != NULL && area()->isCleanPower(getTeam());
 }
 
-void CvCity::changePowerCount(int iChange)
-{
-	if (iChange != 0)
-	{
-		const bool wasPower = isPower();
-
-		m_iPowerCount += iChange;
-		FASSERT_NOT_NEGATIVE(getPowerCount());
-		// #430 event spine: announce the power change (inside the iChange != 0 guard).
-		emitPowerChanged(getID(), getOwner(), iChange);
-		// cppcheck-suppress knownConditionTrueFalse
-		if (wasPower != isPower())
-		{
-			GET_PLAYER(getOwner()).invalidateYieldRankCache();
-
-
-			if (getTeam() == GC.getGame().getActiveTeam())
-			{
-				setInfoDirty(true);
-			}
-		}
-	}
-}
 
 
 int CvCity::getDefenseDamage() const
@@ -13753,7 +13733,7 @@ void CvCity::read(FDataStreamBase* pStream)
 	// WHOLESALE (WRAPPER_READ_CLASS_ARRAY has no per-element hook), so the reseed loops the just-read arrays HERE,
 	// inside read(), co-located with their deserialization -- the in-read reseed, NOT a separate post-load walk over
 	// all cities (that pseudo-emit is banned, superseded-ideas #13). Present/nonzero-gated. m_iID / m_eOwner + the
-	// scalar counts (m_iPopulation / m_iPowerCount / m_eCultureLevel) are read earlier in read().
+	// scalar counts (m_iPopulation / m_eCultureLevel) are read earlier in read().
 	{
 		const int iCityId = m_iID;
 		const int iCityOwner = (int)m_eOwner;
@@ -13769,10 +13749,6 @@ void CvCity::read(FDataStreamBase* pStream)
 		// its owner before its contents (population/buildings/religion/...) reseed.
 		emitCityOwnerChanged(iCityId, (int)NO_PLAYER, iCityOwner);
 		emitPopulationChanged(iCityId, iCityOwner, m_iPopulation);
-		if (m_iPowerCount > 0)
-		{
-			emitPowerChanged(iCityId, iCityOwner, m_iPowerCount);
-		}
 		for (iI = 0; iI < GC.getNumReligionInfos(); ++iI)
 		{
 			if (m_pabHasReligion[iI])
@@ -17519,7 +17495,7 @@ void CvCity::changeDisabledPowerTimer(int iChange)
 {
 	// The timer is DECREMENTED every turn by doDisabledPower, so only its 0-CROSSING is a state change worth
 	// announcing -- a per-decrement emit would fire every turn while isPower() stood still. The crossing is the
-	// second of the three legs CvCity::isPower() ORs (the count leg emits from changePowerCount).
+	// second of the three legs CvCity::isPower() ORs (the count leg emits from the amenity fold crossing).
 	const bool bWasDisabled = m_iDisabledPowerTimer > 0;
 	m_iDisabledPowerTimer += iChange;
 	if (bWasDisabled != (m_iDisabledPowerTimer > 0))

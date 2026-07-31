@@ -831,7 +831,6 @@ public:
 	void getScalars(int (&scalars)[NUM_INFO_SCALARS]) const;
 
 	bool isAreaCleanPower() const;
-	void changePowerCount(int iChange);
 
 	int getDefenseDamage() const;
 	void changeDefenseDamage(int iChange);

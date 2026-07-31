@@ -1575,10 +1575,6 @@ int64_t CyCity::calcCorporateMaintenance() const
 	return m_pCity->calcCorporateMaintenance();
 }
 
-void CyCity::changePowerCount(int iChange)
-{
-	m_pCity->changePowerCount(iChange);
-}
 
 void CyCity::changeEventAnger(int iChange)
 {

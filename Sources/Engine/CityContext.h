@@ -153,7 +153,7 @@ public:
 
 	// --- FORWARDED: the RAW data CvCity already holds O(1) -- a stored copy would duplicate it. Out-of-line (.cpp) ---
 	int  population() const;                  // CvCity::getPopulation            (m_iPopulation)
-	int  power() const;                       // CvCity::getPowerCount            (m_iPowerCount)
+	int  power() const;                       // the `providesPower` AMENITY fold (owner: power IS an amenity)
 	bool isPowered() const;                   // CvCity::isPower -- the HAS_POWER verdict; see the CONTEXT GAP note below
 	bool hasReligion(int eReligion) const;    // CvCity::isHasReligion            (the presence array)
 	bool isHolyCityOf(int eReligion) const;   // CvCity::isHolyCity(eReligion)    ({IS_HOLY_CITY: R}; one game-level lookup)

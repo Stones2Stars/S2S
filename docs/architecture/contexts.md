@@ -154,6 +154,18 @@ the present one, since a dormant building confers nothing ([enabler.md §3.2](..
 > re-derivation. What is forbidden is a store reading ANOTHER SYSTEM's built state (the enabler's operating
 > set) — that is what manufactures an ordering dependency; `policies` already makes exactly this read.
 
+> **⚖ POWER IS AN AMENITY, AND IS TREATED AS ONE (owner).** `CvCity::getPowerCount` reads the `providesPower`
+> fold rather than a hand-named counter, and the counter, its changer and its Python binding are gone. ⚑ The
+> REFCOUNT is what earns it: losing one of two power plants must leave the city powered, which is precisely the
+> failure a plain counter or a bitset cannot express.
+> ⚑ **The fold ANNOUNCES its crossings** (0 ⇄ non-zero, never a second grantor of a key the city already holds),
+> because a consumer routing on an amenity must not re-derive which key moved — the modifier's `HAS_POWER`
+> dependency route and the enabler's power gate both ride that fact. ⚠ Power is the one wired today; government
+> centre and fresh water still ride their own counters and migrate onto this crossing as they convert, which is
+> what turns the per-attribute facts into the ONE parameterized fact described below.
+> ⛔ The crossing is emitted by the FOLD, not by a mutation site: the fold IS the maintenance path, so an emit
+> anywhere else would be a second one.
+
 ⚑ **The path is NOT missing — it is BUILT, three times over, BESPOKE. That is the actual defect.** The
 building→city→gate chain already runs end to end for a handful of attributes, each with its own hand-named
 `CvCity` counter, its own DOMAIN fact and its own predicate: **`governmentCenter`**

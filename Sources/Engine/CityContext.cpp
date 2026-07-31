@@ -24,6 +24,8 @@
 #include "CvCondition.h"    // CASC_PRED_* -- the shared HAS_/IS_ plot predicate ids plotAttrs keys on
 #include "Defines/CvGlobals.h"            // GC -- the bonus / religion domain sizes the derivations walk
 #include "Conditions/CvConditionEval.h"   // CvCascadeEvalCtx -- fillEvalCtx
+#include "Infos/CvClassificationIds.h"    // CLS_AMENITY_* -- the generated amenity ids
+#include "Spine/CvEventSpine.h"           // the amenity CROSSING facts consumers route on
 #include "Infos/CvBuildingInfo.h"         // the grantor's `amenities` block (the city-local grantor)
 #include "Infos/CvCivicInfo.h"            // the EMPIRE-scope grantor's `amenities` block
 #include "Infos/CvClassificationRegistry.h"   // cachedKeyId -- the by-key amenity read's memoized id resolve
@@ -351,7 +353,21 @@ void CityContext::foldAmenities(const CvClassificationBlock* pBlock, int sign, C
 				continue;
 			}
 		}
+		//	A crossing (0 <-> non-zero) is a genuine state change, so it ANNOUNCES -- a consumer routing on an
+		//	amenity must not have to re-derive which key moved. Only the crossing: a second grantor of an
+		//	amenity the city already holds changes no verdict, exactly as the counters this replaces behaved.
+		const bool bHadBefore = amenities.has(iAmenityId);
 		amenities.add(iAmenityId, sign);
+		if (m_city != NULL && bHadBefore != amenities.has(iAmenityId))
+		{
+			//  ⚠ Power is the one amenity whose fact is wired today; the other per-attribute facts
+			//  (government centre, fresh water) still ride their own counters and migrate onto this crossing
+			//  as they convert (contexts.md: ONE parameterized fact replaces the family).
+			if (iAmenityId == CLS_AMENITY_PROVIDES_POWER)
+			{
+				emitPowerChanged(m_city->getID(), m_city->getOwner(), sign);
+			}
+		}
 		if (pRecordInto != NULL)
 		{
 			pRecordInto->add(iAmenityId, sign);
@@ -410,7 +426,8 @@ bool CityContext::isHolyCityAny() const              { return m_holyCityCount > 
 
 // --- forwarding accessors: read the bound CvCity / its owner; no stored copy (owner: don't duplicate available state) ---
 int  CityContext::population() const           { return m_city != NULL ? m_city->getPopulation() : 0; }
-int  CityContext::power() const                { return m_city != NULL ? m_city->getPowerCount() : 0; }
+//  Power is an AMENITY (owner), so this reads the fold it lives in rather than forwarding to a counter.
+int  CityContext::power() const                { return amenityCount(CLS_AMENITY_PROVIDES_POWER); }
 bool CityContext::isPowered() const            { return m_city != NULL && m_city->isPower(); }
 bool CityContext::hasReligion(int eReligion) const   { return m_city != NULL && m_city->isHasReligion((ReligionTypes)eReligion); }
 bool CityContext::isHolyCityOf(int eReligion) const  { return m_city != NULL && m_city->isHolyCity((ReligionTypes)eReligion); }
