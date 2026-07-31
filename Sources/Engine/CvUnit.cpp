@@ -16449,20 +16449,20 @@ bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion, bool bIgnoreHas, boo
 	}
 
 	{
-		const int iMinEraInt = promo.getMinEraType();
-		const int iMaxEraInt = promo.getMaxEraType();
-		if (iMinEraInt > NO_ERA || iMaxEraInt > NO_ERA)
+		// Only the MIN era band survives. No promotion authors a max (34 author identity.minEra, none a maxEra)
+		// and the rebuilt info carries no member for one to be read from, so the upper leg is dead data rather
+		// than a missing read. The band still gates on the unit's era-bearing combat class.
+		const int iMinEraInt = promo.getMinEra();
+		if (iMinEraInt > NO_ERA)
 		{
 			for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
 			{
 				if (isHasUnitCombat((UnitCombatTypes)iI) && GC.getUnitCombatInfo((UnitCombatTypes)iI).getEra() != NO_ERA)
 				{
-					const int iEra = (int)GC.getUnitCombatInfo((UnitCombatTypes)iI).getEra();
-					if (
-						iMinEraInt > NO_ERA && iMinEraInt > iEra
-					||	iMaxEraInt > NO_ERA && iMaxEraInt < iEra
-					) return false;
-
+					if (iMinEraInt > (int)GC.getUnitCombatInfo((UnitCombatTypes)iI).getEra())
+					{
+						return false;
+					}
 					break;
 				}
 			}
@@ -16486,10 +16486,10 @@ bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion, bool bIgnoreHas, boo
 	}
 
 	if (
-		promo.isNotOnDomainType((int)getDomainType())
+		promo.isNotOnDomain((int)getDomainType())
 	||
 		ePromotionLine != NO_PROMOTIONLINE
-	&&	GC.getPromotionLineInfo(ePromotionLine).isNotOnDomainType((int)getDomainType())
+	&&	GC.getPromotionLineInfo(ePromotionLine).isNotOnDomain((int)getDomainType())
 	) return false;
 	//TB SubCombat Mod End
 
@@ -22895,9 +22895,9 @@ bool CvUnit::canKeepPromotion(PromotionTypes ePromotion, bool bAssertFree, bool 
 		return false;
 	}
 
-	if (promo.isNotOnDomainType(getDomainType())
+	if (promo.isNotOnDomain(getDomainType())
 	||  promo.getPromotionLine() != NO_PROMOTIONLINE
-	&&  GC.getPromotionLineInfo(promo.getPromotionLine()).isNotOnDomainType(getDomainType()))
+	&&  GC.getPromotionLineInfo(promo.getPromotionLine()).isNotOnDomain(getDomainType()))
 	{
 		if (bMessageOnFalse)
 		{

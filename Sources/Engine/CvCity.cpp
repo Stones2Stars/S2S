@@ -7829,7 +7829,7 @@ void CvCity::setWeLoveTheKingDay(bool bNewValue)
 		{
 			if (owner.isCivic((CivicTypes)iI))
 			{
-				if (!CvWString(GC.getCivicInfo((CivicTypes)iI).getWeLoveTheKing()).empty())
+				if (!CvWString(GC.getCivicInfo((CivicTypes)iI).getWeLoveTheKingKey()).empty())
 				{
 					eCivic = ((CivicTypes)iI);
 					break;
@@ -7839,7 +7839,7 @@ void CvCity::setWeLoveTheKingDay(bool bNewValue)
 
 		if (eCivic != NO_CIVIC)
 		{
-			CvWString szBuffer = gDLL->getText("TXT_KEY_CITY_CELEBRATE", getNameKey(), GC.getCivicInfo(eCivic).getWeLoveTheKing());
+			CvWString szBuffer = gDLL->getText("TXT_KEY_CITY_CELEBRATE", getNameKey(), GC.getCivicInfo(eCivic).getWeLoveTheKingKey());
 			AddDLLMessage(getOwner(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_WELOVEKING", MESSAGE_TYPE_MINOR_EVENT, ARTFILEMGR.getInterfaceArtInfo("INTERFACE_HAPPY_PERSON")->getPath(), GC.getCOLOR_WHITE(), getX(), getY(), true, true);
 		}
 	}

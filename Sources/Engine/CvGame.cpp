@@ -6,6 +6,7 @@
 #include "Infos/CvClassificationIds.h"   // the generated SKILL_/TAG_/CAPABILITY_ id table
 
 #include "CvGameCoreDLL.h"
+#include "Conditions/CvConditionEval.h"   // cascadeGateOk -- the entity-level gate ([DEC-entity-gate])
 #include "Engine/CvGameSpeedScale.h"
 #include "Enabler/CvEnablerKernel.h"   // requiresMetForPlayer -- the system-placement gate (barbarian fielding)
 #include "AI/BetterBTSAI.h"
@@ -11732,22 +11733,15 @@ void CvGame::changeImprovementCount(ImprovementTypes eIndex, int iChange)
 
 bool CvGame::isValidByGameOption(const CvUnitCombatInfo& info) const
 {
-	PROFILE_EXTRA_FUNC();
-	for (int iI = 0; iI < info.getNumNotOnGameOptions(); iI++)
-	{
-		if (isOption((GameOptionTypes) info.getNotOnGameOption(iI)))
-		{
-			return false;
-		}
-	}
-	for (int iI = 0; iI < info.getNumOnGameOptions(); iI++)
-	{
-		if (!isOption((GameOptionTypes) info.getOnGameOption(iI)))
-		{
-			return false;
-		}
-	}
-	return true;
+	// A whole-entity game-option bar is the entity-level enabled/disabled pair, evaluated LIVE
+	// ([DEC-entity-gate]) -- not the legacy per-entity on/notOn option LISTS this replaces.
+	// The ctx is BARE deliberately: every authored entity gate is a GAMEOPTION_ leaf that reads the live
+	// options and consults no scope context, which is what makes the verdict the same for every player and
+	// city (enabler.md par.8). An entity whose data authors no gate has a NULL gate, and cascadeGateOk(NULL)
+	// is true -- so this stays total, and a newly-authored gate lights up as pure DATA.
+	CvCascadeEvalCtx ec;
+	CvCascadeEvalFlags gateFlags;
+	return cascadeGateOk(info.getGate(), ec, gateFlags);
 }
 
 int CvGame::SorenRand::operator()(const int maxVal) const
