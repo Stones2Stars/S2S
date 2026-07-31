@@ -119,6 +119,24 @@ public:
 	static void collectKeyedTarget(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind,
 		int iTargetSegment, std::vector<std::pair<int, int> >& targetValues, int iScope = -1);
 
+	//	THE AUTHORS-ANY PREDICATE -- "does this entity author a deposit of this SIGN anywhere in this family?"
+	//	It answers the RELEVANCE question an AI focus probe asks ("is this building worth considering for
+	//	production?"), which the point reads structurally cannot: a point read serves ONE compiled
+	//	(family, kind, scope, unit) slot and deliberately excludes the conditioned tail, so a probe built from
+	//	point getters has to ask one getter per shape -- scope-wide, power-gated, plots-target, keyed-by-domain,
+	//	keyed-by-unitcombat -- and still misses every shape nobody thought to add a getter for.
+	//	⚑ This walks the handful the entity AUTHORED, so it is the own-data inversion's cure
+	//	(pedia-read-map finding 2): a "for every domain, does this deposit?" loop over the whole target registry
+	//	becomes one read. It also SUBSUMES the sentinel probe (`getDomainProductionModifier(NO_DOMAIN)`) -- asking
+	//	a keyed getter with a NO_* key to mean "any" is a read of a slot that cannot exist.
+	//	⚠ SIGN IS PRESERVED ON PURPOSE. The probes it replaces test `> 0` / `< 0`, and a building whose only
+	//	production entry is NEGATIVE is not a production building; collapsing to a bare "authors anything" would
+	//	quietly change which buildings the AI offers. iSign is +1 (any positive) or -1 (any negative).
+	//	⚠ Values are AS COMPILED, so this compares against 0 only -- never a magnitude ([DEC-fixedpoint-x100]).
+	//	iKind / iScope filter exactly as they do on collectKeyedTarget (-1 = any).
+	static bool authorsAnySigned(const CvModifiers* modifiers, ModifierFamily eFamily, int iSign,
+		int iKind = -1, int iScope = -1);
+
 	//	The interner lookup for a keyed target token, resolved ONCE per call site rather than per entry.
 	//	Returns -1 when the segment was never authored anywhere, which makes every keyed read answer 0.
 	static int keyedTargetSegment(const char* szTargetSegment);

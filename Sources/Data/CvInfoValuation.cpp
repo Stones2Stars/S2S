@@ -144,6 +144,37 @@ namespace
 	}
 }
 
+bool InfoValuation::authorsAnySigned(const CvModifiers* modifiers, ModifierFamily eFamily, int iSign,
+	int iKind, int iScope)
+{
+	if (modifiers == NULL)
+	{
+		return false;
+	}
+	const std::vector<CvModEntry*>& kEntries = modifiers->entries();
+	for (size_t iEntry = 0; iEntry < kEntries.size(); ++iEntry)
+	{
+		const CvModEntry* pEntry = kEntries[iEntry];
+		if (pEntry == NULL || pEntry->family != eFamily)
+		{
+			continue;
+		}
+		if (iKind >= 0 && pEntry->kind != iKind)
+		{
+			continue;
+		}
+		if (iScope >= 0 && (int)pEntry->scope != iScope)
+		{
+			continue;
+		}
+		if (iSign >= 0 ? (pEntry->value > 0) : (pEntry->value < 0))
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 int InfoValuation::keyedTargetSegment(const char* szTargetSegment)
 {
 	return modSegmentLookup(szTargetSegment);

@@ -12421,17 +12421,15 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 	}
 	if ((iFocusFlags & BUILDINGFOCUS_PRODUCTION) != 0)
 	{
+		// Every production-relevant shape in ONE read per family: the scope-wide percent, the power-gated and
+		// river-plot CONDITIONED entries, and the buildRate rows keyed by domain / unitCombat / category. The
+		// getter-per-shape list this replaces could only ask about shapes someone had added a getter for, and
+		// asked the domain one with a NO_DOMAIN sentinel -- a read of a slot that cannot exist.
 		if (buildingModifiesGenericYields
 			|| bHasTradeRouteValue
-			|| kBuilding.getYieldModifier(YIELD_PRODUCTION) > 0
-			|| kBuilding.getPowerYieldModifier(YIELD_PRODUCTION) > 0
-			|| kBuilding.getRiverPlotYieldChange(YIELD_PRODUCTION) > 0
-			|| kBuilding.getHurryCostModifier() < 0
-			|| kBuilding.getMilitaryProductionModifier() > 0
-			|| kBuilding.getSpaceProductionModifier() > 0
-			|| kBuilding.getGlobalSpaceProductionModifier() > 0
-			|| kBuilding.getDomainProductionModifier(NO_DOMAIN) > 0
-			|| kBuilding.getNumUnitCombatProdModifiers() > 0
+			|| InfoValuation::authorsAnySigned(kBuilding.getModifiers(), MODFAM_PRODUCTION, +1)
+			|| InfoValuation::authorsAnySigned(kBuilding.getModifiers(), MODFAM_BUILD_RATE, +1)
+			|| InfoValuation::authorsAnySigned(kBuilding.getModifiers(), MODFAM_COSTS, -1, COSTS_HURRY)
 			|| getBaseYieldRateFromBuilding(YIELD_PRODUCTION, eBuilding) > 0)
 		{
 			return true;
@@ -12441,11 +12439,10 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 	{
 		if (buildingModifiesCommerceYields ||
 			bHasTradeRouteValue ||
-			kBuilding.getCommerceChange(COMMERCE_GOLD) > 0 ||
-			kBuilding.getCommercePerPopChange(COMMERCE_GOLD) > 0 ||
-			kBuilding.getCommerceModifier(COMMERCE_GOLD) > 0 ||
-			kBuilding.getCommerceModifier(COMMERCE_GOLD, CASC_SCOPE_EMPIRE) > 0 ||
-			kBuilding.getSpecialistExtraCommerce(COMMERCE_GOLD) > 0 ||
+			// One read for every shape this channel can be authored in -- the city/empire percents, the flat,
+			// the per-population scaler and the per-specialist row. State-religion commerce stays its own read:
+			// it is an intrinsic identity config on the info, not a deposit in the family.
+			InfoValuation::authorsAnySigned(kBuilding.getModifiers(), infoCommerceFamily(COMMERCE_GOLD), +1) ||
 			kBuilding.getStateReligionCommerce(COMMERCE_GOLD) > 0)
 		{
 			return true;
@@ -12456,11 +12453,10 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 	{
 		if (buildingModifiesCommerceYields ||
 			bHasTradeRouteValue ||
-			kBuilding.getCommerceChange(COMMERCE_RESEARCH) > 0 ||
-			kBuilding.getCommercePerPopChange(COMMERCE_RESEARCH) > 0 ||
-			kBuilding.getCommerceModifier(COMMERCE_RESEARCH) > 0 ||
-			kBuilding.getCommerceModifier(COMMERCE_RESEARCH, CASC_SCOPE_EMPIRE) > 0 ||
-			kBuilding.getSpecialistExtraCommerce(COMMERCE_RESEARCH) > 0 ||
+			// One read for every shape this channel can be authored in -- the city/empire percents, the flat,
+			// the per-population scaler and the per-specialist row. State-religion commerce stays its own read:
+			// it is an intrinsic identity config on the info, not a deposit in the family.
+			InfoValuation::authorsAnySigned(kBuilding.getModifiers(), infoCommerceFamily(COMMERCE_RESEARCH), +1) ||
 			kBuilding.getStateReligionCommerce(COMMERCE_RESEARCH) > 0)
 		{
 			return true;
@@ -12470,11 +12466,10 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 	{
 		if (buildingModifiesCommerceYields ||
 			bHasTradeRouteValue ||
-			kBuilding.getCommerceChange(COMMERCE_CULTURE) > 0 ||
-			kBuilding.getCommercePerPopChange(COMMERCE_CULTURE) > 0 ||
-			kBuilding.getCommerceModifier(COMMERCE_CULTURE) > 0 ||
-			kBuilding.getCommerceModifier(COMMERCE_CULTURE, CASC_SCOPE_EMPIRE) > 0 ||
-			kBuilding.getSpecialistExtraCommerce(COMMERCE_CULTURE) > 0 ||
+			// One read for every shape this channel can be authored in -- the city/empire percents, the flat,
+			// the per-population scaler and the per-specialist row. State-religion commerce stays its own read:
+			// it is an intrinsic identity config on the info, not a deposit in the family.
+			InfoValuation::authorsAnySigned(kBuilding.getModifiers(), infoCommerceFamily(COMMERCE_CULTURE), +1) ||
 			kBuilding.getStateReligionCommerce(COMMERCE_CULTURE) > 0)
 		{
 			return true;
@@ -12611,11 +12606,10 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 		if (buildingModifiesCommerceYields ||
 			bHasTradeRouteValue ||
 			kBuilding.getEspionageDefenseModifier() > 0 ||
-			kBuilding.getCommerceChange(COMMERCE_ESPIONAGE) > 0 ||
-			kBuilding.getCommercePerPopChange(COMMERCE_ESPIONAGE) > 0 ||
-			kBuilding.getCommerceModifier(COMMERCE_ESPIONAGE) > 0 ||
-			kBuilding.getCommerceModifier(COMMERCE_ESPIONAGE, CASC_SCOPE_EMPIRE) > 0 ||
-			kBuilding.getSpecialistExtraCommerce(COMMERCE_ESPIONAGE) > 0 ||
+			// One read for every shape this channel can be authored in -- the city/empire percents, the flat,
+			// the per-population scaler and the per-specialist row. State-religion commerce stays its own read:
+			// it is an intrinsic identity config on the info, not a deposit in the family.
+			InfoValuation::authorsAnySigned(kBuilding.getModifiers(), infoCommerceFamily(COMMERCE_ESPIONAGE), +1) ||
 			kBuilding.getStateReligionCommerce(COMMERCE_ESPIONAGE) > 0)
 		{
 			return true;
