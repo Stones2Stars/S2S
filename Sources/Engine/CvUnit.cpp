@@ -5265,7 +5265,7 @@ bool CvUnit::canAutomate(AutomateTypes eAutomate) const
 			return false;
 		}
 		//Jets and Fighters can intercept, modders, if you have fighters with 0 interception, feel free to get rid of this check
-		if (m_pUnitInfo->getInterceptionProbability() <= 0)
+		if (maxInterceptionProbability() <= 0)
 		{
 			return false;
 		}
@@ -10506,13 +10506,13 @@ int CvUnit::airRange() const
 	const SpecialUnitTypes eMissile = GC.getSPECIALUNIT_MISSILE();
 	if (getDomainType() == DOMAIN_AIR && nukeRange() == -1 && getSpecialUnitType() != eMissile)
 	{
-		return (m_pUnitInfo->getAirRange() + getExtraAirRange() + GET_TEAM(getTeam()).getExtraMoves(DOMAIN_AIR) + GET_PLAYER(getOwner()).getNationalFlightOperationRangeChange());
+		return (resolvedValue(URS_AIR_RANGE) + GET_TEAM(getTeam()).getExtraMoves(DOMAIN_AIR) + GET_PLAYER(getOwner()).getNationalFlightOperationRangeChange());
 	}
 	if (getDomainType() == DOMAIN_AIR && getSpecialUnitType() == eMissile)
 	{
-		return (m_pUnitInfo->getAirRange() + getExtraAirRange() + GET_TEAM(getTeam()).getExtraMoves(DOMAIN_AIR) + GET_PLAYER(getOwner()).getNationalMissileRangeChange());
+		return (resolvedValue(URS_AIR_RANGE) + GET_TEAM(getTeam()).getExtraMoves(DOMAIN_AIR) + GET_PLAYER(getOwner()).getNationalMissileRangeChange());
 	}
-	return (m_pUnitInfo->getAirRange() + getExtraAirRange());
+	return (resolvedValue(URS_AIR_RANGE));
 }
 
 
@@ -12361,13 +12361,13 @@ int CvUnit::maxXPValue(const CvUnit* pVictim, bool bBarb) const
 
 int CvUnit::firstStrikes() const
 {
-	return std::max(0, m_pUnitInfo->getFirstStrikes() + getExtraFirstStrikes());
+	return std::max(0, resolvedValue(URS_FIRST_STRIKES));
 }
 
 
 int CvUnit::chanceFirstStrikes() const
 {
-	return std::max(0, (m_pUnitInfo->getChanceFirstStrikes() + getExtraChanceFirstStrikes()));
+	return std::max(0, (resolvedValue(URS_FIRST_STRIKE_CHANCE)));
 }
 
 
@@ -12615,7 +12615,7 @@ bool CvUnit::isInquisitor() const
 
 int CvUnit::maxInterceptionProbability() const
 {
-	return std::min(GC.getDefineINT("MAX_INTERCEPTION_PROBABILITY"),std::max(0, m_pUnitInfo->getInterceptionProbability() + getExtraIntercept()));
+	return std::min(GC.getDefineINT("MAX_INTERCEPTION_PROBABILITY"),std::max(0, resolvedValue(URS_INTERCEPT)));
 }
 
 
@@ -12630,7 +12630,7 @@ int CvUnit::currInterceptionProbability() const
 
 int CvUnit::evasionProbability() const
 {
-	return std::min(GC.getDefineINT("MAX_EVASION_PROBABILITY"),std::max(0, m_pUnitInfo->getEvasionProbability() + getExtraEvasion()));
+	return std::min(GC.getDefineINT("MAX_EVASION_PROBABILITY"),std::max(0, resolvedValue(URS_EVASION)));
 }
 
 
@@ -12835,8 +12835,7 @@ int CvUnit::poisonProbabilityModifierTotal() const
 
 int CvUnit::collateralDamage() const
 {
-	int iTotal = m_pUnitInfo->getCollateralDamage();
-	iTotal += getExtraCollateralDamage();
+	int iTotal = resolvedValue(URS_COLLATERAL);
 	return std::max(0, iTotal);
 }
 
@@ -24165,7 +24164,7 @@ void CvUnit::changeExtraCaptureProbabilityModifier(int iChange)
 
 int CvUnit::captureProbabilityTotal() const
 {
-	int iData = m_pUnitInfo->getCaptureProbabilityModifier() + m_iExtraCaptureProbabilityModifier;
+	int iData = resolvedValue(URS_CAPTURE_PROBABILITY);
 
 	iData += GET_PLAYER(getOwner()).getExtraNationalCaptureProbabilityModifier();
 
@@ -24184,7 +24183,7 @@ void CvUnit::changeExtraCaptureResistanceModifier(int iChange)
 
 int CvUnit::captureResistanceTotal() const
 {
-	int iData = m_pUnitInfo->getCaptureResistanceModifier() + m_iExtraCaptureResistanceModifier;
+	int iData = resolvedValue(URS_CAPTURE_RESISTANCE);
 
 	iData += GET_PLAYER(getOwner()).getExtraNationalCaptureResistanceModifier();
 

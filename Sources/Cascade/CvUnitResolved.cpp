@@ -43,6 +43,7 @@ namespace
 		{ -1,                          MODFAM_HEAL,         HEAL_ADJACENT,          CASC_UNIT_FLAT    }, // URS_HEAL_ADJACENT
 		{ -1,                          MODFAM_AIR,          AIR_EVASION,            CASC_UNIT_PERCENT }, // URS_EVASION
 		{ -1,                          MODFAM_AIR,          AIR_INTERCEPT,          CASC_UNIT_PERCENT }, // URS_INTERCEPT
+		{ -1,                          MODFAM_AIR,          AIR_RANGE,              UNIT_CANONICAL    }, // URS_AIR_RANGE
 		{ -1,                          MODFAM_COLLATERAL,   COLLATERAL_DAMAGE,      CASC_UNIT_PERCENT }, // URS_COLLATERAL
 		{ -1,                          MODFAM_CAPTURE,      CAPTURE_PROBABILITY,    CASC_UNIT_PERCENT }, // URS_CAPTURE_PROBABILITY
 		{ -1,                          MODFAM_CAPTURE,      CAPTURE_RESISTANCE,     CASC_UNIT_PERCENT }, // URS_CAPTURE_RESISTANCE

@@ -63,6 +63,9 @@ enum UnitResolvedSlot
 	URS_HEAL_ADJACENT,            // heal.unit.adjacent
 	URS_EVASION,                  // air.unit.evasion
 	URS_INTERCEPT,                // air.unit.intercept
+	URS_AIR_RANGE,                // air.unit.range                -- the unit's OWN air range. The team's
+	                              //   domain-moves award and the player's flight/missile range changes are
+	                              //   separate scopes and are added at the read, not gathered here.
 	URS_COLLATERAL,               // collateral.unit.percent
 	URS_CAPTURE_PROBABILITY,      // capture.unit.probability
 	URS_CAPTURE_RESISTANCE,       // capture.unit.resistance
