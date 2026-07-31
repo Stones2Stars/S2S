@@ -383,6 +383,13 @@
   is invisible to the error-driven sweep and only closes by being looked for. ⚠ A loop calling a gate with
   WHAT-IF args cannot simply swap to the frontier — the frontier answers the CURRENT verdict, so those want the
   as-if-held overlay or the gate twin instead.
+- Rewrite the city's BONUS-KEYED building-yield block. It is the own-data inversion and the read-time radius
+  scan AT ONCE: a loop over every bonus id asking the building what it deposits, and nested inside it a
+  whole-radius walk counting matching plots — per bonus. The building's own compiled entries name the handful
+  it authored (`InfoValuation::collectKeyedTarget`), and the vicinity count is a CityContext read rather than a
+  scan ([contexts.md](../../architecture/contexts.md): the tiered vicinity sets are stored, not walked).
+  ⚠ Its AI twin probes the same getters with `(NO_BONUS, NO_COMMERCE)` to ask "does this building have ANY such
+  entry" — that becomes "does it author any", off the same entry list, never a sentinel read.
 - Move `AI_baseBonusVal`'s per-kind loops off the whole-database driver onto the frontier, and off the dead
   prereq getters onto the bonus's own `EDGEF_REQUIRED_BY` ([DEC-one-reverse-view](../../architecture/decisions.md#dec-one-reverse-view)).
   ⚠ Its "would this bonus UNLOCK this" half needs the AS-IF-HELD overlay above and dangles until that lands;
