@@ -1665,7 +1665,6 @@ protected:
 	int m_iMaxTradeRoutesAdjustment;
 	int m_iNationalHurryAngerModifier;
 	int m_iNationalEnemyWarWearinessModifier;
-	int m_iNationalBombardDefenseModifier;
 	int* m_paiNationalDomainProductionModifier;
 	int* m_paiNationalTechResearchModifier;
 	int m_iFixedBordersCount;
@@ -2178,9 +2177,6 @@ public:
 	void setNationalEnemyWarWearinessModifier(int iNewValue);
 	void changeNationalEnemyWarWearinessModifier(int iChange);
 
-	int getNationalBombardDefenseModifier() const;
-	void setNationalBombardDefenseModifier(int iNewValue);
-	void changeNationalBombardDefenseModifier(int iChange);
 
 
 	int getNationalDomainProductionModifier(DomainTypes eIndex) const;

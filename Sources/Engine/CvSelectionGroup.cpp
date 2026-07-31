@@ -2982,7 +2982,7 @@ int CvSelectionGroup::getBombardTurns(const CvCity* pCity) const
 			}
 			else
 			{
-				iUnitBombardRate *= std::max(25, (100 - pCity->getBuildingBombardDefense()));
+				iUnitBombardRate *= std::max(25, (100 - pCity->getBombardDefense()));
 				iUnitBombardRate /= 100;
 			}
 

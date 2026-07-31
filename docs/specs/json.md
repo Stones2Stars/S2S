@@ -664,7 +664,15 @@ The full address of a deposit:
   the value is measured in defense points, not scaled ([DEC-fixedpoint-x100](../architecture/decisions.md#dec-fixedpoint-x100):
   a percent is never ×100).
   ⚑ **The stack has a FLOOR and NO CEILING — verified, because the absence is load-bearing.** The floor is the
-  `min` kind (`getExtraMinDefense`), applied at the realized read. There is **no cap of any kind** on accumulated
+  `min` kind (`getExtraMinDefense`), applied at the realized read.
+  ⛔ **A FLOOR CARRIES THE UNIT OF WHAT IT FLOORS, so `min` authors `percent` exactly as `amount` does** — the
+  realized read is `max(min, amount-stack × damage-decay)`, which only means anything while the two share a
+  unit. Authoring it `flat` scales it ×100 at readJson and the `max()` then compares a scaled floor against an
+  unscaled stack — a floor 100× too high, which no compiler and no smoke test catches
+  ([fixed-point-and-scales.md §4d](curators/fixed-point-and-scales.md): a mis-scaled config value produces a
+  game that runs perfectly while playing by different numbers). ⚑ The general rule the case states: a kind's
+  unit follows the quantity it PARTICIPATES IN, never the shape it happens to look like in the legacy XML.
+  There is **no cap of any kind** on accumulated
   defense: the contribution sites are unbounded `+=`, the total is unclamped, and the only `max`-shaped constant
   nearby — `MAX_CITY_DEFENSE_DAMAGE` — bounds DAMAGE DEALT TO defense (and is the decay denominator), a
   different axis entirely. ⚠ So an unbounded additive stack is the correct model here; do not "restore" a

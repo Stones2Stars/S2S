@@ -650,7 +650,7 @@ bool CvGameTextMgr::setCombatPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot, 
 					int iChance = pAttacker->breakdownChanceTotal();
 					int iTrueChance = std::max(5, iChance);
 
-					int iBombardDefMod = std::max(0, (100 - tCity->getBuildingBombardDefense()));
+					int iBombardDefMod = std::max(0, (100 - tCity->getBombardDefense()));
 					int iNormalDamage = pAttacker->breakdownDamageTotal();
 					int iTrueDamage = (iNormalDamage * iBombardDefMod) / 100;
 

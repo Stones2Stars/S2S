@@ -166,7 +166,10 @@ SCALAR_FAMILIES = {
     "iAllCityDefense": ("defense", "empire", "amount", "percent"),
     "iNukeModifier": ("defense", "city", "nukeDefense", "percent"),
     "iAirModifier": ("defense", "city", "airDefense", "percent"),
-    "iMinDefense": ("defense", "city", "min", "flat"),
+    # the floor on the `amount` stack, so it carries the SAME unit as the value it floors -- defense points,
+    # applied as a percentage and never scaled. Emitting it `flat` would ×100 it at readJson and the realized
+    # max() would compare a scaled floor against an unscaled stack.
+    "iMinDefense": ("defense", "city", "min", "percent"),
     "iNoEntryDefenseLevel": ("defense", "city", "noEntryLevel", "flat"),
     "iLocalDynamicDefense": ("defense", "city", "dynamicDefense", "flat"),
     "iRiverDefensePenalty": ("defense", "city", "riverDefensePenalty", "flat"),

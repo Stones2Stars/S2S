@@ -89,7 +89,7 @@
     "percent": 40
    },
    "min": {
-    "flat": 25
+    "percent": 25
    },
    "noEntryLevel": {
     "flat": 50

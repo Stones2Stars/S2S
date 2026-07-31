@@ -685,8 +685,7 @@ public:
 
 	int getBuildingDefense() const;
 
-	int getBuildingBombardDefense() const;
-	void changeBuildingBombardDefense(int iChange);
+	int getBombardDefense() const;
 	int getAdditionalBombardDefenseByBuilding(BuildingTypes eType) const;
 
 
@@ -1898,8 +1897,6 @@ public:
 	int getExtraRiverDefensePenalty() const;
 
 	int getExtraMinDefense() const;
-	void setExtraMinDefense(int iValue);
-	void changeExtraMinDefense(int iChange);
 
 	int getExtraBuildingDefenseRecoverySpeedModifier() const;
 

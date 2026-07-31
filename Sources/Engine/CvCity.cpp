@@ -7384,21 +7384,14 @@ int CvCity::getBuildingDefense() const
 }
 
 
-int CvCity::getBuildingBombardDefense() const
+// The city's bombard resistance -- the WHOLE rolled stack, which is why this carries no source in its name:
+// buildings author the kind at city scope and traits author it at empire, and the roll-up folds both. An
+// empire-scope leg added on top of that sum would count the trait contribution twice.
+// The modder option is a CEILING on the resistance, never a term in it.
+int CvCity::getBombardDefense() const
 {
-	int iBombardDefenseTotal = m_iBuildingBombardDefense;
-	iBombardDefenseTotal += GET_PLAYER(getOwner()).getNationalBombardDefenseModifier();
-	return std::min(GC.getGame().getModderGameOption(MODDERGAMEOPTION_MAX_BOMBARD_DEFENSE), iBombardDefenseTotal);
-}
-
-
-void CvCity::changeBuildingBombardDefense(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iBuildingBombardDefense += iChange;
-		FASSERT_NOT_NEGATIVE(getBuildingBombardDefense());
-	}
+	return std::min(GC.getGame().getModderGameOption(MODDERGAMEOPTION_MAX_BOMBARD_DEFENSE),
+		cascadeDefense(DEFENSE_BOMBARD));
 }
 
 // BUG - Building Additional Bombard Defense - start
@@ -7406,7 +7399,7 @@ int CvCity::getAdditionalBombardDefenseByBuilding(BuildingTypes eBuilding) const
 {
 	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eBuilding);
 
-	const int iBaseDefense = getBuildingBombardDefense();
+	const int iBaseDefense = getBombardDefense();
 
 	// cap total bombard defense at 100
 	return std::min(GC.getBuildingInfo(eBuilding).getDefense(DEFENSE_BOMBARD, CASC_SCOPE_CITY) + iBaseDefense, 100) - iBaseDefense;
@@ -18222,17 +18215,10 @@ int CvCity::localCitizenCaptureResistance() const
 
 int CvCity::getExtraLocalDynamicDefense() const { return cascadeDefense(DEFENSE_DYNAMIC); }
 int CvCity::getExtraRiverDefensePenalty() const { return cascadeDefense(DEFENSE_RIVER_PENALTY); }
-int CvCity::getExtraMinDefense() const
-{
-	return m_iExtraMinDefense;
-}
-void CvCity::setExtraMinDefense(int iValue)
-{
-}
-void CvCity::changeExtraMinDefense(int iChange)
-{
-	m_iExtraMinDefense += iChange;
-}
+// The FLOOR on the defense stack, and therefore the SAME unit as the stack it floors: `amount` sums like a flat
+// but is measured in defense points and applied as a percentage, so `min` is a percent too and is never scaled.
+// The realized read maxes the two against each other, which only means anything while they share a unit.
+int CvCity::getExtraMinDefense() const { return cascadeDefense(DEFENSE_MIN); }
 
 int CvCity::getExtraBuildingDefenseRecoverySpeedModifier() const { return cascadeDefense(DEFENSE_BUILDING_RECOVERY); }
 int CvCity::getModifiedBuildingDefenseRecoverySpeedCap() const

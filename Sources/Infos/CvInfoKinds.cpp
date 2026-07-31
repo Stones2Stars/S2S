@@ -701,7 +701,6 @@ CvCascUnit infoDefenseUnit(DefenseKind eKind, CvCascScope eScope)
 {
 	switch (eKind)
 	{
-	case DEFENSE_MIN:
 	case DEFENSE_NO_ENTRY_LEVEL:
 	case DEFENSE_DYNAMIC:
 	case DEFENSE_RIVER_PENALTY:

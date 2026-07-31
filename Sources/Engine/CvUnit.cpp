@@ -7147,7 +7147,7 @@ bool CvUnit::bombard()
 
 			if (!ignoreBuildingDefense())
 			{
-				iBombardModifier -= pBombardCity->getBuildingBombardDefense();
+				iBombardModifier -= pBombardCity->getBombardDefense();
 			}
 
 			pBombardCity->changeDefenseModifier(-(getBombardRate() * std::max(0, 100 + iBombardModifier)) / 100);
@@ -23862,7 +23862,7 @@ void CvUnit::resolveBreakdownAttack(const CvPlot* pPlot)
 	FAssertMsg(pCity != NULL, "Breakdown Target City is not assigned a valid value");
 
 	const int iNormalDamage = breakdownDamageTotal();
-	int iTrueDamage = iNormalDamage + iNormalDamage * std::max(0, 100 - pCity->getBuildingBombardDefense()) / 100;
+	int iTrueDamage = iNormalDamage + iNormalDamage * std::max(0, 100 - pCity->getBombardDefense()) / 100;
 
 	if (iNormalDamage > 0)
 	{

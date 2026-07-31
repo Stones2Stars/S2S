@@ -1199,7 +1199,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iMaxTradeRoutesAdjustment = 0;
 	m_iNationalHurryAngerModifier = 0;
 	m_iNationalEnemyWarWearinessModifier = 0;
-	m_iNationalBombardDefenseModifier = 0;
 	m_iFixedBordersCount = 0;
 	m_iFreedomFighterCount = 0;
 	m_iExtraFreedomFighters = 0;
@@ -18423,7 +18422,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iCompatCheckCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNationalHurryAngerModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNationalEnemyWarWearinessModifier);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iNationalBombardDefenseModifier);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_DOMAIN_TYPES, m_paiNationalDomainProductionModifier);
 		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_TECHS, GC.getNumTechInfos(), m_paiNationalTechResearchModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iFixedBordersCount);
@@ -19354,7 +19352,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCompatCheckCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNationalHurryAngerModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNationalEnemyWarWearinessModifier);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNationalBombardDefenseModifier);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_DOMAIN_TYPES, m_paiNationalDomainProductionModifier);
 		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_TECHS, GC.getNumTechInfos(), m_paiNationalTechResearchModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iFixedBordersCount);
@@ -27041,7 +27038,6 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 	changeHurryCostModifier(GC.getTraitInfo(eTrait).getHurryCostModifier() * iChange);
 	changeForeignTradeRouteModifier(GC.getTraitInfo(eTrait).getForeignTradeRouteModifier() * iChange);
 	changeNationalEnemyWarWearinessModifier(GC.getTraitInfo(eTrait).getEnemyWarWearinessModifier() * iChange);
-	changeNationalBombardDefenseModifier(GC.getTraitInfo(eTrait).getBombardDefense() * iChange);
 	changeCoastalTradeRoutes(GC.getTraitInfo(eTrait).getCoastalTradeRoutes() * iChange);
 	changeMilitaryFoodProductionCount((GC.getTraitInfo(eTrait).isMilitaryFoodProduction()) ? iChange : 0);
 	changeInquisitionCount((GC.getTraitInfo(eTrait).isAllowsInquisitions())? iChange : 0);
@@ -28215,21 +28211,6 @@ void CvPlayer::setNationalEnemyWarWearinessModifier(int iValue)
 void CvPlayer::changeNationalEnemyWarWearinessModifier(int iChange)
 {
 	setNationalEnemyWarWearinessModifier(getNationalEnemyWarWearinessModifier() + iChange);
-}
-
-int CvPlayer::getNationalBombardDefenseModifier() const
-{
-	return m_iNationalBombardDefenseModifier;
-}
-
-void CvPlayer::setNationalBombardDefenseModifier(int iValue)
-{
-	m_iNationalBombardDefenseModifier = iValue;
-}
-
-void CvPlayer::changeNationalBombardDefenseModifier(int iChange)
-{
-	setNationalBombardDefenseModifier(getNationalBombardDefenseModifier() + iChange);
 }
 
 int CvPlayer::getNationalDomainProductionModifier(DomainTypes eIndex) const

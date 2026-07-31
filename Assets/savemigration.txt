@@ -259,10 +259,15 @@ CvCity::m_buildingCommerceMod            (int array, NUM_COMMERCE_TYPES)
 
 ========================
 2026-07-17 — #430 delete-driven legacy cut (defense cluster): the stored building / bombard / min defense
-accumulators fully removed (no member, no serialization, no changer). getBuildingDefense /
-getBuildingBombardDefense / getExtraMinDefense read the cascade scalar slots (scDefense /
-scBuildingBombardDefense / scDefenseMin) unconditionally; the *Legacy oracles + the processBuilding change*
-writers are gone. The stored building-defense value carried a known drift -- the cascade is the sole source.
+accumulators fully removed (no member, no serialization, no changer), and the processBuilding writers with them.
+What serves each value now:
+  m_iBuildingDefense        -> CvCity::getBuildingDefense sums defense.city.amount over the enabler's OPERATING
+                               building set. It is the buildings-only subset ON PURPOSE, serving the
+                               bIgnoreBuilding what-if; the realized read is the whole rolled stack.
+  m_iBuildingBombardDefense -> CvCity::getBombardDefense = cascadeDefense(DEFENSE_BOMBARD), the WHOLE rolled
+                               stack (city buildings + empire traits), capped by MAX_BOMBARD_DEFENSE.
+  m_iExtraMinDefense        -> CvCity::getExtraMinDefense = cascadeDefense(DEFENSE_MIN).
+The stored building-defense value carried a known drift -- the cascade is the sole source.
 
 CvCity::m_iBuildingDefense               (int)
 CvCity::m_iBuildingBombardDefense        (int)
@@ -964,3 +969,10 @@ CvTeam::m_iTradeMissionModifier
 | unit-maintenance redesign (roadmap Scope decisions) -- that rework decides the model, not a re-home of these.
 CvUnit::m_iUpkeepModifier
 CvUnit::m_iUpkeepMultiplierSM
+
+| The player's national bombard-defense accumulator. Its only reader was CvCity's bombard-defense getter, which
+| hand-added this empire leg on top of the city one; that getter is now cascadeDefense(DEFENSE_BOMBARD), whose
+| roll-up already folds team + empire + city -- so the 20 trait `defense.empire.bombardDefense` authorings reach
+| the city through the empire package, and adding this on top would have counted them twice. Its writer went
+| with the rebuilt trait info, which carries the deposit rather than a named scalar.
+CvPlayer::m_iNationalBombardDefenseModifier
