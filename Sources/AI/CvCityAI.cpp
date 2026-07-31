@@ -8501,7 +8501,7 @@ void CvCityAI::AI_doHurry(bool bForce)
 		{
 			if (bDanger)
 			{
-				if (GC.getBuildingInfo(eProductionBuilding).getDefenseModifier() > 0)
+				if (GC.getBuildingInfo(eProductionBuilding).getDefense(DEFENSE_AMOUNT, CASC_SCOPE_CITY) > 0)
 				{
 					bEssential = true;
 				}
@@ -12477,28 +12477,28 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 	}
 	if ((iFocusFlags & BUILDINGFOCUS_DEFENSE) != 0)
 	{
-		if (kBuilding.getDefenseModifier() > 0 ||
-			kBuilding.getBombardDefenseModifier() > 0 ||
+		if (kBuilding.getDefense(DEFENSE_AMOUNT, CASC_SCOPE_CITY) > 0 ||
+			kBuilding.getDefense(DEFENSE_BOMBARD, CASC_SCOPE_CITY) > 0 ||
 			kBuilding.getDefense(DEFENSE_AMOUNT, CASC_SCOPE_EMPIRE) > 0 ||
-			kBuilding.isNeverCapture() ||
+			kBuilding.hasAttribute(CLS_ATTRIBUTE_DESTROYED_ON_CAPTURE) ||
 			kBuilding.providesAmenity(CLS_AMENITY_NUKE_IMMUNE) ||
 			GC.getGame().isOption(GAMEOPTION_UNSUPPORTED_ZONE_OF_CONTROL) && kBuilding.providesAmenity(CLS_AMENITY_ZONE_OF_CONTROL) ||
 			kBuilding.getModifiers()->targetedSum(MODFAM_COMBAT, COMBAT_AMOUNT, CASC_SCOPE_CITY,
 				CASC_UNIT_PERCENT, modSegmentLookup("unitCombats"), -1) != 0 ||
-			kBuilding.getAdjacentDamagePercent() > 0 ||
+			kBuilding.getDefense(DEFENSE_ADJACENT_DAMAGE, CASC_SCOPE_CITY) > 0 ||
 			kBuilding.providesAmenity(CLS_AMENITY_PROTECTED_CULTURE) ||
 			kBuilding.getScalar(SCALAR_OCCUPATION_TIME, CASC_SCOPE_CITY, CASC_UNIT_PERCENT) > 0 ||
-			kBuilding.getNoEntryDefenseLevel() > 0 ||
+			kBuilding.getDefense(DEFENSE_NO_ENTRY_LEVEL, CASC_SCOPE_CITY) > 0 ||
 			kBuilding.getNumUnitFullHeal() > 0 ||
 			kBuilding.providesAmenity(CLS_AMENITY_BORDER_OBSTACLE) ||
-			GC.getGame().isOption(GAMEOPTION_COMBAT_SURROUND_DESTROY) && kBuilding.getLocalDynamicDefense() > 0 ||
+			GC.getGame().isOption(GAMEOPTION_COMBAT_SURROUND_DESTROY) && kBuilding.getDefense(DEFENSE_DYNAMIC, CASC_SCOPE_CITY) > 0 ||
 			kBuilding.getLocalCaptureProbabilityModifier() > 0 ||
 			kBuilding.getLocalCaptureResistanceModifier() > 0 ||
 			kBuilding.getNationalCaptureResistanceModifier() > 0 ||
 			kBuilding.getDefense(DEFENSE_RIVER_PENALTY, CASC_SCOPE_CITY) < 0 ||
-			kBuilding.getMinDefense() > 0 ||
-			kBuilding.getBuildingDefenseRecoverySpeedModifier() > 0 ||
-			kBuilding.getCityDefenseRecoverySpeedModifier() > 0 ||
+			kBuilding.getDefense(DEFENSE_MIN, CASC_SCOPE_CITY) > 0 ||
+			kBuilding.getDefense(DEFENSE_BUILDING_RECOVERY, CASC_SCOPE_CITY) > 0 ||
+			kBuilding.getDefense(DEFENSE_CITY_RECOVERY, CASC_SCOPE_CITY) > 0 ||
 			kBuilding.getNumUnitCombatDefenseAgainstModifiers() > 0)
 		{
 			return true;
