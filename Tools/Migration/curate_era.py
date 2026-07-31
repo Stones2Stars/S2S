@@ -59,7 +59,13 @@ FAMILIES = {
     "iImprovementPercent":              ("costs", "world", "improvementUpgrade", "percent"),
     "iCuttingEdgeCutsTechCostModifier": ("costs", "world", "researchCutBelowEra", "percent"),
     "iGrowthPercent":                   ("growth", "world", None, "percent"),
-    "iAnarchyPercent":                  ("durations", "world", "anger", "percent"),
+    # iAnarchyPercent scales ANARCHY LENGTH and is read at BOTH getCivicAnarchyLength and
+    # getReligionAnarchyLength (CvPlayer), so it emits to BOTH anarchy kinds. It is NOT `anger`:
+    # traits author `anger` alongside `civicAnarchy`/`religiousAnarchy`, which is what proves the three
+    # are distinct kinds -- routing the era scaler to `anger` left both anarchy kinds with no era
+    # contribution at all while depositing into a channel no anarchy read consumes.
+    "iAnarchyPercent":                  [("durations", "world", "civicAnarchy", "percent"),
+                                         ("durations", "world", "religiousAnarchy", "percent")],
     "iGreatPeoplePercent":              ("greatPeopleRate", "world", None, "percent"),
     "iEventChancePerTurn":              ("eventChance", "world", None, "flat"),
     "iInitialCityMaintenancePercent":   ("maintenance", "city", "initial", "flat"),  # x100 fixed-point; 0 in all eras
@@ -76,9 +82,11 @@ ART = {"Button", "AudioUnitVictoryScript", "AudioUnitDefeatScript", "EraInfoSoun
        "CitySoundscapes", "iSoundtrackSpace", "bFirstSoundtrackFirst"}
 IDENTITY = {"iHistoricalStartYear": "historicalStartYear", "iHistoricalEndYear": "historicalEndYear",
             "iNormalSpeedTurns": "normalSpeedTurns", "iAdvancedStartPoints": "advancedStart"}
-# barbarian/goody WORLD-STATE gates -> a bespoke `worldGen` block (owner 2026-07-01): LIVE C++ world-RULE gates
-# (goody/barb placement), NOT identity/modifiers. 0/false in every era today -> not emitted (zero-drop); the
-# mapping routes them to worldGen so future data lands there.
+# barbarian/goody WORLD-STATE gates -> a bespoke `worldGen` block: LIVE C++ world-RULE gates (goody/barb
+# placement), NOT identity/modifiers. 0/false in every era -> not emitted (zero-drop), so the ERA GATE on each
+# rule never fired and its readers are gone -- dead-as-an-era-field, the bNoAnimals disposition. The C++ rules
+# themselves are untouched. The mapping stays so future data has a landing place, but nothing reads it: a
+# world-state-gate CONCEPT needs its own design before that block means anything.
 WORLDGEN = {"bNoGoodies": "noGoodies", "bNoBarbUnits": "noBarbUnits", "bNoBarbCities": "noBarbCities"}
 DROP = {"bNoAnimals"}
 FAMILY_ORDER = ["costs", "growth", "greatPeopleRate", "durations", "eventChance", "maintenance"]
@@ -104,8 +112,9 @@ def curate(typ, rec, order):
                 text[TEXT[tag]] = t
         elif tag in FAMILIES:
             if engine.is_int(t) and int(t) != 0:          # 0 = additive identity / unset -> drop
-                family, scope, member, unit = FAMILIES[tag]
-                _put(fam, family, scope, member, unit, int(t))
+                spec = FAMILIES[tag]
+                for family, scope, member, unit in (spec if isinstance(spec, list) else [spec]):
+                    _put(fam, family, scope, member, unit, int(t))
         elif tag in GRANTS:
             if engine.is_int(t) and int(t) != 0:
                 grants[GRANTS[tag]] = int(t)

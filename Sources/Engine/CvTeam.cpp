@@ -2602,7 +2602,7 @@ int CvTeam::getResearchCost(TechTypes eTech) const
 			{
 				if (iI >= iTechEra && iI < iPlayerEra)
 				{
-					iCuttingEdgeCutsTechCostModifier += GC.getEraInfo((EraTypes)iI).getCuttingEdgeCutsTechCostModifier();
+					iCuttingEdgeCutsTechCostModifier += GC.getEraInfo((EraTypes)iI).getCostsModifier(COSTS_RESEARCH_CUT_BELOW_ERA, CASC_SCOPE_WORLD);
 				}
 				else if (iI >= iPlayerEra)
 				{
@@ -2617,7 +2617,7 @@ int CvTeam::getResearchCost(TechTypes eTech) const
 	iCost *= CvGameSpeedScale::speedPercent();
 	iCost /= 100;
 
-	iCost *= GC.getEraInfo((EraTypes)GC.getTechInfo(eTech).getEra()).getResearchPercent();
+	iCost *= GC.getEraInfo((EraTypes)GC.getTechInfo(eTech).getEra()).getCostsModifier(COSTS_RESEARCH, CASC_SCOPE_WORLD);
 	iCost /= 100;
 
 	iCost *= std::max(0, GC.getTECH_COST_EXTRA_TEAM_MEMBER_MODIFIER() * getNumMembers());

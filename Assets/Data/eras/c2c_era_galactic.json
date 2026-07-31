@@ -37,7 +37,10 @@
  },
  "durations": {
   "world": {
-   "anger": {
+   "civicAnarchy": {
+    "percent": 80
+   },
+   "religiousAnarchy": {
     "percent": 80
    }
   }

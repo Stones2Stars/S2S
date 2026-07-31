@@ -769,11 +769,6 @@ void CvMapGenerator::addGoodies()
 
 	gDLL->NiTextOut("Adding Goodies...");
 
-	if (GC.getEraInfo(GC.getGame().getStartEra()).isNoGoodies())
-	{
-		return;
-	}
-
 	int iNumPlots = GC.getMap().numPlots();
 	int* piShuffle = shuffle(iNumPlots, GC.getGame().getMapRand());
 

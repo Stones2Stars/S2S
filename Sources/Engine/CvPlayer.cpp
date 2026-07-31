@@ -6685,7 +6685,7 @@ int64_t CvPlayer::getBaseUnitCost(const UnitTypes eUnit) const
         {
             eEra = (EraTypes)GC.getUnitInfo(eUnit).getEraInfo();
         }
-        iMod = GC.getEraInfo(eEra).getTrainPercent();
+        iMod = GC.getEraInfo(eEra).getCostsModifier(COSTS_TRAIN, CASC_SCOPE_WORLD);
 
 		iBaseCost *= iMod;
 		iBaseCost /= 100;
@@ -6818,7 +6818,7 @@ int CvPlayer::getProductionNeeded(BuildingTypes eBuilding) const
 	iProductionNeeded /= 100;
 
 	const EraTypes eEra = getCurrentEra();
-	iProductionNeeded *= GC.getEraInfo(eEra).getConstructPercent();
+	iProductionNeeded *= GC.getEraInfo(eEra).getCostsModifier(COSTS_CONSTRUCT, CASC_SCOPE_WORLD);
 	iProductionNeeded /= 100;
 
 	iProductionNeeded *= GC.getBUILDING_PRODUCTION_PERCENT();
@@ -6877,10 +6877,10 @@ int CvPlayer::getProductionNeeded(ProjectTypes eProject) const
 	const EraTypes eEra = getCurrentEra();
 	// Fall back to the current era's create percent when the project has no tech prereq;
 	// otherwise iModifier stayed 0 and zeroed the whole cost (project became ~free).
-	int iModifier = GC.getEraInfo(eEra).getCreatePercent();
+	int iModifier = GC.getEraInfo(eEra).getCostsModifier(COSTS_CREATE, CASC_SCOPE_WORLD);
 	if (GC.getProjectInfo(eProject).getTechPrereq() != NO_TECH)
     {
-        iModifier = GC.getEraInfo((EraTypes)GC.getTechInfo(GC.getProjectInfo(eProject).getTechPrereq()).getEra()).getCreatePercent();
+        iModifier = GC.getEraInfo((EraTypes)GC.getTechInfo(GC.getProjectInfo(eProject).getTechPrereq()).getEra()).getCostsModifier(COSTS_CREATE, CASC_SCOPE_WORLD);
     }
 	iProductionNeeded *= iModifier;
 	iProductionNeeded /= 100;
@@ -8653,7 +8653,7 @@ int CvPlayer::getCivicAnarchyLength(CivicTypes* paeNewCivics) const
 	iTotalAnarchyLength *= getCivicAnarchyModifier() + 100;
 	iTotalAnarchyLength /= 100;
 
-	iTotalAnarchyLength *= GC.getEraInfo(getCurrentEra()).getAnarchyPercent();
+	iTotalAnarchyLength *= GC.getEraInfo(getCurrentEra()).getDurationsModifier(DURATIONS_CIVIC_ANARCHY, CASC_SCOPE_WORLD);
 	iTotalAnarchyLength /= 100;
 
 	if (isRebel())
@@ -8692,7 +8692,7 @@ int CvPlayer::getReligionAnarchyLength() const
 		return 0;
 	}
 
-	iAnarchyLength *= GC.getEraInfo(getCurrentEra()).getAnarchyPercent();
+	iAnarchyLength *= GC.getEraInfo(getCurrentEra()).getDurationsModifier(DURATIONS_RELIGIOUS_ANARCHY, CASC_SCOPE_WORLD);
 	iAnarchyLength /= 100;
 
 	//TB Traits begin
@@ -8824,7 +8824,7 @@ void CvPlayer::killGoldenAgeUnits(CvUnit* pUnitAlive)
 
 int CvPlayer::greatPeopleThresholdMilitary() const
 {
-	int64_t iThreshold = GC.getDefineINT("GREAT_GENERALS_THRESHOLD") * GC.getEraInfo(GC.getGame().getStartEra()).getGreatPeoplePercent();
+	int64_t iThreshold = GC.getDefineINT("GREAT_GENERALS_THRESHOLD") * GC.getEraInfo(GC.getGame().getStartEra()).getScalar(SCALAR_GREAT_PEOPLE_RATE, CASC_SCOPE_WORLD, CASC_UNIT_PERCENT);
 
 	iThreshold = getModifiedIntValue64(iThreshold, getGreatGeneralsThresholdModifier());
 	// Weaker than standard scaling.
@@ -8841,7 +8841,7 @@ int CvPlayer::greatPeopleThresholdMilitary() const
 
 int CvPlayer::greatPeopleThresholdNonMilitary() const
 {
-	int64_t iThreshold = GC.getDefineINT("GREAT_PEOPLE_THRESHOLD") * GC.getEraInfo(GC.getGame().getStartEra()).getGreatPeoplePercent();
+	int64_t iThreshold = GC.getDefineINT("GREAT_PEOPLE_THRESHOLD") * GC.getEraInfo(GC.getGame().getStartEra()).getScalar(SCALAR_GREAT_PEOPLE_RATE, CASC_SCOPE_WORLD, CASC_UNIT_PERCENT);
 
 	iThreshold = getModifiedIntValue64(iThreshold, getGreatPeopleThresholdModifier());
 

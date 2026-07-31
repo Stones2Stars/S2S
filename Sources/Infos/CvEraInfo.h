@@ -10,8 +10,8 @@
 //	identity + one-shot starting grants + era audio are plain config. JSON-fed (Assets/Data/eras/*.json via
 //	mapFrom); no XML read (DEC-no-xml-into-game).
 //
-//	The legacy modifier-family scalar MIRRORS are DEAD: the costs.world percents and the durations anger
-//	multiplier read via the parameterized point getters below; the singleton world families
+//	The legacy modifier-family scalar MIRRORS are DEAD: the costs.world percents and the durations anarchy
+//	multipliers read via the parameterized point getters below; the singleton world families
 //	(growth / greatPeopleRate / eventChance) are stragglers riding the base
 //	getScalar(SCALAR_GROWTH / SCALAR_GREAT_PEOPLE_RATE / SCALAR_EVENT_CHANCE, CASC_SCOPE_WORLD, ...).
 //

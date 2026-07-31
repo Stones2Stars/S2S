@@ -3288,7 +3288,7 @@ int CvGame::getImprovementUpgradeTime(ImprovementTypes eImprovement) const
 	iTime *= CvGameSpeedScale::hammerCostPercent();
 	iTime /= 100;
 
-	iTime *= GC.getEraInfo(getCurrentEra()).getImprovementPercent();
+	iTime *= GC.getEraInfo(getCurrentEra()).getCostsModifier(COSTS_IMPROVEMENT_UPGRADE, CASC_SCOPE_WORLD);
 	iTime /= 100;
 
 	return std::max(1, iTime);
@@ -6996,13 +6996,7 @@ void CvGame::createBarbarianCities(bool bNeanderthal)
 		isOption(GAMEOPTION_BARBARIAN_NONE)
 	||
 		GC.getHandicapInfo(getHandicapType()).getBarbarians(BARBARIANS_TILES_PER_CITY, CASC_SCOPE_WORLD) / 100 <= 0
-	|| (
-			bNeanderthal
-			?
-			(int)getCurrentEra() > 0
-			:
-			GC.getEraInfo(getCurrentEra()).isNoBarbCities()
-		)
+	|| (bNeanderthal && (int)getCurrentEra() > 0)
 	) return;
 
 	const int iCivCities = getNumCivCities();
@@ -7242,7 +7236,7 @@ namespace {
 void CvGame::createBarbarianUnits()
 {
 	PROFILE_EXTRA_FUNC();
-	if (isOption(GAMEOPTION_BARBARIAN_NONE) || GC.getEraInfo(getCurrentEra()).isNoBarbUnits())
+	if (isOption(GAMEOPTION_BARBARIAN_NONE))
 	{
 		return;
 	}
