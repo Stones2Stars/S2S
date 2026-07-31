@@ -3940,7 +3940,9 @@ void CvPlot::doImprovementCulture(PlayerTypes ePlayer, const CvImprovementInfo& 
 		return;
 	}
 	const int iRange = std::max(0, imp.getCultureRange());
-	const int iCulture = imp.getFlatCommerce(COMMERCE_CULTURE, CASC_SCOPE_PLOT) / 100;
+	// Plot culture is carried ×100 like every other internal amount ([DEC-fixedpoint-x100]); only a READER
+	// of it (a tooltip, the pedia) normalizes down, so the flat is passed through at its native scale.
+	const int iCulture = imp.getFlatCommerce(COMMERCE_CULTURE, CASC_SCOPE_PLOT);
 
 	foreach_(CvPlot* plotX, rect(iRange, iRange))
 	{

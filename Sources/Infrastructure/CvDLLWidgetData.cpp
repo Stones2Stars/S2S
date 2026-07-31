@@ -1162,7 +1162,7 @@ void CvDLLWidgetData::doTrain(CvWidgetDataStruct &widgetDataStruct)
 		bool bAlt;
 		const CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
 
-		if (kUnit.getCombat() || kUnit.getAirCombat())
+		if (kUnit.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) || kUnit.getAirCombat())
 		{
 			bAlt = getBugOptionBOOL("CityScreen__ProductionPopupTrainMilitaryUnitsForever", true, "BUG_PRODUCTION_POPUP_TRAIN_MILITARY_UNITS_FOREVER");
 		}

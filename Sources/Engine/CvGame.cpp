@@ -4815,7 +4815,7 @@ UnitTypes CvGame::getBestLandUnit() const
 
 int CvGame::getBestLandUnitCombat() const
 {
-	return getBestLandUnit() == NO_UNIT ? 1 : std::max(1, GC.getUnitInfo(getBestLandUnit()).getCombat());
+	return getBestLandUnit() == NO_UNIT ? 1 : std::max(1, GC.getUnitInfo(getBestLandUnit()).getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100);
 }
 
 
@@ -7166,7 +7166,7 @@ void CvGame::createBarbarianCities(bool bNeanderthal)
 namespace {
 	bool isValidBarbarianSpawnUnit(const CvArea* area, const CvUnitInfo& unitInfo, const UnitTypes unitType)
 	{
-		return unitInfo.getCombat() > 0 && !unitInfo.isOnlyDefensive()
+		return unitInfo.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) > 0 && !unitInfo.isOnlyDefensive()
 			// Make sure its the correct unit type for the area type (land or water)
 			&& (area->isWater() && unitInfo.getDomain() == DOMAIN_SEA || !area->isWater() && unitInfo.getDomain() == DOMAIN_LAND)
 			// Barbs don't need the bonus, but the bonus must be enabled by tech
@@ -11604,7 +11604,7 @@ bool CvGame::canEverSpread(CorporationTypes eCorporation) const
 namespace {
 	bool validBarbarianShipUnit(const CvUnitInfo& unitInfo, const UnitTypes unitType)
 	{
-		return unitInfo.getCombat() > 0 && !unitInfo.isOnlyDefensive()
+		return unitInfo.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) > 0 && !unitInfo.isOnlyDefensive()
 			&& unitInfo.getDomain() == DOMAIN_LAND
 			&& GET_TEAM(BARBARIAN_TEAM).isUnitBonusEnabledByTech(unitInfo, true)
 			&& !unitInfo.isCivilizationUnit()

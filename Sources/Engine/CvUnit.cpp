@@ -655,7 +655,11 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 	m_eUnitType = eUnit;
 	m_eReligionType = NO_RELIGION;
 	m_pUnitInfo = (NO_UNIT != m_eUnitType) ? &GC.getUnitInfo(m_eUnitType) : NULL;
-	m_iBaseCombat = (NO_UNIT != m_eUnitType) ? m_pUnitInfo->getCombat() : 0;
+	// ⚠ The ÷100 is a CLUSTER BOUNDARY, not a sanctioned shape: m_iBaseCombat is still a human whole number
+	// here (it mixes with getExtraStrength and the percent stack below), so this reduces to meet it. It goes
+	// when the combat cluster converts as a unit -- a scale conversion inside a calculation is the defect,
+	// never the fix ([DEC-fixedpoint-x100]; fixed-point-and-scales.md § CONVERT BY ARITHMETIC CLUSTER).
+	m_iBaseCombat = (NO_UNIT != m_eUnitType) ? m_pUnitInfo->getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100 : 0;
 	m_eLeaderUnitType = NO_UNIT;
 	m_eGGExperienceEarnedTowardsType = NO_UNIT;
 	m_iCargoCapacity = 0;
