@@ -38,7 +38,7 @@ int UnitGroupingCombat::getGroupUnit(const CvPlayer *pPlayer, const CvCity *pCit
 
 int UnitGroupingDomain::getGroupUnit(const CvPlayer *pPlayer, const CvCity *pCity, UnitTypes eUnit) const
 {
-	return GC.getUnitInfo(eUnit).getDomainType();
+	return GC.getUnitInfo(eUnit).getDomain();
 }
 
 int UnitGroupingFilters::getGroupUnit(const CvPlayer *pPlayer, const CvCity *pCity, UnitTypes eUnit) const

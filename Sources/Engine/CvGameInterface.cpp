@@ -2625,7 +2625,7 @@ void CvGame::cheatSpaceship() const
 
 DomainTypes CvGame::getUnitDomain(UnitTypes eUnit) const
 {
-	return GC.getUnitInfo(eUnit).getDomainType();
+	return GC.getUnitInfo(eUnit).getDomain();
 }
 
 const CvArtInfoBuilding* CvGame::getBuildingArtInfo(BuildingTypes eBuilding) const

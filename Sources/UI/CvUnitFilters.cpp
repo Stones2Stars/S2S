@@ -89,7 +89,7 @@ bool UnitFilterIsCombats::isEmpty() const
 
 bool UnitFilterIsDomain::isFilteredUnit(const CvPlayer *pPlayer, const CvCity *pCity, UnitTypes eUnit) const
 {
-	return GC.getUnitInfo(eUnit).getDomainType() == m_eDomain;
+	return GC.getUnitInfo(eUnit).getDomain() == m_eDomain;
 }
 
 bool UnitFilterIsDefense::isFilteredUnit(const CvPlayer *pPlayer, const CvCity *pCity, UnitTypes eUnit) const

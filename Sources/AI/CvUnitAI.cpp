@@ -22729,7 +22729,7 @@ bool CvUnitAI::AI_pickup(UnitAITypes eUnitAI, bool bCountProduction, int iMaxPat
 						if (pCity->getProductionTurnsLeft() < 4)
 						{
 							const CvUnitInfo& kUnitInfo = GC.getUnitInfo(pCity->getProductionUnit());
-							if ((!CvTagReads::isDomain(kUnitInfo.getTags(), DOMAIN_AIR)) || (kUnitInfo.getAir(AIR_RANGE, CASC_SCOPE_UNIT) / 100) > 0)
+							if ((!kUnitInfo.getDomain() == DOMAIN_AIR) || (kUnitInfo.getAir(AIR_RANGE, CASC_SCOPE_UNIT) / 100) > 0)
 							{
 								iCount++;
 							}
@@ -22813,7 +22813,7 @@ bool CvUnitAI::AI_pickup(UnitAITypes eUnitAI, bool bCountProduction, int iMaxPat
 					if (bCountProduction && (pLoopCity->getProductionUnitAI() == eUnitAI))
 					{
 						const CvUnitInfo& kUnitInfo = GC.getUnitInfo(pLoopCity->getProductionUnit());
-						if ((!CvTagReads::isDomain(kUnitInfo.getTags(), DOMAIN_AIR)) || (kUnitInfo.getAir(AIR_RANGE, CASC_SCOPE_UNIT) / 100) > 0)
+						if ((!kUnitInfo.getDomain() == DOMAIN_AIR) || (kUnitInfo.getAir(AIR_RANGE, CASC_SCOPE_UNIT) / 100) > 0)
 						{
 							iValue++;
 							iCount++;

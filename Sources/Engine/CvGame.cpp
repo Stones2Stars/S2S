@@ -7168,7 +7168,7 @@ namespace {
 	{
 		return unitInfo.getCombat() > 0 && !unitInfo.isOnlyDefensive()
 			// Make sure its the correct unit type for the area type (land or water)
-			&& (area->isWater() && unitInfo.getDomainType() == DOMAIN_SEA || !area->isWater() && unitInfo.getDomainType() == DOMAIN_LAND)
+			&& (area->isWater() && unitInfo.getDomain() == DOMAIN_SEA || !area->isWater() && unitInfo.getDomain() == DOMAIN_LAND)
 			// Barbs don't need the bonus, but the bonus must be enabled by tech
 			&& GET_TEAM(BARBARIAN_TEAM).isUnitBonusEnabledByTech(unitInfo, true) // "true" to invalidate units that require cultural bonuses
 			&& !unitInfo.isCivilizationUnit() // Invalidates Neanderthal units and units that require the palace.
@@ -7289,7 +7289,7 @@ void CvGame::createBarbarianUnits()
 			if (eBestUnit != NO_UNIT)
 			{
 				CvUnit* pUnit = GET_PLAYER(BARBARIAN_PLAYER).initUnit(eBestUnit, pPlot->getX(), pPlot->getY(), eBarbUnitAI, NO_DIRECTION, getSorenRandNum(10000, "AI Unit Birthmark"));
-				if (GC.getUnitInfo(eBestUnit).getDomainType() == DOMAIN_SEA && pUnit != NULL)
+				if (GC.getUnitInfo(eBestUnit).getDomain() == DOMAIN_SEA && pUnit != NULL)
 				{
 					loadPirateShip(pUnit);
 				}
@@ -11605,7 +11605,7 @@ namespace {
 	bool validBarbarianShipUnit(const CvUnitInfo& unitInfo, const UnitTypes unitType)
 	{
 		return unitInfo.getCombat() > 0 && !unitInfo.isOnlyDefensive()
-			&& unitInfo.getDomainType() == DOMAIN_LAND
+			&& unitInfo.getDomain() == DOMAIN_LAND
 			&& GET_TEAM(BARBARIAN_TEAM).isUnitBonusEnabledByTech(unitInfo, true)
 			&& !unitInfo.isCivilizationUnit()
 			// A barbarian spawn PLACES a unit; it does not shop a city's queue, so it asks the `requires` gate and
@@ -11629,7 +11629,7 @@ void CvGame::loadPirateShip(CvUnit* pUnit)
 		{
 			const CvUnitInfo& unitInfo = GC.getUnitInfo((UnitTypes) iJ);
 
-			if (validBarbarianShipUnit(unitInfo, (UnitTypes) iJ) && (!bSM || pUnit->cargoSpaceAvailable((SpecialUnitTypes)unitInfo.getSpecialUnitType(), unitInfo.getDomainType()) > 0))
+			if (validBarbarianShipUnit(unitInfo, (UnitTypes) iJ) && (!bSM || pUnit->cargoSpaceAvailable((SpecialUnitTypes)unitInfo.getSpecialUnitType(), unitInfo.getDomain()) > 0))
 			{
 				int iValue = 1 + getSorenRandNum(1000, "Barb Unit Selection");
 

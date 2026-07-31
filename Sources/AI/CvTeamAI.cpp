@@ -2166,7 +2166,7 @@ int CvTeamAI::AI_getRivalAirPower( ) const
 	{
 		const CvUnitInfo& kUnit = GC.getUnitInfo((UnitTypes)iI);
 
-		if (CvTagReads::isDomain(kUnit.getTags(), DOMAIN_AIR) && kUnit.getAirCombat() > 0)
+		if (kUnit.getDomain() == DOMAIN_AIR && kUnit.getAirCombat() > 0)
 		{
 			for(int iTeamX = 0; iTeamX < MAX_PC_TEAMS; iTeamX++)
 			{

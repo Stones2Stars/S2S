@@ -86,7 +86,7 @@ int CvGameAI::AI_combatValue(const UnitTypes eUnit) const
 	int iValue = 100;
 	const CvUnitInfo& unit = GC.getUnitInfo(eUnit);
 
-	if (CvTagReads::isDomain(unit.getTags(), DOMAIN_AIR))
+	if (unit.getDomain() == DOMAIN_AIR)
 	{
 		iValue *= unit.getAirCombat();
 	}

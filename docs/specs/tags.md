@@ -49,8 +49,22 @@ The catalogue of a unit's **immutable, accounting-only classification tags** (th
 | `seaUnit` | a sea unit | `DOMAIN_SEA` → `seaUnit` (read by `IS_WATER`) |
 | `airUnit` | an air unit | `DOMAIN_AIR` → `airUnit` (read by `IS_AIR`) |
 
-The domain is membership of what the unit *is* → a tag. The `DOMAIN_*` **enum stays engine-side** (movement/stacking
-are wired to it deeply); the tag is the classification view, and `IS_LAND`/`IS_WATER`/`IS_AIR` read it.
+> **⛔ A TAG SAYS WHAT A UNIT *IS*; A DOMAIN SAYS WHERE IT *OPERATES* — two axes, and the domain is NOT a tag
+> question (owner).** The domain has its OWN entry on the unit (`identity.domain` → `CvUnitInfo::getDomain()`),
+> and every domain read goes there. ⚑ The reason is the one that decides it: answering "where does this operate"
+> from the tag set means FILTERING ALL TAGS for something a single field already holds.
+> ⚖ The three tags below are still carried, and that is fine — a surplus tag is inert (the ruling above), so
+> there is nothing to gain by removing them. ⛔ What must not happen is a consumer reading a DOMAIN through
+> them; there is deliberately no composition over them for that.
+
+> **⛔ IMMOBILE IS NOT A DOMAIN (owner).** A domain says WHERE a unit operates — land / sea / air / space — and
+> not-moving is orthogonal to that, so it never belongs on this axis and gets no tag. ⚠ The data does not yet
+> agree: a handful of units author `DOMAIN_IMMOBILE` (space defenders and the ICBM), which is why they carry no
+> domain tag at all — they are the unmodelled `space` set, not a fourth kind of place.
+> ⚑ **A DOMAIN IS EXCLUSIVE, and crossing one is a SKILL, never a second domain.** Verified: no unit carries two
+> domain tags. A helicopter is `DOMAIN_LAND` + `canMoveAllTerrain` ([skills.md](skills.md)) — it flies over the
+> lake without ever being an air or sea unit — and the same shape covers every land/sea unit with
+> `canMoveImpassable`. So a unit's domain is answerable as ONE value; do not model multi-domain membership.
 
 ### Tech / equipment / type / domain identity — derived from unitcombats (first pass DONE)
 

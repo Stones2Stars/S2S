@@ -3054,7 +3054,7 @@ int CvCity::getProductionModifier(UnitTypes eUnit) const
 		{
 			continue;   // the unit opts out of every non-TYPE production modifier (the `noNonTypeProdMods` skill)
 		}
-		iMultiplier += InfoValuation::keyedTarget(pModifiers, MODFAM_BUILD_RATE, -1, iDomainsSegment, (int)kUnit.getDomainType());
+		iMultiplier += InfoValuation::keyedTarget(pModifiers, MODFAM_BUILD_RATE, -1, iDomainsSegment, (int)kUnit.getDomain());
 		if (kUnit.getCombatClass() != NO_UNITCOMBAT)
 		{
 			iMultiplier += InfoValuation::keyedTarget(pModifiers, MODFAM_BUILD_RATE, -1, iUnitCombatsSegment, (int)kUnit.getCombatClass());
@@ -13104,7 +13104,7 @@ void CvCity::popOrder(int orderIndex, bool bFinish, bool bChoose, bool bResolveL
 				pUnit = owner.getUnit(iUnitId);
 				if (pUnit != NULL)
 				{
-					if (GC.getUnitInfo(eTrainUnit).getDomainType() == DOMAIN_AIR)
+					if (GC.getUnitInfo(eTrainUnit).getDomain() == DOMAIN_AIR)
 					{
 						if (GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS))
 						{

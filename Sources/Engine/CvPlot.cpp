@@ -12427,7 +12427,7 @@ bool CvPlot::canTrain(UnitTypes eUnit, bool bTestVisible) const
 
 	if (isCity())
 	{
-		if (kUnit.getDomainType() == DOMAIN_SEA)
+		if (kUnit.getDomain() == DOMAIN_SEA)
 		{
 			if (!isWater() && !isCoastalLand(kUnit.getMinAreaSize()))
 			{
@@ -12446,14 +12446,14 @@ bool CvPlot::canTrain(UnitTypes eUnit, bool bTestVisible) const
 			return false;
 		}
 
-		if (kUnit.getDomainType() == DOMAIN_SEA)
+		if (kUnit.getDomain() == DOMAIN_SEA)
 		{
 			if (!isWater())
 			{
 				return false;
 			}
 		}
-		else if (kUnit.getDomainType() == DOMAIN_LAND)
+		else if (kUnit.getDomain() == DOMAIN_LAND)
 		{
 			if (isWater())
 			{

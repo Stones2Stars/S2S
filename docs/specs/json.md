@@ -779,6 +779,12 @@ Empire-agnostic self-description. Read directly — never summed or cascaded.
   ⛔ **`identity` is STRICTLY self-description — NEVER a catch-all** (owner): a datum that isn't "what am I"
   (e.g. per-religion spread strength) does NOT go here; it gets its own block (`spread`, §9). Reaching for `identity`
   because a value has no obvious home is the anti-pattern.
+  ⚖ **The worked case that PASSES — a unit's `domain` (owner).** Where a unit operates is empire-agnostic
+  self-description that produces nothing on its own, so it is a genuine identity member rather than a value
+  parked there for want of a home. ⛔ It is deliberately NOT a [tag](tags.md): a tag says what a unit IS, a
+  domain says where it OPERATES, and answering the second from the tag set means filtering every tag for what
+  one field holds. It is exclusive (no unit has two), and crossing a domain is a SKILL — a helicopter is a land
+  unit with `canMoveAllTerrain` ([skills.md](skills.md)), never an air one.
   ⛔ **AND IT CARRIES NO EFFECTS AT ALL (owner).** Not "few", not "only intrinsic ones" — **none**. A value that
   DOES something has a home already and `identity` is never it:
   - a **held boolean ability** is a classification block — unit `skills`, building `attributes`, empire

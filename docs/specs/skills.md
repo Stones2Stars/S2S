@@ -211,6 +211,10 @@ unit JSON `skills` ∪ combat-class JSON `skills` ∪ held promotions' JSON `ski
   `canFliesToMove()`).
 - **`kamikaze ≠ 0 ⇒ suicide`** (`isSuicide` folds `getKamikazePercent()` — a modifier-family magnitude driving a
   skill-plane composite).
+- **the `missile` [tag](tags.md) ⇒ `suicide`** (owner) — a missile is expended by being used, so kill-on-use is
+  what the tag MEANS rather than a second fact to author beside it. ⚑ Like the domain tags, it reaches a unit
+  through its combat classes (`UNITCOMBAT_MISSILE`/`BALLISTIC`), so a unit whose own block lists only `military`
+  still holds it — read the FOLDED set, never the authored line.
 - **`defenseOnly` (the stackable count) feeds `onlyDefensive`** (the composite) — two names, one verdict.
 - **`noCapture` folds a RUNTIME rule** (`!canAttack()` ⇒ uncapturable, `CvUnit.cpp:11031`) — the data half is the
   flag+count only.

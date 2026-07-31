@@ -30,27 +30,11 @@ public:
 	static bool civilian(const CvClassificationBlock* tags);
 	static bool spy(const CvClassificationBlock* tags);
 	static bool wild(const CvClassificationBlock* tags);
-	// The DOMAIN view (tags.md): `DOMAIN_*` remains the engine enum movement and stacking are wired to; these
-	// answer the classification question "what IS this unit" that a rebuilt CvUnitInfo carries no getter for.
+	// The DOMAIN tags (tags.md). ⛔ A domain read goes to `CvUnitInfo::getDomain()`, never through these:
+	// a tag says what a unit IS, a domain says WHERE IT OPERATES. Kept because the data carries them.
 	static bool seaUnit(const CvClassificationBlock* tags);
 	static bool landUnit(const CvClassificationBlock* tags);
 	static bool airUnit(const CvClassificationBlock* tags);
-
-	// The COMPOSITION every `kUnitInfo.getDomainType() == eDomain` site becomes. It is a composition of the
-	// three reads above rather than a parameterized id read -- the ids are minted at LOAD, so there is no
-	// compile-time domain id to key on ([DEC-classification-infos]).
-	// ⛔ It lives HERE rather than at each call site for the reason the class exists at all: a per-site copy of
-	// the mapping is the duplicate that made four translation units reimplement the same memoized-id family
-	// ([patterns.md] -- "the next consumer can't see it, so it reimplements it").
-	// ⚠ A domain with no matching tag answers FALSE, which is the honest answer for a unit whose tags block
-	// has not been filled -- never a silent "matches everything".
-	static bool isDomain(const CvClassificationBlock* tags, DomainTypes eDomain);
-
-	// The INVERSE, for a consumer that needs the domain as a VALUE rather than a test -- indexing a per-domain
-	// array, say. Well-defined because the three domain tags are derived from the unit's single `DOMAIN_*`
-	// (tags.md), so exactly one can hold. ⚠ Answers NO_DOMAIN for a unit whose tags block has not been filled;
-	// a caller indexing an array MUST guard that rather than let it subscript with -1.
-	static DomainTypes domainOf(const CvClassificationBlock* tags);
 
 private:
 	CvTagReads();                                    // organization only -- never instantiated

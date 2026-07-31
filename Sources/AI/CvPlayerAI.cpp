@@ -9314,7 +9314,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus, bool bForTrade) const
 						// A sea unit is worth what the empire's COASTLINE can use, not what its city count says.
 						// The domain is a TAG now ([tags.md]: DOMAIN_* is the engine enum, `seaUnit` the
 						// queryable identity), so this asks the unit what it IS rather than an info getter.
-						const bool bIsWater = CvTagReads::seaUnit(kLoopUnit.getTags());
+						const bool bIsWater = kLoopUnit.getDomain() == DOMAIN_SEA;
 
 						if (bIsWater && !isLimitedUnit(eLoopUnit))
 						{
@@ -10520,7 +10520,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 
 	const CvUnitInfo& kUnitInfo = GC.getUnitInfo(eUnit);
 
-	if (!CvTagReads::isDomain(kUnitInfo.getTags(), AI_unitAIDomainType(eUnitAI)) && eUnitAI != UNITAI_ICBM)
+	if (!kUnitInfo.getDomain() == AI_unitAIDomainType(eUnitAI) && eUnitAI != UNITAI_ICBM)
 	{
 		return 0;
 	}
@@ -11163,7 +11163,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 					for (int iJ = 0; iJ < GC.getNumUnitInfos(); iJ++)
 					{
 						UnitTypes eLoopUnit = (UnitTypes)iJ;
-						if (CvTagReads::isDomain(GC.getUnitInfo(eLoopUnit).getTags(), DOMAIN_LAND))
+						if (GC.getUnitInfo(eLoopUnit).getDomain() == DOMAIN_LAND)
 						{
 							int iUnitCount = getUnitCount(eLoopUnit);
 							int iBombardRate = GC.getUnitInfo(eLoopUnit).getBombardModifier(BOMBARD_RATE, CASC_SCOPE_UNIT);
@@ -22472,7 +22472,7 @@ int CvPlayerAI::AI_getStrategyHash() const
 				}
 			}
 			// Mobile anti-air and artillery flags only meant for land units
-			if (CvTagReads::isDomain(unit.getTags(), DOMAIN_LAND) && iMoves > 1)
+			if (unit.getDomain() == DOMAIN_LAND && iMoves > 1)
 			{
 				if (unit.getAir(AIR_INTERCEPT, CASC_SCOPE_UNIT) > 25)
 				{
@@ -24975,7 +24975,7 @@ int CvPlayerAI::AI_calculateTotalBombard(DomainTypes eDomain) const
 	{
 		const CvUnitInfo& kUnit = GC.getUnitInfo((UnitTypes)iI);
 
-		if (CvTagReads::isDomain(kUnit.getTags(), eDomain))
+		if (kUnit.getDomain() == eDomain)
 		{
 			// ⚠ The two bombard kinds carry DIFFERENT units within the one family ([fixed-point-and-scales]:
 			// ask the KIND's unit, never the family's). `rate` is a PERCENT and is unscaled; `airBombRate` is a
@@ -25142,7 +25142,7 @@ void CvPlayerAI::AI_doEnemyUnitData()
 			// The domain as a VALUE, to index the per-domain sums accumulated above. ⚠ Guarded rather than
 			// indexed blind: a unit whose tags block has not been filled answers NO_DOMAIN, and subscripting
 			// with that would read off the front of the array -- the honest failure is to skip it.
-			const DomainTypes eUnitDomain = CvTagReads::domainOf(GC.getUnitInfo((UnitTypes)iI).getTags());
+			const DomainTypes eUnitDomain = GC.getUnitInfo((UnitTypes)iI).getDomain();
 
 			if (eUnitDomain != NO_DOMAIN)
 			{
@@ -25194,7 +25194,7 @@ int CvPlayerAI::AI_calculateUnitAIViability(UnitAITypes eUnitAI, DomainTypes eDo
 
 		// The DOMAIN is a tag now ([tags.md]: DOMAIN_* stays the engine enum movement and stacking are wired to,
 		// while the classification view answers "what IS this unit"). ⚑
-		if (CvTagReads::isDomain(kUnitInfo.getTags(), eDomain))
+		if (kUnitInfo.getDomain() == eDomain)
 		{
 			// "Do we hold what unlocks it" is the enabler's membership verdict, not a prereq-tech lookup: a unit
 			// is in CAN GET exactly when something held enables it, which is the question the old isHasTech

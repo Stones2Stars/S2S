@@ -5657,7 +5657,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 					UnitCombatTypes eCombatType = (UnitCombatTypes)kUnitInfo.getCombatClass();
 
 					if (eCombatType != NO_UNITCOMBAT
-						&& CvTagReads::isDomain(kUnitInfo.getTags(), DOMAIN_SEA))
+						&& kUnitInfo.getDomain() == DOMAIN_SEA)
 					{
 						iValue += ((InfoValuation::keyedTarget(kBuilding.getModifiers(), MODFAM_EXPERIENCE, -1,
 							InfoValuation::keyedTargetSegment("unitCombats"), (int)eCombatType) / 100) * (bMetAnyCiv ? 6 : 3));
@@ -6067,7 +6067,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 					{
 						const int iModifier = keyedUnitBuildRates[iRow].second;
 						const UnitAITypes eUnitAI = GC.getUnitInfo(eLoopUnit).getDefaultUnitAI();
-						const UnitTypes eBestUnit = kOwner.bestBuildableUnitForAIType(CvTagReads::domainOf(GC.getUnitInfo(eLoopUnit).getTags()), eUnitAI);
+						const UnitTypes eBestUnit = kOwner.bestBuildableUnitForAIType(GC.getUnitInfo(eLoopUnit).getDomain(), eUnitAI);
 
 						int iBuildCost = 0;
 						if (eBestUnit == NO_UNIT)
@@ -8514,7 +8514,7 @@ void CvCityAI::AI_doHurry(bool bForce)
 			if (bDanger)
 			{
 				if (
-					CvTagReads::isDomain(GC.getUnitInfo(eProductionUnit).getTags(), DOMAIN_LAND)
+					GC.getUnitInfo(eProductionUnit).getDomain() == DOMAIN_LAND
 				&&	(GC.getUnitInfo(eProductionUnit).getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) > 0)
 				{
 					bEssential = true;
