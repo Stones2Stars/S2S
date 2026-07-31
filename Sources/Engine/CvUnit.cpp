@@ -5615,7 +5615,7 @@ bool CvUnit::canLoadOntoUnit(const CvUnit* pUnit, const CvPlot* pPlot) const
 	}
 
 	//Not a helpful rule for C2C
-	//if (!m_pUnitInfo->isHiddenNationality() && pUnit->getUnitInfo().isHiddenNationality())
+	//if (!m_pUnitInfo->hasSkill(CLS_SKILL_HIDDEN_NATIONALITY) && pUnit->getUnitInfo().hasSkill(CLS_SKILL_HIDDEN_NATIONALITY))
 	//{
 	//	return false;
 	//}
@@ -12693,14 +12693,14 @@ int CvUnit::costModifierTotal() const
 
 bool CvUnit::canStampede() const
 {
-	return (m_pUnitInfo->isStampede() || mayStampede()) && !cannotStampede();
+	return (m_pUnitInfo->hasSkill(CLS_SKILL_STAMPEDE) || mayStampede()) && !cannotStampede();
 }
 
 bool CvUnit::canAttackOnlyCities() const
 {
 	int iTrueCount = 0;
 
-	if (m_pUnitInfo->isAttackOnlyCities())
+	if (m_pUnitInfo->hasSkill(CLS_SKILL_ATTACK_ONLY_CITIES))
 	{
 		iTrueCount++;
 	}
@@ -12713,7 +12713,7 @@ bool CvUnit::canIgnoreNoEntryLevel() const
 {
 	int iTrueCount = 0;
 
-	if (m_pUnitInfo->isIgnoreNoEntryLevel())
+	if (m_pUnitInfo->hasSkill(CLS_SKILL_IGNORE_NO_ENTRY_LEVEL))
 	{
 		iTrueCount++;
 	}
@@ -12726,7 +12726,7 @@ bool CvUnit::canIgnoreZoneofControl() const
 {
 	int iTrueCount = 0;
 
-	if (m_pUnitInfo->isIgnoreZoneofControl())
+	if (m_pUnitInfo->hasSkill(CLS_SKILL_IGNORE_ZONE_OF_CONTROL))
 	{
 		iTrueCount++;
 	}
@@ -12739,7 +12739,7 @@ bool CvUnit::canFliesToMove() const
 {
 	int iTrueCount = 0;
 
-	if (m_pUnitInfo->isFliesToMove())
+	if (m_pUnitInfo->hasSkill(CLS_SKILL_FLIES_TO_MOVE))
 	{
 		iTrueCount++;
 	}
@@ -12816,7 +12816,7 @@ bool CvUnit::canAnimalIgnoresCities() const
 
 bool CvUnit::canOnslaught() const
 {
-	return m_pUnitInfo->isOnslaught() || mayOnslaught();
+	return m_pUnitInfo->hasSkill(CLS_SKILL_ONSLAUGHT) || mayOnslaught();
 }
 
 
@@ -17538,7 +17538,7 @@ bool CvUnit::isPromotionValid(PromotionTypes ePromotion, bool bFree, bool bKeepC
 
 	if (!bKeepCheck) // If the unit got the promo then these checks have already passed.
 	{
-		if (m_pUnitInfo->isSpy() && !GC.isSS_ENABLED())
+		if (m_pUnitInfo->hasTag(CLS_TAG_SPY) && !GC.isSS_ENABLED())
 		{
 			return false;
 		}
@@ -18090,7 +18090,7 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 	changeCanLeadThroughPeaksCount((kUnitCombat.isCanLeadThroughPeaks()) ? iChange : 0);
 	changeZoneOfControlCount((kUnitCombat.hasSkill(CLS_SKILL_ZONE_OF_CONTROL)) ? iChange : 0);
 	changeCannotMergeSplitCount((kUnitCombat.isCannotMergeSplit()) ? iChange : 0);
-	changeNoSelfHealCount((kUnitCombat.isNoSelfHeal()) ? iChange : 0);
+	changeNoSelfHealCount((kUnitCombat.hasSkill(CLS_SKILL_NO_SELF_HEAL)) ? iChange : 0);
 	changeExtraSelfHealModifier(kUnitCombat.getHealModifier(HEAL_SELF_MODIFIER, CASC_SCOPE_UNIT) * iChange);
 	changeExtraNumHealSupport(kUnitCombat.getNumHealSupport() * iChange);
 	changeExtraInsidiousness(kUnitCombat.getInsidiousnessChange() * iChange);
@@ -18559,7 +18559,7 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	changeExtraCombatModifierPerVolumeMore(kPromotion.getCombatModifierPerVolumeMoreChange() * iChange);//no merge/split
 	changeExtraCombatModifierPerVolumeLess(kPromotion.getCombatModifierPerVolumeLessChange() * iChange);//no merge/split
 
-	changeNoSelfHealCount((kPromotion.isNoSelfHeal()) ? iChange : 0);
+	changeNoSelfHealCount((kPromotion.hasSkill(CLS_SKILL_NO_SELF_HEAL)) ? iChange : 0);
 	changeExtraSelfHealModifier(kPromotion.getHealModifier(HEAL_SELF_MODIFIER, CASC_SCOPE_UNIT) * iChange);
 	changeExtraNumHealSupport(kPromotion.getNumHealSupport() * iChange);
 	changeExtraInsidiousness(kPromotion.getInsidiousnessChange() * iChange);
@@ -21509,12 +21509,12 @@ const char* CvUnit::getFormationType() const
 
 bool CvUnit::isMechUnit() const
 {
-	return m_pUnitInfo->isMechUnit();
+	return m_pUnitInfo->hasTag(CLS_TAG_MECHANIZED);
 }
 
 bool CvUnit::isRenderBelowWater() const
 {
-	return m_pUnitInfo->isRenderBelowWater();
+	return m_pUnitInfo->hasSkill(CLS_SKILL_RENDER_BELOW_WATER);
 }
 
 int CvUnit::getRenderPriority(UnitSubEntityTypes eUnitSubEntity, int iMeshGroupType, int UNIT_MAX_SUB_TYPES) const
@@ -21723,7 +21723,7 @@ bool CvUnit::canFEngage() const
 	{
 		return false;
 	}
-	if (!m_pUnitInfo->getDCMFighterEngage())
+	if (!m_pUnitInfo->hasSkill(CLS_SKILL_DCM_FIGHTER_ENGAGE))
 	{
 		return false;
 	}
@@ -26245,7 +26245,7 @@ int CvUnit::getNoSelfHealCount() const
 
 bool CvUnit::hasNoSelfHeal() const
 {
-	return getNoSelfHealCount() + m_pUnitInfo->isNoSelfHeal() > 0;
+	return getNoSelfHealCount() + m_pUnitInfo->hasSkill(CLS_SKILL_NO_SELF_HEAL) > 0;
 }
 
 void CvUnit::changeNoSelfHealCount(int iChange)
@@ -26612,7 +26612,7 @@ void CvUnit::setSpecialUnit(bool bChange, SpecialUnitTypes eSpecialUnit)
 
 bool CvUnit::isHiddenNationality() const
 {
-	return 0 < getHiddenNationalityCount() + m_pUnitInfo->isHiddenNationality();
+	return 0 < getHiddenNationalityCount() + m_pUnitInfo->hasSkill(CLS_SKILL_HIDDEN_NATIONALITY);
 }
 
 void CvUnit::doHNCapture()
@@ -26692,7 +26692,7 @@ void CvUnit::changeExtraBuildType(bool bChange, BuildTypes eBuild)
 bool CvUnit::isExcile() const
 {
 	int iCount = m_iExcileCount;
-	if (m_pUnitInfo->isExcile())
+	if (m_pUnitInfo->hasSkill(CLS_SKILL_EXCILE))
 	{
 		iCount++;
 	}
@@ -26707,7 +26707,7 @@ void CvUnit::changeExcileCount(int iChange)
 bool CvUnit::isPassage() const
 {
 	int iCount = m_iPassageCount;
-	if (m_pUnitInfo->isPassage())
+	if (m_pUnitInfo->hasSkill(CLS_SKILL_PASSAGE))
 	{
 		iCount++;
 	}
@@ -26722,7 +26722,7 @@ void CvUnit::changePassageCount(int iChange)
 bool CvUnit::isNoNonOwnedCityEntry() const
 {
 	int iCount = m_iNoNonOwnedCityEntryCount;
-	if (m_pUnitInfo->isNoNonOwnedCityEntry())
+	if (m_pUnitInfo->hasSkill(CLS_SKILL_NO_NON_OWNED_CITY_ENTRY))
 	{
 		iCount++;
 	}
@@ -26736,7 +26736,7 @@ void CvUnit::changeNoNonOwnedCityEntryCount(int iChange)
 
 bool CvUnit::isBarbCoExist() const
 {
-	return m_iBarbCoExistCount + m_pUnitInfo->isBarbCoExist() > 0;
+	return m_iBarbCoExistCount + m_pUnitInfo->hasSkill(CLS_SKILL_BARB_CO_EXIST) > 0;
 }
 
 void CvUnit::changeBarbCoExistCount(int iChange)
@@ -26747,7 +26747,7 @@ void CvUnit::changeBarbCoExistCount(int iChange)
 bool CvUnit::isBlendIntoCity() const
 {
 	int iCount = m_iBlendIntoCityCount;
-	if (m_pUnitInfo->isBlendIntoCity())
+	if (m_pUnitInfo->hasSkill(CLS_SKILL_BLEND_INTO_CITY))
 	{
 		iCount++;
 	}
@@ -26762,7 +26762,7 @@ void CvUnit::changeBlendIntoCityCount(int iChange)
 bool CvUnit::isUpgradeAnywhere() const
 {
 	int iCount = m_iUpgradeAnywhereCount;
-	if (m_pUnitInfo->isUpgradeAnywhere())
+	if (m_pUnitInfo->hasSkill(CLS_SKILL_UPGRADE_ANYWHERE))
 	{
 		iCount++;
 	}
@@ -26854,7 +26854,7 @@ void CvUnit::changeExtraVisibilityIntensityType(InvisibleTypes eIndex, int iChan
 
 bool CvUnit::hasInvisibilityType(InvisibleTypes eInvisibleType) const
 {
-	return !isNegatesInvisible(eInvisibleType) && !m_pUnitInfo->isNoInvisibility() && getNoInvisibilityCount() < 1;
+	return !isNegatesInvisible(eInvisibleType) && !m_pUnitInfo->hasSkill(CLS_SKILL_NO_INVISIBILITY) && getNoInvisibilityCount() < 1;
 }
 
 int CvUnit::getExtraInvisibilityIntensityType(InvisibleTypes eIndex) const
@@ -26895,7 +26895,7 @@ bool CvUnit::hasAnyInvisibilityType() const
 void CvUnit::setHasAnyInvisibility()
 {
 	PROFILE_EXTRA_FUNC();
-	if (m_pUnitInfo->isNoInvisibility() || getNoInvisibilityCount() > 0)
+	if (m_pUnitInfo->hasSkill(CLS_SKILL_NO_INVISIBILITY) || getNoInvisibilityCount() > 0)
 	{
 		m_bHasAnyInvisibility = false;
 		return;
@@ -27894,7 +27894,7 @@ void CvUnit::setDebugCount(int iValue)
 
 bool CvUnit::isAssassin() const
 {
-	return m_iAssassinCount + m_pUnitInfo->isAssassin() > 0;
+	return m_iAssassinCount + m_pUnitInfo->hasSkill(CLS_SKILL_ASSASSIN) > 0;
 }
 
 int CvUnit::getAssassinCount() const
@@ -27966,7 +27966,7 @@ bool CvUnit::hasStealthDefense() const
 		return false;
 	}
 	int iCount = getStealthDefenseCount();
-	if (m_pUnitInfo->isStealthDefense())
+	if (m_pUnitInfo->hasSkill(CLS_SKILL_STEALTH_DEFENSE))
 	{
 		iCount++;
 	}
@@ -28239,7 +28239,7 @@ bool CvUnit::isGatherHerd() const
 int CvUnit::getGatherHerdCount() const
 {
 	int iTotal = getExtraGatherHerdCount();
-	if (m_pUnitInfo->isGatherHerd())
+	if (m_pUnitInfo->hasSkill(CLS_SKILL_GATHER_HERD))
 	{
 		iTotal++;
 	}

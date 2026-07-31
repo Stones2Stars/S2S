@@ -17303,7 +17303,7 @@ void CvPlayer::processCivics(const CivicTypes eCivic, const int iChange, const b
 		changeStateReligionBuildingProductionModifier(kCivic.getStateReligionBuildingProductionModifier() * iChange);
 		changeExpInBorderModifier(kCivic.getExpInBorderModifier() * iChange);
 
-		changeUpgradeAnywhere((kCivic.isUpgradeAnywhere())? iChange : 0);
+		changeUpgradeAnywhere((kCivic.providesPolicy(CLS_POLICY_UPGRADE_ANYWHERE))? iChange : 0);
 		changeRevIdxHolyCityGood(kCivic.getRevIdxHolyCityGood() * iChange);
 		changeRevIdxHolyCityBad(kCivic.getRevIdxHolyCityBad() * iChange);
 		changeRevIdxNationalityMod(kCivic.getRevIdxNationalityMod() * static_cast<float>(iChange));
@@ -27031,7 +27031,7 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 {
 	PROFILE_EXTRA_FUNC();
 	changeNonStateReligionCommerce(iChange*((GC.getTraitInfo(eTrait).isNonStateReligionCommerce())? 1 : 0));
-	changeUpgradeAnywhere(iChange*((GC.getTraitInfo(eTrait).isUpgradeAnywhere())? 1 : 0));
+	changeUpgradeAnywhere(iChange*((GC.getTraitInfo(eTrait).providesPolicy(CLS_POLICY_UPGRADE_ANYWHERE))? 1 : 0));
 	changeRevIdxLocal(iChange*GC.getTraitInfo(eTrait).getRevIdxLocal());
 	changeRevIdxNational(iChange*GC.getTraitInfo(eTrait).getRevIdxNational());
 	changeRevIdxDistanceModifier(iChange*GC.getTraitInfo(eTrait).getRevIdxDistanceModifier());

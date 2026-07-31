@@ -13640,7 +13640,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 
 	//Upgrade Anywhere
 	iTempValue = 0;
-	if (kCivic.isUpgradeAnywhere())
+	if (kCivic.providesPolicy(CLS_POLICY_UPGRADE_ANYWHERE))
 	{
 		iTempValue += getNumMilitaryUnits() * iWarmongerPercent / 100;
 
@@ -27819,7 +27819,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	//TBHEAL review
 	//isNoSelfHeal()
 	//#24 Effects for Promotions that don't heal...
-	if (kPromotion.isNoSelfHeal())
+	if (kPromotion.hasSkill(CLS_SKILL_NO_SELF_HEAL))
 	{
 		if (pUnit)
 		{
@@ -30953,7 +30953,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 
 	//TBHEAL review
 	//isNoSelfHeal()
-	if (kUnitCombat.isNoSelfHeal())
+	if (kUnitCombat.hasSkill(CLS_SKILL_NO_SELF_HEAL))
 	{
 		if (pUnit)
 		{
