@@ -144,6 +144,16 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <C
 
 - XML: `Tools/XmlValidator.exe -a`.
 - Python callbacks: `Tools/XMLTools/verify-python-callbacks.py`.
+- **Save migration: `python Tools/verify-savemigration.py`** — checks `Assets/savemigration.txt` against the
+  tree, for the three failures [save.md §3](docs/specs/save.md) describes and nothing was running: a LISTED tag
+  whose member is **still serialized** (it drains a live `WRAPPER_READ` — the value is lost on EVERY load, and
+  it is quieter than the unlisted-orphan desync), a **bracketed** decorated entry (it can never match the
+  normalized tag, so it silently fails to drain), and a **note line that registers as an entry** (the reader
+  takes the first `::`-bearing token, so a wrapped prose line beginning `Class::something` inserts a bogus cut).
+  ⚑ It mirrors `sm_ensureLoaded`/`sm_token` deliberately: a checker stricter than the engine's own parser
+  under-reports, which is exactly how the prose case hid. ⛔ If it fires, decide which SIDE is right — a member
+  whose only writer is `applyEvent` is genuine one-shot event state that CORRECTLY stays serialized, so there
+  the ENTRY is the defect ([save.md §3](docs/specs/save.md)).
 - **Worklist docs: `python Tools/verify-worklist-docs.py`** — fails `todo.md` / `roadmap.md` when they carry
   STATE (counts, censuses, `file:line`, recorded verifications, completion markers). ⚑ It exists because
   [DEC-spec-plus-todo](docs/architecture/decisions.md#dec-spec-plus-todo) was in place and ignored anyway: the

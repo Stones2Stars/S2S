@@ -51,6 +51,11 @@ The field is then FULLY GONE from the object: no member, no read, no write.
   never match, so an entry for one is inert-but-false and its drain loop (§4) is what is actually doing the work.
   ⚠ And nothing marks prose as prose except the leading `|`, so a note line that BEGINS with a `Class::` token
   registers as an entry — keep member names off the start of a wrapped line.
+- **⚑ ALL THREE FAILURES ABOVE ARE CHECKED BY `python Tools/verify-savemigration.py`** — the drain-live-state
+  intersection, the bracketed entry, and the prose line that registers as an entry. It mirrors the reader's own
+  `sm_ensureLoaded`/`sm_token` parse rather than a stricter one, because a stricter checker under-reports
+  exactly the prose case. Run it after editing this file or cutting a serialized member. ⛔ A hit is resolved by
+  deciding which SIDE is right, never by reflex — and never by loosening the check.
 - **⚑ THE FILE IS ALSO THE REPLACEMENT-OBLIGATION LEDGER — read it that way, never as history.** An entry's note
   records WHY the field could be cut: the value is now served by a NAMED replacement (a cascade gather, a computed
   accessor). If that replacement is later archived, renamed, or never built, the field is already gone from every

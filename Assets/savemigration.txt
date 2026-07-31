@@ -61,17 +61,19 @@ CvPlayer::m_iProjectHealth               (int)
 CvPlayer::m_iWorldHappiness              (int)
 CvPlayer::m_iWorldHealth                 (int)
 
-The per-commerce happiness pool (A9): CvCity::getCommerceHappinessPer -> CascadeAccumulator::commerceHappinessPer,
-a bare fetch of the city package's cascade-gathered pool (CommerceInfo iInitialHappiness seed + the buildings'
-commerceHappiness deposits, gatherCityTerms) -- the stored Sigma-over-buildings accumulator and its
-processBuilding feed are deleted (DEC-accumulator-cut-uniform). The changer's AI_setAssignWorkDirty rider moved
-to the surviving processBuilding trigger site. getCommerceHappinessByType/getCommerceHappiness and every AI /
-Python / HTTP consumer are unchanged: the accessor reduces /100, so callers keep their legacy x1 arithmetic.
+The per-commerce happiness pool (A9): the value is OWED to the city package's cascade-gathered pool (the
+CommerceInfo iInitialHappiness seed + the buildings' commerceHappiness deposits), so that CvCity::getCommerceHappinessPer
+becomes a bare fetch of it (DEC-accumulator-cut-uniform).
+!! STILL OWED, do not read this entry as finished: getCommerceHappinessPer still returns the STORED
+   m_aiCommerceHappinessPer, and its changer still feeds it. Only the SERIALIZATION is gone -- which is why the
+   field is listed here -- so the pool currently rebuilds from the changer rather than from the cascade.
+!! When it converts, the changer's AI_setAssignWorkDirty rider has to survive on the trigger site it leaves
+   behind (save.md §6: audit a changer's whole body before cutting it).
 
 CvCity::m_aiCommerceHappinessPer         (int array, NUM_COMMERCE_TYPES)
 
-Building obsoletion is DERIVED, not stored (owner ruling): the team already owns the tech list, so
-CvTeam::isObsoleteBuilding computes it -- the team holds the building's own obsoleting tech, OR its
+Building obsoletion is DERIVED, not stored (owner ruling): the team already owns the tech list, so CvTeam::isObsoleteBuilding
+computes it -- the team holds the building's own obsoleting tech, OR its
 special-building group's (an OR, so the two sources are idempotent by construction). The stored counter and its
 setHasTech maintenance loop are deleted; every consumer reads the same predicate and is unchanged. The counter
 was double-incremented for a grouped member once the group getter went live, which is precisely the failure a
@@ -81,15 +83,16 @@ CvTeam::m_paiObsoleteBuildingCount       (int class-array, per BuildingTypes)
 ========================
 
 ========================
-2026-07-19 — #430 F4 unit-plane pilot (withdrawal group): the stored per-unit extra-withdrawal accumulator is
-removed. CvUnit::getExtraWithdrawal now reads the cascade unit self-accumulator (m_cascadeUnitPackages.withdrawal,
-gathered on-dirty from the unit's held-set: held promotions + held unit-combat classes via MMKernel::sumUnit
-"withdrawal.unit"."percent" -- DELTA-ONLY, the unit-type base is added ONCE by the withdrawalProbability() composite,
-NOT the cascade, DEC-mirror-then-redesign), plus the LIVE commander/commodore inheritance fold on top. The
-changeExtraWithdrawal changer, the three apply-loop folds (processPromotion / processUnitCombat /
-processLoadedSpecialUnit -> markDirty), and the read/write are gone; the never-serialized cache re-derives at load.
-The mid-combat sea-pillage suppress (was changeExtraWithdrawal(-prob)/restore) is now a within-frame transient flag
-(m_bSuppressWithdrawal, NOT serialized) honored by withdrawalProbability().
+2026-07-19 — #430 unit-plane (withdrawal group): the stored per-unit extra-withdrawal accumulator is removed
+and drained. The value is OWED to the unit RESOLVED plane -- URS_WITHDRAWAL (Cascade/CvUnitResolved.h), gathered
+from the unit's info + held promotions + held unit-combat classes and re-derived at load, never serialized.
+!! STILL OWED, do not read this entry as finished: getExtraWithdrawal / changeExtraWithdrawal still stand on
+   CvUnit and the three apply-loop folds (processPromotion / processUnitCombat / processLoadedSpecialUnit)
+   still write through them, against a member that no longer exists.
+!! The SPECIAL-UNIT leg has no home: the resolved plane covers info + promotions + unit-combat classes and
+   NOTHING else, so processLoadedSpecialUnit's contribution is lost by a bare re-point (see todo.md).
+!! The mid-combat sea-pillage interceptor still brackets its attack by mutating withdrawal down and back up --
+   the snapshot-and-restore shape superseded-ideas #19 bans. It wants a parameter on the combat path.
 
 CvUnit::m_iExtraWithdrawal                (int)
 ========================
@@ -98,9 +101,9 @@ CvUnit::m_iExtraWithdrawal                (int)
 2026-07-19 — #430 F4 unit-plane (firstStrike + heal groups): the stored per-unit first-strike + heal accumulators
 are removed. CvUnit::getExtraFirstStrikes / getExtraChanceFirstStrikes / getExtraEnemyHeal / getExtraNeutralHeal /
 getExtraFriendlyHeal / getSameTileHeal / getAdjacentTileHeal now read the cascade unit self-accumulator
-(m_cascadeUnitPackages.{fsStrikes,fsChance,healEnemy,healNeutral,healFriendly,healSameTile,healAdjacent}, gathered
-on-dirty from the held-set: held promotions + held unit-combat classes (DELTA-ONLY, no unit-type base --
-DEC-mirror-then-redesign) via MMKernel::sumUnit
+(the unit RESOLVED plane (Cascade/CvUnitResolved.h) -- URS_FIRST_STRIKES / URS_FIRST_STRIKE_CHANCE /
+URS_HEAL_{ENEMY,NEUTRAL,FRIENDLY,SAME_TILE,ADJACENT} -- gathered
+on-dirty from the held-set: held promotions + held unit-combat classes (DELTA-ONLY, no unit-type base) via MMKernel::sumUnit
 "firstStrike.unit.strikes"/"firstStrike.unit.chance"/"heal.unit.{enemy,neutral,friendly,sameTile,adjacentTile}"."flat").
 The seven changers + their apply-loop folds (processPromotion / processUnitCombat) are gone -- consolidated to ONE
 markDirty(UPK_ALL) per apply loop; the never-serialized cache re-derives at load. The firstStrike getters keep the
@@ -119,9 +122,10 @@ CvUnit::m_iAdjacentTileHeal              (int)
 ========================
 2026-07-19 — #430 F4 unit-plane (evasion + intercept + collateral + capture groups): four more stored per-unit
 delta accumulators removed. CvUnit::getExtraEvasion / getExtraIntercept / getExtraCollateralDamage now read the
-cascade unit self-accumulator (m_cascadeUnitPackages.{evasion,intercept,collateralDamage}); captureProbabilityTotal /
-captureResistanceTotal read m_cascadeUnitPackages.{captureProb,captureResist}. All are gathered on-dirty from the
-held-set: held promotions + held unit-combat classes (DELTA-ONLY, NO unit-type base -- DEC-mirror-then-redesign;
+cascade unit self-accumulator (the unit RESOLVED plane (Cascade/CvUnitResolved.h) -- URS_EVASION / URS_INTERCEPT /
+URS_COLLATERAL); captureProbabilityTotal / captureResistanceTotal read URS_CAPTURE_PROBABILITY /
+URS_CAPTURE_RESISTANCE. All are gathered on-dirty from the
+held-set: held promotions + held unit-combat classes (DELTA-ONLY, NO unit-type base;
 the consumer composites evasionProbability() / maxInterceptionProbability() / collateralDamage() /
 captureProbabilityTotal() / captureResistanceTotal() add the m_pUnitInfo type base ONCE, and keep their
 commander/commodore + national + local-city folds + clamps) via MMKernel::sumUnit "air.unit.evasion"."percent" /
@@ -142,14 +146,17 @@ CvUnit::m_iExtraCaptureResistanceModifier (int)
 combat-percent accumulators are removed. CvUnit::getExtra{CityAttack,CityDefense,HillsAttack,HillsDefense}Percent /
 getExtra{AttackCombatModifier,DefenseCombatModifier,VSBarbs,ReligiousCombatModifier,DamageModifier,Unnerve,Enclose,
 Lunge,DynamicDefense} / getExtraStealthCombatModifier now read the cascade unit self-accumulator
-(m_cascadeUnitPackages.str*, gathered on-dirty from the held-set: held promotions + held unit-combats, DELTA-ONLY --
-the m_pUnitInfo type base is added ONCE by the *Modifier()/*Total() composites, NOT the cascade) via
-MMKernel::sumUnit "strength.unit.<situation>"."percent". The 14 changers + their apply-loop folds (processPromotion /
+(the unit RESOLVED plane (Cascade/CvUnitResolved.h)'s combat slots -- URS_CITY_ATTACK / URS_CITY_DEFENSE /
+URS_HILLS_ATTACK / URS_HILLS_DEFENSE / URS_COMBAT_ATTACK / URS_COMBAT_DEFENSE / URS_VS_BARBS /
+URS_RELIGIOUS_COMBAT / URS_DAMAGE_MODIFIER / URS_UNNERVE / URS_ENCLOSE / URS_LUNGE / URS_DYNAMIC_DEFENSE /
+URS_STEALTH -- gathered on-dirty from the held-set: held promotions + held unit-combats, DELTA-ONLY --
+the m_pUnitInfo type base is added ONCE by the *Modifier()/*Total() composites, NOT the cascade) via MMKernel::sumUnit
+"strength.unit.<situation>"."percent". The 14 changers + their apply-loop folds (processPromotion /
 processUnitCombat) are gone -- consolidated into the existing markDirty(UPK_ALL) per apply loop; the never-serialized
 cache re-derives at load. The getters keep their LIVE commander/commodore fold (stealth had none) + consumer-side
 gates/clamps (noDefensiveBonus zero, religious sign, COMBAT_WITHOUT_WARNING, max(0,·)/max(-95,·)). The GENERAL
 strength.unit.percent (CvUnit::m_iExtraCombatPercent) migrates the same way for its HELD-SET part
-(m_cascadeUnitPackages.strCombatPercent), and its cross-unit LOADED-SPECIAL-UNIT contribution (a loaded special-unit
+(URS_STRENGTH_PERCENT), and its cross-unit LOADED-SPECIAL-UNIT contribution (a loaded special-unit
 applies its combat percent to the transport; SPECIALUNIT is not deposit-ported) is folded LIVE at read in
 getExtraCombatPercent by walking the transport's cargo -- so its changer + processLoadedSpecialUnit fold are gone too
 (the load/unload path refreshes the transport's combat-stat UI via setInfoBarDirty).
@@ -172,9 +179,9 @@ CvUnit::m_iExtraStealthCombatModifier      (int)
 ========================
 
 ========================
-2026-07-19 — #430 F4 unit-plane (BASE-strength group): the two stored per-unit base-strength accumulators are removed.
-CvUnit::getExtraStrength / getExtraStrengthModifier now read the cascade unit self-accumulator
-(m_cascadeUnitPackages.{strBaseFlat,strSizeMod}, gathered on-dirty from the held-set: held promotions + held
+2026-07-19 — #430 F4 unit-plane (BASE-strength group): the two stored per-unit base-strength accumulators are removed. CvUnit::getExtraStrength
+/ getExtraStrengthModifier now read the cascade unit self-accumulator
+(the unit RESOLVED plane (Cascade/CvUnitResolved.h) -- URS_STRENGTH_FLAT plus the size-modifier slot -- gathered on-dirty from the held-set: held promotions + held
 unit-combats, DELTA-ONLY -- the baseCombatStr*PreCheck consumers add m_iBaseCombat + apply the clamp / ×(100+mod)/100
 size scaling) via MMKernel::sumUnit "strength.unit"."flat" and "strength.unit.sizeModifier"."percent" (the poco load
 addresses, CvUnitCombatInfo.cpp jsonFamVal/jsonFamMemberVal). The two changers (+ the callerless
@@ -191,8 +198,8 @@ CvUnit::m_iExtraStrengthModifier           (int)
 
 ========================
 2026-07-19 — #430 F4 unit-plane (UPKEEP, lands WITH F4 per fixed-point-conformance.md): the per-unit base-magnitude
-upkeep chain migrates onto the cascade; the percent modifier + SizeMatters + empire upkeep mods stay legacy.
-CvUnit::getExtraUpkeep100 now reads the cascade unit self-accumulator (m_cascadeUnitPackages.extraUpkeep100,
+upkeep chain migrates onto the cascade; the percent modifier + SizeMatters + empire upkeep mods stay legacy. CvUnit::getExtraUpkeep100
+now reads the cascade unit self-accumulator (the unit RESOLVED plane (Cascade/CvUnitResolved.h) -- URS_UPKEEP_EXTRA,
 UPK_UPKEEP) gathered on-dirty from the held-set (held promotions + held unit-combats) via MMKernel::sumUnit100
 "upkeep.unit.extra"."flat" -- x100-NATIVE (the JSON holds the curator-descaled human; sumUnit100 re-applies the x100
 to match the legacy m_iExtraUpkeep100). CvUnit::getUpkeep100 is now a COMPUTED accessor:
@@ -306,8 +313,8 @@ CvCity::m_iBuildingBadHappiness          (int)
 ========================
 2026-07-18 — #430 delete-driven legacy cut (area/player building-HEALTH rollups): the stored area (per-player)
 and empire building good/bad health accumulators fully removed on both objects. CvArea::getBuildingGood/BadHealth
-and CvPlayer::getBuildingGood/BadHealth read the cascade playerAreaEmpire fold (health family) via
-CascadeWellbeing::buildingHealthArea / buildingHealthEmpire; the changers, the processBuilding area/global-health
+and CvPlayer::getBuildingGood/BadHealth read the cascade playerAreaEmpire fold (health family) via CascadeWellbeing::buildingHealthArea
+/ buildingHealthEmpire; the changers, the processBuilding area/global-health
 feeders (CvPlayer + CvPlot ownership re-attribution) are gone. This completes the building-HEALTH decomposition
 (city cut in the prior entry). The area/player building-HAPPINESS rollups (m_aiBuildingHappiness / player
 m_iBuildingHappiness) are a SEPARATE follow-on cut.
@@ -320,8 +327,8 @@ CvPlayer::m_iBuildingBadHealth           (int)
 
 ========================
 2026-07-18 — #430 delete-driven legacy cut (area/player building-HAPPINESS rollups): the stored area (per-player)
-and empire building happiness accumulators (single signed) fully removed on both objects.
-CvArea::getBuildingHappiness and CvPlayer::getBuildingHappiness read the cascade playerAreaEmpire fold (happiness
+and empire building happiness accumulators (single signed) fully removed on both objects. CvArea::getBuildingHappiness
+and CvPlayer::getBuildingHappiness read the cascade playerAreaEmpire fold (happiness
 family, NET = iGood + iBad) via CascadeWellbeing::buildingHappinessArea / buildingHappinessEmpire; the changers and
 the processBuilding + CvPlot area/global-happiness feeders are gone. This COMPLETES the building wellbeing cluster
 (city health+happiness + area/player health + now area/player happiness — all on the cascade).
@@ -493,9 +500,20 @@ CvPlayer::m_bHasLanguage                 (bool)
 ========================
 
 ========================
-2026-07-11 — animal border-ignore is now a game-option-derived BITMASK (CvUnit::getAnimalIgnoresBordersCount),
-not a stored/promotion-fed count. The accumulator + its changer + the two apply sites were removed; the field's
-read is now a WRAPPER_SKIP_ELEMENT (drains old saves), the write deleted.
+2026-07-11 — animal border-ignore: the stored count is removed and drained. The intent is that it derives from
+the GAME OPTIONS (ANIMAL_STAY_OUT / ANIMAL_DANGEROUS) plus the unit's own `animalIgnoresBorders` SKILL, rather
+than a promotion-fed counter.
+!! STILL OWED, do not read this entry as finished: getAnimalIgnoresBordersCount / changeAnimalIgnoresBordersCount
+   still stand on CvUnit and both apply sites (processPromotion / processUnitCombat) still write through them,
+   against a member that no longer exists.
+!! The promotion-granted leg has NO home yet. CvUnit still carries a per-skill counter for the other ~53 skills
+   and there is no general "does this unit hold skill X, folded over its promotions and combat classes" read --
+   so this one was cut ahead of the mechanism that replaces it. Reviving a counter is not the fix; the fold is,
+   and it serves all of them at once.
+!! Note the TIERS: canAnimalIgnoresImprovements / canAnimalIgnoresCities test the count > 1 and > 2. A skill
+   carries no value (skills.md), so those tiers can no longer come from data at all -- the legacy +2 authoring
+   collapsed to a plain grant. Under the intent above they are option-derived only, which is a real behaviour
+   change to state when this lands, not a regression to chase.
 
 CvUnit::m_iAnimalIgnoresBordersCount     (int)
 ========================
