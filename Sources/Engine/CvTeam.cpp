@@ -7,6 +7,7 @@
 #include "Engine/CvGameSpeedScale.h"
 #include "CvArea.h"
 #include "CvBuildingInfo.h"
+#include "Infos/CvCapabilityReads.h"
 #include "Enabler/CvEnablerKernel.h"   // obsoletedByHeldTech -- obsoletion is DERIVED from the held techs
 #include "Repos/InfoRepo.h"
 #include "CvBonusInfo.h"
@@ -4912,7 +4913,7 @@ void CvTeam::setHasTech(TechTypes eTech, bool bNewValue, PlayerTypes ePlayer, bo
 				player.AI_updateBonusValue();
 			}
 		}
-		if (kTech.isMapVisible())
+		if (CvCapabilityReads::hasWholeMapRevealed(kTech.getCapabilities()))
 		{
 			GC.getMap().setRevealedPlots(getID(), true, true);
 		}
@@ -5348,19 +5349,23 @@ void CvTeam::processTech(TechTypes eTech, int iChange, bool bAnnounce)
 {
 	PROFILE_FUNC();
 	const CvTechInfo& tech = GC.getTechInfo(eTech);
+	// What this tech PROVIDES, asked once. The empire's active set is a different question with its own
+	// surface (CascadeCapabilities, the sole union -- capabilities.md); these gates fire the SIDE EFFECTS a
+	// grant carries, so they ask the grantor.
+	const CvClassificationBlock* caps = tech.getCapabilities();
 
-	if (tech.isExtraWaterSeeFrom())
+	if (CvCapabilityReads::canSeeFurtherFromWater(caps))
 	{
 		GC.getMap().updateSight(false);
 		GC.getMap().updateSight(true);
 	}
 
-	if (iChange > 0 && tech.isMapCentering())
+	if (iChange > 0 && CvCapabilityReads::hasCenteredMap(caps))
 	{
 		setMapCentering(true);
 	}
 
-	if (tech.isCanPassPeaks())
+	if (CvCapabilityReads::canPassPeaks(caps))
 	{
 		//	Koshling - makes peaks workable which chnages the yield calculation
 		updateYield();
@@ -5392,12 +5397,12 @@ void CvTeam::processTech(TechTypes eTech, int iChange, bool bAnnounce)
 		changeCorporationRevenueModifier(tech.getCorporationRevenueModifier() * iChange);
 	}
 
-	if (tech.isEnablesDesertFarming())
+	if (CvCapabilityReads::canFarmDesert(caps))
 	{
 		setLastRoundOfValidImprovementCacheUpdate();
 	}
 
-	if (tech.isBridgeBuilding())
+	if (CvCapabilityReads::canBuildBridges(caps))
 	{
 		if (GC.IsGraphicsInitialized())
 		{
@@ -5405,18 +5410,18 @@ void CvTeam::processTech(TechTypes eTech, int iChange, bool bAnnounce)
 		}
 	}
 
-	if (tech.isIrrigation())
+	if (CvCapabilityReads::canSpreadIrrigation(caps))
 	{
 		GC.getMap().updateIrrigated();
 		setLastRoundOfValidImprovementCacheUpdate();
 	}
 
-	if (tech.isIgnoreIrrigation())
+	if (CvCapabilityReads::canIgnoreIrrigation(caps))
 	{
 		setLastRoundOfValidImprovementCacheUpdate();
 	}
 
-	if (tech.isWaterWork())
+	if (tech.getCanWorkOn().count("water") > 0)
 	{
 		AI_makeAssignWorkDirty();
 		setLastRoundOfValidImprovementCacheUpdate();
@@ -5434,14 +5439,14 @@ void CvTeam::processTech(TechTypes eTech, int iChange, bool bAnnounce)
 
 	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 	{
-		if (tech.isCommerceFlexible(iI) && getID() == GC.getGame().getActiveTeam())
+		if (CvCapabilityReads::canSetCommerceRate(caps, iI) && getID() == GC.getGame().getActiveTeam())
 		{
 			gDLL->getInterfaceIFace()->setDirty(PercentButtons_DIRTY_BIT, true);
 			gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
 		}
 	}
 
-	if (tech.isRiverTrade())
+	if (CvCapabilityReads::hasRiverTrade(caps))
 	{
 		for (int iI = 0; iI < MAX_PLAYERS; iI++)
 		{

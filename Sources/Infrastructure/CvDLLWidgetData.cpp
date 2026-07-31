@@ -2,6 +2,7 @@
 #include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
+#include "Infos/CvCapabilityReads.h"
 #include "Engine/CvGameSpeedScale.h"
 #include "CvInfos.h"              // full info-type defs (Specialist/Unit/Color/Yield/Commerce/Civic/Build/Property) -- was reaching via unity leakage
 #include "Engine/CvArea.h"
@@ -2775,7 +2776,7 @@ void CvDLLWidgetData::parseActionHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 						{
 							for (int iI = 0; iI < GC.getNumTechInfos(); iI++)
 							{
-								if (GC.getTechInfo((TechTypes)iI).isIrrigation())
+								if (CvCapabilityReads::canSpreadIrrigation(GC.getTechInfo((TechTypes)iI).getCapabilities()))
 								{
 									szBuffer.append(NEWLINE);
 									szBuffer.append(gDLL->getText("TXT_KEY_REQUIRES_LINK", CvWString(GC.getTechInfo((TechTypes)iI).getType()).GetCString(), GC.getTechInfo((TechTypes)iI).getTextKeyWide()));
