@@ -80,6 +80,14 @@
 > loop) is [roadmap.md § LEGACY STILL BREATHING](roadmap.md). ⚠ KNOWN-INCOMPLETE — legacy found anywhere else is
 > killed on the same terms. ⛔ Never record a found legacy surface as acceptable or "kept until X".
 
+- Re-point the city's WORKED-PLOT yield sum, the last leg of the city rate standing on a cut member. The VALUE
+  has a source — a plot carries its context and its own realized-yield group read — so what is missing is only
+  the city-side Σ over its worked plots. ⛔ Do NOT answer it from the city's own realized group read: that is
+  the receiver total the rate is being computed FOR, so reading it here is circular. ⛔ And do not re-sum the
+  radius per call — that is the measured cost class ([state-repositories.md](../../architecture/state-repositories.md):
+  the pull must be a CACHE at every level, marked by worked-plot flips and by a working plot's yield changing).
+  ⚑ The rest of the city rate hangs off this one, so it is the keystone of the yield cluster rather than one
+  more accessor.
 - Retire the building-COST-modifier accumulator and move its readers. Its writer is already gone: the curator
   re-homed the legacy source-keyed cost map onto the TARGET, as a conditioned own-cost entry gated on
   possessing the source, so nothing feeds the accumulator and every reader now sees zero. The value lives in
