@@ -17676,69 +17676,11 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 		changeFeatureDoubleMoveCount(((FeatureTypes)iI), ((kPromotion.getFeatureDoubleMove(iI)) ? iChange : 0));
 	}
 
-	for (iI = 0; iI < GC.getNumInvisibleInfos(); iI++)
-	{
-		changeExtraVisibilityIntensityType(((InvisibleTypes)iI), (kPromotion.getVisibilityIntensityChangeType(iI) * iChange));
-		changeExtraInvisibilityIntensityType(((InvisibleTypes)iI), (kPromotion.getInvisibilityIntensityChangeType(iI) * iChange));
-		changeExtraVisibilityIntensityRangeType(((InvisibleTypes)iI), (kPromotion.getVisibilityIntensityRangeChangeType(iI) * iChange));
-	}
-
-	for (iI = 0; iI < kPromotion.getNumNegatesInvisibilityTypes(); iI++)
-	{
-		changeNegatesInvisibleCount((InvisibleTypes)kPromotion.getNegatesInvisibilityType(iI), iChange);
-	}
-
-
-
-	for (iI = 0; iI < kPromotion.getNumTargetUnitCombatTypes(); iI++)
-	{
-		changeTargetUnitCombatCount((UnitCombatTypes)kPromotion.getTargetUnitCombatType(iI), iChange);
-	}
-
-	for (iI = 0; iI < kPromotion.getNumInvisibleTerrainChanges(); iI++)
-	{
-		changeExtraInvisibleTerrain((InvisibleTypes)kPromotion.getInvisibleTerrainChange(iI).eInvisible,(TerrainTypes)kPromotion.getInvisibleTerrainChange(iI).eTerrain, kPromotion.getInvisibleTerrainChange(iI).iIntensity * iChange);
-	}
-
-	for (iI = 0; iI < kPromotion.getNumInvisibleFeatureChanges(); iI++)
-	{
-		changeExtraInvisibleFeature((InvisibleTypes)kPromotion.getInvisibleFeatureChange(iI).eInvisible,(FeatureTypes)kPromotion.getInvisibleFeatureChange(iI).eFeature, kPromotion.getInvisibleFeatureChange(iI).iIntensity * iChange);
-	}
-
-	for (iI = 0; iI < kPromotion.getNumInvisibleImprovementChanges(); iI++)
-	{
-		changeExtraInvisibleImprovement((InvisibleTypes)kPromotion.getInvisibleImprovementChange(iI).eInvisible,(ImprovementTypes)kPromotion.getInvisibleImprovementChange(iI).eImprovement, kPromotion.getInvisibleImprovementChange(iI).iIntensity * iChange);
-	}
-
-	for (iI = 0; iI < kPromotion.getNumVisibleTerrainChanges(); iI++)
-	{
-		changeExtraVisibleTerrain((InvisibleTypes)kPromotion.getVisibleTerrainChange(iI).eInvisible,(TerrainTypes)kPromotion.getVisibleTerrainChange(iI).eTerrain, kPromotion.getVisibleTerrainChange(iI).iIntensity * iChange);
-	}
-
-	for (iI = 0; iI < kPromotion.getNumVisibleFeatureChanges(); iI++)
-	{
-		changeExtraVisibleFeature((InvisibleTypes)kPromotion.getVisibleFeatureChange(iI).eInvisible,(FeatureTypes)kPromotion.getVisibleFeatureChange(iI).eFeature, kPromotion.getVisibleFeatureChange(iI).iIntensity * iChange);
-	}
-
-	for (iI = 0; iI < kPromotion.getNumVisibleImprovementChanges(); iI++)
-	{
-		changeExtraVisibleImprovement((InvisibleTypes)kPromotion.getVisibleImprovementChange(iI).eInvisible,(ImprovementTypes)kPromotion.getVisibleImprovementChange(iI).eImprovement, kPromotion.getVisibleImprovementChange(iI).iIntensity * iChange);
-	}
-
-	for (iI = 0; iI < kPromotion.getNumVisibleTerrainRangeChanges(); iI++)
-	{
-		changeExtraVisibleTerrainRange((InvisibleTypes)kPromotion.getVisibleTerrainRangeChange(iI).eInvisible,(TerrainTypes)kPromotion.getVisibleTerrainRangeChange(iI).eTerrain, kPromotion.getVisibleTerrainRangeChange(iI).iIntensity * iChange);
-	}
-
-	for (iI = 0; iI < kPromotion.getNumVisibleFeatureRangeChanges(); iI++)
-	{
-		changeExtraVisibleFeatureRange((InvisibleTypes)kPromotion.getVisibleFeatureRangeChange(iI).eInvisible,(FeatureTypes)kPromotion.getVisibleFeatureRangeChange(iI).eFeature, kPromotion.getVisibleFeatureRangeChange(iI).iIntensity * iChange);
-	}
-
-	for (iI = 0; iI < kPromotion.getNumVisibleImprovementRangeChanges(); iI++)
-	{
-		changeExtraVisibleImprovementRange((InvisibleTypes)kPromotion.getVisibleImprovementRangeChange(iI).eInvisible,(ImprovementTypes)kPromotion.getVisibleImprovementRangeChange(iI).eImprovement, kPromotion.getVisibleImprovementRangeChange(iI).iIntensity * iChange);
-	}
+	//	⛔ RETIRED with the unit-combat twin above ([vision.md] §4): the per-type and per-substrate
+	//	hide-and-seek tables collapse onto `hideAndSeek.concealment` + `detection`, each detection entry
+	//	naming the METHOD it answers as a SKILL -- which is exactly why the method had to be a skill and
+	//	not a tag: 73 PROMOTIONS author one, and a tag is not promotion-grantable, so a tag reading would
+	//	have dropped every one of them on the floor.
 
 	const int numUnitCombatInfos = GC.getNumUnitCombatInfos();
 	for (iI = 0; iI < numUnitCombatInfos; iI++)
