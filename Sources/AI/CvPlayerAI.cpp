@@ -27201,18 +27201,16 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 			}
 		}
 
-		for (int iI = 0; iI < kPromotion.getNumRemovesUnitCombatTypes(); iI++)
+		// The combat-class membership the promotion STRIPS -- the info's own typed list ([skills.md] §1:
+		// `removesUnitCombats`), not a walk of the unitcombat registry.
+		const std::vector<int>& removedCombats = kPromotion.removesUnitCombats();
+		for (size_t iAt = 0; iAt < removedCombats.size(); ++iAt)
 		{
-			if (pUnit)
+			const UnitCombatTypes eRemoved = (UnitCombatTypes)removedCombats[iAt];
+
+			if (pUnit ? pUnit->isHasUnitCombat(eRemoved) : kUnit.hasCombatClass(eRemoved))
 			{
-				if (pUnit->isHasUnitCombat((UnitCombatTypes)kPromotion.getRemovesUnitCombatType(iI)))
-				{
-					iValue -= AI_unitCombatValue((UnitCombatTypes)kPromotion.getRemovesUnitCombatType(iI), eUnit, pUnit, eUnitAI);
-				}
-			}
-			else if (kUnit.hasCombatClass((UnitCombatTypes)kPromotion.getRemovesUnitCombatType(iI)))
-			{
-				iValue -= AI_unitCombatValue((UnitCombatTypes)kPromotion.getRemovesUnitCombatType(iI), eUnit, pUnit, eUnitAI);
+				iValue -= AI_unitCombatValue(eRemoved, eUnit, pUnit, eUnitAI);
 			}
 		}
 
@@ -28853,18 +28851,31 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		}
 	}
 
-	for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
+	// The promotion's OWN flanking entries, keyed by UNITCOMBAT ([json.md] §6) -- not a sweep of the whole
+	// unit-combat registry asking whether this promotion deposits onto each id.
 	{
-		iTemp = kPromotion.getFlankingStrengthbyUnitCombatTypeChange(iI);
-		if (iTemp != 0)
-		{
-			iTemp *= 100 + 2*(kUnit.getFlankingStrengthbyUnitCombatType(iI) + (pUnit ? pUnit->getExtraFlankingStrengthbyUnitCombatType((UnitCombatTypes)iI) : 0));
+		const int iFlankingSeg = InfoValuation::keyedTargetSegment("flanking");
+		std::vector<std::pair<int, int> > flankingRows;
+		InfoValuation::collectKeyedTarget(
+			kPromotion.getModifiers(), MODFAM_COMBAT, COMBAT_AMOUNT, iFlankingSeg, flankingRows);
 
-			if (eUnitAI == UNITAI_COUNTER || eUnitAI == UNITAI_ATTACK || eUnitAI == UNITAI_ATTACK_CITY)
+		for (size_t iRow = 0; iRow < flankingRows.size(); ++iRow)
+		{
+			const UnitCombatTypes eFlanked = (UnitCombatTypes)flankingRows[iRow].first;
+			iTemp = flankingRows[iRow].second;
+
+			if (iTemp != 0)
 			{
-				iValue += iTemp / 125;
+				iTemp *= 100 + 2 * (InfoValuation::keyedTarget(
+						kUnit.getModifiers(), MODFAM_COMBAT, COMBAT_AMOUNT, iFlankingSeg, eFlanked)
+					+ (pUnit ? pUnit->getExtraFlankingStrengthbyUnitCombatType(eFlanked) : 0));
+
+				if (eUnitAI == UNITAI_COUNTER || eUnitAI == UNITAI_ATTACK || eUnitAI == UNITAI_ATTACK_CITY)
+				{
+					iValue += iTemp / 125;
+				}
+				else iValue += iTemp / 1000;
 			}
-			else iValue += iTemp / 1000;
 		}
 	}
 
@@ -29394,32 +29405,9 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 
-	//Very simple AI for AddsBuildType that assumes they're always desireable.
-	for (int iI = 0; iI < kPromotion.getNumAddsBuildTypes(); iI++)
-	{
-		if ((BuildTypes)kPromotion.getAddsBuildType(iI) != NO_BUILD)
-		{
-			iValue += 50;
-		}
-	}
-
 	//WorkRateMod
-	iTemp = kPromotion.getHillsWorkPercent();
+	iTemp = kPromotion.getScalar(SCALAR_WORK_RATE_HILLS, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT);
 
-	if (iTemp != 0)
-	{
-		if (eUnitAI == UNITAI_WORKER)
-		{
-			iValue += (iTemp / 2);
-		}
-		else
-		{
-			iValue++;
-		}
-	}
-
-	iTemp = kPromotion.getPeaksWorkPercent();
-	//Note: this could use some further development (particularly in ensuring that the unit CAN go onto peaks)
 	if (iTemp != 0)
 	{
 		if (eUnitAI == UNITAI_WORKER)
@@ -29562,7 +29550,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	{
 		//Team Project (4)
 		//WorkRateMod
-		iTemp = kPromotion.getBuildWorkRateModifierChangeType(iI);
+		iTemp = InfoValuation::keyedTarget(kPromotion.getModifiers(), MODFAM_WORK_RATE, 0, InfoValuation::keyedTargetSegment("build"), iI);
 		if (iTemp != 0)
 		{
 			iPass++;
@@ -29605,7 +29593,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		{
 			if (InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_TERRAIN, iI, COMBAT_ATTACK)
 			||  InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_TERRAIN, iI, COMBAT_DEFENSE)
-			||  kPromotion.getTerrainWorkPercent(iI)
+			||  InfoValuation::keyedTarget(kPromotion.getModifiers(), MODFAM_WORK_RATE, 0, InfoValuation::keyedTargetSegment("terrain"), iI)
 			||  kPromotion.getTerrainDoubleMove(iI))
 			{
 				iPass++;
@@ -29697,7 +29685,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 					else iTempValue += iTemp * iTerrainWeight / 1000;
 				}
 
-				iTemp = kPromotion.getTerrainWorkPercent(iI);
+				iTemp = InfoValuation::keyedTarget(kPromotion.getModifiers(), MODFAM_WORK_RATE, 0, InfoValuation::keyedTargetSegment("terrain"), iI);
 				if (iTemp != 0)
 				{
 					if (eUnitAI == UNITAI_WORKER)
@@ -29726,7 +29714,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		{
 			if (InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_FEATURE, iI, COMBAT_ATTACK)
 			||  InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_FEATURE, iI, COMBAT_DEFENSE)
-			||  kPromotion.getFeatureWorkPercent(iI)
+			||  InfoValuation::keyedTarget(kPromotion.getModifiers(), MODFAM_WORK_RATE, 0, InfoValuation::keyedTargetSegment("feature"), iI)
 			||  kPromotion.getFeatureDoubleMove(iI))
 			{
 				iPass++;
@@ -29815,7 +29803,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 				}
 
 				//ls612: Terrain Work Modifiers //TB Edited for WorkRateMod (THANK you for thinking this out ls!)
-				iTemp = kPromotion.getFeatureWorkPercent(iI);
+				iTemp = InfoValuation::keyedTarget(kPromotion.getModifiers(), MODFAM_WORK_RATE, 0, InfoValuation::keyedTargetSegment("feature"), iI);
 				if (iTemp != 0)
 				{
 					if (eUnitAI == UNITAI_WORKER)
@@ -29860,7 +29848,8 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 
 	for (int iI = 0; iI < NUM_DOMAIN_TYPES; iI++)
 	{
-		iTemp = kPromotion.getDomainModifierPercent(iI);
+		iTemp = InfoValuation::keyedCombat(
+			kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_DOMAIN, iI, COMBAT_AMOUNT);
 		if (iTemp != 0)
 		{
 			if (eUnitAI == UNITAI_COUNTER)
@@ -30048,20 +30037,15 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		}
 	}
 
-	for (int iI = 0; iI < kPromotion.getNumRemovesUnitCombatTypes(); iI++)
 	{
-		if (pUnit == NULL)
+		const std::vector<int>& strippedCombats = kPromotion.removesUnitCombats();
+		for (size_t iAt = 0; iAt < strippedCombats.size(); ++iAt)
 		{
-			if (kUnit.hasCombatClass((UnitCombatTypes)kPromotion.getRemovesUnitCombatType(iI)))
+			const UnitCombatTypes eStripped = (UnitCombatTypes)strippedCombats[iAt];
+
+			if (pUnit ? pUnit->isHasUnitCombat(eStripped) : kUnit.hasCombatClass(eStripped))
 			{
-				iValue -= AI_unitCombatValue((UnitCombatTypes)kPromotion.getRemovesUnitCombatType(iI), eUnit, pUnit, eUnitAI);
-			}
-		}
-		else
-		{
-			if (pUnit->isHasUnitCombat((UnitCombatTypes)kPromotion.getRemovesUnitCombatType(iI)))
-			{
-				iValue -= AI_unitCombatValue((UnitCombatTypes)kPromotion.getRemovesUnitCombatType(iI), eUnit, pUnit, eUnitAI);
+				iValue -= AI_unitCombatValue(eStripped, eUnit, pUnit, eUnitAI);
 			}
 		}
 	}
@@ -31429,20 +31413,33 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		iValue += iTemp;
 	}
 
-	for (int iI = 0; iI < kUnitCombat.getNumFlankingStrengthbyUnitCombatTypesChange(); iI++)
+	// Flanking is keyed by UNITCOMBAT ([json.md] §6), and each entry carries its own target -- so the unit-side
+	// reads key off THAT. ⚠ The legacy loop passed its own list INDEX as a UnitCombatTypes, so it scored one
+	// entry against a different class's flanking strength whenever the two disagreed.
 	{
-		iTemp = kUnitCombat.getFlankingStrengthbyUnitCombatTypeChange(iI).iModifier;
+		const int iFlankingSeg = InfoValuation::keyedTargetSegment("flanking");
+		std::vector<std::pair<int, int> > flankingRows;
+		InfoValuation::collectKeyedTarget(
+			kUnitCombat.getModifiers(), MODFAM_COMBAT, COMBAT_AMOUNT, iFlankingSeg, flankingRows);
 
-		if (iTemp != 0)
+		for (size_t iRow = 0; iRow < flankingRows.size(); ++iRow)
 		{
-			if (eUnitAI == UNITAI_COUNTER || eUnitAI == UNITAI_ATTACK || eUnitAI == UNITAI_ATTACK_CITY)
+			const UnitCombatTypes eFlanked = (UnitCombatTypes)flankingRows[iRow].first;
+			iTemp = flankingRows[iRow].second;
+
+			if (iTemp != 0)
 			{
-				iExtra = kUnit.getFlankingStrengthbyUnitCombatType(iI) + (pUnit ? 2*pUnit->getExtraFlankingStrengthbyUnitCombatType((UnitCombatTypes)iI) : 0);
-				iValue += iTemp * (100 + iExtra) / 125;
-			}
-			else
-			{
-				iValue += iTemp / 10;
+				if (eUnitAI == UNITAI_COUNTER || eUnitAI == UNITAI_ATTACK || eUnitAI == UNITAI_ATTACK_CITY)
+				{
+					iExtra = InfoValuation::keyedTarget(
+							kUnit.getModifiers(), MODFAM_COMBAT, COMBAT_AMOUNT, iFlankingSeg, eFlanked)
+						+ (pUnit ? 2 * pUnit->getExtraFlankingStrengthbyUnitCombatType(eFlanked) : 0);
+					iValue += iTemp * (100 + iExtra) / 125;
+				}
+				else
+				{
+					iValue += iTemp / 10;
+				}
 			}
 		}
 	}
@@ -32048,22 +32045,8 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 	}
 
 	//WorkRateMod
-	iTemp = kUnitCombat.getHillsWorkPercent();
+	iTemp = kUnitCombat.getScalar(SCALAR_WORK_RATE_HILLS, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT);
 
-	if (iTemp != 0)
-	{
-		if (eUnitAI == UNITAI_WORKER)
-		{
-			iValue += (iTemp / 2);
-		}
-		else
-		{
-			iValue++;
-		}
-	}
-
-	iTemp = kUnitCombat.getPeaksWorkPercent();
-	//Note: this could use some further development (particularly in ensuring that the unit CAN go onto peaks)
 	if (iTemp != 0)
 	{
 		if (eUnitAI == UNITAI_WORKER)
@@ -32210,14 +32193,21 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 	}
 
-	for (int iI = 0; iI < kUnitCombat.getNumUnitCombatChangeModifiers(); iI++)
 	{
-		iValue += kUnitCombat.getUnitCombatChangeModifier(iI).iModifier;
+		std::vector<std::pair<int, int> > unitCombatRows;
+		InfoValuation::collectKeyedCombat(
+			kUnitCombat.getModifiers(), InfoValuation::COMBAT_TARGET_UNITCOMBAT, COMBAT_AMOUNT, unitCombatRows);
+
+		for (size_t iRow = 0; iRow < unitCombatRows.size(); ++iRow)
+		{
+			iValue += unitCombatRows[iRow].second;
+		}
 	}
 
 	for (int iI = 0; iI < NUM_DOMAIN_TYPES; iI++)
 	{
-		iTemp = kUnitCombat.getDomainModifierPercent(iI);
+		iTemp = InfoValuation::keyedCombat(
+			kUnitCombat.getModifiers(), InfoValuation::COMBAT_TARGET_DOMAIN, iI, COMBAT_AMOUNT);
 		if (iTemp != 0)
 		{
 			if (eUnitAI == UNITAI_COUNTER)
