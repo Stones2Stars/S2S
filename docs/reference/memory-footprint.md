@@ -9,12 +9,12 @@
 > The only live EXE-side window is the `workingSetMB`/`peakWorkingSetMB`/`pagefileMB` gauge on `/computed/perf`
 > (`GetProcessMemoryInfo`, [observability.md](observability.md)).
 
-## The big picture — three FLAT static clusters (~140 MB), and a per-turn GROWER
+## The big picture — three FLAT static clusters (~126 MB), and a per-turn GROWER
 
 | Cluster | ~MB (late-game) | Grows per turn? | What it is |
 |---|--:|:--:|---|
 | Resident **info classes** | ~55 | **No** — immutable after load | the boot-loaded `CvJson<X>Info` tables (§1) |
-| Per-object **info-sized arrays** | ~45 | **No** (at fixed object/player count) | `CvCity`/`CvTeam`/`CvPlayer` arrays dimensioned by info counts (§2) |
+| Per-object **info-sized arrays** | ~31 | **No** (at fixed object/player count) | `CvCity`/`CvTeam`/`CvPlayer` arrays dimensioned by info counts (§2) |
 | **Cascade/enabler/property** derived state | ~40 | **No** — recomputed in place | the derived caches (§3) |
 | **Art / textures / icons** | ~0 in the DLL | **No** | loaded ONCE, shared; the DLL holds no pixels (§4) |
 | **The per-turn climb (+150–230 MB)** | — | **YES**, resets on reload | turn-processing allocation **churn + 32-bit heap fragmentation** (§5) |
@@ -28,8 +28,8 @@
 > (working-set at an early-game state vs the late save, via the `/computed/perf` memory gauge), NOT more struct estimation —
 > that is the honest open question this static audit does not answer.
 
-**Headline:** none of the big *DLL* structures is the per-turn climb. The three static clusters sum to **~140 MB
-(~6 % of the working set)** and are flat. The useful conclusion is the *inverse* of what it looks like: **DLL-side
+**Headline:** none of the big *DLL* structures is the per-turn climb. The three static clusters sum to **~126 MB
+(~5 % of the working set)** and are flat. The useful conclusion is the *inverse* of what it looks like: **DLL-side
 trimming (the unitcombat purge, flattening the 2D arrays) buys single-digit MB — it is NOT the lever.** The
 ~800 MB→2 GB is EXE scene + Python + fragmentation (§5). The one thing this audit *does* settle: the DLL is not
 where the memory goes, so the per-turn climb — whatever its exact split — is dominated by legacy turn-processing +
@@ -67,22 +67,27 @@ are *leaner* than what they replace. The per-instance tax that remains is the **
 ## 2. Per-object info-sized arrays — ~45 MB, and the fragmentation problem
 
 Every `CvCity`/`CvTeam`/`CvPlayer`/`CvUnit` allocates arrays dimensioned by info counts (`new T[GC.getNum*Infos()]`)
-in its `reset()`/`init()`. At the live counts this is **~39 MB data + ~8 MB tiny-block overhead ≈ 47 MB (~2 %)**.
+in its `reset()`/`init()`. At the live counts this is **~26 MB data + ~5 MB tiny-block overhead ≈ 31 MB (~1.5 %)**.
 
 | # | Array | Class | Dimension | Total | Note |
 |--:|---|---|---|--:|---|
-| 1 | `m_ppiBuildingSpecialistChange` | **CvTeam** | Building×Specialist 5202×39 | **14.1 MB** | single largest; **5,202 tiny `int[39]` allocs per team**, mostly zero (`CvTeam.cpp:354`) |
-| 2 | Bonus family (`…ExtraBonusAidModifier` …) | CvCity | Bonus 902 (one ×Property) | 7.7 MB | 902 tiny `int[7]` allocs per city (`CvCity.cpp:712`) |
-| 3 | `m_paiUnitProduction` + 2 GP-rate | CvCity | Unit 2073 ×3 | 4.6 MB | |
-| 4 | `m_ppiBuildingCommerceModifier` | CvTeam + CvPlayer | Building×Commerce 5202×4 | 3.5 MB | |
-| 5 | 6× UnitCombat arrays | CvCity | UnitCombat 470 ×6 | 2.1 MB | the unitcombat 814→470 drop reclaimed ~1.55 MB here |
+| 1 | Bonus family (`…ExtraBonusAidModifier` …) | CvCity | Bonus 902 (one ×Property) | 7.7 MB | largest survivor; 902 tiny `int[7]` allocs per city (`CvCity.cpp:712`) |
+| 2 | `m_paiUnitProduction` + 2 GP-rate | CvCity | Unit 2073 ×3 | 4.6 MB | |
+| 3 | `m_ppiBuildingCommerceModifier` | CvTeam + CvPlayer | Building×Commerce 5202×4 | 3.5 MB | the one remaining Building-outer 2D array |
+| 4 | 6× UnitCombat arrays | CvCity | UnitCombat 470 ×6 | 2.1 MB | the unitcombat 814→470 drop reclaimed ~1.55 MB here |
 
-**The real cost is fragmentation, not bytes.** The Building-outer 2D arrays (`int**` with 5,202 rows) allocate
-**~220k separate tiny heap blocks** across 17 teams + 17 players — heavy allocator overhead and address-space
-fragmentation, disproportionate on a 32-bit heap, over data that is almost entirely zero. Flattening each to one
-contiguous block (or sparse storage) would reclaim the overhead and cut fragmentation. **This cluster also scales
-with PLAYER/TEAM count:** the big 2D arrays attach to every *initialized* slot; at the full 51 `MAX_PLAYERS`/`MAX_TEAMS`
-the CvTeam cluster alone would be ~85 MB (vs ~17 MB at 17 teams).
+**The real cost is fragmentation, not bytes.** A Building-outer 2D array (`int**` with 5,202 rows) allocates
+**~5,200 tiny heap blocks per owner** — so `m_ppiBuildingCommerceModifier` alone is ~177k blocks across 17 teams +
+17 players — heavy allocator overhead and address-space fragmentation, disproportionate on a 32-bit heap, over data
+that is almost entirely zero. Flattening it to one contiguous block (or sparse storage) would reclaim the overhead
+and cut fragmentation. **This cluster also scales with PLAYER/TEAM count:** the 2D arrays attach to every
+*initialized* slot, so the figures above roughly triple at the full 51 `MAX_PLAYERS`/`MAX_TEAMS`.
+
+⚑ **The accumulator cut is what shrinks this cluster, and it is the lever that actually works here** — a
+Building×Specialist array on `CvTeam` was on its own the single largest entry in this table, and cutting the
+accumulator took its ~88k tiny blocks with it ([DEC-accumulator-cut-uniform](../architecture/decisions.md#dec-accumulator-cut-uniform)).
+Each further accumulator dimensioned by an info count pays back the same way, which is worth knowing while
+weighing a cut — though §5 still holds: this whole cluster is not where the process memory goes.
 
 ---
 
@@ -164,8 +169,8 @@ The static clusters (§1–§4) are flat, so the climb is elsewhere. There are T
 working-set at an early-game state vs the late save, and whether it climbs on a *paused* turn (→ fragmentation/Python)
 vs tracks revealed-tiles/cities/units (→ EXE scene).
 
-**Conclusion for the ceiling hunt:** the structural levers that exist are (a) **flatten the Building-outer 2D
-arrays** (§2 — kills ~220k tiny blocks + their fragmentation), (b) the dense buildRate ledger (§3), (c) the
+**Conclusion for the ceiling hunt:** the structural levers that exist are (a) **flatten the remaining Building-outer
+2D array** (§2 — kills ~177k tiny blocks + their fragmentation), (b) the dense buildRate ledger (§3), (c) the
 allocation-churn pooling in turn processing. But the per-turn climb is fundamentally **legacy turn-processing
 churn**, so the sequencing ruling holds: finish the legacy cut first, then the climb is measurable and attributable
 against the cascade rather than a legacy/cascade mix.

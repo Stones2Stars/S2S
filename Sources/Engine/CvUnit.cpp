@@ -17290,13 +17290,6 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 		m_iMaxMoveCacheTurn = -1;
 	}
 
-	CvWString szNullValue;
-	CvWString szNewValue = kPromotion.getRenamesUnitTo();
-	if (szNewValue != szNullValue)
-	{
-		setName(szNewValue);
-	}
-
 	if (kPromotion.getDomainCargoChange() != NO_DOMAIN)
 	{
 		if (bAdding)
@@ -17332,22 +17325,17 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 		}
 	}
 
-	for (iI = 0; iI < kPromotion.getNumAddsBuildTypes(); iI++)
-	{
-		changeExtraBuildType(bAdding, (BuildTypes)kPromotion.getAddsBuildType(iI));
-	}
+	changeBlitzCount((kPromotion.providesSkill(CLS_SKILL_BLITZ)) ? iChange : 0);
+	changeAmphibCount((kPromotion.providesSkill(CLS_SKILL_AMPHIB)) ? iChange : 0);
+	changeRiverCount((kPromotion.providesSkill(CLS_SKILL_RIVER)) ? iChange : 0);
+	changeEnemyRouteCount((kPromotion.providesSkill(CLS_SKILL_ENEMY_ROUTE)) ? iChange : 0);
+	changeAlwaysHealCount((kPromotion.providesSkill(CLS_SKILL_ALWAYS_HEAL)) ? iChange : 0);
+	changeHillsDoubleMoveCount((kPromotion.providesSkill(CLS_SKILL_HILLS_DOUBLE_MOVE)) ? iChange : 0);
 
-	changeBlitzCount((kPromotion.isBlitz()) ? iChange : 0);
-	changeAmphibCount((kPromotion.isAmphib()) ? iChange : 0);
-	changeRiverCount((kPromotion.isRiver()) ? iChange : 0);
-	changeEnemyRouteCount((kPromotion.isEnemyRoute()) ? iChange : 0);
-	changeAlwaysHealCount((kPromotion.hasSkill(CLS_SKILL_ALWAYS_HEAL)) ? iChange : 0);
-	changeHillsDoubleMoveCount((kPromotion.isHillsDoubleMove()) ? iChange : 0);
-
-	changeCanMovePeaksCount((kPromotion.isCanMovePeaks()) ? iChange : 0);
+	changeCanMovePeaksCount((kPromotion.providesSkill(CLS_SKILL_CAN_PASS_PEAKS)) ? iChange : 0);
 	//	Koshling - enhanced mountaineering mode to differentiate between ability to move through
 	//	mountains, and ability to lead a stack through mountains
-	changeCanLeadThroughPeaksCount((kPromotion.isCanLeadThroughPeaks()) ? iChange : 0);
+	changeCanLeadThroughPeaksCount((kPromotion.providesSkill(CLS_SKILL_CAN_LEAD_THROUGH_PEAKS)) ? iChange : 0);
 
 	// Toffer - Assume promotions with commander stats can only be gained by commanders.
 	//	If assumption is wrong, we'll need setCommander(true) to go through all promotions the unit has,
@@ -17363,154 +17351,152 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
     	m_commodore->changeCommandRange(kPromotion.getCommandRange() * iChange);
     }
 
-	changeImmuneToFirstStrikesCount(((kPromotion.hasSkill(CLS_SKILL_IMMUNE_TO_FIRST_STRIKES) || kPromotion.hasSkill(CLS_SKILL_FIRST_STRIKE_IMMUNE))) ? iChange : 0);
+	changeImmuneToFirstStrikesCount(((kPromotion.providesSkill(CLS_SKILL_IMMUNE_TO_FIRST_STRIKES) || kPromotion.providesSkill(CLS_SKILL_FIRST_STRIKE_IMMUNE))) ? iChange : 0);
 
-	changeDefensiveVictoryMoveCount((kPromotion.hasSkill(CLS_SKILL_DEFENSIVE_VICTORY_MOVE)) ? iChange : 0);
-	changeFreeDropCount((kPromotion.hasSkill(CLS_SKILL_FREE_DROP)) ? iChange : 0);
-	changeOffensiveVictoryMoveCount((kPromotion.hasSkill(CLS_SKILL_OFFENSIVE_VICTORY_MOVE)) ? iChange : 0);
+	changeDefensiveVictoryMoveCount((kPromotion.providesSkill(CLS_SKILL_DEFENSIVE_VICTORY_MOVE)) ? iChange : 0);
+	changeFreeDropCount((kPromotion.providesSkill(CLS_SKILL_FREE_DROP)) ? iChange : 0);
+	changeOffensiveVictoryMoveCount((kPromotion.providesSkill(CLS_SKILL_OFFENSIVE_VICTORY_MOVE)) ? iChange : 0);
 
-	changeOneUpCount((kPromotion.hasSkill(CLS_SKILL_ONE_UP)) ? iChange : 0);
-	changePillageEspionageCount((kPromotion.hasSkill(CLS_SKILL_PILLAGE_ESPIONAGE)) ? iChange : 0);
-	changePillageMarauderCount((kPromotion.hasSkill(CLS_SKILL_PILLAGE_MARAUDER)) ? iChange : 0);
-	changePillageOnMoveCount((kPromotion.hasSkill(CLS_SKILL_PILLAGE_ON_MOVE)) ? iChange : 0);
-	changePillageOnVictoryCount((kPromotion.hasSkill(CLS_SKILL_PILLAGE_ON_VICTORY)) ? iChange : 0);
-	changePillageResearchCount((kPromotion.hasSkill(CLS_SKILL_PILLAGE_RESEARCH)) ? iChange : 0);
-	changeAirCombatLimitChange((kPromotion.getAirCombatLimitChange()) * iChange);
-	changeCelebrityHappy(((kPromotion.hasSkill(CLS_SKILL_CELEBRITY) ? 1 : 0)) * iChange);
+	changeOneUpCount((kPromotion.providesSkill(CLS_SKILL_ONE_UP)) ? iChange : 0);
+	changePillageEspionageCount((kPromotion.providesSkill(CLS_SKILL_PILLAGE_ESPIONAGE)) ? iChange : 0);
+	changePillageMarauderCount((kPromotion.providesSkill(CLS_SKILL_PILLAGE_MARAUDER)) ? iChange : 0);
+	changePillageOnMoveCount((kPromotion.providesSkill(CLS_SKILL_PILLAGE_ON_MOVE)) ? iChange : 0);
+	changePillageOnVictoryCount((kPromotion.providesSkill(CLS_SKILL_PILLAGE_ON_VICTORY)) ? iChange : 0);
+	changePillageResearchCount((kPromotion.providesSkill(CLS_SKILL_PILLAGE_RESEARCH)) ? iChange : 0);
+	changeCelebrityHappy(((kPromotion.providesSkill(CLS_SKILL_CELEBRITY) ? 1 : 0)) * iChange);
 	changeCollateralDamageLimitChange((kPromotion.getFlatCollateral(COLLATERAL_LIMIT, CASC_SCOPE_UNIT) / 100) * iChange);
 	changeCollateralDamageMaxUnitsChange((kPromotion.getFlatCollateral(COLLATERAL_MAX_UNITS, CASC_SCOPE_UNIT) / 100) * iChange);
 	changeCombatLimitChange((kPromotion.getFlatCombat(COMBAT_LIMIT, CASC_SCOPE_UNIT) / 100) * iChange);
 	changeExtraDropRange((kPromotion.getMovement(MOVEMENT_DROP_RANGE, CASC_SCOPE_UNIT) / 100) * iChange);
-	changeExtraNoDefensiveBonusCount((kPromotion.getNoDefensiveBonusChange()) * iChange);
-	changeExtraGatherHerdCount((kPromotion.getGatherHerdChange()) * iChange);
+	changeExtraNoDefensiveBonusCount((kPromotion.providesSkill(CLS_SKILL_NO_DEFENSIVE_BONUS) ? 1 : 0) * iChange);
+	changeExtraGatherHerdCount((kPromotion.providesSkill(CLS_SKILL_GATHER_HERD) ? 1 : 0) * iChange);
 
 	changeSurvivorChance((kPromotion.getScalar(SCALAR_SURVIVOR, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT)) * iChange);
-	changeVictoryAdjacentHeal((kPromotion.getVictoryAdjacentHeal()) * iChange);
-	changeVictoryHeal((kPromotion.getVictoryHeal()) * iChange);
-	changeVictoryStackHeal((kPromotion.getVictoryStackHeal()) * iChange);
+	//	the heal accumulators carry whole hit points; the deposits are ×100 flats ([DEC-fixedpoint-x100])
+	changeVictoryAdjacentHeal((kPromotion.getFlatHeal(HEAL_VICTORY_ADJACENT, CASC_SCOPE_UNIT) / 100) * iChange);
+	changeVictoryHeal((kPromotion.getFlatHeal(HEAL_VICTORY, CASC_SCOPE_UNIT) / 100) * iChange);
+	changeVictoryStackHeal((kPromotion.getFlatHeal(HEAL_VICTORY_STACK, CASC_SCOPE_UNIT) / 100) * iChange);
 
 	changeExtraMoves(kPromotion.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100 * iChange);
-	changeExtraMoveDiscount(kPromotion.getMoveDiscountChange() * iChange);
-	changeExtraAirRange(kPromotion.getAirRangeChange() * iChange);
+	changeExtraMoveDiscount(kPromotion.getMovement(MOVEMENT_MOVE_DISCOUNT, CASC_SCOPE_UNIT) / 100 * iChange);
+	changeExtraAirRange(kPromotion.getAir(AIR_RANGE, CASC_SCOPE_UNIT) / 100 * iChange);
 	//TB Combat Mods Begin
 
 
-	changeStampedeCount((kPromotion.isStampedeChange()) ? iChange : 0);
-	changeStampedeCount((kPromotion.isRemoveStampede()) ? -iChange : 0);
-	changeAttackOnlyCitiesCount((kPromotion.isAttackOnlyCitiesAdd()) ? iChange : 0);
-	changeAttackOnlyCitiesCount((kPromotion.isAttackOnlyCitiesSubtract()) ? -iChange : 0);
-	changeIgnoreNoEntryLevelCount((kPromotion.isIgnoreNoEntryLevelAdd()) ? iChange : 0);
-	changeIgnoreNoEntryLevelCount((kPromotion.isIgnoreNoEntryLevelSubtract()) ? -iChange : 0);
-	changeIgnoreZoneofControlCount((kPromotion.isIgnoreZoneofControlAdd()) ? iChange : 0);
-	changeIgnoreZoneofControlCount((kPromotion.isIgnoreZoneofControlSubtract()) ? -iChange : 0);
-	changeFliesToMoveCount((kPromotion.isFliesToMoveAdd()) ? iChange : 0);
-	changeFliesToMoveCount((kPromotion.isFliesToMoveSubtract()) ? -iChange : 0);
-	if (kPromotion.getStrengthChange() != 0)
+	//	skills are GRANT-ONLY ([skills.md] §4): the legacy add/remove pairs collapse to the grant, so the
+	//	revoke half of each is gone rather than reading a `false` plane.
+	changeStampedeCount((kPromotion.providesSkill(CLS_SKILL_STAMPEDE)) ? iChange : 0);
+	changeAttackOnlyCitiesCount((kPromotion.providesSkill(CLS_SKILL_ATTACK_ONLY_CITIES)) ? iChange : 0);
+	changeIgnoreNoEntryLevelCount((kPromotion.providesSkill(CLS_SKILL_IGNORE_NO_ENTRY_LEVEL)) ? iChange : 0);
+	changeIgnoreZoneofControlCount((kPromotion.providesSkill(CLS_SKILL_IGNORE_ZONE_OF_CONTROL)) ? iChange : 0);
+	changeFliesToMoveCount((kPromotion.providesSkill(CLS_SKILL_FLIES_TO_MOVE)) ? iChange : 0);
+	if (kPromotion.getFlatCombat(COMBAT_AMOUNT, CASC_SCOPE_UNIT) != 0)
 	{
 		bSMrecalc = true;
 	}
-	changeOnslaughtCount((kPromotion.isOnslaughtChange()) ? iChange : 0);
+	changeOnslaughtCount((kPromotion.providesSkill(CLS_SKILL_ONSLAUGHT)) ? iChange : 0);
 
+	//	the combat accumulators carry whole points; the deposits are ×100 flats ([DEC-fixedpoint-x100])
+	changeExtraBreakdownChance(kPromotion.getFlatCombat(COMBAT_BREAKDOWN_CHANCE, CASC_SCOPE_UNIT) / 100 * iChange);
+	changeExtraBreakdownDamage(kPromotion.getFlatCombat(COMBAT_BREAKDOWN_DAMAGE, CASC_SCOPE_UNIT) / 100 * iChange);
+	changeExtraTaunt(kPromotion.getFlatCombat(COMBAT_TAUNT, CASC_SCOPE_UNIT) / 100 * iChange);
+	changeExcileCount((kPromotion.providesSkill(CLS_SKILL_EXCILE) ? 1 : 0) * iChange);
+	changePassageCount((kPromotion.providesSkill(CLS_SKILL_PASSAGE) ? 1 : 0) * iChange);
+	changeNoNonOwnedCityEntryCount((kPromotion.providesSkill(CLS_SKILL_NO_NON_OWNED_CITY_ENTRY) ? 1 : 0) * iChange);
+	changeBarbCoExistCount((kPromotion.providesSkill(CLS_SKILL_BARB_CO_EXIST) ? 1 : 0) * iChange);
+	changeBlendIntoCityCount((kPromotion.providesSkill(CLS_SKILL_BLEND_INTO_CITY) ? 1 : 0) * iChange);
+	changeUpgradeAnywhereCount((kPromotion.providesSkill(CLS_SKILL_UPGRADE_ANYWHERE) ? 1 : 0) * iChange);
 
-	changeExtraBreakdownChance(kPromotion.getBreakdownChanceChange() * iChange);
-	changeExtraBreakdownDamage(kPromotion.getBreakdownDamageChange() * iChange);
-	changeExtraTaunt(kPromotion.getTauntChange() * iChange);
-	changeExcileCount(kPromotion.getExcileChange() * iChange);
-	changePassageCount(kPromotion.getPassageChange() * iChange);
-	changeNoNonOwnedCityEntryCount(kPromotion.getNoNonOwnedCityEntryChange() * iChange);
-	changeBarbCoExistCount(kPromotion.getBarbCoExistChange() * iChange);
-	changeBlendIntoCityCount(kPromotion.getBlendIntoCityChange() * iChange);
-	changeUpgradeAnywhereCount(kPromotion.getUpgradeAnywhereChange() * iChange);
-
-	if (kPromotion.getMaxHPChange() != 0)
+	//	maxHP is applied from the sizeMatters section below, where json.md §9 homes the promotion's SM deltas.
+	if (kPromotion.getCombatModifier(COMBAT_AMOUNT, CASC_SCOPE_UNIT) != 0)
 	{
-		changeExtraMaxHP(kPromotion.getMaxHPChange() * iChange);
-		bSMrecalc = true;
-	}
-	if (kPromotion.getStrengthModifier() != 0)
-	{
-		changeExtraStrengthModifier(kPromotion.getStrengthModifier() * iChange);
+		changeExtraStrengthModifier(kPromotion.getCombatModifier(COMBAT_AMOUNT, CASC_SCOPE_UNIT) * iChange);
 		bSMrecalc = true;
 	}
 	//TB Combat Mods End
-	if (kPromotion.getBombardRateChange() != 0)
+	if (kPromotion.getBombardModifier(BOMBARD_RATE, CASC_SCOPE_UNIT) != 0)
 	{
-		changeExtraBombardRate(kPromotion.getBombardRateChange() * iChange);
+		changeExtraBombardRate(kPromotion.getBombardModifier(BOMBARD_RATE, CASC_SCOPE_UNIT) * iChange);
 		bSMrecalc = true;
 	}
 	// Assume only worker units can get the relevant promotions, if not then we'll need a retroactive unitComp late init function.
 	if (isWorker())
 	{
 		bool bChanged = false;
-		if (kPromotion.getHillsWorkPercent() != 0)
+		//	workRate percents are whole numbers and are NOT ×100 ([DEC-fixedpoint-x100]: a percent carries no
+		//	decimals), so these re-point 1:1 with no scale step. The per-TERRAIN rows are applied by the
+		//	terrain loop below, which is where a peak's rate now lives too — TERRAIN_PEAK is a terrain.
+		const int iHillsWork = kPromotion.getScalar(SCALAR_WORK_RATE_HILLS, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT);
+		if (iHillsWork != 0)
 		{
-			m_worker->changeHillsWorkModifier(kPromotion.getHillsWorkPercent() * iChange);
+			m_worker->changeHillsWorkModifier(iHillsWork * iChange);
 			bChanged = true;
 		}
-		if (kPromotion.getPeaksWorkPercent() != 0)
+		const int iWorkRate = kPromotion.getScalar(SCALAR_WORK_RATE, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT);
+		if (iWorkRate != 0)
 		{
-			m_worker->changePeaksWorkModifier(kPromotion.getPeaksWorkPercent() * iChange);
+			m_worker->changeWorkModifier(iWorkRate * iChange);
 			bChanged = true;
 		}
-		if (kPromotion.getWorkRatePercent() != 0)
+		//	the per-BUILD rows are the entity's OWN compiled entries, walked instead of asking every BUILD id
+		//	whether this promotion deposits onto it (the own-data inversion, [modifier.md] §5)
 		{
-			m_worker->changeWorkModifier(kPromotion.getWorkRatePercent() * iChange);
-			bChanged = true;
-		}
-		for (int iI = 0; iI < GC.getNumBuildInfos(); iI++)
-		{
-			if (kPromotion.getBuildWorkRateModifierChangeType(iI) != 0)
+			std::vector<std::pair<int, int> > buildRates;
+			InfoValuation::collectKeyedTarget(kPromotion.getModifiers(), MODFAM_WORK_RATE, -1,
+				InfoValuation::keyedTargetSegment("build"), buildRates, CASC_SCOPE_UNIT);
+			for (size_t iRow = 0; iRow < buildRates.size(); ++iRow)
 			{
-				m_worker->changeExtraWorkModForBuild((BuildTypes)iI, kPromotion.getBuildWorkRateModifierChangeType(iI) * iChange);
+				m_worker->changeExtraWorkModForBuild((BuildTypes)buildRates[iRow].first, buildRates[iRow].second * iChange);
 				bChanged = true;
 			}
 		}
 		if (bChanged) setInfoBarDirty(true);
 	}
-	changeRevoltProtection(kPromotion.getRevoltProtection() * iChange);
-	changeCollateralDamageProtection(kPromotion.getCollateralDamageProtection() * iChange);
-	changePillageChange(kPromotion.getPillageChange() * iChange);
-	changeUpgradeDiscount(kPromotion.getUpgradeDiscount() * iChange);
-	changeExperiencePercent(kPromotion.getExperiencePercent() * iChange);
-	changeKamikazePercent((kPromotion.getKamikazePercent()) * iChange);
-	if (kPromotion.getCargoChange() != 0)
+	//	percent-unit slots re-point 1:1 (a percent is never ×100); flat-unit slots reduce at this point of use.
+	changeRevoltProtection(kPromotion.getScalar(SCALAR_REVOLT_PROTECTION, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT) * iChange);
+	changeCollateralDamageProtection(kPromotion.getCollateralModifier(COLLATERAL_PROTECTION, CASC_SCOPE_UNIT) * iChange);
+	changePillageChange(kPromotion.getScalar(SCALAR_PILLAGE, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100 * iChange);
+	changeUpgradeDiscount(kPromotion.getCostsModifier(COSTS_UPGRADE, CASC_SCOPE_UNIT) * iChange);
+	changeExperiencePercent(kPromotion.getExperienceModifier(EXPERIENCE_AMOUNT, CASC_SCOPE_UNIT) * iChange);
+	changeKamikazePercent(kPromotion.getCombatModifier(COMBAT_KAMIKAZE, CASC_SCOPE_UNIT) * iChange);
+	if (kPromotion.getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) != 0)
 	{
-		changeCargoSpace(kPromotion.getCargoChange() * iChange);
+		changeCargoSpace(kPromotion.getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100 * iChange);
 		bSMrecalc = true;
 	}
-	if (kPromotion.getSMCargoChange() != 0)
+	//	the SM cargo trio are sizeMatters deltas ([json.md] §9), not the cargo family
+	if (kPromotion.getSizeMatters().cargoSmSpace != 0)
 	{
-		changeSMCargoSpace(kPromotion.getSMCargoChange() * iChange);
+		changeSMCargoSpace(kPromotion.getSizeMatters().cargoSmSpace * iChange);
 		bSMrecalc = true;
 	}
-	if (kPromotion.getSMCargoVolumeChange() != 0)
+	if (kPromotion.getSizeMatters().cargoVolume != 0)
 	{
-		changeExtraCargoVolume(kPromotion.getSMCargoVolumeChange() * iChange);
+		changeExtraCargoVolume(kPromotion.getSizeMatters().cargoVolume * iChange);
 		bSMrecalc = true;
 	}
-	if (kPromotion.getSMCargoVolumeModifierChange() != 0)
+	if (kPromotion.getSizeMatters().cargoVolumeModifier != 0)
 	{
-		changeCargoVolumeModifier(kPromotion.getSMCargoVolumeModifierChange() * iChange);
+		changeCargoVolumeModifier(kPromotion.getSizeMatters().cargoVolumeModifier * iChange);
 		bSMrecalc = true;
 	}
 
-	changeExtraCombatModifierPerSizeMore(kPromotion.getCombatModifierPerSizeMoreChange() * iChange);//no merge/split
-	changeExtraCombatModifierPerSizeLess(kPromotion.getCombatModifierPerSizeLessChange() * iChange);//no merge/split
-	changeExtraCombatModifierPerVolumeMore(kPromotion.getCombatModifierPerVolumeMoreChange() * iChange);//no merge/split
-	changeExtraCombatModifierPerVolumeLess(kPromotion.getCombatModifierPerVolumeLessChange() * iChange);//no merge/split
+	changeExtraCombatModifierPerSizeMore(kPromotion.getSizeMatters().combatModifierPerSizeMore * iChange);//no merge/split
+	changeExtraCombatModifierPerSizeLess(kPromotion.getSizeMatters().combatModifierPerSizeLess * iChange);//no merge/split
+	changeExtraCombatModifierPerVolumeMore(kPromotion.getSizeMatters().combatModifierPerVolumeMore * iChange);//no merge/split
+	changeExtraCombatModifierPerVolumeLess(kPromotion.getSizeMatters().combatModifierPerVolumeLess * iChange);//no merge/split
 
-	changeNoSelfHealCount((kPromotion.hasSkill(CLS_SKILL_NO_SELF_HEAL)) ? iChange : 0);
+	changeNoSelfHealCount((kPromotion.providesSkill(CLS_SKILL_NO_SELF_HEAL)) ? iChange : 0);
 	changeExtraSelfHealModifier(kPromotion.getHealModifier(HEAL_SELF_MODIFIER, CASC_SCOPE_UNIT) * iChange);
-	changeExtraNumHealSupport(kPromotion.getNumHealSupport() * iChange);
-	changeExtraInsidiousness(kPromotion.getInsidiousnessChange() * iChange);
-	changeExtraInvestigation(kPromotion.getInvestigationChange() * iChange);
-	changeAssassinCount(kPromotion.getAssassinChange() * iChange);
-	changeExtraStealthStrikes(kPromotion.getStealthStrikesChange() * iChange);
-	changeStealthDefenseCount((kPromotion.hasSkill(CLS_SKILL_STEALTH_DEFENSE) ? 1 : 0) * iChange);
-	changeOnlyDefensiveCount((kPromotion.hasSkill(CLS_SKILL_DEFENSE_ONLY) ? 1 : 0) * iChange);
-	changeNoInvisibilityCount(kPromotion.getNoInvisibilityChange() * iChange);
-	changeExtraNumTriggers(kPromotion.getNumTriggers() * iChange);
-	changeHiddenNationalityCount(kPromotion.getHiddenNationalityChange() * iChange);
+	changeExtraNumHealSupport(kPromotion.getFlatHeal(HEAL_SUPPORT, CASC_SCOPE_UNIT) / 100 * iChange);
+	changeExtraInsidiousness(kPromotion.getUnderworld(UNDERWORLD_INSIDIOUSNESS, CASC_SCOPE_UNIT) / 100 * iChange);
+	changeExtraInvestigation(kPromotion.getUnderworld(UNDERWORLD_INVESTIGATION, CASC_SCOPE_UNIT) / 100 * iChange);
+	changeAssassinCount((kPromotion.providesSkill(CLS_SKILL_ASSASSIN) ? 1 : 0) * iChange);
+	changeExtraStealthStrikes(kPromotion.getFlatCombat(COMBAT_STEALTH_STRIKES, CASC_SCOPE_UNIT) / 100 * iChange);
+	changeStealthDefenseCount((kPromotion.providesSkill(CLS_SKILL_STEALTH_DEFENSE) ? 1 : 0) * iChange);
+	changeOnlyDefensiveCount((kPromotion.providesSkill(CLS_SKILL_DEFENSE_ONLY) ? 1 : 0) * iChange);
+	changeNoInvisibilityCount((kPromotion.providesSkill(CLS_SKILL_NO_INVISIBILITY) ? 1 : 0) * iChange);
+	changeHiddenNationalityCount((kPromotion.providesSkill(CLS_SKILL_HIDDEN_NATIONALITY) ? 1 : 0) * iChange);
 
 	// the promotion's SM rank deltas live in its sizeMatters section (json.md par.9: Promotion carries the
 	// runtime deltas), applied to the engine extra-accumulators on top of the info-derived base ranks
@@ -17547,20 +17533,44 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	{
 		changeExtraTerrainAttackPercent(((TerrainTypes)iI), (InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_TERRAIN, iI, COMBAT_ATTACK) * iChange));
 		changeExtraTerrainDefensePercent(((TerrainTypes)iI), (InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_TERRAIN, iI, COMBAT_DEFENSE) * iChange));
+	}
 
-		changeExtraTerrainWorkPercent(((TerrainTypes)iI), (kPromotion.getTerrainWorkPercent(iI) * iChange));
-
-		changeTerrainDoubleMoveCount(((TerrainTypes)iI), ((kPromotion.getTerrainDoubleMove(iI)) ? iChange : 0));
+	//	the per-terrain / per-feature workRate rows and the double-move lists are the promotion's OWN compiled
+	//	entries, walked instead of asking every terrain/feature id whether it deposits ([modifier.md] §5)
+	{
+		std::vector<std::pair<int, int> > workRows;
+		InfoValuation::collectKeyedTarget(kPromotion.getModifiers(), MODFAM_WORK_RATE, -1,
+			InfoValuation::keyedTargetSegment("terrain"), workRows, CASC_SCOPE_UNIT);
+		for (size_t iRow = 0; iRow < workRows.size(); ++iRow)
+		{
+			changeExtraTerrainWorkPercent((TerrainTypes)workRows[iRow].first, workRows[iRow].second * iChange);
+		}
+		const std::vector<int>& kTerrainDoubleMove = kPromotion.getTerrainDoubleMoves();
+		for (size_t iRow = 0; iRow < kTerrainDoubleMove.size(); ++iRow)
+		{
+			changeTerrainDoubleMoveCount((TerrainTypes)kTerrainDoubleMove[iRow], iChange);
+		}
 	}
 
 	for (iI = 0; iI < GC.getNumFeatureInfos(); iI++)
 	{
 		changeExtraFeatureAttackPercent(((FeatureTypes)iI), (InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_FEATURE, iI, COMBAT_ATTACK) * iChange));
 		changeExtraFeatureDefensePercent(((FeatureTypes)iI), (InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_FEATURE, iI, COMBAT_DEFENSE) * iChange));
+	}
 
-		changeExtraFeatureWorkPercent(((FeatureTypes)iI), (kPromotion.getFeatureWorkPercent(iI) * iChange));
-
-		changeFeatureDoubleMoveCount(((FeatureTypes)iI), ((kPromotion.getFeatureDoubleMove(iI)) ? iChange : 0));
+	{
+		std::vector<std::pair<int, int> > workRows;
+		InfoValuation::collectKeyedTarget(kPromotion.getModifiers(), MODFAM_WORK_RATE, -1,
+			InfoValuation::keyedTargetSegment("feature"), workRows, CASC_SCOPE_UNIT);
+		for (size_t iRow = 0; iRow < workRows.size(); ++iRow)
+		{
+			changeExtraFeatureWorkPercent((FeatureTypes)workRows[iRow].first, workRows[iRow].second * iChange);
+		}
+		const std::vector<int>& kFeatureDoubleMove = kPromotion.getFeatureDoubleMoves();
+		for (size_t iRow = 0; iRow < kFeatureDoubleMove.size(); ++iRow)
+		{
+			changeFeatureDoubleMoveCount((FeatureTypes)kFeatureDoubleMove[iRow], iChange);
+		}
 	}
 
 	//	⛔ RETIRED with the unit-combat twin above ([vision.md] §4): the per-type and per-substrate
@@ -17581,9 +17591,9 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 		setHasUnitCombat(((UnitCombatTypes)kPromotion.providesUnitCombats()[iI]), bAdding, true);
 	}
 
-	for (iI = 0; iI < kPromotion.getNumRemovesUnitCombatTypes(); iI++)
+	for (iI = 0; iI < (int)kPromotion.removesUnitCombats().size(); iI++)
 	{
-		setHasUnitCombat(((UnitCombatTypes)kPromotion.getRemovesUnitCombatType(iI)), bAdding ? false : true, true);
+		setHasUnitCombat(((UnitCombatTypes)kPromotion.removesUnitCombats()[iI]), bAdding ? false : true, true);
 	}
 
 
@@ -17608,7 +17618,7 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 
 	for (iI = 0; iI < NUM_DOMAIN_TYPES; iI++)
 	{
-		changeExtraDomainModifier(((DomainTypes)iI), (kPromotion.getDomainModifierPercent(iI) * iChange));
+		changeExtraDomainModifier(((DomainTypes)iI), (InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_DOMAIN, iI, COMBAT_AMOUNT) * iChange));
 	}
 
 	if (bAdding && bInitial && kPromotion.isZeroesXP())
@@ -17650,7 +17660,7 @@ void CvUnit::setHasPromotion(PromotionTypes eIndex, bool bNewValue, bool bFree, 
 
 	const CvPromotionInfo& kPromotion = GC.getPromotionInfo(eIndex);
 	// Disable spy promotions mechanism
-	bool canPromote = !isSpy() || GC.isSS_ENABLED() || kPromotion.isEnemyRoute(); //exempt commando promotion
+	bool canPromote = !isSpy() || GC.isSS_ENABLED() || kPromotion.providesSkill(CLS_SKILL_ENEMY_ROUTE); //exempt commando promotion
 
 	bool bAssignFree = false;
 	if (bFree)
@@ -18821,14 +18831,6 @@ void CvUnit::read(FDataStreamBase* pStream)
 			if (GC.getPromotionInfo((PromotionTypes)iI).changesMoveThroughPlots())
 			{
 				m_movementCharacteristicsHash ^= GC.getPromotionInfo((PromotionTypes)iI).getZobristValue();
-			}
-			// Toffer - Perhaps just as well to not store this data in the save... Mandatory recalc for one variable.
-			for (int iJ = 0; iJ < GC.getPromotionInfo((PromotionTypes)iI).getNumAddsBuildTypes(); iJ++)
-			{
-				if ((BuildTypes)GC.getPromotionInfo((PromotionTypes)iI).getAddsBuildType(iJ) != NO_BUILD)
-				{
-					changeExtraBuildType(true, (BuildTypes)GC.getPromotionInfo((PromotionTypes)iI).getAddsBuildType(iJ));
-				}
 			}
 		}
 	}
@@ -21984,7 +21986,7 @@ void CvUnit::doBattleFieldPromotions(CvUnit* pDefender, const CombatDetails& cdD
 		const PromotionTypes promotionType = static_cast<PromotionTypes>(iI);
 		const CvPromotionInfo& kPromotion = GC.getPromotionInfo(promotionType);
 		/* Block These Promotions */
-		if (kPromotion.getKamikazePercent() > 0 ||
+		if (kPromotion.getCombatModifier(COMBAT_KAMIKAZE, CASC_SCOPE_UNIT) > 0 ||
 			kPromotion.isLeader() ||
 			kPromotion.hasNegativeEffects())
 		{
@@ -22005,12 +22007,12 @@ void CvUnit::doBattleFieldPromotions(CvUnit* pDefender, const CombatDetails& cdD
 			}
 			//TB Combat Mods End
 			//* attacker was crossing river
-			if (kPromotion.isRiver() && cdDefenderDetails.iRiverAttackModifier != 0)	//this bonus is being applied to defender
+			if (kPromotion.providesSkill(CLS_SKILL_RIVER) && cdDefenderDetails.iRiverAttackModifier != 0)	//this bonus is being applied to defender
 			{
 				aAttackerAvailablePromotions.push_back(promotionType);
 			}
 			//* attack from water
-			if (kPromotion.isAmphib() && cdDefenderDetails.iAmphibAttackModifier != 0)
+			if (kPromotion.providesSkill(CLS_SKILL_AMPHIB) && cdDefenderDetails.iAmphibAttackModifier != 0)
 			{
 				aAttackerAvailablePromotions.push_back(promotionType);
 			}
@@ -22051,7 +22053,7 @@ void CvUnit::doBattleFieldPromotions(CvUnit* pDefender, const CombatDetails& cdD
 			{
 				aAttackerAvailablePromotions.push_back(promotionType);
 			}
-			if (kPromotion.getStrengthChange() > 0)
+			if (kPromotion.getFlatCombat(COMBAT_AMOUNT, CASC_SCOPE_UNIT) > 0)
 			{
 				aAttackerAvailablePromotions.push_back(promotionType);
 			}
@@ -22061,17 +22063,17 @@ void CvUnit::doBattleFieldPromotions(CvUnit* pDefender, const CombatDetails& cdD
 			}
 			//TB Combat Mods End
 			//* combat strength promotions
-			if (kPromotion.getCombatModifier(COMBAT_AMOUNT, CASC_SCOPE_UNIT) > 0 && !kPromotion.isAmphib())
+			if (kPromotion.getCombatModifier(COMBAT_AMOUNT, CASC_SCOPE_UNIT) > 0 && !kPromotion.providesSkill(CLS_SKILL_AMPHIB))
 			{
 				aAttackerAvailablePromotions.push_back(promotionType);
 			}
 			//* domain mod
-			if (kPromotion.getDomainModifierPercent((int)pDefender->getDomainType()))
+			if (InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_DOMAIN, (int)pDefender->getDomainType(), COMBAT_AMOUNT))
 			{
 				aAttackerAvailablePromotions.push_back(promotionType);
 			}
 			//* blitz
-			if (kPromotion.isBlitz() && bAttackerHasLostNoHP)
+			if (kPromotion.providesSkill(CLS_SKILL_BLITZ) && bAttackerHasLostNoHP)
 			{
 				aAttackerAvailablePromotions.push_back(promotionType);
 			}
@@ -22108,7 +22110,7 @@ void CvUnit::doBattleFieldPromotions(CvUnit* pDefender, const CombatDetails& cdD
 			{
 				aDefenderAvailablePromotions.push_back(promotionType);
 			}
-			if (kPromotion.getStrengthChange() > 0)
+			if (kPromotion.getFlatCombat(COMBAT_AMOUNT, CASC_SCOPE_UNIT) > 0)
 			{
 				aDefenderAvailablePromotions.push_back(promotionType);
 			}
@@ -22167,7 +22169,7 @@ void CvUnit::doBattleFieldPromotions(CvUnit* pDefender, const CombatDetails& cdD
 				aDefenderAvailablePromotions.push_back(promotionType);
 			}
 			//* domain mod
-			if (kPromotion.getDomainModifierPercent((int)getDomainType()))
+			if (InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_DOMAIN, (int)getDomainType(), COMBAT_AMOUNT))
 			{
 				aDefenderAvailablePromotions.push_back(promotionType);
 			}
