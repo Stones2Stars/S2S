@@ -341,17 +341,6 @@
   ⚑ The unit is SETTLED and needs no thought: GAME YEARS. The ledger already stores the build year, the
   authored thresholds are year counts, and the tooltip has always promised *"doubles in 1000 years"* — so the
   test is `getGameTurnYear() - iTimeBuilt >= N` and nothing converts.
-- Give `requires` a PRECISE query — "does this entity's requires name this atom / this predicate", answered per
-  id. Two consumers want it and neither has any other source: a building's need for the state religion IN CITY,
-  and the religion a unit needs to be trained.
-  ⛔ `CascadeCondDeps` is NOT that query and must not be pressed into service as one. It deliberately collapses
-  all four state-religion predicates onto one flag, because its job is deciding which events re-gate a
-  candidate — where over-inclusion is SAFE by design ([enabler.md §5](../../specs/enabler.md)). Reading it as a
-  semantic answer widens a 69-building test to ~175 silently.
-  ⚠ And the unit's religion is NOT its `spread` block: 9 units require a religion and spread nothing (crusader,
-  inquisitor, monk, fanatic …), so that substitution drops them from the valuation without failing.
-  ⚑ It extends the ONE scanner rather than adding a second walk
-  ([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation)).
 - Give the what-if valuation a KEYED twin. `expected*` answers a family's point slot, so a deposit that is BOTH
   keyed and conditioned has no read: the tech-gated per-specialist building slot is the live case, and its
   consumers dangle on that alone. It wants the `collectKeyedTarget` walk with the conditioned tail evaluated

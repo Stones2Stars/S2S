@@ -606,7 +606,7 @@ void EnablerKernel::scanCondDeps(const CvCondition* c, CascadeCondDeps& d, bool 
 		else if (t.compare(0, 5, "TECH_") == 0)  { if (c->id >= 0) d.techs.insert(c->id); }
 		else if (t.compare(0, 6, "BONUS_") == 0) { if (c->id >= 0) d.bonuses.insert(c->id); if (bMarkDynamic) d.dynamic = true; }  // trade/map/vicinity shifts aren't a discrete event
 		else if (t.compare(0, 6, "CIVIC_") == 0) d.civicAny = true;
-		else if (t.compare(0, 9, "RELIGION_") == 0) d.religion = true;
+		else if (t.compare(0, 9, "RELIGION_") == 0) { d.religion = true; if (c->id >= 0) d.religions.insert(c->id); }
 		else if (t.compare(0, 12, "CORPORATION_") == 0) d.corp = true;
 		else if (t.compare(0, 9, "BUILDING_") == 0) { if (c->id >= 0) d.buildings.insert(c->id); }
 		else if (bTrackUnits && t.compare(0, 5, "UNIT_") == 0) { if (c->id >= 0) d.units.insert(c->id); }
@@ -623,8 +623,10 @@ void EnablerKernel::scanCondDeps(const CvCondition* c, CascadeCondDeps& d, bool 
 		case CASC_PRED_HAS_CORPORATION:         d.corp = true; break;
 		case CASC_PRED_HAS_RELIGION:
 		case CASC_PRED_IS_HOLY_CITY:            d.religion = true; break;
+		// The in-city one sets BOTH and breaks on its own -- sharing the fallthrough would hand the precise
+		// flag to its three siblings, which is exactly the widening it exists to avoid.
+		case CASC_PRED_STATE_RELIGION_IN_CITY:      d.stateReligionInCity = true; d.stateReligion = true; break;
 		case CASC_PRED_HAS_STATE_RELIGION:
-		case CASC_PRED_STATE_RELIGION_IN_CITY:
 		case CASC_PRED_STATE_RELIGION:
 		case CASC_PRED_IS_STATE_RELIGION_HOLY_CITY: d.stateReligion = true; break;
 		// COASTAL is a `requires` CONDITION in the JSON model, never a property of the entity -- a rebuilt info

@@ -42,6 +42,10 @@ struct EnBucketSets
 struct CascadeCondDeps
 {
 	bool pop, power, religion, corp, goldenAge, stateReligion, civicAny;
+	// The PRECISE state-religion predicate, beside the collapsed `stateReligion` above. The collapsed flag
+	// unions all four spellings because RE-GATING wants breadth (over-inclusion is safe, enabler.md §5); a
+	// consumer asking what an entity actually NEEDS wants this one, which is the in-city requirement alone.
+	bool stateReligionInCity;
 	bool coastal;             // the entity needs a COAST (CASC_PRED_HAS_COAST) -- a requires CONDITION in the
 	                          // JSON model, never an entity property, so a rebuilt info carries no isWater()
 	bool dynamic;             // a non-HAVE atom (live state no event carries) -- only set under bMarkDynamic
@@ -49,9 +53,10 @@ struct CascadeCondDeps
 	std::set<int> bonuses;    // specific BONUS_ ids referenced (presence or HAS_BONUS predicate)
 	std::set<int> buildings;  // specific BUILDING_ ids referenced
 	std::set<int> units;      // specific UNIT_ ids referenced -- only collected under bTrackUnits
+	std::set<int> religions;  // specific RELIGION_ ids referenced (the id half of the `religion` flag above)
 	std::map<int, std::pair<int, int> > propertyBands;  // PROPERTY_ id -> the operate band [min,max] (F5: -1 = unset)
 	CascadeCondDeps() : pop(false), power(false), religion(false), corp(false), goldenAge(false),
-		stateReligion(false), civicAny(false), coastal(false), dynamic(false) {}
+		stateReligion(false), stateReligionInCity(false), civicAny(false), coastal(false), dynamic(false) {}
 };
 
 class EnablerDomain;

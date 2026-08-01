@@ -6235,7 +6235,15 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 
 						religiousBuildingValue++;
 
-						ReligionTypes eReligion = (ReligionTypes)(GC.getUnitInfo((UnitTypes)iI).getPrereqReligion());
+						// The religion this unit NEEDS to be trained -- a `requires` atom, read through the ONE
+						// scanner. ⚠ NOT its `spread` block: 9 units require a religion and spread nothing.
+						CascadeCondDeps kUnitDeps;
+						if (GC.getUnitInfo((UnitTypes)iI).getRequires() != NULL)
+						{
+							EnablerKernel::scanCondDeps(GC.getUnitInfo((UnitTypes)iI).getRequires()->build, kUnitDeps, false, false);
+						}
+						ReligionTypes eReligion = kUnitDeps.religions.empty()
+							? NO_RELIGION : (ReligionTypes)(*kUnitDeps.religions.begin());
 						if (eReligion != NO_RELIGION)
 						{
 							//encouragement to get some minimal ability to train special units
@@ -6311,6 +6319,16 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 					}
 				}
 
+				// Does this building NEED the state religion present in its city? That is a `requires`
+				// question, so it is asked of the requires tree through the ONE scanner rather than of a
+				// flag ([DEC-single-implementation]). Scanned once per building, above the loop.
+				CascadeCondDeps kVoteDeps;
+				if (kBuilding.getRequires() != NULL)
+				{
+					EnablerKernel::scanCondDeps(kBuilding.getRequires()->build, kVoteDeps, false, false);
+					EnablerKernel::scanCondDeps(kBuilding.getRequires()->operate, kVoteDeps, false, false);
+				}
+
 				for (int iI = 0; iI < GC.getNumVoteSourceInfos(); ++iI)
 				{
 					PROFILE("CvCityAI::AI_buildingValueThresholdOriginal.Votes");
@@ -6318,7 +6336,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 					if (kBuilding.getDiploVoteType() == iI)
 					{
 						int votingSourceValue = 0;
-						if (kBuilding.needStateReligionInCity())
+						if (kVoteDeps.stateReligionInCity)
 						{
 							int iShareReligionCount = 0;
 							int iPlayerCount = 0;
