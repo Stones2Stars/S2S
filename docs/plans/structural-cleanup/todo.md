@@ -513,7 +513,10 @@
   halves of that test are mechanical, so the set is enumerable in one sweep.
   ⛔ A guard WITH a commented-out `#define` is a deliberate off-switch and is NOT in this sweep — it is a
   feature or a diagnostic, its disposition is the owner's, and the reason it is off gets recorded in the
-  owning subsystem doc so the next sweep does not eat it.
+  owning subsystem doc so the next sweep does not eat it. ⚠ `GLOBAL_WARMING` carries one and is nonetheless
+  owner-ruled DEAD ([economy.md](../../reference/economy.md)), so it goes WITH the attics — the switch marks a
+  candidate, never a verdict. ⚑ Its nuke counter (`getNukesExploded` and its changer) is live outside the
+  feature and STAYS; only the warming machinery and the orphaned `GLOBAL_WARMING_*` defines go.
   ⚠ Exclude the compiler/tooling predefines and the vendored third-party files — those guards are defined by
   somebody, just not by us.
   ⛔ Why it is worth doing: these blocks are invisible to the compiler census (the preprocessor skips them),
