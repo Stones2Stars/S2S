@@ -12658,7 +12658,7 @@ void CvCity::popOrder(int orderIndex, bool bFinish, bool bChoose, bool bResolveL
 				if (GC.getProjectInfo(eCreateProject).isSpaceship())
 				{
 					bool needsArtType = true;
-					VictoryTypes eVictory = (VictoryTypes)GC.getProjectInfo(eCreateProject).getVictoryPrereq();
+					VictoryTypes eVictory = (VictoryTypes)GC.getProjectInfo(eCreateProject).getLaunchesVictory();
 
 					if (NO_VICTORY != eVictory && GET_TEAM(getTeam()).canLaunch(eVictory))
 					{
@@ -12668,7 +12668,7 @@ void CvCity::popOrder(int orderIndex, bool bFinish, bool bChoose, bool bResolveL
 
 							if (GC.getGame().isNetworkMultiPlayer())
 							{
-								pInfo = new CvPopupInfo(BUTTONPOPUP_LAUNCH, GC.getProjectInfo(eCreateProject).getVictoryPrereq());
+								pInfo = new CvPopupInfo(BUTTONPOPUP_LAUNCH, GC.getProjectInfo(eCreateProject).getLaunchesVictory());
 							}
 							else
 							{

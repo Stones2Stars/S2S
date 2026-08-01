@@ -21744,7 +21744,7 @@ int CvPlayerAI::AI_getSpaceVictoryStage() const
 	bool bNearAllTechs = true;
 	for (int iI = 0; iI < GC.getNumProjectInfos(); iI++)
 	{
-		if (GC.getProjectInfo((ProjectTypes)iI).getVictoryPrereq() == eSpace)
+		if (GC.getProjectInfo((ProjectTypes)iI).getLaunchesVictory() == eSpace)
 		{
 			if (GET_TEAM(getTeam()).getProjectCount((ProjectTypes)iI) > 0)
 			{

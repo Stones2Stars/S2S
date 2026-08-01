@@ -6540,9 +6540,9 @@ bool CvPlayer::canCreate(ProjectTypes eProject, bool bContinue, bool bTestVisibl
 		return false;
 	}
 
-	if (kProject.getVictoryPrereq() != NO_VICTORY)
+	if (kProject.getLaunchesVictory() != NO_VICTORY)
 	{
-		if (!GC.getGame().isVictoryValid((VictoryTypes)kProject.getVictoryPrereq()))
+		if (!GC.getGame().isVictoryValid((VictoryTypes)kProject.getLaunchesVictory()))
 		{
 			return false;
 		}
@@ -6552,7 +6552,7 @@ bool CvPlayer::canCreate(ProjectTypes eProject, bool bContinue, bool bTestVisibl
 			return false;
 		}
 
-		if (GET_TEAM(getTeam()).getVictoryCountdown((VictoryTypes)kProject.getVictoryPrereq()) >= 0)
+		if (GET_TEAM(getTeam()).getVictoryCountdown((VictoryTypes)kProject.getLaunchesVictory()) >= 0)
 		{
 			return false;
 		}
@@ -20436,9 +20436,9 @@ bool CvPlayer::canDoEvent(EventTypes eEvent, const EventTriggeredData& kTriggere
 			const CvProjectInfo& kProject = GC.getProjectInfo((ProjectTypes)iProject);
 			if (kProject.isSpaceship())
 			{
-				if (kProject.getVictoryPrereq() != NO_VICTORY)
+				if (kProject.getLaunchesVictory() != NO_VICTORY)
 				{
-					if (GC.getGame().isVictoryValid((VictoryTypes)(kProject.getVictoryPrereq())))
+					if (GC.getGame().isVictoryValid((VictoryTypes)(kProject.getLaunchesVictory())))
 					{
 						bValid = true;
 						break;
@@ -23431,7 +23431,7 @@ bool CvPlayer::canSpyDestroyProject(PlayerTypes eTarget, ProjectTypes eProject) 
 	}
 	else
 	{
-		const VictoryTypes eVicotry = (VictoryTypes)kProject.getVictoryPrereq();
+		const VictoryTypes eVicotry = (VictoryTypes)kProject.getLaunchesVictory();
 		if (NO_VICTORY != eVicotry)
 		{
 			// Can't destroy spaceship components if we have already launched

@@ -2681,7 +2681,7 @@ VictoryTypes CvGame::getSpaceVictory() const
 		const ProjectTypes eProject = (ProjectTypes) i;
 		if (GC.getProjectInfo(eProject).isSpaceship())
 		{
-			eVictory = (VictoryTypes) GC.getProjectInfo(eProject).getVictoryPrereq();
+			eVictory = (VictoryTypes) GC.getProjectInfo(eProject).getLaunchesVictory();
 			break;
 		}
 	}

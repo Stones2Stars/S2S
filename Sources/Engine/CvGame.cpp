@@ -7940,15 +7940,18 @@ void CvGame::testVictory()
 
 	if (isOption(GAMEOPTION_ENABLE_UNITED_NATIONS) && !m_bDiploVictoryEnabled)
 	{
-		//Find the diplomatic victory
+		// WHICH victory is the diplomatic one is the VICTORY's OWN property -- `condition.diploVote` -- so it is
+		// a forward read over the handful of victories, never a scan of every building asking which one both
+		// gates a victory and carries a vote source. The building side cannot answer that anyway: a building's
+		// victory prereq is an ordinary world-scope gate in `requires.build` ([DEC-entity-gate]), not an FK
+		// naming the victory it belongs to.
 		VictoryTypes eVictoryUN = NO_VICTORY;
 
-		for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
+		for (int iI = 0; iI < GC.getNumVictoryInfos(); iI++)
 		{
-			const int iV = GC.getBuildingInfo((BuildingTypes)iI).getVictoryPrereq();
-			if (iV != NO_VICTORY && GC.getBuildingInfo((BuildingTypes)iI).getDiploVoteType() != NO_VOTESOURCE)
+			if (GC.getVictoryInfo((VictoryTypes)iI).conditionFlag(VICTORY_CONDITION_DIPLO_VOTE))
 			{
-				eVictoryUN = (VictoryTypes) iV;
+				eVictoryUN = (VictoryTypes)iI;
 				break;
 			}
 		}
