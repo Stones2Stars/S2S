@@ -129,13 +129,6 @@
   ⚠ And check the slot's UNIT: a FLAT slot is ×100 and the reader reduces at its point of use, a percent slot
   does not ([DEC-fixedpoint-x100](../../architecture/decisions.md#dec-fixedpoint-x100)) — the legacy feeds
   divided at the WRITE, so a bare re-point is 100× on every flat channel.
-- Give the SPECIAL-UNIT combat contribution a home. A special-unit load feeds a unit's combat percent and
-  withdrawal, and it is neither a promotion nor a combat-class change, so the resolved plane does not gather it
-  and there is no fact that would dirty it. Its `processLoadedSpecialUnit` feeds dangle until it has one.
-- Give the sea-pillage interceptor its "attacking as the defender, no withdrawal" path. It currently brackets the
-  attack by mutating the unit's own withdrawal down and back up — a snapshot-and-restore of a cached slot, which
-  is banned outright ([superseded-ideas](../../architecture/superseded-ideas.md) #19). It wants a parameter on
-  the combat path, never a temporary write.
 - Wire the COUNT a building's per-improvement free-specialist deposit scales by. The read is wired through the
   ONE `per` resolver, but the count it resolves against does not count correctly yet, so those entries
   contribute 0 — wired, not right, which is the ordering while the tree is red
@@ -168,8 +161,6 @@
   swap would count concealment once per type.
   ⛔ Do NOT sweep the neighbouring `getInvisibleType` / `getSeeInvisibleType` calls: those are live `CvUnit`
   methods sitting in the same blocks.
-- Replace the per-type hide-and-seek help text with the detection entry's own render.
-- Cut `CvCity`'s other hand-rolled dirty caches — demolition fodder, never conversion targets.
 - Retire the direct `gDLL->logMsg` / BetterBTSAI log-helper call sites and the log-level globals they gate,
   wholesale as each domain migrates onto the spine — never tidied in place.
 - Delete the legacy `ConstructRequirement` / construct-condition surface once the `requires` RENDERER exists
