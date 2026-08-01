@@ -81,6 +81,14 @@ supply + corporate maintenance.
   × `100/(100−mod)` if −; free allowances subtracted after, floor 0. `getFinalUnitUpkeepChange(iExtra, bMilitary)`
   *temporarily* mutates the accumulators for marginal-cost AI valuation.
 - Final = `(civilianNet + militaryNet) × handicapPct/100 × AI-handicap × era-scale`, 0 for NPCs.
+  > **⚖ EMPIRE UNIT UPKEEP IS AN ORDINARY MAINTENANCE-SHAPED EXPENSE (owner): it "works exactly the same way as
+  > other maintenance — it is subtracted from gold earned at the end."** So it is a RECEIVER like maintenance,
+  > not a special plane: the empire total is a receiver slot in the player's own package cache
+  > ([state-repositories.md](../architecture/state-repositories.md): a receiver is the same cache holding a
+  > different slot), and it lands in `getFinalExpense`'s pre-inflation components beside total maintenance.
+  > ⚑ The one way it DIFFERS from maintenance is whose realized values the Σ takes: maintenance sums the
+  > player's CITIES, unit upkeep sums the player's UNITS. That is the receiver rule working (the Σ of its
+  > MEMBERS' realized values), not an exception to it — the members are simply a different kind of object.
 - **Supply** = `max(0, outsideUnits)·75/100·(era+1)` × `distantUnitSupportCostModifier` × AI-handicap; 0 in anarchy/NPC.
 
 ## Happiness + health (city)
