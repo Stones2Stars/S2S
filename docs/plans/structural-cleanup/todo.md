@@ -68,12 +68,6 @@
   the trait assignments: the read is wired and an unauthored leader takes the default, so this closes by
   AUTHORING. ⚑ It is the beelining dial — a leader that should not commit five techs deep for one unlock is
   expressed HERE, as data, rather than by weakening the enablement valuation for everyone.
-- Re-key FLANKING from UNIT onto UNITCOMBAT, then move its consumer. The model is RULED
-  ([json.md §6](../../specs/json.md)): `combat.<scope>.flanking.{UNITCOMBAT_X}`, no era gate and no per-unit
-  carve-out. The class-keyed form is already emitted and already authored, so what remains is collapsing the
-  per-UNIT entries onto their combat classes + regen, and pointing the consumer at the class axis.
-  ⚠ Several units collapse onto ONE class carrying different percents, so the merge needs a stated rule —
-  decide it once in the curator rather than per entry.
 - Rule on `MISSION_RANGE_ATTACK` (`canRangeStrike` / `rangeStrike` / `INTERFACEMODE_RANGE_ATTACK`). It is a
   SECOND ranged-attack mechanic, distinct from the removed ranged bombard and sitting beside it in every mission
   switch — so the bombard cut did NOT cover it and must not be assumed to have.

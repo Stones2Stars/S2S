@@ -991,3 +991,12 @@ CvCity::m_paiMaxSpecialistCount
 | the info's dead getter plus zero. Its poison sibling went with it -- `poisonProbabilityModifierTotal()` had an
 | EMPTY BODY, i.e. it had already stopped returning anything at all.
 CvUnit::m_iExtraEndurance
+
+| Two CvUnit accumulators whose ONLY feeder was a promotion read that no data authors, so both were frozen at
+| zero. `m_iAirCombatLimitChange` was fed by the promotion `iAirCombatLimitChange` -- no promotion authors an
+| `air` combatLimit row in the curated data, and the legacy XML carries none either, so `airCombatLimit()` now
+| reads the unit info's own value alone. `m_iExtraNumTriggers` was fed by the promotion trigger count, and the
+| TRAP subsystem those triggers served is a removed mechanic (skills.md: `triggerBeforeAttack` is dead), so
+| nothing grants one. Neither had a reader outside CvUnit.
+CvUnit::m_iAirCombatLimitChange
+CvUnit::m_iExtraNumTriggers

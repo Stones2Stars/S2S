@@ -522,7 +522,6 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 	m_iPillageOnMoveCount = 0;
 	m_iPillageOnVictoryCount = 0;
 	m_iPillageResearchCount = 0;
-	m_iAirCombatLimitChange = 0;
 	m_iCelebrityHappy = 0;
 	m_iCollateralDamageLimitChange = 0;
 	m_iCollateralDamageMaxUnitsChange = 0;
@@ -677,7 +676,6 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 	m_iOnlyDefensiveCount = 0;
 	m_iNoInvisibilityCount = 0;
 	m_iNoCaptureCount = 0;
-	m_iExtraNumTriggers = 0;
 	m_iNumTimesTriggered = 0;
 	m_iExtraNoDefensiveBonusCount = 0;
 	m_iExtraGatherHerdCount = 0;
@@ -788,7 +786,6 @@ CvUnit& CvUnit::operator=(const CvUnit& other)
 	m_iPillageOnMoveCount = other.m_iPillageOnMoveCount;
 	m_iPillageOnVictoryCount = other.m_iPillageOnVictoryCount;
 	m_iPillageResearchCount = other.m_iPillageResearchCount;
-	m_iAirCombatLimitChange = other.m_iAirCombatLimitChange;
 	m_iCelebrityHappy = other.m_iCelebrityHappy;
 	m_iCollateralDamageLimitChange = other.m_iCollateralDamageLimitChange;
 	m_iCollateralDamageMaxUnitsChange = other.m_iCollateralDamageMaxUnitsChange;
@@ -914,7 +911,6 @@ CvUnit& CvUnit::operator=(const CvUnit& other)
 	m_iOnlyDefensiveCount = other.m_iOnlyDefensiveCount;
 	m_iNoInvisibilityCount = other.m_iNoInvisibilityCount;
 	m_iNoCaptureCount = other.m_iNoCaptureCount;
-	m_iExtraNumTriggers = other.m_iExtraNumTriggers;
 	m_iNumTimesTriggered = other.m_iNumTimesTriggered;
 	m_iExtraNoDefensiveBonusCount = other.m_iExtraNoDefensiveBonusCount;
 	m_iExtraGatherHerdCount = other.m_iExtraGatherHerdCount;
@@ -12059,19 +12055,6 @@ float CvUnit::airCurrCombatStrFloat(const CvUnit* pOther) const
 
 int CvUnit::combatLimit(const CvUnit* pOpponent) const
 {
-/*****************************************************************************************************/
-/**  Author: TheLadiesOgre                                                                          **/
-/**  Date: 18.09.2009                                                                               **/
-/**  ModComp: TLOTags                                                                               **/
-/**  Reason Added: Implement iAirCombatLimitChange                                                  **/
-/**  Notes:                                                                                         **/
-/*****************************************************************************************************
-	return m_pUnitInfo->getCombatLimit();*/
-	//return (m_pUnitInfo->getCombatLimit() + getCombatLimitChange());
-/*****************************************************************************************************/
-/**  TheLadiesOgre; 18.09.2009; TLOTags                                                             **/
-/*****************************************************************************************************/
-
 	int iTotal = (m_pUnitInfo->getCombatLimit() + getCombatLimitChange());
 	if (pOpponent != NULL)
 	{
@@ -12084,7 +12067,7 @@ int CvUnit::combatLimit(const CvUnit* pOpponent) const
 
 int CvUnit::airCombatLimit(const CvUnit* pOpponent) const
 {
-	int iTotal = m_pUnitInfo->getAirCombatLimit() + getAirCombatLimitChange();
+	int iTotal = m_pUnitInfo->getAirCombatLimit();
 
 	if (pOpponent)
 	{
@@ -14856,21 +14839,6 @@ void CvUnit::changePillageResearchCount(int iChange)
 	FASSERT_NOT_NEGATIVE(getPillageResearchCount());
 }
 
-
-int CvUnit::getAirCombatLimitChange() const
-{
-	return m_iAirCombatLimitChange;
-}
-
-void CvUnit::changeAirCombatLimitChange(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iAirCombatLimitChange += iChange;
-
-		setInfoBarDirty(true);
-	}
-}
 
 int CvUnit::getCelebrityHappy() const
 {
@@ -18309,7 +18277,6 @@ void CvUnit::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvUnit", &m_iPillageOnMoveCount);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iPillageOnVictoryCount);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iPillageResearchCount);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iAirCombatLimitChange);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iCelebrityHappy);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iCollateralDamageLimitChange);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iCollateralDamageMaxUnitsChange);
@@ -18672,7 +18639,6 @@ void CvUnit::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvUnit", &m_bRevealed);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iOnlyDefensiveCount);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iNoInvisibilityCount);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraNumTriggers);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iNumTimesTriggered);
 	WRAPPER_READ(wrapper, "CvUnit", &m_bIsArmed);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iHiddenNationalityCount);
@@ -19041,7 +19007,6 @@ void CvUnit::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iPillageOnMoveCount);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iPillageOnVictoryCount);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iPillageResearchCount);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iAirCombatLimitChange);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iCelebrityHappy);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iCollateralDamageLimitChange);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iCollateralDamageMaxUnitsChange);
@@ -19298,7 +19263,6 @@ void CvUnit::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvUnit", m_bRevealed);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iOnlyDefensiveCount);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iNoInvisibilityCount);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraNumTriggers);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iNumTimesTriggered);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_bIsArmed);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iHiddenNationalityCount);
@@ -22014,7 +21978,7 @@ void CvUnit::doBattleFieldPromotions(CvUnit* pDefender, const CombatDetails& cdD
 				continue;
 			}
 			//* attacker was attacking with S&D bonus
-			if (kPromotion.getLungeChange() > 0 && surroundedDefenseModifier(pPlot, pDefender) != 0)
+			if (kPromotion.getCombatModifier(COMBAT_LUNGE, CASC_SCOPE_UNIT) > 0 && surroundedDefenseModifier(pPlot, pDefender) != 0)
 			{
 				aAttackerAvailablePromotions.push_back(promotionType);
 			}
@@ -22052,7 +22016,7 @@ void CvUnit::doBattleFieldPromotions(CvUnit* pDefender, const CombatDetails& cdD
 			}
 			//* first strikes/chanses promotions
 			if ((kPromotion.getScalar(SCALAR_FIRST_STRIKES, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100 > 0 ||
-				kPromotion.getChanceFirstStrikesChange() > 0) && (firstStrikes() > 0 || chanceFirstStrikes() > 0))
+				kPromotion.getScalar(SCALAR_FIRST_STRIKE_CHANCES, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) > 0) && (firstStrikes() > 0 || chanceFirstStrikes() > 0))
 			{
 				aAttackerAvailablePromotions.push_back(promotionType);
 			}
@@ -22062,7 +22026,7 @@ void CvUnit::doBattleFieldPromotions(CvUnit* pDefender, const CombatDetails& cdD
 				aAttackerAvailablePromotions.push_back(promotionType);
 			}
 			//TB Combat Mods Begin * anti-barbarian combat mod
-			if (kPromotion.getVSBarbsChange() > 0 && (pDefender->isHominid()))
+			if (kPromotion.getCombatModifier(COMBAT_VS_BARBS, CASC_SCOPE_UNIT) > 0 && (pDefender->isHominid()))
 			{
 				aAttackerAvailablePromotions.push_back(promotionType);
 			}
@@ -22070,7 +22034,7 @@ void CvUnit::doBattleFieldPromotions(CvUnit* pDefender, const CombatDetails& cdD
 			{
 				aAttackerAvailablePromotions.push_back(promotionType);
 			}
-			if (kPromotion.getAttackCombatModifierChange() > 0)
+			if (kPromotion.getCombatModifier(COMBAT_ATTACK, CASC_SCOPE_UNIT) > 0)
 			{
 				aAttackerAvailablePromotions.push_back(promotionType);
 			}
@@ -22094,7 +22058,7 @@ void CvUnit::doBattleFieldPromotions(CvUnit* pDefender, const CombatDetails& cdD
 		//* defender withdrawn, give him withdrawal promo
 		else if (m_combatResult.bDefenderWithdrawn)
 		{
-			if (kPromotion.getWithdrawalChange() > 0 &&
+			if (kPromotion.getScalar(SCALAR_WITHDRAWAL, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT) > 0 &&
 				pDefender->canAcquirePromotion(promotionType))
 			{
 				aDefenderAvailablePromotions.push_back(promotionType);
@@ -22103,7 +22067,7 @@ void CvUnit::doBattleFieldPromotions(CvUnit* pDefender, const CombatDetails& cdD
 		//* attacker withdrawn
 		else if (bAttackerWithdrawn)
 		{
-			if (kPromotion.getWithdrawalChange() > 0 &&
+			if (kPromotion.getScalar(SCALAR_WITHDRAWAL, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT) > 0 &&
 				canAcquirePromotion(promotionType))
 			{
 				aAttackerAvailablePromotions.push_back(promotionType);
@@ -22119,7 +22083,7 @@ void CvUnit::doBattleFieldPromotions(CvUnit* pDefender, const CombatDetails& cdD
 			}
 			//TB Combat Mods Begin
 			//* Defender Suffered Surround and Destroy Modifier
-			if (kPromotion.getDynamicDefenseChange() > 0 && surroundedDefenseModifier(pPlot, pDefender) != 0)
+			if (kPromotion.getCombatModifier(COMBAT_DYNAMIC_DEFENSE, CASC_SCOPE_UNIT) > 0 && surroundedDefenseModifier(pPlot, pDefender) != 0)
 			{
 				aDefenderAvailablePromotions.push_back(promotionType);
 			}
@@ -22127,7 +22091,7 @@ void CvUnit::doBattleFieldPromotions(CvUnit* pDefender, const CombatDetails& cdD
 			{
 				aDefenderAvailablePromotions.push_back(promotionType);
 			}
-			if (kPromotion.getAnimalIgnoresBordersChange() > 0 && pDefender->isAnimal() && !GC.getGame().isOption(GAMEOPTION_ANIMAL_STAY_OUT))
+			if (kPromotion.providesSkill(CLS_SKILL_ANIMAL_IGNORES_BORDERS) && pDefender->isAnimal() && !GC.getGame().isOption(GAMEOPTION_ANIMAL_STAY_OUT))
 			{
 				aDefenderAvailablePromotions.push_back(promotionType);
 			}
@@ -22155,7 +22119,7 @@ void CvUnit::doBattleFieldPromotions(CvUnit* pDefender, const CombatDetails& cdD
 			}
 			//* first strikes/chanses promotions
 			if ((kPromotion.getScalar(SCALAR_FIRST_STRIKES, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100 > 0 ||
-				kPromotion.getChanceFirstStrikesChange() > 0) &&
+				kPromotion.getScalar(SCALAR_FIRST_STRIKE_CHANCES, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) > 0) &&
 				(pDefender->firstStrikes() > 0 || pDefender->chanceFirstStrikes() > 0))
 			{
 				aDefenderAvailablePromotions.push_back(promotionType);
@@ -22166,12 +22130,12 @@ void CvUnit::doBattleFieldPromotions(CvUnit* pDefender, const CombatDetails& cdD
 				aDefenderAvailablePromotions.push_back(promotionType);
 			}
 			//TB Combat Mods Begin * anti-barbarian combat mod
-			if (kPromotion.getVSBarbsChange() > 0 && isHominid())
+			if (kPromotion.getCombatModifier(COMBAT_VS_BARBS, CASC_SCOPE_UNIT) > 0 && isHominid())
 			{
 				aDefenderAvailablePromotions.push_back(promotionType);
 			}
 
-			if (!noDefensiveBonus() && kPromotion.getDefenseCombatModifierChange() > 0)
+			if (!noDefensiveBonus() && kPromotion.getCombatModifier(COMBAT_DEFENSE, CASC_SCOPE_UNIT) > 0)
 			{
 				aDefenderAvailablePromotions.push_back(promotionType);
 			}
@@ -26811,17 +26775,6 @@ void CvUnit::doSetDefaultStatuses()
 
 
 
-
-
-int CvUnit::getExtraNumTriggers() const
-{
-	return m_iExtraNumTriggers;
-}
-
-void CvUnit::changeExtraNumTriggers(int iChange)
-{
-	m_iExtraNumTriggers += iChange;
-}
 
 
 int CvUnit::getNumTimesTriggered() const

@@ -1042,8 +1042,6 @@ public:
 	bool isPillageResearch() const;
 	void changePillageResearchCount(int iChange);
 
-	int getAirCombatLimitChange() const;
-	void changeAirCombatLimitChange(int iChange);
 
 	int getCelebrityHappy() const;
 	void changeCelebrityHappy(int iChange);
@@ -1469,7 +1467,6 @@ protected:
 	int m_iPillageOnMoveCount;
 	int m_iPillageOnVictoryCount;
 	int m_iPillageResearchCount;
-	int m_iAirCombatLimitChange;
 	int m_iCelebrityHappy;
 	int m_iCollateralDamageLimitChange;
 	int m_iCollateralDamageMaxUnitsChange;
@@ -1518,7 +1515,6 @@ protected:
 	int m_iNoCaptureCount;
 	int m_iExtraNoDefensiveBonusCount;
 	int m_iExtraGatherHerdCount;
-	int m_iExtraNumTriggers;
 	int m_iNumTimesTriggered;
 	int m_iHiddenNationalityCount;
 	bool m_bIsArmed;
@@ -2094,8 +2090,6 @@ public:
 	void doSetDefaultStatuses();
 
 
-	int getExtraNumTriggers() const;
-	void changeExtraNumTriggers(int iChange);
 
 	int getNumTimesTriggered() const;
 	void changeNumTimesTriggered(int iChange);
