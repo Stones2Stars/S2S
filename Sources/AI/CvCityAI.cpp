@@ -5837,18 +5837,6 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 						/ (100 * std::max(1, kOwner.getNumTradeableBonuses(eFreeBonus)));
 				}
 
-				int iCivicOption = kBuilding.getCivicOption();
-				if (iCivicOption != NO_CIVICOPTION)
-				{
-					for (int iI = 0; iI < GC.getNumCivicInfos(); iI++)
-					{
-						if (GC.getCivicInfo((CivicTypes)iI).getCivicOption() == iCivicOption && !kOwner.canDoCivics((CivicTypes)iI))
-						{
-							iValue += kOwner.AI_civicValue((CivicTypes)iI) / 10;
-						}
-					}
-				}
-
 				int iGreatPeopleRateModifier = kBuilding.getScalar(SCALAR_GREAT_PEOPLE_RATE, CASC_SCOPE_CITY, CASC_UNIT_PERCENT);
 				if (iGreatPeopleRateModifier > 0)
 				{
@@ -12357,14 +12345,12 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 	}
 
 	//	Some things cause us to consider the building in any role
-	if (kBuilding.getFreeSpecialistsAny() > 0 ||
-		kBuilding.getAreaFreeSpecialist() > 0 ||
-		kBuilding.getGlobalFreeSpecialist() > 0 ||
+	if (InfoValuation::authorsAnySigned(kBuilding.getModifiers(), MODFAM_FREE_SPECIALISTS, +1) ||
 		(kBuilding.getPropertyManipulators() != NULL && kBuilding.getPropertyManipulators()->getNumSources() > 0))
 	{
 		return true;
 	}
-	if (kBuilding.providesAmenity(CLS_AMENITY_PROVIDES_POWER) || (kBuilding.getPowerBonus() != NO_BONUS && hasBonus((BonusTypes)(kBuilding.getPowerBonus()))))
+	if (kBuilding.providesAmenity(CLS_AMENITY_PROVIDES_POWER))
 	{
 		return true;
 	}
@@ -13819,23 +13805,17 @@ const {
 		int iYieldValue = AI_buildingYieldValue((YieldTypes)iI, eBuilding, kBuilding, bForeignTrade, aiFreeSpecialistYield[iI]);
 		{
 			int iGlobalYieldModValue = 0;
+			// One empire-scope percent: the legacy area term authors at EMPIRE too (a landmass is not an
+			// ownable scope), so it reaches every city rather than stopping at the coastline.
+			const int iEmpireYieldMod = kBuilding.getYieldModifier((YieldTypes)iI, CASC_SCOPE_EMPIRE);
 
-			if (kBuilding.getGlobalYieldModifier(iI) > 0 || kBuilding.getAreaYieldModifier(iI) > 0)
+			if (iEmpireYieldMod > 0)
 			{
 				foreach_(const CvCity * pLoopCity, kOwner.cities())
 				{
 					int aiLoopCityYields[NUM_YIELD_TYPES];
 					pLoopCity->getYields(aiLoopCityYields);
-					iGlobalYieldModValue +=
-					(
-						(aiLoopCityYields[iI] / 100)
-						*
-						(
-							kBuilding.getGlobalYieldModifier(iI)
-							+
-							(pLoopCity->area() == pArea ? kBuilding.getAreaYieldModifier(iI) : 0)
-						)
-					);
+					iGlobalYieldModValue += (aiLoopCityYields[iI] / 100) * iEmpireYieldMod;
 				}
 			}
 			if (iGlobalYieldModValue > 0)
