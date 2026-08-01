@@ -205,11 +205,8 @@ public:
 	const std::vector<int>& getMapCategories() const        { return m_aiMapCategories; }         // MAPCATEGORY_* FKs
 	const std::vector<int>& getEnabledCivilizations() const { return m_aiEnabledCivilizations; }  // CIVILIZATION_* FKs
 	const std::map<int, int>& getVictoryThresholds() const  { return m_victoryThresholds; }       // VICTORY_* FK -> threshold
-	// The two commerce-magnitude identity configs (×100 -- magnitudes, not counts).
+	// The commerce-magnitude identity config (×100 -- a magnitude, not a count).
 	int getStateReligionCommerce(CommerceTypes eCommerce) const { return m_aiStateReligionCommerce[(int)eCommerce]; }
-	// commerceDoubleTime is TURNS (a count, plain): the legacy CommerceChangeDoubleTime age-doubling threshold
-	// (the deposit half is the §3 existedFor-conditioned second entry; this is the intrinsic display config).
-	int getCommerceDoubleTime(CommerceTypes eCommerce) const { return m_aiCommerceDoubleTime[(int)eCommerce]; }
 
 protected:
 	virtual CvRequires*  mutRequires()     { return &m_requires; }
@@ -274,7 +271,6 @@ private:
 	int m_iGlobalPopulationChange;
 	int m_iFreeTechs;
 	int m_aiStateReligionCommerce[NUM_COMMERCE_TYPES];
-	int m_aiCommerceDoubleTime[NUM_COMMERCE_TYPES];
 	// Fed from the PROPERTY_* families (CascadePropertyBridge::bridgeFamilies -- property-audit.md).
 	CvPropertyManipulators m_PropertyManipulators;            // PROPERTY_X.city.flat -- this building's own city
 	CvPropertyManipulators m_PropertyManipulatorsAllCities;   // PROPERTY_X.empire.flat -- every city of the owner

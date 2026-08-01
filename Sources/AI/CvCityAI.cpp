@@ -12640,10 +12640,6 @@ int CvCityAI::getBuildingCommerceValue(BuildingTypes eBuilding, int iI, int* aiF
 				iResult *= 2;
 			}
 		}
-		if (kBuilding.getCommerceChangeDoubleTime(iI) > 0)
-		{
-			iResult += iResult * 500 / (500 + kBuilding.getCommerceChangeDoubleTime(iI));
-		}
 		// Multiply up by the city's current commerce rate modifier
 		iResult = std::max(1, iResult * getTotalCommerceRateModifier((CommerceTypes)iI) / 100);
 	}

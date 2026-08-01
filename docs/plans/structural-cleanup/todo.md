@@ -28,16 +28,6 @@
   ⚠ Until it is settled the legacy `getObsoletesToBuilding` culture-shell swap has no successor and its four
   sites (`CvPlayer::acquireCity`, `CvTeam::processTech`) stay dangling. ⛔ Do not pick a side to clear them:
   removing the swap is what makes the obsolete set live, so guessing here silently decides the model.
-- Settle the COMMERCE-DOUBLING shape, because the spec and the curator disagree and each is self-consistent.
-  [modifier.md §3](../../specs/modifier.md) rules it "a SECOND deposit on the same slot with
-  `enabled:{existedFor:{min:N}}`, no post-sum multiply". `curate_building` instead emits
-  `identity.commerceDoubleTime` as a per-channel MARKER, and gives a grounded reason: the engine doubles the
-  building's WHOLE per-building commerce — base plus shrine plus corp-HQ plus event plus state-religion — so a
-  base-only second flat UNDER-doubles any building that is also a shrine or a corporation headquarters.
-  ⛔ Not an agent call: one side is a data-model change and the other is a spec correction, and picking either
-  silently decides how a wonder's commerce compounds. The AI consumer stays dangling until it is ruled.
-  ⚠ Whichever wins, `identity` carries no effects ([json.md §7](../../specs/json.md)), so the marker does not
-  stay where it is.
 - Rule on the river-attack term for a CITY defender (`CvUnit::getDefenderCombatValues`). Its two branches
   disagree: attacking across a river hands an ordinary defender `-RIVER_ATTACK_MODIFIER`, while the city branch
   is `min(0, riverDefensePenalty - RIVER_ATTACK_MODIFIER)` — capped at zero, so a city defender can never
@@ -67,7 +57,7 @@
 - Re-home the remaining `identity` EFFECT keys to the block that already exists for each
   ([json.md §7](../../specs/json.md)): constraints → `requires`/`allowed`; `diploVoteType` → the top-level
   `voteSource` section (and rename the getter off the legacy XML tag); `tradeable` → the `canTrade` block;
-  `commerceDoubleTime` → a second deposit gated on `existedFor`; `advancedStart` → resolve the curator's parked
+  `advancedStart` → resolve the curator's parked
   flag; `pillageGold` → drop.
   ⚠ `espionagePoints` rides the missions/`CvOutcome` carve-out — its channel is settled, only its authoring home waits.
 - Emit property pulses through the shared property-source cleaner as trigger entries carrying
@@ -338,6 +328,20 @@
   model deleted. Answering it means reading the candidate's `EDGEF_RELATED` specialists and evaluating their
   rows with the candidate injected — the hypothetical the `expected*` plane owns. ⛔ Do not restore a
   building-side per-specialist getter to clear those sites; the data is not there to serve it.
+- EVALUATE the `existedFor` predicate. It is declared, parsed and rendered, but the evaluator names it in its
+  `default: return true` arm — an unmodelled predicate is IGNORED, never false ([json.md §3.5](../../specs/json.md))
+  — so every age-gated deposit currently applies from turn 0. The commerce doublings are the live authorings.
+  ⛔ The blocker is not the state: `CvCity::getBuildingData` serves `iTimeBuilt` off the serialized building
+  ledger. It is that the evaluator cannot tell WHICH source's deposit it is resolving — `CvCascadeEvalCtx`
+  carries no source handle, `MMKernel::applies` takes only the two condition trees, and neither a compiled
+  entry nor an info knows its own engine id.
+  ⚑ The precedent is exact and already in the ctx: `int religion`, set per-iteration by the walker and -1
+  outside. A source-building slot takes the same shape; the gather's two building walks know the id, and every
+  `expected*` caller valuing a building would have to pass it.
+  ⚠ Settle turns-vs-years with it: the ledger stores `getGameTurnYear()` and the authored thresholds are legacy
+  YEAR counts, while the spec names the predicate "turns since built". A turn has a year
+  ([engine.md](../../reference/engine.md): `CvDate` interpolates, there is no stored table), so either is
+  reachable — but the two answer differently and only one matches the data.
 - Give `requires` a PRECISE query — "does this entity's requires name this atom / this predicate", answered per
   id. Two consumers want it and neither has any other source: a building's need for the state religion IN CITY,
   and the religion a unit needs to be trained.

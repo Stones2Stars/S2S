@@ -46,7 +46,6 @@ CvBuildingInfo::CvBuildingInfo()
 	for (int iCommerce = 0; iCommerce < NUM_COMMERCE_TYPES; ++iCommerce)
 	{
 		m_aiStateReligionCommerce[iCommerce] = 0;
-		m_aiCommerceDoubleTime[iCommerce] = 0;
 	}
 }
 
@@ -260,8 +259,6 @@ void CvBuildingInfo::mapFrom(const picojson::value& entity)
 			}
 		}
 	}
-	// the two commerce-keyed identity configs: stateReligionCommerce is a MAGNITUDE (×100);
-	// commerceDoubleTime is TURNS (a plain count)
+	// the commerce-keyed identity config: stateReligionCommerce is a MAGNITUDE (×100)
 	bi_fillCommerceKeyed(identity, "stateReligionCommerce", m_aiStateReligionCommerce, true);
-	bi_fillCommerceKeyed(identity, "commerceDoubleTime", m_aiCommerceDoubleTime, false);
 }

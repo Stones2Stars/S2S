@@ -9043,14 +9043,6 @@ int CvCity::getBuildingCommerceByBuilding(CommerceTypes eIndex, BuildingTypes eB
 			* GC.getGame().countCorporationLevels(eGlobalCorp);
 	}
 
-	const int iDoubleTime = kBuilding.getCommerceDoubleTime(eIndex);
-	if (iDoubleTime != 0)
-	{
-		const int iTimeBuilt = getBuildingData(eBuilding).iTimeBuilt;
-		if (iTimeBuilt != MIN_INT && GC.getGame().getGameTurnYear() - iTimeBuilt >= iDoubleTime)
-			iCommerce *= 2;
-	}
-
 	return iCommerce;
 }
 
