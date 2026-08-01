@@ -976,3 +976,12 @@ CvUnit::m_iUpkeepMultiplierSM
 | the city through the empire package, and adding this on top would have counted them twice. Its writer went
 | with the rebuilt trait info, which carries the deposit rather than a named scalar.
 CvPlayer::m_iNationalBombardDefenseModifier
+
+| The city's per-type manual-assign SPECIALIST SLOT cap. A serialized incremental accumulator maintained by
+| processBuilding and by the team's tech loop, over a quantity the cascade owns -- so it carried save history no
+| live source could reproduce ([DEC-accumulator-cut-uniform]). The value is now a FRESH GATHER at the read:
+| CvCity::getMaxSpecialistCount(eSpecialist) sums its OPERATING buildings' own
+| `allowedSpecialists.city.{SPECIALIST_X}` deposits through InfoValuation::keyedTargetSum, whose keyed twin
+| evaluates the tech-gated tail against the city's contexts -- which is what the deleted team ledger was
+| pre-computing on every tech acquire.
+CvCity::m_paiMaxSpecialistCount

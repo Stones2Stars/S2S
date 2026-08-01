@@ -27,26 +27,14 @@
 #include "Engine/CvPlotGroup.h"         // the reserved TRADED-bonus source (the ctx.plotGroup connection:"trade" leg)
 #include <string>
 
-static bool ev_playerHasPolicy(const CvPlayer* pPlayer, const char* szKey);   // defined below (the L1 policy read)
+static bool ev_hasPolicy(const EmpireContext* empireContext, const char* szKey);   // defined below (the L1 policy read)
 
 static bool en_starts(const std::string& s, const char* pfx) { return s.compare(0, strlen(pfx), pfx) == 0; }
 
-// ---- the context derivations (contexts.md HAVE axis): the ctx's bound pointers ARE the context bindings --
-// city state reads through CvCity's CityContext, empire/team state through CvPlayer's EmpireContext, plot facts
-// through CvPlot's PlotContext. NULL object => NULL context => the not-present verdict, unchanged. ------------
+// ---- the context reads (contexts.md HAVE axis): the ctx HOLDS each scope's isolated live-state silo, so a
+// predicate reads it directly -- city state through CityContext, empire/team state through EmpireContext, plot
+// facts through PlotContext. A NULL context is the not-present verdict, unchanged. ---------------------------
 
-static const CityContext* ev_cityContext(const CvCascadeEvalCtx& ctx)
-{
-	return ctx.city != NULL ? &ctx.city->getCityContext() : NULL;
-}
-static const EmpireContext* ev_empireContext(const CvCascadeEvalCtx& ctx)
-{
-	return ctx.player != NULL ? &ctx.player->getEmpireContext() : NULL;
-}
-static const PlotContext* ev_plotContext(const CvPlot* plot)
-{
-	return plot != NULL ? &plot->getPlotContext() : NULL;
-}
 
 // A BUILDING prereq must be ACTIVE -- present AND not dormant. Dormancy is CASCADE-COMPUTED (governed 100% by operate
 // enablers, DEC-calc-zero-ride-in), never read from the engine; cascadeIsBuildingActive reads that precomputed fact.
@@ -102,7 +90,7 @@ static bool evp_workedImprovement(const PlotContext& plotContext, const CvCondit
 
 static bool ev_vicinityHas(const CvCascadeEvalCtx& ctx, int eBonus, CvCascVicinity disc)
 {
-	const CityContext* cityContext = ev_cityContext(ctx);
+	const CityContext* cityContext = ctx.cityContext;
 	if (cityContext == NULL) return false;
 	// An ACTIVE building in this city that `provides` eBonus supplies it IN-VICINITY (json §5a) -- computed from JSON
 	// (the enabler's vicinityProvidedBonuses set), NEVER read from the engine's hasVicinityBonus (DEC-calc-zero-ride-in).
@@ -125,7 +113,7 @@ static bool ev_vicinityHas(const CvCascadeEvalCtx& ctx, int eBonus, CvCascVicini
 // with an explicit plotGroup pass-in (the valuation's third context) reads the network object directly.
 static bool ev_tradedBonus(const CvCascadeEvalCtx& ctx, int eBonus)
 {
-	const CityContext* cityContext = ev_cityContext(ctx);
+	const CityContext* cityContext = ctx.cityContext;
 	if (cityContext != NULL) return cityContext->tradedBonusCount(eBonus) > 0;
 	return ctx.plotGroup != NULL && eBonus >= 0 && ctx.plotGroup->hasBonus((BonusTypes)eBonus);
 }
@@ -142,7 +130,7 @@ static bool ev_bonusPresent(const CvCascadeEvalCtx& ctx, int eBonus, CvCascConne
 	// bonus (the "manufactured bonus buildings can't be built" bug). Matches StoneBase's TradeOrVicinity.
 	case CASC_CONN_TRADE_OR_VICINITY: return ev_tradedBonus(ctx, eBonus) || ev_vicinityHas(ctx, eBonus, vic);
 	default:
-		if (ctx.plot != NULL) return ctx.plot->getPlotContext().hasBonus(eBonus, ctx.team ? (int)ctx.team->getID() : (int)NO_TEAM);
+		if (ctx.plotContext != NULL) return ctx.plotContext->hasBonus(eBonus, ctx.empireContext != NULL ? ctx.empireContext->teamId() : (int)NO_TEAM);
 		return ev_tradedBonus(ctx, eBonus);
 	}
 }
@@ -160,8 +148,8 @@ static bool ev_present(const CvCascadeEvalCtx& ctx, const CvCondition* a)
 {
 	const std::string& t = a->type;
 	const int id = a->id;
-	const CityContext* cityContext = ev_cityContext(ctx);
-	const EmpireContext* empireContext = ev_empireContext(ctx);
+	const CityContext* cityContext = ctx.cityContext;
+	const EmpireContext* empireContext = ctx.empireContext;
 	// team-held facts read through the player's EmpireContext (team is deliberately not a context, contexts.md)
 	if (en_starts(t, "TECH_"))     return empireContext != NULL && empireContext->teamHasTech(id);
 	// CIVIC_ and BONUS_ route their live answer through the AS-IF-HELD hypothetical (CvConditionEval.h), because
@@ -211,8 +199,8 @@ static bool ev_present(const CvCascadeEvalCtx& ctx, const CvCondition* a)
 // the UnitEnabler world-cap read: "born once, still consumes its slot").
 static bool ev_countCore(const CvCascadeEvalCtx& ctx, const std::string& t, int id, CvCascScope eScope, int& iOut)
 {
-	const CityContext* cityContext = ev_cityContext(ctx);
-	const EmpireContext* empireContext = ev_empireContext(ctx);
+	const CityContext* cityContext = ctx.cityContext;
+	const EmpireContext* empireContext = ctx.empireContext;
 	if (en_starts(t, "PROPERTY_"))
 	{
 		iOut = (cityContext != NULL && id >= 0) ? cityContext->propertyValue(id) : 0;
@@ -293,8 +281,11 @@ static bool ev_countCore(const CvCascadeEvalCtx& ctx, const std::string& t, int 
 	{
 		const CascadeCountScope sc = (eScope == CASC_SCOPE_TEAM) ? CASCADE_COUNT_TEAM
 		                           : (eScope == CASC_SCOPE_WORLD) ? CASCADE_COUNT_WORLD : CASCADE_COUNT_EMPIRE;
-		const int ent = (eScope == CASC_SCOPE_TEAM) ? (ctx.team ? (int)ctx.team->getID() : 0)
-		                                            : (ctx.player ? (int)ctx.player->getID() : 0);
+		// the count-scope ENTITY id -- both sides asked of the player: a team is the tech bridge and holds no
+		// live-state surface, so its id is forwarded through EmpireContext like every other team fact.
+		const int ent = (ctx.empireContext == NULL) ? 0
+		              : (eScope == CASC_SCOPE_TEAM) ? ctx.empireContext->teamId()
+		                                           : ctx.empireContext->playerId();
 		// the SPECIALIST count's AGGREGATE half: a local city count stays local (above), and rolling it up
 		// across cities is the tally's job -- one place holding the count of all specialists in scope.
 		if (t == "SPECIALIST") { iOut = cascadeTally().specialistCount(ent, sc); return true; }
@@ -362,8 +353,8 @@ static bool ev_evalPresence(const CvCascadeEvalCtx& ctx, const CvCascadeEvalFlag
 		if (en_starts(t, "BONUS_") && (a->min < 0 || a->min <= 1) && a->max < 0)
 		{
 			if (a->connection != CASC_CONN_NONE) return ev_bonusPresent(ctx, a->id, a->connection, a->vicinity);
-			if (f.bonusFromPlot && ctx.plot != NULL) return ctx.plot->getPlotContext().hasBonus(a->id, ctx.team ? (int)ctx.team->getID() : (int)NO_TEAM);
-			if (a->scope == CASC_SCOPE_PLOT) return ctx.plot != NULL && ctx.plot->getPlotContext().hasBonus(a->id, ctx.team ? (int)ctx.team->getID() : (int)NO_TEAM);
+			if (f.bonusFromPlot && ctx.plotContext != NULL) return ctx.plotContext->hasBonus(a->id, ctx.empireContext != NULL ? ctx.empireContext->teamId() : (int)NO_TEAM);
+			if (a->scope == CASC_SCOPE_PLOT) return ctx.plotContext != NULL && ctx.plotContext->hasBonus(a->id, ctx.empireContext != NULL ? ctx.empireContext->teamId() : (int)NO_TEAM);
 			return ev_tradedBonus(ctx, a->id);
 		}
 		const int n = ev_countOf(ctx, a);
@@ -379,10 +370,9 @@ static bool ev_evalPresence(const CvCascadeEvalCtx& ctx, const CvCascadeEvalFlag
 
 static bool ev_evalPredicate(const CvCascadeEvalCtx& ctx, const CvCascadeEvalFlags& f, const CvCondition* pr)
 {
-	const CvPlot* p = ctx.plot;
-	const PlotContext* plotContext = ev_plotContext(p);
-	const CityContext* cityContext = ev_cityContext(ctx);
-	const EmpireContext* empireContext = ev_empireContext(ctx);
+	const PlotContext* plotContext = ctx.plotContext;
+	const CityContext* cityContext = ctx.cityContext;
+	const EmpireContext* empireContext = ctx.empireContext;
 	switch (pr->predKind)
 	{
 	case CASC_PRED_HAS_RIVER:       return plotContext != NULL && plotContext->hasRiver();
@@ -450,7 +440,7 @@ static bool ev_evalPredicate(const CvCascadeEvalCtx& ctx, const CvCascadeEvalFla
 		// getReligionCommerceByReligion OR-gate, derived from the civic/trait grantors' §9 policies
 		// blocks, NEVER the legacy m_iNonStateReligionCommerceCount counter
 		return iStateReligion == pr->id || iStateReligion < 0
-		    || ev_playerHasPolicy(ctx.player, "nonStateReligionCommerce");
+		    || ev_hasPolicy(ctx.empireContext, "nonStateReligionCommerce");
 	}
 	case CASC_PRED_LATITUDE:
 	{
@@ -471,7 +461,7 @@ static bool ev_evalPredicate(const CvCascadeEvalCtx& ctx, const CvCascadeEvalFla
 	// team-relative read, no improvement applied. A plot predicate: no plot in context -> not-present (false).
 	case CASC_PRED_NATURE_YIELD:
 		return plotContext != NULL && pr->id >= 0 && pr->min >= 0
-		    && plotContext->natureYield(pr->id, ctx.team != NULL ? (int)ctx.team->getID() : (int)NO_TEAM) >= pr->min;
+		    && plotContext->natureYield(pr->id, ctx.empireContext != NULL ? ctx.empireContext->teamId() : (int)NO_TEAM) >= pr->min;
 	case CASC_PRED_VICINITY:   return p != NULL;
 	case CASC_PRED_WORKABLE:   return plotContext != NULL && cityContext != NULL && plotContext->owner() == cityContext->owner();
 	case CASC_PRED_IS_WORKED:  return plotContext != NULL && plotContext->isWorked();
@@ -507,13 +497,13 @@ static bool ev_isWaivedPrereq(const CvCascadeEvalCtx& ctx, const CvCondition* c)
 // (bigot/progressive/spiritual); the civic half is model headroom the union carries for free. (The naive per-leaf walk
 // -- ~1200 traits × a string+set lookup EACH, evaluated on millions of {STATE_RELIGION:X} leaves per turn -- is what
 // the prebuilt union eliminates; it also retired a per-player version memo whose invalidation trigger had been orphaned.)
-static bool ev_playerHasPolicy(const CvPlayer* pPlayer, const char* szKey)
+static bool ev_hasPolicy(const EmpireContext* empireContext, const char* szKey)
 {
-	if (pPlayer == NULL) return false;
+	if (empireContext == NULL) return false;
 	// ONE call site, one literal key -> a per-call-site memoized id (the CLS_HAS idiom; a second key would need its own).
 	static int s_pid = -1;
 	const int iPolicy = ClassificationRegistry::cachedKeyId(s_pid, CLSD_POLICY, szKey);
-	return iPolicy >= 0 && pPlayer->getEmpireContext().hasPolicy(iPolicy);
+	return iPolicy >= 0 && empireContext->hasPolicy(iPolicy);
 }
 
 // Reads the cascade-computed ACTIVE set, or -- absent it -- falls back to raw PRESENCE (hasBuilding, a raw
@@ -521,7 +511,7 @@ static bool ev_playerHasPolicy(const CvPlayer* pPlayer, const char* szKey)
 bool cascadeIsBuildingActive(int eBuilding, const CvCascadeEvalCtx& ec)
 {
 	return ec.activeBuildings != NULL ? (ec.activeBuildings->count(eBuilding) != 0)
-	                                  : (ec.city != NULL && ec.city->getCityContext().hasBuilding(eBuilding));
+	                                  : (ec.cityContext != NULL && ec.cityContext->hasBuilding(eBuilding));
 }
 
 // The obsolete set the SAME obsoletion process maintains (present ∧ obsoleted-by-held-tech, json §4.2): an obsolete
@@ -537,14 +527,14 @@ bool cascadeIsBuildingObsolete(int eBuilding, const CvCascadeEvalCtx& ec)
 // The lenient default flags -- a deposit-side count, never a build gate.
 int cascadeCountCityReligions(const CvCondition* filter, const CvCascadeEvalCtx& ec)
 {
-	if (ec.city == NULL)
+	if (ec.cityContext == NULL)
 	{
 		return 0;
 	}
 	static const CvCascadeEvalFlags kFlags;
 	CvCascadeEvalCtx perReligionCtx = ec;
 	int iCount = 0;
-	const CityContext& cityContext = ec.city->getCityContext();
+	const CityContext& cityContext = *ec.cityContext;
 	for (int iReligion = 0; iReligion < GC.getNumReligionInfos(); ++iReligion)
 	{
 		if (!cityContext.hasReligion(iReligion))

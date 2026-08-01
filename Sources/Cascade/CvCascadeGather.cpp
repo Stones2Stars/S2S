@@ -225,7 +225,7 @@ namespace
 				}
 				else if (pEntry->targetSeg == iBonusesSeg)
 				{
-					const TeamTypes eSeeingTeam = (evalCtx.team != NULL) ? evalCtx.team->getID() : NO_TEAM;
+					const TeamTypes eSeeingTeam = (evalCtx.empireContext != NULL) ? (TeamTypes)evalCtx.empireContext->teamId() : NO_TEAM;
 					if (pEntry->targetFk < 0 || pEntry->targetFk != (int)pKeyPlot->getBonusType(eSeeingTeam))
 					{
 						continue;
@@ -385,17 +385,21 @@ namespace
 		gt_beginRefill(CASC_SCOPE_PLOT, iWantedBits, flatSlots, percentSlots);
 
 		CvCascadeEvalCtx evalCtx;
-		evalCtx.plot = &plot;
+		//	the ctx carries the SILOS, never the objects ([contexts.md]) -- the plot's own, its owner's empire
+		//	silo (which answers every team fact too), and the working city's, which also feeds in the enabler's
+		//	operating set.
+		evalCtx.plotContext = &plot.getPlotContext();
 		const PlayerTypes eOwner = plot.getOwner();
 		if (eOwner != NO_PLAYER)
 		{
-			evalCtx.player = &GET_PLAYER(eOwner);
-			evalCtx.team = &GET_TEAM(evalCtx.player->getTeam());
+			evalCtx.empireContext = &GET_PLAYER(eOwner).getEmpireContext();
 		}
 		const CvCity* pWorkingCity = plot.getWorkingCity();
 		if (pWorkingCity != NULL)
 		{
-			evalCtx.city = pWorkingCity;
+			//	fillEvalCtx would overwrite the PLOT silo with the city centre's; this walk is anchored on THIS
+			//	plot, so only the city half is taken.
+			evalCtx.cityContext = &pWorkingCity->getCityContext();
 			EnablerKernel::wireOperatingBuildings(pWorkingCity, evalCtx);
 		}
 
@@ -417,7 +421,7 @@ namespace
 		{
 			gt_foldInfo(GC.getImprovementInfo(plot.getImprovementType()).getModifiers(), 1, CASC_SCOPE_PLOT, iWantedBits, evalCtx, &plot, 0, false, flatSlots, percentSlots);
 		}
-		const TeamTypes eSeeingTeam = (evalCtx.team != NULL) ? evalCtx.team->getID() : NO_TEAM;
+		const TeamTypes eSeeingTeam = (evalCtx.empireContext != NULL) ? (TeamTypes)evalCtx.empireContext->teamId() : NO_TEAM;
 		if (plot.getBonusType(eSeeingTeam) != NO_BONUS)
 		{
 			gt_foldInfo(GC.getBonusInfo(plot.getBonusType(eSeeingTeam)).getModifiers(), 1, CASC_SCOPE_PLOT, iWantedBits, evalCtx, &plot, 0, false, flatSlots, percentSlots);
@@ -484,10 +488,11 @@ namespace
 		gt_beginRefill(CASC_SCOPE_TEAM, iWantedBits, flatSlots, percentSlots);
 
 		CvCascadeEvalCtx evalCtx;
-		evalCtx.team = &team;
+		//	A team owns no live-state silo, so the ctx is anchored on the team LEADER's empire context -- which
+		//	is what answers the team facts a team-scope deposit's conditions ask ([contexts.md]).
 		if (team.getLeaderID() != NO_PLAYER)
 		{
-			evalCtx.player = &GET_PLAYER(team.getLeaderID());
+			evalCtx.empireContext = &GET_PLAYER(team.getLeaderID()).getEmpireContext();
 		}
 
 		// team-scope deposits: projects (team-held, x count) + held techs

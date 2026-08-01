@@ -1143,7 +1143,6 @@ public:
 	int getMaxSpecialistCount() const;
 	int getMaxSpecialistCount(SpecialistTypes eIndex) const;
 	bool isSpecialistValid(SpecialistTypes eIndex, int iExtra = 0) const;
-	void changeMaxSpecialistCount(SpecialistTypes eIndex, int iChange);
 
 	int getForceSpecialistCount(SpecialistTypes eIndex) const;
 	bool isSpecialistForced() const;
@@ -1312,7 +1311,6 @@ public:
 	void clearLostProduction();
 	bool isProductionWonder() const;
 	void updateYieldRate(BuildingTypes eType, YieldTypes eYield, int iChange);
-	void updateMaxSpecialistCount(BuildingTypes eType, SpecialistTypes eSpecialist, int iChange);
 	//int getImprovementYieldChange(ImprovementTypes eIndex1, YieldTypes eIndex2) const;
 	//void changeImprovementYieldChange(ImprovementTypes eIndex1, YieldTypes eIndex2, int iChange);
 	int calculateBonusDefense() const;
@@ -1760,7 +1758,6 @@ protected:
 	std::vector<int> m_juggleSpecialistStart;
 	std::vector<bool> m_juggleWorkedStart;
 	int* m_paiSpecialistCount;
-	int* m_paiMaxSpecialistCount;
 	int* m_paiForceSpecialistCount;
 	int* m_paiFreeSpecialistCountUnattributed;
 	int* m_paiImprovementFreeSpecialists;

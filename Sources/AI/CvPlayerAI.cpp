@@ -6100,15 +6100,25 @@ int CvPlayerAI::AI_techBuildingValue(TechTypes eTech, int iPathLength, bool& bEn
 						iTempValue += 4 * calculateTotalYield((YieldTypes)iJ) * iYieldModifier / getNumCities();
 					}
 				}
-			}
 
-			for (int iJ = 0; iJ < GC.getNumSpecialistInfos(); iJ++)
-			{
-				int iSpecialistChange = kLoopBuilding.getTechSpecialistChange(eTech, iJ);
-
-				if (iSpecialistChange != 0)
+				// The manual-assign specialist SLOTS this tech would open on this building -- the same
+				// with/without DELTA as every other term above, through the KEYED twin because
+				// `allowedSpecialists.city.{SPECIALIST_X}` is keyed AND tech-conditioned. The hypothetical
+				// reaches only the conditioned tail, so what comes back is exactly the slots the TECH adds
+				// ([patterns.md] THE VALUATION PROTOCOL -- contexts in, delta out).
+				// ⚠ The COUNT unit is ×100, so the delta reduces here at its point of use.
+				for (int iJ = 0; iJ < GC.getNumSpecialistInfos(); iJ++)
 				{
-					iTempValue += 800 * iSpecialistChange;
+					const int iSpecialistChange =
+						(InfoValuation::expectedKeyedTarget(kLoopBuilding.getModifiers(), MODFAM_ALLOWED_SPECIALISTS,
+							CHANNEL_AMOUNT, -1, iJ, kCityCtx, kEmpireCtx, pCapitalGroup, &kTechWith)
+						- InfoValuation::expectedKeyedTarget(kLoopBuilding.getModifiers(), MODFAM_ALLOWED_SPECIALISTS,
+							CHANNEL_AMOUNT, -1, iJ, kCityCtx, kEmpireCtx, pCapitalGroup, &kTechWithout)) / 100;
+
+					if (iSpecialistChange != 0)
+					{
+						iTempValue += 800 * iSpecialistChange;
+					}
 				}
 			}
 

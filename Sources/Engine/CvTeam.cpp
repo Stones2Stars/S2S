@@ -126,7 +126,6 @@ m_Properties(this)
 	m_pabHasTech = NULL;
 
 
-	m_ppiBuildingSpecialistChange = NULL;
 	m_ppiBuildingCommerceModifier = NULL;
 	m_abEmbassy = new bool[MAX_TEAMS];
 	m_abLimitedBorders = new bool[MAX_TEAMS];
@@ -224,7 +223,6 @@ void CvTeam::uninit()
 	SAFE_DELETE_ARRAY(m_aiVictoryCountdown);
 	SAFE_DELETE_ARRAY(m_aiForceTeamVoteEligibilityCount);
 	SAFE_DELETE_ARRAY(m_pabHasTech);
-	SAFE_DELETE_ARRAY2(m_ppiBuildingSpecialistChange, GC.getNumBuildingInfos());
 	SAFE_DELETE_ARRAY2(m_ppiBuildingCommerceModifier, GC.getNumBuildingInfos());
 }
 
@@ -387,17 +385,6 @@ void CvTeam::reset(TeamTypes eID, bool bConstructorCall)
 		}
 
 		m_aeRevealedBonuses.clear();
-
-		FAssertMsg(m_ppiBuildingSpecialistChange == NULL, "about to leak memory, CvTeam::m_ppiBuildingSpecialistChange");
-		m_ppiBuildingSpecialistChange = new int* [GC.getNumBuildingInfos()];
-		for (iI = 0; iI < GC.getNumBuildingInfos(); iI++)
-		{
-			m_ppiBuildingSpecialistChange[iI] = new int[GC.getNumSpecialistInfos()];
-			for (iJ = 0; iJ < GC.getNumSpecialistInfos(); iJ++)
-			{
-				m_ppiBuildingSpecialistChange[iI][iJ] = 0;
-			}
-		}
 
 		FAssertMsg(m_ppiBuildingCommerceModifier == NULL, "about to leak memory, CvTeam::m_ppiBuildingCommerceModifier");
 		m_ppiBuildingCommerceModifier = new int* [GC.getNumBuildingInfos()];
@@ -5464,11 +5451,6 @@ void CvTeam::processTech(TechTypes eTech, int iChange, bool bAnnounce)
 
 	for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
 	{
-		for (int iJ = 0; iJ < GC.getNumSpecialistInfos(); iJ++)
-		{
-			changeBuildingSpecialistChange(((BuildingTypes)iI), ((SpecialistTypes)iJ), (GC.getBuildingInfo((BuildingTypes)iI).getTechSpecialistChange(eTech, iJ) * iChange));
-		}
-
 		// ⛔ OBSOLETE IS REMOVAL -- DORMANT != OBSOLETE (owner). Dormancy is `requires.operate` unmet: the
 		// building STAYS and wakes when the condition returns. Obsolescence is permanent supersession, so the
 		// instance GOES -- json.md §4.2's absent-`whenObsolete` default is "fully gone", matching the engine's
@@ -6070,7 +6052,10 @@ void CvTeam::read(FDataStreamBase* pStream)
 
 		if (newIndex != -1)
 		{
-			WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_ppiBuildingSpecialistChange[newIndex]);
+			// DRAINED, both branches: the member is gone, but a DECORATED per-element tag cannot be soft-removed
+			// via savemigration.txt (the normalized name differs from the source literal), so its drain stays
+			// in this live enum-remapping loop -- save.md par.3/par.4. The sibling read beside it is LIVE.
+			WRAPPER_SKIP_ELEMENT(wrapper, "CvTeam", m_ppiBuildingSpecialistChange[newIndex], SAVE_VALUE_TYPE_CLASS_INT_ARRAY);
 			WRAPPER_READ_ARRAY(wrapper, "CvTeam", NUM_COMMERCE_TYPES, m_ppiBuildingCommerceModifier[newIndex]);
 		}
 		else
@@ -6197,7 +6182,6 @@ void CvTeam::write(FDataStreamBase* pStream)
 
 	for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
 	{
-		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_ppiBuildingSpecialistChange[iI]);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvTeam", NUM_COMMERCE_TYPES, m_ppiBuildingCommerceModifier[iI]);
 	}
 
@@ -6655,41 +6639,6 @@ int64_t CvTeam::getTotalVictoryScore() const
 	}
 
 	return iTotalVictoryScore;
-}
-
-
-int CvTeam::getBuildingSpecialistChange(BuildingTypes eIndex1, SpecialistTypes eIndex2) const
-{
-	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eIndex1);
-	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eIndex2);
-	return m_ppiBuildingSpecialistChange[eIndex1][eIndex2];
-}
-
-void CvTeam::changeBuildingSpecialistChange(BuildingTypes eIndex1, SpecialistTypes eIndex2, int iChange)
-{
-	PROFILE_EXTRA_FUNC();
-	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eIndex1);
-	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eIndex2);
-
-	if (iChange != 0)
-	{
-		const int iOldValue = getBuildingSpecialistChange(eIndex1, eIndex2);
-		m_ppiBuildingSpecialistChange[eIndex1][eIndex2] += iChange;
-
-		for (int iI = 0; iI < MAX_PLAYERS; iI++)
-		{
-			if (GET_PLAYER((PlayerTypes)iI).isAliveAndTeam(getID()))
-			{
-				foreach_(CvCity * pLoopCity, GET_PLAYER((PlayerTypes)iI).cities())
-				{
-					// remove the old
-					pLoopCity->updateMaxSpecialistCount(eIndex1, eIndex2, -iOldValue);
-					// set the new
-					pLoopCity->updateMaxSpecialistCount(eIndex1, eIndex2, getBuildingSpecialistChange(eIndex1, eIndex2));
-				}
-			}
-		}
-	}
 }
 
 

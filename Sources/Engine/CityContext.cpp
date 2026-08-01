@@ -426,6 +426,8 @@ bool CityContext::isHolyCityAny() const              { return m_holyCityCount > 
 
 // --- forwarding accessors: read the bound CvCity / its owner; no stored copy (owner: don't duplicate available state) ---
 int  CityContext::population() const           { return m_city != NULL ? m_city->getPopulation() : 0; }
+const OperatingBuildings* CityContext::operatingBuildings() const
+{ return m_city != NULL ? &m_city->m_operatingBuildings : NULL; }
 //  Power is an AMENITY (owner), so this reads the fold it lives in rather than forwarding to a counter.
 int  CityContext::power() const                { return amenityCount(CLS_AMENITY_PROVIDES_POWER); }
 bool CityContext::isPowered() const            { return m_city != NULL && m_city->isPower(); }
@@ -516,6 +518,18 @@ void CityContext::commerces(int (&realizedCommerces)[NUM_COMMERCE_TYPES]) const
 // the caller; the ctx it fills is what the ONE evaluator reads). EmpireContext::fillEvalCtx fills player/team.
 void CityContext::fillEvalCtx(CvCascadeEvalCtx& ec) const
 {
-	ec.city = m_city;
-	ec.plot = (m_city != NULL) ? m_city->plot() : NULL;
+	//	The ctx is handed the SILOS, never the objects holding them ([contexts.md]). A city binds its own plot's
+	//	context alongside its own, because a city-scope evaluation reads plot facts AT the city centre.
+	ec.cityContext = this;
+	ec.plotContext = (m_city != NULL) ? &m_city->plot()->getPlotContext() : NULL;
+	//	The ENABLER's derived output, fed in rather than re-derived: the ctx's active / obsolete / provided sets
+	//	point at the city's own standing set (enabler.md §3.2), so a building-presence or vicinity-provides
+	//	predicate reads the cascade-computed verdict and never the engine's ([DEC-calc-zero-ride-in]).
+	const OperatingBuildings* pOperating = operatingBuildings();
+	if (pOperating != NULL)
+	{
+		ec.activeBuildings = &pOperating->active;
+		ec.obsoleteBuildings = &pOperating->obsolete;
+		ec.vicinityProvidedBonuses = &pOperating->provided;
+	}
 }

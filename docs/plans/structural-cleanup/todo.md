@@ -319,14 +319,11 @@
   ⚑ The unit is SETTLED and needs no thought: GAME YEARS. The ledger already stores the build year, the
   authored thresholds are year counts, and the tooltip has always promised *"doubles in 1000 years"* — so the
   test is `getGameTurnYear() - iTimeBuilt >= N` and nothing converts.
-- Give the what-if valuation a KEYED twin. `expected*` answers a family's point slot, so a deposit that is BOTH
-  keyed and conditioned has no read: the tech-gated per-specialist building slot is the live case, and its
-  consumers dangle on that alone. It wants the `collectKeyedTarget` walk with the conditioned tail evaluated
-  through the ONE evaluator, taking the same optional hypothetical the point form does — never a second
-  evaluator ([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation)).
-  ⚑ The improvement tech-yield reads want it too, and one of them asks a THIRD question: the `bOptimal` branch
-  wants "assume every condition holds", which is neither the live evaluation nor a hypothetical over one named
-  id. Decide whether that is a mode of the same read or an entry-list sum before converting it.
+- Move the IMPROVEMENT tech-yield reads onto the keyed what-if twin. One of them asks a THIRD question the twin
+  does not answer: the `bOptimal` branch wants "assume every condition holds", which is neither the live
+  evaluation nor a hypothetical over one named id. Decide whether that is a MODE of the same read or an
+  entry-list sum before converting it — ⛔ never a second evaluator beside the one the twin already uses
+  ([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation)).
 - Decide where the YIELD what-if's supersession-netting lives — the enabler owns `replacedBy`, or the call site
   composes two valuations. ⛔ Not by widening `expected*` with a replaced-buildings argument.
 - Watch civic-choice STABILITY now that the cross-category half-value damper is gone (owner: drop it; if the

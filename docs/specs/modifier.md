@@ -565,6 +565,23 @@ A deposit lands in one of three ways ([json](json.md) §6.1):
 > ([DEC-materialize-at-mapfrom](../architecture/decisions.md#dec-materialize-at-mapfrom)); it is never a walk of a
 > keyed container the info no longer holds, which is the own-data inversion
 > ([pedia-read-map](../reference/pedia-read-map.md) finding 2).
+>
+> ⛔ **A KEYED READ SERVES THE UNCONDITIONED ENTRIES ONLY — the conditioned tail is the VALUATION's, exactly as
+> it is on the point plane** ([patterns.md § THE GETTER SETUP](../architecture/patterns.md): the compiled sum,
+> the conditioned list and the `expected*` what-if are three distinct reads, and a keyed deposit needs all three
+> just as a scope-wide one does). A keyed walk that sums the tail applies every tech-gated and age-gated deposit
+> from turn 0 — silently, because the number stays plausible. ⚑ The keyed twin of `expected*` is what serves
+> that tail (through the ONE evaluator against the contexts); until it exists a keyed+conditioned deposit is
+> honestly UNSERVED, which is the correct exposed state rather than a gap to paper over with an unconditional
+> sum ([DEC-no-legacy-masking](../architecture/decisions.md#dec-no-legacy-masking)).
+>
+> ⚠ **THE DIRECT-KEYED ADDRESS IS A REAL SHAPE, AND ITS SENTINEL MUST NOT COLLIDE WITH "NOT AUTHORED".** A
+> named-entity key may sit straight under the scope with no plural container token
+> (`allowedSpecialists.city.{SPECIALIST_X}`, `religion.city.{RELIGION_X}`), so the compiled entry carries NO
+> target-segment. A read that treats "no segment" as a failure answers 0 for every such address while the caller
+> passes the right family, kind and target — invisible, because nothing errors. The two meanings are opposite
+> intents and each needs its own value: *this address carries no container token* vs *that token was never
+> authored anywhere*.
 
 ---
 

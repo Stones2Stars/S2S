@@ -58,6 +58,17 @@ public:
 	bool teamHasTech(int eTech) const;        // GET_TEAM(player)::isHasTech -- the TECH_ atom (team is not a context)
 	int  teamProjectCount(int eProject) const;   // GET_TEAM(player)::getProjectCount -- the PROJECT_ atom
 	int  teamMemberCount() const;             // GET_TEAM(player)::getNumMembers (the TEAM counter)
+	// The two IDENTITIES a cross-scope read needs as an ARGUMENT rather than as a fact: the count-scope entity
+	// (tally reads keyed by empire vs team) and the VIEWER a per-team visibility read is taken from (a foreign
+	// tile's bonus reads differently per asking team -- PlotContext::hasBonus / natureYield).
+	// ⛔ teamId is the whole of what a reader may know about a team: `CvTeam` is the TECH BRIDGE and holds no
+	// live-state surface, so it is reached HERE, through the player, and the eval ctx carries no `CvTeam*`
+	// ([contexts.md]; the banner on CvTeam itself).
+	int  playerId() const;                    // CvPlayer::getID
+	int  teamId() const;                      // CvPlayer::getTeam
+	// The §3.9 `ai` AUDIENCE gate: an aiOnly entry applies to AI players only, so the deposit read asks the
+	// asking player which side of that split it is on. Raw, object-owned, O(1) -- forwarded like population.
+	bool isHuman() const;                     // CvPlayer::isHuman
 	// The empire's CURRENT REALIZED COMMERCE -- CvPlayer::getCommerces, the player's own O(1) group read, handed
 	// on unchanged. The empire-scope twin of CityContext::yields and forwarded for the same reason: it is the
 	// base an empire-scope percent deposit resolves against (contexts.md: THE CONTEXT *IS* THE CURRENT VALUE --
@@ -77,7 +88,7 @@ public:
 	// through commerceRate above (the single forward this group fans out over).
 	void commerceRates(int (&commerceRates)[NUM_COMMERCE_TYPES]) const;
 
-	// Fill the EMPIRE half of a condition-eval context (ec.player + ec.team) from the bound player -- paired with
+	// Fill the EMPIRE half of a condition-eval context (this silo alone -- it answers the team facts too) -- paired with
 	// CityContext::fillEvalCtx (city/plot); together they are the eval state the ONE evaluator reads.
 	void fillEvalCtx(CvCascadeEvalCtx& ec) const;
 

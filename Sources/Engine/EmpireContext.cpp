@@ -40,6 +40,18 @@ bool EmpireContext::teamHasTech(int eTech) const
 {
 	return m_player != NULL && eTech >= 0 && GET_TEAM(m_player->getTeam()).isHasTech((TechTypes)eTech);
 }
+int  EmpireContext::playerId() const
+{
+	return m_player != NULL ? (int)m_player->getID() : -1;
+}
+int  EmpireContext::teamId() const
+{
+	return m_player != NULL ? (int)m_player->getTeam() : (int)NO_TEAM;
+}
+bool EmpireContext::isHuman() const
+{
+	return m_player != NULL && m_player->isHuman();
+}
 int  EmpireContext::teamProjectCount(int eProject) const
 {
 	if (m_player == NULL || eProject < 0)
@@ -81,8 +93,10 @@ void EmpireContext::commerceRates(int (&commerceRates)[NUM_COMMERCE_TYPES]) cons
 // Fill the EMPIRE half of the eval ctx (player/team) from the bound player; CityContext::fillEvalCtx fills city/plot.
 void EmpireContext::fillEvalCtx(CvCascadeEvalCtx& ec) const
 {
-	ec.player = m_player;
-	ec.team = (m_player != NULL) ? &GET_TEAM(m_player->getTeam()) : NULL;
+	//	The empire silo answers for the player AND for its team: a team is the TECH BRIDGE and owns no
+	//	live-state surface, so it contributes no second pointer here -- its facts are forwarded (teamHasTech /
+	//	teamId / teamMemberCount / teamProjectCount) ([contexts.md]; the banner on CvTeam).
+	ec.empireContext = this;
 }
 
 // Rebuild the enacted-policy UNION from the player's LIVE grantors -- adopted civics + held (active-set) traits --

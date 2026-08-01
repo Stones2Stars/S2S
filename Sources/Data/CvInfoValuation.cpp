@@ -55,7 +55,7 @@ namespace
 	// The asking player's audience (json §3.9 `ai`): aiOnly deposits count only for an AI asker.
 	bool val_aiAudience(const CvCascadeEvalCtx& evalCtx)
 	{
-		return evalCtx.player != NULL && !evalCtx.player->isHuman();
+		return evalCtx.empireContext != NULL && !evalCtx.empireContext->isHuman();
 	}
 
 	// Resolve a `plots`-target deposit's predicate to a cityContext.plotAttrs COUNT (contexts.md: "how many,
@@ -123,14 +123,19 @@ namespace
 
 namespace
 {
-	//	The keyed-combat axis -> its interned segment id, resolved ONCE per axis.
+	//	The keyed-combat axis -> its interned segment id, resolved ONCE per axis. An axis token the data never
+	//	authored answers TARGET_SEGMENT_NONE, so the id can be forwarded straight into the keyed reads and
+	//	matches nothing -- never the raw -1, which is the live DIRECT-KEYED address shape there.
 	int keyedCombatSegment(InfoValuation::CombatTargetAxis eAxis)
 	{
-		static int s_segments[5] = { -2, -2, -2, -2, -2 };   // -2 = not yet resolved, -1 = never authored
-		if (s_segments[eAxis] == -2)
+		static bool s_resolved[5] = { false, false, false, false, false };
+		static int s_segments[5] = { 0, 0, 0, 0, 0 };
+		if (!s_resolved[eAxis])
 		{
 			static const char* const kAxisSegments[5] = { "terrain", "feature", "unitCombat", "vsUnit", "domain" };
-			s_segments[eAxis] = modSegmentLookup(kAxisSegments[eAxis]);
+			const int iSegment = modSegmentLookup(kAxisSegments[eAxis]);
+			s_segments[eAxis] = iSegment < 0 ? (int)InfoValuation::TARGET_SEGMENT_NONE : iSegment;
+			s_resolved[eAxis] = true;
 		}
 		return s_segments[eAxis];
 	}
@@ -206,13 +211,16 @@ int InfoValuation::overThresholdPenalty(const CvModifiers* modifiers, ModifierFa
 
 int InfoValuation::keyedTargetSegment(const char* szTargetSegment)
 {
-	return modSegmentLookup(szTargetSegment);
+	const int iSegment = modSegmentLookup(szTargetSegment);
+	//	modSegmentLookup answers -1 for "never authored", which is the LIVE direct-keyed address shape here --
+	//	so it is re-coded to the distinct not-in-the-data answer the keyed reads match nothing against.
+	return iSegment < 0 ? (int)TARGET_SEGMENT_NONE : iSegment;
 }
 void InfoValuation::collectKeyedTarget(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind,
 	int iTargetSegment, std::vector<std::pair<int, int> >& targetValues, int iScope)
 {
 	targetValues.clear();
-	if (modifiers == NULL)
+	if (modifiers == NULL || iTargetSegment == TARGET_SEGMENT_NONE)
 	{
 		return;
 	}
@@ -224,7 +232,8 @@ void InfoValuation::collectKeyedTarget(const CvModifiers* modifiers, ModifierFam
 		||  kEntry.targetSeg != iTargetSegment
 		||  kEntry.targetFk < 0
 		|| (iKind >= 0 && kEntry.kind != iKind)
-		|| (iScope >= 0 && (int)kEntry.scope != iScope))
+		|| (iScope >= 0 && (int)kEntry.scope != iScope)
+		||  kEntry.enabled != NULL || kEntry.disabled != NULL)
 		{
 			continue;
 		}
@@ -244,7 +253,7 @@ void InfoValuation::collectKeyedTarget(const CvModifiers* modifiers, ModifierFam
 int InfoValuation::keyedTarget(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind,
 	int iTargetSegment, int iTargetFk)
 {
-	if (modifiers == NULL || iTargetFk < 0 || iTargetSegment < 0)
+	if (modifiers == NULL || iTargetFk < 0 || iTargetSegment == TARGET_SEGMENT_NONE)
 	{
 		return 0;
 	}
@@ -256,7 +265,8 @@ int InfoValuation::keyedTarget(const CvModifiers* modifiers, ModifierFamily eFam
 		if (kEntry.family == eFamily
 		&&  kEntry.targetSeg == iTargetSegment
 		&&  kEntry.targetFk == iTargetFk
-		&& (iKind < 0 || kEntry.kind == iKind))
+		&& (iKind < 0 || kEntry.kind == iKind)
+		&&  kEntry.enabled == NULL && kEntry.disabled == NULL)
 		{
 			iTotal += kEntry.value;
 		}
@@ -352,18 +362,16 @@ void InfoValuation::collectHealByUnitCombat(const CvModifiers* modifiers, std::v
 void InfoValuation::fillEvalCtx(const CityContext& cityContext, const EmpireContext& empireContext,
 	const CvPlotGroup* plotGroup, CvCascadeEvalCtx& evalCtx)
 {
-	cityContext.fillEvalCtx(evalCtx);     // city + plot
-	empireContext.fillEvalCtx(evalCtx);   // player + team
+	//	Each context hands the ctx ITSELF -- the isolated live-state SILO, never the object holding it
+	//	([contexts.md]). The city's fill also feeds in the FED-IN entity verdict (patterns.md what-if driver):
+	//	the enabler's standing operating set -- active + obsolete buildings + vicinity-provided bonuses -- so a
+	//	building-presence or vicinity predicate reads the cascade-computed state and the walk itself never
+	//	evaluates `requires`.
+	cityContext.fillEvalCtx(evalCtx);     // the city silo + its centre plot's + the operating set
+	empireContext.fillEvalCtx(evalCtx);   // the empire silo -- which answers every team fact too
 	// the reserved TRADED-bonus source (contexts.md): a city-bound ctx answers connection:"trade" through the
 	// city's own plot-group-backed maintained count; this explicit pass-in serves the city-less what-if.
 	evalCtx.plotGroup = plotGroup;
-	if (evalCtx.city != NULL)
-	{
-		// the FED-IN entity verdict (patterns.md what-if driver): the enabler's standing operating set --
-		// active buildings + vicinity-provided bonuses -- so building-presence/vicinity predicates read the
-		// cascade-computed state; the walk itself never evaluates requires.
-		EnablerKernel::wireOperatingBuildings(evalCtx.city, evalCtx);
-	}
 }
 
 int64_t InfoValuation::groupSum(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind, CvCascUnit eUnit,
@@ -876,6 +884,65 @@ int InfoValuation::expectedSum(const CvModifiers* modifiers, ModifierFamily eFam
 	// so every other read the conditioned tail makes stays the real city's.
 	evalCtx.hypothetical = pHypothetical;
 	return (int)groupSum(modifiers, eFamily, iKind, eUnit, evalCtx);
+}
+
+int64_t InfoValuation::keyedTargetSum(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind,
+	int iTargetSegment, int iTargetFk, const CvCascadeEvalCtx& evalCtx)
+{
+	if (modifiers == NULL || iTargetFk < 0 || iTargetSegment == TARGET_SEGMENT_NONE)
+	{
+		return 0;
+	}
+	// (1) the UNCONDITIONED half, through the ONE keyed read -- no second matcher beside it.
+	int64_t iTotal = keyedTarget(modifiers, eFamily, iKind, iTargetSegment, iTargetFk);
+	// (2) the CONDITIONED tail, the groupSum walk with the target axis matched instead of skipped. A keyed
+	// entry is in the conditioned list exactly as an untargeted one is, so the only difference from the point
+	// form is WHICH entries are taken.
+	size_t iBegin = 0;
+	size_t iEnd = 0;
+	modifiers->conditionedRange(eFamily, iBegin, iEnd);
+	const std::vector<const CvModEntry*>& conditioned = modifiers->conditioned();
+	for (size_t i = iBegin; i < iEnd; ++i)
+	{
+		const CvModEntry* pEntry = conditioned[i];
+		if (pEntry->targetSeg != iTargetSegment || pEntry->targetFk != iTargetFk)
+		{
+			continue;
+		}
+		if (iKind >= 0 && pEntry->kind != iKind)
+		{
+			continue;
+		}
+		if (!val_scopeFolds(pEntry->scope))
+		{
+			continue;   // the experienced-here fold set, exactly as the point form (modifier.md §1)
+		}
+		if (pEntry->unitQual != NULL)
+		{
+			continue;   // unit-carried values ride ON TOP live ([DEC-unit-modifiers-on-top])
+		}
+		if (!MMKernel::audienceOk(pEntry->aiOnly, evalCtx))
+		{
+			continue;
+		}
+		if (!MMKernel::applies(pEntry->enabled, pEntry->disabled, evalCtx))
+		{
+			continue;
+		}
+		iTotal += MMKernel::perScale(*pEntry, evalCtx, pEntry->value);
+	}
+	return iTotal;
+}
+
+int InfoValuation::expectedKeyedTarget(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind,
+	int iTargetSegment, int iTargetFk,
+	const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup* plotGroup,
+	const CvCascadeHypothetical* pHypothetical)
+{
+	CvCascadeEvalCtx evalCtx;
+	fillEvalCtx(cityContext, empireContext, plotGroup, evalCtx);
+	evalCtx.hypothetical = pHypothetical;
+	return (int)keyedTargetSum(modifiers, eFamily, iKind, iTargetSegment, iTargetFk, evalCtx);
 }
 
 // ---- the §2a fold seams (see the header docs; pure statics, inputs in / ×100 out) ----

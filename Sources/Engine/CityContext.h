@@ -49,6 +49,7 @@ class CvPlot;
 class CvCity;
 class CvClassificationBlock;   // a grantor's §8 `amenities` block, folded by pointer (never included here)
 struct CvCascadeEvalCtx;
+struct OperatingBuildings;   // the enabler's per-city ACTIVE set, forwarded (CvCity owns the storage)
 
 // The city-side twin of CLS_HAS: a one-line getter body reading the city's amenity FOLD by key, with the
 // load-minted id memoized per call site. The city is what a gate asks (contexts.md) -- never each grantor.
@@ -153,6 +154,13 @@ public:
 
 	// --- FORWARDED: the RAW data CvCity already holds O(1) -- a stored copy would duplicate it. Out-of-line (.cpp) ---
 	int  population() const;                  // CvCity::getPopulation            (m_iPopulation)
+	// The ENABLER's per-city derived output (enabler.md §3.2), FORWARDED because the city OWNS the storage
+	// (`CvCity::m_operatingBuildings`) exactly as it owns population -- this context neither computes nor
+	// mirrors it. The eval seam points the ctx's three set members at it, so a predicate asking "is this
+	// building ACTIVE / is this bonus provided in vicinity" reads the cascade-computed verdict rather than the
+	// engine's ([DEC-calc-zero-ride-in]). ⛔ Never STORE a copy: the enabler mutates its set in place as the
+	// operate fixpoint ripples, so a mirror would drift (the contexts.md vicinity-split reasoning).
+	const OperatingBuildings* operatingBuildings() const;
 	int  power() const;                       // the `providesPower` AMENITY fold (owner: power IS an amenity)
 	bool isPowered() const;                   // CvCity::isPower -- the HAS_POWER verdict; see the CONTEXT GAP note below
 	bool hasReligion(int eReligion) const;    // CvCity::isHasReligion            (the presence array)
@@ -204,7 +212,8 @@ public:
 	// flag (SEVT_AREA_CLEAN_POWER_CHANGED) -- and the headquarters designation announces
 	// SEVT_HEADQUARTERS_CHANGED, so a reader that needs to react to either has a fact to hang on.
 
-	// Fill the CITY half of a condition-eval context (ec.city + ec.plot) from the bound city -- the context IS the
+	// Fill the CITY half of a condition-eval context (this silo + its centre plot's + the enabler's operating
+	// set) -- the context IS the
 	// eval state (the evaluator reads through the ctx it fills). Paired with EmpireContext::fillEvalCtx (player/team).
 	void fillEvalCtx(CvCascadeEvalCtx& ec) const;
 

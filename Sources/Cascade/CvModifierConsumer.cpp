@@ -270,9 +270,9 @@ namespace
 	// A plot predicate (HAS_IRRIGATION / HAS_LANDMARK / IS_OWNED / HAS_COAST / HAS_FRESHWATER / the relief block)
 	// is answered off the eval ctx's PLOT (CvConditionEval::ev_evalPredicate -> PlotContext), and CascadeGather
 	// binds that plot PER SCOPE -- which IS the whole derivation of where a flip can reach:
-	//   PLOT   fold -- evalCtx.plot = the plot itself                         (gt_gatherPlotChannels)
-	//   CITY   fold -- evalCtx.plot = THAT CITY'S OWN CENTRE plot             (gt_fillCityEvalCtx -> InfoValuation::
-	//                  fillEvalCtx -> CityContext::fillEvalCtx: ec.plot = m_city->plot())
+	//   PLOT   fold -- evalCtx.plotContext = the plot's own silo                (gt_gatherPlotChannels)
+	//   CITY   fold -- evalCtx.plotContext = THAT CITY'S OWN CENTRE plot's silo (gt_fillCityEvalCtx -> InfoValuation::
+	//                  fillEvalCtx -> CityContext::fillEvalCtx: the city hands in its own + its centre plot's)
 	//   EMPIRE and TEAM folds bind NO plot at all (EmpireContext::fillEvalCtx fills player/team only; the team
 	//   gather sets team/player), so a plot predicate is constantly not-present there -- the evaluator's
 	//   NULL-object convention -- and those packages cannot move on a plot fact.

@@ -94,6 +94,16 @@ public:
 	//	as "what a keyless address compiles to" is the trap -- it happens to work here, and reads nothing at all
 	//	on the exact-match COLLECT forms above.
 	//	⚠ Returns the value AS COMPILED -- a percent is NOT scaled ([DEC-fixedpoint-x100]).
+	//	⚖ iTargetSegment carries the SAME -1 semantics as the COLLECT form below, and the two must never drift:
+	//	-1 is the DIRECT-KEYED address shape (`allowedSpecialists.city.{SPECIALIST_X}` -- a named-entity key
+	//	sitting straight under the scope with no plural container token), not a failure code. Rejecting it here
+	//	made every direct-keyed point read answer 0, which is silent: the caller passes the right family, kind
+	//	and target, and simply never sees the deposit.
+	//	⛔ UNCONDITIONED ENTRIES ONLY, exactly as `CvModifiers::targetedSum` -- a conditioned entry is the
+	//	VALUATION's to evaluate through the ONE evaluator against the contexts, never something a point read
+	//	folds in as though its condition held ([patterns.md] THE GETTER SETUP: the compiled sum, the conditioned
+	//	list and the `expected*` what-if are three distinct reads). Summing the tail here applies every
+	//	tech-gated and age-gated deposit from turn 0.
 	static int keyedTarget(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind,
 		int iTargetSegment, int iTargetFk);
 
@@ -104,14 +114,18 @@ public:
 	//	the handful the entity AUTHORED instead of the whole target registry, which is the own-data inversion
 	//	pedia-read-map finding 2 names as the shape to delete.
 	//	⚠ Values come back AS COMPILED (a flat is ×100, a percent is not -- [DEC-fixedpoint-x100]).
+	//	⛔ UNCONDITIONED ENTRIES ONLY -- the same condition semantics as the point form above and as
+	//	`CvModifiers::targetedSums`; the conditioned tail belongs to the valuation, not to this walk.
 	//	⚖ iTargetSegment is matched EXACTLY, and -1 is a REAL ADDRESS SHAPE, not a failure: a named-entity key
 	//	may sit directly under the scope with no plural container token (`religion.city.{RELIGION_X}` -- the
 	//	address decode routes an underscored segment to targetFk and leaves targetSeg unset), so -1 selects
 	//	precisely those. Serving both shapes here is what keeps this the ONE keyed read
 	//	([DEC-single-implementation]) instead of every direct-keyed consumer hand-rolling an entry walk.
-	//	⛔ So NEVER forward a FAILED `keyedTargetSegment` lookup into this parameter -- that also returns -1, and
-	//	it would silently select the direct-keyed entries instead of answering "nothing was authored there".
-	//	Pass the intent: a container token you know the address carries, or -1 because the address carries none.
+	//	⚑ A FAILED `keyedTargetSegment` lookup is STRUCTURALLY distinct from -1, so it cannot be mistaken for the
+	//	direct-keyed shape: it answers TARGET_SEGMENT_NONE and both keyed reads match nothing against it. That is
+	//	deliberate rather than a caution to remember -- the two meanings ("this address carries no container
+	//	token" and "that token was never authored anywhere") are opposite intents, and collapsing them onto one
+	//	value is what would silently hand a caller the direct-keyed entries it did not ask for.
 	//	iScope filters to entries AUTHORED at one scope (-1 = any), the same shape as iKind's filter. It matters
 	//	wherever the same family+target is authored at two scopes with two different consumers -- `buildRate`
 	//	keyed by buildings is the live case (a city-scope row speeds the build HERE, an empire-scope row speeds
@@ -137,8 +151,6 @@ public:
 	static bool authorsAnySigned(const CvModifiers* modifiers, ModifierFamily eFamily, int iSign,
 		int iKind = -1, int iScope = -1);
 
-	//	The interner lookup for a keyed target token, resolved ONCE per call site rather than per entry.
-	//	Returns -1 when the segment was never authored anywhere, which makes every keyed read answer 0.
 	// The OVER-LIMIT penalty a source authors: the magnitude of its wellbeing entry scaled per unit ABOVE a
 	// threshold token (json §3.7 `above` -- the civic over-expansion class, `{value:-6, per:{CITY, above:
 	// CITY_LIMIT}}`). Returned POSITIVE as a penalty-per-extra-item, so a caller weighs it without re-deriving
@@ -147,7 +159,15 @@ public:
 	static int overThresholdPenalty(const CvModifiers* modifiers, ModifierFamily eFamily,
 		const char* szAboveToken);
 
+	//	The interner lookup for a keyed target token, resolved ONCE per call site rather than per entry.
+	//	⚑ A token that was never authored anywhere answers TARGET_SEGMENT_NONE, NOT -1: -1 is the live
+	//	direct-keyed address shape, so returning it here would make an unauthored token select precisely the
+	//	entries the caller did not ask for. Both keyed reads match nothing against TARGET_SEGMENT_NONE, so a
+	//	caller may forward this result straight into them and a missing token answers 0 by construction.
 	static int keyedTargetSegment(const char* szTargetSegment);
+
+	//	The "that token is not in the data" answer from keyedTargetSegment -- distinct from -1 (direct-keyed).
+	enum { TARGET_SEGMENT_NONE = -2 };
 
 	//	Materialize the doubleMove FK lists from an entity's OWN compiled MOVEMENT entries. doubleMove is half
 	//	movement cost on that ground ([skills.md] par.1) -- a keyed movement modifier, never a skill -- and the
@@ -215,6 +235,29 @@ public:
 		const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup* plotGroup,
 		const CvCascadeHypothetical* pHypothetical = NULL);
 
+	//	THE KEYED TWIN of expectedSum -- the what-if for a deposit that is BOTH keyed and conditioned.
+	//	⚑ Why it must exist as its own read: `expectedSum` answers a family's POINT slot and deliberately skips
+	//	every targeted entry (a keyed entry never folds scope-wide -- folding it would hand a melee-only bonus to
+	//	every unit, [modifier.md §5]), while `keyedTarget` answers the keyed axis but only its UNCONDITIONED
+	//	half. A deposit carrying both axes therefore falls between them and has NO read at all -- which is not a
+	//	hypothetical: `allowedSpecialists.city.{SPECIALIST_X}` gated on a team tech is exactly that shape, and its
+	//	consumers dangled on it.
+	//	⛔ The conditioned tail goes through the ONE evaluator over a ctx the CONTEXTS fill -- never a second
+	//	evaluator and never an unconditional sum ([DEC-single-implementation]); an unconditional sum is what
+	//	applies every tech-gated slot from turn 0.
+	//	⚑ It takes the SAME optional AS-IF-HELD hypothetical the point form does, so "how many slots would this
+	//	open if I ALSO had that tech" is the DELTA between two calls ([patterns.md] THE VALUATION PROTOCOL --
+	//	contexts in, delta out) rather than a second machine that re-derives which entries a tech gates.
+	//	⚠ Values come back AS COMPILED (a flat/count is ×100, a percent is not -- [DEC-fixedpoint-x100]).
+	static int expectedKeyedTarget(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind,
+		int iTargetSegment, int iTargetFk,
+		const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup* plotGroup,
+		const CvCascadeHypothetical* pHypothetical = NULL);
+
+	//	The ctx-taking core of the above, for a caller that already filled one (the groupSum/expectedSum shape).
+	static int64_t keyedTargetSum(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind,
+		int iTargetSegment, int iTargetFk, const CvCascadeEvalCtx& evalCtx);
+
 	// The ctx-taking core the endpoints share (fill the ctx ONCE per endpoint, fold each channel through this):
 	// Σ over the folded scopes of the compiled unconditioned sums (audience-resolved) + the family's conditioned
 	// tail (kind/unit-matched, untargeted, gated via the ONE evaluator, per-resolved via the ONE §3.7 resolver).
@@ -229,7 +272,7 @@ public:
 		CvCascScope eScope, const CvCascadeEvalCtx& evalCtx);
 
 	// ONE substrate info's OWN untargeted PLOT-scope output of a channel family, for the ctx's TARGET plot
-	// (evalCtx.plot): the compiled plot-slot unconditioned sum + the plot-scope conditioned tail -- incl. the
+	// (evalCtx.plotContext): the compiled plot-slot unconditioned sum + the plot-scope conditioned tail -- incl. the
 	// reverse-landed conditioned entries (a building/civic/tech boost keyed to this substrate lands HERE,
 	// CvReversePass) -- evaluated under PLOT-EVAL semantics (a bare {HAS_BONUS:X} reads THIS plot,
 	// bonusFromPlot; the groupSumAt sibling evaluates city-relative and cannot serve the substrate leg).

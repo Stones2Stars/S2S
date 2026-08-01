@@ -345,7 +345,6 @@ CvCity::CvCity()
 	m_paiGreatPeopleUnitRate = NULL;
 	m_paiGreatPeopleUnitProgress = NULL;
 	m_paiSpecialistCount = NULL;
-	m_paiMaxSpecialistCount = NULL;
 	m_paiForceSpecialistCount = NULL;
 	m_paiFreeSpecialistCountUnattributed = NULL;
 	m_paiImprovementFreeSpecialists = NULL;
@@ -638,7 +637,6 @@ void CvCity::uninit()
 	SAFE_DELETE_ARRAY(m_paiGreatPeopleUnitRate);
 	SAFE_DELETE_ARRAY(m_paiGreatPeopleUnitProgress);
 	SAFE_DELETE_ARRAY(m_paiSpecialistCount);
-	SAFE_DELETE_ARRAY(m_paiMaxSpecialistCount);
 	SAFE_DELETE_ARRAY(m_paiForceSpecialistCount);
 	SAFE_DELETE_ARRAY(m_paiFreeSpecialistCountUnattributed);
 	SAFE_DELETE_ARRAY(m_paiImprovementFreeSpecialists);
@@ -936,13 +934,11 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 
 		FAssertMsg((0 < GC.getNumSpecialistInfos()), "GC.getNumSpecialistInfos() is not greater than zero but an array is being allocated in CvCity::reset");
 		m_paiSpecialistCount = new int[GC.getNumSpecialistInfos()];
-		m_paiMaxSpecialistCount = new int[GC.getNumSpecialistInfos()];
 		m_paiForceSpecialistCount = new int[GC.getNumSpecialistInfos()];
 		m_paiFreeSpecialistCountUnattributed = new int[GC.getNumSpecialistInfos()];
 		for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
 		{
 			m_paiSpecialistCount[iI] = 0;
-			m_paiMaxSpecialistCount[iI] = 0;
 			m_paiForceSpecialistCount[iI] = 0;
 			m_paiFreeSpecialistCountUnattributed[iI] = 0;
 		}
@@ -3635,10 +3631,16 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 		changeBuildingCommerceModifier(eCommerceX, iChange * (kBuilding.getCommerceModifier(eCommerceX, CASC_SCOPE_CITY) + owner.getBuildingCommerceModifier(eBuilding, eCommerceX)));
 	}
 
-	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
+	//	The slot cap is a fresh read over the operating buildings now, so nothing accumulates here. What DOES
+	//	survive is the rider the deleted changer carried ([save.md §6]: audit a changer's whole body): a building
+	//	that opens or closes specialist slots moves which plots/slots are worth working, so the citizen
+	//	assignment is asked to re-check. ⚑ Gated on the building ACTUALLY authoring the family -- the ruled test
+	//	is "a building that makes actual changes to specialists or plots", never every completion
+	//	([todo.md] the assignment re-check routing).
+	if (InfoValuation::authorsAnySigned(kBuilding.getModifiers(), MODFAM_ALLOWED_SPECIALISTS, 1)
+	||  InfoValuation::authorsAnySigned(kBuilding.getModifiers(), MODFAM_ALLOWED_SPECIALISTS, -1))
 	{
-		// The TEAM-granted slot count only; the building's own authored count is a deposit now.
-		changeMaxSpecialistCount((SpecialistTypes)iI, GET_TEAM(getTeam()).getBuildingSpecialistChange(eBuilding, (SpecialistTypes)iI) * iChange);
+		AI_setAssignWorkDirty(true);
 	}
 
 	if (kBuilding.providesAmenity(CLS_AMENITY_ZONE_OF_CONTROL))
@@ -10732,10 +10734,29 @@ int CvCity::getMaxSpecialistCount() const
 	return totalFreeSpecialists() + getPopulation() - angryPopulation();
 }
 
+//	The manual-assign slot cap this city opens for one specialist type: a FRESH GATHER over its OPERATING
+//	buildings' own `allowedSpecialists.city.{SPECIALIST_X}` deposits ([DEC-accumulator-cut-uniform] -- the
+//	serialized per-city/per-team ledgers this replaces carried save history no live source could reproduce).
+//	⚑ It reads through the KEYED TWIN because the family authors both shapes: the plain slots a building always
+//	opens, and the tech-gated ones beside them. The twin evaluates that conditioned tail through the ONE
+//	evaluator against this city's contexts, so a slot appears exactly when its tech is held -- which is what the
+//	team ledger was pre-computing on every tech acquire.
+//	⛔ OPERATING buildings only: a dormant or obsolete building confers nothing ([enabler.md §3.2]).
+//	⚠ The COUNT unit stores ×100 ([DEC-fixedpoint-x100]), so the reader reduces here at its point of use.
 int CvCity::getMaxSpecialistCount(SpecialistTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eIndex);
-	return m_paiMaxSpecialistCount[eIndex];
+	const CvPlayer& kOwner = GET_PLAYER(getOwner());
+	CvCascadeEvalCtx evalCtx;
+	InfoValuation::fillEvalCtx(getCityContext(), kOwner.getEmpireContext(), plotGroup(), evalCtx);
+	const OperatingBuildings& kOperating = EnablerKernel::operatingBuildings(this);
+	int64_t iTotal = 0;
+	for (std::set<int>::const_iterator it = kOperating.active.begin(); it != kOperating.active.end(); ++it)
+	{
+		iTotal += InfoValuation::keyedTargetSum(GC.getBuildingInfo((BuildingTypes)*it).getModifiers(),
+			MODFAM_ALLOWED_SPECIALISTS, CHANNEL_AMOUNT, -1, (int)eIndex, evalCtx);
+	}
+	return (int)std::max((int64_t)0, iTotal / 100);
 }
 
 bool CvCity::isSpecialistValid(SpecialistTypes eIndex, int iExtra) const
@@ -10750,19 +10771,6 @@ bool CvCity::isSpecialistValid(SpecialistTypes eIndex, int iExtra) const
 		&&
 		getSpecialistCount(eIndex) + iExtra <= getMaxSpecialistCount()
 	);
-}
-
-
-void CvCity::changeMaxSpecialistCount(SpecialistTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eIndex);
-
-	if (iChange != 0)
-	{
-		m_paiMaxSpecialistCount[eIndex] = std::max(0, (m_paiMaxSpecialistCount[eIndex] + iChange));
-
-		AI_setAssignWorkDirty(true);
-	}
 }
 
 
@@ -13711,7 +13719,6 @@ void CvCity::readBody(FDataStreamBase* pStream)
 	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvCity", REMAPPED_CLASS_TYPE_UNITS, GC.getNumUnitInfos(), m_paiGreatPeopleUnitRate);
 	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvCity", REMAPPED_CLASS_TYPE_UNITS, GC.getNumUnitInfos(), m_paiGreatPeopleUnitProgress);
 	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvCity", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiSpecialistCount);
-	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvCity", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiMaxSpecialistCount);
 	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvCity", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiForceSpecialistCount);
 	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvCity", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiFreeSpecialistCountUnattributed);
 	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvCity", REMAPPED_CLASS_TYPE_IMPROVEMENTS, GC.getNumImprovementInfos(), m_paiImprovementFreeSpecialists);
@@ -14417,7 +14424,6 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_UNITS, GC.getNumUnitInfos(), m_paiGreatPeopleUnitRate);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_UNITS, GC.getNumUnitInfos(), m_paiGreatPeopleUnitProgress);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiSpecialistCount);
-	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiMaxSpecialistCount);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiForceSpecialistCount);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiFreeSpecialistCountUnattributed);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_IMPROVEMENTS, GC.getNumImprovementInfos(), m_paiImprovementFreeSpecialists);
@@ -16308,17 +16314,6 @@ int CvCity::getNumCityPlots() const
 void CvCity::updateYieldRate(BuildingTypes eBuilding, YieldTypes eYield, int iChange)
 {
 	setBuildingYieldChange(eBuilding, eYield, iChange);
-}
-
-/*
-Given a building type, specialist type and the amount of specialists to change, updateMaxSpecialistCount changes the specialist count by the iChange value.
-*/
-void CvCity::updateMaxSpecialistCount(BuildingTypes eBuilding, SpecialistTypes eSpecialist, int iChange)
-{
-	if (hasFullyActiveBuilding(eBuilding))
-	{
-		changeMaxSpecialistCount(eSpecialist, iChange);
-	}
 }
 
 

@@ -14,7 +14,7 @@
 #include "CvInfo.h"                    // CvInfo (+ the compiled CvModEntry carrier the entry-side perScale reads)
 #include "Repos/InfoRepo.h"            // InfoRepo<CvXInfo>::get().get(id) -- the JSON info home
 #include "Defines/CvGlobals.h"
-#include "Engine/CvPlayer.h"           // evalCtx.player->isHuman() -- the audience gate
+#include "Engine/EmpireContext.h"      // EmpireContext::isHuman -- the audience gate (the empire silo)
 #include "CvTraitInfo.h"
 #include "Engine/CvGame.h"             // GC.getGame().isOption (the trait-set option gate)
 #include "Engine/CvMap.h"              // GC.getMap().getWorldSize() -- the per.above CITY_LIMIT scaling leg
@@ -51,7 +51,7 @@ bool MMKernel::audienceOk(bool bAiOnly, const CvCascadeEvalCtx& evalCtx)
 	{
 		return true;
 	}
-	return evalCtx.player != NULL && !evalCtx.player->isHuman();
+	return evalCtx.empireContext != NULL && !evalCtx.empireContext->isHuman();
 }
 
 // The shared §3.7 formula core (see the header): value × (max(0, count − above) / each). The `above` leg

@@ -4,8 +4,8 @@
 
 //
 //	CvCascadeConditionEval -- the PORT of StoneBase `CascadingEnabler/ConditionEvaluator.cs`. Walks a typed
-//	[CvCondition] tree and returns whether it holds, reading the LIVE engine (`CvCity`/`CvPlayer`/`CvPlot`/
-//	`CvTeam`) wherever the C# reads its `EvalState`/`PlotContext` snapshot. The LOGIC is a faithful transcription
+//	[CvCondition] tree and returns whether it holds, reading the per-scope live-state CONTEXTS (CityContext /
+//	EmpireContext / PlotContext) wherever the C# reads its `EvalState`/`PlotContext` snapshot. The LOGIC is a faithful transcription
 //	(StoneBase is the validated reference; owner ruling 2026-06-30) -- only the state reads differ. A NULL condition
 //	is vacuously true; an UNKNOWN predicate is IGNORED (true), never false (json §3.5).
 //
@@ -14,12 +14,11 @@
 #include "CvEdges.h"   // EnEdgeBucket / NUM_EDGEB -- the interned bucket vocabulary the hypothetical keys on
 #include <set>
 
-class CvCity;
-class CvPlayer;
-class CvPlot;
 class CvUnit;
-class CvTeam;
 class CvPlotGroup;
+class CityContext;
+class EmpireContext;
+class PlotContext;
 
 // THE AS-IF-HELD HYPOTHETICAL -- the GATE twin of the membership overlay (Enabler/CvEnablerOverlay.h). A caller
 // asking "would this candidate's `requires` pass if I ALSO held X, and no longer held Y" fills this and hands it
@@ -52,21 +51,33 @@ struct CvCascadeHypothetical
 	}
 };
 
-// The eval context = the live engine objects (StoneBase's `(EvalState s, PlotContext? p)`), FILLED BY THE
-// CONTEXTS (CityContext::fillEvalCtx = city/plot, EmpireContext::fillEvalCtx = player/team -- contexts.md: the
-// contexts ARE the eval state, never a raw-pointer ctx built beside them). The bound pointers are the BINDING
-// handles; the evaluator's atom/count reads go through each object's bound context (city->getCityContext(),
-// player->getEmpireContext(), plot->getPlotContext() -- the HAVE axis), never an ad-hoc game-object reach.
-// `player`+`team` are always set; `city` for city-scope gates AND as the vicinity-scan source; `plot` is the
-// deposit's/build's TARGET plot (the C# `PlotContext? p`) for per-plot predicates; `unit` for unit-scope (units
-// are the deliberate FUTURE context scope -- unit reads stay raw until it exists). A predicate whose object is
-// NULL here is treated as not-present (false) -- the cascade asks a city question only at a city scope.
+// The eval context = THE CONTEXTS THEMSELVES (StoneBase's `(EvalState s, PlotContext? p)`), handed in by their
+// owning objects (CityContext::fillEvalCtx, EmpireContext::fillEvalCtx -- contexts.md: the contexts ARE the eval
+// state, never a raw-pointer ctx built beside them). Each context is the isolated live-state SILO of its scope,
+// so the evaluator's atom/count reads go through it and there is no game object here to reach past.
+// `empireContext` is always set (and answers the TEAM facts too); `cityContext` for city-scope gates AND as the
+// vicinity source; `plotContext` is the deposit's/build's TARGET plot (the C# `PlotContext? p`) for per-plot
+// predicates; `unit` for unit-scope (the deliberate FUTURE context scope -- unit reads stay raw until it
+// exists). A predicate whose context is NULL here is treated as not-present (false) -- the cascade asks a city
+// question only at a city scope.
 struct CvCascadeEvalCtx
 {
-	const CvCity*   city;
-	const CvPlayer* player;
-	const CvTeam*   team;
-	const CvPlot*   plot;
+	// ⛔ THE CTX CARRIES CONTEXTS, NOT GAME OBJECTS (owner, [contexts.md]). Each scope's context is the isolated
+	// live-state SILO its owning object holds as a member (CvCity::m_cityContext, CvPlayer::m_empireContext,
+	// CvPlot::m_plotContext), and a reader is handed the SILO -- never the object housing it. Passing the
+	// object would hand over the whole god-class with the silo one `->` inside it, which is the same as having
+	// no boundary: the isolation has to be STRUCTURAL ("there is no member to reach through"), not a convention
+	// two helper functions and a reviewer's memory uphold.
+	// ⛔ There is deliberately NO `CvTeam*`: a team is the TECH BRIDGE and owns no live-state surface, so every
+	// team fact is asked of the PLAYER (EmpireContext::teamHasTech / teamId / teamMemberCount). A team package
+	// exists for DEPOSITS, which is a different axis -- do not read it as licence for a team context.
+	// ⚑ A context that cannot answer a needed fact is a CONTEXT GAP to close by adding the forward, never a
+	// reason to re-add an object pointer -- that forcing function is the whole point of the structural form.
+	const CityContext*   cityContext;
+	const EmpireContext* empireContext;
+	const PlotContext*   plotContext;
+	// ⚠ The ONE acknowledged hole ([contexts.md]): units are the deliberate FUTURE role-specific scope, so this
+	// stays raw until that context lands. It is not a precedent for the others.
 	const CvUnit*   unit;
 	// The trade-network object -- the reserved explicit TRADED-bonus source (contexts.md; traded state is NEVER
 	// mirrored into CityContext). Filled by the valuation seam's plotGroup pass-in (InfoValuation::fillEvalCtx).
@@ -105,7 +116,7 @@ struct CvCascadeEvalCtx
 	// The AS-IF-HELD hypothetical (above) -- NULL on every ordinary evaluation, so the normal path pays one
 	// null test. Set ONLY by a caller asking a what-if, and never stored anywhere.
 	const CvCascadeHypothetical* hypothetical;
-	CvCascadeEvalCtx() : city(NULL), player(NULL), team(NULL), plot(NULL), unit(NULL), plotGroup(NULL), waivedPrereqBuildings(NULL), activeBuildings(NULL), obsoleteBuildings(NULL), vicinityProvidedBonuses(NULL), buildingAtomsPresence(false), religion(-1), hypothetical(NULL) {}
+	CvCascadeEvalCtx() : cityContext(NULL), empireContext(NULL), plotContext(NULL), unit(NULL), plotGroup(NULL), waivedPrereqBuildings(NULL), activeBuildings(NULL), obsoleteBuildings(NULL), vicinityProvidedBonuses(NULL), buildingAtomsPresence(false), religion(-1), hypothetical(NULL) {}
 };
 
 // Evaluator flags (StoneBase's init-only props). For a `requires.build` gate set strictStateReligionForBuild=true.
@@ -123,12 +134,12 @@ struct CvCascadeEvalFlags
 		: strictStateReligionForBuild(false), ignorePlotScope(false), ignoreDisabled(false), bonusFromPlot(false), testVisible(false) {}
 };
 
-// Is a building ACTIVE for `ec.city`? Reads the cascade-computed `ec.activeBuildings` set (present ∧ operate-holds ∧
+// Is a building ACTIVE for `ec.cityContext`? Reads the cascade-computed `ec.activeBuildings` set (present ∧ operate-holds ∧
 // ¬dormant), or -- when that precompute is absent -- falls back to raw PRESENCE (hasBuilding, a raw input, NOT
 // the engine active-building state). The shared read helper for every modifier calc + the evaluator (single source).
 bool cascadeIsBuildingActive(int eBuilding, const CvCascadeEvalCtx& ec);
 
-// Is a building OBSOLETE for `ec.city`? Reads the cascade-computed `ec.obsoleteBuildings` set (present ∧
+// Is a building OBSOLETE for `ec.cityContext`? Reads the cascade-computed `ec.obsoleteBuildings` set (present ∧
 // obsoleted-by-held-tech, json §4.2) -- an obsolete building deposits its `whenObsolete` tree in place of its normal
 // families and provides nothing. Maintained in the SAME obsoletion process as the active set; NULL set = none.
 bool cascadeIsBuildingObsolete(int eBuilding, const CvCascadeEvalCtx& ec);
@@ -142,7 +153,7 @@ int cascadeCountOf(int iTypeId, const std::string& sType, CvCascScope eScope, co
 // Evaluate the condition tree against the live engine. `c == NULL` -> true (vacuous).
 bool cascadeEvalCondition(const CvCondition* c, const CvCascadeEvalCtx& ctx, const CvCascadeEvalFlags& flags);
 
-// The §3.7 counted-kind RELIGION filter's count leg (ruling 23): how many of ec.city's present religions match
+// The §3.7 counted-kind RELIGION filter's count leg (ruling 23): how many of ec.cityContext's present religions match
 // `filter` (each religion tested with ctx.religion set -- the IS_STATE_RELIGION predicate's input). A NULL
 // filter counts every present religion; no city -> 0. The ONE religion-count implementation -- the `religion:`
 // qualifier's resolver (MMKernel::perScale) and any future consumer share it (DEC-single-implementation).

@@ -5679,11 +5679,15 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 						// The manual-assign slots this building opens for this specialist type. The address is keyed
 						// DIRECTLY by the type with no container token (`allowedSpecialists.city.{SPECIALIST_X}`), which
 						// is exactly what the -1 segment selects ([modifier.md §5]); the COUNT unit stores ×100.
+						// ⚑ The KEYED TWIN, because this family authors BOTH shapes: the plain slots a building always
+						// opens, and the tech-gated ones beside them (a University's scientist slots arriving with
+						// Biology / Physics / Psychology). The twin evaluates that conditioned tail through the ONE
+						// evaluator against this city's contexts, so a slot counts when its tech is actually held.
 						const int iAllowedSlots =
-							InfoValuation::keyedTarget(kBuilding.getModifiers(), MODFAM_ALLOWED_SPECIALISTS,
-								CHANNEL_AMOUNT, -1, iI) / 100
-							+ kTeam.getBuildingSpecialistChange(eBuilding, (SpecialistTypes)iI);
-						
+							InfoValuation::expectedKeyedTarget(kBuilding.getModifiers(), MODFAM_ALLOWED_SPECIALISTS,
+								CHANNEL_AMOUNT, -1, iI,
+								getCityContext(), kOwner.getEmpireContext(), plotGroup()) / 100;
+
 						if (iAllowedSlots > 0)
 						{
 							if (!bUnlimited && iRunnable < 5)
