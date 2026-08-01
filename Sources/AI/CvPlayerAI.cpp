@@ -1949,7 +1949,7 @@ void CvPlayerAI::AI_conquerCity(PlayerTypes eOldOwner, CvCity* pCity, bool bConq
 						{
 							if (hasTrait((TraitTypes)iI))
 							{
-								iRazeValue *= (100 - (GC.getTraitInfo((TraitTypes)iI).getUpkeepModifier()));
+								iRazeValue *= (100 - (GC.getTraitInfo((TraitTypes)iI).getUpkeepModifier(UPKEEP_CIVIC, CASC_SCOPE_EMPIRE)));
 								iRazeValue /= 100;
 							}
 						}
@@ -2534,12 +2534,12 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 			{
 				//Greedy founding means getting the best possible sites - fitting maximum
 				//resources into the fat cross.
-				iGreed += (GC.getTraitInfo((TraitTypes)iI).getUpkeepModifier() / 2);
-				iGreed += 20 * (GC.getTraitInfo((TraitTypes)iI).getCommerceChange(COMMERCE_CULTURE));
+				iGreed += (GC.getTraitInfo((TraitTypes)iI).getUpkeepModifier(UPKEEP_CIVIC, CASC_SCOPE_EMPIRE) / 2);
+				iGreed += 20 * (GC.getTraitInfo((TraitTypes)iI).getFlatCommerce(COMMERCE_CULTURE, CASC_SCOPE_EMPIRE) / 100);
 				// K-Mod note: I don't think this is the right way to calculate greed.
 				// For example, if greed is high, the civ will end up having fewer, more spread out cities.
 				// That's the opposite of what makes an upkeep reduction most useful.
-				if (GC.getTraitInfo((TraitTypes)iI).getCommerceChange(COMMERCE_CULTURE) > 0)
+				if (GC.getTraitInfo((TraitTypes)iI).getFlatCommerce(COMMERCE_CULTURE, CASC_SCOPE_EMPIRE) > 0)
 				{
 					bEasyCulture = true;
 				}
@@ -2569,7 +2569,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 			{
 				if (isSpecialistValid((SpecialistTypes)iI))
 				{
-					iGreed = std::max(iGreed, 100 + 10 * std::min(4, (GC.getSpecialistInfo((SpecialistTypes)iI).getCommerceChange(COMMERCE_CULTURE) + getSpecialistExtraCommerce(COMMERCE_CULTURE))));
+					iGreed = std::max(iGreed, 100 + 10 * std::min(4, (GC.getSpecialistInfo((SpecialistTypes)iI).getFlatCommerce(COMMERCE_CULTURE, CASC_SCOPE_CITY) / 100 + getSpecialistExtraCommerce(COMMERCE_CULTURE))));
 				}
 			}
 
@@ -2608,7 +2608,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 	{
 		for (int iJ = 0; iJ < GC.getNumBuildingInfos(); iJ++)
 		{
-			if (isBuildingFree((BuildingTypes)iJ) && GC.getBuildingInfo((BuildingTypes)iJ).getCommerceChange(COMMERCE_CULTURE) > 0)
+			if (isBuildingFree((BuildingTypes)iJ) && GC.getBuildingInfo((BuildingTypes)iJ).getFlatCommerce(COMMERCE_CULTURE, CASC_SCOPE_CITY) > 0)
 			{
 				bEasyCulture = true;
 				break;
@@ -2676,7 +2676,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 			else
 			{
 				bNeutralTerritory = false;
-				const int iOtherCulture = std::max(1, pLoopPlot->getCulture(pLoopPlot->getOwner()));
+				const int64_t iOtherCulture = std::max<int64_t>(1, pLoopPlot->getCulture(pLoopPlot->getOwner()));
 
 				iCultureMultiplier = 100 * pLoopPlot->getCulture(getID()) + iClaimThreshold;
 				iCultureMultiplier /= (100 * iOtherCulture + iClaimThreshold) / 100;
@@ -2710,13 +2710,13 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 
 					if (eFeature != NO_FEATURE)
 					{
-						aiYield[eYield] -= GC.getFeatureInfo(eFeature).getYieldChange(eYield);
+						aiYield[eYield] -= GC.getFeatureInfo(eFeature).getFlatYield(eYield, CASC_SCOPE_PLOT) / 100;
 						iBasePlotYield = std::max(iBasePlotYield, aiYield[eYield]);
 					}
 
 					if (eBonus != NO_BONUS)
 					{
-						const int iBonusYieldChange = GC.getBonusInfo(eBonus).getYieldChange(eYield);
+						const int iBonusYieldChange = GC.getBonusInfo(eBonus).getFlatYield(eYield, CASC_SCOPE_PLOT) / 100;
 						aiYield[eYield] += iBonusYieldChange;
 						iBasePlotYield += iBonusYieldChange;
 					}
@@ -4867,22 +4867,53 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 		}
 	}
 
-	iValue += (kTech.getFeatureProductionModifier() * 2);
-	iValue += (kTech.getWorkerSpeedModifier() * 4);
-	iValue += (kTech.getTradeRoutes() * (std::max((getNumCities() + 2), iConnectedForeignCities) + 1) * ((bFinancialTrouble) ? 200 : 100));
+	// featureProduction / workRate are PERCENT slots, so they read 1:1; the trade-route count is a FLAT and
+	// reduces at its point of use ([DEC-fixedpoint-x100] -- a bare re-point would be 100x here).
+	iValue += (kTech.getScalar(SCALAR_FEATURE_PRODUCTION, CASC_SCOPE_EMPIRE, CASC_UNIT_PERCENT) * 2);
+	iValue += (kTech.getScalar(SCALAR_WORK_RATE, CASC_SCOPE_EMPIRE, CASC_UNIT_PERCENT) * 4);
+	iValue += (kTech.getTradeRoute(TRADE_ROUTE_AMOUNT, CASC_SCOPE_CITY) / 100
+	        * (std::max((getNumCities() + 2), iConnectedForeignCities) + 1) * ((bFinancialTrouble) ? 200 : 100));
 
 	if (AI_isDoVictoryStrategy(AI_VICTORY_DOMINATION4))
 	{
-		iValue += (kTech.getHealth() * 350);
+		iValue += (kTech.getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_EMPIRE) / 100 * 350);
 	}
 	else
 	{
-		iValue += (kTech.getHealth() * 200);
+		iValue += (kTech.getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_EMPIRE) / 100 * 200);
 	}
 
-	for (int iI = 0; iI < GC.getNumRouteInfos(); iI++)
+	// A route's tech-gated movement cost is the route's OWN `movement` entry under a condition, so the worth of
+	// the tech is the DELTA it makes to that cost -- and a CHEAPER route is better, hence the negation. Driven
+	// from the tech's own edges rather than a scan of every route ([modifier.md] §5).
+	// The as-if-held pair this tech is valued through, shared by every delta below: what an entity is worth
+	// WITH this tech minus what it is worth WITHOUT. A tech-gated deposit is the target's OWN output under a
+	// condition ([DEC-deliveryguy]), so the tech's worth is exactly that difference.
+	CvCascadeHypothetical kWithTech;
+	kWithTech.present[EDGEB_TECHS].insert((int)eTech);
+	CvCascadeHypothetical kWithoutTech;
+	kWithoutTech.absent[EDGEB_TECHS].insert((int)eTech);
+
+	if (pCapitalCity != NULL)
 	{
-		iValue += -(GC.getRouteInfo((RouteTypes)iI).getTechMovementChange(eTech) * 100);
+		const CityContext& kCityContext = pCapitalCity->getCityContext();
+		const EmpireContext& kEmpireContext = getEmpireContext();
+		const CvPlotGroup* pPlotGroup = pCapitalCity->plotGroup(getID());
+
+		std::set<int> kRelatedRoutes;
+		EnablerKernel::addEdge(EnablerKernel::infoFor(EDGEB_TECHS, (int)eTech),
+			EDGEF_RELATED, EDGEB_ROUTES, kRelatedRoutes);
+
+		for (std::set<int>::const_iterator it = kRelatedRoutes.begin(); it != kRelatedRoutes.end(); ++it)
+		{
+			const CvModifiers* pRouteModifiers = GC.getRouteInfo((RouteTypes)*it).getModifiers();
+			const int iWith = InfoValuation::expectedSum(pRouteModifiers, MODFAM_MOVEMENT, 0, CASC_UNIT_FLAT,
+				kCityContext, kEmpireContext, pPlotGroup, &kWithTech);
+			const int iWithout = InfoValuation::expectedSum(pRouteModifiers, MODFAM_MOVEMENT, 0, CASC_UNIT_FLAT,
+				kCityContext, kEmpireContext, pPlotGroup, &kWithoutTech);
+			// a CHEAPER route is better, hence the negation
+			iValue += -(iWith - iWithout);
+		}
 	}
 
 	// The keyed entry list -- the handful this tech authored, never a walk of the domain enum ([modifier.md] §5).
@@ -4938,24 +4969,44 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 	}
 
 	/* ------------------ Tile Improvement Value  ------------------ */
+	// What this tech does to tile yields is the tech's OWN edge fetch, never a scan of every improvement asking
+	// whether it happens to mention the tech ([modifier.md] §5 -- the own-data inversion; the todo's "drive them
+	// from the tech's own edges"). An improvement's tech-gated yield is its OWN output under a condition
+	// ([DEC-deliveryguy]), so the worth is the DELTA between holding this tech and not -- one hypothetical pair
+	// per related improvement, not a table lookup that no longer exists.
 	int iTileImprovementValue = 0;
-	for (int iI = 0; iI < GC.getNumImprovementInfos(); iI++)
+	std::set<int> kRelatedImprovements;
+	EnablerKernel::addEdge(EnablerKernel::infoFor(EDGEB_TECHS, (int)eTech),
+		EDGEF_RELATED, EDGEB_IMPROVEMENTS, kRelatedImprovements);
+
+	if (!kRelatedImprovements.empty() && pCapitalCity != NULL)
 	{
-		for (int iK = 0; iK < NUM_YIELD_TYPES; iK++)
+		const CityContext& kCityContext = pCapitalCity->getCityContext();
+		const EmpireContext& kEmpireContext = getEmpireContext();
+		const CvPlotGroup* pPlotGroup = pCapitalCity->plotGroup(getID());
+
+		for (std::set<int>::const_iterator it = kRelatedImprovements.begin(); it != kRelatedImprovements.end(); ++it)
 		{
-			iTempValue = 0;
+			const CvImprovementInfo& kImprovement = GC.getImprovementInfo((ImprovementTypes)*it);
+			int aiWith[NUM_YIELD_TYPES];
+			int aiWithout[NUM_YIELD_TYPES];
+			kImprovement.expectedFlatYields(kCityContext, kEmpireContext, pPlotGroup, aiWith, &kWithTech);
+			kImprovement.expectedFlatYields(kCityContext, kEmpireContext, pPlotGroup, aiWithout, &kWithoutTech);
 
-			/* original code
-			iTempValue += (GC.getImprovementInfo((ImprovementTypes)iI).getTechYieldChanges(eTech, iK) * getImprovementCount((ImprovementTypes)iI) * 50); */
-			// Often, an improvment only becomes viable after it gets the tech bonus.
-			// So it's silly to score the bonus proportionally to how many of the improvements we already have.
-			iTempValue += (GC.getImprovementInfo((ImprovementTypes)iI).getTechYieldChanges(eTech, iK) * (getImprovementCount((ImprovementTypes)iI) + 2 * getNumCities()) * 35);
-			// This new version is still bork, but at least it won't be worthless.
-
-			iTempValue *= AI_yieldWeight((YieldTypes)iK);
-			iTempValue /= 100;
-
-			iTileImprovementValue += iTempValue;
+			for (int iK = 0; iK < NUM_YIELD_TYPES; iK++)
+			{
+				const int iDelta = (aiWith[iK] - aiWithout[iK]) / 100;
+				if (iDelta == 0)
+				{
+					continue;
+				}
+				// Often an improvement only becomes viable once it HAS the tech bonus, so the score is not
+				// proportional to how many we already own -- the existing count plus a per-city allowance.
+				iTempValue = iDelta * (getImprovementCount((ImprovementTypes)*it) + 2 * getNumCities()) * 35;
+				iTempValue *= AI_yieldWeight((YieldTypes)iK);
+				iTempValue /= 100;
+				iTileImprovementValue += iTempValue;
+			}
 		}
 	}
 
@@ -4963,20 +5014,6 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 
 	
 
-	//ls612: Tech Commerce Modifiers
-	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
-	{
-		if (kTech.getCommerceModifier(iI) != 0)
-		{
-			iValue += (kTech.getCommerceModifier(iI) * 100);
-		}
-
-		//Extra check for financially challenged AIs
-		if (iI == 0 && kTech.getCommerceModifier(iI) < 0 && AI_isFinancialTrouble())
-		{
-			iValue -= 100;
-		}
-	}
 
 	int iBuildValue = 0;
 	// WHICH BUILDS DOES THIS TECH UNLOCK? -- the tech's own `enables` edge names them (patterns.md
@@ -5017,7 +5054,7 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 				iImprovementValue += (kImprovement.getTerrainMakesValid(iK) ? 50 : 0);
 
 				//Desert has negative defense // Toffer - Not very well defined then...
-				if (GC.getTerrainInfo((TerrainTypes)iK).getDefenseModifier() < 0 && kTeam.isCanFarmDesert())
+				if (GC.getTerrainInfo((TerrainTypes)iK).getDefense(DEFENSE_AMOUNT, CASC_SCOPE_PLOT) < 0 && kTeam.isCanFarmDesert())
 				{
 					iImprovementValue += 50;
 				}
@@ -5032,9 +5069,13 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 			{
 				iTempValue = 0;
 
-				iTempValue += (kImprovement.getYieldChange(iK) * 200);
-				iTempValue += (kImprovement.getRiverSideYieldChange(iK) * 100);
-				iTempValue += (kImprovement.getIrrigatedYieldChange(iK) * 150);
+				// The improvement's own PLOT yield, ×100 at the slot so it reduces here. ⚠ The legacy riverSide
+				// and irrigated variants are CONDITIONED entries now (HAS_RIVER / HAS_IRRIGATION,
+				// [DEC-conditions-are-predicates]), not kinds, so they are deliberately NOT in this base: this
+				// scores an improvement generically, with no plot to evaluate those against. It therefore
+				// UNDERVALUES a river/irrigation improvement, which is the accepted direction -- the
+				// "assume every condition holds" read is an undecided mode ([todo.md]) and is not invented here.
+				iTempValue += (kImprovement.getFlatYield((YieldTypes)iK, CASC_SCOPE_PLOT) / 100 * 200);
 
 				// land food yield is more valueble
 				if (iK == YIELD_FOOD && !kImprovement.isWaterImprovement())
@@ -5059,7 +5100,6 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 				int iBonusValue = 0;
 
 				iBonusValue += (kImprovement.isImprovementBonusMakesValid(iK) ? 450 : 0);
-				iBonusValue += (kImprovement.isImprovementObsoleteBonusMakesValid(iK) ? 100 : 0);
 				iBonusValue += (kImprovement.isImprovementBonusTrade(iK) ? 45 * AI_bonusVal((BonusTypes)iK) : 0);
 
 				if (iBonusValue > 0)
@@ -5068,8 +5108,11 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 					{
 						iTempValue = 0;
 
-						iTempValue += (kImprovement.getImprovementBonusYield(iK, iL) * 300);
-						iTempValue += (kImprovement.getIrrigatedYieldChange(iL) * 200);
+						// The bonus-keyed yield is the improvement's own entry for THAT bonus -- an entry-list
+						// read over the handful it authored, never a walk of the bonus registry ([modifier.md] §5).
+						iTempValue += (InfoValuation::keyedTarget(kImprovement.getModifiers(),
+							infoYieldFamily((YieldTypes)iL), CHANNEL_AMOUNT,
+							InfoValuation::keyedTargetSegment("bonuses"), iK) / 100 * 300);
 
 						// food bonuses are more valuable
 						if (iL == YIELD_FOOD)
@@ -5146,7 +5189,7 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 
 			for (int iK = 0; iK < NUM_YIELD_TYPES; iK++)
 			{
-				iTempValue = GC.getRouteInfo(eRoute).getYieldChange(iK) * 100;
+				iTempValue = GC.getRouteInfo(eRoute).getFlatYield((YieldTypes)iK, CASC_SCOPE_PLOT) / 100 * 100;
 
 				for (int iL = 0; iL < GC.getNumImprovementInfos(); iL++)
 				{
@@ -9731,18 +9774,18 @@ int CvPlayerAI::AI_corporationBonusVal(BonusTypes eBonus) const
 		{
 			iCorpCount += getNumCities() / 6 + 1;
 			const CvCorporationInfo& kCorp = GC.getCorporationInfo((CorporationTypes)iCorporation);
-			foreach_(const BonusTypes ePrereqBonus, kCorp.getConsumedBonuses())
+			foreach_(const int iPrereqBonus, kCorp.getConsumedBonuses())
 			{
-				if (eBonus == ePrereqBonus)
+				if ((int)eBonus == iPrereqBonus)
 				{
-					iValue += (50 * kCorp.getYieldProduced(YIELD_FOOD) * iCorpCount) / iCityCount;
-					iValue += (50 * kCorp.getYieldProduced(YIELD_PRODUCTION) * iCorpCount) / iCityCount;
-					iValue += (30 * kCorp.getYieldProduced(YIELD_COMMERCE) * iCorpCount) / iCityCount;
+					iValue += (50 * (kCorp.getFlatYield(YIELD_FOOD, CASC_SCOPE_CITY) / 100) * iCorpCount) / iCityCount;
+					iValue += (50 * (kCorp.getFlatYield(YIELD_PRODUCTION, CASC_SCOPE_CITY) / 100) * iCorpCount) / iCityCount;
+					iValue += (30 * (kCorp.getFlatYield(YIELD_COMMERCE, CASC_SCOPE_CITY) / 100) * iCorpCount) / iCityCount;
 
-					iValue += (30 * kCorp.getCommerceProduced(COMMERCE_GOLD) * iCorpCount) / iCityCount;
-					iValue += (30 * kCorp.getCommerceProduced(COMMERCE_RESEARCH) * iCorpCount) / iCityCount;
-					iValue += (12 * kCorp.getCommerceProduced(COMMERCE_CULTURE) * iCorpCount) / iCityCount;
-					iValue += (20 * kCorp.getCommerceProduced(COMMERCE_ESPIONAGE) * iCorpCount) / iCityCount;
+					iValue += (30 * (kCorp.getFlatCommerce(COMMERCE_GOLD, CASC_SCOPE_CITY) / 100) * iCorpCount) / iCityCount;
+					iValue += (30 * (kCorp.getFlatCommerce(COMMERCE_RESEARCH, CASC_SCOPE_CITY) / 100) * iCorpCount) / iCityCount;
+					iValue += (12 * (kCorp.getFlatCommerce(COMMERCE_CULTURE, CASC_SCOPE_CITY) / 100) * iCorpCount) / iCityCount;
+					iValue += (20 * (kCorp.getFlatCommerce(COMMERCE_ESPIONAGE, CASC_SCOPE_CITY) / 100) * iCorpCount) / iCityCount;
 
 					//Disabled since you can't found/spread a corp unless there is already a bonus,
 					//and that bonus will provide the entirity of the bonusProduced benefit.
@@ -9928,15 +9971,15 @@ int CvPlayerAI::AI_cityTradeVal(CvCity* pCity) const
 		{
 			if (isWorldWonder(eType))
 			{
-				iValue += GC.getBuildingInfo(eType).getProductionCost() / 3;
+				iValue += GC.getBuildingInfo(eType).getCost() / 3;
 			}
 			else if (isLimitedWonder(eType))
 			{
-				iValue += GC.getBuildingInfo(eType).getProductionCost() / 5;
+				iValue += GC.getBuildingInfo(eType).getCost() / 5;
 			}
 			else
 			{
-				iValue += GC.getBuildingInfo(eType).getProductionCost() / 10;
+				iValue += GC.getBuildingInfo(eType).getCost() / 10;
 			}
 		}
 	}
@@ -10015,8 +10058,7 @@ int CvPlayerAI::AI_cityTradeVal(CvCity* pCity) const
 		iValue /= 5;
 	}
 	//This city costs money, and we can't afford it
-	int aiCityCommerces[NUM_COMMERCE_TYPES];
-	pCity->getCommerces(aiCityCommerces);
+	pCity->getCommerces(aiCityCommerces);   // refreshed; declared above in this scope
 	if (AI_isFinancialTrouble() && (aiCityCommerces[COMMERCE_GOLD] - pCity->getMaintenanceTimes100() < 0))
 	{
 		iValue /= 2;
@@ -10035,15 +10077,15 @@ int CvPlayerAI::AI_ourCityValue(CvCity* pCity) const
 		{
 			if (isWorldWonder(eType))
 			{
-				iValue += GC.getBuildingInfo(eType).getProductionCost() / 3;
+				iValue += GC.getBuildingInfo(eType).getCost() / 3;
 			}
 			else if (isLimitedWonder(eType))
 			{
-				iValue += GC.getBuildingInfo(eType).getProductionCost() / 5;
+				iValue += GC.getBuildingInfo(eType).getCost() / 5;
 			}
 			else
 			{
-				iValue += GC.getBuildingInfo(eType).getProductionCost() / 10;
+				iValue += GC.getBuildingInfo(eType).getCost() / 10;
 			}
 		}
 	}
@@ -10374,7 +10416,7 @@ DenialTypes CvPlayerAI::AI_civicTrade(CivicTypes eCivic, PlayerTypes ePlayer) co
 		return DENIAL_FAVORITE_CIVIC;
 	}
 
-	if (GC.getCivilizationInfo(getCivilizationType()).getInitialCivic(GC.getCivicInfo(eCivic).getCivicOption()) == eCivic)
+	if (GC.getCivilizationInfo(getCivilizationType()).getInitialCivic((CivicOptionTypes)GC.getCivicInfo(eCivic).getCivicOption()) == eCivic)
 	{
 		return DENIAL_JOKING;
 	}
@@ -11378,7 +11420,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 				InfoValuation::collectKeyedCombat(kUnitInfo.getModifiers(), InfoValuation::COMBAT_TARGET_UNIT, COMBAT_ATTACK, vsUnitAttack2);
 				foreach_(const STD_PAIR(int, int)& modifier, vsUnitAttack2)
 				{
-					iValue += ((iCombatValue * modifier.second * AI_getUnitWeight(modifier.first)) / 7500);
+					iValue += ((iCombatValue * modifier.second * AI_getUnitWeight((UnitTypes)modifier.first)) / 7500);
 					iValue += ((iCombatValue * (kUnitInfo.hasTargetUnit(modifier.first) ? 50 : 0)) / 100);
 				}
 				for (std::vector<std::pair<int, int> >::const_iterator itCombat = vsUnitCombat.begin();
@@ -11519,7 +11561,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 				InfoValuation::collectKeyedCombat(kUnitInfo.getModifiers(), InfoValuation::COMBAT_TARGET_UNIT, COMBAT_ATTACK, vsUnitAttack3);
 				foreach_(const STD_PAIR(int, int)& modifier, vsUnitAttack3)
 				{
-					iValue += ((iCombatValue * modifier.second * AI_getUnitWeight(modifier.first)) / 10000);
+					iValue += ((iCombatValue * modifier.second * AI_getUnitWeight((UnitTypes)modifier.first)) / 10000);
 					iValue += ((iCombatValue * (kUnitInfo.isDefendAgainstUnit(modifier.first) ? 50 : 0)) / 100);
 				}
 				for (std::vector<std::pair<int, int> >::const_iterator itCombat = vsUnitCombat.begin();
@@ -11898,7 +11940,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 			// The unit's OWN granted promotions -- the handful it authored, not the whole registry.
 			foreach_(const int iGrantedPromotion, kUnitInfo.getGrantedPromotions())
 			{
-				if (GC.getPromotionInfo((PromotionTypes)iGrantedPromotion).isAmphib())
+				if (GC.getPromotionInfo((PromotionTypes)iGrantedPromotion).hasSkill(CLS_SKILL_AMPHIB))
 				{
 					iValue *= 133;
 					iValue /= 100;
@@ -12675,27 +12717,37 @@ int CvPlayerAI::AI_corporationValue(CorporationTypes eCorporation, const CvCity*
 		const int iBonusCount = pCity->getNumBonuses(eBonus);
 		if (iBonusCount > 0)
 		{
-			foreach_(const BonusTypes ePrereqBonus, kCorp.getConsumedBonuses())
+			// The consumed-bonus set is a vector of ENGINE IDS, so the loop variable is an int.
+			foreach_(const int iPrereqBonus, kCorp.getConsumedBonuses())
 			{
-				if (eBonus == ePrereqBonus)
+				if ((int)eBonus == iPrereqBonus)
 				{
-					//	These are all in hundredths, so the multipliers here accoutn for the division
-					//	by 100 at the very end and are 100 times smaller than the multipliers for the
-					//	absolute commerces/yields later
-					//	Production is considerd wiorth 4 X gold, food 3 X
-					iBonusValue += (300 * kCorp.getYieldProduced(YIELD_FOOD) * iBonusCount);
-					iBonusValue += (400 * kCorp.getYieldProduced(YIELD_PRODUCTION) * iBonusCount);
-					iBonusValue += (100 * kCorp.getYieldProduced(YIELD_COMMERCE) * iBonusCount);
+					// ⛔ ONE read, not two planes multiplied by a hand-counted bonus total. The legacy split
+					// "produced per bonus" from a flat "change"; the data authors a SINGLE `{channel}.city.flat`
+					// whose per-bonus scaling rides the entry's own `per:{anyOf: consumed bonuses}` scaler
+					// ([culture-religion-research.md]: the rate and the count are ONE deposit, never two reads).
+					// Re-multiplying by iBonusCount here would re-implement the scaler and double-count it.
+					// Production is considered worth 4x gold, food 3x.
+					iBonusValue += (300 * (kCorp.getFlatYield(YIELD_FOOD, CASC_SCOPE_CITY) / 100));
+					iBonusValue += (400 * (kCorp.getFlatYield(YIELD_PRODUCTION, CASC_SCOPE_CITY) / 100));
+					iBonusValue += (100 * (kCorp.getFlatYield(YIELD_COMMERCE, CASC_SCOPE_CITY) / 100));
 
-					iBonusValue += (100 * kCorp.getCommerceProduced(COMMERCE_GOLD) * iBonusCount);
-					iBonusValue += (100 * kCorp.getCommerceProduced(COMMERCE_RESEARCH) * iBonusCount);
-					iBonusValue += (50 * kCorp.getCommerceProduced(COMMERCE_CULTURE) * iBonusCount);
-					iBonusValue += (40 * kCorp.getCommerceProduced(COMMERCE_ESPIONAGE) * iBonusCount);
+					iBonusValue += (100 * (kCorp.getFlatCommerce(COMMERCE_GOLD, CASC_SCOPE_CITY) / 100));
+					iBonusValue += (100 * (kCorp.getFlatCommerce(COMMERCE_RESEARCH, CASC_SCOPE_CITY) / 100));
+					iBonusValue += (50 * (kCorp.getFlatCommerce(COMMERCE_CULTURE, CASC_SCOPE_CITY) / 100));
+					iBonusValue += (40 * (kCorp.getFlatCommerce(COMMERCE_ESPIONAGE, CASC_SCOPE_CITY) / 100));
 
-					if (NO_BONUS != kCorp.getBonusProduced())
+					// What the corp SUPPLIES in its city is `provides.bonuses` (json §5a), a list -- a corp may
+					// supply more than one, which the single legacy `bonusProduced` could not say.
+					const CvProvides* pProvides = kCorp.getProvides();
+					if (pProvides != NULL)
 					{
-						int iBonuses = getNumAvailableBonuses((BonusTypes)kCorp.getBonusProduced());
-						iBonusValue += (AI_baseBonusVal((BonusTypes)kCorp.getBonusProduced()) * 1000) / (1 + 3 * iBonuses * iBonuses);
+						for (std::vector<int>::const_iterator it = pProvides->bonuses.begin();
+							it != pProvides->bonuses.end(); ++it)
+						{
+							const int iOwned = getNumAvailableBonuses((BonusTypes)*it);
+							iBonusValue += (AI_baseBonusVal((BonusTypes)*it) * 1000) / (1 + 3 * iOwned * iOwned);
+						}
 					}
 				}
 			}
@@ -12703,27 +12755,13 @@ int CvPlayerAI::AI_corporationValue(CorporationTypes eCorporation, const CvCity*
 	}
 	iBonusValue *= 3;
 
-	/************************************************************************************************/
-	/* Afforess					  Start		 02/09/10											   */
-	/*																							  */
-	/*																							  */
-	/************************************************************************************************/
-	//TODO: Move this to CityAI?
-	iBonusValue += kCorp.getHealth() * 15000;
-	iBonusValue += kCorp.getHappiness() * 25000;
-	iBonusValue += kCorp.getMilitaryProductionModifier() * 3500;
-	iBonusValue += kCorp.getFreeXP() * 15000;
-
-	//these are whole numbers, not like the percents above.
-	iBonusValue += (30000 * kCorp.getYieldChange(YIELD_FOOD));
-	iBonusValue += (40000 * kCorp.getYieldChange(YIELD_PRODUCTION));
-	iBonusValue += (10000 * kCorp.getYieldChange(YIELD_COMMERCE));
-
-	iBonusValue += (10000 * kCorp.getCommerceChange(COMMERCE_GOLD));
-	iBonusValue += (10000 * kCorp.getCommerceChange(COMMERCE_RESEARCH));
-	iBonusValue += (5000 * kCorp.getCommerceChange(COMMERCE_CULTURE));
-	iBonusValue += (4000 * kCorp.getCommerceChange(COMMERCE_ESPIONAGE));
-	/************************************************************************************************/
+	// The corp's city-scope wellbeing, experience and military build-rate -- the same compiled flats, reduced
+	// at the point of use. ⚠ The legacy "whole numbers, not like the percents above" second plane is gone: it
+	// was the same authored deposit read twice.
+	iBonusValue += (kCorp.getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_CITY) / 100) * 15000;
+	iBonusValue += (kCorp.getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_CITY) / 100) * 25000;
+	iBonusValue += kCorp.getBuildRateModifier(BUILD_RATE_MILITARY, CASC_SCOPE_CITY) * 3500;
+	iBonusValue += (kCorp.getExperience(EXPERIENCE_AMOUNT, CASC_SCOPE_CITY) / 100) * 15000;
 	/* Afforess						 END															*/
 	/************************************************************************************************/
 
@@ -23443,7 +23481,6 @@ void CvPlayerAI::AI_calculateAverages() const
 		}
 		m_iAverageGreatPeopleMultiplier = 0;
 
-		int64_t sumBaseCommerce[NUM_COMMERCE_TYPES] = {};
 		int64_t sumFinalCommerce[NUM_COMMERCE_TYPES] = {};
 		{
 			int iTotalPopulation = 0;
@@ -23461,9 +23498,6 @@ void CvPlayerAI::AI_calculateAverages() const
 				{
 					m_aiAverageCommerceMultiplier[iI] += iPopulation * cityX->getTotalCommerceRateModifier((CommerceTypes)iI);
 
-					sumBaseCommerce[iI] += aiCityCommerces[(CommerceTypes)iI];
-					int aiCityCommerces[NUM_COMMERCE_TYPES];
-					cityX->getCommerces(aiCityCommerces);
 					sumFinalCommerce[iI] += aiCityCommerces[(CommerceTypes)iI];
 				}
 				m_iAverageGreatPeopleMultiplier += iPopulation * cityX->getTotalGreatPeopleRateModifier();
@@ -23494,15 +23528,15 @@ void CvPlayerAI::AI_calculateAverages() const
 				m_iAverageGreatPeopleMultiplier = 100;
 			}
 		}
-		//Calculate Exchange Rate
+		// Calculate Exchange Rate -- raw commerce in, realized channel commerce out.
+		// ⚠ DANGLING, and deliberately explicit about it: the BASE leg (the per-channel commerce BEFORE the
+		// total-modifier stack, legacy getBaseCommerceRateTimes100) has NO read on the new surface -- only the
+		// REALIZED getCommerces exists. It read the realized value on BOTH sides, so the ratio was silently
+		// always 100 while looking computed. A neutral 100 is the same answer stated honestly, and it stops the
+		// no-op from reading as a live heuristic. It resolves when the §2a base-commerce read exists.
 		for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 		{
-			m_aiAverageCommerceExchange[iI] = (
-				static_cast<int>(
-					100 * std::max<int64_t>(1, sumBaseCommerce[iI])
-					/ std::max<int64_t>(1, sumFinalCommerce[iI])
-					)
-			);
+			m_aiAverageCommerceExchange[iI] = 100;
 		}
 		// Timestamp
 		m_iAveragesCacheTurn = GC.getGame().getGameTurn();

@@ -43,6 +43,26 @@ public:
 	// -- the HQ-city revenue plane (rulings 4+10): the per-CORPORATION_LEVEL commerce value of the
 	//    {IS_HEADQUARTERS: SELF} entries; the consumer applies × corp level at the HQ city itself.
 	int getHeadquartersCommerce(CommerceTypes eCommerce) const { return m_aiHeadquartersCommerce[(int)eCommerce]; }
+	// -- the corp's PRODUCED output, scaled by the consumed-bonus count at the consumer: the data authors
+	//    `{yield|commerce}.city.flat` (food/production/culture/gold/research), so these are ordinary point reads
+	//    over the compiled sums. ×100 like every other flat; the reader reduces at its point of use.
+	int getFlatYield(YieldTypes eYield, CvCascScope eScope) const
+	{ return m_modifiers.sum(infoYieldFamily(eYield), CHANNEL_AMOUNT, eScope, CASC_UNIT_FLAT); }
+	int getFlatCommerce(CommerceTypes eCommerce, CvCascScope eScope) const
+	{ return m_modifiers.sum(infoCommerceFamily(eCommerce), CHANNEL_AMOUNT, eScope, CASC_UNIT_FLAT); }
+	// -- the rest of what a corporation authors at CITY scope: wellbeing, the military build-rate and free XP.
+	int getFlatWellbeing(WellbeingChannel eChannel, CvCascScope eScope) const
+	{
+		if (eChannel == WELLBEING_ANGER || eChannel == WELLBEING_UNHEALTH)
+		{
+			return 0;   // the opposing sides are a ROUTING of negatives at fill, never authored directly
+		}
+		return m_modifiers.sum(infoWellbeingFamily(eChannel), CHANNEL_AMOUNT, eScope, CASC_UNIT_FLAT);
+	}
+	int getBuildRateModifier(BuildRateKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_BUILD_RATE, eKind, eScope, CASC_UNIT_PERCENT); }
+	int getExperience(ExperienceKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_EXPERIENCE, eKind, eScope, infoKindUnit(MODFAM_EXPERIENCE, eKind)); }
 	// -- the consumed-bonus set (the per:{anyOf:...} scaler's union): WHICH bonuses this corp's output scales
 	//    over -- the spread/dormancy gate's "≥1 prereq bonus present" set and the AI's consumption view.
 	const std::vector<int>& getConsumedBonuses() const { return m_aeConsumedBonuses; }
