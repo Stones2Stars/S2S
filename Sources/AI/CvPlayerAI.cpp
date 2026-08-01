@@ -29986,367 +29986,61 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		}
 	}
 
-	// TB Combat Mods Begin
-	//TB Rudimentary to get us started
+	// The concealment-vs-detection CONTEST ([vision.md] par.4) -- its OWN block and its OWN evaluation, never
+	// folded into `vision`, which answers only how FAR you see. The collapsed data carries ONE concealment
+	// magnitude plus a detection ROW per method answered, so this is TWO terms: the per-INVISIBLE_* intensity
+	// tables, their per-substrate terrain/feature/improvement variants and the second RANGE system that ran
+	// beside vision's are all retired, and summing a per-type table would have counted one concealment once
+	// per method. Values are x100 at the info ([DEC-fixedpoint-x100]), reduced here at the point of use.
+	// The UnitAI groupings are carried over as-is; the contest's real evaluation is its own piece of work, so
+	// this deliberately UNDER-values rather than guessing a tuned model (owner).
 	if (GC.getGame().isOption(GAMEOPTION_COMBAT_HIDE_SEEK))
 	{
-		for (int iI = 0; iI < GC.getNumInvisibleInfos(); iI++)
-		{
-			iTemp = kPromotion.getVisibilityIntensityChangeType(iI);
-			if (iTemp != 0)
-			{
-				if (pUnit)
-				{
-					iTemp += pUnit->visibilityIntensityTotal((InvisibleTypes)iI);
-				}
-				if (eUnitAI == UNITAI_SEE_INVISIBLE ||
-					eUnitAI == UNITAI_SEE_INVISIBLE_SEA ||
-					eUnitAI == UNITAI_PILLAGE_COUNTER)
-				{
-					iValue += (iTemp * 350);
-				}
-				else if (eUnitAI == UNITAI_COUNTER ||
-					eUnitAI == UNITAI_ANIMAL ||
-					eUnitAI == UNITAI_ESCORT_SEA ||
-					eUnitAI == UNITAI_HUNTER_ESCORT ||
-					eUnitAI == UNITAI_PROPERTY_CONTROL ||
-					eUnitAI == UNITAI_ESCORT)
-				{
-					iValue += (iTemp * 15);
-				}
-				else
-				{
-					iValue += (iTemp * 10);
-				}
-			}
-			iTemp = kPromotion.getInvisibilityIntensityChangeType(iI);
-			if (iTemp != 0)
-			{
-				if (pUnit)
-				{
-					iTemp += pUnit->invisibilityIntensityTotal((InvisibleTypes)iI);
-				}
-				if (eUnitAI == UNITAI_ANIMAL ||
-					eUnitAI == UNITAI_PILLAGE ||
-					eUnitAI == UNITAI_EXPLORE ||
-					eUnitAI == UNITAI_PIRATE_SEA ||
-					eUnitAI == UNITAI_ATTACK_SEA ||
-					eUnitAI == UNITAI_MISSILE_CARRIER_SEA ||
-					eUnitAI == UNITAI_HUNTER ||
-					eUnitAI == UNITAI_GREAT_HUNTER ||
-					eUnitAI == UNITAI_PROPERTY_CONTROL_SEA ||
-					eUnitAI == UNITAI_INFILTRATOR)
-				{
-					iValue += (iTemp * 30);
-				}
-				else
-				{
-					iValue += (iTemp * 5);
-				}
-			}
-			iTemp = kPromotion.getVisibilityIntensityRangeChangeType(iI);
-			if (iTemp != 0)
-			{
-				if (pUnit)
-				{
-					if (pUnit->visibilityIntensityTotal((InvisibleTypes)iI) != 0)
-					{
-						iTemp += pUnit->visibilityIntensityTotal((InvisibleTypes)iI);
-					}
-				}
-				if (eUnitAI == UNITAI_SEE_INVISIBLE ||
-					eUnitAI == UNITAI_SEE_INVISIBLE_SEA ||
-					eUnitAI == UNITAI_PILLAGE_COUNTER)
-				{
-					iValue += (iTemp * 350); //Calvitix Test
-				}
-				else if (eUnitAI == UNITAI_COUNTER ||
-					eUnitAI == UNITAI_ANIMAL ||
-					eUnitAI == UNITAI_ESCORT_SEA ||
-					eUnitAI == UNITAI_HUNTER_ESCORT ||
-					eUnitAI == UNITAI_PROPERTY_CONTROL ||
-					eUnitAI == UNITAI_ESCORT)
-				{
-					iValue += (iTemp * 15);
-				}
-				else
-				{
-					iValue += (iTemp * 10);
-				}
-			}
-		}
-		//VERY rudimentary
-		for (int iI = 0; iI < kPromotion.getNumInvisibleTerrainChanges(); iI++)
-		{
-			iTemp = kPromotion.getInvisibleTerrainChange(iI).iIntensity;
-			if (iTemp != 0)
-			{
-				if (pUnit)
-				{
-					iTemp += pUnit->invisibilityIntensityTotal((InvisibleTypes)kPromotion.getInvisibleTerrainChange(iI).eInvisible);
-				}
-				if (eUnitAI == UNITAI_ANIMAL ||
-					eUnitAI == UNITAI_PILLAGE ||
-					eUnitAI == UNITAI_EXPLORE ||
-					eUnitAI == UNITAI_PIRATE_SEA ||
-					eUnitAI == UNITAI_ATTACK_SEA ||
-					eUnitAI == UNITAI_MISSILE_CARRIER_SEA ||
-					eUnitAI == UNITAI_HUNTER ||
-					eUnitAI == UNITAI_GREAT_HUNTER ||
-					eUnitAI == UNITAI_PROPERTY_CONTROL_SEA ||
-					eUnitAI == UNITAI_INFILTRATOR)
-				{
-					iValue += (iTemp * 10);
-				}
-				else
-				{
-					iValue += (iTemp * 4);
-				}
-			}
-		}
-		for (int iI = 0; iI < kPromotion.getNumInvisibleFeatureChanges(); iI++)
-		{
-			iTemp = kPromotion.getInvisibleFeatureChange(iI).iIntensity;
+		const CvHideAndSeekSection& kHideAndSeek = kPromotion.getHideAndSeek();
 
-			if (iTemp != 0)
-			{
-				if (pUnit)
-				{
-					iTemp += pUnit->invisibilityIntensityTotal((InvisibleTypes)kPromotion.getInvisibleFeatureChange(iI).eInvisible);
-				}
-				if (eUnitAI == UNITAI_ANIMAL ||
-					eUnitAI == UNITAI_PILLAGE ||
-					eUnitAI == UNITAI_EXPLORE ||
-					eUnitAI == UNITAI_PIRATE_SEA ||
-					eUnitAI == UNITAI_ATTACK_SEA ||
-					eUnitAI == UNITAI_MISSILE_CARRIER_SEA ||
-					eUnitAI == UNITAI_HUNTER ||
-					eUnitAI == UNITAI_GREAT_HUNTER ||
-					eUnitAI == UNITAI_PROPERTY_CONTROL_SEA ||
-					eUnitAI == UNITAI_INFILTRATOR)
-				{
-					iValue += (iTemp * 10);
-				}
-				else
-				{
-					iValue += (iTemp * 4);
-				}
-			}
-		}
-		for (int iI = 0; iI < kPromotion.getNumInvisibleImprovementChanges(); iI++)
+		iTemp = kHideAndSeek.concealment / 100;
+		if (iTemp != 0)
 		{
-			iTemp = kPromotion.getInvisibleImprovementChange(iI).iIntensity;
-
-			if (iTemp != 0)
+			if (eUnitAI == UNITAI_ANIMAL ||
+				eUnitAI == UNITAI_PILLAGE ||
+				eUnitAI == UNITAI_EXPLORE ||
+				eUnitAI == UNITAI_PIRATE_SEA ||
+				eUnitAI == UNITAI_ATTACK_SEA ||
+				eUnitAI == UNITAI_MISSILE_CARRIER_SEA ||
+				eUnitAI == UNITAI_HUNTER ||
+				eUnitAI == UNITAI_GREAT_HUNTER ||
+				eUnitAI == UNITAI_PROPERTY_CONTROL_SEA ||
+				eUnitAI == UNITAI_INFILTRATOR)
 			{
-				if (pUnit)
-				{
-					iTemp += pUnit->invisibilityIntensityTotal((InvisibleTypes)kPromotion.getInvisibleImprovementChange(iI).eInvisible);
-				}
-				if (eUnitAI == UNITAI_ANIMAL ||
-					eUnitAI == UNITAI_PILLAGE ||
-					eUnitAI == UNITAI_EXPLORE ||
-					eUnitAI == UNITAI_PIRATE_SEA ||
-					eUnitAI == UNITAI_ATTACK_SEA ||
-					eUnitAI == UNITAI_MISSILE_CARRIER_SEA ||
-					eUnitAI == UNITAI_HUNTER ||
-					eUnitAI == UNITAI_GREAT_HUNTER ||
-					eUnitAI == UNITAI_PROPERTY_CONTROL_SEA ||
-					eUnitAI == UNITAI_INFILTRATOR)
-				{
-					iValue += (iTemp * 10);
-				}
-				else
-				{
-					iValue += (iTemp * 3);
-				}
+				iValue += iTemp * 30;
 			}
+			else iValue += iTemp * 5;
 		}
-		for (int iI = 0; iI < kPromotion.getNumVisibleTerrainChanges(); iI++)
-		{
-			iTemp = kPromotion.getVisibleTerrainChange(iI).iIntensity;
 
-			if (iTemp != 0)
-			{
-				if (pUnit)
-				{
-					iTemp += pUnit->visibilityIntensityTotal((InvisibleTypes)kPromotion.getVisibleTerrainChange(iI).eInvisible);
-				}
-				if (eUnitAI == UNITAI_SEE_INVISIBLE ||
-					eUnitAI == UNITAI_SEE_INVISIBLE_SEA ||
-					eUnitAI == UNITAI_PILLAGE_COUNTER)
-				{
-					iValue += (iTemp * 150);
-				}
-				else if (eUnitAI == UNITAI_COUNTER ||
-					eUnitAI == UNITAI_ANIMAL ||
-					eUnitAI == UNITAI_ESCORT_SEA ||
-					eUnitAI == UNITAI_HUNTER_ESCORT ||
-					eUnitAI == UNITAI_PROPERTY_CONTROL ||
-					eUnitAI == UNITAI_ESCORT)
-				{
-					iValue += (iTemp * 8);
-				}
-				else
-				{
-					iValue += (iTemp * 4);
-				}
-			}
+		int iDetectionTotal = 0;
+		for (size_t iRow = 0; iRow < kHideAndSeek.detection.size(); ++iRow)
+		{
+			iDetectionTotal += kHideAndSeek.detection[iRow].value;
 		}
-		for (int iI = 0; iI < kPromotion.getNumVisibleFeatureChanges(); iI++)
+		iTemp = iDetectionTotal / 100;
+		if (iTemp != 0)
 		{
-			iTemp = kPromotion.getVisibleFeatureChange(iI).iIntensity;
-
-			if (iTemp != 0)
+			if (eUnitAI == UNITAI_SEE_INVISIBLE ||
+				eUnitAI == UNITAI_SEE_INVISIBLE_SEA ||
+				eUnitAI == UNITAI_PILLAGE_COUNTER)
 			{
-				if (pUnit)
-				{
-					iTemp += pUnit->visibilityIntensityTotal((InvisibleTypes)kPromotion.getVisibleFeatureChange(iI).eInvisible);
-				}
-				if (eUnitAI == UNITAI_SEE_INVISIBLE ||
-					eUnitAI == UNITAI_SEE_INVISIBLE_SEA ||
-					eUnitAI == UNITAI_PILLAGE_COUNTER)
-				{
-					iValue += (iTemp * 150);
-				}
-				else if (eUnitAI == UNITAI_COUNTER ||
-					eUnitAI == UNITAI_ANIMAL ||
-					eUnitAI == UNITAI_ESCORT_SEA ||
-					eUnitAI == UNITAI_HUNTER_ESCORT ||
-					eUnitAI == UNITAI_PROPERTY_CONTROL ||
-					eUnitAI == UNITAI_ESCORT)
-				{
-					iValue += (iTemp * 8);
-				}
-				else
-				{
-					iValue += (iTemp * 4);
-				}
+				iValue += iTemp * 350;
 			}
-		}
-		for (int iI = 0; iI < kPromotion.getNumVisibleImprovementChanges(); iI++)
-		{
-			iTemp = kPromotion.getVisibleImprovementChange(iI).iIntensity;
-
-			if (iTemp != 0)
+			else if (eUnitAI == UNITAI_COUNTER ||
+				eUnitAI == UNITAI_ANIMAL ||
+				eUnitAI == UNITAI_ESCORT_SEA ||
+				eUnitAI == UNITAI_HUNTER_ESCORT ||
+				eUnitAI == UNITAI_PROPERTY_CONTROL ||
+				eUnitAI == UNITAI_ESCORT)
 			{
-				if (pUnit)
-				{
-					iTemp += pUnit->visibilityIntensityTotal((InvisibleTypes)kPromotion.getVisibleImprovementChange(iI).eInvisible);
-				}
-				if (eUnitAI == UNITAI_SEE_INVISIBLE ||
-					eUnitAI == UNITAI_SEE_INVISIBLE_SEA ||
-					eUnitAI == UNITAI_PILLAGE_COUNTER)
-				{
-					iValue += (iTemp * 150);
-				}
-				else if (eUnitAI == UNITAI_COUNTER ||
-					eUnitAI == UNITAI_ANIMAL ||
-					eUnitAI == UNITAI_ESCORT_SEA ||
-					eUnitAI == UNITAI_HUNTER_ESCORT ||
-					eUnitAI == UNITAI_PROPERTY_CONTROL ||
-					eUnitAI == UNITAI_ESCORT)
-				{
-					iValue += (iTemp * 8);
-				}
-				else
-				{
-					iValue += (iTemp * 3);
-				}
+				iValue += iTemp * 15;
 			}
-		}
-		for (int iI = 0; iI < kPromotion.getNumVisibleTerrainRangeChanges(); iI++)
-		{
-			iTemp = kPromotion.getVisibleTerrainRangeChange(iI).iIntensity;
-
-			if (iTemp != 0)
-			{
-				if (pUnit)
-				{
-					iTemp += pUnit->visibilityIntensityTotal((InvisibleTypes)kPromotion.getVisibleTerrainRangeChange(iI).eInvisible);
-				}
-				if (eUnitAI == UNITAI_SEE_INVISIBLE ||
-					eUnitAI == UNITAI_SEE_INVISIBLE_SEA ||
-					eUnitAI == UNITAI_PILLAGE_COUNTER)
-				{
-					iValue += (iTemp * 80);
-				}
-				else if (eUnitAI == UNITAI_COUNTER ||
-					eUnitAI == UNITAI_ANIMAL ||
-					eUnitAI == UNITAI_ESCORT_SEA ||
-					eUnitAI == UNITAI_HUNTER_ESCORT ||
-					eUnitAI == UNITAI_PROPERTY_CONTROL ||
-					eUnitAI == UNITAI_ESCORT)
-				{
-					iValue += (iTemp * 4);
-				}
-				else
-				{
-					iValue += (iTemp * 2);
-				}
-			}
-		}
-		for (int iI = 0; iI < kPromotion.getNumVisibleFeatureRangeChanges(); iI++)
-		{
-			iTemp = kPromotion.getVisibleFeatureRangeChange(iI).iIntensity;
-
-			if (iTemp != 0)
-			{
-				if (pUnit)
-				{
-					iTemp += pUnit->visibilityIntensityTotal((InvisibleTypes)kPromotion.getVisibleFeatureRangeChange(iI).eInvisible);
-				}
-				if (eUnitAI == UNITAI_SEE_INVISIBLE ||
-					eUnitAI == UNITAI_SEE_INVISIBLE_SEA ||
-					eUnitAI == UNITAI_PILLAGE_COUNTER)
-				{
-					iValue += (iTemp * 80);
-				}
-				else if (eUnitAI == UNITAI_COUNTER ||
-					eUnitAI == UNITAI_ANIMAL ||
-					eUnitAI == UNITAI_ESCORT_SEA ||
-					eUnitAI == UNITAI_HUNTER_ESCORT ||
-					eUnitAI == UNITAI_PROPERTY_CONTROL ||
-					eUnitAI == UNITAI_ESCORT)
-				{
-					iValue += (iTemp * 4);
-				}
-				else
-				{
-					iValue += (iTemp * 2);
-				}
-			}
-		}
-		for (int iI = 0; iI < kPromotion.getNumVisibleImprovementRangeChanges(); iI++)
-		{
-			iTemp = kPromotion.getVisibleImprovementRangeChange(iI).iIntensity;
-
-			if (iTemp != 0)
-			{
-				if (pUnit)
-				{
-					iTemp += pUnit->visibilityIntensityTotal((InvisibleTypes)kPromotion.getVisibleImprovementRangeChange(iI).eInvisible);
-				}
-				if (eUnitAI == UNITAI_SEE_INVISIBLE ||
-					eUnitAI == UNITAI_SEE_INVISIBLE_SEA ||
-					eUnitAI == UNITAI_PILLAGE_COUNTER)
-				{
-					iValue += (iTemp * 80);
-				}
-				else if (eUnitAI == UNITAI_COUNTER ||
-					eUnitAI == UNITAI_ANIMAL ||
-					eUnitAI == UNITAI_ESCORT_SEA ||
-					eUnitAI == UNITAI_HUNTER_ESCORT ||
-					eUnitAI == UNITAI_PROPERTY_CONTROL ||
-					eUnitAI == UNITAI_ESCORT)
-				{
-					iValue += (iTemp * 4);
-				}
-				else
-				{
-					iValue += (iTemp * 2);
-				}
-			}
+			else iValue += iTemp * 10;
 		}
 	}
 
