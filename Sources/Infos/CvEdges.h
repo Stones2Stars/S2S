@@ -16,6 +16,7 @@
 
 #include <string>
 #include <vector>
+#include <algorithm>
 #include <map>
 
 namespace picojson { class value; }
@@ -93,6 +94,17 @@ public:
 	{
 		std::map<short, std::vector<int> >::const_iterator it = m_edges.find(key(eFamily, eBucket));
 		return (it != m_edges.end()) ? &it->second : NULL;
+	}
+	// Membership in one edge list -- "does this source ENABLE that id" ([json.md] §4.1). The list is the
+	// authored handful, so this is the read that replaces a per-id bool table over a whole registry.
+	bool has(EnEdgeFamily eFamily, EnEdgeBucket eBucket, int iId) const
+	{
+		const std::vector<int>* pList = find(eFamily, eBucket);
+		if (pList == NULL)
+		{
+			return false;
+		}
+		return std::find(pList->begin(), pList->end(), iId) != pList->end();
 	}
 	int count() const { return (int)m_edges.size(); }   // the readJson census
 	bool isEmpty() const { return m_edges.empty(); }

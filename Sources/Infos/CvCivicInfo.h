@@ -72,6 +72,8 @@ public:
 	{ return m_modifiers.sum(MODFAM_UPKEEP, eKind, eScope, CASC_UNIT_FLAT); }
 	int getCapture(CaptureKind eKind, CvCascScope eScope) const
 	{ return m_modifiers.sum(MODFAM_CAPTURE, eKind, eScope, CASC_UNIT_PERCENT); }
+	int getDefense(DefenseKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_DEFENSE, eKind, eScope, CASC_UNIT_PERCENT); }
 	int getDiplomacy(DiplomacyKind eKind, CvCascScope eScope) const
 	{ return m_modifiers.sum(MODFAM_DIPLOMACY, eKind, eScope, infoKindUnit(MODFAM_DIPLOMACY, eKind)); }
 	int getStateReligion(StateReligionKind eKind, CvCascScope eScope) const
@@ -101,6 +103,9 @@ public:
 	// scale percent under the overexpansion option -- InfoValuation::resolvedCityLimit is the ONE engine-side
 	// read; the CITY_LIMIT per.above eval leg (MMKernel::perApply) applies the same scale.
 	int getCityLimit() const { return m_iCityLimit; }
+	// ai.behaviour.weight / ai.flavours -- AI-only metadata; never affects rules ([json.md] §7).
+	int getAIWeight() const { return m_iAIWeight; }
+	int getFlavorValue(int iFlavor) const { return mapValueOrDefault(m_flavours, iFlavor); }
 	// Ruling 26, option (a): does this civic carry the over-limit ANGER (a compiled CITY_LIMIT `per.above`
 	// wellbeing entry)? Materialized at mapFrom from the compiled entries -- the presence verdict the engine's
 	// hard-cap sites read (a limit WITHOUT the anger deposit is a HARD cap; with it, exceeding is allowed and
@@ -134,6 +139,8 @@ private:
 	int m_iAnarchyLength;
 	int m_iUpkeepLevel;
 	int m_iCityLimit;
+	int m_iAIWeight;                         // ai.behaviour.weight
+	std::map<int, int> m_flavours;           // FlavorTypes -> weight (ai.flavours)
 	bool m_bCityOverLimitAnger;
 	CvWString m_szWeLoveTheKingKey;
 	CvPropertyManipulators m_PropertyManipulators;   // fed from the PROPERTY_* families (CascadePropertyBridge)

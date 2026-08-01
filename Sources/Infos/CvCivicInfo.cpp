@@ -9,7 +9,7 @@
 #include "CvGameCoreDLL.h"
 #include "CvCivicInfo.h"
 #include "Property/CvPropertyBridge.h" // the shared PROPERTY_* family -> manipulator walk
-#include "CvJsonParse.h"   // jsonChildObj / jsonIdInt / jsonIdFk / jsonIdStr
+#include "CvJsonParse.h"   // jsonChildObj / jsonIdInt / jsonIdFk / jsonIdStr / jsonReadFlavours
 #include "CvModEntry.h"    // the compiled entries -- the over-limit-anger presence derivation
 
 CvCivicInfo::CvCivicInfo()
@@ -17,6 +17,7 @@ CvCivicInfo::CvCivicInfo()
 	, m_iAnarchyLength(0)
 	, m_iUpkeepLevel(-1)
 	, m_iCityLimit(0)
+	, m_iAIWeight(0)
 	, m_bCityOverLimitAnger(false)
 {
 }
@@ -29,6 +30,8 @@ void CvCivicInfo::mapFrom(const picojson::value& entity)
 	m_iAnarchyLength = 0;
 	m_iUpkeepLevel = -1;
 	m_iCityLimit = 0;
+	m_iAIWeight = 0;
+	m_flavours.clear();
 	m_bCityOverLimitAnger = false;
 	m_szWeLoveTheKingKey.clear();
 
@@ -53,6 +56,17 @@ void CvCivicInfo::mapFrom(const picojson::value& entity)
 		{
 			m_szWeLoveTheKingKey = CvWString(szTextKey.c_str());
 		}
+	}
+
+	// ai.behaviour.weight + ai.flavours -- AI-only metadata, never affecting rules (json.md §7). 42 civics
+	// author flavours and the info held none, so every flavour-weighted civic decision read zero.
+	if (const picojson::object* pAi = jsonChildObj(entityObj, "ai"))
+	{
+		if (const picojson::object* pBehaviour = jsonChildObj(*pAi, "behaviour"))
+		{
+			m_iAIWeight = jsonIdInt(*pBehaviour, "weight");
+		}
+		jsonReadFlavours(*pAi, m_flavours);
 	}
 
 	// The CITY_LIMIT per.above token (ruling 26: `{-V, per:{CITY, above:"CITY_LIMIT"}}` on the government
