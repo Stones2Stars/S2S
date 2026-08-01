@@ -2096,11 +2096,15 @@ bool CvCity::isTeamWondersMaxed() const
 
 int CvCity::getMaxNumNationalWonders() const
 {
-	return GC.getGame().isOption(GAMEOPTION_CHALLENGE_ONE_CITY) ? GC.getCultureLevelInfo(getCultureLevel()).getMaxNationalWondersOCC() : GC.getCultureLevelInfo(getCultureLevel()).getMaxNationalWonders();
+	return GC.getCultureLevelInfo(getCultureLevel()).getMaxNationalWonders();
 }
 
 bool CvCity::isNationalWondersMaxed() const
 {
+	if (GC.getGame().isOption(GAMEOPTION_CHALLENGE_ONE_CITY))
+	{
+		return false;
+	}
 	if (GC.getGame().isOption(GAMEOPTION_NO_WONDER_LIMIT))
 	{
 		return false;
