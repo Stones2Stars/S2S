@@ -320,8 +320,33 @@ undefined internal name "facts"; it is the operating-building set.)*
 neither active nor dormant — it goes into the `obsolete` set (excluded from `active`, provides nothing), and the
 [modifier](modifier.md) reads its **`whenObsolete`** tree (§2 / [json](json.md) §4.2) in place of its normal
 families. It is maintained by the same targeted propagation (an `obsoletedBy.techs` reverse-index re-checked on a
-tech change), read via `cascadeIsBuildingObsolete`. Inert while legacy still swaps an obsolete building out of the
-city; live at the swap cut, when an obsolete building STAYS present.
+tech change), read via `cascadeIsBuildingObsolete`.
+
+⛔ **THE INSTANCE'S FATE IS DECIDED BY `whenObsolete`, AND THERE ARE EXACTLY TWO (owner):** an **absent/empty**
+tree means the building is **HARD REMOVED**; a tree **carrying any modifier** means the building **STAYS** and
+that tree **TAKES OVER** from its normal families ([json.md §4.2](json.md)). So this `obsolete` set is the
+**tree-carrying population** — present, non-active, depositing `whenObsolete` — never the removed ones, which
+are not in the city to hold.
+
+⚖ **A TECH IS THE ONLY THING THAT CAN OBSOLETE (owner), which is what makes the whole fate purely EVENT-DRIVEN
+and needs no fact to DRIVE it.** When a tech lands, the buildings it obsoletes are checked and each does what it
+needs to do — so the apply lives on the TECH fact, in the enabler's `onTechChanged`, beside the edge application
+that already runs there.
+
+⚖ **AN "I HAVE BEEN OBSOLETED" FACT IS WELCOME — but it is PURELY for LOGGING and the NOTIFICATION (owner),
+never the mechanism.** That is the [event-spine.md](event-spine.md) player-alert shape exactly: the alert is a
+CONSUMER of a fact, never re-inlined at the mutation site, and the legacy "your building was obsoleted" message
+died with the legacy mutator this cut removes — so it is on the owed-alerts list. ⛔ What must NOT happen is the
+APPLY being moved onto that fact: the removal is not waiting on an announcement, and routing it through one
+would make a UI concern a condition of the state change.
+
+⛔ **So the legacy shape was wrong in three separate ways, and all three are cut.** `CvTeam::processTech` swept
+the WHOLE building registry asking each id whether this tech obsoleted it, tore the instance out
+unconditionally, then walked a `getObsoletesToBuilding` chain to place a successor. But the tech's own
+`EDGEF_OBSOLETES`/`EDGEB_BUILDINGS` edge already names the handful (the own-data inversion — never scan the
+registry), the fate is the `whenObsolete` branch above rather than an unconditional removal, and the successor
+that chain placed is exactly what the curator now reads to emit the tree. A hand-wired per-site reaction inside
+a mutator is retired in favour of the one surface.
 
 ---
 
@@ -560,6 +585,33 @@ The enabler machine is built and lives in **`Sources/Enabler/`** — its own tre
 - **`CascadeCapabilities`** (`CvCapabilities.{h,cpp}`) — the per-team derived-on-query capability union
   ([capabilities.md](capabilities.md)).
 
+### RESIDENCY — the network count lives on the PLOT GROUP, and only there
+
+**⛔ The `CvPlotGroup` is the ONLY authoritative list for trade resources, and NOTHING mirrors it.** The network's
+content is aggregated UP from its member plots and cities (`CvPlot::updatePlotGroupBonus` →
+`CvPlotGroup::changeNumBonuses`), so the group is where the number is formed; every reader below it RELAYS.
+
+- **`CvCity::getNumBonuses` is a relay**, not a stored count: it reads the group through the city's plot-group
+  pointer and applies the three things that are genuinely per-asker — the bonus's `TechCityTrade` gate, the
+  player's minted-percent suppression, and the city's own corporation add-on. **The city declares no
+  bonus-count member.**
+- **`CityContext::tradedBonusCount` FORWARDS to that read** — it is the object's own O(1) data, so the
+  STORES-vs-FORWARDS rule ([contexts.md](../architecture/contexts.md)) puts it on the forward side. A stored
+  copy re-swept every bonus on every fact that could move one, for a number a pointer hop already answers.
+- **What the crossing fan-out is FOR.** `CvPlotGroup::changeNumBonuses` still fans into its member cities, and
+  the city's plot-group moves still announce — but only to fire the **presence CROSSING** (`processBonus` + the
+  corporation re-check), never to maintain a value. A count moving between two non-zero values announces
+  nothing, by ruling ([event-spine.md](event-spine.md)).
+
+⚑ **Why a per-city mirror is the wrong answer even though the read is hot.** Three copies of one number
+(group → city → context) is duplicated authoritative state with only drift to gain — the read-not-store rule
+([tally.md](tally.md): *"creating something new when we already have it is pointless"*). And the cost that
+argued for it is gone: the group maintains its holdings as a sparse `id → count` map, so the relay is a pointer
+hop and a lookup, not the group SUM the mirror was built to avoid.
+
+⚖ **VICINITY belongs to the CITY and is a plain local-presence fact:** it satisfies `connection:"vicinity"`
+atoms and NOTHING else — it never adds a second owned count (one pasture is ONE horse, not vicinity+network=2).
+
 ### The host — GRAFTED
 
 The machine's state now lives on its scope owners, as plain DATA MEMBERS (the guardrail bars adding vtable *bases*
@@ -781,20 +833,11 @@ promotion offer is not over-inclusive.
    band index are NOT convergence targets — the reverse pass deliberately excludes engine tokens, the plot
    substrate and `PROPERTY_` bands, and a coarse list matches a coarse event. Detail + the perf caveat:
    [todo.md](../plans/structural-cleanup/todo.md).
-2. **RESIDENCY + COUNTING.** The `CvPlotGroup` holds the network's bonus content and **is the ONLY authoritative
-   list for trade resources** — the city holds no authoritative mirror. But the CITY read must be a **maintained
-   number, added and subtracted on spine events, never calculated per read** (the state-repositories capstone):
-   `CvCity::getNumBonuses` is a bare fetch of a derived, never-serialized per-city count kept current by the
-   crossing fan-out plus the tech/minted/corp events that move its gates. The per-read calculation it replaces
-   (TechCityTrade gate → two-hop plot-group resolution → group sum → minted gate → corp add-on, re-executed on
-   EVERY call) was the turn wall's hottest cluster under the governor's read volume. VICINITY belongs to the CITY
-   and is a plain local-presence fact: it satisfies `connection:"vicinity"` atoms and NOTHING else — it never adds
-   a second owned count (one pasture is ONE horse, not vicinity+network=2).
-3. **Neither the counts NOR plot-group MEMBERSHIP are trusted from a save** (membership is derived state: routes +
+2. **Neither the counts NOR plot-group MEMBERSHIP are trusted from a save** (membership is derived state: routes +
    terrain-trade capabilities + ownership). The deserialized groups are drained and discarded; a load-end rebuild
    re-colors membership from current state and folds the counts through the live entry points as each plot joins,
    announcing every bonus fact as a genuine crossing emit before the `GAME_LOAD_FINISHED` gate pass.
-4. **The DORMANCY VERDICT is the operating-building fixpoint** (§3.2,
+3. **The DORMANCY VERDICT is the operating-building fixpoint** (§3.2,
    [DEC-calc-zero-ride-in](../architecture/decisions.md#dec-calc-zero-ride-in)) — applied through the engine's
    disabled-building flag, never a hand re-derivation from legacy prereq getters, plus the two runtime-state legs
    the authored data does not carry (employed-population composition; the banned-non-state-religion policy). The
@@ -806,7 +849,7 @@ promotion offer is not over-inclusive.
    ⛔ **BAKED-CONSUMER RE-RUNS:** an engine consumer that BAKES state on modifier changes (the trade-route
    ASSIGNMENT) runs during this fixpoint against not-yet-warmed packages and its baked result self-heals never;
    every such consumer is re-run ONCE after the load-end package warm.
-5. **The dynamic operate axes ride their events** — connectivity via the plot-group/network bonus events,
+4. **The dynamic operate axes ride their events** — connectivity via the plot-group/network bonus events,
    vicinity (radius growth) via the culture-level event — routed into the operate re-check of dependents.
 
 ### The consumer ITERATION sweep (F2b)

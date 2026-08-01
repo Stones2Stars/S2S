@@ -353,6 +353,7 @@ static const char* spineDomainPrefix(int iEventId)
 	case SEVT_PLAYER_INIT:            return "[SPINE] playerInit";
 	case SEVT_BUILDING_CHANGED:       return "[SPINE] buildingChanged";
 	case SEVT_BUILDING_PROCESSED:     return "[SPINE] buildingProcessed";
+	case SEVT_BUILDING_OBSOLETED:     return "[SPINE] buildingObsoleted";
 	case SEVT_LOAD_PIPELINE:          return "[SPINE] loadPipeline";
 	case SEVT_TURN_STARTED:           return "[SPINE] turnStarted";
 	case SEVT_TURN_ENDED:             return "[SPINE] turnEnded";
@@ -656,6 +657,14 @@ void emitBuildingChanged(int iCity, int iOwner, int iBuilding, int iDelta, bool 
 void emitBuildingProcessed(int iCity, int iOwner, int iBuilding, int iDelta)
 {
 	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_BUILDING_PROCESSED, iBuilding, 0, iDelta, iOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_BUILDING, iBuilding).addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_DELTA, iDelta);
+	eventSpine().emit(e);
+}
+
+void emitBuildingObsoleted(int iCity, int iOwner, int iBuilding, int iDelta)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_BUILDING_OBSOLETED, iBuilding, 0, iDelta, iOwner, iCity);
 	e.iDomainTag = SD_SPINE;
 	e.addI(SPF_BUILDING, iBuilding).addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_DELTA, iDelta);
 	eventSpine().emit(e);

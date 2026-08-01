@@ -55,7 +55,7 @@ void BuildingEnabler::augmentWaived(const CvPlayer& kPlayer, const CvTeam& kTeam
 	if (!waivedSpecials.empty())
 		for (int b = 0; b < nB; ++b)
 		{
-			const SpecialBuildingTypes sb = GC.getBuildingInfo((BuildingTypes)b).getSpecialBuildingType();
+			const SpecialBuildingTypes sb = (SpecialBuildingTypes)GC.getBuildingInfo((BuildingTypes)b).getSpecialBuildingType();
 			if (sb != NO_SPECIALBUILDING && waivedSpecials.count((int)sb) != 0) waived.insert(b);
 		}
 }
@@ -172,7 +172,7 @@ static const std::vector<int>& bd_sbMembers(int iSb)
 		s_specialBuildingMembersBuilt = true;
 		for (int b = 0; b < GC.getNumBuildingInfos(); ++b)
 		{
-			const SpecialBuildingTypes sb = GC.getBuildingInfo((BuildingTypes)b).getSpecialBuildingType();
+			const SpecialBuildingTypes sb = (SpecialBuildingTypes)GC.getBuildingInfo((BuildingTypes)b).getSpecialBuildingType();
 			if (sb != NO_SPECIALBUILDING) s_specialBuildingMembers[(int)sb].push_back(b);
 		}
 	}
@@ -247,7 +247,7 @@ static bool bd_categoryCapOk(int iB, const CvCity& kCity)
 
 static bool bd_groupCapOk(int iB, const CvPlayer& kPlayer)
 {
-	const SpecialBuildingTypes sb = GC.getBuildingInfo((BuildingTypes)iB).getSpecialBuildingType();
+	const SpecialBuildingTypes sb = (SpecialBuildingTypes)GC.getBuildingInfo((BuildingTypes)iB).getSpecialBuildingType();
 	if (sb == NO_SPECIALBUILDING) return true;
 	const CvInfo* jg = InfoRepo<CvSpecialBuildingInfo>::get().get((int)sb);
 	const CvAllowed* a = (jg != NULL) ? jg->getAllowed() : NULL;
@@ -483,7 +483,22 @@ void BuildingEnabler::onCityTechChanged(TeamTypes eTeam, TechTypes eTech, bool b
 					const int b = (*obsB)[i];
 					if (!pCity->hasBuilding((BuildingTypes)b)) continue;
 					const CvInfo* jb = InfoRepo<CvBuildingInfo>::get().get(b);
-					if (!EnablerKernel::obsoletedByOtherHeldTech(jb, kTeam, eTech)) EnablerKernel::applyEdges(d, jb, EDGEB_BUILDINGS, -iDelta);
+					if (EnablerKernel::obsoletedByOtherHeldTech(jb, kTeam, eTech)) continue;
+					EnablerKernel::applyEdges(d, jb, EDGEB_BUILDINGS, -iDelta);
+					// ⚖ THE INSTANCE'S FATE, decided here because a TECH is the only thing that can obsolete
+					// (owner): an EMPTY `whenObsolete` is a HARD REMOVAL, while a tree carrying modifiers leaves
+					// the building standing for that tree to take over ([json.md §4.2], [enabler.md §3.2] -- the
+					// enabler's own obsolete set is exactly the tree-carrying population). ⛔ No successor is
+					// placed: what the retired culture-shell chain used to put here is what the curator now reads
+					// to emit the tree on the building itself.
+					if (bHas)
+					{
+						const CvModifiers* pWhenObsolete = jb->getWhenObsolete();
+						if (pWhenObsolete == NULL || pWhenObsolete->empty())
+						{
+							pCity->changeHasBuilding((BuildingTypes)b, false);
+						}
+					}
 				}
 			if (bGate) bd_gateSet(*pCity, touched);   // gate-on-entry + the par.7.1 step-2 re-gates
 		}
@@ -511,7 +526,7 @@ void BuildingEnabler::onCityBuildingChanged(const CvCity& kCity, int iBuilding, 
 		// buildings domain carries the counts). A GROUP-capped member's crossing re-gates ALL its group
 		// siblings (the grouped wonders: one member built consumes the shared slot). world/team caps reach ALL
 		// players; empire reaches the owner's -- the widest reach is used (idempotent gate evals).
-		const SpecialBuildingTypes eSb = GC.getBuildingInfo((BuildingTypes)iBuilding).getSpecialBuildingType();
+		const SpecialBuildingTypes eSb = (SpecialBuildingTypes)GC.getBuildingInfo((BuildingTypes)iBuilding).getSpecialBuildingType();
 		const CvInfo* jg = (eSb != NO_SPECIALBUILDING) ? InfoRepo<CvSpecialBuildingInfo>::get().get((int)eSb) : NULL;
 		const bool bGroupCapped = (jg != NULL && jg->getAllowed() != NULL);
 		if ((jb != NULL && jb->getAllowed() != NULL) || bGroupCapped)

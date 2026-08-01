@@ -522,7 +522,17 @@ enum SpineDomainEvent
 	// A machine consumer therefore keys on that field, not on the ints.
 	// iType = -1 (no id space), iA = the new INT value (0 for the float/string kinds), iB = GlobalDefineKind,
 	// iC = -1, iSrcLoc = -1. DOMAIN.
-	SEVT_GLOBAL_DEFINE_CHANGED = 75
+	SEVT_GLOBAL_DEFINE_CHANGED = 75,
+
+	// A present building crossed into (or out of) OBSOLESCENCE in this city -- the enabler's own obsolete-set
+	// verdict, announced where it changes ([enabler.md §3.2]).
+	// ⛔ OBSERVABILITY ONLY -- logging and the player NOTIFICATION (owner). It drives NOTHING: a tech is the only
+	// thing that can obsolete, so the FATE (an empty `whenObsolete` removes the instance, a tree-carrying one
+	// leaves it standing for that tree to take over) is applied on the TECH fact where the check already runs.
+	// Routing the apply through this fact would make a UI concern a condition of the state change.
+	// iType = the building, iA = +1 obsoleted / -1 no longer obsolete, iB = 0, iC = the owner, iSrcLoc = the city.
+	// DOMAIN.
+	SEVT_BUILDING_OBSOLETED = 76
 };
 
 //	WHICH typed setter produced a SEVT_GLOBAL_DEFINE_CHANGED fact (its iB) -- the value's kind decides which render
@@ -564,6 +574,8 @@ void emitNameChange(int iKind, int iOwner, int iEntityId);
 // (iSrcLoc), so a consumer can route it -- but the endpoints themselves only emit (no consumer/routing here). =====
 void emitBuildingChanged(int iCity, int iOwner, int iBuilding, int iDelta, bool bFirst);
 void emitBuildingProcessed(int iCity, int iOwner, int iBuilding, int iDelta);
+// Observability only (logging + the player notification) -- see SEVT_BUILDING_OBSOLETED; drives no apply.
+void emitBuildingObsoleted(int iCity, int iOwner, int iBuilding, int iDelta);
 void emitLoadPipeline(int iRebuildMs, int iFixpointMs, int iFixEnsureMs, int iFixProcessMs, int iPasses, int iFlips, int iConverged, int iVerifyCatches, int iPlotWarmMs, int iPackageWarmMs);
 void emitReligionChanged(int iCity, int iOwner, int iReligion, bool bHas);
 void emitCorporationChanged(int iCity, int iOwner, int iCorporation, bool bHas);

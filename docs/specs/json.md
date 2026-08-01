@@ -400,10 +400,24 @@ Same per-kind bucket shape as `enables`.
   **target-side** as a **full modifier tree in the §6 grammar** (channels · scopes · units · `enabled`/`disabled`
   predicates — a *separate* tree, not a gate on the normal families). When the building is obsolete its **normal
   modifier families stop and this tree applies instead**; the surviving output is authored directly here and may
-  differ from the working values. **Absent/empty ⇒ the obsolete building contributes nothing — fully gone** (the
-  default, matching the engine's remove-on-obsolete). The canonical use is a wonder keeping culture/tourism while it
-  loses its working bonus: `"whenObsolete": { "culture": { "city": { "flat": 5 } } }`. *(The engine's clunky
-  `getObsoletesToBuilding` culture-shell swap is what the curator reads to emit this tree.)*
+  differ from the working values.
+
+  > **⚖ OBSOLESCENCE HAS EXACTLY TWO FATES, AND `whenObsolete` DECIDES WHICH (owner).** This is the whole rule;
+  > there is no third case and no flag beside it:
+  >
+  > | `whenObsolete` | the built instance |
+  > |---|---|
+  > | **absent / empty** | **HARD REMOVED** — the building is gone from the city |
+  > | **carries any modifier** | **STAYS**, and that tree **TAKES OVER** from its normal families |
+  >
+  > ⛔ **NO SUCCESSOR IS PLACED in either case.** The legacy `getObsoletesToBuilding` culture-shell swap walked a
+  > chain to put a replacement building in the city; what that swap used to place is exactly what the curator now
+  > reads to emit this tree ON THE BUILDING ITSELF, so keeping the swap would deliver the same effect twice.
+  > ⚑ The enabler's `obsolete` set ([enabler.md §3.2](enabler.md)) is therefore the **tree-carrying** population —
+  > present, non-active, depositing `whenObsolete` — never the removed ones, which are not in the city to hold.
+
+  The canonical use is a wonder keeping culture/tourism while it loses its working bonus:
+  `"whenObsolete": { "culture": { "city": { "flat": 5 } } }`.
 - **`replaces`** — succession removal: a successor takes the predecessor's slot, removing it from the buildable set
   once the successor is itself buildable. Authored **target-side** as **`replacedBy.{kind}`** (the entities that
   hard-replace this one, e.g. `replacedBy.units`), mirroring `obsoletedBy`. The §9 `replacedBy` (whole-entity Info-swap

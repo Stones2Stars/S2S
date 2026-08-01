@@ -5449,58 +5449,6 @@ void CvTeam::processTech(TechTypes eTech, int iChange, bool bAnnounce)
 		}
 	}
 
-	for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
-	{
-		// ⛔ OBSOLETE IS REMOVAL -- DORMANT != OBSOLETE (owner). Dormancy is `requires.operate` unmet: the
-		// building STAYS and wakes when the condition returns. Obsolescence is permanent supersession, so the
-		// instance GOES -- json.md §4.2's absent-`whenObsolete` default is "fully gone", matching the engine's
-		// remove-on-obsolete. Two ways a tech obsoletes a building: its own `obsoleteTech`, or its
-		// special-building GROUP's.
-		const CvBuildingInfo& kObsBuilding = GC.getBuildingInfo((BuildingTypes)iI);
-		const bool bByOwnTech = kObsBuilding.getObsoleteTech() == eTech;
-		const bool bByGroupTech = kObsBuilding.getSpecialBuildingType() != NO_SPECIALBUILDING
-			&& GC.getSpecialBuildingInfo(kObsBuilding.getSpecialBuildingType()).getObsoleteTech() == eTech;
-
-		// The stored counter used to dedupe the two paths via `bWasObsolete`; the DERIVED counterfactual does it
-		// now -- act only if no OTHER held tech had already obsoleted this building ([DEC-derived-never-trusted]).
-		if (iChange > 0 && (bByOwnTech || bByGroupTech)
-		&& !EnablerKernel::obsoletedByOtherHeldTech(InfoRepo<CvBuildingInfo>::get().get(iI), *this, eTech))
-		{
-			// Walk the obsoletesTo chain past any successor that is ITSELF already obsolete, so the swap lands
-			// on the first still-valid replacement (the legacy culture-shell swap, json.md §4.2).
-			BuildingTypes eObsoletesToBuilding = kObsBuilding.getObsoletesToBuilding();
-			while (eObsoletesToBuilding > NO_BUILDING)
-			{
-				if (GC.getBuildingInfo(eObsoletesToBuilding).getObsoleteTech() < 0
-				|| !isHasTech(GC.getBuildingInfo(eObsoletesToBuilding).getObsoleteTech()))
-				{
-					break;
-				}
-				eObsoletesToBuilding = GC.getBuildingInfo(eObsoletesToBuilding).getObsoletesToBuilding();
-			}
-			for (int iPlayer = 0; iPlayer < MAX_PLAYERS; iPlayer++)
-			{
-				if (!GET_PLAYER((PlayerTypes)iPlayer).isAliveAndTeam(getID()))
-				{
-					continue;
-				}
-				foreach_(CvCity * cityX, GET_PLAYER((PlayerTypes)iPlayer).cities())
-				{
-					if (!cityX->hasBuilding((BuildingTypes)iI))
-					{
-						continue;
-					}
-					cityX->changeHasBuilding((BuildingTypes)iI, false);
-
-					if (eObsoletesToBuilding != NO_BUILDING && !cityX->hasBuilding(eObsoletesToBuilding))
-					{
-						cityX->changeHasBuilding(eObsoletesToBuilding, true);
-					}
-				}
-			}
-		}
-	}
-
 	for (int iI = 0; iI < MAX_PLAYERS; iI++)
 	{
 		CvPlayer& playerX = GET_PLAYER((PlayerTypes)iI);

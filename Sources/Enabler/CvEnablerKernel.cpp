@@ -563,7 +563,14 @@ static void ek_recheckActiveSet(const CvCity* pCity, const std::vector<int>& see
 			nowObs = (v == EK_OBSOLETE);
 			now = (v == EK_ACTIVE);
 		}
-		if (nowObs != wasObs) { if (nowObs) f.obsolete.insert(b); else f.obsolete.erase(b); }
+		if (nowObs != wasObs)
+		{
+			if (nowObs) f.obsolete.insert(b); else f.obsolete.erase(b);
+			// ⚖ OBSERVABILITY ONLY -- logging + the player NOTIFICATION (owner). The FATE is applied on the TECH
+			// fact (a tech is the only thing that can obsolete), so nothing waits on this and no consumer may
+			// route the apply through it ([enabler.md §3.2], [event-spine.md] player alerts).
+			emitBuildingObsoleted(pCity->getID(), (int)pCity->getOwner(), b, nowObs ? 1 : -1);
+		}
 		if (now == was) continue;
 		// ⚖ ANNOUNCE THE OPERATE CROSSING. This is the play-time twin of the load seed's emit: the verdict is the
 		// enabler's, so the enabler announces it, at the one place it changes. Consumers keyed on the operating
