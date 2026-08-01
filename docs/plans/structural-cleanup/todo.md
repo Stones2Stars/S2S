@@ -229,6 +229,17 @@
   per-player handicap (saved) drives human-facing economics, while every `getAI*` advantage reads the GAME handicap
   (the average of alive humans) — [engine.md](../../reference/engine.md). Keep them separately named.
 
+- Wire the `hideAndSeek` BLOCK engine-side ([json.md §9](../../specs/json.md), [vision.md §4](../../specs/vision.md)).
+  The data authors it and the engine does not know it, so readJson reports it as an unknown key — correct,
+  fail-loud, and the signal. What it needs: the block registered as a reserved SECTION (a non-reserved object
+  key would otherwise be read as a modifier FAMILY), its `concealment`/`detection` entries served with the
+  `{unit: HAS_<SKILL>}` qualifier resolvable against the SKILL plane (today `IS_` resolves only against tags),
+  and the METHOD skills minted like any other authored skill key.
+  ⛔ Its evaluation stays SEPARATE from the classic visibility one — that bleed is the defect the block exists
+  to end, so do not answer a hide-and-seek question from the vision budget or the reverse.
+  ⚠ `CvVisionSection` still parses the RETIRED 13-table shape (the FK, `negates`, the four intensity maps, the
+  nine substrate row-lists) and nothing reads it; `MODFAM_VISION` still carries `VISION_CONCEALMENT` /
+  `VISION_DETECTION` kinds the family no longer owns. Both go with this wiring, not before it.
 - The PLAYER-ALERT consumer, and the alerts owed to it — they re-attach to the OPERATE CROSSING fact, never
   re-inlined at a mutation site ([event-spine.md](../../specs/event-spine.md)). Expect the owed list to GROW as
   each legacy mutator is cut; add them together on the facts.
