@@ -1,5 +1,25 @@
 {
  "type": "PROMOTION_RETINUE_ADVENTURER",
+ "movement": {
+  "unit": {
+   "terrain": {
+    "TERRAIN_DESERT": {
+     "percent": -50
+    },
+    "TERRAIN_ICE": {
+     "percent": -50
+    }
+   },
+   "feature": {
+    "FEATURE_JUNGLE": {
+     "percent": -50
+    },
+    "FEATURE_FOREST": {
+     "percent": -50
+    }
+   }
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 10
@@ -10,16 +30,6 @@
    "strikes": {
     "flat": 1
    }
-  }
- },
- "skills": {
-  "terrainDoubleMove": {
-   "TERRAIN_DESERT": true,
-   "TERRAIN_ICE": true
-  },
-  "featureDoubleMove": {
-   "FEATURE_JUNGLE": true,
-   "FEATURE_FOREST": true
   }
  },
  "ui": {

@@ -149,6 +149,13 @@ public:
 
 	static int keyedTargetSegment(const char* szTargetSegment);
 
+	//	Materialize the doubleMove FK lists from an entity's OWN compiled MOVEMENT entries. doubleMove is half
+	//	movement cost on that ground ([skills.md] par.1) -- a keyed movement modifier, never a skill -- and the
+	//	consumers want the plain target list, so it materializes once at mapFrom
+	//	([DEC-materialize-at-mapfrom]). ONE implementation for every carrier ([DEC-single-implementation]).
+	static void fillDoubleMoveTargets(const CvModifiers* modifiers,
+		std::vector<int>& terrainTargets, std::vector<int>& featureTargets);
+
 	// THE EVAL-CTX FILL SEAM (contexts.md: "the contexts ARE the eval state"): CityContext::fillEvalCtx
 	// (city/plot) + EmpireContext::fillEvalCtx (player/team) + the plotGroup pass-in (the reserved TRADED-bonus
 	// source -- evalCtx.plotGroup; NULL = the city's own plot-group-backed reads answer trade) + the enabler's

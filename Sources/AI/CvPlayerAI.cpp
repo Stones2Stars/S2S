@@ -29601,7 +29601,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 			if (InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_TERRAIN, iI, COMBAT_ATTACK)
 			||  InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_TERRAIN, iI, COMBAT_DEFENSE)
 			||  InfoValuation::keyedTarget(kPromotion.getModifiers(), MODFAM_WORK_RATE, 0, InfoValuation::keyedTargetSegment("terrain"), iI)
-			||  kPromotion.getTerrainDoubleMove(iI))
+			||  InfoValuation::keyedTarget(kPromotion.getModifiers(), MODFAM_MOVEMENT, 0, InfoValuation::keyedTargetSegment("terrain"), iI))
 			{
 				iPass++;
 				const int iTerrainWeight = (
@@ -29670,7 +29670,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 					}
 				}
 
-				if (kPromotion.getTerrainDoubleMove(iI))
+				if (InfoValuation::keyedTarget(kPromotion.getModifiers(), MODFAM_MOVEMENT, 0, InfoValuation::keyedTargetSegment("terrain"), iI))
 				{
 					iTemp = iMoves * (bOnTerrain ? 80 : 40);
 
@@ -29722,7 +29722,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 			if (InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_FEATURE, iI, COMBAT_ATTACK)
 			||  InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_FEATURE, iI, COMBAT_DEFENSE)
 			||  InfoValuation::keyedTarget(kPromotion.getModifiers(), MODFAM_WORK_RATE, 0, InfoValuation::keyedTargetSegment("feature"), iI)
-			||  kPromotion.getFeatureDoubleMove(iI))
+			||  InfoValuation::keyedTarget(kPromotion.getModifiers(), MODFAM_MOVEMENT, 0, InfoValuation::keyedTargetSegment("feature"), iI))
 			{
 				iPass++;
 				const int iFeatureWeight = (
@@ -29787,7 +29787,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 					}
 				}
 
-				if (kPromotion.getFeatureDoubleMove(iI))
+				if (InfoValuation::keyedTarget(kPromotion.getModifiers(), MODFAM_MOVEMENT, 0, InfoValuation::keyedTargetSegment("feature"), iI))
 				{
 					iTemp = iMoves * (bOnFeature ? 80 : 40);
 

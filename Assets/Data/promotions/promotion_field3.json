@@ -7,6 +7,18 @@
    ]
   }
  },
+ "movement": {
+  "unit": {
+   "terrain": {
+    "TERRAIN_PLAINS": {
+     "percent": -50
+    },
+    "TERRAIN_GRASSLAND": {
+     "percent": -50
+    }
+   }
+  }
+ },
  "combat": {
   "unit": {
    "terrain": {
@@ -27,12 +39,6 @@
      }
     }
    }
-  }
- },
- "skills": {
-  "terrainDoubleMove": {
-   "TERRAIN_PLAINS": true,
-   "TERRAIN_GRASSLAND": true
   }
  },
  "promotionLine": {

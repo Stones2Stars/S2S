@@ -7,6 +7,27 @@
    ]
   }
  },
+ "movement": {
+  "unit": {
+   "terrain": {
+    "TERRAIN_BARREN": {
+     "percent": -50
+    },
+    "TERRAIN_SCRUB": {
+     "percent": -50
+    },
+    "TERRAIN_ROCKY": {
+     "percent": -50
+    },
+    "TERRAIN_BADLAND": {
+     "percent": -50
+    },
+    "TERRAIN_JAGGED": {
+     "percent": -50
+    }
+   }
+  }
+ },
  "combat": {
   "unit": {
    "terrain": {
@@ -51,15 +72,6 @@
      }
     }
    }
-  }
- },
- "skills": {
-  "terrainDoubleMove": {
-   "TERRAIN_BARREN": true,
-   "TERRAIN_SCRUB": true,
-   "TERRAIN_ROCKY": true,
-   "TERRAIN_BADLAND": true,
-   "TERRAIN_JAGGED": true
   }
  },
  "promotionLine": {

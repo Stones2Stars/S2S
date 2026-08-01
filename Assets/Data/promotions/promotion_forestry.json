@@ -7,14 +7,28 @@
    ]
   }
  },
- "skills": {
-  "featureDoubleMove": {
-   "FEATURE_JUNGLE": true,
-   "FEATURE_FOREST": true,
-   "FEATURE_BAMBOO": true,
-   "FEATURE_FOREST_YOUNG": true,
-   "FEATURE_FOREST_BURNT": true,
-   "FEATURE_FOREST_ANCIENT": true
+ "movement": {
+  "unit": {
+   "feature": {
+    "FEATURE_JUNGLE": {
+     "percent": -50
+    },
+    "FEATURE_FOREST": {
+     "percent": -50
+    },
+    "FEATURE_BAMBOO": {
+     "percent": -50
+    },
+    "FEATURE_FOREST_YOUNG": {
+     "percent": -50
+    },
+    "FEATURE_FOREST_BURNT": {
+     "percent": -50
+    },
+    "FEATURE_FOREST_ANCIENT": {
+     "percent": -50
+    }
+   }
   }
  },
  "ui": {

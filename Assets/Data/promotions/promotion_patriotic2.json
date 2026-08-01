@@ -12,6 +12,23 @@
    ]
   }
  },
+ "movement": {
+  "unit": {
+   "terrain": {
+    "TERRAIN_DESERT": {
+     "percent": -50
+    }
+   },
+   "feature": {
+    "FEATURE_JUNGLE": {
+     "percent": -50
+    },
+    "FEATURE_FOREST": {
+     "percent": -50
+    }
+   }
+  }
+ },
  "combat": {
   "unit": {
    "percent": 15,
@@ -31,14 +48,7 @@
   }
  },
  "skills": {
-  "hillsDoubleMove": true,
-  "terrainDoubleMove": {
-   "TERRAIN_DESERT": true
-  },
-  "featureDoubleMove": {
-   "FEATURE_JUNGLE": true,
-   "FEATURE_FOREST": true
-  }
+  "hillsDoubleMove": true
  },
  "promotionLine": {
   "PROMOTIONLINE_PATRIOTIC": 2

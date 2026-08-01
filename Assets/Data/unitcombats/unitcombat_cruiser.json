@@ -1,10 +1,18 @@
 {
  "type": "UNITCOMBAT_CRUISER",
- "skills": {
-  "terrainDoubleMove": {
-   "TERRAIN_OCEAN_POLAR": true,
-   "TERRAIN_OCEAN": true,
-   "TERRAIN_OCEAN_TROPICAL": true
+ "movement": {
+  "unit": {
+   "terrain": {
+    "TERRAIN_OCEAN_POLAR": {
+     "percent": -50
+    },
+    "TERRAIN_OCEAN": {
+     "percent": -50
+    },
+    "TERRAIN_OCEAN_TROPICAL": {
+     "percent": -50
+    }
+   }
   }
  },
  "tags": [

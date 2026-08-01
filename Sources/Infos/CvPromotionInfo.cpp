@@ -9,7 +9,8 @@
 #include "CvGameCoreDLL.h"          // PCH umbrella -- picojson + GC
 #include "CvPromotionInfo.h"
 #include "CvPromotionLineInfo.h"    // GC.getPromotionLineInfo(...) -> the line's unitcombat lists (qualified-set build)
-#include "CvJsonParse.h"            // jsonResolveId / jsonIdInt / jsonIdBool / jsonIdFk / jsonIdStr / jsonChildObj / jsonReadIdList / jsonReadKeyedBoolIdList
+#include "CvJsonParse.h"
+#include "Data/CvInfoValuation.h"            // jsonResolveId / jsonIdInt / jsonIdBool / jsonIdFk / jsonIdStr / jsonChildObj / jsonReadIdList / jsonReadKeyedBoolIdList
 #include "Property/CvPropertyBridge.h" // the shared PROPERTY_* family -> manipulator walk
 #include "AI/CvGameAI.h"            // complete CvGameAI -- GC.getGame().getSorenRand() (zobrist draw, archive mirror)
 
@@ -103,11 +104,14 @@ void CvPromotionInfo::mapFrom(const picojson::value& entity)
 	// law-enforcement lines) emits into the holding unit's same-plot city / plot -- the ONE shared walk.
 	CascadePropertyBridge::bridgeFamilies(getModifiers(), m_PropertyManipulators, RELATION_SAME_PLOT);
 
+	// doubleMove is HALF MOVEMENT COST on that ground ([skills.md] par.1), so it is a keyed MOVEMENT
+	// modifier and NOT a skill. The typed FK lists are materialized once here from the compiled entries
+	// ([DEC-materialize-at-mapfrom]) so every consumer stays a bare member read.
+	InfoValuation::fillDoubleMoveTargets(getModifiers(), m_aiTerrainDoubleMove, m_aiFeatureDoubleMove);
+
 	// --- par.8 keyed-skill extras (the flat bools live on the composed m_skills block via the base dispatch) ---
 	if (const picojson::object* pSkills = jsonChildObj(entityObj, "skills"))
 	{
-		jsonReadKeyedBoolIdList(*pSkills, "terrainDoubleMove", m_aiTerrainDoubleMove);
-		jsonReadKeyedBoolIdList(*pSkills, "featureDoubleMove", m_aiFeatureDoubleMove);
 		jsonReadIdList(*pSkills, "unitCombats", m_aiProvidesUnitCombats);
 		jsonReadIdList(*pSkills, "removesUnitCombats", m_aiRemovesUnitCombats);
 	}

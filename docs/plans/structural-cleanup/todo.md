@@ -99,14 +99,6 @@
   — which matters because `DomainTypes` crosses the ABI through `DllExport CvUnit::getDomainType()`.
   ⚠ Several sites treat it as a live case rather than a dead one (`isDomain`-style switches, an `FAssert` that
   ACCEPTS it beside `DOMAIN_LAND`), so this is a per-site read, never a delete-the-case sweep.
-- Re-home `terrainDoubleMove` / `featureDoubleMove` out of `skills` into the `movement` family, keyed by
-  `TERRAIN_*`/`FEATURE_*` ([skills.md §1](../../specs/skills.md)). The mechanic is HALF MOVEMENT COST on that
-  ground while the promotion is held (owner), so it is a keyed movement modifier and never a boolean — the
-  current `skills: {name:{TYPE:true}}` emit is a shape the model does not define.
-  ⚠ It rides the movement RESOLVER: the cost halving is hardcoded in `CvPlot::movementCost` off a boolean
-  count, so honouring an authored percent is a resolver change, not just a re-point. ⛔ Doing only the data
-  half silently empties the info's FK vectors and kills the mechanic.
-
 - Map the flagged unitcombat remainder — map the obvious, flag the unsure, never blunt-purge
   ([unitcombat-tag-mapping.md](unitcombat-tag-mapping.md)).
 

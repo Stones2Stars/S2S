@@ -12,6 +12,24 @@
    ]
   }
  },
+ "movement": {
+  "unit": {
+   "terrain": {
+    "TERRAIN_TAIGA": {
+     "percent": -50
+    },
+    "TERRAIN_TUNDRA": {
+     "percent": -50
+    },
+    "TERRAIN_PERMAFROST": {
+     "percent": -50
+    },
+    "TERRAIN_ICE": {
+     "percent": -50
+    }
+   }
+  }
+ },
  "combat": {
   "unit": {
    "terrain": {
@@ -48,14 +66,6 @@
      }
     }
    }
-  }
- },
- "skills": {
-  "terrainDoubleMove": {
-   "TERRAIN_TAIGA": true,
-   "TERRAIN_TUNDRA": true,
-   "TERRAIN_PERMAFROST": true,
-   "TERRAIN_ICE": true
   }
  },
  "promotionLine": {

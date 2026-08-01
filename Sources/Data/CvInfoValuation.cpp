@@ -952,3 +952,31 @@ int InfoValuation::netHealth(const int (&wellbeing)[NUM_WELLBEING_CHANNELS])
 	// modifier.md §2b: health sums AGAINST unhealth. Signed, for the same reason.
 	return (wellbeing[WELLBEING_HEALTH] - wellbeing[WELLBEING_UNHEALTH]) / 100;
 }
+
+void InfoValuation::fillDoubleMoveTargets(const CvModifiers* modifiers,
+	std::vector<int>& terrainTargets, std::vector<int>& featureTargets)
+{
+	terrainTargets.clear();
+	featureTargets.clear();
+
+	if (modifiers == NULL)
+	{
+		return;
+	}
+	// A memberless keyed address compiles to KIND 0 (CvModifiers.cpp mod_decodeLeaf), never a negative --
+	// the COLLECT form matches the kind EXACTLY, so a wildcard would read nothing here.
+	std::vector<std::pair<int, int> > rows;
+
+	collectKeyedTarget(modifiers, MODFAM_MOVEMENT, 0, keyedTargetSegment("terrain"), rows);
+	for (size_t iRow = 0; iRow < rows.size(); ++iRow)
+	{
+		terrainTargets.push_back(rows[iRow].first);
+	}
+	rows.clear();
+
+	collectKeyedTarget(modifiers, MODFAM_MOVEMENT, 0, keyedTargetSegment("feature"), rows);
+	for (size_t iRow = 0; iRow < rows.size(); ++iRow)
+	{
+		featureTargets.push_back(rows[iRow].first);
+	}
+}

@@ -7,6 +7,21 @@
    ]
   }
  },
+ "movement": {
+  "unit": {
+   "feature": {
+    "FEATURE_JUNGLE": {
+     "percent": -50
+    },
+    "FEATURE_FOREST": {
+     "percent": -50
+    },
+    "FEATURE_SWAMP": {
+     "percent": -50
+    }
+   }
+  }
+ },
  "combat": {
   "unit": {
    "unitCombat": {
@@ -20,12 +35,7 @@
   }
  },
  "skills": {
-  "hillsDoubleMove": true,
-  "featureDoubleMove": {
-   "FEATURE_JUNGLE": true,
-   "FEATURE_FOREST": true,
-   "FEATURE_SWAMP": true
-  }
+  "hillsDoubleMove": true
  },
  "promotionLine": {
   "PROMOTIONLINE_POWER_SOURCE_UPGRADE": 3

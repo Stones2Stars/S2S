@@ -8,7 +8,8 @@
 
 #include "CvGameCoreDLL.h"          // PCH umbrella -- picojson + GC (getGame().getSorenRand())
 #include "CvUnitCombatInfo.h"
-#include "CvJsonParse.h"            // jsonChildObj / jsonIdFk / jsonIdBool / jsonReadIdList / jsonReadKeyedBoolIdList
+#include "CvJsonParse.h"
+#include "Data/CvInfoValuation.h"            // jsonChildObj / jsonIdFk / jsonIdBool / jsonReadIdList / jsonReadKeyedBoolIdList
 #include "AI/CvGameAI.h"            // complete CvGameAI -- GC.getGame().getSorenRand() (zobrist seed)
 
 CvUnitCombatInfo::CvUnitCombatInfo()
@@ -58,12 +59,10 @@ void CvUnitCombatInfo::mapFrom(const picojson::value& entity)
 		jsonReadIdList(*pIdentity, "defaultStatuses", m_aiDefaultStatuses);
 	}
 
-	// --- par.8 keyed-skill FK lists (skills.<name>.{TYPE}:true) ---
-	if (const picojson::object* pSkills = jsonChildObj(entityObj, "skills"))
-	{
-		jsonReadKeyedBoolIdList(*pSkills, "terrainDoubleMove", m_aiTerrainDoubleMove);
-		jsonReadKeyedBoolIdList(*pSkills, "featureDoubleMove", m_aiFeatureDoubleMove);
-	}
+	// doubleMove is HALF MOVEMENT COST on that ground ([skills.md] par.1), so it is a keyed MOVEMENT modifier
+	// and NOT a skill. The typed FK lists are materialized once here from the compiled entries
+	// ([DEC-materialize-at-mapfrom]) so every consumer stays a bare member read.
+	InfoValuation::fillDoubleMoveTargets(getModifiers(), m_aiTerrainDoubleMove, m_aiFeatureDoubleMove);
 
 	// --- the derived move-through-plots verdict, materialized over the type's own data (the ONE shared
 	// derivation, deriveChangesMoveThroughPlots; the getter is a bare member read) ---

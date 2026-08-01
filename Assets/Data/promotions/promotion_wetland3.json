@@ -7,6 +7,21 @@
    ]
   }
  },
+ "movement": {
+  "unit": {
+   "terrain": {
+    "TERRAIN_LUSH": {
+     "percent": -50
+    },
+    "TERRAIN_MUDDY": {
+     "percent": -50
+    },
+    "TERRAIN_MARSH": {
+     "percent": -50
+    }
+   }
+  }
+ },
  "combat": {
   "unit": {
    "terrain": {
@@ -35,13 +50,6 @@
      }
     }
    }
-  }
- },
- "skills": {
-  "terrainDoubleMove": {
-   "TERRAIN_LUSH": true,
-   "TERRAIN_MUDDY": true,
-   "TERRAIN_MARSH": true
   }
  },
  "promotionLine": {

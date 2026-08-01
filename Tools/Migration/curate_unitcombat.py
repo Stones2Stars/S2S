@@ -64,9 +64,14 @@ VS_KEYED = {
     "BuildWorkChangeModifiers":       ("workRate", "build", None, "percent"),
     "TrapAvoidanceUnitCombatTypes":   ("trap", "avoidance", None, "flat"),
 }
-CAP_LIST = {"TerrainDoubleMoveChangeTypes": "terrainDoubleMove",
-            "FeatureDoubleMoveChangeTypes": "featureDoubleMove",
-            "TrapImmunityUnitCombatTypes": "trapImmunity"}
+CAP_LIST = {"TrapImmunityUnitCombatTypes": "trapImmunity"}
+# doubleMove is HALF MOVEMENT COST on that ground (owner) -- a keyed MOVEMENT modifier, never a skill; see
+# curate_promotion for the ruling. Same magnitude on both carriers.
+DOUBLE_MOVE_KEYED = {
+    "TerrainDoubleMoveChangeTypes": "terrain",
+    "FeatureDoubleMoveChangeTypes": "feature",
+}
+DOUBLE_MOVE_PERCENT = -50
 # *Base -> identity.base (§0.6 create-unit base data). quality/group/size use a -10 "unset" sentinel.
 # *Base ranks -> the sizeMatters block (json.md §9), NOT identity.base. -10 = "unset" sentinel (0 is a real rank).
 BASE_SENTINEL10 = {"iQualityBase": "qualityBase", "iGroupBase": "groupBase", "iSizeBase": "sizeBase"}
@@ -148,6 +153,11 @@ def curate(typ, rec, store):
         if node is not None:
             for k in _simple_list(node):
                 caps.setdefault(name, OrderedDict())[k] = True
+    for tag, kw in DOUBLE_MOVE_KEYED.items():
+        node = rec.find(tag)
+        if node is not None:
+            for k in _simple_list(node):
+                fam_unit("movement").setdefault(kw, OrderedDict()).setdefault(k, OrderedDict())["percent"] = DOUBLE_MOVE_PERCENT
     # celebrity: a unit-combat defines a unit's BASE abilities, so celebrity is a base SKILL here too. The numeric
     # iCelebrityHappy amount is DROPPED (owner 2026-07-01: "not a random field on a unit") -> boolean skill when
     # non-zero. CvCity is fixed POST-MIGRATION to scan for celebrity-skilled units and award the happiness itself.

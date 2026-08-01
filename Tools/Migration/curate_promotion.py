@@ -190,9 +190,16 @@ CAP_COUNT = {
     "iDefenseOnlyChange": "defenseOnly", "iNoInvisibilityChange": "noInvisibility",
 }
 # per-type capability LISTS (simple list -> {TYPE: true}) and pair-lists handled in VS_KEYED above.
-CAP_LIST = {
-    "TerrainDoubleMoves": "terrainDoubleMove", "FeatureDoubleMoves": "featureDoubleMove",
+CAP_LIST = {}
+# terrain/featureDoubleMove is HALF MOVEMENT COST on that ground while the promotion is held (owner), so it is
+# an ordinary keyed MOVEMENT modifier and never a skill -- a skill is a pure boolean enabler carrying no value,
+# and this carries both a target and a magnitude ([skills.md] par.1, [json.md] par.8). The legacy tag is a bare
+# list, so the magnitude is the mechanic's own: -50% cost on that terrain/feature.
+DOUBLE_MOVE_KEYED = {
+    "TerrainDoubleMoves": "terrain",
+    "FeatureDoubleMoves": "feature",
 }
+DOUBLE_MOVE_PERCENT = -50
 # VISION / LOS RESOLVER (non-cascade, §7): pair-lists (InvisibleType -> intensity) + struct-vectors.
 VISION_PAIRS = {
     "VisibilityIntensityChangeTypes": "visibilityIntensity",
@@ -336,6 +343,14 @@ def curate(typ, rec, store):
             if member:
                 base = base.setdefault(member, OrderedDict())
             base[unit] = v
+
+    # --- doubleMove -> movement.unit.{terrain|feature}.{TYPE}.percent (half cost on that ground) ---
+    for tag, kw in DOUBLE_MOVE_KEYED.items():
+        node = rec.find(tag)
+        if node is None:
+            continue
+        for k in _simple_list(node):
+            fam_unit("movement").setdefault(kw, OrderedDict()).setdefault(k, OrderedDict())["percent"] = DOUBLE_MOVE_PERCENT
 
     # --- HealUnitCombatChangeTypes (struct: UnitCombatType + iHeal + iAdjacentHeal) -> heal.unit.unitCombat.{UC} ---
     hnode = rec.find("HealUnitCombatChangeTypes")

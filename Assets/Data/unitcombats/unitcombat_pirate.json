@@ -1,5 +1,20 @@
 {
  "type": "UNITCOMBAT_PIRATE",
+ "movement": {
+  "unit": {
+   "terrain": {
+    "TERRAIN_COAST_POLAR": {
+     "percent": -50
+    },
+    "TERRAIN_COAST": {
+     "percent": -50
+    },
+    "TERRAIN_COAST_TROPICAL": {
+     "percent": -50
+    }
+   }
+  }
+ },
  "combat": {
   "unit": {
    "stealth": {
@@ -9,14 +24,6 @@
     "flat": 1
    }
   }
- },
- "skills": {
-  "terrainDoubleMove": {
-   "TERRAIN_COAST_POLAR": true,
-   "TERRAIN_COAST": true,
-   "TERRAIN_COAST_TROPICAL": true
-  },
-  "navalDisguise": true
  },
  "tags": [
   "outlaw"
@@ -30,6 +37,9 @@
    "unit": "HAS_NAVAL_DISGUISE"
   }
  },
+ "skills": [
+  "navalDisguise"
+ ],
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/pirate_ships.dds"

@@ -7,17 +7,37 @@
    ]
   }
  },
- "skills": {
-  "featureDoubleMove": {
-   "FEATURE_REEF": true,
-   "FEATURE_REEF_BEACON": true,
-   "FEATURE_REEF_LIGHTHOUSE": true,
-   "FEATURE_CORAL_REEF": true,
-   "FEATURE_CORAL_REEF_BEACON": true,
-   "FEATURE_CORAL_REEF_LIGHTHOUSE": true,
-   "FEATURE_PLATY_GREAT_BARRIER": true,
-   "FEATURE_GREAT_BARRIER_REEF_BEACON": true,
-   "FEATURE_GREAT_BARRIER_REEF_LIGHTHOUSE": true
+ "movement": {
+  "unit": {
+   "feature": {
+    "FEATURE_REEF": {
+     "percent": -50
+    },
+    "FEATURE_REEF_BEACON": {
+     "percent": -50
+    },
+    "FEATURE_REEF_LIGHTHOUSE": {
+     "percent": -50
+    },
+    "FEATURE_CORAL_REEF": {
+     "percent": -50
+    },
+    "FEATURE_CORAL_REEF_BEACON": {
+     "percent": -50
+    },
+    "FEATURE_CORAL_REEF_LIGHTHOUSE": {
+     "percent": -50
+    },
+    "FEATURE_PLATY_GREAT_BARRIER": {
+     "percent": -50
+    },
+    "FEATURE_GREAT_BARRIER_REEF_BEACON": {
+     "percent": -50
+    },
+    "FEATURE_GREAT_BARRIER_REEF_LIGHTHOUSE": {
+     "percent": -50
+    }
+   }
   }
  },
  "ui": {

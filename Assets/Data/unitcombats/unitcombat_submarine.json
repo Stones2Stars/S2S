@@ -1,15 +1,28 @@
 {
  "type": "UNITCOMBAT_SUBMARINE",
- "skills": {
-  "terrainDoubleMove": {
-   "TERRAIN_OCEAN_POLAR": true,
-   "TERRAIN_OCEAN": true,
-   "TERRAIN_OCEAN_TROPICAL": true,
-   "TERRAIN_TRENCH": true,
-   "TERRAIN_TRENCH_POLAR": true,
-   "TERRAIN_TRENCH_TROPICAL": true
-  },
-  "submarine": true
+ "movement": {
+  "unit": {
+   "terrain": {
+    "TERRAIN_OCEAN_POLAR": {
+     "percent": -50
+    },
+    "TERRAIN_OCEAN": {
+     "percent": -50
+    },
+    "TERRAIN_OCEAN_TROPICAL": {
+     "percent": -50
+    },
+    "TERRAIN_TRENCH": {
+     "percent": -50
+    },
+    "TERRAIN_TRENCH_POLAR": {
+     "percent": -50
+    },
+    "TERRAIN_TRENCH_TROPICAL": {
+     "percent": -50
+    }
+   }
+  }
  },
  "tags": [
   "naval"
@@ -23,6 +36,9 @@
    "unit": "HAS_SUBMARINE"
   }
  },
+ "skills": [
+  "submarine"
+ ],
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/submarines.dds"

@@ -7,11 +7,17 @@
    ]
   }
  },
- "skills": {
-  "hillsDoubleMove": true,
-  "terrainDoubleMove": {
-   "TERRAIN_PEAK": true
+ "movement": {
+  "unit": {
+   "terrain": {
+    "TERRAIN_PEAK": {
+     "percent": -50
+    }
+   }
   }
+ },
+ "skills": {
+  "hillsDoubleMove": true
  },
  "ui": {
   "art": {

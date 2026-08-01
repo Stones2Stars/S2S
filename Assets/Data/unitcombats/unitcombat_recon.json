@@ -1,5 +1,17 @@
 {
  "type": "UNITCOMBAT_RECON",
+ "movement": {
+  "unit": {
+   "feature": {
+    "FEATURE_REEF": {
+     "percent": -50
+    },
+    "FEATURE_CORAL_REEF": {
+     "percent": -50
+    }
+   }
+  }
+ },
  "combat": {
   "unit": {
    "damageModifier": {
@@ -15,12 +27,6 @@
    "resistance": {
     "flat": -20
    }
-  }
- },
- "skills": {
-  "featureDoubleMove": {
-   "FEATURE_REEF": true,
-   "FEATURE_CORAL_REEF": true
   }
  },
  "tags": [

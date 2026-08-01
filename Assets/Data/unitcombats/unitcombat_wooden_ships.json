@@ -1,14 +1,30 @@
 {
  "type": "UNITCOMBAT_WOODEN_SHIPS",
- "skills": {
-  "terrainDoubleMove": {
-   "TERRAIN_COAST_POLAR": true,
-   "TERRAIN_COAST": true,
-   "TERRAIN_COAST_TROPICAL": true,
-   "TERRAIN_COAST_DEEP": true,
-   "TERRAIN_COAST_DEEP_TROPICAL": true,
-   "TERRAIN_COAST_DEEP_POLAR": true,
-   "TERRAIN_LAKE_SHORE": true
+ "movement": {
+  "unit": {
+   "terrain": {
+    "TERRAIN_COAST_POLAR": {
+     "percent": -50
+    },
+    "TERRAIN_COAST": {
+     "percent": -50
+    },
+    "TERRAIN_COAST_TROPICAL": {
+     "percent": -50
+    },
+    "TERRAIN_COAST_DEEP": {
+     "percent": -50
+    },
+    "TERRAIN_COAST_DEEP_TROPICAL": {
+     "percent": -50
+    },
+    "TERRAIN_COAST_DEEP_POLAR": {
+     "percent": -50
+    },
+    "TERRAIN_LAKE_SHORE": {
+     "percent": -50
+    }
+   }
   }
  },
  "tags": [

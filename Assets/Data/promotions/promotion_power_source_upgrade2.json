@@ -13,6 +13,24 @@
    ]
   }
  },
+ "movement": {
+  "unit": {
+   "terrain": {
+    "TERRAIN_DESERT": {
+     "percent": -50
+    },
+    "TERRAIN_MARSH": {
+     "percent": -50
+    },
+    "TERRAIN_ICE": {
+     "percent": -50
+    },
+    "TERRAIN_TUNDRA": {
+     "percent": -50
+    }
+   }
+  }
+ },
  "combat": {
   "unit": {
    "unitCombat": {
@@ -23,14 +41,6 @@
      "percent": 15
     }
    }
-  }
- },
- "skills": {
-  "terrainDoubleMove": {
-   "TERRAIN_DESERT": true,
-   "TERRAIN_MARSH": true,
-   "TERRAIN_ICE": true,
-   "TERRAIN_TUNDRA": true
   }
  },
  "promotionLine": {

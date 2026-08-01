@@ -7,6 +7,21 @@
    ]
   }
  },
+ "movement": {
+  "unit": {
+   "terrain": {
+    "TERRAIN_DESERT": {
+     "percent": -50
+    },
+    "TERRAIN_DUNES": {
+     "percent": -50
+    },
+    "TERRAIN_SALT_FLATS": {
+     "percent": -50
+    }
+   }
+  }
+ },
  "combat": {
   "unit": {
    "terrain": {
@@ -35,13 +50,6 @@
      }
     }
    }
-  }
- },
- "skills": {
-  "terrainDoubleMove": {
-   "TERRAIN_DESERT": true,
-   "TERRAIN_DUNES": true,
-   "TERRAIN_SALT_FLATS": true
   }
  },
  "promotionLine": {
