@@ -361,6 +361,11 @@ namespace
 		{
 			gt_foldInfo(GC.getCorporationInfo((CorporationTypes)iCorporation).getModifiers(), 1, eScope, iWantedBits, evalCtx, pKeyPlot, 0, false, flatSlots, percentSlots);
 		}
+		// ⛔ This EMPIRE-scope fold deliberately leaves ctx.sourceBuilding unset (-1), unlike the city fold. The
+		// player may own N copies of one building, each built in a different year, so "how long has THIS
+		// building stood" has no single answer here -- a source-predicate must decline rather than age-gate
+		// against whichever copy the walk happened to reach. Every authored existedFor sits at CITY scope, so
+		// nothing is lost; an empire-scope one would be unanswerable by construction, not merely unwired.
 		for (int iBuilding = 0; iBuilding < GC.getNumBuildingInfos(); ++iBuilding)
 		{
 			const int iOwned = player.getBuildingCount((BuildingTypes)iBuilding);
@@ -452,12 +457,17 @@ namespace
 		// deposits nothing; an obsolete one deposits its whenObsolete tree in place of its normal families)
 		if (evalCtx.activeBuildings != NULL)
 		{
+			// The fold carries WHICH building it is resolving, so a source-predicate can ask about the carrier
+			// (existedFor -- how long has THIS building stood). Same shape as the per-religion walk: a local
+			// copy with the slot set per iteration, never a mutation of the shared ctx.
+			CvCascadeEvalCtx perBuildingCtx = evalCtx;
 			for (std::set<int>::const_iterator it = evalCtx.activeBuildings->begin(); it != evalCtx.activeBuildings->end(); ++it)
 			{
 				const CvBuildingInfo& building = GC.getBuildingInfo((BuildingTypes)(*it));
 				const bool bObsolete = cascadeIsBuildingObsolete(*it, evalCtx);
+				perBuildingCtx.sourceBuilding = *it;
 				gt_foldInfo(bObsolete ? building.getWhenObsolete() : building.getModifiers(),
-					1, CASC_SCOPE_CITY, iWantedBits, evalCtx, NULL, 0, false, flatSlots, percentSlots);
+					1, CASC_SCOPE_CITY, iWantedBits, perBuildingCtx, NULL, 0, false, flatSlots, percentSlots);
 			}
 		}
 		// (2) assigned specialists x count -- EXCLUDING the rate channels (§2a: a specialist's yield/commerce

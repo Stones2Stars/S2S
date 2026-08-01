@@ -478,6 +478,16 @@ int  CityContext::team() const                 { return m_city != NULL ? (int)m_
 const CvPlot* CityContext::cityPlot() const    { return m_city != NULL ? m_city->plot() : NULL; }
 const CvPlot* CityContext::radiusPlot(int iRingIndex) const { return m_city != NULL ? m_city->getCityIndexPlot(iRingIndex) : NULL; }
 bool CityContext::hasBuilding(int eBuilding) const   { return m_city != NULL && eBuilding >= 0 && m_city->hasBuilding((BuildingTypes)eBuilding); }
+// MIN_INT when the city does not hold it -- getBuildingData answers that sentinel for an absent building, and a
+// build YEAR is legitimately negative, so absence cannot be signalled by sign.
+int  CityContext::buildingBuildYear(int eBuilding) const
+{
+	if (m_city == NULL || eBuilding < 0 || !m_city->hasBuilding((BuildingTypes)eBuilding))
+	{
+		return MIN_INT;
+	}
+	return m_city->getBuildingData((BuildingTypes)eBuilding).iTimeBuilt;
+}
 int  CityContext::stateReligion() const        { return m_city != NULL ? (int)GET_PLAYER(m_city->getOwner()).getStateReligion() : -1; }
 bool CityContext::hasPolicy(int ePolicy) const { return m_city != NULL && GET_PLAYER(m_city->getOwner()).getEmpireContext().policies.has(ePolicy); }
 

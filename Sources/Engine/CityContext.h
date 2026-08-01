@@ -186,6 +186,12 @@ public:
 	const CvPlot* cityPlot() const;           // CvCity::plot -- the centre tile
 	const CvPlot* radiusPlot(int iRingIndex) const;   // CvCity::getCityIndexPlot -- O(1) coordinate arithmetic
 	bool hasBuilding(int eBuilding) const;    // CvCity::hasBuilding -- the §7 raw-presence has-list (m_bHasBuildings)
+	// The GAME YEAR a present building was built (CvCity::getBuildingData().iTimeBuilt -- the serialized building
+	// ledger, raw object-owned state, so FORWARDED and never stored). Serves the `existedFor` age gate
+	// (json.md §3.5): the authored thresholds are YEAR counts, which is what the tooltip has always promised.
+	// ⛔ Returns MIN_INT for a building this city does NOT hold -- the caller must test that BEFORE subtracting,
+	// since a game year is legitimately NEGATIVE (BC) and `getGameTurnYear() - MIN_INT` overflows.
+	int  buildingBuildYear(int eBuilding) const;
 	int  stateReligion() const;               // owner CvPlayer::getStateReligion  (STATE_RELIGION_IN_CITY = hasReligion(stateReligion()))
 	bool hasPolicy(int ePolicy) const;        // owner EmpireContext::policies.has  (empire aggregate, not mirrored here)
 	// The city's CURRENT REALIZED YIELDS -- CvCity::getYields, the city's own O(1) group read, handed on unchanged.

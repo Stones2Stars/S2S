@@ -113,10 +113,18 @@ struct CvCascadeEvalCtx
 	// by cascadeCountCityReligions while it evaluates the filter predicate; -1 outside that loop. The
 	// IS_STATE_RELIGION predicate reads it against the player's state religion.
 	int religion;
+	// The SOURCE BUILDING whose deposit is being resolved (the `religion` slot's shape, one axis over): set
+	// per-iteration by the walks that know the id -- the gather's city-building fold and the per-building
+	// valuation seam -- and -1 everywhere else. It exists because an entry cannot name its own carrier: neither
+	// a compiled CvModEntry nor an info knows its engine id, so a predicate about the SOURCE (existedFor -- how
+	// long has THIS building stood) has no other way to ask.
+	// ⛔ -1 means "no source in hand", and a source-predicate must answer FALSE there rather than guessing: a
+	// scope-wide read that never set it would otherwise age-gate against whatever building came last.
+	int sourceBuilding;
 	// The AS-IF-HELD hypothetical (above) -- NULL on every ordinary evaluation, so the normal path pays one
 	// null test. Set ONLY by a caller asking a what-if, and never stored anywhere.
 	const CvCascadeHypothetical* hypothetical;
-	CvCascadeEvalCtx() : cityContext(NULL), empireContext(NULL), plotContext(NULL), unit(NULL), plotGroup(NULL), waivedPrereqBuildings(NULL), activeBuildings(NULL), obsoleteBuildings(NULL), vicinityProvidedBonuses(NULL), buildingAtomsPresence(false), religion(-1), hypothetical(NULL) {}
+	CvCascadeEvalCtx() : cityContext(NULL), empireContext(NULL), plotContext(NULL), unit(NULL), plotGroup(NULL), waivedPrereqBuildings(NULL), activeBuildings(NULL), obsoleteBuildings(NULL), vicinityProvidedBonuses(NULL), buildingAtomsPresence(false), religion(-1), sourceBuilding(-1), hypothetical(NULL) {}
 };
 
 // Evaluator flags (StoneBase's init-only props). For a `requires.build` gate set strictStateReligionForBuild=true.

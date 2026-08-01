@@ -291,19 +291,6 @@
 
 - Move the what-if valuation consumers onto `expected*` — the AI candidate weighting and the build-list hover
   tooltip are ONE call ([patterns.md](../../architecture/patterns.md) THE VALUATION PROTOCOL).
-- EVALUATE the `existedFor` predicate. It is declared, parsed and rendered, but the evaluator names it in its
-  `default: return true` arm — an unmodelled predicate is IGNORED, never false ([json.md §3.5](../../specs/json.md))
-  — so every age-gated deposit currently applies from turn 0. The commerce doublings are the live authorings.
-  ⛔ The blocker is not the state: `CvCity::getBuildingData` serves `iTimeBuilt` off the serialized building
-  ledger. It is that the evaluator cannot tell WHICH source's deposit it is resolving — `CvCascadeEvalCtx`
-  carries no source handle, `MMKernel::applies` takes only the two condition trees, and neither a compiled
-  entry nor an info knows its own engine id.
-  ⚑ The precedent is exact and already in the ctx: `int religion`, set per-iteration by the walker and -1
-  outside. A source-building slot takes the same shape; the gather's two building walks know the id, and every
-  `expected*` caller valuing a building would have to pass it.
-  ⚑ The unit is SETTLED and needs no thought: GAME YEARS. The ledger already stores the build year, the
-  authored thresholds are year counts, and the tooltip has always promised *"doubles in 1000 years"* — so the
-  test is `getGameTurnYear() - iTimeBuilt >= N` and nothing converts.
 - Move the IMPROVEMENT tech-yield reads onto the keyed what-if twin. One of them asks a THIRD question the twin
   does not answer: the `bOptimal` branch wants "assume every condition holds", which is neither the live
   evaluation nor a hypothetical over one named id. Decide whether that is a MODE of the same read or an

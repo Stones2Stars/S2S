@@ -455,6 +455,29 @@ static bool ev_evalPredicate(const CvCascadeEvalCtx& ctx, const CvCascadeEvalFla
 		}
 		return (pr->min < 0 || lat >= pr->min) && (pr->max < 0 || lat <= pr->max);
 	}
+	// {existedFor:{min:N}} -- the AGE gate (json §3.5): N GAME YEARS since the SOURCE building was built. The
+	// unit is years, not turns: the city ledger stores getGameTurnYear() at build time and the tooltip has
+	// always promised "doubles in 1000 years", so nothing converts. The live authorings are the commerce
+	// doublings (the legacy CommerceChangeDoubleTimes), which author as a SECOND deposit on the same slot
+	// gated here rather than a post-sum multiply (modifier.md §3).
+	case CASC_PRED_EXISTED_FOR:
+	{
+		// Needs the carrier: a deposit resolved with no source building in hand cannot be aged. Answering TRUE
+		// would apply every age-gated deposit from turn 0 -- which is precisely the hole this closes -- and
+		// answering against some other building would be worse than either.
+		if (cityContext == NULL || ctx.sourceBuilding < 0)
+		{
+			return false;
+		}
+		const int iBuiltYear = cityContext->buildingBuildYear(ctx.sourceBuilding);
+		// ⛔ Test the absence sentinel BEFORE subtracting: a build year is legitimately NEGATIVE (BC), so
+		// absence cannot be read off the sign, and GC.getGame().getGameTurnYear() - MIN_INT overflows.
+		if (iBuiltYear == MIN_INT)
+		{
+			return false;
+		}
+		return pr->min < 0 || (GC.getGame().getGameTurnYear() - iBuiltYear) >= pr->min;
+	}
 	// {natureYield:{<channel>:N}} -- the improvement PLACEMENT threshold (json §3.5): the target plot's
 	// PRE-improvement nature yield of the channel (`id` = YieldTypes) must be >= `min`. Transcribes the engine
 	// gate (CvPlot::canHaveImprovement: calculateNatureYield(channel, eTeam) < prereq -> invalid) -- the same
@@ -462,7 +485,7 @@ static bool ev_evalPredicate(const CvCascadeEvalCtx& ctx, const CvCascadeEvalFla
 	case CASC_PRED_NATURE_YIELD:
 		return plotContext != NULL && pr->id >= 0 && pr->min >= 0
 		    && plotContext->natureYield(pr->id, ctx.empireContext != NULL ? ctx.empireContext->teamId() : (int)NO_TEAM) >= pr->min;
-	case CASC_PRED_VICINITY:   return p != NULL;
+	case CASC_PRED_VICINITY:   return plotContext != NULL;
 	case CASC_PRED_WORKABLE:   return plotContext != NULL && cityContext != NULL && plotContext->owner() == cityContext->owner();
 	case CASC_PRED_IS_WORKED:  return plotContext != NULL && plotContext->isWorked();
 	// IS_<TAG> -- classification-tag membership against the UNIT target (json §8). The tag id resolves lazily: the
@@ -474,7 +497,7 @@ static bool ev_evalPredicate(const CvCascadeEvalCtx& ctx, const CvCascadeEvalFla
 		const int iTagId = pr->id >= 0 ? pr->id : GC.getInfoTypeForString(pr->param.c_str(), /*bHideAssert*/true);
 		return iTagId < 0 ? true : ctx.unit->getUnitInfo().getTags()->hasId(iTagId);
 	}
-	default:                   return true;   // UNKNOWN / ExistedFor / unmodelled domain -> IGNORED (json §3.5)
+	default:                   return true;   // UNKNOWN / unmodelled domain -> IGNORED, never false (json §3.5)
 	}
 }
 

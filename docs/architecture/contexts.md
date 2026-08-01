@@ -216,6 +216,18 @@ the bound game objects. Consequences, each already implied by the model above:
   lands it replaces the pointer, and until then this is the one acknowledged hole, not a licence for others.
 - **The enabler's precomputed sets** (operating/active/obsolete buildings, vicinity-provided bonuses) stay ctx
   members: they are the ENABLER's derived output fed to the evaluator, never per-scope live state.
+- **⚖ THE SOURCE SLOTS — a predicate about the CARRIER needs the carrier named, because an entry cannot name
+  itself.** Neither a compiled entry nor an info knows its own engine id, so a condition asking about the
+  DEPOSITING entity rather than the target (`existedFor` — how long has THIS building stood) has no other way
+  to ask. The ctx therefore carries a slot per such axis — `religion` (the §3.7 counted-kind filter) and
+  `sourceBuilding` — **set per-iteration by the walk that knows the id, on a LOCAL COPY of the ctx, and -1
+  everywhere else**; the shared ctx is never mutated. ⛔ -1 means "no carrier in hand" and a source-predicate
+  must answer FALSE there: a scope-wide read that never set it would otherwise resolve against whichever
+  entity the walk happened to reach last.
+  ⚠ **A source slot is only meaningful where the carrier is SINGULAR.** The city fold resolves one building at
+  a time, so it sets one; the EMPIRE fold walks a building the player may hold N copies of, each acquired at a
+  different moment, so the question has no single answer and the slot stays unset by design. That is a
+  structural limit, not an unwired leg — do not "complete" it by setting the slot there.
 - **A context that cannot answer a needed fact is a CONTEXT GAP to close** (add the forward), never a reason to
   re-add an object pointer. That is the forcing function the structural form buys.
 
