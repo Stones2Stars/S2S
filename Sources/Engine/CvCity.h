@@ -1122,7 +1122,6 @@ public:
 	std::map<BuildingTypes, BuiltBuildingData> getBuildingLedger() const { return m_buildingLedger; }
 	std::vector<BuildingTypes> getHasBuildings() const { return m_hasBuildings; }
 
-	bool isValidBuildingLocation(BuildingTypes eType) const;
 
 
 	bool isHasReligion(ReligionTypes eIndex) const;
@@ -1221,7 +1220,6 @@ public:
 	int getNumCityPlots() const;
 	int getPopulationgrowthratepercentage() const;
 	void changePopulationgrowthratepercentage(int iChange, bool bAdd);
-	bool isValidTerrainForBuildings(BuildingTypes eIndex) const;
 
 	void changeFreshWater(int iChange);
 	bool hasFreshWater() const;

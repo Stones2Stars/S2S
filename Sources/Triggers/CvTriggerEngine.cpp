@@ -283,23 +283,32 @@ static int tr_placeGrantedBuilding(CvCity* pCity, CvPlayer& player, int iBuildin
 	{
 		return 0;
 	}
-	// ⚠ The two VALIDITY guards the legacy free-building placement carried, kept because dropping them is a real
-	// gameplay defect rather than a simplification: an OBSOLETE building would be resurrected in every city, and a
-	// location-invalid one would land where it cannot stand (the lighthouse in a landlocked city). A grant changes
-	// the LIFETIME of the provision, never whether the receiver can hold it at all.
-	if (GET_TEAM(pCity->getTeam()).isObsoleteBuilding((BuildingTypes)iBuilding)
-	|| !pCity->isValidBuildingLocation((BuildingTypes)iBuilding))
+	// An obsolete building must not be resurrected in every city. The team already owns the tech list, so this is
+	// the derived predicate rather than a stored flag.
+	if (GET_TEAM(pCity->getTeam()).isObsoleteBuilding((BuildingTypes)iBuilding))
 	{
 		return 0;
 	}
-	if (pEnabled != NULL)
+	// ⚠ WHERE it may stand is the building's OWN `requires.build`, evaluated by the ONE evaluator
+	// ([DEC-single-implementation]) -- the coastal/river/terrain/map-category clauses the legacy placement gate
+	// re-derived by hand are exactly that condition, authored. A grant changes the LIFETIME of the provision and
+	// skips the production cost; it does not change whether the receiver can hold the thing at all.
+	// ⛔ It is NOT the enabler's queue verdict: that answers "may this city QUEUE it", which a grant bypasses by
+	// construction (triggers.md -- the only divergence from normal creation is the cost step).
+	const CvInfo* pBuildingInfo = &GC.getBuildingInfo((BuildingTypes)iBuilding);
+	const CvCondition* pRequiresBuild = pBuildingInfo->requiresBuild();
+	if (pRequiresBuild != NULL || pEnabled != NULL)
 	{
 		// the contexts ARE the eval state (contexts.md): the fill seams, never a hand-assembled raw ctx
 		CvCascadeEvalCtx ec;
 		pCity->getCityContext().fillEvalCtx(ec);
 		player.getEmpireContext().fillEvalCtx(ec);
 		EnablerKernel::wireOperatingBuildings(pCity, ec);   // the enabler's sets are the third leg
-		if (!cascadeEvalCondition(pEnabled, ec, kFlags))
+		if (pRequiresBuild != NULL && !cascadeEvalCondition(pRequiresBuild, ec, kFlags))
+		{
+			return 0;
+		}
+		if (pEnabled != NULL && !cascadeEvalCondition(pEnabled, ec, kFlags))
 		{
 			return 0;
 		}
