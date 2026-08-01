@@ -338,10 +338,9 @@
   ⚑ The precedent is exact and already in the ctx: `int religion`, set per-iteration by the walker and -1
   outside. A source-building slot takes the same shape; the gather's two building walks know the id, and every
   `expected*` caller valuing a building would have to pass it.
-  ⚠ Settle turns-vs-years with it: the ledger stores `getGameTurnYear()` and the authored thresholds are legacy
-  YEAR counts, while the spec names the predicate "turns since built". A turn has a year
-  ([engine.md](../../reference/engine.md): `CvDate` interpolates, there is no stored table), so either is
-  reachable — but the two answer differently and only one matches the data.
+  ⚑ The unit is SETTLED and needs no thought: GAME YEARS. The ledger already stores the build year, the
+  authored thresholds are year counts, and the tooltip has always promised *"doubles in 1000 years"* — so the
+  test is `getGameTurnYear() - iTimeBuilt >= N` and nothing converts.
 - Give `requires` a PRECISE query — "does this entity's requires name this atom / this predicate", answered per
   id. Two consumers want it and neither has any other source: a building's need for the state religion IN CITY,
   and the religion a unit needs to be trained.

@@ -316,7 +316,7 @@ namespace
 			}
 			return CvWString::format(L"latitude up to %d", condition.max);
 		case CASC_PRED_EXISTED_FOR:
-			return CvWString::format(L"existed %d+ turns", condition.min);
+			return CvWString::format(L"existed %d+ years", condition.min);
 		case CASC_PRED_IS_TAG:
 		{
 			// param carries the full TAG_<SUFFIX> name (json §8) -- render the suffix

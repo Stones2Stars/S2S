@@ -432,8 +432,10 @@ without being removed.
 - **`per`** scales the deposit by a count — local at `city`/`plot`, via the [tally](tally.md) at cross-city scopes.
 - Whole-entity availability (is this building active at all?) is the [enabler](enabler.md)'s `requires`, not a
   per-deposit condition: a dormant entity deposits nothing, so the modifier machine never special-cases it.
-- **Age-gated deposits** — legacy `CommerceChangeDoubleTimes` ("double after N turns") is **not** a timer/stage
-  but a SECOND deposit on the same slot with `enabled:{existedFor:{min:N}}` (no post-sum multiply).
+- **Age-gated deposits** — legacy `CommerceChangeDoubleTimes` ("double after N YEARS") is **not** a timer/stage
+  but a SECOND deposit on the same slot with `enabled:{existedFor:{min:N}}` (no post-sum multiply). ⚠ The unit is GAME
+  YEARS, not turns — the age is measured against the stored build YEAR, and that is what the tooltip has
+  always promised ([json.md §3.5](json.md)).
 
 ---
 

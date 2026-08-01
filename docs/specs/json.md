@@ -270,7 +270,7 @@ IGNORED**, never treated as false — retiring a system never spuriously disable
   `{HAS_BONUS: BONUS_X}` · `{HAS_RELIGION: RELIGION_X}` · `{STATE_RELIGION: RELIGION_X}` · `{IS_HOLY_CITY: RELIGION_X}` ·
   `{IS_HEADQUARTERS: CORPORATION_X}` (the city is that corporation's HQ — the corp analog of `{IS_HOLY_CITY: …}`;
   carries the corp-HQ revenue condition) ·
-  `{HAS_CORPORATION: CORPORATION_X}` · `{latitude:{min,max}}` · `{existedFor:{min:N}}` (turns since built) ·
+  `{HAS_CORPORATION: CORPORATION_X}` · `{latitude:{min,max}}` · `{existedFor:{min:N}}` (GAME YEARS since built -- what the player has always been told: *"doubles in 1000 years"*. The city stores the build YEAR (`getGameTurnYear`) and every authored threshold is a year count; a turn's year is derived, never stored ([engine.md](../reference/engine.md)), so nothing needs converting) ·
   `{HAS_COAST:{minArea:N}}` (the city is adjacent to a water body of **≥ N tiles**; a bare `HAS_COAST` is coastal at
   the default threshold, so an entity needing a *larger* sea body carries the size here).
 - **membership sugar** `{ terrain|feature|bonus: [TYPE,…] }` = "the plot's terrain/feature/bonus is one of these";
@@ -1240,7 +1240,7 @@ in its city; costs 120 hammers.*
 ```
 
 *Only one may exist in the world; can't be built where a capital already sits; builds twice as fast with connected
-marble; +10 culture, doubling after it has stood 1000 turns.*
+marble; +10 culture, doubling after it has stood 1000 years.*
 
 ### A culture level (per-city wonder caps)
 
