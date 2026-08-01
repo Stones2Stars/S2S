@@ -13428,7 +13428,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 	}
 
 	ReligionTypes eBestReligion = AI_bestReligion();
-	if (!kCivic.isStateReligion() && !isStateReligion())
+	if (!kCivic.providesPolicy(CLS_POLICY_STATE_RELIGION) && !isStateReligion())
 	{
 		eBestReligion = NO_RELIGION;
 	}
@@ -13439,7 +13439,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 
 	//Fuyu Civic AI: restructuring
 		//#0: constant values
-	int iValue = getNumCities() * 6 + kCivic.getAIWeight() * getNumCities();
+	int iValue = getNumCities() * 6;
 
 	
 	// Koshling - Anarchy length is not part of the civic's value - it's part of the cost of an overall switch and is now evaluated in that process
@@ -13450,12 +13450,12 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 	iValue += iTempValue;
 
 	CvCity* pCapital = getCapitalCity();
-	iValue += ((kCivic.getGreatPeopleRateModifier() * getNumCities()) / 10);
+	iValue += ((kCivic.getScalar(SCALAR_GREAT_PEOPLE_RATE, CASC_SCOPE_EMPIRE, CASC_UNIT_PERCENT) * getNumCities()) / 10);
 
 	//	Koshling - made the GG calculations non-linear as they were not scaling well with large armies
 	int iGGMultiplier = 100 - 1000 / (10 + range(getNumMilitaryUnits(), 1, 100));
-	iTempValue = ((kCivic.getGreatGeneralRateModifier() * iGGMultiplier) / 10);
-	iTempValue += ((kCivic.getDomesticGreatGeneralRateModifier() * iGGMultiplier) / 20);
+	iTempValue = ((kCivic.getScalar(SCALAR_GREAT_GENERAL_RATE, CASC_SCOPE_EMPIRE, CASC_UNIT_PERCENT) * iGGMultiplier) / 10);
+	iTempValue += ((kCivic.getScalar(SCALAR_GREAT_GENERAL_RATE_DOMESTIC, CASC_SCOPE_EMPIRE, CASC_UNIT_PERCENT) * iGGMultiplier) / 20);
 	//Fuyu: Only if wars ongoing, as suggested by Munch - modified by Koshling to just be an increase then
 	
 	iValue += iTempValue / (bWarPlan || isMinorCiv() ? 3 : 1);
@@ -13485,46 +13485,43 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 		iValue += iTempValue;
 	}
 
-	iTempValue = ((kCivic.getWorkerSpeedModifier() * AI_getNumAIUnits(UNITAI_WORKER)) / 15);
+	iTempValue = ((kCivic.getScalar(SCALAR_WORK_RATE, CASC_SCOPE_EMPIRE, CASC_UNIT_PERCENT) * AI_getNumAIUnits(UNITAI_WORKER)) / 15);
 	
 	iValue += iTempValue;
-	iTempValue = ((kCivic.getImprovementUpgradeRateModifier() * getNumCities()) / 50);
+	iTempValue = ((kCivic.getScalar(SCALAR_IMPROVEMENT_UPGRADE_RATE, CASC_SCOPE_EMPIRE, CASC_UNIT_PERCENT) * getNumCities()) / 50);
 	
 	iValue += iTempValue;
-	iTempValue = (kCivic.getMilitaryProductionModifier() * getNumCities() * iWarmongerPercent) / (bWarPlan ? 300 : 500);
+	iTempValue = (kCivic.getBuildRateModifier(BUILD_RATE_MILITARY, CASC_SCOPE_EMPIRE) * getNumCities() * iWarmongerPercent) / (bWarPlan ? 300 : 500);
 	
 	iValue += iTempValue;
-	iTempValue = kCivic.getFreeUnitUpkeepCivilian() / 2;
+	// FLAT slots, so they reduce here. ⛔ The legacy PopPercent twins are NOT a second read: a pop-scaled source
+	// is the SAME deposit carrying `per:{POPULATION}` ([modifier.md] §2), so reading it again and multiplying by
+	// population would apply the scaler twice.
+	iTempValue = (kCivic.getFlatUpkeep(UPKEEP_FREE_CIVILIAN, CASC_SCOPE_EMPIRE) / 100) / 2;
 	
 	iValue += iTempValue;
-	iTempValue = kCivic.getFreeUnitUpkeepMilitary() / 2;
+	iTempValue = (kCivic.getFlatUpkeep(UPKEEP_FREE_MILITARY, CASC_SCOPE_EMPIRE) / 100) / 2;
 	
 	iValue += iTempValue;
-	iTempValue = kCivic.getFreeUnitUpkeepCivilianPopPercent() * getTotalPopulation() / 200;
-	
-	iValue += iTempValue;
-	iTempValue = kCivic.getFreeUnitUpkeepMilitaryPopPercent() * getTotalPopulation() / 300;
-	
-	iValue += iTempValue;
-	iTempValue = -(kCivic.getCivilianUnitUpkeepMod() * (getNumUnits() - getNumMilitaryUnits()));
+	iTempValue = -(kCivic.getUpkeepModifier(UPKEEP_UNIT_CIVILIAN, CASC_SCOPE_EMPIRE) * (getNumUnits() - getNumMilitaryUnits()));
 	
 	iValue += iTempValue;
 
-	iTempValue = -kCivic.getMilitaryUnitUpkeepMod() * (bWarPlan ? (getNumMilitaryUnits() * 3 / 2) : getNumMilitaryUnits());
+	iTempValue = -kCivic.getUpkeepModifier(UPKEEP_UNIT_MILITARY, CASC_SCOPE_EMPIRE) * (bWarPlan ? (getNumMilitaryUnits() * 3 / 2) : getNumMilitaryUnits());
 
 	
 	iValue += iTempValue;
 
-	if (kCivic.getInflationModifier() != 0)
+	if (kCivic.getScalar(SCALAR_INFLATION, CASC_SCOPE_EMPIRE, CASC_UNIT_PERCENT) != 0)
 	{
 		//	Koshling - Use 100 turns of first order costs to judge inflation modifiers
-		iTempValue = static_cast<int>(-getInflationMod10000() * calculatePreInflatedCosts() * kCivic.getInflationModifier() / 10000);
+		iTempValue = static_cast<int>(-getInflationMod10000() * calculatePreInflatedCosts() * kCivic.getScalar(SCALAR_INFLATION, CASC_SCOPE_EMPIRE, CASC_UNIT_PERCENT) / 10000);
 		
 		iValue += iTempValue;
 	}
 
 	iTempValue = 0;
-	if (kCivic.isMilitaryFoodProduction())
+	if (kCivic.providesPolicy(CLS_POLICY_MILITARY_FOOD_PRODUCTION))
 	{
 		foreach_(const CvCity * pLoopCity, cities())
 		{
@@ -13558,49 +13555,49 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 				kCurrentCivic = &GC.getCivicInfo(eCurrentCivic);
 			}
 		}
-		if (kCivic.getRevIdxLocal() != 0)
+		if (kCivic.getRevolution(REVOLUTION_LOCAL, CASC_SCOPE_EMPIRE) != 0)
 		{
 			//	What's our current situation?
 			int	localRevIdx = AI_calculateAverageLocalInstability();
 
 			//	Use the more serious of the before and after values if this civic were to be chosen
-			if (kCivic.getRevIdxLocal() > 0)
+			if (kCivic.getRevolution(REVOLUTION_LOCAL, CASC_SCOPE_EMPIRE) > 0)
 			{
-				localRevIdx += kCivic.getRevIdxLocal();
+				localRevIdx += kCivic.getRevolution(REVOLUTION_LOCAL, CASC_SCOPE_EMPIRE);
 			}
 
 			//	If there is no civoption vacuum we need to subtract out the current civic
 			if (kCurrentCivic != NULL)
 			{
-				localRevIdx -= kCurrentCivic->getRevIdxLocal();
+				localRevIdx -= kCurrentCivic->getRevolution(REVOLUTION_LOCAL, CASC_SCOPE_EMPIRE);
 			}
 
 			//	Treat instability seriously as it goes up - not just linear
 			const int localRevScaling = localRevIdx < 0 ? 0 : std::min(localRevIdx * localRevIdx / 50 + localRevIdx / 2, 100);
 
-			iTempValue = -(kCivic.getRevIdxLocal() * localRevScaling * getNumCities()) / 4;
+			iTempValue = -(kCivic.getRevolution(REVOLUTION_LOCAL, CASC_SCOPE_EMPIRE) * localRevScaling * getNumCities()) / 4;
 			
 			iValue += iTempValue;
 		}
 
-		if (kCivic.getRevIdxNational() != 0)
+		if (kCivic.getRevolution(REVOLUTION_NATIONAL, CASC_SCOPE_EMPIRE) != 0)
 		{
-			iTempValue = -(8 * getNumCities()) * kCivic.getRevIdxNational();
+			iTempValue = -(8 * getNumCities()) * kCivic.getRevolution(REVOLUTION_NATIONAL, CASC_SCOPE_EMPIRE);
 
 			//	If there is no civoption vacuum we need to subtract out the current civic
 			if (kCurrentCivic != NULL)
 			{
-				iTempValue += (8 * getNumCities()) * kCurrentCivic->getRevIdxNational();
+				iTempValue += (8 * getNumCities()) * kCurrentCivic->getRevolution(REVOLUTION_NATIONAL, CASC_SCOPE_EMPIRE);
 			}
 			
 			iValue += iTempValue;
 		}
 
-		if (kCivic.getRevIdxDistanceModifier() != 0)
+		if (kCivic.getRevolution(REVOLUTION_DISTANCE_MODIFIER, CASC_SCOPE_EMPIRE) != 0)
 		{
 			int iCapitalDistance = AI_calculateAverageCityDistance();
 			int iOldCapitalDistance = iCapitalDistance;
-			iCapitalDistance *= 100 + kCivic.getRevIdxDistanceModifier() - (kCurrentCivic == NULL ? 0 : kCurrentCivic->getRevIdxDistanceModifier());
+			iCapitalDistance *= 100 + kCivic.getRevolution(REVOLUTION_DISTANCE_MODIFIER, CASC_SCOPE_EMPIRE) - (kCurrentCivic == NULL ? 0 : kCurrentCivic->getRevolution(REVOLUTION_DISTANCE_MODIFIER, CASC_SCOPE_EMPIRE));
 			iCapitalDistance /= 100;
 
 			iTempValue = (getNumCities() * (iOldCapitalDistance - iCapitalDistance) * (10 + std::max(0, AI_calculateAverageLocalInstability())));
@@ -13609,21 +13606,21 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 		}
 	}
 
-	if (GC.getGame().getCivicCityLimit(eCivic) > 0)
+	if (InfoValuation::resolvedCityLimit(kCivic.getCityLimit()) > 0)
 	{
-		if (kCivic.getCityOverLimitUnhappy() == 0)
+		if ((InfoValuation::overThresholdPenalty(kCivic.getModifiers(), MODFAM_HAPPINESS, "CITY_LIMIT") / 100) == 0)
 		{
 			//	Treat numCities == limit as a want-to-expand case even if we have not actually (yet) decided
 			//	to produce the settler
-			if (getNumCities() + AI_totalUnitAIs(UNITAI_SETTLE) >= GC.getGame().getCivicCityLimit(eCivic))
+			if (getNumCities() + AI_totalUnitAIs(UNITAI_SETTLE) >= InfoValuation::resolvedCityLimit(kCivic.getCityLimit()))
 			{
-				iValue -= (getNumCities() + AI_totalUnitAIs(UNITAI_SETTLE) + 1 - GC.getGame().getCivicCityLimit(eCivic)) * 100; //if we are planning to expand, city limitations suck
+				iValue -= (getNumCities() + AI_totalUnitAIs(UNITAI_SETTLE) + 1 - InfoValuation::resolvedCityLimit(kCivic.getCityLimit())) * 100; //if we are planning to expand, city limitations suck
 			}
 			else
 			{
 				//	Smaller limits suck more but since we are not trying to expand it can't be
 				//	worse than the best case where we ARE trying and can't
-				iValue -= 100 / GC.getGame().getCivicCityLimit(eCivic);
+				iValue -= 100 / InfoValuation::resolvedCityLimit(kCivic.getCityLimit());
 			}
 		}
 		else
@@ -13633,9 +13630,9 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 			int iCount = 0;
 			int iWantToBuild = getNumCities() + AI_totalUnitAIs(UNITAI_SETTLE) + 1;
 
-			if (iWantToBuild > GC.getGame().getCivicCityLimit(eCivic))
+			if (iWantToBuild > InfoValuation::resolvedCityLimit(kCivic.getCityLimit()))
 			{
-				int iExtraCities = iWantToBuild - GC.getGame().getCivicCityLimit(eCivic);
+				int iExtraCities = iWantToBuild - InfoValuation::resolvedCityLimit(kCivic.getCityLimit());
 
 				foreach_(const CvCity * pLoopCity, cities() | filtered(!CvCity::fn::isNoUnhappiness()))
 				{
@@ -13643,11 +13640,11 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 
 					iCount++;
 
-					if (iHappy < iExtraCities * kCivic.getCityOverLimitUnhappy())
+					if (iHappy < iExtraCities * (InfoValuation::overThresholdPenalty(kCivic.getModifiers(), MODFAM_HAPPINESS, "CITY_LIMIT") / 100))
 					{
 						//	Weight by city size as the happiness calculation does
 						//	[TBD - is this really right though - unhappy in smaller cities is arguably worse]
-						iCost += 50 * (iExtraCities * kCivic.getCityOverLimitUnhappy() - iHappy);
+						iCost += 50 * (iExtraCities * (InfoValuation::overThresholdPenalty(kCivic.getModifiers(), MODFAM_HAPPINESS, "CITY_LIMIT") / 100) - iHappy);
 					}
 				}
 
@@ -13691,7 +13688,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 	iTempValue = 0;
 	int iNonstateReligionCount = 0;
 	//Inquisition Civic Values
-	if (kCivic.isAllowInquisitions())
+	if (kCivic.providesPolicy(CLS_POLICY_ALLOW_INQUISITIONS))
 	{
 		if (getStateReligion() != NO_RELIGION)
 		{
@@ -13732,9 +13729,13 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 	}
 
 	iTempValue = 0;
-	for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
+	// the unit-combat-keyed buildRate rows this civic authored -- its own entries, not a registry walk
+	std::vector<std::pair<int, int> > kCivicUnitCombatBuildRate;
+	InfoValuation::collectKeyedTarget(kCivic.getModifiers(), MODFAM_BUILD_RATE, -1,
+		InfoValuation::keyedTargetSegment("unitCombats"), kCivicUnitCombatBuildRate, (int)CASC_SCOPE_EMPIRE);
+	for (size_t iKeyed = 0; iKeyed < kCivicUnitCombatBuildRate.size(); ++iKeyed)
 	{
-		iTempValue += (kCivic.getUnitCombatProductionModifier(iI) * 2) / 3;
+		iTempValue += (kCivicUnitCombatBuildRate[iKeyed].second * 2) / 3;
 	}
 	
 	iValue += iTempValue;
@@ -13752,22 +13753,18 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 	iValue += iTempValue;
 
 	iTempValue = 0;
-	for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
+	// the unit-keyed buildRate rows this civic authored
+	std::vector<std::pair<int, int> > kCivicUnitBuildRate;
+	InfoValuation::collectKeyedTarget(kCivic.getModifiers(), MODFAM_BUILD_RATE, -1,
+		InfoValuation::keyedTargetSegment("units"), kCivicUnitBuildRate, (int)CASC_SCOPE_EMPIRE);
+	for (size_t iKeyed = 0; iKeyed < kCivicUnitBuildRate.size(); ++iKeyed)
 	{
-		iTempValue += kCivic.getBonusMintedPercent(iI) * getNumAvailableBonuses((BonusTypes)iI) * getNumCities() * 2;
+		iTempValue += (kCivicUnitBuildRate[iKeyed].second * 2) / 5;
 	}
 	
 	iValue += iTempValue;
 
-	iTempValue = 0;
-	for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
-	{
-		iTempValue += (kCivic.getUnitProductionModifier(iI) * 2) / 5;
-	}
-	
-	iValue += iTempValue;
-
-	if (kCivic.getPopulationgrowthratepercentage() != 0)
+	if (kCivic.getScalar(SCALAR_POPULATION_GROWTH_RATE, CASC_SCOPE_CITY, CASC_UNIT_PERCENT) != 0)
 	{
 		if (m_iCityGrowthValueBase == -1)
 		{
@@ -13804,25 +13801,25 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 			//	estimate.
 			//	So the value is:
 			int onePopBaseValue = (int)getCurrentEra() * 2 + 3;
-			iTempValue = -(kCivic.getPopulationgrowthratepercentage() * iTempValue * onePopBaseValue) / (getNumCities() * 100);
+			iTempValue = -(kCivic.getScalar(SCALAR_POPULATION_GROWTH_RATE, CASC_SCOPE_CITY, CASC_UNIT_PERCENT) * iTempValue * onePopBaseValue) / (getNumCities() * 100);
 
 			
 			iValue += iTempValue;
 		}
 	}
 
-	if (kCivic.getAttitudeShareMod() != 0)
+	if (kCivic.getDiplomacy(DIPLOMACY_ATTITUDE_SHARE, CASC_SCOPE_EMPIRE) != 0)
 	{
 		int iTempValue = 0;
 
 		// The AI will disfavor bad attitude modifiers more than good ones
-		if (kCivic.getAttitudeShareMod() < 0)
+		if (kCivic.getDiplomacy(DIPLOMACY_ATTITUDE_SHARE, CASC_SCOPE_EMPIRE) < 0)
 		{
-			iTempValue += (kCivic.getAttitudeShareMod() * 4);
+			iTempValue += (kCivic.getDiplomacy(DIPLOMACY_ATTITUDE_SHARE, CASC_SCOPE_EMPIRE) * 4);
 		}
-		else if (kCivic.getAttitudeShareMod() > 0)
+		else if (kCivic.getDiplomacy(DIPLOMACY_ATTITUDE_SHARE, CASC_SCOPE_EMPIRE) > 0)
 		{
-			iTempValue += (kCivic.getAttitudeShareMod() * 3);
+			iTempValue += (kCivic.getDiplomacy(DIPLOMACY_ATTITUDE_SHARE, CASC_SCOPE_EMPIRE) * 3);
 		}
 		
 		iValue += iTempValue;
@@ -14276,7 +14273,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 		|| kCivic.isAnyBuildingHappinessChange() || kCivic.isAnyFeatureHappinessChange()
 		|| kCivic.getNonStateReligionHappiness() != 0
 		|| (kCivic.getWarWearinessModifier() != 0 && getWarWearinessPercentAnger() != 0)
-		|| (GC.getGame().getCivicCityLimit(eCivic) > 0 && kCivic.getCityOverLimitUnhappy() > 0)
+		|| (InfoValuation::resolvedCityLimit(kCivic.getCityLimit()) > 0 && (InfoValuation::overThresholdPenalty(kCivic.getModifiers(), MODFAM_HAPPINESS, "CITY_LIMIT") / 100) > 0)
 		|| (kCivic.getStateReligionHappiness() != 0 && (kCivic.isStateReligion() || isStateReligion()))))
 	{
 		int iExtraPop = 1;
@@ -14380,7 +14377,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 		}
 	}
 
-	if (!kCivic.isStateReligion() && !isStateReligion())
+	if (!kCivic.providesPolicy(CLS_POLICY_STATE_RELIGION) && !isStateReligion())
 	{
 		iHighestReligionCount = 0;
 	}
@@ -14959,8 +14956,8 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 
 	//#6: other possibly non-constant factors
 
-	//iValue += ((kCivic.isMilitaryFoodProduction()) ? 0 : 0);
-	if (kCivic.isMilitaryFoodProduction())
+	//iValue += ((kCivic.providesPolicy(CLS_POLICY_MILITARY_FOOD_PRODUCTION)) ? 0 : 0);
+	if (kCivic.providesPolicy(CLS_POLICY_MILITARY_FOOD_PRODUCTION))
 	{
 
 		int iTempMilitaryFoodProductionCount = 0;
@@ -25724,7 +25721,7 @@ bool CvPlayerAI::AI_isCivicValueRecalculationRequired(CivicTypes eCivic, CivicTy
 	}
 
 	//other kCivicSelected
-	if (kCivic.isMilitaryFoodProduction() && kCivicSelected.isMilitaryFoodProduction())
+	if (kCivic.providesPolicy(CLS_POLICY_MILITARY_FOOD_PRODUCTION) && kCivicSelected.isMilitaryFoodProduction())
 	{
 		return true;
 	}

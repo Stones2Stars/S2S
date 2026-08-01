@@ -175,6 +175,35 @@ bool InfoValuation::authorsAnySigned(const CvModifiers* modifiers, ModifierFamil
 	return false;
 }
 
+int InfoValuation::overThresholdPenalty(const CvModifiers* modifiers, ModifierFamily eFamily,
+	const char* szAboveToken)
+{
+	if (modifiers == NULL || szAboveToken == NULL)
+	{
+		return 0;
+	}
+	int iWorst = 0;
+	const std::vector<CvModEntry*>& kEntries = modifiers->entries();
+	for (size_t iEntry = 0; iEntry < kEntries.size(); ++iEntry)
+	{
+		const CvModEntry* pEntry = kEntries[iEntry];
+		if (pEntry == NULL || pEntry->family != eFamily || !pEntry->hasAbove)
+		{
+			continue;
+		}
+		if (pEntry->perAboveToken != szAboveToken)
+		{
+			continue;
+		}
+		// authored NEGATIVE (it is a penalty on a positive channel); hand it back positive
+		if (pEntry->value < 0 && -pEntry->value > iWorst)
+		{
+			iWorst = -pEntry->value;
+		}
+	}
+	return iWorst;
+}
+
 int InfoValuation::keyedTargetSegment(const char* szTargetSegment)
 {
 	return modSegmentLookup(szTargetSegment);

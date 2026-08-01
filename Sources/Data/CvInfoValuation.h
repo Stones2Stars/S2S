@@ -139,6 +139,14 @@ public:
 
 	//	The interner lookup for a keyed target token, resolved ONCE per call site rather than per entry.
 	//	Returns -1 when the segment was never authored anywhere, which makes every keyed read answer 0.
+	// The OVER-LIMIT penalty a source authors: the magnitude of its wellbeing entry scaled per unit ABOVE a
+	// threshold token (json §3.7 `above` -- the civic over-expansion class, `{value:-6, per:{CITY, above:
+	// CITY_LIMIT}}`). Returned POSITIVE as a penalty-per-extra-item, so a caller weighs it without re-deriving
+	// the sign. 0 = the source authors none. An ENTRY-LIST read by necessity: the entry is conditioned and
+	// per-scaled, so no point sum can answer it ([modifier.md] §5).
+	static int overThresholdPenalty(const CvModifiers* modifiers, ModifierFamily eFamily,
+		const char* szAboveToken);
+
 	static int keyedTargetSegment(const char* szTargetSegment);
 
 	// THE EVAL-CTX FILL SEAM (contexts.md: "the contexts ARE the eval state"): CityContext::fillEvalCtx
