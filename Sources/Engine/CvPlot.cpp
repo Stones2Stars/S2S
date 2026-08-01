@@ -7103,8 +7103,6 @@ void CvPlot::setFeatureType(FeatureTypes eNewValue, int iVariety, bool bImprovem
 				CvCity* cityX = plotX->getPlotCity();
 				if (cityX)
 				{
-					cityX->updateFeatureHealth();
-					cityX->updateFeatureHappiness();
 				}
 			}
 		}
@@ -7485,7 +7483,6 @@ void CvPlot::setImprovementType(ImprovementTypes eNewImprovement)
 
 				if (pLoopCity != NULL)
 				{
-					pLoopCity->updateFeatureHappiness();
 
 					//	Changed improvement status might change city best build opinions
 					pLoopCity->AI_markBestBuildValuesStale();

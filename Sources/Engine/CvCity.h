@@ -575,7 +575,6 @@ public:
 	int getFreshWaterGoodHealth() const;
 	void updateFreshWaterHealth();
 
-	void updateFeatureHealth();
 // BUG - Feature Health - start
 	void calculateFeatureHealthPercent(int& iGood, int& iBad) const;
 	void calculateFeatureHealthPercentChange(int& iGood, int& iBad, CvPlot* pIgnorePlot = NULL) const;
@@ -599,7 +598,6 @@ public:
 
 	int getBuildingHappiness(BuildingTypes eType) const;
 
-	void updateExtraBuildingHappiness(bool bLimited = false);
 
 	int getAdditionalHealthByPlayerNoUnhealthyPopulation(int iExtraPop = 0, int iIgnoreNoUnhealthyPopulationCount = 0) const;
 	int getAdditionalHealthByPlayerBuildingOnlyHealthy(int iIgnoreBuildingOnlyHealthyCount = 0) const;
@@ -607,12 +605,10 @@ public:
 	int getAdditionalHappinessByBuilding(BuildingTypes eType) const;
 	int getAdditionalHappinessByBuilding(BuildingTypes eType, int& iGood, int& iBad, int& iAngryPop) const;
 
-	void updateExtraBuildingHealth(bool bLimited = false);
 
 	int getAdditionalHealthByBuilding(BuildingTypes eType) const;
 	int getAdditionalHealthByBuilding(BuildingTypes eType, int& iGood, int& iBad, int& iSpoiledFood, int& iStarvation) const;
 
-	void updateFeatureHappiness(bool bLimited = false);
 
 
 
@@ -1906,9 +1902,6 @@ public:
 		DECLARE_MAP_FUNCTOR(CvCity, void, invalidateYieldRankCache);
 		DECLARE_MAP_FUNCTOR(CvCity, void, invalidateCommerceRankCache);
 
-		DECLARE_MAP_FUNCTOR_1(CvCity, void, updateExtraBuildingHappiness, bool);
-		DECLARE_MAP_FUNCTOR_1(CvCity, void, updateExtraBuildingHealth, bool);
-		DECLARE_MAP_FUNCTOR_1(CvCity, void, updateFeatureHappiness, bool);
 		DECLARE_MAP_FUNCTOR_1(CvCity, void, setCommerceModifierDirty, CommerceTypes);
 		DECLARE_MAP_FUNCTOR_1(CvCity, void, setLayoutDirty, bool);
 		DECLARE_MAP_FUNCTOR_1(CvCity, void, AI_setAssignWorkDirty, bool);

@@ -582,8 +582,6 @@ void CvCity::init(int iID, PlayerTypes eOwner, int iX, int iY, bool bBumpUnits, 
 	changeAirUnitCapacity(GC.getCITY_AIR_UNIT_CAPACITY());
 
 	updateFreshWaterHealth();
-	updateFeatureHealth();
-	updateFeatureHappiness();
 
 	player.markMaintenanceDirty();
 
@@ -4314,17 +4312,29 @@ int CvCity::unhealthyPopulation(int iExtra) const
 }
 
 
+// The unhealth the city's BUILDINGS contribute -- the one slice the realized group read cannot answer, since a
+// group read hands back the channel TOTAL over every source. The per-building term is already the cascade read
+// (getBuildingBadHealth resolves it through expectedWellbeing), so this sums those rather than a second
+// derivation ([DEC-single-implementation]). ⚑ It walks the OPERATING set: a dormant building deposits nothing
+// (enabler.md §3.2). The area leg went with the area scope and the player leg with the empire accumulator -- an
+// empire-scope deposit rolls DOWN into each building's resolved value rather than being summed beside it.
+// ⚠ Per-DECISION cadence only (the AI what-if deltas); it is not a read path.
 int CvCity::totalBadBuildingHealth() const
 {
+	PROFILE_EXTRA_FUNC();
 	if (isBuildingOnlyHealthy())
 	{
 		return 0;
 	}
-	//	The area leg is gone with the area scope, and the player leg with the empire accumulator: an
-	//	empire-scope deposit rolls DOWN into this city's realized value rather than being summed separately.
-	return getBuildingBadHealth()
-		+ getExtraBuildingBadHealth()
-		+ std::min(0, calculatePopulationHealth());
+	int iBadHealth = 0;
+	foreach_(const BuildingTypes eBuilding, getHasBuildings())
+	{
+		if (hasFullyActiveBuilding(eBuilding))
+		{
+			iBadHealth += getBuildingBadHealth(eBuilding);
+		}
+	}
+	return iBadHealth + std::min(0, calculatePopulationHealth());
 }
 
 
@@ -5384,7 +5394,6 @@ void CvCity::setPopulation(int iNewValue, bool bNormal)
 				plot()->setFeatureType(NO_FEATURE);
 			}
 		}
-		updateFeatureHealth();
 		if (bNormal)
 		{
 		}
@@ -6159,34 +6168,6 @@ void CvCity::updateFreshWaterHealth()
 }
 
 
-void CvCity::updateFeatureHealth()
-{
-	int iNewGoodHealth = 0;
-	int iNewBadHealth = 0;
-
-	calculateFeatureHealthPercent(iNewGoodHealth, iNewBadHealth);
-	iNewBadHealth = -iNewBadHealth;  // convert to "negative is bad"
-
-	iNewGoodHealth /= 100;
-
-	// AIAndy: Feature unhealthiness reduced for small cities
-	iNewBadHealth *= std::max(std::min(getPopulation() - 2, 5), 0);
-	iNewBadHealth /= 500;
-
-	if ((getFeatureGoodHealth() != iNewGoodHealth) || (getFeatureBadHealth() != iNewBadHealth))
-	{
-		FAssert(getFeatureGoodHealth() >= 0);
-		FAssert(getFeatureBadHealth() <= 0);
-
-		AI_setAssignWorkDirty(true);
-
-		if (getTeam() == GC.getGame().getActiveTeam())
-		{
-			setInfoDirty(true);
-		}
-	}
-}
-
 /*
  * Adds the total percentage health effects from existing features to iGood and iBad.
  *
@@ -6480,49 +6461,6 @@ int CvCity::getBuildingHappiness(BuildingTypes eBuilding) const
 }
 
 
-void CvCity::updateExtraBuildingHappiness(bool bLimited)
-{
-	PROFILE_EXTRA_FUNC();
-	int iNewExtraBuildingGoodHappiness = 0;
-	int iNewExtraBuildingBadHappiness = 0;
-
-	foreach_(const BuildingTypes eTypeX, getHasBuildings())
-	{
-		if (hasFullyActiveBuilding(eTypeX))
-		{
-			int iChange = GET_PLAYER(getOwner()).getExtraBuildingHappiness(eTypeX);
-
-			if (iChange > 0)
-			{
-				iNewExtraBuildingGoodHappiness += iChange;
-			}
-			else
-			{
-				iNewExtraBuildingBadHappiness += iChange;
-			}
-		}
-	}
-
-	if (getExtraBuildingGoodHappiness() != iNewExtraBuildingGoodHappiness)
-	{
-		FASSERT_NOT_NEGATIVE(getExtraBuildingGoodHappiness());
-
-		if (!bLimited)
-		{
-			AI_setAssignWorkDirty(true);
-		}
-	}
-
-	if (getExtraBuildingBadHappiness() != iNewExtraBuildingBadHappiness)
-	{
-		FAssert(getExtraBuildingBadHappiness() <= 0);
-
-		if (!bLimited)
-		{
-			AI_setAssignWorkDirty(true);
-		}
-	}
-}
 int CvCity::getAdditionalHealthByPlayerNoUnhealthyPopulation(int iExtraPop, int iIgnoreNoUnhealthyPopulationCount) const
 {
 	int iHealth = 0;
@@ -6870,92 +6808,8 @@ void subtractGoodOrBad(int iValue, int& iGood, int& iBad)
 // BUG - Building Additional Happiness - end
 
 
-void CvCity::updateExtraBuildingHealth(bool bLimited)
-{
-	PROFILE_EXTRA_FUNC();
-	int iNewExtraBuildingGoodHealth = 0;
-	int iNewExtraBuildingBadHealth = 0;
-
-	foreach_(const BuildingTypes eTypeX, getHasBuildings())
-	{
-		if (hasFullyActiveBuilding(eTypeX))
-		{
-			int iChange = GET_PLAYER(getOwner()).getExtraBuildingHealth(eTypeX);
-
-			if (iChange > 0)
-			{
-				iNewExtraBuildingGoodHealth += iChange;
-			}
-			else iNewExtraBuildingBadHealth += iChange;
-		}
-	}
-
-	if (getExtraBuildingGoodHealth() != iNewExtraBuildingGoodHealth)
-	{
-		FASSERT_NOT_NEGATIVE(getExtraBuildingGoodHealth());
-
-		if (!bLimited)
-		{
-			AI_setAssignWorkDirty(true);
-		}
-	}
-
-	if (getExtraBuildingBadHealth() != iNewExtraBuildingBadHealth)
-	{
-		FAssert(getExtraBuildingBadHealth() <= 0);
-
-		if (!bLimited)
-		{
-			AI_setAssignWorkDirty(true);
-		}
-	}
-}
 
 
-void CvCity::updateFeatureHappiness(bool bLimited)
-{
-	PROFILE_EXTRA_FUNC();
-	int iNewFeatureGoodHappiness = 0;
-	int iNewFeatureBadHappiness = 0;
-
-	foreach_(const CvPlot* pLoopPlot, plots())
-	{
-		const FeatureTypes eFeature = pLoopPlot->getFeatureType();
-
-		if (eFeature != NO_FEATURE)
-		{
-			int iHappy = GET_PLAYER(getOwner()).getFeatureHappiness(eFeature);
-			if (iHappy > 0)
-			{
-				iNewFeatureGoodHappiness += iHappy;
-			}
-			else
-			{
-				iNewFeatureBadHappiness += iHappy;
-			}
-		}
-	}
-
-	if (getFeatureGoodHappiness() != iNewFeatureGoodHappiness)
-	{
-		FASSERT_NOT_NEGATIVE(getFeatureGoodHappiness());
-
-		if (!bLimited)
-		{
-			AI_setAssignWorkDirty(true);
-		}
-	}
-
-	if (getFeatureBadHappiness() != iNewFeatureBadHappiness)
-	{
-		FAssert(getFeatureBadHappiness() <= 0);
-
-		if (!bLimited)
-		{
-			AI_setAssignWorkDirty(true);
-		}
-	}
-}
 
 
 int CvCity::getExtraHappiness() const
@@ -7990,8 +7844,6 @@ void CvCity::setCultureLevel(CultureLevelTypes eNewValue, bool bUpdatePlotGroups
 			);
 		}
 		// Afforess - Update Health and Happiness when culture expands
-		updateFeatureHappiness();
-		updateFeatureHealth();
 
 		// Alert people if max culture level acquired in a known city
 		if (getCultureThreshold() == -1)
@@ -14868,29 +14720,9 @@ void CvCity::setBuildingHappyChange(BuildingTypes eBuilding, int iChange)
 
 				m_aBuildingHappyChange.erase(it);
 
-				if (hasFullyActiveBuilding(eBuilding))
+				if (iChange != 0 && hasFullyActiveBuilding(eBuilding))
 				{
-					if (iOldChange > 0)
-					{
-						changeBuildingGoodHappiness(-iOldChange);
-					}
-					else if (iOldChange < 0)
-					{
-						changeBuildingBadHappiness(-iOldChange);
-					}
-
-					if (iChange != 0)
-					{
-						m_aBuildingHappyChange.push_back(std::make_pair(eBuilding, iChange));
-						if (iChange > 0)
-						{
-							changeBuildingGoodHappiness(iChange);
-						}
-						else if (iChange < 0)
-						{
-							changeBuildingBadHappiness(iChange);
-						}
-					}
+					m_aBuildingHappyChange.push_back(std::make_pair(eBuilding, iChange));
 				}
 			}
 			return;
@@ -14900,15 +14732,6 @@ void CvCity::setBuildingHappyChange(BuildingTypes eBuilding, int iChange)
 	if (0 != iChange && hasFullyActiveBuilding(eBuilding))
 	{
 		m_aBuildingHappyChange.push_back(std::make_pair(eBuilding, iChange));
-
-		if (iChange > 0)
-		{
-			changeBuildingGoodHappiness(iChange);
-		}
-		else if (iChange < 0)
-		{
-			changeBuildingBadHappiness(iChange);
-		}
 	}
 }
 

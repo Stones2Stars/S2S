@@ -238,7 +238,6 @@ public:
 	// Marks the empire's maintenance RECEIVER slot -- what a member city's realized value moving invalidates.
 	void markMaintenanceDirty() const;
 
-	void updateFeatureHappiness(bool bLimited = false);
 
 	void updateCorporation();
 	void updateCitySight(bool bIncrement, bool bUpdatePlotGroups);

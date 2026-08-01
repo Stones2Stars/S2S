@@ -4344,10 +4344,6 @@ void CvPlayer::updateYield()
 }
 
 
-void CvPlayer::updateFeatureHappiness(bool bLimited)
-{
-	algo::for_each(cities(), CvCity::fn::updateFeatureHappiness(bLimited));
-}
 
 void CvPlayer::updateCorporation()
 {
@@ -12511,7 +12507,6 @@ void CvPlayer::changeExtraBuildingHappiness(const BuildingTypes eIndex, const in
 	{
 		m_extraBuildingHappiness[itr->first] += iChange;
 	}
-	algo::for_each(cities(), CvCity::fn::updateExtraBuildingHappiness(bLimited));
 }
 
 int CvPlayer::getExtraBuildingHappiness(const BuildingTypes eIndex) const
@@ -12543,7 +12538,6 @@ void CvPlayer::changeExtraBuildingHealth(const BuildingTypes eIndex, const int i
 	{
 		m_extraBuildingHealth[itr->first] += iChange;
 	}
-	algo::for_each(cities(), CvCity::fn::updateExtraBuildingHealth(bLimited));
 }
 
 int CvPlayer::getExtraBuildingHealth(const BuildingTypes eIndex) const
@@ -13364,7 +13358,6 @@ void CvPlayer::setCivics(CivicOptionTypes eIndex, CivicTypes eNewValue)
 		foreach_ (CvCity* city, cities())
 		{
 			if (bUpdateHappiness)
-				city->updateFeatureHappiness();
 			if (bUpdateHealth)
 		}
 
