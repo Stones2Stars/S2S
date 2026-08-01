@@ -74,20 +74,8 @@
      "percent": 25
     }
    },
-   "flankingUnit": {
-    "UNIT_ARCHER": {
-     "percent": 100
-    },
-    "UNIT_LONGBOWMAN": {
-     "percent": 100
-    },
-    "UNIT_CROSSBOWMAN": {
-     "percent": 100
-    },
-    "UNIT_LIGHT_CROSSBOWMAN": {
-     "percent": 100
-    },
-    "UNIT_HEAVY_CROSSBOWMAN": {
+   "flanking": {
+    "UNITCOMBAT_ARCHER": {
      "percent": 100
     }
    }

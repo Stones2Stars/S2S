@@ -113,17 +113,8 @@
      }
     }
    },
-   "flankingUnit": {
-    "UNIT_CATAPULT": {
-     "percent": 100
-    },
-    "UNIT_TREBUCHET": {
-     "percent": 100
-    },
-    "UNIT_BOMBARD": {
-     "percent": 100
-    },
-    "UNIT_CANNON": {
+   "flanking": {
+    "UNITCOMBAT_SIEGE": {
      "percent": 100
     }
    }

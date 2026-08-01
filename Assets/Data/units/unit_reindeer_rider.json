@@ -94,11 +94,8 @@
      "percent": 25
     }
    },
-   "flankingUnit": {
-    "UNIT_CATAPULT": {
-     "percent": 50
-    },
-    "UNIT_TREBUCHET": {
+   "flanking": {
+    "UNITCOMBAT_SIEGE": {
      "percent": 50
     }
    }

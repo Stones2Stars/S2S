@@ -49,17 +49,11 @@
      }
     }
    },
-   "flankingUnit": {
-    "UNIT_FLUYT": {
+   "flanking": {
+    "UNITCOMBAT_WOODEN_SHIPS": {
      "percent": 100
     },
-    "UNIT_GALLEON": {
-     "percent": 100
-    },
-    "UNIT_TRANSPORT": {
-     "percent": 100
-    },
-    "UNIT_LANDING_SHIP": {
+    "UNITCOMBAT_DIESEL_SHIPS": {
      "percent": 100
     }
    },

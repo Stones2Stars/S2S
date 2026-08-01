@@ -460,8 +460,26 @@ VS_KEYED = {
     "UnitCombatMods": ("unitCombat", None), "DomainMods": ("domain", None),
     "FlankingStrikesbyUnitCombat": ("flanking", None), "UnitAttackMods": ("vsUnit", "attack"),
     "UnitDefenseMods": ("vsUnit", "defense"),
-    "FlankingStrikes": ("flankingUnit", None),   # by-UNIT flanking strength -> strength.unit.flankingUnit.{UNIT}.percent
 }
+# FLANKING IS KEYED BY UNITCOMBAT, NEVER BY UNIT (owner, json.md §6) -- "mounted should be able to flank siege".
+# The legacy `FlankingStrikes` table names individual UNITS, so every unit nobody listed is silently un-flankable
+# ("grand-canyon-sized gaps in what is efficient for flanking"), and its per-unit spread was encoding a REJECTED
+# balance theory (knights must not flank cannons). So it folds onto the class axis rather than emitting a second
+# per-unit shape beside it. The target unit's PRIMARY <Combat> is its identity and is the key; the SUBS are
+# deliberately not fanned to, which would widen one authored entry onto every class the target happens to carry.
+_UNIT_PRIMARY_COMBAT = {}
+_FLANK_UNRESOLVED = set()
+
+
+def _unit_primary_combat(store):
+    """UNIT_X -> its primary <Combat> class. Built once per run."""
+    if not _UNIT_PRIMARY_COMBAT:
+        for utyp, urec in store.table("UnitInfo").items():
+            node = urec.find("Combat")
+            combat = engine.text(node) if node is not None else None
+            if combat and combat != "NONE":
+                _UNIT_PRIMARY_COMBAT[utyp] = combat
+    return _UNIT_PRIMARY_COMBAT
 # targeting/immunity capability LISTS -> capabilities.<name>: {TYPE: true}
 CAP_LIST = {
     "UnitCombatTargets": "targets", "UnitCombatDefenders": "defenders",
@@ -811,6 +829,25 @@ def pass2(typ, rec, store, fams, caps, grants, vision, identity):
             if member:
                 base = base.setdefault(member, OrderedDict())
             base["percent"] = v
+    # The by-UNIT flanking rows fold onto the class axis (see _unit_primary_combat above), MAX-merged with any
+    # class-keyed row already emitted: several units share one class and these are counter-bonuses, so the
+    # strongest authored intent against that class wins rather than the rows summing.
+    flank_node = rec.find("FlankingStrikes")
+    if flank_node is not None:
+        primary = _unit_primary_combat(store)
+        flank = fams.setdefault("combat", OrderedDict()).setdefault("unit", OrderedDict()).setdefault("flanking", OrderedDict())
+        for k, v in _pairs(flank_node):
+            unit_combat = primary.get(k)
+            if not unit_combat:
+                # A target with no primary combat class carries no identity to key on -- announce rather than
+                # drop silently (the curator census discipline, triggers.md).
+                if k not in _FLANK_UNRESOLVED:
+                    _FLANK_UNRESOLVED.add(k)
+                    print("  [flanking] %s: target has no primary Combat class -- row dropped" % k)
+                continue
+            slot = flank.setdefault(unit_combat, OrderedDict())
+            if v > slot.get("percent", 0):
+                slot["percent"] = v
     # targeting/immunity per-type lists are NOT skills (they carry a value -- the TYPE): owner 2026-07-20, skills are
     # pure boolean ENABLERS. Route to the combat family, keyed by type -- combat data, not a skill.
     # FLAG: this family placement is a reasonable combat home pending owner confirmation of the exact shape.
