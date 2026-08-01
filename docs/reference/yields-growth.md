@@ -65,8 +65,15 @@
   anarchy → 0, `+GOLDEN_AGE_GREAT_PEOPLE_MODIFIER` GP rate, less food for growth. `m_iGoldenAgeTurns` (−1/turn),
   length `max(1, GOLDEN_AGE_LENGTH·speedPercent·(1+goldenAgeModifier/100)/100)`.
 - **Era:** `m_eCurrentEra` advances **only** in `CvTeam::setHasTech` when `player era < tech.getEra()` (only
-  increases). Side-effects: heritage commerce deltas, per-city free specialists, graphics. As a cascade input it
-  gates `requires` atoms and scales anarchy/growth/event-prob + the AI per-era handicap bonus.
+  increases) — so era advance is TECH-DRIVEN, and `setCurrentEra` is where the fact is announced
+  (`emitEraChanged`), never a place a consumer's effect is inlined. Its own side-effects are heritage commerce
+  deltas and graphics. As a cascade input it gates `requires` atoms and scales anarchy/growth/event-prob + the
+  AI per-era handicap bonus.
+  ⚑ **An era-advance HANDOUT is a trigger-plane consumer of that fact, not a side-effect of the setter** — the
+  trait's era-advance free specialist authors `onEraChanged` → `action.grant.specialists`
+  ([json.md §5](../specs/json.md)) and lands in the city's UNATTRIBUTED typed-free ledger, so it outlives the
+  trait ([superseded-ideas #10](../architecture/superseded-ideas.md): the discriminator is whether removing the
+  source removes the specialist).
 
 ## See also
 
