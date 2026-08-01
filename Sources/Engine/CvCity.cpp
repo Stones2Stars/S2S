@@ -8436,15 +8436,15 @@ int CvCity::getBuildingCommerceByBuilding(CommerceTypes eIndex, BuildingTypes eB
 		if (eRel != NO_RELIGION && eRel == kOwner.getStateReligion())
 			iCommerce += kOwner.getStateReligionBuildingCommerce(eIndex);
 
-		const ReligionTypes eGlobalRel = (ReligionTypes)kBuilding.getGlobalReligionCommerce();
-		if (eGlobalRel != NO_RELIGION)
+		const ReligionTypes eShrineReligion = (ReligionTypes)kBuilding.getShrineReligion();
+		if (eShrineReligion != NO_RELIGION)
 		{
-			iCommerce += GC.getReligionInfo(eGlobalRel).getGlobalReligionCommerce(eIndex)
-				* GC.getGame().countReligionLevels(eGlobalRel);
+			iCommerce += GC.getReligionInfo(eShrineReligion).getShrineCommerce(eIndex)
+				* GC.getGame().countReligionLevels(eShrineReligion);
 		}
 	}
 
-	const CorporationTypes eGlobalCorp = (CorporationTypes)kBuilding.getGlobalCorporationCommerce();
+	const CorporationTypes eGlobalCorp = (CorporationTypes)kBuilding.getHeadquartersCorporation();
 	if (eGlobalCorp != NO_CORPORATION)
 	{
 		iCommerce += GC.getCorporationInfo(eGlobalCorp).getHeadquartersCommerce(eIndex)
@@ -8548,29 +8548,6 @@ int CvCity::getAdditionalBaseCommerceRateBySpecialist(CommerceTypes eIndex, Spec
 
 
 
-int CvCity::getReligionCommerceByReligion(CommerceTypes eIndex, ReligionTypes eReligion) const
-{
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-	FASSERT_BOUNDS(0, GC.getNumReligionInfos(), eReligion);
-
-	int iCommerce = 0;
-
-	if(GET_PLAYER(getOwner()).getStateReligion() == eReligion
-	|| GET_PLAYER(getOwner()).getStateReligion() == NO_RELIGION
-	|| GET_PLAYER(getOwner()).isNonStateReligionCommerce())
-	{
-		if (isHasReligion(eReligion))
-		{
-			iCommerce += GC.getReligionInfo(eReligion).getStateReligionCommerce(eIndex);
-
-			if (isHolyCity(eReligion))
-			{
-				iCommerce += GC.getReligionInfo(eReligion).getHolyCityCommerce(eIndex);
-			}
-		}
-	}
-	return iCommerce;
-}
 
 
 // XXX can this be simplified???
@@ -11573,7 +11550,7 @@ void CvCity::popOrder(int orderIndex, bool bFinish, bool bChoose, bool bResolveL
 
 			owner.changeBuildingMaking(eConstructBuilding, -1);
 
-			const SpecialBuildingTypes eSpecialBuilding = GC.getBuildingInfo(eConstructBuilding).getSpecialBuildingType();
+			const SpecialBuildingTypes eSpecialBuilding = static_cast<SpecialBuildingTypes>(GC.getBuildingInfo(eConstructBuilding).getSpecialBuildingType());
 			if (eSpecialBuilding != NO_SPECIALBUILDING)
 			{
 				owner.changeBuildingGroupMaking(eSpecialBuilding, -1);
@@ -14705,7 +14682,7 @@ PlayerTypes CvCity::getLiberationPlayer(bool bConquest) const
 
 	const int64_t iTotalCultureTimes100 = countTotalCultureTimes100();
 	PlayerTypes eBestPlayer = NO_PLAYER;
-	int iBestValue = 0;
+	int64_t iBestValue = 0;
 
 	for (int iI = 0; iI < MAX_PC_PLAYERS; ++iI)
 	{
@@ -14738,7 +14715,7 @@ PlayerTypes CvCity::getLiberationPlayer(bool bConquest) const
 					iCultureTimes100 = (iCultureTimes100 + iTotalCultureTimes100) / 2;
 				}
 
-				const int iValue = std::max(100, iCultureTimes100) / std::max(1, iCapitalDistance);
+				const int64_t iValue = std::max<int64_t>(100, iCultureTimes100) / std::max(1, iCapitalDistance);
 
 				if (iValue > iBestValue)
 				{
@@ -17142,7 +17119,7 @@ void CvCity::endCitizenJuggling()
 
 	if ((m_bJuggleDeferredSpec || m_bJuggleDeferredWork) && isCitySelected())
 	{
-		exeSetUIDirty(CitizenButtons_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty(CitizenButtons_DIRTY_BIT, true);
 	}
 	m_bJuggleDeferredSpec = false;
 	m_bJuggleDeferredWork = false;

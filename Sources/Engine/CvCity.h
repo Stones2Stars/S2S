@@ -958,7 +958,6 @@ public:
 	int getAdditionalCommerceBySpecialist(CommerceTypes eIndex, SpecialistTypes eSpecialist, int iChange) const;
 	int getAdditionalBaseCommerceRateBySpecialist(CommerceTypes eIndex, SpecialistTypes eSpecialist, int iChange) const;
 
-	int getReligionCommerceByReligion(CommerceTypes eIndex, ReligionTypes eReligion) const;
 
 	void updateCorporation();
 	void updateCorporationBonus();

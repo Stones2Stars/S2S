@@ -1108,11 +1108,6 @@ int CyCity::getBuildingCommerceByBuilding(int /*CommerceTypes*/ eIndex, int /*Bu
 	return m_pCity->getBuildingCommerceByBuilding((CommerceTypes)eIndex, (BuildingTypes) iBuilding);
 }
 
-int CyCity::getReligionCommerceByReligion(int /*CommerceTypes*/ eIndex, int /*ReligionTypes*/ eReligion) const
-{
-	return m_pCity->getReligionCommerceByReligion((CommerceTypes)eIndex, (ReligionTypes)eReligion);
-}
-
 int CyCity::getCommerceRateModifier(int /*CommerceTypes*/ eIndex) const
 {
 	return m_pCity->getTotalCommerceRateModifier((CommerceTypes)eIndex);
