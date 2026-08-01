@@ -6568,22 +6568,22 @@ void CvGame::doSpawns(PlayerTypes ePlayer)
 
 					if (bSizeMatters)
 					{
-						const int iCount = kUnit.getNumGroupSpawnUnitCombatTypes();
-						if (iCount > 0)
+						const std::vector<GroupSpawnUnitCombat>& kGroupSpawn = kUnit.getGroupSpawn();
+						if (!kGroupSpawn.empty())
 						{
 							std::vector<int> aRandomList;
 							//generate random list
-							for (int iIndex = 0; iIndex < iCount; iIndex++)
+							for (int iIndex = 0; iIndex < (int)kGroupSpawn.size(); iIndex++)
 							{
-								for (int iJ = 0; iJ < kUnit.getGroupSpawnUnitCombatType(iIndex).iChance; iJ++)
+								for (int iJ = 0; iJ < kGroupSpawn[iIndex].iChance; iJ++)
 								{
 									aRandomList.push_back(iIndex);
 								}
 							}
 							//generate result from list
 							const int iFinalIndex = aRandomList[getSorenRandNum(aRandomList.size(), "Spawn Group Random Roll")];
-							const UnitCombatTypes eGroupVolume = kUnit.getGroupSpawnUnitCombatType(iFinalIndex).eUnitCombat;
-							const CvWString szTitle = kUnit.getGroupSpawnUnitCombatType(iFinalIndex).m_szTitle;
+							const UnitCombatTypes eGroupVolume = kGroupSpawn[iFinalIndex].eUnitCombat;
+							const CvWString szTitle = kGroupSpawn[iFinalIndex].m_szTitle;
 
 							//remove old group volume unitcombat
 							if (eGroupVolume != NO_UNITCOMBAT)
