@@ -4270,7 +4270,7 @@ UnitTypes CvCityAI::AI_bestUnit(int& iBestUnitValue, int iNumSelectableTypes, Un
 
 		for (int iI = 0; iI < NUM_UNITAI_TYPES; iI++)
 		{
-			aiUnitAIVal[iI] *= std::max(0, (GC.getLeaderHeadInfo(getPersonalityType()).getUnitAIWeightModifier(iI) + 100));
+			aiUnitAIVal[iI] *= std::max(0, (GC.getLeaderHeadInfo(getPersonalityType()).getUnitAIWeightModifier((UnitAITypes)iI) + 100));
 			aiUnitAIVal[iI] /= 100;
 		}
 	}
@@ -4566,7 +4566,7 @@ const std::vector<CvCity::ScoredBuilding> CvCityAI::AI_bestBuildingsThreshold(in
 	// stays the per-candidate cap filter (the per-player extra-instances allowance the enabler allowedOk does not yet
 	// fully model); it now runs only over the small offered set. Order preserved: listedIds fills ascending id.
 	std::vector<int> vecConstructible;
-	getConstructibleFrontier(vecConstructible);
+	getAvailableBuildings(vecConstructible);
 	for (std::vector<int>::const_iterator it = vecConstructible.begin(), itEnd = vecConstructible.end(); it != itEnd; ++it)
 	{
 		const BuildingTypes eBuilding = (BuildingTypes)*it;
@@ -5142,7 +5142,10 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 		SAFE_DELETE_ARRAY(paiFreeSpecialistCommerce);
 		SAFE_DELETE_ARRAY(paiFreeSpecialistYield);
 
-		for (int iI = 1; iI < kBuilding.getFreeSpecialistsAny() + 1; iI++)
+		// The untyped slots this building opens IN THIS CITY -- the engine picks each one's type at placement
+		// (modifier.md §6), so the loop asks it per slot. The COUNT unit stores ×100, so it reduces here.
+		const int iCityFreeSpecialistSlots = kBuilding.getFreeSpecialistsAny(CASC_SCOPE_CITY) / 100;
+		for (int iI = 1; iI < iCityFreeSpecialistSlots + 1; iI++)
 		{
 			const SpecialistTypes eNewSpecialist = getBestSpecialist(iI);
 			if (eNewSpecialist == NO_SPECIALIST) break;
@@ -5877,9 +5880,11 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 
 				iValue += kBuilding.getAirUnitCapacity() * (getPopulation() * 2 + 10);
 				iValue += -kBuilding.getDefense(DEFENSE_NUKE, CASC_SCOPE_CITY) / (bMetAnyCiv ? 10 : 20);
-				iValue += kBuilding.getFreeSpecialistsAny() * 16;
-				iValue += kBuilding.getAreaFreeSpecialist() * iNumCitiesInArea * 12;
-				iValue += kBuilding.getGlobalFreeSpecialist() * iNumCities * 12;
+				// The slots this building opens here, and the empire-scope ones it opens in every city. One
+				// empire read covers both legacy legs: the area term authors at EMPIRE too (a landmass is not
+				// an ownable scope), so it reaches the whole empire rather than stopping at the coastline.
+				iValue += kBuilding.getFreeSpecialistsAny(CASC_SCOPE_CITY) / 100 * 16;
+				iValue += kBuilding.getFreeSpecialistsAny(CASC_SCOPE_EMPIRE) / 100 * iNumCities * 12;
 				iValue += kBuilding.getScalar(SCALAR_WORK_RATE, CASC_SCOPE_EMPIRE, CASC_UNIT_PERCENT) * kOwner.AI_getNumAIUnits(UNITAI_WORKER) / 10;
 
 				int iMilitaryProductionModifier = kBuilding.getBuildRateModifier(BUILD_RATE_MILITARY, CASC_SCOPE_CITY);
@@ -6275,7 +6280,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 
 						if (bCulturalVictory1)
 						{
-							const int iLoopBuildingCultureModifier = GC.getBuildingInfo(eLoopBuilding).getCommerceModifier(COMMERCE_CULTURE);
+							const int iLoopBuildingCultureModifier = GC.getBuildingInfo(eLoopBuilding).getCommerceModifier(COMMERCE_CULTURE, CASC_SCOPE_CITY);
 							if (iLoopBuildingCultureModifier > 0)
 							{
 								const int iLoopBuildingsBuilt = kOwner.getBuildingCount(eLoopBuilding);
@@ -6630,7 +6635,7 @@ int CvCityAI::AI_projectValue(ProjectTypes eProject) const
 
 	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 	{
-		iValue += project.getCommerceModifier(iI) * iOurNumCities / 4;
+		iValue += project.getCommerceModifier((CommerceTypes)iI, CASC_SCOPE_EMPIRE) * iOurNumCities / 4;
 	}
 	const int iWorldHappy = project.getWorldHappiness();
 	const int iWorldHealth = project.getWorldHealth();
@@ -10592,7 +10597,7 @@ int CvCityAI::AI_getHappyFromHurry(int iHurryPopulation) const
 {
 	const int iHappyDiff = iHurryPopulation - GC.getHURRY_POP_ANGER();
 
-	if (iHappyDiff > 0 && getHurryAngerTimer() <= 1 && 2 * angryPopulation(1) - healthRate(false, 1) > 1)
+	if (iHappyDiff > 0 && getHurryAngerTimer() <= 1 && 2 * angryPopulation(1) - healthRate(1) > 1)
 	{
 		return iHappyDiff;
 	}
@@ -10778,10 +10783,13 @@ void CvCityAI::AI_buildGovernorChooseProduction()
 	}
 	const int iPop = getPopulation();
 
-	if (AI_countNumBonuses(NO_BONUS, false, true, 10, true, true) > 0
-	&& iPop > AI_countNumBonuses(NO_BONUS, true, false, -1, true, true)
+	// The city's own realized commerce, read once for both culture tests below: every choice between them
+	// returns on success, so reaching the second means nothing was queued and the rates cannot have moved.
 	int aiOwnCommerces[NUM_COMMERCE_TYPES];
 	getCommerces(aiOwnCommerces);
+
+	if (AI_countNumBonuses(NO_BONUS, false, true, 10, true, true) > 0
+	&& iPop > AI_countNumBonuses(NO_BONUS, true, false, -1, true, true)
 	&& aiOwnCommerces[COMMERCE_CULTURE] / 100 == 0
 	&& AI_chooseBuilding(BUILDINGFOCUS_CULTURE))
 	{
@@ -10806,8 +10814,6 @@ void CvCityAI::AI_buildGovernorChooseProduction()
 	const int iCulturePressure = AI_calculateCulturePressure();
 
 	if (iCulturePressure > 100
-		int aiOwnCommerces[NUM_COMMERCE_TYPES];
-		getCommerces(aiOwnCommerces);
 		|| iCulturePressure != 0 && aiOwnCommerces[COMMERCE_CULTURE] == 0)
 	{
 		if (AI_chooseBuilding(BUILDINGFOCUS_CULTURE, 15))
@@ -12100,25 +12106,22 @@ int CvCityAI::AI_getPromotionValue(PromotionTypes ePromotion) const
 
 		if (kUnit.getCombatClass() != NO_UNITCOMBAT)
 		{
-			bool bUnitCanGetPromotion = false;
+			// A promotion reaches a unit through its PRIMARY combat class or any of its SUBS -- combat-class
+			// membership is always the "primary ∪ subs" union ([tags.md]).
+			const CvPromotionInfo& kPromotion = GC.getPromotionInfo(ePromotion);
+			bool bUnitCanGetPromotion = kPromotion.appliesToUnitCombat(kUnit.getCombatClass());
 
-			if (GC.getPromotionInfo(ePromotion).getUnitCombat(kUnit.getCombatClass()))
+			if (!bUnitCanGetPromotion)
 			{
-				bUnitCanGetPromotion = true;
-			}
-			else
-			{
-				//TB SubCombat Mod Begin
-				foreach_(const UnitCombatTypes eSubCombat, kUnit.getCombatClasses())
+				foreach_(const int iSubCombat, kUnit.getCombatClasses())
 				{
-					if (GC.getPromotionInfo(ePromotion).getUnitCombat(eSubCombat))
+					if (kPromotion.appliesToUnitCombat(iSubCombat))
 					{
 						bUnitCanGetPromotion = true;
 						break;
 					}
 				}
 			}
-			//TB SubCombat Mod End
 
 			// #430 F2b: canTrain is implicit in the LISTED frontier above; the count/value block runs unchanged.
 			{
@@ -12490,18 +12493,14 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 	}
 	if ((iFocusFlags & BUILDINGFOCUS_HEALTHY) != 0)
 	{
-		foreach_(const TechModifier & modifier, kBuilding.getTechHealthChanges())
-		{
-			if (GET_TEAM(getTeam()).isHasTech(modifier.first) && modifier.second > 0)
-			{
-				return true;
-			}
-		}
-		if (kBuilding.getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_CITY) > 0
-			|| kBuilding.getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_EMPIRE) > 0
+		// "Does this building do anything for health?" -- one read over its own entries, answering every scope
+		// and every conditioned row at once. The tech-gated and bonus-gated health changes are ordinary
+		// conditioned deposits in this same family, so the two keyed walks this replaces were asking the same
+		// entry list one key at a time. ⚠ The tech walk additionally required the tech to be HELD; this offers
+		// the candidate for scoring whether or not it is, and the score then values an unreachable row at ~0.
+		if (InfoValuation::authorsAnySigned(kBuilding.getModifiers(), infoWellbeingFamily(WELLBEING_HEALTH), +1)
 			|| kBuilding.providesAmenity(CLS_AMENITY_ABOLISHED_UNHEALTH_FROM_POPULATION)
 			|| kBuilding.providesAmenity(CLS_AMENITY_ABOLISHED_UNHEALTH_FROM_BUILDINGS)
-			|| !kBuilding.getBonusHealthChanges().empty()
 			|| GET_PLAYER(getOwner()).getExtraBuildingHealth(eBuilding) > 0)
 		{
 			return true;
@@ -12557,10 +12556,12 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 	}
 	if ((iFocusFlags & BUILDINGFOCUS_SPECIALIST) != 0)
 	{
-		if (kBuilding.getSpecialistCount(NO_SPECIALIST) > 0 ||
-			kBuilding.getFreeSpecialistCount(NO_SPECIALIST) > 0 ||
-			!kBuilding.getImprovementFreeSpecialists().empty() ||
-			kBuilding.getTechSpecialistChange(NO_TECH, NO_SPECIALIST) > 0)
+		// "Does this building do anything for specialists?" -- one read per family over the building's OWN
+		// entries, which answers every shape at once: the untyped bucket, the typed slots, the
+		// improvement-scaled rows and the tech-conditioned tail that a NO_* sentinel probe had to ask for
+		// one leg at a time. `free` sits ON TOP of `allowed`, so both families count (modifier.md §6).
+		if (InfoValuation::authorsAnySigned(kBuilding.getModifiers(), MODFAM_FREE_SPECIALISTS, +1)
+		|| InfoValuation::authorsAnySigned(kBuilding.getModifiers(), MODFAM_ALLOWED_SPECIALISTS, +1))
 		{
 			return true;
 		}
@@ -12683,6 +12684,9 @@ int CvCityAI::getBuildingCommerceValue(BuildingTypes eBuilding, int iI, int* aiF
 
 	if (aiBaseCommerceRate[iI] == MAX_INT)
 	{
+		// The caller memoizes this per candidate, so the group read only runs on the first miss.
+		int aiOwnCommerces[NUM_COMMERCE_TYPES];
+		getCommerces(aiOwnCommerces);
 		aiBaseCommerceRate[iI] = aiOwnCommerces[(CommerceTypes)iI] / 100;
 	}
 	int iBaseCommerceRate = aiBaseCommerceRate[iI];
@@ -12776,7 +12780,7 @@ int CvCityAI::getBuildingCommerceValue(BuildingTypes eBuilding, int iI, int* aiF
 
 		if (eStateReligion != NO_RELIGION)
 		{
-			iResult += kBuilding.getStateReligionCommerce(iI) * kOwner.getHasReligionCount(eStateReligion) * 3;
+			iResult += kBuilding.getStateReligionCommerce((CommerceTypes)iI) * kOwner.getHasReligionCount(eStateReligion) * 3;
 		}
 		const ReligionTypes eReligionGlobalCommerce = (ReligionTypes)kBuilding.getShrineReligion();
 

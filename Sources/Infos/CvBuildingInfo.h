@@ -164,11 +164,13 @@ public:
 	// ai.flavours -- FLAVOR_* id -> weight (sparse; absent = 0). json §7 `ai` METADATA: it never affects rules,
 	// only how the AI weights this building. Same shape + shared reader as CvLeaderHeadInfo's.
 	int getFlavorValue(FlavorTypes eFlavor) const;
-	// freeSpecialists.city.any -- the GENERIC free-specialist slots this building grants ([modifier.md §6]:
+	// freeSpecialists.<scope>.any -- the GENERIC free-specialist slots this building grants ([modifier.md §6]:
 	// the count-by-type leaf, where the key IS the type or `any`). The AMOUNT is the cascade's half of the
-	// two-part seam; PLACEMENT stays the engine's. Materialized at mapFrom from the compiled entry list, so
-	// this is a bare member read ([DEC-materialize-at-mapfrom]) and human-scaled (the COUNT unit stores ×100).
-	int getFreeSpecialistsAny() const { return m_iFreeSpecialistsAny; }
+	// two-part seam; PLACEMENT stays the engine's. The data authors `any` at CITY and at EMPIRE, so scope is
+	// the caller's argument ([DEC-scope-is-an-axis]) -- the empire leaf is what the legacy global/area pair
+	// authored, a landmass being no scope of its own. ×100 like every other getter; the reader reduces.
+	int getFreeSpecialistsAny(CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_FREE_SPECIALISTS, CHANNEL_AMOUNT, eScope, CASC_UNIT_COUNT); }
 	int getMilitaryWorth() const            { return m_iMilitaryWorth; }
 	int getConquestProbability() const      { return m_iConquestProbability; }      // survive-conquest percent config
 	int getVisibilityPriority() const       { return m_iVisibilityPriority; }
@@ -271,7 +273,6 @@ private:
 	int m_iPopulationChange;
 	int m_iGlobalPopulationChange;
 	int m_iFreeTechs;
-	int m_iFreeSpecialistsAny;                      // freeSpecialists.city.any (human count)
 	int m_aiStateReligionCommerce[NUM_COMMERCE_TYPES];
 	int m_aiCommerceDoubleTime[NUM_COMMERCE_TYPES];
 	// Fed from the PROPERTY_* families (CascadePropertyBridge::bridgeFamilies -- property-audit.md).

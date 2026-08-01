@@ -21,7 +21,6 @@ CvBuildingInfo::CvBuildingInfo()
 	, m_iPopulationChange(0)
 	, m_iGlobalPopulationChange(0)
 	, m_iFreeTechs(0)
-	, m_iFreeSpecialistsAny(0)
 	, m_iMilitaryWorth(0)
 	, m_iConquestProbability(0)
 	, m_iVisibilityPriority(0)
@@ -105,7 +104,6 @@ void CvBuildingInfo::mapFrom(const picojson::value& entity)
 	m_iPopulationChange = 0;
 	m_iGlobalPopulationChange = 0;
 	m_iFreeTechs = 0;
-	m_iFreeSpecialistsAny = 0;
 	m_szArtDefineTag.clear();
 
 	// PROPERTY_* per-turn SOURCES: a building's <PROPERTY_X>.city.flat (the crime/disease/pollution cuts and
@@ -183,11 +181,6 @@ void CvBuildingInfo::mapFrom(const picojson::value& entity)
 		m_iFreeTechs              = grantPulse(iKeyFreeTechs) / 100;
 	}
 
-	// freeSpecialists.city.`any` -- the generic slot count, now an ORDINARY compiled point read: `any` is the
-	// untyped bucket the engine assigns a type to at placement, so it decodes as the memberless scope-wide
-	// amount rather than a named target, and the compiled sum already excludes the conditioned tail.
-	m_iFreeSpecialistsAny =
-		m_modifiers.sum(MODFAM_FREE_SPECIALISTS, CHANNEL_AMOUNT, CASC_SCOPE_CITY, CASC_UNIT_COUNT) / 100;
 	m_iMilitaryWorth = jsonIdInt(identity, "militaryWorth");
 	m_iConquestProbability = jsonIdInt(identity, "conquestProbability");
 	m_iVisibilityPriority = jsonIdInt(identity, "visibilityPriority");

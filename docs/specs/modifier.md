@@ -632,6 +632,14 @@ No bespoke host↔cargo family is needed. The full unit-stat family vocabulary
 - **`freeSpecialists:{<scope>:{any:N, SPECIALIST_X:M, …}}`** — granted specialists; `any` = an assignable-slot
   bucket, a typed entry is auto-assigned. Leaf is a count (a list when conditioned). ⚠ Here `any` is a **count key**
   (an untyped specialist slot), **NOT** the [json](json.md) §3.4 condition combinator.
+  > **⛔ `any` IS AN AMOUNT, NOT A TARGET — and that decides whether the family works at all.** The untyped
+  > bucket is N slots whose specialist type the ENGINE picks at placement (the two-part seam below), so it
+  > carries no target: it decodes as the **memberless scope-wide amount**, exactly like any other magnitude.
+  > ⚑ The consequence is structural rather than cosmetic. A deposit carrying a TARGET segment is excluded from
+  > its scope's package by construction (only point-foldable entries fold), so registering `any` as a target
+  > token strands the amount outside the package plane — no scope roll-up can answer it, and the only read left
+  > is a per-call walk of every authoring source. A TYPED `SPECIALIST_X` entry is genuinely keyed and correctly
+  > stays an entry-list read (§5); `any` is not, and must never be given the same treatment.
 - **`allowedSpecialists:{<scope>:{SPECIALIST_X:N}}`** — the manual-assign cap, per-type only (no `any`).
 - `free` lives ON TOP of `allowed` (independent). Normally a modifier leaf is `<scope>.<unit>` (e.g. a bare
   number or `.flat`); specialist counts instead use a **count-by-type** leaf (the `SPECIALIST_*` type — or `any`

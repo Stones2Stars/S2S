@@ -7054,7 +7054,6 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, CvArea* pAr
 		}
 	}
 
-	changeFreeSpecialist(kBuilding.getGlobalFreeSpecialist() * iChange);
 	changeCoastalTradeRoutes(kBuilding.getCoastalTradeRoutes() * iChange);
 	changeTradeRoutes(kBuilding.getGlobalTradeRoutes() * iChange);
 
@@ -17205,7 +17204,6 @@ void CvPlayer::processCivics(const CivicTypes eCivic, const int iChange, const b
 		changeCivilianUnitUpkeepMod(kCivic.getCivilianUnitUpkeepMod() * iChange);
 		changeMilitaryUnitUpkeepMod(kCivic.getMilitaryUnitUpkeepMod() * iChange);
 		changeMaxConscript(getWorldSizeMaxConscript(eCivic) * iChange);
-		changeFreeSpecialist(kCivic.getFreeSpecialist() * iChange);
 		changeTradeRoutes(kCivic.getTradeRoutes() * iChange);
 		changeStateReligionUnitProductionModifier(kCivic.getStateReligionUnitProductionModifier() * iChange);
 		changeStateReligionBuildingProductionModifier(kCivic.getStateReligionBuildingProductionModifier() * iChange);
@@ -27020,7 +27018,6 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 	changeMilitaryUnitUpkeepMod(iChange*GC.getTraitInfo(eTrait).getMilitaryUnitUpkeepMod());
 	changeHappyPerMilitaryUnit(iChange*GC.getTraitInfo(eTrait).getHappyPerMilitaryUnit());
 	changeLargestCityHappiness(iChange*GC.getTraitInfo(eTrait).getLargestCityHappiness());
-	changeFreeSpecialist(iChange*GC.getTraitInfo(eTrait).getFreeSpecialist());
 	changeTradeRoutes(iChange*GC.getTraitInfo(eTrait).getTradeRoutes());
 	changeStateReligionUnitProductionModifier(iChange*GC.getTraitInfo(eTrait).getStateReligionUnitProductionModifier());
 	changeStateReligionBuildingProductionModifier(iChange*GC.getTraitInfo(eTrait).getStateReligionBuildingProductionModifier());

@@ -232,6 +232,10 @@
 - The PLAYER-ALERT consumer, and the alerts owed to it — they re-attach to the OPERATE CROSSING fact, never
   re-inlined at a mutation site ([event-spine.md](../../specs/event-spine.md)). Expect the owed list to GROW as
   each legacy mutator is cut; add them together on the facts.
+- Rebuild the CITIZEN-JUGGLING bracket the governor's probe loop opens and closes. Its call sites survived the
+  clean-slate revert of the engine game-object classes but the bracket itself did not, so they dangle with no
+  implementation anywhere in the tree. It defers the side-effect layer across a run of probe mutations and
+  replays the run's NET once at the close — so it is a real machine to write, never a pair of calls to delete.
 - Decide WHERE the citizen-assignment re-check is asked for. The mechanism itself is right and stays — the AI
   needs a way to be told the best plots to work may have moved — so this is a CALL-SITE question, never a
   removal. `AI_setAssignWorkDirty` is called from across the engine while `AI_updateAssignWork` re-runs the FULL
@@ -341,9 +345,11 @@
   would under-count silently.
 - Restore a home for the city's TYPED FREE specialist counts. The getter and setter reference a member the city
   no longer declares, and the setter computes its new value, fires its side effects and then stores nothing —
-  so the typed-free ledger reads empty whatever is granted into it. ⛔ Decide it WITH the free-specialist
-  AMOUNT item below rather than separately: the two are one seam ([modifier.md §6](../../specs/modifier.md)),
-  and re-adding the member alone would restore a legacy accumulator.
+  so the typed-free ledger reads empty whatever is granted into it. ⛔ Re-adding the member alone would restore
+  a legacy accumulator. ⚑ It is the half of the seam the cascade does NOT own: the untyped AMOUNT is a summed
+  deposit, but a TYPED free specialist is genuine one-shot state (a Great-Person join consumes its unit, an
+  era advance is a persisted pulse — [legacy-grant-apply-sites.md](../../reference/legacy-grant-apply-sites.md)),
+  so this wants a store, not a channel.
 - Make the empire GREAT-GENERAL rate a RECEIVER SUM over the player's cities, not an empire-package read.
   ⚑ Great general is NOT great people (owner): great PEOPLE accrue per city, while great general points are
   **summed from cities** plus battlefield experience into the player's own counter — so the empire figure is the
@@ -360,15 +366,7 @@
   ⛔ They do NOT each earn a replacement getter — the group read answers the TOTAL, and per-source attribution is
   the ORACLE's job. Their last maintainers (`processBonus`, `processSpecialist`) go with them.
 - Design the genuine residue that needs NEW surface: the slider math, the espionage counters, the live combat
-  state, `getHappinessTimer`, the `CvPlayer` unit-upkeep family, and the FREE-SPECIALIST AMOUNT.
-  ⚑ The free-specialist amount is CASCADE RESPONSIBILITY (owner) — so the empire/area figure is NOT an info read
-  to restore, and a per-scope getter must not be added to the building info to satisfy the call sites. What is
-  missing is the cascade read: `MODFAM_FREE_SPECIALISTS` exists in the vocabulary and the building materializes
-  only its `city.any` leaf, so nothing answers the summed amount over the scope chain. Until it exists the
-  push accumulators (`CvPlayer::m_iFreeSpecialist` + the area twin, fed from building/civic/trait `processX`)
-  and their consumers dangle — that is the census working ([modifier.md §6](../../specs/modifier.md): the AMOUNT
-  is the cascade's half of the two-part seam, PLACEMENT stays the engine's).
-  ⚠ The accumulators are NOT serialized, so this cut carries no `savemigration.txt` step.
+  state, `getHappinessTimer`, and the `CvPlayer` unit-upkeep family.
 - Hoist the per-commerce valuation in `getBuildingCommerceValue` — it runs once per (candidate × channel) where
   the caller already threads other per-candidate arrays for exactly this reason.
 
