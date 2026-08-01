@@ -71,6 +71,14 @@
    ]
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_FOLKLORE_HUMPBACK_WHALE",
+    "scope": "empire"
+   }
+  ]
+ },
  "attributes": {
   "destroyedOnCapture": true
  },

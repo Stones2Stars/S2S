@@ -166,6 +166,14 @@
    ]
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_CARRION_GATHERER",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 30,
   "countModifier": 1,

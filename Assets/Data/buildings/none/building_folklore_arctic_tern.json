@@ -70,6 +70,14 @@
    ]
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_FOLKLORE_ARCTIC_TERN",
+    "scope": "empire"
+   }
+  ]
+ },
  "attributes": {
   "destroyedOnCapture": true
  },

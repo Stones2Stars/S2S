@@ -71,6 +71,14 @@
    ]
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_FOLKLORE_GREAT_WHITE_SHARK",
+    "scope": "empire"
+   }
+  ]
+ },
  "attributes": {
   "destroyedOnCapture": true
  },

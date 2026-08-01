@@ -27,6 +27,14 @@
    }
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_MAGLEV_LAUNCHER",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 20310,
   "sizeModifier": 3,

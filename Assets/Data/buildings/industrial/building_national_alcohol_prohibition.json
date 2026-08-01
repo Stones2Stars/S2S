@@ -17,6 +17,14 @@
    ]
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_ORDINANCE_ALCOHOL_PROHIBITION",
+    "scope": "empire"
+   }
+  ]
+ },
  "attributes": {
   "destroyedOnCapture": true
  },

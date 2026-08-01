@@ -69,6 +69,14 @@
    ]
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_FOLKLORE_THOMSONS_GAZELLE",
+    "scope": "empire"
+   }
+  ]
+ },
  "attributes": {
   "destroyedOnCapture": true
  },

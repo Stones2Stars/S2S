@@ -45,6 +45,14 @@
    "flat": -2
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_BATHING_RITUAL",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 60,
   "hurryModifier": 100

@@ -88,6 +88,14 @@
    ]
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_FOLKLORE_E_METAL",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 30,
   "complexityModifier": 2

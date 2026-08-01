@@ -25,6 +25,14 @@
    "flat": 1
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_EFFECT_ACHIEVEMENT_ENVIRONMENTAL",
+    "scope": "empire"
+   }
+  ]
+ },
  "attributes": {
   "destroyedOnCapture": true
  },

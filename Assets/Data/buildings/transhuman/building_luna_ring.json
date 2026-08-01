@@ -30,6 +30,14 @@
    "flat": 500
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_EFFECT_LUNA_RING",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 9912,
   "hurryModifier": 10000

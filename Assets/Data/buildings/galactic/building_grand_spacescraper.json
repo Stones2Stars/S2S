@@ -41,6 +41,14 @@
    "flat": 50
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_SPACESCRAPER",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 65730
  },

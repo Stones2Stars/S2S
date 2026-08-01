@@ -76,6 +76,14 @@
    "flat": 15
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_EFFECT_DISNEYLAND",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 5220,
   "sizeModifier": 3,

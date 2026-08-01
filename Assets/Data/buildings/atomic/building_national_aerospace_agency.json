@@ -74,6 +74,14 @@
    "flat": 1
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_EFFECT_LAUNCH_SITE",
+    "scope": "empire"
+   }
+  ]
+ },
  "triggers": [
   {
    "trigger": "onTurn",

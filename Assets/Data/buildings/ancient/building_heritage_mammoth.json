@@ -23,6 +23,14 @@
    "flat": 1
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_EFFECT_HERITAGE_MAMMOTHS",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 139,
   "sizeModifier": 1,

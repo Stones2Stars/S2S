@@ -65,6 +65,14 @@
    "SPECIALIST_SPY": 1
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_LOCAL_COURTHOUSE",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 880,
   "sizeModifier": 3,

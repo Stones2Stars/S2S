@@ -55,6 +55,14 @@
    "SPECIALIST_ARTIST": 3
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_ART_GALLERY",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 6480,
   "sizeModifier": 3,

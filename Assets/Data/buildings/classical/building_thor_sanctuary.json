@@ -87,6 +87,14 @@
    }
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_THOR_ALTAR",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 1350,
   "sizeModifier": 2,

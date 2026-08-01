@@ -69,6 +69,14 @@
    "flat": 4
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_PET_SHOP",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 3210,
   "sizeModifier": 2,

@@ -62,6 +62,14 @@
    }
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_CAPTURE_THE_FLAG",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 90,
   "sizeModifier": 2,

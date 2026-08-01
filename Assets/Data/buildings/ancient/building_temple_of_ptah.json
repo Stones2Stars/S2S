@@ -87,6 +87,14 @@
    "flat": 3
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_SCHOOL_OF_SCRIBES",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 1056,
   "sizeModifier": 3,

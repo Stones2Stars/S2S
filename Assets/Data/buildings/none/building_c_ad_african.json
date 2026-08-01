@@ -25,6 +25,14 @@
  "allowed": {
   "empire": 1
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_C_AC_AFRICAN",
+    "scope": "empire"
+   }
+  ]
+ },
  "attributes": {
   "destroyedOnCapture": true
  },

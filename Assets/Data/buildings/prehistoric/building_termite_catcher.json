@@ -66,6 +66,14 @@
    "flat": 1
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_TERMITE_CATCHER",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 30,
   "countModifier": 1,

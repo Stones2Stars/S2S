@@ -30,6 +30,14 @@
    "flat": 20
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_HYPERSPACE_CONSTRUCTION_CENTER",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 141330
  },

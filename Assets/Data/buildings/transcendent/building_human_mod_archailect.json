@@ -39,6 +39,14 @@
    }
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_INTERGALACTIC_KOLMOGOROV_COMPRESSION",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 48710
  },

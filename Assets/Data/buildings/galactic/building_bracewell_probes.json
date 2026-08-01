@@ -25,6 +25,14 @@
    "flat": 100
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_INTERSTELLAR_DATA_COLLECTION",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 34707
  },

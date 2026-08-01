@@ -24,6 +24,14 @@
    "flat": 1000
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_EFFECT_COSMIC_EXPANSION_POWER_PLANT",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 17350,
   "hurryModifier": 10000

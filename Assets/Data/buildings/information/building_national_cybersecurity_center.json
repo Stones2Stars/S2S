@@ -45,6 +45,14 @@
    "flat": 15
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_COMPUTER_SECURITY_OFFICE",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 4010,
   "sizeModifier": 2,

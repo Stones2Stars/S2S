@@ -73,6 +73,14 @@
    "flat": 100
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_EFFECT_TERRAFORMED_MARS",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 27966,
   "hurryModifier": 10000

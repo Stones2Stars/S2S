@@ -28,6 +28,14 @@
  "allowed": {
   "empire": 1
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_BELIEF_RESURRECTION",
+    "scope": "empire"
+   }
+  ]
+ },
  "attributes": {
   "destroyedOnCapture": true
  },

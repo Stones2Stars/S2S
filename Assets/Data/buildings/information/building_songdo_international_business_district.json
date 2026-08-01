@@ -33,6 +33,14 @@
    "SPECIALIST_MERCHANT": 2
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_AEROTROPOLIS",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 15750,
   "sizeModifier": 3,

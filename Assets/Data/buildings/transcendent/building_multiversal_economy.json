@@ -62,6 +62,14 @@
  "allowed": {
   "empire": 1
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_EFFECT_MULTIVERSAL_ECONOMY",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 57510
  },

@@ -48,6 +48,14 @@
    "flat": 4000
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_EFFECT_ASTEROID_MINING_COMPLEX",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 6311,
   "hurryModifier": 10000

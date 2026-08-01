@@ -25,6 +25,14 @@
    "flat": 600
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_EFFECT_MARS_CYCLER",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 10110
  },

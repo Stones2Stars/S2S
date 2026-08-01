@@ -24,6 +24,14 @@
  "allowed": {
   "empire": 1
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_BELIEF_KARMA",
+    "scope": "empire"
+   }
+  ]
+ },
  "attributes": {
   "destroyedOnCapture": true
  },

@@ -30,6 +30,14 @@
    "flat": 800
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_CISLUNAR_DYSON_HARROP_SATELLITE",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 13448,
   "hurryModifier": 10000

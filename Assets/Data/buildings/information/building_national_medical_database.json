@@ -51,6 +51,14 @@
    "flat": -100
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_EFFECT_MEDICAL_DATABASE",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 4010,
   "sizeModifier": 2,

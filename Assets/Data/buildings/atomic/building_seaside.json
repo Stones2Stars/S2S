@@ -20,6 +20,14 @@
    "flat": 20
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_MIXED_USE_DEVELOPMENT",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 9240,
   "sizeModifier": 3,

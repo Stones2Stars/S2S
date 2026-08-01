@@ -103,6 +103,14 @@
    "flat": 4
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_COLOSSEUM",
+    "scope": "empire"
+   }
+  ]
+ },
  "triggers": [
   {
    "trigger": "onTurnEnd",

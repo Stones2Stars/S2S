@@ -51,6 +51,14 @@
    }
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_CISLUNAR_ONEILL_CYLINDER",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 27966,
   "hurryModifier": 10000

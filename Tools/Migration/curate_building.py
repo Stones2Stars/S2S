@@ -291,7 +291,8 @@ REQUIRES_TAGS = {
     "PrereqGameOption", "NotGameOption",
 }
 # store-handled enabler edges (DROP building-side: they invert onto the SOURCE) + obsolete/replace.
-STORE_TAGS = {"ObsoleteTech", "ObsoletesToBuilding", "ReplacementBuildings", "FreeBuilding", "FreeAreaBuilding"}
+# NB FreeBuilding/FreeAreaBuilding are NOT here: they are not enabler edges at all but GRANTS, emitted in pass2.
+STORE_TAGS = {"ObsoleteTech", "ObsoletesToBuilding", "ReplacementBuildings"}
 # PASS-2 tags (keyed inversions / properties / repeatable grants / building-on-building / one-shot grants/pulses).
 # Listed so the coverage check distinguishes "deferred to pass 2" from "genuinely unhandled".
 PASS2_TAGS = {
@@ -312,6 +313,7 @@ PASS2_TAGS = {
     "PropertySpawnUnit", "PropertySpawnProperty", "iNumUnitFullHeal", "HealUnitCombatTypes",
     # one-shot grants / pulses:
     "ExtraFreeBonuses", "FreeTraitTypes", "FreeSpecialTech", "iFreeTechs", "NewCityFree", "HolyCity",
+    "FreeBuilding", "FreeAreaBuilding",
     "iGlobalPopulationChange", "iPopulationChange", "bGoldenAge", "FreeSpecialistCounts", "SpecialistCounts",
     # enables-family from XML:
     "FoundsCorporation", "Hurrys", "bForceTeamVoteEligible",
@@ -730,6 +732,21 @@ def pass2(typ, rec, store, fams, grants, triggers, identity, enables, capabiliti
     ft = _int(rec, "iFreeTechs")
     if ft:
         grants["freeTechs"] = ft
+    # FreeBuilding / FreeAreaBuilding -> grants.buildings at EMPIRE scope (owner: "in all scenarios they behave
+    # like grants"). The source hands the target OVER and the receiving city genuinely HAS it -- load-bearing
+    # rather than cosmetic, because the authored data gates on holding these targets in over a thousand
+    # `requires` atoms, so a shape delivering only the EFFECTS would satisfy none of them.
+    # Two authored populations, ONE shape: a building naming ITSELF ("I build it in the first city, and then
+    # every city afterwards gets a free copy" -- owner) and a wonder naming a DIFFERENT building for all cities.
+    # They differ only in whether source and target are the same id, so nothing splits on it.
+    # AREA is not a scope (state-repositories.md: a landmass is not ownable), so the area variant authors at
+    # EMPIRE like every other legacy iArea* row. Deliberate widening, stated: the legacy term stopped at the
+    # coastline and the empire term does not.
+    for tag in ("FreeBuilding", "FreeAreaBuilding"):
+        fb = _txt(rec, tag)
+        if fb:
+            grants.setdefault("buildings", []).append(
+                OrderedDict((("building", fb), ("scope", "empire"))))
     for tag in ("iPopulationChange", "iGlobalPopulationChange"):
         v = _int(rec, tag)
         if v:

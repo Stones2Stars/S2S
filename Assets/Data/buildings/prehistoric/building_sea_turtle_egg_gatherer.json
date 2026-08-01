@@ -54,6 +54,14 @@
    "flat": 1
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_SEA_TURTLE_EGG_GATHERER",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 160,
   "countModifier": 1,

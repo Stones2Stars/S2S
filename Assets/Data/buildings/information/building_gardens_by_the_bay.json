@@ -60,6 +60,14 @@
    "SPECIALIST_ENGINEER": 1
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_ECOSCRAPER",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 12630,
   "sizeModifier": 3,

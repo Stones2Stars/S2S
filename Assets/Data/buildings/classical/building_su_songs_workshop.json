@@ -53,6 +53,14 @@
    "SPECIALIST_SCIENTIST": 2
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_WATERCLOCK",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 1680,
   "sizeModifier": 2,

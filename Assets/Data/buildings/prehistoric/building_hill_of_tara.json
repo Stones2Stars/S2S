@@ -65,6 +65,14 @@
    "flat": 4
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_CHIEFS_HUT",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 624,
   "sizeModifier": 1,

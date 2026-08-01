@@ -44,6 +44,14 @@
    ]
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_INTERSTELLAR_STAR_SCOOP",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 59621,
   "hurryModifier": 10000

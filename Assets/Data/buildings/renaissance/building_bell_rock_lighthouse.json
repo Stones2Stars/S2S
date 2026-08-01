@@ -65,6 +65,14 @@
    "SPECIALIST_MERCHANT": 1
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_LIGHTHOUSE",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 3210,
   "sizeModifier": 2,

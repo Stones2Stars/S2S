@@ -28,6 +28,14 @@
    "flat": 150
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_INTERSTELLAR_WORMHOLE_TRADING_POST",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 23064,
   "hurryModifier": 10000

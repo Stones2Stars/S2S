@@ -44,6 +44,14 @@
    "flat": -100
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_HEALERS_HUT",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 1458,
   "complexityModifier": 2,

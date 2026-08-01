@@ -39,6 +39,14 @@
    "flat": 20
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_ASTROBIOLOGY_LAB",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 8970,
   "sizeModifier": 1,

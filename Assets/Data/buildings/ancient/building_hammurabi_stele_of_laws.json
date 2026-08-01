@@ -81,6 +81,14 @@
    "flat": 6
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_COURTHOUSE",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 1008,
   "complexityModifier": 2,

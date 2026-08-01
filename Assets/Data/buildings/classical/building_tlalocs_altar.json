@@ -46,6 +46,14 @@
    "SPECIALIST_PRIEST": 2
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_SACRIFICIAL_ALTAR",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 1458,
   "sizeModifier": 1,

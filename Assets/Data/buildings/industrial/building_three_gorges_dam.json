@@ -55,6 +55,14 @@
    "flat": 2
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_POWER_GORGE",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 4800,
   "sizeModifier": 3,

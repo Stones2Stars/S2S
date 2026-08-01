@@ -62,6 +62,14 @@
    "flat": 1
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_TALLY_STONE",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 60,
   "countModifier": 2,

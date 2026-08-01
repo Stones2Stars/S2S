@@ -73,6 +73,14 @@
    ]
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_SPONGE_GATHERER",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 160,
   "countModifier": 1,

@@ -32,6 +32,14 @@
    "flat": 30
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_HYPERSPACE_SIMULATED_UNIVERSE",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 14732,
   "hurryModifier": 10000

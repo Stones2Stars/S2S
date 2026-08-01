@@ -25,6 +25,14 @@
  "allowed": {
   "empire": 1
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_C_AC_NORTH_AMERICAN",
+    "scope": "empire"
+   }
+  ]
+ },
  "attributes": {
   "destroyedOnCapture": true
  },

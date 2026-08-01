@@ -53,6 +53,14 @@
    "flat": 8
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_MARKET",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 1992,
   "sizeModifier": 3,

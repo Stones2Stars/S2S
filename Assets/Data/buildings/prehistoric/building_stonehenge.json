@@ -53,6 +53,14 @@
    "flat": 8
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_MONUMENT",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 624,
   "sizeModifier": 3,

@@ -41,6 +41,14 @@
    "flat": 15
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_LUNAR_SOLAR_PANELS",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 7800,
   "hurryModifier": 1000000

@@ -25,6 +25,14 @@
    "flat": 50
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_PLANETARIUM",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 17910
  },

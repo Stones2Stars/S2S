@@ -35,6 +35,14 @@
    "flat": 1
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_BARK_GATHERER",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 80,
   "countModifier": 1,

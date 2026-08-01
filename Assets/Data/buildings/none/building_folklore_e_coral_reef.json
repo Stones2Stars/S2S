@@ -87,6 +87,14 @@
    ]
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_FOLKLORE_E_CORAL_REEF",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 20,
   "complexityModifier": 2

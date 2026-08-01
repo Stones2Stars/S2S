@@ -37,6 +37,14 @@
    "flat": 100
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_ANTIMATTER_HARVESTER",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 34707,
   "hurryModifier": 10000

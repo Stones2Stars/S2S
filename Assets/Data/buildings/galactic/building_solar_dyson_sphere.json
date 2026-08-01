@@ -51,6 +51,14 @@
    ]
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_EFFECT_SOLAR_DYSON_SPHERE",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 42829,
   "hurryModifier": 10000

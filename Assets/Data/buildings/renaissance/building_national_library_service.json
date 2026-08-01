@@ -81,6 +81,14 @@
    "flat": 15
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_LIBRARY",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 1030,
   "sizeModifier": 2,

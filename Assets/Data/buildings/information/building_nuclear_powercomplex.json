@@ -68,6 +68,14 @@
    "flat": 100
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_POWER_NUCLEAR",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 4010,
   "hurryModifier": 100

@@ -25,6 +25,14 @@
    "flat": 120
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_MARTIAN_MINE",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 11175,
   "hurryModifier": 10000

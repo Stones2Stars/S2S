@@ -41,6 +41,14 @@
    "flat": 10
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_OBSERVATORY",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 11550
  },

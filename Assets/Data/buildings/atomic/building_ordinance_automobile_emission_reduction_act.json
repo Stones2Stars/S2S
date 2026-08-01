@@ -34,6 +34,14 @@
    ]
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_ORDINANCE_EFFECT_AUTOMOBILE_EMISSION_REDUCTION_ACT",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 1345,
   "materialsModifier": 1,

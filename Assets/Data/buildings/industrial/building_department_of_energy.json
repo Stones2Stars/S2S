@@ -41,6 +41,14 @@
    "SPECIALIST_ENGINEER": 1
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_POWER_LINES",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 1540,
   "sizeModifier": 2,

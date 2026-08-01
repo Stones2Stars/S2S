@@ -14,6 +14,14 @@
  "allowed": {
   "empire": 1
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 1310,
   "complexityModifier": 2

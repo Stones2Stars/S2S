@@ -80,6 +80,14 @@
    "flat": 2
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_GRANARY",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 250,
   "sizeModifier": 2,

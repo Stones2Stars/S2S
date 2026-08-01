@@ -42,6 +42,14 @@
    "flat": 1
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_ROCKDUST_GATHERER",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 70,
   "countModifier": 1,

@@ -36,6 +36,14 @@
    "flat": 50
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_UNIVERSAL_LIBRARY",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 75930,
   "complexityModifier": 2

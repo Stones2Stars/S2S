@@ -31,6 +31,14 @@
    "flat": 1
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_COMMUNITY_DISCUSSIONS",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 20,
   "sizeModifier": 1,

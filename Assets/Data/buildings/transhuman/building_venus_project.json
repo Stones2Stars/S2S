@@ -37,6 +37,14 @@
    }
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_RATIONAL_CITY",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 31530,
   "sizeModifier": 3,

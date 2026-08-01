@@ -81,6 +81,14 @@
    ]
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_FOLKLORE_E_DRAGON",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 20,
   "complexityModifier": 2

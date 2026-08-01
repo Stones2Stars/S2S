@@ -21,6 +21,14 @@
    ]
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_ORDINANCE_SMOKING_PROHIBITION",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 1685,
   "complexityModifier": 1

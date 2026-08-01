@@ -95,6 +95,14 @@
    ]
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_FOLKLORE_T_RAPTORS",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 250,
   "complexityModifier": 2

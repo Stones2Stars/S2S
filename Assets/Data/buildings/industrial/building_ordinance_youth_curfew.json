@@ -22,6 +22,14 @@
    ]
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_SAFETY_YOUTH_CURFEW",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 870,
   "complexityModifier": 1

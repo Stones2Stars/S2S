@@ -38,6 +38,14 @@
    }
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_TRANSTELLAR_LASER_HIGHWAY_RELAY",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 23432,
   "hurryModifier": 10000

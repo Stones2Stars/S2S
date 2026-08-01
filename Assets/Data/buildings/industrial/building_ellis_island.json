@@ -57,6 +57,14 @@
    "flat": 2
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_C_L_EUROPEAN",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 3780,
   "sizeModifier": 3,

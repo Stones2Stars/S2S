@@ -25,6 +25,14 @@
    "BONUS_HUMAN_MOD_GENE_EDITING"
   ]
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_STEM_CELL_LAB",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 6770
  },

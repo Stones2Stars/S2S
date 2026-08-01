@@ -36,6 +36,14 @@
    "flat": 40
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_EFFECT_GPS",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 3850,
   "sizeModifier": 2,

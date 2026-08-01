@@ -37,6 +37,14 @@
    "flat": 2000
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_SOLAR_POWER_SATELLITE",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 2106,
   "hurryModifier": 10000

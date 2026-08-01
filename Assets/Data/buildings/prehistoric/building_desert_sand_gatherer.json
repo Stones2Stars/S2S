@@ -46,6 +46,14 @@
    "flat": 1
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_DESERT_SAND_GATHERER",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 70,
   "countModifier": 1,

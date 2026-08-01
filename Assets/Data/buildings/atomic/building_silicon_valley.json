@@ -43,6 +43,14 @@
    "SPECIALIST_SCIENTIST": 1
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_COMPUTER_NETWORK",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 8850,
   "sizeModifier": 3,

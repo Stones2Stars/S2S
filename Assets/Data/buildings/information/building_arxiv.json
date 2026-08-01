@@ -31,6 +31,14 @@
    "flat": 20
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_MATHEMATICS_DEPARTMENT",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 11070,
   "complexityModifier": 2

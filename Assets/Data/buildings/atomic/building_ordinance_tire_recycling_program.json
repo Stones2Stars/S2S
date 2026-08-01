@@ -27,6 +27,14 @@
    ]
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_ORDINANCE_EFFECT_TIRE_RECYCLING_PROGRAM",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 1475,
   "sizeModifier": 1,

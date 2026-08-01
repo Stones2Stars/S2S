@@ -62,6 +62,14 @@
    "flat": 6
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_CONSTRUCTION_FIRM",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 7080,
   "sizeModifier": 3,

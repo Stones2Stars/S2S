@@ -53,6 +53,14 @@
    "flat": 5
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_RAILROAD_STATION",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 1310,
   "sizeModifier": 3,

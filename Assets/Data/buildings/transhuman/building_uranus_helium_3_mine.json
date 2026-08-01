@@ -29,6 +29,14 @@
    "flat": 2
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_HELIUM_3_IMPORTER",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 9926,
   "hurryModifier": 10000

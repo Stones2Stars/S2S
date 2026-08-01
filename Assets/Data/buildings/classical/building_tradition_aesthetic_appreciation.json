@@ -24,6 +24,14 @@
    "percent": 2
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_EFFECT_TRADITION_AESTHETIC_APPRECIATION",
+    "scope": "empire"
+   }
+  ]
+ },
  "attributes": {
   "destroyedOnCapture": true
  },

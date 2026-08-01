@@ -26,6 +26,14 @@
    "flat": 17
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_GRAVITY_TRAIN",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 13810,
   "sizeModifier": 3,

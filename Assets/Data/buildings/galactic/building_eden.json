@@ -67,6 +67,14 @@
    "flat": -20
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_DEEP_SPACE_ECOSYSTEM",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 38544,
   "hurryModifier": 10000

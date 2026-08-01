@@ -70,6 +70,14 @@
    "flat": 5
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_EFFECT_DEPARTMENT_OF_FOREIGN_POLICY",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 1660,
   "sizeModifier": 2,

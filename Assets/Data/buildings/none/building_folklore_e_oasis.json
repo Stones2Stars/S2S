@@ -87,6 +87,14 @@
    ]
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_FOLKLORE_E_OASIS",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 20,
   "complexityModifier": 2

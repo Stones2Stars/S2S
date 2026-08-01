@@ -36,7 +36,13 @@
   }
  },
  "grants": {
-  "freeTechs": 1
+  "freeTechs": 1,
+  "buildings": [
+   {
+    "building": "BUILDING_INTERSTELLAR_MATRIOSHKA_BRAIN",
+    "scope": "empire"
+   }
+  ]
  },
  "cost": {
   "production": 38840,

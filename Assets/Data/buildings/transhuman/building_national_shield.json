@@ -29,6 +29,14 @@
    "flat": 4
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_ADVANCED_SHIELDING",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 38430,
   "sizeModifier": 2,

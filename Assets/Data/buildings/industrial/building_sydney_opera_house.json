@@ -83,6 +83,14 @@
    "SPECIALIST_ARTIST": 2
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_OPERA_HOUSE",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 4620,
   "sizeModifier": 3,

@@ -34,6 +34,14 @@
    ]
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_ORDINANCE_EFFECT_COMMUTER_SHUTTLE_SERVICE",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 830,
   "sizeModifier": 1,

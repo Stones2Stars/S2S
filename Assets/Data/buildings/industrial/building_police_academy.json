@@ -79,6 +79,14 @@
    "SPECIALIST_INVESTIGATOR": 2
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_SAFETY_POLICE_ACADEMY",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 1600,
   "sizeModifier": 3,

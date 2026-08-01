@@ -29,6 +29,14 @@
    "flat": 2000
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_MAGITEK_COMBAT_ARENA",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 21020,
   "hurryModifier": 10000

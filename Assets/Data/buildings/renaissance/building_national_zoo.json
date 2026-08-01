@@ -59,6 +59,14 @@
    "SPECIALIST_SCIENTIST": 1
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_ZOO",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 1070,
   "sizeModifier": 3,

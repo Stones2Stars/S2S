@@ -61,6 +61,14 @@
    "flat": 20
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_CISLUNAR_PARTICLE_ACCELERATOR",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 71510,
   "hurryModifier": 10000

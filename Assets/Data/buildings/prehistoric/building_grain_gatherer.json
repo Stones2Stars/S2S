@@ -26,6 +26,14 @@
    }
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_GRAIN_GATHERER",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 30,
   "countModifier": 1,

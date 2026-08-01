@@ -56,6 +56,14 @@
    ]
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_NEST_THIEF",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 30,
   "countModifier": 1,

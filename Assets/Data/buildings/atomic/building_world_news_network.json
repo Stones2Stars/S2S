@@ -69,6 +69,14 @@
    "flat": 15
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_PRESS_AGENCY",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 7080,
   "sizeModifier": 3,

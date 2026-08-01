@@ -48,6 +48,14 @@
    ]
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_TIDEPOOL_SCAVENGER",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 30,
   "countModifier": 1,

@@ -43,6 +43,14 @@
    "flat": 2
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_RECYCLING_CENTER",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 8850,
   "sizeModifier": 1,

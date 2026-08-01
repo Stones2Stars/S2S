@@ -61,6 +61,14 @@
    "flat": 8
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_INSURANCE_OFFICE",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 7080,
   "sizeModifier": 3,

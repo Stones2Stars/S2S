@@ -46,6 +46,14 @@
    "flat": 2
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_KNOWLEDGE_INHERITANCE",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 40,
   "countModifier": 1,

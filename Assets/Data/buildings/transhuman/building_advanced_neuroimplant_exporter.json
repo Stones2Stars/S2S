@@ -29,6 +29,14 @@
    "flat": 10
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_EFFECT_NEUROIMPLANT_EXPORTER",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 11810,
   "sizeModifier": 2,

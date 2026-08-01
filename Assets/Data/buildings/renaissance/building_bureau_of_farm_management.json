@@ -40,6 +40,14 @@
    "SPECIALIST_SCIENTIST": 1
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_MODERN_WAREHOUSE",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 990,
   "sizeModifier": 2,

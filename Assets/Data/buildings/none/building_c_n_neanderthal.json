@@ -20,6 +20,14 @@
    "percent": -5
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_C_AC_NEANDERTHAL",
+    "scope": "empire"
+   }
+  ]
+ },
  "attributes": {
   "destroyedOnCapture": true
  },

@@ -57,6 +57,14 @@
    "flat": -1
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_CHALK_GATHERER",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 70,
   "sizeModifier": 1,

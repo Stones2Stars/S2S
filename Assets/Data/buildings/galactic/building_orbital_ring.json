@@ -46,6 +46,14 @@
    }
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_LOFSTROM_LOOP",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 54630,
   "sizeModifier": 3,

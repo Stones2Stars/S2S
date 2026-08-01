@@ -68,6 +68,14 @@
    "flat": 4
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_EFFECT_LASCAUX_CAVES",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 300,
   "sizeModifier": 2,

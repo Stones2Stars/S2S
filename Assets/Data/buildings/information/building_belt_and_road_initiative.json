@@ -26,6 +26,14 @@
    "flat": 60
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_INTERNATIONAL_PORT",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 15750,
   "sizeModifier": 3,

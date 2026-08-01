@@ -43,6 +43,14 @@
    ]
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_WILD_HERBS_GATHERER",
+    "scope": "empire"
+   }
+  ]
+ },
  "triggers": [
   {
    "trigger": "onTurn",

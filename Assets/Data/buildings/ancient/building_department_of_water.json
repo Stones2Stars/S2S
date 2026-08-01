@@ -64,6 +64,14 @@
    "SPECIALIST_ENGINEER": 1
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_WATER_PIPES",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 368,
   "sizeModifier": 2,

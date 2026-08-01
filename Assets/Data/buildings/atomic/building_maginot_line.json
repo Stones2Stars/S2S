@@ -24,6 +24,14 @@
    "flat": 2
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_BARRICADES",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 5700,
   "sizeModifier": 3,

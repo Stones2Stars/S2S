@@ -52,6 +52,14 @@
    "flat": -50
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_EFFECT_TERRAFORMED_LUNA",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 14476,
   "hurryModifier": 10000

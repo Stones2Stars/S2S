@@ -91,6 +91,14 @@
    "flat": 10
   }
  },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_LARGE_STEEL_ARCH_BRIDGE",
+    "scope": "empire"
+   }
+  ]
+ },
  "cost": {
   "production": 4980,
   "sizeModifier": 3,
