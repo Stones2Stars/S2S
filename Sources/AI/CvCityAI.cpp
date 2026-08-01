@@ -5678,7 +5678,8 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 				iValue += ((InfoValuation::keyedTarget(kBuilding.getModifiers(), MODFAM_EXPERIENCE, -1,
 					InfoValuation::keyedTargetSegment("domains"), (int)DOMAIN_SEA) / 100) * (bMetAnyCiv ? 16 : 8));
 
-				iValue += (kBuilding.getDomainProductionModifier(DOMAIN_SEA) / 4);
+				iValue += (InfoValuation::keyedTarget(kBuilding.getModifiers(), MODFAM_BUILD_RATE, -1,
+					InfoValuation::keyedTargetSegment("domains"), (int)DOMAIN_SEA) / 4);
 			}
 
 			if (((iFocusFlags & BUILDINGFOCUS_MAINTENANCE) || (iFocusFlags & BUILDINGFOCUS_GOLD) || iPass > 0)
@@ -5895,9 +5896,14 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 
 				int iMilitaryProductionModifier = kBuilding.getBuildRateModifier(BUILD_RATE_MILITARY, CASC_SCOPE_CITY);
 
-				for (int iJ = 0; iJ < kBuilding.getNumUnitCombatProdModifiers(); iJ++)
+				// The unit-combat-keyed buildRate deposits, read as the ENTRY-LIST over what this building
+				// AUTHORED (modifier.md §5). A percent comes back unscaled ([DEC-fixedpoint-x100]).
+				std::vector<std::pair<int, int> > keyedCombatBuildRates;
+				InfoValuation::collectKeyedTarget(kBuilding.getModifiers(), MODFAM_BUILD_RATE, -1,
+					InfoValuation::keyedTargetSegment("unitCombats"), keyedCombatBuildRates);
+				for (size_t iRow = 0; iRow < keyedCombatBuildRates.size(); ++iRow)
 				{
-					iMilitaryProductionModifier += kBuilding.getUnitCombatProdModifier(iJ) / 4;
+					iMilitaryProductionModifier += keyedCombatBuildRates[iRow].second / 4;
 				}
 				if (bMetAnyCiv && iMilitaryProductionModifier > 0)
 				{
@@ -5952,17 +5958,6 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 						iValue += (healRows[iRow].iHeal / 100) / 4;
 					}
 					iValue += kBuilding.getHeal(HEAL_AMOUNT, CASC_SCOPE_CITY) / 100 / 2;
-					for (int iI = 0; iI < kBuilding.getNumAidRateChanges(); iI++)
-					{
-						iValue += kBuilding.getAidRateChange(iI).iChange / 3;//Update
-					}
-					for (int iI = 0; iI < kBuilding.getNumBonusAidModifiers(); iI++)
-					{
-						if (hasBonus(kBuilding.getBonusAidModifier(iI).eBonusType))
-						{
-							iValue += kBuilding.getBonusAidModifier(iI).iModifier / 3;
-						}
-					}
 				}
 
 				if (kBuilding.getPopulationChange() != 0)
@@ -6035,13 +6030,18 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 					}
 				}
 
-				for (int iI = 0; iI < NUM_DOMAIN_TYPES; iI++)
+				// The domain-keyed buildRate deposits -- the handful this building names, never the domain
+				// registry asked one id at a time.
+				std::vector<std::pair<int, int> > keyedDomainBuildRates;
+				InfoValuation::collectKeyedTarget(kBuilding.getModifiers(), MODFAM_BUILD_RATE, -1,
+					InfoValuation::keyedTargetSegment("domains"), keyedDomainBuildRates);
+				for (size_t iRow = 0; iRow < keyedDomainBuildRates.size(); ++iRow)
 				{
-					iValue += kBuilding.getDomainProductionModifier(iI) / 5;
+					iValue += keyedDomainBuildRates[iRow].second / 5;
 
 					if (bIsHighProductionCity)
 					{
-						iValue += kBuilding.getDomainProductionModifier(iI) / 5;
+						iValue += keyedDomainBuildRates[iRow].second / 5;
 					}
 				}
 				int forcedTradeRoutesValue = 0;
@@ -12495,7 +12495,8 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 			kBuilding.getDefense(DEFENSE_MIN, CASC_SCOPE_CITY) > 0 ||
 			kBuilding.getDefense(DEFENSE_BUILDING_RECOVERY, CASC_SCOPE_CITY) > 0 ||
 			kBuilding.getDefense(DEFENSE_CITY_RECOVERY, CASC_SCOPE_CITY) > 0 ||
-			kBuilding.getNumUnitCombatDefenseAgainstModifiers() > 0)
+			kBuilding.getModifiers()->targetedSum(MODFAM_DEFENSE, DEFENSE_AMOUNT, CASC_SCOPE_CITY,
+				CASC_UNIT_PERCENT, modSegmentLookup("unitCombats"), -1) != 0)
 		{
 			return true;
 		}
@@ -12542,7 +12543,8 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 	}
 	if ((iFocusFlags & BUILDINGFOCUS_DOMAINSEA) != 0)
 	{
-		if (kBuilding.getDomainProductionModifier(DOMAIN_SEA) > 0
+		if (InfoValuation::keyedTarget(kBuilding.getModifiers(), MODFAM_BUILD_RATE, -1,
+			InfoValuation::keyedTargetSegment("domains"), (int)DOMAIN_SEA) > 0
 		|| InfoValuation::keyedTarget(kBuilding.getModifiers(), MODFAM_EXPERIENCE, -1,
 			InfoValuation::keyedTargetSegment("domains"), (int)DOMAIN_SEA) > 0)
 		{
