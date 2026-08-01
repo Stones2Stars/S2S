@@ -26399,8 +26399,12 @@ int CvPlayerAI::AI_workerTradeVal(const CvUnit* pUnit) const
 	PROFILE_FUNC();
 
 
-	if (!GC.getUnitInfo(pUnit->getUnitType()).isWorkerTrade())
-	{//It's not a worker, so it's worthless
+	// `tradable` is ONE skill -- the legacy workerTrade/militaryTrade pair named the DEAL SLOT, not the unit
+	// ([skills.md] §1), so WHICH slot a trade goes through is filtered here on the unit's own tag.
+	const CvUnitInfo& kTradeUnit = GC.getUnitInfo(pUnit->getUnitType());
+
+	if (!kTradeUnit.hasSkill(CLS_SKILL_TRADABLE) || !kTradeUnit.hasTag(CLS_TAG_WORKER))
+	{//It's not a tradable worker, so it's worthless
 		return 0;
 	}
 
@@ -26877,7 +26881,10 @@ int CvPlayerAI::AI_getCivicAttitudeChange(PlayerTypes ePlayer) const
 
 				if (eCivic != NO_CIVIC)
 				{
-					iAttitude += kCivicOption.getCivicAttitudeChange(eCivic);
+					// diplomacy.empire.civics.{CIVIC_X} -- the civic's own keyed entry for the OTHER player's
+					// civic, a FLAT reduced at the point of use.
+					iAttitude += InfoValuation::keyedTarget(kCivicOption.getModifiers(), MODFAM_DIPLOMACY,
+						DIPLOMACY_AMOUNT, InfoValuation::keyedTargetSegment("civics"), eCivic) / 100;
 				}
 			}
 		}
@@ -26894,7 +26901,9 @@ int CvPlayerAI::AI_getCivicShareAttitude(PlayerTypes ePlayer) const
 	{
 		if (NO_CIVIC != getCivics((CivicOptionTypes)iI) && getCivics((CivicOptionTypes)iI) == GET_PLAYER(ePlayer).getCivics((CivicOptionTypes)iI))
 		{
-			iAttitude += GC.getCivicInfo((CivicTypes)getCivics((CivicOptionTypes)iI)).getAttitudeShareMod();
+			// diplomacy.empire.attitudeShare -- a FLAT, so it reduces at the point of use.
+			iAttitude += GC.getCivicInfo((CivicTypes)getCivics((CivicOptionTypes)iI))
+				.getDiplomacy(DIPLOMACY_ATTITUDE_SHARE, CASC_SCOPE_EMPIRE) / 100;
 		}
 	}
 	return iAttitude;
@@ -28281,7 +28290,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 			int iBoost = ((pUnit->resolvedValue(URS_HEAL_SAME_TILE) / 100) * 2);
 			for (int iK = 0; iK < GC.getNumUnitCombatInfos(); iK++)
 			{
-				if (GC.getUnitCombatInfo((UnitCombatTypes)iK).isHealsAs())
+				if (GC.getUnitCombatInfo((UnitCombatTypes)iK).hasSkill(CLS_SKILL_HEALS_AS))
 				{
 					UnitCombatTypes eHealUnitCombat = (UnitCombatTypes)iK;
 					iBoost += pUnit->getHealUnitCombatTypeTotal(eHealUnitCombat);
@@ -28320,7 +28329,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 			int iBoost = ((pUnit->resolvedValue(URS_HEAL_ADJACENT) / 100) * 2);
 			for (int iK = 0; iK < GC.getNumUnitCombatInfos(); iK++)
 			{
-				if (GC.getUnitCombatInfo((UnitCombatTypes)iK).isHealsAs())
+				if (GC.getUnitCombatInfo((UnitCombatTypes)iK).hasSkill(CLS_SKILL_HEALS_AS))
 				{
 					UnitCombatTypes eHealUnitCombat = (UnitCombatTypes)iK;
 					iBoost += pUnit->getHealUnitCombatTypeAdjacentTotal(eHealUnitCombat);
@@ -28718,10 +28727,9 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 			}
 			else
 			{
-				for (int i = 0; i < GC.getNumInvisibleInfos(); i++)
-				{
-					iInvisFactor += pUnit->invisibilityIntensityTotal((InvisibleTypes)i);
-				}
+				// ONE concealment magnitude ([vision.md] §4) -- summing a per-INVISIBLE_* table counted the
+				// same concealment once per method.
+				iInvisFactor += pUnit->concealment() / 100;
 			}
 		}
 		else
@@ -29134,10 +29142,9 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 			}
 			else
 			{
-				for (int i = 0; i < GC.getNumInvisibleInfos(); i++)
-				{
-					iInvisFactor += pUnit->invisibilityIntensityTotal((InvisibleTypes)i);
-				}
+				// ONE concealment magnitude ([vision.md] §4) -- summing a per-INVISIBLE_* table counted the
+				// same concealment once per method.
+				iInvisFactor += pUnit->concealment() / 100;
 			}
 		}
 		else
@@ -30101,35 +30108,18 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 
 			//Logistics
 			//I & III
-		iValue += (kUnitCombat.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100 * 20);
-		//II
 		if (kUnitCombat.hasSkill(CLS_SKILL_ENEMY_ROUTE)) iValue += 20;
-		iValue += (kUnitCombat.getMovement(MOVEMENT_MOVE_DISCOUNT, CASC_SCOPE_UNIT) / 100 * 10);
-		//total 20, 30, 20 points
-
-		//Deception
-		if (kUnitCombat.getAir(AIR_EVASION, CASC_SCOPE_UNIT))
-		{
-			//Lean towards more deception if deception is already present
-			iValue += ((kUnitCombat.getAir(AIR_EVASION, CASC_SCOPE_UNIT) * 2) + (pUnit == NULL ? 0 : pUnit->evasionProbability()));
-		}//total 20, 30, 40 points
 
 		//Security
 		iValue += kUnitCombat.getFlatVision(VISION_STRENGTH, CASC_SCOPE_UNIT) * 10 / VISION_OPEN_GROUND_COST;
 		//Lean towards more security if security is already present
-		iValue += (kUnitCombat.getAir(AIR_INTERCEPT, CASC_SCOPE_UNIT) + (pUnit == NULL ? kUnit.getAir(AIR_INTERCEPT, CASC_SCOPE_UNIT) : pUnit->currInterceptionProbability()));
+		iValue += (pUnit == NULL ? kUnit.getAir(AIR_INTERCEPT, CASC_SCOPE_UNIT) : pUnit->currInterceptionProbability());
 		//total 20, 30, 40 points
 
 		//Escape
 		if (kUnitCombat.getScalar(SCALAR_WITHDRAWAL, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT))
 		{
 			iValue += 30;
-		}
-
-		//Improvise
-		if (kUnitCombat.getCostsModifier(COSTS_UPGRADE, CASC_SCOPE_UNIT) != 0)
-		{
-			iValue += 20;
 		}
 
 		//Loyalty
@@ -30934,7 +30924,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 			int iBoost = ((pUnit->resolvedValue(URS_HEAL_SAME_TILE) / 100) * 2);
 			for (int iK = 0; iK < GC.getNumUnitCombatInfos(); iK++)
 			{
-				if (GC.getUnitCombatInfo((UnitCombatTypes)iK).isHealsAs())
+				if (GC.getUnitCombatInfo((UnitCombatTypes)iK).hasSkill(CLS_SKILL_HEALS_AS))
 				{
 					UnitCombatTypes eHealUnitCombat = (UnitCombatTypes)iK;
 					iBoost += pUnit->getHealUnitCombatTypeTotal(eHealUnitCombat);
@@ -30972,7 +30962,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 			int iBoost = ((pUnit->resolvedValue(URS_HEAL_ADJACENT) / 100) * 2);
 			for (int iK = 0; iK < GC.getNumUnitCombatInfos(); iK++)
 			{
-				if (GC.getUnitCombatInfo((UnitCombatTypes)iK).isHealsAs())
+				if (GC.getUnitCombatInfo((UnitCombatTypes)iK).hasSkill(CLS_SKILL_HEALS_AS))
 				{
 					UnitCombatTypes eHealUnitCombat = (UnitCombatTypes)iK;
 					iBoost += pUnit->getHealUnitCombatTypeAdjacentTotal(eHealUnitCombat);
@@ -31341,10 +31331,9 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 			}
 			else
 			{
-				for (int i = 0; i < GC.getNumInvisibleInfos(); i++)
-				{
-					iInvisFactor += pUnit->invisibilityIntensityTotal((InvisibleTypes)i);
-				}
+				// ONE concealment magnitude ([vision.md] §4) -- summing a per-INVISIBLE_* table counted the
+				// same concealment once per method.
+				iInvisFactor += pUnit->concealment() / 100;
 			}
 		}
 		else
@@ -31714,10 +31703,9 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 			}
 			else
 			{
-				for (int i = 0; i < GC.getNumInvisibleInfos(); i++)
-				{
-					iInvisFactor += pUnit->invisibilityIntensityTotal((InvisibleTypes)i);
-				}
+				// ONE concealment magnitude ([vision.md] §4) -- summing a per-INVISIBLE_* table counted the
+				// same concealment once per method.
+				iInvisFactor += pUnit->concealment() / 100;
 			}
 		}
 		else

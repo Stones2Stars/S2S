@@ -84,6 +84,26 @@ public:
 	// upkeep.unit.extra is a FLAT gold magnitude: the compiled x100 IS the legacy x100 accessor scale.
 	int getFlatUpkeep(UpkeepKind eKind, CvCascScope eScope) const
 	{ return m_modifiers.sum(MODFAM_UPKEEP, eKind, eScope, CASC_UNIT_FLAT); }
+	// ⚠ movement / air / costs: NO unitcombat authors any of these today, so they answer 0 -- the same
+	// live-but-inert HEADROOM as getFlatVision above, and present for the same reason. A combat class IS a
+	// stat bundle that a unit wears like a free promotion ([engine.md] UnitCombat), so the two infos mirror;
+	// omitting the group here would fork the valuation surface between two receivers that carry one vocabulary.
+	int getMovement(MovementKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_MOVEMENT, eKind, eScope, CASC_UNIT_FLAT); }
+	int getAir(AirKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_AIR, eKind, eScope, infoKindUnit(MODFAM_AIR, eKind, eScope)); }
+	int getCostsModifier(CostsKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_COSTS, eKind, eScope, CASC_UNIT_PERCENT); }
+	int getFlatCollateral(CollateralKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_COLLATERAL, eKind, eScope, CASC_UNIT_FLAT); }
+	int getCollateralModifier(CollateralKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_COLLATERAL, eKind, eScope, CASC_UNIT_PERCENT); }
+	int getFlatBombard(BombardKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_BOMBARD, eKind, eScope, CASC_UNIT_FLAT); }
+	int getBombardModifier(BombardKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_BOMBARD, eKind, eScope, CASC_UNIT_PERCENT); }
+	int getCargo(CargoKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_CARGO, eKind, eScope, CASC_UNIT_FLAT); }
 
 	// ======================= 4. INTRINSIC -- bare typed reads (the census identity set) =======================
 	int getReligion() const { return m_iReligion; }   // identity.religion: RELIGION_* FK (religious-combat class)
