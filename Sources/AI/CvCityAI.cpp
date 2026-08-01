@@ -6098,7 +6098,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 
 					iValue += unitProductionModifierValue;
 				}
-				if (kBuilding.getPopulationgrowthratepercentage() != 0)
+				if (kBuilding.getScalar(SCALAR_POPULATION_GROWTH_RATE, CASC_SCOPE_CITY, CASC_UNIT_PERCENT) != 0)
 				{
 					int iFoodPerTurn = foodDifference();
 
@@ -6109,12 +6109,12 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 						{
 							int iCurrentFoodToGrow = growthThreshold();
 							int growthValue = (std::min(3, iCityHappy + 1) * iCurrentFoodToGrow) / iFoodPerTurn;
-							iValue -= (kBuilding.getPopulationgrowthratepercentage() * growthValue) / 100;
+							iValue -= (kBuilding.getScalar(SCALAR_POPULATION_GROWTH_RATE, CASC_SCOPE_CITY, CASC_UNIT_PERCENT) * growthValue) / 100;
 						}
 					}
 
 				}
-				if (kBuilding.getGlobalPopulationgrowthratepercentage() != 0)
+				if (kBuilding.getScalar(SCALAR_POPULATION_GROWTH_RATE, CASC_SCOPE_EMPIRE, CASC_UNIT_PERCENT) != 0)
 				{
 					int iCityCount = 0;
 					int globalGrowthValue = 0;
@@ -6137,7 +6137,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 
 					if (iCityCount > 0)
 					{
-						iValue += (kBuilding.getGlobalPopulationgrowthratepercentage() * globalGrowthValue) / (iCityCount * 100);
+						iValue += (kBuilding.getScalar(SCALAR_POPULATION_GROWTH_RATE, CASC_SCOPE_EMPIRE, CASC_UNIT_PERCENT) * globalGrowthValue) / (iCityCount * 100);
 					}
 				}
 
@@ -11213,8 +11213,8 @@ void CvCityAI::AI_updateSpecialYieldMultiplier()
 		}
 		m_aiSpecialYieldMultiplier[YIELD_PRODUCTION] += std::max(-25, GC.getBuildingInfo(eProductionBuilding).getScalar(SCALAR_FOOD_KEPT, CASC_SCOPE_CITY, CASC_UNIT_PERCENT));
 
-		if (GC.getBuildingInfo(eProductionBuilding).getCommerceChange(COMMERCE_CULTURE) > 0
-			|| GC.getBuildingInfo(eProductionBuilding).getCommercePerPopChange(COMMERCE_CULTURE) > 0)
+		if (InfoValuation::authorsAnySigned(GC.getBuildingInfo(eProductionBuilding).getModifiers(),
+			infoCommerceFamily(COMMERCE_CULTURE), +1))
 		{
 			const int iTargetCultureRate = AI_calculateTargetCulturePerTurn();
 			if (iTargetCultureRate > 0)
@@ -12327,11 +12327,9 @@ static bool buildingHasTradeRouteValue(BuildingTypes eBuilding)
 {
 	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
 
-	return (kBuilding.getTradeRoutes() > 0 ||
-		kBuilding.getCoastalTradeRoutes() > 0 ||
-		kBuilding.getGlobalTradeRoutes() > 0 ||
-		kBuilding.getTradeRouteModifier() > 0 ||
-		kBuilding.getForeignTradeRouteModifier() > 0);
+	// "Does this building do anything for trade routes?" -- one read over its own entries, which
+	// covers the conditioned coastal/foreign rows a point getter structurally cannot see.
+	return InfoValuation::authorsAnySigned(kBuilding.getModifiers(), MODFAM_TRADE_ROUTES, +1);
 }
 
 bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags) const
@@ -12380,24 +12378,19 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 	{
 		return true;
 	}
-	if (kBuilding.getFoundsCorporation() != NO_CORPORATION || kBuilding.getGlobalReligionCommerce() > 0 || kBuilding.getGlobalCorporationCommerce() > 0)
+	if (kBuilding.getFoundsCorporation() != NO_CORPORATION || kBuilding.getShrineReligion() > 0 || kBuilding.getHeadquartersCorporation() > 0)
 	{
 		return true;
 	}
 
-	const bool buildingModifiesGenericYields =
-		(
-			kBuilding.getBonusYieldModifier(NO_BONUS, NO_COMMERCE) > 0 ||
-			kBuilding.getBonusYieldChanges(NO_BONUS, NO_COMMERCE) > 0 ||
-			kBuilding.getVicinityBonusYieldChanges(NO_BONUS, NO_COMMERCE) > 0
-			);
-
+	// Every shape this channel can be authored in, in ONE read: the scope-wide percent and flat, the rows
+	// keyed by bonus and by vicinity bonus, and the power-gated and river-plot CONDITIONED entries. A point
+	// getter serves one compiled slot and excludes the conditioned tail, so the list this replaces had to ask
+	// one getter per shape -- and asked the bonus ones with a NO_BONUS sentinel, a read of a slot that cannot
+	// exist.
 	const bool buildingModifiesCommerceYields =
 		(
-			buildingModifiesGenericYields
-			|| kBuilding.getYieldModifier(YIELD_COMMERCE) > 0
-			|| kBuilding.getPowerYieldModifier(YIELD_COMMERCE) > 0
-			|| kBuilding.getRiverPlotYieldChange(YIELD_COMMERCE) > 0
+			InfoValuation::authorsAnySigned(kBuilding.getModifiers(), infoYieldFamily(YIELD_COMMERCE), +1)
 			|| getBaseYieldRateFromBuilding(YIELD_COMMERCE, eBuilding) > 0
 			);
 
@@ -12405,11 +12398,9 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 
 	if ((iFocusFlags & BUILDINGFOCUS_FOOD) != 0)
 	{
-		if (buildingModifiesGenericYields
-			|| bHasTradeRouteValue
+		if (bHasTradeRouteValue
 			|| kBuilding.getScalar(SCALAR_FOOD_KEPT, CASC_SCOPE_CITY, CASC_UNIT_PERCENT) > 0
-			|| kBuilding.getYieldModifier(YIELD_FOOD) > 0
-			|| kBuilding.getRiverPlotYieldChange(YIELD_FOOD) > 0
+			|| InfoValuation::authorsAnySigned(kBuilding.getModifiers(), infoYieldFamily(YIELD_FOOD), +1)
 			|| getBaseYieldRateFromBuilding(YIELD_FOOD, eBuilding) > 0)
 		{
 			return true;
@@ -12421,8 +12412,7 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 		// river-plot CONDITIONED entries, and the buildRate rows keyed by domain / unitCombat / category. The
 		// getter-per-shape list this replaces could only ask about shapes someone had added a getter for, and
 		// asked the domain one with a NO_DOMAIN sentinel -- a read of a slot that cannot exist.
-		if (buildingModifiesGenericYields
-			|| bHasTradeRouteValue
+		if (bHasTradeRouteValue
 			|| InfoValuation::authorsAnySigned(kBuilding.getModifiers(), MODFAM_PRODUCTION, +1)
 			|| InfoValuation::authorsAnySigned(kBuilding.getModifiers(), MODFAM_BUILD_RATE, +1)
 			|| InfoValuation::authorsAnySigned(kBuilding.getModifiers(), MODFAM_COSTS, -1, COSTS_HURRY)
@@ -12812,7 +12802,7 @@ int CvCityAI::getBuildingCommerceValue(BuildingTypes eBuilding, int iI, int* aiF
 		{
 			iResult += kBuilding.getStateReligionCommerce(iI) * kOwner.getHasReligionCount(eStateReligion) * 3;
 		}
-		const ReligionTypes eReligionGlobalCommerce = (ReligionTypes)kBuilding.getGlobalReligionCommerce();
+		const ReligionTypes eReligionGlobalCommerce = (ReligionTypes)kBuilding.getShrineReligion();
 
 		if (eReligionGlobalCommerce != NO_RELIGION)
 		{
@@ -12852,11 +12842,11 @@ int CvCityAI::getBuildingCommerceValue(BuildingTypes eBuilding, int iI, int* aiF
 
 	if (iCorpValue >= 0) // Don't build if it'll hurt us.
 	{
-		if (kBuilding.getGlobalCorporationCommerce() != NO_CORPORATION)
+		if (kBuilding.getHeadquartersCorporation() != NO_CORPORATION)
 		{
-			int iGoldValue = (GC.getCorporationInfo((CorporationTypes)(kBuilding.getGlobalCorporationCommerce())).getHeadquartersCommerce((CommerceTypes)iI) * GC.getGame().countCorporationLevels((CorporationTypes)(kBuilding.getGlobalCorporationCommerce())) * 2);
+			int iGoldValue = (GC.getCorporationInfo((CorporationTypes)(kBuilding.getHeadquartersCorporation())).getHeadquartersCommerce((CommerceTypes)iI) * GC.getGame().countCorporationLevels((CorporationTypes)(kBuilding.getHeadquartersCorporation())) * 2);
 
-			iGoldValue += GC.getCorporationInfo((CorporationTypes)(kBuilding.getGlobalCorporationCommerce())).getHeadquartersCommerce((CommerceTypes)iI);
+			iGoldValue += GC.getCorporationInfo((CorporationTypes)(kBuilding.getHeadquartersCorporation())).getHeadquartersCommerce((CommerceTypes)iI);
 			if (iGoldValue > 0)
 			{
 				iGoldValue += 2 + (kOwner.getNumCities() / 4);
@@ -12929,7 +12919,7 @@ int CvCityAI::tradeRouteValue(const CvBuildingInfo& kBuilding, YieldTypes eYield
 {
 	PROFILE_FUNC();
 
-	const int iExtraTradeRoutes = kBuilding.getTradeRoutes();
+	const int iExtraTradeRoutes = (kBuilding.getTradeRoute(TRADE_ROUTE_AMOUNT, CASC_SCOPE_CITY) / 100);
 	const int iCurrentTradeRoutes = getTradeRoutes();
 	const CvPlayerAI& kOwner = GET_PLAYER(getOwner());
 
@@ -12964,11 +12954,11 @@ int CvCityAI::tradeRouteValue(const CvBuildingInfo& kBuilding, YieldTypes eYield
 
 	int iValue = std::min(iExtraTradeRoutes, iCurrentTradeRoutes + iExtraTradeRoutes) * 4 * iTradeRouteValue;
 	iValue += (kBuilding.getCoastalTradeRoutes() * kOwner.countNumCoastalCities() * 4 * iTradeRouteValue);
-	iValue += (kBuilding.getGlobalTradeRoutes() * kOwner.getNumCities() * 4 * iTradeRouteValue);
+	iValue += ((kBuilding.getTradeRoute(TRADE_ROUTE_AMOUNT, CASC_SCOPE_EMPIRE) / 100) * kOwner.getNumCities() * 4 * iTradeRouteValue);
 
 	int iUnmodifiedCurrentValue = (100 * getTradeYield(eYield)) / (100 + getTradeRouteModifier());
 
-	iValue += ((kBuilding.getTradeRouteModifier() * iUnmodifiedCurrentValue) / (bForeignTrade ? 12 : 25));
+	iValue += ((kBuilding.getTradeRoute(TRADE_ROUTE_MODIFIER, CASC_SCOPE_CITY) * iUnmodifiedCurrentValue) / (bForeignTrade ? 12 : 25));
 	if (bForeignTrade)
 	{
 		iValue += ((kBuilding.getForeignTradeRouteModifier() * iUnmodifiedCurrentValue) / 12);
@@ -12976,13 +12966,13 @@ int CvCityAI::tradeRouteValue(const CvBuildingInfo& kBuilding, YieldTypes eYield
 
 	return iValue;
 #ifdef OLD_TRADE_ROUTE_CALCULATION
-	iTempValue = ((kBuilding.getTradeRoutes() * ((8 * std::max(0, (totalTradeModifier() + 100))) / 100))
+	iTempValue = (((kBuilding.getTradeRoute(TRADE_ROUTE_AMOUNT, CASC_SCOPE_CITY) / 100) * ((8 * std::max(0, (totalTradeModifier() + 100))) / 100))
 		* (getPopulation() / 5 + 1));
 	int iGlobalTradeValue = (((6 * iTotalPopulation) / 5) / iNumCities);
 	iTempValue += (kBuilding.getCoastalTradeRoutes() * kOwner.countNumCoastalCities() * iGlobalTradeValue);
-	iTempValue += (kBuilding.getGlobalTradeRoutes() * iNumCities * iGlobalTradeValue);
+	iTempValue += ((kBuilding.getTradeRoute(TRADE_ROUTE_AMOUNT, CASC_SCOPE_EMPIRE) / 100) * iNumCities * iGlobalTradeValue);
 
-	iTempValue += ((kBuilding.getTradeRouteModifier() * getTradeYield(YIELD_COMMERCE)) / (bForeignTrade ? 12 : 25));
+	iTempValue += ((kBuilding.getTradeRoute(TRADE_ROUTE_MODIFIER, CASC_SCOPE_CITY) * getTradeYield(YIELD_COMMERCE)) / (bForeignTrade ? 12 : 25));
 	if (bForeignTrade)
 	{
 		iTempValue += ((kBuilding.getForeignTradeRouteModifier() * getTradeYield(YIELD_COMMERCE)) / 12);
