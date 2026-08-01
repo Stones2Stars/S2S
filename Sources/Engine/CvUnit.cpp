@@ -378,12 +378,16 @@ void CvUnit::init(int iID, UnitTypes eUnit, UnitAITypes eUnitAI, PlayerTypes eOw
 		doSetDefaultStatuses();
 
 		// Cache initial healer values
-		for (int iI = m_pUnitInfo->getNumHealUnitCombatTypes() - 1; iI > -1; iI--)
 		{
-			const HealUnitCombat& data = m_pUnitInfo->getHealUnitCombatType(iI);
-
-			changeHealUnitCombatTypeVolume(data.eUnitCombat, data.iHeal);
-			changeHealUnitCombatTypeAdjacentVolume(data.eUnitCombat, data.iAdjacentHeal);
+			std::vector<HealByUnitCombat> healRows;
+			InfoValuation::collectHealByUnitCombat(m_pUnitInfo->getModifiers(), healRows);
+			for (size_t iRow = 0; iRow < healRows.size(); ++iRow)
+			{
+				const HealByUnitCombat& kRow = healRows[iRow];
+				//	the accumulators carry whole hit points; the deposits are ×100 amounts
+				changeHealUnitCombatTypeVolume((UnitCombatTypes)kRow.iUnitCombat, kRow.iHeal / 100);
+				changeHealUnitCombatTypeAdjacentVolume((UnitCombatTypes)kRow.iUnitCombat, kRow.iAdjacentHeal / 100);
+			}
 		}
 
 		if (GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS))
@@ -12353,7 +12357,7 @@ int CvUnit::maxFirstStrikes() const
 bool CvUnit::isRanged() const
 {
 	PROFILE_EXTRA_FUNC();
-	const int groupDefinitions = getUnitInfo().getGroupDefinitions();
+	const int groupDefinitions = getGroupDefinitions();
 	for (int  i = 0; i < groupDefinitions; i++)
 	{
 		if ( !getArtInfo(i, GET_PLAYER(getOwner()).getCurrentEra())->getActAsRanged() )
@@ -16085,19 +16089,22 @@ void CvUnit::changeExtraFeatureWorkPercent(FeatureTypes eIndex, int iChange)
 int CvUnit::terrainWorkPercent(TerrainTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, GC.getNumTerrainInfos(), eIndex);
-	return m_pUnitInfo->getTerrainWorkRateModifierType(eIndex) + getExtraTerrainWorkPercent(eIndex);
+	return InfoValuation::keyedTarget(m_pUnitInfo->getModifiers(), MODFAM_WORK_RATE, -1,
+		InfoValuation::keyedTargetSegment("terrain"), eIndex) + getExtraTerrainWorkPercent(eIndex);
 }
 
 int CvUnit::featureWorkPercent(FeatureTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, GC.getNumFeatureInfos(), eIndex);
-	return m_pUnitInfo->getFeatureWorkRateModifierType(eIndex) + getExtraFeatureWorkPercent(eIndex);
+	return InfoValuation::keyedTarget(m_pUnitInfo->getModifiers(), MODFAM_WORK_RATE, -1,
+		InfoValuation::keyedTargetSegment("feature"), eIndex) + getExtraFeatureWorkPercent(eIndex);
 }
 
 int CvUnit::buildWorkPercent(BuildTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, GC.getNumBuildInfos(), eIndex);
-	return m_pUnitInfo->getBuildWorkRateModifierType(eIndex) + getExtraWorkModForBuild(eIndex);
+	return InfoValuation::keyedTarget(m_pUnitInfo->getModifiers(), MODFAM_WORK_RATE, -1,
+		InfoValuation::keyedTargetSegment("build"), eIndex) + getExtraWorkModForBuild(eIndex);
 }
 
 
@@ -18751,7 +18758,7 @@ void CvUnit::read(FDataStreamBase* pStream)
 			WRAPPER_READ_DECORATED(wrapper, "CvUnit", &iAssignedCity, "m_iAssignedCity");
 
 			m_worker->changeWorkModifier(iExtraWorkPercent);
-			m_worker->changeHillsWorkModifier(iExtraHillsWorkPercent + m_pUnitInfo->getHillsWorkModifier());
+			m_worker->changeHillsWorkModifier(iExtraHillsWorkPercent + m_pUnitInfo->getScalar(SCALAR_WORK_RATE_HILLS, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT));
 			m_worker->setCityAssignment(iAssignedCity);
 
 			short iSize = 0;
@@ -19312,7 +19319,7 @@ void CvUnit::write(FDataStreamBase* pStream)
 	if (m_worker)
 	{
 		WRAPPER_WRITE_DECORATED(wrapper, "CvUnit", m_worker->getWorkModifier(), "m_iExtraWorkPercent");
-		WRAPPER_WRITE_DECORATED(wrapper, "CvUnit", m_worker->getHillsWorkModifier() - m_pUnitInfo->getHillsWorkModifier(), "m_iExtraHillsWorkPercent");
+		WRAPPER_WRITE_DECORATED(wrapper, "CvUnit", m_worker->getHillsWorkModifier() - m_pUnitInfo->getScalar(SCALAR_WORK_RATE_HILLS, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT), "m_iExtraHillsWorkPercent");
 		WRAPPER_WRITE_DECORATED(wrapper, "CvUnit", m_worker->getAssignedCity(), "m_iAssignedCity");
 
 		const std::vector<BuildTypes>& extraBuilds = m_worker->getExtraBuilds();
@@ -20074,13 +20081,15 @@ int CvUnit::computeWaveSize( bool bRangedRound, int iAttackerMax, int iDefenderM
 	int aiDesiredSize[BATTLE_UNIT_COUNT];
 	if ( bRangedRound )
 	{
-		aiDesiredSize[BATTLE_UNIT_ATTACKER] = getUnitInfo().getRangedWaveSize();
-		aiDesiredSize[BATTLE_UNIT_DEFENDER] = getCombatUnit()->getUnitInfo().getRangedWaveSize();
+		//	the animation WAVE sizes go with the rest of the formation data (above); 0 is what the
+		//	<= 0 fallbacks below already read as "use the maximum"
+		aiDesiredSize[BATTLE_UNIT_ATTACKER] = 0;
+		aiDesiredSize[BATTLE_UNIT_DEFENDER] = 0;
 	}
 	else
 	{
-		aiDesiredSize[BATTLE_UNIT_ATTACKER] = getUnitInfo().getMeleeWaveSize();
-		aiDesiredSize[BATTLE_UNIT_DEFENDER] = getCombatUnit()->getUnitInfo().getMeleeWaveSize();
+		aiDesiredSize[BATTLE_UNIT_ATTACKER] = 0;
+		aiDesiredSize[BATTLE_UNIT_DEFENDER] = 0;
 	}
 
 	aiDesiredSize[BATTLE_UNIT_DEFENDER] = aiDesiredSize[BATTLE_UNIT_DEFENDER] <= 0 ? iDefenderMax : aiDesiredSize[BATTLE_UNIT_DEFENDER];
@@ -20162,7 +20171,7 @@ bool CvUnit::isSuicide() const
 
 int CvUnit::getDropRange() const
 {
-	return (m_pUnitInfo->getDropRange() + getExtraDropRange());
+	return (m_pUnitInfo->getMovement(MOVEMENT_DROP_RANGE, CASC_SCOPE_UNIT) / 100 + getExtraDropRange());
 }
 
 void CvUnit::getDefenderCombatValues(const CvUnit& kDefender, const CvPlot* pPlot, int iOurStrength, int iOurFirepower, int& iTheirOdds, int& iTheirStrength, int& iOurDamage, int& iTheirDamage, CombatDetails* pTheirDetails, const CvUnit* pDefender) const
@@ -20324,32 +20333,36 @@ int CvUnit::getGroupSize() const
 	{
 		return groupRank();
 	}
-	return m_pUnitInfo->getGroupSize();
+	return 0;
 }
 
+//	The combat-ANIMATION formation data (group size / definitions / required members / render-always / the
+//	animation speed + pad time) is not carried by the rebuilt info: the curator drops it, and ART is out of
+//	scope for this rework ([roadmap.md] Scope decisions), so there is nothing to read. These four are DllExport
+//	-- the closed EXE calls them -- so the SYMBOLS stay and answer the absent value.
 int CvUnit::getGroupDefinitions() const
 {
-	return m_pUnitInfo->getGroupDefinitions();
+	return 0;
 }
 
 int CvUnit::getUnitGroupRequired(int i) const
 {
-	return m_pUnitInfo->getUnitGroupRequired(i);
+	return -1;
 }
 
 bool CvUnit::isRenderAlways() const
 {
-	return m_pUnitInfo->isRenderAlways();
+	return false;
 }
 
 float CvUnit::getAnimationMaxSpeed() const
 {
-	return m_pUnitInfo->getUnitMaxSpeed();
+	return 0.0f;
 }
 
 float CvUnit::getAnimationPadTime() const
 {
-	return m_pUnitInfo->getUnitPadTime();
+	return 0.0f;
 }
 
 const char* CvUnit::getFormationType() const
