@@ -205,6 +205,9 @@ public:
 	int getReligion() const                 { return m_iReligion; }                 // RELIGION_* FK (the religious-building association)
 	int getShrineReligion() const           { return m_iShrineReligion; }           // json §9 `shrine`: the religion this is the SHRINE of
 	int getHeadquartersCorporation() const  { return m_iHeadquartersCorporation; }  // json §9 `headquarters`: the corp-HQ FK
+	// The audio played when this building COMPLETES. Audio is an unmigrated system the JSON only REFERENCES
+	// (json §7), so the info carries the TAG and the audio manager resolves it -- never a migrated asset.
+	const char* getConstructSound() const   { return m_szConstructSound.c_str(); } // json §7 `sound.construct`
 
 	// The KEEP-legacy property engine's per-turn SOURCES, bridged from this building's PROPERTY_* families
 	// (property-audit.md). Buildings gather NO_RELATION -- a building's deposit lands in its OWN city -- while
@@ -272,6 +275,7 @@ private:
 	int m_iReligion;
 	int m_iShrineReligion;
 	int m_iHeadquartersCorporation;
+	std::string m_szConstructSound;
 	std::vector<int> m_aiMapCategories;
 	std::vector<int> m_aiEnabledCivilizations;
 	std::map<int, int> m_victoryThresholds;

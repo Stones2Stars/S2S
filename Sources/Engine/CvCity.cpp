@@ -4032,14 +4032,6 @@ int CvCity::getRevSuccessHappiness() const
 }
 
 
-int CvCity::getLargestCityHappiness() const
-{
-	if (findPopulationRank() <= GC.getWorldInfo(GC.getMap().getWorldSize()).getTargetNumCities())
-	{
-		return GET_PLAYER(getOwner()).getLargestCityHappiness();
-	}
-	return 0;
-}
 
 int CvCity::getVassalHappiness() const
 {
@@ -4619,7 +4611,7 @@ int CvCity::flatHurryAngerLength() const
 
 int CvCity::hurryAngerLength(HurryTypes eHurry) const
 {
-	return GC.getHurryInfo(eHurry).isAnger() ? flatHurryAngerLength() : 0;
+	return GC.getHurryInfo(eHurry).causesAnger() ? flatHurryAngerLength() : 0;
 }
 
 
@@ -8148,15 +8140,15 @@ int CvCity::totalTradeModifier(const CvCity* pOtherCity) const
 			iModifier += getForeignTradeRouteModifier();
 			iModifier += GET_PLAYER(getOwner()).getForeignTradeRouteModifier();
 
-			const CvPlayer& kOtherPlayer = GET_PLAYER(pOtherCity->getOwner());
-			const CvPlayer& kPlayer = GET_PLAYER(getOwner());
-			for (int iI = 0; iI < GC.getNumCivicOptionInfos(); iI++)
-			{
-				if (kPlayer.getCivics((CivicOptionTypes)iI) == kOtherPlayer.getCivics((CivicOptionTypes)iI))
-				{
-					iModifier += GC.getCivicInfo(kPlayer.getCivics((CivicOptionTypes)iI)).getSharedCivicTradeRouteModifier();
-				}
-			}
+			// ⚠ The SHARED-CIVIC route bonus is authored as a CONDITIONED `tradeRoutes.empire.modifier.percent`
+			// entry gated `all: [IS_FOREIGN, SHARES_CIVIC]` (curate_civic), and both predicates are evaluated
+			// against the ROUTE'S PARTNER ([json.md §3.5]) -- an axis CvCascadeEvalCtx carries no slot for, so
+			// nothing can evaluate them yet. The group read above serves the UNCONDITIONED sum only.
+			// ⛔ It is left UNSERVED rather than re-summed unconditionally here: folding a conditioned entry in
+			// without its gate pays the bonus on every foreign route, to partners running different civics
+			// ([modifier.md §5] -- honestly unserved is the correct exposed state).
+			// MISSING MACHINE: the route-partner axis on the eval ctx, which the IS_FOREIGN / SHARES_CIVIC
+			// predicates read.
 			iModifier += getPeaceTradeModifier(pOtherCity->getTeam());
 		}
 	}
@@ -11727,7 +11719,6 @@ void CvCity::popOrder(int orderIndex, bool bFinish, bool bChoose, bool bResolveL
 			if (getBugOptionBOOL("Civ4lerts__CompleteProject", true) || isLimitedProject(eCreateProject) && getBugOptionBOOL("Civ4lerts__CompleteSpecial", true))
 			{
 				swprintf(szBuffer, gDLL->getText("TXT_KEY_MISC_CREATED_PROJECT_IN", GC.getProjectInfo(eCreateProject).getTextKeyWide(), getNameKey()).GetCString());
-				strcpy(szSound, GC.getProjectInfo(eCreateProject).getCreateSound());
 				szIcon = GC.getProjectInfo(eCreateProject).getButton();
 				bCompletionMessage = true;
 			}
@@ -14750,7 +14741,7 @@ int CvCity::getMusicScriptId() const
 
 int CvCity::getSoundscapeScriptId() const
 {
-	return GC.getEraInfo(GET_PLAYER(getOwner()).getCurrentEra()).getCitySoundscapeSciptId(getCitySizeType());
+	return GC.getEraInfo(GET_PLAYER(getOwner()).getCurrentEra()).getCitySoundscapeScriptId(getCitySizeType());
 }
 
 void CvCity::cheat(bool bCtrl, bool bAlt, bool bShift)
@@ -15003,10 +14994,6 @@ int CvCity::getLandmarkAnger() const
 	return iAnger;
 }
 
-int CvCity::getCivicHappiness() const
-{
-	return GET_PLAYER(getOwner()).getCivicHappiness();
-}
 
 bool CvCity::isBuiltFoodProducedUnit() const
 {

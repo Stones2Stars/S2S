@@ -138,6 +138,13 @@ void CvBuildingInfo::mapFrom(const picojson::value& entity)
 		m_iHeadquartersCorporation = jsonResolveId(szFk);
 	}
 
+	// --- sound: the completion audio TAG (json §7 -- the definitions stay audio/ART XML-side) ---
+	m_szConstructSound.clear();
+	if (const picojson::object* pSound = jsonChildObj(entityObj, "sound"))
+	{
+		jsonIdStr(*pSound, "construct", m_szConstructSound);
+	}
+
 	// --- the identity block: the census set, each key one typed member ---
 	// ⛔ An entity with NO `identity` block must still FULLY REDEFINE every member below -- the mapFrom
 	// idempotency contract (CvInfo.h), which the full-registry re-run depends on. So the block is read against

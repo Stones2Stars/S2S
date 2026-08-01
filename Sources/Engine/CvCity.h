@@ -359,7 +359,6 @@ public:
 	int getRevIndexPercentAnger() const;
 	int getRevSuccessHappiness() const;
 
-	int getLargestCityHappiness() const;
 	int getVassalHappiness() const;
 	int getVassalUnhappiness() const;
 
@@ -1208,7 +1207,6 @@ public:
 
 	DllExport void getBuildQueue(std::vector<std::string>& astrQueue) const;
 
-	int getCivicHappiness() const;
 	int getAdditionalDefenseByBuilding(BuildingTypes eType) const;
 	int getNumCityPlots() const;
 	int getPopulationgrowthratepercentage() const;
