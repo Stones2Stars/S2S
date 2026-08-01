@@ -17187,9 +17187,14 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 	for (size_t iK = 0; iK < kKeyed.size(); ++iK)
 		changeExtraUnitCombatModifier((UnitCombatTypes)kKeyed[iK].first, kKeyed[iK].second * iChange);
 
-	for (iI = 0; iI < kUnitCombat.getNumFlankingStrengthbyUnitCombatTypesChange(); iI++)
 	{
-		changeExtraFlankingStrengthbyUnitCombatType(((UnitCombatTypes)kUnitCombat.getFlankingStrengthbyUnitCombatTypeChange(iI).eUnitCombat), kUnitCombat.getFlankingStrengthbyUnitCombatTypeChange(iI).iModifier * iChange);
+		std::vector<std::pair<int, int> > flankRows;
+		InfoValuation::collectKeyedTarget(kUnitCombat.getModifiers(), MODFAM_COMBAT, COMBAT_AMOUNT,
+			InfoValuation::keyedTargetSegment("flanking"), flankRows, CASC_SCOPE_UNIT);
+		for (size_t iRow = 0; iRow < flankRows.size(); ++iRow)
+		{
+			changeExtraFlankingStrengthbyUnitCombatType((UnitCombatTypes)flankRows[iRow].first, flankRows[iRow].second * iChange);
+		}
 	}
 
 
@@ -17583,7 +17588,19 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	for (iI = 0; iI < numUnitCombatInfos; iI++)
 	{
 		changeExtraUnitCombatModifier(((UnitCombatTypes)iI), (InfoValuation::keyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_UNITCOMBAT, iI, COMBAT_AMOUNT) * iChange));
-		changeExtraFlankingStrengthbyUnitCombatType(((UnitCombatTypes)iI), (kPromotion.getFlankingStrengthbyUnitCombatTypeChange(iI) * iChange));
+	}
+
+	//	FLANKING is keyed by UNITCOMBAT ([json.md] §6: `combat.<scope>.flanking.{UNITCOMBAT_X}`), so the rows are
+	//	the entity's OWN authored handful rather than a sweep of every combat class. The values are percents and
+	//	are therefore not ×100 ([DEC-fixedpoint-x100]).
+	{
+		std::vector<std::pair<int, int> > flankRows;
+		InfoValuation::collectKeyedTarget(kPromotion.getModifiers(), MODFAM_COMBAT, COMBAT_AMOUNT,
+			InfoValuation::keyedTargetSegment("flanking"), flankRows, CASC_SCOPE_UNIT);
+		for (size_t iRow = 0; iRow < flankRows.size(); ++iRow)
+		{
+			changeExtraFlankingStrengthbyUnitCombatType((UnitCombatTypes)flankRows[iRow].first, flankRows[iRow].second * iChange);
+		}
 	}
 
 	for (iI = 0; iI < (int)kPromotion.providesUnitCombats().size(); iI++)
@@ -17610,10 +17627,6 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 		}
 	}
 
-	if (kPromotion.setSpecialUnit() != NO_SPECIALUNIT)
-	{
-		setSpecialUnit(iChange, kPromotion.setSpecialUnit());
-	}
 	//TB Combat Mod End
 
 	for (iI = 0; iI < NUM_DOMAIN_TYPES; iI++)
