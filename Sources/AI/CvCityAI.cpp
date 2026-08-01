@@ -10567,7 +10567,7 @@ void CvCityAI::AI_findBestImprovementForPlot(const CvPlot* pPlot, plotInfo* plot
 				{
 					bValid = false;
 				}
-				else if (player.getFeatureHappiness(eFeature) > 0)
+				else if (currentFeature->getWellbeingModifier(WELLBEING_HAPPINESS, CASC_SCOPE_PLOT) > 0)
 				{
 					bValid = false;
 				}
@@ -12377,7 +12377,9 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 	{
 		return true;
 	}
-	if (kBuilding.getFoundsCorporation() != NO_CORPORATION || kBuilding.getShrineReligion() > 0 || kBuilding.getHeadquartersCorporation() > 0)
+	// Founding a corporation and being its headquarters are ONE relationship in the data: the building
+	// declares `headquarters: CORPORATION_X` (json §9) and the corp's values live on the corporation.
+	if (kBuilding.getShrineReligion() > 0 || kBuilding.getHeadquartersCorporation() > 0)
 	{
 		return true;
 	}
@@ -12817,7 +12819,7 @@ int CvCityAI::getBuildingCommerceValue(BuildingTypes eBuilding, int iI, int* aiF
 		}
 	}
 
-	CorporationTypes eCorporation = (CorporationTypes)kBuilding.getFoundsCorporation();
+	CorporationTypes eCorporation = (CorporationTypes)kBuilding.getHeadquartersCorporation();
 	int iCorpValue = 0;
 	if (NO_CORPORATION != eCorporation)
 	{
