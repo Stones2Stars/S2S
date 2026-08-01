@@ -15901,11 +15901,6 @@ void CvUnit::changeExtraDomainModifier(DomainTypes eIndex, int iChange)
 
 const CvWString CvUnit::getDescription(uint uiForm) const
 {
-	if (m_pUnitInfo->getCivilizationName(getCivilizationType()) != NULL
-	&& !CvWString(m_pUnitInfo->getCivilizationName(getCivilizationType())).empty())
-	{
-		return gDLL->getText(m_pUnitInfo->getCivilizationName(getCivilizationType()));
-	}
 	return m_pUnitInfo->getDescription(uiForm);
 }
 

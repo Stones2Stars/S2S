@@ -16486,7 +16486,7 @@ int CvPlayer::getAdvancedStartUnitCost(UnitTypes eUnit, bool bAdd, const CvPlot*
 		int iMaxUnitsPerCity = GC.getDefineINT("ADVANCED_START_MAX_UNITS_PER_CITY");
 		if (iMaxUnitsPerCity >= 0)
 		{
-			if (GC.getUnitInfo(eUnit).isMilitarySupport() && getNumMilitaryUnits() >= iMaxUnitsPerCity * getNumCities())
+			if (GC.getUnitInfo(eUnit).hasTag(CLS_TAG_MILITARY) && getNumMilitaryUnits() >= iMaxUnitsPerCity * getNumCities())
 			{
 				return -1;
 			}
@@ -18716,7 +18716,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 
 			foreach_(const CvUnit* unitX, units())
 			{
-				if (!unitX->isTempUnit() && GC.getUnitInfo(unitX->getUnitType()).isMilitarySupport())
+				if (!unitX->isTempUnit() && GC.getUnitInfo(unitX->getUnitType()).hasTag(CLS_TAG_MILITARY))
 				{
 					iMilitary++;
 				}
