@@ -10413,7 +10413,6 @@ void CvPlayer::changeStateReligionCount(int iChange, bool bLimited)
 			gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
 		}
 
-		checkReligiousDisablingAllBuildings();
 	}
 }
 
@@ -28366,12 +28365,6 @@ void CvPlayer::changeExtraNonStateReligionSpreadModifier(int iChange)
 	m_iExtraNonStateReligionSpreadModifier += iChange;
 }
 
-void CvPlayer::checkReligiousDisablingAllBuildings()
-{
-	PROFILE_FUNC();
-
-	for_each(cities(), CvCity::fn::checkReligiousDisablingAllBuildings());
-}
 
 int CvPlayer::getBaseMergeSelectionUnit() const
 {

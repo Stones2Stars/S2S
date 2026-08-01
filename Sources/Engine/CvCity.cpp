@@ -3658,7 +3658,6 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 
 	if (!bReligiously && GC.getGame().isOption(GAMEOPTION_RELIGION_DISABLING))
 	{
-		checkReligiousDisabling(eBuilding, owner);
 	}
 	markMaintenanceDirty();
 	setLayoutDirty(true);
@@ -6536,8 +6535,19 @@ int CvCity::getAdditionalHappinessByBuilding(BuildingTypes eBuilding, int& iGood
 	int iStarting = iGood - iBad;
 	int iStartingBad = iBad;
 
-	// Basic
-	addGoodOrBad(kBuilding.getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_CITY) / 100, iGood, iBad);
+	// ⚖ The building's OWN wellbeing, resolved for THIS city -- the valuation, not a point read. A point read
+	// serves the compiled UNCONDITIONED sum only ([patterns.md] THE GETTER SETUP), so the conditioned entries
+	// would be silently missing: the state-religion happiness this used to hand-gate is authored as a
+	// {STATE_RELIGION: <the building's religion>} conditioned deposit (curate_religion), and it is the ONE
+	// evaluator against this city's contexts that decides whether it applies. The same call folds the
+	// empire-scope leg into the experienced-here answer, so both scopes read once.
+	// ⚠ The channels are POSITIVE magnitudes ×100; addGoodOrBad wants ONE signed human number per side.
+	{
+		int aiBuildingWellbeing[NUM_WELLBEING_CHANNELS];
+		buildingWellbeing(eBuilding, aiBuildingWellbeing);
+		addGoodOrBad(aiBuildingWellbeing[WELLBEING_HAPPINESS] / 100, iGood, iBad);
+		addGoodOrBad(-(aiBuildingWellbeing[WELLBEING_ANGER] / 100), iGood, iBad);
+	}
 
 	// Building
 	addGoodOrBad(getBuildingHappyChange(eBuilding), iGood, iBad);
@@ -6557,15 +6567,6 @@ int CvCity::getAdditionalHappinessByBuilding(BuildingTypes eBuilding, int& iGood
 
 	// Player Building
 	addGoodOrBad(GET_PLAYER(getOwner()).getExtraBuildingHappiness(eBuilding), iGood, iBad);
-
-	// Empire -- the legacy AREA and GLOBAL fields fold to ONE slot (no area scope), so this reads once.
-	addGoodOrBad(kBuilding.getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_EMPIRE), iGood, iBad);
-
-	// Religion
-	if (kBuilding.getReligion() != NO_RELIGION && kBuilding.getReligion() == GET_PLAYER(getOwner()).getStateReligion())
-	{
-		iGood += kBuilding.getStateReligionHappiness();
-	}
 
 	// Bonus
 	// ⛔ No BONUS-keyed happiness read: the axis has ZERO authorings across the whole data set (keyed happiness
@@ -7940,7 +7941,7 @@ int CvCity::getBaseYieldRateFromBuilding(const YieldTypes eYield, const Building
 	return (
 		building.getFlatYield(eYield, CASC_SCOPE_CITY)
 		+
-		building.getYieldPerPopChange(eYield) * getPopulation()
+		building.getYieldPerPopulation(eYield, CASC_SCOPE_CITY) * getPopulation()
 		+
 		getBuildingYieldChange(eBuilding, eYield)
 	);
@@ -7990,7 +7991,7 @@ int CvCity::getYieldBySpecialist(YieldTypes eIndex, SpecialistTypes eSpecialist)
 	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
 	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eSpecialist);
 	return (
-		GC.getSpecialistInfo(eSpecialist).getYieldChange(eIndex)
+		GC.getSpecialistInfo(eSpecialist).getFlatYield(eIndex, CASC_SCOPE_CITY) / 100
 		+ GET_PLAYER(getOwner()).getExtraSpecialistYield(eSpecialist, eIndex)
 		+ GET_PLAYER(getOwner()).getSpecialistYieldPercentChanges(eSpecialist, eIndex) / 100
 	);
@@ -8429,7 +8430,7 @@ int CvCity::getBuildingCommerceByBuilding(CommerceTypes eIndex, BuildingTypes eB
 
 		if (bFull)
 		{
-			iCommerce += kBuilding.getCommercePerPopChange(eIndex) / 100;
+			iCommerce += kBuilding.getCommercePerPopulation(eIndex, CASC_SCOPE_CITY) / 100;
 		}
 
 		const ReligionTypes eRel = (ReligionTypes)kBuilding.getReligion();
@@ -8541,7 +8542,7 @@ int CvCity::getAdditionalBaseCommerceRateBySpecialist(CommerceTypes eIndex, Spec
 	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eSpecialist);
 	return (
 		iChange * (
-			GC.getSpecialistInfo(eSpecialist).getCommerceChange(eIndex)
+			GC.getSpecialistInfo(eSpecialist).getFlatCommerce(eIndex, CASC_SCOPE_CITY) / 100
 		)
 	);
 }
@@ -10550,70 +10551,10 @@ bool CvCity::isHasReligion(ReligionTypes eIndex) const
 	return m_pabHasReligion[eIndex];
 }
 
-void CvCity::checkReligiousDisablingAllBuildings()
-{
-	PROFILE_EXTRA_FUNC();
-	if (!GC.getGame().isOption(GAMEOPTION_RELIGION_DISABLING) || getReligionCount() == 0)
-	{
-		return;
-	}
-	const CvPlayer& player = GET_PLAYER(getOwner());
 
-	for (int iJ = 0; iJ < GC.getNumBuildingInfos(); iJ++)
-	{
-		checkReligiousDisabling((BuildingTypes)iJ, player);
-	}
-	markMaintenanceDirty();
-}
-
-void CvCity::checkReligiousDisabling(const BuildingTypes eBuilding, const CvPlayer& player)
-{
-	PROFILE_EXTRA_FUNC();
-	if (isDormantBuilding(eBuilding))
-	{
-		return;
-	}
-	const CvBuildingInfo& building = GC.getBuildingInfo(eBuilding);
-
-	const ReligionTypes eReligion = (ReligionTypes)building.getReligion();
-	const ReligionTypes eReligionReq = (ReligionTypes)building.getPrereqReligion();
-
-	// If building is not of a religious nature
-	if (eReligion == NO_RELIGION && eReligionReq == NO_RELIGION
-	// or if city doesn't have the building's religion(s)
-	|| (eReligion == NO_RELIGION || !isHasReligion(eReligion))
-	&& (eReligionReq == NO_RELIGION || !isHasReligion(eReligionReq))
-	// or the city doesn't have the building
-	|| !hasBuilding(eBuilding))
-	{
-		return; // Nothing needs to be done
-	}
-
-	for (int iI = 0; iI < GC.getNumReligionInfos(); iI++)
-	{
-		const ReligionTypes eReligionX = (ReligionTypes)iI;
-
-		if (eReligion == eReligionX || eReligionReq == eReligionX)
-		{
-			if (isDormantBuilding(eBuilding))
-			{
-				if (player.hasAllReligionsActive() || player.getStateReligion() == eReligionX)
-				{
-				}
-			}
-			else if (!player.hasAllReligionsActive() && player.getStateReligion() != eReligionX)
-			{
-			}
-		}
-	}
-}
 
 void CvCity::applyReligionModifiers(const ReligionTypes eIndex, const bool bValue)
 {
-	PROFILE_EXTRA_FUNC();
-	foreach_(const BuildingTypes eTypeX, getHasBuildings())
-	{
-	}
 	markMaintenanceDirty();
 }
 
@@ -10715,7 +10656,6 @@ void CvCity::setHasReligion(ReligionTypes eIndex, bool bNewValue, bool bAnnounce
 
 		applyReligionModifiers(eIndex, bNewValue);
 
-		checkReligiousDisablingAllBuildings();
 	}
 
 	for (int iI = 0; iI < MAX_PLAYERS; iI++)
@@ -14767,7 +14707,7 @@ int CvCity::getBestYieldAvailable(YieldTypes eYield) const
 	{
 		if (isSpecialistValid((SpecialistTypes)iJ, 1))
 		{
-			int iYield = GC.getSpecialistInfo((SpecialistTypes)iJ).getYieldChange(eYield);
+			const int iYield = GC.getSpecialistInfo((SpecialistTypes)iJ).getFlatYield(eYield, CASC_SCOPE_CITY) / 100;
 			if (iYield > iBestYieldAvailable)
 			{
 				iBestYieldAvailable = iYield;

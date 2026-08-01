@@ -1122,8 +1122,6 @@ public:
 	bool isHasReligion(ReligionTypes eIndex) const;
 	void setHasReligion(ReligionTypes eIndex, bool bNewValue, bool bAnnounce, bool bArrows = true);
 
-	void checkReligiousDisablingAllBuildings();
-	void checkReligiousDisabling(const BuildingTypes eType, const CvPlayer& player);
 	void applyReligionModifiers(const ReligionTypes eIndex, const bool bValue);
 
 	bool isHasCorporation(CorporationTypes eIndex) const;
@@ -1868,7 +1866,6 @@ public:
 		DECLARE_MAP_FUNCTOR(CvCity, void, startDeferredBonusProcessing);
 		DECLARE_MAP_FUNCTOR(CvCity, void, endDeferredBonusProcessing);
 		DECLARE_MAP_FUNCTOR(CvCity, void, doTurn);
-		DECLARE_MAP_FUNCTOR(CvCity, void, checkReligiousDisablingAllBuildings);
 		DECLARE_MAP_FUNCTOR(CvCity, void, updateCorporation);
 		DECLARE_MAP_FUNCTOR(CvCity, void, updateYield);
 		DECLARE_MAP_FUNCTOR(CvCity, void, onYieldChange);

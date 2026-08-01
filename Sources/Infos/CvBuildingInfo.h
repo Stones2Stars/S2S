@@ -91,6 +91,15 @@ public:
 	{ return m_modifiers.sum(infoCommerceFamily(eCommerce), CHANNEL_AMOUNT, eScope, CASC_UNIT_FLAT); }
 	int getCommerceModifier(CommerceTypes eCommerce, CvCascScope eScope) const
 	{ return m_modifiers.sum(infoCommerceFamily(eCommerce), CHANNEL_AMOUNT, eScope, CASC_UNIT_PERCENT); }
+	// The PER-POPULATION plane of the same two channel groups -- the §3.7 count-scaled deposit the yield/commerce
+	// rate adds as `perPopulation × population` (modifier.md §2a's EXTRA tier). It is a THIRD unit on the family,
+	// not a third family: the split lives in the NAME exactly as flat-vs-modifier does, never a scale suffix.
+	// ⚠ perPopulation is FLAT-SIDE, so it is ×100 like a flat and the reader reduces at its point of use
+	// ([DEC-fixedpoint-x100]) -- NOT the legacy "latent /100" that made the old member look human.
+	int getYieldPerPopulation(YieldTypes eYield, CvCascScope eScope) const
+	{ return m_modifiers.sum(infoYieldFamily(eYield), CHANNEL_AMOUNT, eScope, CASC_UNIT_PER_POPULATION); }
+	int getCommercePerPopulation(CommerceTypes eCommerce, CvCascScope eScope) const
+	{ return m_modifiers.sum(infoCommerceFamily(eCommerce), CHANNEL_AMOUNT, eScope, CASC_UNIT_PER_POPULATION); }
 	// The wellbeing point read exposes the AUTHORED families' signed compiled sums (happiness/health); the
 	// four-channel sign ROUTING is a fill/valuation rule (modifier.md §2b -- expectedWellbeing), so the two
 	// unauthored channels (ANGER/UNHEALTH) hold no slot and read 0 here.

@@ -2252,7 +2252,6 @@ public:
 	void setExtraNonStateReligionSpreadModifier(int iValue);
 	void changeExtraNonStateReligionSpreadModifier(int iChange);
 
-	void checkReligiousDisablingAllBuildings();
 	//TB Traits end
 
 	void startDeferredPlotGroupBonusCalculation();
