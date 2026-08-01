@@ -27,6 +27,7 @@
 #include "CvProcessInfo.h"
 #include "CvUnitCombatInfo.h"
 #include "CvTraitInfo.h"
+#include "CvVictoryInfo.h"
 #include "Enabler/CvCapabilities.h"     // the empire capability union + the authored-key vocabulary
 #include "Infrastructure/CvInitCore.h"
 #include "Engine/CvMap.h"
@@ -21702,7 +21703,7 @@ int CvPlayerAI::AI_getSpaceVictoryStage() const
 	{
 		if (GC.getGame().isVictoryValid((VictoryTypes)iI))
 		{
-			if (GC.getVictoryInfo((VictoryTypes)iI).getVictoryDelayTurns() > 0)
+			if (GC.getVictoryInfo((VictoryTypes)iI).conditionValue(VICTORY_CONDITION_DELAY_TURNS) > 0)
 			{
 				eSpace = (VictoryTypes)iI;
 				break;
@@ -21990,7 +21991,7 @@ int CvPlayerAI::AI_getDominationVictoryStage() const
 		if (GC.getGame().isVictoryValid((VictoryTypes)iI))
 		{
 			const CvVictoryInfo& kVictoryInfo = GC.getVictoryInfo((VictoryTypes)iI);
-			if (kVictoryInfo.getLandPercent() > 0 && kVictoryInfo.getPopulationPercentLead())
+			if (kVictoryInfo.conditionValue(VICTORY_CONDITION_LAND_PERCENT) > 0 && kVictoryInfo.conditionValue(VICTORY_CONDITION_POPULATION_PERCENT_LEAD))
 			{
 				eDomination = (VictoryTypes)iI;
 				break;
@@ -23089,7 +23090,7 @@ int CvPlayerAI::AI_getStrategyHash() const
 						iAchieveVictories++;
 					}
 				}
-				else if (kVictory.getMinLandPercent() > 0 || kVictory.getLandPercent() > 0)
+				else if (kVictory.conditionValue(VICTORY_CONDITION_MIN_LAND_PERCENT) > 0 || kVictory.conditionValue(VICTORY_CONDITION_LAND_PERCENT) > 0)
 				{
 					int iLargerCount = 0;
 					for (int iTeam = 0; iTeam < MAX_PC_TEAMS; iTeam++)
@@ -26110,9 +26111,9 @@ void CvPlayerAI::AI_setPushReligiousVictory()
 		if (GC.getGame().isVictoryValid((VictoryTypes)iI))
 		{
 			const CvVictoryInfo& kVictoryInfo = GC.getVictoryInfo((VictoryTypes)iI);
-			if (kVictoryInfo.getReligionPercent() > 0)
+			if (kVictoryInfo.conditionValue(VICTORY_CONDITION_RELIGION_PERCENT) > 0)
 			{
-				iVictoryTarget = kVictoryInfo.getReligionPercent();
+				iVictoryTarget = kVictoryInfo.conditionValue(VICTORY_CONDITION_RELIGION_PERCENT);
 				bValid = true;
 				break;
 			}
@@ -26213,9 +26214,9 @@ void CvPlayerAI::AI_setConsiderReligiousVictory()
 		if (GC.getGame().isVictoryValid((VictoryTypes)iI))
 		{
 			const CvVictoryInfo& kVictoryInfo = GC.getVictoryInfo((VictoryTypes)iI);
-			if (kVictoryInfo.getReligionPercent() > 0)
+			if (kVictoryInfo.conditionValue(VICTORY_CONDITION_RELIGION_PERCENT) > 0)
 			{
-				iVictoryTarget = kVictoryInfo.getReligionPercent();
+				iVictoryTarget = kVictoryInfo.conditionValue(VICTORY_CONDITION_RELIGION_PERCENT);
 				bValid = true;
 				break;
 			}

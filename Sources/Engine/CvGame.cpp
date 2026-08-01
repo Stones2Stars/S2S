@@ -22,6 +22,7 @@
 #include "CvUnitCombatInfo.h"
 #include "CvImprovementInfo.h"
 #include "CvBonusInfo.h"
+#include "CvVictoryInfo.h"
 #include "CvMap.h"
 #include "Infrastructure/CvMapGenerator.h"
 #include "UI/CvMessageControl.h"
@@ -2790,7 +2791,7 @@ int CvGame::getSymbolID(int iSymbol)
 int CvGame::getAdjustedPopulationPercent(VictoryTypes eVictory) const
 {
 	PROFILE_EXTRA_FUNC();
-	if (GC.getVictoryInfo(eVictory).getPopulationPercentLead() == 0)
+	if (GC.getVictoryInfo(eVictory).conditionValue(VICTORY_CONDITION_POPULATION_PERCENT_LEAD) == 0)
 	{
 		return 0;
 	}
@@ -2821,7 +2822,7 @@ int CvGame::getAdjustedPopulationPercent(VictoryTypes eVictory) const
 		}
 	}
 
-	return std::min(100, (((iNextBestPopulation * 100) / getTotalPopulation()) + GC.getVictoryInfo(eVictory).getPopulationPercentLead()));
+	return std::min(100, (((iNextBestPopulation * 100) / getTotalPopulation()) + GC.getVictoryInfo(eVictory).conditionValue(VICTORY_CONDITION_POPULATION_PERCENT_LEAD)));
 }
 
 
@@ -2833,16 +2834,16 @@ int CvGame::getProductionPerPopulation(HurryTypes eHurry) const
 
 int CvGame::getAdjustedLandPercent(VictoryTypes eVictory) const
 {
-	if (GC.getVictoryInfo(eVictory).getLandPercent() == 0)
+	if (GC.getVictoryInfo(eVictory).conditionValue(VICTORY_CONDITION_LAND_PERCENT) == 0)
 	{
 		return 0;
 	}
 
-	int iPercent = GC.getVictoryInfo(eVictory).getLandPercent();
+	int iPercent = GC.getVictoryInfo(eVictory).conditionValue(VICTORY_CONDITION_LAND_PERCENT);
 
 	iPercent -= (countCivTeamsEverAlive() * 2);
 
-	return std::max(iPercent, GC.getVictoryInfo(eVictory).getMinLandPercent());
+	return std::max(iPercent, GC.getVictoryInfo(eVictory).conditionValue(VICTORY_CONDITION_MIN_LAND_PERCENT));
 }
 
 
@@ -3277,7 +3278,7 @@ int CvGame::victoryDelay(VictoryTypes eVictory) const
 {
 	FASSERT_BOUNDS(0, GC.getNumVictoryInfos(), eVictory);
 
-	return GC.getVictoryInfo(eVictory).getVictoryDelayTurns() * CvGameSpeedScale::speedPercent() / 100;
+	return GC.getVictoryInfo(eVictory).conditionValue(VICTORY_CONDITION_DELAY_TURNS) * CvGameSpeedScale::speedPercent() / 100;
 }
 
 
@@ -7656,7 +7657,7 @@ bool CvGame::testVictory(VictoryTypes eVictory, TeamTypes eTeam, bool* pbEndScor
 		bValid = false;
 	}
 	// Religious Victory
-	if (bValid && GC.getVictoryInfo(eVictory).getReligionPercent() > 0)
+	if (bValid && GC.getVictoryInfo(eVictory).conditionValue(VICTORY_CONDITION_RELIGION_PERCENT) > 0)
 	{
 		bValid = false;
 		if (getNumCivCities() > (countCivPlayersAlive() * 2))
@@ -7664,7 +7665,7 @@ bool CvGame::testVictory(VictoryTypes eVictory, TeamTypes eTeam, bool* pbEndScor
 			for (int iK = 0; iK < GC.getNumReligionInfos(); iK++)
 			{
 				if (GET_TEAM(eTeam).hasHolyCity((ReligionTypes)iK)
-				&& calculateReligionPercent((ReligionTypes)iK) >= GC.getVictoryInfo(eVictory).getReligionPercent())
+				&& calculateReligionPercent((ReligionTypes)iK) >= GC.getVictoryInfo(eVictory).conditionValue(VICTORY_CONDITION_RELIGION_PERCENT))
 				{
 					bValid = true;
 					break;
@@ -7673,7 +7674,7 @@ bool CvGame::testVictory(VictoryTypes eVictory, TeamTypes eTeam, bool* pbEndScor
 		}
 	}
 	// Cultural Victory
-	if (bValid && GC.getVictoryInfo(eVictory).getCityCulture() != NO_CULTURELEVEL && GC.getVictoryInfo(eVictory).getNumCultureCities() > 0)
+	if (bValid && GC.getVictoryInfo(eVictory).getCityCulture() != NO_CULTURELEVEL && GC.getVictoryInfo(eVictory).conditionValue(VICTORY_CONDITION_NUM_CULTURE_CITIES) > 0)
 	{
 		int iCount = 0;
 		for (int iK = 0; iK < MAX_PC_PLAYERS; iK++)
@@ -7689,23 +7690,9 @@ bool CvGame::testVictory(VictoryTypes eVictory, TeamTypes eTeam, bool* pbEndScor
 				}
 			}
 		}
-		if (iCount < GC.getVictoryInfo(eVictory).getNumCultureCities())
+		if (iCount < GC.getVictoryInfo(eVictory).conditionValue(VICTORY_CONDITION_NUM_CULTURE_CITIES))
 		{
 			bValid = false;
-		}
-	}
-	// Not in use...
-	if (bValid && GC.getVictoryInfo(eVictory).getTotalCultureRatio() > 0)
-	{
-		const uint64_t iThreshold = GET_TEAM(eTeam).countTotalCulture() * 100 / GC.getVictoryInfo(eVictory).getTotalCultureRatio();
-
-		for (int iK = 0; iK < MAX_PC_TEAMS; iK++)
-		{
-			if (iK != eTeam && GET_TEAM((TeamTypes)iK).isAlive() && GET_TEAM((TeamTypes)iK).countTotalCulture() > iThreshold)
-			{
-				bValid = false;
-				break;
-			}
 		}
 	}
 	// Scientific Victory
@@ -9366,7 +9353,7 @@ void CvGame::doUpdateCacheOnTurn()
 			const CvVictoryInfo& kVictoryInfo = GC.getVictoryInfo((VictoryTypes) iI);
 			if (kVictoryInfo.getCityCulture() > 0)
 			{
-				const int iNumCultureCities = kVictoryInfo.getNumCultureCities();
+				const int iNumCultureCities = kVictoryInfo.conditionValue(VICTORY_CONDITION_NUM_CULTURE_CITIES);
 				if (iNumCultureCities > m_iNumCultureVictoryCities)
 				{
 					m_iNumCultureVictoryCities = iNumCultureCities;
