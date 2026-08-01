@@ -6526,19 +6526,8 @@ bool CvPlayer::canCreate(ProjectTypes eProject, bool bContinue, bool bTestVisibl
 			return false;
 		}
 
-		if (GC.getGame().isNoNukes() && kProject.isAllowsNukes())
-		{
-			return false;
-		}
-
-		if (kProject.getAnyoneProjectPrereq() != NO_PROJECT)
-		{
-			if (GC.getGame().getProjectCreatedCount((ProjectTypes)kProject.getAnyoneProjectPrereq()) == 0)
-			{
-				return false;
-			}
-		}
-
+		// The world-scope "someone must have built this" prereq is a `requires.build` atom the enabler already
+		// evaluates ([enabler.md §3]); re-testing it here is a second implementation of the gate.
 		for (int iI = 0; iI < GC.getNumProjectInfos(); iI++)
 		{
 			if (GET_TEAM(getTeam()).getProjectCount((ProjectTypes)iI) < kProject.getProjectsNeeded(iI))
@@ -16720,38 +16709,41 @@ int CvPlayer::getAdvancedStartTechCost(TechTypes eTech, bool bAdd) const
 			return -1;
 		}
 
-		// Search through all techs to see if any of the currently owned ones requires this tech
-		for (int iI = 0; iI < GC.getNumTechInfos(); iI++)
-		{
-			const TechTypes eTechLoop = static_cast<TechTypes>(iI);
+		// A tech drives MEMBERSHIP through its own `enables` edges ([enabler.md §2]), so "does anything I hold
+		// depend on this tech" is a FORWARD read of the handful it unlocks -- never a scan of every tech, every
+		// unit and every city's buildings asking each one backwards (the own-data inversion [AGENTS.md] names).
+		const CvEdges* pEnables = GC.getTechInfo(eTech).getEdges();
 
-			if (GET_TEAM(getTeam()).isHasTech(eTechLoop))
+		const std::vector<int>* pTechs = pEnables->find(EDGEF_ENABLES, EDGEB_TECHS);
+		if (pTechs != NULL)
+		{
+			for (size_t iEnabled = 0; iEnabled < pTechs->size(); ++iEnabled)
 			{
-				if (algo::any_of_equal(GC.getTechInfo(eTechLoop).getPrereqOrTechs(), eTech)
-				||  algo::any_of_equal(GC.getTechInfo(eTechLoop).getPrereqAndTechs(), eTech))
+				if (GET_TEAM(getTeam()).isHasTech((TechTypes)(*pTechs)[iEnabled]))
 				{
 					return -1;
 				}
 			}
 		}
 
-		// If player has placed anything on the map which uses this tech then you cannot remove it
-		foreach_(const CvUnit* pLoopUnit, units())
+		const std::vector<int>* pUnits = pEnables->find(EDGEF_ENABLES, EDGEB_UNITS);
+		if (pUnits != NULL)
 		{
-			if (pLoopUnit->getUnitInfo().getPrereqAndTech() == eTech
-			|| algo::any_of_equal(pLoopUnit->getUnitInfo().getPrereqAndTechs(), eTech))
+			for (size_t iEnabled = 0; iEnabled < pUnits->size(); ++iEnabled)
 			{
-				return -1;
+				if (getUnitCount((UnitTypes)(*pUnits)[iEnabled]) > 0)
+				{
+					return -1;
+				}
 			}
 		}
 
-		// Cities
-		foreach_(const CvCity* cityX, cities())
+		const std::vector<int>* pBuildings = pEnables->find(EDGEF_ENABLES, EDGEB_BUILDINGS);
+		if (pBuildings != NULL)
 		{
-			foreach_(const BuildingTypes eType, cityX->getHasBuildings())
+			for (size_t iEnabled = 0; iEnabled < pBuildings->size(); ++iEnabled)
 			{
-				if (GC.getBuildingInfo(eType).getPrereqAndTech() == eTech
-				|| algo::any_of_equal(GC.getBuildingInfo(eType).getPrereqAndTechs(), eTech))
+				if (getBuildingCount((BuildingTypes)(*pBuildings)[iEnabled]) > 0)
 				{
 					return -1;
 				}
@@ -24895,36 +24887,6 @@ DenialTypes CvPlayer::AI_militaryUnitTrade(const CvUnit* pUnit, PlayerTypes ePla
 
 	return NO_DENIAL;
 }
-
-bool CvPlayer::hasValidCivics(BuildingTypes eBuilding) const
-{
-	PROFILE_EXTRA_FUNC();
-	bool bValidOrCivic = false;
-	bool bOrReq = false;
-
-	for (int iI = 0; iI < GC.getNumCivicInfos(); iI++)
-	{
-		if (GC.getBuildingInfo(eBuilding).isPrereqOrCivics(iI))
-		{
-			bOrReq = true;
-			if (isCivic(CivicTypes(iI)))
-			{
-				bValidOrCivic = true;
-			}
-		}
-
-		if (GC.getBuildingInfo(eBuilding).isPrereqAndCivics(iI) && !isCivic(CivicTypes(iI)))
-		{
-			return false;
-		}
-	}
-	if (bOrReq && !bValidOrCivic)
-	{
-		return false;
-	}
-	return true;
-}
-
 
 void CvPlayer::changeBonusMintedPercent(const BonusTypes eBonus, const int iChange)
 {

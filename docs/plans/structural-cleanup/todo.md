@@ -49,7 +49,11 @@
   ([json.md §7](../../specs/json.md)): constraints → `requires`/`allowed`; `diploVoteType` → the top-level
   `voteSource` section (and rename the getter off the legacy XML tag); `tradeable` → the `canTrade` block;
   `advancedStart` → resolve the curator's parked
-  flag; `pillageGold` → drop.
+  flag; `pillageGold` → drop; **`allowsNukes` → `requires.build.disabled: "NO_NUKES"`**, the predicate
+  [json.md §3.5](../../specs/json.md) already defines for exactly this ("a nuke-enabling building carries
+  `requires.build.disabled: NO_NUKES`"). ⚠ Its legacy engine gate is CUT, so until the curator re-homes it the
+  no-nukes bar does not apply to projects at all — the hole is deliberate and visible
+  ([DEC-no-legacy-masking](../../architecture/decisions.md#dec-no-legacy-masking)), not an oversight.
   ⚠ `espionagePoints` rides the missions/`CvOutcome` carve-out — its channel is settled, only its authoring home waits.
 - Emit property pulses through the shared property-source cleaner as trigger entries carrying
   `on`/`relation`/`distance`, instead of parking them verbatim.

@@ -1421,7 +1421,6 @@ public:
 	int getTerrainYieldChange(TerrainTypes eIndex1, YieldTypes eIndex2) const;
 	void changeTerrainYieldChange(TerrainTypes eIndex1, YieldTypes eIndex2, int iChange);
 
-	bool hasValidCivics(BuildingTypes eBuilding) const;
 
 	int getSevoWondersScore(int mode);
 
