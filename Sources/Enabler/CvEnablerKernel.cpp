@@ -135,6 +135,40 @@ bool EnablerKernel::obsoletedByOtherHeldTech(const CvInfo* j, const CvTeam& kTea
 	return false;
 }
 
+void EnablerKernel::supersededBy(EnEdgeBucket eBucket, int eId, std::vector<int>& superseded)
+{
+	superseded.clear();
+	const CvInfo* pSuccessor = infoFor(eBucket, eId);
+	if (pSuccessor == NULL)
+	{
+		return;
+	}
+	// The reverse pass landed every entity whose requires -- INCLUDING its dormant triggers -- names eId.
+	const std::vector<int>* pDependents = pSuccessor->edge(EDGEF_REQUIRED_BY, eBucket);
+	if (pDependents == NULL)
+	{
+		return;
+	}
+	for (size_t i = 0; i < pDependents->size(); ++i)
+	{
+		const CvInfo* pPredecessor = infoFor(eBucket, (*pDependents)[i]);
+		if (pPredecessor == NULL)
+		{
+			continue;
+		}
+		// the EXACT predicate over the merged family: does this one go dormant TO eId, or merely reference it?
+		const std::vector<int>& dormantSuccessors = pPredecessor->dormantTriggers();
+		for (size_t iDormant = 0; iDormant < dormantSuccessors.size(); ++iDormant)
+		{
+			if (dormantSuccessors[iDormant] == eId)
+			{
+				superseded.push_back((*pDependents)[i]);
+				break;
+			}
+		}
+	}
+}
+
 void EnablerKernel::applyEdges(EnablerDomain& d, const CvInfo* j, EnEdgeBucket eBucket, int iDelta)
 {
 	if (j == NULL) return;

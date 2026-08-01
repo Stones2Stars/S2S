@@ -5715,9 +5715,11 @@ int CvCity::getAdditionalGreatPeopleRateByBuilding(BuildingTypes eBuilding) cons
 	);
 	const CvBuildingInfo& building = GC.getBuildingInfo(eBuilding);
 
-	for (int iI = 0; iI < building.getNumReplacedBuilding(); iI++)
+	std::vector<int> supersededBuildings;
+	EnablerKernel::supersededBy(EDGEB_BUILDINGS, (int)eBuilding, supersededBuildings);
+	for (size_t iI = 0; iI < supersededBuildings.size(); iI++)
 	{
-		const BuildingTypes eBuildingX = static_cast<BuildingTypes>(building.getReplacedBuilding(iI));
+		const BuildingTypes eBuildingX = static_cast<BuildingTypes>(supersededBuildings[iI]);
 
 		if (hasFullyActiveBuilding(eBuildingX))
 		{
@@ -6628,9 +6630,11 @@ int CvCity::getAdditionalHappinessByBuilding(BuildingTypes eBuilding, int& iGood
 
 	// ⛔ No TECH-keyed happiness read: zero authorings anywhere (keyed happiness is empire.buildings).
 
-	for (int iI = 0; iI < kBuilding.getNumReplacedBuilding(); iI++)
+	std::vector<int> supersededBuildings;
+	EnablerKernel::supersededBy(EDGEB_BUILDINGS, (int)eBuilding, supersededBuildings);
+	for (size_t iI = 0; iI < supersededBuildings.size(); iI++)
 	{
-		const BuildingTypes eBuildingX = static_cast<BuildingTypes>(kBuilding.getReplacedBuilding(iI));
+		const BuildingTypes eBuildingX = static_cast<BuildingTypes>(supersededBuildings[iI]);
 
 		if (isActiveBuilding(eBuildingX))
 		{
@@ -6748,9 +6752,11 @@ int CvCity::getAdditionalHealthByBuilding(BuildingTypes eBuilding, int& iGood, i
 		}
 	}
 
-	for (int iI = 0; iI < kBuilding.getNumReplacedBuilding(); iI++)
+	std::vector<int> supersededBuildings;
+	EnablerKernel::supersededBy(EDGEB_BUILDINGS, (int)eBuilding, supersededBuildings);
+	for (size_t iI = 0; iI < supersededBuildings.size(); iI++)
 	{
-		const BuildingTypes eBuildingX = static_cast<BuildingTypes>(kBuilding.getReplacedBuilding(iI));
+		const BuildingTypes eBuildingX = static_cast<BuildingTypes>(supersededBuildings[iI]);
 
 		if (hasFullyActiveBuilding(eBuildingX))
 		{
@@ -10280,8 +10286,8 @@ void CvCity::setHasBuilding(const BuildingTypes eType, const bool bNewValue, con
 
 		// (Buildings REPLACED by this one are not disabled here: a predecessor standing under its successor is
 		// reversible DORMANCY, authored as the target's `requires.operate.dormant` and resolved by the enabler's
-		// operate fixpoint -- enabler.md §2. Re-deriving it from getReplacedBuilding would be the hand
-		// re-derivation [DEC-calc-zero-ride-in] bans.)
+		// operate fixpoint -- enabler.md §2. Re-deriving it here would be the hand re-derivation
+		// [DEC-calc-zero-ride-in] bans.)
 	}
 }
 
@@ -15328,9 +15334,11 @@ int CvCity::getAdditionalDefenseByBuilding(BuildingTypes eBuilding) const
 	}
 
 	// If this new building replaces an old one, subtract the old defense rate from the new one.
-	for (int iI = 0; iI < kBuilding.getNumReplacedBuilding(); iI++)
+	std::vector<int> supersededBuildings;
+	EnablerKernel::supersededBy(EDGEB_BUILDINGS, (int)eBuilding, supersededBuildings);
+	for (size_t iI = 0; iI < supersededBuildings.size(); iI++)
 	{
-		const BuildingTypes eBuildingX = static_cast<BuildingTypes>(kBuilding.getReplacedBuilding(iI));
+		const BuildingTypes eBuildingX = static_cast<BuildingTypes>(supersededBuildings[iI]);
 
 		if (isActiveBuilding(eBuildingX))
 		{

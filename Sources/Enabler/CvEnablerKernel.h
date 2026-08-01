@@ -88,6 +88,20 @@ public:
 	// ... by a held tech OTHER than eExclude (the tech-delta's obsolete-present ripple counterfactual).
 	static bool obsoletedByOtherHeldTech(const CvInfo* j, const CvTeam& kTeam, TechTypes eExclude);
 
+	// THE SUPERSEDED SET -- "which entities of this kind does eId push into dormancy?", the REVERSE of the
+	// dormant edge. The legacy `ReplacementBuildings` read the relation from the successor's side; the curated
+	// model authors it target-side, as each PREDECESSOR's `requires.operate.dormant` naming its successor
+	// (enabler.md §2: a building replacement is reversible DORMANCY, never a `replaces` removal). So the
+	// forward question the enabler asks every turn -- "is a successor of mine present?" -- and this one are the
+	// two directions of one edge, and this is the only place the reverse is walked
+	// ([DEC-single-implementation]).
+	//
+	// ⚠ EDGEF_REQUIRED_BY is a MERGED bucket: it also carries every entity whose requires.build/operate merely
+	// REFERENCES eId (enabler.md's edge-family caution -- a consumer with ALL semantics cannot read it raw).
+	// So each candidate is confirmed against its OWN dormantTriggers, which is the exact predicate the caution
+	// prescribes; without it a building that simply REQUIRES eId would read as superseded by it.
+	static void supersededBy(EnEdgeBucket eBucket, int eId, std::vector<int>& superseded);
+
 	// The ONE domain-refcount edge applier (enabler.md par.7.1; DEC-single-implementation): apply/withdraw a
 	// HAVE-source's edges into a domain -- enables.<bucket> -> the enable plane, obsoletes/replaces/
 	// disables.<bucket> -> the remove plane. Every per-domain enabler's seed + event deltas route through this.
