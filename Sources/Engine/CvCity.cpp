@@ -673,7 +673,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	{
 		for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 		{
-			setCommerceModifierDirty((CommerceTypes)iI);
 		}
 	}
 	m_iID = iID;
@@ -1384,7 +1383,6 @@ void CvCity::doTurn()
 	//Damages enemy units around the city, if applicable
 	{ PERF_SCOPE("city.doAttack", getOwner()); doAttack(); }
 	//Heals friendly units in the city extra, if applicable
-	{ PERF_SCOPE("city.doHeal", getOwner()); doHeal(); }
 	//Spreads corporations
 	{ PERF_SCOPE("city.doCorporation", getOwner()); doCorporation(); }
 	//Counts down the disable power timer
@@ -3599,7 +3597,7 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 		// The player-side ledger legs stay: they are recompute-from-source stores the city PULLS, not
 		// per-building accumulators (state-repositories.md).
 		changeBuildingCommerceChange(eBuilding, eCommerceX, iChange * owner.getBuildingCommerceChange(eBuilding, eCommerceX));
-		changeBuildingCommerceModifier(eCommerceX, iChange * (kBuilding.getCommerceModifier(eCommerceX, CASC_SCOPE_CITY) + owner.getBuildingCommerceModifier(eBuilding, eCommerceX)));
+		owner.invalidateCommerceRankCache();
 	}
 
 	//	The slot cap is a fresh read over the operating buildings now, so nothing accumulates here. What DOES
@@ -3695,7 +3693,6 @@ void CvCity::processSpecialist(SpecialistTypes eSpecialist, int iChange)
 	}
 	else
 	{
-		updateSpecialistHappinessHealthFromTech();
 	}
 }
 
@@ -8363,9 +8360,6 @@ int CvCity::getTotalCommerceRateModifier(CommerceTypes eIndex) const
 
 // The modifier's own dirty flag is gone with the hand-rolled cache above; what remains is the ordinary
 // commerce-dirty signal the rate read still uses.
-void CvCity::setCommerceModifierDirty(CommerceTypes eCommerce)
-{
-}
 
 int CvCity::getProductionToCommerceModifier(CommerceTypes eIndex) const
 {
@@ -8687,7 +8681,6 @@ void CvCity::recordCommerceRateModifierGrant(EventTypes eEvent, CommerceTypes eI
 	{
 		m_eventGrants.add(EVENTGRANT_COMMERCE_RATE_MODIFIER, eEvent, eIndex, -1, iChange);
 
-		setCommerceModifierDirty(eIndex);
 
 		AI_setAssignWorkDirty(true);
 	}
@@ -8733,27 +8726,6 @@ void CvCity::changeCommerceHappinessPer(CommerceTypes eIndex, int iChange)
 		AI_setAssignWorkDirty(true);
 	}
 }
-
-
-void CvCity::changeBuildingCommerceModifier(CommerceTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-
-	if (iChange != 0)
-	{
-		m_buildingCommerceMod[eIndex] += iChange;
-		setCommerceModifierDirty(eIndex);
-		GET_PLAYER(getOwner()).invalidateCommerceRankCache();
-	}
-}
-
-int CvCity::getBuildingCommerceModifier(CommerceTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-	return m_buildingCommerceMod[eIndex];
-}
-
-
 
 
 int CvCity::getDomainProductionModifier(DomainTypes eIndex) const
@@ -15736,17 +15708,6 @@ void CvCity::changeProtectedCultureCount(int iChange)
 	m_iProtectedCultureCount += iChange;
 }
 
-int CvCity::getNumUnitFullHeal() const
-{
-	return m_iNumUnitFullHeal;
-}
-
-void CvCity::changeNumUnitFullHeal(int iChange)
-{
-	m_iNumUnitFullHeal += iChange;
-}
-
-
 void CvCity::doAttack()
 {
 	PROFILE_FUNC();
@@ -15788,28 +15749,6 @@ void CvCity::doAttack()
 	}
 }
 
-void CvCity::doHeal()
-{
-	PROFILE_FUNC();
-
-	if (getNumUnitFullHeal() > 0)
-	{
-		UnitVector damagedUnits;
-		// Get the damaged units on our team
-		algo::push_back(
-			damagedUnits,
-			plot()->units() | filtered(CvUnit::fn::getTeam() == getTeam() && CvUnit::fn::getDamage() > 0)
-		);
-		// Randomize them
-		algo::random_shuffle(damagedUnits, CvGame::SorenRand("Unit Full Heals"));
-		// Heal as many as we are able
-		const int maxHeals = std::min<int>(getNumUnitFullHeal(), damagedUnits.size());
-		foreach_(CvUnit * unit, damagedUnits | sliced(0, maxHeals))
-		{
-			unit->setDamage(0, getOwner(), false);
-		}
-	}
-}
 
 void CvCity::doCorporation()
 {
@@ -16842,85 +16781,11 @@ int CvCity::cityDefenseRecoveryRate() const
 }
 
 
-void CvCity::updateExtraTechSpecialistHappiness()
-{
-	PROFILE_EXTRA_FUNC();
-	int iRunningTotal = 0;
-
-	for (int iI = GC.getNumSpecialistInfos() - 1; iI > -1; iI--)
-	{
-		const SpecialistTypes eSpecialist = static_cast<SpecialistTypes>(iI);;
-		const int iSpecificSpecialistCount = specialistCount(eSpecialist);
-
-		for (int iJ = GC.getNumTechInfos() - 1; iJ > -1; iJ--)
-		{
-			if (GET_TEAM(getTeam()).isHasTech(static_cast<TechTypes>(iJ)))
-			{
-				iRunningTotal += iSpecificSpecialistCount * GC.getSpecialistInfo(eSpecialist).getTechHappiness(static_cast<TechTypes>(iJ));
-			}
-		}
-	}
-}
-
-int CvCity::getBuildingHappinessFromTech(const TechTypes eTech) const
-{
-	PROFILE_EXTRA_FUNC();
-	for (std::vector< std::pair<TechTypes, int> >::const_iterator it = m_buildingHappinessFromTech.begin(); it != m_buildingHappinessFromTech.end(); ++it)
-	{
-		if ((*it).first == eTech)
-		{
-			return ((*it).second);
-		}
-	}
-	return 0;
-}
-
-void CvCity::updateSpecialistHappinessHealthFromTech()
-{
-	updateExtraTechSpecialistHappiness();
-	updateExtraTechSpecialistHealth();
-
-	AI_setAssignWorkDirty(true);
-
-	if (getTeam() == GC.getGame().getActiveTeam())
-	{
-		setInfoDirty(true);
-	}
-}
 
 
-void CvCity::updateExtraTechSpecialistHealth()
-{
-	PROFILE_EXTRA_FUNC();
-	int iRunningTotal = 0;
 
-	for (int iI = GC.getNumSpecialistInfos() - 1; iI > -1; iI--)
-	{
-		const SpecialistTypes eSpecialist = static_cast<SpecialistTypes>(iI);
-		const int iSpecificSpecialistCount = specialistCount(eSpecialist);
 
-		for (int iJ = GC.getNumTechInfos() - 1; iJ > -1; iJ--)
-		{
-			if (GET_TEAM(getTeam()).isHasTech(static_cast<TechTypes>(iJ)))
-			{
-				iRunningTotal += iSpecificSpecialistCount * GC.getSpecialistInfo(eSpecialist).getTechHealth(static_cast<TechTypes>(iJ));
-			}
-		}
-	}
-}
 
-int CvCity::getBuildingHealthFromTech(const TechTypes eTech) const
-{
-	PROFILE_EXTRA_FUNC();
-	for (std::vector< std::pair<TechTypes, int> >::const_iterator it = m_buildingHealthFromTech.begin(); it != m_buildingHealthFromTech.end(); ++it)
-	{
-		if ((*it).first == eTech)
-		{
-			return ((*it).second);
-		}
-	}
-	return 0;
-}
 
 int CvCity::getLocalSpecialistExtraYield(SpecialistTypes eSpecialist, YieldTypes eYield) const
 {
@@ -17244,7 +17109,6 @@ void CvCity::endCitizenJuggling()
 	if (m_bJuggleDeferredSpec)
 	{
 		// the three whole-set recomputes every probe skipped, run ONCE for the run
-		updateSpecialistHappinessHealthFromTech();
 
 		const int iNumSpecialists = std::min((int)m_juggleSpecialistStart.size(), GC.getNumSpecialistInfos());
 		for (int iSpecialist = 0; iSpecialist < iNumSpecialists; ++iSpecialist)
@@ -17354,17 +17218,6 @@ void CvCity::setWorkerHave(const int iUnitID, const bool bNewValue)
 	}
 }
 
-void CvCity::processTech(const TechTypes eTech, const int iChange)
-{
-	updateSpecialistHappinessHealthFromTech();
-	{
-		const int iBuildingHappinessFromTech = getBuildingHappinessFromTech(eTech);
-
-		if (iBuildingHappinessFromTech != 0)
-		{
-		}
-	}
-}
 
 
 const CityOutputHistory* CvCity::getCityOutputHistory() const

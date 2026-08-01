@@ -10575,7 +10575,6 @@ void CvPlayer::setCapitalCity(CvCity* pNewCapitalCity)
 		{
 			for(int iI = 0; iI < NUM_COMMERCE_TYPES ; iI++ )
 			{
-				pOldCapitalCity->setCommerceModifierDirty((CommerceTypes)iI);
 			}
 			pOldCapitalCity->setInfoDirty(true);
 		}
@@ -10583,7 +10582,6 @@ void CvPlayer::setCapitalCity(CvCity* pNewCapitalCity)
 		{
 			for(int iI = 0; iI < NUM_COMMERCE_TYPES ; iI++ )
 			{
-				pNewCapitalCity->setCommerceModifierDirty((CommerceTypes)iI);
 			}
 			pNewCapitalCity->setInfoDirty(true);
 		}
@@ -12273,8 +12271,7 @@ void CvPlayer::changeCapitalCommerceRateModifier(CommerceTypes eIndex, int iChan
 
 		if (pCapitalCity)
 		{
-			pCapitalCity->setCommerceModifierDirty(eIndex);
-
+			pCapitalCity->
 			pCapitalCity->AI_setAssignWorkDirty(true);
 		}
 	}
@@ -26185,14 +26182,6 @@ void CvPlayer::changeBuildingCommerceModifier(BuildingTypes eType, CommerceTypes
 	if (iChange != 0)
 	{
 		m_ppiBuildingCommerceModifier[eType][eCommerce] += iChange;
-
-		foreach_(CvCity* cityX, cities())
-		{
-			if (cityX->hasFullyActiveBuilding(eType))
-			{
-				cityX->changeBuildingCommerceModifier(eCommerce, iChange);
-			}
-		}
 	}
 }
 
@@ -26219,8 +26208,7 @@ void CvPlayer::changeBonusCommerceModifier(BonusTypes eIndex1, CommerceTypes eIn
 
 void CvPlayer::setCityCommerceModifierDirty(CommerceTypes eCommerce)
 {
-	algo::for_each(cities(), CvCity::fn::setCommerceModifierDirty(eCommerce));
-}
+	algo::for_each(cities(), CvCity::fn::}
 
 int CvPlayer::getLandmarkYield(YieldTypes eIndex) const
 {
@@ -28860,7 +28848,6 @@ void CvPlayer::processTech(const TechTypes eTech, const int iChange)
 	{
 		changeCommerceRateModifier(static_cast<CommerceTypes>(i), tech.getCommerceModifier(i) * iChange);
 	}
-	algo::for_each(cities(), CvCity::fn::processTech(eTech, iChange));
 }
 
 

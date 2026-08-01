@@ -75,7 +75,6 @@ public:
 	std::vector<int> getWorkers() const { return m_workers; }
 	void setWorkerHave(const int iUnitID, const bool bNewValue);
 
-	void processTech(const TechTypes eTech, const int iChange);
 
 private:
 	bool canHurryInternal(const HurryTypes eHurry) const;
@@ -922,8 +921,6 @@ public:
 
 	int getBaseYieldRateModifier(YieldTypes eIndex, int iExtra = 0) const;
 
-	void changeBuildingCommerceModifier(CommerceTypes eIndex, int iChange);
-	int getBuildingCommerceModifier(CommerceTypes eIndex) const;
 
 	void onYieldChange();
 
@@ -950,7 +947,6 @@ public:
 
 
 	int getTotalCommerceRateModifier(CommerceTypes eIndex) const;
-	void setCommerceModifierDirty(CommerceTypes eCommerce);
 
 	int getProductionToCommerceModifier(CommerceTypes eIndex) const;
 	void changeProductionToCommerceModifier(CommerceTypes eIndex, int iChange);
@@ -1285,11 +1281,8 @@ public:
 	bool isProtectedCulture() const;
 	void changeProtectedCultureCount(int iChange);
 
-	int getNumUnitFullHeal() const;
-	void changeNumUnitFullHeal(int iChange);
 
 	void doAttack();
-	void doHeal();
 
 	void doCorporation();
 	int getCorporationInfluence(CorporationTypes eCorporation) const;
@@ -1773,13 +1766,9 @@ public:
 	int getLocalSpecialistExtraYield(SpecialistTypes eSpecialist, YieldTypes eYield) const;
 
 private:
-	void updateExtraTechSpecialistHappiness();
 
-	int getBuildingHappinessFromTech(const TechTypes eTech) const;
-	int getBuildingHealthFromTech(const TechTypes eTech) const;
 
 	void updateExtraTechHappiness();
-	void updateExtraTechSpecialistHealth();
 	int getTechHealth(TechTypes eTech) const;
 	void changeLocalSpecialistExtraYield(SpecialistTypes eSpecialist, YieldTypes eYield, int iChange);
 
@@ -1814,7 +1803,6 @@ public:
 	int getExtraLocalCaptureProbabilityModifier() const;
 	int getExtraLocalCaptureResistanceModifier() const;
 
-	void updateSpecialistHappinessHealthFromTech();
 
 	int getExtraLocalDynamicDefense() const;
 
@@ -1899,7 +1887,6 @@ public:
 		DECLARE_MAP_FUNCTOR(CvCity, void, invalidateYieldRankCache);
 		DECLARE_MAP_FUNCTOR(CvCity, void, invalidateCommerceRankCache);
 
-		DECLARE_MAP_FUNCTOR_1(CvCity, void, setCommerceModifierDirty, CommerceTypes);
 		DECLARE_MAP_FUNCTOR_1(CvCity, void, setLayoutDirty, bool);
 		DECLARE_MAP_FUNCTOR_1(CvCity, void, AI_setAssignWorkDirty, bool);
 		DECLARE_MAP_FUNCTOR_1(CvCity, void, AI_setChooseProductionDirty, bool);
@@ -1912,7 +1899,6 @@ public:
 		DECLARE_MAP_FUNCTOR_2(CvCity, void, setBuildingListFilterActive, BuildingFilterTypes, bool);
 		DECLARE_MAP_FUNCTOR_2(CvCity, void, changeFreeSpecialistCount, SpecialistTypes, int);
 		DECLARE_MAP_FUNCTOR_2(CvCity, void, processVoteSourceBonus, VoteSourceTypes, bool);
-		DECLARE_MAP_FUNCTOR_2(CvCity, void, processTech, const TechTypes, const int);
 
 		DECLARE_MAP_FUNCTOR_CONST(CvCity, bool, isCapital);
 		DECLARE_MAP_FUNCTOR_CONST(CvCity, bool, isNoUnhappiness);
