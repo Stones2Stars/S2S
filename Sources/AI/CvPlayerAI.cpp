@@ -4859,9 +4859,11 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 
 	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
 	{
-		if (kTech.getFreeSpecialistCount(iI) != 0)
+		const int iTechFreeSpecialists =
+			InfoValuation::keyedTarget(kTech.getModifiers(), MODFAM_FREE_SPECIALISTS, CHANNEL_AMOUNT, -1, iI) / 100;
+		if (iTechFreeSpecialists != 0)
 		{
-			iValue += 50 * getNumCities() * kTech.getFreeSpecialistCount(iI);
+			iValue += 50 * getNumCities() * iTechFreeSpecialists;
 		}
 	}
 
@@ -13867,9 +13869,11 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 	iTempValue = 0;
 	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
 	{
-		if (kCivic.getFreeSpecialistCount(iI) > 0)
+		const int iCivicFreeSpecialists =
+			InfoValuation::keyedTarget(kCivic.getModifiers(), MODFAM_FREE_SPECIALISTS, CHANNEL_AMOUNT, -1, iI) / 100;
+		if (iCivicFreeSpecialists > 0)
 		{
-			iTempValue += getNumCities() * kCivic.getFreeSpecialistCount(iI) * 12;
+			iTempValue += getNumCities() * iCivicFreeSpecialists * 12;
 		}
 	}
 	
@@ -14149,7 +14153,8 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 	iTempValue = -((kCivic.getWarWearinessModifier() * getNumCities()) / ((bWarPlan) ? 10 : 50));
 	
 	iValue += iTempValue;
-	iTempValue = (kCivic.getFreeSpecialist() * getNumCities() * 12);
+	// The civic's untyped slots reach EVERY city of the empire, so they scale by the city count.
+	iTempValue = (kCivic.getFreeSpecialistsAny(CASC_SCOPE_EMPIRE) / 100 * getNumCities() * 12);
 	
 	iValue += iTempValue;
 

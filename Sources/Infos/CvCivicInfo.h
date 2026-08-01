@@ -56,6 +56,11 @@ public:
 		}
 		return m_modifiers.sum(infoWellbeingFamily(eChannel), CHANNEL_AMOUNT, eScope, CASC_UNIT_FLAT);
 	}
+	// freeSpecialists.<scope>.any -- the GENERIC free-specialist slots this civic grants while adopted
+	// ([modifier.md §6]: the cascade owns the AMOUNT, the engine picks each slot's type at placement). The
+	// TYPED `{SPECIALIST_X}` rows beside it are keyed and stay an entry-list read. ×100; the reader reduces.
+	int getFreeSpecialistsAny(CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_FREE_SPECIALISTS, CHANNEL_AMOUNT, eScope, CASC_UNIT_COUNT); }
 	// The grouped families this type's census participation covers.
 	int getMaintenanceModifier(MaintenanceKind eKind, CvCascScope eScope) const
 	{ return m_modifiers.sum(MODFAM_MAINTENANCE, eKind, eScope, CASC_UNIT_PERCENT); }

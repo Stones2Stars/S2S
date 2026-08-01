@@ -5757,13 +5757,22 @@ int CvCity::getAdditionalBaseGreatPeopleRateByBuilding(BuildingTypes eBuilding) 
 	// Specialists
 	for (int iI = 0; iI < GC.getNumSpecialistInfos(); ++iI)
 	{
-		if (kBuilding.getFreeSpecialistCount((SpecialistTypes)iI) != 0)
+		// The TYPED free slots this building opens for this specialist. The address is keyed directly by
+		// the type with no container token, which is what the -1 segment selects ([modifier.md §5]); the
+		// COUNT unit stores ×100.
+		const int iTypedFreeSlots =
+			InfoValuation::keyedTarget(kBuilding.getModifiers(), MODFAM_FREE_SPECIALISTS,
+				CHANNEL_AMOUNT, -1, iI) / 100;
+		if (iTypedFreeSlots != 0)
 		{
-			iExtraRate += getAdditionalBaseGreatPeopleRateBySpecialist((SpecialistTypes)iI, kBuilding.getFreeSpecialistCount((SpecialistTypes)iI));
+			iExtraRate += getAdditionalBaseGreatPeopleRateBySpecialist((SpecialistTypes)iI, iTypedFreeSlots);
 		}
 	}
 
-	for (int iI = 1; iI < kBuilding.getFreeSpecialist() + 1; iI++)
+	// The untyped slots this building opens here -- the engine picks each one's type at placement
+	// ([modifier.md §6]), so the loop asks it per slot. The COUNT unit stores ×100.
+	const int iCityFreeSpecialistSlots = kBuilding.getFreeSpecialistsAny(CASC_SCOPE_CITY) / 100;
+	for (int iI = 1; iI < iCityFreeSpecialistSlots + 1; iI++)
 	{
 		const SpecialistTypes eNewSpecialist = getBestSpecialist(iI);
 		if (eNewSpecialist == NO_SPECIALIST) break;
@@ -6713,7 +6722,10 @@ int CvCity::getAdditionalHappinessByBuilding(BuildingTypes eBuilding, int& iGood
 
 	int iSpecialistExtraHappy = 0;
 
-	for (int iI = 1; iI < kBuilding.getFreeSpecialist() + 1; iI++)
+	// The untyped slots this building opens here -- the engine picks each one's type at placement
+	// ([modifier.md §6]), so the loop asks it per slot. The COUNT unit stores ×100.
+	const int iCityFreeSpecialistSlots = kBuilding.getFreeSpecialistsAny(CASC_SCOPE_CITY) / 100;
+	for (int iI = 1; iI < iCityFreeSpecialistSlots + 1; iI++)
 	{
 		const SpecialistTypes eNewSpecialist = getBestSpecialist(iI);
 		if (eNewSpecialist == NO_SPECIALIST) break;
@@ -6830,7 +6842,10 @@ int CvCity::getAdditionalHealthByBuilding(BuildingTypes eBuilding, int& iGood, i
 
 	int iSpecialistExtraHealth = 0;
 
-	for (int iI = 1; iI < kBuilding.getFreeSpecialist() + 1; iI++)
+	// The untyped slots this building opens here -- the engine picks each one's type at placement
+	// ([modifier.md §6]), so the loop asks it per slot. The COUNT unit stores ×100.
+	const int iCityFreeSpecialistSlots = kBuilding.getFreeSpecialistsAny(CASC_SCOPE_CITY) / 100;
+	for (int iI = 1; iI < iCityFreeSpecialistSlots + 1; iI++)
 	{
 		const SpecialistTypes eNewSpecialist = getBestSpecialist(iI);
 		if (eNewSpecialist == NO_SPECIALIST) break;
