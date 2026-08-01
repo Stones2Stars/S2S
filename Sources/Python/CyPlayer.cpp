@@ -1106,9 +1106,7 @@ int CyPlayer::getCapitalCommerceRateModifier(CommerceTypes eIndex) const
 	return m_pPlayer->getCapitalCommerceRateModifier(eIndex);
 }
 
-int CyPlayer::getSpecialistExtraCommerce(CommerceTypes eIndex) const
 {
-	return m_pPlayer->getSpecialistExtraCommerce(eIndex);
 }
 
 bool CyPlayer::isCommerceFlexible(int /*CommerceTypes*/ eIndex) const

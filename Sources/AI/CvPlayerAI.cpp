@@ -2569,7 +2569,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 			{
 				if (isSpecialistValid((SpecialistTypes)iI))
 				{
-					iGreed = std::max(iGreed, 100 + 10 * std::min(4, (GC.getSpecialistInfo((SpecialistTypes)iI).getFlatCommerce(COMMERCE_CULTURE, CASC_SCOPE_CITY) / 100 + getSpecialistExtraCommerce(COMMERCE_CULTURE))));
+					iGreed = std::max(iGreed, 100 + 10 * std::min(4, GC.getSpecialistInfo((SpecialistTypes)iI).getFlatCommerce(COMMERCE_CULTURE, CASC_SCOPE_CITY) / 100));
 				}
 			}
 

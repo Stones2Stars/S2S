@@ -1026,3 +1026,16 @@ CvCity::FreeBuildingsIndex
 CvCity::FreeAreaBuildingCountSize
 CvCity::FreeAreaBuildingCountType
 CvCity::FreeAreaBuildingCount
+
+| The SPECIALIST EXTRA-COMMERCE accumulators, all three planes. They are the per-specialist commerce bonus in its
+| local (building-in-city), perType (one named specialist) and all (any specialist -- the Sistine shape) forms,
+| pushed by processBuilding / processCivics / processTrait into a player and a city store. The cascade owns them:
+| the curator authors the deposit on the SOURCE at empire scope with a per-SPECIALIST scaler, so the stores were
+| a second copy of a value the packages already carry.
+| ⚠ Their change* riders were audited before the cut: updateExtraSpecialistCommerce had already been gutted to a
+| no-op (it computed a total and discarded it), and the AI_makeAssignWorkDirty / AI_setAssignWorkDirty flips are
+| owed to the citizen-assignment SPINE CONSUMER rather than re-inlined here.
+| REPLACEMENT: the cascade commerce packages ({commerce}.empire.cities with per:{type:SPECIALIST}).
+CvPlayer::m_aiSpecialistExtraCommerce
+CvPlayer::m_ppaaiSpecialistExtraCommerce
+CvCity::m_ppaaiLocalSpecialistExtraCommerce

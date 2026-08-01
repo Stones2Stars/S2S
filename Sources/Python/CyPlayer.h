@@ -290,7 +290,6 @@ public:
 	void changeCommercePercent(CommerceTypes eIndex, int iChange);
 	int getCommerceRateModifier(CommerceTypes eIndex) const;
 	int getCapitalCommerceRateModifier(CommerceTypes eIndex) const;
-	int getSpecialistExtraCommerce(CommerceTypes eIndex) const;
 
 	bool isCommerceFlexible(int /*CommerceTypes*/ eIndex) const;
 

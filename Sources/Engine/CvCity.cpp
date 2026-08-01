@@ -372,7 +372,6 @@ CvCity::CvCity()
 	m_paiUnitCombatProductionModifier = NULL;
 	m_paiUnitCombatDefenseAgainstModifier = NULL;
 	m_ppaaiLocalSpecialistExtraYield = NULL;
-	m_ppaaiLocalSpecialistExtraCommerce = NULL;
 
 	m_paiSpecialistBannedCount = NULL;
 	m_paiHealUnitCombatTypeVolume = NULL;
@@ -650,7 +649,6 @@ void CvCity::uninit()
 	SAFE_DELETE_ARRAY(m_paiSpecialistBannedCount);
 	SAFE_DELETE_ARRAY(m_paiHealUnitCombatTypeVolume);
 	SAFE_DELETE_ARRAY2(m_ppaaiLocalSpecialistExtraYield, GC.getNumSpecialistInfos());
-	SAFE_DELETE_ARRAY2(m_ppaaiLocalSpecialistExtraCommerce, GC.getNumSpecialistInfos());
 }
 
 // FUNCTION: reset()
@@ -865,8 +863,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 		FAssertMsg(0 < GC.getNumSpecialistInfos(), "GC.getNumSpecialistInfos() is not greater than zero but an array is being allocated in CvCity::reset");
 		FAssertMsg(m_ppaaiLocalSpecialistExtraYield == NULL, "about to leak memory, CvCity::m_ppaaiLocalSpecialistExtraYield");
 		m_ppaaiLocalSpecialistExtraYield = new int* [GC.getNumSpecialistInfos()];
-		FAssertMsg(m_ppaaiLocalSpecialistExtraCommerce == NULL, "about to leak memory, CvCity::m_ppaaiLocalSpecialistExtraCommerce");
-		m_ppaaiLocalSpecialistExtraCommerce = new int* [GC.getNumSpecialistInfos()];
 		m_paiSpecialistBannedCount = new int[GC.getNumSpecialistInfos()];
 		for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
 		{
@@ -876,10 +872,8 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 				m_ppaaiLocalSpecialistExtraYield[iI][iJ] = 0;
 			}
 			m_paiSpecialistBannedCount[iI] = 0;
-			m_ppaaiLocalSpecialistExtraCommerce[iI] = new int[NUM_COMMERCE_TYPES];
 			for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
 			{
-				m_ppaaiLocalSpecialistExtraCommerce[iI][iJ] = 0;
 			}
 		}
 
@@ -3708,7 +3702,6 @@ void CvCity::processSpecialist(SpecialistTypes eSpecialist, int iChange)
 	else
 	{
 		updateExtraSpecialistYield();
-		updateExtraSpecialistCommerce();
 		updateSpecialistHappinessHealthFromTech();
 	}
 }
@@ -8862,54 +8855,6 @@ void CvCity::updateExtraSpecialistYield()
 	}
 }
 
-int CvCity::getExtraSpecialistCommerceTotal(CommerceTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-	return m_aiExtraSpecialistCommerce[eIndex];
-}
-
-int CvCity::getExtraSpecialistCommerce(CommerceTypes eIndex, SpecialistTypes eSpecialist) const
-{
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eSpecialist);
-	return (specialistCount(eSpecialist) * (getLocalSpecialistExtraCommerce(eSpecialist, eIndex) + GET_PLAYER(getOwner()).getExtraSpecialistCommerce(eSpecialist, eIndex) + GET_PLAYER(getOwner()).getSpecialistExtraCommerce(eIndex)));
-}
-
-void CvCity::updateExtraSpecialistCommerce(CommerceTypes eCommerce)
-{
-	PROFILE_EXTRA_FUNC();
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eCommerce);
-
-	int iOldCommerce = getExtraSpecialistCommerceTotal(eCommerce);
-
-	int iNewCommerce = 0;
-
-	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
-	{
-		iNewCommerce += getExtraSpecialistCommerce(eCommerce, ((SpecialistTypes)iI));
-	}
-
-}
-
-void CvCity::updateExtraSpecialistCommerce()
-{
-	PROFILE_EXTRA_FUNC();
-	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
-	{
-		updateExtraSpecialistCommerce((CommerceTypes)iI);
-	}
-
-
-	if (getTeam() == GC.getGame().getActiveTeam())
-	{
-		setInfoDirty(true);
-	}
-	if (isCitySelected())
-	{
-		gDLL->getInterfaceIFace()->setDirty(CityScreen_DIRTY_BIT, true);
-		gDLL->getInterfaceIFace()->setDirty(InfoPane_DIRTY_BIT, true);
-	}
-}
 
 
 
@@ -9167,9 +9112,6 @@ int CvCity::getAdditionalBaseCommerceRateBySpecialist(CommerceTypes eIndex, Spec
 	return (
 		iChange * (
 			GC.getSpecialistInfo(eSpecialist).getCommerceChange(eIndex)
-			+ GET_PLAYER(getOwner()).getExtraSpecialistCommerce(eSpecialist, eIndex)
-			+ getLocalSpecialistExtraCommerce(eSpecialist, eIndex)
-			+ GET_PLAYER(getOwner()).getSpecialistExtraCommerce(eIndex)
 		)
 	);
 }
@@ -13902,12 +13844,10 @@ void CvCity::readBody(FDataStreamBase* pStream)
 
 		if (iI != -1)
 		{
-			WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_ppaaiLocalSpecialistExtraCommerce[iI]);
 		}
 		else
 		{
 			//	Consume the values
-			WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_ppaaiLocalSpecialistExtraCommerce[iI], SAVE_VALUE_TYPE_INT_ARRAY);
 		}
 	}
 	WRAPPER_READ(wrapper, "CvCity", &m_bVisibilitySetup);
@@ -14396,7 +14336,6 @@ void CvCity::write(FDataStreamBase* pStream)
 
 	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
 	{
-		WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_ppaaiLocalSpecialistExtraCommerce[iI]);
 	}
 	WRAPPER_WRITE(wrapper, "CvCity", m_bVisibilitySetup);
 
@@ -18202,28 +18141,6 @@ void CvCity::changeLocalSpecialistExtraYield(SpecialistTypes eSpecialist, YieldT
 	AI_setAssignWorkDirty(true);
 }
 
-int CvCity::getLocalSpecialistExtraCommerce(SpecialistTypes eSpecialist, CommerceTypes eCommerce) const
-{
-	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eSpecialist);
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eCommerce);
-
-	return m_ppaaiLocalSpecialistExtraCommerce[eSpecialist][eCommerce];
-}
-
-void CvCity::changeLocalSpecialistExtraCommerce(SpecialistTypes eSpecialist, CommerceTypes eCommerce, int iChange)
-{
-	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eSpecialist);
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eCommerce);
-
-	if (iChange != 0)
-	{
-		m_ppaaiLocalSpecialistExtraCommerce[eSpecialist][eCommerce] = (m_ppaaiLocalSpecialistExtraCommerce[eSpecialist][eCommerce] + iChange);
-	}
-
-	updateExtraSpecialistCommerce();
-
-	AI_setAssignWorkDirty(true);
-}
 
 int CvCity::specialistCount(SpecialistTypes eSpecialist) const
 {
@@ -18245,10 +18162,7 @@ int CvCity::specialistCommerce(SpecialistTypes eSpecialist, CommerceTypes eComme
 	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eSpecialist);
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eCommerce);
 
-	int iTotal = GET_PLAYER(getOwner()).specialistCommerce(eSpecialist, eCommerce);
-	iTotal += getLocalSpecialistExtraCommerce(eSpecialist, eCommerce);
-
-	return iTotal;
+	return GET_PLAYER(getOwner()).specialistCommerce(eSpecialist, eCommerce);
 }
 
 int CvCity::specialistYieldTotal(SpecialistTypes eSpecialist, YieldTypes eYield) const
@@ -18530,7 +18444,6 @@ void CvCity::endCitizenJuggling()
 	{
 		// the three whole-set recomputes every probe skipped, run ONCE for the run
 		updateExtraSpecialistYield();
-		updateExtraSpecialistCommerce();
 		updateSpecialistHappinessHealthFromTech();
 
 		const int iNumSpecialists = std::min((int)m_juggleSpecialistStart.size(), GC.getNumSpecialistInfos());

@@ -1024,8 +1024,6 @@ public:
 	int getStateReligionBuildingCommerce(CommerceTypes eIndex) const;
 	void changeStateReligionBuildingCommerce(CommerceTypes eIndex, int iChange);
 
-	int getSpecialistExtraCommerce(CommerceTypes eIndex) const;
-	void changeSpecialistExtraCommerce(CommerceTypes eIndex, int iChange);
 
 	bool isCommerceFlexible(CommerceTypes eIndex) const;
 
@@ -2004,7 +2002,6 @@ protected:
 	CivicTypes* m_paeCivics;
 
 	int** m_ppaaiSpecialistExtraYield;
-	int** m_ppaaiSpecialistExtraCommerce;
 
 	CLinkList<TechTypes> m_researchQueue;
 
@@ -2121,9 +2118,6 @@ public:
 	void setAIAttitudeModifier(int iNewValue);
 	void changeAIAttitudeModifier(int iChange);
 
-	int getExtraSpecialistCommerce(SpecialistTypes eIndex1, CommerceTypes eIndex2) const;
-	void changeExtraSpecialistCommerce(SpecialistTypes eIndex1, CommerceTypes eIndex2, int iChange);
-	void updateExtraSpecialistCommerce();
 
 	int getSpecialistExtraYield(YieldTypes eIndex) const;
 	void changeSpecialistExtraYield(YieldTypes eIndex, int iChange);

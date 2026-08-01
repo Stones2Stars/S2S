@@ -222,7 +222,6 @@ m_cachedBonusCount(NULL)
 	//TB Traits begin
 	m_paiImprovementUpgradeRateModifierSpecific = NULL;
 	m_paiBuildWorkerSpeedModifierSpecific = NULL;
-	m_ppaaiSpecialistExtraCommerce = NULL;
 	m_pabHasTrait = NULL;
 	m_aiLessYieldThreshold = new int[NUM_YIELD_TYPES];
 
@@ -634,7 +633,6 @@ void CvPlayer::uninit()
 	SAFE_DELETE_ARRAY(m_pabHasTrait);
 	SAFE_DELETE_ARRAY(m_paiNationalDomainProductionModifier);
 	SAFE_DELETE_ARRAY(m_paiNationalTechResearchModifier);
-	SAFE_DELETE_ARRAY2(m_ppaaiSpecialistExtraCommerce, GC.getNumSpecialistInfos());
 	SAFE_DELETE_ARRAY2(m_ppaaiTerrainYieldChange, GC.getNumTerrainInfos());
 	SAFE_DELETE_ARRAY2(m_ppiBuildingCommerceModifier, GC.getNumBuildingInfos());
 	SAFE_DELETE_ARRAY2(m_ppiBuildingCommerceChange, GC.getNumBuildingInfos());
@@ -1506,14 +1504,10 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 		}
 		//TB Traits begin
 		FAssertMsg(0 < GC.getNumSpecialistInfos(), "GC.getNumSpecialistInfos() is not greater than zero but it is used to allocate memory in CvPlayer::reset");
-		FAssertMsg(m_ppaaiSpecialistExtraCommerce==NULL, "about to leak memory, CvPlayer::m_ppaaiSpecialistExtraCommerce");
-		m_ppaaiSpecialistExtraCommerce = new int*[GC.getNumSpecialistInfos()];
 		for (iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
 		{
-			m_ppaaiSpecialistExtraCommerce[iI] = new int[NUM_COMMERCE_TYPES];
 			for (iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
 			{
-				m_ppaaiSpecialistExtraCommerce[iI][iJ] = 0;
 			}
 		}
 
@@ -7051,7 +7045,6 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, CvArea* pAr
 
 	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 	{
-		changeSpecialistExtraCommerce(((CommerceTypes)iI), (kBuilding.getSpecialistExtraCommerce(iI) * iChange));
 		changeStateReligionBuildingCommerce(((CommerceTypes)iI), (kBuilding.getStateReligionCommerce((CommerceTypes)iI) * iChange));
 	}
 
@@ -8775,10 +8768,6 @@ int CvPlayer::specialistCommerceTimes100(SpecialistTypes eSpecialist, CommerceTy
 	return
 	(
 		100 * GC.getSpecialistInfo(eSpecialist).getCommerceChange(eCommerce)
-		+
-		100 * getExtraSpecialistCommerce(eSpecialist, eCommerce)
-		+
-		100 * getSpecialistExtraCommerce(eCommerce)
 		+
 		getSpecialistCommercePercentChanges(eSpecialist, eCommerce)
 	);
@@ -12337,25 +12326,6 @@ void CvPlayer::changeStateReligionBuildingCommerce(CommerceTypes eIndex, int iCh
 }
 
 
-int CvPlayer::getSpecialistExtraCommerce(CommerceTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-	return m_aiSpecialistExtraCommerce[eIndex];
-}
-
-
-void CvPlayer::changeSpecialistExtraCommerce(CommerceTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-
-	if (iChange != 0)
-	{
-		m_aiSpecialistExtraCommerce[eIndex] += iChange;
-
-
-		AI_makeAssignWorkDirty();
-	}
-}
 
 
 bool CvPlayer::isCommerceFlexible(CommerceTypes eIndex) const
@@ -17110,7 +17080,6 @@ void CvPlayer::processCivics(const CivicTypes eCivic, const int iChange, const b
 		{
 			changeCommerceRateModifier(((CommerceTypes)iI), (kCivic.getCommerceModifier(iI) * iChange));
 			changeCapitalCommerceRateModifier(((CommerceTypes)iI), (kCivic.getCapitalCommerceModifier(iI) * iChange));
-			changeSpecialistExtraCommerce(((CommerceTypes)iI), (kCivic.getSpecialistExtraCommerce(iI) * iChange));
 		}
 
 		std::vector<std::pair<int, int> > kCivicBuildRate;
@@ -18271,12 +18240,10 @@ void CvPlayer::read(FDataStreamBase* pStream)
 
 			if ( iI != -1 )
 			{
-				WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_ppaaiSpecialistExtraCommerce[iI]);
 			}
 			else
 			{
 				//	Consume the values
-				WRAPPER_SKIP_ELEMENT(wrapper, "CvPlayer", m_ppaaiSpecialistExtraCommerce[iI], SAVE_VALUE_TYPE_INT_ARRAY);
 			}
 		}
 		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_TRAITS, GC.getNumTraitInfos(), m_pabHasTrait);
@@ -19204,7 +19171,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 
 		for (iI=0;iI<GC.getNumSpecialistInfos();iI++)
 		{
-			WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_ppaaiSpecialistExtraCommerce[iI]);
 		}
 		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_TRAITS, GC.getNumTraitInfos(), m_pabHasTrait);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iLeaderHeadLevel);
@@ -26957,7 +26923,6 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 			infoCommerceFamily(iCommerce), CHANNEL_AMOUNT, iSpecialistSegment, kSpecialistCommerces, (int)CASC_SCOPE_EMPIRE);
 		for (size_t iRow = 0; iRow < kSpecialistCommerces.size(); ++iRow)
 		{
-			changeExtraSpecialistCommerce((SpecialistTypes)kSpecialistCommerces[iRow].first, (CommerceTypes)iCommerce,
 				kSpecialistCommerces[iRow].second / 100 * iChange);
 		}
 	}
@@ -26981,7 +26946,6 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 	{
 		changeCapitalCommerceRateModifier((CommerceTypes)iI, GC.getTraitInfo(eTrait).getCapitalCommerceModifier(iI) * iChange);
-		changeSpecialistExtraCommerce((CommerceTypes)iI, GC.getTraitInfo(eTrait).getSpecialistExtraCommerce(iI) * iChange);
 		changeGoldenAgeCommerce((CommerceTypes)iI, GC.getTraitInfo(eTrait).getGoldenAgeCommerceChanges(iI) * iChange);
 	}
 
@@ -27388,35 +27352,6 @@ void CvPlayer::changeAIAttitudeModifier( int iChange )
 }
 
 
-int CvPlayer::getExtraSpecialistCommerce(SpecialistTypes eIndex1, CommerceTypes eIndex2) const
-{
-	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eIndex1);
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex2);
-	return m_ppaaiSpecialistExtraCommerce[eIndex1][eIndex2];
-}
-
-
-void CvPlayer::changeExtraSpecialistCommerce(SpecialistTypes eIndex1, CommerceTypes eIndex2, int iChange)
-{
-	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eIndex1);
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex2);
-
-	if (iChange != 0)
-	{
-		m_ppaaiSpecialistExtraCommerce[eIndex1][eIndex2] += iChange;
-		//TB Note: should be allowed to be negative.
-		//FASSERT_NOT_NEGATIVE(getExtraSpecialistCommerce(eIndex1, eIndex2));
-
-		updateExtraSpecialistCommerce();
-
-		AI_makeAssignWorkDirty();
-	}
-}
-
-void CvPlayer::updateExtraSpecialistCommerce()
-{
-	algo::for_each(cities(), CvCity::fn::updateExtraSpecialistCommerce());
-}
 
 int CvPlayer::getSpecialistExtraYield(YieldTypes eIndex) const
 {

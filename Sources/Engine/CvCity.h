@@ -988,10 +988,6 @@ public:
 	void updateExtraSpecialistYield(YieldTypes eYield);
 	void updateExtraSpecialistYield();
 
-	int getExtraSpecialistCommerceTotal(CommerceTypes eIndex) const;
-	int getExtraSpecialistCommerce(CommerceTypes eIndex, SpecialistTypes eSpecialist) const;
-	void updateExtraSpecialistCommerce(CommerceTypes eCommerce);
-	void updateExtraSpecialistCommerce();
 
 	int getTotalCommerceRateModifier(CommerceTypes eIndex) const;
 	void setCommerceModifierDirty(CommerceTypes eCommerce);
@@ -1719,7 +1715,6 @@ protected:
 	int m_iModifiedBuildingDefenseRecoverySpeedCap;
 
 	int** m_ppaaiLocalSpecialistExtraYield;
-	int** m_ppaaiLocalSpecialistExtraCommerce;
 	int m_iPrioritySpecialist;
 	int* m_paiSpecialistBannedCount;
 	int* m_paiHealUnitCombatTypeVolume;
@@ -1840,7 +1835,6 @@ protected:
 public:
 	int localCitizenCaptureResistance() const;
 	int getLocalSpecialistExtraYield(SpecialistTypes eSpecialist, YieldTypes eYield) const;
-	int getLocalSpecialistExtraCommerce(SpecialistTypes eSpecialist, CommerceTypes eCommerce) const;
 
 private:
 	void updateExtraTechSpecialistHappiness();
@@ -1852,7 +1846,6 @@ private:
 	void updateExtraTechSpecialistHealth();
 	int getTechHealth(TechTypes eTech) const;
 	void changeLocalSpecialistExtraYield(SpecialistTypes eSpecialist, YieldTypes eYield, int iChange);
-	void changeLocalSpecialistExtraCommerce(SpecialistTypes eSpecialist, CommerceTypes eCommerce, int iChange);
 
 public:
 	int specialistCount(SpecialistTypes eSpecialist) const;
@@ -1956,7 +1949,6 @@ public:
 		DECLARE_MAP_FUNCTOR(CvCity, void, doTurn);
 		DECLARE_MAP_FUNCTOR(CvCity, void, checkReligiousDisablingAllBuildings);
 		DECLARE_MAP_FUNCTOR(CvCity, void, updateExtraSpecialistYield);
-		DECLARE_MAP_FUNCTOR(CvCity, void, updateExtraSpecialistCommerce);
 		DECLARE_MAP_FUNCTOR(CvCity, void, updateReligionCommerce);
 		DECLARE_MAP_FUNCTOR(CvCity, void, updateBuildingCommerce);
 		DECLARE_MAP_FUNCTOR(CvCity, void, updateCorporation);
