@@ -17205,104 +17205,66 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 	changeAttackOnlyCitiesCount((kUnitCombat.hasSkill(CLS_SKILL_ATTACK_ONLY_CITIES)) ? iChange : 0);
 	changeIgnoreNoEntryLevelCount((kUnitCombat.hasSkill(CLS_SKILL_IGNORE_NO_ENTRY_LEVEL)) ? iChange : 0);
 	changeIgnoreZoneofControlCount((kUnitCombat.hasSkill(CLS_SKILL_IGNORE_ZONE_OF_CONTROL)) ? iChange : 0);
-	changeFliesToMoveCount((kUnitCombat.isFliesToMoveAdd()) ? iChange : 0);
-	changeFliesToMoveCount((kUnitCombat.isFliesToMoveSubtract()) ? -iChange : 0);
+	changeFliesToMoveCount((kUnitCombat.hasSkill(CLS_SKILL_FLIES_TO_MOVE)) ? iChange : 0);
 	if ( kUnitCombat.changesMoveThroughPlots() )
 	{
 		m_movementCharacteristicsHash ^= kUnitCombat.getZobristValue();
 		m_iMaxMoveCacheTurn = -1;
 	}
-	changeCanMovePeaksCount((kUnitCombat.isCanMovePeaks()) ? iChange : 0);
-	changeCanLeadThroughPeaksCount((kUnitCombat.isCanLeadThroughPeaks()) ? iChange : 0);
+	//	`canPassPeaks` is DUAL-PLANE under one name ([skills.md]): a promotion/combat class grants the UNIT
+	//	skill, TECH_MOUNTAINEERING grants the empire CAPABILITY, and the effective check is the OR of the two.
+	//	The legacy `bCanMovePeaks` was the unit half, so it resolves here.
+	changeCanMovePeaksCount((kUnitCombat.hasSkill(CLS_SKILL_CAN_PASS_PEAKS)) ? iChange : 0);
+	changeCanLeadThroughPeaksCount((kUnitCombat.hasSkill(CLS_SKILL_CAN_LEAD_THROUGH_PEAKS)) ? iChange : 0);
 	changeZoneOfControlCount((kUnitCombat.hasSkill(CLS_SKILL_ZONE_OF_CONTROL)) ? iChange : 0);
-	changeCannotMergeSplitCount((kUnitCombat.isCannotMergeSplit()) ? iChange : 0);
+	changeCannotMergeSplitCount((kUnitCombat.hasSkill(CLS_SKILL_CANNOT_MERGE_SPLIT)) ? iChange : 0);
 	changeNoSelfHealCount((kUnitCombat.hasSkill(CLS_SKILL_NO_SELF_HEAL)) ? iChange : 0);
 	changeExtraSelfHealModifier(kUnitCombat.getHealModifier(HEAL_SELF_MODIFIER, CASC_SCOPE_UNIT) * iChange);
-	changeExtraNumHealSupport(kUnitCombat.getNumHealSupport() * iChange);
-	changeExtraInsidiousness(kUnitCombat.getInsidiousnessChange() * iChange);
-	changeExtraInvestigation(kUnitCombat.getInvestigationChange() * iChange);
-	changeExtraStealthStrikes(kUnitCombat.getStealthStrikesChange() * iChange);
+	changeExtraNumHealSupport(kUnitCombat.getFlatHeal(HEAL_SUPPORT, CASC_SCOPE_UNIT) / 100 * iChange);
+	//	⛔ insidiousness/investigation are UNDERWORLD, never espionage ([json.md §6]: espionage is what SPY
+	//	units do; a criminal hiding from an investigator is neither). Mis-filed in three curators historically,
+	//	which is precisely why the boundary is written down.
+	changeExtraInsidiousness(kUnitCombat.getUnderworld(UNDERWORLD_INSIDIOUSNESS, CASC_SCOPE_UNIT) / 100 * iChange);
+	changeExtraInvestigation(kUnitCombat.getUnderworld(UNDERWORLD_INVESTIGATION, CASC_SCOPE_UNIT) / 100 * iChange);
+	changeExtraStealthStrikes(kUnitCombat.getFlatCombat(COMBAT_STEALTH_STRIKES, CASC_SCOPE_UNIT) / 100 * iChange);
 	changeStealthDefenseCount((kUnitCombat.hasSkill(CLS_SKILL_STEALTH_DEFENSE) ? 1 : 0) * iChange);
 	changeOnlyDefensiveCount((kUnitCombat.hasSkill(CLS_SKILL_DEFENSE_ONLY) ? 1 : 0) * iChange);
-	changeNoInvisibilityCount(kUnitCombat.getNoInvisibilityChange() * iChange);
-	changeNoCaptureCount(kUnitCombat.getNoCaptureChange() * iChange);
+	changeNoInvisibilityCount((kUnitCombat.hasSkill(CLS_SKILL_NO_INVISIBILITY) ? 1 : 0) * iChange);
+	changeNoCaptureCount((kUnitCombat.hasSkill(CLS_SKILL_NO_CAPTURE) ? 1 : 0) * iChange);
 
-	// Arrays
-	if (kUnitCombat.isAnyDomainModifierPercent())
+	//	The DOMAIN-keyed combat percents: the entity's OWN compiled entries name the handful of domains it
+	//	authored, rather than a sweep of every domain asking whether it deposits (the own-data inversion).
+	std::vector<std::pair<int, int> > kDomainCombat;
+	InfoValuation::collectKeyedCombat(kUnitCombat.getModifiers(), InfoValuation::COMBAT_TARGET_DOMAIN,
+		COMBAT_AMOUNT, kDomainCombat);
+	for (size_t iD = 0; iD < kDomainCombat.size(); ++iD)
 	{
-		for (iI = 0; iI < NUM_DOMAIN_TYPES; iI++)
-		{
-			changeExtraDomainModifier(((DomainTypes)iI), (kUnitCombat.getDomainModifierPercent(iI) * iChange));
-		}
+		changeExtraDomainModifier((DomainTypes)kDomainCombat[iD].first, kDomainCombat[iD].second * iChange);
+	}
+
+	//	doubleMove is HALF MOVEMENT COST on that ground ([skills.md] par.1) -- a keyed MOVEMENT modifier, never a
+	//	skill. The FK lists are materialized once at mapFrom, so these are bare member reads.
+	const std::vector<int>& kTerrainDoubleMove = kUnitCombat.getTerrainDoubleMoves();
+	for (size_t iT = 0; iT < kTerrainDoubleMove.size(); ++iT)
+	{
+		changeTerrainDoubleMoveCount((TerrainTypes)kTerrainDoubleMove[iT], iChange);
+	}
+
+	const std::vector<int>& kFeatureDoubleMove = kUnitCombat.getFeatureDoubleMoves();
+	for (size_t iF = 0; iF < kFeatureDoubleMove.size(); ++iF)
+	{
+		changeFeatureDoubleMoveCount((FeatureTypes)kFeatureDoubleMove[iF], iChange);
 	}
 
 
-	for (iI = 0; iI < kUnitCombat.getNumTerrainDoubleMoveChangeTypes(); iI++)
-	{
-		changeTerrainDoubleMoveCount(((TerrainTypes)kUnitCombat.getTerrainDoubleMoveChangeType(iI)), iChange);
-	}
-
-	for (iI = 0; iI < kUnitCombat.getNumFeatureDoubleMoveChangeTypes(); iI++)
-	{
-		changeFeatureDoubleMoveCount(((FeatureTypes)kUnitCombat.getFeatureDoubleMoveChangeType(iI)), iChange);
-	}
-
-
-	// int vector utilizing pairing without delayed resolution
-	for (iI = 0; iI < GC.getNumInvisibleInfos(); iI++)
-	{
-		changeExtraVisibilityIntensityType(((InvisibleTypes)iI), (kUnitCombat.getVisibilityIntensityChangeType(iI) * iChange));
-		changeExtraInvisibilityIntensityType(((InvisibleTypes)iI), (kUnitCombat.getInvisibilityIntensityChangeType(iI) * iChange));
-		changeExtraVisibilityIntensityRangeType(((InvisibleTypes)iI), (kUnitCombat.getVisibilityIntensityRangeChangeType(iI) * iChange));
-		changeExtraVisibilityIntensitySameTileType(((InvisibleTypes)iI), (kUnitCombat.getVisibilityIntensitySameTileChangeType(iI) * iChange));
-	}
-
-	for (iI = 0; iI < kUnitCombat.getNumInvisibleTerrainChanges(); iI++)
-	{
-		changeExtraInvisibleTerrain((InvisibleTypes)kUnitCombat.getInvisibleTerrainChange(iI).eInvisible,(TerrainTypes)kUnitCombat.getInvisibleTerrainChange(iI).eTerrain, kUnitCombat.getInvisibleTerrainChange(iI).iIntensity * iChange);
-	}
-
-	for (iI = 0; iI < kUnitCombat.getNumInvisibleFeatureChanges(); iI++)
-	{
-		changeExtraInvisibleFeature((InvisibleTypes)kUnitCombat.getInvisibleFeatureChange(iI).eInvisible,(FeatureTypes)kUnitCombat.getInvisibleFeatureChange(iI).eFeature, kUnitCombat.getInvisibleFeatureChange(iI).iIntensity * iChange);
-	}
-
-	for (iI = 0; iI < kUnitCombat.getNumInvisibleImprovementChanges(); iI++)
-	{
-		changeExtraInvisibleImprovement((InvisibleTypes)kUnitCombat.getInvisibleImprovementChange(iI).eInvisible,(ImprovementTypes)kUnitCombat.getInvisibleImprovementChange(iI).eImprovement, kUnitCombat.getInvisibleImprovementChange(iI).iIntensity * iChange);
-	}
-
-	for (iI = 0; iI < kUnitCombat.getNumVisibleTerrainChanges(); iI++)
-	{
-		changeExtraVisibleTerrain((InvisibleTypes)kUnitCombat.getVisibleTerrainChange(iI).eInvisible,(TerrainTypes)kUnitCombat.getVisibleTerrainChange(iI).eTerrain, kUnitCombat.getVisibleTerrainChange(iI).iIntensity * iChange);
-	}
-
-	for (iI = 0; iI < kUnitCombat.getNumVisibleFeatureChanges(); iI++)
-	{
-		changeExtraVisibleFeature((InvisibleTypes)kUnitCombat.getVisibleFeatureChange(iI).eInvisible,(FeatureTypes)kUnitCombat.getVisibleFeatureChange(iI).eFeature, kUnitCombat.getVisibleFeatureChange(iI).iIntensity * iChange);
-	}
-
-	for (iI = 0; iI < kUnitCombat.getNumVisibleImprovementChanges(); iI++)
-	{
-		changeExtraVisibleImprovement((InvisibleTypes)kUnitCombat.getVisibleImprovementChange(iI).eInvisible,(ImprovementTypes)kUnitCombat.getVisibleImprovementChange(iI).eImprovement, kUnitCombat.getVisibleImprovementChange(iI).iIntensity * iChange);
-	}
-
-	for (iI = 0; iI < kUnitCombat.getNumVisibleTerrainRangeChanges(); iI++)
-	{
-		changeExtraVisibleTerrainRange((InvisibleTypes)kUnitCombat.getVisibleTerrainRangeChange(iI).eInvisible,(TerrainTypes)kUnitCombat.getVisibleTerrainRangeChange(iI).eTerrain, kUnitCombat.getVisibleTerrainRangeChange(iI).iIntensity * iChange);
-	}
-
-	for (iI = 0; iI < kUnitCombat.getNumVisibleFeatureRangeChanges(); iI++)
-	{
-		changeExtraVisibleFeatureRange((InvisibleTypes)kUnitCombat.getVisibleFeatureRangeChange(iI).eInvisible,(FeatureTypes)kUnitCombat.getVisibleFeatureRangeChange(iI).eFeature, kUnitCombat.getVisibleFeatureRangeChange(iI).iIntensity * iChange);
-	}
-
-	for (iI = 0; iI < kUnitCombat.getNumVisibleImprovementRangeChanges(); iI++)
-	{
-		changeExtraVisibleImprovementRange((InvisibleTypes)kUnitCombat.getVisibleImprovementRangeChange(iI).eInvisible,(ImprovementTypes)kUnitCombat.getVisibleImprovementRangeChange(iI).eImprovement, kUnitCombat.getVisibleImprovementRangeChange(iI).iIntensity * iChange);
-	}
-
-	// int vector utilizing struct with delayed resolution
+	//	⛔ THE PER-TYPE AND PER-SUBSTRATE HIDE-AND-SEEK TABLES ARE RETIRED ([vision.md] §4). The 13 tables
+	//	(visibility/invisibility intensity per INVISIBLE_*, their range and same-tile variants, and the
+	//	terrain/feature/improvement conditional sets) collapsed onto TWO members: `hideAndSeek.concealment`
+	//	-- how well this hides -- and `hideAndSeek.detection`, each entry naming the METHOD it answers as a
+	//	SKILL. The method is a skill because a promotion can grant one, which a tag cannot hold.
+	//	⚠ The marginal per-substrate loss is a DELIBERATE owner ruling, not an omission to restore: 270 of
+	//	355 authoring entities named exactly ONE type, so the 14×13 surface served a quarter of its own data.
+	//	The unit reads its folded answer through CvUnit::concealment() / detectionAgainst(skill).
 	for (iI = 0; iI < kUnitCombat.getNumTerrainAttackChangeModifiers(); iI++)
 	{
 		changeExtraTerrainAttackPercent(((TerrainTypes)kUnitCombat.getTerrainAttackChangeModifier(iI).eTerrain), kUnitCombat.getTerrainAttackChangeModifier(iI).iModifier * iChange);
