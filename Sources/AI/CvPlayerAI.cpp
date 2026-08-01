@@ -27134,20 +27134,20 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		iValue += (kPromotion.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100 * 20);
 		//II
 		if (kPromotion.hasSkill(CLS_SKILL_ENEMY_ROUTE)) iValue += 20;
-		iValue += (kPromotion.getMoveDiscountChange() * 10);
+		iValue += (kPromotion.getMovement(MOVEMENT_MOVE_DISCOUNT, CASC_SCOPE_UNIT) / 100 * 10);
 		//total 20, 30, 20 points
 
 		//Deception
-		if (kPromotion.getEvasionChange())
+		if (kPromotion.getAir(AIR_EVASION, CASC_SCOPE_UNIT))
 		{
 			//Lean towards more deception if deception is already present
-			iValue += ((kPromotion.getEvasionChange() * 2) + (pUnit == NULL ? 0 : pUnit->evasionProbability()));
+			iValue += ((kPromotion.getAir(AIR_EVASION, CASC_SCOPE_UNIT) * 2) + (pUnit == NULL ? 0 : pUnit->evasionProbability()));
 		}//total 20, 30, 40 points
 
 		//Security
 		iValue += kPromotion.getFlatVision(VISION_STRENGTH, CASC_SCOPE_UNIT) * 10 / VISION_OPEN_GROUND_COST;
 		//Lean towards more security if security is already present
-		iValue += (kPromotion.getInterceptChange() + (pUnit == NULL ? kUnit.getAir(AIR_INTERCEPT, CASC_SCOPE_UNIT) : pUnit->currInterceptionProbability()));
+		iValue += (kPromotion.getAir(AIR_INTERCEPT, CASC_SCOPE_UNIT) + (pUnit == NULL ? kUnit.getAir(AIR_INTERCEPT, CASC_SCOPE_UNIT) : pUnit->currInterceptionProbability()));
 		//total 20, 30, 40 points
 
 		//Escape
@@ -27157,7 +27157,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		}
 
 		//Improvise
-		if (kPromotion.getUpgradeDiscount())
+		if (kPromotion.getCostsModifier(COSTS_UPGRADE, CASC_SCOPE_UNIT) != 0)
 		{
 			iValue += 20;
 		}
@@ -27620,16 +27620,6 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//#16 Effects for AirCombat Units that have extra attacks...
-	iTemp = kPromotion.getAirCombatLimitChange();
-	if (iTemp != 0)
-	{
-		if ((eUnitAI == UNITAI_ATTACK_AIR) ||
-			(eUnitAI == UNITAI_CARRIER_AIR) ||
-			(eUnitAI == UNITAI_DEFENSE_AIR))
-		{
-			iValue += std::min(iTemp, 20);
-		}
-	}
 
 	//#17 Effects for Promotions that have Happyness Bonus...
 	iTemp = (kPromotion.hasSkill(CLS_SKILL_CELEBRITY) ? 1 : 0);
@@ -28129,7 +28119,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//#30 Effects for Promotions on Victory Heal...
-	iTemp = kPromotion.getVictoryHeal();
+	iTemp = kPromotion.getFlatHeal(HEAL_VICTORY, CASC_SCOPE_UNIT) / 100;
 	if (iTemp > 0)
 	{
 		if (pUnit)
@@ -28347,7 +28337,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 
 
 	//#35 Effects for Promotions on Victory Stack Heal...
-	iTemp = kPromotion.getVictoryStackHeal();
+	iTemp = kPromotion.getFlatHeal(HEAL_VICTORY_STACK, CASC_SCOPE_UNIT) / 100;
 	if (iTemp > 0)
 	{
 		if (pUnit)
@@ -28386,7 +28376,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//#36 Effects for Promotions on Victory Adj. Heal...
-	iTemp = kPromotion.getVictoryAdjacentHeal();
+	iTemp = kPromotion.getFlatHeal(HEAL_VICTORY_ADJACENT, CASC_SCOPE_UNIT) / 100;
 	if (iTemp > 0)
 	{
 		if (pUnit)
@@ -28550,7 +28540,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//#44 Effects for Promotions that give Insidiousness...
-	iTemp = kPromotion.getInsidiousnessChange();
+	iTemp = kPromotion.getUnderworld(UNDERWORLD_INSIDIOUSNESS, CASC_SCOPE_UNIT) / 100;
 	if (iTemp != 0)
 	{
 		//TB Must update here as soon as I can improve on AI - not sure about pirates yet.
@@ -28582,7 +28572,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//#45 Effects for Promotions that give investigation...
-	iTemp = kPromotion.getInvestigationChange();
+	iTemp = kPromotion.getUnderworld(UNDERWORLD_INVESTIGATION, CASC_SCOPE_UNIT) / 100;
 	if (iTemp != 0)
 	{
 		//TB: Do I need another AI for just this?  hmm...
@@ -28697,7 +28687,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//#49 Effects for Promotions that Give Moves discount...
-	iTemp = kPromotion.getMoveDiscountChange();
+	iTemp = kPromotion.getMovement(MOVEMENT_MOVE_DISCOUNT, CASC_SCOPE_UNIT) / 100;
 	if (iTemp != 0)
 	{
 		if ((eUnitAI == UNITAI_PILLAGE) ||
@@ -28724,7 +28714,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//#50 Effects for Promotions that Give extra Air Range...
-	iTemp = kPromotion.getAirRangeChange();
+	iTemp = kPromotion.getAir(AIR_RANGE, CASC_SCOPE_UNIT) / 100;
 	if (iTemp != 0)
 	{
 		if (eUnitAI == UNITAI_ATTACK_AIR ||
@@ -28739,7 +28729,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//#51 Effects for Promotions that Give Air interceptions...
-	iTemp = kPromotion.getInterceptChange();
+	iTemp = kPromotion.getAir(AIR_INTERCEPT, CASC_SCOPE_UNIT);
 	if (iTemp != 0)
 	{
 		if (eUnitAI == UNITAI_DEFENSE_AIR ||
@@ -28759,7 +28749,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//#52 Effects for Promotions that Give Air Evasion...
-	iTemp = kPromotion.getEvasionChange();
+	iTemp = kPromotion.getAir(AIR_EVASION, CASC_SCOPE_UNIT);
 	if (iTemp != 0)
 	{
 		if (eUnitAI == UNITAI_ATTACK_AIR || eUnitAI == UNITAI_CARRIER_AIR)
@@ -29074,7 +29064,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//Breakdown
-	iTemp = kPromotion.getBreakdownChanceChange();
+	iTemp = kPromotion.getFlatCombat(COMBAT_BREAKDOWN_CHANCE, CASC_SCOPE_UNIT) / 100;
 	if (iTemp != 0)
 	{
 		if (pUnit != NULL && pUnit->canAttack())
@@ -29092,7 +29082,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 	iValue += iTemp;
 
-	iTemp = kPromotion.getBreakdownDamageChange();
+	iTemp = kPromotion.getFlatCombat(COMBAT_BREAKDOWN_DAMAGE, CASC_SCOPE_UNIT) / 100;
 	if (iTemp != 0)
 	{
 		if (pUnit != NULL && pUnit->canAttack())
@@ -29204,7 +29194,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	iInvisFactor = 0;
-	iTemp = kPromotion.getStealthCombatModifierChange();
+	iTemp = kPromotion.getCombatModifier(COMBAT_STEALTH, CASC_SCOPE_UNIT);
 	if (iTemp != 0)
 	{
 		if (pUnit)
@@ -29611,13 +29601,15 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		}
 	}
 
-	iTemp = kPromotion.getUpgradeDiscount();
+	// costs.upgrade is sign-NORMALIZED as a COST modifier, so a discount authors NEGATIVE. The AI's benefit
+	// is the reduction, so negate at the read rather than inverting the uses below.
+	iTemp = -kPromotion.getCostsModifier(COSTS_UPGRADE, CASC_SCOPE_UNIT);
 	if (iTemp != 0)
 	{
 		iValue += (iTemp / 4);
 	}
 
-	iTemp = kPromotion.getExperiencePercent();
+	iTemp = kPromotion.getExperienceModifier(EXPERIENCE_AMOUNT, CASC_SCOPE_UNIT);
 	if (iTemp != 0)
 	{
 		if ((eUnitAI == UNITAI_ATTACK) ||
@@ -29636,7 +29628,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 		}
 	}
 
-	iTemp = kPromotion.getKamikazePercent();
+	iTemp = kPromotion.getCombatModifier(COMBAT_KAMIKAZE, CASC_SCOPE_UNIT);
 	if (iTemp != 0)
 	{
 		if (eUnitAI == UNITAI_ATTACK_CITY)
@@ -30074,7 +30066,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 
 	if (!isNPC())
 	{
-		iTemp = kPromotion.getVSBarbsChange();
+		iTemp = kPromotion.getCombatModifier(COMBAT_VS_BARBS, CASC_SCOPE_UNIT);
 		if (iTemp != 0)
 		{
 			if (eUnitAI == UNITAI_COUNTER
@@ -30213,20 +30205,20 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		iValue += (kUnitCombat.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100 * 20);
 		//II
 		if (kUnitCombat.hasSkill(CLS_SKILL_ENEMY_ROUTE)) iValue += 20;
-		iValue += (kUnitCombat.getMoveDiscountChange() * 10);
+		iValue += (kUnitCombat.getMovement(MOVEMENT_MOVE_DISCOUNT, CASC_SCOPE_UNIT) / 100 * 10);
 		//total 20, 30, 20 points
 
 		//Deception
-		if (kUnitCombat.getEvasionChange())
+		if (kUnitCombat.getAir(AIR_EVASION, CASC_SCOPE_UNIT))
 		{
 			//Lean towards more deception if deception is already present
-			iValue += ((kUnitCombat.getEvasionChange() * 2) + (pUnit == NULL ? 0 : pUnit->evasionProbability()));
+			iValue += ((kUnitCombat.getAir(AIR_EVASION, CASC_SCOPE_UNIT) * 2) + (pUnit == NULL ? 0 : pUnit->evasionProbability()));
 		}//total 20, 30, 40 points
 
 		//Security
 		iValue += kUnitCombat.getFlatVision(VISION_STRENGTH, CASC_SCOPE_UNIT) * 10 / VISION_OPEN_GROUND_COST;
 		//Lean towards more security if security is already present
-		iValue += (kUnitCombat.getInterceptChange() + (pUnit == NULL ? kUnit.getAir(AIR_INTERCEPT, CASC_SCOPE_UNIT) : pUnit->currInterceptionProbability()));
+		iValue += (kUnitCombat.getAir(AIR_INTERCEPT, CASC_SCOPE_UNIT) + (pUnit == NULL ? kUnit.getAir(AIR_INTERCEPT, CASC_SCOPE_UNIT) : pUnit->currInterceptionProbability()));
 		//total 20, 30, 40 points
 
 		//Escape
@@ -30236,7 +30228,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 
 		//Improvise
-		if (kUnitCombat.getUpgradeDiscount())
+		if (kUnitCombat.getCostsModifier(COSTS_UPGRADE, CASC_SCOPE_UNIT) != 0)
 		{
 			iValue += 20;
 		}
@@ -30504,16 +30496,6 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 	}
 	iValue += iTemp;
 
-	iTemp = kUnitCombat.getAirCombatLimitChange();
-	if (iTemp != 0)
-	{
-		if ((eUnitAI == UNITAI_ATTACK_AIR) ||
-			(eUnitAI == UNITAI_CARRIER_AIR) ||
-			(eUnitAI == UNITAI_DEFENSE_AIR))
-		{
-			iValue += iTemp;
-		}
-	}
 
 	iTemp = (kUnitCombat.hasSkill(CLS_SKILL_CELEBRITY) ? 1 : 0);
 	int iTempTemp = 0;
@@ -30908,7 +30890,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		iValue += iTemp;
 	}
 
-	iTemp = kUnitCombat.getVictoryHeal();
+	iTemp = kUnitCombat.getFlatHeal(HEAL_VICTORY, CASC_SCOPE_UNIT) / 100;
 	if (iTemp > 0)
 	{
 		if (pUnit)
@@ -31045,7 +31027,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		iValue += iTemp;
 	}
 
-	iTemp = kUnitCombat.getVictoryStackHeal();
+	iTemp = kUnitCombat.getFlatHeal(HEAL_VICTORY_STACK, CASC_SCOPE_UNIT) / 100;
 	if (iTemp > 0)
 	{
 		if (pUnit)
@@ -31083,7 +31065,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		iValue += iTemp;
 	}
 
-	iTemp = kUnitCombat.getVictoryAdjacentHeal();
+	iTemp = kUnitCombat.getFlatHeal(HEAL_VICTORY_ADJACENT, CASC_SCOPE_UNIT) / 100;
 	if (iTemp > 0)
 	{
 		if (pUnit)
@@ -31240,7 +31222,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 	}
 
-	iTemp = kUnitCombat.getInsidiousnessChange();
+	iTemp = kUnitCombat.getUnderworld(UNDERWORLD_INSIDIOUSNESS, CASC_SCOPE_UNIT) / 100;
 	if (iTemp != 0)
 	{
 		//TB Must update here as soon as I can improve on AI - not sure about pirates yet.
@@ -31271,7 +31253,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		iValue += iTemp;
 	}
 
-	iTemp = kUnitCombat.getInvestigationChange();
+	iTemp = kUnitCombat.getUnderworld(UNDERWORLD_INVESTIGATION, CASC_SCOPE_UNIT) / 100;
 	if (iTemp != 0)
 	{
 		//TB: Do I need another AI for just this?  hmm...
@@ -31347,7 +31329,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 	}
 
-	iTemp = kUnitCombat.getMoveDiscountChange();
+	iTemp = kUnitCombat.getMovement(MOVEMENT_MOVE_DISCOUNT, CASC_SCOPE_UNIT) / 100;
 	if (iTemp != 0)
 	{
 		if ((eUnitAI == UNITAI_PILLAGE) ||
@@ -31373,7 +31355,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 	}
 
-	iTemp = kUnitCombat.getAirRangeChange();
+	iTemp = kUnitCombat.getAir(AIR_RANGE, CASC_SCOPE_UNIT) / 100;
 	if (iTemp != 0)
 	{
 		if (eUnitAI == UNITAI_ATTACK_AIR ||
@@ -31387,7 +31369,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 	}
 
-	iTemp = kUnitCombat.getInterceptChange();
+	iTemp = kUnitCombat.getAir(AIR_INTERCEPT, CASC_SCOPE_UNIT);
 	if (iTemp != 0)
 	{
 		if (eUnitAI == UNITAI_DEFENSE_AIR ||
@@ -31406,7 +31388,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 	}
 
-	iTemp = kUnitCombat.getEvasionChange();
+	iTemp = kUnitCombat.getAir(AIR_EVASION, CASC_SCOPE_UNIT);
 	if (iTemp != 0)
 	{
 		if (eUnitAI == UNITAI_ATTACK_AIR || eUnitAI == UNITAI_CARRIER_AIR)
@@ -31669,7 +31651,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 	}
 
 	//Breakdown
-	iTemp = kUnitCombat.getBreakdownChanceChange();
+	iTemp = kUnitCombat.getFlatCombat(COMBAT_BREAKDOWN_CHANCE, CASC_SCOPE_UNIT) / 100;
 	if (iTemp != 0)
 	{
 		if (eUnitAI == UNITAI_ATTACK_CITY)
@@ -31691,7 +31673,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 	}
 
-	iTemp = kUnitCombat.getBreakdownDamageChange();
+	iTemp = kUnitCombat.getFlatCombat(COMBAT_BREAKDOWN_DAMAGE, CASC_SCOPE_UNIT) / 100;
 	if (iTemp != 0)
 	{
 		if (eUnitAI == UNITAI_ATTACK_CITY)
@@ -31806,7 +31788,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 	}
 
 	iInvisFactor = 0;
-	iTemp = kUnitCombat.getStealthCombatModifierChange();
+	iTemp = kUnitCombat.getCombatModifier(COMBAT_STEALTH, CASC_SCOPE_UNIT);
 	if (iTemp != 0)
 	{
 		if (pUnit)
@@ -32273,13 +32255,15 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 	}
 
-	iTemp = kUnitCombat.getUpgradeDiscount();
+	// costs.upgrade is sign-NORMALIZED as a COST modifier, so a discount authors NEGATIVE. The AI's benefit
+	// is the reduction, so negate at the read rather than inverting the uses below.
+	iTemp = -kUnitCombat.getCostsModifier(COSTS_UPGRADE, CASC_SCOPE_UNIT);
 	if (iTemp != 0)
 	{
 		iValue += (iTemp / 16);
 	}
 
-	iTemp = kUnitCombat.getExperiencePercent();
+	iTemp = kUnitCombat.getExperienceModifier(EXPERIENCE_AMOUNT, CASC_SCOPE_UNIT);
 	if (iTemp != 0)
 	{
 		if ((eUnitAI == UNITAI_ATTACK) ||
@@ -32298,7 +32282,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 	}
 
-	iTemp = kUnitCombat.getKamikazePercent();
+	iTemp = kUnitCombat.getCombatModifier(COMBAT_KAMIKAZE, CASC_SCOPE_UNIT);
 	if (iTemp != 0)
 	{
 		if (eUnitAI == UNITAI_ATTACK_CITY)
@@ -32439,7 +32423,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 		}
 	}
 
-	iTemp = kUnitCombat.getVSBarbsChange();
+	iTemp = kUnitCombat.getCombatModifier(COMBAT_VS_BARBS, CASC_SCOPE_UNIT);
 	if (iTemp != 0)
 	{
 		if (eUnitAI == UNITAI_COUNTER ||
