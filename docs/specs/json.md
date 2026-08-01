@@ -708,6 +708,20 @@ The full address of a deposit:
   (`UNITCOMBAT_*`/`UNIT_*`/`TERRAIN_*`/`FEATURE_*`/`DOMAIN_*`) is `combat`, at unit/empire/team/city scope. ⛔ A
   concept with its own family never hides as a `combat` member: capture → `capture`, cargo → `cargo`, ranges →
   `air`/`range`, espionage defense → its own family.
+  > **⚖ FLANKING IS KEYED BY UNITCOMBAT, NEVER BY UNIT (owner).** `combat.<scope>.flanking.{UNITCOMBAT_X}` is the
+  > authored shape — *"mounted should be able to flank siege, is the very short answer."* A per-UNIT key names
+  > individual units, so every unit nobody thought to list is silently un-flankable: *"right now flanking units
+  > counter specific other units, which leaves grand-canyon-sized gaps in what is efficient for flanking."* The
+  > class key closes them by construction, which is the whole reason it is the axis.
+  > ⛔ **The per-unit table was encoding a BALANCE THEORY, and the theory is rejected (owner):** it existed so
+  > that knights and horsemen could not flank cannons — *"but that is, pardon the pun, horseshit; if you manage
+  > to get horses close, the artilleryman is just as fucked as any previous siege."* So there is no era gate and
+  > no per-unit carve-out to preserve: getting cavalry onto a siege crew is the mechanic, and which century the
+  > crew is from does not enter into it.
+  > ⚑ This is the [engine.md](../reference/engine.md) UnitCombat distinction doing its job — a UNITCOMBAT is the
+  > good/bad-AGAINST column, so a "vs" modifier keys on a CLASS. ⚠ It does NOT make flanking a per-target
+  > enumeration: [skills.md §1](skills.md)'s note tying flanking to `targets`' narrow per-target granularity
+  > describes the shape being retired, not the one to author.
 - **⚖ `capture` carries BOTH WHAT YOU GET AND THE ODDS (owner).** `capture.unit.becomes` names the unit you
   receive for capturing this one; `capture.unit.probability` / `.resistance` are the odds. The two belong
   together because they are one mechanic answered from one place — splitting the result off into `identity` (or

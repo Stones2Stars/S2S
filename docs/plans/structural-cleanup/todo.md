@@ -75,12 +75,12 @@
   the entity-level applicability gate over a world-scope victory atom
   ([json.md §2](../../specs/json.md) Applicability, [DEC-entity-gate](../../architecture/decisions.md#dec-entity-gate)),
   never a revived `getVictoryPrereq`. ⚠ Its AI consumer dangles until this lands; that is the census working.
-- Settle what FLANKING is keyed BY, then move its consumers. The legacy getter is keyed by UNITCOMBAT
-  (`getFlankingStrengthbyUnitCombatType`, read in a loop over that registry) while the authored data keys by
-  UNIT — `combat.unit.flankingUnit.{UNIT_X}`, which is where all of it lives. So the two sides disagree about
-  the axis, and re-pointing the consumer would silently answer a different question rather than the same one.
-  ⚑ [skills.md §1](../../specs/skills.md) ties flanking to `targets` (per-combat-class), which is the reading
-  the DATA does not match — so this is a model question to answer before any consumer moves, not a rename.
+- Re-key FLANKING from UNIT onto UNITCOMBAT, then move its consumer. The model is RULED
+  ([json.md §6](../../specs/json.md)): `combat.<scope>.flanking.{UNITCOMBAT_X}`, no era gate and no per-unit
+  carve-out. The class-keyed form is already emitted and already authored, so what remains is collapsing the
+  per-UNIT entries onto their combat classes + regen, and pointing the consumer at the class axis.
+  ⚠ Several units collapse onto ONE class carrying different percents, so the merge needs a stated rule —
+  decide it once in the curator rather than per entry.
 - Rule on `MISSION_RANGE_ATTACK` (`canRangeStrike` / `rangeStrike` / `INTERFACEMODE_RANGE_ATTACK`). It is a
   SECOND ranged-attack mechanic, distinct from the removed ranged bombard and sitting beside it in every mission
   switch — so the bombard cut did NOT cover it and must not be assumed to have.
@@ -149,11 +149,6 @@
   attack by mutating the unit's own withdrawal down and back up — a snapshot-and-restore of a cached slot, which
   is banned outright ([superseded-ideas](../../architecture/superseded-ideas.md) #19). It wants a parameter on
   the combat path, never a temporary write.
-- Settle whether a unit's STRENGTH MODIFIER is the `combat` amount or its own Size-Matters channel. It has no
-  resolved slot: the legacy member was fed from `getStrengthModifier()` (the merge/split value) alongside a
-  separate `COMBAT_AMOUNT` feed, so the two were distinct in the legacy and the model carries only one of them.
-  ⛔ Do not mint a slot before the model question is answered — [json.md §6](../../specs/json.md) rules
-  `strength` the BASE and `combat` everything that modifies it, which is the reading the two feeds contradict.
 - Wire the COUNT a building's per-improvement free-specialist deposit scales by. The read is wired through the
   ONE `per` resolver, but the count it resolves against does not count correctly yet, so those entries
   contribute 0 — wired, not right, which is the ordering while the tree is red
