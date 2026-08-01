@@ -780,6 +780,12 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_bLayoutDirty = false;
 	m_bPlundered = false;
 	m_bPopProductionProcess = false;
+	// the citizen-juggle bracket is run state, so a recycled city never inherits a half-open one
+	m_iCitizenJugglingCount = 0;
+	m_bJuggleDeferredSpec = false;
+	m_bJuggleDeferredWork = false;
+	m_juggleSpecialistStart.clear();
+	m_juggleWorkedStart.clear();
 
 	m_eOwner = eOwner;
 	m_ePreviousOwner = NO_PLAYER;
@@ -3708,9 +3714,18 @@ void CvCity::processSpecialist(SpecialistTypes eSpecialist, int iChange)
 	// A specialist's entire output -- its yields, commerce, wellbeing, underworld stats and great-people rate --
 	// is a compiled DEPOSIT the cascade folds, so nothing is accumulated city-side any more. What remains is the
 	// eager updaters, which other call sites drive too and which are not this function's to own.
-	updateExtraSpecialistYield();
-	updateExtraSpecialistCommerce();
-	updateSpecialistHappinessHealthFromTech();
+	if (isCitizenJuggling())
+	{
+		// The juggle bracket: these three WHOLE-SET recomputes ran once per probe, which is the measured
+		// governor churn. They defer to endCitizenJuggling's single batch run for the whole run.
+		m_bJuggleDeferredSpec = true;
+	}
+	else
+	{
+		updateExtraSpecialistYield();
+		updateExtraSpecialistCommerce();
+		updateSpecialistHappinessHealthFromTech();
+	}
 }
 
 
@@ -10576,7 +10591,16 @@ void CvCity::setSpecialistCount(SpecialistTypes eIndex, int iNewValue)
 		FASSERT_NOT_NEGATIVE(getSpecialistCount(eIndex));
 		// #430 event spine: announce the specialist change (delta from the captured old count; inside the change
 		// guard). The cascade invalidation (specialist packages + WB) rides this emit -> the invalidation consumer.
-		emitSpecialistChanged(getID(), getOwner(), (int)eIndex, iNewValue - iOldValue);
+		// Inside a juggle run the per-probe fact is suppressed and the run's NET is announced once at the
+		// close -- converged probes then cancel to nothing rather than marking the packages per probe.
+		if (isCitizenJuggling())
+		{
+			m_bJuggleDeferredSpec = true;
+		}
+		else
+		{
+			emitSpecialistChanged(getID(), getOwner(), (int)eIndex, iNewValue - iOldValue);
+		}
 
 		changeSpecialistPopulation(iNewValue - iOldValue);
 		processSpecialist(eIndex, (iNewValue - iOldValue));
@@ -10962,7 +10986,14 @@ void CvCity::setWorkingPlot(int iIndex, bool bNewValue)
 		// no plot whose state changed, so there is no fact to announce.
 		if (pPlot != NULL)
 		{
-			emitPlotWorkedChanged(GC.getMap().plotNum(pPlot->getX(), pPlot->getY()), (int)getOwner(), getID(), bNewValue);
+			if (isCitizenJuggling())
+			{
+				m_bJuggleDeferredWork = true;   // the NET flip announces at the close, not this probe
+			}
+			else
+			{
+				emitPlotWorkedChanged(GC.getMap().plotNum(pPlot->getX(), pPlot->getY()), (int)getOwner(), getID(), bNewValue);
+			}
 		}
 	}
 }
@@ -18597,6 +18628,110 @@ void CvCity::changeQuarantinedCount(int iChange)
 {
 	m_iQuarantinedCount += iChange;
 }
+
+// ---- THE CITIZEN-JUGGLE BRACKET -------------------------------------------------------------------------
+//
+//	The governor probes citizen assignments by MUTATING for real and measuring, many times per run. Each probe
+//	mutation is semantically correct but drags a side-effect layer behind it -- three whole-set specialist
+//	recomputes, and a DOMAIN fact per specialist and per worked plot, each of which marks the city's packages
+//	and forces a rebuild. Across a run that is the measured churn.
+//
+//	So the bracket DEFERS the layer and replays the run's NET once at the close. The probes keep their exact
+//	semantics; what is withheld is only the announcing. ⚑ The net is the point: probes that converge back to
+//	where they started cancel to NOTHING, so the common case announces nothing at all.
+//
+//	⛔ The close does NOT hand-dirty a cache. It EMITS the net facts and lets the modifier consumer derive the
+//	marks, because that is the one mark derivation ([DEC-uniform-cache-shape]; the city package is "marked ONLY
+//	by the modifier consumer's derived masks"). An earlier version dirtied a per-scope accumulator directly --
+//	the archived substrate ([superseded-ideas] #14) -- and that is exactly what must not come back.
+//
+//	REFCOUNTED so a nested bracket cannot close the outer one early. Purely transient: never serialized, and
+//	cleared by reset() like any other run state.
+void CvCity::startCitizenJuggling()
+{
+	if (m_iCitizenJugglingCount++ == 0)
+	{
+		m_bJuggleDeferredSpec = false;
+		m_bJuggleDeferredWork = false;
+
+		const int iNumSpecialists = GC.getNumSpecialistInfos();
+		m_juggleSpecialistStart.resize(iNumSpecialists);
+		for (int iSpecialist = 0; iSpecialist < iNumSpecialists; ++iSpecialist)
+		{
+			m_juggleSpecialistStart[iSpecialist] = getSpecialistCount((SpecialistTypes)iSpecialist);
+		}
+		m_juggleWorkedStart.resize(NUM_CITY_PLOTS);
+		for (int iPlot = 0; iPlot < NUM_CITY_PLOTS; ++iPlot)
+		{
+			m_juggleWorkedStart[iPlot] = isWorkingPlot(iPlot);
+		}
+	}
+}
+
+void CvCity::endCitizenJuggling()
+{
+	if (m_iCitizenJugglingCount <= 0)
+	{
+		FErrorMsg("Unbalanced citizen-juggle bracket");
+		m_iCitizenJugglingCount = 0;
+		return;
+	}
+	if (--m_iCitizenJugglingCount > 0)
+	{
+		return;   // an inner bracket closing; only the outermost replays
+	}
+
+	if (m_bJuggleDeferredSpec)
+	{
+		// the three whole-set recomputes every probe skipped, run ONCE for the run
+		updateExtraSpecialistYield();
+		updateExtraSpecialistCommerce();
+		updateSpecialistHappinessHealthFromTech();
+
+		const int iNumSpecialists = std::min((int)m_juggleSpecialistStart.size(), GC.getNumSpecialistInfos());
+		for (int iSpecialist = 0; iSpecialist < iNumSpecialists; ++iSpecialist)
+		{
+			const int iNet = getSpecialistCount((SpecialistTypes)iSpecialist) - m_juggleSpecialistStart[iSpecialist];
+			if (iNet != 0)
+			{
+				emitSpecialistChanged(getID(), getOwner(), iSpecialist, iNet);
+			}
+		}
+	}
+
+	if (m_bJuggleDeferredWork)
+	{
+		const int iNumPlots = std::min((int)m_juggleWorkedStart.size(), (int)NUM_CITY_PLOTS);
+		const bool bShowSymbols = getTeam() == GC.getGame().getActiveTeam() || GC.getGame().isDebugMode();
+		for (int iPlot = 0; iPlot < iNumPlots; ++iPlot)
+		{
+			if (m_juggleWorkedStart[iPlot] == isWorkingPlot(iPlot))
+			{
+				continue;   // this plot ended where it started -- the probes cancelled
+			}
+			CvPlot* pPlot = getCityIndexPlot(iPlot);
+			if (pPlot == NULL)
+			{
+				continue;   // a radius index off the map edge: no plot, so no fact and nothing to refresh
+			}
+			emitPlotWorkedChanged(GC.getMap().plotNum(pPlot->getX(), pPlot->getY()), (int)getOwner(), getID(), isWorkingPlot(iPlot));
+			// the display half, once per genuinely-changed plot rather than once per probe
+			pPlot->updatePlotBuilder();
+			if (bShowSymbols)
+			{
+				pPlot->updateSymbolDisplay();
+			}
+		}
+	}
+
+	if ((m_bJuggleDeferredSpec || m_bJuggleDeferredWork) && isCitySelected())
+	{
+		exeSetUIDirty(CitizenButtons_DIRTY_BIT, true);
+	}
+	m_bJuggleDeferredSpec = false;
+	m_bJuggleDeferredWork = false;
+}
+
 
 void CvCity::resetQuarantinedCount()
 {

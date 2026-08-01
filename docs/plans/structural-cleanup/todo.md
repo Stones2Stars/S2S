@@ -229,32 +229,21 @@
   per-player handicap (saved) drives human-facing economics, while every `getAI*` advantage reads the GAME handicap
   (the average of alive humans) — [engine.md](../../reference/engine.md). Keep them separately named.
 
-- Finish the INVISIBILITY EVALUATION on the `hideAndSeek` block. The READ is wired — the block parses, and
-  `CvUnit::concealment()` / `detectionAgainst(skillId)` sum it over the unit's info ∪ promotions ∪ combat
-  classes — but the sight-registration and AI sites still ask on the retired `INVISIBLE_*` axis and dangle:
-  `CvPlot` (spot intensity), `CvSelectionGroup`, `CvUnit`'s registration, plus the `CvCityAI` /  `CvPlayerAI`
-  build-time filters and the `CvGlobals` seer index.
-  ⛔ The two evaluations stay SEPARATE — a hide-and-seek question is never answered from the vision budget nor
-  the reverse; that bleed is the defect the block exists to end ([vision.md §4](../../specs/vision.md)).
-  ⚑ **Being DETECTED is NOT a state (owner):** vision is provided by the DETECTING unit, never empire-wide, so
-  the contest resolves live per (seeker, hider) and nothing is stored on the hider. Do not mint a status plane.
-  ⚠ The AI sites ask two different questions off ONE read — ADMISSION (`detection > 0`, the build-time filter)
-  and RANKING (the magnitude) — so they want the number, not a bool.
-  ⚠ A method id is a SKILL id now; the loops that drive them off `GC.getNumInvisibleInfos()` need the method
-  set from the skill registry instead.
+- Make `hideAndSeek` a CACHED BLOCK on the UNIT and the CITY, not a per-read walk of the info (owner). Today
+  `CvUnit::concealment()` / `detectionAgainst(methodSkill)` re-walk the unit's info ∪ promotions ∪ combat
+  classes on every call, and `getInvisibleType()` reads the INFO alone — so a **promotion-granted method does
+  not work at all**, which is the whole reason the method is a skill.
+  ⚑ The dirty triggers already exist and are exactly right: a unit's resolved values dirty ONLY on a promotion
+  or combat-class change (`SEVT_UNIT_PROMOTION_CHANGED` / `SEVT_UNIT_COMBAT_CHANGED`,
+  [state-repositories.md](../../architecture/state-repositories.md)), and those are precisely the three
+  carriers the block gathers over. The CITY side dirties on its building facts.
+  ⛔ It is a SECTION, so it cannot ride the `URS_*` resolved table, which gathers modifier-FAMILY entries —
+  it wants its own cached block on the same mark protocol, never a hand-named scalar pair beside it
+  ([DEC-uniform-cache-shape](../../architecture/decisions.md#dec-uniform-cache-shape)).
+  ⚠ `isInvisible` is one of the hottest reads in the engine, which is why the walk must not stay on it.
 - The PLAYER-ALERT consumer, and the alerts owed to it — they re-attach to the OPERATE CROSSING fact, never
   re-inlined at a mutation site ([event-spine.md](../../specs/event-spine.md)). Expect the owed list to GROW as
   each legacy mutator is cut; add them together on the facts.
-- Rebuild the CITIZEN-JUGGLING bracket the governor's probe loop opens and closes. Its call sites survived the
-  clean-slate revert of the engine game-object classes but the bracket itself did not, so they dangle with no
-  implementation anywhere in the tree. It defers the side-effect layer across a run of probe mutations and
-  replays the run's NET once at the close — so it is a real machine to write, never a pair of calls to delete.
-  ⚑ A prior implementation exists in history and is worth reading for its SHAPE (the start snapshots the
-  specialist counts and worked plots; the close replays the net, refreshes the changed plots' symbols once and
-  dirties the UI). ⛔ It is NOT restorable as written: it dirtied through the archived per-scope accumulator
-  ([superseded-ideas #14](../../architecture/superseded-ideas.md)), so the mark has to be re-expressed on the
-  uniform derived-cache protocol — and the DEFERRAL half lives in the mutation sites the revert also took,
-  which is the larger part of the work.
 - Decide WHERE the citizen-assignment re-check is asked for. The mechanism itself is right and stays — the AI
   needs a way to be told the best plots to work may have moved — so this is a CALL-SITE question, never a
   removal. `AI_setAssignWorkDirty` is called from across the engine while `AI_updateAssignWork` re-runs the FULL

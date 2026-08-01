@@ -437,6 +437,12 @@ public:
 	bool isQuarantined() const;
 	int getQuarantinedCount() const;
 	void changeQuarantinedCount(int iChange);
+	// The CITIZEN-JUGGLE bracket (see CvCity.cpp): the governor's probe run defers its side-effect layer and
+	// replays the run's NET once at the close. Refcounted so a nested bracket cannot close the outer one.
+	void startCitizenJuggling();
+	void endCitizenJuggling();
+	bool isCitizenJuggling() const { return m_iCitizenJugglingCount > 0; }
+
 	void resetQuarantinedCount();
 
 
@@ -1747,6 +1753,12 @@ protected:
 	int* m_paiUnitProduction;
 	int* m_paiGreatPeopleUnitRate;
 	int* m_paiGreatPeopleUnitProgress;
+	// Citizen-juggle bracket state -- purely transient run state: NEVER serialized, cleared by reset().
+	int m_iCitizenJugglingCount;
+	bool m_bJuggleDeferredSpec;
+	bool m_bJuggleDeferredWork;
+	std::vector<int> m_juggleSpecialistStart;
+	std::vector<bool> m_juggleWorkedStart;
 	int* m_paiSpecialistCount;
 	int* m_paiMaxSpecialistCount;
 	int* m_paiForceSpecialistCount;
