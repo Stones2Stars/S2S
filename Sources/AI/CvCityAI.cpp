@@ -5737,13 +5737,21 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 							}
 						}
 
-						if (kBuilding.getSpecialistCount(iI) + kTeam.getBuildingSpecialistChange(eBuilding, (SpecialistTypes)iI) > 0)
+						// The manual-assign slots this building opens for this specialist type. The address is keyed
+						// DIRECTLY by the type with no container token (`allowedSpecialists.city.{SPECIALIST_X}`), which
+						// is exactly what the -1 segment selects ([modifier.md §5]); the COUNT unit stores ×100.
+						const int iAllowedSlots =
+							InfoValuation::keyedTarget(kBuilding.getModifiers(), MODFAM_ALLOWED_SPECIALISTS,
+								CHANNEL_AMOUNT, -1, iI) / 100
+							+ kTeam.getBuildingSpecialistChange(eBuilding, (SpecialistTypes)iI);
+						
+						if (iAllowedSlots > 0)
 						{
 							if (!bUnlimited && iRunnable < 5)
 							{
 								int iTempValue = AI_specialistValue(((SpecialistTypes)iI), false, false);
 
-								iTempValue *= 20 + 40 * (kBuilding.getSpecialistCount(iI) + kTeam.getBuildingSpecialistChange(eBuilding, (SpecialistTypes)iI));
+								iTempValue *= 20 + 40 * iAllowedSlots;
 								iTempValue /= 100;
 
 								if (iFoodDifference < 2)
@@ -6555,9 +6563,10 @@ ProjectTypes CvCityAI::AI_bestProject() const
 		{
 			int iValue = AI_projectValue((ProjectTypes)iI);
 
-			if ((GC.getProjectInfo((ProjectTypes)iI).getEveryoneSpecialUnit() != NO_SPECIALUNIT) ||
-				(GC.getProjectInfo((ProjectTypes)iI).getEveryoneSpecialBuilding() != NO_SPECIALBUILDING) ||
-				GC.getProjectInfo((ProjectTypes)iI).isAllowsNukes())
+			// A project that unlocks something for EVERY player is worth a nudge over one that does not, and
+			// the enables edge is what says so: a project opening a SpecialBuilding authors
+			// `enables.specialBuildings` ([json.md §5] -- it unlocks, it hands nothing out).
+			if (GC.getProjectInfo((ProjectTypes)iI).edge(EDGEF_ENABLES, EDGEB_SPECIAL_BUILDINGS) != NULL)
 			{
 				if (GC.getGame().getSorenRandNum(100, "Project Everyone") == 0)
 				{
@@ -6637,9 +6646,20 @@ int CvCityAI::AI_projectValue(ProjectTypes eProject) const
 	{
 		iValue += project.getCommerceModifier((CommerceTypes)iI, CASC_SCOPE_EMPIRE) * iOurNumCities / 4;
 	}
-	const int iWorldHappy = project.getWorldHappiness();
-	const int iWorldHealth = project.getWorldHealth();
-	const int iWorldTradeRoutes = project.getWorldTradeRoutes();
+	// What this project hands to EVERY empire -- the `world.empires` plural-target fan ([json.md §3.3]). It
+	// carries a target segment, so it deliberately does NOT fold into the world point slot and is read off the
+	// entry list like any other keyed deposit ([modifier.md §5]); the gather is what lands it in each player's
+	// package. There is no named entity under `empires`, hence the -1 target. Flats are ×100.
+	const int iEmpiresSegment = InfoValuation::keyedTargetSegment("empires");
+	const int iWorldHappy =
+		InfoValuation::keyedTarget(project.getModifiers(), infoWellbeingFamily(WELLBEING_HAPPINESS),
+			CHANNEL_AMOUNT, iEmpiresSegment, -1) / 100;
+	const int iWorldHealth =
+		InfoValuation::keyedTarget(project.getModifiers(), infoWellbeingFamily(WELLBEING_HEALTH),
+			CHANNEL_AMOUNT, iEmpiresSegment, -1) / 100;
+	const int iWorldTradeRoutes =
+		InfoValuation::keyedTarget(project.getModifiers(), MODFAM_TRADE_ROUTES,
+			TRADE_ROUTE_AMOUNT, iEmpiresSegment, -1) / 100;
 
 	if (iWorldHappy != 0 || iWorldHealth != 0 || iWorldTradeRoutes != 0)
 	{
@@ -9490,7 +9510,7 @@ bool CvCityAI::AI_foodAvailable(int iExtra) const
 
 	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
 	{
-		iFoodCount += (GC.getSpecialistInfo((SpecialistTypes)iI).getYieldChange(YIELD_FOOD) * getFreeSpecialistCount((SpecialistTypes)iI));
+		iFoodCount += (GC.getSpecialistInfo((SpecialistTypes)iI).getFlatYield(YIELD_FOOD, CASC_SCOPE_CITY) / 100 * getFreeSpecialistCount((SpecialistTypes)iI));
 	}
 
 	if (iFoodCount < foodConsumption(false, iExtra))
@@ -12457,9 +12477,9 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 			kBuilding.hasTriggerFullHeal() ||
 			kBuilding.providesAmenity(CLS_AMENITY_BORDER_OBSTACLE) ||
 			GC.getGame().isOption(GAMEOPTION_COMBAT_SURROUND_DESTROY) && kBuilding.getDefense(DEFENSE_DYNAMIC, CASC_SCOPE_CITY) > 0 ||
-			kBuilding.getLocalCaptureProbabilityModifier() > 0 ||
-			kBuilding.getLocalCaptureResistanceModifier() > 0 ||
-			kBuilding.getNationalCaptureResistanceModifier() > 0 ||
+			// Anything this building does to resist or survive a city capture, at either scope, in one read
+			// over its own entries -- the same entry-list shape the two keyed reads in this chain already use.
+			InfoValuation::authorsAnySigned(kBuilding.getModifiers(), MODFAM_CITY_CAPTURE, +1) ||
 			kBuilding.getDefense(DEFENSE_RIVER_PENALTY, CASC_SCOPE_CITY) < 0 ||
 			kBuilding.getDefense(DEFENSE_MIN, CASC_SCOPE_CITY) > 0 ||
 			kBuilding.getDefense(DEFENSE_BUILDING_RECOVERY, CASC_SCOPE_CITY) > 0 ||
@@ -12570,7 +12590,7 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 	{
 		if (buildingModifiesCommerceYields ||
 			bHasTradeRouteValue ||
-			kBuilding.getEspionageDefenseModifier() > 0 ||
+			InfoValuation::authorsAnySigned(kBuilding.getModifiers(), MODFAM_ESPIONAGE_DEFENSE, +1) ||
 			// One read for every shape this channel can be authored in -- the city/empire percents, the flat,
 			// the per-population scaler and the per-specialist row. State-religion commerce stays its own read:
 			// it is an intrinsic identity config on the info, not a deposit in the family.
@@ -12786,7 +12806,9 @@ int CvCityAI::getBuildingCommerceValue(BuildingTypes eBuilding, int iI, int* aiF
 
 		if (eReligionGlobalCommerce != NO_RELIGION)
 		{
-			iResult += GC.getReligionInfo(eReligionGlobalCommerce).getGlobalReligionCommerce(iI) * GC.getGame().countReligionLevels(eReligionGlobalCommerce) * 2;
+			// The shrine's own per-commerce value, scaled by how many cities hold the religion -- the shrine
+			// relationship is the building's (`shrine: RELIGION_X`) while the VALUES live on the religion.
+			iResult += GC.getReligionInfo(eReligionGlobalCommerce).getShrineCommerce((CommerceTypes)iI) * GC.getGame().countReligionLevels(eReligionGlobalCommerce) * 2;
 
 			if (eStateReligion == eReligionGlobalCommerce)
 			{
@@ -13313,7 +13335,7 @@ bool CvCityAI::AI_chooseHealerUnit(int iMinNeeded)
 
 	for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
 	{
-		if (GC.getUnitCombatInfo((UnitCombatTypes)iI).isHealsAs())
+		if (GC.getUnitCombatInfo((UnitCombatTypes)iI).hasSkill(CLS_SKILL_HEALS_AS))
 		{
 			UnitCombatTypes eUnitCombat = (UnitCombatTypes)iI;
 			PlayerTypes ePlayer = getOwner();

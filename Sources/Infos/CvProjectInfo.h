@@ -37,9 +37,14 @@ public:
 
 	// ======================= 3. MODIFIER GROUPS -- point reads over the compiled sums ========================
 	// (Conditioned-list access + the expected* what-if valuations are the base CvInfo surface. The census
-	// participation: maintenance.empire %, {gold/research/culture}.empire %, happiness/health at empire+world,
-	// diplomacy.team.techShare, tradeRoutes.world -- all unconditioned; buildRate.self bonus-gated entries are
-	// conditioned and stay entry-list/valuation reads.)
+	// participation: maintenance.empire %, {gold/research/culture}.empire %, happiness/health at empire,
+	// diplomacy.team.techShare -- all unconditioned; buildRate.self bonus-gated entries are conditioned and
+	// stay entry-list/valuation reads.)
+	// ⛔ The `world.empires` FAN is NOT one of these point reads, and expecting it here reads 0 silently: a
+	// plural target ([json.md §3.3]) carries a target segment, which makes the entry unfoldable by
+	// construction, so the health/tradeRoutes rows authored there are an ENTRY-LIST read
+	// (`InfoValuation::keyedTarget` over the `empires` segment, [modifier.md §5]). The gather is what lands
+	// the fan in each player's package.
 	int getCommerceModifier(CommerceTypes eCommerce, CvCascScope eScope) const
 	{ return m_modifiers.sum(infoCommerceFamily(eCommerce), CHANNEL_AMOUNT, eScope, CASC_UNIT_PERCENT); }
 	// The authored wellbeing families' SIGNED sums. ⛔ ANGER/UNHEALTH read 0 here BY CONSTRUCTION and that is
