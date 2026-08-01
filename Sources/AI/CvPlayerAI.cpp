@@ -24512,7 +24512,7 @@ void CvPlayerAI::AI_doAdvancedStart(bool bNoExit)
 							int iFoodYield = GC.getTerrainInfo(pLoopPlot2->getTerrainType()).getFlatYield(YIELD_FOOD, CASC_SCOPE_PLOT) / 100;
 							if (pLoopPlot2->getFeatureType() != NO_FEATURE)
 							{
-								iFoodYield += GC.getFeatureInfo(pLoopPlot2->getFeatureType()).getYieldChange(YIELD_FOOD);
+								iFoodYield += GC.getFeatureInfo(pLoopPlot2->getFeatureType()).getFlatYield(YIELD_FOOD, CASC_SCOPE_PLOT) / 100;
 							}
 							if (((iFoodYield >= 2) && !pLoopPlot2->isFreshWater()) || pLoopPlot2->isHills() || pLoopPlot2->isRiver())
 							{
@@ -32771,20 +32771,22 @@ int CvPlayerAI::AI_heritageValue(const HeritageTypes eType) const
 	const CvHeritageInfo& heritage = GC.getHeritageInfo(eType);
 
 	int iValue = 0;
+	//	The era-banded empire commerce. The band table is gone: the curator authors each band as an
+	//	ERA-THRESHOLD CONDITIONED entry (`{value, enabled:{type: ERA, min: N}}` -- [json.md §6]), so the bands
+	//	ACCUMULATE FOR FREE through ordinary deposit summation -- every entry whose threshold the player's era
+	//	has reached applies, which is exactly what the old `eEra >= band` walk was doing by hand.
+	//	⚑ A CITY-LESS view evaluates against the CAPITAL ([patterns.md] THE VALUATION PROTOCOL): this is a
+	//	player-scope question, and the capital is the ONE ruled stand-in. A player with no capital has no
+	//	valuation to give, so the commerce term simply contributes nothing rather than inventing a base.
+	const CvCity* pCapital = getCapitalCity();
+	if (pCapital != NULL)
 	{
-		const EraTypes eEra = getCurrentEra();
-
-		const IDValueMap<EraTypes, CommerceArray>& kEraChanges = heritage.getEraCommerceChanges();
-		for (IDValueMap<EraTypes, CommerceArray>::const_iterator itEra = kEraChanges.begin(), itEraEnd = kEraChanges.end(); itEra != itEraEnd; ++itEra)
+		int aiFlatCommerce[NUM_COMMERCE_TYPES];
+		heritage.expectedFlatCommerce(pCapital->getCityContext(), getEmpireContext(),
+			pCapital->plotGroup(getID()), aiFlatCommerce);
+		for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 		{
-			const EraCommerceArray& pair = *itEra;
-			if (eEra >= pair.first)
-			{
-				for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
-				{
-					iValue += pair.second[(CommerceTypes)iI];
-				}
-			}
+			iValue += aiFlatCommerce[iI] / 100;   // a FLAT is ×100; the reader reduces at its point of use
 		}
 	}
 	iValue += heritagePropertiesValue(heritage);
