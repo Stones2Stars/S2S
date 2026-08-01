@@ -7055,20 +7055,13 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, CvArea* pAr
 	}
 
 	changeCoastalTradeRoutes(kBuilding.getCoastalTradeRoutes() * iChange);
-	changeTradeRoutes(kBuilding.getGlobalTradeRoutes() * iChange);
+	// The EMPIRE-scope route COUNT -- the memberless flat deposit (ruling 11: kind 0 IS the count). The slot is
+	// a FLAT amount and therefore ×100, so the reader reduces at its point of use ([DEC-fixedpoint-x100]): a
+	// route count is a whole game quantity.
+	changeTradeRoutes(kBuilding.getTradeRoute(TRADE_ROUTE_AMOUNT, CASC_SCOPE_EMPIRE) / 100 * iChange);
 
 	changePopulationgrowthratepercentage(kBuilding.getGlobalPopulationgrowthratepercentage(), (iChange==1));
 	changeForceAllTradeRoutes(kBuilding.providesAmenity(CLS_AMENITY_FORCE_ALL_TRADE_ROUTES) * iChange);
-	{
-		const int iWorldTradeRoute = kBuilding.getWorldTradeRoutes() * iChange;
-		if (iWorldTradeRoute != 0)
-		{
-			for (int iI = 0; iI < MAX_PC_PLAYERS; iI++)
-			{
-				GET_PLAYER((PlayerTypes)iI).changeTradeRoutes(iWorldTradeRoute);
-			}
-		}
-	}
 
 	changeSpaceProductionModifier(kBuilding.getBuildRateModifier(BUILD_RATE_SPACE, CASC_SCOPE_EMPIRE) * iChange);
 
