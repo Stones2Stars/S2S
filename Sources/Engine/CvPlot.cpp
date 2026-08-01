@@ -8274,12 +8274,6 @@ int CvPlot::calculateYield(YieldTypes eYield, bool bDisplay) const
 				{
 					iYield += GET_PLAYER(ePlayer).getSeaPlotYield(eYield);
 				}
-				const CvCity* pWorkingCity = getWorkingCity();
-
-				if (pWorkingCity && (!bDisplay || pWorkingCity->isRevealed(GC.getGame().getActiveTeam(), false)))
-				{
-					iYield += pWorkingCity->getYieldChangeAt(this, eYield);
-				}
 			}
 		}
 		if (getLandmarkType() != NO_LANDMARK && GC.getGame().isOption(GAMEOPTION_MAP_PERSONALIZED))

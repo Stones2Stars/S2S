@@ -272,13 +272,7 @@ public:
 
 	int getProductionToCommerceModifier(int /*CommerceTypes*/ eIndex) const;
 	int getBuildingCommerceByBuilding(int /*CommerceTypes*/ eIndex, int /*BuildingTypes*/ iBuilding) const;
-	int getSpecialistCommerce(int /*CommerceTypes*/ eIndex) const;
-	void changeSpecialistCommerce(int /*CommerceTypes*/ eIndex, int iChange);
 	int getReligionCommerceByReligion(int /*CommerceTypes*/ eIndex, int /*ReligionTypes*/ iReligion) const;
-	int getCorporationCommerce(int /*CommerceTypes*/ eIndex) const;
-	int getCorporationCommerceByCorporation(int /*CommerceTypes*/ eIndex, int /*CorporationTypes*/ iCorporation) const;
-	int getCorporationYield(int /*YieldTypes*/ eIndex) const;
-	int getCorporationYieldByCorporation(int /*YieldTypes*/ eIndex, int /*CorporationTypes*/ iCorporation) const;
 	int getCommerceRateModifier(int /*CommerceTypes*/ eIndex) const;
 	int getCommerceHappinessByType(int /*CommerceTypes*/ eIndex) const;
 	int getDomainProductionModifier(int /*DomainTypes*/ eIndex) const;

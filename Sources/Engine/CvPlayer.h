@@ -240,9 +240,6 @@ public:
 
 	void updateFeatureHappiness(bool bLimited = false);
 
-	void updateExtraSpecialistYield();
-	void updateBuildingCommerce();
-	void updateReligionCommerce();
 	void updateCorporation();
 	void updateCitySight(bool bIncrement, bool bUpdatePlotGroups);
 	void updateTradeRoutes();

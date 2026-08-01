@@ -1108,39 +1108,9 @@ int CyCity::getBuildingCommerceByBuilding(int /*CommerceTypes*/ eIndex, int /*Bu
 	return m_pCity->getBuildingCommerceByBuilding((CommerceTypes)eIndex, (BuildingTypes) iBuilding);
 }
 
-int CyCity::getSpecialistCommerce(int /*CommerceTypes*/ eIndex) const
-{
-	return m_pCity->getSpecialistCommerce((CommerceTypes)eIndex);
-}
-
-void CyCity::changeSpecialistCommerce(int /*CommerceTypes*/ eIndex, int iChange)
-{
-	m_pCity->changeSpecialistCommerceTimes100((CommerceTypes)eIndex, 100*iChange);
-}
-
 int CyCity::getReligionCommerceByReligion(int /*CommerceTypes*/ eIndex, int /*ReligionTypes*/ eReligion) const
 {
 	return m_pCity->getReligionCommerceByReligion((CommerceTypes)eIndex, (ReligionTypes)eReligion);
-}
-
-int CyCity::getCorporationCommerce(int /*CommerceTypes*/ eIndex) const
-{
-	return m_pCity->getCorporationCommerce((CommerceTypes)eIndex);
-}
-
-int CyCity::getCorporationCommerceByCorporation(int /*CommerceTypes*/ eIndex, int /*CorporationTypes*/ eCorporation) const
-{
-	return m_pCity->getCorporationCommerceByCorporation((CommerceTypes)eIndex, (CorporationTypes)eCorporation);
-}
-
-int CyCity::getCorporationYield(int /*YieldTypes*/ eIndex) const
-{
-	return m_pCity->getCorporationYield((YieldTypes)eIndex);
-}
-
-int CyCity::getCorporationYieldByCorporation(int /*YieldTypes*/ eIndex, int /*CorporationTypes*/ eCorporation) const
-{
-	return m_pCity->getCorporationYieldByCorporation((YieldTypes)eIndex, (CorporationTypes)eCorporation);
 }
 
 int CyCity::getCommerceRateModifier(int /*CommerceTypes*/ eIndex) const

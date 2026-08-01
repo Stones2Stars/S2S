@@ -4349,24 +4349,6 @@ void CvPlayer::updateFeatureHappiness(bool bLimited)
 	algo::for_each(cities(), CvCity::fn::updateFeatureHappiness(bLimited));
 }
 
-void CvPlayer::updateExtraSpecialistYield()
-{
-	algo::for_each(cities(), CvCity::fn::updateExtraSpecialistYield());
-}
-
-
-void CvPlayer::updateBuildingCommerce()
-{
-	algo::for_each(cities(), CvCity::fn::updateBuildingCommerce());
-}
-
-
-void CvPlayer::updateReligionCommerce()
-{
-	algo::for_each(cities(), CvCity::fn::updateReligionCommerce());
-}
-
-
 void CvPlayer::updateCorporation()
 {
 	for_each(cities(), CvCity::fn::updateCorporation());
@@ -9396,7 +9378,6 @@ void CvPlayer::changeNonStateReligionCommerce(int iNewValue)
 
 	if(iNewValue != 0)
 	{
-		updateReligionCommerce();
 		AI_makeAssignWorkDirty();
 	}
 }
@@ -10430,7 +10411,6 @@ void CvPlayer::changeStateReligionCount(int iChange, bool bLimited)
 
 		if (!bLimited)
 		{
-			updateReligionCommerce();
 
 			GC.getGame().AI_makeAssignWorkDirty();
 
@@ -11695,7 +11675,6 @@ void CvPlayer::setLastStateReligion(const ReligionTypes eNewReligion)
 		// The state-religion switch, past the no-change guard and after the field commit.
 		emitStateReligionChanged(getID(), (int)eNewReligion);
 
-		updateReligionCommerce();
 
 		GC.getGame().updateSecretaryGeneral();
 		GC.getGame().AI_makeAssignWorkDirty();
@@ -13115,8 +13094,7 @@ void CvPlayer::changeHasReligionCount(ReligionTypes eIndex, int iChange)
 		FASSERT_NOT_NEGATIVE(getHasReligionCount(eIndex));
 
 		//AIAndy: Commented out for now to make interfaith project work properly
-		//GC.getGame().updateBuildingCommerce();
-
+		//GC.getGame().
 		//GC.getGame().AI_makeAssignWorkDirty();
 	}
 }
@@ -13132,8 +13110,7 @@ void CvPlayer::changeHasCorporationCount(CorporationTypes eIndex, int iChange)
 		FASSERT_NOT_NEGATIVE(getHasCorporationCount(eIndex));
 
 		//AIAndy: Commented out to keep same as religion one, this expensive function will be called at next turn change anyway
-		//GC.getGame().updateBuildingCommerce();
-
+		//GC.getGame().
 		//GC.getGame().AI_makeAssignWorkDirty();
 	}
 }
@@ -13462,9 +13439,6 @@ void CvPlayer::changeExtraSpecialistYield(SpecialistTypes eIndex1, YieldTypes eI
 	if (iChange != 0)
 	{
 		m_ppaaiSpecialistExtraYield[eIndex1][eIndex2] += iChange;
-		//TB Note: it should be ok to have a negative total Extra Specialist Yield now
-
-		updateExtraSpecialistYield();
 
 		AI_makeAssignWorkDirty();
 	}
@@ -26612,15 +26586,7 @@ void CvPlayer::changeSpecialistCommercePercentChanges(SpecialistTypes eIndex1, C
 
 	if (iChange != 0)
 	{
-		const int iOldValue = getSpecialistCommercePercentChanges(eIndex1, eIndex2);
 		m_ppiSpecialistCommercePercentChanges[eIndex1][eIndex2] += iChange;
-
-		foreach_(CvCity* pLoopCity, cities())
-		{
-			const int iExistingValue = (pLoopCity->getFreeSpecialistCount(eIndex1) + pLoopCity->getSpecialistCount(eIndex1)) * (getSpecialistCommercePercentChanges(eIndex1, eIndex2) - iOldValue);
-			// set the new
-			pLoopCity->changeSpecialistCommerceTimes100(eIndex2, iExistingValue);
-		}
 	}
 }
 
@@ -26639,15 +26605,7 @@ void CvPlayer::changeSpecialistYieldPercentChanges(SpecialistTypes eIndex1, Yiel
 
 	if (iChange != 0)
 	{
-		const int iOldValue = getSpecialistYieldPercentChanges(eIndex1, eIndex2);
 		m_ppiSpecialistYieldPercentChanges[eIndex1][eIndex2] += iChange;
-
-		foreach_(CvCity* pLoopCity, cities())
-		{
-			const int iExistingValue = pLoopCity->getSpecialistCount(eIndex1) * (getSpecialistYieldPercentChanges(eIndex1, eIndex2) - iOldValue) / 100;
-			// set the new
-			pLoopCity->changeSpecialistYieldTotal(eIndex2, iExistingValue);
-		}
 	}
 }
 

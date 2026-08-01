@@ -12736,6 +12736,12 @@ int CvCityAI::getBuildingCommerceValue(BuildingTypes eBuilding, int iI, int* aiF
 		iResult += iCorpValue / 25;
 	}
 
+	// The corp-HQ clamp below weighs its gold estimate against what this city already earns on the channel.
+	// That is the city's REALIZED commerce -- the group read ([DEC-new-getter-surface]); per-source attribution
+	// is the oracle's job, so there is no building-only slice to ask for.
+	int aiRealizedCommerce[NUM_COMMERCE_TYPES];
+	getCommerces(aiRealizedCommerce);
+
 	if (iCorpValue >= 0) // Don't build if it'll hurt us.
 	{
 		if (kBuilding.getHeadquartersCorporation() != NO_CORPORATION)
@@ -12746,7 +12752,7 @@ int CvCityAI::getBuildingCommerceValue(BuildingTypes eBuilding, int iI, int* aiF
 			if (iGoldValue > 0)
 			{
 				iGoldValue += 2 + (kOwner.getNumCities() / 4);
-				iGoldValue += std::min(iGoldValue, getBuildingCommerce((CommerceTypes)iI) / 2) / 2;
+				iGoldValue += std::min(iGoldValue, aiRealizedCommerce[iI] / 2) / 2;
 			}
 			iGoldValue *= 2;
 			iGoldValue *= getTotalCommerceRateModifier((CommerceTypes)iI);

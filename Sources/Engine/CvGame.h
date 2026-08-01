@@ -71,7 +71,6 @@ public:
 	DllExport void updateBlockadedPlots();
 
 	void updatePlotGroups(bool reInitialize = false);
-	void updateBuildingCommerce();
 	void updateCitySight(bool bIncrement);
 	void updateTradeRoutes();
 

@@ -919,20 +919,6 @@ public:
 	void setCultureLevel(CultureLevelTypes eNewValue, bool bUpdatePlotGroups);
 	void updateCultureLevel(bool bUpdatePlotGroups);
 
-	int getRiverPlotYield(YieldTypes eIndex) const;
-	void changeRiverPlotYield(YieldTypes eIndex, int iChange);
-
-	int getTerrainYieldChange(const TerrainTypes eTerrain, const YieldTypes eYield) const;
-	void changeTerrainYieldChanges(const TerrainTypes eTerrain, const YieldArray& yields);
-
-	int getPlotYieldChange(const PlotTypes ePlot, const YieldTypes eYield) const;
-	void changePlotYieldChanges(const PlotTypes ePlot, const YieldArray& yields);
-
-	int getImprovementYieldChange(const ImprovementTypes eImprovement, const YieldTypes eYield) const;
-	void changeImprovementYieldChanges(const ImprovementTypes eImprovement, const YieldArray& yields);
-
-	int getYieldChangeAt(const CvPlot* pPlot, const YieldTypes eYield) const;
-
 	int getBaseYieldRateFromBuilding(const YieldTypes eIndex, const BuildingTypes eType) const;
 	int getAdditionalYieldByBuilding(YieldTypes eIndex, BuildingTypes eType, bool bFilter = false) const;
 
@@ -940,27 +926,10 @@ public:
 
 	int getBaseYieldRateModifier(YieldTypes eIndex, int iExtra = 0) const;
 
-	// Toffer - ToDo - Change all extra yields to be cached with two decimal accuracy.
-	int getExtraYield(YieldTypes eYield) const;
-	int getExtraYield100(YieldTypes eYield) const;
-	void changeExtraYield(YieldTypes eYield, int iChange);
-	// ! Toffer
-	// Specialist yields are tracked apart from the other extra yields because they receive the
-	// city yield modifier like worked tiles do (#317); the rest of the extra bucket stays flat.
-	int getSpecialistYieldTotal(YieldTypes eYield) const;
-	void changeSpecialistYieldTotal(YieldTypes eYield, int iChange);
-	void changeBuildingExtraYield(YieldTypes eYield, int iChange);
-	int getBuildingExtraYield(YieldTypes eYield) const;
-
-
 	void changeBuildingCommerceModifier(CommerceTypes eIndex, int iChange);
 	int getBuildingCommerceModifier(CommerceTypes eIndex) const;
 
 	void onYieldChange();
-
-	int getBaseYieldPerPopRate(YieldTypes eIndex) const;
-	void setBaseYieldPerPopRate(YieldTypes eIndex, int iNewValue);
-	void changeBaseYieldPerPopRate(YieldTypes eIndex, int iChange);
 
 	int getYieldRateModifier(YieldTypes eIndex) const;
 	void changeYieldRateModifier(YieldTypes eIndex, int iChange);
@@ -983,11 +952,6 @@ public:
 	int calculateTotalTradeYield(YieldTypes eIndex, PlayerTypes eWithPlayer = NO_PLAYER, bool bRound = false, bool bBase = false) const;
 	void setTradeYield(YieldTypes eIndex, int iNewValue);
 
-	int getExtraSpecialistYield(YieldTypes eIndex) const;
-	int getExtraSpecialistYield(YieldTypes eIndex, SpecialistTypes eSpecialist) const;
-	void updateExtraSpecialistYield(YieldTypes eYield);
-	void updateExtraSpecialistYield();
-
 
 	int getTotalCommerceRateModifier(CommerceTypes eIndex) const;
 	void setCommerceModifierDirty(CommerceTypes eCommerce);
@@ -995,31 +959,16 @@ public:
 	int getProductionToCommerceModifier(CommerceTypes eIndex) const;
 	void changeProductionToCommerceModifier(CommerceTypes eIndex, int iChange);
 
-	int getBuildingCommerce(CommerceTypes eIndex) const;
-	int getBuildingCommerce100(CommerceTypes eIndex) const;
 	int getBuildingCommerceByBuilding(CommerceTypes eIndex, BuildingTypes eType, const bool bFull = false, const bool bTestVisible = false) const;
 	int getAdditionalCommerceByBuilding(CommerceTypes eIndex, BuildingTypes eType) const;
 	int getAdditionalCommerceRateModifierByBuilding(CommerceTypes eIndex, BuildingTypes eType) const;
-	void updateBuildingCommerce();
 
-	int getSpecialistCommerce(CommerceTypes eIndex) const;
-	void changeSpecialistCommerceTimes100(CommerceTypes eIndex, int iChange);
 	int getAdditionalCommerceBySpecialist(CommerceTypes eIndex, SpecialistTypes eSpecialist, int iChange) const;
 	int getAdditionalBaseCommerceRateBySpecialist(CommerceTypes eIndex, SpecialistTypes eSpecialist, int iChange) const;
 
-	int getReligionCommerce(CommerceTypes eIndex) const;
 	int getReligionCommerceByReligion(CommerceTypes eIndex, ReligionTypes eReligion) const;
-	void updateReligionCommerce(CommerceTypes eIndex);
-	void updateReligionCommerce();
 
-	void setCorporationYield(YieldTypes eIndex, int iNewValue);
-	int getCorporationCommerce(CommerceTypes eIndex) const;
-	int getCorporationCommerceByCorporation(CommerceTypes eIndex, CorporationTypes eCorporation) const;
-	int getCorporationYield(YieldTypes eIndex) const;
-	int getCorporationYieldByCorporation(YieldTypes eIndex, CorporationTypes eCorporation) const;
 	void updateCorporation();
-	void updateCorporationCommerce(CommerceTypes eIndex);
-	void updateCorporationYield(YieldTypes eIndex);
 	void updateCorporationBonus();
 
 	int getCommerceRateModifier(CommerceTypes eIndex) const;
@@ -1030,8 +979,6 @@ public:
 	int getCommerceHappiness() const;
 	void changeCommerceHappinessPer(CommerceTypes eIndex, int iChange);
 
-	void changeCommercePerPopFromBuildings(const CommerceTypes eIndex, const int iChange);
-	int getCommercePerPopFromBuildings(const CommerceTypes eIndex) const;
 
 
 	int getDomainProductionModifier(DomainTypes eIndex) const;
@@ -1650,10 +1597,6 @@ protected:
 	std::map<short, int> m_buildingProductionMod;
 	std::map<short, int> m_unitProductionMod;
 
-	std::map<short, YieldArray> m_terrainYieldChanges;
-	std::map<short, YieldArray> m_plotYieldChanges;
-	std::map<short, YieldArray> m_improvementYieldChanges;
-
 	std::map<BuildingTypes, BuiltBuildingData> m_buildingLedger;
 
 	int m_iMilitaryProductionModifier;
@@ -1948,9 +1891,6 @@ public:
 		DECLARE_MAP_FUNCTOR(CvCity, void, endDeferredBonusProcessing);
 		DECLARE_MAP_FUNCTOR(CvCity, void, doTurn);
 		DECLARE_MAP_FUNCTOR(CvCity, void, checkReligiousDisablingAllBuildings);
-		DECLARE_MAP_FUNCTOR(CvCity, void, updateExtraSpecialistYield);
-		DECLARE_MAP_FUNCTOR(CvCity, void, updateReligionCommerce);
-		DECLARE_MAP_FUNCTOR(CvCity, void, updateBuildingCommerce);
 		DECLARE_MAP_FUNCTOR(CvCity, void, updateCorporation);
 		DECLARE_MAP_FUNCTOR(CvCity, void, updateYield);
 		DECLARE_MAP_FUNCTOR(CvCity, void, onYieldChange);

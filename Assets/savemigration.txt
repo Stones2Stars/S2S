@@ -1039,3 +1039,27 @@ CvCity::FreeAreaBuildingCount
 CvPlayer::m_aiSpecialistExtraCommerce
 CvPlayer::m_ppaaiSpecialistExtraCommerce
 CvCity::m_ppaaiLocalSpecialistExtraCommerce
+
+========================
+2026-08-01 — #430 delete-driven legacy cut (the CvCity per-plot-TYPE yield accumulators): the whole
+getYieldChangeAt cluster is retired by the PLOTS-TARGET fold. A scope-wide source now deposits onto every
+matching plot in scope as <yield>.<scope>.plots.flat gated by a plot predicate (json.md §6.1), which is the ONE
+uniform mechanism the curator names as retiring getYieldChangeAt / getSeaPlotYield / getRiverPlotYield and the
+per-plot-type accumulators with it (curate_building._inject_plots). River is the HAS_RIVER entry, the plot-TYPE
+map is the IS_WATER / IS_LAND+IS_FLATLANDS / HAS_HILLS / HAS_PEAK entries, and the terrain- and
+improvement-keyed maps land plot-scope on their TARGET through the readJson reverse pass.
+| The three maps had NO feeder left in the engine at all -- their change* functions were called from nowhere --
+| so this is a read-and-store cut, not a migration of live state.
+| The per-block decorated tags are BRACKET-FREE (Size / Type / value), so they soft-remove by exact name here
+| (save.md §3; the CvCity::BuildingHappinessFromTechSize precedent), never as a bracketed per-element tag.
+| REPLACEMENT: the plot's own realized yield package -- the plots-target deposits resolve into it at plot scope.
+CvCity::PlotYieldChangesSize              (decorated short)
+CvCity::PlotYieldChangesType              (decorated short, per entry)
+CvCity::PlotYieldChanges                  (decorated int array, per entry)
+CvCity::TerrainYieldChangesSize           (decorated short)
+CvCity::TerrainYieldChangesType           (decorated short, per entry)
+CvCity::TerrainYieldChanges               (decorated int array, per entry)
+CvCity::ImprovementYieldChangesSize       (decorated short)
+CvCity::ImprovementYieldChangesType       (decorated short, per entry)
+CvCity::ImprovementYieldChanges           (decorated int array, per entry)
+========================

@@ -2536,20 +2536,6 @@ void CvGame::updatePlotGroups(bool reInitialize)
 }
 
 
-void CvGame::updateBuildingCommerce()
-{
-	PROFILE_FUNC();
-
-	for (int iI = 0; iI < MAX_PLAYERS; iI++)
-	{
-		if (GET_PLAYER((PlayerTypes)iI).isAlive())
-		{
-			GET_PLAYER((PlayerTypes)iI).updateBuildingCommerce();
-		}
-	}
-}
-
-
 void CvGame::updateCitySight(bool bIncrement)
 {
 	PROFILE_FUNC();
@@ -3455,7 +3441,6 @@ void CvGame::setGameTurn(int iNewValue)
 
 		doCalculateCurrentTick();
 
-		updateBuildingCommerce();
 
 		setScoreDirty(true);
 
@@ -5579,7 +5564,6 @@ void CvGame::setHolyCity(ReligionTypes eIndex, const CvCity* pNewValue, bool bAn
 	if (pOldValue != NULL)
 	{
 		pOldValue->changeReligionInfluence(eIndex, -GC.getHOLY_CITY_INFLUENCE());
-		pOldValue->updateReligionCommerce();
 		pOldValue->setInfoDirty(true);
 	}
 
@@ -5589,7 +5573,6 @@ void CvGame::setHolyCity(ReligionTypes eIndex, const CvCity* pNewValue, bool bAn
 
 		pHolyCity->setHasReligion(eIndex, true, bAnnounce, true);
 		pHolyCity->changeReligionInfluence(eIndex, GC.getHOLY_CITY_INFLUENCE());
-		pHolyCity->updateReligionCommerce();
 		pHolyCity->setInfoDirty(true);
 
 		if (bAnnounce && isFinalInitialized() && !gDLL->GetWorldBuilderMode())
