@@ -417,9 +417,12 @@ the total-observability bar below.)
   git"* (owner)** — an old implementation parked beside the live one so it could be switched back, which is
   what version control is for. ⚑ **The test is mechanical, so this needs no judgement: is the guard symbol
   defined anywhere in `Sources/` or `fbuild.bff`?** If not, the block never compiles, and it is deleted — git
-  is the archaeology. ⚠ Exclude the COMPILER/tooling predefines (`_M_IX86`, `__INTELLISENSE__`,
-  `APSTUDIO_INVOKED`, `WIN32`, `_DEBUG`) and vendored third-party files; those are genuine build switches, not
-  attics. ⛔ The cost of leaving one is the usual one: it holds the NAMES of things that were removed, so the
+  is the archaeology. ⚠ **The one FALSE POSITIVE the test has is a guard something ELSE defines**, and it is
+  the exception to know: **`__INTELLISENSE__` is defined by VS Code's IntelliSense parser** (`CvGameCoreDLL.h`),
+  so being absent from `Sources/`+`fbuild.bff` is its NORMAL state and says nothing about it — it stays. Same
+  for the compiler's own target predefines (`_M_IX86`, `WIN32`, `_DEBUG`), the resource editor's
+  (`APSTUDIO_INVOKED`) and anything inside a vendored third-party file. ⇒ Read the test as *"defined by
+  NOBODY"*, not *"defined by not-us"*. ⛔ The cost of leaving one is the usual one: it holds the NAMES of things that were removed, so the
   next agent finds them and re-treads the very thing that was killed — and being preprocessor-skipped, it is
   invisible to the compiler census that would otherwise name it.
 - **ARCHITECTURAL NORTH-STAR — Clean Architecture + interface-based contracts.** Dependency inversion, isolated

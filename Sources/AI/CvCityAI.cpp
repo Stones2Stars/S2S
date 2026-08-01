@@ -8219,16 +8219,6 @@ int CvCityAI::AI_getImprovementValue(const CvPlot* pPlot, ImprovementTypes eImpr
 
 	iValue += 100 * getImprovementFreeSpecialists(eImprovement);
 
-	if (improvement.getHappiness() != 0)
-	{
-		int iHappyLevel = netHappiness(0);
-		if (iHappyLevel - iHappyLevel / 5 < 0)
-		{
-			iValue += 100 * improvement.getHappiness();
-		}
-		else iValue += 20 * improvement.getHappiness();
-	}
-
 	if (!isHuman())
 	{
 		iValue *= std::max(0, GC.getLeaderHeadInfo(getPersonalityType()).getImprovementWeightModifier(eFinalUpgrade) + 200);
