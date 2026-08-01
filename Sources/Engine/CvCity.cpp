@@ -15308,11 +15308,18 @@ int CvCity::getAdditionalDefenseByBuilding(BuildingTypes eBuilding) const
 		//iExtraRate += std::max(0, kBuilding.getDefense(DEFENSE_AMOUNT, CASC_SCOPE_CITY) - std::max(0, iCultureDefense));
 		iExtraBuildingRate += kBuilding.getDefense(DEFENSE_AMOUNT, CASC_SCOPE_CITY);
 	}
-	for (int iJ = 0; iJ < GC.getNumBonusInfos(); iJ++)
+	// The bonus-keyed defense rows, read as the entity's OWN authored entries rather than by asking every bonus
+	// in the registry whether this building deposits onto it -- the own-data inversion ([modifier.md §5]).
 	{
-		if (hasBonus((BonusTypes)iJ))
+		std::vector<std::pair<int, int> > bonusDefense;
+		InfoValuation::collectKeyedTarget(kBuilding.getModifiers(), MODFAM_DEFENSE, DEFENSE_AMOUNT,
+			InfoValuation::keyedTargetSegment("bonuses"), bonusDefense);
+		for (std::vector<std::pair<int, int> >::const_iterator it = bonusDefense.begin(); it != bonusDefense.end(); ++it)
 		{
-			iExtraRate += kBuilding.getBonusDefenseChanges(iJ);
+			if (hasBonus(static_cast<BonusTypes>(it->first)))
+			{
+				iExtraRate += it->second;
+			}
 		}
 	}
 	if (kBuilding.getDefense(DEFENSE_AMOUNT, CASC_SCOPE_EMPIRE) != 0)
@@ -15330,11 +15337,14 @@ int CvCity::getAdditionalDefenseByBuilding(BuildingTypes eBuilding) const
 			const CvBuildingInfo& info = GC.getBuildingInfo(eBuildingX);
 
 			iExtraBuildingRate -= info.getDefense(DEFENSE_AMOUNT, CASC_SCOPE_CITY);
-			for (int iJ = 0; iJ < GC.getNumBonusInfos(); iJ++)
+			std::vector<std::pair<int, int> > replacedBonusDefense;
+			InfoValuation::collectKeyedTarget(info.getModifiers(), MODFAM_DEFENSE, DEFENSE_AMOUNT,
+				InfoValuation::keyedTargetSegment("bonuses"), replacedBonusDefense);
+			for (std::vector<std::pair<int, int> >::const_iterator it = replacedBonusDefense.begin(); it != replacedBonusDefense.end(); ++it)
 			{
-				if (hasBonus((BonusTypes)iJ))
+				if (hasBonus(static_cast<BonusTypes>(it->first)))
 				{
-					iExtraRate -= info.getBonusDefenseChanges(iJ);
+					iExtraRate -= it->second;
 				}
 			}
 			iExtraRate -= info.getDefense(DEFENSE_AMOUNT, CASC_SCOPE_EMPIRE);
@@ -15348,35 +15358,7 @@ int CvCity::getAdditionalDefenseByBuilding(BuildingTypes eBuilding) const
 }
 
 
-int CvCity::calculateCorporationHealth() const
-{
-	PROFILE_EXTRA_FUNC();
-	int iHealth = 0;
 
-	for (int iI = 0; iI < GC.getNumCorporationInfos(); iI++)
-	{
-		if (isActiveCorporation((CorporationTypes)iI))
-		{
-			iHealth += GC.getCorporationInfo((CorporationTypes)iI).getHealth();
-		}
-	}
-	return iHealth;
-}
-
-int CvCity::calculateCorporationHappiness() const
-{
-	PROFILE_EXTRA_FUNC();
-	int iHappiness = 0;
-
-	for (int iI = 0; iI < GC.getNumCorporationInfos(); iI++)
-	{
-		if (isActiveCorporation((CorporationTypes)iI))
-		{
-			iHappiness += GC.getCorporationInfo((CorporationTypes)iI).getHappiness();
-		}
-	}
-	return iHappiness;
-}
 
 
 int CvCity::sight() const

@@ -1247,8 +1247,6 @@ public:
 
 	int getRevTrend() const;
 	bool isInquisitionConditions() const;
-	int calculateCorporationHealth() const;
-	int calculateCorporationHappiness() const;
 
 	BuildTypes findChopBuild(FeatureTypes eFeature) const;
 	int calculateBonusCommerceRateModifier(CommerceTypes eIndex) const;
