@@ -163,9 +163,16 @@ techs are monotonic, no `operate`.
 > genuinely needed the answer is the owning info's own `requires` section, never the merged family.
 
 **Empire/team-scope constructables need NO new machinery** (the scope spine already has team/empire): stage-gates
-via `enables` (the space line), doctrine bans via `disables` + empire modifiers. An empire-scope building
-replaces the `FreeBuilding` autobuild (~345 uses); it authors on the existing scope spine (team/empire), so it
-needs no new machinery.
+via `enables` (the space line), doctrine bans via `disables` + empire modifiers.
+
+> **⚖ MOVING THE ALL-ENCOMPASSING BUILDINGS TO EMPIRE SCOPE IS WANTED, AND IS OUTSIDE THIS REWORK (owner).**
+> It is forward intent, not a #430 instruction — do not read it as one, and do not build a player-held building
+> instance for it.
+> ⛔ **In particular it is NOT how the free building is served.** That is a GRANT: the source names the target
+> in `grants.buildings` and the receiving city genuinely HAS the building, which is load-bearing because the
+> authored data gates on holding those targets in over a thousand `requires` atoms — an empire-scope effect-only
+> shape would satisfy none of them ([legacy-grant-apply-sites.md](../reference/legacy-grant-apply-sites.md) §4
+> carries the ruling and the two-leg apply).
 
 > **The two fates are two mechanisms — nothing to declare.** `disables` = **destroy** (a law/ban
 > removes it; rebuilt on repeal); the target's `requires.operate.dormant` = **dormant** (it stays put,

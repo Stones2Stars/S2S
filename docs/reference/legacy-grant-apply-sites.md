@@ -243,9 +243,35 @@ religionCount + corporationCount + greatPeople*2`, scaled by `(100 + culturePerc
 Moving the whole function would import a modifier AND an out-of-scope event store into the grants machine — the
 exact §1 mistake. Only the `grants.promotions` leg migrates.
 
-**MODIFIER, not grant** — `getFreeBuilding`/`getFreeAreaBuilding` (refcounted ±1 with source presence);
-building `getFreeTraitTypes` ("conferred while active"); vote `tradeRoutes`/`isFreeTrade`/`isNoNukes`/`forceCivic`
-(reversed on repeal); vote-source religion yields; building/civic/trait `freeSpecialists`.
+**MODIFIER, not grant** — building `getFreeTraitTypes` ("conferred while active"); vote
+`tradeRoutes`/`isFreeTrade`/`isNoNukes`/`forceCivic` (reversed on repeal); vote-source religion yields;
+building/civic/trait `freeSpecialists`.
+
+**⚖ THE FREE BUILDING IS A GRANT — "in all scenarios they behave like grants" (owner).** A building naming
+another (or itself) hands that building over, and the receiving city genuinely HAS it: the authored data gates
+on holding these targets in over a thousand `requires` atoms (`BUILDING_LIBRARY`, `BUILDING_OBSERVATORY`,
+`BUILDING_COLOSSEUM` and their kin), so a shape that delivered only the EFFECTS would silently break every one
+of them. It authors `grants.buildings` on the SOURCE ([json.md §5](../specs/json.md)), landing in every city of
+the empire.
+⚠ **This is a behaviour change from legacy, stated rather than hidden** ([validation.md](../specs/validation.md)):
+the legacy pair was refcounted ±1 with the source's presence and REMOVED the copies when the source went. A
+grant persists — losing the wonder keeps the granted buildings.
+⚑ **Two authored populations, ONE shape:** a building granting ITSELF (*"I build it in the first city, and then
+every city afterwards gets a free copy"* — owner) and a wonder granting a DIFFERENT building to all cities. They
+differ only in whether source and target are the same id, so nothing about the disposition splits on it.
+⛔ **THE APPLY HAS TWO LEGS, and the second is the one a fan-at-construction misses: "AFTERWARDS" (owner).** A
+city FOUNDED or ACQUIRED later must receive the copies for every source its owner already holds, so the grantor
+fact fanning over the cities that already stand is only half of it — the other half fires when a CITY STARTS
+EXISTING and folds what the owner holds. This is the amenity fold's two-leg shape exactly
+([contexts.md](../architecture/contexts.md)), and it is what the legacy per-city `checkFreeBuildings` sweep was
+doing. ⚠ A one-shot fan passes every test on the cities standing at the time and silently misses every future
+one.
+⛔ **Do NOT read this as the empire-scope building.** Moving the all-encompassing buildings to empire scope is
+wanted but is OUTSIDE this rework (owner) — see [enabler.md §2](../specs/enabler.md).
+⚠ A separate ARRIVAL mechanism feeds the same targets and is not this: the buildings and heritages handed over
+by animals or entertainers come from the OUTCOME system's `constructs` verb
+([mission-outcome-system.md](mission-outcome-system.md)), which places the first copy; the grant above is what
+spreads it.
 
 **GRANT, contradicting the earlier reclassification** — the **unattributed** free-specialist ledger
 (`m_paiFreeSpecialistCountUnattributed`) is genuine one-shot state: Great-Person `join` consumes the unit so no
