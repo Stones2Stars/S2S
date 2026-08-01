@@ -10403,22 +10403,22 @@ DomainTypes CvUnit::getDomainType() const
 
 InvisibleTypes CvUnit::getInvisibleType() const
 {
-	const InvisibleTypes eInvisible = (InvisibleTypes)m_pUnitInfo->getInvisibleType();
-	if (eInvisible != NO_INVISIBLE && isNegatesInvisible(eInvisible))
+	// The unit's hiding METHOD: the skill->key direction of GC.getMethodSkill. The CARRIER is a SKILL because a
+	// promotion can grant a method (optical camouflage); the KEY stays the INVISIBLE_* registry because that is
+	// what the per-plot per-method registration is dimensioned by ([vision.md] §4).
+	// ⚠ Asked of the INFO, which is behaviour-preserving (the legacy body read the info too) and keeps this
+	// cheap -- isInvisible is one of the hottest reads in the engine. A PROMOTION-granted method therefore does
+	// not show here yet: that wants a resolved slot dirtied on promotion change, not a per-read walk of every
+	// promotion inside this call.
+	for (int iI = 0; iI < GC.getNumInvisibleInfos(); ++iI)
 	{
-		return NO_INVISIBLE;
+		const int iMethodSkill = GC.getMethodSkill((InvisibleTypes)iI);
+		if (iMethodSkill >= 0 && getUnitInfo().hasSkill(iMethodSkill))
+		{
+			return (InvisibleTypes)iI;
+		}
 	}
-	return (eInvisible);
-}
-
-int CvUnit::getNumSeeInvisibleTypes() const
-{
-	return m_pUnitInfo->getNumSeeInvisibleTypes();
-}
-
-InvisibleTypes CvUnit::getSeeInvisibleType(int i) const
-{
-	return (InvisibleTypes)(m_pUnitInfo->getSeeInvisibleType(i));
+	return NO_INVISIBLE;
 }
 
 
@@ -25803,7 +25803,7 @@ void CvUnit::updateSpotIntensity(const InvisibleTypes eInvisibleType, const bool
 				{
 					// The same registration as CvPlot::changeAdjacentSight, and the same rule: DETECTION with
 					// no distance attenuation and no spot range, because reach is vision's (vision.md §4).
-					pPlot->setSpotIntensity(getTeam(), eInvisible, getID(), detectionAgainst(eInvisible));
+					pPlot->setSpotIntensity(getTeam(), eInvisible, getID(), detectionAgainst(GC.getMethodSkill(eInvisible)));
 				}
 			}
 		}
@@ -26446,7 +26446,7 @@ bool CvUnit::hasInvisibleAbility() const
 		return hasAnyInvisibilityType();
 	}
 
-	if ((InvisibleTypes)m_pUnitInfo->getInvisibleType() != NO_INVISIBLE)
+	if (getInvisibleType() != NO_INVISIBLE)
 	{
 		return true;
 	}

@@ -984,16 +984,8 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 		}
 
 		FAssertMsg((0 < GC.getNumInvisibleInfos()), "GC.getNumInvisibleInfos() is not greater than zero but an array is being allocated in CvCity::reset");
-		m_aiCachedBestSeeInvisibleUnit = new int[GC.getNumInvisibleInfos()];
-		m_abCachedBestSeeInvisibleUnit = new bool[GC.getNumInvisibleInfos()];
-		m_aiCachedBestSeeInvisibleUnitSea = new int[GC.getNumInvisibleInfos()];
-		m_abCachedBestSeeInvisibleUnitSea = new bool[GC.getNumInvisibleInfos()];
 		for (int iI = 0; iI < GC.getNumInvisibleInfos(); iI++)
 		{
-			m_aiCachedBestSeeInvisibleUnit[iI] = -1;
-			m_abCachedBestSeeInvisibleUnit[iI] = false;
-			m_aiCachedBestSeeInvisibleUnitSea[iI] = -1;
-			m_abCachedBestSeeInvisibleUnitSea[iI] = false;
 		}
 
 		m_pabWorkingPlot = new bool[NUM_CITY_PLOTS];
@@ -1384,7 +1376,6 @@ void CvCity::doTurn()
 	FAssert(m_deferringBonusProcessingCount == 0);
 
 
-	flushBestSeeInvisibleUnitCache();
 	//	Fail safe
 	m_deferringBonusProcessingCount = 0;
 
@@ -18612,50 +18603,6 @@ void CvCity::resetQuarantinedCount()
 	m_iQuarantinedCount = 0;
 }
 
-void CvCity::flushBestSeeInvisibleUnitCache()
-{
-	PROFILE_EXTRA_FUNC();
-	for (int iI = 0; iI < GC.getNumInvisibleInfos(); iI++)
-	{
-		m_aiCachedBestSeeInvisibleUnit[iI] = -1;
-		m_abCachedBestSeeInvisibleUnit[iI] = false;
-		m_aiCachedBestSeeInvisibleUnitSea[iI] = -1;
-		m_abCachedBestSeeInvisibleUnitSea[iI] = false;
-	}
-}
-
-void CvCity::setBestSeeInvisibleUnitCache(InvisibleTypes eInvisible, UnitTypes eUnitType, bool bSea)
-{
-	int iI = (int)eInvisible;
-	if (bSea)
-	{
-		m_aiCachedBestSeeInvisibleUnitSea[iI] = (int)eUnitType;
-		m_abCachedBestSeeInvisibleUnitSea[iI] = true;
-		return;
-	}
-	m_aiCachedBestSeeInvisibleUnit[iI] = (int)eUnitType;
-	m_abCachedBestSeeInvisibleUnit[iI] = true;
-}
-
-UnitTypes CvCity::getCachedBestSeeInvisibleUnit(InvisibleTypes eInvisible, bool bSea) const
-{
-	int iI = (int)eInvisible;
-	if (bSea)
-	{
-		return (UnitTypes)m_aiCachedBestSeeInvisibleUnitSea[iI];
-	}
-	return (UnitTypes)m_aiCachedBestSeeInvisibleUnit[iI];
-}
-
-bool CvCity::isCachedBestSeeInvisibleUnit(InvisibleTypes eInvisible, bool bSea) const
-{
-	int iI = (int)eInvisible;
-	if (bSea)
-	{
-		return m_abCachedBestSeeInvisibleUnitSea[iI];
-	}
-	return m_abCachedBestSeeInvisibleUnit[iI];
-}
 
 void CvCity::AI_setPropertyControlBuildingQueued(bool bSet)
 {

@@ -3308,47 +3308,83 @@ void cvInternalGlobals::buildLoadTimeIndexes()
 	CityOutputHistory::setCityOutputHistorySize((uint16_t)GC.getCITY_OUTPUT_HISTORY_SIZE());
 
 
-	buildInvisibleSeerIndex();
 }
 
+// The hiding METHOD has two id spaces and this is the ONE map between them (vision.md §4). The METHOD KEY is
+// the INVISIBLE_* registry -- small, fixed, and what the per-plot per-method registration is dimensioned by --
+// while the CARRIER on a unit is a SKILL, because a promotion can grant a method (optical camouflage) and a
+// registry entry cannot be granted. The names are a pure prefix swap (INVISIBLE_NAVAL_DISGUISE ->
+// SKILL_NAVAL_DISGUISE), so neither side carries a table and the two cannot drift.
+// Built lazily: the SKILL_* infotypes mint from the authored `skills` blocks, i.e. AFTER the info registry.
+int cvInternalGlobals::getMethodSkill(InvisibleTypes eInvisible) const
+{
+	FASSERT_BOUNDS(0, getNumInvisibleInfos(), eInvisible);
+	if ((int)m_invisibleMethodSkill.size() != getNumInvisibleInfos())
+	{
+		m_invisibleMethodSkill.assign(getNumInvisibleInfos(), -2);   // -2 = not yet resolved
+	}
+	int& iCached = m_invisibleMethodSkill[eInvisible];
+	if (iCached == -2)
+	{
+		std::string szSkill = "SKILL_";
+		szSkill += getInvisibleInfo(eInvisible).getType() + strlen("INVISIBLE_");
+		iCached = getInfoTypeForString(szSkill.c_str(), /*bHideAssert*/true);
+	}
+	return iCached;
+}
+
+// "Invisibility method -> the trainable units that can see it". A pure function of info data, so it is
+// identical on every client (lockstep/OOS safe) and never rebuilt during play. Units that can never be trained
+// (ProductionCost -1, e.g. spawn-only creatures) are excluded: a civ "unlocking" one of those is no counter.
+// Only units offering UNITAI_SEE_INVISIBLE count as seers -- recon units technically detect camouflage but roam
+// the map instead of countering infiltrators, and counting them opened the NPC gate at TECH_TRAILS.
+// ⚑ Built LAZILY on first ask, not at load: it resolves method SKILLS, and those mint from the authored
+// `skills` blocks, so an eager build could run before the registry exists and cache -1 forever.
 const std::vector<UnitTypes>& cvInternalGlobals::getUnitsSeeingInvisible(InvisibleTypes eInvisible) const
 {
-	FASSERT_BOUNDS(0, (int)m_invisibleSeerUnits.size(), eInvisible);
-	return m_invisibleSeerUnits[eInvisible];
-}
-
-// Build, once at load, the map "invisibility class -> trainable units that can see it".
-// Pure function of info data, so it is identical on every client (lockstep/OOS safe) and
-// never needs rebuilding during play. Units that can never be trained (ProductionCost -1,
-// e.g. spawn-only creatures) are excluded: a civ "unlocking" one of those is no counter.
-// Only units offering UNITAI_SEE_INVISIBLE count as seers: recon units (Scout/Guide/...)
-// technically see camouflage but roam the map instead of countering infiltrators, and
-// counting them opened the NPC gate at TECH_TRAILS -- observed live 2026-06-11: a new
-// barb thief spawned at t~270 "through" the gate. The dedicated-counter lines (dogs, law
-// enforcement) all carry the AI type.
-void cvInternalGlobals::buildInvisibleSeerIndex()
-{
-	PROFILE_EXTRA_FUNC();
-	m_invisibleSeerUnits.assign(getNumInvisibleInfos(), std::vector<UnitTypes>());
-
-	for (int iI = 0; iI < getNumUnitInfos(); iI++)
+	FASSERT_BOUNDS(0, getNumInvisibleInfos(), eInvisible);
+	if ((int)m_invisibleSeerUnits.size() != getNumInvisibleInfos())
 	{
-		const CvUnitInfo& kUnit = getUnitInfo(static_cast<UnitTypes>(iI));
+		m_invisibleSeerUnits.assign(getNumInvisibleInfos(), std::vector<UnitTypes>());
 
-		if (kUnit.getProductionCost() < 0 || !kUnit.hasUnitAI(UNITAI_SEE_INVISIBLE))
+		for (int iMethod = 0; iMethod < getNumInvisibleInfos(); ++iMethod)
 		{
-			continue;
-		}
-		for (int iJ = 0; iJ < kUnit.getNumSeeInvisibleTypes(); iJ++)
-		{
-			const int iSee = kUnit.getSeeInvisibleType(iJ);
-
-			if (iSee > -1)
+			const int iMethodSkill = getMethodSkill((InvisibleTypes)iMethod);
+			if (iMethodSkill < 0)
 			{
-				m_invisibleSeerUnits[iSee].push_back(static_cast<UnitTypes>(iI));
+				continue;
+			}
+			for (int iUnit = 0; iUnit < getNumUnitInfos(); ++iUnit)
+			{
+				const CvUnitInfo& kUnit = getUnitInfo((UnitTypes)iUnit);
+				if (kUnit.getProductionCost() < 0 || !kUnit.hasUnitAI(UNITAI_SEE_INVISIBLE))
+				{
+					continue;
+				}
+				if (kUnit.getHideAndSeek().detectionAgainst(iMethodSkill) > 0)
+				{
+					m_invisibleSeerUnits[iMethod].push_back((UnitTypes)iUnit);
+				}
 			}
 		}
 	}
+	return m_invisibleSeerUnits[eInvisible];
+}
+
+// Which method a UNIT TYPE hides by -- the info-level twin of CvUnit::getInvisibleType, for the callers that
+// hold a type rather than an instance (the build list, the spawn gates).
+InvisibleTypes cvInternalGlobals::getUnitMethod(UnitTypes eUnit) const
+{
+	const CvUnitInfo& kUnit = getUnitInfo(eUnit);
+	for (int iI = 0; iI < getNumInvisibleInfos(); ++iI)
+	{
+		const int iMethodSkill = getMethodSkill((InvisibleTypes)iI);
+		if (iMethodSkill >= 0 && kUnit.hasSkill(iMethodSkill))
+		{
+			return (InvisibleTypes)iI;
+		}
+	}
+	return NO_INVISIBLE;
 }
 
 // Build, once at load, the map "enabler building B -> buildings whose constructibility

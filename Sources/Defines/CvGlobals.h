@@ -608,6 +608,10 @@ public:
 	// units that can see I. Load-derived from info data only -> identical on every client.
 	// Backs CvGame::canNPCFieldUnit's "every civ can counter it" gate on NPC invisible
 	// units. See docs/dev/plans/ai-vs-human-benchmarking.md (criminal finding).
+	// The hiding METHOD's two id spaces, joined: the INVISIBLE_* registry is the method KEY (what the per-plot
+	// per-method registration is sized by), the SKILL_* id is its CARRIER on a unit (promotion-grantable).
+	int getMethodSkill(InvisibleTypes eInvisible) const;
+	InvisibleTypes getUnitMethod(UnitTypes eUnit) const;   // which method a unit TYPE hides by (info-level)
 	const std::vector<UnitTypes>& getUnitsSeeingInvisible(InvisibleTypes eInvisible) const;
 
 	int getNumSpecialBuildingInfos() const;
@@ -816,7 +820,6 @@ public:
 
 protected:
 	void buildLoadTimeIndexes();   // the engine-side load indexes; runs AFTER loadJson(JSON_LOAD_POSTMENU)
-	void buildInvisibleSeerIndex();
 
 	bool m_bGraphicsInitialized;
 	bool m_bDLLProfiler;
@@ -990,7 +993,8 @@ protected:
 	// #195 constructibility enabler reverse-indices, indexed by enabler BuildingTypes.
 	std::vector< std::vector<BuildingTypes> > m_buildingEnablerIndex;
 	std::vector< std::vector<UnitTypes> > m_buildingToUnitsEnabledIndex;
-	std::vector< std::vector<UnitTypes> > m_invisibleSeerUnits;
+	mutable std::vector<int> m_invisibleMethodSkill;   // InvisibleTypes -> its SKILL_* id (lazy; -2 = unresolved)
+	mutable std::vector< std::vector<UnitTypes> > m_invisibleSeerUnits;   // method -> trainable seers (lazy)
 	std::vector<CvSpecialBuildingInfo*> m_paSpecialBuildingInfo;
 	std::vector<CvUnitInfo*> m_paUnitInfo;
 	std::vector<CvSpawnInfo*> m_paSpawnInfo;

@@ -135,6 +135,17 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <C
     in TWO infos; both compiled "clean" by that grep, and one surfaced a build later.)* **Check `grep -c C1003`:
     if it is non-zero, errors are hidden — verify your own files by reading what you changed, not by their
     absence from the log.**
+  - **⛔ AN INCREMENTAL `build` DOES NOT REBUILD THE PCH, SO A HEADER EDIT CAN BE INVISIBLE TO EVERY TU.**
+    `CvGlobals.h`, `CvEnums.h` and the rest of the umbrella live in `Build/<Config>/CvGameCoreDLL.pch`, and an
+    incremental build has been observed serving a **day-old** PCH against freshly-edited headers — so every
+    translation unit compiled against the OLD class. The signature is unmistakable once you know it and
+    nonsensical before: a member you just added reports `C2039: 'x' : is not a member of 'cvInternalGlobals'`
+    **and the members around it that have existed for years report `C3861: identifier not found` inside the same
+    function body.** A class that half-exists is not a code error; it is a stale PCH.
+    ⚠ **The real cost is a FALSE VERIFICATION, not the wasted minutes:** a "no errors in my files" grep taken
+    against a stale PCH proves nothing, because the compiler never saw the edit. **Check the PCH's mtime against
+    the headers you touched** (`ls -la Build/<Config>/CvGameCoreDLL.pch`), and when a header change is part of
+    the work, verify with `rebuild` rather than `build`.
 - The `Tools/MakeDLL*.bat` shortcuts (`MakeDLLAssert.bat`, `MakeDLLRelease.bat`, …)
   always `rebuild deploy` — full clean+rebuild+copy. Don't use them for an
   iterative compile-check loop.

@@ -13652,58 +13652,18 @@ bool CvCityAI::AI_establishSeeInvisibleCoverage()
 			criteria.m_eVisibility = eVisible;
 			criteria.m_bNoNegativeProperties = true;
 
-			//continue to use this best unit method so as to establish a rare coastal response.
-			//if (plot()->isCoastalLand())
-			//{
-			//	if (!isCachedBestSeeInvisibleUnit(eVisible, true))
-			//	{
-			//		eBestUnit = AI_bestUnitAI(UNITAI_SEE_INVISIBLE_SEA, iUnitValue, false, false, &criteria);
-			//		setBestSeeInvisibleUnitCache(eVisible, eBestUnit, true);
-			//	}
-			//	else
-			//	{
-			//		eBestUnit = getCachedBestSeeInvisibleUnit(eVisible, true);
-			//	}
-			//
-			//	if (eBestUnit != NULL)
-			//	{
-			//		iResponders = GET_PLAYER(getOwner()).getContractBroker().numRequestsOutstanding(UNITAI_SEE_INVISIBLE_SEA, false, eBestUnit, pPlot);
-			//		iResponders += pPlot->countSeeInvisibleActive(getOwner(), eVisible);
-			//		if (iResponders < 1)
-			//		{
-			//			//end result
-			//			if (AI_chooseUnit("See Invisible Sea needed", UNITAI_SEE_INVISIBLE_SEA, -1, -1, -1, &criteria, eBestUnit) )
-			//			{
-			//				return true;
-			//			}
-			//		}
-			//	}
-			//}
-			//if (!isCachedBestSeeInvisibleUnit(eVisible))
-			//{
-			//	eBestUnit = AI_bestUnitAI(UNITAI_SEE_INVISIBLE, iUnitValue, false, false, &criteria);
-			//	setBestSeeInvisibleUnitCache(eVisible, eBestUnit);
-			//}
-			//else
-			//{
-			//	eBestUnit = getCachedBestSeeInvisibleUnit(eVisible);
-			//}
-			//
-			//if (eBestUnit != NO_UNIT)
-			//{
-			int iResponders = GET_PLAYER(getOwner()).getContractBroker().numRequestsOutstanding(UNITAI_SEE_INVISIBLE, false, pPlot);//This will tend to space out the AI's sense of immediate need to prepare for each type.
-			int iActiveResponders = pPlot->countSeeInvisibleActive(getOwner(), eVisible);
-			if ((iResponders+ iActiveResponders) < 1)
+			// Space out the AI's sense of immediate need: an outstanding request counts as coverage, so it does
+			// not queue a second detector for the same method while the first is still being answered.
+			const int iResponders = GET_PLAYER(getOwner()).getContractBroker().numRequestsOutstanding(UNITAI_SEE_INVISIBLE, false, pPlot);
+			const int iActiveResponders = pPlot->countSeeInvisibleActive(getOwner(), eVisible);
+
+			if ((iResponders + iActiveResponders) < 1)
 			{
-				//end result
-				//const int iMaxSeeInvisibleUnits = 2 + player.getNumCities() + intSqrt(player.getNumCities() * intSqrt(eCurrentEra));
-
-
-
-				//Calvitix Test. demand an See Invisible only in 20% of cases
-				int irandomaction = GC.getGame().getSorenRandNum(10, "AI See Invisible Invoqued");
-
-				if (irandomaction > 7 && AI_chooseUnit("See Invisible needed", UNITAI_SEE_INVISIBLE, -1, -1, -1, &criteria))
+				// Demand a detector in only ~20% of cases -- a deliberate damper, not a probability the
+				// mechanic needs. Invisibility units are allowed to be UNDERVALUED for now (owner), and the
+				// UnitAI rework splits them off this shared track entirely.
+				if (GC.getGame().getSorenRandNum(10, "AI See Invisible Invoqued") > 7
+				&&  AI_chooseUnit("See Invisible needed", UNITAI_SEE_INVISIBLE, -1, -1, -1, &criteria))
 				{
 					return true;
 				}
@@ -13799,24 +13759,11 @@ bool CvCityAI::AI_meetsUnitSelectionCriteria(UnitTypes eUnit, const CvUnitSelect
 				return false;
 			}
 
-			if (!GC.getGame().isOption(GAMEOPTION_COMBAT_HIDE_SEEK))
-			{
-				int iVisibilityRequested = (int)criteria->m_eVisibility;
-				bool bFound = false;
-				for (int iI = 0; iI < kUnitInfo.getNumSeeInvisibleTypes(); ++iI)
-				{
-					if (kUnitInfo.getSeeInvisibleType(iI) == iVisibilityRequested)
-					{
-						bFound = true;
-						break;
-					}
-				}
-				if (!bFound)
-				{
-					return false;
-				}
-			}
-			else if (kUnitInfo.getVisibilityIntensityType(criteria->m_eVisibility) <= 0)
+			// ADMISSION: is this candidate a valid answer to a request for a detector of that method? The two
+			// legacy branches asked one question of two tables (a membership list, an intensity table); there
+			// is one surface now, so it is one read. An INFO read -- what this unit TYPE carries -- because no
+			// instance exists yet ([patterns.md] THE TWO READ ROLES).
+			if (kUnitInfo.getHideAndSeek().detectionAgainst(GC.getMethodSkill(criteria->m_eVisibility)) <= 0)
 			{
 				return false;
 			}

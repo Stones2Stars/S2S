@@ -11488,7 +11488,7 @@ int CvGame::getNumWonders() const
 bool CvGame::canNPCFieldUnit(UnitTypes eUnit) const
 {
 	PROFILE_EXTRA_FUNC();
-	const InvisibleTypes eInvisible = (InvisibleTypes)GC.getUnitInfo(eUnit).getInvisibleType();
+	const InvisibleTypes eInvisible = GC.getUnitMethod(eUnit);
 
 	if (eInvisible == NO_INVISIBLE)
 	{

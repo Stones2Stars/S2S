@@ -10805,42 +10805,18 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 				break; // Not a valid unit for this role
 			}
 			const InvisibleTypes eVisibilityRequested = criteria ? criteria->m_eVisibility : NO_INVISIBLE;
+			// ADMISSION: a named method must be answered; an unnamed one asks only that it detects SOMETHING.
+			// One read either way -- the option used to pick between two tables and there is one surface now.
 			if (eVisibilityRequested != NO_INVISIBLE)
 			{
-				if (!GC.getGame().isOption(GAMEOPTION_COMBAT_HIDE_SEEK))
-				{
-					bool bFound = false;
-					for (int iI = 0; iI < kUnitInfo.getNumSeeInvisibleTypes(); ++iI)
-					{
-						if (kUnitInfo.getSeeInvisibleType(iI) == eVisibilityRequested)
-						{
-							bFound = true;
-							break;
-						}
-					}
-					if (!bFound)
-					{
-						break; // Not a valid unit for this role
-					}
-				}
-				else if (kUnitInfo.getVisibilityIntensityType(criteria->m_eVisibility) <= 0)
+				if (kUnitInfo.getHideAndSeek().detectionAgainst(GC.getMethodSkill(eVisibilityRequested)) <= 0)
 				{
 					break; // Not a valid unit for this role
 				}
 			}
-			else
+			else if (kUnitInfo.getHideAndSeek().detection.empty())
 			{
-				if (GC.getGame().isOption(GAMEOPTION_COMBAT_HIDE_SEEK))
-				{
-					if (kUnitInfo.getNumVisibilityIntensityTypes() == 0)
-					{
-						break;  // Not a valid unit for this role
-					}
-				}
-				else if (kUnitInfo.getNumSeeInvisibleTypes() == 0)
-				{
-					break; // Not a valid unit for this role
-				}
+				break; // Not a valid unit for this role
 			}
 
 			bValid = true;
@@ -11695,12 +11671,12 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 				iValue += iCombatValue;
 				iValue += iCombatValue * ((kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100) - 1) / 4;
 				iValue += kUnitInfo.getAir(AIR_INTERCEPT, CASC_SCOPE_UNIT) * 3;
-				if (kUnitInfo.getNumSeeInvisibleTypes() > 0)
+				if (!kUnitInfo.getHideAndSeek().detection.empty())
 				{
 					iValue += 200;
 				}
 				// Boats which can't be seen don't play defense, don't make good escorts
-				if (kUnitInfo.getInvisibleType() != NO_INVISIBLE)
+				if (kUnitInfo.getHideAndSeek().concealment > 0)
 				{
 					iValue /= 2;
 				}
@@ -11800,14 +11776,12 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 				iValue *= (kUnitInfo.getUnderworld(UNDERWORLD_INSIDIOUSNESS, CASC_SCOPE_UNIT) / 100);
 				if (GC.getGame().isOption(GAMEOPTION_COMBAT_HIDE_SEEK))
 				{
-					for (int iI = 0; iI < GC.getNumInvisibleInfos(); iI++)
-					{
-						iValue += kUnitInfo.getInvisibilityIntensityType(iI) * 10;
-					}
+					// One concealment number now, not a per-type table (see the SEE_INVISIBLE ranking note).
+					iValue += kUnitInfo.getHideAndSeek().concealment / 10;
 				}
 				else
 				{
-					if (kUnitInfo.getInvisibleType() != NO_INVISIBLE)
+					if (kUnitInfo.getHideAndSeek().concealment > 0)
 					{
 						iValue *= 10;
 					}
@@ -11825,38 +11799,20 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 				const InvisibleTypes eVisibilityRequested = criteria ? criteria->m_eVisibility : NO_INVISIBLE;
 				iValue += iCombatValue;
 				iValue += ((kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100) - 1) * 30 / 100;
+				// RANKING, deliberately flat: a detector is worth its detection against the method asked for,
+				// and nothing is multiplied by it. The old shape scaled the WHOLE unit value by the intensity
+				// (x100 per method under hide-and-seek), which is what put detectors into direct competition
+				// with ordinary military and civilian units on one scale.
+				// ⚖ Owner: invisibility/hide-and-seek units may be UNDERVALUED for now, and the UnitAI rework
+				// splits them off this shared track entirely -- so this is a deliberate floor, not a port, and
+				// AI tuning is a permanent ongoing process regardless.
 				if (eVisibilityRequested != NO_INVISIBLE)
 				{
-					if (GC.getGame().isOption(GAMEOPTION_COMBAT_HIDE_SEEK))
-					{
-						iValue *= kUnitInfo.getVisibilityIntensityType(eVisibilityRequested);
-					}
-					else
-					{
-						for (int iI = 0; iI < kUnitInfo.getNumSeeInvisibleTypes(); ++iI)
-						{
-							if (kUnitInfo.getSeeInvisibleType(iI) == (int)eVisibilityRequested)
-							{
-								iValue *= 100;
-								break;
-							}
-						}
-					}
+					iValue += kUnitInfo.getHideAndSeek().detectionAgainst(GC.getMethodSkill(eVisibilityRequested)) / 100;
 				}
 				else
 				{
-					if (GC.getGame().isOption(GAMEOPTION_COMBAT_HIDE_SEEK))
-					{
-						const InvisibilityArray& array = kUnitInfo.getVisibilityIntensityTypes();
-						for (InvisibilityArray::const_iterator it = array.begin(); it != array.end(); ++it)
-						{
-							iValue = getModifiedIntValue(iValue, 100 * (*it).second);
-						}
-					}
-					else
-					{
-						iValue += 50 * kUnitInfo.getNumSeeInvisibleTypes();
-					}
+					iValue += 50 * (int)kUnitInfo.getHideAndSeek().detection.size();
 				}
 				break;
 			}

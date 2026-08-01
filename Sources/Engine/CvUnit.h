@@ -720,8 +720,6 @@ public:
 	UnitTypes getCaptureUnitType() const;
 	UnitCombatTypes getUnitCombatType() const;
 	InvisibleTypes getInvisibleType() const;
-	int getNumSeeInvisibleTypes() const;
-	InvisibleTypes getSeeInvisibleType(int i) const;
 
 	int flavorValue(FlavorTypes eFlavor) const;
 

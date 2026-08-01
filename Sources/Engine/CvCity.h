@@ -439,10 +439,6 @@ public:
 	void changeQuarantinedCount(int iChange);
 	void resetQuarantinedCount();
 
-	void flushBestSeeInvisibleUnitCache();
-	void setBestSeeInvisibleUnitCache(InvisibleTypes eInvisible, UnitTypes eUnitType, bool bSea = false);
-	UnitTypes getCachedBestSeeInvisibleUnit(InvisibleTypes eInvisible, bool bSea = false) const;
-	bool isCachedBestSeeInvisibleUnit(InvisibleTypes eInvisible, bool bSea = false) const;
 
 	DllExport int getID() const;
 	int getIndex() const;
@@ -1791,10 +1787,6 @@ protected:
 	BuildingChangeArray m_aBuildingHealthChange;
 
 	// CACHE: cache frequently used values
-	int* m_aiCachedBestSeeInvisibleUnit;
-	bool* m_abCachedBestSeeInvisibleUnit;
-	int* m_aiCachedBestSeeInvisibleUnitSea;
-	bool* m_abCachedBestSeeInvisibleUnitSea;
 	mutable int	m_iPopulationRank;
 	mutable bool m_bPopulationRankValid;
 	int*	m_aiBaseYieldRank;

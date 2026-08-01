@@ -2600,18 +2600,16 @@ void CvPlot::changeAdjacentSight(TeamTypes eTeam, int iSight, bool bIncrement, C
 	if (NULL != pUnit)
 	{
 		iUnitID = pUnit->getID();
-		if (bHideSeek)
+		// Which methods this seer registers against. Under hide-and-seek EVERY method registers, because the
+		// graduated contest decides perception per plot below; classically it registers only the methods it
+		// answers at all -- a BINARY membership. Both read the ONE detection surface; what stays separate is
+		// the VERDICT (an intensity vs a bare bit), never the data behind it.
+		for (int iI = GC.getNumInvisibleInfos() - 1; iI > -1; iI--)
 		{
-			for (int iI = GC.getNumInvisibleInfos() - 1; iI > -1; iI--)
+			const InvisibleTypes eMethod = (InvisibleTypes)iI;
+			if (bHideSeek || pUnit->detectionAgainst(GC.getMethodSkill(eMethod)) > 0)
 			{
-				aSeeInvisibleTypes.push_back((InvisibleTypes)iI);
-			}
-		}
-		else
-		{
-			for (int i=0; i < pUnit->getNumSeeInvisibleTypes(); i++)
-			{
-				aSeeInvisibleTypes.push_back(pUnit->getSeeInvisibleType(i));
+				aSeeInvisibleTypes.push_back(eMethod);
 			}
 		}
 	}
@@ -13549,22 +13547,12 @@ int CvPlot::countSeeInvisibleActive(PlayerTypes ePlayer, InvisibleTypes eVisible
 		{
 			if (pLoopUnit->getOwner() == ePlayer)
 			{
-				if (GC.getGame().isOption(GAMEOPTION_COMBAT_HIDE_SEEK))
+				// "Can this unit answer that method at all" is ONE binary question, so it is one read: the
+				// option only ever chose between two TABLES, and there is one surface now. Asked of the UNIT,
+				// not its info, so its promotions and combat classes count.
+				if (pLoopUnit->detectionAgainst(GC.getMethodSkill(eVisible)) > 0)
 				{
-					if (GC.getUnitInfo(pLoopUnit->getUnitType()).getVisibilityIntensityType(eVisible) > 0)
-					{
-						iCount += 1;
-					}
-				}
-				else
-				{
-					for (int iI = 0; iI < GC.getUnitInfo(pLoopUnit->getUnitType()).getNumSeeInvisibleTypes(); ++iI)
-					{
-						if (GC.getUnitInfo(pLoopUnit->getUnitType()).getSeeInvisibleType(iI) == (int)eVisible)
-						{
-							iCount += 1;
-						}
-					}
+					iCount += 1;
 				}
 			}
 		}
