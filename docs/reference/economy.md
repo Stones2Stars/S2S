@@ -81,14 +81,15 @@ supply + corporate maintenance.
   × `100/(100−mod)` if −; free allowances subtracted after, floor 0. `getFinalUnitUpkeepChange(iExtra, bMilitary)`
   *temporarily* mutates the accumulators for marginal-cost AI valuation.
 - Final = `(civilianNet + militaryNet) × handicapPct/100 × AI-handicap × era-scale`, 0 for NPCs.
-  > **⚖ EMPIRE UNIT UPKEEP IS AN ORDINARY MAINTENANCE-SHAPED EXPENSE (owner): it "works exactly the same way as
-  > other maintenance — it is subtracted from gold earned at the end."** So it is a RECEIVER like maintenance,
-  > not a special plane: the empire total is a receiver slot in the player's own package cache
-  > ([state-repositories.md](../architecture/state-repositories.md): a receiver is the same cache holding a
-  > different slot), and it lands in `getFinalExpense`'s pre-inflation components beside total maintenance.
-  > ⚑ The one way it DIFFERS from maintenance is whose realized values the Σ takes: maintenance sums the
-  > player's CITIES, unit upkeep sums the player's UNITS. That is the receiver rule working (the Σ of its
-  > MEMBERS' realized values), not an exception to it — the members are simply a different kind of object.
+  > **⛔ UPKEEP *IS* MAINTENANCE — THERE IS NO DIFFERENCE (owner); IT ONLY COMES FROM UNITS INSTEAD OF CITIES.**
+  > It is the same expense, subtracted from gold earned at the end, and it therefore rides the SAME empire
+  > receiver rather than a parallel one. The receiver rule is unchanged — a cross-scope total is the Σ of its
+  > MEMBERS' realized values ([state-repositories.md](../architecture/state-repositories.md)) — and the only
+  > thing that varies is WHICH members: maintenance sums the player's cities, upkeep sums its units. So the
+  > empire's Σ has two legs into one slot.
+  > ⛔ Do NOT mint a second receiver for it. Reading "upkeep" as its own machine is what produces a parallel
+  > expense plane, a second bit in the receiver region, and a double-count at `getFinalExpense` the moment both
+  > are added — the components are ONE total, not two.
 - **Supply** = `max(0, outsideUnits)·75/100·(era+1)` × `distantUnitSupportCostModifier` × AI-handicap; 0 in anarchy/NPC.
 
 ## Happiness + health (city)

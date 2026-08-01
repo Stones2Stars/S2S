@@ -1505,8 +1505,8 @@ void CvUnit::die()
 		FAssertMsg(!getCombatUnit(), "The current unit instance's combat unit is expected to be NULL");
 	}
 
-	// The owner's totals count the unit itself, not its position, so they settle for an off-map death too.
-	owner.changeUnitUpkeep(-getUpkeep(), isMilitaryBranch());
+	// The owner's upkeep total is a Σ over its live units, so a death MARKS it rather than pushing a delta.
+	owner.setUnitUpkeepDirty();
 
 	owner.changeUnitCount(m_eUnitType, -1);
 	if (GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS)
@@ -15031,7 +15031,7 @@ void CvUnit::calcUpkeep()
 	m_iUpkeep100 = std::max(0, iCalc);
 	if (m_iUpkeep100 != iOldUpkeep)
 	{
-		GET_PLAYER(getOwner()).changeUnitUpkeep(m_iUpkeep100 - iOldUpkeep, isMilitaryBranch());
+		GET_PLAYER(getOwner()).setUnitUpkeepDirty();
 	}
 }
 

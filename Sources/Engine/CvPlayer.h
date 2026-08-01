@@ -595,7 +595,6 @@ public:
 	int getMilitaryUnitUpkeepMod() const;
 	void changeCivilianUnitUpkeepMod(const int iChange);
 	void changeMilitaryUnitUpkeepMod(const int iChange);
-	void changeUnitUpkeep(const int iChange, const bool bMilitary);
 	void setUnitUpkeepDirty() const;
 
 	int64_t getUnitUpkeepCivilian100() const;
@@ -606,6 +605,7 @@ public:
 	int64_t getUnitUpkeepMilitaryNet() const;
 	int64_t getUnitUpkeepNet(const bool bMilitary, const int iUnitUpkeep = MAX_INT) const;
 	int64_t calcFinalUnitUpkeep(const bool bReal=true) const;
+	int64_t calcFinalUnitUpkeepFrom(int64_t iCivilian100, int64_t iMilitary100, const bool bReal=true) const;
 	int64_t getFinalUnitUpkeep() const;
 	int getFinalUnitUpkeepChange(const int iExtra, const bool bMilitary);
 	// ! Unit Upkeep

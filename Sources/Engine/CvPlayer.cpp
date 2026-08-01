@@ -9648,43 +9648,58 @@ void CvPlayer::changeMilitaryUnitUpkeepMod(const int iChange)
 	}
 }
 
-void CvPlayer::changeUnitUpkeep(const int iChange, const bool bMilitary)
-{
-	if (iChange != 0)
-	{
-		FAssertMsg(iChange > 0 || bMilitary && -iChange <= m_iUnitUpkeepMilitary100 || !bMilitary && -iChange <= m_iUnitUpkeepCivilian100, "These should always be positive!");
-
-		if (bMilitary)
-			m_iUnitUpkeepMilitary100 += iChange;
-		else m_iUnitUpkeepCivilian100 += iChange;
-
-		setUnitUpkeepDirty();
-	}
-}
-
+// ⚖ UPKEEP *IS* MAINTENANCE -- it only comes from UNITS instead of CITIES (owner). So the empire total is the
+// same shape maintenance already has: the Σ of its MEMBERS' realized values
+// ([state-repositories.md]), asked of each member rather than pushed into a stored accumulator. It runs inside
+// the existing unit-upkeep dirty gate (calcFinalUnitUpkeep), so the walk is once per change, never per read.
 int64_t CvPlayer::getUnitUpkeepCivilian100() const
 {
-	return m_iUnitUpkeepCivilian100;
+	int64_t iUpkeep = 0;
+	foreach_(const CvUnit* pLoopUnit, units())
+	{
+		if (!pLoopUnit->isMilitaryBranch())
+		{
+			iUpkeep += pLoopUnit->getUpkeep();
+		}
+	}
+	return iUpkeep;
 }
 
 int64_t CvPlayer::getUnitUpkeepMilitary100() const
 {
-	return m_iUnitUpkeepMilitary100;
+	int64_t iUpkeep = 0;
+	foreach_(const CvUnit* pLoopUnit, units())
+	{
+		if (pLoopUnit->isMilitaryBranch())
+		{
+			iUpkeep += pLoopUnit->getUpkeep();
+		}
+	}
+	return iUpkeep;
+}
+
+namespace {
+	// The modifier stage both buckets share: the asymmetric cost combiner over a raw ×100 bucket sum, reduced
+	// to whole gold at the end ([DEC-fixedpoint-x100]).
+	int64_t applyUnitUpkeepModifier(int64_t iRawUpkeep100, int iModifier)
+	{
+		uint64_t iUpkeep = std::max<int64_t>(0, iRawUpkeep100);
+
+		if (iModifier > 0)
+		{
+			iUpkeep = iUpkeep * (100 + iModifier) / 100;
+		}
+		else if (iModifier < 0)
+		{
+			iUpkeep = iUpkeep * 100 / (100 - iModifier);
+		}
+		return static_cast<int64_t>(iUpkeep / 100);
+	}
 }
 
 int64_t CvPlayer::getUnitUpkeepCivilian() const
 {
-	uint64_t iUpkeep = std::max<int64_t>(0, m_iUnitUpkeepCivilian100);
-
-	if (m_iCivilianUnitUpkeepMod > 0)
-	{
-		iUpkeep = iUpkeep * (100 + m_iCivilianUnitUpkeepMod) / 100;
-	}
-	else if (m_iCivilianUnitUpkeepMod < 0)
-	{
-		iUpkeep = iUpkeep * 100 / (100 - m_iCivilianUnitUpkeepMod);
-	}
-	return static_cast<int64_t>(iUpkeep / 100);
+	return applyUnitUpkeepModifier(getUnitUpkeepCivilian100(), m_iCivilianUnitUpkeepMod);
 }
 
 int64_t CvPlayer::getUnitUpkeepCivilianNet() const
@@ -9694,17 +9709,7 @@ int64_t CvPlayer::getUnitUpkeepCivilianNet() const
 
 int64_t CvPlayer::getUnitUpkeepMilitary() const
 {
-	uint64_t iUpkeep = std::max<int64_t>(0, m_iUnitUpkeepMilitary100);
-
-	if (m_iMilitaryUnitUpkeepMod > 0)
-	{
-		iUpkeep = iUpkeep * (100 + m_iMilitaryUnitUpkeepMod) / 100;
-	}
-	else if (m_iMilitaryUnitUpkeepMod < 0)
-	{
-		iUpkeep = iUpkeep * 100 / (100 - m_iMilitaryUnitUpkeepMod);
-	}
-	return static_cast<int64_t>(iUpkeep / 100);
+	return applyUnitUpkeepModifier(getUnitUpkeepMilitary100(), m_iMilitaryUnitUpkeepMod);
 }
 
 int64_t CvPlayer::getUnitUpkeepMilitaryNet() const
@@ -9732,10 +9737,22 @@ int64_t CvPlayer::calcFinalUnitUpkeep(const bool bReal) const
 	{
 		return 0;
 	}
+	return calcFinalUnitUpkeepFrom(getUnitUpkeepCivilian100(), getUnitUpkeepMilitary100(), bReal);
+}
+
+// Prices a HYPOTHETICAL pair of raw ×100 buckets. It exists so the marginal-cost valuation can ask "what would
+// upkeep be with this much more" WITHOUT the temp add/restore the legacy form used -- the buckets are now a Σ
+// recomputed from the live units, so there is no stored value to nudge and put back.
+int64_t CvPlayer::calcFinalUnitUpkeepFrom(int64_t iCivilian100, int64_t iMilitary100, const bool bReal) const
+{
+	if (isNPC())
+	{
+		return 0;
+	}
 	int64_t iCalc = 0;
 
-	iCalc += getUnitUpkeepCivilianNet();
-	iCalc += getUnitUpkeepMilitaryNet();
+	iCalc += std::max<int64_t>(0, applyUnitUpkeepModifier(iCivilian100, m_iCivilianUnitUpkeepMod) - getFreeUnitUpkeepCivilian());
+	iCalc += std::max<int64_t>(0, applyUnitUpkeepModifier(iMilitary100, m_iMilitaryUnitUpkeepMod) - getFreeUnitUpkeepMilitary());
 
 	if (iCalc > 0)
 	{
@@ -9786,19 +9803,12 @@ int CvPlayer::getFinalUnitUpkeepChange(const int iExtra, const bool bMilitary)
 {
 	if (iExtra == 0) return 0;
 
-	// Temporary change
-	if (bMilitary)
-		m_iUnitUpkeepMilitary100 += iExtra;
-	else m_iUnitUpkeepCivilian100 += iExtra;
+	// NON-MUTATING: the hypothetical rides in as a parameter rather than as a temp add/restore on a stored
+	// bucket -- there is no stored bucket to nudge any more.
+	const int64_t iCivilian100 = getUnitUpkeepCivilian100() + (bMilitary ? 0 : iExtra);
+	const int64_t iMilitary100 = getUnitUpkeepMilitary100() + (bMilitary ? iExtra : 0);
 
-	const int iChange = static_cast<int>(calcFinalUnitUpkeep(false) - getFinalUnitUpkeep());
-
-	// Very important to restore the real value!
-	if (bMilitary)
-		m_iUnitUpkeepMilitary100 -= iExtra;
-	else m_iUnitUpkeepCivilian100 -= iExtra;
-
-	return iChange;
+	return static_cast<int>(calcFinalUnitUpkeepFrom(iCivilian100, iMilitary100, false) - getFinalUnitUpkeep());
 }
 // ! Unit Upkeep
 
