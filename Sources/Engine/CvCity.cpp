@@ -6285,12 +6285,15 @@ int CvCity::getAdditionalHealth(int iGoodPercent, int iBadPercent, int& iGood, i
 {
 	const int iStarting = iGood - iBad;
 
-	// Add current
+	// Fold the city's CURRENT feature percent onto the proposed change, so the pair below is the resulting
+	// LEVEL rather than the change alone. This is the whole of the feature term (modifier.md §2b: feature
+	// wellbeing is the plot-scope percent summed over the radius, reduced at the point of use) -- the stored
+	// accumulators that used to be added on top were a second copy of exactly this sum, so they counted the
+	// current level twice against a caller that starts both sides at zero.
 	calculateFeatureHealthPercent(iGoodPercent, iBadPercent);
 
-	// Delta
-	iGood += (iGoodPercent / 100) + getFeatureGoodHealth();
-	iBad += (iBadPercent / 100) - getFeatureBadHealth();
+	iGood += iGoodPercent / 100;
+	iBad += iBadPercent / 100;
 
 	return iGood - iBad - iStarting;
 }
@@ -14763,29 +14766,9 @@ void CvCity::setBuildingHealthChange(BuildingTypes eBuilding, int iChange)
 
 				m_aBuildingHealthChange.erase(it);
 
-				if (hasFullyActiveBuilding(eBuilding))
+				if (iChange != 0 && hasFullyActiveBuilding(eBuilding))
 				{
-					if (iOldChange > 0)
-					{
-						changeBuildingGoodHealth(-iOldChange);
-					}
-					else if (iOldChange < 0)
-					{
-						changeBuildingBadHealth(-iOldChange);
-					}
-
-					if (iChange != 0)
-					{
-						m_aBuildingHealthChange.push_back(std::make_pair(eBuilding, iChange));
-						if (iChange > 0)
-						{
-							changeBuildingGoodHealth(iChange);
-						}
-						else if (iChange < 0)
-						{
-							changeBuildingBadHealth(iChange);
-						}
-					}
+					m_aBuildingHealthChange.push_back(std::make_pair(eBuilding, iChange));
 				}
 			}
 			return;
@@ -14795,15 +14778,6 @@ void CvCity::setBuildingHealthChange(BuildingTypes eBuilding, int iChange)
 	if (0 != iChange && hasFullyActiveBuilding(eBuilding))
 	{
 		m_aBuildingHealthChange.push_back(std::make_pair(eBuilding, iChange));
-
-		if (iChange > 0)
-		{
-			changeBuildingGoodHealth(iChange);
-		}
-		else if (iChange < 0)
-		{
-			changeBuildingBadHealth(iChange);
-		}
 	}
 }
 
