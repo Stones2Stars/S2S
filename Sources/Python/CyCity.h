@@ -136,7 +136,6 @@ public:
 	void changeHasBuilding(int /*BuildingTypes*/ iIndex, bool bNewValue);
 	int hasBuilding(int /*BuildingTypes*/ iIndex) const;
 	bool isActiveBuilding(int /*BuildingTypes*/ iIndex) const;
-	bool isFreeBuilding(int /*BuildingTypes*/ iIndex) const;
 	int getID() const;
 	int getX() const;
 	int getY() const;

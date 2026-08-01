@@ -1052,11 +1052,6 @@ public:
 	int getImprovementCount(ImprovementTypes eIndex) const;
 	void changeImprovementCount(ImprovementTypes eIndex, int iChange);
 
-	uint16_t getFreeBuildingCount(const BuildingTypes eIndex) const;
-	void checkFreeBuildings(CvCity* city);
-	uint16_t getFreeAreaBuildingCount(BuildingTypes eIndex, const CvArea* area) const;
-	bool isBuildingFree(BuildingTypes eIndex, const CvArea* area = NULL) const;
-	void changeFreeBuildingCount(const BuildingTypes eIndex, const int iChange);
 
 	int getExtraBuildingHappiness(const BuildingTypes eIndex) const;
 	void changeExtraBuildingHappiness(const BuildingTypes eIndex, const int iChange, const bool bLimited = false);
@@ -2347,7 +2342,6 @@ private:
 	std::map<short, uint32_t> m_unitCountSM;
 	std::map<short, uint32_t> m_unitMaking;
 	std::map<short, uint32_t> m_buildingMaking;
-	std::map<short, uint16_t> m_freeBuildingCount;
 	std::map<short, uint32_t> m_bonusExport;
 	std::map<short, uint32_t> m_bonusImport;
 	std::map<short, uint32_t> m_greatGeneralPointsType;

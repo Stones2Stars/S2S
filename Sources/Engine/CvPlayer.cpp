@@ -655,7 +655,6 @@ void CvPlayer::uninit()
 	m_goldenAgeOnBirthOfGreatPersonCount.clear();
 	m_greatPeopleRateforUnit.clear();
 	m_buildingMaking.clear();
-	m_freeBuildingCount.clear();
 	m_extraBuildingHappiness.clear();
 	m_extraBuildingHealth.clear();
 	m_buildingProductionMod.clear();
@@ -7029,52 +7028,31 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, CvArea* pAr
 
 	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
 
-	if (!bReligiouslyDisabling)
-	{
-		const BuildingTypes eFreeBuilding = kBuilding.getFreeBuilding();
-		if (eFreeBuilding != NO_BUILDING)
-		{
-			changeFreeBuildingCount(eFreeBuilding, iChange);
-		}
-
-		const BuildingTypes eFreeAreaBuilding = kBuilding.getFreeAreaBuilding();
-		if (eFreeAreaBuilding != NO_BUILDING)
-		{
-			// Toffer - ToDo - Would make more sense to store this info in the CvArea object, mapped to player, rather than duplicating the info across all cities in the area.
-			algo::for_each(cities() | filtered(CvCity::fn::area() == pArea), CvCity::fn::changeFreeAreaBuildingCount(eFreeAreaBuilding, iChange));
-		}
-
-		if (kBuilding.getCivicOption() != NO_CIVICOPTION)
-		{
-			changeHasCivicOptionCount(((CivicOptionTypes)kBuilding.getCivicOption()), iChange);
-		}
-	}
-
 	changeCoastalTradeRoutes(kBuilding.getCoastalTradeRoutes() * iChange);
 	// The EMPIRE-scope route COUNT -- the memberless flat deposit (ruling 11: kind 0 IS the count). The slot is
 	// a FLAT amount and therefore ×100, so the reader reduces at its point of use ([DEC-fixedpoint-x100]): a
 	// route count is a whole game quantity.
 	changeTradeRoutes(kBuilding.getTradeRoute(TRADE_ROUTE_AMOUNT, CASC_SCOPE_EMPIRE) / 100 * iChange);
 
-	changePopulationgrowthratepercentage(kBuilding.getGlobalPopulationgrowthratepercentage(), (iChange==1));
 	changeForceAllTradeRoutes(kBuilding.providesAmenity(CLS_AMENITY_FORCE_ALL_TRADE_ROUTES) * iChange);
 
 	changeSpaceProductionModifier(kBuilding.getBuildRateModifier(BUILD_RATE_SPACE, CASC_SCOPE_EMPIRE) * iChange);
 
-	changeRevIdxNational(kBuilding.getRevIdxNational() * iChange);
+	// `national` is a revolution KIND, not a scope fragment -- the data authors `revolution.city.national`, so the
+	// read is the kind at CITY scope. (Its sibling `local` is the same shape and carries the bulk of the data.)
+	changeRevIdxNational(kBuilding.getRevolution(REVOLUTION_NATIONAL, CASC_SCOPE_CITY) * iChange);
 
 	pArea->changeBorderObstacleCount(getTeam(), kBuilding.providesAmenity(CLS_AMENITY_BORDER_OBSTACLE) ? iChange : 0);
 
 	for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
 	{
-		changeSeaPlotYield(((YieldTypes)iI), (kBuilding.getGlobalSeaPlotYieldChange(iI) * iChange));
 		changeYieldRateModifier(((YieldTypes)iI), (kBuilding.getYieldModifier((YieldTypes)iI, CASC_SCOPE_EMPIRE) * iChange));
 	}
 
 	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 	{
 		changeSpecialistExtraCommerce(((CommerceTypes)iI), (kBuilding.getSpecialistExtraCommerce(iI) * iChange));
-		changeStateReligionBuildingCommerce(((CommerceTypes)iI), (kBuilding.getStateReligionCommerce(iI) * iChange));
+		changeStateReligionBuildingCommerce(((CommerceTypes)iI), (kBuilding.getStateReligionCommerce((CommerceTypes)iI) * iChange));
 	}
 
 	// The KEYED happiness deposits ([modifier.md §5]): an entry-list read over what this building
@@ -12561,74 +12539,6 @@ void CvPlayer::changeImprovementCount(ImprovementTypes eIndex, int iChange)
 }
 
 
-void CvPlayer::changeFreeBuildingCount(const BuildingTypes eIndex, const int iChange)
-{
-	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eIndex);
-	FAssertMsg(iChange != 0, "This is not a change!");
-
-	std::map<short, uint16_t>::const_iterator itr = m_freeBuildingCount.find((short)eIndex);
-
-	if (itr == m_freeBuildingCount.end())
-	{
-		if (iChange > 0)
-		{
-			m_freeBuildingCount.insert(std::make_pair((short)eIndex, iChange));
-			algo::for_each(cities(), CvCity::fn::setFreeBuilding(eIndex, true));
-		}
-		else FErrorMsg("Expected positive iChange for first building of a kind");
-	}
-	else if (iChange < 0 && (int)(itr->second) <= -iChange)
-	{
-		FAssertMsg((int)(itr->second) >= -iChange, "This change would bring the count to a negative value! Code copes with it though")
-		m_freeBuildingCount.erase(itr->first);
-		algo::for_each(cities(), CvCity::fn::setFreeBuilding(eIndex, false));
-	}
-	else // change building count
-	{
-		m_freeBuildingCount[itr->first] += iChange;
-	}
-}
-
-uint16_t CvPlayer::getFreeBuildingCount(const BuildingTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eIndex);
-	std::map<short, uint16_t>::const_iterator itr = m_freeBuildingCount.find((short)eIndex);
-	return itr != m_freeBuildingCount.end() ? itr->second : 0;
-}
-
-void CvPlayer::checkFreeBuildings(CvCity* city)
-{
-	PROFILE_EXTRA_FUNC();
-	for (std::map<short, uint16_t>::const_iterator itr = m_freeBuildingCount.begin(); itr != m_freeBuildingCount.end(); ++itr)
-	{
-		if (!city->isFreeBuilding((BuildingTypes)itr->first))
-		{
-			// This one will not register the free building if it is still not valid or if it was manually built.
-			city->setFreeBuilding((BuildingTypes)itr->first, true);
-		}
-	}
-}
-
-// Used by newly settled cities to propagate the count in the area
-uint16_t CvPlayer::getFreeAreaBuildingCount(BuildingTypes eIndex, const CvArea* area) const
-{
-	PROFILE_EXTRA_FUNC();
-	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eIndex);
-
-	foreach_(const CvCity* city, cities())
-	{
-		if (city->area() == area && city->getFreeAreaBuildingCount(eIndex) > 0)
-		{
-			return city->getFreeAreaBuildingCount(eIndex);
-		}
-	}
-	return 0;
-}
-
-bool CvPlayer::isBuildingFree(BuildingTypes eIndex, const CvArea* area) const
-{
-	return getFreeBuildingCount(eIndex) > 0 || area && getFreeAreaBuildingCount(eIndex, area) > 0;
-}
 
 
 void CvPlayer::changeExtraBuildingHappiness(const BuildingTypes eIndex, const int iChange, const bool bLimited)
@@ -18510,19 +18420,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 				}
 			}
 
-			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "iFreeBuildingCountSize");
-			while (iSize-- > 0)
-			{
-				WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iType, "iFreeBuildingCountType");
-				WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &sCountU, "iFreeBuildingCountCount");
-				iType = static_cast<short>(wrapper.getNewClassEnumValue(REMAPPED_CLASS_TYPE_BUILDINGS, iType, true));
-
-				if (iType > -1)
-				{
-					m_freeBuildingCount.insert(std::make_pair(iType, sCountU));
-				}
-			}
-
 			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "iExtraBuildingHappinessSize");
 			while (iSize-- > 0)
 			{
@@ -19400,12 +19297,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 			{
 				WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", it->first, "iBuildingMakingType");
 				WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", it->second, "iBuildingMakingCount");
-			}
-			WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", (short)m_freeBuildingCount.size(), "iFreeBuildingCountSize");
-			for (std::map<short, uint16_t>::const_iterator it = m_freeBuildingCount.begin(), itEnd = m_freeBuildingCount.end(); it != itEnd; ++it)
-			{
-				WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", it->first, "iFreeBuildingCountType");
-				WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", it->second, "iFreeBuildingCountCount");
 			}
 			WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", (short)m_extraBuildingHappiness.size(), "iExtraBuildingHappinessSize");
 			for (std::map<short, int>::const_iterator it = m_extraBuildingHappiness.begin(), itEnd = m_extraBuildingHappiness.end(); it != itEnd; ++it)

@@ -2603,15 +2603,39 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 			}
 		}
 	}
-	// free culture building
+	// free culture building -- a building the player HOLDS that GRANTS a culture one. The standing
+	// "this building is free for me" flag went with its accumulator: a granted building is simply one the city
+	// HAS, so the question is asked of the GRANTOR's own compiled payload (grants.buildings at empire scope,
+	// json §5) rather than a player-side mirror. Own-data, never a scan of every building asking about this one.
 	if (!bEasyCulture)
 	{
-		for (int iJ = 0; iJ < GC.getNumBuildingInfos(); iJ++)
+		const int iBuildingsBucket = CvGrants::key("buildings");
+		const int iEmpireScope = CvGrants::key("empire");
+		for (int iJ = 0; iJ < GC.getNumBuildingInfos() && !bEasyCulture; iJ++)
 		{
-			if (isBuildingFree((BuildingTypes)iJ) && GC.getBuildingInfo((BuildingTypes)iJ).getFlatCommerce(COMMERCE_CULTURE, CASC_SCOPE_CITY) > 0)
+			if (getBuildingCount((BuildingTypes)iJ) <= 0)
 			{
-				bEasyCulture = true;
-				break;
+				continue;
+			}
+			const CvBuildingInfo& kSource = GC.getBuildingInfo((BuildingTypes)iJ);
+			const CvGrants* pGrants = kSource.getTriggers() ? kSource.getTriggers()->consideredGrant() : NULL;
+			const std::vector<int>* pGranted = (pGrants != NULL) ? pGrants->list(iBuildingsBucket) : NULL;
+			if (pGranted == NULL)
+			{
+				continue;
+			}
+			for (size_t iEntry = 0; iEntry < pGranted->size(); ++iEntry)
+			{
+				if (pGrants->listScope(iBuildingsBucket, iEntry) != iEmpireScope)
+				{
+					continue;
+				}
+				if (GC.getBuildingInfo((BuildingTypes)(*pGranted)[iEntry])
+						.getFlatCommerce(COMMERCE_CULTURE, CASC_SCOPE_CITY) > 0)
+				{
+					bEasyCulture = true;
+					break;
+				}
 			}
 		}
 	}

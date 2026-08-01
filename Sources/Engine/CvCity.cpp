@@ -567,20 +567,6 @@ void CvCity::init(int iID, PlayerTypes eOwner, int iX, int iY, bool bBumpUnits, 
 	}
 
 	CvArea* pArea = area();
-	//TBFREEBUILD
-	for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
-	{
-		const uint16_t iFreeAreaBuildingCount = player.getFreeAreaBuildingCount((BuildingTypes)iI, pArea);
-		if (iFreeAreaBuildingCount > 0)
-		{
-			changeFreeAreaBuildingCount((BuildingTypes)iI, iFreeAreaBuildingCount);
-		}
-		else if (player.getFreeBuildingCount((BuildingTypes)iI) > 0)
-		{
-			setFreeBuilding(((BuildingTypes)iI), true);
-		}
-	}
-
 	pArea->changeCitiesPerPlayer(getOwner(), 1);
 
 	GET_TEAM(getTeam()).changeNumCities(1);
@@ -847,8 +833,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	}
 
 	m_hasBuildings.clear();
-	m_vFreeBuildings.clear();
-	m_freeAreaBuildingCount.clear();
 	m_paTradeCities.clear();
 	m_orderQueue.clear();
 	m_aEventsOccured.clear();
@@ -1407,7 +1391,6 @@ void CvCity::doTurn()
 	//Does vicinity bonus checks
 	{ PERF_SCOPE("city.doVicinityBonus", getOwner()); doVicinityBonus(); }
 	//Checks conditions of buildings, may disable or enable some
-	{ PERF_SCOPE("city.checkFreeBuildings", getOwner()); checkFreeBuildings(); }
 
 	//Damages enemy units around the city, if applicable
 	{ PERF_SCOPE("city.doAttack", getOwner()); doAttack(); }
@@ -11474,92 +11457,7 @@ bool CvCity::processGreatWall(bool bIn, bool bForce, bool bSeeded)
 
 
 // Toffer - ToDo - Would make more sense to store this info in the CvArea object, mapped to player, rather than duplicating the info across all cities in the area.
-void CvCity::changeFreeAreaBuildingCount(const BuildingTypes eIndex, const int iChange)
-{
-	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eIndex);
-	FAssertMsg(iChange != 0, "This is not a change!");
 
-	std::map<short, uint16_t>::const_iterator itr = m_freeAreaBuildingCount.find((short)eIndex);
-
-	if (itr == m_freeAreaBuildingCount.end())
-	{
-		if (iChange > 0)
-		{
-			m_freeAreaBuildingCount.insert(std::make_pair((short)eIndex, iChange));
-			setFreeBuilding(eIndex, true);
-		}
-		else FErrorMsg("Expected positive iChange for first building of a kind");
-	}
-	else if (iChange < 0 && (int)(itr->second) <= -iChange)
-	{
-		FAssertMsg((int)(itr->second) >= -iChange, "This change would bring the count to a negative value! Code copes with it though")
-		m_freeAreaBuildingCount.erase(itr->first);
-		setFreeBuilding(eIndex, false);
-	}
-	else // change building count
-	{
-		m_freeAreaBuildingCount[itr->first] += iChange;
-	}
-}
-
-uint16_t CvCity::getFreeAreaBuildingCount(const short iIndex) const
-{
-	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), iIndex);
-	std::map<short, uint16_t>::const_iterator itr = m_freeAreaBuildingCount.find(iIndex);
-	return itr != m_freeAreaBuildingCount.end() ? itr->second : 0;
-}
-
-void CvCity::setFreeBuilding(const BuildingTypes eIndex, const bool bNewValue)
-{
-	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eIndex);
-
-	std::vector<short>::iterator itr = find(m_vFreeBuildings.begin(), m_vFreeBuildings.end(), (short)eIndex);
-
-	if (bNewValue)
-	{
-		if (itr == m_vFreeBuildings.end()
-		// Buildings built manually shouldn't disappear when the free building effect ends,
-		&& !hasBuilding(eIndex) // therefore we won't count it as a free building just yet if we have the building.
-		&& !GET_TEAM(getTeam()).isObsoleteBuilding(eIndex)
-		&& isValidBuildingLocation(eIndex))
-		{
-			m_vFreeBuildings.push_back(eIndex);
-			changeHasBuilding(eIndex, true);
-		}
-	}
-	else if (itr != m_vFreeBuildings.end()
-	&& getFreeAreaBuildingCount(eIndex) == 0
-	&& GET_PLAYER(getOwner()).getFreeBuildingCount(eIndex) == 0)
-	{
-		m_vFreeBuildings.erase(itr);
-		if (hasBuilding(eIndex))
-		{
-			changeHasBuilding(eIndex, false);
-		}
-		else FErrorMsg("This shouldn't really happen...");
-	}
-}
-
-bool CvCity::isFreeBuilding(const short iIndex) const
-{
-	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), iIndex);
-	return algo::any_of_equal(m_vFreeBuildings, iIndex);
-}
-
-void CvCity::checkFreeBuildings()
-{
-	PROFILE_EXTRA_FUNC();
-	GET_PLAYER(getOwner()).checkFreeBuildings(this);
-
-	for (std::map<short, uint16_t>::const_iterator itr = m_freeAreaBuildingCount.begin(); itr != m_freeAreaBuildingCount.end(); ++itr)
-	{
-		if (!isFreeBuilding((BuildingTypes)itr->first))
-		{
-			// This one will not register the free building if it is still not valid or if it was manually built.
-			setFreeBuilding((BuildingTypes)itr->first, true);
-		}
-	}
-}
 
 
 bool CvCity::isHasReligion(ReligionTypes eIndex) const
@@ -14087,17 +13985,6 @@ void CvCity::readBody(FDataStreamBase* pStream)
 		short iSize;
 
 		// Buildings
-		WRAPPER_READ_DECORATED(wrapper, "CvCity", &iSize, "FreeBuildingsSize");
-		for (short i = 0; i < iSize; ++i)
-		{
-			WRAPPER_READ_DECORATED(wrapper, "CvCity", &iType, "FreeBuildingsIndex");
-			iType = static_cast<short>(wrapper.getNewClassEnumValue(REMAPPED_CLASS_TYPE_BUILDINGS, iType, true));
-
-			if (iType > -1)
-			{
-				m_vFreeBuildings.push_back(iType);
-			}
-		}
 
 		WRAPPER_READ_DECORATED(wrapper, "CvCity", &iSize, "BuildingProgressSize");
 		for (short i = 0; i < iSize; ++i)
@@ -14214,17 +14101,7 @@ void CvCity::readBody(FDataStreamBase* pStream)
 			}
 		}
 
-		WRAPPER_READ_DECORATED(wrapper, "CvCity", &iSize, "FreeAreaBuildingCountSize");
-		while (iSize-- > 0)
 		{
-			WRAPPER_READ_DECORATED(wrapper, "CvCity", &iType, "FreeAreaBuildingCountType");
-			WRAPPER_READ_DECORATED(wrapper, "CvCity", &sCountU, "FreeAreaBuildingCount");
-			iType = static_cast<short>(wrapper.getNewClassEnumValue(REMAPPED_CLASS_TYPE_BUILDINGS, iType, true));
-
-			if (iType > -1)
-			{
-				m_freeAreaBuildingCount.insert(std::make_pair(iType, sCountU));
-			}
 		}
 
 		WRAPPER_READ_DECORATED(wrapper, "CvCity", &iSize, "BuildingLedgerSize");
@@ -14566,12 +14443,6 @@ void CvCity::write(FDataStreamBase* pStream)
 		}
 
 		// Buildings
-		WRAPPER_WRITE_DECORATED(wrapper, "CvCity", (short)m_vFreeBuildings.size(), "FreeBuildingsSize");
-		foreach_(const short building, m_vFreeBuildings)
-		{
-			WRAPPER_WRITE_DECORATED(wrapper, "CvCity", building, "FreeBuildingsIndex");
-		}
-
 		WRAPPER_WRITE_DECORATED(wrapper, "CvCity", (short)m_progressOnBuilding.size(), "BuildingProgressSize");
 		for (std::vector< std::pair<BuildingTypes, int> >::iterator it = m_progressOnBuilding.begin(); it != m_progressOnBuilding.end(); ++it)
 		{
@@ -14631,13 +14502,6 @@ void CvCity::write(FDataStreamBase* pStream)
 		{
 			WRAPPER_WRITE_DECORATED(wrapper, "CvCity", it->first, "BuildingProductionModType");
 			WRAPPER_WRITE_DECORATED(wrapper, "CvCity", it->second, "BuildingProductionMod");
-		}
-
-		WRAPPER_WRITE_DECORATED(wrapper, "CvCity", (short)m_freeAreaBuildingCount.size(), "FreeAreaBuildingCountSize");
-		for (std::map<short, uint16_t>::const_iterator it = m_freeAreaBuildingCount.begin(), itEnd = m_freeAreaBuildingCount.end(); it != itEnd; ++it)
-		{
-			WRAPPER_WRITE_DECORATED(wrapper, "CvCity", it->first, "FreeAreaBuildingCountType");
-			WRAPPER_WRITE_DECORATED(wrapper, "CvCity", it->second, "FreeAreaBuildingCount");
 		}
 
 		WRAPPER_WRITE_DECORATED(wrapper, "CvCity", (short)m_buildingLedger.size(), "BuildingLedgerSize");

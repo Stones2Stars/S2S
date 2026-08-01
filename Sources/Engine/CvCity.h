@@ -1185,11 +1185,6 @@ public:
 
 	bool isValidBuildingLocation(BuildingTypes eType) const;
 
-	uint16_t getFreeAreaBuildingCount(const short iIndex) const;
-	void changeFreeAreaBuildingCount(const BuildingTypes eType, const int iChange);
-	void setFreeBuilding(const BuildingTypes eType, const bool bNewValue);
-	bool isFreeBuilding(short iIndex) const;
-	void checkFreeBuildings();
 
 	bool isHasReligion(ReligionTypes eIndex) const;
 	void setHasReligion(ReligionTypes eIndex, bool bNewValue, bool bAnnounce, bool bArrows = true);
@@ -1655,8 +1650,6 @@ protected:
 
 	std::vector<BuildingTypes> m_hasBuildings;
 
-	std::vector<short> m_vFreeBuildings;
-	std::map<short, uint16_t> m_freeAreaBuildingCount;
 	std::map<short, int> m_bonusDefenseChanges;
 	std::map<short, int> m_buildingProductionMod;
 	std::map<short, int> m_unitProductionMod;
@@ -1995,8 +1988,6 @@ public:
 		DECLARE_MAP_FUNCTOR_1(CvCity, void, changeFood, int);
 
 		DECLARE_MAP_FUNCTOR_2(CvCity, void, setBuildingListFilterActive, BuildingFilterTypes, bool);
-		DECLARE_MAP_FUNCTOR_2(CvCity, void, setFreeBuilding, BuildingTypes, bool);
-		DECLARE_MAP_FUNCTOR_2(CvCity, void, changeFreeAreaBuildingCount, BuildingTypes, int);
 		DECLARE_MAP_FUNCTOR_2(CvCity, void, changeFreeSpecialistCount, SpecialistTypes, int);
 		DECLARE_MAP_FUNCTOR_2(CvCity, void, processVoteSourceBonus, VoteSourceTypes, bool);
 		DECLARE_MAP_FUNCTOR_2(CvCity, void, processTech, const TechTypes, const int);

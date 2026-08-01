@@ -1009,3 +1009,20 @@ CvUnit::m_iExtraNumTriggers
 | advance. Era advance is tech-driven (CvTeam::setHasTech), which is why the era is a happening rather than the
 | trait's own considered action. REPLACEMENT: CvTriggerEngine tr_resolveEraChanged.
 CvPlayer::m_paiEraAdvanceFreeSpecialistCount
+
+| The FREE-BUILDING refcounts, both scopes. A building naming another (or itself) handed it to every city, held
+| as a player refcount plus a per-city mirror and re-asserted by a per-turn checkFreeBuildings sweep. It is a
+| GRANT (owner: "in all scenarios they behave like grants"), so the source now authors grants.buildings at
+| empire scope and the trigger engine places it -- fanning over the cities that already stand, and folding into
+| each city that starts existing afterwards. Nothing needs carrying between the two, so the stores go.
+| The receiving city genuinely HAS the building, which is load-bearing: the authored data gates on holding
+| these targets in over a thousand requires atoms.
+| REPLACEMENT: CvTriggerEngine tr_grantBuildingsFrom + tr_foldOwnerGrantedBuildings.
+CvPlayer::iFreeBuildingCountSize
+CvPlayer::iFreeBuildingCountType
+CvPlayer::iFreeBuildingCountCount
+CvCity::FreeBuildingsSize
+CvCity::FreeBuildingsIndex
+CvCity::FreeAreaBuildingCountSize
+CvCity::FreeAreaBuildingCountType
+CvCity::FreeAreaBuildingCount
