@@ -359,6 +359,7 @@ CvCity::CvCity()
 	m_cachedPropertyNeeds = NULL;
 	m_paiFreeBonus = NULL;
 	m_paiFreeBonusEvents = NULL;
+	m_paiNumBonuses = NULL;
 	m_pabHadVicinityBonus = NULL;
 	m_pabHasVicinityBonus = NULL;
 	m_pabHadRawVicinityBonus = NULL;
@@ -624,6 +625,7 @@ void CvCity::uninit()
 	SAFE_DELETE_ARRAY(m_paiImprovementFreeSpecialists);
 	SAFE_DELETE_ARRAY(m_paiReligionInfluence);
 	SAFE_DELETE_ARRAY(m_cachedPropertyNeeds);
+	SAFE_DELETE_ARRAY(m_paiNumBonuses);
 	SAFE_DELETE_ARRAY(m_pabHadVicinityBonus);
 	SAFE_DELETE_ARRAY(m_pabHasVicinityBonus);
 	SAFE_DELETE_ARRAY(m_pabHadRawVicinityBonus);
@@ -970,12 +972,14 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 		FAssertMsg((0 < iMaxTradeRoutes), "Max Trade Routes is not greater than zero but an array is being allocated in CvCity::reset");
 		m_paTradeCities = std::vector<IDInfo>(iMaxTradeRoutes);
 
+		m_paiNumBonuses = new int[GC.getNumBonusInfos()];
 		m_pabHadVicinityBonus = new bool[GC.getNumBonusInfos()];
 		m_pabHadRawVicinityBonus = new bool[GC.getNumBonusInfos()];
 		m_paiFreeBonus = new int[GC.getNumBonusInfos()];
 		m_paiFreeBonusEvents = new int[GC.getNumBonusInfos()];
 		for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
 		{
+			m_paiNumBonuses[iI] = 0;
 			m_pabHadVicinityBonus[iI] = false;
 			m_pabHadRawVicinityBonus[iI] = false;
 			m_paiFreeBonus[iI] = 0;
@@ -9900,10 +9904,36 @@ void CvCity::setForceSpecialistCount(SpecialistTypes eIndex, int iNewValue)
 }
 
 
+// The city's TYPED free specialists of one type -- the two halves of the free-specialist seam, added
+// ([modifier.md §6]). Neither half is a stored city accumulator, which is why the old member is gone:
+//   1. the DERIVABLE half -- the typed `freeSpecialists.{SPECIALIST_X}` deposits of the sources that are alive
+//      RIGHT NOW: this city's OPERATING buildings (a dormant one grants nothing) plus the empire-scope sources
+//      the owner already sums. A typed entry is genuinely keyed, so it stays an entry-list read (§5), never a
+//      scope-wide fold.
+//   2. the ONE-SHOT half -- the UNATTRIBUTED ledger, which is genuine non-derivable state and correctly stays
+//      serialized: a Great-Person join CONSUMES its unit and an era advance is a persisted pulse, so no live
+//      source survives to re-derive them ([legacy-grant-apply-sites.md] §4, [save.md §5]).
+// ⚠ The count unit is ×100 like every other compiled magnitude, so the derivable half reduces here; the
+// one-shot ledger is a whole count and does not.
 int CvCity::getFreeSpecialistCount(SpecialistTypes eIndex) const
 {
+	PROFILE_EXTRA_FUNC();
 	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eIndex);
-	return m_paiFreeSpecialistCount[eIndex];
+
+	const CvPlayer& kOwner = GET_PLAYER(getOwner());
+	CvCascadeEvalCtx evalCtx;
+	InfoValuation::fillEvalCtx(getCityContext(), kOwner.getEmpireContext(), plotGroup(getOwner()), evalCtx);
+
+	const OperatingBuildings& kOperating = EnablerKernel::operatingBuildings(this);
+	int64_t iCityScope = 0;
+	for (std::set<int>::const_iterator it = kOperating.active.begin(); it != kOperating.active.end(); ++it)
+	{
+		iCityScope += InfoValuation::keyedTargetSum(GC.getBuildingInfo((BuildingTypes)*it).getModifiers(),
+			MODFAM_FREE_SPECIALISTS, CHANNEL_AMOUNT, -1, (int)eIndex, evalCtx);
+	}
+	const int iDerivable = (int)std::max((int64_t)0, iCityScope / 100) + kOwner.getFreeSpecialistCount(eIndex);
+
+	return std::max(0, iDerivable + m_paiFreeSpecialistCountUnattributed[eIndex]);
 }
 
 int CvCity::getAddedFreeSpecialistCount(SpecialistTypes eIndex) const
@@ -9924,7 +9954,7 @@ void CvCity::setFreeSpecialistCount(SpecialistTypes eIndex, int iNewValue)
 	iNewValue = std::max(0, iNewValue);
 	if (iOldValue != iNewValue)
 	{
-		FASSERT_NOT_NEGATIVE(m_paiFreeSpecialistCount[eIndex]);
+		FASSERT_NOT_NEGATIVE(getFreeSpecialistCount(eIndex));
 
 		changeNumGreatPeople(iNewValue - iOldValue);
 		processSpecialist(eIndex, (iNewValue - iOldValue));
