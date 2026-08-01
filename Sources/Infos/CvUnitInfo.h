@@ -19,7 +19,7 @@
 
 #include "CvInfo.h"
 #include "CvJsonParse.h"            // vectorHas / mapValueOrDefault -- the shared runtime point reads the getters delegate to
-#include "CvVisionSection.h"        // par.9 `vision` typed section (shared unit-plane LOS block)
+#include "CvHideAndSeekSection.h"   // par.9 `hideAndSeek` typed section (the shared concealment/detection contest)
 #include "CvSizeMattersSection.h"   // par.9 `sizeMatters` typed section
 #include "CvOutcomesSection.h"      // par.8 `outcomes` typed section (shared unit-plane CvOutcome intake)
 #include "Defines/CvEnums.h"        // EraTypes/UnitArtStyleTypes/MissionTypes/DomainTypes/UnitAITypes/...
@@ -46,7 +46,7 @@ public:
 	virtual const CvClassificationBlock* getSkills() const { return &m_skills; }
 	virtual const CvClassificationBlock* getTags() const { return &m_tags; }
 	virtual const CvGate* getGate() const { return &m_gate; }
-	const CvVisionSection& getVision() const { return m_vision; }
+	const CvHideAndSeekSection& getHideAndSeek() const { return m_hideAndSeek; }
 	const CvSizeMattersSection& getSizeMatters() const { return m_sizeMatters; }
 
 	// ======================= 2. CLASSIFICATION -- O(1) bitset tests, hold-vs-provide in the NAME (json par.8) ==
@@ -308,7 +308,7 @@ private:
 	CvClassificationBlock m_skills;
 	CvClassificationBlock m_tags;
 	CvGate m_gate;
-	CvVisionSection m_vision;
+	CvHideAndSeekSection m_hideAndSeek;
 	CvSizeMattersSection m_sizeMatters;
 	CvOutcomesSection m_outcomes;
 

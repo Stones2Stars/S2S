@@ -731,7 +731,7 @@ public:
 
 	int sight(const CvPlot* pPlot = NULL) const;   // the unit's sight BUDGET (vision.md)
 	int concealment() const;                       // how well it HIDES (vision.md §4)
-	int detectionAgainst(InvisibleTypes eMethod) const;   // how well it sees THAT method -- registration only
+	int detectionAgainst(int iMethodSkill) const;  // how well it sees THAT method (a SKILL id) -- registration only
 
 	int baseMoves() const;
 	int maxMoves() const;

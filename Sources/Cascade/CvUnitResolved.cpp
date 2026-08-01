@@ -48,7 +48,6 @@ namespace
 		{ -1,                          MODFAM_CAPTURE,      CAPTURE_PROBABILITY,    CASC_UNIT_PERCENT }, // URS_CAPTURE_PROBABILITY
 		{ -1,                          MODFAM_CAPTURE,      CAPTURE_RESISTANCE,     CASC_UNIT_PERCENT }, // URS_CAPTURE_RESISTANCE
 		{ -1,                          MODFAM_UPKEEP,       UPKEEP_EXTRA,           CASC_UNIT_FLAT    }, // URS_UPKEEP_EXTRA
-		{ -1,                          MODFAM_VISION,       VISION_CONCEALMENT,     CASC_UNIT_FLAT    }, // URS_CONCEALMENT
 		{ -1,                          MODFAM_VISION,       VISION_STRENGTH,        CASC_UNIT_FLAT    }, // URS_VISION
 		// The `combat` family. UNIT_CANONICAL rather than a hand-picked unit per row: infoKindUnit already owns
 		// the percent-vs-flat verdict for a kind ([fixed-point-and-scales.md]: ask the KIND's unit, never the

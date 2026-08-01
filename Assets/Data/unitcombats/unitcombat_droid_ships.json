@@ -6,7 +6,7 @@
  "hideAndSeek": {
   "detection": {
    "value": 200,
-   "unit": "HAS_NAVALDISGUISE"
+   "unit": "HAS_NAVAL_DISGUISE"
   }
  },
  "ui": {

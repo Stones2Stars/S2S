@@ -353,13 +353,13 @@ enum VisionKind
 	VISION_STRENGTH = 0,      // how well the observer sees (memberless -- the family's default kind)
 	VISION_ELEVATION,         // how high it is; grants sight to whoever looks from it
 	VISION_OBSTRUCTION,       // what it costs to see THROUGH this ground
-	// The hide-and-seek pair (vision.md §4): ONE detection type counters ONE concealment type, and the METHOD
-	// is the hider's TAG -- a detection entry names the method it answers through the ordinary {unit: IS_<TAG>}
-	// qualifier, so the pairing needs no vocabulary of its own.
-	VISION_CONCEALMENT,       // how well a unit HIDES
-	VISION_DETECTION,         // how well a seeker sees a hidden unit, per method it answers
 	NUM_VISION_KINDS
 };
+// ⛔ THE HIDE-AND-SEEK PAIR IS NOT IN THIS FAMILY (owner). `concealment`/`detection` are the `hideAndSeek` BLOCK
+// (json.md §9, CvHideAndSeekSection): this family answers how FAR you see, that block answers whether you
+// PERCEIVE what stands inside the reach -- a graduated contest with its OWN evaluation. The legacy engine's two
+// evaluations bled into each other for years, so a shared family is exactly what would let that re-form. The
+// contest reads this budget for reach and never the reverse.
 const int VISION_SCOPES = INFO_SCOPE_BIT(CASC_SCOPE_UNIT) | INFO_SCOPE_BIT(CASC_SCOPE_PLOT) | INFO_SCOPE_BIT(CASC_SCOPE_CITY);
 // THE VISION SCALE. One plot of open ground costs 100 -- the same "one step = 100" denominator movement already
 // uses (MOVE_DENOMINATOR), so the two families read alike. A baseline of 1 was the thing that had to go: it left

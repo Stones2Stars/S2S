@@ -201,13 +201,19 @@ static const char* CJK_INTRINSIC_KEYS[] = {
 	"type", "text", "description", "help", "civilopedia", "message", "quote", "strategy", "adjective", "shortDescription",
 	"cost", "ui", "world", "sound", "identity", "ai",
 	"policies", "succession", "excludes", "produces", "condition", "effect",
-	"vision", "outcomes", "mapGeneration", "replacedBy", "capabilities", "skills", "tags", "state", "attributes", "characteristics", "builds",
+	"outcomes", "mapGeneration", "replacedBy", "capabilities", "skills", "tags", "state", "attributes", "characteristics", "builds",
 	"promotionLine", "buildUp", "shrine", "headquarters", "properties", "voteSource", "threshold", "role", "victory",
 	"targetLevel", "conversion", "cityFounding", "unitCapability",
 	"canTrade", "canTradeOn", "canWorkOn",   // tech bespoke blocks (owner 2026-07-02, json.md §2 / capabilities.md)
 	"spread",   // UNIT spread strength block: spread.religion/spread.corporation keyed maps (owner 2026-07-11 -- clearer than burying under timed `grants`)
 	"groupSpawn",   // UNIT group-spawn config: struct rows {unitCombat, chance, title} (owner 2026-07-11 -- config, not a grant)
 	"sizeMatters",      // the Size-Matters own-block (json.md §9 -- game-option system data, never a family)
+	// The hide-and-seek CONTEST own-block (json.md §9), sibling of sizeMatters. It is a SECTION and `vision` is a
+	// FAMILY, and that split is the point: `vision` answers how FAR you see (strength/elevation/obstruction, an
+	// ordinary deposit plane), while this answers whether you PERCEIVE what stands inside that reach -- a
+	// graduated contest with its own evaluation. The legacy engine's two evaluations bled into each other for
+	// years (owner), which is exactly what one shared family would let re-form.
+	"hideAndSeek",
 	"missions",         // the future missions block (json.md §8 -- the missions/CvOutcome carve-out)
 	"combatClass", "combatClasses",   // UNIT primary/sub combat classes -- ROOT keys (json.md §8)
 	0
@@ -229,7 +235,7 @@ static const char* CJK_FAMILY_KEYS[] = {
 	"maintenance", "missionYieldMultiplier", "movement", "occupationTime", "odds", "pillage",
 	"populationGrowthRate", "production", "range", "religion", "research", "researchRate", "revoltProtection",
 	"revolution", "spawnRate", "speed", "stateReligion", "strength", "survivor", "tradeMission", "tradeRoutes",
-	"underworld", "upkeep", "warWeariness", "withdrawal", "workRate",
+	"underworld", "upkeep", "vision", "warWeariness", "withdrawal", "workRate",
 	0
 };
 // Purged vocabulary -- keys that must NEVER be parsed again; a straggler in the data surfaces in the unconsumed

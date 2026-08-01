@@ -12457,73 +12457,67 @@ void CvUnit::changeNoInvisibilityCount(int iChange)
 
 namespace
 {
-	// The hider's METHOD is its TAG, and the enum name IS the tag name -- INVISIBLE_NAVAL_DISGUISE becomes
-	// TAG_NAVAL_DISGUISE, a prefix swap. So neither side carries a table and the two cannot drift (vision.md §4).
-	CvString uv_methodTag(InvisibleTypes eMethod)
+	// The hide-and-seek contest is the `hideAndSeek` BLOCK, never the `vision` family (json.md §9): vision says
+	// how FAR this unit sees, the block says whether it perceives what stands inside that reach. Both sides of
+	// the contest gather over the SAME three carriers the resolved plane uses -- the unit's own info, its held
+	// promotions, and its combat classes -- because a promotion grants both a METHOD (a skill) and a strength.
+	template <class VisitorT>
+	void uv_visitHideAndSeek(const CvUnit& kUnit, VisitorT& kVisitor)
 	{
-		CvString szTag = "TAG_";
-		szTag += GC.getInvisibleInfo(eMethod).getType() + strlen("INVISIBLE_");
-		return szTag;
+		kVisitor.visit(kUnit.getUnitInfo().getHideAndSeek());
+
+		for (int iPromotion = 0; iPromotion < GC.getNumPromotionInfos(); ++iPromotion)
+		{
+			if (kUnit.isHasPromotion((PromotionTypes)iPromotion))
+			{
+				kVisitor.visit(GC.getPromotionInfo((PromotionTypes)iPromotion).getHideAndSeek());
+			}
+		}
+		for (int iCombat = 0; iCombat < GC.getNumUnitCombatInfos(); ++iCombat)
+		{
+			if (kUnit.isHasUnitCombat((UnitCombatTypes)iCombat))
+			{
+				kVisitor.visit(GC.getUnitCombatInfo((UnitCombatTypes)iCombat).getHideAndSeek());
+			}
+		}
 	}
 
-	// ONE contributor's detection against a method: an entry qualified by that method's tag, or an UNQUALIFIED
-	// entry, which answers any method (a see-everything detector).
-	int uv_detectionOf(const CvInfo* pInfo, const CvString& szTag)
+	struct uv_ConcealmentSum
 	{
-		const CvModifiers* pModifiers = pInfo != NULL ? pInfo->getModifiers() : NULL;
-		if (pModifiers == NULL)
-		{
-			return 0;
-		}
-		int iTotal = 0;
-		const std::vector<CvModEntry*>& aEntries = pModifiers->entries();
-		for (std::vector<CvModEntry*>::const_iterator it = aEntries.begin(); it != aEntries.end(); ++it)
-		{
-			const CvModEntry* pEntry = *it;
-			if (pEntry == NULL || pEntry->family != MODFAM_VISION || pEntry->kind != VISION_DETECTION)
-			{
-				continue;
-			}
-			const CvCondition* pQual = pEntry->unitQual;
-			if (pQual == NULL || (pQual->predKind == CASC_PRED_IS_TAG && pQual->param == szTag))
-			{
-				iTotal += pEntry->value;
-			}
-		}
-		return iTotal;
-	}
+		uv_ConcealmentSum() : iTotal(0) {}
+		void visit(const CvHideAndSeekSection& kBlock) { iTotal += kBlock.concealment; }
+		int iTotal;
+	};
+
+	struct uv_DetectionSum
+	{
+		explicit uv_DetectionSum(int iMethodSkill) : iMethod(iMethodSkill), iTotal(0) {}
+		void visit(const CvHideAndSeekSection& kBlock) { iTotal += kBlock.detectionAgainst(iMethod); }
+		int iMethod;
+		int iTotal;
+	};
 }
 
 int CvUnit::concealment() const
 {
-	// How well this unit hides. ONE number -- the METHOD it hides by is its tag, and a seeker's detection
+	// How well this unit hides. ONE number -- the METHOD it hides by is a SKILL, and a seeker's detection
 	// against THAT method is what this is weighed against (vision.md §4: one detection type counters one
-	// concealment type).
-	return resolvedValue(URS_CONCEALMENT);
+	// concealment type). NOT a resolved slot: the resolved plane gathers modifier-FAMILY entries and this is a
+	// section, so it is summed over the same three carriers directly.
+	uv_ConcealmentSum kSum;
+	uv_visitHideAndSeek(*this, kSum);
+	return kSum.iTotal;
 }
 
-int CvUnit::detectionAgainst(InvisibleTypes eMethod) const
+int CvUnit::detectionAgainst(int iMethodSkill) const
 {
 	// Walked at SIGHT REGISTRATION (per move), never per read -- isInvisible is one of the hottest reads in the
 	// engine and reads the plot's already-registered value instead.
-	const CvString szTag = uv_methodTag(eMethod);
-	int iTotal = uv_detectionOf(&getUnitInfo(), szTag);
-
-	for (int iPromotion = 0; iPromotion < GC.getNumPromotionInfos(); ++iPromotion)
-	{
-		if (isHasPromotion((PromotionTypes)iPromotion))
-		{
-			iTotal += uv_detectionOf(&GC.getPromotionInfo((PromotionTypes)iPromotion), szTag);
-		}
-	}
-	for (int iCombat = 0; iCombat < GC.getNumUnitCombatInfos(); ++iCombat)
-	{
-		if (isHasUnitCombat((UnitCombatTypes)iCombat))
-		{
-			iTotal += uv_detectionOf(&GC.getUnitCombatInfo((UnitCombatTypes)iCombat), szTag);
-		}
-	}
-	return iTotal;
+	// ⚠ The method is a SKILL id ([skills.md]), not the retired INVISIBLE_* axis: a promotion can grant a
+	// hiding method (optical camouflage), which is what makes it a skill rather than a tag.
+	uv_DetectionSum kSum(iMethodSkill);
+	uv_visitHideAndSeek(*this, kSum);
+	return kSum.iTotal;
 }
 
 bool CvUnit::isInvisible(TeamTypes eTeam, bool bDebug, bool bCheckCargo) const

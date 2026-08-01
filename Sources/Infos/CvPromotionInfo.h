@@ -19,7 +19,7 @@
 
 #include "CvInfo.h"
 #include "CvJsonParse.h"            // vectorHas -- the shared id-vector membership scan the has*/is* getters read
-#include "CvVisionSection.h"        // par.9 `vision` typed section (shared unit-plane LOS block)
+#include "CvHideAndSeekSection.h"   // par.9 `hideAndSeek` typed section (the shared concealment/detection contest)
 #include "CvSizeMattersSection.h"   // par.9 `sizeMatters` typed section (the SM deltas live here)
 #include "Defines/CvEnums.h"        // TechTypes / PromotionLineTypes / NO_* + NO_COMMAND
 #include "Defines/CvStructs.h"      // UnitCombatModifier (the ai.unitCombatWeights rows)
@@ -37,7 +37,7 @@ public:
 	virtual const CvGate* getGate() const { return &m_gate; }
 	virtual const CvEdges* getEdges() const { return &m_edges; }         // enables.promotions chain edges
 	virtual const CvRequires* getRequires() const { return &m_requires; }   // the chain's requires.build AND-half
-	const CvVisionSection& getVision() const { return m_vision; }
+	const CvHideAndSeekSection& getHideAndSeek() const { return m_hideAndSeek; }
 	const CvSizeMattersSection& getSizeMatters() const { return m_sizeMatters; }
 
 	// ======================= 2. CLASSIFICATION -- O(1) bitset tests, hold-vs-provide in the NAME (json par.8) ==
@@ -202,7 +202,7 @@ private:
 	CvGate m_gate;
 	CvEdges m_edges;
 	CvRequires m_requires;
-	CvVisionSection m_vision;
+	CvHideAndSeekSection m_hideAndSeek;
 	CvSizeMattersSection m_sizeMatters;
 
 	// --- the intrinsic identity members (materialized once at mapFrom) ---

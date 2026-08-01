@@ -6,7 +6,7 @@
 //	CvOutcomesSection -- the json.md par.8 `outcomes` bespoke block as ONE composable typed section object
 //	(patterns.md par. THE GETTER SETUP category 1: sections are whole typed objects). The CvOutcome system's
 //	intake: units and unitcombats author the exact key vocabulary { kill:[...], actions:[...] }, so ONE unit
-//	serves both (the CvVisionSection composition precedent) -- the combat-kill outcome list, the heap-owned
+//	serves both (the CvHideAndSeekSection composition precedent) -- the combat-kill outcome list, the heap-owned
 //	action outcome-missions, and the by-index / by-mission runtime queries the composing pocos forward.
 //	WRITE-ONCE AT LOAD (parse is the sole writer; clear-first, idempotent under the full-registry re-map).
 //	Members stay private -- unlike the plain-data open-member sections, this unit OWNS heap objects (the

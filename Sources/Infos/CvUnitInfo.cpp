@@ -362,7 +362,7 @@ void CvUnitInfo::mapFrom(const picojson::value& entity)
 	CvInfo::mapFrom(entity);   // core fields + the section dispatch (compiles m_modifiers; fills the composed units)
 
 	// par.8/par.9 typed sections (clear-first inside their own parse)
-	m_vision.parse(entity);
+	m_hideAndSeek.parse(entity);
 	m_sizeMatters.parse(entity);
 	m_outcomes.parse(entity);
 

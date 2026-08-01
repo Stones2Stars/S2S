@@ -229,17 +229,19 @@
   per-player handicap (saved) drives human-facing economics, while every `getAI*` advantage reads the GAME handicap
   (the average of alive humans) — [engine.md](../../reference/engine.md). Keep them separately named.
 
-- Wire the `hideAndSeek` BLOCK engine-side ([json.md §9](../../specs/json.md), [vision.md §4](../../specs/vision.md)).
-  The data authors it and the engine does not know it, so readJson reports it as an unknown key — correct,
-  fail-loud, and the signal. What it needs: the block registered as a reserved SECTION (a non-reserved object
-  key would otherwise be read as a modifier FAMILY), its `concealment`/`detection` entries served with the
-  `{unit: HAS_<SKILL>}` qualifier resolvable against the SKILL plane (today `IS_` resolves only against tags),
-  and the METHOD skills minted like any other authored skill key.
-  ⛔ Its evaluation stays SEPARATE from the classic visibility one — that bleed is the defect the block exists
-  to end, so do not answer a hide-and-seek question from the vision budget or the reverse.
-  ⚠ `CvVisionSection` still parses the RETIRED 13-table shape (the FK, `negates`, the four intensity maps, the
-  nine substrate row-lists) and nothing reads it; `MODFAM_VISION` still carries `VISION_CONCEALMENT` /
-  `VISION_DETECTION` kinds the family no longer owns. Both go with this wiring, not before it.
+- Finish the INVISIBILITY EVALUATION on the `hideAndSeek` block. The READ is wired — the block parses, and
+  `CvUnit::concealment()` / `detectionAgainst(skillId)` sum it over the unit's info ∪ promotions ∪ combat
+  classes — but the sight-registration and AI sites still ask on the retired `INVISIBLE_*` axis and dangle:
+  `CvPlot` (spot intensity), `CvSelectionGroup`, `CvUnit`'s registration, plus the `CvCityAI` /  `CvPlayerAI`
+  build-time filters and the `CvGlobals` seer index.
+  ⛔ The two evaluations stay SEPARATE — a hide-and-seek question is never answered from the vision budget nor
+  the reverse; that bleed is the defect the block exists to end ([vision.md §4](../../specs/vision.md)).
+  ⚑ **Being DETECTED is NOT a state (owner):** vision is provided by the DETECTING unit, never empire-wide, so
+  the contest resolves live per (seeker, hider) and nothing is stored on the hider. Do not mint a status plane.
+  ⚠ The AI sites ask two different questions off ONE read — ADMISSION (`detection > 0`, the build-time filter)
+  and RANKING (the magnitude) — so they want the number, not a bool.
+  ⚠ A method id is a SKILL id now; the loops that drive them off `GC.getNumInvisibleInfos()` need the method
+  set from the skill registry instead.
 - The PLAYER-ALERT consumer, and the alerts owed to it — they re-attach to the OPERATE CROSSING fact, never
   re-inlined at a mutation site ([event-spine.md](../../specs/event-spine.md)). Expect the owed list to GROW as
   each legacy mutator is cut; add them together on the facts.

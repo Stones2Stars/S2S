@@ -398,6 +398,26 @@ def scale_vision(out):
 # The 14 legacy hiding METHODS -> their skill names. The method is HOW a unit hides, and a PROMOTION can grant
 # one (optical camouflage), so it is a SKILL ([skills.md]) -- never a tag, which is not promotion-grantable and
 # therefore could not hold the 73 promotion-authored methods. The seeker's qualifier reads it as HAS_<SKILL>.
+def cls_upper_snake(key):
+    """camelCase classification key -> the UPPER_SNAKE half of its minted infotype id.
+
+    MIRRORS ClassificationRegistry::clsUpperSnake exactly ("navalDisguise" -> NAVAL_DISGUISE, "maxHP" -> MAX_HP):
+    a skill's id is SKILL_<this>, so a predicate naming the skill must spell it the SAME way or it resolves to
+    nothing and the qualifier silently never matches. A plain .upper() is the trap -- it is right for every
+    single-word method and wrong for every multi-word one.
+    """
+    out = []
+    for i, c in enumerate(key):
+        if i > 0:
+            prev = key[i - 1]
+            nxt = key[i + 1] if i + 1 < len(key) else ""
+            if (c.isupper() and (prev.islower() or prev.isdigit() or (prev.isupper() and nxt.islower()))) \
+               or (c.isdigit() and prev.isalpha()):
+                out.append("_")
+        out.append(c.upper())
+    return "".join(out)
+
+
 def hide_method_skill(invisible_type):
     """INVISIBLE_NAVAL_DISGUISE -> "navalDisguise". MECHANICAL, never a table (owner: special cases are never a
     thing -- we model them into the core set). The engine derives the same name from the same enum, so the two
@@ -595,7 +615,7 @@ def collapse_hide_and_seek(out, vision):
             seen[typ] = seen.get(typ, 0) + HIDE_NEGATE_STRENGTH
     for typ, val in seen.items():
         detect.append(OrderedDict([("value", val * VISION_PLOT),
-                                   ("unit", "HAS_" + hide_method_skill(typ).upper())]))
+                                   ("unit", "HAS_" + cls_upper_snake(hide_method_skill(typ)))]))
 
     # the second reach and the per-substrate conditional tables -- dropped with the mechanic they served
     for dead in ("visibilityIntensityRange", "visibilityIntensitySameTile", "invisibleTerrain",

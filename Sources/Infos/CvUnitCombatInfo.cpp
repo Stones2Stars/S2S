@@ -37,7 +37,7 @@ void CvUnitCombatInfo::mapFrom(const picojson::value& entity)
 	CvInfo::mapFrom(entity);   // core reading + the section dispatch (compiles m_modifiers; fills skills/gate)
 
 	// par.8/par.9 typed sections (clear-first inside their own parse)
-	m_vision.parse(entity);
+	m_hideAndSeek.parse(entity);
 	m_sizeMatters.parse(entity);
 	m_outcomes.parse(entity);
 

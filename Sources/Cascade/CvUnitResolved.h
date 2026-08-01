@@ -70,9 +70,6 @@ enum UnitResolvedSlot
 	URS_CAPTURE_PROBABILITY,      // capture.unit.probability
 	URS_CAPTURE_RESISTANCE,       // capture.unit.resistance
 	URS_UPKEEP_EXTRA,             // upkeep.unit.extra
-	URS_CONCEALMENT,              // vision.unit.concealment       -- how well it HIDES (vision.md §4). The
-	                              //   METHOD it hides by is its tag; this is the one strength a seeker's
-	                              //   detection against that method is weighed against.
 	URS_VISION,                   // vision.unit.flat              -- the unit's sight STRENGTH (vision.md):
 	                              //   its own base plus its combat classes plus its promotions. Elevation is
 	                              //   NOT here -- that belongs to the ground and is added at read.

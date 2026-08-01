@@ -90,7 +90,7 @@ void CvPromotionInfo::mapFrom(const picojson::value& entity)
 	// par.9 typed sections (clear-first inside their own parse). NB the 4 identity.negatesInvisibility
 	// authorings duplicate vision.negates value-for-value -- the vision section is the served home (the
 	// double-authoring is a reported curator seam, not parsed twice).
-	m_vision.parse(entity);
+	m_hideAndSeek.parse(entity);
 	m_sizeMatters.parse(entity);
 
 	if (!entity.is<picojson::object>())
