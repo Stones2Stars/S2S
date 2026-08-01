@@ -185,9 +185,18 @@
  "policies": {
   "allReligionsActive": true
  },
- "grants": {
-  "eraAdvanceFreeSpecialist": "SPECIALIST_GREAT_PROPHET"
- },
+ "triggers": [
+  {
+   "trigger": "onEraChanged",
+   "action": {
+    "grant": {
+     "specialists": {
+      "SPECIALIST_GREAT_PROPHET": 1
+     }
+    }
+   }
+  }
+ ],
  "succession": {
   "promotionLine": "PROMOTIONLINE_SPIRITUAL",
   "priority": 2

@@ -47,9 +47,16 @@
    object-owned counts. Killed: the tally is a read-only accessor + roll-up over the objects' own counts
    ([tally.md](../specs/tally.md), [DEC-tally-serializes-nothing](decisions.md)). **Never re-add a tally-side store,
    seed, or shadow.**
-10. **`grants.specialists`** *(dead)* — free specialists as a grant. Killed: free specialists are the
-    `freeSpecialists` MODIFIER family, alive-with-source ([modifier.md §6](../specs/modifier.md)); zero authorings
-    ever existed.
+10. **`grants.specialists` for an ALIVE-WITH-SOURCE specialist** *(dead)* — the ordinary building/civic free
+    specialist authored as a grant. Killed: those are the `freeSpecialists` MODIFIER family, which dies with its
+    source ([modifier.md §6](../specs/modifier.md)).
+    ⚠ **The key itself is NOT dead — the LIFETIME is what was killed.** The spec reserved a carve-out for
+    anything that "genuinely GRANTS permanent free specialists, surviving the destruction of its source", and
+    that case exists: the trait's ERA-ADVANCE specialist is a persisted PULSE landing in the city's
+    UNATTRIBUTED typed-free ledger, so it outlives the trait. It authors on the TRIGGER plane
+    (`onEraChanged` → `action.grant.specialists`), never as an entity-level grant
+    ([json.md §5](../specs/json.md)). ⛔ Do not read this entry as banning that shape, and do not "restore"
+    the ban over it — the discriminator is whether removing the source removes the specialist.
 11. **Graded parity tolerance (the six-rung "care scale")** *(dead)* — grading a divergence's acceptability. Killed
     by [DEC-parity](decisions.md): exact match, no tolerance band, no agent grading; a divergence is a
     data-collection gap to close.

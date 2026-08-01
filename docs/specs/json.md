@@ -580,12 +580,17 @@ declare the number. Enforcement reads the [tally](tally.md) count.
 }
 ```
 
-- **lists** — `buildings · units · techs · civics · promotions · traits · bonuses`. ⛔ **`specialists` is NOT
-  in the grants vocabulary:** free specialists never fit the grants
-  model — they are the `freeSpecialists` MODIFIER family ([modifier.md §6](modifier.md), alive-with-source + the
-  two-part amount/placement seam). *If anything is ever found that genuinely GRANTS permanent free specialists —
-  surviving the destruction of its wonder/building/source — we deal with it then*; no machinery is built for the
-  hypothetical.
+- **lists** — `buildings · units · techs · civics · promotions · traits · bonuses · specialists`.
+  ⛔ **`specialists` is a NARROW carve-out, and the test is the LIFETIME — never the payload.** Free specialists
+  are ordinarily the `freeSpecialists` MODIFIER family ([modifier.md §6](modifier.md)): alive-with-source, dying
+  with the building or civic that pays for them, on the two-part amount/placement seam. Authoring THOSE as a
+  grant is the retired shape ([superseded-ideas #10](../architecture/superseded-ideas.md)) and stays retired.
+  A specialist is a GRANT in exactly one case: a **persisted PULSE that outlives its source** — handed over
+  once, never reclaimed. ⚑ The live instance is the trait's ERA-ADVANCE specialist: it fires on the era
+  advancing (`onEraChanged`, §5's trigger plane — not the trait's own considered action) and lands in the
+  city's **UNATTRIBUTED** typed-free ledger, so losing the trait does not take it back. ⛔ So the question to
+  ask is never "is this a specialist?" but "does removing the source remove it?" — if it does, it is the
+  modifier family and belongs nowhere near `grants`.
 - **numeric pulses** — `grants.<channel>: value` (`grants.revolution: -100`, `grants.goldenAge`).
 - **Founder buildings are PLAIN `grants.buildings` on the settler** — the settler's considered action IS
   founding, so no bespoke section exists; an entry may carry `enabled` (`{ "building": BUILDING_X, "enabled"?:

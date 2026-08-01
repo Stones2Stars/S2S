@@ -168,9 +168,20 @@
   }
  },
  "grants": {
-  "eraAdvanceFreeSpecialist": "SPECIALIST_GREAT_ADMIRAL",
   "goldenAgeOnBirthOfGreatPerson": "UNIT_GREAT_ADMIRAL"
  },
+ "triggers": [
+  {
+   "trigger": "onEraChanged",
+   "action": {
+    "grant": {
+     "specialists": {
+      "SPECIALIST_GREAT_ADMIRAL": 1
+     }
+    }
+   }
+  }
+ ],
  "succession": {
   "promotionLine": "PROMOTIONLINE_STRATEGIST",
   "priority": 2

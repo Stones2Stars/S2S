@@ -109,9 +109,20 @@
   }
  },
  "grants": {
-  "eraAdvanceFreeSpecialist": "SPECIALIST_GREAT_MILITARY_INSTRUCTOR",
   "goldenAgeOnBirthOfGreatPerson": "UNIT_GREAT_GENERAL"
  },
+ "triggers": [
+  {
+   "trigger": "onEraChanged",
+   "action": {
+    "grant": {
+     "specialists": {
+      "SPECIALIST_GREAT_MILITARY_INSTRUCTOR": 1
+     }
+    }
+   }
+  }
+ ],
  "succession": {
   "promotionLine": "PROMOTIONLINE_STRATEGIST",
   "priority": 3

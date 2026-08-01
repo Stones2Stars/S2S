@@ -435,6 +435,7 @@ def is_complex(typ, rec, complex_ids):
 def curate(typ, rec, store):
     text, fam, props, policies, grants, art_blocks, identity, ai = {}, {}, {}, {}, {}, {}, {}, {}
     excludes, succession = [], {}
+    triggers = []
     gp_unit, gp_change = None, None
     bonus_happy = OrderedDict()
     free_spec_wonder = []            # FreeSpecialistPer* -> freeSpecialists.empire.any per-wonder deposits (below)
@@ -547,8 +548,19 @@ def curate(typ, rec, store):
         elif tag == "GreatPeopleUnitType":
             gp_unit = t if (t and t != "NONE") else None
         elif tag == "EraAdvanceFreeSpecialistType":
+            # Fires when the ERA ADVANCES, not on the trait's own considered action, so it is a TRIGGERS entry
+            # rather than a grant (json.md §5). The era advance is tech-driven (a tech whose era exceeds the
+            # player's raises it), and the spine already carries that fact as SEVT_ERA_CHANGED -> `onEraChanged`.
+            # `specialists` IS a grant payload here, the carve-out json.md §5 reserved: this one is a persisted
+            # PULSE that outlives the trait (the apply lands it in the city's UNATTRIBUTED typed-free ledger),
+            # never the alive-with-source freeSpecialists modifier family.
             if t and t != "NONE":
-                grants["eraAdvanceFreeSpecialist"] = t
+                triggers.append(OrderedDict([
+                    ("trigger", "onEraChanged"),
+                    ("action", OrderedDict([
+                        ("grant", OrderedDict([("specialists", OrderedDict([(t, 1)]))])),
+                    ])),
+                ]))
         elif tag == "GoldenAgeonBirthofGreatPersonType":
             if t and t != "NONE":
                 grants["goldenAgeOnBirthOfGreatPerson"] = t
@@ -646,6 +658,8 @@ def curate(typ, rec, store):
         out["policies"] = OrderedDict((k, policies[k]) for k in sorted(policies))
     if grants:
         out["grants"] = grants
+    if triggers:
+        out["triggers"] = triggers
     if succession:
         out["succession"] = succession
     if ai:
