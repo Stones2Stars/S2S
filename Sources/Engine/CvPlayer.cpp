@@ -7102,17 +7102,6 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, CvArea* pAr
 			kKeyedBuildRate[iKeyed].second * iChange);
 	}
 
-	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
-	{
-		for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
-		{
-			changeExtraSpecialistYield(((SpecialistTypes)iI), ((YieldTypes)iJ), (kBuilding.getSpecialistYieldChange(iI, iJ) * iChange));
-		}
-		for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
-		{
-			changeExtraSpecialistCommerce(((SpecialistTypes)iI), ((CommerceTypes)iJ), (kBuilding.getSpecialistCommerceChange(iI, iJ) * iChange));
-		}
-	}
 	//TB Building tags
 	changeExtraNationalCaptureProbabilityModifier(kBuilding.getNationalCaptureProbabilityModifier() * iChange);
 	changeExtraNationalCaptureResistanceModifier(kBuilding.getNationalCaptureResistanceModifier() * iChange);
@@ -27066,21 +27055,43 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 		changeBuildWorkerSpeedModifierSpecific(pair.first, iChange * pair.second);
 	}
 
-	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
+	// The trait's specialist-keyed yield/commerce deposits. A trait keyed to a SHARED sub-city target keeps the
+	// governing-deliverer shape ([modifier.md §4] -- the per-set carve-out: the simple and complex sets hold
+	// different values for one shared specialist file), so the rows are read from the TRAIT rather than inverted
+	// onto the specialist. An ENTRY-LIST read over the handful the trait authored ([modifier.md §5]), never a
+	// walk of every specialist id asking what it deposits. The slots are FLAT and therefore ×100, so the reader
+	// reduces at its point of use -- the accumulators carry whole yields ([DEC-fixedpoint-x100]).
+	const int iSpecialistSegment = InfoValuation::keyedTargetSegment("specialists");
+	for (int iYield = 0; iYield < NUM_YIELD_TYPES; iYield++)
 	{
-		for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
+		std::vector<std::pair<int, int> > kSpecialistYields;
+		InfoValuation::collectKeyedTarget(GC.getTraitInfo(eTrait).getModifiers(),
+			infoYieldFamily(iYield), CHANNEL_AMOUNT, iSpecialistSegment, kSpecialistYields, (int)CASC_SCOPE_EMPIRE);
+		for (size_t iRow = 0; iRow < kSpecialistYields.size(); ++iRow)
 		{
-			changeExtraSpecialistYield(((SpecialistTypes)iI), ((YieldTypes)iJ), (GC.getTraitInfo(eTrait).getSpecialistYieldChange(iI, iJ) * iChange));
+			changeExtraSpecialistYield((SpecialistTypes)kSpecialistYields[iRow].first, (YieldTypes)iYield,
+				kSpecialistYields[iRow].second / 100 * iChange);
 		}
-		for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
+	}
+	for (int iCommerce = 0; iCommerce < NUM_COMMERCE_TYPES; iCommerce++)
+	{
+		std::vector<std::pair<int, int> > kSpecialistCommerces;
+		InfoValuation::collectKeyedTarget(GC.getTraitInfo(eTrait).getModifiers(),
+			infoCommerceFamily(iCommerce), CHANNEL_AMOUNT, iSpecialistSegment, kSpecialistCommerces, (int)CASC_SCOPE_EMPIRE);
+		for (size_t iRow = 0; iRow < kSpecialistCommerces.size(); ++iRow)
 		{
-			changeExtraSpecialistCommerce(((SpecialistTypes)iI), ((CommerceTypes)iJ), (GC.getTraitInfo(eTrait).getSpecialistCommerceChange(iI, iJ) * iChange));
+			changeExtraSpecialistCommerce((SpecialistTypes)kSpecialistCommerces[iRow].first, (CommerceTypes)iCommerce,
+				kSpecialistCommerces[iRow].second / 100 * iChange);
 		}
+	}
 
-		if ((SpecialistTypes)GC.getTraitInfo(eTrait).getEraAdvanceFreeSpecialistType() == ((SpecialistTypes)iI))
-		{
-			changeEraAdvanceFreeSpecialistCount((SpecialistTypes)GC.getTraitInfo(eTrait).getEraAdvanceFreeSpecialistType(), iChange);
-		}
+	// The era-advance free specialist is a persisted PULSE rather than a while-active deposit, so it belongs to
+	// the typed-free specialist STORE, which has no home yet -- this stays dangling until that store exists.
+	// The trait NAMES the type, so it never needed the registry walk it used to sit inside.
+	const SpecialistTypes eEraAdvanceSpecialist = (SpecialistTypes)GC.getTraitInfo(eTrait).getEraAdvanceFreeSpecialistType();
+	if (eEraAdvanceSpecialist != NO_SPECIALIST)
+	{
+		changeEraAdvanceFreeSpecialistCount(eEraAdvanceSpecialist, iChange);
 	}
 
 	for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
