@@ -68,13 +68,6 @@
   the trait assignments: the read is wired and an unauthored leader takes the default, so this closes by
   AUTHORING. ⚑ It is the beelining dial — a leader that should not commit five techs deep for one unlock is
   expressed HERE, as data, rather than by weakening the enablement valuation for everyone.
-- Author a PROJECT's victory MEMBERSHIP, which the curator drops. The legacy `VictoryPrereq` tag said "this
-  project belongs to, and needs, this victory condition"; nothing in the emitted JSON carries it, and
-  `victory.thresholds` is a DIFFERENT concept (how much this project contributes), so a project that is part of a
-  victory but contributes no threshold has no representation at all. The spec already answers the shape — it is
-  the entity-level applicability gate over a world-scope victory atom
-  ([json.md §2](../../specs/json.md) Applicability, [DEC-entity-gate](../../architecture/decisions.md#dec-entity-gate)),
-  never a revived `getVictoryPrereq`. ⚠ Its AI consumer dangles until this lands; that is the census working.
 - Re-key FLANKING from UNIT onto UNITCOMBAT, then move its consumer. The model is RULED
   ([json.md §6](../../specs/json.md)): `combat.<scope>.flanking.{UNITCOMBAT_X}`, no era gate and no per-unit
   carve-out. The class-keyed form is already emitted and already authored, so what remains is collapsing the
@@ -106,6 +99,14 @@
   — which matters because `DomainTypes` crosses the ABI through `DllExport CvUnit::getDomainType()`.
   ⚠ Several sites treat it as a live case rather than a dead one (`isDomain`-style switches, an `FAssert` that
   ACCEPTS it beside `DOMAIN_LAND`), so this is a per-site read, never a delete-the-case sweep.
+- Re-home `terrainDoubleMove` / `featureDoubleMove` out of `skills` into the `movement` family, keyed by
+  `TERRAIN_*`/`FEATURE_*` ([skills.md §1](../../specs/skills.md)). The mechanic is HALF MOVEMENT COST on that
+  ground while the promotion is held (owner), so it is a keyed movement modifier and never a boolean — the
+  current `skills: {name:{TYPE:true}}` emit is a shape the model does not define.
+  ⚠ It rides the movement RESOLVER: the cost halving is hardcoded in `CvPlot::movementCost` off a boolean
+  count, so honouring an authored percent is a resolver change, not just a re-point. ⛔ Doing only the data
+  half silently empties the info's FK vectors and kills the mechanic.
+
 - Map the flagged unitcombat remainder — map the obvious, flag the unsure, never blunt-purge
   ([unitcombat-tag-mapping.md](unitcombat-tag-mapping.md)).
 

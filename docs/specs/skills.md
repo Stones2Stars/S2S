@@ -132,7 +132,7 @@ value (*which* type), so it is not a skill; it lives in a modifier family:
 | `targets` | combat — `strength.unit.targets.{UNITCOMBAT_*}` | preferentially targets those combat classes (this is what defines flanking — narrow per-target, "cannot be fucked with" granularity) |
 | `unitTargets` | combat — `strength.unit.unitTargets.{UNIT_*}` | targets those specific units |
 | `defenders` | combat — `strength.unit.defenders.{UNITCOMBAT_*}` | is a valid target for attackers of those combat classes |
-| `terrainDoubleMove` / `featureDoubleMove` | movement (per `TERRAIN_*`/`FEATURE_*`) | double movement on the listed terrain/feature |
+| `terrainDoubleMove` / `featureDoubleMove` | movement — `movement.unit.{terrain\|feature}.{TYPE}.percent` | **HALF MOVEMENT COST on that terrain/feature while the promotion is held (owner)** — so it is an ordinary keyed movement modifier (`-50`), never a boolean. ⚠ The shipped data still emits it into `skills` as `{name:{TYPE:true}}`, which is a THIRD shape the model does not define (a unit's skills are a string ARRAY, a promotion's are `{name:true\|false}` — [json.md §8](json.md)); the curator re-home is owed. ⛔ Do not re-point a consumer at the skills block meanwhile — that bakes in the shape being removed |
 | `trapImmunity` / `trapTarget` / `trapSetWith` | ❌ **DEAD** (traps removed) — drop |
 
 **The one that STAYS a skill: `collateralImmune`** — its legacy per-source keying (`UNITCOMBAT_SIEGE`/`ASSAULT_MECH`/
