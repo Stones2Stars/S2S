@@ -14293,6 +14293,11 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 		{
 			int iCityHappy = pLoopCity->netHappiness(iExtraPop);
 
+			// ⛔ DANGLING BY CENSUS -- the commerceHappiness FAMILY DISSOLVED: a slider rate is a §3.1 count-scaler
+			// TOKEN, so "+N happiness at 100%% culture" is an ordinary happiness deposit carrying `per:{CULTURE_RATE,
+			// each:100}` and is already inside the realized wellbeing (curate_building CommerceHappinesses).
+			// MISSING MACHINE: a read that ISOLATES the slider-scaled component of happiness -- the `per`-scaled
+			// share, which resolves at gather and no point read or valuation exposes on its own.
 			iCityHappy -= std::max(0, pLoopCity->getCommerceHappiness() / 100);   // ×100 getter -> ÷100 (iCityHappy is a whole-citizen count)
 
 			int iMilitaryHappinessDefenders = 0;
@@ -16853,6 +16858,11 @@ void CvPlayerAI::AI_doCommerce()
 		{
 			foreach_(const CvCity * pLoopCity, cities())
 			{
+				// ⛔ DANGLING BY CENSUS -- the commerceHappiness FAMILY DISSOLVED: a slider rate is a §3.1 count-scaler
+				// TOKEN, so "+N happiness at 100%% culture" is an ordinary happiness deposit carrying `per:{CULTURE_RATE,
+				// each:100}` and is already inside the realized wellbeing (curate_building CommerceHappinesses).
+				// MISSING MACHINE: a read that ISOLATES the slider-scaled component of happiness -- the `per`-scaled
+				// share, which resolves at gather and no point read or valuation exposes on its own.
 				if (pLoopCity->getCommerceHappinessPer(COMMERCE_CULTURE) > 0)
 				{
 					// the pool is ×100, so scale the numerator to match rather than reducing the divisor (keeps precision)
@@ -25795,6 +25805,11 @@ int CvPlayerAI::AI_getHappinessWeight(int iHappy, int iExtraPop) const
 	int iValue = 0;
 	foreach_(const CvCity * pLoopCity, cities())
 	{
+		// ⛔ DANGLING BY CENSUS -- the commerceHappiness FAMILY DISSOLVED: a slider rate is a §3.1 count-scaler
+		// TOKEN, so "+N happiness at 100%% culture" is an ordinary happiness deposit carrying `per:{CULTURE_RATE,
+		// each:100}` and is already inside the realized wellbeing (curate_building CommerceHappinesses).
+		// MISSING MACHINE: a read that ISOLATES the slider-scaled component of happiness -- the `per`-scaled
+		// share, which resolves at gather and no point read or valuation exposes on its own.
 		const int iCityHappy = pLoopCity->netHappiness(iExtraPop) - std::max(0, pLoopCity->getCommerceHappiness() / 100);
 
 		//Fuyu: max happy 5

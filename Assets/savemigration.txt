@@ -61,14 +61,14 @@ CvPlayer::m_iProjectHealth               (int)
 CvPlayer::m_iWorldHappiness              (int)
 CvPlayer::m_iWorldHealth                 (int)
 
-The per-commerce happiness pool (A9): the value is OWED to the city package's cascade-gathered pool (the
-CommerceInfo iInitialHappiness seed + the buildings' commerceHappiness deposits), so that CvCity::getCommerceHappinessPer
-becomes a bare fetch of it (DEC-accumulator-cut-uniform).
-!! STILL OWED, do not read this entry as finished: getCommerceHappinessPer still returns the STORED
-   m_aiCommerceHappinessPer, and its changer still feeds it. Only the SERIALIZATION is gone -- which is why the
-   field is listed here -- so the pool currently rebuilds from the changer rather than from the cascade.
-!! When it converts, the changer's AI_setAssignWorkDirty rider has to survive on the trigger site it leaves
-   behind (save.md §6: audit a changer's whole body before cutting it).
+The per-commerce happiness pool: there is no pool, and no channel. The whole commerceHappiness FAMILY
+DISSOLVES (curate_building CommerceHappinesses) -- a slider rate is a json §3.1 count-scaler TOKEN, so
+"+N happiness at 100% culture" is an ordinary `happiness.city.flat` deposit carrying
+`per: {CULTURE_RATE, each: 100}`, resolved into the realized wellbeing like any other deposit. Wellbeing mints
+zero kinds for it.
+| The getter/changer family and the CommerceInfo iInitialHappiness seed are therefore GONE rather than
+| re-pointed; re-adding any of them beside the wellbeing read would count the same deposit twice.
+| REPLACEMENT: the realized wellbeing read (the deposit is already inside it).
 
 CvCity::m_aiCommerceHappinessPer         (int array, NUM_COMMERCE_TYPES)
 

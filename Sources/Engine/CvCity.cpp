@@ -562,7 +562,6 @@ void CvCity::init(int iID, PlayerTypes eOwner, int iX, int iY, bool bBumpUnits, 
 
 	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 	{
-		changeCommerceHappinessPer(((CommerceTypes)iI), GC.getCommerceInfo((CommerceTypes)iI).getInitialHappiness());
 	}
 
 	CvArea* pArea = area();
@@ -8658,47 +8657,6 @@ void CvCity::recordCommerceRateModifierGrant(EventTypes eEvent, CommerceTypes eI
 	{
 		m_eventGrants.add(EVENTGRANT_COMMERCE_RATE_MODIFIER, eEvent, eIndex, -1, iChange);
 
-
-		AI_setAssignWorkDirty(true);
-	}
-}
-
-
-int CvCity::getCommerceHappinessPer(CommerceTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-	return m_aiCommerceHappinessPer[eIndex];
-}
-
-
-int CvCity::getCommerceHappinessByType(CommerceTypes eCommerce) const
-{
-	return ((getCommerceHappinessPer(eCommerce) * GET_PLAYER(getOwner()).getCommercePercent(eCommerce)) / 100);
-}
-
-
-int CvCity::getCommerceHappiness() const
-{
-	PROFILE_EXTRA_FUNC();
-	int iHappiness = 0;
-
-	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
-	{
-		iHappiness += getCommerceHappinessByType((CommerceTypes)iI);
-	}
-
-	return iHappiness;
-}
-
-
-void CvCity::changeCommerceHappinessPer(CommerceTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-
-	if (iChange != 0)
-	{
-		m_aiCommerceHappinessPer[eIndex] += iChange;
-		FASSERT_NOT_NEGATIVE(getCommerceHappinessPer(eIndex));
 
 		AI_setAssignWorkDirty(true);
 	}

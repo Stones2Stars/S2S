@@ -964,10 +964,6 @@ public:
 	int getCommerceRateModifier(CommerceTypes eIndex) const;
 	void recordCommerceRateModifierGrant(EventTypes eEvent, CommerceTypes eIndex, int iChange);
 
-	int getCommerceHappinessPer(CommerceTypes eIndex) const;
-	int getCommerceHappinessByType(CommerceTypes eIndex) const;
-	int getCommerceHappiness() const;
-	void changeCommerceHappinessPer(CommerceTypes eIndex, int iChange);
 
 
 

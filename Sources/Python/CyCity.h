@@ -273,7 +273,6 @@ public:
 	int getProductionToCommerceModifier(int /*CommerceTypes*/ eIndex) const;
 	int getBuildingCommerceByBuilding(int /*CommerceTypes*/ eIndex, int /*BuildingTypes*/ iBuilding) const;
 	int getCommerceRateModifier(int /*CommerceTypes*/ eIndex) const;
-	int getCommerceHappinessByType(int /*CommerceTypes*/ eIndex) const;
 	int getDomainProductionModifier(int /*DomainTypes*/ eIndex) const;
 
 
