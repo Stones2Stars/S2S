@@ -546,7 +546,6 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 	m_iFliesToMoveCount = 0;
 	m_iSMStrength = 0;
 	m_iOnslaughtCount = 0;
-	m_iExtraEndurance = 0;
 	m_iRetrainsAvailable = 0;
 	m_iQualityBaseTotal = 0;
 	m_iGroupBaseTotal = 0;
@@ -809,7 +808,6 @@ CvUnit& CvUnit::operator=(const CvUnit& other)
 	m_iFliesToMoveCount = other.m_iFliesToMoveCount;
 	m_iSMStrength = other.m_iSMStrength;
 	m_iOnslaughtCount = other.m_iOnslaughtCount;
-	m_iExtraEndurance = other.m_iExtraEndurance;
 	m_iRetrainsAvailable = other.m_iRetrainsAvailable;
 	m_iQualityBaseTotal = other.m_iQualityBaseTotal;
 	m_iGroupBaseTotal = other.m_iGroupBaseTotal;
@@ -12799,15 +12797,6 @@ bool CvUnit::canOnslaught() const
 
 
 
-int CvUnit::enduranceTotal() const
-{
-	return m_pUnitInfo->getEndurance() + getExtraEndurance();
-}
-
-
-int CvUnit::poisonProbabilityModifierTotal() const
-{
-}
 //TB Combat Mods End
 
 
@@ -15180,16 +15169,6 @@ void CvUnit::changeOnslaughtCount(int iChange)
 
 
 
-int CvUnit::getExtraEndurance() const
-{
-	return m_iExtraEndurance;
-}
-
-void CvUnit::changeExtraEndurance(int iChange)
-{
-	m_iExtraEndurance += iChange;
-	FASSERT_NOT_NEGATIVE(m_iExtraEndurance);
-}
 
 
 
@@ -17116,78 +17095,87 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 	}
 
 	changeExtraMoves(kUnitCombat.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split diff
-	changeExtraMoveDiscount(kUnitCombat.getMoveDiscountChange() * iChange);//no merge/split diff
-	changeExtraAirRange(kUnitCombat.getAirRangeChange() * iChange);//no merge/split diff
-	changeCargoSpace(kUnitCombat.getCargoChange() * iChange);//no merge/split diff (since this mechanism is either a base setter or is for non-SM or non-player on SM.
+	changeExtraMoveDiscount(kUnitCombat.getMovement(MOVEMENT_MOVE_DISCOUNT, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split diff
+	changeExtraAirRange(kUnitCombat.getAir(AIR_RANGE, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split diff
+	changeCargoSpace(kUnitCombat.getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split diff (since this mechanism is either a base setter or is for non-SM or non-player on SM.
 
-	changeSMCargoSpace(kUnitCombat.getSMCargoChange() * iChange);//merge/split volumetric
-	changeCargoVolume(kUnitCombat.getSMCargoVolumeChange() * iChange);//merge/split volumetric
-	changeCargoVolumeModifier(kUnitCombat.getSMCargoVolumeModifierChange() * iChange);//merge/split volumetric
+	// The SM cargo trio is the `sizeMatters` BLOCK (json.md par.9), not a modifier family -- plain authored
+	// ints, so no de-scaling here.
+	changeSMCargoSpace(kUnitCombat.getSizeMatters().cargoSmSpace * iChange);//merge/split volumetric
+	changeCargoVolume(kUnitCombat.getSizeMatters().cargoVolume * iChange);//merge/split volumetric
+	changeCargoVolumeModifier(kUnitCombat.getSizeMatters().cargoVolumeModifier * iChange);//merge/split volumetric
 
-	changeExtraBombardRate(kUnitCombat.getBombardRateChange() * iChange);//no merge/split (affect this volumetrically on the final value)
+	changeExtraBombardRate(kUnitCombat.getFlatBombard(BOMBARD_RATE, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split (affect this volumetrically on the final value)
 	// Assume only worker units can get the relevant unit combats, if not then we'll need a retroactive unitComp late init function.
 	if (isWorker())
 	{
 		bool bChanged = false;
-		if (kUnitCombat.getHillsWorkPercent() != 0)
+		// The work-rate scalars are PERCENTS, so they are not scaled ([DEC-fixedpoint-x100]).
+		const int iHillsWork = kUnitCombat.getScalar(SCALAR_WORK_RATE_HILLS, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT);
+		if (iHillsWork != 0)
 		{
-			m_worker->changeHillsWorkModifier(kUnitCombat.getHillsWorkPercent() * iChange);
+			m_worker->changeHillsWorkModifier(iHillsWork * iChange);
 			bChanged = true;
 		}
-		if (kUnitCombat.getPeaksWorkPercent() != 0)
+		const int iWorkRate = kUnitCombat.getScalar(SCALAR_WORK_RATE, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT);
+		if (iWorkRate != 0)
 		{
-			m_worker->changePeaksWorkModifier(kUnitCombat.getPeaksWorkPercent() * iChange);
+			m_worker->changeWorkModifier(iWorkRate * iChange);
 			bChanged = true;
 		}
-		if (kUnitCombat.getWorkRatePercent() != 0)
+		// The per-BUILD work rate: the entity's OWN compiled entries name the handful it authored, rather than
+		// a container the info no longer holds ([modifier.md par.5]; the own-data inversion).
+		std::vector<std::pair<int, int> > kBuildWork;
+		InfoValuation::collectKeyedTarget(kUnitCombat.getModifiers(), MODFAM_WORK_RATE, 0,
+			InfoValuation::keyedTargetSegment("build"), kBuildWork);
+		for (size_t iI = 0; iI < kBuildWork.size(); ++iI)
 		{
-			m_worker->changeWorkModifier(kUnitCombat.getWorkRatePercent() * iChange);
-			bChanged = true;
-		}
-		for (int iI = 0; iI < kUnitCombat.getNumBuildWorkChangeModifiers(); iI++)
-		{
-			m_worker->changeExtraWorkModForBuild((BuildTypes)kUnitCombat.getBuildWorkChangeModifier(iI).eBuild, kUnitCombat.getBuildWorkChangeModifier(iI).iModifier * iChange);
+			m_worker->changeExtraWorkModForBuild((BuildTypes)kBuildWork[iI].first, kBuildWork[iI].second * iChange);
 			bChanged = true;
 		}
 		if (bChanged) setInfoBarDirty(true);
 	}
-	changeRevoltProtection(kUnitCombat.getRevoltProtection() * iChange);// merge/split
-	changeCollateralDamageProtection(kUnitCombat.getCollateralDamageProtection() * iChange);//no merge/split
-	changePillageChange(kUnitCombat.getPillageChange() * iChange);//no merge/split
-	changeUpgradeDiscount(kUnitCombat.getUpgradeDiscount() * iChange);//no merge/split (modified but not multiplicative)
-	changeExperiencePercent(kUnitCombat.getExperiencePercent() * iChange);//no merge/split (modified but not multiplicative)
-	changeKamikazePercent((kUnitCombat.getKamikazePercent()) * iChange);//no merge/split
-	changeAirCombatLimitChange((kUnitCombat.getAirCombatLimitChange()) * iChange);//no merge/split
+	changeRevoltProtection(kUnitCombat.getScalar(SCALAR_REVOLT_PROTECTION, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT) * iChange);// merge/split
+	changeCollateralDamageProtection(kUnitCombat.getCollateralModifier(COLLATERAL_PROTECTION, CASC_SCOPE_UNIT) * iChange);//no merge/split
+	changePillageChange(kUnitCombat.getScalar(SCALAR_PILLAGE, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100 * iChange);//no merge/split
+	// ⚠ costs.upgrade is sign-NORMALIZED as a COST modifier, so a DISCOUNT authors NEGATIVE. This accumulator
+	// holds the discount, so the sign is flipped at the read rather than at every use.
+	changeUpgradeDiscount(-kUnitCombat.getCostsModifier(COSTS_UPGRADE, CASC_SCOPE_UNIT) * iChange);//no merge/split (modified but not multiplicative)
+	changeExperiencePercent(kUnitCombat.getExperienceModifier(EXPERIENCE_AMOUNT, CASC_SCOPE_UNIT) * iChange);//no merge/split (modified but not multiplicative)
+	changeKamikazePercent(kUnitCombat.getCombatModifier(COMBAT_KAMIKAZE, CASC_SCOPE_UNIT) * iChange);//no merge/split
 	changeCelebrityHappy(((kUnitCombat.hasSkill(CLS_SKILL_CELEBRITY) ? 1 : 0)) * iChange);//no merge/split
 	changeCollateralDamageLimitChange((kUnitCombat.getFlatCollateral(COLLATERAL_LIMIT, CASC_SCOPE_UNIT) / 100) * iChange);//no merge/split
 	changeCollateralDamageMaxUnitsChange((kUnitCombat.getFlatCollateral(COLLATERAL_MAX_UNITS, CASC_SCOPE_UNIT) / 100) * iChange);//no merge/split
 	changeCombatLimitChange((kUnitCombat.getFlatCombat(COMBAT_LIMIT, CASC_SCOPE_UNIT) / 100) * iChange);//no merge/split
 	changeExtraDropRange((kUnitCombat.getMovement(MOVEMENT_DROP_RANGE, CASC_SCOPE_UNIT) / 100) * iChange);//no merge/split
-	changeExtraNoDefensiveBonusCount((kUnitCombat.getNoDefensiveBonusChange()) * iChange);
-	changeExtraGatherHerdCount((kUnitCombat.getGatherHerdChange()) * iChange);
+	// Both are pure boolean ENABLERS, so they are SKILLS ([skills.md]) -- the count accumulates presence.
+	changeExtraNoDefensiveBonusCount((kUnitCombat.hasSkill(CLS_SKILL_NO_DEFENSIVE_BONUS) ? 1 : 0) * iChange);
+	changeExtraGatherHerdCount((kUnitCombat.hasSkill(CLS_SKILL_GATHER_HERD) ? 1 : 0) * iChange);
 	changeSurvivorChance((kUnitCombat.getScalar(SCALAR_SURVIVOR, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT)) * iChange);//no merge/split
-	changeVictoryAdjacentHeal((kUnitCombat.getVictoryAdjacentHeal()) * iChange);//no merge/split
-	changeVictoryHeal((kUnitCombat.getVictoryHeal()) * iChange);//no merge/split
-	changeVictoryStackHeal((kUnitCombat.getVictoryStackHeal()) * iChange);//no merge/split
-	changeExtraEndurance(kUnitCombat.getEnduranceChange() * iChange);//no merge/split
-	changeExtraPoisonProbabilityModifier(kUnitCombat.getPoisonProbabilityModifierChange() * iChange);//no merge/split
+	changeVictoryAdjacentHeal(kUnitCombat.getFlatHeal(HEAL_VICTORY_ADJACENT, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split
+	changeVictoryHeal(kUnitCombat.getFlatHeal(HEAL_VICTORY, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split
+	changeVictoryStackHeal(kUnitCombat.getFlatHeal(HEAL_VICTORY_STACK, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split
+	// The combat FLATS are ×100; the reader reduces at its point of use ([DEC-fixedpoint-x100]).
+	changeExtraBreakdownChance(kUnitCombat.getFlatCombat(COMBAT_BREAKDOWN_CHANCE, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split (larger/smaller just more/less survivable)
+	changeExtraBreakdownDamage(kUnitCombat.getFlatCombat(COMBAT_BREAKDOWN_DAMAGE, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split
+	changeExtraTaunt(kUnitCombat.getFlatCombat(COMBAT_TAUNT, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split
+	// The SM figures are the `sizeMatters` BLOCK (json.md par.9), plain authored ints -- never a family, so no
+	// de-scaling. `strength` is the BASE and `combat` is what MODIFIES it (json.md par.6), so the strength
+	// MODIFIER is a combat percent -- and a percent is not scaled.
+	changeExtraMaxHP(kUnitCombat.getSizeMatters().maxHP * iChange);//merge/split
+	changeExtraStrengthModifier(kUnitCombat.getCombatModifier(COMBAT_AMOUNT, CASC_SCOPE_UNIT) * iChange);//merge/split
 
-	changeExtraBreakdownChance(kUnitCombat.getBreakdownChanceChange() * iChange);//no merge/split (larger/smaller just more/less survivable)
-	changeExtraBreakdownDamage(kUnitCombat.getBreakdownDamageChange() * iChange);//no merge/split
-	changeExtraTaunt(kUnitCombat.getTauntChange() * iChange);//no merge/split
-	changeExtraMaxHP(kUnitCombat.getMaxHPChange() * iChange);//merge/split
-	changeExtraStrengthModifier(kUnitCombat.getStrengthModifier() * iChange);//merge/split
-
-	changeExtraCombatModifierPerSizeMore(kUnitCombat.getCombatModifierPerSizeMoreChange() * iChange);//no merge/split
-	changeExtraCombatModifierPerSizeLess(kUnitCombat.getCombatModifierPerSizeLessChange() * iChange);//no merge/split
-	changeExtraCombatModifierPerVolumeMore(kUnitCombat.getCombatModifierPerVolumeMoreChange() * iChange);//no merge/split
-	changeExtraCombatModifierPerVolumeLess(kUnitCombat.getCombatModifierPerVolumeLessChange() * iChange);//no merge/split
+	changeExtraCombatModifierPerSizeMore(kUnitCombat.getSizeMatters().combatModifierPerSizeMore * iChange);//no merge/split
+	changeExtraCombatModifierPerSizeLess(kUnitCombat.getSizeMatters().combatModifierPerSizeLess * iChange);//no merge/split
+	changeExtraCombatModifierPerVolumeMore(kUnitCombat.getSizeMatters().combatModifierPerVolumeMore * iChange);//no merge/split
+	changeExtraCombatModifierPerVolumeLess(kUnitCombat.getSizeMatters().combatModifierPerVolumeLess * iChange);//no merge/split
 	//
-	changeExcileCount(kUnitCombat.getExcileChange() * iChange);
-	changePassageCount(kUnitCombat.getPassageChange() * iChange);
-	changeNoNonOwnedCityEntryCount(kUnitCombat.getNoNonOwnedCityEntryChange() * iChange);
-	changeBarbCoExistCount(kUnitCombat.getBarbCoExistChange() * iChange);
-	changeBlendIntoCityCount(kUnitCombat.getBlendIntoCityChange() * iChange);
+	// Pure boolean ENABLERS, so all five are SKILLS ([skills.md]); the count accumulates presence.
+	changeExcileCount((kUnitCombat.hasSkill(CLS_SKILL_EXCILE) ? 1 : 0) * iChange);
+	changePassageCount((kUnitCombat.hasSkill(CLS_SKILL_PASSAGE) ? 1 : 0) * iChange);
+	changeNoNonOwnedCityEntryCount((kUnitCombat.hasSkill(CLS_SKILL_NO_NON_OWNED_CITY_ENTRY) ? 1 : 0) * iChange);
+	changeBarbCoExistCount((kUnitCombat.hasSkill(CLS_SKILL_BARB_CO_EXIST) ? 1 : 0) * iChange);
+	changeBlendIntoCityCount((kUnitCombat.hasSkill(CLS_SKILL_BLEND_INTO_CITY) ? 1 : 0) * iChange);
 	//
 	//
 
@@ -17201,23 +17189,22 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 	changePillageOnMoveCount((kUnitCombat.hasSkill(CLS_SKILL_PILLAGE_ON_MOVE)) ? iChange : 0);//no merge/split
 	changePillageOnVictoryCount((kUnitCombat.hasSkill(CLS_SKILL_PILLAGE_ON_VICTORY)) ? iChange : 0);//no merge/split
 	changePillageResearchCount((kUnitCombat.hasSkill(CLS_SKILL_PILLAGE_RESEARCH)) ? iChange : 0);//no merge/split
-	changeBlitzCount((kUnitCombat.isBlitz()) ? iChange : 0);//no merge/split
-	changeAmphibCount((kUnitCombat.isAmphib()) ? iChange : 0);//no merge/split
-	changeRiverCount((kUnitCombat.isRiver()) ? iChange : 0);//no merge/split
-	changeEnemyRouteCount((kUnitCombat.isEnemyRoute()) ? iChange : 0);//no merge/split
+	changeBlitzCount((kUnitCombat.hasSkill(CLS_SKILL_BLITZ)) ? iChange : 0);//no merge/split
+	changeAmphibCount((kUnitCombat.hasSkill(CLS_SKILL_AMPHIB)) ? iChange : 0);//no merge/split
+	changeRiverCount((kUnitCombat.hasSkill(CLS_SKILL_RIVER)) ? iChange : 0);//no merge/split
+	changeEnemyRouteCount((kUnitCombat.hasSkill(CLS_SKILL_ENEMY_ROUTE)) ? iChange : 0);//no merge/split
 	changeAlwaysHealCount((kUnitCombat.hasSkill(CLS_SKILL_ALWAYS_HEAL)) ? iChange : 0);
-	changeHillsDoubleMoveCount((kUnitCombat.isHillsDoubleMove()) ? iChange : 0);
+	changeHillsDoubleMoveCount((kUnitCombat.hasSkill(CLS_SKILL_HILLS_DOUBLE_MOVE)) ? iChange : 0);
 	changeImmuneToFirstStrikesCount(((kUnitCombat.hasSkill(CLS_SKILL_IMMUNE_TO_FIRST_STRIKES) || kUnitCombat.hasSkill(CLS_SKILL_FIRST_STRIKE_IMMUNE))) ? iChange : 0);
-	changeAlwaysInvisibleCount((kUnitCombat.isAlwaysInvisible()) ? iChange : 0);
-	changeStampedeCount((kUnitCombat.isStampedeChange()) ? iChange : 0);
-	changeStampedeCount((kUnitCombat.isRemoveStampede()) ? -iChange : 0);
-	changeOnslaughtCount((kUnitCombat.isOnslaughtChange()) ? iChange : 0);
-	changeAttackOnlyCitiesCount((kUnitCombat.isAttackOnlyCitiesAdd()) ? iChange : 0);
-	changeAttackOnlyCitiesCount((kUnitCombat.isAttackOnlyCitiesSubtract()) ? -iChange : 0);
-	changeIgnoreNoEntryLevelCount((kUnitCombat.isIgnoreNoEntryLevelAdd()) ? iChange : 0);
-	changeIgnoreNoEntryLevelCount((kUnitCombat.isIgnoreNoEntryLevelSubtract()) ? -iChange : 0);
-	changeIgnoreZoneofControlCount((kUnitCombat.isIgnoreZoneofControlAdd()) ? iChange : 0);
-	changeIgnoreZoneofControlCount((kUnitCombat.isIgnoreZoneofControlSubtract()) ? -iChange : 0);
+	changeAlwaysInvisibleCount((kUnitCombat.hasSkill(CLS_SKILL_ALWAYS_INVISIBLE)) ? iChange : 0);
+	//	⛔ SKILLS ARE GRANT-ONLY ([skills.md] par.4): the add/remove PAIRS collapse to the grant alone, so the
+	//	`-iChange` revoke halves are gone rather than re-pointed. An ability is granted, never taken away by a
+	//	`false` -- which is what removes the special case rather than carrying it forward.
+	changeStampedeCount((kUnitCombat.hasSkill(CLS_SKILL_STAMPEDE)) ? iChange : 0);
+	changeOnslaughtCount((kUnitCombat.hasSkill(CLS_SKILL_ONSLAUGHT)) ? iChange : 0);
+	changeAttackOnlyCitiesCount((kUnitCombat.hasSkill(CLS_SKILL_ATTACK_ONLY_CITIES)) ? iChange : 0);
+	changeIgnoreNoEntryLevelCount((kUnitCombat.hasSkill(CLS_SKILL_IGNORE_NO_ENTRY_LEVEL)) ? iChange : 0);
+	changeIgnoreZoneofControlCount((kUnitCombat.hasSkill(CLS_SKILL_IGNORE_ZONE_OF_CONTROL)) ? iChange : 0);
 	changeFliesToMoveCount((kUnitCombat.isFliesToMoveAdd()) ? iChange : 0);
 	changeFliesToMoveCount((kUnitCombat.isFliesToMoveSubtract()) ? -iChange : 0);
 	if ( kUnitCombat.changesMoveThroughPlots() )
@@ -17574,7 +17561,6 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 		bSMrecalc = true;
 	}
 	changeOnslaughtCount((kPromotion.isOnslaughtChange()) ? iChange : 0);
-	changeExtraEndurance(kPromotion.getEnduranceChange() * iChange);
 
 
 	changeExtraBreakdownChance(kPromotion.getBreakdownChanceChange() * iChange);
@@ -18403,7 +18389,6 @@ void CvUnit::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvUnit", &m_iAttackCount);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iDefenseCount);
 
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraEndurance);
 
 	// Read compressed data format
 	for (int iI = 0; iI < GC.getNumPromotionInfos(); iI++)
@@ -19216,7 +19201,6 @@ void CvUnit::write(FDataStreamBase* pStream)
 
 
 
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraEndurance);
 
 	//	Use condensed format now - only save non-default array elements
 	for (int iI = 0; iI < GC.getNumPromotionInfos(); iI++)
@@ -22228,11 +22212,6 @@ void CvUnit::doBattleFieldPromotions(CvUnit* pDefender, const CombatDetails& cdD
 			{
 				aAttackerAvailablePromotions.push_back(promotionType);
 			}
-			//* attacker is developing endurance
-			if (kPromotion.getEnduranceChange() > 0 && (enduranceTotal() > 0))
-			{
-				aAttackerAvailablePromotions.push_back(promotionType);
-			}
 			//TB Combat Mods End
 			//* attacker was crossing river
 			if (kPromotion.isRiver() && cdDefenderDetails.iRiverAttackModifier != 0)	//this bonus is being applied to defender
@@ -22387,11 +22366,6 @@ void CvUnit::doBattleFieldPromotions(CvUnit* pDefender, const CombatDetails& cdD
 			}
 
 			if (!noDefensiveBonus() && kPromotion.getDefenseCombatModifierChange() > 0)
-			{
-				aDefenderAvailablePromotions.push_back(promotionType);
-			}
-			//* defender is developing endurance
-			if (kPromotion.getEnduranceChange() > 0 && (pDefender->enduranceTotal() > 0))
 			{
 				aDefenderAvailablePromotions.push_back(promotionType);
 			}

@@ -867,8 +867,6 @@ public:
 	bool canAnimalIgnoresCities() const;
 	bool canOnslaught() const;
 	int aidTotal(PropertyTypes eProperty) const;
-	int enduranceTotal() const;
-	int poisonProbabilityModifierTotal() const;
 //TB Combat Mods End
 	int collateralDamage() const;
 	int collateralDamageLimit() const;
@@ -1133,8 +1131,6 @@ public:
 	bool mayOnslaught() const;
 	void changeOnslaughtCount(int iChange);
 
-	int getExtraEndurance () const;
-	void changeExtraEndurance (int iChange);
 
 
 	//TB Combat Mods End
@@ -1533,7 +1529,6 @@ protected:
 	bool m_bSuppressWithdrawal;
 	bool m_bHasAnyInvisibility;
 	bool m_bRevealed;
-	int m_iExtraEndurance;
 	int m_iRetrainsAvailable;
 	int m_iQualityBaseTotal;
 	int m_iGroupBaseTotal;

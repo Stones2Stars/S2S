@@ -985,3 +985,9 @@ CvPlayer::m_iNationalBombardDefenseModifier
 | evaluates the tech-gated tail against the city's contexts -- which is what the deleted team ledger was
 | pre-computing on every tech acquire.
 CvCity::m_paiMaxSpecialistCount
+
+| The unit's ENDURANCE accumulator. The mechanic is dead (owner): no unitcombat, promotion or unit authors an
+| endurance value anywhere in the curated data, so every feed summed to nothing and `enduranceTotal()` returned
+| the info's dead getter plus zero. Its poison sibling went with it -- `poisonProbabilityModifierTotal()` had an
+| EMPTY BODY, i.e. it had already stopped returning anything at all.
+CvUnit::m_iExtraEndurance

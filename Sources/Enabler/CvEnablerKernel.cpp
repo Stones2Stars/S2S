@@ -375,7 +375,11 @@ static EkBuildingVerdict ek_classifyBuilding(int b, const CvCity* pCity, CvCasca
 {
 	const CvInfo* j = InfoRepo<CvBuildingInfo>::get().get(b);
 	if (j == NULL) return EK_ACTIVE;
-	if (ecOp.team != NULL && EnablerKernel::obsoletedByHeldTech(j, *ecOp.team)) return EK_OBSOLETE;
+	//	The obsoleting TECH is asked of the city's own team -- the enabler's machinery reads team techs directly
+	//	(its two other callers already hold a CvTeam&), which is exactly what the tech bridge is for. What the
+	//	eval ctx must not carry is a team for a STATE question ([contexts.md]); this is neither the ctx's nor a
+	//	state read.
+	if (pCity != NULL && EnablerKernel::obsoletedByHeldTech(j, GET_TEAM(pCity->getTeam()))) return EK_OBSOLETE;
 	if (j->requiresOperate() != NULL && !cascadeEvalCondition(j->requiresOperate(), ecOp, flags)) return EK_DORMANT_OPERATE;
 	const std::vector<int>& dorm = j->dormantTriggers();
 	for (size_t i = 0; i < dorm.size(); ++i)
