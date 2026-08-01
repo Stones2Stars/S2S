@@ -3085,13 +3085,13 @@ int CvCity::getProductionModifier(BuildingTypes eBuilding) const
 
 	iMultiplier += GET_PLAYER(getOwner()).getBuildingProductionModifier(eBuilding);
 
-	for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
-	{
-		if (hasBonus((BonusTypes)iI))
-		{
-			iMultiplier += GC.getBuildingInfo(eBuilding).getBonusProductionModifier(iI);
-		}
-	}
+	// The building's own `buildRate.self.percent`, which the data authors CONDITIONED on holding a bonus
+	// (curate_building's COND_KEYED bonus gate). A point read serves the unconditioned sum only, so the gate is
+	// resolved by the ONE evaluator against this city's contexts -- never a loop asking every bonus in the
+	// registry whether this building deposits against it (the own-data inversion).
+	iMultiplier += GC.getBuildingInfo(eBuilding).expectedModifier(
+		MODFAM_BUILD_RATE, BUILD_RATE_AMOUNT, CASC_UNIT_PERCENT,
+		getCityContext(), GET_PLAYER(getOwner()).getEmpireContext(), plotGroup(getOwner()));
 
 	if (GET_PLAYER(getOwner()).getStateReligion() != NO_RELIGION)
 	{
@@ -3115,13 +3115,11 @@ int CvCity::getProductionModifier(ProjectTypes eProject) const
 		iMultiplier += getSpaceProductionModifier();
 	}
 
-	for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
-	{
-		if (hasBonus((BonusTypes)iI))
-		{
-			iMultiplier += GC.getProjectInfo(eProject).getBonusProductionModifier(iI);
-		}
-	}
+	// The project's own bonus-conditioned `buildRate.self.percent`, resolved by the ONE evaluator -- the same
+	// shape as the building twin above.
+	iMultiplier += GC.getProjectInfo(eProject).expectedModifier(
+		MODFAM_BUILD_RATE, BUILD_RATE_AMOUNT, CASC_UNIT_PERCENT,
+		getCityContext(), GET_PLAYER(getOwner()).getEmpireContext(), plotGroup(getOwner()));
 	return iMultiplier;
 }
 
@@ -8573,7 +8571,10 @@ void CvCity::updateCorporationBonus()
 	{
 		for (int iCorp = 0; iCorp < GC.getNumCorporationInfos(); ++iCorp)
 		{
-			const int iBonusProduced = GC.getCorporationInfo((CorporationTypes)iCorp).getBonusProduced();
+			// what a corporation SUPPLIES is its `provides.bonuses` (json §5a); the legacy single-FK member
+			// is that list, which no shipped corp authors more than one entry of.
+			const CvProvides* pProvides = GC.getCorporationInfo((CorporationTypes)iCorp).getProvides();
+			const int iBonusProduced = (pProvides != NULL && !pProvides->bonuses.empty()) ? pProvides->bonuses[0] : -1;
 
 			if (-1 < iBonusProduced
 			&& !GET_TEAM(getTeam()).isBonusObsolete((BonusTypes)iBonusProduced)
@@ -10729,10 +10730,8 @@ bool CvCity::isHasCorporation(CorporationTypes eIndex) const
 void CvCity::applyCorporationModifiers(CorporationTypes eIndex, bool bValue)
 {
 	PROFILE_EXTRA_FUNC();
-	foreach_(const BuildingTypes eTypeX, getHasBuildings())
-	{
-	}
-	changeMilitaryProductionModifier(GC.getCorporationInfo(eIndex).getMilitaryProductionModifier() * (bValue ? 1 : -1));
+	changeMilitaryProductionModifier(
+		GC.getCorporationInfo(eIndex).getBuildRateModifier(BUILD_RATE_MILITARY, CASC_SCOPE_CITY) * (bValue ? 1 : -1));
 
 	CvCity* pHeadquarters = GC.getGame().getHeadquarters(eIndex);
 
