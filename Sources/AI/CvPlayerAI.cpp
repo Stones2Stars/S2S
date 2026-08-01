@@ -27349,98 +27349,46 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	iValue += iTemp;
 
 	//#10 Effects for Promotions that have Retreat
-	iTemp = kPromotion.getExcileChange();
-	if (iTemp < 0)
+	if (kPromotion.hasSkill(CLS_SKILL_EXCILE))
 	{
-		if (pUnit)
+		if (pUnit && !pUnit->isExcile())
 		{
-			if (pUnit->isExcile())
+			iValue -= 25;
+		}
+	}
+
+	//#11 Effects for Promotions that have Passage
+	if (kPromotion.hasSkill(CLS_SKILL_PASSAGE))
+	{
+		if (pUnit && !pUnit->isPassage())
+		{
+			if (eUnitAI == UNITAI_ESCORT)
+			{
+				iValue += 50;
+			}
+			else
 			{
 				iValue += 25;
 			}
 		}
 	}
-	if (iTemp > 0)
-	{
-		if (pUnit)
-		{
-			if (!pUnit->isExcile())
-			{
-				iValue -= 25;
-			}
-		}
-	}
 
-	//#11 Effects for Promotions that have Passage
-	iTemp = kPromotion.getPassageChange();
-	if (iTemp > 0)
-	{
-		if (pUnit)
-		{
-			if (!pUnit->isPassage())
-			{
-				if (eUnitAI == UNITAI_ESCORT)
-				{
-					iValue += 50;
-				}
-				else
-				{
-					iValue += 25;
-				}
-			}
-		}
-	}
-	if (iTemp < 0)
-	{
-		if (pUnit)
-		{
-			if (pUnit->isPassage())
-			{
-				if (eUnitAI == UNITAI_ESCORT)
-				{
-					iValue -= 100;
-				}
-				else
-				{
-					iValue -= 25;
-				}
-			}
-		}
-	}
-
-	//#12 iTemp = kPromotion.getNoNonOwnedCityEntryChange();
-	//#13 iTemp = kPromotion.getBlendIntoCityChange();
-	//Perhaps these will be interesting for differing AI types so it's here as a reminder
-	//No automatic value to be assigned at the moment.
+	// The blendIntoCity and noNonOwnedCityEntry skills carry no automatic value here; they may be worth
+	// weighting per AI type later.
 
 	//#14 Effects for Promotions that have BarbCoExist
-	iTemp = kPromotion.getBarbCoExistChange();
-	if (iTemp > 0)
+	// ⚠ BEHAVIOUR CHANGE, deliberate: the legacy block was INERT -- both branches accumulated into iTemp and
+	// never added it to iValue, so barbarian co-existence scored nothing either way. The authored weights are
+	// applied as they plainly read.
+	if (kPromotion.hasSkill(CLS_SKILL_BARB_CO_EXIST))
 	{
 		if (eUnitAI == UNITAI_EXPLORE)
 		{
-			iTemp += 20;
+			iValue += 20;
 		}
 		else if (eUnitAI == UNITAI_ESCORT)
 		{
-			iTemp -= 100;
-		}
-	}
-	if (iTemp < 0)
-	{
-		if (pUnit)
-		{
-			if (pUnit->isBarbCoExist())
-			{
-				if (eUnitAI == UNITAI_PILLAGE)
-				{
-					iValue += 15;
-				}
-				else if (eUnitAI == UNITAI_ESCORT)
-				{
-					iTemp += 100;
-				}
-			}
+			iValue -= 100;
 		}
 	}
 
@@ -27800,14 +27748,13 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//#23 Effects for Promotions that get Hidden Nationality...
-	iTemp = kPromotion.getHiddenNationalityChange();
-	if (iTemp != 0)
+	if (kPromotion.hasSkill(CLS_SKILL_HIDDEN_NATIONALITY))
 	{
 		if (pUnit)
 		{
-			if (!pUnit->isHiddenNationality() && iTemp > 0)
+			if (!pUnit->isHiddenNationality())
 			{
-				if ((eUnitAI == UNITAI_INFILTRATOR))
+				if (eUnitAI == UNITAI_INFILTRATOR)
 				{
 					iValue += 100;
 				}
@@ -27816,15 +27763,6 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 					iValue += 50;
 				}
 				iValue += 30;
-			}
-			else if (pUnit->isHiddenNationality() && iTemp < 0)
-			{
-				if (eUnitAI == UNITAI_INFILTRATOR)
-				{
-					iValue -= 100;
-				}
-
-				iValue -= 30;
 			}
 		}
 	}
@@ -28603,33 +28541,10 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	}
 
 	//#46 Effects for Promotions for assassins...
-	iTemp = kPromotion.getAssassinChange();
-	if (iTemp != 0)
+	if (kPromotion.hasSkill(CLS_SKILL_ASSASSIN))
 	{
-		int iTemp2 = 0;
-		if (pUnit)
-		{
-			if (pUnit->isAssassin())
-			{
-				if (iTemp < 0)
-				{
-					iTemp2 -= 30;
-				}
-				else if (iTemp > 0)
-				{
-					iTemp2 += 10;
-				}
-			}
-			else if (iTemp < 0)
-			{
-				iTemp2 -= 5;
-			}
-			else
-			{
-				iTemp2 += 30;
-			}
-		}
-		else iTemp2 += iTemp * 5;
+		// Worth more to a unit that does not already have it than to one that does.
+		int iTemp2 = pUnit ? (pUnit->isAssassin() ? 10 : 30) : 5;
 
 		if (eUnitAI == UNITAI_INFILTRATOR)
 		{
