@@ -11117,20 +11117,6 @@ void CvCity::setHasBuilding(const BuildingTypes eType, const bool bNewValue, con
 				processBuilding(eType, -1, false, true);
 			}
 
-			//Remove any extensions of this building
-			std::vector<BuildingTypes> temp;
-
-			foreach_(const BuildingTypes eTypeX, getHasBuildings())
-			{
-				if (GC.getBuildingInfo(eTypeX).getExtendsBuilding() == eType)
-				{
-					temp.push_back(eTypeX);
-				}
-			}
-			foreach_(const BuildingTypes eType, temp)
-			{
-				changeHasBuilding(eType, false);
-			}
 		}
 
 		// #430 event spine: the PRESENCE fact, at the presence choke point -- fires on EVERY genuine has-flip,
@@ -11177,7 +11163,7 @@ void CvCity::setupBuilding(const CvBuildingInfo& kBuilding, const BuildingTypes 
 	PROFILE_EXTRA_FUNC();
 	const int iChange = bNewValue ? 1 : -1;
 
-	handleBuildingCounts(eType, iChange, isLimitedWonder(eType) && !kBuilding.isNoLimit());
+	handleBuildingCounts(eType, iChange, isLimitedWonder(eType) && !kBuilding.isNoInstanceLimit());
 
 	if (!bNewValue) // Building removal
 	{
