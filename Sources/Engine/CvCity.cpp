@@ -13567,10 +13567,13 @@ void CvCity::doMeltdown()
 
 // Private Functions...
 
-void CvCity::read(FDataStreamBase* pStream)
+// The TWO-PHASE stream read (FFreeListTrashArray.h ReadStreamableFFreeListTrashArrayTwoPhase). Phase 1
+// deserializes ONLY the id so the loader can REGISTER the city in its owner's list before phase 2 streams the
+// rest -- which is what lets the DOMAIN events the body emits from inside its own read resolve through the
+// ordinary id lookup ([DEC-spine-reseed]). Same bytes in the same order as a single-phase read; only the
+// moment the object becomes resolvable differs.
+void CvCity::readIdentity(FDataStreamBase* pStream)
 {
-
-	PROFILE_EXTRA_FUNC();
 	CvTaggedSaveFormatWrapper& wrapper = CvTaggedSaveFormatWrapper::getSaveFormatWrapper();
 
 	wrapper.AttachToStream(pStream);
@@ -13581,6 +13584,15 @@ void CvCity::read(FDataStreamBase* pStream)
 	reset();
 
 	WRAPPER_READ(wrapper, "CvCity", &m_iID);
+}
+
+void CvCity::readBody(FDataStreamBase* pStream)
+{
+	PROFILE_EXTRA_FUNC();
+	CvTaggedSaveFormatWrapper& wrapper = CvTaggedSaveFormatWrapper::getSaveFormatWrapper();
+
+	wrapper.AttachToStream(pStream);
+
 	WRAPPER_READ(wrapper, "CvCity", &m_iX);
 	WRAPPER_READ(wrapper, "CvCity", &m_iY);
 	WRAPPER_READ(wrapper, "CvCity", &m_iRallyX);
@@ -14279,6 +14291,12 @@ void CvCity::read(FDataStreamBase* pStream)
 	WRAPPER_READ_OBJECT_END(wrapper);
 	//Example of how to skip an unneeded element
 	//WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_iMaxFoodKeptPercent, SAVE_VALUE_ANY);	// was present in old formats
+}
+
+void CvCity::read(FDataStreamBase* pStream)
+{
+	readIdentity(pStream);
+	readBody(pStream);
 }
 
 void CvCity::write(FDataStreamBase* pStream)

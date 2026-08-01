@@ -17935,7 +17935,10 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		{
 			m_groupCycles[i]->Read(pStream);
 			ReadStreamableFFreeListTrashArray(*m_plotGroups[i], pStream);
-			ReadStreamableFFreeListTrashArray(*m_cities[i], pStream);
+			// Cities load TWO-PHASE: the id first, so each city is registered before its body streams and the
+			// DOMAIN events it emits from inside its own read resolve by ordinary id lookup
+			// ([DEC-spine-reseed]). Identical bytes -- only the registration moment differs.
+			ReadStreamableFFreeListTrashArrayTwoPhase(*m_cities[i], pStream);
 			ReadStreamableFFreeListTrashArray(*m_units[i], pStream);
 			ReadStreamableFFreeListTrashArray(*m_selectionGroups[i], pStream);
 		}

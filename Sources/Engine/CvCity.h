@@ -1411,6 +1411,10 @@ public:
 	virtual void AI_setNavalMilitaryProductionCity(bool bNewVal) = 0;
 
 
+	// The two-phase stream read: identity (the id alone) so the loader can register this city before the
+	// body streams, then the body ([DEC-spine-reseed]). `read` is the single-phase entry for direct callers.
+	void readIdentity(FDataStreamBase* pStream);
+	void readBody(FDataStreamBase* pStream);
 	void read(FDataStreamBase* pStream);
 	void write(FDataStreamBase* pStream);
 
