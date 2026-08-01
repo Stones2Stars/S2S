@@ -1422,7 +1422,6 @@ void CvCity::doTurn()
 
 	{ PERF_SCOPE("city.doGreatPeople", getOwner()); doGreatPeople(); }
 
-	doMeltdown();
 
 	updateEspionageVisibility(true);
 
@@ -10375,104 +10374,34 @@ void CvCity::setupBuilding(const CvBuildingInfo& kBuilding, const BuildingTypes 
 		// Toffer: Certain things should only apply when the building is built the very first time.
 		if (bFirst) // Not city copy on owner change, actually built.
 		{
-			{
-				const int iPopChange = kBuilding.getPopulationChange();
-				if (iPopChange != 0)
-				{
-					if (iPopChange > 0)
-					{
-						for (int iI = 0; iI < iPopChange; iI++)
-						{
-							changeFood(growthThreshold(), true);
-						}
-					}
-					else
-					{
-						for (int iI = 0; iI < -iPopChange; iI++)
-						{
-							changeFood(-std::max(growthThreshold(-1), getFood() + 1), true);
-						}
-					}
-					// Don't starve with the extra citizen working nothing
-					AI_updateAssignWork();
-				}
-			}
-
+			// ⛔ The first-build PAYLOAD is the trigger engine's, and it is not duplicated here. The local and
+			// empire population pulses, the golden age and the free techs are the source's `grants` applied by
+			// tr_applyBuildingFirstBuild off SEVT_BUILDING_CHANGED, gated exactly as this block gated them
+			// (triggers.md: a grant is a trigger with a null condition). Keeping a copy beside it is the
+			// double-apply the roadmap names as the worst class of surviving legacy -- two live paths handing
+			// out the same thing, detectable only by noticing the effect landed twice.
+			// What stays here is what is NOT a payload: the capital designation, the corporation HQ founding,
+			// and the wonder replay/announcement chrome.
 			if (kBuilding.providesAmenity(CLS_AMENITY_CAPITAL))
 			{
 				GET_PLAYER(getOwner()).setCapitalCity(this);
 			}
 
-			if (NO_CORPORATION != (CorporationTypes)kBuilding.getFoundsCorporation()
-			&& !GC.getGame().isCorporationFounded((CorporationTypes)kBuilding.getFoundsCorporation()))
+			// `enables.corporations` -- the building unlocks a corporation, and founding it here designates this
+			// city as its headquarters. The edge family is the load-compiled forward view ([DEC-one-reverse-view]).
+			if (const std::vector<int>* pFounds = kBuilding.edge(EDGEF_ENABLES, EDGEB_CORPORATIONS))
 			{
-				setHeadquarters((CorporationTypes)kBuilding.getFoundsCorporation());
-			}
-
-			if (kBuilding.getFreeSpecialTech() != NO_TECH && !GET_TEAM(getTeam()).isHasTech(kBuilding.getFreeSpecialTech()))
-			{
-				GET_TEAM(getTeam()).setHasTech(kBuilding.getFreeSpecialTech(), true, getOwner(), true, true);
+				for (std::vector<int>::const_iterator it = pFounds->begin(); it != pFounds->end(); ++it)
+				{
+					if (!GC.getGame().isCorporationFounded((CorporationTypes)*it))
+					{
+						setHeadquarters((CorporationTypes)*it);
+					}
+				}
 			}
 
 			if (GC.getGame().isFinalInitialized() && !gDLL->GetWorldBuilderMode())
 			{
-				if (kBuilding.isGoldenAge())
-				{
-					GET_PLAYER(getOwner()).changeGoldenAgeTurns(1 + GET_PLAYER(getOwner()).getGoldenAgeLength());
-				}
-
-				if (kBuilding.getGlobalPopulationChange() > 0)
-				{
-					if (kBuilding.hasAttribute(CLS_ATTRIBUTE_TEAM_SHARE))
-					{
-						for (int iI = 0; iI < MAX_PC_PLAYERS; iI++)
-						{
-							if (GET_PLAYER((PlayerTypes)iI).isAliveAndTeam(getTeam()))
-							{
-								foreach_(CvCity* pLoopCity, GET_PLAYER((PlayerTypes)iI).cities())
-								{
-									for (int iI = kBuilding.getGlobalPopulationChange() - 1; iI > -1; iI--)
-									{
-										pLoopCity->changeFood(pLoopCity->growthThreshold());
-									}
-									// so subsequent cities don't starve with the extra citizen working nothing
-									pLoopCity->AI_updateAssignWork();
-								}
-							}
-						}
-					}
-					else
-					{
-						foreach_(CvCity* pLoopCity, GET_PLAYER(getOwner()).cities())
-						{
-							for (int iI = kBuilding.getGlobalPopulationChange() - 1; iI > -1; iI--)
-							{
-								pLoopCity->changeFood(pLoopCity->growthThreshold());
-							}
-							// so subsequent cities don't starve with the extra citizen working nothing
-							pLoopCity->AI_updateAssignWork();
-						}
-					}
-				}
-
-				if (kBuilding.getFreeTechs() > 0)
-				{
-					if (isHuman())
-					{
-						GET_PLAYER(getOwner()).chooseTech(
-							kBuilding.getFreeTechs(),
-							gDLL->getText("TXT_KEY_MISC_COMPLETED_WONDER_CHOOSE_TECH", kBuilding.getTextKeyWide())
-						);
-					}
-					else
-					{
-						for (int iI = 0; iI < kBuilding.getFreeTechs(); iI++)
-						{
-							GET_PLAYER(getOwner()).AI_chooseFreeTech();
-						}
-					}
-				}
-
 				if (isWorldWonder(eType))
 				{
 					GC.getGame().addReplayMessage(
@@ -11701,26 +11630,6 @@ void CvCity::popOrder(int orderIndex, bool bFinish, bool bChoose, bool bResolveL
 
 				CvEventReporter::getInstance().buildingBuilt(this, eConstructBuilding);
 			}
-			else if (!(getBuildingAvailability(eConstructBuilding) == EnablerDomain::STATE_LISTED))
-			{
-				const BuildingTypes eBuilding = GC.getBuildingInfo(eConstructBuilding).getProductionContinueBuilding();
-				if (eBuilding != NO_BUILDING && isBuildingContinuable(eBuilding))
-				{
-					if (m_iLostProduction == 0)
-					{
-						m_iLostProduction = getProgressOnBuilding(eConstructBuilding);
-						changeProgressOnBuilding(eConstructBuilding, -m_iLostProduction);
-					}
-					if (m_iLostProduction > 0)
-					{
-						changeProgressOnBuilding(eBuilding, m_iLostProduction);
-						const CvWString szMessage = gDLL->getText("TXT_KEY_MISC_PROD_CONVERTED", m_iLostProduction, GC.getBuildingInfo(eConstructBuilding).getTextKeyWide(), GC.getBuildingInfo(eBuilding).getTextKeyWide());
-						AddDLLMessage(getOwner(), false, GC.getEVENT_MESSAGE_TIME(), szMessage, "AS2D_WONDERGOLD", MESSAGE_TYPE_MINOR_EVENT, GC.getYieldInfo(YIELD_PRODUCTION).getButton(), GC.getCOLOR_GREEN(), getX(), getY(), true, true);
-
-						m_iLostProduction = 0;
-					}
-				}
-			}
 
 			setBuildingListInvalid();
 			break;
@@ -12128,28 +12037,20 @@ bool CvCity::doCheckProduction()
 			if (player.isProductionMaxedBuilding(eTypeX))
 			{
 				const int iProgress = (*it).second;
+				const int iProductionGold = iProgress * GC.getMAXED_BUILDING_GOLD_PERCENT() / 100;
 
-				if (GC.getBuildingInfo(eTypeX).getProductionContinueBuilding() != NO_BUILDING && (getBuildingAvailability(eTypeX) == EnablerDomain::STATE_LISTED))
+				if (iProductionGold > 0)
 				{
-					m_iLostProduction = iProgress;
-				}
-				else
-				{
-					const int iProductionGold = iProgress * GC.getMAXED_BUILDING_GOLD_PERCENT() / 100;
-
-					if (iProductionGold > 0)
-					{
-						player.changeGold(iProductionGold);
-						AddDLLMessage(
-							getOwner(), false, GC.getEVENT_MESSAGE_TIME(),
-							gDLL->getText(
-								"TXT_KEY_MISC_LOST_WONDER_PROD_CONVERTED",
-								getNameKey(), GC.getBuildingInfo(eTypeX).getTextKeyWide(), iProductionGold
-							),
-							"AS2D_WONDERGOLD", MESSAGE_TYPE_MINOR_EVENT, GC.getCommerceInfo(COMMERCE_GOLD).getButton(),
-							GC.getCOLOR_RED(), getX(), getY(), true, true
-						);
-					}
+					player.changeGold(iProductionGold);
+					AddDLLMessage(
+						getOwner(), false, GC.getEVENT_MESSAGE_TIME(),
+						gDLL->getText(
+							"TXT_KEY_MISC_LOST_WONDER_PROD_CONVERTED",
+							getNameKey(), GC.getBuildingInfo(eTypeX).getTextKeyWide(), iProductionGold
+						),
+						"AS2D_WONDERGOLD", MESSAGE_TYPE_MINOR_EVENT, GC.getCommerceInfo(COMMERCE_GOLD).getButton(),
+						GC.getCOLOR_RED(), getX(), getY(), true, true
+					);
 				}
 				decayBuilding.push_back(std::make_pair(eTypeX, -iProgress));
 			}
@@ -12635,38 +12536,6 @@ void CvCity::doGreatPeople()
 	}
 }
 
-
-void CvCity::doMeltdown()
-{
-	PROFILE_EXTRA_FUNC();
-
-	std::vector<BuildingTypes> temp;
-
-	foreach_(const BuildingTypes eType, getHasBuildings())
-	{
-		if (!isDormantBuilding(eType))
-		{
-			const int iOdds = GC.getBuildingInfo(eType).getNukeExplosionRand();
-
-			if (iOdds > 0 && GC.getGame().getSorenRandNum(10000, "Meltdown!!!") < iOdds)
-			{
-				temp.push_back(eType);
-
-				plot()->nukeExplosion(1);
-				{
-					CvWString szBuffer = gDLL->getText("TXT_KEY_MISC_MELTDOWN_CITY", getNameKey());
-					AddDLLMessage(getOwner(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_MELTDOWN", MESSAGE_TYPE_MINOR_EVENT,
-						ARTFILEMGR.getInterfaceArtInfo("INTERFACE_UNHEALTHY_PERSON")->getPath(), GC.getCOLOR_RED(), getX(), getY(), true, true);
-				}
-				break;
-			}
-		}
-	}
-	foreach_(const BuildingTypes eType, temp)
-	{
-		changeHasBuilding(eType, false);
-	}
-}
 
 // Private Functions...
 
@@ -13704,10 +13573,8 @@ void CvCity::getVisibleBuildings(std::list<BuildingTypes>& kChosenVisible, int& 
 		bool bValid = false;
 		const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eType);
 
-		if (kBuilding.getNotShowInCity()) continue;
-
 		const bool bIsWonder = isLimitedWonder(eType);
-		const bool bIsDefense = (kBuilding.getDefenseModifier() > 0);
+		const bool bIsDefense = (kBuilding.getDefense(DEFENSE_AMOUNT, CASC_SCOPE_CITY) > 0);
 
 		if ((iShowFlags & SHOW_BUILDINGS_WONDERS) != 0)
 		{
@@ -15637,10 +15504,10 @@ int CvCity::getAdditionalDefenseByBuilding(BuildingTypes eBuilding) const
 
 	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
 
-	if (kBuilding.getDefenseModifier() != 0)
+	if (kBuilding.getDefense(DEFENSE_AMOUNT, CASC_SCOPE_CITY) != 0)
 	{
-		//iExtraRate += std::max(0, kBuilding.getDefenseModifier() - std::max(0, iCultureDefense));
-		iExtraBuildingRate += kBuilding.getDefenseModifier();
+		//iExtraRate += std::max(0, kBuilding.getDefense(DEFENSE_AMOUNT, CASC_SCOPE_CITY) - std::max(0, iCultureDefense));
+		iExtraBuildingRate += kBuilding.getDefense(DEFENSE_AMOUNT, CASC_SCOPE_CITY);
 	}
 	for (int iJ = 0; iJ < GC.getNumBonusInfos(); iJ++)
 	{
@@ -15663,7 +15530,7 @@ int CvCity::getAdditionalDefenseByBuilding(BuildingTypes eBuilding) const
 		{
 			const CvBuildingInfo& info = GC.getBuildingInfo(eBuildingX);
 
-			iExtraBuildingRate -= info.getDefenseModifier();
+			iExtraBuildingRate -= info.getDefense(DEFENSE_AMOUNT, CASC_SCOPE_CITY);
 			for (int iJ = 0; iJ < GC.getNumBonusInfos(); iJ++)
 			{
 				if (hasBonus((BonusTypes)iJ))

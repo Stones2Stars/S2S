@@ -1741,7 +1741,6 @@ protected:
 	void doDecay();
 	void doReligion();
 	void doGreatPeople();
-	void doMeltdown();
 	bool doCheckProduction();
 
 	int getHurryCostModifier(UnitTypes eUnit) const;
