@@ -28,6 +28,16 @@
   ⚠ Until it is settled the legacy `getObsoletesToBuilding` culture-shell swap has no successor and its four
   sites (`CvPlayer::acquireCity`, `CvTeam::processTech`) stay dangling. ⛔ Do not pick a side to clear them:
   removing the swap is what makes the obsolete set live, so guessing here silently decides the model.
+- Settle the COMMERCE-DOUBLING shape, because the spec and the curator disagree and each is self-consistent.
+  [modifier.md §3](../../specs/modifier.md) rules it "a SECOND deposit on the same slot with
+  `enabled:{existedFor:{min:N}}`, no post-sum multiply". `curate_building` instead emits
+  `identity.commerceDoubleTime` as a per-channel MARKER, and gives a grounded reason: the engine doubles the
+  building's WHOLE per-building commerce — base plus shrine plus corp-HQ plus event plus state-religion — so a
+  base-only second flat UNDER-doubles any building that is also a shrine or a corporation headquarters.
+  ⛔ Not an agent call: one side is a data-model change and the other is a spec correction, and picking either
+  silently decides how a wonder's commerce compounds. The AI consumer stays dangling until it is ruled.
+  ⚠ Whichever wins, `identity` carries no effects ([json.md §7](../../specs/json.md)), so the marker does not
+  stay where it is.
 - Rule on the river-attack term for a CITY defender (`CvUnit::getDefenderCombatValues`). Its two branches
   disagree: attacking across a river hands an ordinary defender `-RIVER_ATTACK_MODIFIER`, while the city branch
   is `min(0, riverDefensePenalty - RIVER_ATTACK_MODIFIER)` — capped at zero, so a city defender can never
@@ -242,6 +252,12 @@
   clean-slate revert of the engine game-object classes but the bracket itself did not, so they dangle with no
   implementation anywhere in the tree. It defers the side-effect layer across a run of probe mutations and
   replays the run's NET once at the close — so it is a real machine to write, never a pair of calls to delete.
+  ⚑ A prior implementation exists in history and is worth reading for its SHAPE (the start snapshots the
+  specialist counts and worked plots; the close replays the net, refreshes the changed plots' symbols once and
+  dirties the UI). ⛔ It is NOT restorable as written: it dirtied through the archived per-scope accumulator
+  ([superseded-ideas #14](../../architecture/superseded-ideas.md)), so the mark has to be re-expressed on the
+  uniform derived-cache protocol — and the DEFERRAL half lives in the mutation sites the revert also took,
+  which is the larger part of the work.
 - Decide WHERE the citizen-assignment re-check is asked for. The mechanism itself is right and stays — the AI
   needs a way to be told the best plots to work may have moved — so this is a CALL-SITE question, never a
   removal. `AI_setAssignWorkDirty` is called from across the engine while `AI_updateAssignWork` re-runs the FULL
@@ -322,6 +338,17 @@
   model deleted. Answering it means reading the candidate's `EDGEF_RELATED` specialists and evaluating their
   rows with the candidate injected — the hypothetical the `expected*` plane owns. ⛔ Do not restore a
   building-side per-specialist getter to clear those sites; the data is not there to serve it.
+- Give `requires` a PRECISE query — "does this entity's requires name this atom / this predicate", answered per
+  id. Two consumers want it and neither has any other source: a building's need for the state religion IN CITY,
+  and the religion a unit needs to be trained.
+  ⛔ `CascadeCondDeps` is NOT that query and must not be pressed into service as one. It deliberately collapses
+  all four state-religion predicates onto one flag, because its job is deciding which events re-gate a
+  candidate — where over-inclusion is SAFE by design ([enabler.md §5](../../specs/enabler.md)). Reading it as a
+  semantic answer widens a 69-building test to ~175 silently.
+  ⚠ And the unit's religion is NOT its `spread` block: 9 units require a religion and spread nothing (crusader,
+  inquisitor, monk, fanatic …), so that substitution drops them from the valuation without failing.
+  ⚑ It extends the ONE scanner rather than adding a second walk
+  ([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation)).
 - Give the what-if valuation a KEYED twin. `expected*` answers a family's point slot, so a deposit that is BOTH
   keyed and conditioned has no read: the tech-gated per-specialist building slot is the live case, and its
   consumers dangle on that alone. It wants the `collectKeyedTarget` walk with the conditioned tail evaluated
