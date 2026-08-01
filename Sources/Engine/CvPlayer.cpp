@@ -7202,15 +7202,20 @@ bool CvPlayer::canBuild(const CvPlot* pPlot, BuildTypes eBuild, bool bTestVisibl
 	{
 		const ImprovementTypes eImprovement = kBuild.getImprovement();
 
-		if (
-			eImprovement != NO_IMPROVEMENT
-		&&
-			(
-				GC.getImprovementInfo(eImprovement).isNational() && getImprovementCount(eImprovement) > 0
-				||
-				GC.getImprovementInfo(eImprovement).isGlobal() && GC.getGame().getImprovementCount(eImprovement) > 0
-			)
-		) return false;
+		if (eImprovement != NO_IMPROVEMENT)
+		{
+			// The `allowed` self-caps carry the real number, so a build is permitted while the count is
+			// under it; an absent cap reads -1 and bars nothing.
+			const CvImprovementInfo& kImprovement = GC.getImprovementInfo(eImprovement);
+			const int iEmpireCap = kImprovement.allowedCap(ALLOWEDCAP_EMPIRE);
+			const int iWorldCap = kImprovement.allowedCap(ALLOWEDCAP_WORLD);
+
+			if (iEmpireCap >= 0 && getImprovementCount(eImprovement) >= iEmpireCap
+			|| iWorldCap >= 0 && GC.getGame().getImprovementCount(eImprovement) >= iWorldCap)
+			{
+				return false;
+			}
+		}
 	}
 	return true;
 }

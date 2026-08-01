@@ -3133,11 +3133,6 @@ void CvDLLWidgetData::parseActionHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 						}
 					}
 
-					if (!(pMissionPlot->isIrrigationAvailable()))
-					{
-						GAMETEXT.setYieldChangeHelp(szBuffer, gDLL->getText("TXT_KEY_ACTION_IRRIGATED").c_str(), L": ", L"", improvement->getIrrigatedYieldChangeArray());
-					}
-
 					if (eRoute == NO_ROUTE)
 					{
 						for (int iI = 0; iI < GC.getNumRouteInfos(); iI++)

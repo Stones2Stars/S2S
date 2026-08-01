@@ -1117,7 +1117,7 @@ bool CvWorkerAI::improveBonus(CvUnitAI* unit, int allowedMovementTurns)
 			// Defense contribution (fort-likes only).
 			if (kImprovementX.hasCharacteristic(CLS_CHARACTERISTIC_ACTS_AS_CITY))
 			{
-				const int iDefenseRaw = kImprovementX.getAirBombDefense()
+				const int iDefenseRaw = kImprovementX.getDefense(DEFENSE_AIR, CASC_SCOPE_PLOT) / 100
 				                      + kImprovementX.getDefense(DEFENSE_AMOUNT, CASC_SCOPE_PLOT);
 				iValueDefense = iDefenseRaw / W.defenseDivisor;
 				if (kImprovementX.hasCharacteristic(CLS_CHARACTERISTIC_ZONE_OF_CONTROL)) iValueDefense += W.zocSourceBonus;

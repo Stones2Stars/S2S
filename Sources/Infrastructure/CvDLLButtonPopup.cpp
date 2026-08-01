@@ -3006,13 +3006,10 @@ bool CvDLLButtonPopup::launchImprovementUpgradeOptionsPopup(CvPopup* pPopup, CvP
 				}
 				continue;
 			}
-			for (int iJ = 0; iJ < kImprovement.getNumAlternativeImprovementUpgradeTypes(); iJ++)
+			if (kImprovement.isAlternativeImprovementUpgradeType(eImprovement)
+			&& pPlot->canHaveImprovement(eImprovement, eTeam, false, true))
 			{
-				if ((ImprovementTypes)kImprovement.getAlternativeImprovementUpgradeType(iJ) == eImprovement
-				&& pPlot->canHaveImprovement(eImprovement, eTeam, false, true))
-				{
-					gDLL->getInterfaceIFace()->popupAddGenericButton(pPopup, kImprovementX.getDescription(), kImprovementX.getButton(), iI, WIDGET_HELP_IMPROVEMENT_ACTUAL, iI, 0, true);
-				}
+				gDLL->getInterfaceIFace()->popupAddGenericButton(pPopup, kImprovementX.getDescription(), kImprovementX.getButton(), iI, WIDGET_HELP_IMPROVEMENT_ACTUAL, iI, 0, true);
 			}
 		}
 	}

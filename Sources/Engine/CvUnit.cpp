@@ -6926,7 +6926,7 @@ bool CvUnit::airBomb(int iX, int iY)
 		
 		if (GC.getGame().getSorenRandNum(getAirBombCurrRate(), "Air Bomb - Offense")
 			>=
-			GC.getGame().getSorenRandNum(GC.getImprovementInfo(pPlot->getImprovementType()).getAirBombDefense(), "Air Bomb - Defense"))
+			GC.getGame().getSorenRandNum(GC.getImprovementInfo(pPlot->getImprovementType()).getDefense(DEFENSE_AIR, CASC_SCOPE_PLOT) / 100, "Air Bomb - Defense"))
 		{
 			AddDLLMessage(
 				getOwner(), true, GC.getEVENT_MESSAGE_TIME(),

@@ -6935,31 +6935,6 @@ void CvCity::updateFeatureHappiness(bool bLimited)
 				iNewFeatureBadHappiness += iHappy;
 			}
 		}
-
-		const ImprovementTypes eImprovement = pLoopPlot->getImprovementType();
-
-		if (NO_IMPROVEMENT != eImprovement)
-		{
-			int iHappy = GC.getImprovementInfo(eImprovement).getHappiness();
-
-			const CvPlayer& kPlayer = GET_PLAYER(getOwner());
-			for (int iJ = 0; iJ < GC.getNumCivicOptionInfos(); iJ++)
-			{
-				if (kPlayer.getCivics((CivicOptionTypes)iJ) != NO_CIVIC)
-				{
-					iHappy += GC.getCivicInfo(kPlayer.getCivics((CivicOptionTypes)iJ)).getImprovementHappinessChanges(eImprovement);
-				}
-			}
-
-			if (iHappy > 0)
-			{
-				iNewFeatureGoodHappiness += iHappy;
-			}
-			else
-			{
-				iNewFeatureBadHappiness += iHappy;
-			}
-		}
 	}
 
 	if (getFeatureGoodHappiness() != iNewFeatureGoodHappiness)

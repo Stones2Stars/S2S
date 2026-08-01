@@ -983,9 +983,9 @@ void CvPlot::doImprovementUpgrade(const ImprovementTypes eType)
 		}
 		eUpgrade = eMainUpgrade;
 	}
-	for (int iI = 0; iI < GC.getImprovementInfo(getImprovementType()).getNumAlternativeImprovementUpgradeTypes(); ++iI)
+	foreach_(const int iAltUpgrade, GC.getImprovementInfo(getImprovementType()).getAlternativeImprovementUpgradeTypes())
 	{
-		const ImprovementTypes eUpgradeX = (ImprovementTypes)GC.getImprovementInfo(getImprovementType()).getAlternativeImprovementUpgradeType(iI);
+		const ImprovementTypes eUpgradeX = (ImprovementTypes)iAltUpgrade;
 
 		if (canHaveImprovement(eUpgradeX, eTeam, false, true))
 		{
@@ -1064,9 +1064,9 @@ void CvPlot::doImprovementUpgrade(const ImprovementTypes eType)
 					iBestValue = iValue;
 				}
 			}
-			for (int iI = 0; iI < GC.getImprovementInfo(getImprovementType()).getNumAlternativeImprovementUpgradeTypes(); ++iI)
+			foreach_(const int iAltUpgrade, GC.getImprovementInfo(getImprovementType()).getAlternativeImprovementUpgradeTypes())
 			{
-				const ImprovementTypes eUpgradeX = (ImprovementTypes)GC.getImprovementInfo(getImprovementType()).getAlternativeImprovementUpgradeType(iI);
+				const ImprovementTypes eUpgradeX = (ImprovementTypes)iAltUpgrade;
 
 				// Toffer - Upgrade cost code commented out in setImprovementType() for the time being
 				if (/* GC.getImprovementInfo(eUpgradeX).getHighestCost() <= GET_PLAYER(getOwner()).getGold() && */ canHaveImprovement(eUpgradeX, eTeam, false, true))
@@ -7292,7 +7292,7 @@ void CvPlot::setImprovementCurrentValue()
 		}
 		if (GC.getImprovementInfo(eImprovement).isMilitaryStructure())
 		{
-			int iCounterDefenseValue = GC.getImprovementInfo(eImprovement).getAirBombDefense()/10;
+			int iCounterDefenseValue = GC.getImprovementInfo(eImprovement).getDefense(DEFENSE_AIR, CASC_SCOPE_PLOT) / 100 / 10;
 			iCounterDefenseValue += GC.getImprovementInfo(eImprovement).getDefense(DEFENSE_AMOUNT, CASC_SCOPE_PLOT)/10;
 			iCounterDefenseValue += (GC.getImprovementInfo(eImprovement).hasCharacteristic(CLS_CHARACTERISTIC_ZONE_OF_CONTROL) ? 3 : 0);
 			if (!isCityRadius())
@@ -7333,7 +7333,7 @@ bool CvPlot::isImprovementDestructible() const
 	return (
 		m_eImprovementType > -1
 		&&
-		GC.getImprovementInfo(getImprovementType()).getAirBombDefense() > -1
+		GC.getImprovementInfo(getImprovementType()).getDefense(DEFENSE_AIR, CASC_SCOPE_PLOT) / 100 > -1
 	);
 }
 // ! Toffer

@@ -8156,7 +8156,7 @@ int CvCityAI::AI_getImprovementValue(const CvPlot* pPlot, ImprovementTypes eImpr
 	// We should only be caring about military stats on military improvements; others are incidential
 	if (improvement.isMilitaryStructure())
 	{
-		int iMilitaryValue = 3 * improvement.getAirBombDefense();
+		int iMilitaryValue = 3 * (improvement.getDefense(DEFENSE_AIR, CASC_SCOPE_PLOT) / 100);
 
 		if (improvement.hasCharacteristic(CLS_CHARACTERISTIC_ZONE_OF_CONTROL)) iMilitaryValue += 200;
 
@@ -11731,7 +11731,7 @@ void CvCityAI::AI_updateWorkersNeededHere()
 				const int iPlotValue = AI_yieldValue(aiYields, NULL, false, false, false, false, true, true);
 				const ImprovementTypes eBestImp = GC.getBuildInfo(AI_getBestBuild(iI)).getImprovement();
 				if (eBestImp != NO_IMPROVEMENT
-					&& (getImprovementFreeSpecialists(eBestImp) > 0 || GC.getImprovementInfo(eBestImp).getHappiness() > 0))
+					&& getImprovementFreeSpecialists(eBestImp) > 0)
 				{
 					iSpecialCount++;
 				}
