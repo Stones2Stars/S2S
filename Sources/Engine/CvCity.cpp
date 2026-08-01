@@ -728,7 +728,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_iSpecialistInsidiousness = 0;
 	m_iSpecialistInvestigation = 0;
 	m_icachedPropertyNeedsTurn = 0;
-	m_fPopulationgrowthratepercentageLog = 0.0;
 	m_iCiv = NO_CIVILIZATION;
 	m_iLandmarkAngerTimer = 0;
 	m_iFreshWater = 0;
@@ -1388,7 +1387,6 @@ void CvCity::doTurn()
 	//Counts down the disable power timer
 	doDisabledPower();
 
-	{ PERF_SCOPE("city.recalcPopGrowth", getOwner()); recalculatePopulationgrowthratepercentage(); }
 
 	doWarWeariness();
 
@@ -10307,7 +10305,9 @@ void CvCity::setupBuilding(const CvBuildingInfo& kBuilding, const BuildingTypes 
 	{
 		GC.getGame().changeNumBuildings(eType, iChange);
 
-		if (kBuilding.needStateReligionInCity() && kBuilding.getDiploVoteType() > -1)
+		CascadeCondDeps kVoteDeps;
+		EnablerKernel::scanCondDeps(kBuilding.requiresBuild(), kVoteDeps, false, false);
+		if (kVoteDeps.stateReligionInCity && kBuilding.getDiploVoteType() > -1)
 		{
 			const VoteSourceTypes eVoteSource = (VoteSourceTypes) kBuilding.getDiploVoteType();
 			if (eVoteSource > NO_VOTESOURCE && GC.getGame().getVoteSourceReligion(eVoteSource) == NO_RELIGION)
@@ -12280,18 +12280,9 @@ void CvCity::doReligion()
 							{
 								setHasReligion(eReligionX, false, true, false);
 
-								std::vector<BuildingTypes> temp;
-								foreach_(const BuildingTypes eTypeX, getHasBuildings())
-								{
-									if (GC.getBuildingInfo(eTypeX).getPrereqReligion() == iReligionX)
-									{
-										temp.push_back(eTypeX);
-									}
-								}
-								foreach_(const BuildingTypes eTypeX, temp)
-								{
-									changeHasBuilding(eTypeX, false);
-								}
+								// ⚠ The buildings that needed this religion are NOT torn down: PrereqReligion is
+								// requires.OPERATE, so losing it makes them DORMANT and they wake if the religion
+								// returns (enabler.md §3). A behaviour change from legacy, stated not hidden.
 								break;
 							}
 						}
@@ -12632,7 +12623,6 @@ void CvCity::readBody(FDataStreamBase* pStream)
 
 	WRAPPER_READ(wrapper, "CvCity", &m_iEventAnger);
 
-	WRAPPER_READ(wrapper, "CvCity", &m_fPopulationgrowthratepercentageLog);
 
 
 	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvCity", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_pabHadVicinityBonus);
@@ -13202,7 +13192,6 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_CORPORATIONS, GC.getNumCorporationInfos(), m_pabHasCorporation);
 
 	WRAPPER_WRITE(wrapper, "CvCity", m_iEventAnger);
-	WRAPPER_WRITE(wrapper, "CvCity", m_fPopulationgrowthratepercentageLog);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_pabHadVicinityBonus);
 	WRAPPER_WRITE_CLASS_ENUM(wrapper, "CvCity", REMAPPED_CLASS_TYPE_CIVILIZATIONS, m_iCiv);
 
@@ -15127,30 +15116,20 @@ bool CvCity::hadRawVicinityBonus(BonusTypes eIndex) const
 }
 
 
-void CvCity::recalculatePopulationgrowthratepercentage()
-{
-	PROFILE_FUNC();
-
-	m_fPopulationgrowthratepercentageLog = 0;
-
-	for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
-	{
-		const BuildingTypes eLoopBuilding = static_cast<BuildingTypes>(iI);
-		if (isActiveBuilding(eLoopBuilding) && GC.getBuildingInfo(eLoopBuilding).getPopulationgrowthratepercentage() != 0)
-		{
-			changePopulationgrowthratepercentage(GC.getBuildingInfo(eLoopBuilding).getPopulationgrowthratepercentage(), true);
-		}
-	}
-}
-
+// The city's population-growth-rate percent, read as the ordinary cascade channel it is
+// (populationGrowthRate.city -- the SCALAR_POPULATION_GROWTH_RATE straggler slot). What this replaces was a
+// FLOAT log-space accumulator rebuilt by a blanket walk over every building in the game each turn: a float on a
+// deterministic-lockstep engine (an OOS hazard in its own right), a hand-named scalar that no derived mask could
+// address ([DEC-uniform-cache-shape]), and a self-heal ([DEC-no-self-heal]) all at once.
+// ⚠ BEHAVIOUR CHANGE, stated rather than hidden: the legacy form composed the sources MULTIPLICATIVELY through
+// the log. Percents are ADDITIVE deltas that sum and apply once ([modifier.md §2]), so the sources now add. A
+// percent is not ×100 scaled ([DEC-fixedpoint-x100]), so this needs no reduction.
 int CvCity::getPopulationgrowthratepercentage() const
 {
-	return (int)(exp(m_fPopulationgrowthratepercentageLog) * 100 - 100);
-}
-
-void CvCity::changePopulationgrowthratepercentage(int iChange, bool bAdd)
-{
-	m_fPopulationgrowthratepercentageLog += (bAdd ? 1 : -1) * log((100 + (float)iChange) / 100);
+	ModifierFamily eFamily = MODFAM_NONE;
+	int iKind = -1;
+	infoScalarSlot(SCALAR_POPULATION_GROWTH_RATE, eFamily, iKind);
+	return InfoValuation::realizedAtCity(*this, CascadeChannelRegistry::channelLookup(eFamily, iKind, -1));
 }
 
 

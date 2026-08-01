@@ -1063,3 +1063,15 @@ CvCity::ImprovementYieldChangesSize       (decorated short)
 CvCity::ImprovementYieldChangesType       (decorated short, per entry)
 CvCity::ImprovementYieldChanges           (decorated int array, per entry)
 ========================
+
+========================
+2026-08-01 — #430 delete-driven legacy cut (the CvCity population-growth-rate accumulator): a FLOAT log-space
+store rebuilt every turn by a blanket walk over every building in the game. Three defects in one member: a
+float on a deterministic-lockstep engine, a hand-named scalar no derived mask can address
+([DEC-uniform-cache-shape]), and a self-heal ([DEC-no-self-heal]).
+| BEHAVIOUR CHANGE, stated: the log composed its sources MULTIPLICATIVELY; percents are ADDITIVE deltas that
+| sum and apply once ([modifier.md §2]), so the sources now add.
+| REPLACEMENT: the populationGrowthRate.city cascade channel (the SCALAR_POPULATION_GROWTH_RATE straggler
+| slot), read through InfoValuation::realizedAtCity like every other realized channel.
+CvCity::m_fPopulationgrowthratepercentageLog   (float)
+========================

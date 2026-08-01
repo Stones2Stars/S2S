@@ -1210,7 +1210,6 @@ public:
 	int getAdditionalDefenseByBuilding(BuildingTypes eType) const;
 	int getNumCityPlots() const;
 	int getPopulationgrowthratepercentage() const;
-	void changePopulationgrowthratepercentage(int iChange, bool bAdd);
 
 	void changeFreshWater(int iChange);
 	bool hasFreshWater() const;
@@ -1531,7 +1530,6 @@ protected:
 	int m_iLostProductionModified;
 	int m_iGoldFromLostProduction;
 	int m_iCiv;
-	float m_fPopulationgrowthratepercentageLog;
 
 	bool m_bBuiltFoodProducedUnit;
 	bool m_bResetTechs;
@@ -1737,7 +1735,6 @@ protected:
 	bool canHurryUnit(HurryTypes eHurry, UnitTypes eUnit) const;
 	bool canHurryBuilding(HurryTypes eHurry, BuildingTypes eType) const;
 	void recalculateMaxFoodKeptPercent();
-	void recalculatePopulationgrowthratepercentage();
 	virtual bool AI_addBestCitizen(bool bWorkers, bool bSpecialists, int* piBestPlot = NULL, SpecialistTypes* peBestSpecialist = NULL) = 0;
 	virtual bool AI_removeWorstCitizen(SpecialistTypes eIgnoreSpecialist = NO_SPECIALIST) = 0;
 
