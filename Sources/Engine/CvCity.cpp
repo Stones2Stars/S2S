@@ -3065,8 +3065,9 @@ int CvCity::getProductionModifier(UnitTypes eUnit) const
 		if (kUnit.getCombatClass() != NO_UNITCOMBAT)
 		{
 			iMultiplier += InfoValuation::keyedTarget(pModifiers, MODFAM_BUILD_RATE, -1, iUnitCombatsSegment, (int)kUnit.getCombatClass());
-			foreach_(const UnitCombatTypes eSubCombat, kUnit.getCombatClasses())
+			foreach_(const int iSubCombat, kUnit.getCombatClasses())
 			{
+				const UnitCombatTypes eSubCombat = static_cast<UnitCombatTypes>(iSubCombat);
 				iMultiplier += InfoValuation::keyedTarget(pModifiers, MODFAM_BUILD_RATE, -1, iUnitCombatsSegment, (int)eSubCombat);
 			}
 		}
@@ -8605,8 +8606,9 @@ void CvCity::updateCorporationBonus()
 			{
 				bool bConsumes = false;
 
-				foreach_(const BonusTypes eBonusConsumed, GC.getCorporationInfo((CorporationTypes)iCorp).getConsumedBonuses())
+				foreach_(const int iConsumedBonus, GC.getCorporationInfo((CorporationTypes)iCorp).getConsumedBonuses())
 				{
+					const BonusTypes eBonusConsumed = static_cast<BonusTypes>(iConsumedBonus);
 					if (eBonusConsumed != iBonusProduced) // ignore circular xml definiton error.
 					{
 						bConsumes = true;
@@ -8746,9 +8748,7 @@ void CvCity::changeDomainProductionModifier(DomainTypes eIndex, int iChange)
 
 
 // ⚑ The `< 0 ? MAX_INT` saturating guards these two getters used to carry were the FOSSIL of a live 32-bit
-int aiOwnCommerces[NUM_COMMERCE_TYPES];
-getCommerces(aiOwnCommerces);
-// overflow: city culture accumulates aiOwnCommerces[CULTURE] every turn and NEVER decays, so on a
+// overflow: city culture accumulates the realized culture commerce every turn and NEVER decays, so on a
 // long game it wrapped negative and the guards detected the wrap and clamped. That silently corrupted every
 // consumer of the value -- culture percent, cultural ownership, the level thresholds -- because a saturated
 // total is not the total. The storage is 64-bit now, so there is no wrap to detect and nothing to clamp.
@@ -8894,7 +8894,7 @@ void CvCity::changeCultureTimes100(PlayerTypes eIndex, int64_t iChange, bool bPl
 	int iNew;
 	if (iChange < 0)
 	{
-		iNew = std::max(0, iOld + iChange);
+		iNew = std::max<int64_t>(0, iOld + iChange);
 	}
 	else if (MAX_INT - iChange > iOld)
 	{
@@ -9311,8 +9311,9 @@ bool CvCity::isActiveCorporation(CorporationTypes eCorporation) const
 	bool bRequiresBonus = false;
 	bool bHasRequiredBonus = false;
 
-	foreach_(const BonusTypes eBonus, GC.getCorporationInfo(eCorporation).getConsumedBonuses())
+	foreach_(const int iConsumedBonus, GC.getCorporationInfo(eCorporation).getConsumedBonuses())
 	{
+		const BonusTypes eBonus = static_cast<BonusTypes>(iConsumedBonus);
 		bRequiresBonus = true;
 		if (getNumBonuses(eBonus) > 0)
 		{
@@ -9901,7 +9902,7 @@ int CvCity::getMaxSpecialistCount(SpecialistTypes eIndex) const
 	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eIndex);
 	const CvPlayer& kOwner = GET_PLAYER(getOwner());
 	CvCascadeEvalCtx evalCtx;
-	InfoValuation::fillEvalCtx(getCityContext(), kOwner.getEmpireContext(), plotGroup(), evalCtx);
+	InfoValuation::fillEvalCtx(getCityContext(), kOwner.getEmpireContext(), plotGroup(getOwner()), evalCtx);
 	const OperatingBuildings& kOperating = EnablerKernel::operatingBuildings(this);
 	int64_t iTotal = 0;
 	for (std::set<int>::const_iterator it = kOperating.active.begin(); it != kOperating.active.end(); ++it)
@@ -10904,8 +10905,9 @@ void CvCity::setHasCorporation(CorporationTypes eIndex, bool bNewValue, bool bAn
 
 							CvWString szBonusList;
 							bool bFirst = true;
-							foreach_(const BonusTypes eBonus, GC.getCorporationInfo(eIndex).getConsumedBonuses())
+							foreach_(const int iConsumedBonus, GC.getCorporationInfo(eIndex).getConsumedBonuses())
 							{
+								const BonusTypes eBonus = static_cast<BonusTypes>(iConsumedBonus);
 								CvWString szTemp;
 								szTemp.Format(L"%s", GC.getBonusInfo(eBonus).getDescription());
 								setListHelp(szBonusList, L"", szTemp, L", ", bFirst);
@@ -11210,7 +11212,7 @@ void CvCity::pushOrder(OrderTypes eOrder, int iData1, int iData2, bool bSave, bo
 
 				owner.changeBuildingMaking(buildingType, 1);
 
-				const SpecialBuildingTypes eSpecialBuilding = GC.getBuildingInfo(buildingType).getSpecialBuildingType();
+				const SpecialBuildingTypes eSpecialBuilding = static_cast<SpecialBuildingTypes>(GC.getBuildingInfo(buildingType).getSpecialBuildingType());
 				if (eSpecialBuilding != NO_SPECIALBUILDING)
 				{
 					owner.changeBuildingGroupMaking(eSpecialBuilding, 1);
@@ -15887,8 +15889,9 @@ int CvCity::getCorporationInfluence(CorporationTypes eCorporation) const
 	int iBonusesConsumed = 0;
 	int iNumAvailBonuses = 0;
 	//Influence scales based on the number of resources a corporation consumes
-	foreach_(const BonusTypes eBonus, GC.getCorporationInfo(eCorporation).getConsumedBonuses())
+	foreach_(const int iConsumedBonus, GC.getCorporationInfo(eCorporation).getConsumedBonuses())
 	{
+		const BonusTypes eBonus = static_cast<BonusTypes>(iConsumedBonus);
 		iBonusesConsumed++;
 		iNumAvailBonuses += getNumBonuses(eBonus);
 	}
@@ -15907,8 +15910,9 @@ int CvCity::getCorporationInfluence(CorporationTypes eCorporation) const
 
 	if (iBonusesConsumed > 0)
 	{
-		foreach_(const BonusTypes eBonus, GC.getCorporationInfo(eCorporation).getConsumedBonuses())
+		foreach_(const int iConsumedBonus, GC.getCorporationInfo(eCorporation).getConsumedBonuses())
 		{
+			const BonusTypes eBonus = static_cast<BonusTypes>(iConsumedBonus);
 			if (hasBonus(eBonus))
 			{
 				iInfluence += (GC.getCORPORATION_RESOURCE_BASE_INFLUENCE() / iBonusesConsumed);
