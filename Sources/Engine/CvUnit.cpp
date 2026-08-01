@@ -16402,20 +16402,32 @@ bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion, bool bIgnoreHas, boo
 		return false;
 	}
 	//TB Combat Mods Begin
+	//	THE PROMOTION'S `requires.build`, through the ONE evaluator ([DEC-single-implementation]). This single
+	//	gate replaces the whole hand-rolled prereq battery -- the AND prereq, the OR pair, and the plot-substrate
+	//	prereqs below -- because the curator authors every one of them into `requires`: 508 promotions carry a
+	//	requires.build, which is the LADDER (each rung naming the rung beneath it, json.md §9) plus two terrain
+	//	clauses. The evaluator resolves a PROMOTION_ atom against the unit and a TERRAIN_/FEATURE_ atom against
+	//	its plot, so nothing is lost by asking once rather than field by field.
+	//	⚑ Promotions are the enabler's on-demand carve-out ([enabler.md §7.1]): there is no maintained per-unit
+	//	set, so the gate is evaluated HERE, at the decision point, exactly as specced.
 	if (!bForFree || bForBuildUp)
 	{
-		const PromotionTypes ePromotionPrerequisite = promo.getPrereqPromotion();
-
-		if (ePromotionPrerequisite != NO_PROMOTION && !isHasPromotion(ePromotionPrerequisite))
+		CvCascadeEvalCtx promoCtx;
+		promoCtx.unit = this;
+		promoCtx.empireContext = &GET_PLAYER(getOwner()).getEmpireContext();
+		const CvPlot* pUnitPlot = plot();
+		if (pUnitPlot != NULL)
 		{
-			return false;
+			promoCtx.plotContext = &pUnitPlot->getPlotContext();
+			const CvCity* pPlotCity = pUnitPlot->getPlotCity();
+			if (pPlotCity != NULL)
+			{
+				promoCtx.cityContext = &pPlotCity->getCityContext();
+			}
 		}
-		const PromotionTypes ePromotionPrerequisite1 = promo.getPrereqOrPromotion1();
-		const PromotionTypes ePromotionPrerequisite2 = promo.getPrereqOrPromotion2();
-
-		if ((ePromotionPrerequisite1 != NO_PROMOTION || ePromotionPrerequisite2 != NO_PROMOTION)
-		&&  (ePromotionPrerequisite1 == NO_PROMOTION || !isHasPromotion(ePromotionPrerequisite1))
-		&&  (ePromotionPrerequisite2 == NO_PROMOTION || !isHasPromotion(ePromotionPrerequisite2)))
+		static const CvCascadeEvalFlags kPromoFlags;
+		if (!cascadeEvalCondition(promo.getRequires() != NULL ? promo.getRequires()->build() : NULL,
+			promoCtx, kPromoFlags))
 		{
 			return false;
 		}
@@ -16523,18 +16535,9 @@ bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion, bool bIgnoreHas, boo
 		return false;
 	}
 
-	if (promo.getSpecialCargoPrereq() != NO_SPECIALUNIT
-	&&  promo.getSpecialCargoPrereq() != getSpecialCargo())
-	{
-		return false;
-	}
-
-	if (GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS)
-	&& promo.getSMNotSpecialCargoPrereq() != NO_SPECIALUNIT
-	&& promo.getSMNotSpecialCargoPrereq() != getSMNotSpecialCargo())
-	{
-		return false;
-	}
+	//	⛔ The special-cargo PREREQ gates are DEAD: no promotion authors one. ⚠ Do not confuse them with
+	//	`specialCargoChange`, which 5 promotions DO author -- that is the cargo RESTRICTION a promotion grants
+	//	(what the carrier may take), not a gate on acquiring it. The two read alike and dispose oppositely.
 
 	if (!bForFree)
 	{
@@ -16552,129 +16555,13 @@ bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion, bool bIgnoreHas, boo
 		}
 	}
 
-	bool bValid = true;
-
-	for (int iI = 0; iI < promo.getNumPrereqTerrainTypes(); iI++)
-	{
-		const TerrainTypes ePrereqTerrain = (TerrainTypes)promo.getPrereqTerrainType(iI);
-
-		if (ePrereqTerrain != NO_TERRAIN)
-		{
-			bValid = false;
-
-			if (ePrereqTerrain == GC.getTERRAIN_PEAK())
-			{
-				if (plot()->isAsPeak())
-				{
-					bValid = true;
-					break;
-				}
-			}
-			else if (ePrereqTerrain == GC.getTERRAIN_HILL())
-			{
-				if (plot()->isHills())
-				{
-					bValid = true;
-					break;
-				}
-			}
-			else if (ePrereqTerrain == plot()->getTerrainType())
-			{
-				bValid = true;
-				break;
-			}
-		}
-	}
-	if (!bValid)
-	{
-		return false;
-	}
-
-	for (int iI = 0; iI < promo.getNumPrereqFeatureTypes(); iI++)
-	{
-		const FeatureTypes ePrereqFeature = (FeatureTypes)promo.getPrereqFeatureType(iI);
-
-		if (ePrereqFeature != NO_FEATURE)
-		{
-			bValid = false;
-			if (plot()->getFeatureType() == ePrereqFeature)
-			{
-				bValid = true;
-				break;
-			}
-		}
-	}
-	if (!bValid)
-	{
-		return false;
-	}
-
-	// Improvements and buildings is an OR statement between all of them.
-	{
-		bool bFirst = true;
-
-		for (int iI = 0; iI < promo.getNumPrereqImprovementTypes(); iI++)
-		{
-			ImprovementTypes ePrereqImprovement = (ImprovementTypes)promo.getPrereqImprovementType(iI);
-			if (ePrereqImprovement != NO_IMPROVEMENT)
-			{
-				bFirst = false;
-				bValid = false;
-				if (plot()->isCity(true) && ePrereqImprovement == GC.getIMPROVEMENT_CITY())
-				{
-					bValid = true;
-					break;
-				}
-				if (plot()->getImprovementType() == ePrereqImprovement)
-				{
-					bValid = true;
-					break;
-				}
-			}
-		}
-		if (bFirst || !bValid)
-		{
-			const int iNumPrereqLocalBuilding = promo.getNumPrereqLocalBuildingTypes();
-			if (iNumPrereqLocalBuilding > 0)
-			{
-				bValid = false;
-				for (int iI = 0; iI < iNumPrereqLocalBuilding; iI++)
-				{
-					if (plot()->isCity(false)
-
-					&& pPlot->getPlotCity()->isActiveBuilding((BuildingTypes)promo.getPrereqLocalBuildingType(iI)))
-					{
-						bValid = true;
-						break;
-					}
-				}
-			}
-		}
-	}
-	if (!bValid)
-	{
-		return false;
-	}
-
-	for (int iI = 0; iI < promo.getNumPrereqPlotBonusTypes(); iI++)
-	{
-		const BonusTypes ePrereqBonus = (BonusTypes)promo.getPrereqPlotBonusType(iI);
-
-		if (ePrereqBonus != NO_BONUS)
-		{
-			bValid = false;
-			if (plot()->getBonusType(getTeam()) == ePrereqBonus)
-			{
-				bValid = true;
-				break;
-			}
-		}
-	}
-	if (!bValid)
-	{
-		return false;
-	}
-
+	//	⛔ THE PLOT-SUBSTRATE PREREQ BATTERY IS GONE, and it is two different dispositions in one block.
+	//	TERRAIN prereqs are now part of the ONE `requires.build` gate above (the curator authors them there;
+	//	two promotions carry one). FEATURE / IMPROVEMENT / LOCAL-BUILDING / PLOT-BONUS prereqs are DEAD: not
+	//	one promotion in the curated data authors any of them, so every loop here ran zero times and the
+	//	`bValid` scaffold around them decided nothing.
+	//	⚑ Should a modder ever author one, it lands in `requires` like the terrain clauses and is evaluated
+	//	by the same gate -- which is why nothing needs re-adding here for it to work.
 	if (promo.isPrereqNormInvisible() && !hasInvisibleAbility())
 	{
 		return false;
@@ -16784,7 +16671,7 @@ bool CvUnit::isPromotionValid(PromotionTypes ePromotion, bool bFree, bool bKeepC
 	}
 
 	//Disable Looter Promos for units that cannot pillage
-	if (promo.getPillageChange() > 0 && !getUnitInfo().hasSkill(CLS_SKILL_PILLAGE))
+	if (promo.getScalar(SCALAR_PILLAGE, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) > 0 && !getUnitInfo().hasSkill(CLS_SKILL_PILLAGE))
 	{
 		return false;
 	}
@@ -16806,8 +16693,8 @@ bool CvUnit::isPromotionValid(PromotionTypes ePromotion, bool bFree, bool bKeepC
 
 	if (!bKeepCheck)
 	{
-		if (promo.getInterceptChange() + maxInterceptionProbability() > GC.getDefineINT("MAX_INTERCEPTION_PROBABILITY")
-		||	promo.getEvasionChange() + evasionProbability() > GC.getDefineINT("MAX_EVASION_PROBABILITY")
+		if (promo.getAir(AIR_INTERCEPT, CASC_SCOPE_UNIT) + maxInterceptionProbability() > GC.getDefineINT("MAX_INTERCEPTION_PROBABILITY")
+		||	promo.getAir(AIR_EVASION, CASC_SCOPE_UNIT) + evasionProbability() > GC.getDefineINT("MAX_EVASION_PROBABILITY")
 		||	promo.getSizeMatters().quality > 0 && getExperience() >= experienceNeeded(1))
 		{
 			return false;
@@ -17265,40 +17152,40 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 	//	⚠ The marginal per-substrate loss is a DELIBERATE owner ruling, not an omission to restore: 270 of
 	//	355 authoring entities named exactly ONE type, so the 14×13 surface served a quarter of its own data.
 	//	The unit reads its folded answer through CvUnit::concealment() / detectionAgainst(skill).
-	for (iI = 0; iI < kUnitCombat.getNumTerrainAttackChangeModifiers(); iI++)
-	{
-		changeExtraTerrainAttackPercent(((TerrainTypes)kUnitCombat.getTerrainAttackChangeModifier(iI).eTerrain), kUnitCombat.getTerrainAttackChangeModifier(iI).iModifier * iChange);
-	}
+	//	The TERRAIN / FEATURE / UNITCOMBAT keyed axes, read off the entity's OWN compiled entries -- the handful
+	//	it authored, never a walk of a keyed container the info no longer holds. `combat` is what modifies
+	//	`strength` (json.md §6), so attack/defense are combat kinds; the work rate is its own family.
+	//	⚠ All of these are PERCENTS, so none is scaled ([DEC-fixedpoint-x100]).
+	std::vector<std::pair<int, int> > kKeyed;
+	InfoValuation::collectKeyedCombat(kUnitCombat.getModifiers(), InfoValuation::COMBAT_TARGET_TERRAIN, COMBAT_ATTACK, kKeyed);
+	for (size_t iK = 0; iK < kKeyed.size(); ++iK)
+		changeExtraTerrainAttackPercent((TerrainTypes)kKeyed[iK].first, kKeyed[iK].second * iChange);
 
-	for (iI = 0; iI < kUnitCombat.getNumTerrainDefenseChangeModifiers(); iI++)
-	{
-		changeExtraTerrainDefensePercent(((TerrainTypes)kUnitCombat.getTerrainDefenseChangeModifier(iI).eTerrain), kUnitCombat.getTerrainDefenseChangeModifier(iI).iModifier * iChange);
-	}
+	InfoValuation::collectKeyedCombat(kUnitCombat.getModifiers(), InfoValuation::COMBAT_TARGET_TERRAIN, COMBAT_DEFENSE, kKeyed);
+	for (size_t iK = 0; iK < kKeyed.size(); ++iK)
+		changeExtraTerrainDefensePercent((TerrainTypes)kKeyed[iK].first, kKeyed[iK].second * iChange);
 
-	for (iI = 0; iI < kUnitCombat.getNumTerrainWorkChangeModifiers(); iI++)
-	{
-		changeExtraTerrainWorkPercent(((TerrainTypes)kUnitCombat.getTerrainWorkChangeModifier(iI).eTerrain), kUnitCombat.getTerrainWorkChangeModifier(iI).iModifier * iChange);
-	}
+	InfoValuation::collectKeyedTarget(kUnitCombat.getModifiers(), MODFAM_WORK_RATE, 0,
+		InfoValuation::keyedTargetSegment("terrain"), kKeyed);
+	for (size_t iK = 0; iK < kKeyed.size(); ++iK)
+		changeExtraTerrainWorkPercent((TerrainTypes)kKeyed[iK].first, kKeyed[iK].second * iChange);
 
-	for (iI = 0; iI < kUnitCombat.getNumFeatureAttackChangeModifiers(); iI++)
-	{
-		changeExtraFeatureAttackPercent(((FeatureTypes)kUnitCombat.getFeatureAttackChangeModifier(iI).eFeature), kUnitCombat.getFeatureAttackChangeModifier(iI).iModifier * iChange);
-	}
+	InfoValuation::collectKeyedCombat(kUnitCombat.getModifiers(), InfoValuation::COMBAT_TARGET_FEATURE, COMBAT_ATTACK, kKeyed);
+	for (size_t iK = 0; iK < kKeyed.size(); ++iK)
+		changeExtraFeatureAttackPercent((FeatureTypes)kKeyed[iK].first, kKeyed[iK].second * iChange);
 
-	for (iI = 0; iI < kUnitCombat.getNumFeatureDefenseChangeModifiers(); iI++)
-	{
-		changeExtraFeatureDefensePercent(((FeatureTypes)kUnitCombat.getFeatureDefenseChangeModifier(iI).eFeature), kUnitCombat.getFeatureDefenseChangeModifier(iI).iModifier * iChange);
-	}
+	InfoValuation::collectKeyedCombat(kUnitCombat.getModifiers(), InfoValuation::COMBAT_TARGET_FEATURE, COMBAT_DEFENSE, kKeyed);
+	for (size_t iK = 0; iK < kKeyed.size(); ++iK)
+		changeExtraFeatureDefensePercent((FeatureTypes)kKeyed[iK].first, kKeyed[iK].second * iChange);
 
-	for (iI = 0; iI < kUnitCombat.getNumFeatureWorkChangeModifiers(); iI++)
-	{
-		changeExtraFeatureWorkPercent(((FeatureTypes)kUnitCombat.getFeatureWorkChangeModifier(iI).eFeature), kUnitCombat.getFeatureWorkChangeModifier(iI).iModifier * iChange);
-	}
+	InfoValuation::collectKeyedTarget(kUnitCombat.getModifiers(), MODFAM_WORK_RATE, 0,
+		InfoValuation::keyedTargetSegment("feature"), kKeyed);
+	for (size_t iK = 0; iK < kKeyed.size(); ++iK)
+		changeExtraFeatureWorkPercent((FeatureTypes)kKeyed[iK].first, kKeyed[iK].second * iChange);
 
-	for (iI = 0; iI < kUnitCombat.getNumUnitCombatChangeModifiers(); iI++)
-	{
-		changeExtraUnitCombatModifier(((UnitCombatTypes)kUnitCombat.getUnitCombatChangeModifier(iI).eUnitCombat), kUnitCombat.getUnitCombatChangeModifier(iI).iModifier * iChange);
-	}
+	InfoValuation::collectKeyedCombat(kUnitCombat.getModifiers(), InfoValuation::COMBAT_TARGET_UNITCOMBAT, COMBAT_AMOUNT, kKeyed);
+	for (size_t iK = 0; iK < kKeyed.size(); ++iK)
+		changeExtraUnitCombatModifier((UnitCombatTypes)kKeyed[iK].first, kKeyed[iK].second * iChange);
 
 	for (iI = 0; iI < kUnitCombat.getNumFlankingStrengthbyUnitCombatTypesChange(); iI++)
 	{

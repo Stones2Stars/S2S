@@ -3694,7 +3694,7 @@ void CvUnitAI::AI_attackCityMove()
 
 		for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
 		{
-			if (GC.getUnitCombatInfo((UnitCombatTypes)iI).isHealsAs())
+			if (GC.getUnitCombatInfo((UnitCombatTypes)iI).hasSkill(CLS_SKILL_HEALS_AS))
 			{
 				UnitCombatTypes eHealType = (UnitCombatTypes)iI;
 				if (plot()->getUnitCombatsUnsupportedByHealer(getOwner(), eHealType, getDomainType()) > 4)
@@ -29303,7 +29303,10 @@ bool CvUnitAI::AI_selectStatus(bool bStack, CvUnit* pUnit)
 					//Standout
 					if (hasInvisibleAbility())
 					{
-						iTemp = kPromotion.getNumNegatesInvisibilityTypes();
+						//	The per-INVISIBLE_* negates plane is RETIRED ([vision.md] par.4): counter-detection is
+						//	now a detection entry naming the METHOD it answers as a SKILL, so "does this promotion
+						//	strip cover" is asked of the detection rows.
+						iTemp = (int)kPromotion.getHideAndSeek().detection.size();
 
 						if (iTemp != 0)
 						{
@@ -29440,16 +29443,11 @@ bool CvUnitAI::AI_selectStatus(bool bStack, CvUnit* pUnit)
 					//Standout
 					if (pUnit->hasInvisibleAbility())
 					{
-						int iTemp = 0;
-						//only care about the NegatesInvisibilityTypes which have an actual effect
-						for (int iN = 0; iN < kPromotion.getNumNegatesInvisibilityTypes(); iN++)
-						{
-							InvisibleTypes invsibleType = (InvisibleTypes)kPromotion.getNegatesInvisibilityType(iN);
-							if (pUnit->getInvisibleType() == invsibleType || pUnit->hasInvisibilityType(invsibleType))
-							{
-								iTemp++;
-							}
-						}
+						//	⚠ The per-type MATCH this used to make ("only the negated types that affect THIS unit")
+						//	does not survive: the per-INVISIBLE_* plane is retired by ruling ([vision.md] par.4),
+						//	not merely un-ported, so the question collapses to whether the promotion authors any
+						//	detection at all. A coarser answer is the accepted cost of that collapse.
+						int iTemp = (int)kPromotion.getHideAndSeek().detection.size();
 						if (iTemp != 0)
 						{
 							if (promotionLineStandout != NO_PROMOTIONLINE && kPromotion.getPromotionLine() == promotionLineStandout)
