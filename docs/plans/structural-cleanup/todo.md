@@ -322,12 +322,6 @@
 
 - Move the what-if valuation consumers onto `expected*` — the AI candidate weighting and the build-list hover
   tooltip are ONE call ([patterns.md](../../architecture/patterns.md) THE VALUATION PROTOCOL).
-  ⚑ The AI's per-building SPECIALIST valuation is the case that cannot be re-pointed and must wait for this: a
-  building boosting a specialist's output is own-output landed on the SPECIALIST, gated on the building's
-  presence ([DEC-deliveryguy]), so the building carries no such row to read and asking it is the inversion the
-  model deleted. Answering it means reading the candidate's `EDGEF_RELATED` specialists and evaluating their
-  rows with the candidate injected — the hypothetical the `expected*` plane owns. ⛔ Do not restore a
-  building-side per-specialist getter to clear those sites; the data is not there to serve it.
 - EVALUATE the `existedFor` predicate. It is declared, parsed and rendered, but the evaluator names it in its
   `default: return true` arm — an unmodelled predicate is IGNORED, never false ([json.md §3.5](../../specs/json.md))
   — so every age-gated deposit currently applies from turn 0. The commerce doublings are the live authorings.

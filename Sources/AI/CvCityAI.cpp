@@ -12810,7 +12810,6 @@ int CvCityAI::getBuildingCommerceValue(BuildingTypes eBuilding, int iI, int* aiF
 	int aiPlayerCommerces[NUM_COMMERCE_TYPES];
 	GET_PLAYER(getOwner()).getCommerces(aiPlayerCommerces);
 	iResult += kBuilding.getCommerceModifier((CommerceTypes)iI, CASC_SCOPE_EMPIRE) * aiPlayerCommerces[(CommerceTypes)iI] / 100 / 8;
-	iResult += kBuilding.getSpecialistExtraCommerce(iI) * kOwner.getTotalPopulation() / 3;
 	{
 		const ReligionTypes eStateReligion = kOwner.getStateReligion();
 
@@ -13842,6 +13841,42 @@ const {
 	{
 		iValue += kBuilding.getScalar(SCALAR_FOOD_KEPT, CASC_SCOPE_CITY, CASC_UNIT_PERCENT) / 2;
 	}
+	// What this building is worth THROUGH THE SPECIALISTS it improves. A building boosting a specialist's
+	// output is own-output landed on the SPECIALIST, gated on the building's presence ([DEC-deliveryguy]), so
+	// the building carries no such row and asking it is the inversion the model deleted. The specialists that
+	// name it are its RELATED family, and the worth is the DELTA between holding it and not -- one array per
+	// specialist, hoisted out of the channel loop below ([patterns.md] THE VALUATION PROTOCOL).
+	int aiSpecialistYieldDelta[NUM_YIELD_TYPES];
+	for (int iSpec = 0; iSpec < NUM_YIELD_TYPES; iSpec++) { aiSpecialistYieldDelta[iSpec] = 0; }
+	{
+		std::set<int> relatedSpecialists;
+		EnablerKernel::addEdge(EnablerKernel::infoFor(EDGEB_BUILDINGS, (int)eBuilding),
+			EDGEF_RELATED, EDGEB_SPECIALISTS, relatedSpecialists);
+		if (!relatedSpecialists.empty())
+		{
+			CvCascadeHypothetical kSpecWith;
+			kSpecWith.present[EDGEB_BUILDINGS].insert((int)eBuilding);
+			CvCascadeHypothetical kSpecWithout;
+			kSpecWithout.absent[EDGEB_BUILDINGS].insert((int)eBuilding);
+			const CityContext& kSpecCityCtx = getCityContext();
+			const EmpireContext& kSpecEmpireCtx = kOwner.getEmpireContext();
+			const CvPlotGroup* pSpecGroup = plotGroup(getOwner());
+			for (std::set<int>::const_iterator itSpec = relatedSpecialists.begin();
+				itSpec != relatedSpecialists.end(); ++itSpec)
+			{
+				const CvSpecialistInfo& kSpec = GC.getSpecialistInfo((SpecialistTypes)*itSpec);
+				int aiSpecWith[NUM_YIELD_TYPES];
+				int aiSpecWithout[NUM_YIELD_TYPES];
+				kSpec.expectedFlatYields(kSpecCityCtx, kSpecEmpireCtx, pSpecGroup, aiSpecWith, &kSpecWith);
+				kSpec.expectedFlatYields(kSpecCityCtx, kSpecEmpireCtx, pSpecGroup, aiSpecWithout, &kSpecWithout);
+				for (int iCh = 0; iCh < NUM_YIELD_TYPES; iCh++)
+				{
+					aiSpecialistYieldDelta[iCh] += (aiSpecWith[iCh] - aiSpecWithout[iCh]) / 100;
+				}
+			}
+		}
+	}
+
 	for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
 	{
 		int iYieldValue = AI_buildingYieldValue((YieldTypes)iI, eBuilding, kBuilding, bForeignTrade, aiFreeSpecialistYield[iI]);
@@ -13869,10 +13904,7 @@ const {
 				iYieldValue += std::min(-1, iGlobalYieldModValue / 12);
 			}
 		}
-		for (int iJ = GC.getNumSpecialistInfos() - 1; iJ > -1; iJ--)
-		{
-			iYieldValue += kBuilding.getSpecialistYieldChange(iJ, iI) * iTotalPopulation / 5;
-		}
+		iYieldValue += aiSpecialistYieldDelta[iI] * iTotalPopulation / 5;
 
 		if (iYieldValue != 0)
 		{
@@ -13953,14 +13985,44 @@ const {
 
 	const CvPlayerAI& kOwner = GET_PLAYER(getOwner());
 	int iValue = 0;
+	// The commerce twin of the specialist-yield delta above: the boost lives on the SPECIALIST gated on this
+	// building, so its worth is the DELTA across the specialists that name it, hoisted out of the loop.
+	int aiSpecialistCommerceDelta[NUM_COMMERCE_TYPES];
+	for (int iCh = 0; iCh < NUM_COMMERCE_TYPES; iCh++) { aiSpecialistCommerceDelta[iCh] = 0; }
+	{
+		std::set<int> relatedSpecialists;
+		EnablerKernel::addEdge(EnablerKernel::infoFor(EDGEB_BUILDINGS, (int)eBuilding),
+			EDGEF_RELATED, EDGEB_SPECIALISTS, relatedSpecialists);
+		if (!relatedSpecialists.empty())
+		{
+			CvCascadeHypothetical kSpecWith;
+			kSpecWith.present[EDGEB_BUILDINGS].insert((int)eBuilding);
+			CvCascadeHypothetical kSpecWithout;
+			kSpecWithout.absent[EDGEB_BUILDINGS].insert((int)eBuilding);
+			const CityContext& kSpecCityCtx = getCityContext();
+			const EmpireContext& kSpecEmpireCtx = kOwner.getEmpireContext();
+			const CvPlotGroup* pSpecGroup = plotGroup(getOwner());
+			for (std::set<int>::const_iterator itSpec = relatedSpecialists.begin();
+				itSpec != relatedSpecialists.end(); ++itSpec)
+			{
+				const CvSpecialistInfo& kSpec = GC.getSpecialistInfo((SpecialistTypes)*itSpec);
+				int aiSpecWith[NUM_COMMERCE_TYPES];
+				int aiSpecWithout[NUM_COMMERCE_TYPES];
+				kSpec.expectedFlatCommerce(kSpecCityCtx, kSpecEmpireCtx, pSpecGroup, aiSpecWith, &kSpecWith);
+				kSpec.expectedFlatCommerce(kSpecCityCtx, kSpecEmpireCtx, pSpecGroup, aiSpecWithout, &kSpecWithout);
+				for (int iCh = 0; iCh < NUM_COMMERCE_TYPES; iCh++)
+				{
+					aiSpecialistCommerceDelta[iCh] += (aiSpecWith[iCh] - aiSpecWithout[iCh]) / 100;
+				}
+			}
+		}
+	}
+
 	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 	{
 		int directCommerceValue = getBuildingCommerceValue(eBuilding, iI, aiFreeSpecialistYield, aiFreeSpecialistCommerce, aiBaseCommerceRate, aiPlayerCommerceRate);
 
-		for (int iJ = GC.getNumSpecialistInfos() - 1; iJ > -1; iJ--)
-		{
-			directCommerceValue += kBuilding.getSpecialistCommerceChange(iJ, iI) * iTotalPopulation / 6;
-		}
+		directCommerceValue += aiSpecialistCommerceDelta[iI] * iTotalPopulation / 6;
 		if (directCommerceValue != 0)
 		{
 			// Make sure we don't reduce 1 to 0! TEST TEST
