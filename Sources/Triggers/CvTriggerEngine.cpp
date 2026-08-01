@@ -20,6 +20,7 @@
 #include "Infos/CvEraInfo.h"      // InfoRepo<CvEraInfo> (game-start era grants)
 #include "Infos/CvHandicapInfo.h" // InfoRepo<CvHandicapInfo> (game-start handicap grants)
 #include "AI/CvPlayerAI.h"        // GET_PLAYER -- the player's civ/era/handicap for the game-start resolve
+#include "AI/CvTeamAI.h"          // GET_TEAM -- the obsolete-building guard on a granted placement
 #include "Engine/CvGame.h"        // GC.getGame().getStartEra() -- the era the game-start grants key on
 #include "Engine/CvCity.h"        // the per-turn apply walks the player's cities
 #include "Engine/CityContext.h"   // fillEvalCtx (city/plot) -- the contexts fill the eval state (contexts.md)
@@ -271,6 +272,89 @@ static int tr_promoteCityUnits(CvCity* pCity, const CvInfo* j)
 // live -- `grants.techs` (the legacy getFreeSpecialTech branch) has ZERO authorings across all 5,180 buildings, so
 // that branch was dead code and is not ported.
 //
+// The per-RECEIVER placement of a granted building. The entry's condition is evaluated against the city
+// RECEIVING it, never the granting one (json §8's per-receiver rule): a gate like IS_CAPITAL means the
+// RECEIVER's capital-ness, so evaluating it once at the source would strand the grant wherever it was authored.
+// The eval ctx is built only when there IS a condition -- the overwhelmingly common entry is unconditional.
+static int tr_placeGrantedBuilding(CvCity* pCity, CvPlayer& player, int iBuilding,
+	const CvCondition* pEnabled, const CvCascadeEvalFlags& kFlags)
+{
+	if (pCity == NULL || iBuilding < 0 || pCity->hasBuilding((BuildingTypes)iBuilding))
+	{
+		return 0;
+	}
+	// ⚠ The two VALIDITY guards the legacy free-building placement carried, kept because dropping them is a real
+	// gameplay defect rather than a simplification: an OBSOLETE building would be resurrected in every city, and a
+	// location-invalid one would land where it cannot stand (the lighthouse in a landlocked city). A grant changes
+	// the LIFETIME of the provision, never whether the receiver can hold it at all.
+	if (GET_TEAM(pCity->getTeam()).isObsoleteBuilding((BuildingTypes)iBuilding)
+	|| !pCity->isValidBuildingLocation((BuildingTypes)iBuilding))
+	{
+		return 0;
+	}
+	if (pEnabled != NULL)
+	{
+		// the contexts ARE the eval state (contexts.md): the fill seams, never a hand-assembled raw ctx
+		CvCascadeEvalCtx ec;
+		pCity->getCityContext().fillEvalCtx(ec);
+		player.getEmpireContext().fillEvalCtx(ec);
+		EnablerKernel::wireOperatingBuildings(pCity, ec);   // the enabler's sets are the third leg
+		if (!cascadeEvalCondition(pEnabled, ec, kFlags))
+		{
+			return 0;
+		}
+	}
+	pCity->changeHasBuilding((BuildingTypes)iBuilding, true);
+	return 1;
+}
+
+// THE FREE BUILDING -- the ONE placement both legs share ([DEC-single-implementation]). A grant hands the
+// building OVER and the receiving city genuinely HAS it, which is load-bearing rather than cosmetic: the
+// authored data gates on holding these targets in over a thousand `requires` atoms, so a shape delivering only
+// the EFFECTS would satisfy none of them.
+//
+// An entry's SCOPE says WHERE it lands (json §3.9's universal entry field): `empire` reaches every city the
+// player holds; absent means the considered action's own city, which is why the settler's founder-buildings and
+// the civ capital list are unaffected.
+//
+// ⚠ Deliberately NOT refcounted against the source's presence. Legacy removed the copies when the source went;
+// a grant PERSISTS (owner: "in all scenarios they behave like grants") -- a stated behaviour change, not an
+// omission ([legacy-grant-apply-sites.md] §4).
+static int tr_grantBuildingsFrom(const CvInfo* j, CvCity* pSourceCity, CvPlayer& player)
+{
+	if (j == NULL || j->consideredGrants() == NULL)
+	{
+		return 0;
+	}
+	const std::vector<int>* pList = j->consideredGrants()->list(tr_keyBuildings);
+	if (pList == NULL || pList->empty())
+	{
+		return 0;
+	}
+	int nPlaced = 0;
+	const CvCascadeEvalFlags kFlags;
+	for (size_t i = 0; i < pList->size(); ++i)
+	{
+		const int iBuilding = (*pList)[i];
+		const int iScope = j->consideredGrants()->listScope(tr_keyBuildings, i);
+		// the entry's own `enabled` condition (the §3.9 conditioned object form), index-parallel to the ids
+		const CvCondition* pEnabled = j->consideredGrants()->listCond(tr_keyBuildings, i);
+
+		if (iScope == tr_keyScopeEmpire)
+		{
+			foreach_(CvCity* pLoopCity, player.cities())
+			{
+				nPlaced += tr_placeGrantedBuilding(pLoopCity, player, iBuilding, pEnabled, kFlags);
+			}
+		}
+		else
+		{
+			nPlaced += tr_placeGrantedBuilding(pSourceCity, player, iBuilding, pEnabled, kFlags);
+		}
+	}
+	return nPlaced;
+}
+
 // Ordering note: the legacy applied these MID-setup; the machine applies at SEVT_BUILDING_CHANGED, which fires at
 // the END of setHasBuilding (CvCity.cpp:13486, after setupBuilding at :13446) -- so the building is fully set up
 // before its provisions land, which is strictly the safer order.
@@ -316,6 +400,13 @@ static void tr_applyBuildingFirstBuild(const CvInfo* j, int iBuilding, int iPlay
 		}
 	}
 
+	// THE FREE BUILDING -- `grants.buildings` on the source (owner: "in all scenarios they behave like grants").
+	// An entry's SCOPE says WHERE it lands: `empire` reaches every city the player holds, absent means this city.
+	// ⚑ This is leg ONE of two. It fans over the cities that ALREADY STAND; a city founded or acquired LATER is
+	// covered by the city-founded leg, which folds what its owner already holds. A fan alone would pass on every
+	// city standing today and silently miss every future one ("every city AFTERWARDS gets a free copy", owner).
+	tr_grantBuildingsFrom(j, pCity, player);
+
 	const int iFreeTechs = j->consideredGrants()->pulse(tr_keyFreeTechs) / 100;
 	if (iFreeTechs > 0)
 	{
@@ -337,7 +428,8 @@ static void tr_resolveBuilding(int iBuilding, int iPlayer, int iCity)
 	const int nFreeTech  = tr_pulse(j, tr_keyFreeTechs);            // one-shot on first build
 	const int nGoldenAge = tr_flag(j, tr_keyGoldenAge);             // one-shot golden age (bool grant, increment 2)
 	const int nPop       = tr_scopedPulseSum(j, tr_keyPopulation);  // one-shot population boost (scoped pulse, increment 2)
-	if (nRepeat == 0 && nFreePromo == 0 && nFreeTech == 0 && nGoldenAge == 0 && nPop == 0) return;
+	const int nGrantBld  = tr_listCount(j, tr_keyBuildings);        // the free building (grants.buildings on the source)
+	if (nRepeat == 0 && nFreePromo == 0 && nFreeTech == 0 && nGoldenAge == 0 && nPop == 0 && nGrantBld == 0) return;
 	// The two population scopes SEPARATELY (nPop is their sum) -- the apply and the tripwire need them apart.
 	const int nPopCity   = (j->consideredGrants() != NULL) ? j->consideredGrants()->scopedPulse(tr_keyPopulation, tr_keyScopeCity)   / 100 : 0;
 	const int nPopEmpire = (j->consideredGrants() != NULL) ? j->consideredGrants()->scopedPulse(tr_keyPopulation, tr_keyScopeEmpire) / 100 : 0;
@@ -810,6 +902,63 @@ static void tr_resolveCityFounded(int iOwner, int iCity, int iFounderType)
 		.addI(TF_GRANTBUILDINGS, (int)pSeeds->size()));
 }
 
+// LEG TWO of the free building: a city that STARTS EXISTING folds what its owner ALREADY holds. Leg one fans the
+// grantor over the cities standing at the time, so without this a city founded or acquired AFTERWARDS never
+// receives its copies -- *"I build it in the first city, and then every city afterwards gets a free copy"*
+// (owner). ⚑ It is the amenity fold's two-leg shape, for the same reason: a grantor fact cannot reach a city
+// that does not exist yet, so the CITY side folds on arrival ([contexts.md](../architecture/contexts.md)).
+//
+// ⛔ EMPIRE-scoped entries ONLY. An unscoped entry is the considered action's own target and was already placed
+// where it was earned; re-placing it in every later city would silently promote a local grant to an empire one.
+//
+// ⚑ The self-granting population needs no special case and that is the point: once ANY city holds the source its
+// empire count is non-zero, so every city arriving afterwards folds a copy -- which is exactly what "build it in
+// the first city, every city afterwards gets one" means.
+static int tr_foldOwnerGrantedBuildings(int iOwner, int iCity)
+{
+	if (iOwner < 0 || iCity < 0 || s_bSuppressed)
+	{
+		return 0;
+	}
+	CvPlayer& player = GET_PLAYER((PlayerTypes)iOwner);
+	CvCity* pCity = player.getCity(iCity);
+	if (pCity == NULL)
+	{
+		return 0;
+	}
+	int nPlaced = 0;
+	const CvCascadeEvalFlags kFlags;
+	const int iNumBuildings = GC.getNumBuildingInfos();
+	for (int iSource = 0; iSource < iNumBuildings; ++iSource)
+	{
+		// the player's own O(1) empire aggregate -- the tally's read-not-store rule (tally.md §2)
+		if (player.getBuildingCount((BuildingTypes)iSource) <= 0)
+		{
+			continue;
+		}
+		const CvInfo* jSource = InfoRepo<CvBuildingInfo>::get().get(iSource);
+		if (jSource == NULL || jSource->consideredGrants() == NULL)
+		{
+			continue;
+		}
+		const std::vector<int>* pList = jSource->consideredGrants()->list(tr_keyBuildings);
+		if (pList == NULL)
+		{
+			continue;
+		}
+		for (size_t i = 0; i < pList->size(); ++i)
+		{
+			if (jSource->consideredGrants()->listScope(tr_keyBuildings, i) != tr_keyScopeEmpire)
+			{
+				continue;
+			}
+			nPlaced += tr_placeGrantedBuilding(pCity, player, (*pList)[i],
+				jSource->consideredGrants()->listCond(tr_keyBuildings, i), kFlags);
+		}
+	}
+	return nPlaced;
+}
+
 // THE CAPITAL RELOCATED -- re-seed the palace into the new capital. The palace is what MAKES a city the capital
 // (setupBuilding's isCapital branch calls setCapitalCity), so without this a captured capital never relocates:
 // the settler's `grants.buildings` covers FOUNDING only, and the civilization building list that used to carry the palace on
@@ -886,7 +1035,15 @@ void CvTriggerEngine::onEvent(const CvSpineEvent& e)
 		}
 		break;
 	// iType = founding unit's type, iC = owner, iSrcLoc = the new city
-	case SEVT_CITY_FOUNDED:   tr_resolveCityFounded(e.iC, e.iSrcLoc, e.iType); break;
+	case SEVT_CITY_FOUNDED:
+		tr_resolveCityFounded(e.iC, e.iSrcLoc, e.iType);
+		// ...and the new city folds the empire-scoped buildings its owner already holds (the free building's
+		// second leg -- "every city AFTERWARDS gets a free copy").
+		tr_foldOwnerGrantedBuildings(e.iC, e.iSrcLoc);
+		break;
+	// A city ACQUIRED (conquest/trade) arrives under a new owner who may already hold granting sources, so it
+	// folds them exactly as a founded city does. iC = the NEW owner (-1 on dispose -- the fold guards it).
+	case SEVT_CITY_OWNER_CHANGED: tr_foldOwnerGrantedBuildings(e.iC, e.iSrcLoc); break;
 	// iC = owner, iSrcLoc = the new capital (-1 = none left)
 	case SEVT_CAPITAL_CHANGED: tr_resolveCapitalChanged(e.iC, e.iSrcLoc); break;
 	case SEVT_TECH_ACQUIRED:    tr_resolveTech(e.iType, e.iC);       break;  // first-discover only (iC = discoverer)

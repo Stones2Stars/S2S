@@ -62,6 +62,7 @@ void CvGrants::clearParsed()
 	}
 	m_lists.clear();
 	m_listConds.clear();
+	m_listScopes.clear();
 	m_pulses.clear();
 	m_scopedPulses.clear();
 	m_flags.clear();
@@ -118,6 +119,7 @@ void CvGrants::parse(const picojson::value& v)
 					{
 						m_lists[iKey].push_back(id);
 						m_listConds[iKey].push_back(NULL);
+						m_listScopes[iKey].push_back(-1);   // unscoped: the considered action's own target
 					}
 					else
 					{
@@ -133,6 +135,7 @@ void CvGrants::parse(const picojson::value& v)
 					// nobody. The id goes into m_lists as usual; the condition rides index-parallel.
 					const picojson::object& entryObj = a[i].get<picojson::object>();
 					int id = -1;
+					int iScopeKey = -1;
 					CvCondition* pCond = NULL;
 					for (picojson::object::const_iterator entryIt = entryObj.begin(); entryIt != entryObj.end(); ++entryIt)
 					{
@@ -141,6 +144,23 @@ void CvGrants::parse(const picojson::value& v)
 							delete pCond;
 							pCond = cascadeParseCondition(entryIt->second);
 						}
+						else if (entryIt->first == "scope")
+						{
+							// WHERE the provision lands (json §3.9's universal entry field). Interned like any
+							// other grants key; the applier decides what each scope means.
+							if (entryIt->second.is<std::string>())
+							{
+								iScopeKey = key(entryIt->second.get<std::string>().c_str());
+							}
+							else
+							{
+								jsonNoteUnconsumed(szBucket, "scopeNotAString");
+							}
+						}
+						// ⛔ `scope` is EXCLUDED by name, never by ordering. The id is taken from the first
+						// string-valued key, and picojson::object is a sorted map -- so a payload key sorting
+						// after "scope" (`unit`, `tech`) would otherwise have its entry's SCOPE resolved as the
+						// id, and jsonResolveId would drop the grant against a bucket that never named one.
 						else if (entryIt->second.is<std::string>() && id < 0)
 						{
 							id = jsonResolveId(entryIt->second.get<std::string>());
@@ -150,6 +170,7 @@ void CvGrants::parse(const picojson::value& v)
 					{
 						m_lists[iKey].push_back(id);
 						m_listConds[iKey].push_back(pCond);
+						m_listScopes[iKey].push_back(iScopeKey);
 					}
 					else
 					{
@@ -174,7 +195,11 @@ void CvGrants::parse(const picojson::value& v)
 			const int id = jsonResolveId(val.get<std::string>());
 			if (id >= 0)
 			{
+				// The three vectors stay index-parallel BY CONSTRUCTION, not by every reader tolerating a short
+				// one: the bare-string form pushes its defaults like the array forms above.
 				m_lists[iKey].push_back(id);
+				m_listConds[iKey].push_back(NULL);
+				m_listScopes[iKey].push_back(-1);
 			}
 			else
 			{

@@ -80,6 +80,20 @@ public:
 		}
 		return bucketIt->second[i];
 	}
+	// The per-entry SCOPE key for bucket[i] (-1 = unscoped). Index-parallel to list(bucket).
+	// ⚖ `scope` is part of the UNIVERSAL entry grammar (json §3.9), so a list entry carries it exactly as it
+	// carries `enabled`: it says WHERE the provision lands, not merely WHAT is handed over. Absent means the
+	// source's own considered-action target (a settler's founding city, the constructing city) -- which is why
+	// the founder-buildings and the civ capital list need no scope and are unaffected.
+	int listScope(int iBucketKey, size_t i) const
+	{
+		std::map<int, std::vector<int> >::const_iterator bucketIt = m_listScopes.find(iBucketKey);
+		if (bucketIt == m_listScopes.end() || i >= bucketIt->second.size())
+		{
+			return -1;
+		}
+		return bucketIt->second[i];
+	}
 
 	// --- PARSE-SURFACE readers (LOAD-ONLY): the mapFrom materializations speak the authored vocabulary once
 	// per load ("the parse surface alone touches strings"). A runtime read takes the int-keyed surface above
@@ -103,6 +117,8 @@ private:
 	// entry takes `enabled`). Its id still lands in m_lists (so every count/consumer keeps working); the condition
 	// rides here, keyed by bucket, parallel to the ids. Empty = the plain always-on string form.
 	std::map<int, std::vector<CvCondition*> > m_listConds;
+	// The per-entry scope key, index-parallel to m_lists (-1 = unscoped). See listScope().
+	std::map<int, std::vector<int> > m_listScopes;
 	std::map<int, int> m_pulses;                        // channel key -> value ×100 (population/revolution/…)
 	std::map<int, std::map<int, int> > m_scopedPulses;  // channel key -> {scope key -> value ×100}
 	std::set<int> m_flags;                                 // bool flags ("goldenAge")
