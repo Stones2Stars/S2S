@@ -94,7 +94,11 @@
   ([skills.md](../../specs/skills.md)).
 - Retire the legacy `largestCity` member once ranked-target-selection EVALUATION lands.
 - Re-home `stronglyRestricted` to a `requires.build` civ-membership gate, when NPC civilizations are wired.
-- Move corp-HQ revenue (`HeadquarterCommerces`) with the corporation rework.
+- Move corp-HQ revenue (`HeadquarterCommerces`) with the corporation rework, and with it the two corp shapes
+  no corporation authors: the HQ FREE UNIT — a `grants` payload, so it lands on the trigger plane off the
+  headquarters fact ([triggers.md](../../specs/triggers.md)), never as an info getter — and corp-vs-corp
+  EXCLUSION, whose home is the §9 `excludes` block ([json.md §9](../../specs/json.md)). Competition currently
+  answers from the consumed-bonus overlap alone. ⛔ Neither is machinery to build ahead of data authoring it.
 - Retire `DOMAIN_IMMOBILE`. Immobile is not a domain ([json.md §7](../../specs/json.md)) — a domain is the
   MEDIUM a unit operates in — and no unit authors it any more, so nothing keeps the member alive but its
   consumers: the enum entry, ~21 engine/AI sites, the `CIV4DomainInfos.xml` record, its game text, and a Python

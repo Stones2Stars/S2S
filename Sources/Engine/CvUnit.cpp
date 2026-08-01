@@ -8277,14 +8277,14 @@ bool CvUnit::canSpreadCorporation(const CvPlot* pPlot, CorporationTypes eCorpora
 	}
 	if (!bTestVisible)
 	{
-		for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
+		// The corp names the handful of buildings its spread needs; ask it for those rather than walking
+		// every building id asking whether this is one of them.
+		const std::map<int, int>& spreadNeeds = GC.getCorporationInfo(eCorporation).getSpreadBuildingCounts();
+		for (std::map<int, int>::const_iterator needIt = spreadNeeds.begin(); needIt != spreadNeeds.end(); ++needIt)
 		{
-			if (GC.getCorporationInfo(eCorporation).getPrereqBuilding(iI) > 0)
+			if (GET_PLAYER(pCity->getOwner()).getBuildingCount((BuildingTypes)needIt->first) < needIt->second)
 			{
-				if (GET_PLAYER(pCity->getOwner()).getBuildingCount((BuildingTypes)iI) < GC.getCorporationInfo(eCorporation).getPrereqBuilding(iI))
-				{
-					return false;
-				}
+				return false;
 			}
 		}
 	}

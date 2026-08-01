@@ -9247,9 +9247,7 @@ void CvGame::changeHumanPlayer(PlayerTypes eOldHuman, PlayerTypes eNewHuman)
 bool CvGame::isCompetingCorporation(CorporationTypes eCorporation1, CorporationTypes eCorporation2) const
 {
 	PROFILE_EXTRA_FUNC();
-	if (GC.getCorporationInfo(eCorporation1).isCompetingCorporation(eCorporation2) || GC.getCorporationInfo(eCorporation2).isCompetingCorporation(eCorporation1))
-		return true;
-
+	// Two corporations compete when they draw on a resource in common -- the consumed-bonus sets overlap.
 	foreach_(const BonusTypes eBonus, GC.getCorporationInfo(eCorporation1).getConsumedBonuses())
 	{
 		if (algo::any_of_equal(GC.getCorporationInfo(eCorporation2).getConsumedBonuses(), eBonus))
@@ -11283,7 +11281,7 @@ void CvGame::doFoundCorporation(CorporationTypes eCorporation, bool bForce)
 		{
 			foreach_(CvCity* pLoopCity, kPlayer.cities())
 			{
-				int iSpread = pLoopCity->getCorporationInfluence(eCorporation) * GC.getCorporationInfo(eCorporation).getSpread() / 100;
+				int iSpread = pLoopCity->getCorporationInfluence(eCorporation) * GC.getCorporationInfo(eCorporation).getSpreadFactor() / 100;
 
 				if (iSpread > 0)
 				{
@@ -11325,7 +11323,7 @@ int CvGame::getAverageCorporationInfluence(const CvCity* pCity, const Corporatio
 	{
 		return 100;
 	}
-	const int iSpread0 = GC.getCorporationInfo(eCorporation).getSpread();
+	const int iSpread0 = GC.getCorporationInfo(eCorporation).getSpreadFactor();
 	if (iSpread0 == 0) return 0;
 
 	const int iSpreadMod = 100 + GET_PLAYER(pCity->getOwner()).getCorporationSpreadModifier();

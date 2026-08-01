@@ -2387,22 +2387,21 @@ void CvDLLWidgetData::parseActionHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 						}
 
 						const CvCorporationInfo& kCorporation = GC.getCorporationInfo(eCorporation);
-						for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
+						const std::map<int, int>& spreadNeeds = kCorporation.getSpreadBuildingCounts();
+						for (std::map<int, int>::const_iterator needIt = spreadNeeds.begin(); needIt != spreadNeeds.end(); ++needIt)
 						{
-							if (kCorporation.getPrereqBuilding(iI) > 0)
-							{
-								szBuffer.append(
-									CvWString::format(
-										L"%s%s", NEWLINE,
-										gDLL->getText(
-											"TXT_KEY_HELPTEXT_REQUIRES_NUM_BUILDINGS_0",
-											CvWString(GC.getBuildingInfo((BuildingTypes)iI).getType()).GetCString(),
-											GC.getBuildingInfo((BuildingTypes)iI).getDescription(),
-											kCorporation.getPrereqBuilding(iI)
-										).c_str()
-									)
-								);
-							}
+							const CvBuildingInfo& kNeeded = GC.getBuildingInfo((BuildingTypes)needIt->first);
+							szBuffer.append(
+								CvWString::format(
+									L"%s%s", NEWLINE,
+									gDLL->getText(
+										"TXT_KEY_HELPTEXT_REQUIRES_NUM_BUILDINGS_0",
+										CvWString(kNeeded.getType()).GetCString(),
+										kNeeded.getDescription(),
+										needIt->second
+									).c_str()
+								)
+							);
 						}
 					}
 				}

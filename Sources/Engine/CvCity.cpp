@@ -3834,13 +3834,6 @@ void CvCity::setHeadquarters(CorporationTypes eIndex)
 	if (!isHeadquarters(eIndex))
 	{
 		GC.getGame().setHeadquarters(eIndex, this, true);
-
-		const UnitTypes eFreeUnit = (UnitTypes)GC.getCorporationInfo(eIndex).getFreeUnit();
-
-		if (eFreeUnit != NO_UNIT)
-		{
-			GET_PLAYER(getOwner()).initUnit(eFreeUnit, getX(), getY(), NO_UNITAI, NO_DIRECTION, GC.getGame().getSorenRandNum(10000, "AI Unit Birthmark"));
-		}
 	}
 }
 
@@ -9058,7 +9051,7 @@ int CvCity::getBuildingCommerceByBuilding(CommerceTypes eIndex, BuildingTypes eB
 	const CorporationTypes eGlobalCorp = (CorporationTypes)kBuilding.getGlobalCorporationCommerce();
 	if (eGlobalCorp != NO_CORPORATION)
 	{
-		iCommerce += GC.getCorporationInfo(eGlobalCorp).getHeadquarterCommerce(eIndex)
+		iCommerce += GC.getCorporationInfo(eGlobalCorp).getHeadquartersCommerce(eIndex)
 			* GC.getGame().countCorporationLevels(eGlobalCorp);
 	}
 
@@ -17257,7 +17250,7 @@ void CvCity::doCorporation()
 						{
 							int iSpread = pLoopCity->getCorporationInfluence((CorporationTypes)iI);
 
-							iSpread *= GC.getCorporationInfo((CorporationTypes)iI).getSpread();
+							iSpread *= GC.getCorporationInfo((CorporationTypes)iI).getSpreadFactor();
 
 							iSpread /= 100;
 
@@ -17325,7 +17318,7 @@ void CvCity::doCorporation()
 			(
 				GC.getGame().getAverageCorporationInfluence(this, (CorporationTypes)iI)
 				-
-				GC.getCorporationInfo((CorporationTypes)iI).getSpread()
+				GC.getCorporationInfo((CorporationTypes)iI).getSpreadFactor()
 				* getCorporationInfluence((CorporationTypes)iI)
 				* kOwner.getCorporationInfluence((CorporationTypes)iI)
 				/

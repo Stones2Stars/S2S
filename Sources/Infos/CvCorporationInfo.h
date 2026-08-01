@@ -62,6 +62,10 @@ public:
 		std::map<int, int>::const_iterator countIt = m_spreadBuildingCounts.find(iBuilding);
 		return countIt != m_spreadBuildingCounts.end() ? countIt->second : 0;
 	}
+	// The same plane as a LIST: the handful of buildings this corp actually names, so a consumer asking
+	// "what does it require" walks those rather than every building id asking each one in turn (the
+	// own-data inversion). Ordered by building id, so a reader sees them in registry order.
+	const std::map<int, int>& getSpreadBuildingCounts() const { return m_spreadBuildingCounts; }
 
 	// --- store-inverted tech FKs (tech.enables.corporations / tech.obsoletes.corporations), reconstructed at
 	// LOAD by the readJson reverse pass (CvReversePass), which calls the setters below. LOAD-ONLY writers. ---
