@@ -9110,23 +9110,13 @@ int CvCity::getAdditionalCommerceRateModifierByBuilding(CommerceTypes eIndex, Bu
 	}
 	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
 
-	int iMod = kBuilding.getCommerceModifier(eIndex, CASC_SCOPE_CITY) + kBuilding.getCommerceModifier(eIndex, CASC_SCOPE_EMPIRE);
-
-	foreach_(const TechCommerceArray& pair, kBuilding.getTechCommerceModifiers())
-	{
-		if (GET_TEAM(getTeam()).isHasTech(pair.first))
-		{
-			iMod += pair.second[eIndex];
-		}
-	}
-	for (int iI = 0; iI < GC.getNumBonusInfos(); ++iI)
-	{
-		if (hasBonus((BonusTypes)iI))
-		{
-			iMod += kBuilding.getBonusCommerceModifier(iI, eIndex);
-		}
-	}
-	return iMod;
+	// ONE valuation: the compiled unconditioned sums with every scope folded into the experienced-here
+	// answer, plus the conditioned tail resolved against THIS city ([patterns.md] THE GETTER SETUP read 3).
+	// The tech-gated and bonus-gated rows are ordinary conditioned entries, so the two walks this replaces
+	// were re-deriving by hand what the evaluator already answers. A percent is not scaled.
+	return kBuilding.expectedModifier(
+		infoCommerceFamily(eIndex), CHANNEL_AMOUNT, CASC_UNIT_PERCENT,
+		getCityContext(), GET_PLAYER(getOwner()).getEmpireContext(), plotGroup(getOwner()));
 }
 // BUG - Building Additional Commerce - end
 

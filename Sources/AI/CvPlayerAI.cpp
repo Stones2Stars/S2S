@@ -5707,6 +5707,15 @@ int CvPlayerAI::AI_techBuildingValue(TechTypes eTech, int iPathLength, bool& bEn
 	std::set<int> unlockedBuildings;
 	EnablerKernel::addEdge(EnablerKernel::infoFor(EDGEB_TECHS, (int)eTech), EDGEF_ENABLES, EDGEB_BUILDINGS, unlockedBuildings);
 
+	// The two worlds this tech's value is the DELTA between, built once for the whole sweep. A city-less
+	// valuation evaluates against the CAPITAL ([patterns.md] THE VALUATION PROTOCOL); a player without one
+	// has no valuation to give, so those legs are skipped rather than guessed at.
+	CvCascadeHypothetical kTechWith;
+	kTechWith.present[EDGEB_TECHS].insert((int)eTech);
+	CvCascadeHypothetical kTechWithout;
+	kTechWithout.absent[EDGEB_TECHS].insert((int)eTech);
+	const CvCity* pTechCapital = getCapitalCity();
+
 	for (std::set<int>::const_iterator itUnlocked = unlockedBuildings.begin(); itUnlocked != unlockedBuildings.end(); ++itUnlocked)
 	{
 		const BuildingTypes eLoopBuilding = static_cast<BuildingTypes>(*itUnlocked);
@@ -5960,93 +5969,112 @@ int CvPlayerAI::AI_techBuildingValue(TechTypes eTech, int iPathLength, bool& bEn
 
 				iValue += iBuildingValue;
 			}
-			else if (getBuildingAvailabilityAnywhere(eLoopBuilding) == EnablerDomain::STATE_LISTED)
+		}
+	}
+
+	// WHAT THIS TECH IMPROVES, as distinct from what it UNLOCKS -- two different questions off two different
+	// edges. A tech-gated deposit is a CONDITIONED entry on the building, so the buildings a tech makes better
+	// are exactly those whose compiled entries reference it: the tech's own RELATED family
+	// ([DEC-one-reverse-view]), landed once at load. The loop above walks what the tech ENABLES and can never
+	// reach these, which is why this is its own pass rather than a branch inside it.
+	std::set<int> improvedBuildings;
+	EnablerKernel::addEdge(EnablerKernel::infoFor(EDGEB_TECHS, (int)eTech), EDGEF_RELATED, EDGEB_BUILDINGS, improvedBuildings);
+
+	for (std::set<int>::const_iterator itImproved = improvedBuildings.begin(); itImproved != improvedBuildings.end(); ++itImproved)
+	{
+		const BuildingTypes eLoopBuilding = static_cast<BuildingTypes>(*itImproved);
+
+		if (unlockedBuildings.count((int)eLoopBuilding) != 0
+		|| getBuildingAvailabilityAnywhere(eLoopBuilding) != EnablerDomain::STATE_LISTED)
+		{
+			continue;   // scored above as an unlock, or not offered at all
+		}
+		const CvBuildingInfo& kLoopBuilding = GC.getBuildingInfo(eLoopBuilding);
+		// "Is this a culture building?" -- one read over its own entries, which covers the flat, the
+		// per-population scaler and every scope at once.
+		if (!isLimitedWonder(eLoopBuilding)
+		&& InfoValuation::authorsAnySigned(kLoopBuilding.getModifiers(), infoCommerceFamily(COMMERCE_CULTURE), +1))
+		{
+			iExistingCultureBuildingCount++;
+		}
+
+		const int iNumExisting = algo::count_if(cities(), bind(&CvCity::hasBuilding, _1, eLoopBuilding));
+
+		if (iNumExisting > 0)
+		{
+			int iTempValue = 0;
+
+			// WHAT MY EXISTING BUILDINGS GAIN FROM THIS TECH -- the DELTA between holding it and not, asked of
+			// the ONE valuation ([patterns.md] THE VALUATION PROTOCOL). A tech-gated building deposit is an
+			// ordinary CONDITIONED entry (`enabled: TECH_X`), so each hypothetical resolves it and nothing here
+			// re-derives which entries the tech gates -- which is what the per-channel keyed tables did by hand.
+			if (pTechCapital != NULL)
 			{
-				if (!isLimitedWonder(eLoopBuilding)
-				&& (kLoopBuilding.getCommerceChange(COMMERCE_CULTURE) > 0 || kLoopBuilding.getCommercePerPopChange(COMMERCE_CULTURE) > 0))
+				const CityContext& kCityCtx = pTechCapital->getCityContext();
+				const EmpireContext& kEmpireCtx = getEmpireContext();
+				const CvPlotGroup* pCapitalGroup = pTechCapital->plotGroup(getID());
+				int aiWith[NUM_YIELD_TYPES];
+				int aiWithout[NUM_YIELD_TYPES];
+				int aiCWith[NUM_COMMERCE_TYPES];
+				int aiCWithout[NUM_COMMERCE_TYPES];
+
+				// The flats, ×100 -> whole.
+				kLoopBuilding.expectedFlatCommerce(kCityCtx, kEmpireCtx, pCapitalGroup, aiCWith, &kTechWith);
+				kLoopBuilding.expectedFlatCommerce(kCityCtx, kEmpireCtx, pCapitalGroup, aiCWithout, &kTechWithout);
+				for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
 				{
-					iExistingCultureBuildingCount++;
+					iTempValue += 4 * (aiCWith[iJ] - aiCWithout[iJ]) / 100;
+				}
+				kLoopBuilding.expectedFlatYields(kCityCtx, kEmpireCtx, pCapitalGroup, aiWith, &kTechWith);
+				kLoopBuilding.expectedFlatYields(kCityCtx, kEmpireCtx, pCapitalGroup, aiWithout, &kTechWithout);
+				for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
+				{
+					iTempValue += 4 * (aiWith[iJ] - aiWithout[iJ]) / 100;
 				}
 
-				const int iNumExisting = algo::count_if(cities(), bind(&CvCity::hasBuilding, _1, eLoopBuilding));
-
-				if (iNumExisting > 0)
+				// The percents, applied against what the empire actually produces. A percent is NOT scaled.
+				int aiEmpireCommerces[NUM_COMMERCE_TYPES];
+				getCommerces(aiEmpireCommerces);
+				for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
 				{
-					int iTempValue = 0;
-
-					foreach_(const TechCommerceArray & pair, kLoopBuilding.getTechCommerceChanges())
+					const int iDelta =
+						kLoopBuilding.expectedModifier(infoCommerceFamily((CommerceTypes)iJ), CHANNEL_AMOUNT,
+							CASC_UNIT_PERCENT, kCityCtx, kEmpireCtx, pCapitalGroup, &kTechWith)
+						- kLoopBuilding.expectedModifier(infoCommerceFamily((CommerceTypes)iJ), CHANNEL_AMOUNT,
+							CASC_UNIT_PERCENT, kCityCtx, kEmpireCtx, pCapitalGroup, &kTechWithout);
+					if (iDelta != 0)
 					{
-						if (eTech == pair.first)
-						{
-							for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
-							{
-								iTempValue += 4 * pair.second[iJ];
-							}
-							break;
-						}
-					}
-					foreach_(const TechArray & pair, kLoopBuilding.getTechYieldChanges())
-					{
-						if (eTech == pair.first)
-						{
-							for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
-							{
-								iTempValue += 4 * pair.second[iJ];
-							}
-							break;
-						}
-					}
-					foreach_(const TechCommerceArray & pair, kLoopBuilding.getTechCommerceModifiers())
-					{
-						if (eTech == pair.first)
-						{
-							for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
-							{
-								const int iCommerceModifier = pair.second[iJ];
-								if (iCommerceModifier != 0)
-								{
-									int aiOwnCommerces[NUM_COMMERCE_TYPES];
-									getCommerces(aiOwnCommerces);
-									iTempValue += 4 * aiOwnCommerces[(CommerceTypes)iJ] / 100 * iCommerceModifier / getNumCities();
-								}
-							}
-							break;
-						}
-					}
-					foreach_(const TechArray & pair, kLoopBuilding.getTechYieldModifiers())
-					{
-						if (eTech == pair.first)
-						{
-							for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
-							{
-								const int iYieldModifier = pair.second[iJ];
-								if (iYieldModifier != 0)
-								{
-									iTempValue += 4 * calculateTotalYield((YieldTypes)iJ) * iYieldModifier / getNumCities();
-								}
-							}
-							break;
-						}
-					}
-
-					for (int iJ = 0; iJ < GC.getNumSpecialistInfos(); iJ++)
-					{
-						int iSpecialistChange = kLoopBuilding.getTechSpecialistChange(eTech, iJ);
-
-						if (iSpecialistChange != 0)
-						{
-							iTempValue += 800 * iSpecialistChange;
-						}
-					}
-
-					if (iTempValue != 0)
-					{
-						iTempValue = iTempValue * BUILDING_VALUE_TO_TECH_BUILDING_VALUE_MULTIPLIER / 100;
-
-						
-						iValue += iTempValue;
+						iTempValue += 4 * aiEmpireCommerces[iJ] / 100 * iDelta / getNumCities();
 					}
 				}
+				kLoopBuilding.expectedYieldModifiers(kCityCtx, kEmpireCtx, pCapitalGroup, aiWith, &kTechWith);
+				kLoopBuilding.expectedYieldModifiers(kCityCtx, kEmpireCtx, pCapitalGroup, aiWithout, &kTechWithout);
+				for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
+				{
+					const int iYieldModifier = aiWith[iJ] - aiWithout[iJ];
+					if (iYieldModifier != 0)
+					{
+						iTempValue += 4 * calculateTotalYield((YieldTypes)iJ) * iYieldModifier / getNumCities();
+					}
+				}
+			}
+
+			for (int iJ = 0; iJ < GC.getNumSpecialistInfos(); iJ++)
+			{
+				int iSpecialistChange = kLoopBuilding.getTechSpecialistChange(eTech, iJ);
+
+				if (iSpecialistChange != 0)
+				{
+					iTempValue += 800 * iSpecialistChange;
+				}
+			}
+
+			if (iTempValue != 0)
+			{
+				iTempValue = iTempValue * BUILDING_VALUE_TO_TECH_BUILDING_VALUE_MULTIPLIER / 100;
+
+				
+				iValue += iTempValue;
 			}
 		}
 	}

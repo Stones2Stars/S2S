@@ -322,6 +322,14 @@
   model deleted. Answering it means reading the candidate's `EDGEF_RELATED` specialists and evaluating their
   rows with the candidate injected — the hypothetical the `expected*` plane owns. ⛔ Do not restore a
   building-side per-specialist getter to clear those sites; the data is not there to serve it.
+- Give the what-if valuation a KEYED twin. `expected*` answers a family's point slot, so a deposit that is BOTH
+  keyed and conditioned has no read: the tech-gated per-specialist building slot is the live case, and its
+  consumers dangle on that alone. It wants the `collectKeyedTarget` walk with the conditioned tail evaluated
+  through the ONE evaluator, taking the same optional hypothetical the point form does — never a second
+  evaluator ([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation)).
+  ⚑ The improvement tech-yield reads want it too, and one of them asks a THIRD question: the `bOptimal` branch
+  wants "assume every condition holds", which is neither the live evaluation nor a hypothetical over one named
+  id. Decide whether that is a mode of the same read or an entry-list sum before converting it.
 - Decide where the YIELD what-if's supersession-netting lives — the enabler owns `replacedBy`, or the call site
   composes two valuations. ⛔ Not by widening `expected*` with a replaced-buildings argument.
 - Watch civic-choice STABILITY now that the cross-category half-value damper is gone (owner: drop it; if the
