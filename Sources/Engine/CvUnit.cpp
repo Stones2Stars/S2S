@@ -12863,7 +12863,7 @@ int CvUnit::hillsDefenseModifier() const
 int CvUnit::terrainAttackModifier(TerrainTypes eTerrain) const
 {
 	FASSERT_BOUNDS(0, GC.getNumTerrainInfos(), eTerrain);
-	return (m_pUnitInfo->getTerrainAttackModifier(eTerrain) + getExtraTerrainAttackPercent(eTerrain));
+	return (InfoValuation::keyedCombat(m_pUnitInfo->getModifiers(), InfoValuation::COMBAT_TARGET_TERRAIN, eTerrain, COMBAT_ATTACK) + getExtraTerrainAttackPercent(eTerrain));
 }
 
 
@@ -12874,14 +12874,14 @@ int CvUnit::terrainDefenseModifier(TerrainTypes eTerrain) const
 		return 0;
 	}
 	FASSERT_BOUNDS(0, GC.getNumTerrainInfos(), eTerrain);
-	return (m_pUnitInfo->getTerrainDefenseModifier(eTerrain) + getExtraTerrainDefensePercent(eTerrain));
+	return (InfoValuation::keyedCombat(m_pUnitInfo->getModifiers(), InfoValuation::COMBAT_TARGET_TERRAIN, eTerrain, COMBAT_DEFENSE) + getExtraTerrainDefensePercent(eTerrain));
 }
 
 
 int CvUnit::featureAttackModifier(FeatureTypes eFeature) const
 {
 	FASSERT_BOUNDS(0, GC.getNumFeatureInfos(), eFeature);
-	return (m_pUnitInfo->getFeatureAttackModifier(eFeature) + getExtraFeatureAttackPercent(eFeature));
+	return (InfoValuation::keyedCombat(m_pUnitInfo->getModifiers(), InfoValuation::COMBAT_TARGET_FEATURE, eFeature, COMBAT_ATTACK) + getExtraFeatureAttackPercent(eFeature));
 }
 
 int CvUnit::featureDefenseModifier(FeatureTypes eFeature) const
@@ -12891,7 +12891,7 @@ int CvUnit::featureDefenseModifier(FeatureTypes eFeature) const
 		return 0;
 	}
 	FASSERT_BOUNDS(0, GC.getNumFeatureInfos(), eFeature);
-	return (m_pUnitInfo->getFeatureDefenseModifier(eFeature) + getExtraFeatureDefensePercent(eFeature));
+	return (InfoValuation::keyedCombat(m_pUnitInfo->getModifiers(), InfoValuation::COMBAT_TARGET_FEATURE, eFeature, COMBAT_DEFENSE) + getExtraFeatureDefensePercent(eFeature));
 }
 
 int CvUnit::unitAttackModifier(UnitTypes eUnit) const
@@ -12915,14 +12915,14 @@ int CvUnit::unitDefenseModifier(UnitTypes eUnit) const
 int CvUnit::unitCombatModifier(UnitCombatTypes eUnitCombat) const
 {
 	FASSERT_BOUNDS(0, GC.getNumUnitCombatInfos(), eUnitCombat);
-	return (m_pUnitInfo->getUnitCombatModifier(eUnitCombat) + getExtraUnitCombatModifier(eUnitCombat, isCommander(), isCommodore()));
+	return (InfoValuation::keyedCombat(m_pUnitInfo->getModifiers(), InfoValuation::COMBAT_TARGET_UNITCOMBAT, eUnitCombat, COMBAT_AMOUNT) + getExtraUnitCombatModifier(eUnitCombat, isCommander(), isCommodore()));
 }
 
 
 int CvUnit::domainModifier(DomainTypes eDomain) const
 {
 	FASSERT_BOUNDS(0, NUM_DOMAIN_TYPES, eDomain);
-	return (m_pUnitInfo->getDomainModifier(eDomain) + getExtraDomainModifier(eDomain));
+	return (InfoValuation::keyedCombat(m_pUnitInfo->getModifiers(), InfoValuation::COMBAT_TARGET_DOMAIN, eDomain, COMBAT_AMOUNT) + getExtraDomainModifier(eDomain));
 }
 
 
@@ -18157,9 +18157,7 @@ void CvUnit::read(FDataStreamBase* pStream)
 
 	for (int iI = 0; iI < GC.getNumPromotionInfos(); iI++)
 	{
-		if (
-		   0 != g_paiTempTrapSetWithPromotionCount[iI]
-		|| 0 != g_paiTempPromotionFromTraitCount[iI])
+		if (0 != g_paiTempPromotionFromTraitCount[iI])
 		{
 			PromotionKeyedInfo* info = findOrCreatePromotionKeyedInfo((PromotionTypes)iI);
 
@@ -18683,11 +18681,7 @@ void CvUnit::read(FDataStreamBase* pStream)
 
 		if (g_paiTempHealUnitCombatTypeVolume[iI] != 0
 		||  g_paiTempHealUnitCombatTypeAdjacentVolume[iI] != 0
-		||  g_paiTempTrapImmunityUnitCombatCount[iI] != 0
-		||  g_paiTempTargetUnitCombatCount[iI] != 0
-		||  g_paiTempExtraTrapDisableUnitCombatType[iI] != 0
-		||  g_paiTempExtraTrapAvoidanceUnitCombatType[iI] != 0
-		||  g_paiTempExtraTrapTriggerUnitCombatType[iI] != 0)
+		||  g_paiTempTargetUnitCombatCount[iI] != 0)
 		{
 			UnitCombatKeyedInfo* info = findOrCreateUnitCombatKeyedInfo((UnitCombatTypes)iI);
 
@@ -19414,20 +19408,10 @@ void CvUnit::collateralCombat(const CvPlot* pPlot, CvUnit* pSkipUnit)
 		mapUnitDamage.erase(pBestUnit);
 		//TB SubCombat Mod Begin
 		int iI;
-		UnitCombatTypes eUnitCombatType;
-		bool isCollateralImmune = false;
-
-		for (iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
-		{
-			if (/*pBestUnit->*/isHasUnitCombat((UnitCombatTypes)iI))
-			{
-				eUnitCombatType = ((UnitCombatTypes)iI);
-				if (pBestUnit->getUnitInfo().getUnitCombatCollateralImmune(eUnitCombatType))
-				{
-					isCollateralImmune = true;
-				}
-			}
-		}
+		//	collateral immunity is ONE boolean skill ([skills.md] §1: the legacy per-source keying -- siege /
+		//	assault-mech / robot, all the siege variant -- collapses to a single enabler), so the per-class
+		//	sweep it used to need is gone with the keying.
+		const bool isCollateralImmune = pBestUnit->getUnitInfo().hasSkill(CLS_SKILL_COLLATERAL_IMMUNE);
 		//TB SubCombat Mod End (with the exception of the following reference to 'isCollateralImmune'
 		if (!isCollateralImmune)
 		{
@@ -19501,7 +19485,10 @@ void CvUnit::flankingStrikeCombat(const CvPlot* pPlot, int iAttackerStrength, in
 		if (pLoopUnit != pSkipUnit && !pLoopUnit->isDead() && isEnemy(pLoopUnit->getTeam(), pPlot, pLoopUnit)
 		&& !pLoopUnit->isInvisible(getTeam(), false) && pLoopUnit->canDefend())
 		{
-			int iFlankingStrength = m_pUnitInfo->getFlankingStrikeUnits().getValue(pLoopUnit->getUnitType());
+			//	FLANKING is keyed by UNITCOMBAT, never by UNIT ([json.md] §6): the per-unit table encoded a
+			//	balance theory that is rejected, and it left every unit nobody listed silently un-flankable.
+			//	The class total below is the whole answer.
+			int iFlankingStrength = 0;
 
 			for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
 			{
@@ -20112,7 +20099,11 @@ bool CvUnit::isTargetOf(const CvUnit& attacker) const
 
 	const CvUnitInfo& attackerInfo = attacker.getUnitInfo();
 
-	if (getUnitType() != NO_UNIT && attackerInfo.isTargetUnit(getUnitType()))
+	//	the §8 targeting / immunity membership maps are keyed bool rows on the COMBAT family, read through the
+	//	ONE keyed read rather than a per-key named getter ([json.md] §8, [modifier.md] §5)
+	if (getUnitType() != NO_UNIT
+	&& InfoValuation::keyedTarget(attackerInfo.getModifiers(), MODFAM_COMBAT, -1,
+		InfoValuation::keyedTargetSegment("unitTargets"), getUnitType()) != 0)
 	{
 		return true;
 	}
@@ -20126,14 +20117,19 @@ bool CvUnit::isTargetOf(const CvUnit& attacker) const
 
 	for (std::map<UnitCombatTypes, UnitCombatKeyedInfo>::const_iterator it = m_unitCombatKeyedInfo.begin(), end = m_unitCombatKeyedInfo.end(); it != end; ++it)
 	{
-		if (it->second.m_bHasUnitCombat && (attackerInfo.getTargetUnitCombat(it->first) || attacker.hasTargetUnitCombat(it->first)))
+		if (it->second.m_bHasUnitCombat
+		&& (InfoValuation::keyedTarget(attackerInfo.getModifiers(), MODFAM_COMBAT, -1,
+				InfoValuation::keyedTargetSegment("targets"), it->first) != 0
+			|| attacker.hasTargetUnitCombat(it->first)))
 		{
 			return true;
 		}
 	}
 	for (std::map<UnitCombatTypes, UnitCombatKeyedInfo>::const_iterator it = attacker.m_unitCombatKeyedInfo.begin(), end = attacker.m_unitCombatKeyedInfo.end(); it != end; ++it)
 	{
-		if (it->second.m_bHasUnitCombat && ourInfo.getDefenderUnitCombat(it->first))
+		if (it->second.m_bHasUnitCombat
+		&& InfoValuation::keyedTarget(ourInfo.getModifiers(), MODFAM_COMBAT, -1,
+			InfoValuation::keyedTargetSegment("defenders"), it->first) != 0)
 		{
 			return true;
 		}
