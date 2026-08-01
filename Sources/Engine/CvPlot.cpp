@@ -7665,15 +7665,7 @@ void CvPlot::setPlotCity(CvCity* pNewValue)
 	updatePlotGroupBonus(false);
 	if (isCity())
 	{
-		CvPlotGroup* pPlotGroup = getPlotGroup(getOwner());
-
-		if (pPlotGroup)
-		{
-			for (int iI = 0; iI < GC.getNumBonusInfos(); ++iI)
-			{
-				getPlotCity()->changeNumBonuses((BonusTypes)iI, -pPlotGroup->getNumBonuses((BonusTypes)iI));
-			}
-		}
+		getPlotCity()->onNetworkSupplyLost(getPlotGroup(getOwner()));
 	}
 	const int iOldCityId = (pOldPlotCity != NULL) ? pOldPlotCity->getID() : -1;
 
@@ -7692,15 +7684,7 @@ void CvPlot::setPlotCity(CvCity* pNewValue)
 
 	if (isCity())
 	{
-		CvPlotGroup* pPlotGroup = getPlotGroup(getOwner());
-
-		if (pPlotGroup)
-		{
-			for (int iI = 0; iI < GC.getNumBonusInfos(); ++iI)
-			{
-				getPlotCity()->changeNumBonuses((BonusTypes)iI, pPlotGroup->getNumBonuses((BonusTypes)iI));
-			}
-		}
+		getPlotCity()->onNetworkSupplyAcquired(getPlotGroup(getOwner()));
 	}
 	updatePlotGroupBonus(true);
 
@@ -8727,14 +8711,6 @@ void CvPlot::setPlotGroup(PlayerTypes ePlayer, CvPlotGroup* pNewValue, bool bRec
 				GET_PLAYER(getOwner()).startDeferredPlotGroupBonusCalculation();
 				updatePlotGroupBonus(false);
 			}
-
-			if (pOldPlotGroup != NULL && pCity != NULL && pCity->getOwner() == ePlayer)
-			{
-				for (int iI = 0; iI < GC.getNumBonusInfos(); ++iI)
-				{
-					pCity->changeNumBonuses((BonusTypes)iI, -pOldPlotGroup->getNumBonuses((BonusTypes)iI));
-				}
-			}
 		}
 
 		if (pNewValue == NULL)
@@ -8748,18 +8724,15 @@ void CvPlot::setPlotGroup(PlayerTypes ePlayer, CvPlotGroup* pNewValue, bool bRec
 
 		if (bRecalculateEffect)
 		{
-			if (pCity != NULL && getPlotGroup(ePlayer) != NULL && pCity->getOwner() == ePlayer)
-			{
-				for (int iI = 0; iI < GC.getNumBonusInfos(); ++iI)
-				{
-					pCity->changeNumBonuses((BonusTypes)iI, getPlotGroup(ePlayer)->getNumBonuses((BonusTypes)iI));
-				}
-			}
 			// #430 NETWORK MEMBERSHIP (trigger #3): this city's OWN center plot moved to a different plot-group
 			// (merge/split), so its whole network resource set changed. Owner-gated -- a group change for a NON-owner
-			// player over this plot doesn't touch the city's network access. Announce it so the cache re-evals connection:trade.
+			// player over this plot doesn't touch the city's network access. The supply swap crosses from one
+			// group's holdings to the other's in ONE step (the city holds no count to move across, so what is
+			// announced is the crossing, not a pair of deltas); the fact then lets the cache re-eval connection:trade.
 			if (pCity != NULL && pCity->getOwner() == ePlayer)
 			{
+				pCity->onNetworkSupplyChanged(pOldPlotGroup, getPlotGroup(ePlayer));
+
 				emitCityNetworkChanged((int)pCity->getOwner(), pCity->getID());
 			}
 			if (ePlayer == getOwner())

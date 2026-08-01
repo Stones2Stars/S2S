@@ -57,12 +57,18 @@ enormous class of per-read CALCULATION becomes obsolete.** Not "gets faster" —
 scan/union/walk collapses into a stored value some event already maintained, and reads become bare fetches
 ([state-repositories.md](state-repositories.md); [DEC-turn-time-is-king](decisions.md#dec-turn-time-is-king)).
 The in-tree exhibits are not hypothetical: `isCoastalLand()` is an 8-neighbour scan **per predicate
-evaluation**; the §5a vicinity check is a radius union **per check**; and `getNumBonuses` is recorded in
-[enabler.md §8](../specs/enabler.md) as *"the turn wall's hottest cluster under the governor's read volume"* —
-a tech gate → two-hop plot-group resolution → group sum → minted gate → corp add-on, **re-executed on every
-call**. The win is STRUCTURAL: once the fact is stored there is no read-time work left to do, so cost tracks
-EVENT volume (what changed), never read volume (how often it is asked) — and it is observed where every
-performance claim is observed, on the per-turn wall clock ([DEC-turn-time-is-king](decisions.md#dec-turn-time-is-king)).
+evaluation**, and the §5a vicinity check is a radius union **per check**. The win is STRUCTURAL: once the fact
+is stored there is no read-time work left to do, so cost tracks EVENT volume (what changed), never read volume
+(how often it is asked) — and it is observed where every performance claim is observed, on the per-turn wall
+clock ([DEC-turn-time-is-king](decisions.md#dec-turn-time-is-king)).
+
+⛔ **BUT THE TEST IS A SCAN, NOT A HOP — and `getNumBonuses` is the case that marks the line.** What earns a
+store is read-time work that GROWS with something (neighbours, radius tiles, a registry). A read that resolves
+through a POINTER to the object which already owns the number O(1) is not that, and storing it anyway makes a
+third copy of one fact ([enabler.md §8](../specs/enabler.md) RESIDENCY: the plot group owns the network count,
+the city relays it, the context forwards the relay). ⚠ This one had a store on exactly that mistaken reading,
+and it cost a sweep of every bonus on every fact that could move one — strictly more work than the hop it was
+avoiding. **Ask what the read WALKS; if the answer is "one pointer", forward it.**
 
 > **⛔ SO A CONSUMER NEVER WALKS AN INFO'S KEYED LIST TO ASK A PER-ITEM LIVE-STATE QUESTION — THE EVENT-BUILT
 > READ-ONLY STATE ANSWERS IT (owner).** *"There should be no iterating like that; the eventspine-built read-only
@@ -103,7 +109,7 @@ event-driven — never a read-time scan, and never left on the old accessor as a
 
 | context | owner | STORES (unique aggregate) | FORWARDS (read through the bound object / its owner) |
 |---|---|---|---|
-| **CityContext** | `CvCity` | `plotAttrs` — per-predicate plot COUNTS (the fold of member plots' bits) · **`amenities`** — the `AMENITY_*` id→COUNT fold over the city's OPERATING buildings + the empire-scope grantors (json §8; the count is load-bearing — see the callout below) · **the VICINITY BONUSES available in the city** (owner) — the §5a radius union, MAP half (see the split below) · the **TRADED count** (the gated network number) · the **AREA facts** (area id, its tile count, the coastal water-body size) · the **holy-city count** | population, power, religion presence, holy-city-of, corporation, capital, government-centre, fresh-water access, property value (raw, `CvCity`-owned, O(1)); state religion (→ owner `CvPlayer`); **the CURRENT REALIZED YIELDS** (owner) — the city's own O(1) group read, forwarded so a valuation can resolve a percent against a real base (below); **the CURRENT REALIZED COMMERCE** — `CvCity::getCommerces`, the per-commerce SPLIT of that commerce yield by the empire's sliders plus each channel's own deposits ([modifier.md §2a](../specs/modifier.md)), forwarded for the same reason |
+| **CityContext** | `CvCity` | `plotAttrs` — per-predicate plot COUNTS (the fold of member plots' bits) · **`amenities`** — the `AMENITY_*` id→COUNT fold over the city's OPERATING buildings + the empire-scope grantors (json §8; the count is load-bearing — see the callout below) · **the VICINITY BONUSES available in the city** (owner) — the §5a radius union, MAP half (see the split below) · the **AREA facts** (area id, its tile count, the coastal water-body size) · the **holy-city count** | population, power, religion presence, holy-city-of, corporation, capital, government-centre, fresh-water access, property value (raw, `CvCity`-owned, O(1)); state religion (→ owner `CvPlayer`); **the TRADED count** — the gated network number, forwarded through `CvCity::getNumBonuses`, which relays to the PLOT GROUP that owns it ([enabler.md §8](../specs/enabler.md) RESIDENCY: nothing mirrors the group); **the CURRENT REALIZED YIELDS** (owner) — the city's own O(1) group read, forwarded so a valuation can resolve a percent against a real base (below); **the CURRENT REALIZED COMMERCE** — `CvCity::getCommerces`, the per-commerce SPLIT of that commerce yield by the empire's sliders plus each channel's own deposits ([modifier.md §2a](../specs/modifier.md)), forwarded for the same reason |
 | **EmpireContext** | `CvPlayer` | `policies` — the empire's enacted-policy set (the derived UNION over live civics'/traits' policy blocks, stored nowhere else) | state religion (single enum → `CvPlayer::getStateReligion`), civics/traits/heritages presence, the team-held facts; **the CURRENT REALIZED COMMERCE** — `CvPlayer::getCommerces`, the four empire RECEIVER totals: the city-yields forward's empire twin, so an empire-scope percent resolves against a real base; **the COMMERCE SLIDER PERCENTAGES** (owner) — the player's gold / research / culture / espionage rates, the `GOLD_RATE`/`RESEARCH_RATE`/`CULTURE_RATE`/`ESPIONAGE_RATE` tokens ([json.md §3.1](../specs/json.md)); a group keyed by `CommerceTypes`, forwarded because `CvPlayer` owns them O(1) |
 
 ⛔ **THE VICINITY SPLIT — the context holds the MAP half, the enabler holds the BUILDING half.** The §5a in-vicinity
@@ -305,9 +311,6 @@ CAPSTONE — LOAD is the only full build).
     culture-level fact (the workable radius itself grows with culture, so that fact is also the vicinity-MEMBERSHIP
     signal). The plot→cities direction is the radius inverse: the workable fat cross is symmetric, so the cities that
     may hold a plot sit at the same offsets around it.
-  - the **TRADED count** ← the city-bonus / network-membership / plot-group-resource facts, plus the tech fact (a
-    tech opens or closes the `TechCityTrade` gate the stored count applies). Traded MEMBERSHIP still belongs to
-    `CvPlotGroup`; only this city's own gated COUNT is held here, which no other object owns.
   - the **AREA facts** ← the plot-TYPE fact near the city, and the wholesale **areas-recalculated** fact below.
   - the **holy-city count** ← the holy-city fact.
 - **`EmpireContext.policies`** ← the **civic / trait / player-init DOMAIN facts**, routed through the contexts'
@@ -401,8 +404,9 @@ expected values out**:
 - **CvPlotGroup** — the trade-network object; the reserved explicit **traded**-bonus source (`connection:"trade"` vs
   `"vicinity"`, [json.md §3.4](../specs/json.md)). Traded state is **NEVER mirrored into `CityContext`**. The
   valuation seam fills it into the eval ctx (`CvCascadeEvalCtx::plotGroup`): a `connection:"trade"` atom reads the
-  city's own plot-group-backed maintained count when a city is bound (`CityContext::tradedBonusCount` — the
-  tech-gate/minted/corp relay), and the passed group directly for the city-less what-if.
+  city's own plot-group-backed RELAY when a city is bound (`CityContext::tradedBonusCount` forwards to
+  `CvCity::getNumBonuses` — the tech-gate/minted/corp layer over the group's count), and the passed group directly
+  for the city-less what-if.
 
 Each endpoint returns the UNCONDITIONED ×100 base PLUS every conditioned `m_cond` deposit whose condition holds — summed
 via the **one** evaluator (`MMKernel::applies`) over a `CvCascadeEvalCtx` the contexts fill (`CityContext::fillEvalCtx`

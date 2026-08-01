@@ -375,7 +375,6 @@ public:
 	bool canDoCivics(CivicTypes eCivic) const;
 	bool canRevolution(CivicTypes* paeNewCivics) const;
 	void revolution(CivicTypes* paeNewCivics, bool bForce = false);
-	int getCivicPercentAnger(CivicTypes eCivic) const;
 
 	bool canDoReligion(ReligionTypes eReligion) const;
 	bool canChangeReligion() const;
@@ -1375,8 +1374,6 @@ public:
 
 	int getGrowthThreshold(int iPopulation) const;
 	int getPopulationgrowthratepercentage() const;
-	void setPopulationgrowthratepercentage(int iNewValue);
-	void changePopulationgrowthratepercentage(int iChange, bool bAdd);
 
 
 
@@ -1417,8 +1414,6 @@ public:
 	int getCityOverLimitUnhappy() const;
 	void changeCityOverLimitUnhappy(int iChange);
 
-	int getForeignUnhappyPercent() const;
-	void changeForeignUnhappyPercent(int iChange);
 
 	bool isShowLandmarks() const;
 	void setShowLandmarks(bool bNewVal);
@@ -1631,7 +1626,6 @@ protected:
 	int m_iTaxRateUnhappiness;
 	int m_iNoCapitalUnhappiness;
 	int m_iForceAllTradeRoutes;
-	float m_fPopulationgrowthratepercentageLog;
 	int m_iCorporationSpreadModifier;
 	// @SAVEBREAK - delete
 	int m_iCorporateTaxIncome;
@@ -1640,7 +1634,6 @@ protected:
 	bool m_bShowLandmarks;
 	int m_iCityLimit;
 	int m_iCityOverLimitUnhappy;
-	int m_iForeignUnhappyPercent;
 	//TB Traits
 	int* m_paiImprovementUpgradeRateModifierSpecific;
 	int* m_paiBuildWorkerSpeedModifierSpecific;
@@ -2068,7 +2061,6 @@ protected:
 	CvCity* pickTriggerCity(EventTriggerTypes eTrigger) const;
 	CvUnit* pickTriggerUnit(EventTriggerTypes eTrigger, const CvPlot* pPlot, bool bCheckPlot) const;
 	bool isValidEventTech(TechTypes eTech, EventTypes eEvent, PlayerTypes eOtherPlayer) const;
-	void recalculatePopulationgrowthratepercentage();
 
 	int calculatePlotRouteYieldDifference(const CvPlot* pPlot, const RouteTypes eRoute, YieldTypes eYield) const;
 	RouteTypes getBestRouteInternal(const CvPlot* pPlot, bool bConnect, const CvUnit* pBuilder, BuildTypes* eBestRouteBuild = NULL) const;

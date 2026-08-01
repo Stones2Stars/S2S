@@ -108,7 +108,6 @@ public:
 	// fact, so the consumer is the single trigger path; a direct call beside the event would be a second maintenance
 	// surface for the same state.
 	void refreshVicinityBonuses() const;   // the par.3.4-tiered MAP-provider presence over the workable radius
-	void refreshTradedBonuses() const;     // the gated network count (the TechCityTrade + minted relay)
 	void refreshAreaFacts() const;         // the city's area ID + the coastal water-body size
 	void refreshHolyCity() const;          // how many religions hold this city as their holy city
 	// Distance to the owner's nearest government centre. Re-derived for EVERY city of a player when a
@@ -239,7 +238,6 @@ private:
 	mutable ContextDict m_vicinityForeign;     // a radius tile owned by another player (the crossBorder opt-in only)
 	mutable ContextDict m_vicinityWorked;      // a radius tile a citizen works this turn (the centre tile included)
 	mutable ContextDict m_vicinityConnected;   // owned + a valid bonus + connected to this city (the "obtained" tier)
-	mutable ContextDict m_tradedBonuses;       // the gated network count, per bonus
 	mutable int m_areaId;                      // the city's area ID (-1 = unassigned)
 	mutable int m_areaTileCount;               // that area's tile count -- AREA_SIZE served without dereferencing CvArea
 	// The largest ADJACENT water body, in tiles -- ONE int that answers isCoastal at EVERY threshold

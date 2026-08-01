@@ -513,11 +513,13 @@ void CvPlotGroup::changeNumBonuses(const BonusTypes eBonus, const int iChange)
 			emitPlotGroupBonusChanged((int)getOwner(), getID(), (int)eBonus, iChange > 0 ? 1 : -1);
 		}
 
+		// The member cities hold no copy of this count -- their read relays straight back here
+		// ([state-repositories.md]) -- so the fan exists ONLY to announce the presence CROSSING to each of them.
 		foreach_(CvCity* pLoopCity, GET_PLAYER(getOwner()).cities())
 		{
 			if (pLoopCity->plotGroup(getOwner()) == this)
 			{
-				pLoopCity->changeNumBonuses(eBonus, iChange);
+				pLoopCity->onNetworkBonusChanged(eBonus, iOldTotal, iNewTotal);
 			}
 		}
 	}

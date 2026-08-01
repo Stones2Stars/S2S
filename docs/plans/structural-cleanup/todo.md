@@ -19,15 +19,6 @@
   behaviour, so it is an owner call ([save.md §3](../../specs/save.md)).
 - Decide whether the `…Times100` on AI unit counts and plot strength is swept with the scale conversion — same
   shape, different nature (fractional SizeMatters counts, not a modifier channel).
-- Settle whether an OBSOLETE building instance is REMOVED or STAYS PRESENT, because two live statements
-  disagree and the swap cut hangs on it. [enabler.md §3.2](../../specs/enabler.md) has the obsolete set going
-  live *"at the swap cut, when an obsolete building STAYS present"* and its `whenObsolete` tree applying in
-  place of its families; the `CvTeam::processTech` comment asserts as an owner ruling that obsolescence is
-  permanent supersession so *"the instance GOES"*. Both cite [json.md §4.2](../../specs/json.md), whose
-  absent-`whenObsolete` default ("fully gone") reads either way — contributing nothing, or not existing.
-  ⚠ Until it is settled the legacy `getObsoletesToBuilding` culture-shell swap has no successor and its four
-  sites (`CvPlayer::acquireCity`, `CvTeam::processTech`) stay dangling. ⛔ Do not pick a side to clear them:
-  removing the swap is what makes the obsolete set live, so guessing here silently decides the model.
 - Rule on the river-attack term for a CITY defender (`CvUnit::getDefenderCombatValues`). Its two branches
   disagree: attacking across a river hands an ordinary defender `-RIVER_ATTACK_MODIFIER`, while the city branch
   is `min(0, riverDefensePenalty - RIVER_ATTACK_MODIFIER)` — capped at zero, so a city defender can never
@@ -154,6 +145,24 @@
   gone from every save and the value has NO source, which nothing catches ([AGENTS.md](../../../AGENTS.md)).
   The wellbeing cut notes are the known cluster — they name the archived bespoke substrate
   ([superseded-ideas](../../architecture/superseded-ideas.md) #14) rather than what actually serves them now.
+- Cut `CvPlayer::processCivics` — the legacy civic ACCUMULATOR PUSH. A civic's deposits reach its cities by
+  rolling DOWN the scope chain ([modifier.md §1](../../specs/modifier.md)), so pushing them into player-side
+  accumulators is the STORED-ACCUMULATOR DRIFT class
+  ([DEC-accumulator-cut-uniform](../../architecture/decisions.md#dec-accumulator-cut-uniform)). ⚑ It is already
+  HALF-converted — `InfoValuation::collectKeyedTarget`, `providesAmenity(CLS_AMENITY_*)` and `resolvedCityLimit`
+  sit beside the legacy reads — so the shape to finish is established, not invented.
+  ⛔ **THREE KINDS, and collapsing them is the mistake:**
+  1. **modifier-channel pushes** (yield/commerce/capital/building/bonus/terrain/specialist-percent/production
+     modifiers, the wellbeing terms) — the cascade carries these; the push GOES.
+  2. **per-flag POLICY counters** (`changeFixedBordersCount`, `changeNoForeignTradeCount`,
+     `changeNoCorporationsCount`, `changeStateReligionCount`, `changeAllReligionsActiveCount`, …) — these are the
+     hand-named counters that retire onto the `EmpireContext.policies` derived union
+     ([contexts.md](../../architecture/contexts.md)), i.e. the SAME family as the amenity counters above; they do
+     not simply vanish.
+  3. **genuine non-cascade state** — the revolution index members (permanent Python-authoritative carve-out),
+     `changeMaxConscript`, `changeSpecialistValidCount`, the hurry counts.
+  ⚠ It also spans the per-TU error cap, so until it clears, lines ~16.9k–28.9k of `CvPlayer.cpp` have NEVER been
+  compiled — it gates visibility into the rest of the file, not just its own errors.
 - Move every consumer off the hand-named channel-shaped getters on `CvCity`/`CvPlayer`, then delete the old names.
 - Cut the hide-and-seek per-type intensity ACCUMULATORS on `CvUnit` (serialized — the cut carries a
   `savemigration.txt` step; confirm the tag spelling against the stream first). Their replacements are built.
@@ -214,7 +223,9 @@
   it wants its own cached block on the same mark protocol, never a hand-named scalar pair beside it
   ([DEC-uniform-cache-shape](../../architecture/decisions.md#dec-uniform-cache-shape)).
   ⚠ `isInvisible` is one of the hottest reads in the engine, which is why the walk must not stay on it.
-- The PLAYER-ALERT consumer, and the alerts owed to it — they re-attach to the OPERATE CROSSING fact, never
+- The PLAYER-ALERT consumer, and the alerts owed to it — including the "your building was obsoleted" message,
+  which rides `SEVT_BUILDING_OBSOLETED` (emitted for exactly this, and for logging; it drives no apply) — they
+  re-attach to the OPERATE CROSSING fact, never
   re-inlined at a mutation site ([event-spine.md](../../specs/event-spine.md)). Expect the owed list to GROW as
   each legacy mutator is cut; add them together on the facts.
 - Decide WHERE the citizen-assignment re-check is asked for. The mechanism itself is right and stays — the AI
@@ -316,9 +327,6 @@
 - Re-express the specialist EXPERIENCE reads as the ENTRY-LIST read over the specialist's own authored entries.
   ⛔ Not an arity fix — folding a keyed entry scope-wide is the silently-plausible-wrong case
   ([modifier.md §5](../../specs/modifier.md)).
-- Make `CvCity::getNumBonuses` a BARE FETCH of a maintained per-city count ([enabler.md §8](../../specs/enabler.md)
-  open item 2). ⛔ Every per-read re-plumbing of this is the wrong axis and has been backed out before.
-  ⚠ `CityContext::tradedBonusCount` re-derives on refresh and is on the wrong side of it too.
 - Give the CityContext its id-keyed RADIUS DICTIONARIES, then move the improvement count onto them. The count
   domain is wired but walks the city's radius per call; it runs at rebuild/per-decision cadence rather than on a
   read path, so it is not the banned read-time scan, but the dictionary is the standing target
@@ -351,8 +359,19 @@
   ⚠ Audit each `change*` BODY for side-effect riders first ([save.md §6](../../specs/save.md)).
   ⛔ They do NOT each earn a replacement getter — the group read answers the TOTAL, and per-source attribution is
   the ORACLE's job. Their last maintainers (`processBonus`, `processSpecialist`) go with them.
+- Cut the `CvPlayer` unit-upkeep accumulators onto the UPKEEP cascade — ⛔ upkeep is NOT residue awaiting a new
+  surface: it is **its own cascade channel, together with MAINTENANCE** (owner), and the vocabulary is already
+  minted (`UPKEEP_UNIT_MILITARY` / `UPKEEP_UNIT_CIVILIAN` / `UPKEEP_FREE_MILITARY` / `UPKEEP_FREE_CIVILIAN` /
+  `UPKEEP_AMOUNT`, at `EMPIRE | UNIT`). So `m_iUnitUpkeepCivilian100` / `m_iUnitUpkeepMilitary100` and their
+  `*UpkeepMod` percent stages are the ordinary STORED-ACCUMULATOR DRIFT class
+  ([DEC-accumulator-cut-uniform](../../architecture/decisions.md#dec-accumulator-cut-uniform)), and the empire
+  total is a RECEIVER SLOT in the player's own package beside maintenance's — the second non-commerce receiver,
+  which is what makes that rule general rather than a maintenance special case
+  ([state-repositories.md](../../architecture/state-repositories.md), [economy.md](../../reference/economy.md)).
+  ⚠ The free allowances are SIGNED free-amount kinds whose group floors at zero as combine metadata, applied
+  BEFORE the consumption site's own `max(0, upkeep − Σfree)` — two floors, deliberately ([modifier.md §2](../../specs/modifier.md)).
 - Design the genuine residue that needs NEW surface: the slider math, the espionage counters, the live combat
-  state, `getHappinessTimer`, and the `CvPlayer` unit-upkeep family.
+  state, and `getHappinessTimer`.
 - Hoist the per-commerce valuation in `getBuildingCommerceValue` — it runs once per (candidate × channel) where
   the caller already threads other per-candidate arrays for exactly this reason.
 
@@ -476,8 +495,8 @@
 - Converge the operate reverse index's two PER-ID buckets onto `EDGEF_REQUIRED_BY`.
   ⛔ The axis-flag lists and the PROPERTY band index are NOT convergence targets — a coarse list matches a coarse
   event, and the reverse pass deliberately excludes engine tokens and the plot substrate.
-- Close the remaining [enabler.md §8](../../specs/enabler.md) items: residency/counting, plot-group membership
-  not trusted from a save, the load-end dormancy fixpoint, the dynamic operate axes.
+- Close the remaining [enabler.md §8](../../specs/enabler.md) items: plot-group membership not trusted from a
+  save, the load-end dormancy fixpoint, the dynamic operate axes.
 
 ## Tree / include hygiene
 

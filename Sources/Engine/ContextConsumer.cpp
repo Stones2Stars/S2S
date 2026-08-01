@@ -139,22 +139,11 @@ public:
 		case SEVT_CITY_CULTURE_LEVEL_CHANGED:
 			refreshVicinityForCity(kEvent.iC, kEvent.iSrcLoc);
 			break;
-		// An ACTIVE providing building appeared or vanished. The building half of the supply is the ENABLER's
-		// (vicinityProvidedBonuses), so nothing is folded here -- but the same construction/destruction moves this
-		// city's own network count, which IS this context's.
-		case SEVT_VICINITY_BONUS_CHANGED:
-		case SEVT_BONUS_CHANGED:
-		case SEVT_CITY_NETWORK_CHANGED:
-			refreshTradedForCity(kEvent.iC, kEvent.iSrcLoc);
-			break;
-		// A network resource entered or left a PLOT GROUP: every member city's gated count can move, and so can the
-		// obtained-vicinity tier (which requires connection to the city).
+		// A network resource entered or left a PLOT GROUP: the obtained-vicinity tier can move with it, since that
+		// tier requires the bonus to be connected to the city. The city's network COUNT needs nothing here -- it
+		// is forwarded from the plot group, so it follows the change with no store to refresh.
 		case SEVT_PLOTGROUP_BONUS_CHANGED:
-			refreshNetworkForPlayer(kEvent.iC);
-			break;
-		// A tech can open or close a bonus's TechCityTrade gate, which is the gate the stored count applies.
-		case SEVT_TECH_CHANGED:
-			refreshTradedForPlayer(kEvent.iC);
+			refreshVicinityForPlayer(kEvent.iC);
 			break;
 		// A grantor's OPERATING contribution turned on or off: fold its amenities in or out (+1 / -1). The
 		// OPERATING axis is the right one -- a DORMANT grantor confers nothing (enabler.md §3.2) -- and it now
@@ -272,15 +261,6 @@ private:
 		}
 	}
 
-	static void refreshTradedForCity(int iOwner, int iCityId)
-	{
-		const CvCity* pCity = cityFor(iOwner, iCityId);
-		if (pCity != NULL)
-		{
-			pCity->getCityContext().refreshTradedBonuses();
-		}
-	}
-
 	static void refreshHolyCityFor(int iOwner, int iCityId)
 	{
 		const CvCity* pCity = cityFor(iOwner, iCityId);
@@ -329,7 +309,6 @@ private:
 		}
 		const CityContext& kContext = pCity->getCityContext();
 		kContext.refreshVicinityBonuses();
-		kContext.refreshTradedBonuses();
 		kContext.refreshAreaFacts();
 		kContext.refreshHolyCity();
 		kContext.refreshGovernmentCenterDistance();
@@ -390,9 +369,9 @@ private:
 		forEachRadiusCity(iPlotIndex, RefreshAreaFacts());
 	}
 
-	// A plot-group resource move touches every city of that player, and it moves BOTH the gated network count and
-	// the obtained-vicinity tier (which requires connection to the city).
-	static void refreshNetworkForPlayer(int iPlayer)
+	// A plot-group resource move touches every city of that player: it moves the obtained-vicinity tier, which
+	// requires the bonus to be connected to the city.
+	static void refreshVicinityForPlayer(int iPlayer)
 	{
 		if (iPlayer < 0 || iPlayer >= MAX_PLAYERS)
 		{
@@ -402,22 +381,7 @@ private:
 		CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iPlayer);
 		for (const CvCity* pCity = kPlayer.firstCity(&iLoop); pCity != NULL; pCity = kPlayer.nextCity(&iLoop))
 		{
-			pCity->getCityContext().refreshTradedBonuses();
 			pCity->getCityContext().refreshVicinityBonuses();
-		}
-	}
-
-	static void refreshTradedForPlayer(int iPlayer)
-	{
-		if (iPlayer < 0 || iPlayer >= MAX_PLAYERS)
-		{
-			return;
-		}
-		int iLoop = 0;
-		CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iPlayer);
-		for (const CvCity* pCity = kPlayer.firstCity(&iLoop); pCity != NULL; pCity = kPlayer.nextCity(&iLoop))
-		{
-			pCity->getCityContext().refreshTradedBonuses();
 		}
 	}
 
@@ -496,7 +460,6 @@ private:
 			{
 				const CityContext& kContext = pCity->getCityContext();
 				kContext.refreshVicinityBonuses();
-				kContext.refreshTradedBonuses();
 				kContext.refreshAreaFacts();
 				kContext.refreshHolyCity();
 				// AFTER the loop would be wrong only if it read another city's store; it reads government-centre

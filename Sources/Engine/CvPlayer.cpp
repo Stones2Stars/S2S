@@ -427,7 +427,7 @@ void CvPlayer::initMore(PlayerTypes eID, LeaderHeadTypes ePersonality, bool bSet
 	// I imagine there's a lot of code that doesn't expect NO_CIVIC to be the set civic though.
 	for (int iI = GC.getNumCivicOptionInfos() - 1; iI > -1; iI--)
 	{
-		setCivics((CivicOptionTypes)iI, (CivicTypes)GC.getCivilizationInfo(getCivilizationType()).getInitialCivic(iI));
+		setCivics((CivicOptionTypes)iI, GC.getCivilizationInfo(getCivilizationType()).getInitialCivic((CivicOptionTypes)iI));
 	}
 }
 
@@ -1113,7 +1113,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_bInquisitionConditions = false;
 	m_iCityLimit = 0;
 	m_iCityOverLimitUnhappy = 0;
-	m_iForeignUnhappyPercent = 0;
 
 	m_iNumNukeUnits = 0;
 	m_iNumOutsideUnits = 0;
@@ -1274,9 +1273,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iEnslavementChance = 0;
 	m_iForeignTradeRouteModifier = 0;
 	m_iTaxRateUnhappiness = 0;
-
-	// Afforess Food Threshold Modifier 08/16/09
-	m_fPopulationgrowthratepercentageLog = 0;
 
 	m_iDistantUnitSupportCostModifier = 0;
 	m_iReligionSpreadRate = 0;
@@ -1738,7 +1734,7 @@ void CvPlayer::resetCivTypeEffects()
 	{
 		for (int iI = 0; iI < GC.getNumCivicOptionInfos(); iI++)
 		{
-			setCivics(((CivicOptionTypes)iI), ((CivicTypes)(GC.getCivilizationInfo(getCivilizationType()).getInitialCivic(iI))));
+			setCivics((CivicOptionTypes)iI, GC.getCivilizationInfo(getCivilizationType()).getInitialCivic((CivicOptionTypes)iI));
 		}
 
 		for (int iI = 0; iI < GC.getNumEventInfos(); iI++)
@@ -2543,8 +2539,6 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 	}
 	else
 	{
-		CvTeam& newTeam = GET_TEAM(getTeam());
-
 		// Notifications, gold on capture
 		if (bConquest)
 		{
@@ -2797,34 +2791,22 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 			pNewCity->setCultureTimes100(((PlayerTypes)iI), aiCulture[iI], false, false);
 		}
 
+		// An OBSOLETE building carries over ONLY if its `whenObsolete` tree takes over; an EMPTY tree is a HARD
+		// REMOVAL, so such a building simply does not arrive in the acquired city ([json.md §4.2],
+		// [enabler.md §3.2]). ⛔ No successor is placed either way -- what the legacy culture-shell chain used to
+		// put here is what the curator now reads to emit that tree on the building itself.
+		const CvTeam& newTeam = GET_TEAM(getTeam());
+		for (std::map<BuildingTypes, BuiltBuildingData>::const_iterator itr = buildingLedger.begin(); itr != buildingLedger.end(); ++itr)
 		{
-			std::vector<BuildingTypes> obsolete;
-			for (std::map<BuildingTypes, BuiltBuildingData>::const_iterator itr = buildingLedger.begin(); itr != buildingLedger.end(); ++itr)
+			if (newTeam.isObsoleteBuilding(itr->first))
 			{
-				if (newTeam.isObsoleteBuilding(itr->first))
+				const CvModifiers* pWhenObsolete = GC.getBuildingInfo(itr->first).getWhenObsolete();
+				if (pWhenObsolete == NULL || pWhenObsolete->empty())
 				{
-					obsolete.push_back(itr->first);
-				}
-				else pNewCity->setHasBuilding(itr->first, true, itr->second.eBuiltBy, itr->second.iTimeBuilt, false);
-			}
-			foreach_(const BuildingTypes eType, obsolete)
-			{
-				BuildingTypes eObsoletesToBuilding = GC.getBuildingInfo(eType).getObsoletesToBuilding();
-				while (eObsoletesToBuilding > NO_BUILDING)
-				{
-					if (hasBuilding(eObsoletesToBuilding))
-					{
-						break;
-					}
-					if (GC.getBuildingInfo(eObsoletesToBuilding).getObsoleteTech() < 0
-					|| !GET_TEAM(getTeam()).isHasTech(GC.getBuildingInfo(eObsoletesToBuilding).getObsoleteTech()))
-					{
-						pNewCity->changeHasBuilding(eObsoletesToBuilding, true);
-						break;
-					}
-					eObsoletesToBuilding = GC.getBuildingInfo(eObsoletesToBuilding).getObsoletesToBuilding();
+					continue;
 				}
 			}
+			pNewCity->setHasBuilding(itr->first, true, itr->second.eBuiltBy, itr->second.iTimeBuilt, false);
 		}
 
 		for (BuildingChangeArray::iterator it = aBuildingHappyChange.begin(); it != aBuildingHappyChange.end(); ++it)
@@ -3981,9 +3963,6 @@ void CvPlayer::doTurn()
 	{
 		setCommercePercent(COMMERCE_ESPIONAGE, 0);
 	}
-
-	//	Recalculate city growth rates from scratch each turn
-	recalculatePopulationgrowthratepercentage();
 
 	verifyGoldCommercePercent();
 
@@ -6894,7 +6873,7 @@ int CvPlayer::getProductionModifier(BuildingTypes eBuilding) const
 	// Resolved ONCE per call (see the UnitTypes overload above).
 	const int iBuildingsSegment = InfoValuation::keyedTargetSegment("buildings");
 	const int iSpecialBuildingsSegment = InfoValuation::keyedTargetSegment("specialBuildings");
-	const SpecialBuildingTypes eSpecialBuilding = GC.getBuildingInfo(eBuilding).getSpecialBuildingType();
+	const SpecialBuildingTypes eSpecialBuilding = (SpecialBuildingTypes)GC.getBuildingInfo(eBuilding).getSpecialBuildingType();
 
 	for (int iI = 0; iI < GC.getNumTraitInfos(); iI++)
 	{
@@ -8130,17 +8109,6 @@ void CvPlayer::revolution(CivicTypes* paeNewCivics, bool bForce)
 }
 
 
-int CvPlayer::getCivicPercentAnger(CivicTypes eCivic) const
-{
-	if (getCivics((CivicOptionTypes)GC.getCivicInfo(eCivic).getCivicOption()) == eCivic)
-	{
-		// the divisor is 1000 so 1 percent would be represented by 10.
-		return GC.getCivicInfo(eCivic).getCivicPercentAnger() * 10;
-	}
-	return 0;
-}
-
-
 bool CvPlayer::canDoReligion(ReligionTypes eReligion) const
 {
 	return GET_TEAM(getTeam()).getHasReligionCount(eReligion) != 0;
@@ -8453,9 +8421,9 @@ void CvPlayer::foundCorporation(CorporationTypes eCorporation)
 			int iValue = 10;
 			iValue += pLoopCity->getPopulation();
 
-			foreach_(const BonusTypes eBonus, GC.getCorporationInfo(eCorporation).getConsumedBonuses())
+			foreach_(const int iConsumedBonus, GC.getCorporationInfo(eCorporation).getConsumedBonuses())
 			{
-				iValue += 10 * pLoopCity->getNumBonuses(eBonus);
+				iValue += 10 * pLoopCity->getNumBonuses((BonusTypes)iConsumedBonus);
 			}
 
 			iValue += GC.getGame().getSorenRandNum(GC.getDefineINT("FOUND_CORPORATION_CITY_RAND"), "Found Corporation");
@@ -8496,7 +8464,11 @@ int CvPlayer::getCivicAnarchyLength(CivicTypes* paeNewCivics) const
 	int iCount = 0;
 	for (int iI = 0; iI < GC.getNumCivicOptionInfos(); iI++)
 	{
-		if (paeNewCivics[iI] != getCivics((CivicOptionTypes)iI) && !GC.getCivicInfo(paeNewCivics[iI]).isPolicy())
+		// It is the CIVIC change that costs anarchy (owner). Policies are not a separately-toggled thing to
+		// exempt: they are granted BY a civic and lapse with it -- adopting one confers its policies, dropping it
+		// takes them back, so they are never permanent and never move on their own
+		// ([contexts.md] EmpireContext.policies is the derived union over the live grantors).
+		if (paeNewCivics[iI] != getCivics((CivicOptionTypes)iI))
 		{
 			const int iAnarchyLength = GC.getCivicInfo(paeNewCivics[iI]).getAnarchyLength();
 
@@ -8732,7 +8704,9 @@ int CvPlayer::greatPeopleThresholdNonMilitary() const
 
 int CvPlayer::specialistYield(SpecialistTypes eSpecialist, YieldTypes eYield) const
 {
-	return (GC.getSpecialistInfo(eSpecialist).getYieldChange(eYield) + getExtraSpecialistYield(eSpecialist, eYield) + getSpecialistExtraYield(eYield) + (getSpecialistYieldPercentChanges(eSpecialist, eYield) / 100));
+	// The intrinsic is the specialist's own CITY-scope flat; it is ×100, so it reduces here where the terms
+	// beside it are whole yields ([DEC-fixedpoint-x100]).
+	return ((GC.getSpecialistInfo(eSpecialist).getFlatYield(eYield, CASC_SCOPE_CITY) / 100) + getExtraSpecialistYield(eSpecialist, eYield) + getSpecialistExtraYield(eYield) + (getSpecialistYieldPercentChanges(eSpecialist, eYield) / 100));
 }
 
 
@@ -8743,9 +8717,11 @@ int CvPlayer::specialistCommerce(SpecialistTypes eSpecialist, CommerceTypes eCom
 
 int CvPlayer::specialistCommerceTimes100(SpecialistTypes eSpecialist, CommerceTypes eCommerce) const
 {
+	// The intrinsic is already ×100 on the info, which is the scale this read returns -- so the legacy `100 *`
+	// is gone rather than relocated ([DEC-fixedpoint-x100]).
 	return
 	(
-		100 * GC.getSpecialistInfo(eSpecialist).getCommerceChange(eCommerce)
+		GC.getSpecialistInfo(eSpecialist).getFlatCommerce(eCommerce, CASC_SCOPE_CITY)
 		+
 		getSpecialistCommercePercentChanges(eSpecialist, eCommerce)
 	);
@@ -12270,7 +12246,6 @@ void CvPlayer::changeCapitalCommerceRateModifier(CommerceTypes eIndex, int iChan
 
 		if (pCapitalCity)
 		{
-			pCapitalCity->
 			pCapitalCity->AI_setAssignWorkDirty(true);
 		}
 	}
@@ -13323,40 +13298,6 @@ void CvPlayer::setCivics(CivicOptionTypes eIndex, CivicTypes eNewValue)
 			emitCivicAdopted((int)getID(), (int)eNewValue, (int)eOldCivic);
 		}
 
-		// Afforess - Check Buildings, Clear Caches
-		bool bUpdateHealth = false;
-		bool bUpdateHappiness = false;
-		if (eNewValue != NO_CIVIC && eOldCivic != NO_CIVIC)
-		{
-			const CvCivicInfo& kCivic = GC.getCivicInfo(getCivics(eIndex));
-			const CvCivicInfo& kOldCivic = GC.getCivicInfo(eOldCivic);
-			for (int iI = 0; iI < GC.getNumImprovementInfos(); iI++)
-			{
-				if (kCivic.getImprovementHealthPercentChanges(iI) != kOldCivic.getImprovementHealthPercentChanges(iI))
-				{
-					bUpdateHealth = true;
-				}
-				if (kCivic.getImprovementHappinessChanges(iI) != kOldCivic.getImprovementHappinessChanges(iI))
-				{
-					bUpdateHappiness = true;
-				}
-				if (bUpdateHappiness && bUpdateHealth)
-				{
-					break;
-				}
-			}
-		}
-		else
-		{
-			bUpdateHappiness = true;
-			bUpdateHealth = true;
-		}
-		foreach_ (CvCity* city, cities())
-		{
-			if (bUpdateHappiness)
-			if (bUpdateHealth)
-		}
-
 		GC.getGame().updateSecretaryGeneral();
 
 		GC.getGame().AI_makeAssignWorkDirty();
@@ -13433,6 +13374,10 @@ void CvPlayer::changeExtraSpecialistYield(SpecialistTypes eIndex1, YieldTypes eI
 	}
 }
 
+
+// How far either way along the group cycle a near-move reinsert looks for its slot, in nodes. Its only user is
+// the function below.
+static const int REINSERT_SEARCH_HORIZON = 5;
 
 void CvPlayer::updateGroupCycle(CvUnit* pUnit, bool bFarMove)
 {
@@ -14563,8 +14508,10 @@ void CvPlayer::doEspionageOneOffPoints(int iChange)
 void CvPlayer::doEspionagePoints()
 {
 	int aiRecvCommerces[NUM_COMMERCE_TYPES];
-	doEspionageOneOffPoints(getCommerces(aiRecvCommerces);
-	aiRecvCommerces[COMMERCE_ESPIONAGE] / 100);
+	getCommerces(aiRecvCommerces);
+	// The group read is x100 like every realized amount, and espionage points are a whole count -- so the
+	// reduce lands at the point of use ([DEC-fixedpoint-x100]).
+	doEspionageOneOffPoints(aiRecvCommerces[COMMERCE_ESPIONAGE] / 100);
 }
 
 int CvPlayer::getEspionageSpending(TeamTypes eAgainstTeam, int iTotal) const
@@ -16660,11 +16607,6 @@ int CvPlayer::getAdvancedStartRouteCost(RouteTypes eRoute, bool bAdd, const CvPl
 			{
 				return -1;
 			}
-			if (info->getObsoleteTech() != NO_TECH
-			&& GET_TEAM(getTeam()).isHasTech(info->getObsoleteTech()))
-			{
-				return -1;
-			}
 		}
 	}
 	return iCost;
@@ -16983,67 +16925,32 @@ void CvPlayer::processCivics(const CivicTypes eCivic, const int iChange, const b
 	//Speed Optimizations
 	if (bLimited)
 	{
-		foreach_(const BuildingModifier2& change, kCivic.getBuildingHappinessChangesSparse())
+		// The civic's OWN `enables.specialists` list names the handful it unlocks; asking every specialist in
+		// the registry whether this civic validates it is the own-data inversion ([DEC-one-reverse-view]).
+		const std::vector<int>* pValidSpecialists = kCivic.getEdges()->find(EDGEF_ENABLES, EDGEB_SPECIALISTS);
+		if (pValidSpecialists != NULL)
 		{
-			changeExtraBuildingHappiness(change.first, change.second * iChange, bLimited);
-		}
-		foreach_(const BuildingModifier2& change, kCivic.getBuildingHealthChangesSparse())
-		{
-			changeExtraBuildingHealth(change.first, change.second * iChange, bLimited);
-		}
-		if (kCivic.isAnyFeatureHappinessChange())
-		{
-			for (int iI = 0; iI < GC.getNumFeatureInfos(); iI++)
+			for (size_t iSpec = 0; iSpec < pValidSpecialists->size(); ++iSpec)
 			{
-				changeFeatureHappiness((FeatureTypes)iI, kCivic.getFeatureHappinessChanges(iI) * iChange, bLimited);
+				changeSpecialistValidCount((SpecialistTypes)(*pValidSpecialists)[iSpec], iChange, bLimited);
 			}
-		}
-		for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
-		{
-			changeSpecialistValidCount((SpecialistTypes)iI, kCivic.isSpecialistValid(iI) * iChange, bLimited);
 		}
 	}
 	else
 	{
-		changeStateReligionGreatPeopleRateModifier(kCivic.getStateReligionGreatPeopleRateModifier() * iChange);
 
-
-		changeImprovementUpgradeRateModifier(kCivic.getImprovementUpgradeRateModifier() * iChange);
-		changeMilitaryProductionModifier(kCivic.getMilitaryProductionModifier() * iChange);
-		changeBaseFreeUnitUpkeepCivilian(kCivic.getFreeUnitUpkeepCivilian() * iChange);
-		changeBaseFreeUnitUpkeepMilitary(kCivic.getFreeUnitUpkeepMilitary() * iChange);
-		changeFreeUnitUpkeepCivilianPopPercent(kCivic.getFreeUnitUpkeepCivilianPopPercent() * iChange);
-		changeFreeUnitUpkeepMilitaryPopPercent(kCivic.getFreeUnitUpkeepMilitaryPopPercent() * iChange);
-		changeCivilianUnitUpkeepMod(kCivic.getCivilianUnitUpkeepMod() * iChange);
-		changeMilitaryUnitUpkeepMod(kCivic.getMilitaryUnitUpkeepMod() * iChange);
 		changeMaxConscript(getWorldSizeMaxConscript(eCivic) * iChange);
-		changeTradeRoutes(kCivic.getTradeRoutes() * iChange);
-		changeStateReligionUnitProductionModifier(kCivic.getStateReligionUnitProductionModifier() * iChange);
-		changeStateReligionBuildingProductionModifier(kCivic.getStateReligionBuildingProductionModifier() * iChange);
-		changeExpInBorderModifier(kCivic.getExpInBorderModifier() * iChange);
 
 		changeUpgradeAnywhere((kCivic.providesPolicy(CLS_POLICY_UPGRADE_ANYWHERE))? iChange : 0);
-		changeRevIdxHolyCityGood(kCivic.getRevIdxHolyCityGood() * iChange);
-		changeRevIdxHolyCityBad(kCivic.getRevIdxHolyCityBad() * iChange);
-		changeRevIdxNationalityMod(kCivic.getRevIdxNationalityMod() * static_cast<float>(iChange));
-		changeRevIdxBadReligionMod(kCivic.getRevIdxBadReligionMod() * static_cast<float>(iChange));
-		changeRevIdxGoodReligionMod(kCivic.getRevIdxGoodReligionMod() * static_cast<float>(iChange));
-		changeInquisitionCount((kCivic.isAllowInquisitions())? iChange : 0);
-		changeInquisitionCount((kCivic.isDisallowInquisitions())? -iChange : 0);
-
-		for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
-		{
-			changeYieldRateModifier(((YieldTypes)iI), (kCivic.getYieldModifier(iI) * iChange));
-			changeCapitalYieldRateModifier(((YieldTypes)iI), (kCivic.getCapitalYieldModifier(iI) * iChange));
-			changeTradeYieldModifier(((YieldTypes)iI), (kCivic.getTradeYieldModifier(iI) * iChange));
-			changeLandmarkYield((YieldTypes)iI, kCivic.getLandmarkYieldChanges(iI) * iChange);
-		}
-
-		for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
-		{
-			changeCommerceRateModifier(((CommerceTypes)iI), (kCivic.getCommerceModifier(iI) * iChange));
-			changeCapitalCommerceRateModifier(((CommerceTypes)iI), (kCivic.getCapitalCommerceModifier(iI) * iChange));
-		}
+		// The holy-city kinds are FLAT, so the ×100 reduces here at the point of use; the three MOD kinds are
+		// percents and carry no scaling at all ([DEC-fixedpoint-x100]) -- a family-wide ÷100 would zero them.
+		changeRevIdxHolyCityGood(kCivic.getRevolution(REVOLUTION_HOLY_CITY_GOOD, CASC_SCOPE_EMPIRE) / 100 * iChange);
+		changeRevIdxHolyCityBad(kCivic.getRevolution(REVOLUTION_HOLY_CITY_BAD, CASC_SCOPE_EMPIRE) / 100 * iChange);
+		changeRevIdxNationalityMod(kCivic.getRevolution(REVOLUTION_NATIONALITY, CASC_SCOPE_EMPIRE) * static_cast<float>(iChange));
+		changeRevIdxBadReligionMod(kCivic.getRevolution(REVOLUTION_BAD_RELIGION, CASC_SCOPE_EMPIRE) * static_cast<float>(iChange));
+		changeRevIdxGoodReligionMod(kCivic.getRevolution(REVOLUTION_GOOD_RELIGION, CASC_SCOPE_EMPIRE) * static_cast<float>(iChange));
+		changeInquisitionCount((kCivic.providesPolicy(CLS_POLICY_ALLOW_INQUISITIONS))? iChange : 0);
+		changeInquisitionCount((kCivic.providesPolicy(CLS_POLICY_DISALLOW_INQUISITIONS))? -iChange : 0);
 
 		std::vector<std::pair<int, int> > kCivicBuildRate;
 		InfoValuation::collectKeyedTarget(kCivic.getModifiers(), MODFAM_BUILD_RATE, -1,
@@ -17054,81 +16961,19 @@ void CvPlayer::processCivics(const CivicTypes eCivic, const int iChange, const b
 				kCivicBuildRate[iKeyed].second * iChange);
 		}
 
-		foreach_(const BuildingModifier2& change, kCivic.getBuildingHappinessChangesSparse())
-		{
-			changeExtraBuildingHappiness(change.first, change.second * iChange);
-		}
-		foreach_(const BuildingModifier2& change, kCivic.getBuildingHealthChangesSparse())
-		{
-			changeExtraBuildingHealth(change.first, change.second * iChange);
-		}
 
-		for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
+		const std::vector<int>* pValidSpecialists = kCivic.getEdges()->find(EDGEF_ENABLES, EDGEB_SPECIALISTS);
+		if (pValidSpecialists != NULL)
 		{
-			changeUnitProductionModifier(((UnitTypes)iI), kCivic.getUnitProductionModifier(iI) * iChange);
+			for (size_t iSpec = 0; iSpec < pValidSpecialists->size(); ++iSpec)
+			{
+				changeSpecialistValidCount((SpecialistTypes)(*pValidSpecialists)[iSpec], iChange);
+			}
 		}
 
-		for (int iI = 0; iI < GC.getNumFeatureInfos(); iI++)
-		{
-			changeFeatureHappiness(((FeatureTypes)iI), (kCivic.getFeatureHappinessChanges(iI) * iChange));
-		}
-
-		for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
-		{
-			changeSpecialistValidCount((SpecialistTypes)iI, kCivic.isSpecialistValid(iI) * iChange);
-			changeFreeSpecialistCount((SpecialistTypes)iI, (kCivic.getFreeSpecialistCount(iI) * iChange));
-		}
-
-		changeForeignTradeRouteModifier(kCivic.getForeignTradeRouteModifier() * iChange);
-		changeReligionSpreadRate(kCivic.getReligionSpreadRate() * iChange);
-		changeCorporationSpreadModifier(kCivic.getCorporationSpreadRate() * iChange);
-		changeDistantUnitSupportCostModifier(kCivic.getDistantUnitSupportCostModifier() * iChange);
-		changeExtraFreedomFighters(kCivic.getFreedomFighterChange() * iChange);
-		changeEnslavementChance(kCivic.getEnslavementChance() * iChange);
-		changeHurryCostModifier(kCivic.getHurryCostModifier() * iChange);
-		changeHurryInflationModifier(kCivic.getHurryInflationModifier() * iChange);
-		changeLandmarkHappiness(kCivic.getLandmarkHappiness() * iChange);
-		changeNoLandmarkAngerCount(kCivic.isNoLandmarkAnger() ? iChange : 0);
-
-		changeFixedBordersCount(kCivic.IsFixedBorders() ? iChange : 0);
-		changeFreedomFighterCount(kCivic.isFreedomFighter() ? iChange : 0);
+		changeFixedBordersCount(kCivic.providesPolicy(CLS_POLICY_FIXED_BORDERS) ? iChange : 0);
 		AI_makeAssignWorkDirty();
-		for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
-		{
-			for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
-			{
-				changeSpecialistYieldPercentChanges((SpecialistTypes)iI, (YieldTypes)iJ, kCivic.getSpecialistYieldPercentChanges(iI, iJ) * iChange);
-			}
-			for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
-			{
-				changeSpecialistCommercePercentChanges((SpecialistTypes)iI, (CommerceTypes)iJ, kCivic.getSpecialistCommercePercentChanges(iI, iJ) * iChange);
-			}
-		}
 
-		for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
-		{
-			for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
-			{
-				changeBuildingCommerceModifier((BuildingTypes)iI, (CommerceTypes)iJ, kCivic.getBuildingCommerceModifier(iI, iJ) * iChange);
-			}
-		}
-
-		for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
-		{
-			for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
-			{
-				changeBuildingCommerceChange((BuildingTypes)iI, (CommerceTypes)iJ, kCivic.getBuildingCommerceChange(iI, iJ) * iChange);
-			}
-		}
-
-		for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
-		{
-			changeBonusMintedPercent((BonusTypes)iI, kCivic.getBonusMintedPercent(iI) * iChange);
-			for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
-			{
-				changeBonusCommerceModifier((BonusTypes)iI, (CommerceTypes)iJ, kCivic.getBonusCommerceModifier(iI, iJ) * iChange);
-			}
-		}
 		if (iChange == -1)
 		{
 			for (int iI = 0; iI < GC.getNumVoteSourceInfos(); ++iI)
@@ -17143,45 +16988,25 @@ void CvPlayer::processCivics(const CivicTypes eCivic, const int iChange, const b
 			}
 
 		}
-		for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
-		{
-			changeUnitCombatProductionModifier(((UnitCombatTypes)iI), (kCivic.getUnitCombatProductionModifier(iI) * iChange));
-		}
 
-		for (int iI = 0; iI < GC.getNumTerrainInfos(); iI++)
-		{
-			for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
-			{
-				changeTerrainYieldChange(((TerrainTypes)iI), ((YieldTypes)iJ), (kCivic.getTerrainYieldChanges(iI, iJ) * iChange));
-			}
-		}
-		changeExtraNationalCaptureProbabilityModifier(kCivic.getNationalCaptureProbabilityModifier() * iChange);
-		changeExtraNationalCaptureResistanceModifier(kCivic.getNationalCaptureResistanceModifier() * iChange);
 	}
 
-	changeCivicHappiness(kCivic.getCivicHappiness() * iChange);
-	changeLargestCityHappiness(kCivic.getLargestCityHappiness() * iChange, bLimited);
-	changeNoCapitalUnhappiness(kCivic.isNoCapitalUnhappiness() * iChange);
-	changeTaxRateUnhappiness(kCivic.getTaxRateUnhappiness() * iChange);
-	changeHappyPerMilitaryUnit(kCivic.getHappyPerMilitaryUnit() * iChange,  bLimited);
-
-	changeCivicHealth(kCivic.getExtraHealth() * iChange,  bLimited);
 	changeNoUnhealthyPopulationCount(kCivic.providesAmenity(CLS_AMENITY_ABOLISHED_UNHEALTH_FROM_POPULATION) * iChange, bLimited);
 	changeBuildingOnlyHealthyCount(kCivic.providesAmenity(CLS_AMENITY_ABOLISHED_UNHEALTH_FROM_BUILDINGS) * iChange, bLimited);
 
-	changePopulationgrowthratepercentage(kCivic.getPopulationgrowthratepercentage(), iChange == 1);
-	changeMilitaryFoodProductionCount(kCivic.isMilitaryFoodProduction() * iChange, bLimited);
+	changeMilitaryFoodProductionCount(kCivic.providesPolicy(CLS_POLICY_MILITARY_FOOD_PRODUCTION) * iChange, bLimited);
 
-	changeNoForeignTradeCount(kCivic.isNoForeignTrade() * iChange, bLimited);
-	changeNoCorporationsCount(kCivic.isNoCorporations() * iChange, bLimited);
-	changeNoForeignCorporationsCount(kCivic.isNoForeignCorporations() * iChange, bLimited);
+	changeNoForeignTradeCount(kCivic.providesPolicy(CLS_POLICY_NO_FOREIGN_TRADE) * iChange, bLimited);
+	changeNoCorporationsCount(kCivic.providesPolicy(CLS_POLICY_NO_CORPORATIONS) * iChange, bLimited);
+	changeNoForeignCorporationsCount(kCivic.providesPolicy(CLS_POLICY_NO_FOREIGN_CORPORATIONS) * iChange, bLimited);
 
-	changeStateReligionCount(kCivic.isStateReligion() * iChange, bLimited);
-	changeNoNonStateReligionSpreadCount(kCivic.isNoNonStateReligionSpread() * iChange);
+	changeStateReligionCount(kCivic.providesPolicy(CLS_POLICY_STATE_RELIGION) * iChange, bLimited);
+	changeNoNonStateReligionSpreadCount(kCivic.providesPolicy(CLS_POLICY_NO_NON_STATE_RELIGION_SPREAD) * iChange);
 
-	changeRevIdxLocal(kCivic.getRevIdxLocal() * iChange);
-	changeRevIdxNational(kCivic.getRevIdxNational() * iChange);
-	changeRevIdxDistanceModifier(kCivic.getRevIdxDistanceModifier() * iChange);
+	// local/national are FLAT index deltas (the ×100 reduces here); distanceModifier is a percent and does not.
+	changeRevIdxLocal(kCivic.getRevolution(REVOLUTION_LOCAL, CASC_SCOPE_EMPIRE) / 100 * iChange);
+	changeRevIdxNational(kCivic.getRevolution(REVOLUTION_NATIONAL, CASC_SCOPE_EMPIRE) / 100 * iChange);
+	changeRevIdxDistanceModifier(kCivic.getRevolution(REVOLUTION_DISTANCE_MODIFIER, CASC_SCOPE_EMPIRE) * iChange);
 
 	// #430 ruling 26: the limit accumulator takes the RESOLVED limit (base config × world-size scale, option-
 	// gated -- InfoValuation::resolvedCityLimit); the over-limit accumulator becomes a PRESENCE COUNT of
@@ -17189,20 +17014,27 @@ void CvPlayer::processCivics(const CivicTypes eCivic, const int iChange, const b
 	// CITY_LIMIT per.above deposits, never here) -- its consumers test ==0 / >0, exactly the presence question.
 	changeCityLimit(InfoValuation::resolvedCityLimit(kCivic.getCityLimit()) * iChange);
 	changeCityOverLimitUnhappy((kCivic.hasCityOverLimitAnger() ? 1 : 0) * iChange);
-	changeForeignUnhappyPercent(kCivic.getForeignerUnhappyPercent() * iChange);
-
 
 	//TB Civics Tags
-	changeAllReligionsActiveCount((kCivic.isAllReligionsActive())? iChange : 0);
-	changeAllReligionsActiveCount((kCivic.isBansNonStateReligions())? -iChange : 0);
+	changeAllReligionsActiveCount((kCivic.providesPolicy(CLS_POLICY_ALL_RELIGIONS_ACTIVE))? iChange : 0);
+	changeAllReligionsActiveCount((kCivic.providesPolicy(CLS_POLICY_BANS_NON_STATE_RELIGIONS))? -iChange : 0);
 
-	for (int iI = 0; iI < GC.getNumHurryInfos(); iI++)
+	// Both are the civic's OWN authored edge lists, walked directly rather than asked per registry id.
+	const std::vector<int>* pHurries = kCivic.getEdges()->find(EDGEF_ENABLES, EDGEB_HURRIES);
+	if (pHurries != NULL)
 	{
-		changeHurryCount((HurryTypes)iI, kCivic.isHurry(iI) * iChange);
+		for (size_t iHurry = 0; iHurry < pHurries->size(); ++iHurry)
+		{
+			changeHurryCount((HurryTypes)(*pHurries)[iHurry], iChange);
+		}
 	}
-	for (int iI = 0; iI < GC.getNumSpecialBuildingInfos(); iI++)
+	const std::vector<int>* pWaived = kCivic.getEdges()->find(EDGEF_ENABLES, EDGEB_SPECIAL_BUILDINGS_WAIVED);
+	if (pWaived != NULL)
 	{
-		changeSpecialBuildingNotRequiredCount((SpecialBuildingTypes)iI, kCivic.isSpecialBuildingNotRequired(iI) * iChange);
+		for (size_t iWaived = 0; iWaived < pWaived->size(); ++iWaived)
+		{
+			changeSpecialBuildingNotRequiredCount((SpecialBuildingTypes)(*pWaived)[iWaived], iChange);
+		}
 	}
 }
 
@@ -17471,7 +17303,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iForeignTradeRouteModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iTaxRateUnhappiness);
 
-		WRAPPER_READ(wrapper, "CvPlayer", &m_fPopulationgrowthratepercentageLog);
 
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iReligionSpreadRate);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iDistantUnitSupportCostModifier);
@@ -17492,7 +17323,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		// !SAVEBREAK
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iCityLimit);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iCityOverLimitUnhappy);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iForeignUnhappyPercent);
 
 		//	Subdue and construct-by-unit stats
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNumAnimalsSubdued);
@@ -18784,7 +18614,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iForeignTradeRouteModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iTaxRateUnhappiness);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_fPopulationgrowthratepercentageLog);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iReligionSpreadRate);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iDistantUnitSupportCostModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iEnslavementChance);
@@ -18804,7 +18633,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		// !SAVEBREAK
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCityLimit);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCityOverLimitUnhappy);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iForeignUnhappyPercent);
 
 		//	Subdue and construct-by-unit stats
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNumAnimalsSubdued);
@@ -24468,14 +24296,18 @@ void CvPlayer::getResourceLayerColors(GlobeLayerResourceOptionTypes eOption, std
 					bOfInterest = kBonusInfo.getBonusClassType() == GC.getInfoTypeForString("BONUSCLASS_STRATEGIC");
 					break;
 				case SHOW_RESOURCES_LUXURY:
-					bOfInterest = kBonusInfo.getHappiness() > 0 && kBonusInfo.getHealth() < 1
+					// Both tests are pure SIGN, so they are scale-invariant and need no ÷100
+					// ([DEC-fixedpoint-x100]).
+					bOfInterest = kBonusInfo.getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_EMPIRE) > 0
+						&& kBonusInfo.getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_EMPIRE) <= 0
 						|| kBonusInfo.getBonusClassType() == GC.getInfoTypeForString("BONUSCLASS_LUXURY");
 					break;
 				case SHOW_RESOURCES_PRODUCTION:
 					bOfInterest = kBonusInfo.getBonusClassType() == GC.getInfoTypeForString("BONUSCLASS_PRODUCTION");
 					break;
 				case SHOW_RESOURCES_GROWTH:
-					bOfInterest = kBonusInfo.getHealth() > 0 && kBonusInfo.getHappiness() < 1
+					bOfInterest = kBonusInfo.getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_EMPIRE) > 0
+						&& kBonusInfo.getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_EMPIRE) <= 0
 						|| kBonusInfo.getBonusClassType() == GC.getInfoTypeForString("BONUSCLASS_CROP")
 						|| kBonusInfo.getBonusClassType() == GC.getInfoTypeForString("BONUSCLASS_LIVESTOCK")
 						|| kBonusInfo.getBonusClassType() == GC.getInfoTypeForString("BONUSCLASS_SEAFOOD");
@@ -25385,61 +25217,19 @@ int CvPlayer::getSevoWondersScore(int mode)
 }
 
 
-void CvPlayer::recalculatePopulationgrowthratepercentage()
-{
-	PROFILE_FUNC();
-
-	m_fPopulationgrowthratepercentageLog = 0;
-
-	for (int iI = GC.getNumBuildingInfos() - 1; iI > -1; iI--)
-	{
-		const BuildingTypes eType = static_cast<BuildingTypes>(iI);
-
-		if (GC.getBuildingInfo(eType).getGlobalPopulationgrowthratepercentage() != 0)
-		{
-			foreach_(const CvCity* city, cities())
-			{
-				if (city->isActiveBuilding(eType))
-				{
-					changePopulationgrowthratepercentage(GC.getBuildingInfo(eType).getGlobalPopulationgrowthratepercentage(),true);
-				}
-			}
-		}
-	}
-
-	for(int iI = 0; iI < GC.getNumCivicOptionInfos(); iI++)
-	{
-		const CivicTypes eCivic = getCivics((CivicOptionTypes)iI);
-
-		if (eCivic != NO_CIVIC && GC.getCivicInfo(eCivic).getPopulationgrowthratepercentage() != 0)
-		{
-			changePopulationgrowthratepercentage(GC.getCivicInfo(eCivic).getPopulationgrowthratepercentage(),true);
-		}
-	}
-
-	for(int iI = 0; iI < GC.getNumTraitInfos(); iI++)
-	{
-		const TraitTypes eTrait = static_cast<TraitTypes>(iI);
-		if (hasTrait(eTrait) && GC.getTraitInfo(eTrait).getGlobalPopulationgrowthratepercentage() != 0)
-		{
-			changePopulationgrowthratepercentage(GC.getTraitInfo(eTrait).getGlobalPopulationgrowthratepercentage(),true);
-		}
-	}
-}
-
+// The empire's growth percent (growth.empire -- the SCALAR_GROWTH straggler slot), the twin of the city's
+// populationGrowthRate channel. It replaces a FLOAT log-space accumulator rebuilt by a blanket walk over every
+// building in the game: a float on a deterministic-lockstep engine, a hand-named scalar no derived mask could
+// address ([DEC-uniform-cache-shape]), and a self-heal ([DEC-no-self-heal]) at once.
+// ⚠ BEHAVIOUR CHANGE, stated rather than hidden: the log composed its sources MULTIPLICATIVELY; percents are
+// ADDITIVE deltas that sum and apply once ([modifier.md §2]), so the sources now add. A percent is not ×100
+// scaled ([DEC-fixedpoint-x100]), so this needs no reduction.
 int CvPlayer::getPopulationgrowthratepercentage() const
 {
-	return (int)(exp(m_fPopulationgrowthratepercentageLog)*100 - 100);
-}
-
-void CvPlayer::setPopulationgrowthratepercentage(int iNewValue)
-{
-	m_fPopulationgrowthratepercentageLog = log((100+(float)iNewValue)/100);
-}
-
-void CvPlayer::changePopulationgrowthratepercentage(int iChange, bool bAdd)
-{
-	m_fPopulationgrowthratepercentageLog += (bAdd ? 1 : -1)*log((100+(float)iChange)/100);
+	ModifierFamily eFamily = MODFAM_NONE;
+	int iKind = -1;
+	infoScalarSlot(SCALAR_GROWTH, eFamily, iKind);
+	return InfoValuation::realizedAtEmpire(*this, CascadeChannelRegistry::channelLookup(eFamily, iKind, -1));
 }
 
 int CvPlayer::getReligionSpreadRate() const
@@ -26646,16 +26436,6 @@ void CvPlayer::changeCityLimit(int iChange)
 	m_iCityLimit += iChange;
 }
 
-int CvPlayer::getForeignUnhappyPercent() const {
-	return m_iForeignUnhappyPercent;
-}
-
-void CvPlayer::changeForeignUnhappyPercent(int iChange) {
-	if (iChange != 0)
-	{
-		m_iForeignUnhappyPercent += iChange;
-	}
-}
 
 
 // BUG - Reminder Mod - start
@@ -26707,14 +26487,16 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 	PROFILE_EXTRA_FUNC();
 	changeNonStateReligionCommerce(iChange*((GC.getTraitInfo(eTrait).isNonStateReligionCommerce())? 1 : 0));
 	changeUpgradeAnywhere(iChange*((GC.getTraitInfo(eTrait).providesPolicy(CLS_POLICY_UPGRADE_ANYWHERE))? 1 : 0));
-	changeRevIdxLocal(iChange*GC.getTraitInfo(eTrait).getRevIdxLocal());
-	changeRevIdxNational(iChange*GC.getTraitInfo(eTrait).getRevIdxNational());
-	changeRevIdxDistanceModifier(iChange*GC.getTraitInfo(eTrait).getRevIdxDistanceModifier());
-	changeRevIdxHolyCityGood(iChange*GC.getTraitInfo(eTrait).getRevIdxHolyCityGood());
-	changeRevIdxHolyCityBad(iChange*GC.getTraitInfo(eTrait).getRevIdxHolyCityBad());
-	changeRevIdxNationalityMod(iChange*GC.getTraitInfo(eTrait).getRevIdxNationalityMod());
-	changeRevIdxBadReligionMod(iChange*GC.getTraitInfo(eTrait).getRevIdxBadReligionMod());
-	changeRevIdxGoodReligionMod(iChange*GC.getTraitInfo(eTrait).getRevIdxGoodReligionMod());
+	const CvTraitInfo& kTrait = GC.getTraitInfo(eTrait);
+	// The flat index deltas reduce their ×100 here; the three MOD kinds are percents and carry no scaling.
+	changeRevIdxLocal(iChange * (kTrait.getRevolution(REVOLUTION_LOCAL, CASC_SCOPE_EMPIRE) / 100));
+	changeRevIdxNational(iChange * (kTrait.getRevolution(REVOLUTION_NATIONAL, CASC_SCOPE_EMPIRE) / 100));
+	changeRevIdxDistanceModifier(iChange * kTrait.getRevolution(REVOLUTION_DISTANCE_MODIFIER, CASC_SCOPE_EMPIRE));
+	changeRevIdxHolyCityGood(iChange * (kTrait.getRevolution(REVOLUTION_HOLY_CITY_GOOD, CASC_SCOPE_EMPIRE) / 100));
+	changeRevIdxHolyCityBad(iChange * (kTrait.getRevolution(REVOLUTION_HOLY_CITY_BAD, CASC_SCOPE_EMPIRE) / 100));
+	changeRevIdxNationalityMod(iChange * static_cast<float>(kTrait.getRevolution(REVOLUTION_NATIONALITY, CASC_SCOPE_EMPIRE)));
+	changeRevIdxBadReligionMod(iChange * static_cast<float>(kTrait.getRevolution(REVOLUTION_BAD_RELIGION, CASC_SCOPE_EMPIRE)));
+	changeRevIdxGoodReligionMod(iChange * static_cast<float>(kTrait.getRevolution(REVOLUTION_GOOD_RELIGION, CASC_SCOPE_EMPIRE)));
 
 	changeCivilizationHealth(iChange*GC.getTraitInfo(eTrait).getHealth());
 	changeExtraHappiness(iChange*GC.getTraitInfo(eTrait).getHappiness());
@@ -26800,7 +26582,6 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 	changeMilitaryFoodProductionCount((GC.getTraitInfo(eTrait).isMilitaryFoodProduction()) ? iChange : 0);
 	changeInquisitionCount((GC.getTraitInfo(eTrait).isAllowsInquisitions())? iChange : 0);
 
-	changePopulationgrowthratepercentage(GC.getTraitInfo(eTrait).getGlobalPopulationgrowthratepercentage(),(iChange==1));
 	changeNationalCityStartCulture(GC.getTraitInfo(eTrait).getCityStartCulture() * iChange);
 	changeNationalAirUnitCapacity(GC.getTraitInfo(eTrait).getGlobalAirUnitCapacity() * iChange);
 	changeNationalCityStartBonusPopulation(GC.getTraitInfo(eTrait).getBonusPopulationinNewCities() * iChange);

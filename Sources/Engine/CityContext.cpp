@@ -56,7 +56,6 @@ void CityContext::clear() const
 	m_vicinityForeign.clear();
 	m_vicinityWorked.clear();
 	m_vicinityConnected.clear();
-	m_tradedBonuses.clear();
 	m_areaId = -1;
 	m_areaTileCount = 0;
 	m_governmentCenterDistance = 0;
@@ -133,28 +132,6 @@ void CityContext::refreshVicinityBonuses() const
 		else if (iPlotOwner == iCityOwner && pRadiusPlot->isHasValidBonus() && pRadiusPlot->isConnectedTo(m_city))
 		{
 			m_vicinityConnected.add(eOwnBonus, 1);
-		}
-	}
-}
-
-// Re-derive the gated network count. The city's own m_paiNumBonuses is already an O(1) maintained number; what was
-// DERIVED per read is the pair of gates over it -- the bonus's TechCityTrade tech and the player's minted-percent
-// suppression -- so the gated result is what is stored. Re-read from source on every fact rather than accumulated as
-// a delta, so a fact whose payload cannot express the change (a presence-only transition) still lands the true value.
-void CityContext::refreshTradedBonuses() const
-{
-	m_tradedBonuses.clear();
-	if (m_city == NULL)
-	{
-		return;
-	}
-	const int iNumBonuses = GC.getNumBonusInfos();
-	for (int eBonus = 0; eBonus < iNumBonuses; ++eBonus)
-	{
-		const int iCount = m_city->getNumBonuses((BonusTypes)eBonus);
-		if (iCount != 0)
-		{
-			m_tradedBonuses.set(eBonus, iCount);
 		}
 	}
 }
@@ -412,10 +389,20 @@ bool CityContext::hasVicinityBonusAt(int eBonus, CvCascVicinity eTier) const
 // each other's ordering.
 bool CityContext::hasVicinityBonus(int eBonus) const
 {
-	return eBonus >= 0 && m_tradedBonuses.has(eBonus) && hasVicinityBonusAt(eBonus, CASC_VIC_CONNECTED);
+	return eBonus >= 0 && tradedBonusCount(eBonus) > 0 && hasVicinityBonusAt(eBonus, CASC_VIC_CONNECTED);
 }
 
-int  CityContext::tradedBonusCount(int eBonus) const { return eBonus >= 0 ? m_tradedBonuses.count(eBonus) : 0; }
+// FORWARDED, never stored: the count belongs to the plot group, which owns it O(1), and the city relays it through
+// its group pointer ([state-repositories.md]). A third copy here bought nothing and cost a sweep of every bonus on
+// every fact that could move one, so what is forwarded is the city's own gated read.
+int  CityContext::tradedBonusCount(int eBonus) const
+{
+	if (eBonus < 0 || m_city == NULL)
+	{
+		return 0;
+	}
+	return m_city->getNumBonuses((BonusTypes)eBonus);
+}
 int  CityContext::areaId() const                     { return m_areaId; }
 int  CityContext::areaSize() const                   { return m_areaTileCount; }
 int  CityContext::governmentCenterDistance() const   { return m_governmentCenterDistance; }

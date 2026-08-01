@@ -1031,7 +1031,7 @@ bool CvDeal::startTrade(TradeData trade, PlayerTypes eFromPlayer, PlayerTypes eT
 				//Move the HQ building over to the new city.
 				for (int i = 0; i < GC.getNumBuildingInfos(); i++)
 				{
-					if ((CorporationTypes)GC.getBuildingInfo((BuildingTypes)i).getGlobalCorporationCommerce() == (CorporationTypes)trade.m_iData)
+					if (GC.getBuildingInfo((BuildingTypes)i).getHeadquartersCorporation() == trade.m_iData)
 					{
 						pNewHQCity->changeHasBuilding((BuildingTypes)i, true);
 						if (pOldHeadquarters != NULL)

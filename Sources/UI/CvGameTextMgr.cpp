@@ -2399,19 +2399,6 @@ void CvGameTextMgr::setAngerHelp(CvWStringBuffer &szBuffer, CvCity& city)
 			szBuffer.append(NEWLINE);
 		}
 	}
-	int iCivicPercent = 0;
-	for (int iI = 0; iI < GC.getNumCivicInfos(); ++iI)
-	{
-		iCivicPercent += kPlayer.getCivicPercentAnger((CivicTypes)iI);
-	}
-	iAnger = iCivicPercent * iPop / iDivisor;
-	if (iAnger != 0)
-	{
-		iTotal += iAnger;
-		szBuffer.append(gDLL->getText(iAnger > 0 ? "TXT_KEY_ANGER_CIVIC_PERCENT_BAD" : "TXT_KEY_ANGER_CIVIC_PERCENT_GOOD", iAnger));
-		szBuffer.append(NEWLINE);
-	}
-
 	// The remaining raw-state inputs, each read directly off the state that produces it.
 	iAnger = city.getVassalUnhappiness();
 	if (iAnger > 0)

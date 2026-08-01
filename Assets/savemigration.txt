@@ -536,8 +536,11 @@ Derived caches, never read from a save (reads are named skips; writes KEPT for s
 m_aiSpecialistCommerce100 precedent). Rebuilt at load by the bonus-network rebuild in CvGame::onFinalInitialized
 (building-power re-sum + updatePlotGroups(reInitialize) recolor, counts folded as each plot joins) through the
 live entry points. The skips + kept writes flush together at the next save-compat break.
-2026-07-15: CvCity::m_paiNumBonuses is GONE as a member (getNumBonuses is a plot-group RELAY; enabler.md par.8
-RESIDENCY) -- its read stays a named skip, its WRITE is now dropped too (skip no-ops on saves that lack it).
+The city-side count is GONE as a member and has NO replacement store: the city holds no bonus mirror at all,
+and getNumBonuses RELAYS through its plot group, which owns the count (enabler.md par.8 RESIDENCY, plus
+state-repositories.md). Its read stays a named skip and its write is dropped (the skip no-ops on a save that
+never wrote it). The plot-group side is the authoritative one and is likewise never trusted from a save --
+the load-end rebuild re-folds it as each plot joins.
 
 Plot-group MEMBERSHIP (CvPlayer::m_plotGroups streamable block; CvPlot::m_aiPlotGroup ids)
 ========================
@@ -1074,4 +1077,23 @@ float on a deterministic-lockstep engine, a hand-named scalar no derived mask ca
 | REPLACEMENT: the populationGrowthRate.city cascade channel (the SCALAR_POPULATION_GROWTH_RATE straggler
 | slot), read through InfoValuation::realizedAtCity like every other realized channel.
 CvCity::m_fPopulationgrowthratepercentageLog   (float)
+========================
+#430 delete-driven legacy cut (the CvPlayer population-growth-rate accumulator): the EMPIRE twin of the city
+member above, and the same three defects — a FLOAT log-space store on a deterministic-lockstep engine, a
+hand-named scalar no derived mask can address ([DEC-uniform-cache-shape]), and a per-turn blanket rebuild that
+zeroed it and re-walked every building in the game against every city ([DEC-no-self-heal]).
+| BEHAVIOUR CHANGE, stated: the log composed its sources MULTIPLICATIVELY; percents are ADDITIVE deltas that
+| sum and apply once ([modifier.md §2]), so the sources now add.
+| REPLACEMENT: the growth.empire cascade channel (the SCALAR_GROWTH straggler slot), read through
+| InfoValuation::realizedAtEmpire like every other realized channel.
+CvPlayer::m_fPopulationgrowthratepercentageLog   (float)
+========================
+#430 delete-driven legacy cut (the foreigner-unhappiness accumulator): a per-civic push whose consumer
+recomputed `(100 - ownCulturePercent) * (100/V) / 100` in the city wellbeing fold -- the SAME arithmetic the
+curator already precomputes into the data, so the legacy read double-counted the cascade's own deposit
+([DEC-no-legacy-masking]).
+| REPLACEMENT: the civic's `happiness.empire.flat` telescoping pair on the CULTURE_PERCENTAGE counter
+| (flat -R together with {+R, per CULTURE_PERCENTAGE each 100}, R = 100/V), routed to the anger channel at
+| fill like any other negative wellbeing deposit ([modifier.md §2b]).
+CvPlayer::m_iForeignUnhappyPercent
 ========================

@@ -10437,7 +10437,13 @@ DenialTypes CvPlayerAI::AI_civicTrade(CivicTypes eCivic, PlayerTypes ePlayer) co
 		return NO_DENIAL;
 	}
 
-	if (getCivicPercentAnger(getCivics((CivicOptionTypes)(GC.getCivicInfo(eCivic).getCivicOption()))) < getCivicPercentAnger(eCivic))
+	// Would the proposed civic leave us less happy than the one it replaces? The civic's anger is authored as
+	// NEGATIVE happiness (curator ruling 12: the legacy percent-anger is a happiness deposit per 100 city
+	// population), so the comparison reads the two civics' own wellbeing rather than a player-side accumulator.
+	const CivicTypes eCurrentCivic = getCivics((CivicOptionTypes)GC.getCivicInfo(eCivic).getCivicOption());
+	if (eCurrentCivic != NO_CIVIC
+	&& GC.getCivicInfo(eCurrentCivic).getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_EMPIRE)
+	 > GC.getCivicInfo(eCivic).getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_EMPIRE))
 	{
 		return DENIAL_ANGER_CIVIC;
 	}

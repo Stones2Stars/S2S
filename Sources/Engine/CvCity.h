@@ -1019,7 +1019,28 @@ public:
 
 	int getNumBonuses(BonusTypes eIndex) const;
 	bool hasBonus(BonusTypes eIndex) const;
-	void changeNumBonuses(BonusTypes eIndex, int iChange);
+
+	// WHAT THE NETWORK SUPPLIES THIS CITY, read straight off the plot group.
+	// The CvPlotGroup is the ONLY authoritative list for trade resources and the city holds no mirror of it
+	// ([state-repositories.md]) -- the network's content is aggregated UP from the member plots and cities
+	// (CvPlot::updatePlotGroupBonus feeds CvPlotGroup::changeNumBonuses), so a second per-city copy of the same
+	// number would be a duplicate of authoritative state with nothing but drift to gain ([tally.md]: the game
+	// objects already own their counts; creating something new when we already have it is pointless).
+	// This is the RAW held count -- before the minted gate (getNumBonusesFromBase), the TechCityTrade gate and
+	// the per-city corporation add-on that getNumBonuses layers on top.
+	int getNetworkBonusCount(BonusTypes eBonus) const;
+
+	// The crossings. The city stores no count, so these exist ONLY to fire the presence transition
+	// (processBonus + the corporation re-check) that a relayed read cannot announce for itself.
+	// A count moving between two non-zero values announces nothing, by ruling ([event-spine.md]).
+	void onNetworkBonusChanged(BonusTypes eBonus, int iOldCount, int iNewCount);
+	void onNetworkSupplyChanged(const CvPlotGroup* pOldSupply, const CvPlotGroup* pNewSupply);
+	// The city ITSELF arriving on / departing from its plot. UNCONDITIONAL, unlike the two above: the deferred
+	// bracket works by snapshotting this city's live relayed read, which is already final the moment the city
+	// exists -- so the snapshot/compare pass cannot see a supply that arrives WITH the city. It is an
+	// initialization, not a delta.
+	void onNetworkSupplyAcquired(const CvPlotGroup* pSupply);
+	void onNetworkSupplyLost(const CvPlotGroup* pSupply);
 
 	int getCorpBonusProduction(const BonusTypes eBonus) const;
 	bool isCorporationBonus(BonusTypes eBonus) const;
@@ -1554,14 +1575,6 @@ protected:
 	int* m_paiFreeBonus;
 	int* m_paiFreeBonusEvents;
 	mutable int* m_cachedPropertyNeeds;
-	// The city's obtained-bonus COUNT per resource -- a DERIVED, NEVER-SERIALIZED per-city number kept current
-	// by the plot-group crossing fan-out (CvPlotGroup::changeNumBonuses fans into every member city, and the
-	// plot-group join/leave paths re-fold it), so getNumBonuses stays a BARE FETCH.
-	// ⛔ NOT a per-read plot-group relay: re-deriving it on every call is the wrong axis and is the measured
-	// cost class ([enabler.md §8] RESIDENCY -- the turn wall's hottest cluster under the governor's read volume).
-	// ⛔ NOT serialized: it is derived state rebuilt at load by the bonus-network rebuild, and its old save tag
-	// drains by name ([save.md §5], Assets/savemigration.txt).
-	int* m_paiNumBonuses;
 	bool* m_pabHadVicinityBonus;
 	bool* m_pabHadRawVicinityBonus;
 	mutable bool* m_pabHasVicinityBonusCached;
@@ -1914,6 +1927,7 @@ public:
 		DECLARE_MAP_FUNCTOR_CONST_1(CvCity, bool, isHasReligion, ReligionTypes);
 		DECLARE_MAP_FUNCTOR_CONST_1(CvCity, bool, isHasCorporation, CorporationTypes);
 		DECLARE_MAP_FUNCTOR_CONST_1(CvCity, bool, hasBonus, BonusTypes);
+		DECLARE_MAP_FUNCTOR_CONST_1(CvCity, void, clearUpgradeCache, UnitTypes);
 		DECLARE_MAP_FUNCTOR_CONST_1(CvCity, bool, isCoastal, int);
 		DECLARE_MAP_FUNCTOR_CONST_1(CvCity, bool, hasBuilding, BuildingTypes);
 		DECLARE_MAP_FUNCTOR_CONST_1(CvCity, bool, isActiveBuilding, BuildingTypes);

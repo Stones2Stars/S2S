@@ -3410,7 +3410,7 @@ void cvInternalGlobals::checkInitialCivics()
 		for (int iJ = getNumCivicOptionInfos() - 1; iJ > -1; iJ--)
 		{
 			//No Initial Civic Found
-			const CivicTypes eCivic = (CivicTypes)civ.getInitialCivic(iJ);
+			const CivicTypes eCivic = civ.getInitialCivic((CivicOptionTypes)iJ);
 
 			if (eCivic == NO_CIVIC || getCivicInfo(eCivic).getCivicOption() != iJ)
 			{

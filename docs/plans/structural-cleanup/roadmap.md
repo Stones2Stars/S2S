@@ -237,13 +237,14 @@ The rest of the boundary every consumer meets:
   object's own RAW O(1) data. Nothing is serialized; the reseed rebuilds it.
   **BUILT:** `PlotContext` holds the `CASC_PRED_*` verdict BITSET (own-plot + adjacency blocks, an 8-neighbour
   fan-out on the adjacency half); `CityContext` holds `plotAttrs` (the literal FOLD of member plots' bits), the
-  tiered VICINITY-bonus sets, the traded-bonus count, the area id + tile count, the largest-adjacent-water size
+  tiered VICINITY-bonus sets, the area id + tile count, the largest-adjacent-water size
   and the holy-city count; `EmpireContext` holds `policies`. All maintained solely by the contexts' own spine
   consumer — no direct hooks anywhere — off the complete plot substrate surface (terrain / feature / improvement
   / route / bonus / owner / type / river / irrigation / landmark / worked) plus `SEVT_AREAS_RECALCULATED`.
-  The payoff is the point: `hasVicinityBonus` was a full radius scan + a 5,202-building scan per check;
-  `isCoastalLand` an 8-neighbour scan per predicate; `getNumBonuses` the turn wall's hottest cluster — all now
-  bare fetches. **OPEN:** the id-keyed radius dictionaries that would collapse `ev_cityPlotHas`' remaining
+  The payoff is the point: `hasVicinityBonus` was a full radius scan + a 5,202-building scan per check and
+  `isCoastalLand` an 8-neighbour scan per predicate — both now bare fetches. ⚠ The network bonus COUNT is the
+  deliberate non-instance: it FORWARDS to the plot group that owns it rather than being stored a third time
+  ([enabler.md §8](../../specs/enabler.md) RESIDENCY). **OPEN:** the id-keyed radius dictionaries that would collapse `ev_cityPlotHas`' remaining
   per-check scan (terrain/feature/improvement/route prereqs), and the context gaps in the
   [todo.md](todo.md).
 - **How the INFO side hands its data to the cascade — "make the infos sane" (active).** Today an info IS the legacy

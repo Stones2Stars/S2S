@@ -21,6 +21,7 @@
 #include "CvInfos.h"
 #include "CvMap.h"
 #include "CvPlot.h"
+#include "CvPlotGroup.h"                // getNumBonuses -- the network count getNumBonuses relays through
 #include "AI/CvPlayerAI.h"
 #include "CvPopupInfo.h"
 #include "CvProcessInfo.h"              // getProductionToCommerce -- the commerce split's EXTRA-tier conversion rate
@@ -359,7 +360,6 @@ CvCity::CvCity()
 	m_cachedPropertyNeeds = NULL;
 	m_paiFreeBonus = NULL;
 	m_paiFreeBonusEvents = NULL;
-	m_paiNumBonuses = NULL;
 	m_pabHadVicinityBonus = NULL;
 	m_pabHasVicinityBonus = NULL;
 	m_pabHadRawVicinityBonus = NULL;
@@ -625,7 +625,6 @@ void CvCity::uninit()
 	SAFE_DELETE_ARRAY(m_paiImprovementFreeSpecialists);
 	SAFE_DELETE_ARRAY(m_paiReligionInfluence);
 	SAFE_DELETE_ARRAY(m_cachedPropertyNeeds);
-	SAFE_DELETE_ARRAY(m_paiNumBonuses);
 	SAFE_DELETE_ARRAY(m_pabHadVicinityBonus);
 	SAFE_DELETE_ARRAY(m_pabHasVicinityBonus);
 	SAFE_DELETE_ARRAY(m_pabHadRawVicinityBonus);
@@ -972,14 +971,12 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 		FAssertMsg((0 < iMaxTradeRoutes), "Max Trade Routes is not greater than zero but an array is being allocated in CvCity::reset");
 		m_paTradeCities = std::vector<IDInfo>(iMaxTradeRoutes);
 
-		m_paiNumBonuses = new int[GC.getNumBonusInfos()];
 		m_pabHadVicinityBonus = new bool[GC.getNumBonusInfos()];
 		m_pabHadRawVicinityBonus = new bool[GC.getNumBonusInfos()];
 		m_paiFreeBonus = new int[GC.getNumBonusInfos()];
 		m_paiFreeBonusEvents = new int[GC.getNumBonusInfos()];
 		for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
 		{
-			m_paiNumBonuses[iI] = 0;
 			m_pabHadVicinityBonus[iI] = false;
 			m_pabHadRawVicinityBonus[iI] = false;
 			m_paiFreeBonus[iI] = 0;
@@ -4136,10 +4133,6 @@ void CvCity::realizedWellbeing(int iExtraPopulation, int (&wellbeing)[NUM_WELLBE
 		iAngerPercent += getWarWearinessPercentAnger();
 		iAngerPercent += getRevRequestPercentAnger(iExtraPopulation);
 		iAngerPercent += getRevIndexPercentAnger();
-		for (int iI = 0; iI < GC.getNumCivicInfos(); iI++)
-		{
-			iAngerPercent += owner.getCivicPercentAnger((CivicTypes)iI);
-		}
 		// The truncating integer division is the engine quirk §2b says to reproduce VERBATIM, so it truncates to
 		// whole citizens FIRST and the result is lifted after -- scaling first would silently smooth it away.
 		wellbeing[WELLBEING_ANGER] += 100 * ((iAngerPercent * (getPopulation() + iExtraPopulation)) / GC.getPERCENT_ANGER_DIVISOR());
@@ -4150,13 +4143,6 @@ void CvCity::realizedWellbeing(int iExtraPopulation, int (&wellbeing)[NUM_WELLBE
 		wellbeing[WELLBEING_ANGER] += 100 * std::max(0, getEventAnger());
 		wellbeing[WELLBEING_ANGER] -= 100 * std::min(0, iEventGranted);
 
-		int iForeignAnger = owner.getForeignUnhappyPercent();
-		if (iForeignAnger != 0)
-		{
-			iForeignAnger = 100 / iForeignAnger;
-			iForeignAnger = ((100 - plot()->calculateCulturePercent(getOwner())) * iForeignAnger) / 100;
-			wellbeing[WELLBEING_ANGER] += 100 * std::max(0, iForeignAnger);
-		}
 		if (owner.getCityLimit() != 0 && owner.getCityOverLimitUnhappy() != 0)
 		{
 			const int iOverLimitCities = owner.getNumCities() - owner.getCityLimit();
@@ -6582,10 +6568,6 @@ int CvCity::getAdditionalHappinessByBuilding(BuildingTypes eBuilding, int& iGood
 		iBaseAngerPercent += getHurryPercentAnger();
 		iBaseAngerPercent += getConscriptPercentAnger();
 		iBaseAngerPercent += getDefyResolutionPercentAnger();
-		for (int iI = 0; iI < GC.getNumCivicInfos(); iI++)
-		{
-			iBaseAngerPercent += GET_PLAYER(getOwner()).getCivicPercentAnger((CivicTypes)iI);
-		}
 
 		int iCurrentAngerPercent = iBaseAngerPercent + getWarWearinessPercentAnger();
 		int iCurrentUnhappiness = iCurrentAngerPercent * getPopulation() / GC.getPERCENT_ANGER_DIVISOR();
@@ -9095,6 +9077,14 @@ int CvCity::getNumBonusesFromBase(BonusTypes eIndex, int iBaseNum) const
 	return iBaseNum;
 }
 
+int CvCity::getNetworkBonusCount(BonusTypes eBonus) const
+{
+	FASSERT_BOUNDS(0, GC.getNumBonusInfos(), eBonus);
+
+	const CvPlotGroup* pPlotGroup = plotGroup(getOwner());
+	return pPlotGroup != NULL ? pPlotGroup->getNumBonuses(eBonus) : 0;
+}
+
 int CvCity::getNumBonuses(BonusTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, GC.getNumBonusInfos(), eIndex);
@@ -9103,7 +9093,7 @@ int CvCity::getNumBonuses(BonusTypes eIndex) const
 	{
 		return 0;
 	}
-	return getNumBonusesFromBase(eIndex, m_paiNumBonuses[eIndex]) + getCorpBonusProduction(eIndex);
+	return getNumBonusesFromBase(eIndex, getNetworkBonusCount(eIndex)) + getCorpBonusProduction(eIndex);
 }
 
 
@@ -9123,7 +9113,7 @@ void CvCity::startDeferredBonusProcessing()
 
 		for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
 		{
-			m_paiStartDeferredSectionNumBonuses[iI] = m_paiNumBonuses[iI];
+			m_paiStartDeferredSectionNumBonuses[iI] = getNetworkBonusCount((BonusTypes)iI);
 		}
 	}
 }
@@ -9135,7 +9125,7 @@ void CvCity::endDeferredBonusProcessing()
 	{
 		for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
 		{
-			processNumBonusChange((BonusTypes)iI, m_paiStartDeferredSectionNumBonuses[iI], m_paiNumBonuses[iI]);
+			processNumBonusChange((BonusTypes)iI, m_paiStartDeferredSectionNumBonuses[iI], getNetworkBonusCount((BonusTypes)iI));
 		}
 
 		SAFE_DELETE_ARRAY(m_paiStartDeferredSectionNumBonuses);
@@ -9170,22 +9160,62 @@ void CvCity::processNumBonusChange(BonusTypes eIndex, int iOldValue, int iNewVal
 	}
 }
 
-void CvCity::changeNumBonuses(BonusTypes eIndex, int iChange)
+void CvCity::onNetworkBonusChanged(BonusTypes eBonus, int iOldCount, int iNewCount)
 {
-	PROFILE_FUNC();
+	FASSERT_BOUNDS(0, GC.getNumBonusInfos(), eBonus);
 
-	FASSERT_BOUNDS(0, GC.getNumBonusInfos(), eIndex);
-
-	if (iChange != 0)
+	// While a deferred section is open the bracket owns the announcement: it snapshotted this city's relayed
+	// read on entry and compares it on exit, so a run of moves over the same bonus collapses into one crossing.
+	if (m_deferringBonusProcessingCount == 0)
 	{
-		//bool bOldHasBonus = hasBonus(eIndex);
+		processNumBonusChange(eBonus, iOldCount, iNewCount);
+	}
+}
 
-		m_paiNumBonuses[eIndex] += iChange;
+void CvCity::onNetworkSupplyChanged(const CvPlotGroup* pOldSupply, const CvPlotGroup* pNewSupply)
+{
+	PROFILE_EXTRA_FUNC();
 
-		if (m_deferringBonusProcessingCount == 0)
-		{
-			processNumBonusChange(eIndex, m_paiNumBonuses[eIndex] - iChange, m_paiNumBonuses[eIndex]);
-		}
+	// Same deferral as the per-bonus crossing above, and for the same reason -- the pointer move IS a change in
+	// what this city's relayed read returns, so the bracket's snapshot/compare sees it whole.
+	if (m_deferringBonusProcessingCount != 0)
+	{
+		return;
+	}
+	for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
+	{
+		const int iOldCount = pOldSupply != NULL ? pOldSupply->getNumBonuses((BonusTypes)iI) : 0;
+		const int iNewCount = pNewSupply != NULL ? pNewSupply->getNumBonuses((BonusTypes)iI) : 0;
+
+		processNumBonusChange((BonusTypes)iI, iOldCount, iNewCount);
+	}
+}
+
+void CvCity::onNetworkSupplyAcquired(const CvPlotGroup* pSupply)
+{
+	PROFILE_EXTRA_FUNC();
+
+	if (pSupply == NULL)
+	{
+		return;
+	}
+	for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
+	{
+		processNumBonusChange((BonusTypes)iI, 0, pSupply->getNumBonuses((BonusTypes)iI));
+	}
+}
+
+void CvCity::onNetworkSupplyLost(const CvPlotGroup* pSupply)
+{
+	PROFILE_EXTRA_FUNC();
+
+	if (pSupply == NULL)
+	{
+		return;
+	}
+	for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
+	{
+		processNumBonusChange((BonusTypes)iI, pSupply->getNumBonuses((BonusTypes)iI), 0);
 	}
 }
 
