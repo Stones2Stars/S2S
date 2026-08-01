@@ -4436,58 +4436,12 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, int& iBestValue, bool bAs
 			// Allow order of magnitude
 			iValue *= 100; // Need it multiplying up so that truncation errors don't render.
 
-			iValue += getProductionExperience(eUnitX);
-
-			/* Toffer - Super slow evaluation, needs smart caching to work.
-
-			// KOSHLING - this need rework to take actual promotion values. *** TODO ***
-			// May need some caching to do so at appropriate performance levels.
-			const int iCombatType = unit.getCombatClass();
-			int iPromotionValue = 0;
-			for (int iJ = GC.getNumPromotionInfos() - 1; iJ > -1; iJ--)
-			{
-				// Unit
-				if (unit.grantsPromotion(iJ))
-				{
-					iPromotionValue += 15;
-					continue;
-				}
-				// Buildings
-				if (isFreePromotion((PromotionTypes)iJ))
-				{
-					if (iCombatType != NO_UNITCOMBAT && GC.getPromotionInfo((PromotionTypes)iJ).getUnitCombat(iCombatType))
-					{
-						iPromotionValue += 15;
-						continue;
-					}
-					bool bFound = false;
-					foreach_(const UnitCombatTypes eSubCombat, unit.getCombatClasses())
-					{
-						if (GC.getPromotionInfo((PromotionTypes)iJ).getUnitCombat(eSubCombat))
-						{
-							iPromotionValue += 15;
-							bFound = true;
-							break;
-						}
-					}
-					if (bFound) continue;
-				}
-				// Traits
-				if (iCombatType != NO_UNITCOMBAT)
-				{
-					for (int iK = GC.getNumTraitInfos() - 1; iK > -1; iK--)
-					{
-						if (hasTrait((TraitTypes)iK) && GC.getTraitInfo((TraitTypes)iK).isFreePromotionUnitCombats(iJ, iCombatType))
-						{
-							iPromotionValue += 15;
-							break;
-						}
-					}
-				}
-			}
-			iValue *= 100 + iPromotionValue;
-			iValue /= 100;
-			*/
+			// Free XP is a cascade FLAT, so it reduces at the point of use like every other reader of it
+			// ([DEC-fixedpoint-x100]). Production weighs the XP amount and NOTHING beyond it: what those levels
+			// would buy is deliberately not evaluated on this path (owner) -- see the unit-plane note in
+			// docs/reference/special-systems.md. A unit evaluates its own promotions once it exists, off its
+			// resolved cache (CvUnitAI::AI_promote).
+			iValue += getProductionExperience(eUnitX) / 100;
 
 			if (!bNoRand)
 			{
@@ -5533,21 +5487,6 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 					iValue += (InfoValuation::keyedTarget(kBuilding.getModifiers(), MODFAM_EXPERIENCE, -1, iDomainsSeg, iI) / 100)
 						* (bMetAnyCiv ? iDomainExpValue : iDomainExpValue / 2);
 				}
-				int iPromoValue = 0;
-				// The free-promotion payload, off the `triggers` onTurnEnd entries. A CONDITIONAL promotion may not
-				// land, so it scores lower than an unconditional one -- the split the legacy weighting also made.
-				std::vector<int> aPromoAlways;
-				std::vector<int> aPromoConditional;
-				kBuilding.triggerPromotions(aPromoAlways, aPromoConditional);
-				for (size_t iP = 0; iP < aPromoAlways.size(); ++iP)
-				{
-					iPromoValue += AI_getPromotionValue((PromotionTypes)aPromoAlways[iP]) * 3/2;
-				}
-				for (size_t iP = 0; iP < aPromoConditional.size(); ++iP)
-				{
-					iPromoValue += AI_getPromotionValue((PromotionTypes)aPromoConditional[iP]);
-				}
-				iValue += iPromoValue;
 			}
 
 			if ((!isDevelopingCity() || getCityContext().isCapital()))
@@ -12125,70 +12064,6 @@ bool CvCityAI::AI_buildCaravan()
 		}
 	}
 	return false;
-}
-
-int CvCityAI::AI_getPromotionValue(PromotionTypes ePromotion) const
-{
-	PROFILE_EXTRA_FUNC();
-	int iCanTrainCount = 0;
-	int iValue = 0;
-	// #430 F2b (enabler.md par.6): iterate the LISTED unit frontier instead of scanning every unit --
-	// getAvailableUnits fills the city's LISTED unit frontier. Order-independent: the loop only
-	// accumulates iCanTrainCount and a commutative iValue sum; the combat-type check stays a per-candidate filter.
-	std::vector<int> vecTrainable;
-	getAvailableUnits(vecTrainable);
-	for (std::vector<int>::const_iterator it = vecTrainable.begin(), itEnd = vecTrainable.end(); it != itEnd; ++it)
-	{
-		const UnitTypes eUnitX = (UnitTypes)*it;
-		const CvUnitInfo& kUnit = GC.getUnitInfo(eUnitX);
-
-		if (kUnit.getCombatClass() != NO_UNITCOMBAT)
-		{
-			// A promotion reaches a unit through its PRIMARY combat class or any of its SUBS -- combat-class
-			// membership is always the "primary ∪ subs" union ([tags.md]).
-			const CvPromotionInfo& kPromotion = GC.getPromotionInfo(ePromotion);
-			bool bUnitCanGetPromotion = kPromotion.appliesToUnitCombat(kUnit.getCombatClass());
-
-			if (!bUnitCanGetPromotion)
-			{
-				foreach_(const int iSubCombat, kUnit.getCombatClasses())
-				{
-					if (kPromotion.appliesToUnitCombat(iSubCombat))
-					{
-						bUnitCanGetPromotion = true;
-						break;
-					}
-				}
-			}
-
-			// #430 F2b: canTrain is implicit in the LISTED frontier above; the count/value block runs unchanged.
-			{
-				iCanTrainCount++;
-				if (bUnitCanGetPromotion)
-				{
-					iValue += GET_PLAYER(getOwner()).AI_promotionValue(ePromotion, eUnitX);
-				}
-			}
-		}
-	}
-	if (iValue == 0)
-	{
-		return 0; //Avoid division by 0 when the city can't train units or the promotion never applies.
-	}
-	if (iValue > 0)
-	{
-		iValue = iValue / iCanTrainCount + 1;
-	}
-	else
-	{
-		iValue = iValue / iCanTrainCount - 1;
-	}
-
-	if (iValue > 0 && GET_TEAM(getTeam()).hasWarPlan(true))
-	{
-		iValue *= 2;
-	}
-	return iValue;
 }
 
 SpecialistTypes CvCity::getBestSpecialist(int iExtra) const

@@ -36,6 +36,27 @@
   `bUpdateGlobal=true` feeds GG points. Free promotions bypass tech prereqs (`isPromotionValid`). AI `AI_promote()`
   recurses silently. **No log anywhere in the XP/promo system** beyond `level` in `/units`.
 
+> **⚖ PROMOTION VALUE IS EVALUATED ON A REAL UNIT ONLY — THE PRODUCTION DECISION DOES NOT ASK (owner).** A city
+> choosing what to build weighs the free XP AMOUNT and nothing about what those levels would buy. The unit
+> evaluates its own promotions once it EXISTS, off its resolved cache (`CvUnitAI::AI_promote`).
+> ⛔ **The cost is the reason, and a better walk does not rescue it (owner): *"even though our promotion walk
+> would be significantly more efficient, it's still wildly expensive."*** The question is per
+> (city × candidate unit × promotion) on the hottest loop of the turn, so it is unaffordable however
+> efficiently it is written — this is [DEC-turn-time-is-king](../architecture/decisions.md#dec-turn-time-is-king)
+> deciding a feature, not an optimization to attempt.
+> ⛔ **Nor can it be cached around: *"caching a theoretical promotion setup for all the units is unrealistic at
+> best of times"*** — what would be cached is a hypothetical promotion set for units that do not exist, keyed by
+> a candidate the city may never build.
+> ⚑ **It may return later, and there is exactly ONE shape it may return in:** the traversal `AI_promote` already
+> uses — the player's maintained unlocked-promotion set → live per-unit applicability → the ONE
+> `AI_promotionValue` ([enabler.md §7.1](../specs/enabler.md)'s promotions carve-out;
+> [DEC-single-implementation](../architecture/decisions.md#dec-single-implementation)). ⛔ Never a second walk,
+> and never a whole-registry sweep per candidate.
+> ⚠ **The XP term itself is a cascade FLAT (`EXPERIENCE_AMOUNT` is `CASC_UNIT_FLAT` at city scope), so every
+> reader reduces at its point of use** ([DEC-fixedpoint-x100](../architecture/decisions.md#dec-fixedpoint-x100)).
+> A reader that omits the `÷100` inflates free XP 100× against everything it is weighed beside — silently, since
+> the result stays plausible.
+
 ## Vision & visibility (plot, per team)
 
 - Per-plot per-team: `m_aiVisibilityCount` (>0 = visible now), `m_abRevealed` (ever-seen, permanent), `…LastSeenTurn`,

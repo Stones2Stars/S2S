@@ -27110,14 +27110,14 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	//#1 Analyze basic promotion effects
 	if (pUnit)
 	{
-		for (int iI = 0; iI < kPromotion.getNumAIWeightbyUnitCombatTypes(); iI++)
+		for (int iI = 0; iI < kPromotion.getNumAIWeightsByUnitCombat(); iI++)
 		{
-			if (kPromotion.getAIWeightbyUnitCombatType(iI).iModifier != 0)
+			const UnitCombatModifier& kWeight = kPromotion.getAIWeightByUnitCombat(iI);
+
+			if (kWeight.iModifier != 0
+			&& (pUnit->isHasUnitCombat(kWeight.eUnitCombat) || kUnit.hasCombatClass(kWeight.eUnitCombat)))
 			{
-				if ((pUnit->isHasUnitCombat(kPromotion.getAIWeightbyUnitCombatType(iI).eUnitCombat)) || (kUnit.hasCombatClass(kPromotion.getAIWeightbyUnitCombatType(iI).eUnitCombat)))
-				{
-					iValue += kPromotion.getAIWeightbyUnitCombatType(iI).iModifier;
-				}
+				iValue += kWeight.iModifier;
 			}
 		}
 	}
