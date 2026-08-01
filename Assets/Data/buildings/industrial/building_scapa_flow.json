@@ -44,7 +44,17 @@
  },
  "culture": {
   "city": {
-   "flat": 2
+   "flat": [
+    2,
+    {
+     "value": 2,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "defense": {
@@ -115,9 +125,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SCAPA_FLOW",
   "civilopedia": "TXT_KEY_BUILDING_SCAPA_FLOW_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_GREAT_SPY",

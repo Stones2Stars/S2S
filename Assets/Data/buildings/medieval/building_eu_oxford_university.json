@@ -50,7 +50,17 @@
  },
  "culture": {
   "city": {
-   "flat": 4
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "buildRate": {
@@ -152,9 +162,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_EU_OXFORD_UNIVERSITY",
   "civilopedia": "TXT_KEY_BUILDING_EU_OXFORD_UNIVERSITY_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 8,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_MERCHANT",

@@ -38,7 +38,17 @@
  },
  "culture": {
   "city": {
-   "flat": 4
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "greatPeopleRate": {
@@ -95,9 +105,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_FORBIDDEN_PALACE",
   "civilopedia": "TXT_KEY_BUILDING_FORBIDDEN_PALACE_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 8,
   "greatPeopleUnitType": "UNIT_GREAT_SPY",
   "advisor": "ADVISOR_ECONOMY",

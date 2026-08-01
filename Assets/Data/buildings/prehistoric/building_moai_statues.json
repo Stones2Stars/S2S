@@ -42,7 +42,17 @@
  },
  "culture": {
   "city": {
-   "flat": 4
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "greatPeopleRate": {
@@ -88,9 +98,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MOAI_STATUES",
   "civilopedia": "TXT_KEY_BUILDING_MOAI_STATUES_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 5,
   "militaryWorth": 10,
   "conquestProbability": 100,

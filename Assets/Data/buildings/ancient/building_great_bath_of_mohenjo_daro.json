@@ -26,7 +26,17 @@
  },
  "culture": {
   "city": {
-   "flat": 5
+   "flat": [
+    5,
+    {
+     "value": 5,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "buildRate": {
@@ -94,9 +104,6 @@
   "description": "TXT_KEY_BUILDING_GREAT_BATH_OF_MOHENJO_DARO",
   "civilopedia": "TXT_KEY_BUILDING_GREAT_BATH_OF_MOHENJO_DARO_PEDIA",
   "help": "TXT_KEY_BUILDING_GREAT_BATH_OF_MOHENJO_DARO_HELP",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_DOCTOR",

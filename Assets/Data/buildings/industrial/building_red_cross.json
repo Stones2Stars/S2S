@@ -31,7 +31,17 @@
  },
  "culture": {
   "city": {
-   "flat": 2
+   "flat": [
+    2,
+    {
+     "value": 2,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "maintenance": {
@@ -98,9 +108,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_RED_CROSS",
   "civilopedia": "TXT_KEY_BUILDING_RED_CROSS_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 8,
   "militaryWorth": 4,
   "greatPeopleUnitType": "UNIT_DOCTOR",

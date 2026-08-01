@@ -30,7 +30,17 @@
  },
  "culture": {
   "city": {
-   "flat": 6
+   "flat": [
+    6,
+    {
+     "value": 6,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "greatPeopleRate": {
@@ -88,9 +98,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SHAOLIN_TEMPLE",
   "civilopedia": "TXT_KEY_BUILDING_SHAOLIN_TEMPLE_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_PROPHET",
   "advisor": "ADVISOR_MILITARY",

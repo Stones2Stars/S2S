@@ -35,7 +35,17 @@
  },
  "culture": {
   "city": {
-   "flat": 6
+   "flat": [
+    6,
+    {
+     "value": 6,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   },
   "empire": {
    "cities": {
@@ -91,9 +101,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CRYSTAL_PALACE",
   "civilopedia": "TXT_KEY_BUILDING_CRYSTAL_PALACE_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",

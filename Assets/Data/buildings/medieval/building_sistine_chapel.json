@@ -25,7 +25,17 @@
  },
  "culture": {
   "city": {
-   "flat": 10
+   "flat": [
+    10,
+    {
+     "value": 10,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   },
   "empire": {
    "cities": {
@@ -102,9 +112,6 @@
   "civilopedia": "TXT_KEY_BUILDING_SISTINE_CHAPEL_PEDIA",
   "stateReligionCommerce": {
    "culture": 5
-  },
-  "commerceDoubleTime": {
-   "culture": 1000
   },
   "worth": 14,
   "conquestProbability": 100,

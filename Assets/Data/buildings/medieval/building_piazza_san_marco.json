@@ -30,7 +30,17 @@
  },
  "culture": {
   "city": {
-   "flat": 8
+   "flat": [
+    8,
+    {
+     "value": 8,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "greatPeopleRate": {
@@ -81,9 +91,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_PIAZZA_SAN_MARCO",
   "civilopedia": "TXT_KEY_BUILDING_PIAZZA_SAN_MARCO_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 12,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

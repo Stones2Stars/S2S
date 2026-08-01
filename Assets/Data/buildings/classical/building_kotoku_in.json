@@ -35,7 +35,17 @@
  },
  "culture": {
   "city": {
-   "flat": 4
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   },
   "empire": {
    "percent": 1
@@ -117,9 +127,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_KOTOKU_IN",
   "civilopedia": "TXT_KEY_BUILDING_KOTOKU_IN_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_PROPHET",

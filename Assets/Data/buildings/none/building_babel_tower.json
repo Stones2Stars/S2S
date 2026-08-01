@@ -15,7 +15,17 @@
  },
  "culture": {
   "city": {
-   "flat": 4
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "happiness": {
@@ -50,9 +60,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_BABEL_TOWER",
   "civilopedia": "TXT_KEY_BUILDING_TMESO_SHRINE_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "notConstructible": true,
   "worth": 8,
   "conquestProbability": 100,

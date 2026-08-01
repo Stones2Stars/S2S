@@ -46,7 +46,17 @@
  },
  "culture": {
   "city": {
-   "flat": 8
+   "flat": [
+    8,
+    {
+     "value": 8,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "buildRate": {
@@ -120,9 +130,6 @@
   "help": "TXT_KEY_BUILDING_THE_ISHTAR_GATE_HELP",
   "stateReligionCommerce": {
    "espionage": 1
-  },
-  "commerceDoubleTime": {
-   "culture": 1000
   },
   "worth": 10,
   "conquestProbability": 100,

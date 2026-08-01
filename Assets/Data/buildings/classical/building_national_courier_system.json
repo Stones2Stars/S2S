@@ -54,7 +54,17 @@
  },
  "culture": {
   "city": {
-   "flat": 4
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "buildRate": {
@@ -129,9 +139,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_NATIONAL_COURIER_SYSTEM",
   "civilopedia": "TXT_KEY_BUILDING_NATIONAL_COURIER_SYSTEM_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 5,
   "militaryWorth": 10,
   "greatPeopleUnitType": "UNIT_GREAT_SPY",

@@ -38,7 +38,17 @@
  },
  "culture": {
   "city": {
-   "flat": 2
+   "flat": [
+    2,
+    {
+     "value": 2,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "greatPeopleRate": {
@@ -62,9 +72,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HQ_SIDS_SUSHI_CO",
   "civilopedia": "TXT_KEY_BUILDING_CORPORATION_2_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "notConstructible": true,
   "worth": 8,
   "conquestProbability": 100,

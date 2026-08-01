@@ -15,7 +15,17 @@
  },
  "culture": {
   "city": {
-   "flat": 4
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "greatPeopleRate": {
@@ -56,9 +66,6 @@
   "civilopedia": "TXT_KEY_BUILDING_SHRINE_OF_BAB_PEDIA",
   "stateReligionCommerce": {
    "research": 1
-  },
-  "commerceDoubleTime": {
-   "culture": 1000
   },
   "notConstructible": true,
   "worth": 8,

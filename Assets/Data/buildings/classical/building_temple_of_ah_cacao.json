@@ -21,7 +21,17 @@
  },
  "culture": {
   "city": {
-   "flat": 6
+   "flat": [
+    6,
+    {
+     "value": 6,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "buildRate": {
@@ -83,9 +93,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TEMPLE_OF_AH_CACAO",
   "civilopedia": "TXT_KEY_BUILDING_TEMPLE_OF_AH_CACAO_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 12,
   "militaryWorth": 8,
   "conquestProbability": 100,

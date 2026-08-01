@@ -44,7 +44,17 @@
  },
  "culture": {
   "city": {
-   "flat": 4
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   },
   "empire": {
    "percent": 6
@@ -151,9 +161,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TEMPLE_OF_HEAVEN",
   "civilopedia": "TXT_KEY_BUILDING_TEMPLE_OF_HEAVEN_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 3,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_PROPHET",

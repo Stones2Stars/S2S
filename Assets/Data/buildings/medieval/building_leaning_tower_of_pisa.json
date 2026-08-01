@@ -35,7 +35,17 @@
  },
  "culture": {
   "city": {
-   "flat": 4
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   },
   "empire": {
    "percent": 2
@@ -89,9 +99,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LEANING_TOWER_OF_PISA",
   "civilopedia": "TXT_KEY_BUILDING_LEANING_TOWER_OF_PISA_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

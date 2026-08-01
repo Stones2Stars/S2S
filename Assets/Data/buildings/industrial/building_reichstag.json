@@ -16,7 +16,17 @@
  },
  "culture": {
   "city": {
-   "flat": 4
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "buildRate": {
@@ -81,9 +91,6 @@
   "description": "TXT_KEY_BUILDING_REICHSTAG",
   "civilopedia": "TXT_KEY_BUILDING_REICHSTAG_PEDIA",
   "help": "TXT_KEY_BUILDING_REICHSTAG_HELP",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_GREAT_SPY",

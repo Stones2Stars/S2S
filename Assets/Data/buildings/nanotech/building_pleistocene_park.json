@@ -50,7 +50,17 @@
  },
  "culture": {
   "city": {
-   "flat": 2
+   "flat": [
+    2,
+    {
+     "value": 2,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "happiness": {
@@ -96,9 +106,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_PLEISTOCENE_PARK",
   "civilopedia": "TXT_KEY_BUILDING_PLEISTOCENE_PARK_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_SCIENTIST",

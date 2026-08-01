@@ -41,7 +41,17 @@
  },
  "culture": {
   "city": {
-   "flat": 6
+   "flat": [
+    6,
+    {
+     "value": 6,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "greatPeopleRate": {
@@ -112,9 +122,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_THE_GREAT_LIGHTHOUSE",
   "civilopedia": "TXT_KEY_BUILDING_THE_GREAT_LIGHTHOUSE_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_MERCHANT",

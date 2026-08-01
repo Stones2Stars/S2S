@@ -37,7 +37,17 @@
  },
  "culture": {
   "city": {
-   "flat": 15
+   "flat": [
+    15,
+    {
+     "value": 15,
+     "enabled": {
+      "existedFor": {
+       "min": 100
+      }
+     }
+    }
+   ]
   }
  },
  "happiness": {
@@ -91,9 +101,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DISNEYLAND",
   "civilopedia": "TXT_KEY_BUILDING_DISNEYLAND_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 100
-  },
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

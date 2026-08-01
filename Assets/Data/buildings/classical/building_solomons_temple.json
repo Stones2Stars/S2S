@@ -41,7 +41,17 @@
  },
  "culture": {
   "city": {
-   "flat": 4,
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ],
    "percent": 10
   }
  },
@@ -129,9 +139,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SOLOMONS_TEMPLE",
   "civilopedia": "TXT_KEY_BUILDING_SOLOMONS_TEMPLE_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 2,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_SCIENTIST",

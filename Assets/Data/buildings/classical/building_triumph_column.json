@@ -25,7 +25,17 @@
  },
  "culture": {
   "city": {
-   "flat": 2
+   "flat": [
+    2,
+    {
+     "value": 2,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "buildRate": {
@@ -105,9 +115,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TRIUMPH_COLUMN",
   "civilopedia": "TXT_KEY_BUILDING_TRIUMPH_COLUMN_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 2,
   "greatPeopleUnitType": "UNIT_ARTIST",
   "advisor": "ADVISOR_CULTURE",

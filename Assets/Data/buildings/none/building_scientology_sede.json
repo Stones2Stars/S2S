@@ -20,7 +20,17 @@
  },
  "culture": {
   "city": {
-   "flat": 2
+   "flat": [
+    2,
+    {
+     "value": 2,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "greatPeopleRate": {
@@ -57,9 +67,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SCIENTOLOGY_SEDE",
   "civilopedia": "TXT_KEY_BUILDING_SCIENTOLOGY_SEDE_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "notConstructible": true,
   "worth": 8,
   "conquestProbability": 100,

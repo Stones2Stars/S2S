@@ -37,7 +37,17 @@
  },
  "culture": {
   "city": {
-   "flat": 10
+   "flat": [
+    10,
+    {
+     "value": 10,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "greatPeopleRate": {
@@ -106,9 +116,6 @@
   "stateReligionCommerce": {
    "research": 1,
    "culture": 1
-  },
-  "commerceDoubleTime": {
-   "culture": 1000
   },
   "worth": 10,
   "conquestProbability": 100,

@@ -53,7 +53,17 @@
  },
  "culture": {
   "city": {
-   "flat": 4
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 300
+      }
+     }
+    }
+   ]
   }
  },
  "defense": {
@@ -138,9 +148,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ALHAMBRA",
   "civilopedia": "TXT_KEY_BUILDING_ALHAMBRA_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 300
-  },
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_PROPHET",

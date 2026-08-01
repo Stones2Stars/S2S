@@ -44,7 +44,17 @@
  },
  "culture": {
   "city": {
-   "flat": 2
+   "flat": [
+    2,
+    {
+     "value": 2,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "greatPeopleRate": {
@@ -105,9 +115,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_PEARL_HARBOR",
   "civilopedia": "TXT_KEY_BUILDING_PEARL_HARBOR_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 10,
   "conquestProbability": 100,
   "airUnitCapacity": 4,

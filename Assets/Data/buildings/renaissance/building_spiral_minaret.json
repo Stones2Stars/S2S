@@ -30,7 +30,17 @@
  },
  "culture": {
   "city": {
-   "flat": 8
+   "flat": [
+    8,
+    {
+     "value": 8,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "buildRate": {
@@ -94,9 +104,6 @@
   "civilopedia": "TXT_KEY_BUILDING_SPIRAL_MINARET_PEDIA",
   "stateReligionCommerce": {
    "gold": 2
-  },
-  "commerceDoubleTime": {
-   "culture": 1000
   },
   "worth": 14,
   "conquestProbability": 100,

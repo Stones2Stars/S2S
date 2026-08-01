@@ -37,7 +37,17 @@
  },
  "culture": {
   "city": {
-   "flat": 6
+   "flat": [
+    6,
+    {
+     "value": 6,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "happiness": {
@@ -108,9 +118,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_THEATRE_OF_DIONYSUS",
   "civilopedia": "TXT_KEY_BUILDING_THEATRE_OF_DIONYSUS_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

@@ -21,7 +21,17 @@
  },
  "culture": {
   "city": {
-   "flat": 1
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "attributes": {
@@ -45,9 +55,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TRADITION_WORK_ETHIC",
   "civilopedia": "TXT_KEY_BUILDING_TRADITION_WORK_ETHIC_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "notConstructible": true,
   "worth": 6,
   "advisor": "ADVISOR_GROWTH",

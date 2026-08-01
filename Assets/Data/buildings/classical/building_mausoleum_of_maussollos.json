@@ -54,7 +54,17 @@
  },
  "culture": {
   "city": {
-   "flat": 10
+   "flat": [
+    10,
+    {
+     "value": 10,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "buildRate": {
@@ -114,9 +124,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MAUSOLEUM_OF_MAUSSOLLOS",
   "civilopedia": "TXT_KEY_BUILDING_MAUSOLEUM_OF_MAUSSOLLOS_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 12,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

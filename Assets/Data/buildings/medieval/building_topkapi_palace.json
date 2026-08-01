@@ -16,7 +16,17 @@
  },
  "culture": {
   "city": {
-   "flat": 4
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "greatPeopleRate": {
@@ -65,9 +75,6 @@
   "description": "TXT_KEY_BUILDING_TOPKAPI_PALACE",
   "civilopedia": "TXT_KEY_BUILDING_TOPKAPI_PALACE_PEDIA",
   "help": "TXT_KEY_BUILDING_TOPKAPI_PALACE_HELP",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 13,
   "militaryWorth": 10,
   "conquestProbability": 100,

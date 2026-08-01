@@ -32,7 +32,17 @@
  },
  "culture": {
   "city": {
-   "flat": 2
+   "flat": [
+    2,
+    {
+     "value": 2,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "buildRate": {
@@ -96,9 +106,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CN_TOWER",
   "civilopedia": "TXT_KEY_BUILDING_CN_TOWER_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 8,
   "militaryWorth": 4,
   "conquestProbability": 100,

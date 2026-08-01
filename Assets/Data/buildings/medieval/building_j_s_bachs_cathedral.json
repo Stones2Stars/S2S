@@ -30,7 +30,17 @@
  },
  "culture": {
   "city": {
-   "flat": 6
+   "flat": [
+    6,
+    {
+     "value": 6,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "buildRate": {
@@ -125,9 +135,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_J_S_BACHS_CATHEDRAL",
   "civilopedia": "TXT_KEY_BUILDING_J_S_BACHS_CATHEDRAL_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 8,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

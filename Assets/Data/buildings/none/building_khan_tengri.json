@@ -15,7 +15,17 @@
  },
  "culture": {
   "city": {
-   "flat": 4
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "greatPeopleRate": {
@@ -45,9 +55,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_KHAN_TENGRI",
   "civilopedia": "TXT_KEY_BUILDING_KHAN_TENGRI_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "notConstructible": true,
   "worth": 8,
   "conquestProbability": 100,

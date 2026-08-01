@@ -27,7 +27,17 @@
  },
  "culture": {
   "city": {
-   "flat": 6
+   "flat": [
+    6,
+    {
+     "value": 6,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "greatPeopleRate": {
@@ -71,9 +81,6 @@
   "description": "TXT_KEY_BUILDING_NAZCA_LINES",
   "civilopedia": "TXT_KEY_BUILDING_NAZCA_LINES_PEDIA",
   "help": "TXT_KEY_BUILDING_NAZCA_LINES_HELP",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 6,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

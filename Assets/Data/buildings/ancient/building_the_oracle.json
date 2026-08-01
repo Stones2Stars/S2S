@@ -25,7 +25,17 @@
  },
  "culture": {
   "city": {
-   "flat": 8
+   "flat": [
+    8,
+    {
+     "value": 8,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "buildRate": {
@@ -98,9 +108,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_THE_ORACLE",
   "civilopedia": "TXT_KEY_BUILDING_THE_ORACLE_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_PROPHET",

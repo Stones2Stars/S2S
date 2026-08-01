@@ -30,7 +30,17 @@
  },
  "culture": {
   "city": {
-   "flat": 10
+   "flat": [
+    10,
+    {
+     "value": 10,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   },
   "empire": {
    "cities": {
@@ -92,9 +102,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_WESTMINSTER_ABBEY",
   "civilopedia": "TXT_KEY_BUILDING_WESTMINSTER_ABBEY_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

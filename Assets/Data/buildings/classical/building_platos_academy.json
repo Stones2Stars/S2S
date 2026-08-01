@@ -41,7 +41,17 @@
  },
  "culture": {
   "city": {
-   "flat": 4
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "maintenance": {
@@ -102,9 +112,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_PLATOS_ACADEMY",
   "civilopedia": "TXT_KEY_BUILDING_PLATOS_ACADEMY_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 8,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_SCIENTIST",

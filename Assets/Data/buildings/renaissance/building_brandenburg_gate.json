@@ -31,7 +31,17 @@
  },
  "culture": {
   "city": {
-   "flat": 6
+   "flat": [
+    6,
+    {
+     "value": 6,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "buildRate": {
@@ -104,9 +114,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_BRANDENBURG_GATE",
   "civilopedia": "TXT_KEY_BUILDING_BRANDENBURG_GATE_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 14,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_GREAT_SPY",

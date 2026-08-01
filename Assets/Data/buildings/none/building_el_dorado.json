@@ -33,7 +33,17 @@
  },
  "culture": {
   "city": {
-   "flat": 3
+   "flat": [
+    3,
+    {
+     "value": 3,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "buildRate": {
@@ -113,9 +123,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_EL_DORADO",
   "civilopedia": "TXT_KEY_BUILDING_EL_DORADO_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_MERCHANT",

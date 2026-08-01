@@ -32,7 +32,17 @@
  },
  "culture": {
   "city": {
-   "flat": 4
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "greatPeopleRate": {
@@ -83,9 +93,6 @@
   "description": "TXT_KEY_BUILDING_TSUKIJI_FISH_MARKET",
   "civilopedia": "TXT_KEY_BUILDING_TSUKIJI_FISH_MARKET_PEDIA",
   "help": "TXT_KEY_BUILDING_TSUKIJI_FISH_MARKET_HELP",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_MERCHANT",

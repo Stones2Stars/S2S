@@ -30,7 +30,17 @@
  },
  "culture": {
   "city": {
-   "flat": 1
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "health": {
@@ -88,9 +98,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_PONT_DU_GARD",
   "civilopedia": "TXT_KEY_BUILDING_PONT_DU_GARD_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "centerInCity": true,
   "worth": 4,
   "conquestProbability": 100,

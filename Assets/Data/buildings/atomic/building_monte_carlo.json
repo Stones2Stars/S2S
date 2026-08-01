@@ -55,7 +55,17 @@
  },
  "culture": {
   "city": {
-   "flat": 10
+   "flat": [
+    10,
+    {
+     "value": 10,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   },
   "empire": {
    "buildings": {
@@ -124,9 +134,6 @@
   "description": "TXT_KEY_BUILDING_MONTE_CARLO",
   "civilopedia": "TXT_KEY_BUILDING_MONTE_CARLO_PEDIA",
   "help": "TXT_KEY_BUILDING_LASVEGASSTRIP_HELP",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_MERCHANT",

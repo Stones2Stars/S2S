@@ -30,12 +30,32 @@
  },
  "research": {
   "city": {
-   "flat": 1
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "culture": {
   "city": {
-   "flat": 3
+   "flat": [
+    3,
+    {
+     "value": 3,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "happiness": {
@@ -122,10 +142,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MASADA",
   "civilopedia": "TXT_KEY_BUILDING_MASADA_PEDIA",
-  "commerceDoubleTime": {
-   "research": 1000,
-   "culture": 1000
-  },
   "worth": 6,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_PROPHET",

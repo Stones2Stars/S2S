@@ -41,7 +41,17 @@
  },
  "culture": {
   "city": {
-   "flat": 4
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "revolution": {
@@ -107,9 +117,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_PORCELAIN_TOWER",
   "civilopedia": "TXT_KEY_BUILDING_PORCELAIN_TOWER_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 12,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

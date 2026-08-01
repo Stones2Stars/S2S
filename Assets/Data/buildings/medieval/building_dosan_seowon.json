@@ -41,13 +41,33 @@
  },
  "research": {
   "city": {
-   "flat": 4,
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ],
    "percent": 15
   }
  },
  "culture": {
   "city": {
-   "flat": 4
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "maintenance": {
@@ -111,10 +131,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DOSAN_SEOWON",
   "civilopedia": "TXT_KEY_BUILDING_DOSAN_SEOWON_PEDIA",
-  "commerceDoubleTime": {
-   "research": 1000,
-   "culture": 1000
-  },
   "worth": 14,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_SCIENTIST",

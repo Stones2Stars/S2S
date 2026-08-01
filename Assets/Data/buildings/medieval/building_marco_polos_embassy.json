@@ -30,7 +30,17 @@
  },
  "culture": {
   "city": {
-   "flat": 2
+   "flat": [
+    2,
+    {
+     "value": 2,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "greatPeopleRate": {
@@ -84,9 +94,6 @@
   "description": "TXT_KEY_BUILDING_MARCO_POLOS_EMBASSY",
   "civilopedia": "TXT_KEY_BUILDING_MARCO_POLOS_EMBASSY_PEDIA",
   "help": "TXT_KEY_BUILDING_MARCO_POLOS_EMBASSY_HELP",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 12,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_MERCHANT",

@@ -43,7 +43,17 @@
  },
  "culture": {
   "city": {
-   "flat": 3,
+   "flat": [
+    3,
+    {
+     "value": 3,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ],
    "percent": 5
   }
  },
@@ -132,9 +142,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TEMPLE_OF_TOTH",
   "civilopedia": "TXT_KEY_BUILDING_TEMPLE_OF_TOTH_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 2,
   "conquestProbability": 100,
   "religion": "RELIGION_KEMETISM",

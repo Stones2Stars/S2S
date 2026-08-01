@@ -31,7 +31,17 @@
  },
  "culture": {
   "city": {
-   "flat": 8
+   "flat": [
+    8,
+    {
+     "value": 8,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "revolution": {
@@ -81,9 +91,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_AACHEN_CATHEDRAL",
   "civilopedia": "TXT_KEY_BUILDING_AACHEN_CATHEDRAL_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_PROPHET",

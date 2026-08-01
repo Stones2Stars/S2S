@@ -15,7 +15,17 @@
  },
  "culture": {
   "city": {
-   "flat": 4
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "greatPeopleRate": {
@@ -54,9 +64,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_NATURE_ANSWER",
   "civilopedia": "TXT_KEY_BUILDING_NATURE_ANSWER_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "notConstructible": true,
   "worth": 8,
   "conquestProbability": 100,

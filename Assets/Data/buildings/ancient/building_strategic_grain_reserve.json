@@ -23,7 +23,17 @@
  },
  "culture": {
   "city": {
-   "flat": 2
+   "flat": [
+    2,
+    {
+     "value": 2,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "health": {
@@ -110,9 +120,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_STRATEGIC_GRAIN_RESERVE",
   "civilopedia": "TXT_KEY_BUILDING_STRATEGIC_GRAIN_RESERVE_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 10,
   "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",
   "advisor": "ADVISOR_GROWTH",

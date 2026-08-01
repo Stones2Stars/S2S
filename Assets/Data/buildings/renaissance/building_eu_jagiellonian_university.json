@@ -45,7 +45,17 @@
  },
  "culture": {
   "city": {
-   "flat": 14,
+   "flat": [
+    14,
+    {
+     "value": 14,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ],
    "percent": 5
   }
  },
@@ -143,9 +153,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_EU_JAGIELLONIAN_UNIVERSITY",
   "civilopedia": "TXT_KEY_BUILDING_EU_JAGIELLONIAN_UNIVERSITY_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 8,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

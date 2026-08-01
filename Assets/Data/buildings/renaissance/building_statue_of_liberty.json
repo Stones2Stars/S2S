@@ -38,7 +38,17 @@
  },
  "culture": {
   "city": {
-   "flat": 6
+   "flat": [
+    6,
+    {
+     "value": 6,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "buildRate": {
@@ -105,9 +115,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_STATUE_OF_LIBERTY",
   "civilopedia": "TXT_KEY_BUILDING_STATUE_OF_LIBERTY_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 16,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_MERCHANT",

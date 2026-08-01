@@ -48,7 +48,17 @@
  },
  "culture": {
   "city": {
-   "flat": 3
+   "flat": [
+    3,
+    {
+     "value": 3,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "happiness": {
@@ -125,9 +135,6 @@
   "description": "TXT_KEY_BUILDING_SILK_ROAD",
   "civilopedia": "TXT_KEY_BUILDING_SILK_ROAD_PEDIA",
   "help": "TXT_KEY_BUILDING_SILK_ROAD_HELP",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 8,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_MERCHANT",

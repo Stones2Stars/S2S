@@ -15,7 +15,17 @@
  },
  "culture": {
   "city": {
-   "flat": 4
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   },
   "empire": {
    "cities": {
@@ -70,9 +80,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_THE_KARNAK_TEMPLE_COMPLEX",
   "civilopedia": "TXT_KEY_BUILDING_THE_KARNAK_TEMPLE_COMPLEX_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "notConstructible": true,
   "worth": 8,
   "conquestProbability": 100,

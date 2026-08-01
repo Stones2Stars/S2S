@@ -26,7 +26,17 @@
  },
  "culture": {
   "city": {
-   "flat": 4
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "buildRate": {
@@ -115,9 +125,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_THE_NECROMANTEION",
   "civilopedia": "TXT_KEY_BUILDING_THE_NECROMANTEION_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 2,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_PROPHET",

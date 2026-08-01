@@ -16,7 +16,17 @@
  },
  "culture": {
   "city": {
-   "flat": 5
+   "flat": [
+    5,
+    {
+     "value": 5,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "greatPeopleRate": {
@@ -75,9 +85,6 @@
   "description": "TXT_KEY_BUILDING_THE_MOTHERLAND_CALLS",
   "civilopedia": "TXT_KEY_BUILDING_THE_MOTHERLAND_CALLS_PEDIA",
   "help": "TXT_KEY_BUILDING_THE_MOTHERLAND_CALLS_HELP",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 16,
   "militaryWorth": 8,
   "conquestProbability": 100,

@@ -1748,8 +1748,6 @@ protected:
 	CvString m_szScriptData;
 
 	int* m_paiProjectProduction;
-	int* m_paiBuildingOriginalOwner;
-	int* m_paiBuildingOriginalTime;
 	int* m_paiUnitProduction;
 	int* m_paiGreatPeopleUnitRate;
 	int* m_paiGreatPeopleUnitProgress;

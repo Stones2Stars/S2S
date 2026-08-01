@@ -31,7 +31,17 @@
  },
  "culture": {
   "city": {
-   "flat": 4
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 8000
+      }
+     }
+    }
+   ]
   }
  },
  "buildRate": {
@@ -95,9 +105,6 @@
   "description": "TXT_KEY_BUILDING_LASCAUX_PAINTS",
   "civilopedia": "TXT_KEY_BUILDING_LASCAUX_PAINTS_PEDIA",
   "help": "TXT_KEY_BUILDING_LASCAUX_CAVES_HELP",
-  "commerceDoubleTime": {
-   "culture": 8000
-  },
   "centerInCity": true,
   "worth": 6,
   "conquestProbability": 100,

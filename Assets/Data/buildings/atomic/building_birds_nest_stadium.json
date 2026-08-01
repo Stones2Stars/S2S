@@ -30,7 +30,17 @@
  },
  "culture": {
   "city": {
-   "flat": 10
+   "flat": [
+    10,
+    {
+     "value": 10,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "happiness": {
@@ -96,9 +106,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_BIRDS_NEST_STADIUM",
   "civilopedia": "TXT_KEY_BUILDING_BIRDS_NEST_STADIUM_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 8,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

@@ -58,7 +58,17 @@
  },
  "culture": {
   "city": {
-   "flat": 2,
+   "flat": [
+    2,
+    {
+     "value": 2,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ],
    "percent": 2
   }
  },
@@ -125,9 +135,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_STATUE_OF_CHAMPION",
   "civilopedia": "TXT_KEY_BUILDING_STATUE_OF_CHAMPION_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 2,
   "greatPeopleUnitType": "UNIT_ARTIST",
   "advisor": "ADVISOR_CULTURE",

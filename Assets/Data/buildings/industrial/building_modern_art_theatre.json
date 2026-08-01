@@ -37,7 +37,17 @@
  },
  "culture": {
   "city": {
-   "flat": 10
+   "flat": [
+    10,
+    {
+     "value": 10,
+     "enabled": {
+      "existedFor": {
+       "min": 100
+      }
+     }
+    }
+   ]
   }
  },
  "greatPeopleRate": {
@@ -90,9 +100,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MODERN_ART_THEATRE",
   "civilopedia": "TXT_KEY_BUILDING_MODERN_ART_THEATRE_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 100
-  },
   "worth": 8,
   "greatPeopleUnitType": "UNIT_ARTIST",
   "advisor": "ADVISOR_CULTURE",

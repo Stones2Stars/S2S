@@ -155,9 +155,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TRAVEL_AGENCY",
   "civilopedia": "TXT_KEY_BUILDING_TRAVEL_AGENCY_PEDIA",
-  "commerceDoubleTime": {
-   "gold": 100
-  },
   "worth": 2,
   "greatPeopleUnitType": "UNIT_MERCHANT",
   "advisor": "ADVISOR_ECONOMY",

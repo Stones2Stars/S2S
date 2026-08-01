@@ -35,7 +35,17 @@
  },
  "culture": {
   "city": {
-   "flat": 8
+   "flat": [
+    8,
+    {
+     "value": 8,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   },
   "empire": {
    "buildings": {
@@ -112,9 +122,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_COIT_TOWER",
   "civilopedia": "TXT_KEY_BUILDING_COIT_TOWER_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

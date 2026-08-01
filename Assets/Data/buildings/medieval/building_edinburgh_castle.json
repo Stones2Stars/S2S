@@ -55,7 +55,17 @@
  },
  "culture": {
   "city": {
-   "flat": 4
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 100
+      }
+     }
+    }
+   ]
   }
  },
  "espionage": {
@@ -132,9 +142,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_EDINBURGH_CASTLE",
   "civilopedia": "TXT_KEY_BUILDING_EDINBURGH_CASTLE_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 100
-  },
   "worth": 12,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_MERCHANT",

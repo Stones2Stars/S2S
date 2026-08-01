@@ -53,7 +53,17 @@
  },
  "culture": {
   "city": {
-   "flat": 2
+   "flat": [
+    2,
+    {
+     "value": 2,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "maintenance": {
@@ -119,9 +129,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_COPERNICUS_OBSERVATORY",
   "civilopedia": "TXT_KEY_BUILDING_COPERNICUS_OBSERVATORY_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 12,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_SCIENTIST",

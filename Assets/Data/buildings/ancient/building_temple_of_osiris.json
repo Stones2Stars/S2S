@@ -52,7 +52,17 @@
  },
  "culture": {
   "city": {
-   "flat": 2
+   "flat": [
+    2,
+    {
+     "value": 2,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   },
   "empire": {
    "percent": 2
@@ -129,9 +139,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TEMPLE_OF_OSIRIS",
   "civilopedia": "TXT_KEY_BUILDING_TEMPLE_OF_OSIRIS_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 6,
   "advisor": "ADVISOR_RELIGION",
   "visibilityPriority": 1,

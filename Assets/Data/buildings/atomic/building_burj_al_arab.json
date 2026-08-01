@@ -34,7 +34,17 @@
  },
  "culture": {
   "city": {
-   "flat": 4
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "happiness": {
@@ -113,9 +123,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_BURJ_AL_ARAB",
   "civilopedia": "TXT_KEY_BUILDING_BURJ_AL_ARAB_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",

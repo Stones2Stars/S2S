@@ -69,7 +69,17 @@
  },
  "culture": {
   "city": {
-   "flat": 4
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "greatPeopleRate": {
@@ -118,9 +128,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TROYES_TRADE_FAIR",
   "civilopedia": "TXT_KEY_BUILDING_TROYES_TRADE_FAIR_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_MERCHANT",

@@ -32,7 +32,17 @@
  },
  "culture": {
   "city": {
-   "flat": 4
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "happiness": {
@@ -77,9 +87,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HILL_OF_TARA",
   "civilopedia": "TXT_KEY_BUILDING_HILL_OF_TARA_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_PROPHET",

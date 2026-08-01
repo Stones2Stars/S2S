@@ -16,7 +16,17 @@
  },
  "culture": {
   "city": {
-   "flat": 3
+   "flat": [
+    3,
+    {
+     "value": 3,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "freeSpecialists": {
@@ -79,9 +89,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_NATIONAL_PARK",
   "civilopedia": "TXT_KEY_BUILDING_NATIONAL_PARK_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 7,
   "greatPeopleUnitType": "UNIT_SCIENTIST",
   "advisor": "ADVISOR_GROWTH",

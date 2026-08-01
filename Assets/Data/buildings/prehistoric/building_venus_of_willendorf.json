@@ -22,7 +22,17 @@
  },
  "culture": {
   "city": {
-   "flat": 2
+   "flat": [
+    2,
+    {
+     "value": 2,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "happiness": {
@@ -71,9 +81,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_VENUS_OF_WILLENDORF",
   "civilopedia": "TXT_KEY_BUILDING_VENUS_OF_WILLENDORF_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 8,
   "conquestProbability": 100,
   "advisor": "ADVISOR_CULTURE",

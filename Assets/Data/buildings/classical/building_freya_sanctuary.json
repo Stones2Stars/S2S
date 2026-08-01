@@ -44,7 +44,17 @@
  },
  "culture": {
   "city": {
-   "flat": 4
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "buildRate": {
@@ -134,9 +144,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_FREYA_SANCTUARY",
   "civilopedia": "TXT_KEY_BUILDING_FREYA_SANCTUARY_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 2,
   "conquestProbability": 100,
   "religion": "RELIGION_ASATRU",

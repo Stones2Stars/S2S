@@ -49,7 +49,17 @@
  },
  "culture": {
   "city": {
-   "flat": 6
+   "flat": [
+    6,
+    {
+     "value": 6,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "buildRate": {
@@ -109,9 +119,6 @@
   "description": "TXT_KEY_BUILDING_THE_GREAT_PYRAMID",
   "civilopedia": "TXT_KEY_BUILDING_THE_GREAT_PYRAMID_PEDIA",
   "help": "TXT_KEY_BUILDING_VALLEY_OF_THE_KINGS_HELP",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 12,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",

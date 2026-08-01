@@ -66,7 +66,17 @@
  },
  "culture": {
   "city": {
-   "flat": 4,
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ],
    "percent": 12
   },
   "empire": {
@@ -149,9 +159,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CONFUCIAN_SCHOOL",
   "civilopedia": "TXT_KEY_BUILDING_CONFUCIAN_SCHOOL_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 2,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_SCIENTIST",

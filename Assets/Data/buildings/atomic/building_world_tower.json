@@ -97,9 +97,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_WORLD_TOWER",
   "civilopedia": "TXT_KEY_BUILDING_WORLD_TOWER_PEDIA",
-  "commerceDoubleTime": {
-   "gold": 1000
-  },
   "worth": 20,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",

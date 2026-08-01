@@ -53,7 +53,17 @@
  },
  "gold": {
   "city": {
-   "flat": 1,
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "existedFor": {
+       "min": 200
+      }
+     }
+    }
+   ],
    "percent": 10
   }
  },
@@ -97,9 +107,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CENTRAL_BANK",
   "civilopedia": "TXT_KEY_BUILDING_CENTRAL_BANK_PEDIA",
-  "commerceDoubleTime": {
-   "gold": 200
-  },
   "worth": 5,
   "greatPeopleUnitType": "UNIT_MERCHANT",
   "advisor": "ADVISOR_ECONOMY",

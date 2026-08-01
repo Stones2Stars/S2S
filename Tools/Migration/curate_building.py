@@ -601,16 +601,24 @@ def pass2(typ, rec, store, fams, grants, triggers, identity, enables, capabiliti
         srh_rel = rec.findtext("ReligionType")
         _inject_cond(fams, "happiness", "city", "flat", srh,
                      OrderedDict([("STATE_RELIGION", srh_rel)]) if srh_rel and srh_rel != "NONE" else "HAS_STATE_RELIGION")
-    # --- CommerceChangeDoubleTimes: the engine DOUBLES the building's WHOLE per-building commerce (base + shrine +
-    # corpHQ + event + stateRel) once it has existed >= N game-years (getBuildingCommerceByBuilding iCommerce*=2,
-    # CvCity.cpp:12284-12290). A +base-only second flat UNDER-doubles a building that is also a shrine/corp-HQ, so emit
-    # a clean per-channel MARKER (the age threshold) the cascade uses to double the building's FULL computed commerce.
-    # `identity.commerceDoubleTime: {commerce: years}` (mirrors identity.shrine -- a per-building relationship/marker). ---
+    # --- CommerceChangeDoubleTimes: "this channel doubles once the building has stood N" -> a SECOND DEPOSIT on the
+    # SAME slot, gated `enabled:{existedFor:{min:N}}` (modifier.md §3 "Age-gated deposits"; json.md §3.5 names the
+    # predicate and §10's Versailles is this exact mechanic: `culture.city.flat: [10, {value:10, enabled:{existedFor:
+    # {min:1000}}}]`). A doubling is an ADDED equal deposit, never a post-sum multiply and never a timer/stage marker.
+    # The doubled amount is the building's OWN authored base for that channel -- its CommerceChanges value, i.e. the
+    # very number the yield/commerce loop deposited as <commerce>.city.flat. Shrine commerce belongs to the RELIGION
+    # (religion.shrine.{commerce}) and headquarters commerce to the CORPORATION, so neither is part of the building's
+    # base here. A channel with a double-time but NO authored base doubles nothing and emits nothing. ---
     cdt = rec.find("CommerceChangeDoubleTimes")
     if cdt is not None:
-        dbl = OrderedDict((member, turns) for member, turns in engine.named_array(cdt, engine.COMMERCES).items() if turns)
-        if dbl:
-            identity["commerceDoubleTime"] = dbl
+        base_node = rec.find("CommerceChanges")
+        base_commerce = engine.named_array(base_node, engine.COMMERCES) if base_node is not None else {}
+        for member, turns in engine.named_array(cdt, engine.COMMERCES).items():
+            base = base_commerce.get(member)
+            if not base:
+                continue
+            _inject_cond(fams, member, "city", "flat", base,
+                         OrderedDict([("existedFor", OrderedDict([("min", turns)]))]))
     # --- CommerceHappinesses: legacy "+V happiness at 100% on the <commerce> slider" -> ordinary happiness
     # deposits per-scaled on the json.md §3.1 slider-rate tokens (ruling 20, info-rebuild.md: the whole
     # commerceHappiness family DISSOLVES -- wellbeing mints zero kinds). Engine site (shared by all channels):

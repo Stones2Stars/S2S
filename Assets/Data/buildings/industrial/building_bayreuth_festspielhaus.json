@@ -36,7 +36,17 @@
  },
  "culture": {
   "city": {
-   "flat": 10
+   "flat": [
+    10,
+    {
+     "value": 10,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   },
   "empire": {
    "buildings": {
@@ -90,9 +100,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_BAYREUTH_FESTSPIELHAUS",
   "civilopedia": "TXT_KEY_BUILDING_BAYREUTH_FESTSPIELHAUS_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

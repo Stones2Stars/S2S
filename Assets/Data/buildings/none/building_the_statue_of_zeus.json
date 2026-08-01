@@ -15,7 +15,17 @@
  },
  "culture": {
   "city": {
-   "flat": 10
+   "flat": [
+    10,
+    {
+     "value": 10,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "greatPeopleRate": {
@@ -64,9 +74,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_THE_STATUE_OF_ZEUS",
   "civilopedia": "TXT_KEY_BUILDING_THE_STATUE_OF_ZEUS_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "notConstructible": true,
   "worth": 8,
   "militaryWorth": 4,

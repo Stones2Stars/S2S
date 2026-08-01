@@ -16,7 +16,17 @@
  },
  "culture": {
   "city": {
-   "flat": 4
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "espionage": {
@@ -55,9 +65,6 @@
   "description": "TXT_KEY_BUILDING_ZIZKOV_TELEVISION_TOWER",
   "civilopedia": "TXT_KEY_BUILDING_ZIZKOV_TELEVISION_TOWER_PEDIA",
   "help": "TXT_KEY_BUILDING_ZIZKOV_TELEVISION_TOWER_HELP",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 12,
   "militaryWorth": 8,
   "conquestProbability": 100,

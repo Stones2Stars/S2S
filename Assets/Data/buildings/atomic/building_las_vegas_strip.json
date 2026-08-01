@@ -58,7 +58,17 @@
  },
  "culture": {
   "city": {
-   "flat": 8
+   "flat": [
+    8,
+    {
+     "value": 8,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "freeSpecialists": {
@@ -102,9 +112,6 @@
   "description": "TXT_KEY_BUILDING_LAS_VEGAS_STRIP",
   "civilopedia": "TXT_KEY_BUILDING_LAS_VEGAS_STRIP_PEDIA",
   "help": "TXT_KEY_BUILDING_LASVEGASSTRIP_HELP",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_MERCHANT",

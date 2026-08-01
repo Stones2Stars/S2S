@@ -36,7 +36,17 @@
  },
  "culture": {
   "city": {
-   "flat": 4
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   },
   "empire": {
    "percent": 1
@@ -139,9 +149,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_THE_BRIHADEESWARAR_TEMPLE",
   "civilopedia": "TXT_KEY_BUILDING_THE_BRIHADEESWARAR_TEMPLE_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 6,
   "conquestProbability": 100,
   "religion": "RELIGION_HINDUISM",

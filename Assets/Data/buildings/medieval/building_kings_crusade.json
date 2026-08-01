@@ -40,7 +40,17 @@
  },
  "culture": {
   "city": {
-   "flat": 2
+   "flat": [
+    2,
+    {
+     "value": 2,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "greatPeopleRate": {
@@ -100,9 +110,6 @@
   "help": "TXT_KEY_BUILDING_KINGS_CRUSADE_HELP",
   "stateReligionCommerce": {
    "gold": 1
-  },
-  "commerceDoubleTime": {
-   "culture": 1000
   },
   "worth": 10,
   "militaryWorth": 10,

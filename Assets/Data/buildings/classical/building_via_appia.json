@@ -43,7 +43,17 @@
  },
  "culture": {
   "city": {
-   "flat": 2
+   "flat": [
+    2,
+    {
+     "value": 2,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "greatPeopleRate": {
@@ -85,9 +95,6 @@
   "description": "TXT_KEY_BUILDING_VIA_APPIA",
   "civilopedia": "TXT_KEY_BUILDING_VIA_APPIA_PEDIA",
   "help": "TXT_KEY_BUILDING_VIA_APPIA_HELP",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_MERCHANT",

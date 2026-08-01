@@ -42,7 +42,17 @@
  },
  "culture": {
   "city": {
-   "flat": 2
+   "flat": [
+    2,
+    {
+     "value": 2,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
   }
  },
  "happiness": {
@@ -71,9 +81,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HQ_RED_CURTAINS",
   "civilopedia": "TXT_KEY_BUILDING_CORPORATION_RED_PEDIA",
-  "commerceDoubleTime": {
-   "culture": 1000
-  },
   "notConstructible": true,
   "worth": 8,
   "conquestProbability": 100,
