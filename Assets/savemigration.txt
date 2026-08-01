@@ -1000,3 +1000,12 @@ CvUnit::m_iExtraEndurance
 | nothing grants one. Neither had a reader outside CvUnit.
 CvUnit::m_iAirCombatLimitChange
 CvUnit::m_iExtraNumTriggers
+
+| The player's ERA-ADVANCE free-specialist accumulator. It was a refcount of held traits (processTrait +/-1) that
+| CvPlayer::setCurrentEra then read back to hand every city that many typed-free specialists -- the stored
+| accumulator class, replaced by a fact rather than a store. The trait now authors the payload on the TRIGGER
+| plane (`onEraChanged` -> `action.grant.specialists`, json.md §5), and the trigger engine's SEVT_ERA_CHANGED
+| route applies it straight to the cities, so nothing needs to be carried between the trait change and the era
+| advance. Era advance is tech-driven (CvTeam::setHasTech), which is why the era is a happening rather than the
+| trait's own considered action. REPLACEMENT: CvTriggerEngine tr_resolveEraChanged.
+CvPlayer::m_paiEraAdvanceFreeSpecialistCount

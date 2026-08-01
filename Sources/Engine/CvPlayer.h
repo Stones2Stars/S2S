@@ -1669,7 +1669,6 @@ protected:
 	int m_iFreedomFighterCount;
 	int m_iExtraFreedomFighters;
 
-	int* m_paiEraAdvanceFreeSpecialistCount;
 	int m_iNationalCityStartCulture;
 	int m_iNationalAirUnitCapacity;
 	int m_iNationalCityStartBonusPopulation;
@@ -2187,9 +2186,6 @@ public:
 
 	int getCoastalAIInfluence() const;
 
-	int getEraAdvanceFreeSpecialistCount(SpecialistTypes eIndex) const;
-	void setEraAdvanceFreeSpecialistCount(SpecialistTypes eIndex, int iValue);
-	void changeEraAdvanceFreeSpecialistCount(SpecialistTypes eIndex, int iChange);
 
 	int getGoldenAgeOnBirthOfGreatPersonCount(const UnitTypes eIndex) const;
 	void changeGoldenAgeOnBirthOfGreatPersonCount(const UnitTypes eIndex, const char iChange);

@@ -175,9 +175,9 @@
    "trigger": "onEraChanged",
    "action": {
     "grant": {
-     "specialists": {
-      "SPECIALIST_GREAT_ADMIRAL": 1
-     }
+     "specialists": [
+      "SPECIALIST_GREAT_ADMIRAL"
+     ]
     }
    }
   }

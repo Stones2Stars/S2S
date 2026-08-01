@@ -557,8 +557,11 @@ def curate(typ, rec, store):
             if t and t != "NONE":
                 triggers.append(OrderedDict([
                     ("trigger", "onEraChanged"),
+                    # The LIST form its siblings use (units/techs): one element per granted specialist. An
+                    # OBJECT here would parse as a SCOPED PULSE (CvGrants: "population": {"city": 3}) and grant
+                    # nothing, silently.
                     ("action", OrderedDict([
-                        ("grant", OrderedDict([("specialists", OrderedDict([(t, 1)]))])),
+                        ("grant", OrderedDict([("specialists", [t])])),
                     ])),
                 ]))
         elif tag == "GoldenAgeonBirthofGreatPersonType":

@@ -229,7 +229,6 @@ m_cachedBonusCount(NULL)
 	m_paiNationalDomainProductionModifier = NULL;
 	m_paiNationalTechResearchModifier = NULL;
 
-	m_paiEraAdvanceFreeSpecialistCount = NULL;
 
 	//TB Traits end
 
@@ -310,7 +309,6 @@ CvPlayer::~CvPlayer()
 	//TB Traits begin
 	SAFE_DELETE_ARRAY(m_aiLessYieldThreshold);
 		//Team Project (6)
-	SAFE_DELETE_ARRAY(m_paiEraAdvanceFreeSpecialistCount);
 	//Team Project (7)
 	//TB Traits end
 
@@ -1624,7 +1622,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 		FAssertMsg(m_ppiSpecialistYieldPercentChanges==NULL, "about to leak memory, CvPlayer::m_ppiSpecialistYieldPercentChanges");
 		m_ppiSpecialistCommercePercentChanges = new int*[GC.getNumSpecialistInfos()];
 		m_ppiSpecialistYieldPercentChanges = new int*[GC.getNumSpecialistInfos()];
-		m_paiEraAdvanceFreeSpecialistCount = new int[GC.getNumSpecialistInfos()];
 
 		for (iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
 		{
@@ -1638,7 +1635,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 			{
 				m_ppiSpecialistYieldPercentChanges[iI][iJ] = 0;
 			}
-			m_paiEraAdvanceFreeSpecialistCount[iI] = 0;
 		}
 
 		for (iI = 0; iI < NUM_MODDEROPTION_TYPES; iI++)
@@ -11671,14 +11667,6 @@ void CvPlayer::setCurrentEra(EraTypes eNewValue)
 		// dirty all of this player's cities...
 		foreach_ (CvCity* city, cities())
 		{
-			//TB Era Advance Free Specialist Type
-			for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
-			{
-				if (getEraAdvanceFreeSpecialistCount((SpecialistTypes)iI) > 0)
-				{
-					city->changeFreeSpecialistCount((SpecialistTypes)iI, getEraAdvanceFreeSpecialistCount((SpecialistTypes)iI), true);
-				}
-			}
 			city->setLayoutDirty(true);
 		}
 
@@ -18411,7 +18399,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraStateReligionSpreadModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraNonStateReligionSpreadModifier);
-		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiEraAdvanceFreeSpecialistCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNationalCityStartCulture);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNationalAirUnitCapacity);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNationalCityStartBonusPopulation);
@@ -19341,7 +19328,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraStateReligionSpreadModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraNonStateReligionSpreadModifier);
-		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiEraAdvanceFreeSpecialistCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNationalCityStartCulture);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNationalAirUnitCapacity);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNationalCityStartBonusPopulation);
@@ -27085,14 +27071,8 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 		}
 	}
 
-	// The era-advance free specialist is a persisted PULSE rather than a while-active deposit, so it belongs to
-	// the typed-free specialist STORE, which has no home yet -- this stays dangling until that store exists.
-	// The trait NAMES the type, so it never needed the registry walk it used to sit inside.
-	const SpecialistTypes eEraAdvanceSpecialist = (SpecialistTypes)GC.getTraitInfo(eTrait).getEraAdvanceFreeSpecialistType();
-	if (eEraAdvanceSpecialist != NO_SPECIALIST)
-	{
-		changeEraAdvanceFreeSpecialistCount(eEraAdvanceSpecialist, iChange);
-	}
+	// (The trait's era-advance specialist is not applied here: it fires on the ERA ADVANCING, which is the
+	// trigger engine's SEVT_ERA_CHANGED route, not on gaining the trait.)
 
 	for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
 	{
@@ -28270,25 +28250,6 @@ int CvPlayer::getCoastalAIInfluence() const
 	}
 	iModifier += 50;
 	return iModifier;
-}
-
-	//Team Project (6)
-int CvPlayer::getEraAdvanceFreeSpecialistCount(SpecialistTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eIndex);
-	return m_paiEraAdvanceFreeSpecialistCount[eIndex];
-}
-
-void CvPlayer::setEraAdvanceFreeSpecialistCount(SpecialistTypes eIndex, int iValue)
-{
-	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eIndex);
-
-	m_paiEraAdvanceFreeSpecialistCount[eIndex] = iValue;
-}
-
-void CvPlayer::changeEraAdvanceFreeSpecialistCount(SpecialistTypes eIndex, int iChange)
-{
-	setEraAdvanceFreeSpecialistCount(eIndex, (getEraAdvanceFreeSpecialistCount(eIndex) + iChange));
 }
 
 void CvPlayer::changeGoldenAgeOnBirthOfGreatPersonCount(const UnitTypes eUnit, const char iChange)

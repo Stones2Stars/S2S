@@ -362,9 +362,9 @@
    "trigger": "onEraChanged",
    "action": {
     "grant": {
-     "specialists": {
-      "SPECIALIST_GREAT_MILITARY_INSTRUCTOR": 1
-     }
+     "specialists": [
+      "SPECIALIST_GREAT_MILITARY_INSTRUCTOR"
+     ]
     }
    }
   }

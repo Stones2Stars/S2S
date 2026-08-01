@@ -36,7 +36,7 @@
 #include <vector>
 
 // ===================== [GRANTS] spine domain (logging.md §4: logging is a spine CONSUMER) =====================
-enum TrEvt { TRE_BUILDING = 1, TRE_UNIT, TRE_TECH, TRE_RELIGION, TRE_CIVIC, TRE_GAMESTART, TRE_REPEAT, TRE_FOUND };
+enum TrEvt { TRE_BUILDING = 1, TRE_UNIT, TRE_TECH, TRE_RELIGION, TRE_CIVIC, TRE_GAMESTART, TRE_REPEAT, TRE_FOUND, TRE_ERA };
 enum GrFld
 {
 	TF_PLAYER = 1, TF_BUILDING, TF_UNIT, TF_TECH, TF_RELIGION, TF_CIVIC,
@@ -50,7 +50,8 @@ enum GrFld
 	TF_FIRSTACQUIRE,                                         // buildings: 1 = genuine first build, 0 = conquest/restore
 	TF_CITY, TF_SPAWNED, TF_HEALED,                          // the per-turn apply (increment 5): what actually LANDED
 	TF_APPLIED,                                              // 1 = the machine ran the FIRST-BUILD apply (NOT a claim about every grant on the line)
-	TF_MATMISMATCH                                           // 1 = a mapFrom-materialized getter disagrees with its composed grants read
+	TF_MATMISMATCH,                                          // 1 = a mapFrom-materialized getter disagrees with its composed grants read
+	TF_ERA, TF_SPECIALISTS                                   // the era-advance apply: which era, and how many specialists LANDED
 };
 static const char* tr_prefix(int evt)
 {
@@ -64,6 +65,7 @@ static const char* tr_prefix(int evt)
 	case TRE_GAMESTART: return "[TRIGGERS/gameStart]";
 	case TRE_REPEAT:   return "[TRIGGERS/repeat]";
 	case TRE_FOUND:    return "[TRIGGERS/cityFounded]";
+	case TRE_ERA:      return "[TRIGGERS/era]";
 	default:           return "[GRANTS]";
 	}
 }
@@ -101,6 +103,8 @@ static const char* tr_field(int tag, SpineFieldType* peType)
 	case TF_HEALED:         return "healed";
 	case TF_APPLIED:        return "appliedFirstBuild";
 	case TF_MATMISMATCH:    return "matMismatch";
+	case TF_ERA:            return "era";
+	case TF_SPECIALISTS:    return "specialists";
 	default:                return NULL;
 	}
 }
@@ -136,6 +140,7 @@ static const int tr_keyGoldenAge        = CvGrants::key("goldenAge");
 static const int tr_keyPopulation       = CvGrants::key("population");
 static const int tr_keyScopeCity        = CvGrants::key("city");
 static const int tr_keyScopeEmpire      = CvGrants::key("empire");
+static const int tr_keySpecialists      = CvGrants::key("specialists");
 static const int tr_keyFirstFreeUnit    = CvGrants::key("firstFreeUnit");
 static const int tr_keyFirstFreeProphet = CvGrants::key("firstFreeProphet");
 static const int tr_keyNumFreeUnits     = CvGrants::key("numFreeUnits");
@@ -474,6 +479,53 @@ static void tr_resolveCivic(int iCivic, int iPlayer)
 	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_TRIGGERS, TRE_CIVIC, 1)
 		.addI(TF_SUPPRESSED, s_bSuppressed ? 1 : 0)
 		.addI(TF_PLAYER, iPlayer).addI(TF_CIVIC, iCivic).addI(TF_REVOLUTION, nRev));
+}
+
+// The player's ERA ADVANCED. Era advance is TECH-DRIVEN (owner): researching a tech whose era exceeds the
+// player's raises it (CvTeam::setHasTech), so the era is a happening no single source owns -- which is exactly
+// why a trait's era-advance specialist fires HERE and not on the trait's own considered action (json.md §5).
+// ⚑ The grant is a persisted PULSE, the one carve-out on `grants.specialists`: it lands in the city's
+// UNATTRIBUTED typed-free ledger, so it OUTLIVES the trait that paid for it. An alive-with-source specialist is
+// the freeSpecialists MODIFIER family instead and never reaches this plane.
+// ⚠ The trait walk is a PRESENCE read (the HAVE axis), not the banned own-data inversion: it asks which traits
+// the player HOLDS, never asks every trait what it deposits. Era advance fires a handful of times per game.
+static void tr_resolveEraChanged(int iPlayer)
+{
+	// A load RESTORES an era rather than advancing into one, so the reseed's emit must not hand out the pulse
+	// again ([DEC-spine-reseed]: a grant is the RESULT of a genuine in-play acquisition).
+	if (s_bSuppressed) return;
+	CvPlayer& player = GET_PLAYER((PlayerTypes)iPlayer);
+	int iGranted = 0;
+	for (int iTrait = 0; iTrait < GC.getNumTraitInfos(); iTrait++)
+	{
+		if (!player.hasTrait((TraitTypes)iTrait)) continue;
+		const CvInfo* j = InfoRepo<CvTraitInfo>::get().get(iTrait);
+		if (j == NULL || j->getTriggers() == NULL) continue;
+		const std::vector<CvTriggerEntry*>& entries = j->getTriggers()->entries();
+		for (size_t iEntry = 0; iEntry < entries.size(); ++iEntry)
+		{
+			const CvTriggerEntry* pEntry = entries[iEntry];
+			if (pEntry->happening != "onEraChanged") continue;
+			if (pEntry->grant == NULL) continue;
+			const std::vector<int>* pSpecialists = pEntry->grant->list(tr_keySpecialists);
+			if (pSpecialists == NULL || pSpecialists->empty()) continue;
+			// Every city of the empire, matching the legacy apply's own fan.
+			foreach_(CvCity* pCity, player.cities())
+			{
+				for (size_t iSpec = 0; iSpec < pSpecialists->size(); ++iSpec)
+				{
+					pCity->changeFreeSpecialistCount((SpecialistTypes)(*pSpecialists)[iSpec], 1, true);
+					++iGranted;
+				}
+			}
+		}
+	}
+	if (iGranted > 0)
+	{
+		eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_TRIGGERS, TRE_ERA, 1)
+			.addI(TF_SUPPRESSED, 0).addI(TF_PLAYER, iPlayer)
+			.addI(TF_ERA, (int)player.getCurrentEra()).addI(TF_SPECIALISTS, iGranted));
+	}
 }
 
 // Game start: resolve the player's game-start grants off its civilization (civics/techs/buildings), era + handicap
@@ -842,6 +894,8 @@ void CvTriggerEngine::onEvent(const CvSpineEvent& e)
 	case SEVT_RELIGION_FOUNDED: tr_resolveReligion(e.iType, e.iA, e.iC, e.iSrcLoc, e.iB != 0); break;
 	case SEVT_CIVIC_ADOPTED:    tr_resolveCivic(e.iType, e.iC);      break;  // iC = adopting player
 	case SEVT_PLAYER_INIT:      tr_resolvePlayerInit(e.iC);          break;  // iC = player (game start)
+	// iA = the new era, iC = the player whose era advanced (tech-driven -- CvTeam::setHasTech)
+	case SEVT_ERA_CHANGED:      if (e.iC >= 0) { tr_resolveEraChanged(e.iC); } break;
 	// The per-turn provisions (increment 5). PLAYER-scoped only -- the GAME-scope boundary carries iC = -1 and is
 	// the perf/observability fact, not a grant trigger. Legacy ran the per-turn spawn inside CvCity::doTurn within
 	// CvPlayer::doTurn, so the player boundary is the ordering-faithful grain.

@@ -190,9 +190,9 @@
    "trigger": "onEraChanged",
    "action": {
     "grant": {
-     "specialists": {
-      "SPECIALIST_GREAT_PROPHET": 1
-     }
+     "specialists": [
+      "SPECIALIST_GREAT_PROPHET"
+     ]
     }
    }
   }
