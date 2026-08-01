@@ -500,7 +500,6 @@ namespace
 		"improvements", "terrains", "features", "bonus", "bonuses", "buildings", "domains", "unitCombats",
 		"specialists", "routes", "civics", "techs", "builds",
 		"unitCombat", "flankingUnit", "vsUnit", "feature", "terrain", "domain",
-		"any",   // the untyped free-specialist slot bucket (modifier.md §6 count key)
 		0
 	};
 

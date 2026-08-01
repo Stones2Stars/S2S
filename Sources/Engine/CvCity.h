@@ -707,7 +707,6 @@ public:
 	void changeNukeModifier(int iChange);
 
 	int getFreeSpecialist() const;
-	void changeFreeSpecialist(int iChange);
 
 	int getPowerCount() const;
 	bool isPower() const;

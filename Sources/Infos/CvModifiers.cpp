@@ -304,6 +304,16 @@ namespace
 		for (size_t i = iTailStart; i < segments.size(); ++i)
 		{
 			const std::string& szSegment = segments[i];
+			// `any` is the UNTYPED bucket -- N slots whose specialist type the ENGINE picks at placement
+			// ("the AI chooses whatever specialist is best", owner), which is modifier.md §6's two-part seam:
+			// the cascade owns the AMOUNT, placement stays the engine's. So it is authoring sugar for the
+			// MEMBERLESS scope-wide amount, never a named target -- routing it to targetSeg would make the
+			// entry unfoldable (isPointFoldable) and strand the amount outside the package plane, where no
+			// scope roll-up can reach it and every reader would have to walk the live sources instead.
+			if (szSegment == "any")
+			{
+				continue;
+			}
 			if (infoIsTargetToken(szSegment) || infoIsFamilyTargetToken(decode.family, szSegment))
 			{
 				decode.targetSeg = modSegmentIntern(szSegment);

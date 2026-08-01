@@ -183,27 +183,11 @@ void CvBuildingInfo::mapFrom(const picojson::value& entity)
 		m_iFreeTechs              = grantPulse(iKeyFreeTechs) / 100;
 	}
 
-	// freeSpecialists.city.`any` -- the generic slot count. Read off the compiled entry list ONCE here (the
-	// one sanctioned load-time scan source, patterns.md § Materialize at mapFrom): a keyed/count-by-type leaf
-	// is an entry-list read by design and never folds into a point-read slot ([modifier.md §5]).
-	{
-		m_iFreeSpecialistsAny = 0;
-		const int iAnySeg = modSegmentLookup("any");
-		const std::vector<CvModEntry*>& kEntries = m_modifiers.entries();
-		for (size_t iEntry = 0; iEntry < kEntries.size(); ++iEntry)
-		{
-			const CvModEntry* pEntry = kEntries[iEntry];
-			if (pEntry->family != MODFAM_FREE_SPECIALISTS || pEntry->scope != CASC_SCOPE_CITY) continue;
-			if (iAnySeg < 0) continue;
-			if (pEntry->targetSeg != iAnySeg && pEntry->memberSeg != iAnySeg) continue;
-			// A CONDITIONED entry -- above all one carrying a §3.7 `per` count-scaler -- has no value until it is
-			// resolved against a city, so it can never fold into this unconditional slot: the answer depends on
-			// how many of something that city has. Folding one grants the slots everywhere and unconditionally.
-			// `isConditioned` is the model's own test (the twin of `isPointFoldable`), so the two cannot drift.
-			if (pEntry->isConditioned()) continue;
-			m_iFreeSpecialistsAny += pEntry->value / 100;   // the COUNT unit is stored ×100
-		}
-	}
+	// freeSpecialists.city.`any` -- the generic slot count, now an ORDINARY compiled point read: `any` is the
+	// untyped bucket the engine assigns a type to at placement, so it decodes as the memberless scope-wide
+	// amount rather than a named target, and the compiled sum already excludes the conditioned tail.
+	m_iFreeSpecialistsAny =
+		m_modifiers.sum(MODFAM_FREE_SPECIALISTS, CHANNEL_AMOUNT, CASC_SCOPE_CITY, CASC_UNIT_COUNT) / 100;
 	m_iMilitaryWorth = jsonIdInt(identity, "militaryWorth");
 	m_iConquestProbability = jsonIdInt(identity, "conquestProbability");
 	m_iVisibilityPriority = jsonIdInt(identity, "visibilityPriority");

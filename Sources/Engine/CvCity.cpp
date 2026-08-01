@@ -4273,7 +4273,7 @@ int CvCity::totalFreeSpecialists() const
 	{
 		return 0;
 	}
-	int iCount = getFreeSpecialist() + GET_PLAYER(getOwner()).getFreeSpecialist();
+	int iCount = getFreeSpecialist();   // the roll-up already carries the empire leg -- adding it again doubles it
 
 	for (int iI = 0; iI < GC.getNumImprovementInfos(); ++iI)
 	{
@@ -7456,18 +7456,12 @@ void CvCity::changeNukeModifier(int iChange)
 
 int CvCity::getFreeSpecialist() const
 {
-	return std::max(0, m_iFreeSpecialist);
-}
-
-
-void CvCity::changeFreeSpecialist(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iFreeSpecialist += iChange;
-
-		AI_setAssignWorkDirty(true);
-	}
+	// The realized free-specialist AMOUNT -- the cascade's half of the two-part seam (modifier.md §6); the
+	// engine still picks WHICH specialist each untyped slot becomes. It is the cross-scope roll-up over the
+	// chain this city sits under (team + empire + city), so the empire-authored civic / trait / building slots
+	// are ALREADY inside it. The COUNT unit is stored x100, so it reduces here.
+	const int iChannel = CascadeChannelRegistry::channelLookup(MODFAM_FREE_SPECIALISTS, CHANNEL_AMOUNT, -1);
+	return std::max(0, InfoValuation::realizedAtCity(*this, iChannel) / 100);
 }
 
 

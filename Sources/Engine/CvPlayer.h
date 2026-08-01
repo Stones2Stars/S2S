@@ -689,8 +689,6 @@ public:
 	int getModifiedWarWearinessPercentAnger(int iWarWearinessPercentAnger) const;
 
 
-	int getFreeSpecialist() const;
-	void changeFreeSpecialist(int iChange);
 
 	int getNoForeignTradeCount() const;
 	bool isNoForeignTrade() const;

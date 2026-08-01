@@ -10284,20 +10284,7 @@ int CvPlayer::getModifiedWarWearinessPercentAnger(int iWarWearinessPercentAnger)
 }
 
 
-int CvPlayer::getFreeSpecialist() const
-{
-	return m_iFreeSpecialist;
-}
 
-
-void CvPlayer::changeFreeSpecialist(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iFreeSpecialist += iChange;
-		AI_makeAssignWorkDirty();
-	}
-}
 
 
 int CvPlayer::getNoForeignTradeCount() const
