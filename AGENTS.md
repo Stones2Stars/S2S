@@ -415,9 +415,20 @@ the total-observability bar below.)
   REMOVED, in code as well as docs. **A `#ifdef`-guarded block whose symbol is DEFINED NOWHERE is the same
   thing wearing a preprocessor costume: *"ifdef sections come from a time when people did not understand
   git"* (owner)** — an old implementation parked beside the live one so it could be switched back, which is
-  what version control is for. ⚑ **The test is mechanical, so this needs no judgement: is the guard symbol
-  defined anywhere in `Sources/` or `fbuild.bff`?** If not, the block never compiles, and it is deleted — git
-  is the archaeology. ⚠ **The one FALSE POSITIVE the test has is a guard something ELSE defines**, and it is
+  what version control is for. ⚑ **The first test is mechanical: is the guard symbol defined anywhere in
+  `Sources/` or `fbuild.bff`?** If not, the block never compiles — but that only makes it a CANDIDATE.
+  **⛔ THE CANDIDATE SET IS TWO DIFFERENT POPULATIONS AND THEY GET OPPOSITE TREATMENT — collapsing them is
+  how a sweep deletes a wanted feature.** The discriminator is mechanical too: **does a COMMENTED-OUT
+  `#define` of the guard exist?**
+  - **A commented-out `#define` ⇒ a deliberate OFF-SWITCH** — a feature or a diagnostic somebody can flip on,
+    switched off for a REASON. It is un-killed forward intent and it STAYS
+    ([DEC-keep-unkilled-ideas](docs/architecture/decisions.md#dec-keep-unkilled-ideas)); the disposition is the
+    OWNER's. ⚠ And the reason it is off is exactly what stops the NEXT sweep eating it, so record that reason
+    in the subsystem's reference doc in the same pass — the worked case is `ENABLE_FOGWAR_DECAY`
+    ([special-systems.md](docs/reference/special-systems.md)), a recent feature that is off because it broke
+    HOTSEAT, and which the mechanical test flags identically to an abandoned alternate.
+  - **No `#define` anywhere, not even commented ⇒ no switch ever existed** ⇒ an abandoned alternate parked
+    beside the live one. THAT is the attic, and it is deleted — git is the archaeology. ⚠ **The one FALSE POSITIVE the test has is a guard something ELSE defines**, and it is
   the exception to know: **`__INTELLISENSE__` is defined by VS Code's IntelliSense parser** (`CvGameCoreDLL.h`),
   so being absent from `Sources/`+`fbuild.bff` is its NORMAL state and says nothing about it — it stays. Same
   for the compiler's own target predefines (`_M_IX86`, `WIN32`, `_DEBUG`), the resource editor's
