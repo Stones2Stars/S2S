@@ -25535,10 +25535,11 @@ void CvPlayer::recalculateResourceConsumption(BonusTypes eBonus)
 		{
 			const CvBuildingInfo& kBuilding = GC.getBuildingInfo(prodBuilding);
 
-			if (kBuilding.getPrereqAndBonus() == eBonus
-			|| kBuilding.getPrereqVicinityBonus() == eBonus
-			|| algo::any_of_equal(kBuilding.getPrereqOrBonuses(), eBonus)
-			|| algo::any_of_equal(kBuilding.getPrereqOrVicinityBonuses(), eBonus))
+			// The BONUS carries the list of candidates whose `requires` reference it
+			// ([DEC-one-reverse-view]), so the four separate prereq axes collapse into one membership test.
+			// The merged bucket is safe HERE because the legacy test OR'd all four -- ANY semantics, which a
+			// superset only loosens ([enabler.md §2]); an ALL-semantics consumer must never read it this way.
+			if (GC.getBonusInfo(eBonus).getEdges()->has(EDGEF_REQUIRED_BY, EDGEB_BUILDINGS, (int)prodBuilding))
 			{
 				iConsumption += prodYieldRate;
 			}
@@ -25553,10 +25554,7 @@ void CvPlayer::recalculateResourceConsumption(BonusTypes eBonus)
 		{
 			const CvUnitInfo& kUnit = GC.getUnitInfo(prodUnit);
 
-			if (kUnit.getPrereqAndBonus() == eBonus
-			|| kUnit.getPrereqVicinityBonus() == eBonus
-			|| algo::any_of_equal(kUnit.getPrereqOrBonuses(), eBonus)
-			|| algo::any_of_equal(kUnit.getPrereqOrVicinityBonuses(), eBonus))
+			if (GC.getBonusInfo(eBonus).getEdges()->has(EDGEF_REQUIRED_BY, EDGEB_UNITS, (int)prodUnit))
 			{
 				iConsumption += prodYieldRate;
 			}

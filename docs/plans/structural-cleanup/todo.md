@@ -289,6 +289,20 @@
   text manager's own job ([patterns.md](../../architecture/patterns.md) THE DIVISION OF LABOUR). ⚠ The CONDITION
   renderer it calls already exists and takes exactly what `CvRequires` holds, so this is a composer to write,
   never a renderer to build — reading it as the latter overstates the dependency and parks work that is doable.
+- The REQUIRES-ATOM EXTRACTOR — "which bonuses/techs/buildings does this entity's `requires` name?", the FORWARD
+  question. `CvRequires` holds the parsed trees and exposes no way to enumerate the atom ids in one, so a
+  consumer collecting an entity's own prereqs has nothing to ask. ⛔ It is NOT a boolean-expression API
+  ([pedia-read-map.md](../../reference/pedia-read-map.md) finding 3): what a consumer wants is the ID LIST per
+  HAVE-axis, which is also what the requires BLOCK COMPOSER above needs, so the two want one implementation
+  ([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation)).
+  ⚑ Distinct from the REVERSE question ("who requires this bonus"), which `EDGEF_REQUIRED_BY` already answers —
+  do not read one as covering the other.
+- The PER-ENTRY ATTRIBUTION read — "how much of this modifier comes from the entry gated on THIS id?". The
+  curator authors the bonus-keyed production modifiers as CONDITIONED `buildRate.self.percent` entries, so a
+  point read excludes them by construction and `expected*` folds every entry whose condition currently holds —
+  which answers a different question and silently over-attributes when several bonuses are held. ⚑ It is the
+  conditioned-list read ([modifier.md §5](../../specs/modifier.md): the compiled sum, the conditioned list and
+  the what-if are three distinct reads), filtered to entries whose condition names the asked-about id.
 - A home for pedia category / sort metadata ([pedia-read-map.md](../../reference/pedia-read-map.md) finding 4).
 - Ranked-target-selection EVALUATION ([parked/ranked-target-selection.md](../parked/ranked-target-selection.md))
   — a ranked entry applies unranked until it lands.
