@@ -490,7 +490,9 @@ a shared one welds the two machines and forces one load policy onto two that dif
 
 Each game-object scope a cascade reader needs — **plot / city / player** (NEVER area — a landmass is shared by
 several empires, so it is not an ownable SCOPE at all, only a bare id + tile count a city reads as a FACT, and
-area-shaped effects author at empire; units are a FUTURE role-specific scope) — owns ONE per-scope live-state CONTEXT
+area-shaped effects author at empire; **NEVER team — `CvTeam` is the TECH BRIDGE and `CvPlayer` holds the context,
+so the eval ctx carries no `CvTeam*` and every team fact is asked of the player**; units are a FUTURE role-specific
+scope) — owns ONE per-scope live-state CONTEXT
 (`PlotContext` / `CityContext` / `EmpireContext`), the single home a getter/evaluator reads for that scope's
 changeable state. A context STORES only its uniquely-owned AGGREGATE (COUNTS keyed by id via the shared
 `ContextDict`; state with no home elsewhere — `CityContext.plotAttrs`, `EmpireContext.policies`) and FORWARDS

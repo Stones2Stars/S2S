@@ -335,7 +335,19 @@ generalizes: **an area is not a scope at all.** A scope must be unambiguously OW
 owned by exactly one player up the chain — and a landmass is shared by several empires at once, so anything on it
 is a per-(landmass × player) cross-product rather than a scope
 ([state-repositories.md](state-repositories.md)). An area is therefore a bare **id**, "a really big plot" to
-reference, and an area-shaped effect authors at **empire**. Team is likewise not a context.
+reference, and an area-shaped effect authors at **empire**.
+
+> **⛔ AND TEAM IS NOT A CONTEXT EITHER — `CvTeam` IS THE TECH BRIDGE; `CvPlayer` HOLDS THE CONTEXT (owner).**
+> A team's job on this plane is to hold the shared TECH/war facts and hand them across its members. It owns no
+> live-state surface, so **every team fact a reader needs is asked of the PLAYER** — team-held techs through
+> `EmpireContext::teamHasTech`, and everything else forwarded the same way.
+> ⛔ **Consequence, and it is structural: `CvCascadeEvalCtx` carries NO `CvTeam*`**, and no getter, evaluator,
+> predicate or valuation reaches a team to answer a state question. A player that cannot answer one is a
+> **CONTEXT GAP to close by adding the forward** (§ THE EVAL CTX), never a reason to reach a team.
+> ⚠ **Do NOT read the DEPOSIT spine as licence.** `world › team › empire › city › plot` is the containment spine
+> for MAGNITUDES, and a team genuinely carries a package ([state-repositories.md](state-repositories.md): three
+> channels) — so "team is a scope" is true of deposits and false of state. Conflating the two is what puts a
+> `CvTeam*` back in a reader's hands; the same distinction is stated on `CvTeam` itself.
 
 ⚑ **What the contexts DO carry is the area FACT** — the city's area id, its tile count and the coastal
 water-body size, forwarded by `CityContext` for the `AREA_SIZE` token and the adjacency reads. *"We rather use

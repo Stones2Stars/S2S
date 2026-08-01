@@ -14,6 +14,25 @@
 
 class CvArea;
 
+//	⛔⛔ CvTeam IS THE TECH BRIDGE. IT IS NOT A SCOPE WITH A CONTEXT. ⛔⛔
+//
+//	THE LIVE-STATE CONTEXT LIVES ON CvPlayer (`EmpireContext`), NEVER HERE (owner ruling;
+//	[docs/architecture/contexts.md]). A team holds the shared TECH/war facts and hands them across the members --
+//	that is the whole of its job on the cascade plane. Everything a reader needs about a team is asked of the
+//	PLAYER: team-held techs read through `EmpireContext::teamHasTech`, and every other team fact is forwarded the
+//	same way.
+//
+//	⛔ SO: `CvCascadeEvalCtx` CARRIES NO `CvTeam*`, and no getter, evaluator, predicate or valuation reaches a
+//	team to answer a state question. If you are about to add one, the answer you want is on the player -- and if
+//	the player cannot answer it, that is a CONTEXT GAP to close by adding the forward, never a reason to reach a
+//	team ([contexts.md]: "a context that cannot answer a needed fact is a CONTEXT GAP to close").
+//
+//	⚑ Why it is ruled rather than incidental: a team is not unambiguously ownable by one player, so it is not a
+//	scope a value can roll down to; modelling it as one puts per-(team × player) state in the middle of the
+//	containment spine. The scope spine is `world > team > empire > city > plot` for DEPOSITS -- a team package
+//	exists for magnitudes -- but the STATE surface a reader asks is the player's context. Do not conflate the
+//	deposit scope with a context.
+
 class CvTeam
 	: private bst::noncopyable
 {
@@ -227,8 +246,6 @@ public:
 	void setHasEmbassy(TeamTypes eIndex, bool bNewValue);
 	int getBuildingCommerceChange(BuildingTypes eIndex1, CommerceTypes eIndex2) const;
 
-	int getBuildingSpecialistChange(BuildingTypes eIndex1, SpecialistTypes eIndex2) const;
-	void changeBuildingSpecialistChange(BuildingTypes eIndex1, SpecialistTypes eIndex2, int iChange);
 
 	bool isLimitedBordersTrading() const;
 
@@ -500,7 +517,6 @@ protected:
 	bool* m_abIsRebelAgainst;
 	bool* m_pabHasTech;
 
-	int** m_ppiBuildingSpecialistChange;
 	int** m_ppiBuildingCommerceModifier;
 	int** m_ppiBuildingYieldModifier;
 
