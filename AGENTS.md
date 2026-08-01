@@ -409,6 +409,19 @@ the total-observability bar below.)
   defer the real design; when the right design needs prerequisite work, do the prerequisite and build the real
   thing. **Corollary — ISOLATE COMPONENTS:** prefer clean, interface-bounded components with isolated surfaces so
   each can be built and reasoned about once, properly.
+- **⛔ LEAVE NO EVIDENCE OF THE ABANDONED PATH — and an `#ifdef` ATTIC IS THAT EVIDENCE (owner)**
+  ([DEC-no-rollerskate-evidence](docs/architecture/decisions.md#dec-no-rollerskate-evidence)). Dead and
+  commented-out code, superseded dual surfaces, transitional shims and `was X` / `(formerly …)` trails are all
+  REMOVED, in code as well as docs. **A `#ifdef`-guarded block whose symbol is DEFINED NOWHERE is the same
+  thing wearing a preprocessor costume: *"ifdef sections come from a time when people did not understand
+  git"* (owner)** — an old implementation parked beside the live one so it could be switched back, which is
+  what version control is for. ⚑ **The test is mechanical, so this needs no judgement: is the guard symbol
+  defined anywhere in `Sources/` or `fbuild.bff`?** If not, the block never compiles, and it is deleted — git
+  is the archaeology. ⚠ Exclude the COMPILER/tooling predefines (`_M_IX86`, `__INTELLISENSE__`,
+  `APSTUDIO_INVOKED`, `WIN32`, `_DEBUG`) and vendored third-party files; those are genuine build switches, not
+  attics. ⛔ The cost of leaving one is the usual one: it holds the NAMES of things that were removed, so the
+  next agent finds them and re-treads the very thing that was killed — and being preprocessor-skipped, it is
+  invisible to the compiler census that would otherwise name it.
 - **ARCHITECTURAL NORTH-STAR — Clean Architecture + interface-based contracts.** Dependency inversion, isolated
   layers, composition over the inherited Civ4 god-classes. The full compass is
   [north-star.md](docs/architecture/north-star.md); the concrete C++03 shape (pure-virtual interfaces, MI as

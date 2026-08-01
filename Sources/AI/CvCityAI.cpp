@@ -12953,41 +12953,13 @@ int CvCityAI::tradeRouteValue(const CvBuildingInfo& kBuilding, YieldTypes eYield
 	}
 
 	int iValue = std::min(iExtraTradeRoutes, iCurrentTradeRoutes + iExtraTradeRoutes) * 4 * iTradeRouteValue;
-	iValue += (kBuilding.getCoastalTradeRoutes() * kOwner.countNumCoastalCities() * 4 * iTradeRouteValue);
 	iValue += ((kBuilding.getTradeRoute(TRADE_ROUTE_AMOUNT, CASC_SCOPE_EMPIRE) / 100) * kOwner.getNumCities() * 4 * iTradeRouteValue);
 
 	int iUnmodifiedCurrentValue = (100 * getTradeYield(eYield)) / (100 + getTradeRouteModifier());
 
 	iValue += ((kBuilding.getTradeRoute(TRADE_ROUTE_MODIFIER, CASC_SCOPE_CITY) * iUnmodifiedCurrentValue) / (bForeignTrade ? 12 : 25));
-	if (bForeignTrade)
-	{
-		iValue += ((kBuilding.getForeignTradeRouteModifier() * iUnmodifiedCurrentValue) / 12);
-	}
 
 	return iValue;
-#ifdef OLD_TRADE_ROUTE_CALCULATION
-	iTempValue = (((kBuilding.getTradeRoute(TRADE_ROUTE_AMOUNT, CASC_SCOPE_CITY) / 100) * ((8 * std::max(0, (totalTradeModifier() + 100))) / 100))
-		* (getPopulation() / 5 + 1));
-	int iGlobalTradeValue = (((6 * iTotalPopulation) / 5) / iNumCities);
-	iTempValue += (kBuilding.getCoastalTradeRoutes() * kOwner.countNumCoastalCities() * iGlobalTradeValue);
-	iTempValue += ((kBuilding.getTradeRoute(TRADE_ROUTE_AMOUNT, CASC_SCOPE_EMPIRE) / 100) * iNumCities * iGlobalTradeValue);
-
-	iTempValue += ((kBuilding.getTradeRoute(TRADE_ROUTE_MODIFIER, CASC_SCOPE_CITY) * getTradeYield(YIELD_COMMERCE)) / (bForeignTrade ? 12 : 25));
-	if (bForeignTrade)
-	{
-		iTempValue += ((kBuilding.getForeignTradeRouteModifier() * getTradeYield(YIELD_COMMERCE)) / 12);
-	}
-
-	if (bFinancialTrouble)
-	{
-		iTempValue *= 2;
-	}
-
-	if (kOwner.isNoForeignTrade())
-	{
-		iTempValue /= 3;
-	}
-#endif
 }
 
 // Evaluate a building we are considering building here in terms of its effect on properties

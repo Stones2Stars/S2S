@@ -508,6 +508,12 @@
   [AGENTS.md](../../../AGENTS.md) Conventions §Design.
 - Run the dead-code / dead-XML pass — tooling generates CANDIDATES only; every removal verified against
   source/data and test-loaded, one subsystem at a time.
+- Delete the `#ifdef` ATTICS — every guarded block whose symbol is defined nowhere in `Sources/` or
+  `fbuild.bff` ([AGENTS.md](../../../AGENTS.md) Conventions §Design). ⚑ Unlike the pass above this one needs no
+  candidate judgement: the guard is either defined or it is not, so the set is enumerable in one sweep.
+  ⚠ Exclude the compiler/tooling predefines and the vendored third-party files — those guards are real.
+  ⛔ These are invisible to the compiler census (the preprocessor skips them), so they hold the names of cut
+  members indefinitely and no build will ever name one.
 - Route the `[CTB/work/intransit]` block onto the same gate as every other CTB line so it reaches `/events`.
 
 ## Green-up (after the structure, never ahead of it)
