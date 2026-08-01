@@ -23,13 +23,13 @@
   }
  },
  "skills": [
-  "ignoreBuildingDefense"
+  "ignoreBuildingDefense",
+  "camouflage"
  ],
  "tags": [
   "military",
   "landUnit",
-  "troop",
-  "camouflage"
+  "troop"
  ],
  "combatClass": "UNITCOMBAT_CLONES",
  "combatClasses": [
@@ -48,11 +48,13 @@
   "UNITCOMBAT_SIZE_MEDIUM",
   "UNITCOMBAT_HEALS_AS_PEOPLE"
  ],
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 100
+  }
+ },
  "vision": {
   "unit": {
-   "concealment": {
-    "flat": 100
-   },
    "flat": 100
   }
  },

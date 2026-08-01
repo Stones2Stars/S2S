@@ -1,11 +1,9 @@
 {
  "type": "PROMOTION_SPOT3",
- "vision": {
-  "unit": {
-   "detection": {
-    "value": 100,
-    "unit": "IS_SIZE"
-   }
+ "hideAndSeek": {
+  "detection": {
+   "value": 100,
+   "unit": "HAS_SIZE"
   }
  },
  "promotionLine": {

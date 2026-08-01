@@ -121,12 +121,12 @@
   "mechanized",
   "rivalTerritory",
   "renderBelowWater",
-  "tradable"
+  "tradable",
+  "submarine"
  ],
  "tags": [
   "military",
-  "seaUnit",
-  "submarine"
+  "seaUnit"
  ],
  "combatClass": "UNITCOMBAT_SUBMARINE",
  "combatClasses": [
@@ -144,11 +144,13 @@
   "UNITCOMBAT_HEALS_AS_PEOPLE",
   "UNITCOMBAT_HEALS_AS_NAVAL"
  ],
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 100
+  }
+ },
  "vision": {
   "unit": {
-   "concealment": {
-    "flat": 100
-   },
    "flat": 100
   }
  },

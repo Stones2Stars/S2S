@@ -1,12 +1,13 @@
 {
  "type": "PROMOTION_COVERT_OPERATIONS3",
- "vision": {
-  "unit": {
-   "concealment": {
-    "flat": 10000
-   }
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 100
   }
  },
+ "skills": [
+  "cloaked"
+ ],
  "promotionLine": {
   "PROMOTIONLINE_COVERT_OPERATIONS": 3
  },

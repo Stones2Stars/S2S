@@ -7,13 +7,14 @@
    ]
   }
  },
- "vision": {
-  "unit": {
-   "concealment": {
-    "flat": 10000
-   }
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 100
   }
  },
+ "skills": [
+  "camouflage"
+ ],
  "promotionLine": {
   "PROMOTIONLINE_COVERT_OPERATIONS": 1
  },

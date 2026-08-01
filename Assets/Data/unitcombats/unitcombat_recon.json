@@ -26,13 +26,10 @@
  "tags": [
   "recon"
  ],
- "vision": {
-  "unit": {
-   "detection": {
-    "value": 100,
-    "unit": "IS_CAMOUFLAGE"
-   },
-   "flat": 100
+ "hideAndSeek": {
+  "detection": {
+   "value": 100,
+   "unit": "HAS_CAMOUFLAGE"
   }
  },
  "ui": {

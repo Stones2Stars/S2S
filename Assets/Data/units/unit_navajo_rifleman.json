@@ -126,13 +126,13 @@
   "sabotage",
   "stealPlans",
   "upgradeAnywhere",
-  "ignoreNoEntryLevel"
+  "ignoreNoEntryLevel",
+  "camouflage"
  ],
  "tags": [
   "military",
   "landUnit",
-  "troop",
-  "camouflage"
+  "troop"
  ],
  "combatClass": "UNITCOMBAT_RUFFIAN",
  "combatClasses": [
@@ -149,15 +149,17 @@
   "UNITCOMBAT_SIZE_MEDIUM",
   "UNITCOMBAT_HEALS_AS_PEOPLE"
  ],
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 400
+  },
+  "detection": {
+   "value": 300,
+   "unit": "HAS_CAMOUFLAGE"
+  }
+ },
  "vision": {
   "unit": {
-   "concealment": {
-    "flat": 400
-   },
-   "detection": {
-    "value": 300,
-    "unit": "IS_CAMOUFLAGE"
-   },
    "flat": 100
   }
  },

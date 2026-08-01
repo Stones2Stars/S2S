@@ -1217,7 +1217,7 @@ def curate(typ, rec, store):
     # Collapse the per-type invisibility tables onto the vision family FIRST (vision.md §4), then merge
     # whatever the mechanic did not claim -- the collapse writes vision.unit, so a bare assign would
     # overwrite it.
-    collapse_hide_and_seek(out, vision, True)
+    collapse_hide_and_seek(out, vision)
     merge_vision(out, vision)
     if outcomes:
         out["outcomes"] = outcomes

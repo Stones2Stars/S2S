@@ -94,12 +94,12 @@
   "mechanized",
   "noBadGoodies",
   "renderBelowWater",
-  "tradable"
+  "tradable",
+  "stealth"
  ],
  "tags": [
   "military",
-  "seaUnit",
-  "stealth"
+  "seaUnit"
  ],
  "combatClass": "UNITCOMBAT_NUCLEAR_SHIPS",
  "combatClasses": [
@@ -122,11 +122,13 @@
   "UNITCOMBAT_HEALS_AIRCRAFT",
   "UNITCOMBAT_HEALS_TECH"
  ],
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 100
+  }
+ },
  "vision": {
   "unit": {
-   "concealment": {
-    "flat": 100
-   },
    "flat": 100
   }
  },

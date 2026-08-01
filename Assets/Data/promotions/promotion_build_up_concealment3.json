@@ -1,12 +1,13 @@
 {
  "type": "PROMOTION_BUILD_UP_CONCEALMENT3",
- "vision": {
-  "unit": {
-   "concealment": {
-    "flat": 10000
-   }
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 100
   }
  },
+ "skills": [
+  "camouflage"
+ ],
  "promotionLine": {
   "PROMOTIONLINE_BUILD_UP_CONCEALMENT": 5
  },

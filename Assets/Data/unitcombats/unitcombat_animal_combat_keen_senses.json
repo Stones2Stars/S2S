@@ -1,18 +1,16 @@
 {
  "type": "UNITCOMBAT_ANIMAL_COMBAT_KEEN_SENSES",
- "vision": {
-  "unit": {
-   "detection": [
-    {
-     "value": 200,
-     "unit": "IS_SIZE"
-    },
-    {
-     "value": 200,
-     "unit": "IS_CAMOUFLAGE"
-    }
-   ]
-  }
+ "hideAndSeek": {
+  "detection": [
+   {
+    "value": 200,
+    "unit": "HAS_SIZE"
+   },
+   {
+    "value": 200,
+    "unit": "HAS_CAMOUFLAGE"
+   }
+  ]
  },
  "ui": {
   "art": {

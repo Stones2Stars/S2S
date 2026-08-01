@@ -21,12 +21,10 @@
    }
   }
  },
- "vision": {
-  "unit": {
-   "detection": {
-    "value": 1000,
-    "unit": "IS_CAMOUFLAGE"
-   }
+ "hideAndSeek": {
+  "detection": {
+   "value": 1000,
+   "unit": "HAS_CAMOUFLAGE"
   }
  },
  "promotionLine": {

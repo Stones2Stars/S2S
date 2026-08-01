@@ -20,24 +20,21 @@
  "tags": [
   "recon"
  ],
- "vision": {
-  "unit": {
-   "detection": [
-    {
-     "value": 200,
-     "unit": "IS_SUBMARINE"
-    },
-    {
-     "value": 100,
-     "unit": "IS_DISGUISED"
-    },
-    {
-     "value": 100,
-     "unit": "IS_CAMOUFLAGE"
-    }
-   ],
-   "flat": 100
-  }
+ "hideAndSeek": {
+  "detection": [
+   {
+    "value": 200,
+    "unit": "HAS_SUBMARINE"
+   },
+   {
+    "value": 100,
+    "unit": "HAS_DISGUISED"
+   },
+   {
+    "value": 100,
+    "unit": "HAS_CAMOUFLAGE"
+   }
+  ]
  },
  "sizeMatters": {
   "combatModifier": {

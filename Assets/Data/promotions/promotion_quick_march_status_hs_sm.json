@@ -21,19 +21,17 @@
    }
   }
  },
- "vision": {
-  "unit": {
-   "detection": [
-    {
-     "value": 1000,
-     "unit": "IS_CAMOUFLAGE"
-    },
-    {
-     "value": 1000,
-     "unit": "IS_SIZE"
-    }
-   ]
-  }
+ "hideAndSeek": {
+  "detection": [
+   {
+    "value": 1000,
+    "unit": "HAS_CAMOUFLAGE"
+   },
+   {
+    "value": 1000,
+    "unit": "HAS_SIZE"
+   }
+  ]
  },
  "promotionLine": {
   "PROMOTIONLINE_ENHANCED_MARCH": 3

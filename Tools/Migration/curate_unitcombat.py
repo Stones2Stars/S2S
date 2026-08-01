@@ -256,7 +256,7 @@ def curate(typ, rec, store):
     add_tags(out, TAG_BY_UNITCOMBAT.get(typ, ()))
     # A unitcombat is TYPE-DERIVED, so it may carry the hiding-METHOD tag too (a promotion may not -- tags are
     # not promotion-grantable, [tags.md]).
-    collapse_hide_and_seek(out, vision, True)
+    collapse_hide_and_seek(out, vision)
     merge_vision(out, vision)
     if outcomes:
         out["outcomes"] = outcomes

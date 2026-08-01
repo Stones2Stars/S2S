@@ -109,6 +109,19 @@ Owner-ruled or curator-grounded with a clear meaning.
 | `upgradeAnywhere` | can upgrade regardless of location |
 | `zoneOfControl` | exerts a zone of control |
 
+### The HIDE-AND-SEEK METHODS are skills (owner)
+
+The way a unit hides — `camouflage` · `cloaked` · `disguised` · `navalDisguise` · `political` · `size` ·
+`submarine` · `captive` · `stealth` · `submerged` · `invisible` — is a **skill**, by the §0 test: **a promotion
+can grant one**, and *optical camouflage* is exactly that. Pure boolean enablers like every other skill; the
+STRENGTH is the `hideAndSeek.concealment` magnitude beside them ([json.md §9](json.md), [vision.md §4](vision.md)),
+and a seeker's `hideAndSeek.detection` entry names the method it answers as `{unit: HAS_<SKILL>}`.
+
+⛔ **They are NOT [tags](tags.md).** A tag says what a unit IS; a method says how it HIDES — and the carrier
+question is settled by the data, not by taste: **73 promotions author a method**, which a tag cannot hold
+because tags are not promotion-grantable. ⚑ **`submarine` is the case that shows both planes at once** — it is a
+genuine identity TAG *and* carries the method SKILL, because a surfaced submarine is not hidden.
+
 ### Per-type keyed abilities are NOT skills (owner 2026-07-20)
 
 **A skill is a pure boolean ENABLER** (§0 / json.md §8) — it carries no value. An ability **keyed by a type** carries a

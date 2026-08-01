@@ -12,18 +12,16 @@
    }
   }
  },
- "vision": {
-  "unit": {
-   "concealment": {
-    "flat": -1800
-   },
-   "detection": {
-    "value": 400,
-    "unit": "IS_SIZE"
-   }
+ "hideAndSeek": {
+  "concealment": {
+   "flat": -1800
+  },
+  "detection": {
+   "value": 400,
+   "unit": "HAS_SIZE"
   }
  },
- "tags": [
+ "skills": [
   "size",
   "camouflage"
  ],

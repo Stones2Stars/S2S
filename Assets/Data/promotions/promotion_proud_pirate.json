@@ -9,13 +9,12 @@
   "hiddenNationality": true,
   "unitCombats": [
    "UNITCOMBAT_PIRATE"
-  ]
+  ],
+  "navalDisguise": true
  },
- "vision": {
-  "unit": {
-   "concealment": {
-    "flat": -10000
-   }
+ "hideAndSeek": {
+  "concealment": {
+   "flat": -100
   }
  },
  "enabled": "GAMEOPTION_COMBAT_HIDE_SEEK",

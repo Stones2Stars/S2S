@@ -85,14 +85,14 @@
   "ignoreZoneOfControl",
   "rivalTerritory",
   "sabotage",
-  "stealPlans"
+  "stealPlans",
+  "camouflage",
+  "invisible"
  ],
  "tags": [
   "military",
   "landUnit",
-  "troop",
-  "camouflage",
-  "invisible"
+  "troop"
  ],
  "combatClass": "UNITCOMBAT_STRIKE_TEAM",
  "combatClasses": [
@@ -109,21 +109,23 @@
   "UNITCOMBAT_SIZE_MEDIUM",
   "UNITCOMBAT_HEALS_AS_PEOPLE"
  ],
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 800
+  },
+  "detection": [
+   {
+    "value": 600,
+    "unit": "HAS_CAMOUFLAGE"
+   },
+   {
+    "value": 200,
+    "unit": "HAS_INVISIBLE"
+   }
+  ]
+ },
  "vision": {
   "unit": {
-   "concealment": {
-    "flat": 800
-   },
-   "detection": [
-    {
-     "value": 600,
-     "unit": "IS_CAMOUFLAGE"
-    },
-    {
-     "value": 200,
-     "unit": "IS_INVISIBLE"
-    }
-   ],
    "flat": 100
   }
  },

@@ -10,12 +10,10 @@
  "skills": {
   "enemyRoute": true
  },
- "vision": {
-  "unit": {
-   "detection": {
-    "value": 100,
-    "unit": "IS_CAMOUFLAGE"
-   }
+ "hideAndSeek": {
+  "detection": {
+   "value": 100,
+   "unit": "HAS_CAMOUFLAGE"
   }
  },
  "promotionLine": {

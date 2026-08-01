@@ -3,12 +3,10 @@
  "tags": [
   "naval"
  ],
- "vision": {
-  "unit": {
-   "detection": {
-    "value": 100,
-    "unit": "IS_NAVALDISGUISE"
-   }
+ "hideAndSeek": {
+  "detection": {
+   "value": 100,
+   "unit": "HAS_NAVALDISGUISE"
   }
  },
  "ui": {

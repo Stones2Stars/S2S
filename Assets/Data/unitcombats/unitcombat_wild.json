@@ -13,23 +13,21 @@
  "tags": [
   "wild"
  ],
- "vision": {
-  "unit": {
-   "detection": [
-    {
-     "value": 1000,
-     "unit": "IS_DISGUISED"
-    },
-    {
-     "value": 1000,
-     "unit": "IS_POLITICAL"
-    },
-    {
-     "value": 100,
-     "unit": "IS_CAMOUFLAGE"
-    }
-   ]
-  }
+ "hideAndSeek": {
+  "detection": [
+   {
+    "value": 1000,
+    "unit": "HAS_DISGUISED"
+   },
+   {
+    "value": 1000,
+    "unit": "HAS_POLITICAL"
+   },
+   {
+    "value": 100,
+    "unit": "HAS_CAMOUFLAGE"
+   }
+  ]
  },
  "ui": {
   "art": {

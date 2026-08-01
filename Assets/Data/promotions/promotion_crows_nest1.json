@@ -1,18 +1,16 @@
 {
  "type": "PROMOTION_CROWS_NEST1",
- "vision": {
-  "unit": {
-   "detection": [
-    {
-     "value": 100,
-     "unit": "IS_NAVALDISGUISE"
-    },
-    {
-     "value": 100,
-     "unit": "IS_SUBMARINE"
-    }
-   ]
-  }
+ "hideAndSeek": {
+  "detection": [
+   {
+    "value": 100,
+    "unit": "HAS_NAVALDISGUISE"
+   },
+   {
+    "value": 100,
+    "unit": "HAS_SUBMARINE"
+   }
+  ]
  },
  "promotionLine": {
   "PROMOTIONLINE_CROWS_NEST": 1

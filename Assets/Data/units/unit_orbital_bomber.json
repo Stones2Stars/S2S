@@ -78,12 +78,12 @@
  "skills": [
   "ignoreBuildingDefense",
   "mechanized",
-  "tradable"
+  "tradable",
+  "stealth"
  ],
  "tags": [
   "military",
-  "airUnit",
-  "stealth"
+  "airUnit"
  ],
  "combatClass": "UNITCOMBAT_ORBITAL_AIRCRAFT",
  "combatClasses": [
@@ -104,15 +104,17 @@
   "UNITCOMBAT_HEALS_AS_AIRCRAFT",
   "UNITCOMBAT_HEALS_AS_TECH"
  ],
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 200
+  },
+  "detection": {
+   "value": 100,
+   "unit": "HAS_STEALTH"
+  }
+ },
  "vision": {
   "unit": {
-   "concealment": {
-    "flat": 200
-   },
-   "detection": {
-    "value": 100,
-    "unit": "IS_STEALTH"
-   },
    "flat": 100
   }
  },

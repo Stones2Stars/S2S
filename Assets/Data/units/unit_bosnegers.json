@@ -131,15 +131,15 @@
   "destroy",
   "ignoreZoneOfControl",
   "stealPlans",
-  "upgradeAnywhere"
+  "upgradeAnywhere",
+  "camouflage",
+  "disguised",
+  "political"
  ],
  "tags": [
   "military",
   "landUnit",
-  "people",
-  "camouflage",
-  "disguised",
-  "political"
+  "people"
  ],
  "combatClass": "UNITCOMBAT_CRIMINAL",
  "combatClasses": [
@@ -154,25 +154,27 @@
   "UNITCOMBAT_SIZE_MEDIUM",
   "UNITCOMBAT_HEALS_AS_PEOPLE"
  ],
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 1000
+  },
+  "detection": [
+   {
+    "value": 100,
+    "unit": "HAS_CAMOUFLAGE"
+   },
+   {
+    "value": 700,
+    "unit": "HAS_DISGUISED"
+   },
+   {
+    "value": 100,
+    "unit": "HAS_POLITICAL"
+   }
+  ]
+ },
  "vision": {
   "unit": {
-   "concealment": {
-    "flat": 1000
-   },
-   "detection": [
-    {
-     "value": 100,
-     "unit": "IS_CAMOUFLAGE"
-    },
-    {
-     "value": 700,
-     "unit": "IS_DISGUISED"
-    },
-    {
-     "value": 100,
-     "unit": "IS_POLITICAL"
-    }
-   ],
    "flat": 100
   }
  },

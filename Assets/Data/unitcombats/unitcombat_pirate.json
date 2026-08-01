@@ -15,21 +15,19 @@
    "TERRAIN_COAST_POLAR": true,
    "TERRAIN_COAST": true,
    "TERRAIN_COAST_TROPICAL": true
-  }
+  },
+  "navalDisguise": true
  },
  "tags": [
-  "outlaw",
-  "navalDisguise"
+  "outlaw"
  ],
- "vision": {
-  "unit": {
-   "concealment": {
-    "flat": 100
-   },
-   "detection": {
-    "value": 100,
-    "unit": "IS_NAVALDISGUISE"
-   }
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 100
+  },
+  "detection": {
+   "value": 100,
+   "unit": "HAS_NAVALDISGUISE"
   }
  },
  "ui": {

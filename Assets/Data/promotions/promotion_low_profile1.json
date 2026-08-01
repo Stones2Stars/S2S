@@ -1,12 +1,13 @@
 {
  "type": "PROMOTION_LOW_PROFILE1",
- "vision": {
-  "unit": {
-   "concealment": {
-    "flat": 10000
-   }
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 100
   }
  },
+ "skills": [
+  "size"
+ ],
  "promotionLine": {
   "PROMOTIONLINE_LOW_PROFILE": 1
  },

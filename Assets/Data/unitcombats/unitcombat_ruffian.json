@@ -103,21 +103,19 @@
   }
  },
  "skills": {
-  "cannotMergeSplit": true
+  "cannotMergeSplit": true,
+  "camouflage": true
  },
  "tags": [
-  "outlaw",
-  "camouflage"
+  "outlaw"
  ],
- "vision": {
-  "unit": {
-   "concealment": {
-    "flat": 100
-   },
-   "detection": {
-    "value": 100,
-    "unit": "IS_CAMOUFLAGE"
-   }
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 100
+  },
+  "detection": {
+   "value": 100,
+   "unit": "HAS_CAMOUFLAGE"
   }
  },
  "ui": {

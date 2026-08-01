@@ -142,22 +142,24 @@
   "UNITCOMBAT_HEALS_AS_MECHANICAL",
   "UNITCOMBAT_HEALS_AS_TECH"
  ],
+ "hideAndSeek": {
+  "detection": [
+   {
+    "value": 500,
+    "unit": "HAS_DISGUISED"
+   },
+   {
+    "value": 600,
+    "unit": "HAS_POLITICAL"
+   },
+   {
+    "value": 300,
+    "unit": "HAS_CAMOUFLAGE"
+   }
+  ]
+ },
  "vision": {
   "unit": {
-   "detection": [
-    {
-     "value": 500,
-     "unit": "IS_DISGUISED"
-    },
-    {
-     "value": 600,
-     "unit": "IS_POLITICAL"
-    },
-    {
-     "value": 300,
-     "unit": "IS_CAMOUFLAGE"
-    }
-   ],
    "flat": 100
   }
  },

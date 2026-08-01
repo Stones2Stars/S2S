@@ -86,13 +86,13 @@
   "noCapture",
   "pillage",
   "onlyDefensive",
-  "ignoreNoEntryLevel"
+  "ignoreNoEntryLevel",
+  "camouflage"
  ],
  "tags": [
   "military",
   "landUnit",
-  "people",
-  "camouflage"
+  "people"
  ],
  "combatClass": "UNITCOMBAT_MELEE",
  "combatClasses": [
@@ -111,15 +111,17 @@
   "UNITCOMBAT_HEALS_AS_PEOPLE",
   "UNITCOMBAT_HEALS_PEOPLE"
  ],
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 400
+  },
+  "detection": {
+   "value": 300,
+   "unit": "HAS_CAMOUFLAGE"
+  }
+ },
  "vision": {
   "unit": {
-   "concealment": {
-    "flat": 400
-   },
-   "detection": {
-    "value": 300,
-    "unit": "IS_CAMOUFLAGE"
-   },
    "flat": 100
   }
  },

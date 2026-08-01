@@ -7,18 +7,16 @@
    }
   }
  },
- "vision": {
-  "unit": {
-   "concealment": {
-    "flat": 2000
-   },
-   "detection": {
-    "value": -800,
-    "unit": "IS_SIZE"
-   }
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 2000
+  },
+  "detection": {
+   "value": -800,
+   "unit": "HAS_SIZE"
   }
  },
- "tags": [
+ "skills": [
   "size"
  ],
  "enabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",

@@ -87,13 +87,13 @@
   "counterSpy",
   "destroy",
   "ignoreTerrainCost",
-  "stealPlans"
+  "stealPlans",
+  "camouflage"
  ],
  "tags": [
   "military",
   "landUnit",
-  "people",
-  "camouflage"
+  "people"
  ],
  "combatClass": "UNITCOMBAT_CRIMINAL",
  "combatClasses": [
@@ -109,11 +109,13 @@
   "UNITCOMBAT_HEALS_AS_PEOPLE",
   "UNITCOMBAT_EXILE"
  ],
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 200
+  }
+ },
  "vision": {
   "unit": {
-   "concealment": {
-    "flat": 200
-   },
    "flat": 100
   }
  },

@@ -81,12 +81,12 @@
  },
  "skills": [
   "pillage",
-  "tradable"
+  "tradable",
+  "camouflage"
  ],
  "tags": [
   "military",
-  "landUnit",
-  "camouflage"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_STRIKE_TEAM",
  "combatClasses": [
@@ -102,15 +102,17 @@
   "UNITCOMBAT_SIZE_MEDIUM",
   "UNITCOMBAT_HEALS_AS_PEOPLE"
  ],
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 100
+  },
+  "detection": {
+   "value": 100,
+   "unit": "HAS_CAMOUFLAGE"
+  }
+ },
  "vision": {
   "unit": {
-   "concealment": {
-    "flat": 100
-   },
-   "detection": {
-    "value": 100,
-    "unit": "IS_CAMOUFLAGE"
-   },
    "flat": 100
   }
  },

@@ -1,12 +1,13 @@
 {
  "type": "PROMOTION_INNOCENT_MERCHANTS3",
- "vision": {
-  "unit": {
-   "concealment": {
-    "flat": 10000
-   }
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 100
   }
  },
+ "skills": [
+  "navalDisguise"
+ ],
  "promotionLine": {
   "PROMOTIONLINE_INNOCENT_MERCHANTS": 3
  },

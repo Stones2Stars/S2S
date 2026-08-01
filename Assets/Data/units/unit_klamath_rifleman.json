@@ -72,12 +72,12 @@
  "skills": [
   "hiddenNationality",
   "pillage",
-  "counterSpy"
+  "counterSpy",
+  "camouflage"
  ],
  "tags": [
   "military",
-  "landUnit",
-  "camouflage"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_GUN",
  "combatClasses": [
@@ -93,11 +93,13 @@
   "UNITCOMBAT_SIZE_MEDIUM",
   "UNITCOMBAT_HEALS_AS_PEOPLE"
  ],
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 100
+  }
+ },
  "vision": {
   "unit": {
-   "concealment": {
-    "flat": 100
-   },
    "flat": 100
   }
  },

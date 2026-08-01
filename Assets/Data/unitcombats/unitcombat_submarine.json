@@ -8,21 +8,19 @@
    "TERRAIN_TRENCH": true,
    "TERRAIN_TRENCH_POLAR": true,
    "TERRAIN_TRENCH_TROPICAL": true
-  }
+  },
+  "submarine": true
  },
  "tags": [
-  "naval",
-  "submarine"
+  "naval"
  ],
- "vision": {
-  "unit": {
-   "concealment": {
-    "flat": 100
-   },
-   "detection": {
-    "value": 100,
-    "unit": "IS_SUBMARINE"
-   }
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 100
+  },
+  "detection": {
+   "value": 100,
+   "unit": "HAS_SUBMARINE"
   }
  },
  "ui": {

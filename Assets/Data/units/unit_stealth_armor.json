@@ -77,12 +77,12 @@
   "ignoreBuildingDefense",
   "mechanized",
   "tradable",
-  "collateralImmune"
+  "collateralImmune",
+  "camouflage"
  ],
  "tags": [
   "military",
-  "landUnit",
-  "camouflage"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_DREADNOUGHT",
  "combatClasses": [
@@ -99,11 +99,13 @@
   "UNITCOMBAT_HEALS_AS_PEOPLE",
   "UNITCOMBAT_HEALS_AS_MECHANICAL"
  ],
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 100
+  }
+ },
  "vision": {
   "unit": {
-   "concealment": {
-    "flat": 100
-   },
    "flat": 100
   }
  },

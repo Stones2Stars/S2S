@@ -148,13 +148,13 @@
   "ignoreTerrainCost",
   "noNonOwnedCityEntry",
   "stealthDefense",
-  "upgradeAnywhere"
+  "upgradeAnywhere",
+  "camouflage"
  ],
  "tags": [
   "military",
   "landUnit",
-  "troop",
-  "camouflage"
+  "troop"
  ],
  "combatClass": "UNITCOMBAT_RUFFIAN",
  "combatClasses": [
@@ -177,15 +177,17 @@
   "UNITCOMBAT_HEALS_AS_PEOPLE",
   "UNITCOMBAT_HEALS_AS_ANIMALS"
  ],
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 100
+  },
+  "detection": {
+   "value": 100,
+   "unit": "HAS_CAMOUFLAGE"
+  }
+ },
  "vision": {
   "unit": {
-   "concealment": {
-    "flat": 100
-   },
-   "detection": {
-    "value": 100,
-    "unit": "IS_CAMOUFLAGE"
-   },
    "flat": 100
   }
  },

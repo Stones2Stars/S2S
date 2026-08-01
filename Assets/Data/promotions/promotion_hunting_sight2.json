@@ -19,19 +19,17 @@
    }
   }
  },
- "vision": {
-  "unit": {
-   "detection": [
-    {
-     "value": 100,
-     "unit": "IS_SIZE"
-    },
-    {
-     "value": 100,
-     "unit": "IS_CAMOUFLAGE"
-    }
-   ]
-  }
+ "hideAndSeek": {
+  "detection": [
+   {
+    "value": 100,
+    "unit": "HAS_SIZE"
+   },
+   {
+    "value": 100,
+    "unit": "HAS_CAMOUFLAGE"
+   }
+  ]
  },
  "promotionLine": {
   "PROMOTIONLINE_HUNTING_SIGHT": 2

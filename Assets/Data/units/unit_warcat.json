@@ -125,12 +125,12 @@
   "ignoreTerrainCost",
   "ignoreZoneOfControl",
   "noNonOwnedCityEntry",
-  "ignoreNoEntryLevel"
+  "ignoreNoEntryLevel",
+  "camouflage"
  ],
  "tags": [
   "military",
-  "landUnit",
-  "camouflage"
+  "landUnit"
  ],
  "combatClass": "UNITCOMBAT_FELINE",
  "combatClasses": [
@@ -153,11 +153,13 @@
   "UNITCOMBAT_SIZE_MEDIUM",
   "UNITCOMBAT_HEALS_AS_ANIMALS"
  ],
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 400
+  }
+ },
  "vision": {
   "unit": {
-   "concealment": {
-    "flat": 400
-   },
    "flat": 100
   }
  },

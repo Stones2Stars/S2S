@@ -15,14 +15,12 @@
    "percent": 5
   }
  },
- "vision": {
-  "unit": {
-   "concealment": {
-    "flat": 200
-   }
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 200
   }
  },
- "tags": [
+ "skills": [
   "camouflage"
  ],
  "ui": {

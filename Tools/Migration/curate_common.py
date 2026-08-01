@@ -395,9 +395,10 @@ def scale_vision(out):
             elif key == "flat" and isinstance(leaf, int):
                 node[key] = leaf * VISION_PLOT
 
-# The 14 legacy hiding METHODS -> their tag names. The method is WHAT a unit hides by, which is type-derived
-# membership, so it is a TAG ([tags.md]) and the seeker's qualifier reads it as IS_<TAG>.
-def hide_method_tag(invisible_type):
+# The 14 legacy hiding METHODS -> their skill names. The method is HOW a unit hides, and a PROMOTION can grant
+# one (optical camouflage), so it is a SKILL ([skills.md]) -- never a tag, which is not promotion-grantable and
+# therefore could not hold the 73 promotion-authored methods. The seeker's qualifier reads it as HAS_<SKILL>.
+def hide_method_skill(invisible_type):
     """INVISIBLE_NAVAL_DISGUISE -> "navalDisguise". MECHANICAL, never a table (owner: special cases are never a
     thing -- we model them into the core set). The engine derives the same name from the same enum, so the two
     sides cannot drift and neither carries a per-type list."""
@@ -408,7 +409,7 @@ def specialunit_tag(special_type):
 
     The SPECIALUNIT_* group is pure type-derived MEMBERSHIP, which is exactly a tag ([tags.md] par.8) -- so the
     group becomes the unit's tag and a carrier's restriction reads it as the ordinary {unit: IS_<TAG>} qualifier
-    ([modifier.md] par.6). MECHANICAL, never a table: the same derivation as hide_method_tag, so a new group
+    ([modifier.md] par.6). MECHANICAL, never a table: the same derivation as hide_method_skill, so a new group
     needs no curator edit.
     """
     parts = special_type[len("SPECIALUNIT_"):].lower().split("_")
@@ -521,32 +522,64 @@ def add_tags(out, tags):
             have.append(tag)
 
 
-def collapse_hide_and_seek(out, vision, bTags):
-    """Collapse the 13 per-type invisibility tables onto the `vision` family (vision.md §4).
+def add_skills(out, skills):
+    """Append skills to out["skills"] without duplicating or clobbering, in whichever shape is already there.
+
+    Skills are GRANT-ONLY ([skills.md] par.4), so the array of strings is the normal shape -- but a carrier that
+    already emitted the object form keeps it, because rewriting the shape here would fight whichever curator
+    wrote it. Same clobber-safety as add_tags: the hide-and-seek METHOD and the ability tables are independent
+    writers of one block, so a plain assignment would silently drop whichever ran first.
+    """
+    if not skills:
+        return
+    have = out.setdefault("skills", [])
+    if isinstance(have, dict):
+        for skill in skills:
+            have.setdefault(skill, True)
+        return
+    for skill in skills:
+        if skill not in have:
+            have.append(skill)
+
+
+def collapse_hide_and_seek(out, vision):
+    """Collapse the 13 per-type invisibility tables onto the `hideAndSeek` BLOCK (json.md par.9, vision.md par.4).
 
     ONE detection type counters ONE concealment type (owner) -- a PAIRING, and the legacy type IS that pairing:
     the hider's `invisibilityIntensity{X}` and the seeker's `visibilityIntensity{X}` share a key. So the method
-    becomes a TAG and both strengths become ordinary vision entries, the seeker's qualified by `IS_<TAG>`.
-    Nothing new is minted: it is the same {unit: IS_<TAG>} qualifier cargo uses for what it may carry.
+    becomes a SKILL and both strengths become entries in the block, the seeker's qualified by `HAS_<SKILL>`.
+
+    ⛔ THE METHOD IS A SKILL, NEVER A TAG (owner). A promotion can grant one -- optical camouflage is exactly
+    that -- and tags are not promotion-grantable. This is not taxonomy: 73 promotions author a method, and the
+    tag reading had to DROP every one of them for want of a carrier that could hold it (the promotion call site
+    passed bTags=False precisely because the tag block could not take them). A carrier that cannot hold what the
+    data authors is the wrong carrier.
+
+    ⛔ THE BLOCK IS NOT PART OF `vision` (owner). `vision` answers how FAR you see; this answers whether you
+    PERCEIVE what stands inside that reach, and the legacy engine's two evaluations bled into each other for
+    years. Keeping the contest out of the family also kills a live 100x defect BY CONSTRUCTION: scale_vision
+    multiplies every `flat` leaf under `vision`, so a concealment left there was scaled TWICE (once here, once
+    by the promotion curator's later scale_vision) while `detection`'s `value` leaf escaped untouched -- which
+    is exactly why the two sides sat 100x apart.
 
     ⚖ Marginal data loss is ACCEPTED (owner) -- the second reach (`visibilityIntensityRange` and its
-    terrain/feature/improvement variants) goes because detection is an ADDENDUM to vision and rides the §2
-    budget, and the same-tile bonus and the per-substrate conditional tables go with it. What survives is what
-    the data actually uses: the pairing, and graduated strengths including the negatives (the family sums, so
-    counter-detection is just a negative deposit).
+    terrain/feature/improvement variants) goes because the contest rides the vision budget for reach, and the
+    same-tile bonus and the per-substrate conditional tables go with it. What survives is what the data actually
+    uses: the pairing, and graduated strengths including the negatives (the entries sum, so counter-detection is
+    just a negative deposit).
     """
-    tags = []
+    skills = []
     conceal = 0
     detect = []
 
     # the hider: its method, and how well it hides by it
     method = vision.pop("invisible", None)
     if isinstance(method, str) and method.startswith("INVISIBLE_"):
-        tags.append(hide_method_tag(method))
+        skills.append(hide_method_skill(method))
         conceal = max(conceal, HIDE_SEE_BASELINE)
     for typ, val in (vision.pop("invisibilityIntensity", None) or {}).items():
         if typ.startswith("INVISIBLE_") and isinstance(val, int):
-            tags.append(hide_method_tag(typ))
+            skills.append(hide_method_skill(typ))
             conceal += val
 
     # the seeker: which methods it answers, and how well
@@ -562,7 +595,7 @@ def collapse_hide_and_seek(out, vision, bTags):
             seen[typ] = seen.get(typ, 0) + HIDE_NEGATE_STRENGTH
     for typ, val in seen.items():
         detect.append(OrderedDict([("value", val * VISION_PLOT),
-                                   ("unit", "IS_" + hide_method_tag(typ).upper())]))
+                                   ("unit", "HAS_" + hide_method_skill(typ).upper())]))
 
     # the second reach and the per-substrate conditional tables -- dropped with the mechanic they served
     for dead in ("visibilityIntensityRange", "visibilityIntensitySameTile", "invisibleTerrain",
@@ -571,13 +604,12 @@ def collapse_hide_and_seek(out, vision, bTags):
         vision.pop(dead, None)
 
     if conceal or detect:
-        node = out.setdefault("vision", OrderedDict()).setdefault("unit", OrderedDict())
+        node = out.setdefault("hideAndSeek", OrderedDict())
         if conceal:
             node["concealment"] = OrderedDict([("flat", conceal * VISION_PLOT)])
         if detect:
             node["detection"] = detect[0] if len(detect) == 1 else detect
-    if bTags:
-        add_tags(out, tags)
+    add_skills(out, skills)
 
 def merge_vision(out, vision):
     """Merge a leftover `vision` dict into out["vision"] WITHOUT clobbering a scope already filled.

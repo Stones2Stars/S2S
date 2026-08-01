@@ -5,12 +5,10 @@
    "percent": -45
   }
  },
- "vision": {
-  "unit": {
-   "detection": {
-    "value": 1100,
-    "unit": "IS_SIZE"
-   }
+ "hideAndSeek": {
+  "detection": {
+   "value": 1100,
+   "unit": "HAS_SIZE"
   }
  },
  "enabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",

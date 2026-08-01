@@ -724,8 +724,8 @@ The full address of a deposit:
 - **`underworld` is the in-city criminal contest** (criminals burrow, investigators drag them out): kinds
   `insidiousness` + `investigation`, at **city AND unit scope** — the city is the arena, the unit carries the
   stat (`UNITCOMBAT_CRIMINAL` vs `UNITCOMBAT_LAW_ENFORCEMENT`, resolved by
-  `CvUnit::doInsidiousnessVSInvestigationCheck`). ⚠ **`detection` is RESERVED for the hide-and-seek plane** — the
-  map-level spotting of hidden units is a different system with its own future block, and must not be folded in here.
+  `CvUnit::doInsidiousnessVSInvestigationCheck`). ⚠ **`detection` belongs to the hide-and-seek plane** — the
+  map-level spotting of hidden units is a different system with its own block (`hideAndSeek`, §9), and must not be folded in here.
   > **⛔ UNDERWORLD IS NOT ESPIONAGE, AND THE LINE IS THE DEFINITION OF ESPIONAGE (owner): "espionage is only
   > things that SPY UNITS can do", plus the espionage-POINT ratios that govern how much of an opponent you can
   > see.** A criminal hiding from an investigator is neither, so `insidiousness`/`investigation` are underworld
@@ -1164,8 +1164,21 @@ Data read by a specific system, not the cascade. Use only when the entity needs 
 
   Effective runtime rank = the derived info base + `Σ` held-promotion changes + the engine merge/split accumulators
   (`getExtraQuality`/`Group`/`Size` — live engine state, **never** data). Block absent ⇒ the entity carries no SM
-  data. *(This is the pattern for every game-option-specific system — each gets its own block, e.g. `hideAndSeek`
-  when `GAMEOPTION_COMBAT_HIDE_AND_SEEK` returns.)*
+  data. *(This is the pattern for every game-option-specific system — each gets its own block; `hideAndSeek`
+  below is its sibling.)*
+- **`hideAndSeek`** — the concealment-vs-detection CONTEST (gated by `GAMEOPTION_COMBAT_HIDE_AND_SEEK`), the
+  own-block sibling of `sizeMatters`. **Two members, one per side of the equation:** `concealment` (how well
+  this unit hides) and `detection` (how well it finds a hidden one, per method it answers, each entry qualified
+  `{unit: HAS_<SKILL>}`). Both are graduated magnitudes and both may be NEGATIVE — a negative detection deposit
+  is counter-detection, a negative concealment strips cover (the `WANTED` line does exactly that).
+  ⚑ **The METHOD is not in this block at all — it is a [skill](skills.md)** (`camouflage`, `cloaked`,
+  `disguised`, …), because a promotion can grant one and optical camouflage is precisely that
+  ([vision.md §4](vision.md)). A [tag](tags.md) could not hold it: tags are not promotion-grantable, and 73
+  promotions author a method.
+  ⛔ **It is NOT part of `vision`, and the separation is load-bearing (owner).** `vision` answers *how far do you
+  see*; this answers *do I perceive what is standing there*. The legacy engine's two evaluations bled into each
+  other for years, so expressing them as one family is what lets that bleed re-form. The contest READS the
+  [vision](vision.md) budget for reach and never the reverse.
 
   > **⚖ TRAINING A UNIT ABOVE ITS BASE RANK IS AN OFFSET, `base + x` — NEVER AN ABSOLUTE RANK (owner).** A base
   > group rank is DERIVED per unit from its combat classes, so an absolute number means a different thing for
@@ -1201,7 +1214,7 @@ Data read by a specific system, not the cascade. Use only when the entity needs 
   > — so a newly-built ranked unit already equals "three fresh units merged" without inventing any history.
 - **bespoke** object-sections, each read by its own system: `promotionLine` · `buildUp` · `shrine` · `headquarters` ·
   `spread` · `properties` · `voteSource` · `threshold` · `role` · `victory` · `targetLevel` · `conversion` ·
-  `cityFounding` · `unitCapability`.
+  `cityFounding` · `unitCapability` · `sizeMatters` · `hideAndSeek`.
 
 A dedicated system's data lives in its **own block** — a module is "on" iff its block exists and is non-empty — so
 a system can be added, swapped, or removed as a unit.

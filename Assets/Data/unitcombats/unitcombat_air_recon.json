@@ -4,24 +4,21 @@
   "air",
   "recon"
  ],
- "vision": {
-  "unit": {
-   "detection": [
-    {
-     "value": 200,
-     "unit": "IS_SUBMARINE"
-    },
-    {
-     "value": 200,
-     "unit": "IS_SUBMERGED"
-    },
-    {
-     "value": 200,
-     "unit": "IS_CAMOUFLAGE"
-    }
-   ],
-   "flat": 100
-  }
+ "hideAndSeek": {
+  "detection": [
+   {
+    "value": 200,
+    "unit": "HAS_SUBMARINE"
+   },
+   {
+    "value": 200,
+    "unit": "HAS_SUBMERGED"
+   },
+   {
+    "value": 200,
+    "unit": "HAS_CAMOUFLAGE"
+   }
+  ]
  },
  "ui": {
   "art": {

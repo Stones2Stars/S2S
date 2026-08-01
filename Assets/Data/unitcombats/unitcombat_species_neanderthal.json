@@ -3,12 +3,10 @@
  "skills": {
   "stealthDefense": true
  },
- "vision": {
-  "unit": {
-   "detection": {
-    "value": 500,
-    "unit": "IS_POLITICAL"
-   }
+ "hideAndSeek": {
+  "detection": {
+   "value": 500,
+   "unit": "HAS_POLITICAL"
   }
  },
  "ui": {

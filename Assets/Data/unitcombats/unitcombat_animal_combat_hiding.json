@@ -6,18 +6,14 @@
   }
  },
  "skills": {
-  "stealthDefense": false
+  "stealthDefense": false,
+  "camouflage": true
  },
- "vision": {
-  "unit": {
-   "concealment": {
-    "flat": 100
-   }
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 100
   }
  },
- "tags": [
-  "camouflage"
- ],
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/nature_hiding.dds"

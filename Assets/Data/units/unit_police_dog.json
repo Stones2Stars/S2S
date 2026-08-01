@@ -107,18 +107,20 @@
   "UNITCOMBAT_SIZE_SMALL",
   "UNITCOMBAT_HEALS_AS_ANIMALS"
  ],
+ "hideAndSeek": {
+  "detection": [
+   {
+    "value": 400,
+    "unit": "HAS_CAMOUFLAGE"
+   },
+   {
+    "value": 100,
+    "unit": "HAS_POLITICAL"
+   }
+  ]
+ },
  "vision": {
   "unit": {
-   "detection": [
-    {
-     "value": 400,
-     "unit": "IS_CAMOUFLAGE"
-    },
-    {
-     "value": 100,
-     "unit": "IS_POLITICAL"
-    }
-   ],
    "flat": 100
   }
  },

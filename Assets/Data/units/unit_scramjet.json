@@ -63,13 +63,13 @@
   "ignoreBuildingDefense",
   "mechanized",
   "dcmFighterEngage",
-  "tradable"
+  "tradable",
+  "stealth"
  ],
  "tags": [
   "military",
   "airUnit",
-  "fighter",
-  "stealth"
+  "fighter"
  ],
  "combatClass": "UNITCOMBAT_STEALTH",
  "combatClasses": [
@@ -92,15 +92,17 @@
   "UNITCOMBAT_HEALS_AS_AIRCRAFT",
   "UNITCOMBAT_HEALS_AS_TECH"
  ],
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 200
+  },
+  "detection": {
+   "value": 100,
+   "unit": "HAS_STEALTH"
+  }
+ },
  "vision": {
   "unit": {
-   "concealment": {
-    "flat": 200
-   },
-   "detection": {
-    "value": 100,
-    "unit": "IS_STEALTH"
-   },
    "flat": 100
   }
  },

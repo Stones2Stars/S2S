@@ -7,12 +7,10 @@
    }
   }
  },
- "vision": {
-  "unit": {
-   "detection": {
-    "value": 100,
-    "unit": "IS_DISGUISED"
-   }
+ "hideAndSeek": {
+  "detection": {
+   "value": 100,
+   "unit": "HAS_DISGUISED"
   }
  },
  "promotionLine": {

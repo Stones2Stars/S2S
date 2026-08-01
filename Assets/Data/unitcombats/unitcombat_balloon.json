@@ -11,18 +11,16 @@
   }
  },
  "skills": {
-  "fliesToMove": true
+  "fliesToMove": true,
+  "submarine": true,
+  "submerged": true
  },
  "tags": [
-  "air",
-  "submarine",
-  "submerged"
+  "air"
  ],
- "vision": {
-  "unit": {
-   "concealment": {
-    "flat": 300
-   }
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 300
   }
  },
  "ui": {

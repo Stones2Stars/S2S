@@ -44,28 +44,26 @@
   }
  },
  "skills": {
-  "cannotMergeSplit": true
+  "cannotMergeSplit": true,
+  "disguised": true
  },
  "tags": [
-  "outlaw",
-  "disguised"
+  "outlaw"
  ],
- "vision": {
-  "unit": {
-   "concealment": {
-    "flat": 100
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 100
+  },
+  "detection": [
+   {
+    "value": 100,
+    "unit": "HAS_CAMOUFLAGE"
    },
-   "detection": [
-    {
-     "value": 100,
-     "unit": "IS_CAMOUFLAGE"
-    },
-    {
-     "value": 100,
-     "unit": "IS_DISGUISED"
-    }
-   ]
-  }
+   {
+    "value": 100,
+    "unit": "HAS_DISGUISED"
+   }
+  ]
  },
  "ui": {
   "art": {

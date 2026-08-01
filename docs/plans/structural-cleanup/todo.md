@@ -232,12 +232,6 @@
 - The PLAYER-ALERT consumer, and the alerts owed to it — they re-attach to the OPERATE CROSSING fact, never
   re-inlined at a mutation site ([event-spine.md](../../specs/event-spine.md)). Expect the owed list to GROW as
   each legacy mutator is cut; add them together on the facts.
-- Split `CvCity::read` into IDENTITY and BODY phases. The AI override already calls both halves and they exist
-  nowhere, so the pair dangles. It is not cosmetic sequencing: the identity phase lands `m_iID` so the stream
-  loop can REGISTER the city in its owner's list BEFORE the body streams, which is what lets the city's own
-  in-read reseed emits resolve by ordinary id lookup ([DEC-spine-reseed](../../architecture/decisions.md#dec-spine-reseed)).
-  Same origin as the juggling bracket below — the call sites survived the clean-slate revert of the engine
-  game-object classes and their implementation did not.
 - Rebuild the CITIZEN-JUGGLING bracket the governor's probe loop opens and closes. Its call sites survived the
   clean-slate revert of the engine game-object classes but the bracket itself did not, so they dangle with no
   implementation anywhere in the tree. It defers the side-effect layer across a run of probe mutations and

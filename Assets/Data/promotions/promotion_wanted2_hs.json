@@ -2,13 +2,16 @@
  "type": "PROMOTION_WANTED2_HS",
  "skills": {
   "upgradeAnywhere": false,
-  "assassin": false
+  "assassin": false,
+  "camouflage": true,
+  "disguised": true,
+  "political": true,
+  "navalDisguise": true,
+  "invisible": true
  },
- "vision": {
-  "unit": {
-   "concealment": {
-    "flat": -50000
-   }
+ "hideAndSeek": {
+  "concealment": {
+   "flat": -500
   }
  },
  "promotionLine": {

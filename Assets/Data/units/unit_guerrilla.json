@@ -110,13 +110,13 @@
   "sabotage",
   "stealPlans",
   "upgradeAnywhere",
-  "ignoreNoEntryLevel"
+  "ignoreNoEntryLevel",
+  "camouflage"
  ],
  "tags": [
   "military",
   "landUnit",
-  "troop",
-  "camouflage"
+  "troop"
  ],
  "combatClass": "UNITCOMBAT_STRIKE_TEAM",
  "combatClasses": [
@@ -133,15 +133,17 @@
   "UNITCOMBAT_SIZE_MEDIUM",
   "UNITCOMBAT_HEALS_AS_PEOPLE"
  ],
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 500
+  },
+  "detection": {
+   "value": 400,
+   "unit": "HAS_CAMOUFLAGE"
+  }
+ },
  "vision": {
   "unit": {
-   "concealment": {
-    "flat": 500
-   },
-   "detection": {
-    "value": 400,
-    "unit": "IS_CAMOUFLAGE"
-   },
    "flat": 100
   }
  },

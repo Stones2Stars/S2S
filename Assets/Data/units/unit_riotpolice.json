@@ -123,12 +123,14 @@
   "UNITCOMBAT_SIZE_MEDIUM",
   "UNITCOMBAT_HEALS_AS_PEOPLE"
  ],
+ "hideAndSeek": {
+  "detection": {
+   "value": 800,
+   "unit": "HAS_DISGUISED"
+  }
+ },
  "vision": {
   "unit": {
-   "detection": {
-    "value": 800,
-    "unit": "IS_DISGUISED"
-   },
    "flat": 100
   }
  },

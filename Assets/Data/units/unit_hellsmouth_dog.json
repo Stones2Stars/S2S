@@ -107,12 +107,14 @@
   "UNITCOMBAT_SIZE_MEDIUM",
   "UNITCOMBAT_HEALS_AS_ANIMALS"
  ],
+ "hideAndSeek": {
+  "detection": {
+   "value": 100,
+   "unit": "HAS_CAMOUFLAGE"
+  }
+ },
  "vision": {
   "unit": {
-   "detection": {
-    "value": 100,
-    "unit": "IS_CAMOUFLAGE"
-   },
    "flat": 100
   }
  },

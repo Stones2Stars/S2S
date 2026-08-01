@@ -121,14 +121,14 @@
   "ignoreTerrainCost",
   "ignoreZoneOfControl",
   "stealPlans",
-  "upgradeAnywhere"
+  "upgradeAnywhere",
+  "camouflage",
+  "disguised"
  ],
  "tags": [
   "military",
   "landUnit",
-  "people",
-  "camouflage",
-  "disguised"
+  "people"
  ],
  "combatClass": "UNITCOMBAT_STRIKE_TEAM",
  "combatClasses": [
@@ -146,21 +146,23 @@
   "UNITCOMBAT_SIZE_MEDIUM",
   "UNITCOMBAT_HEALS_AS_PEOPLE"
  ],
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 900
+  },
+  "detection": [
+   {
+    "value": 300,
+    "unit": "HAS_CAMOUFLAGE"
+   },
+   {
+    "value": 400,
+    "unit": "HAS_DISGUISED"
+   }
+  ]
+ },
  "vision": {
   "unit": {
-   "concealment": {
-    "flat": 900
-   },
-   "detection": [
-    {
-     "value": 300,
-     "unit": "IS_CAMOUFLAGE"
-    },
-    {
-     "value": 400,
-     "unit": "IS_DISGUISED"
-    }
-   ],
    "flat": 100
   }
  },

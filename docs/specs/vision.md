@@ -182,27 +182,51 @@ The shipped data says so plainly once you know to look — the same key appears 
   only 10 name four or more, and `CAMOUFLAGE` / `SIZE` / `DISGUISED` are three quarters of everything. The
   14×13 surface serves a quarter of its own data.
 
-### Where it lands — DIRECTION, not design
+### Where it lands — THE `hideAndSeek` BLOCK, never inside `vision`
 
-The pairing needs **no new vocabulary**: the method becomes a [tag](tags.md), and both strengths become ordinary
-`vision` entries qualified by it — the same `{unit: IS_<TAG>}` qualifier cargo uses for what it may carry.
+⛔ **HIDE AND SEEK IS ITS OWN BLOCK AND ITS OWN EVALUATION (owner).** `vision` answers ONE question — *how far
+do you see* — and stops there. Whether a unit standing inside that reach is PERCEIVED is a graduated CONTEST
+between how well it hides and how well the seeker detects, which is a different mechanic with a different
+evaluation. ⚑ **The separation is the deliverable, not tidiness: the legacy engine's hide-and-seek evaluation
+bled into its classic-visibility evaluation for years** (owner), so the two must not be expressed in one family
+where the same bleed can re-form. The contest data therefore lives in **`hideAndSeek`**, the option-gated block
+([json.md §9](json.md): a dedicated system's data lives in its own block, and the module is ON iff that block
+exists and is non-empty), and `vision` keeps only the budget — strength, `elevation`, `obstruction`.
+
+⚖ **THE METHOD IS A SKILL, NOT A TAG (owner).** The operative test is *can a promotion grant it?*
+([json.md §8](json.md)) — and it plainly can: **optical camouflage** is exactly a late-game promotion INTO a
+hiding method. So the method is a [skill](skills.md), which fits on both counts: promotion-grantable, and a pure
+boolean enabler carrying no value — correct, because the LEVEL is the `concealment` magnitude beside it.
+⛔ It is NOT a [tag](tags.md), and the reason generalizes: a tag says what a unit **IS**, while `camouflage` /
+`size` / `political` say how it **HIDES**. **`submarine` is the case that proves the split** — it is a genuine
+identity tag AND carries the method skill, because a surfaced submarine is not hidden: *"submarine does not need
+to be hidden/invisible, it just mostly is"* (owner).
+⚑ **The tag reading also DESTROYED authored data, which is what settles it.** Tags are not promotion-grantable,
+so a method named by a PROMOTION had nowhere to land and was dropped on the floor — and **73 promotions author
+one** (`CAMOUFLAGE` 40 · `DISGUISED` 21 · `NAVAL_DISGUISE` 16 · `POLITICAL` 15 · `INVISIBLE` 10 · `SIZE` 9 ·
+`CLOAKED` 8 · `SUBMARINE` 3), the cloaking line among them. A carrier that cannot hold what the data authors is
+the wrong carrier.
 
 ```jsonc
-// the hider
-"tags":   [ "submarine" ],
-"vision": { "unit": { "concealment": { "flat": 300 } } }
+// the hider: the METHOD is a skill (promotion-grantable), the LEVEL is a magnitude
+"skills":      [ "camouflage" ],
+"hideAndSeek": { "concealment": { "flat": 300 } }
 
 // the seeker: sonar answers submarines well and camouflage poorly
-"vision": { "unit": { "detection": [ { "value": 500, "unit": "IS_SUBMARINE" },
-                                     { "value": 200, "unit": "IS_CAMOUFLAGE" } ] } }
+"hideAndSeek": { "detection": [ { "value": 500, "unit": "HAS_SUBMARINE" },
+                                { "value": 200, "unit": "HAS_CAMOUFLAGE" } ] }
 ```
+
+A skill is something a unit **HAS**, so the qualifier reads `HAS_<SKILL>` ([json.md §3.5](json.md): `IS_*` is
+what the target IS, `HAS_*` is what it has) — the same `{unit: …}` qualifier cargo uses, pointed at the skill
+plane rather than the tag plane.
 
 `perceived ⟺ reachable ∧ detection(against that method) ≥ concealment`
 
-⛔ **Detection is an ADDENDUM to vision and gets NO reach of its own (owner).** Reach is the §2 budget, already
-computed; detection only ever runs on a plot that budget already granted. That is what retires
-`visibilityIntensityRange` — a second range system running beside vision's, with nothing keeping the two in
-step. Negatives need no mechanism either: the family sums, so counter-detection is a negative deposit.
+⛔ **Detection gets NO reach of its own (owner).** Reach is the §2 budget, already computed; the contest only
+ever runs on a plot that budget already granted. That is what retires `visibilityIntensityRange` — a second
+range system running beside vision's, with nothing keeping the two in step. Negatives need no mechanism either:
+the block's entries sum, so counter-detection is a negative deposit.
 
 ### What the collapse did, and what it cost
 
@@ -211,16 +235,15 @@ drugs."* The 13 per-type tables (477 authorings across 14 types) are gone; what 
 
 | was | is |
 |---|---|
-| `invisible: INVISIBLE_SUBMARINE` | the **`submarine` tag** — the method is type-derived membership |
-| `invisibilityIntensity{X: n}` | `vision.unit.concealment` + the method's tag |
-| `visibilityIntensity{X: n}` · `seeInvisible` · `negates` | `vision.unit.detection`, each entry qualified `{unit: IS_<TAG>}` |
-| `visibilityIntensityRange` + its 3 substrate variants | **gone** — detection is an addendum and rides §2's reach |
+| `invisible: INVISIBLE_SUBMARINE` | the **`camouflage`-family SKILL** — the method, promotion-grantable |
+| `invisibilityIntensity{X: n}` | `hideAndSeek.concealment` + the method skill |
+| `visibilityIntensity{X: n}` · `seeInvisible` · `negates` | `hideAndSeek.detection`, each entry qualified `{unit: HAS_<SKILL>}` |
+| `visibilityIntensityRange` + its 3 substrate variants | **gone** — the contest rides §2's reach |
 | `visibilityIntensitySameTile`, the per-substrate conditional tables | **gone** — the marginal loss taken deliberately |
 
 **What survived is what the data used:** the 1:1 pairing, graduated strengths, and negatives as
-counter-detection (the family sums, so a negative deposit just subtracts). A promotion carries magnitudes only —
-tags are not promotion-grantable ([tags.md](tags.md)) — while a unit and a unitcombat, both type-derived, carry
-the method tag.
+counter-detection (the entries sum, so a negative deposit just subtracts). A promotion carries **both** — the
+method skill it grants, and the magnitudes it adds — which is precisely what the tag reading could not express.
 
 ## 5. What this model retires
 

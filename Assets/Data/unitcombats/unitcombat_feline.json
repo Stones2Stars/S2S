@@ -49,22 +49,18 @@
   }
  },
  "skills": {
-  "cannotMergeSplit": true
+  "cannotMergeSplit": true,
+  "camouflage": true
  },
- "vision": {
-  "unit": {
-   "concealment": {
-    "flat": 100
-   },
-   "detection": {
-    "value": 100,
-    "unit": "IS_CAMOUFLAGE"
-   }
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 100
+  },
+  "detection": {
+   "value": 100,
+   "unit": "HAS_CAMOUFLAGE"
   }
  },
- "tags": [
-  "camouflage"
- ],
  "sizeMatters": {
   "combatModifier": {
    "perSizeMore": -5,

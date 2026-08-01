@@ -152,18 +152,20 @@
   "UNITCOMBAT_HEALS_AS_PEOPLE",
   "UNITCOMBAT_HEALS_AS_MECHANICAL"
  ],
+ "hideAndSeek": {
+  "detection": [
+   {
+    "value": 600,
+    "unit": "HAS_DISGUISED"
+   },
+   {
+    "value": 200,
+    "unit": "HAS_POLITICAL"
+   }
+  ]
+ },
  "vision": {
   "unit": {
-   "detection": [
-    {
-     "value": 600,
-     "unit": "IS_DISGUISED"
-    },
-    {
-     "value": 200,
-     "unit": "IS_POLITICAL"
-    }
-   ],
    "flat": 100
   }
  },

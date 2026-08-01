@@ -129,22 +129,24 @@
   "UNITCOMBAT_HEALS_AS_PEOPLE",
   "UNITCOMBAT_HEALS_AS_MECHANICAL"
  ],
+ "hideAndSeek": {
+  "detection": [
+   {
+    "value": 500,
+    "unit": "HAS_DISGUISED"
+   },
+   {
+    "value": 500,
+    "unit": "HAS_POLITICAL"
+   },
+   {
+    "value": 200,
+    "unit": "HAS_CAMOUFLAGE"
+   }
+  ]
+ },
  "vision": {
   "unit": {
-   "detection": [
-    {
-     "value": 500,
-     "unit": "IS_DISGUISED"
-    },
-    {
-     "value": 500,
-     "unit": "IS_POLITICAL"
-    },
-    {
-     "value": 200,
-     "unit": "IS_CAMOUFLAGE"
-    }
-   ],
    "flat": 100
   }
  },

@@ -12,14 +12,12 @@
    }
   }
  },
- "vision": {
-  "unit": {
-   "concealment": {
-    "flat": 600
-   }
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 600
   }
  },
- "tags": [
+ "skills": [
   "size"
  ],
  "enabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",
