@@ -15272,7 +15272,10 @@ void CvUnit::changeKamikazePercent(int iChange)
 
 DirectionTypes CvUnit::getFacingDirection(bool checkLineOfSightProperty) const
 {
-	if (checkLineOfSightProperty && !m_pUnitInfo->isLineOfSight())
+	// ⚑ NOTHING authors a line-of-sight restriction, so a caller asking for the restricted answer always gets
+	// the unrestricted one. DllExport: the EXE is the only caller that passes true -- every in-tree call
+	// passes false and reads the facing directly.
+	if (checkLineOfSightProperty)
 	{
 		return NO_DIRECTION; //look in all directions
 	}
@@ -16583,7 +16586,7 @@ bool CvUnit::isPromotionValid(PromotionTypes ePromotion, bool bFree, bool bKeepC
 		}
 	}
 	// Very few reasons to deny a unit promotions that are specifically set to be a free for it.
-	if (m_pUnitInfo->getFreePromotions(ePromotion) || GET_PLAYER(getOwner()).isFreePromotion(getUnitType(), ePromotion))
+	if (m_pUnitInfo->grantsPromotion(ePromotion) || GET_PLAYER(getOwner()).isFreePromotion(getUnitType(), ePromotion))
 	{
 		return true;
 	}
@@ -23316,7 +23319,7 @@ void CvUnit::setFreePromotion(PromotionTypes ePromotion, bool bAdding, TraitType
 
 	if (bAdding && !isHasPromotion(ePromotion))
 	{
-		if (m_pUnitInfo->getFreePromotions((int)ePromotion)
+		if (m_pUnitInfo->grantsPromotion((int)ePromotion)
 		|| (NO_UNIT != getUnitType() && pPlayer.isFreePromotion(getUnitType(), ePromotion)))
 		{
 			setHasPromotion(ePromotion, true, true);
@@ -25026,7 +25029,7 @@ void CvUnit::changeExtraSelfHealModifier(int iChange)
 
 int CvUnit::getNumHealSupportTotal() const
 {
-	return std::max(0, m_pUnitInfo->getNumHealSupport() + m_iExtraNumHealSupport);
+	return std::max(0, m_pUnitInfo->getFlatHeal(HEAL_SUPPORT, CASC_SCOPE_UNIT) / 100 + m_iExtraNumHealSupport);
 }
 
 void CvUnit::changeExtraNumHealSupport(int iChange)
@@ -26988,20 +26991,19 @@ void CvUnit::defineReligion()
 	{
 		if (m_eReligionType == NO_RELIGION)
 		{
-			UnitCombatTypes eUnitCombat;
-
-			for (int iI = -1; iI < m_pUnitInfo->getNumSubCombatTypes(); iI++)
+			// A unit's combat classes are its PRIMARY plus its subs ([json.md] par.8) -- the loop's -1
+			// sentinel stood for the primary, which is simply the `combatClass` read.
+			std::vector<int> aeCombatClasses;
+			if (m_pUnitInfo->getCombatClass() != NO_UNITCOMBAT)
 			{
-				if (iI > -1)
-				{
-					eUnitCombat = (UnitCombatTypes)m_pUnitInfo->getSubCombatType(iI);
-				}
-				else
-				{
-					eUnitCombat = (UnitCombatTypes)m_pUnitInfo->getCombatClass();
+				aeCombatClasses.push_back(m_pUnitInfo->getCombatClass());
+			}
+			const std::vector<int>& aeSubCombatClasses = m_pUnitInfo->getCombatClasses();
+			aeCombatClasses.insert(aeCombatClasses.end(), aeSubCombatClasses.begin(), aeSubCombatClasses.end());
 
-					if (eUnitCombat == NO_UNITCOMBAT) continue;
-				}
+			for (size_t iClass = 0; iClass < aeCombatClasses.size(); ++iClass)
+			{
+				const UnitCombatTypes eUnitCombat = (UnitCombatTypes)aeCombatClasses[iClass];
 				const ReligionTypes eOriginalCombatReligion = GC.getUnitCombatInfo(eUnitCombat).getReligion();
 
 				if (eOriginalCombatReligion != NO_RELIGION)
