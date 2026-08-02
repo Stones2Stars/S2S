@@ -183,7 +183,6 @@ CvPlot::CvPlot()
 		g_bestDefenderCache = new DefenderScoreCache();
 	}
 
-	m_baseYields = new short[NUM_YIELD_TYPES]();
 
 	// Plot danger cache
 	m_borderDangerCache = new bool[MAX_TEAMS];
@@ -258,7 +257,6 @@ CvPlot::~CvPlot()
 
 	uninit();
 
-	SAFE_DELETE_ARRAY(m_baseYields);
 	SAFE_DELETE_ARRAY(m_borderDangerCache);
 }
 
@@ -6566,27 +6564,6 @@ void CvPlot::setPlotType(PlotTypes eNewValue, bool bRecalculate, bool bRebuildGr
 
 	updateSeeFromSight(true, true);
 
-	short yieldChange[NUM_YIELD_TYPES] = {};
-	for (int iI = 0; iI < NUM_YIELD_TYPES; ++iI)
-	{
-		if (eNewValue == PLOT_PEAK)
-		{
-			yieldChange[iI] += GC.getYieldInfo((YieldTypes)iI).getPeakChange();
-		}
-		else if (eNewValue == PLOT_HILLS)
-		{
-			yieldChange[iI] += GC.getYieldInfo((YieldTypes)iI).getHillsChange();
-		}
-		if (eOldPlotType == PLOT_PEAK)
-		{
-			yieldChange[iI] -= GC.getYieldInfo((YieldTypes)iI).getPeakChange();
-		}
-		else if (eOldPlotType == PLOT_HILLS)
-		{
-			yieldChange[iI] -= GC.getYieldInfo((YieldTypes)iI).getHillsChange();
-		}
-	}
-	changeBaseYield(yieldChange);
 
 	updatePlotGroup();
 
@@ -6892,19 +6869,6 @@ void CvPlot::setTerrainType(TerrainTypes eNewValue, bool bRecalculate, bool bReb
 		{
 			m_movementCharacteristicsHash ^= GC.getTerrainInfo(eNewValue).getZobristValue();
 		}
-		short yieldChange[NUM_YIELD_TYPES] = {};
-		for (int iI = 0; iI < NUM_YIELD_TYPES; ++iI)
-		{
-			if (eNewValue != NO_TERRAIN)
-			{
-				yieldChange[iI] += GC.getTerrainInfo(eNewValue).getFlatYield((YieldTypes)iI, CASC_SCOPE_PLOT) / 100;
-			}
-			if (eOldTerrain != NO_TERRAIN)
-			{
-				yieldChange[iI] -= GC.getTerrainInfo(eOldTerrain).getFlatYield((YieldTypes)iI, CASC_SCOPE_PLOT) / 100;
-			}
-		}
-		changeBaseYield(yieldChange);
 		updatePlotGroup();
 
 		if (eNewValue != NO_TERRAIN)
@@ -7023,29 +6987,6 @@ void CvPlot::setFeatureType(FeatureTypes eNewValue, int iVariety, bool bImprovem
 		{
 			updateSeeFromSight(true, true);
 		}
-		short yieldChange[NUM_YIELD_TYPES] = {};
-		for (int iI = 0; iI < NUM_YIELD_TYPES; ++iI)
-		{
-			if (eNewValue != NO_FEATURE)
-			{
-				yieldChange[iI] += GC.getFeatureInfo(eNewValue).getYieldChange((YieldTypes)iI);
-
-				if (isRiver())
-				{
-					yieldChange[iI] += GC.getFeatureInfo(eNewValue).getRiverYieldChange((YieldTypes)iI);
-				}
-			}
-			if (eOldFeature != NO_FEATURE)
-			{
-				yieldChange[iI] -= GC.getFeatureInfo(eOldFeature).getYieldChange((YieldTypes)iI);
-
-				if (isRiver())
-				{
-					yieldChange[iI] -= GC.getFeatureInfo(eOldFeature).getRiverYieldChange((YieldTypes)iI);
-				}
-			}
-		}
-		changeBaseYield(yieldChange);
 		updateFeatureSymbol();
 
 		if (eOldFeature != NO_FEATURE && GC.getFeatureInfo(eOldFeature).getArtInfo()->isRiverArt()
@@ -7843,102 +7784,11 @@ void CvPlot::changeRiverCrossingCount(int iChange)
 	}
 	if (bNewRiverPlot || bRiverRemoved)
 	{
-		const FeatureTypes eFeature = getFeatureType();
-		short yieldChange[NUM_YIELD_TYPES] = {};
-		for (int iI = 0; iI < NUM_YIELD_TYPES; ++iI)
-		{
-			if (bNewRiverPlot)
-			{
-				yieldChange[iI] += GC.getYieldInfo((YieldTypes)iI).getRiverChange();
-
-				if (eFeature != NO_FEATURE)
-				{
-					yieldChange[iI] += GC.getFeatureInfo(eFeature).getRiverYieldChange((YieldTypes)iI);
-				}
-			}
-			else if (bRiverRemoved)
-			{
-				yieldChange[iI] -= GC.getYieldInfo((YieldTypes)iI).getRiverChange();
-
-				if (eFeature != NO_FEATURE)
-				{
-					yieldChange[iI] -= GC.getFeatureInfo(eFeature).getRiverYieldChange((YieldTypes)iI);
-				}
-			}
-		}
-		changeBaseYield(yieldChange);
 		// The PRESENCE transition is the fact; the running crossing count is not (only crossing zero changes state).
 		emitPlotRiverChanged(GC.getMap().plotNum(getX(), getY()), (int)getOwner(), bNewRiverPlot, m_iRiverCrossingCount);
 	}
 }
 
-
-int CvPlot::getBaseYield(const YieldTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
-	return m_baseYields[eIndex];
-}
-
-void CvPlot::changeBaseYield(const short* pYieldChange)
-{
-	PROFILE_EXTRA_FUNC();
-
-	bool bChange = false;
-
-	for (int iI = 0; iI < NUM_YIELD_TYPES; ++iI)
-	{
-		if (pYieldChange[iI] != 0)
-		{
-			m_baseYields[iI] += pYieldChange[iI];
-			bChange = true;
-		}
-	}
-	if (bChange)
-	{
-		updateYield();
-	}
-}
-
-void CvPlot::recalculateBaseYield()
-{
-	PROFILE_EXTRA_FUNC();
-	const PlotTypes ePlot = getPlotType();
-	const TerrainTypes eTerrain = getTerrainType();
-	const FeatureTypes eFeature = getFeatureType();
-	const bool bRiver = getRiverCrossingCount() > 0;
-
-	for (int iI = 0; iI < NUM_YIELD_TYPES; ++iI)
-	{
-		int iYield = 0;
-
-		if (ePlot == PLOT_PEAK)
-		{
-			iYield += GC.getYieldInfo((YieldTypes)iI).getPeakChange();
-		}
-		else if (ePlot == PLOT_HILLS)
-		{
-			iYield += GC.getYieldInfo((YieldTypes)iI).getHillsChange();
-		}
-		if (eTerrain != NO_TERRAIN)
-		{
-			iYield += GC.getTerrainInfo(eTerrain).getFlatYield((YieldTypes)iI, CASC_SCOPE_PLOT) / 100;
-		}
-		if (eFeature != NO_FEATURE)
-		{
-			iYield += GC.getFeatureInfo(eFeature).getYieldChange((YieldTypes)iI);
-
-			if (bRiver)
-			{
-				iYield += GC.getFeatureInfo(eFeature).getRiverYieldChange((YieldTypes)iI);
-			}
-		}
-		if (bRiver)
-		{
-			iYield += GC.getYieldInfo((YieldTypes)iI).getRiverChange();
-		}
-		m_baseYields[iI] = iYield;
-	}
-}
 
 
 void CvPlot::setExtraYield(YieldTypes eYield, short iExtraYield)
@@ -11190,7 +11040,6 @@ void CvPlot::read(FDataStreamBase* pStream)
 			m_aPlotTeamVisibilityIntensity[iI].iIntensity = iType4;
 		}
 	}
-	WRAPPER_READ_ARRAY(wrapper, "CvPlot", NUM_YIELD_TYPES, m_baseYields);
 
 	// Toffer - Read maps
 	{
@@ -11605,7 +11454,6 @@ void CvPlot::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlot", iType3);
 		WRAPPER_WRITE(wrapper, "CvPlot", iType4);
 	}
-	WRAPPER_WRITE_ARRAY(wrapper, "CvPlot", NUM_YIELD_TYPES, m_baseYields);
 
 	// Toffer - Write maps
 	{

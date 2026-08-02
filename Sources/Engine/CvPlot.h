@@ -157,7 +157,6 @@ public:
 
 	void erase();
 
-	void recalculateBaseYield();
 
 	// The per-plot ISOLATED live-state read surface -- the plot-scope sibling of CvCity::getCityContext /
 	// CvPlayer::getEmpireContext (plot state here; city state on CityContext; empire state on EmpireContext). Forwards
@@ -777,8 +776,6 @@ public:
 	int getRiverCrossingCount() const;
 	void changeRiverCrossingCount(int iChange);
 
-	int getBaseYield(const YieldTypes eIndex) const;
-	void changeBaseYield(const short* pYieldChange);
 
 	void setExtraYield(YieldTypes eYield, short iExtraYield);
 	short* getYield() const;
@@ -1044,7 +1041,6 @@ protected:
 	//short* m_aiCultureRangeForts;
 	// Super Forts end
 
-	short* m_baseYields;
 	bst::array<short, NUM_YIELD_TYPES> m_aExtraYield;
 	// Plot culture accumulates the spread from city culture at ×100 and only DECAYS proportionally, so it is
 	// the same accumulating AMOUNT its city-scope source is -- 64-bit for the same reason.

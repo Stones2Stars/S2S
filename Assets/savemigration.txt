@@ -698,7 +698,6 @@ CvCity::m_buildingYieldMod
 | than stored separately, so there is nothing to migrate out.
 CvCity::m_aiCommerceRateModifier
 ========================
-========================
 | The BUILDING-DEFENSE accumulator. A serialized += store of the city's buildings' defense contribution, which
 | getTotalDefense then weighed against the CULTURE LEVEL's via max(building, natural) before adding the player and
 | bonus terms. There is no natural-defense channel to weigh against: DEFENSE_AMOUNT is ONE channel that buildings
@@ -1140,3 +1139,11 @@ CvPlayer::m_iCoastalTradeRoutes
 | REPLACEMENT: none, deliberately -- write-only state for a mechanic that had no data.
 CvUnit::m_bHasHNCapturePromotion
 ========================
+The plot's PUSH-MAINTAINED base yield. It was a second copy of a number the cascade already computes: the
+| gather folds the plot's whole substrate -- terrain, feature, route, improvement, resource -- into the plot
+| package against the plot's own eval ctx, so the river-gated entries resolve there too. The store was kept
+| current by four hand-written delta blocks (plot type, terrain, feature, river), which is the drift class
+| ([DEC-accumulator-cut-uniform]) and also what made its one reader look cheap.
+| REPLACEMENT: the plot's own CvCascadePackage. ITS PRE-IMPROVEMENT slot is still owed -- calculateNatureYield
+| wants the pre-improvement, pre-route subset, which the realized package does not separate ([todo.md]).
+CvPlot::m_baseYields
