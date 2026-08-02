@@ -22713,11 +22713,15 @@ bool CvUnit::canKeepPromotion(PromotionTypes ePromotion, bool bAssertFree, bool 
 	//	against its plot, so nothing is lost by asking once rather than axis by axis.
 	//	⚑ Promotions are the enabler's on-demand carve-out ([enabler.md §7.1]): there is no maintained per-unit
 	//	set, so the KEEP verdict is evaluated HERE, at the decision point, exactly as the ACQUIRE verdict is.
-	//	⚠ BEHAVIOUR: the legacy walk emitted a CAN_RETRAIN / NO_RETRAIN message PER FAILING AXIS -- six pairs. A
-	//	single evaluator call returns a bool and cannot attribute which clause failed, so those notices are gone
-	//	rather than re-created around the gate. ⚑ Nothing visible is lost: NONE of the twelve keys exists in the
-	//	text XML, so they already rendered as raw keys. Player-facing text is END-STAGE and demand-driven anyway
-	//	([patterns.md] THE DIVISION OF LABOUR: a line removed by a cut is not a regression to restore).
+	//	⚠ BEHAVIOUR, and it is a REAL LOSS rather than a tidy-up: the legacy walk emitted a CAN_RETRAIN /
+	//	NO_RETRAIN message PER FAILING AXIS -- six pairs, all twelve authored and rendering in
+	//	`Global_CIV4GameText.xml`. A single evaluator call returns a bool and cannot attribute WHICH clause
+	//	failed, so the player now learns that a promotion lapsed without being told why.
+	//	⚑ The gate is still the evaluator's -- the axes are what the curator authors into `requires`, and
+	//	re-creating a per-axis walk purely to caption the failure would rebuild the legacy battery for text.
+	//	Player-facing text is END-STAGE and demand-driven ([patterns.md] THE DIVISION OF LABOUR: a line removed
+	//	by a cut is not a regression to restore), so the notices come back -- if wanted -- on the ALERT
+	//	consumer, off the fact, never re-inlined here ([event-spine.md] PLAYER ALERTS). Owed list: todo.md.
 	//	⛔ It is NOT answerable from the structural `requires` walk: that reports what a tree NAMES, so an `any`
 	//	pair would read as an AND and a `noneOf` as a requirement. A gate verdict is the evaluator's.
 	if (!bIsFreePromotion)

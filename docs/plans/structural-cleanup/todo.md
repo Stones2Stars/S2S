@@ -321,7 +321,12 @@
   it wants its own cached block on the same mark protocol, never a hand-named scalar pair beside it
   ([DEC-uniform-cache-shape](../../architecture/decisions.md#dec-uniform-cache-shape)).
   ⚠ `isInvisible` is one of the hottest reads in the engine, which is why the walk must not stay on it.
-- The PLAYER-ALERT consumer, and the alerts owed to it — including the "your building was obsoleted" message,
+- The PLAYER-ALERT consumer, and the alerts owed to it — including the six CAN_RETRAIN / NO_RETRAIN pairs the
+  promotion KEEP gate used to emit per failing axis (terrain / feature / plot bonus / improvement / local
+  building / promotion prereq). All twelve are authored and were rendering, so this is a real loss of
+  player-facing information, not a dead-key cleanup: a unit now loses a promotion without being told which
+  condition it lost. ⛔ They do NOT come back as a per-axis walk beside the gate — that rebuilds the legacy
+  battery to caption a failure — and the "your building was obsoleted" message,
   which rides `SEVT_BUILDING_OBSOLETED` (emitted for exactly this, and for logging; it drives no apply) — they
   re-attach to the OPERATE CROSSING fact, never
   re-inlined at a mutation site ([event-spine.md](../../specs/event-spine.md)). Expect the owed list to GROW as
