@@ -4234,18 +4234,6 @@ int CvCity::totalFreeSpecialists() const
 			iCount += iNumSpecialistsPerImprovement * countNumImprovedPlots((ImprovementTypes)iI);
 		}
 	}
-	if (GET_PLAYER(getOwner()).hasFreeSpecialistperWorldWonder())
-	{
-		iCount += getNumWorldWonders();
-	}
-	if (GET_PLAYER(getOwner()).hasFreeSpecialistperNationalWonder())
-	{
-		iCount += getNumNationalWonders();
-	}
-	if (GET_PLAYER(getOwner()).hasFreeSpecialistperTeamProject())
-	{
-		iCount += getNumTeamWonders();
-	}
 	// Toffer - Negative free specialist effectively reduce pop of city...
 	//	That's not an intended effect of the free specialist feature.
 	return std::max(0, iCount);

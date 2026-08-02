@@ -180,7 +180,6 @@ m_cachedBonusCount(NULL)
 	m_dataRepository.init(this);
 	m_aiSeaPlotYield = new int[NUM_YIELD_TYPES];
 	m_aiYieldRateModifier = new int[NUM_YIELD_TYPES];
-	m_aiCapitalYieldRateModifier = new int[NUM_YIELD_TYPES];
 	m_aiExtraYieldThreshold = new int[NUM_YIELD_TYPES];
 	m_aiTradeYieldModifier = new int[NUM_YIELD_TYPES];
 	m_aiCommercePercent = new int[NUM_COMMERCE_TYPES];
@@ -294,7 +293,6 @@ CvPlayer::~CvPlayer()
 
 	SAFE_DELETE_ARRAY(m_aiSeaPlotYield);
 	SAFE_DELETE_ARRAY(m_aiYieldRateModifier);
-	SAFE_DELETE_ARRAY(m_aiCapitalYieldRateModifier);
 	SAFE_DELETE_ARRAY(m_aiExtraYieldThreshold);
 	SAFE_DELETE_ARRAY(m_aiTradeYieldModifier);
 	SAFE_DELETE_ARRAY(m_aiCommercePercent);
@@ -1187,8 +1185,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iNationalHurryAngerModifier = 0;
 	m_iNationalEnemyWarWearinessModifier = 0;
 	m_iFixedBordersCount = 0;
-	m_iFreedomFighterCount = 0;
-	m_iExtraFreedomFighters = 0;
 
 	m_iNationalCityStartCulture = 0;
 	m_iNationalAirUnitCapacity = 0;
@@ -1199,9 +1195,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iNationalMissileCargoSpaceChange = 0;
 	m_iCitiesStartwithStateReligionCount = 0;
 	m_iDraftsOnCityCaptureCount = 0;
-	m_iFreeSpecialistperWorldWonderCount = 0;
-	m_iFreeSpecialistperNationalWonderCount = 0;
-	m_iFreeSpecialistperTeamProjectCount = 0;
 	m_iExtraGoodyCount = 0;
 
 	m_iAllReligionsActiveCount = 0;
@@ -1304,7 +1297,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	{
 		m_aiSeaPlotYield[iI] = 0;
 		m_aiYieldRateModifier[iI] = 0;
-		m_aiCapitalYieldRateModifier[iI] = 0;
 		m_aiExtraYieldThreshold[iI] = 0;
 		m_aiTradeYieldModifier[iI] = 0;
 		m_aiLandmarkYield[iI] = 0;
@@ -11760,40 +11752,6 @@ void CvPlayer::changeYieldRateModifier(YieldTypes eIndex, int iChange)
 }
 
 
-int CvPlayer::getCapitalYieldRateModifier(YieldTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
-	return m_aiCapitalYieldRateModifier[eIndex];
-}
-
-
-void CvPlayer::changeCapitalYieldRateModifier(YieldTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
-
-	if (iChange != 0)
-	{
-		m_aiCapitalYieldRateModifier[eIndex] += iChange;
-
-		invalidateYieldRankCache(eIndex);
-
-		CvCity* pCapitalCity = getCapitalCity();
-
-		if (pCapitalCity)
-		{
-			if (eIndex == YIELD_COMMERCE)
-			{
-			}
-
-			pCapitalCity->AI_setAssignWorkDirty(true);
-
-			if (pCapitalCity->getTeam() == GC.getGame().getActiveTeam())
-			{
-				pCapitalCity->setInfoDirty(true);
-			}
-		}
-	}
-}
 
 
 int CvPlayer::getExtraYieldThreshold(YieldTypes eIndex) const
@@ -17083,7 +17041,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiSeaPlotYield);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiYieldRateModifier);
-		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiCapitalYieldRateModifier);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiExtraYieldThreshold);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiTradeYieldModifier);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommercePercent);
@@ -17896,9 +17853,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNationalMissileCargoSpaceChange);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iCitiesStartwithStateReligionCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iDraftsOnCityCaptureCount);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iFreeSpecialistperWorldWonderCount);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iFreeSpecialistperNationalWonderCount);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iFreeSpecialistperTeamProjectCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraGoodyCount);
 
 
@@ -17923,8 +17877,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		// !SAVEBREAK
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iUpgradeRoundCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iSelectionRegroup);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iFreedomFighterCount);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraFreedomFighters);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iGold);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iCulture);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iMinTaxIncome);
@@ -18398,7 +18350,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiSeaPlotYield);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiYieldRateModifier);
-		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiCapitalYieldRateModifier);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiExtraYieldThreshold);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiTradeYieldModifier);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommercePercent);
@@ -18803,9 +18754,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNationalMissileCargoSpaceChange);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCitiesStartwithStateReligionCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iDraftsOnCityCaptureCount);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iFreeSpecialistperWorldWonderCount);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iFreeSpecialistperNationalWonderCount);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iFreeSpecialistperTeamProjectCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraGoodyCount);
 
 
@@ -18824,8 +18772,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iUpgradeRoundCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iSelectionRegroup);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iFreedomFighterCount);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraFreedomFighters);
 		//TB Traits end
 
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iGold);
@@ -26511,25 +26457,6 @@ void CvPlayer::changeSpecialistExtraYield(YieldTypes eIndex, int iChange)
 	}
 }
 
-int CvPlayer::getFreeCityYield(YieldTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
-
-	return m_aiFreeCityYield[eIndex];
-}
-
-void CvPlayer::changeFreeCityYield(YieldTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
-
-	if (iChange != 0)
-	{
-		m_aiFreeCityYield[eIndex] += iChange;
-
-		algo::for_each(cities(), CvCity::fn::onYieldChange());
-	}
-}
-
 void CvPlayer::setHasTrait(TraitTypes eIndex, bool bNewValue)
 {
 	PROFILE_EXTRA_FUNC();
@@ -27383,51 +27310,6 @@ void CvPlayer::changeDraftsOnCityCaptureCount(int iChange)
 	m_iDraftsOnCityCaptureCount += iChange;
 }
 
-bool CvPlayer::hasFreeSpecialistperWorldWonder() const
-{
-	return (m_iFreeSpecialistperWorldWonderCount > 0);
-}
-
-void CvPlayer::setFreeSpecialistperWorldWonderCount(int iValue)
-{
-	m_iFreeSpecialistperWorldWonderCount = iValue;
-}
-
-void CvPlayer::changeFreeSpecialistperWorldWonderCount(int iChange)
-{
-	m_iFreeSpecialistperWorldWonderCount += iChange;
-}
-
-bool CvPlayer::hasFreeSpecialistperNationalWonder() const
-{
-	return (m_iFreeSpecialistperNationalWonderCount > 0);
-}
-
-void CvPlayer::setFreeSpecialistperNationalWonderCount(int iValue)
-{
-	m_iFreeSpecialistperNationalWonderCount = iValue;
-}
-
-void CvPlayer::changeFreeSpecialistperNationalWonderCount(int iChange)
-{
-	m_iFreeSpecialistperNationalWonderCount += iChange;
-}
-
-bool CvPlayer::hasFreeSpecialistperTeamProject() const
-{
-	return (m_iFreeSpecialistperTeamProjectCount > 0);
-}
-
-void CvPlayer::setFreeSpecialistperTeamProjectCount(int iValue)
-{
-	m_iFreeSpecialistperTeamProjectCount = iValue;
-}
-
-void CvPlayer::changeFreeSpecialistperTeamProjectCount(int iChange)
-{
-	m_iFreeSpecialistperTeamProjectCount += iChange;
-}
-
 bool CvPlayer::hasExtraGoody() const
 {
 	return (m_iExtraGoodyCount > 0);
@@ -27793,26 +27675,6 @@ int CvPlayer::getSelectionRegroup() const
 void CvPlayer::setSelectionRegroup(int iGroupID)
 {
 	m_iSelectionRegroup = iGroupID;
-}
-
-bool CvPlayer::hasFreedomFighter() const
-{
-	return (m_iFreedomFighterCount > 0);
-}
-
-void CvPlayer::changeFreedomFighterCount(int iChange)
-{
-	m_iFreedomFighterCount += iChange;
-}
-
-int CvPlayer::getExtraFreedomFighters() const
-{
-	return (m_iExtraFreedomFighters > 0);
-}
-
-void CvPlayer::changeExtraFreedomFighters(int iChange)
-{
-	m_iExtraFreedomFighters += iChange;
 }
 
 

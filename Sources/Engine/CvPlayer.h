@@ -965,8 +965,6 @@ public:
 	int getYieldRateModifier(YieldTypes eIndex) const;
 	void changeYieldRateModifier(YieldTypes eIndex, int iChange);
 
-	int getCapitalYieldRateModifier(YieldTypes eIndex) const;
-	void changeCapitalYieldRateModifier(YieldTypes eIndex, int iChange);
 
 	int getExtraYieldThreshold(YieldTypes eIndex) const;
 	void updateExtraYieldThreshold(YieldTypes eIndex);
@@ -1615,8 +1613,6 @@ protected:
 	int* m_paiNationalDomainProductionModifier;
 	int* m_paiNationalTechResearchModifier;
 	int m_iFixedBordersCount;
-	int m_iFreedomFighterCount;
-	int m_iExtraFreedomFighters;
 
 	int m_iNationalCityStartCulture;
 	int m_iNationalAirUnitCapacity;
@@ -1627,9 +1623,6 @@ protected:
 	int m_iNationalMissileCargoSpaceChange;
 	int m_iCitiesStartwithStateReligionCount;
 	int m_iDraftsOnCityCaptureCount;
-	int m_iFreeSpecialistperWorldWonderCount;
-	int m_iFreeSpecialistperNationalWonderCount;
-	int m_iFreeSpecialistperTeamProjectCount;
 	int m_iExtraGoodyCount;
 
 	int m_iAllReligionsActiveCount;
@@ -1908,7 +1901,6 @@ protected:
 
 	int* m_aiSeaPlotYield;
 	int* m_aiYieldRateModifier;
-	int* m_aiCapitalYieldRateModifier;
 	int* m_aiExtraYieldThreshold;
 	int* m_aiTradeYieldModifier;
 	int* m_aiCommercePercent;
@@ -2069,8 +2061,6 @@ public:
 	int getSpecialistExtraYield(YieldTypes eIndex) const;
 	void changeSpecialistExtraYield(YieldTypes eIndex, int iChange);
 
-	int getFreeCityYield(YieldTypes eIndex) const;
-	void changeFreeCityYield(YieldTypes eIndex, int iChange);
 
 
 	void setHasTrait(TraitTypes eIndex, bool bNewValue);
@@ -2165,17 +2155,8 @@ public:
 	void setDraftsOnCityCaptureCount(int iValue);
 	void changeDraftsOnCityCaptureCount(int iChange);
 
-	bool hasFreeSpecialistperWorldWonder() const;
-	void setFreeSpecialistperWorldWonderCount(int iValue);
-	void changeFreeSpecialistperWorldWonderCount(int iChange);
 
-	bool hasFreeSpecialistperNationalWonder() const;
-	void setFreeSpecialistperNationalWonderCount(int iValue);
-	void changeFreeSpecialistperNationalWonderCount(int iChange);
 
-	bool hasFreeSpecialistperTeamProject() const;
-	void setFreeSpecialistperTeamProjectCount(int iValue);
-	void changeFreeSpecialistperTeamProjectCount(int iChange);
 
 	bool hasExtraGoody() const;
 	void setExtraGoodyCount(int iValue);
@@ -2268,10 +2249,6 @@ public:
 	int getSelectionRegroup() const;
 	void setSelectionRegroup(int iGroupID);
 
-	bool hasFreedomFighter() const;
-	void changeFreedomFighterCount(int iChange);
-	int getExtraFreedomFighters() const;
-	void changeExtraFreedomFighters(int iChange);
 
 	CvBuildLists* m_pBuildLists;
 

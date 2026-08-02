@@ -1147,3 +1147,17 @@ The plot's PUSH-MAINTAINED base yield. It was a second copy of a number the casc
 | REPLACEMENT: the plot's own CvCascadePackage. ITS PRE-IMPROVEMENT slot is still owed -- calculateNatureYield
 | wants the pre-improvement, pre-route subset, which the realized package does not separate ([todo.md]).
 CvPlot::m_baseYields
+========================
+Trait-fed PLAYER accumulators, cut with the pushes that were their only writer. Each was a hand-maintained
+| sum over the held traits' authored data, and the gather already folds those same modifiers into the
+| player's scope packages -- so the store was a second copy, and an info carries no live data that could be
+| lost with it ([DEC-accumulator-cut-uniform]).
+| REPLACEMENT: the player's own CvCascadePackage, rebuilt from the held-trait facts the save read emits
+| ([DEC-spine-reseed]) -- the per-wonder free specialists are the freeSpecialists FAMILY ([json.md par.9]),
+| not a policy, so they arrive through the same fold.
+CvPlayer::m_aiCapitalYieldRateModifier
+CvPlayer::m_iExtraFreedomFighters
+CvPlayer::m_iFreedomFighterCount
+CvPlayer::m_iFreeSpecialistperNationalWonderCount
+CvPlayer::m_iFreeSpecialistperTeamProjectCount
+CvPlayer::m_iFreeSpecialistperWorldWonderCount
