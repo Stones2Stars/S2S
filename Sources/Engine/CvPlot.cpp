@@ -16,6 +16,8 @@
 #include "CvGameCoreUtils.h"
 #include "Defines/CvGlobals.h"
 #include "CvImprovementInfo.h"
+#include "CvTerrainInfo.h"   // the plot substrate's own defense/yield group reads
+#include "CvFeatureInfo.h"
 #include "CvInfos.h"
 #include "CvMap.h"
 #include "AI/CvPlayerAI.h"
@@ -4268,11 +4270,13 @@ int CvPlot::defenseModifier(TeamTypes eDefender, bool bIgnoreBuilding, bool bHel
 {
 	FAssertMsg(getTerrainType() != NO_TERRAIN, "TerrainType is not assigned a valid value");
 
-	int iModifier = GC.getTerrainInfo(getTerrainType()).getDefenseModifier();
+	//	The substrate's own defense contribution. `defense.amount` is a PERCENT that sums and applies once
+	//	([json.md §6]), so these carry no scaling and add straight into the stack.
+	int iModifier = GC.getTerrainInfo(getTerrainType()).getDefense(DEFENSE_AMOUNT, CASC_SCOPE_PLOT);
 
 	if (getFeatureType() != NO_FEATURE)
 	{
-		iModifier += GC.getFeatureInfo(getFeatureType()).getDefenseModifier();
+		iModifier += GC.getFeatureInfo(getFeatureType()).getDefense(DEFENSE_AMOUNT, CASC_SCOPE_PLOT);
 	}
 
 	if (isHills())
