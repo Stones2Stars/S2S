@@ -1136,7 +1136,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iNoForeignTradeCount = 0;
 	m_iNoCorporationsCount = 0;
 	m_iNoForeignCorporationsCount = 0;
-	m_iCoastalTradeRoutes = 0;
 	m_iTradeRoutes = 0;
 	m_iRevolutionTimer = 0;
 	m_iConversionTimer = 0;
@@ -6959,7 +6958,6 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, CvArea* pAr
 
 	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
 
-	changeCoastalTradeRoutes(kBuilding.getCoastalTradeRoutes() * iChange);
 	// The EMPIRE-scope route COUNT -- the memberless flat deposit (ruling 11: kind 0 IS the count). The slot is
 	// a FLAT amount and therefore ×100, so the reader reduces at its point of use ([DEC-fixedpoint-x100]): a
 	// route count is a whole game quantity.
@@ -7006,9 +7004,6 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, CvArea* pAr
 			kKeyedBuildRate[iKeyed].second * iChange);
 	}
 
-	//TB Building tags
-	changeExtraNationalCaptureProbabilityModifier(kBuilding.getNationalCaptureProbabilityModifier() * iChange);
-	changeExtraNationalCaptureResistanceModifier(kBuilding.getNationalCaptureResistanceModifier() * iChange);
 }
 
 
@@ -7451,7 +7446,7 @@ int CvPlayer::calculateUnitSupply(int& iPaidUnits, int& iBaseSupplyCost) const
 		{
 			iMod +=
 				(
-					handicap->getAIUnitSupplyPercent() - 100
+					handicap->getUpkeepModifier(UPKEEP_SUPPLY, CASC_SCOPE_EMPIRE, true) - 100
 					+
 					handicap->getUnitUpkeepEraModifier() * getCurrentEra()
 				);
@@ -7513,7 +7508,7 @@ int CvPlayer::getInflationMod10000() const
 			CvHandicapInfo * handicap = &(GC.getHandicapInfo(GC.getGame().getHandicapType()));
 			if (handicap != NULL)
 			iMod = (
-				handicap->getAIInflationPercent() - 100
+				handicap->getUpkeepModifier(UPKEEP_INFLATION, CASC_SCOPE_EMPIRE, true) - 100
 				+
 				handicap->getUnitUpkeepEraModifier() * getCurrentEra()
 			);
@@ -7983,8 +7978,12 @@ bool CvPlayer::canDoCivics(CivicTypes eCivic) const
 		)
 		||
 		(
+			// "is this civic unlocked yet" is a MEMBERSHIP question -- a tech reaches a civic through its own
+			// `enables.civics` edge ([enabler.md] par.2), so the verdict is the maintained tri-state rather than a
+			// prereq read on the civic. STATE_HIDDEN means no held source enables it; GREYED/LISTED both mean it
+			// is in the tree, which is exactly what the tech prereq used to answer.
 			!isHasCivicOption((CivicOptionTypes)GC.getCivicInfo(eCivic).getCivicOption())
-			&& !GET_TEAM(getTeam()).isHasTech(GC.getCivicInfo(eCivic).getTechPrereq())
+			&& getCivicAvailability(eCivic) == EnablerDomain::STATE_HIDDEN
 		)
 	))
 	{
@@ -10200,22 +10199,6 @@ void CvPlayer::changeNoForeignCorporationsCount(int iChange, bool bLimited)
 }
 
 
-int CvPlayer::getCoastalTradeRoutes() const
-{
-	return m_iCoastalTradeRoutes;
-}
-
-
-void CvPlayer::changeCoastalTradeRoutes(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iCoastalTradeRoutes += iChange;
-		updateTradeRoutes();
-	}
-}
-
-
 int CvPlayer::getTradeRoutes() const
 {
 	return m_iTradeRoutes;
@@ -11907,17 +11890,19 @@ void CvPlayer::updateExtraYieldThreshold(YieldTypes eIndex)
 
 	int iBestValue = 0;
 
+	// The threshold is a whole yield count compared against a plot's own, so the trait's ×100 FLAT reduces
+	// here at the point of use ([DEC-fixedpoint-x100]); the SELECTION is the smallest positive one held.
 	FAssertMsg((GC.getNumTraitInfos() > 0), "GC.getNumTraitInfos() is less than or equal to zero but is expected to be larger than zero in CvPlayer::updateExtraYieldThreshold");
 	for (int iI = 0; iI < GC.getNumTraitInfos(); iI++)
 	{
 		if (hasTrait((TraitTypes)iI))
 		{
-			if (GC.getTraitInfo((TraitTypes) iI).getExtraYieldThreshold(eIndex) > 0)
+			const int iTraitThreshold =
+				GC.getTraitInfo((TraitTypes)iI).getExtraYieldThreshold(eIndex, CASC_SCOPE_EMPIRE) / 100;
+
+			if (iTraitThreshold > 0 && (iBestValue == 0 || iTraitThreshold < iBestValue))
 			{
-				if ((iBestValue == 0) || (GC.getTraitInfo((TraitTypes) iI).getExtraYieldThreshold(eIndex) < iBestValue))
-				{
-					iBestValue = GC.getTraitInfo((TraitTypes) iI).getExtraYieldThreshold(eIndex);
-				}
+				iBestValue = iTraitThreshold;
 			}
 		}
 	}
@@ -11946,17 +11931,17 @@ void CvPlayer::updateLessYieldThreshold(YieldTypes eIndex)
 
 	int iWorstValue = 0;
 
-	FAssertMsg((GC.getNumTraitInfos() > 0), "GC.getNumTraitInfos() is less than or equal to zero but is expected to be larger than zero in CvPlayer::updateExtraYieldThreshold");
+	FAssertMsg((GC.getNumTraitInfos() > 0), "GC.getNumTraitInfos() is less than or equal to zero but is expected to be larger than zero in CvPlayer::updateLessYieldThreshold");
 	for (int iI = 0; iI < GC.getNumTraitInfos(); iI++)
 	{
 		if (hasTrait((TraitTypes)iI))
 		{
-			if (GC.getTraitInfo((TraitTypes) iI).getLessYieldThreshold(eIndex) > 0)
+			const int iTraitThreshold =
+				GC.getTraitInfo((TraitTypes)iI).getLessYieldThreshold(eIndex, CASC_SCOPE_EMPIRE) / 100;
+
+			if (iTraitThreshold > 0 && (iWorstValue == 0 || iTraitThreshold < iWorstValue))
 			{
-				if ((iWorstValue == 0) || (GC.getTraitInfo((TraitTypes) iI).getLessYieldThreshold(eIndex) < iWorstValue))
-				{
-					iWorstValue = GC.getTraitInfo((TraitTypes) iI).getLessYieldThreshold(eIndex);
-				}
+				iWorstValue = iTraitThreshold;
 			}
 		}
 	}
@@ -17082,7 +17067,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNoForeignTradeCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNoCorporationsCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNoForeignCorporationsCount);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iCoastalTradeRoutes);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iTradeRoutes);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iRevolutionTimer);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iConversionTimer);
@@ -18466,7 +18450,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNoForeignTradeCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNoCorporationsCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNoForeignCorporationsCount);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCoastalTradeRoutes);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iTradeRoutes);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iRevolutionTimer);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iConversionTimer);
@@ -21123,11 +21106,14 @@ void CvPlayer::doEvents()
 		++it;
 	}
 
+	// eventChance is a FLAT kind, so the era serves it ×100 and the roll -- a whole number of sides -- reduces
+	// here at the point of use ([DEC-fixedpoint-x100]); its `growth` sibling below is a PERCENT and reduces nowhere.
 	const bool bNewEventEligible =
 	(
 		GC.getGame().getElapsedGameTurns() > 0
 		&&
-		GC.getGame().getSorenRandNum(GC.getDefineINT("EVENT_PROBABILITY_ROLL_SIDES"), "Global event check") < GC.getEraInfo(getCurrentEra()).getEventChancePerTurn()
+		GC.getGame().getSorenRandNum(GC.getDefineINT("EVENT_PROBABILITY_ROLL_SIDES"), "Global event check")
+			< GC.getEraInfo(getCurrentEra()).getScalar(SCALAR_EVENT_CHANCE, CASC_SCOPE_WORLD, CASC_UNIT_FLAT) / 100
 	);
 
 	std::vector< std::pair<EventTriggeredData*, int> > aePossibleEventTriggerWeights;
@@ -22949,7 +22935,7 @@ bool CvPlayer::canSpyBribeUnit(PlayerTypes eTarget, const CvUnit& kUnit) const
 
 bool CvPlayer::canSpyDestroyBuilding(PlayerTypes eTarget, BuildingTypes eBuilding) const
 {
-	return (GC.getBuildingInfo(eBuilding).getProductionCost() > 0 && !isLimitedWonder(eBuilding));
+	return (GC.getBuildingInfo(eBuilding).getCost() > 0 && !isLimitedWonder(eBuilding));
 }
 
 bool CvPlayer::canSpyDestroyProject(PlayerTypes eTarget, ProjectTypes eProject) const
@@ -23069,7 +23055,7 @@ int CvPlayer::getGrowthThreshold(int iPopulation) const
 	iThreshold *= CvGameSpeedScale::speedPercent();
 	iThreshold /= 100;
 
-	iThreshold *= GC.getEraInfo(getCurrentEra()).getGrowthPercent();
+	iThreshold *= GC.getEraInfo(getCurrentEra()).getScalar(SCALAR_GROWTH, CASC_SCOPE_WORLD, CASC_UNIT_PERCENT);
 	iThreshold /= 100;
 
 	if (isNormalAI())
@@ -23096,17 +23082,6 @@ void CvPlayer::verifyUnitStacksValid()
 {
 	algo::for_each(units(), CvUnit::fn::verifyStackValid());
 }
-
-//TB Prophet Mod begin
-UnitTypes CvPlayer::getTechFreeProphet(TechTypes eTech) const
-{
-	if (GC.getGame().isOption(GAMEOPTION_RELIGION_DIVINE_PROPHETS))
-	{
-		return (UnitTypes) GC.getTechInfo(eTech).getFirstFreeProphet();
-	}
-	return NO_UNIT;
-}
-//TB Prophet Mod end
 
 // BUG - Trade Totals - start
 /*
@@ -26469,7 +26444,6 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 	changeHurryCostModifier(GC.getTraitInfo(eTrait).getHurryCostModifier() * iChange);
 	changeForeignTradeRouteModifier(GC.getTraitInfo(eTrait).getForeignTradeRouteModifier() * iChange);
 	changeNationalEnemyWarWearinessModifier(GC.getTraitInfo(eTrait).getEnemyWarWearinessModifier() * iChange);
-	changeCoastalTradeRoutes(GC.getTraitInfo(eTrait).getCoastalTradeRoutes() * iChange);
 	changeMilitaryFoodProductionCount((GC.getTraitInfo(eTrait).isMilitaryFoodProduction()) ? iChange : 0);
 	changeInquisitionCount((GC.getTraitInfo(eTrait).isAllowsInquisitions())? iChange : 0);
 
@@ -26482,8 +26456,12 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 	changeNationalMissileCargoSpaceChange(GC.getTraitInfo(eTrait).getMissileCargoSpace() * iChange);
 	changeExtraFreedomFighters(GC.getTraitInfo(eTrait).getFreedomFighterChange() * iChange);
 
-	changeExtraNationalCaptureProbabilityModifier(GC.getTraitInfo(eTrait).getNationalCaptureProbabilityModifier() * iChange);
-	changeExtraNationalCaptureResistanceModifier(GC.getTraitInfo(eTrait).getNationalCaptureResistanceModifier() * iChange);
+	// `national` is the EMPIRE SCOPE, not a kind fragment ([DEC-scope-is-an-axis]); capture authors PERCENT at
+	// empire, so the re-point is 1:1 with no reduction.
+	changeExtraNationalCaptureProbabilityModifier(
+		GC.getTraitInfo(eTrait).getCapture(CAPTURE_PROBABILITY, CASC_SCOPE_EMPIRE) * iChange);
+	changeExtraNationalCaptureResistanceModifier(
+		GC.getTraitInfo(eTrait).getCapture(CAPTURE_RESISTANCE, CASC_SCOPE_EMPIRE) * iChange);
 
 	changeExtraStateReligionSpreadModifier(GC.getTraitInfo(eTrait).getStateReligionSpreadProbabilityModifier() * iChange);
 	changeExtraNonStateReligionSpreadModifier(GC.getTraitInfo(eTrait).getNonStateReligionSpreadProbabilityModifier() * iChange);

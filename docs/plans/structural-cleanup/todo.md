@@ -55,6 +55,15 @@
   no-nukes bar does not apply to projects at all — the hole is deliberate and visible
   ([DEC-no-legacy-masking](../../architecture/decisions.md#dec-no-legacy-masking)), not an oversight.
   ⚠ `espionagePoints` rides the missions/`CvOutcome` carve-out — its channel is settled, only its authoring home waits.
+- Bring `curate_trait`'s trade-route rows onto ruling 11, as `curate_building` already is: `iCoastalTradeRoutes`
+  and `iForeignTradeRouteModifier` still emit `coastal` / `foreign` as MEMBERS, and neither has a kind in the
+  vocabulary — so a trait authoring one emits an address that resolves to nothing and is dropped in silence.
+  The ruled shape is the conditioned deposit (the memberless route count gated `HAS_COAST`; the modifier kind
+  gated `IS_FOREIGN`) — a WHERE-member is the condition-as-member rollerskate
+  ([DEC-conditions-are-predicates](../../architecture/decisions.md#dec-conditions-are-predicates)).
+  ⚠ No trait authors either tag today, so this is latent rather than live data loss — and traits are
+  content-LOCKED, so it closes by fixing the mapping, not by a regen.
+
 - Emit property pulses through the shared property-source cleaner as trigger entries carrying
   `on`/`relation`/`distance`, instead of parking them verbatim.
 - Author the leader→trait assignments. The chain is wired and the slots are authorable; the CONTENT is
@@ -105,6 +114,17 @@
   the pull must be a CACHE at every level, marked by worked-plot flips and by a working plot's yield changing).
   ⚑ The rest of the city rate hangs off this one, so it is the keystone of the yield cluster rather than one
   more accessor.
+- Cut the PLAYER's trade-route count accumulator — it DOUBLE-COUNTS every empire-scope route deposit today.
+  Its feeders read the building / trait / tech EMPIRE deposit and push it into the player member, while the city
+  ALSO adds its own realized roll-up of the same channel — and that roll-up already includes the empire leg, so
+  each deposit lands once per city PLUS once more
+  ([state-repositories.md](../../architecture/state-repositories.md): an upper scope's package is never added on
+  top of a Σ that already contains it). ⚑ The city read wants the world CONFIG leg plus the rolled channel and
+  nothing else. ⚠ The `INITIAL_TRADE_ROUTES` baseline pushed into the same member is a global define, not a
+  deposit — decide its home rather than sweeping it in. ⛔ Deleting the accumulator fires no `updateTradeRoutes`
+  rider, so confirm the trade-route ASSIGNMENT still re-runs off the surviving triggers
+  ([save.md §6](../../specs/save.md); the baked-consumer re-run in [enabler.md §8](../../specs/enabler.md)).
+
 - Retire the building-COST-modifier accumulator and move its readers. Its writer is already gone: the curator
   re-homed the legacy source-keyed cost map onto the TARGET, as a conditioned own-cost entry gated on
   possessing the source, so nothing feeds the accumulator and every reader now sees zero. The value lives in
@@ -182,6 +202,17 @@
   table to keep a text line rendering.
 
 ## Not built yet
+
+- Apply the PER-CITY GATES AT THE COMBINE. [modifier.md §1](../../specs/modifier.md) specifies the realized value
+  as the sum of the scope packages **with the per-city gates (state-religion-in-city, coastal, connected, area
+  membership) applied live at the combine**; `InfoValuation::rolledLegsAtCity` is a bare package sum, so an
+  UPPER-scope deposit gated on a CITY predicate never fires. ⚑ The gate is what a per-city condition on an
+  empire-scope entry is FOR — the curator already authors them (a building's coastal trade routes are an empire
+  entry gated `HAS_COAST`), so the deposits exist and are read by nothing.
+  ⛔ It is NOT a package-rebuild question: an empire package has no city bound, so the condition cannot be
+  evaluated when the package is built — that is precisely why the spec puts it at the COMBINE, where the asking
+  city is known. ⚠ Until it lands the affected deposits are UNSERVED, and `savemigration.txt` carries the
+  replacement obligation for the one whose accumulator has already been cut.
 
 - Give GAME OPTIONS and CONFIG VALUES a standardized read surface (owner: *"having standardized getters for
   gameoption, and config values is not a bad idea"*). The reads are scattered — `isOption` sites, string-keyed
@@ -453,6 +484,11 @@
   NPC/barbarian starts.
 - Retire the engine start selection (the whole-database scan + AI scoring, and the per-role starting counts)
   once packages carry the identities.
+- Dispatch a PROJECT's grants. The trigger engine has no project front door at all, so a project's
+  `grantsSpecialUnit` payload (the completion-time special-unit unlock) reaches nothing and its consumer stays
+  dangling. ⚑ Its sibling on the same completion — `enables.specialBuildings` — is an availability EDGE and is
+  already read off the project, so only the payload half waits: the split is [triggers.md](../../specs/triggers.md)'s
+  grant-vs-edge line, not a missing project concept.
 
 ## Scale conversion
 

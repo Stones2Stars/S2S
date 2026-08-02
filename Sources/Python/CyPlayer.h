@@ -232,8 +232,6 @@ public:
 	void changeExtraHappiness(int iChange);
 
 	int getWarWearinessPercentAnger() const;
-	int getCoastalTradeRoutes() const;
-	void changeCoastalTradeRoutes(int iChange);
 	int getTradeRoutes() const;
 	int getRevolutionTimer() const;
 	void changeRevolutionTimer(int addTime);

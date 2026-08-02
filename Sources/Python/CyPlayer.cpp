@@ -871,16 +871,6 @@ int CyPlayer::getWarWearinessPercentAnger() const
 	return m_pPlayer->getWarWearinessPercentAnger();
 }
 
-int CyPlayer::getCoastalTradeRoutes() const
-{
-	return m_pPlayer->getCoastalTradeRoutes();
-}
-
-void CyPlayer::changeCoastalTradeRoutes(int iChange)
-{
-	m_pPlayer->changeCoastalTradeRoutes(iChange);
-}
-
 int CyPlayer::getTradeRoutes() const
 {
 	return m_pPlayer->getTradeRoutes();

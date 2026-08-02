@@ -975,10 +975,11 @@ void CvTeam::processBuilding(BuildingTypes eBuilding, int iChange, bool bReligio
 {
 	PROFILE_FUNC();
 
-	if (!bReligiouslyDisabling)
-	{
-	}
-	changeEnemyWarWearinessModifier(GC.getBuildingInfo(eBuilding).getEnemyWarWearinessModifier() * iChange);
+	// `enemy` is the war-weariness KIND ([DEC-scope-is-an-axis]: the building authors it at CITY scope, and this
+	// team-wide total is the Σ over the team's buildings, which is what the legacy accumulator held). The family
+	// is a PERCENT throughout, so the read is unscaled.
+	changeEnemyWarWearinessModifier(
+		GC.getBuildingInfo(eBuilding).getScalar(SCALAR_ENEMY_WAR_WEARINESS, CASC_SCOPE_CITY, CASC_UNIT_PERCENT) * iChange);
 }
 
 
@@ -4291,9 +4292,17 @@ void CvTeam::processProjectChange(ProjectTypes eIndex, int iChange, int iOldProj
 			GC.getGame().makeSpecialUnitValid((SpecialUnitTypes)(kProject.getEveryoneSpecialUnit()));
 		}
 
-		if (kProject.getEveryoneSpecialBuilding() != NO_SPECIALBUILDING)
+		// Completion flips the game-wide SpecialBuilding validity: an UNLOCK, so it is the project's own
+		// `enables.specialBuildings` edge ([json.md §4.1]) rather than a payload. The edge is a LIST, so a
+		// project may unlock several -- the single-id legacy shape was the narrower case of this one.
+		const std::vector<int>* pSpecialBuildings =
+			kProject.getEdges() ? kProject.getEdges()->find(EDGEF_ENABLES, EDGEB_SPECIAL_BUILDINGS) : NULL;
+		if (pSpecialBuildings != NULL)
 		{
-			GC.getGame().makeSpecialBuildingValid((SpecialBuildingTypes)(kProject.getEveryoneSpecialBuilding()));
+			for (size_t iSpecial = 0; iSpecial < pSpecialBuildings->size(); ++iSpecial)
+			{
+				GC.getGame().makeSpecialBuildingValid((SpecialBuildingTypes)(*pSpecialBuildings)[iSpecial]);
+			}
 		}
 
 		for (int iI = 0; iI < MAX_PC_PLAYERS; iI++)
@@ -4315,15 +4324,7 @@ void CvTeam::processProjectChange(ProjectTypes eIndex, int iChange, int iOldProj
 							}
 						}
 					}
-					// The maintenance KINDS at their scope ([DEC-scope-is-an-axis]). The connected-city kind is
-					// gone with the legacy getter: NOTHING in Assets/Data authors a connectedCity maintenance
-					// modifier, so the leg only ever added zero.
-
-					for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
-					{
-					}
 				}
-				player.changeTradeRoutes(kProject.getWorldTradeRoutes());
 			}
 		}
 	}
@@ -5059,9 +5060,9 @@ void CvTeam::setHasTech(TechTypes eTech, bool bNewValue, PlayerTypes ePlayer, bo
 			const CvGrants* pGrants = kTech.getTriggers() ? kTech.getTriggers()->consideredGrant() : NULL;
 			const int iFreeTechs = pGrants ? pGrants->pulse("freeTechs") : 0;
 			const bool bFreeUnit = pGrants && pGrants->firstListId("firstFreeUnit") != -1;
+			const bool bFreeProphet = pGrants && pGrants->firstListId("firstFreeProphet") != -1;
 			if (bFreeUnit || iFreeTechs > 0
-			|| (GC.getGame().isOption(GAMEOPTION_RELIGION_DIVINE_PROPHETS)
-				&& GET_PLAYER(ePlayer).getTechFreeProphet(eTech) != NO_UNIT))
+			|| (bFreeProphet && GC.getGame().isOption(GAMEOPTION_RELIGION_DIVINE_PROPHETS)))
 			{
 				bClearResearchQueueAI = true;
 			}
@@ -5145,18 +5146,23 @@ void CvTeam::setHasTech(TechTypes eTech, bool bNewValue, PlayerTypes ePlayer, bo
 					CivicOptionTypes eCivicOptionType = NO_CIVICOPTION;
 					CivicTypes eCivicType = NO_CIVIC;
 
-					for (int iJ = 0; iJ < GC.getNumCivicOptionInfos(); iJ++)
+					// The TECH names the civics it unlocks on its own `enables.civics` edge
+					// ([DEC-one-reverse-view]); asking every civic whether this tech is its prereq is the
+					// own-data inversion, and it re-scanned the whole civic registry once per unheld option.
+					const std::vector<int>* pCivics =
+						kTech.getEdges() ? kTech.getEdges()->find(EDGEF_ENABLES, EDGEB_CIVICS) : NULL;
+					if (pCivics != NULL)
 					{
-						if (!playerX.isHasCivicOption((CivicOptionTypes)iJ))
+						for (size_t iCivic = 0; iCivic < pCivics->size(); ++iCivic)
 						{
-							for (int iK = 0; iK < GC.getNumCivicInfos(); iK++)
+							const CivicTypes eCandidate = (CivicTypes)(*pCivics)[iCivic];
+							const CivicOptionTypes eOption =
+								(CivicOptionTypes)GC.getCivicInfo(eCandidate).getCivicOption();
+
+							if (eOption != NO_CIVICOPTION && !playerX.isHasCivicOption(eOption))
 							{
-								if (GC.getCivicInfo((CivicTypes)iK).getCivicOption() == iJ
-								&& GC.getCivicInfo((CivicTypes)iK).getTechPrereq() == eTech)
-								{
-									eCivicOptionType = (CivicOptionTypes)iJ;
-									eCivicType = (CivicTypes)iK;
-								}
+								eCivicOptionType = eOption;
+								eCivicType = eCandidate;
 							}
 						}
 					}
@@ -5504,11 +5510,15 @@ void CvTeam::processTech(TechTypes eTech, int iChange, bool bAnnounce)
 
 	if (iChange > 0)
 	{
-		for (int iI = 0; iI < GC.getNumSpecialBuildingInfos(); ++iI)
+		// The tech's own `enables.specialBuildings` edge names what it makes valid ([DEC-one-reverse-view]);
+		// the store inverts BOTH legacy special-building tech prereqs into it, so this is the whole set.
+		const std::vector<int>* pSpecialBuildings =
+			kTech.getEdges() ? kTech.getEdges()->find(EDGEF_ENABLES, EDGEB_SPECIAL_BUILDINGS) : NULL;
+		if (pSpecialBuildings != NULL)
 		{
-			if (eTech == GC.getSpecialBuildingInfo((SpecialBuildingTypes)iI).getTechPrereqAnyone())
+			for (size_t iSpecial = 0; iSpecial < pSpecialBuildings->size(); ++iSpecial)
 			{
-				GC.getGame().makeSpecialBuildingValid((SpecialBuildingTypes)iI, bAnnounce);
+				GC.getGame().makeSpecialBuildingValid((SpecialBuildingTypes)(*pSpecialBuildings)[iSpecial], bAnnounce);
 			}
 		}
 	}

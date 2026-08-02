@@ -92,10 +92,15 @@ public:
 	{ return m_modifiers.sum(MODFAM_COSTS, eKind, eScope, CASC_UNIT_PERCENT); }
 	// (researchRate / improvementUpgradeRate / workRate / conscript / greatGeneralRate / greatPeopleRate /
 	// growth / goldenAge / espionageDefense / hurry / range are the 1-2-kind stragglers: the base
-	// getScalar(SCALAR_*) covers them. The extra/lessYieldThreshold families are MIN-selected parameters -- a
-	// threshold is CHOSEN across the player's sources, never summed, so no compiled point read can serve them;
-	// the player's threshold accumulator (CvPlayer::updateExtraYieldThreshold / updateLessYieldThreshold) is the
-	// live read. Keyed targets stay entry-list reads.)
+	// getScalar(SCALAR_*) covers them. Keyed targets stay entry-list reads.)
+	// The threshold families are MIN-SELECTED ACROSS SOURCES, and the selection is the PLAYER's: each trait
+	// serves only its OWN authored value here, and `CvPlayer::updateExtraYieldThreshold` picks the smallest
+	// positive one over the held traits. The two levels are distinct -- a compiled point read cannot serve the
+	// player's realized threshold, but it is exactly what the selection reads per candidate.
+	int getExtraYieldThreshold(YieldTypes eYield, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_EXTRA_YIELD_THRESHOLD, (int)eYield, eScope, CASC_UNIT_FLAT); }
+	int getLessYieldThreshold(YieldTypes eYield, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_LESS_YIELD_THRESHOLD, (int)eYield, eScope, CASC_UNIT_FLAT); }
 
 	// ======================= 4. INTRINSIC -- bare typed reads (the census identity set) ======================
 	// The pure-traits alignment (the MMKernel PureFilter's source-sign input) + the trait-option curation flags.

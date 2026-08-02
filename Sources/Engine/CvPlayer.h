@@ -687,8 +687,6 @@ public:
 	bool isNoForeignCorporations() const;
 	void changeNoForeignCorporationsCount(int iChange, bool bLimited = false);
 
-	int getCoastalTradeRoutes() const;
-	void changeCoastalTradeRoutes(int iChange);
 
 	int getTradeRoutes() const;
 	void changeTradeRoutes(int iChange);
@@ -1690,7 +1688,6 @@ protected:
 
 public:
 	void verifyUnitStacksValid();
-	UnitTypes getTechFreeProphet(TechTypes eTech) const;
 
 	// BUG - Trade Totals - start
 	void calculateTradeTotals(YieldTypes eIndex, int& iDomesticYield, int& iDomesticRoutes, int& iForeignYield, int& iForeignRoutes, PlayerTypes eWithPlayer = NO_PLAYER, bool bRound = false, bool bBase = false) const;
@@ -1850,7 +1847,6 @@ protected:
 	int m_iNoForeignTradeCount;
 	int m_iNoCorporationsCount;
 	int m_iNoForeignCorporationsCount;
-	int m_iCoastalTradeRoutes;
 	int m_iTradeRoutes;
 	int m_iRevolutionTimer;
 	int m_iConversionTimer;

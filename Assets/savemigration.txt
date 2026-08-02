@@ -1117,4 +1117,15 @@ CvPlayer::m_iFreeUnitUpkeepCivilianPopPercent
 CvPlayer::m_iFreeUnitUpkeepMilitaryPopPercent
 CvPlayer::m_iCivilianUnitUpkeepMod
 CvPlayer::m_iMilitaryUnitUpkeepMod
+| CvPlayer::m_iCoastalTradeRoutes -- the empire coastal route-count accumulator. Ruling 11 folds a building's
+| iCoastalTradeRoutes into the MEMBERLESS tradeRoutes route count as a HAS_COAST-CONDITIONED empire entry
+| (curate_building _inject_cond), so the value rides the same slot CvCity::getExtraTradeRoutes() already reads
+| and no separate accumulator or per-city isCoastal() test belongs beside it.
+| REPLACEMENT: CvCity::getExtraTradeRoutes() -- the team + empire + city roll-up of MODFAM_TRADE_ROUTES /
+| TRADE_ROUTE_AMOUNT.
+| OBLIGATION NOT YET MET: an empire-scope entry gated on a CITY predicate needs the per-city gate applied
+| AT THE COMBINE ([modifier.md] section 1 names coastal explicitly); InfoValuation::rolledLegsAtCity is a bare
+| package sum today, so the coastal routes are UNSERVED until that gate lands. The hole is deliberate and
+| visible ([DEC-no-legacy-masking]) rather than masked by keeping the accumulator alive.
+CvPlayer::m_iCoastalTradeRoutes
 ========================

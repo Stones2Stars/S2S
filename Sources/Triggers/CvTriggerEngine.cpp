@@ -504,8 +504,8 @@ static int tr_firstId(const CvInfo* j, int iBucketKey)   // a single-id grant bu
 // The TECH first-discoverer provisions. Mirrors the CvTeam::setHasTech first-discover block, whose apply legs are
 // DELETED -- what stays there is the non-grant residue: the `bClearResearchQueueAI` rider (a free tech invalidates
 // the AI's queued research) and the "first to tech" announcements, both keyed off the same data.
-// The prophet leg is the tech's own `firstFreeProphet` gated on GAMEOPTION_RELIGION_DIVINE_PROPHETS -- exactly what
-// CvPlayer::getTechFreeProphet does (a pure info read + the option), so it moves without changing the resolution.
+// The prophet leg is the tech's own `firstFreeProphet` bucket gated on GAMEOPTION_RELIGION_DIVINE_PROPHETS: a pure
+// grant read plus the live option, resolved here beside the other two first-discoverer legs.
 static void tr_applyTechFirstDiscover(int iTech, int iPlayer, int iFirstUnit, int iFirstProphet, int nFreeTechs)
 {
 	CvPlayer& player = GET_PLAYER((PlayerTypes)iPlayer);

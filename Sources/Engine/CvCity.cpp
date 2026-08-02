@@ -10890,11 +10890,6 @@ int CvCity::getTradeRoutes() const
 {
 	int iTradeRoutes = GC.getGame().getTradeRoutes();
 	iTradeRoutes += GET_PLAYER(getOwner()).getTradeRoutes();
-
-	if (isCoastal(GC.getWorldInfo(GC.getMap().getWorldSize()).getOceanMinAreaSize()))
-	{
-		iTradeRoutes += GET_PLAYER(getOwner()).getCoastalTradeRoutes();
-	}
 	iTradeRoutes += getExtraTradeRoutes();
 
 	return std::max(0, std::min(iTradeRoutes, getMaxTradeRoutes()));
