@@ -200,6 +200,19 @@
      `changeMaxConscript`, `changeSpecialistValidCount`, the hurry counts.
   ⚠ It also spans the per-TU error cap, so until it clears, lines ~16.9k–28.9k of `CvPlayer.cpp` have NEVER been
   compiled — it gates visibility into the rest of the file, not just its own errors.
+- Sweep the WRITERLESS SERIALIZED ACCUMULATORS — a member that is still declared, still serialized and still
+  READ, whose `change*` has NO CALLER left. The feeder was cut; the store was not.
+  ⛔ **The compiler will NEVER name one** — it compiles cleanly and always will — so this class is invisible to
+  the error-driven census and closes only by being looked for, exactly like the whole-registry AI scans below.
+  ⚠ **It is WORSE than a value that reads 0.** On a new game it does read 0, which looks harmless; on an
+  existing save it returns decades of accumulated history that no live source can reproduce and nothing
+  re-derives — the STORED-ACCUMULATOR DRIFT class, wearing a plausible number
+  ([DEC-accumulator-cut-uniform](../../architecture/decisions.md#dec-accumulator-cut-uniform)).
+  ⚑ **The mechanical test is two greps, not a judgement:** the member has a `WRAPPER_READ`/`WRITE`, and its
+  `change*`/`set*` has no caller outside its own definition. Known instances to start from:
+  `CvCity::getBonusDefenseChanges` and `CvPlayer::getBonusCommerceModifier`.
+  ⛔ Do NOT read "it compiles and something calls it" as evidence a value is maintained — that is the reasoning
+  this entry exists to correct.
 - Move every consumer off the hand-named channel-shaped getters on `CvCity`/`CvPlayer`, then delete the old names.
 - Cut the hide-and-seek per-type intensity ACCUMULATORS on `CvUnit` (serialized — the cut carries a
   `savemigration.txt` step; confirm the tag spelling against the stream first). Their replacements are built.
