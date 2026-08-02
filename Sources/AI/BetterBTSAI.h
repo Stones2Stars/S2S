@@ -42,7 +42,7 @@ void logCityAI(int level, const char* format, ...);
 void logGroupAI(int level, const char* format, ...);
 void logEspionageAI(int level, const char* format, ...);
 void logFoundAI(int level, const char* format, ...);
-void logInitInfo(const char* format, ...); // session-initialization header ([INIT/*] -> GameInfo.log); renamed from logGameInfo
+void logInitInfo(const char* format, ...); // session-initialization header ([INIT/*] -> GameInfo.log)
 void logCombatAI(int level, const char* format, ...);
 
 // Engine-integrity warnings -- [ENG/*] tags -> Engine.log, gated by gTeamLogLevel.

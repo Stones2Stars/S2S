@@ -2914,7 +2914,7 @@ void CvDLLWidgetData::parseActionHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 					}
 				}
 
-				if (GC.getBuildInfo(eBuild).isKill())
+				if (GC.getBuildInfo(eBuild).isConsumesUnit())
 				{
 					szBuffer.append(NEWLINE);
 					szBuffer.append(gDLL->getText("TXT_KEY_ACTION_CONSUME_UNIT"));

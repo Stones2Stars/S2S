@@ -318,8 +318,7 @@ void logEngine(int level, const char* format, ...)
 // Session-INITIALIZATION header -- [INIT/*] -> GameInfo.log. Written once on game start/load
 // (from CvGame::onFinalInitialized) so every other AI log can be read against the active
 // options/rules/setup. No level gate in the fn; the caller emits it when any logging is active.
-// (Renamed from logGameInfo 2026-06-18: it logs session INIT, and [GAME/*] clashed with the
-//  per-turn [STATE/game] feed.)
+// The tag is INIT rather than GAME so it cannot clash with the per-turn [STATE/game] cascade feed.
 void logInitInfo(const char* format, ...)
 {
 	static char buf[2048];

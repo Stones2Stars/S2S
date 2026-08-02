@@ -49,10 +49,15 @@
   predicate qualifier on its `cargo.space` entries, so the load/board gates want the QUALIFIED entry read
   evaluated against each cargo candidate — the point sum is the unqualified capacity plane by construction, so
   it cannot answer the restriction.
-  ⛔ The promotion-side DOMAIN-CARGO CHANGE goes with it rather than being re-pointed: a promotion adds SPACE,
-  never PERMISSION ([modifier.md §6](../../specs/modifier.md) — an owner-ruled intentional divergence from
-  legacy), so a per-unit override of WHAT may be carried has no home in the ruled model. Re-pointing it would
-  re-create the shape the ruling removes.
+  ⛔ The PROMOTION-SIDE WIDENING rides the same item and CANNOT be dropped from the engine alone. A promotion
+  adds SPACE, never PERMISSION ([modifier.md §6](../../specs/modifier.md) — an owner-ruled intentional
+  divergence from legacy), so the per-promotion overrides of WHAT may be carried (domain / special-unit /
+  SM-not-special) have no home in the ruled model. But the curator still emits all three, the rebuilt promotion
+  info still serves them, and promotions still author them — so this is a coupled CURATOR + INFO + ENGINE
+  removal, and it is GATED on the payload-less entry form above: strip the promotion overrides first and a
+  carrier whose base capacity is 0 (the whole ancient-navy transport line, and the fighter/missile transports)
+  can state no restriction at all and simply stops carrying. ⚠ Do the grammar and the authoring FIRST, then
+  remove all three planes together.
 - Re-home the remaining `identity` EFFECT keys to the block that already exists for each
   ([json.md §7](../../specs/json.md)): constraints → `requires`/`allowed`; `diploVoteType` → the top-level
   `voteSource` section (and rename the getter off the legacy XML tag); `tradeable` → the `canTrade` block;
@@ -332,11 +337,17 @@
   text manager's own job ([patterns.md](../../architecture/patterns.md) THE DIVISION OF LABOUR). ⚠ The CONDITION
   renderer it calls already exists and takes exactly what `CvRequires` holds, so this is a composer to write,
   never a renderer to build — reading it as the latter overstates the dependency and parks work that is doable.
-- Evaluate a PROMOTION's `requires` through the ONE evaluator instead of hand-reconstructing it.
-  `CvUnit::canAcquirePromotion` walks the legacy prereq axes by hand — terrain, feature, plot bonus,
-  improvement, local building, and the promotion AND/OR trio — rebuilding a gate the evaluator already answers
-  from the same tree ([enabler.md §7.1](../../specs/enabler.md): promotions keep no maintained set, so
-  `requires` is enforced ON DEMAND at level-up, which is exactly this call).
+- Evaluate the promotion KEEP gate through the ONE evaluator instead of hand-reconstructing it. The ACQUIRE
+  half is done — that gate now asks `requires.build` once through `cascadeEvalCondition` — so what is left is
+  `CvUnit::canKeepPromotion`, which still walks the legacy prereq axes by hand (terrain, feature, plot bonus,
+  improvement / local building, and the promotion AND/OR trio) to re-validate a promotion the unit already
+  holds ([enabler.md §7.1](../../specs/enabler.md): promotions keep no maintained set, so `requires` is
+  enforced ON DEMAND).
+  ⛔ **This one needs an OWNER CALL first, and it is not a mechanical conversion.** Each failing axis emits its
+  OWN message — a CAN_RETRAIN / NO_RETRAIN pair per axis, six pairs — telling the player WHICH condition the
+  unit lost. A single evaluator call returns a bool and cannot attribute that, so converting as-is silently
+  trades twelve specific notices for one generic "you lost this promotion". Decide whether the per-axis
+  messages survive (and if so, what reports the failing axis) BEFORE converting.
   ⛔ It is NOT a job for the structural `requires` walk, and reaching for that is the trap: a flat read reports
   an `all`, an `anyOf` and a `noneOf` alike, so reconstructing the gate from it would silently turn the OR pair
   into an AND and read a `noneOf` as a requirement. Mention is not requirement — the walk answers what a tree

@@ -562,11 +562,12 @@ void CvGame::onFinalInitialized(const bool bNewGame)
 	// doesn't route through onFinalInitialized.
 	writePlotSnapshot(bNewGame ? "start" : "load");
 
-	// [GAME/*] -- one-time session header so every other AI log can be read against
-	// the active game setup. Emitted whenever any AI logging level is enabled.
+	// [INIT/*] -- one-time session header so every other AI log can be read against the active game setup.
+	// Emitted whenever any AI logging level is enabled. The tag is INIT rather than GAME so it cannot clash
+	// with the [STATE/game] cascade feed ([observability.md]).
 	if (gPlayerLogLevel > 0 || gTeamLogLevel > 0 || gCityLogLevel > 0 || gUnitLogLevel > 0)
 	{
-		logGameInfo("[GAME/begin] %s turn=%d speed=%s handicap=%s startEra=%s map=%dx%d maxTurns=%d civsAlive=%d",
+		logInitInfo("[INIT/begin] %s turn=%d speed=%s handicap=%s startEra=%s map=%dx%d maxTurns=%d civsAlive=%d",
 			bNewGame ? "NEW_GAME" : "LOAD", getGameTurn(),
 			GC.getGameSpeedInfo(getGameSpeedType()).getType(),
 			GC.getHandicapInfo(getHandicapType()).getType(),
@@ -578,14 +579,14 @@ void CvGame::onFinalInitialized(const bool bNewGame)
 		{
 			if (isOption((GameOptionTypes)iI))
 			{
-				logGameInfo("[GAME/option] %s", GC.getGameOptionInfo((GameOptionTypes)iI).getType());
+				logInitInfo("[INIT/option] %s", GC.getGameOptionInfo((GameOptionTypes)iI).getType());
 			}
 		}
 		for (int iI = 0; iI < GC.getNumVictoryInfos(); iI++)
 		{
 			if (isVictoryValid((VictoryTypes)iI))
 			{
-				logGameInfo("[GAME/victory] %s", GC.getVictoryInfo((VictoryTypes)iI).getType());
+				logInitInfo("[INIT/victory] %s", GC.getVictoryInfo((VictoryTypes)iI).getType());
 			}
 		}
 		for (int iI = 0; iI < MAX_PLAYERS; iI++)
@@ -593,7 +594,7 @@ void CvGame::onFinalInitialized(const bool bNewGame)
 			const CvPlayer& kP = GET_PLAYER((PlayerTypes)iI);
 			if (kP.isAlive())
 			{
-				logGameInfo("[GAME/player] id=%d team=%d human=%d leader=%s civ=%s",
+				logInitInfo("[INIT/player] id=%d team=%d human=%d leader=%s civ=%s",
 					iI, (int)kP.getTeam(), kP.isHumanPlayer() ? 1 : 0,
 					GC.getLeaderHeadInfo(kP.getLeaderType()).getType(),
 					GC.getCivilizationInfo(kP.getCivilizationType()).getType());
@@ -1230,7 +1231,7 @@ void CvGame::initFreeState()
 					for (int iK = 0; iK < MAX_PLAYERS; iK++)
 					{
 						if (GET_PLAYER((PlayerTypes)iK).isAliveAndTeam((TeamTypes)iJ)
-						&& GC.getCivilizationInfo(GET_PLAYER((PlayerTypes)iK).getCivilizationType()).isFreeTech(iI))
+						&& GC.getCivilizationInfo(GET_PLAYER((PlayerTypes)iK).getCivilizationType()).isFreeTech((TechTypes)iI))
 						{
 							GET_TEAM((TeamTypes)iJ).setHasTech((TechTypes)iI, true, NO_PLAYER, false, false);
 							break;
@@ -3961,7 +3962,7 @@ void CvGame::initScoreCalculation()
 			for (int iCiv = 0; iCiv < GC.getNumCivilizationInfos(); iCiv++)
 			{
 				if (GC.getCivilizationInfo((CivilizationTypes)iCiv).isPlayable()
-				&&  GC.getCivilizationInfo((CivilizationTypes)iCiv).isFreeTech(i))
+				&&  GC.getCivilizationInfo((CivilizationTypes)iCiv).isFreeTech((TechTypes)i))
 				{
 					m_iInitTech += getScoreValueOfTech((TechTypes)i);
 					break;
@@ -6552,8 +6553,9 @@ void CvGame::doSpawns(PlayerTypes ePlayer)
 							//remove old group volume unitcombat
 							if (eGroupVolume != NO_UNITCOMBAT)
 							{
-								foreach_(const UnitCombatTypes eSubCombat, kUnit.getCombatClasses())
+								foreach_(const int iSubCombat, kUnit.getCombatClasses())
 								{
+									const UnitCombatTypes eSubCombat = (UnitCombatTypes)iSubCombat;
 									if (GC.getUnitCombatInfo(eSubCombat).getSizeMatters().groupBase != -10 && eSubCombat != eGroupVolume)
 									{
 										CvUnit::normalizeUnitPromotions(
@@ -6893,9 +6895,9 @@ void CvGame::doHeadquarters()
 				&& kLoopTeam.isHasTech(eTechPrereq)
 				&& kLoopTeam.getNumCities() > 0)
 				{
-					foreach_(const BonusTypes eBonus, kCorporation.getConsumedBonuses())
+					foreach_(const int iBonus, kCorporation.getConsumedBonuses())
 					{
-						if (kLoopTeam.hasBonus(eBonus))
+						if (kLoopTeam.hasBonus((BonusTypes)iBonus))
 						{
 							int iValue = getSorenRandNum(10, "Found Corporation (Team)");
 
@@ -6926,11 +6928,11 @@ void CvGame::doHeadquarters()
 
 					if (playerX.isAliveAndTeam(eBestTeam) && playerX.getNumCities() > 0)
 					{
-						foreach_(const BonusTypes eBonus, kCorporation.getConsumedBonuses())
+						foreach_(const int iBonus, kCorporation.getConsumedBonuses())
 						{
-							if (playerX.hasBonus(eBonus))
+							if (playerX.hasBonus((BonusTypes)iBonus))
 							{
-								int iValue = getSorenRandNum(25, "Found Corporation (Player)") - playerX.getNumAvailableBonuses(eBonus);
+								int iValue = getSorenRandNum(25, "Found Corporation (Player)") - playerX.getNumAvailableBonuses((BonusTypes)iBonus);
 
 								for (int iK = 0; iK < GC.getNumCorporationInfos(); iK++)
 								{
@@ -9215,9 +9217,9 @@ bool CvGame::isCompetingCorporation(CorporationTypes eCorporation1, CorporationT
 {
 	PROFILE_EXTRA_FUNC();
 	// Two corporations compete when they draw on a resource in common -- the consumed-bonus sets overlap.
-	foreach_(const BonusTypes eBonus, GC.getCorporationInfo(eCorporation1).getConsumedBonuses())
+	foreach_(const int iBonus, GC.getCorporationInfo(eCorporation1).getConsumedBonuses())
 	{
-		if (algo::any_of_equal(GC.getCorporationInfo(eCorporation2).getConsumedBonuses(), eBonus))
+		if (algo::any_of_equal(GC.getCorporationInfo(eCorporation2).getConsumedBonuses(), iBonus))
 		{
 			return true;
 		}

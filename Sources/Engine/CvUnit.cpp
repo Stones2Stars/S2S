@@ -8306,10 +8306,10 @@ bool CvUnit::canSpreadCorporation(const CvPlot* pPlot, CorporationTypes eCorpora
 		// Afforess: Some corporations don't require any resources...
 		bool bValid = false;
 		bool bRequiresBonus = false;
-		foreach_(const BonusTypes eBonus, GC.getCorporationInfo(eCorporation).getConsumedBonuses())
+		foreach_(const int iBonus, GC.getCorporationInfo(eCorporation).getConsumedBonuses())
 		{
 			bRequiresBonus = true;
-			if (pCity->hasBonus(eBonus))
+			if (pCity->hasBonus((BonusTypes)iBonus))
 			{
 				bValid = true;
 				break;
@@ -9697,7 +9697,7 @@ bool CvUnit::build(BuildTypes eBuild)
 		}
 		// Super Forts end
 
-		if (kBuild.isKill())
+		if (kBuild.isConsumesUnit())
 		{
 			if (plot()->getWorkingCity() != NULL)
 			{
@@ -10373,7 +10373,7 @@ SpecialUnitTypes CvUnit::getSpecialUnitType() const
 
 UnitTypes CvUnit::getCaptureUnitType() const
 {
-	return m_pUnitInfo->getCaptures();
+	return (UnitTypes)m_pUnitInfo->getCaptures();
 }
 
 
@@ -10523,17 +10523,18 @@ int CvUnit::nukeRange() const
 
 namespace CvUnitInternal
 {
-	bool canBuildRoute(const std::vector<BuildTypes>& aBuilds, const CvTeam& team)
+	//	The list is taken by TEMPLATE because the two build repertoires differ in element type: the unit info
+	//	serves its own `builds` as FK ints, while the worker component holds typed BuildTypes.
+	template <class BuildList>
+	bool canBuildRoute(const BuildList& aBuilds, const CvTeam& team)
 	{
 		PROFILE_EXTRA_FUNC();
-		foreach_(const BuildTypes eBuild, aBuilds)
+		for (size_t iBuild = 0; iBuild < aBuilds.size(); ++iBuild)
 		{
-			const CvBuildInfo& info = GC.getBuildInfo(eBuild);
+			const CvBuildInfo& info = GC.getBuildInfo((BuildTypes)aBuilds[iBuild]);
 			if (info.getRoute() > NO_ROUTE && team.isHasTech(info.getTechPrereq()))
 			{
-				const TechTypes obsoleteTech = info.getObsoleteTech();
-				if (obsoleteTech == NO_TECH || !team.isHasTech(obsoleteTech))
-					return true;
+				return true;
 			}
 		}
 		return false;
@@ -16359,7 +16360,7 @@ bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion, bool bIgnoreHas, boo
 		return false;
 	}
 
-	if (promo.getReplacesUnitCombat() != NO_UNITCOMBAT && !isHasUnitCombat(promo.getReplacesUnitCombat()))
+	if (promo.getReplacesUnitCombat() != NO_UNITCOMBAT && !isHasUnitCombat((UnitCombatTypes)promo.getReplacesUnitCombat()))
 	{
 		return false;
 	}
@@ -16398,7 +16399,7 @@ bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion, bool bIgnoreHas, boo
 			}
 		}
 		static const CvCascadeEvalFlags kPromoFlags;
-		if (!cascadeEvalCondition(promo.getRequires() != NULL ? promo.getRequires()->build() : NULL,
+		if (!cascadeEvalCondition(promo.getRequires() != NULL ? promo.getRequires()->build : NULL,
 			promoCtx, kPromoFlags))
 		{
 			return false;
@@ -17019,10 +17020,8 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 	changeExtraBreakdownDamage(kUnitCombat.getFlatCombat(COMBAT_BREAKDOWN_DAMAGE, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split
 	changeExtraTaunt(kUnitCombat.getFlatCombat(COMBAT_TAUNT, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split
 	// The SM figures are the `sizeMatters` BLOCK (json.md par.9), plain authored ints -- never a family, so no
-	// de-scaling. `strength` is the BASE and `combat` is what MODIFIES it (json.md par.6), so the strength
-	// MODIFIER is a combat percent -- and a percent is not scaled.
+	// de-scaling.
 	changeExtraMaxHP(kUnitCombat.getSizeMatters().maxHP * iChange);//merge/split
-	changeExtraStrengthModifier(kUnitCombat.getCombatModifier(COMBAT_AMOUNT, CASC_SCOPE_UNIT) * iChange);//merge/split
 
 	changeExtraCombatModifierPerSizeMore(kUnitCombat.getSizeMatters().combatModifierPerSizeMore * iChange);//no merge/split
 	changeExtraCombatModifierPerSizeLess(kUnitCombat.getSizeMatters().combatModifierPerSizeLess * iChange);//no merge/split
@@ -17199,7 +17198,7 @@ void CvUnit::setHasUnitCombat(UnitCombatTypes eIndex, bool bNewValue, bool bByPr
 
 		if (GC.getGame().isValidByGameOption(info)
 		// Disable spy promotions mechanism, exempt commando promotion
-		&& (!isSpy() || GC.isSS_ENABLED() || info.isEnemyRoute()))
+		&& (!isSpy() || GC.isSS_ENABLED() || info.providesSkill(CLS_SKILL_ENEMY_ROUTE)))
 		{
 			UnitCombatKeyedInfo* infoKeyed =
 			(
@@ -17271,7 +17270,7 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	{
 		if (bAdding)
 		{
-			setNewDomainCargo(kPromotion.getDomainCargoChange());
+			setNewDomainCargo((DomainTypes)kPromotion.getDomainCargoChange());
 		}
 		else
 		{
@@ -17282,7 +17281,7 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	{
 		if (bAdding)
 		{
-			setNewSpecialCargo(kPromotion.getSpecialCargoChange());
+			setNewSpecialCargo((SpecialUnitTypes)kPromotion.getSpecialCargoChange());
 		}
 		else
 		{
@@ -17294,7 +17293,7 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	{
 		if (bAdding)
 		{
-			setNewSMNotSpecialCargo(kPromotion.getSMNotSpecialCargoChange());
+			setNewSMNotSpecialCargo((SpecialUnitTypes)kPromotion.getSMNotSpecialCargoChange());
 		}
 		else
 		{
@@ -17385,9 +17384,10 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	changeUpgradeAnywhereCount((kPromotion.providesSkill(CLS_SKILL_UPGRADE_ANYWHERE) ? 1 : 0) * iChange);
 
 	//	maxHP is applied from the sizeMatters section below, where json.md §9 homes the promotion's SM deltas.
+	//	The value itself is gathered by the RESOLVED plane off the held set; only the size-matters recalc rider
+	//	belongs at the apply site.
 	if (kPromotion.getCombatModifier(COMBAT_AMOUNT, CASC_SCOPE_UNIT) != 0)
 	{
-		changeExtraStrengthModifier(kPromotion.getCombatModifier(COMBAT_AMOUNT, CASC_SCOPE_UNIT) * iChange);
 		bSMrecalc = true;
 	}
 	//TB Combat Mods End
@@ -21574,7 +21574,7 @@ void CvUnit::changeCanLeadThroughPeaksCount(int iChange)
 
 int CvUnit::getMaxHurryFood() const
 {
-	return std::max(0, m_pUnitInfo->getBaseFoodChange() * CvGameSpeedScale::hammerCostPercent() / 100);
+	return std::max(0, m_pUnitInfo->getFoodBase() * CvGameSpeedScale::hammerCostPercent() / 100);
 }
 
 int CvUnit::getHurryFood(const CvPlot* pPlot) const
@@ -21661,8 +21661,9 @@ void CvUnit::setCommander(bool bNewVal)
 	{
 		m_commander = new UnitCompCommander(this, m_pUnitInfo);
 
-		foreach_(const UnitCombatTypes eSubCombat, m_pUnitInfo->getCombatClasses())
+		foreach_(const int iSubCombat, m_pUnitInfo->getCombatClasses())
 		{
+			const UnitCombatTypes eSubCombat = (UnitCombatTypes)iSubCombat;
 			if (GC.getUnitCombatInfo(eSubCombat).getSizeMatters().qualityBase > -10)
 			{
 				setHasUnitCombat(eSubCombat, false);
@@ -21804,8 +21805,9 @@ void CvUnit::setCommodore(bool bNewVal)
 	{
 		m_commodore = new UnitCompCommodore(this, m_pUnitInfo);
 
-		foreach_(const UnitCombatTypes eSubCombat, m_pUnitInfo->getCombatClasses())
+		foreach_(const int iSubCombat, m_pUnitInfo->getCombatClasses())
 		{
+			const UnitCombatTypes eSubCombat = (UnitCombatTypes)iSubCombat;
 			if (GC.getUnitCombatInfo(eSubCombat).getSizeMatters().qualityBase > -10)
 			{
 				setHasUnitCombat(eSubCombat, false);
@@ -23285,9 +23287,9 @@ void CvUnit::doSetUnitCombats()
 	{
 		setHasUnitCombat(getUnitCombatType(), true);
 	}
-	foreach_(const UnitCombatTypes eSubCombat, m_pUnitInfo->getCombatClasses())
+	foreach_(const int iSubCombat, m_pUnitInfo->getCombatClasses())
 	{
-		setHasUnitCombat(eSubCombat, true);
+		setHasUnitCombat((UnitCombatTypes)iSubCombat, true);
 	}
 	// The unit's era stamp comes from the tech that UNLOCKS it, off its own ENABLED_BY reverse family
 	// ([DEC-one-reverse-view]) -- a tech names the units it unlocks in `enables.units`, so the unit has no
@@ -23575,18 +23577,13 @@ int CvUnit::combatModifierPerVolumeLessTotal() const
 	return iData;
 }
 
+//	`strength` is the BASE and `combat` is what MODIFIES it (json.md par.6), so the strength MODIFIER is the
+//	combat percent the RESOLVED plane already gathers from the unit's held promotions + combat classes.
+//	⚠ A PERCENT is not scaled ([DEC-fixedpoint-x100]), so this reduces by nothing -- the callers stack it as
+//	`100 + value`, which is the unscaled form.
 int CvUnit::getExtraStrengthModifier() const
 {
-	return m_iExtraStrengthModifier;
-}
-
-void CvUnit::changeExtraStrengthModifier(int iChange)
-{
-	m_iExtraStrengthModifier += iChange;
-}
-
-void CvUnit::setExtraStrengthModifier(int iChange)
-{
+	return resolvedValue(URS_STRENGTH_PERCENT);
 }
 
 bool CvUnit::isBreakdownCombat(const CvPlot* pPlot, bool bSamePlot) const
@@ -26716,16 +26713,16 @@ void CvUnit::doSetDefaultStatuses()
 	std::vector<int> m_iDefaultStatusTypes;
 	m_iDefaultStatusTypes.clear();
 	//Step 1: Assign all statuses from defaults into a local vector to create a singular list
-	for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
+	//	The unit's own combat classes are the candidate set. The keyed map iterates ASCENDING by id, exactly as the
+	//	registry countdown did, so the list order step 2 compares and erases against is unchanged.
+	for (std::map<UnitCombatTypes, UnitCombatKeyedInfo>::const_iterator it = m_unitCombatKeyedInfo.begin(), end = m_unitCombatKeyedInfo.end(); it != end; ++it)
 	{
-		if (isHasUnitCombat((UnitCombatTypes)iI))
+		if (!isHasUnitCombat(it->first))
 		{
-			const UnitCombatTypes eUnitCombat = ((UnitCombatTypes)iI);
-			for (int iJ = 0; iJ < GC.getUnitCombatInfo(eUnitCombat).getNumDefaultStatusTypes(); iJ++)
-			{
-				m_iDefaultStatusTypes.push_back(GC.getUnitCombatInfo(eUnitCombat).getDefaultStatusType(iJ));
-			}
+			continue;
 		}
+		const std::vector<int>& kDefaultStatuses = GC.getUnitCombatInfo(it->first).getDefaultStatuses();
+		m_iDefaultStatusTypes.insert(m_iDefaultStatusTypes.end(), kDefaultStatuses.begin(), kDefaultStatuses.end());
 	}
 	//Step 2: Compare all statuses in the list to all other statuses in the list to check for the same promotionline.
 	//If one of them has the iLinePriority 1 promo in that set, this is supposed to indicate NO status from this group.
@@ -26981,7 +26978,7 @@ void CvUnit::defineReligion()
 			for (size_t iClass = 0; iClass < aeCombatClasses.size(); ++iClass)
 			{
 				const UnitCombatTypes eUnitCombat = (UnitCombatTypes)aeCombatClasses[iClass];
-				const ReligionTypes eOriginalCombatReligion = GC.getUnitCombatInfo(eUnitCombat).getReligion();
+				const ReligionTypes eOriginalCombatReligion = (ReligionTypes)GC.getUnitCombatInfo(eUnitCombat).getReligion();
 
 				if (eOriginalCombatReligion != NO_RELIGION)
 				{
@@ -26996,11 +26993,11 @@ void CvUnit::defineReligion()
 			//if not locked by innate type, after changes in unitcombat process function we'll call this function IF the unitcombat has a religion.
 			//This function is also called if the state religion changes so if we find a unit combat has defined m_eReligionType then we'll not bother with switching to the state religion so check here first
 			bool bFound = false;
-			for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
+			for (std::map<UnitCombatTypes, UnitCombatKeyedInfo>::const_iterator it = m_unitCombatKeyedInfo.begin(), end = m_unitCombatKeyedInfo.end(); it != end; ++it)
 			{
-				if (isHasUnitCombat((UnitCombatTypes)iI))
+				if (isHasUnitCombat(it->first))
 				{
-					const ReligionTypes eUnitCombatReligion = GC.getUnitCombatInfo((UnitCombatTypes)iI).getReligion();
+					const ReligionTypes eUnitCombatReligion = (ReligionTypes)GC.getUnitCombatInfo(it->first).getReligion();
 					if (eUnitCombatReligion != NO_RELIGION)
 					{
 						m_eReligionType = eUnitCombatReligion; //Let's assume there's only going to be one of these on a unit ever - it only ever comes up if the unit isn't locked with a pre-defined one anyhow

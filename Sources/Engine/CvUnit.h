@@ -1780,8 +1780,6 @@ public:
 	int combatModifierPerVolumeLessTotal() const;
 
 	int getExtraStrengthModifier() const;
-	void changeExtraStrengthModifier(int iChange);
-	void setExtraStrengthModifier(int iChange);
 
 
 	bool isBreakdownCombat(const CvPlot* pPlot, bool bSamePlot = false) const;
