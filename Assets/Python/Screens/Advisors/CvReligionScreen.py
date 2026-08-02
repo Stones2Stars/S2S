@@ -13,6 +13,7 @@ AdvisorOpt = BugCore.game.Advisors
 # globals
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
+GC = CyGlobalContext()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -160,7 +161,7 @@ class CvReligionScreen:
 		if DebugUtils.isAnyDebugMode():
 			self.szDropdownName = self.DEBUG_DROPDOWN_ID
 			screen.addDropDownBoxGFC(self.szDropdownName, 22, 12, 300, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
-			for j in range(STATE.getMAX_PLAYERS()):
+			for j in range(GC.getMAX_PLAYERS()):
 				if (GC.getPlayer(j).isAlive()):
 					screen.addPullDownString(self.szDropdownName, GC.getPlayer(j).getName(), j, j, False )
 

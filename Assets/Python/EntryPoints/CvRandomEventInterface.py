@@ -16,6 +16,7 @@ from operator import itemgetter
 
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
+GC = CyGlobalContext()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -283,7 +284,7 @@ def doWeddingFeud3(argsList):
   destPlayer = GC.getPlayer(data.eOtherPlayer)
   player = GC.getPlayer(data.ePlayer)
 
-  for iLoopPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
+  for iLoopPlayer in xrange(GC.getMAX_PC_PLAYERS()):
     loopPlayer = GC.getPlayer(iLoopPlayer)
     if loopPlayer.isAlive() and loopPlayer.getStateReligion() == player.getStateReligion():
       loopPlayer.AI_changeAttitudeExtra(data.ePlayer, 1)
@@ -366,7 +367,7 @@ def canTriggerBabyBoom(argsList):
   if team.isAtWar(False):
     return False
 
-  for iLoopTeam in xrange(STATE.getMAX_PC_TEAMS()):
+  for iLoopTeam in xrange(GC.getMAX_PC_TEAMS()):
     if iLoopTeam != player.getTeam():
       if team.AI_getAtPeaceCounter(iLoopTeam) == 1:
         return True
@@ -502,7 +503,7 @@ def canTriggerBrothersInNeed(argsList):
   if not bFound:
     return False
 
-  for iTeam in xrange(STATE.getMAX_PC_TEAMS()):
+  for iTeam in xrange(GC.getMAX_PC_TEAMS()):
     if iTeam != player.getTeam() and iTeam != otherPlayer.getTeam() and GC.getTeam(iTeam).isAlive():
       if GC.getTeam(iTeam).isAtWarWith(otherPlayer.getTeam()) and not GC.getTeam(iTeam).isAtWarWith(player.getTeam()):
         return True
@@ -777,7 +778,7 @@ def applyGreatDepression(argsList):
   player = GC.getPlayer(data.ePlayer)
   corporation = GC.getCorporationInfo(data.eCorporation)
 
-  for iPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
+  for iPlayer in xrange(GC.getMAX_PC_PLAYERS()):
     loopPlayer = GC.getPlayer(iPlayer)
     if loopPlayer.isAlive():
       loopPlayer.changeGold(-loopPlayer.getGold()/4)
@@ -914,7 +915,7 @@ def getHelpSoloFlight(argsList):
 def applySoloFlight(argsList):
   data = argsList[1]
 
-  for iPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
+  for iPlayer in xrange(GC.getMAX_PC_PLAYERS()):
     loopPlayer = GC.getPlayer(iPlayer)
     if loopPlayer.isAlive() and iPlayer != data.ePlayer:
       loopTeam = GC.getTeam(loopPlayer.getTeam())
@@ -1077,7 +1078,7 @@ def doAncientOlympics2(argsList):
 
   plots = GC.getMap().plots()
 
-  for j in xrange(STATE.getMAX_PC_PLAYERS()):
+  for j in xrange(GC.getMAX_PC_PLAYERS()):
     loopPlayer = GC.getPlayer(j)
     if j != data.ePlayer and loopPlayer.isAlive() and not loopPlayer.isMinorCiv():
       for plot in plots:
@@ -1111,7 +1112,7 @@ def getHelpModernOlympics(argsList):
 def applyModernOlympics(argsList):
 	data = argsList[1]
 
-	for iPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
+	for iPlayer in xrange(GC.getMAX_PC_PLAYERS()):
 		loopPlayer = GC.getPlayer(iPlayer)
 		if loopPlayer.isAlive() and iPlayer != data.ePlayer:
 			loopTeam = GC.getTeam(loopPlayer.getTeam())
@@ -1144,7 +1145,7 @@ def canApplyEarthDay2(argsList):
 
   iCivic = GC.getInfoTypeForString("CIVIC_GREEN")
 
-  for iPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
+  for iPlayer in xrange(GC.getMAX_PC_PLAYERS()):
     loopPlayer = GC.getPlayer(iPlayer)
     if loopPlayer.isAlive() and iPlayer != data.ePlayer and not loopPlayer.isHuman():
       loopTeam = GC.getTeam(loopPlayer.getTeam())
@@ -1166,7 +1167,7 @@ def applyEarthDay2(argsList):
   iCivicOption = GC.getInfoTypeForString("CIVICOPTION_ECONOMY")
 
   listPlayers = []
-  for iPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
+  for iPlayer in xrange(GC.getMAX_PC_PLAYERS()):
     loopPlayer = GC.getPlayer(iPlayer)
     if loopPlayer.isAlive() and iPlayer != data.ePlayer and not loopPlayer.isHuman():
       loopTeam = GC.getTeam(loopPlayer.getTeam())
@@ -1397,7 +1398,7 @@ def getHelpGreatMediator2(argsList):
 def doAncientTexts2(argsList):
   data = argsList[1]
 
-  for iPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
+  for iPlayer in xrange(GC.getMAX_PC_PLAYERS()):
     loopPlayer = GC.getPlayer(iPlayer)
     if loopPlayer.isAlive() and iPlayer != data.ePlayer:
       loopTeam = GC.getTeam(loopPlayer.getTeam())
@@ -1435,7 +1436,7 @@ def canTriggerTheHuns(argsList):
 #   At least one civ on the board must know Mounted Archery.
   bFoundValid = False
   iTech = GC.getInfoTypeForString("TECH_MOUNTED_ARCHERY")
-  for iPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
+  for iPlayer in xrange(GC.getMAX_PC_PLAYERS()):
     loopPlayer = GC.getPlayer(iPlayer)
     if loopPlayer.isAlive():
       if GC.getTeam(loopPlayer.getTeam()).isHasTech(iTech):
@@ -1448,7 +1449,7 @@ def canTriggerTheHuns(argsList):
 #   At least one civ on the board must know Iron Working.
   bFoundValid = False
   iTech = GC.getInfoTypeForString("TECH_IRON_WORKING")
-  for iPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
+  for iPlayer in xrange(GC.getMAX_PC_PLAYERS()):
     loopPlayer = GC.getPlayer(iPlayer)
     if loopPlayer.isAlive():
       if GC.getTeam(loopPlayer.getTeam()).isHasTech(iTech):
@@ -1500,7 +1501,7 @@ def applyTheHuns1(argsList):
 
   iUnitType = GC.getInfoTypeForString("UNIT_HORSE_ARCHER")
 
-  barbPlayer = GC.getPlayer(STATE.getBARBARIAN_PLAYER())
+  barbPlayer = GC.getPlayer(GC.getBARBARIAN_PLAYER())
   for i in xrange(iNumUnits):
     barbPlayer.initUnit(iUnitType, plot.getX(), plot.getY(), UnitAITypes.UNITAI_ATTACK_CITY_LEMMING, DirectionTypes.DIRECTION_SOUTH)
 
@@ -1518,7 +1519,7 @@ def canTriggerTheVandals(argsList):
 #   At least one civ on the board must know Metal Casting.
   bFoundValid = False
   iTech = GC.getInfoTypeForString("TECH_METAL_CASTING")
-  for iPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
+  for iPlayer in xrange(GC.getMAX_PC_PLAYERS()):
     loopPlayer = GC.getPlayer(iPlayer)
     if loopPlayer.isAlive():
       if GC.getTeam(loopPlayer.getTeam()).isHasTech(iTech):
@@ -1531,7 +1532,7 @@ def canTriggerTheVandals(argsList):
 #   At least one civ on the board must know Smithing.
   bFoundValid = False
   iTech = GC.getInfoTypeForString("TECH_SMITHING")
-  for iPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
+  for iPlayer in xrange(GC.getMAX_PC_PLAYERS()):
     loopPlayer = GC.getPlayer(iPlayer)
     if loopPlayer.isAlive():
       if GC.getTeam(loopPlayer.getTeam()).isHasTech(iTech):
@@ -1584,7 +1585,7 @@ def applyTheVandals1(argsList):
 
   iUnitType = GC.getInfoTypeForString("UNIT_HEAVY_SWORDSMAN")
 
-  barbPlayer = GC.getPlayer(STATE.getBARBARIAN_PLAYER())
+  barbPlayer = GC.getPlayer(GC.getBARBARIAN_PLAYER())
   for i in xrange(iNumUnits):
     barbPlayer.initUnit(iUnitType, plot.getX(), plot.getY(), UnitAITypes.UNITAI_ATTACK_CITY_LEMMING, DirectionTypes.DIRECTION_SOUTH)
 
@@ -1602,7 +1603,7 @@ def canTriggerTheGoths(argsList):
 #   At least one civ on the board must know Mathematics.
   bFoundValid = False
   iTech = GC.getInfoTypeForString("TECH_MATHEMATICS")
-  for iPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
+  for iPlayer in xrange(GC.getMAX_PC_PLAYERS()):
     loopPlayer = GC.getPlayer(iPlayer)
     if loopPlayer.isAlive():
       if GC.getTeam(loopPlayer.getTeam()).isHasTech(iTech):
@@ -1615,7 +1616,7 @@ def canTriggerTheGoths(argsList):
 #   At least one civ on the board must know Iron Working.
   bFoundValid = False
   iTech = GC.getInfoTypeForString("TECH_IRON_WORKING")
-  for iPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
+  for iPlayer in xrange(GC.getMAX_PC_PLAYERS()):
     loopPlayer = GC.getPlayer(iPlayer)
     if loopPlayer.isAlive():
       if GC.getTeam(loopPlayer.getTeam()).isHasTech(iTech):
@@ -1667,7 +1668,7 @@ def applyTheGoths1(argsList):
 
   iUnitType = GC.getInfoTypeForString("UNIT_AXEMAN")
 
-  barbPlayer = GC.getPlayer(STATE.getBARBARIAN_PLAYER())
+  barbPlayer = GC.getPlayer(GC.getBARBARIAN_PLAYER())
   for i in xrange(iNumUnits):
     barbPlayer.initUnit(iUnitType, plot.getX(), plot.getY(), UnitAITypes.UNITAI_ATTACK_CITY_LEMMING, DirectionTypes.DIRECTION_SOUTH)
 
@@ -1685,7 +1686,7 @@ def canTriggerThePhilistines(argsList):
 #   At least one civ on the board must know Monotheism.
   bFoundValid = False
   iTech = GC.getInfoTypeForString("TECH_MONOTHEISM")
-  for iPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
+  for iPlayer in xrange(GC.getMAX_PC_PLAYERS()):
     loopPlayer = GC.getPlayer(iPlayer)
     if loopPlayer.isAlive():
       if GC.getTeam(loopPlayer.getTeam()).isHasTech(iTech):
@@ -1698,7 +1699,7 @@ def canTriggerThePhilistines(argsList):
 #   At least one civ on the board must know Bronze Working.
   bFoundValid = False
   iTech = GC.getInfoTypeForString("TECH_BRONZE_WORKING")
-  for iPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
+  for iPlayer in xrange(GC.getMAX_PC_PLAYERS()):
     loopPlayer = GC.getPlayer(iPlayer)
     if loopPlayer.isAlive():
       if GC.getTeam(loopPlayer.getTeam()).isHasTech(iTech):
@@ -1751,7 +1752,7 @@ def applyThePhilistines1(argsList):
 
   iUnitType = GC.getInfoTypeForString("UNIT_SPEARMAN")
 
-  barbPlayer = GC.getPlayer(STATE.getBARBARIAN_PLAYER())
+  barbPlayer = GC.getPlayer(GC.getBARBARIAN_PLAYER())
   for i in xrange(iNumUnits):
     barbPlayer.initUnit(iUnitType, plot.getX(), plot.getY(), UnitAITypes.UNITAI_ATTACK_CITY_LEMMING, DirectionTypes.DIRECTION_SOUTH)
 
@@ -1769,7 +1770,7 @@ def canTriggerTheVedicAryans(argsList):
 #   At least one civ on the board must know Polytheism.
   bFoundValid = False
   iTech = GC.getInfoTypeForString("TECH_POLYTHEISM")
-  for iPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
+  for iPlayer in xrange(GC.getMAX_PC_PLAYERS()):
     loopPlayer = GC.getPlayer(iPlayer)
     if loopPlayer.isAlive():
       if GC.getTeam(loopPlayer.getTeam()).isHasTech(iTech):
@@ -1782,7 +1783,7 @@ def canTriggerTheVedicAryans(argsList):
 #   At least one civ on the board must know Archery.
   bFoundValid = False
   iTech = GC.getInfoTypeForString("TECH_ARCHERY")
-  for iPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
+  for iPlayer in xrange(GC.getMAX_PC_PLAYERS()):
     loopPlayer = GC.getPlayer(iPlayer)
     if loopPlayer.isAlive():
       if GC.getTeam(loopPlayer.getTeam()).isHasTech(iTech):
@@ -1835,7 +1836,7 @@ def applyTheVedicAryans1(argsList):
 
   iUnitType = GC.getInfoTypeForString("UNIT_ARCHER")
 
-  barbPlayer = GC.getPlayer(STATE.getBARBARIAN_PLAYER())
+  barbPlayer = GC.getPlayer(GC.getBARBARIAN_PLAYER())
   for i in xrange(iNumUnits):
     barbPlayer.initUnit(iUnitType, plot.getX(), plot.getY(), UnitAITypes.UNITAI_ATTACK_CITY_LEMMING, DirectionTypes.DIRECTION_SOUTH)
 
@@ -1873,7 +1874,7 @@ def canTriggerTea(argsList):
 	if player.isCivic(GC.getInfoTypeForString("CIVIC_MERCANTILISM")):
 		return False
 
-	for iLoopPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
+	for iLoopPlayer in xrange(GC.getMAX_PC_PLAYERS()):
 		if player.canHaveTradeRoutesWith(iLoopPlayer):
 			return True
 	return False
@@ -2139,7 +2140,7 @@ def getHelpBestDefenseDone2(argsList):
 def applyBestDefenseDone2(argsList):
 	data = argsList[1]
 
-	for iPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
+	for iPlayer in xrange(GC.getMAX_PC_PLAYERS()):
 		loopPlayer = GC.getPlayer(iPlayer)
 		if loopPlayer.isAlive() and iPlayer != data.ePlayer:
 			loopTeam = GC.getTeam(loopPlayer.getTeam())
@@ -2318,7 +2319,7 @@ def applyCrusadeDone3(argsList):
   holyCity = GAME.getHolyCity(data.eReligion)
 
   listCities = []
-  for iPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
+  for iPlayer in xrange(GC.getMAX_PC_PLAYERS()):
     loopPlayer = GC.getPlayer(iPlayer)
     if loopPlayer.isAlive():
       for loopCity in loopPlayer.cities():
@@ -3103,7 +3104,7 @@ def getHelpNapalm1(argsList):
 def applyNapalm1(argsList):
   data = argsList[1]
 
-  for iPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
+  for iPlayer in xrange(GC.getMAX_PC_PLAYERS()):
     loopPlayer = GC.getPlayer(iPlayer)
     if loopPlayer.isAlive() and iPlayer != data.ePlayer:
       loopTeam = GC.getTeam(loopPlayer.getTeam())
@@ -3318,7 +3319,7 @@ def getHelpCureforCancer1(argsList):
 
 def applyCureforCancer1(argsList):
 	data = argsList[1]
-	for iPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
+	for iPlayer in xrange(GC.getMAX_PC_PLAYERS()):
 		loopPlayer = GC.getPlayer(iPlayer)
 		if loopPlayer.isAlive() and iPlayer != data.ePlayer:
 			loopTeam = GC.getTeam(loopPlayer.getTeam())
@@ -3627,7 +3628,7 @@ def canTriggerTheBuccaneers(argsList):
 #   At least one civ on the board must know Gunpowder.
   bFoundValid = False
   iTech = GC.getInfoTypeForString("TECH_GUNPOWDER")
-  for iPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
+  for iPlayer in xrange(GC.getMAX_PC_PLAYERS()):
     loopPlayer = GC.getPlayer(iPlayer)
     if loopPlayer.isAlive():
       if GC.getTeam(loopPlayer.getTeam()).isHasTech(iTech):
@@ -3640,7 +3641,7 @@ def canTriggerTheBuccaneers(argsList):
 #   At least one civ on the board must know Astronomy.
   bFoundValid = False
   iTech = GC.getInfoTypeForString("TECH_ASTRONOMY")
-  for iPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
+  for iPlayer in xrange(GC.getMAX_PC_PLAYERS()):
     loopPlayer = GC.getPlayer(iPlayer)
     if loopPlayer.isAlive():
       if GC.getTeam(loopPlayer.getTeam()).isHasTech(iTech):
@@ -3693,7 +3694,7 @@ def applyTheBuccaneers1(argsList):
 
   iUnitType = GC.getInfoTypeForString("UNIT_FRENCH_MUSKETEER")
 
-  barbPlayer = GC.getPlayer(STATE.getBARBARIAN_PLAYER())
+  barbPlayer = GC.getPlayer(GC.getBARBARIAN_PLAYER())
   for i in xrange(iNumUnits):
     barbPlayer.initUnit(iUnitType, plot.getX(), plot.getY(), UnitAITypes.UNITAI_ATTACK_CITY_LEMMING, DirectionTypes.DIRECTION_SOUTH)
 
@@ -3728,7 +3729,7 @@ def canTriggerBlackbeard(argsList):
 	if pAggregate > 5 + iWorldSize*iWorldSize - iWorldSize:
 		return False
 
-	iMaxPlayers = STATE.getMAX_PC_PLAYERS()
+	iMaxPlayers = GC.getMAX_PC_PLAYERS()
 	# At least one civ on the board must know Chemistry.
 	iTech = GC.getInfoTypeForString("TECH_CHEMISTRY")
 	for iPlayerX in xrange(iMaxPlayers):
@@ -3774,7 +3775,7 @@ def applyBlackbeard1(argsList):
 
 	plot = MAP.plotByIndex(plots[GAME.getSorenRandNum(len(plots), "Blackbeard event location")])
 
-	barb = GC.getPlayer(STATE.getBARBARIAN_PLAYER())
+	barb = GC.getPlayer(GC.getBARBARIAN_PLAYER())
 	iWorldSize = MAP.getWorldSize() + 1
 	iUnitType1 = GC.getInfoTypeForString("UNIT_PRIVATEER")
 	iUnitType2 = GC.getInfoTypeForString("UNIT_FRIGATE")
@@ -3794,7 +3795,7 @@ def canTriggerPiratesoftheNeutralZones(argsList):
 
 	# At least one civ on the board must know Stealth
 	iTech = GC.getInfoTypeForString("TECH_STEALTH")
-	for iPlayerX in xrange(STATE.getMAX_PC_PLAYERS()):
+	for iPlayerX in xrange(GC.getMAX_PC_PLAYERS()):
 		CyPlayerX = GC.getPlayer(iPlayerX)
 		if CyPlayerX.isAlive():
 			if GC.getTeam(CyPlayerX.getTeam()).isHasTech(iTech):
@@ -3845,7 +3846,7 @@ def applyPiratesoftheNeutralZones1(argsList):
 
 	iUnit = GC.getInfoTypeForString("UNIT_STEALTH_DESTROYER")
 	iNav = GC.getInfoTypeForString("PROMOTION_NAVIGATION1")
-	barbarian = GC.getPlayer(STATE.getBARBARIAN_PLAYER())
+	barbarian = GC.getPlayer(GC.getBARBARIAN_PLAYER())
 	x = plot.getX()
 	y = plot.getY()
 	for i in xrange(iNumUnits):
@@ -3903,7 +3904,7 @@ def canTriggerMalaccanPirates(argsList):
 #   At least one civ on the board must know Automatic weapons
   bFoundValid = False
   iTech = GC.getInfoTypeForString("TECH_AUTOMATIC_WEAPONS")
-  for iPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
+  for iPlayer in xrange(GC.getMAX_PC_PLAYERS()):
     loopPlayer = GC.getPlayer(iPlayer)
     if loopPlayer.isAlive():
       if GC.getTeam(loopPlayer.getTeam()).isHasTech(iTech):
@@ -3917,7 +3918,7 @@ def canTriggerMalaccanPirates(argsList):
 #   At least one civ on the board must know Radio
   bFoundValid = False
   iTech = GC.getInfoTypeForString("TECH_RADIO")
-  for iPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
+  for iPlayer in xrange(GC.getMAX_PC_PLAYERS()):
     loopPlayer = GC.getPlayer(iPlayer)
     if loopPlayer.isAlive():
       if GC.getTeam(loopPlayer.getTeam()).isHasTech(iTech):
@@ -3968,7 +3969,7 @@ def applyMalaccanPirates1(argsList):
 
   iUnitType1 = GC.getInfoTypeForString("UNIT_STEAM_DESTROYER")
 
-  barbPlayer = GC.getPlayer(STATE.getBARBARIAN_PLAYER())
+  barbPlayer = GC.getPlayer(GC.getBARBARIAN_PLAYER())
   iNav1 = GC.getInfoTypeForString("PROMOTION_NAVIGATION1")
   iCbt4 = GC.getInfoTypeForString("PROMOTION_COMBAT4")
   iCoAs1 = GC.getInfoTypeForString("PROMOTION_COASTAL_ASSAULT1")
@@ -4034,7 +4035,7 @@ def canTriggerHenryMorgan(argsList):
 #   At least one civ on the board must know Astronomy
   bFoundValid = False
   iTech = GC.getInfoTypeForString("TECH_ASTRONOMY")
-  for iPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
+  for iPlayer in xrange(GC.getMAX_PC_PLAYERS()):
     loopPlayer = GC.getPlayer(iPlayer)
     if loopPlayer.isAlive():
       if GC.getTeam(loopPlayer.getTeam()).isHasTech(iTech):
@@ -4047,7 +4048,7 @@ def canTriggerHenryMorgan(argsList):
 #   At least one civ on the board must know Military Science
   bFoundValid = False
   iTech = GC.getInfoTypeForString("TECH_MILITARY_SCIENCE")
-  for iPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
+  for iPlayer in xrange(GC.getMAX_PC_PLAYERS()):
     loopPlayer = GC.getPlayer(iPlayer)
     if loopPlayer.isAlive():
       if GC.getTeam(loopPlayer.getTeam()).isHasTech(iTech):
@@ -4112,7 +4113,7 @@ def applyHenryMorgan1(argsList):
   iUnitType2 = GC.getInfoTypeForString("UNIT_FRIGATE")
   iUnitType3 = GC.getInfoTypeForString("UNIT_PRIVATEER")
 
-  barbPlayer = GC.getPlayer(STATE.getBARBARIAN_PLAYER())
+  barbPlayer = GC.getPlayer(GC.getBARBARIAN_PLAYER())
   iCbt4 = GC.getInfoTypeForString("PROMOTION_COMBAT4")
   for i in xrange(iNumUnit1):
       CyUnit = barbPlayer.initUnit(iUnitType1, plot.getX(), plot.getY(), UnitAITypes.UNITAI_PIRATE_SEA, DirectionTypes.DIRECTION_SOUTH)
@@ -4190,7 +4191,7 @@ def canTriggerStedeBonnet(argsList):
 #   At least one civ on the board must know Astronomy
   bFoundValid = False
   iTech = GC.getInfoTypeForString("TECH_ASTRONOMY")
-  for iPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
+  for iPlayer in xrange(GC.getMAX_PC_PLAYERS()):
     loopPlayer = GC.getPlayer(iPlayer)
     if loopPlayer.isAlive():
       if GC.getTeam(loopPlayer.getTeam()).isHasTech(iTech):
@@ -4203,7 +4204,7 @@ def canTriggerStedeBonnet(argsList):
 #   At least one civ on the board must know Gunpowder
   bFoundValid = False
   iTech = GC.getInfoTypeForString("TECH_GUNPOWDER")
-  for iPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
+  for iPlayer in xrange(GC.getMAX_PC_PLAYERS()):
     loopPlayer = GC.getPlayer(iPlayer)
     if loopPlayer.isAlive():
       if GC.getTeam(loopPlayer.getTeam()).isHasTech(iTech):
@@ -4262,7 +4263,7 @@ def applyStedeBonnet1(argsList):
   iUnitType2 = GC.getInfoTypeForString("UNIT_NETHERLANDS_OOSTINDIEVAARDER")
   iNav1 = GC.getInfoTypeForString("PROMOTION_NAVIGATION1")
 
-  barbPlayer = GC.getPlayer(STATE.getBARBARIAN_PLAYER())
+  barbPlayer = GC.getPlayer(GC.getBARBARIAN_PLAYER())
   for i in xrange(iNumUnit1):
       CyUnit = barbPlayer.initUnit(iUnitType1, plot.getX(), plot.getY(), UnitAITypes.UNITAI_ATTACK_SEA, DirectionTypes.DIRECTION_SOUTH)
       CyUnit.setName("Barque")
@@ -4339,7 +4340,7 @@ def canTriggerTheCorsairs(argsList):
 #   At least one civ on the board must know Optics
   bFoundValid = False
   iTech = GC.getInfoTypeForString("TECH_OPTICS")
-  for iPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
+  for iPlayer in xrange(GC.getMAX_PC_PLAYERS()):
     loopPlayer = GC.getPlayer(iPlayer)
     if loopPlayer.isAlive():
       if GC.getTeam(loopPlayer.getTeam()).isHasTech(iTech):
@@ -4391,7 +4392,7 @@ def applyTheCorsairs1(argsList):
   iUnitType1 = GC.getInfoTypeForString("UNIT_PORTUGAL_CARRACK")
 
 
-  barbPlayer = GC.getPlayer(STATE.getBARBARIAN_PLAYER())
+  barbPlayer = GC.getPlayer(GC.getBARBARIAN_PLAYER())
   sUnitName = TRNSLTR.getText("TXT_KEY_EVENT_THE_CORSAIRS_UNIT_NAME", ())
   for i in xrange(iNumUnit1):
       CyUnit = barbPlayer.initUnit(iUnitType1, plot.getX(), plot.getY(), UnitAITypes.UNITAI_ATTACK_SEA, DirectionTypes.DIRECTION_SOUTH)
@@ -4470,7 +4471,7 @@ def canTriggerIllyrianPirates(argsList):
 #   At least one civ on the board must know Metal Casting.
   bFoundValid = False
   iTech = GC.getInfoTypeForString("TECH_METAL_CASTING")
-  for iPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
+  for iPlayer in xrange(GC.getMAX_PC_PLAYERS()):
     loopPlayer = GC.getPlayer(iPlayer)
     if loopPlayer.isAlive():
       if GC.getTeam(loopPlayer.getTeam()).isHasTech(iTech):
@@ -4483,7 +4484,7 @@ def canTriggerIllyrianPirates(argsList):
 #   At least one civ on the board must know Sailing.
   bFoundValid = False
   iTech = GC.getInfoTypeForString("TECH_SAILING")
-  for iPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
+  for iPlayer in xrange(GC.getMAX_PC_PLAYERS()):
     loopPlayer = GC.getPlayer(iPlayer)
     if loopPlayer.isAlive():
       if GC.getTeam(loopPlayer.getTeam()).isHasTech(iTech):
@@ -4533,7 +4534,7 @@ def applyIllyrianPirates1(argsList):
     iNumUnit1  = 5
 
   iUnitType1 = GC.getInfoTypeForString("UNIT_WARGALLEY")
-  barbPlayer = GC.getPlayer(STATE.getBARBARIAN_PLAYER())
+  barbPlayer = GC.getPlayer(GC.getBARBARIAN_PLAYER())
   sUnitName = TRNSLTR.getText("TXT_KEY_EVENT_ILLYRIAN_PIRATES_UNIT_NAME", ())
   for i in xrange(iNumUnit1):
       CyUnit = barbPlayer.initUnit(iUnitType1, plot.getX(), plot.getY(), UnitAITypes.UNITAI_PIRATE_SEA, DirectionTypes.DIRECTION_SOUTH)
@@ -4553,7 +4554,7 @@ def canTriggerMahdiArmy(argsList):
 #   At least one civ on the board must know Flintlock.
   bFoundValid = False
   iTech = GC.getInfoTypeForString("TECH_FLINTLOCK")
-  for iPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
+  for iPlayer in xrange(GC.getMAX_PC_PLAYERS()):
     loopPlayer = GC.getPlayer(iPlayer)
     if loopPlayer.isAlive():
       if GC.getTeam(loopPlayer.getTeam()).isHasTech(iTech):
@@ -4566,7 +4567,7 @@ def canTriggerMahdiArmy(argsList):
 #   At least one civ on the board must know Liberalism.
   bFoundValid = False
   iTech = GC.getInfoTypeForString("TECH_LIBERALISM")
-  for iPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
+  for iPlayer in xrange(GC.getMAX_PC_PLAYERS()):
     loopPlayer = GC.getPlayer(iPlayer)
     if loopPlayer.isAlive():
       if GC.getTeam(loopPlayer.getTeam()).isHasTech(iTech):
@@ -4618,7 +4619,7 @@ def applyMahdiArmy1(argsList):
 
   iUnitType = GC.getInfoTypeForString("UNIT_MUSKETMAN")
 
-  barbPlayer = GC.getPlayer(STATE.getBARBARIAN_PLAYER())
+  barbPlayer = GC.getPlayer(GC.getBARBARIAN_PLAYER())
   for i in xrange(iNumUnits):
     barbPlayer.initUnit(iUnitType, plot.getX(), plot.getY(), UnitAITypes.UNITAI_ATTACK_CITY_LEMMING, DirectionTypes.DIRECTION_SOUTH)
 
@@ -4636,7 +4637,7 @@ def canTriggerTheTaliban(argsList):
 #   At least one civ on the board must know Satellites.
   bFoundValid = False
   iTech = GC.getInfoTypeForString("TECH_SATELLITES")
-  for iPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
+  for iPlayer in xrange(GC.getMAX_PC_PLAYERS()):
     loopPlayer = GC.getPlayer(iPlayer)
     if loopPlayer.isAlive():
       if GC.getTeam(loopPlayer.getTeam()).isHasTech(iTech):
@@ -4649,7 +4650,7 @@ def canTriggerTheTaliban(argsList):
 #   At least one civ on the board must know Robotics.
   bFoundValid = False
   iTech = GC.getInfoTypeForString("TECH_ROBOTICS")
-  for iPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
+  for iPlayer in xrange(GC.getMAX_PC_PLAYERS()):
     loopPlayer = GC.getPlayer(iPlayer)
     if loopPlayer.isAlive():
       if GC.getTeam(loopPlayer.getTeam()).isHasTech(iTech):
@@ -4708,7 +4709,7 @@ def applyTheTaliban1(argsList):
   iUnitType1 = GC.getInfoTypeForString("UNIT_GUERRILLA")
   iUnitType2 = GC.getInfoTypeForString("UNIT_AT_INFANTRY")
 
-  barbPlayer = GC.getPlayer(STATE.getBARBARIAN_PLAYER())
+  barbPlayer = GC.getPlayer(GC.getBARBARIAN_PLAYER())
   for i in xrange(iNumUnits1):
     barbPlayer.initUnit(iUnitType1, plot.getX(), plot.getY(), UnitAITypes.UNITAI_ATTACK_CITY_LEMMING, DirectionTypes.DIRECTION_SOUTH)
   for i in xrange(iNumUnits2):
@@ -4826,7 +4827,7 @@ def applyMercenariesAncient1(argsList):
 	y = plot.getY()
 
 	iUnit = GC.getInfoTypeForString("UNIT_OBSIDIAN_SWORDSMAN")
-	barb = GC.getPlayer(STATE.getBARBARIAN_PLAYER())
+	barb = GC.getPlayer(GC.getBARBARIAN_PLAYER())
 	iCount = (MAP.getWorldSize() + 5)*2/3
 
 	while iCount > 0:
@@ -4915,7 +4916,7 @@ def applyMercenariesClassical1(argsList):
 	y = plot.getY()
 
 	iUnit = GC.getInfoTypeForString("UNIT_AXEMAN")
-	barb = GC.getPlayer(STATE.getBARBARIAN_PLAYER())
+	barb = GC.getPlayer(GC.getBARBARIAN_PLAYER())
 	iCount = (MAP.getWorldSize() + 5)*2/3
 
 	while iCount > 0:
@@ -5003,7 +5004,7 @@ def applyMercenariesMedieval1(argsList):
 	y = plot.getY()
 
 	iUnit = GC.getInfoTypeForString("UNIT_SWORDSMAN")
-	barb = GC.getPlayer(STATE.getBARBARIAN_PLAYER())
+	barb = GC.getPlayer(GC.getBARBARIAN_PLAYER())
 	iCount = (MAP.getWorldSize() + 5)*2/3
 
 	while iCount > 0:
@@ -5215,7 +5216,7 @@ def canTriggerSilverRain(argsList):
 #   At least one civ on the board must know Weather control
   bFoundValid = False
   iTech = GC.getInfoTypeForString("TECH_WEATHER_CONTROL")
-  for iPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
+  for iPlayer in xrange(GC.getMAX_PC_PLAYERS()):
     loopPlayer = GC.getPlayer(iPlayer)
     if loopPlayer.isAlive():
       if GC.getTeam(loopPlayer.getTeam()).isHasTech(iTech):
@@ -5270,7 +5271,7 @@ def applySilverRain1(argsList):
 
   iUnitType1 = GC.getInfoTypeForString("UNIT_NANITE_CLOUD")
 
-  barbPlayer = GC.getPlayer(STATE.getBARBARIAN_PLAYER())
+  barbPlayer = GC.getPlayer(GC.getBARBARIAN_PLAYER())
   for i in xrange(iNumUnits1):
     barbPlayer.initUnit(iUnitType1, plot.getX(), plot.getY(), UnitAITypes.UNITAI_ATTACK_CITY_LEMMING, DirectionTypes.DIRECTION_SOUTH)
 
@@ -5303,13 +5304,13 @@ def applySilverRain3(argsList):
 	iCounterUnit2 = GC.getInfoTypeForString("UNIT_ICBM")
 	for CyCity in player.cities():
 		if CyCity.canTrain(iCounterUnit1, False, False, False, False) or CyCity.canTrain(iCounterUnit2, False, False, False, False):
-			iNukeUnit = GC.getPlayer(STATE.getBARBARIAN_PLAYER()).initUnit(GC.getInfoTypeForString("UNIT_NANITE_CLOUD"), x, y, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+			iNukeUnit = GC.getPlayer(GC.getBARBARIAN_PLAYER()).initUnit(GC.getInfoTypeForString("UNIT_NANITE_CLOUD"), x, y, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 			plot.nukeExplosion(1, iNukeUnit)
 			iNukeUnit.kill(False, -1)
 			break
 	else:
 		iUnit = GC.getInfoTypeForString("UNIT_NANITE_CLOUD")
-		barb = GC.getPlayer(STATE.getBARBARIAN_PLAYER())
+		barb = GC.getPlayer(GC.getBARBARIAN_PLAYER())
 		iCount = (MAP.getWorldSize() + 5)*2/3
 		while iCount > 0:
 			CyUnit = barb.initUnit(iUnit, x, y, UnitAITypes.UNITAI_ATTACK_CITY_LEMMING, DirectionTypes.DIRECTION_SOUTH)
@@ -5493,7 +5494,7 @@ def TriggerHarryPotter2(argsList):
 			CyCity.changeHurryAngerTimer(CyCity.flatHurryAngerLength())
 
 	CyTeam = GC.getTeam(CyPlayer.getTeam())
-	for iPlayerX in xrange(STATE.getMAX_PC_PLAYERS()):
+	for iPlayerX in xrange(GC.getMAX_PC_PLAYERS()):
 		CyPlayerX = GC.getPlayer(iPlayerX)
 		if CyPlayerX.isAlive() and CyPlayerX.getStateReligion() == iStateReligion and CyTeam.isHasMet(CyPlayerX.getTeam()) :
 			CyPlayerX.AI_changeMemoryCount(iPlayer, MemoryTypes.MEMORY_EVENT_BAD_TO_US, 1)
@@ -6218,7 +6219,7 @@ def doVolcanoReport(argsList):
   ft_volcano_active = GC.getInfoTypeForString('FEATURE_VOLCANO_ACTIVE')
 
   # report message to any one who can see this plot
-  iMaxPlayer = STATE.getMAX_PC_PLAYERS()
+  iMaxPlayer = GC.getMAX_PC_PLAYERS()
   for i in xrange(iMaxPlayer):
     loopPlayer = GC.getPlayer(i)
     if loopPlayer.isHuman() and loopPlayer.isAlive() and pPlot.isRevealed(loopPlayer.getTeam(), False):
@@ -6696,7 +6697,7 @@ def canApplyNativegood1(argsList):
 	player = GC.getPlayer(data.ePlayer)
 	if (player.getNativeOpinion()>=4):
 		if(0):
-			for iLoopPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
+			for iLoopPlayer in xrange(GC.getMAX_PC_PLAYERS()):
 				loopPlayer = GC.getPlayer(iLoopPlayer)
 				if loopPlayer.isAlive():
 					szBuffer = "canApplyNativegood1 -- was ge 4"
@@ -6704,7 +6705,7 @@ def canApplyNativegood1(argsList):
 		return 1
 	else:
 		if (0):
-			for iLoopPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
+			for iLoopPlayer in xrange(GC.getMAX_PC_PLAYERS()):
 				loopPlayer = GC.getPlayer(iLoopPlayer)
 				if loopPlayer.isAlive():
 					szBuffer = "canApplyNativegood1 -- was lt 4"
@@ -6726,7 +6727,7 @@ def canApplyNativegood2(argsList):
 	player = GC.getPlayer(data.ePlayer)
 	if player.getNativeOpinion() >= 5:
 		if (0):
-			for iLoopPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
+			for iLoopPlayer in xrange(GC.getMAX_PC_PLAYERS()):
 				loopPlayer = GC.getPlayer(iLoopPlayer)
 				if loopPlayer.isAlive():
 					szBuffer = "canApplyNativegood2 -- was ge 5"
@@ -6734,7 +6735,7 @@ def canApplyNativegood2(argsList):
 		return 1
 	else:
 		if (0):
-			for iLoopPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
+			for iLoopPlayer in xrange(GC.getMAX_PC_PLAYERS()):
 				loopPlayer = GC.getPlayer(iLoopPlayer)
 				if loopPlayer.isAlive():
 					szBuffer = "canApplyNativegood2 -- was lt 5"
@@ -6784,14 +6785,14 @@ def canApplyNativegood3(argsList):
 
 	if player.getNativeOpinion() >= 4:
 		if (0):
-			for iLoopPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
+			for iLoopPlayer in xrange(GC.getMAX_PC_PLAYERS()):
 				loopPlayer = GC.getPlayer(iLoopPlayer)
 				if loopPlayer.isAlive():
 					szBuffer = "canApplyNativegood3 -- was ge 4"
 					CyInterface().addMessage(iLoopPlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getInfoTypeForString("COLOR_WHITE"), -1, -1, True, True)
 		return 1
 	else:
-		for iLoopPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
+		for iLoopPlayer in xrange(GC.getMAX_PC_PLAYERS()):
 			if (0):
 				loopPlayer = GC.getPlayer(iLoopPlayer)
 				if loopPlayer.isAlive():
@@ -6820,14 +6821,14 @@ def canApplyNativegood4(argsList):
 
 	if player.getNativeOpinion() >= 5:
 		if (0):
-			for iLoopPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
+			for iLoopPlayer in xrange(GC.getMAX_PC_PLAYERS()):
 				loopPlayer = GC.getPlayer(iLoopPlayer)
 				if loopPlayer.isAlive():
 					szBuffer = "canApplyNativegood4 -- was ge 4"
 					CyInterface().addMessage(iLoopPlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getInfoTypeForString("COLOR_WHITE"), -1, -1, True, True)
 		return 1
 	else:
-		for iLoopPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
+		for iLoopPlayer in xrange(GC.getMAX_PC_PLAYERS()):
 			if (0):
 				loopPlayer = GC.getPlayer(iLoopPlayer)
 				if loopPlayer.isAlive():
@@ -6898,7 +6899,7 @@ def canTriggerCivilWar(argsList):
 	player = GC.getPlayer(data.ePlayer)
 	pCity = player.getCity(data.iCityId)
 
-	if STATE.getMAX_PC_PLAYERS() == GAME.countCivPlayersAlive():
+	if GC.getMAX_PC_PLAYERS() == GAME.countCivPlayersAlive():
 		return False
 	if player.getNumCities() <= 1:
 		return False
@@ -6915,7 +6916,7 @@ def applyCivilWar(argsList):
 	lAlive = []
 	del lAlive[:]
 
-	iMaxCiv = STATE.getMAX_PC_PLAYERS()
+	iMaxCiv = GC.getMAX_PC_PLAYERS()
 	for i in xrange(iMaxCiv):
 		pPlayer = GC.getPlayer(i)
 		lAlive.append(pPlayer.getCivilizationType())

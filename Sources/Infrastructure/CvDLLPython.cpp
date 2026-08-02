@@ -105,6 +105,11 @@ DllExport void DLLPublishToPython()
 	CyGameTextMgr::pythonPublish();
 	CyArtFileMgr::pythonPublish();   // ART: out of scope, kept
 
+	// The CONFIG half of the old global context, reintroduced deliberately (owner) WITHOUT the infos:
+	// counts, defines, constants and the BUG bridge are configuration a great deal of Python needs, and are
+	// not the read surface the library replaces. The get<X>Info accessors and Cy* handles stay gone.
+	CyGlobalContext::pythonPublish();
+
 
 
 

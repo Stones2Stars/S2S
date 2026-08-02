@@ -333,7 +333,7 @@ class CityDemolish:
 			if CyCity.isHolyCity():
 				for iReligion in xrange(GC.getNumReligionInfos()):
 					if CyCity.isHolyCityByType(iReligion):
-						for iOtherPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
+						for iOtherPlayer in xrange(GC.getMAX_PC_PLAYERS()):
 							if iOtherPlayer == iPlayer: continue
 							CyPlayer = GC.getPlayer(iOtherPlayer)
 							if CyPlayer.isAlive() and CyPlayer.getStateReligion() == iReligion:

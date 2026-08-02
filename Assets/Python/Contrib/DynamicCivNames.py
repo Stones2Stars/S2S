@@ -15,6 +15,7 @@ import RevUtils
 
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
+GC = CyGlobalContext()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -53,7 +54,7 @@ def init():
 	#bLeaveHumanName = REV_OPTIONS.isLeaveHumanPlayerName()
 
 	if not GAME.isFinalInitialized() or GAME.getGameTurn() == GAME.getStartTurn():
-		for i in xrange(STATE.getMAX_PC_PLAYERS()):
+		for i in xrange(GC.getMAX_PC_PLAYERS()):
 			onSetPlayerAlive([i, GC.getPlayer(i).isAlive()])
 
 	bEnabled = True
@@ -71,7 +72,7 @@ def uninit():
 	EM.removeEventHandler("vassalState", onVassalState)
 	EM.removeEventHandler("addTeam", onAddTeam)
 
-	for i in range(STATE.getMAX_PC_PLAYERS()):
+	for i in range(GC.getMAX_PC_PLAYERS()):
 		if GC.getPlayer(i).isAlive():
 			resetName(i)
 
@@ -93,9 +94,9 @@ def onBeginPlayerTurn(argsList):
 		iPrevPlayer -= 1
 
 	if iPrevPlayer < 0:
-		iPrevPlayer = STATE.getBARBARIAN_PLAYER()
+		iPrevPlayer = GC.getBARBARIAN_PLAYER()
 
-	if iPrevPlayer >= 0 and iPrevPlayer < STATE.getMAX_PC_PLAYERS():
+	if iPrevPlayer >= 0 and iPrevPlayer < GC.getMAX_PC_PLAYERS():
 		iPlayer = iPrevPlayer
 		pPlayer = GC.getPlayer(iPlayer)
 
@@ -150,7 +151,7 @@ def onCityBuilt(argsList):
 
 def onVassalState(argsList):
 	iVassal = argsList[1]
-	for iPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
+	for iPlayer in xrange(GC.getMAX_PC_PLAYERS()):
 		if GC.getPlayer(iPlayer).getTeam() == iVassal:
 			setNewNameByCivics(iPlayer)
 
@@ -170,7 +171,7 @@ def setNewNameByCivics(iPlayer):
 def onSetPlayerAlive(argsList):
 	iPlayerID = argsList[0]
 	bNewValue = argsList[1]
-	if bNewValue and iPlayerID < STATE.getMAX_PC_PLAYERS():
+	if bNewValue and iPlayerID < GC.getMAX_PC_PLAYERS():
 		pPlayer = GC.getPlayer(iPlayerID)
 		#if bLeaveHumanName and (pPlayer.isHuman() or GAME.getActivePlayer() == iPlayerID):
 		#	return
@@ -183,7 +184,7 @@ def onSetPlayerAlive(argsList):
 def onAddTeam(argsList):
 	eTeam1 = argsList[0]
 	eTeam2 = argsList[1]
-	for i in xrange(STATE.getMAX_PC_PLAYERS()):
+	for i in xrange(GC.getMAX_PC_PLAYERS()):
 		pPlayer = GC.getPlayer(i)
 		if pPlayer.isAlive() and pPlayer.getTeam() in (eTeam1, eTeam2):
 			setNewNameByCivics(i)
@@ -201,7 +202,7 @@ def nameForNewPlayer(iPlayer):
 		return [TRNSLTR.getText("TXT_KEY_MOD_DCN_REFUGEES", ())%(curAdj), curShort, curAdj]
 
 	currentEra = 0
-	for i in xrange(STATE.getMAX_PC_PLAYERS()):
+	for i in xrange(GC.getMAX_PC_PLAYERS()):
 		if GC.getPlayer(i).getCurrentEra() > currentEra:
 			currentEra = GC.getPlayer(i).getCurrentEra()
 
@@ -359,7 +360,7 @@ def newNameByCivics(iPlayer):
 
 		if pTeam.getNumMembers() == 2:
 			newName = GC.getPlayer(iLeader).getCivilizationAdjective(0) + "-"
-			for idx in xrange(STATE.getMAX_PC_PLAYERS()):
+			for idx in xrange(GC.getMAX_PC_PLAYERS()):
 				if idx != iLeader and GC.getPlayer(idx).getTeam() == pTeam.getID():
 					newName += GC.getPlayer(idx).getCivilizationAdjective(0)
 					break
@@ -367,7 +368,7 @@ def newNameByCivics(iPlayer):
 			return [newName,curShort,curAdj]
 		else:
 			newName = GC.getPlayer(iLeader).getCivilizationAdjective(0)[0:4]
-			for idx in xrange(STATE.getMAX_PC_PLAYERS()):
+			for idx in xrange(GC.getMAX_PC_PLAYERS()):
 				if not idx == iLeader and GC.getPlayer(idx).getTeam() == pTeam.getID():
 					newName += GC.getPlayer(idx).getCivilizationAdjective(0)[0:3]
 			newName += TRNSLTR.getText("TXT_KEY_MOD_DCN_ALLIANCE", ())

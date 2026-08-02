@@ -5,6 +5,7 @@ import AttitudeUtil
 # globals
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
+GC = CyGlobalContext()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -141,7 +142,7 @@ class CvVictoryScreen:
 		# Get Best Team
 		iBestTeam = 0
 		iMax = 0
-		for iPlayerX in xrange(STATE.getMAX_PC_PLAYERS()):
+		for iPlayerX in xrange(GC.getMAX_PC_PLAYERS()):
 			if iPlayerX == iActivePlayer:
 				continue
 			CyPlayerX = GC.getPlayer(iPlayerX)
@@ -171,7 +172,7 @@ class CvVictoryScreen:
 		bDebugModeDLL = GAME.isDebugMode()
 		iBestPopTeam = -1
 		iBestPop = 0
-		for iTeamX in xrange(STATE.getMAX_PC_TEAMS()):
+		for iTeamX in xrange(GC.getMAX_PC_TEAMS()):
 			if iTeamX == iTeamAct:
 				continue
 			CyTeamX = GC.getTeam(iTeamX)
@@ -187,7 +188,7 @@ class CvVictoryScreen:
 
 		iBestScoreTeam = -1
 		iBestScore = 0
-		for iTeamX in xrange(STATE.getMAX_PC_TEAMS()):
+		for iTeamX in xrange(GC.getMAX_PC_TEAMS()):
 			if iTeamX == iTeamAct:
 				continue
 			CyTeamX = GC.getTeam(iTeamX)
@@ -205,7 +206,7 @@ class CvVictoryScreen:
 
 		iBestLandTeam = -1
 		iBestLand = 0
-		for iTeamX in xrange(STATE.getMAX_PC_TEAMS()):
+		for iTeamX in xrange(GC.getMAX_PC_TEAMS()):
 			CyTeamX = GC.getTeam(iTeamX)
 			if iTeamX == iTeamAct:
 				continue
@@ -240,7 +241,7 @@ class CvVictoryScreen:
 		iBestCulture = 0
 		iWorldCulture = 0
 
-		for iTeamX in xrange(STATE.getMAX_PC_TEAMS()):
+		for iTeamX in xrange(GC.getMAX_PC_TEAMS()):
 			CyTeamX = GC.getTeam(iTeamX)
 			iWorldCulture += CyTeamX.countTotalCulture()
 			if iTeamX == iTeamAct:
@@ -265,7 +266,7 @@ class CvVictoryScreen:
 					iUNTeam = -1
 					bUnknown = True
 
-					for iPlayerX in xrange(STATE.getMAX_PC_PLAYERS()):
+					for iPlayerX in xrange(GC.getMAX_PC_PLAYERS()):
 						CyPlayerX = GC.getPlayer(iPlayerX)
 						if CyPlayerX.isAlive() and not CyPlayerX.isMinorCiv() and CyPlayerX.hasBuilding(i):
 							iUNTeam = CyPlayerX.getTeam()
@@ -280,7 +281,7 @@ class CvVictoryScreen:
 		iWorldPower = 0
 		bestPower = 0
 
-		for iPlayerX in xrange(STATE.getMAX_PC_PLAYERS()):
+		for iPlayerX in xrange(GC.getMAX_PC_PLAYERS()):
 			CyPlayerX = GC.getPlayer(iPlayerX)
 			if CyPlayerX.isAlive():
 				iTeamX = CyPlayerX.getTeam()
@@ -303,7 +304,7 @@ class CvVictoryScreen:
 		import DebugUtils
 		if DebugUtils.isAnyDebugMode():
 			screen.addDropDownBoxGFC("VictoryScreenDropdownWidget", 22, 0, 300, eWidGen, 1, 2, FontTypes.GAME_FONT)
-			for j in xrange(STATE.getMAX_PLAYERS()):
+			for j in xrange(GC.getMAX_PLAYERS()):
 				if GC.getPlayer(j).isAlive():
 					screen.addPullDownString("VictoryScreenDropdownWidget", GC.getPlayer(j).getName(), j, j, False)
 
@@ -538,7 +539,7 @@ class CvVictoryScreen:
 					iRow = screen.appendTableRow(szTable)
 					screen.setTableText(szTable, 0, iRow, ufont3b + TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_OTHER_CIV_SCORE",()), "", eWidGen, 1, 2, 1<<0)
 					iRow = screen.appendTableRow(szTable)
-					for iTeamX in xrange(STATE.getMAX_PC_TEAMS()):
+					for iTeamX in xrange(GC.getMAX_PC_TEAMS()):
 						if iTeamX == iTeamAct: continue
 						CyTeamX = GC.getTeam(iTeamX)
 						if CyTeamX.isAlive() and not CyTeamX.isMinorCiv():
@@ -553,7 +554,7 @@ class CvVictoryScreen:
 		nRivals = 0
 		nknown = 0
 		nVassaled = 0
-		for iTeamX in xrange(STATE.getMAX_PC_TEAMS()):
+		for iTeamX in xrange(GC.getMAX_PC_TEAMS()):
 			if iTeamX == iTeamAct: continue
 			CyTeamX = GC.getTeam(iTeamX)
 			if CyTeamX.isAlive() and not CyTeamX.isMinorCiv():
@@ -676,7 +677,7 @@ class CvVictoryScreen:
 
 				iBestBuildingTeam = -1
 				bestBuilding = 0
-				for iTeamX in xrange(STATE.getMAX_PC_TEAMS()):
+				for iTeamX in xrange(GC.getMAX_PC_TEAMS()):
 					if iTeamX == iTeamAct: continue
 					CyTeamX = GC.getTeam(iTeamX)
 					if CyTeamX.isAlive() and not CyTeamX.isMinorCiv():
@@ -702,7 +703,7 @@ class CvVictoryScreen:
 
 				iBestProjectTeam = -1
 				bestProject = -1
-				for iTeamX in xrange(STATE.getMAX_PC_TEAMS()):
+				for iTeamX in xrange(GC.getMAX_PC_TEAMS()):
 					if iTeamX == iTeamAct: continue
 					CyTeamX = GC.getTeam(iTeamX)
 					if CyTeamX.isAlive() and not CyTeamX.isMinorCiv():
@@ -837,7 +838,7 @@ class CvVictoryScreen:
 						bestCityCulture = 0
 						maxCityCulture = GC.getCultureLevelInfo(eVictoryCulture).getSpeedThreshold(GAME.getGameSpeedType())
 
-						for iPlayerX in xrange(STATE.getMAX_PLAYERS()):
+						for iPlayerX in xrange(GC.getMAX_PLAYERS()):
 							CyPlayerX = GC.getPlayer(iPlayerX)
 							if CyPlayerX.isAlive() and not CyPlayerX.isMinorCiv() and not CyPlayerX.isNPC():
 								if iPlayerX != iActivePlayer and (CyTeam.isHasMet(CyPlayerX.getTeam()) or bDebugModeDLL):
@@ -1009,7 +1010,7 @@ class CvVictoryScreen:
 		screen.appendListBoxStringNoUpdate(szCivsTable, szTxt, eWidGen, 1, 2, 1<<2)
 
 		iTeam = CyPlayer.getTeam()
-		for iPlayerX in xrange(STATE.getMAX_PC_PLAYERS()):
+		for iPlayerX in xrange(GC.getMAX_PC_PLAYERS()):
 			if iPlayerX == iPlayerAct:
 				continue
 			CyPlayerX = GC.getPlayer(iPlayerX)
@@ -1042,7 +1043,7 @@ class CvVictoryScreen:
 					iUNTeam = -1
 					bUnknown = True
 
-					for iPlayerX in xrange(STATE.getMAX_PC_PLAYERS()):
+					for iPlayerX in xrange(GC.getMAX_PC_PLAYERS()):
 						CyPlayerX = GC.getPlayer(iPlayerX)
 						if CyPlayerX.isAlive() and not CyPlayerX.isMinorCiv() and CyPlayerX.hasBuilding(i):
 							iUNTeam = CyPlayerX.getTeam()
@@ -1172,7 +1173,7 @@ class CvVictoryScreen:
 		# determine the two candidates, add to header
 		iCandTeam1 = -1
 		iCandTeam2 = -1
-		for iTeamX in xrange(STATE.getMAX_PC_TEAMS()):
+		for iTeamX in xrange(GC.getMAX_PC_TEAMS()):
 			CyTeamX = GC.getTeam(iTeamX)
 			if CyTeamX.isAlive() and GAME.isTeamVoteEligible(iTeamX, iVoteBody):
 				if iCandTeam1 == -1:
@@ -1244,7 +1245,7 @@ class CvVictoryScreen:
 		iAPUNTeam = self.getAP_UN_OwnerTeam()
 
 		aList = []
-		for iPlayerX in xrange(STATE.getMAX_PC_PLAYERS()):
+		for iPlayerX in xrange(GC.getMAX_PC_PLAYERS()):
 			CyPlayerX = GC.getPlayer(iPlayerX)
 			if CyPlayerX.isAlive():
 				iVotes = CyPlayerX.getVotes(iVoteIdx, iVoteBody) # so that it sorts from most votes to least
@@ -1465,7 +1466,7 @@ class CvVictoryScreen:
 	def getListCultureCitiesTeam(self, iTeam):
 		aList = []
 
-		for iPlayerX in xrange(STATE.getMAX_PLAYERS()):
+		for iPlayerX in xrange(GC.getMAX_PLAYERS()):
 			CyPlayerX = GC.getPlayer(iPlayerX)
 			if CyPlayerX.isAlive() and CyPlayerX.getTeam() == iTeam:
 				for CyCity in CyPlayerX.cities():
@@ -1483,7 +1484,7 @@ class CvVictoryScreen:
 		iTeamCities = 0
 		iThreshold = GC.getCultureLevelInfo(GC.getNumCultureLevelInfos()-1).getSpeedThreshold(GAME.getGameSpeedType())
 
-		for iPlayerX in xrange(STATE.getMAX_PLAYERS()):
+		for iPlayerX in xrange(GC.getMAX_PLAYERS()):
 			CyPlayerX = GC.getPlayer(iPlayerX)
 			if CyPlayerX.isAlive():
 				iTeamX = CyPlayerX.getTeam()
@@ -1503,7 +1504,7 @@ class CvVictoryScreen:
 	def getTeamWonderScore(self, iTeam):
 		teamWonderScore = 0
 
-		for iPlayerX in xrange(STATE.getMAX_PC_PLAYERS()):
+		for iPlayerX in xrange(GC.getMAX_PC_PLAYERS()):
 			CyPlayerX = GC.getPlayer(iPlayerX)
 			if CyPlayerX.isAlive() and not CyPlayerX.isMinorCiv() and CyPlayerX.getTeam() == iTeam:
 				teamWonderScore += CyPlayerX.getSevoWondersScore(0)
@@ -1511,7 +1512,7 @@ class CvVictoryScreen:
 
 
 	def teamLaunchedShip(self, iTeam):
-		for iPlayerX in xrange(STATE.getMAX_PC_PLAYERS()):
+		for iPlayerX in xrange(GC.getMAX_PC_PLAYERS()):
 			CyPlayerX = GC.getPlayer(iPlayerX)
 			if CyPlayerX.isAlive() and not CyPlayerX.isMinorCiv() and CyPlayerX.getTeam() == iTeam:
 				if GAME.getStarshipLaunched(iPlayerX):
@@ -1593,7 +1594,7 @@ class CvVictoryScreen:
 			return 2
 
 	def getPlayerOnTeam(self, iTeam):
-		for i in xrange(STATE.getMAX_PC_PLAYERS()):
+		for i in xrange(GC.getMAX_PC_PLAYERS()):
 			if iTeam == GC.getPlayer(i).getTeam():
 				return i
 
@@ -1604,7 +1605,7 @@ class CvVictoryScreen:
 			CvBuildingInfo = GC.getBuildingInfo(i)
 			for j in xrange(GC.getNumVoteSourceInfos()):
 				if CvBuildingInfo.getVoteSourceType() == j:
-					for iPlayerX in xrange(STATE.getMAX_PC_PLAYERS()):
+					for iPlayerX in xrange(GC.getMAX_PC_PLAYERS()):
 						CyPlayerX = GC.getPlayer(iPlayerX)
 						if CyPlayerX.isAlive() and not CyPlayerX.isMinorCiv() and CyPlayerX.hasBuilding(i):
 							return CyPlayerX.getTeam()
@@ -1616,7 +1617,7 @@ class CvVictoryScreen:
 		CyTeam = GC.getTeam(iTeam)
 
 		# check if anyone has built the apollo project (PROJECT_APOLLO_PROGRAM)
-		for iTeamX in xrange(STATE.getMAX_PC_TEAMS()):
+		for iTeamX in xrange(GC.getMAX_PC_TEAMS()):
 			CyTeamX = GC.getTeam(iTeamX)
 			if CyTeamX.isAlive() and not CyTeamX.isMinorCiv():
 				if iTeamX == iTeam:

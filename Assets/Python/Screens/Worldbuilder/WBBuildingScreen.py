@@ -14,6 +14,7 @@ import WorldBuilder
 
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
+GC = CyGlobalContext()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -103,7 +104,7 @@ class WBBuildingScreen:
 
 	def sortCities(self):
 		self.lCities = []
-		for iPlayerX in xrange(STATE.getMAX_PLAYERS()):
+		for iPlayerX in xrange(GC.getMAX_PLAYERS()):
 			pPlayerX = GC.getPlayer(iPlayerX)
 			if iOwnerType == 1 and iPlayerX != iPlayer: continue
 			if iOwnerType == 2 and pPlayerX.getTeam() != pCity.getTeam(): continue

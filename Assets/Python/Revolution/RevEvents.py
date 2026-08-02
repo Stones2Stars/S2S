@@ -15,6 +15,7 @@ import RevUtils
 # globals
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
+GC = CyGlobalContext()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -47,8 +48,8 @@ def init(newCustomEM, RevOptHandle):
 	global revCultureModifier, cityLostModifier, cityAcquiredModifier, acquiredTurns, LOG_DEBUG, centerPopups, RevOpt, customEM
 	global endWarsOnDeath, allowAssimilation, bSmallRevolts, MAX_PC_PLAYERS, MAX_PC_TEAMS
 
-	MAX_PC_PLAYERS = STATE.getMAX_PC_PLAYERS()
-	MAX_PC_TEAMS = STATE.getMAX_PC_TEAMS()
+	MAX_PC_PLAYERS = GC.getMAX_PC_PLAYERS()
+	MAX_PC_TEAMS = GC.getMAX_PC_TEAMS()
 	RevOpt = RevOptHandle
 	customEM = newCustomEM
 
@@ -147,8 +148,8 @@ def onEndGameTurn(argsList):
 def onEndPlayerTurn(argsList):
 	iGameTurn, iPlayer = argsList
 
-	iMax = STATE.getMAX_PC_PLAYERS()
-	iBarb = STATE.getBARBARIAN_PLAYER()
+	iMax = GC.getMAX_PC_PLAYERS()
+	iBarb = GC.getBARBARIAN_PLAYER()
 	if iPlayer == iBarb:
 		iNextPlayer = 0
 	elif iPlayer + 1 >= iMax:
@@ -423,7 +424,7 @@ def checkRebelBonuses(argsList):
 	orgOwnerID = pCity.getOriginalOwner()
 
 	# TODO: Handle case where city is acquired by disorganized rebels
-	if iOwnerNew == STATE.getBARBARIAN_PLAYER() and pCity.getRevolutionCounter() > 0:
+	if iOwnerNew == GC.getBARBARIAN_PLAYER() and pCity.getRevolutionCounter() > 0:
 		print "[REV] City %s captured by barb rebels!" % pCity.getName()
 		'''
 		oldOwner = GC.getPlayer(iOwnerOld)
@@ -1067,7 +1068,7 @@ def assimilateHandler(iPlayerID, netUserData, popupReturn):
 # Small revolts are short duration disorder striking a city, shutting down production and culture, etc.
 def doSmallRevolts(iPlayer, CyPlayer):
 
-	if iPlayer >= STATE.getMAX_PC_PLAYERS():
+	if iPlayer >= GC.getMAX_PC_PLAYERS():
 		raise "NPC does not revolt!"
 
 	for city in CyPlayer.cities():

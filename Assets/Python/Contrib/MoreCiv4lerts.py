@@ -8,12 +8,13 @@ import TradeUtil
 
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
+GC = CyGlobalContext()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
 
-EVENT_MESSAGE_TIME_LONG = STATE.getDefineINT("EVENT_MESSAGE_TIME_LONG")
+EVENT_MESSAGE_TIME_LONG = GC.getDefineINT("EVENT_MESSAGE_TIME_LONG")
 
 class MoreCiv4lerts:
 
@@ -127,7 +128,7 @@ class MoreCiv4lertsEvent(AbstractMoreCiv4lertsEvent):
 			# Check for cultural expansion and population growth
 			icon = "Art/Interface/Buttons/General/Warning_popup.dds"
 			iActiveTeam = GAME.getActiveTeam()
-			for iPlayerX in xrange(STATE.getMAX_PC_PLAYERS()):
+			for iPlayerX in xrange(GC.getMAX_PC_PLAYERS()):
 				CyPlayerX = GC.getPlayer(iPlayerX)
 				if not CyPlayerX.isAlive() or CyPlayerX.getTeam() != iActiveTeam:
 					continue

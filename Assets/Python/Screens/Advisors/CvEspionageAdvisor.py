@@ -7,6 +7,7 @@ import CvScreenEnums
 # globals
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
+GC = CyGlobalContext()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -86,7 +87,7 @@ class TheScreen:
 		self.CyTeamAct = CyTeamAct = GC.getTeam(iTeamAct)
 
 		aList = []
-		for iRank in range(STATE.getMAX_PC_PLAYERS()):
+		for iRank in range(GC.getMAX_PC_PLAYERS()):
 			iPlayerX = GAME.getRankPlayer(iRank)
 			if iPlayerX == iPlayerAct:
 				continue
@@ -169,7 +170,7 @@ class TheScreen:
 		import DebugUtils
 		if DebugUtils.isAnyDebugMode():
 			screen.addDropDownBoxGFC("DebugDropdown", 22, 0, 300, iWidGen, 554, -1, iFontTitle)
-			for j in range(STATE.getMAX_PC_PLAYERS()):
+			for j in range(GC.getMAX_PC_PLAYERS()):
 				if GC.getPlayer(j).isAlive():
 					screen.addPullDownString("DebugDropdown", GC.getPlayer(j).getName(), j, j, False )
 
@@ -673,7 +674,7 @@ class TheScreen:
 			# show total EP spending over the last turn
 			if bSeeDetails:
 				iSpending = 0
-				for iTeamZ in xrange(STATE.getMAX_PC_TEAMS()):
+				for iTeamZ in xrange(GC.getMAX_PC_TEAMS()):
 					if iTeamZ == iTeamX: continue
 					CyTeamZ = GC.getTeam(iTeamZ)
 					if not CyTeamZ.isAlive(): continue

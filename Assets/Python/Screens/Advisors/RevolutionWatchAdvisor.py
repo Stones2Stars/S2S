@@ -89,6 +89,8 @@ import time
 # globals
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
+GC = CyGlobalContext()
+gc = GC   # this module spells it lowercase
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -1180,7 +1182,7 @@ class RevolutionWatchAdvisor:
 
 		team = gc.getTeam(gc.getGame().getActiveTeam())
 
-		for iTeamX in range(STATE.getMAX_TEAMS()):
+		for iTeamX in range(GC.getMAX_TEAMS()):
 			if team.isAtWarWith(iTeamX):
 				if city.isVisible(iTeamX, False):
 					return self.angryIcon
@@ -1642,7 +1644,7 @@ class RevolutionWatchAdvisor:
 	def findGlobalBaseYieldRateRank (self, city, szKey, arg):
 
 		aList = []
-		for i in range(STATE.getMAX_PLAYERS()):
+		for i in range(GC.getMAX_PLAYERS()):
 			for cityX in gc.getPlayer(i).cities():
 				aList.append(cityX.getPlotYield(arg))
 
@@ -1652,7 +1654,7 @@ class RevolutionWatchAdvisor:
 	def findGlobalYieldRateRank (self, city, szKey, arg):
 
 		L = []
-		for i in range(STATE.getMAX_PLAYERS()):
+		for i in range(GC.getMAX_PLAYERS()):
 			for cityX in gc.getPlayer(i).cities():
 				L.append(cityX.getYieldRate(arg))
 
@@ -1662,7 +1664,7 @@ class RevolutionWatchAdvisor:
 	def findGlobalCommerceRateRank (self, city, szKey, arg):
 
 		L = []
-		for i in range(STATE.getMAX_PLAYERS()):
+		for i in range(GC.getMAX_PLAYERS()):
 			for cityX in gc.getPlayer(i).cities():
 				L.append(cityX.getCommerceRate(arg))
 

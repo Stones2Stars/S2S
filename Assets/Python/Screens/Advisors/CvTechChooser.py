@@ -6,6 +6,7 @@ from sys import maxint
 
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
+GC = CyGlobalContext()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -283,7 +284,7 @@ class CvTechChooser:
 		if DebugUtils.bDebugMode:
 			DDB = "TC_DebugDD"
 			screen.addDropDownBoxGFC(DDB, 4, 2, 200, eWidGen, 1, 2, eFontTitle)
-			for iPlayerX in range(STATE.getMAX_PLAYERS()):
+			for iPlayerX in range(GC.getMAX_PLAYERS()):
 				CyPlayerX = GC.getPlayer(iPlayerX)
 				if CyPlayerX.isAlive():
 					screen.addPullDownString(DDB, CyPlayerX.getName(), iPlayerX, iPlayerX, iPlayer == iPlayerX)

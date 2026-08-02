@@ -6,6 +6,7 @@ DebugLogging = False # Adjusted from CvDiplomacyInterface
 
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
+GC = CyGlobalContext()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -251,7 +252,7 @@ class CvDiplomacy:
 			iPlayer = self.diploScreen.getWhoTradingWith()
 			CyTeam = GC.getTeam(GC.getPlayer(iPlayer).getTeam())
 
-			for iPlayerX in xrange(STATE.getMAX_PC_PLAYERS()):
+			for iPlayerX in xrange(GC.getMAX_PC_PLAYERS()):
 				if iPlayerX in (iPlayerAct, iPlayer): continue
 				CyPlayerX = GC.getPlayer(iPlayerX)
 				if CyPlayerX.isAlive():
@@ -265,7 +266,7 @@ class CvDiplomacy:
 		elif szType == "AI_DIPLOCOMMENT_TARGET":
 			iTeamAct = GC.getGame().getActiveTeam()
 			CyTeamAct = GC.getTeam(iTeamAct)
-			for iPlayerX in xrange(STATE.getMAX_PC_PLAYERS()):
+			for iPlayerX in xrange(GC.getMAX_PC_PLAYERS()):
 				CyPlayerX = GC.getPlayer(iPlayerX)
 				if CyPlayerX.isAlive() and CyTeamAct.isAtWarWith(CyPlayerX.getTeam()):
 					for CyCity in CyPlayerX.cities():

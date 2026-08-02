@@ -6,6 +6,7 @@ import WBTradeScreen
 
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
+GC = CyGlobalContext()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -91,7 +92,7 @@ class WBDiplomacyScreen:
 		iWidth = screen.getXResolution()/5
 		screen.addDropDownBoxGFC("CurrentPlayer", 20, 20, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
 		lPlayers = []
-		for iPlayerX in xrange(STATE.getMAX_PLAYERS()):
+		for iPlayerX in xrange(GC.getMAX_PLAYERS()):
 			pPlayerX = GC.getPlayer(iPlayerX)
 			if pPlayerX.isEverAlive():
 				if bHideDead and not pPlayerX.isAlive(): continue

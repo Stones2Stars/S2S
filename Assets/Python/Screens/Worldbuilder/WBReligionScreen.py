@@ -8,6 +8,7 @@ import WBInfoScreen
 
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
+GC = CyGlobalContext()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -43,7 +44,7 @@ class WBReligionScreen:
 		screen.addPullDownString("OwnerType", CyTranslator().getText("TXT_KEY_MAIN_MENU_PLAYER", ()), 1, 1, 1 == iOwnerType)
 
 		screen.addDropDownBoxGFC("CurrentPlayer", screen.getXResolution()/4, self.iTable_Y - 30, 150, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
-		for i in xrange(STATE.getMAX_PLAYERS()):
+		for i in xrange(GC.getMAX_PLAYERS()):
 			pPlayerX = GC.getPlayer(i)
 			if pPlayerX.isEverAlive():
 				sText = pPlayerX.getName()
@@ -77,7 +78,7 @@ class WBReligionScreen:
 		global lCities
 		lCities = []
 		iSelectedTeam = GC.getPlayer(iSelectedPlayer).getTeam()
-		for iPlayerX in xrange(STATE.getMAX_PLAYERS()):
+		for iPlayerX in xrange(GC.getMAX_PLAYERS()):
 			pPlayerX = GC.getPlayer(iPlayerX)
 			if iOwnerType == 1 and iPlayerX != iSelectedPlayer: continue
 			if iOwnerType == 2 and pPlayerX.getTeam() != iSelectedTeam: continue
@@ -166,7 +167,7 @@ class WBReligionScreen:
 		screen.setTableColumnHeader("WBStateReligion", 1, "", 24)
 		screen.setTableColumnHeader("WBStateReligion", 2, "", iWidth - 48)
 
-		for iPlayerX in xrange(STATE.getMAX_PLAYERS()):
+		for iPlayerX in xrange(GC.getMAX_PLAYERS()):
 			pPlayerX = GC.getPlayer(iPlayerX)
 			if not pPlayerX.isAlive(): continue
 			iRow = screen.appendTableRow("WBStateReligion")

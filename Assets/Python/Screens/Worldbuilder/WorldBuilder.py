@@ -18,6 +18,7 @@ import WBTradeScreen
 
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
+GC = CyGlobalContext()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -233,7 +234,7 @@ class WorldBuilder:
 
 	def refreshStartingPlots(self):
 		CyEngine().clearAreaBorderPlots(AreaBorderLayers.AREA_BORDER_LAYER_REVEALED_PLOTS)
-		for iPlayerX in xrange(STATE.getMAX_PC_PLAYERS()):
+		for iPlayerX in xrange(GC.getMAX_PC_PLAYERS()):
 			pPlot = GC.getPlayer(iPlayerX).getStartingPlot()
 			if pPlot:
 				sColor = "COLOR_MAGENTA"
@@ -248,7 +249,7 @@ class WorldBuilder:
 		if self.iPlayerAddMode == "EraseAll":
 			self.m_pCurrentPlot.erase()
 			CyEngine().removeLandmark(self.m_pCurrentPlot)
-			for iPlayerX in xrange(STATE.getMAX_PLAYERS()):
+			for iPlayerX in xrange(GC.getMAX_PLAYERS()):
 				CyEngine().removeSign(self.m_pCurrentPlot, iPlayerX)
 
 		elif self.iPlayerAddMode == "AddLandMark":
@@ -355,7 +356,7 @@ class WorldBuilder:
 		if self.iPlayerAddMode == "EraseAll":
 			self.m_pCurrentPlot.erase()
 			CyEngine().removeLandmark(self.m_pCurrentPlot)
-			for iPlayerX in xrange(STATE.getMAX_PLAYERS()):
+			for iPlayerX in xrange(GC.getMAX_PLAYERS()):
 				CyEngine().removeSign(self.m_pCurrentPlot, iPlayerX)
 		elif self.iPlayerAddMode == "Ownership":
 			self.m_pCurrentPlot.setOwner(-1)
@@ -521,7 +522,7 @@ class WorldBuilder:
 
 	def landmarkModeCB(self):
 		self.iPlayerAddMode = "AddLandMark"
-		self.iCurrentPlayer = STATE.getBARBARIAN_PLAYER()
+		self.iCurrentPlayer = GC.getBARBARIAN_PLAYER()
 		self.refreshSideMenu()
 
 
@@ -681,7 +682,7 @@ class WorldBuilder:
 				 iX, iY, iButtonWidth, iButtonWidth, WidgetTypes.WIDGET_PYTHON, 1029, 28, ButtonStyles.BUTTON_STYLE_LABEL)
 			iX += iAdjust
 			screen.addDropDownBoxGFC("WorldBuilderPlayerChoice", iX, iY, self.xRes - 8 - iX, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
-			for iPlayer in xrange(STATE.getMAX_PLAYERS()):
+			for iPlayer in xrange(GC.getMAX_PLAYERS()):
 				if GC.getPlayer(iPlayer).isEverAlive():
 					sName = GC.getPlayer(iPlayer).getName()
 					if not GC.getPlayer(iPlayer).isAlive():
@@ -736,9 +737,9 @@ class WorldBuilder:
 				iX, iY, iButtonWidth, iButtonWidth, WidgetTypes.WIDGET_WB_LANDMARK_BUTTON, -1, -1, ButtonStyles.BUTTON_STYLE_LABEL)
 			iX += iAdjust
 			screen.addDropDownBoxGFC("WorldBuilderPlayerChoice", iX, iY, self.xRes - 8 - iX, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
-			screen.addPullDownString("WorldBuilderPlayerChoice", CyTranslator().getText("TXT_KEY_WB_LANDMARKS", ()), STATE.getBARBARIAN_PLAYER(), STATE.getBARBARIAN_PLAYER(), self.iCurrentPlayer == STATE.getBARBARIAN_PLAYER())
-			for iPlayer in xrange(STATE.getMAX_PLAYERS()):
-				if iPlayer == STATE.getBARBARIAN_PLAYER(): continue
+			screen.addPullDownString("WorldBuilderPlayerChoice", CyTranslator().getText("TXT_KEY_WB_LANDMARKS", ()), GC.getBARBARIAN_PLAYER(), GC.getBARBARIAN_PLAYER(), self.iCurrentPlayer == GC.getBARBARIAN_PLAYER())
+			for iPlayer in xrange(GC.getMAX_PLAYERS()):
+				if iPlayer == GC.getBARBARIAN_PLAYER(): continue
 				if GC.getPlayer(iPlayer).isEverAlive():
 					sName = GC.getPlayer(iPlayer).getName()
 					if not GC.getPlayer(iPlayer).isAlive():
@@ -795,7 +796,7 @@ class WorldBuilder:
 			screen.setImageButton("WorldBuilderRevealAll", CyArtFileMgr().getInterfaceArtInfo("WORLDBUILDER_REVEAL_ALL_TILES").getPath(), iX, iY, iButtonWidth, iButtonWidth, WidgetTypes.WIDGET_WB_REVEAL_ALL_BUTTON, -1, -1)
 			iX += iAdjust
 			screen.addDropDownBoxGFC("WorldBuilderPlayerChoice", iX, iY, self.xRes - 8 - iX, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
-			for iPlayer in xrange(STATE.getMAX_PLAYERS()):
+			for iPlayer in xrange(GC.getMAX_PLAYERS()):
 				if GC.getPlayer(iPlayer).isEverAlive():
 					sName = GC.getPlayer(iPlayer).getName()
 					if not GC.getPlayer(iPlayer).isAlive():
@@ -1271,7 +1272,7 @@ class WorldBuilder:
 				continue
 			pNewCity.changeHasBuilding(iBuilding, pOldCity.hasBuilding(iBuilding))
 
-		for iPlayerX in xrange(STATE.getMAX_PLAYERS()):
+		for iPlayerX in xrange(GC.getMAX_PLAYERS()):
 			pNewCity.setCultureTimes100(iPlayerX, pOldCity.getCultureTimes100(iPlayerX), False)
 		for iReligion in xrange(GC.getNumReligionInfos()):
 			pNewCity.setHasReligion(iReligion, pOldCity.isHasReligion(iReligion), False, False)

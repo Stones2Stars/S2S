@@ -4,8 +4,21 @@
 #define CyGlobalContext_h
 
 //
-// Python wrapper class for global vars and fxns
-// Passed to Python
+//	CyGlobalContext -- the CONFIG / REGISTRY / DEFINES half of the old global context, and NOTHING ELSE.
+//
+//	⚖ REINTRODUCED DELIBERATELY (owner), minus the infos. The purge treated this class as one thing; it was
+//	two. What it hands out here -- the registry COUNTS, the global DEFINES, the engine CONSTANTS, the BUG
+//	bridge, name->id resolution -- is CONFIGURATION, not entity data, and a great deal of Python legitimately
+//	needs it. Removing that half bought nothing and broke everything that reads a setting.
+//
+//	⛔ WHAT IT NO LONGER DOES, AND MUST NEVER DO AGAIN: hand out INFOS. The per-entity `get<X>Info(i)`
+//	accessors and the `Cy*` object HANDLES are gone and stay gone -- that is the read surface the library
+//	replaces ([DEC-cy-not-fixed]), and it is precisely the half whose return values let a script reach the
+//	whole legacy getter set. A script wanting entity data asks the library; a script wanting a SETTING asks
+//	here. The split is the point: the escape hatch closes, the config stays.
+//
+//	⚑ The DEFINES are served BY NAME (getDefineINT/FLOAT) rather than as a getter per value. That is what makes
+//	this extensible by DATA: a new define is a new XML row, never a new method.
 //
 
 #include "Defines/CvGlobals.h"
@@ -22,17 +35,10 @@ public:
 	static CyGlobalContext& getInstance();		// singleton accessor
 	static void initStatics();
 
+	// Publishes the config half. Called from DLLPublishToPython.
+	static void pythonPublish();
+
 	bool isDebugBuild() const;
-	CyGame* getCyGame() const;
-	CyMap* getCyMap() const;
-	void switchMap(MapTypes eMap);
-	CyMap* getMapByIndex(MapTypes eMap) const;
-	python::list getMaps() const;
-	int getNumMapsInitialized() const;
-	CyPlayer* getCyPlayer(PlayerTypes ePlayer) const;
-	CyPlayer* getCyActivePlayer() const;
-	CvRandom& getCyASyncRand() const;
-	CyTeam* getCyTeam(TeamTypes eTeam) const;
 
 	int getInfoTypeForString(const char* szInfoType, bool bHideAssert = false) const;
 
@@ -40,62 +46,9 @@ public:
 	const char* getFlavorType(FlavorTypes e) const;
 	const python::list getFlavorTypes() const;
 
-	const CvMapInfo& getMapInfo(MapTypes eMap) const;
-	const CvEffectInfo* getEffectInfo(int i) const;
-	const CvTerrainInfo* getTerrainInfo(int i) const;
-	const CvBonusClassInfo* getBonusClassInfo(int i) const;
-	const CvBonusInfo* getBonusInfo(int i) const;
-	const CvFeatureInfo* getFeatureInfo(int i) const;
-	const CvCivilizationInfo* getCivilizationInfo(int idx) const;
-	const CvLeaderHeadInfo* getLeaderHeadInfo(int i) const;
-	const CvTraitInfo* getTraitInfo(int i) const;
-	const CvUnitInfo* getUnitInfo(int i) const;
-	const CvSpecialUnitInfo* getSpecialUnitInfo(int i) const;
-	const CvYieldInfo* getYieldInfo(int i) const;
-	const CvCommerceInfo* getCommerceInfo(int i) const;
-	const CvRouteInfo* getRouteInfo(int i) const;
-	const CvImprovementInfo* getImprovementInfo(int i) const;
-	const CvGoodyInfo* getGoodyInfo(int i) const;
-	const CvBuildInfo* getBuildInfo(int i) const;
-	const CvHandicapInfo* getHandicapInfo(int i) const;
-	const CvGameSpeedInfo& getGameSpeedInfo(int i) const;
-	const CvMissionInfo* getMissionInfo(int i) const;
-	const CvCommandInfo* getCommandInfo(int i) const;
-	const CvActionInfo* getActionInfo(int i) const;
 	const CvInfoBase* getUnitCombatInfo(int i) const;
-	const CvPromotionLineInfo* getPromotionLineInfo(int i) const;
 	const CvInfoBase* getDomainInfo(int i) const;
-	const CvBuildingInfo* getBuildingInfo(int i) const;
-	const CvCivicOptionInfo* getCivicOptionInfo(int i) const;
-	const CvCivicInfo* getCivicInfo(int i) const;
-	const CvDiplomacyInfo* getDiplomacyInfo(int i) const;
-	const CvProjectInfo* getProjectInfo(int i) const;
-	const CvVoteInfo* getVoteInfo(int i) const;
-	const CvProcessInfo* getProcessInfo(int i) const;
-	const CvSpecialistInfo* getSpecialistInfo(int i) const;
-	const CvReligionInfo* getReligionInfo(int i) const;
-	const CvHeritageInfo* getHeritageInfo(int i) const;
-	const CvCorporationInfo* getCorporationInfo(int i) const;
-	const CvControlInfo* getControlInfo(int i) const;
-	const CvTechInfo* getTechInfo(int i) const;
-	const CvSpecialBuildingInfo* getSpecialBuildingInfo(int i) const;
-	const CvPromotionInfo* getPromotionInfo(int i) const;
-	const CvEmphasizeInfo * getEmphasizeInfo(int i) const;
-	const CvUpkeepInfo * getUpkeepInfo(int i) const;
-	const CvCultureLevelInfo * getCultureLevelInfo(int i) const;
-	const CvEraInfo * getEraInfo(int i) const;
-	const CvVictoryInfo * getVictoryInfo(int i) const;
-	const CvWorldInfo * getWorldInfo(int i) const;
-	const CvClimateInfo * getClimateInfo(int i) const;
-	const CvSeaLevelInfo * getSeaLevelInfo(int i) const;
 	const CvInfoBase * getUnitAIInfo(int i) const;
-	const CvColorInfo* getColorInfo(int i) const;
-	const CvAdvisorInfo* getAdvisorInfo(int i) const;
-	const CvUnitArtStyleTypeInfo* getUnitArtStyleTypeInfo(int i) const;
-	const CvPropertyInfo* getPropertyInfo(int i) const;
-	const CvPlayerColorInfo* getPlayerColorInfo(int i) const;
-	const CvMainMenuInfo* getMainMenus(int i) const;
-	const CvVoteSourceInfo* getVoteSourceInfo(int i) const;
 	const CvInfoBase* getAttitudeInfo(int i) const;
 	const CvInfoBase* getMemoryInfo(int i) const;
 	const CvInfoBase* getConceptInfo(int i) const;
@@ -106,12 +59,6 @@ public:
 	const CvInfoBase* getForceControlInfo(int i) const;
 	const CvInfoBase* getSeasonInfo(int i) const;
 	const CvInfoBase* getDenialInfo(int i) const;
-	const CvEventTriggerInfo* getEventTriggerInfo(int i) const;
-	const CvEventInfo* getEventInfo(int i) const;
-	const CvEspionageMissionInfo* getEspionageMissionInfo(int i) const;
-	const CvHurryInfo* getHurryInfo(int i) const;
-	const CvPlayerOptionInfo& getPlayerOptionInfo(int i) const;
-	const CvGraphicOptionInfo& getGraphicOptionInfo(int i) const;
 
 	const char* getArtStyleTypes(int i) const { return GC.getArtStyleTypes((ArtStyleTypes) i); }
 

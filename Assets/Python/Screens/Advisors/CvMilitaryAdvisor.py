@@ -8,6 +8,7 @@ import UnitGrouper
 # globals
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
+GC = CyGlobalContext()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -180,7 +181,7 @@ class CvMilitaryAdvisor:
 		# loop through all players and display leaderheads
 		x = 4
 		dx = 72
-		for iPlayerX in range(STATE.getMAX_PLAYERS()):
+		for iPlayerX in range(GC.getMAX_PLAYERS()):
 			CyPlayerX = GC.getPlayer(iPlayerX)
 			if CyPlayerX.isAlive() and CyTeam.isHasMet(CyPlayerX.getTeam()):
 
@@ -227,7 +228,7 @@ class CvMilitaryAdvisor:
 		if bReload:
 			CyPlayer = self.CyPlayer
 			self.stats = UnitGrouper.GrouperStats(self.grouper)
-			for iPlayerX in range(STATE.getMAX_PLAYERS()):
+			for iPlayerX in range(GC.getMAX_PLAYERS()):
 				CyPlayerX = GC.getPlayer(iPlayerX)
 				if not CyPlayerX.isAlive(): continue
 

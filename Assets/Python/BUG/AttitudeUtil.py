@@ -15,6 +15,7 @@ import re
 
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
+GC = CyGlobalContext()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -129,7 +130,7 @@ def getAttitudeText(nPlayer, nTarget, bNumber, bSmily, bWorstEnemy, bWarPeace):
 			if pTeam.isForcePeace(nTargetTeam):
 				bPeace = True
 			elif pTargetTeam.isAVassal():
-				for nOwnerTeam in range(STATE.getMAX_PC_TEAMS()):
+				for nOwnerTeam in range(GC.getMAX_PC_TEAMS()):
 					if pTargetTeam.isVassal(nOwnerTeam) and pTeam.isForcePeace(nOwnerTeam):
 						bPeace = True
 						break
@@ -296,7 +297,7 @@ class Attitude:
 					if pThisTeam.isForcePeace(iTargetTeam):
 						bPeace = True
 					elif pTargetTeam.isAVassal():
-						for iOwnerTeam in range(STATE.getMAX_PC_TEAMS()):
+						for iOwnerTeam in range(GC.getMAX_PC_TEAMS()):
 							if pTargetTeam.isVassal(iOwnerTeam) and pThisTeam.isForcePeace(iOwnerTeam):
 								bPeace = True
 								break
@@ -323,7 +324,7 @@ def getWorstEnemyTeams():
 	Loops over players because CyTeam does not have getWorstEnemyName().
 	"""
 	namesToID = {}
-	for iTeam in xrange(STATE.getMAX_PC_TEAMS()):
+	for iTeam in xrange(GC.getMAX_PC_TEAMS()):
 		CyTeam = GC.getTeam(iTeam)
 		if CyTeam.isAlive() and not CyTeam.isMinorCiv():
 			namesToID[CyTeam.getName()] = iTeam

@@ -22,6 +22,7 @@ import BugCore
 
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
+GC = CyGlobalContext()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -114,7 +115,7 @@ class RevolutionInit:
 		revDefaultNumPlayers = GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers()
 
 		bodStr = self.getRevComponentsText()
-		MAX_PC_PLAYERS = STATE.getMAX_PC_PLAYERS()
+		MAX_PC_PLAYERS = GC.getMAX_PC_PLAYERS()
 		bodStr += TRNSLTR.getText("TXT_KEY_REV_MOD_MAX_CIVS_IN_DLL",(MAX_PC_PLAYERS, ))
 		if revMaxCivs > 0 and revMaxCivs < MAX_PC_PLAYERS:
 			bodStr += TRNSLTR.getText("TXT_KEY_REV_MOD_REVS_WILL_STOP_AT",( revMaxCivs, ))

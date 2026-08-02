@@ -21,6 +21,7 @@ EventSignsOpt = BugCore.game.EventSigns
 # civ globals
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
+GC = CyGlobalContext()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -120,7 +121,7 @@ def clearSignsAndLandmarks(pPlot):
 	will only place the sign/landmark on a plot if there isn't already one there.
 	If I could resolve that issue, this function would actually be used. ;)
 	"""
-	for iPlayer in range(STATE.getMAX_PLAYERS()):
+	for iPlayer in range(GC.getMAX_PLAYERS()):
 		engine.removeSign(pPlot, iPlayer)
 	engine.removeLandmark(pPlot)
 	# Don't even know what this does; it was the last of my failed attempts to force the signs to show.
@@ -170,7 +171,7 @@ def placeLandmark(pPlot, sEventType, iFood, iProd, iComm, bIsSign, iSignOwner):
 
 	elif iSignOwner == -1:
 		# add signs for all valid human players who are still alive.
-		for iPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
+		for iPlayer in xrange(GC.getMAX_PC_PLAYERS()):
 			player = GC.getPlayer(iPlayer)
 			if player.isAlive() and player.isHuman():
 				addSign(pPlot, iPlayer, sCaption)
@@ -427,7 +428,7 @@ class PlotSigns:
 
 	def setSign(self, ePlayer, szCaption):
 		""" Sets Caption for a given player on this plot. """
-		if ePlayer == -1 or 0 <= ePlayer < STATE.getMAX_PLAYERS():
+		if ePlayer == -1 or 0 <= ePlayer < GC.getMAX_PLAYERS():
 			self.signDict[ePlayer] = szCaption
 		else:
 			BugUtil.warn("EventSigns PlotSigns.setSign() was passed an invalid Player ID %s at Plot (%d,%d)" % (str(ePlayer), self.iX, self.iY))
@@ -488,7 +489,7 @@ class EventSignsEventHandler:
 		(pPlot, eTeam) = argsList
 		if g_bShowSigns and gSavedSigns:
 
-			for ePlayer in range(STATE.getMAX_PC_PLAYERS()):
+			for ePlayer in range(GC.getMAX_PC_PLAYERS()):
 				if GC.getPlayer(ePlayer).getTeam() == eTeam:
 					gSavedSigns.displaySign(pPlot, ePlayer)
 

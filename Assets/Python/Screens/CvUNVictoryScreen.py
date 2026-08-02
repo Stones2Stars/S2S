@@ -7,6 +7,8 @@ import math
 # globals
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
+GC = CyGlobalContext()
+gc = GC   # this module spells it lowercase
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -97,7 +99,7 @@ class CvUnVictoryScreen:
 		iCount = 0
 		leaderMap = { }
 		# Count all other leaders
-		for iPlayer in range(STATE.getMAX_PLAYERS()):
+		for iPlayer in range(GC.getMAX_PLAYERS()):
 			player = gc.getPlayer(iPlayer)
 			if (player.isAlive() and iPlayer != self.iActiveLeader and not player.isNPC() and not player.isMinorCiv()):
 				leaderMap[iPlayer] = iCount

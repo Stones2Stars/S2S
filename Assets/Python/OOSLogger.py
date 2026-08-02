@@ -33,7 +33,7 @@ def writeLog():
 	pFile.write("Total num areas: %d\n\n\n" % MAP.getNumAreas())
 
 	# Player data
-	for iPlayer in xrange(STATE.getMAX_PLAYERS()):
+	for iPlayer in xrange(GC.getMAX_PLAYERS()):
 		pPlayer = GC.getPlayer(iPlayer)
 		if pPlayer.isEverAlive():
 

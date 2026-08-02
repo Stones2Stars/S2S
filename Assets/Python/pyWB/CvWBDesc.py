@@ -3,6 +3,7 @@ import os
 
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
+GC = CyGlobalContext()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -359,40 +360,40 @@ class CvTeamDesc:
 
 			if not team.isNPC():
 				# write met other teams
-				for i in xrange(STATE.getMAX_PC_TEAMS()):
+				for i in xrange(GC.getMAX_PC_TEAMS()):
 					if i == idx: continue
 					if team.isHasMet(i):
 						f.write("\tContactWithTeam=%d, (%s)\n" %(i, GC.getTeam(i).getName().encode(fEncode)))
 
 				# write Espionage against other teams
-				for i in xrange(STATE.getMAX_PC_TEAMS()):
+				for i in xrange(GC.getMAX_PC_TEAMS()):
 					if team.getEspionagePointsAgainstTeam(i) > 0:
 						f.write("\tEspionageTeam=%d, EspionageAmount=%d, (%s)\n"
 							%(i, team.getEspionagePointsAgainstTeam(i), GC.getTeam(i).getName().encode(fEncode))
 						)
 				if not bMinorCiv:
 					# write warring teams
-					for i in xrange(STATE.getMAX_PC_TEAMS()):
+					for i in xrange(GC.getMAX_PC_TEAMS()):
 						if team.isHasMet(i) and team.isAtWarWith(i):
 							f.write("\tAtWar=%d, (%s)\n" %(i, GC.getTeam(i).getName().encode(fEncode)))
 
 				# write permanent war/peace teams
-				for i in xrange(STATE.getMAX_PC_TEAMS()):
+				for i in xrange(GC.getMAX_PC_TEAMS()):
 					if team.isPermanentWarPeace(i):
 						f.write("\tPermanentWarPeace=%d, (%s)\n" %(i, GC.getTeam(i).getName().encode(fEncode)))
 
 				# write open borders other teams
-				for i in xrange(STATE.getMAX_PC_TEAMS()):
+				for i in xrange(GC.getMAX_PC_TEAMS()):
 					if team.isOpenBorders(i):
 						f.write("\tOpenBordersWithTeam=%d, (%s)\n" %(i, GC.getTeam(i).getName().encode(fEncode)))
 
 				# write defensive pact other teams
-				for i in xrange(STATE.getMAX_PC_TEAMS()):
+				for i in xrange(GC.getMAX_PC_TEAMS()):
 					if team.isDefensivePact(i):
 						f.write("\tDefensivePactWithTeam=%d, (%s)\n" %(i, GC.getTeam(i).getName().encode(fEncode)))
 
 				# write vassal state
-				for i in xrange(STATE.getMAX_PC_TEAMS()):
+				for i in xrange(GC.getMAX_PC_TEAMS()):
 					if team.isVassal(i):
 						iType = self.getRelationshipStatus(idx, i)
 						if iType == 1:
@@ -572,7 +573,7 @@ class CvPlayerDesc:
 				if pPlayerReligionInfo:
 					f.write("\tStateReligion=%s\n" %(pPlayerReligionInfo.getType()))
 
-				for i in xrange(STATE.getMAX_PC_PLAYERS()):
+				for i in xrange(GC.getMAX_PC_PLAYERS()):
 					playerX = GC.getPlayer(i)
 					if playerX.isAlive() and player.AI_getAttitudeExtra(i) != 0:
 						f.write("\tAttitudePlayer=%d, (%s), AttitudeExtra=%d\n" %(i, playerX.getName().encode(fEncode), player.AI_getAttitudeExtra(i)))
@@ -1102,7 +1103,7 @@ class CvCityDesc:
 
 		# Player culture
 		bFound = False
-		for iPlayerX in xrange(STATE.getMAX_PLAYERS()):
+		for iPlayerX in xrange(GC.getMAX_PLAYERS()):
 			if GC.getPlayer(iPlayerX).isAlive():
 				name = GC.getPlayer(iPlayerX).getName().encode(fEncode)
 			else: name = "Error"
@@ -1309,7 +1310,7 @@ class CvCityDesc:
 
 				while "!CityCultures" not in peek:
 					entry = peek.split("|")
-					if int(entry[1]) < STATE.getMAX_PLAYERS():
+					if int(entry[1]) < GC.getMAX_PLAYERS():
 						self.lCulture.append([int(entry[1]), int(entry[3])])
 					peek = f.readline()
 
@@ -1486,7 +1487,7 @@ class CvPlotDesc:
 
 		# Fog of War
 		bFirst = True
-		for iTeamX in xrange(STATE.getMAX_PC_TEAMS()):
+		for iTeamX in xrange(GC.getMAX_PC_TEAMS()):
 			if GC.getTeam(iTeamX).isAlive() and plot.isRevealed(iTeamX, 0):
 				if bFirst:
 					f.write("\tTeamReveal=")
@@ -1497,7 +1498,7 @@ class CvPlotDesc:
 
 		# Player culture
 		bFound = False
-		for iPlayerX in xrange(STATE.getMAX_PLAYERS()):
+		for iPlayerX in xrange(GC.getMAX_PLAYERS()):
 			if GC.getPlayer(iPlayerX).isAlive():
 				name = GC.getPlayer(iPlayerX).getName().encode(fEncode)
 			else: name = "Error"
@@ -1657,7 +1658,7 @@ class CvPlotDesc:
 
 					while "!PlotCultures" not in peek:
 						entry = peek.split("|")
-						if int(entry[1]) < STATE.getMAX_PLAYERS():
+						if int(entry[1]) < GC.getMAX_PLAYERS():
 							self.lCulture.append([int(entry[1]), int(entry[3])])
 						peek = f.readline()
 
@@ -1809,9 +1810,9 @@ Randomize Resources=0\nEndMap\n"
 			)
 		)
 		# write team and player info
-		for i in xrange(STATE.getMAX_TEAMS()):
+		for i in xrange(GC.getMAX_TEAMS()):
 			CvTeamDesc().write(f, i)
-		for i in xrange(STATE.getMAX_PLAYERS()):
+		for i in xrange(GC.getMAX_PLAYERS()):
 			CvPlayerDesc().write(f, i)
 
 		# write plot info
@@ -1857,7 +1858,7 @@ Randomize Resources=0\nEndMap\n"
 
 		print "Reading teams desc"
 		self.teamsDesc = []
-		for i in xrange(STATE.getMAX_TEAMS()):
+		for i in xrange(GC.getMAX_TEAMS()):
 			iFilePos = f.tell()
 			pDesc = CvTeamDesc()
 			if not pDesc.read(f, i):
@@ -1867,7 +1868,7 @@ Randomize Resources=0\nEndMap\n"
 
 		print "Reading players desc"
 		self.playersDesc = []
-		for i in xrange(STATE.getMAX_PLAYERS()):
+		for i in xrange(GC.getMAX_PLAYERS()):
 			iFilePos = f.tell()
 			pDesc = CvPlayerDesc()
 			if not pDesc.read(f, i):
@@ -1946,7 +1947,7 @@ Randomize Resources=0\nEndMap\n"
 	def getAssignedStartingPlots(self):
 		MAP = GC.getMap()
 
-		for i in xrange(STATE.getMAX_PC_PLAYERS()):
+		for i in xrange(GC.getMAX_PC_PLAYERS()):
 			pPlayer = GC.getPlayer(i)
 			if pPlayer.isAlive():
 				pWBPlayer = self.playersDesc[i]
@@ -2057,7 +2058,7 @@ Randomize Resources=0\nEndMap\n"
 					plot.setCulture(item[0], item[1], True)
 
 		# Final player pass
-		for i in xrange(STATE.getMAX_PC_PLAYERS()):
+		for i in xrange(GC.getMAX_PC_PLAYERS()):
 			pWBPlayer = self.playersDesc[i]
 			if pWBPlayer.civType is None: continue
 			player = GC.getPlayer(pWBPlayer.iPlayer)

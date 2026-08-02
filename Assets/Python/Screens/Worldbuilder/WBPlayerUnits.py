@@ -14,6 +14,7 @@ import WorldBuilder
 
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
+GC = CyGlobalContext()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -50,7 +51,7 @@ class WBPlayerUnits:
 		iY = 20
 		iWidth = (screen.getXResolution() - 40)/5
 		screen.addDropDownBoxGFC("CurrentPlayer", iX, iY, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
-		for i in xrange(STATE.getMAX_PLAYERS()):
+		for i in xrange(GC.getMAX_PLAYERS()):
 			pPlayerX = GC.getPlayer(i)
 			if pPlayerX.isEverAlive():
 				sText = pPlayerX.getName()
@@ -123,7 +124,7 @@ class WBPlayerUnits:
 				iUnitID = unitX.getID()
 				iUnitOwner = unitX.getOwner()
 
-		for iPlayerX in xrange(STATE.getMAX_PLAYERS()):
+		for iPlayerX in xrange(GC.getMAX_PLAYERS()):
 			if iOwnerType == 1 and iPlayerX != iPlayer:
 				continue
 			playerX = GC.getPlayer(iPlayerX)
@@ -176,7 +177,7 @@ class WBPlayerUnits:
 				iCityOwner = cityX.getOwner()
 
 		lCities = []
-		for iPlayerX in xrange(STATE.getMAX_PLAYERS()):
+		for iPlayerX in xrange(GC.getMAX_PLAYERS()):
 			if iOwnerType == 1 and iPlayerX != iPlayer:
 				continue
 			playerX = GC.getPlayer(iPlayerX)

@@ -3,6 +3,7 @@ from CvPythonExtensions import *
 # globals
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
+GC = CyGlobalContext()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -81,7 +82,7 @@ class CvFinanceAdvisor:
 		if DebugUtils.isAnyDebugMode():
 			DD = "FinAdv_DebugDD"
 			screen.addDropDownBoxGFC(DD, 8, 0, 300, eWidGen, -1, -1, FontTypes.GAME_FONT)
-			for iPlayerX in range(STATE.getMAX_PLAYERS()):
+			for iPlayerX in range(GC.getMAX_PLAYERS()):
 				CyPlayerX = GC.getPlayer(iPlayerX)
 				if CyPlayerX.isAlive():
 					screen.addPullDownString(DD, CyPlayerX.getName(), iPlayerX, iPlayerX, iPlayer == iPlayerX)

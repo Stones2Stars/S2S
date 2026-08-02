@@ -7,6 +7,7 @@ import WBInfoScreen
 import WorldBuilder
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
+GC = CyGlobalContext()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -41,7 +42,7 @@ class WBProjectScreen:
 		screen.setLabel("ProjectHeader", "Background", "<font=4b>" + CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_PROJECT", ()) + "</font>", 1<<2, screen.getXResolution()/2, 20, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 		screen.addDropDownBoxGFC("CurrentTeam", 20, 20, screen.getXResolution()/5, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
-		for i in xrange(STATE.getMAX_TEAMS()):
+		for i in xrange(GC.getMAX_TEAMS()):
 			if GC.getTeam(i).isAlive():
 				iLeader = GC.getTeam(i).getLeaderID()
 				sName = GC.getPlayer(iLeader).getName()
@@ -206,7 +207,7 @@ class WBProjectScreen:
 
 	def editProject(self, item):
 		if bApplyAll:
-			for i in xrange(STATE.getMAX_TEAMS()):
+			for i in xrange(GC.getMAX_TEAMS()):
 				pTeamX = GC.getTeam(i)
 				if pTeamX.isNPC() and bNoBarb: continue
 				if pTeamX.isAlive():

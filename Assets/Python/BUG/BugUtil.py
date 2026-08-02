@@ -117,6 +117,8 @@
 ## Author: EmperorFool
 
 from CvPythonExtensions import *
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state.
+STATE = CyState()
 import ColorUtil
 import CvEventInterface
 import sys

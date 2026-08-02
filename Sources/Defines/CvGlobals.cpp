@@ -2912,7 +2912,8 @@ void cvInternalGlobals::switchMap(MapTypes eMap)
 	{
 		getMap().beforeSwitch();
 		getGame().setCurrentMap(eMap);
-		*CyGlobalContext::getInstance().getCyMap() = getMap();
+		// The CyMap wrapper is no longer synced here: the global context hands out no Cy* HANDLES any more, so
+		// there is nothing on the far side to keep in step. The map switch itself is untouched.
 		getMap().afterSwitch();
 	}
 }

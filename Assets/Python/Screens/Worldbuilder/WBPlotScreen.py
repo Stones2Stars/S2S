@@ -9,6 +9,7 @@ import WBInfoScreen
 
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
+GC = CyGlobalContext()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -44,7 +45,7 @@ class WBPlotScreen:
 		iY = 50
 		screen.addDropDownBoxGFC("CurrentPlayer", iX, iY, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
 		screen.addPullDownString("CurrentPlayer", CyTranslator().getText("TXT_KEY_CULTURELEVEL_NONE", ()), -1, -1, pPlot.getOwner() == -1)
-		for i in xrange(STATE.getMAX_PLAYERS()):
+		for i in xrange(GC.getMAX_PLAYERS()):
 			pPlayerX = GC.getPlayer(i)
 			if pPlayerX.isAlive():
 				screen.addPullDownString("CurrentPlayer", pPlayerX.getName(), i, i, i == pPlot.getOwner())
@@ -175,7 +176,7 @@ class WBPlotScreen:
 		screen.setText("EditLandMark", "Background", sText, 1<<1, iX + iSignWidth, iY - 30, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 		lSigns = []
-		for _ in xrange(STATE.getMAX_PLAYERS()):
+		for _ in xrange(GC.getMAX_PLAYERS()):
 			lSigns.append(-1)
 		for i in xrange(CyEngine().getNumSigns()):
 			pSign = CyEngine().getSignByIndex(i)
@@ -189,7 +190,7 @@ class WBPlotScreen:
 		screen.setTableColumnHeader("WBSigns", 2, "", (iSignWidth - 48) /3)
 		screen.setTableColumnHeader("WBSigns", 3, "", (iSignWidth - 48) *2/3)
 
-		for iPlayerX in xrange(STATE.getMAX_PLAYERS()):
+		for iPlayerX in xrange(GC.getMAX_PLAYERS()):
 			pPlayerX = GC.getPlayer(iPlayerX)
 			if pPlayerX.isEverAlive():
 				iRow = screen.appendTableRow("WBSigns")

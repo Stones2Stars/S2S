@@ -5,6 +5,7 @@ from CvPythonExtensions import *
 
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
+GC = CyGlobalContext()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -113,7 +114,7 @@ class NaturalWonders:
         if sType.find("FEATURE_PLATY_") == -1:
             return
 
-        if iTeam < 0 or iTeam >= STATE.getMAX_TEAMS():
+        if iTeam < 0 or iTeam >= GC.getMAX_TEAMS():
             return
         CyTeam = GC.getTeam(iTeam)
         if CyTeam is None or CyTeam.isNPC():
@@ -160,7 +161,7 @@ class NaturalWonders:
             return
 
         bFirst = True
-        for iTeamX in xrange(STATE.getMAX_PC_TEAMS()):
+        for iTeamX in xrange(GC.getMAX_PC_TEAMS()):
             if iTeamX == iTeam:
                 continue
             if pPlot.isRevealed(iTeamX, False):
@@ -178,7 +179,7 @@ class NaturalWonders:
         TRNSLTR = CyTranslator()
         iPlayerAct = GAME.getActivePlayer()
 
-        for iPlayerX in xrange(STATE.getMAX_PC_PLAYERS()):
+        for iPlayerX in xrange(GC.getMAX_PC_PLAYERS()):
             CyPlayerX = GC.getPlayer(iPlayerX)
             if CyPlayerX is None:
                 continue

@@ -5,6 +5,7 @@ import cPickle
 # globals
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
+GC = CyGlobalContext()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -532,7 +533,7 @@ class CvDomesticAdvisor:
 		iTeam = CyGame().getActiveTeam()
 		CyTeam = GC.getTeam(iTeam)
 
-		for iTeamX in xrange(STATE.getMAX_PC_TEAMS()):
+		for iTeamX in xrange(GC.getMAX_PC_TEAMS()):
 			if iTeamX != iTeam and CyTeam.isAtWarWith(iTeamX) and CyCity.isVisible(iTeamX, False):
 				return unichr(8867)
 		return ""
@@ -976,7 +977,7 @@ class CvDomesticAdvisor:
 
 		y = CyCity.getPlotYield(arg)
 		aList = []
-		for iPlayerX in xrange(STATE.getMAX_PC_PLAYERS()):
+		for iPlayerX in xrange(GC.getMAX_PC_PLAYERS()):
 			for CyCity in GC.getPlayer(iPlayerX).cities():
 				aList.append(CyCity.getPlotYield(arg))
 
@@ -986,7 +987,7 @@ class CvDomesticAdvisor:
 
 		y = CyCity.getYieldRate(arg)
 		aList = []
-		for iPlayerX in xrange(STATE.getMAX_PC_PLAYERS()):
+		for iPlayerX in xrange(GC.getMAX_PC_PLAYERS()):
 			for CyCity in GC.getPlayer(iPlayerX).cities():
 				aList.append(CyCity.getYieldRate(arg))
 
@@ -996,7 +997,7 @@ class CvDomesticAdvisor:
 
 		y = CyCity.getCommerceRate(arg)
 		aList = []
-		for iPlayerX in xrange(STATE.getMAX_PC_PLAYERS()):
+		for iPlayerX in xrange(GC.getMAX_PC_PLAYERS()):
 			for CyCity in GC.getPlayer(iPlayerX).cities():
 				aList.append(CyCity.getCommerceRate(arg))
 

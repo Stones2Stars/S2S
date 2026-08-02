@@ -8,6 +8,7 @@ import CvWBDesc
 WBDesc = CvWBDesc.CvWBDesc()
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
+GC = CyGlobalContext()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -102,7 +103,7 @@ def getPlayerDesc():
 	print "CvWBInterface.getPlayerDesc"
 	playerTuple = WBDesc.playersDesc
 	t = ()
-	for i in xrange(STATE.getMAX_PLAYERS()):
+	for i in xrange(GC.getMAX_PLAYERS()):
 		playerWB = playerTuple[i]
 		t += (playerWB.szCivDesc, playerWB.szCivShortDesc, playerWB.szLeaderName, playerWB.szCivAdjective, playerWB.szFlagDecal)
 	return t
@@ -113,10 +114,10 @@ def getPlayerData():
 	Last thing called before you can select your game options for a scenario.
 	'''
 	print "CvWBInterface.getPlayerData"
-	iNPC = STATE.getMAX_PC_PLAYERS()
+	iNPC = GC.getMAX_PC_PLAYERS()
 	playerTuple = WBDesc.playersDesc
 	t = ()
-	for i in xrange(STATE.getMAX_PLAYERS()):
+	for i in xrange(GC.getMAX_PLAYERS()):
 		playerWB = playerTuple[i]
 		t += (
 			getInfoType(playerWB.civType), playerWB.isPlayableCiv, getInfoType(playerWB.leaderType), playerWB.iHandicap,

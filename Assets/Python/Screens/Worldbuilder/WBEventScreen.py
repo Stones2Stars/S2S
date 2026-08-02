@@ -8,6 +8,7 @@ import WBInfoScreen
 
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
+GC = CyGlobalContext()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -105,7 +106,7 @@ class WBEventScreen:
 		screen.setTableColumnHeader("WBEventPlayer", 0, "", 24)
 		screen.setTableColumnHeader("WBEventPlayer", 1, "", iWidth - 24)
 
-		for iPlayerX in xrange(STATE.getMAX_PC_PLAYERS()):
+		for iPlayerX in xrange(GC.getMAX_PC_PLAYERS()):
 			pPlayerX = GC.getPlayer(iPlayerX)
 			if pPlayerX.isAlive():
 				if iEventPlayer == -1:
@@ -233,7 +234,7 @@ class WBEventScreen:
 		screen.setTableColumnHeader("WBOtherPlayer", 0, "", 24)
 		screen.setTableColumnHeader("WBOtherPlayer", 1, "", iWidth - 24)
 
-		for iPlayerX in xrange(STATE.getMAX_PC_PLAYERS()):
+		for iPlayerX in xrange(GC.getMAX_PC_PLAYERS()):
 			if iPlayerX == iEventPlayer: continue
 			pPlayerX = GC.getPlayer(iPlayerX)
 			if pPlayerX.isAlive():

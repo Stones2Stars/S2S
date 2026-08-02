@@ -10,6 +10,7 @@ import ScreenResolution as SR
 # globals
 # STATE is the live-state half of the one data-fetching library (CyState, beside CyEnabler). CyInterface and
 # CyTranslator are the UI and localization services, which the library deliberately does not own.
+GC = CyGlobalContext()
 STATE = CyState()
 CyIF = CyInterface()
 TRNSLTR = CyTranslator()

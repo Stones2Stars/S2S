@@ -17,6 +17,7 @@ import re
 # Globals
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
+GC = CyGlobalContext()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -430,7 +431,7 @@ class TeamScores:
 
 	def gatherVassals(self):
 		if self.bVassal:
-			for iTeam in range(STATE.getMAX_PC_TEAMS()):
+			for iTeam in range(GC.getMAX_PC_TEAMS()):
 				teamScores = self._scoreboard.getTeamScores(iTeam)
 				if teamScores and self.CyTeam.isVassal(iTeam):
 					# teamScores is a master of self

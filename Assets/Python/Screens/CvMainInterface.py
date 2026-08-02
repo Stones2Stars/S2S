@@ -11,6 +11,7 @@ import RevInstances
 # globals
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
+GC = CyGlobalContext()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -132,9 +133,9 @@ class CvMainInterface:
 				"TXT_KEY_RAW_YIELD_TILES_ALL")
 			# Cache Constants.
 			self.iPlotListMaxRows		= GC.getMAX_PLOT_LIST_ROWS()
-			self.iMaxPlayers			= STATE.getMAX_PLAYERS()
-			self.iMaxPcTeams			= STATE.getMAX_PC_TEAMS()
-			self.iMaxPcPlayers			= STATE.getMAX_PC_PLAYERS()
+			self.iMaxPlayers			= GC.getMAX_PLAYERS()
+			self.iMaxPcTeams			= GC.getMAX_PC_TEAMS()
+			self.iMaxPcPlayers			= GC.getMAX_PC_PLAYERS()
 			self.iMaxDefenseDamage		= GC.getMAX_CITY_DEFENSE_DAMAGE()
 			self.fMoveDenominator = float(GC.getMOVE_DENOMINATOR())
 			self.bNegGoldIsMaintenance	= GC.getDefineINT("TREAT_NEGATIVE_GOLD_AS_MAINTENANCE")

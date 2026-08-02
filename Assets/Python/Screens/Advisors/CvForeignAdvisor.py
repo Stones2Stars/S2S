@@ -9,6 +9,7 @@ import math
 # globals
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
+GC = CyGlobalContext()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -185,7 +186,7 @@ class CvForeignAdvisor:
 		if DebugUtils.isAnyDebugMode():
 			DDB = "FA_DebugDD"
 			screen.addDropDownBoxGFC(DDB, 22, 0, 300, eWidGen, 1, 1, FontTypes.GAME_FONT)
-			for iPlayerX in range(STATE.getMAX_PC_PLAYERS()):
+			for iPlayerX in range(GC.getMAX_PC_PLAYERS()):
 				CyPlayerX = GC.getPlayer(iPlayerX)
 				if CyPlayerX.isAlive():
 					screen.addPullDownString(DDB, CyPlayerX.getName(), iPlayerX, iPlayerX, iPlayerX == iPlayer)
@@ -200,7 +201,7 @@ class CvForeignAdvisor:
 		iTeam = self.iTeam
 		CyTeam = self.CyTeam
 		aList = []
-		for iPlayerX in range(STATE.getMAX_PC_PLAYERS()):
+		for iPlayerX in range(GC.getMAX_PC_PLAYERS()):
 			if iPlayerX == iPlayer: continue
 			CyPlayerX = GC.getPlayer(iPlayerX)
 			if not CyPlayerX.isAlive() or CyPlayerX.isMinorCiv(): continue
