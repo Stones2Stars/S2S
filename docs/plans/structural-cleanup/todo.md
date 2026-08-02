@@ -68,6 +68,20 @@
   no-nukes bar does not apply to projects at all — the hole is deliberate and visible
   ([DEC-no-legacy-masking](../../architecture/decisions.md#dec-no-legacy-masking)), not an oversight.
   ⚠ `espionagePoints` rides the missions/`CvOutcome` carve-out — its channel is settled, only its authoring home waits.
+- Author the trait LADDER as `requires`, so learnability is an ordinary enabler gate. A developing line is a
+  chain of trait LEVELS and "may I take this rung" is an availability question — so it belongs in `requires`,
+  exactly as [json.md §9](../../specs/json.md) already specs for a promotion line (each level's `requires.build`
+  names the level below). ⛔ Today nothing carries it: a trait authors only `succession.{promotionLine,priority}`
+  — ORDERING data, which the rebuilt info is explicit is never a gate — no trait authors `requires`, no entity
+  authors the `enables.traits` inversion, and `CvTraitInfo` serves no `getRequires()`. So the rung prerequisite
+  is derivable (line + priority) but stated nowhere.
+  ⚠ Until it is authored, `CvPlayer::canLearnTrait`'s ladder block is a legacy re-derivation MASKING that
+  absence ([DEC-no-legacy-masking](../../architecture/decisions.md#dec-no-legacy-masking)) — it scans the whole
+  trait registry for the rung beneath, and it is already half-migrated (calling the new `getSuccessionPriority`
+  beside the legacy `getPromotionLine`).
+  ⛔ Its TECH leg goes rather than converting: gating a rung on the line's `PrereqTech` is the tech-gated
+  collapse [modifier.md §4](../../specs/modifier.md) rules WRONG — researching a level's prereq tech does not
+  advance a held trait, and the held trait IS the authoritative level.
 - Bring `curate_trait`'s trade-route rows onto ruling 11, as `curate_building` already is: `iCoastalTradeRoutes`
   and `iForeignTradeRouteModifier` still emit `coastal` / `foreign` as MEMBERS, and neither has a kind in the
   vocabulary — so a trait authoring one emits an address that resolves to nothing and is dropped in silence.
