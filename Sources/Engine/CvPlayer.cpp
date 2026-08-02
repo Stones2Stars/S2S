@@ -26080,10 +26080,16 @@ void CvPlayer::clearCanConstructCacheForGroup(SpecialBuildingTypes eSpecialBuild
 void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 {
 	PROFILE_EXTRA_FUNC();
-	changeNonStateReligionCommerce(iChange*((GC.getTraitInfo(eTrait).isNonStateReligionCommerce())? 1 : 0));
-	changeUpgradeAnywhere(iChange*((GC.getTraitInfo(eTrait).providesPolicy(CLS_POLICY_UPGRADE_ANYWHERE))? 1 : 0));
 	const CvTraitInfo& kTrait = GC.getTraitInfo(eTrait);
-	// The flat index deltas reduce their ×100 here; the three MOD kinds are percents and carry no scaling.
+
+	//	⛔ A trait's MODIFIER families are deliberately NOT applied here. The gather folds every held trait's
+	//	modifiers into this player's scope packages -- selecting the active simple/complex set and applying the
+	//	PURE_TRAITS sign filter as it goes -- so a push into player-side accumulators would be a second copy of
+	//	the same numbers, maintained by hand ([DEC-accumulator-cut-uniform]). What is left below is only what the
+	//	cascade does not carry.
+
+	//	REVOLUTION is Python-authoritative, so the engine stores what Python reads back and models nothing. The
+	//	flat index deltas reduce their ×100 here; the three MOD kinds are percents and carry no scaling.
 	changeRevIdxLocal(iChange * (kTrait.getRevolution(REVOLUTION_LOCAL, CASC_SCOPE_EMPIRE) / 100));
 	changeRevIdxNational(iChange * (kTrait.getRevolution(REVOLUTION_NATIONAL, CASC_SCOPE_EMPIRE) / 100));
 	changeRevIdxDistanceModifier(iChange * kTrait.getRevolution(REVOLUTION_DISTANCE_MODIFIER, CASC_SCOPE_EMPIRE));
@@ -26093,199 +26099,30 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 	changeRevIdxBadReligionMod(iChange * static_cast<float>(kTrait.getRevolution(REVOLUTION_BAD_RELIGION, CASC_SCOPE_EMPIRE)));
 	changeRevIdxGoodReligionMod(iChange * static_cast<float>(kTrait.getRevolution(REVOLUTION_GOOD_RELIGION, CASC_SCOPE_EMPIRE)));
 
-	changeCivilizationHealth(iChange*GC.getTraitInfo(eTrait).getHealth());
-	changeExtraHappiness(iChange*GC.getTraitInfo(eTrait).getHappiness());
+	//	The empire POLICY states this trait enacts while it is held -- pure on/off conditions of the civilization
+	//	([json.md §9]), read off the trait's own policy block. They are per-flag counters today and retire onto
+	//	the EmpireContext.policies union with the rest of that family ([contexts.md]).
+	changeNonStateReligionCommerce(kTrait.providesPolicy(CLS_POLICY_NON_STATE_RELIGION_COMMERCE) ? iChange : 0);
+	changeUpgradeAnywhere(kTrait.providesPolicy(CLS_POLICY_UPGRADE_ANYWHERE) ? iChange : 0);
+	changeMilitaryFoodProductionCount(kTrait.providesPolicy(CLS_POLICY_MILITARY_FOOD_PRODUCTION) ? iChange : 0);
+	changeInquisitionCount(kTrait.providesPolicy(CLS_POLICY_ALLOW_INQUISITIONS) ? iChange : 0);
+	changeCitiesStartwithStateReligionCount(kTrait.providesPolicy(CLS_POLICY_CITIES_START_WITH_STATE_RELIGION) ? iChange : 0);
+	changeDraftsOnCityCaptureCount(kTrait.providesPolicy(CLS_POLICY_DRAFTS_ON_CITY_CAPTURE) ? iChange : 0);
+	changeExtraGoodyCount(kTrait.providesPolicy(CLS_POLICY_EXTRA_GOODY) ? iChange : 0);
+	changeAllReligionsActiveCount(kTrait.providesPolicy(CLS_POLICY_ALL_RELIGIONS_ACTIVE) ? iChange : 0);
+	changeAllReligionsActiveCount(kTrait.providesPolicy(CLS_POLICY_BANS_NON_STATE_RELIGIONS) ? -iChange : 0);
 
-	foreach_(const BuildingModifier2& pair, GC.getTraitInfo(eTrait).getBuildingHappinessModifiersFiltered())
-	{
-		changeExtraBuildingHappiness(pair.first, iChange * pair.second);
-	}
-
-	changeUpkeepModifier(iChange*GC.getTraitInfo(eTrait).getUpkeepModifier());
-	changeLevelExperienceModifier(iChange*GC.getTraitInfo(eTrait).getLevelExperienceModifier());
-
-	// The wonder build-rate categories: `world`/`team`/`national` name the CAP SCOPE that makes a building a
-	// wonder ([json.md §4.4]), so each is its own build-rate kind. All three are percents and carry no scaling.
-	changeMaxGlobalBuildingProductionModifier(iChange * kTrait.getBuildRateModifier(BUILD_RATE_WORLD_WONDER, CASC_SCOPE_EMPIRE));
-	changeMaxTeamBuildingProductionModifier(iChange * kTrait.getBuildRateModifier(BUILD_RATE_TEAM_WONDER, CASC_SCOPE_EMPIRE));
-	changeMaxPlayerBuildingProductionModifier(iChange * kTrait.getBuildRateModifier(BUILD_RATE_NATIONAL_WONDER, CASC_SCOPE_EMPIRE));
-
-	for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
-	{
-		changeTradeYieldModifier((YieldTypes)iI,
-			iChange * kTrait.getTradeRouteYieldModifier((YieldTypes)iI, CASC_SCOPE_EMPIRE));
-	}
-
-	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
-	{
-		changeCommerceRateModifier((CommerceTypes)iI,
-			iChange * kTrait.getCommerceModifier((CommerceTypes)iI, CASC_SCOPE_EMPIRE));
-	}
-
-	for (int iI = 0; iI < GC.getTraitInfo(eTrait).getNumCivicOptionNoUpkeepTypes(); iI++)
-	{
-		if ((CivicOptionTypes)GC.getTraitInfo(eTrait).isCivicOptionNoUpkeepType(iI).eCivicOption != NO_CIVICOPTION)
-		{
-			CivicOptionTypes eCivicOption = ((CivicOptionTypes)GC.getTraitInfo(eTrait).isCivicOptionNoUpkeepType(iI).eCivicOption);
-			if(GC.getTraitInfo(eTrait).isCivicOptionNoUpkeepType(iI).bBool)
-			{
-				changeNoCivicUpkeepCount(eCivicOption, iChange);
-			}
-		}
-	}
-
-	//for (int iI = 0; iI < GC.getNumCivicOptionInfos(); iI++)
-	//{
-	//	if (GC.getCivicOptionInfo((CivicOptionTypes) iI).getTraitNoUpkeep(eTrait))
-	//	{
-	//		changeNoCivicUpkeepCount(((CivicOptionTypes)iI), iChange);
-	//	}
-	//}
-
-	//TB Traits begin
-	if (GC.getTraitInfo(eTrait).getMaxAnarchy() > -1)
+	//	The anarchy CLAMPS are intrinsic bounds on a duration, not a channel that accumulates.
+	if (kTrait.getMaxAnarchy() > -1)
 	{
 		updateMaxAnarchyTurns();
 	}
-	if (GC.getTraitInfo(eTrait).getMinAnarchy() > 0)
+	if (kTrait.getMinAnarchy() > 0)
 	{
 		updateMinAnarchyTurns();
 	}
-	changeCivicAnarchyModifier(iChange*GC.getTraitInfo(eTrait).getCivicAnarchyTimeModifier());
-	changeReligiousAnarchyModifier(iChange*GC.getTraitInfo(eTrait).getReligiousAnarchyTimeModifier());
-	changeImprovementUpgradeRateModifier(iChange*GC.getTraitInfo(eTrait).getImprovementUpgradeRateModifier());
-	changeMaxConscript(iChange*GC.getTraitInfo(eTrait).getMaxConscript());
-	changeStateReligionGreatPeopleRateModifier(iChange*GC.getTraitInfo(eTrait).getStateReligionGreatPeopleRateModifier());
-	changeHappyPerMilitaryUnit(iChange*GC.getTraitInfo(eTrait).getHappyPerMilitaryUnit());
-	changeLargestCityHappiness(iChange*GC.getTraitInfo(eTrait).getLargestCityHappiness());
-	changeTradeRoutes(iChange*GC.getTraitInfo(eTrait).getTradeRoutes());
-	changeStateReligionUnitProductionModifier(iChange*GC.getTraitInfo(eTrait).getStateReligionUnitProductionModifier());
-	changeStateReligionBuildingProductionModifier(iChange*GC.getTraitInfo(eTrait).getStateReligionBuildingProductionModifier());
-	changeExpInBorderModifier(iChange*GC.getTraitInfo(eTrait).getExpInBorderModifier());
-	changeMilitaryProductionModifier(iChange*GC.getTraitInfo(eTrait).getMilitaryProductionModifier());
-	changeAIAttitudeModifier(iChange*GC.getTraitInfo(eTrait).getAttitudeModifier());
-	changeNationalEspionageDefense(iChange*GC.getTraitInfo(eTrait).getEspionageDefense());
-	changeMaxTradeRoutesAdjustment(iChange*GC.getTraitInfo(eTrait).getMaxTradeRoutesChange());
-	changeNationalHurryAngerModifier(GC.getTraitInfo(eTrait).getHurryAngerModifier() * iChange);
-	changeHurryCostModifier(GC.getTraitInfo(eTrait).getHurryCostModifier() * iChange);
-	changeForeignTradeRouteModifier(GC.getTraitInfo(eTrait).getForeignTradeRouteModifier() * iChange);
-	changeNationalEnemyWarWearinessModifier(GC.getTraitInfo(eTrait).getEnemyWarWearinessModifier() * iChange);
-	changeMilitaryFoodProductionCount((GC.getTraitInfo(eTrait).isMilitaryFoodProduction()) ? iChange : 0);
-	changeInquisitionCount((GC.getTraitInfo(eTrait).isAllowsInquisitions())? iChange : 0);
 
-	changeNationalCityStartCulture(GC.getTraitInfo(eTrait).getCityStartCulture() * iChange);
-	changeNationalAirUnitCapacity(GC.getTraitInfo(eTrait).getGlobalAirUnitCapacity() * iChange);
-	changeNationalCityStartBonusPopulation(GC.getTraitInfo(eTrait).getBonusPopulationinNewCities() * iChange);
-	changeNationalMissileRangeChange(GC.getTraitInfo(eTrait).getMissileRange() * iChange);
-	changeNationalFlightOperationRangeChange(GC.getTraitInfo(eTrait).getFlightOperationRange() * iChange);
-	changeNationalNavalCargoSpaceChange(GC.getTraitInfo(eTrait).getNavalCargoSpace() * iChange);
-	changeNationalMissileCargoSpaceChange(GC.getTraitInfo(eTrait).getMissileCargoSpace() * iChange);
-	changeExtraFreedomFighters(GC.getTraitInfo(eTrait).getFreedomFighterChange() * iChange);
-
-	// `national` is the EMPIRE SCOPE, not a kind fragment ([DEC-scope-is-an-axis]); capture authors PERCENT at
-	// empire, so the re-point is 1:1 with no reduction.
-	changeExtraNationalCaptureProbabilityModifier(
-		GC.getTraitInfo(eTrait).getCapture(CAPTURE_PROBABILITY, CASC_SCOPE_EMPIRE) * iChange);
-	changeExtraNationalCaptureResistanceModifier(
-		GC.getTraitInfo(eTrait).getCapture(CAPTURE_RESISTANCE, CASC_SCOPE_EMPIRE) * iChange);
-
-	changeExtraStateReligionSpreadModifier(GC.getTraitInfo(eTrait).getStateReligionSpreadProbabilityModifier() * iChange);
-	changeExtraNonStateReligionSpreadModifier(GC.getTraitInfo(eTrait).getNonStateReligionSpreadProbabilityModifier() * iChange);
-	changeCitiesStartwithStateReligionCount((GC.getTraitInfo(eTrait).isCitiesStartwithStateReligion())? iChange : 0);
-	changeDraftsOnCityCaptureCount((GC.getTraitInfo(eTrait).isDraftsOnCityCapture())? iChange : 0);
-	changeFreeSpecialistperWorldWonderCount((GC.getTraitInfo(eTrait).isFreeSpecialistperWorldWonder())? iChange : 0);
-	changeFreeSpecialistperNationalWonderCount((GC.getTraitInfo(eTrait).isFreeSpecialistperNationalWonder())? iChange : 0);
-	changeFreeSpecialistperTeamProjectCount((GC.getTraitInfo(eTrait).isFreeSpecialistperTeamProject())? iChange : 0);
-	changeExtraGoodyCount((GC.getTraitInfo(eTrait).isExtraGoody())? iChange : 0);
-
-	changeAllReligionsActiveCount((GC.getTraitInfo(eTrait).isAllReligionsActive())? iChange : 0);
-	changeAllReligionsActiveCount((GC.getTraitInfo(eTrait).isBansNonStateReligions())? -iChange : 0);
-	changeFreedomFighterCount(GC.getTraitInfo(eTrait).isFreedomFighter() ? iChange : 0);
-
-	foreach_(const ImprovementModifier& pair, GC.getTraitInfo(eTrait).getImprovementUpgradeModifiers())
-	{
-		changeImprovementUpgradeRateModifierSpecific(pair.first, iChange * pair.second);
-	}
-
-	foreach_(const BuildModifier2& pair, GC.getTraitInfo(eTrait).getBuildWorkerSpeedModifiers())
-	{
-		changeBuildWorkerSpeedModifierSpecific(pair.first, iChange * pair.second);
-	}
-
-	// The trait's specialist-keyed YIELD deposits. A trait keyed to a SHARED sub-city target keeps the
-	// governing-deliverer shape ([modifier.md §4] -- the per-set carve-out: the simple and complex sets hold
-	// different values for one shared specialist file), so the rows are read from the TRAIT rather than inverted
-	// onto the specialist. An ENTRY-LIST read over the handful the trait authored ([modifier.md §5]), never a
-	// walk of every specialist id asking what it deposits. The slots are FLAT and therefore ×100, so the reader
-	// reduces at its point of use -- the accumulators carry whole yields ([DEC-fixedpoint-x100]).
-	const int iSpecialistSegment = InfoValuation::keyedTargetSegment("specialists");
-	for (int iYield = 0; iYield < NUM_YIELD_TYPES; iYield++)
-	{
-		std::vector<std::pair<int, int> > kSpecialistYields;
-		InfoValuation::collectKeyedTarget(GC.getTraitInfo(eTrait).getModifiers(),
-			infoYieldFamily(iYield), CHANNEL_AMOUNT, iSpecialistSegment, kSpecialistYields, (int)CASC_SCOPE_EMPIRE);
-		for (size_t iRow = 0; iRow < kSpecialistYields.size(); ++iRow)
-		{
-			changeExtraSpecialistYield((SpecialistTypes)kSpecialistYields[iRow].first, (YieldTypes)iYield,
-				kSpecialistYields[iRow].second / 100 * iChange);
-		}
-	}
-	// (The trait's era-advance specialist is not applied here: it fires on the ERA ADVANCING, which is the
-	// trigger engine's SEVT_ERA_CHANGED route, not on gaining the trait.)
-
-	for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
-	{
-		const YieldTypes eYield = static_cast<YieldTypes>(iI);
-		changeSeaPlotYield(eYield, GC.getTraitInfo(eTrait).getSeaPlotYieldChanges(iI) * iChange);
-		changeFreeCityYield(eYield, GC.getTraitInfo(eTrait).getYieldChange(iI) * iChange);
-		changeYieldRateModifier(eYield, kTrait.getYieldModifier(eYield, CASC_SCOPE_EMPIRE) * iChange);
-		changeCapitalYieldRateModifier(eYield, GC.getTraitInfo(eTrait).getCapitalYieldModifier(iI) * iChange);
-		changeSpecialistExtraYield(eYield, GC.getTraitInfo(eTrait).getSpecialistExtraYield(iI) * iChange);
-		updateExtraYieldThreshold(eYield);
-		updateLessYieldThreshold(eYield);
-	}
-
-	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
-	{
-		changeCapitalCommerceRateModifier((CommerceTypes)iI, GC.getTraitInfo(eTrait).getCapitalCommerceModifier(iI) * iChange);
-	}
-
-	int iGPRateChange = GC.getTraitInfo(eTrait).getGreatPeopleRateChange();
-	if (iGPRateChange > 0)
-	{
-		UnitTypes eGreatPeopleUnit = (UnitTypes)GC.getTraitInfo(eTrait).getGreatPeopleUnitType();
-		changeNationalGreatPeopleUnitRate(eGreatPeopleUnit, GC.getTraitInfo(eTrait).getGreatPeopleRateChange() * iChange);
-	}
-
-	const UnitTypes eGreatPeopleUnit = (UnitTypes)GC.getTraitInfo(eTrait).getGoldenAgeonBirthofGreatPeopleType();
-	if (eGreatPeopleUnit != NO_UNIT)
-	{
-		changeGoldenAgeOnBirthOfGreatPersonCount(eGreatPeopleUnit, iChange);
-	}
-
-	foreach_(const DomainModifier2& pair, GC.getTraitInfo(eTrait).getDomainProductionModifiers())
-	{
-		changeNationalDomainProductionModifier(pair.first, pair.second * iChange);
-	}
-
-	foreach_(const TechModifier& pair, GC.getTraitInfo(eTrait).getTechResearchModifiers())
-	{
-		changeNationalTechResearchModifier(pair.first, pair.second * iChange);
-	}
-
-	for (int iI = 0; iI < GC.getTraitInfo(eTrait).getNumUnitCombatProductionModifiers(); iI++)
-	{
-		const UnitCombatTypes eUnitCombat = (UnitCombatTypes)GC.getTraitInfo(eTrait).getUnitCombatProductionModifier(iI).eUnitCombat;
-		if (eUnitCombat != NO_UNITCOMBAT)
-		{
-			if (GC.getTraitInfo(eTrait).getUnitCombatProductionModifier(iI).iModifier != 0)
-			{
-				changeUnitCombatProductionModifier(eUnitCombat, iChange*GC.getTraitInfo(eTrait).getUnitCombatProductionModifier(iI).iModifier);
-			}
-		}
-	}
-
-	//Run through Unit Promotion Changes
+	//	Run through Unit Promotion Changes
 	algo::for_each(units(), CvUnit::fn::doSetFreePromotions(iChange > 0, eTrait));
 }
 
