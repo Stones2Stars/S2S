@@ -68,16 +68,17 @@
   no-nukes bar does not apply to projects at all — the hole is deliberate and visible
   ([DEC-no-legacy-masking](../../architecture/decisions.md#dec-no-legacy-masking)), not an oversight.
   ⚠ `espionagePoints` rides the missions/`CvOutcome` carve-out — its channel is settled, only its authoring home waits.
-- Dissolve the invented `succession` block into EDGES, and author the trait ladder so learnability is an
-  ordinary enabler gate ([json.md §9](../../specs/json.md) carries the ruling). A rung `enables` the rung above
-  it; the gate that a rung needs the one beneath is its `requires`, the shape §9 already specs for a promotion
-  line. Ordering needs no section, and a manual upgrade link is an edge.
-  ⛔ It spans every layer, exactly as `cityFounding` did — the spec (done), `curate_trait`'s emit, the
-  `CvTraitInfo` members + their getters, the readJson/harness reserved-section vocabulary, and the authored
-  data, which carries it broadly. Purge it in one pass, not per layer.
-  ⚑ The tell it was never real: NOTHING authors `enables.traits`, because the edge that belongs there was being
-  parked in a section — so the enabler could not see a relationship it owns, and the rung prerequisite ends up
-  derivable (line + priority) but stated nowhere.
+- Give the ENABLER a TRAIT domain, and let `CvPlayer::canLearnTrait` / `canUnlearnTrait` read its verdict.
+  The ladder is now plain `enables.traits` data, so the generate pass already answers learnability for free —
+  a rung is in CAN GET iff the rung beneath it is held ([enabler.md §1](../../specs/enabler.md)). What is
+  missing is the DOMAIN: traits are not instantiated as an `EnablerDomain`, so nothing serves the verdict and
+  those two functions still hand-walk the trait registry.
+  ⛔ Do NOT answer it on the INFO side. Deriving a rung depth / line root by walking the edge chain on
+  `CvTraitInfo` rebuilds, per-info, exactly the walk the generate pass performs — a second implementation of
+  availability ([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation)), and
+  the enabler is where "can I?" lives ([DEC-enabler-not-cascade](../../architecture/decisions.md#dec-enabler-not-cascade)).
+  ⚠ Its consumers also want an ORDERING (which rung outranks which, for the unlearn/downgrade choice). That
+  falls out of the same domain rather than needing an authored rank.
   ⚠ Until it is authored, `CvPlayer::canLearnTrait`'s ladder block is a legacy re-derivation MASKING that
   absence ([DEC-no-legacy-masking](../../architecture/decisions.md#dec-no-legacy-masking)) — it scans the whole
   trait registry for the rung beneath, and it is already half-migrated (calling the new `getSuccessionPriority`

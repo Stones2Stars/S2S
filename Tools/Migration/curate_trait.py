@@ -34,8 +34,9 @@ parsed into per-PROPERTY_* families). OWNER RULINGS (2026-06-14) drive the struc
     GAMEOPTION_LEADER_COMPLEX_TRAITS restating the simple/complex FOLDER split, which IS the selection
     mechanism (traits/simple/ vs traits/complex/, option-selected at the composition root). The `loadPrune`
     section it fed was a curator-era invention, retired whole (superseded-ideas.md).
-  * PromotionLine + LinePriority -> a `succession` block (the developing-leaders line ordering); the line's own
-    PrereqTech is a DERIVED tech enabler owned by PromotionLineInfo (store), not re-authored here.
+  * PromotionLine + LinePriority -> `enables.traits`: a rung ENABLES the next rung. That edge IS the ladder --
+    a rung enters CAN GET only once the one beneath it is held (enabler.md par.1) -- so there is no ordering
+    block, no rank, and no gate beside it. The `succession` block these used to emit never existed in the spec.
   * Categories -> DROP (dead: zero C++ readers; not authored in either trait XML; civic drops it too).
   * the culture-requirement progression (GAMEOPTION_NEXT_TRAIT_CULTURE_REQ_PERCENT) is a GAME OPTION, not a
     trait field -> not authored on the trait.
@@ -433,9 +434,21 @@ def is_complex(typ, rec, complex_ids):
     return False
 
 
+
+def _ladder_next(typ, rank):
+    """The rung ABOVE `typ` on its developing line: TRAIT_X -> TRAIT_X1 -> ... (and the negative arm).
+    The ids carry the rung, so the next one is derived rather than looked up."""
+    if not typ:
+        return None
+    stem = typ.rstrip('0123456789')
+    cur = rank if rank else 0
+    nxt = cur - 1 if cur < 0 else cur + 1
+    return "%s%d" % (stem, nxt)
+
 def curate(typ, rec, store):
     text, fam, props, policies, grants, art_blocks, identity, ai = {}, {}, {}, {}, {}, {}, {}, {}
-    excludes, succession = [], {}
+    excludes = []
+    line_name, line_rank = None, None
     triggers = []
     gp_unit, gp_change = None, None
     bonus_happy = OrderedDict()
@@ -540,10 +553,10 @@ def curate(typ, rec, store):
             pass   # DROPPED (owner 2026-07-08): restates the simple/complex folder split -- see the docstring
         elif tag == "PromotionLine":
             if t and t != "NONE":
-                succession["promotionLine"] = t
+                line_name = t
         elif tag == "iLinePriority":
             if engine.is_int(t) and int(t) != 0:
-                succession["priority"] = int(t)
+                line_rank = int(t)
         elif tag == "iGreatPeopleRateChange":
             gp_change = int(t) if engine.is_int(t) else None
         elif tag == "GreatPeopleUnitType":
@@ -664,8 +677,11 @@ def curate(typ, rec, store):
         out["grants"] = grants
     if triggers:
         out["triggers"] = triggers
-    if succession:
-        out["succession"] = succession
+    # The ladder edge: this rung enables the NEXT one on its line. Rank 0/absent is the base rung.
+    if line_name:
+        nxt = _ladder_next(typ, line_rank)
+        if nxt:
+            out.setdefault("enables", OrderedDict()).setdefault("traits", []).append(nxt)
     if ai:
         out["ai"] = ai
     cc.emit_art(out, art_blocks)
@@ -694,11 +710,11 @@ def main():
     nc = sum(1 for f in folders.values() if f == "complex")
     print("TraitInfo curated: %d  (simple=%d, complex=%d)" % (len(results), len(results) - nc, nc))
     STRUCT = {"type", "description", "civilopedia", "help", "strategy", "enables", "replacedBy", "excludes",
-              "policies", "grants", "succession", "ai", "ui", "world", "sound", "identity"}
+              "policies", "grants", "ai", "ui", "world", "sound", "identity"}
     fams = sorted({k for o in results.values() for k in o if k not in STRUCT and not k.startswith("PROPERTY_")})
     has = lambda k: sum(1 for o in results.values() if k in o)
     print("  families seen: %s" % ", ".join(fams))
-    for k in ("enables", "replacedBy", "excludes", "succession", "grants", "policies", "ai"):
+    for k in ("enables", "replacedBy", "excludes", "grants", "policies", "ai"):
         print("  with %-11s: %d" % (k, has(k)))
     if all_leftover:
         print("  !! leftover-to-identity (review): %s" % ", ".join(sorted(all_leftover)))
