@@ -11468,67 +11468,63 @@ bool CvPlot::shouldUsePlotBuilder() const
 
 int CvPlot::getYieldWithBuild(BuildTypes eBuild, YieldTypes eYield, bool bWithUpgrade) const
 {
-	PROFILE_EXTRA_FUNC();
-	int iYield = 0;
+	// THE WHAT-IF: this plot's base package recomputed with the BUILD's substrate substituted in -- the same
+	// one calc the package rebuild runs, handed the candidate instead of what is standing here
+	// ([DEC-single-implementation]). Feature, improvement and route are swapped; terrain and the bonus are the
+	// ground's and do not move. This is the read the AI's worker/improvement decisions weigh, so it answers the
+	// NEW yield rather than a hand-assembled delta.
+	const CvBuildInfo& kBuild = GC.getBuildInfo(eBuild);
 
-	bool bIgnoreFeature = false;
-	if (getFeatureType() != NO_FEATURE)
-	{
-		if (GC.getBuildInfo(eBuild).isFeatureRemove(getFeatureType()))
-		{
-			bIgnoreFeature = true;
-		}
-	}
+	// a build that clears the feature answers as though it were already cleared
+	const bool bRemovesFeature = getFeatureType() != NO_FEATURE && kBuild.isFeatureRemove(getFeatureType());
 
-	iYield += calculateNatureYield(eYield, getTeam(), bIgnoreFeature);
-
-	ImprovementTypes eImprovement = GC.getBuildInfo(eBuild).getImprovement();
-
-	if (eImprovement != NO_IMPROVEMENT)
-	{
-		if (bWithUpgrade)
-		{
-			//in the case that improvements upgrade, use 2 upgrade levels higher for the
-			//yield calculations.
-			ImprovementTypes eUpgradeImprovement = GC.getImprovementInfo(eImprovement).getImprovementUpgrade();
-			if (eUpgradeImprovement != NO_IMPROVEMENT)
-			{
-				//unless it's commerce on a low food tile, in which case only use 1 level higher
-				if ((eYield != YIELD_COMMERCE) || (getYield(YIELD_FOOD) >= GC.getFOOD_CONSUMPTION_PER_POPULATION()))
-				{
-					const ImprovementTypes eUpgradeImprovement2 = GC.getImprovementInfo(eUpgradeImprovement).getImprovementUpgrade();
-					if (eUpgradeImprovement2 != NO_IMPROVEMENT)
-					{
-						eUpgradeImprovement = eUpgradeImprovement2;
-					}
-				}
-			}
-
-			if ((eUpgradeImprovement != NO_IMPROVEMENT) && (eUpgradeImprovement != eImprovement))
-			{
-				eImprovement = eUpgradeImprovement;
-			}
-		}
-
-		iYield += calculateImprovementYieldChange(eImprovement, eYield, getOwner(), false);
-	}
-
-	RouteTypes eRoute = (RouteTypes)GC.getBuildInfo(eBuild).getRoute();
-	if (eRoute != NO_ROUTE)
+	ImprovementTypes eImprovement = (ImprovementTypes)kBuild.getImprovement();
+	if (eImprovement == NO_IMPROVEMENT)
 	{
 		eImprovement = getImprovementType();
-		if (eImprovement != NO_IMPROVEMENT)
+	}
+	else if (bWithUpgrade)
+	{
+		//	the AI weighs an improvement at what it MATURES into -- two upgrade levels on, except commerce on a
+		//	low-food tile, which is weighed one level on (the legacy heuristic, kept)
+		ImprovementTypes eUpgrade = (ImprovementTypes)GC.getImprovementInfo(eImprovement).getImprovementUpgrade();
+		if (eUpgrade != NO_IMPROVEMENT)
 		{
-			iYield += GC.getRouteInfo(eRoute).getImprovementYield(eImprovement, (YieldTypes)(eYield));
-			if (getRouteType() != NO_ROUTE)
+			int aiCurrentYields[NUM_YIELD_TYPES];
+			getYields(aiCurrentYields);
+			if (eYield != YIELD_COMMERCE
+			|| aiCurrentYields[YIELD_FOOD] / 100 >= GC.getFOOD_CONSUMPTION_PER_POPULATION())
 			{
-				iYield -= GC.getRouteInfo(getRouteType()).getImprovementYield(eImprovement, (YieldTypes)(eYield));
+				const ImprovementTypes eUpgradeTwo =
+					(ImprovementTypes)GC.getImprovementInfo(eUpgrade).getImprovementUpgrade();
+				if (eUpgradeTwo != NO_IMPROVEMENT)
+				{
+					eUpgrade = eUpgradeTwo;
+				}
 			}
+			eImprovement = eUpgrade;
 		}
 	}
 
+	RouteTypes eRoute = (RouteTypes)kBuild.getRoute();
+	if (eRoute == NO_ROUTE)
+	{
+		eRoute = getRouteType();
+	}
+	const BonusTypes eBonus = getBonusType(getTeam());
 
-	return iYield;
+	CvCascadeEvalCtx evalCtx;
+	InfoValuation::fillEvalCtxAtPlot(*this, evalCtx);
+	int aiYields[NUM_YIELD_TYPES];
+	InfoValuation::plotBaseYields(
+		getTerrainType() != NO_TERRAIN ? GC.getTerrainInfo(getTerrainType()).getModifiers() : NULL,
+		(!bRemovesFeature && getFeatureType() != NO_FEATURE) ? GC.getFeatureInfo(getFeatureType()).getModifiers() : NULL,
+		eBonus != NO_BONUS ? GC.getBonusInfo(eBonus).getModifiers() : NULL,
+		eImprovement != NO_IMPROVEMENT ? GC.getImprovementInfo(eImprovement).getModifiers() : NULL,
+		eRoute != NO_ROUTE ? GC.getRouteInfo(eRoute).getModifiers() : NULL,
+		evalCtx, aiYields);
+	// x100 native; this read answers WHOLE yields, as its callers weigh them ([DEC-fixedpoint-x100])
+	return aiYields[eYield] / 100;
 }
 
 bool CvPlot::canTrigger(EventTriggerTypes eTrigger, PlayerTypes ePlayer) const

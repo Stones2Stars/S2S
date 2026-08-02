@@ -185,6 +185,13 @@ group's natural index** — never N individual getters for a groupable set. This
   `ALL_CITY`, `WORLD`, `AREA`, …) inside a kind name collapses two of the address's axes into bespoke per-pair
   entries. `getDefense(DEFENSE_AMOUNT, SCOPE_CITY)` — kind and scope are separate arguments, exactly as the
   JSON's own `<family>.<scope>.<member>` separates them.
+- **⚖ THE DECISION PROTOCOL IS TWO STAGES, IN ORDER (owner): *"first it should ask enabler what is possible,
+  and then it asks cascade 'what if I do this?'"*** Every AI decision is that pair — the ENABLER narrows to the
+  candidates ([enabler.md §6](../specs/enabler.md): the frontier is the shared choice set, iterated instead of
+  the entity database), and the CASCADE values each survivor through the what-if. ⛔ Neither half substitutes
+  for the other: scoring what cannot be done wastes the expensive half on candidates the cheap half would have
+  dropped, and gating without valuing picks an option the AI cannot weigh. ⚑ **This is what makes the what-if
+  affordable at all** — it runs over a small maintained set, never over everything.
 - **THE WHAT-IF DRIVER — the AI's planning asks are STRAIGHT RESPONSES, 0 calculation (owner).** The two
   most-asked questions in the engine both answer from compiled structures: *"what can I do next after getting
   this?"* is the FUNDAMENTAL enabler-tree read — the info's load-compiled `enables`/reverse edge families + the
