@@ -8026,7 +8026,9 @@ int CvPlot::calculateNatureYield(YieldTypes eYield, TeamTypes eTeam, bool bIgnor
 
 	if (eTeam != NO_TEAM && getBonusType(eTeam) != NO_BONUS)
 	{
-		iYield += GC.getBonusInfo(getBonusType(eTeam)).getYieldChange(eYield);
+		//	A bonus's tile yield is its own plot-scope flat ([json.md §6.2]: plot-substrate entities each own
+		//	their plot-scope output). Plot yields are whole numbers, so the FLAT slot reduces here.
+		iYield += GC.getBonusInfo(getBonusType(eTeam)).getFlatYield(eYield, CASC_SCOPE_PLOT) / 100;
 	}
 
 	if (bIgnoreFeature && getFeatureType() != NO_FEATURE)
