@@ -626,6 +626,16 @@
 
 - Build the ONE data-fetching library toward COMPLETE (its end state, not a gate on cutting). Build it for the
   pedia (a SHAPE oracle, NOT a coverage oracle — the appendix is enumerable).
+  ⛔ **RESTORING THE ENGINE→PYTHON CALLBACK DIRECTION IS GATED ON THE INFO PLANE, and the reason is the IMPORT
+  CHAIN, not the callbacks themselves.** The engine enters Python at `CvEventInterface`, which imports
+  `BugEventManager` → `CvEventManager` → `CvScreensInterface`, i.e. the whole screen tree — so EVERY module on
+  that path must import cleanly before ANY callback fires, and each builds its own global from the legacy god
+  object at module scope. Those modules are INFO-dominated, so the chain cannot come back until `CyInfo` serves
+  the info plane; the live-state and availability halves alone do not reach it.
+  ⚑ That makes the direction patterns.md calls REQUIRED AND KEPT currently DOWN, which is worth knowing rather
+  than rediscovering: the cut is meant to be one-way, and until this closes it is not.
+  ⛔ It is NOT closed by publishing the legacy god object ([DEC-cy-not-fixed]) and NOT by a per-module shim
+  ([DEC-no-legacy-masking]) — a module comes off it by having its reads served, one module at a time.
 - Shoot the dead `Cy*` bindings on sight as the compiler names them.
 - Serve the UPGRADE-AWARE building count the random-event surface reads. Its binding is already unpublished, so
   those reads answer nothing today — the cut NAMED the requirement rather than creating it.

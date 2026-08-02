@@ -4,6 +4,7 @@
 #include "Python/CyCity.h"
 #include "Python/CyEnabler.h"
 #include "Python/CyGlobalContext.h"
+#include "Python/CyState.h"
 #include "Python/CyPlayer.h"
 #include "Python/CyPlot.h"
 #include "Python/CyUnit.h"
@@ -89,7 +90,8 @@ DllExport void DLLPublishToPython()
 	// The NEW uniform read surface. Not a widened Cy* binding -- an id-based surface with no dependency on the
 	// legacy wrappers, so they can be cut away without touching it ([DEC-cy-not-fixed]).
 	//
-	CyEnabler::pythonPublish();
+	CyEnabler::pythonPublish();   // "can I, right now?"      -- the availability half
+	CyState::pythonPublish();     // "what do I HAVE, now?"   -- the live-state half
 
 
 
