@@ -15,7 +15,7 @@ THE BASE/DEPOSIT SPLIT (owner §0.6 + ranking #34: "base -> identity, deltas are
   collateral/air/capture/espionage/heal. Same vocab as Promotion (the *Change suffix dropped on the unit).
 
 PASS 1 (this file): identity.base + the §5 scalar families + requires.build + store enables/obsoletes + cost
-+ grants + succession (upgradesTo) + capabilities + ai +
++ grants + capabilities + ai +
 COVERAGE CHECK. PASS 2 (deferred, shows as UNHANDLED): vs-keyed combat (Terrain/Feature/UnitCombat/Domain/Unit mods),
 the vision/LOS resolver, KillOutcomes/Actions -> `outcomes` (the clean VERB-PER-PAYLOAD vocabulary, emit_outcomes),
 GP-action magnitudes (discover/hurry/trade/greatWork -> grants/outcomes), PropertyManipulators, BonusProductionModifiers.
@@ -1003,7 +1003,6 @@ def curate(typ, rec, store):
     caps = OrderedDict()
     tags = OrderedDict()
     grants = OrderedDict()
-    succession = OrderedDict()
     identity = OrderedDict()
     base = OrderedDict()
     cost = OrderedDict()
@@ -1127,10 +1126,10 @@ def curate(typ, rec, store):
         # plain grants.buildings (ruling 8 / json.md §5): the settler's considered action IS founding, so no
         # bespoke foundBuildings key -- entry form {building, enabled?} unchanged.
         grants["buildings"] = found_buildings(store)
-    # --- succession (upgrade chain; manual, NOT replaces) ---
-    ups = _typelist_struct(rec, "UnitUpgrades", "UnitType") or _typelist(rec, "UnitUpgrades")
-    if ups:
-        succession["upgradesTo"] = ups
+    # UnitUpgrades is ALREADY carried by the edges: requires.build.dormant.all is the upgrades MINUS the
+    # superseders and replacedBy.units is the superseders (enabler.md par.3), so an `upgradesTo` block
+    # beside them was a duplicate in a section that does not exist. Verified over the shipped data: every
+    # authored upgradesTo was a SUBSET of dormant UNION replacedBy -- nothing was lost by dropping it.
     # SupersedingUnits = the genuine REPLACE edge (owner ruling 2026-06-25): a successor that REMOVES the predecessor
     # from the buildable set once itself buildable (engine isSupersedingUnitAvailable). Modeled with the EXISTING
     # `replacedBy` enabler edge (target-side, like obsoletedBy) -- NOT a bespoke supersededBy mechanism. Distinct from
@@ -1205,7 +1204,7 @@ def curate(typ, rec, store):
     ot = _txt(rec, "ObsoleteTech")
     if ot:
         out["obsoletedBy"] = OrderedDict([("techs", [ot])])
-    # SupersedingUnits -> the `replacedBy` replace edge (see succession note above): the unit is removed from
+    # SupersedingUnits -> the `replacedBy` replace edge (see the upgrade note above): the unit is removed from
     # buildable when a superseder is buildable. The existing replace mechanic, not a bespoke supersededBy.
     if sup:
         out["replacedBy"] = OrderedDict([("units", sup)])
@@ -1260,8 +1259,6 @@ def curate(typ, rec, store):
         out["outcomes"] = outcomes
     if grants:
         out["grants"] = grants
-    if succession:
-        out["succession"] = succession
     if base:
         identity["base"] = base
     if cost:
@@ -1356,10 +1353,10 @@ def main():
 
     has = lambda k: sum(1 for o in results.values() if k in o)
     STRUCT = {"type", "description", "civilopedia", "help", "enables", "obsoletes", "requires", "allowed", "skills", "tags",
-              "vision", "outcomes", "grants", "succession", "cost", "ai", "enabled", "disabled", "ui", "world", "sound", "identity"}
+              "vision", "outcomes", "grants", "cost", "ai", "enabled", "disabled", "ui", "world", "sound", "identity"}
     seen = sorted({f for o in results.values() for f in o if f not in STRUCT})
     print("UnitInfo curated: %d  | SpecialUnitInfo: %d" % (n, len(su_results)))
-    for k in ("enables", "obsoletes", "requires", "allowed", "skills", "tags", "grants", "succession", "cost", "identity"):
+    for k in ("enables", "obsoletes", "requires", "allowed", "skills", "tags", "grants", "cost", "identity"):
         print("  with %-11s: %d" % (k, has(k)))
     print("  families seen: %s" % ", ".join(seen))
     if args.sample is not None:
