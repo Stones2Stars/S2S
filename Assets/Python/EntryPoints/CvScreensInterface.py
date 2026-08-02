@@ -707,6 +707,13 @@ def lateInit():
 	twenty at startup put the whole advisor/screen tree on the path before anything could be shown. screenMap[X]
 	still reaches them -- they are simply built the first time they are asked for, exactly like earlyInit's.
 	"""
+	# WorldBuilder is built FIRST: its sub-screens take it as a constructor argument, so it has to exist before
+	# the factory rows below are evaluated.
+	import WorldBuilder, CvAdvancedStartScreen
+	global worldBuilderScreen, advancedStartScreen
+	advancedStartScreen = CvAdvancedStartScreen.CvAdvancedStartScreen()
+	worldBuilderScreen = WorldBuilder.WorldBuilder(WORLDBUILDER_SCREEN)
+
 	_screenFactories.update({
 		CORPORATION_SCREEN    : ('CvCorporationScreen', 'CvCorporationScreen', ()),
 		ESPIONAGE_ADVISOR     : ('CvEspionageAdvisor', 'CvEspionageAdvisor', ()),
@@ -743,10 +750,6 @@ def lateInit():
 		WB_TRADE              : ('WBTradeScreen', 'WBTradeScreen', (worldBuilderScreen,)),
 	})
 
-	import WorldBuilder, CvAdvancedStartScreen
-	global worldBuilderScreen, advancedStartScreen
-	advancedStartScreen = CvAdvancedStartScreen.CvAdvancedStartScreen()
-	worldBuilderScreen = WorldBuilder.WorldBuilder(WORLDBUILDER_SCREEN)
 	CivicData.initCivicData()
 
 # ⛔ SCREENS CONSTRUCT ON FIRST USE, NOT AT IMPORT.
