@@ -67,19 +67,6 @@ public:
 	const char* getFlavorType(FlavorTypes e) const;
 	const python::list getFlavorTypes() const;
 
-	const CvInfoBase* getUnitCombatInfo(int i) const;
-	const CvInfoBase* getDomainInfo(int i) const;
-	const CvInfoBase * getUnitAIInfo(int i) const;
-	const CvInfoBase* getAttitudeInfo(int i) const;
-	const CvInfoBase* getMemoryInfo(int i) const;
-	const CvInfoBase* getConceptInfo(int i) const;
-	const CvInfoBase* getNewConceptInfo(int i) const;
-	const CvInfoBase* getCalendarInfo(int i) const;
-	const CvInfoBase* getGameOptionInfo(int i) const;
-	const CvInfoBase* getMPOptionInfo(int i) const;
-	const CvInfoBase* getForceControlInfo(int i) const;
-	const CvInfoBase* getSeasonInfo(int i) const;
-	const CvInfoBase* getDenialInfo(int i) const;
 
 	const char* getArtStyleTypes(int i) const { return GC.getArtStyleTypes((ArtStyleTypes) i); }
 

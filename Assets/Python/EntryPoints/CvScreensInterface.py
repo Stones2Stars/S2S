@@ -676,93 +676,78 @@ def featAccomplishedOnFocusCallback(argsList):
 ####################
 # Handle Input Map #
 ####################
-screenMap = {
+class _LazyScreenMap(dict):
+	"""screenMap, with construction deferred to FIRST USE.
+
+	Reading screenMap[X] is unchanged for every caller; what changed is that a screen nobody opens is never
+	built. That matters because a screen constructor READS THE GAME, so eagerly building the tree put every
+	read it performs on the startup path.
+	"""
+	def __missing__(self, key):
+		moduleName, className, args = _screenFactories[key]
+		module = __import__(moduleName)
+		screen = getattr(module, className)(*args)
+		dict.__setitem__(self, key, screen)
+		return screen
+
+screenMap = _LazyScreenMap({
 	MAIN_INTERFACE			: mainInterface,
 	OPTIONS_SCREEN			: optionsScreen,
 	REPLAY_SCREEN			: replayScreen,
 	STRATEGY_OVERLAY_SCREEN		: overlayScreen,
 	REVOLUTION_WATCH_ADVISOR	: revolutionWatchAdvisor
-}
+})
 ##############
 # Initialize #
 ##############
 def lateInit():
-	import CvCorporationScreen
-	import CvEspionageAdvisor
-	import CvMilitaryAdvisor
-	import CvDomesticAdvisor
-	import CvForeignAdvisor
-	import CvFinanceAdvisor
-	import CvReligionScreen
-	import CvEraMovieScreen
-	import CvVictoryScreen
-	import CvCivicsScreen
-	import HeritageScreen
-	import CvInfoScreen
-	import CvDawnOfMan
-	import CvTopCivs
-	import Forgetful
-	import CvTechChooser
-	import BuildListScreen
-	import CvDebugInfoScreen
-	screenMap[CORPORATION_SCREEN]	= CvCorporationScreen.CvCorporationScreen()
-	screenMap[ESPIONAGE_ADVISOR]	= CvEspionageAdvisor.CvEspionageAdvisor()
-	screenMap[MILITARY_ADVISOR]		= CvMilitaryAdvisor.CvMilitaryAdvisor(MILITARY_ADVISOR)
-	screenMap[DOMESTIC_ADVISOR]		= CvDomesticAdvisor.CvDomesticAdvisor(DOMESTIC_ADVISOR)
-	screenMap[FOREIGN_ADVISOR]		= CvForeignAdvisor.CvForeignAdvisor(FOREIGN_ADVISOR)
-	screenMap[FINANCE_ADVISOR]		= CvFinanceAdvisor.CvFinanceAdvisor(FINANCE_ADVISOR)
-	screenMap[RELIGION_SCREEN]		= CvReligionScreen.CvReligionScreen()
-	screenMap[ERA_MOVIE_SCREEN]		= CvEraMovieScreen.CvEraMovieScreen()
-	screenMap[VICTORY_SCREEN]		= CvVictoryScreen.CvVictoryScreen(VICTORY_SCREEN)
-	screenMap[CIVICS_SCREEN]		= CvCivicsScreen.CvCivicsScreen(CIVICS_SCREEN)
-	screenMap[HERITAGE_SCREEN]		= HeritageScreen.HeritageScreen(HERITAGE_SCREEN)
-	screenMap[INFO_SCREEN]			= CvInfoScreen.CvInfoScreen(INFO_SCREEN)
-	screenMap[DAWN_OF_MAN]			= CvDawnOfMan.CvDawnOfMan()
-	screenMap[TOP_CIVS]				= CvTopCivs.CvTopCivs(TOP_CIVS)
-	screenMap[FORGETFUL_SCREEN]		= Forgetful.Forgetful()
-	screenMap[TECH_CHOOSER]			= CvTechChooser.CvTechChooser()
-	screenMap[BUILD_LIST_SCREEN]	= BuildListScreen.BuildListScreen()
-	screenMap[DEBUG_INFO_SCREEN]	= CvDebugInfoScreen.CvDebugInfoScreen()
+	"""Registers the LATE screens and does the remaining late-init work.
+
+	The screens are registered as FACTORIES, not constructed: building one reads the game, and constructing
+	twenty at startup put the whole advisor/screen tree on the path before anything could be shown. screenMap[X]
+	still reaches them -- they are simply built the first time they are asked for, exactly like earlyInit's.
+	"""
+	_screenFactories.update({
+		CORPORATION_SCREEN    : ('CvCorporationScreen', 'CvCorporationScreen', ()),
+		ESPIONAGE_ADVISOR     : ('CvEspionageAdvisor', 'CvEspionageAdvisor', ()),
+		MILITARY_ADVISOR      : ('CvMilitaryAdvisor', 'CvMilitaryAdvisor', (MILITARY_ADVISOR,)),
+		DOMESTIC_ADVISOR      : ('CvDomesticAdvisor', 'CvDomesticAdvisor', (DOMESTIC_ADVISOR,)),
+		FOREIGN_ADVISOR       : ('CvForeignAdvisor', 'CvForeignAdvisor', (FOREIGN_ADVISOR,)),
+		FINANCE_ADVISOR       : ('CvFinanceAdvisor', 'CvFinanceAdvisor', (FINANCE_ADVISOR,)),
+		RELIGION_SCREEN       : ('CvReligionScreen', 'CvReligionScreen', ()),
+		ERA_MOVIE_SCREEN      : ('CvEraMovieScreen', 'CvEraMovieScreen', ()),
+		VICTORY_SCREEN        : ('CvVictoryScreen', 'CvVictoryScreen', (VICTORY_SCREEN,)),
+		CIVICS_SCREEN         : ('CvCivicsScreen', 'CvCivicsScreen', (CIVICS_SCREEN,)),
+		HERITAGE_SCREEN       : ('HeritageScreen', 'HeritageScreen', (HERITAGE_SCREEN,)),
+		INFO_SCREEN           : ('CvInfoScreen', 'CvInfoScreen', (INFO_SCREEN,)),
+		DAWN_OF_MAN           : ('CvDawnOfMan', 'CvDawnOfMan', ()),
+		TOP_CIVS              : ('CvTopCivs', 'CvTopCivs', (TOP_CIVS,)),
+		FORGETFUL_SCREEN      : ('Forgetful', 'Forgetful', ()),
+		TECH_CHOOSER          : ('CvTechChooser', 'CvTechChooser', ()),
+		BUILD_LIST_SCREEN     : ('BuildListScreen', 'BuildListScreen', ()),
+		DEBUG_INFO_SCREEN     : ('CvDebugInfoScreen', 'CvDebugInfoScreen', ()),
+		WB_PLOT               : ('WBPlotScreen', 'WBPlotScreen', (worldBuilderScreen,)),
+		WB_EVENT              : ('WBEventScreen', 'WBEventScreen', (worldBuilderScreen,)),
+		WB_BUILDING           : ('WBBuildingScreen', 'WBBuildingScreen', (worldBuilderScreen,)),
+		WB_CITYDATA           : ('WBCityDataScreen', 'WBCityDataScreen', (worldBuilderScreen,)),
+		WB_CITYEDIT           : ('WBCityEditScreen', 'WBCityEditScreen', (worldBuilderScreen,)),
+		WB_PROJECT            : ('WBProjectScreen', 'WBProjectScreen', (worldBuilderScreen,)),
+		WB_TEAM               : ('WBTeamScreen', 'WBTeamScreen', (worldBuilderScreen,)),
+		WB_PLAYER             : ('WBPlayerScreen', 'WBPlayerScreen', (worldBuilderScreen,)),
+		WB_PROMOTION          : ('WBPromotionScreen', 'WBPromotionScreen', (worldBuilderScreen,)),
+		WB_DIPLOMACY          : ('WBDiplomacyScreen', 'WBDiplomacyScreen', (worldBuilderScreen,)),
+		WB_UNITLIST           : ('WBPlayerUnits', 'WBPlayerUnits', (worldBuilderScreen,)),
+		WB_RELIGION           : ('WBReligionScreen', 'WBReligionScreen', (worldBuilderScreen,)),
+		WB_CORPORATION        : ('WBCorporationScreen', 'WBCorporationScreen', (worldBuilderScreen,)),
+		WB_INFO               : ('WBInfoScreen', 'WBInfoScreen', (worldBuilderScreen,)),
+		WB_TRADE              : ('WBTradeScreen', 'WBTradeScreen', (worldBuilderScreen,)),
+	})
 
 	import WorldBuilder, CvAdvancedStartScreen
 	global worldBuilderScreen, advancedStartScreen
 	advancedStartScreen = CvAdvancedStartScreen.CvAdvancedStartScreen()
 	worldBuilderScreen = WorldBuilder.WorldBuilder(WORLDBUILDER_SCREEN)
-	screenMap[WORLDBUILDER_SCREEN] = worldBuilderScreen
-	import WBPlotScreen
-	import WBEventScreen
-	import WBBuildingScreen
-	import WBCityDataScreen
-	import WBCityEditScreen
-	import WBProjectScreen
-	import WBTeamScreen
-	import WBPlayerScreen
-	import WBPromotionScreen
-	import WBDiplomacyScreen
-	import WBPlayerUnits
-	import WBReligionScreen
-	import WBCorporationScreen
-	import WBInfoScreen
-	import WBTradeScreen
-	screenMap[WB_PLOT]			= WBPlotScreen.WBPlotScreen(worldBuilderScreen)
-	screenMap[WB_EVENT]			= WBEventScreen.WBEventScreen(worldBuilderScreen)
-	screenMap[WB_BUILDING]		= WBBuildingScreen.WBBuildingScreen(worldBuilderScreen)
-	screenMap[WB_CITYDATA]		= WBCityDataScreen.WBCityDataScreen(worldBuilderScreen)
-	screenMap[WB_CITYEDIT]		= WBCityEditScreen.WBCityEditScreen(worldBuilderScreen)
-	screenMap[WB_PROJECT]		= WBProjectScreen.WBProjectScreen(worldBuilderScreen)
-	screenMap[WB_TEAM]			= WBTeamScreen.WBTeamScreen(worldBuilderScreen)
-	screenMap[WB_PLAYER]		= WBPlayerScreen.WBPlayerScreen(worldBuilderScreen)
-	screenMap[WB_PROMOTION]		= WBPromotionScreen.WBPromotionScreen(worldBuilderScreen)
-	screenMap[WB_DIPLOMACY]		= WBDiplomacyScreen.WBDiplomacyScreen(worldBuilderScreen)
-	screenMap[WB_UNITLIST]		= WBPlayerUnits.WBPlayerUnits(worldBuilderScreen)
-	screenMap[WB_RELIGION]		= WBReligionScreen.WBReligionScreen(worldBuilderScreen)
-	screenMap[WB_CORPORATION]	= WBCorporationScreen.WBCorporationScreen(worldBuilderScreen)
-	screenMap[WB_INFO]			= WBInfoScreen.WBInfoScreen(worldBuilderScreen)
-	screenMap[WB_TRADE]			= WBTradeScreen.WBTradeScreen(worldBuilderScreen)
-
-	import CivicData
 	CivicData.initCivicData()
-
 
 # ⛔ SCREENS CONSTRUCT ON FIRST USE, NOT AT IMPORT.
 # earlyInit() used to build every screen at module scope, so importing this module ran nine screen
@@ -770,7 +755,6 @@ def lateInit():
 # surface it touches, on the ENGINE'S ENTRY PATH: nothing could be imported until everything a screen
 # reads was answerable. The lazy shape is what the code already wanted (createRevolutionWatchAdvisor
 # tests `is None` for exactly this reason); earlyInit defeated it by forcing them eagerly.
-# A screen is still reached the same way -- screenMap[X] -- it is simply built the first time it is asked
 # for, so a screen nobody opens costs nothing and cannot break the import.
 _screenFactories = {
 	INTRO_MOVIE_SCREEN   : ('CvIntroMovieScreen',   'CvIntroMovieScreen',   ()),

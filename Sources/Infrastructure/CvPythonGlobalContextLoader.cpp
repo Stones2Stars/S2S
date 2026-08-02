@@ -88,9 +88,7 @@ void CvPythonGlobalContextLoader::CyGlobalContextPythonInterface1(boost::python:
 		.def("getNumBuildingInfos", &CyGlobalContext::getNumBuildingInfos, "() - Total Building Infos XML\\Buildings\\CIV4BuildingInfos.xml")
 
 		.def("getNumUnitCombatInfos", &CyGlobalContext::getNumUnitCombatInfos, "() - Total Unit Combat Infos XML\\Units\\CIV4UnitCombatInfos.xml")
-		.def("getUnitCombatInfo", &CyGlobalContext::getUnitCombatInfo, boost::python::return_value_policy<boost::python::reference_existing_object>(), "(UnitCombatID) - CvInfo for UnitCombatID")
 
-		.def("getDomainInfo", &CyGlobalContext::getDomainInfo, boost::python::return_value_policy<boost::python::reference_existing_object>(), "(DomainID) - CvInfo for DomainID")
 
 		.def("getNumActionInfos", &CyGlobalContext::getNumActionInfos, "() - Total Action Infos XML\\Units\\CIV4ActionInfos.xml")
 
@@ -153,36 +151,26 @@ void CvPythonGlobalContextLoader::CyGlobalContextPythonInterface3(boost::python:
 		.def("switchMap", &CyGlobalContext::switchMap, "void (int)")
 		.def("getMapByIndex", &CyGlobalContext::getMapByIndex, boost::python::return_value_policy<boost::python::reference_existing_object>(), "CyMap (int)")
 
-		.def("getAttitudeInfo", &CyGlobalContext::getAttitudeInfo, boost::python::return_value_policy<boost::python::reference_existing_object>(), "AttitudeInfo (int id)")
-		.def("getMemoryInfo", &CyGlobalContext::getMemoryInfo, boost::python::return_value_policy<boost::python::reference_existing_object>(), "MemoryInfo (int id)")
 
 
 
 		.def("getNumHurryInfos", &CyGlobalContext::getNumHurryInfos, "() - Total Hurry Infos")
 
 		.def("getNumConceptInfos", &CyGlobalContext::getNumConceptInfos, "int () - NumConceptInfos")
-		.def("getConceptInfo", &CyGlobalContext::getConceptInfo, boost::python::return_value_policy<boost::python::reference_existing_object>(), "Concept Info () - Returns info object")
 
 		.def("getNumNewConceptInfos", &CyGlobalContext::getNumNewConceptInfos, "int () - NumNewConceptInfos")
-		.def("getNewConceptInfo", &CyGlobalContext::getNewConceptInfo, boost::python::return_value_policy<boost::python::reference_existing_object>(), "New Concept Info () - Returns info object")
 
 		.def("getNumCalendarInfos", &CyGlobalContext::getNumCalendarInfos, "int () - Returns NumCalendarInfos")
-		.def("getCalendarInfo", &CyGlobalContext::getCalendarInfo, boost::python::return_value_policy<boost::python::reference_existing_object>(), "CalendarInfo () - Returns Info object")
 
 		.def("getNumGameOptionInfos", &CyGlobalContext::getNumGameOptionInfos, "int () - Returns NumGameOptionInfos")
-		.def("getGameOptionInfo", &CyGlobalContext::getGameOptionInfo, boost::python::return_value_policy<boost::python::reference_existing_object>(), "GameOptionInfo () - Returns Info object")
 
 		.def("getNumMPOptionInfos", &CyGlobalContext::getNumMPOptionInfos, "int () - Returns NumMPOptionInfos")
-		.def("getMPOptionInfo", &CyGlobalContext::getMPOptionInfo, boost::python::return_value_policy<boost::python::reference_existing_object>(), "MPOptionInfo () - Returns Info object")
 
 		.def("getNumForceControlInfos", &CyGlobalContext::getNumForceControlInfos, "int () - Returns NumForceControlInfos")
-		.def("getForceControlInfo", &CyGlobalContext::getForceControlInfo, boost::python::return_value_policy<boost::python::reference_existing_object>(), "ForceControlInfo () - Returns Info object")
 
 		.def("getNumSeasonInfos", &CyGlobalContext::getNumSeasonInfos, "int () - Returns NumSeasonInfos")
-		.def("getSeasonInfo", &CyGlobalContext::getSeasonInfo, boost::python::return_value_policy<boost::python::reference_existing_object>(), "SeasonInfo () - Returns Info object")
 
 		.def("getNumDenialInfos", &CyGlobalContext::getNumDenialInfos, "int () - Returns NumDenialInfos")
-		.def("getDenialInfo", &CyGlobalContext::getDenialInfo, boost::python::return_value_policy<boost::python::reference_existing_object>(), "DenialInfo () - Returns Info object")
 		;
 }
 void CvPythonGlobalContextLoader::CyGlobalContextPythonInterface4(boost::python::class_<CyGlobalContext>& inst)
@@ -226,7 +214,6 @@ void CvPythonGlobalContextLoader::CyGlobalContextPythonInterface4(boost::python:
 		.def("getNumEmphasizeInfos", &CyGlobalContext::getNumEmphasizeInfos, "() - Total EmphasizeInfos")
 
 
-		.def("getUnitAIInfo", &CyGlobalContext::getUnitAIInfo, boost::python::return_value_policy<boost::python::reference_existing_object>(), "UnitAIInfo (int id)")
 
 
 
