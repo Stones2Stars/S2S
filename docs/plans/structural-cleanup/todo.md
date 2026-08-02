@@ -222,6 +222,18 @@
   `CvCity::getBonusDefenseChanges` and `CvPlayer::getBonusCommerceModifier`.
   ⛔ Do NOT read "it compiles and something calls it" as evidence a value is maintained — that is the reasoning
   this entry exists to correct.
+- Serve the UNIT-QUALIFIED entry sum — the ON-TOP read that `unit:`-qualified deposits have no consumer for.
+  The compiled entry carries the qualifier (`CvModEntry::unitQual`) and BOTH the gather and the valuation
+  deliberately skip it, because a unit-carried value rides live on top and is never cached
+  ([DEC-unit-modifiers-on-top](../../architecture/decisions.md#dec-unit-modifiers-on-top)). That half is right;
+  what is missing is the read that sums the entries matching a given unit predicate over the live sources, so
+  those deposits currently reach nobody.
+  ⚑ The live case is the per-military-unit happiness a civic or trait grants
+  (`happiness.empire.cities.{unit: IS_MILITARY}`) — the CvModEntry comment names it verbatim. Its consumer wants
+  the epoch-stable per-unit VALUE, which the city then folds as `perUnit × liveCount`; the writerless player
+  accumulator it replaces is the last of that family.
+  ⛔ It is NOT `keyedTargetSum` with a wider signature: that answers a NAMED target id, while this filters on a
+  PREDICATE evaluated per candidate unit — a different axis, so folding them collapses two questions into one.
 - Move every consumer off the hand-named channel-shaped getters on `CvCity`/`CvPlayer`, then delete the old names.
 - Cut the hide-and-seek per-type intensity ACCUMULATORS on `CvUnit` (serialized — the cut carries a
   `savemigration.txt` step; confirm the tag spelling against the stream first). Their replacements are built.
