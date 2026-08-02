@@ -17,8 +17,11 @@ import ScreenResolution as SR
 STORE_EVENT_ID = CvUtil.getNewEventID()
 RECALL_EVENT_ID = CvUtil.getNewEventID()
 
-GC = CyGlobalContext()
-GAME = GC.getGame()
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
 
 g_reminders = None
@@ -27,7 +30,10 @@ g_reminders = None
 g_turnReminderTexts = ""
 
 # Used to receive network messages
-g_hasNetMessage = hasattr(CyPlayer, "addReminder")
+# The reminder net-message rides the legacy CyPlayer binding, which is gone ([DEC-cy-not-fixed]), so
+# Python cannot send one -- False is the accurate answer, not a probe of a surface that no longer exists.
+# The engine side (CvPlayer::addReminder) is untouched; it returns when the new surface serves it.
+g_hasNetMessage = False
 
 def hasNetMessage():
 	return g_hasNetMessage

@@ -908,34 +908,14 @@ bool CvXMLLoadUtility::LoadPreMenuGlobals()
 	GC.resolveDelayedResolution();
 	OutputDebugString("Delayed resolution resolved\n");
 
-	for (int i=0; i < GC.getNumBuildingInfos(); ++i)
-	{
-		GC.getBuildingInfo((BuildingTypes)i).readPass3();
-	}
-
-	for (int i=0; i < GC.getNumCivicInfos(); ++i)
-	{
-		GC.getCivicInfo((CivicTypes)i).readPass3();
-	}
-
-	for (int i=0; i < GC.getNumCorporationInfos(); ++i)
-	{
-		GC.getCorporationInfo((CorporationTypes)i).readPass3();
-	}
-
+	// PASS 3 is XML three-pass machinery, so it runs for the ONE type still authored in XML. Every other type
+	// here is JSON-fed and inherits the base, which asserts "Override this" -- a legacy load pass reaching a
+	// replaced info ([DEC-no-xml-into-game]), and it aborted the premenu load outright rather than degrading.
+	// EVENTs are a permanent carve-out and stay XML (naming.md), so this loop is the whole of what pass 3 means
+	// now; the JSON types resolve their cross-references in readJson's own FK/reverse pass instead.
 	for (int i=0; i < GC.getNumEventInfos(); ++i)
 	{
 		GC.getEventInfo((EventTypes)i).readPass3();
-	}
-
-	for (int i=0; i < GC.getNumProjectInfos(); ++i)
-	{
-		GC.getProjectInfo((ProjectTypes)i).readPass3();
-	}
-
-	for (int i=0; i < GC.getNumUnitInfos(); ++i)
-	{
-		GC.getUnitInfo((UnitTypes)i).readPass3();
 	}
 	OutputDebugString("Pass3 processing complete\n");
 

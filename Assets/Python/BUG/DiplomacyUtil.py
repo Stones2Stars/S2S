@@ -21,9 +21,12 @@
 from CvPythonExtensions import *
 import TradeUtil
 
-GC = CyGlobalContext()
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 diplo = CyDiplomacy()
-GAME = GC.getGame()
 
 # comment-type -> ( event-type , trade-type )
 g_eventsByCommentType = {}

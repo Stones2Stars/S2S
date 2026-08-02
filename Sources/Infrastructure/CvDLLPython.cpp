@@ -3,7 +3,9 @@
 #include "CvPython.h"
 #include "Python/CyCity.h"
 #include "Python/CyEnabler.h"
+#include "Python/CyArtFileMgr.h"
 #include "Python/CyEnums.h"
+#include "Python/CyGameTextMgr.h"
 #include "Python/CyGlobalContext.h"
 #include "Python/CyState.h"
 #include "Python/CyPlayer.h"
@@ -96,6 +98,12 @@ DllExport void DLLPublishToPython()
 	CyEnums::pythonPublish();     // the engine enum constants + name->id resolution
 	CyEnabler::pythonPublish();   // "can I, right now?"      -- the availability half
 	CyState::pythonPublish();     // "what do I HAVE, now?"   -- the live-state half
+
+	// NOT the library, and not the banned surface: TXT is an UNMIGRATED SYSTEM BOUNDARY that stays, and Python
+	// screen chrome calls it directly (patterns.md § THE PYTHON READ BOUNDARY). It was collateral in the Cy
+	// BINDING purge, which took a kept boundary out along with the read surface it was aimed at.
+	CyGameTextMgr::pythonPublish();
+	CyArtFileMgr::pythonPublish();   // ART: out of scope, kept
 
 
 

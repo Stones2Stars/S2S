@@ -19,8 +19,11 @@ import WBPlayerScreen
 import WBPlotScreen
 
 # globals
-GC = CyGlobalContext()
-GAME = GC.getGame()
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
 
 class CvEventManager:
@@ -1277,11 +1280,10 @@ class CvEventManager:
 		CyPlot, CyUnit = argsList
 		if not CyUnit:
 			return
-		GC = CyGlobalContext()
 		iX = CyPlot.getX()
 		iY = CyPlot.getY()
 		iUnit = CyUnit.getUnitType()
-		if iUnit == GC.getInfoTypeForString('UNIT_TURN'):
+		if iUnit == ENUMS.getInfoType('UNIT_TURN'):
 			if CyPlot.isCity():
 				GC.getPlayer(CyUnit.getOwner()).acquireCity(CyPlot.getPlotCity(), False, False)
 			for pNukedPlot in CyPlot.rect(1, 1):

@@ -3,9 +3,12 @@
 from CvPythonExtensions import *
 import BugCore
 
-GC = CyGlobalContext()
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 ANewDawnOpt = BugCore.game.DiplomacySettings
-GAME = GC.getGame()
 
 class DiplomacySettings:
 	def __init__(self, eventManager):

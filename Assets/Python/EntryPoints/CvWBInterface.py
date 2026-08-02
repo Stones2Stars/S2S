@@ -6,7 +6,11 @@ from CvPythonExtensions import *
 import CvWBDesc
 
 WBDesc = CvWBDesc.CvWBDesc()
-GC = CyGlobalContext()
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 
 #---------------------#
 # Write Scenario file #

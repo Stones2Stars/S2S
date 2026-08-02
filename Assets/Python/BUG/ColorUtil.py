@@ -12,7 +12,11 @@
 from CvPythonExtensions import *
 import BugUtil
 
-gc = CyGlobalContext()
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 
 # tuple of interesting color names to be selectable from dropdowns
 COLOR_KEYS = ( "COLOR_RED", "COLOR_YELLOW", "COLOR_CYAN", "COLOR_GREEN",

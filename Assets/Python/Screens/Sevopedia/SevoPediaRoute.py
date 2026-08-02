@@ -4,7 +4,11 @@ from CvPythonExtensions import *
 import string
 
 # globals
-gc = CyGlobalContext()
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 ArtFileMgr = CyArtFileMgr()
 localText = CyTranslator()
 

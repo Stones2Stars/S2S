@@ -8,7 +8,11 @@
 from CvPythonExtensions import *
 import BugOptionsTab
 import BugConfigTracker
-GC = CyGlobalContext()
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 
 class BugSystemOptionsTab(BugOptionsTab.BugOptionsTab):
 	"BUG System Options Screen Tab"

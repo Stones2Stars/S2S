@@ -19,7 +19,11 @@ import SdToolKit
 COLOR_KEYS = None
 PALETTE_WIDTH = None
 
-GC = CyGlobalContext()
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 StratLayerOpt = BugCore.game.StrategyOverlay
 
 g_layers = {}

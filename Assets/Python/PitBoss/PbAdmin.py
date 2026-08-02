@@ -13,7 +13,11 @@ import time
 import string
 
 PB = CyPitboss()
-gc = CyGlobalContext()
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 localText = CyTranslator()
 msgBox = None
 # potential mark for deletion TODO: MurderMesa/Scvijc

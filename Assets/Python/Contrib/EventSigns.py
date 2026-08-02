@@ -19,10 +19,13 @@ EventSignsOpt = BugCore.game.EventSigns
 
 
 # civ globals
-GC = CyGlobalContext()
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 engine = CyEngine()
 TRNSLTR = CyTranslator()
-MAP = GC.getMap()
 
 # for sdtoolkit
 SD_MOD_ID = "EventSigns"

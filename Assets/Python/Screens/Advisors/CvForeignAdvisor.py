@@ -7,11 +7,14 @@ import HandleInputUtil
 import math
 
 # globals
-GC = CyGlobalContext()
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 AFM = CyArtFileMgr()
 GTM = CyGameTextMgr()
 TRNSLTR = CyTranslator()
-GAME = GC.getGame()
 
 # this class is shared by both the resource and technology foreign advisors
 class CvForeignAdvisor:

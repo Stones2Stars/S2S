@@ -12,7 +12,11 @@ import WBPlotScreen
 import WBEventScreen
 import WorldBuilder
 
-GC = CyGlobalContext()
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 iCityID = -1
 iCityOwner = -1
 iUnitID = -1

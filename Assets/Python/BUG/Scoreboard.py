@@ -15,7 +15,11 @@ import DealUtil
 import re
 
 # Globals
-GC = CyGlobalContext()
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 
 # Columns IDs
 NUM_PARTS = 26

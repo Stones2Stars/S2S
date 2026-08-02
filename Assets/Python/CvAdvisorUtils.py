@@ -1,7 +1,10 @@
 from CvPythonExtensions import *
 
-GC = CyGlobalContext()
-GAME = GC.getGame()
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
 
 lPopulation = [

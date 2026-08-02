@@ -63,11 +63,14 @@ UNHAPPY_ICON = "Art/Interface/mainscreen/cityscreen/angry_citizen.dds"
 
 ### Globals
 
-GC = CyGlobalContext()
-GAME = GC.getGame()
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
 
-EVENT_MESSAGE_TIME_LONG = GC.getDefineINT("EVENT_MESSAGE_TIME_LONG")
+EVENT_MESSAGE_TIME_LONG = STATE.getDefineINT("EVENT_MESSAGE_TIME_LONG")
 Civ4lertsOpt = BugCore.game.Civ4lerts
 
 

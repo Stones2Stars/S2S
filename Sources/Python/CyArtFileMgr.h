@@ -26,6 +26,9 @@ class CyArtFileMgr
 {
 public:
 	CyArtFileMgr();
+
+	// Publishes the ART boundary -- kept, not migrated (roadmap: art is out of scope).
+	static void pythonPublish();
 	explicit CyArtFileMgr(const CvArtFileMgr& pArtFileMgr);			// Call from C++
 
 	CvArtInfoInterface* getInterfaceArtInfo(const char* szArtDefineTag) const;

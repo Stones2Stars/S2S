@@ -319,3 +319,61 @@ std::wstring CyGameTextMgr::getFlagHelp()
 	GAMETEXT.setFlagHelp(szBuffer);
 	return szBuffer.getCString();
 }
+
+
+//
+//	THE TEXT BOUNDARY, republished. TXT/localization is an UNMIGRATED SYSTEM BOUNDARY that STAYS
+//	(patterns.md § THE PYTHON READ BOUNDARY: "resolution stays with the existing managers and Python screen
+//	chrome keeps calling the text system directly") -- so this is not the library, and not the banned binding
+//	surface either. It was collateral in the Cy BINDING purge, which took the kept boundary out along with the
+//	read surface it was aimed at.
+//	⚠ The composer BODIES were cut and are being rebuilt on appendEntryLines + the requires block composer, so a
+//	method here answers empty until its composer lands. That is the correct exposed state -- the hole is visible
+//	rather than masked ([DEC-no-legacy-masking]) -- and it is why nothing is "restored" beyond the publication.
+//
+void CyGameTextMgr::pythonPublish()
+{
+	python::class_<CyGameTextMgr>("CyGameTextMgr")
+		.def("Reset", &CyGameTextMgr::Reset)
+		.def("getTimeStr", &CyGameTextMgr::getTimeStr)
+		.def("getDateStr", &CyGameTextMgr::getDateStr)
+		.def("getInterfaceTimeStr", &CyGameTextMgr::getInterfaceTimeStr)
+		.def("getOOSSeeds", &CyGameTextMgr::getOOSSeeds)
+		.def("getNetStats", &CyGameTextMgr::getNetStats)
+		.def("getTechHelp", &CyGameTextMgr::getTechHelp)
+		.def("getUnitHelp", &CyGameTextMgr::getUnitHelp)
+		.def("getSpecificUnitHelp", &CyGameTextMgr::getSpecificUnitHelp)
+		.def("getBuildingHelp", &CyGameTextMgr::getBuildingHelp)
+		.def("getHeritageHelp", &CyGameTextMgr::getHeritageHelp)
+		.def("getProjectHelp", &CyGameTextMgr::getProjectHelp)
+		.def("getPromotionHelp", &CyGameTextMgr::getPromotionHelp)
+		.def("getUnitCombatHelp", &CyGameTextMgr::getUnitCombatHelp)
+		.def("getBonusHelp", &CyGameTextMgr::getBonusHelp)
+		.def("getProductionHelpCity", &CyGameTextMgr::getProductionHelpCity)
+		.def("getReligionHelpCity", &CyGameTextMgr::getReligionHelpCity)
+		.def("getCorporationHelpCity", &CyGameTextMgr::getCorporationHelpCity)
+		.def("getImprovementHelp", &CyGameTextMgr::getImprovementHelp)
+		.def("getRouteHelp", &CyGameTextMgr::getRouteHelp)
+		.def("getTerrainHelp", &CyGameTextMgr::getTerrainHelp)
+		.def("getFeatureHelp", &CyGameTextMgr::getFeatureHelp)
+		.def("parseCivicInfo", &CyGameTextMgr::parseCivicInfo)
+		.def("parseReligionInfo", &CyGameTextMgr::parseReligionInfo)
+		.def("parseCorporationInfo", &CyGameTextMgr::parseCorporationInfo)
+		.def("parseCivInfos", &CyGameTextMgr::parseCivInfos)
+		.def("parseLeaderTraits", &CyGameTextMgr::parseLeaderTraits)
+		.def("parseTraits", &CyGameTextMgr::parseTraits)
+		.def("getHappinessHelp", &CyGameTextMgr::getHappinessHelp)
+		.def("getSpecialistHelp", &CyGameTextMgr::getSpecialistHelp)
+		.def("getTradeString", &CyGameTextMgr::getTradeString)
+		.def("buildHintsList", &CyGameTextMgr::buildHintsList)
+		.def("getAttitudeString", &CyGameTextMgr::getAttitudeString)
+		.def("setConvertHelp", &CyGameTextMgr::setConvertHelp)
+		.def("setRevolutionHelp", &CyGameTextMgr::setRevolutionHelp)
+		.def("setVassalRevoltHelp", &CyGameTextMgr::setVassalRevoltHelp)
+		.def("getActiveDealsString", &CyGameTextMgr::getActiveDealsString)
+		.def("getDealString", &CyGameTextMgr::getDealString)
+		.def("getFinanceUnitUpkeepString", &CyGameTextMgr::getFinanceUnitUpkeepString)
+		.def("getDefenseHelp", &CyGameTextMgr::getDefenseHelp)
+		.def("getFlagHelp", &CyGameTextMgr::getFlagHelp)
+	;
+}

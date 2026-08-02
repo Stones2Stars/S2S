@@ -90,6 +90,11 @@ public:
 	// forced into a group that would mean nothing. ----
 	int getActivePlayer() const;
 	int getGameTurn() const;
+	// The global DEFINES. They belong on the live-state half rather than the vocabulary because a define is a
+	// LIVE option -- user-changeable mid-game through the BUG bridge, which is exactly why nothing STATIC may be
+	// gated on one (python-read-map § open questions). The READS are in scope; the writes are not.
+	int getDefineINT(const std::string& szName) const;
+	float getDefineFLOAT(const std::string& szName) const;
 	int getAIAutoPlay(int iPlayer) const;
 	std::wstring getPlayerName(int iPlayer) const;
 	std::wstring getCityName(int iPlayer, int iCity) const;

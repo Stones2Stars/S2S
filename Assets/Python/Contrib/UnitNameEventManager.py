@@ -80,7 +80,11 @@ import BugData
 SD_MOD_ID = "UnitCnt"
 RENAME_EVENT_ID = CvUtil.getNewEventID()
 
-GC = CyGlobalContext()
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 
 UnitNamingOpt = BugCore.game.UnitNaming
 

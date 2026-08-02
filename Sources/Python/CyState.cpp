@@ -274,6 +274,16 @@ int CyState::getAIAutoPlay(int iPlayer) const
 	return GC.getGame().getAIAutoPlay((PlayerTypes)iPlayer);
 }
 
+int CyState::getDefineINT(const std::string& szName) const
+{
+	return GC.getDefineINT(szName.c_str());
+}
+
+float CyState::getDefineFLOAT(const std::string& szName) const
+{
+	return GC.getDefineFLOAT(szName.c_str());
+}
+
 std::wstring CyState::getPlayerName(int iPlayer) const
 {
 	const CvPlayer* pPlayer = cys_player(iPlayer);
@@ -324,6 +334,8 @@ void CyState::pythonPublish()
 		// plain live facts
 		.def("getActivePlayer",          &CyState::getActivePlayer)
 		.def("getGameTurn",              &CyState::getGameTurn)
+		.def("getDefineINT",             &CyState::getDefineINT)
+		.def("getDefineFLOAT",           &CyState::getDefineFLOAT)
 		.def("getAIAutoPlay",            &CyState::getAIAutoPlay)
 		.def("getPlayerName",            &CyState::getPlayerName)
 		.def("getCityName",              &CyState::getCityName)

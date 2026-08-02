@@ -21,6 +21,10 @@ public:
 
 	void Reset();
 
+	// Publishes the TEXT boundary. Kept, not migrated: TXT is an unmigrated system boundary
+	// (patterns.md § THE PYTHON READ BOUNDARY) and Python screen chrome calls it directly.
+	static void pythonPublish();
+
 	std::wstring getTimeStr(int iGameTurn, bool bSave);
 	std::wstring getDateStr(int iGameTurn, bool bSave, int /*CalendarTypes*/ eCalendar, int iStartYear, int /*GameSpeedTypes*/ eSpeed);
 	std::wstring getInterfaceTimeStr(int /*PlayerTypes*/ iPlayer);

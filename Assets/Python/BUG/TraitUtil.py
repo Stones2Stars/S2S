@@ -17,7 +17,11 @@ TRAIT_ICONS = {}
 GENERIC_BUTTON = "Art/Interface/Buttons/TechTree/"
 TRAIT_BUTTONS = {}
 
-gc = CyGlobalContext()
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 
 def init():
 	"Performs one-time initialization after the game starts up."

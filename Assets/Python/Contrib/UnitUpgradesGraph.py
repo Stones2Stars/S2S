@@ -6,7 +6,11 @@
 from CvPythonExtensions import *
 
 # globals
-GC = CyGlobalContext()
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 
 #SplitOutgoing is similar, but for a unit that holds together two trees by what it upgrades to.  For instance,
 #you might have a commoner unit that upgrades to Scout, Warrior, and Worker, while otherwise those units have
