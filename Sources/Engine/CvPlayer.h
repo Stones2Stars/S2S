@@ -93,7 +93,6 @@ public:
 	bool hasHeritage(const HeritageTypes eType) const;
 	bool canAddHeritage(const HeritageTypes eType, const bool bTestVisible = false) const;
 	void setHeritage(const HeritageTypes eType, const bool bNewValue);
-	int getHeritageCommerceEraChange(const CommerceTypes eType, const EraTypes eEra) const;
 	std::vector<HeritageTypes> getHeritage() const { return m_myHeritage; }
 
 public:
@@ -114,7 +113,6 @@ protected:
 	std::vector<CvUnit*> m_commodores;
 	std::vector<CvPlot*> m_commodoreFieldPlots;
 
-	void processHeritage(const HeritageTypes eType, const int iChange);
 	std::vector<HeritageTypes> m_myHeritage;
 
 public:
@@ -962,11 +960,7 @@ public:
 	int getSeaPlotYield(YieldTypes eIndex) const;
 	void changeSeaPlotYield(YieldTypes eIndex, int iChange);
 
-	int getGoldenAgeYield(YieldTypes eIndex) const;
-	void changeGoldenAgeYield(YieldTypes eIndex, int iChange);
 
-	int getGoldenAgeCommerce(CommerceTypes eIndex) const;
-	void changeGoldenAgeCommerce(CommerceTypes eIndex, int iChange);
 
 	int getYieldRateModifier(YieldTypes eIndex) const;
 	void changeYieldRateModifier(YieldTypes eIndex, int iChange);
@@ -983,8 +977,6 @@ public:
 	int getTradeYieldModifier(YieldTypes eIndex) const;
 	void changeTradeYieldModifier(YieldTypes eIndex, int iChange);
 
-	int getExtraCommerce(const CommerceTypes eIndex) const;
-	void changeExtraCommerce(const CommerceTypes eIndex, const int iChange);
 
 	int getCommercePercent(CommerceTypes eIndex) const;
 	void setCommercePercent(CommerceTypes eIndex, int iNewValue);
@@ -1004,7 +996,6 @@ public:
 	void changeCapitalCommerceRateModifier(CommerceTypes eIndex, int iChange);
 
 	int getStateReligionBuildingCommerce(CommerceTypes eIndex) const;
-	void changeStateReligionBuildingCommerce(CommerceTypes eIndex, int iChange);
 
 
 	bool isCommerceFlexible(CommerceTypes eIndex) const;
@@ -1453,6 +1444,7 @@ public:
 
 	void acquireFort(CvPlot* pPlot);
 
+	int getFreeSpecialistCount(SpecialistTypes eIndex) const;
 	int getResourceConsumption(BonusTypes eBonus) const;
 	void recalculateAllResourceConsumption();
 
@@ -1468,14 +1460,8 @@ public:
 	void setCommodoreFieldPlot(bool bNewValue, CvPlot* aPlot);
 	std::vector<CvPlot*> getCommodoreFieldPlots() const { return m_commodoreFieldPlots; }
 
-	int getFreeSpecialistCount(SpecialistTypes eIndex) const;
-	void setFreeSpecialistCount(SpecialistTypes eIndex, int iNewValue);
-	void changeFreeSpecialistCount(SpecialistTypes eIndex, int iChange);
 
 	bool hasValidBuildings(TechTypes eTech) const;
-
-
-	void setCityCommerceModifierDirty(CommerceTypes eCommerce);
 
 	int getBuildingCommerceModifier(BuildingTypes eBonus, CommerceTypes eIndex) const;
 	void changeBuildingCommerceModifier(BuildingTypes eBonus, CommerceTypes eIndex, int iChange);

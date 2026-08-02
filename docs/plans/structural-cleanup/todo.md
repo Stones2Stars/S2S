@@ -365,6 +365,16 @@
   building, not two per channel.
   ⚠ A point read excludes these entries by construction (only null-condition entries fold into the compiled
   sum), so re-pointing one to the point read silently drops the bonus's whole contribution.
+- Give the ctx-taking KEYED SUM the scope filter its collecting twin already has. `collectKeyedTarget` takes an
+  `iScope` (-1 = any) precisely because the same family+target is authored at two scopes with two different
+  consumers; the ctx-taking `keyedTargetSum` — the one that serves the CONDITIONED tail through the ONE
+  evaluator — takes none, so a caller that must pin a leg to one scope has to fall back to the unconditioned
+  collect and silently loses every gated row.
+  ⚑ The live case is the free-specialist split: a building authors BOTH a city-scope row (counted by the city
+  holding it) and an empire-scope row (counted by the player), so the empire read MUST pin the scope or the two
+  legs double-count — and pinning it today costs the conditioned tail.
+  ⛔ Not a second read: it is one parameter on the existing one, matching the collect's spelling, so the two
+  keyed reads stop differing on an axis the data actually uses.
 - A home for pedia category / sort metadata ([pedia-read-map.md](../../reference/pedia-read-map.md) finding 4).
 - Ranked-target-selection EVALUATION ([parked/ranked-target-selection.md](../parked/ranked-target-selection.md))
   — a ranked entry applies unranked until it lands.

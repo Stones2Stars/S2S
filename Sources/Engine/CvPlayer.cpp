@@ -6947,11 +6947,6 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, CvArea* pAr
 		changeYieldRateModifier(((YieldTypes)iI), (kBuilding.getYieldModifier((YieldTypes)iI, CASC_SCOPE_EMPIRE) * iChange));
 	}
 
-	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
-	{
-		changeStateReligionBuildingCommerce(((CommerceTypes)iI), (kBuilding.getStateReligionCommerce((CommerceTypes)iI) * iChange));
-	}
-
 	// The KEYED happiness deposits ([modifier.md §5]): an entry-list read over what this building
 	// authors onto NAMED other buildings -- never folded scope-wide. ×100 at the slot, human here.
 	std::vector<std::pair<int, int> > kKeyedHappy;
@@ -11446,12 +11441,6 @@ void CvPlayer::setCurrentEra(EraTypes eNewValue)
 		// deposit, and the ERA requires atoms. Announce the fact past the no-change guard.
 		emitEraChanged(getID(), (int)eNewValue);
 
-		// Toffer - Heritage may change commerce output with era.
-		for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
-		{
-			changeExtraCommerce((CommerceTypes)iI, getHeritageCommerceEraChange((CommerceTypes)iI, eNewValue));
-		}
-
 		if (GC.getGame().getActiveTeam() != NO_TEAM)
 		{
 			for (int iI = 0; iI < GC.getMap().numPlots(); iI++)
@@ -11739,46 +11728,6 @@ void CvPlayer::changeSeaPlotYield(YieldTypes eIndex, int iChange)
 }
 
 
-	//Team Project (7)
-int CvPlayer::getGoldenAgeYield(YieldTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
-	return std::max(0,m_aiGoldenAgeYield[eIndex]);
-}
-
-
-void CvPlayer::changeGoldenAgeYield(YieldTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
-
-	if (iChange != 0)
-	{
-		m_aiGoldenAgeYield[eIndex] += iChange;
-
-		updateYield();
-	}
-}
-
-
-int CvPlayer::getGoldenAgeCommerce(CommerceTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-	return std::max(0,m_aiGoldenAgeCommerce[eIndex]);
-}
-
-
-void CvPlayer::changeGoldenAgeCommerce(CommerceTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-
-	if (iChange != 0)
-	{
-		m_aiGoldenAgeCommerce[eIndex] += iChange;
-
-	}
-}
-
-
 int CvPlayer::getYieldRateModifier(YieldTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
@@ -11945,25 +11894,6 @@ void CvPlayer::changeTradeYieldModifier(YieldTypes eIndex, int iChange)
 }
 
 
-int CvPlayer::getExtraCommerce(const CommerceTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-
-	return m_extraCommerce[eIndex];
-}
-
-
-void CvPlayer::changeExtraCommerce(const CommerceTypes eIndex, const int iChange)
-{
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-
-	if (iChange != 0)
-	{
-		m_extraCommerce[eIndex] += iChange;
-	}
-}
-
-
 int CvPlayer::getCommercePercent(CommerceTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
@@ -12087,7 +12017,6 @@ void CvPlayer::changeCommerceRateModifier(CommerceTypes eIndex, int iChange)
 	{
 		m_aiCommerceRateModifier[eIndex] = std::min(m_aiCommerceRateModifier[eIndex] + iChange, MAX_COMMERCE_RATE_MODIFIER_VALUE);
 
-		setCityCommerceModifierDirty(eIndex);
 
 		AI_makeAssignWorkDirty();
 	}
@@ -12110,7 +12039,6 @@ void CvPlayer::changeCommerceRateModifierfromEvents(CommerceTypes eIndex, int iC
 		//Also totals into generic Rate Modifier total
 		m_aiCommerceRateModifier[eIndex] = std::min(m_aiCommerceRateModifier[eIndex] + iChange, MAX_COMMERCE_RATE_MODIFIER_VALUE);
 
-		setCityCommerceModifierDirty(eIndex);
 
 		AI_makeAssignWorkDirty();
 	}
@@ -12141,23 +12069,15 @@ void CvPlayer::changeCapitalCommerceRateModifier(CommerceTypes eIndex, int iChan
 }
 
 
+//	The empire-wide state-religion building commerce. Its accumulator is CUT: the value is an ordinary
+//	cascade deposit (a building's `stateReligionCommerce` rolling down the scope chain), so the push that
+//	maintained this is gone with its feeders. The read answers 0 rather than a legacy-correct number, so
+//	the two surviving consumers show the gap instead of masking it ([DEC-no-legacy-masking]); they move to
+//	the cascade with the rest of the decomposition.
 int CvPlayer::getStateReligionBuildingCommerce(CommerceTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-	return m_aiStateReligionBuildingCommerce[eIndex];
-}
-
-
-void CvPlayer::changeStateReligionBuildingCommerce(CommerceTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-
-	if (iChange != 0)
-	{
-		m_aiStateReligionBuildingCommerce[eIndex] += iChange;
-		FASSERT_NOT_NEGATIVE(getStateReligionBuildingCommerce(eIndex));
-
-	}
+	return 0;
 }
 
 
@@ -14835,7 +14755,7 @@ int64_t CvPlayer::getEspionageMissionBaseCost(EspionageMissionTypes eMission, Pl
 		{
 			int64_t iCultureAmount = kMission.getCityInsertCultureAmountFactor() *  pCity->countTotalCultureTimes100();
 			iCultureAmount /= 10000;
-			iCultureAmount = std::max(1, iCultureAmount);
+			iCultureAmount = std::max((int64_t)1, iCultureAmount);
 			iMissionCost = iBaseMissionCost + (kMission.getCityInsertCultureCostFactor() * iCultureAmount) / 100;
 		}
 	}
@@ -15035,7 +14955,7 @@ int CvPlayer::getEspionageMissionCostModifier(EspionageMissionTypes eMission, Pl
 		}
 
 		// City's culture affects cost
-		iModifier *= 100 - (pCity->getCultureTimes100(getID()) * GC.getDefineINT("ESPIONAGE_CULTURE_MULTIPLIER_MOD")) / std::max(1, pCity->getCultureTimes100(eTargetPlayer) + pCity->getCultureTimes100(getID()));
+		iModifier *= 100 - (pCity->getCultureTimes100(getID()) * GC.getDefineINT("ESPIONAGE_CULTURE_MULTIPLIER_MOD")) / std::max((int64_t)1, pCity->getCultureTimes100(eTargetPlayer) + pCity->getCultureTimes100(getID()));
 		iModifier /= 100;
 
 		iModifier *= 100 + pCity->getEspionageDefenseModifier();
@@ -17374,7 +17294,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 				// AIAndy: Check for no civic set or a civic of the wrong category set
 				if ( (m_paeCivics[i] == NO_CIVIC) || (GC.getCivicInfo(m_paeCivics[i]).getCivicOption() != (CivicOptionTypes)i ) )
 				{
-					m_paeCivics[i] = (CivicTypes)GC.getCivilizationInfo(getCivilizationType()).getInitialCivic(i);
+					m_paeCivics[i] = (CivicTypes)GC.getCivilizationInfo(getCivilizationType()).getInitialCivic((CivicOptionTypes)i);
 				}
 
 				//	Also need to fix iCityLimits if its definition got changed in an active civic.  The way we do this
@@ -21913,7 +21833,7 @@ bool CvPlayer::splitEmpire(int iAreaId)
 		AI_updateBonusValue();
 	}
 
-	std::vector< std::pair<int, int> > aCultures;
+	std::vector< std::pair<int, int64_t> > aCultures;
 	for (int iPlot = 0; iPlot < GC.getMap().numPlots(); ++iPlot)
 	{
 		CvPlot* pLoopPlot = GC.getMap().plotByIndex(iPlot);
@@ -21936,7 +21856,7 @@ bool CvPlayer::splitEmpire(int iAreaId)
 
 		if (bTranferPlot)
 		{
-			int iCulture = pLoopPlot->getCulture(getID());
+			int64_t iCulture = pLoopPlot->getCulture(getID());
 
 			if (bPlayerExists)
 			{
@@ -21956,7 +21876,7 @@ bool CvPlayer::splitEmpire(int iAreaId)
 	{
 		if (pLoopCity->area() == pArea)
 		{
-			const int iCulture = pLoopCity->getCultureTimes100(getID());
+			const int64_t iCulture = pLoopCity->getCultureTimes100(getID());
 			const CvPlot* pPlot = pLoopCity->plot();
 
 			GET_PLAYER(eNewPlayer).acquireCity(pLoopCity, false, false, false);
@@ -24487,9 +24407,9 @@ CvCity* CvPlayer::getBestHQCity(CorporationTypes eCorporation) const
 				}
 
 				bool bFoundBonus = false;
-				foreach_(const BonusTypes eBonus, GC.getCorporationInfo(eCorporation).getConsumedBonuses())
+				foreach_(const int iBonus, GC.getCorporationInfo(eCorporation).getConsumedBonuses())
 				{
-					if (pLoopCity->hasBonus(eBonus))
+					if (pLoopCity->hasBonus((BonusTypes)iBonus))
 					{
 						bFoundBonus = true;
 						iValue += 50;
@@ -24513,9 +24433,9 @@ CvCity* CvPlayer::getBestHQCity(CorporationTypes eCorporation) const
 				iValue += 100;
 			}
 
-			foreach_(const BonusTypes eBonus, GC.getCorporationInfo(eCorporation).getConsumedBonuses())
+			foreach_(const int iBonus, GC.getCorporationInfo(eCorporation).getConsumedBonuses())
 			{
-				if (pLoopCity->hasBonus(eBonus))
+				if (pLoopCity->hasBonus((BonusTypes)iBonus))
 				{
 					iValue += 50;
 				}
@@ -24587,11 +24507,11 @@ DenialTypes CvPlayer::AI_corporationTrade(CorporationTypes eCorporation, PlayerT
 		//If we don't have the corporation
 		if (!(pLoopCity->isHasCorporation(eCorporation)))
 		{
-			foreach_(const BonusTypes eBonus, GC.getCorporationInfo(eCorporation).getConsumedBonuses())
+			foreach_(const int iBonus, GC.getCorporationInfo(eCorporation).getConsumedBonuses())
 			{
 				bRequiresBonus = true;
 				//if the city can have the corporation
-				if (pLoopCity->hasBonus(eBonus))
+				if (pLoopCity->hasBonus((BonusTypes)iBonus))
 				{
 					bValid = true;
 				}
@@ -25145,29 +25065,61 @@ void CvPlayer::changeNoCapitalUnhappiness(int iChange)
 	}
 }
 
+//	The EMPIRE-scope free-specialist term -- what the city adds on top of its OWN scope's rows and its
+//	unattributed one-shot ledger. A KEYED deposit is an ENTRY-LIST read over the LIVE SOURCES
+//	([modifier.md] par.5), never a scope-package read, so this asks each thing the player holds -- its
+//	buildings anywhere, its adopted civics, its active traits -- what it deposits onto THIS specialist.
+//	⚠ The scope filter is what keeps this from double-counting: a building authors BOTH a city-scope row
+//	(counted by the city that holds it) and an empire-scope row (counted here), so the read is pinned to
+//	EMPIRE and the two legs cannot overlap.
+//	⚠ This is the UNCONDITIONED keyed read: a bonus/tech-gated free-specialist row is not served here yet,
+//	because the ctx-taking keyed sum carries no scope filter to pin the leg with. That is a surface gap, not
+//	a silent choice -- an unconditional sum would apply every gated slot from turn 0, which is worse.
+//	⚠ The count unit is x100 like every compiled magnitude, so it reduces here.
 int CvPlayer::getFreeSpecialistCount(SpecialistTypes eIndex) const
 {
-	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eIndex);
-	return m_paiFreeSpecialistCount[eIndex];
-}
-
-void CvPlayer::setFreeSpecialistCount(SpecialistTypes eIndex, int iNewValue)
-{
+	PROFILE_EXTRA_FUNC();
 	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eIndex);
 
-	const int iOldValue = getFreeSpecialistCount(eIndex);
+	int64_t iEmpireScope = 0;
+	std::vector<std::pair<int, int> > keyedRows;
 
-	if (iOldValue != iNewValue)
+	foreach_(const BuildingTypes eBuilding, getHasBuildings())
 	{
-		FASSERT_NOT_NEGATIVE(getFreeSpecialistCount(eIndex));
-
-		algo::for_each(cities(), CvCity::fn::changeFreeSpecialistCount(eIndex, iNewValue - iOldValue));
+		keyedRows.clear();
+		InfoValuation::collectKeyedTarget(GC.getBuildingInfo(eBuilding).getModifiers(),
+			MODFAM_FREE_SPECIALISTS, CHANNEL_AMOUNT, -1, keyedRows, CASC_SCOPE_EMPIRE);
+		for (size_t iRow = 0; iRow < keyedRows.size(); ++iRow)
+		{
+			if (keyedRows[iRow].first == (int)eIndex) iEmpireScope += keyedRows[iRow].second;
+		}
 	}
-}
-
-void CvPlayer::changeFreeSpecialistCount(SpecialistTypes eIndex, int iChange)
-{
-	setFreeSpecialistCount(eIndex, (getFreeSpecialistCount(eIndex) + iChange));
+	for (int iOption = 0; iOption < GC.getNumCivicOptionInfos(); iOption++)
+	{
+		const CivicTypes eCivic = getCivics((CivicOptionTypes)iOption);
+		if (eCivic == NO_CIVIC) continue;
+		keyedRows.clear();
+		InfoValuation::collectKeyedTarget(GC.getCivicInfo(eCivic).getModifiers(),
+			MODFAM_FREE_SPECIALISTS, CHANNEL_AMOUNT, -1, keyedRows, CASC_SCOPE_EMPIRE);
+		for (size_t iRow = 0; iRow < keyedRows.size(); ++iRow)
+		{
+			if (keyedRows[iRow].first == (int)eIndex) iEmpireScope += keyedRows[iRow].second;
+		}
+	}
+	//	The trait walk is a PRESENCE read (the HAVE axis), never the own-data inversion: it asks which traits
+	//	the player HOLDS, not which traits deposit onto this specialist.
+	for (int iTrait = 0; iTrait < GC.getNumTraitInfos(); iTrait++)
+	{
+		if (!hasTrait((TraitTypes)iTrait)) continue;
+		keyedRows.clear();
+		InfoValuation::collectKeyedTarget(GC.getTraitInfo((TraitTypes)iTrait).getModifiers(),
+			MODFAM_FREE_SPECIALISTS, CHANNEL_AMOUNT, -1, keyedRows, CASC_SCOPE_EMPIRE);
+		for (size_t iRow = 0; iRow < keyedRows.size(); ++iRow)
+		{
+			if (keyedRows[iRow].first == (int)eIndex) iEmpireScope += keyedRows[iRow].second;
+		}
+	}
+	return (int)std::max((int64_t)0, iEmpireScope / 100);
 }
 
 int CvPlayer::getTerrainYieldChange(TerrainTypes eIndex1, YieldTypes eIndex2) const
@@ -25687,13 +25639,8 @@ void CvPlayer::changeBonusCommerceModifier(BonusTypes eIndex1, CommerceTypes eIn
 		//int iOldValue = getBonusCommerceModifier(eIndex1, eIndex2);
 
 		m_ppiBonusCommerceModifier[eIndex1][eIndex2] += iChange;
-		setCityCommerceModifierDirty(eIndex2);
 	}
 }
-
-void CvPlayer::setCityCommerceModifierDirty(CommerceTypes eCommerce)
-{
-	algo::for_each(cities(), CvCity::fn::}
 
 int CvPlayer::getLandmarkYield(YieldTypes eIndex) const
 {
@@ -26217,7 +26164,6 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 
 	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 	{
-		changeExtraCommerce((CommerceTypes)iI, 100*iChange*GC.getTraitInfo(eTrait).getCommerceChange(iI));
 		changeCommerceRateModifier((CommerceTypes)iI, iChange*GC.getTraitInfo(eTrait).getCommerceModifier(iI));
 	}
 
@@ -26353,13 +26299,11 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 		changeSpecialistExtraYield(eYield, GC.getTraitInfo(eTrait).getSpecialistExtraYield(iI) * iChange);
 		updateExtraYieldThreshold(eYield);
 		updateLessYieldThreshold(eYield);
-		changeGoldenAgeYield(eYield, GC.getTraitInfo(eTrait).getGoldenAgeYieldChanges(iI) * iChange);
 	}
 
 	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 	{
 		changeCapitalCommerceRateModifier((CommerceTypes)iI, GC.getTraitInfo(eTrait).getCapitalCommerceModifier(iI) * iChange);
-		changeGoldenAgeCommerce((CommerceTypes)iI, GC.getTraitInfo(eTrait).getGoldenAgeCommerceChanges(iI) * iChange);
 	}
 
 	int iGPRateChange = GC.getTraitInfo(eTrait).getGreatPeopleRateChange();
@@ -28379,7 +28323,6 @@ void CvPlayer::setHeritage(const HeritageTypes eType, const bool bNewValue)
 		if (itr == m_myHeritage.end())
 		{
 			m_myHeritage.push_back(eType);
-			processHeritage(eType, 1);
 			emitHeritageChanged(getID(), (int)eType, true);
 		}
 		else FErrorMsg("Tried to add a duplicate vector element!");
@@ -28387,7 +28330,6 @@ void CvPlayer::setHeritage(const HeritageTypes eType, const bool bNewValue)
 	else if (itr != m_myHeritage.end())
 	{
 		m_myHeritage.erase(itr);
-		processHeritage(eType, -1);
 		emitHeritageChanged(getID(), (int)eType, false);
 	}
 	else FErrorMsg("Vector element to remove was missing!");
@@ -28395,45 +28337,6 @@ void CvPlayer::setHeritage(const HeritageTypes eType, const bool bNewValue)
 	clearCanConstructCache(NO_BUILDING, true);
 }
 
-void CvPlayer::processHeritage(const HeritageTypes eType, const int iChange)
-{
-	PROFILE_EXTRA_FUNC();
-
-	const CvHeritageInfo& heritage = GC.getHeritageInfo(eType);
-	const EraTypes eEra = getCurrentEra();
-
-	const IDValueMap<EraTypes, CommerceArray>& kEraChanges = heritage.getEraCommerceChanges();
-	for (IDValueMap<EraTypes, CommerceArray>::const_iterator itEra = kEraChanges.begin(), itEraEnd = kEraChanges.end(); itEra != itEraEnd; ++itEra)
-	{
-		const EraCommerceArray& pair = *itEra;
-		if (eEra >= pair.first)
-		{
-			for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
-			{
-				changeExtraCommerce((CommerceTypes)iI, iChange * pair.second[(CommerceTypes)iI]);
-			}
-		}
-	}
-}
-
-int CvPlayer::getHeritageCommerceEraChange(const CommerceTypes eType, const EraTypes eEra) const
-{
-	PROFILE_EXTRA_FUNC();
-	int iCommerce100 = 0;
-	foreach_(const HeritageTypes eTypeX, getHeritage())
-	{
-		const IDValueMap<EraTypes, CommerceArray>& kEraChanges = GC.getHeritageInfo(eTypeX).getEraCommerceChanges();
-		for (IDValueMap<EraTypes, CommerceArray>::const_iterator itEra = kEraChanges.begin(), itEraEnd = kEraChanges.end(); itEra != itEraEnd; ++itEra)
-		{
-			const EraCommerceArray& pair = *itEra;
-			if (eEra == pair.first)
-			{
-				iCommerce100 += pair.second[eType];
-			}
-		}
-	}
-	return iCommerce100;
-}
 
 #ifdef CVARMY_BREAKSAVE
 
