@@ -1176,3 +1176,10 @@ More trait-fed PLAYER accumulators. The empire's own civic-upkeep modifier and i
 CvPlayer::m_iUpkeepModifier
 CvPlayer::m_aiCommerceRateModifier
 CvPlayer::m_aiCapitalCommerceRateModifier
+The empire's per-carrier hold allowances and its flight range. Trait-fed sums the gather already folds into
+| the player's packages, so the unit-side readers ask the cargo and air GROUPS and index the kind. All three
+| are FLAT slots, so each reader reduces at its point of use.
+| REPLACEMENT: CvPlayer::getCargoKinds -> CARGO_NAVAL / CARGO_MISSILE; getAirKinds -> AIR_RANGE.
+CvPlayer::m_iNationalNavalCargoSpaceChange
+CvPlayer::m_iNationalMissileCargoSpaceChange
+CvPlayer::m_iNationalFlightOperationRangeChange

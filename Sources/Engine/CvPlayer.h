@@ -1610,9 +1610,6 @@ protected:
 	int m_iNationalAirUnitCapacity;
 	int m_iNationalCityStartBonusPopulation;
 	int m_iNationalMissileRangeChange;
-	int m_iNationalFlightOperationRangeChange;
-	int m_iNationalNavalCargoSpaceChange;
-	int m_iNationalMissileCargoSpaceChange;
 	int m_iCitiesStartwithStateReligionCount;
 	int m_iDraftsOnCityCaptureCount;
 	int m_iExtraGoodyCount;
@@ -2123,17 +2120,8 @@ public:
 	void setNationalMissileRangeChange(int iValue);
 	void changeNationalMissileRangeChange(int iChange);
 
-	int getNationalFlightOperationRangeChange() const;
-	void setNationalFlightOperationRangeChange(int iValue);
-	void changeNationalFlightOperationRangeChange(int iChange);
 
-	int getNationalNavalCargoSpaceChange() const;
-	void setNationalNavalCargoSpaceChange(int iValue);
-	void changeNationalNavalCargoSpaceChange(int iChange);
 
-	int getNationalMissileCargoSpaceChange() const;
-	void setNationalMissileCargoSpaceChange(int iValue);
-	void changeNationalMissileCargoSpaceChange(int iChange);
 
 	bool hasCitiesStartwithStateReligion() const;
 	void setCitiesStartwithStateReligionCount(int iValue);

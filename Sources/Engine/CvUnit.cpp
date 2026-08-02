@@ -10507,7 +10507,9 @@ int CvUnit::airRange() const
 	const SpecialUnitTypes eMissile = GC.getSPECIALUNIT_MISSILE();
 	if (getDomainType() == DOMAIN_AIR && nukeRange() == -1 && getSpecialUnitType() != eMissile)
 	{
-		return (resolvedValue(URS_AIR_RANGE) + GET_TEAM(getTeam()).getExtraMoves(DOMAIN_AIR) + GET_PLAYER(getOwner()).getNationalFlightOperationRangeChange());
+		int aiAir[NUM_AIR_KINDS];
+		GET_PLAYER(getOwner()).getAirKinds(aiAir);
+		return (resolvedValue(URS_AIR_RANGE) + GET_TEAM(getTeam()).getExtraMoves(DOMAIN_AIR) + aiAir[AIR_RANGE] / 100);
 	}
 	if (getDomainType() == DOMAIN_AIR && getSpecialUnitType() == eMissile)
 	{
@@ -12942,16 +12944,21 @@ int CvUnit::cargoSpace() const
 	{
 		int iCargoCapacity = SMcargoSpaceFilter();
 
+		//	The empire's own hold allowances, by carrier kind. FLAT slots, so each reduces at its point of use
+		//	before the rank scaling ([DEC-fixedpoint-x100]).
+		int aiCargo[NUM_CARGO_KINDS];
+		GET_PLAYER(getOwner()).getCargoKinds(aiCargo);
+
 		if (getDomainType() == DOMAIN_SEA)
 		{
-			iCargoCapacity += applySMRank(GET_PLAYER(getOwner()).getNationalNavalCargoSpaceChange(),
+			iCargoCapacity += applySMRank(aiCargo[CARGO_NAVAL] / 100,
 				getSizeMattersSpacialOffsetValue(),
 				GC.getSIZE_MATTERS_MOST_VOLUMETRIC_MULTIPLIER());
 		}
 		const SpecialUnitTypes eMissile = (SpecialUnitTypes)GC.getInfoTypeForString("SPECIALUNIT_MISSILE");
 		if (getSpecialCargo() == eMissile)
 		{
-			iCargoCapacity += applySMRank(GET_PLAYER(getOwner()).getNationalMissileCargoSpaceChange(),
+			iCargoCapacity += applySMRank(aiCargo[CARGO_MISSILE] / 100,
 				getSizeMattersSpacialOffsetValue(),
 				GC.getSIZE_MATTERS_MOST_VOLUMETRIC_MULTIPLIER());
 		}
@@ -12959,13 +12966,16 @@ int CvUnit::cargoSpace() const
 	}
 	int iCargoCapacity = m_pUnitInfo->getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100 + m_iCargoCapacity;
 
+	int aiCargo[NUM_CARGO_KINDS];
+	GET_PLAYER(getOwner()).getCargoKinds(aiCargo);
+
 	if (getDomainType() == DOMAIN_SEA)
 	{
-		iCargoCapacity += GET_PLAYER(getOwner()).getNationalNavalCargoSpaceChange();
+		iCargoCapacity += aiCargo[CARGO_NAVAL] / 100;
 	}
 	if (getSpecialCargo() == GC.getSPECIALUNIT_MISSILE())
 	{
-		iCargoCapacity += GET_PLAYER(getOwner()).getNationalMissileCargoSpaceChange();
+		iCargoCapacity += aiCargo[CARGO_MISSILE] / 100;
 	}
 	return std::max(0, iCargoCapacity);
 }

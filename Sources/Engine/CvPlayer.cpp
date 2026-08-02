@@ -1184,9 +1184,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iNationalAirUnitCapacity = 0;
 	m_iNationalCityStartBonusPopulation = 0;
 	m_iNationalMissileRangeChange = 0;
-	m_iNationalFlightOperationRangeChange = 0;
-	m_iNationalNavalCargoSpaceChange = 0;
-	m_iNationalMissileCargoSpaceChange = 0;
 	m_iCitiesStartwithStateReligionCount = 0;
 	m_iDraftsOnCityCaptureCount = 0;
 	m_iExtraGoodyCount = 0;
@@ -17777,9 +17774,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNationalAirUnitCapacity);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNationalCityStartBonusPopulation);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNationalMissileRangeChange);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iNationalFlightOperationRangeChange);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iNationalNavalCargoSpaceChange);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iNationalMissileCargoSpaceChange);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iCitiesStartwithStateReligionCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iDraftsOnCityCaptureCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraGoodyCount);
@@ -18674,9 +18668,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNationalAirUnitCapacity);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNationalCityStartBonusPopulation);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNationalMissileRangeChange);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNationalFlightOperationRangeChange);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNationalNavalCargoSpaceChange);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNationalMissileCargoSpaceChange);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCitiesStartwithStateReligionCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iDraftsOnCityCaptureCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraGoodyCount);
@@ -27158,51 +27149,6 @@ void CvPlayer::setNationalMissileRangeChange(int iValue)
 void CvPlayer::changeNationalMissileRangeChange(int iChange)
 {
 	setNationalMissileRangeChange(getNationalMissileRangeChange() + iChange);
-}
-
-int CvPlayer::getNationalFlightOperationRangeChange() const
-{
-	return m_iNationalFlightOperationRangeChange;
-}
-
-void CvPlayer::setNationalFlightOperationRangeChange(int iValue)
-{
-	m_iNationalFlightOperationRangeChange = iValue;
-}
-
-void CvPlayer::changeNationalFlightOperationRangeChange(int iChange)
-{
-	setNationalFlightOperationRangeChange(getNationalFlightOperationRangeChange() + iChange);
-}
-
-int CvPlayer::getNationalNavalCargoSpaceChange() const
-{
-	return m_iNationalNavalCargoSpaceChange;
-}
-
-void CvPlayer::setNationalNavalCargoSpaceChange(int iValue)
-{
-	m_iNationalNavalCargoSpaceChange = iValue;
-}
-
-void CvPlayer::changeNationalNavalCargoSpaceChange(int iChange)
-{
-	setNationalNavalCargoSpaceChange(getNationalNavalCargoSpaceChange() + iChange);
-}
-
-int CvPlayer::getNationalMissileCargoSpaceChange() const
-{
-	return m_iNationalMissileCargoSpaceChange;
-}
-
-void CvPlayer::setNationalMissileCargoSpaceChange(int iValue)
-{
-	m_iNationalMissileCargoSpaceChange = iValue;
-}
-
-void CvPlayer::changeNationalMissileCargoSpaceChange(int iChange)
-{
-	setNationalMissileCargoSpaceChange(getNationalMissileCargoSpaceChange() + iChange);
 }
 
 bool CvPlayer::hasCitiesStartwithStateReligion() const
