@@ -1130,7 +1130,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 
 
 	m_iUpkeepModifier = 0;
-	m_iLevelExperienceModifier = 0;
 	m_iExtraHealth = 0;
 	m_iExtraHappiness = 0;
 	m_iExtraHappinessUnattributed = 0;
@@ -9947,16 +9946,6 @@ void CvPlayer::changeUpkeepModifier(int iChange)
 }
 
 
-int CvPlayer::getLevelExperienceModifier() const
-{
-	return m_iLevelExperienceModifier;
-}
-
-void CvPlayer::changeLevelExperienceModifier(int iChange)
-{
-	m_iLevelExperienceModifier += iChange;
-}
-
 
 int CvPlayer::getExtraHealth() const
 {
@@ -16912,7 +16901,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExpInBorderModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iBuildingOnlyHealthyCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iUpkeepModifier);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iLevelExperienceModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraHealth);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraHappiness);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraHappinessUnattributed);
@@ -18289,7 +18277,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExpInBorderModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iBuildingOnlyHealthyCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iUpkeepModifier);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iLevelExperienceModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraHealth);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraHappiness);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraHappinessUnattributed);

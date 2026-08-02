@@ -652,8 +652,6 @@ public:
 	int getUpkeepModifier() const;
 	void changeUpkeepModifier(int iChange);
 
-	int getLevelExperienceModifier() const;
-	void changeLevelExperienceModifier(int iChange);
 
 	int getExtraHealth() const;
 	void changeExtraHealth(int iChange);
@@ -1811,7 +1809,6 @@ protected:
 
 
 	int m_iUpkeepModifier;
-	int m_iLevelExperienceModifier;
 	int m_iExtraHealth;
 	int m_iExtraHappiness;
 	int m_iExtraHappinessUnattributed;

@@ -3457,7 +3457,12 @@ void getUnitAIString(CvWString& szString, UnitAITypes eUnitAI)
  */
 int calcBaseExpNeeded(const int iLevel, const PlayerTypes ePlayer)
 {
-	int iThreshold = 99 + (iLevel*iLevel + 1) * (100 + GET_PLAYER(ePlayer).getLevelExperienceModifier());
+	//	The group hands back the whole family and the caller indexes it ([patterns.md] rule 7); the level
+	//	modifier is a PERCENT kind, so it enters the identity unscaled.
+	int aiExperience[NUM_EXPERIENCE_KINDS];
+	GET_PLAYER(ePlayer).getExperienceKinds(aiExperience);
+
+	int iThreshold = 99 + (iLevel*iLevel + 1) * (100 + aiExperience[EXPERIENCE_LEVEL_MODIFIER]);
 
 	if (GC.getGame().isOption(GAMEOPTION_UNIT_MORE_XP_TO_LEVEL))
 	{

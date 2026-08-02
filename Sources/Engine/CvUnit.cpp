@@ -1146,8 +1146,14 @@ void CvUnit::convert(CvUnit* pUnit, const bool bKillOriginal)
 	m_eCurrentBuildUpType = NO_PROMOTIONLINE;
 
 	setLevel(pUnit->getLevel());
-	const int iOldModifier = std::max(1, 100 + GET_PLAYER(pUnit->getOwner()).getLevelExperienceModifier());
-	const int iOurModifier = std::max(1, 100 + GET_PLAYER(getOwner()).getLevelExperienceModifier());
+	//	Carrying XP across owners rescales it by each side's own level modifier, so both empires are asked.
+	int aiOldExperience[NUM_EXPERIENCE_KINDS];
+	int aiOurExperience[NUM_EXPERIENCE_KINDS];
+	GET_PLAYER(pUnit->getOwner()).getExperienceKinds(aiOldExperience);
+	GET_PLAYER(getOwner()).getExperienceKinds(aiOurExperience);
+
+	const int iOldModifier = std::max(1, 100 + aiOldExperience[EXPERIENCE_LEVEL_MODIFIER]);
+	const int iOurModifier = std::max(1, 100 + aiOurExperience[EXPERIENCE_LEVEL_MODIFIER]);
 	setExperience(std::max(0, pUnit->getExperience() * iOurModifier / iOldModifier));
 
 	setName(pUnit->getNameNoDesc());

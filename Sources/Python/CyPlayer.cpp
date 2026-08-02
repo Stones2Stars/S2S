@@ -835,11 +835,6 @@ int CyPlayer::getTotalMaintenance() const
 	return (int)m_pPlayer->getTotalMaintenance();
 }
 
-int CyPlayer::getLevelExperienceModifier() const
-{
-	return m_pPlayer->getLevelExperienceModifier();
-}
-
 int CyPlayer::getExtraHealth() const
 {
 	return m_pPlayer->getExtraHealth();

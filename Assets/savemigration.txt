@@ -1161,3 +1161,8 @@ CvPlayer::m_iFreedomFighterCount
 CvPlayer::m_iFreeSpecialistperNationalWonderCount
 CvPlayer::m_iFreeSpecialistperTeamProjectCount
 CvPlayer::m_iFreeSpecialistperWorldWonderCount
+The empire's LEVEL-EXPERIENCE modifier, cut with the trait push that was its only writer. Its readers ask
+| the player's experience GROUP instead of a hand-named accessor ([DEC-new-getter-surface]); the kind is a
+| PERCENT, so it enters the level identity unscaled.
+| REPLACEMENT: CvPlayer::getExperienceKinds -> EXPERIENCE_LEVEL_MODIFIER.
+CvPlayer::m_iLevelExperienceModifier

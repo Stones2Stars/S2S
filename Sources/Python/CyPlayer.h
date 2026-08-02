@@ -222,7 +222,6 @@ public:
 	int64_t getTreasuryUpkeep() const;
 	int64_t getCorporateMaintenance() const;
 	int getTotalMaintenance() const;
-	int getLevelExperienceModifier() const;
 
 	int getExtraHealth() const;
 	void changeExtraHealth(int iChange);
