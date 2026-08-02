@@ -8,6 +8,7 @@
 #include "CvGameCoreDLL.h"
 #include "Conditions/CvConditionEval.h"   // cascadeGateOk -- the entity-level gate ([DEC-entity-gate])
 #include "Engine/CvGameSpeedScale.h"
+#include "Conditions/CvConditionQuery.h"   // the ONE structural read over a requires tree
 #include "Enabler/CvEnablerKernel.h"   // requiresMetForPlayer -- the system-placement gate (barbarian fielding)
 #include "AI/BetterBTSAI.h"
 #include "CvArea.h"
@@ -11388,7 +11389,14 @@ void CvGame::calculateRiverBuildings()
 	m_iRiverBuildings = 0;
 	for (int iJ = 0; iJ < GC.getNumBuildingInfos(); iJ++)
 	{
-		if (GC.getBuildingInfo((BuildingTypes)iJ).isRiver())
+		// "needs a river" is a PLACEMENT CONDITION, so it lives in the building's own `requires` as the
+		// HAS_RIVER predicate ([json.md] par.4.3/3.5) rather than as a flag on the info -- asked through the
+		// ONE shared tree read ([DEC-single-implementation]).
+		// ⚠ BOTH halves count: the curator puts most of these in `build`, but a handful sit in `operate` (a
+		// building that needs the water to keep RUNNING), and this count is "how many buildings care".
+		const CvBuildingInfo& kBuildingX = GC.getBuildingInfo((BuildingTypes)iJ);
+		if (CvConditionQuery::hasPredicate(kBuildingX.requiresBuild(), CASC_PRED_HAS_RIVER)
+		||  CvConditionQuery::hasPredicate(kBuildingX.requiresOperate(), CASC_PRED_HAS_RIVER))
 		{
 			m_iRiverBuildings++;
 		}
@@ -11406,7 +11414,9 @@ void CvGame::calculateCoastalBuildings()
 	m_iCoastalBuildings = 0;
 	for (int iJ = 0; iJ < GC.getNumBuildingInfos(); iJ++)
 	{
-		if (GC.getBuildingInfo((BuildingTypes)iJ).isWater())
+		const CvBuildingInfo& kBuildingX = GC.getBuildingInfo((BuildingTypes)iJ);
+		if (CvConditionQuery::hasPredicate(kBuildingX.requiresBuild(), CASC_PRED_HAS_COAST)
+		||  CvConditionQuery::hasPredicate(kBuildingX.requiresOperate(), CASC_PRED_HAS_COAST))
 		{
 			m_iCoastalBuildings++;
 		}

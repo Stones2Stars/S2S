@@ -324,15 +324,15 @@
   text manager's own job ([patterns.md](../../architecture/patterns.md) THE DIVISION OF LABOUR). ⚠ The CONDITION
   renderer it calls already exists and takes exactly what `CvRequires` holds, so this is a composer to write,
   never a renderer to build — reading it as the latter overstates the dependency and parks work that is doable.
-- Give the `requires` TREE ONE SHARED WALK — "which ids / which predicates does this entity's `requires` name?".
-  ⚑ This is NOT a missing machine: `CvRequires` exposes `build`/`operate` as public `CvCondition*` and the node
-  is a plain tagged struct, so any call site CAN walk it. What is missing is that ONE of them does
-  ([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation)) — otherwise the
-  building river/coastal counts, the corp prereq leg and the block composer each grow their own recursion.
-  ⛔ It is NOT a boolean-expression API ([pedia-read-map.md](../../reference/pedia-read-map.md) finding 3).
-  ⚠ It needs BOTH shapes, and the id half alone does not cover its consumers: an ID LIST per HAVE-axis, and a
-  PREDICATE test (the river/coastal building counts ask whether the tree names `HAS_RIVER` / `HAS_COAST`, which
-  no id list answers).
+- Evaluate a PROMOTION's `requires` through the ONE evaluator instead of hand-reconstructing it.
+  `CvUnit::canAcquirePromotion` walks the legacy prereq axes by hand — terrain, feature, plot bonus,
+  improvement, local building, and the promotion AND/OR trio — rebuilding a gate the evaluator already answers
+  from the same tree ([enabler.md §7.1](../../specs/enabler.md): promotions keep no maintained set, so
+  `requires` is enforced ON DEMAND at level-up, which is exactly this call).
+  ⛔ It is NOT a job for the structural `requires` walk, and reaching for that is the trap: a flat read reports
+  an `all`, an `anyOf` and a `noneOf` alike, so reconstructing the gate from it would silently turn the OR pair
+  into an AND and read a `noneOf` as a requirement. Mention is not requirement — the walk answers what a tree
+  NAMES, and a gate verdict is the evaluator's.
   ⚑ Distinct from the REVERSE question ("who requires this bonus"), which `EDGEF_REQUIRED_BY` already answers —
   do not read one as covering the other.
 - Move the BONUS-KEYED modifier consumers onto the AS-IF-HELD delta. "How much of this comes from the entry
