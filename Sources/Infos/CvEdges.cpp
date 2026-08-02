@@ -10,7 +10,7 @@
 // The intern tables -- ONE place the spec vocabulary is spelled (order matches the enums).
 static const char* EDGE_FAMILY_NAMES[NUM_EDGEF] =
 {
-	"enables", "obsoletes", "replaces", "disables", "obsoletedBy", "related", "requiredBy"
+	"enables", "obsoletes", "replaces", "disables", "obsoletedBy", "related", "requiredBy", "enabledBy"
 };
 static const char* EDGE_BUCKET_NAMES[NUM_EDGEB] =
 {

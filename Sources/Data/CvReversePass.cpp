@@ -285,7 +285,17 @@ namespace
 					for (size_t iRef = 0; iRef < pReferencedIds->size(); ++iRef)
 					{
 						const int iReferencedId = (*pReferencedIds)[iRef];
-						rp_landRelated(rp_infoForBucket((EnEdgeBucket)iBucket, iReferencedId), eSourceBucket, iSourceId);
+						CvInfo* pReferencedInfo = rp_infoForBucket((EnEdgeBucket)iBucket, iReferencedId);
+						rp_landRelated(pReferencedInfo, eSourceBucket, iSourceId);
+						// The UNLOCK axis gets its OWN reverse family beside the merged display one, because
+						// `enables` is the one relation with no target-side authoring: a target declares its
+						// own `obsoletedBy` / `replacedBy`, but nothing says "what unlocks me" -- only the
+						// SOURCE does. Landing it separately is what lets a consumer ask for the unlocking
+						// tech without having to tell it apart from an obsoleting one inside EDGEF_RELATED.
+						if ((EnEdgeFamily)iFamily == EDGEF_ENABLES && pReferencedInfo != NULL)
+						{
+							pReferencedInfo->addReverseEdge(EDGEF_ENABLED_BY, eSourceBucket, iSourceId);
+						}
 						pSourceInfo->addReverseEdge(EDGEF_RELATED, (EnEdgeBucket)iBucket, iReferencedId);
 						++s_counts.relatedAdds;
 					}

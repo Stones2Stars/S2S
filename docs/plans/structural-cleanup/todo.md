@@ -346,12 +346,6 @@
   building, not two per channel.
   ⚠ A point read excludes these entries by construction (only null-condition entries fold into the compiled
   sum), so re-pointing one to the point read silently drops the bonus's whole contribution.
-- Serve a BUILDING's ENABLING TECH. A tech reaches a building through its own `enables.buildings` edge, so the
-  building's reverse tech bucket is the MERGED `EDGEF_RELATED` one — it cannot tell an enabling tech from an
-  obsoleting one or from a tech that merely deposits onto the building, and `EDGEF_OBSOLETED_BY` separates only
-  the first of those. ⚠ It is NOT cosmetic: the corporation auto-founding gate gates on how many teams know the
-  tech, and no corporation authors a tech prereq of its own, so the HQ building's tech is the only live source
-  that gate has. ⛔ Do not approximate it from the merged bucket — a wrong tech mis-times corp founding silently.
 - A home for pedia category / sort metadata ([pedia-read-map.md](../../reference/pedia-read-map.md) finding 4).
 - Ranked-target-selection EVALUATION ([parked/ranked-target-selection.md](../parked/ranked-target-selection.md))
   — a ranked entry applies unranked until it lands.

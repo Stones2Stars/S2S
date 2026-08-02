@@ -35,6 +35,13 @@ namespace picojson { class value; }
 //                        an atom, POPULATED by the readJson reverse pass. The gate stage re-gates exactly
 //                        these dependents on this info's HAVE-event -- never a database sweep, and never a
 //                        bespoke index inside an enabler.
+//   EDGEF_ENABLED_BY  -- the UNLOCK axis: entities that name this info in their own `enables`. It exists
+//                        because enabling is the one relation with NO target-side authoring: a building
+//                        declares its own `obsoletedBy` and its own `replacedBy`, so those reverses come off
+//                        the target's own data, but nothing authors "what unlocks me" -- only the SOURCE says
+//                        `enables.buildings`. Without this family the target's sole recourse is the MERGED
+//                        EDGEF_RELATED bucket, which cannot tell an unlocking tech from an obsoleting one or
+//                        from one that merely deposits onto it. Populated by the same reverse pass.
 enum EnEdgeFamily
 {
 	EDGEF_ENABLES = 0,
@@ -44,6 +51,7 @@ enum EnEdgeFamily
 	EDGEF_OBSOLETED_BY,
 	EDGEF_RELATED,
 	EDGEF_REQUIRED_BY,
+	EDGEF_ENABLED_BY,
 	NUM_EDGEF
 };
 

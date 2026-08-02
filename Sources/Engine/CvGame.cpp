@@ -11223,7 +11223,7 @@ void CvGame::doFoundCorporation(CorporationTypes eCorporation, bool bForce)
 			GC.getCorporationInfo(eCorporation).getHeadquartersBuildings();
 		for (size_t iHq = 0; iHq < aeHeadquarters.size(); ++iHq)
 		{
-			ePrereqTech = (TechTypes)GC.getBuildingInfo(aeHeadquarters[iHq]).getPrereqAndTech();
+			ePrereqTech = GC.getBuildingInfo(aeHeadquarters[iHq]).getEnablingTech();
 			if (ePrereqTech != NO_TECH)
 			{
 				break;
