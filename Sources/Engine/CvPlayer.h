@@ -577,14 +577,6 @@ public:
 	int getNumOutsideUnits() const;
 	void changeNumOutsideUnits(int iChange);
 
-	int getBaseFreeUnitUpkeepCivilian() const;
-	int getBaseFreeUnitUpkeepMilitary() const;
-	void changeBaseFreeUnitUpkeepCivilian(const int iChange);
-	void changeBaseFreeUnitUpkeepMilitary(const int iChange);
-	int getFreeUnitUpkeepCivilianPopPercent() const;
-	int getFreeUnitUpkeepMilitaryPopPercent() const;
-	void changeFreeUnitUpkeepCivilianPopPercent(const int iChange);
-	void changeFreeUnitUpkeepMilitaryPopPercent(const int iChange);
 	int getFreeUnitUpkeepCivilian() const;
 	int getFreeUnitUpkeepMilitary() const;
 
@@ -593,8 +585,6 @@ public:
 	// Toffer - Unit Upkeep
 	int getCivilianUnitUpkeepMod() const;
 	int getMilitaryUnitUpkeepMod() const;
-	void changeCivilianUnitUpkeepMod(const int iChange);
-	void changeMilitaryUnitUpkeepMod(const int iChange);
 	void setUnitUpkeepDirty() const;
 
 	int64_t getUnitUpkeepCivilian100() const;
@@ -1620,6 +1610,7 @@ protected:
 	int m_iForeignTradeRouteModifier;
 	int m_iNoLandmarkAngerCount;
 	int m_iLandmarkHappiness;
+	int m_iFreeUnitUpkeepCivilianEvents;   // event-granted free upkeep -- one-shot, persisted
 	int m_iDistantUnitSupportCostModifier;
 	int m_iReligionSpreadRate;
 	int m_iTaxRateUnhappiness;
@@ -1834,12 +1825,6 @@ protected:
 
 	int m_iNumNukeUnits;
 	int m_iNumOutsideUnits;
-	int m_iBaseFreeUnitUpkeepCivilian;
-	int m_iBaseFreeUnitUpkeepMilitary;
-	int m_iFreeUnitUpkeepCivilianPopPercent;
-	int m_iFreeUnitUpkeepMilitaryPopPercent;
-	int m_iCivilianUnitUpkeepMod;
-	int m_iMilitaryUnitUpkeepMod;
 
 	mutable int64_t m_iFinalUnitUpkeep;
 	mutable bool m_bUnitUpkeepDirty;

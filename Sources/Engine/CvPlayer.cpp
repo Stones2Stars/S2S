@@ -363,10 +363,6 @@ void CvPlayer::initMore(PlayerTypes eID, LeaderHeadTypes ePersonality, bool bSet
 	{
 		setAlive(true);
 	}
-	changeBaseFreeUnitUpkeepCivilian(GC.getBASE_FREE_UNITS_UPKEEP_CIVILIAN());
-	changeBaseFreeUnitUpkeepMilitary(GC.getBASE_FREE_UNITS_UPKEEP_MILITARY());
-	changeFreeUnitUpkeepCivilianPopPercent(GC.getBASE_FREE_UNITS_UPKEEP_CIVILIAN_PER_100_POP());
-	changeFreeUnitUpkeepMilitaryPopPercent(GC.getBASE_FREE_UNITS_UPKEEP_MILITARY_PER_100_POP());
 	changeTradeRoutes(GC.getINITIAL_TRADE_ROUTES());
 
 	for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
@@ -1116,13 +1112,7 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 
 	m_iNumNukeUnits = 0;
 	m_iNumOutsideUnits = 0;
-	m_iBaseFreeUnitUpkeepCivilian = 0;
-	m_iBaseFreeUnitUpkeepMilitary = 0;
-	m_iFreeUnitUpkeepCivilianPopPercent = 0;
-	m_iFreeUnitUpkeepMilitaryPopPercent = 0;
 
-	m_iCivilianUnitUpkeepMod = 0;
-	m_iMilitaryUnitUpkeepMod = 0;
 	m_iFinalUnitUpkeep = 0;
 
 	m_iNumMilitaryUnits = 0;
@@ -1274,6 +1264,7 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iForeignTradeRouteModifier = 0;
 	m_iTaxRateUnhappiness = 0;
 
+	m_iFreeUnitUpkeepCivilianEvents = 0;
 	m_iDistantUnitSupportCostModifier = 0;
 	m_iReligionSpreadRate = 0;
 
@@ -9556,97 +9547,42 @@ void CvPlayer::changeNumOutsideUnits(int iChange)
 
 // Toffer - Unit Upkeep
 
-int CvPlayer::getBaseFreeUnitUpkeepCivilian() const
-{
-	return std::max(0, m_iBaseFreeUnitUpkeepCivilian);
-}
-
-void CvPlayer::changeBaseFreeUnitUpkeepCivilian(const int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iBaseFreeUnitUpkeepCivilian += iChange;
-		setUnitUpkeepDirty();
-	}
-}
-
-int CvPlayer::getBaseFreeUnitUpkeepMilitary() const
-{
-	return std::max(0, m_iBaseFreeUnitUpkeepMilitary);
-}
-
-void CvPlayer::changeBaseFreeUnitUpkeepMilitary(const int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iBaseFreeUnitUpkeepMilitary += iChange;
-		setUnitUpkeepDirty();
-	}
-}
-
-int CvPlayer::getFreeUnitUpkeepCivilianPopPercent() const
-{
-	return m_iFreeUnitUpkeepCivilianPopPercent;
-}
-
-void CvPlayer::changeFreeUnitUpkeepCivilianPopPercent(const int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iFreeUnitUpkeepCivilianPopPercent += iChange;
-		setUnitUpkeepDirty();
-	}
-}
-
-int CvPlayer::getFreeUnitUpkeepMilitaryPopPercent() const
-{
-	return m_iFreeUnitUpkeepMilitaryPopPercent;
-}
-
-void CvPlayer::changeFreeUnitUpkeepMilitaryPopPercent(const int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iFreeUnitUpkeepMilitaryPopPercent += iChange;
-		setUnitUpkeepDirty();
-	}
-}
-
+// The free allowances and the two bucket modifiers are ordinary empire-scope cascade reads now.
+// ⚑ The legacy BASE and POP-PERCENT members are ONE deposit here: the curator folds the pop-scaled leg into
+// the SAME freeCivilian/freeMilitary kind as a {value, per:{POPULATION, each:100}} entry, under the one
+// free-amount sign convention (positive GRANTS free upkeep, negative SHRINKS the allowance; entries sum).
+// ⚠ INTENTIONAL model change, already ruled at the curator: the legacy asymmetric getModifiedIntValue
+// rounding is not chased -- the shape is additive linear.
 int CvPlayer::getFreeUnitUpkeepCivilian() const
 {
-	return std::max(0, getBaseFreeUnitUpkeepCivilian() + getModifiedIntValue(getTotalPopulation(), getFreeUnitUpkeepCivilianPopPercent()));
+	// FLAT, so the x100 reduces here. The >= 0 floor is the GROUP floor, deliberately distinct from and
+	// applied before the consumption site's own max(0, upkeep - SUMfree) ([modifier.md par.2]).
+	// + the EVENT grant, which is genuine one-shot state and therefore a separately persisted store rather
+	// than a cascade deposit ([state-repositories.md]: a recompute cache would wipe it).
+	return std::max(0, static_cast<int>(InfoValuation::realizedAtEmpire(*this,
+		CascadeChannelRegistry::channelLookup(MODFAM_UPKEEP, (int)UPKEEP_FREE_CIVILIAN, -1)) / 100)
+		+ m_iFreeUnitUpkeepCivilianEvents);
 }
 
 int CvPlayer::getFreeUnitUpkeepMilitary() const
 {
-	return std::max(0, getBaseFreeUnitUpkeepMilitary() + getModifiedIntValue(getTotalPopulation(), getFreeUnitUpkeepMilitaryPopPercent()));
+	return std::max(0, static_cast<int>(InfoValuation::realizedAtEmpire(*this,
+		CascadeChannelRegistry::channelLookup(MODFAM_UPKEEP, (int)UPKEEP_FREE_MILITARY, -1)) / 100));
 }
 
+// PERCENT kinds -- an additive stack, never x100 scaled ([DEC-fixedpoint-x100]).
 int CvPlayer::getCivilianUnitUpkeepMod() const
 {
-	return m_iCivilianUnitUpkeepMod;
-}
-int CvPlayer::getMilitaryUnitUpkeepMod() const
-{
-	return m_iMilitaryUnitUpkeepMod;
+	return static_cast<int>(InfoValuation::realizedAtEmpire(*this,
+		CascadeChannelRegistry::channelLookup(MODFAM_UPKEEP, (int)UPKEEP_UNIT_CIVILIAN, -1)));
 }
 
-void CvPlayer::changeCivilianUnitUpkeepMod(const int iChange)
+int CvPlayer::getMilitaryUnitUpkeepMod() const
 {
-	if (iChange != 0)
-	{
-		m_iCivilianUnitUpkeepMod += iChange;
-		setUnitUpkeepDirty();
-	}
+	return static_cast<int>(InfoValuation::realizedAtEmpire(*this,
+		CascadeChannelRegistry::channelLookup(MODFAM_UPKEEP, (int)UPKEEP_UNIT_MILITARY, -1)));
 }
-void CvPlayer::changeMilitaryUnitUpkeepMod(const int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iMilitaryUnitUpkeepMod += iChange;
-		setUnitUpkeepDirty();
-	}
-}
+
 
 // ⚖ UPKEEP *IS* MAINTENANCE -- it only comes from UNITS instead of CITIES (owner). So the empire total is the
 // same shape maintenance already has: the Σ of its MEMBERS' realized values
@@ -9699,7 +9635,7 @@ namespace {
 
 int64_t CvPlayer::getUnitUpkeepCivilian() const
 {
-	return applyUnitUpkeepModifier(getUnitUpkeepCivilian100(), m_iCivilianUnitUpkeepMod);
+	return applyUnitUpkeepModifier(getUnitUpkeepCivilian100(), getCivilianUnitUpkeepMod());
 }
 
 int64_t CvPlayer::getUnitUpkeepCivilianNet() const
@@ -9709,7 +9645,7 @@ int64_t CvPlayer::getUnitUpkeepCivilianNet() const
 
 int64_t CvPlayer::getUnitUpkeepMilitary() const
 {
-	return applyUnitUpkeepModifier(getUnitUpkeepMilitary100(), m_iMilitaryUnitUpkeepMod);
+	return applyUnitUpkeepModifier(getUnitUpkeepMilitary100(), getMilitaryUnitUpkeepMod());
 }
 
 int64_t CvPlayer::getUnitUpkeepMilitaryNet() const
@@ -9751,8 +9687,8 @@ int64_t CvPlayer::calcFinalUnitUpkeepFrom(int64_t iCivilian100, int64_t iMilitar
 	}
 	int64_t iCalc = 0;
 
-	iCalc += std::max<int64_t>(0, applyUnitUpkeepModifier(iCivilian100, m_iCivilianUnitUpkeepMod) - getFreeUnitUpkeepCivilian());
-	iCalc += std::max<int64_t>(0, applyUnitUpkeepModifier(iMilitary100, m_iMilitaryUnitUpkeepMod) - getFreeUnitUpkeepMilitary());
+	iCalc += std::max<int64_t>(0, applyUnitUpkeepModifier(iCivilian100, getCivilianUnitUpkeepMod()) - getFreeUnitUpkeepCivilian());
+	iCalc += std::max<int64_t>(0, applyUnitUpkeepModifier(iMilitary100, getMilitaryUnitUpkeepMod()) - getFreeUnitUpkeepMilitary());
 
 	if (iCalc > 0)
 	{
@@ -17307,6 +17243,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 
 
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iReligionSpreadRate);
+		WRAPPER_READ(wrapper, "CvPlayer", &m_iFreeUnitUpkeepCivilianEvents);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iDistantUnitSupportCostModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iEnslavementChance);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNoCapitalUnhappiness);
@@ -18109,12 +18046,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iSelectionRegroup);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iFreedomFighterCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraFreedomFighters);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iCivilianUnitUpkeepMod);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iMilitaryUnitUpkeepMod);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iBaseFreeUnitUpkeepCivilian);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iBaseFreeUnitUpkeepMilitary);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iFreeUnitUpkeepCivilianPopPercent);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iFreeUnitUpkeepMilitaryPopPercent);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iGold);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iCulture);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iMinTaxIncome);
@@ -18617,6 +18548,7 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iForeignTradeRouteModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iTaxRateUnhappiness);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iReligionSpreadRate);
+		WRAPPER_WRITE(wrapper, "CvPlayer", m_iFreeUnitUpkeepCivilianEvents);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iDistantUnitSupportCostModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iEnslavementChance);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNoCapitalUnhappiness);
@@ -19018,12 +18950,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraFreedomFighters);
 		//TB Traits end
 
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCivilianUnitUpkeepMod);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iMilitaryUnitUpkeepMod);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iBaseFreeUnitUpkeepCivilian);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iBaseFreeUnitUpkeepMilitary);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iFreeUnitUpkeepCivilianPopPercent);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iFreeUnitUpkeepMilitaryPopPercent);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iGold);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCulture);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iMinTaxIncome);
@@ -20839,7 +20765,8 @@ void CvPlayer::applyEvent(EventTypes eEvent, int iEventTriggeredId, bool bUpdate
 
 	if (0 != kEvent.getFreeUnitSupport())
 	{
-		changeBaseFreeUnitUpkeepCivilian(kEvent.getFreeUnitSupport());
+		m_iFreeUnitUpkeepCivilianEvents += kEvent.getFreeUnitSupport();
+		setUnitUpkeepDirty();
 	}
 
 	const CvProperties* pProp = kEvent.getPropertiesAllCities();
@@ -26528,12 +26455,6 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 	changeImprovementUpgradeRateModifier(iChange*GC.getTraitInfo(eTrait).getImprovementUpgradeRateModifier());
 	changeMaxConscript(iChange*GC.getTraitInfo(eTrait).getMaxConscript());
 	changeStateReligionGreatPeopleRateModifier(iChange*GC.getTraitInfo(eTrait).getStateReligionGreatPeopleRateModifier());
-	changeBaseFreeUnitUpkeepCivilian(iChange*GC.getTraitInfo(eTrait).getFreeUnitUpkeepCivilian());
-	changeBaseFreeUnitUpkeepMilitary(iChange*GC.getTraitInfo(eTrait).getFreeUnitUpkeepMilitary());
-	changeFreeUnitUpkeepCivilianPopPercent(iChange*GC.getTraitInfo(eTrait).getFreeUnitUpkeepCivilianPopPercent());
-	changeFreeUnitUpkeepMilitaryPopPercent(iChange*GC.getTraitInfo(eTrait).getFreeUnitUpkeepMilitaryPopPercent());
-	changeCivilianUnitUpkeepMod(iChange*GC.getTraitInfo(eTrait).getCivilianUnitUpkeepMod());
-	changeMilitaryUnitUpkeepMod(iChange*GC.getTraitInfo(eTrait).getMilitaryUnitUpkeepMod());
 	changeHappyPerMilitaryUnit(iChange*GC.getTraitInfo(eTrait).getHappyPerMilitaryUnit());
 	changeLargestCityHappiness(iChange*GC.getTraitInfo(eTrait).getLargestCityHappiness());
 	changeTradeRoutes(iChange*GC.getTraitInfo(eTrait).getTradeRoutes());

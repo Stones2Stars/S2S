@@ -1097,3 +1097,24 @@ curator already precomputes into the data, so the legacy read double-counted the
 | fill like any other negative wellbeing deposit ([modifier.md §2b]).
 CvPlayer::m_iForeignUnhappyPercent
 ========================
+#430 delete-driven legacy cut (the rest of the unit-upkeep cluster): the free allowances, their pop-percent
+twins and the two bucket modifiers were serialized push-accumulators fed by trait/civic deposits the cascade
+now carries at empire scope -- the STORED-ACCUMULATOR DRIFT class ([DEC-accumulator-cut-uniform]).
+| REPLACEMENT: `upkeep.empire.{freeCivilian,freeMilitary}` (FLAT, the reader reduces ×100) and
+| `upkeep.empire.{unitCivilian,unitMilitary}` (PERCENT, unscaled), read through
+| InfoValuation::realizedAtEmpire.
+| ⚑ The BASE and POP-PERCENT members collapse into ONE deposit: the curator folds the pop-scaled leg into the
+| same free kind as a {value, per:{POPULATION, each:100}} entry under the one free-amount sign convention, so
+| there is no second read to re-home.
+| ⚠ The engine's own baseline (BASE_FREE_UNITS_UPKEEP_* global defines) went with them and loses nothing --
+| all four defines are 0, so the push was inert.
+| ⚠ The EVENT grant (CvEventInfo iFreeUnitSupport, 4 authorings) is NOT covered by any of the above: it is
+| genuine one-shot state, so it moved to its own persisted member and is ADDED to the cascade read
+| ([state-repositories.md]: a recompute cache would wipe an event grant).
+CvPlayer::m_iBaseFreeUnitUpkeepCivilian
+CvPlayer::m_iBaseFreeUnitUpkeepMilitary
+CvPlayer::m_iFreeUnitUpkeepCivilianPopPercent
+CvPlayer::m_iFreeUnitUpkeepMilitaryPopPercent
+CvPlayer::m_iCivilianUnitUpkeepMod
+CvPlayer::m_iMilitaryUnitUpkeepMod
+========================
