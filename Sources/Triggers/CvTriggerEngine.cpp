@@ -139,6 +139,7 @@ static const int tr_keyCivics           = CvGrants::key("civics");
 static const int tr_keyFreeTechs        = CvGrants::key("freeTechs");
 static const int tr_keyGoldenAge        = CvGrants::key("goldenAge");
 static const int tr_keyPopulation       = CvGrants::key("population");
+static const int tr_keyCulture          = CvGrants::key("culture");
 static const int tr_keyScopeCity        = CvGrants::key("city");
 static const int tr_keyScopeEmpire      = CvGrants::key("empire");
 static const int tr_keySpecialists      = CvGrants::key("specialists");
@@ -870,17 +871,28 @@ static void tr_applyPerTurn(int iPlayer)
 // (json §5: the settler's considered action IS founding): a settler seeding buildings into the city it founds.
 // That is a NEW mechanic coined for this rework, so there is no legacy apply to mirror -- the data has been
 // authored and inert, waiting for a trigger.
-// ⛔ The other settle-time provisions (start-era freePopulation, civilization buildings, FreeStartEra, the trait
-// settle keys, barbarianInitialDefenders) still apply in CvPlayer::found: several are not authored in a `grants`
-// block at all, so the machine cannot resolve them off consideredGrants() until the curator emits them
-// (grant-apply-sites.md §5.4). The TRIGGER now exists; the DATA is the remaining blocker.
+// It also hands over the founder's conditioned NUMERIC pulses -- the trait start CULTURE and bonus POPULATION,
+// which are conditional grants living on the founder ([json.md] §5), each gated by the trait as the entry's own
+// `enabled`. They are read off the conditioned-pulse tail rather than the pulse MAP: the map holds one summed
+// number per channel with nowhere to put a condition, so reading them there would hand every civilization the
+// sum of every trait's bonus ([CvGrants.h] -- the split mirrors the modifier plane's compiled-sum + tail).
+// ⛔ The other settle-time provisions (start-era freePopulation, civilization buildings, FreeStartEra,
+// barbarianInitialDefenders) still apply in CvPlayer::found: several are not authored in a `grants` block at
+// all, so the machine cannot resolve them off consideredGrants() until the curator emits them
+// (grant-apply-sites.md §5.4).
 static void tr_resolveCityFounded(int iOwner, int iCity, int iFounderType)
 {
 	if (iOwner < 0 || iFounderType < 0) return;
 	const CvInfo* j = InfoRepo<CvUnitInfo>::get().get(iFounderType);
 	if (j == NULL || j->consideredGrants() == NULL) return;
 	const std::vector<int>* pSeeds = j->consideredGrants()->list(tr_keyBuildings);
-	if (pSeeds == NULL || pSeeds->empty()) return;
+	const std::vector<int>* pCulture = j->consideredGrants()->pulseEntries(tr_keyCulture);
+	const std::vector<int>* pPopulation = j->consideredGrants()->pulseEntries(tr_keyPopulation);
+	// ⚠ The guard covers EVERY payload this resolver hands over, not just the buildings. A founder carrying only
+	// pulses would otherwise return before applying any of them.
+	if ((pSeeds == NULL || pSeeds->empty())
+	&& (pCulture == NULL || pCulture->empty())
+	&& (pPopulation == NULL || pPopulation->empty())) return;
 
 	CvPlayer& player = GET_PLAYER((PlayerTypes)iOwner);
 	CvCity* pCity = player.getCity(iCity);
@@ -893,7 +905,7 @@ static void tr_resolveCityFounded(int iOwner, int iCity, int iFounderType)
 		player.getEmpireContext().fillEvalCtx(ec);
 		EnablerKernel::wireOperatingBuildings(pCity, ec);   // the enabler's sets are the third leg (see above)
 		const CvCascadeEvalFlags kFlags;
-		for (size_t i = 0; i < pSeeds->size(); ++i)
+		for (size_t i = 0; pSeeds != NULL && i < pSeeds->size(); ++i)
 		{
 			const int iBuilding = (*pSeeds)[i];
 			if (iBuilding < 0) continue;
@@ -903,6 +915,31 @@ static void tr_resolveCityFounded(int iOwner, int iCity, int iFounderType)
 			if (pCity->hasBuilding((BuildingTypes)iBuilding)) continue;
 			pCity->changeHasBuilding((BuildingTypes)iBuilding, true);
 			++nPlaced;
+		}
+		// The conditioned numeric pulses. Each entry is gated by its own `enabled` through the ONE evaluator, so
+		// only the founder's owner's live traits contribute -- which is the whole reason they cannot be summed
+		// off the pulse map. ⚠ Pulse values are ×100 at parse, so each reduces here at its point of use.
+		int iCulture100 = 0;
+		for (size_t i = 0; pCulture != NULL && i < pCulture->size(); ++i)
+		{
+			const CvCondition* pEnabled = j->consideredGrants()->pulseEntryCond(tr_keyCulture, i);
+			if (pEnabled != NULL && !cascadeEvalCondition(pEnabled, ec, kFlags)) continue;
+			iCulture100 += (*pCulture)[i];
+		}
+		if (iCulture100 / 100 > 0)
+		{
+			pCity->changeCulture(player.getID(), iCulture100 / 100, true, true);
+		}
+		int iPop100 = 0;
+		for (size_t i = 0; pPopulation != NULL && i < pPopulation->size(); ++i)
+		{
+			const CvCondition* pEnabled = j->consideredGrants()->pulseEntryCond(tr_keyPopulation, i);
+			if (pEnabled != NULL && !cascadeEvalCondition(pEnabled, ec, kFlags)) continue;
+			iPop100 += (*pPopulation)[i];
+		}
+		if (iPop100 / 100 > 0)
+		{
+			pCity->changePopulation(iPop100 / 100);
 		}
 	}
 	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_TRIGGERS, TRE_FOUND, 1)

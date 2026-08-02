@@ -60,11 +60,21 @@ void CvGrants::clearParsed()
 			delete bucketIt->second[i];
 		}
 	}
+	for (std::map<int, std::vector<CvCondition*> >::iterator channelIt = m_pulseEntryConds.begin(); channelIt != m_pulseEntryConds.end(); ++channelIt)
+	{
+		for (size_t i = 0; i < channelIt->second.size(); ++i)
+		{
+			delete channelIt->second[i];
+		}
+	}
 	m_lists.clear();
 	m_listConds.clear();
 	m_listScopes.clear();
 	m_pulses.clear();
 	m_scopedPulses.clear();
+	m_pulseEntries.clear();
+	m_pulseEntryConds.clear();
+	m_pulseEntryScopes.clear();
 	m_flags.clear();
 }
 
@@ -136,10 +146,20 @@ void CvGrants::parse(const picojson::value& v)
 					const picojson::object& entryObj = a[i].get<picojson::object>();
 					int id = -1;
 					int iScopeKey = -1;
+					int iValue100 = 0;
+					bool bHasValue = false;
 					CvCondition* pCond = NULL;
 					for (picojson::object::const_iterator entryIt = entryObj.begin(); entryIt != entryObj.end(); ++entryIt)
 					{
-						if (entryIt->first == "enabled")
+						// The NUMERIC-payload entry ({value: N, enabled: <cond>}) -- a conditioned PULSE rather
+						// than a conditioned id. It names no entity, so the id-based landing below cannot serve
+						// it; without this it resolves nothing and the whole entry is dropped.
+						if (entryIt->first == "value" && entryIt->second.is<double>())
+						{
+							iValue100 = jsonX100(entryIt->second.get<double>());
+							bHasValue = true;
+						}
+						else if (entryIt->first == "enabled")
 						{
 							delete pCond;
 							pCond = cascadeParseCondition(entryIt->second);
@@ -172,10 +192,19 @@ void CvGrants::parse(const picojson::value& v)
 						m_listConds[iKey].push_back(pCond);
 						m_listScopes[iKey].push_back(iScopeKey);
 					}
+					else if (bHasValue)
+					{
+						// The conditioned PULSE tail. It deliberately does NOT fold into m_pulses: that map holds
+						// one summed number per channel with nowhere to put a condition, so folding would apply
+						// every entry to every holder -- plausible, silent and wrong.
+						m_pulseEntries[iKey].push_back(iValue100);
+						m_pulseEntryConds[iKey].push_back(pCond);
+						m_pulseEntryScopes[iKey].push_back(iScopeKey);
+					}
 					else
 					{
-						// A conditioned entry naming nothing resolvable -- dropped WITH its condition, so a
-						// targeted provision reaches nobody. Never silent.
+						// A conditioned entry naming nothing resolvable and carrying no value -- dropped WITH its
+						// condition, so a targeted provision reaches nobody. Never silent.
 						jsonNoteUnconsumed(szBucket, "entryHasNoResolvableId");
 						delete pCond;
 					}

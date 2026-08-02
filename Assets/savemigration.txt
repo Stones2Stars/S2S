@@ -1246,10 +1246,9 @@ The trait CITY-START culture and bonus population. Both were writerless empire a
 | FOUNDER -- `grants.culture` / `grants.population` on the settler, gated by the trait ([json.md] par.5) --
 | and the data now authors them there; the invented `cityFounding` block they used to sit in is gone from the
 | spec, the curator, the parser vocabulary and the data.
-| REPLACEMENT: the grants machine, applied off SEVT_CITY_FOUNDED in tr_resolveCityFounded.
-| WARNING: that apply does NOT run yet -- CvGrants carries per-entry conditions on LIST entries
-| (m_listConds) but not on PULSES, so a conditioned pulse is dropped at parse with a LOUD unconsumed report
-| (`entryHasNoResolvableId`). Nothing regressed, because the accumulators applied 0 already; the value stays
-| unserved until conditioned pulses land.
+| REPLACEMENT: the grants machine, applied off SEVT_CITY_FOUNDED in tr_resolveCityFounded, which reads the
+| founder's CONDITIONED PULSE tail (CvGrants::pulseEntries / pulseEntryCond) and evaluates each entry's own
+| `enabled` through the ONE evaluator. The tail exists because the pulse MAP holds one summed number per
+| channel with nowhere to put a condition -- summing there would hand every civ every trait's bonus.
 CvPlayer::m_iNationalCityStartCulture
 CvPlayer::m_iNationalCityStartBonusPopulation

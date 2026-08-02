@@ -95,6 +95,41 @@ public:
 		return bucketIt->second[i];
 	}
 
+	// --- the CONDITIONED PULSE tail (the numeric-payload twin of list/listCond/listScope) ---
+	// A pulse channel authored as a LIST of §3.9 entries ({value: N, enabled: <cond>}) cannot fold into the
+	// m_pulses/m_scopedPulses maps: those hold ONE summed number per (channel, scope) and have nowhere to put a
+	// condition, so summing a conditioned entry into them would apply it unconditionally. That is the
+	// silently-plausible-wrong case -- every holder would receive every conditioned entry's value.
+	// ⚑ So the split mirrors the modifier plane exactly ([patterns.md] THE GETTER SETUP): the maps stay the
+	// UNCONDITIONED compiled sum, and the conditioned entries stay a LIST a ctx-taking caller evaluates through
+	// the ONE evaluator. A caller that reads only the maps is correct-but-partial, never wrong.
+	// ⚠ Index-parallel by construction, exactly like the list triple: every push writes all three.
+	const std::vector<int>* pulseEntries(int iChannelKey) const
+	{
+		std::map<int, std::vector<int> >::const_iterator channelIt = m_pulseEntries.find(iChannelKey);
+		return (channelIt != m_pulseEntries.end()) ? &channelIt->second : NULL;
+	}
+	// The per-entry condition for pulseEntries(channel)[i]. NULL = unconditional.
+	const CvCondition* pulseEntryCond(int iChannelKey, size_t i) const
+	{
+		std::map<int, std::vector<CvCondition*> >::const_iterator channelIt = m_pulseEntryConds.find(iChannelKey);
+		if (channelIt == m_pulseEntryConds.end() || i >= channelIt->second.size())
+		{
+			return NULL;
+		}
+		return channelIt->second[i];
+	}
+	// The per-entry SCOPE key for pulseEntries(channel)[i] (-1 = unscoped -- the considered action's own target).
+	int pulseEntryScope(int iChannelKey, size_t i) const
+	{
+		std::map<int, std::vector<int> >::const_iterator channelIt = m_pulseEntryScopes.find(iChannelKey);
+		if (channelIt == m_pulseEntryScopes.end() || i >= channelIt->second.size())
+		{
+			return -1;
+		}
+		return channelIt->second[i];
+	}
+
 	// --- PARSE-SURFACE readers (LOAD-ONLY): the mapFrom materializations speak the authored vocabulary once
 	// per load ("the parse surface alone touches strings"). A runtime read takes the int-keyed surface above
 	// with a minted handle -- never these. ---
@@ -108,7 +143,8 @@ public:
 
 	bool isEmpty() const
 	{
-		return m_lists.empty() && m_pulses.empty() && m_scopedPulses.empty() && m_flags.empty();
+		return m_lists.empty() && m_pulses.empty() && m_scopedPulses.empty() && m_pulseEntries.empty()
+			&& m_flags.empty();
 	}
 
 private:
@@ -121,6 +157,10 @@ private:
 	std::map<int, std::vector<int> > m_listScopes;
 	std::map<int, int> m_pulses;                        // channel key -> value ×100 (population/revolution/…)
 	std::map<int, std::map<int, int> > m_scopedPulses;  // channel key -> {scope key -> value ×100}
+	// The CONDITIONED pulse tail (see the readers above). The three are index-parallel by construction.
+	std::map<int, std::vector<int> > m_pulseEntries;                // channel key -> values ×100
+	std::map<int, std::vector<CvCondition*> > m_pulseEntryConds;    // owned; freed in clearParsed
+	std::map<int, std::vector<int> > m_pulseEntryScopes;            // -1 = unscoped
 	std::set<int> m_flags;                                 // bool flags ("goldenAge")
 
 	CvGrants(const CvGrants&);              // noncopyable -- owns its entries
