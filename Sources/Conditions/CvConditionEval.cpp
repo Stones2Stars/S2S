@@ -479,12 +479,12 @@ static bool ev_evalPredicate(const CvCascadeEvalCtx& ctx, const CvCascadeEvalFla
 		return pr->min < 0 || (GC.getGame().getGameTurnYear() - iBuiltYear) >= pr->min;
 	}
 	// {natureYield:{<channel>:N}} -- the improvement PLACEMENT threshold (json §3.5): the target plot's
-	// PRE-improvement nature yield of the channel (`id` = YieldTypes) must be >= `min`. Transcribes the engine
-	// gate (CvPlot::canHaveImprovement: calculateNatureYield(channel, eTeam) < prereq -> invalid) -- the same
-	// team-relative read, no improvement applied. A plot predicate: no plot in context -> not-present (false).
+	// PRE-improvement nature yield of the channel (`id` = YieldTypes) must be >= `min`. Reads the plot
+	// package's SUBSTRATE segment, so no improvement is applied and nothing is walked per call.
+	// A plot predicate: no plot in context -> not-present (false).
 	case CASC_PRED_NATURE_YIELD:
 		return plotContext != NULL && pr->id >= 0 && pr->min >= 0
-		    && plotContext->natureYield(pr->id, ctx.empireContext != NULL ? ctx.empireContext->teamId() : (int)NO_TEAM) >= pr->min;
+		    && plotContext->natureYield(pr->id) >= pr->min;
 	case CASC_PRED_VICINITY:   return plotContext != NULL;
 	case CASC_PRED_WORKABLE:   return plotContext != NULL && cityContext != NULL && plotContext->owner() == cityContext->owner();
 	case CASC_PRED_IS_WORKED:  return plotContext != NULL && plotContext->isWorked();

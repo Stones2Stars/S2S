@@ -179,6 +179,12 @@ public:
 	// take NO upper-scope percent -- the city stack scales the already-summed base later, once. That is also why
 	// the yield group here is the plot's flat base and never a rate.
 	void getYields(int (&yields)[NUM_YIELD_TYPES]) const;
+	// The SUBSTRATE segment of the same package: what the GROUND yields -- terrain + feature + bonus -- before
+	// the route, the improvement or the owner's sources. The value an improvement's placement gate tests
+	// against, and the plot's nature yield ([contexts.md]: a slot of this package, never a per-call walk).
+	// ⚠ Carries NO team: a plot is resolved in ISOLATION (modifier.md §2), so its substrate has ONE value, and
+	// the legacy per-asking-team bonus-visibility nuance is not reproduced.
+	void getNatureYields(int (&yields)[NUM_YIELD_TYPES]) const;
 	void getCommerces(int (&commerces)[NUM_COMMERCE_TYPES]) const;
 	// The four wellbeing channels (modifier.md §2b). At plot scope the census authors HEALTH only (the feature
 	// fallout class); the other three answer 0 with no storage anywhere.

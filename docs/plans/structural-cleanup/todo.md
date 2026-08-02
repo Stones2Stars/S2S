@@ -271,21 +271,13 @@
   (`calculateYield` and the `m_aiYield` / `getYield` / `updateYield` cache it feeds) is the hand-maintained plot
   yield cache the plot's own `CvCascadePackage` + `getYields` already replace; the package and the gather's plot
   leg are BUILT, so this is a deletion with a consumer sweep, not a machine to design.
-  ⚑ **`calculateNatureYield` rides the same cut** — it is yield compute, so it is the cascade's, and a PARTIAL
-  leg is no exemption ([DEC-universal-yield](../../architecture/decisions.md#dec-universal-yield)).
-  ⚖ **THE PLOT IS ONE PACKAGE AND ITS PARTS ARE SEGMENTS OF IT (owner)** — nature, improvement and route are
-  segments within the plot's own package, and a read asks for the whole or for a segment. That is
-  [contexts.md](../../architecture/contexts.md)'s "a SECOND SLOT of that same package", and it is the whole of
-  the shape: `natureYield` is the pre-improvement/pre-route segment, read as a bare fetch like any other. Today
-  `PlotContext::natureYield` forwards to the per-call walk instead — the forwarded-read-that-COMPUTES defect
-  that doc names.
-  ⛔ Do NOT reach for a heavier mechanism for it. Minting a synthetic channel per yield (the wellbeing sign-twin
-  shape) is over-engineering the segment into the channel registry, and a bespoke fourth dictionary on
-  `CvCascadePackage` is worse still — it would put a hand-named field on the one uniform cache type and the
-  stored-vs-oracle diff would go blind to it.
-  ⚑ The gather needs no new pass: its plot leg already folds terrain / feature / route / improvement / bonus and
-  the owner's plot-scope sources in order, so the nature segment is that same fold with route and improvement
-  withheld — exactly the pre-improvement base the golden-age threshold is documented to test against.
+  ⚠ **`calculateNatureYield` still has its AI callers, and they are NOT a segment re-point.** The genuine
+  consumers of the plot's actual substrate value are served; what is left on the legacy walk is AI yield
+  arithmetic — the improvement valuations that compute `nature + calculateImprovementYieldChange` (that sum IS
+  `expected*`), the feature-food/hill-food heuristics, and the `bIgnoreFeature` CHOP what-ifs, which no stored
+  segment can answer because they ask about a plot that does not exist. Re-pointing them at the segment would
+  wire legacy AI calc onto new machinery — the "bending the new surface to preserve an AI call's old shape"
+  failure. They convert with the valuation, or they go.
   ⚠ `calculateImprovementYieldChange` is the same rule's other half: "what would this improvement give here" is
   a yield compute, so it is an `expected*` READ of the machine, never AI-side yield arithmetic.
 

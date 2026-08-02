@@ -1854,8 +1854,11 @@ void CvGame::normalizeAddGoodTerrain()
 
 			if (plot != NULL && plot != pStartingPlot)
 			{
-				if (plot->calculateNatureYield(YIELD_FOOD, eTeam) >= iConsumption
-				&&  plot->calculateNatureYield(YIELD_PRODUCTION, eTeam) > 0)
+				// the plot's SUBSTRATE segment (×100 native; these compare against whole yields)
+				int aiNatureYields[NUM_YIELD_TYPES];
+				plot->getNatureYields(aiNatureYields);
+				if (aiNatureYields[YIELD_FOOD] / 100 >= iConsumption
+				&&  aiNatureYields[YIELD_PRODUCTION] / 100 > 0)
 				{
 					iGoodPlot++;
 				}
@@ -1877,7 +1880,10 @@ void CvGame::normalizeAddGoodTerrain()
 			{
 				bool bChanged = false;
 
-				if (plot->calculateNatureYield(YIELD_FOOD, eTeam) < iConsumption)
+				// the plot's SUBSTRATE segment (×100 native; these compare against whole yields)
+				int aiNatureYields[NUM_YIELD_TYPES];
+				plot->getNatureYields(aiNatureYields);
+				if (aiNatureYields[YIELD_FOOD] / 100 < iConsumption)
 				{
 					for (int iK = 0; iK < GC.getNumTerrainInfos(); iK++)
 					{
@@ -1890,7 +1896,9 @@ void CvGame::normalizeAddGoodTerrain()
 						}
 					}
 				}
-				if (plot->calculateNatureYield(YIELD_PRODUCTION, eTeam) == 0)
+				// RE-READ: the terrain may have just been swapped above, and that fact marks the package.
+				plot->getNatureYields(aiNatureYields);
+				if (aiNatureYields[YIELD_PRODUCTION] / 100 == 0)
 				{
 					for (int iK = 0; iK < GC.getNumFeatureInfos(); iK++)
 					{

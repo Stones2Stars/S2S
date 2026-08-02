@@ -86,6 +86,17 @@ void CvPlot::getYields(int (&yields)[NUM_YIELD_TYPES]) const
 	}
 }
 
+void CvPlot::getNatureYields(int (&yields)[NUM_YIELD_TYPES]) const
+{
+	for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+	{
+		const int iChannel = CascadeChannelRegistry::channelLookup(infoYieldFamily(iYield), (int)CHANNEL_AMOUNT, -1);
+		// This plot's OWN package segment -- not the cross-scope roll-up: a substrate value takes no upper-scope
+		// contribution by construction.
+		yields[iYield] = (int)m_cascadePackage.readSubstrateFlat(iChannel);
+	}
+}
+
 void CvPlot::getCommerces(int (&commerces)[NUM_COMMERCE_TYPES]) const
 {
 	for (int iCommerce = 0; iCommerce < NUM_COMMERCE_TYPES; ++iCommerce)
@@ -3013,9 +3024,14 @@ bool CvPlot::canHaveImprovement(ImprovementTypes eImprovement, TeamTypes eTeam, 
 	// Minimum yield
 	if (!bIgnoreNatureYields)
 	{
+		// The plot's SUBSTRATE segment -- the pre-improvement value this threshold has always tested against,
+		// now a bare package fetch. ×100 native, and the authored threshold is a whole yield, so the reduce is
+		// here at the compare ([DEC-fixedpoint-x100]).
+		int aiNatureYields[NUM_YIELD_TYPES];
+		getNatureYields(aiNatureYields);
 		for (int iI = 0; iI < NUM_YIELD_TYPES; ++iI)
 		{
-			if (calculateNatureYield(((YieldTypes)iI), eTeam) < pInfo.getPrereqNatureYield(iI))
+			if (aiNatureYields[iI] / 100 < pInfo.getPrereqNatureYield(iI))
 			{
 				return false;
 			}

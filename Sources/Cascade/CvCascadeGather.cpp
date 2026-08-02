@@ -385,9 +385,33 @@ namespace
 	// ---- pure function of the game and terminates unconditionally. Only the RECEIVER SUM legs below consume
 	// ---- other scopes -- which is what bounds the oracle's recursion (see gt_freshEmpireDocument). ----
 
-	void gt_gatherPlotChannels(const CvPlot& plot, int64_t iWantedBits, std::vector<int64_t>& flatSlots, std::vector<int>& percentSlots)
+	// Zero the wanted slots of a FLAT-only vector -- gt_beginRefill's single-dictionary twin, for the segment
+	// below (only the flat side is segmented; a percent belongs to the plot as a whole).
+	void gt_beginRefillFlat(CvCascScope eScope, int64_t iWantedBits, std::vector<int64_t>& flatSlots)
+	{
+		const int iChannels = CascadeChannelRegistry::scopeChannelCount(eScope);
+		for (int iSlot = 0; iSlot < iChannels && iSlot < (int)flatSlots.size(); ++iSlot)
+		{
+			const int iChannel = CascadeChannelRegistry::scopeSlotChannel(eScope, iSlot);
+			if ((iWantedBits & CascadeChannelRegistry::scopeChannelBit(eScope, iChannel)) != 0)
+			{
+				flatSlots[iSlot] = 0;
+			}
+		}
+	}
+
+	// pSubstrateSlots receives the SUBSTRATE-ONLY segment of the flat side -- terrain + feature + bonus, i.e.
+	// what the GROUND yields before anything is built on it. That is the plot's nature value, and it is a
+	// SEGMENT of this same package rather than a second walk ([contexts.md]). NULL for a caller wanting only
+	// the total. Only the flat side segments; a percent belongs to the plot as a whole.
+	void gt_gatherPlotChannels(const CvPlot& plot, int64_t iWantedBits, std::vector<int64_t>& flatSlots, std::vector<int>& percentSlots,
+		std::vector<int64_t>* pSubstrateSlots)
 	{
 		gt_beginRefill(CASC_SCOPE_PLOT, iWantedBits, flatSlots, percentSlots);
+		if (pSubstrateSlots != NULL)
+		{
+			gt_beginRefillFlat(CASC_SCOPE_PLOT, iWantedBits, *pSubstrateSlots);
+		}
 
 		CvCascadeEvalCtx evalCtx;
 		//	the ctx carries the SILOS, never the objects ([contexts.md]) -- the plot's own, its owner's empire
@@ -408,16 +432,33 @@ namespace
 			EnablerKernel::wireOperatingBuildings(pWorkingCity, evalCtx);
 		}
 
-		// (1) the plot's own substrate -- each entity's own-output plot deposits (terrain/feature/route/
-		// improvement/resource; the isolated per-plot base package, modifier.md §2)
+		// (1) the SUBSTRATE -- terrain + feature + bonus: what the ground itself yields. The flat side lands in
+		// the segment when one is asked for and is carried into the total below, so every source is still
+		// evaluated exactly ONCE; percents go straight to the plot's percent dictionary either way.
+		std::vector<int64_t>& substrateOut = (pSubstrateSlots != NULL) ? *pSubstrateSlots : flatSlots;
+		const TeamTypes eSeeingTeam = (evalCtx.empireContext != NULL) ? (TeamTypes)evalCtx.empireContext->teamId() : NO_TEAM;
 		if (plot.getTerrainType() != NO_TERRAIN)
 		{
-			gt_foldInfo(GC.getTerrainInfo(plot.getTerrainType()).getModifiers(), 1, CASC_SCOPE_PLOT, iWantedBits, evalCtx, &plot, 0, false, flatSlots, percentSlots);
+			gt_foldInfo(GC.getTerrainInfo(plot.getTerrainType()).getModifiers(), 1, CASC_SCOPE_PLOT, iWantedBits, evalCtx, &plot, 0, false, substrateOut, percentSlots);
 		}
 		if (plot.getFeatureType() != NO_FEATURE)
 		{
-			gt_foldInfo(GC.getFeatureInfo(plot.getFeatureType()).getModifiers(), 1, CASC_SCOPE_PLOT, iWantedBits, evalCtx, &plot, 0, false, flatSlots, percentSlots);
+			gt_foldInfo(GC.getFeatureInfo(plot.getFeatureType()).getModifiers(), 1, CASC_SCOPE_PLOT, iWantedBits, evalCtx, &plot, 0, false, substrateOut, percentSlots);
 		}
+		if (plot.getBonusType(eSeeingTeam) != NO_BONUS)
+		{
+			gt_foldInfo(GC.getBonusInfo(plot.getBonusType(eSeeingTeam)).getModifiers(), 1, CASC_SCOPE_PLOT, iWantedBits, evalCtx, &plot, 0, false, substrateOut, percentSlots);
+		}
+		if (pSubstrateSlots != NULL)
+		{
+			for (size_t iSlot = 0; iSlot < substrateOut.size() && iSlot < flatSlots.size(); ++iSlot)
+			{
+				flatSlots[iSlot] += substrateOut[iSlot];
+			}
+		}
+
+		// (2) what is BUILT on the plot -- the route and the improvement. Deliberately OUTSIDE the segment:
+		// the pre-improvement value is precisely the one an improvement's placement gate tests against.
 		if (plot.getRouteType() != NO_ROUTE)
 		{
 			gt_foldInfo(GC.getRouteInfo(plot.getRouteType()).getModifiers(), 1, CASC_SCOPE_PLOT, iWantedBits, evalCtx, &plot, 0, false, flatSlots, percentSlots);
@@ -426,14 +467,10 @@ namespace
 		{
 			gt_foldInfo(GC.getImprovementInfo(plot.getImprovementType()).getModifiers(), 1, CASC_SCOPE_PLOT, iWantedBits, evalCtx, &plot, 0, false, flatSlots, percentSlots);
 		}
-		const TeamTypes eSeeingTeam = (evalCtx.empireContext != NULL) ? (TeamTypes)evalCtx.empireContext->teamId() : NO_TEAM;
-		if (plot.getBonusType(eSeeingTeam) != NO_BONUS)
-		{
-			gt_foldInfo(GC.getBonusInfo(plot.getBonusType(eSeeingTeam)).getModifiers(), 1, CASC_SCOPE_PLOT, iWantedBits, evalCtx, &plot, 0, false, flatSlots, percentSlots);
-		}
 
-		// (2) the owner's sources' PLOT-scope deposits (keyed by this plot's substrate / `plots`-target / bare
-		// plot flats) -- civics, traits, techs, owned buildings, ... (the keyed/plots flats of the plot base)
+		// (3) the owner's sources' PLOT-scope deposits (keyed by this plot's substrate / `plots`-target / bare
+		// plot flats) -- civics, traits, techs, owned buildings, ... (the keyed/plots flats of the plot base).
+		// Outside the segment too: these are the OWNER's contribution, not the ground's.
 		if (eOwner != NO_PLAYER)
 		{
 			gt_foldPlayerSources(GET_PLAYER(eOwner), CASC_SCOPE_PLOT, iWantedBits, evalCtx, &plot, flatSlots, percentSlots);
@@ -533,7 +570,7 @@ namespace
 	{
 		kDocument.reset(CASC_SCOPE_PLOT, plot.getX(), plot.getY());
 		gt_gatherPlotChannels(plot, CascadeChannelRegistry::scopeAllChannelsMask(CASC_SCOPE_PLOT),
-			kDocument.flat, kDocument.percent);
+			kDocument.flat, kDocument.percent, &kDocument.substrateFlat);
 	}
 
 	void gt_freshCityDocument(const CvCity& city, const CvCascadeEvalCtx& evalCtx, CvCascadeSlotValues& kDocument)
@@ -987,7 +1024,7 @@ void CascadeGather::refreshPlot(const CvPlot& plot, int64_t iMask)
 {
 	const CvCascadePackage<CvPlot>& package = plot.getCascadePackage();
 	package.ensureSized();
-	gt_gatherPlotChannels(plot, iMask, package.flat, package.percent);
+	gt_gatherPlotChannels(plot, iMask, package.flat, package.percent, &package.substrateFlat);
 	emitCacheRebuilt((int)CASC_SCOPE_PLOT, (int)plot.getOwner(),
 		plot.getX() + plot.getY() * GC.getMap().getGridWidth(), iMask);
 }

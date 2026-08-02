@@ -35,6 +35,9 @@ struct CvCascadeSlotValues
 	std::vector<int64_t> flat;         // dictionary 1, by the scope's LOCAL slot index: the x100 flat sums
 	std::vector<int> percent;          // dictionary 2, same indexing: the percent sums
 	std::vector<int64_t> sum;          // the receiver slots: the realized x100 totals this scope consumes
+	// The SUBSTRATE segment of `flat` (CvCascadePackage.h) -- carried here for the same reason as every other
+	// dictionary: a segment the stored side serves but the document does not would be invisible to the diff.
+	std::vector<int64_t> substrateFlat;
 
 	CvCascadeSlotValues() : scope(CASC_SCOPE_CITY), identityFirst(-1), identitySecond(-1) {}
 
@@ -73,6 +76,7 @@ struct CvCascadeSlotValues
 		flat.assign(iChannels, 0);
 		percent.assign(iChannels, 0);
 		sum.assign(iReceivers, 0);
+		substrateFlat.assign(eScope == CASC_SCOPE_PLOT ? iChannels : 0, 0);
 	}
 };
 

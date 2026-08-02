@@ -49,6 +49,13 @@ struct CvCascadePackage
 	mutable std::vector<int64_t> flat;   // dictionary 1: the channel-indexed x100 flat sums (local slots)
 	mutable std::vector<int> percent;    // dictionary 2: the channel-indexed percent sums (local slots)
 	mutable std::vector<int64_t> sum;    // the receiver slots: the realized x100 totals this scope consumes
+	// A SEGMENT of `flat`: the plot's SUBSTRATE-only contribution -- terrain + feature + bonus, WITHOUT the
+	// improvement, the route or the owner's plot-scope sources. A package's parts are segments of it (owner),
+	// and this is the one the data asks for: the pre-improvement value an improvement's placement gate tests
+	// against and the contexts serve as the plot's nature yield ([contexts.md] -- it is a slot of this same
+	// package, never a per-call walk). Sized at PLOT scope only; empty everywhere else, exactly as a channel
+	// no scope authors carries no storage.
+	mutable std::vector<int64_t> substrateFlat;
 	CvDerivedCacheSet<TOwner, int64_t> set;   // THE dirty protocol -- the one component, 64-bit mask form
 
 	CvCascadePackage() : scope(CASC_SCOPE_CITY), identityFirst(-1), identitySecond(-1) {}
@@ -93,6 +100,18 @@ struct CvCascadePackage
 			return 0;
 		}
 		return iSlot < (int)percent.size() ? percent[iSlot] : 0;
+	}
+
+	// The SUBSTRATE segment of this channel's flat sum (see `substrateFlat`). A bare fetch like its siblings;
+	// a scope that carries no segment answers 0 with no storage existing.
+	int64_t readSubstrateFlat(int iChannel) const
+	{
+		const int iSlot = CascadeChannelRegistry::scopeSlotIndex(scope, iChannel);
+		if (iSlot < 0)
+		{
+			return 0;
+		}
+		return iSlot < (int)substrateFlat.size() ? substrateFlat[iSlot] : 0;
 	}
 
 	int64_t readSum(int iChannel) const
@@ -208,6 +227,10 @@ struct CvCascadePackage
 		if (sum.size() < iReceivers)
 		{
 			sum.resize(iReceivers, 0);
+		}
+		if (scope == CASC_SCOPE_PLOT && substrateFlat.size() < iChannels)
+		{
+			substrateFlat.resize(iChannels, 0);
 		}
 	}
 	// Slot write access for the gather (refs into the mutable storage; game-thread only).

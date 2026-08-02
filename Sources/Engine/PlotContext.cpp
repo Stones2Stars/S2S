@@ -136,13 +136,18 @@ bool PlotContext::hasBonus(int eBonus, int eTeam) const  { return m_plot != NULL
 bool PlotContext::isCity() const         { return m_plot != NULL && m_plot->isCity(); }
 int  PlotContext::owner() const          { return m_plot != NULL ? (int)m_plot->getOwner() : (int)NO_PLAYER; }
 int  PlotContext::latitude() const       { return m_plot != NULL ? m_plot->getLatitude() : 0; }
-int  PlotContext::natureYield(int eYield, int eTeam) const
+int  PlotContext::natureYield(int eYield) const
 {
-	if (m_plot == NULL || eYield < 0)
+	if (m_plot == NULL || eYield < 0 || eYield >= NUM_YIELD_TYPES)
 	{
 		return 0;
 	}
-	return m_plot->calculateNatureYield((YieldTypes)eYield, (TeamTypes)eTeam);
+	// The plot's own package SEGMENT -- a bare fetch, never a per-call walk (contexts.md: the number is already
+	// in the package). ×100 native, and a placement threshold is authored as a whole yield, so the single
+	// reduce is here at the point of use ([DEC-fixedpoint-x100]).
+	int aiNature[NUM_YIELD_TYPES];
+	m_plot->getNatureYields(aiNature);
+	return aiNature[eYield] / 100;
 }
 
 // The realized-yield group forward: the bound plot's own group read, handed on unchanged -- no store, no mirror,

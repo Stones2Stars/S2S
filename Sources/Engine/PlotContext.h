@@ -96,7 +96,10 @@ public:
 	bool isCity() const;                         // the plot holds a city
 	int  owner() const;                          // CvPlot::getOwner (the vicinity scans' owned-plot test; NO_PLAYER = unowned)
 	int  latitude() const;                       // CvPlot::getLatitude (the latitude band predicate)
-	int  natureYield(int eYield, int eTeam) const;   // CvPlot::calculateNatureYield -- the plot's own PRE-improvement
+	// The plot's own PRE-improvement (substrate) yield, read as a SEGMENT of its package -- terrain + feature +
+	// bonus, before the route, the improvement or the owner's sources. ⚠ Takes no team: a plot resolves in
+	// isolation (modifier.md §2), so its substrate carries ONE value.
+	int  natureYield(int eYield) const;             // the plot's own PRE-improvement
 	                                             // nature yield of a channel (per-channel AND per-team, so not a verdict bit)
 	// The plot's CURRENT REALIZED YIELDS -- CvPlot::getYields, the plot's own O(1) group read, handed on
 	// unchanged: the WHOLE isolated per-plot base package (substrate + improvement + route + the keyed/plots
