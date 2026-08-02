@@ -149,7 +149,6 @@ public:
 
 	void AI_makeProductionDirty();
 
-	void AI_doCentralizedProduction();
 
 	void AI_conquerCity(PlayerTypes eOldOwner, CvCity* pCity, bool bConquest, bool bTrade);
 

@@ -1202,3 +1202,10 @@ CvPlayer::m_iExtraNationalCaptureResistanceModifier
 CvPlayer::m_iMaxTradeRoutesAdjustment
 CvPlayer::m_iNationalEnemyWarWearinessModifier
 CvPlayer::m_iAIAttitudeModifier
+The three WONDER build-rate modifiers. `world`/`team`/`national` name the cap SCOPE that makes a building a
+| wonder ([json.md par.4.4]), so each is its own build-rate kind; the reader takes the group and indexes it.
+| All three are percents and carry no scaling.
+| REPLACEMENT: CvPlayer::getBuildRateKinds -> BUILD_RATE_WORLD_WONDER / _TEAM_WONDER / _NATIONAL_WONDER.
+CvPlayer::m_iMaxGlobalBuildingProductionModifier
+CvPlayer::m_iMaxTeamBuildingProductionModifier
+CvPlayer::m_iMaxPlayerBuildingProductionModifier

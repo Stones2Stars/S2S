@@ -1085,9 +1085,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iGreatGeneralsCreated = 0;
 	m_iGreatPeopleThresholdModifier = 0;
 	m_iGreatGeneralsThresholdModifier = 0;
-	m_iMaxGlobalBuildingProductionModifier = 0;
-	m_iMaxTeamBuildingProductionModifier = 0;
-	m_iMaxPlayerBuildingProductionModifier = 0;
 	m_iFeatureProductionModifier = 0;
 	m_iImprovementUpgradeRateModifier = 0;
 	m_iMilitaryProductionModifier = 0;
@@ -3935,11 +3932,6 @@ void CvPlayer::doTurn()
 	doResearch();
 
 	doEspionagePoints();
-
-//#if 0 // AI_doCentralizedProduction is unfinished, no point calling it. [11/12/2019 billw]
-//	// New function to handle wonder construction in a centralized manner
-//	AI_doCentralizedProduction();
-//#endif
 
 	//	Resource consumption's only consumer is the bonus-depletion odds scaling
 	//	(CvPlot::doBonusDepletion), which is gated on this modder option -- skip maintaining
@@ -6848,19 +6840,24 @@ int CvPlayer::getProductionModifier(BuildingTypes eBuilding) const
 		}
 	}
 
+	//	The wonder categories are their own build-rate kinds, named by the cap SCOPE that makes a building a
+	//	wonder ([json.md par.4.4]). All three are percents and enter the multiplier unscaled.
+	int aiBuildRate[NUM_BUILD_RATE_KINDS];
+	getBuildRateKinds(aiBuildRate);
+
 	if (::isWorldWonder(eBuilding))
 	{
-		iMultiplier += getMaxGlobalBuildingProductionModifier();
+		iMultiplier += aiBuildRate[BUILD_RATE_WORLD_WONDER];
 	}
 
 	if (::isTeamWonder(eBuilding))
 	{
-		iMultiplier += getMaxTeamBuildingProductionModifier();
+		iMultiplier += aiBuildRate[BUILD_RATE_TEAM_WONDER];
 	}
 
 	if (::isNationalWonder(eBuilding))
 	{
-		iMultiplier += getMaxPlayerBuildingProductionModifier();
+		iMultiplier += aiBuildRate[BUILD_RATE_NATIONAL_WONDER];
 	}
 
 	return iMultiplier;
@@ -9109,40 +9106,10 @@ void CvPlayer::changeGreatGeneralsThresholdModifier(int iChange)
 
 
 
-int CvPlayer::getMaxGlobalBuildingProductionModifier() const
-{
-	return m_iMaxGlobalBuildingProductionModifier;
-}
 
 
-void CvPlayer::changeMaxGlobalBuildingProductionModifier(int iChange)
-{
-	m_iMaxGlobalBuildingProductionModifier += iChange;
-}
 
 
-int CvPlayer::getMaxTeamBuildingProductionModifier() const
-{
-	return m_iMaxTeamBuildingProductionModifier;
-}
-
-
-void CvPlayer::changeMaxTeamBuildingProductionModifier(int iChange)
-{
-	m_iMaxTeamBuildingProductionModifier += iChange;
-}
-
-
-int CvPlayer::getMaxPlayerBuildingProductionModifier() const
-{
-	return m_iMaxPlayerBuildingProductionModifier;
-}
-
-
-void CvPlayer::changeMaxPlayerBuildingProductionModifier(int iChange)
-{
-	m_iMaxPlayerBuildingProductionModifier += iChange;
-}
 
 
 int CvPlayer::getFeatureProductionModifier() const
@@ -16780,9 +16747,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iGreatGeneralsCreated);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iGreatPeopleThresholdModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iGreatGeneralsThresholdModifier);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iMaxGlobalBuildingProductionModifier);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iMaxTeamBuildingProductionModifier);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iMaxPlayerBuildingProductionModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iFeatureProductionModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iImprovementUpgradeRateModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iMilitaryProductionModifier);
@@ -18139,9 +18103,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iGreatGeneralsCreated);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iGreatPeopleThresholdModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iGreatGeneralsThresholdModifier);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iMaxGlobalBuildingProductionModifier);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iMaxTeamBuildingProductionModifier);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iMaxPlayerBuildingProductionModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iFeatureProductionModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iImprovementUpgradeRateModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iMilitaryProductionModifier);

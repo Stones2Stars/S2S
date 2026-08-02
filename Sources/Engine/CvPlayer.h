@@ -506,14 +506,8 @@ public:
 
 
 
-	int getMaxGlobalBuildingProductionModifier() const;
-	void changeMaxGlobalBuildingProductionModifier(int iChange);
 
-	int getMaxTeamBuildingProductionModifier() const;
-	void changeMaxTeamBuildingProductionModifier(int iChange);
 
-	int getMaxPlayerBuildingProductionModifier() const;
-	void changeMaxPlayerBuildingProductionModifier(int iChange);
 
 
 	int getFeatureProductionModifier() const;
@@ -1674,7 +1668,6 @@ public:
 	virtual void AI_updateAssignWork() = 0;
 	virtual void AI_makeProductionDirty() = 0;
 
-	//virtual void AI_doCentralizedProduction() = 0;
 
 	virtual void AI_conquerCity(PlayerTypes eOldOwner, CvCity* pCity, bool bConquest, bool bTrade) = 0;
 	virtual int AI_foundValue(int iX, int iY, int iMinUnitRange = -1, bool bStartingLoc = false) const = 0;
@@ -1749,9 +1742,6 @@ protected:
 	int m_iGreatGeneralsCreated;
 	int m_iGreatPeopleThresholdModifier;
 	int m_iGreatGeneralsThresholdModifier;
-	int m_iMaxGlobalBuildingProductionModifier;
-	int m_iMaxTeamBuildingProductionModifier;
-	int m_iMaxPlayerBuildingProductionModifier;
 	int m_iFeatureProductionModifier;
 	int m_iImprovementUpgradeRateModifier;
 	int m_iMilitaryProductionModifier;
