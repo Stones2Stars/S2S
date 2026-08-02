@@ -15741,9 +15741,9 @@ int CvPlayerAI::AI_espionageVal(PlayerTypes eTargetPlayer, EspionageMissionTypes
 					int iTempValue = 0;
 					if (NULL != pPlot->getWorkingCity())
 					{
-						iTempValue += (pPlot->calculateImprovementYieldChange(eImprovement, YIELD_FOOD, pPlot->getOwner()) * 2);
-						iTempValue += (pPlot->calculateImprovementYieldChange(eImprovement, YIELD_PRODUCTION, pPlot->getOwner()) * 1);
-						iTempValue += (pPlot->calculateImprovementYieldChange(eImprovement, YIELD_COMMERCE, pPlot->getOwner()) * 2);
+						iTempValue += (pPlot->calculateImprovementYieldChange(eImprovement, YIELD_FOOD) * 2);
+						iTempValue += (pPlot->calculateImprovementYieldChange(eImprovement, YIELD_PRODUCTION) * 1);
+						iTempValue += (pPlot->calculateImprovementYieldChange(eImprovement, YIELD_COMMERCE) * 2);
 						iTempValue += GC.getImprovementInfo(eImprovement).getUpgradeTime() / 2;
 						iValue += iTempValue;
 					}

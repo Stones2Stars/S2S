@@ -472,9 +472,9 @@ int CyPlot::calculateTotalBestNatureYield(TeamTypes eTeam) const
 	return m_pPlot ? m_pPlot->calculateTotalBestNatureYield(eTeam) : -1;
 }
 
-int CyPlot::calculateImprovementYieldChange(int /*ImprovementTypes*/ eImprovement, YieldTypes eYield, int /*PlayerTypes*/ ePlayer, bool bOptimal) const
+int CyPlot::calculateImprovementYieldChange(int /*ImprovementTypes*/ eImprovement, YieldTypes eYield) const
 {
-	return m_pPlot ? m_pPlot->calculateImprovementYieldChange((ImprovementTypes) eImprovement, eYield, (PlayerTypes) ePlayer, bOptimal) : -1;
+	return m_pPlot ? m_pPlot->calculateImprovementYieldChange((ImprovementTypes) eImprovement, eYield) : -1;
 }
 
 bool CyPlot::hasYield() const

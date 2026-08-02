@@ -785,10 +785,10 @@ public:
 
 	void setExtraYield(YieldTypes eYield, short iExtraYield);
 	DllExport int getYield(YieldTypes eIndex) const;
-	int calculateNatureYield(YieldTypes eIndex, TeamTypes eTeam, bool bIgnoreFeature = false) const;
+	int calculateNatureYield(YieldTypes eIndex, bool bIgnoreFeature = false) const;
 	int calculateBestNatureYield(YieldTypes eIndex, TeamTypes eTeam) const;
 	int calculateTotalBestNatureYield(TeamTypes eTeam) const;
-	int calculateImprovementYieldChange(ImprovementTypes eImprovement, YieldTypes eYield, PlayerTypes ePlayer, bool bOptimal = false, bool bBestRoute = false) const;
+	int calculateImprovementYieldChange(ImprovementTypes eImprovement, YieldTypes eYield) const;
 	bool hasYield() const;
 	int getYieldWithBuild(BuildTypes eBuild, YieldTypes eYield, bool bWithUpgrade) const;
 

@@ -7178,8 +7178,8 @@ void CvPlot::setImprovementCurrentValue()
 		{
 			for (int iK = 0; iK < NUM_YIELD_TYPES; iK++)
 			{
-				iCountervalue += 20 * calculateImprovementYieldChange(eImprovement, (YieldTypes)iK, getOwner(), false);
-				iCountervalue += 10 * calculateNatureYield((YieldTypes)iK, getTeam(), (getFeatureType() == NO_FEATURE) ? true : false);
+				iCountervalue += 20 * calculateImprovementYieldChange(eImprovement, (YieldTypes)iK);
+				iCountervalue += 10 * calculateNatureYield((YieldTypes)iK, getFeatureType() == NO_FEATURE);
 			}
 		}
 		if (GC.getImprovementInfo(eImprovement).isMilitaryStructure())
@@ -7807,49 +7807,30 @@ int CvPlot::getYield(YieldTypes eIndex) const
 }
 
 
-int CvPlot::calculateNatureYield(YieldTypes eYield, TeamTypes eTeam, bool bIgnoreFeature) const
+int CvPlot::calculateNatureYield(YieldTypes eYield, bool bIgnoreFeature) const
 {
-	PROFILE_FUNC();
-
-	if (isImpassable(getTeam()))
-	{
-		if (!isAsPeak())
-		{
-			return 0;
-		}
-		if (eTeam != NO_TEAM && !isRoute())
-		{// It makes sense to only require a route for a city to work the peak even if the player doesn't have the mounteneering tech.
-		// Perhaps add a landslide event that destroys route and improvement on peaks, so that players without the mountaneering tech
-		// can't rebuild easily mountain improvements conquered from a more advanced civilization.
-			return 0;
-		}
-	}
-	FAssertMsg(getTerrainType() != NO_TERRAIN, "TerrainType is not assigned a valid value");
-
-	int iYield = getBaseYield(eYield);
-
-	if (eTeam != NO_TEAM && getBonusType(eTeam) != NO_BONUS)
-	{
-		//	A bonus's tile yield is its own plot-scope flat ([json.md §6.2]: plot-substrate entities each own
-		//	their plot-scope output). Plot yields are whole numbers, so the FLAT slot reduces here.
-		iYield += GC.getBonusInfo(getBonusType(eTeam)).getFlatYield(eYield, CASC_SCOPE_PLOT) / 100;
-	}
-
-	if (bIgnoreFeature && getFeatureType() != NO_FEATURE)
-	{
-		if (isRiver())
-		{
-			iYield -= GC.getFeatureInfo(getFeatureType()).getRiverYieldChange(eYield);
-		}
-		iYield -= GC.getFeatureInfo(getFeatureType()).getYieldChange(eYield);
-	}
-	return std::max(0, iYield);
+	// The GROUND's yield: this plot's base package with nothing BUILT on it -- the same one calc the package
+	// rebuild runs, handed no improvement and no route ([DEC-single-implementation]). bIgnoreFeature is the
+	// CHOP what-if: it answers as though the feature were already cleared, which no stored segment can serve
+	// because it describes a plot that does not exist.
+	// ⚠ Carries no team: a plot resolves in ISOLATION (modifier.md §2), so its substrate has ONE value.
+	const BonusTypes eBonus = getBonusType(getTeam());
+	CvCascadeEvalCtx evalCtx;
+	InfoValuation::fillEvalCtxAtPlot(*this, evalCtx);
+	int aiYields[NUM_YIELD_TYPES];
+	InfoValuation::plotBaseYields(
+		getTerrainType() != NO_TERRAIN ? GC.getTerrainInfo(getTerrainType()).getModifiers() : NULL,
+		(!bIgnoreFeature && getFeatureType() != NO_FEATURE) ? GC.getFeatureInfo(getFeatureType()).getModifiers() : NULL,
+		eBonus != NO_BONUS ? GC.getBonusInfo(eBonus).getModifiers() : NULL,
+		NULL, NULL, evalCtx, aiYields);
+	return aiYields[eYield] / 100;   // x100 native; this read answers whole yields ([DEC-fixedpoint-x100])
 }
 
 
 int CvPlot::calculateBestNatureYield(YieldTypes eIndex, TeamTypes eTeam) const
 {
-	return std::max(calculateNatureYield(eIndex, eTeam, false), calculateNatureYield(eIndex, eTeam, true));
+	// the better of standing and cleared -- the chop what-if beside the ground as it is
+	return std::max(calculateNatureYield(eIndex, false), calculateNatureYield(eIndex, true));
 }
 
 
@@ -7859,80 +7840,23 @@ int CvPlot::calculateTotalBestNatureYield(TeamTypes eTeam) const
 }
 
 
-int CvPlot::calculateImprovementYieldChange(ImprovementTypes eImprovement, YieldTypes eYield, PlayerTypes ePlayer, bool bOptimal, bool bBestRoute) const
+int CvPlot::calculateImprovementYieldChange(ImprovementTypes eImprovement, YieldTypes eYield) const
 {
-	PROFILE_FUNC();
-
-	int iYield = GC.getImprovementInfo(eImprovement).getYieldChange(eYield);
-
-	if (isRiverSide())
+	// What this improvement itself delivers on this plot -- the improvement is the entity that DELIVERS the
+	// yield (owner), so this is its own untargeted plot-scope output, reverse-landed conditioned entries
+	// included: its riverside and irrigated variants ride HAS_RIVER / HAS_IRRIGATION, and the tech / civic /
+	// player boosts keyed to it land on it at readJson (CvReversePass).
+	// ⚠ The ROUTE's per-improvement buff is deliberately NOT here: it is a governing-deliverer entry that
+	// stays on the ROUTE (modifier.md §4), and the AI evaluates a route on MOVE SPEED (owner) -- there is no
+	// movespeed-vs-gold tradeoff to weigh and the yield only lands above a threshold.
+	if (eImprovement == NO_IMPROVEMENT)
 	{
-		iYield += GC.getImprovementInfo(eImprovement).getRiverSideYieldChange(eYield);
+		return 0;
 	}
-
-	if (bOptimal ? true : isIrrigationAvailable())
-	{
-		iYield += GC.getImprovementInfo(eImprovement).getIrrigatedYieldChange(eYield);
-	}
-
-	if (bOptimal)
-	{
-		int iBestYield = 0;
-
-		for (int iI = 0; iI < GC.getNumRouteInfos(); ++iI)
-		{
-			iBestYield = std::max(iBestYield, GC.getRouteInfo(iI).getImprovementYield(eImprovement, (YieldTypes)(eYield)));
-		}
-		iYield += iBestYield;
-	}
-	else
-	{
-		const RouteTypes eRoute =
-		(
-			bBestRoute && ePlayer != NO_PLAYER
-			?
-			GET_PLAYER(ePlayer).getBestRoute(GC.getMap().plotSorenINLINE(getX(), getY()))
-			:
-			getRouteType()
-		);
-		if (eRoute != NO_ROUTE)
-		{
-			iYield += GC.getRouteInfo(eRoute).getImprovementYield(eImprovement, (YieldTypes)(eYield));
-		}
-	}
-
-	if (bOptimal || ePlayer == NO_PLAYER)
-	{
-		for (int iI = 0; iI < GC.getNumTechInfos(); ++iI)
-		{
-			iYield += GC.getImprovementInfo(eImprovement).getTechYieldChanges(iI, eYield);
-		}
-
-		for (int iI = 0; iI < GC.getNumCivicInfos(); ++iI)
-		{
-			iYield += GC.getCivicInfo((CivicTypes) iI).getImprovementYieldChanges(eImprovement, eYield);
-		}
-	}
-	else
-	{
-		iYield += GET_PLAYER(ePlayer).getImprovementYieldChange(eImprovement, eYield);
-		iYield += GET_TEAM(GET_PLAYER(ePlayer).getTeam()).getImprovementYieldChange(eImprovement, eYield);
-	}
-
-	if (ePlayer != NO_PLAYER)
-	{
-		const BonusTypes eBonus = getBonusType(GET_PLAYER(ePlayer).getTeam());
-
-		if (eBonus != NO_BONUS)
-		{
-			iYield += GC.getImprovementInfo(eImprovement).getImprovementBonusYield(eBonus, eYield);
-		}
-	}
-
-	// Improvement cannot actually produce negative yield
-	int iCurrYield = calculateNatureYield(eYield, (ePlayer == NO_PLAYER) ? NO_TEAM : GET_PLAYER(ePlayer).getTeam(), bOptimal);
-
-	return std::max( -iCurrYield, iYield );
+	CvCascadeEvalCtx evalCtx;
+	InfoValuation::fillEvalCtxAtPlot(*this, evalCtx);
+	return (int)(InfoValuation::plotOwnYield(
+		GC.getImprovementInfo(eImprovement).getModifiers(), infoYieldFamily(eYield), evalCtx) / 100);
 }
 
 

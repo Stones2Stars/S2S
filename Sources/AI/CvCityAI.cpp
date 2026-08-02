@@ -7647,7 +7647,7 @@ int CvCityAI::AI_getGoodTileCount() const
 						bUseBaseValue = false;
 						for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
 						{
-							aiFinalYields[iJ] = (pLoopPlot->calculateNatureYield(((YieldTypes)iJ), getTeam(), bIgnoreFeature) + pLoopPlot->calculateImprovementYieldChange(eImprovement, ((YieldTypes)iJ), getOwner(), false));
+							aiFinalYields[iJ] = (pLoopPlot->calculateNatureYield(((YieldTypes)iJ), bIgnoreFeature) + pLoopPlot->calculateImprovementYieldChange(eImprovement, ((YieldTypes)iJ)));
 						}
 					}
 				}
@@ -7737,7 +7737,7 @@ int CvCityAI::AI_countWorkedPoorTiles() const
 						bUseBaseValue = false;
 						for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
 						{
-							aiFinalYields[iJ] = (pLoopPlot->calculateNatureYield(((YieldTypes)iJ), getTeam(), bIgnoreFeature) + pLoopPlot->calculateImprovementYieldChange(eImprovement, ((YieldTypes)iJ), getOwner(), false));
+							aiFinalYields[iJ] = (pLoopPlot->calculateNatureYield(((YieldTypes)iJ), bIgnoreFeature) + pLoopPlot->calculateImprovementYieldChange(eImprovement, ((YieldTypes)iJ)));
 						}
 					}
 				}
@@ -7868,7 +7868,7 @@ void CvCityAI::AI_getYieldMultipliers(int& iFoodMultiplier, int& iProductionMult
 						bUseBaseValue = false;
 						for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
 						{
-							aiFinalYields[iJ] = pLoopPlot->calculateNatureYield((YieldTypes)iJ, getTeam(), bIgnoreFeature) + pLoopPlot->calculateImprovementYieldChange(eImprovement, (YieldTypes)iJ, getOwner(), false);
+							aiFinalYields[iJ] = pLoopPlot->calculateNatureYield((YieldTypes)iJ, bIgnoreFeature) + pLoopPlot->calculateImprovementYieldChange(eImprovement, (YieldTypes)iJ);
 						}
 					}
 				}
@@ -7918,12 +7918,12 @@ void CvCityAI::AI_getYieldMultipliers(int& iFoodMultiplier, int& iProductionMult
 
 			if (pLoopPlot->getFeatureType() != NO_FEATURE)
 			{
-				iFeatureFoodSurplus += std::max(0, pLoopPlot->calculateNatureYield(YIELD_FOOD, getTeam()) - GC.getFOOD_CONSUMPTION_PER_POPULATION());
+				iFeatureFoodSurplus += std::max(0, pLoopPlot->calculateNatureYield(YIELD_FOOD) - GC.getFOOD_CONSUMPTION_PER_POPULATION());
 			}
 
 			if ((pLoopPlot->isHills()))
 			{
-				iHillFoodDeficit += std::max(0, GC.getFOOD_CONSUMPTION_PER_POPULATION() - pLoopPlot->calculateNatureYield(YIELD_FOOD, getTeam()));
+				iHillFoodDeficit += std::max(0, GC.getFOOD_CONSUMPTION_PER_POPULATION() - pLoopPlot->calculateNatureYield(YIELD_FOOD));
 			}
 		}
 	}
@@ -8162,8 +8162,8 @@ int CvCityAI::AI_getImprovementValue(const CvPlot* pPlot, ImprovementTypes eImpr
 	for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
 	{
 		yields[iJ] =
-			(pPlot->calculateImprovementYieldChange(eFinalUpgrade, (YieldTypes)iJ, getOwner(), false, true) * 1
-				+ pPlot->calculateImprovementYieldChange(eImprovement, (YieldTypes)iJ, getOwner(), false, true) * 5
+			(pPlot->calculateImprovementYieldChange(eFinalUpgrade, (YieldTypes)iJ) * 1
+				+ pPlot->calculateImprovementYieldChange(eImprovement, (YieldTypes)iJ) * 5
 				) / 2;
 	}
 	iValue += yields[YIELD_FOOD] * iFoodPriority;
@@ -10262,7 +10262,7 @@ int CvCityAI::AI_plotValue(const CvPlot* pPlot, bool bAvoidGrowth, bool bRemove,
 		{
 			for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
 			{
-				int iYieldDiff = (pPlot->calculateImprovementYieldChange(eFinalImprovement, ((YieldTypes)iI), getOwner()) - pPlot->calculateImprovementYieldChange(eCurrentImprovement, ((YieldTypes)iI), getOwner()));
+				int iYieldDiff = (pPlot->calculateImprovementYieldChange(eFinalImprovement, ((YieldTypes)iI)) - pPlot->calculateImprovementYieldChange(eCurrentImprovement, ((YieldTypes)iI)));
 				aiYields[iI] += iYieldDiff;
 			}
 			const int iFinalYieldValue = (AI_yieldValue(aiYields, NULL, bAvoidGrowth, bRemove, bIgnoreFood, bIgnoreGrowth, bIgnoreStarvation) * 100);
@@ -10278,10 +10278,16 @@ int CvCityAI::AI_plotValue(const CvPlot* pPlot, bool bAvoidGrowth, bool bRemove,
 		}
 	}
 
+	// the local scratch is short (AI_yieldValue's shape); the potential test reads the group array width
+	int aiPotentialYields[NUM_YIELD_TYPES];
+	for (int iPotential = 0; iPotential < NUM_YIELD_TYPES; ++iPotential)
+	{
+		aiPotentialYields[iPotential] = aiYields[iPotential];
+	}
 	// If we are not emphasizing food or use food for production)
 	if ((!AI_isEmphasizeYield(YIELD_FOOD) || isFoodProduction())
 	// and this plot is super bad (less than 2 food and less than combined 2 prod/commerce
-	&& !AI_potentialPlot(aiYields))
+	&& !AI_potentialPlot(aiPotentialYields))
 	{
 		// undervalue it even more!
 		iValue /= 16;
@@ -10547,8 +10553,8 @@ void CvCityAI::AI_findBestImprovementForPlot(const CvPlot* pPlot, plotInfo* plot
 		for (int yieldCounter = 0; yieldCounter < NUM_YIELD_TYPES; yieldCounter++)
 		{
 			plotInfo->newYields[yieldCounter] = 0;
-			plotInfo->newYields[yieldCounter] = pPlot->calculateNatureYield((YieldTypes)yieldCounter, getTeam(), bIgnoreFeature);
-			plotInfo->newYields[yieldCounter] += pPlot->calculateImprovementYieldChange(ePotentialImprovement, (YieldTypes)yieldCounter, getOwner(), false, true);
+			plotInfo->newYields[yieldCounter] = pPlot->calculateNatureYield((YieldTypes)yieldCounter, bIgnoreFeature);
+			plotInfo->newYields[yieldCounter] += pPlot->calculateImprovementYieldChange(ePotentialImprovement, (YieldTypes)yieldCounter);
 		}
 
 		// subtract existing plot value
@@ -10928,9 +10934,9 @@ int CvCityAI::AI_getPlotMagicValue(const CvPlot* pPlot, bool bHealthy, bool bWor
 			{
 				yields100[iI] += (
 					(
-						100 * pPlot->calculateImprovementYieldChange(eFinalImprovement, (YieldTypes)iI, getOwner())
+						100 * pPlot->calculateImprovementYieldChange(eFinalImprovement, (YieldTypes)iI)
 						-
-						100 * pPlot->calculateImprovementYieldChange(eCurrentImprovement, (YieldTypes)iI, getOwner())
+						100 * pPlot->calculateImprovementYieldChange(eCurrentImprovement, (YieldTypes)iI)
 					)
 					/ 2
 				);

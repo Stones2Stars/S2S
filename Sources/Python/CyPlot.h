@@ -130,7 +130,7 @@ public:
 	void setExtraYield(YieldTypes eYield, short iExtraYield);
 	int calculateBestNatureYield(YieldTypes eIndex, TeamTypes eTeam) const;
 	int calculateTotalBestNatureYield(TeamTypes eTeam) const;
-	int calculateImprovementYieldChange(int /*ImprovementTypes*/ eImprovement, YieldTypes eYield, int /*PlayerTypes*/ ePlayer, bool bOptimal) const;
+	int calculateImprovementYieldChange(int /*ImprovementTypes*/ eImprovement, YieldTypes eYield) const;
 	bool hasYield() const;
 
 	int getCulture(int /*PlayerTypes*/ eIndex) const;

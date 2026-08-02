@@ -475,7 +475,7 @@ int computeYieldSum(CvPlot* plot, ImprovementTypes eImpr, PlayerTypes ePlayer)
 	int iYieldSum = 0;
 	for (int iK = 0; iK < NUM_YIELD_TYPES; iK++)
 	{
-		iYieldSum += plot->calculateImprovementYieldChange(eImpr, (YieldTypes)iK, ePlayer, false);
+		iYieldSum += plot->calculateImprovementYieldChange(eImpr, (YieldTypes)iK);
 	}
 	return iYieldSum;
 }
@@ -1106,10 +1106,9 @@ bool CvWorkerAI::improveBonus(CvUnitAI* unit, int allowedMovementTurns)
 				for (int iK = 0; iK < NUM_YIELD_TYPES; iK++)
 				{
 					iValueYields += W.improvementYieldInCityRadius
-						* pLoopPlot->calculateImprovementYieldChange(eImprovementX, (YieldTypes)iK, ePlayer, false);
+						* pLoopPlot->calculateImprovementYieldChange(eImprovementX, (YieldTypes)iK);
 					iValueYields += W.natureYieldInCityRadius
-						* pLoopPlot->calculateNatureYield((YieldTypes)iK, unit->getTeam(),
-							eFeature == NO_FEATURE ? true : kBestBuild.isFeatureRemove(eFeature));
+						* pLoopPlot->calculateNatureYield((YieldTypes)iK, eFeature == NO_FEATURE ? true : kBestBuild.isFeatureRemove(eFeature));
 				}
 				iValue += iValueYields;
 			}

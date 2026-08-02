@@ -78,7 +78,7 @@ enum CvCascPredKind
 	CASC_PRED_LATITUDE, CASC_PRED_EXISTED_FOR,
 	// {natureYield:{food:N,...}} -- the improvement PLACEMENT threshold (one node per channel): the target
 	// plot's PRE-improvement nature yield of the channel must be >= `min` (the engine gate: CvPlot.cpp
-	// canHaveImprovement, calculateNatureYield(channel, team) < prereq -> invalid). `id` carries the
+	// canHaveImprovement, calculateNatureYield(channel) < prereq -> invalid). `id` carries the
 	// YieldTypes channel (no Type param -- `param` stays empty so the reverse walks never FK-route it).
 	CASC_PRED_NATURE_YIELD,
 	// classification-TAG membership: IS_<TAG> against a UNIT target (json §8/§3.5). `param` holds the full

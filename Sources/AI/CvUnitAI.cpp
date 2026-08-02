@@ -1939,7 +1939,7 @@ bool CvUnitAI::AI_SettleFirstCity()
 
 				if (plot()->isCoastalLand(iOceanMinSize) && !pBestPlot->isCoastalLand(iOceanMinSize)
 					|| pBestPlot->getBonusType(NO_TEAM) != NO_BONUS
-					&& pBestPlot->calculateNatureYield(YIELD_FOOD, getTeam(), true) > 0)
+					&& pBestPlot->calculateNatureYield(YIELD_FOOD, true) > 0)
 				{
 					pBestPlot = NULL;
 				}
@@ -25247,9 +25247,9 @@ int CvUnitAI::AI_pillageValue(const CvPlot* pPlot, int iBonusValueThreshold) con
 	{
 		if (pPlot->getWorkingCity() != NULL)
 		{
-			iValue += 5 * pPlot->calculateImprovementYieldChange(eImprovement, YIELD_FOOD, pPlot->getOwner());
-			iValue += 4 * pPlot->calculateImprovementYieldChange(eImprovement, YIELD_PRODUCTION, pPlot->getOwner());
-			iValue += 3 * pPlot->calculateImprovementYieldChange(eImprovement, YIELD_COMMERCE, pPlot->getOwner());
+			iValue += 5 * pPlot->calculateImprovementYieldChange(eImprovement, YIELD_FOOD);
+			iValue += 4 * pPlot->calculateImprovementYieldChange(eImprovement, YIELD_PRODUCTION);
+			iValue += 3 * pPlot->calculateImprovementYieldChange(eImprovement, YIELD_COMMERCE);
 		}
 		iValue += GC.getImprovementInfo(eImprovement).getPillageGold();
 

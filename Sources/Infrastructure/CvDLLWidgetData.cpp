@@ -2689,7 +2689,7 @@ void CvDLLWidgetData::parseActionHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 					int iYield = 0;
 					if (eImprovement != NO_IMPROVEMENT)
 					{
-						iYield += pMissionPlot->calculateImprovementYieldChange(eImprovement, ((YieldTypes)iI), pHeadSelectedUnit->getOwner());
+						iYield += pMissionPlot->calculateImprovementYieldChange(eImprovement, ((YieldTypes)iI));
 					}
 
 					// Assuming neither using FeatureChange/TerrainChange nor placing routes will remove improvements (though former may remove prereqs for imps...)
@@ -2697,7 +2697,7 @@ void CvDLLWidgetData::parseActionHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 					&&  eRoute == NO_ROUTE
 					&&  !bIsFeatureChange && !bIsTerrainChange)
 					{
-						iYield -= pMissionPlot->calculateImprovementYieldChange(pMissionPlot->getImprovementType(), ((YieldTypes)iI), pHeadSelectedUnit->getOwner());
+						iYield -= pMissionPlot->calculateImprovementYieldChange(pMissionPlot->getImprovementType(), ((YieldTypes)iI));
 					}
 
 					// Yield deltas from removing/changing features
