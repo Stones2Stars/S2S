@@ -103,7 +103,7 @@ class WBBuildingScreen:
 
 	def sortCities(self):
 		self.lCities = []
-		for iPlayerX in xrange(GC.getMAX_PLAYERS()):
+		for iPlayerX in xrange(STATE.getMAX_PLAYERS()):
 			pPlayerX = GC.getPlayer(iPlayerX)
 			if iOwnerType == 1 and iPlayerX != iPlayer: continue
 			if iOwnerType == 2 and pPlayerX.getTeam() != pCity.getTeam(): continue

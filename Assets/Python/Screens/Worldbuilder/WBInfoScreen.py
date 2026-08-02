@@ -75,7 +75,7 @@ class WBInfoScreen:
 		screen.addPullDownString("ItemType", CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_PROJECT", ()), 13, 13, 13 == iMode)
 
 		screen.addDropDownBoxGFC("CurrentPlayer", iX + iWidth/2, iY, iWidth/2, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
-		for i in xrange(GC.getMAX_PLAYERS()):
+		for i in xrange(STATE.getMAX_PLAYERS()):
 			pPlayerX = GC.getPlayer(i)
 			if pPlayerX.isAlive():
 				sText = pPlayerX.getName()
@@ -298,7 +298,7 @@ class WBInfoScreen:
 			for i in xrange(GC.getNumUnitInfos()):
 				Info = GC.getUnitInfo(i)
 				lItems.append([Info.getDescription(), 0, 0, i, Info.getButton(), []])
-			for iPlayerX in xrange(GC.getMAX_PLAYERS()):
+			for iPlayerX in xrange(STATE.getMAX_PLAYERS()):
 				pPlayerX = GC.getPlayer(iPlayerX)
 				if pPlayerX.isAlive():
 					for loopUnit in pPlayerX.units():
@@ -312,7 +312,7 @@ class WBInfoScreen:
 			for i in xrange(GC.getNumPromotionInfos()):
 				Info = GC.getPromotionInfo(i)
 				lItems.append([Info.getDescription(), 0, 0, i, Info.getButton(), []])
-			for iPlayerX in xrange(GC.getMAX_PLAYERS()):
+			for iPlayerX in xrange(STATE.getMAX_PLAYERS()):
 				pPlayerX = GC.getPlayer(iPlayerX)
 				if pPlayerX.isAlive():
 					for loopUnit in pPlayerX.units():
@@ -328,7 +328,7 @@ class WBInfoScreen:
 			for i in xrange(GC.getNumBuildingInfos()):
 				Info = GC.getBuildingInfo(i)
 				lItems.append([Info.getDescription(), 0, 0, i, Info.getButton(), []])
-			for iPlayerX in xrange(GC.getMAX_PLAYERS()):
+			for iPlayerX in xrange(STATE.getMAX_PLAYERS()):
 				pPlayerX = GC.getPlayer(iPlayerX)
 				if pPlayerX.isAlive():
 					for loopCity in pPlayerX.cities():
@@ -344,7 +344,7 @@ class WBInfoScreen:
 			for i in xrange(GC.getNumSpecialistInfos()):
 				Info = GC.getSpecialistInfo(i)
 				lItems.append([Info.getDescription(), 0, 0, i, Info.getButton(), []])
-			for iPlayerX in xrange(GC.getMAX_PLAYERS()):
+			for iPlayerX in xrange(STATE.getMAX_PLAYERS()):
 				pPlayerX = GC.getPlayer(iPlayerX)
 				if pPlayerX.isAlive():
 					for loopCity in pPlayerX.cities():
@@ -457,7 +457,7 @@ class WBInfoScreen:
 			for i in xrange(GC.getNumCivicInfos()):
 				Info = GC.getCivicInfo(i)
 				lItems.append([Info.getDescription(), 0, 0, i, Info.getButton(), []])
-			for iPlayerX in xrange(GC.getMAX_PLAYERS()):
+			for iPlayerX in xrange(STATE.getMAX_PLAYERS()):
 				pPlayerX = GC.getPlayer(iPlayerX)
 				if pPlayerX.isAlive():
 					for iItemX in xrange(GC.getNumCivicInfos()):
@@ -471,7 +471,7 @@ class WBInfoScreen:
 			for i in xrange(GC.getNumTechInfos()):
 				Info = GC.getTechInfo(i)
 				lItems.append([Info.getDescription(), 0, 0, i, Info.getButton(), []])
-			for iTeamX in xrange(GC.getMAX_TEAMS()):
+			for iTeamX in xrange(STATE.getMAX_TEAMS()):
 				pTeamX = GC.getTeam(iTeamX)
 				if pTeamX.isAlive():
 					for iItemX in xrange(GC.getNumTechInfos()):
@@ -488,7 +488,7 @@ class WBInfoScreen:
 			for i in xrange(GC.getNumProjectInfos()):
 				Info = GC.getProjectInfo(i)
 				lItems.append([Info.getDescription(), 0, 0, i, Info.getButton(), []])
-			for iTeamX in xrange(GC.getMAX_TEAMS()):
+			for iTeamX in xrange(STATE.getMAX_TEAMS()):
 				pTeamX = GC.getTeam(iTeamX)
 				if pTeamX.isAlive():
 					for iItemX in xrange(GC.getNumProjectInfos()):

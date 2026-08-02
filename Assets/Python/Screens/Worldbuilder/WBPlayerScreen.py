@@ -48,7 +48,7 @@ class WBPlayerScreen:
 
 		iY = 20
 		screen.addDropDownBoxGFC("CurrentPlayer", 20, iY, screen.getXResolution()/5, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
-		for i in xrange(GC.getMAX_PLAYERS()):
+		for i in xrange(STATE.getMAX_PLAYERS()):
 			pPlayerX = GC.getPlayer(i)
 			if pPlayerX.isEverAlive():
 				sText = pPlayerX.getName()

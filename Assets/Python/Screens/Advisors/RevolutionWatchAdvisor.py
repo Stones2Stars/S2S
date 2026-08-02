@@ -1180,7 +1180,7 @@ class RevolutionWatchAdvisor:
 
 		team = gc.getTeam(gc.getGame().getActiveTeam())
 
-		for iTeamX in range(gc.getMAX_TEAMS()):
+		for iTeamX in range(STATE.getMAX_TEAMS()):
 			if team.isAtWarWith(iTeamX):
 				if city.isVisible(iTeamX, False):
 					return self.angryIcon
@@ -1642,7 +1642,7 @@ class RevolutionWatchAdvisor:
 	def findGlobalBaseYieldRateRank (self, city, szKey, arg):
 
 		aList = []
-		for i in range(gc.getMAX_PLAYERS()):
+		for i in range(STATE.getMAX_PLAYERS()):
 			for cityX in gc.getPlayer(i).cities():
 				aList.append(cityX.getPlotYield(arg))
 
@@ -1652,7 +1652,7 @@ class RevolutionWatchAdvisor:
 	def findGlobalYieldRateRank (self, city, szKey, arg):
 
 		L = []
-		for i in range(gc.getMAX_PLAYERS()):
+		for i in range(STATE.getMAX_PLAYERS()):
 			for cityX in gc.getPlayer(i).cities():
 				L.append(cityX.getYieldRate(arg))
 
@@ -1662,7 +1662,7 @@ class RevolutionWatchAdvisor:
 	def findGlobalCommerceRateRank (self, city, szKey, arg):
 
 		L = []
-		for i in range(gc.getMAX_PLAYERS()):
+		for i in range(STATE.getMAX_PLAYERS()):
 			for cityX in gc.getPlayer(i).cities():
 				L.append(cityX.getCommerceRate(arg))
 

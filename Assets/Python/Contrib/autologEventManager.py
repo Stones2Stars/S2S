@@ -432,7 +432,7 @@ class AutoLogEvent(AbstractAutoLogEvent):
 #				Logger.writeLog(message)
 				sMsgArray.append(message)
 
-				for iPlayer in xrange(GC.getMAX_PLAYERS()):
+				for iPlayer in xrange(STATE.getMAX_PLAYERS()):
 					if GC.getPlayer(iPlayer).getTeam() == iHasMetTeamY:
 						sLeader = GC.getLeaderHeadInfo(GC.getPlayer(iPlayer).getLeaderType()).getDescription()
 						sCivName = GC.getPlayer(iPlayer).getCivilizationShortDescription(0)
@@ -1488,7 +1488,7 @@ class AutoLogEvent(AbstractAutoLogEvent):
 	def initStuff(self):
 		#set up variables to hold stuff
 		#RevolutionDCM autolog fix
-		MAX_PC_PLAYERS = GC.getMAX_PC_PLAYERS()
+		MAX_PC_PLAYERS = STATE.getMAX_PC_PLAYERS()
 		iCivicOptions = GC.getNumCivicOptionInfos()
 
 		self.CIVAttitude = [""] * (MAX_PC_PLAYERS * MAX_PC_PLAYERS + MAX_PC_PLAYERS)
@@ -1498,7 +1498,7 @@ class AutoLogEvent(AbstractAutoLogEvent):
 		self.CityConscriptCounter = [0] * 1000
 
 	def storeStuff(self):
-		MAX_PC_PLAYERS = GC.getMAX_PC_PLAYERS()
+		MAX_PC_PLAYERS = STATE.getMAX_PC_PLAYERS()
 		iCivicOptions = GC.getNumCivicOptionInfos()
 		if not self.CIVReligion:
 			self.initStuff()
@@ -1538,7 +1538,7 @@ class AutoLogEvent(AbstractAutoLogEvent):
 		if not (bLogReligion or bLogAttitude or bLogCivics):
 			return
 
-		MAX_PC_PLAYERS = GC.getMAX_PC_PLAYERS()
+		MAX_PC_PLAYERS = STATE.getMAX_PC_PLAYERS()
 		iCivicOptions = GC.getNumCivicOptionInfos()
 		iActivePlayer = GAME.getActivePlayer()
 		iActiveTeam = GC.getPlayer(iActivePlayer).getTeam()

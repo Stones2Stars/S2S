@@ -1,5 +1,5 @@
 # OOS logger: writes the info contained in the sync checksum to a log file
-from CvPythonExtensions import CyGlobalContext, YieldTypes, CommerceTypes, UnitAITypes
+from CvPythonExtensions import YieldTypes, CommerceTypes, UnitAITypes
 
 def writeLog():
 	import SystemPaths as SP
@@ -33,7 +33,7 @@ def writeLog():
 	pFile.write("Total num areas: %d\n\n\n" % MAP.getNumAreas())
 
 	# Player data
-	for iPlayer in xrange(GC.getMAX_PLAYERS()):
+	for iPlayer in xrange(STATE.getMAX_PLAYERS()):
 		pPlayer = GC.getPlayer(iPlayer)
 		if pPlayer.isEverAlive():
 

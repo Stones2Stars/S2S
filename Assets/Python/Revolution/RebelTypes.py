@@ -5,7 +5,7 @@
 
 # This file sets up the most likely rebel civ types to appear when a revolution occurs in a particular civ.
 
-from CvPythonExtensions import CyGlobalContext
+from CvPythonExtensions import *
 
 # Initialize list to empty.
 RebelTypeList = []

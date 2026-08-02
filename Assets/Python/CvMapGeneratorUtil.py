@@ -1347,7 +1347,7 @@ class BonusBalancer:
 
 	def normalizeAddExtras(self):
 		GC = self.GC
-		for i in xrange(GC.getMAX_PC_PLAYERS()):
+		for i in xrange(STATE.getMAX_PC_PLAYERS()):
 			if not GC.getPlayer(i).isAlive():
 				continue
 			start_plot = GC.getPlayer(i).getStartingPlot() # returns a CyPlot

@@ -62,7 +62,7 @@ class WBTeamScreen:
 				i *= 2
 
 		screen.addDropDownBoxGFC("CurrentTeam", 20, 20, iWidth - 20, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
-		for i in xrange(GC.getMAX_TEAMS()):
+		for i in xrange(STATE.getMAX_TEAMS()):
 			if GC.getTeam(i).isAlive():
 				iLeader = GC.getTeam(i).getLeaderID()
 				sName = GC.getPlayer(iLeader).getName()
@@ -72,7 +72,7 @@ class WBTeamScreen:
 
 		screen.addDropDownBoxGFC("MergeTeam", 20, 50, iWidth - 20, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
 		screen.addPullDownString("MergeTeam", CyTranslator().getText("TXT_KEY_WB_MERGE_TEAM",()), -1, -1, True)
-		for i in xrange(GC.getMAX_TEAMS()):
+		for i in xrange(STATE.getMAX_TEAMS()):
 			if GC.getTeam(i).isAlive():
 				if i == self.iTeam: continue
 				iLeader = GC.getTeam(i).getLeaderID()
@@ -290,7 +290,7 @@ class WBTeamScreen:
 		screen.setTableColumnHeader("WBTeamMembers", 0, "", iWidth/2)
 		screen.setTableColumnHeader("WBTeamMembers", 1, "", iWidth/2)
 		lMembers = []
-		for iPlayerX in xrange(GC.getMAX_PLAYERS()):
+		for iPlayerX in xrange(STATE.getMAX_PLAYERS()):
 			pPlayerX = GC.getPlayer(iPlayerX)
 			iTeamX = pPlayerX.getTeam()
 			pTeamX = GC.getTeam(iTeamX)

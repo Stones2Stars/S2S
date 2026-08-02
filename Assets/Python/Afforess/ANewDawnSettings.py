@@ -227,7 +227,7 @@ def updateAliveCivsOption():
 	import BugGame
 	aliveCivsOption = BugGame.ANewDawnSettings.AliveCivilization
 	descs = []
-	for iPlayer in range(GC.getMAX_PC_PLAYERS()):
+	for iPlayer in range(STATE.getMAX_PC_PLAYERS()):
 		CyPlayer = GC.getPlayer(iPlayer)
 		if CyPlayer.isHuman() and CyPlayer.isAlive():
 			descs.append(GC.getCivilizationInfo(CyPlayer.getCivilizationType()).getShortDescription())

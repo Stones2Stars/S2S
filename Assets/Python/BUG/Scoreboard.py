@@ -430,7 +430,7 @@ class TeamScores:
 
 	def gatherVassals(self):
 		if self.bVassal:
-			for iTeam in range(GC.getMAX_PC_TEAMS()):
+			for iTeam in range(STATE.getMAX_PC_TEAMS()):
 				teamScores = self._scoreboard.getTeamScores(iTeam)
 				if teamScores and self.CyTeam.isVassal(iTeam):
 					# teamScores is a master of self

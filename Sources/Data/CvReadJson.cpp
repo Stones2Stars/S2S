@@ -20,7 +20,6 @@
 #include "CvJsonParse.h"               // jsonClassifyKey / jsonUnresolvedIds -- shared vocabulary + FK diag
 #include "CvInfo.h"                // CvInfo (+ cascadeStartNode) -- the mapped info data + the TECH_GAME_START root
 #include "Data/CvDepositIndex.h"     // DepositIndex::pushInfo/clearCompiled -- the compiled deposit index (push-time interning)
-#include "UI/CvEntryText.h"          // entryDetailLine -- the ruling-29 per-entry renderer (the [READJSON/mod] sample proof)
 #include "CvClassificationRegistry.h"  // the §8/§9 generated classification categories -- minted + resolved post-map
 #include "CvTechInfo.h"            // CvTechInfo -- for the capabilities read-back survey (+ cascadeStartNode)
 #include "CvImprovementInfo.h"     // complete type for the RJ_REPO_TYPES dispatch
@@ -629,6 +628,7 @@ void loadJson(JsonLoadPhase eLoadPhase)
 	for (std::set<std::string>::const_iterator it = unknownKeys.begin(); it != unknownKeys.end(); ++it)
 		eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_KEY_UNKNOWN, 1).addStr(RJF_ID, it->c_str()));
 
+	gDLL->logMsg("Loading.log", CvString::format("[READJSON] step spine-emits-done ms=%u", (unsigned)(GetTickCount() - s2sT0)).c_str(), true, false);
 	// READ-BACK survey: reconstruct the modifier stats + per-entity structure counts from the MAPPED data (the
 	// home) -- the compiled §6 entries on getModifiers(), the spec model ([DEC-json-not-cascade]) -- proving the
 	// compile round-trips (values ×100'd, addresses interned, requires/edges/allowed/grants populated).
@@ -655,14 +655,15 @@ void loadJson(JsonLoadPhase eLoadPhase)
 				if (en->aiOnly) ++mAiOnly;   // the §3.9 `ai` audience flag (the Orwell census keeps the axis visible)
 				if (iModSample < 10)   // concrete value samples -- proves the single human->×100 conversion at the leaf
 				{
-					// the ruling-29 renderer's observability proof (the ONE demonstration consumer): each sample
-					// carries its per-entry detail line through UI/CvEntryText, end to end through the spine
-					const CvWString szRendered = entryDetailLine(*en);
+					// ⛔ The per-entry RENDER is deliberately NOT taken here. It reaches the presentation layer
+					// (gDLL->getSymbolID for the wellbeing icons), and at PREMENU the font/symbol system does not
+					// exist yet -- the EXE dereferenced a null and took the whole load down, inside a DIAGNOSTIC.
+					// readJson is the load pipeline; rendering is a cold UI path and belongs at UI time. The sample
+					// still proves what this survey is for -- that the entry COMPILED -- from the compiled data.
 					eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_MOD, 1)
 						.addStr(RJF_TYPE, store[s].type.c_str()).addStr(RJF_ADDR, en->address().c_str())
 						.addStr(RJF_UNIT, DepositIndex::unitSegment(en->unit)).addI(RJF_VAL, en->value)
-							.addI(RJF_AIONLY, en->aiOnly ? 1 : 0)   // the audience flag (never an address segment)
-							.addWStr(RJF_RENDERED, szRendered.c_str()));
+							.addI(RJF_AIONLY, en->aiOnly ? 1 : 0));   // the audience flag (never an address segment)
 					++iModSample;
 				}
 			}
@@ -713,7 +714,10 @@ void loadJson(JsonLoadPhase eLoadPhase)
 	// EDGEF_RELATED display inversion, the EDGEF_REQUIRED_BY re-gate index, and the own-output reverse
 	// landing, in ONE pass over the compiled surfaces (Data/CvReversePass.cpp). Runs after every entity is
 	// mapped so it inverts the final compiled state.
+	gDLL->logMsg("Loading.log", CvString::format("[READJSON] step survey-done ms=%u", (unsigned)(GetTickCount() - s2sT0)).c_str(), true, false);
 	reversePassRun();
+	gDLL->logMsg("Loading.log", CvString::format("[READJSON] step reverse-pass-done ms=%u", (unsigned)(GetTickCount() - s2sT0)).c_str(), true, false);
+
 	const ReversePassCounts& reverseCounts = reversePassCounts();
 
 	// The compiled deposit index PUSH: every mapped info's §6 families (+ whenObsolete) intern + compile here,

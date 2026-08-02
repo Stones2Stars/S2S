@@ -132,9 +132,9 @@ class CvMainInterface:
 				"TXT_KEY_RAW_YIELD_TILES_ALL")
 			# Cache Constants.
 			self.iPlotListMaxRows		= GC.getMAX_PLOT_LIST_ROWS()
-			self.iMaxPlayers			= GC.getMAX_PLAYERS()
-			self.iMaxPcTeams			= GC.getMAX_PC_TEAMS()
-			self.iMaxPcPlayers			= GC.getMAX_PC_PLAYERS()
+			self.iMaxPlayers			= STATE.getMAX_PLAYERS()
+			self.iMaxPcTeams			= STATE.getMAX_PC_TEAMS()
+			self.iMaxPcPlayers			= STATE.getMAX_PC_PLAYERS()
 			self.iMaxDefenseDamage		= GC.getMAX_CITY_DEFENSE_DAMAGE()
 			self.fMoveDenominator = float(GC.getMOVE_DENOMINATOR())
 			self.bNegGoldIsMaintenance	= GC.getDefineINT("TREAT_NEGATIVE_GOLD_AS_MAINTENANCE")

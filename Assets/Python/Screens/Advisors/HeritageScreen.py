@@ -120,7 +120,7 @@ class HeritageScreen:
 		if self.bDebug:
 			DD = "Heritage_DebugDD"
 			screen.addDropDownBoxGFC(DD, H_EDGE, 0, 300, eWidGen, 1, 1, FontTypes.GAME_FONT)
-			for iPlayerX in xrange(GC.getMAX_PLAYERS()):
+			for iPlayerX in xrange(STATE.getMAX_PLAYERS()):
 				CyPlayerX = GC.getPlayer(iPlayerX)
 				if CyPlayerX.isAlive():
 					screen.addPullDownString(DD, CyPlayerX.getName(), iPlayerX, iPlayerX, iPlayerX == iPlayer)
@@ -200,8 +200,8 @@ class HeritageScreen:
 		self.aWidgetBucket.append(DD)
 		screen.addDropDownBoxGFC(DD, x0, H_EDGE, w0, WidgetTypes.WIDGET_GENERAL, 1, 2, FontTypes.GAME_FONT)
 		if self.bDebug:
-			range = GC.getMAX_PLAYERS()
-		else: range = GC.getMAX_PC_PLAYERS()
+			range = STATE.getMAX_PLAYERS()
+		else: range = STATE.getMAX_PC_PLAYERS()
 
 		for iPlayerX in xrange(range):
 			playerX = GC.getPlayer(iPlayerX)

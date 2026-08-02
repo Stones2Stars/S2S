@@ -926,11 +926,13 @@ bool CvXMLLoadUtility::LoadPreMenuGlobals()
 		const CvString szType = GC.getCursorInfo((CursorTypes)i).getType();
 		if (GC.getDefinesVarSystem()->GetValue(szType, iVal))
 		{
+			// This runs AFTER every document has been parsed, so the parser holds no current document and
+			// asking it for one dereferences NULL -- the error reporter crashed instead of reporting. The file
+			// is tracked independently for exactly this reason, so read it from there and name the offending
+			// type, which is what makes the report actionable at all.
 			char szMessage[1024];
-			char* tmp = xercesc::XMLString::transcode(m_pParser->getDocument()->getDocumentURI());
-			sprintf(szMessage, "cursor type already set? \n Current XML file is: %s", tmp);
-				// GC.getCurrentXMLFile().GetCString()); HERE
-			xercesc::XMLString::release(&tmp);
+			sprintf(szMessage, "cursor type already set: %s\n Current XML file is: %s",
+				szType.GetCString(), GC.getCurrentXMLFile().GetCString());
 			gDLL->MessageBox(szMessage, "XML Error");
 		}
 		GC.getDefinesVarSystem()->SetValue(szType, i);

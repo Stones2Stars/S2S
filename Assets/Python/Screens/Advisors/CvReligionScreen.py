@@ -160,7 +160,7 @@ class CvReligionScreen:
 		if DebugUtils.isAnyDebugMode():
 			self.szDropdownName = self.DEBUG_DROPDOWN_ID
 			screen.addDropDownBoxGFC(self.szDropdownName, 22, 12, 300, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
-			for j in range(GC.getMAX_PLAYERS()):
+			for j in range(STATE.getMAX_PLAYERS()):
 				if (GC.getPlayer(j).isAlive()):
 					screen.addPullDownString(self.szDropdownName, GC.getPlayer(j).getName(), j, j, False )
 

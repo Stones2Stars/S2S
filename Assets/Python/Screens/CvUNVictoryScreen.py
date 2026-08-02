@@ -97,7 +97,7 @@ class CvUnVictoryScreen:
 		iCount = 0
 		leaderMap = { }
 		# Count all other leaders
-		for iPlayer in range(gc.getMAX_PLAYERS()):
+		for iPlayer in range(STATE.getMAX_PLAYERS()):
 			player = gc.getPlayer(iPlayer)
 			if (player.isAlive() and iPlayer != self.iActiveLeader and not player.isNPC() and not player.isMinorCiv()):
 				leaderMap[iPlayer] = iCount

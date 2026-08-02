@@ -90,9 +90,18 @@ public:
 	// forced into a group that would mean nothing. ----
 	int getActivePlayer() const;
 	int getGameTurn() const;
-	// The global DEFINES. They belong on the live-state half rather than the vocabulary because a define is a
+	bool isFinalInitialized() const;   // is the game up enough to be asked / shown a message
+	// The closed CONSTANTS block (python-read-map: a small closed set, trivially served by the library).
+	// Compile-time engine limits, so they are bare reads with no owner and no scope.
+	int getMAX_PLAYERS() const;
+	int getMAX_PC_PLAYERS() const;
+	int getMAX_TEAMS() const;
+	int getMAX_PC_TEAMS() const;
+	int getBARBARIAN_PLAYER() const;
+
+	// The global DEFINES. They sit on the live-state half rather than the vocabulary because a define is a
 	// LIVE option -- user-changeable mid-game through the BUG bridge, which is exactly why nothing STATIC may be
-	// gated on one (python-read-map § open questions). The READS are in scope; the writes are not.
+	// gated on one (python-read-map). The READS are in scope; the writes are not.
 	int getDefineINT(const std::string& szName) const;
 	float getDefineFLOAT(const std::string& szName) const;
 	int getAIAutoPlay(int iPlayer) const;

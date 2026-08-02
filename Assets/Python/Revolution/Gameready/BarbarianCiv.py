@@ -26,8 +26,8 @@ class BarbarianCiv:
 	def __init__(self, customEM, RevOpt):
 		self.RevOpt = RevOpt
 		self.customEM = customEM
-		self.BARBARIAN_PLAYER = GC.getBARBARIAN_PLAYER()
-		self.MAX_PC_PLAYERS = GC.getMAX_PC_PLAYERS()
+		self.BARBARIAN_PLAYER = STATE.getBARBARIAN_PLAYER()
+		self.MAX_PC_PLAYERS = STATE.getMAX_PC_PLAYERS()
 
 		self.customEM.addEventHandler("BeginGameTurn", self.onBeginGameTurn)
 

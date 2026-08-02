@@ -6,7 +6,7 @@
 ##
 ## Author: Zappara
 
-from CvPythonExtensions import CyGlobalContext, GameOptionTypes
+from CvPythonExtensions import GameOptionTypes
 import BugOptionsTab
 
 class RoMOptionsTab(BugOptionsTab.BugOptionsTab):

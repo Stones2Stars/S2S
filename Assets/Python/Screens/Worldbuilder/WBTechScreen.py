@@ -55,7 +55,7 @@ class WBTechScreen:
 		wDDB = 256
 		screen.addDropDownBoxGFC(DDB, 8, -1, wDDB, eWidGen, 0, 1, eFontSmall)
 
-		for i in xrange(GC.getMAX_TEAMS()):
+		for i in xrange(STATE.getMAX_TEAMS()):
 			loopTeam = GC.getTeam(i)
 			if loopTeam.isAlive():
 				if loopTeam.isNPC():
@@ -216,7 +216,7 @@ class WBTechScreen:
 		iTeam = self.iTeam
 		if self.bAllPlayers:
 			bNoNPC = self.bNoNPC
-			for iTeamX in xrange(GC.getMAX_TEAMS()):
+			for iTeamX in xrange(STATE.getMAX_TEAMS()):
 				if iTeamX == iTeam: continue
 				pTeamX = GC.getTeam(iTeamX)
 				if not pTeamX.isAlive() or bNoNPC and pTeamX.isNPC():

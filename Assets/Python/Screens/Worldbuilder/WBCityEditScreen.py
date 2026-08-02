@@ -62,7 +62,7 @@ class WBCityEditScreen:
 		iX = screen.getXResolution() - iWidth - 20
 		iY = 20
 		screen.addDropDownBoxGFC("CityOwner", iX, iY, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
-		for i in xrange(GC.getMAX_PLAYERS()):
+		for i in xrange(STATE.getMAX_PLAYERS()):
 			pPlayerX = GC.getPlayer(i)
 			if pPlayerX.isEverAlive():
 				sText = pPlayerX.getName()
@@ -110,7 +110,7 @@ class WBCityEditScreen:
 
 	def sortCities(self):
 		self.lCities = []
-		for iPlayerX in xrange(GC.getMAX_PLAYERS()):
+		for iPlayerX in xrange(STATE.getMAX_PLAYERS()):
 			pPlayerX = GC.getPlayer(iPlayerX)
 			if iOwnerType == 1 and iPlayerX != iPlayer: continue
 			if iOwnerType == 2 and pPlayerX.getTeam() != pCity.getTeam(): continue

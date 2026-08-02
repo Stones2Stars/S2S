@@ -37,8 +37,8 @@ class CvEventManager:
 		self.aWonderTuple = [[],[],[],[],[]]
 		# These caches are normally filled during late init in onWindowActivation().
 		# Keep safe defaults so early events cannot throw AttributeError.
-		self.MAX_PLAYERS = GC.getMAX_PLAYERS()
-		self.MAX_PC_PLAYERS = GC.getMAX_PC_PLAYERS()
+		self.MAX_PLAYERS = STATE.getMAX_PLAYERS()
+		self.MAX_PC_PLAYERS = STATE.getMAX_PC_PLAYERS()
 		self.mapBuildingType = {
 			"ZIZKOV": -1,
 			"HELSINKI": -1,
@@ -264,8 +264,8 @@ class CvEventManager:
 				import BugCore
 				self.RoMOpt = BugCore.game.RoMSettings
 				# Cache game constants.
-				self.MAX_PLAYERS	= GC.getMAX_PLAYERS()
-				self.MAX_PC_PLAYERS = GC.getMAX_PC_PLAYERS()
+				self.MAX_PLAYERS	= STATE.getMAX_PLAYERS()
+				self.MAX_PC_PLAYERS = STATE.getMAX_PC_PLAYERS()
 				self.iWAR_PRIZES	= GC.getDefineINT("WAR_PRIZES")
 				self.iArcologyCityID = -1
 				self.iOldCityID = -1
@@ -614,7 +614,7 @@ class CvEventManager:
 		self.GO_ONE_CITY_CHALLENGE		= GAME.isOption(GameOptionTypes.GAMEOPTION_CHALLENGE_ONE_CITY)
 
 		if bNewGame and self.GO_START_AS_MINORS:
-			for iTeam in xrange(GC.getMAX_PC_TEAMS()):
+			for iTeam in xrange(STATE.getMAX_PC_TEAMS()):
 				CyTeam = GC.getTeam(iTeam)
 				if CyTeam.isAlive() and not CyTeam.isOpenBordersTrading():
 					CyTeam.setIsMinorCiv(True)
@@ -810,7 +810,7 @@ class CvEventManager:
 					if not iGameTurn % (4*self.iGameSpeedPercent/100 + 1):
 						iTeam = CyPlayer.getTeam()
 						iDiv = iGameTurn * 2
-						for iTeamX in xrange(GC.getMAX_PC_TEAMS()):
+						for iTeamX in xrange(STATE.getMAX_PC_TEAMS()):
 							CyTeamX = GC.getTeam(iTeamX)
 							if CyTeamX.isAlive() and CyTeamX.isVassal(iTeam):
 								iDiv -= intSqrt(iDiv)
@@ -1460,7 +1460,7 @@ class CvEventManager:
 			CyArea = CyCity.area()
 			iTeam = CyPlayer.getTeam()
 			CyTeam = GC.getTeam(iTeam)
-			for iTeamX in xrange(GC.getMAX_PC_TEAMS()):
+			for iTeamX in xrange(STATE.getMAX_PC_TEAMS()):
 				if iTeamX != iTeam and not CyTeam.isHasMet(iTeamX):
 					CyTeamX = GC.getTeam(iTeamX)
 					if CyTeamX.countNumCitiesByArea(CyArea) > 0:
@@ -1871,7 +1871,7 @@ class CvEventManager:
 		elif iBuilding == mapBuildingType["ZIZKOV"]:
 			TECH_SATELLITES = self.TECH_SATELLITES
 			iTeam = CyPlayer.getTeam()
-			for iTeamX in xrange(GC.getMAX_PC_TEAMS()):
+			for iTeamX in xrange(STATE.getMAX_PC_TEAMS()):
 				if iTeamX == iTeam:
 					continue
 				CyTeamX = GC.getTeam(iTeamX)

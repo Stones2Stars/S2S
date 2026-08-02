@@ -215,7 +215,7 @@ class CvInfoScreen:
 		if DebugUtils.isAnyDebugMode():
 			DD = "Info_DebugDD"
 			screen.addDropDownBoxGFC(DD, 8, 0, 300, eWidGen, 1, 2, FontTypes.GAME_FONT)
-			for iPlayerX in xrange(GC.getMAX_PLAYERS()):
+			for iPlayerX in xrange(STATE.getMAX_PLAYERS()):
 				if GC.getPlayer(iPlayerX).isAlive():
 					screen.addPullDownString(DD, GC.getPlayer(iPlayerX).getName(), iPlayerX, iPlayerX, iPlayer == iPlayerX)
 			if not self.iTab:
@@ -269,7 +269,7 @@ class CvInfoScreen:
 	def drawGraphTab(self, screen):
 
 		self.scoreCache = [None] * self.iNumGraphs
-		self.bPlayerInclude = [True] * GC.getMAX_PC_PLAYERS()
+		self.bPlayerInclude = [True] * STATE.getMAX_PC_PLAYERS()
 
 		xRes = self.xRes
 		self.wLegend = wLegend = 128 + xRes / 20
@@ -286,8 +286,8 @@ class CvInfoScreen:
 			self.sGraphTextBannerWidget.append(self.getNextWidgetName())
 			self.sGraphPanelWidget.append(self.getNextWidgetName())
 
-		self.sPlayerTextWidget = [0] * GC.getMAX_PC_PLAYERS()
-		for i in xrange(GC.getMAX_PC_PLAYERS()):
+		self.sPlayerTextWidget = [0] * STATE.getMAX_PC_PLAYERS()
+		for i in xrange(STATE.getMAX_PC_PLAYERS()):
 			self.sPlayerTextWidget[i] = self.getNextWidgetName()
 
 		self.sShowAllWidget = self.getNextWidgetName()
@@ -669,7 +669,7 @@ class CvInfoScreen:
 		aiGroupNetTrade = []
 
 		# Loop through all players to determine Rank and relative Strength
-		for iPlayerX in xrange(GC.getMAX_PC_PLAYERS()):
+		for iPlayerX in xrange(STATE.getMAX_PC_PLAYERS()):
 			playerX = GC.getPlayer(iPlayerX)
 			if not playerX.isAlive():
 				continue
@@ -887,7 +887,7 @@ class CvInfoScreen:
 		topCities = [None] * 5
 		topValues = [None] * 5
 		iMedianPop = -1
-		for i in xrange(GC.getMAX_PC_PLAYERS()):
+		for i in xrange(STATE.getMAX_PC_PLAYERS()):
 
 			for cityX in GC.getPlayer(i).cities():
 
@@ -1044,7 +1044,7 @@ class CvInfoScreen:
 		iNumWonders = 0
 
 		# Loop through players to determine Wonders
-		for iPlayerX in xrange(GC.getMAX_PC_PLAYERS()):
+		for iPlayerX in xrange(STATE.getMAX_PC_PLAYERS()):
 
 			playerX = GC.getPlayer(iPlayerX)
 
@@ -1130,7 +1130,7 @@ class CvInfoScreen:
 		if self.szWonderDisplayMode == "Projects":
 
 			# Loop through players to determine Projects
-			for iPlayerLoop in xrange(GC.getMAX_PC_PLAYERS()):
+			for iPlayerLoop in xrange(STATE.getMAX_PC_PLAYERS()):
 				iTeamLoop = GC.getPlayer(iPlayerLoop).getTeam()
 				# Block duplicates
 				if iTeamLoop in aiTeamsUsed:
@@ -1475,7 +1475,7 @@ class CvInfoScreen:
 		self.aiPlayersMetNAEspionage = []
 		self.iNumPlayersMet = 0
 		self.iNumPlayersMetNAEspionage = 0
-		for iPlayerX in xrange(GC.getMAX_PC_PLAYERS()):
+		for iPlayerX in xrange(STATE.getMAX_PC_PLAYERS()):
 			playerX = GC.getPlayer(iPlayerX)
 			iTeamX = playerX.getTeam()
 			if playerX.isEverAlive() and (team.isHasMet(iTeamX) or self.bDebug or iEndGame):
@@ -1615,19 +1615,19 @@ class CvInfoScreen:
 							self.drawGraphs()
 							break
 
-				for i in xrange(GC.getMAX_PC_PLAYERS()):
+				for i in xrange(STATE.getMAX_PC_PLAYERS()):
 					if szWidgetName == self.sPlayerTextWidget[i]:
 						self.bPlayerInclude[i] = not self.bPlayerInclude[i]
 						self.drawGraphs()
 						break
 
 				if szWidgetName == self.sShowAllWidget:
-					for i in xrange(GC.getMAX_PC_PLAYERS()):
+					for i in xrange(STATE.getMAX_PC_PLAYERS()):
 						self.bPlayerInclude[i] = True
 					self.drawGraphs()
 
 				if szWidgetName == self.sShowNoneWidget:
-					for i in xrange(GC.getMAX_PC_PLAYERS()):
+					for i in xrange(STATE.getMAX_PC_PLAYERS()):
 						self.bPlayerInclude[i] = False
 					self.drawGraphs()
 

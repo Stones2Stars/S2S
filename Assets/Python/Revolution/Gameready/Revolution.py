@@ -45,8 +45,8 @@ class Revolution:
 		self.showRevIndexInPopup = RevOpt.isShowRevIndexInPopup()
 
 		self.maxCivs = RevOpt.getRevMaxCivs()
-		if self.maxCivs <= 0 or self.maxCivs > GC.getMAX_PC_PLAYERS():
-			self.maxCivs = GC.getMAX_PC_PLAYERS()
+		if self.maxCivs <= 0 or self.maxCivs > STATE.getMAX_PC_PLAYERS():
+			self.maxCivs = STATE.getMAX_PC_PLAYERS()
 
 		self.offerDefectToRevs = RevOpt.isOfferDefectToRevs()
 
@@ -484,7 +484,7 @@ class Revolution:
 		# Penalty on top score/power to help keep game even. Benefit for highest culture
 		powerList = []; cultureList = []; scoreList = []
 
-		for iPlayer in xrange(GC.getMAX_PC_PLAYERS()):
+		for iPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
 			player = GC.getPlayer(iPlayer)
 			if player.isAlive():
 				powerList.append((player.getPower(), iPlayer))
@@ -527,7 +527,7 @@ class Revolution:
 	def onBeginPlayerTurn(self, argsList):
 		iPlayer = argsList[1]
 
-		if iPlayer > GC.getMAX_PC_PLAYERS():
+		if iPlayer > STATE.getMAX_PC_PLAYERS():
 			return
 		iPlayer -= 1
 
@@ -548,7 +548,7 @@ class Revolution:
 	def onEndPlayerTurn(self, argsList):
 		iGameTurn, iPlayer = argsList
 
-		iMax = GC.getMAX_PC_PLAYERS()
+		iMax = STATE.getMAX_PC_PLAYERS()
 
 		if iPlayer > iMax:
 			return
@@ -593,7 +593,7 @@ class Revolution:
 			return # Already captured and got capture bonus
 
 		pRevPlayer = None
-		for i in xrange(GC.getMAX_PC_PLAYERS()):
+		for i in xrange(STATE.getMAX_PC_PLAYERS()):
 			playerI = GC.getPlayer(i)
 			if playerI.isAlive() and playerI.getCivilizationType() == revCivType:
 				pRevPlayer = playerI
@@ -601,7 +601,7 @@ class Revolution:
 
 		if pRevPlayer is None:
 			if self.LOG_DEBUG: print "[REV] Revolt: Checking for end to Barbarian uprising in " + pCity.getName()
-			pRevPlayer = GC.getPlayer(GC.getBARBARIAN_PLAYER())
+			pRevPlayer = GC.getPlayer(STATE.getBARBARIAN_PLAYER())
 			bBarbarian = True
 		else: bBarbarian = False
 
@@ -776,7 +776,7 @@ class Revolution:
 
 		iNumUnits = max([iNumUnits,1])
 
-		for iPlayer in xrange(GC.getMAX_PC_PLAYERS()) :
+		for iPlayer in xrange(STATE.getMAX_PC_PLAYERS()) :
 
 			if ownerID == iPlayer:
 				mess = TRNSLTR.getText("TXT_KEY_REV_MESS_REINFORCEMENTS",()) + " %s!"%(pCity.getName())
@@ -1044,7 +1044,7 @@ class Revolution:
 			culturePercent = 0
 			maxCult = 0
 			maxCultPlayer = -1
-			for idx in xrange(GC.getMAX_PC_PLAYERS()) :
+			for idx in xrange(STATE.getMAX_PC_PLAYERS()) :
 				if( pPlayer.getTeam() == GC.getPlayer(idx).getTeam() ) :
 					culturePercent += pCity.plot().calculateCulturePercent(idx)
 				if( pCity.plot().calculateCulturePercent(idx) > maxCult ) :
@@ -2010,7 +2010,7 @@ class Revolution:
 
 	def checkForRevolution(self, iGameTurn, iPlayer):
 
-		if iPlayer >= GC.getMAX_PC_PLAYERS():
+		if iPlayer >= STATE.getMAX_PC_PLAYERS():
 			raise "NPC does not revolt!"
 
 		pPlayer = GC.getPlayer(iPlayer)
@@ -2284,7 +2284,7 @@ class Revolution:
 			revCivType = RevData.getCityVal(instigator, 'RevolutionCiv')
 			pRevPlayer = None
 			if revCivType >= 0:
-				for i in xrange(GC.getMAX_PC_PLAYERS()) :
+				for i in xrange(STATE.getMAX_PC_PLAYERS()) :
 					if i != iPlayer:
 						playerI = GC.getPlayer( i )
 						if( playerI.isAlive() and playerI.getCivilizationType() == revCivType ) :
@@ -2302,13 +2302,13 @@ class Revolution:
 					bCanJoin = False
 
 				if( bCanJoin and pTeam.isAVassal() ) :
-					for teamID in xrange(GC.getMAX_PC_TEAMS()) :
+					for teamID in xrange(STATE.getMAX_PC_TEAMS()) :
 						if( pTeam.isVassal(teamID) and GC.getTeam(teamID).isHuman() ) :
 							bCanJoin = False
 							break
 
 				if( bCanJoin and pRevPlayer.isAlive() and GC.getTeam(pRevPlayer.getTeam()).isAVassal() ) :
-					for teamID in xrange(GC.getMAX_PC_TEAMS()) :
+					for teamID in xrange(STATE.getMAX_PC_TEAMS()) :
 						if( GC.getTeam(pRevPlayer.getTeam()).isVassal(teamID) and GC.getTeam(teamID).isHuman() ) :
 							bCanJoin = False
 							break
@@ -2475,18 +2475,18 @@ class Revolution:
 			# calculateCulturalOwner rules out dead civs ...
 			maxCulture = 30
 			cultOwnerID = -1
-			for idx in xrange(GC.getMAX_PC_PLAYERS()) :
+			for idx in xrange(STATE.getMAX_PC_PLAYERS()) :
 				if( instigator.plot().getCulture( idx ) > maxCulture ) :
 					maxCulture = instigator.plot().getCulture( idx )
 					cultOwnerID = idx
 
-			if( cultOwnerID >= 0 and cultOwnerID < GC.getMAX_PC_PLAYERS() and not GC.getPlayer(cultOwnerID).getTeam() == pPlayer.getTeam() ) :
+			if( cultOwnerID >= 0 and cultOwnerID < STATE.getMAX_PC_PLAYERS() and not GC.getPlayer(cultOwnerID).getTeam() == pPlayer.getTeam() ) :
 				if self.LOG_DEBUG: print "[REV] Revolt: %s has majority culture from other player %d, asking to join"%(instigator.getName(),cultOwnerID)
 				cultCities = []
 				for pCity in revCities :
 					maxCulture = 30
 					cityCultOwnerID = -1
-					for idx in xrange(GC.getMAX_PC_PLAYERS()) :
+					for idx in xrange(STATE.getMAX_PC_PLAYERS()) :
 						if( pCity.plot().getCulture( idx ) > maxCulture ) :
 							maxCulture = pCity.plot().getCulture( idx )
 							cityCultOwnerID = idx
@@ -2558,7 +2558,7 @@ class Revolution:
 						if joinPlayer.getID() == pRevPlayer.getID():
 							joinPlayer = None
 						elif self.allowSmallBarbRevs and len(cultCities) == 1 and instRevIdx < int(1.2*self.revInstigatorThreshold) and not instigator.area().isBorderObstacle(pPlayer.getTeam()):
-							pRevPlayer = GC.getPlayer(GC.getBARBARIAN_PLAYER())
+							pRevPlayer = GC.getPlayer(STATE.getBARBARIAN_PLAYER())
 							bIsJoinWar = False
 							if self.LOG_DEBUG: print "[REV] Revolt: Small, disorganized Revolution"
 					else :
@@ -3027,7 +3027,7 @@ class Revolution:
 							bodStr += TRNSLTR.getText("TXT_KEY_REV_HL_SLAVE_DENY",())
 
 							# Slaves always rise up as barbarians
-							pRevPlayer = GC.getPlayer( GC.getBARBARIAN_PLAYER() )
+							pRevPlayer = GC.getPlayer( STATE.getBARBARIAN_PLAYER() )
 							assert(len(slaveCities) > 0)
 							specialDataDict = { 'iNewCivic' : newCivic, 'iRevPlayer' : pRevPlayer.getID() }
 							cityIdxs = []
@@ -3522,7 +3522,7 @@ class Revolution:
 			[pRevPlayer, bIsJoinWar] = self.chooseRevolutionCiv(indCities, bJoinCultureWar = False, bReincarnate = True, bJoinRebels = True, bSpreadRebels = False)
 			vassalStyle = None
 			if self.allowSmallBarbRevs and len(indCities) == 1 and instRevIdx < int(1.4*self.revInstigatorThreshold) and not instigator.area().isBorderObstacle(pPlayer.getTeam()):
-				pRevPlayer = GC.getPlayer(GC.getBARBARIAN_PLAYER())
+				pRevPlayer = GC.getPlayer(STATE.getBARBARIAN_PLAYER())
 				bIsJoinWar = False
 				if self.LOG_DEBUG: print "[REV] Revolt: Small, disorganized Revolution"
 
@@ -3592,7 +3592,7 @@ class Revolution:
 				# If at war with this cities rebel civ type, join them
 				revCivType = RevData.getCityVal(pCity, 'RevolutionCiv')
 				if revCivType > -1:
-					for i in xrange(GC.getMAX_PC_PLAYERS()):
+					for i in xrange(STATE.getMAX_PC_PLAYERS()):
 						if i != iParentPlayer:
 							playerI = GC.getPlayer(i)
 							if (
@@ -3607,7 +3607,7 @@ class Revolution:
 
 			if bReincarnate:
 				# Check for civ that can rise from the ashes
-				for i in xrange(GC.getMAX_PC_PLAYERS()):
+				for i in xrange(STATE.getMAX_PC_PLAYERS()):
 					if not i == iParentPlayer and pCity.getCulture(i) > 50:
 						playerI = GC.getPlayer(i)
 						if not playerI.isAlive():
@@ -3621,7 +3621,7 @@ class Revolution:
 			if self.LOG_DEBUG: print "[REV] Revolt: Checking for rebellions that could spill over"
 
 			rebelIDList = []
-			for i in xrange(GC.getMAX_PC_PLAYERS()) :
+			for i in xrange(STATE.getMAX_PC_PLAYERS()) :
 				if( not i == iParentPlayer and pCity.area().getUnitsPerPlayer(i) > 0 ) :
 					playerI = GC.getPlayer(i)
 					teamI = GC.getTeam( playerI.getTeam() )
@@ -3678,7 +3678,7 @@ class Revolution:
 		if not pRevPlayer and bReincarnate and GAME.countCivPlayersAlive() < GAME.countCivPlayersEverAlive():
 
 			deadCivs = []
-			for idx in xrange(GC.getMAX_PC_PLAYERS()):
+			for idx in xrange(STATE.getMAX_PC_PLAYERS()):
 				playerI = GC.getPlayer(idx)
 				if not playerI.isAlive() and playerI.isEverAlive():
 					# TODO: Should this also check for revData?
@@ -3721,14 +3721,14 @@ class Revolution:
 
 			# Search for empty slot
 			newPlayerIdx = -1
-			for i in xrange(GC.getMAX_PC_PLAYERS()):
+			for i in xrange(STATE.getMAX_PC_PLAYERS()):
 				if not GC.getPlayer(i).isEverAlive() and not RevData.revObjectExists(GC.getPlayer(i)):
 					newPlayerIdx = i
 					print "[REV] Revolt: Creating new player in slot " + str(i)
 					break
 			else:
 				print "[REV] Revolt: No available slots, spawning as Barbarians"
-				return [GC.getPlayer(GC.getBARBARIAN_PLAYER()), bIsJoinWar]
+				return [GC.getPlayer(STATE.getBARBARIAN_PLAYER()), bIsJoinWar]
 
 
 			# Create list of available civs and similar civ types
@@ -3749,7 +3749,7 @@ class Revolution:
 				civX = GC.getCivilizationInfo(iCivX)
 				if not civX.isPlayable(): continue
 
-				for i in xrange(GC.getMAX_PC_PLAYERS()):
+				for i in xrange(STATE.getMAX_PC_PLAYERS()):
 					# Switch in preparation for defining regions of the world for different rebel civ types
 					if (iCivX == GC.getPlayer(i).getCivilizationType()
 					and (GC.getPlayer(i).isEverAlive() or RevData.revObjectExists(GC.getPlayer(i)))
@@ -3764,7 +3764,7 @@ class Revolution:
 
 			if not availableCivs:
 				print "[REV] Revolt: No available civs, spawning as Barbarians"
-				return [GC.getPlayer(GC.getBARBARIAN_PLAYER()), bIsJoinWar]
+				return [GC.getPlayer(STATE.getBARBARIAN_PLAYER()), bIsJoinWar]
 
 			newCivIdx = None
 
@@ -3804,14 +3804,14 @@ class Revolution:
 			leaderList = []
 			for leaderType in xrange(GC.getNumLeaderHeadInfos()):
 				if GC.getCivilizationInfo(newCivIdx).isLeaders(leaderType) or GAME.isOption(GameOptionTypes.GAMEOPTION_LEADER_UNRESTRICTED):
-					for jdx in xrange(GC.getMAX_PC_PLAYERS()):
+					for jdx in xrange(STATE.getMAX_PC_PLAYERS()):
 						if GC.getPlayer(jdx).getLeaderType() == leaderType and not newPlayerIdx == jdx:
 							break
 					else: leaderList.append(leaderType)
 
 			if not leaderList:
 				print "[INFO] Unexpected lack of possible leaders, spawning as Barbarians"
-				return [GC.getPlayer(GC.getBARBARIAN_PLAYER()), bIsJoinWar]
+				return [GC.getPlayer(STATE.getBARBARIAN_PLAYER()), bIsJoinWar]
 
 			newLeaderIdx = leaderList[GAME.getSorenRandNum(len(leaderList), 'Revolution: pick leader')]
 
@@ -3854,7 +3854,7 @@ class Revolution:
 					pRevPlayer.setCivics(civicOptionID, civicType)
 
 		if not pRevPlayer.isAlive() and GAME.countCivPlayersAlive() >= self.maxCivs:
-			return [GC.getPlayer(GC.getBARBARIAN_PLAYER()), False]
+			return [GC.getPlayer(STATE.getBARBARIAN_PLAYER()), False]
 
 		return [pRevPlayer, bIsJoinWar]
 
@@ -3874,7 +3874,7 @@ class Revolution:
 		availLeader = []
 		for i in xrange(GC.getNumLeaderHeadInfos()):
 			if ownerCivInfo.isLeaders(i) or GAME.isOption(GameOptionTypes.GAMEOPTION_LEADER_UNRESTRICTED):
-				for j in xrange(GC.getMAX_PC_PLAYERS()):
+				for j in xrange(STATE.getMAX_PC_PLAYERS()):
 					if GC.getPlayer(j).getLeaderType() == i:
 						break
 				else:
@@ -5148,7 +5148,7 @@ class Revolution:
 									pPlot.setRevealed(pRevTeam.getID(), True, False, pTeam.getID())
 
 							# Meet players known by motherland
-							for k in xrange(GC.getMAX_PC_TEAMS()) :
+							for k in xrange(STATE.getMAX_PC_TEAMS()) :
 								if( pTeam.isHasMet(k) ) :
 									# Granted independence, so just meet some fraction of players
 									if( GAME.getSorenRandNum(100,'odds') > 50 ) :
@@ -5177,7 +5177,7 @@ class Revolution:
 
 					iNumPlayerCities = pPlayer.getNumCities()
 
-					for iPlayer in xrange(GC.getMAX_PC_PLAYERS()) :
+					for iPlayer in xrange(STATE.getMAX_PC_PLAYERS()) :
 						# Craft revolution anouncement message for all players
 						if( GC.getPlayer(iPlayer).canContact(pPlayer.getID()) or iPlayer == pPlayer.getID() ) :
 
@@ -5359,7 +5359,7 @@ class Revolution:
 
 						bIsBarbRev = joinPlayer.isNPC()
 
-						for iPlayer in xrange(GC.getMAX_PC_PLAYERS()) :
+						for iPlayer in xrange(STATE.getMAX_PC_PLAYERS()) :
 							# Craft revolution anouncement message for all players
 							if( GC.getPlayer(iPlayer).canContact(pPlayer.getID()) or iPlayer == pPlayer.getID() ) :
 
@@ -5602,7 +5602,7 @@ class Revolution:
 		else :
 			mess += " " + TRNSLTR.getText("TXT_KEY_REV_MESS_REPORT_INCREASED", ())
 
-		for iPlayer in xrange(GC.getMAX_PC_PLAYERS()):
+		for iPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
 			if( (not iPlayer == pPlayer.getID()) and GC.getPlayer(iPlayer).isAlive() ) :
 				if( not (revType == "independence" and termsAccepted) ) :
 					try :
@@ -5635,7 +5635,7 @@ class Revolution:
 
 			if self.LOG_DEBUG: print "[REV] Revolt: No leader change, leader's of same type"
 
-			for iPlayer in xrange(GC.getMAX_PC_PLAYERS()):
+			for iPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
 				if pPlayer.canContact(iPlayer):
 					mess = '%s '%(newLeaderName) + TRNSLTR.getText("TXT_KEY_REV_MESS_NEW_LEADER",()) + ' %s!'%(pPlayer.getCivilizationDescription(0))
 					CyInterface().addMessage(iPlayer, False, GC.getEVENT_MESSAGE_TIME(), mess, None, InterfaceMessageTypes.MESSAGE_TYPE_MAJOR_EVENT, None, ColorTypes(79), -1, -1, False, False)
@@ -5654,7 +5654,7 @@ class Revolution:
 		else:
 			RevUtils.changeCiv(pPlayer.getID(),pPlayer.getCivilizationType(),newLeaderType)
 
-			for iPlayerTest in xrange(GC.getMAX_PC_PLAYERS()) :
+			for iPlayerTest in xrange(STATE.getMAX_PC_PLAYERS()) :
 				if pPlayer.canContact(iPlayerTest):
 					mess = '%s '%(pPlayer.getName()) + TRNSLTR.getText("TXT_KEY_REV_MESS_NEW_LEADER",()) + ' %s!'%(pPlayer.getCivilizationDescription(0))
 					CyInterface().addMessage(iPlayerTest, False, GC.getEVENT_MESSAGE_TIME(), mess, None, InterfaceMessageTypes.MESSAGE_TYPE_MAJOR_EVENT, None, ColorTypes(79), -1, -1, False, False)
@@ -5900,7 +5900,7 @@ class Revolution:
 			print "[REV] Error: attempted spawning of revs for NPC player"
 			return
 
-		if pRevPlayer.isNPC() and pRevPlayer.getID() != GC.getBARBARIAN_PLAYER():
+		if pRevPlayer.isNPC() and pRevPlayer.getID() != STATE.getBARBARIAN_PLAYER():
 			print "[REV] Error: attempted to spawn non barbarian NPC revolutionaries!"
 			return
 
@@ -5989,7 +5989,7 @@ class Revolution:
 
 			bJoinRev = False
 
-		for iPlayer in xrange(GC.getMAX_PC_PLAYERS()):
+		for iPlayer in xrange(STATE.getMAX_PC_PLAYERS()):
 			if not GC.getPlayer(iPlayer):
 				continue
 			# Craft revolution anouncement message for all players
@@ -6069,7 +6069,7 @@ class Revolution:
 				if self.LOG_DEBUG:
 					print "[REV] Revolt: Giving rebels %d espionage points against motherland" % espPoints
 				if not pRevTeam.isAlive():
-					for k in xrange(GC.getMAX_PC_TEAMS()):
+					for k in xrange(STATE.getMAX_PC_TEAMS()):
 						if GC.getTeam(k) == None:
 							continue
 						if pRevTeam.isAtWarWith(k) and not GC.getTeam(k).isMinorCiv():
@@ -6086,9 +6086,9 @@ class Revolution:
 						pPlot.setRevealed(pRevTeam.getID(), True, False, pTeam.getID())
 
 				# Meet players known by motherland
-				for k in xrange(GC.getMAX_PC_TEAMS()) :
+				for k in xrange(STATE.getMAX_PC_TEAMS()) :
 					kTeam = GC.getTeam(k)
-					if kTeam == None or kTeam.getLeaderID() < 0 or kTeam.getLeaderID() > GC.getMAX_PC_PLAYERS():
+					if kTeam == None or kTeam.getLeaderID() < 0 or kTeam.getLeaderID() > STATE.getMAX_PC_PLAYERS():
 						continue
 					kPlayer = GC.getPlayer(kTeam.getLeaderID())
 					if kPlayer == None:

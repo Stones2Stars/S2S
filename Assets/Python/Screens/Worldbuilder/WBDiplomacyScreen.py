@@ -91,7 +91,7 @@ class WBDiplomacyScreen:
 		iWidth = screen.getXResolution()/5
 		screen.addDropDownBoxGFC("CurrentPlayer", 20, 20, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
 		lPlayers = []
-		for iPlayerX in xrange(GC.getMAX_PLAYERS()):
+		for iPlayerX in xrange(STATE.getMAX_PLAYERS()):
 			pPlayerX = GC.getPlayer(iPlayerX)
 			if pPlayerX.isEverAlive():
 				if bHideDead and not pPlayerX.isAlive(): continue

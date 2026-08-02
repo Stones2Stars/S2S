@@ -693,9 +693,9 @@ class GoldTrade(AbstractStatefulAlert):
 
 	def _reset(self):
 		self.maxGoldTrade = {}
-		for player in range(GC.getMAX_PLAYERS()):
+		for player in range(STATE.getMAX_PLAYERS()):
 			self.maxGoldTrade[player] = {}
-			for rival in range(GC.getMAX_PLAYERS()):
+			for rival in range(STATE.getMAX_PLAYERS()):
 				self._setMaxGoldTrade(player, rival, 0)
 
 	def _getMaxGoldTrade(self, player, rival):
@@ -732,9 +732,9 @@ class GoldPerTurnTrade(AbstractStatefulAlert):
 
 	def _reset(self):
 		self.maxGoldPerTurnTrade = {}
-		for player in range(GC.getMAX_PC_PLAYERS()):
+		for player in range(STATE.getMAX_PC_PLAYERS()):
 			self.maxGoldPerTurnTrade[player] = {}
-			for rival in range(GC.getMAX_PC_PLAYERS()):
+			for rival in range(STATE.getMAX_PC_PLAYERS()):
 				self._setMaxGoldPerTurnTrade(player, rival, 0)
 
 	def _getMaxGoldPerTurnTrade(self, player, rival):
@@ -801,7 +801,7 @@ class RefusesToTalk(AbstractStatefulAlert):
 		CyTeam = GC.getTeam(iTeam)
 		refusals = self.refusals[iPlayer]
 		aSet = set()
-		for iPlayerX in range(GC.getMAX_PC_PLAYERS()):
+		for iPlayerX in range(STATE.getMAX_PC_PLAYERS()):
 			if iPlayerX == iPlayer: continue
 			CyPlayerX = GC.getPlayer(iPlayerX)
 			if not CyPlayerX.isAlive() or CyPlayerX.isHuman() or CyPlayerX.isMinorCiv(): continue
@@ -826,7 +826,7 @@ class RefusesToTalk(AbstractStatefulAlert):
 
 	def _reset(self):
 		self.refusals = {}
-		for i in range(0,GC.getMAX_PC_PLAYERS()):
+		for i in range(0,STATE.getMAX_PC_PLAYERS()):
 			self.refusals[i] = set()
 
 class WorstEnemy(AbstractStatefulAlert):
@@ -929,5 +929,5 @@ class WorstEnemy(AbstractStatefulAlert):
 		It will hold -1 for any team or enemy the active team hasn't met.
 		"""
 		self.enemies = {}
-		for i in range(0,GC.getMAX_PC_PLAYERS()):
-			self.enemies[i] = [-1] * GC.getMAX_TEAMS()
+		for i in range(0,STATE.getMAX_PC_PLAYERS()):
+			self.enemies[i] = [-1] * STATE.getMAX_TEAMS()

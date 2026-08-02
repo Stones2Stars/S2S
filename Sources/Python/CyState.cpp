@@ -268,11 +268,22 @@ int CyState::getGameTurn() const
 	return GC.getGame().getGameTurn();
 }
 
+bool CyState::isFinalInitialized() const
+{
+	return GC.getGame().isFinalInitialized();
+}
+
 int CyState::getAIAutoPlay(int iPlayer) const
 {
 	if (iPlayer < 0 || iPlayer >= MAX_PLAYERS) return 0;
 	return GC.getGame().getAIAutoPlay((PlayerTypes)iPlayer);
 }
+
+int CyState::getMAX_PLAYERS() const       { return MAX_PLAYERS; }
+int CyState::getMAX_PC_PLAYERS() const    { return MAX_PC_PLAYERS; }
+int CyState::getMAX_TEAMS() const         { return MAX_TEAMS; }
+int CyState::getMAX_PC_TEAMS() const      { return MAX_PC_TEAMS; }
+int CyState::getBARBARIAN_PLAYER() const  { return (int)BARBARIAN_PLAYER; }
 
 int CyState::getDefineINT(const std::string& szName) const
 {
@@ -334,6 +345,12 @@ void CyState::pythonPublish()
 		// plain live facts
 		.def("getActivePlayer",          &CyState::getActivePlayer)
 		.def("getGameTurn",              &CyState::getGameTurn)
+		.def("isFinalInitialized",       &CyState::isFinalInitialized)
+		.def("getMAX_PLAYERS",           &CyState::getMAX_PLAYERS)
+		.def("getMAX_PC_PLAYERS",        &CyState::getMAX_PC_PLAYERS)
+		.def("getMAX_TEAMS",             &CyState::getMAX_TEAMS)
+		.def("getMAX_PC_TEAMS",          &CyState::getMAX_PC_TEAMS)
+		.def("getBARBARIAN_PLAYER",      &CyState::getBARBARIAN_PLAYER)
 		.def("getDefineINT",             &CyState::getDefineINT)
 		.def("getDefineFLOAT",           &CyState::getDefineFLOAT)
 		.def("getAIAutoPlay",            &CyState::getAIAutoPlay)

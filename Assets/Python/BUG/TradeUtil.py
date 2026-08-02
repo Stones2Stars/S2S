@@ -270,7 +270,7 @@ def tradePartners(player):
 	"""
 	Iterates over all of <player>'s possible trade partners, yielding each CyPlayer in turn.
 	"""
-	for iPartner in xrange(GC.getMAX_PC_PLAYERS()):
+	for iPartner in xrange(STATE.getMAX_PC_PLAYERS()):
 		partner = GC.getPlayer(iPartner)
 		if canTrade(player, partner):
 			yield partner

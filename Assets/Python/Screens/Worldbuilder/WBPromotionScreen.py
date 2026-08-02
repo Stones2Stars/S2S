@@ -97,7 +97,7 @@ class WBPromotionScreen:
 	def sortUnits(self):
 		global lUnits
 		lUnits = []
-		for iPlayerX in xrange(GC.getMAX_PLAYERS()):
+		for iPlayerX in xrange(STATE.getMAX_PLAYERS()):
 			pPlayerX = GC.getPlayer(iPlayerX)
 			if iOwnerType == 1 and iPlayerX != pUnit.getOwner(): continue
 			if iOwnerType == 2 and pPlayerX.getTeam() != pUnit.getTeam(): continue

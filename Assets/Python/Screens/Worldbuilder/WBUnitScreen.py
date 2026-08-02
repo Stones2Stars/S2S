@@ -461,7 +461,7 @@ class WBUnitScreen:
 		iWidth = xRes/5 - 20
 
 		screen.addDropDownBoxGFC("UnitOwner", iX, iY, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
-		for iPlayerX in xrange(GC.getMAX_PLAYERS()):
+		for iPlayerX in xrange(STATE.getMAX_PLAYERS()):
 			pPlayerX = GC.getPlayer(iPlayerX)
 			if pPlayerX.isEverAlive():
 				sName = pPlayerX.getName()
@@ -550,7 +550,7 @@ class WBUnitScreen:
 		iOwner = self.currentUnit.getOwner()
 		iTeam = self.currentUnit.getTeam()
 
-		for iPlayerX in xrange(GC.getMAX_PLAYERS()):
+		for iPlayerX in xrange(STATE.getMAX_PLAYERS()):
 
 			if iOwnerType == 1 and iPlayerX != iOwner:
 				continue

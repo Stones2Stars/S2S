@@ -36,7 +36,7 @@ class AIAutoPlay :
 		self.bDisableNextTurnArray2 = []
 		self.NumberOfTurns = []
 		self.TurnsToAuto = []
-		for i in range(GC.getMAX_PC_PLAYERS()):
+		for i in range(STATE.getMAX_PC_PLAYERS()):
 			self.bEnableNextTurnArray.append(0)
 			self.bDisableNextTurnArray.append(0)
 			self.bDisableNextTurnArray2.append(0)
@@ -97,14 +97,14 @@ class AIAutoPlay :
 		elif SdToolKit.sdObjectGetVal("AIAutoPlay", GAME, "bCanCancelAuto") is None:
 			SdToolKit.sdObjectSetVal("AIAutoPlay", GAME, "bCanCancelAuto", True)
 
-		for i in range(GC.getMAX_PC_PLAYERS()):
+		for i in range(STATE.getMAX_PC_PLAYERS()):
 			CyPlayer = GC.getPlayer(i)
 			if CyPlayer.isHumanDisabled() and not GAME.isForcedAIAutoPlay(i):
 				GAME.setAIAutoPlay(i, 1)
 
 	def onVictory(self, argsList):
 		self.checkPlayer(GAME.getActivePlayer())
-		for i in range(GC.getMAX_PC_PLAYERS()):
+		for i in range(STATE.getMAX_PC_PLAYERS()):
 			if GC.getPlayer(i).isHumanDisabled():
 				GAME.setForcedAIAutoPlay(i, 0, False)
 
@@ -133,7 +133,7 @@ class AIAutoPlay :
 
 	def checkPlayer(self, iPlayer):
 		CyPlayer = GC.getPlayer(iPlayer)
-		for i in range(GC.getMAX_PC_TEAMS()):
+		for i in range(STATE.getMAX_PC_TEAMS()):
 			current = CyPlayer.getEspionageSpendingWeightAgainstTeam(i)
 			CyPlayer.setEspionageSpendingWeightAgainstTeam(i, max(0, current * 9 // 10))
 
@@ -179,7 +179,7 @@ class AIAutoPlay :
 		if not GAME.isMultiplayer():
 			return
 
-		for i in range(GC.getMAX_PC_PLAYERS()):
+		for i in range(STATE.getMAX_PC_PLAYERS()):
 			if self.bEnableNextTurnArray[i] == 1:
 				self.bEnableNextTurnArray[i] = 0
 				self.abdicate(i, self.NumberOfTurns[i])

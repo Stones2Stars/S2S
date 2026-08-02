@@ -158,7 +158,7 @@ class CvCivicsScreen:
 		if DebugUtils.isAnyDebugMode():
 			DD = "Civic_DebugDD"
 			screen.addDropDownBoxGFC(DD, H_EDGE, 0, 300, eWidGen, 1, 1, FontTypes.GAME_FONT)
-			for iPlayerX in xrange(GC.getMAX_PLAYERS()):
+			for iPlayerX in xrange(STATE.getMAX_PLAYERS()):
 				CyPlayerX = GC.getPlayer(iPlayerX)
 				if CyPlayerX.isAlive():
 					screen.addPullDownString(DD, CyPlayerX.getName(), iPlayerX, iPlayerX, iPlayerX == iPlayer)

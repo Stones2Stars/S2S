@@ -180,7 +180,7 @@ class CvMilitaryAdvisor:
 		# loop through all players and display leaderheads
 		x = 4
 		dx = 72
-		for iPlayerX in range(GC.getMAX_PLAYERS()):
+		for iPlayerX in range(STATE.getMAX_PLAYERS()):
 			CyPlayerX = GC.getPlayer(iPlayerX)
 			if CyPlayerX.isAlive() and CyTeam.isHasMet(CyPlayerX.getTeam()):
 
@@ -227,7 +227,7 @@ class CvMilitaryAdvisor:
 		if bReload:
 			CyPlayer = self.CyPlayer
 			self.stats = UnitGrouper.GrouperStats(self.grouper)
-			for iPlayerX in range(GC.getMAX_PLAYERS()):
+			for iPlayerX in range(STATE.getMAX_PLAYERS()):
 				CyPlayerX = GC.getPlayer(iPlayerX)
 				if not CyPlayerX.isAlive(): continue
 

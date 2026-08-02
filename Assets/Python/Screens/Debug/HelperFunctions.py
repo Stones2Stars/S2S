@@ -451,31 +451,13 @@ class HelperFunctions:
 		if iTechXY != 0 and iTechXY != 99999: #If we have tech requirement or tech obsoletion
 			return aTechDesc[aTechID.index(iTechXY)]
 		return ""
-
-	#^^^^ HIGHEST TECH REQUIREMENT LOCATION FINDER FUNCTIONS  ^^^^#
-
-	##### GOM REQUIREMENT READER FUNCTIONS #####
-
-	#Example use:
-	#aGOMReqList = []
-	#for i in range(2):
-	#	aGOMReqList.append([])
-	#getGOMReqs(CvBuildingInfo.getConstructCondition(), GOMTypes.GOM_BONUS, aGOMReqList) - for buildings
-	#getGOMReqs(CvUnitInfo.getTrainCondition(), GOMTypes.GOM_BONUS, aGOMReqList) - for units
-	#Array is filled with enums - GC.getBonusInfo(aGOMReqList[BoolExprTypes.BOOLEXPR_AND][i]).getType() will extract type of bonus at i-th place.
-	#Array is filled with enums - GC.getBonusInfo(aGOMReqList[BoolExprTypes.BOOLEXPR_OR][i]).getType() will extract type of bonus at i-th place.
-
-	def getGOMReqs(self, CyBoolExpr, GOMType, GOMReqList, eParentExpr = BoolExprTypes.NO_BOOLEXPR):
-		if CyBoolExpr is not None:
-			eExpr = CyBoolExpr.getType()
-			if eExpr == BoolExprTypes.BOOLEXPR_AND \
-			or eExpr == BoolExprTypes.BOOLEXPR_OR:
-				self.getGOMReqs(CyBoolExpr.getFirstExpr(), GOMType, GOMReqList, eExpr)
-				self.getGOMReqs(CyBoolExpr.getSecondExpr(), GOMType, GOMReqList, eExpr)
-
-			elif eExpr == BoolExprTypes.BOOLEXPR_HAS and CyBoolExpr.getGOMType() == GOMType:
-				GOMReqList[eParentExpr].append(CyBoolExpr.getID())
-
+	#### THE GOM REQUIREMENT WALKER IS GONE ####
+	# It recursed CyBoolExpr trees out of getConstructCondition()/getTrainCondition() to extract the required
+	# techs/bonuses. Both read-maps reach the same verdict: NO boolean-expression API belongs on the new
+	# surface -- the consumers want the LIST, which is the CvRequires section read, not the tree. Its inputs
+	# are gone too (the BoolExpr and info bindings both went), so it could not run regardless.
+	# Its callers are left DANGLING on purpose: the requirement lines stop rendering until the requires read
+	# is served, which is the visible hole rather than a masked one ([DEC-no-legacy-masking]).
 	#^^^^ GOM REQUIREMENT READER FUNCTIONS ^^^^#
 
 	##### PROPERTY READER FUNCTIONS #####

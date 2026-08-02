@@ -81,7 +81,7 @@ class CvFinanceAdvisor:
 		if DebugUtils.isAnyDebugMode():
 			DD = "FinAdv_DebugDD"
 			screen.addDropDownBoxGFC(DD, 8, 0, 300, eWidGen, -1, -1, FontTypes.GAME_FONT)
-			for iPlayerX in range(GC.getMAX_PLAYERS()):
+			for iPlayerX in range(STATE.getMAX_PLAYERS()):
 				CyPlayerX = GC.getPlayer(iPlayerX)
 				if CyPlayerX.isAlive():
 					screen.addPullDownString(DD, CyPlayerX.getName(), iPlayerX, iPlayerX, iPlayer == iPlayerX)

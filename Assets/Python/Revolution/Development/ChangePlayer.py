@@ -42,7 +42,7 @@ class ChangePlayer:
 
 # Chooser window for switching a players civ
 def changeCivPopup():
-	iNumCivs = GC.getMAX_PC_PLAYERS()
+	iNumCivs = STATE.getMAX_PC_PLAYERS()
 	popup = CyPopup(RevDefs.changeCivPopup, EventContextTypes.EVENTCONTEXT_ALL, True)
 	popup.setHeaderString('Change a civ?', 1<<2)
 	popup.setBodyString('Which civ to change, to which civ and leader and what team?', 1<<0)
@@ -110,14 +110,14 @@ def updateGraphics():
 	iHuman = GAME.getActivePlayer()
 
 	iSwitchTo = -1
-	for iPlayerX in xrange(GC.getMAX_PC_PLAYERS()):
+	for iPlayerX in xrange(STATE.getMAX_PC_PLAYERS()):
 		CyPlayer = GC.getPlayer(iPlayerX)
 		if not CyPlayer.isAlive():
 			iSwitchTo = iPlayerX
 			break
 
 	if iSwitchTo < 0:
-		iSwitchTo = 1 + GAME.getSorenRandNum(GC.getMAX_PC_PLAYERS() - 1, 'ChangePlayer')
+		iSwitchTo = 1 + GAME.getSorenRandNum(STATE.getMAX_PC_PLAYERS() - 1, 'ChangePlayer')
 
 	GAME.setForcedAIAutoPlay(iHuman, 3, True)
 
@@ -138,7 +138,7 @@ def changeHumanPopup(bDied=False):
 	popup.addSeparator()
 
 	popup.createPythonPullDown('Take control of this civ ...', 1)
-	for iPlayerX in range(GC.getMAX_PC_PLAYERS()):
+	for iPlayerX in range(STATE.getMAX_PC_PLAYERS()):
 		CyPlayerX = GC.getPlayer(iPlayerX)
 		if CyPlayerX.isAlive():
 			popup.addPullDownString(CyPlayerX.getName() + " - " + CyPlayerX.getCivilizationShortDescription(0), iPlayerX, 1)

@@ -2967,7 +2967,7 @@ class BonusBalancer:
 		print "[MST] ======== BonusBalancer:balanceStrategicBoni()"
 		# put boni in resourcesToBalance around starting-plots
 		allBoniCnt = 0
-		for i in range(GC.getMAX_PC_PLAYERS()):
+		for i in range(STATE.getMAX_PC_PLAYERS()):
 			if GC.getPlayer(i).isAlive():
 				sprint = "[MST] PLAYER %i \n" % (i)
 				start_plot = GC.getPlayer(i).getStartingPlot()
@@ -3853,7 +3853,7 @@ class TeamStart:
 		self.teamDict = {}
 		self.humanDict = {}
 		# get teams of players
-		self.playerList = [GC.getPlayer(i) for i in range(GC.getMAX_PC_PLAYERS()) if GC.getPlayer(i).isAlive()]
+		self.playerList = [GC.getPlayer(i) for i in range(STATE.getMAX_PC_PLAYERS()) if GC.getPlayer(i).isAlive()]
 		for player in self.playerList:
 			playerNum = player.getID()
 			teamNum = GC.getPlayer( playerNum ).getTeam()
@@ -3889,7 +3889,7 @@ class TeamStart:
 		self.startPlotDict = {}
 		self.plotDistDict = {}
 		# get playerNum list
-		self.playerList = [GC.getPlayer(i) for i in range(GC.getMAX_PC_PLAYERS()) if GC.getPlayer(i).isAlive()]
+		self.playerList = [GC.getPlayer(i) for i in range(STATE.getMAX_PC_PLAYERS()) if GC.getPlayer(i).isAlive()]
 
 		# get starting-plots
 		spNum = 0

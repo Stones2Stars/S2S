@@ -127,7 +127,7 @@ class MoreCiv4lertsEvent(AbstractMoreCiv4lertsEvent):
 			# Check for cultural expansion and population growth
 			icon = "Art/Interface/Buttons/General/Warning_popup.dds"
 			iActiveTeam = GAME.getActiveTeam()
-			for iPlayerX in xrange(GC.getMAX_PC_PLAYERS()):
+			for iPlayerX in xrange(STATE.getMAX_PC_PLAYERS()):
 				CyPlayerX = GC.getPlayer(iPlayerX)
 				if not CyPlayerX.isAlive() or CyPlayerX.getTeam() != iActiveTeam:
 					continue

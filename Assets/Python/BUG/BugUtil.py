@@ -248,7 +248,7 @@ def log(level, message, args=()):
 
 def logToScreen(message):
 	"""Displays the message in the on-screen message area after escaping < and >."""
-	if CyGame().isFinalInitialized():
+	if STATE.isFinalInitialized():
 		CyInterface().addImmediateMessage(escapeXml(message), "")
 
 def logToFile(message):

@@ -132,8 +132,17 @@ def showReplay(argsList):
 def showDanQuayleScreen(argsList):
 	screenMap[DAN_QUAYLE_SCREEN].interfaceScreen()
 
+unVictoryScreen = None
+def getUnVictoryScreen():
+	"""Built on first use, like the screenMap screens."""
+	global unVictoryScreen
+	if unVictoryScreen is None:
+		import CvUnVictoryScreen
+		unVictoryScreen = CvUnVictoryScreen.CvUnVictoryScreen()
+	return unVictoryScreen
+
 def showUnVictoryScreen(argsList):
-	unVictoryScreen.interfaceScreen()
+	getUnVictoryScreen().interfaceScreen()
 
 def showTopCivs():
 	screenMap[TOP_CIVS].showScreen()
@@ -755,30 +764,34 @@ def lateInit():
 	CivicData.initCivicData()
 
 
+# ⛔ SCREENS CONSTRUCT ON FIRST USE, NOT AT IMPORT.
+# earlyInit() used to build every screen at module scope, so importing this module ran nine screen
+# constructors -- and a screen constructor reads the game. That put the whole screen tree, and the read
+# surface it touches, on the ENGINE'S ENTRY PATH: nothing could be imported until everything a screen
+# reads was answerable. The lazy shape is what the code already wanted (createRevolutionWatchAdvisor
+# tests `is None` for exactly this reason); earlyInit defeated it by forcing them eagerly.
+# A screen is still reached the same way -- screenMap[X] -- it is simply built the first time it is asked
+# for, so a screen nobody opens costs nothing and cannot break the import.
+_screenFactories = {
+	INTRO_MOVIE_SCREEN   : ('CvIntroMovieScreen',   'CvIntroMovieScreen',   ()),
+	WONDER_MOVIE_SCREEN  : ('CvWonderMovieScreen',  'CvWonderMovieScreen',  ()),
+	VICTORY_MOVIE_SCREEN : ('CvVictoryMovieScreen', 'CvVictoryMovieScreen', ()),
+	HALL_OF_FAME         : ('CvHallOfFameScreen',   'CvHallOfFameScreen',   (HALL_OF_FAME,)),
+	DAN_QUAYLE_SCREEN    : ('CvDanQuayle',          'CvDanQuayle',          ()),
+	SPACE_SHIP_SCREEN    : ('CvSpaceShipScreen',    'CvSpaceShipScreen',    ()),
+	PEDIA                : ('Pedia',                'Pedia',                (PEDIA,)),
+}
+
+def getScreen(screenId):
+	"""The screen for this id, built on first use."""
+	screen = screenMap.get(screenId)
+	if screen is None:
+		moduleName, className, args = _screenFactories[screenId]
+		module = __import__(moduleName)
+		screen = getattr(module, className)(*args)
+		screenMap[screenId] = screen
+	return screen
+
 def earlyInit():
-	import CvIntroMovieScreen
-	import CvWonderMovieScreen
-	import CvVictoryMovieScreen
-	import CvHallOfFameScreen
-	import CvDanQuayle
-	import CvSpaceShipScreen
-
-	screenMap[INTRO_MOVIE_SCREEN]	= CvIntroMovieScreen.CvIntroMovieScreen()
-	screenMap[WONDER_MOVIE_SCREEN]	= CvWonderMovieScreen.CvWonderMovieScreen()
-	screenMap[VICTORY_MOVIE_SCREEN]	= CvVictoryMovieScreen.CvVictoryMovieScreen()
-
-	screenMap[HALL_OF_FAME]	= CvHallOfFameScreen.CvHallOfFameScreen(HALL_OF_FAME)
-
-	screenMap[DAN_QUAYLE_SCREEN] = CvDanQuayle.CvDanQuayle()
-	screenMap[SPACE_SHIP_SCREEN] = CvSpaceShipScreen.CvSpaceShipScreen()
-
-	import Pedia
-	screenMap[PEDIA] = Pedia.Pedia(PEDIA)
-
-	import CvUnVictoryScreen
-	global unVictoryScreen
-	unVictoryScreen = CvUnVictoryScreen.CvUnVictoryScreen()
-	# RevolutionDCM
-	createRevolutionWatchAdvisor()
-
-earlyInit()
+	"""Deliberately empty: screens build on first use (see above). Kept because the engine names it."""
+	pass

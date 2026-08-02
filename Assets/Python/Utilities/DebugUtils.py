@@ -21,7 +21,7 @@ class DebugUtils:
 		self.iLastUnitPicker = -1
 
 	def resetUnitMovement(self):
-		for iPlayer in xrange(GC.getMAX_PLAYERS()):
+		for iPlayer in xrange(STATE.getMAX_PLAYERS()):
 			for CyUnit in GC.getPlayer(iPlayer).units():
 				CyUnit.setMoves(0)
 
@@ -61,7 +61,7 @@ class DebugUtils:
 			iOwner = GC.getGame().getActivePlayer()
 		if iOwner > -1:
 			popup.addPullDownString(GC.getPlayer(iOwner).getName(), iOwner, 0)
-		for i in xrange(GC.getMAX_PLAYERS()):
+		for i in xrange(STATE.getMAX_PLAYERS()):
 			if i == iOwner: continue
 			CyPlayer = GC.getPlayer(i)
 			if CyPlayer.isAlive():
@@ -205,8 +205,8 @@ def initTechsCheat():
 	popup = CyPopup(1002, EventContextTypes.EVENTCONTEXT_ALL, True)
 	popup.setHeaderString("Tech & Gold Cheat!", 1<<2)
 	popup.createPullDown(0)
-	popup.addPullDownString("All", GC.getMAX_PLAYERS(), 0)
-	for i in xrange(GC.getMAX_PLAYERS()):
+	popup.addPullDownString("All", STATE.getMAX_PLAYERS(), 0)
+	for i in xrange(STATE.getMAX_PLAYERS()):
 		if GC.getPlayer(i).isAlive():
 			popup.addPullDownString(GC.getPlayer(i).getName(), i, 0)
 	popup.setBodyString("Modify Player " + unichr(8500), 1<<0)
@@ -221,9 +221,9 @@ def applyTechCheat(iPlayer, userData, popupReturn):
 
 	iPlayer = popupReturn.getSelectedPullDownValue(0)
 	iPlayers = 0
-	if iPlayer == GC.getMAX_PLAYERS():
+	if iPlayer == STATE.getMAX_PLAYERS():
 		player = []
-		for iPlayerX in xrange(GC.getMAX_PC_PLAYERS()):
+		for iPlayerX in xrange(STATE.getMAX_PC_PLAYERS()):
 			CyPlayerX = GC.getPlayer(iPlayerX)
 			if CyPlayerX.isAlive():
 				player.append(CyPlayerX)

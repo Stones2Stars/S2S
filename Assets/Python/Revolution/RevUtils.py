@@ -406,7 +406,7 @@ def computeWarOdds(CyPlayerA, CyPlayerB, CyArea, allowAttackerVassal=True, allow
 					warOdds -= 20
 			else: # Find de facto aggressor
 				warOdds -= 10
-				for iTeam in xrange(GC.getMAX_PC_TEAMS()) :
+				for iTeam in xrange(STATE.getMAX_PC_TEAMS()) :
 					if CyTeamA.isVassal(iTeam):
 						iTeamA = iTeam
 						CyTeamA = GC.getTeam(iTeam)
@@ -422,7 +422,7 @@ def computeWarOdds(CyPlayerA, CyPlayerB, CyArea, allowAttackerVassal=True, allow
 				else: # Allow master to attack vassal
 					warOdds -= 20
 			else: # Find de facto victim
-				for iTeam in xrange(GC.getMAX_PC_TEAMS()):
+				for iTeam in xrange(STATE.getMAX_PC_TEAMS()):
 					if CyTeamB.isVassal(iTeam):
 						iTeamB = iTeam
 						CyTeamB = GC.getTeam(iTeam)
@@ -530,7 +530,7 @@ def giveCityCulture(CyCity, iPlayer, newCityVal, newPlotVal):
 	# Places this culture value in city and city plot
 	# Places half this value in neighboring plots
 
-	if iPlayer < 0 or iPlayer >= GC.getMAX_PC_PLAYERS():
+	if iPlayer < 0 or iPlayer >= STATE.getMAX_PC_PLAYERS():
 		return
 	CyPlot = CyCity.plot()
 
@@ -715,7 +715,7 @@ def changePersonality(playerIdx, newPersonality = -1):
 			if (not iI == GC.getDefineINT("BARBARIAN_LEADER")) :
 				iValue = (1 + GAME.getSorenRandNum(10000, "Choosing Personality"))
 
-				for iJ in xrange(GC.getMAX_PC_PLAYERS()) :
+				for iJ in xrange(STATE.getMAX_PC_PLAYERS()) :
 					if (GC.getPlayer(iJ).isEverAlive()) :
 						if (GC.getPlayer(iJ).getPersonalityType() == iI) :
 							iValue /= 2

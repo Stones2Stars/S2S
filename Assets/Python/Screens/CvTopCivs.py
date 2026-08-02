@@ -94,7 +94,7 @@ class CvTopCivs:
 		if szType == TRNSLTR.getText("TXT_KEY_TOPCIVS_TECH", ()):
 			iNumTotalTechs = GC.getNumTechInfos()
 		# Loop through all players
-		for iPlayer in range(GC.getMAX_PC_PLAYERS()):
+		for iPlayer in range(STATE.getMAX_PC_PLAYERS()):
 			CyPlayer = GC.getPlayer(iPlayer)
 
 			if CyPlayer.isAlive():
