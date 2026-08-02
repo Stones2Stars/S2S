@@ -265,3 +265,19 @@
     which is exactly why it looks like a fix and is not one.
     ⚠ Consequence to know rather than rediscover: nothing now grants an animal CITY entry except
     `ANIMAL_DANGEROUS`, whose own help text stops at improved tiles.
+29. **The HIDDEN-NATIONALITY CAPTURE MARK** (`bSetOnHNCapture` → `CvUnit::doHNCapture` /
+    `removeHNCapturePromotion` / the serialized `m_bHasHNCapturePromotion`, plus the `CyUnit` wrapper method)
+    *(dead)* — a unit captured BY a hidden-nationality unit was to be given a promotion flagged for it, stripped
+    again once that unit stood in its owner's own territory.
+    ⚑ **It never had data, and the shape of the absence is the point:** the tag exists in the unit SCHEMA and
+    nowhere else — **no promotion record has ever carried it** — so both engine loops scanned the whole promotion
+    registry every capture to find nothing, and the serialized bool was never once set.
+    ⛔ It is **not** re-homed and the member is **not** kept alive meanwhile: it is TRIGGER-SHAPED (a happening,
+    then promote), which is the building-counter-damage case exactly
+    ([triggers.md](../specs/triggers.md)) — a verb is not minted speculatively for one mechanic, and the data goes
+    out rather than the old shape being preserved. If the mechanic is wanted it is authored fresh on the trigger
+    plane (an `onCaptured` happening + the `promote` action), never by restoring a promotion-side "apply me when
+    X" flag, which is the condition-as-member shape
+    ([DEC-conditions-are-predicates](decisions.md#dec-conditions-are-predicates)) inverted onto the target.
+    ⚠ **The revival risk is the surviving SCHEMA tag**: it reads like an unmigrated field. The curator now DROPs
+    it explicitly so the mapping cannot quietly re-emit a key nothing reads.

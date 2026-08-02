@@ -45,6 +45,14 @@
   its own, then author the flagged carriers ([modifier.md §6](../../specs/modifier.md)).
   ⚠ Settle in-game first whether the ancient transports are civilians-only; the owner's recollection is explicitly
   unconfirmed and must not be authored against.
+  ⚑ The ENGINE half waits on the same thing and is what dangles today: WHAT a carrier may take is the `unit:`
+  predicate qualifier on its `cargo.space` entries, so the load/board gates want the QUALIFIED entry read
+  evaluated against each cargo candidate — the point sum is the unqualified capacity plane by construction, so
+  it cannot answer the restriction.
+  ⛔ The promotion-side DOMAIN-CARGO CHANGE goes with it rather than being re-pointed: a promotion adds SPACE,
+  never PERMISSION ([modifier.md §6](../../specs/modifier.md) — an owner-ruled intentional divergence from
+  legacy), so a per-unit override of WHAT may be carried has no home in the ruled model. Re-pointing it would
+  re-create the shape the ruling removes.
 - Re-home the remaining `identity` EFFECT keys to the block that already exists for each
   ([json.md §7](../../specs/json.md)): constraints → `requires`/`allowed`; `diploVoteType` → the top-level
   `voteSource` section (and rename the getter off the legacy XML tag); `tradeable` → the `canTrade` block;
@@ -492,6 +500,22 @@
   NPC/barbarian starts.
 - Retire the engine start selection (the whole-database scan + AI scoring, and the per-role starting counts)
   once packages carry the identities.
+- Finish the TRAIT free-promotion path on the trigger plane, which the data already sits on: the curated traits
+  author `onTurnEnd` → `action.promote` carrying both the promotions and a `units.unitCombats` filter. TWO gaps
+  keep it from reaching a unit, and each has its pattern already in the same file:
+  1. the per-unit promote pass walks only the city's OPERATING BUILDINGS, so no trait entry is ever consulted —
+     it wants the player's HELD-TRAIT walk beside it (the era-advance resolver is that walk, and the same
+     PRESENCE read, never the banned own-data inversion);
+  2. the promote applier IGNORES the entry's `units.unitCombats` filter, so a trait that arms one combat class
+     would promote every unit in the city. ⛔ Landing (1) without (2) is worse than landing neither.
+  ⚑ The CADENCE is the ruled one and is deliberately NOT the legacy one ([json.md §5](../../specs/json.md):
+  promotions to the units present at END-TURN, one mechanism) — legacy instead fanned every unit of the player
+  the moment the trait moved. ⚠ So the legacy removal half has no counterpart either: a promotion that stops
+  being valid is dropped by the PROMOTION SYSTEM itself ([triggers.md](../../specs/triggers.md)), which is why
+  the payload plane needs no take-away verb.
+  ⚠ Until it lands, trait-granted promotions reach nobody, and `CvUnit::setFreePromotion`'s trait legs dangle
+  naming exactly this. ⛔ Do not answer them by restoring a trait-side promotion×unitcombat map: that is the
+  legacy mechanism whose data has already moved.
 - Dispatch a PROJECT's grants. The trigger engine has no project front door at all, so a project's
   `grantsSpecialUnit` payload (the completion-time special-unit unlock) reaches nothing and its consumer stays
   dangling. ⚑ Its sibling on the same completion — `enables.specialBuildings` — is an availability EDGE and is

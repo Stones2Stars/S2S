@@ -1397,7 +1397,6 @@ protected:
 	PromotionLineTypes m_eCurrentBuildUpType;
 
 	bool m_bHiddenNationality;
-	bool m_bHasHNCapturePromotion;
 	int m_iCanMovePeaksCount;
 	//	Koshling - enhanced mountaineering mode to differentiate between ability to move through
 	//	mountains, and ability to lead a stack through mountains
@@ -1955,8 +1954,6 @@ public:
 	bool isBuildUp() const;
 	void setSpecialUnit(bool bChange, SpecialUnitTypes eSpecialUnit);
 	bool isHiddenNationality() const;
-	void doHNCapture();
-	void removeHNCapturePromotion();
 
 
 	bool hasBuild(BuildTypes eBuild) const;

@@ -82,8 +82,6 @@ def onCombatResult(argsList):
 			X = CyUnitW.getX()
 			Y = CyUnitW.getY()
 			CyUnit = GC.getPlayer(iPlayerW).initUnit(iUnit, X, Y, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
-			if CyUnitW.isHiddenNationality():
-				CyUnit.doHNCapture()
 			if iPlayerW == GAME.getActivePlayer():
 				CvUtil.sendMessage(sMessage, iPlayerW, 8, 'Art/Interface/Buttons/Civics/Serfdom.dds', ColorTypes(44), X, Y, True, True)
 

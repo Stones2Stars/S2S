@@ -879,8 +879,6 @@ class CvEventManager:
 					CyUnitWP = CyPlayerW.initUnit(iUnitL, iX, iY, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
 					CyUnitWP.finishMoves()
 					CyUnitWP.setDamage(GAME.getSorenRandNum(40, "XP") + 40, iPlayerW)
-					if CyUnitW.isHiddenNationality():
-						CyUnitWP.doHNCapture()
 					# Message
 					iPlayerAct = GAME.getActivePlayer()
 					if iPlayerAct in (iPlayerW, iPlayerL):

@@ -239,7 +239,7 @@ ID_LIST = {"UnitCombats": "unitCombats", "NotOnDomainTypes": "notOnDomains",
            "PrereqLocalBuildingTypes": "prereqLocalBuildings", "PrereqBonusTypes": "prereqBonuses"}
 ID_BOOL = {"bLeader": "leader", "bStatus": "status", "bQuick": "quick", "bStarsign": "starsign",
            "bZeroesXP": "zeroesXP", "bRemoveAfterSet": "removeAfterSet", "bForOffset": "forOffset",
-           "bSetOnHNCapture": "setOnHNCapture", "bSetOnInvestigated": "setOnInvestigated",
+           "bSetOnInvestigated": "setOnInvestigated",
            "bPlotPrereqsKeepAfter": "plotPrereqsKeepAfter", "bCargoPrereq": "cargoPrereq",
            "bPrereqNormInvisible": "prereqNormInvisible"}   # bRBombardPrereq DROPs with the DCM-range removal
 # DROP entirely (store-handled, dead, or pedia-derived).
@@ -257,7 +257,11 @@ DROP = {"Type", "Description", "Help", "Sound", "Button",
         "iTrapDamageMax", "iTrapDamageMin", "iTrapComplexity", "iNumTriggers",
         "TrapDisableUnitCombatTypes", "TrapAvoidanceUnitCombatTypes", "TrapTriggerUnitCombatTypes",
         "TrapImmunityUnitCombatTypes", "TargetUnitCombatTypes", "TrapSetWithPromotionTypes",
-        "iTriggerBeforeAttackChange"}
+        "iTriggerBeforeAttackChange",
+        # hidden-nationality CAPTURE MARK -- the mechanic is removed. It is trigger-shaped (a happening, then
+        # promote) and the tag lives in the SCHEMA only: no promotion record carries it, so the engine loops
+        # that looked for one always found nothing. It returns, if wanted, authored on the trigger plane.
+        "bSetOnHNCapture"}
 
 
 def _txt(rec, tag):

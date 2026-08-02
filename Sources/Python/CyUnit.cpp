@@ -708,8 +708,3 @@ bool CyUnit::isHiddenNationality() const
 {
 	return m_pUnit->isHiddenNationality();
 }
-
-void CyUnit::doHNCapture()
-{
-	m_pUnit->doHNCapture();
-}

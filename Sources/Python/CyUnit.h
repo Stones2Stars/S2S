@@ -175,7 +175,6 @@ public:
 	int captureProbabilityTotal() const;
 	int captureResistanceTotal() const;
 	bool isHiddenNationality() const;
-	void doHNCapture();
 
 	int /*UnitAITypes*/ getUnitAIType() const;
 	void setUnitAIType(int /*UnitAITypes*/ iNewValue);

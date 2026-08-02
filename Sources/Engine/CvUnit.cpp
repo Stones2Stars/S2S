@@ -3,6 +3,7 @@
 
 #include "Tools/FProfiler.h"
 #include "Conditions/CvConditionEval.h"   // cascadeGateOk -- the entity-level enabled/disabled pair
+#include "Conditions/CvConditionQuery.h"  // the ONE structural read over a parsed `requires` tree
 #include "Enabler/CvEnablerKernel.h"      // everAvailable -- the CAN-I-EVER bar (the corp spread gate)
 #include "Infos/CvClassificationIds.h"   // the generated SKILL_/TAG_/CAPABILITY_ id table
 
@@ -648,7 +649,6 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 	m_bAutoPromoting = false;
 	m_bAutoUpgrading = false;
 	m_iHiddenNationalityCount = 0;
-	m_bHasHNCapturePromotion = false;
 	m_bHasAnyInvisibility = false;
 	m_bRevealed = false;
 	m_shadowUnit.reset();
@@ -888,7 +888,6 @@ CvUnit& CvUnit::operator=(const CvUnit& other)
 	m_bAutoPromoting = other.m_bAutoPromoting;
 	m_bAutoUpgrading = other.m_bAutoUpgrading;
 	m_iHiddenNationalityCount = other.m_iHiddenNationalityCount;
-	m_bHasHNCapturePromotion = other.m_bHasHNCapturePromotion;
 	m_bHasAnyInvisibility = other.m_bHasAnyInvisibility;
 	m_bRevealed = other.m_bRevealed;
 	m_shadowUnit = other.m_shadowUnit;
@@ -1566,10 +1565,6 @@ void CvUnit::die()
 			{
 				CvEventReporter::getInstance().unitCaptured(eOwner, getUnitType(), pkCapturedUnit);
 
-				if (getCapturingUnit() && getCapturingUnit()->isHiddenNationality())
-				{
-					pkCapturedUnit->doHNCapture();
-				}
 				AddDLLMessage(
 					eCapturingPlayer, true, GC.getEVENT_MESSAGE_TIME(),
 					gDLL->getText("TXT_KEY_MISC_YOU_CAPTURED_UNIT", GC.getUnitInfo(eCaptureUnitType).getTextKeyWide()),
@@ -1660,10 +1655,6 @@ void CvUnit::doTurn()
 	gDLL->getInterfaceIFace()->setDirty(InfoPane_DIRTY_BIT, true);
 
 	m_bRevealed = false;
-	if (m_bHasHNCapturePromotion && getOwner() == plot()->getOwner())
-	{
-		removeHNCapturePromotion();
-	}
 
 	if (getInsidiousnessTotal(true) > 0)
 	{
@@ -17802,41 +17793,32 @@ bool CvUnit::normalizeUnitPromotions(CvUnit* unit, int offset, PromotionPredicat
 
 UnitCombatTypes CvUnit::getBestHealingType()
 {
-	PROFILE_EXTRA_FUNC();
-	UnitCombatTypes eBestUnitCombat = NO_UNITCOMBAT;
-	int iBestValue = 0;
-
-	for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
-	{
-		if (GC.getUnitCombatInfo((UnitCombatTypes)iI).isHealsAs())
-		{
-			const int iValue = getHealUnitCombatTypeTotal((UnitCombatTypes)iI);
-			if (iValue > iBestValue)
-			{
-				iBestValue = iValue;
-				eBestUnitCombat = (UnitCombatTypes)iI;
-			}
-		}
-	}
-	return eBestUnitCombat;
+	return getBestHealingTypeConst();
 }
 
+//	The healer class this unit is strongest in. Only a class the unit carries a heal VOLUME for can win, and a
+//	volume exists only where a keyed entry does (every feeder goes through changeHealUnitCombatTypeVolume, which
+//	creates one) -- so the unit's OWN keyed map IS the candidate set. Asking the whole unitcombat registry was the
+//	own-data inversion: it put a ~470-wide scan on an AI path to find the handful the unit already names.
+//	⚠ The candidate set is deliberately NOT the info's authored heal rows: the volume is fed by the unit's info AND
+//	by its promotions, so reading the info alone would silently drop every promotion-granted healer class.
 UnitCombatTypes CvUnit::getBestHealingTypeConst() const
 {
 	PROFILE_EXTRA_FUNC();
 	UnitCombatTypes eBestUnitCombat = NO_UNITCOMBAT;
 	int iBestValue = 0;
 
-	for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
+	for (std::map<UnitCombatTypes, UnitCombatKeyedInfo>::const_iterator it = m_unitCombatKeyedInfo.begin(), end = m_unitCombatKeyedInfo.end(); it != end; ++it)
 	{
-		if (GC.getUnitCombatInfo((UnitCombatTypes)iI).isHealsAs())
+		if (!GC.getUnitCombatInfo(it->first).hasSkill(CLS_SKILL_HEALS_AS))
 		{
-			const int iValue = getHealUnitCombatTypeTotal((UnitCombatTypes)iI);
-			if (iValue > iBestValue)
-			{
-				iBestValue = iValue;
-				eBestUnitCombat = (UnitCombatTypes)iI;
-			}
+			continue;
+		}
+		const int iValue = getHealUnitCombatTypeTotal(it->first);
+		if (iValue > iBestValue)
+		{
+			iBestValue = iValue;
+			eBestUnitCombat = it->first;
 		}
 	}
 	return eBestUnitCombat;
@@ -18427,7 +18409,6 @@ void CvUnit::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvUnit", &m_bInhibitSplit);
 	WRAPPER_READ(wrapper, "CvUnit", &m_bIsBuildUp);
 	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvUnit", REMAPPED_CLASS_TYPE_SPECIAL_UNITS, (int*)&m_eSpecialUnit);
-	WRAPPER_READ(wrapper, "CvUnit", &m_bHasHNCapturePromotion);
 	WRAPPER_READ(wrapper, "CvUnit", (int*)&m_eCapturingUnit.eOwner);
 	WRAPPER_READ(wrapper, "CvUnit", &m_eCapturingUnit.iID);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExcileCount);
@@ -19093,8 +19074,6 @@ void CvUnit::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvUnit", m_bInhibitSplit);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_bIsBuildUp);
 	WRAPPER_WRITE_CLASS_ENUM(wrapper, "CvUnit", REMAPPED_CLASS_TYPE_SPECIAL_UNITS, m_eSpecialUnit);
-	//WRAPPER_WRITE(wrapper, "CvUnit", m_bHiddenNationality);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_bHasHNCapturePromotion);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_eCapturingUnit.eOwner);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_eCapturingUnit.iID);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExcileCount);
@@ -21105,22 +21084,46 @@ bool CvUnit::performInquisition()
 			{
 				std::vector<BuildingTypes> temp;
 
+				//	A building's religion PREREQ is an ordinary `requires` atom now (the curator emits it as the
+				//	reversible MEANS it always was -- a religion can leave via exactly this inquisition), so the
+				//	building's own tree names the religions it depends on. Asking every religion in the registry
+				//	whether THIS building named it was the own-data inversion.
+				//	⚠ The structural walk reports what a tree MENTIONS, not what it REQUIRES, so a religion named
+				//	under a `noneOf` would read as a dependency here. Nothing authors one, and a gate VERDICT is
+				//	the enabler's, never this walk's ([CvConditionQuery.h]).
+				const ReligionTypes eStateReligion = GET_PLAYER(getOwner()).getStateReligion();
+
 				foreach_(const BuildingTypes eType, pCity->getHasBuildings())
 				{
 					const CvBuildingInfo& buildingX = GC.getBuildingInfo(eType);
-					if (buildingX.getPrereqReligion() == NO_RELIGION)
+					const CvRequires* pRequires = buildingX.getRequires();
+					if (pRequires == NULL)
 					{
 						continue;
 					}
-					for (int iJ = 0; iJ < GC.getNumReligionInfos(); iJ++)
+					std::vector<int> requiredReligions;
+					CvConditionQuery::collectIds(pRequires->build, EDGEB_RELIGIONS, requiredReligions);
+					CvConditionQuery::collectIds(pRequires->operate, EDGEB_RELIGIONS, requiredReligions);
+					if (requiredReligions.empty())
 					{
-						if (GET_PLAYER(getOwner()).getStateReligion() != iJ && buildingX.getPrereqReligion() == iJ)
+						continue;
+					}
+					//	A building the STATE religion satisfies survives the purge, however many faiths it names.
+					bool bKeepsStateReligion = false;
+					for (size_t iReligion = 0; iReligion < requiredReligions.size(); ++iReligion)
+					{
+						if (requiredReligions[iReligion] == (int)eStateReligion)
 						{
-							temp.push_back(eType);
-							iCompensationGold += buildingX.getCost() * CvGameSpeedScale::hammerCostPercent() / std::max(1, GC.getDefineINT("INQUISITION_BUILDING_GOLD_DIVISOR"));
+							bKeepsStateReligion = true;
 							break;
 						}
 					}
+					if (bKeepsStateReligion)
+					{
+						continue;
+					}
+					temp.push_back(eType);
+					iCompensationGold += buildingX.getCost() * CvGameSpeedScale::hammerCostPercent() / std::max(1, GC.getDefineINT("INQUISITION_BUILDING_GOLD_DIVISOR"));
 				}
 				foreach_(const BuildingTypes eType, temp)
 				{
@@ -24386,19 +24389,23 @@ void CvUnit::setGGExperienceEarnedTowardsType()
 	//OR Alternatively, subselections of a given Primary Category (for example: UNITCOMBAT_CIVILIAN) could give its sub-selections designations instead (like UNITCOMBAT_LAW_ENFORCEMENT and UNITCOMBAT_HEALER)
 	//In this case, we'd probably want a Great Citizen to give pts to UNITCOMBAT_CIVILIAN when settled in the city BUT such a unit would come more from the GP mechanism instead.
 
-	for (int iI = GC.getNumUnitCombatInfos() - 1; iI > -1; iI--)
+	//	The unit's OWN combat classes are the candidate set -- asking the whole registry which ones it has was the
+	//	own-data inversion. ⚠ The keyed map is a SUPERSET (an entry is created by any keyed write, e.g. a
+	//	promotion-fed heal volume), so the has-test stays; and the map sorts ASCENDING by id, so it is walked in
+	//	REVERSE to keep the highest-id-class-wins selection the registry countdown had.
+	for (std::map<UnitCombatTypes, UnitCombatKeyedInfo>::const_reverse_iterator it = m_unitCombatKeyedInfo.rbegin(), end = m_unitCombatKeyedInfo.rend(); it != end; ++it)
 	{
-		const UnitCombatTypes eType = static_cast<UnitCombatTypes>(iI);
-
-		if (isHasUnitCombat(eType))
+		if (!isHasUnitCombat(it->first))
 		{
-			for (int iJ = GC.getUnitCombatInfo(eType).getNumGGptsforUnitTypes() - 1; iJ > -1; iJ--)
+			continue;
+		}
+		const std::vector<int>& kGGUnits = GC.getUnitCombatInfo(it->first).getGGPointsForUnits();
+		for (int iEntry = (int)kGGUnits.size() - 1; iEntry > -1; iEntry--)
+		{
+			if (kGGUnits[iEntry] > -1)
 			{
-				if (GC.getUnitCombatInfo(eType).getGGptsforUnitType(iJ) > -1)
-				{
-					m_eGGExperienceEarnedTowardsType = static_cast<UnitTypes>(GC.getUnitCombatInfo(eType).getGGptsforUnitType(iJ));
-					return;
-				}
+				m_eGGExperienceEarnedTowardsType = static_cast<UnitTypes>(kGGUnits[iEntry]);
+				return;
 			}
 		}
 	}
@@ -25377,36 +25384,6 @@ bool CvUnit::isHiddenNationality() const
 {
 	return 0 < getHiddenNationalityCount() + m_pUnitInfo->hasSkill(CLS_SKILL_HIDDEN_NATIONALITY);
 }
-
-void CvUnit::doHNCapture()
-{
-	PROFILE_EXTRA_FUNC();
-	for (int iI = 0; iI < GC.getNumPromotionInfos(); iI++)
-	{
-		if (GC.getPromotionInfo((PromotionTypes)iI).isSetOnHNCapture()
-		&& canAcquirePromotion((PromotionTypes)iI, PromotionRequirements::ForFree))
-		{
-			setHasPromotion((PromotionTypes)iI, true, true, false, false);
-			m_bHasHNCapturePromotion = true;
-			return;
-		}
-	}
-}
-
-void CvUnit::removeHNCapturePromotion()
-{
-	PROFILE_EXTRA_FUNC();
-	for (int iI = 0; iI < GC.getNumPromotionInfos(); iI++)
-	{
-		if (GC.getPromotionInfo((PromotionTypes)iI).isSetOnHNCapture() && isHasPromotion((PromotionTypes)iI))
-		{
-			setHasPromotion((PromotionTypes)iI, false, true, false, false);
-			m_bHasHNCapturePromotion = false;
-			return;
-		}
-	}
-}
-
 
 bool CvUnit::hasBuild(BuildTypes eBuild) const
 {

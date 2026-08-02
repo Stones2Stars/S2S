@@ -1129,3 +1129,14 @@ CvPlayer::m_iMilitaryUnitUpkeepMod
 | visible ([DEC-no-legacy-masking]) rather than masked by keeping the accumulator alive.
 CvPlayer::m_iCoastalTradeRoutes
 ========================
+| CvUnit::m_bHasHNCapturePromotion -- the hidden-nationality CAPTURE MARK. A unit captured BY a
+| hidden-nationality unit was given a promotion flagged bSetOnHNCapture, stripped again once that unit stood
+| in its owner own territory; this bool recorded that it carried the mark.
+| The mechanic is REMOVED rather than re-homed. It is TRIGGER-SHAPED (a happening, then promote) and NOTHING
+| authors the flag: the tag survives in the unit SCHEMA alone, no promotion record has ever carried it, so
+| both engine loops already found nothing and the bool was never set. That is the building-counter-damage
+| class exactly ([triggers.md]: a verb is not minted speculatively for one mechanic, and the legacy member is
+| not kept alive in the meantime), so it returns -- if wanted -- authored fresh on the trigger plane.
+| REPLACEMENT: none, deliberately -- write-only state for a mechanic that had no data.
+CvUnit::m_bHasHNCapturePromotion
+========================
