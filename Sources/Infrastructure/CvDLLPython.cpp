@@ -6,6 +6,7 @@
 #include "Python/CyArea.h"
 #include "Python/CyArtFileMgr.h"
 #include "Python/CyEnums.h"
+#include "Python/CyInfo.h"
 #include "Python/CyGameTextMgr.h"
 #include "Python/CyGlobalContext.h"
 #include "Python/CyMap.h"
@@ -100,6 +101,7 @@ DllExport void DLLPublishToPython()
 	CyEnums::pythonPublish();     // the engine enum constants + name->id resolution
 	CyEnabler::pythonPublish();   // "can I, right now?"      -- the availability half
 	CyState::pythonPublish();     // "what do I HAVE, now?"   -- the live-state half
+	CyInfo::pythonPublish();      // "what do I CARRY?"       -- the info half (the ONLY home for infos)
 
 	// NOT the library, and not the banned surface: TXT is an UNMIGRATED SYSTEM BOUNDARY that stays, and Python
 	// screen chrome calls it directly (patterns.md § THE PYTHON READ BOUNDARY). It was collateral in the Cy

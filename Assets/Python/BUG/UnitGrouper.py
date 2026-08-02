@@ -13,6 +13,7 @@ import BugUtil
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
 gc = GC   # this module spells it lowercase
+INFO = CyInfo()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -107,10 +108,11 @@ class UnitTypeGrouping(Grouping):
 	def __init__(self):
 		Grouping.__init__(self, "type", "TXT_KEY_UNITGROUPER_TYPE_GROUPING")
 
-		for i in range(gc.getNumUnitInfos()):
-			info = gc.getUnitInfo(i)
-			if info:
-				self._addGroup(Group(self, i, info.getDescription()))
+		# Entity data comes from the INFO surface, never the global context ([DEC-cy-not-fixed]):
+		# the context serves settings, CyInfo serves entities.
+		for i in range(GC.getNumUnitInfos()):
+			if INFO.exists("UNIT_", i):
+				self._addGroup(Group(self, i, INFO.getDescription("UNIT_", i)))
 
 	def calcGroupKeys(self, unit, player, team):
 		return (unit.getUnitType(),)
