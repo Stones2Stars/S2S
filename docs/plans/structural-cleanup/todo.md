@@ -240,6 +240,12 @@
   city is known. ⚠ Until it lands the affected deposits are UNSERVED, and `savemigration.txt` carries the
   replacement obligation for the one whose accumulator has already been cut.
 
+- Charge the improvement UPGRADE cost from somewhere that can tell an upgrade from a build. Nothing charges it
+  today. The only implementation sat in the improvement-set choke point, which cannot tell the two apart, so a
+  worker building a farm on a seed camp paid twice — once for the build, once again because the camp lists the
+  farm as its upgrade — and it also fired on unowned plots, where there is no owner to charge. It wants the
+  intermediate that only the upgrade path calls, never the shared setter.
+
 - Give GAME OPTIONS and CONFIG VALUES a standardized read surface (owner: *"having standardized getters for
   gameoption, and config values is not a bad idea"*). The reads are scattered — `isOption` sites, string-keyed
   `getDefineINT`/`getDefineFLOAT` lookups, and modder-option reads — and the string-keyed half is the same

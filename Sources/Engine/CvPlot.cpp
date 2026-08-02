@@ -977,12 +977,8 @@ void CvPlot::doImprovementUpgrade(const ImprovementTypes eType)
 
 	if (canHaveImprovement(eMainUpgrade, eTeam, false, true))
 	{
-		// Toffer - Upgrade cost code commented out in setImprovementType() for the time being
-		// if (GC.getImprovementInfo(eMainUpgrade).getHighestCost() <= GET_PLAYER(getOwner()).getGold())
-		{
-			iHash *= -2;
-			iHash += eMainUpgrade;
-		}
+		iHash *= -2;
+		iHash += eMainUpgrade;
 		eUpgrade = eMainUpgrade;
 	}
 	foreach_(const int iAltUpgrade, GC.getImprovementInfo(getImprovementType()).getAlternativeImprovementUpgradeTypes())
@@ -992,12 +988,8 @@ void CvPlot::doImprovementUpgrade(const ImprovementTypes eType)
 		if (canHaveImprovement(eUpgradeX, eTeam, false, true))
 		{
 			eUpgrade = eUpgradeX;
-			// Toffer - Upgrade cost code commented out in setImprovementType() for the time being
-			//if (GC.getImprovementInfo(eUpgradeX).getHighestCost() <= GET_PLAYER(getOwner()).getGold())
-			{
-				iHash *= -2;
-				iHash += eUpgradeX;
-			}
+			iHash *= -2;
+			iHash += eUpgradeX;
 		}
 	}
 	if (iHash == 512)
@@ -1056,8 +1048,7 @@ void CvPlot::doImprovementUpgrade(const ImprovementTypes eType)
 
 			int iBestValue = pCity->AI_getImprovementValue(this, eType, iFoodMultiplier, iProductionMultiplier, iCommerceMultiplier, iDesiredFoodChange);
 
-			// Toffer - Upgrade cost code commented out in setImprovementType() for the time being
-			if (/*GC.getImprovementInfo(eMainUpgrade).getHighestCost() <= GET_PLAYER(getOwner()).getGold() && */ canHaveImprovement(eMainUpgrade, eTeam, false, true))
+			if (canHaveImprovement(eMainUpgrade, eTeam, false, true))
 			{
 				int iValue = pCity->AI_getImprovementValue(this, eMainUpgrade, iFoodMultiplier, iProductionMultiplier, iCommerceMultiplier, iDesiredFoodChange);
 				if (iValue > iBestValue)
@@ -1070,8 +1061,7 @@ void CvPlot::doImprovementUpgrade(const ImprovementTypes eType)
 			{
 				const ImprovementTypes eUpgradeX = (ImprovementTypes)iAltUpgrade;
 
-				// Toffer - Upgrade cost code commented out in setImprovementType() for the time being
-				if (/* GC.getImprovementInfo(eUpgradeX).getHighestCost() <= GET_PLAYER(getOwner()).getGold() && */ canHaveImprovement(eUpgradeX, eTeam, false, true))
+				if (canHaveImprovement(eUpgradeX, eTeam, false, true))
 				{
 					int iValue = pCity->AI_getImprovementValue(this, eUpgradeX, iFoodMultiplier, iProductionMultiplier, iCommerceMultiplier, iDesiredFoodChange);
 					if (iValue > iBestValue)
@@ -7346,30 +7336,6 @@ void CvPlot::setImprovementType(ImprovementTypes eNewImprovement)
 
 	if (eOldImprovement != eNewImprovement)
 	{
-		/* Toffer - This is the wrong place to have this upgrade cost.
-		// e.g. Workers building a farm on a seed camp would get charged both when they start the build and here again when they finish the build because seed camp has farm as an upgrade.
-		// Should be in an intermediate function that calls this function, an intermediate only the imp upg code calls.
-		// This issue was noticed when this happened on an unowned plot, and GET_PLAYER(getOwner()).changeGold() failed.
-		if (eOldImprovement != NO_IMPROVEMENT && eNewImprovement != NO_IMPROVEMENT)
-		{
-			//Charge for Upgrade but be careful not to charge for a downgrade (pillage).
-			if (GC.getImprovementInfo(eOldImprovement).getImprovementUpgrade() == eNewImprovement)
-			{
-				GET_PLAYER(getOwner()).changeGold(-GC.getImprovementInfo(eNewImprovement).getHighestCost());
-			}
-			else
-			{
-				for (int iI = 0; iI < GC.getImprovementInfo(eOldImprovement).getNumAlternativeImprovementUpgradeTypes(); iI++)
-				{
-					if ((ImprovementTypes)GC.getImprovementInfo(eOldImprovement).getAlternativeImprovementUpgradeType(iI) == eNewImprovement)
-					{
-						GET_PLAYER(getOwner()).changeGold(-GC.getImprovementInfo(eNewImprovement).getHighestCost());
-						break;
-					}
-				}
-			}
-		}
-		*/
 		// Remove old improvement
 		if (eOldImprovement != NO_IMPROVEMENT)
 		{
@@ -7384,9 +7350,9 @@ void CvPlot::setImprovementType(ImprovementTypes eNewImprovement)
 		}
 		if (eNewImprovement != NO_IMPROVEMENT)
 		{
-			for (int iI = 0; iI < GC.getImprovementInfo(eNewImprovement).getNumFeatureChangeTypes(); iI++)
+			foreach_(const int iFeatureChange, GC.getImprovementInfo(eNewImprovement).getFeatureChangeTypes())
 			{
-				FeatureTypes eAddingFeature = (FeatureTypes)GC.getImprovementInfo(eNewImprovement).getFeatureChangeType(iI);
+				const FeatureTypes eAddingFeature = (FeatureTypes)iFeatureChange;
 				if (canHaveFeature(eAddingFeature, true))
 				{
 					setFeatureType(eAddingFeature, -1, true);
