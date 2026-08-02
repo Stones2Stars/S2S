@@ -286,9 +286,16 @@
   `plotOwnYield` serves exactly that, reverse-landed entries included.
   ⚠ Its `bOptimal` / `bBestRoute` arguments are WHAT-IF variations (best available route, irrigation assumed),
   so they are the AS-IF-HELD hypothetical the valuation already takes, never extra parameters on the read.
-  ⛔ The route→improvement keyed yield is the one term to confirm rather than assume: it is a
-  governing-deliverer map that stays SOURCE-side (modifier.md §4), fed to improvement-side readers by the
-  reverse pass's compat rows — check it arrives through `plotOwnYield` before deleting the legacy leg.
+  ⚖ **THE ROUTE→IMPROVEMENT YIELD IS NOT AN AI CONCERN — THE AI EVALUATES A ROUTE ON MOVE SPEED (owner):**
+  *"ai does not need to factor in that it gets more yield from route for some improvements in some cases, it
+  should evaluate routes on movespeed."* So the improvement what-if does NOT owe that term, and a per-route ×
+  per-improvement yield term must not be built into the valuation for it.
+  ⚠ Distinct from that, and still open on the DATA side: `RouteYieldChanges` are governing-deliverer
+  SOURCE-side entries on the route (`{yield}.plot.improvements.{IMP}.flat`, modifier.md §4), and a KEYED entry
+  never folds scope-wide (§5). `plotBaseYields`'s route leg is `plotOwnYield` — the route's UNTARGETED output —
+  so that authored data currently reaches no plot yield at all. Serving it needs the improvement's FK passed
+  beside its modifiers so the route's keyed entry can be resolved (`keyedTargetSum` already exists); it is a
+  realized-yield question, NOT a blocker on any AI decision.
 
 - Apply the PER-CITY GATES AT THE COMBINE. [modifier.md §1](../../specs/modifier.md) specifies the realized value
   as the sum of the scope packages **with the per-city gates (state-religion-in-city, coastal, connected, area
