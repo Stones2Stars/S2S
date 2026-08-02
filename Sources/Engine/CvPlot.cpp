@@ -41,6 +41,7 @@
 #include "CvCascadeGather.h"
 #include "CvCascadeChannelRegistry.h"   // channelLookup / wellbeingTwin -- the group reads' channel identity
 #include "CvInfoKinds.h"                // the family + kind vocabulary the group reads walk
+#include "Conditions/CvConditionEval.h"  // CvCascadeEvalCtx + cascadeEvalCondition -- the ONE evaluator
 #include "Data/CvInfoValuation.h"       // realizedAtPlot -- the ONE cross-scope roll-up
 #include "Spine/CvEventSpine.h"   // the plot DOMAIN facts -- owner/terrain/feature/bonus/improvement/route/type/river/irrigation/landmark/working-city/network (play choke points + the in-read reseed)
 #include "Infrastructure/FAStarNode.h"
@@ -12045,45 +12046,30 @@ bool CvPlot::canTrain(UnitTypes eUnit, bool bTestVisible) const
 		return false;
 	}
 
+	//	THE UNIT'S `requires.build`, through the ONE evaluator ([DEC-single-implementation]) -- the same gate the
+	//	promotion planes ask. It replaces the hand-walked bonus battery here (the AND prereq and the OR list),
+	//	which re-derived by hand what the curator authors into `requires`.
+	//	⚑ The BONUS axis is GATE-ONLY ([enabler.md §8] resolved forks): a bonus never drives tree membership, so
+	//	"can this be trained here" is exactly a requires-gate question and nothing else.
+	//	⚠ Still gated on !bTestVisible, unchanged: a test-visible ask deliberately skips the have-the-means half
+	//	so the build list can GREY a candidate rather than hide it ([enabler.md §6]).
 	if (!bTestVisible)
 	{
+		CvCascadeEvalCtx trainCtx;
+		trainCtx.plotContext = &getPlotContext();
 		const CvCity* pCity = getPlotCity();
-
-		if (kUnit.getPrereqAndBonus() != NO_BONUS)
+		if (pCity != NULL)
 		{
-			if (NULL == pCity)
-			{
-				if (!isPlotGroupConnectedBonus(getOwner(), (BonusTypes)kUnit.getPrereqAndBonus()))
-				{
-					return false;
-				}
-			}
-			else if (!pCity->hasBonus((BonusTypes)kUnit.getPrereqAndBonus()))
-			{
-				return false;
-			}
+			trainCtx.cityContext = &pCity->getCityContext();
 		}
-
-		bool bValid = true;
-		foreach_(const BonusTypes ePrereqBonus, kUnit.getPrereqOrBonuses())
+		if (getOwner() != NO_PLAYER)
 		{
-			bValid = false;
-
-			if (NULL == pCity)
-			{
-				if (isPlotGroupConnectedBonus(getOwner(), ePrereqBonus))
-				{
-					bValid = true;
-					break;
-				}
-			}
-			else if (pCity->hasBonus(ePrereqBonus))
-			{
-				bValid = true;
-				break;
-			}
+			trainCtx.empireContext = &GET_PLAYER(getOwner()).getEmpireContext();
+			trainCtx.plotGroup = plotGroup(getOwner());
 		}
-		if (!bValid)
+		static const CvCascadeEvalFlags kTrainFlags;
+		if (!cascadeEvalCondition(kUnit.getRequires() != NULL ? kUnit.getRequires()->build : NULL,
+			trainCtx, kTrainFlags))
 		{
 			return false;
 		}
