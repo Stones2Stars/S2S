@@ -10506,16 +10506,21 @@ bool CvUnit::hasMoved()	const
 
 int CvUnit::airRange() const
 {
+	// ⚖ A MISSILE'S RANGE IS THE SAME MECHANIC AS AN AIRPLANE'S BOMBARD RANGE (owner), so both answer through
+	// the ONE `air.range` channel -- the empire leg reaches a missile exactly as it reaches a bomber. The two
+	// branches this replaces differed only in that the missile one read a separate national missile-range
+	// accumulator, and that accumulator was a dead end: its legacy tag lives in an XML schema and nowhere else,
+	// no record ever authored it, and the address the curator mapped it to has no minted kind. So there was
+	// never a second channel -- only a second store that summed nothing.
+	// ⚠ A DOMAIN_AIR NUKE that is not a missile still answers its base alone, exactly as before; the nuke leg is
+	// its own kind (AIR_NUKE_RANGE, read by nukeRange) and is deliberately not folded in here.
+	// ⚠ AIR_RANGE is a FLAT slot, so it reduces at this point of use ([DEC-fixedpoint-x100]).
 	const SpecialUnitTypes eMissile = GC.getSPECIALUNIT_MISSILE();
-	if (getDomainType() == DOMAIN_AIR && nukeRange() == -1 && getSpecialUnitType() != eMissile)
+	if (getDomainType() == DOMAIN_AIR && (nukeRange() == -1 || getSpecialUnitType() == eMissile))
 	{
 		int aiAir[NUM_AIR_KINDS];
 		GET_PLAYER(getOwner()).getAirKinds(aiAir);
 		return (resolvedValue(URS_AIR_RANGE) + GET_TEAM(getTeam()).getExtraMoves(DOMAIN_AIR) + aiAir[AIR_RANGE] / 100);
-	}
-	if (getDomainType() == DOMAIN_AIR && getSpecialUnitType() == eMissile)
-	{
-		return (resolvedValue(URS_AIR_RANGE) + GET_TEAM(getTeam()).getExtraMoves(DOMAIN_AIR));
 	}
 	return (resolvedValue(URS_AIR_RANGE));
 }

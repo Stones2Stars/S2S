@@ -1235,9 +1235,11 @@ The empire ESPIONAGE-DEFENSE accumulator. Its consumer was already converted: Cv
 CvPlayer::m_iNationalEspionageDefense
 The empire MISSILE-RANGE accumulator, cut as DEAD rather than re-pointed. Its legacy tag `iMissileRange`
 | exists in the XML SCHEMA and nowhere else -- no record has ever authored it -- and the address the curator
-| maps it to (`combat.empire.missileRange`) has no minted kind and zero authorings. The term was therefore
-| always 0, so CvUnit::airRange's missile branch drops it with no behaviour change.
-| REPLACEMENT: none -- the mechanic never carried data.
+| maps it to (`combat.empire.missileRange`) has no minted kind and zero authorings, so the term was always 0.
+| There was never a second CHANNEL -- only a second STORE that summed nothing: a missile's range is the
+| same mechanic as an airplane's bombard range (owner), so both answer through the ONE `air.range` channel
+| and the empire leg reaches a missile exactly as it reaches a bomber.
+| REPLACEMENT: CvPlayer::getAirKinds -> AIR_RANGE, in CvUnit::airRange (a FLAT slot, reduced at the read).
 CvPlayer::m_iNationalMissileRangeChange
 The trait CITY-START culture and bonus population. Both were writerless empire accumulators whose readers in
 | CvPlayer::found applied 0, so the mechanic was already dead. They are conditional GRANTS living on the
