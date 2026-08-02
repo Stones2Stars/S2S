@@ -112,6 +112,15 @@
   ACCEPTS it beside `DOMAIN_LAND`), so this is a per-site read, never a delete-the-case sweep.
 - Map the flagged unitcombat remainder — map the obvious, flag the unsure, never blunt-purge
   ([unitcombat-tag-mapping.md](unitcombat-tag-mapping.md)).
+- Decide what an EMPIRE-scope `range` deposit means, and who consumes it. Traits author `range.empire.flat`
+  and the only `SCALAR_RANGE` reader asks at UNIT scope, so those deposits reach nothing — they load, resolve
+  to a real slot, and are read by nobody. ⚑ On the aerial line it looks like a duplicate of the
+  `air.empire.range` beside it; elsewhere it does not, which is why this is a DATA question and not a reader
+  to bolt on ([DEC-no-guessing](../../architecture/decisions.md#dec-no-guessing)).
+  ⚠ Traits are content-LOCKED ([modifier.md §4](../../specs/modifier.md)), so it closes by editing the trait
+  JSON directly, never by a regen — and `curate_trait`'s `combat.empire.*` rows for the range/cargo tags are
+  stale leftovers that can no longer fire (no record authors those tags, and the folders are excluded from the
+  full regen), so they are not the lever either.
 
 ## Legacy still breathing — delete it
 

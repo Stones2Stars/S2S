@@ -514,8 +514,6 @@ public:
 	void changeFeatureProductionModifier(int iChange);
 
 	int getWorkRate(BuildTypes eBuild) const;
-	int getImprovementUpgradeRateModifier() const;
-	void changeImprovementUpgradeRateModifier(int iChange);
 
 	int getMilitaryProductionModifier() const;
 	void changeMilitaryProductionModifier(int iChange);
@@ -1582,14 +1580,11 @@ protected:
 	int m_iCityLimit;
 	int m_iCityOverLimitUnhappy;
 	//TB Traits
-	int* m_paiImprovementUpgradeRateModifierSpecific;
 	int* m_paiBuildWorkerSpeedModifierSpecific;
 	bool* m_pabHasTrait;
 	int m_iLeaderHeadLevel;
-	int m_iNationalEspionageDefense;
 	int m_iInquisitionCount;
 	int m_iCompatCheckCount;
-	int m_iNationalHurryAngerModifier;
 	int* m_paiNationalDomainProductionModifier;
 	int* m_paiNationalTechResearchModifier;
 	int m_iFixedBordersCount;
@@ -1597,7 +1592,6 @@ protected:
 	int m_iNationalCityStartCulture;
 	int m_iNationalAirUnitCapacity;
 	int m_iNationalCityStartBonusPopulation;
-	int m_iNationalMissileRangeChange;
 	int m_iCitiesStartwithStateReligionCount;
 	int m_iDraftsOnCityCaptureCount;
 	int m_iExtraGoodyCount;
@@ -1743,7 +1737,6 @@ protected:
 	int m_iGreatPeopleThresholdModifier;
 	int m_iGreatGeneralsThresholdModifier;
 	int m_iFeatureProductionModifier;
-	int m_iImprovementUpgradeRateModifier;
 	int m_iMilitaryProductionModifier;
 	int m_iSpaceProductionModifier;
 
@@ -2001,8 +1994,6 @@ protected:
 public:
 
 
-	int getImprovementUpgradeRateModifierSpecific(ImprovementTypes eImprovement) const;
-	void changeImprovementUpgradeRateModifierSpecific(ImprovementTypes eImprovement, int iChange);
 
 	int getBuildWorkerSpeedModifierSpecific(BuildTypes eBuild) const;
 	void changeBuildWorkerSpeedModifierSpecific(BuildTypes eBuild, int iChange);
@@ -2029,9 +2020,6 @@ public:
 	void doPromoteLeader();
 	void clearLeaderTraits();
 
-	int getNationalEspionageDefense() const;
-	void setNationalEspionageDefense(int iNewValue);
-	void changeNationalEspionageDefense(int iChange);
 
 	int getInquisitionCount() const;
 	void changeInquisitionCount(int iChange);
@@ -2041,9 +2029,6 @@ public:
 	void changeNationalGreatPeopleUnitRate(const UnitTypes eIndex, const int iChange);
 
 
-	int getNationalHurryAngerModifier() const;
-	void setNationalHurryAngerModifier(int iNewValue);
-	void changeNationalHurryAngerModifier(int iChange);
 
 
 
@@ -2077,9 +2062,6 @@ public:
 	void setNationalCityStartBonusPopulation(int iValue);
 	void changeNationalCityStartBonusPopulation(int iChange);
 
-	int getNationalMissileRangeChange() const;
-	void setNationalMissileRangeChange(int iValue);
-	void changeNationalMissileRangeChange(int iChange);
 
 
 

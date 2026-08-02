@@ -50,6 +50,7 @@
 #include "Repos/BuildingsRepo.h"
 #include "CvTraitInfo.h"
 #include "Data/CvInfoValuation.h"   // resolvedCityLimit + realizedAtEmpire -- the ONE cross-scope roll-up
+#include "Conditions/CvConditionEval.h"   // the CvCascadeEvalCtx DEFINITION (CvCascadeGather only forward-declares)
 #include "Conditions/CvConditionQuery.h"  // the ONE structural read over a compiled entry's condition tree
 #include "Infos/CvModEntry.h"             // the compiled entry the conditioned walk reads its trees off
 #include "CvCascadeGather.h"
@@ -221,7 +222,6 @@ m_cachedBonusCount(NULL)
 
 
 	//TB Traits begin
-	m_paiImprovementUpgradeRateModifierSpecific = NULL;
 	m_paiBuildWorkerSpeedModifierSpecific = NULL;
 	m_pabHasTrait = NULL;
 	m_aiLessYieldThreshold = new int[NUM_YIELD_TYPES];
@@ -622,7 +622,6 @@ void CvPlayer::uninit()
 	SAFE_DELETE_ARRAY2(m_ppaaiSpecialistExtraYield, GC.getNumSpecialistInfos());
 	SAFE_DELETE_ARRAY(m_pabAutomatedCanBuild);
 	SAFE_DELETE_ARRAY(m_paiResourceConsumption);
-	SAFE_DELETE_ARRAY(m_paiImprovementUpgradeRateModifierSpecific);
 	SAFE_DELETE_ARRAY(m_paiBuildWorkerSpeedModifierSpecific);
 	SAFE_DELETE_ARRAY(m_pabHasTrait);
 	SAFE_DELETE_ARRAY(m_paiNationalDomainProductionModifier);
@@ -1086,7 +1085,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iGreatPeopleThresholdModifier = 0;
 	m_iGreatGeneralsThresholdModifier = 0;
 	m_iFeatureProductionModifier = 0;
-	m_iImprovementUpgradeRateModifier = 0;
 	m_iMilitaryProductionModifier = 0;
 	m_iSpaceProductionModifier = 0;
 
@@ -1165,15 +1163,12 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_bHuman = false;
 	//TB Traits begin
 	m_iLeaderHeadLevel = 0;
-	m_iNationalEspionageDefense = 0;
 	m_iInquisitionCount = 0;
-	m_iNationalHurryAngerModifier = 0;
 	m_iFixedBordersCount = 0;
 
 	m_iNationalCityStartCulture = 0;
 	m_iNationalAirUnitCapacity = 0;
 	m_iNationalCityStartBonusPopulation = 0;
-	m_iNationalMissileRangeChange = 0;
 	m_iCitiesStartwithStateReligionCount = 0;
 	m_iDraftsOnCityCaptureCount = 0;
 	m_iExtraGoodyCount = 0;
@@ -1476,19 +1471,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 		}
 
 		//TB Traits end
-		//TB Traits begin
-		FAssertMsg(m_paiImprovementUpgradeRateModifierSpecific==NULL, "about to leak memory, CvPlayer::m_paiImprovementUpgradeRateModifierSpecific");
-		m_paiImprovementUpgradeRateModifierSpecific = new int [GC.getNumImprovementInfos()];
-		//TB Traits end
-		for (iI = 0; iI < GC.getNumImprovementInfos(); iI++)
-		{
-			for (iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
-			{
-			}
-			//TB Traits begin
-			m_paiImprovementUpgradeRateModifierSpecific[iI] = 0;
-			//TB Traits end
-		}
 
 		STATIC_ASSERT(NUM_DOMAIN_TYPES > 0, value_should_be_greater_than_zero);
 		m_paiNationalDomainProductionModifier = new int[NUM_DOMAIN_TYPES];
@@ -7208,9 +7190,36 @@ RouteTypes CvPlayer::getBestRouteInternal(const CvPlot* pPlot, bool bConnect, co
 }
 
 
+//	The progress an improvement accrues per qualifying turn toward its upgrade, as a percent of the base rate.
+//	⚑ TWO READS, because the family authors BOTH shapes and neither can answer the other. A source's plain
+//	`improvementUpgradeRate.empire.percent` folds into the compiled scalar; its per-improvement
+//	`empire.improvements.{IMPROVEMENT_X}` rows are KEYED, and a keyed deposit is excluded from its scope's
+//	package by construction -- it is an ENTRY-LIST read over the LIVE sources ([modifier.md] §5). Folding the
+//	keyed rows scope-wide would hand EVERY improvement the rate authored for one, which is the silently-plausible
+//	wrong number that rule exists to prevent.
+//	⛔ TRAITS are the only keyed authors, so the walk is the player's HELD traits; `getTraitInfo` already resolves
+//	the option-selected active set ([modifier.md] §4), so nothing here picks between the simple/complex tables.
+//	⚠ The kind is a PERCENT, so neither leg carries the ×100 and nothing reduces here
+//	([DEC-fixedpoint-x100]: scale is decided per UNIT, and a percent is never scaled).
 int CvPlayer::getImprovementUpgradeProgressRate(const ImprovementTypes eImprovement) const
 {
-	const int iMod = getImprovementUpgradeRateModifier() + getImprovementUpgradeRateModifierSpecific(eImprovement);
+	PROFILE_EXTRA_FUNC();
+	int aiScalars[NUM_INFO_SCALARS];
+	getScalars(aiScalars);
+
+	CvCascadeEvalCtx evalCtx;
+	getEmpireContext().fillEvalCtx(evalCtx);
+	int64_t iKeyed = 0;
+	for (int iTrait = 0; iTrait < GC.getNumTraitInfos(); ++iTrait)
+	{
+		if (hasTrait((TraitTypes)iTrait))
+		{
+			iKeyed += InfoValuation::keyedTargetSum(GC.getTraitInfo((TraitTypes)iTrait).getModifiers(),
+				MODFAM_IMPROVEMENT_UPGRADE_RATE, CHANNEL_AMOUNT, -1, (int)eImprovement, evalCtx);
+		}
+	}
+
+	const int iMod = aiScalars[SCALAR_IMPROVEMENT_UPGRADE_RATE] + (int)iKeyed;
 	if (iMod < 0)
 	{
 		return std::max(1, 10000 / (100 - iMod));
@@ -9175,18 +9184,6 @@ int CvPlayer::getWorkRate(BuildTypes eBuild) const
 	return iRate;
 }
 // BUG - Partial Builds - end
-
-
-int CvPlayer::getImprovementUpgradeRateModifier() const
-{
-	return m_iImprovementUpgradeRateModifier;
-}
-
-
-void CvPlayer::changeImprovementUpgradeRateModifier(int iChange)
-{
-	m_iImprovementUpgradeRateModifier += iChange;
-}
 
 
 int CvPlayer::getMilitaryProductionModifier() const
@@ -16748,7 +16745,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iGreatPeopleThresholdModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iGreatGeneralsThresholdModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iFeatureProductionModifier);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iImprovementUpgradeRateModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iMilitaryProductionModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iSpaceProductionModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNonStateReligionCommerceCount);
@@ -17653,7 +17649,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		}
 		//TB Combat Mod begin
 		//TB Traits begin
-		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_IMPROVEMENTS, GC.getNumImprovementInfos(), m_paiImprovementUpgradeRateModifierSpecific);
 		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_IMPROVEMENTS, GC.getNumImprovementInfos(), m_paiBuildWorkerSpeedModifierSpecific);
 
 		for (int i = 0; i < wrapper.getNumClassEnumValues(REMAPPED_CLASS_TYPE_SPECIALISTS); ++i)
@@ -17681,11 +17676,9 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		// @SAVEBREAK - Delete
 		WRAPPER_SKIP_ELEMENT(wrapper, "CvPlayer", m_iTraitDisplayCount, SAVE_VALUE_ANY);
 		// !SAVEBREAK
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iNationalEspionageDefense);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iInquisitionCount);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiLessYieldThreshold);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iCompatCheckCount);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iNationalHurryAngerModifier);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_DOMAIN_TYPES, m_paiNationalDomainProductionModifier);
 		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_TECHS, GC.getNumTechInfos(), m_paiNationalTechResearchModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iFixedBordersCount);
@@ -17696,7 +17689,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNationalCityStartCulture);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNationalAirUnitCapacity);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNationalCityStartBonusPopulation);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iNationalMissileRangeChange);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iCitiesStartwithStateReligionCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iDraftsOnCityCaptureCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraGoodyCount);
@@ -18104,7 +18096,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iGreatPeopleThresholdModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iGreatGeneralsThresholdModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iFeatureProductionModifier);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iImprovementUpgradeRateModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iMilitaryProductionModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iSpaceProductionModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNonStateReligionCommerceCount);
@@ -18553,7 +18544,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		//TB Combat mod begin
 		//TB Combat mod end
 		//TB Traits begin
-		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_IMPROVEMENTS, GC.getNumImprovementInfos(), m_paiImprovementUpgradeRateModifierSpecific);
 		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_IMPROVEMENTS, GC.getNumImprovementInfos(), m_paiBuildWorkerSpeedModifierSpecific);
 
 		for (iI=0;iI<GC.getNumSpecialistInfos();iI++)
@@ -18561,11 +18551,9 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		}
 		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_TRAITS, GC.getNumTraitInfos(), m_pabHasTrait);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iLeaderHeadLevel);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNationalEspionageDefense);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iInquisitionCount);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiLessYieldThreshold);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCompatCheckCount);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNationalHurryAngerModifier);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_DOMAIN_TYPES, m_paiNationalDomainProductionModifier);
 		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_TECHS, GC.getNumTechInfos(), m_paiNationalTechResearchModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iFixedBordersCount);
@@ -18576,7 +18564,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNationalCityStartCulture);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNationalAirUnitCapacity);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNationalCityStartBonusPopulation);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNationalMissileRangeChange);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCitiesStartwithStateReligionCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iDraftsOnCityCaptureCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraGoodyCount);
@@ -26195,16 +26182,6 @@ CvCity*	CvPlayer::findClosestCity(const CvPlot* pPlot) const
 	return pResult;
 }
 
-int CvPlayer::getImprovementUpgradeRateModifierSpecific(ImprovementTypes eImprovement) const
-{
-	return m_paiImprovementUpgradeRateModifierSpecific[eImprovement];
-}
-
-void CvPlayer::changeImprovementUpgradeRateModifierSpecific(ImprovementTypes eImprovement, int iChange)
-{
-	m_paiImprovementUpgradeRateModifierSpecific[eImprovement] = (m_paiImprovementUpgradeRateModifierSpecific[eImprovement] + iChange);
-}
-
 int CvPlayer::getBuildWorkerSpeedModifierSpecific(BuildTypes eBuild) const
 {
 	return m_paiBuildWorkerSpeedModifierSpecific[eBuild];
@@ -26754,21 +26731,6 @@ void CvPlayer::clearLeaderTraits()
 	setLeaderHeadLevel(0);
 }
 
-int CvPlayer::getNationalEspionageDefense() const
-{
-	return m_iNationalEspionageDefense;
-}
-
-void CvPlayer::setNationalEspionageDefense(int iValue)
-{
-	m_iNationalEspionageDefense = iValue;
-}
-
-void CvPlayer::changeNationalEspionageDefense(int iChange)
-{
-	setNationalEspionageDefense(getNationalEspionageDefense() + iChange);
-}
-
 int CvPlayer::getInquisitionCount() const
 {
 	return m_iInquisitionCount;
@@ -26822,21 +26784,6 @@ int CvPlayer::getNationalGreatPeopleRate() const
 	return std::max(0, m_iNationalGreatPeopleRate);
 }
 
-
-int CvPlayer::getNationalHurryAngerModifier() const
-{
-	return m_iNationalHurryAngerModifier;
-}
-
-void CvPlayer::setNationalHurryAngerModifier(int iValue)
-{
-	m_iNationalHurryAngerModifier = iValue;
-}
-
-void CvPlayer::changeNationalHurryAngerModifier(int iChange)
-{
-	setNationalHurryAngerModifier(getNationalHurryAngerModifier() + iChange);
-}
 
 int CvPlayer::getNationalDomainProductionModifier(DomainTypes eIndex) const
 {
@@ -26973,21 +26920,6 @@ void CvPlayer::setNationalCityStartBonusPopulation(int iValue)
 void CvPlayer::changeNationalCityStartBonusPopulation(int iChange)
 {
 	setNationalCityStartBonusPopulation(getNationalCityStartBonusPopulation() + iChange);
-}
-
-int CvPlayer::getNationalMissileRangeChange() const
-{
-	return m_iNationalMissileRangeChange;
-}
-
-void CvPlayer::setNationalMissileRangeChange(int iValue)
-{
-	m_iNationalMissileRangeChange = iValue;
-}
-
-void CvPlayer::changeNationalMissileRangeChange(int iChange)
-{
-	setNationalMissileRangeChange(getNationalMissileRangeChange() + iChange);
 }
 
 bool CvPlayer::hasCitiesStartwithStateReligion() const

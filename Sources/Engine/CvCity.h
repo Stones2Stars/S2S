@@ -556,7 +556,6 @@ public:
 	void changeWarWearinessModifier(int iChange);
 
 	int getHurryAngerModifier() const;
-	void changeHurryAngerModifier(int iChange);
 
 	int getHealRate() const;
 	void changeHealRate(int iChange);
@@ -1524,7 +1523,6 @@ protected:
 	int m_iNumNationalWonders;
 	int m_iNumBuildings;
 	int m_iWarWearinessModifier;
-	int m_iHurryAngerModifier;
 	int m_iHealRate;
 	int m_iEspionageHealthCounter;
 	int m_iEspionageHappinessCounter;

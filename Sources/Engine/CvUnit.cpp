@@ -10515,7 +10515,7 @@ int CvUnit::airRange() const
 	}
 	if (getDomainType() == DOMAIN_AIR && getSpecialUnitType() == eMissile)
 	{
-		return (resolvedValue(URS_AIR_RANGE) + GET_TEAM(getTeam()).getExtraMoves(DOMAIN_AIR) + GET_PLAYER(getOwner()).getNationalMissileRangeChange());
+		return (resolvedValue(URS_AIR_RANGE) + GET_TEAM(getTeam()).getExtraMoves(DOMAIN_AIR));
 	}
 	return (resolvedValue(URS_AIR_RANGE));
 }

@@ -1209,3 +1209,33 @@ The three WONDER build-rate modifiers. `world`/`team`/`national` name the cap SC
 CvPlayer::m_iMaxGlobalBuildingProductionModifier
 CvPlayer::m_iMaxTeamBuildingProductionModifier
 CvPlayer::m_iMaxPlayerBuildingProductionModifier
+The IMPROVEMENT-UPGRADE RATE pair. A source authors BOTH shapes and neither answers the other: the plain
+| `improvementUpgradeRate.empire.percent` folds into the compiled scalar, while the per-improvement
+| `empire.improvements.{IMPROVEMENT_X}` rows are KEYED and are excluded from the scope package by
+| construction, so they are an ENTRY-LIST read over the live sources ([modifier.md] par.5). TRAITS are the
+| only keyed authors, so the reader walks the player's held traits. The kind is a PERCENT and carries no
+| scaling.
+| REPLACEMENT: CvPlayer::getScalars -> SCALAR_IMPROVEMENT_UPGRADE_RATE, plus
+| InfoValuation::keyedTargetSum over the held traits, both in CvPlayer::getImprovementUpgradeProgressRate.
+CvPlayer::m_iImprovementUpgradeRateModifier
+CvPlayer::m_paiImprovementUpgradeRateModifierSpecific
+The HURRY-ANGER modifier, cut on BOTH scopes at once. The city and the player each held a hand-summed leg and
+| the city getter added them; the ONE roll-up over the chain the city sits under answers both, so a building's
+| `hurryAnger.city.percent` and any empire-scope deposit arrive through the same read ([modifier.md] par.1).
+| ⚠ BEHAVIOUR: the legacy city changer re-scaled an in-flight m_iHurryAngerTimer whenever the modifier moved.
+| A computed value has no change moment to hook, so a running timer now resolves against the CURRENT
+| modifier -- the recompute-from-source side ([DEC-accumulator-cut-uniform]).
+| REPLACEMENT: CvCity::getScalars -> SCALAR_HURRY_ANGER_MODIFIER, in CvCity::getHurryAngerModifier.
+CvCity::m_iHurryAngerModifier
+CvPlayer::m_iNationalHurryAngerModifier
+The empire ESPIONAGE-DEFENSE accumulator. Its consumer was already converted: CvCity::getEspionageDefenseModifier
+| reads the cascade slot directly, so this store had neither a feeder nor a reader left and only carried save
+| history no live source could reproduce.
+| REPLACEMENT: CvCity::getEspionageDefenseModifier -> MODFAM_ESPIONAGE_DEFENSE / CHANNEL_AMOUNT.
+CvPlayer::m_iNationalEspionageDefense
+The empire MISSILE-RANGE accumulator, cut as DEAD rather than re-pointed. Its legacy tag `iMissileRange`
+| exists in the XML SCHEMA and nowhere else -- no record has ever authored it -- and the address the curator
+| maps it to (`combat.empire.missileRange`) has no minted kind and zero authorings. The term was therefore
+| always 0, so CvUnit::airRange's missile branch drops it with no behaviour change.
+| REPLACEMENT: none -- the mechanic never carried data.
+CvPlayer::m_iNationalMissileRangeChange

@@ -694,7 +694,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_iNumNationalWonders = 0;
 	m_iNumBuildings = 0;
 	m_iWarWearinessModifier = 0;
-	m_iHurryAngerModifier = 0;
 	m_iHealRate = 0;
 	m_iEspionageHealthCounter = 0;
 	m_iEspionageHappinessCounter = 0;
@@ -6017,40 +6016,21 @@ void CvCity::changeWarWearinessModifier(int iChange)
 }
 
 
+//	How much longer (or shorter) hurry anger lasts here, as a percent: the ONE roll-up over the chain this city
+//	sits under, so a building's `hurryAnger.city.percent` and an empire-scope deposit answer through the same
+//	read ([modifier.md] §1 -- the downward roll is realized AT READ, and a lower scope never stores an upper
+//	scope's sum). The two hand-summed legs it replaces were a city accumulator plus the player's, which
+//	double-counted nothing only because both had already lost their feeders.
+//	⚠ BEHAVIOUR: the legacy changer re-scaled an in-flight `m_iHurryAngerTimer` proportionally whenever the
+//	modifier moved. A computed value has no change moment to hook, so a timer already running now simply
+//	resolves against the CURRENT modifier -- which is the recompute-from-source side, and the side
+//	[DEC-accumulator-cut-uniform] rules correct.
+//	⚠ The kind is a PERCENT, so it is not ×100 and nothing reduces here ([DEC-fixedpoint-x100]).
 int CvCity::getHurryAngerModifier() const
 {
-	int iTotalHurryAngerModifier = m_iHurryAngerModifier;
-	iTotalHurryAngerModifier += GET_PLAYER(getOwner()).getNationalHurryAngerModifier();
-	// AIAndy: This used to return m_iHurryAngerModifier instead of the calculated iTotalHurryAngerModifier which I don't assume is correct
-	return iTotalHurryAngerModifier;
-}
-
-
-void CvCity::changeHurryAngerModifier(int iChange)
-{
-	if (0 != iChange)
-	{
-		int iRatio = 0;
-
-		//	Foregiveness for crazily long hurry anger times because its was bugged in older
-		//	versions!
-		if (m_iHurryAngerTimer > 1000)
-		{
-			m_iHurryAngerTimer = 0;
-		}
-
-		if (m_iHurryAngerTimer > 0)
-		{
-			iRatio = (100 * (m_iHurryAngerTimer - 1)) / std::max(1, 100 + getHurryAngerModifier());
-		}
-
-		m_iHurryAngerModifier += iChange;
-
-		if (m_iHurryAngerTimer > 0)
-		{
-			m_iHurryAngerTimer = (iRatio * std::max(1, 100 + getHurryAngerModifier())) / 100 + 1;
-		}
-	}
+	int aiScalars[NUM_INFO_SCALARS];
+	getScalars(aiScalars);
+	return aiScalars[SCALAR_HURRY_ANGER_MODIFIER];
 }
 
 
@@ -12471,7 +12451,6 @@ void CvCity::readBody(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvCity", &m_iNumNationalWonders);
 	WRAPPER_READ(wrapper, "CvCity", &m_iNumBuildings);
 	WRAPPER_READ(wrapper, "CvCity", &m_iWarWearinessModifier);
-	WRAPPER_READ(wrapper, "CvCity", &m_iHurryAngerModifier);
 	WRAPPER_READ(wrapper, "CvCity", &m_iHealRate);
 	WRAPPER_READ(wrapper, "CvCity", &m_iEspionageHealthCounter);
 	WRAPPER_READ(wrapper, "CvCity", &m_iEspionageHappinessCounter);
@@ -13116,7 +13095,6 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvCity", m_iNumNationalWonders);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iNumBuildings);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iWarWearinessModifier);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iHurryAngerModifier);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iHealRate);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iEspionageHealthCounter);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iEspionageHappinessCounter);
