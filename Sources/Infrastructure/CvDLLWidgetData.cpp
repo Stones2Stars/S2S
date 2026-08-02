@@ -4,6 +4,7 @@
 
 #include "CvGameCoreDLL.h"
 #include "Engine/CvGameSpeedScale.h"
+#include "Data/CvInfoValuation.h"   // resolvedCityLimit -- the civic's base limit x the world-size scale
 #include "CvInfos.h"              // full info-type defs (Specialist/Unit/Color/Yield/Commerce/Civic/Build/Property) -- was reaching via unity leakage
 #include "Engine/CvArea.h"
 #include "CvBuildingInfo.h"
@@ -2273,7 +2274,8 @@ void CvDLLWidgetData::parseActionHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 						for (int iI = 0; iI < GC.getNumCivicOptionInfos(); iI++)
 						{
 							if (GET_PLAYER(pHeadSelectedUnit->getOwner()).getCivics((CivicOptionTypes)iI) != NO_CIVIC
-							&& GC.getGame().getCivicCityLimit((CivicTypes)GET_PLAYER(pHeadSelectedUnit->getOwner()).getCivics((CivicOptionTypes)iI)) > 0)
+							&& InfoValuation::resolvedCityLimit(GC.getCivicInfo(
+								(CivicTypes)GET_PLAYER(pHeadSelectedUnit->getOwner()).getCivics((CivicOptionTypes)iI)).getCityLimit()) > 0)
 							{
 								szCivics.append(GC.getCivicInfo((CivicTypes)GET_PLAYER(pHeadSelectedUnit->getOwner()).getCivics((CivicOptionTypes)iI)).getDescription());
 							}
@@ -2667,7 +2669,6 @@ void CvDLLWidgetData::parseActionHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 				BonusTypes ePlotBonus = pMissionPlot->getBonusType(pHeadSelectedUnit->getTeam());
 				FeatureTypes ePlotFeature = pMissionPlot->getFeatureType();
 				TerrainTypes ePlotTerrain = pMissionPlot->getTerrainType();
-				bool ePlotRiverSide = pMissionPlot->isRiverSide();
 				bool bIsFeatureChange = (GC.getBuildInfo(eBuild).getFeatureChange() != NO_FEATURE);
 				bool bIsTerrainChange = (GC.getBuildInfo(eBuild).getTerrainChange() != NO_TERRAIN);
 
@@ -2694,13 +2695,12 @@ void CvDLLWidgetData::parseActionHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 					if (NO_FEATURE != ePlotFeature
 					&&  GC.getBuildInfo(eBuild).isFeatureRemove(ePlotFeature))
 					{
-						iYield -= GC.getFeatureInfo(ePlotFeature).getYieldChange(iI) +
-							(ePlotRiverSide ? GC.getFeatureInfo(ePlotFeature).getRiverYieldChange(iI) : 0);
+						iYield -= GC.getFeatureInfo(ePlotFeature).getFlatYield((YieldTypes)iI, CASC_SCOPE_PLOT) / 100;
 					}
 					if (bIsFeatureChange)
 					{
-						iYield += GC.getFeatureInfo((FeatureTypes)GC.getBuildInfo(eBuild).getFeatureChange()).getYieldChange(iI) +
-							(ePlotRiverSide ? GC.getFeatureInfo((FeatureTypes)GC.getBuildInfo(eBuild).getFeatureChange()).getRiverYieldChange(iI) : 0);
+						iYield += GC.getFeatureInfo((FeatureTypes)GC.getBuildInfo(eBuild).getFeatureChange())
+							.getFlatYield((YieldTypes)iI, CASC_SCOPE_PLOT) / 100;
 					}
 
 					// Yield delta from terrain change
@@ -2733,14 +2733,6 @@ void CvDLLWidgetData::parseActionHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 					}
 				}
 
-				if (eImprovement != NO_IMPROVEMENT)
-				{
-					int iHappy = improvement->getHappiness();
-					if (iHappy != 0)
-					{
-						szBuffer.append(CvWString::format(L", +%d%c", abs(iHappy), (iHappy > 0 ? gDLL->getSymbolID(HAPPY_CHAR) : gDLL->getSymbolID(UNHAPPY_CHAR))));
-					}
-				}
 
 				const bool bValid = algo::any_of(gDLL->getInterfaceIFace()->getSelectionList()->units(), bind(CvUnit::canBuild, _1, pMissionPlot, eBuild, false));
 

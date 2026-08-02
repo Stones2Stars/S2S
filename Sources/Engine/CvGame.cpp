@@ -238,15 +238,6 @@ void CvGame::init(HandicapTypes eHandicap)
 		else setOption(GAMEOPTION_NO_WORLDBUILDER, false);
 	}
 
-	// Alberts2: Recalculate which info class replacements are currently active
-	GC.updateReplacements();
-
-	//establish improvement costs
-	//for (int iI = 0; iI < GC.getNumImprovementInfos(); iI++)
-	//{
-	//	GC.getImprovementInfo((ImprovementTypes)iI).setHighestCost();
-	//}
-
 	if (getGameTurn() == 0)
 	{
 		setGameTurn(GC.getGameSpeedInfo(getGameSpeedType()).getEraStartTurn(getStartEra()));
@@ -1132,12 +1123,6 @@ void CvGame::reset(HandicapTypes eHandicap, bool bConstructorCall)
 	}
 
 	m_Properties.clear();
-
-	// Alberts2: Recalculate which info class replacements are currently active
-	if (!bConstructorCall)
-	{
-		GC.updateReplacements();
-	}
 
 	// Only spot identified where game-options have been set before scenarios starts initiating cities on the map
 	//	So here we can cache option specific things like valid cultureLevels.
@@ -3297,7 +3282,9 @@ bool CvGame::canTrainNukes() const
 			player.getTrainableAnywhere(vecTrainable);
 			for (std::vector<int>::const_iterator it = vecTrainable.begin(), itEnd = vecTrainable.end(); it != itEnd; ++it)
 			{
-				if (GC.getUnitInfo((UnitTypes)*it).getNukeRange() != -1)
+				// An existence test, so the FLAT slot's ×100 is immaterial to the sign: an unauthored range sums
+				// to 0 where the legacy sentinel was -1, and every authored range is >= 1.
+				if (GC.getUnitInfo((UnitTypes)*it).getAir(AIR_NUKE_RANGE, CASC_SCOPE_UNIT) > 0)
 				{
 					return true;
 				}
