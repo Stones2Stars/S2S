@@ -16,6 +16,9 @@ class CyMap
 {
 public:
 	CyMap();
+
+	// Publishes the MAP-SCRIPT boundary -- handles, not infos (patterns.md).
+	static void pythonPublish();
 	explicit CyMap(MapTypes eMap);
 
 	//const CvMapInterfaceBase* getMap() const { return m_pMap; } // Call from C++

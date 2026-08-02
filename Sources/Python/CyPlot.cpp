@@ -631,3 +631,16 @@ python::list CyPlot::rect(int halfWid, int halfHgt) const
 	}
 	return list;
 }
+
+//
+//	THE MAP-SCRIPT BOUNDARY (handles, not infos) -- see CyMap.cpp for the ruling.
+//
+void CyPlot::pythonPublish()
+{
+	// ⚠ The TYPE only, no methods. CyMap::plot() returns a CyPlot*, so boost needs the class REGISTERED for
+	// that conversion to exist at all -- without it the map-script reads fail at the return, not at the call.
+	// Its methods came from a separate loader that the binding purge removed; they come back with the
+	// map-script boundary work, and a script touching one gets a loud AttributeError until then.
+	// Uses the python:: alias, never a bare boost:: -- two Boosts coexist (engine.md).
+	python::class_<CyPlot>("CyPlot", python::no_init);
+}

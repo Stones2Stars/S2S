@@ -3,10 +3,12 @@
 #include "CvPython.h"
 #include "Python/CyCity.h"
 #include "Python/CyEnabler.h"
+#include "Python/CyArea.h"
 #include "Python/CyArtFileMgr.h"
 #include "Python/CyEnums.h"
 #include "Python/CyGameTextMgr.h"
 #include "Python/CyGlobalContext.h"
+#include "Python/CyMap.h"
 #include "Python/CyState.h"
 #include "Python/CyPlayer.h"
 #include "Python/CyPlot.h"
@@ -109,6 +111,12 @@ DllExport void DLLPublishToPython()
 	// counts, defines, constants and the BUG bridge are configuration a great deal of Python needs, and are
 	// not the read surface the library replaces. The get<X>Info accessors and Cy* handles stay gone.
 	CyGlobalContext::pythonPublish();
+
+	// The MAP-SCRIPT boundary: handles, not infos. Map scripts are their own boundary (patterns.md) and were
+	// never meant to be affected by the Cy* cut.
+	CyMap::pythonPublish();
+	CyPlot::pythonPublish();
+	CyArea::pythonPublish();
 
 
 

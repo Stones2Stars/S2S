@@ -25,6 +25,9 @@ class CyArea
 {
 public:
 	CyArea();
+
+	// Publishes the MAP-SCRIPT boundary -- handles, not infos (patterns.md).
+	static void pythonPublish();
 	explicit CyArea(CvArea* pArea);					// Call from C++
 
 	CvArea* getArea() const;						// Call from C++ -- resolves the id; NULL once it is stale

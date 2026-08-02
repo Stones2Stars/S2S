@@ -456,3 +456,109 @@ void CyMap::setClimateZone(const int y, const ClimateZoneTypes eClimate)
 {
 	m_pMap->setClimateZone(y, eClimate);
 }
+
+//
+//	THE MAP-SCRIPT BOUNDARY, republished. Map scripts are their OWN boundary (patterns.md THE PYTHON READ
+//	BOUNDARY: they read map-gen types nothing else reads, run before most game state exists, are WRITE-
+//	dominated, and their contract is the named Python CALLBACKS) -- so third-party scripts were never meant
+//	to be affected by the Cy* cut. These are HANDLES, not infos: the ruling that GC hands out no infos is
+//	untouched by them.
+//
+void CyMap::pythonPublish()
+{
+	python::class_<CyMap>("CyMap")
+		.def("getType", &CyMap::getType)
+
+		.def("plotsInitialized", &CyMap::plotsInitialized)
+
+		.def("viewportsEnabled", &CyMap::viewportsEnabled)
+		.def("getViewportWidth", &CyMap::getViewportWidth)
+		.def("getViewportHeight", &CyMap::getViewportHeight)
+		.def("getMapXFromViewportX", &CyMap::getMapXFromViewportX)
+		.def("getMapYFromViewportY", &CyMap::getMapYFromViewportY)
+		.def("getViewportXFromMapX", &CyMap::getViewportXFromMapX)
+		.def("getViewportYFromMapY", &CyMap::getViewportYFromMapY)
+		.def("isInViewport", &CyMap::isInViewport)
+		.def("setViewportActionState", &CyMap::setViewportActionState)
+		.def("isMidSwitch", &CyMap::isMidSwitch)
+
+		.def("closeAdvisor", &CyMap::closeAdvisor)
+		.def("bringIntoView", &CyMap::bringIntoView)
+
+		.def("erasePlots", &CyMap::erasePlots)
+		.def("setRevealedPlots", &CyMap::setRevealedPlots)
+		.def("resetRevealedPlots", &CyMap::resetRevealedPlots)
+		.def("setAllPlotTypes", &CyMap::setAllPlotTypes)
+
+		.def("verifyUnitValidPlot", &CyMap::verifyUnitValidPlot)
+
+		.def("updateVisibility", &CyMap::updateVisibility)
+		.def("syncRandPlot", &CyMap::syncRandPlot, python::return_value_policy<python::manage_new_object>())
+
+		.def("findBiggestArea", &CyMap::findBiggestArea, python::return_value_policy<python::manage_new_object>())
+
+		.def("getMapFractalFlags", &CyMap::getMapFractalFlags)
+		.def("isPlot", &CyMap::isPlot)
+		.def("numPlots", &CyMap::numPlots)
+		.def("plotNum", &CyMap::plotNum)
+		.def("plotX", &CyMap::plotX)
+		.def("plotY", &CyMap::plotY)
+		.def("getGridWidth", &CyMap::getGridWidth)
+		.def("getGridHeight", &CyMap::getGridHeight)
+
+		.def("getLandPlots", &CyMap::getLandPlots)
+		.def("getOwnedPlots", &CyMap::getOwnedPlots)
+
+		.def("getTopLatitude", &CyMap::getTopLatitude)
+		.def("getBottomLatitude", &CyMap::getBottomLatitude)
+
+		.def("getNextRiverID", &CyMap::getNextRiverID)
+		.def("incrementNextRiverID", &CyMap::incrementNextRiverID)
+
+		.def("isWrapX", &CyMap::isWrapX)
+		.def("isWrapY", &CyMap::isWrapY)
+		.def("getMapScriptName", &CyMap::getMapScriptName)
+		.def("getWorldSize", &CyMap::getWorldSize)
+		.def("getClimate", &CyMap::getClimate)
+		.def("getSeaLevel", &CyMap::getSeaLevel)
+
+		.def("getNumCustomMapOptions", &CyMap::getNumCustomMapOptions)
+		.def("getCustomMapOption", &CyMap::getCustomMapOption)
+
+		.def("getNumBonuses", &CyMap::getNumBonuses)
+		.def("getNumBonusesOnLand", &CyMap::getNumBonusesOnLand)
+
+		.def("plots", &CyMap::plots)
+		.def("plotByIndex", &CyMap::plotByIndex, python::return_value_policy<python::manage_new_object>())
+		.def("sPlotByIndex", &CyMap::sPlotByIndex, python::return_value_policy<python::reference_existing_object>())
+		.def("plot", &CyMap::plot, python::return_value_policy<python::manage_new_object>())
+		.def("sPlot", &CyMap::sPlot, python::return_value_policy<python::reference_existing_object>())
+		.def("pointToPlot", &CyMap::pointToPlot, python::return_value_policy<python::manage_new_object>())
+
+		.def("getNumAreas", &CyMap::getNumAreas)
+		.def("getNumLandAreas", &CyMap::getNumLandAreas)
+		.def("getArea", &CyMap::getArea, python::return_value_policy<python::manage_new_object>())
+		.def("areas", &CyMap::areas)
+		.def("recalculateAreas", &CyMap::recalculateAreas)
+		.def("resetPathDistance", &CyMap::resetPathDistance)
+
+		.def("calculatePathDistance", &CyMap::calculatePathDistance)
+		.def("rebuild", &CyMap::rebuild)
+		.def("regenerateGameElements", &CyMap::regenerateGameElements)
+		.def("updateFog", &CyMap::updateFog)
+		.def("updateMinimapColor", &CyMap::updateMinimapColor)
+		.def("updateMinOriginalStartDist", &CyMap::updateMinOriginalStartDist)
+
+		// AIAndy: Expose path generation functionality to Python
+		.def("generatePathForHypotheticalUnit", &CyMap::generatePathForHypotheticalUnit)
+		.def("getLastPathStepNum", &CyMap::getLastPathStepNum)
+		.def("getLastPathPlotByIndex", &CyMap::getLastPathPlotByIndex, python::return_value_policy<python::manage_new_object>())
+
+		.def("moveUnitToMap", &CyMap::moveUnitToMap)
+		.def("setClimateZone", &CyMap::setClimateZone)
+	;
+
+	python::enum_<ViewportDeferredActionState>("ViewportDeferredActionState")
+		.value("VIEWPORT_ACTION_STATE_AFTER_SWITCH", VIEWPORT_ACTION_STATE_AFTER_SWITCH)
+	;
+}

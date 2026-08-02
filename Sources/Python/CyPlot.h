@@ -16,6 +16,9 @@ class CyPlot
 {
 public:
 	CyPlot();
+
+	// Publishes the MAP-SCRIPT boundary -- handles, not infos (patterns.md).
+	static void pythonPublish();
 	DllExport explicit CyPlot(CvPlot*);			// Call from C++
 	CyPlot(CvPlot*, bool bInViewportSpace);
 

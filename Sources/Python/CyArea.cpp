@@ -157,3 +157,51 @@ void CyArea::changeCleanPowerCount(TeamTypes eIndex, int iChange) const
 		pArea->changeCleanPowerCount(eIndex, iChange);
 	}
 }
+
+//
+//	THE MAP-SCRIPT BOUNDARY, republished. Map scripts are their OWN boundary (patterns.md THE PYTHON READ
+//	BOUNDARY: they read map-gen types nothing else reads, run before most game state exists, are WRITE-
+//	dominated, and their contract is the named Python CALLBACKS) -- so third-party scripts were never meant
+//	to be affected by the Cy* cut. These are HANDLES, not infos: the ruling that GC hands out no infos is
+//	untouched by them.
+//
+void CyArea::pythonPublish()
+{
+	python::class_<CyArea>("CyArea", python::no_init)
+		.def("calculateTotalBestNatureYield", &CyArea::calculateTotalBestNatureYield)
+		.def("countCoastalLand", &CyArea::countCoastalLand)
+		.def("countNumUniqueBonusTypes", &CyArea::countNumUniqueBonusTypes)
+		.def("getID", &CyArea::getID)
+		.def("getNumTiles", &CyArea::getNumTiles)
+		.def("isLake", &CyArea::isLake)
+		.def("getNumRiverEdges", &CyArea::getNumRiverEdges)
+		.def("getNumCities", &CyArea::getNumCities)
+		.def("getNumUnits", &CyArea::getNumUnits)
+		.def("getTotalPopulation", &CyArea::getTotalPopulation)
+		.def("getNumStartingPlots", &CyArea::getNumStartingPlots)
+		.def("isWater", &CyArea::isWater)
+
+		.def("getUnitsPerPlayer", &CyArea::getUnitsPerPlayer)
+		.def("getCitiesPerPlayer", &CyArea::getCitiesPerPlayer)
+		.def("getPower", &CyArea::getPower)
+		.def("getBestFoundValue", &CyArea::getBestFoundValue)
+
+
+		.def("isCleanPower", &CyArea::isCleanPower)
+		.def("isBorderObstacle", &CyArea::isBorderObstacle)
+
+
+		.def("getNumBonuses", &CyArea::getNumBonuses)
+		.def("getNumTotalBonuses", &CyArea::getNumTotalBonuses)
+/************************************************************************************************/
+/* Afforess	                  Start		 07/15/10                                               */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+		.def("changeCleanPowerCount", &CyArea::changeCleanPowerCount)
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
+
+	;
+}
