@@ -140,12 +140,5 @@
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_EXCESSIVE3_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_EXCESSIVE_STRATEGY",
   "negativeTrait": true
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_EXCESSIVE2"
-   ]
-  }
  }
 }

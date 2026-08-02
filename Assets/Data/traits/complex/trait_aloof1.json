@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_ALOOF1",
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_ALOOF2"
   ]
  },

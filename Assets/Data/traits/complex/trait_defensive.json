@@ -248,5 +248,10 @@
     "percent": 30
    }
   }
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_DEFENSIVE1"
+  ]
  }
 }

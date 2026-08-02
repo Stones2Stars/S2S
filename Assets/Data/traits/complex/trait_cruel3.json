@@ -182,12 +182,5 @@
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_CRUEL3_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_CRUEL_STRATEGY",
   "negativeTrait": true
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_CRUEL2"
-   ]
-  }
  }
 }

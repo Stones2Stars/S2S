@@ -536,5 +536,10 @@
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_DECEIVER_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_DECEIVER_STRATEGY",
   "impurePropertyManipulators": true
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_DECEIVER1"
+  ]
  }
 }

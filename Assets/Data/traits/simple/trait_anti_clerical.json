@@ -174,5 +174,10 @@
   "civilopedia": "TXT_KEY_TRAIT_ANTI_CLERICAL_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_ANTI_CLERICAL_SHORT",
   "negativeTrait": true
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_ANTI_CLERICAL1"
+  ]
  }
 }

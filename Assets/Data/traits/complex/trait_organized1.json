@@ -152,7 +152,7 @@
   "strategy": "TXT_KEY_TRAIT_COMPLEX_ORGANIZED_STRATEGY"
  },
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_ORGANIZED2"
   ]
  }

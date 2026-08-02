@@ -331,12 +331,5 @@
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_AGRICULTURAL3_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_AGRICULTURAL_STRATEGY",
   "impurePropertyManipulators": true
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_AGRICULTURAL2"
-   ]
-  }
  }
 }

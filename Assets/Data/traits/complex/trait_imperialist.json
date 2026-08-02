@@ -368,5 +368,10 @@
     "percent": 20
    }
   }
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_IMPERIALIST1"
+  ]
  }
 }

@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_DYNAMIC1",
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_DYNAMIC2"
   ]
  },

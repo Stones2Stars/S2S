@@ -254,5 +254,10 @@
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_REVOLUTIONARY_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_REVOLUTIONARY_STRATEGY",
   "impurePropertyManipulators": true
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_REVOLUTIONARY1"
+  ]
  }
 }

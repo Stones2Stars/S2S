@@ -156,5 +156,10 @@
   "description": "TXT_KEY_TRAIT_EXPANSIVE",
   "civilopedia": "TXT_KEY_TRAIT_EXPANSIVE_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_EXPANSIVE_SHORT"
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_EXPANSIVE1"
+  ]
  }
 }

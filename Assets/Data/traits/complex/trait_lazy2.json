@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_LAZY2",
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_LAZY3"
   ]
  },
@@ -298,12 +298,5 @@
   "strategy": "TXT_KEY_TRAIT_LAZY_STRATEGY",
   "negativeTrait": true,
   "impurePropertyManipulators": true
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_LAZY1"
-   ]
-  }
  }
 }

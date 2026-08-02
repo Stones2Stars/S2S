@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_ANTI_CLERICAL1",
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_ANTI_CLERICAL2"
   ]
  },

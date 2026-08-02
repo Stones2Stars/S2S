@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_MEGALOMANIAC1",
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_MEGALOMANIAC2"
   ]
  },

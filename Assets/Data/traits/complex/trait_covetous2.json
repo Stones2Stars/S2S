@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_COVETOUS2",
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_COVETOUS3"
   ]
  },
@@ -148,13 +148,6 @@
    "upgrade": {
     "percent": 10
    }
-  }
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_COVETOUS1"
-   ]
   }
  }
 }

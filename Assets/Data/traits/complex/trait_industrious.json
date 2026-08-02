@@ -648,5 +648,10 @@
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_INDUSTRIOUS_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_INDUSTRIOUS_STRATEGY",
   "impurePropertyManipulators": true
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_INDUSTRIOUS1"
+  ]
  }
 }

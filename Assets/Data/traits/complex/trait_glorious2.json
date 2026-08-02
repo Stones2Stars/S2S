@@ -180,15 +180,8 @@
   "strategy": "TXT_KEY_TRAIT_GLORIOUS_STRATEGY",
   "impurePropertyManipulators": true
  },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_GLORIOUS1"
-   ]
-  }
- },
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_GLORIOUS3"
   ]
  }

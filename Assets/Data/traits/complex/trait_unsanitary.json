@@ -622,5 +622,10 @@
   "civilopedia": "TXT_KEY_TRAIT_UNSANITARY_PEDIA",
   "strategy": "TXT_KEY_TRAIT_UNSANITARY_STRATEGY",
   "negativeTrait": true
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_UNSANITARY1"
+  ]
  }
 }

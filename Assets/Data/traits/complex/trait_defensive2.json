@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_DEFENSIVE2",
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_DEFENSIVE3"
   ]
  },
@@ -240,13 +240,6 @@
    "upgrade": {
     "percent": 10
    }
-  }
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_DEFENSIVE1"
-   ]
   }
  }
 }

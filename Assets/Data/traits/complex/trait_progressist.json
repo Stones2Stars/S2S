@@ -128,5 +128,10 @@
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_INNOVATIVE_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_INNOVATIVE_STRATEGY",
   "minAnarchy": 2
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_PROGRESSIST1"
+  ]
  }
 }

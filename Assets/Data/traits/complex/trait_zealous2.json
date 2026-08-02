@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_ZEALOUS2",
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_ZEALOUS3"
   ]
  },
@@ -295,12 +295,5 @@
   "strategy": "TXT_KEY_TRAIT_ZEALOUS_STRATEGY",
   "negativeTrait": true,
   "impurePromotions": true
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_FANATICAL1"
-   ]
-  }
  }
 }

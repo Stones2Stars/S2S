@@ -169,12 +169,5 @@
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_FOREIGN3_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_FOREIGN_STRATEGY",
   "negativeTrait": true
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_FOREIGN2"
-   ]
-  }
  }
 }

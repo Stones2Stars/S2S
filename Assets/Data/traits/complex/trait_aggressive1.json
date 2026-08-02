@@ -159,7 +159,7 @@
   }
  },
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_AGGRESSIVE2"
   ]
  }

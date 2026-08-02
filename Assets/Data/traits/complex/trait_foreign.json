@@ -242,5 +242,10 @@
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_FOREIGN_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_FOREIGN_STRATEGY",
   "negativeTrait": true
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_FOREIGN1"
+  ]
  }
 }

@@ -194,12 +194,5 @@
   "strategy": "TXT_KEY_TRAIT_ZEALOUS_STRATEGY",
   "negativeTrait": true,
   "impurePromotions": true
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_ZEALOUS2"
-   ]
-  }
  }
 }

@@ -185,5 +185,10 @@
     "percent": -15
    }
   }
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_SLOB1"
+  ]
  }
 }

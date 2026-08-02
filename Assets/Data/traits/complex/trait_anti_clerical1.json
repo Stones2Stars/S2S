@@ -215,7 +215,7 @@
   "negativeTrait": true
  },
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_ANTI_CLERICAL2"
   ]
  }

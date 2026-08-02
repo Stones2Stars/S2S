@@ -187,5 +187,10 @@
     "percent": -30
    }
   }
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_PROGRESSIST1"
+  ]
  }
 }

@@ -222,5 +222,10 @@
   "description": "TXT_KEY_TRAIT_SEAFARING",
   "civilopedia": "TXT_KEY_TRAIT_SEAFARING_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_SEAFARING_SHORT"
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_SEAFARING1"
+  ]
  }
 }

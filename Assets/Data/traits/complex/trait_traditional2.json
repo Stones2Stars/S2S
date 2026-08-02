@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_TRADITIONAL2",
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_TRADITIONAL3"
   ]
  },
@@ -332,12 +332,5 @@
   "civilopedia": "TXT_KEY_TRAIT_TRADITIONAL2_PEDIA",
   "strategy": "TXT_KEY_TRAIT_TRADITIONAL_STRATEGY",
   "negativeTrait": true
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_TRADITIONAL1"
-   ]
-  }
  }
 }

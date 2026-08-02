@@ -589,5 +589,10 @@
   "civilopedia": "TXT_KEY_TRAIT_CROOKED_PEDIA",
   "strategy": "TXT_KEY_TRAIT_CROOKED_STRATEGY",
   "negativeTrait": true
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_CROOKED1"
+  ]
  }
 }

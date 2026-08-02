@@ -654,5 +654,10 @@
   "strategy": "TXT_KEY_TRAIT_TRADITIONAL_STRATEGY",
   "negativeTrait": true,
   "impurePropertyManipulators": true
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_TRADITIONAL1"
+  ]
  }
 }

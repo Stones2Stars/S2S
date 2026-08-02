@@ -100,5 +100,10 @@
   "description": "TXT_KEY_TRAIT_PHILOSOPHICAL",
   "civilopedia": "TXT_KEY_TRAIT_PHILOSOPHICAL_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_PHILOSOPHICAL_SHORT"
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_PHILOSOPHICAL1"
+  ]
  }
 }

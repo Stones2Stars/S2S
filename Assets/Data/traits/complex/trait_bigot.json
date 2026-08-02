@@ -179,5 +179,10 @@
   "civilopedia": "TXT_KEY_TRAIT_BIGOT_PEDIA",
   "strategy": "TXT_KEY_TRAIT_BIGOT_STRATEGY",
   "negativeTrait": true
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_BIGOT1"
+  ]
  }
 }

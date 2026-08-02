@@ -276,7 +276,7 @@
   }
  },
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_CARELESS2"
   ]
  }

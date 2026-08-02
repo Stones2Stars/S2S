@@ -358,12 +358,5 @@
   "strategy": "TXT_KEY_TRAIT_TRADITIONAL_STRATEGY",
   "negativeTrait": true,
   "impurePropertyManipulators": true
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_TRADITIONAL2"
-   ]
-  }
  }
 }

@@ -294,12 +294,5 @@
   "civilopedia": "TXT_KEY_TRAIT_NEGLIGENT3_PEDIA",
   "strategy": "TXT_KEY_TRAIT_NEGLIGENT_STRATEGY",
   "negativeTrait": true
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_NEGLIGENT2"
-   ]
-  }
  }
 }

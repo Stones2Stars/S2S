@@ -585,7 +585,7 @@
   "strategy": "TXT_KEY_TRAIT_COMPLEX_CREATIVE_STRATEGY"
  },
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_CREATIVE2"
   ]
  }

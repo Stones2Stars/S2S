@@ -148,12 +148,5 @@
     "percent": -20
    }
   }
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_CARELESS2"
-   ]
-  }
  }
 }

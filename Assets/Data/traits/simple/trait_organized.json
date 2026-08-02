@@ -135,5 +135,10 @@
   "description": "TXT_KEY_TRAIT_ORGANIZED",
   "civilopedia": "TXT_KEY_TRAIT_ORGANIZED_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_ORGANIZED_SHORT"
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_ORGANIZED1"
+  ]
  }
 }

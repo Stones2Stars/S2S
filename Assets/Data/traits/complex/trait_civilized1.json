@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_CIVILIZED1",
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_CIVILIZED2"
   ]
  },

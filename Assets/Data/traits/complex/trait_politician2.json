@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_POLITICIAN2",
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_POLITICIAN3"
   ]
  },
@@ -211,12 +211,5 @@
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_POLITICIAN2_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_POLITICIAN_STRATEGY",
   "impurePropertyManipulators": true
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_POLITICIAN1"
-   ]
-  }
  }
 }

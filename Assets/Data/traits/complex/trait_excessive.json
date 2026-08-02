@@ -202,5 +202,10 @@
     }
    }
   }
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_EXCESSIVE1"
+  ]
  }
 }

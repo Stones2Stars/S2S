@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_EFFICIENT2",
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_EFFICIENT3"
   ]
  },
@@ -216,12 +216,5 @@
   "civilopedia": "TXT_KEY_TRAIT_EFFICIENT2_PEDIA",
   "strategy": "TXT_KEY_TRAIT_EFFICIENT_STRATEGY",
   "impurePropertyManipulators": true
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_EFFICIENT1"
-   ]
-  }
  }
 }

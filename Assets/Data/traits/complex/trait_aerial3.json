@@ -434,12 +434,5 @@
   "civilopedia": "TXT_KEY_TRAIT_AERIAL3_PEDIA",
   "strategy": "TXT_KEY_TRAIT_AERIAL_STRATEGY",
   "impurePropertyManipulators": true
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_AERIAL2"
-   ]
-  }
  }
 }

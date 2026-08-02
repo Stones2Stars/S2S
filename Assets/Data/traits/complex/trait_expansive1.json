@@ -147,7 +147,7 @@
   "strategy": "TXT_KEY_TRAIT_COMPLEX_EXPANSIVE_STRATEGY"
  },
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_EXPANSIVE2"
   ]
  }

@@ -145,12 +145,5 @@
     "percent": 20
    }
   }
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_AGGRESSIVE2"
-   ]
-  }
  }
 }

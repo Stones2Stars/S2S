@@ -493,5 +493,10 @@
     "percent": -20
    }
   }
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_DYNAMIC1"
+  ]
  }
 }

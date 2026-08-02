@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_COWARDLY1",
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_COWARDLY2"
   ]
  },

@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_WARMONGER1",
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_WARMONGER2"
   ]
  },

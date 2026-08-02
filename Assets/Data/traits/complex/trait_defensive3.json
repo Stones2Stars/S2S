@@ -224,12 +224,5 @@
     "percent": 10
    }
   }
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_DEFENSIVE2"
-   ]
-  }
  }
 }

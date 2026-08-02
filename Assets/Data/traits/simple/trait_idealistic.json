@@ -47,5 +47,10 @@
   "civilopedia": "TXT_KEY_TRAIT_IDEALISTIC_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_IDEALISTIC_SHORT",
   "negativeTrait": true
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_IDEALISTIC1"
+  ]
  }
 }

@@ -153,12 +153,5 @@
   "civilopedia": "TXT_KEY_TRAIT_GRIM3_PEDIA",
   "strategy": "TXT_KEY_TRAIT_GRIM_STRATEGY",
   "negativeTrait": true
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_GRIM2"
-   ]
-  }
  }
 }

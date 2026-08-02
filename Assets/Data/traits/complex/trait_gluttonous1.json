@@ -345,7 +345,7 @@
   "negativeTrait": true
  },
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_GLUTTONOUS2"
   ]
  }

@@ -167,7 +167,7 @@
   "impurePropertyManipulators": true
  },
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_POPULIST2"
   ]
  }

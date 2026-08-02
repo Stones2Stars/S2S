@@ -213,7 +213,7 @@
   "negativeTrait": true
  },
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_CRUEL2"
   ]
  }

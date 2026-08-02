@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_WARMONGER2",
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_WARMONGER3"
   ]
  },
@@ -134,13 +134,6 @@
    "upgrade": {
     "percent": -30
    }
-  }
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_WARMONGER1"
-   ]
   }
  }
 }

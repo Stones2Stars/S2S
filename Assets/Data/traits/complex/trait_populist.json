@@ -229,5 +229,10 @@
   "strategy": "TXT_KEY_TRAIT_COMPLEX_POPULIST_STRATEGY",
   "negativeTrait": true,
   "impurePropertyManipulators": true
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_POPULIST1"
+  ]
  }
 }

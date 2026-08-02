@@ -415,5 +415,10 @@
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_ANTI_CLERICAL_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_ANTI_CLERICAL_STRATEGY",
   "negativeTrait": true
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_ANTI_CLERICAL1"
+  ]
  }
 }

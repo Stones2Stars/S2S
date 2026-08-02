@@ -178,5 +178,10 @@
     "percent": 10
    }
   }
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_BARBARIC1"
+  ]
  }
 }

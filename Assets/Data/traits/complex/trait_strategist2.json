@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_STRATEGIST2",
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_STRATEGIST3"
   ]
  },
@@ -225,13 +225,6 @@
    "upgrade": {
     "percent": 10
    }
-  }
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_STRATEGIST1"
-   ]
   }
  }
 }

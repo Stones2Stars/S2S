@@ -209,12 +209,5 @@
     "percent": -15
    }
   }
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_MEEK2"
-   ]
-  }
  }
 }

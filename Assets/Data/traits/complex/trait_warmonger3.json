@@ -127,12 +127,5 @@
     "percent": -35
    }
   }
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_WARMONGER2"
-   ]
-  }
  }
 }

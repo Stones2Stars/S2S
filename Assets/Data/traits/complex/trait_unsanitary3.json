@@ -330,12 +330,5 @@
   "civilopedia": "TXT_KEY_TRAIT_UNSANITARY3_PEDIA",
   "strategy": "TXT_KEY_TRAIT_UNSANITARY_STRATEGY",
   "negativeTrait": true
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_UNSANITARY2"
-   ]
-  }
  }
 }

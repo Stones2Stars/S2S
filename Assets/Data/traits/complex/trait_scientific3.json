@@ -408,12 +408,5 @@
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_SCIENTIFIC3_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_SCIENTIFIC_STRATEGY",
   "impurePropertyManipulators": true
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_SCIENTIFIC2"
-   ]
-  }
  }
 }

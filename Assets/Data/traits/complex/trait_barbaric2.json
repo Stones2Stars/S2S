@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_BARBARIC2",
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_BARBARIC3"
   ]
  },
@@ -164,13 +164,6 @@
    "upgrade": {
     "percent": 15
    }
-  }
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_BARBARIC1"
-   ]
   }
  }
 }

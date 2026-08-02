@@ -247,7 +247,7 @@
   }
  },
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_IMPERIALIST2"
   ]
  }

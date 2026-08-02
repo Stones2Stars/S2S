@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_ISOLATIONIST2",
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_ISOLATIONIST3"
   ]
  },
@@ -173,12 +173,5 @@
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_ISOLATIONIST2_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_ISOLATIONIST_STRATEGY",
   "negativeTrait": true
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_ISOLATIONIST1"
-   ]
-  }
  }
 }

@@ -66,5 +66,10 @@
   "civilopedia": "TXT_KEY_TRAIT_TEMPERAMENTAL_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_TEMPERAMENTAL_SHORT",
   "negativeTrait": true
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_TEMPERAMENTAL1"
+  ]
  }
 }

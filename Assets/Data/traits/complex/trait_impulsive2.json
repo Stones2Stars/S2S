@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_IMPULSIVE2",
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_IMPULSIVE3"
   ]
  },
@@ -154,12 +154,5 @@
   "civilopedia": "TXT_KEY_TRAIT_IMPULSIVE2_PEDIA",
   "strategy": "TXT_KEY_TRAIT_IMPULSIVE_STRATEGY",
   "negativeTrait": true
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_IMPULSIVE1"
-   ]
-  }
  }
 }

@@ -161,12 +161,5 @@
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_IDEALISTIC3_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_IDEALISTIC_STRATEGY",
   "negativeTrait": true
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_IDEALISTIC2"
-   ]
-  }
  }
 }

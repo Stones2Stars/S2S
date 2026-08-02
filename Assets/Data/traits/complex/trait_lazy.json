@@ -640,5 +640,10 @@
   "strategy": "TXT_KEY_TRAIT_LAZY_STRATEGY",
   "negativeTrait": true,
   "impurePropertyManipulators": true
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_LAZY1"
+  ]
  }
 }

@@ -163,7 +163,7 @@
   "negativeTrait": true
  },
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_IDEALISTIC2"
   ]
  }

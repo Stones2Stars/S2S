@@ -273,7 +273,7 @@
   "impurePromotions": true
  },
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_ZEALOUS2"
   ]
  }

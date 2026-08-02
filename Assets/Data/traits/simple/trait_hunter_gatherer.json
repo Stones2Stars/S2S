@@ -90,5 +90,10 @@
   "civilopedia": "TXT_KEY_TRAIT_HUNTER_GATHERER_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_HUNTER_GATHERER_SHORT",
   "negativeTrait": true
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_HUNTER_GATHERER1"
+  ]
  }
 }

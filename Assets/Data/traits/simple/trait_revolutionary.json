@@ -89,5 +89,10 @@
   "shortDescription": "TXT_KEY_TRAIT_REVOLUTIONARY_SHORT",
   "negativeTrait": true,
   "impurePromotions": true
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_REVOLUTIONARY1"
+  ]
  }
 }

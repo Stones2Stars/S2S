@@ -303,15 +303,8 @@
   "civilopedia": "TXT_KEY_TRAIT_MEDICAL2_PEDIA",
   "strategy": "TXT_KEY_TRAIT_MEDICAL_STRATEGY"
  },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_MEDICAL1"
-   ]
-  }
- },
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_MEDICAL3"
   ]
  }

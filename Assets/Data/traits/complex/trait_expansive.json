@@ -139,5 +139,10 @@
   "description": "TXT_KEY_TRAIT_COMPLEX_EXPANSIVE",
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_EXPANSIVE_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_EXPANSIVE_STRATEGY"
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_EXPANSIVE1"
+  ]
  }
 }

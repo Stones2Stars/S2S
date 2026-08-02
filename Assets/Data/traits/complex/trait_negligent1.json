@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_NEGLIGENT1",
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_NEGLIGENT2"
   ]
  },

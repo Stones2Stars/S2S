@@ -411,7 +411,7 @@
   "impurePropertyManipulators": true
  },
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_INDUSTRIOUS2"
   ]
  }

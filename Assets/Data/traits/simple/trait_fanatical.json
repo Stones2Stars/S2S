@@ -69,5 +69,10 @@
   "civilopedia": "TXT_KEY_TRAIT_FANATICAL_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_FANATICAL_SHORT",
   "negativeTrait": true
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_FANATICAL1"
+  ]
  }
 }

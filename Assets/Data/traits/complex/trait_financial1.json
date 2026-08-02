@@ -440,7 +440,7 @@
   }
  },
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_FINANCIAL2"
   ]
  }

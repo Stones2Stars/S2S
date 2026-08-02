@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_MINIMALIST1",
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_MINIMALIST2"
   ]
  },

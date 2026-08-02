@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_CROOKED1",
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_CROOKED2"
   ]
  },

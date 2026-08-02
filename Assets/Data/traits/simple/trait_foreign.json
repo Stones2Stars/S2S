@@ -94,5 +94,10 @@
   "shortDescription": "TXT_KEY_TRAIT_FOREIGN_SHORT",
   "negativeTrait": true,
   "impurePromotions": true
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_FOREIGN1"
+  ]
  }
 }

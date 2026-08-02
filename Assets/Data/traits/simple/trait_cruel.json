@@ -67,5 +67,10 @@
   "civilopedia": "TXT_KEY_TRAIT_CRUEL_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_CRUEL_SHORT",
   "negativeTrait": true
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_CRUEL1"
+  ]
  }
 }

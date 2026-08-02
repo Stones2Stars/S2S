@@ -167,12 +167,5 @@
     "percent": 20
    }
   }
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_STRATEGIST2"
-   ]
-  }
  }
 }

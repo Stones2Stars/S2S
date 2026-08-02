@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_FINANCIAL1",
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_FINANCIAL2"
   ]
  },

@@ -442,7 +442,7 @@
   "strategy": "TXT_KEY_TRAIT_COMPLEX_SEAFARING_STRATEGY"
  },
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_SEAFARING2"
   ]
  }

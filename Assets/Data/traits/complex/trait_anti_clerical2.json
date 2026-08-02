@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_ANTI_CLERICAL2",
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_ANTI_CLERICAL3"
   ]
  },
@@ -224,12 +224,5 @@
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_ANTI_CLERICAL2_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_ANTI_CLERICAL_STRATEGY",
   "negativeTrait": true
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_ANTI_CLERICAL1"
-   ]
-  }
  }
 }

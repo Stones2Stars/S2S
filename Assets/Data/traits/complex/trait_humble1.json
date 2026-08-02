@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_HUMBLE1",
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_HUMBLE2"
   ]
  },

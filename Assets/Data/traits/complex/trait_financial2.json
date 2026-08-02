@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_FINANCIAL2",
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_FINANCIAL3"
   ]
  },
@@ -331,13 +331,6 @@
    "hurry": {
     "percent": -25
    }
-  }
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_FINANCIAL1"
-   ]
   }
  }
 }

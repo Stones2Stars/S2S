@@ -98,5 +98,10 @@
   "shortDescription": "TXT_KEY_TRAIT_EXCESSIVE_SHORT",
   "negativeTrait": true,
   "impurePromotions": true
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_EXCESSIVE1"
+  ]
  }
 }

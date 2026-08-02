@@ -322,5 +322,10 @@
   "strategy": "TXT_KEY_TRAIT_ZEALOUS_STRATEGY",
   "negativeTrait": true,
   "impurePromotions": true
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_FANATICAL1"
+  ]
  }
 }

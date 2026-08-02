@@ -355,7 +355,7 @@
   "impurePropertyManipulators": true
  },
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_AGRICULTURAL2"
   ]
  }

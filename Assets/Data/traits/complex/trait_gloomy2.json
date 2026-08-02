@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_GLOOMY2",
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_GLOOMY3"
   ]
  },
@@ -186,12 +186,5 @@
   "strategy": "TXT_KEY_TRAIT_GLOOMY_STRATEGY",
   "negativeTrait": true,
   "impurePropertyManipulators": true
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_GLOOMY1"
-   ]
-  }
  }
 }

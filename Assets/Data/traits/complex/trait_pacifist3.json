@@ -126,12 +126,5 @@
     "percent": 30
    }
   }
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_PACIFIST2"
-   ]
-  }
  }
 }

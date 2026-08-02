@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_ORGANIZED1",
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_ORGANIZED2"
   ]
  },

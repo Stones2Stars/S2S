@@ -281,7 +281,7 @@
   "impurePropertyManipulators": true
  },
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_SCIENTIFIC2"
   ]
  }

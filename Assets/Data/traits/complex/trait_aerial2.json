@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_AERIAL2",
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_AERIAL3"
   ]
  },
@@ -480,12 +480,5 @@
   "civilopedia": "TXT_KEY_TRAIT_AERIAL2_PEDIA",
   "strategy": "TXT_KEY_TRAIT_AERIAL_STRATEGY",
   "impurePropertyManipulators": true
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_AERIAL1"
-   ]
-  }
  }
 }

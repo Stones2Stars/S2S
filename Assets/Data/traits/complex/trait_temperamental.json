@@ -120,5 +120,10 @@
   "strategy": "TXT_KEY_TRAIT_COMPLEX_TEMPERAMENTAL_STRATEGY",
   "negativeTrait": true,
   "impurePropertyManipulators": true
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_TEMPERAMENTAL1"
+  ]
  }
 }

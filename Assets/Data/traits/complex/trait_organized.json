@@ -154,5 +154,10 @@
     "percent": 25
    }
   }
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_ORGANIZED1"
+  ]
  }
 }

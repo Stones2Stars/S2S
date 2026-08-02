@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_CRUEL2",
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_CRUEL3"
   ]
  },
@@ -216,12 +216,5 @@
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_CRUEL2_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_CRUEL_STRATEGY",
   "negativeTrait": true
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_CRUEL1"
-   ]
-  }
  }
 }

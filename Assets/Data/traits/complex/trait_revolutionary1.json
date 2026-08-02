@@ -200,7 +200,7 @@
   "impurePropertyManipulators": true
  },
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_REVOLUTIONARY2"
   ]
  }

@@ -222,12 +222,5 @@
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_REVOLUTIONARY3_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_REVOLUTIONARY_STRATEGY",
   "impurePropertyManipulators": true
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_REVOLUTIONARY2"
-   ]
-  }
  }
 }

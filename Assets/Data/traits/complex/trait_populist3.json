@@ -194,12 +194,5 @@
   "strategy": "TXT_KEY_TRAIT_COMPLEX_POPULIST_STRATEGY",
   "negativeTrait": true,
   "impurePropertyManipulators": true
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_POPULIST2"
-   ]
-  }
  }
 }

@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_PHILOSOPHICAL1",
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_PHILOSOPHICAL2"
   ]
  },

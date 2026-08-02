@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_PROTECTIVE2",
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_PROTECTIVE3"
   ]
  },
@@ -378,12 +378,5 @@
   "description": "TXT_KEY_TRAIT_COMPLEX_PROTECTIVE2",
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_PROTECTIVE2_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_PROTECTIVE_STRATEGY"
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_PROTECTIVE1"
-   ]
-  }
  }
 }

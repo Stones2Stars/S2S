@@ -345,7 +345,7 @@
   "impurePropertyManipulators": true
  },
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_DECEIVER2"
   ]
  }

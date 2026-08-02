@@ -141,12 +141,5 @@
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_MEGALOMANIAC3_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_MEGALOMANIAC_STRATEGY",
   "negativeTrait": true
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_MEGALOMANIAC2"
-   ]
-  }
  }
 }

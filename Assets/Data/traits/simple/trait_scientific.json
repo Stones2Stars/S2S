@@ -91,5 +91,10 @@
   "description": "TXT_KEY_TRAIT_SCIENTIFIC",
   "civilopedia": "TXT_KEY_TRAIT_SCIENTIFIC_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_SCIENTIFIC_SHORT"
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_SCIENTIFIC1"
+  ]
  }
 }

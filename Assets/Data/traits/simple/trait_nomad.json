@@ -340,5 +340,10 @@
   "civilopedia": "TXT_KEY_TRAIT_NOMAD_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_NOMAD_SHORT",
   "impurePropertyManipulators": true
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_NOMAD1"
+  ]
  }
 }

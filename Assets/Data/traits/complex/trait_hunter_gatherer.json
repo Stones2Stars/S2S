@@ -156,5 +156,10 @@
   "strategy": "TXT_KEY_TRAIT_COMPLEX_HUNTER_GATHERER_STRATEGY",
   "negativeTrait": true,
   "impurePropertyManipulators": true
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_HUNTER_GATHERER1"
+  ]
  }
 }

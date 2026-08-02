@@ -126,5 +126,10 @@
   "description": "TXT_KEY_TRAIT_POLITICIAN",
   "civilopedia": "TXT_KEY_TRAIT_POLITICIAN_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_POLITICIAN_SHORT"
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_POLITICIAN1"
+  ]
  }
 }

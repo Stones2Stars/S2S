@@ -112,12 +112,5 @@
     "percent": 25
    }
   }
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_PROLIFIC2"
-   ]
-  }
  }
 }

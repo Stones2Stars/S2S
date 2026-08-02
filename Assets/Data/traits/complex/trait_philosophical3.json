@@ -198,12 +198,5 @@
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_PHILOSOPHICAL3_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_PHILOSOPHICAL_STRATEGY",
   "impurePropertyManipulators": true
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_PHILOSOPHICAL2"
-   ]
-  }
  }
 }

@@ -183,5 +183,10 @@
   "civilopedia": "TXT_KEY_TRAIT_AGGRESSIVE_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_AGGRESSIVE_SHORT",
   "impurePropertyManipulators": true
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_AGGRESSIVE1"
+  ]
  }
 }

@@ -206,5 +206,10 @@
   "civilopedia": "TXT_KEY_TRAIT_INDUSTRIOUS_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_INDUSTRIOUS_SHORT",
   "impurePropertyManipulators": true
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_INDUSTRIOUS1"
+  ]
  }
 }

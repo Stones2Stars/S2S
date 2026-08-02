@@ -265,5 +265,10 @@
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_CRUEL_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_CRUEL_STRATEGY",
   "negativeTrait": true
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_CRUEL1"
+  ]
  }
 }

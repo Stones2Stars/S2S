@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_INNOVATIVE2",
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_INNOVATIVE3"
   ]
  },
@@ -130,12 +130,5 @@
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_INNOVATIVE2_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_INNOVATIVE_STRATEGY",
   "minAnarchy": 2
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_PROGRESSIST1"
-   ]
-  }
  }
 }

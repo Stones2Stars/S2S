@@ -149,7 +149,7 @@
   "impurePropertyManipulators": true
  },
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_HUNTER_GATHERER2"
   ]
  }

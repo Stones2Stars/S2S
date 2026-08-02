@@ -155,12 +155,5 @@
   "civilopedia": "TXT_KEY_TRAIT_IMPULSIVE3_PEDIA",
   "strategy": "TXT_KEY_TRAIT_IMPULSIVE_STRATEGY",
   "negativeTrait": true
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_IMPULSIVE2"
-   ]
-  }
  }
 }

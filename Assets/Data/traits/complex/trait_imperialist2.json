@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_IMPERIALIST2",
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_IMPERIALIST3"
   ]
  },
@@ -261,13 +261,6 @@
    "upgrade": {
     "percent": 15
    }
-  }
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_IMPERIALIST1"
-   ]
   }
  }
 }

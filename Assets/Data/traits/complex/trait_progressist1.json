@@ -111,7 +111,7 @@
   "minAnarchy": 1
  },
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_INNOVATIVE2"
   ]
  }

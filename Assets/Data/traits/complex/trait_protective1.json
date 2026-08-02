@@ -480,7 +480,7 @@
   "strategy": "TXT_KEY_TRAIT_COMPLEX_PROTECTIVE_STRATEGY"
  },
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_PROTECTIVE2"
   ]
  }

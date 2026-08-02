@@ -139,12 +139,5 @@
     }
    }
   }
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_EFFICIENT2"
-   ]
-  }
  }
 }

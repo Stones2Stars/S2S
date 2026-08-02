@@ -746,5 +746,10 @@
   "civilopedia": "TXT_KEY_TRAIT_UNREFINED_PEDIA",
   "strategy": "TXT_KEY_TRAIT_UNREFINED_STRATEGY",
   "negativeTrait": true
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_UNREFINED1"
+  ]
  }
 }

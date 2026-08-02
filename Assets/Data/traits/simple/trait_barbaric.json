@@ -105,5 +105,10 @@
   "shortDescription": "TXT_KEY_TRAIT_BARBARIC_SHORT",
   "negativeTrait": true,
   "impurePromotions": true
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_BARBARIC1"
+  ]
  }
 }

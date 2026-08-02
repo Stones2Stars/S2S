@@ -413,5 +413,10 @@
     "percent": 20
    }
   }
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_STRATEGIST1"
+  ]
  }
 }

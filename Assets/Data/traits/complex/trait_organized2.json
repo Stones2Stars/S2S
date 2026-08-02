@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_ORGANIZED2",
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_ORGANIZED3"
   ]
  },
@@ -152,12 +152,5 @@
   "description": "TXT_KEY_TRAIT_COMPLEX_ORGANIZED2",
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_ORGANIZED2_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_ORGANIZED_STRATEGY"
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_ORGANIZED1"
-   ]
-  }
  }
 }

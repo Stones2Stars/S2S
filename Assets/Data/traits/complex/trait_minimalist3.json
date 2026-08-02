@@ -146,12 +146,5 @@
   "civilopedia": "TXT_KEY_TRAIT_MINIMALIST3_PEDIA",
   "strategy": "TXT_KEY_TRAIT_MINIMALIST_STRATEGY",
   "negativeTrait": true
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_MINIMALIST2"
-   ]
-  }
  }
 }

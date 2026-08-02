@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_MEEK2",
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_MEEK3"
   ]
  },
@@ -252,13 +252,6 @@
    "upgrade": {
     "percent": -10
    }
-  }
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_MEEK1"
-   ]
   }
  }
 }

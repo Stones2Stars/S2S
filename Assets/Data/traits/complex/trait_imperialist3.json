@@ -206,12 +206,5 @@
     "percent": 20
    }
   }
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_IMPERIALIST2"
-   ]
-  }
  }
 }

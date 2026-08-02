@@ -165,12 +165,5 @@
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_ISOLATIONIST3_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_ISOLATIONIST_STRATEGY",
   "negativeTrait": true
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_ISOLATIONIST2"
-   ]
-  }
  }
 }

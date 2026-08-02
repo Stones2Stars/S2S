@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_GREEDY2",
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_GREEDY3"
   ]
  },
@@ -315,13 +315,6 @@
    "hurry": {
     "percent": -25
    }
-  }
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_GREEDY1"
-   ]
   }
  }
 }

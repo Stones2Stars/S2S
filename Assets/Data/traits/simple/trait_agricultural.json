@@ -175,5 +175,10 @@
   "description": "TXT_KEY_TRAIT_AGRICULTURAL",
   "civilopedia": "TXT_KEY_TRAIT_AGRICULTURAL_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_AGRICULTURAL_SHORT"
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_AGRICULTURAL1"
+  ]
  }
 }

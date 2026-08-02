@@ -303,15 +303,8 @@
   "strategy": "TXT_KEY_TRAIT_UNSANITARY_STRATEGY",
   "negativeTrait": true
  },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_UNSANITARY1"
-   ]
-  }
- },
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_UNSANITARY3"
   ]
  }

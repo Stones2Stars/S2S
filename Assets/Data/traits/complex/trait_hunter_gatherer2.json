@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_HUNTER_GATHERER2",
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_HUNTER_GATHERER3"
   ]
  },
@@ -156,12 +156,5 @@
   "strategy": "TXT_KEY_TRAIT_COMPLEX_HUNTER_GATHERER_STRATEGY",
   "negativeTrait": true,
   "impurePropertyManipulators": true
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_HUNTER_GATHERER1"
-   ]
-  }
  }
 }

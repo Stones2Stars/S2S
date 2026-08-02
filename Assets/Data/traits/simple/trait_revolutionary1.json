@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_REVOLUTIONARY1",
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_REVOLUTIONARY2"
   ]
  },

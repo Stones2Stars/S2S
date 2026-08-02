@@ -73,5 +73,10 @@
   "civilopedia": "TXT_KEY_TRAIT_ISOLATIONIST_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_ISOLATIONIST_SHORT",
   "negativeTrait": true
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_ISOLATIONIST1"
+  ]
  }
 }

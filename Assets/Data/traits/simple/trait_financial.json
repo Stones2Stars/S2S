@@ -121,5 +121,10 @@
     }
    }
   }
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_FINANCIAL1"
+  ]
  }
 }

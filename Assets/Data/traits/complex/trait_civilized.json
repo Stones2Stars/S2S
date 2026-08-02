@@ -178,5 +178,10 @@
   "civilopedia": "TXT_KEY_TRAIT_CIVILIZED_PEDIA",
   "strategy": "TXT_KEY_TRAIT_CIVILIZED_STRATEGY",
   "maxAnarchy": 4
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_CIVILIZED1"
+  ]
  }
 }

@@ -119,7 +119,7 @@
   "strategy": "TXT_KEY_TRAIT_COMPLEX_CHARISMATIC_STRATEGY"
  },
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_CHARISMATIC2"
   ]
  }

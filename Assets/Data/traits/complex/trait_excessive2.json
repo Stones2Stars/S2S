@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_EXCESSIVE2",
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_EXCESSIVE3"
   ]
  },
@@ -207,12 +207,5 @@
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_EXCESSIVE2_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_EXCESSIVE_STRATEGY",
   "negativeTrait": true
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_EXCESSIVE1"
-   ]
-  }
  }
 }

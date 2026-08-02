@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_MEEK1",
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_MEEK2"
   ]
  },

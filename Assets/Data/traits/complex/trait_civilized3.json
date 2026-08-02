@@ -154,12 +154,5 @@
   "civilopedia": "TXT_KEY_TRAIT_CIVILIZED3_PEDIA",
   "strategy": "TXT_KEY_TRAIT_CIVILIZED_STRATEGY",
   "maxAnarchy": 2
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_CIVILIZED2"
-   ]
-  }
  }
 }

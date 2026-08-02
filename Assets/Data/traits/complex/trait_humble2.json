@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_HUMBLE2",
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_HUMBLE3"
   ]
  },
@@ -145,12 +145,5 @@
   "description": "TXT_KEY_TRAIT_HUMBLE2",
   "civilopedia": "TXT_KEY_TRAIT_HUMBLE2_PEDIA",
   "strategy": "TXT_KEY_TRAIT_HUMBLE_STRATEGY"
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_HUMBLE1"
-   ]
-  }
  }
 }

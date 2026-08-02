@@ -94,5 +94,10 @@
   "civilopedia": "TXT_KEY_TRAIT_MEGALOMANIAC_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_MEGALOMANIAC_SHORT",
   "negativeTrait": true
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_MEGALOMANIAC1"
+  ]
  }
 }

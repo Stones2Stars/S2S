@@ -131,5 +131,10 @@
     "percent": 50
    }
   }
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_PACIFIST1"
+  ]
  }
 }

@@ -311,5 +311,10 @@
     "percent": 15
    }
   }
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_NATURALIST1"
+  ]
  }
 }

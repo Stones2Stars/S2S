@@ -213,7 +213,7 @@
   "strategy": "TXT_KEY_TRAIT_COMPLEX_HUMANITARIAN_STRATEGY"
  },
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_HUMANITARIAN2"
   ]
  }

@@ -295,7 +295,7 @@
   }
  },
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_STRATEGIST2"
   ]
  }

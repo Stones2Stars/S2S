@@ -138,7 +138,7 @@
   "negativeTrait": true
  },
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_MEGALOMANIAC2"
   ]
  }

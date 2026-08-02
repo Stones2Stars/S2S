@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_BIGOT2",
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_BIGOT3"
   ]
  },
@@ -175,12 +175,5 @@
   "civilopedia": "TXT_KEY_TRAIT_BIGOT2_PEDIA",
   "strategy": "TXT_KEY_TRAIT_BIGOT_STRATEGY",
   "negativeTrait": true
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_BIGOT1"
-   ]
-  }
  }
 }

@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_ISOLATIONIST1",
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_ISOLATIONIST2"
   ]
  },

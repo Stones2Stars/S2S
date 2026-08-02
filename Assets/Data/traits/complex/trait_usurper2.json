@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_USURPER2",
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_USURPER3"
   ]
  },
@@ -192,12 +192,5 @@
   "civilopedia": "TXT_KEY_TRAIT_USURPER2_PEDIA",
   "strategy": "TXT_KEY_TRAIT_USURPER_STRATEGY",
   "negativeTrait": true
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_USURPER1"
-   ]
-  }
  }
 }

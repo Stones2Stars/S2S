@@ -133,5 +133,10 @@
     "percent": -40
    }
   }
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_WARMONGER1"
+  ]
  }
 }

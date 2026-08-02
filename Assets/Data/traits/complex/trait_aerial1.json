@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_AERIAL1",
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_AERIAL2"
   ]
  },

@@ -198,12 +198,5 @@
   "civilopedia": "TXT_KEY_TRAIT_USURPER3_PEDIA",
   "strategy": "TXT_KEY_TRAIT_USURPER_STRATEGY",
   "negativeTrait": true
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_USURPER2"
-   ]
-  }
  }
 }

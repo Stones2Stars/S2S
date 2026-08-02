@@ -121,15 +121,8 @@
   "negativeTrait": true,
   "impurePropertyManipulators": true
  },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_TEMPERAMENTAL1"
-   ]
-  }
- },
  "enables": {
-  "traitsAnd": [
+  "traits": [
    "TRAIT_TEMPERAMENTAL3"
   ]
  }

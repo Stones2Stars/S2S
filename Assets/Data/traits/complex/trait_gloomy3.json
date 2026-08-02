@@ -181,12 +181,5 @@
   "strategy": "TXT_KEY_TRAIT_GLOOMY_STRATEGY",
   "negativeTrait": true,
   "impurePropertyManipulators": true
- },
- "requires": {
-  "build": {
-   "all": [
-    "TRAIT_GLOOMY2"
-   ]
-  }
  }
 }

@@ -116,5 +116,10 @@
   "description": "TXT_KEY_TRAIT_CHARISMATIC",
   "civilopedia": "TXT_KEY_TRAIT_CHARISMATIC_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_CHARISMATIC_SHORT"
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_CHARISMATIC1"
+  ]
  }
 }
