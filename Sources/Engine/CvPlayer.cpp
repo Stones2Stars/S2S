@@ -4267,12 +4267,6 @@ void CvPlayer::RecalculatePlotGroupHashes()
 	algo::for_each(plot_groups(), CvPlotGroup::fn::RecalculateHashes());
 }
 
-void CvPlayer::updateYield()
-{
-	algo::for_each(cities(), CvCity::fn::updateYield());
-}
-
-
 
 void CvPlayer::updateCorporation()
 {
@@ -8850,7 +8844,6 @@ void CvPlayer::changeGoldenAgeTurns(int iChange)
 				changeAnarchyTurns(-getAnarchyTurns());
 				((CvPlayerAI*)this)->AI_startGoldenAge();
 			}
-			updateYield();
 
 			if (bWasGoldenAge)
 			{
@@ -11618,7 +11611,6 @@ void CvPlayer::changeSeaPlotYield(YieldTypes eIndex, int iChange)
 	{
 		m_aiSeaPlotYield[eIndex] += iChange;
 
-		updateYield();
 	}
 }
 
@@ -11691,7 +11683,6 @@ void CvPlayer::updateExtraYieldThreshold(YieldTypes eIndex)
 		m_aiExtraYieldThreshold[eIndex] = iBestValue;
 		FASSERT_NOT_NEGATIVE(getExtraYieldThreshold(eIndex));
 
-		updateYield();
 	}
 }
 
@@ -11730,7 +11721,6 @@ void CvPlayer::updateLessYieldThreshold(YieldTypes eIndex)
 		m_aiLessYieldThreshold[eIndex] = iWorstValue;
 		FASSERT_NOT_NEGATIVE(getLessYieldThreshold(eIndex));
 
-		updateYield();
 	}
 }
 
@@ -24892,7 +24882,6 @@ void CvPlayer::changeTerrainYieldChange(TerrainTypes eIndex1, YieldTypes eIndex2
 	{
 		m_ppaaiTerrainYieldChange[eIndex1][eIndex2] += iChange;
 
-		updateYield();
 	}
 }
 
@@ -25396,7 +25385,6 @@ void CvPlayer::changeLandmarkYield(YieldTypes eIndex, int iChange)
 	{
 		m_aiLandmarkYield[eIndex] += iChange;
 
-		updateYield();
 	}
 }
 

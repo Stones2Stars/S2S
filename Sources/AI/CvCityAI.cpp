@@ -9377,7 +9377,7 @@ void CvCityAI::AI_juggleCitizens()
 }
 
 
-bool CvCityAI::AI_potentialPlot(short* piYields) const
+bool CvCityAI::AI_potentialPlot(const int* piYields) const
 {
 	const int iNetFood = piYields[YIELD_FOOD] - GC.getFOOD_CONSUMPTION_PER_POPULATION();
 
@@ -9420,11 +9420,18 @@ bool CvCityAI::AI_foodAvailable(int iExtra) const
 
 		if (pLoopPlot != NULL)
 		{
+			// the plot's group read, reduced to the whole yields this heuristic weighs ([DEC-fixedpoint-x100])
+			int aiPlotYields[NUM_YIELD_TYPES];
+			pLoopPlot->getYields(aiPlotYields);
+			for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+			{
+				aiPlotYields[iYield] /= 100;
+			}
 			if (iI == CITY_HOME_PLOT)
 			{
-				iFoodCount += pLoopPlot->getYield(YIELD_FOOD);
+				iFoodCount += aiPlotYields[YIELD_FOOD];
 			}
-			else if ((pLoopPlot->getWorkingCity() == this) && AI_potentialPlot(pLoopPlot->getYield()))
+			else if (pLoopPlot->getWorkingCity() == this && AI_potentialPlot(aiPlotYields))
 			{
 				abPlotAvailable[iI] = true;
 			}

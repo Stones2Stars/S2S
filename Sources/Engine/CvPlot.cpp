@@ -1485,16 +1485,17 @@ bool CvPlot::updateSymbolsInternal()
 
 	if (isShowCitySymbols() || gDLL->getInterfaceIFace()->isShowYields() && !gDLL->getInterfaceIFace()->isCityScreenUp())
 	{
+		// The plot's own package, in one group read; the symbol stack draws WHOLE yields, so the single reduce
+		// is here at the display boundary ([DEC-fixedpoint-x100]).
 		int yieldAmounts[NUM_YIELD_TYPES];
+		getYields(yieldAmounts);
 		int maxYield = 0;
-		int iYield = 0;
 		for (int iYieldType = 0; iYieldType < NUM_YIELD_TYPES; iYieldType++)
 		{
-			iYield = calculateYield((YieldTypes)iYieldType, true);
-			yieldAmounts[iYieldType] = iYield;
-			if (iYield > maxYield)
+			yieldAmounts[iYieldType] /= 100;
+			if (yieldAmounts[iYieldType] > maxYield)
 			{
-				maxYield = iYield;
+				maxYield = yieldAmounts[iYieldType];
 			}
 		}
 
@@ -1506,7 +1507,7 @@ bool CvPlot::updateSymbolsInternal()
 
 			for (int iYieldType = 0; iYieldType < NUM_YIELD_TYPES; iYieldType++)
 			{
-				iYield = yieldAmounts[iYieldType];
+				int iYield = yieldAmounts[iYieldType];
 
 				if (iYield)
 				{
@@ -5801,7 +5802,6 @@ void CvPlot::setArea(int iNewValue)
 			processArea(area(), 1);
 
 			updateIrrigated();
-			updateYield();
 		}
 	}
 }
@@ -5934,12 +5934,10 @@ void CvPlot::setNOfRiver(bool bNewValue, CardinalDirectionTypes eRiverDir)
 			updatePlotGroupBonus(true);
 
 			updateRiverCrossing();
-			updateYield();
 
 			foreach_(CvPlot* pAdjacentPlot, adjacent())
 			{
 				pAdjacentPlot->updateRiverCrossing();
-				pAdjacentPlot->updateYield();
 			}
 
 			if (area() != NULL)
@@ -5984,12 +5982,10 @@ void CvPlot::setWOfRiver(bool bNewValue, CardinalDirectionTypes eRiverDir)
 			updatePlotGroupBonus(true);
 
 			updateRiverCrossing();
-			updateYield();
 
 			foreach_(CvPlot* pAdjacentPlot, adjacent())
 			{
 				pAdjacentPlot->updateRiverCrossing();
-				pAdjacentPlot->updateYield();
 			}
 
 			if (area())
@@ -6111,7 +6107,6 @@ void CvPlot::setIrrigated(bool bNewValue)
 		m_bIrrigated = bNewValue;
 		foreach_(CvPlot* pLoopPlot, rect(1, 1))
 		{
-			pLoopPlot->updateYield();
 			pLoopPlot->setLayoutDirty(true);
 		}
 		emitPlotIrrigationChanged(GC.getMap().plotNum(getX(), getY()), (int)getOwner(), bNewValue);
@@ -6183,7 +6178,6 @@ void CvPlot::updatePotentialCityWork()
 	if (m_bPotentialCityWork != bValid)
 	{
 		m_bPotentialCityWork = bValid;
-		updateYield();
 	}
 }
 
@@ -6446,7 +6440,6 @@ void CvPlot::setOwner(PlayerTypes eNewValue, bool bCheckUnits, bool bUpdatePlotG
 			}
 
 			updateIrrigated();
-			updateYield();
 
 			if (bUpdatePlotGroup)
 			{
@@ -6689,7 +6682,6 @@ void CvPlot::setPlotType(PlotTypes eNewValue, bool bRecalculate, bool bRebuildGr
 
 		foreach_(CvPlot* plotX, adjacent())
 		{
-			plotX->updateYield();
 			plotX->updatePlotGroup();
 		}
 
@@ -7162,7 +7154,6 @@ void CvPlot::setBonusType(BonusTypes eNewValue)
 			}
 		}
 
-		updateYield();
 
 		setLayoutDirty(true);
 
@@ -7352,7 +7343,6 @@ void CvPlot::setImprovementType(ImprovementTypes eNewImprovement)
 			}
 		}
 		updateIrrigated();
-		updateYield();
 
 		for (int iI = 0; iI < NUM_CITY_PLOTS; ++iI)
 		{
@@ -7459,7 +7449,6 @@ void CvPlot::setRouteType(RouteTypes eNewValue, bool bUpdatePlotGroups)
 			setRevealedRouteType((TeamTypes)iI, eNewValue);
 		}
 	}
-	updateYield();
 
 	if (bUpdatePlotGroups && bOldRoute != bNewRoute)
 	{
@@ -7585,7 +7574,6 @@ void CvPlot::setPlotCity(CvCity* pNewValue)
 		}
 	}
 	updateIrrigated();
-	updateYield();
 	updateMinimapColor();
 }
 
@@ -7685,7 +7673,6 @@ void CvPlot::updateWorkingCity()
 			getWorkingCity()->AI_setAssignWorkDirty(true);
 		}
 
-		updateYield();
 		updateFog();
 		updateShowCitySymbols();
 
@@ -7803,58 +7790,20 @@ void CvPlot::setExtraYield(YieldTypes eYield, short iExtraYield)
 
 	m_aExtraYield[eYield] += iExtraYield;
 
-	updateYield();
 }
 
 
-short* CvPlot::getYield() const
-{
-	return m_aiYield;
-}
-
+// ⛔ EXE-BOUND: the closed Firaxis .exe resolves ?getYield@CvPlot@@QBEHW4YieldTypes@@@Z by name (verified against
+// the deployed DLL's exports and the EXE image -- engine.md's decisive test), so the name, the signature and the
+// whole-yield return are FIXED by ABI and this read cannot be renamed or removed. It is no longer a cache
+// accessor: it reads the plot's package like every other consumer and reduces at the boundary, the EXE being a
+// reader like any other ([DEC-fixedpoint-x100]).
 int CvPlot::getYield(YieldTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
-	return m_aiYield[eIndex];
-}
-
-void CvPlot::updateYield()
-{
-	PROFILE_FUNC();
-
-	if (!area()) return;
-
-	bool bChange = false;
-	CvCity* pWorkingCity = getWorkingCity();
-	const bool bWorked = pWorkingCity ? pWorkingCity->isWorkingPlot(this) : false;
-
-	for (int iI = 0; iI < NUM_YIELD_TYPES; ++iI)
-	{
-		const int iNewYield = calculateYield((YieldTypes)iI);
-		const int iOldYield = m_aiYield[iI];
-
-		if (iOldYield != iNewYield)
-		{
-			FASSERT_NOT_NEGATIVE(iNewYield);
-
-
-			bChange = true;
-		}
-	}
-	if (bChange)
-	{
-		if (pWorkingCity)
-		{
-			// The plot's own substrate facts mark its package AND the city sums those packages feed; only the
-			// UI-side rider the retired push maintainer carried belongs here.
-			if (bWorked)
-			{
-				pWorkingCity->onYieldChange();
-			}
-			pWorkingCity->AI_setAssignWorkDirty(true);
-		}
-		updateSymbols();
-	}
+	int aiYields[NUM_YIELD_TYPES];
+	getYields(aiYields);
+	return aiYields[eIndex] / 100;
 }
 
 
@@ -7987,120 +7936,6 @@ int CvPlot::calculateImprovementYieldChange(ImprovementTypes eImprovement, Yield
 }
 
 
-int CvPlot::calculateYield(YieldTypes eYield, bool bDisplay) const
-{
-	PROFILE_FUNC();
-
-	if (bDisplay && GC.getGame().isDebugMode())
-	{
-		return getYield()[eYield];
-	}
-
-	if (getTerrainType() == NO_TERRAIN || !isPotentialCityWork())
-	{
-		return 0;
-	}
-
-	PlayerTypes ePlayer;
-
-	if (bDisplay)
-	{
-		ePlayer = getRevealedOwner(GC.getGame().getActiveTeam(), false);
-
-		if (ePlayer == NO_PLAYER)
-		{
-			ePlayer = GC.getGame().getActivePlayer();
-		}
-	}
-	else ePlayer = getOwner();
-
-	int iYield = (
-		calculateNatureYield(eYield, (ePlayer != NO_PLAYER) ? GET_PLAYER(ePlayer).getTeam() : NO_TEAM)
-		+
-		m_aExtraYield[eYield]
-	);
-	bool bCity = false;
-
-	if (ePlayer != NO_PLAYER)
-	{
-		{
-			const CvCity* pCity = getPlotCity();
-
-			if (pCity && (!bDisplay || pCity->isRevealed(GC.getGame().getActiveTeam(), false)))
-			{
-				iYield += GC.getYieldInfo(eYield).getCityChange();
-
-				if (GC.getYieldInfo(eYield).getPopulationChangeDivisor() != 0)
-				{
-					iYield += pCity->getPopulation() / GC.getYieldInfo(eYield).getPopulationChangeDivisor();
-				}
-				bCity = true;
-			}
-		}
-		{
-			const bool bReachable = isRoute() || !isImpassable(GET_PLAYER(ePlayer).getTeam());
-			if (bReachable)
-			{
-				iYield += GET_PLAYER(ePlayer).getTerrainYieldChange(getTerrainType(), eYield);
-
-				if (isWater())
-				{
-					iYield += GET_PLAYER(ePlayer).getSeaPlotYield(eYield);
-				}
-			}
-		}
-		if (getLandmarkType() != NO_LANDMARK && GC.getGame().isOption(GAMEOPTION_MAP_PERSONALIZED))
-		{
-			iYield += GET_PLAYER(ePlayer).getLandmarkYield(eYield);
-		}
-
-		if (GET_PLAYER(ePlayer).getExtraYieldThreshold(eYield) > 0 && iYield >= GET_PLAYER(ePlayer).getExtraYieldThreshold(eYield))
-		{
-			iYield += GC.getDefineINT("EXTRA_YIELD");
-		}
-
-		if (GET_PLAYER(ePlayer).getLessYieldThreshold(eYield) > 0 && iYield >= GET_PLAYER(ePlayer).getLessYieldThreshold(eYield))
-		{
-			iYield -= GC.getDefineINT("EXTRA_YIELD");
-		}
-
-		if (GET_PLAYER(ePlayer).isGoldenAge() && iYield >= GC.getYieldInfo(eYield).getGoldenAgeYieldThreshold())
-		{
-			iYield += GC.getYieldInfo(eYield).getGoldenAgeYield();
-		}
-	}
-	if (bCity)
-	{
-		iYield = std::max(iYield, GC.getYieldInfo(eYield).getMinCity());
-	}
-	else
-	{
-		ImprovementTypes eImprovement;
-		RouteTypes eRoute;
-
-		if (bDisplay)
-		{
-			eImprovement = getRevealedImprovementType(GC.getGame().getActiveTeam());
-			eRoute = getRevealedRouteType(GC.getGame().getActiveTeam(), false);
-		}
-		else
-		{
-			eImprovement = getImprovementType();
-			eRoute = getRouteType();
-		}
-
-		if (eImprovement != NO_IMPROVEMENT)
-		{
-			iYield += calculateImprovementYieldChange(eImprovement, eYield, ePlayer);
-		}
-
-		if (eRoute != NO_ROUTE)
-		{
-			iYield += GC.getRouteInfo(eRoute).getYieldChange(eYield);
-		}
-	}
-	return std::max(0, iYield);
-}
 
 
 bool CvPlot::hasYield() const

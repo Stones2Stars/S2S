@@ -674,16 +674,6 @@ void CvMap::updateMinOriginalStartDist(const CvArea* pArea)
 }
 
 
-void CvMap::updateYield()
-{
-	PROFILE_EXTRA_FUNC();
-	for (int iI = 0; iI < numPlots(); iI++)
-	{
-		plotByIndex(iI)->updateYield();
-	}
-}
-
-
 void CvMap::verifyUnitValidPlot()
 {
 	PROFILE_EXTRA_FUNC();

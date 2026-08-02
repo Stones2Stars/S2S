@@ -227,7 +227,6 @@ public:
 
 	void updatePlotGroups(const CvArea* possibleNewInAreaOnly = NULL, bool reInitialize = false);
 
-	void updateYield();
 	// The empire's additive maintenance stack for one KIND (team + empire), the empire twin of the city read.
 	// ⛔ It reads the rolled LEGS directly rather than going through InfoValuation::realizedAtEmpire: that
 	// helper answers a RECEIVER channel with its maintained sum, and maintenance is now one -- so routing this

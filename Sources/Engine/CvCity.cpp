@@ -1578,12 +1578,6 @@ bool CvCity::canBeSelected() const
 }
 
 
-void CvCity::updateYield()
-{
-	algo::for_each(plots(), bind(CvPlot::updateYield, _1));
-}
-
-
 // XXX kill this?
 void CvCity::updateVisibility()
 {
@@ -5370,7 +5364,6 @@ void CvCity::setPopulation(int iNewValue, bool bNormal)
 			)
 		) AI_setChooseProductionDirty(true);
 	}
-	plot()->updateYield();
 	owner.markMaintenanceDirty();
 
 	owner.AI_makeAssignWorkDirty();

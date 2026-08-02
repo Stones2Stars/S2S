@@ -784,9 +784,6 @@ public:
 
 
 	void setExtraYield(YieldTypes eYield, short iExtraYield);
-	short* getYield() const;
-	void updateYield();
-	int calculateYield(YieldTypes eIndex, bool bDisplay = false) const;
 	DllExport int getYield(YieldTypes eIndex) const;
 	int calculateNatureYield(YieldTypes eIndex, TeamTypes eTeam, bool bIgnoreFeature = false) const;
 	int calculateBestNatureYield(YieldTypes eIndex, TeamTypes eTeam) const;

@@ -719,7 +719,7 @@ protected:
 	bool AI_removeWorstCitizen(SpecialistTypes eIgnoreSpecialist = NO_SPECIALIST);
 	void AI_juggleCitizens();
 
-	bool AI_potentialPlot(short* piYields) const;
+	bool AI_potentialPlot(const int* piYields) const;
 	bool AI_foodAvailable(int iExtra = 0) const;
 
 	int AI_buildingYieldValue(YieldTypes eYield, BuildingTypes eBuilding, const CvBuildingInfo& kBuilding, bool bForeignTrade, int iFreeSpecialistYield) const;

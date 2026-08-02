@@ -1050,19 +1050,6 @@ void CvTeam::doTurn()
 }
 
 
-void CvTeam::updateYield()
-{
-	PROFILE_EXTRA_FUNC();
-	for (int iI = 0; iI < MAX_PLAYERS; iI++)
-	{
-		if (GET_PLAYER((PlayerTypes)iI).isAliveAndTeam(getID()))
-		{
-			GET_PLAYER((PlayerTypes)iI).updateYield();
-		}
-	}
-}
-
-
 bool CvTeam::canChangeWarPeace(TeamTypes eTeam, bool bAllowVassal) const
 {
 	PROFILE_EXTRA_FUNC();
@@ -5363,11 +5350,6 @@ void CvTeam::processTech(TechTypes eTech, int iChange, bool bAnnounce)
 		setMapCentering(true);
 	}
 
-	if (clsHasId(caps, CLS_CAPABILITY_CAN_PASS_PEAKS))
-	{
-		//	Koshling - makes peaks workable which chnages the yield calculation
-		updateYield();
-	}
 	if (iChange > 0)
 	{
 		ObsoletePromotions(eTech);
@@ -5474,7 +5456,6 @@ void CvTeam::processTech(TechTypes eTech, int iChange, bool bAnnounce)
 
 		if (eBonus != NO_BONUS && GC.getBonusInfo(eBonus).getTechReveal() == eTech)
 		{
-			pLoopPlot->updateYield();
 			pLoopPlot->setLayoutDirty(true);
 		}
 	}
@@ -5769,7 +5750,6 @@ void CvTeam::setForceRevealedBonus(BonusTypes eBonus, bool bRevealed)
 
 		if (pLoopPlot->getBonusType() == eBonus)
 		{
-			pLoopPlot->updateYield();
 			pLoopPlot->setLayoutDirty(true);
 		}
 	}

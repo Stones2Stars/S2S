@@ -100,7 +100,6 @@ public:
 	void updateCenterUnit();
 	void updateWorkingCity();
 	void updateMinOriginalStartDist(const CvArea* pArea);
-	void updateYield();
 
 	void verifyUnitValidPlot();
 

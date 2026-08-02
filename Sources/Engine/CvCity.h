@@ -138,7 +138,6 @@ public:
 	DllExport bool canBeSelected() const;
 	DllExport void updateSelectedCity(bool bTestProduction);
 
-	void updateYield();
 
 	void updateVisibility();
 	bool isVisibilitySetup() const;
@@ -1877,7 +1876,6 @@ public:
 		DECLARE_MAP_FUNCTOR(CvCity, void, endDeferredBonusProcessing);
 		DECLARE_MAP_FUNCTOR(CvCity, void, doTurn);
 		DECLARE_MAP_FUNCTOR(CvCity, void, updateCorporation);
-		DECLARE_MAP_FUNCTOR(CvCity, void, updateYield);
 		DECLARE_MAP_FUNCTOR(CvCity, void, onYieldChange);
 		DECLARE_MAP_FUNCTOR(CvCity, void, clearTradeRoutes);
 		DECLARE_MAP_FUNCTOR(CvCity, void, setBuildingListInvalid);

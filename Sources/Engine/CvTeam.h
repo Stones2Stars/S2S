@@ -101,7 +101,6 @@ public:
 
 	void doTurn();
 
-	void updateYield();
 
 	bool canChangeWarPeace(TeamTypes eTeam, bool bAllowVassal = false) const;
 	DllExport bool canDeclareWar(TeamTypes eTeam) const;
