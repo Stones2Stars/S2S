@@ -324,20 +324,37 @@
   text manager's own job ([patterns.md](../../architecture/patterns.md) THE DIVISION OF LABOUR). ⚠ The CONDITION
   renderer it calls already exists and takes exactly what `CvRequires` holds, so this is a composer to write,
   never a renderer to build — reading it as the latter overstates the dependency and parks work that is doable.
-- The REQUIRES-ATOM EXTRACTOR — "which bonuses/techs/buildings does this entity's `requires` name?", the FORWARD
-  question. `CvRequires` holds the parsed trees and exposes no way to enumerate the atom ids in one, so a
-  consumer collecting an entity's own prereqs has nothing to ask. ⛔ It is NOT a boolean-expression API
-  ([pedia-read-map.md](../../reference/pedia-read-map.md) finding 3): what a consumer wants is the ID LIST per
-  HAVE-axis, which is also what the requires BLOCK COMPOSER above needs, so the two want one implementation
-  ([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation)).
+- Give the `requires` TREE ONE SHARED WALK — "which ids / which predicates does this entity's `requires` name?".
+  ⚑ This is NOT a missing machine: `CvRequires` exposes `build`/`operate` as public `CvCondition*` and the node
+  is a plain tagged struct, so any call site CAN walk it. What is missing is that ONE of them does
+  ([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation)) — otherwise the
+  building river/coastal counts, the corp prereq leg and the block composer each grow their own recursion.
+  ⛔ It is NOT a boolean-expression API ([pedia-read-map.md](../../reference/pedia-read-map.md) finding 3).
+  ⚠ It needs BOTH shapes, and the id half alone does not cover its consumers: an ID LIST per HAVE-axis, and a
+  PREDICATE test (the river/coastal building counts ask whether the tree names `HAS_RIVER` / `HAS_COAST`, which
+  no id list answers).
   ⚑ Distinct from the REVERSE question ("who requires this bonus"), which `EDGEF_REQUIRED_BY` already answers —
   do not read one as covering the other.
-- The PER-ENTRY ATTRIBUTION read — "how much of this modifier comes from the entry gated on THIS id?". The
-  curator authors the bonus-keyed production modifiers as CONDITIONED `buildRate.self.percent` entries, so a
-  point read excludes them by construction and `expected*` folds every entry whose condition currently holds —
-  which answers a different question and silently over-attributes when several bonuses are held. ⚑ It is the
-  conditioned-list read ([modifier.md §5](../../specs/modifier.md): the compiled sum, the conditioned list and
-  the what-if are three distinct reads), filtered to entries whose condition names the asked-about id.
+- Move the BONUS-KEYED modifier consumers onto the AS-IF-HELD delta. "How much of this comes from the entry
+  gated on THIS id" is answered by `CvCascadeHypothetical` — the `expected*` reads take one, and its `absent`
+  set forces an id un-held, so the attribution IS the difference between two calls
+  ([patterns.md](../../architecture/patterns.md) THE VALUATION PROTOCOL: the caller gets a DELTA).
+  ⛔ The read exists; what is wrong is the CALL-SITE SHAPE. The resource-consumption pass asks per
+  (city × building × channel), and `expected*` is a per-DECISION read — one per (city, candidate) per pass — so
+  a per-channel `expectedModifier` there would run the evaluator in an inner loop. Convert through the GROUP
+  reads (`expectedFlatYields` / `expectedYieldModifiers` / …), which fill a whole array per call: two calls per
+  building, not two per channel.
+  ⚠ A point read excludes these entries by construction (only null-condition entries fold into the compiled
+  sum), so re-pointing one to the point read silently drops the bonus's whole contribution.
+- Feed the CORPORATION its HQ-BUILDING registry, exactly as `rp_feedShrineBuildings` feeds the religion its
+  shrine buildings. The building declares the relationship as its §9 `headquarters` FK and the consumers ask the
+  CORPORATION ("which building is this corp's HQ"), so the reverse pass fills the list from the compiled FK —
+  [json.md §9](../../specs/json.md) calls `headquarters` the corp analog of `shrine` and gives them the same FK
+  shape, so this is the sibling of a landed pass, not a new mechanism.
+  ⚠ Without it every consumer scans the whole building registry asking each one whose HQ it is.
+  ⚑ It also settles the corp's gating TECH, which nothing else can: no corporation authors a `TechPrereq` or an
+  `ObsoleteTech`, so the corp's own tech reads are always empty and the HQ building's enabling tech is the only
+  live source the founding gate has.
 - A home for pedia category / sort metadata ([pedia-read-map.md](../../reference/pedia-read-map.md) finding 4).
 - Ranked-target-selection EVALUATION ([parked/ranked-target-selection.md](../parked/ranked-target-selection.md))
   — a ranked entry applies unranked until it lands.
