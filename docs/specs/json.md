@@ -48,7 +48,7 @@ of them.
 | **Intrinsic** ("what am I") | `identity` (incl. all TEXT) · `cost` · `ui` · `world` · `sound` · `ai` | empire-agnostic self-description, art, audio, AI metadata |
 | **Classification** | `skills` (UNIT, mutable abilities) · `tags` (UNIT, immutable type membership) · `status` (UNIT, a per-turn counter -- applied, ticks down, over) · `attributes` (BUILDING, what the building itself is/does) · `amenities` (CITY-held, grantor-provided) · `characteristics` (PLOT SUBSTRATE, held plot-scope intrinsics) · `capabilities` (TEAM, grantor-provided) | §8 — the classification model; scope carried by the section name |
 | **Applicability** | entity-level `enabled` · `disabled` | the whole entity applies only while `enabled` holds and `disabled` does not (the §3.9 pair at entity level) — the canonical whole-entity game-option gate: `"enabled": "GAMEOPTION_X"` |
-| **Auxiliary / bespoke** | `policies` · `succession` · `excludes` · `produces` · `condition` · `effect` · `outcomes` · `mapGeneration` · `replacedBy` · `promotionLine` · `buildUp` · `shrine` · `headquarters` · `properties` · `voteSource` · `threshold` · `role` · `victory` · `targetLevel` · `conversion` · `unitCapability` · `canTrade` (tech → the trade-table/deal system: tradeable items + agreements — `techs`/`openBorders`/`rightOfPassage`/`embassy`/`bonuses`/…) · `canTradeOn` (tech → trade-route system; terrain refs) · `canWorkOn` (tech → the city `canWork` gate; workable plot classes — `water`/`peaks`/…) — all three [capabilities.md](capabilities.md) | data read by their own systems, not the cascade |
+| **Auxiliary / bespoke** | `policies` · `excludes` · `produces` · `condition` · `effect` · `outcomes` · `mapGeneration` · `replacedBy` · `promotionLine` · `buildUp` · `shrine` · `headquarters` · `properties` · `voteSource` · `threshold` · `role` · `victory` · `targetLevel` · `conversion` · `unitCapability` · `canTrade` (tech → the trade-table/deal system: tradeable items + agreements — `techs`/`openBorders`/`rightOfPassage`/`embassy`/`bonuses`/…) · `canTradeOn` (tech → trade-route system; terrain refs) · `canWorkOn` (tech → the city `canWork` gate; workable plot classes — `water`/`peaks`/…) — all three [capabilities.md](capabilities.md) | data read by their own systems, not the cascade |
 
 `type` (the entity's own id, e.g. `"BUILDING_FORGE"`) and the TEXT fields are present where relevant.
 
@@ -1149,7 +1149,15 @@ Data read by a specific system, not the cascade. Use only when the entity needs 
   the `WORLD_WONDER`/`NATIONAL_WONDER`/`TEAM_WONDER` count token (§3.1).
   (NB `nonStateReligionCommerce` was *suspected* an effect but is VERIFIED a pure STATE — a Free-Church permission that
   non-state religions' `stateReligionCommerce` applies — so it correctly STAYS a policy.)*
-- **`succession`** — `{ upgradesTo, promotionLine, priority }` (manual upgrade / promotion-line link).
+> **⛔ THERE IS NO `succession` SECTION — it was an INVENTION, and it is the `cityFounding` failure repeated
+> (owner).** A minted block reached this spec's bespoke list, the curator, `CvTraitInfo`'s members and the
+> authored data, so every layer ratified it and each reader in turn found it sanctioned.
+> ⚖ **A LADDER IS AN `enables` EDGE.** "What does holding this unlock?" is the GENERATE pass's own question
+> ([enabler.md §2](enabler.md)): a rung `enables` the rung above it, and the gate that a rung needs the one
+> beneath is its `requires` — the shape §9 already specs for a promotion line. Ordering needs no section of
+> its own, and a manual upgrade link is likewise an edge, never a bespoke key.
+> ⛔ The tell that it was never real: NOTHING authored `enables.traits`, because the edge that belongs there
+> was being parked in a section instead — so the enabler could not see a relationship it owns.
 - **`promotionLine`** (PROMOTION) — `{ PROMOTIONLINE_X: rank }`, the promotion's rung on a named ladder.
   **⚖ A LINE IS A LADDER, AND HOLDING A RUNG IMPLIES THE RUNGS BENEATH IT** — each level's `requires.build`
   names the level below (`ACCURACY3` → `ACCURACY2` → `ACCURACY`), so a unit carrying the top of a line carries

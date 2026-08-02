@@ -68,13 +68,16 @@
   no-nukes bar does not apply to projects at all — the hole is deliberate and visible
   ([DEC-no-legacy-masking](../../architecture/decisions.md#dec-no-legacy-masking)), not an oversight.
   ⚠ `espionagePoints` rides the missions/`CvOutcome` carve-out — its channel is settled, only its authoring home waits.
-- Author the trait LADDER as `requires`, so learnability is an ordinary enabler gate. A developing line is a
-  chain of trait LEVELS and "may I take this rung" is an availability question — so it belongs in `requires`,
-  exactly as [json.md §9](../../specs/json.md) already specs for a promotion line (each level's `requires.build`
-  names the level below). ⛔ Today nothing carries it: a trait authors only `succession.{promotionLine,priority}`
-  — ORDERING data, which the rebuilt info is explicit is never a gate — no trait authors `requires`, no entity
-  authors the `enables.traits` inversion, and `CvTraitInfo` serves no `getRequires()`. So the rung prerequisite
-  is derivable (line + priority) but stated nowhere.
+- Dissolve the invented `succession` block into EDGES, and author the trait ladder so learnability is an
+  ordinary enabler gate ([json.md §9](../../specs/json.md) carries the ruling). A rung `enables` the rung above
+  it; the gate that a rung needs the one beneath is its `requires`, the shape §9 already specs for a promotion
+  line. Ordering needs no section, and a manual upgrade link is an edge.
+  ⛔ It spans every layer, exactly as `cityFounding` did — the spec (done), `curate_trait`'s emit, the
+  `CvTraitInfo` members + their getters, the readJson/harness reserved-section vocabulary, and the authored
+  data, which carries it broadly. Purge it in one pass, not per layer.
+  ⚑ The tell it was never real: NOTHING authors `enables.traits`, because the edge that belongs there was being
+  parked in a section — so the enabler could not see a relationship it owns, and the rung prerequisite ends up
+  derivable (line + priority) but stated nowhere.
   ⚠ Until it is authored, `CvPlayer::canLearnTrait`'s ladder block is a legacy re-derivation MASKING that
   absence ([DEC-no-legacy-masking](../../architecture/decisions.md#dec-no-legacy-masking)) — it scans the whole
   trait registry for the rung beneath, and it is already half-migrated (calling the new `getSuccessionPriority`
