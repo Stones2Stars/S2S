@@ -1454,7 +1454,6 @@ public:
 	void acquireFort(CvPlot* pPlot);
 
 	int getResourceConsumption(BonusTypes eBonus) const;
-	void recalculateResourceConsumption(BonusTypes eBonus);
 	void recalculateAllResourceConsumption();
 
 	void listCommander(bool bAdd, CvUnit* unit);

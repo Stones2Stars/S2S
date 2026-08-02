@@ -48,6 +48,8 @@
 #include "Repos/BuildingsRepo.h"
 #include "CvTraitInfo.h"
 #include "Data/CvInfoValuation.h"   // resolvedCityLimit + realizedAtEmpire -- the ONE cross-scope roll-up
+#include "Conditions/CvConditionQuery.h"  // the ONE structural read over a compiled entry's condition tree
+#include "Infos/CvModEntry.h"             // the compiled entry the conditioned walk reads its trees off
 #include "CvCascadeGather.h"
 #include "Enabler/CvTechEnabler.h"        // initDomain x6 -- the per-player domain lifecycle start (enabler.md 7.1)
 #include "Enabler/CvCivicEnabler.h"
@@ -25313,186 +25315,11 @@ int CvPlayer::getResourceConsumption(BonusTypes eBonus) const
 }
 
 
-//void CvPlayer::recalculateResourceConsumption(BonusTypes eBonus)
-//{
-//	PROFILE_FUNC();
-//
-//	if (eBonus == NO_BONUS || m_paiResourceConsumption == NULL)
-//		return;
-//
-//	int iTotalConsumption = 0;
-//
-//	// 1. City resource consumption
-//	for (int i = 0; i < numCities(); ++i)
-//	{
-//		CvCity* pCity = getCity(i);
-//		if (pCity)
-//		{
-//			iTotalConsumption += pCity->getResourceConsumption(eBonus);
-//		}
-//	}
-//
-//	// 2. Unit resource consumption
-//	for (int i = 0; i < getNumUnits(); ++i)
-//	{
-//		CvUnit* pUnit = getUnit(i);
-//		if (pUnit)
-//		{
-//			iTotalConsumption += pUnit->getResourceConsumption(eBonus);
-//		}
-//	}
-//
-//	// If buildings contribute, add a similar loop here.
-//
-//	// 3. Set the total consumption
-//	m_paiResourceConsumption[eBonus] = iTotalConsumption;
-//}
-
-//recalculate resource consumption only measures how much we are using
-//the resource at this very moment, not the past. It ignores existing buildings
-//units, etc... UNLESS they are generating income from the resource.
-void CvPlayer::recalculateResourceConsumption(BonusTypes eBonus)
-{
-	PROFILE_FUNC();
-
-	if (!hasBonus(eBonus))
-	{
-		m_paiResourceConsumption[eBonus] = 0;
-		return;
-	}
-	int iConsumption = 0;
-
-	for (city_iterator cityIt = beginCities(); cityIt != endCities(); ++cityIt)
-	{
-		const CvCity* cityX = *cityIt;
-		// --- Construction Consumption ---
-		YieldTypes prodYield = YIELD_PRODUCTION;
-		int aiRealizedYields[NUM_YIELD_TYPES];
-		cityX->getYields(aiRealizedYields);
-		int baseProd = aiRealizedYields[prodYield] / 100;   // ÷100 at the reader ([DEC-fixedpoint-x100])
-		int prodYieldRate = baseProd;
-
-		BuildingTypes prodBuilding = cityX->getProductionBuilding();
-		UnitTypes prodUnit = cityX->getProductionUnit();
-		ProjectTypes prodProject = cityX->getProductionProject();
-
-		if (prodBuilding != NO_BUILDING)
-		{
-			const CvBuildingInfo& kBuilding = GC.getBuildingInfo(prodBuilding);
-
-			// The BONUS carries the list of candidates whose `requires` reference it
-			// ([DEC-one-reverse-view]), so the four separate prereq axes collapse into one membership test.
-			// The merged bucket is safe HERE because the legacy test OR'd all four -- ANY semantics, which a
-			// superset only loosens ([enabler.md §2]); an ALL-semantics consumer must never read it this way.
-			if (GC.getBonusInfo(eBonus).getEdges()->has(EDGEF_REQUIRED_BY, EDGEB_BUILDINGS, (int)prodBuilding))
-			{
-				iConsumption += prodYieldRate;
-			}
-
-			int mod = kBuilding.getBonusProductionModifier(eBonus);
-			if (mod != 0)
-			{
-				iConsumption += baseProd * mod / 100;
-			}
-		}
-		else if (prodUnit != NO_UNIT)
-		{
-			const CvUnitInfo& kUnit = GC.getUnitInfo(prodUnit);
-
-			if (GC.getBonusInfo(eBonus).getEdges()->has(EDGEF_REQUIRED_BY, EDGEB_UNITS, (int)prodUnit))
-			{
-				iConsumption += prodYieldRate;
-			}
-
-			int mod = kUnit.getBonusProductionModifier(eBonus);
-			if (mod != 0)
-			{
-				iConsumption += baseProd * mod / 100;
-			}
-		}
-		else if (prodProject != NO_PROJECT)
-		{
-			int mod = GC.getProjectInfo(prodProject).getBonusProductionModifier(eBonus);
-			if (mod != 0)
-			{
-				iConsumption += baseProd * mod / 100;
-			}
-		}
-
-		// --- Precompute base commerce rates ---
-		int aiBaseCommerceRate[NUM_COMMERCE_TYPES];
-		for (int iI = 0; iI < NUM_COMMERCE_TYPES; ++iI)
-		{
-			aiBaseCommerceRate[iI] = aiCityCommerces[(CommerceTypes)iI] / 100;
-		}
-
-		// --- Building Effects ---
-		const std::vector<BuildingTypes>& hasBuildings = cityX->getHasBuildings();
-		for (std::vector<BuildingTypes>::const_iterator bldIt = hasBuildings.begin(); bldIt != hasBuildings.end(); ++bldIt)
-		{
-			BuildingTypes eTypeX = *bldIt;
-			if (cityX->isDormantBuilding(eTypeX))
-				continue;
-
-			const CvBuildingInfo& buildingX = GC.getBuildingInfo(eTypeX);
-			iConsumption += (
-					0   // bonus-keyed happiness: ZERO authorings anywhere in the data (the axis is empire.buildings)
-				+	buildingX.getBonusHealthChanges().getValue(eBonus) * 8
-				+	buildingX.getBonusDefenseChanges(eBonus)
-			);
-
-			for (int iJ = 0; iJ < NUM_YIELD_TYPES; ++iJ)
-			{
-				int aiRealizedYields[NUM_YIELD_TYPES];
-				cityX->getYields(aiRealizedYields);
-				int baseYield = aiRealizedYields[iJ] / 100;
-				iConsumption += (
-						buildingX.getBonusYieldChanges(eBonus, iJ) * 3
-					+ buildingX.getBonusYieldModifier(eBonus, iJ) * baseYield / 33
-				);
-			}
-			for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; ++iJ)
-			{
-				iConsumption += aiBaseCommerceRate[iJ] * buildingX.getBonusCommerceModifier(eBonus, iJ) / 33;
-			}
-		}
-	}
-
-	// --- Resource Export: Trading Partners ---
-	int iBonusExport = getBonusExport(eBonus);
-	if (iBonusExport > 0)
-		{
-			int iTempValue = 0;
-			int iTradingPartnerCount = 0;
-		for (int iI = 0; iI < MAX_PC_PLAYERS; ++iI)
-			{
-			const CvPlayer& kOther = GET_PLAYER((PlayerTypes)iI);
-			if (kOther.isAlive()
-				&& GET_TEAM(getTeam()).isHasMet(kOther.getTeam())
-				&& kOther.getBonusImport(eBonus) > 0)
-				{
-				iTempValue += kOther.getResourceConsumption(eBonus);
-				++iTradingPartnerCount;
-				}
-			}
-			if (iTradingPartnerCount > 0)
-			{
-			iTempValue = (iTempValue / iTradingPartnerCount) * iBonusExport;
-				iConsumption += iTempValue;
-			}
-		}
-
-	m_paiResourceConsumption[eBonus] = iConsumption;
-}
-
-//	Inverted iteration of recalculateResourceConsumption over ALL bonuses: one pass over
-//	each city visiting only the bonuses its current production item and built buildings
-//	actually touch (load-derived CvBuildingInfo::getConsumptionRelevantBonuses), instead of
-//	rescanning every city's every building once per bonus type. Every individual term keeps
-//	the legacy integer arithmetic and int addition commutes, so the results are
-//	byte-identical -- REQUIRED, because this is synced game state (it feeds bonus-depletion
-//	odds and is serialized), not advisory AI data. Verify with gPerfLogLevel >= 2: the
-//	legacy per-bonus recompute runs as a shadow and [PERF/rescons] reports mismatches.
+//	How heavily this empire leans on each resource. ONE pass over the cities, visiting per city only the
+//	bonuses its current production item and its built buildings actually touch -- never the whole bonus
+//	registry per city, and never a second per-bonus implementation beside this one
+//	([DEC-single-implementation]). This is SYNCED state (it feeds bonus-depletion odds and serializes), so
+//	every term stays integer arithmetic.
 void CvPlayer::recalculateAllResourceConsumption()
 {
 	PROFILE_EXTRA_FUNC();
@@ -25517,41 +25344,50 @@ void CvPlayer::recalculateAllResourceConsumption()
 		const UnitTypes prodUnit = cityX->getProductionUnit();
 		const ProjectTypes prodProject = cityX->getProductionProject();
 
+		//	A production item's bonus-gated build-rate reads the same way whatever KIND of item it is, because
+		//	`expected*` is declared on the info BASE -- so the three branches collapse to one over the item's
+		//	info. The legacy shape asked EVERY bonus in the registry whether this one item named it; the item's
+		//	own conditioned entries name the handful instead.
+		const CvInfo* pProductionItem = NULL;
 		if (prodBuilding != NO_BUILDING)
 		{
-			const CvBuildingInfo& kBuilding = GC.getBuildingInfo(prodBuilding);
-
-			for (int iI = 0; iI < iNumBonuses; iI++)
-			{
-				const int iMod = kBuilding.getBonusProductionModifier((BonusTypes)iI);
-				if (iMod != 0)
-				{
-					aiConsumption[iI] += baseProd * iMod / 100;
-				}
-			}
+			pProductionItem = &GC.getBuildingInfo(prodBuilding);
 		}
 		else if (prodUnit != NO_UNIT)
 		{
-			const CvUnitInfo& kUnit = GC.getUnitInfo(prodUnit);
-
-			for (int iI = 0; iI < iNumBonuses; iI++)
-			{
-				const int iMod = kUnit.getBonusProductionModifier((BonusTypes)iI);
-				if (iMod != 0)
-				{
-					aiConsumption[iI] += baseProd * iMod / 100;
-				}
-			}
+			pProductionItem = &GC.getUnitInfo(prodUnit);
 		}
 		else if (prodProject != NO_PROJECT)
 		{
-			const CvProjectInfo& kProject = GC.getProjectInfo(prodProject);
-			for (int iI = 0; iI < iNumBonuses; iI++)
+			pProductionItem = &GC.getProjectInfo(prodProject);
+		}
+
+		if (pProductionItem != NULL)
+		{
+			std::set<int> productionBonuses;
+			const std::vector<const CvModEntry*>& kItemConditioned = pProductionItem->modifierConditioned();
+			for (size_t iEntry = 0; iEntry < kItemConditioned.size(); ++iEntry)
 			{
-				const int iMod = kProject.getBonusProductionModifier((BonusTypes)iI);
-				if (iMod != 0)
+				std::vector<int> entryBonuses;
+				CvConditionQuery::collectIds(kItemConditioned[iEntry]->enabled, EDGEB_BONUSES, entryBonuses);
+				CvConditionQuery::collectIds(kItemConditioned[iEntry]->disabled, EDGEB_BONUSES, entryBonuses);
+				productionBonuses.insert(entryBonuses.begin(), entryBonuses.end());
+			}
+			for (std::set<int>::const_iterator bonusIt = productionBonuses.begin(); bonusIt != productionBonuses.end(); ++bonusIt)
+			{
+				CvCascadeHypothetical kWith;
+				kWith.present[EDGEB_BONUSES].insert(*bonusIt);
+				CvCascadeHypothetical kWithout;
+				kWithout.absent[EDGEB_BONUSES].insert(*bonusIt);
+				//	`buildRate.self` -- how much faster holding this bonus makes THIS item. A percent is unscaled.
+				const int iModifier =
+					pProductionItem->expectedModifier(MODFAM_BUILD_RATE, BUILD_RATE_AMOUNT, CASC_UNIT_PERCENT,
+						cityX->getCityContext(), getEmpireContext(), cityX->plotGroup(getID()), &kWith)
+				  - pProductionItem->expectedModifier(MODFAM_BUILD_RATE, BUILD_RATE_AMOUNT, CASC_UNIT_PERCENT,
+						cityX->getCityContext(), getEmpireContext(), cityX->plotGroup(getID()), &kWithout);
+				if (iModifier != 0)
 				{
-					aiConsumption[iI] += baseProd * iMod / 100;
+					aiConsumption[*bonusIt] += baseProd * iModifier / 100;
 				}
 			}
 		}
@@ -25584,14 +25420,17 @@ void CvPlayer::recalculateAllResourceConsumption()
 		{
 			aiBaseYieldRate[iJ] /= 100;   // ÷100 at the reader ([DEC-fixedpoint-x100])
 		}
-		int aiBaseCommerceRate[NUM_COMMERCE_TYPES];
-		for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
-		{
-			aiBaseCommerceRate[iJ] = aiCityCommerces[(CommerceTypes)iJ] / 100;
-		}
+		// --- Building effects: what a bonus is worth to a building IS what holding it changes about what that
+		//     building delivers -- the AS-IF-HELD delta ([patterns.md] THE VALUATION PROTOCOL: the live contexts
+		//     go in, the DELTA comes out). The same read taken with the bonus forced PRESENT and forced ABSENT,
+		//     differenced, replaces the whole battery of per-term bonus tables, and picks up any future
+		//     bonus-gated deposit without a new table to add.
+		//     ⚠ GROUP reads, never per-channel: expected* is a per-DECISION read, so a per-channel call in here
+		//     would run the ONE evaluator in an inner loop.
+		const CityContext& kCityContext = cityX->getCityContext();
+		const EmpireContext& kEmpireContext = getEmpireContext();
+		const CvPlotGroup* pCityGroup = cityX->plotGroup(getID());
 
-		// --- Building effects: each built building contributes only to the bonuses its
-		//     effect tables reference. Term math is the legacy code verbatim. ---
 		const std::vector<BuildingTypes>& hasBuildings = cityX->getHasBuildings();
 		for (std::vector<BuildingTypes>::const_iterator bldIt = hasBuildings.begin(); bldIt != hasBuildings.end(); ++bldIt)
 		{
@@ -25601,25 +25440,78 @@ void CvPlayer::recalculateAllResourceConsumption()
 
 			const CvBuildingInfo& buildingX = GC.getBuildingInfo(eTypeX);
 
-			foreach_(const BonusTypes eBonus, buildingX.getConsumptionRelevantBonuses())
+			//	The bonus-KEYED defense rows sit at a different address (defense.city.bonuses.{BONUS}) -- keyed,
+			//	not conditioned -- so they come from the ONE keyed read. The delta below moves the CONDITIONED
+			//	tail only, by construction, so it can never see them.
+			std::vector<std::pair<int, int> > defenseByBonus;
+			InfoValuation::collectKeyedTarget(buildingX.getModifiers(), MODFAM_DEFENSE, DEFENSE_AMOUNT,
+				InfoValuation::keyedTargetSegment("bonuses"), defenseByBonus, CASC_SCOPE_CITY);
+			for (size_t iRow = 0; iRow < defenseByBonus.size(); ++iRow)
 			{
-				int iValue = (
-						0   // bonus-keyed happiness: ZERO authorings (the axis is empire.buildings)
-					+	buildingX.getBonusHealthChanges().getValue(eBonus) * 8
-					+	buildingX.getBonusDefenseChanges(eBonus)
-				);
+				//	A defense value is a PERCENT and therefore unscaled ([DEC-fixedpoint-x100]).
+				aiConsumption[defenseByBonus[iRow].first] += defenseByBonus[iRow].second;
+			}
+
+			//	The bonuses this building's OWN data names, off its compiled conditioned entries through the ONE
+			//	structural walk -- the handful it authored, never the bonus registry.
+			//	⚑ A bonus named under a `noneOf` is collected too, and that is CORRECT here rather than the walk's
+			//	known limit biting: the delta measures the real signed effect, so a bonus that SUPPRESSES a
+			//	deposit simply values negative instead of being mistaken for a requirement.
+			std::set<int> relevantBonuses;
+			const std::vector<const CvModEntry*>& kConditioned = buildingX.modifierConditioned();
+			for (size_t iEntry = 0; iEntry < kConditioned.size(); ++iEntry)
+			{
+				std::vector<int> entryBonuses;
+				CvConditionQuery::collectIds(kConditioned[iEntry]->enabled, EDGEB_BONUSES, entryBonuses);
+				CvConditionQuery::collectIds(kConditioned[iEntry]->disabled, EDGEB_BONUSES, entryBonuses);
+				relevantBonuses.insert(entryBonuses.begin(), entryBonuses.end());
+			}
+
+			for (std::set<int>::const_iterator bonusIt = relevantBonuses.begin(); bonusIt != relevantBonuses.end(); ++bonusIt)
+			{
+				CvCascadeHypothetical kWith;
+				kWith.present[EDGEB_BONUSES].insert(*bonusIt);
+				CvCascadeHypothetical kWithout;
+				kWithout.absent[EDGEB_BONUSES].insert(*bonusIt);
+
+				int aiWellbeingWith[NUM_WELLBEING_CHANNELS];
+				int aiWellbeingWithout[NUM_WELLBEING_CHANNELS];
+				buildingX.expectedWellbeing(kCityContext, kEmpireContext, pCityGroup, aiWellbeingWith, &kWith);
+				buildingX.expectedWellbeing(kCityContext, kEmpireContext, pCityGroup, aiWellbeingWithout, &kWithout);
+
+				int aiFlatWith[NUM_YIELD_TYPES];
+				int aiFlatWithout[NUM_YIELD_TYPES];
+				buildingX.expectedFlatYields(kCityContext, kEmpireContext, pCityGroup, aiFlatWith, &kWith);
+				buildingX.expectedFlatYields(kCityContext, kEmpireContext, pCityGroup, aiFlatWithout, &kWithout);
+
+				int aiModWith[NUM_YIELD_TYPES];
+				int aiModWithout[NUM_YIELD_TYPES];
+				buildingX.expectedYieldModifiers(kCityContext, kEmpireContext, pCityGroup, aiModWith, &kWith);
+				buildingX.expectedYieldModifiers(kCityContext, kEmpireContext, pCityGroup, aiModWithout, &kWithout);
+
+				int aiCommerceWith[NUM_COMMERCE_TYPES];
+				int aiCommerceWithout[NUM_COMMERCE_TYPES];
+				buildingX.expectedFlatCommerce(kCityContext, kEmpireContext, pCityGroup, aiCommerceWith, &kWith);
+				buildingX.expectedFlatCommerce(kCityContext, kEmpireContext, pCityGroup, aiCommerceWithout, &kWithout);
+
+				//	A FLAT is x100 and reduces at the point of use; a PERCENT is unscaled.
+				int iValue = ((aiWellbeingWith[WELLBEING_HEALTH] - aiWellbeingWithout[WELLBEING_HEALTH])
+					- (aiWellbeingWith[WELLBEING_UNHEALTH] - aiWellbeingWithout[WELLBEING_UNHEALTH])) / 100 * 8;
+
 				for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
 				{
-					iValue += (
-							buildingX.getBonusYieldChanges(eBonus, iJ) * 3
-						+ buildingX.getBonusYieldModifier(eBonus, iJ) * aiBaseYieldRate[iJ] / 33
-					);
+					iValue += (aiFlatWith[iJ] - aiFlatWithout[iJ]) / 100 * 3;
+					iValue += (aiModWith[iJ] - aiModWithout[iJ]) * aiBaseYieldRate[iJ] / 33;
 				}
+				//	⚠ The commerce rows are FLATS, not percents -- the legacy "BonusCommercePercentChanges" name
+				//	is a misnomer the curator records, and the legacy term multiplied them by the city's commerce
+				//	RATE as if they were a modifier. They are weighted here as the additive per-turn amounts they
+				//	are, alongside the yield flats.
 				for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
 				{
-					iValue += aiBaseCommerceRate[iJ] * buildingX.getBonusCommerceModifier(eBonus, iJ) / 33;
+					iValue += (aiCommerceWith[iJ] - aiCommerceWithout[iJ]) / 100 * 3;
 				}
-				aiConsumption[eBonus] += iValue;
+				aiConsumption[*bonusIt] += iValue;
 			}
 		}
 	}
@@ -25655,28 +25547,6 @@ void CvPlayer::recalculateAllResourceConsumption()
 				aiConsumption[iI] += (iTempValue / iTradingPartnerCount) * iBonusExport;
 			}
 		}
-	}
-
-	if (gPerfLogLevel >= 2)
-	{
-		// Shadow verify: legacy recompute stays authoritative; report any divergence.
-		int iMismatches = 0;
-		for (int iI = 0; iI < iNumBonuses; iI++)
-		{
-			recalculateResourceConsumption((BonusTypes)iI);
-			if (m_paiResourceConsumption[iI] != aiConsumption[iI])
-			{
-				if (iMismatches < 5)
-				{
-					logPerf(2, "[PERF/rescons] MISMATCH owner=%d bonus=%d legacy=%d fast=%d",
-						(int)getID(), iI, m_paiResourceConsumption[iI], aiConsumption[iI]);
-				}
-				iMismatches++;
-			}
-		}
-		logPerf(2, "[PERF/rescons] turn=%d owner=%d verified bonuses=%d mismatches=%d",
-			GC.getGame().getGameTurn(), (int)getID(), iNumBonuses, iMismatches);
-		return;
 	}
 
 	for (int iI = 0; iI < iNumBonuses; iI++)
