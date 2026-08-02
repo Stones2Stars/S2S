@@ -286,9 +286,12 @@ public:
 	// A NULL substrate slot contributes 0 (no feature / no improvement / no route / no bonus). The plot package
 	// rebuild AND every what-if plot read call THIS one function ([DEC-single-implementation]); the caller
 	// passes each present substrate's getModifiers() and a ctx whose `plot` is the target plot.
+	// pNatureYields optionally receives the SUBSTRATE segment (the floored terrain+feature+bonus term) this
+	// already derives, so a caller wanting the pre-improvement value never re-sums those legs itself.
 	static void plotBaseYields(const CvModifiers* terrainModifiers, const CvModifiers* featureModifiers,
 		const CvModifiers* bonusModifiers, const CvModifiers* improvementModifiers, const CvModifiers* routeModifiers,
-		const CvCascadeEvalCtx& evalCtx, int (&plotYields)[NUM_YIELD_TYPES]);
+		const CvCascadeEvalCtx& evalCtx, int (&plotYields)[NUM_YIELD_TYPES],
+		int (*pNatureYields)[NUM_YIELD_TYPES] = NULL);
 
 	// THE CITY RATE COMBINE (modifier.md §2a -- the sharp two-tier shape, the order load-bearing):
 	//   rate100 = (BASE + specialists) x max(0, 100 + percentSum)/100 + 100 x (EXTRA100 / 100)

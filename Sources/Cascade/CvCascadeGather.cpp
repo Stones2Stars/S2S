@@ -432,48 +432,68 @@ namespace
 			EnablerKernel::wireOperatingBuildings(pWorkingCity, evalCtx);
 		}
 
-		// (1) the SUBSTRATE -- terrain + feature + bonus: what the ground itself yields. The flat side lands in
-		// the segment when one is asked for and is carried into the total below, so every source is still
-		// evaluated exactly ONCE; percents go straight to the plot's percent dictionary either way.
-		std::vector<int64_t>& substrateOut = (pSubstrateSlots != NULL) ? *pSubstrateSlots : flatSlots;
 		const TeamTypes eSeeingTeam = (evalCtx.empireContext != NULL) ? (TeamTypes)evalCtx.empireContext->teamId() : NO_TEAM;
-		if (plot.getTerrainType() != NO_TERRAIN)
+		const CvModifiers* pTerrain     = plot.getTerrainType()      != NO_TERRAIN     ? GC.getTerrainInfo(plot.getTerrainType()).getModifiers()         : NULL;
+		const CvModifiers* pFeature     = plot.getFeatureType()      != NO_FEATURE     ? GC.getFeatureInfo(plot.getFeatureType()).getModifiers()         : NULL;
+		const CvModifiers* pBonus       = plot.getBonusType(eSeeingTeam) != NO_BONUS   ? GC.getBonusInfo(plot.getBonusType(eSeeingTeam)).getModifiers()  : NULL;
+		const CvModifiers* pImprovement = plot.getImprovementType()  != NO_IMPROVEMENT ? GC.getImprovementInfo(plot.getImprovementType()).getModifiers() : NULL;
+		const CvModifiers* pRoute       = plot.getRouteType()        != NO_ROUTE       ? GC.getRouteInfo(plot.getRouteType()).getModifiers()             : NULL;
+
+		// (1) every PLOT-scope source, folded generically. This serves the channels whose combine IS a plain
+		// sum (health, defense, the property plane, ...). The YIELD channels are RECOMPUTED in (2): their
+		// combine is the §2a plot-as-base package, which floors PER SEGMENT and cannot be expressed as a sum.
+		gt_foldInfo(pTerrain,     1, CASC_SCOPE_PLOT, iWantedBits, evalCtx, &plot, 0, false, flatSlots, percentSlots);
+		gt_foldInfo(pFeature,     1, CASC_SCOPE_PLOT, iWantedBits, evalCtx, &plot, 0, false, flatSlots, percentSlots);
+		gt_foldInfo(pBonus,       1, CASC_SCOPE_PLOT, iWantedBits, evalCtx, &plot, 0, false, flatSlots, percentSlots);
+		gt_foldInfo(pRoute,       1, CASC_SCOPE_PLOT, iWantedBits, evalCtx, &plot, 0, false, flatSlots, percentSlots);
+		gt_foldInfo(pImprovement, 1, CASC_SCOPE_PLOT, iWantedBits, evalCtx, &plot, 0, false, flatSlots, percentSlots);
+
+		// The owner's PLOT-scope deposits (keyed by this plot's substrate / `plots`-target / bare plot flats)
+		// land in a SCRATCH as well as the totals: the §2a package puts them AFTER the substrate legs, so the
+		// yield recompute needs them as their own term rather than mixed into the substrate sum.
+		std::vector<int64_t> ownerFlat(flatSlots.size(), 0);
+		if (eOwner != NO_PLAYER)
 		{
-			gt_foldInfo(GC.getTerrainInfo(plot.getTerrainType()).getModifiers(), 1, CASC_SCOPE_PLOT, iWantedBits, evalCtx, &plot, 0, false, substrateOut, percentSlots);
-		}
-		if (plot.getFeatureType() != NO_FEATURE)
-		{
-			gt_foldInfo(GC.getFeatureInfo(plot.getFeatureType()).getModifiers(), 1, CASC_SCOPE_PLOT, iWantedBits, evalCtx, &plot, 0, false, substrateOut, percentSlots);
-		}
-		if (plot.getBonusType(eSeeingTeam) != NO_BONUS)
-		{
-			gt_foldInfo(GC.getBonusInfo(plot.getBonusType(eSeeingTeam)).getModifiers(), 1, CASC_SCOPE_PLOT, iWantedBits, evalCtx, &plot, 0, false, substrateOut, percentSlots);
-		}
-		if (pSubstrateSlots != NULL)
-		{
-			for (size_t iSlot = 0; iSlot < substrateOut.size() && iSlot < flatSlots.size(); ++iSlot)
+			gt_foldPlayerSources(GET_PLAYER(eOwner), CASC_SCOPE_PLOT, iWantedBits, evalCtx, &plot, ownerFlat, percentSlots);
+			for (size_t iSlot = 0; iSlot < ownerFlat.size() && iSlot < flatSlots.size(); ++iSlot)
 			{
-				flatSlots[iSlot] += substrateOut[iSlot];
+				flatSlots[iSlot] += ownerFlat[iSlot];
 			}
 		}
 
-		// (2) what is BUILT on the plot -- the route and the improvement. Deliberately OUTSIDE the segment:
-		// the pre-improvement value is precisely the one an improvement's placement gate tests against.
-		if (plot.getRouteType() != NO_ROUTE)
+		// (2) THE YIELD CHANNELS -- the isolated plot-as-base package (modifier.md §2a basePlotYield):
+		// max(0, terrain+feature+bonus) nature · improvement floored at −nature · + route · then the owner's
+		// keyed/plots flats · floored. The per-segment floors live in the ONE implementation of this calc
+		// ([DEC-single-implementation]); the gather never re-derives them, and it takes the substrate segment
+		// back from the same call rather than summing those legs a second time.
+		int aiBaseYields[NUM_YIELD_TYPES];
+		int aiNatureYields[NUM_YIELD_TYPES];
+		InfoValuation::plotBaseYields(pTerrain, pFeature, pBonus, pImprovement, pRoute, evalCtx, aiBaseYields, &aiNatureYields);
+		for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
 		{
-			gt_foldInfo(GC.getRouteInfo(plot.getRouteType()).getModifiers(), 1, CASC_SCOPE_PLOT, iWantedBits, evalCtx, &plot, 0, false, flatSlots, percentSlots);
-		}
-		if (plot.getImprovementType() != NO_IMPROVEMENT)
-		{
-			gt_foldInfo(GC.getImprovementInfo(plot.getImprovementType()).getModifiers(), 1, CASC_SCOPE_PLOT, iWantedBits, evalCtx, &plot, 0, false, flatSlots, percentSlots);
-		}
-
-		// (3) the owner's sources' PLOT-scope deposits (keyed by this plot's substrate / `plots`-target / bare
-		// plot flats) -- civics, traits, techs, owned buildings, ... (the keyed/plots flats of the plot base).
-		// Outside the segment too: these are the OWNER's contribution, not the ground's.
-		if (eOwner != NO_PLAYER)
-		{
-			gt_foldPlayerSources(GET_PLAYER(eOwner), CASC_SCOPE_PLOT, iWantedBits, evalCtx, &plot, flatSlots, percentSlots);
+			const int iChannel = CascadeChannelRegistry::channelLookup(infoYieldFamily(iYield), (int)CHANNEL_AMOUNT, -1);
+			if (iChannel < 0 || (iWantedBits & CascadeChannelRegistry::scopeChannelBit(CASC_SCOPE_PLOT, iChannel)) == 0)
+			{
+				continue;
+			}
+			const int iSlot = CascadeChannelRegistry::scopeSlotIndex(CASC_SCOPE_PLOT, iChannel);
+			if (iSlot < 0)
+			{
+				continue;
+			}
+			int64_t iTotal = (int64_t)aiBaseYields[iYield] + (iSlot < (int)ownerFlat.size() ? ownerFlat[iSlot] : 0);
+			if (iTotal < 0)
+			{
+				iTotal = 0;
+			}
+			if (iSlot < (int)flatSlots.size())
+			{
+				flatSlots[iSlot] = iTotal;
+			}
+			if (pSubstrateSlots != NULL && iSlot < (int)pSubstrateSlots->size())
+			{
+				(*pSubstrateSlots)[iSlot] = aiNatureYields[iYield];
+			}
 		}
 	}
 

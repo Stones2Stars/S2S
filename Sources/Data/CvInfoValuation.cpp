@@ -518,7 +518,7 @@ int64_t InfoValuation::plotOwnYield(const CvModifiers* modifiers, ModifierFamily
 
 void InfoValuation::plotBaseYields(const CvModifiers* terrainModifiers, const CvModifiers* featureModifiers,
 	const CvModifiers* bonusModifiers, const CvModifiers* improvementModifiers, const CvModifiers* routeModifiers,
-	const CvCascadeEvalCtx& evalCtx, int (&plotYields)[NUM_YIELD_TYPES])
+	const CvCascadeEvalCtx& evalCtx, int (&plotYields)[NUM_YIELD_TYPES], int (*pNatureYields)[NUM_YIELD_TYPES])
 {
 	// THE ISOLATED PLOT-AS-BASE CALC (modifier.md §2 plot note; legacy decomposition calc-map §10.1): per
 	// channel -- nature = max(0, terrain + feature + bonus own-output); the improvement floored at −nature
@@ -546,6 +546,12 @@ void InfoValuation::plotBaseYields(const CvModifiers* terrainModifiers, const Cv
 			iTotal = 0;
 		}
 		plotYields[iYield] = (int)iTotal;
+		if (pNatureYields != NULL)
+		{
+			// The SUBSTRATE segment, handed back from the one place that already derives it -- a caller
+			// needing the pre-improvement value never re-sums the substrate legs itself.
+			(*pNatureYields)[iYield] = (int)iNature;
+		}
 	}
 }
 
