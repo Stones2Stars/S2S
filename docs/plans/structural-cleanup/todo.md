@@ -290,6 +290,11 @@
   *"ai does not need to factor in that it gets more yield from route for some improvements in some cases, it
   should evaluate routes on movespeed."* So the improvement what-if does NOT owe that term, and a per-route ×
   per-improvement yield term must not be built into the valuation for it.
+  ⚑ **Two reasons, and they are why this does not get re-litigated.** (1) **There is never a movespeed-vs-gold
+  TRADEOFF** — a route is laid for movement, so nothing is being weighed against the yield and no comparison
+  needs the number. (2) **The yield only happens ABOVE A THRESHOLD**, so it is incidental rather than a
+  competing objective the AI could steer by. ⇒ Modelling it in the valuation buys no better decision at
+  per-(route × improvement) cost on a hot loop.
   ⚠ Distinct from that, and still open on the DATA side: `RouteYieldChanges` are governing-deliverer
   SOURCE-side entries on the route (`{yield}.plot.improvements.{IMP}.flat`, modifier.md §4), and a KEYED entry
   never folds scope-wide (§5). `plotBaseYields`'s route leg is `plotOwnYield` — the route's UNTARGETED output —
