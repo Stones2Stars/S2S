@@ -33,19 +33,6 @@ void TerrainStructs::getDataMembers(CvInfoUtil& util)
 	;
 }
 
-void PlaceBonusTypes::getDataMembers(CvInfoUtil& util)
-{
-	util
-		.addEnum(eBonus, L"BonusType")
-		.add(iProbability, L"iProbability")
-		.add(bRequiresAccess, L"bRequiresAccess")
-		.addEnum(ePrereqTerrain, L"TerrainType")
-		.addEnum(ePrereqFeature, L"FeatureType")
-		.addEnum(ePrereqMapCategory, L"MapCategoryType")
-		.addEnum(ePrereqTech, L"TechType")
-	;
-}
-
 void FeatureStruct::getDataMembers(CvInfoUtil& util)
 {
 	util

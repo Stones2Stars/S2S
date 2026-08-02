@@ -3220,41 +3220,6 @@ bool CvPlot::canBuild(BuildTypes eBuild, PlayerTypes ePlayer, bool bTestVisible,
 		}
 	}
 
-	if (!info.getPlaceBonusTypes().empty())
-	{
-		if (getBonusType() != NO_BONUS)
-		{
-			return false;
-		}
-
-		bool bInvalid = true;
-		foreach_(const PlaceBonusTypes& obj, info.getPlaceBonusTypes())
-		{
-			bInvalid =
-			(
-				obj.bRequiresAccess && !GET_PLAYER(getOwner()).hasBonus(obj.eBonus)
-			||
-				obj.ePrereqMapCategory != NO_MAPCATEGORY && !isMapCategoryType(obj.ePrereqMapCategory)
-			||
-				obj.ePrereqTech != NO_TECH && !GET_TEAM(getTeam()).isHasTech(obj.ePrereqTech)
-			||
-				obj.ePrereqTerrain != NO_TERRAIN && getTerrainType() != obj.ePrereqTerrain
-			||
-				obj.ePrereqFeature != NO_FEATURE && getFeatureType() != obj.ePrereqFeature
-			||
-				!canHaveBonus(obj.eBonus)
-			);
-
-			if (!bInvalid)
-			{
-				break;
-			}
-		}
-		if (bInvalid)
-		{
-			return false;
-		}
-	}
 
 	foreach_(const BonusTypes ePrereqBonus, info.getPrereqBonuses())
 	{
@@ -9741,126 +9706,10 @@ bool CvPlot::changeBuildProgress(BuildTypes eBuild, int iChange, TeamTypes eTeam
 		m_paiBuildProgress[eBuild] += iChange;
 		FASSERT_NOT_NEGATIVE(getBuildProgress(eBuild));
 
-		BonusTypes eBonusPlaced = NO_BONUS;
 		if (getBuildProgress(eBuild) >= getBuildTime(eBuild))
 		{
 			m_paiBuildProgress[eBuild] = 0;
 
-			//TB Bonus Placement
-			if (!GC.getBuildInfo(eBuild).getPlaceBonusTypes().empty())
-			{
-				std::vector<int> m_aBonusResult;
-				m_aBonusResult.clear();
-				bool bAccessFound = false;
-				foreach_(const PlaceBonusTypes& obj, GC.getBuildInfo(eBuild).getPlaceBonusTypes())
-				{
-					const BonusTypes eBonus = obj.eBonus;
-					bAccessFound = false;
-					if (obj.bRequiresAccess)
-					{
-						if (GET_PLAYER(getOwner()).hasBonus(eBonus))
-						{
-							bAccessFound = true;
-						}
-					}
-					else
-					{
-						bAccessFound = true;
-					}
-					//Check MapCategoryType
-					if (bAccessFound)
-					{
-						if (obj.ePrereqMapCategory != NO_MAPCATEGORY)
-						{
-							bAccessFound = false;
-							if (isMapCategoryType(obj.ePrereqMapCategory))
-							{
-								bAccessFound = true;
-							}
-						}
-					}
-					if (bAccessFound)
-					{
-						if (obj.ePrereqTerrain != NO_TERRAIN)
-						{
-							bAccessFound = false;
-							if (getTerrainType() == obj.ePrereqTerrain)
-							{
-								bAccessFound = true;
-							}
-						}
-					}
-					if (bAccessFound)
-					{
-						if (obj.ePrereqTech != NO_TECH)
-						{
-							bAccessFound = false;
-							if (GET_TEAM(getTeam()).isHasTech(obj.ePrereqTech))
-							{
-								bAccessFound = true;
-							}
-						}
-					}
-					if (bAccessFound)
-					{
-						if (obj.ePrereqFeature != NO_FEATURE)
-						{
-							bAccessFound = false;
-							if (getFeatureType() == obj.ePrereqFeature)
-							{
-								bAccessFound = true;
-							}
-						}
-					}
-					if (bAccessFound)
-					{
-						bAccessFound = false;
-						if(canHaveBonus(obj.eBonus))
-						{
-							bAccessFound = true;
-						}
-					}
-					if (bAccessFound)
-					{
-						for (int iK = 0; iK < obj.iProbability; iK++)
-						{
-							m_aBonusResult.push_back((int)obj.eBonus);
-						}
-					}
-				}
-				if (!m_aBonusResult.empty())
-				{
-					const int iPossible = std::max((int)m_aBonusResult.size(), 100);
-					const uint32_t iResult = GC.getGame().getSorenRandNum(iPossible, "Select Bonus Placement Type");
-
-					if (iResult >= m_aBonusResult.size())
-					{
-						eBonusPlaced = NO_BONUS;
-					}
-					else
-					{
-						eBonusPlaced = (BonusTypes)m_aBonusResult[iResult];
-					}
-				}
-				if (eBonusPlaced != NO_BONUS)
-				{
-					setBonusType(eBonusPlaced);
-
-					if ( isInViewport() )
-					{
-						const CvWString szBuffer = gDLL->getText("TXT_KEY_MISC_PLACED_BONUS", GC.getBonusInfo(eBonusPlaced).getTextKeyWide());
-						AddDLLMessage(getOwner(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer,  ARTFILEMGR.getInterfaceArtInfo("WORLDBUILDER_CITY_EDIT")->getPath(), MESSAGE_TYPE_INFO, GC.getBonusInfo(getBonusType()).getButton(), GC.getCOLOR_WHITE(), getViewportX(),getViewportY(), true, true);
-					}
-				}
-				else
-				{
-					if ( isInViewport() )
-					{
-						const CvWString szBuffer = gDLL->getText("TXT_KEY_MISC_PLACED_BONUS_FAIL");
-						AddDLLMessage(getOwner(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer,  ARTFILEMGR.getInterfaceArtInfo("WORLDBUILDER_CITY_EDIT")->getPath(), MESSAGE_TYPE_INFO, 0, GC.getCOLOR_RED(), getViewportX(),getViewportY(), true, true);
-					}
-				}
-			}
 
 			// Place improvement, so long as it isn't a placeholder improvement for FeatureChange or TerrainChange
 			if (GC.getBuildInfo(eBuild).getImprovement() != NO_IMPROVEMENT

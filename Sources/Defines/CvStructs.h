@@ -243,19 +243,6 @@ struct TerrainStructs
 	bool operator< (const TerrainStructs& rhs) const {return (int)eTerrain < (int)rhs.eTerrain;}
 	void getDataMembers(CvInfoUtil& util);
 };
-struct PlaceBonusTypes
-{
-	BonusTypes eBonus;
-	int iProbability;
-	bool bRequiresAccess;
-	TechTypes ePrereqTech;
-	TerrainTypes ePrereqTerrain;
-	FeatureTypes ePrereqFeature;
-	MapCategoryTypes ePrereqMapCategory;
-	operator int() const {return (int)eBonus;}
-	bool operator< (const PlaceBonusTypes& rhs) const {return (int)eBonus < (int)rhs.eBonus;}
-	void getDataMembers(CvInfoUtil& util);
-};
 struct FeatureStruct
 {
 	FeatureTypes eFeature;
