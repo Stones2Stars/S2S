@@ -28192,14 +28192,18 @@ void CvPlayer::processTech(const TechTypes eTech, const int iChange)
 	PROFILE_EXTRA_FUNC();
 	const CvTechInfo& tech = GC.getTechInfo(eTech);
 
-	//	featureProduction is a percent and carries no scaling. The route COUNT and the two wellbeing channels are
-	//	FLAT slots, so each reduces at its point of use -- these accumulators hold whole routes and whole citizens
-	//	([DEC-fixedpoint-x100]).
+	//	featureProduction is a percent and carries no scaling. Everything else here is a FLAT slot and reduces at
+	//	its point of use -- these accumulators hold whole routes, whole citizens, and the two demographics'
+	//	whole-number totals ([DEC-fixedpoint-x100]).
 	changeFeatureProductionModifier(
 		tech.getScalar(SCALAR_FEATURE_PRODUCTION, CASC_SCOPE_EMPIRE, CASC_UNIT_PERCENT) * iChange);
 	changeTradeRoutes(tech.getTradeRoute(TRADE_ROUTE_AMOUNT, CASC_SCOPE_CITY) / 100 * iChange);
 	changeExtraHealth(tech.getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_EMPIRE) / 100 * iChange);
 	changeExtraHappiness(tech.getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_EMPIRE) / 100 * iChange);
+	//	The two demographics a tech feeds: `worth` is the empire's ASSETS total, and the domain-specific
+	//	`militaryWorth` is its POWER (the engine.py worth convention).
+	changeAssets(tech.getWorth() / 100 * iChange);
+	changeTechPower(tech.getMilitaryWorth() / 100 * iChange);
 	changeTechScore(getScoreValueOfTech(eTech) * iChange);
 }
 

@@ -210,8 +210,7 @@
   ([DEC-accumulator-cut-uniform](../../architecture/decisions.md#dec-accumulator-cut-uniform)).
   ⚑ **The mechanical test is two greps, not a judgement:** the member has a `WRAPPER_READ`/`WRITE`, and its
   `change*`/`set*` has no caller outside its own definition. Known instances to start from:
-  `CvCity::getBonusDefenseChanges`, `CvPlayer::getBonusCommerceModifier` and `CvPlayer::getTechPower` — the
-  last one because no tech authors a power value any more, so its only feeder went with the dead read.
+  `CvCity::getBonusDefenseChanges` and `CvPlayer::getBonusCommerceModifier`.
   ⛔ Do NOT read "it compiles and something calls it" as evidence a value is maintained — that is the reasoning
   this entry exists to correct.
 - Move every consumer off the hand-named channel-shaped getters on `CvCity`/`CvPlayer`, then delete the old names.
