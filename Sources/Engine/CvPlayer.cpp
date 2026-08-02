@@ -28192,18 +28192,15 @@ void CvPlayer::processTech(const TechTypes eTech, const int iChange)
 	PROFILE_EXTRA_FUNC();
 	const CvTechInfo& tech = GC.getTechInfo(eTech);
 
-	changeFeatureProductionModifier(tech.getFeatureProductionModifier() * iChange);
-	changeTradeRoutes(tech.getTradeRoutes() * iChange);
-	changeExtraHealth(tech.getHealth() * iChange);
-	changeExtraHappiness(tech.getHappiness() * iChange);
-	changeAssets(tech.getAssetValue() * iChange);
-	changeTechPower(tech.getPowerValue() * iChange);
+	//	featureProduction is a percent and carries no scaling. The route COUNT and the two wellbeing channels are
+	//	FLAT slots, so each reduces at its point of use -- these accumulators hold whole routes and whole citizens
+	//	([DEC-fixedpoint-x100]).
+	changeFeatureProductionModifier(
+		tech.getScalar(SCALAR_FEATURE_PRODUCTION, CASC_SCOPE_EMPIRE, CASC_UNIT_PERCENT) * iChange);
+	changeTradeRoutes(tech.getTradeRoute(TRADE_ROUTE_AMOUNT, CASC_SCOPE_CITY) / 100 * iChange);
+	changeExtraHealth(tech.getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_EMPIRE) / 100 * iChange);
+	changeExtraHappiness(tech.getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_EMPIRE) / 100 * iChange);
 	changeTechScore(getScoreValueOfTech(eTech) * iChange);
-
-	for (int i = 0; i < NUM_COMMERCE_TYPES; i++)
-	{
-		changeCommerceRateModifier(static_cast<CommerceTypes>(i), tech.getCommerceModifier(i) * iChange);
-	}
 }
 
 
