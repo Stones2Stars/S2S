@@ -26104,18 +26104,22 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 	changeUpkeepModifier(iChange*GC.getTraitInfo(eTrait).getUpkeepModifier());
 	changeLevelExperienceModifier(iChange*GC.getTraitInfo(eTrait).getLevelExperienceModifier());
 
-	changeMaxGlobalBuildingProductionModifier(iChange*GC.getTraitInfo(eTrait).getMaxGlobalBuildingProductionModifier());
-	changeMaxTeamBuildingProductionModifier(iChange*GC.getTraitInfo(eTrait).getMaxTeamBuildingProductionModifier());
-	changeMaxPlayerBuildingProductionModifier(iChange*GC.getTraitInfo(eTrait).getMaxPlayerBuildingProductionModifier());
+	// The wonder build-rate categories: `world`/`team`/`national` name the CAP SCOPE that makes a building a
+	// wonder ([json.md §4.4]), so each is its own build-rate kind. All three are percents and carry no scaling.
+	changeMaxGlobalBuildingProductionModifier(iChange * kTrait.getBuildRateModifier(BUILD_RATE_WORLD_WONDER, CASC_SCOPE_EMPIRE));
+	changeMaxTeamBuildingProductionModifier(iChange * kTrait.getBuildRateModifier(BUILD_RATE_TEAM_WONDER, CASC_SCOPE_EMPIRE));
+	changeMaxPlayerBuildingProductionModifier(iChange * kTrait.getBuildRateModifier(BUILD_RATE_NATIONAL_WONDER, CASC_SCOPE_EMPIRE));
 
 	for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
 	{
-		changeTradeYieldModifier(((YieldTypes)iI), iChange*GC.getTraitInfo(eTrait).getTradeYieldModifier(iI));
+		changeTradeYieldModifier((YieldTypes)iI,
+			iChange * kTrait.getTradeRouteYieldModifier((YieldTypes)iI, CASC_SCOPE_EMPIRE));
 	}
 
 	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 	{
-		changeCommerceRateModifier((CommerceTypes)iI, iChange*GC.getTraitInfo(eTrait).getCommerceModifier(iI));
+		changeCommerceRateModifier((CommerceTypes)iI,
+			iChange * kTrait.getCommerceModifier((CommerceTypes)iI, CASC_SCOPE_EMPIRE));
 	}
 
 	for (int iI = 0; iI < GC.getTraitInfo(eTrait).getNumCivicOptionNoUpkeepTypes(); iI++)
@@ -26208,7 +26212,7 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 		changeBuildWorkerSpeedModifierSpecific(pair.first, iChange * pair.second);
 	}
 
-	// The trait's specialist-keyed yield/commerce deposits. A trait keyed to a SHARED sub-city target keeps the
+	// The trait's specialist-keyed YIELD deposits. A trait keyed to a SHARED sub-city target keeps the
 	// governing-deliverer shape ([modifier.md §4] -- the per-set carve-out: the simple and complex sets hold
 	// different values for one shared specialist file), so the rows are read from the TRAIT rather than inverted
 	// onto the specialist. An ENTRY-LIST read over the handful the trait authored ([modifier.md §5]), never a
@@ -26226,17 +26230,6 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 				kSpecialistYields[iRow].second / 100 * iChange);
 		}
 	}
-	for (int iCommerce = 0; iCommerce < NUM_COMMERCE_TYPES; iCommerce++)
-	{
-		std::vector<std::pair<int, int> > kSpecialistCommerces;
-		InfoValuation::collectKeyedTarget(GC.getTraitInfo(eTrait).getModifiers(),
-			infoCommerceFamily(iCommerce), CHANNEL_AMOUNT, iSpecialistSegment, kSpecialistCommerces, (int)CASC_SCOPE_EMPIRE);
-		for (size_t iRow = 0; iRow < kSpecialistCommerces.size(); ++iRow)
-		{
-				kSpecialistCommerces[iRow].second / 100 * iChange);
-		}
-	}
-
 	// (The trait's era-advance specialist is not applied here: it fires on the ERA ADVANCING, which is the
 	// trigger engine's SEVT_ERA_CHANGED route, not on gaining the trait.)
 
@@ -26245,7 +26238,7 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 		const YieldTypes eYield = static_cast<YieldTypes>(iI);
 		changeSeaPlotYield(eYield, GC.getTraitInfo(eTrait).getSeaPlotYieldChanges(iI) * iChange);
 		changeFreeCityYield(eYield, GC.getTraitInfo(eTrait).getYieldChange(iI) * iChange);
-		changeYieldRateModifier(eYield, GC.getTraitInfo(eTrait).getYieldModifier(iI) * iChange);
+		changeYieldRateModifier(eYield, kTrait.getYieldModifier(eYield, CASC_SCOPE_EMPIRE) * iChange);
 		changeCapitalYieldRateModifier(eYield, GC.getTraitInfo(eTrait).getCapitalYieldModifier(iI) * iChange);
 		changeSpecialistExtraYield(eYield, GC.getTraitInfo(eTrait).getSpecialistExtraYield(iI) * iChange);
 		updateExtraYieldThreshold(eYield);
