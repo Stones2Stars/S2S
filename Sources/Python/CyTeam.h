@@ -14,6 +14,9 @@ class CyTeam
 {
 public:
 	CyTeam();
+
+	// Publishes the HANDLE (not an info).
+	static void pythonPublish();
 	explicit CyTeam(CvTeam* pTeam);		// Call from C++
 
 	//const CvTeam* getTeam() const { return m_pTeam; }	// Call from C++

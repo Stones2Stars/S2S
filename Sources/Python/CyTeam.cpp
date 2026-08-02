@@ -643,3 +643,159 @@ bool CyTeam::isHasEmbassy(int /*TeamTypes*/ eTeam) const
 {
 	return m_pTeam->isHasEmbassy((TeamTypes)eTeam);
 }
+
+//
+//	A game-object HANDLE, not an info -- the wrappers the engine hands to Python callbacks.
+//
+void CyTeam::pythonPublish()
+{
+	python::class_<CyTeam>("CyTeam", python::no_init)
+		.def("isRebelAgainst", &CyTeam::isRebelAgainst, "bool ( int iTeam )" )
+		.def("setRebelAgainst", &CyTeam::setRebelAgainst, "void ( int iTeam, bool bNewValue )" )
+		.def("countRebelAgainst", &CyTeam::countRebelAgainst, "int ( )" )
+
+		.def("addTeam", &CyTeam::addTeam)
+
+		.def("canChangeWarPeace", &CyTeam::canChangeWarPeace)
+		.def("canDeclareWar", &CyTeam::canDeclareWar)
+		.def("declareWar", &CyTeam::declareWar)
+		.def("makePeace", &CyTeam::makePeace)
+		.def("canContact", &CyTeam::canContact)
+		.def("meet", &CyTeam::meet)
+		.def("signOpenBorders", &CyTeam::signOpenBorders)
+		.def("signDefensivePact", &CyTeam::signDefensivePact)
+
+		.def("getAssets", &CyTeam::getAssets)
+		.def("getPower", &CyTeam::getPower)
+
+		.def("getTotalVictoryScore", &CyTeam::getTotalVictoryScore)
+
+		.def("isAtWar", &CyTeam::isAtWar)
+		.def("getAtWarCount", &CyTeam::getAtWarCount)
+		.def("getHasMetCivCount", &CyTeam::getHasMetCivCount)
+		.def("isAVassal", &CyTeam::isAVassal)
+
+		.def("getBuildingCountPlusMaking", &CyTeam::getBuildingCountPlusMaking)
+		.def("getUnitMaking", &CyTeam::getUnitMaking)
+		.def("getUnitCountPlusMaking", &CyTeam::getUnitCountPlusMaking)
+		.def("getHasReligionCount", &CyTeam::getHasReligionCount)
+		.def("getHasCorporationCount", &CyTeam::getHasCorporationCount)
+
+		.def("countTotalCulture", &CyTeam::countTotalCulture)
+
+		.def("countNumCitiesByArea", &CyTeam::countNumCitiesByArea)
+
+		.def("getResearchCost", &CyTeam::getResearchCost)
+
+		.def("hasHolyCity", &CyTeam::hasHolyCity)
+		.def("hasHeadquarters", &CyTeam::hasHeadquarters)
+
+		.def("isHuman", &CyTeam::isHuman)
+		.def("isNPC", &CyTeam::isNPC)
+		.def("isHominid", &CyTeam::isNPC)
+		.def("isMinorCiv", &CyTeam::isMinorCiv)
+		.def("setIsMinorCiv", &CyTeam::setIsMinorCiv)
+
+		.def("getLeaderID", &CyTeam::getLeaderID)
+		.def("getHandicapType", &CyTeam::getHandicapType)
+		.def("getName", &CyTeam::getName)
+
+		.def("getNumMembers", &CyTeam::getNumMembers)
+		.def("isAlive", &CyTeam::isAlive)
+		.def("isEverAlive", &CyTeam::isEverAlive)
+		.def("getNumCities", &CyTeam::getNumCities)
+		.def("getTotalPopulation", &CyTeam::getTotalPopulation)
+		.def("getTotalLand", &CyTeam::getTotalLand)
+
+		.def("getForceTeamVoteEligibilityCount", &CyTeam::getForceTeamVoteEligibilityCount)
+		.def("isForceTeamVoteEligible", &CyTeam::isForceTeamVoteEligible)
+		.def("changeForceTeamVoteEligibilityCount", &CyTeam::changeForceTeamVoteEligibilityCount)
+		.def("isExtraWaterSeeFrom", &CyTeam::isExtraWaterSeeFrom)
+		.def("isMapTrading", &CyTeam::isMapTrading)
+		.def("isTechTrading", &CyTeam::isTechTrading)
+		.def("isGoldTrading", &CyTeam::isGoldTrading)
+		.def("isOpenBordersTrading", &CyTeam::isOpenBordersTrading)
+		.def("isDefensivePactTrading", &CyTeam::isDefensivePactTrading)
+		.def("isPermanentAllianceTrading", &CyTeam::isPermanentAllianceTrading)
+		.def("isVassalStateTrading", &CyTeam::isVassalStateTrading)
+		.def("isBridgeBuilding", &CyTeam::isBridgeBuilding)
+		.def("isIrrigation", &CyTeam::isIrrigation)
+		.def("isIgnoreIrrigation", &CyTeam::isIgnoreIrrigation)
+		.def("isWaterWork", &CyTeam::isWaterWork)
+
+		.def("getVassalPower", &CyTeam::getVassalPower)
+		.def("setVassalPower", &CyTeam::setVassalPower)
+		.def("getMasterPower", &CyTeam::getMasterPower)
+		.def("setMasterPower", &CyTeam::setMasterPower)
+
+		.def("isMapCentering", &CyTeam::isMapCentering)
+		.def("setMapCentering", &CyTeam::setMapCentering)
+
+		.def("getEnemyWarWearinessModifier", &CyTeam::getEnemyWarWearinessModifier)
+		.def("changeEnemyWarWearinessModifier", &CyTeam::changeEnemyWarWearinessModifier)
+
+		.def("getID", &CyTeam::getID)
+
+		.def("getWarWeariness", &CyTeam::getWarWeariness)
+		.def("changeWarWeariness", &CyTeam::changeWarWeariness)
+		.def("isCommerceFlexible", &CyTeam::isCommerceFlexible)
+
+		.def("getExtraMoves", &CyTeam::getExtraMoves)
+		.def("changeExtraMoves", &CyTeam::changeExtraMoves)
+
+		.def("isHasMet", &CyTeam::isHasMet)
+		.def("isAtWarWith", &CyTeam::isAtWarWith)
+		.def("isPermanentWarPeace", &CyTeam::isPermanentWarPeace)
+		.def("setPermanentWarPeace", &CyTeam::setPermanentWarPeace)
+		.def("isOpenBorders", &CyTeam::isOpenBorders)
+		.def("isForcePeace", &CyTeam::isForcePeace)
+		.def("isVassal", &CyTeam::isVassal)
+		.def("assignVassal", &CyTeam::assignVassal)
+		.def("freeVassal", &CyTeam::freeVassal)
+		.def("isDefensivePact", &CyTeam::isDefensivePact)
+		.def("getProjectCount", &CyTeam::getProjectCount)
+		.def("getProjectDefaultArtType", &CyTeam::getProjectDefaultArtType)
+		.def("setProjectArtType", &CyTeam::setProjectArtType)
+		.def("changeProjectCount", &CyTeam::changeProjectCount)
+		.def("getProjectMaking", &CyTeam::getProjectMaking)
+		.def("getBuildingCount", &CyTeam::getBuildingCount)
+		.def("isBuildingMaxedOut", &CyTeam::isBuildingMaxedOut)
+		.def("getUnitCount", &CyTeam::getUnitCount)
+		.def("isObsoleteBuilding", &CyTeam::isObsoleteBuilding)
+
+		.def("getResearchProgress", &CyTeam::getResearchProgress)
+		.def("setResearchProgress", &CyTeam::setResearchProgress)
+		.def("changeResearchProgress", &CyTeam::changeResearchProgress)
+		.def("isTerrainTrade", &CyTeam::isTerrainTrade)
+		.def("isRiverTrade", &CyTeam::isRiverTrade)
+		.def("getTechCount", &CyTeam::getTechCount)
+
+		.def("isHasTech", &CyTeam::isHasTech)
+		.def("setHasTech", &CyTeam::setHasTech)
+		.def("isNoTradeTech", &CyTeam::isNoTradeTech)
+
+
+
+		.def("isHasEmbassy", &CyTeam::isHasEmbassy)
+
+		.def("getVictoryCountdown", &CyTeam::getVictoryCountdown)
+		.def("getVictoryDelay", &CyTeam::getVictoryDelay)
+		.def("canLaunch", &CyTeam::canLaunch)
+		.def("getLaunchSuccessRate", &CyTeam::getLaunchSuccessRate)
+
+		.def("getEspionagePointsAgainstTeam", &CyTeam::getEspionagePointsAgainstTeam)
+		.def("setEspionagePointsAgainstTeam", &CyTeam::setEspionagePointsAgainstTeam)
+		.def("changeEspionagePointsAgainstTeam", &CyTeam::changeEspionagePointsAgainstTeam)
+		.def("getEspionagePointsEver", &CyTeam::getEspionagePointsEver)
+		.def("setEspionagePointsEver", &CyTeam::setEspionagePointsEver)
+		.def("changeEspionagePointsEver", &CyTeam::changeEspionagePointsEver)
+		.def("getCounterespionageTurnsLeftAgainstTeam", &CyTeam::getCounterespionageTurnsLeftAgainstTeam)
+		.def("changeCounterespionageTurnsLeftAgainstTeam", &CyTeam::changeCounterespionageTurnsLeftAgainstTeam)
+		.def("getCounterespionageModAgainstTeam", &CyTeam::getCounterespionageModAgainstTeam)
+		.def("changeCounterespionageModAgainstTeam", &CyTeam::changeCounterespionageModAgainstTeam)
+		.def("AI_shareWar", &CyTeam::AI_shareWar)
+		.def("AI_getAtWarCounter", &CyTeam::AI_getAtWarCounter)
+		.def("AI_getAtPeaceCounter", &CyTeam::AI_getAtPeaceCounter)
+		.def("AI_getWarSuccess", &CyTeam::AI_getWarSuccess)
+	;
+}

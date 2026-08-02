@@ -40,6 +40,27 @@ public:
 
 	bool isDebugBuild() const;
 
+	// The Cy* HANDLES. These are NOT infos -- they are the game-object wrappers the engine already hands to
+	// Python callbacks, and the ruling that this class serves no INFOS does not reach them. Cutting them was
+	// an over-reach: they are the most-used names in the tree.
+
+	int getNumCivilizationInfos() const { return GC.getNumCivilizationInfos(); }   // the correctly-spelled twin
+
+	// The Cy* HANDLES. NOT infos -- they are the game-object wrappers the engine already hands to Python
+	// callbacks, so the ruling that this class serves no INFOS does not reach them. Cutting them was an
+	// over-reach: getPlayer/getTeam/getMap/getGame are the most-called names in the whole tree.
+	CyGame* getCyGame() const;
+	CyMap* getCyMap() const;
+	void switchMap(MapTypes eMap);
+	CyMap* getMapByIndex(MapTypes eMap) const;
+	python::list getMaps() const;
+	int getNumMapsInitialized() const;
+	CyPlayer* getCyPlayer(PlayerTypes ePlayer) const;
+	CyPlayer* getCyActivePlayer() const;
+	CvRandom& getCyASyncRand() const;
+	CyTeam* getCyTeam(TeamTypes eTeam) const;
+	const CvMainMenuInfo* getMainMenus(int i) const;
+
 	int getInfoTypeForString(const char* szInfoType, bool bHideAssert = false) const;
 
 	int getNumFlavorTypes() const;

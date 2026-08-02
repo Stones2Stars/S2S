@@ -10,6 +10,7 @@
 #include "CyArea.h"
 #include "CyCity.h"
 #include "CyPlot.h"
+#include "Infrastructure/CvPythonPlotLoader.h"
 #include "CyUnit.h"
 
 //
@@ -637,10 +638,8 @@ python::list CyPlot::rect(int halfWid, int halfHgt) const
 //
 void CyPlot::pythonPublish()
 {
-	// ⚠ The TYPE only, no methods. CyMap::plot() returns a CyPlot*, so boost needs the class REGISTERED for
-	// that conversion to exist at all -- without it the map-script reads fail at the return, not at the call.
-	// Its methods came from a separate loader that the binding purge removed; they come back with the
-	// map-script boundary work, and a script touching one gets a loud AttributeError until then.
-	// Uses the python:: alias, never a bare boost:: -- two Boosts coexist (engine.md).
-	python::class_<CyPlot>("CyPlot", python::no_init);
+	// A game-object HANDLE, not an info. Its def set publishes through the loader, whose split across
+	// translation units keeps any single one inside the VC7.1 compiler's limits.
+	python::class_<CyPlot> plot("CyPlot", python::no_init);
+	CvPythonPlotLoader::CyPlotPythonInterface1(plot);
 }

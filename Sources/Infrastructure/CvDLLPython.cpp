@@ -7,6 +7,10 @@
 #include "Python/CyArtFileMgr.h"
 #include "Python/CyEnums.h"
 #include "Python/CyInfo.h"
+#include "CvPythonPlayerLoader.h"
+#include "CvPythonPlotLoader.h"
+#include "Python/CyGame.h"
+#include "Python/CyTeam.h"
 #include "Python/CyGameTextMgr.h"
 #include "Python/CyGlobalContext.h"
 #include "Python/CyMap.h"
@@ -116,6 +120,18 @@ DllExport void DLLPublishToPython()
 
 	// The MAP-SCRIPT boundary: handles, not infos. Map scripts are their own boundary (patterns.md) and were
 	// never meant to be affected by the Cy* cut.
+	// The game-object HANDLES. Not infos -- these are the wrappers the engine hands to Python callbacks, and
+	// GC.getPlayer/getTeam/getMap/getGame are the most-called names in the tree.
+	CyGame::pythonPublish();
+	CyTeam::pythonPublish();
+	{
+		// CyPlayer and CyPlot publish through their loaders (their def sets are split across translation units
+		// to keep any single one inside the VC7.1 compiler's limits).
+		python::class_<CyPlayer> player("CyPlayer", python::no_init);
+		CvPythonPlayerLoader::CyPlayerPythonInterface1(player);
+		CvPythonPlayerLoader::CyPlayerPythonInterface2(player);
+		CvPythonPlayerLoader::CyPlayerPythonInterface3(player);
+	}
 	CyMap::pythonPublish();
 	CyPlot::pythonPublish();
 	CyArea::pythonPublish();

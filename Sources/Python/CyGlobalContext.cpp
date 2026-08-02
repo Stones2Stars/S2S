@@ -20,6 +20,7 @@
 #include "AI/CvTeamAI.h"
 #include "CyGame.h"
 #include "CyGlobalContext.h"
+#include "Infrastructure/CvPythonGlobalContextLoader.h"
 #include "CyMap.h"
 #include "CyPlayer.h"
 #include "CyTeam.h"
@@ -165,107 +166,82 @@ const CvInfoBase* CyGlobalContext::getDenialInfo(int i) const
 // a script asking for entity data gets an AttributeError here and goes to the library, which is exactly the
 // point of keeping the two apart ([DEC-cy-not-fixed]). The DEFINES are served BY NAME, so a new define is
 // data rather than a new method.
+
+
+CyGame* CyGlobalContext::getCyGame() const
+{
+	static CyGame cyGame(GC.getGame());
+	return &cyGame;
+}
+
+CyMap* CyGlobalContext::getCyMap() const
+{
+	static CyMap cyMap;
+	return &cyMap;
+	//return g_cyMaps[CURRENT_MAP];
+}
+
+void CyGlobalContext::switchMap(MapTypes eMap)
+{
+	GC.switchMap(eMap);
+}
+
+CyMap* CyGlobalContext::getMapByIndex(MapTypes eMap) const
+{
+	FASSERT_BOUNDS(0, NUM_MAPS, eMap);
+	return &g_cyMaps[eMap];
+}
+
+python::list CyGlobalContext::getMaps() const
+{
+	python::list l = python::list();
+
+	foreach_(CyMap& mapX, g_cyMaps)
+	{
+		l.append(mapX);
+	}
+	return l;
+}
+
+int CyGlobalContext::getNumMapsInitialized() const
+{
+	return algo::count_if(GC.getMaps(), bind(CvMap::plotsInitialized, _1));
+}
+
+CyPlayer* CyGlobalContext::getCyPlayer(PlayerTypes ePlayer) const
+{
+	FASSERT_BOUNDS(0, MAX_PLAYERS, ePlayer);
+	return ePlayer >= 0 && ePlayer < MAX_PLAYERS ? &g_cyPlayers[ePlayer] : NULL;
+}
+
+CyPlayer* CyGlobalContext::getCyActivePlayer() const
+{
+	return getCyPlayer(GC.getGame().getActivePlayer());
+}
+
+CvRandom& CyGlobalContext::getCyASyncRand() const
+{
+	return GC.getASyncRand();
+}
+
+CyTeam* CyGlobalContext::getCyTeam(TeamTypes eTeam) const
+{
+	FASSERT_BOUNDS(0, MAX_TEAMS, eTeam);
+	return eTeam < MAX_TEAMS ? &g_cyTeams[eTeam] : NULL;
+}
+
+const CvMainMenuInfo* CyGlobalContext::getMainMenus(int i) const
+{
+	return ((i >= 0 && i < GC.getNumMainMenus()) ? &GC.getMainMenus(i) : NULL);
+}
+
 void CyGlobalContext::pythonPublish()
 {
-#define PUBLISH_CY_GET_METHOD(dataType, VAR) .def("get"#VAR, &CyGlobalContext::get##VAR)
-
-	python::class_<CyGlobalContext>("CyGlobalContext")
-		.def("isDebugBuild", &CyGlobalContext::isDebugBuild)
-		.def("getInfoTypeForString", &CyGlobalContext::getInfoTypeForString)
-		.def("getNumFlavorTypes", &CyGlobalContext::getNumFlavorTypes)
-		.def("getFlavorType", &CyGlobalContext::getFlavorType)
-		.def("getFlavorTypes", &CyGlobalContext::getFlavorTypes)
-		.def("getArtStyleTypes", &CyGlobalContext::getArtStyleTypes)
-		.def("getMapBonus", &CyGlobalContext::getMapBonus)
-		.def("getNumMapBonuses", &CyGlobalContext::getNumMapBonuses)
-		.def("getDefineINT", &CyGlobalContext::getDefineINT)
-		.def("getDefineFLOAT", &CyGlobalContext::getDefineFLOAT)
-		.def("setDefineINT", &CyGlobalContext::setDefineINT)
-		.def("setDefineFLOAT", &CyGlobalContext::setDefineFLOAT)
-		.def("setNoUpdateDefineFLOAT", &CyGlobalContext::setNoUpdateDefineFLOAT)
-		.def("setIsBug", &CyGlobalContext::setIsBug)
-		.def("refreshOptionsBUG", &CyGlobalContext::refreshOptionsBUG)
-		.def("getMAX_PC_PLAYERS", &CyGlobalContext::getMAX_PC_PLAYERS)
-		.def("getMAX_PLAYERS", &CyGlobalContext::getMAX_PLAYERS)
-		.def("getMAX_PC_TEAMS", &CyGlobalContext::getMAX_PC_TEAMS)
-		.def("getMAX_TEAMS", &CyGlobalContext::getMAX_TEAMS)
-		.def("getBARBARIAN_PLAYER", &CyGlobalContext::getBARBARIAN_PLAYER)
-		.def("getBARBARIAN_TEAM", &CyGlobalContext::getBARBARIAN_TEAM)
-		.def("getNUM_CITY_PLOTS", &CyGlobalContext::getNUM_CITY_PLOTS)
-		.def("isDCM_ACTIVE_DEFENSE", &CyGlobalContext::isDCM_ACTIVE_DEFENSE)
-		.def("isDCM_FIGHTER_ENGAGE", &CyGlobalContext::isDCM_FIGHTER_ENGAGE)
-		.def("isIDW_ENABLED", &CyGlobalContext::isIDW_ENABLED)
-		.def("isIDW_EMERGENCY_DRAFT_ENABLED", &CyGlobalContext::isIDW_EMERGENCY_DRAFT_ENABLED)
-		.def("isIDW_NO_BARBARIAN_INFLUENCE", &CyGlobalContext::isIDW_NO_BARBARIAN_INFLUENCE)
-		.def("isIDW_NO_NAVAL_INFLUENCE", &CyGlobalContext::isIDW_NO_NAVAL_INFLUENCE)
-		.def("isIDW_PILLAGE_INFLUENCE_ENABLED", &CyGlobalContext::isIDW_PILLAGE_INFLUENCE_ENABLED)
-		.def("isSS_ENABLED", &CyGlobalContext::isSS_ENABLED)
-		.def("isSS_BRIBE", &CyGlobalContext::isSS_BRIBE)
-		.def("isSS_ASSASSINATE", &CyGlobalContext::isSS_ASSASSINATE)
-		// the registry COUNTS -- hand-written in the header, so the macros below do NOT cover them
-		.def("getNumActionInfos", &CyGlobalContext::getNumActionInfos)
-		.def("getNumBonusInfos", &CyGlobalContext::getNumBonusInfos)
-		.def("getNumBuildInfos", &CyGlobalContext::getNumBuildInfos)
-		.def("getNumBuildingInfos", &CyGlobalContext::getNumBuildingInfos)
-		.def("getNumCalendarInfos", &CyGlobalContext::getNumCalendarInfos)
-		.def("getNumCivicInfos", &CyGlobalContext::getNumCivicInfos)
-		.def("getNumCivicOptionInfos", &CyGlobalContext::getNumCivicOptionInfos)
-		.def("getNumCivilizatonInfos", &CyGlobalContext::getNumCivilizatonInfos)
-		.def("getNumClimateInfos", &CyGlobalContext::getNumClimateInfos)
-		.def("getNumCommandInfos", &CyGlobalContext::getNumCommandInfos)
-		.def("getNumConceptInfos", &CyGlobalContext::getNumConceptInfos)
-		.def("getNumControlInfos", &CyGlobalContext::getNumControlInfos)
-		.def("getNumCorporationInfos", &CyGlobalContext::getNumCorporationInfos)
-		.def("getNumCultureLevelInfos", &CyGlobalContext::getNumCultureLevelInfos)
-		.def("getNumDenialInfos", &CyGlobalContext::getNumDenialInfos)
-		.def("getNumDiplomacyInfos", &CyGlobalContext::getNumDiplomacyInfos)
-		.def("getNumEffectInfos", &CyGlobalContext::getNumEffectInfos)
-		.def("getNumEmphasizeInfos", &CyGlobalContext::getNumEmphasizeInfos)
-		.def("getNumEraInfos", &CyGlobalContext::getNumEraInfos)
-		.def("getNumEspionageMissionInfos", &CyGlobalContext::getNumEspionageMissionInfos)
-		.def("getNumEventInfos", &CyGlobalContext::getNumEventInfos)
-		.def("getNumEventTriggerInfos", &CyGlobalContext::getNumEventTriggerInfos)
-		.def("getNumFeatureInfos", &CyGlobalContext::getNumFeatureInfos)
-		.def("getNumForceControlInfos", &CyGlobalContext::getNumForceControlInfos)
-		.def("getNumGameOptionInfos", &CyGlobalContext::getNumGameOptionInfos)
-		.def("getNumGameSpeedInfos", &CyGlobalContext::getNumGameSpeedInfos)
-		.def("getNumGoodyInfos", &CyGlobalContext::getNumGoodyInfos)
-		.def("getNumHandicapInfos", &CyGlobalContext::getNumHandicapInfos)
-		.def("getNumHeritageInfos", &CyGlobalContext::getNumHeritageInfos)
-		.def("getNumHurryInfos", &CyGlobalContext::getNumHurryInfos)
-		.def("getNumImprovementInfos", &CyGlobalContext::getNumImprovementInfos)
-		.def("getNumLeaderHeadInfos", &CyGlobalContext::getNumLeaderHeadInfos)
-		.def("getNumMPOptionInfos", &CyGlobalContext::getNumMPOptionInfos)
-		.def("getNumMainMenus", &CyGlobalContext::getNumMainMenus)
-		.def("getNumMissionInfos", &CyGlobalContext::getNumMissionInfos)
-		.def("getNumNewConceptInfos", &CyGlobalContext::getNumNewConceptInfos)
-		.def("getNumPlayableCivilizationInfos", &CyGlobalContext::getNumPlayableCivilizationInfos)
-		.def("getNumPlayerColorInfos", &CyGlobalContext::getNumPlayerColorInfos)
-		.def("getNumProcessInfos", &CyGlobalContext::getNumProcessInfos)
-		.def("getNumProjectInfos", &CyGlobalContext::getNumProjectInfos)
-		.def("getNumPromotionInfos", &CyGlobalContext::getNumPromotionInfos)
-		.def("getNumPromotionLineInfos", &CyGlobalContext::getNumPromotionLineInfos)
-		.def("getNumPropertyInfos", &CyGlobalContext::getNumPropertyInfos)
-		.def("getNumReligionInfos", &CyGlobalContext::getNumReligionInfos)
-		.def("getNumRouteInfos", &CyGlobalContext::getNumRouteInfos)
-		.def("getNumSeaLevelInfos", &CyGlobalContext::getNumSeaLevelInfos)
-		.def("getNumSeasonInfos", &CyGlobalContext::getNumSeasonInfos)
-		.def("getNumSpecialBuildingInfos", &CyGlobalContext::getNumSpecialBuildingInfos)
-		.def("getNumSpecialUnitInfos", &CyGlobalContext::getNumSpecialUnitInfos)
-		.def("getNumSpecialistInfos", &CyGlobalContext::getNumSpecialistInfos)
-		.def("getNumTechInfos", &CyGlobalContext::getNumTechInfos)
-		.def("getNumTerrainInfos", &CyGlobalContext::getNumTerrainInfos)
-		.def("getNumTraitInfos", &CyGlobalContext::getNumTraitInfos)
-		.def("getNumUnitCombatInfos", &CyGlobalContext::getNumUnitCombatInfos)
-		.def("getNumUnitInfos", &CyGlobalContext::getNumUnitInfos)
-		.def("getNumUpkeepInfos", &CyGlobalContext::getNumUpkeepInfos)
-		.def("getNumVictoryInfos", &CyGlobalContext::getNumVictoryInfos)
-		.def("getNumVoteInfos", &CyGlobalContext::getNumVoteInfos)
-		.def("getNumVoteSourceInfos", &CyGlobalContext::getNumVoteSourceInfos)
-		.def("getNumWorldInfos", &CyGlobalContext::getNumWorldInfos)
-		DO_FOR_EACH_EXPOSED_INT_GLOBAL_DEFINE(PUBLISH_CY_GET_METHOD)
-		DO_FOR_EACH_EXPOSED_INFO_TYPE(PUBLISH_CY_GET_METHOD)
-		;
-
-#undef PUBLISH_CY_GET_METHOD
+	// The publication rides the ORIGINAL loaders, pruned against this class's own header -- so the INFO
+	// accessors drop out by construction rather than by a hand-kept list, and cannot creep back in.
+	python::class_<CyGlobalContext> gc("CyGlobalContext");
+	CvPythonGlobalContextLoader::CyGlobalContextPythonInterface1(gc);
+	CvPythonGlobalContextLoader::CyGlobalContextPythonInterface2(gc);
+	CvPythonGlobalContextLoader::CyGlobalContextPythonInterface3(gc);
+	CvPythonGlobalContextLoader::CyGlobalContextPythonInterface4(gc);
 }

@@ -19,6 +19,9 @@ class CyGame
 {
 public:
 	CyGame();
+
+	// Publishes the HANDLE (not an info).
+	static void pythonPublish();
 	explicit CyGame(CvGame& pGame);			// Call from C++
 	explicit CyGame(CvGameAI& pGame);		// Call from C++;
 
