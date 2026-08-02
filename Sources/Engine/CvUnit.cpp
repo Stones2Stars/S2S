@@ -22705,287 +22705,41 @@ bool CvUnit::canKeepPromotion(PromotionTypes ePromotion, bool bAssertFree, bool 
 		return false;
 	}
 
-	if (!promo.isPlotPrereqsKeepAfter())
-	{
-		bool bValid = true;
-		{
-			if (plot() != NULL)
-			{
-
-
-				const TerrainTypes eTerrain = plot()->getTerrainType();
-
-				for (int iI = 0; iI < promo.getNumPrereqTerrainTypes(); iI++)
-				{
-					const TerrainTypes ePrereqTerrain = (TerrainTypes)promo.getPrereqTerrainType(iI);
-					if (ePrereqTerrain != NO_TERRAIN)
-					{
-						bValid = false;
-						if (ePrereqTerrain == GC.getTERRAIN_PEAK())
-						{
-							if (plot()->isAsPeak())
-							{
-								bValid = true;
-								break;
-							}
-						}
-						else if (ePrereqTerrain == GC.getTERRAIN_HILL())
-						{
-							if (plot()->isHills())
-							{
-								bValid = true;
-								break;
-							}
-						}
-						else if (ePrereqTerrain == eTerrain)
-						{
-							bValid = true;
-							break;
-						}
-					}
-				}
-				if (!bValid)
-				{
-					if (bMessageOnFalse)
-					{
-						if (bPromo && !bIsFreePromotion)
-						{
-							AddDLLMessage(
-								getOwner(), true, GC.getEVENT_MESSAGE_TIME(),
-								gDLL->getText(
-									"TXT_KEY_MISC_OBSOLETED_PROMOTION_TERRAIN_CAN_RETRAIN",
-									getNameKey(), promo.getDescription()
-								),
-								"AS2D_POSITIVE_DINK", MESSAGE_TYPE_INFO, NULL, GC.getCOLOR_GREEN(), getX(), getY()
-							);
-						}
-						else
-						{
-							AddDLLMessage(
-								getOwner(), true, GC.getEVENT_MESSAGE_TIME(),
-								gDLL->getText(
-									"TXT_KEY_MISC_OBSOLETED_PROMOTION_TERRAIN_NO_RETRAIN",
-									getNameKey(), promo.getDescription()
-								),
-								"AS2D_POSITIVE_DINK", MESSAGE_TYPE_INFO, NULL, GC.getCOLOR_RED(), getX(), getY()
-							);
-						}
-					}
-					return false;
-				}
-			}
-		}
-		{
-			const FeatureTypes eFeature = plot()->getFeatureType();
-
-			for (int iI = 0; iI < promo.getNumPrereqFeatureTypes(); iI++)
-			{
-				const FeatureTypes ePrereqFeature = (FeatureTypes)promo.getPrereqFeatureType(iI);
-
-				if (ePrereqFeature != NO_FEATURE)
-				{
-					if (eFeature == ePrereqFeature)
-					{
-						bValid = true;
-						break;
-					}
-					else bValid = false;
-				}
-			}
-			if (!bValid)
-			{
-				if (bMessageOnFalse)
-				{
-					if (bPromo && !bIsFreePromotion)
-					{
-						AddDLLMessage(
-							getOwner(), true, GC.getEVENT_MESSAGE_TIME(),
-							gDLL->getText(
-								"TXT_KEY_MISC_OBSOLETED_PROMOTION_FEATURE_CAN_RETRAIN",
-								getNameKey(), promo.getDescription()
-							),
-							"AS2D_POSITIVE_DINK", MESSAGE_TYPE_INFO, NULL, GC.getCOLOR_GREEN(), getX(), getY()
-						);
-					}
-					else
-					{
-						AddDLLMessage(
-							getOwner(), true, GC.getEVENT_MESSAGE_TIME(),
-							gDLL->getText(
-								"TXT_KEY_MISC_OBSOLETED_PROMOTION_FEATURE_NO_RETRAIN",
-								getNameKey(), promo.getDescription()
-							),
-							"AS2D_POSITIVE_DINK", MESSAGE_TYPE_INFO, NULL, GC.getCOLOR_RED(), getX(), getY()
-						);
-					}
-				}
-				return false;
-			}
-		}
-		{
-			const BonusTypes eBonus = plot()->getBonusType(getTeam());
-
-			for (int iI = 0; iI < promo.getNumPrereqPlotBonusTypes(); iI++)
-			{
-				const BonusTypes ePrereqBonus = (BonusTypes)promo.getPrereqPlotBonusType(iI);
-				if (ePrereqBonus != NO_BONUS)
-				{
-					bValid = false;
-					if (eBonus == ePrereqBonus)
-					{
-						bValid = true;
-						break;
-					}
-				}
-			}
-			if (!bValid)
-			{
-				if (bMessageOnFalse)
-				{
-					if (bPromo && !bIsFreePromotion)
-					{
-						AddDLLMessage(
-							getOwner(), true, GC.getEVENT_MESSAGE_TIME(),
-							gDLL->getText(
-								"TXT_KEY_MISC_OBSOLETED_PROMOTION_PLOT_BONUS_CAN_RETRAIN",
-								getNameKey(), promo.getDescription()
-							),
-							"AS2D_POSITIVE_DINK", MESSAGE_TYPE_INFO, NULL, GC.getCOLOR_GREEN(), getX(), getY()
-						);
-					}
-					else
-					{
-						AddDLLMessage(
-							getOwner(), true, GC.getEVENT_MESSAGE_TIME(),
-							gDLL->getText(
-								"TXT_KEY_MISC_OBSOLETED_PROMOTION_PLOT_BONUS_NO_RETRAIN",
-								getNameKey(), promo.getDescription()
-							),
-							"AS2D_POSITIVE_DINK", MESSAGE_TYPE_INFO, NULL, GC.getCOLOR_RED(), getX(), getY()
-						);
-					}
-				}
-				return false;
-			}
-		}
-		{
-			//Improvements and buildings are OR statements between all of them.
-			bValid = false;
-			bool bRequire = false;
-			const ImprovementTypes eImprovement = plot()->getImprovementType();
-
-			for (int iI = 0; iI < promo.getNumPrereqImprovementTypes(); iI++)
-			{
-				const ImprovementTypes ePrereqImprovement = (ImprovementTypes)promo.getPrereqImprovementType(iI);
-
-				if (ePrereqImprovement != NO_IMPROVEMENT)
-				{
-					bRequire = true;
-					if (ePrereqImprovement == GC.getIMPROVEMENT_CITY())
-					{
-						if (plot()->isCity(true))
-						{
-							bValid = true;
-							break;
-						}
-					}
-					if (eImprovement == ePrereqImprovement)
-					{
-						bValid = true;
-						break;
-					}
-				}
-			}
-			const int iNumPrereqLocalBuilding = promo.getNumPrereqLocalBuildingTypes();
-
-			if (!bValid && iNumPrereqLocalBuilding > 0)
-			{
-				bRequire = true;
-				for (int iI = 0; iI < iNumPrereqLocalBuilding; iI++)
-				{
-					if (plot()->isCity(false))
-					{
-						const CvCity* pCity = plot()->getPlotCity();
-						if (pCity->isActiveBuilding((BuildingTypes)promo.getPrereqLocalBuildingType(iI)))
-						{
-							bValid = true;
-							break;
-						}
-					}
-				}
-			}
-			if (bRequire && !bValid)
-			{
-				if (bMessageOnFalse)
-				{
-					if (bPromo && !bIsFreePromotion)
-					{
-						AddDLLMessage(
-							getOwner(), true, GC.getEVENT_MESSAGE_TIME(),
-							gDLL->getText(
-								"TXT_KEY_MISC_OBSOLETED_PROMOTION_IMP_CITY_CAN_RETRAIN",
-								getNameKey(), promo.getDescription()
-							),
-							"AS2D_POSITIVE_DINK", MESSAGE_TYPE_INFO, NULL, GC.getCOLOR_GREEN(), getX(), getY()
-						);
-					}
-					else
-					{
-						AddDLLMessage(
-							getOwner(), true, GC.getEVENT_MESSAGE_TIME(),
-							gDLL->getText(
-								"TXT_KEY_MISC_OBSOLETED_PROMOTION_IMP_CITY_NO_RETRAIN",
-								getNameKey(), promo.getDescription()
-							),
-							"AS2D_POSITIVE_DINK", MESSAGE_TYPE_INFO, NULL, GC.getCOLOR_RED(), getX(), getY()
-						);
-					}
-				}
-				return false;
-			}
-			//Improvements and buildings are OR statements between all of them.
-		}
-	}
-
+	//	THE PROMOTION'S `requires.build`, through the ONE evaluator ([DEC-single-implementation]) -- the same
+	//	single gate the ACQUIRE half asks. It replaces the whole hand-rolled prereq battery this function used to
+	//	walk field by field (the plot-substrate axes -- terrain / feature / plot bonus / improvement / local
+	//	building -- and the promotion AND/OR trio beneath them), because the curator authors every one of them
+	//	into `requires`: the evaluator resolves a PROMOTION_ atom against the unit and a TERRAIN_/FEATURE_ atom
+	//	against its plot, so nothing is lost by asking once rather than axis by axis.
+	//	⚑ Promotions are the enabler's on-demand carve-out ([enabler.md §7.1]): there is no maintained per-unit
+	//	set, so the KEEP verdict is evaluated HERE, at the decision point, exactly as the ACQUIRE verdict is.
+	//	⚠ BEHAVIOUR: the legacy walk emitted a CAN_RETRAIN / NO_RETRAIN message PER FAILING AXIS -- six pairs. A
+	//	single evaluator call returns a bool and cannot attribute which clause failed, so those notices are gone
+	//	rather than re-created around the gate. ⚑ Nothing visible is lost: NONE of the twelve keys exists in the
+	//	text XML, so they already rendered as raw keys. Player-facing text is END-STAGE and demand-driven anyway
+	//	([patterns.md] THE DIVISION OF LABOUR: a line removed by a cut is not a regression to restore).
+	//	⛔ It is NOT answerable from the structural `requires` walk: that reports what a tree NAMES, so an `any`
+	//	pair would read as an AND and a `noneOf` as a requirement. A gate verdict is the evaluator's.
 	if (!bIsFreePromotion)
 	{
+		CvCascadeEvalCtx keepCtx;
+		keepCtx.unit = this;
+		keepCtx.empireContext = &GET_PLAYER(getOwner()).getEmpireContext();
+		const CvPlot* pUnitPlot = plot();
+		if (pUnitPlot != NULL)
 		{
-			const PromotionTypes ePromotionPrerequisite = promo.getPrereqPromotion();
-			const PromotionTypes ePromotionPrerequisite1 = promo.getPrereqOrPromotion1();
-			const PromotionTypes ePromotionPrerequisite2 = promo.getPrereqOrPromotion2();
-
-			if (ePromotionPrerequisite != NO_PROMOTION && !isHasPromotion(ePromotionPrerequisite)
-			|| (ePromotionPrerequisite1 != NO_PROMOTION || ePromotionPrerequisite2 != NO_PROMOTION)
-			&& (ePromotionPrerequisite1 == NO_PROMOTION || !isHasPromotion(ePromotionPrerequisite1))
-			&& (ePromotionPrerequisite2 == NO_PROMOTION || !isHasPromotion(ePromotionPrerequisite2)))
+			keepCtx.plotContext = &pUnitPlot->getPlotContext();
+			const CvCity* pPlotCity = pUnitPlot->getPlotCity();
+			if (pPlotCity != NULL)
 			{
-				if (bMessageOnFalse)
-				{
-					if (bPromo && !isPromotionFree(ePromotion))
-					{
-						AddDLLMessage(
-							getOwner(), true, GC.getEVENT_MESSAGE_TIME(),
-							gDLL->getText(
-								"TXT_KEY_MISC_OBSOLETED_PROMOTION_PROMOPREREQ_CAN_RETRAIN",
-								getNameKey(), promo.getDescription()
-							),
-							"AS2D_POSITIVE_DINK", MESSAGE_TYPE_INFO, NULL, GC.getCOLOR_GREEN(), getX(), getY()
-						);
-					}
-					else
-					{
-						AddDLLMessage(
-							getOwner(), true, GC.getEVENT_MESSAGE_TIME(),
-							gDLL->getText(
-								"TXT_KEY_MISC_OBSOLETED_PROMOTION_PROMOPREREQ_NO_RETRAIN",
-								getNameKey(), promo.getDescription()
-							),
-							"AS2D_POSITIVE_DINK", MESSAGE_TYPE_INFO, NULL, GC.getCOLOR_RED(), getX(), getY()
-						);
-					}
-				}
-				return false;
+				keepCtx.cityContext = &pPlotCity->getCityContext();
 			}
+		}
+		static const CvCascadeEvalFlags kKeepFlags;
+		if (!cascadeEvalCondition(promo.getRequires() != NULL ? promo.getRequires()->build : NULL,
+			keepCtx, kKeepFlags))
+		{
+			return false;
 		}
 	}
 
