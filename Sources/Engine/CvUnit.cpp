@@ -353,7 +353,7 @@ void CvUnit::init(int iID, UnitTypes eUnit, UnitAITypes eUnitAI, PlayerTypes eOw
 			GET_PLAYER(eOwner).NoteAnimalSubdued();
 		}
 
-		if (m_pUnitInfo->getNukeRange() != -1)
+		if (m_pUnitInfo->getAir(AIR_NUKE_RANGE, CASC_SCOPE_UNIT) > 0)
 		{
 			GET_PLAYER(eOwner).changeNumNukeUnits(1);
 		}
@@ -1516,7 +1516,7 @@ void CvUnit::die()
 		owner.changeUnitCountSM(m_eUnitType, -smGroupMultiplier(groupRank()));
 	}
 
-	if (m_pUnitInfo->getNukeRange() != -1)
+	if (m_pUnitInfo->getAir(AIR_NUKE_RANGE, CASC_SCOPE_UNIT) > 0)
 	{
 		owner.changeNumNukeUnits(-1);
 	}
@@ -8494,8 +8494,11 @@ bool CvUnit::canConstruct(const CvPlot* pPlot, BuildingTypes eBuilding, bool bTe
 		return false;
 	}
 
-	if (GC.getBuildingInfo(eBuilding).getGlobalReligionCommerce() > NO_RELIGION
-	&& GC.getBuildingInfo(eBuilding).getProductionCost() == -1
+	// "a SHRINE that cannot be built directly, and one already exists" -- the shrine relationship is the
+	// building's own §9 `shrine` FK, and the cost sentinel moved: the legacy field used -1 for not-buildable
+	// while the curated `cost.production` is simply ABSENT there (no building authors a negative cost).
+	if (GC.getBuildingInfo(eBuilding).getShrineReligion() > NO_RELIGION
+	&& GC.getBuildingInfo(eBuilding).getCost() <= 0
 	&& GC.getGame().getBuildingCreatedCount(eBuilding) > 0)
 	{
 		return false;
@@ -10184,7 +10187,7 @@ CvCity* CvUnit::getUpgradeCity(UnitTypes eUnit, bool bSearch, int* iSearchValue)
 	//the cargo it already does.
 	if (GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS))
 	{
-		if (kUnitInfo.getSMCargoSpace() < SMgetCargo())
+		if (kUnitInfo.getSizeMatters().cargoSmSpace < SMgetCargo())
 		{
 			return NULL;
 		}
@@ -10519,7 +10522,12 @@ int CvUnit::airRange() const
 
 int CvUnit::nukeRange() const
 {
-	return m_pUnitInfo->getNukeRange();
+	// ⛔ The -1 SENTINEL IS PRESERVED HERE, deliberately. The cascade sums an unauthored slot to 0 while the
+	// legacy field used -1 for "not a nuke", and that sentinel is load-bearing across this accessor's callers
+	// (`>= 0`, `> -1`, `!= -1`) -- returning 0 would make every one of them true for EVERY unit. The slot is a
+	// FLAT, so it reduces here ([DEC-fixedpoint-x100]); every authored range is >= 1, so 0 is unambiguous.
+	const int iRange = m_pUnitInfo->getAir(AIR_NUKE_RANGE, CASC_SCOPE_UNIT) / 100;
+	return iRange > 0 ? iRange : -1;
 }
 
 namespace CvUnitInternal
@@ -17837,7 +17845,7 @@ int CvUnit::getSubUnitCount() const
 	{
 		return groupRank();
 	}
-	return m_pUnitInfo->getGroupSize();
+	return m_pUnitInfo->getSizeMatters().groupSize;
 }
 
 
@@ -21106,7 +21114,7 @@ bool CvUnit::performInquisition()
 						if (GET_PLAYER(getOwner()).getStateReligion() != iJ && buildingX.getPrereqReligion() == iJ)
 						{
 							temp.push_back(eType);
-							iCompensationGold += buildingX.getProductionCost() * CvGameSpeedScale::hammerCostPercent() / std::max(1, GC.getDefineINT("INQUISITION_BUILDING_GOLD_DIVISOR"));
+							iCompensationGold += buildingX.getCost() * CvGameSpeedScale::hammerCostPercent() / std::max(1, GC.getDefineINT("INQUISITION_BUILDING_GOLD_DIVISOR"));
 							break;
 						}
 					}
@@ -23446,7 +23454,7 @@ void CvUnit::changeExtraBreakdownChance(int iChange)
 
 int CvUnit::breakdownChanceTotal() const
 {
-	int iData = m_pUnitInfo->getBreakdownChance() + m_iExtraBreakdownChance;
+	int iData = m_pUnitInfo->getFlatCombat(COMBAT_BREAKDOWN_CHANCE, CASC_SCOPE_UNIT) / 100 + m_iExtraBreakdownChance;
 
 	return std::max(0, iData);
 }
@@ -23459,7 +23467,7 @@ void CvUnit::changeExtraBreakdownDamage(int iChange)
 
 int CvUnit::breakdownDamageTotal() const
 {
-	int iData = m_pUnitInfo->getBreakdownDamage() + m_iExtraBreakdownDamage;
+	int iData = m_pUnitInfo->getFlatCombat(COMBAT_BREAKDOWN_DAMAGE, CASC_SCOPE_UNIT) / 100 + m_iExtraBreakdownDamage;
 	return std::max(0, iData);
 }
 
@@ -23490,7 +23498,7 @@ void CvUnit::setExtraCombatModifierPerSizeMore(int iChange)
 
 int CvUnit::combatModifierPerSizeMoreTotal() const
 {
-	int iData = m_pUnitInfo->getCombatModifierPerSizeMore();
+	int iData = m_pUnitInfo->getSizeMatters().combatModifierPerSizeMore;
 	iData += getExtraCombatModifierPerSizeMore();
 	return iData;
 }
@@ -23512,7 +23520,7 @@ void CvUnit::setExtraCombatModifierPerSizeLess(int iChange)
 
 int CvUnit::combatModifierPerSizeLessTotal() const
 {
-	int iData = m_pUnitInfo->getCombatModifierPerSizeLess();
+	int iData = m_pUnitInfo->getSizeMatters().combatModifierPerSizeLess;
 	iData += getExtraCombatModifierPerSizeLess();
 	return iData;
 }
@@ -23534,7 +23542,7 @@ void CvUnit::setExtraCombatModifierPerVolumeMore(int iChange)
 
 int CvUnit::combatModifierPerVolumeMoreTotal() const
 {
-	int iData = m_pUnitInfo->getCombatModifierPerVolumeMore();
+	int iData = m_pUnitInfo->getSizeMatters().combatModifierPerVolumeMore;
 	iData += getExtraCombatModifierPerVolumeMore();
 	return iData;
 }
@@ -23556,7 +23564,7 @@ void CvUnit::setExtraCombatModifierPerVolumeLess(int iChange)
 
 int CvUnit::combatModifierPerVolumeLessTotal() const
 {
-	int iData = m_pUnitInfo->getCombatModifierPerVolumeLess();
+	int iData = m_pUnitInfo->getSizeMatters().combatModifierPerVolumeLess;
 	iData += getExtraCombatModifierPerVolumeLess();
 	return iData;
 }
@@ -24518,7 +24526,7 @@ int CvUnit::getMaxHP() const
 
 int CvUnit::HPValueTotalPreCheck() const
 {
-	return std::max(1, m_pUnitInfo->getMaxHP() + getExtraMaxHP());
+	return std::max(1, m_pUnitInfo->getSizeMatters().maxHP + getExtraMaxHP());
 }
 
 int CvUnit::getSMHPValue() const
@@ -24731,7 +24739,7 @@ int CvUnit::getBombardRate() const
 
 		return m_iSMBombardRate;
 	}
-	return std::max(0, m_pUnitInfo->getBombardRate() + getExtraBombardRate());
+	return std::max(0, m_pUnitInfo->getBombardModifier(BOMBARD_RATE, CASC_SCOPE_UNIT) + getExtraBombardRate());
 }
 
 
@@ -24739,7 +24747,7 @@ int CvUnit::getBombardRate() const
 ////This is the core multiplicative method being utilized.
 void CvUnit::setSMBombardRate()
 {
-	m_iSMBombardRate = applySMRank(std::max(0, m_pUnitInfo->getBombardRate() + m_iExtraBombardRate), getSizeMattersOffsetValue(), GC.getSIZE_MATTERS_MOST_MULTIPLIER());
+	m_iSMBombardRate = applySMRank(std::max(0, m_pUnitInfo->getBombardModifier(BOMBARD_RATE, CASC_SCOPE_UNIT) + m_iExtraBombardRate), getSizeMattersOffsetValue(), GC.getSIZE_MATTERS_MOST_MULTIPLIER());
 
 	// optional but most of these should be above or equal to 0.
 	FASSERT_NOT_NEGATIVE(m_iSMBombardRate);
@@ -24766,7 +24774,7 @@ int CvUnit::getAirBombBaseRate() const//The call that plugs into the rest of the
 
 int CvUnit::getSMAirBombBaseRateTotalBase() const//The total before the Size Matters multiplicative method adjusts for the final value.
 {
-	return m_pUnitInfo->getBombRate();//Unit base.
+	return m_pUnitInfo->getFlatBombard(BOMBARD_AIR_BOMB_RATE, CASC_SCOPE_UNIT) / 100;//Unit base.
 }
 
 int CvUnit::getSMAirBombBaseRate() const//The final result of the Multiplicative adjustment
@@ -26213,7 +26221,7 @@ bool CvUnit::isCriminal() const
 
 int CvUnit::getInsidiousnessTotal(bool bCriminalCheck) const
 {
-	int iTotal = m_pUnitInfo->getInsidiousness();
+	int iTotal = m_pUnitInfo->getUnderworld(UNDERWORLD_INSIDIOUSNESS, CASC_SCOPE_UNIT) / 100;
 	iTotal += m_iExtraInsidiousness;
 	if (!bCriminalCheck && iTotal > 0)
 	{
@@ -26237,7 +26245,7 @@ void CvUnit::changeExtraInsidiousness(int iChange)
 
 int CvUnit::getInvestigationTotal() const
 {
-	int iTotal = m_pUnitInfo->getInvestigation();
+	int iTotal = m_pUnitInfo->getUnderworld(UNDERWORLD_INVESTIGATION, CASC_SCOPE_UNIT) / 100;
 	iTotal += m_iExtraInvestigation;
 	return iTotal;
 }
@@ -26657,7 +26665,7 @@ int CvUnit::stealthStrikesTotal() const
 	{
 		return 0;
 	}
-	int iAnswer = m_pUnitInfo->getStealthStrikes();
+	int iAnswer = m_pUnitInfo->getFlatCombat(COMBAT_STEALTH_STRIKES, CASC_SCOPE_UNIT) / 100;
 	iAnswer += getExtraStealthStrikes();
 
 	return iAnswer;
