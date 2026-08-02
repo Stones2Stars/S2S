@@ -336,7 +336,7 @@ void CvUnitInfo::mapFrom(const picojson::value& entity)
 	m_aiCombatClasses.clear();
 	m_aiUnitAIs.clear();
 	m_aiNotUnitAIs.clear();
-	m_aiMapCategories.clear();
+	m_aeMapCategories.clear();
 	m_aiTerrainImpassable.clear();
 	m_aiFeatureImpassable.clear();
 	m_aiDefendAgainstUnits.clear();
@@ -431,7 +431,17 @@ void CvUnitInfo::mapFrom(const picojson::value& entity)
 		// identity lists
 		jsonReadIdList(*pIdentity, "unitAIs", m_aiUnitAIs);
 		jsonReadIdList(*pIdentity, "notUnitAIs", m_aiNotUnitAIs);
-		jsonReadIdList(*pIdentity, "mapCategories", m_aiMapCategories);
+		// mapCategories is held TYPED so every carrier of the concept -- plot, terrain, feature, improvement,
+		// bonus, project, goody, building, unit -- serves ONE shape; the shared isMapCategory walk binds both
+		// sides by reference and cannot straddle two element types.
+		{
+			std::vector<int> mapCategoryIds;
+			jsonReadIdList(*pIdentity, "mapCategories", mapCategoryIds);
+			for (size_t iCategory = 0; iCategory < mapCategoryIds.size(); ++iCategory)
+			{
+				m_aeMapCategories.push_back((MapCategoryTypes)mapCategoryIds[iCategory]);
+			}
+		}
 		jsonReadIdList(*pIdentity, "terrainImpassable", m_aiTerrainImpassable);
 		jsonReadIdList(*pIdentity, "featureImpassable", m_aiFeatureImpassable);
 		jsonReadIdList(*pIdentity, "defendAgainstUnit", m_aiDefendAgainstUnits);

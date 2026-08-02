@@ -2363,7 +2363,7 @@ void CvDLLWidgetData::parseActionHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 						CvWStringBuffer szBonusList;
 						bool bValid = false;
 						bool bFirst = true;
-						foreach_(const BonusTypes eBonus, GC.getCorporationInfo(eCorporation).getConsumedBonuses())
+						foreach_(const int iBonus, GC.getCorporationInfo(eCorporation).getConsumedBonuses())
 						{
 							if (!bFirst)
 							{
@@ -2373,9 +2373,9 @@ void CvDLLWidgetData::parseActionHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 							{
 								bFirst = false;
 							}
-							szBonusList.append(GC.getBonusInfo(eBonus).getDescription());
+							szBonusList.append(GC.getBonusInfo((BonusTypes)iBonus).getDescription());
 
-							if (pMissionCity->hasBonus(eBonus))
+							if (pMissionCity->hasBonus((BonusTypes)iBonus))
 							{
 								bValid = true;
 								break;

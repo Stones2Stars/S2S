@@ -16369,11 +16369,6 @@ bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion, bool bIgnoreHas, boo
 	{
 		return false;
 	}
-	const CvPlot* pPlot = plot();
-	if ((m_pUnitInfo != NULL && pPlot != NULL) && (!isMapCategory(*pPlot, promo) || !isMapCategory(*m_pUnitInfo, promo)))
-	{
-		return false;
-	}
 	//TB Combat Mods Begin
 	//	THE PROMOTION'S `requires.build`, through the ONE evaluator ([DEC-single-implementation]). This single
 	//	gate replaces the whole hand-rolled prereq battery -- the AND prereq, the OR pair, and the plot-substrate

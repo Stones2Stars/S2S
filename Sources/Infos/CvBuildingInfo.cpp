@@ -96,7 +96,7 @@ void CvBuildingInfo::mapFrom(const picojson::value& entity)
 	CvInfo::mapFrom(entity);   // core reading (type / text keys) + the section dispatch (compiles m_modifiers)
 
 	// idempotency (CvInfo.h): the full-registry re-run fully redefines every materialized member
-	m_aiMapCategories.clear();
+	m_aeMapCategories.clear();
 	m_aiEnabledCivilizations.clear();
 	m_victoryThresholds.clear();
 	m_flavours.clear();
@@ -113,17 +113,17 @@ void CvBuildingInfo::mapFrom(const picojson::value& entity)
 	CascadePropertyBridge::bridgeFamilies(getModifiers(), m_PropertyManipulators, NO_RELATION, 0,
 		&m_PropertyManipulatorsAllCities);
 
-	// world.art.define -- the ART_DEF_* tag getArtInfo resolves through ArtFileMgr (every building authors one).
-	if (const picojson::object* pArt = jsonWorldArt(entity))
-	{
-		jsonIdStr(*pArt, "define", m_szArtDefineTag);
-	}
-
 	if (!entity.is<picojson::object>())
 	{
 		return;
 	}
 	const picojson::object& entityObj = entity.get<picojson::object>();
+
+	// world.art.define -- the ART_DEF_* tag getArtInfo resolves through ArtFileMgr (every building authors one).
+	if (const picojson::object* pArt = jsonWorldArt(entityObj))
+	{
+		jsonIdStr(*pArt, "define", m_szArtDefineTag);
+	}
 
 	// --- the §9 FK sections: shrine (religion) + headquarters (corporation) -- the relationship IS the data ---
 	std::string szFk;
@@ -219,7 +219,7 @@ void CvBuildingInfo::mapFrom(const picojson::value& entity)
 				const int iCategory = jsonResolveId(categories[i].get<std::string>());
 				if (iCategory >= 0)
 				{
-					m_aiMapCategories.push_back(iCategory);
+					m_aeMapCategories.push_back((MapCategoryTypes)iCategory);
 				}
 			}
 		}

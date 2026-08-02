@@ -151,7 +151,7 @@ public:
 	bool hasUnitAI(int iUnitAI) const { return vectorHas(m_aiUnitAIs, iUnitAI); }
 	const std::vector<int>& getNotUnitAIs() const { return m_aiNotUnitAIs; }   // identity.notUnitAIs
 	bool hasNotUnitAI(int iUnitAI) const { return vectorHas(m_aiNotUnitAIs, iUnitAI); }
-	const std::vector<int>& getMapCategories() const { return m_aiMapCategories; }        // identity.mapCategories
+	const std::vector<MapCategoryTypes>& getMapCategories() const { return m_aeMapCategories; }   // identity.mapCategories
 	const std::vector<int>& getTerrainImpassable() const { return m_aiTerrainImpassable; }   // identity.terrainImpassable
 	bool isTerrainImpassable(int iTerrain) const { return vectorHas(m_aiTerrainImpassable, iTerrain); }
 	const std::vector<int>& getFeatureImpassable() const { return m_aiFeatureImpassable; }   // identity.featureImpassable
@@ -349,7 +349,7 @@ private:
 	int m_iSMNotSpecialCargo;
 	std::vector<int> m_aiUnitAIs;
 	std::vector<int> m_aiNotUnitAIs;
-	std::vector<int> m_aiMapCategories;
+	std::vector<MapCategoryTypes> m_aeMapCategories;
 	std::vector<int> m_aiTerrainImpassable;
 	std::vector<int> m_aiFeatureImpassable;
 	std::vector<int> m_aiDefendAgainstUnits;

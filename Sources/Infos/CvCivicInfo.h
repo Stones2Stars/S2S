@@ -10,6 +10,7 @@
 //
 
 #include "CvInfo.h"
+#include "CvJsonParse.h"   // mapValueOrDefault -- the ONE sparse id-map point read the flavour getter delegates to
 
 class CvCivicInfo : public CvInfo
 {

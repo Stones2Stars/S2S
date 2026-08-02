@@ -949,13 +949,6 @@ namespace
 					static_cast<CvBonusInfo*>(InfoRepo<CvBonusInfo>::get().editPtr((*pLinkedIds)[iLinked]))->setTechObsolete(eTech);
 				}
 			}
-			if (const std::vector<int>* pLinkedIds = pEdges->find(EDGEF_OBSOLETES, EDGEB_BUILDS))
-			{
-				for (size_t iLinked = 0; iLinked < pLinkedIds->size(); ++iLinked)
-				{
-					static_cast<CvBuildInfo*>(InfoRepo<CvBuildInfo>::get().editPtr((*pLinkedIds)[iLinked]))->setObsoleteTech(eTech);
-				}
-			}
 			if (const std::vector<int>* pLinkedIds = pEdges->find(EDGEF_ENABLES, EDGEB_PROJECTS))
 			{
 				for (size_t iLinked = 0; iLinked < pLinkedIds->size(); ++iLinked)
