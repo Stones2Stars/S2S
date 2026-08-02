@@ -102,23 +102,14 @@ uniform package format (Σflat / Σpercent per channel per scope; the unit is pa
 computed by a legacy ad-hoc path outside the machine is a shortcut to fold in
 ([DEC-universal-yield](../architecture/decisions.md#dec-universal-yield)).
 
-> **⛔ AND THE *COMPUTE* IS THE CASCADE'S, NOT ONLY THE STORAGE (owner): *"if it is yield compute, it is cascade
-> responsibility — that stands for any yields, commerces, properties or anything else."*** The ruling above is
-> often read as being about where a value is KEPT; it is equally about who WORKS IT OUT. Any function that
-> calculates a yield / commerce / property magnitude belongs to this machine, whatever it is called and whoever
-> asks it.
-> ⛔ **The two disguises that get a compute mistaken for something else** — both are the same failure, and both
-> have already cost a wrong disposition:
-> - **"it is only a PARTIAL leg"** — a pre-improvement / pre-route / nature-only yield is still a yield compute.
->   It is a SECOND SLOT of the same package ([contexts.md](../architecture/contexts.md)), minted the way the
->   wellbeing sign twins are, never a per-call walk kept outside the machine because it answers a narrower
->   question.
-> - **"it is a WHAT-IF, so it belongs to the asker"** — *"what would this improvement yield here"* is a yield
->   compute too. The what-if plane is a READ of this machine (the `expected*` valuations,
->   [patterns.md](../architecture/patterns.md)), not a licence for the AI to keep its own yield arithmetic.
-> ⇒ **The test is the QUESTION, never the caller or the name:** if the answer is a magnitude in one of these
-> families, the cascade computes it. A `calculate*` on a game object that sums info getters per read is by
-> construction the legacy path this replaces.
+> ⚠ **Two shapes get mistaken for exemptions from that last sentence; neither is one.** A **PARTIAL leg** (a
+> pre-improvement / nature-only yield) is still yield compute — it is a SEGMENT of the scope's own package
+> ([contexts.md](../architecture/contexts.md)), never a per-call walk kept outside the machine because it
+> answers a narrower question. A **WHAT-IF** (*"what would this improvement yield here"*) is yield compute too:
+> the what-if plane is a READ of this machine (the `expected*` valuations,
+> [patterns.md](../architecture/patterns.md)), not licence for a consumer to keep its own yield arithmetic.
+> ⇒ The test is the QUESTION, never the caller or the name — a `calculate*` on a game object that sums info
+> getters per read is by construction the legacy path this replaces.
 
 **The output-seam.** Where the engine performs placement/application, the machine owns the two ends and the engine
 the middle: (1) authored INPUTS are source-centric deposits (a package); (2) placement/application is engine

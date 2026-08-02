@@ -271,26 +271,23 @@
   (`calculateYield` and the `m_aiYield` / `getYield` / `updateYield` cache it feeds) is the hand-maintained plot
   yield cache the plot's own `CvCascadePackage` + `getYields` already replace; the package and the gather's plot
   leg are BUILT, so this is a deletion with a consumer sweep, not a machine to design.
-  ⚑ **`calculateNatureYield` is cascade work too, and that is the ruling that decides the shape** — if it is
-  yield compute it is the cascade's, and a PARTIAL leg is no exemption
-  ([DEC-universal-yield](../../architecture/decisions.md#dec-universal-yield)). The pre-improvement/pre-route
-  yield is a SECOND SLOT of the same plot package ([contexts.md](../../architecture/contexts.md)), never a
-  per-call walk — today `PlotContext::natureYield` forwards to the walk, which is the
-  forwarded-read-that-COMPUTES defect that doc names.
-  ⚖ **The shape is the WELLBEING SIGN TWIN, generalized** — the registry already mints a synthetic channel
-  beside an authored one, rides the same scope set, and excludes it from the authored census. A nature twin per
-  base-yield channel at plot scope therefore needs NO new package field, NO new invalidation path, and is
-  carried by the stored-vs-oracle documents for free (they size by channel count). ⛔ Do NOT add a fourth
-  dictionary to `CvCascadePackage` for it — that would put a bespoke field on the one uniform cache type and the
-  oracle diff would go blind to it.
-  ⚠ The twin flag is a BOOL today, so a nature twin would answer `isTwin` correctly but would be
-  indistinguishable from a sign twin; it wants to become a twin KIND, with the wellbeing lookup keyed on SIGN and
-  a nature lookup beside it. Conflating the two under one flag is the one-word-two-meanings trap.
+  ⚑ **`calculateNatureYield` rides the same cut** — it is yield compute, so it is the cascade's, and a PARTIAL
+  leg is no exemption ([DEC-universal-yield](../../architecture/decisions.md#dec-universal-yield)).
+  ⚖ **THE PLOT IS ONE PACKAGE AND ITS PARTS ARE SEGMENTS OF IT (owner)** — nature, improvement and route are
+  segments within the plot's own package, and a read asks for the whole or for a segment. That is
+  [contexts.md](../../architecture/contexts.md)'s "a SECOND SLOT of that same package", and it is the whole of
+  the shape: `natureYield` is the pre-improvement/pre-route segment, read as a bare fetch like any other. Today
+  `PlotContext::natureYield` forwards to the per-call walk instead — the forwarded-read-that-COMPUTES defect
+  that doc names.
+  ⛔ Do NOT reach for a heavier mechanism for it. Minting a synthetic channel per yield (the wellbeing sign-twin
+  shape) is over-engineering the segment into the channel registry, and a bespoke fourth dictionary on
+  `CvCascadePackage` is worse still — it would put a hand-named field on the one uniform cache type and the
+  stored-vs-oracle diff would go blind to it.
   ⚑ The gather needs no new pass: its plot leg already folds terrain / feature / route / improvement / bonus and
-  the owner's plot-scope sources in order, so nature is that same fold with route and improvement withheld —
-  which is exactly the pre-improvement base the golden-age threshold is documented to test against.
-  ⚠ `calculateImprovementYieldChange` is the same ruling's other half: "what would this improvement give here"
-  is a yield compute, so it is an `expected*` READ of the machine, never AI-side yield arithmetic.
+  the owner's plot-scope sources in order, so the nature segment is that same fold with route and improvement
+  withheld — exactly the pre-improvement base the golden-age threshold is documented to test against.
+  ⚠ `calculateImprovementYieldChange` is the same rule's other half: "what would this improvement give here" is
+  a yield compute, so it is an `expected*` READ of the machine, never AI-side yield arithmetic.
 
 - Apply the PER-CITY GATES AT THE COMBINE. [modifier.md §1](../../specs/modifier.md) specifies the realized value
   as the sum of the scope packages **with the per-city gates (state-religion-in-city, coastal, connected, area

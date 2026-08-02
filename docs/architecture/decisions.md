@@ -257,10 +257,7 @@ yield-effect member-mirror; Python-authoritative gameplay staying Python). **Hom
 
 ANY number modified by game mechanics is a yield — base yields, commerce, free XP, free specialists, properties, and
 any other — carried by ONE machine in ONE uniform package format (Σflat / Σpercent per channel per scope). A number
-computed by a legacy ad-hoc path OUTSIDE the machine is a shortcut/failure. **The COMPUTE is the cascade's, not only
-the storage: if it is yield compute it is cascade responsibility, for yields, commerces, properties or anything else
-— a PARTIAL leg (a pre-improvement yield) and a WHAT-IF (*"what would this improvement give here"*) are both yield
-computes, not exemptions.** The **OUTPUT-SEAM**: where the engine does
+computed by a legacy ad-hoc path OUTSIDE the machine is a shortcut/failure — the COMPUTE, not only the storage. The **OUTPUT-SEAM**: where the engine does
 placement/application (free-specialist assignment; the golden-age plot-base-yield-threshold "+1"), the cascade owns
 the authored INPUTS + the OUTPUT yields — both live in the machine — and ONLY the middle mechanism is engine-owned.
 **Home:** [modifier.md](../specs/modifier.md).
