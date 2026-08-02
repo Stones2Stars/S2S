@@ -34,15 +34,6 @@ public:
 	// obsoletedBy.techs -- authored TARGET-side (enabler.md §2: nothing authors tech.obsoletes.buildings), so
 	// the obsoleting tech IS this edge rather than a member. Reads [0]: an AUTHORED edge list keeps its data
 	// order, which `CvEdges::sortUnique` deliberately leaves alone for exactly these first-element getters.
-	// The UNLOCKING tech -- the mirror of getObsoleteTech below, off the ENABLED_BY reverse family. A tech
-	// names the buildings it unlocks in its own `enables.buildings`, so this is the only direction the target
-	// can ask from; EDGEF_RELATED would answer with obsoleting and depositing techs mixed in.
-	TechTypes getEnablingTech() const
-	{
-		const std::vector<int>* pTechs = edge(EDGEF_ENABLED_BY, EDGEB_TECHS);
-		return (TechTypes)((pTechs != NULL && !pTechs->empty()) ? (*pTechs)[0] : NO_TECH);
-	}
-
 	// Same shape as the sibling `CvSpecialBuildingInfo::getObsoleteTech`, which names this read as its twin.
 	TechTypes getObsoleteTech() const
 	{

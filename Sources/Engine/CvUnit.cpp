@@ -23275,11 +23275,15 @@ void CvUnit::doSetUnitCombats()
 	{
 		setHasUnitCombat(eSubCombat, true);
 	}
+	// The unit's era stamp comes from the tech that UNLOCKS it, off its own ENABLED_BY reverse family
+	// ([DEC-one-reverse-view]) -- a tech names the units it unlocks in `enables.units`, so the unit has no
+	// forward prereq of its own to read.
+	const TechTypes eEnablingTech = m_pUnitInfo->getEnablingTech();
 	const EraTypes eEra =
 	(
-		m_pUnitInfo->getPrereqAndTech() > -1
+		eEnablingTech != NO_TECH
 		?
-		(EraTypes)GC.getTechInfo((TechTypes)m_pUnitInfo->getPrereqAndTech()).getEra()
+		(EraTypes)GC.getTechInfo(eEnablingTech).getEra()
 		:
 		GC.getGame().getCurrentEra()
 	);

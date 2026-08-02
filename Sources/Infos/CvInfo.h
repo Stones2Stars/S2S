@@ -118,6 +118,19 @@ public:
 	const std::vector<int>& dormantTriggers() const;                          // empty static when absent
 	const std::vector<int>* edge(EnEdgeFamily eFamily, EnEdgeBucket eBucket) const   // NULL when absent; int-keyed, no strings
 	{ const CvEdges* e = getEdges(); return e ? e->find(eFamily, eBucket) : NULL; }
+	// THE UNLOCKING TECH -- declared on the BASE so every rebuilt info serves the same read, exactly as the
+	// expected* valuations are. `enables` is authored SOURCE-side only (a tech names what it unlocks), so this
+	// reverse family is the only direction a target can ask from; EDGEF_RELATED would answer with obsoleting
+	// and merely-depositing techs mixed in. The obsoletion twin does NOT belong beside it: a target authors its
+	// own `obsoletedBy`, so that read is the target's own data and stays on the types that carry it.
+	// ⚠ FIRST of the list -- an entity unlocked by several techs has several, and the enabler's membership
+	// formula (ANY held source enables it) is what actually decides availability. This read is for a consumer
+	// that wants ONE representative tech (an era stamp, a "when does this arrive" estimate), never a gate.
+	TechTypes getEnablingTech() const
+	{
+		const std::vector<int>* pTechs = edge(EDGEF_ENABLED_BY, EDGEB_TECHS);
+		return (TechTypes)((pTechs != NULL && !pTechs->empty()) ? (*pTechs)[0] : NO_TECH);
+	}
 	// The reverse-view writer -- LOAD-ONLY (the readJson reverse pass fills EDGEF_RELATED/EDGEF_REQUIRED_BY onto
 	// the REFERENCED info, so every info already carries its reverse lookups after load). Part of the
 	// write-once-at-load window; never called post-load.
