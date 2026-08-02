@@ -118,12 +118,26 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <C
     `Build/<Config>/`, or grep the binary for a string your change introduced. Never infer deployment from build
     output. (`agentstart.bat` closes the game too, but it runs AFTER deploy — it cannot rescue a copy that already
     failed.)
-- **Quick compile check after an edit:** `Assert build` from `Sources/`.
-  Incremental is ~30s; a clean rebuild is several minutes (~25 unity batches × ~30s).
+- **Quick compile check after an edit:** `Assert rebuild` from `Sources/`.
+  **⚑ CLEAN-REBUILD WALL CLOCK, per config — the spread is what decides which one you reach for:**
+
+  | config | clean `rebuild` | why |
+  |---|--:|---|
+  | **`Assert`** | **~15s** | minimal optimization; 54 objects at ~13:1 parallelism (3m11s CPU / 14.7s wall) |
+  | `Release` | ~1m40 | optimized |
+  | `FinalRelease` | ~8min | fully optimized — the config the "several minutes" folklore actually described |
+
+  ⛔ **So on `Assert` there is NO reason to ever run an incremental `build`.** It saves ~7 seconds (7.8s vs 14.7s)
+  and buys the stale-PCH false-verification hazard below in exchange — a trade that is never worth making. Use
+  `rebuild`, and the whole incremental-PCH question stops being reachable on the config you compile-check with.
+  ⚠ FastBuild reports **CPU** time in its per-step summary and **wall** time only on the closing `Time: Real`
+  line; reading the former as the latter is what makes a 15-second build look like three minutes.
   - **⛔ DO NOT BUILD UNLESS YOU ARE HUNTING BUGS (owner).** Building is not a checkpoint, not a way to "confirm"
     an edit, and not something a change is finished with — the tree is deliberately red
     ([DEC-playability-not-a-gate](docs/architecture/decisions.md#dec-playability-not-a-gate)), so a build tells
-    you almost nothing you did not already know and costs minutes of the owner's wall clock every time.
+    you almost nothing you did not already know. ⚠ The binding reason is that it tells you nothing, NOT that it
+    is slow: an `Assert` rebuild is ~15s (table above). Do not cite build cost as the justification here — the
+    ruling stands on the red tree, and on `Release`/`FinalRelease` being where the real minutes are.
     Run one when you are ACTUALLY chasing a compiler error, and otherwise verify the way the red tree demands:
     **read what you changed** and grep the census for the symbols you touched. ⚑ The trap is that the line above
     reads as an invitation — "quick compile check after an edit" describes the tool, not a habit to acquire.
