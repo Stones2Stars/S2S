@@ -57,7 +57,7 @@ static const char* INTRINSIC[] = {
     "capabilities", "skills",
     // bespoke entity sections (object-valued but NOT scope-keyed modifier families):
     "promotionLine", "buildUp", "shrine", "properties", "voteSource", "threshold", "role", "victory",
-    "targetLevel", "conversion", "cityFounding", "unitCapability", 0
+    "targetLevel", "conversion", "unitCapability", 0
 };
 static const char* SCOPES[] = {
     "world", "team", "empire", "area", "city", "plot",

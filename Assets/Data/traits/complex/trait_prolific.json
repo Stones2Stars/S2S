@@ -62,16 +62,6 @@
    }
   }
  },
- "cityFounding": {
-  "empire": {
-   "startCulture": {
-    "flat": 10
-   },
-   "startPopulation": {
-    "flat": 1
-   }
-  }
- },
  "succession": {
   "promotionLine": "PROMOTIONLINE_PROLIFIC"
  },

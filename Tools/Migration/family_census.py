@@ -19,7 +19,7 @@ RESERVED = {
     "shrine", "headquarters", "succession", "excludes", "produces",
     "condition", "effect", "vision", "outcomes", "mapGeneration",
     "promotionLine", "buildUp", "properties", "voteSource", "threshold",
-    "role", "victory", "targetLevel", "conversion", "cityFounding",
+    "role", "victory", "targetLevel", "conversion",
     "unitCapability", "canTrade", "canTradeOn", "canWorkOn", "spread",
     "sizeMatters", "combatClass", "combatClasses", "builds", "missions",
     "enabled", "disabled",

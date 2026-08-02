@@ -68,13 +68,6 @@
    }
   }
  },
- "cityFounding": {
-  "empire": {
-   "startPopulation": {
-    "flat": 1
-   }
-  }
- },
  "succession": {
   "promotionLine": "PROMOTIONLINE_PROLIFIC",
   "priority": 3

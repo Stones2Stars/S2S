@@ -203,7 +203,7 @@ static const char* CJK_INTRINSIC_KEYS[] = {
 	"policies", "succession", "excludes", "produces", "condition", "effect",
 	"outcomes", "mapGeneration", "replacedBy", "capabilities", "skills", "tags", "state", "attributes", "characteristics", "builds",
 	"promotionLine", "buildUp", "shrine", "headquarters", "properties", "voteSource", "threshold", "role", "victory",
-	"targetLevel", "conversion", "cityFounding", "unitCapability",
+	"targetLevel", "conversion", "unitCapability",
 	"canTrade", "canTradeOn", "canWorkOn",   // tech bespoke blocks (owner 2026-07-02, json.md §2 / capabilities.md)
 	"spread",   // UNIT spread strength block: spread.religion/spread.corporation keyed maps (owner 2026-07-11 -- clearer than burying under timed `grants`)
 	"groupSpawn",   // UNIT group-spawn config: struct rows {unitCombat, chance, title} (owner 2026-07-11 -- config, not a grant)

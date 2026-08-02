@@ -1589,9 +1589,7 @@ protected:
 	int* m_paiNationalTechResearchModifier;
 	int m_iFixedBordersCount;
 
-	int m_iNationalCityStartCulture;
 	int m_iNationalAirUnitCapacity;
-	int m_iNationalCityStartBonusPopulation;
 	int m_iCitiesStartwithStateReligionCount;
 	int m_iDraftsOnCityCaptureCount;
 	int m_iExtraGoodyCount;
@@ -2047,9 +2045,6 @@ public:
 	int getGoldenAgeOnBirthOfGreatPersonCount(const UnitTypes eIndex) const;
 	void changeGoldenAgeOnBirthOfGreatPersonCount(const UnitTypes eIndex, const char iChange);
 
-	int getNationalCityStartCulture() const;
-	void setNationalCityStartCulture(int iValue);
-	void changeNationalCityStartCulture(int iChange);
 
 	int getNationalAirUnitCapacity() const;
 	void setNationalAirUnitCapacity(int iValue);
@@ -2058,9 +2053,6 @@ public:
 
 
 
-	int getNationalCityStartBonusPopulation() const;
-	void setNationalCityStartBonusPopulation(int iValue);
-	void changeNationalCityStartBonusPopulation(int iChange);
 
 
 

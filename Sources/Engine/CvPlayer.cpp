@@ -1166,9 +1166,7 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iInquisitionCount = 0;
 	m_iFixedBordersCount = 0;
 
-	m_iNationalCityStartCulture = 0;
 	m_iNationalAirUnitCapacity = 0;
-	m_iNationalCityStartBonusPopulation = 0;
 	m_iCitiesStartwithStateReligionCount = 0;
 	m_iDraftsOnCityCaptureCount = 0;
 	m_iExtraGoodyCount = 0;
@@ -6368,20 +6366,6 @@ void CvPlayer::found(int iX, int iY, CvUnit *pUnit)
 		pCity->setFreeSpecialistCount(((SpecialistTypes)iI), 0);
 	}
 
-	{
-		const int iCulture = getNationalCityStartCulture();
-		if (iCulture > 0)
-		{
-			pCity->changeCulture(getID(), iCulture, true, true);
-		}
-	}
-	{
-		const int iBonusPop = getNationalCityStartBonusPopulation();
-		if (iBonusPop > 0)
-		{
-			pCity->changePopulation(iBonusPop);
-		}
-	}
 
 	if (hasCitiesStartwithStateReligion())
 	{
@@ -17686,9 +17670,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iAllReligionsActiveCount);
 
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iNationalCityStartCulture);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNationalAirUnitCapacity);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iNationalCityStartBonusPopulation);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iCitiesStartwithStateReligionCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iDraftsOnCityCaptureCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraGoodyCount);
@@ -18561,9 +18543,7 @@ void CvPlayer::write(FDataStreamBase* pStream)
 
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iAllReligionsActiveCount);
 
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNationalCityStartCulture);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNationalAirUnitCapacity);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNationalCityStartBonusPopulation);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCitiesStartwithStateReligionCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iDraftsOnCityCaptureCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraGoodyCount);
@@ -26877,21 +26857,6 @@ int CvPlayer::getGoldenAgeOnBirthOfGreatPersonCount(const UnitTypes eUnit) const
 	return itr != m_goldenAgeOnBirthOfGreatPersonCount.end() ? itr->second : 0;
 }
 
-int CvPlayer::getNationalCityStartCulture() const
-{
-	return m_iNationalCityStartCulture;
-}
-
-void CvPlayer::setNationalCityStartCulture(int iValue)
-{
-	m_iNationalCityStartCulture = iValue;
-}
-
-void CvPlayer::changeNationalCityStartCulture(int iChange)
-{
-	setNationalCityStartCulture(getNationalCityStartCulture() + iChange);
-}
-
 int CvPlayer::getNationalAirUnitCapacity() const
 {
 	return m_iNationalAirUnitCapacity;
@@ -26905,21 +26870,6 @@ void CvPlayer::setNationalAirUnitCapacity(int iValue)
 void CvPlayer::changeNationalAirUnitCapacity(int iChange)
 {
 	setNationalAirUnitCapacity(getNationalAirUnitCapacity() + iChange);
-}
-
-int CvPlayer::getNationalCityStartBonusPopulation() const
-{
-	return m_iNationalCityStartBonusPopulation;
-}
-
-void CvPlayer::setNationalCityStartBonusPopulation(int iValue)
-{
-	m_iNationalCityStartBonusPopulation = iValue;
-}
-
-void CvPlayer::changeNationalCityStartBonusPopulation(int iChange)
-{
-	setNationalCityStartBonusPopulation(getNationalCityStartBonusPopulation() + iChange);
 }
 
 bool CvPlayer::hasCitiesStartwithStateReligion() const

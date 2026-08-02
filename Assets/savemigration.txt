@@ -1239,3 +1239,15 @@ The empire MISSILE-RANGE accumulator, cut as DEAD rather than re-pointed. Its le
 | always 0, so CvUnit::airRange's missile branch drops it with no behaviour change.
 | REPLACEMENT: none -- the mechanic never carried data.
 CvPlayer::m_iNationalMissileRangeChange
+The trait CITY-START culture and bonus population. Both were writerless empire accumulators whose readers in
+| CvPlayer::found applied 0, so the mechanic was already dead. They are conditional GRANTS living on the
+| FOUNDER -- `grants.culture` / `grants.population` on the settler, gated by the trait ([json.md] par.5) --
+| and the data now authors them there; the invented `cityFounding` block they used to sit in is gone from the
+| spec, the curator, the parser vocabulary and the data.
+| REPLACEMENT: the grants machine, applied off SEVT_CITY_FOUNDED in tr_resolveCityFounded.
+| WARNING: that apply does NOT run yet -- CvGrants carries per-entry conditions on LIST entries
+| (m_listConds) but not on PULSES, so a conditioned pulse is dropped at parse with a LOUD unconsumed report
+| (`entryHasNoResolvableId`). Nothing regressed, because the accumulators applied 0 already; the value stays
+| unserved until conditioned pulses land.
+CvPlayer::m_iNationalCityStartCulture
+CvPlayer::m_iNationalCityStartBonusPopulation

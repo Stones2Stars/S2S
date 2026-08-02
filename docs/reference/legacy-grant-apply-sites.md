@@ -317,8 +317,6 @@ question [grants-machine.md](../specs/triggers.md) left open.
 
    | provision | authored home today | poco reader |
    |---|---|---|
-   | `cityStartCulture` | `cityFounding.empire.startCulture.flat` | `CvTraitInfo.cpp:303` |
-   | `bonusPopulationinNewCities` | `cityFounding.empire.startPopulation.flat` | `CvTraitInfo.cpp:304` |
    | `citiesStartWithStateReligion` · `draftsOnCityCapture` · `extraGoody` | `policies` (bitset) | `CvTraitInfo.h:138-140` |
    | `barbarianInitialDefenders` | `barbarians.world.defenders.flat` | `CvHandicapInfo.cpp:155` |
    | advanced-start budget | era `identity.advancedStart`; handicap `identity.advancedStart.{pointsMod,aiPercent}` | `curate_era.py:78`, `curate_handicap.py:142` |
@@ -329,6 +327,17 @@ question [grants-machine.md](../specs/triggers.md) left open.
    ([DEC-recurate-on-decision](../architecture/decisions.md#dec-recurate-on-decision)). Two are not merely
    homing: `extraGoody` feeds the goody-hut system that §2 rules OUT, and the advanced-start budget is flagged
    *"parked in identity … pending review"* by `curate_handicap.py:55` — an open curator question in its own right.
+
+   ⚖ **The trait's start CULTURE and bonus starting POPULATION are already SETTLED and are not on that list
+   (owner): they are conditional grants living on the FOUNDER** — `grants.culture` / `grants.population` on the
+   settler, gated by the trait ([json.md §5](../specs/json.md)). Both are existing numeric-pulse vocabulary, so
+   nothing about them was ever an open question.
+   ⛔ **They appeared open only because an invented `cityFounding` section was recorded here as their "authored
+   home"** — a block that reached this doc, [json.md](../specs/json.md)'s bespoke list, the curator's mapping
+   table and `CvTraitInfo`'s readers, so every layer ratified it and each reader in turn found it sanctioned.
+   The block does not exist; the settler's considered action IS founding, which is precisely why the payload
+   needs no section of its own. What remains is the mechanical re-home of the data + the reader, tracked in
+   [todo.md](../plans/structural-cleanup/todo.md).
 5. **Start-era grants applied forever.** `freePopulation` and `FreeStartEra` buildings fire at *every* city
    founding, not at game start — both are in scope per §0; the open question is only which TRIGGER owns them
    (city-founded, not player-init). Grounded evidence for the ruling: legacy fires `freePopulation` at

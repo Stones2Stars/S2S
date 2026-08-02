@@ -73,13 +73,6 @@
    "percent": -25
   }
  },
- "cityFounding": {
-  "empire": {
-   "startCulture": {
-    "flat": 10
-   }
-  }
- },
  "durations": {
   "empire": {
    "civicAnarchy": {

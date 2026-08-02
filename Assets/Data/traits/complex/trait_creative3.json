@@ -247,13 +247,6 @@
    "percent": -25
   }
  },
- "cityFounding": {
-  "empire": {
-   "startCulture": {
-    "flat": 20
-   }
-  }
- },
  "diplomacy": {
   "empire": {
    "warWeariness": {

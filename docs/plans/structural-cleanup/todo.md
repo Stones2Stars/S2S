@@ -583,6 +583,16 @@
   ⚠ Until it lands, trait-granted promotions reach nobody, and `CvUnit::setFreePromotion`'s trait legs dangle
   naming exactly this. ⛔ Do not answer them by restoring a trait-side promotion×unitcombat map: that is the
   legacy mechanism whose data has already moved.
+- Carry per-entry CONDITIONS on a grants PULSE, then apply the founder's at city founding. `CvGrants` holds
+  `m_listConds` index-parallel to its list buckets, but a pulse is a bare `channel -> value` map with nowhere
+  to put a condition — so a conditioned pulse resolves no id and is dropped at parse. ⚑ That drop is LOUD
+  (`entryHasNoResolvableId`), which is the fail-closed half working; what is missing is the carrier.
+  ⚠ The live case is the settler's founder provisions: the trait start CULTURE and bonus POPULATION are
+  conditional grants on the founder ([json.md §5](../../specs/json.md)), authored and waiting, and
+  `tr_resolveCityFounded` reads only the `buildings` bucket — so its early-return also has to widen, or a
+  settler carrying pulses and no buildings returns before applying anything.
+  ⛔ Do NOT answer it by summing the entries unconditionally: that hands every civilization the sum of every
+  trait's bonus, which is plausible, silent and wrong.
 - Dispatch a PROJECT's grants. The trigger engine has no project front door at all, so a project's
   `grantsSpecialUnit` payload (the completion-time special-unit unlock) reaches nothing and its consumer stays
   dangling. ⚑ Its sibling on the same completion — `enables.specialBuildings` — is an availability EDGE and is

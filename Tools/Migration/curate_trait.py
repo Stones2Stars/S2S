@@ -52,8 +52,9 @@ parsed into per-PROPERTY_* families). OWNER RULINGS (2026-06-14) drive the struc
   modifier ~10x and was reverted.)
 - GreatPeopleUnitType + GreatPeopleRateChange FOLD into greatPeopleRate.empire.units.{UNIT}.flat (the change is
   keyed by the GP unit; CvPlayer.cpp:28606-28610, only when >0).
-- CityStartCulture + BonusPopulationinNewCities -> a `cityFounding` family (standing empire accumulators applied
-  at every city founding, NOT one-shot grants).
+- CityStartCulture + BonusPopulationinNewCities -> DROPPED here. They are conditional GRANTS living on the
+  FOUNDER -- `grants.culture` / `grants.population` on the settler, gated by the trait (json.md par.5). The
+  `cityFounding` family they used to emit was an INVENTION and never existed in the spec.
 - SpecialistYield/CommerceChanges -> KEEP trait-side, keyed by specialist (yield/commerce.empire.specialists.{SPEC}.flat,
   governing-deliverer) -- NOT inverted onto the shared specialist, because the simple/complex sets carry different
   per-set values for the same specialist (Option-B ruling 2026-06-25; see modifier.md trait callout). curate_specialist
@@ -163,9 +164,6 @@ SCALAR = {
     "fRevIdxNationalityMod":           ("revolution", "empire", "nationalityMod", "percent"),
     "fRevIdxGoodReligionMod":          ("revolution", "empire", "goodReligionMod", "percent"),
     "fRevIdxBadReligionMod":           ("revolution", "empire", "badReligionMod", "percent"),
-    # founding (standing empire accumulators applied at every city founding — owner: cityFounding modifier)
-    "iCityStartCulture":               ("cityFounding", "empire", "startCulture", "flat"),
-    "iBonusPopulationinNewCities":     ("cityFounding", "empire", "startPopulation", "flat"),
 }
 
 # --- state-religion grouped family: tag -> (member, unit). All empire, gated on having a state religion. ---
@@ -287,12 +285,15 @@ TEXT = {"Description": "description", "Civilopedia": "civilopedia", "Help": "hel
 # gated by bonus presence; handled in the loop + merge below.) SpecialistYield/CommerceChanges are NO LONGER dropped
 # either — they now STAY trait-side keyed by specialist (KEYED above), per the Option-B ruling (the simple/complex
 # per-set value cannot be inverted onto the one shared specialist file).
-DROP = {"Type", "TraitPrereq", "TraitPrereqOr1", "TraitPrereqOr2", "PrereqTech", "Categories"}
+# iCityStartCulture / iBonusPopulationinNewCities: conditional GRANTS on the founder (json.md par.5), never a
+# trait-side family -- dropped here so the mapping cannot quietly re-emit the invented `cityFounding` block.
+DROP = {"Type", "TraitPrereq", "TraitPrereqOr1", "TraitPrereqOr2", "PrereqTech", "Categories",
+        "iCityStartCulture", "iBonusPopulationinNewCities"}
 FAMILY_ORDER = ["food", "production", "buildRate", "researchRate", "commerce", "gold", "research", "culture", "espionage",
                 "extraYieldThreshold", "lessYieldThreshold", "happiness", "health", "growth",
                 "greatPeopleRate", "greatGeneralRate", "freeSpecialists", "experience", "conscript",
                 "combat", "unitProduction", "maintenance", "upkeep", "tradeRoutes", "hurry", "workRate",
-                "improvementUpgradeRate", "goldenAge", "cityFounding", "unitCapability", "durations",
+                "improvementUpgradeRate", "goldenAge", "unitCapability", "durations",
                 "diplomacy", "stateReligion", "revolution"]
 
 

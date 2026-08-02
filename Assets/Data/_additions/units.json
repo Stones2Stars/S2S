@@ -1,7 +1,87 @@
 {
- "UNIT_CISLUNAR_INFANTRY":   { "identity": { "domain": "DOMAIN_LAND" } },
- "UNIT_DEEPSPACE_INFANTRY":  { "identity": { "domain": "DOMAIN_LAND" } },
- "UNIT_HYPERSPACE_DEFENDER": { "identity": { "domain": "DOMAIN_LAND" } },
- "UNIT_WORLDSHIP_DEFENDER":  { "identity": { "domain": "DOMAIN_AIR"  } },
- "UNIT_ICBM":                { "identity": { "domain": "DOMAIN_AIR"  } }
+ "UNIT_CISLUNAR_INFANTRY": {
+  "identity": {
+   "domain": "DOMAIN_LAND"
+  }
+ },
+ "UNIT_DEEPSPACE_INFANTRY": {
+  "identity": {
+   "domain": "DOMAIN_LAND"
+  }
+ },
+ "UNIT_HYPERSPACE_DEFENDER": {
+  "identity": {
+   "domain": "DOMAIN_LAND"
+  }
+ },
+ "UNIT_WORLDSHIP_DEFENDER": {
+  "identity": {
+   "domain": "DOMAIN_AIR"
+  }
+ },
+ "UNIT_ICBM": {
+  "identity": {
+   "domain": "DOMAIN_AIR"
+  }
+ },
+ "UNIT_SETTLER": {
+  "grants": {
+   "culture": [
+    {
+     "value": 5,
+     "enabled": "TRAIT_CREATIVE"
+    },
+    {
+     "value": 5,
+     "enabled": "TRAIT_CREATIVE1"
+    },
+    {
+     "value": 10,
+     "enabled": "TRAIT_CREATIVE2"
+    },
+    {
+     "value": 20,
+     "enabled": "TRAIT_CREATIVE3"
+    },
+    {
+     "value": 5,
+     "enabled": "TRAIT_INNOVATIVE2"
+    },
+    {
+     "value": 10,
+     "enabled": "TRAIT_INNOVATIVE3"
+    },
+    {
+     "value": 10,
+     "enabled": "TRAIT_PROLIFIC"
+    },
+    {
+     "value": 5,
+     "enabled": "TRAIT_PROLIFIC1"
+    },
+    {
+     "value": 5,
+     "enabled": "TRAIT_PROLIFIC2"
+    }
+   ],
+   "population": [
+    {
+     "value": 1,
+     "enabled": "TRAIT_PROLIFIC"
+    },
+    {
+     "value": 1,
+     "enabled": "TRAIT_PROLIFIC1"
+    },
+    {
+     "value": 1,
+     "enabled": "TRAIT_PROLIFIC2"
+    },
+    {
+     "value": 1,
+     "enabled": "TRAIT_PROLIFIC3"
+    }
+   ]
+  }
+ }
 }

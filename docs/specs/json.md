@@ -48,7 +48,7 @@ of them.
 | **Intrinsic** ("what am I") | `identity` (incl. all TEXT) · `cost` · `ui` · `world` · `sound` · `ai` | empire-agnostic self-description, art, audio, AI metadata |
 | **Classification** | `skills` (UNIT, mutable abilities) · `tags` (UNIT, immutable type membership) · `status` (UNIT, a per-turn counter -- applied, ticks down, over) · `attributes` (BUILDING, what the building itself is/does) · `amenities` (CITY-held, grantor-provided) · `characteristics` (PLOT SUBSTRATE, held plot-scope intrinsics) · `capabilities` (TEAM, grantor-provided) | §8 — the classification model; scope carried by the section name |
 | **Applicability** | entity-level `enabled` · `disabled` | the whole entity applies only while `enabled` holds and `disabled` does not (the §3.9 pair at entity level) — the canonical whole-entity game-option gate: `"enabled": "GAMEOPTION_X"` |
-| **Auxiliary / bespoke** | `policies` · `succession` · `excludes` · `produces` · `condition` · `effect` · `outcomes` · `mapGeneration` · `replacedBy` · `promotionLine` · `buildUp` · `shrine` · `headquarters` · `properties` · `voteSource` · `threshold` · `role` · `victory` · `targetLevel` · `conversion` · `cityFounding` · `unitCapability` · `canTrade` (tech → the trade-table/deal system: tradeable items + agreements — `techs`/`openBorders`/`rightOfPassage`/`embassy`/`bonuses`/…) · `canTradeOn` (tech → trade-route system; terrain refs) · `canWorkOn` (tech → the city `canWork` gate; workable plot classes — `water`/`peaks`/…) — all three [capabilities.md](capabilities.md) | data read by their own systems, not the cascade |
+| **Auxiliary / bespoke** | `policies` · `succession` · `excludes` · `produces` · `condition` · `effect` · `outcomes` · `mapGeneration` · `replacedBy` · `promotionLine` · `buildUp` · `shrine` · `headquarters` · `properties` · `voteSource` · `threshold` · `role` · `victory` · `targetLevel` · `conversion` · `unitCapability` · `canTrade` (tech → the trade-table/deal system: tradeable items + agreements — `techs`/`openBorders`/`rightOfPassage`/`embassy`/`bonuses`/…) · `canTradeOn` (tech → trade-route system; terrain refs) · `canWorkOn` (tech → the city `canWork` gate; workable plot classes — `water`/`peaks`/…) — all three [capabilities.md](capabilities.md) | data read by their own systems, not the cascade |
 
 `type` (the entity's own id, e.g. `"BUILDING_FORGE"`) and the TEXT fields are present where relevant.
 
@@ -615,6 +615,17 @@ declare the number. Enforcement reads the [tally](tally.md) count.
   ([grants-machine.md](triggers.md) increment 5); the data is authored and
   waiting. The settler ALONE carries the founder buildings — no civilization authors a duplicate in its own
   `grants.buildings`.
+  > **⛔ EVERY founder provision rides this shape — the NUMERIC PULSES too, not just buildings (owner).** A
+  > trait's start culture and its bonus starting population are **conditional grants that live on the FOUNDER**:
+  > `grants.culture` / `grants.population` on the settler, with the trait as the entry's `enabled` condition.
+  > Both channels are already §5 numeric-pulse vocabulary, so this needs no new key and no new machinery —
+  > it is the founder shape above, applied to the payloads it was always meant to carry.
+  > ⛔ **There is NO founding SECTION, and inventing one is the recurring rollerskate this callout exists to
+  > stop.** A `cityFounding` block was minted by an agent, written into this spec's bespoke list, emitted by
+  > the curator and read by `CvTraitInfo` — so every layer ratified it and the next reader found it sanctioned.
+  > It is fantasy: the settler's considered action IS founding, which is exactly why the payload needs no home
+  > of its own. ⚠ A standing per-city EFFECT is a modifier and belongs to its own family; a one-shot pulse
+  > handed over AT founding is a grant. Neither is ever a bespoke section.
 - **Recurring / chance-rolled / state-conditioned handouts are NOT grants — they are `triggers` entries**
   (trigger → chance → `action.grant`): the old `repeatable` wrapper and its `interval` field dissolve into the
   trigger; the old building `freePromotions` (promotions to every unit present at end-turn — one mechanism, no
@@ -1247,7 +1258,7 @@ Data read by a specific system, not the cascade. Use only when the entity needs 
   > — so a newly-built ranked unit already equals "three fresh units merged" without inventing any history.
 - **bespoke** object-sections, each read by its own system: `promotionLine` · `buildUp` · `shrine` · `headquarters` ·
   `spread` · `properties` · `voteSource` · `threshold` · `role` · `victory` · `targetLevel` · `conversion` ·
-  `cityFounding` · `unitCapability` · `sizeMatters` · `hideAndSeek`.
+  `unitCapability` · `sizeMatters` · `hideAndSeek`.
 
 A dedicated system's data lives in its **own block** — a module is "on" iff its block exists and is non-empty — so
 a system can be added, swapped, or removed as a unit.
