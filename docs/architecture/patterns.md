@@ -528,9 +528,23 @@ Four words carry the whole requirement:
 - **⛔ ENUM OPERATIONS ARE FIRST CLASS** — name→type/enum resolution is a supported operation, covering
   **resolution AND EXTENSION**: BUG resolves `WidgetTypes`/`InputTypes`/`InterfaceDirtyBits` by name from config
   strings *and* MINTS new `WidgetTypes` members at runtime, handing them back as widget ids. A read-only lookup
-  does not serve that, and three engine enums are reachable ONLY this way — so a library lacking it forces the
-  banned reach-around. It generalizes `getInfoTypeForString` and mirrors the load-minted classification
+  does not serve that. It generalizes `getInfoTypeForString` and mirrors the load-minted classification
   registries ([DEC-classification-infos](decisions.md#dec-classification-infos)).
+  ⚑ **THE ENUM VOCABULARY IS A PREREQUISITE OF THE READ SURFACE, not a convenience beside it.** The group reads
+  are specified as `getYields()[YieldTypes.YIELD_FOOD]` (§ THE TWO READ ROLES: the existing engine enum indexes
+  the RESULT), so until the enum TYPES are published the replacement surface cannot be consumed at all — a
+  script cannot name the slot it wants, and neither can any screen that would render one.
+  ⛔ **Publishing them is therefore NOT a survival of the banned surface.**
+  [DEC-cy-not-fixed](decisions.md#dec-cy-not-fixed) bans the `.def` GETTER contract; a publication carrying zero
+  `.def` and zero `class_` is CONSTANTS, not reads. ⚠ The distinction is worth stating because the enum
+  publication was once swept up in the binding purge as though it were one, which takes the whole Python layer
+  down with it — every module names an engine constant.
+  ⚑ **EXTENSION needs no API of its own, which is why none is minted.** A published boost enum is a real Python
+  type, so BUG's existing construct-from-int + `setattr` mechanism adds members the moment the type exists; a
+  mint verb would be machinery for a caller that does not exist.
+  ⚠ **Of the three, only TWO are ours** — `WidgetTypes` and `InterfaceDirtyBits` are in `CvEnums.h`;
+  `InputTypes` is the EXE's and was never DLL-published. The DLL owes the vocabulary for the enums it DEFINES,
+  and a name absent from `CvEnums.h` is the EXE's to serve, never a hole in the library.
 
 **⚑ BUILD IT FOR THE PEDIA — but know exactly what that proves (owner).** The pedia's purpose is to display every
 entity exhaustively, so it is not a sample of the info surface, it **is** the info surface rendered. Therefore:

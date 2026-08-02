@@ -645,8 +645,6 @@
   [enabler.md §2](../../specs/enabler.md) unified the two deliberately, so the distinction does not survive into
   the data). Summing the bucket counts the band as an upgrade — plausibly, silently, and wrong. Decide what the
   read MEANS before serving it.
-- Serve enum resolution AND EXTENSION as a first-class operation — BUG reaches three engine enums only that way
-  and MINTS new members at runtime, so a library without it forces the banned reach-around.
 - REBUILD the emptied `CvGameTextMgr` composers on `appendEntryLines` + the requires block composer. The bodies
   that read legacy getters were CUT, not migrated, so this is writing them fresh — never "moving" one, and never
   restoring a body to see what it used to say.

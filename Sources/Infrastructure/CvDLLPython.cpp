@@ -3,6 +3,7 @@
 #include "CvPython.h"
 #include "Python/CyCity.h"
 #include "Python/CyEnabler.h"
+#include "Python/CyEnums.h"
 #include "Python/CyGlobalContext.h"
 #include "Python/CyState.h"
 #include "Python/CyPlayer.h"
@@ -90,6 +91,9 @@ DllExport void DLLPublishToPython()
 	// The NEW uniform read surface. Not a widened Cy* binding -- an id-based surface with no dependency on the
 	// legacy wrappers, so they can be cut away without touching it ([DEC-cy-not-fixed]).
 	//
+	// The VOCABULARY goes first: the group reads below are specified as `getYields()[YieldTypes.YIELD_FOOD]`,
+	// so the enum types have to exist before anything can consume a result.
+	CyEnums::pythonPublish();     // the engine enum constants + name->id resolution
 	CyEnabler::pythonPublish();   // "can I, right now?"      -- the availability half
 	CyState::pythonPublish();     // "what do I HAVE, now?"   -- the live-state half
 
