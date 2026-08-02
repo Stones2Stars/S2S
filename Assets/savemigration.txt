@@ -1183,3 +1183,22 @@ The empire's per-carrier hold allowances and its flight range. Trait-fed sums th
 CvPlayer::m_iNationalNavalCargoSpaceChange
 CvPlayer::m_iNationalMissileCargoSpaceChange
 CvPlayer::m_iNationalFlightOperationRangeChange
+The remaining trait-fed empire modifiers, cut as one batch. Each reader takes its family's GROUP and indexes
+| the kind ([DEC-new-getter-surface]); the gather already folds these from the held traits, so the stores were
+| duplicates and the reseed rebuilds the values on load.
+| ⚠ UNITS are per kind, not per family: the anarchy durations, the religion-spread and great-people
+| modifiers and the empire-scope capture pair are PERCENTS and re-point 1:1, while the trade-route CAP and the
+| attitude delta are FLAT and reduce at the reader.
+| REPLACEMENT: CvPlayer::getDurationKinds / getExperienceKinds / getStateReligionKinds / getCaptureKinds /
+| getTradeRouteKinds / getDiplomacyKinds.
+CvPlayer::m_iCivicAnarchyModifier
+CvPlayer::m_iReligiousAnarchyModifier
+CvPlayer::m_iExpInBorderModifier
+CvPlayer::m_iExtraStateReligionSpreadModifier
+CvPlayer::m_iExtraNonStateReligionSpreadModifier
+CvPlayer::m_iStateReligionGreatPeopleRateModifier
+CvPlayer::m_iExtraNationalCaptureProbabilityModifier
+CvPlayer::m_iExtraNationalCaptureResistanceModifier
+CvPlayer::m_iMaxTradeRoutesAdjustment
+CvPlayer::m_iNationalEnemyWarWearinessModifier
+CvPlayer::m_iAIAttitudeModifier

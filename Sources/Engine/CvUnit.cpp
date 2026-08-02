@@ -8162,11 +8162,13 @@ bool CvUnit::spread(ReligionTypes eReligion)
 		{
 			int iSpreadProb = m_pUnitInfo->getReligionSpreadStrength(eReligion);
 
+			int aiStateReligion[NUM_STATE_RELIGION_KINDS];
+			GET_PLAYER(getOwner()).getStateReligionKinds(aiStateReligion);
 			if ((ReligionTypes)GET_PLAYER(getOwner()).getStateReligion() == eReligion)
 			{
-				iSpreadProb += GET_PLAYER(getOwner()).getExtraStateReligionSpreadModifier();
+				iSpreadProb += aiStateReligion[STATE_RELIGION_SPREAD_PROBABILITY];
 			}
-			else iSpreadProb += GET_PLAYER(getOwner()).getExtraNonStateReligionSpreadModifier();
+			else iSpreadProb += aiStateReligion[STATE_RELIGION_NON_STATE_SPREAD_PROBABILITY];
 
 			if (pCity->getTeam() != getTeam())
 			{
@@ -14252,8 +14254,10 @@ void CvUnit::changeExperience100(int iChange, int iMax, bool bFromCombat, bool b
 
 		if (bInBorders)
 		{
-			iMod += kPlayer.getExpInBorderModifier();
-			iModGG += aiScalars[SCALAR_GREAT_GENERAL_RATE_DOMESTIC] + kPlayer.getExpInBorderModifier();
+			int aiExperience[NUM_EXPERIENCE_KINDS];
+			kPlayer.getExperienceKinds(aiExperience);
+			iMod += aiExperience[EXPERIENCE_IN_BORDER];
+			iModGG += aiScalars[SCALAR_GREAT_GENERAL_RATE_DOMESTIC] + aiExperience[EXPERIENCE_IN_BORDER];
 		}
 		iChange = getModifiedIntValue(iChange, iMod);
 
@@ -23442,7 +23446,9 @@ int CvUnit::captureProbabilityTotal() const
 {
 	int iData = resolvedValue(URS_CAPTURE_PROBABILITY);
 
-	iData += GET_PLAYER(getOwner()).getExtraNationalCaptureProbabilityModifier();
+	int aiCapture[NUM_CAPTURE_KINDS];
+	GET_PLAYER(getOwner()).getCaptureKinds(aiCapture);
+	iData += aiCapture[CAPTURE_PROBABILITY];
 
 	if (plot()->isCity(false, getTeam()))
 	{
@@ -23456,7 +23462,9 @@ int CvUnit::captureResistanceTotal() const
 {
 	int iData = resolvedValue(URS_CAPTURE_RESISTANCE);
 
-	iData += GET_PLAYER(getOwner()).getExtraNationalCaptureResistanceModifier();
+	int aiCapture[NUM_CAPTURE_KINDS];
+	GET_PLAYER(getOwner()).getCaptureKinds(aiCapture);
+	iData += aiCapture[CAPTURE_RESISTANCE];
 
 	if (plot()->isCity(false, getTeam()))
 	{

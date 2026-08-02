@@ -1085,7 +1085,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iGreatGeneralsCreated = 0;
 	m_iGreatPeopleThresholdModifier = 0;
 	m_iGreatGeneralsThresholdModifier = 0;
-	m_iStateReligionGreatPeopleRateModifier = 0;
 	m_iMaxGlobalBuildingProductionModifier = 0;
 	m_iMaxTeamBuildingProductionModifier = 0;
 	m_iMaxPlayerBuildingProductionModifier = 0;
@@ -1121,7 +1120,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iHighestUnitLevel = 1;
 	m_iOverflowResearch = 0;
 	m_iNoUnhealthyPopulationCount = 0;
-	m_iExpInBorderModifier = 0;
 	m_iBuildingOnlyHealthyCount = 0;
 
 
@@ -1169,15 +1167,10 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_bNukesValid = false;
 	m_bHuman = false;
 	//TB Traits begin
-	m_iCivicAnarchyModifier = 0;
-	m_iReligiousAnarchyModifier = 0;
-	m_iAIAttitudeModifier = 0;
 	m_iLeaderHeadLevel = 0;
 	m_iNationalEspionageDefense = 0;
 	m_iInquisitionCount = 0;
-	m_iMaxTradeRoutesAdjustment = 0;
 	m_iNationalHurryAngerModifier = 0;
-	m_iNationalEnemyWarWearinessModifier = 0;
 	m_iFixedBordersCount = 0;
 
 	m_iNationalCityStartCulture = 0;
@@ -1190,11 +1183,7 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 
 	m_iAllReligionsActiveCount = 0;
 
-	m_iExtraNationalCaptureProbabilityModifier = 0;
-	m_iExtraNationalCaptureResistanceModifier = 0;
 
-	m_iExtraStateReligionSpreadModifier = 0;
-	m_iExtraNonStateReligionSpreadModifier = 0;
 	//TB Traits end
 	m_iBaseMergeSelection = FFreeList::INVALID_INDEX;
 	m_iFirstMergeSelection = FFreeList::INVALID_INDEX;
@@ -8423,7 +8412,9 @@ int CvPlayer::getCivicAnarchyLength(CivicTypes* paeNewCivics) const
 	iTotalAnarchyLength *= anarchyModifierScalar() + 100;
 	iTotalAnarchyLength /= 100;
 
-	iTotalAnarchyLength *= getCivicAnarchyModifier() + 100;
+	int aiDurations[NUM_DURATIONS_KINDS];
+	getDurationKinds(aiDurations);
+	iTotalAnarchyLength *= aiDurations[DURATIONS_CIVIC_ANARCHY] + 100;
 	iTotalAnarchyLength /= 100;
 
 	iTotalAnarchyLength *= GC.getEraInfo(getCurrentEra()).getDurationsModifier(DURATIONS_CIVIC_ANARCHY, CASC_SCOPE_WORLD);
@@ -8469,9 +8460,11 @@ int CvPlayer::getReligionAnarchyLength() const
 	iAnarchyLength /= 100;
 
 	//TB Traits begin
-	if (getReligiousAnarchyModifier() !=0)
+	int aiDurations[NUM_DURATIONS_KINDS];
+	getDurationKinds(aiDurations);
+	if (aiDurations[DURATIONS_RELIGIOUS_ANARCHY] != 0)
 	{
-		iAnarchyLength += iAnarchyLength * getReligiousAnarchyModifier() / 100;
+		iAnarchyLength += iAnarchyLength * aiDurations[DURATIONS_RELIGIOUS_ANARCHY] / 100;
 	}
 	//TB Traits end
 
@@ -9114,16 +9107,6 @@ void CvPlayer::changeGreatGeneralsThresholdModifier(int iChange)
 }
 
 
-int CvPlayer::getStateReligionGreatPeopleRateModifier() const
-{
-	return m_iStateReligionGreatPeopleRateModifier;
-}
-
-
-void CvPlayer::changeStateReligionGreatPeopleRateModifier(int iChange)
-{
-	m_iStateReligionGreatPeopleRateModifier += iChange;
-}
 
 
 int CvPlayer::getMaxGlobalBuildingProductionModifier() const
@@ -9847,19 +9830,6 @@ void CvPlayer::changeNoUnhealthyPopulationCount(int iChange, bool bLimited)
 }
 
 
-int CvPlayer::getExpInBorderModifier() const
-{
-	return m_iExpInBorderModifier;
-}
-
-
-void CvPlayer::changeExpInBorderModifier(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iExpInBorderModifier += iChange;
-	}
-}
 
 
 int CvPlayer::getBuildingOnlyHealthyCount() const
@@ -16810,7 +16780,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iGreatGeneralsCreated);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iGreatPeopleThresholdModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iGreatGeneralsThresholdModifier);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iStateReligionGreatPeopleRateModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iMaxGlobalBuildingProductionModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iMaxTeamBuildingProductionModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iMaxPlayerBuildingProductionModifier);
@@ -16839,7 +16808,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iHighestUnitLevel);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iOverflowResearch);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNoUnhealthyPopulationCount);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iExpInBorderModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iBuildingOnlyHealthyCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraHealth);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraHappiness);
@@ -17269,7 +17237,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 				m_cityNames.insertAtEnd(szBuffer);
 			}
 		}
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iMaxTradeRoutesAdjustment);
 
 		int iSize;
 		WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "NUM_MAPS");
@@ -17722,11 +17689,8 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		}
 		//TB Combat Mod begin
 		//TB Traits begin
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iCivicAnarchyModifier);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iReligiousAnarchyModifier);
 		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_IMPROVEMENTS, GC.getNumImprovementInfos(), m_paiImprovementUpgradeRateModifierSpecific);
 		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_IMPROVEMENTS, GC.getNumImprovementInfos(), m_paiBuildWorkerSpeedModifierSpecific);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iAIAttitudeModifier);
 
 		for (int i = 0; i < wrapper.getNumClassEnumValues(REMAPPED_CLASS_TYPE_SPECIALISTS); ++i)
 		{
@@ -17758,18 +17722,13 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiLessYieldThreshold);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iCompatCheckCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNationalHurryAngerModifier);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iNationalEnemyWarWearinessModifier);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_DOMAIN_TYPES, m_paiNationalDomainProductionModifier);
 		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_TECHS, GC.getNumTechInfos(), m_paiNationalTechResearchModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iFixedBordersCount);
 
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraNationalCaptureProbabilityModifier);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraNationalCaptureResistanceModifier);
 
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iAllReligionsActiveCount);
 
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraStateReligionSpreadModifier);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraNonStateReligionSpreadModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNationalCityStartCulture);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNationalAirUnitCapacity);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNationalCityStartBonusPopulation);
@@ -18180,7 +18139,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iGreatGeneralsCreated);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iGreatPeopleThresholdModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iGreatGeneralsThresholdModifier);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iStateReligionGreatPeopleRateModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iMaxGlobalBuildingProductionModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iMaxTeamBuildingProductionModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iMaxPlayerBuildingProductionModifier);
@@ -18209,7 +18167,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iHighestUnitLevel);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iOverflowResearch);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNoUnhealthyPopulationCount);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExpInBorderModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iBuildingOnlyHealthyCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraHealth);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraHappiness);
@@ -18398,7 +18355,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 			}
 		}
 
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iMaxTradeRoutesAdjustment);
 
 		WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", NUM_MAPS, "NUM_MAPS");
 
@@ -18636,11 +18592,8 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		//TB Combat mod begin
 		//TB Combat mod end
 		//TB Traits begin
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCivicAnarchyModifier);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iReligiousAnarchyModifier);
 		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_IMPROVEMENTS, GC.getNumImprovementInfos(), m_paiImprovementUpgradeRateModifierSpecific);
 		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_IMPROVEMENTS, GC.getNumImprovementInfos(), m_paiBuildWorkerSpeedModifierSpecific);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iAIAttitudeModifier);
 
 		for (iI=0;iI<GC.getNumSpecialistInfos();iI++)
 		{
@@ -18652,18 +18605,13 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiLessYieldThreshold);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCompatCheckCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNationalHurryAngerModifier);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNationalEnemyWarWearinessModifier);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_DOMAIN_TYPES, m_paiNationalDomainProductionModifier);
 		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_TECHS, GC.getNumTechInfos(), m_paiNationalTechResearchModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iFixedBordersCount);
 
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraNationalCaptureProbabilityModifier);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraNationalCaptureResistanceModifier);
 
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iAllReligionsActiveCount);
 
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraStateReligionSpreadModifier);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraNonStateReligionSpreadModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNationalCityStartCulture);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNationalAirUnitCapacity);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNationalCityStartBonusPopulation);
@@ -26286,36 +26234,6 @@ CvCity*	CvPlayer::findClosestCity(const CvPlot* pPlot) const
 	return pResult;
 }
 
-int CvPlayer::getCivicAnarchyModifier( ) const
-{
-	return m_iCivicAnarchyModifier;
-}
-
-void CvPlayer::setCivicAnarchyModifier( int iNewValue )
-{
-	m_iCivicAnarchyModifier = iNewValue;
-}
-
-void CvPlayer::changeCivicAnarchyModifier( int iChange )
-{
-	setCivicAnarchyModifier( getCivicAnarchyModifier() + iChange );
-}
-
-int CvPlayer::getReligiousAnarchyModifier( ) const
-{
-	return m_iReligiousAnarchyModifier;
-}
-
-void CvPlayer::setReligiousAnarchyModifier( int iNewValue )
-{
-	m_iReligiousAnarchyModifier = iNewValue;
-}
-
-void CvPlayer::changeReligiousAnarchyModifier( int iChange )
-{
-	setReligiousAnarchyModifier( getReligiousAnarchyModifier() + iChange );
-}
-
 int CvPlayer::getImprovementUpgradeRateModifierSpecific(ImprovementTypes eImprovement) const
 {
 	return m_paiImprovementUpgradeRateModifierSpecific[eImprovement];
@@ -26334,21 +26252,6 @@ int CvPlayer::getBuildWorkerSpeedModifierSpecific(BuildTypes eBuild) const
 void CvPlayer::changeBuildWorkerSpeedModifierSpecific(BuildTypes eBuild, int iChange)
 {
 	m_paiBuildWorkerSpeedModifierSpecific[eBuild] = (m_paiBuildWorkerSpeedModifierSpecific[eBuild] + iChange);
-}
-
-int CvPlayer::getAIAttitudeModifier( ) const
-{
-	return m_iAIAttitudeModifier;
-}
-
-void CvPlayer::setAIAttitudeModifier( int iNewValue )
-{
-	m_iAIAttitudeModifier = iNewValue;
-}
-
-void CvPlayer::changeAIAttitudeModifier( int iChange )
-{
-	setAIAttitudeModifier( getAIAttitudeModifier() + iChange );
 }
 
 
@@ -26959,16 +26862,6 @@ int CvPlayer::getNationalGreatPeopleRate() const
 }
 
 
-int CvPlayer::getMaxTradeRoutesAdjustment() const
-{
-	return m_iMaxTradeRoutesAdjustment;
-}
-
-void CvPlayer::changeMaxTradeRoutesAdjustment(int iChange)
-{
-	m_iMaxTradeRoutesAdjustment += iChange;
-}
-
 int CvPlayer::getNationalHurryAngerModifier() const
 {
 	return m_iNationalHurryAngerModifier;
@@ -26982,21 +26875,6 @@ void CvPlayer::setNationalHurryAngerModifier(int iValue)
 void CvPlayer::changeNationalHurryAngerModifier(int iChange)
 {
 	setNationalHurryAngerModifier(getNationalHurryAngerModifier() + iChange);
-}
-
-int CvPlayer::getNationalEnemyWarWearinessModifier() const
-{
-	return m_iNationalEnemyWarWearinessModifier;
-}
-
-void CvPlayer::setNationalEnemyWarWearinessModifier(int iValue)
-{
-	m_iNationalEnemyWarWearinessModifier = iValue;
-}
-
-void CvPlayer::changeNationalEnemyWarWearinessModifier(int iChange)
-{
-	setNationalEnemyWarWearinessModifier(getNationalEnemyWarWearinessModifier() + iChange);
 }
 
 int CvPlayer::getNationalDomainProductionModifier(DomainTypes eIndex) const
@@ -27257,67 +27135,7 @@ void CvPlayer::changeFixedBordersCount(int iChange)
 }
 
 //Team Project (3)
-int CvPlayer::getExtraNationalCaptureProbabilityModifier() const
-{
-	return m_iExtraNationalCaptureProbabilityModifier;
-}
-
-void CvPlayer::setExtraNationalCaptureProbabilityModifier(int iValue)
-{
-	m_iExtraNationalCaptureProbabilityModifier = iValue;
-}
-
-void CvPlayer::changeExtraNationalCaptureProbabilityModifier(int iChange)
-{
-	m_iExtraNationalCaptureProbabilityModifier += iChange;
-}
-
-int CvPlayer::getExtraNationalCaptureResistanceModifier() const
-{
-	return m_iExtraNationalCaptureResistanceModifier;
-}
-
-void CvPlayer::setExtraNationalCaptureResistanceModifier(int iValue)
-{
-	m_iExtraNationalCaptureResistanceModifier = iValue;
-}
-
-void CvPlayer::changeExtraNationalCaptureResistanceModifier(int iChange)
-{
-	m_iExtraNationalCaptureResistanceModifier += iChange;
-}
-
 //Team Project (6)
-int CvPlayer::getExtraStateReligionSpreadModifier() const
-{
-	return m_iExtraStateReligionSpreadModifier;
-}
-
-void CvPlayer::setExtraStateReligionSpreadModifier(int iValue)
-{
-	m_iExtraStateReligionSpreadModifier = iValue;
-}
-
-void CvPlayer::changeExtraStateReligionSpreadModifier(int iChange)
-{
-	m_iExtraStateReligionSpreadModifier += iChange;
-}
-
-int CvPlayer::getExtraNonStateReligionSpreadModifier() const
-{
-	return m_iExtraNonStateReligionSpreadModifier;
-}
-
-void CvPlayer::setExtraNonStateReligionSpreadModifier(int iValue)
-{
-	m_iExtraNonStateReligionSpreadModifier = iValue;
-}
-
-void CvPlayer::changeExtraNonStateReligionSpreadModifier(int iChange)
-{
-	m_iExtraNonStateReligionSpreadModifier += iChange;
-}
-
 
 int CvPlayer::getBaseMergeSelectionUnit() const
 {

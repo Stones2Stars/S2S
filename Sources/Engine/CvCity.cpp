@@ -5607,7 +5607,9 @@ int CvCity::getTotalGreatPeopleRateModifier() const
 
 	if (owner.getStateReligion() != NO_RELIGION && isHasReligion(owner.getStateReligion()))
 	{
-		iModifier += owner.getStateReligionGreatPeopleRateModifier();
+		int aiStateReligion[NUM_STATE_RELIGION_KINDS];
+		owner.getStateReligionKinds(aiStateReligion);
+		iModifier += aiStateReligion[STATE_RELIGION_GREAT_PEOPLE_RATE];
 	}
 
 	if (owner.isGoldenAge())
@@ -7136,7 +7138,14 @@ int CvCity::getExtraTradeRoutes() const { return cascadeValue(MODFAM_TRADE_ROUTE
 
 int CvCity::getMaxTradeRoutes() const
 {
-	return getOwner() == NO_PLAYER ? GC.getMAX_TRADE_ROUTES() : GC.getMAX_TRADE_ROUTES() + GET_PLAYER(getOwner()).getMaxTradeRoutesAdjustment();
+	if (getOwner() == NO_PLAYER)
+	{
+		return GC.getMAX_TRADE_ROUTES();
+	}
+	//	The empire's cap adjustment is a FLAT slot, so it reduces here.
+	int aiTradeRoutes[NUM_TRADE_ROUTE_KINDS];
+	GET_PLAYER(getOwner()).getTradeRouteKinds(aiTradeRoutes);
+	return GC.getMAX_TRADE_ROUTES() + aiTradeRoutes[TRADE_ROUTE_MAX] / 100;
 }
 
 
@@ -16614,7 +16623,9 @@ int CvCity::localCitizenCaptureResistance() const
 {
 	int iTotal = 0;
 	iTotal += getExtraLocalCaptureResistanceModifier();
-	iTotal += GET_PLAYER(getOwner()).getExtraNationalCaptureResistanceModifier();
+	int aiCapture[NUM_CAPTURE_KINDS];
+	GET_PLAYER(getOwner()).getCaptureKinds(aiCapture);
+	iTotal += aiCapture[CAPTURE_RESISTANCE];
 	return iTotal;
 }
 

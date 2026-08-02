@@ -3220,7 +3220,9 @@ int CvTeam::getEnemyWarWearinessModifier() const
 	{
 		if (GET_PLAYER((PlayerTypes)iI).isAliveAndTeam(getID()))
 		{
-			iEnemyWarWearinessTotal += GET_PLAYER((PlayerTypes)iI).getNationalEnemyWarWearinessModifier();
+			int aiDiplomacy[NUM_DIPLOMACY_KINDS];
+			GET_PLAYER((PlayerTypes)iI).getDiplomacyKinds(aiDiplomacy);
+			iEnemyWarWearinessTotal += aiDiplomacy[DIPLOMACY_ENEMY_WAR_WEARINESS];
 		}
 	}
 	return iEnemyWarWearinessTotal;

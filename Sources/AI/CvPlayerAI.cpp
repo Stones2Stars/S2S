@@ -6970,7 +6970,9 @@ int CvPlayerAI::AI_getAttitudeVal(PlayerTypes ePlayer, bool bForced) const
 
 	iAttitude += GC.getHandicapInfo(GET_PLAYER(ePlayer).getHandicapType()).getDiplomacy(DIPLOMACY_ATTITUDE, CASC_SCOPE_EMPIRE, false) / 100;
 
-	iAttitude += GET_PLAYER(ePlayer).getAIAttitudeModifier();
+	int aiDiplomacy[NUM_DIPLOMACY_KINDS];
+	GET_PLAYER(ePlayer).getDiplomacyKinds(aiDiplomacy);
+	iAttitude += aiDiplomacy[DIPLOMACY_ATTITUDE] / 100;
 
 	if (!GET_PLAYER(ePlayer).isHumanPlayer())
 	{
@@ -7140,7 +7142,9 @@ int CvPlayerAI::AI_getTraitAttitude(PlayerTypes ePlayer) const
 {
 	PROFILE_EXTRA_FUNC();
 	CvPlayerAI& kPlayer = GET_PLAYER(ePlayer);
-	int iAttitude = kPlayer.getAIAttitudeModifier();
+	int aiDiplomacy[NUM_DIPLOMACY_KINDS];
+	kPlayer.getDiplomacyKinds(aiDiplomacy);
+	int iAttitude = aiDiplomacy[DIPLOMACY_ATTITUDE] / 100;
 
 	if (iAttitude < 0)
 	{

@@ -505,8 +505,6 @@ public:
 
 
 
-	int getStateReligionGreatPeopleRateModifier() const;
-	void changeStateReligionGreatPeopleRateModifier(int iChange);
 
 	int getMaxGlobalBuildingProductionModifier() const;
 	void changeMaxGlobalBuildingProductionModifier(int iChange);
@@ -627,8 +625,6 @@ public:
 
 	void changeNoUnhealthyPopulationCount(int iChange, bool bLimited = false);
 
-	int getExpInBorderModifier() const;
-	void changeExpInBorderModifier(int iChange);
 
 	int getBuildingOnlyHealthyCount() const;
 	bool isBuildingOnlyHealthy() const;
@@ -1599,9 +1595,7 @@ protected:
 	int m_iNationalEspionageDefense;
 	int m_iInquisitionCount;
 	int m_iCompatCheckCount;
-	int m_iMaxTradeRoutesAdjustment;
 	int m_iNationalHurryAngerModifier;
-	int m_iNationalEnemyWarWearinessModifier;
 	int* m_paiNationalDomainProductionModifier;
 	int* m_paiNationalTechResearchModifier;
 	int m_iFixedBordersCount;
@@ -1616,11 +1610,7 @@ protected:
 
 	int m_iAllReligionsActiveCount;
 
-	int m_iExtraNationalCaptureProbabilityModifier;
-	int m_iExtraNationalCaptureResistanceModifier;
 
-	int m_iExtraStateReligionSpreadModifier;
-	int m_iExtraNonStateReligionSpreadModifier;
 	//TB Traits
 	int m_iBaseMergeSelection;
 	int m_iFirstMergeSelection;
@@ -1759,7 +1749,6 @@ protected:
 	int m_iGreatGeneralsCreated;
 	int m_iGreatPeopleThresholdModifier;
 	int m_iGreatGeneralsThresholdModifier;
-	int m_iStateReligionGreatPeopleRateModifier;
 	int m_iMaxGlobalBuildingProductionModifier;
 	int m_iMaxTeamBuildingProductionModifier;
 	int m_iMaxPlayerBuildingProductionModifier;
@@ -1795,7 +1784,6 @@ protected:
 	int m_iHighestUnitLevel;
 	int m_iOverflowResearch;
 	int m_iNoUnhealthyPopulationCount;
-	int m_iExpInBorderModifier;
 	int m_iBuildingOnlyHealthyCount;
 
 
@@ -1852,9 +1840,6 @@ protected:
 	int m_iMotherPlayer;
 
 	//TB Traits begin
-	int m_iCivicAnarchyModifier;
-	int m_iReligiousAnarchyModifier;
-	int m_iAIAttitudeModifier;
 	int m_iFocusPlotX;
 	int m_iFocusPlotY;
 	int* m_aiLessYieldThreshold;
@@ -2024,13 +2009,7 @@ protected:
 
 	//TB Traits begin
 public:
-	int getCivicAnarchyModifier() const;
-	void setCivicAnarchyModifier(int iNewValue);
-	void changeCivicAnarchyModifier(int iChange);
 
-	int getReligiousAnarchyModifier() const;
-	void setReligiousAnarchyModifier(int iNewValue);
-	void changeReligiousAnarchyModifier(int iChange);
 
 	int getImprovementUpgradeRateModifierSpecific(ImprovementTypes eImprovement) const;
 	void changeImprovementUpgradeRateModifierSpecific(ImprovementTypes eImprovement, int iChange);
@@ -2038,9 +2017,6 @@ public:
 	int getBuildWorkerSpeedModifierSpecific(BuildTypes eBuild) const;
 	void changeBuildWorkerSpeedModifierSpecific(BuildTypes eBuild, int iChange);
 
-	int getAIAttitudeModifier() const;
-	void setAIAttitudeModifier(int iNewValue);
-	void changeAIAttitudeModifier(int iChange);
 
 
 	int getSpecialistExtraYield(YieldTypes eIndex) const;
@@ -2074,16 +2050,11 @@ public:
 	int getNationalGreatPeopleUnitRate(const UnitTypes eIndex) const;
 	void changeNationalGreatPeopleUnitRate(const UnitTypes eIndex, const int iChange);
 
-	int getMaxTradeRoutesAdjustment() const;
-	void changeMaxTradeRoutesAdjustment(int iChange);
 
 	int getNationalHurryAngerModifier() const;
 	void setNationalHurryAngerModifier(int iNewValue);
 	void changeNationalHurryAngerModifier(int iChange);
 
-	int getNationalEnemyWarWearinessModifier() const;
-	void setNationalEnemyWarWearinessModifier(int iNewValue);
-	void changeNationalEnemyWarWearinessModifier(int iChange);
 
 
 
@@ -2144,21 +2115,9 @@ public:
 	void setAllReligionsActiveCount(int iValue);
 	void changeAllReligionsActiveCount(int iChange);
 
-	int getExtraNationalCaptureProbabilityModifier() const;
-	void setExtraNationalCaptureProbabilityModifier(int iValue);
-	void changeExtraNationalCaptureProbabilityModifier(int iChange);
 
-	int getExtraNationalCaptureResistanceModifier() const;
-	void setExtraNationalCaptureResistanceModifier(int iValue);
-	void changeExtraNationalCaptureResistanceModifier(int iChange);
 
-	int getExtraStateReligionSpreadModifier() const;
-	void setExtraStateReligionSpreadModifier(int iValue);
-	void changeExtraStateReligionSpreadModifier(int iChange);
 
-	int getExtraNonStateReligionSpreadModifier() const;
-	void setExtraNonStateReligionSpreadModifier(int iValue);
-	void changeExtraNonStateReligionSpreadModifier(int iChange);
 
 	//TB Traits end
 
