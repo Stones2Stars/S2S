@@ -8228,7 +8228,7 @@ void CvPlot::setCulture(PlayerTypes eIndex, int64_t iNewValue, bool bUpdate, boo
 	}
 
 	// Protection from overzealous decay, others
-	iNewValue = std::max(0, iNewValue);
+	iNewValue = std::max<int64_t>(0, iNewValue);
 
 	if (getCulture(eIndex) != iNewValue)
 	{
@@ -8258,26 +8258,7 @@ void CvPlot::setCulture(PlayerTypes eIndex, int64_t iNewValue, bool bUpdate, boo
 			}
 			if (bFirst) m_cultureRatesThisTurn.push_back(std::make_pair(eIndex, iChange));
 		}
-		std::vector<std::pair<PlayerTypes, int> >::iterator itr;
-
-		// Toffer - 08.08.20
-		// 4 byte integer overflow protection
-		if (iNewValue > 1000000000) // trigger reduction at a billion
-		{
-			// This player may not yet be in the vector if it goes from 0 to a billion in one go through worldbuilder or something.
-			iNewValue /= 10; // So we do this outside the vector loop.
-			// Reduce culture by same factor for all players
-			for (itr = m_aiCulture.begin(); itr != m_aiCulture.end(); ++itr)
-			{
-				if ((*itr).first != eIndex)
-				{
-					(*itr).second /= 10;
-				}
-			}
-			// This overflow protection will start to break down if a plot is getting 900 million+ culture from a specific player per turn.
-			// it reduce 1 billion+ down to 100 million+, this should be an adequate overflow protection in this case.
-		}
-		// ! Toffer
+		std::vector<std::pair<PlayerTypes, int64_t> >::iterator itr;
 
 		for (itr = m_aiCulture.begin(); itr != m_aiCulture.end(); ++itr)
 		{
@@ -8291,7 +8272,7 @@ void CvPlot::setCulture(PlayerTypes eIndex, int64_t iNewValue, bool bUpdate, boo
 		{
 			m_aiCulture.push_back(std::make_pair(eIndex, iNewValue));
 			// Force the capacity to the size() since we need to minimize memory usage and adding cultures is rare
-			std::vector<std::pair<PlayerTypes, int> >(m_aiCulture).swap(m_aiCulture);
+			std::vector<std::pair<PlayerTypes, int64_t> >(m_aiCulture).swap(m_aiCulture);
 		}
 		else
 		{
@@ -8316,7 +8297,7 @@ void CvPlot::changeCulture(PlayerTypes eIndex, int64_t iChange, bool bUpdate)
 {
 	if (0 != iChange)
 	{
-		setCulture(eIndex, std::max(0, getCulture(eIndex) + iChange), bUpdate, true);
+		setCulture(eIndex, std::max<int64_t>(0, getCulture(eIndex) + iChange), bUpdate, true);
 	}
 }
 
