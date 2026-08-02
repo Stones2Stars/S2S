@@ -672,7 +672,6 @@ public:
 
 	int getMaxTradeRoutes() const;
 
-	int getTradeRouteModifier() const;
 
 	int getForeignTradeRouteModifier() const;
 	void changeForeignTradeRouteModifier(int iChange);

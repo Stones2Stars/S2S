@@ -585,6 +585,7 @@ public:
 	bool isNukeVictim(const CvPlot* pPlot, const TeamTypes eTeam, int iRange) const;
 	bool canNuke() const;
 	bool canNukeAt(const CvPlot* pPlot, int iX, int iY) const;
+	bool nuke(int iX, int iY);
 
 	bool canRecon() const;
 	bool canReconAt(const CvPlot* pPlot, int iX, int iY) const;
@@ -1718,7 +1719,6 @@ public:
 	bool isPromotionFree(PromotionTypes ePromotion) const;
 	int getPromotionFreeCount(PromotionTypes ePromotion) const;
 	void setPromotionFreeCount(PromotionTypes ePromotion, int iChange);
-	void checkFreetoCombatClass();
 	//TB Combat Mods end
 	bool meetsUnitSelectionCriteria(const CvUnitSelectionCriteria* criteria) const;
 	bool shouldUseWithdrawalOddsCap() const;

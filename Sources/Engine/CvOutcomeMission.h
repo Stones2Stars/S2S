@@ -17,6 +17,7 @@ class CvUnit;
 class CvXMLLoadUtility;
 class BoolExpr;
 class IntExpr;
+namespace picojson { class value; }
 
 class CvOutcomeMission
 {
@@ -34,6 +35,9 @@ public:
 	void buildDisplayString(CvWStringBuffer& szBuffer, const CvUnit* pUnit) const;
 	void execute(CvUnit* pUnit) const;
 
+
+	// The JSON intake -- ONE outcomes.actions[] entry (mission-outcome-system.md).
+	void mapFrom(const picojson::value& v);
 
 	void getCheckSum(uint32_t& iSum) const;
 

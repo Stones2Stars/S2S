@@ -5686,7 +5686,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 						const int iAllowedSlots =
 							InfoValuation::expectedKeyedTarget(kBuilding.getModifiers(), MODFAM_ALLOWED_SPECIALISTS,
 								CHANNEL_AMOUNT, -1, iI,
-								getCityContext(), kOwner.getEmpireContext(), plotGroup()) / 100;
+								getCityContext(), kOwner.getEmpireContext(), plotGroup(getOwner())) / 100;
 
 						if (iAllowedSlots > 0)
 						{
@@ -12870,7 +12870,9 @@ int CvCityAI::tradeRouteValue(const CvBuildingInfo& kBuilding, YieldTypes eYield
 	int iValue = std::min(iExtraTradeRoutes, iCurrentTradeRoutes + iExtraTradeRoutes) * 4 * iTradeRouteValue;
 	iValue += ((kBuilding.getTradeRoute(TRADE_ROUTE_AMOUNT, CASC_SCOPE_EMPIRE) / 100) * kOwner.getNumCities() * 4 * iTradeRouteValue);
 
-	int iUnmodifiedCurrentValue = (100 * getTradeYield(eYield)) / (100 + getTradeRouteModifier());
+	int aiTradeRoutes[NUM_TRADE_ROUTE_KINDS];
+	getTradeRouteKinds(aiTradeRoutes);
+	int iUnmodifiedCurrentValue = (100 * getTradeYield(eYield)) / (100 + aiTradeRoutes[TRADE_ROUTE_MODIFIER]);
 
 	iValue += ((kBuilding.getTradeRoute(TRADE_ROUTE_MODIFIER, CASC_SCOPE_CITY) * iUnmodifiedCurrentValue) / (bForeignTrade ? 12 : 25));
 

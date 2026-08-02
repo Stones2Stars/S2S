@@ -18,6 +18,8 @@ class CvUnit;
 class CvXMLLoadUtility;
 class BoolExpr;
 class IntExpr;
+class CvCondition;
+namespace picojson { class value; }
 
 class CvOutcome
 {
@@ -53,7 +55,10 @@ public:
 
 	void buildDisplayString(CvWStringBuffer& szBuffer, const CvUnit& kUnit) const;
 
-	bool read(CvXMLLoadUtility* pXML);
+	// The JSON intake -- ONE outcomes.kill[] / outcomes.actions[] entry (mission-outcome-system.md). The
+	// CvOutcome ENGINE is unchanged; only the read path is JSON. Idempotent: fully redefines every member.
+	void mapFrom(const picojson::value& v);
+
 	void copyNonDefaults(CvOutcome* pOutcome);
 	void getCheckSum(uint32_t& iSum) const;
 
@@ -64,7 +69,9 @@ protected:
 	const IntExpr* m_aiYield[NUM_YIELD_TYPES];
 	const IntExpr* m_aiCommerce[NUM_COMMERCE_TYPES];
 	UnitTypes m_eUnitType;
-	const BoolExpr* m_bUnitToCity;
+	// The gates are typed CONDITION trees evaluated by the ONE evaluator (cascadeEvalCondition) -- never a
+	// BoolExpr round-trip ([DEC-single-implementation], mission-outcome-system.md).
+	const CvCondition* m_bUnitToCity;
 	PromotionTypes m_ePromotionType;
 	BonusTypes m_eBonusType;
 	int m_iGPP;
@@ -74,8 +81,8 @@ protected:
 	int m_iPopulationBoost;
 	const IntExpr* m_iReduceAnarchyLength;
 	EventTriggerTypes m_eEventTrigger;
-	const BoolExpr* m_pPlotCondition;
-	const BoolExpr* m_pUnitCondition;
+	const CvCondition* m_pPlotCondition;
+	const CvCondition* m_pUnitCondition;
 	CvString m_szPythonCallback;
 	bool m_bKill;
 	CvString m_szPythonCode;

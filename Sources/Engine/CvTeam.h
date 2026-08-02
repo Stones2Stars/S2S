@@ -351,9 +351,6 @@ public:
 
 	bool isCapitulated() const;
 
-	int getRouteChange(RouteTypes eIndex) const;
-	void changeRouteChange(RouteTypes eIndex, int iChange);
-
 	int getProjectCount(ProjectTypes eIndex) const;
 	DllExport int getProjectDefaultArtType(ProjectTypes eIndex) const;
 	DllExport void setProjectDefaultArtType(ProjectTypes eIndex, int value);
@@ -523,7 +520,6 @@ protected:
 	int* m_aiWarWearinessTimes100;
 	int* m_aiExtraMoves;
 	int* m_aiForceTeamVoteEligibilityCount;
-	int* m_paiRouteChange;
 	int* m_paiProjectCount;
 	int* m_paiProjectDefaultArtTypes;
 	int* m_paiProjectMaking;

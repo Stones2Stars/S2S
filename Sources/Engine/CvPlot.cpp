@@ -3233,10 +3233,9 @@ bool CvPlot::canBuild(BuildTypes eBuild, PlayerTypes ePlayer, bool bTestVisible,
 		}
 	}
 
-	if (!isMapCategory(*this, info))
-	{
-		return false;
-	}
+	// No map-category gate on the BUILD itself: a build authors no `mapCategories` (nor did the legacy XML), so
+	// the test was vacuous. The plot's own categories still gate through the terrain, and the improvement or
+	// route the build creates carries its own.
 
 	const ImprovementTypes eImprovement = info.getImprovement();
 	bool bValid = false;
@@ -4359,11 +4358,15 @@ int CvPlot::movementCost(const CvUnit* pUnit, const CvPlot* pFromPlot) const
 			const RouteTypes toRouteType = getRouteType();
 			const CvRouteInfo& toRoute = GC.getRouteInfo(toRouteType);
 
-			int iRouteCost = fromRoute.getFlatMovement(MOVEMENT_MOVES, CASC_SCOPE_PLOT) / 100 + GET_TEAM(pUnit->getTeam()).getRouteChange(fromRouteType);
+			// A tech-gated route move-cost delta is a CONDITIONED entry beside the base in the route's OWN
+			// movement.plot.flat slot ([modifier.md] par.6 -- the route is the worked case), so it belongs to the
+			// route rather than to a team-side accumulator. The point read serves the unconditioned base; the
+			// conditioned tail lands when this read evaluates it against the asking team.
+			int iRouteCost = fromRoute.getFlatMovement(MOVEMENT_MOVES, CASC_SCOPE_PLOT) / 100;
 			FAssertMsg(iRouteCost > 0, "Route cost is expected to be greater than 0");
 			if (toRouteType != fromRouteType)
 			{
-				const int iToRouteCost = toRoute.getFlatMovement(MOVEMENT_MOVES, CASC_SCOPE_PLOT) / 100 + GET_TEAM(pUnit->getTeam()).getRouteChange(toRouteType);
+				const int iToRouteCost = toRoute.getFlatMovement(MOVEMENT_MOVES, CASC_SCOPE_PLOT) / 100;
 
 				if (iToRouteCost > iRouteCost)
 				{
@@ -11805,7 +11808,7 @@ bool CvPlot::canTrain(UnitTypes eUnit, bool bTestVisible) const
 		if (getOwner() != NO_PLAYER)
 		{
 			trainCtx.empireContext = &GET_PLAYER(getOwner()).getEmpireContext();
-			trainCtx.plotGroup = plotGroup(getOwner());
+			trainCtx.plotGroup = getPlotGroup(getOwner());
 		}
 		static const CvCascadeEvalFlags kTrainFlags;
 		if (!cascadeEvalCondition(kUnit.getRequires() != NULL ? kUnit.getRequires()->build : NULL,

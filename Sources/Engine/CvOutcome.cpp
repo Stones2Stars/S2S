@@ -29,6 +29,68 @@
 #include "Tools/CheckSum.h"
 #include "AI/CvGameAI.h"
 #include "Infrastructure/IntExpr.h"
+#include "Conditions/CvConditionEval.h"       // the ONE evaluator + CvCascadeEvalCtx
+#include "Infos/CvJsonConditionParse.h"       // cascadeParseCondition -- the ONE human->data condition boundary
+#include "Infos/CvJsonParse.h"                // jsonChildObj / jsonIdInt / jsonIdFk / jsonIdBool / jsonIdStr
+#include "Data/CvInfoValuation.h"             // fillEvalCtxAtPlot
+
+namespace
+{
+	//	The ONE eval-ctx assembly for an outcome's gates. Plot-anchored, because every gate an outcome carries is
+	//	asked about a place ([contexts.md]: the ctx carries the per-scope CONTEXT SILOS, never the game objects);
+	//	the unit rides the one acknowledged raw slot until the unit context lands.
+	void oc_fillCtx(const CvUnit& kUnit, const CvPlot* pPlot, CvCascadeEvalCtx& ctx)
+	{
+		if (pPlot != NULL)
+		{
+			InfoValuation::fillEvalCtxAtPlot(*pPlot, ctx);
+		}
+		else if (kUnit.getOwner() != NO_PLAYER)
+		{
+			ctx.empireContext = &GET_PLAYER(kUnit.getOwner()).getEmpireContext();
+		}
+		ctx.unit = &kUnit;
+	}
+
+	bool oc_gateHolds(const CvCondition* pCondition, const CvUnit& kUnit, const CvPlot* pPlot)
+	{
+		if (pCondition == NULL)
+		{
+			return true;
+		}
+		CvCascadeEvalCtx ctx;
+		oc_fillCtx(kUnit, pPlot, ctx);
+		static const CvCascadeEvalFlags kFlags;
+		return cascadeEvalCondition(pCondition, ctx, kFlags);
+	}
+
+	//	A numeric outcome payload: a plain int, or the {base, random} pair the curator emits for a rolled
+	//	amount -- Plus(Constant, Random), which is exactly what the legacy expression tree held.
+	const IntExpr* oc_intExpr(const picojson::object& o, const char* szKey)
+	{
+		picojson::object::const_iterator it = o.find(szKey);
+		if (it == o.end())
+		{
+			return NULL;
+		}
+		if (it->second.is<double>())
+		{
+			return new IntExprConstant((int)it->second.get<double>());
+		}
+		if (it->second.is<picojson::object>())
+		{
+			const picojson::object& kNum = it->second.get<picojson::object>();
+			const int iBase = jsonIdInt(kNum, "base");
+			const int iRandom = jsonIdInt(kNum, "random");
+			if (iRandom != 0)
+			{
+				return new IntExprPlus(new IntExprConstant(iBase), new IntExprRandom(new IntExprConstant(iRandom)));
+			}
+			return new IntExprConstant(iBase);
+		}
+		return NULL;
+	}
+}
 
 CvOutcome::CvOutcome(): m_eUnitType(NO_UNIT),
 						m_iChance(NULL),
@@ -135,8 +197,7 @@ bool CvOutcome::getUnitToCity(const CvUnit& kUnit) const
 {
 	if (m_bUnitToCity)
 	{
-		// evaluate does not actually change the object so const_cast is fine
-		return m_bUnitToCity->evaluate(kUnit.getGameObject());
+		return oc_gateHolds(m_bUnitToCity, kUnit, kUnit.plot());
 	}
 	return false;
 }
@@ -346,10 +407,9 @@ int CvOutcome::getChance(const CvUnit &kUnit) const
 		iChance += getChancePerPop() * pCity->getPopulation();
 	}
 
-	if (kInfo.isCapture() && !kUnit.isHuman())
-	{
-		iChance += GC.getHandicapInfo(GC.getGame().getHandicapType()).getSubdueAnimalBonusAI();
-	}
+	// The AI's subdue-animal handicap bonus re-homes onto the TRIGGER's own `chance` ([triggers.md]: a threshold
+	// on a happening is a trigger, not a magnitude), so it carries no kind and no handicap getter; it reaches the
+	// odds again when the curator attaches it there.
 
 	const std::map<int, int>& kPromotionOdds = kInfo.getPromotionOdds();
 	for (std::map<int, int>::const_iterator itOdds = kPromotionOdds.begin(); itOdds != kPromotionOdds.end(); ++itOdds)
@@ -560,20 +620,14 @@ bool CvOutcome::isPossible(const CvUnit& kUnit) const
 		}
 	}
 
-	if (m_pPlotCondition)
+	if (!oc_gateHolds(m_pPlotCondition, kUnit, kUnit.plot()))
 	{
-		if (!m_pPlotCondition->evaluate(kUnit.plot()->getGameObject()))
-		{
-			return false;
-		}
+		return false;
 	}
 
-	if (m_pUnitCondition)
+	if (!oc_gateHolds(m_pUnitCondition, kUnit, kUnit.plot()))
 	{
-		if (!m_pUnitCondition->evaluate(kUnit.getGameObject()))
-		{
-			return false;
-		}
+		return false;
 	}
 
 	if (m_pPythonPossibleFunc)
@@ -679,12 +733,9 @@ bool CvOutcome::isPossibleSomewhere(const CvUnit& kUnit) const
 		}
 	}
 
-	if (m_pUnitCondition)
+	if (!oc_gateHolds(m_pUnitCondition, kUnit, kUnit.plot()))
 	{
-		if (!m_pUnitCondition->evaluate(kUnit.getGameObject()))
-		{
-			return false;
-		}
+		return false;
 	}
 
 	return getChance(kUnit) > 0;
@@ -880,20 +931,14 @@ bool CvOutcome::isPossibleInPlot(const CvUnit& kUnit, const CvPlot& kPlot, bool 
 		}
 	}
 
-	if (m_pPlotCondition)
+	if (!oc_gateHolds(m_pPlotCondition, kUnit, &kPlot))
 	{
-		if (!m_pPlotCondition->evaluate(kPlot.getGameObject()))
-		{
-			return false;
-		}
+		return false;
 	}
 
-	if (m_pUnitCondition)
+	if (!oc_gateHolds(m_pUnitCondition, kUnit, &kPlot))
 	{
-		if (!m_pUnitCondition->evaluate(kUnit.getGameObject()))
-		{
-			return false;
-		}
+		return false;
 	}
 
 	if (m_pPythonPossibleFunc)
@@ -1011,7 +1056,7 @@ bool CvOutcome::execute(CvUnit &kUnit, PlayerTypes eDefeatedUnitPlayer, UnitType
 		pUnitInfo = &kUnit.getUnitInfo()
 	);
 
-	CvWString& szMessage = GC.getOutcomeInfo(getType()).getMessageKey();
+	const CvWString& szMessage = GC.getOutcomeInfo(getType()).getMessageKey();
 	bool bNothing = true;
 	if (!szMessage.empty())
 	{
@@ -1467,112 +1512,142 @@ int CvOutcome::AI_getValueInPlot(const CvUnit &kUnit, const CvPlot &kPlot, bool 
 	return iValue;
 }
 
-bool CvOutcome::read(CvXMLLoadUtility* pXML)
+
+//	ONE outcomes.kill[] / outcomes.actions[] entry -> this outcome. The verb-per-payload vocabulary of
+//	[json.md] par.8; the engine below is untouched, only the read path is JSON (mission-outcome-system.md).
+//	Idempotent by contract: every member is fully redefined, owned expressions freed first.
+void CvOutcome::mapFrom(const picojson::value& v)
 {
-	PROFILE_EXTRA_FUNC();
-	CvString szTextVal;
-	pXML->GetChildXmlValByName(szTextVal, L"OutcomeType");
-	GC.addDelayedResolution((int*)&m_eType, szTextVal);
-	//m_eType = (OutcomeTypes) pXML->FindInInfoClass(szTextVal);
-	if (pXML->TryMoveToXmlFirstChild(L"iChance"))
+	SAFE_DELETE(m_iChance);
+	SAFE_DELETE(m_bUnitToCity);
+	SAFE_DELETE(m_iReduceAnarchyLength);
+	SAFE_DELETE(m_pPlotCondition);
+	SAFE_DELETE(m_pUnitCondition);
+	for (int i = 0; i < NUM_YIELD_TYPES; i++)
 	{
-		m_iChance = IntExpr::read(pXML);
-		pXML->MoveToXmlParent();
+		SAFE_DELETE(m_aiYield[i]);
 	}
-	pXML->GetOptionalChildXmlValByName(&m_iChancePerPop, L"iChancePerPop");
-	pXML->GetOptionalChildXmlValByName(szTextVal, L"UnitType");
-	GC.addDelayedResolution((int*)&m_eUnitType, szTextVal);
-	//m_eUnitType = (UnitTypes) pXML->FindInInfoClass(szTextVal);
-	if (pXML->TryMoveToXmlFirstChild(L"bUnitToCity"))
+	for (int i = 0; i < NUM_COMMERCE_TYPES; i++)
 	{
-		m_bUnitToCity = BoolExpr::read(pXML);
-		pXML->MoveToXmlParent();
+		SAFE_DELETE(m_aiCommerce[i]);
 	}
-	pXML->GetOptionalChildXmlValByName(szTextVal, L"PromotionType");
-	GC.addDelayedResolution((int*)&m_ePromotionType, szTextVal);
-	//m_ePromotionType = (PromotionTypes) pXML->FindInInfoClass(szTextVal);
-	pXML->GetOptionalChildXmlValByName(szTextVal, L"BonusType");
-	GC.addDelayedResolution((int*)&m_eBonusType, szTextVal);
-	//m_eBonusType = (BonusTypes) pXML->FindInInfoClass(szTextVal);
-	pXML->GetOptionalChildXmlValByName(&m_iGPP, L"iGPP");
-	pXML->GetOptionalChildXmlValByName(szTextVal, L"GPUnitType");
-	GC.addDelayedResolution((int*)&m_eGPUnitType, szTextVal);
-	//m_eGPUnitType = (UnitTypes) pXML->FindInInfoClass(szTextVal);
-	pXML->GetOptionalChildXmlValByName(&m_iHappinessTimer, L"iHappinessTimer");
-	pXML->GetOptionalChildXmlValByName(&m_iPopulationBoost, L"iPopulationBoost");
-	if (pXML->TryMoveToXmlFirstChild(L"iReduceAnarchyLength"))
-	{
-		m_iReduceAnarchyLength = IntExpr::read(pXML);
-		pXML->MoveToXmlParent();
-	}
-	pXML->GetOptionalChildXmlValByName(szTextVal, L"EventTrigger");
-	GC.addDelayedResolution((int*)&m_eEventTrigger, szTextVal);
-	pXML->GetOptionalChildXmlValByName(m_szPythonCallback, L"PythonCallback");
-	pXML->GetOptionalChildXmlValByName(&m_bKill, L"bKill");
-	pXML->GetOptionalChildXmlValByName(m_szPythonModuleName, L"PythonName");
-	pXML->GetOptionalChildXmlValByName(m_szPythonCode, L"Python");
+	m_eType = NO_OUTCOME;
+	m_eUnitType = NO_UNIT;
+	m_ePromotionType = NO_PROMOTION;
+	m_eBonusType = NO_BONUS;
+	m_eGPUnitType = NO_UNIT;
+	m_eEventTrigger = NO_EVENTTRIGGER;
+	m_iGPP = 0;
+	m_iChancePerPop = 0;
+	m_iHappinessTimer = 0;
+	m_iPopulationBoost = 0;
+	m_bKill = false;
+	m_szPythonCallback.clear();
+	m_szPythonModuleName.clear();
+	m_szPythonCode.clear();
 
-	if (!m_szPythonCode.empty())
+	if (!v.is<picojson::object>())
 	{
-		preparePython(m_szPythonCode);
-		compilePython();
+		return;
 	}
+	const picojson::object& o = v.get<picojson::object>();
 
-	if(pXML->TryMoveToXmlFirstChild(L"Yields"))
+	//	`requires` is the GATE: the OUTCOME_* id (identity + replace tier) plus the plot/unit condition trees,
+	//	which parse through the ONE human->data boundary into typed nodes.
+	const picojson::object* pRequires = jsonChildObj(o, "requires");
+	if (pRequires != NULL)
 	{
-		if(pXML->TryMoveToXmlFirstChild())
+		m_eType = static_cast<OutcomeTypes>(jsonIdFk(*pRequires, "outcome"));
+
+		picojson::object::const_iterator itGate = pRequires->find("plot");
+		if (itGate != pRequires->end())
 		{
-
-			if (pXML->TryMoveToXmlFirstOfSiblings(L"iYield"))
-			{
-				int iI = 0;
-				do
-				{
-					//pXML->GetXmlVal(&m_aiYield[iI]);
-					m_aiYield[iI] = IntExpr::read(pXML);
-					iI++;
-				} while(pXML->TryMoveToXmlNextSibling());
-			}
-			pXML->MoveToXmlParent();
+			m_pPlotCondition = cascadeParseCondition(itGate->second);
 		}
-		pXML->MoveToXmlParent();
-	}
-
-	if(pXML->TryMoveToXmlFirstChild(L"Commerces"))
-	{
-		if(pXML->TryMoveToXmlFirstChild())
+		itGate = pRequires->find("unit");
+		if (itGate != pRequires->end())
 		{
-
-			if (pXML->TryMoveToXmlFirstOfSiblings(L"iCommerce"))
-			{
-				int iI = 0;
-				do
-				{
-					//pXML->GetXmlVal(&m_aiCommerce[iI]);
-					m_aiCommerce[iI] = IntExpr::read(pXML);
-					iI++;
-				} while(pXML->TryMoveToXmlNextSibling());
-			}
-			pXML->MoveToXmlParent();
+			m_pUnitCondition = cascadeParseCondition(itGate->second);
 		}
-		pXML->MoveToXmlParent();
 	}
 
-	m_Properties.read(pXML);
+	m_iChance = oc_intExpr(o, "chance");
+	m_iChancePerPop = jsonIdInt(o, "chancePerPop");
+	m_bKill = jsonIdBool(o, "consumes");
+	m_iPopulationBoost = jsonIdInt(o, "population");
+	m_iReduceAnarchyLength = oc_intExpr(o, "revolution");
+	m_ePromotionType = static_cast<PromotionTypes>(jsonIdFk(o, "promotes"));
+	m_eBonusType = static_cast<BonusTypes>(jsonIdFk(o, "places"));
+	m_eEventTrigger = static_cast<EventTriggerTypes>(jsonIdFk(o, "triggers"));
 
-	if (pXML->TryMoveToXmlFirstChild(L"PlotCondition"))
+	//	`spawns` -- the unit, and whether it arrives in a CITY rather than on the plot. `toCity` is authored
+	//	either as a bare true or as a condition (a tech requirement), so it parses as a condition either way.
+	const picojson::object* pSpawns = jsonChildObj(o, "spawns");
+	if (pSpawns != NULL)
 	{
-		m_pPlotCondition = BoolExpr::read(pXML);
-		pXML->MoveToXmlParent();
+		m_eUnitType = static_cast<UnitTypes>(jsonIdFk(*pSpawns, "unit"));
+
+		picojson::object::const_iterator itToCity = pSpawns->find("toCity");
+		if (itToCity != pSpawns->end())
+		{
+			if (itToCity->second.is<bool>())
+			{
+				// an UNCONDITIONAL to-city: the empty AND group, which holds by construction
+				m_bUnitToCity = itToCity->second.get<bool>() ? new CvCondition() : NULL;
+			}
+			else
+			{
+				m_bUnitToCity = cascadeParseCondition(itToCity->second);
+			}
+		}
 	}
 
-	if (pXML->TryMoveToXmlFirstChild(L"UnitCondition"))
+	const picojson::object* pGreatPeople = jsonChildObj(o, "greatPeople");
+	if (pGreatPeople != NULL)
 	{
-		m_pUnitCondition = BoolExpr::read(pXML);
-		pXML->MoveToXmlParent();
+		m_iGPP = jsonIdInt(*pGreatPeople, "points");
+		m_eGPUnitType = static_cast<UnitTypes>(jsonIdFk(*pGreatPeople, "unit"));
 	}
 
-	return true;
+	//	a TIMED happiness pulse -- `duration` is the turns it lasts, not a magnitude.
+	const picojson::object* pHappiness = jsonChildObj(o, "happiness");
+	if (pHappiness != NULL)
+	{
+		m_iHappinessTimer = jsonIdInt(*pHappiness, "duration");
+	}
+
+	//	The one-shot YIELDS and COMMERCES reuse the ordinary family words ([json.md] par.8), so each maps
+	//	straight onto its engine channel; a rolled amount arrives as the {base, random} pair.
+	static const char* const kYieldKeys[NUM_YIELD_TYPES] = { "food", "production", "commerce" };
+	for (int iYield = 0; iYield < NUM_YIELD_TYPES; iYield++)
+	{
+		m_aiYield[iYield] = oc_intExpr(o, kYieldKeys[iYield]);
+	}
+	static const char* const kCommerceKeys[NUM_COMMERCE_TYPES] = { "gold", "research", "culture", "espionage" };
+	for (int iCommerce = 0; iCommerce < NUM_COMMERCE_TYPES; iCommerce++)
+	{
+		m_aiCommerce[iCommerce] = oc_intExpr(o, kCommerceKeys[iCommerce]);
+	}
+
+	//	The Python escape hatch stays Python (mission-outcome-system.md): a named callback, or an inline body
+	//	compiled under its module name. compilePython() binds them once the whole registry is mapped.
+	const picojson::object* pPython = jsonChildObj(o, "python");
+	if (pPython != NULL)
+	{
+		std::string szValue;
+		if (jsonIdStr(*pPython, "callback", szValue))
+		{
+			m_szPythonCallback = szValue.c_str();
+		}
+		if (jsonIdStr(*pPython, "module", szValue))
+		{
+			m_szPythonModuleName = szValue.c_str();
+		}
+		if (jsonIdStr(*pPython, "code", szValue))
+		{
+			m_szPythonCode = szValue.c_str();
+		}
+	}
 }
 
 void CvOutcome::copyNonDefaults(CvOutcome* pOutcome)
@@ -1971,8 +2046,6 @@ void CvOutcome::getCheckSum(uint32_t& iSum) const
 	CheckSum(iSum, m_eType);
 	m_iChance->getCheckSum(iSum);
 	CheckSum(iSum, m_eUnitType);
-	if (m_bUnitToCity)
-		m_bUnitToCity->getCheckSum(iSum);
 	CheckSum(iSum, m_ePromotionType);
 	CheckSum(iSum, m_eBonusType);
 	CheckSum(iSum, m_iGPP);
@@ -1992,10 +2065,6 @@ void CvOutcome::getCheckSum(uint32_t& iSum) const
 	if (m_iReduceAnarchyLength)
 		m_iReduceAnarchyLength->getCheckSum(iSum);
 	m_Properties.getCheckSum(iSum);
-	if (m_pPlotCondition)
-		m_pPlotCondition->getCheckSum(iSum);
-	if (m_pUnitCondition)
-		m_pUnitCondition->getCheckSum(iSum);
 	CheckSumC(iSum, m_szPythonCallback);
 	CheckSum(iSum, m_bKill);
 	CheckSum(iSum, m_szPythonCode);

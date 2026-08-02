@@ -874,11 +874,6 @@ int CyCity::getMaxTradeRoutes() const
 	return m_pCity->getMaxTradeRoutes();
 }
 
-int CyCity::getTradeRouteModifier() const
-{
-	return m_pCity->getTradeRouteModifier();
-}
-
 int CyCity::getForeignTradeRouteModifier() const
 {
 	return m_pCity->getForeignTradeRouteModifier();

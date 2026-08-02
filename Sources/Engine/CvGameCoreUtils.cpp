@@ -284,6 +284,94 @@ bool isTechRequiredForProject(TechTypes eTech, ProjectTypes eProject)
 	return false;
 }
 
+//	The RESOLVED max conscript: the civic's own `conscript.empire.flat` deposit scaled by the world size. The
+//	base is an ordinary cascade scalar now (SCALAR_CONSCRIPT), so it is ×100 and reduces here at the point of
+//	use ([DEC-fixedpoint-x100]); the world-size percent is CONFIG read from its source ([state-repositories.md]:
+//	WORLD is config, never a package). One home for the composition, as CvGameSpeedScale is for gamespeed.
+int getWorldSizeMaxConscript(CivicTypes eCivic)
+{
+	const int iBase = GC.getCivicInfo(eCivic).getScalar(SCALAR_CONSCRIPT, CASC_SCOPE_EMPIRE, CASC_UNIT_FLAT) / 100;
+	if (iBase <= 0)
+	{
+		return 0;
+	}
+	return iBase * std::max(0, GC.getWorldInfo(GC.getMap().getWorldSize()).getMaxConscriptModifier() + 100) / 100;
+}
+
+//	⚖ THE CATEGORY IS THE SELF-CAP IT AUTHORS ([enabler.md] par.4, [json.md] par.4.4): the SCOPE of an entity's
+//	`allowed` cap is what makes it a world / team / national one -- there is no `isWorldWonder` mirror on the
+//	info and none comes back. Precedence is world > team > national, so a building authoring more than one
+//	answers to the widest scope, exactly as the wonder COUNTS are bucketed.
+namespace
+{
+	int gcu_selfCap(const CvAllowed* pAllowed, EnAllowedCap eKind)
+	{
+		return pAllowed != NULL ? pAllowed->cap(eKind) : -1;
+	}
+}
+
+bool isWorldUnit(UnitTypes eUnit)
+{
+	return gcu_selfCap(GC.getUnitInfo(eUnit).getAllowed(), ALLOWEDCAP_WORLD) >= 0;
+}
+
+//	Units have no TEAM cap ([json.md] par.4.4 -- units belong to players), so national IS the empire cap.
+bool isNationalUnit(UnitTypes eUnit)
+{
+	const CvAllowed* pAllowed = GC.getUnitInfo(eUnit).getAllowed();
+	return gcu_selfCap(pAllowed, ALLOWEDCAP_WORLD) < 0
+		&& gcu_selfCap(pAllowed, ALLOWEDCAP_EMPIRE) >= 0;
+}
+
+bool isWorldWonder(BuildingTypes eBuilding)
+{
+	return gcu_selfCap(GC.getBuildingInfo(eBuilding).getAllowed(), ALLOWEDCAP_WORLD) >= 0;
+}
+
+bool isTeamWonder(BuildingTypes eBuilding)
+{
+	const CvAllowed* pAllowed = GC.getBuildingInfo(eBuilding).getAllowed();
+	return gcu_selfCap(pAllowed, ALLOWEDCAP_WORLD) < 0
+		&& gcu_selfCap(pAllowed, ALLOWEDCAP_TEAM) >= 0;
+}
+
+bool isNationalWonder(BuildingTypes eBuilding)
+{
+	const CvAllowed* pAllowed = GC.getBuildingInfo(eBuilding).getAllowed();
+	return gcu_selfCap(pAllowed, ALLOWEDCAP_WORLD) < 0
+		&& gcu_selfCap(pAllowed, ALLOWEDCAP_TEAM) < 0
+		&& gcu_selfCap(pAllowed, ALLOWEDCAP_EMPIRE) >= 0;
+}
+
+//	How many of it may exist at the scope its category comes from; -1 when it is not capped at all.
+int limitedWonderLimit(BuildingTypes eBuilding)
+{
+	const CvAllowed* pAllowed = GC.getBuildingInfo(eBuilding).getAllowed();
+	const int iWorld = gcu_selfCap(pAllowed, ALLOWEDCAP_WORLD);
+	if (iWorld >= 0)
+	{
+		return iWorld;
+	}
+	const int iTeam = gcu_selfCap(pAllowed, ALLOWEDCAP_TEAM);
+	if (iTeam >= 0)
+	{
+		return iTeam;
+	}
+	return gcu_selfCap(pAllowed, ALLOWEDCAP_EMPIRE);
+}
+
+bool isWorldProject(ProjectTypes eProject)
+{
+	return gcu_selfCap(GC.getProjectInfo(eProject).getAllowed(), ALLOWEDCAP_WORLD) >= 0;
+}
+
+bool isTeamProject(ProjectTypes eProject)
+{
+	const CvAllowed* pAllowed = GC.getProjectInfo(eProject).getAllowed();
+	return gcu_selfCap(pAllowed, ALLOWEDCAP_WORLD) < 0
+		&& gcu_selfCap(pAllowed, ALLOWEDCAP_TEAM) >= 0;
+}
+
 bool isLimitedUnit(UnitTypes eUnit)
 {
 	return (isWorldUnit(eUnit) || isNationalUnit(eUnit));

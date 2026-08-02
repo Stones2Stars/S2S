@@ -68,7 +68,8 @@ public:
 		COMBAT_TARGET_FEATURE,       // combat.unit.feature.{FEATURE_X}
 		COMBAT_TARGET_UNITCOMBAT,    // combat.unit.unitCombat.{UNITCOMBAT_X}
 		COMBAT_TARGET_UNIT,          // combat.unit.vsUnit.{UNIT_X}
-		COMBAT_TARGET_DOMAIN         // combat.unit.domain.{DOMAIN_X}
+		COMBAT_TARGET_DOMAIN,        // combat.unit.domain.{DOMAIN_X}
+		COMBAT_TARGET_FLANKING       // combat.unit.flanking.{UNITCOMBAT_X} -- keyed by CLASS, never by unit
 	};
 
 	//	The POINT read: this entity's keyed combat percent against ONE target. Walks the entity's own compiled

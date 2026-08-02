@@ -128,11 +128,11 @@ namespace
 	//	matches nothing -- never the raw -1, which is the live DIRECT-KEYED address shape there.
 	int keyedCombatSegment(InfoValuation::CombatTargetAxis eAxis)
 	{
-		static bool s_resolved[5] = { false, false, false, false, false };
-		static int s_segments[5] = { 0, 0, 0, 0, 0 };
+		static bool s_resolved[6] = { false, false, false, false, false, false };
+		static int s_segments[6] = { 0, 0, 0, 0, 0, 0 };
 		if (!s_resolved[eAxis])
 		{
-			static const char* const kAxisSegments[5] = { "terrain", "feature", "unitCombat", "vsUnit", "domain" };
+			static const char* const kAxisSegments[6] = { "terrain", "feature", "unitCombat", "vsUnit", "domain", "flanking" };
 			const int iSegment = modSegmentLookup(kAxisSegments[eAxis]);
 			s_segments[eAxis] = iSegment < 0 ? (int)InfoValuation::TARGET_SEGMENT_NONE : iSegment;
 			s_resolved[eAxis] = true;

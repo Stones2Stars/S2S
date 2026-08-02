@@ -112,7 +112,6 @@ m_Properties(this)
 
 	m_abIsRebelAgainst = new bool[MAX_TEAMS];
 
-	m_paiRouteChange = NULL;
 	m_paiProjectCount = NULL;
 	m_paiProjectDefaultArtTypes = NULL;
 	m_pavProjectArtTypes = NULL;
@@ -212,7 +211,6 @@ void CvTeam::uninit()
 	m_unitCount.clear();
 
 	SAFE_DELETE_ARRAY(m_abCanLaunch);
-	SAFE_DELETE_ARRAY(m_paiRouteChange);
 	SAFE_DELETE_ARRAY(m_paiProjectCount);
 	SAFE_DELETE_ARRAY(m_paiProjectDefaultArtTypes);
 	SAFE_DELETE_ARRAY(m_pavProjectArtTypes);
@@ -313,13 +311,6 @@ void CvTeam::reset(TeamTypes eID, bool bConstructorCall)
 		for (iI = 0; iI < GC.getNumVictoryInfos(); iI++)
 		{
 			m_abCanLaunch[iI] = false;
-		}
-
-		FAssertMsg(m_paiRouteChange == NULL, "about to leak memory, CvTeam::m_paiRouteChange");
-		m_paiRouteChange = new int[GC.getNumRouteInfos()];
-		for (iI = 0; iI < GC.getNumRouteInfos(); iI++)
-		{
-			m_paiRouteChange[iI] = 0;
 		}
 
 		FAssertMsg(m_paiProjectCount == NULL, "about to leak memory, CvPlayer::m_paiProjectCount");
@@ -4090,20 +4081,6 @@ bool CvTeam::isCapitulated() const
 }
 
 
-int CvTeam::getRouteChange(RouteTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, GC.getNumRouteInfos(), eIndex);
-	return m_paiRouteChange[eIndex];
-}
-
-
-void CvTeam::changeRouteChange(RouteTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, GC.getNumRouteInfos(), eIndex);
-	m_paiRouteChange[eIndex] += iChange;
-}
-
-
 int CvTeam::getProjectCount(ProjectTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, GC.getNumProjectInfos(), eIndex);
@@ -5401,11 +5378,6 @@ void CvTeam::processTech(TechTypes eTech, int iChange, bool bAnnounce)
 		setLastRoundOfValidImprovementCacheUpdate();
 	}
 
-	for (int iI = 0; iI < GC.getNumRouteInfos(); iI++)
-	{
-		changeRouteChange(((RouteTypes)iI), (GC.getRouteInfo((RouteTypes)iI).getTechMovementChange(eTech) * iChange));
-	}
-
 	// domainMoves is authored KEYED (domainMoves.empire.domains.{DOMAIN}), so it reads as the entry list over
 	// the handful this tech names -- never a walk of the domain enum ([modifier.md] §5). The team's extraMoves
 	// counter stays: it also carries the circumnavigation award, which is no deposit's.
@@ -5890,7 +5862,6 @@ void CvTeam::read(FDataStreamBase* pStream)
 	WRAPPER_READ_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_abVassal);
 	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_VICTORIES, GC.getNumVictoryInfos(), m_abCanLaunch);
 	WRAPPER_READ_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_abIsRebelAgainst);
-	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_ROUTES, GC.getNumRouteInfos(), m_paiRouteChange);
 	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_PROJECTS, GC.getNumProjectInfos(), m_paiProjectCount);
 	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_PROJECTS, GC.getNumProjectInfos(), m_paiProjectDefaultArtTypes);
 
@@ -6066,7 +6037,6 @@ void CvTeam::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_abVassal);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_VICTORIES, GC.getNumVictoryInfos(), m_abCanLaunch);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_abIsRebelAgainst);
-	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_ROUTES, GC.getNumRouteInfos(), m_paiRouteChange);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_PROJECTS, GC.getNumProjectInfos(), m_paiProjectCount);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_PROJECTS, GC.getNumProjectInfos(), m_paiProjectDefaultArtTypes);
 

@@ -1256,3 +1256,11 @@ The trait CITY-START culture and bonus population. Both were writerless empire a
 | channel with nowhere to put a condition -- summing there would hand every civ every trait's bonus.
 CvPlayer::m_iNationalCityStartCulture
 CvPlayer::m_iNationalCityStartBonusPopulation
+The TEAM ROUTE MOVE-COST accumulator. A tech-gated route move delta is authored as a CONDITIONED entry beside
+| the base cost in the ROUTE's own `movement.plot.flat` slot ([modifier.md] par.6 names the route as the worked
+| case), so the value belongs to the route and the team-side store was a second, drifting copy of it -- fed by a
+| whole-registry route walk in processTech, and carrying save history no live source can reproduce.
+| REPLACEMENT: CvRouteInfo::getFlatMovement(MOVEMENT_MOVES, CASC_SCOPE_PLOT), read in CvPlot::movementCost. The
+| unconditioned base is served today; the tech-gated tail lands when that read evaluates its conditioned entries
+| against the asking team (ROUTE_VACTRAIN under TECH_SKYROADS is the one authoring in the shipped data).
+CvTeam::m_paiRouteChange

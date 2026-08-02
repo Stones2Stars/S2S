@@ -3197,7 +3197,7 @@ void CvDLLWidgetData::parseActionHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 					}
 
 					// TODO Fix, make separate func
-					int iMovementCost = GC.getRouteInfo(eRoute).getFlatMovement(MOVEMENT_MOVES, CASC_SCOPE_PLOT) / 100 + team.getRouteChange(eRoute);
+					int iMovementCost = GC.getRouteInfo(eRoute).getFlatMovement(MOVEMENT_MOVES, CASC_SCOPE_PLOT) / 100;
 
 					int iMoves = 0;
 					if (iMovementCost > 0)
@@ -3498,27 +3498,10 @@ void CvDLLWidgetData::parseDisabledCitizenHelp(CvWidgetDataStruct &widgetDataStr
 	{
 		GAMETEXT.parseSpecialistHelpActual(szBuffer, (SpecialistTypes)widgetDataStruct.m_iData1, pHeadSelectedCity, false, 1);
 
-		if (!pHeadSelectedCity->isSpecialistValid(((SpecialistTypes)widgetDataStruct.m_iData1), 1))
-		{
-			bool bFirst = true;
-
-			for (int iI = GC.getNumBuildingInfos() - 1; iI > -1; iI--)
-			{
-				const BuildingTypes eLoopBuilding = static_cast<BuildingTypes>(iI);
-
-				if (GC.getBuildingInfo(eLoopBuilding).getSpecialistCount(widgetDataStruct.m_iData1) > 0
-				&& !pHeadSelectedCity->isActiveBuilding(eLoopBuilding) && !isLimitedWonder(eLoopBuilding)
-				&& (GC.getBuildingInfo(eLoopBuilding).getSpecialBuildingType() == NO_SPECIALBUILDING || (pHeadSelectedCity->getBuildingAvailability(eLoopBuilding) == EnablerDomain::STATE_LISTED)))
-				{
-					setListHelp(szBuffer, gDLL->getText("TXT_KEY_REQUIRES"), GC.getBuildingInfo(eLoopBuilding).getDescription(), gDLL->getText("TXT_KEY_OR").c_str(), bFirst);
-					bFirst = false;
-				}
-			}
-			if (!bFirst)
-			{
-				szBuffer.append(ENDCOLR);
-			}
-		}
+		// The "one of these buildings would open the slot" line is a REVERSE cross-link, so it is read off the
+		// specialist's own EDGEF_RELATED family ([DEC-one-reverse-view]) rather than by scanning every building
+		// and asking each one -- the own-data inversion the composer rebuild deletes. The composer re-adds it
+		// on that read; the slot count itself is the keyed `allowedSpecialists.city.{SPECIALIST_X}` entry.
 	}
 }
 

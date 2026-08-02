@@ -1795,7 +1795,6 @@ void CvNetChooseMergeUnit::Execute()
 			}
 			pkMergedUnit->setExperience100(iXP);
 
-			pkMergedUnit->checkFreetoCombatClass();
 			pkMergedUnit->setGameTurnCreated(pUnit1->getGameTurnCreated());
 			pkMergedUnit->m_eOriginalOwner = pUnit1->getOriginalOwner();
 			pkMergedUnit->setAutoPromoting(pUnit1->isAutoPromoting());

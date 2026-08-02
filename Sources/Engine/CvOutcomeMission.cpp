@@ -19,6 +19,7 @@
 #include "Tools/CheckSum.h"
 #include "Infrastructure/IntExpr.h"
 #include "Infrastructure/BoolExpr.h"
+#include "Infos/CvJsonParse.h"   // jsonIdStr
 
 CvOutcomeMission::CvOutcomeMission() :
 m_eMission(NO_MISSION),
@@ -28,6 +29,44 @@ m_ePayerType(NO_GAMEOBJECT),
 m_pPlotCondition(NULL),
 m_pUnitCondition(NULL)
 {
+}
+
+//	ONE outcomes.actions[] entry -> this outcome-mission. The entry names its MISSION_*, and its outcome payload
+//	arrives one of two ways ([json.md] par.8): an explicit `outcomes` LIST when the action can resolve several
+//	ways, or the entry ITSELF as a single inline outcome. CvOutcomeList::mapFrom accepts both shapes, so the
+//	choice is a pass-through rather than a branch in the payload reading.
+//	⚠ `constructs` is deliberately NOT read here: it is the MISSION_CONSTRUCT hardcoded ability's building, and
+//	CvOutcome carries no building payload -- that ability reads its own per-unit has-building surface.
+void CvOutcomeMission::mapFrom(const picojson::value& v)
+{
+	if (!v.is<picojson::object>())
+	{
+		return;
+	}
+	const picojson::object& o = v.get<picojson::object>();
+
+	std::string szMission;
+	if (jsonIdStr(o, "mission", szMission))
+	{
+		m_eMission = static_cast<MissionTypes>(GC.getInfoTypeForString(szMission.c_str(), true));
+	}
+
+	picojson::object::const_iterator itOutcomes = o.find("outcomes");
+	if (itOutcomes != o.end())
+	{
+		m_OutcomeList.mapFrom(itOutcomes->second);
+	}
+	else if (o.find("requires") != o.end())
+	{
+		m_OutcomeList.mapFrom(v);
+	}
+
+	// the mission's own consume flag defaults TRUE (an outcome mission spends its unit unless it says otherwise)
+	picojson::object::const_iterator itConsumes = o.find("consumes");
+	if (itConsumes != o.end() && itConsumes->second.is<bool>())
+	{
+		m_bKill = itConsumes->second.get<bool>();
+	}
 }
 
 CvOutcomeMission::~CvOutcomeMission()

@@ -368,10 +368,10 @@ void CvUnit::init(int iID, UnitTypes eUnit, UnitAITypes eUnitAI, PlayerTypes eOw
 		doSetFreePromotions(true);
 		// The unit's OWN grants.promotions are handed over by the GRANTS MACHINE off this emit. Its position is
 		// pinned between two neighbours and is wrong on either side of them:
-		//   AFTER doSetFreePromotions -- a promotion can grant UNIT-COMBATS, and doSetFreePromotions ends with
-		//     checkFreetoCombatClass() which reconciles them. Emitting before that let the machine mutate the
-		//     combat-class set outside its reconciliation; the outcome lists are merged from unit + combat classes,
-		//     which crashed as a wild CvTeam::isHasTech read out of CvOutcome::isPossibleSomewhere.
+		//   AFTER doSetFreePromotions -- a promotion can grant UNIT-COMBATS, so the combat-class set is only
+		//     settled once that pass has run. Emitting before it let the machine mutate the set mid-pass; the
+		//     outcome lists are merged from unit + combat classes, which crashed as a wild CvTeam::isHasTech
+		//     read out of CvOutcome::isPossibleSomewhere.
 		//   BEFORE doSetDefaultStatuses -- that calls statusUpdate(), establishing the unit's status/animation
 		//     state. Emitting after it left promotions landing on an already-computed visual state (units drawn
 		//     only after re-selection; a fortified unit stuck in its run animation).
@@ -1266,12 +1266,6 @@ bool CvUnit::scheduleDeath(bool bDelay, PlayerTypes ePlayer, bool bMessaged)
 	*/
 	const PlayerTypes eOwner = getOwner();
 	CvPlayerAI& owner = GET_PLAYER(eOwner);
-
-	// Release any worker plot claims held by this unit. CvUnit::kill does not
-	// route through AI_setMissionAI for the dying unit, so explicit release is
-	// required (not merely defensive) -- combat losses, disbands, and drowned
-	// cargo all bypass that hook.
-	owner.getWorkerAI().releaseAllClaimsBy(getID());
 
 	CvPlot* pPlot = plot();
 
@@ -6678,6 +6672,87 @@ bool CvUnit::canNukeAt(const CvPlot* pPlot, int iX, int iY) const
 }
 
 
+// The MISSION_NUKE launcher. The strike itself is not resolved here: this arms the unit
+// (setMadeAttack + setAttackPlot) and CvUnit::kill fires pTarget->nukeExplosion(nukeRange(), this)
+// once the unit dies, so the explosion is a consequence of the death rather than of the order.
+bool CvUnit::nuke(int iX, int iY)
+{
+	PROFILE_EXTRA_FUNC();
+
+	if (!canNukeAt(plot(), iX, iY))
+	{
+		return false;
+	}
+	CvPlot* nukePlot = GC.getMap().plot(iX, iY);
+
+	if (airBaseCombatStr() != 0 && interceptTest(nukePlot))
+	{
+		return true;
+	}
+	const PlayerTypes eMyOwner = getOwner();
+	CvPlayerAI& myOwner = GET_PLAYER(eMyOwner);
+
+	bool nukedTeams[MAX_PC_TEAMS];
+
+	for (int iI = 0; iI < MAX_PC_TEAMS; iI++)
+	{
+		nukedTeams[iI] = isNukeVictim(nukePlot, (TeamTypes)iI, nukeRange());
+	}
+
+	if (airBaseCombatStr() != 0)
+	{
+		setReconPlot(nukePlot);
+	}
+
+	// NUKE INTERCEPTION does not roll here: `combat.nukeInterception` is one of the trigger-plane set that
+	// carries no kind and attaches to its trigger's own `chance` ([triggers.md]), so neither the team's
+	// interception odds nor the warhead's evasion has a source until the curator lands them there.
+
+	if (nukePlot->isActiveVisible(false) && !isUsingDummyEntities() && isInViewport())
+	{
+		if (airBaseCombatStr() != 0)
+		{
+			addMission(CvAirMissionDefinition(MISSION_AIRSTRIKE, nukePlot, this));
+
+			if (GC.getInfoTypeForString("EFFECT_JETFIGHTER_NUKE_EXPLODE") != -1)
+			{
+				gDLL->getEngineIFace()->TriggerEffect((EffectTypes)GC.getInfoTypeForString("EFFECT_JETFIGHTER_NUKE_EXPLODE"), nukePlot->getPoint(), 0);
+				gDLL->getInterfaceIFace()->playGeneralSound("AS2D_NUKE_EXPLODES", nukePlot->getPoint());
+			}
+		}
+		else // the non-intercepted entity mission -- no defender
+		{
+			addMission(CvMissionDefinition(MISSION_NUKE, nukePlot, this));
+		}
+	}
+
+	setMadeAttack(true);
+	setAttackPlot(nukePlot, false);
+
+	nukeDiplomacy(nukedTeams);
+
+	const CvWString szBuffer = gDLL->getText("TXT_KEY_MISC_NUKE_LAUNCHED", myOwner.getNameKey(), getNameKey());
+
+	for (int iI = 0; iI < MAX_PC_PLAYERS; iI++)
+	{
+		if (GET_PLAYER((PlayerTypes)iI).isAlive())
+		{
+			AddDLLMessage(
+				(PlayerTypes)iI, iI == eMyOwner, GC.getEVENT_MESSAGE_TIME(),
+				szBuffer, "AS2D_NUKE_EXPLODES", MESSAGE_TYPE_MAJOR_EVENT,
+				getButton(), GC.getCOLOR_RED(), nukePlot->getX(), nukePlot->getY(), true, true
+			);
+		}
+	}
+
+	if (isSuicide())
+	{
+		kill(true);
+	}
+	return true;
+}
+
+
 
 bool CvUnit::canRecon() const
 {
@@ -10204,11 +10279,9 @@ CvCity* CvUnit::getUpgradeCity(UnitTypes eUnit, bool bSearch, int* iSearchValue)
 			{
 				return NULL;
 			}
-
-			if (kUnitInfo.getDomainCargo() != NO_DOMAIN && kUnitInfo.getDomainCargo() != pLoopUnit->getDomainType())
-			{
-				return NULL;
-			}
+			// The DOMAIN restriction is the `unit:` predicate qualifier on the candidate's own cargo.space
+			// entries ([modifier.md] par.6), so answering it needs the QUALIFIED entry read evaluated against
+			// this cargo unit -- the point sum is the unqualified capacity plane by construction and cannot.
 		}
 	}
 
@@ -17752,7 +17825,6 @@ void CvUnit::setHasPromotion(PromotionTypes eIndex, bool bNewValue, bool bFree, 
 			if (!isDead() && !bDying)
 			{
 				checkPromotionObsoletion();
-				checkFreetoCombatClass();
 			}
 
 			//	Updates the grpahics last after everything is calculated
@@ -20506,18 +20578,10 @@ float CvUnit::getHealthBarModifier() const
 
 void CvUnit::getLayerAnimationPaths(std::vector<AnimationPathTypes>& aAnimationPaths) const
 {
-	PROFILE_EXTRA_FUNC();
-	for (int i = 0; i < GC.getNumPromotionInfos(); ++i)
-	{
-		if (isHasPromotion((PromotionTypes)i))
-		{
-			const AnimationPathTypes eAnimationPath = (AnimationPathTypes)GC.getPromotionInfo((PromotionTypes)i).getLayerAnimationPath();
-			if (eAnimationPath != ANIMATIONPATH_NONE)
-			{
-				aAnimationPaths.push_back(eAnimationPath);
-			}
-		}
-	}
+	// EXE-BOUND (DllExport): the closed .exe asks for a unit's layered animation paths, so the signature is
+	// fixed. It answers EMPTY because no promotion authors a layer animation path -- the curator carries the
+	// mapping, the shipped data carries no key, so the walk it used to do could only ever find nothing.
+	aAnimationPaths.clear();
 }
 
 int CvUnit::getSelectionSoundScript() const
@@ -22805,33 +22869,6 @@ void CvUnit::setPromotionFreeCount(PromotionTypes ePromotion, int iChange)
 	}
 }
 
-void CvUnit::checkFreetoCombatClass()
-{
-	PROFILE_EXTRA_FUNC();
-	for (int iI = GC.getNumUnitCombatInfos() -1; iI > -1; iI--)
-	{
-		if (isHasUnitCombat(static_cast<UnitCombatTypes>(iI)))
-		{
-			for (int iK = GC.getNumPromotionInfos() - 1; iK > -1; iK--)
-			{
-				const PromotionTypes ePromo = static_cast<PromotionTypes>(iK);
-				const CvPromotionInfo& promoInfo = GC.getPromotionInfo(ePromo);
-
-				if (promoInfo.isFreetoUnitCombat(iI))
-				{
-					PromotionRequirements::flags promoFlags = PromotionRequirements::None;
-
-					if (promoFlags == PromotionRequirements::None) promoFlags = PromotionRequirements::Promote;
-
-					if (canAcquirePromotion(ePromo, promoFlags))
-					{
-						setHasPromotion(ePromo, true, true);
-					}
-				}
-			}
-		}
-	}
-}
 //TB Combat Mods end
 
 bool CvUnit::meetsUnitSelectionCriteria(const CvUnitSelectionCriteria* criteria) const
@@ -22947,10 +22984,14 @@ void CvUnit::statusUpdate(PromotionTypes eStatus)
 
 int CvUnit::flankingStrengthbyUnitCombatTotal(UnitCombatTypes eCombatType) const
 {
+	// The unit's own authored share is the KEYED entry `combat.unit.flanking.{UNITCOMBAT_X}` -- flanking is keyed
+	// by combat CLASS, never by unit ([json.md] par.6) -- read off its own compiled entries, never by walking the
+	// UnitCombat registry. A memberless address compiles to kind 0, and a percent is not scaled.
 	return (
 		std::max(
 			0,
-			m_pUnitInfo->getFlankingStrengthbyUnitCombatType(eCombatType)
+			InfoValuation::keyedCombat(m_pUnitInfo->getModifiers(), InfoValuation::COMBAT_TARGET_FLANKING,
+				(int)eCombatType, COMBAT_AMOUNT)
 			+ getExtraFlankingStrengthbyUnitCombatType(eCombatType, isCommander(), isCommodore())
 		)
 	);
@@ -23139,10 +23180,6 @@ void CvUnit::doSetFreePromotions(bool bAdding, TraitTypes eTrait)
 	for (int iI = GC.getNumPromotionInfos() - 1; iI > -1; iI--)
 	{
 		setFreePromotion(static_cast<PromotionTypes>(iI), bAdding, eTrait);
-	}
-	if (bAdding)
-	{
-		checkFreetoCombatClass();
 	}
 	if (GC.getGame().getModderGameOption(MODDERGAMEOPTION_STARSIGNS))
 	{
@@ -23891,7 +23928,6 @@ CvUnit* CvUnit::mergeUnits(CvUnit* pUnit1, CvUnit* pUnit2, CvUnit* pUnit3, CvSel
 	}
 	pkMergedUnit->setExperience100(iXP);
 
-	pkMergedUnit->checkFreetoCombatClass();
 	pkMergedUnit->setGameTurnCreated(pUnit1->getGameTurnCreated());
 	pkMergedUnit->m_eOriginalOwner = pUnit1->getOriginalOwner();
 	pkMergedUnit->setAutoPromoting(pUnit1->isAutoPromoting());
@@ -24175,11 +24211,9 @@ int CvUnit::eraGroupSplitLimit() const
 
 DomainTypes CvUnit::getDomainCargo() const
 {
-	if (m_eNewDomainCargo != NO_DOMAIN)
-	{
-		return m_eNewDomainCargo;
-	}
-	return (DomainTypes)m_pUnitInfo->getDomainCargo();
+	// The promotion-set override is the whole of it: the AUTHORED restriction is the `unit:` predicate
+	// qualifier on the unit's cargo.space entries ([modifier.md] par.6), never an info scalar.
+	return m_eNewDomainCargo;
 }
 
 void CvUnit::setNewDomainCargo(DomainTypes eDomain)
@@ -24656,7 +24690,9 @@ void CvUnit::setSMBaseWorkRate()
 
 int CvUnit::getRevoltProtection() const
 {
-	return m_pUnitInfo->getCultureGarrisonValue() + m_iRevoltProtection;
+	// The authored share is `culture.unit.garrison`, which mints no getter until its vocabulary + curator call
+	// land, so only the runtime accumulator answers meanwhile ([todo.md]: curate culture.unit.garrison).
+	return m_iRevoltProtection;
 }
 
 void CvUnit::changeRevoltProtection(int iChange)

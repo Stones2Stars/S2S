@@ -302,6 +302,29 @@
   beside its modifiers so the route's keyed entry can be resolved (`keyedTargetSum` already exists); it is a
   realized-yield question, NOT a blocker on any AI decision.
 
+- Serve the SLIDER-SCALED SHARE of a channel — the part of a city's realized happiness contributed by a deposit
+  carrying `per:{CULTURE_RATE, each:100}` ([json.md §3.1](../../specs/json.md): a slider rate is a count-scaler
+  TOKEN, so "+N happiness at 100% culture" is an ordinary happiness deposit). The share resolves at gather and no
+  point read or valuation exposes it on its own, so a consumer can neither discount it nor ask what one slider
+  point is worth. ⚑ Two AI reads want exactly this: the civic valuation, which weighs happiness that a slider
+  move could take away, and the culture-slider chooser, whose whole term is "how much RATE would clear this
+  city's anger" — that chooser cannot answer at all today, so only the culture-victory branch moves the slider.
+  ⛔ Not a getter per channel: it is the `per`-scaled share of a group the read already hands out.
+
+- Serve the MISSION_CONSTRUCT building. `constructs` is the dominant `outcomes.actions[]` verb
+  ([json.md §8](../../specs/json.md)) and reaches nothing: `CvOutcome` carries no building payload by design —
+  the construct is one of the hardcoded mission-abilities, gated by the unit's own has-building surface
+  ([mission-outcome-system.md](../../reference/mission-outcome-system.md)) — and that surface does not exist on
+  the rebuilt unit info. ⛔ Do NOT answer it by giving `CvOutcome` a building member: that would make the
+  data-driven outcome plane carry a hardcoded ability's payload, which is the carve-out the mission-concept
+  rework owns.
+
+- Evaluate the ROUTE's tech-gated movement tail at the movement read. A route's base move cost and its
+  tech-gated delta are ONE slot on the route — the bare number plus a conditioned entry beside it
+  ([modifier.md §6](../../specs/modifier.md), the worked case) — but `CvPlot::movementCost` takes the point read,
+  which serves the unconditioned entries only, so the gated delta applies to nobody. ⚑ It wants the conditioned
+  tail evaluated against the asking team, the same shape every other conditioned read uses.
+
 - Apply the PER-CITY GATES AT THE COMBINE. [modifier.md §1](../../specs/modifier.md) specifies the realized value
   as the sum of the scope packages **with the per-city gates (state-religion-in-city, coastal, connected, area
   membership) applied live at the combine**; `InfoValuation::rolledLegsAtCity` is a bare package sum, so an
@@ -621,6 +644,10 @@
   tree renders nothing, so appearance is unverifiable guesswork until it is green
   ([patterns.md](../../architecture/patterns.md) THE DIVISION OF LABOUR). ⛔ Do not open a layout pass.
   ⛔ A composer's acceptance test is that it reads NO legacy getter, never that it reads nicely.
+  ⚑ The WIDGET-help composers are in the same rebuild, and one owes a line: the disabled-citizen tooltip's
+  "one of these buildings would open the slot" list. It is a REVERSE cross-link, so it reads the specialist's own
+  `EDGEF_RELATED` ([DEC-one-reverse-view](../../architecture/decisions.md#dec-one-reverse-view)) — never the
+  whole-building scan asking each one, which is the own-data inversion it was.
   ⛔ The four WELLBEING composers are NOT `appendEntryLines` targets — a realized per-scope aggregate has no
   entry list to render from, and is a BLOCK. A bonus's "what needs me" block reads the bonus's own
   `EDGEF_RELATED` ([DEC-one-reverse-view](../../architecture/decisions.md#dec-one-reverse-view)), never a
@@ -743,8 +770,7 @@
 
 ## Green-up (after the structure, never ahead of it)
 
-- Engine-repair debt: the bare Engine includes · `CvOutcomeMission::mapFrom` · the property-manipulator helpers ·
-  `CvCity.h`'s functor row.
+- Engine-repair debt: the bare Engine includes · the property-manipulator helpers · `CvCity.h`'s functor row.
 - The vocabulary TXT keys (one per family/kind/predicate/token) — polish on a working machine; the renderer's
   spell-back fallback is the accepted output until then.
 

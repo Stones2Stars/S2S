@@ -216,7 +216,6 @@ public:
 	int getSpaceProductionModifier() const;
 	int getExtraTradeRoutes() const;
 	int getMaxTradeRoutes() const;
-	int getTradeRouteModifier() const;
 	int getForeignTradeRouteModifier() const;
 	int getBuildingDefense() const;
 	int getMaxAirlift() const;

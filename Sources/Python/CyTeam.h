@@ -125,8 +125,6 @@ public:
 	void assignVassal(int /*TeamTypes*/ eIndex, bool bSurrender);
 	void freeVassal(int /*TeamTypes*/ eIndex);
 	bool isDefensivePact(int /*TeamTypes*/ eIndex) const;
-	int getRouteChange(int /*RouteTypes*/ eIndex) const;
-	void changeRouteChange(int /*RouteTypes*/ eIndex, int iChange);
 	int getProjectCount(int /*ProjectTypes*/ eIndex) const;
 	int getProjectDefaultArtType(int /*ProjectTypes*/ eIndex) const;
 	void setProjectArtType(int /*ProjectTypes*/ eIndex, int number, int value);

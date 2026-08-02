@@ -125,8 +125,8 @@ int CvActionInfo::getMissionType() const
 		case ACTIONSUBTYPE_SPECIALIST:
 			return GC.getSpecialistInfo((SpecialistTypes)m_iOriginalIndex).getMissionType();
 
-		case ACTIONSUBTYPE_BUILDING:
-			return GC.getBuildingInfo((BuildingTypes)m_iOriginalIndex).getMissionType();
+		// ACTIONSUBTYPE_BUILDING carries NO mission: the action-table builder keeps the building its slot but
+		// writes no mission or hotkey back onto the JSON-fed info, so this falls through to NO_MISSION.
 
 		case ACTIONSUBTYPE_HERITAGE:
 			return GC.getHeritageInfo((HeritageTypes)m_iOriginalIndex).getMissionType();

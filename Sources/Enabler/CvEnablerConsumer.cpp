@@ -105,11 +105,32 @@ private:
 		case SEVT_TECH_CHANGED:
 			if (kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS)
 			{
-				// the MAINTAINED city bonus counts: a tech can move the TechCityTrade gate, so the gated
-				// answers refresh from the stored totals (no group walk) for the player's cities.
-				foreach_(CvCity* pLoopCity, GET_PLAYER((PlayerTypes)kEvent.iC).cities())
+				// A tech moves the per-bonus TechCityTrade GATE, and that gate lives inside CvCity::getNumBonuses
+				// -- ABOVE the network-count compare the ordinary crossing path runs -- so a tech flip changes
+				// what a city HOLDS without any network count moving. There is nothing to refresh (the plot group
+				// owns the number and the city only relays it, [enabler.md] RESIDENCY); what is owed is the
+				// PRESENCE CROSSING, announced here for exactly the bonuses this tech gates.
+				const bool bTechAcquired = (kEvent.iA != 0);
+				for (int iBonus = 0; iBonus < GC.getNumBonusInfos(); ++iBonus)
 				{
-					pLoopCity->refreshAllEffectiveBonuses();
+					const BonusTypes eBonus = static_cast<BonusTypes>(iBonus);
+					if (GC.getBonusInfo(eBonus).getTechCityTrade() != kEvent.iType)
+					{
+						continue;
+					}
+					foreach_(CvCity* pLoopCity, GET_PLAYER((PlayerTypes)kEvent.iC).cities())
+					{
+						// the tech gate is a hard zero, so the verdict crosses iff the city holds any of this
+						// bonus once the gate is discounted -- the same quantity getNumBonuses returns behind it.
+						const int iHeldBehindGate =
+							pLoopCity->getNumBonusesFromBase(eBonus, pLoopCity->getNetworkBonusCount(eBonus))
+							+ pLoopCity->getCorpBonusProduction(eBonus);
+
+						if (iHeldBehindGate != 0)
+						{
+							pLoopCity->processBonus(eBonus, bTechAcquired ? 1 : -1);
+						}
+					}
 				}
 				// the tech domain's O(delta) membership update -- the SOLE maintainer of the availability
 				// vectors' tech axis. iType=Tech, iA=has, iC=triggering player (the team resolves from it).

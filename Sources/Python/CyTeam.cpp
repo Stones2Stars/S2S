@@ -456,16 +456,6 @@ bool CyTeam::isDefensivePact(int /*TeamTypes*/ eIndex) const
 	return m_pTeam->isDefensivePact((TeamTypes)eIndex);
 }
 
-int CyTeam::getRouteChange(int /*RouteTypes*/ eIndex) const
-{
-	return m_pTeam->getRouteChange((RouteTypes)eIndex);
-}
-
-void CyTeam::changeRouteChange(int /*RouteTypes*/ eIndex, int iChange)
-{
-	m_pTeam->changeRouteChange((RouteTypes)eIndex, iChange);
-}
-
 int CyTeam::getProjectCount(int /*ProjectTypes*/ eIndex) const
 {
 	return m_pTeam->getProjectCount((ProjectTypes)eIndex);
