@@ -284,8 +284,6 @@ public:
 	int getYieldRateModifier(YieldTypes eIndex) const;
 	int getCommercePercent(int /*CommerceTypes*/ eIndex) const;
 	void changeCommercePercent(CommerceTypes eIndex, int iChange);
-	int getCommerceRateModifier(CommerceTypes eIndex) const;
-	int getCapitalCommerceRateModifier(CommerceTypes eIndex) const;
 
 	bool isCommerceFlexible(int /*CommerceTypes*/ eIndex) const;
 

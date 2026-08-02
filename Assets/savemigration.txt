@@ -1166,3 +1166,13 @@ The empire's LEVEL-EXPERIENCE modifier, cut with the trait push that was its onl
 | PERCENT, so it enters the level identity unscaled.
 | REPLACEMENT: CvPlayer::getExperienceKinds -> EXPERIENCE_LEVEL_MODIFIER.
 CvPlayer::m_iLevelExperienceModifier
+More trait-fed PLAYER accumulators. The empire's own civic-upkeep modifier and its two commerce-modifier
+| planes were sums over authored data the gather already folds into the player's packages, so the readers ask
+| the group and the hand-named accessors go ([DEC-new-getter-surface]).
+| ⚠ The event-granted commerce modifier is NOT among these: its writer is applyEvent, which makes it genuine
+| one-shot state that correctly stays serialized ([save.md par.5]).
+| REPLACEMENT: CvPlayer::getUpkeepKinds -> UPKEEP_CIVIC; the commerce planes roll up through the player's
+| own package (capital is a PREDICATE, not a scope, so its plane is a conditioned deposit rather than a store).
+CvPlayer::m_iUpkeepModifier
+CvPlayer::m_aiCommerceRateModifier
+CvPlayer::m_aiCapitalCommerceRateModifier

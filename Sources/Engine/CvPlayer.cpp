@@ -183,9 +183,7 @@ m_cachedBonusCount(NULL)
 	m_aiExtraYieldThreshold = new int[NUM_YIELD_TYPES];
 	m_aiTradeYieldModifier = new int[NUM_YIELD_TYPES];
 	m_aiCommercePercent = new int[NUM_COMMERCE_TYPES];
-	m_aiCommerceRateModifier = new int[NUM_COMMERCE_TYPES];
 	m_aiCommerceRateModifierfromEvents = new int[NUM_COMMERCE_TYPES];
-	m_aiCapitalCommerceRateModifier = new int[NUM_COMMERCE_TYPES];
 	m_aiGoldPerTurnByPlayer = new int[MAX_PLAYERS];
 	m_aiEspionageSpendingWeightAgainstTeam = new int[MAX_TEAMS];
 
@@ -296,9 +294,7 @@ CvPlayer::~CvPlayer()
 	SAFE_DELETE_ARRAY(m_aiExtraYieldThreshold);
 	SAFE_DELETE_ARRAY(m_aiTradeYieldModifier);
 	SAFE_DELETE_ARRAY(m_aiCommercePercent);
-	SAFE_DELETE_ARRAY(m_aiCommerceRateModifier);
 	SAFE_DELETE_ARRAY(m_aiCommerceRateModifierfromEvents);
-	SAFE_DELETE_ARRAY(m_aiCapitalCommerceRateModifier);
 	SAFE_DELETE_ARRAY(m_aiGoldPerTurnByPlayer);
 	SAFE_DELETE_ARRAY(m_aiEspionageSpendingWeightAgainstTeam);
 	SAFE_DELETE_ARRAY(m_abFeatAccomplished);
@@ -1129,7 +1125,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iBuildingOnlyHealthyCount = 0;
 
 
-	m_iUpkeepModifier = 0;
 	m_iExtraHealth = 0;
 	m_iExtraHappiness = 0;
 	m_iExtraHappinessUnattributed = 0;
@@ -1308,9 +1303,7 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	for (iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 	{
 		m_aiCommercePercent[iI] = 0;
-		m_aiCommerceRateModifier[iI] = 0;
 		m_aiCommerceRateModifierfromEvents[iI] = 0;
-		m_aiCapitalCommerceRateModifier[iI] = 0;
 	}
 
 	for (iI = 0; iI < MAX_PLAYERS; iI++)
@@ -9934,16 +9927,6 @@ int64_t CvPlayer::getTotalMaintenance() const
 }
 
 
-int CvPlayer::getUpkeepModifier() const
-{
-	return m_iUpkeepModifier;
-}
-
-
-void CvPlayer::changeUpkeepModifier(int iChange)
-{
-	m_iUpkeepModifier += iChange;
-}
 
 
 
@@ -11951,25 +11934,6 @@ void CvPlayer::changeCommerceRate(CommerceTypes eIndex, int iChange)
 	}
 }
 
-int CvPlayer::getCommerceRateModifier(CommerceTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-	return m_aiCommerceRateModifier[eIndex];
-}
-
-
-void CvPlayer::changeCommerceRateModifier(CommerceTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-
-	if (iChange != 0)
-	{
-		m_aiCommerceRateModifier[eIndex] = std::min(m_aiCommerceRateModifier[eIndex] + iChange, MAX_COMMERCE_RATE_MODIFIER_VALUE);
-
-
-		AI_makeAssignWorkDirty();
-	}
-}
 
 int CvPlayer::getCommerceRateModifierfromEvents(CommerceTypes eIndex) const
 {
@@ -11986,36 +11950,12 @@ void CvPlayer::changeCommerceRateModifierfromEvents(CommerceTypes eIndex, int iC
 		//Totals into Events to split for display
 		m_aiCommerceRateModifierfromEvents[eIndex] = std::min(m_aiCommerceRateModifierfromEvents[eIndex] + iChange, MAX_COMMERCE_RATE_MODIFIER_VALUE);
 		//Also totals into generic Rate Modifier total
-		m_aiCommerceRateModifier[eIndex] = std::min(m_aiCommerceRateModifier[eIndex] + iChange, MAX_COMMERCE_RATE_MODIFIER_VALUE);
 
 
 		AI_makeAssignWorkDirty();
 	}
 }
 
-int CvPlayer::getCapitalCommerceRateModifier(CommerceTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-	return m_aiCapitalCommerceRateModifier[eIndex];
-}
-
-
-void CvPlayer::changeCapitalCommerceRateModifier(CommerceTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-
-	if (iChange != 0)
-	{
-		m_aiCapitalCommerceRateModifier[eIndex] += iChange;
-
-		CvCity* pCapitalCity = getCapitalCity();
-
-		if (pCapitalCity)
-		{
-			pCapitalCity->AI_setAssignWorkDirty(true);
-		}
-	}
-}
 
 
 //	The empire-wide state-religion building commerce. Its accumulator is CUT: the value is an ordinary
@@ -12979,7 +12919,11 @@ int CvPlayer::getSingleCivicUpkeep(CivicTypes eCivic, bool bIgnoreAnarchy) const
 		+
 		std::max(0, (getNumCities() + GC.getDefineINT("UPKEEP_CITY_OFFSET")) * GC.getUpkeepInfo((UpkeepTypes)GC.getCivicInfo(eCivic).getUpkeepLevel()).getCityPercent() / 100)
 	);
-	iUpkeep = getModifiedIntValue(iUpkeep, getUpkeepModifier());
+	//	The empire's own civic-upkeep modifier, taken from the upkeep group. A percent kind, so it goes into the
+	//	cost combiner unscaled -- the handicap's own civic modifier is applied separately below.
+	int aiUpkeep[NUM_UPKEEP_KINDS];
+	getUpkeepKinds(aiUpkeep);
+	iUpkeep = getModifiedIntValue(iUpkeep, aiUpkeep[UPKEEP_CIVIC]);
 
 	iUpkeep *= GC.getHandicapInfo(getHandicapType()).getUpkeepModifier(UPKEEP_CIVIC, CASC_SCOPE_EMPIRE, false);
 	iUpkeep /= 100;
@@ -16900,7 +16844,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNoUnhealthyPopulationCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExpInBorderModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iBuildingOnlyHealthyCount);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iUpkeepModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraHealth);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraHappiness);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraHappinessUnattributed);
@@ -17040,8 +16983,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		{
 			emitCommercePercentChanged(getID(), iCommerce, m_aiCommercePercent[iCommerce], 0);
 		}
-		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommerceRateModifier);
-		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCapitalCommerceRateModifier);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", MAX_PLAYERS, m_aiGoldPerTurnByPlayer);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", MAX_TEAMS, m_aiEspionageSpendingWeightAgainstTeam);
 
@@ -18276,7 +18217,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNoUnhealthyPopulationCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExpInBorderModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iBuildingOnlyHealthyCount);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iUpkeepModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraHealth);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraHappiness);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraHappinessUnattributed);
@@ -18340,8 +18280,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiExtraYieldThreshold);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiTradeYieldModifier);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommercePercent);
-		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommerceRateModifier);
-		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCapitalCommerceRateModifier);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", MAX_PLAYERS, m_aiGoldPerTurnByPlayer);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", MAX_TEAMS, m_aiEspionageSpendingWeightAgainstTeam);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_FEAT_TYPES, m_abFeatAccomplished);

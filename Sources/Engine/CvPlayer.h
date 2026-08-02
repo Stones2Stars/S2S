@@ -649,8 +649,6 @@ public:
 	// DEFECT, because it forces a bespoke invalidation path no derived mask can reach.
 	int64_t getTotalMaintenance() const;
 
-	int getUpkeepModifier() const;
-	void changeUpkeepModifier(int iChange);
 
 
 	int getExtraHealth() const;
@@ -981,15 +979,11 @@ public:
 	int getTotalCityBaseCommerceRate(CommerceTypes eIndex) const;
 	void changeCommerceRate(CommerceTypes eIndex, int iChange);
 
-	int getCommerceRateModifier(CommerceTypes eIndex) const;
-	void changeCommerceRateModifier(CommerceTypes eIndex, int iChange);
 
 	int getCommerceRateModifierfromEvents(CommerceTypes eIndex) const;
 	void changeCommerceRateModifierfromEvents(CommerceTypes eIndex, int iChange);
 
 
-	int getCapitalCommerceRateModifier(CommerceTypes eIndex) const;
-	void changeCapitalCommerceRateModifier(CommerceTypes eIndex, int iChange);
 
 	int getStateReligionBuildingCommerce(CommerceTypes eIndex) const;
 
@@ -1808,7 +1802,6 @@ protected:
 	int m_iBuildingOnlyHealthyCount;
 
 
-	int m_iUpkeepModifier;
 	int m_iExtraHealth;
 	int m_iExtraHappiness;
 	int m_iExtraHappinessUnattributed;
@@ -1901,9 +1894,7 @@ protected:
 	int* m_aiExtraYieldThreshold;
 	int* m_aiTradeYieldModifier;
 	int* m_aiCommercePercent;
-	int* m_aiCommerceRateModifier;
 	int* m_aiCommerceRateModifierfromEvents;
-	int* m_aiCapitalCommerceRateModifier;
 	int* m_aiGoldPerTurnByPlayer;
 	int* m_aiEspionageSpendingWeightAgainstTeam;
 
