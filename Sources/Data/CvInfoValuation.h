@@ -182,6 +182,12 @@ public:
 	// standing operating set wired in (EnablerKernel::wireOperatingBuildings -- the FED-IN active/dormant
 	// verdict). Every expected* endpoint builds its ctx through this one seam; no caller assembles a
 	// raw-pointer ctx beside the contexts.
+	// The PLOT-ANCHORED fill: the ctx for a walk whose target is THIS plot rather than a city centre. The city
+	// fill would overwrite the plot silo with the centre's, so a per-plot ask (the package rebuild, and every
+	// what-if that names a plot) fills through here instead. Binds the plot's own silo, its owner's empire silo
+	// (which answers every team fact) and the working city's, wiring in the enabler's operating set with it.
+	static void fillEvalCtxAtPlot(const CvPlot& plot, CvCascadeEvalCtx& evalCtx);
+
 	static void fillEvalCtx(const CityContext& cityContext, const EmpireContext& empireContext,
 		const CvPlotGroup* plotGroup, CvCascadeEvalCtx& evalCtx);
 

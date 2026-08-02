@@ -278,8 +278,17 @@
   segment can answer because they ask about a plot that does not exist. Re-pointing them at the segment would
   wire legacy AI calc onto new machinery — the "bending the new surface to preserve an AI call's old shape"
   failure. They convert with the valuation, or they go.
-  ⚠ `calculateImprovementYieldChange` is the same rule's other half: "what would this improvement give here" is
-  a yield compute, so it is an `expected*` READ of the machine, never AI-side yield arithmetic.
+  ⚠ `calculateImprovementYieldChange` is the same rule's other half, and it needs NOTHING new — it collapses to
+  ONE `InfoValuation::plotOwnYield(improvementModifiers, family, ctx)` with a plot-anchored ctx
+  (`fillEvalCtxAtPlot`). Every term it reconstructs by hand is now a deposit on the improvement: its own yield,
+  the riverside and irrigated variants (conditioned on HAS_RIVER / HAS_IRRIGATION), and the tech / civic /
+  player improvement boosts, which the reverse pass lands on the improvement as conditioned entries —
+  `plotOwnYield` serves exactly that, reverse-landed entries included.
+  ⚠ Its `bOptimal` / `bBestRoute` arguments are WHAT-IF variations (best available route, irrigation assumed),
+  so they are the AS-IF-HELD hypothetical the valuation already takes, never extra parameters on the read.
+  ⛔ The route→improvement keyed yield is the one term to confirm rather than assume: it is a
+  governing-deliverer map that stays SOURCE-side (modifier.md §4), fed to improvement-side readers by the
+  reverse pass's compat rows — check it arrives through `plotOwnYield` before deleting the legacy leg.
 
 - Apply the PER-CITY GATES AT THE COMBINE. [modifier.md §1](../../specs/modifier.md) specifies the realized value
   as the sum of the scope packages **with the per-city gates (state-religion-in-city, coastal, connected, area

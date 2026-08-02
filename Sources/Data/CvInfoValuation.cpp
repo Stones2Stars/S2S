@@ -359,6 +359,26 @@ void InfoValuation::collectHealByUnitCombat(const CvModifiers* modifiers, std::v
 	}
 }
 
+void InfoValuation::fillEvalCtxAtPlot(const CvPlot& plot, CvCascadeEvalCtx& evalCtx)
+{
+	//	the ctx carries the SILOS, never the objects ([contexts.md]) -- the plot's own, its owner's empire silo
+	//	(which answers every team fact too), and the working city's, which also feeds in the enabler's operating
+	//	set. The CITY fill is deliberately not used: it would overwrite the PLOT silo with the city centre's,
+	//	and this walk is anchored on THIS plot, so only the city half is taken.
+	evalCtx.plotContext = &plot.getPlotContext();
+	const PlayerTypes eOwner = plot.getOwner();
+	if (eOwner != NO_PLAYER)
+	{
+		evalCtx.empireContext = &GET_PLAYER(eOwner).getEmpireContext();
+	}
+	const CvCity* pWorkingCity = plot.getWorkingCity();
+	if (pWorkingCity != NULL)
+	{
+		evalCtx.cityContext = &pWorkingCity->getCityContext();
+		EnablerKernel::wireOperatingBuildings(pWorkingCity, evalCtx);
+	}
+}
+
 void InfoValuation::fillEvalCtx(const CityContext& cityContext, const EmpireContext& empireContext,
 	const CvPlotGroup* plotGroup, CvCascadeEvalCtx& evalCtx)
 {

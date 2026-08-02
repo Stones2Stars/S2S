@@ -414,23 +414,8 @@ namespace
 		}
 
 		CvCascadeEvalCtx evalCtx;
-		//	the ctx carries the SILOS, never the objects ([contexts.md]) -- the plot's own, its owner's empire
-		//	silo (which answers every team fact too), and the working city's, which also feeds in the enabler's
-		//	operating set.
-		evalCtx.plotContext = &plot.getPlotContext();
+		InfoValuation::fillEvalCtxAtPlot(plot, evalCtx);
 		const PlayerTypes eOwner = plot.getOwner();
-		if (eOwner != NO_PLAYER)
-		{
-			evalCtx.empireContext = &GET_PLAYER(eOwner).getEmpireContext();
-		}
-		const CvCity* pWorkingCity = plot.getWorkingCity();
-		if (pWorkingCity != NULL)
-		{
-			//	fillEvalCtx would overwrite the PLOT silo with the city centre's; this walk is anchored on THIS
-			//	plot, so only the city half is taken.
-			evalCtx.cityContext = &pWorkingCity->getCityContext();
-			EnablerKernel::wireOperatingBuildings(pWorkingCity, evalCtx);
-		}
 
 		const TeamTypes eSeeingTeam = (evalCtx.empireContext != NULL) ? (TeamTypes)evalCtx.empireContext->teamId() : NO_TEAM;
 		const CvModifiers* pTerrain     = plot.getTerrainType()      != NO_TERRAIN     ? GC.getTerrainInfo(plot.getTerrainType()).getModifiers()         : NULL;
