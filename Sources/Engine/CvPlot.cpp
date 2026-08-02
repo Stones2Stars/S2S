@@ -2897,13 +2897,6 @@ bool CvPlot::canHaveImprovement(ImprovementTypes eImprovement, TeamTypes eTeam, 
 	{
 		return false;
 	}
-	// Meant for pseudo improvements that won't ever be on the map, like bonus placement improvements.
-	// Toffer - Shouldn't this be part of buildInfo?
-	//	I'm thinking bonus placement builds should not be linked to an improvement at all.
-	if (pInfo.isNotOnAnyBonus() && getBonusType() != NO_BONUS)
-	{
-		return false;
-	}
 	const BonusTypes eBonus = getBonusType(eTeam);
 
 	// Special upgrade rule
@@ -3006,11 +2999,6 @@ bool CvPlot::canHaveImprovement(ImprovementTypes eImprovement, TeamTypes eTeam, 
 			bValid = true;
 		}
 		else if (eFeature != NO_FEATURE && pInfo.getFeatureMakesValid(eFeature))
-		{
-			bValid = true;
-		}
-		else if (eBonus != NO_BONUS && pInfo.isImprovementObsoleteBonusMakesValid(eBonus)
-		&& GET_TEAM(eTeam).isHasTech((TechTypes)GC.getBonusInfo(eBonus).getTechObsolete()))
 		{
 			bValid = true;
 		}
