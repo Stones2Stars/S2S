@@ -240,6 +240,16 @@
   city is known. ⚠ Until it lands the affected deposits are UNSERVED, and `savemigration.txt` carries the
   replacement obligation for the one whose accumulator has already been cut.
 
+- Give the plot's PRE-IMPROVEMENT yield its own package SLOT, and make the read a bare fetch. It recomputes per
+  call today while the cascade already holds the number, and it is asked per (plot × improvement × yield) by the
+  improvement placement gate and by both the city and worker improvement valuations — with the best-yield form
+  calling it twice — so it is squarely the per-read cost class
+  ([state-repositories.md](../../architecture/state-repositories.md): the pull must be a CACHE at every level).
+  ⛔ It is NOT answerable from the realized package: nature yield is the PRE-improvement, PRE-route subset, which
+  is exactly why it wants a slot of its own rather than a reader that subtracts its way back to one.
+  ⚑ The substrate facts that mark it are already emitted (terrain / feature / river / bonus), so this is a slot
+  plus a mark, not new machinery.
+
 - Charge the improvement UPGRADE cost from somewhere that can tell an upgrade from a build. Nothing charges it
   today. The only implementation sat in the improvement-set choke point, which cannot tell the two apart, so a
   worker building a farm on a seed camp paid twice — once for the build, once again because the camp lists the
