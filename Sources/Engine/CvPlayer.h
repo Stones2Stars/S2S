@@ -324,7 +324,6 @@ public:
 
 	int64_t getBaseUnitCost(const UnitTypes eUnit) const;
 
-	int getBuildingPrereqBuilding(BuildingTypes eBuilding, BuildingTypes ePrereqBuilding, int iExtra = 0) const;
 	void removeBuilding(BuildingTypes building);
 
 	void processBuilding(BuildingTypes eBuilding, int iChange, CvArea* pArea, bool bReligiouslyDisabling = false);

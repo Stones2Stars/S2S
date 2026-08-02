@@ -82,7 +82,6 @@ public:
 	int countOwnedBonuses(int /*BonusTypes*/ eBonus) const;
 	int countNumBuildings(int /*BuildingTypes*/ eBuilding) const;
 	bool hasBuilding(int /*BuildingTypes*/ eBuilding) const;
-	int getBuildingPrereqBuilding(BuildingTypes eBuilding, BuildingTypes ePrereqBuilding, int iExtra) const;
 	int countNumCitiesConnectedToCapital() const;
 
 	bool canContact(int /*PlayerTypes*/ ePlayer) const;

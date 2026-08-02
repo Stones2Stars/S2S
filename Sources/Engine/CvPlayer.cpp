@@ -6903,39 +6903,6 @@ int CvPlayer::getProductionModifier(ProjectTypes eProject) const
 	return iMultiplier;
 }
 
-int CvPlayer::getBuildingPrereqBuilding(BuildingTypes eBuilding, BuildingTypes ePrereqBuilding, int iExtra) const
-{
-	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
-
-	int iPrereqs = kBuilding.getPrereqNumOfBuildings().getValue(ePrereqBuilding);
-
-	// dont bother with the rest of the calcs if we have no prereqs
-	if (iPrereqs < 1)
-	{
-		return 0;
-	}
-	if (kBuilding.isForceNoPrereqScaling() || isLimitedWonder(ePrereqBuilding))
-	{
-		if (iPrereqs > 1 && GC.getGame().isOption(GAMEOPTION_CHALLENGE_ONE_CITY))
-		{
-			return 1;
-		}
-		return iPrereqs;
-	}
-	iPrereqs = getModifiedIntValue(iPrereqs, GC.getWorldInfo(GC.getMap().getWorldSize()).getBuildingPrereqModifier());
-
-	if (!isLimitedWonder(eBuilding))
-	{
-		iPrereqs *= 1 + getBuildingCount(eBuilding) + iExtra;
-	}
-
-	if (iPrereqs > 1 && GC.getGame().isOption(GAMEOPTION_CHALLENGE_ONE_CITY))
-	{
-		return 1;
-	}
-	return std::max(1, iPrereqs);
-}
-
 
 void CvPlayer::removeBuilding(BuildingTypes building)
 {
@@ -16437,13 +16404,17 @@ int CvPlayer::getAdvancedStartBuildingCost(BuildingTypes eBuilding, bool bAdd, c
 				return -1;
 			}
 
-			// Check other buildings in this city and make sure none of them require this one
-			foreach_(const BuildingTypes eType, pCity->getHasBuildings())
+			// The building itself carries the buildings whose `requires` reference it
+			// ([DEC-one-reverse-view]), so the question is whether this city HOLDS one of that handful --
+			// never a walk of everything the city has, asking each what it needs.
+			const std::vector<int>* pDependents =
+				GC.getBuildingInfo(eBuilding).edge(EDGEF_REQUIRED_BY, EDGEB_BUILDINGS);
+			if (pDependents != NULL)
 			{
-				const CvBuildingInfo& building = GC.getBuildingInfo(eType);
-				for (int iI = building.getNumPrereqInCityBuildings() - 1; iI > -1; iI--)
+				for (std::vector<int>::const_iterator it = pDependents->begin(),
+					itEnd = pDependents->end(); it != itEnd; ++it)
 				{
-					if (eBuilding == building.getPrereqInCityBuilding(iI))
+					if (pCity->hasBuilding(static_cast<BuildingTypes>(*it)))
 					{
 						return -1;
 					}
@@ -25514,16 +25485,6 @@ void CvPlayer::recalculateResourceConsumption(BonusTypes eBonus)
 	m_paiResourceConsumption[eBonus] = iConsumption;
 }
 
-namespace {
-	void addUniqueBonus(std::vector<BonusTypes>& aBonuses, int iBonus)
-	{
-		if (iBonus != NO_BONUS && !algo::any_of_equal(aBonuses, (BonusTypes)iBonus))
-		{
-			aBonuses.push_back((BonusTypes)iBonus);
-		}
-	}
-}
-
 //	Inverted iteration of recalculateResourceConsumption over ALL bonuses: one pass over
 //	each city visiting only the bonuses its current production item and built buildings
 //	actually touch (load-derived CvBuildingInfo::getConsumptionRelevantBonuses), instead of
@@ -25556,22 +25517,10 @@ void CvPlayer::recalculateAllResourceConsumption()
 		const UnitTypes prodUnit = cityX->getProductionUnit();
 		const ProjectTypes prodProject = cityX->getProductionProject();
 
-		std::vector<BonusTypes> prereqBonuses;
-
 		if (prodBuilding != NO_BUILDING)
 		{
 			const CvBuildingInfo& kBuilding = GC.getBuildingInfo(prodBuilding);
 
-			addUniqueBonus(prereqBonuses, kBuilding.getPrereqAndBonus());
-			addUniqueBonus(prereqBonuses, kBuilding.getPrereqVicinityBonus());
-			foreach_(const BonusTypes eBonus, kBuilding.getPrereqOrBonuses())
-			{
-				addUniqueBonus(prereqBonuses, eBonus);
-			}
-			foreach_(const BonusTypes eBonus, kBuilding.getPrereqOrVicinityBonuses())
-			{
-				addUniqueBonus(prereqBonuses, eBonus);
-			}
 			for (int iI = 0; iI < iNumBonuses; iI++)
 			{
 				const int iMod = kBuilding.getBonusProductionModifier((BonusTypes)iI);
@@ -25585,16 +25534,6 @@ void CvPlayer::recalculateAllResourceConsumption()
 		{
 			const CvUnitInfo& kUnit = GC.getUnitInfo(prodUnit);
 
-			addUniqueBonus(prereqBonuses, kUnit.getPrereqAndBonus());
-			addUniqueBonus(prereqBonuses, kUnit.getPrereqVicinityBonus());
-			foreach_(const BonusTypes eBonus, kUnit.getPrereqOrBonuses())
-			{
-				addUniqueBonus(prereqBonuses, eBonus);
-			}
-			foreach_(const BonusTypes eBonus, kUnit.getPrereqOrVicinityBonuses())
-			{
-				addUniqueBonus(prereqBonuses, eBonus);
-			}
 			for (int iI = 0; iI < iNumBonuses; iI++)
 			{
 				const int iMod = kUnit.getBonusProductionModifier((BonusTypes)iI);
@@ -25617,9 +25556,24 @@ void CvPlayer::recalculateAllResourceConsumption()
 			}
 		}
 
-		foreach_(const BonusTypes eBonus, prereqBonuses)
+		// The BONUS carries the list of candidates whose `requires` reference it ([DEC-one-reverse-view]), so
+		// the four legacy prereq axes collapse into ONE membership test -- the same read the per-bonus pass
+		// above makes. The merged bucket is safe here because the legacy collection OR'd all four (ANY
+		// semantics, which a superset only loosens); an ALL-semantics consumer must never read it this way.
+		for (int iI = 0; iI < iNumBonuses; iI++)
 		{
-			aiConsumption[eBonus] += prodYieldRate;
+			const CvEdges* pBonusEdges = GC.getBonusInfo((BonusTypes)iI).getEdges();
+			if (pBonusEdges == NULL)
+			{
+				continue;
+			}
+			if ((prodBuilding != NO_BUILDING
+					&& pBonusEdges->has(EDGEF_REQUIRED_BY, EDGEB_BUILDINGS, (int)prodBuilding))
+			||  (prodUnit != NO_UNIT
+					&& pBonusEdges->has(EDGEF_REQUIRED_BY, EDGEB_UNITS, (int)prodUnit)))
+			{
+				aiConsumption[iI] += prodYieldRate;
+			}
 		}
 
 		// --- Base rates once per city (the legacy per-bonus pass re-derived the same
