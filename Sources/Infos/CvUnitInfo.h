@@ -207,11 +207,15 @@ public:
 	int getCorporationSpreadStrength(int iCorporation) const
 	{ const std::map<int, int>::const_iterator it = m_corporationSpread.find(iCorporation); return it != m_corporationSpread.end() ? it->second : 0; }
 	const std::vector<GroupSpawnUnitCombat>& getGroupSpawn() const { return m_groupSpawn; }  // groupSpawn rows {unitCombat, chance, title}
-	const std::vector<int>& getUpgradesTo() const { return m_aiUpgradesTo; }         // succession.upgradesTo
-	bool isUpgradeTo(int iUnit) const { return vectorHas(m_aiUpgradesTo, iUnit); }
+	// A unit's DIRECT upgrades are its par.4.3 `requires.build.dormant.all` ids -- the upgrades MINUS any that
+	// also supersede it, which is precisely the set the dormancy gate recurses (enabler.md par.3). CvRequires
+	// already materializes them, so this is a bare read of that one store, never a second copy of the list.
+	// The superseders are the sibling `replacedBy.units` below; a consumer wanting both unions the two.
+	const std::vector<int>& getUpgradesTo() const { return dormantTriggers(); }
+	bool isUpgradeTo(int iUnit) const { return vectorHas(dormantTriggers(), iUnit); }
 	const std::vector<int>& getReplacedByUnits() const { return m_aiReplacedByUnits; }   // replacedBy.units (the par.4.2 superseders)
-	// the upgrade CHAIN -- every unit transitively reachable over succession.upgradesTo (the legacy UnitUpgrades
-	// closure); derived by deriveAtRegistryComplete, not JSON-mapped.
+	// the upgrade CHAIN -- every unit transitively reachable over the direct upgrades above (the whole upgrade
+	// TREE: chains, obsolete intermediates, cycles); derived by deriveAtRegistryComplete, not JSON-mapped.
 	const std::vector<int>& getUpgradeChain() const { return m_aiUpgradeChain; }
 
 	// --- grants (par.5 payload) -- the lists materialized at mapFrom (bucket-string reads are load-time only) ---
@@ -369,9 +373,8 @@ private:
 	std::map<int, int> m_religionSpread;
 	std::map<int, int> m_corporationSpread;
 	std::vector<GroupSpawnUnitCombat> m_groupSpawn;
-	std::vector<int> m_aiUpgradesTo;
 	std::vector<int> m_aiReplacedByUnits;
-	std::vector<int> m_aiUpgradeChain;   // derived: the upgradesTo transitive closure (deriveAtRegistryComplete)
+	std::vector<int> m_aiUpgradeChain;   // derived: the direct-upgrade transitive closure (deriveAtRegistryComplete)
 
 	// --- grants materialization + GP-action magnitudes ---
 	std::vector<int> m_aiGrantedPromotions;

@@ -107,6 +107,16 @@ public:
 	// disables.<bucket> -> the remove plane. Every per-domain enabler's seed + event deltas route through this.
 	static void applyEdges(EnablerDomain& d, const CvInfo* j, EnEdgeBucket eBucket, int iDelta);
 
+	// THE ONE PLAYER-DOMAIN HAVE APPLIER -- the whole per-domain mechanic in one place, parameterized by the
+	// BUCKET exactly as everAvailable is. Acquiring or losing a HAVE source applies its edges into the domain
+	// (the refcounted membership formula) and re-gates the candidates that source touches -- its own
+	// enables/removal targets plus its EDGEF_REQUIRED_BY dependents (enabler.md par.7.1 steps 1+2).
+	// ⛔ There is nothing domain-specific left to write: EnablerDomain is generic, applyEdges is generic and the
+	// gate is generic, so a per-domain CLASS varies only by (bucket, repo, event) -- parameters, not code. Minting
+	// one per info is the duplication this collapses ([DEC-single-implementation]).
+	static void applyPlayerHave(const CvPlayer& kPlayer, EnablerDomain& d, EnEdgeBucket eBucket,
+		const CvInfo* jSource, bool bHas);
+
 	// requires gate: build ∧ operate, through the typed-condition evaluator (STRICT state religion for build).
 	// bVisible=true relaxes the GREYABLE clauses (connectable resource / unadopted civic) for the visible frontier (enabler.md §6).
 	static bool requiresMet(const CvInfo* j, const CvCascadeEvalCtx& ec, bool bVisible = false);

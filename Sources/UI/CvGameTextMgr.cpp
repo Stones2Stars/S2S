@@ -1792,20 +1792,6 @@ void CvGameTextMgr::parseTraits(CvWStringBuffer &szHelpString, TraitTypes eTrait
 		szHelpString.append(gDLL->getText("TXT_KEY_TRAITHELP_NEGATIVE"));
 	}
 
-	// json.md par.9 `succession` -- the promotion LINE this trait belongs to, and its rank within it.
-	if (kTrait.getSuccessionPromotionLine() != -1)
-	{
-		const PromotionLineTypes ePromotionLine = static_cast<PromotionLineTypes>(kTrait.getSuccessionPromotionLine());
-		szHelpString.append(NEWLINE);
-		szHelpString.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_LINE", GC.getPromotionLineInfo(ePromotionLine).getDescription()));
-
-		if (kTrait.getSuccessionPriority() > 0)
-		{
-			szHelpString.append(NEWLINE);
-			szHelpString.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_LINE_PRIORITY", kTrait.getSuccessionPriority()));
-		}
-	}
-
 	// json.md par.9 `excludes` -- the same-tier traits this one cannot be held alongside.
 	const std::vector<int>& aiExcludes = kTrait.getExcludes();
 	for (std::vector<int>::const_iterator itExclude = aiExcludes.begin(); itExclude != aiExcludes.end(); ++itExclude)

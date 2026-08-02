@@ -1978,11 +1978,20 @@ void CvDLLWidgetData::parseHurryHelp(CvWidgetDataStruct &widgetDataStruct, CvWSt
 		{
 			bool bFirst = true;
 
-			for (int iI = 0; iI < GC.getNumCivicInfos(); iI++)
+			// "Which civics unlock this hurry?" is the REVERSE question, and the hurry already carries its own
+			// answer: a civic authors `enables.hurries`, and the readJson reverse pass lands that back on the
+			// hurry as a RELATED civic edge ([DEC-one-reverse-view]). So this reads the handful that actually
+			// name it, instead of asking every civic in the game whether it does -- the whole-registry scan
+			// enabler.md par.8 singles out, on a hover-help path.
+			const CvHurryInfo& kHurry = GC.getHurryInfo((HurryTypes)(widgetDataStruct.m_iData1));
+			const std::vector<int>* pUnlockingCivics = kHurry.edge(EDGEF_RELATED, EDGEB_CIVICS);
+			if (pUnlockingCivics != NULL)
 			{
-				if (GC.getCivicInfo((CivicTypes)iI).isHurry(widgetDataStruct.m_iData1))
+				for (size_t iCivic = 0; iCivic < pUnlockingCivics->size(); ++iCivic)
 				{
-					setListHelp(szBuffer, gDLL->getText("TXT_KEY_REQUIRES"), GC.getCivicInfo((CivicTypes)iI).getDescription(), gDLL->getText("TXT_KEY_OR").c_str(), bFirst);
+					setListHelp(szBuffer, gDLL->getText("TXT_KEY_REQUIRES"),
+						GC.getCivicInfo((CivicTypes)(*pUnlockingCivics)[iCivic]).getDescription(),
+						gDLL->getText("TXT_KEY_OR").c_str(), bFirst);
 					bFirst = false;
 				}
 			}

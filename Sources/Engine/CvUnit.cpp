@@ -23113,57 +23113,24 @@ void CvUnit::setFreePromotion(PromotionTypes ePromotion, bool bAdding, TraitType
 		{
 			if (it->second.m_bHasUnitCombat)
 			{
+				// The player free-promotion registry STAYS: it is written only by applyEvent, i.e. genuine
+				// one-shot event state, which is out of the payload plane's scope entirely
+				// (legacy-grant-apply-sites.md par.4 -- the three legs of this function have three lifetimes).
 				if (pPlayer.isFreePromotion(it->first, ePromotion))
 				{
 					setHasPromotion(ePromotion, true, true);
 					return;
 				}
-
-				if (eTrait == NO_TRAIT)
-				{
-					for (int iK = GC.getNumTraitInfos() - 1; iK > -1; iK--)
-					{
-						if (pPlayer.hasTrait((TraitTypes)iK) && GC.getTraitInfo((TraitTypes)iK).isFreePromotionUnitCombats(ePromotion, it->first))
-						{
-							setHasPromotion(ePromotion, true, true, false, false, true);
-							return;
-						}
-					}
-				}
-				else if (GC.getTraitInfo(eTrait).isFreePromotionUnitCombats(ePromotion, it->first))
-				{
-					setHasPromotion(ePromotion, true, true, false, false, true);
-					return;
-				}
 			}
 		}
 	}
-	//Remove trait derived promotions if trait has been removed
-	if (!bAdding && isPromotionFromTrait(ePromotion) && isHasPromotion(ePromotion))
-	{
-		for (std::map<UnitCombatTypes, UnitCombatKeyedInfo>::const_iterator it = m_unitCombatKeyedInfo.begin(), end = m_unitCombatKeyedInfo.end(); it != end; ++it)
-		{
-			if (it->second.m_bHasUnitCombat)
-			{
-				if (eTrait == NO_TRAIT)
-				{
-					for (int iK = GC.getNumTraitInfos() - 1; iK > -1; iK--)
-					{
-						if (!pPlayer.hasTrait((TraitTypes)iK) && GC.getTraitInfo((TraitTypes)iK).isFreePromotionUnitCombats((int)ePromotion, it->first))
-						{
-							setHasPromotion(ePromotion, false, true, false, false, true);
-							return;
-						}
-					}
-				}
-				else if (GC.getTraitInfo(eTrait).isFreePromotionUnitCombats((int)ePromotion, it->first))
-				{
-					setHasPromotion(ePromotion, false, true, false, false, true);
-					return;
-				}
-			}
-		}
-	}
+	// The TRAIT legs are gone from both halves. A trait's free promotions are a MODIFIER (alive-with-source --
+	// legacy-grant-apply-sites.md par.4), and the data has already moved to the trigger plane: the curated traits
+	// author `onTurnEnd` -> `action.promote` carrying the promotions AND a units.unitCombats filter
+	// (triggers.md). ⛔ Do NOT answer a dangling trait promotion by restoring a trait-side promotion x unitcombat
+	// map -- that is the legacy mechanism whose data moved, and it swept the whole trait registry per promotion
+	// to do it. Until the trigger engine's promote pass consults held traits, trait-granted promotions reach no
+	// unit; that hole is tracked, and is the correct exposed state rather than a legacy path kept breathing.
 }
 
 void CvUnit::doSetFreePromotions(bool bAdding, TraitTypes eTrait)

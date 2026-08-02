@@ -6,8 +6,8 @@
 //
 //	CvTraitSelection -- the ONE consuming-system calc for "may this trait be held right now?".
 //
-//	CvTraitInfo serves the authored alignment (isNegativeTrait / isBarbarianSelectionOnly) and the
-//	succession rank, and NOTHING else: an info never reads game state, so a verdict composing
+//	CvTraitInfo serves the authored alignment (isNegativeTrait / isBarbarianSelectionOnly) and NOTHING
+//	else: an info never reads game state, so a verdict composing
 //	GAMEOPTION_LEADER_* cannot live there (json.md §9 -- a game option gates AT THE CONSUMING SYSTEM).
 //	This class IS that consuming system, held in one place rather than re-derived per call site
 //	([DEC-single-implementation]) -- the same shape as CvGameSpeedScale, and for the same reason.
@@ -41,13 +41,13 @@ public:
 	// advanced-start pick) from an in-play acquisition (learning/unlearning down a developing line). It is
 	// what gates the two start-only rules -- the barbarian-selection carve-out and START_NO_POSITIVE_TRAITS.
 	//
-	// The three live legs, in order:
+	// The two live legs, in order:
 	//  1. a barbarian-selection-only trait is always selectable AT START (and only there);
 	//  2. ALIGNMENT vs the option pair -- NO_NEGATIVE_TRAITS drops negative traits; START_NO_POSITIVE_TRAITS
 	//     drops positive ones at start (and negative ones too while LEADER_DEVELOPING is live, since the
-	//     developing line is then the only intended route in);
-	//  3. the DEVELOPING gate -- with LEADER_DEVELOPING on, only line members (a non-zero succession
-	//     priority) are selectable; with it off, only non-line traits are.
+	//     developing line is then the only intended route in).
+	// ⛔ There is no third, rung-shaped leg: base-vs-developed is the ENABLER's completed tree, never a rank
+	// this calc reads (a base roots on TECH_GAME_START; a rung above one needs its predecessor held).
 	static bool isSelectable(const CvTraitInfo& kTrait, bool bGameStart);
 
 private:

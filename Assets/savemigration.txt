@@ -276,10 +276,14 @@ CvCity::m_iExtraMinDefense               (int)
 
 ========================
 2026-07-17 — #430 delete-driven legacy cut (GP-rate accumulators): the stored base great-people-rate (city) and
-national great-people-rate (player) accumulators fully removed. getBaseGreatPeopleRate reads max(0, scGpBase) +
-scGpNational; getNationalGreatPeopleRate reads the cascade trait sum (scGpNational). The *Legacy oracle, the
-changeBaseGreatPeopleRate changer + its Cy binding / WorldBuilder callers, and the m_iNationalGreatPeopleRate
-total-write (the per-unit map m_greatPeopleRateforUnit is kept -- no cascade home yet) are gone.
+national great-people-rate (player) accumulators fully removed. CvCity::getBaseGreatPeopleRate is the whole
+replacement -- a fresh gather of the greatPeopleRate channel via InfoValuation::realizedAtCity, which IS the
+roll-up over the chain the city sits under (team + empire + city, modifier.md par.1), so the empire-scope trait
+deposits are already inside it and NO empire aggregate is added on top. getNationalGreatPeopleRate is therefore
+gone entirely rather than re-homed: its only consumer was that addition, which double-counted every empire-scope
+deposit once per city. The *Legacy oracle, the changeBaseGreatPeopleRate changer + its Cy binding / WorldBuilder
+callers, and the m_iNationalGreatPeopleRate total-write (the per-unit map m_greatPeopleRateforUnit is kept -- no
+cascade home yet) are gone.
 
 CvCity::m_iBaseGreatPeopleRate           (int)
 CvPlayer::m_iNationalGreatPeopleRate     (int)

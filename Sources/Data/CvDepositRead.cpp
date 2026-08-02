@@ -172,7 +172,10 @@ int MMKernel::sumUnconditioned(const CvInfo* d, const std::string& wantAddress, 
 }
 
 // The active trait set's CvTraitInfo for trait t -- COMPLEX if GAMEOPTION_LEADER_COMPLEX_TRAITS, else SIMPLE.
-// The two sets collide on the engine id, so they live in separate repos; this picks by the live option.
+// The two sets live in separate repos and are separated BY ID too (a complex trait keeps its own TRAIT_COMPLEX_
+// identity, modifier.md par.4), so a given id resolves in exactly one of them and the fall-through is total.
+// The OPTION read is still load-bearing for the one id BOTH sets carry -- TRAIT_BARBARIAN, base-filled into
+// complex/ so that set stays self-complete -- where it picks the entry belonging to the active set.
 // NEVER a runtime swap of a single shared engine CvTraitInfo.
 const CvTraitInfo* MMKernel::traitData(int t)
 {

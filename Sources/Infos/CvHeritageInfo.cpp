@@ -67,7 +67,7 @@ void CvHeritageInfo::deriveAtRegistryComplete()
 	}
 
 	// PrereqOrHeritage: every related heritage whose enables.heritages includes this heritage (the
-	// folklore->taxon predecessor succession).
+	// folklore->taxon predecessor chain).
 	const std::vector<int>* pRelatedHeritages = edge(EDGEF_RELATED, EDGEB_HERITAGES);
 	if (pRelatedHeritages != NULL)
 	{

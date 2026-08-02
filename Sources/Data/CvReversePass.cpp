@@ -33,6 +33,7 @@
 #include "CvVoteInfo.h"
 #include "CvHurryInfo.h"
 #include "CvTraitInfo.h"
+#include "CvComplexTraitInfo.h"        // + CvComplexTraitTag -- the complex set's own repo (rp_traitInfoForId)
 #include "CvSpecialistInfo.h"
 #include "CvTerrainInfo.h"
 #include "CvFeatureInfo.h"
@@ -76,6 +77,24 @@ namespace
 		X(CvTraitInfo,           getNumTraitInfos,           EDGEB_TRAITS) \
 		X(CvSpecialistInfo,      getNumSpecialistInfos,      EDGEB_SPECIALISTS)
 
+	// A trait id lives in exactly ONE of the two trait repos, because the two sets are separated BY ID as well as
+	// by folder (modifier.md par.4: a complex trait keeps its own TRAIT_COMPLEX_ identity and is never re-keyed
+	// onto the base one). So there is no active-set choice to make here and NO game option to read -- asking both
+	// repos is total, and the order is arbitrary.
+	// TRAIT_BARBARIAN is the one id both sets carry (the NPC trait base-filled into complex/ so that set stays
+	// self-complete). Nothing references it and it carries no edges of its own, so which entry answers cannot
+	// change any reverse view. If a future shared id ever gains edges, this must land on BOTH entries instead of
+	// picking one -- the single-pointer return is what would have to change.
+	CvInfo* rp_traitInfoForId(int iId)
+	{
+		const CvInfo* pTraitInfo = InfoRepo<CvTraitInfo>::get().get(iId);
+		if (pTraitInfo == NULL)
+		{
+			pTraitInfo = InfoRepo<CvComplexTraitTag>::get().get(iId);
+		}
+		return const_cast<CvInfo*>(pTraitInfo);
+	}
+
 	// The referenced info of an edge BUCKET (the display axis -- every bucket the spec vocabulary carries; the
 	// _AND/_OR/_WAIVED variants resolve to their kind's repo). Distinct from EnablerKernel::infoFor, which is
 	// the GATE axis and deliberately serves only the enabler's domain kinds. Reads never create: get() +
@@ -108,9 +127,9 @@ namespace
 		case EDGEB_ROUTES_AND:              return const_cast<CvInfo*>(InfoRepo<CvRouteInfo>::get().get(iId));
 		case EDGEB_VOTES:                   return const_cast<CvInfo*>(InfoRepo<CvVoteInfo>::get().get(iId));
 		case EDGEB_HURRIES:                 return const_cast<CvInfo*>(InfoRepo<CvHurryInfo>::get().get(iId));
-		case EDGEB_TRAITS:                  return const_cast<CvInfo*>(InfoRepo<CvTraitInfo>::get().get(iId));
-		case EDGEB_TRAITS_AND:              return const_cast<CvInfo*>(InfoRepo<CvTraitInfo>::get().get(iId));
-		case EDGEB_TRAITS_OR:               return const_cast<CvInfo*>(InfoRepo<CvTraitInfo>::get().get(iId));
+		case EDGEB_TRAITS:                  return rp_traitInfoForId(iId);
+		case EDGEB_TRAITS_AND:              return rp_traitInfoForId(iId);
+		case EDGEB_TRAITS_OR:               return rp_traitInfoForId(iId);
 		case EDGEB_SPECIALISTS:             return const_cast<CvInfo*>(InfoRepo<CvSpecialistInfo>::get().get(iId));
 		default:                            return NULL;
 		}

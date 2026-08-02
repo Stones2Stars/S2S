@@ -125,6 +125,16 @@ private:
 				TechEnabler::onTechChanged(GET_PLAYER((PlayerTypes)kEvent.iC).getTeam(), (TechTypes)kEvent.iType, kEvent.iA != 0);
 			}
 			break;
+		case SEVT_TRAIT_CHANGED:
+			if (kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS)
+			{
+				// the HELD-TRAIT axis: a rung's own `enables.traits` edge is the developing ladder, so acquiring
+				// one is what puts the next rung in the tree (iType=Trait, iC=player, iA=add)
+				const CvPlayer& kTraitOwner = GET_PLAYER((PlayerTypes)kEvent.iC);
+				EnablerKernel::applyPlayerHave(kTraitOwner, kTraitOwner.m_enabler.traits, EDGEB_TRAITS,
+					InfoRepo<CvTraitInfo>::get().get(kEvent.iType), kEvent.iA != 0);
+			}
+			break;
 		case SEVT_CIVIC_ADOPTED:
 			if (kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS)
 			{

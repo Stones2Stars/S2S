@@ -182,6 +182,40 @@ void EnablerKernel::applyEdges(EnablerDomain& d, const CvInfo* j, EnEdgeBucket e
 	}
 }
 
+// THE ONE PLAYER-DOMAIN HAVE APPLIER (see the header): apply the source's edges, then re-gate exactly the
+// candidates it touches. Every player domain is this same mechanic with a different bucket.
+void EnablerKernel::applyPlayerHave(const CvPlayer& kPlayer, EnablerDomain& d, EnEdgeBucket eBucket,
+	const CvInfo* jSource, bool bHas)
+{
+	if (jSource == NULL || !d.isSeeded())
+	{
+		return;   // pre-init window: the object's own read/init emits replay its facts
+	}
+	// The touched set: the source's own enables/removal targets PLUS its EDGEF_REQUIRED_BY dependents -- the
+	// par.7.1 step-2 re-gate, so a candidate whose `requires` merely REFERENCES this source re-evaluates too.
+	std::set<int> touched;
+	static const EnEdgeFamily FAMS[] = { EDGEF_ENABLES, EDGEF_OBSOLETES, EDGEF_REPLACES, EDGEF_DISABLES, EDGEF_REQUIRED_BY, NUM_EDGEF };
+	for (int f = 0; FAMS[f] != NUM_EDGEF; ++f)
+	{
+		const std::vector<int>* p = jSource->edge(FAMS[f], eBucket);
+		if (p != NULL) touched.insert(p->begin(), p->end());
+	}
+
+	applyEdges(d, jSource, eBucket, bHas ? +1 : -1);
+
+	CvCascadeEvalCtx ec;
+	kPlayer.getEmpireContext().fillEvalCtx(ec);   // player+team -- the contexts ARE the eval state (contexts.md)
+	CvCascadeEvalFlags gateFlags;
+	for (std::set<int>::const_iterator it = touched.begin(); it != touched.end(); ++it)
+	{
+		if (!d.inTree(*it)) continue;
+		const CvInfo* jCand = infoFor(eBucket, *it);
+		d.setGateFailed(*it, (jCand != NULL && !cascadeGateOk(jCand->getGate(), ec, gateFlags))   // DEC-entity-gate
+		                  || !requiresMet(jCand, ec)
+		                  || !allowedOk(jCand, *it, kPlayer, /*bUnit*/ false, eBucket));
+	}
+}
+
 bool EnablerKernel::obsoletedByHeldTech(const CvInfo* j, const CvTeam& kTeam)
 {
 	if (j == NULL) return false;

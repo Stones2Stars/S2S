@@ -45,11 +45,11 @@ bool CvTraitSelection::isSelectable(const CvTraitInfo& kTrait, bool bGameStart)
 		return false;
 	}
 
-	// 3. The DEVELOPING gate -- the two option states admit disjoint sets, so this is not a filter that can
-	// be skipped when the option is off: with it off, a line member is NOT selectable.
-	if (kGame.isOption(GAMEOPTION_LEADER_DEVELOPING))
-	{
-		return kTrait.getSuccessionPriority() != 0;
-	}
-	return kTrait.getSuccessionPriority() == 0;
+	// There is deliberately no third stage. Whether a trait is a base rung or a developed one is not asked here
+	// and is not a property this calc can see: it falls out of the ENABLER's completed tree. A base rung roots on
+	// TECH_GAME_START's `enables.traits`, so it is LISTED from turn 1; a rung above one is reached only by its
+	// predecessor's ladder edge (and, from rank 2, the line's tech), so it is LISTED only once that predecessor is
+	// held. The caller gates on that verdict (CvPlayer::canLearnTrait) and this composes only the option rules the
+	// availability machine has no business knowing.
+	return true;
 }

@@ -136,9 +136,12 @@ struct PlayerEnabler
 	EnablerDomain projects;  // the creatable list -- maintained by ProjectEnabler (init + tech/project deltas)
 	EnablerDomain processes; // the maintainable list -- maintained by ProcessEnabler (init + onTechChanged)
 	EnablerDomain builds;    // the unlocked worker-builds set (par.7.1) -- maintained by BuildEnabler (init + onTechChanged)
+	EnablerDomain traits;    // the learnable list -- maintained by TraitEnabler (init + onTraitChanged); the
+	                         // ladder is the trait's own `enables.traits` edge, so a rung lists when the one
+	                         // beneath it is held -- no authored rank, no gate beside it
 	EnablerDomain promotions; // the unlocked-promotions set (par.7.1) -- maintained by PromotionEnabler (init + onTechChanged); the per-unit gate overlays its planes at level-up
 
-	void reset() { techs.reset(); civics.reset(); projects.reset(); processes.reset(); builds.reset(); promotions.reset(); }
+	void reset() { techs.reset(); civics.reset(); projects.reset(); processes.reset(); builds.reset(); promotions.reset(); traits.reset(); }
 };
 
 // The per-CITY enabler object (enabler.md par.7.1: city domains = buildings, units -- the domains with

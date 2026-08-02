@@ -31,6 +31,8 @@ void CvTraitInfo::mapFrom(const picojson::value& entity)
 	m_iMaxAnarchy = 0;
 	m_szShortDescriptionKey.clear();
 	m_aiExcludes.clear();
+	m_flavours.clear();
+	m_bCoastalAIInfluence = false;
 
 	// PROPERTY_* per-turn SOURCES: a trait's <PROPERTY_X>.city.flat deposits in EVERY owner city while the trait
 	// is held -- RELATION_ASSOCIATED, the player-gathered fan the legacy trait manipulators used. The ONE shared
@@ -59,4 +61,14 @@ void CvTraitInfo::mapFrom(const picojson::value& entity)
 
 	// --- par.9 `excludes` -- the same-tier traits this one is mutually exclusive with ---
 	jsonReadIdList(entityObj, "excludes", m_aiExcludes);
+
+	// --- par.7 `ai` metadata -- the flavour weights the level-up valuation multiplies the leader's own against ---
+	if (const picojson::object* pAi = jsonChildObj(entityObj, "ai"))
+	{
+		jsonReadFlavours(*pAi, m_flavours);
+		if (const picojson::object* pBehaviour = jsonChildObj(*pAi, "behaviour"))
+		{
+			m_bCoastalAIInfluence = jsonIdBool(*pBehaviour, "coastalAIInfluence");
+		}
+	}
 }

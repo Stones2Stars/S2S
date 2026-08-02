@@ -41,7 +41,7 @@
 //	      DERIVED at load, never stored): once the full registry is mapped, every CvUnitInfo recompute-assigns
 //	      its load-derived members -- the SM base-rank/strength/cargo sums over its combat classes, the first
 //	      prereq TECH atom's era (classified by the resolved atom id through the ONE type dispatch), the
-//	      can-acquire-experience verdict, and the succession.upgradesTo transitive closure (the upgrade chain).
+//	      can-acquire-experience verdict, and the direct-upgrade transitive closure (the upgrade chain).
 //
 //	After this pass every info ALREADY CARRIES its reverse lookups + load-derived values; no consumer builds its
 //	own scan or side index, and no getter derives lazily. LOAD-ONLY: called by loadJson only, inside the

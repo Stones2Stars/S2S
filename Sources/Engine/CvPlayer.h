@@ -861,10 +861,12 @@ public:
 
 	EnablerDomain::State getTechAvailability(TechTypes eTech) const;
 	EnablerDomain::State getCivicAvailability(CivicTypes eCivic) const;
+	EnablerDomain::State getTraitAvailability(TraitTypes eTrait) const;
 	EnablerDomain::State getProjectAvailability(ProjectTypes eProject) const;
 	EnablerDomain::State getProcessAvailability(ProcessTypes eProcess) const;
 	void getAvailableTechs(std::vector<int>& techs) const;
 	void getAvailableCivics(std::vector<int>& civics) const;
+	void getAvailableTraits(std::vector<int>& traits) const;
 	void getAvailableProjects(std::vector<int>& projects) const;
 	void getAvailableProcesses(std::vector<int>& processes) const;
 
@@ -1998,9 +2000,6 @@ public:
 
 
 
-	int getSpecialistExtraYield(YieldTypes eIndex) const;
-	void changeSpecialistExtraYield(YieldTypes eIndex, int iChange);
-
 
 
 	void setHasTrait(TraitTypes eIndex, bool bNewValue);
@@ -2022,7 +2021,6 @@ public:
 	int getInquisitionCount() const;
 	void changeInquisitionCount(int iChange);
 
-	int getNationalGreatPeopleRate() const;
 	int getNationalGreatPeopleUnitRate(const UnitTypes eIndex) const;
 	void changeNationalGreatPeopleUnitRate(const UnitTypes eIndex, const int iChange);
 

@@ -4289,10 +4289,9 @@ void CvTeam::processProjectChange(ProjectTypes eIndex, int iChange, int iOldProj
 
 	if (iChange > 0)
 	{
-		if (kProject.getEveryoneSpecialUnit() != NO_SPECIALUNIT)
-		{
-			GC.getGame().makeSpecialUnitValid((SpecialUnitTypes)(kProject.getEveryoneSpecialUnit()));
-		}
+		// (The game-wide SPECIAL UNIT unlock that stood here is gone with its data: no project authors a
+		// specialUnit payload, so the term was applying nothing. Its sibling below is an availability EDGE and
+		// survives on that basis -- the split is triggers.md's grant-vs-edge line, not a pair that moves together.)
 
 		// Completion flips the game-wide SpecialBuilding validity: an UNLOCK, so it is the project's own
 		// `enables.specialBuildings` edge ([json.md §4.1]) rather than a payload. The edge is a LIST, so a
@@ -5514,6 +5513,7 @@ void CvTeam::processTech(TechTypes eTech, int iChange, bool bAnnounce)
 	{
 		// The tech's own `enables.specialBuildings` edge names what it makes valid ([DEC-one-reverse-view]);
 		// the store inverts BOTH legacy special-building tech prereqs into it, so this is the whole set.
+		const CvTechInfo& kTech = GC.getTechInfo(eTech);
 		const std::vector<int>* pSpecialBuildings =
 			kTech.getEdges() ? kTech.getEdges()->find(EDGEF_ENABLES, EDGEB_SPECIAL_BUILDINGS) : NULL;
 		if (pSpecialBuildings != NULL)

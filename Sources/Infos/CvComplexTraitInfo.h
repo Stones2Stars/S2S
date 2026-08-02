@@ -4,13 +4,18 @@
 
 //
 //	CvComplexTraitInfo -- the COMPLEX/Thunderbrd trait set (StoneBase ComplexTraitInfo). Stored in its OWN repo
-//	InfoRepo<CvComplexTraitTag> (the simple set collides with it on the engine id, so it needs a distinct repo tag).
-//	Active under GAMEOPTION_LEADER_COMPLEX_TRAITS.
+//	InfoRepo<CvComplexTraitTag>, because the two sets are two genuinely different entity populations that a single
+//	repo would interleave. Active under GAMEOPTION_LEADER_COMPLEX_TRAITS.
+//
+//	The two sets are separated BY ID as well as by repo: a complex trait keeps its own TRAIT_COMPLEX_ identity
+//	(naming.md) and is never re-keyed onto the base trait's id (modifier.md par.4). So a given trait id resolves in
+//	exactly ONE repo and no reader has to consult a game option to know which. The lone shared id is
+//	TRAIT_BARBARIAN, the NPC trait base-filled into complex/ so that set stays self-complete.
 //
 
 #include "CvTraitInfo.h"
 
-// The phantom repo TAG for the complex trait set (both sets store CvTraitInfo subclasses keyed by the SAME engine id).
+// The phantom repo TAG for the complex trait set (both sets store CvTraitInfo subclasses in the one engine id space).
 struct CvComplexTraitTag {};
 
 class CvComplexTraitInfo : public CvTraitInfo {};

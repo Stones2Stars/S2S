@@ -5579,10 +5579,11 @@ int CvCity::getBaseGreatPeopleRate() const
 {
 	// A FRESH GATHER from the cascade's greatPeopleRate channel, replacing the serialized per-source
 	// accumulator ([DEC-accumulator-cut-uniform]). ×100 native, and GPP is a whole count, so the single ÷100
-	// is here at the discrete boundary. The empire term is the player's own aggregate and rides on top.
+	// is here at the discrete boundary. The realized city read IS the roll-up over the chain this city sits
+	// under (team + empire + city, modifier.md §1), so the empire-scope trait deposits are ALREADY inside it —
+	// adding an empire aggregate on top would count each of them once per city plus once more.
 	const int iChannel = CascadeChannelRegistry::channelLookup(MODFAM_GREAT_PEOPLE_RATE, (int)CHANNEL_AMOUNT, -1);
-	return std::max(0, InfoValuation::realizedAtCity(*this, iChannel) / 100)
-		+ GET_PLAYER(getOwner()).getNationalGreatPeopleRate();
+	return std::max(0, InfoValuation::realizedAtCity(*this, iChannel) / 100);
 }
 
 

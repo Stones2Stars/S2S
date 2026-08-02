@@ -708,6 +708,8 @@ void CvPlayer::primeEnablerDomains() const
 {
 	TechEnabler::initDomain(*this);
 	CivicEnabler::initDomain(*this);
+	// The TRAITS domain rides the generic kernel applier -- no per-info enabler class ([DEC-single-implementation]).
+	m_enabler.traits.init(GC.getNumTraitInfos());
 	ProjectEnabler::initDomain(*this);
 	ProcessEnabler::initDomain(*this);
 	BuildEnabler::initDomain(*this);
@@ -790,6 +792,11 @@ EnablerDomain::State CvPlayer::getCivicAvailability(CivicTypes eCivic) const
 	return (EnablerDomain::State)m_enabler.civics.state((int)eCivic);
 }
 
+EnablerDomain::State CvPlayer::getTraitAvailability(TraitTypes eTrait) const
+{
+	return (EnablerDomain::State)m_enabler.traits.state((int)eTrait);
+}
+
 EnablerDomain::State CvPlayer::getProjectAvailability(ProjectTypes eProject) const
 {
 	return (EnablerDomain::State)m_enabler.projects.state((int)eProject);
@@ -808,6 +815,13 @@ void CvPlayer::getAvailableTechs(std::vector<int>& techs) const
 void CvPlayer::getAvailableCivics(std::vector<int>& civics) const
 {
 	m_enabler.civics.listedIds(civics);
+}
+
+// The learnable trait list -- what a leader-level-up may CHOOSE FROM. The ladder is the trait's own
+// `enables.traits` edge, so a rung appears here exactly when the rung beneath it is held.
+void CvPlayer::getAvailableTraits(std::vector<int>& traits) const
+{
+	m_enabler.traits.listedIds(traits);
 }
 
 void CvPlayer::getAvailableProjects(std::vector<int>& projects) const
@@ -8615,7 +8629,7 @@ int CvPlayer::specialistYield(SpecialistTypes eSpecialist, YieldTypes eYield) co
 {
 	// The intrinsic is the specialist's own CITY-scope flat; it is ×100, so it reduces here where the terms
 	// beside it are whole yields ([DEC-fixedpoint-x100]).
-	return ((GC.getSpecialistInfo(eSpecialist).getFlatYield(eYield, CASC_SCOPE_CITY) / 100) + getExtraSpecialistYield(eSpecialist, eYield) + getSpecialistExtraYield(eYield) + (getSpecialistYieldPercentChanges(eSpecialist, eYield) / 100));
+	return ((GC.getSpecialistInfo(eSpecialist).getFlatYield(eYield, CASC_SCOPE_CITY) / 100) + getExtraSpecialistYield(eSpecialist, eYield) + (getSpecialistYieldPercentChanges(eSpecialist, eYield) / 100));
 }
 
 
@@ -26174,26 +26188,6 @@ void CvPlayer::changeBuildWorkerSpeedModifierSpecific(BuildTypes eBuild, int iCh
 
 
 
-int CvPlayer::getSpecialistExtraYield(YieldTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
-	return m_aiSpecialistExtraYield[eIndex];
-}
-
-void CvPlayer::changeSpecialistExtraYield(YieldTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
-
-	if (iChange != 0)
-	{
-		m_aiSpecialistExtraYield[eIndex] += iChange;
-
-		algo::for_each(cities(), CvCity::fn::onYieldChange());
-
-		AI_makeAssignWorkDirty();
-	}
-}
-
 void CvPlayer::setHasTrait(TraitTypes eIndex, bool bNewValue)
 {
 	PROFILE_EXTRA_FUNC();
@@ -26211,7 +26205,10 @@ void CvPlayer::setHasTrait(TraitTypes eIndex, bool bNewValue)
 		emitTraitChanged(getID(), (int)eIndex, bNewValue);
 		processTrait(eIndex, bNewValue ? 1 : -1);
 
-		if (GC.getGame().isOption(GAMEOPTION_LEADER_DEVELOPING) && GC.getTraitInfo(eIndex).getSuccessionPriority() != 0)
+		// Announce a developing-leader trait change to the other humans. The old rank clause (only announce a
+		// non-base rung) went with the succession rank; under DEVELOPING every trait change is a level-up move
+		// worth announcing, and which rung it sits on is the enabler's business, not this notification's.
+		if (GC.getGame().isOption(GAMEOPTION_LEADER_DEVELOPING))
 		{
 			const bool bNegativeTrait = GC.getTraitInfo(eIndex).isNegativeTrait();
 
@@ -26287,178 +26284,61 @@ void CvPlayer::setHasTrait(TraitTypes eIndex, bool bNewValue)
 	}
 }
 
+//	May this player LEARN this trait? The verdict is the ENABLER's ([DEC-enabler-not-cascade]: "can I?" is the
+//	availability machine's), read as a bare O(1) fetch of the maintained tri-state -- no gate runs here and
+//	`requires` is never re-evaluated (enabler.md par.7).
+//	⚑ The developing LADDER needs no code at all: a rung is its predecessor's `enables.traits` edge, so it
+//	enters CAN GET exactly when the rung beneath it is held. That is the generate pass doing its own job, which
+//	is why the hand-walk this replaces -- a scan of the whole trait registry for the rung beneath, plus a gate on
+//	the line's PrereqTech -- is gone rather than converted. (The tech leg was also the collapse modifier.md par.4
+//	rules WRONG: researching a level's tech does not advance a held trait.)
+//	⛔ The remaining legs are NOT availability and stay here: holding it already, the NPC bar, and the
+//	option-composed selectability verdict (CvTraitSelection -- a consuming-system calc, engine.md).
 bool CvPlayer::canLearnTrait(TraitTypes eIndex, bool isSelectingNegative) const
 {
-	PROFILE_EXTRA_FUNC();
 	FASSERT_BOUNDS(NO_TRAIT, GC.getNumTraitInfos(), eIndex);
 
 	if (eIndex == NO_TRAIT || isNPC() || hasTrait(eIndex))
 	{
 		return false;
 	}
-
-	const CvTraitInfo& kTrait = GC.getTraitInfo(eIndex);
-
-	if (kTrait.getSuccessionPriority() == 0 || !CvTraitSelection::isSelectable(kTrait, false)) return false;
-
-
-	const TraitTypes eTraitPrerequisite = kTrait.getPrereqTrait();
-	const TraitTypes eTraitPrerequisite1 = kTrait.getPrereqOrTrait1();
-	const TraitTypes eTraitPrerequisite2 = kTrait.getPrereqOrTrait2();
-
-	bool bbypass = true;
-	if (eTraitPrerequisite != NO_TRAIT)
-	{
-		bbypass = false;
-		if (hasTrait(eTraitPrerequisite))
-		{
-			bbypass = true;
-		}
-	}
-	if (!bbypass)//then we DON'T have a prereq that's been removed thanks to the override mechanism.
-	{
-		return false;// this is the only line to remain if mod is removed
-	}
-
-	if (eTraitPrerequisite1 != NO_TRAIT)
-	{
-		bbypass = false;
-		if (hasTrait(eTraitPrerequisite1))
-		{
-			bbypass = true;
-		}
-
-		if (!bbypass && eTraitPrerequisite2 != NO_TRAIT)
-		{
-			if (hasTrait(eTraitPrerequisite2))
-			{
-				bbypass = true;
-			}
-		}
-
-		if (!bbypass)//then we DON'T have a prereq that's been removed thanks to the override mechanism.
-		{
-			return false;// this is the only line to remain if mod is removed
-		}
-	}
-
-	if (kTrait.getPrereqTech() != NO_TECH && !GET_TEAM(getTeam()).isHasTech(kTrait.getPrereqTech()))
+	if (getTraitAvailability(eIndex) != EnablerDomain::STATE_LISTED)
 	{
 		return false;
 	}
-
-	if (kTrait.getPromotionLine() != NO_PROMOTIONLINE)
-	{
-		if (GC.getPromotionLineInfo((PromotionLineTypes) kTrait.getPromotionLine()).getPrereqTech() != NO_TECH
-		&& !GET_TEAM(getTeam()).isHasTech(GC.getPromotionLineInfo((PromotionLineTypes) kTrait.getPromotionLine()).getPrereqTech()))
-		{
-			return false;
-		}
-		for (int iI = 0; iI < GC.getNumTraitInfos(); iI++)
-		{
-			const TraitTypes ePrereq = ((TraitTypes)iI);
-			if (!hasTrait(ePrereq) && GC.getTraitInfo(ePrereq).getPromotionLine() != NO_PROMOTIONLINE)
-			{
-				if (!kTrait.isNegativeTrait() && kTrait.getSuccessionPriority() > 1)
-				{
-					if (GC.getTraitInfo(ePrereq).getPromotionLine() == kTrait.getPromotionLine()
-					&& (GC.getTraitInfo(ePrereq).getSuccessionPriority() == (kTrait.getSuccessionPriority() - 1)))
-					{
-						return false;
-					}
-				}
-				else if (kTrait.isNegativeTrait() && isSelectingNegative && (kTrait.getSuccessionPriority() < -1))
-				{
-					if (GC.getTraitInfo(ePrereq).getPromotionLine() == kTrait.getPromotionLine()
-					&& (GC.getTraitInfo(ePrereq).getSuccessionPriority() == (kTrait.getSuccessionPriority() + 1)))
-					{
-						return false;
-					}
-				}
-			}
-		}
-	}
-
-	for (int iI = 0; iI < GC.getNumTraitInfos(); iI++)
-	{
-		const TraitTypes eTrait = ((TraitTypes)iI);
-		if (hasTrait(eTrait))
-		{
-			for (int iJ = 0; iJ < GC.getTraitInfo(eTrait).getNumDisallowedTraitTypes(); iJ++)
-			{
-				if (GC.getTraitInfo(eTrait).isDisallowedTraitType(iJ).eTrait == eIndex)
-				{
-					return false;
-				}
-			}
-		}
-	}
-	return true;
+	return CvTraitSelection::isSelectable(GC.getTraitInfo(eIndex), isSelectingNegative);
 }
 
+//	Only the TOP OF THE HAS STACK may be unlearned (owner) -- and that is not a rank comparison, it is simply the
+//	held rung nothing else held developed FROM. So the test is the trait's OWN forward `enables.traits` edge: if
+//	the player holds something this trait develops into, this one is not the top and stays.
+//	⛔ No rank, no line lookup, no sweep of the trait registry -- the succession battery that used to express this
+//	was comparing priorities to reconstruct a fact the has-state already carries (the own-data read,
+//	[DEC-one-reverse-view]; a whole-registry scan is the shape enabler.md par.8 singles out).
+//	⚑ DIRECT successors are sufficient: a deeper rung is unreachable without the one beneath it, so holding rung 3
+//	implies holding rung 2, and rung 1's own edge already names rung 2.
+//	The ALIGNMENT leg is the other real rule: a level-up offers ONE sign, so bPositive drops a NEGATIVE trait and
+//	!bPositive a positive one.
 bool CvPlayer::canUnlearnTrait(TraitTypes eTrait, bool bPositive) const
 {
-	PROFILE_EXTRA_FUNC();
-	if (GC.getTraitInfo(eTrait).getSuccessionPriority() == 0)
+	if (eTrait == NO_TRAIT || !hasTrait(eTrait))
 	{
 		return false;
 	}
-
-	if (GC.getTraitInfo(eTrait).getPromotionLine() == NO_PROMOTIONLINE)
+	const CvTraitInfo& kTrait = GC.getTraitInfo(eTrait);
+	if (bPositive != kTrait.isNegativeTrait())
 	{
 		return false;
 	}
-
-	if (!hasTrait(eTrait))
+	const std::vector<int>* pDevelopsInto = kTrait.edge(EDGEF_ENABLES, EDGEB_TRAITS);
+	if (pDevelopsInto != NULL)
 	{
-		return false;
-	}
-
-	if (GC.getGame().isOption(GAMEOPTION_LEADER_DEVELOPING) && GC.getTraitInfo(eTrait).getSuccessionPriority() == 0)
-	{
-		return false;
-	}
-	else if (!GC.getGame().isOption(GAMEOPTION_LEADER_DEVELOPING) && GC.getTraitInfo(eTrait).getSuccessionPriority() != 0)
-	{
-		return false;
-	}
-
-	for (int iI = 0; iI < GC.getNumTraitInfos(); iI++)
-	{
-		const TraitTypes qTrait = ((TraitTypes)iI);
-		if (hasTrait(qTrait) && GC.getTraitInfo(eTrait).getPromotionLine() == GC.getTraitInfo(qTrait).getPromotionLine())
+		for (size_t iSuccessor = 0; iSuccessor < pDevelopsInto->size(); ++iSuccessor)
 		{
-			if (bPositive)
+			if (hasTrait((TraitTypes)(*pDevelopsInto)[iSuccessor]))
 			{
-				if (GC.getTraitInfo(eTrait).isNegativeTrait())
-				{
-					if (GC.getTraitInfo(qTrait).getSuccessionPriority() < GC.getTraitInfo(eTrait).getSuccessionPriority())
-					{
-						return false;
-					}
-				}
+				return false;   // something held developed from it -- not the top of the stack
 			}
-			else
-			{
-				if (GC.getTraitInfo(qTrait).getSuccessionPriority() > GC.getTraitInfo(eTrait).getSuccessionPriority())
-				{
-					return false;
-				}
-			}
-		}
-	}
-	if (bPositive)
-	{
-		if (!GC.getTraitInfo(eTrait).isNegativeTrait())
-		{
-			return false;
-		}
-	}
-	else
-	{
-		if (GC.getTraitInfo(eTrait).isNegativeTrait())
-		{
-			return false;
 		}
 	}
 	return true;
@@ -26567,27 +26447,9 @@ void CvPlayer::doPromoteLeader()
 				for (int iJ = 0; iJ < GC.getNumFlavorTypes(); iJ++)
 				{
 					FlavorTypes eFlavor = ((FlavorTypes)iJ);
-					iFlavorValue = (GC.getLeaderHeadInfo(getPersonalityType()).getFlavorValue(eFlavor)+1) * (GC.getTraitInfo(eTrait).getFlavorValue(eFlavor)+1);
-					if (GC.getTraitInfo(eTrait).getSuccessionPriority() > 0)
-					{
-						int iLevelModifier = getLeaderHeadLevel();
-						if (GC.getGame().isOption(GAMEOPTION_LEADER_START_NO_POSITIVE_TRAITS))
-						{
-							iLevelModifier -= 2;
-						}
-						int iMultModifier = std::max(1, iLevelModifier);
-						int iPriorityModifier = 0;
-						if (GC.getTraitInfo(eTrait).isNegativeTrait())
-						{
-							iPriorityModifier = 1;
-						}
-						else
-						{
-							iPriorityModifier = GC.getTraitInfo(eTrait).getSuccessionPriority();
-						}
-						int iMult = (iPriorityModifier * 10 * iMultModifier);
-						iFlavorValue *= iMult;
-					}
+					iFlavorValue = (GC.getLeaderHeadInfo(getPersonalityType()).getFlavorValue(eFlavor)+1) * (GC.getTraitInfo(eTrait).getFlavour(eFlavor)+1);
+					// (The rung-depth weighting that stood here scaled a candidate by its succession rank; it went
+					// with the rank. The AI still weights by the leader's own flavours against the trait's.)
 					if (GC.getTraitInfo(eTrait).isCoastalAIInfluence())
 					{
 						iFlavorValue *= getCoastalAIInfluence();
@@ -26641,27 +26503,9 @@ void CvPlayer::doPromoteLeader()
 					for (int iJ = 0; iJ < GC.getNumFlavorTypes(); iJ++)
 					{
 						FlavorTypes eFlavor = ((FlavorTypes)iJ);
-						iFlavorValue = (GC.getLeaderHeadInfo(getPersonalityType()).getFlavorValue(eFlavor)+1) * (100 - GC.getTraitInfo(eTrait).getFlavorValue(eFlavor)+1);
-						if (GC.getTraitInfo(eTrait).getSuccessionPriority() < 0)
-						{
-							int iLevelModifier = getLeaderHeadLevel();
-							if (GC.getGame().isOption(GAMEOPTION_LEADER_START_NO_POSITIVE_TRAITS))
-							{
-								iLevelModifier -= 2;
-							}
-							int iMultModifier = std::max(1, iLevelModifier);
-							int iPriorityModifier = 0;
-							if (GC.getTraitInfo(eTrait).isNegativeTrait())
-							{
-								iPriorityModifier = -GC.getTraitInfo(eTrait).getSuccessionPriority();
-							}
-							else
-							{
-								iPriorityModifier = -1;
-							}
-							int iMult = (iPriorityModifier * 10 * iMultModifier);
-							iFlavorValue *= iMult;
-						}
+						iFlavorValue = (GC.getLeaderHeadInfo(getPersonalityType()).getFlavorValue(eFlavor)+1) * (100 - GC.getTraitInfo(eTrait).getFlavour(eFlavor)+1);
+						// (The rung-depth weighting that stood here went with the succession rank -- see its twin
+						// in the positive branch above.)
 						if (GC.getTraitInfo(eTrait).isCoastalAIInfluence())
 						{
 							iFlavorValue *= getCoastalAIInfluence();
@@ -26730,8 +26574,6 @@ void CvPlayer::changeNationalGreatPeopleUnitRate(const UnitTypes eUnit, const in
 		FErrorMsg("This is not a change!");
 		return;
 	}
-	m_iNationalGreatPeopleRate += iChange;
-
 	if (eUnit == NO_UNIT)
 	{
 		return;
@@ -26757,11 +26599,6 @@ int CvPlayer::getNationalGreatPeopleUnitRate(const UnitTypes eUnit) const
 	FASSERT_BOUNDS(0, GC.getNumUnitInfos(), eUnit);
 	std::map<short, int>::const_iterator itr = m_greatPeopleRateforUnit.find((short)eUnit);
 	return itr != m_greatPeopleRateforUnit.end() ? itr->second : 0;
-}
-
-int CvPlayer::getNationalGreatPeopleRate() const
-{
-	return std::max(0, m_iNationalGreatPeopleRate);
 }
 
 
@@ -27454,7 +27291,9 @@ bool CvPlayer::canAddHeritage(const HeritageTypes eType, const bool bTestVisible
 	}
 	const CvHeritageInfo& heritage = GC.getHeritageInfo(eType);
 
-	if (heritage.needLanguage() && !m_bHasLanguage)
+	// The language gate is a derived-on-query CAPABILITY over the team's live grantors (capabilities.md), not a
+	// latched player bool -- it lapses with its last live source rather than being set once.
+	if (heritage.needsLanguage() && !CascadeCapabilities::flag(getTeam(), CCF_HAS_LANGUAGE))
 	{
 		return false;
 	}

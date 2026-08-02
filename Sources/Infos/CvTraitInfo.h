@@ -11,6 +11,7 @@
 //
 
 #include "CvInfo.h"
+#include "CvJsonParse.h"   // mapValueOrDefault -- the ONE sparse id-map point read the flavour getter delegates to
 
 class CvTraitInfo : public CvInfo
 {
@@ -119,6 +120,20 @@ public:
 	// (property-audit.md). Player-gathered and fanned to every owner city -- RELATION_ASSOCIATED.
 	const CvPropertyManipulators* getPropertyManipulators() const { return &m_PropertyManipulators; }
 
+	// ai.flavours -- this trait's FLAVOR_* affinities (sparse; absent = 0). json.md par.7 `ai` metadata: affects
+	// no rule, only what the AI steers toward. The level-up valuation multiplies the LEADER's own flavour figure
+	// by this one, so the pair is what decides whether a leader wants this trait.
+	// Named for the ENTITY side, as CvUnitInfo already is -- the leaderhead keeps `getFlavorValue`, so a reader
+	// can see which half it is holding rather than inferring it from the receiver.
+	// ⚠ The two halves are NOT interchangeable and the data says so: leaderheads, buildings and techs all sit on
+	// 1..10, while TRAIT flavours are signed and run -10..24. Whatever that wider range encodes is unexplained --
+	// do not assume it is the same quantity as a leader's figure, and do not "normalize" it to match.
+	int getFlavour(FlavorTypes eFlavor) const { return mapValueOrDefault(m_flavours, (int)eFlavor); }
+
+	// ai.behaviour.coastalAIInfluence -- the level-up valuation scales this trait by the player's coastal
+	// influence, so a seafaring line is worth more to a coastal empire. AI metadata only; affects no rule.
+	bool isCoastalAIInfluence() const { return m_bCoastalAIInfluence; }
+
 protected:
 	virtual CvEdges*     mutEdges()     { return &m_edges; }
 	virtual CvTriggers*  mutTriggers()  { return &m_triggers; }
@@ -142,6 +157,8 @@ private:
 	CvWString m_szShortDescriptionKey;
 	CvPropertyManipulators m_PropertyManipulators;   // fed from the PROPERTY_* families (CascadePropertyBridge)
 	std::vector<int> m_aiExcludes;
+	std::map<int, int> m_flavours;                   // ai.flavours -- FLAVOR_* id -> weight
+	bool m_bCoastalAIInfluence;                      // ai.behaviour.coastalAIInfluence
 };
 
 #endif // CV_JSON_TRAIT_INFO_H

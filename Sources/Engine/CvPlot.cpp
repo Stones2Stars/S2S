@@ -3435,7 +3435,7 @@ int CvPlot::getBuildTime(BuildTypes eBuild) const
 	iTime *= CvGameSpeedScale::hammerCostPercent();
 	iTime /= 100;
 
-	iTime *= GC.getEraInfo(GC.getGame().getStartEra()).getBuildPercent();
+	iTime *= GC.getEraInfo(GC.getGame().getStartEra()).getCostsModifier(COSTS_BUILD, CASC_SCOPE_WORLD);
 	iTime /= 100;
 
 	return iTime;

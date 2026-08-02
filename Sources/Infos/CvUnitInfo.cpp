@@ -2,7 +2,7 @@
 //	CvUnitInfo -- the base dispatch fills the composed units (requires/edges/allowed/grants/triggers/gate; the
 //	par.6 modifier families compile into CvModifiers; the par.8 skills/tags bool blocks); this subclass parses
 //	ONLY what the type genuinely owns: the identity/cost set, the root combat-class FKs, the par.8 builds
-//	repertoire, the par.9 spread/groupSpawn/vision/sizeMatters/succession/replacedBy sections, the grants
+//	repertoire, the par.9 spread/groupSpawn/vision/sizeMatters/replacedBy sections, the grants
 //	materialization, the ai metadata, and the outcomes system intake. The par.8 keyed targeting/immunity
 //	containers materialize from the COMPILED targeted entries (the family-scoped target tokens). NO
 //	family-address read survives here ([DEC-materialize-at-mapfrom]: the modifier values are served by the
@@ -276,11 +276,11 @@ void CvUnitInfo::deriveAtRegistryComplete(int iFirstPrereqTechEra, const std::se
 	// set is the pass's one cross-registry precompute) ---
 	m_bCanAcquireExperience = m_iCombatClass >= 0 && combatClassesWithPromotions.count(m_iCombatClass) != 0;
 
-	// --- the upgrade CHAIN: every unit transitively reachable over succession.upgradesTo (the legacy
-	// UnitUpgrades closure, SM upkeep/count consumer). Breadth-first over the direct edges; the visited test
-	// both dedups (the archived none_of_equal) and terminates a cyclic authoring. ---
+	// --- the upgrade CHAIN: every unit transitively reachable over the DIRECT upgrades (the whole upgrade
+	// tree, SM upkeep/count consumer). Breadth-first over the direct edges; the visited test both dedups and
+	// terminates a cyclic authoring. ---
 	m_aiUpgradeChain.clear();
-	std::vector<int> pendingUnits(m_aiUpgradesTo);
+	std::vector<int> pendingUnits(getUpgradesTo());
 	while (!pendingUnits.empty())
 	{
 		const int iReached = pendingUnits.front();
@@ -352,7 +352,6 @@ void CvUnitInfo::mapFrom(const picojson::value& entity)
 	m_religionSpread.clear();
 	m_corporationSpread.clear();
 	m_groupSpawn.clear();
-	m_aiUpgradesTo.clear();
 	m_aiReplacedByUnits.clear();
 	m_aiGrantedPromotions.clear();
 	m_aiGrantedGreatPeople.clear();
@@ -553,11 +552,8 @@ void CvUnitInfo::mapFrom(const picojson::value& entity)
 		}
 	}
 
-	// --- par.9 succession.upgradesTo + replacedBy.units ---
-	if (const picojson::object* pSuccession = jsonChildObj(entityObj, "succession"))
-	{
-		jsonReadIdList(*pSuccession, "upgradesTo", m_aiUpgradesTo);
-	}
+	// --- par.4.2 replacedBy.units (the superseders; the DIRECT upgrades ride requires.build.dormant.all,
+	// materialized by CvRequires and read straight off it) ---
 	if (const picojson::object* pReplacedBy = jsonChildObj(entityObj, "replacedBy"))
 	{
 		jsonReadIdList(*pReplacedBy, "units", m_aiReplacedByUnits);
