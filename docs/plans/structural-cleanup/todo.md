@@ -92,8 +92,9 @@
   The ruled shape is the conditioned deposit (the memberless route count gated `HAS_COAST`; the modifier kind
   gated `IS_FOREIGN`) — a WHERE-member is the condition-as-member rollerskate
   ([DEC-conditions-are-predicates](../../architecture/decisions.md#dec-conditions-are-predicates)).
-  ⚠ No trait authors either tag today, so this is latent rather than live data loss — and traits are
-  content-LOCKED, so it closes by fixing the mapping, not by a regen.
+  ⚠ No trait authors either tag today, so this is latent rather than live data loss. It closes by fixing the
+  mapping and REGENERATING (`curate_trait.py --write`) — traits are no longer content-locked
+  ([modifier.md §4](../../specs/modifier.md)).
 
 - Emit property pulses through the shared property-source cleaner as trigger entries carrying
   `on`/`relation`/`distance`, instead of parking them verbatim.
@@ -135,10 +136,8 @@
   to a real slot, and are read by nobody. ⚑ On the aerial line it looks like a duplicate of the
   `air.empire.range` beside it; elsewhere it does not, which is why this is a DATA question and not a reader
   to bolt on ([DEC-no-guessing](../../architecture/decisions.md#dec-no-guessing)).
-  ⚠ Traits are content-LOCKED ([modifier.md §4](../../specs/modifier.md)), so it closes by editing the trait
-  JSON directly, never by a regen — and `curate_trait`'s `combat.empire.*` rows for the range/cargo tags are
-  stale leftovers that can no longer fire (no record authors those tags, and the folders are excluded from the
-  full regen), so they are not the lever either.
+  ⚠ It closes through `curate_trait` + a regen ([modifier.md §4](../../specs/modifier.md) — traits are no longer
+  content-locked), never by hand-editing the emitted JSON, which a regen would overwrite.
 
 ## Legacy still breathing — delete it
 

@@ -78,16 +78,15 @@
     "percent": 50
    },
    "freeCivilian": {
-    "flat": [
-     -10,
-     {
-      "value": -30,
-      "per": {
-       "type": "POPULATION",
-       "each": 100
-      }
-     }
-    ]
+    "flat": -10,
+    "perPopulation": -30
+   }
+  }
+ },
+ "hurry": {
+  "empire": {
+   "cost": {
+    "percent": -25
    }
   }
  },
@@ -146,13 +145,6 @@
   "civilopedia": "TXT_KEY_TRAIT_IMPULSIVE_PEDIA",
   "strategy": "TXT_KEY_TRAIT_IMPULSIVE_STRATEGY",
   "negativeTrait": true
- },
- "costs": {
-  "empire": {
-   "hurry": {
-    "percent": -25
-   }
-  }
  },
  "enables": {
   "traits": [

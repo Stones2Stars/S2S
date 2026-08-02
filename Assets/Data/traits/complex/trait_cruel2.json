@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_CRUEL2",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_CRUEL3"
+  ],
   "traits": [
    "TRAIT_CRUEL3"
   ]
@@ -156,28 +159,18 @@
    }
   }
  },
- "triggers": [
-  {
-   "trigger": "onTurnEnd",
-   "action": {
-    "promote": {
-     "promotions": [
-      "PROMOTION_CRUEL2"
-     ],
-     "units": {
-      "unitCombats": [
-       "UNITCOMBAT_CRIMINAL",
-       "UNITCOMBAT_GUN",
-       "UNITCOMBAT_MELEE",
-       "UNITCOMBAT_MOUNTED",
-       "UNITCOMBAT_STRIKE_TEAM",
-       "UNITCOMBAT_THROWING"
-      ]
-     }
-    }
-   }
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_CRUEL2": [
+    "UNITCOMBAT_CRIMINAL",
+    "UNITCOMBAT_GUN",
+    "UNITCOMBAT_MELEE",
+    "UNITCOMBAT_MOUNTED",
+    "UNITCOMBAT_STRIKE_TEAM",
+    "UNITCOMBAT_THROWING"
+   ]
   }
- ],
+ },
  "ai": {
   "flavours": [
    {

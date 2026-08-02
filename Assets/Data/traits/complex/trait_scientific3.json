@@ -270,13 +270,8 @@
  },
  "happiness": {
   "empire": {
-   "cities": {
-    "flat": [
-     {
-      "value": -1,
-      "religion": "!IS_STATE_RELIGION"
-     }
-    ]
+   "nonStateReligion": {
+    "flat": -1
    }
   }
  },
@@ -295,16 +290,14 @@
    }
   }
  },
- "air": {
+ "combat": {
   "empire": {
-   "range": {
+   "missileRange": {
+    "flat": 2
+   },
+   "flightRange": {
     "flat": 1
    }
-  }
- },
- "range": {
-  "empire": {
-   "flat": 2
   }
  },
  "workRate": {

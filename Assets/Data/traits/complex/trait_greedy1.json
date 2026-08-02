@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_GREEDY1",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_GREEDY2"
+  ],
   "traits": [
    "TRAIT_GREEDY2"
   ]
@@ -353,6 +356,13 @@
    }
   }
  },
+ "hurry": {
+  "empire": {
+   "cost": {
+    "percent": -25
+   }
+  }
+ },
  "workRate": {
   "empire": {
    "percent": 15
@@ -420,12 +430,5 @@
   "civilopedia": "TXT_KEY_TRAIT_GREEDY1_PEDIA",
   "strategy": "TXT_KEY_TRAIT_GREEDY_STRATEGY",
   "negativeTrait": true
- },
- "costs": {
-  "empire": {
-   "hurry": {
-    "percent": -25
-   }
-  }
  }
 }

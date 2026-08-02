@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_EFFICIENT1",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_EFFICIENT2"
+  ],
   "traits": [
    "TRAIT_EFFICIENT2"
   ]
@@ -10,6 +13,9 @@
  ],
  "commerce": {
   "empire": {
+   "tradeRoute": {
+    "percent": 10
+   },
    "improvements": {
     "IMPROVEMENT_COTTAGE": {
      "flat": 1
@@ -200,14 +206,5 @@
   "civilopedia": "TXT_KEY_TRAIT_EFFICIENT1_PEDIA",
   "strategy": "TXT_KEY_TRAIT_EFFICIENT_STRATEGY",
   "impurePropertyManipulators": true
- },
- "tradeRoutes": {
-  "empire": {
-   "modifier": {
-    "commerce": {
-     "percent": 10
-    }
-   }
-  }
  }
 }

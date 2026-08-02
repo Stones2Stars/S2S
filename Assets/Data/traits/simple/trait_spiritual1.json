@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_SPIRITUAL1",
  "enables": {
-  "traits": [
+  "traitsAnd": [
    "TRAIT_SPIRITUAL2"
   ]
  },
@@ -176,13 +176,8 @@
      "flat": 1
     }
    },
-   "cities": {
-    "flat": [
-     {
-      "value": -3,
-      "religion": "!IS_STATE_RELIGION"
-     }
-    ]
+   "nonStateReligion": {
+    "flat": -3
    }
   }
  },

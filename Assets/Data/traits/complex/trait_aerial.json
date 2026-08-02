@@ -755,29 +755,19 @@
    }
   }
  },
- "capture": {
+ "combat": {
   "empire": {
-   "resistance": {
-    "percent": -30
-   }
-  }
- },
- "air": {
-  "empire": {
-   "range": {
+   "missileRange": {
     "flat": 1
-   }
-  }
- },
- "range": {
-  "empire": {
-   "flat": 1
-  }
- },
- "cargo": {
-  "empire": {
+   },
+   "flightRange": {
+    "flat": 1
+   },
    "missileCargo": {
     "flat": 2
+   },
+   "captureResistance": {
+    "percent": -30
    }
   }
  },
@@ -861,53 +851,31 @@
    }
   }
  },
- "triggers": [
-  {
-   "trigger": "onTurnEnd",
-   "action": {
-    "promote": {
-     "promotions": [
-      "PROMOTION_AERIAL"
-     ],
-     "units": {
-      "unitCombats": [
-       "UNITCOMBAT_ARCHER",
-       "UNITCOMBAT_BALLOON",
-       "UNITCOMBAT_GUN",
-       "UNITCOMBAT_HELICOPTER",
-       "UNITCOMBAT_THROWING"
-      ]
-     }
-    }
-   }
-  },
-  {
-   "trigger": "onTurnEnd",
-   "action": {
-    "promote": {
-     "promotions": [
-      "PROMOTION_AERIAL_SUPERIORITY"
-     ],
-     "units": {
-      "unitCombats": [
-       "UNITCOMBAT_ANTIMATTER_SPACESHIP",
-       "UNITCOMBAT_BOMBERS",
-       "UNITCOMBAT_EARLY_BOMBERS",
-       "UNITCOMBAT_EARLY_FIGHTERS",
-       "UNITCOMBAT_EARLY_SPACESHIP",
-       "UNITCOMBAT_JET_FIGHTERS",
-       "UNITCOMBAT_NUCLEAR_SPACESHIP",
-       "UNITCOMBAT_ORBITAL_AIRCRAFT",
-       "UNITCOMBAT_SOLAR_SAIL_SPACESHIP",
-       "UNITCOMBAT_STEALTH",
-       "UNITCOMBAT_SUPERSONIC_PLANES",
-       "UNITCOMBAT_WORMHOLE_SPACESHIP"
-      ]
-     }
-    }
-   }
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_AERIAL": [
+    "UNITCOMBAT_ARCHER",
+    "UNITCOMBAT_BALLOON",
+    "UNITCOMBAT_GUN",
+    "UNITCOMBAT_HELICOPTER",
+    "UNITCOMBAT_THROWING"
+   ],
+   "PROMOTION_AERIAL_SUPERIORITY": [
+    "UNITCOMBAT_ANTIMATTER_SPACESHIP",
+    "UNITCOMBAT_BOMBERS",
+    "UNITCOMBAT_EARLY_BOMBERS",
+    "UNITCOMBAT_EARLY_FIGHTERS",
+    "UNITCOMBAT_EARLY_SPACESHIP",
+    "UNITCOMBAT_JET_FIGHTERS",
+    "UNITCOMBAT_NUCLEAR_SPACESHIP",
+    "UNITCOMBAT_ORBITAL_AIRCRAFT",
+    "UNITCOMBAT_SOLAR_SAIL_SPACESHIP",
+    "UNITCOMBAT_STEALTH",
+    "UNITCOMBAT_SUPERSONIC_PLANES",
+    "UNITCOMBAT_WORMHOLE_SPACESHIP"
+   ]
   }
- ],
+ },
  "ai": {
   "flavours": [
    {

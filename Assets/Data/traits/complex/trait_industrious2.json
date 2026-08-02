@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_INDUSTRIOUS2",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_INDUSTRIOUS3"
+  ],
   "traits": [
    "TRAIT_INDUSTRIOUS3"
   ]

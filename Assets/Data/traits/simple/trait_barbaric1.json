@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_BARBARIC1",
  "enables": {
-  "traits": [
+  "traitsAnd": [
    "TRAIT_BARBARIC2"
   ]
  },
@@ -41,24 +41,14 @@
    }
   }
  },
- "triggers": [
-  {
-   "trigger": "onTurnEnd",
-   "action": {
-    "promote": {
-     "promotions": [
-      "PROMOTION_COMBAT1"
-     ],
-     "units": {
-      "unitCombats": [
-       "UNITCOMBAT_GUN",
-       "UNITCOMBAT_MELEE"
-      ]
-     }
-    }
-   }
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_COMBAT1": [
+    "UNITCOMBAT_GUN",
+    "UNITCOMBAT_MELEE"
+   ]
   }
- ],
+ },
  "ai": {
   "flavours": [
    {

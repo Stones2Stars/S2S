@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_SEAFARING2",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_SEAFARING3"
+  ],
   "traits": [
    "TRAIT_SEAFARING3"
   ]
@@ -173,7 +176,7 @@
    }
   }
  },
- "cargo": {
+ "combat": {
   "empire": {
    "navalCargo": {
     "flat": 1
@@ -199,12 +202,9 @@
  },
  "tradeRoutes": {
   "empire": {
-   "flat": [
-    {
-     "value": 1,
-     "enabled": "HAS_COAST"
-    }
-   ]
+   "coastal": {
+    "flat": 1
+   }
   }
  },
  "workRate": {
@@ -253,48 +253,26 @@
    }
   }
  },
- "triggers": [
-  {
-   "trigger": "onTurnEnd",
-   "action": {
-    "promote": {
-     "promotions": [
-      "PROMOTION_AMPHIBIOUS"
-     ],
-     "units": {
-      "unitCombats": [
-       "UNITCOMBAT_GUN",
-       "UNITCOMBAT_HELICOPTER"
-      ]
-     }
-    }
-   }
-  },
-  {
-   "trigger": "onTurnEnd",
-   "action": {
-    "promote": {
-     "promotions": [
-      "PROMOTION_SEAFARING2"
-     ],
-     "units": {
-      "unitCombats": [
-       "UNITCOMBAT_DIESEL_SHIPS",
-       "UNITCOMBAT_DROID_SHIPS",
-       "UNITCOMBAT_GRAVITY_DRIVE_SHIPS",
-       "UNITCOMBAT_JET_SHIPS",
-       "UNITCOMBAT_LEVITATION_SHIPS",
-       "UNITCOMBAT_NUCLEAR_SHIPS",
-       "UNITCOMBAT_SHOCKWAVE_SHIPS",
-       "UNITCOMBAT_STEAM_SHIPS",
-       "UNITCOMBAT_TROID_SHIPS",
-       "UNITCOMBAT_WOODEN_SHIPS"
-      ]
-     }
-    }
-   }
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_AMPHIBIOUS": [
+    "UNITCOMBAT_GUN",
+    "UNITCOMBAT_HELICOPTER"
+   ],
+   "PROMOTION_SEAFARING2": [
+    "UNITCOMBAT_DIESEL_SHIPS",
+    "UNITCOMBAT_DROID_SHIPS",
+    "UNITCOMBAT_GRAVITY_DRIVE_SHIPS",
+    "UNITCOMBAT_JET_SHIPS",
+    "UNITCOMBAT_LEVITATION_SHIPS",
+    "UNITCOMBAT_NUCLEAR_SHIPS",
+    "UNITCOMBAT_SHOCKWAVE_SHIPS",
+    "UNITCOMBAT_STEAM_SHIPS",
+    "UNITCOMBAT_TROID_SHIPS",
+    "UNITCOMBAT_WOODEN_SHIPS"
+   ]
   }
- ],
+ },
  "ai": {
   "flavours": [
    {

@@ -87,23 +87,13 @@
    }
   }
  },
- "triggers": [
-  {
-   "trigger": "onTurnEnd",
-   "action": {
-    "promote": {
-     "promotions": [
-      "PROMOTION_LOYALTY"
-     ],
-     "units": {
-      "unitCombats": [
-       "UNITCOMBAT_SPY"
-      ]
-     }
-    }
-   }
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_LOYALTY": [
+    "UNITCOMBAT_SPY"
+   ]
   }
- ],
+ },
  "ai": {
   "flavours": [
    {

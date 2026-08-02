@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_CROOKED1",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_CROOKED2"
+  ],
   "traits": [
    "TRAIT_CROOKED2"
   ]
@@ -221,9 +224,11 @@
    }
   }
  },
- "espionageDefense": {
+ "combat": {
   "empire": {
-   "percent": -15
+   "espionageDefense": {
+    "percent": -15
+   }
   }
  },
  "maintenance": {
@@ -279,23 +284,13 @@
    }
   }
  },
- "triggers": [
-  {
-   "trigger": "onTurnEnd",
-   "action": {
-    "promote": {
-     "promotions": [
-      "PROMOTION_CROOKED1"
-     ],
-     "units": {
-      "unitCombats": [
-       "UNITCOMBAT_CRIMINAL"
-      ]
-     }
-    }
-   }
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_CROOKED1": [
+    "UNITCOMBAT_CRIMINAL"
+   ]
   }
- ],
+ },
  "ai": {
   "flavours": [
    {

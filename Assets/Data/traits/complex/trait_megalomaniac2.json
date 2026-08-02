@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_MEGALOMANIAC2",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_MEGALOMANIAC3"
+  ],
   "traits": [
    "TRAIT_MEGALOMANIAC3"
   ]
@@ -63,9 +66,11 @@
    "percent": 10
   }
  },
- "espionageDefense": {
+ "combat": {
   "empire": {
-   "percent": -10
+   "espionageDefense": {
+    "percent": -10
+   }
   }
  },
  "upkeep": {

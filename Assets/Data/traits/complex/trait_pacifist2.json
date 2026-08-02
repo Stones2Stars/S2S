@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_PACIFIST2",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_PACIFIST3"
+  ],
   "traits": [
    "TRAIT_PACIFIST3"
   ]
@@ -41,15 +44,10 @@
     "percent": -10
    },
    "freeMilitary": {
-    "flat": [
-     {
-      "value": -15,
-      "per": {
-       "type": "POPULATION",
-       "each": 100
-      }
-     }
-    ]
+    "perPopulation": -15
+   },
+   "upgradePrice": {
+    "percent": 30
    }
   }
  },
@@ -72,24 +70,14 @@
    }
   }
  },
- "triggers": [
-  {
-   "trigger": "onTurnEnd",
-   "action": {
-    "promote": {
-     "promotions": [
-      "PROMOTION_PACIFIST2"
-     ],
-     "units": {
-      "unitCombats": [
-       "UNITCOMBAT_COMBATANT",
-       "UNITCOMBAT_NAVAL_COMBATANT"
-      ]
-     }
-    }
-   }
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_PACIFIST2": [
+    "UNITCOMBAT_COMBATANT",
+    "UNITCOMBAT_NAVAL_COMBATANT"
+   ]
   }
- ],
+ },
  "ai": {
   "flavours": [
    {
@@ -129,12 +117,5 @@
   "strategy": "TXT_KEY_TRAIT_PACIFIST_STRATEGY",
   "negativeTrait": true,
   "impurePropertyManipulators": true
- },
- "costs": {
-  "empire": {
-   "upgrade": {
-    "percent": 30
-   }
-  }
  }
 }

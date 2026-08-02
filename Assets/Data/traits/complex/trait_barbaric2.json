@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_BARBARIC2",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_BARBARIC3"
+  ],
   "traits": [
    "TRAIT_BARBARIC3"
   ]
@@ -60,6 +63,13 @@
    }
   }
  },
+ "upkeep": {
+  "empire": {
+   "upgradePrice": {
+    "percent": 15
+   }
+  }
+ },
  "hurry": {
   "empire": {
    "anger": {
@@ -100,24 +110,14 @@
    }
   }
  },
- "triggers": [
-  {
-   "trigger": "onTurnEnd",
-   "action": {
-    "promote": {
-     "promotions": [
-      "PROMOTION_BARBARIC2"
-     ],
-     "units": {
-      "unitCombats": [
-       "UNITCOMBAT_COMBATANT",
-       "UNITCOMBAT_NAVAL_COMBATANT"
-      ]
-     }
-    }
-   }
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_BARBARIC2": [
+    "UNITCOMBAT_COMBATANT",
+    "UNITCOMBAT_NAVAL_COMBATANT"
+   ]
   }
- ],
+ },
  "ai": {
   "flavours": [
    {
@@ -158,12 +158,5 @@
   "negativeTrait": true,
   "impurePromotions": true,
   "minAnarchy": 2
- },
- "costs": {
-  "empire": {
-   "upgrade": {
-    "percent": 15
-   }
-  }
  }
 }

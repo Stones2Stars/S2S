@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_CREATIVE2",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_CREATIVE3"
+  ],
   "traits": [
    "TRAIT_CREATIVE3"
   ]
@@ -415,9 +418,9 @@
    "flat": -1
   }
  },
- "capture": {
+ "combat": {
   "empire": {
-   "resistance": {
+   "captureResistance": {
     "percent": -10
    }
   }

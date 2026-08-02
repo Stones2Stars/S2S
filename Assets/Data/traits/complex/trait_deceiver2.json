@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_DECEIVER2",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_DECEIVER3"
+  ],
   "traits": [
    "TRAIT_DECEIVER3"
   ]
@@ -175,16 +178,14 @@
    }
   }
  },
- "capture": {
+ "combat": {
   "empire": {
-   "resistance": {
+   "espionageDefense": {
+    "percent": 20
+   },
+   "captureResistance": {
     "percent": -20
    }
-  }
- },
- "espionageDefense": {
-  "empire": {
-   "percent": 20
   }
  },
  "durations": {
@@ -216,23 +217,13 @@
    }
   }
  },
- "triggers": [
-  {
-   "trigger": "onTurnEnd",
-   "action": {
-    "promote": {
-     "promotions": [
-      "PROMOTION_DECEIVER2"
-     ],
-     "units": {
-      "unitCombats": [
-       "UNITCOMBAT_SPY"
-      ]
-     }
-    }
-   }
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_DECEIVER2": [
+    "UNITCOMBAT_SPY"
+   ]
   }
- ],
+ },
  "ai": {
   "flavours": [
    {

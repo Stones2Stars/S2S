@@ -228,9 +228,9 @@
    "flat": -1
   }
  },
- "capture": {
+ "combat": {
   "empire": {
-   "resistance": {
+   "captureResistance": {
     "percent": -10
    }
   }

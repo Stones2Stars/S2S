@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_HUMANITARIAN1",
  "enables": {
-  "traits": [
+  "traitsAnd": [
    "TRAIT_HUMANITARIAN2"
   ]
  },

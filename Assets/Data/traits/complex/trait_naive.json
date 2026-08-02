@@ -419,9 +419,11 @@
    }
   }
  },
- "espionageDefense": {
+ "combat": {
   "empire": {
-   "percent": -20
+   "espionageDefense": {
+    "percent": -20
+   }
   }
  },
  "durations": {
@@ -465,23 +467,13 @@
    }
   }
  },
- "triggers": [
-  {
-   "trigger": "onTurnEnd",
-   "action": {
-    "promote": {
-     "promotions": [
-      "PROMOTION_NAIVE"
-     ],
-     "units": {
-      "unitCombats": [
-       "UNITCOMBAT_SPY"
-      ]
-     }
-    }
-   }
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_NAIVE": [
+    "UNITCOMBAT_SPY"
+   ]
   }
- ],
+ },
  "ai": {
   "flavours": [
    {

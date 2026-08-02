@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_PROLIFIC1",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_PROLIFIC2"
+  ],
   "traits": [
    "TRAIT_PROLIFIC2"
   ]

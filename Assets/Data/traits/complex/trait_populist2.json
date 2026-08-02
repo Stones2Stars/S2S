@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_POPULIST2",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_POPULIST3"
+  ],
   "traits": [
    "TRAIT_POPULIST3"
   ]
@@ -10,14 +13,6 @@
  ],
  "commerce": {
   "empire": {
-   "specialists": {
-    "SPECIALIST_LAWYER": {
-     "flat": -1
-    },
-    "SPECIALIST_GREAT_STATESMAN": {
-     "flat": -1
-    }
-   },
    "cities": {
     "flat": [
      {
@@ -28,6 +23,14 @@
       }
      }
     ]
+   },
+   "specialists": {
+    "SPECIALIST_LAWYER": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_STATESMAN": {
+     "flat": -1
+    }
    }
   }
  },

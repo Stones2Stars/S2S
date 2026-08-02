@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_ANTI_CLERICAL1",
  "enables": {
-  "traits": [
+  "traitsAnd": [
    "TRAIT_ANTI_CLERICAL2"
   ]
  },
@@ -92,9 +92,11 @@
    }
   }
  },
- "espionageDefense": {
+ "combat": {
   "empire": {
-   "percent": 25
+   "espionageDefense": {
+    "percent": 25
+   }
   }
  },
  "maintenance": {

@@ -57,9 +57,11 @@
    "flat": 2
   }
  },
- "espionageDefense": {
+ "combat": {
   "empire": {
-   "percent": -20
+   "espionageDefense": {
+    "percent": -20
+   }
   }
  },
  "goldenAge": {

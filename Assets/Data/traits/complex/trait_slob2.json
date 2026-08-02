@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_SLOB2",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_SLOB3"
+  ],
   "traits": [
    "TRAIT_SLOB3"
   ]
@@ -63,6 +66,13 @@
    }
   }
  },
+ "hurry": {
+  "empire": {
+   "cost": {
+    "percent": -15
+   }
+  }
+ },
  "diplomacy": {
   "empire": {
    "attitude": {
@@ -94,24 +104,14 @@
    }
   }
  },
- "triggers": [
-  {
-   "trigger": "onTurnEnd",
-   "action": {
-    "promote": {
-     "promotions": [
-      "PROMOTION_SLOB2"
-     ],
-     "units": {
-      "unitCombats": [
-       "UNITCOMBAT_SPECIES_HUMAN",
-       "UNITCOMBAT_SPECIES_NEANDERTHAL"
-      ]
-     }
-    }
-   }
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_SLOB2": [
+    "UNITCOMBAT_SPECIES_HUMAN",
+    "UNITCOMBAT_SPECIES_NEANDERTHAL"
+   ]
   }
- ],
+ },
  "ai": {
   "flavours": [
    {
@@ -150,12 +150,5 @@
   "civilopedia": "TXT_KEY_TRAIT_SLOB2_PEDIA",
   "strategy": "TXT_KEY_TRAIT_SLOB_STRATEGY",
   "negativeTrait": true
- },
- "costs": {
-  "empire": {
-   "hurry": {
-    "percent": -15
-   }
-  }
  }
 }

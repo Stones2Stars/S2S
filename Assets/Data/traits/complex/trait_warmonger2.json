@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_WARMONGER2",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_WARMONGER3"
+  ],
   "traits": [
    "TRAIT_WARMONGER3"
   ]
@@ -41,15 +44,10 @@
     "percent": 10
    },
    "freeMilitary": {
-    "flat": [
-     {
-      "value": 30,
-      "per": {
-       "type": "POPULATION",
-       "each": 100
-      }
-     }
-    ]
+    "perPopulation": 30
+   },
+   "upgradePrice": {
+    "percent": -30
    }
   }
  },
@@ -72,24 +70,14 @@
    }
   }
  },
- "triggers": [
-  {
-   "trigger": "onTurnEnd",
-   "action": {
-    "promote": {
-     "promotions": [
-      "PROMOTION_COMBAT2"
-     ],
-     "units": {
-      "unitCombats": [
-       "UNITCOMBAT_COMBATANT",
-       "UNITCOMBAT_NAVAL_COMBATANT"
-      ]
-     }
-    }
-   }
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_COMBAT2": [
+    "UNITCOMBAT_COMBATANT",
+    "UNITCOMBAT_NAVAL_COMBATANT"
+   ]
   }
- ],
+ },
  "ai": {
   "flavours": [
    {
@@ -128,12 +116,5 @@
   "civilopedia": "TXT_KEY_TRAIT_WARMONGER2_PEDIA",
   "strategy": "TXT_KEY_TRAIT_WARMONGER_STRATEGY",
   "impurePropertyManipulators": true
- },
- "costs": {
-  "empire": {
-   "upgrade": {
-    "percent": -30
-   }
-  }
  }
 }

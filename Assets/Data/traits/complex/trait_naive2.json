@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_NAIVE2",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_NAIVE3"
+  ],
   "traits": [
    "TRAIT_NAIVE3"
   ]
@@ -166,9 +169,11 @@
    }
   }
  },
- "espionageDefense": {
+ "combat": {
   "empire": {
-   "percent": -25
+   "espionageDefense": {
+    "percent": -25
+   }
   }
  },
  "durations": {
@@ -200,23 +205,13 @@
    }
   }
  },
- "triggers": [
-  {
-   "trigger": "onTurnEnd",
-   "action": {
-    "promote": {
-     "promotions": [
-      "PROMOTION_NAIVE2"
-     ],
-     "units": {
-      "unitCombats": [
-       "UNITCOMBAT_SPY"
-      ]
-     }
-    }
-   }
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_NAIVE2": [
+    "UNITCOMBAT_SPY"
+   ]
   }
- ],
+ },
  "ai": {
   "flavours": [
    {

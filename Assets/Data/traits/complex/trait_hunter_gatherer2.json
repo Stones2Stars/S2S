@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_HUNTER_GATHERER2",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_HUNTER_GATHERER3"
+  ],
   "traits": [
    "TRAIT_HUNTER_GATHERER3"
   ]

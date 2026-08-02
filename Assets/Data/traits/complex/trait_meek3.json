@@ -72,12 +72,12 @@
    "flat": -6
   }
  },
- "capture": {
+ "combat": {
   "empire": {
-   "probability": {
+   "captureProbability": {
     "percent": -20
    },
-   "resistance": {
+   "captureResistance": {
     "percent": -10
    }
   }
@@ -98,29 +98,16 @@
     "percent": -10
    },
    "freeCivilian": {
-    "flat": [
-     {
-      "value": -15,
-      "per": {
-       "type": "POPULATION",
-       "each": 100
-      }
-     }
-    ]
+    "perPopulation": -15
    },
    "freeMilitary": {
-    "flat": [
-     {
-      "value": -15,
-      "per": {
-       "type": "POPULATION",
-       "each": 100
-      }
-     }
-    ]
+    "perPopulation": -15
    },
    "unitMilitary": {
     "percent": 10
+   },
+   "upgradePrice": {
+    "percent": -15
    }
   }
  },
@@ -146,23 +133,13 @@
    }
   }
  },
- "triggers": [
-  {
-   "trigger": "onTurnEnd",
-   "action": {
-    "promote": {
-     "promotions": [
-      "PROMOTION_MEEK3"
-     ],
-     "units": {
-      "unitCombats": [
-       "UNITCOMBAT_COMBATANT"
-      ]
-     }
-    }
-   }
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_MEEK3": [
+    "UNITCOMBAT_COMBATANT"
+   ]
   }
- ],
+ },
  "ai": {
   "flavours": [
    {
@@ -202,12 +179,5 @@
   "strategy": "TXT_KEY_TRAIT_MEEK_STRATEGY",
   "negativeTrait": true,
   "impurePropertyManipulators": true
- },
- "costs": {
-  "empire": {
-   "upgrade": {
-    "percent": -15
-   }
-  }
  }
 }

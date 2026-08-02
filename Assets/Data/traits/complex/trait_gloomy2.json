@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_GLOOMY2",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_GLOOMY3"
+  ],
   "traits": [
    "TRAIT_GLOOMY3"
   ]

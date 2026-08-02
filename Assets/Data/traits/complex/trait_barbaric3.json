@@ -55,6 +55,13 @@
    }
   }
  },
+ "upkeep": {
+  "empire": {
+   "upgradePrice": {
+    "percent": 15
+   }
+  }
+ },
  "hurry": {
   "empire": {
    "anger": {
@@ -89,24 +96,14 @@
    }
   }
  },
- "triggers": [
-  {
-   "trigger": "onTurnEnd",
-   "action": {
-    "promote": {
-     "promotions": [
-      "PROMOTION_BARBARIC3"
-     ],
-     "units": {
-      "unitCombats": [
-       "UNITCOMBAT_COMBATANT",
-       "UNITCOMBAT_NAVAL_COMBATANT"
-      ]
-     }
-    }
-   }
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_BARBARIC3": [
+    "UNITCOMBAT_COMBATANT",
+    "UNITCOMBAT_NAVAL_COMBATANT"
+   ]
   }
- ],
+ },
  "ai": {
   "flavours": [
    {
@@ -147,12 +144,5 @@
   "negativeTrait": true,
   "impurePromotions": true,
   "minAnarchy": 3
- },
- "costs": {
-  "empire": {
-   "upgrade": {
-    "percent": 15
-   }
-  }
  }
 }

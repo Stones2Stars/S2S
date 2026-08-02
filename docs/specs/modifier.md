@@ -464,18 +464,27 @@ reversible — it can be lost).
 both ways at parse so the machine reads top-down. Any "land it on the target" is a **parse transform**, never an
 authored shape.
 
-> **⛔ Trait modifier sources — pick the active set by the OPTION, never the id (kraken-resilience).**
+> **⛔ THE TWO TRAIT SETS ARE COMPLETELY SEPARATE — SEPARATED BY ID, NOT ONLY BY FOLDER (owner).**
 > A leader's traits resolve to ONE `CvTraitInfo` table from *either* its simple set (`traits/simple/`, the
 > `DefaultTraits`) *or* its complex/Thunderbrd set (`traits/complex/`, the `DefaultComplexTraits`), chosen at runtime
 > by **`GAMEOPTION_LEADER_COMPLEX_TRAITS`**. The curator emits both as **two cleanly-separated, self-complete folders**
 > (`traits/simple/` + `traits/complex/`); a consumer **loads the one active folder** by the live game option — this is
 > NOT an entity-level option gate and NOT a mid-game swap (any WorldBuilder mid-game trait swap is a post-migration
-> concern). The two
-> sets share **~64 colliding type ids**, so a consumer reading a trait's modifier families MUST select the active set
-> from the **live game option (asserted via `/state`)** — NEVER infer it from a trait id's spelling (a `…1`-suffixed id
-> is not "simple") nor from file load-order. Using the wrong file silently yields wrong magnitudes. (The enabler is
-> unaffected: it reads trait *presence*, which
-> `/state` already resolves to the active set; only the modifier cascade reads trait *family values*.)
+> concern).
+> **A complex trait KEEPS ITS OWN `TRAIT_COMPLEX_` IDENTITY** ([naming.md](naming.md): `TRAIT_` is a simple trait,
+> `TRAIT_COMPLEX_` a complex one). ⛔ It is NEVER re-keyed onto the base trait's id: that re-key is what
+> manufactured the colliding-id problem — two genuinely different entities answering to one name — which then
+> forced every reader to disambiguate by game option and made a wrong read silently return wrong magnitudes.
+> Distinct ids remove the ambiguity by construction rather than by discipline.
+> ⚠ **The separation is deliberately NOT completed by renaming the legacy ids**: the complex-ONLY records (a trait
+> the simple system never had) keep their authored `TRAIT_` ids, because they collide with nothing and renaming
+> them is a Type removal with save consequences ([save.md §7](save.md)). So `traits/complex/` legitimately holds a
+> MIX of `TRAIT_COMPLEX_*` (the variants of a simple trait) and plain `TRAIT_*` (the complex-only ones) — read the
+> FOLDER as the set boundary, never the prefix.
+> ⚑ The one remaining shared id is **`TRAIT_BARBARIAN`**, the NPC trait base-filled into `complex/` so that set
+> stays self-complete (below) — the only simple trait with no complex variant.
+> (The enabler is unaffected either way: it reads trait *presence*; only the modifier cascade reads trait
+> *family values*.)
 >
 > **⛔ Inverted-onto-a-SHARED-entity boosts stay on the TRAIT, per set — the own-output carve-out.**
 > The [deliveryguy rule](#4-ownership--the-deliveryguy-rule) normally puts a trait's boost of *another* entity's output
@@ -510,10 +519,28 @@ authored shape.
 >     with **no** replacement is base-filled into `complex/` whole (its base IS the complex version — e.g.
 >     `TRAIT_BARBARIAN`, the NPC-civ trait). **Folder classification** keys on the `OnGameOptions: COMPLEX` gate /
 >     replacement-variant; a developing-line (`PromotionLine`) member that UNIQUELY lacks the gate its siblings carry is
->     a SOURCE-data bug to fix (restore the tag), not a classifier change (the `TRAIT_TIMID1` case). **Traits are
->     content-LOCKED** — `curate_trait` + `curate_leaderhead` are excluded from the full regen; the folders are
->     hand-maintained from here (the community owns trait assignments post-launch). The active set is chosen by the live
->     option (callout above).
+>     a SOURCE-data bug to fix (restore the tag), not a classifier change (the `TRAIT_TIMID1` case). The active set is
+>     chosen by the live option (callout above).
+>     **⛔ TRAITS ARE NOT CONTENT-LOCKED — THE CURATOR IS THE AUTHORITY AND THE FOLDERS ARE REGENERATED (owner).**
+>     The lock made the two folders hand-maintained, which is precisely how they drifted: a hand edit could put an
+>     edge in one set pointing at an entity only the other set has, and nothing regenerable existed to correct it.
+>     So `curate_trait` reads the legacy XML like every other curator and `--write` rewrites both folders.
+>     ⚑ **Its input is the ARCHIVED XML** (`SourceArchive/Assets/**`, searched by `store.py` alongside the live
+>     roots): the trait XML was removed from `Assets/` once its JSON landed, and it is curator INPUT there and
+>     nowhere else — never a game load path ([DEC-no-xml-into-game](../architecture/decisions.md#dec-no-xml-into-game)),
+>     and unrelated to the red-ratchet ban on reviving a `CvXInfo` from `SourceArchive/Infos/`.
+>     ⚠ Community-owned trait CONTENT still lands through `_additions/` like any other post-curation authoring
+>     ([curators/README.md](curators/README.md)), which is what the lock was reaching for — a regenerable base with
+>     an overlay, not a frozen folder.
+>   - **⛔ THE LADDER EDGE IS RESOLVED FROM LINE MEMBERSHIP, NEVER FROM THE ID SPELLING.** A rung `enables` the rung
+>     above it ([json.md §9](json.md): a ladder is an `enables` edge, not a section), and which rung that IS comes
+>     from the line's members ordered by `iLinePriority` — restricted to the FOLDER being emitted, so a chain simply
+>     ends where that set ends (`simple/` tops out at rung 1) and never reaches into the other set.
+>     ⚠ Deriving the successor by string arithmetic on the id (`TRAIT_X1` → `TRAIT_X2`) is WRONG and fails silently
+>     in three ways the data actually contains: a line that RENAMES mid-chain (`TRAIT_NOMAD1` → `TRAIT_NOMADIC2`)
+>     gets an edge to a fabricated id no record defines; a line whose ranks SKIP loses the link entirely; and a top
+>     rung gets an edge to a rung above it that does not exist. The base rung is `iLinePriority` 0/absent, and the
+>     two arms (`+1,+2,+3` and `-1,-2,-3`) each chain outward from it, so a line carrying both FORKS at the base.
 >   - **Developing line — do NOT auto-develop (engine-verified).** A `PromotionLine` is a chain of trait *levels*
 >     (`TRAIT_NOMAD1`→`TRAIT_NOMADIC2`→`…`, ordered by `iLinePriority`, each with a `PrereqTech`+`TraitPrereq`), but
 >     **researching a level's `PrereqTech` does NOT advance the held trait**. The **held trait `/state` reports IS

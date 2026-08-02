@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_USURPER2",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_USURPER3"
+  ],
   "traits": [
    "TRAIT_USURPER3"
   ]
@@ -103,16 +106,14 @@
    "percent": 25
   }
  },
- "capture": {
+ "combat": {
   "empire": {
-   "resistance": {
+   "espionageDefense": {
+    "percent": -10
+   },
+   "captureResistance": {
     "percent": -20
    }
-  }
- },
- "espionageDefense": {
-  "empire": {
-   "percent": -10
   }
  },
  "upkeep": {

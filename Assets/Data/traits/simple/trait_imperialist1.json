@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_IMPERIALIST1",
  "enables": {
-  "traits": [
+  "traitsAnd": [
    "TRAIT_IMPERIALIST2"
   ]
  },
@@ -52,15 +52,7 @@
  "upkeep": {
   "empire": {
    "freeMilitary": {
-    "flat": [
-     {
-      "value": 20,
-      "per": {
-       "type": "POPULATION",
-       "each": 100
-      }
-     }
-    ]
+    "perPopulation": 20
    }
   }
  },

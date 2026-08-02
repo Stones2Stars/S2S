@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_PIOUS1",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_PIOUS2"
+  ],
   "traits": [
    "TRAIT_PIOUS2"
   ]
@@ -139,13 +142,8 @@
  },
  "happiness": {
   "empire": {
-   "cities": {
-    "flat": [
-     {
-      "value": -1,
-      "religion": "!IS_STATE_RELIGION"
-     }
-    ]
+   "nonStateReligion": {
+    "flat": -1
    },
    "flat": [
     {
@@ -216,26 +214,16 @@
  "policies": {
   "allowInquisitions": true
  },
- "triggers": [
-  {
-   "trigger": "onTurnEnd",
-   "action": {
-    "promote": {
-     "promotions": [
-      "PROMOTION_DEVOTION1"
-     ],
-     "units": {
-      "unitCombats": [
-       "UNITCOMBAT_CIVILIAN",
-       "UNITCOMBAT_COMBATANT",
-       "UNITCOMBAT_EXPLORER",
-       "UNITCOMBAT_NAVAL_COMBATANT"
-      ]
-     }
-    }
-   }
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_DEVOTION1": [
+    "UNITCOMBAT_CIVILIAN",
+    "UNITCOMBAT_COMBATANT",
+    "UNITCOMBAT_EXPLORER",
+    "UNITCOMBAT_NAVAL_COMBATANT"
+   ]
   }
- ],
+ },
  "ai": {
   "flavours": [
    {

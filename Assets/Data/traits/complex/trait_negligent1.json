@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_NEGLIGENT1",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_NEGLIGENT2"
+  ],
   "traits": [
    "TRAIT_NEGLIGENT2"
   ]
@@ -252,9 +255,11 @@
    "flat": -2
   }
  },
- "espionageDefense": {
+ "combat": {
   "empire": {
-   "percent": -10
+   "espionageDefense": {
+    "percent": -10
+   }
   }
  },
  "maintenance": {
@@ -270,15 +275,7 @@
  "upkeep": {
   "empire": {
    "freeCivilian": {
-    "flat": [
-     {
-      "value": -15,
-      "per": {
-       "type": "POPULATION",
-       "each": 100
-      }
-     }
-    ]
+    "perPopulation": -15
    }
   }
  },
@@ -304,23 +301,13 @@
    }
   }
  },
- "triggers": [
-  {
-   "trigger": "onTurnEnd",
-   "action": {
-    "promote": {
-     "promotions": [
-      "PROMOTION_NEGLIGENT1"
-     ],
-     "units": {
-      "unitCombats": [
-       "UNITCOMBAT_COMBATANT"
-      ]
-     }
-    }
-   }
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_NEGLIGENT1": [
+    "UNITCOMBAT_COMBATANT"
+   ]
   }
- ],
+ },
  "ai": {
   "flavours": [
    {

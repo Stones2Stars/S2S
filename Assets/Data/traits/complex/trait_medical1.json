@@ -1,9 +1,12 @@
 {
  "type": "TRAIT_MEDICAL1",
  "enables": {
-  "traits": [
+  "traitsAnd": [
    "TRAIT_MEDICAL2",
    "TRAIT_MEDICAL3"
+  ],
+  "traits": [
+   "TRAIT_MEDICAL2"
   ]
  },
  "excludes": [
@@ -331,25 +334,13 @@
   }
  },
  "grants": {
+  "freePromotions": {
+   "PROMOTION_MEDICAL1": [
+    "UNITCOMBAT_HEALTH_CARE"
+   ]
+  },
   "goldenAgeOnBirthOfGreatPerson": "UNIT_DOCTOR"
  },
- "triggers": [
-  {
-   "trigger": "onTurnEnd",
-   "action": {
-    "promote": {
-     "promotions": [
-      "PROMOTION_MEDICAL1"
-     ],
-     "units": {
-      "unitCombats": [
-       "UNITCOMBAT_HEALTH_CARE"
-      ]
-     }
-    }
-   }
-  }
- ],
  "ai": {
   "flavours": [
    {

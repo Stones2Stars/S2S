@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_PIOUS2",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_PIOUS3"
+  ],
   "traits": [
    "TRAIT_PIOUS3"
   ]
@@ -220,26 +223,16 @@
  "policies": {
   "citiesStartWithStateReligion": true
  },
- "triggers": [
-  {
-   "trigger": "onTurnEnd",
-   "action": {
-    "promote": {
-     "promotions": [
-      "PROMOTION_DEVOTION2"
-     ],
-     "units": {
-      "unitCombats": [
-       "UNITCOMBAT_CIVILIAN",
-       "UNITCOMBAT_COMBATANT",
-       "UNITCOMBAT_EXPLORER",
-       "UNITCOMBAT_NAVAL_COMBATANT"
-      ]
-     }
-    }
-   }
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_DEVOTION2": [
+    "UNITCOMBAT_CIVILIAN",
+    "UNITCOMBAT_COMBATANT",
+    "UNITCOMBAT_EXPLORER",
+    "UNITCOMBAT_NAVAL_COMBATANT"
+   ]
   }
- ],
+ },
  "ai": {
   "flavours": [
    {

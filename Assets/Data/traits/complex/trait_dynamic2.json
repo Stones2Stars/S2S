@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_DYNAMIC2",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_DYNAMIC3"
+  ],
   "traits": [
    "TRAIT_DYNAMIC3"
   ]
@@ -164,6 +167,13 @@
    }
   }
  },
+ "commerce": {
+  "empire": {
+   "tradeRoute": {
+    "percent": -10
+   }
+  }
+ },
  "freeSpecialists": {
   "empire": {
    "any": 1
@@ -177,15 +187,10 @@
  "upkeep": {
   "empire": {
    "freeCivilian": {
-    "flat": [
-     {
-      "value": -15,
-      "per": {
-       "type": "POPULATION",
-       "each": 100
-      }
-     }
-    ]
+    "perPopulation": -15
+   },
+   "upgradePrice": {
+    "percent": -15
    }
   }
  },
@@ -193,6 +198,9 @@
   "empire": {
    "anger": {
     "percent": -25
+   },
+   "cost": {
+    "percent": -30
    }
   }
  },
@@ -269,24 +277,5 @@
   "description": "TXT_KEY_TRAIT_DYNAMIC2",
   "civilopedia": "TXT_KEY_TRAIT_DYNAMIC2_PEDIA",
   "strategy": "TXT_KEY_TRAIT_DYNAMIC_STRATEGY"
- },
- "tradeRoutes": {
-  "empire": {
-   "modifier": {
-    "commerce": {
-     "percent": -10
-    }
-   }
-  }
- },
- "costs": {
-  "empire": {
-   "hurry": {
-    "percent": -30
-   },
-   "upgrade": {
-    "percent": -15
-   }
-  }
  }
 }

@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_POLITICIAN2",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_POLITICIAN3"
+  ],
   "traits": [
    "TRAIT_POLITICIAN3"
   ]

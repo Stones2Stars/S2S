@@ -104,16 +104,14 @@
    "flat": 1
   }
  },
- "capture": {
+ "combat": {
   "empire": {
-   "resistance": {
+   "espionageDefense": {
+    "percent": 15
+   },
+   "captureResistance": {
     "percent": 30
    }
-  }
- },
- "espionageDefense": {
-  "empire": {
-   "percent": 15
   }
  },
  "upkeep": {
@@ -125,13 +123,8 @@
  },
  "tradeRoutes": {
   "empire": {
-   "modifier": {
-    "percent": [
-     {
-      "value": -30,
-      "enabled": "IS_FOREIGN"
-     }
-    ]
+   "foreign": {
+    "percent": -30
    }
   }
  },

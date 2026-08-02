@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_IDEALISTIC2",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_IDEALISTIC3"
+  ],
   "traits": [
    "TRAIT_IDEALISTIC3"
   ]

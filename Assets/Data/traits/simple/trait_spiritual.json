@@ -171,13 +171,8 @@
      "flat": 1
     }
    },
-   "cities": {
-    "flat": [
-     {
-      "value": -3,
-      "religion": "!IS_STATE_RELIGION"
-     }
-    ]
+   "nonStateReligion": {
+    "flat": -3
    }
   }
  },

@@ -5,6 +5,9 @@
  ],
  "commerce": {
   "empire": {
+   "tradeRoute": {
+    "percent": 10
+   },
    "improvements": {
     "IMPROVEMENT_SUBMERGED_TOWN": {
      "flat": 1
@@ -130,14 +133,5 @@
   "civilopedia": "TXT_KEY_TRAIT_EFFICIENT3_PEDIA",
   "strategy": "TXT_KEY_TRAIT_EFFICIENT_STRATEGY",
   "impurePropertyManipulators": true
- },
- "tradeRoutes": {
-  "empire": {
-   "modifier": {
-    "commerce": {
-     "percent": 10
-    }
-   }
-  }
  }
 }

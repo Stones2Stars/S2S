@@ -43,17 +43,12 @@
   "empire": {
    "flat": -1,
    "cities": {
-    "flat": [
-     {
-      "value": -1,
-      "max": "TARGET_NUM_CITIES",
-      "orderedByDescending": "CITY_SIZE"
-     },
-     {
-      "value": -1,
-      "religion": "!IS_STATE_RELIGION"
-     }
-    ]
+    "flat": -1,
+    "max": "TARGET_NUM_CITIES",
+    "orderedByDescending": "CITY_SIZE"
+   },
+   "nonStateReligion": {
+    "flat": -1
    }
   }
  },
@@ -74,13 +69,8 @@
  },
  "tradeRoutes": {
   "empire": {
-   "modifier": {
-    "percent": [
-     {
-      "value": -20,
-      "enabled": "IS_FOREIGN"
-     }
-    ]
+   "foreign": {
+    "percent": -20
    }
   }
  },

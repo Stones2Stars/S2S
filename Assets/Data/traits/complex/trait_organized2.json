@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_ORGANIZED2",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_ORGANIZED3"
+  ],
   "traits": [
    "TRAIT_ORGANIZED3"
   ]
@@ -85,16 +88,8 @@
     "percent": -30
    },
    "freeCivilian": {
-    "flat": [
-     5,
-     {
-      "value": 30,
-      "per": {
-       "type": "POPULATION",
-       "each": 100
-      }
-     }
-    ]
+    "flat": 5,
+    "perPopulation": 30
    }
   }
  },

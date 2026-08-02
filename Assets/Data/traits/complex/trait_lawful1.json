@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_LAWFUL1",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_LAWFUL2"
+  ],
   "traits": [
    "TRAIT_LAWFUL2"
   ]
@@ -433,9 +436,11 @@
    }
   }
  },
- "espionageDefense": {
+ "combat": {
   "empire": {
-   "percent": 15
+   "espionageDefense": {
+    "percent": 15
+   }
   }
  },
  "maintenance": {
@@ -488,23 +493,13 @@
    }
   }
  },
- "triggers": [
-  {
-   "trigger": "onTurnEnd",
-   "action": {
-    "promote": {
-     "promotions": [
-      "PROMOTION_LAWFUL1"
-     ],
-     "units": {
-      "unitCombats": [
-       "UNITCOMBAT_LAW_ENFORCEMENT"
-      ]
-     }
-    }
-   }
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_LAWFUL1": [
+    "UNITCOMBAT_LAW_ENFORCEMENT"
+   ]
   }
- ],
+ },
  "ai": {
   "flavours": [
    {

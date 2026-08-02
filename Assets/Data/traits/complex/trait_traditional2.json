@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_TRADITIONAL2",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_TRADITIONAL3"
+  ],
   "traits": [
    "TRAIT_TRADITIONAL3"
   ]

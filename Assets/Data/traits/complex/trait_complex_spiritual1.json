@@ -1,0 +1,353 @@
+{
+ "type": "TRAIT_COMPLEX_SPIRITUAL1",
+ "excludes": [
+  "TRAIT_ANTI_CLERICAL1",
+  "TRAIT_FANATICAL",
+  "TRAIT_PIOUS1"
+ ],
+ "food": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_PRIEST": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_PROPHET": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_COMBATANT": {
+     "percent": -10
+    },
+    "UNITCOMBAT_MISSIONARY": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "researchRate": {
+  "empire": {
+   "techs": {
+    "TECH_RITUALISM": {
+     "percent": 20
+    },
+    "TECH_ANIMISM": {
+     "percent": 20
+    },
+    "TECH_CEREMONIAL_BURIAL": {
+     "percent": 20
+    },
+    "TECH_MYSTICISM": {
+     "percent": 20
+    },
+    "TECH_ANCESTOR_WORSHIP": {
+     "percent": 20
+    },
+    "TECH_MUMMIFICATION": {
+     "percent": 20
+    },
+    "TECH_CEREMONY": {
+     "percent": 20
+    },
+    "TECH_PRIESTHOOD": {
+     "percent": 20
+    },
+    "TECH_DUALISM": {
+     "percent": 20
+    },
+    "TECH_DIVINATION": {
+     "percent": 20
+    },
+    "TECH_RESURRECTION": {
+     "percent": 20
+    },
+    "TECH_MONOTHEISM": {
+     "percent": 20
+    },
+    "TECH_POLYTHEISM": {
+     "percent": 20
+    },
+    "TECH_KARMA": {
+     "percent": 20
+    },
+    "TECH_ZOROASTRIANISM": {
+     "percent": 20
+    },
+    "TECH_SCRIPTURES": {
+     "percent": 20
+    },
+    "TECH_HINDUISM": {
+     "percent": 20
+    },
+    "TECH_JUDAISM": {
+     "percent": 20
+    },
+    "TECH_REINCARNATION": {
+     "percent": 20
+    },
+    "TECH_MEDITATION": {
+     "percent": 20
+    },
+    "TECH_BUDDHISM": {
+     "percent": 20
+    },
+    "TECH_ASTROLOGY": {
+     "percent": 20
+    },
+    "TECH_CONFUCIANISM": {
+     "percent": 20
+    },
+    "TECH_TAOISM": {
+     "percent": 20
+    },
+    "TECH_THEOLOGY": {
+     "percent": 20
+    },
+    "TECH_CHRISTIANITY": {
+     "percent": 20
+    },
+    "TECH_PAPACY": {
+     "percent": 20
+    },
+    "TECH_FUNDAMENTALISM": {
+     "percent": 20
+    },
+    "TECH_ISLAM": {
+     "percent": 20
+    },
+    "TECH_DRUIDIC_TRADITIONS": {
+     "percent": 20
+    },
+    "TECH_SHAMANISM": {
+     "percent": 20
+    },
+    "TECH_TENGRIISM": {
+     "percent": 20
+    },
+    "TECH_MESOPOTAMISM": {
+     "percent": 20
+    },
+    "TECH_YORUBA": {
+     "percent": 20
+    },
+    "TECH_ANDEANISM": {
+     "percent": 20
+    },
+    "TECH_NGAIISM": {
+     "percent": 20
+    },
+    "TECH_SHINTO": {
+     "percent": 20
+    },
+    "TECH_KEMETISM": {
+     "percent": 20
+    },
+    "TECH_CANAANISM": {
+     "percent": 20
+    },
+    "TECH_RODNOVERA": {
+     "percent": 20
+    },
+    "TECH_ASATRU": {
+     "percent": 20
+    },
+    "TECH_HELLENISM": {
+     "percent": 20
+    },
+    "TECH_NAGHUALISM": {
+     "percent": 20
+    },
+    "TECH_JAINISM": {
+     "percent": 20
+    },
+    "TECH_VOODOO": {
+     "percent": 20
+    },
+    "TECH_SIKHISM": {
+     "percent": 20
+    },
+    "TECH_BAHAI": {
+     "percent": 20
+    },
+    "TECH_MORMON": {
+     "percent": 20
+    },
+    "TECH_CAO_DAI": {
+     "percent": 20
+    },
+    "TECH_SCIENTOLOGY": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_PRIEST": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_PROPHET": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_PRIEST": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_PROPHET": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "nonStateReligion": {
+    "flat": 1
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "units": {
+    "UNIT_PROPHET": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "experience": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_COMBATANT": {
+     "flat": -1
+    }
+   },
+   "percent": [
+    {
+     "value": 10,
+     "enabled": {
+      "all": [
+       "IS_HOLY_CITY",
+       "!IS_STATE_RELIGION_HOLY_CITY"
+      ]
+     }
+    }
+   ]
+  }
+ },
+ "goldenAge": {
+  "empire": {
+   "percent": -25
+  }
+ },
+ "durations": {
+  "empire": {
+   "religiousAnarchy": {
+    "percent": -25
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": 20
+   }
+  }
+ },
+ "stateReligion": {
+  "empire": {
+   "happiness": {
+    "flat": 1
+   },
+   "holyCityXP": {
+    "percent": 10
+   },
+   "spreadProbability": {
+    "percent": 10
+   },
+   "nonStateSpreadProbability": {
+    "percent": 10
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "holyCityGood": {
+    "flat": 5
+   },
+   "holyCityBad": {
+    "flat": -5
+   },
+   "badReligionMod": {
+    "percent": -10
+   },
+   "goodReligionMod": {
+    "percent": 10
+   }
+  }
+ },
+ "policies": {
+  "nonStateReligionCommerce": true
+ },
+ "grants": {
+  "goldenAgeOnBirthOfGreatPerson": "UNIT_PROPHET"
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": -2
+   },
+   {
+    "FLAVOR_RELIGION": 13
+   },
+   {
+    "FLAVOR_PRODUCTION": -1
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 0
+   },
+   {
+    "FLAVOR_ESPIONAGE": -1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitSpiritual.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_COMPLEX_SPIRITUAL1",
+  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_SPIRITUAL1_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_SPIRITUAL_STRATEGY"
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_SPIRITUAL2"
+  ]
+ }
+}

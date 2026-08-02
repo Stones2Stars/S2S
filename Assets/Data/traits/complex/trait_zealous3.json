@@ -48,13 +48,8 @@
  },
  "happiness": {
   "empire": {
-   "cities": {
-    "flat": [
-     {
-      "value": -2,
-      "religion": "!IS_STATE_RELIGION"
-     }
-    ]
+   "nonStateReligion": {
+    "flat": -2
    }
   }
  },
@@ -135,26 +130,16 @@
    }
   }
  },
- "triggers": [
-  {
-   "trigger": "onTurnEnd",
-   "action": {
-    "promote": {
-     "promotions": [
-      "PROMOTION_DEVOTION3"
-     ],
-     "units": {
-      "unitCombats": [
-       "UNITCOMBAT_CIVILIAN",
-       "UNITCOMBAT_COMBATANT",
-       "UNITCOMBAT_EXPLORER",
-       "UNITCOMBAT_NAVAL_COMBATANT"
-      ]
-     }
-    }
-   }
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_DEVOTION3": [
+    "UNITCOMBAT_CIVILIAN",
+    "UNITCOMBAT_COMBATANT",
+    "UNITCOMBAT_EXPLORER",
+    "UNITCOMBAT_NAVAL_COMBATANT"
+   ]
   }
- ],
+ },
  "ai": {
   "flavours": [
    {

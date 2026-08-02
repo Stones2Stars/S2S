@@ -1,13 +1,27 @@
 {
  "type": "TRAIT_ISOLATIONIST1",
  "enables": {
-  "traits": [
+  "traitsAnd": [
    "TRAIT_ISOLATIONIST2"
   ]
+ },
+ "food": {
+  "empire": {
+   "tradeRoute": {
+    "percent": -30
+   }
+  }
  },
  "production": {
   "empire": {
    "percent": 15
+  }
+ },
+ "commerce": {
+  "empire": {
+   "tradeRoute": {
+    "percent": -20
+   }
   }
  },
  "espionage": {
@@ -24,15 +38,7 @@
  },
  "tradeRoutes": {
   "empire": {
-   "flat": -1,
-   "modifier": {
-    "food": {
-     "percent": -30
-    },
-    "commerce": {
-     "percent": -20
-    }
-   }
+   "flat": -1
   }
  },
  "revolution": {

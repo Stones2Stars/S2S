@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_TIMID2",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_TIMID3"
+  ],
   "traits": [
    "TRAIT_TIMID3"
   ]
@@ -48,12 +51,12 @@
    "flat": -4
   }
  },
- "capture": {
+ "combat": {
   "empire": {
-   "probability": {
+   "captureProbability": {
     "percent": -5
    },
-   "resistance": {
+   "captureResistance": {
     "percent": -10
    }
   }
@@ -65,6 +68,9 @@
    },
    "unitMilitary": {
     "percent": 10
+   },
+   "upgradePrice": {
+    "percent": -20
    }
   }
  },
@@ -88,24 +94,14 @@
    }
   }
  },
- "triggers": [
-  {
-   "trigger": "onTurnEnd",
-   "action": {
-    "promote": {
-     "promotions": [
-      "PROMOTION_TIMID2"
-     ],
-     "units": {
-      "unitCombats": [
-       "UNITCOMBAT_COMBATANT",
-       "UNITCOMBAT_NAVAL_COMBATANT"
-      ]
-     }
-    }
-   }
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_TIMID2": [
+    "UNITCOMBAT_COMBATANT",
+    "UNITCOMBAT_NAVAL_COMBATANT"
+   ]
   }
- ],
+ },
  "ai": {
   "flavours": [
    {
@@ -143,12 +139,5 @@
   "description": "TXT_KEY_TRAIT_TIMID2",
   "civilopedia": "TXT_KEY_TRAIT_TIMID2_PEDIA",
   "strategy": "TXT_KEY_TRAIT_TIMID_STRATEGY"
- },
- "costs": {
-  "empire": {
-   "upgrade": {
-    "percent": -20
-   }
-  }
  }
 }

@@ -197,16 +197,14 @@
    }
   }
  },
- "capture": {
+ "combat": {
   "empire": {
-   "resistance": {
+   "espionageDefense": {
+    "percent": 30
+   },
+   "captureResistance": {
     "percent": -20
    }
-  }
- },
- "espionageDefense": {
-  "empire": {
-   "percent": 30
   }
  },
  "durations": {
@@ -250,23 +248,13 @@
    }
   }
  },
- "triggers": [
-  {
-   "trigger": "onTurnEnd",
-   "action": {
-    "promote": {
-     "promotions": [
-      "PROMOTION_DECEIVER3"
-     ],
-     "units": {
-      "unitCombats": [
-       "UNITCOMBAT_SPY"
-      ]
-     }
-    }
-   }
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_DECEIVER3": [
+    "UNITCOMBAT_SPY"
+   ]
   }
- ],
+ },
  "ai": {
   "flavours": [
    {

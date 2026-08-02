@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_REVOLUTIONARY2",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_REVOLUTIONARY3"
+  ],
   "traits": [
    "TRAIT_REVOLUTIONARY3"
   ]
@@ -101,16 +104,14 @@
    "flat": 1
   }
  },
- "capture": {
+ "combat": {
   "empire": {
-   "resistance": {
+   "espionageDefense": {
+    "percent": 10
+   },
+   "captureResistance": {
     "percent": 20
    }
-  }
- },
- "espionageDefense": {
-  "empire": {
-   "percent": 10
   }
  },
  "upkeep": {
@@ -122,13 +123,8 @@
  },
  "tradeRoutes": {
   "empire": {
-   "modifier": {
-    "percent": [
-     {
-      "value": -20,
-      "enabled": "IS_FOREIGN"
-     }
-    ]
+   "foreign": {
+    "percent": -20
    }
   }
  },

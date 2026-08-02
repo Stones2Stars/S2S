@@ -53,13 +53,8 @@
  "tradeRoutes": {
   "empire": {
    "flat": 2,
-   "modifier": {
-    "percent": [
-     {
-      "value": 20,
-      "enabled": "IS_FOREIGN"
-     }
-    ]
+   "foreign": {
+    "percent": 20
    }
   }
  },

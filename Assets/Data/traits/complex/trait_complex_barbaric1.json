@@ -1,0 +1,153 @@
+{
+ "type": "TRAIT_COMPLEX_BARBARIC1",
+ "excludes": [
+  "TRAIT_CIVILIZED1"
+ ],
+ "food": {
+  "empire": {
+   "flat": -1,
+   "percent": -5
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "worldWonder": {
+    "percent": -10
+   },
+   "military": {
+    "percent": 5
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "flat": -1,
+   "percent": -5
+  }
+ },
+ "research": {
+  "empire": {
+   "flat": -1,
+   "percent": -5
+  }
+ },
+ "espionage": {
+  "empire": {
+   "flat": -1,
+   "percent": -5
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "experience": {
+  "empire": {
+   "levelModifier": {
+    "percent": -5
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "upgradePrice": {
+    "percent": 5
+   }
+  }
+ },
+ "hurry": {
+  "empire": {
+   "anger": {
+    "percent": -10
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "builds": {
+    "BUILD_TRAIL": {
+     "percent": -25
+    },
+    "BUILD_PATH": {
+     "percent": -25
+    },
+    "BUILD_ROAD": {
+     "percent": -25
+    },
+    "BUILD_PAVED_ROAD": {
+     "percent": -25
+    }
+   }
+  }
+ },
+ "improvementUpgradeRate": {
+  "empire": {
+   "percent": -50
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": -5
+   },
+   "attitude": {
+    "flat": -1
+   }
+  }
+ },
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_BARBARIC1": [
+    "UNITCOMBAT_COMBATANT",
+    "UNITCOMBAT_NAVAL_COMBATANT"
+   ]
+  }
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": -2
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": -2
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   },
+   {
+    "FLAVOR_GROWTH": 7
+   },
+   {
+    "FLAVOR_ESPIONAGE": -4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitBarbaric.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_COMPLEX_BARBARIC1",
+  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_BARBARIC1_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_BARBARIC_STRATEGY",
+  "negativeTrait": true,
+  "impurePromotions": true,
+  "minAnarchy": 1
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_BARBARIC2"
+  ]
+ }
+}

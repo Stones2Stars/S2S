@@ -182,6 +182,45 @@ def synthesize_game_start(store, result):
     def truthy(rec, tag):
         return engine.text(rec.find(tag)) in ("1", "true", "True")
 
+    # The ROOT rungs of the developing lines, per trait SET. A rung roots iff nothing develops INTO it, and that
+    # is decided WITHIN a set: PROMOTIONLINE_EXCESSIVE keeps its rank-0 base only in simple/, so in complex/ the
+    # rank -1 rung is itself the root. Judging by rank alone strands exactly that case unreachable, and judging by
+    # the store's inverted TraitPrereq strands every rung that carries a rank but no authored prereq -- so this
+    # asks the LADDER, the one place the chain is actually resolved (curate_trait.ladder_edges). The union over
+    # both sets is correct for the shared root list: each set resolves only the ids it holds, so the other set's
+    # roots are inert rather than wrong.
+    def trait_roots():
+        from curate_trait import is_complex, ladder_edges
+        table = store.table("TraitInfo")
+        repl = store.replacements.get("TraitInfo", {})
+        complex_ids = set(v["replacement"] for v in repl.values())
+        rid_to_base = {v["replacement"]: b for b, v in repl.items()}
+        lineOf, rankOf = {}, {}
+        for typ, rec in table.items():
+            line = engine.text(rec.find("PromotionLine"))
+            lineRank = engine.text(rec.find("iLinePriority"))
+            if line:
+                lineOf[typ] = line
+            rankOf[typ] = int(lineRank) if engine.is_int(lineRank) else 0
+        emitted = {"simple": set(), "complex": set()}
+        for typ, rec in table.items():
+            if typ in rid_to_base:
+                emitted["complex"].add(typ)
+            else:
+                folder = "complex" if is_complex(typ, rec, complex_ids) else "simple"
+                emitted[folder].add(typ)
+                if folder == "simple" and typ not in repl:
+                    emitted["complex"].add(typ)
+        roots = set()
+        for ids in emitted.values():
+            developed = set()
+            for targets in ladder_edges(lineOf, rankOf, ids).values():
+                developed.update(targets)
+            roots |= (ids - developed)
+        return roots
+
+    startTraits = trait_roots()
+
     def cap0(rec):                       # a 0 instance cap at ANY scope = never created by build/train
         for tag in ("iMaxGlobalInstances", "iMaxPlayerInstances", "iMaxTeamInstances"):
             v = engine.text(rec.find(tag))
@@ -204,6 +243,13 @@ def synthesize_game_start(store, result):
         ("processes",    "ProcessInfo",     ["processes"],    None),
         ("promotions",   "PromotionInfo",   ["promotions"],   None),
         ("techs",        "TechInfo",        ["techs"],        lambda t, r: not truthy(r, "bDisable")),
+        # The BASE rungs of every developing line root here like any other start-available entity, so they are
+        # LISTED from turn 1; every rung ABOVE a base is reached by the ladder edge instead (and, from rank 2, by
+        # the line's tech). ⛔ The inbound-edge test alone is NOT enough to find the bases: the ladder is built
+        # from PromotionLine + iLinePriority, while the store can only invert an authored `TraitPrereq` -- and
+        # plenty of rungs carry a rank with NO TraitPrereq, so they look start-enabled and would be offered from
+        # turn 1. A base is exactly a rung with no rank.
+        ("traits",       "TraitInfo",       ["traits", "traitsAnd", "traitsOr"], lambda t, r: t in startTraits),
         ("units",        "UnitInfo",        ["units"],        lambda t, r: cost(r) != -1 and not cap0(r)),
     ):
         ids = _start_enabled(store, ent, sbuckets, keep)

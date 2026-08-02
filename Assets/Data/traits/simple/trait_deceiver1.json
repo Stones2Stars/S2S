@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_DECEIVER1",
  "enables": {
-  "traits": [
+  "traitsAnd": [
    "TRAIT_DECEIVER2"
   ]
  },
@@ -104,38 +104,16 @@
    }
   }
  },
- "triggers": [
-  {
-   "trigger": "onTurnEnd",
-   "action": {
-    "promote": {
-     "promotions": [
-      "PROMOTION_DECEPTION1"
-     ],
-     "units": {
-      "unitCombats": [
-       "UNITCOMBAT_SPY"
-      ]
-     }
-    }
-   }
-  },
-  {
-   "trigger": "onTurnEnd",
-   "action": {
-    "promote": {
-     "promotions": [
-      "PROMOTION_SECURITY1"
-     ],
-     "units": {
-      "unitCombats": [
-       "UNITCOMBAT_SPY"
-      ]
-     }
-    }
-   }
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_DECEPTION1": [
+    "UNITCOMBAT_SPY"
+   ],
+   "PROMOTION_SECURITY1": [
+    "UNITCOMBAT_SPY"
+   ]
   }
- ],
+ },
  "ai": {
   "flavours": [
    {

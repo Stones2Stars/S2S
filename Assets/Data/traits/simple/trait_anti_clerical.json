@@ -87,9 +87,11 @@
    }
   }
  },
- "espionageDefense": {
+ "combat": {
   "empire": {
-   "percent": 25
+   "espionageDefense": {
+    "percent": 25
+   }
   }
  },
  "maintenance": {

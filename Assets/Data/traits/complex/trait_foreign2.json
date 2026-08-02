@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_FOREIGN2",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_FOREIGN3"
+  ],
   "traits": [
    "TRAIT_FOREIGN3"
   ]
@@ -142,13 +145,8 @@
  },
  "tradeRoutes": {
   "empire": {
-   "modifier": {
-    "percent": [
-     {
-      "value": 30,
-      "enabled": "IS_FOREIGN"
-     }
-    ]
+   "foreign": {
+    "percent": 30
    }
   }
  },

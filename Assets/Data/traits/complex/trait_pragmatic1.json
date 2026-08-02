@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_PRAGMATIC1",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_PRAGMATIC2"
+  ],
   "traits": [
    "TRAIT_PRAGMATIC2"
   ]

@@ -435,15 +435,37 @@ def is_complex(typ, rec, complex_ids):
 
 
 
-def _ladder_next(typ, rank):
-    """The rung ABOVE `typ` on its developing line: TRAIT_X -> TRAIT_X1 -> ... (and the negative arm).
-    The ids carry the rung, so the next one is derived rather than looked up."""
-    if not typ:
-        return None
-    stem = typ.rstrip('0123456789')
-    cur = rank if rank else 0
-    nxt = cur - 1 if cur < 0 else cur + 1
-    return "%s%d" % (stem, nxt)
+def ladder_edges(lineOf, rankOf, emittedIds):
+    """The developing-ladder `enables.traits` edges for ONE output folder: {typ: [nextTyp, ...]}.
+
+    A rung ENABLES the rung above it, and that edge IS the ladder (json.md par.9 -- ordering needs no section of
+    its own). Membership comes from the legacy PromotionLine + iLinePriority, NEVER from the id spelling: a line
+    may RENAME mid-chain (TRAIT_NOMAD1 -> TRAIT_NOMADIC2) or SKIP a rank (TRAIT_GLORIOUS1 -> TRAIT_GLORIOUS3),
+    and deriving the successor by string arithmetic on the id silently loses both -- it fabricates a
+    TRAIT_NOMAD2 that no record defines.
+
+    Scoped to ONE FOLDER's emitted ids so the two trait sets stay COMPLETELY SEPARATE: the chain simply ends
+    where that set ends (simple/ tops out at rung 1), and a rung is never linked to one the active set has no
+    entity for. Priority 0/absent is the BASE rung; the two arms (+1,+2,+3 and -1,-2,-3) each chain outward from
+    it, so a line carrying both forks from the base."""
+    members = {}
+    for typ in emittedIds:
+        line = lineOf.get(typ)
+        if line:
+            members.setdefault(line, []).append((rankOf.get(typ, 0), typ))
+    edges = {}
+    for line, entries in members.items():
+        byRank = {}
+        for rank, typ in entries:
+            byRank.setdefault(rank, []).append(typ)
+        for arm in (sorted(r for r in byRank if r >= 0),
+                    sorted((r for r in byRank if r <= 0), reverse=True)):
+            for i in range(len(arm) - 1):
+                for lower in byRank[arm[i]]:
+                    for upper in byRank[arm[i + 1]]:
+                        if upper != lower and upper not in edges.setdefault(lower, []):
+                            edges[lower].append(upper)
+    return edges
 
 def curate(typ, rec, store):
     text, fam, props, policies, grants, art_blocks, identity, ai = {}, {}, {}, {}, {}, {}, {}, {}
@@ -677,11 +699,8 @@ def curate(typ, rec, store):
         out["grants"] = grants
     if triggers:
         out["triggers"] = triggers
-    # The ladder edge: this rung enables the NEXT one on its line. Rank 0/absent is the base rung.
-    if line_name:
-        nxt = _ladder_next(typ, line_rank)
-        if nxt:
-            out.setdefault("enables", OrderedDict()).setdefault("traits", []).append(nxt)
+    # NB the developing-ladder `enables.traits` edge is NOT emitted here: it is a property of the LINE and of the
+    # emitting FOLDER, neither of which this per-record pass can see. It is applied per folder in main().
     if ai:
         out["ai"] = ai
     cc.emit_art(out, art_blocks)
@@ -727,46 +746,61 @@ def main():
     if args.write:
         out_dir = os.path.join(REPO, "Assets", "Data", "traits")
 
+        # The developing ladder, per FOLDER (see ladder_edges): membership from PromotionLine + iLinePriority,
+        # scoped to the ids that folder actually emits, so a chain never reaches into the other set.
+        lineOf, rankOf = {}, {}
+        for typ, rec in table.items():
+            line = engine.text(rec.find("PromotionLine"))
+            rank = engine.text(rec.find("iLinePriority"))
+            if line:
+                lineOf[typ] = line
+            rankOf[typ] = int(rank) if rank not in (None, "") else 0
+        emitted = {"simple": set(), "complex": set()}
+        for typ in results:
+            if typ in rid_to_base:
+                emitted["complex"].add(typ)          # the complex variant, under its OWN TRAIT_COMPLEX_ id
+            else:
+                emitted[folders[typ]].add(typ)
+                if folders[typ] == "simple" and typ not in repl_map:
+                    emitted["complex"].add(typ)      # base-fill: no complex variant exists for this one
+        ladders = dict((f, ladder_edges(lineOf, rankOf, ids)) for f, ids in emitted.items())
+
         def _write(folder, typ, obj):
             d = os.path.join(out_dir, folder)
             os.makedirs(d, exist_ok=True)
+            edges = ladders[folder].get(typ)
+            if edges:
+                # copy first -- a base-filled object is written to BOTH folders, whose chains differ
+                obj = OrderedDict(obj)
+                enables = OrderedDict(obj.get("enables") or OrderedDict())
+                enables["traits"] = edges
+                obj["enables"] = enables
             with open(os.path.join(d, typ.lower() + ".json"), "w") as f:
                 json.dump(obj, f, indent=1, ensure_ascii=False)
 
-        # Fresh dirs so types that are no longer emitted standalone (the replacement records, now MERGED into
-        # complex/<base>) don't linger as stale files.
-        # ⛔ But NEVER when the curator produced nothing: traits are content-LOCKED and hand-maintained
-        # (modifier.md), so a zero result means there is no input to rewrite from -- clearing would destroy the
-        # authored set rather than refresh it.
+        # Drop-before-rewrite through the SHARED clear, so a type no longer emitted (a re-keyed or merged-away
+        # record) cannot linger as a stale file. It must be this one and not a hand-rolled loop: clearing a folder
+        # is what REGISTERS it for the `_additions` overlay re-apply at process exit (curators/README.md), so a
+        # curator that clears by hand silently drops its own overlay. It also carries the refuse-on-zero guard --
+        # a curator that produced nothing has no input to rewrite from, and clearing would destroy the set.
+        cc.wipe_entity_json(out_dir, recurse=True, expected=len(results))
         if not results:
-            print("REFUSED to clear the trait folders: the curator produced 0 entities.")
             return
-        for sub in ("simple", "complex"):
-            d = os.path.join(out_dir, sub)
-            if os.path.isdir(d):
-                for fn in os.listdir(d):
-                    if fn.endswith(".json"):
-                        os.remove(os.path.join(d, fn))
         nwritten = 0
         for typ, obj in results.items():
             if typ in rid_to_base:
-                continue   # standalone replacement record -> subsumed into complex/<base> below; don't emit alone
+                # THE COMPLEX VARIANT KEEPS ITS OWN `TRAIT_COMPLEX_` IDENTITY (naming.md: TRAIT_ is a simple
+                # trait, TRAIT_COMPLEX_ a complex one). Re-keying it onto the base id is what manufactured the
+                # colliding-id problem -- two different entities answering to one name, which then forced every
+                # reader to disambiguate by game option. The two sets are separated by FOLDER and by ID, so
+                # nothing has to be resolved at read time.
+                _write("complex", typ, obj)
+                nwritten += 1
+                continue
             _write(folders[typ], typ, obj)                    # base/plain -> simple/ (or complex-only -> complex/)
             nwritten += 1
             if typ in repl_map:
-                # base trait WITH a complex replacement: emit the complex def keyed by the BASE type (the type the
-                # player actually holds) so the calc picks it by GAMEOPTION. WHOLE-SWAP, NO base-fill (owner ruling
-                # 2026-06-25, SUPERSEDING the 2026-06-21 fill-from-base): the engine's CvInfoReplacements swaps the
-                # WHOLE CvTraitInfo, so a field the replacement OMITS is 0/absent in the engine -- it is NOT inherited
-                # from base. Matching that literally is required for parity (base SPIRITUAL gives PRIEST a specialist
-                # yield the complex replacement drops -> engine perType 0; fill-from-base wrongly kept it). So the
-                # complex/ def IS the replacement's curated Info ENTIRELY, merely re-keyed to the base type. The
-                # complex/ set stays SELF-COMPLETE + INDEPENDENT of simple/ (the replacement Info is itself complete).
-                rid = repl_map[typ]["replacement"]
-                merged = OrderedDict(results.get(rid, OrderedDict()))
-                merged["type"] = typ
-                _write("complex", typ, merged)
-                nwritten += 1
+                pass   # its complex variant is emitted above under its own TRAIT_COMPLEX_ id
             elif folders[typ] == "simple":
                 # SELF-COMPLETE COMPLEX (owner ruling 2026-07-21): a simple trait with NO complex replacement is ALSO
                 # base-filled into complex/ (its whole def, identical) so the complex folder is a SUPERSET of simple.

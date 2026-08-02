@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_HUMANITARIAN2",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_HUMANITARIAN3"
+  ],
   "traits": [
    "TRAIT_HUMANITARIAN3"
   ]
@@ -173,24 +176,14 @@
    }
   }
  },
- "triggers": [
-  {
-   "trigger": "onTurnEnd",
-   "action": {
-    "promote": {
-     "promotions": [
-      "PROMOTION_HUMANITARIAN2"
-     ],
-     "units": {
-      "unitCombats": [
-       "UNITCOMBAT_HEALTH_CARE",
-       "UNITCOMBAT_RECON"
-      ]
-     }
-    }
-   }
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_HUMANITARIAN2": [
+    "UNITCOMBAT_HEALTH_CARE",
+    "UNITCOMBAT_RECON"
+   ]
   }
- ],
+ },
  "ai": {
   "flavours": [
    {

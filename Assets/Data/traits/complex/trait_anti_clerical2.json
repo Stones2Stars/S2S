@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_ANTI_CLERICAL2",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_ANTI_CLERICAL3"
+  ],
   "traits": [
    "TRAIT_ANTI_CLERICAL3"
   ]
@@ -92,13 +95,8 @@
  },
  "happiness": {
   "empire": {
-   "cities": {
-    "flat": [
-     {
-      "value": -1,
-      "religion": "!IS_STATE_RELIGION"
-     }
-    ]
+   "nonStateReligion": {
+    "flat": -1
    }
   }
  },

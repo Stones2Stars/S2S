@@ -55,12 +55,12 @@
    "flat": -2
   }
  },
- "capture": {
+ "combat": {
   "empire": {
-   "probability": {
+   "captureProbability": {
     "percent": -10
    },
-   "resistance": {
+   "captureResistance": {
     "percent": -20
    }
   }
@@ -72,6 +72,9 @@
    },
    "unitMilitary": {
     "percent": 10
+   },
+   "upgradePrice": {
+    "percent": -20
    }
   }
  },
@@ -95,24 +98,14 @@
    }
   }
  },
- "triggers": [
-  {
-   "trigger": "onTurnEnd",
-   "action": {
-    "promote": {
-     "promotions": [
-      "PROMOTION_TIMID"
-     ],
-     "units": {
-      "unitCombats": [
-       "UNITCOMBAT_COMBATANT",
-       "UNITCOMBAT_NAVAL_COMBATANT"
-      ]
-     }
-    }
-   }
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_TIMID": [
+    "UNITCOMBAT_COMBATANT",
+    "UNITCOMBAT_NAVAL_COMBATANT"
+   ]
   }
- ],
+ },
  "ai": {
   "flavours": [
    {
@@ -151,13 +144,6 @@
   "civilopedia": "TXT_KEY_TRAIT_TIMID_PEDIA",
   "strategy": "TXT_KEY_TRAIT_TIMID_STRATEGY",
   "negativeTrait": true
- },
- "costs": {
-  "empire": {
-   "upgrade": {
-    "percent": -20
-   }
-  }
  },
  "enables": {
   "traits": [

@@ -321,13 +321,8 @@
  "tradeRoutes": {
   "empire": {
    "flat": 1,
-   "modifier": {
-    "percent": [
-     {
-      "value": 20,
-      "enabled": "IS_FOREIGN"
-     }
-    ]
+   "foreign": {
+    "percent": 20
    }
   }
  },

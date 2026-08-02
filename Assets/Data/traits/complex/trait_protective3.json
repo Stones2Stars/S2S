@@ -229,9 +229,11 @@
    "flat": 9
   }
  },
- "espionageDefense": {
+ "combat": {
   "empire": {
-   "percent": 20
+   "espionageDefense": {
+    "percent": 20
+   }
   }
  },
  "maintenance": {
@@ -247,15 +249,7 @@
  "upkeep": {
   "empire": {
    "freeCivilian": {
-    "flat": [
-     {
-      "value": 15,
-      "per": {
-       "type": "POPULATION",
-       "each": 100
-      }
-     }
-    ]
+    "perPopulation": 15
    }
   }
  },
@@ -281,23 +275,13 @@
    }
   }
  },
- "triggers": [
-  {
-   "trigger": "onTurnEnd",
-   "action": {
-    "promote": {
-     "promotions": [
-      "PROMOTION_PROTECTIVE3"
-     ],
-     "units": {
-      "unitCombats": [
-       "UNITCOMBAT_COMBATANT"
-      ]
-     }
-    }
-   }
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_PROTECTIVE3": [
+    "UNITCOMBAT_COMBATANT"
+   ]
   }
- ],
+ },
  "ai": {
   "flavours": [
    {

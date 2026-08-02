@@ -9,6 +9,13 @@
    }
   }
  },
+ "commerce": {
+  "empire": {
+   "tradeRoute": {
+    "percent": 10
+   }
+  }
+ },
  "research": {
   "empire": {
    "percent": -10
@@ -28,36 +35,18 @@
  },
  "tradeRoutes": {
   "empire": {
-   "modifier": {
-    "percent": [
-     {
-      "value": 30,
-      "enabled": "IS_FOREIGN"
-     }
-    ],
-    "commerce": {
-     "percent": 10
-    }
+   "foreign": {
+    "percent": 30
    }
   }
  },
- "triggers": [
-  {
-   "trigger": "onTurnEnd",
-   "action": {
-    "promote": {
-     "promotions": [
-      "PROMOTION_LOYALTY"
-     ],
-     "units": {
-      "unitCombats": [
-       "UNITCOMBAT_SPY"
-      ]
-     }
-    }
-   }
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_LOYALTY": [
+    "UNITCOMBAT_SPY"
+   ]
   }
- ],
+ },
  "ai": {
   "flavours": [
    {

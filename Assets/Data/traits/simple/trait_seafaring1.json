@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_SEAFARING1",
  "enables": {
-  "traits": [
+  "traitsAnd": [
    "TRAIT_SEAFARING2"
   ]
  },
@@ -104,12 +104,9 @@
  },
  "tradeRoutes": {
   "empire": {
-   "flat": [
-    {
-     "value": 1,
-     "enabled": "HAS_COAST"
-    }
-   ]
+   "coastal": {
+    "flat": 1
+   }
   }
  },
  "workRate": {
@@ -158,47 +155,25 @@
    }
   }
  },
- "triggers": [
-  {
-   "trigger": "onTurnEnd",
-   "action": {
-    "promote": {
-     "promotions": [
-      "PROMOTION_AMPHIBIOUS"
-     ],
-     "units": {
-      "unitCombats": [
-       "UNITCOMBAT_ASSAULT_MECH",
-       "UNITCOMBAT_CLONES",
-       "UNITCOMBAT_GUN",
-       "UNITCOMBAT_HELICOPTER",
-       "UNITCOMBAT_HITECH",
-       "UNITCOMBAT_MELEE"
-      ]
-     }
-    }
-   }
-  },
-  {
-   "trigger": "onTurnEnd",
-   "action": {
-    "promote": {
-     "promotions": [
-      "PROMOTION_NAVIGATION1"
-     ],
-     "units": {
-      "unitCombats": [
-       "UNITCOMBAT_DIESEL_SHIPS",
-       "UNITCOMBAT_NUCLEAR_SHIPS",
-       "UNITCOMBAT_STEAM_SHIPS",
-       "UNITCOMBAT_SUBMARINE",
-       "UNITCOMBAT_WOODEN_SHIPS"
-      ]
-     }
-    }
-   }
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_AMPHIBIOUS": [
+    "UNITCOMBAT_ASSAULT_MECH",
+    "UNITCOMBAT_CLONES",
+    "UNITCOMBAT_GUN",
+    "UNITCOMBAT_HELICOPTER",
+    "UNITCOMBAT_HITECH",
+    "UNITCOMBAT_MELEE"
+   ],
+   "PROMOTION_NAVIGATION1": [
+    "UNITCOMBAT_DIESEL_SHIPS",
+    "UNITCOMBAT_NUCLEAR_SHIPS",
+    "UNITCOMBAT_STEAM_SHIPS",
+    "UNITCOMBAT_SUBMARINE",
+    "UNITCOMBAT_WOODEN_SHIPS"
+   ]
   }
- ],
+ },
  "ai": {
   "flavours": [
    {

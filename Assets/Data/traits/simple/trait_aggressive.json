@@ -121,45 +121,23 @@
    }
   }
  },
- "triggers": [
-  {
-   "trigger": "onTurnEnd",
-   "action": {
-    "promote": {
-     "promotions": [
-      "PROMOTION_COMBAT1"
-     ],
-     "units": {
-      "unitCombats": [
-       "UNITCOMBAT_ASSAULT_MECH",
-       "UNITCOMBAT_CLONES",
-       "UNITCOMBAT_GUN",
-       "UNITCOMBAT_HITECH",
-       "UNITCOMBAT_MELEE"
-      ]
-     }
-    }
-   }
-  },
-  {
-   "trigger": "onTurnEnd",
-   "action": {
-    "promote": {
-     "promotions": [
-      "PROMOTION_AGGRESSIVE"
-     ],
-     "units": {
-      "unitCombats": [
-       "UNITCOMBAT_ASSAULT_MECH",
-       "UNITCOMBAT_GUN",
-       "UNITCOMBAT_HITECH",
-       "UNITCOMBAT_MELEE"
-      ]
-     }
-    }
-   }
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_COMBAT1": [
+    "UNITCOMBAT_ASSAULT_MECH",
+    "UNITCOMBAT_CLONES",
+    "UNITCOMBAT_GUN",
+    "UNITCOMBAT_HITECH",
+    "UNITCOMBAT_MELEE"
+   ],
+   "PROMOTION_AGGRESSIVE": [
+    "UNITCOMBAT_ASSAULT_MECH",
+    "UNITCOMBAT_GUN",
+    "UNITCOMBAT_HITECH",
+    "UNITCOMBAT_MELEE"
+   ]
   }
- ],
+ },
  "ai": {
   "flavours": [
    {

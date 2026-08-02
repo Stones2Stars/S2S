@@ -5,6 +5,9 @@
  ],
  "food": {
   "empire": {
+   "tradeRoute": {
+    "percent": 20
+   },
    "specialists": {
     "SPECIALIST_MERCHANT": {
      "flat": 1
@@ -17,6 +20,9 @@
  },
  "production": {
   "empire": {
+   "tradeRoute": {
+    "percent": 20
+   },
    "specialists": {
     "SPECIALIST_MERCHANT": {
      "flat": 1
@@ -41,6 +47,9 @@
  },
  "commerce": {
   "empire": {
+   "tradeRoute": {
+    "percent": 20
+   },
    "specialists": {
     "SPECIALIST_MERCHANT": {
      "flat": 1
@@ -70,9 +79,11 @@
    "flat": -2
   }
  },
- "espionageDefense": {
+ "combat": {
   "empire": {
-   "percent": -20
+   "espionageDefense": {
+    "percent": -20
+   }
   }
  },
  "maintenance": {
@@ -94,22 +105,8 @@
    "max": {
     "flat": 2
    },
-   "modifier": {
-    "percent": [
-     {
-      "value": 20,
-      "enabled": "IS_FOREIGN"
-     }
-    ],
-    "food": {
-     "percent": 20
-    },
-    "production": {
-     "percent": 20
-    },
-    "commerce": {
-     "percent": 20
-    }
+   "foreign": {
+    "percent": 20
    }
   }
  },

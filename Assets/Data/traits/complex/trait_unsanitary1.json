@@ -1,9 +1,12 @@
 {
  "type": "TRAIT_UNSANITARY1",
  "enables": {
-  "traits": [
+  "traitsAnd": [
    "TRAIT_UNSANITARY2",
    "TRAIT_UNSANITARY3"
+  ],
+  "traits": [
+   "TRAIT_UNSANITARY2"
   ]
  },
  "excludes": [
@@ -333,25 +336,15 @@
    }
   }
  },
- "triggers": [
-  {
-   "trigger": "onTurnEnd",
-   "action": {
-    "promote": {
-     "promotions": [
-      "PROMOTION_UNSANITARY1"
-     ],
-     "units": {
-      "unitCombats": [
-       "UNITCOMBAT_ANIMAL",
-       "UNITCOMBAT_CRIMINAL",
-       "UNITCOMBAT_RUFFIAN"
-      ]
-     }
-    }
-   }
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_UNSANITARY1": [
+    "UNITCOMBAT_ANIMAL",
+    "UNITCOMBAT_CRIMINAL",
+    "UNITCOMBAT_RUFFIAN"
+   ]
   }
- ],
+ },
  "ai": {
   "flavours": [
    {

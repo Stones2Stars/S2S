@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_LAZY1",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_LAZY2"
+  ],
   "traits": [
    "TRAIT_LAZY2"
   ]

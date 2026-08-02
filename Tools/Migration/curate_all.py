@@ -5,11 +5,18 @@ The single "full regen" entry point. Order is NOT load-bearing among the entity 
 fresh and writes its own folder); `curate_order` + `curate_additions` run LAST because the additions overlay must
 land after every re-curate (docs/specs/curators/README.md).
 
-⛔ LOCKED entities are EXCLUDED (owner ruling 2026-07-21): `trait`, `leaderhead`, and `tech` are content-LOCKED and
-hand-maintained from here on (the community owns trait assignments post-launch), so a full regen must NEVER clobber
-them. Edit LOCKED to change what is frozen. Shared modules + superseded emitters are never run as curators.
-`tech` is locked so archiving the trait XML cannot regress the store-derived tech->trait `enables` on a re-curate;
-future tech-edge changes ride the `_additions` overlay, not a curate_tech re-run.
+⛔ LOCKED entities are EXCLUDED from the full regen: their folders are hand-maintained, so a regen must never
+clobber them. Edit LOCKED to change what is frozen. Shared modules + superseded emitters are never run as curators.
+
+⚑ `trait` is NOT locked (owner): the lock is what let the two trait sets drift — a hand edit could put an edge in
+one set pointing at an entity only the other set has, with nothing regenerable to correct it. `curate_trait` reads
+the ARCHIVED trait XML (`SourceArchive/Assets/**`, searched by store.py alongside the live roots) and rewrites both
+folders; community-owned trait CONTENT rides the `_additions` overlay like every other post-curation authoring.
+⚑ `tech` is NOT locked either, and the reason is worth keeping: it was locked so archiving the trait XML could not
+regress the store-derived tech->trait `enables` on a re-curate. But the lock landed AFTER the archiving, so it did
+not preserve those edges — it FROZE THEIR ABSENCE. All 152 (the `PrereqTech` on every rank +-2/+-3 trait rung, i.e.
+the tech gate on advancing a developing line) were missing from the tech JSON until the store could read the
+archive again. A lock over a value with no live source hides the hole instead of protecting it.
 
   python curate_all.py            # full regen (all unlocked entities + order + additions)
   python curate_all.py --list     # print what WOULD run, run nothing
@@ -19,7 +26,7 @@ import os, sys, glob, subprocess
 HERE = os.path.dirname(os.path.abspath(__file__))
 PY = sys.executable
 
-LOCKED = {"trait", "leaderhead", "tech"}               # hand-maintained; never regenerated
+LOCKED = {"leaderhead"}                                # hand-maintained; never regenerated
 NOT_A_CURATOR = {"all", "common", "pocos"}             # this runner, the shared core, the legacy batch
 TAIL = ["curate_order.py", "curate_additions.py"]      # run LAST, in this order
 

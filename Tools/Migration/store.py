@@ -23,6 +23,15 @@ REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 XML_DIR = os.path.join(REPO, "Assets", "XML")
 MOD_DIR = os.path.join(REPO, "Assets", "Modules")
 
+# ARCHIVED curator INPUT. `SourceArchive/Assets/**` mirrors the two live roots above, and holds legacy XML that was
+# removed from `Assets/` once its JSON landed. It is read HERE and nowhere else: the archive is curator input only,
+# never a game load path ([DEC-no-xml-into-game]) and never a source of engine code (the red-ratchet ban is on
+# reviving a `CvXInfo` from `SourceArchive/Infos/`, a different thing entirely).
+# ⚠ The archive roots are searched ALONGSIDE the live ones, not instead of them, so an entity whose XML is still
+# live is unaffected; only a category whose XML lives solely in the archive is served from it.
+ARCHIVE_XML_DIR = os.path.join(REPO, "SourceArchive", "Assets", "XML")
+ARCHIVE_MOD_DIR = os.path.join(REPO, "SourceArchive", "Assets", "Modules")
+
 # Module sub-paths EXCLUDED from the migration — confirmed CASE BY CASE against the MLF authority
 # (`Assets/Modules/MLF_CIV4ModularLoadingControls.xml`, config Modules_Main_1 + the nested per-module MLFs), owner
 # 2026-06-15. The MLF `bLoad` flag is the truth for what the GAME loads. Verdicts (per-module sweep):
@@ -298,7 +307,7 @@ class Store:
 
     def _files(self, glb):
         found = []
-        for base in (XML_DIR, MOD_DIR):
+        for base in (XML_DIR, MOD_DIR, ARCHIVE_XML_DIR, ARCHIVE_MOD_DIR):
             found.extend(glob.glob(os.path.join(base, "**", glb), recursive=True))
         out = []
         for f in found:

@@ -5,6 +5,9 @@
  ],
  "commerce": {
   "empire": {
+   "tradeRoute": {
+    "percent": 10
+   },
    "improvements": {
     "IMPROVEMENT_COTTAGE": {
      "flat": 1
@@ -259,15 +262,6 @@
   "civilopedia": "TXT_KEY_TRAIT_EFFICIENT_PEDIA",
   "strategy": "TXT_KEY_TRAIT_EFFICIENT_STRATEGY",
   "impurePropertyManipulators": true
- },
- "tradeRoutes": {
-  "empire": {
-   "modifier": {
-    "commerce": {
-     "percent": 10
-    }
-   }
-  }
  },
  "enables": {
   "traits": [

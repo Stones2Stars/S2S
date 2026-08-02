@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_IMPULSIVE1",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_IMPULSIVE2"
+  ],
   "traits": [
    "TRAIT_IMPULSIVE2"
   ]
@@ -86,16 +89,8 @@
     "percent": 30
    },
    "freeCivilian": {
-    "flat": [
-     -5,
-     {
-      "value": -15,
-      "per": {
-       "type": "POPULATION",
-       "each": 100
-      }
-     }
-    ]
+    "flat": -5,
+    "perPopulation": -15
    }
   }
  },

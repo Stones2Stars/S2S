@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_PREEMINENT1",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_PREEMINENT2"
+  ],
   "traits": [
    "TRAIT_PREEMINENT2"
   ]
@@ -321,13 +324,8 @@
  "tradeRoutes": {
   "empire": {
    "flat": -1,
-   "modifier": {
-    "percent": [
-     {
-      "value": -10,
-      "enabled": "IS_FOREIGN"
-     }
-    ]
+   "foreign": {
+    "percent": -10
    }
   }
  },

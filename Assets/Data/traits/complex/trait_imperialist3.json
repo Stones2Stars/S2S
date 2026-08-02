@@ -90,12 +90,12 @@
    "flat": 9
   }
  },
- "capture": {
+ "combat": {
   "empire": {
-   "probability": {
+   "captureProbability": {
     "percent": 25
    },
-   "resistance": {
+   "captureResistance": {
     "percent": 10
    }
   }
@@ -113,15 +113,10 @@
  "upkeep": {
   "empire": {
    "freeMilitary": {
-    "flat": [
-     {
-      "value": 15,
-      "per": {
-       "type": "POPULATION",
-       "each": 100
-      }
-     }
-    ]
+    "perPopulation": 15
+   },
+   "upgradePrice": {
+    "percent": 20
    }
   }
  },
@@ -144,23 +139,13 @@
    }
   }
  },
- "triggers": [
-  {
-   "trigger": "onTurnEnd",
-   "action": {
-    "promote": {
-     "promotions": [
-      "PROMOTION_IMPERIALIST3"
-     ],
-     "units": {
-      "unitCombats": [
-       "UNITCOMBAT_COMBATANT"
-      ]
-     }
-    }
-   }
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_IMPERIALIST3": [
+    "UNITCOMBAT_COMBATANT"
+   ]
   }
- ],
+ },
  "ai": {
   "flavours": [
    {
@@ -199,12 +184,5 @@
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_IMPERIALIST3_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_IMPERIALIST_STRATEGY",
   "impurePropertyManipulators": true
- },
- "costs": {
-  "empire": {
-   "upgrade": {
-    "percent": 20
-   }
-  }
  }
 }

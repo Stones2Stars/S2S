@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_MINIMALIST2",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_MINIMALIST3"
+  ],
   "traits": [
    "TRAIT_MINIMALIST3"
   ]
@@ -77,15 +80,7 @@
  "upkeep": {
   "empire": {
    "freeCivilian": {
-    "flat": [
-     {
-      "value": -30,
-      "per": {
-       "type": "POPULATION",
-       "each": 100
-      }
-     }
-    ]
+    "perPopulation": -30
    }
   }
  },

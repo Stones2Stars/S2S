@@ -65,6 +65,9 @@
   "empire": {
    "anger": {
     "percent": 25
+   },
+   "cost": {
+    "percent": 25
    }
   }
  },
@@ -105,12 +108,5 @@
   "description": "TXT_KEY_TRAIT_PROLIFIC3",
   "civilopedia": "TXT_KEY_TRAIT_PROLIFIC3_PEDIA",
   "strategy": "TXT_KEY_TRAIT_PROLIFIC_STRATEGY"
- },
- "costs": {
-  "empire": {
-   "hurry": {
-    "percent": 25
-   }
-  }
  }
 }

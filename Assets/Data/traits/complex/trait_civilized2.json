@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_CIVILIZED2",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_CIVILIZED3"
+  ],
   "traits": [
    "TRAIT_CIVILIZED3"
   ]
@@ -109,24 +112,14 @@
    }
   }
  },
- "triggers": [
-  {
-   "trigger": "onTurnEnd",
-   "action": {
-    "promote": {
-     "promotions": [
-      "PROMOTION_CIVILIZED2"
-     ],
-     "units": {
-      "unitCombats": [
-       "UNITCOMBAT_COMBATANT",
-       "UNITCOMBAT_NAVAL_COMBATANT"
-      ]
-     }
-    }
-   }
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_CIVILIZED2": [
+    "UNITCOMBAT_COMBATANT",
+    "UNITCOMBAT_NAVAL_COMBATANT"
+   ]
   }
- ],
+ },
  "ai": {
   "flavours": [
    {

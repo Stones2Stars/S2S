@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_SCIENTIFIC2",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_SCIENTIFIC3"
+  ],
   "traits": [
    "TRAIT_SCIENTIFIC3"
   ]
@@ -257,13 +260,8 @@
  },
  "happiness": {
   "empire": {
-   "cities": {
-    "flat": [
-     {
-      "value": -1,
-      "religion": "!IS_STATE_RELIGION"
-     }
-    ]
+   "nonStateReligion": {
+    "flat": -1
    }
   }
  },
@@ -282,9 +280,9 @@
    }
   }
  },
- "air": {
+ "combat": {
   "empire": {
-   "range": {
+   "flightRange": {
     "flat": 1
    }
   }

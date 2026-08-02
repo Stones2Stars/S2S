@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_EXCESSIVE2",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_EXCESSIVE3"
+  ],
   "traits": [
    "TRAIT_EXCESSIVE3"
   ]
@@ -26,6 +29,9 @@
  },
  "commerce": {
   "empire": {
+   "tradeRoute": {
+    "percent": -10
+   },
    "improvements": {
     "IMPROVEMENT_TOWN": {
      "flat": -1
@@ -110,11 +116,6 @@
   "empire": {
    "max": {
     "flat": -1
-   },
-   "modifier": {
-    "commerce": {
-     "percent": -10
-    }
    }
   }
  },

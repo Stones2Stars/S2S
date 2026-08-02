@@ -1,8 +1,11 @@
 {
  "type": "TRAIT_UNREFINED1",
  "enables": {
-  "traits": [
+  "traitsAnd": [
    "TRAIT_UNREFINED2"
+  ],
+  "traits": [
+   "TRAIT_UNREFINED3"
   ]
  },
  "excludes": [
@@ -389,9 +392,9 @@
    "flat": 1
   }
  },
- "capture": {
+ "combat": {
   "empire": {
-   "probability": {
+   "captureProbability": {
     "percent": 10
    }
   }

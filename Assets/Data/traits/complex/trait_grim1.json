@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_GRIM1",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_GRIM2"
+  ],
   "traits": [
    "TRAIT_GRIM2"
   ]
@@ -72,12 +75,12 @@
    "flat": -2
   }
  },
- "capture": {
+ "combat": {
   "empire": {
-   "probability": {
+   "captureProbability": {
     "percent": -5
    },
-   "resistance": {
+   "captureResistance": {
     "percent": -10
    }
   }

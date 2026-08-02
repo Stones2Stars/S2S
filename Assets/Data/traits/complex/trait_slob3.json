@@ -55,6 +55,13 @@
    }
   }
  },
+ "hurry": {
+  "empire": {
+   "cost": {
+    "percent": -25
+   }
+  }
+ },
  "diplomacy": {
   "empire": {
    "attitude": {
@@ -86,24 +93,14 @@
    }
   }
  },
- "triggers": [
-  {
-   "trigger": "onTurnEnd",
-   "action": {
-    "promote": {
-     "promotions": [
-      "PROMOTION_SLOB3"
-     ],
-     "units": {
-      "unitCombats": [
-       "UNITCOMBAT_SPECIES_HUMAN",
-       "UNITCOMBAT_SPECIES_NEANDERTHAL"
-      ]
-     }
-    }
-   }
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_SLOB3": [
+    "UNITCOMBAT_SPECIES_HUMAN",
+    "UNITCOMBAT_SPECIES_NEANDERTHAL"
+   ]
   }
- ],
+ },
  "ai": {
   "flavours": [
    {
@@ -142,12 +139,5 @@
   "civilopedia": "TXT_KEY_TRAIT_SLOB3_PEDIA",
   "strategy": "TXT_KEY_TRAIT_SLOB_STRATEGY",
   "negativeTrait": true
- },
- "costs": {
-  "empire": {
-   "hurry": {
-    "percent": -25
-   }
-  }
  }
 }

@@ -1,13 +1,27 @@
 {
  "type": "TRAIT_POPULIST1",
  "enables": {
-  "traits": [
+  "traitsAnd": [
    "TRAIT_POPULIST2"
   ]
+ },
+ "food": {
+  "empire": {
+   "tradeRoute": {
+    "percent": 60
+   }
+  }
  },
  "production": {
   "empire": {
    "percent": -5
+  }
+ },
+ "commerce": {
+  "empire": {
+   "tradeRoute": {
+    "percent": -30
+   }
   }
  },
  "extraYieldThreshold": {
@@ -70,17 +84,5 @@
   "civilopedia": "TXT_KEY_TRAIT_POPULIST_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_POPULIST_SHORT",
   "negativeTrait": true
- },
- "tradeRoutes": {
-  "empire": {
-   "modifier": {
-    "food": {
-     "percent": 60
-    },
-    "commerce": {
-     "percent": -30
-    }
-   }
-  }
  }
 }

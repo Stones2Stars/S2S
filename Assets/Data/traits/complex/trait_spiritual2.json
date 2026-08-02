@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_SPIRITUAL2",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_SPIRITUAL3"
+  ],
   "traits": [
    "TRAIT_SPIRITUAL3"
   ]
@@ -87,13 +90,8 @@
  },
  "happiness": {
   "empire": {
-   "cities": {
-    "flat": [
-     {
-      "value": 1,
-      "religion": "!IS_STATE_RELIGION"
-     }
-    ]
+   "nonStateReligion": {
+    "flat": 1
    }
   }
  },

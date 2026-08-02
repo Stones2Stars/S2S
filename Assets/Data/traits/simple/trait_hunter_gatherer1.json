@@ -1,12 +1,15 @@
 {
  "type": "TRAIT_HUNTER_GATHERER1",
  "enables": {
-  "traits": [
+  "traitsAnd": [
    "TRAIT_HUNTER_GATHERER2"
   ]
  },
  "food": {
   "empire": {
+   "tradeRoute": {
+    "percent": -50
+   },
    "improvements": {
     "IMPROVEMENT_SCAVENGING_CAMP": {
      "flat": 1
@@ -60,15 +63,6 @@
   "empire": {
    "civic": {
     "percent": 10
-   }
-  }
- },
- "tradeRoutes": {
-  "empire": {
-   "modifier": {
-    "food": {
-     "percent": -50
-    }
    }
   }
  },

@@ -339,9 +339,18 @@
    ]
   }
  },
- "espionageDefense": {
+ "combat": {
   "empire": {
-   "percent": -30
+   "espionageDefense": {
+    "percent": -30
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "upgradePrice": {
+    "percent": -20
+   }
   }
  },
  "goldenAge": {
@@ -387,13 +396,6 @@
   "civilopedia": "TXT_KEY_TRAIT_CARELESS_PEDIA",
   "strategy": "TXT_KEY_TRAIT_CARELESS_STRATEGY",
   "negativeTrait": true
- },
- "costs": {
-  "empire": {
-   "upgrade": {
-    "percent": -20
-   }
-  }
  },
  "enables": {
   "traits": [

@@ -138,11 +138,18 @@ techs are monotonic, no `operate`.
 > the inverted `enables`** (never stubbed, never re-authored on the child): the tech `leadsTo` and the route
 > bonus prereqs in the ONE general reverse pass (`Data/CvReversePass.cpp`) — a cross-entity reconstruction has
 > exactly ONE home, and it is never `mapFrom` (which runs while the view is still being built) nor a second
-> load-time pass beside the reader. ⚠ **The TRAIT prereqs are the deliberate exception and are NOT
-> reconstructed:** the rebuilt `CvTraitInfo` carries no prereq getter at all, because re-adding
+> load-time pass beside the reader. ⚠ **The TRAIT prereqs are the deliberate exception and their forward GETTER is
+> NOT reconstructed:** the rebuilt `CvTraitInfo` carries no prereq getter at all, because re-adding
 > `getPrereqTrait`/`getPrereqOrTrait1/2` would be a legacy getter name returning
 > ([DEC-new-getter-surface](../architecture/decisions.md#dec-new-getter-surface)). Their consumers
 > (`CvPlayer`, `CvGameTextMgr`) read the trait's own edge families instead, as stage-4 consumer work.
+> ⛔ **"Not reconstructed" is about the GETTER ONLY — the prereqs THEMSELVES are live and load-bearing. Reading
+> this line as "trait prereqs are inert" is the misreading this callout exists to stop.** A trait's `TraitPrereq`
+> and `PrereqTech` INVERT at the store onto the SOURCE's `enables`: trait→trait becomes the developing-ladder
+> edge, and tech→trait becomes `tech.enables.traits` — §2's rule that a tech is authored in `enables`, never as a
+> generation driver in `requires`. ⚑ The TECH leg is not a curiosity: every rank ±2/±3 rung carries one, so it is
+> the gate on advancing a developing line at all, and a tech JSON missing those edges leaves every upper rung
+> permanently unreachable — silently, since nothing reads a gate that was never emitted.
 > **The inversion must keep AND vs OR
 > in DISTINCT buckets** or the reverse map loses the distinction — a single AND prereq inverts to its own bucket
 > (`enables.routesAnd` / `enables.traitsAnd`), the OR-list to another (`enables.routes` / `enables.traitsOr`), and

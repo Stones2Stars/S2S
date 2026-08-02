@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_LIAR2",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_LIAR3"
+  ],
   "traits": [
    "TRAIT_LIAR3"
   ]
@@ -52,9 +55,6 @@
  },
  "espionage": {
   "empire": {
-   "goldenAge": {
-    "flat": -4
-   },
    "cities": {
     "flat": [
      {
@@ -65,6 +65,9 @@
       }
      }
     ]
+   },
+   "goldenAge": {
+    "flat": -4
    }
   }
  },
@@ -78,20 +81,17 @@
    "any": -1
   }
  },
- "espionageDefense": {
+ "combat": {
   "empire": {
-   "percent": 10
+   "espionageDefense": {
+    "percent": 10
+   }
   }
  },
  "tradeRoutes": {
   "empire": {
-   "modifier": {
-    "percent": [
-     {
-      "value": -20,
-      "enabled": "IS_FOREIGN"
-     }
-    ]
+   "foreign": {
+    "percent": -20
    }
   }
  },

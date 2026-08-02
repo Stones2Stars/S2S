@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_FINANCIAL1",
  "enables": {
-  "traits": [
+  "traitsAnd": [
    "TRAIT_FINANCIAL2"
   ]
  },
@@ -28,6 +28,9 @@
  },
  "commerce": {
   "empire": {
+   "tradeRoute": {
+    "percent": 10
+   },
    "specialists": {
     "SPECIALIST_MERCHANT": {
      "flat": 1
@@ -114,14 +117,5 @@
   "description": "TXT_KEY_TRAIT_FINANCIAL0",
   "civilopedia": "TXT_KEY_TRAIT_FINANCIAL_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_FINANCIAL_SHORT"
- },
- "tradeRoutes": {
-  "empire": {
-   "modifier": {
-    "commerce": {
-     "percent": 10
-    }
-   }
-  }
  }
 }

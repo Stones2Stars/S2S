@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_ALOOF2",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_ALOOF3"
+  ],
   "traits": [
    "TRAIT_ALOOF3"
   ]
@@ -326,13 +329,8 @@
  "tradeRoutes": {
   "empire": {
    "flat": 1,
-   "modifier": {
-    "percent": [
-     {
-      "value": 10,
-      "enabled": "IS_FOREIGN"
-     }
-    ]
+   "foreign": {
+    "percent": 10
    }
   }
  },

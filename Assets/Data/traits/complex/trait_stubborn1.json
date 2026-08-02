@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_STUBBORN1",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_STUBBORN2"
+  ],
   "traits": [
    "TRAIT_STUBBORN2"
   ]
@@ -8,6 +11,13 @@
  "excludes": [
   "TRAIT_DYNAMIC1"
  ],
+ "food": {
+  "empire": {
+   "tradeRoute": {
+    "percent": 10
+   }
+  }
+ },
  "buildRate": {
   "empire": {
    "worldWonder": {
@@ -210,24 +220,17 @@
  "upkeep": {
   "empire": {
    "freeCivilian": {
-    "flat": [
-     {
-      "value": 15,
-      "per": {
-       "type": "POPULATION",
-       "each": 100
-      }
-     }
-    ]
+    "perPopulation": 15
+   },
+   "upgradePrice": {
+    "percent": 10
    }
   }
  },
- "tradeRoutes": {
+ "hurry": {
   "empire": {
-   "modifier": {
-    "food": {
-     "percent": 10
-    }
+   "cost": {
+    "percent": 30
    }
   }
  },
@@ -291,15 +294,5 @@
   "civilopedia": "TXT_KEY_TRAIT_STUBBORN1_PEDIA",
   "strategy": "TXT_KEY_TRAIT_STUBBORN_STRATEGY",
   "negativeTrait": true
- },
- "costs": {
-  "empire": {
-   "hurry": {
-    "percent": 30
-   },
-   "upgrade": {
-    "percent": 10
-   }
-  }
  }
 }

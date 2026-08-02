@@ -47,9 +47,6 @@
  },
  "espionage": {
   "empire": {
-   "goldenAge": {
-    "flat": -8
-   },
    "cities": {
     "flat": [
      {
@@ -60,6 +57,9 @@
       }
      }
     ]
+   },
+   "goldenAge": {
+    "flat": -8
    }
   }
  },
@@ -73,21 +73,18 @@
    "any": -1
   }
  },
- "espionageDefense": {
+ "combat": {
   "empire": {
-   "percent": 20
+   "espionageDefense": {
+    "percent": 20
+   }
   }
  },
  "tradeRoutes": {
   "empire": {
    "flat": -1,
-   "modifier": {
-    "percent": [
-     {
-      "value": -10,
-      "enabled": "IS_FOREIGN"
-     }
-    ]
+   "foreign": {
+    "percent": -10
    }
   }
  },

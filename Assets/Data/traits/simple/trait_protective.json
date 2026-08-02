@@ -178,42 +178,20 @@
    }
   }
  },
- "triggers": [
-  {
-   "trigger": "onTurnEnd",
-   "action": {
-    "promote": {
-     "promotions": [
-      "PROMOTION_CITY_GARRISON1"
-     ],
-     "units": {
-      "unitCombats": [
-       "UNITCOMBAT_ARCHER",
-       "UNITCOMBAT_CLONES",
-       "UNITCOMBAT_GUN",
-       "UNITCOMBAT_HITECH",
-       "UNITCOMBAT_MELEE"
-      ]
-     }
-    }
-   }
-  },
-  {
-   "trigger": "onTurnEnd",
-   "action": {
-    "promote": {
-     "promotions": [
-      "PROMOTION_TRENCH1"
-     ],
-     "units": {
-      "unitCombats": [
-       "UNITCOMBAT_GUN"
-      ]
-     }
-    }
-   }
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_CITY_GARRISON1": [
+    "UNITCOMBAT_ARCHER",
+    "UNITCOMBAT_CLONES",
+    "UNITCOMBAT_GUN",
+    "UNITCOMBAT_HITECH",
+    "UNITCOMBAT_MELEE"
+   ],
+   "PROMOTION_TRENCH1": [
+    "UNITCOMBAT_GUN"
+   ]
   }
- ],
+ },
  "ai": {
   "flavours": [
    {

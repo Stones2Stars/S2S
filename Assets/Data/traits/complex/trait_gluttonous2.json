@@ -1,8 +1,11 @@
 {
  "type": "TRAIT_GLUTTONOUS2",
  "enables": {
-  "traits": [
+  "traitsAnd": [
    "TRAIT_GLUTTONOUS2",
+   "TRAIT_GLUTTONOUS3"
+  ],
+  "traits": [
    "TRAIT_GLUTTONOUS3"
   ]
  },

@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_EXPANSIVE2",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_EXPANSIVE3"
+  ],
   "traits": [
    "TRAIT_EXPANSIVE3"
   ]
@@ -74,15 +77,7 @@
  "upkeep": {
   "empire": {
    "freeCivilian": {
-    "flat": [
-     {
-      "value": 30,
-      "per": {
-       "type": "POPULATION",
-       "each": 100
-      }
-     }
-    ]
+    "perPopulation": 30
    }
   }
  },

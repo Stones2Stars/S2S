@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_HONEST1",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_HONEST2"
+  ],
   "traits": [
    "TRAIT_HONEST2"
   ]
@@ -62,21 +65,18 @@
    "flat": 1
   }
  },
- "espionageDefense": {
+ "combat": {
   "empire": {
-   "percent": -20
+   "espionageDefense": {
+    "percent": -20
+   }
   }
  },
  "tradeRoutes": {
   "empire": {
    "flat": 1,
-   "modifier": {
-    "percent": [
-     {
-      "value": 10,
-      "enabled": "IS_FOREIGN"
-     }
-    ]
+   "foreign": {
+    "percent": 10
    }
   }
  },

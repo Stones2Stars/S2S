@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_HUMBLE1",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_HUMBLE2"
+  ],
   "traits": [
    "TRAIT_HUMBLE2"
   ]
@@ -58,16 +61,14 @@
    "percent": -5
   }
  },
- "capture": {
+ "combat": {
   "empire": {
-   "resistance": {
+   "espionageDefense": {
+    "percent": 5
+   },
+   "captureResistance": {
     "percent": -10
    }
-  }
- },
- "espionageDefense": {
-  "empire": {
-   "percent": 5
   }
  },
  "upkeep": {

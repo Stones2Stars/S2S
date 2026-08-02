@@ -61,12 +61,12 @@
    "flat": 2
   }
  },
- "capture": {
+ "combat": {
   "empire": {
-   "probability": {
+   "captureProbability": {
     "percent": -20
    },
-   "resistance": {
+   "captureResistance": {
     "percent": 40
    }
   }
@@ -78,6 +78,9 @@
    },
    "unitCivilian": {
     "percent": -10
+   },
+   "upgradePrice": {
+    "percent": 30
    }
   }
  },
@@ -186,24 +189,14 @@
    }
   }
  },
- "triggers": [
-  {
-   "trigger": "onTurnEnd",
-   "action": {
-    "promote": {
-     "promotions": [
-      "PROMOTION_DEFENSIVE"
-     ],
-     "units": {
-      "unitCombats": [
-       "UNITCOMBAT_COMBATANT",
-       "UNITCOMBAT_NAVAL_COMBATANT"
-      ]
-     }
-    }
-   }
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_DEFENSIVE": [
+    "UNITCOMBAT_COMBATANT",
+    "UNITCOMBAT_NAVAL_COMBATANT"
+   ]
   }
- ],
+ },
  "ai": {
   "flavours": [
    {
@@ -241,13 +234,6 @@
   "description": "TXT_KEY_TRAIT_DEFENSIVE",
   "civilopedia": "TXT_KEY_TRAIT_DEFENSIVE_PEDIA",
   "strategy": "TXT_KEY_TRAIT_DEFENSIVE_STRATEGY"
- },
- "costs": {
-  "empire": {
-   "upgrade": {
-    "percent": 30
-   }
-  }
  },
  "enables": {
   "traits": [

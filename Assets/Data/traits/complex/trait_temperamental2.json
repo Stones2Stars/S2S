@@ -32,9 +32,11 @@
    "flat": -2
   }
  },
- "espionageDefense": {
+ "combat": {
   "empire": {
-   "percent": 10
+   "espionageDefense": {
+    "percent": 10
+   }
   }
  },
  "hurry": {

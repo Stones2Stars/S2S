@@ -3,6 +3,20 @@
  "excludes": [
   "TRAIT_STUBBORN"
  ],
+ "food": {
+  "empire": {
+   "tradeRoute": {
+    "percent": -10
+   }
+  }
+ },
+ "production": {
+  "empire": {
+   "tradeRoute": {
+    "percent": -10
+   }
+  }
+ },
  "buildRate": {
   "empire": {
    "worldWonder": {
@@ -363,6 +377,13 @@
    }
   }
  },
+ "commerce": {
+  "empire": {
+   "tradeRoute": {
+    "percent": -10
+   }
+  }
+ },
  "freeSpecialists": {
   "empire": {
    "any": 1
@@ -376,15 +397,10 @@
  "upkeep": {
   "empire": {
    "freeCivilian": {
-    "flat": [
-     {
-      "value": -15,
-      "per": {
-       "type": "POPULATION",
-       "each": 100
-      }
-     }
-    ]
+    "perPopulation": -15
+   },
+   "upgradePrice": {
+    "percent": -20
    }
   }
  },
@@ -392,6 +408,9 @@
   "empire": {
    "anger": {
     "percent": -25
+   },
+   "cost": {
+    "percent": -50
    }
   }
  },
@@ -468,31 +487,6 @@
   "description": "TXT_KEY_TRAIT_DYNAMIC",
   "civilopedia": "TXT_KEY_TRAIT_DYNAMIC_PEDIA",
   "strategy": "TXT_KEY_TRAIT_DYNAMIC_STRATEGY"
- },
- "tradeRoutes": {
-  "empire": {
-   "modifier": {
-    "food": {
-     "percent": -10
-    },
-    "production": {
-     "percent": -10
-    },
-    "commerce": {
-     "percent": -10
-    }
-   }
-  }
- },
- "costs": {
-  "empire": {
-   "hurry": {
-    "percent": -50
-   },
-   "upgrade": {
-    "percent": -20
-   }
-  }
  },
  "enables": {
   "traits": [

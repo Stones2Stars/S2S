@@ -275,23 +275,13 @@
    }
   }
  },
- "triggers": [
-  {
-   "trigger": "onTurnEnd",
-   "action": {
-    "promote": {
-     "promotions": [
-      "PROMOTION_MEDICAL3"
-     ],
-     "units": {
-      "unitCombats": [
-       "UNITCOMBAT_HEALTH_CARE"
-      ]
-     }
-    }
-   }
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_MEDICAL3": [
+    "UNITCOMBAT_HEALTH_CARE"
+   ]
   }
- ],
+ },
  "ai": {
   "flavours": [
    {

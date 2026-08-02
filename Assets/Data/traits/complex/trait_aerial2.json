@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_AERIAL2",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_AERIAL3"
+  ],
   "traits": [
    "TRAIT_AERIAL3"
   ]
@@ -328,17 +331,13 @@
    }
   }
  },
- "capture": {
+ "combat": {
   "empire": {
-   "resistance": {
-    "percent": -20
-   }
-  }
- },
- "air": {
-  "empire": {
-   "range": {
+   "flightRange": {
     "flat": 1
+   },
+   "captureResistance": {
+    "percent": -20
    }
   }
  },
@@ -422,26 +421,16 @@
    }
   }
  },
- "triggers": [
-  {
-   "trigger": "onTurnEnd",
-   "action": {
-    "promote": {
-     "promotions": [
-      "PROMOTION_AERIAL_WEAPONRY"
-     ],
-     "units": {
-      "unitCombats": [
-       "UNITCOMBAT_GUN",
-       "UNITCOMBAT_HITECH",
-       "UNITCOMBAT_ROCKET_LAUNCHER",
-       "UNITCOMBAT_SIEGE"
-      ]
-     }
-    }
-   }
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_AERIAL_WEAPONRY": [
+    "UNITCOMBAT_GUN",
+    "UNITCOMBAT_HITECH",
+    "UNITCOMBAT_ROCKET_LAUNCHER",
+    "UNITCOMBAT_SIEGE"
+   ]
   }
- ],
+ },
  "ai": {
   "flavours": [
    {

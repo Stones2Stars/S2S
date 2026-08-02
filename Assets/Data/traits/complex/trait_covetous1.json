@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_COVETOUS1",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_COVETOUS2"
+  ],
   "traits": [
    "TRAIT_COVETOUS2"
   ]
@@ -48,22 +51,27 @@
    }
   }
  },
+ "upkeep": {
+  "empire": {
+   "upgradePrice": {
+    "percent": 5
+   }
+  }
+ },
  "tradeRoutes": {
   "empire": {
    "flat": 1,
-   "modifier": {
-    "percent": [
-     {
-      "value": 10,
-      "enabled": "IS_FOREIGN"
-     }
-    ]
+   "foreign": {
+    "percent": 10
    }
   }
  },
  "hurry": {
   "empire": {
    "anger": {
+    "percent": 10
+   },
+   "cost": {
     "percent": 10
    }
   }
@@ -131,15 +139,5 @@
   "strategy": "TXT_KEY_TRAIT_COVETOUS_STRATEGY",
   "negativeTrait": true,
   "minAnarchy": 1
- },
- "costs": {
-  "empire": {
-   "hurry": {
-    "percent": 10
-   },
-   "upgrade": {
-    "percent": 5
-   }
-  }
  }
 }

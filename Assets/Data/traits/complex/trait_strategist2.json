@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_STRATEGIST2",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_STRATEGIST3"
+  ],
   "traits": [
    "TRAIT_STRATEGIST3"
   ]
@@ -157,9 +160,18 @@
    ]
   }
  },
- "espionageDefense": {
+ "combat": {
   "empire": {
-   "percent": 10
+   "espionageDefense": {
+    "percent": 10
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "upgradePrice": {
+    "percent": 10
+   }
   }
  },
  "goldenAge": {
@@ -219,12 +231,5 @@
   "description": "TXT_KEY_TRAIT_STRATEGIST2",
   "civilopedia": "TXT_KEY_TRAIT_STRATEGIST2_PEDIA",
   "strategy": "TXT_KEY_TRAIT_STRATEGIST_STRATEGY"
- },
- "costs": {
-  "empire": {
-   "upgrade": {
-    "percent": 10
-   }
-  }
  }
 }

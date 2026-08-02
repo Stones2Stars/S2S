@@ -177,9 +177,9 @@
    "flat": 1
   }
  },
- "capture": {
+ "combat": {
   "empire": {
-   "probability": {
+   "captureProbability": {
     "percent": 5
    }
   }

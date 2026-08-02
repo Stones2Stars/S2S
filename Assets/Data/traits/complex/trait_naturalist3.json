@@ -55,6 +55,13 @@
    }
   }
  },
+ "hurry": {
+  "empire": {
+   "cost": {
+    "percent": 25
+   }
+  }
+ },
  "workRate": {
   "empire": {
    "builds": {
@@ -167,24 +174,14 @@
    }
   }
  },
- "triggers": [
-  {
-   "trigger": "onTurnEnd",
-   "action": {
-    "promote": {
-     "promotions": [
-      "PROMOTION_NATURALIST3"
-     ],
-     "units": {
-      "unitCombats": [
-       "UNITCOMBAT_SPECIES_HUMAN",
-       "UNITCOMBAT_SPECIES_NEANDERTHAL"
-      ]
-     }
-    }
-   }
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_NATURALIST3": [
+    "UNITCOMBAT_SPECIES_HUMAN",
+    "UNITCOMBAT_SPECIES_NEANDERTHAL"
+   ]
   }
- ],
+ },
  "ai": {
   "flavours": [
    {
@@ -222,12 +219,5 @@
   "description": "TXT_KEY_TRAIT_NATURALIST3",
   "civilopedia": "TXT_KEY_TRAIT_NATURALIST3_PEDIA",
   "strategy": "TXT_KEY_TRAIT_NATURALIST_STRATEGY"
- },
- "costs": {
-  "empire": {
-   "hurry": {
-    "percent": 25
-   }
-  }
  }
 }

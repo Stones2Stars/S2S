@@ -1,6 +1,9 @@
 {
  "type": "TRAIT_COWARDLY1",
  "enables": {
+  "traitsAnd": [
+   "TRAIT_COWARDLY2"
+  ],
   "traits": [
    "TRAIT_COWARDLY2"
   ]
@@ -54,9 +57,9 @@
    "flat": -4
   }
  },
- "capture": {
+ "combat": {
   "empire": {
-   "resistance": {
+   "captureResistance": {
     "percent": 20
    }
   }
@@ -68,6 +71,9 @@
    },
    "unitCivilian": {
     "percent": 10
+   },
+   "upgradePrice": {
+    "percent": -10
    }
   }
  },
@@ -173,24 +179,14 @@
    }
   }
  },
- "triggers": [
-  {
-   "trigger": "onTurnEnd",
-   "action": {
-    "promote": {
-     "promotions": [
-      "PROMOTION_COWARDLY1"
-     ],
-     "units": {
-      "unitCombats": [
-       "UNITCOMBAT_COMBATANT",
-       "UNITCOMBAT_NAVAL_COMBATANT"
-      ]
-     }
-    }
-   }
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_COWARDLY1": [
+    "UNITCOMBAT_COMBATANT",
+    "UNITCOMBAT_NAVAL_COMBATANT"
+   ]
   }
- ],
+ },
  "ai": {
   "flavours": [
    {
@@ -229,12 +225,5 @@
   "civilopedia": "TXT_KEY_TRAIT_COWARDLY1_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COWARDLY_STRATEGY",
   "negativeTrait": true
- },
- "costs": {
-  "empire": {
-   "upgrade": {
-    "percent": -10
-   }
-  }
  }
 }

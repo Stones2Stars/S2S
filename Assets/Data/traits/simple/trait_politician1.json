@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_POLITICIAN1",
  "enables": {
-  "traits": [
+  "traitsAnd": [
    "TRAIT_POLITICIAN2"
   ]
  },
@@ -92,23 +92,13 @@
    }
   }
  },
- "triggers": [
-  {
-   "trigger": "onTurnEnd",
-   "action": {
-    "promote": {
-     "promotions": [
-      "PROMOTION_LOYALTY"
-     ],
-     "units": {
-      "unitCombats": [
-       "UNITCOMBAT_SPY"
-      ]
-     }
-    }
-   }
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_LOYALTY": [
+    "UNITCOMBAT_SPY"
+   ]
   }
- ],
+ },
  "ai": {
   "flavours": [
    {
