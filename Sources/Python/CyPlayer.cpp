@@ -1630,11 +1630,6 @@ void CyPlayer::addReminder(int iGameTurn, std::wstring szMessage) const
 	m_pPlayer->addReminder(iGameTurn, CvWString(szMessage));
 }
 
-int CyPlayer::getBuildingCountWithUpgrades(int iBuilding) const
-{
-	return m_pPlayer->getBuildingCountWithUpgrades((BuildingTypes)iBuilding);
-}
-
 void CyPlayer::setHandicap(int iNewVal, bool bAdjustGameHandicap)
 {
 	m_pPlayer->setHandicap(iNewVal, bAdjustGameHandicap);

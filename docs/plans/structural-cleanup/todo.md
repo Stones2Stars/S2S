@@ -510,6 +510,14 @@
 - Build the ONE data-fetching library toward COMPLETE (its end state, not a gate on cutting). Build it for the
   pedia (a SHAPE oracle, NOT a coverage oracle — the appendix is enumerable).
 - Shoot the dead `Cy*` bindings on sight as the compiler names them.
+- Serve the UPGRADE-AWARE building count the random-event surface reads. Its binding is already unpublished, so
+  those reads answer nothing today — the cut NAMED the requirement rather than creating it.
+  ⛔ It does not come back as the legacy count. "Including upgrades" resolves through a building's DORMANT
+  TRIGGERS, and that bucket merges two populations: the successors that supersede a building, and the unrelated
+  buildings whose mere presence dorms it (a pollution band dorming an observatory —
+  [enabler.md §2](../../specs/enabler.md) unified the two deliberately, so the distinction does not survive into
+  the data). Summing the bucket counts the band as an upgrade — plausibly, silently, and wrong. Decide what the
+  read MEANS before serving it.
 - Serve enum resolution AND EXTENSION as a first-class operation — BUG reaches three engine enums only that way
   and MINTS new members at runtime, so a library without it forces the banned reach-around.
 - REBUILD the emptied `CvGameTextMgr` composers on `appendEntryLines` + the requires block composer. The bodies

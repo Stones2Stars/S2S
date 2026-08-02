@@ -404,7 +404,6 @@ public:
 
 	void addReminder(int iGameTurn, std::wstring szMessage) const;
 
-	int getBuildingCountWithUpgrades(int /*BuildingTypes*/ iBuilding) const;
 	void setColor(int /*PlayerColorTypes*/ iColor);
 	void setHandicap(int iNewVal, bool bAverageGameHandicap);
 

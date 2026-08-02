@@ -1482,8 +1482,6 @@ public:
 	int getLandmarkHappiness() const;
 	void changeLandmarkHappiness(int iChange);
 
-	int getBuildingCountWithUpgrades(BuildingTypes eBuilding) const;
-
 	void setColor(PlayerColorTypes eColor);
 
 	void setHandicap(int iNewVal, bool bAdjustGameHandicap = false);
@@ -1502,13 +1500,10 @@ public:
 	void updateCorporateMaintenance();
 
 	int getCorporationInfluence(CorporationTypes eIndex) const;
-	int getEnvironmentalProtection() const;
-	int getLaborFreedom() const;
+	int getRevolutionFromCivics(RevolutionKind eKind) const;
 
 
 	bool m_bChoosingReligion;
-
-	int getBuildingCount(BuildingTypes eBuilding, bool bUpgrades) const;
 
 	int getScoreComponent(int iRawScore, int iInitial, int iMax, int iFactor, bool bExponential, bool bFinal, bool bVictory) const;
 

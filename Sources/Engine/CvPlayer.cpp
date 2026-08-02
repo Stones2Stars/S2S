@@ -27,6 +27,8 @@
 #include "Tools/CvHttpServer.h"
 #include "CvImprovementInfo.h"
 #include "CvHeritageInfo.h"
+#include "CvTechInfo.h"    // the retained requires.build prereq views
+#include "CvCivicInfo.h"   // the parameterized revolution read
 #include "CvInfos.h"
 #include "Infrastructure/CvInitCore.h"
 #include "CvMap.h"
@@ -25537,43 +25539,28 @@ void CvPlayer::changeHurriedCount(int iChange)
 	m_iHurryCount += iChange;
 }
 
+//	A tech's building prerequisite is the OR-GROUP its requires.build tree retains: the empire must hold at
+//	least ONE of the named buildings, in that entry's stated quantity. A tech naming no such group requires
+//	no building at all.
 bool CvPlayer::hasValidBuildings(TechTypes eTech) const
 {
 	PROFILE_EXTRA_FUNC();
-	bool bRequiresOrBuilding = false;
-	bool bHasOneOrBuilding = false;
+	const std::vector<PrereqBuilding>& kPrereqOrBuildings = GC.getTechInfo(eTech).getPrereqOrBuildings();
 
-	for (int iI = 0; iI < GC.getTechInfo(eTech).getNumPrereqBuildings(); iI++)
+	bool bRequiresOrBuilding = false;
+	for (size_t iEntry = 0; iEntry < kPrereqOrBuildings.size(); ++iEntry)
 	{
-		const int iRequired = GC.getTechInfo(eTech).getPrereqBuilding(iI).iMinimumRequired;
-		if (iRequired > 0)
+		const PrereqBuilding& kPrereq = kPrereqOrBuildings[iEntry];
+		if (kPrereq.iMinimumRequired > 0)
 		{
-			if (getBuildingCount(GC.getTechInfo(eTech).getPrereqBuilding(iI).eBuilding) < iRequired)
+			bRequiresOrBuilding = true;
+			if (getBuildingCount(kPrereq.eBuilding) >= kPrereq.iMinimumRequired)
 			{
-				return false;
+				return true;
 			}
 		}
 	}
-	for (int iI = 0; iI < GC.getTechInfo(eTech).getNumPrereqOrBuildings(); iI++)
-	{
-		if (!bHasOneOrBuilding)
-		{
-			const int iRequiredOr = GC.getTechInfo(eTech).getPrereqOrBuilding(iI).iMinimumRequired;
-			if (iRequiredOr > 0)
-			{
-				bRequiresOrBuilding = true;
-				if (getBuildingCount(GC.getTechInfo(eTech).getPrereqOrBuilding(iI).eBuilding) >= iRequiredOr)
-				{
-					bHasOneOrBuilding = true;
-				}
-			}
-		}
-	}
-	if (!bHasOneOrBuilding && bRequiresOrBuilding)
-	{
-		return false;
-	}
-	return true;
+	return !bRequiresOrBuilding;
 }
 
 int CvPlayer::getBuildingCommerceChange(BuildingTypes eType, CommerceTypes CommerceType) const
@@ -25661,33 +25648,6 @@ void CvPlayer::changeLandmarkYield(YieldTypes eIndex, int iChange)
 	}
 }
 
-
-int CvPlayer::getBuildingCount(BuildingTypes eBuilding, bool bUpgrades) const
-{
-	if (bUpgrades)
-	{
-		return getBuildingCountWithUpgrades(eBuilding);
-	}
-	return getBuildingCount(eBuilding);
-}
-
-int CvPlayer::getBuildingCountWithUpgrades(BuildingTypes eBuilding) const
-{
-	PROFILE_EXTRA_FUNC();
-	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eBuilding);
-
-	if (eBuilding == NO_BUILDING)
-	{
-		return 0;
-	}
-	int iCount = getBuildingCount(eBuilding);
-	const CvBuildingInfo& building = GC.getBuildingInfo(eBuilding);
-	for (int iI = 0; iI < building.getNumReplacementBuilding(); ++iI)
-	{
-		iCount += getBuildingCount((BuildingTypes)building.getReplacementBuilding(iI));
-	}
-	return iCount;
-}
 
 void CvPlayer::setColor(PlayerColorTypes eColor)
 {
@@ -25864,34 +25824,25 @@ int CvPlayer::getCorporationInfluence(CorporationTypes eIndex) const
 			}
 		}
 	}
-	iInfluence = getModifiedIntValue(iInfluence, (-5) * getEnvironmentalProtection() - 2 * getLaborFreedom());
+	iInfluence = getModifiedIntValue(iInfluence,
+		(-5) * getRevolutionFromCivics(REVOLUTION_ENVIRONMENTAL_PROTECTION)
+		- 2 * getRevolutionFromCivics(REVOLUTION_LABOR_FREEDOM));
 
 	return iInfluence;
 }
 
-int CvPlayer::getEnvironmentalProtection() const
+//	The empire's revolution total for ONE kind, summed over the civic adopted in each option slot. Revolution
+//	is Python-authoritative, so this hands back the civics' own authored values and models nothing further.
+int CvPlayer::getRevolutionFromCivics(RevolutionKind eKind) const
 {
 	PROFILE_EXTRA_FUNC();
 	int iValue = 0;
-	for (int iI = 0; iI < GC.getNumCivicOptionInfos(); iI++)
+	for (int iOption = 0; iOption < GC.getNumCivicOptionInfos(); iOption++)
 	{
-		if (getCivics((CivicOptionTypes)iI) != NO_CIVIC)
+		const CivicTypes eCivic = getCivics((CivicOptionTypes)iOption);
+		if (eCivic != NO_CIVIC)
 		{
-			iValue += GC.getCivicInfo(getCivics((CivicOptionTypes)iI)).getRevEnvironmentalProtection();
-		}
-	}
-	return iValue;
-}
-
-int CvPlayer::getLaborFreedom() const
-{
-	PROFILE_EXTRA_FUNC();
-	int iValue = 0;
-	for (int iI = 0; iI < GC.getNumCivicOptionInfos(); iI++)
-	{
-		if (getCivics((CivicOptionTypes)iI) != NO_CIVIC)
-		{
-			iValue += GC.getCivicInfo(getCivics((CivicOptionTypes)iI)).getRevLaborFreedom();
+			iValue += GC.getCivicInfo(eCivic).getRevolution(eKind, CASC_SCOPE_EMPIRE);
 		}
 	}
 	return iValue;
