@@ -5686,26 +5686,19 @@ void CvGame::setHeadquarters(CorporationTypes eIndex, CvCity* pNewValue, bool bA
 		CvCity* pHeadquarters = getHeadquarters(eIndex);
 
 		// Set and Replace Corporation HQ's
-		if (pOldValue)
+		// The CORPORATION names its HQ buildings ([DEC-one-reverse-view], fed at load from each building's §9
+		// `headquarters` FK) -- never a scan of every building asking whose headquarters it is.
+		const std::vector<BuildingTypes>& aeHeadquarters =
+			GC.getCorporationInfo(eIndex).getHeadquartersBuildings();
+		if (!aeHeadquarters.empty())
 		{
-			for (int i = 0; i < GC.getNumBuildingInfos(); i++)
+			if (pOldValue)
 			{
-				if ((CorporationTypes)GC.getBuildingInfo((BuildingTypes)i).getGlobalCorporationCommerce() == eIndex)
-				{
-					pOldValue->changeHasBuilding((BuildingTypes)i, false);
-					break;
-				}
+				pOldValue->changeHasBuilding(aeHeadquarters[0], false);
 			}
-		}
-		if (pNewValue)
-		{
-			for (int i = 0; i < GC.getNumBuildingInfos(); i++)
+			if (pNewValue)
 			{
-				if ((CorporationTypes)GC.getBuildingInfo((BuildingTypes)i).getGlobalCorporationCommerce() == eIndex)
-				{
-					pNewValue->changeHasBuilding((BuildingTypes)i, true);
-					break;
-				}
+				pNewValue->changeHasBuilding(aeHeadquarters[0], true);
 			}
 		}
 
@@ -11219,19 +11212,21 @@ void CvGame::doFoundCorporation(CorporationTypes eCorporation, bool bForce)
 		}
 	}
 	TechTypes ePrereqTech = GC.getCorporationInfo(eCorporation).getTechPrereq();
-	//Find the prereq tech for corporate HQ
+	// The gating tech falls back to the corp's HQ building's own -- and that fallback is the ONLY live path,
+	// since no corporation authors a tech prereq. The HQ buildings come from the corporation's own registry
+	// ([DEC-one-reverse-view]); what the BUILDING's enabling tech is remains unserved -- a tech reaches a
+	// building through its `enables.buildings` edge, and the building's reverse tech bucket is the MERGED
+	// EDGEF_RELATED one, which cannot tell an enabling tech from an obsoleting or depositing one.
 	if (ePrereqTech == NO_TECH)
 	{
-		for (int i = 0; i < GC.getNumBuildingInfos(); i++)
+		const std::vector<BuildingTypes>& aeHeadquarters =
+			GC.getCorporationInfo(eCorporation).getHeadquartersBuildings();
+		for (size_t iHq = 0; iHq < aeHeadquarters.size(); ++iHq)
 		{
-			if ((CorporationTypes)GC.getBuildingInfo((BuildingTypes)i).getGlobalCorporationCommerce() == eCorporation)
+			ePrereqTech = (TechTypes)GC.getBuildingInfo(aeHeadquarters[iHq]).getPrereqAndTech();
+			if (ePrereqTech != NO_TECH)
 			{
-				ePrereqTech = (TechTypes)GC.getBuildingInfo((BuildingTypes)i).getPrereqAndTech();
-				if (ePrereqTech != NO_TECH)
-				{
-					//Found a tech, exit the loop, else keep looking
-					break;
-				}
+				break;
 			}
 		}
 		if (ePrereqTech == NO_TECH)

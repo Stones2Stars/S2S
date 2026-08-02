@@ -75,6 +75,16 @@ public:
 	int getTGAIndex() const { return m_iTGAIndex; }                                           // ui.art.tgaIndex
 	const char* getMovieFile() const { return m_szMovieFile.c_str(); }                        // ui.art.movie.file
 	const char* getMovieSound() const { return m_szMovieSound.c_str(); }                      // ui.art.movie.sound
+	// --- RUNTIME member (set post-load, NOT JSON): the HQ-building registry, the exact sibling of the
+	// religion's shrine registry. The BUILDING declares the relationship as its §9 `headquarters` FK
+	// (json.md §9 -- `headquarters` is the corp analog of `shrine`, same FK shape), and every consumer asks
+	// the CORPORATION which building is its HQ, so the readJson reverse pass fills this from the compiled FK
+	// (CvReversePass calls addHeadquartersBuilding) rather than each consumer scanning the building registry.
+	const std::vector<BuildingTypes>& getHeadquartersBuildings() const
+	{ return reinterpret_cast<const std::vector<BuildingTypes>&>(m_aeHeadquartersBuildings); }
+	void addHeadquartersBuilding(int iBuilding) { m_aeHeadquartersBuildings.push_back(iBuilding); }
+	void clearHeadquartersBuildings() { m_aeHeadquartersBuildings.clear(); }   // clear-first: the pass runs in BOTH load phases
+
 	// requires.spread per-building count atoms ({type:BUILDING_X, scope:empire, min:N}, json §4.3) -- the
 	// executive-spread gate's per-building COUNT need; 0 = no requirement (materialized at mapFrom).
 	int getSpreadBuildingCount(int iBuilding) const
@@ -124,6 +134,9 @@ private:
 	int m_aiHeadquartersCommerce[NUM_COMMERCE_TYPES];
 	std::vector<int> m_aeConsumedBonuses;
 	std::map<int, int> m_spreadBuildingCounts;
+
+	// --- the RUNTIME registry (post-load, fed by the reverse pass from each building's §9 headquarters FK) ---
+	std::vector<int> m_aeHeadquartersBuildings;
 
 	// --- the intrinsic identity members ---
 	int m_iSpreadFactor;

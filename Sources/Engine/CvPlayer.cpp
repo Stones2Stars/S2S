@@ -26006,12 +26006,13 @@ int CvPlayer::getCorporationInfluence(CorporationTypes eIndex) const
 	//Find the prereq tech for corporate HQ
 	TechTypes ePrereqTech = GC.getCorporationInfo(eIndex).getTechPrereq();
 
-	for (int i = 0; ePrereqTech == NO_TECH && i < GC.getNumBuildingInfos(); i++)
+	// The corporation names its HQ buildings ([DEC-one-reverse-view]) -- the gating tech falls back to theirs,
+	// which is the only live path since no corporation authors a tech prereq of its own.
+	const std::vector<BuildingTypes>& aeHeadquarters =
+		GC.getCorporationInfo(eIndex).getHeadquartersBuildings();
+	for (size_t iHq = 0; ePrereqTech == NO_TECH && iHq < aeHeadquarters.size(); ++iHq)
 	{
-		if ((CorporationTypes)GC.getBuildingInfo((BuildingTypes)i).getGlobalCorporationCommerce() == eIndex)
-		{
-			ePrereqTech = (TechTypes)GC.getBuildingInfo((BuildingTypes)i).getPrereqAndTech();
-		}
+		ePrereqTech = (TechTypes)GC.getBuildingInfo(aeHeadquarters[iHq]).getPrereqAndTech();
 	}
 	if (ePrereqTech != NO_TECH && !GET_TEAM(getTeam()).isHasTech(ePrereqTech))
 	{

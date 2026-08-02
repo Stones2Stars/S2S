@@ -1077,6 +1077,47 @@ namespace
 		}
 	}
 
+	// HQ-BUILDING REGISTRY FEED -- the exact sibling of rp_feedShrineBuildings, and for the same reason. The
+	// building authors the relationship as its §9 `headquarters` FK (CvBuildingInfo::getHeadquartersCorporation
+	// -- json.md §9: `headquarters` is the corp analog of `shrine`, the building declares only the FK while the
+	// per-commerce values live on the CORPORATION), and every consumer asks the CORPORATION which building is
+	// its HQ. Feeding the registry here is what stops each of them scanning the whole building registry.
+	// Idempotent by contract: clear-first, so the pass may run in both load phases.
+	void rp_feedHeadquartersBuildings()
+	{
+		const int iNumCorporations = GC.getNumCorporationInfos();
+		for (int iCorporation = 0; iCorporation < iNumCorporations; ++iCorporation)
+		{
+			CvCorporationInfo* pCorporation =
+				static_cast<CvCorporationInfo*>(InfoRepo<CvCorporationInfo>::get().editPtr(iCorporation));
+			if (pCorporation != NULL)
+			{
+				pCorporation->clearHeadquartersBuildings();
+			}
+		}
+		const int iNumBuildings = GC.getNumBuildingInfos();
+		for (int iBuilding = 0; iBuilding < iNumBuildings; ++iBuilding)
+		{
+			const CvBuildingInfo* pBuilding =
+				static_cast<const CvBuildingInfo*>(InfoRepo<CvBuildingInfo>::get().get(iBuilding));
+			if (pBuilding == NULL)
+			{
+				continue;
+			}
+			const int iCorporation = pBuilding->getHeadquartersCorporation();
+			if (iCorporation < 0)
+			{
+				continue;
+			}
+			CvCorporationInfo* pCorporation =
+				static_cast<CvCorporationInfo*>(InfoRepo<CvCorporationInfo>::get().editPtr(iCorporation));
+			if (pCorporation != NULL)
+			{
+				pCorporation->addHeadquartersBuilding(iBuilding);
+			}
+		}
+	}
+
 	// The tech-side FORWARD obsoletion views (building/process obsoletion is authored TARGET-side,
 	// obsoletedBy.techs; nothing authors tech.obsoletes.buildings) -- reconstructed so the enabler's O(delta)
 	// tech application can find "which buildings/processes does this tech obsolete" without a candidate scan.
@@ -1421,6 +1462,7 @@ void reversePassRun()
 	s_counts = ReversePassCounts();
 	rp_reconstructRouteBonusPrereqs();
 	rp_feedShrineBuildings();
+	rp_feedHeadquartersBuildings();
 	rp_reconstructTechForeignKeys();
 	rp_reconstructTechObsoletionViews();
 	// the own-output landing runs BEFORE the RELATED walk, so a landed entry's source-presence condition feeds

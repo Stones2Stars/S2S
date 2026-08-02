@@ -346,15 +346,12 @@
   building, not two per channel.
   ⚠ A point read excludes these entries by construction (only null-condition entries fold into the compiled
   sum), so re-pointing one to the point read silently drops the bonus's whole contribution.
-- Feed the CORPORATION its HQ-BUILDING registry, exactly as `rp_feedShrineBuildings` feeds the religion its
-  shrine buildings. The building declares the relationship as its §9 `headquarters` FK and the consumers ask the
-  CORPORATION ("which building is this corp's HQ"), so the reverse pass fills the list from the compiled FK —
-  [json.md §9](../../specs/json.md) calls `headquarters` the corp analog of `shrine` and gives them the same FK
-  shape, so this is the sibling of a landed pass, not a new mechanism.
-  ⚠ Without it every consumer scans the whole building registry asking each one whose HQ it is.
-  ⚑ It also settles the corp's gating TECH, which nothing else can: no corporation authors a `TechPrereq` or an
-  `ObsoleteTech`, so the corp's own tech reads are always empty and the HQ building's enabling tech is the only
-  live source the founding gate has.
+- Serve a BUILDING's ENABLING TECH. A tech reaches a building through its own `enables.buildings` edge, so the
+  building's reverse tech bucket is the MERGED `EDGEF_RELATED` one — it cannot tell an enabling tech from an
+  obsoleting one or from a tech that merely deposits onto the building, and `EDGEF_OBSOLETED_BY` separates only
+  the first of those. ⚠ It is NOT cosmetic: the corporation auto-founding gate gates on how many teams know the
+  tech, and no corporation authors a tech prereq of its own, so the HQ building's tech is the only live source
+  that gate has. ⛔ Do not approximate it from the merged bucket — a wrong tech mis-times corp founding silently.
 - A home for pedia category / sort metadata ([pedia-read-map.md](../../reference/pedia-read-map.md) finding 4).
 - Ranked-target-selection EVALUATION ([parked/ranked-target-selection.md](../parked/ranked-target-selection.md))
   — a ranked entry applies unranked until it lands.

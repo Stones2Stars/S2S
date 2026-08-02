@@ -6418,14 +6418,13 @@ void CvTeam::ObsoleteCorporations(TechTypes eObsoleteTech)
 								//Remove the Corp HQ Building
 								if (pLoopCity->isHeadquarters((CorporationTypes)iI))
 								{
-									for (int iJ = 0; iJ < GC.getNumBuildingInfos(); iJ++)
+									// The corporation names its HQ buildings ([DEC-one-reverse-view]), so the HQ
+									// goes without asking every building in the game whose it is.
+									const std::vector<BuildingTypes>& aeHeadquarters =
+										GC.getCorporationInfo((CorporationTypes)iI).getHeadquartersBuildings();
+									for (size_t iHq = 0; iHq < aeHeadquarters.size(); ++iHq)
 									{
-										if ((CorporationTypes)GC.getBuildingInfo((BuildingTypes)iJ).getGlobalCorporationCommerce() == ((CorporationTypes)iI)
-										|| GC.getBuildingInfo((BuildingTypes)iJ).getFoundsCorporation() == ((CorporationTypes)iI)
-										|| GC.getBuildingInfo((BuildingTypes)iJ).getPrereqCorporation() == ((CorporationTypes)iI))
-										{
-											pLoopCity->changeHasBuilding((BuildingTypes)iJ, false);
-										}
+										pLoopCity->changeHasBuilding(aeHeadquarters[iHq], false);
 									}
 									GC.getGame().setHeadquarters((CorporationTypes)iI, NULL, false);
 									//Be Sure to Create a New Headquarters, ASAP
