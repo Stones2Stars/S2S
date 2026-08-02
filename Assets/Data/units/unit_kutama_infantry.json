@@ -85,11 +85,6 @@
    "PROMOTION_WARMTH3"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_HEAVY_PIKEMAN"
-  ]
- },
  "cost": {
   "production": 200,
   "upkeep": 1

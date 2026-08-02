@@ -101,10 +101,6 @@
    }
   }
  ],
- "succession": {
-  "promotionLine": "PROMOTIONLINE_TIMID",
-  "priority": -3
- },
  "ai": {
   "flavours": [
    {
@@ -148,6 +144,13 @@
    "upgrade": {
     "percent": -20
    }
+  }
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TRAIT_TIMID2"
+   ]
   }
  }
 }

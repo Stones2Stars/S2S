@@ -82,12 +82,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_FIGHTER",
-   "UNIT_P51_MUSTANG"
-  ]
- },
  "cost": {
   "production": 850,
   "upkeep": 1

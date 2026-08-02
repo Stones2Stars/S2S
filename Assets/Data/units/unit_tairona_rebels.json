@@ -85,11 +85,6 @@
    "PROMOTION_WOODSMAN1"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MUSKETMAN"
-  ]
- },
  "cost": {
   "production": 385,
   "upkeep": 1

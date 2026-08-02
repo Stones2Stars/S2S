@@ -77,12 +77,6 @@
    "PROMOTION_BLITZ"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_SENTINEL",
-   "UNIT_FERAL"
-  ]
- },
  "cost": {
   "production": 2900,
   "upkeep": 1,

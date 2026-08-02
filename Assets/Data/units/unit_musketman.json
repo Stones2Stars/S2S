@@ -79,11 +79,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_RIFLEMAN"
-  ]
- },
  "cost": {
   "production": 342,
   "upkeep": 1

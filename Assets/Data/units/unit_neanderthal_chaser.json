@@ -86,11 +86,6 @@
    "PROMOTION_BY_THE_HORNS"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_NEANDERTHAL_TRACKER"
-  ]
- },
  "cost": {
   "production": 27,
   "upkeep": 1

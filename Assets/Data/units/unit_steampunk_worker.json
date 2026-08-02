@@ -192,11 +192,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_WORKER_MODERN"
-  ]
- },
  "cost": {
   "production": 590,
   "upkeep": 1

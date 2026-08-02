@@ -100,11 +100,6 @@
    "PROMOTION_TO_THE_DEATH4"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_AXEMAN"
-  ]
- },
  "cost": {
   "production": 67,
   "upkeep": 1

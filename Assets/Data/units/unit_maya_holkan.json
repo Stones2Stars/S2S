@@ -137,11 +137,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_SKIRMISHER"
-  ]
- },
  "cost": {
   "production": 63,
   "upkeep": 1

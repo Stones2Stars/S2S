@@ -104,12 +104,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_NLOS_CANNON",
-   "UNIT_HOVER_ARTILLERY"
-  ]
- },
  "cost": {
   "production": 1700,
   "upkeep": 2

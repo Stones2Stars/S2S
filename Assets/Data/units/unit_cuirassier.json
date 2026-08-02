@@ -169,12 +169,6 @@
    "PROMOTION_COMMANDO"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_CARABINIER",
-   "UNIT_LANCER"
-  ]
- },
  "cost": {
   "production": 380,
   "upkeep": 1

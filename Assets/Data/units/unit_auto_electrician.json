@@ -113,11 +113,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_REPLICATION_MECHANIC"
-  ]
- },
  "cost": {
   "production": 961,
   "upkeep": 8,

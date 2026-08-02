@@ -108,11 +108,6 @@
    "PROMOTION_FORESTRY"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_UNMANNED_MACHINE_GUN"
-  ]
- },
  "cost": {
   "production": 1030,
   "upkeep": 1

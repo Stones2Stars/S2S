@@ -171,11 +171,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_POLICE_CAT"
-  ]
- },
  "cost": {
   "production": 425,
   "upkeep": 5

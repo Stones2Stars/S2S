@@ -121,11 +121,6 @@
    "PROMOTION_WARMTH1"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MACEMAN"
-  ]
- },
  "cost": {
   "production": 155,
   "upkeep": 1

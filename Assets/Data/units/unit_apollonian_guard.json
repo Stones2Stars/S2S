@@ -130,12 +130,6 @@
    "PROMOTION_CITY_GARRISON1"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_PIKEMAN",
-   "UNIT_GUARD"
-  ]
- },
  "cost": {
   "production": 115,
   "upkeep": 1

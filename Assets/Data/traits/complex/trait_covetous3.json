@@ -95,10 +95,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_COVETOUS",
-  "priority": -3
- },
  "ai": {
   "flavours": [
    {
@@ -147,6 +143,13 @@
    "upgrade": {
     "percent": 15
    }
+  }
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TRAIT_COVETOUS2"
+   ]
   }
  }
 }

@@ -81,11 +81,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_AMBULANCE"
-  ]
- },
  "cost": {
   "production": 3080,
   "upkeep": 1

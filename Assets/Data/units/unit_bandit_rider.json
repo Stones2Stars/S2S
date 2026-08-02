@@ -190,11 +190,6 @@
    "PROMOTION_LOOTER"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_HIGHWAYMAN"
-  ]
- },
  "cost": {
   "production": 225,
   "upkeep": 5

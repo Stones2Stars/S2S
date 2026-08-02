@@ -85,11 +85,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_HALFTRACK"
-  ]
- },
  "cost": {
   "production": 1030,
   "upkeep": 2

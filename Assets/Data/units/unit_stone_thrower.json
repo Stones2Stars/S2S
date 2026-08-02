@@ -126,12 +126,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_SLINGER",
-   "UNIT_NEANDERTHAL_STONE_THROWER"
-  ]
- },
  "cost": {
   "production": 4,
   "upkeep": 1

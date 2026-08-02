@@ -86,10 +86,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_TEMPERAMENTAL",
-  "priority": -3
- },
  "ai": {
   "flavours": [
    {
@@ -129,5 +125,12 @@
   "strategy": "TXT_KEY_TRAIT_COMPLEX_TEMPERAMENTAL_STRATEGY",
   "negativeTrait": true,
   "impurePropertyManipulators": true
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TRAIT_TEMPERAMENTAL2"
+   ]
+  }
  }
 }

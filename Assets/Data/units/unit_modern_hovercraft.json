@@ -124,11 +124,6 @@
    "PROMOTION_AMPHIBIOUS"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_HITECH_HOVERCRAFT"
-  ]
- },
  "cost": {
   "production": 1475,
   "upkeep": 5

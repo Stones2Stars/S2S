@@ -182,11 +182,6 @@
    }
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_BURGLAR"
-  ]
- },
  "cost": {
   "production": 73,
   "upkeep": 3

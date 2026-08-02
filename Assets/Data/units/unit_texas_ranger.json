@@ -170,11 +170,6 @@
    "PROMOTION_SENTRY3"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_RIOTPOLICE"
-  ]
- },
  "cost": {
   "production": 630,
   "upkeep": 7

@@ -73,11 +73,6 @@
    }
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_FOOD_FREIGHT"
-  ]
- },
  "cost": {
   "production": 240,
   "upkeep": 1

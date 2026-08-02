@@ -73,13 +73,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_TESLA_INFANTRY",
-   "UNIT_EXOARMORED_INFANTRY",
-   "UNIT_CHROME_INFANTRY"
-  ]
- },
  "cost": {
   "production": 1180,
   "upkeep": 1

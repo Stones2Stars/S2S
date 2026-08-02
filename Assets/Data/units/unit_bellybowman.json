@@ -71,12 +71,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_LIGHT_CROSSBOWMAN",
-   "UNIT_SCORPION"
-  ]
- },
  "cost": {
   "production": 180,
   "upkeep": 1

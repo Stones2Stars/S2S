@@ -162,11 +162,6 @@
    }
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_ASSASSIN"
-  ]
- },
  "cost": {
   "production": 155,
   "upkeep": 4

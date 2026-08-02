@@ -43,7 +43,7 @@ static const char* RESERVED_SECTIONS[] = {
     "type", "text", "description", "help", "civilopedia", "message",
     "enables", "obsoletes", "replaces", "disables", "requires", "allowed", "grants",
     "cost", "ui", "world", "sound", "identity", "ai",
-    "loadPrune", "policies", "succession", "excludes", "produces", "condition", "effect",
+    "loadPrune", "policies", "excludes", "produces", "condition", "effect",
     "vision", "outcomes", "capabilities", "mapGeneration", "replacedBy", 0
 };
 // intrinsic / auxiliary sections — NOT read by the 3 machines; light-touch (no grammar check). Includes the
@@ -51,7 +51,7 @@ static const char* RESERVED_SECTIONS[] = {
 static const char* INTRINSIC[] = {
     "type", "text", "description", "help", "civilopedia", "message", "quote", "strategy", "adjective", "shortDescription",
     "cost", "ui", "world", "sound", "identity", "ai",
-    "loadPrune", "policies", "succession", "excludes", "produces", "condition", "effect",
+    "loadPrune", "policies", "excludes", "produces", "condition", "effect",
     "vision", "outcomes", "mapGeneration", "replacedBy",
     // capabilities (TEAM, tech-unlocked) vs skills (UNIT, innate) — scope encoded by the section NAME (decision B):
     "capabilities", "skills",

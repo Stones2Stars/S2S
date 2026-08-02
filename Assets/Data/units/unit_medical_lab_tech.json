@@ -103,11 +103,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MEDEVAC_DROPSHIP"
-  ]
- },
  "cost": {
   "production": 2600,
   "upkeep": 12,

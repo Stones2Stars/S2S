@@ -79,11 +79,6 @@
    "PROMOTION_IMPERIAL_GUARD"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MODERN_IMP_GUARD"
-  ]
- },
  "cost": {
   "production": 568,
   "upkeep": 1

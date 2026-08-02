@@ -185,11 +185,6 @@
    "PROMOTION_TRENCH1"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_LIGHT_TANK"
-  ]
- },
  "cost": {
   "production": 950
  },

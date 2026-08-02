@@ -121,11 +121,6 @@
    "PROMOTION_SHOCK"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_PIKEMAN"
-  ]
- },
  "cost": {
   "production": 110,
   "upkeep": 1

@@ -117,11 +117,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_ARTILLERY"
-  ]
- },
  "cost": {
   "production": 830,
   "upkeep": 1

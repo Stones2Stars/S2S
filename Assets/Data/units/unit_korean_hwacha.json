@@ -119,11 +119,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_BOMBARD"
-  ]
- },
  "cost": {
   "production": 275,
   "upkeep": 1

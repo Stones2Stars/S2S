@@ -95,11 +95,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_GATLING_GUN"
-  ]
- },
  "cost": {
   "production": 495,
   "upkeep": 1

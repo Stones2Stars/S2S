@@ -62,12 +62,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_NEANDERTHAL_WARRIOR",
-   "UNIT_NEANDERTHAL_WOODEN_SPEARMAN"
-  ]
- },
  "cost": {
   "production": 19,
   "upkeep": 1

@@ -75,11 +75,6 @@
    "PROMOTION_GOAD1"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MUSKETMAN"
-  ]
- },
  "cost": {
   "production": 310,
   "upkeep": 1

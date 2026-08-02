@@ -92,11 +92,6 @@
    }
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_SUPPLY_TRAIN"
-  ]
- },
  "cost": {
   "production": 130,
   "upkeep": 1

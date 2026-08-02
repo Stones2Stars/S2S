@@ -135,11 +135,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_ATTACK_SUBMARINE"
-  ]
- },
  "cost": {
   "production": 818,
   "upkeep": 1

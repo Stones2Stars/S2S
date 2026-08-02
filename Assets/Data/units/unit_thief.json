@@ -179,11 +179,6 @@
    }
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_ROGUE"
-  ]
- },
  "cost": {
   "production": 46,
   "upkeep": 2

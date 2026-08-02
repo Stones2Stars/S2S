@@ -83,11 +83,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MEDIC"
-  ]
- },
  "cost": {
   "production": 480,
   "upkeep": 6,

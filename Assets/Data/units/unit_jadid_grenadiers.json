@@ -138,11 +138,6 @@
    "PROMOTION_DRILL1"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MODERN_GRENADIER"
-  ]
- },
  "cost": {
   "production": 450,
   "upkeep": 1

@@ -169,11 +169,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_SWAT_TEAM"
-  ]
- },
  "cost": {
   "production": 975,
   "upkeep": 10

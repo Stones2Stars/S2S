@@ -47,11 +47,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MILITIA_MODERN"
-  ]
- },
  "cost": {
   "upkeep": 1
  },

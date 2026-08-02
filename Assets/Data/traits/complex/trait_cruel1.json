@@ -173,10 +173,6 @@
    }
   }
  ],
- "succession": {
-  "promotionLine": "PROMOTIONLINE_CRUEL",
-  "priority": -1
- },
  "ai": {
   "flavours": [
    {
@@ -215,5 +211,10 @@
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_CRUEL1_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_CRUEL_STRATEGY",
   "negativeTrait": true
+ },
+ "enables": {
+  "traitsAnd": [
+   "TRAIT_CRUEL2"
+  ]
  }
 }

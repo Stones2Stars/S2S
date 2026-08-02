@@ -132,11 +132,6 @@
    }
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_AIRSETTLER"
-  ]
- },
  "cost": {
   "upkeep": 8
  },

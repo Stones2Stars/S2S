@@ -98,11 +98,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_F22_RAPTOR"
-  ]
- },
  "cost": {
   "production": 1600,
   "upkeep": 5

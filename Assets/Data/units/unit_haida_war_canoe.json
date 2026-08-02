@@ -90,11 +90,6 @@
    "PROMOTION_COASTAL_ASSAULT1"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_WARGALLEY"
-  ]
- },
  "cost": {
   "production": 105,
   "upkeep": 1

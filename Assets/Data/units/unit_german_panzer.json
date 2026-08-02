@@ -120,11 +120,6 @@
    "PROMOTION_COMMANDO"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_ARMOR_M60"
-  ]
- },
  "cost": {
   "production": 1200,
   "upkeep": 3

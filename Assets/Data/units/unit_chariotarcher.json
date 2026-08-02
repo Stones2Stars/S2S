@@ -138,11 +138,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_HORSE_ARCHER"
-  ]
- },
  "cost": {
   "production": 120,
   "upkeep": 1

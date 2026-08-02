@@ -296,10 +296,6 @@
    }
   }
  ],
- "succession": {
-  "promotionLine": "PROMOTIONLINE_CROOKED",
-  "priority": 1
- },
  "ai": {
   "flavours": [
    {

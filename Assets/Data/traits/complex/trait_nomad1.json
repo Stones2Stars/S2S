@@ -1058,10 +1058,6 @@
    }
   }
  ],
- "succession": {
-  "promotionLine": "PROMOTIONLINE_NOMADIC",
-  "priority": 1
- },
  "ai": {
   "flavours": [
    {
@@ -1099,5 +1095,10 @@
   "description": "TXT_KEY_TRAIT_COMPLEX_NOMADIC1",
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_NOMADIC1_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_NOMADIC_STRATEGY"
+ },
+ "enables": {
+  "traitsAnd": [
+   "TRAIT_NOMADIC2"
+  ]
  }
 }

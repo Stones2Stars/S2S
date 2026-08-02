@@ -128,11 +128,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MODERN_MEDIVAC"
-  ]
- },
  "cost": {
   "production": 1150,
   "upkeep": 11,

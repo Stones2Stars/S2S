@@ -90,12 +90,6 @@
    "PROMOTION_WARMTH1"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MODERN_MARINE",
-   "UNIT_SKI_PATROL"
-  ]
- },
  "cost": {
   "production": 805,
   "upkeep": 1

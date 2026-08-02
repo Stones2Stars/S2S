@@ -85,9 +85,6 @@
    }
   }
  ],
- "succession": {
-  "promotionLine": "PROMOTIONLINE_PACIFIST"
- },
  "ai": {
   "flavours": [
    {

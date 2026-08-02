@@ -94,11 +94,6 @@
    "PROMOTION_SPEED"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_RIFLEMAN"
-  ]
- },
  "cost": {
   "production": 405,
   "upkeep": 1

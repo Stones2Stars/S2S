@@ -56,11 +56,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_BOMBER"
-  ]
- },
  "cost": {
   "production": 950,
   "upkeep": 1

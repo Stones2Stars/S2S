@@ -112,11 +112,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MODERN_FLAMETHROWER"
-  ]
- },
  "cost": {
   "production": 890,
   "upkeep": 1

@@ -175,10 +175,6 @@
   "allowInquisitions": true,
   "bansNonStateReligions": true
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_ANTI_CLERICAL",
-  "priority": -1
- },
  "ai": {
   "flavours": [
    {
@@ -217,5 +213,10 @@
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_ANTI_CLERICAL1_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_ANTI_CLERICAL_STRATEGY",
   "negativeTrait": true
+ },
+ "enables": {
+  "traitsAnd": [
+   "TRAIT_ANTI_CLERICAL2"
+  ]
  }
 }

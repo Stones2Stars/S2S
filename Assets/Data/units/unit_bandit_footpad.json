@@ -148,11 +148,6 @@
    "PROMOTION_LOOTER"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_CUTTHROAT"
-  ]
- },
  "cost": {
   "production": 200,
   "upkeep": 5

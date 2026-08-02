@@ -134,10 +134,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_HUMANITARIAN",
-  "priority": 1
- },
  "ai": {
   "flavours": [
    {

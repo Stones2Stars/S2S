@@ -29,10 +29,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_IDEALISTIC",
-  "priority": -1
- },
  "ai": {
   "flavours": [
    {

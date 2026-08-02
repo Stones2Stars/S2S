@@ -73,11 +73,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_TRANSPORT"
-  ]
- },
  "cost": {
   "production": 570,
   "upkeep": 1

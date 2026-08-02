@@ -103,11 +103,6 @@
    "PROMOTION_SENTRY"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_GUNSHIP"
-  ]
- },
  "cost": {
   "production": 580
  },

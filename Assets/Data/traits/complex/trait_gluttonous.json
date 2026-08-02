@@ -369,9 +369,6 @@
  "policies": {
   "militaryFoodProduction": true
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_GLUTTONOUS"
- },
  "ai": {
   "flavours": [
    {

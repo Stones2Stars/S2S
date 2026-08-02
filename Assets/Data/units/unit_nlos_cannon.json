@@ -100,12 +100,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_LEVITATION_ARTILLERY",
-   "UNIT_WALKER_ARTILLERY"
-  ]
- },
  "cost": {
   "production": 3294,
   "upkeep": 6

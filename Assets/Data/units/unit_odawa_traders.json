@@ -100,11 +100,6 @@
    }
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_FREIGHT"
-  ]
- },
  "cost": {
   "production": 270,
   "upkeep": 1

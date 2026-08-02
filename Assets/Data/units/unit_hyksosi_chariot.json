@@ -104,12 +104,6 @@
    "PROMOTION_DRILL1"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_CHARIOT",
-   "UNIT_HORSE_ARCHER"
-  ]
- },
  "cost": {
   "production": 130,
   "upkeep": 1

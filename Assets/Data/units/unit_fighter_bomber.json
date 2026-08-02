@@ -112,11 +112,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_A10_BOMBER"
-  ]
- },
  "cost": {
   "production": 1130,
   "upkeep": 1

@@ -140,10 +140,6 @@
  "policies": {
   "citiesStartWithStateReligion": true
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_GLORIOUS",
-  "priority": 1
- },
  "ai": {
   "flavours": [
    {

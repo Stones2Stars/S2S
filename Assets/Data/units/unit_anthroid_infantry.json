@@ -93,11 +93,6 @@
    "PROMOTION_BLITZ"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_HITECH_ROBOT"
-  ]
- },
  "cost": {
   "production": 5500,
   "upkeep": 11

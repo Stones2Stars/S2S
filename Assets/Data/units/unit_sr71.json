@@ -89,11 +89,6 @@
    "PROMOTION_SENTRY2"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_DRONE"
-  ]
- },
  "cost": {
   "production": 1140,
   "upkeep": 6

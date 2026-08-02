@@ -79,11 +79,6 @@
    "PROMOTION_HUNTING_SIGHT1"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MASTER_RANGER"
-  ]
- },
  "cost": {
   "upkeep": 1
  },

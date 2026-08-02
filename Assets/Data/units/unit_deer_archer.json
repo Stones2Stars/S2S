@@ -140,11 +140,6 @@
    "PROMOTION_COLD1"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_DEER_LIGHT"
-  ]
- },
  "cost": {
   "production": 235
  },

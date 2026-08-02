@@ -104,11 +104,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_WAR_WAGON"
-  ]
- },
  "cost": {
   "production": 130
  },

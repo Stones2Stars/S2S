@@ -142,10 +142,6 @@
  "policies": {
   "draftsOnCityCapture": true
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_BIGOT",
-  "priority": -1
- },
  "ai": {
   "flavours": [
    {

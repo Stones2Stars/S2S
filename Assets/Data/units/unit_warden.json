@@ -75,11 +75,6 @@
    "PROMOTION_HUNTING_SIGHT2"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_GAME_HUNTER"
-  ]
- },
  "cost": {
   "production": 265,
   "upkeep": 1

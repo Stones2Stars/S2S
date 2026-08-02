@@ -113,11 +113,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_FLAMING_ARROW"
-  ]
- },
  "cost": {
   "production": 300,
   "upkeep": 1

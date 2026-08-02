@@ -90,13 +90,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_STONE_AXEMAN",
-   "UNIT_STONE_MACEMAN",
-   "UNIT_NEANDERTHAL_WARRIOR"
-  ]
- },
  "cost": {
   "production": 31,
   "upkeep": 1

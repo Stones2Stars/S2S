@@ -601,9 +601,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_LAZY"
- },
  "ai": {
   "flavours": [
    {

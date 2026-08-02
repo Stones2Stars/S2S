@@ -16,8 +16,6 @@ CvTraitInfo::CvTraitInfo()
 	, m_bImpurePromotions(false)
 	, m_iMinAnarchy(0)
 	, m_iMaxAnarchy(0)
-	, m_iSuccessionPromotionLine(-1)
-	, m_iSuccessionPriority(0)
 {
 }
 
@@ -32,8 +30,6 @@ void CvTraitInfo::mapFrom(const picojson::value& entity)
 	m_iMinAnarchy = 0;
 	m_iMaxAnarchy = 0;
 	m_szShortDescriptionKey.clear();
-	m_iSuccessionPromotionLine = -1;
-	m_iSuccessionPriority = 0;
 	m_aiExcludes.clear();
 
 	// PROPERTY_* per-turn SOURCES: a trait's <PROPERTY_X>.city.flat deposits in EVERY owner city while the trait
@@ -61,11 +57,6 @@ void CvTraitInfo::mapFrom(const picojson::value& entity)
 		}
 	}
 
-	// --- par.9 succession.{promotionLine, priority} + excludes ---
-	if (const picojson::object* pSuccession = jsonChildObj(entityObj, "succession"))
-	{
-		m_iSuccessionPromotionLine = jsonIdFk(*pSuccession, "promotionLine");
-		m_iSuccessionPriority = jsonIdInt(*pSuccession, "priority");
-	}
+	// --- par.9 `excludes` -- the same-tier traits this one is mutually exclusive with ---
 	jsonReadIdList(entityObj, "excludes", m_aiExcludes);
 }

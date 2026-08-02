@@ -133,11 +133,6 @@
    "PROMOTION_COMMANDO"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_GIRAFFE_CAVALRY"
-  ]
- },
  "cost": {
   "production": 455
  },

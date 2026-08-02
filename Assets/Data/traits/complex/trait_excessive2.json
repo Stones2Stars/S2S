@@ -169,10 +169,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_EXCESSIVE",
-  "priority": -2
- },
  "ai": {
   "flavours": [
    {
@@ -211,5 +207,12 @@
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_EXCESSIVE2_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_EXCESSIVE_STRATEGY",
   "negativeTrait": true
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TRAIT_EXCESSIVE1"
+   ]
+  }
  }
 }

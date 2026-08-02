@@ -123,11 +123,6 @@
    "PROMOTION_AMPHIBIOUS"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MECHANIZED_INFANTRY"
-  ]
- },
  "cost": {
   "production": 1180,
   "upkeep": 2

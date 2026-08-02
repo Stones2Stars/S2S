@@ -144,11 +144,6 @@
    }
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_TAMED_DONKEY"
-  ]
- },
  "cost": {
   "production": 100
  },

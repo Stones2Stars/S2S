@@ -241,10 +241,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_SCIENTIFIC",
-  "priority": 1
- },
  "ai": {
   "flavours": [
    {
@@ -283,5 +279,10 @@
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_SCIENTIFIC1_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_SCIENTIFIC_STRATEGY",
   "impurePropertyManipulators": true
+ },
+ "enables": {
+  "traitsAnd": [
+   "TRAIT_SCIENTIFIC2"
+  ]
  }
 }

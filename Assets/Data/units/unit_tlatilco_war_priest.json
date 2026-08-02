@@ -119,12 +119,6 @@
    "PROMOTION_FANATIC"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_SWORDSMAN",
-   "UNIT_APOTHECARY"
-  ]
- },
  "cost": {
   "production": 67,
   "upkeep": 1

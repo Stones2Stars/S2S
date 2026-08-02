@@ -87,12 +87,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_LIGHT_SWORDSMAN",
-   "UNIT_NEANDERTHAL_OBSIDIAN_SWORDSMAN"
-  ]
- },
  "cost": {
   "production": 66,
   "upkeep": 1

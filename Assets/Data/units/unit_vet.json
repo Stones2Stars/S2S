@@ -85,11 +85,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_FIELD_VET"
-  ]
- },
  "cost": {
   "production": 140,
   "upkeep": 3,

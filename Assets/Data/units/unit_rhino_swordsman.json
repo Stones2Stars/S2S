@@ -99,11 +99,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_KNIGHT"
-  ]
- },
  "cost": {
   "production": 225
  },

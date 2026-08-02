@@ -200,10 +200,6 @@
    }
   }
  ],
- "succession": {
-  "promotionLine": "PROMOTIONLINE_IMPERIALIST",
-  "priority": 1
- },
  "ai": {
   "flavours": [
    {
@@ -249,5 +245,10 @@
     "percent": 5
    }
   }
+ },
+ "enables": {
+  "traitsAnd": [
+   "TRAIT_IMPERIALIST2"
+  ]
  }
 }

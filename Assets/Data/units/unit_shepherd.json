@@ -157,12 +157,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_VET",
-   "UNIT_NEANDERTHAL_SHEPHERD"
-  ]
- },
  "cost": {
   "production": 70,
   "upkeep": 2,

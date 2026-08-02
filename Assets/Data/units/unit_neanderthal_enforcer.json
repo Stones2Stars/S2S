@@ -122,11 +122,6 @@
    "PROMOTION_SENTRY"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_TOWN_WATCHMEN"
-  ]
- },
  "cost": {
   "production": 69,
   "upkeep": 3

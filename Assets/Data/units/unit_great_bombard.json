@@ -107,11 +107,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MOTAR"
-  ]
- },
  "cost": {
   "production": 495,
   "upkeep": 1

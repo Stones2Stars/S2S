@@ -198,12 +198,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_GRENADIER",
-   "UNIT_ANCIENT_FLAMETHROWER"
-  ]
- },
  "cost": {
   "production": 130,
   "upkeep": 1

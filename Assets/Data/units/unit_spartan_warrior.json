@@ -84,11 +84,6 @@
    "PROMOTION_HEROIC"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_SWORDSMAN"
-  ]
- },
  "cost": {
   "production": 200,
   "upkeep": 1

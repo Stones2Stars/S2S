@@ -85,11 +85,6 @@
    "PROMOTION_SHOCK"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_CROSSBOWMAN"
-  ]
- },
  "cost": {
   "production": 220,
   "upkeep": 1

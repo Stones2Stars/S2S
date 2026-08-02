@@ -92,12 +92,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_EARLY_MACEMAN",
-   "UNIT_NEANDERTHAL_OBSIDIAN_MACEMAN"
-  ]
- },
  "cost": {
   "production": 63,
   "upkeep": 1

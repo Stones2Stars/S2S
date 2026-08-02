@@ -82,10 +82,6 @@
  "policies": {
   "upgradeAnywhere": true
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_SCIENTIFIC",
-  "priority": 1
- },
  "ai": {
   "flavours": [
    {

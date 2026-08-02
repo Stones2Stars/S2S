@@ -151,11 +151,6 @@
    "PROMOTION_COMMANDO"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_CUIRASSIER"
-  ]
- },
  "cost": {
   "production": 220,
   "upkeep": 1

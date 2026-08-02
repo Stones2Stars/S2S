@@ -88,9 +88,6 @@
    }
   }
  ],
- "succession": {
-  "promotionLine": "PROMOTIONLINE_WARMONGER"
- },
  "ai": {
   "flavours": [
    {

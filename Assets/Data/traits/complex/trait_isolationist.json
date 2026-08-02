@@ -154,9 +154,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_ISOLATIONIST"
- },
  "ai": {
   "flavours": [
    {

@@ -106,11 +106,6 @@
    "PROMOTION_WETLAND2"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_AXEMAN"
-  ]
- },
  "cost": {
   "production": 42,
   "upkeep": 1

@@ -149,9 +149,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_NEGOTIATOR"
- },
  "ai": {
   "flavours": [
    {

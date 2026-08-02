@@ -103,11 +103,6 @@
    "PROMOTION_SENTRY"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_BOMBARD"
-  ]
- },
  "cost": {
   "production": 250,
   "upkeep": 1

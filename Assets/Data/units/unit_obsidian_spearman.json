@@ -88,12 +88,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_SPEARMAN",
-   "UNIT_NEANDERTHAL_OBSIDIAN_SPEARMAN"
-  ]
- },
  "cost": {
   "production": 63,
   "upkeep": 1

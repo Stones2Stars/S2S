@@ -96,11 +96,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_ARMORED_CAR"
-  ]
- },
  "cost": {
   "production": 360,
   "upkeep": 1

@@ -76,11 +76,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_NEANDERTHAL_STONE_AGE_SPEARMAN"
-  ]
- },
  "cost": {
   "production": 62,
   "upkeep": 1

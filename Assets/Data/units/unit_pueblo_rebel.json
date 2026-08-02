@@ -183,11 +183,6 @@
    "PROMOTION_TAKE_PRISONERS3"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_SNIPER"
-  ]
- },
  "cost": {
   "production": 530,
   "upkeep": 6

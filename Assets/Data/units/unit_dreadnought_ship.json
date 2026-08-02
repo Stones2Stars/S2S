@@ -97,11 +97,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_WW2_BATTLESHIP"
-  ]
- },
  "cost": {
   "production": 1150,
   "upkeep": 2

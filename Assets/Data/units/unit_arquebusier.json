@@ -79,11 +79,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MUSKETMAN"
-  ]
- },
  "cost": {
   "production": 320,
   "upkeep": 1

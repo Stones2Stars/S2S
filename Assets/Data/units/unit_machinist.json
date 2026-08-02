@@ -94,12 +94,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MECHANIC",
-   "UNIT_AVIATION_TECHNICIAN"
-  ]
- },
  "cost": {
   "production": 511,
   "upkeep": 5,

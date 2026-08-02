@@ -94,11 +94,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_SIEGE_RAM"
-  ]
- },
  "cost": {
   "production": 125,
   "upkeep": 1

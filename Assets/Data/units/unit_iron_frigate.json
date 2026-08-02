@@ -114,11 +114,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_STEAM_DESTROYER"
-  ]
- },
  "cost": {
   "production": 600,
   "upkeep": 2

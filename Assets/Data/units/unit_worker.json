@@ -135,16 +135,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_WORKANIMAL",
-   "UNIT_WORKBUFFALO",
-   "UNIT_WORKELEPHANT",
-   "UNIT_WORKMULE",
-   "UNIT_WORKLLAMA",
-   "UNIT_WORKCAMEL"
-  ]
- },
  "cost": {
   "production": 90,
   "upkeep": 2

@@ -87,11 +87,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_GALLEY"
-  ]
- },
  "cost": {
   "production": 108,
   "upkeep": 1

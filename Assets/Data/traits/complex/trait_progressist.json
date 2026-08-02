@@ -90,9 +90,6 @@
  "policies": {
   "upgradeAnywhere": true
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_INNOVATIVE"
- },
  "ai": {
   "flavours": [
    {

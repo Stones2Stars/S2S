@@ -132,11 +132,6 @@
    "PROMOTION_COMMANDO"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_KNIGHT"
-  ]
- },
  "cost": {
   "production": 200,
   "upkeep": 1

@@ -67,9 +67,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_HUNTER_GATHERER"
- },
  "ai": {
   "flavours": [
    {

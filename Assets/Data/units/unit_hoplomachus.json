@@ -166,11 +166,6 @@
    "PROMOTION_COMBAT3"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_GUARD"
-  ]
- },
  "cost": {
   "production": 235,
   "upkeep": 5

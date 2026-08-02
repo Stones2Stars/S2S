@@ -87,11 +87,6 @@
    "PROMOTION_AMPHIBIOUS"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_HITECH_MARINE"
-  ]
- },
  "cost": {
   "production": 1500,
   "upkeep": 1

@@ -169,11 +169,6 @@
    "PROMOTION_COMMANDO"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_DRAGOON"
-  ]
- },
  "cost": {
   "production": 410,
   "upkeep": 1

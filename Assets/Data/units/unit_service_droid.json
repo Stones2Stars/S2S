@@ -123,11 +123,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_NANITE_REPAIR_CLOUD"
-  ]
- },
  "cost": {
   "production": 4315,
   "upkeep": 11,

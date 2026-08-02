@@ -69,12 +69,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_CLUBMAN",
-   "UNIT_NEANDERTHAL_BRUTE"
-  ]
- },
  "cost": {
   "production": 3,
   "upkeep": 1

@@ -63,11 +63,6 @@
    "PROMOTION_TRENCH1"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_INFANTRY"
-  ]
- },
  "cost": {
   "production": 715,
   "upkeep": 1

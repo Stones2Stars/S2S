@@ -123,10 +123,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_GRIM",
-  "priority": -2
- },
  "ai": {
   "flavours": [
    {
@@ -165,5 +161,12 @@
   "civilopedia": "TXT_KEY_TRAIT_GRIM2_PEDIA",
   "strategy": "TXT_KEY_TRAIT_GRIM_STRATEGY",
   "negativeTrait": true
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TRAIT_GRIM1"
+   ]
+  }
  }
 }

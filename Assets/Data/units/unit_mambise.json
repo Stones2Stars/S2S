@@ -180,11 +180,6 @@
    "PROMOTION_PINCH"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_TRENCH_CAVALRY"
-  ]
- },
  "cost": {
   "production": 630,
   "upkeep": 1

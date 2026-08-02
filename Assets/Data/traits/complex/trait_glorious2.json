@@ -141,10 +141,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_GLORIOUS",
-  "priority": 2
- },
  "ai": {
   "flavours": [
    {
@@ -183,5 +179,17 @@
   "civilopedia": "TXT_KEY_TRAIT_GLORIOUS2_PEDIA",
   "strategy": "TXT_KEY_TRAIT_GLORIOUS_STRATEGY",
   "impurePropertyManipulators": true
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TRAIT_GLORIOUS1"
+   ]
+  }
+ },
+ "enables": {
+  "traitsAnd": [
+   "TRAIT_GLORIOUS3"
+  ]
  }
 }

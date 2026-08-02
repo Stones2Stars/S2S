@@ -197,11 +197,6 @@
    }
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_ROBBER"
-  ]
- },
  "cost": {
   "production": 700,
   "upkeep": 10

@@ -134,11 +134,6 @@
    "PROMOTION_FLANKING1"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_CUIRASSIER"
-  ]
- },
  "cost": {
   "production": 355,
   "upkeep": 1

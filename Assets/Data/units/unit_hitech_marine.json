@@ -95,11 +95,6 @@
    "PROMOTION_COLD3"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_POWER_ARMORED_INFANTRY"
-  ]
- },
  "cost": {
   "production": 2745,
   "upkeep": 4

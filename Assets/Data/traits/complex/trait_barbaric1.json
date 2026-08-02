@@ -107,10 +107,6 @@
    }
   }
  ],
- "succession": {
-  "promotionLine": "PROMOTIONLINE_BARBARIC",
-  "priority": -1
- },
  "ai": {
   "flavours": [
    {
@@ -158,5 +154,10 @@
     "percent": 5
    }
   }
+ },
+ "enables": {
+  "traitsAnd": [
+   "TRAIT_BARBARIC2"
+  ]
  }
 }

@@ -82,11 +82,6 @@
    "PROMOTION_MOBILITY"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_LONGBOWMAN"
-  ]
- },
  "cost": {
   "production": 105,
   "upkeep": 1

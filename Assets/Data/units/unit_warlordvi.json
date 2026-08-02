@@ -139,11 +139,6 @@
    "PROMOTION_LEADER"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_WARLORDVII"
-  ]
- },
  "cost": {
   "production": 3000,
   "upkeep": 16

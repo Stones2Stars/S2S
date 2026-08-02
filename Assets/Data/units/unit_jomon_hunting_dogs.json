@@ -92,11 +92,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_WARDOG"
-  ]
- },
  "cost": {
   "production": 70,
   "upkeep": 1

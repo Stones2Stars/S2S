@@ -57,12 +57,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_NEANDERTHAL_STONE_AGE_AXEMAN",
-   "UNIT_NEANDERTHAL_STONE_MACEMAN"
-  ]
- },
  "cost": {
   "production": 33,
   "upkeep": 1

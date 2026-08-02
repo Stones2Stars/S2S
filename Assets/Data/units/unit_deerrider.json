@@ -164,11 +164,6 @@
    "PROMOTION_COLD1"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_DEER_ARCHER"
-  ]
- },
  "cost": {
   "production": 155
  },

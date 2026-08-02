@@ -92,12 +92,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_NEANDERTHAL_HEALER",
-   "UNIT_NEANDERTHAL_SHEPHERD"
-  ]
- },
  "cost": {
   "production": 25,
   "upkeep": 2,

@@ -90,11 +90,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_AXEMAN"
-  ]
- },
  "cost": {
   "production": 100,
   "upkeep": 1

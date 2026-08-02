@@ -267,10 +267,6 @@
    }
   }
  ],
- "succession": {
-  "promotionLine": "PROMOTIONLINE_NEGLIGENT",
-  "priority": -2
- },
  "ai": {
   "flavours": [
    {
@@ -309,5 +305,12 @@
   "civilopedia": "TXT_KEY_TRAIT_NEGLIGENT2_PEDIA",
   "strategy": "TXT_KEY_TRAIT_NEGLIGENT_STRATEGY",
   "negativeTrait": true
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TRAIT_NEGLIGENT1"
+   ]
+  }
  }
 }

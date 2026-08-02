@@ -115,9 +115,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_GRIM"
- },
  "ai": {
   "flavours": [
    {

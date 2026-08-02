@@ -94,11 +94,6 @@
    "PROMOTION_COLD3"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_BOMBARD_MAMMOTH"
-  ]
- },
  "cost": {
   "production": 475
  },

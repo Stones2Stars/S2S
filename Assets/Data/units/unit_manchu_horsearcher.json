@@ -152,11 +152,6 @@
    "PROMOTION_FORMATION2"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_CUIRASSIER"
-  ]
- },
  "cost": {
   "production": 235,
   "upkeep": 1

@@ -86,11 +86,6 @@
    "PROMOTION_PINCH3"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_BIG_GAME_HUNTER"
-  ]
- },
  "cost": {
   "production": 319,
   "upkeep": 1

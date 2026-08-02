@@ -112,11 +112,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_SWORDSMAN"
-  ]
- },
  "cost": {
   "production": 165,
   "upkeep": 1

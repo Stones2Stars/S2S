@@ -76,11 +76,6 @@
    "PROMOTION_HUNTING_SIGHT1"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_RANGER"
-  ]
- },
  "cost": {
   "production": 92,
   "upkeep": 1

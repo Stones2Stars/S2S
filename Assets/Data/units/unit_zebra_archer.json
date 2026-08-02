@@ -153,11 +153,6 @@
    "PROMOTION_COMMANDO"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_ZEBRA_CUIRASSIER"
-  ]
- },
  "cost": {
   "production": 235
  },

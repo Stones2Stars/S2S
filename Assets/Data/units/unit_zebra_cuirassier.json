@@ -180,11 +180,6 @@
    "PROMOTION_COMMANDO"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_ZEBRA_CAVALRY"
-  ]
- },
  "cost": {
   "production": 475
  },

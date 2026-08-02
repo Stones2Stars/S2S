@@ -86,11 +86,6 @@
    "PROMOTION_FIELD2"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MOTORCYCLE"
-  ]
- },
  "cost": {
   "production": 325,
   "upkeep": 1

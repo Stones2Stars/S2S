@@ -89,11 +89,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_FLUYT"
-  ]
- },
  "cost": {
   "production": 310,
   "upkeep": 1

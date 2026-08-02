@@ -160,9 +160,6 @@
    }
   }
  ],
- "succession": {
-  "promotionLine": "PROMOTIONLINE_AGGRESSIVE"
- },
  "ai": {
   "flavours": [
    {

@@ -117,12 +117,6 @@
    "PROMOTION_BLITZ"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_CHARIOT",
-   "UNIT_HORSE_ARCHER"
-  ]
- },
  "cost": {
   "production": 120,
   "upkeep": 1

@@ -88,11 +88,6 @@
    "PROMOTION_MARTIAL_ARTS"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_HEAVY_AXEMAN"
-  ]
- },
  "cost": {
   "production": 47,
   "upkeep": 1

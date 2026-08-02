@@ -119,11 +119,6 @@
    "PROMOTION_CAMOUFLAGE"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_HEAVY_AXEMAN"
-  ]
- },
  "cost": {
   "production": 155,
   "upkeep": 1

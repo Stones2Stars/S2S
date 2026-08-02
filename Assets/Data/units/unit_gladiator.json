@@ -73,11 +73,6 @@
    "SPECIALIST_SETTLED_GLADIATOR"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MACEMAN"
-  ]
- },
  "cost": {
   "upkeep": 1
  },

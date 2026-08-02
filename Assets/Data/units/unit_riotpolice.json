@@ -139,11 +139,6 @@
    "PROMOTION_SENTRY"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_POLICE_APC"
-  ]
- },
  "cost": {
   "production": 720,
   "upkeep": 8

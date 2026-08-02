@@ -67,12 +67,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_PALACE_GUARD",
-   "UNIT_NEANDERTHAL_TRIBAL_GUARDIAN"
-  ]
- },
  "cost": {
   "production": 60,
   "upkeep": 3

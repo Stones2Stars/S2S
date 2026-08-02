@@ -115,12 +115,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_ARCHER",
-   "UNIT_NEANDERTHAL_SLINGER"
-  ]
- },
  "cost": {
   "production": 23,
   "upkeep": 1

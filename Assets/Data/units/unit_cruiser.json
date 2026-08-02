@@ -111,11 +111,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MISSILE_CRUISER"
-  ]
- },
  "cost": {
   "production": 1250,
   "upkeep": 2

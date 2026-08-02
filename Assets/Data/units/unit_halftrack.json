@@ -101,11 +101,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MOBILE_SAM"
-  ]
- },
  "cost": {
   "production": 1030,
   "upkeep": 2

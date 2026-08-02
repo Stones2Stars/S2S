@@ -80,11 +80,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MAPINGUARI_OBSIDIAN"
-  ]
- },
  "cost": {
   "production": 76,
   "upkeep": 8

@@ -217,10 +217,6 @@
    }
   }
  ],
- "succession": {
-  "promotionLine": "PROMOTIONLINE_IMPERIALIST",
-  "priority": 2
- },
  "ai": {
   "flavours": [
    {
@@ -265,6 +261,13 @@
    "upgrade": {
     "percent": 15
    }
+  }
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TRAIT_IMPERIALIST1"
+   ]
   }
  }
 }

@@ -83,11 +83,6 @@
    "PROMOTION_FLANKING1"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MUSKETMAN"
-  ]
- },
  "cost": {
   "production": 255,
   "upkeep": 1

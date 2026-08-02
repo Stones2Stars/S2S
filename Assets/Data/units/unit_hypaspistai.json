@@ -129,11 +129,6 @@
    "PROMOTION_CITY_RAIDER2"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_PIKEMAN"
-  ]
- },
  "cost": {
   "production": 115,
   "upkeep": 1

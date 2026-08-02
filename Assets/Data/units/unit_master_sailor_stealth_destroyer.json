@@ -130,11 +130,6 @@
    "PROMOTION_LEADERSHIP"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MASTER_SAILOR_FF_DESTROYER_I"
-  ]
- },
  "cost": {
   "upkeep": 3
  },

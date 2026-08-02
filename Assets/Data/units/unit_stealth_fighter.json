@@ -118,11 +118,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_STEALTH_BOMBER"
-  ]
- },
  "cost": {
   "production": 2120,
   "upkeep": 9

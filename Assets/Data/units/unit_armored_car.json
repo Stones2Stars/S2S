@@ -126,11 +126,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_BTR80"
-  ]
- },
  "cost": {
   "production": 1025,
   "upkeep": 2

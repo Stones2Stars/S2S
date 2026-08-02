@@ -82,9 +82,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_CHARISMATIC"
- },
  "ai": {
   "flavours": [
    {

@@ -135,11 +135,6 @@
    "PROMOTION_BLITZ"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_CARROBALLISTA"
-  ]
- },
  "cost": {
   "production": 155,
   "upkeep": 1

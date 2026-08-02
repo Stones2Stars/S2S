@@ -81,11 +81,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_TRIREME"
-  ]
- },
  "cost": {
   "production": 150,
   "upkeep": 1

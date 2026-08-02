@@ -101,11 +101,6 @@
    }
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_HEAVY_ROCKET"
-  ]
- },
  "cost": {
   "production": 2106,
   "upkeep": 1

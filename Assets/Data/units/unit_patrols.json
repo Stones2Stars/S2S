@@ -155,11 +155,6 @@
    "PROMOTION_SENTRY"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_GUARD"
-  ]
- },
  "cost": {
   "production": 210,
   "upkeep": 4

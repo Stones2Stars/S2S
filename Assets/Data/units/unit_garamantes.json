@@ -163,11 +163,6 @@
    "PROMOTION_WARMTH3"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_HIGHWAYMAN"
-  ]
- },
  "cost": {
   "production": 230,
   "upkeep": 5

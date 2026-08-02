@@ -104,11 +104,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_TREBUCHET"
-  ]
- },
  "cost": {
   "production": 250,
   "upkeep": 1

@@ -91,11 +91,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_GALLEON"
-  ]
- },
  "cost": {
   "production": 340,
   "upkeep": 1

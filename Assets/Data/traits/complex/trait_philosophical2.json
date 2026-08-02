@@ -115,10 +115,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_PHILOSOPHICAL",
-  "priority": 2
- },
  "ai": {
   "flavours": [
    {
@@ -157,5 +153,12 @@
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_PHILOSOPHICAL2_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_PHILOSOPHICAL_STRATEGY",
   "impurePropertyManipulators": true
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TRAIT_PHILOSOPHICAL1"
+   ]
+  }
  }
 }

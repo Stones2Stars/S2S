@@ -177,12 +177,6 @@
    "PROMOTION_TRENCH1"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_AUTOGYRO",
-   "UNIT_ARMORED_CAR"
-  ]
- },
  "cost": {
   "production": 860,
   "upkeep": 1

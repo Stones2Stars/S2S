@@ -105,11 +105,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_BATTERING_RAM"
-  ]
- },
  "cost": {
   "production": 111,
   "upkeep": 1

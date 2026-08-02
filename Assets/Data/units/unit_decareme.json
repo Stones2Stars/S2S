@@ -74,11 +74,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_GALLEASS"
-  ]
- },
  "cost": {
   "production": 250,
   "upkeep": 1

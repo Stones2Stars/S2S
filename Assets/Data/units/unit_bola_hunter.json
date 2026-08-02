@@ -84,11 +84,6 @@
    "PROMOTION_SPEED"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_GAME_HUNTER"
-  ]
- },
  "cost": {
   "production": 295,
   "upkeep": 1

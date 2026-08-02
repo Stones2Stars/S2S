@@ -82,10 +82,6 @@
    }
   }
  ],
- "succession": {
-  "promotionLine": "PROMOTIONLINE_WARMONGER",
-  "priority": 3
- },
  "ai": {
   "flavours": [
    {
@@ -130,6 +126,13 @@
    "upgrade": {
     "percent": -35
    }
+  }
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TRAIT_WARMONGER2"
+   ]
   }
  }
 }

@@ -127,11 +127,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_STEALTH_DESTROYER"
-  ]
- },
  "cost": {
   "production": 710,
   "upkeep": 1

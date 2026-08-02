@@ -143,11 +143,6 @@
    "PROMOTION_LEADERSHIP"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MASTER_SAILOR_FUSION_SUBMARINE"
-  ]
- },
  "cost": {
   "upkeep": 3
  },

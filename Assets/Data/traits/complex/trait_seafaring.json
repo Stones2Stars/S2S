@@ -499,9 +499,6 @@
    }
   }
  ],
- "succession": {
-  "promotionLine": "PROMOTIONLINE_SEAFARING"
- },
  "ai": {
   "flavours": [
    {

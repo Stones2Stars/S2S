@@ -174,10 +174,6 @@
    }
   }
  ],
- "succession": {
-  "promotionLine": "PROMOTIONLINE_HUMANITARIAN",
-  "priority": 1
- },
  "ai": {
   "flavours": [
    {
@@ -215,5 +211,10 @@
   "description": "TXT_KEY_TRAIT_COMPLEX_HUMANITARIAN1",
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_HUMANITARIAN1_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_HUMANITARIAN_STRATEGY"
+ },
+ "enables": {
+  "traitsAnd": [
+   "TRAIT_HUMANITARIAN2"
+  ]
  }
 }

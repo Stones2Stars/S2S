@@ -139,11 +139,6 @@
    "PROMOTION_LEADER"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_WARLORDVIII"
-  ]
- },
  "cost": {
   "production": 5000,
   "upkeep": 16

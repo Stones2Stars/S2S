@@ -177,11 +177,6 @@
    "PROMOTION_LOOTER"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_GUERRILLA"
-  ]
- },
  "cost": {
   "production": 590,
   "upkeep": 6

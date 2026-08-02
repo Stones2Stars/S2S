@@ -88,11 +88,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_LIGHT_SWORDSMAN"
-  ]
- },
  "cost": {
   "production": 103,
   "upkeep": 1

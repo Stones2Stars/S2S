@@ -442,10 +442,6 @@
    }
   }
  ],
- "succession": {
-  "promotionLine": "PROMOTIONLINE_AERIAL",
-  "priority": 2
- },
  "ai": {
   "flavours": [
    {
@@ -484,5 +480,12 @@
   "civilopedia": "TXT_KEY_TRAIT_AERIAL2_PEDIA",
   "strategy": "TXT_KEY_TRAIT_AERIAL_STRATEGY",
   "impurePropertyManipulators": true
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TRAIT_AERIAL1"
+   ]
+  }
  }
 }

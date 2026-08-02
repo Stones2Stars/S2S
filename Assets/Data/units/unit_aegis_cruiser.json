@@ -129,11 +129,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_LITTORAL_COMBAT_SHIP"
-  ]
- },
  "cost": {
   "production": 2305,
   "upkeep": 3

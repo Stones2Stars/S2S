@@ -101,11 +101,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_STONE_MACEMAN"
-  ]
- },
  "cost": {
   "production": 28,
   "upkeep": 1

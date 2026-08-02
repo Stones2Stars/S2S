@@ -80,11 +80,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MAPINGUARI_STONE"
-  ]
- },
  "cost": {
   "production": 62,
   "upkeep": 5

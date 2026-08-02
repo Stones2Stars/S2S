@@ -127,11 +127,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_BEARKNIGHT"
-  ]
- },
  "cost": {
   "production": 169
  },

@@ -121,11 +121,6 @@
    "PROMOTION_POISON_TIPS"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_ARCHER"
-  ]
- },
  "cost": {
   "production": 46,
   "upkeep": 1

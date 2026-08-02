@@ -317,9 +317,6 @@
    }
   }
  ],
- "succession": {
-  "promotionLine": "PROMOTIONLINE_NOMAD"
- },
  "ai": {
   "flavours": [
    {

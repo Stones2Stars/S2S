@@ -126,11 +126,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_SPACE_SAM_INFANTRY"
-  ]
- },
  "cost": {
   "production": 2580,
   "upkeep": 4

@@ -248,10 +248,6 @@
    }
   }
  ],
- "succession": {
-  "promotionLine": "PROMOTIONLINE_NATURALIST",
-  "priority": 1
- },
  "ai": {
   "flavours": [
    {

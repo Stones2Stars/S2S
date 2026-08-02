@@ -215,12 +215,6 @@
    }
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_GUNFIGHTER",
-   "UNIT_OUTLAW"
-  ]
- },
  "cost": {
   "production": 405,
   "upkeep": 7

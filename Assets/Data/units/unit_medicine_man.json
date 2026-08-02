@@ -93,11 +93,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_APOTHECARY"
-  ]
- },
  "cost": {
   "production": 138,
   "upkeep": 3,

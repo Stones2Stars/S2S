@@ -121,12 +121,6 @@
    "PROMOTION_COMMANDO"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_AUTOGYRO",
-   "UNIT_ARMORED_CAR"
-  ]
- },
  "cost": {
   "production": 525,
   "upkeep": 1

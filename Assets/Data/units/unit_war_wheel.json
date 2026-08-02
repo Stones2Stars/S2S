@@ -85,11 +85,6 @@
    "PROMOTION_SENTRY"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_UNMANNED_TRIKE"
-  ]
- },
  "cost": {
   "production": 555,
   "upkeep": 1

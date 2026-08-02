@@ -371,9 +371,6 @@
  "policies": {
   "militaryFoodProduction": true
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_AGRICULTURAL"
- },
  "ai": {
   "flavours": [
    {

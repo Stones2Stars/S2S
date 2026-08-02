@@ -195,10 +195,6 @@
    }
   }
  ],
- "succession": {
-  "promotionLine": "PROMOTIONLINE_NATURALIST",
-  "priority": 2
- },
  "ai": {
   "flavours": [
    {
@@ -242,6 +238,13 @@
    "hurry": {
     "percent": 15
    }
+  }
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TRAIT_NATURALIST1"
+   ]
   }
  }
 }

@@ -133,11 +133,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_NUCLEAR_CARRIER"
-  ]
- },
  "cost": {
   "production": 1600,
   "upkeep": 2

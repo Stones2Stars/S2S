@@ -72,11 +72,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_DECAREME"
-  ]
- },
  "cost": {
   "production": 240,
   "upkeep": 1

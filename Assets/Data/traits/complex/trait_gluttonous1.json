@@ -305,10 +305,6 @@
  "policies": {
   "militaryFoodProduction": true
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_GLUTTONOUS",
-  "priority": -1
- },
  "ai": {
   "flavours": [
    {
@@ -347,5 +343,10 @@
   "civilopedia": "TXT_KEY_TRAIT_GLUTTONOUS1_PEDIA",
   "strategy": "TXT_KEY_TRAIT_GLUTTONOUS_STRATEGY",
   "negativeTrait": true
+ },
+ "enables": {
+  "traitsAnd": [
+   "TRAIT_GLUTTONOUS2"
+  ]
  }
 }

@@ -217,10 +217,6 @@
    }
   }
  ],
- "succession": {
-  "promotionLine": "PROMOTIONLINE_NAIVE",
-  "priority": -2
- },
  "ai": {
   "flavours": [
    {
@@ -260,5 +256,12 @@
   "strategy": "TXT_KEY_TRAIT_NAIVE_STRATEGY",
   "negativeTrait": true,
   "impurePropertyManipulators": true
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TRAIT_NAIVE1"
+   ]
+  }
  }
 }

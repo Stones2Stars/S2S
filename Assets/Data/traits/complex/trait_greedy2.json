@@ -271,10 +271,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_GREEDY",
-  "priority": -2
- },
  "ai": {
   "flavours": [
    {
@@ -319,6 +315,13 @@
    "hurry": {
     "percent": -25
    }
+  }
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TRAIT_GREEDY1"
+   ]
   }
  }
 }

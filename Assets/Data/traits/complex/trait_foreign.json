@@ -204,9 +204,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_FOREIGNER"
- },
  "ai": {
   "flavours": [
    {

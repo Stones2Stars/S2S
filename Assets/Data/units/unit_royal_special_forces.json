@@ -92,11 +92,6 @@
    "PROMOTION_LAND_WARRIOR3"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_DROPSHIP"
-  ]
- },
  "cost": {
   "production": 1475,
   "upkeep": 1

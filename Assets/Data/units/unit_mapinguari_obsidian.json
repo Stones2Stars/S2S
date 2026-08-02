@@ -85,11 +85,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MAPINGUARI"
-  ]
- },
  "cost": {
   "production": 99,
   "upkeep": 12

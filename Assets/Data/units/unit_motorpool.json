@@ -110,11 +110,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_AUTO_ELECTRICIAN"
-  ]
- },
  "cost": {
   "production": 811,
   "upkeep": 7,

@@ -64,11 +64,6 @@
    "PROMOTION_LEADER"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MUSKETMAN"
-  ]
- },
  "cost": {
   "upkeep": 1
  },

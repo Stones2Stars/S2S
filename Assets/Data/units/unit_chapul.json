@@ -137,11 +137,6 @@
    "PROMOTION_MOBILITY"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_CUIRASSIER"
-  ]
- },
  "cost": {
   "production": 370,
   "upkeep": 1

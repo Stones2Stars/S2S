@@ -56,11 +56,6 @@
    "SPECIALIST_GREAT_MILITARY_INSTRUCTOR"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_WARLORDVS"
-  ]
- },
  "cost": {
   "upkeep": 1
  },

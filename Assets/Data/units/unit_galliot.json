@@ -81,11 +81,6 @@
    }
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_CARRACK_MERCHANT"
-  ]
- },
  "cost": {
   "production": 133,
   "upkeep": 1

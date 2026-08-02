@@ -123,13 +123,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_CANOE",
-   "UNIT_WAR_CANOE",
-   "UNIT_NEANDERTHAL_RAFT"
-  ]
- },
  "cost": {
   "production": 50,
   "upkeep": 1

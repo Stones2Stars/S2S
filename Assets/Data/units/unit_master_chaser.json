@@ -90,11 +90,6 @@
    "PROMOTION_MASTER_HUNTER1"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MASTER_TRACKER"
-  ]
- },
  "cost": {
   "upkeep": 1
  },

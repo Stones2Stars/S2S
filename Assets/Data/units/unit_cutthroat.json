@@ -186,12 +186,6 @@
    }
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_SCOUNDREL",
-   "UNIT_PARTISAN"
-  ]
- },
  "cost": {
   "production": 330,
   "upkeep": 6

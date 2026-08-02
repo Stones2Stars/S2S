@@ -132,11 +132,6 @@
    "PROMOTION_HILL_WORKER3"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_WORKER_MODERN"
-  ]
- },
  "cost": {
   "production": 665,
   "upkeep": 1

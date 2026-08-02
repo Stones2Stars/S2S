@@ -198,11 +198,6 @@
    "PROMOTION_LOOTER"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_OUTLAW"
-  ]
- },
  "cost": {
   "production": 470,
   "upkeep": 7

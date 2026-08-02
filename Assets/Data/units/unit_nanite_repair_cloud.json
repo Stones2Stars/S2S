@@ -144,11 +144,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_ANIMA_REPAIR_CLOUD"
-  ]
- },
  "cost": {
   "production": 5750,
   "upkeep": 17,

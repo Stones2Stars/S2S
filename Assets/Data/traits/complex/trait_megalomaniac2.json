@@ -108,10 +108,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_MEGALOMANIAC",
-  "priority": -2
- },
  "ai": {
   "flavours": [
    {
@@ -150,5 +146,12 @@
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_MEGALOMANIAC2_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_MEGALOMANIAC_STRATEGY",
   "negativeTrait": true
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TRAIT_MEGALOMANIAC1"
+   ]
+  }
  }
 }

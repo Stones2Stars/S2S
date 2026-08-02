@@ -127,10 +127,6 @@
    }
   }
  ],
- "succession": {
-  "promotionLine": "PROMOTIONLINE_CIVILIZED",
-  "priority": 1
- },
  "ai": {
   "flavours": [
    {

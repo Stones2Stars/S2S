@@ -79,12 +79,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_COMPOSITE_BOWMAN",
-   "UNIT_BELLYBOWMAN"
-  ]
- },
  "cost": {
   "production": 105,
   "upkeep": 1

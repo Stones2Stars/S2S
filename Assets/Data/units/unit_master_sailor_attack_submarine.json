@@ -149,11 +149,6 @@
    "PROMOTION_LEADERSHIP"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MASTER_SAILOR_NUCLEAR_SUBMARINE"
-  ]
- },
  "cost": {
   "upkeep": 2
  },

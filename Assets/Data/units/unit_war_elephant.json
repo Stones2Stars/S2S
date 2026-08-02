@@ -99,11 +99,6 @@
    "PROMOTION_COMMANDO"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_BOMBARD_ELEPHANT"
-  ]
- },
  "cost": {
   "production": 340,
   "upkeep": 1

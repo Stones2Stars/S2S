@@ -751,9 +751,6 @@
    }
   }
  ],
- "succession": {
-  "promotionLine": "PROMOTIONLINE_LAWFUL"
- },
  "ai": {
   "flavours": [
    {

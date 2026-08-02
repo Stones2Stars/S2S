@@ -229,10 +229,6 @@
    "percent": 25
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_CARELESS",
-  "priority": -1
- },
  "ai": {
   "flavours": [
    {
@@ -278,5 +274,10 @@
     "percent": -10
    }
   }
+ },
+ "enables": {
+  "traitsAnd": [
+   "TRAIT_CARELESS2"
+  ]
  }
 }

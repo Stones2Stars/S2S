@@ -103,12 +103,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_HUNTER",
-   "UNIT_NEANDERTHAL_TRACKER"
-  ]
- },
  "cost": {
   "production": 38,
   "upkeep": 1

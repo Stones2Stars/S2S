@@ -128,11 +128,6 @@
    "PROMOTION_MARCH"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_PIKEMAN"
-  ]
- },
  "cost": {
   "production": 140,
   "upkeep": 1

@@ -97,12 +97,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_OBSIDIAN_AXEMAN",
-   "UNIT_NEANDERTHAL_STONE_AGE_AXEMAN"
-  ]
- },
  "cost": {
   "production": 42,
   "upkeep": 1

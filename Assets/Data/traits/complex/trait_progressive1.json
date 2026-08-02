@@ -111,10 +111,6 @@
   "allReligionsActive": true,
   "nonStateReligionCommerce": true
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_PROGRESSIVE",
-  "priority": 1
- },
  "ai": {
   "flavours": [
    {

@@ -158,11 +158,6 @@
    "PROMOTION_RUGGED3"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_SKIRMISHER"
-  ]
- },
  "cost": {
   "production": 125,
   "upkeep": 1

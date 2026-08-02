@@ -84,11 +84,6 @@
    "PROMOTION_COMBAT2"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_LONGBOWMAN"
-  ]
- },
  "cost": {
   "production": 165,
   "upkeep": 1

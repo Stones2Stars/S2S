@@ -145,9 +145,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_ANTI_CLERICAL"
- },
  "ai": {
   "flavours": [
    {

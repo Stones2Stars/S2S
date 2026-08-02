@@ -70,12 +70,6 @@
    "PROMOTION_BLITZ"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_ANTHROID_INFANTRY",
-   "UNIT_FERAL"
-  ]
- },
  "cost": {
   "production": 4700,
   "upkeep": 1

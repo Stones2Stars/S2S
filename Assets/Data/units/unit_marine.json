@@ -79,11 +79,6 @@
    "PROMOTION_AMPHIBIOUS"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MODERN_MARINE"
-  ]
- },
  "cost": {
   "production": 975,
   "upkeep": 1

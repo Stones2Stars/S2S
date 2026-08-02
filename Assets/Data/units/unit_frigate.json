@@ -106,11 +106,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_IRON_FRIGATE"
-  ]
- },
  "cost": {
   "production": 350,
   "upkeep": 1

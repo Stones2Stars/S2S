@@ -160,10 +160,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_REVOLUTIONARY",
-  "priority": 1
- },
  "ai": {
   "flavours": [
    {
@@ -202,5 +198,10 @@
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_REVOLUTIONARY1_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_REVOLUTIONARY_STRATEGY",
   "impurePropertyManipulators": true
+ },
+ "enables": {
+  "traitsAnd": [
+   "TRAIT_REVOLUTIONARY2"
+  ]
  }
 }

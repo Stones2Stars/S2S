@@ -118,11 +118,6 @@
    "PROMOTION_FORESTRY"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_TRENCH_INFANTRY"
-  ]
- },
  "cost": {
   "production": 455,
   "upkeep": 1

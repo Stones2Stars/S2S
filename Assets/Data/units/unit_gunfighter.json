@@ -209,11 +209,6 @@
    }
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_THUG"
-  ]
- },
  "cost": {
   "production": 535,
   "upkeep": 8

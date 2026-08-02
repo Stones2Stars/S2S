@@ -85,11 +85,6 @@
    "PROMOTION_ARROW_BARRAGE3"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_LONGBOWMAN"
-  ]
- },
  "cost": {
   "production": 165,
   "upkeep": 1

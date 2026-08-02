@@ -51,11 +51,6 @@
    }
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_GATHERER"
-  ]
- },
  "cost": {
   "upkeep": 1
  },

@@ -82,11 +82,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_LANDING_SHIP"
-  ]
- },
  "cost": {
   "production": 750,
   "upkeep": 2

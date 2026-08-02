@@ -116,11 +116,6 @@
    "PROMOTION_BLITZ"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_DREADNOUGHT"
-  ]
- },
  "cost": {
   "production": 2505,
   "upkeep": 11

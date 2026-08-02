@@ -107,11 +107,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_HACKER"
-  ]
- },
  "cost": {
   "production": 1540,
   "upkeep": 9,

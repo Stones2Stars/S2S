@@ -84,12 +84,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MEDICINE_MAN",
-   "UNIT_NEANDERTHAL_HEALER"
-  ]
- },
  "cost": {
   "production": 45,
   "upkeep": 2,

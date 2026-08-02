@@ -76,11 +76,6 @@
    "PROMOTION_FORMATION"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MUSKETMAN"
-  ]
- },
  "cost": {
   "production": 290,
   "upkeep": 1

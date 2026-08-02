@@ -87,11 +87,6 @@
    "PROMOTION_COVER"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_SWORDSMAN"
-  ]
- },
  "cost": {
   "production": 195,
   "upkeep": 1

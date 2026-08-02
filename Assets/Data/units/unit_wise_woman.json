@@ -77,13 +77,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_HEALER",
-   "UNIT_SHEPHERD",
-   "UNIT_NEANDERTHAL_WISE_WOMAN"
-  ]
- },
  "cost": {
   "production": 18,
   "upkeep": 1,

@@ -115,11 +115,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_DROPSHIP"
-  ]
- },
  "cost": {
   "production": 2865,
   "upkeep": 9

@@ -118,11 +118,6 @@
    "PROMOTION_LEADERSHIP"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MASTER_SAILOR_ATTACK_SUBMARINE"
-  ]
- },
  "cost": {
   "upkeep": 1
  },

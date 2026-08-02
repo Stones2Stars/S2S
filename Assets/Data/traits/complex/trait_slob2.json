@@ -112,10 +112,6 @@
    }
   }
  ],
- "succession": {
-  "promotionLine": "PROMOTIONLINE_SLOB",
-  "priority": -2
- },
  "ai": {
   "flavours": [
    {
@@ -160,6 +156,13 @@
    "hurry": {
     "percent": -15
    }
+  }
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TRAIT_SLOB1"
+   ]
   }
  }
 }

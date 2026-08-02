@@ -76,11 +76,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MODERN_PARATROOPER"
-  ]
- },
  "cost": {
   "production": 1230,
   "upkeep": 1

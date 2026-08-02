@@ -90,11 +90,6 @@
    "PROMOTION_LEADERSHIP"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MASTER_SAILOR_MANOWAR"
-  ]
- },
  "cost": {
   "upkeep": 1
  },

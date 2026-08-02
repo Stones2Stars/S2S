@@ -105,11 +105,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_BATTLESHIP"
-  ]
- },
  "cost": {
   "production": 1300,
   "upkeep": 2

@@ -70,11 +70,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_WORKBOAT_MODERN"
-  ]
- },
  "cost": {
   "production": 233,
   "upkeep": 1

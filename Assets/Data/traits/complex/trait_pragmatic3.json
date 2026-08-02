@@ -123,10 +123,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_PRAGMATIC",
-  "priority": 3
- },
  "ai": {
   "flavours": [
    {
@@ -164,5 +160,12 @@
   "description": "TXT_KEY_TRAIT_PRAGMATIC3",
   "civilopedia": "TXT_KEY_TRAIT_PRAGMATIC3_PEDIA",
   "strategy": "TXT_KEY_TRAIT_PRAGMATIC_STRATEGY"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TRAIT_PRAGMATIC2"
+   ]
+  }
  }
 }

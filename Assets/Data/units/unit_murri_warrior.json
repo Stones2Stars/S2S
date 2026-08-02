@@ -68,11 +68,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_HEAVY_SWORDSMAN"
-  ]
- },
  "cost": {
   "production": 270,
   "upkeep": 1

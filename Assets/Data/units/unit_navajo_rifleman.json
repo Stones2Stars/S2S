@@ -172,11 +172,6 @@
    "PROMOTION_WARMTH1"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_GUERRILLA"
-  ]
- },
  "cost": {
   "production": 787,
   "upkeep": 6

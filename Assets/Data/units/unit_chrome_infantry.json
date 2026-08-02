@@ -66,11 +66,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_CLONE_INFANTRY"
-  ]
- },
  "cost": {
   "production": 2700,
   "upkeep": 2

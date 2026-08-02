@@ -87,11 +87,6 @@
    "PROMOTION_FIELD3"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_GAME_HUNTER"
-  ]
- },
  "cost": {
   "production": 295,
   "upkeep": 1

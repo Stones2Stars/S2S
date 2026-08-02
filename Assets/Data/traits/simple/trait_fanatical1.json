@@ -45,10 +45,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_FANATICAL",
-  "priority": -1
- },
  "ai": {
   "flavours": [
    {

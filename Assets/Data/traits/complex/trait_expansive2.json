@@ -110,10 +110,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_EXPANSIVE",
-  "priority": 2
- },
  "ai": {
   "flavours": [
    {
@@ -151,5 +147,12 @@
   "description": "TXT_KEY_TRAIT_COMPLEX_EXPANSIVE2",
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_EXPANSIVE2_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_EXPANSIVE_STRATEGY"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TRAIT_EXPANSIVE1"
+   ]
+  }
  }
 }

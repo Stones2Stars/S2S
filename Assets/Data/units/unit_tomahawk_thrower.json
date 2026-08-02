@@ -133,12 +133,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_AXEMAN",
-   "UNIT_JAVELINEER"
-  ]
- },
  "cost": {
   "production": 42,
   "upkeep": 1

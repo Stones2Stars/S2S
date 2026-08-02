@@ -74,11 +74,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_GUIDED_MISSILE"
-  ]
- },
  "cost": {
   "production": 811,
   "upkeep": 1

@@ -218,10 +218,6 @@
    }
   }
  ],
- "succession": {
-  "promotionLine": "PROMOTIONLINE_PROTECTIVE",
-  "priority": 1
- },
  "ai": {
   "flavours": [
    {

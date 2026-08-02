@@ -92,11 +92,6 @@
    "PROMOTION_AMBUSH"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_SPECIAL_INFANTRY"
-  ]
- },
  "cost": {
   "production": 1400,
   "upkeep": 1

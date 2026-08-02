@@ -102,11 +102,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_ROCKET_ARTILLERY"
-  ]
- },
  "cost": {
   "production": 1180,
   "upkeep": 2

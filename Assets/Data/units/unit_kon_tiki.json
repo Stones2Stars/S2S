@@ -98,11 +98,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_COG"
-  ]
- },
  "cost": {
   "production": 100,
   "upkeep": 1

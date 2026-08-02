@@ -196,11 +196,6 @@
    }
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_TECHNARCHIST"
-  ]
- },
  "cost": {
   "production": 1000,
   "upkeep": 12

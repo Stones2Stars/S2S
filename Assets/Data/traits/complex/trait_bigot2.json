@@ -137,10 +137,6 @@
   "bansNonStateReligions": true,
   "citiesStartWithStateReligion": true
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_BIGOT",
-  "priority": -2
- },
  "ai": {
   "flavours": [
    {
@@ -179,5 +175,12 @@
   "civilopedia": "TXT_KEY_TRAIT_BIGOT2_PEDIA",
   "strategy": "TXT_KEY_TRAIT_BIGOT_STRATEGY",
   "negativeTrait": true
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TRAIT_BIGOT1"
+   ]
+  }
  }
 }

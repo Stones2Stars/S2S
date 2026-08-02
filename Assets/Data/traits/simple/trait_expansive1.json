@@ -139,10 +139,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_EXPANSIVE",
-  "priority": 1
- },
  "ai": {
   "flavours": [
    {

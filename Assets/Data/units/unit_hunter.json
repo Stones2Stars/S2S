@@ -109,12 +109,6 @@
    "PROMOTION_HUNTING_SIGHT1"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_RANGER",
-   "UNIT_NEANDERTHAL_HUNTER"
-  ]
- },
  "cost": {
   "production": 63,
   "upkeep": 1

@@ -88,11 +88,6 @@
    "PROMOTION_MARCH"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_FERAL"
-  ]
- },
  "cost": {
   "production": 3665,
   "upkeep": 4

@@ -100,11 +100,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_CARROBALLISTA"
-  ]
- },
  "cost": {
   "production": 175,
   "upkeep": 1

@@ -191,11 +191,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_POLICE_MECH"
-  ]
- },
  "cost": {
   "production": 1825,
   "upkeep": 13

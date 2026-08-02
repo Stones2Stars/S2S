@@ -129,11 +129,6 @@
    "PROMOTION_COMBAT2"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_CUIRASSIER"
-  ]
- },
  "cost": {
   "production": 355,
   "upkeep": 1

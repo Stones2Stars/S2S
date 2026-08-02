@@ -145,10 +145,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_GLOOMY",
-  "priority": -1
- },
  "ai": {
   "flavours": [
    {

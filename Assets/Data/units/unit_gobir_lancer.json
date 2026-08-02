@@ -180,11 +180,6 @@
    "PROMOTION_DRILL3"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_CAVALRY"
-  ]
- },
  "cost": {
   "production": 475,
   "upkeep": 1

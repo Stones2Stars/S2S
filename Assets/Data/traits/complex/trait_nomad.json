@@ -1300,9 +1300,6 @@
    }
   }
  ],
- "succession": {
-  "promotionLine": "PROMOTIONLINE_NOMADIC"
- },
  "ai": {
   "flavours": [
    {

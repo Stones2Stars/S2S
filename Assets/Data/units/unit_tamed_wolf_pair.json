@@ -141,11 +141,6 @@
    }
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_TAMED_WOLF"
-  ]
- },
  "cost": {
   "production": 100
  },

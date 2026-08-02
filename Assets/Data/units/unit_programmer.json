@@ -88,11 +88,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_SOFTWARE_DEVELOPER"
-  ]
- },
  "cost": {
   "production": 1200,
   "upkeep": 8,

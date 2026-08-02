@@ -126,11 +126,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_JAVELINEER"
-  ]
- },
  "cost": {
   "production": 52,
   "upkeep": 1

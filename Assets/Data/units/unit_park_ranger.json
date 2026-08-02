@@ -104,11 +104,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_ECOLOGIST"
-  ]
- },
  "cost": {
   "production": 545,
   "upkeep": 3,

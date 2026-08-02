@@ -93,11 +93,6 @@
    "PROMOTION_GUERILLA1"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_HEAVY_AXEMAN"
-  ]
- },
  "cost": {
   "production": 185,
   "upkeep": 1

@@ -188,12 +188,6 @@
    "PROMOTION_GUERILLA1"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_AUTOGYRO",
-   "UNIT_ARMORED_CAR"
-  ]
- },
  "cost": {
   "production": 950,
   "upkeep": 1

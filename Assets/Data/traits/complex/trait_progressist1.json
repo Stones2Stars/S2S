@@ -71,10 +71,6 @@
  "policies": {
   "upgradeAnywhere": true
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_INNOVATIVE",
-  "priority": 1
- },
  "ai": {
   "flavours": [
    {
@@ -113,5 +109,10 @@
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_INNOVATIVE1_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_INNOVATIVE_STRATEGY",
   "minAnarchy": 1
+ },
+ "enables": {
+  "traitsAnd": [
+   "TRAIT_INNOVATIVE2"
+  ]
  }
 }

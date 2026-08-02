@@ -431,9 +431,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_DYNAMIC"
- },
  "ai": {
   "flavours": [
    {

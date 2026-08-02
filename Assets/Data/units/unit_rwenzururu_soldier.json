@@ -103,11 +103,6 @@
    "PROMOTION_PINCH2"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_AT_INFANTRY"
-  ]
- },
  "cost": {
   "production": 920,
   "upkeep": 1

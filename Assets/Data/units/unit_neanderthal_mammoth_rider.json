@@ -111,11 +111,6 @@
    "PROMOTION_COLD3"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_WAR_MAMMOTH"
-  ]
- },
  "cost": {
   "production": 130
  },

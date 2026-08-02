@@ -115,11 +115,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_FUSION_BATTLESHIP"
-  ]
- },
  "cost": {
   "production": 1420,
   "upkeep": 3

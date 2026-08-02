@@ -116,11 +116,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_GUARDDOG"
-  ]
- },
  "cost": {
   "production": 163,
   "upkeep": 1

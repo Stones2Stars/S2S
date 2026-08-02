@@ -105,11 +105,6 @@
    }
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_CELEBRITY"
-  ]
- },
  "cost": {
   "production": 250,
   "upkeep": 4

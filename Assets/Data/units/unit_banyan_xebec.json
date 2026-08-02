@@ -81,11 +81,6 @@
    }
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_LIBERTY_MERCHANT"
-  ]
- },
  "cost": {
   "production": 372,
   "upkeep": 1

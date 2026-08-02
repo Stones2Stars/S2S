@@ -189,10 +189,6 @@
    }
   }
  ],
- "succession": {
-  "promotionLine": "PROMOTIONLINE_COWARDLY",
-  "priority": -3
- },
  "ai": {
   "flavours": [
    {
@@ -237,6 +233,13 @@
    "upgrade": {
     "percent": -10
    }
+  }
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TRAIT_COWARDLY2"
+   ]
   }
  }
 }

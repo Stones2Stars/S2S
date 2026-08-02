@@ -137,9 +137,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_HUMANITARIAN"
- },
  "ai": {
   "flavours": [
    {

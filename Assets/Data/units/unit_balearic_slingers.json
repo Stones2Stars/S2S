@@ -86,12 +86,6 @@
    "PROMOTION_SIDESTEP1"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_LIGHT_CROSSBOWMAN",
-   "UNIT_SCORPION"
-  ]
- },
  "cost": {
   "production": 200,
   "upkeep": 1

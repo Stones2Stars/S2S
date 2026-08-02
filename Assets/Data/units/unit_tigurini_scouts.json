@@ -78,11 +78,6 @@
    "PROMOTION_FORESTRY"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_ADVENTURER"
-  ]
- },
  "cost": {
   "production": 235,
   "upkeep": 1

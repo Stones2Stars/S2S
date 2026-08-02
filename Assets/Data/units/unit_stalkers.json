@@ -132,11 +132,6 @@
    "PROMOTION_SENTRY"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_ASSASSIN"
-  ]
- },
  "cost": {
   "production": 160,
   "upkeep": 4

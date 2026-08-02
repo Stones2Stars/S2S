@@ -111,14 +111,6 @@
    "SPECIALIST_GREAT_ADMIRAL"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MASTER_SAILOR_WAR_CANOE",
-   "UNIT_MASTER_SAILOR_KAYAK",
-   "UNIT_MASTER_SAILOR_UBOAT",
-   "UNIT_MASTER_SAILOR_EARLY_CARRIER"
-  ]
- },
  "cost": {
   "upkeep": 5
  },

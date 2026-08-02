@@ -104,11 +104,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_AH64_GUNSHIP"
-  ]
- },
  "cost": {
   "production": 1280,
   "upkeep": 2

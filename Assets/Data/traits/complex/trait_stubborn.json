@@ -424,9 +424,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_STUBBORN"
- },
  "ai": {
   "flavours": [
    {

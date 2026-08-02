@@ -123,11 +123,6 @@
    "PROMOTION_SHOCK2"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_CAMEL_KNIGHT"
-  ]
- },
  "cost": {
   "production": 200,
   "upkeep": 1

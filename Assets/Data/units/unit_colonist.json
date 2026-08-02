@@ -132,11 +132,6 @@
    }
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_PIONEER"
-  ]
- },
  "cost": {
   "upkeep": 6
  },

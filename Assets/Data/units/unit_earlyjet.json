@@ -83,12 +83,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_F111_AARDVARK",
-   "UNIT_F104_STARFIGHTER"
-  ]
- },
  "cost": {
   "production": 1150,
   "upkeep": 3

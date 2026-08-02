@@ -93,11 +93,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MEDICAL_VET"
-  ]
- },
  "cost": {
   "production": 330,
   "upkeep": 4,

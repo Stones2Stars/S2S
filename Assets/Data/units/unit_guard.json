@@ -154,11 +154,6 @@
    "PROMOTION_SENTRY"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_CITY_GUARD"
-  ]
- },
  "cost": {
   "production": 330,
   "upkeep": 5

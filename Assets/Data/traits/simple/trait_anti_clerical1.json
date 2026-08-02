@@ -150,10 +150,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_ANTI_CLERICAL",
-  "priority": -1
- },
  "ai": {
   "flavours": [
    {

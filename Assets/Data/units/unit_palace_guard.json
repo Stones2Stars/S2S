@@ -61,11 +61,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_KINGS_GUARD"
-  ]
- },
  "cost": {
   "production": 120,
   "upkeep": 4

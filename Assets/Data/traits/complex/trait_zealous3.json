@@ -155,10 +155,6 @@
    }
   }
  ],
- "succession": {
-  "promotionLine": "PROMOTIONLINE_ZEALOUS",
-  "priority": -3
- },
  "ai": {
   "flavours": [
    {
@@ -198,5 +194,12 @@
   "strategy": "TXT_KEY_TRAIT_ZEALOUS_STRATEGY",
   "negativeTrait": true,
   "impurePromotions": true
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TRAIT_ZEALOUS2"
+   ]
+  }
  }
 }

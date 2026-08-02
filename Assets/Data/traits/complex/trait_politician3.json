@@ -143,10 +143,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_POLITICIAN",
-  "priority": 3
- },
  "ai": {
   "flavours": [
    {
@@ -185,5 +181,12 @@
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_POLITICIAN3_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_POLITICIAN_STRATEGY",
   "impurePropertyManipulators": true
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TRAIT_POLITICIAN2"
+   ]
+  }
  }
 }

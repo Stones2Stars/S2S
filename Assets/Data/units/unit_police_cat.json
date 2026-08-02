@@ -172,11 +172,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_FELINE_SUPERIOR"
-  ]
- },
  "cost": {
   "production": 800,
   "upkeep": 6

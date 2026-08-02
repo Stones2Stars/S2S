@@ -82,11 +82,6 @@
    "PROMOTION_HUNTING_SIGHT2"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MASTER_GAME_HUNTER"
-  ]
- },
  "cost": {
   "upkeep": 1
  },

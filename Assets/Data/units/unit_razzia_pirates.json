@@ -135,11 +135,6 @@
    "PROMOTION_COASTAL_ASSAULT3"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_ASSAULT_SHIP"
-  ]
- },
  "cost": {
   "production": 500,
   "upkeep": 1

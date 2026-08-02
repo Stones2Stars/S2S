@@ -85,11 +85,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_CARAVEL"
-  ]
- },
  "cost": {
   "production": 105,
   "upkeep": 1

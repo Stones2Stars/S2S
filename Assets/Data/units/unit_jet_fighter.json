@@ -101,11 +101,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MODERN_FIGHTER"
-  ]
- },
  "cost": {
   "production": 1500,
   "upkeep": 5

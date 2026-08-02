@@ -187,11 +187,6 @@
    }
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_COLONIST"
-  ]
- },
  "cost": {
   "upkeep": 4
  },

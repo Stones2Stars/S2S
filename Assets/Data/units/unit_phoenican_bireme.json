@@ -86,11 +86,6 @@
    "PROMOTION_SENTRY"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_GALLEASS"
-  ]
- },
  "cost": {
   "production": 260,
   "upkeep": 1

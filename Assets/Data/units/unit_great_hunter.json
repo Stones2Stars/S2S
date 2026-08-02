@@ -101,11 +101,6 @@
    "SPECIALIST_GREAT_HUNTER"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MASTER_CHASER"
-  ]
- },
  "cost": {
   "upkeep": 1
  },

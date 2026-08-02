@@ -155,11 +155,6 @@
    "PROMOTION_SENTRY"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_POLICE_MECH"
-  ]
- },
  "cost": {
   "production": 1150,
   "upkeep": 12

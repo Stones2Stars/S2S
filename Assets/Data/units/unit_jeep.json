@@ -119,11 +119,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_HUMVEE"
-  ]
- },
  "cost": {
   "production": 1100,
   "upkeep": 2

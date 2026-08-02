@@ -149,11 +149,6 @@
    "PROMOTION_MOUNTAINEER"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_WORKER_INDUSTRIAL"
-  ]
- },
  "cost": {
   "production": 150,
   "upkeep": 3

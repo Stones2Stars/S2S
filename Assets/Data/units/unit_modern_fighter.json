@@ -95,11 +95,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_SCRAMJET"
-  ]
- },
  "cost": {
   "production": 1650,
   "upkeep": 11

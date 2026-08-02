@@ -140,11 +140,6 @@
    }
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_TRIBE"
-  ]
- },
  "world": {
   "art": {
    "define": "ART_DEF_UNIT_BAND_MALE"

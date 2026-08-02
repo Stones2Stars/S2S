@@ -86,13 +86,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_ASSAULT_DROID",
-   "UNIT_SCOUT_MECH",
-   "UNIT_AUTOM_INFANTRY"
-  ]
- },
  "cost": {
   "production": 2406,
   "upkeep": 11

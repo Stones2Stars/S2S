@@ -76,11 +76,6 @@
    "PROMOTION_SENTRY"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MOTORCYCLE"
-  ]
- },
  "cost": {
   "production": 285,
   "upkeep": 1

@@ -87,11 +87,6 @@
    "PROMOTION_GOAD3"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_WARDEN"
-  ]
- },
  "cost": {
   "production": 175,
   "upkeep": 1

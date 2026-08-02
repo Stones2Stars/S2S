@@ -240,10 +240,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_FINANCIAL",
-  "priority": 3
- },
  "ai": {
   "flavours": [
    {
@@ -288,6 +284,13 @@
    "hurry": {
     "percent": -25
    }
+  }
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TRAIT_FINANCIAL2"
+   ]
   }
  }
 }

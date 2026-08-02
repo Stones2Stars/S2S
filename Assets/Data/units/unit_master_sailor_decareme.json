@@ -71,11 +71,6 @@
    "PROMOTION_SEA_HUNTER2"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MASTER_SAILOR_GALLEASS"
-  ]
- },
  "cost": {
   "upkeep": 1
  },

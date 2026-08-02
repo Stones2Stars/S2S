@@ -132,12 +132,6 @@
    "PROMOTION_FORMATION"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_PIKEMAN",
-   "UNIT_LIGHT_SWORDSMAN"
-  ]
- },
  "cost": {
   "production": 115,
   "upkeep": 1

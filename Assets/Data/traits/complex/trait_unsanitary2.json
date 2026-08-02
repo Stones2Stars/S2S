@@ -264,10 +264,6 @@
    }
   }
  ],
- "succession": {
-  "promotionLine": "PROMOTIONLINE_UNSANITARY",
-  "priority": -2
- },
  "ai": {
   "flavours": [
    {
@@ -306,5 +302,17 @@
   "civilopedia": "TXT_KEY_TRAIT_UNSANITARY2_PEDIA",
   "strategy": "TXT_KEY_TRAIT_UNSANITARY_STRATEGY",
   "negativeTrait": true
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TRAIT_UNSANITARY1"
+   ]
+  }
+ },
+ "enables": {
+  "traitsAnd": [
+   "TRAIT_UNSANITARY3"
+  ]
  }
 }

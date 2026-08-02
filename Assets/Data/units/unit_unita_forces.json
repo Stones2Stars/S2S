@@ -90,11 +90,6 @@
    "PROMOTION_DRILL3"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MODERN_MARINE"
-  ]
- },
  "cost": {
   "production": 1080,
   "upkeep": 1

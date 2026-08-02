@@ -221,9 +221,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_EFFICIENT"
- },
  "ai": {
   "flavours": [
    {

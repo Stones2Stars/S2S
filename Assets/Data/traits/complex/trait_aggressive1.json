@@ -113,10 +113,6 @@
    }
   }
  ],
- "succession": {
-  "promotionLine": "PROMOTIONLINE_AGGRESSIVE",
-  "priority": 1
- },
  "ai": {
   "flavours": [
    {
@@ -161,5 +157,10 @@
     "percent": 20
    }
   }
+ },
+ "enables": {
+  "traitsAnd": [
+   "TRAIT_AGGRESSIVE2"
+  ]
  }
 }

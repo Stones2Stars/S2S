@@ -120,11 +120,6 @@
    "PROMOTION_COMMANDO"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_ELEPHANT_GUNNER"
-  ]
- },
  "cost": {
   "production": 450,
   "upkeep": 1

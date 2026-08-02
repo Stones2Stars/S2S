@@ -94,12 +94,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_SAM_INFANTRY",
-   "UNIT_MODERN_MACHINE_GUN"
-  ]
- },
  "cost": {
   "production": 1030,
   "upkeep": 1

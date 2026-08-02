@@ -85,11 +85,6 @@
    "PROMOTION_NANOIDS"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_NANITE_CLOUD"
-  ]
- },
  "cost": {
   "production": 4968,
   "upkeep": 1

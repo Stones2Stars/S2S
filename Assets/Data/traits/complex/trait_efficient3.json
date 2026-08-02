@@ -92,10 +92,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_EFFICIENT",
-  "priority": 3
- },
  "ai": {
   "flavours": [
    {
@@ -142,6 +138,13 @@
      "percent": 10
     }
    }
+  }
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TRAIT_EFFICIENT2"
+   ]
   }
  }
 }

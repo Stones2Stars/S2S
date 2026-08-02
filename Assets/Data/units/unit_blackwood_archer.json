@@ -86,12 +86,6 @@
    "PROMOTION_FORESTRY"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_LONGBOWMAN",
-   "UNIT_LIGHT_CROSSBOWMAN"
-  ]
- },
  "cost": {
   "production": 105,
   "upkeep": 1

@@ -177,9 +177,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_INDUSTRIOUS"
- },
  "ai": {
   "flavours": [
    {

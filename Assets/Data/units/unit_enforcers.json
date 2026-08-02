@@ -120,12 +120,6 @@
    "PROMOTION_SENTRY"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_TOWN_WATCHMEN",
-   "UNIT_NEANDERTHAL_ENFORCER"
-  ]
- },
  "cost": {
   "production": 47,
   "upkeep": 2

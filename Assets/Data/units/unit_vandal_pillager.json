@@ -134,11 +134,6 @@
    "PROMOTION_LOOTER"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_KNIGHT"
-  ]
- },
  "cost": {
   "production": 225,
   "upkeep": 1

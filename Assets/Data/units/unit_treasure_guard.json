@@ -165,11 +165,6 @@
    "PROMOTION_CITY_GARRISON2"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_GUARD"
-  ]
- },
  "cost": {
   "production": 235,
   "upkeep": 5

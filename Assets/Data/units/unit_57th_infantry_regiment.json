@@ -114,12 +114,6 @@
    "PROMOTION_GUERILLA2"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MACHINE_GUN",
-   "UNIT_LIGHT_AA"
-  ]
- },
  "cost": {
   "production": 1050,
   "upkeep": 1

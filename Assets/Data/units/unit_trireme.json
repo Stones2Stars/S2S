@@ -81,11 +81,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_QUINQUEREME2"
-  ]
- },
  "cost": {
   "production": 210,
   "upkeep": 1

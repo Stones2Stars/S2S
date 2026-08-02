@@ -437,10 +437,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_UNREFINED",
-  "priority": -1
- },
  "ai": {
   "flavours": [
    {

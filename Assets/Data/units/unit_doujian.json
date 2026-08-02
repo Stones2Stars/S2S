@@ -89,11 +89,6 @@
    "PROMOTION_DRILL1"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_GALLEASS"
-  ]
- },
  "cost": {
   "production": 270,
   "upkeep": 1

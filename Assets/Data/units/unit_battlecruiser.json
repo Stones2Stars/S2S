@@ -97,12 +97,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_CRUISER",
-   "UNIT_HEAVY_CRUISER"
-  ]
- },
  "cost": {
   "production": 1100,
   "upkeep": 2

@@ -118,12 +118,6 @@
    "PROMOTION_SENTRY"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_ENFORCERS",
-   "UNIT_NEANDERTHAL_WATCHER"
-  ]
- },
  "cost": {
   "production": 14,
   "upkeep": 1

@@ -125,11 +125,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_WORKER_INDUSTRIAL"
-  ]
- },
  "cost": {
   "production": 78,
   "upkeep": 1

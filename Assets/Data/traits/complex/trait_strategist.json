@@ -369,9 +369,6 @@
    }
   }
  ],
- "succession": {
-  "promotionLine": "PROMOTIONLINE_STRATEGIST"
- },
  "ai": {
   "flavours": [
    {

@@ -91,12 +91,6 @@
    "PROMOTION_BY_THE_HORNS"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_TRACKER",
-   "UNIT_NEANDERTHAL_CHASER"
-  ]
- },
  "cost": {
   "production": 17,
   "upkeep": 1

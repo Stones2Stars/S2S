@@ -178,12 +178,6 @@
    "PROMOTION_COMMANDO"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_GIRAFFE_CARABINIER",
-   "UNIT_GIRAFFE_DRAGOON"
-  ]
- },
  "cost": {
   "production": 425
  },

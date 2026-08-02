@@ -58,11 +58,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_FERAL"
-  ]
- },
  "cost": {
   "production": 4300,
   "upkeep": 1

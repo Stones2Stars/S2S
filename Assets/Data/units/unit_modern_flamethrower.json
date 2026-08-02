@@ -114,11 +114,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_PLASMA_THROWER"
-  ]
- },
  "cost": {
   "production": 1400,
   "upkeep": 1

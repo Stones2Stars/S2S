@@ -80,10 +80,6 @@
    }
   }
  ],
- "succession": {
-  "promotionLine": "PROMOTIONLINE_PACIFIST",
-  "priority": -3
- },
  "ai": {
   "flavours": [
    {
@@ -129,6 +125,13 @@
    "upgrade": {
     "percent": 30
    }
+  }
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TRAIT_PACIFIST2"
+   ]
   }
  }
 }

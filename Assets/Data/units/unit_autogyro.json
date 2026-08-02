@@ -97,11 +97,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_GUNSHIP"
-  ]
- },
  "cost": {
   "production": 1030,
   "upkeep": 2

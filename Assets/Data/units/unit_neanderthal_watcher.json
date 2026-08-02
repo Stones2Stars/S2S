@@ -120,11 +120,6 @@
    "PROMOTION_SENTRY"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_NEANDERTHAL_ENFORCER"
-  ]
- },
  "cost": {
   "production": 21,
   "upkeep": 2

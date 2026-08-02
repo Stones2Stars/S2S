@@ -111,11 +111,6 @@
    "PROMOTION_FORMATION2"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_ARMORED_CAR"
-  ]
- },
  "cost": {
   "production": 400,
   "upkeep": 1

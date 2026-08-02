@@ -231,11 +231,6 @@
    }
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_TRADE_CARAVAN"
-  ]
- },
  "cost": {
   "production": 59,
   "upkeep": 1

@@ -86,11 +86,6 @@
    "PROMOTION_MASTER_HUNTER1"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_NEANDERTHAL_MASTER_HUNTER"
-  ]
- },
  "cost": {
   "upkeep": 1
  },

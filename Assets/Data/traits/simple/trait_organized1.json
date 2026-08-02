@@ -124,10 +124,6 @@
    "percent": 20
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_ORGANIZED",
-  "priority": 1
- },
  "ai": {
   "flavours": [
    {

@@ -175,11 +175,6 @@
    "PROMOTION_POISON_TIPS"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_CHIVALRY"
-  ]
- },
  "cost": {
   "production": 270,
   "upkeep": 1

@@ -393,10 +393,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_FINANCIAL",
-  "priority": 1
- },
  "ai": {
   "flavours": [
    {
@@ -442,5 +438,10 @@
     "percent": -25
    }
   }
+ },
+ "enables": {
+  "traitsAnd": [
+   "TRAIT_FINANCIAL2"
+  ]
  }
 }

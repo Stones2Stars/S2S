@@ -113,10 +113,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_ORGANIZED",
-  "priority": 1
- },
  "ai": {
   "flavours": [
    {
@@ -154,5 +150,10 @@
   "description": "TXT_KEY_TRAIT_COMPLEX_ORGANIZED1",
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_ORGANIZED1_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_ORGANIZED_STRATEGY"
+ },
+ "enables": {
+  "traitsAnd": [
+   "TRAIT_ORGANIZED2"
+  ]
  }
 }

@@ -123,11 +123,6 @@
    "PROMOTION_BERZERKER1"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_POLICE_DOG"
-  ]
- },
  "cost": {
   "production": 310,
   "upkeep": 4

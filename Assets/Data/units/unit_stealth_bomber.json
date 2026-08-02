@@ -113,11 +113,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_ORBITAL_BOMBER"
-  ]
- },
  "cost": {
   "production": 2406,
   "upkeep": 6

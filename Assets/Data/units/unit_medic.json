@@ -84,12 +84,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_AMBULANCE",
-   "UNIT_MEDICAL_LAB_TECH"
-  ]
- },
  "cost": {
   "production": 595,
   "upkeep": 7,

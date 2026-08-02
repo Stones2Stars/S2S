@@ -105,11 +105,6 @@
    "PROMOTION_BLITZ"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_ANTI_PERSONNEL_MECH"
-  ]
- },
  "cost": {
   "production": 3250,
   "upkeep": 6

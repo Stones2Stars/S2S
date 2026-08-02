@@ -95,11 +95,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_EARLY_MACEMAN"
-  ]
- },
  "cost": {
   "production": 42,
   "upkeep": 1

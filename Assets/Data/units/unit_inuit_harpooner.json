@@ -113,11 +113,6 @@
    "PROMOTION_COLD3"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_SKIRMISHER"
-  ]
- },
  "cost": {
   "production": 75,
   "upkeep": 1

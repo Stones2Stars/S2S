@@ -99,11 +99,6 @@
    "PROMOTION_LEADERSHIP"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MASTER_SAILOR_STEAM_DESTROYER"
-  ]
- },
  "cost": {
   "upkeep": 2
  },

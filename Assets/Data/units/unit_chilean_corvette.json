@@ -135,12 +135,6 @@
    "PROMOTION_SENTRY"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_STEAM_DESTROYER",
-   "UNIT_PRE_DREADNOUGHT"
-  ]
- },
  "cost": {
   "production": 570,
   "upkeep": 1

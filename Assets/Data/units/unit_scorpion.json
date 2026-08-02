@@ -113,11 +113,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_BALLISTA"
-  ]
- },
  "cost": {
   "production": 245,
   "upkeep": 1

@@ -108,11 +108,6 @@
    "PROMOTION_FORESTRY"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_BOMBARD_ELEPHANT"
-  ]
- },
  "cost": {
   "production": 375,
   "upkeep": 1

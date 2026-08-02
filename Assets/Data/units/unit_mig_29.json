@@ -120,11 +120,6 @@
    "PROMOTION_RANGE1"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MODERN_FIGHTER"
-  ]
- },
  "cost": {
   "production": 1605,
   "upkeep": 5

@@ -173,10 +173,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_DYNAMIC",
-  "priority": 3
- },
  "ai": {
   "flavours": [
    {
@@ -223,6 +219,13 @@
    "upgrade": {
     "percent": -20
    }
+  }
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TRAIT_DYNAMIC2"
+   ]
   }
  }
 }

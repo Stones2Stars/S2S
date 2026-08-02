@@ -63,11 +63,6 @@
    "SPECIALIST_MILITARY_INSTRUCTOR"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_WARLORDIIS"
-  ]
- },
  "cost": {
   "upkeep": 1
  },

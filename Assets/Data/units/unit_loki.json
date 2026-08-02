@@ -86,11 +86,6 @@
    "PROMOTION_BERZERKER2"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MUSKETMAN"
-  ]
- },
  "cost": {
   "production": 300
  },

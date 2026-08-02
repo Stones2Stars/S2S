@@ -108,11 +108,6 @@
    "PROMOTION_BLITZ"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_ARMOR_M60"
-  ]
- },
  "cost": {
   "production": 1100,
   "upkeep": 2

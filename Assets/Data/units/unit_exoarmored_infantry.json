@@ -85,12 +85,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_POWER_ARMORED_INFANTRY",
-   "UNIT_CYBORG"
-  ]
- },
  "cost": {
   "production": 2865,
   "upkeep": 2

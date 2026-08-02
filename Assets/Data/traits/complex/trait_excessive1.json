@@ -155,10 +155,6 @@
  "policies": {
   "extraGoody": true
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_EXCESSIVE",
-  "priority": -1
- },
  "ai": {
   "flavours": [
    {
@@ -206,5 +202,10 @@
     }
    }
   }
+ },
+ "enables": {
+  "traitsAnd": [
+   "TRAIT_EXCESSIVE2"
+  ]
  }
 }

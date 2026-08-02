@@ -587,9 +587,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_GREEDY"
- },
  "ai": {
   "flavours": [
    {

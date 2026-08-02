@@ -90,11 +90,6 @@
    "PROMOTION_BLITZ"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_WALKER_MECH"
-  ]
- },
  "cost": {
   "production": 4800,
   "upkeep": 11

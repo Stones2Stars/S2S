@@ -249,10 +249,6 @@
    }
   }
  ],
- "succession": {
-  "promotionLine": "PROMOTIONLINE_STRATEGIST",
-  "priority": 1
- },
  "ai": {
   "flavours": [
    {
@@ -297,5 +293,10 @@
     "percent": 10
    }
   }
+ },
+ "enables": {
+  "traitsAnd": [
+   "TRAIT_STRATEGIST2"
+  ]
  }
 }

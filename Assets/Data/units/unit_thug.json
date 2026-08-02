@@ -187,11 +187,6 @@
    }
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_STREET_GANG"
-  ]
- },
  "cost": {
   "production": 600,
   "upkeep": 9

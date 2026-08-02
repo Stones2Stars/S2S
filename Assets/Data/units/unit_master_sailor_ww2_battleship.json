@@ -117,11 +117,6 @@
    "PROMOTION_LEADERSHIP"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MASTER_SAILOR_BATTLESHIP"
-  ]
- },
  "cost": {
   "upkeep": 2
  },

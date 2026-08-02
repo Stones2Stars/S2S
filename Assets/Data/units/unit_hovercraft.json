@@ -125,11 +125,6 @@
    "PROMOTION_AMPHIBIOUS"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MODERN_HOVERCRAFT"
-  ]
- },
  "cost": {
   "production": 1100,
   "upkeep": 4

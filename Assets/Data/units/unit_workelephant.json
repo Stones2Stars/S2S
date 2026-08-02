@@ -130,11 +130,6 @@
    "PROMOTION_FOREST_WORKER1"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_WORKER_INDUSTRIAL"
-  ]
- },
  "cost": {
   "production": 165,
   "upkeep": 3

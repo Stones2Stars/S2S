@@ -153,12 +153,6 @@
    "PROMOTION_MOUNTAINEER"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_AUTOGYRO",
-   "UNIT_ARMORED_CAR"
-  ]
- },
  "cost": {
   "production": 125
  },

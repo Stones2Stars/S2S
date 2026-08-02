@@ -124,10 +124,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_ISOLATIONIST",
-  "priority": -1
- },
  "ai": {
   "flavours": [
    {
@@ -166,5 +162,10 @@
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_ISOLATIONIST1_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_ISOLATIONIST_STRATEGY",
   "negativeTrait": true
+ },
+ "enables": {
+  "traitsAnd": [
+   "TRAIT_ISOLATIONIST2"
+  ]
  }
 }

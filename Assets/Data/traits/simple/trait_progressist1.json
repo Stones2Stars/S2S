@@ -160,10 +160,6 @@
    }
   }
  ],
- "succession": {
-  "promotionLine": "PROMOTIONLINE_PROGRESSIST",
-  "priority": 1
- },
  "ai": {
   "flavours": [
    {

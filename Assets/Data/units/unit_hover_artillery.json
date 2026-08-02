@@ -117,11 +117,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_LEVITATION_ARTILLERY"
-  ]
- },
  "cost": {
   "production": 3250,
   "upkeep": 6

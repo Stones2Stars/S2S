@@ -158,11 +158,6 @@
    "PROMOTION_SENTRY"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_STALKERS"
-  ]
- },
  "cost": {
   "production": 97,
   "upkeep": 2

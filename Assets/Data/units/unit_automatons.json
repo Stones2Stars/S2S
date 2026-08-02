@@ -63,12 +63,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_CYBORG",
-   "UNIT_BLEEDER"
-  ]
- },
  "cost": {
   "production": 4000,
   "upkeep": 4

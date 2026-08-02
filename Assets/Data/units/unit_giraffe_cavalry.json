@@ -180,11 +180,6 @@
    "PROMOTION_COMMANDO"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_GIRAFFE_TRENCH_CAVALRY"
-  ]
- },
  "cost": {
   "production": 580
  },

@@ -73,10 +73,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_PROLIFIC",
-  "priority": 2
- },
  "ai": {
   "flavours": [
    {
@@ -120,6 +116,13 @@
    "hurry": {
     "percent": 10
    }
+  }
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TRAIT_PROLIFIC1"
+   ]
   }
  }
 }

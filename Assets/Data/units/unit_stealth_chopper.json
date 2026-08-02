@@ -106,12 +106,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_HYBRID_GUNSHIP",
-   "UNIT_UNMANNED_HELICOPTER"
-  ]
- },
  "cost": {
   "production": 1845,
   "upkeep": 4

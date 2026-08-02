@@ -708,9 +708,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_UNREFINED"
- },
  "ai": {
   "flavours": [
    {

@@ -292,10 +292,6 @@
    }
   }
  ],
- "succession": {
-  "promotionLine": "PROMOTIONLINE_MEDICAL",
-  "priority": 3
- },
  "ai": {
   "flavours": [
    {
@@ -333,5 +329,12 @@
   "description": "TXT_KEY_TRAIT_MEDICAL3",
   "civilopedia": "TXT_KEY_TRAIT_MEDICAL3_PEDIA",
   "strategy": "TXT_KEY_TRAIT_MEDICAL_STRATEGY"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TRAIT_MEDICAL2"
+   ]
+  }
  }
 }

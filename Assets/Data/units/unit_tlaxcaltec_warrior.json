@@ -97,11 +97,6 @@
    "PROMOTION_DRILL1"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_SWORDSMAN"
-  ]
- },
  "cost": {
   "production": 67,
   "upkeep": 1

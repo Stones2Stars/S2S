@@ -79,11 +79,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_EARLY_FIGHTER"
-  ]
- },
  "cost": {
   "production": 380
  },

@@ -61,11 +61,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_AUTOMATONS"
-  ]
- },
  "cost": {
   "production": 2800,
   "upkeep": 3

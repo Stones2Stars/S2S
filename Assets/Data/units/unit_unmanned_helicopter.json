@@ -104,11 +104,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_DROID_HELICOPTER"
-  ]
- },
  "cost": {
   "production": 2865,
   "upkeep": 5

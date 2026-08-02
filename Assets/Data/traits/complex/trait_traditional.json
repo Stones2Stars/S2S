@@ -615,9 +615,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_TRADITIONAL"
- },
  "ai": {
   "flavours": [
    {

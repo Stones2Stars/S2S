@@ -139,11 +139,6 @@
    "PROMOTION_COMBAT2"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_CHIVALRY"
-  ]
- },
  "cost": {
   "production": 345,
   "upkeep": 1

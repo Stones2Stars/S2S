@@ -139,11 +139,6 @@
    "PROMOTION_WARMTH3"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_CAMEL_GUNNER"
-  ]
- },
  "cost": {
   "production": 380,
   "upkeep": 1

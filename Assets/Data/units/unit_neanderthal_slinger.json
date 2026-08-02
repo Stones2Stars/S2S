@@ -102,11 +102,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_ARCHER"
-  ]
- },
  "cost": {
   "production": 37,
   "upkeep": 1

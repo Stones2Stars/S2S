@@ -116,11 +116,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_LONGBOWMAN"
-  ]
- },
  "cost": {
   "production": 145,
   "upkeep": 1

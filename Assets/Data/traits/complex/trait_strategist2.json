@@ -182,10 +182,6 @@
    }
   }
  ],
- "succession": {
-  "promotionLine": "PROMOTIONLINE_STRATEGIST",
-  "priority": 2
- },
  "ai": {
   "flavours": [
    {
@@ -229,6 +225,13 @@
    "upgrade": {
     "percent": 10
    }
+  }
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TRAIT_STRATEGIST1"
+   ]
   }
  }
 }

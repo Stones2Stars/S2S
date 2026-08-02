@@ -98,11 +98,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_STRIKE_FIGHTER"
-  ]
- },
  "cost": {
   "production": 1150,
   "upkeep": 4

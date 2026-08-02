@@ -89,11 +89,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_B52_BOMBER"
-  ]
- },
  "cost": {
   "production": 1353,
   "upkeep": 1

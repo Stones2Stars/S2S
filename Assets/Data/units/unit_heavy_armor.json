@@ -149,11 +149,6 @@
    "PROMOTION_BLITZ"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_STEALTH_ARMOR"
-  ]
- },
  "cost": {
   "production": 2008,
   "upkeep": 3

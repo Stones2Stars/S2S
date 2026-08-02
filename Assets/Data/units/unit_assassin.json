@@ -175,12 +175,6 @@
    }
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_CUTTHROAT",
-   "UNIT_SHARPSHOOTER"
-  ]
- },
  "cost": {
   "production": 260,
   "upkeep": 5

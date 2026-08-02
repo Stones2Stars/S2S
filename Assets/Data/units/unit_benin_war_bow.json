@@ -78,11 +78,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_ARQUEBUSIER"
-  ]
- },
  "cost": {
   "production": 290,
   "upkeep": 1

@@ -153,11 +153,6 @@
    "PROMOTION_COMMANDO"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_TRENCH_CAVALRY"
-  ]
- },
  "cost": {
   "production": 525,
   "upkeep": 1

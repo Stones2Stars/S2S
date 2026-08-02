@@ -131,11 +131,6 @@
    }
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_THIEF"
-  ]
- },
  "cost": {
   "production": 13,
   "upkeep": 1

@@ -351,10 +351,6 @@
    }
   }
  ],
- "succession": {
-  "promotionLine": "PROMOTIONLINE_CROOKED",
-  "priority": 2
- },
  "ai": {
   "flavours": [
    {
@@ -393,5 +389,12 @@
   "civilopedia": "TXT_KEY_TRAIT_CROOKED2_PEDIA",
   "strategy": "TXT_KEY_TRAIT_CROOKED_STRATEGY",
   "negativeTrait": true
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TRAIT_CROOKED1"
+   ]
+  }
  }
 }

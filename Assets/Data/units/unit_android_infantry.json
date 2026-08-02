@@ -94,12 +94,6 @@
    "PROMOTION_BLITZ"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_CYBORG",
-   "UNIT_SENTROID_INFANTRY"
-  ]
- },
  "cost": {
   "production": 3900,
   "upkeep": 11

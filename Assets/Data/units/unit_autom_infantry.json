@@ -94,11 +94,6 @@
    "PROMOTION_BLITZ"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_WARBOT_INFANTRY"
-  ]
- },
  "cost": {
   "production": 3200,
   "upkeep": 11

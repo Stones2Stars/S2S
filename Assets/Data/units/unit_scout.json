@@ -66,12 +66,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_GUIDE",
-   "UNIT_NEANDERTHAL_SCOUT"
-  ]
- },
  "cost": {
   "production": 11,
   "upkeep": 1

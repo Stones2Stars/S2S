@@ -134,11 +134,6 @@
    "PROMOTION_MOBILITY"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_DRAGOON"
-  ]
- },
  "cost": {
   "production": 455,
   "upkeep": 1

@@ -81,11 +81,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_EARLYJET"
-  ]
- },
  "cost": {
   "production": 930,
   "upkeep": 2

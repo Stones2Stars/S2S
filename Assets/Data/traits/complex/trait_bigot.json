@@ -141,9 +141,6 @@
   "draftsOnCityCapture": true,
   "nonStateReligionCommerce": true
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_BIGOT"
- },
  "ai": {
   "flavours": [
    {

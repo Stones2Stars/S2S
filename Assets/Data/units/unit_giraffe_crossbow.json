@@ -160,11 +160,6 @@
    "PROMOTION_COMMANDO"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_GIRAFFE_CUIRASSIER"
-  ]
- },
  "cost": {
   "production": 245
  },

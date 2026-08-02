@@ -205,11 +205,6 @@
    "PROMOTION_INDUSTRYESPIONAGE"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MOBSTER_CAR"
-  ]
- },
  "cost": {
   "production": 700,
   "upkeep": 8

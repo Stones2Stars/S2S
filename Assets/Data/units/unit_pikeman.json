@@ -71,11 +71,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_HEAVY_PIKEMAN"
-  ]
- },
  "cost": {
   "production": 190,
   "upkeep": 1

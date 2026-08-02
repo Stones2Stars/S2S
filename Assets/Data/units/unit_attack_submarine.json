@@ -142,11 +142,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_NUCLEAR_SUBMARINE"
-  ]
- },
  "cost": {
   "production": 1680,
   "upkeep": 2

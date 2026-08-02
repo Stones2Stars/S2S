@@ -175,12 +175,6 @@
    "PROMOTION_MARAUDER"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_SHARPSHOOTER",
-   "UNIT_SCOUNDREL"
-  ]
- },
  "cost": {
   "production": 387,
   "upkeep": 6

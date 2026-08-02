@@ -80,11 +80,6 @@
    "PROMOTION_SENTRY"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_SR71"
-  ]
- },
  "cost": {
   "production": 1150,
   "upkeep": 3

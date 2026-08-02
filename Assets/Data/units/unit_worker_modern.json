@@ -125,11 +125,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_CLONES"
-  ]
- },
  "cost": {
   "production": 848,
   "upkeep": 5

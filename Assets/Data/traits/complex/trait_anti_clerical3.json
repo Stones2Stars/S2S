@@ -181,10 +181,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_ANTI_CLERICAL",
-  "priority": -3
- },
  "ai": {
   "flavours": [
    {
@@ -223,5 +219,12 @@
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_ANTI_CLERICAL3_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_ANTI_CLERICAL_STRATEGY",
   "negativeTrait": true
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TRAIT_ANTI_CLERICAL2"
+   ]
+  }
  }
 }

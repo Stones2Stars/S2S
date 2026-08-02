@@ -79,11 +79,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_WARGALLEY"
-  ]
- },
  "cost": {
   "production": 107,
   "upkeep": 1

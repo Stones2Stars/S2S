@@ -87,10 +87,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_INNOVATIVE",
-  "priority": 3
- },
  "ai": {
   "flavours": [
    {
@@ -129,5 +125,12 @@
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_INNOVATIVE3_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_INNOVATIVE_STRATEGY",
   "minAnarchy": 3
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TRAIT_INNOVATIVE2"
+   ]
+  }
  }
 }

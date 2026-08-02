@@ -49,11 +49,6 @@
    "PROMOTION_SECURITY1"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_SPECIAL_AGENT"
-  ]
- },
  "cost": {
   "production": 473,
   "upkeep": 100

@@ -92,12 +92,6 @@
    "PROMOTION_MARCH"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_HITECH_ROBOT",
-   "UNIT_SENTINEL"
-  ]
- },
  "cost": {
   "production": 5200,
   "upkeep": 16,

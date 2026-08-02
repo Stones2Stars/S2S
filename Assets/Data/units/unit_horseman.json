@@ -180,11 +180,6 @@
    "PROMOTION_COMMANDO"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MOUNTED_INFANTRY"
-  ]
- },
  "cost": {
   "production": 120,
   "upkeep": 1

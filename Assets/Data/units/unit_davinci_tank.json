@@ -72,11 +72,6 @@
    "PROMOTION_BLITZ"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_EARLY_TANK"
-  ]
- },
  "cost": {
   "production": 410
  },

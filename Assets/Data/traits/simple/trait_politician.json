@@ -104,9 +104,6 @@
    }
   }
  ],
- "succession": {
-  "promotionLine": "PROMOTIONLINE_POLITICIAN"
- },
  "ai": {
   "flavours": [
    {

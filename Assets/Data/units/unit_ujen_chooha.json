@@ -117,11 +117,6 @@
    "PROMOTION_MOBILITY"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_LIGHT_ARTILLERY"
-  ]
- },
  "cost": {
   "production": 470,
   "upkeep": 1

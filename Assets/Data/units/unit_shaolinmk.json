@@ -132,12 +132,6 @@
    "PROMOTION_MARTIAL_ARTS3"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_CITY_GUARD",
-   "UNIT_AMBULANCE"
-  ]
- },
  "cost": {
   "production": 345,
   "upkeep": 4,

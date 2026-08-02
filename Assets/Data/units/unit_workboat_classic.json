@@ -61,11 +61,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_WORKBOAT_MIDDLE"
-  ]
- },
  "cost": {
   "production": 100,
   "upkeep": 2

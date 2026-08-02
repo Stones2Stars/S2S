@@ -72,11 +72,6 @@
    "PROMOTION_MOUNTAINEER"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_ADVENTURER"
-  ]
- },
  "cost": {
   "production": 110,
   "upkeep": 1

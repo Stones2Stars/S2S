@@ -126,11 +126,6 @@
    "PROMOTION_COASTAL_ASSAULT1"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_BARBARY_CORSAIR"
-  ]
- },
  "cost": {
   "production": 240,
   "upkeep": 1

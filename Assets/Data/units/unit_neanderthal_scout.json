@@ -64,11 +64,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_GUIDE"
-  ]
- },
  "cost": {
   "production": 21,
   "upkeep": 1

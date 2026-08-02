@@ -167,11 +167,6 @@
    "PROMOTION_MUJAHID"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_CHIVALRY"
-  ]
- },
  "cost": {
   "production": 275,
   "upkeep": 1

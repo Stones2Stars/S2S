@@ -81,11 +81,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MACHINIST"
-  ]
- },
  "cost": {
   "production": 268,
   "upkeep": 4,

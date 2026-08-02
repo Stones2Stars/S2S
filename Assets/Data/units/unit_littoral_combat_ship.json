@@ -147,11 +147,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_FUSION_CRUISER"
-  ]
- },
  "cost": {
   "production": 2985,
   "upkeep": 3

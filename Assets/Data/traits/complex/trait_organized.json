@@ -110,9 +110,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_ORGANIZED"
- },
  "ai": {
   "flavours": [
    {

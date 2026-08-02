@@ -166,11 +166,6 @@
    "PROMOTION_WARMTH1"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_TRENCH_CAVALRY"
-  ]
- },
  "cost": {
   "production": 580,
   "upkeep": 1

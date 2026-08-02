@@ -126,11 +126,6 @@
    "PROMOTION_COMMANDO"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_CAMEL_KNIGHT"
-  ]
- },
  "cost": {
   "production": 140,
   "upkeep": 1

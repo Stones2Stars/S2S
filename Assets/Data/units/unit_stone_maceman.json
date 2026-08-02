@@ -101,13 +101,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_OBSIDIAN_MACEMAN",
-   "UNIT_OBSIDIAN_SWORDSMAN",
-   "UNIT_NEANDERTHAL_STONE_MACEMAN"
-  ]
- },
  "cost": {
   "production": 38,
   "upkeep": 1

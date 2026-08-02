@@ -133,11 +133,6 @@
    "PROMOTION_POLAR_WORKER2"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_WORKER_INDUSTRIAL"
-  ]
- },
  "cost": {
   "production": 170,
   "upkeep": 3

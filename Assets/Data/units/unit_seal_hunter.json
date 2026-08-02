@@ -116,11 +116,6 @@
    "PROMOTION_RUGGED3"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_RANGER"
-  ]
- },
  "cost": {
   "production": 63,
   "upkeep": 1

@@ -90,11 +90,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MEDICINE_MAN"
-  ]
- },
  "cost": {
   "production": 62,
   "upkeep": 3,

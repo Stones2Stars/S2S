@@ -135,11 +135,6 @@
    "PROMOTION_HILL_WORKER2"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_WORKER_INDUSTRIAL"
-  ]
- },
  "cost": {
   "production": 140,
   "upkeep": 1

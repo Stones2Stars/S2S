@@ -136,11 +136,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_FUSION_SUBMARINE"
-  ]
- },
  "cost": {
   "production": 1680,
   "upkeep": 3

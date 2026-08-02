@@ -66,11 +66,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_GEAR_MECHANIC"
-  ]
- },
  "cost": {
   "production": 169,
   "upkeep": 3,

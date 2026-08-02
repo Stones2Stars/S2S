@@ -107,12 +107,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_SLOOP",
-   "UNIT_SLOOP_OF_WAR"
-  ]
- },
  "cost": {
   "production": 360,
   "upkeep": 1

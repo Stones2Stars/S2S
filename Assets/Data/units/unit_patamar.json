@@ -98,11 +98,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_PADDLE_STEAMER"
-  ]
- },
  "cost": {
   "production": 440,
   "upkeep": 1

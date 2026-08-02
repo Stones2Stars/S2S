@@ -289,10 +289,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_AGRICULTURAL",
-  "priority": 2
- },
  "ai": {
   "flavours": [
    {
@@ -331,5 +327,12 @@
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_AGRICULTURAL2_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_AGRICULTURAL_STRATEGY",
   "impurePropertyManipulators": true
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TRAIT_AGRICULTURAL1"
+   ]
+  }
  }
 }

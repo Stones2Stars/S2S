@@ -122,11 +122,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_F18_HORNET"
-  ]
- },
  "cost": {
   "production": 1150,
   "upkeep": 3

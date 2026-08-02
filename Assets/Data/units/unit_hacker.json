@@ -201,11 +201,6 @@
    }
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_TECHNARCHIST"
-  ]
- },
  "cost": {
   "production": 2005,
   "upkeep": 15

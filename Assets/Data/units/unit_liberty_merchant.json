@@ -81,11 +81,6 @@
    }
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_CARGO_SHIP"
-  ]
- },
  "cost": {
   "production": 773,
   "upkeep": 1

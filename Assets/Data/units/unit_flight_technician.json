@@ -92,11 +92,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_JET_TECHNICIAN"
-  ]
- },
  "cost": {
   "production": 980,
   "upkeep": 7,

@@ -190,12 +190,6 @@
    "PROMOTION_MOUNTAINEER"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_HTSNIPER",
-   "UNIT_SPECIAL_INFANTRY"
-  ]
- },
  "cost": {
   "production": 1410,
   "upkeep": 11

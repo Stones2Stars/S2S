@@ -116,11 +116,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_ACV"
-  ]
- },
  "cost": {
   "production": 1700,
   "upkeep": 2

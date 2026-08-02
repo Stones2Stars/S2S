@@ -119,11 +119,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_UAV"
-  ]
- },
  "cost": {
   "production": 1700,
   "upkeep": 5

@@ -65,11 +65,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_CONSTRUCT_SHIP"
-  ]
- },
  "cost": {
   "production": 492,
   "upkeep": 4

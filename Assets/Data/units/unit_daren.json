@@ -177,11 +177,6 @@
    "PROMOTION_FIELD1"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MOUNTED_INFANTRY"
-  ]
- },
  "cost": {
   "production": 128,
   "upkeep": 1

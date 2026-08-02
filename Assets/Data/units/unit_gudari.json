@@ -96,13 +96,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MODERN_INFANTRY",
-   "UNIT_MARINE",
-   "UNIT_PARATROOPER"
-  ]
- },
  "cost": {
   "production": 990,
   "upkeep": 1

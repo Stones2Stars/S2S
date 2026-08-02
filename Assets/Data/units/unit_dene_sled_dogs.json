@@ -109,11 +109,6 @@
    "PROMOTION_COLD3"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_WARDOG"
-  ]
- },
  "cost": {
   "production": 72,
   "upkeep": 1

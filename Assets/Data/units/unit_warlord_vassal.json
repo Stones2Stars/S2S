@@ -47,11 +47,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_LORD"
-  ]
- },
  "cost": {
   "production": 280,
   "upkeep": 1

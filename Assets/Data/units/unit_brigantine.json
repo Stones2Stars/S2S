@@ -116,11 +116,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MANOWAR"
-  ]
- },
  "cost": {
   "production": 450,
   "upkeep": 1

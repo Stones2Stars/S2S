@@ -123,11 +123,6 @@
    "PROMOTION_COMMANDO"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_CAMEL_GUNNER"
-  ]
- },
  "cost": {
   "production": 355,
   "upkeep": 1

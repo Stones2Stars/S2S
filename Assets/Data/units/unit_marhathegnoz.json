@@ -144,11 +144,6 @@
    "PROMOTION_WOODSMAN2"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_CHIVALRY"
-  ]
- },
  "cost": {
   "production": 275,
   "upkeep": 1

@@ -177,11 +177,6 @@
    "PROMOTION_SHADOWSTALKER2"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MSNIPER"
-  ]
- },
  "cost": {
   "production": 787,
   "upkeep": 7

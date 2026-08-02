@@ -62,11 +62,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_WORKBOAT_CLASSIC"
-  ]
- },
  "cost": {
   "production": 61,
   "upkeep": 1

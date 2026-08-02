@@ -178,11 +178,6 @@
    "PROMOTION_BLITZ"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_CAVALRY"
-  ]
- },
  "cost": {
   "production": 475,
   "upkeep": 1

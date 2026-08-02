@@ -166,11 +166,6 @@
    "PROMOTION_WARMTH1"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_CITY_GUARD"
-  ]
- },
  "cost": {
   "production": 370,
   "upkeep": 6

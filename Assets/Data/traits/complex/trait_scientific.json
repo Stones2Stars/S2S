@@ -646,9 +646,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_SCIENTIFIC"
- },
  "ai": {
   "flavours": [
    {

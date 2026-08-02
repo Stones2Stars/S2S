@@ -79,11 +79,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_PRECISION_ATTACK_MISSILE"
-  ]
- },
  "cost": {
   "production": 2006,
   "upkeep": 1

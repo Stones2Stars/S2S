@@ -159,11 +159,6 @@
    "PROMOTION_COLD1"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_LIGHT_TANK"
-  ]
- },
  "cost": {
   "production": 425
  },

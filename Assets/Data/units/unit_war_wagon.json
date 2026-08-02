@@ -94,11 +94,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_SIEGE_WAGON"
-  ]
- },
  "cost": {
   "production": 215,
   "upkeep": 1

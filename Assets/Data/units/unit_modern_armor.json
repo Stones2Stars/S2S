@@ -138,13 +138,6 @@
    "PROMOTION_BLITZ"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_HEAVY_ARMOR",
-   "UNIT_THERMOBARIC_TANK",
-   "UNIT_DROID_TANK"
-  ]
- },
  "cost": {
   "production": 1700,
   "upkeep": 3

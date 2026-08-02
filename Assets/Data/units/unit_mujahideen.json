@@ -110,11 +110,6 @@
    "PROMOTION_GUERILLA3"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MOBILE_SAM"
-  ]
- },
  "cost": {
   "production": 1345,
   "upkeep": 1

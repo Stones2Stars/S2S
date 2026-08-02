@@ -113,9 +113,6 @@
    }
   }
  ],
- "succession": {
-  "promotionLine": "PROMOTIONLINE_TIMID"
- },
  "ai": {
   "flavours": [
    {

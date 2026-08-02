@@ -148,11 +148,6 @@
    "PROMOTION_SENTRY"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_HTSNIPER"
-  ]
- },
  "cost": {
   "production": 1410,
   "upkeep": 10

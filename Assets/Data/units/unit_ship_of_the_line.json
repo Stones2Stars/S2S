@@ -120,12 +120,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_STEAM_DESTROYER",
-   "UNIT_PRE_DREADNOUGHT"
-  ]
- },
  "cost": {
   "production": 525,
   "upkeep": 1

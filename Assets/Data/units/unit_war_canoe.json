@@ -102,12 +102,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_WARGALLEY",
-   "UNIT_NEANDERTHAL_WAR_CANOE"
-  ]
- },
  "cost": {
   "production": 87,
   "upkeep": 1

@@ -100,12 +100,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_WARDOG",
-   "UNIT_NEANDERTHAL_TRAINED_DOG"
-  ]
- },
  "cost": {
   "production": 70,
   "upkeep": 1

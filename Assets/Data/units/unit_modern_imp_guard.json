@@ -65,11 +65,6 @@
    "PROMOTION_IMPERIAL_GUARD"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_ROBOT_IMP_GUARD"
-  ]
- },
  "cost": {
   "production": 1237,
   "upkeep": 1

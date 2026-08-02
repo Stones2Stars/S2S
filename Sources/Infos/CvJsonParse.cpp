@@ -200,7 +200,7 @@ static const char* CJK_EDGES[] = { "enables", "obsoletes", "replaces", "disables
 static const char* CJK_INTRINSIC_KEYS[] = {
 	"type", "text", "description", "help", "civilopedia", "message", "quote", "strategy", "adjective", "shortDescription",
 	"cost", "ui", "world", "sound", "identity", "ai",
-	"policies", "succession", "excludes", "produces", "condition", "effect",
+	"policies", "excludes", "produces", "condition", "effect",
 	"outcomes", "mapGeneration", "replacedBy", "capabilities", "skills", "tags", "state", "attributes", "characteristics", "builds",
 	"promotionLine", "buildUp", "shrine", "headquarters", "properties", "voteSource", "threshold", "role", "victory",
 	"targetLevel", "conversion", "unitCapability",

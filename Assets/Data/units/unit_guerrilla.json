@@ -156,11 +156,6 @@
    "PROMOTION_AMBUSH"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MSNIPER"
-  ]
- },
  "cost": {
   "production": 1250,
   "upkeep": 9

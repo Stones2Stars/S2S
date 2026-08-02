@@ -94,12 +94,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MACHINE_GUN",
-   "UNIT_LIGHT_AA"
-  ]
- },
  "cost": {
   "production": 950,
   "upkeep": 1

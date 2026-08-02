@@ -69,11 +69,6 @@
    "PROMOTION_SEA_HUNTER2"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MASTER_SAILOR_QUINQUEREME"
-  ]
- },
  "cost": {
   "upkeep": 1
  },

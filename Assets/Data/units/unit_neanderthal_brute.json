@@ -68,11 +68,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_NEANDERTHAL"
-  ]
- },
  "cost": {
   "production": 5,
   "upkeep": 1

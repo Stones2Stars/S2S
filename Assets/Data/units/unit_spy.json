@@ -48,11 +48,6 @@
    "PROMOTION_COMMANDO"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_AGENT"
-  ]
- },
  "cost": {
   "production": 133,
   "upkeep": 10

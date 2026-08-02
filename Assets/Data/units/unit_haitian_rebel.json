@@ -93,11 +93,6 @@
    "PROMOTION_HIT_AND_RUN"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_RIFLEMAN"
-  ]
- },
  "cost": {
   "production": 500,
   "upkeep": 1

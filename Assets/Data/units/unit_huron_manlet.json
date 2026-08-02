@@ -149,12 +149,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_AXEMAN",
-   "UNIT_SKIRMISHER"
-  ]
- },
  "cost": {
   "production": 38,
   "upkeep": 1

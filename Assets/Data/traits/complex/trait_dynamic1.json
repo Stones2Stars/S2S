@@ -260,10 +260,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_DYNAMIC",
-  "priority": 1
- },
  "ai": {
   "flavours": [
    {

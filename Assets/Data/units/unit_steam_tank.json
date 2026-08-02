@@ -93,12 +93,6 @@
    "PROMOTION_AMPHIBIOUS"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_LIGHT_TANK",
-   "UNIT_TANK"
-  ]
- },
  "cost": {
   "production": 720,
   "upkeep": 1

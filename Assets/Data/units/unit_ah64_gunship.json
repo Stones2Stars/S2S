@@ -105,11 +105,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_STEALTH_CHOPPER"
-  ]
- },
  "cost": {
   "production": 1475,
   "upkeep": 3

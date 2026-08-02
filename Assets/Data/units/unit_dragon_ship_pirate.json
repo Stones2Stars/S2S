@@ -111,11 +111,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_BARBARY_CORSAIR"
-  ]
- },
  "cost": {
   "production": 215,
   "upkeep": 1

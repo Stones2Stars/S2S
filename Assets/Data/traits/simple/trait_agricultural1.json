@@ -165,10 +165,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_AGRICULTURAL",
-  "priority": 1
- },
  "ai": {
   "flavours": [
    {

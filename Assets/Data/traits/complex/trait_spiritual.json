@@ -367,9 +367,6 @@
  "grants": {
   "goldenAgeOnBirthOfGreatPerson": "UNIT_PROPHET"
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_SPIRITUAL"
- },
  "ai": {
   "flavours": [
    {

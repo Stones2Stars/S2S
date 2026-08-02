@@ -90,11 +90,6 @@
    "PROMOTION_LEADERSHIP"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MASTER_SAILOR_IRON_FRIGATE"
-  ]
- },
  "cost": {
   "upkeep": 1
  },

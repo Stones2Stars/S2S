@@ -87,11 +87,6 @@
    "PROMOTION_SEA_HUNTER2"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MASTER_SAILOR_WAR_GALLEY"
-  ]
- },
  "cost": {
   "upkeep": 1
  },

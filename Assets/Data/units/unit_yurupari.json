@@ -109,11 +109,6 @@
    "PROMOTION_LOOTER"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_SPEARMAN"
-  ]
- },
  "cost": {
   "production": 47,
   "upkeep": 1

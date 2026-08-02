@@ -94,11 +94,6 @@
    "PROMOTION_SIDESTEP1"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_RIFLEMAN"
-  ]
- },
  "cost": {
   "production": 385,
   "upkeep": 1

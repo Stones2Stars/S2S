@@ -87,12 +87,6 @@
    "PROMOTION_BLITZ"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_LIGHT_TANK",
-   "UNIT_TANK"
-  ]
- },
  "cost": {
   "production": 1000,
   "upkeep": 2

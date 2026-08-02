@@ -106,10 +106,6 @@
    }
   }
  ],
- "succession": {
-  "promotionLine": "PROMOTIONLINE_TIMID",
-  "priority": -1
- },
  "ai": {
   "flavours": [
    {

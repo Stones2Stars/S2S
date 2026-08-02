@@ -65,12 +65,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_NEANDERTHAL_SCOUT",
-   "UNIT_NEANDERTHAL_CHASER"
-  ]
- },
  "cost": {
   "production": 12,
   "upkeep": 1

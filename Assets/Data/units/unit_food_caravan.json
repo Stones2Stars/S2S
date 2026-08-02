@@ -71,11 +71,6 @@
    }
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_FOOD_SUPPLY_TRAIN"
-  ]
- },
  "cost": {
   "production": 115,
   "upkeep": 1

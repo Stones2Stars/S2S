@@ -108,9 +108,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_IMPULSIVE"
- },
  "ai": {
   "flavours": [
    {

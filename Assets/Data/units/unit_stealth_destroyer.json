@@ -123,11 +123,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_FF_DESTROYER_I"
-  ]
- },
  "cost": {
   "production": 2030,
   "upkeep": 3

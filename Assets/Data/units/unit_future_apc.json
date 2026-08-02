@@ -113,11 +113,6 @@
    "PROMOTION_AMPHIBIOUS"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_SHOCKWAVE_APC"
-  ]
- },
  "cost": {
   "production": 2865,
   "upkeep": 4

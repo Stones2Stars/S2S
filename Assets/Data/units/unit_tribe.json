@@ -140,11 +140,6 @@
    }
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_SETTLER"
-  ]
- },
  "cost": {
   "upkeep": 2
  },

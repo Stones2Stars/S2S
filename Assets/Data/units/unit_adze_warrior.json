@@ -121,11 +121,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_HEAVY_AXEMAN"
-  ]
- },
  "cost": {
   "production": 155,
   "upkeep": 1

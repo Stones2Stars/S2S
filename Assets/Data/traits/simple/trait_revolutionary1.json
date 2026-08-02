@@ -68,10 +68,6 @@
    }
   }
  ],
- "succession": {
-  "promotionLine": "PROMOTIONLINE_REVOLUTIONARY",
-  "priority": -1
- },
  "ai": {
   "flavours": [
    {

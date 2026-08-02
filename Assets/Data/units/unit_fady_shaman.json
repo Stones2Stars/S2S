@@ -106,11 +106,6 @@
    "PROMOTION_DISEASE_CONTROL3"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_DR"
-  ]
- },
  "cost": {
   "production": 245,
   "upkeep": 5,

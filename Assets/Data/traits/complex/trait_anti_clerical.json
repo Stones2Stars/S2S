@@ -377,9 +377,6 @@
   "allowInquisitions": true,
   "bansNonStateReligions": true
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_ANTI_CLERICAL"
- },
  "ai": {
   "flavours": [
    {

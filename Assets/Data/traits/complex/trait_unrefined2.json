@@ -338,10 +338,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_CREATIVE",
-  "priority": -2
- },
  "ai": {
   "flavours": [
    {

@@ -103,11 +103,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_F4_PHANTOM"
-  ]
- },
  "cost": {
   "production": 1110,
   "upkeep": 2

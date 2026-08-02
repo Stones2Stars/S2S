@@ -74,11 +74,6 @@
    "PROMOTION_RUGGED3"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_INFANTRY"
-  ]
- },
  "cost": {
   "production": 805,
   "upkeep": 1

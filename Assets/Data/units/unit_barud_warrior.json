@@ -112,11 +112,6 @@
    "PROMOTION_WARMTH2"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_ARQUEBUSIER"
-  ]
- },
  "cost": {
   "production": 300,
   "upkeep": 1

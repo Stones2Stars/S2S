@@ -92,10 +92,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_FINANCIAL",
-  "priority": 1
- },
  "ai": {
   "flavours": [
    {

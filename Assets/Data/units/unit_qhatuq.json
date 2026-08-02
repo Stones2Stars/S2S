@@ -85,11 +85,6 @@
    "PROMOTION_GUERILLA3"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_EXPLORER"
-  ]
- },
  "cost": {
   "production": 320,
   "upkeep": 1

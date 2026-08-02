@@ -113,11 +113,6 @@
    "PROMOTION_CITY_RAIDER3"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_FLAMETHROWER"
-  ]
- },
  "cost": {
   "production": 310,
   "upkeep": 3

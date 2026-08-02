@@ -132,12 +132,6 @@
    "PROMOTION_PINCH"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_AUTOGYRO",
-   "UNIT_ARMORED_CAR"
-  ]
- },
  "cost": {
   "production": 580,
   "upkeep": 1

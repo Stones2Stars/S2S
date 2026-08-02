@@ -500,11 +500,6 @@
    }
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_FOOD_CARAVAN"
-  ]
- },
  "cost": {
   "production": 59,
   "upkeep": 1

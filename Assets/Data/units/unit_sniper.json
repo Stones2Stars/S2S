@@ -167,11 +167,6 @@
    "PROMOTION_SENTRY"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MSNIPER"
-  ]
- },
  "cost": {
   "production": 725,
   "upkeep": 7

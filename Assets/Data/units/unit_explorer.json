@@ -64,11 +64,6 @@
    "PROMOTION_WOODSMAN1"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_ADVENTURER"
-  ]
- },
  "cost": {
   "production": 175,
   "upkeep": 1

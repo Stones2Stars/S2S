@@ -132,11 +132,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_GIRAFFE_CUIRASSIER"
-  ]
- },
  "cost": {
   "production": 235
  },

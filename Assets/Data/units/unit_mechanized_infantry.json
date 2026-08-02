@@ -102,11 +102,6 @@
    "PROMOTION_AMPHIBIOUS"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_FUTURE_APC"
-  ]
- },
  "cost": {
   "production": 1605,
   "upkeep": 3

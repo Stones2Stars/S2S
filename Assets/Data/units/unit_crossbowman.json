@@ -70,11 +70,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_HEAVY_CROSSBOWMAN"
-  ]
- },
  "cost": {
   "production": 240,
   "upkeep": 1

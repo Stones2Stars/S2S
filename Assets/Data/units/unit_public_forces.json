@@ -206,11 +206,6 @@
    "PROMOTION_POLICING3"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_POLICE_MECH"
-  ]
- },
  "cost": {
   "production": 1925,
   "upkeep": 9

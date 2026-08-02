@@ -167,11 +167,6 @@
    "PROMOTION_POLICING3"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_PATROLS"
-  ]
- },
  "cost": {
   "production": 175,
   "upkeep": 4

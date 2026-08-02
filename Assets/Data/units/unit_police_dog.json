@@ -124,11 +124,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_CANIS_SUPERIOR"
-  ]
- },
  "cost": {
   "production": 601,
   "upkeep": 3

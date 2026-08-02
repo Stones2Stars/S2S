@@ -83,11 +83,6 @@
    "PROMOTION_TRANSPORT1"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_GALLEY"
-  ]
- },
  "cost": {
   "production": 92,
   "upkeep": 1

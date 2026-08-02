@@ -82,13 +82,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_SPIKED_CLUBMAN",
-   "UNIT_WOODEN_SPEARMAN",
-   "UNIT_NEANDERTHAL"
-  ]
- },
  "cost": {
   "production": 19,
   "upkeep": 1

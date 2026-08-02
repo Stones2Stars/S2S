@@ -106,11 +106,6 @@
    }
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_BARD"
-  ]
- },
  "cost": {
   "production": 16,
   "upkeep": 1

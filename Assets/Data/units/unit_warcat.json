@@ -163,11 +163,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_GUARDCAT"
-  ]
- },
  "cost": {
   "production": 216,
   "upkeep": 4

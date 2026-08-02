@@ -115,11 +115,6 @@
    "PROMOTION_COMMANDO"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_EARLY_TANK"
-  ]
- },
  "cost": {
   "production": 600,
   "upkeep": 1

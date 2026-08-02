@@ -111,11 +111,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_PRIVATEER"
-  ]
- },
  "cost": {
   "production": 410,
   "upkeep": 1

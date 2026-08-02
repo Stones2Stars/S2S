@@ -142,11 +142,6 @@
    "PROMOTION_BLITZ"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MODERN_ARMOR"
-  ]
- },
  "cost": {
   "production": 1345,
   "upkeep": 3

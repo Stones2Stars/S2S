@@ -144,11 +144,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MOUNTED_INFANTRY"
-  ]
- },
  "cost": {
   "production": 98,
   "upkeep": 1

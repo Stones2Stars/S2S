@@ -117,11 +117,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_ACVSAM"
-  ]
- },
  "cost": {
   "production": 1365,
   "upkeep": 2

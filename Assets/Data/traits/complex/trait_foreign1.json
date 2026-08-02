@@ -166,10 +166,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_FOREIGNER",
-  "priority": -1
- },
  "ai": {
   "flavours": [
    {
@@ -208,5 +204,10 @@
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_FOREIGN1_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_FOREIGN_STRATEGY",
   "negativeTrait": true
+ },
+ "enables": {
+  "traitsAnd": [
+   "TRAIT_FOREIGN2"
+  ]
  }
 }

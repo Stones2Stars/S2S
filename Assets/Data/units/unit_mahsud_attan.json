@@ -135,11 +135,6 @@
    "PROMOTION_DRILL3"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_DRAGOON"
-  ]
- },
  "cost": {
   "production": 455,
   "upkeep": 1

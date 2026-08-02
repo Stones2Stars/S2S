@@ -482,9 +482,6 @@
    }
   }
  ],
- "succession": {
-  "promotionLine": "PROMOTIONLINE_NAIVE"
- },
  "ai": {
   "flavours": [
    {

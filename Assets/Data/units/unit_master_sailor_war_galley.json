@@ -70,11 +70,6 @@
    "PROMOTION_SEA_HUNTER2"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MASTER_SAILOR_TRIREME"
-  ]
- },
  "cost": {
   "upkeep": 1
  },

@@ -104,11 +104,6 @@
    "PROMOTION_DRILL2"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_RIFLEMAN"
-  ]
- },
  "cost": {
   "production": 385,
   "upkeep": 1

@@ -101,11 +101,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MASTER_SAILOR_DREADNOUGHT_SHIP"
-  ]
- },
  "cost": {
   "upkeep": 2
  },

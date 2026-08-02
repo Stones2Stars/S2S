@@ -184,11 +184,6 @@
    "PROMOTION_POLICING3"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_SWAT_TEAM"
-  ]
- },
  "cost": {
   "production": 1100,
   "upkeep": 13

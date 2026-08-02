@@ -182,10 +182,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_INDUSTRIOUS",
-  "priority": 1
- },
  "ai": {
   "flavours": [
    {

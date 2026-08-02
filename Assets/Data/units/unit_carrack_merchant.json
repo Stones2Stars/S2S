@@ -73,11 +73,6 @@
    }
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_CLIPPER_MERCHANT"
-  ]
- },
  "cost": {
   "production": 308,
   "upkeep": 1

@@ -95,11 +95,6 @@
    "PROMOTION_COASTAL_GUARD1"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_CARAVEL"
-  ]
- },
  "cost": {
   "production": 260,
   "upkeep": 1

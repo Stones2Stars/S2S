@@ -106,11 +106,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_ORBITAL_FIGHTER"
-  ]
- },
  "cost": {
   "production": 3000,
   "upkeep": 16

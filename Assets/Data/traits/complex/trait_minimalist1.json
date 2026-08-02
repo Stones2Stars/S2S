@@ -116,10 +116,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_MINIMALIST",
-  "priority": -1
- },
  "ai": {
   "flavours": [
    {

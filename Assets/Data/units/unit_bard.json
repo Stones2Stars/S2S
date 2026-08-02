@@ -105,11 +105,6 @@
    }
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_ENTERTAINER"
-  ]
- },
  "cost": {
   "production": 151,
   "upkeep": 2

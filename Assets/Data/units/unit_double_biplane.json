@@ -79,12 +79,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_EARLYJET",
-   "UNIT_A10_BOMBER"
-  ]
- },
  "cost": {
   "production": 970,
   "upkeep": 1

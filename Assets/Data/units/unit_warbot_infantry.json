@@ -93,11 +93,6 @@
    "PROMOTION_BLITZ"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_DROID_INFANTRY"
-  ]
- },
  "cost": {
   "production": 3600,
   "upkeep": 11

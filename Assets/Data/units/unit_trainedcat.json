@@ -130,11 +130,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_WARCAT"
-  ]
- },
  "cost": {
   "production": 132,
   "upkeep": 3

@@ -125,11 +125,6 @@
    "PROMOTION_SHOCK"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_HEAVY_AXEMAN"
-  ]
- },
  "cost": {
   "production": 160,
   "upkeep": 1

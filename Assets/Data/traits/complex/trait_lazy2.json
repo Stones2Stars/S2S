@@ -259,10 +259,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_LAZY",
-  "priority": -2
- },
  "ai": {
   "flavours": [
    {
@@ -302,5 +298,12 @@
   "strategy": "TXT_KEY_TRAIT_LAZY_STRATEGY",
   "negativeTrait": true,
   "impurePropertyManipulators": true
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TRAIT_LAZY1"
+   ]
+  }
  }
 }

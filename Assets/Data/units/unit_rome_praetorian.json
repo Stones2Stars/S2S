@@ -84,11 +84,6 @@
    "PROMOTION_MARCH"
   ]
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_SWORDSMAN"
-  ]
- },
  "cost": {
   "production": 195,
   "upkeep": 1

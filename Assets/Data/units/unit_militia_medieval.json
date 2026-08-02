@@ -44,11 +44,6 @@
    "flat": 100
   }
  },
- "succession": {
-  "upgradesTo": [
-   "UNIT_MILITIA_RENAISSANCE"
-  ]
- },
  "cost": {
   "upkeep": 1
  },

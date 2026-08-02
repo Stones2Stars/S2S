@@ -153,9 +153,6 @@
    }
   }
  },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_AGRICULTURAL"
- },
  "ai": {
   "flavours": [
    {

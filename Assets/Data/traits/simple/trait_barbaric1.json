@@ -59,10 +59,6 @@
    }
   }
  ],
- "succession": {
-  "promotionLine": "PROMOTIONLINE_BARBARIC",
-  "priority": -1
- },
  "ai": {
   "flavours": [
    {
