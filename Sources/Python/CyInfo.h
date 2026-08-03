@@ -36,6 +36,10 @@ public:
 	std::wstring getDescription(const std::string& szTypePrefix, int iId) const;
 	// The entity's stable TYPE KEY ("UNIT_AXEMAN") -- what a scenario serializer and a config string need.
 	std::string getType(const std::string& szTypePrefix, int iId) const;
+	// The entity's BUTTON/icon art reference (the `ui` block, json.md §7). ART is an unmigrated system boundary
+	// that stays ([roadmap] Scope decisions), so what crosses here is the TAG the art manager resolves -- never
+	// pixels, and never an art OBJECT. This is the read every enumeration screen makes beside the description.
+	std::string getButton(const std::string& szTypePrefix, int iId) const;
 	// Whether the registry actually holds an entity at this id, so a caller can skip a hole without
 	// inferring it from an empty name.
 	bool exists(const std::string& szTypePrefix, int iId) const;

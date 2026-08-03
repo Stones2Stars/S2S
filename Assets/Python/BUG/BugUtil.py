@@ -125,6 +125,8 @@ import sys
 import time
 import traceback
 import types
+GC = CyGlobalContext()
+GAME = GC.getGame()
 
 ## Text Formatting and Processing
 

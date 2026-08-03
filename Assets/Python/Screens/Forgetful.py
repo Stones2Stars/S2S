@@ -1,4 +1,5 @@
 from CvPythonExtensions import *
+GC = CyGlobalContext()
 
 class Forgetful:
 	def __init__(self):

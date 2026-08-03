@@ -12,6 +12,7 @@ import RevInstances
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -25,6 +26,7 @@ import ReminderEventManager # Reminders
 import GPUtil # Great Person Bar
 import RawYields # Raw Yields
 import StackBarUtil
+GAME = GC.getGame()
 
 CITYTAB_ADMIN = 0
 CITYTAB_UNIT = 1
@@ -150,7 +152,9 @@ class CvMainInterface:
 			self.iNumSpecialistInfos	= iNumSpecialistInfos = GC.getNumSpecialistInfos()
 			self.aSpecialistIconList = aSpecialistIconList = []
 			for i in xrange(iNumSpecialistInfos):
-				aSpecialistIconList.append(GC.getSpecialistInfo(i).getTexture())
+				# The icon is ART on the entity's `ui` block, so it comes from the info library by infotype
+				# prefix -- the global context hands out no info OBJECTS ([DEC-cy-not-fixed]).
+				aSpecialistIconList.append(INFO.getButton("SPECIALIST_", i))
 			'''
 			FONT_CENTER_JUSTIFY	= 1<<2
 			FONT_RIGHT_JUSTIFY	= 1<<1

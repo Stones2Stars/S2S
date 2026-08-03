@@ -77,7 +77,10 @@ def addTrait(trait, icon, button):
 		if icon is not None:
 			# A FontSymbols id arrives as an int and still needs formatting; an [ICON_*] token has already been
 			# resolved to its glyph by the translator, so it is stored as-is.
-			TRAIT_ICONS[eTrait] = icon if isinstance(icon, basestring) else u"%c" % icon
+			if isinstance(icon, basestring):
+				TRAIT_ICONS[eTrait] = icon
+			else:
+				TRAIT_ICONS[eTrait] = u"%c" % icon
 		if button is not None:
 			TRAIT_BUTTONS[eTrait] = button
 

@@ -2,6 +2,7 @@ from __future__ import division
 from CvPythonExtensions import *
 from copy import copy, deepcopy
 from math import *
+GC = CyGlobalContext()
 
 DMAX_EARTH = 20038	# max possible distance between two points on earth (WGS-84)
 

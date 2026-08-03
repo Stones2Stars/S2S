@@ -1,4 +1,6 @@
 from CvPythonExtensions import *
+GC = CyGlobalContext()
+GAME = GC.getGame()
 
 def GameFontScreen():
 	import CvScreenEnums

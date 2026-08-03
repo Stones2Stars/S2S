@@ -8,6 +8,9 @@
 
 from CvPythonExtensions import *
 import BugOptionsTab
+GC = CyGlobalContext()
+GAME = GC.getGame()
+TRNSLTR = CyTranslator()
 
 class RevDCMOptionsTab(BugOptionsTab.BugOptionsTab):
 

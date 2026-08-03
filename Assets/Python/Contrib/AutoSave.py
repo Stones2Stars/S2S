@@ -12,6 +12,8 @@ ENUMS = CyEnums()
 CyIF = CyInterface()
 TRNSLTR = CyTranslator()
 import TextUtil
+GAME = GC.getGame()
+MAP = GC.getMap()
 
 
 

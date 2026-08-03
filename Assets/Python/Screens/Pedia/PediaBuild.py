@@ -1,6 +1,8 @@
 # Sevopedia overhauled by Toffer for Caveman2Cosmos.
 
 from CvPythonExtensions import *
+GC = CyGlobalContext()
+TRNSLTR = CyTranslator()
 
 class PediaBuild:
 

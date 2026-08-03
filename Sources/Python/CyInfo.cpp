@@ -34,6 +34,14 @@ std::string CyInfo::getType(const std::string& szTypePrefix, int iId) const
 	return pInfo ? std::string(pInfo->getType()) : std::string();
 }
 
+std::string CyInfo::getButton(const std::string& szTypePrefix, int iId) const
+{
+	const CvInfo* pInfo = cyi_info(szTypePrefix, iId);
+	if (pInfo == NULL) return std::string();
+	const char* szButton = pInfo->getButton();
+	return szButton ? std::string(szButton) : std::string();
+}
+
 bool CyInfo::exists(const std::string& szTypePrefix, int iId) const
 {
 	return cyi_info(szTypePrefix, iId) != NULL;
@@ -64,6 +72,7 @@ void CyInfo::pythonPublish()
 	python::class_<CyInfo>("CyInfo")
 		.def("getDescription", &CyInfo::getDescription)
 		.def("getType",        &CyInfo::getType)
+		.def("getButton",      &CyInfo::getButton)
 		.def("exists",         &CyInfo::exists)
 		.def("civicOptions",   &CyInfo::civicOptions, python::return_value_policy<python::reference_existing_object>())
 		;

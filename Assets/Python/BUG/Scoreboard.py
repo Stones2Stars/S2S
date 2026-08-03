@@ -13,6 +13,7 @@
 from CvPythonExtensions import *
 import DealUtil
 import re
+TRNSLTR = CyTranslator()
 
 # Globals
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,

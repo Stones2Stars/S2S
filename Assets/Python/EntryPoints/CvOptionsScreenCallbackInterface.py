@@ -3,6 +3,7 @@ OPTIONS SCREEN CALLBACK INTERFACE - Any time something is changed in the Options
 """
 from CvPythonExtensions import *
 import CvScreensInterface
+GC = CyGlobalContext()
 
 UsrPrfl = CyUserProfile()
 g_iResChange = 0

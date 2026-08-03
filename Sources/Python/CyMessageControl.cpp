@@ -62,3 +62,30 @@ int CyMessageControl::GetConnState(int iPlayer) const
 {
 	return gDLL->getConnState((PlayerTypes)iPlayer);
 }
+
+//
+//	THE COMMAND boundary, republished. ⛔ This is NOT the banned read surface: the Cy* cut is DIRECTIONAL and
+//	only the info/state GETTER contract dies ([DEC-cy-not-fixed]). Every method here SENDS a net message --
+//	the MP-safe way Python-authoritative UI asks the engine to act -- so it answers no question about game
+//	state and constitutes no getter contract. It was collateral in the binding purge, like TXT and ART.
+//
+//	⚑ Routing these through the net layer rather than mutating directly is what keeps multiplayer in lockstep
+//	(engine.md § THE SYNCHRONIZED RNG: a divergent mutation order desyncs), so the alternative to publishing it
+//	is not "Python stops mutating" -- it is Python losing the only synchronized path it has.
+//
+void CyMessageControl::pythonPublish()
+{
+	python::class_<CyMessageControl>("CyMessageControl")
+		.def("sendPushOrder", &CyMessageControl::sendPushOrder)
+		.def("sendDoTask", &CyMessageControl::sendDoTask)
+		.def("sendUpdateCivics", &CyMessageControl::sendUpdateCivics)
+		.def("sendResearch", &CyMessageControl::sendResearch)
+		.def("sendPlayerOption", &CyMessageControl::sendPlayerOption)
+		.def("sendEspionageSpendingWeightChange", &CyMessageControl::sendEspionageSpendingWeightChange)
+		.def("sendAdvancedStartAction", &CyMessageControl::sendAdvancedStartAction)
+		.def("sendModNetMessage", &CyMessageControl::sendModNetMessage)
+		.def("sendEmpireSplit", &CyMessageControl::sendEmpireSplit)
+		.def("GetFirstBadConnection", &CyMessageControl::GetFirstBadConnection)
+		.def("GetConnState", &CyMessageControl::GetConnState)
+	;
+}

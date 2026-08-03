@@ -10,6 +10,8 @@ import CvReplayScreen
 import ScreenInput as PyScreenInput
 
 import BugCore
+GC = CyGlobalContext()
+GAME = GC.getGame()
 AdvisorOpt = BugCore.game.Advisors
 
 g_iScreenActive = -2

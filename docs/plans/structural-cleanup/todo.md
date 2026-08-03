@@ -886,10 +886,16 @@
   `get<X>Info` ([patterns.md](../../architecture/patterns.md) THE PYTHON READ BOUNDARY) — the token route needs
   no engine work at all. ⚠ A screen's reads fail only when that screen is first opened, so they surface one at a
   time rather than at load.
-- Re-home the module-scope engine HANDLES the cut dropped rather than re-pointed. Scripts bind them once at module
-  scope and call them throughout; the binding went and the call sites did not, so the failure is at first use, not
-  at import. ⛔ Do not answer it by republishing the legacy god object — the handles come back through the surface
-  that serves them now, or the call sites move.
+- Serve the INFO-OBJECT accessor plane. `GC.get<X>Info(id).<method>()` is the dominant remaining Python read, and
+  the global context hands out no info objects by design ([DEC-cy-not-fixed]) — so every one of them is an
+  AttributeError at FIRST USE, not at import. `CyInfo` answers the generic reads by infotype prefix
+  (`getDescription` / `getType` / `getButton`); what is unserved is the per-type tail (`getEra`, `getGridX/Y`,
+  `getWorldSize`, `getPrereqAndTech`, `isVisible`, `getColorType`, `getActionInfoIndex`, …).
+  ⛔ `getChar` is NOT part of this — the font glyph is TEXT-plane and the translator already publishes each one as
+  an `[ICON_*]` token ([patterns.md](../../architecture/patterns.md) THE PYTHON READ BOUNDARY), so it never closes
+  by reviving an info accessor.
+  ⚑ Re-derive the demand with `python Tools/census-python-boundary.py`; the accessor histogram is what ranks the
+  work, and the four generic methods dominate it.
 - Serve the free-function map helpers (plot direction / XY / distance / step distance). Their registrar went with
   the binding purge; the map-generation utilities call them throughout. ⚠ A map script's failure is SILENT — it
   lands inside the override protocol and falls back to DLL-default generation, so a wrong map is the symptom.

@@ -11,6 +11,8 @@
 #
 
 from CvPythonExtensions import *
+GC = CyGlobalContext()
+TRNSLTR = CyTranslator()
 
 class PediaUnitCombat:
 

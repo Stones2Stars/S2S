@@ -1,5 +1,8 @@
 from CvPythonExtensions import *
 import HandleInputUtil
+GC = CyGlobalContext()
+GAME = GC.getGame()
+TRNSLTR = CyTranslator()
 
 iSelectedCiv = -1
 iSelectedLeader = -1

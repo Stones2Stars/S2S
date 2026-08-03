@@ -1,6 +1,9 @@
 ## Sid Meier's Civilization 4
 ## Copyright Firaxis Games 2005
 from CvPythonExtensions import *
+GC = CyGlobalContext()
+GAME = GC.getGame()
+MAP = GC.getMap()
 
 """
 NOTES ABOUT THE MAP UTILITIES

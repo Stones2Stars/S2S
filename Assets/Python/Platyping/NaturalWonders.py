@@ -2,10 +2,13 @@
 ## Copyright Firaxis Games 2007
 
 from CvPythonExtensions import *
+TRNSLTR = CyTranslator()
 
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+GAME = GC.getGame()
+MAP = GC.getMap()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()

@@ -1,5 +1,7 @@
 # Cached civic data
 from CvPythonExtensions import *
+GC = CyGlobalContext()
+INFO = CyInfo()
 
 def initCivicData():
 	GC = CyGlobalContext()

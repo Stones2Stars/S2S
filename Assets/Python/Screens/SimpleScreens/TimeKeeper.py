@@ -1,4 +1,6 @@
 from CvPythonExtensions import *
+GC = CyGlobalContext()
+TRNSLTR = CyTranslator()
 
 def TimeKeeper():
 	import CvScreenEnums

@@ -90,6 +90,7 @@ import time
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+GAME = GC.getGame()
 gc = GC   # this module spells it lowercase
 STATE = CyState()
 ENABLER = CyEnabler()

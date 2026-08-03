@@ -2,6 +2,7 @@
 
 from CvPythonExtensions import *
 from operator import itemgetter
+GC = CyGlobalContext()
 
 polish_hex_mapping = {
     'xc6': 'C',

@@ -6,8 +6,10 @@
 ##
 ## Author: Zappara
 
-from CvPythonExtensions import GameOptionTypes
+from CvPythonExtensions import GameOptionTypes, CyGlobalContext
 import BugOptionsTab
+GC = CyGlobalContext()
+GAME = GC.getGame()
 
 class RoMOptionsTab(BugOptionsTab.BugOptionsTab):
 

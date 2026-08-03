@@ -4,6 +4,9 @@
 from CvPythonExtensions import *
 from operator import itemgetter
 import CvScreensInterface
+GC = CyGlobalContext()
+GAME = GC.getGame()
+TRNSLTR = CyTranslator()
 
 # globals
 CD = None

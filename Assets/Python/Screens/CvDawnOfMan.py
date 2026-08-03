@@ -2,6 +2,8 @@
 ## Copyright Firaxis Games 2005
 
 from CvPythonExtensions import *
+GC = CyGlobalContext()
+TRNSLTR = CyTranslator()
 
 class CvDawnOfMan:
 

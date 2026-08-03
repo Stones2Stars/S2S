@@ -14,6 +14,7 @@
 #include "Python/CyGameTextMgr.h"
 #include "Python/CyGlobalContext.h"
 #include "Python/CyMap.h"
+#include "Python/CyMessageControl.h"
 #include "Python/CyState.h"
 #include "Python/CyPlayer.h"
 #include "Python/CyPlot.h"
@@ -113,6 +114,11 @@ DllExport void DLLPublishToPython()
 	// BINDING purge, which took a kept boundary out along with the read surface it was aimed at.
 	CyGameTextMgr::pythonPublish();
 	CyArtFileMgr::pythonPublish();   // ART: out of scope, kept
+
+	// The COMMAND boundary: Python-authoritative UI telling the engine to ACT, through the net layer so
+	// multiplayer stays in lockstep. The cut is DIRECTIONAL -- only the READ surface dies -- so this is a kept
+	// boundary, not a revived getter contract ([DEC-cy-not-fixed]).
+	CyMessageControl::pythonPublish();
 
 	// The CONFIG half of the old global context, reintroduced deliberately (owner) WITHOUT the infos:
 	// counts, defines, constants and the BUG bridge are configuration a great deal of Python needs, and are

@@ -1,5 +1,8 @@
 # OOS logger: writes the info contained in the sync checksum to a log file
-from CvPythonExtensions import YieldTypes, CommerceTypes, UnitAITypes
+from CvPythonExtensions import YieldTypes, CommerceTypes, UnitAITypes, CyGlobalContext
+GC = CyGlobalContext()
+GAME = GC.getGame()
+MAP = GC.getMap()
 
 def writeLog():
 	import SystemPaths as SP
