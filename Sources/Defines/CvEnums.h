@@ -1206,6 +1206,54 @@ enum OrderTypes
 	NUM_ORDER_TYPES
 };
 
+//	The city's running COUNTDOWNS -- the turn counters the wellbeing pair decays over, plus the espionage
+//	counters that feed it. All live engine state, so they are read as ONE group ([patterns.md] THE TWO READ
+//	ROLES: the getter IS the group), never a getter per timer.
+//	⚠ A _PERIOD entry is the LENGTH one unit of that anger decays over, NOT a countdown: a reader pairs a
+//	timer with its period, and `timer % period == 0` is the turn one angry citizen drops off.
+enum CityCountdownKind
+{
+	COUNTDOWN_HURRY_ANGER = 0,
+	COUNTDOWN_HURRY_ANGER_PERIOD,
+	COUNTDOWN_CONSCRIPT_ANGER,
+	COUNTDOWN_CONSCRIPT_ANGER_PERIOD,
+	COUNTDOWN_DEFY_RESOLUTION_ANGER,
+	COUNTDOWN_DEFY_RESOLUTION_ANGER_PERIOD,
+	COUNTDOWN_HAPPINESS,
+	COUNTDOWN_OCCUPATION,
+	COUNTDOWN_ESPIONAGE_HAPPINESS,
+	COUNTDOWN_ESPIONAGE_HEALTH,
+
+	NUM_CITY_COUNTDOWN_KINDS
+};
+
+//	What the city is BUILDING right now, as one group: which order, of what, and the production arithmetic
+//	around it.
+//	⚠ ORDER_READ_TYPE carries an OrderTypes value (NO_ORDER when the queue is empty) and ORDER_READ_ID the
+//	unit / building / project / process id it names -- so a reader tests the TYPE before trusting the ID.
+enum CityOrderRead
+{
+	ORDER_READ_TYPE = 0,
+	ORDER_READ_ID,
+	ORDER_READ_PRODUCTION_LEFT,
+	ORDER_READ_PRODUCTION_PER_TURN,
+	ORDER_READ_MAX_OVERFLOW,
+
+	NUM_CITY_ORDER_READS
+};
+
+//	The quote for ONE hurry method: may I, and at what price. The hurry type is a SELECTOR in the call -- a
+//	sparse id over the hurry registry, the same shape the great-person unit-progress read uses for its unit id.
+enum CityHurryQuote
+{
+	HURRY_QUOTE_ALLOWED = 0,
+	HURRY_QUOTE_POPULATION_COST,
+	HURRY_QUOTE_PRODUCTION_GAINED,
+	HURRY_QUOTE_GOLD_COST,
+
+	NUM_CITY_HURRY_QUOTES
+};
+
 enum TaskTypes
 {
 	NO_TASK = -1,

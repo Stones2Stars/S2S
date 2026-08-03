@@ -335,10 +335,35 @@ bool CyState::isOccupation(int iPlayer, int iCity) const
 	return pCity ? pCity->isOccupation() : false;
 }
 
-int CyState::getOccupationTimer(int iPlayer, int iCity) const
+// ---- The city's RAW-STATE groups ----
+
+python::list CyState::getCountdowns(int iPlayer, int iCity) const
 {
+	int values[NUM_CITY_COUNTDOWN_KINDS] = { 0 };
 	const CvCity* pCity = cys_city(iPlayer, iCity);
-	return pCity ? pCity->getOccupationTimer() : 0;
+	if (pCity) pCity->getCountdowns(values);
+	return cys_toList(values);
+}
+
+python::list CyState::getOrder(int iPlayer, int iCity) const
+{
+	int values[NUM_CITY_ORDER_READS] = { 0 };
+	values[ORDER_READ_TYPE] = NO_ORDER;
+	values[ORDER_READ_ID]   = -1;
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	if (pCity) pCity->getOrderRead(values);
+	return cys_toList(values);
+}
+
+python::list CyState::getHurryQuote(int iPlayer, int iCity, int iHurry) const
+{
+	int values[NUM_CITY_HURRY_QUOTES] = { 0 };
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	if (pCity && iHurry >= 0 && iHurry < GC.getNumHurryInfos())
+	{
+		pCity->getHurryQuote((HurryTypes)iHurry, values);
+	}
+	return cys_toList(values);
 }
 
 // ---- The city screen's VIEW state ----
@@ -483,6 +508,18 @@ int CyState::getGameTurn() const
 	return GC.getGame().getGameTurn();
 }
 
+bool CyState::isPlayerAlive(int iPlayer) const
+{
+	const CvPlayer* pPlayer = cys_player(iPlayer);
+	return pPlayer ? pPlayer->isAlive() : false;
+}
+
+int CyState::getPlayerTeam(int iPlayer) const
+{
+	const CvPlayer* pPlayer = cys_player(iPlayer);
+	return pPlayer ? (int)pPlayer->getTeam() : -1;
+}
+
 bool CyState::isFinalInitialized() const
 {
 	return GC.getGame().isFinalInitialized();
@@ -562,7 +599,9 @@ void CyState::pythonPublish()
 		.def("getGreatPeopleThresholdNonMilitary", &CyState::getGreatPeopleThresholdNonMilitary)
 		.def("getMilitaryHappinessUnits",&CyState::getMilitaryHappinessUnits)
 		.def("isOccupation",             &CyState::isOccupation)
-		.def("getOccupationTimer",       &CyState::getOccupationTimer)
+		.def("getCountdowns",            &CyState::getCountdowns)
+		.def("getOrder",                 &CyState::getOrder)
+		.def("getHurryQuote",            &CyState::getHurryQuote)
 		.def("isProductionAutomated",    &CyState::isProductionAutomated)
 		.def("getOrderQueueLength",      &CyState::getOrderQueueLength)
 		.def("getBuildingListFilterActive", &CyState::getBuildingListFilterActive)
@@ -584,6 +623,8 @@ void CyState::pythonPublish()
 		// plain live facts
 		.def("getActivePlayer",          &CyState::getActivePlayer)
 		.def("getGameTurn",              &CyState::getGameTurn)
+		.def("isPlayerAlive",            &CyState::isPlayerAlive)
+		.def("getPlayerTeam",            &CyState::getPlayerTeam)
 		.def("isFinalInitialized",       &CyState::isFinalInitialized)
 		.def("getMAX_PLAYERS",           &CyState::getMAX_PLAYERS)
 		.def("getMAX_PC_PLAYERS",        &CyState::getMAX_PC_PLAYERS)

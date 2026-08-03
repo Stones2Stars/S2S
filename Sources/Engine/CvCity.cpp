@@ -317,6 +317,63 @@ void CvCity::getScalars(int (&scalars)[NUM_INFO_SCALARS]) const
 }
 
 
+void CvCity::getCountdowns(int (&countdowns)[NUM_CITY_COUNTDOWN_KINDS]) const
+{
+	countdowns[COUNTDOWN_HURRY_ANGER]                   = getHurryAngerTimer();
+	countdowns[COUNTDOWN_HURRY_ANGER_PERIOD]            = flatHurryAngerLength();
+	countdowns[COUNTDOWN_CONSCRIPT_ANGER]               = getConscriptAngerTimer();
+	countdowns[COUNTDOWN_CONSCRIPT_ANGER_PERIOD]        = flatConscriptAngerLength();
+	countdowns[COUNTDOWN_DEFY_RESOLUTION_ANGER]         = getDefyResolutionAngerTimer();
+	countdowns[COUNTDOWN_DEFY_RESOLUTION_ANGER_PERIOD]  = flatDefyResolutionAngerLength();
+	countdowns[COUNTDOWN_HAPPINESS]                     = getHappinessTimer();
+	countdowns[COUNTDOWN_OCCUPATION]                    = getOccupationTimer();
+	countdowns[COUNTDOWN_ESPIONAGE_HAPPINESS]           = getEspionageHappinessCounter();
+	countdowns[COUNTDOWN_ESPIONAGE_HEALTH]              = getEspionageHealthCounter();
+}
+
+
+void CvCity::getOrderRead(int (&order)[NUM_CITY_ORDER_READS]) const
+{
+	order[ORDER_READ_TYPE] = NO_ORDER;
+	order[ORDER_READ_ID]   = -1;
+	if (isProductionUnit())
+	{
+		order[ORDER_READ_TYPE] = ORDER_TRAIN;
+		order[ORDER_READ_ID]   = (int)getProductionUnit();
+	}
+	else if (isProductionBuilding())
+	{
+		order[ORDER_READ_TYPE] = ORDER_CONSTRUCT;
+		order[ORDER_READ_ID]   = (int)getProductionBuilding();
+	}
+	else if (isProductionProject())
+	{
+		order[ORDER_READ_TYPE] = ORDER_CREATE;
+		order[ORDER_READ_ID]   = (int)getProductionProject();
+	}
+	else if (isProductionProcess())
+	{
+		order[ORDER_READ_TYPE] = ORDER_MAINTAIN;
+		order[ORDER_READ_ID]   = (int)getProductionProcess();
+	}
+	order[ORDER_READ_PRODUCTION_LEFT]     = productionLeft();
+	order[ORDER_READ_PRODUCTION_PER_TURN] = getCurrentProductionDifference(ProductionCalc::FoodProduction);
+	order[ORDER_READ_MAX_OVERFLOW]        = getMaxProductionOverflow();
+}
+
+
+void CvCity::getHurryQuote(HurryTypes eHurry, int (&quote)[NUM_CITY_HURRY_QUOTES]) const
+{
+	const bool bAllowed = canHurry(eHurry, false);
+	quote[HURRY_QUOTE_ALLOWED]            = bAllowed ? 1 : 0;
+	quote[HURRY_QUOTE_POPULATION_COST]    = hurryPopulation(eHurry);
+	quote[HURRY_QUOTE_PRODUCTION_GAINED]  = hurryProduction(eHurry);
+	//	The gold cost is 64-bit at source; it is narrowed HERE, at the read, because a hurry price that
+	//	overflows 32 bits is not a price any interface can render either.
+	quote[HURRY_QUOTE_GOLD_COST]          = (int)getHurryGold(eHurry);
+}
+
+
 CvCity::CvCity()
 	: m_GameObject(this),
 	m_BuildingList(NULL, this),

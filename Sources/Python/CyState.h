@@ -121,10 +121,22 @@ public:
 	int getGreatPeopleUnitProgress(int iPlayer, int iCity, int iUnit) const;
 	int getGreatPeopleThresholdNonMilitary(int iPlayer) const;
 	int getMilitaryHappinessUnits(int iPlayer, int iCity) const;
-	// Post-conquest resistance: whether it is running, and for how many more turns. Live city state, so it is
-	// here and not on the info surface -- occupation is something a city HAS, never something a type CARRIES.
+	// Post-conquest resistance: whether it is running. The REMAINING TURNS are COUNTDOWN_OCCUPATION in the
+	// countdown group below -- a turn counter is not a lone fact, and every other counter reads there.
 	bool isOccupation(int iPlayer, int iCity) const;
-	int getOccupationTimer(int iPlayer, int iCity) const;
+
+	// ---- The city's RAW-STATE groups: live engine counters and the current order. ----
+	// These are the state no deposit produces, so they answer off the city directly rather than off a package --
+	// but they obey the same grammar as the deposit groups: one read per group, the group's own kind enum
+	// indexes the RESULT (CityCountdownKind / CityOrderRead), and the surface grows by groups, not counters.
+	// ⚠ NOT x100. Every slot is a whole game count -- a turn number, a citizen count, a hammer total -- so a
+	// reader never divides one ([DEC-fixedpoint-x100] scales AMOUNTS; these are counts).
+	python::list getCountdowns(int iPlayer, int iCity) const;
+	python::list getOrder(int iPlayer, int iCity) const;
+	// The hurry QUOTE for one method: may I, and at what price. eHurry is a SELECTOR in the call because the
+	// hurry registry is sparse and a city is asked about one method at a time -- the getGreatPeopleUnitProgress
+	// shape, for the same reason.
+	python::list getHurryQuote(int iPlayer, int iCity, int iHurry) const;
 
 	// ---- The city screen's own VIEW state: which filter/sort/grouping the player left its lists on. ----
 	// ⚠ Genuinely per-city state that the engine stores, not authored data and not a derived value -- so it is
@@ -155,6 +167,10 @@ public:
 	// forced into a group that would mean nothing. ----
 	int getActivePlayer() const;
 	int getGameTurn() const;
+	// Is this player still in the game, and whose team are they on. Both are asked constantly by anything that
+	// walks the player range, and neither belongs to a group -- they are lone facts about the slot itself.
+	bool isPlayerAlive(int iPlayer) const;
+	int getPlayerTeam(int iPlayer) const;
 	bool isFinalInitialized() const;   // is the game up enough to be asked / shown a message
 	// The closed CONSTANTS block (python-read-map: a small closed set, trivially served by the library).
 	// Compile-time engine limits, so they are bare reads with no owner and no scope.

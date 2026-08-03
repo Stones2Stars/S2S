@@ -820,6 +820,14 @@ public:
 	// The straggler-scalar group (patterns.md getScalar, read as ONE group): every InfoScalar slot, each answered
 	// at THIS scope -- the entries whose family the city carries hold a value, the rest answer 0.
 	void getScalars(int (&scalars)[NUM_INFO_SCALARS]) const;
+	// The RAW-STATE groups: live engine counters and the current order, which no deposit produces. They are
+	// grouped for the same reason the deposit families are -- one read per group, indexed by the group's own
+	// kind enum -- so the surface grows by groups rather than by a getter per counter.
+	void getCountdowns(int (&countdowns)[NUM_CITY_COUNTDOWN_KINDS]) const;
+	void getOrderRead(int (&order)[NUM_CITY_ORDER_READS]) const;
+	// The hurry QUOTE for one method. eHurry selects WHICH hurry, so it is a call argument rather than a slot:
+	// the registry is sparse and a city answers about one method at a time.
+	void getHurryQuote(HurryTypes eHurry, int (&quote)[NUM_CITY_HURRY_QUOTES]) const;
 
 	bool isAreaCleanPower() const;
 
