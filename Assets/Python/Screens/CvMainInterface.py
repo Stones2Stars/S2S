@@ -4108,11 +4108,14 @@ class CvMainInterface:
 
 				screen.setTextAt(label, panel, szBuffer, 1<<0, 4, y, 0, eFontGame, eWidGen, 0, 0)
 				#Stack Promotions
+				# ONE read per unit, then tally -- the promotion registry is ~1500 entries, so asking per promotion
+				# per unit would cost tens of thousands of boundary crossings every redraw.
+				aPromoCount = {}
+				for aStackId in aSelectedIds:
+					for iPromo in STATE.getUnitPromotions(aStackId[0], aStackId[1]):
+						aPromoCount[iPromo] = aPromoCount.get(iPromo, 0) + 1
 				for iPromo in xrange(self.iNumPromotionInfos):
-					iCount = 0
-					for aStackId in aSelectedIds:
-						if STATE.hasUnitPromotion(aStackId[0], aStackId[1], iPromo) and not STATE.isUnitPromotionOverridden(aStackId[0], aStackId[1], iPromo):
-							iCount += 1
+					iCount = aPromoCount.get(iPromo, 0)
 					if iCount:
 						aPromoList.append((iPromo, iCount))
 				# Unit type list
@@ -4147,9 +4150,8 @@ class CvMainInterface:
 
 				screen.setTextAt(label, panel, szBuffer, 1<<0, 4, y, 0, eFontGame, WidgetTypes.WIDGET_UNIT_NAME, 0, 0)
 				# Get Promotions
-				for iPromo in xrange(self.iNumPromotionInfos):
-					if STATE.hasUnitPromotion(aSelUnit[0], aSelUnit[1], iPromo) and not STATE.isUnitPromotionOverridden(aSelUnit[0], aSelUnit[1], iPromo):
-						aPromoList.append((iPromo, 1))
+				for iPromo in STATE.getUnitPromotions(aSelUnit[0], aSelUnit[1]):
+					aPromoList.append((iPromo, 1))
 				if not bMirrorsGroup or iMissionCount <= 1:
 					if aSelRead[UnitReadKind.UNIT_READ_DOMAIN] == DomainTypes.DOMAIN_AIR:
 						strengthBase = aSelRead[UnitReadKind.UNIT_READ_AIR_BASE_COMBAT]

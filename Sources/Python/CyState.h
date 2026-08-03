@@ -245,6 +245,12 @@ public:
 	// The SELECTOR predicates: each asks about a PAIR, so the subject is in the call rather than a flag slot.
 	bool isUnitInvisible(int iPlayer, int iUnit, int iTeam) const;
 	bool hasUnitPromotion(int iPlayer, int iUnit, int iPromotion) const;
+	// ⛔ The unit's HELD promotions, as ONE list. Asking per-promotion instead costs a boundary crossing per
+	// PROMOTION per unit per redraw, and the registry is ~1500 entries -- a stack panel then spends tens of
+	// thousands of crossings a frame. The per-promotion read above stays for a single POINTED question.
+	// ⚠ Overridden promotions are excluded: a held-but-overridden promotion is not one the unit HAS in any sense
+	// a display cares about, and every caller was already filtering them out by hand.
+	python::list getUnitPromotions(int iPlayer, int iUnit) const;
 	bool isUnitPromotionOverridden(int iPlayer, int iUnit, int iPromotion) const;
 	bool isUnitActionRecommended(int iPlayer, int iUnit, int iAction) const;
 	// Can this unit become that one -- a PAIR question (this unit, that target type), so the target is in

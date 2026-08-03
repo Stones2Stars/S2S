@@ -814,6 +814,24 @@ bool CyState::isUnitInvisible(int iPlayer, int iUnit, int iTeam) const
 	return pUnit->isInvisible((TeamTypes)iTeam, false);
 }
 
+python::list CyState::getUnitPromotions(int iPlayer, int iUnit) const
+{
+	g_szLastCyRead = "CyState::getUnitPromotions";
+	python::list ids = python::list();
+	const CvUnit* pUnit = cys_unit(iPlayer, iUnit);
+	if (pUnit == NULL) return ids;
+	const int iNum = GC.getNumPromotionInfos();
+	for (int iPromotion = 0; iPromotion < iNum; ++iPromotion)
+	{
+		const PromotionTypes ePromotion = (PromotionTypes)iPromotion;
+		if (pUnit->isHasPromotion(ePromotion) && !pUnit->isPromotionOverriden(ePromotion))
+		{
+			ids.append(iPromotion);
+		}
+	}
+	return ids;
+}
+
 bool CyState::hasUnitPromotion(int iPlayer, int iUnit, int iPromotion) const
 {
 	g_szLastCyRead = "CyState::hasUnitPromotion";
@@ -1152,6 +1170,7 @@ void CyState::pythonPublish()
 		.def("getPlotUnitIds",           &CyState::getPlotUnitIds)
 		.def("isUnitInvisible",          &CyState::isUnitInvisible)
 		.def("hasUnitPromotion",         &CyState::hasUnitPromotion)
+		.def("getUnitPromotions",        &CyState::getUnitPromotions)
 		.def("isUnitPromotionOverridden",&CyState::isUnitPromotionOverridden)
 		.def("isUnitActionRecommended",  &CyState::isUnitActionRecommended)
 		.def("canUnitUpgrade",           &CyState::canUnitUpgrade)
