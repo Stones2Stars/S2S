@@ -27,6 +27,7 @@
 #include "Enabler/CvEnabler.h"   // EnablerDomain::State -- the availability tri-state
 #include "Infos/CvEdges.h"       // EnEdgeFamily / EnEdgeBucket -- the edge axes ([DEC-one-reverse-view])
 #include "Python/CyInfo.h"       // PyIntrinsicSlot -- the straggler slots CyInfo::getIntrinsic is addressed by
+#include "Infos/CvInfoKinds.h"  // WellbeingChannel -- the group enum getRealizedWellbeing is indexed by
 #include "UI/CvBuildingFilters.h"
 #include "UI/CvBuildingGrouping.h"
 #include "UI/CvBuildingSort.h"
@@ -354,6 +355,18 @@ void CyEnums::pythonPublish()
 		.value("NUM_CITYTAB_TYPES", NUM_CITYTAB_TYPES)
 	;
 
+	//	The four wellbeing channels (modifier.md §2b) -- what getWellbeing / getRealizedWellbeing hand back. Each
+	//	is a POSITIVE magnitude; the opposing pairs are summed by the reader, because the final-state values
+	//	(angryPopulation, healthRate) are a calculation DOWNSTREAM of the group, never slots in it
+	//	([patterns.md] THE TWO READ ROLES, rule 6).
+	python::enum_<WellbeingChannel>("WellbeingChannel")
+		.value("WELLBEING_HAPPINESS", WELLBEING_HAPPINESS)
+		.value("WELLBEING_ANGER", WELLBEING_ANGER)
+		.value("WELLBEING_HEALTH", WELLBEING_HEALTH)
+		.value("WELLBEING_UNHEALTH", WELLBEING_UNHEALTH)
+		.value("NUM_WELLBEING_CHANNELS", NUM_WELLBEING_CHANNELS)
+	;
+
 	//	The kind enums that index CyState's raw-state city groups. They are the consumer's vocabulary for those
 	//	reads exactly as YieldTypes is for getYields -- the enum indexes the RESULT, never the call.
 	python::enum_<CityCountdownKind>("CityCountdownKind")
@@ -377,6 +390,22 @@ void CyEnums::pythonPublish()
 		.value("ORDER_READ_PRODUCTION_PER_TURN", ORDER_READ_PRODUCTION_PER_TURN)
 		.value("ORDER_READ_MAX_OVERFLOW", ORDER_READ_MAX_OVERFLOW)
 		.value("NUM_CITY_ORDER_READS", NUM_CITY_ORDER_READS)
+	;
+
+	python::enum_<CityGrowthRead>("CityGrowthRead")
+		.value("GROWTH_READ_FOOD_STORED", GROWTH_READ_FOOD_STORED)
+		.value("GROWTH_READ_FOOD_PER_TURN", GROWTH_READ_FOOD_PER_TURN)
+		.value("GROWTH_READ_THRESHOLD", GROWTH_READ_THRESHOLD)
+		.value("GROWTH_READ_TURNS_LEFT", GROWTH_READ_TURNS_LEFT)
+		.value("GROWTH_READ_IS_FOOD_PRODUCTION", GROWTH_READ_IS_FOOD_PRODUCTION)
+		.value("NUM_CITY_GROWTH_READS", NUM_CITY_GROWTH_READS)
+	;
+
+	python::enum_<CityCultureRead>("CityCultureRead")
+		.value("CULTURE_READ_OWNER_AMOUNT", CULTURE_READ_OWNER_AMOUNT)
+		.value("CULTURE_READ_THRESHOLD", CULTURE_READ_THRESHOLD)
+		.value("CULTURE_READ_LEVEL", CULTURE_READ_LEVEL)
+		.value("NUM_CITY_CULTURE_READS", NUM_CITY_CULTURE_READS)
 	;
 
 	python::enum_<CityHurryQuote>("CityHurryQuote")

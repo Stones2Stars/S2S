@@ -164,11 +164,25 @@ python::list CyState::getVisionKinds(int iPlayer, int iCity) const
 	return cys_toList(values);
 }
 
-python::list CyState::getRealizedWellbeing(int iPlayer, int iCity) const
+python::list CyState::getRealizedWellbeing(int iPlayer, int iCity, int iExtraPopulation) const
 {
 	int values[NUM_WELLBEING_CHANNELS] = { 0 };
 	const CvCity* pCity = cys_city(iPlayer, iCity);
-	if (pCity) pCity->realizedWellbeing(0, values);
+	if (pCity) pCity->realizedWellbeing(iExtraPopulation, values);
+	return cys_toList(values);
+}
+
+python::list CyState::getYieldModifiers(int iPlayer, int iCity) const
+{
+	int values[NUM_YIELD_TYPES] = { 0 };
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	if (pCity)
+	{
+		for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+		{
+			values[iYield] = pCity->getBaseYieldRateModifier((YieldTypes)iYield);
+		}
+	}
 	return cys_toList(values);
 }
 
@@ -353,6 +367,42 @@ python::list CyState::getOrder(int iPlayer, int iCity) const
 	const CvCity* pCity = cys_city(iPlayer, iCity);
 	if (pCity) pCity->getOrderRead(values);
 	return cys_toList(values);
+}
+
+python::list CyState::getGrowth(int iPlayer, int iCity) const
+{
+	int values[NUM_CITY_GROWTH_READS] = { 0 };
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	if (pCity) pCity->getGrowthRead(values);
+	return cys_toList(values);
+}
+
+python::list CyState::getCulture(int iPlayer, int iCity) const
+{
+	int values[NUM_CITY_CULTURE_READS] = { 0 };
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	if (pCity) pCity->getCultureRead(values);
+	return cys_toList(values);
+}
+
+bool CyState::isCityRevealed(int iPlayer, int iCity, int iTeam) const
+{
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	if (pCity == NULL || iTeam < 0 || iTeam >= MAX_TEAMS)
+	{
+		return false;
+	}
+	return pCity->isRevealed((TeamTypes)iTeam, false);
+}
+
+bool CyState::isEmphasize(int iPlayer, int iCity, int iEmphasize) const
+{
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	if (pCity == NULL || iEmphasize < 0 || iEmphasize >= GC.getNumEmphasizeInfos())
+	{
+		return false;
+	}
+	return pCity->AI_isEmphasize((EmphasizeTypes)iEmphasize);
 }
 
 python::list CyState::getHurryQuote(int iPlayer, int iCity, int iHurry) const
@@ -582,6 +632,7 @@ void CyState::pythonPublish()
 		.def("getUnderworldKinds",       &CyState::getUnderworldKinds)
 		.def("getVisionKinds",           &CyState::getVisionKinds)
 		.def("getRealizedWellbeing",     &CyState::getRealizedWellbeing)
+		.def("getYieldModifiers",        &CyState::getYieldModifiers)
 		.def("getSight",                 &CyState::getSight)
 		// ENUMERATION + CITY rank groups + plain city facts
 		.def("getHeadSelectedCityId",    &CyState::getHeadSelectedCityId)
@@ -601,6 +652,10 @@ void CyState::pythonPublish()
 		.def("isOccupation",             &CyState::isOccupation)
 		.def("getCountdowns",            &CyState::getCountdowns)
 		.def("getOrder",                 &CyState::getOrder)
+		.def("getGrowth",                &CyState::getGrowth)
+		.def("getCulture",               &CyState::getCulture)
+		.def("isCityRevealed",           &CyState::isCityRevealed)
+		.def("isEmphasize",              &CyState::isEmphasize)
 		.def("getHurryQuote",            &CyState::getHurryQuote)
 		.def("isProductionAutomated",    &CyState::isProductionAutomated)
 		.def("getOrderQueueLength",      &CyState::getOrderQueueLength)

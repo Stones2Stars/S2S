@@ -362,6 +362,27 @@ void CvCity::getOrderRead(int (&order)[NUM_CITY_ORDER_READS]) const
 }
 
 
+void CvCity::getGrowthRead(int (&growth)[NUM_CITY_GROWTH_READS]) const
+{
+	growth[GROWTH_READ_FOOD_STORED]        = getFood();
+	growth[GROWTH_READ_FOOD_PER_TURN]      = foodDifference();
+	growth[GROWTH_READ_THRESHOLD]          = growthThreshold();
+	growth[GROWTH_READ_TURNS_LEFT]         = getFoodTurnsLeft();
+	growth[GROWTH_READ_IS_FOOD_PRODUCTION] = isFoodProduction() ? 1 : 0;
+}
+
+
+void CvCity::getCultureRead(int (&culture)[NUM_CITY_CULTURE_READS]) const
+{
+	//	The stored culture is 64-bit at source and narrows HERE, at the read: a city's own culture total is
+	//	compared against a 32-bit threshold, so a wider answer buys the reader nothing.
+	const PlayerTypes eOwner = getOwner();
+	culture[CULTURE_READ_OWNER_AMOUNT] = (eOwner == NO_PLAYER) ? 0 : (int)getCulture(eOwner);
+	culture[CULTURE_READ_THRESHOLD]    = getCultureThreshold();
+	culture[CULTURE_READ_LEVEL]        = (int)getCultureLevel();
+}
+
+
 void CvCity::getHurryQuote(HurryTypes eHurry, int (&quote)[NUM_CITY_HURRY_QUOTES]) const
 {
 	const bool bAllowed = canHurry(eHurry, false);

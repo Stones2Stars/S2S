@@ -40,9 +40,15 @@
 //	DOWNSTREAM of the four wellbeing channels, not slots in the array -- folding one in would put a computed
 //	outcome in a slot meaning "a channel a source deposited into" and hide the opposing-pair structure.
 //
-//	⛔ NO WHAT-IF ARGUMENTS, and every read is a BARE FETCH. Nothing here gates, ensures or recomputes, exactly as
-//	on the C++ side -- so a missed invalidation shows up in script as a visibly wrong number rather than being
-//	silently repaired at the boundary (state-repositories.md; [DEC-no-self-heal]).
+//	⛔ EVERY READ IS A BARE FETCH -- nothing here gates, ensures or recomputes, exactly as on the C++ side, so a
+//	missed invalidation shows up in script as a visibly wrong number rather than being silently repaired at the
+//	boundary (state-repositories.md; [DEC-no-self-heal]).
+//	⚖ A PROJECTION OVER A KNOWN IMMINENT CHANGE IS NOT A WHAT-IF (owner). getRealizedWellbeing takes the
+//	population the city is ABOUT TO HAVE, because the engine's own realizedWellbeing does and because the anger
+//	side is non-linear in population -- no consumer can derive it from the current-population answer. That is a
+//	different thing from the banned shape: the AI's "what if I BUILT this?" is the cascade's expected* read on
+//	the what-if plane (patterns.md), never a widened live-state getter. The test is whether the argument names a
+//	CANDIDATE (banned here) or a state the object is already headed for (fine).
 //
 //	BOOST: this file uses ONLY the `python::` alias, never a bare `boost::` and never a using-directive -- the
 //	tree carries TWO Boosts and an unqualified name can resolve to the wrong one through the PCH (engine.md).
@@ -73,7 +79,13 @@ public:
 	// The REALIZED wellbeing: the deposits above PLUS the raw-state inputs no deposit produces (the anger
 	// percents, the espionage counters, event anger -- modifier.md §2b). Distinct from getWellbeing on purpose;
 	// a script that adds the two double-counts.
-	python::list getRealizedWellbeing(int iPlayer, int iCity) const;
+	// iExtraPopulation projects the answer onto a population the city is about to reach (+1 growing, -1
+	// starving, 0 for the current state) -- the overcrowding and per-citizen anger terms are non-linear in
+	// population, so this cannot be derived from the 0 answer.
+	python::list getRealizedWellbeing(int iPlayer, int iCity, int iExtraPopulation) const;
+	// The city's yield MODIFIER percents, indexed by YieldTypes -- the multiplier a base yield is scaled by.
+	// A PERCENT, so it is NOT x100 and a reader never divides it ([DEC-fixedpoint-x100]).
+	python::list getYieldModifiers(int iPlayer, int iCity) const;
 	int getSight(int iPlayer, int iCity) const;   // the city's sight BUDGET (vision.md)
 
 	// ---- THE CURRENT SELECTION, as an IDENTITY. ----
@@ -133,6 +145,14 @@ public:
 	// reader never divides one ([DEC-fixedpoint-x100] scales AMOUNTS; these are counts).
 	python::list getCountdowns(int iPlayer, int iCity) const;
 	python::list getOrder(int iPlayer, int iCity) const;
+	python::list getGrowth(int iPlayer, int iCity) const;
+	python::list getCulture(int iPlayer, int iCity) const;
+	// Has this team SEEN the city. Fog state, so it is live and per-team -- an unrevealed city is one a screen
+	// may know of but must not name.
+	bool isCityRevealed(int iPlayer, int iCity, int iTeam) const;
+	// The city governor's EMPHASIS flags -- what the player told this city to prioritise. Per-city view state
+	// the engine stores, so it reads here; eEmphasize selects one flag, the sparse-selector shape again.
+	bool isEmphasize(int iPlayer, int iCity, int iEmphasize) const;
 	// The hurry QUOTE for one method: may I, and at what price. eHurry is a SELECTOR in the call because the
 	// hurry registry is sparse and a city is asked about one method at a time -- the getGreatPeopleUnitProgress
 	// shape, for the same reason.

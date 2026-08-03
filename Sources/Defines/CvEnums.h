@@ -1242,6 +1242,32 @@ enum CityOrderRead
 	NUM_CITY_ORDER_READS
 };
 
+//	The city's FOOD/GROWTH state: what is in the store, what this turn adds, what the next citizen costs, and
+//	how far off it is. One group, because every consumer that asks one of these asks three of them.
+//	⚠ GROWTH_READ_FOOD_PER_TURN is the BOTTOMED difference (the engine's own default) -- a starving city
+//	reports its real deficit, so a reader tests the sign rather than assuming non-negative.
+enum CityGrowthRead
+{
+	GROWTH_READ_FOOD_STORED = 0,
+	GROWTH_READ_FOOD_PER_TURN,
+	GROWTH_READ_THRESHOLD,
+	GROWTH_READ_TURNS_LEFT,
+	GROWTH_READ_IS_FOOD_PRODUCTION,
+
+	NUM_CITY_GROWTH_READS
+};
+
+//	The city's CULTURE standing: what the owner has accumulated here, what the next level costs, and which
+//	level it currently sits at. One group -- the threshold is meaningless without the amount beside it.
+enum CityCultureRead
+{
+	CULTURE_READ_OWNER_AMOUNT = 0,
+	CULTURE_READ_THRESHOLD,
+	CULTURE_READ_LEVEL,
+
+	NUM_CITY_CULTURE_READS
+};
+
 //	The quote for ONE hurry method: may I, and at what price. The hurry type is a SELECTOR in the call -- a
 //	sparse id over the hurry registry, the same shape the great-person unit-progress read uses for its unit id.
 enum CityHurryQuote
