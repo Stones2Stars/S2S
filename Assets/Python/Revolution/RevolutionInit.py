@@ -12,6 +12,11 @@
 # where configFileName is nominally "Revolution.ini".
 
 from CvPythonExtensions import *
+
+# GAME is used throughout this module (isFinalInitialized, isOption, getMaxTurns) but was never ASSIGNED, so the
+# first read raised NameError and took RevolutionInit's construction down with it. Same shape as the MAP global
+# in MapScriptToolsOld: declared-by-use, never bound.
+GAME = CyGame()
 import RevEvents
 import BarbarianCiv
 import AIAutoPlay
