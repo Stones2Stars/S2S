@@ -159,6 +159,44 @@ public:
 	// power, the two automation toggles and the conscript verdict. A lone bool getter beside this group
 	// would be a second surface for the same question, which is what the grammar exists to prevent.
 	python::list getCityFlags(int iPlayer, int iCity) const;
+	// What this city holds and is doing about ONE building / unit type. The entity is a SELECTOR in the call
+	// because the question is about a PAIR, and the registries are sparse -- a slot per building would cross
+	// thousands of zeros to answer about one.
+	python::list getBuildingInCity(int iPlayer, int iCity, int iBuilding) const;
+	python::list getUnitInCity(int iPlayer, int iCity, int iUnit) const;
+	// Turns to finish ONE queued item. iOrder is an OrderTypes value naming which registry iType indexes, and
+	// iNum is the item's position in the build QUEUE -- the estimate differs per position, which is why the node
+	// is a parameter and not a slot on the groups above.
+	int getProductionTurnsLeft(int iPlayer, int iCity, int iOrder, int iType, int iNum) const;
+	python::list getSpecialistInCity(int iPlayer, int iCity, int iSpecialist) const;
+	python::list getCityCounts(int iPlayer, int iCity) const;
+	// The city's TRADE ROUTES as rows: [partnerOwner, partnerCity, profitTimes100]. Routes are live STATE, so
+	// they are walked rather than looked up -- nothing authors a route.
+	python::list getTradeRoutes(int iPlayer, int iCity) const;
+	// Which religions / corporations this city HAS, as rows: [id, bIsHolyCity] and [id, bIsHeadquarters].
+	python::list getCityReligions(int iPlayer, int iCity) const;
+	python::list getCityCorporations(int iPlayer, int iCity) const;
+	// Culture accumulated here BY a given player, and each player's share of the plot's culture.
+	int64_t getCultureForPlayer(int iPlayer, int iCity, int iForPlayer) const;
+	int getCulturePercent(int iPlayer, int iCity, int iForPlayer) const;
+	// One yield's share of a ROUTE's profit, run through the city's trade-yield rule. The profit comes from
+	// getTradeRoutes above, so the caller pairs the two rather than the engine re-deriving the route here.
+	int getTradeYield(int iPlayer, int iCity, int iYield, int iProfitTimes100) const;
+	// The city screen's RECOMMENDATION -- what the governor would build. It is the AI's own pick, so it is a
+	// read of a verdict rather than a re-derivation; a script must never re-implement the choice.
+	int getBestUnit(int iPlayer, int iCity) const;
+	int getBestUnitForRole(int iPlayer, int iCity, int iUnitAI) const;
+	// The city's recent OUTPUT history: one row per remembered turn, [iTurn, [[iOrder, iType], ...]]. Served as
+	// rows because the history object itself is not something script can hold.
+	python::list getCityOutputHistory(int iPlayer, int iCity) const;
+	// The lone per-entity facts that belong to no group.
+	int getNumBonuses(int iPlayer, int iCity, int iBonus) const;
+	bool hasCorporation(int iPlayer, int iCity, int iCorporation) const;
+	int getProjectProduction(int iPlayer, int iCity, int iProject) const;
+	int getHandicap(int iPlayer, int iCity) const;
+	// The city's PROPERTY rows: one [propertyId, value, changeThisTurn] per property it carries. A list of rows
+	// rather than an object, so nothing hands script a handle it cannot read.
+	python::list getCityProperties(int iPlayer, int iCity) const;
 	// The city screen's BUILD LISTS, already filtered / grouped / sorted by the engine's own view model: a list
 	// of GROUPS, each a list of entity ids. One crossing for the whole list rather than one per entry -- a
 	// boost::python call costs far more than the lookup inside it, and this is redrawn constantly.
@@ -246,6 +284,12 @@ public:
 	int getAIAutoPlay(int iPlayer) const;
 	std::wstring getPlayerName(int iPlayer) const;
 	std::wstring getCityName(int iPlayer, int iCity) const;
+	// What the city is building, already localized -- the engine composes it from the order, so a script that
+	// rebuilt it from the order group would be a second implementation of the same sentence.
+	std::wstring getProductionName(int iPlayer, int iCity) const;
+	// The same thing as a TXT_KEY rather than resolved text -- the `*Key` suffix IS the contract
+	// ([patterns.md]), so a caller always knows which of the two it is holding.
+	std::wstring getProductionNameKey(int iPlayer, int iCity) const;
 
 	static void pythonPublish();
 };

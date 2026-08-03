@@ -17,6 +17,7 @@
 #include "Infrastructure/CvDLLInterfaceIFaceBase.h"  // getHeadSelectedCity/Unit -- the CURRENT SELECTION
 #include "AI/CvPlayerAI.h"          // GET_PLAYER
 #include "Infos/CvInfoKinds.h"      // the NUM_<FAMILY>_KINDS the groups are sized by
+#include "UI/CityOutputHistory.h"  // the city admin tab's recent-output rows
 #include "UI/CvBuildingFilters.h"   // BuildingFilterTypes -- the city screen's list VIEW state
 #include "UI/CvUnitFilters.h"       // UnitFilterTypes -- ditto
 
@@ -451,6 +452,236 @@ python::list CyState::getBuildingListGroups(int iPlayer, int iCity) const
 	                      &CvCity::getBuildingListType);
 }
 
+python::list CyState::getBuildingInCity(int iPlayer, int iCity, int iBuilding) const
+{
+	int values[NUM_CITY_BUILDING_READS] = { 0 };
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	if (pCity && iBuilding >= 0 && iBuilding < GC.getNumBuildingInfos())
+	{
+		pCity->getBuildingInCity((BuildingTypes)iBuilding, values);
+	}
+	return cys_toList(values);
+}
+
+python::list CyState::getUnitInCity(int iPlayer, int iCity, int iUnit) const
+{
+	int values[NUM_CITY_UNIT_READS] = { 0 };
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	if (pCity && iUnit >= 0 && iUnit < GC.getNumUnitInfos())
+	{
+		pCity->getUnitInCity((UnitTypes)iUnit, values);
+	}
+	return cys_toList(values);
+}
+
+int CyState::getProductionTurnsLeft(int iPlayer, int iCity, int iOrder, int iType, int iNum) const
+{
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	if (pCity == NULL || iType < 0) return 0;
+	switch (iOrder)
+	{
+	case ORDER_TRAIN:
+		if (iType < GC.getNumUnitInfos()) return pCity->getProductionTurnsLeft((UnitTypes)iType, iNum);
+		break;
+	case ORDER_CONSTRUCT:
+		if (iType < GC.getNumBuildingInfos()) return pCity->getProductionTurnsLeft((BuildingTypes)iType, iNum);
+		break;
+	case ORDER_CREATE:
+		if (iType < GC.getNumProjectInfos()) return pCity->getProductionTurnsLeft((ProjectTypes)iType, iNum);
+		break;
+	default:
+		break;
+	}
+	return 0;
+}
+
+python::list CyState::getSpecialistInCity(int iPlayer, int iCity, int iSpecialist) const
+{
+	int values[NUM_CITY_SPECIALIST_READS] = { 0 };
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	if (pCity && iSpecialist >= 0 && iSpecialist < GC.getNumSpecialistInfos())
+	{
+		pCity->getSpecialistInCity((SpecialistTypes)iSpecialist, values);
+	}
+	return cys_toList(values);
+}
+
+int CyState::getBestUnit(int iPlayer, int iCity) const
+{
+	CvCity* pCity = const_cast<CvCity*>(cys_city(iPlayer, iCity));
+	if (pCity == NULL) return -1;
+	int iBestValue = 0;
+	return (int)pCity->AI_bestUnit(iBestValue);
+}
+
+int CyState::getBestUnitForRole(int iPlayer, int iCity, int iUnitAI) const
+{
+	CvCity* pCity = const_cast<CvCity*>(cys_city(iPlayer, iCity));
+	if (pCity == NULL || iUnitAI < 0 || iUnitAI >= NUM_UNITAI_TYPES) return -1;
+	int iBestValue = 0;
+	return (int)pCity->AI_bestUnitAI((UnitAITypes)iUnitAI, iBestValue);
+}
+
+python::list CyState::getCityOutputHistory(int iPlayer, int iCity) const
+{
+	python::list rows = python::list();
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	if (pCity == NULL) return rows;
+	const CityOutputHistory* pHistory = pCity->getCityOutputHistory();
+	if (pHistory == NULL) return rows;
+	const int iSize = (int)CityOutputHistory::getCityOutputHistorySize();
+	for (int iHistory = 0; iHistory < iSize; ++iHistory)
+	{
+		const int iTurn = (int)pHistory->getRecentOutputTurn((uint16_t)iHistory);
+		if (iTurn < 1)
+		{
+			break;   // the history is filled front-to-back; the first empty slot ends it
+		}
+		python::list entries = python::list();
+		const int iNum = (int)pHistory->getCityOutputHistoryNumEntries((uint16_t)iHistory);
+		for (int iEntry = 0; iEntry < iNum; ++iEntry)
+		{
+			python::list pair = python::list();
+			pair.append((int)pHistory->getCityOutputHistoryEntry((uint16_t)iHistory, (uint16_t)iEntry, true));
+			pair.append((int)pHistory->getCityOutputHistoryEntry((uint16_t)iHistory, (uint16_t)iEntry, false));
+			entries.append(pair);
+		}
+		python::list row = python::list();
+		row.append(iTurn);
+		row.append(entries);
+		rows.append(row);
+	}
+	return rows;
+}
+
+python::list CyState::getCityCounts(int iPlayer, int iCity) const
+{
+	int values[NUM_CITY_COUNT_READS] = { 0 };
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	if (pCity) pCity->getCityCounts(values);
+	return cys_toList(values);
+}
+
+python::list CyState::getTradeRoutes(int iPlayer, int iCity) const
+{
+	python::list rows = python::list();
+	CvCity* pCity = const_cast<CvCity*>(cys_city(iPlayer, iCity));
+	if (pCity == NULL) return rows;
+	const int iMax = pCity->getMaxTradeRoutes();
+	for (int i = 0; i < iMax; ++i)
+	{
+		CvCity* pPartner = pCity->getTradeCity(i);
+		if (pPartner == NULL) continue;
+		python::list row = python::list();
+		row.append((int)pPartner->getOwner());
+		row.append(pPartner->getID());
+		row.append(pCity->calculateTradeProfitTimes100(pPartner));
+		rows.append(row);
+	}
+	return rows;
+}
+
+python::list CyState::getCityReligions(int iPlayer, int iCity) const
+{
+	python::list rows = python::list();
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	if (pCity == NULL) return rows;
+	for (int i = 0; i < GC.getNumReligionInfos(); ++i)
+	{
+		if (!pCity->isHasReligion((ReligionTypes)i)) continue;
+		python::list row = python::list();
+		row.append(i);
+		row.append(pCity->isHolyCity((ReligionTypes)i) ? 1 : 0);
+		rows.append(row);
+	}
+	return rows;
+}
+
+python::list CyState::getCityCorporations(int iPlayer, int iCity) const
+{
+	python::list rows = python::list();
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	if (pCity == NULL) return rows;
+	for (int i = 0; i < GC.getNumCorporationInfos(); ++i)
+	{
+		if (!pCity->isHasCorporation((CorporationTypes)i)) continue;
+		python::list row = python::list();
+		row.append(i);
+		row.append(pCity->isHeadquarters((CorporationTypes)i) ? 1 : 0);
+		rows.append(row);
+	}
+	return rows;
+}
+
+int64_t CyState::getCultureForPlayer(int iPlayer, int iCity, int iForPlayer) const
+{
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	if (pCity == NULL || iForPlayer < 0 || iForPlayer >= MAX_PLAYERS) return 0;
+	return pCity->getCultureTimes100((PlayerTypes)iForPlayer);
+}
+
+int CyState::getCulturePercent(int iPlayer, int iCity, int iForPlayer) const
+{
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	if (pCity == NULL || iForPlayer < 0 || iForPlayer >= MAX_PLAYERS) return 0;
+	const CvPlot* pPlot = pCity->plot();
+	return pPlot ? pPlot->calculateCulturePercent((PlayerTypes)iForPlayer) : 0;
+}
+
+int CyState::getTradeYield(int iPlayer, int iCity, int iYield, int iProfitTimes100) const
+{
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	if (pCity == NULL || iYield < 0 || iYield >= NUM_YIELD_TYPES) return 0;
+	return pCity->calculateTradeYield((YieldTypes)iYield, iProfitTimes100);
+}
+
+int CyState::getNumBonuses(int iPlayer, int iCity, int iBonus) const
+{
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	if (pCity == NULL || iBonus < 0 || iBonus >= GC.getNumBonusInfos()) return 0;
+	return pCity->getNumBonuses((BonusTypes)iBonus);
+}
+
+bool CyState::hasCorporation(int iPlayer, int iCity, int iCorporation) const
+{
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	if (pCity == NULL || iCorporation < 0 || iCorporation >= GC.getNumCorporationInfos()) return false;
+	return pCity->isHasCorporation((CorporationTypes)iCorporation);
+}
+
+int CyState::getProjectProduction(int iPlayer, int iCity, int iProject) const
+{
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	if (pCity == NULL || iProject < 0 || iProject >= GC.getNumProjectInfos()) return 0;
+	return pCity->getProjectProduction((ProjectTypes)iProject);
+}
+
+int CyState::getHandicap(int iPlayer, int iCity) const
+{
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	return pCity ? (int)pCity->getHandicapType() : -1;
+}
+
+python::list CyState::getCityProperties(int iPlayer, int iCity) const
+{
+	python::list rows = python::list();
+	CvCity* pCity = const_cast<CvCity*>(cys_city(iPlayer, iCity));
+	if (pCity == NULL) return rows;
+	CvProperties* pProperties = pCity->getProperties();
+	if (pProperties == NULL) return rows;
+	const int iNum = pProperties->getNumProperties();
+	for (int i = 0; i < iNum; ++i)
+	{
+		const PropertyTypes eProperty = pProperties->getProperty(i);
+		python::list row = python::list();
+		row.append((int)eProperty);
+		row.append(pProperties->getValueByProperty(eProperty));
+		row.append(pProperties->getChangeByProperty(eProperty));
+		rows.append(row);
+	}
+	return rows;
+}
+
 python::list CyState::getCityFlags(int iPlayer, int iCity) const
 {
 	int values[NUM_CITY_FLAGS] = { 0 };
@@ -783,6 +1014,20 @@ std::wstring CyState::getPlayerName(int iPlayer) const
 	return pPlayer ? std::wstring(pPlayer->getName()) : std::wstring();
 }
 
+std::wstring CyState::getProductionName(int iPlayer, int iCity) const
+{
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	if (pCity == NULL || pCity->getProductionName() == NULL) return std::wstring();
+	return std::wstring(pCity->getProductionName());
+}
+
+std::wstring CyState::getProductionNameKey(int iPlayer, int iCity) const
+{
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	if (pCity == NULL || pCity->getProductionNameKey() == NULL) return std::wstring();
+	return std::wstring(pCity->getProductionNameKey());
+}
+
 std::wstring CyState::getCityName(int iPlayer, int iCity) const
 {
 	const CvCity* pCity = cys_city(iPlayer, iCity);
@@ -837,6 +1082,25 @@ void CyState::pythonPublish()
 		.def("getGrowth",                &CyState::getGrowth)
 		.def("getCulture",               &CyState::getCulture)
 		.def("getCityFlags",             &CyState::getCityFlags)
+		.def("getBuildingInCity",        &CyState::getBuildingInCity)
+		.def("getUnitInCity",            &CyState::getUnitInCity)
+		.def("getProductionTurnsLeft",   &CyState::getProductionTurnsLeft)
+		.def("getSpecialistInCity",      &CyState::getSpecialistInCity)
+		.def("getCityCounts",            &CyState::getCityCounts)
+		.def("getTradeRoutes",           &CyState::getTradeRoutes)
+		.def("getCityReligions",         &CyState::getCityReligions)
+		.def("getCityCorporations",      &CyState::getCityCorporations)
+		.def("getCultureForPlayer",      &CyState::getCultureForPlayer)
+		.def("getCulturePercent",        &CyState::getCulturePercent)
+		.def("getTradeYield",            &CyState::getTradeYield)
+		.def("getBestUnit",              &CyState::getBestUnit)
+		.def("getBestUnitForRole",       &CyState::getBestUnitForRole)
+		.def("getCityOutputHistory",     &CyState::getCityOutputHistory)
+		.def("getNumBonuses",            &CyState::getNumBonuses)
+		.def("hasCorporation",           &CyState::hasCorporation)
+		.def("getProjectProduction",     &CyState::getProjectProduction)
+		.def("getHandicap",              &CyState::getHandicap)
+		.def("getCityProperties",        &CyState::getCityProperties)
 		.def("getUnitListGroups",        &CyState::getUnitListGroups)
 		.def("getBuildingListGroups",    &CyState::getBuildingListGroups)
 		.def("getUnitRead",              &CyState::getUnitRead)
@@ -884,6 +1148,8 @@ void CyState::pythonPublish()
 		.def("getAIAutoPlay",            &CyState::getAIAutoPlay)
 		.def("getPlayerName",            &CyState::getPlayerName)
 		.def("getCityName",              &CyState::getCityName)
+		.def("getProductionName",        &CyState::getProductionName)
+		.def("getProductionNameKey",     &CyState::getProductionNameKey)
 		;
 
 	// The EMPIRE selector, named rather than left as a bare -1 at every call site: a script reads the empire by

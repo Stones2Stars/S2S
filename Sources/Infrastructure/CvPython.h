@@ -175,9 +175,16 @@ namespace Cy
 	//
 	struct PyIdentity : PyWrapBase
 	{
+		//	⛔ CyArgsList OWNS what it is handed. Every other add() pushes a FRESH object -- PyInt_FromLong,
+		//	PyString_FromString, PyUnicode_FromWideChar all return a NEW reference -- so the list releases what it
+		//	holds. Handing it `identity.ptr()` bare would hand it a BORROWED pointer that `identity` still owns,
+		//	and the tuple would be released twice: freed while this object still points at it, after which the
+		//	interpreter reads freed memory on some later touch. So incref, and give the list its own reference.
+		//	⚠ The failure is REMOTE from the cause -- an access violation inside python24 at whatever next walks
+		//	the object -- so it reads as an interpreter bug rather than as a refcount error here.
 		PyIdentity(int iOwner, int iId) : identity(python::make_tuple(iOwner, iId))
 		{
-			pyobj = identity.ptr();
+			pyobj = python::incref(identity.ptr());
 		}
 
 		python::tuple identity;

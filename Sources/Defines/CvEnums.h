@@ -1237,7 +1237,11 @@ enum CityOrderRead
 	ORDER_READ_ID,
 	ORDER_READ_PRODUCTION_LEFT,
 	ORDER_READ_PRODUCTION_PROGRESS,
+	ORDER_READ_PRODUCTION_NEEDED,
+	ORDER_READ_GENERAL_TURNS_LEFT,
+	ORDER_READ_TURNS_LEFT,
 	ORDER_READ_PRODUCTION_PER_TURN,
+	ORDER_READ_PRODUCTION_PER_TURN_NO_FOOD,
 	ORDER_READ_MAX_OVERFLOW,
 
 	NUM_CITY_ORDER_READS
@@ -1315,6 +1319,62 @@ enum CityFlagKind
 	NUM_CITY_FLAGS
 };
 
+//	What THIS CITY holds and is doing about ONE building. The building is a SELECTOR in the call -- the
+//	question is about a (city, building) PAIR, so it cannot be a slot.
+//	⚠ HAPPINESS / HEALTH here name their SOURCE, which the modifier package deliberately cannot do; they are
+//	the engine's own surviving per-building contributions, kept because the city screen renders them today.
+enum CityBuildingRead
+{
+	CITY_BUILDING_HAS = 0,
+	CITY_BUILDING_ACTIVE,
+	CITY_BUILDING_HAPPINESS,
+	CITY_BUILDING_HEALTH,
+	CITY_BUILDING_PROGRESS,
+	CITY_BUILDING_DELAY,
+	CITY_BUILDING_PRODUCTION_DECAY,
+
+	NUM_CITY_BUILDING_READS
+};
+
+//	The same, for ONE unit type this city could build.
+enum CityUnitRead
+{
+	CITY_UNIT_PROGRESS = 0,
+	CITY_UNIT_DELAY,
+	CITY_UNIT_PRODUCTION_DECAY,
+
+	NUM_CITY_UNIT_READS
+};
+
+//	What this city does with ONE specialist type. Selector-keyed like the building/unit reads, for the same
+//	reason: it is a (city, specialist) question over a sparse registry.
+enum CitySpecialistRead
+{
+	CITY_SPECIALIST_COUNT = 0,
+	CITY_SPECIALIST_FORCED,
+	CITY_SPECIALIST_FREE,
+	CITY_SPECIALIST_VALID,
+	CITY_SPECIALIST_EMPHASIZED,
+
+	NUM_CITY_SPECIALIST_READS
+};
+
+//	The city's plain COUNTERS -- the wonder tallies against their per-city caps, and the defence pair. Lone
+//	numbers with no family of their own, grouped so the screen fetches them once.
+enum CityCountRead
+{
+	CITY_COUNT_NATIONAL_WONDERS = 0,
+	CITY_COUNT_MAX_NATIONAL_WONDERS,
+	CITY_COUNT_WORLD_WONDERS,
+	CITY_COUNT_MAX_WORLD_WONDERS,
+	CITY_COUNT_DEFENSE_MODIFIER,
+	CITY_COUNT_DEFENSE_DAMAGE,
+	CITY_COUNT_REVOLUTION_INDEX,
+	CITY_COUNT_REVOLUTION_AVERAGE,
+
+	NUM_CITY_COUNT_READS
+};
+
 //	The city's FOOD/GROWTH state: what is in the store, what this turn adds, what the next citizen costs, and
 //	how far off it is. One group, because every consumer that asks one of these asks three of them.
 //	⚠ GROWTH_READ_FOOD_PER_TURN is the BOTTOMED difference (the engine's own default) -- a starving city
@@ -1323,6 +1383,7 @@ enum CityGrowthRead
 {
 	GROWTH_READ_FOOD_STORED = 0,
 	GROWTH_READ_FOOD_PER_TURN,
+	GROWTH_READ_FOOD_CONSUMPTION,
 	GROWTH_READ_THRESHOLD,
 	GROWTH_READ_TURNS_LEFT,
 	GROWTH_READ_IS_FOOD_PRODUCTION,

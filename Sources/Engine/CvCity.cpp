@@ -358,7 +358,13 @@ void CvCity::getOrderRead(int (&order)[NUM_CITY_ORDER_READS]) const
 	}
 	order[ORDER_READ_PRODUCTION_LEFT]     = productionLeft();
 	order[ORDER_READ_PRODUCTION_PROGRESS] = getProductionProgress();
-	order[ORDER_READ_PRODUCTION_PER_TURN] = getCurrentProductionDifference(ProductionCalc::FoodProduction);
+	order[ORDER_READ_PRODUCTION_NEEDED]   = getProductionNeeded();
+	order[ORDER_READ_GENERAL_TURNS_LEFT]  = getGeneralProductionTurnsLeft();
+	order[ORDER_READ_TURNS_LEFT]          = getProductionTurnsLeft();
+	//	The two rates the city screen actually needs: everything, and everything-except-food-conversion. Their
+	//	DIFFERENCE is the food-derived part, so a third slot would be derivable and therefore redundant.
+	order[ORDER_READ_PRODUCTION_PER_TURN]         = getCurrentProductionDifference(ProductionCalc::FoodProduction | ProductionCalc::Overflow);
+	order[ORDER_READ_PRODUCTION_PER_TURN_NO_FOOD] = getCurrentProductionDifference(ProductionCalc::Overflow);
 	order[ORDER_READ_MAX_OVERFLOW]        = getMaxProductionOverflow();
 }
 
@@ -367,6 +373,7 @@ void CvCity::getGrowthRead(int (&growth)[NUM_CITY_GROWTH_READS]) const
 {
 	growth[GROWTH_READ_FOOD_STORED]        = getFood();
 	growth[GROWTH_READ_FOOD_PER_TURN]      = foodDifference();
+	growth[GROWTH_READ_FOOD_CONSUMPTION]   = foodConsumption();
 	growth[GROWTH_READ_THRESHOLD]          = growthThreshold();
 	growth[GROWTH_READ_TURNS_LEFT]         = getFoodTurnsLeft();
 	growth[GROWTH_READ_IS_FOOD_PRODUCTION] = isFoodProduction() ? 1 : 0;
@@ -397,6 +404,46 @@ void CvCity::getCityFlags(int (&flags)[NUM_CITY_FLAGS]) const
 	flags[CITY_FLAG_OCCUPATION]            = isOccupation() ? 1 : 0;
 	flags[CITY_FLAG_PLUNDERED]             = isPlundered() ? 1 : 0;
 	flags[CITY_FLAG_QUARANTINED]           = isQuarantined() ? 1 : 0;
+}
+
+void CvCity::getBuildingInCity(BuildingTypes eBuilding, int (&read)[NUM_CITY_BUILDING_READS]) const
+{
+	read[CITY_BUILDING_HAS]              = hasBuilding(eBuilding) ? 1 : 0;
+	read[CITY_BUILDING_ACTIVE]           = isActiveBuilding(eBuilding) ? 1 : 0;
+	read[CITY_BUILDING_HAPPINESS]        = getBuildingHappiness(eBuilding);
+	read[CITY_BUILDING_HEALTH]           = getBuildingHealth(eBuilding);
+	read[CITY_BUILDING_PROGRESS]         = getProgressOnBuilding(eBuilding);
+	read[CITY_BUILDING_DELAY]            = getDelayOnBuilding(eBuilding);
+	read[CITY_BUILDING_PRODUCTION_DECAY] = isBuildingProductionDecay(eBuilding) ? 1 : 0;
+}
+
+
+void CvCity::getUnitInCity(UnitTypes eUnit, int (&read)[NUM_CITY_UNIT_READS]) const
+{
+	read[CITY_UNIT_PROGRESS]         = getProgressOnUnit(eUnit);
+	read[CITY_UNIT_DELAY]            = getDelayOnUnit(eUnit);
+	read[CITY_UNIT_PRODUCTION_DECAY] = isUnitProductionDecay(eUnit) ? 1 : 0;
+}
+
+void CvCity::getSpecialistInCity(SpecialistTypes eSpecialist, int (&read)[NUM_CITY_SPECIALIST_READS]) const
+{
+	read[CITY_SPECIALIST_COUNT]      = getSpecialistCount(eSpecialist);
+	read[CITY_SPECIALIST_FORCED]     = getForceSpecialistCount(eSpecialist);
+	read[CITY_SPECIALIST_FREE]       = getFreeSpecialistCount(eSpecialist);
+	read[CITY_SPECIALIST_VALID]      = isSpecialistValid(eSpecialist) ? 1 : 0;
+	read[CITY_SPECIALIST_EMPHASIZED] = AI_isEmphasizeSpecialist(eSpecialist) ? 1 : 0;
+}
+
+void CvCity::getCityCounts(int (&counts)[NUM_CITY_COUNT_READS]) const
+{
+	counts[CITY_COUNT_NATIONAL_WONDERS]     = getNumNationalWonders();
+	counts[CITY_COUNT_MAX_NATIONAL_WONDERS] = getMaxNumNationalWonders();
+	counts[CITY_COUNT_WORLD_WONDERS]        = getNumWorldWonders();
+	counts[CITY_COUNT_MAX_WORLD_WONDERS]    = getMaxNumWorldWonders();
+	counts[CITY_COUNT_DEFENSE_MODIFIER]     = getDefenseModifier(false);
+	counts[CITY_COUNT_DEFENSE_DAMAGE]       = getDefenseDamage();
+	counts[CITY_COUNT_REVOLUTION_INDEX]     = getRevolutionIndex();
+	counts[CITY_COUNT_REVOLUTION_AVERAGE]   = getRevIndexAverage();
 }
 
 void CvCity::getHurryQuote(HurryTypes eHurry, int (&quote)[NUM_CITY_HURRY_QUOTES]) const

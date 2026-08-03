@@ -828,6 +828,10 @@ public:
 	void getGrowthRead(int (&growth)[NUM_CITY_GROWTH_READS]) const;
 	void getCultureRead(int (&culture)[NUM_CITY_CULTURE_READS]) const;
 	void getCityFlags(int (&flags)[NUM_CITY_FLAGS]) const;
+	void getBuildingInCity(BuildingTypes eBuilding, int (&read)[NUM_CITY_BUILDING_READS]) const;
+	void getUnitInCity(UnitTypes eUnit, int (&read)[NUM_CITY_UNIT_READS]) const;
+	void getSpecialistInCity(SpecialistTypes eSpecialist, int (&read)[NUM_CITY_SPECIALIST_READS]) const;
+	void getCityCounts(int (&counts)[NUM_CITY_COUNT_READS]) const;
 	// The hurry QUOTE for one method. eHurry selects WHICH hurry, so it is a call argument rather than a slot:
 	// the registry is sparse and a city answers about one method at a time.
 	void getHurryQuote(HurryTypes eHurry, int (&quote)[NUM_CITY_HURRY_QUOTES]) const;
