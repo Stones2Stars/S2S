@@ -365,6 +365,22 @@ void CvGameTextMgr::setTimeStr(CvWString& szString, int iGameTurn, bool bSave)
 }
 
 
+//
+//	⛔ EXE-BOUND: the closed EXE resolves this by mangled name, so the DEFINITION must exist or the symbol
+//	is absent from the export table and the EXE's lookup fails ([engine.md] § Is a symbol really EXE-bound?).
+//	A DllExport DECLARATION alone exports nothing.
+//
+//	The body is deliberately minimal: the legacy composer read the legacy getter surface, which is cut, and a
+//	composer's acceptance test is that it reads NO legacy getter ([patterns.md] THE DIVISION OF LABOUR). The
+//	minimize-popup help therefore renders EMPTY until the composer is rebuilt on `appendEntryLines` — an
+//	honest visible gap rather than a legacy read masking it ([DEC-no-legacy-masking]).
+//
+void CvGameTextMgr::setMinimizePopupHelp(CvWString& szString, const CvPopupInfo& info)
+{
+	szString.clear();
+}
+
+
 void CvGameTextMgr::setInterfaceTime(CvWString& szString, PlayerTypes ePlayer)
 {
 	CvWString szTempBuffer;

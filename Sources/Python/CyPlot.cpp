@@ -29,7 +29,7 @@ void CyPlot::erase()
 	if (m_pPlot) m_pPlot->erase();
 }
 
-NiPoint3 CyPlot::getPoint() const
+NiPoint3 CyPlot::getPoint()
 {
 	return m_pPlot ? m_pPlot->getPoint() : NiPoint3(0,0,0);
 }

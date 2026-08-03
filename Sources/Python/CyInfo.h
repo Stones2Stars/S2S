@@ -46,6 +46,8 @@ enum PyIntrinsicSlot
 	PYINT_COLOR_TYPE,          // COLOR_* FK for a yield
 	PYINT_ACTION_INFO_INDEX,   // the hotkey/action index a control maps to
 	PYINT_IS_LIMITED_WONDER,   // does this building carry a SELF-cap (world/team/empire) -- i.e. is it a wonder
+	PYINT_IS_PERMANENT,        // is this victory PERMANENT (never written into a scenario's victory list)
+	PYINT_IS_REPEAT,           // is this tech REPEATABLE (researchable more than once)
 	NUM_PYINT
 };
 

@@ -83,6 +83,8 @@ void CyEnums::pythonPublish()
 		.value("PYINT_COLOR_TYPE",        PYINT_COLOR_TYPE)
 		.value("PYINT_ACTION_INFO_INDEX", PYINT_ACTION_INFO_INDEX)
 		.value("PYINT_IS_LIMITED_WONDER", PYINT_IS_LIMITED_WONDER)
+		.value("PYINT_IS_PERMANENT",      PYINT_IS_PERMANENT)
+		.value("PYINT_IS_REPEAT",         PYINT_IS_REPEAT)
 		;
 
 	python::enum_<EnEdgeBucket>("EdgeBucket")

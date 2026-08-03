@@ -119,17 +119,17 @@ class CvGameDesc:
 		# write mp options
 		for i in xrange(GC.getNumMPOptionInfos()):
 			if GAME.isMPOption(i):
-				f.write("\tMPOption=%s\n" %(GC.getMPOptionInfo(i).getType()))
+				f.write("\tMPOption=%s\n" %(INFO.getType("MPOPTION_", i)))
 
 		# write force controls
 		for i in xrange(GC.getNumForceControlInfos()):
 			if GAME.isForcedControl(i):
-				f.write("\tForceControl=%s\n" %(GC.getForceControlInfo(i).getType()))
+				f.write("\tForceControl=%s\n" %(INFO.getType("FORCECONTROL_", i)))
 
 		# write victories
 		for i in xrange(GC.getNumVictoryInfos()):
 			if GAME.isVictoryValid(i):
-				if not GC.getVictoryInfo(i).isPermanent():
+				if INFO.getIntrinsic("VICTORY_", i, IntrinsicSlot.PYINT_IS_PERMANENT) != 1:
 					f.write("\tVictory=%s\n" %(INFO.getType("VICTORY_", i)))
 
 		f.write("\tGameTurn=%d\n" % GAME.getGameTurn())
@@ -354,12 +354,12 @@ class CvTeamDesc:
 				f.write("\tMinorNationCiv=1\n")
 			# write techs
 			for i in xrange(GC.getNumTechInfos()):
-				tech = GC.getTechInfo(i)
+				szTechType = INFO.getType("TECH_", i)
 				if team.isHasTech(i):
-					f.write("\tTech=%s\n" % tech.getType())
-				if tech.isRepeat():
+					f.write("\tTech=%s\n" % szTechType)
+				if INFO.getIntrinsic("TECH_", i, IntrinsicSlot.PYINT_IS_REPEAT) == 1:
 					for j in xrange(team.getTechCount(i)):
-						f.write("\tTech=%s\n" % tech.getType())
+						f.write("\tTech=%s\n" % szTechType)
 
 			if not team.isNPC():
 				# write met other teams
@@ -557,7 +557,7 @@ class CvPlayerDesc:
 			f.write("\tFlagDecal=%s\n" % player.getFlagDecal().encode(fEncode))
 			f.write("\tWhiteFlag=%d\n" % player.isWhiteFlag())
 			f.write("\tCivType=%s\n" % INFO.getType("CIVILIZATION_", player.getCivilizationType()))
-			f.write("\tColor=%s\n" % GC.getPlayerColorInfo(player.getPlayerColor()).getType())
+			f.write("\tColor=%s\n" % INFO.getType("PLAYERCOLOR_", player.getPlayerColor()))
 			f.write("\tArtStyle=%s\n" % GC.getArtStyleTypes(player.getArtStyleType()))
 			f.write("\tPlayableCiv=%d\n" % int(player.isPlayable()))
 
@@ -572,9 +572,9 @@ class CvPlayerDesc:
 				for i in xrange(GC.getNumCivicOptionInfos()):
 					f.write("\tCivicOption=%s, Civic=%s\n" %(INFO.getType("CIVICOPTION_", i), INFO.getType("CIVIC_", player.getCivics(i))))
 
-				pPlayerReligionInfo = GC.getReligionInfo(player.getStateReligion())
-				if pPlayerReligionInfo:
-					f.write("\tStateReligion=%s\n" %(pPlayerReligionInfo.getType()))
+				iStateReligion = player.getStateReligion()
+				if iStateReligion >= 0:
+					f.write("\tStateReligion=%s\n" %(INFO.getType("RELIGION_", iStateReligion)))
 
 				for i in xrange(GC.getMAX_PC_PLAYERS()):
 					playerX = GC.getPlayer(i)
@@ -833,9 +833,8 @@ class CvUnitDesc:
 
 	# save unit desc to a file
 	def write(self, f, unit, plot):
-		info = GC.getUnitInfo(unit.getUnitType())
 		f.write("\tBeginUnit\n\t\tUnitType=%s, UnitOwner=%d, (%s)\n"
-			%(info.getType(), unit.getOwner(), GC.getPlayer(unit.getOwner()).getName().encode(fEncode))
+			%(INFO.getType("UNIT_", unit.getUnitType()), unit.getOwner(), GC.getPlayer(unit.getOwner()).getName().encode(fEncode))
 		)
 		if unit.isCommander():
 			f.write("\t\tCommander=1\n")
@@ -866,7 +865,7 @@ class CvUnitDesc:
 		elif temp == ActivityTypes.ACTIVITY_PLUNDER:
 			f.write("\t\tPlunder\n")
 
-		f.write("\t\tUnitAIType=%s\n" % GC.getUnitAIInfo(unit.getUnitAIType()).getType())
+		f.write("\t\tUnitAIType=%s\n" % INFO.getType("UNITAI_", unit.getUnitAIType()))
 
 		if unit.getScriptData():
 			f.write("\t\tScriptData=%s\n\t\t!ScriptData\n" % unit.getScriptData())
@@ -1133,10 +1132,10 @@ class CvCityDesc:
 			szType = INFO.getType("BUILDING_", i)
 			for k in xrange(YieldTypes.NUM_YIELD_TYPES):
 				if city.getBuildingYieldChange(i, k) != 0:
-					f.write("\t\tModifiedBuilding=%s, Yield=%s, Amount=%s\n" %(szType, GC.getYieldInfo(k).getType(), city.getBuildingYieldChange(i, k)))
+					f.write("\t\tModifiedBuilding=%s, Yield=%s, Amount=%s\n" %(szType, INFO.getType("YIELD_", k), city.getBuildingYieldChange(i, k)))
 			for k in xrange(CommerceTypes.NUM_COMMERCE_TYPES):
 				if city.getBuildingCommerceChange(i, k) != 0:
-					f.write("\t\tModifiedBuilding=%s, Commerce=%s, Amount=%s\n" %(szType, GC.getCommerceInfo(k).getType(), city.getBuildingCommerceChange(i, k)))
+					f.write("\t\tModifiedBuilding=%s, Commerce=%s, Amount=%s\n" %(szType, INFO.getType("COMMERCE_", k), city.getBuildingCommerceChange(i, k)))
 			if city.getBuildingHappyChange(i) != 0:
 				f.write("\t\tModifiedBuilding=%s, Happy=%s\n" %(szType, city.getBuildingHappyChange(i)))
 			if city.getBuildingHealthChange(i) != 0:
@@ -1808,8 +1807,8 @@ Randomize Resources=0\nEndMap\n"
 				MAP.getTopLatitude(), MAP.getBottomLatitude(),
 				MAP.isWrapX(), MAP.isWrapY(),
 				INFO.getType("WORLDSIZE_", MAP.getWorldSize()),
-				GC.getClimateInfo(MAP.getClimate()).getType(),
-				GC.getSeaLevelInfo(MAP.getSeaLevel()).getType()
+				INFO.getType("CLIMATE_", MAP.getClimate()),
+				INFO.getType("SEALEVEL_", MAP.getSeaLevel())
 			)
 		)
 		# write team and player info

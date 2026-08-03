@@ -40,6 +40,8 @@
 #include "Infos/CvEspionageMissionInfo.h"
 #include "Infos/CvGoodyInfo.h"
 #include "Infos/CvUpkeepInfo.h"
+#include "Infos/CvVictoryInfo.h"   // isPermanent -- the scenario victory-list filter
+#include "Infos/CvTechInfo.h"      // isRepeat -- the scenario repeat-tech loop (PYINT_IS_REPEAT)
 #include "Infos/CvVoteSourceInfo.h"
 #include "Infos/CvInvisibleInfo.h"
 #include "Infos/CvEventInfo.h"
@@ -225,6 +227,24 @@ int CyInfo::getIntrinsic(const std::string& szTypePrefix, int iId, int iSlot) co
 				return 1;
 			}
 			return 0;
+		}
+		break;
+
+	case PYINT_IS_REPEAT:
+		// A REPEATABLE tech can be researched more than once; the scenario writer emits one Tech line per
+		// completion, so it needs the flag to know whether to loop the team's tech count.
+		if (szTypePrefix == "TECH_" && iId < GC.getNumTechInfos())
+		{
+			return GC.getTechInfo((TechTypes)iId).isRepeat() ? 1 : 0;
+		}
+		break;
+
+	case PYINT_IS_PERMANENT:
+		// A PERMANENT victory is one a scenario never lists: the WorldBuilder description writes only the
+		// non-permanent valid victories, because a permanent one is always in force and cannot be toggled.
+		if (szTypePrefix == "VICTORY_" && iId < GC.getNumVictoryInfos())
+		{
+			return GC.getVictoryInfo((VictoryTypes)iId).isPermanent() ? 1 : 0;
 		}
 		break;
 

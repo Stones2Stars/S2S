@@ -26,7 +26,10 @@ public:
 	void setPlot(CvPlot* p) { m_pPlot = p; }	// Call from C++
 
 	void erase();
-	DllExport NiPoint3 getPoint() const;
+	// ⛔ NOT const. The closed EXE resolves this by MANGLED NAME, and `const` is part of the mangling
+	// (QAE -> QBE), so adding it silently removes the symbol the EXE looks up while the body still
+	// compiles ([engine.md] -- an EXE-referenced symbol's name and signature are FIXED).
+	DllExport NiPoint3 getPoint();
 	int getTeam() const;
 
 	void nukeExplosion(int iRange, const CyUnit& kNukeUnit);
