@@ -24,6 +24,36 @@ class CvEraInfo; class CvHandicapInfo; class CvSpecialBuildingInfo; class CvProp
 class CvSkillClsTag; class CvTagClsTag; class CvAttributeClsTag; class CvCapabilityClsTag; class CvPolicyClsTag;
 class CvCharacteristicClsTag; class CvAmenityClsTag;
 
+//
+//	THE UNLOADED READ. The info plane is built once, by the ONE reader; a read that cannot be answered means a
+//	load pass did not fill the slot it is asking for. That is a LOAD defect, and it is reported HERE -- with the
+//	registry, the id and the mapped bound -- rather than answered with a blank info whose NULL getType() would
+//	surface in the EXE's frame or in boost::python with nothing left naming the id that caused it.
+//
+//	The line lands in Exceptions.log beside the [EXCEPTION] entries the vectored handler writes, so a crash is
+//	diagnosable from the logs alone; Loading.log carries it too, next to the [READJSON] census that built the
+//	plane. The raise then runs the ordinary unhandled path, which writes the minidump + the Python callstack.
+//
+void infoPlaneUnloadedRead(const char* szTypeName, int iId, int iMappedCount)
+{
+	const CvString szMessage = CvString::format(
+		"[INFOPLANE] UNLOADED READ registry=%s id=%d mapped=%d -- the info plane is built once, at load; "
+		"a read never creates an entry. This id was never mapped, so nothing can answer for it.",
+		szTypeName, iId, iMappedCount);
+
+	if (gDLL != NULL)
+	{
+		gDLL->logMsg("Exceptions.log", szMessage.c_str(), true, false);
+		gDLL->logMsg("Loading.log", szMessage.c_str(), true, false);
+	}
+	OutputDebugString(szMessage.c_str());
+	OutputDebugString("\n");
+
+	// Fails in EVERY config (an FAssert would compile away in Release/FinalRelease). NONCONTINUABLE so no
+	// handler can resume past a read that has no answer to return.
+	::RaiseException(INFOPLANE_UNLOADED_READ_EXCEPTION, EXCEPTION_NONCONTINUABLE, 0, NULL);
+}
+
 // #430 option B: ALIAS the tag's singleton to the engine's GC.m_pa<X>Info array -- the repo becomes a VIEW over the
 // read()+mapFrom'd objects getXInfo returns (one object, no separate store). The reinterpret is layout-safe: both are
 // std::vector<pointer>, and CvJson<X>Info / the Cv<X>Info shims derive from CvInfo (element upcast is trivial).

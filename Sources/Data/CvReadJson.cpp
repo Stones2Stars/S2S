@@ -314,6 +314,22 @@ const CvInfo* rjInfoForTypeConst(const std::string& t, int iId)
 	return ClassificationRegistry::infoForType(t);
 }
 
+//
+//	How many ids a JSON-backed registry holds, by infotype prefix -- the registry's END, answered by the SAME
+//	dispatch that answers its entities. ⛔ It lives HERE, beside the dispatch, precisely so a consumer never
+//	grows a per-prefix count table of its own: the load pipeline's table stays the one source, and the two
+//	cannot drift ([DEC-single-implementation]).
+//	Answers -1 for a prefix this dispatch does not own, so a caller can tell "not a JSON registry" from "empty".
+//
+int rjCountForType(const std::string& t)
+{
+	if (t == "TECH_GAME_START") return 1;
+#define X(PFX, T) if (rj_starts(t, PFX)) return InfoRepo<T>::get().size();
+	RJ_REPO_TYPES(X)
+#undef X
+	return -1;
+}
+
 CvInfo* rjInfoForType(const std::string& t, int iId)
 {
 	// the synthetic root's cascade data lives OFF the InfoRepo (cascadeStartNode) -- route it there, never the GC poco

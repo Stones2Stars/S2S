@@ -51,5 +51,7 @@ void loadJsonCategory(const char* szDataFolder,
 CvInfo* rjInfoForType(const std::string& szType, int iId);
 // READ-ONLY twin -- NULL past the end, never get-or-create. Consumers (the Cy read surface) use THIS.
 const CvInfo* rjInfoForTypeConst(const std::string& szType, int iId);
+// How many ids a JSON-backed registry holds (-1 = not a JSON registry). The registry END, from the ONE dispatch.
+int rjCountForType(const std::string& szType);
 
 #endif // CV_READJSON_H

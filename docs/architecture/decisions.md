@@ -479,6 +479,20 @@ at GAME LOAD ONLY: every JSON-shaped object is freed before load ends. Inventing
 defect (it has happened repeatedly). The `Json` name-fragment is reserved for the load-time parse surface; a
 runtime-resident `Json*`-named type is misnamed or misplaced. **Home:** [patterns.md § The ONE reader](patterns.md).
 
+### DEC-info-plane-read-only
+
+The info plane is WRITE-ONCE-AT-LOAD: `edit`/`editPtr` (get-or-create) belong to the ONE reader, the reverse pass
+and the classification registry, and **a read NEVER creates or grows a registry**. A read that cannot be answered is
+a LOAD defect and FAILS LOUD, naming the registry + id, in every config — never answered with a freshly-minted blank
+info. Two reasons it is a hard rule: a blank info's `getType()` returns NULL, which is dereferenced in the EXE's
+frame or in boost::python with nothing left naming the id that caused it; and on an ALIASED repo the backing IS
+`GC.m_pa<X>Info`, so creating moves `getNum<X>Infos()` — a READ silently redefines the registry's own bound and
+bounded walks run off into entries the walk itself created. **Corollary (owner): crash at the main menu because
+things are not loaded, rather than manually incrementing the registry to limp past it** — and never defer a read
+(the lazy-screen shortcut) to make the failure go quiet, which moves the failure somewhere illegible without
+initializing anything. The read-side twin of [DEC-one-json-reader](#dec-one-json-reader); the fail-loud application
+of [DEC-no-legacy-masking](#dec-no-legacy-masking). **Home:** [patterns.md § The INFO DATA-OUT contract](patterns.md).
+
 ### DEC-scope-is-an-axis
 
 A kind/scalar/yield enum names its CONCEPT only; the SCOPE a value is authored at is a separate axis of the deposit

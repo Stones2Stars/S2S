@@ -76,6 +76,33 @@ class CvCivilizationInfo; class CvEraInfo; class CvHandicapInfo; class CvGameSpe
 class CvPropertyInfo; class CvLeaderHeadInfo; class CvSpecialUnitInfo; class CvVictoryInfo; class CvVoteInfo;
 class CvHurryInfo; class CvBonusClassInfo; class CvWorldInfo;
 
+//	A custom NONCONTINUABLE exception code (customer bit + error severity), so an unloaded read is distinguishable
+//	in Exceptions.log and in the minidump from a genuine ACCESS_VIOLATION -- the whole point being that this one
+//	names its own cause instead of surfacing as a NULL deref in somebody else's frame.
+#define INFOPLANE_UNLOADED_READ_EXCEPTION 0xE0530001
+
+//	Report an UNLOADED READ and fail, in EVERY config -- see InfoRepo::atPtr below for what it catches and why.
+//	⛔ Deliberately NOT an FAssert: FASSERT_ENABLE is off in Release/FinalRelease (fbuild.bff), which is exactly
+//	where the game is actually played, so an assert here would compile away in the build that needs it most.
+void infoPlaneUnloadedRead(const char* szTypeName, int iId, int iMappedCount);
+
+//	THE SAME READ, for a registry still held as a BARE ENGINE ARRAY rather than through an InfoRepo.
+//	⛔ One implementation, two access paths ([DEC-single-implementation]): the guard cannot be allowed to differ
+//	between them, because which path a registry uses is a migration detail and the CALLER never knows which it got.
+//	⚠ The unguarded form (`return *(m_pa<X>[iId])`) is a live crash, not a theoretical one: FASSERT_BOUNDS above it
+//	compiles out of Release, so an out-of-range id dereferences a GARBAGE POINTER and the failure lands wherever
+//	that garbage is first walked -- observed as an access violation inside a std::map::find on an info's member,
+//	with nothing in the stack naming the id or the registry.
+template <class TInfo>
+TInfo& infoArrayAt(const std::vector<TInfo*>& kArray, int iId, const char* szTypeName)
+{
+	if (iId < 0 || iId >= (int)kArray.size() || kArray[iId] == NULL)
+	{
+		infoPlaneUnloadedRead(szTypeName, iId, (int)kArray.size());
+	}
+	return *kArray[iId];
+}
+
 // RepoPayload<TTag> -- the type-specific CvInfo subclass each repo creates (owner ruling 2026-06-30, mirroring
 // StoneBase's per-type Domain/Infos). Default = the generic CvInfo; specialized for the types carrying type-specific
 // data. Keeps creation CONSISTENT: InfoRepo<CvTraitInfo> ALWAYS makes a CvSimpleTraitInfo regardless of the caller,
@@ -157,6 +184,42 @@ public:
 
 	// pointer form of edit() (uniform with get() for prefix dispatch); never NULL.
 	CvInfo* editPtr(int iId) { return &edit(iId); }
+
+	// How many ids this repo holds -- the registry's END. A read surface cannot walk a registry without it:
+	// probing get() for the first NULL is NOT a bound (a repo may legitimately hold a NULL hole), and probing
+	// editPtr() is worse, since that GROWS the array rather than answering.
+	int size() const
+	{
+		const std::vector<CvInfo*>& vec = m_pBacking ? *m_pBacking : m_data;
+		return (int)vec.size();
+	}
+
+	//	⛔ THE READ. The info plane is WRITE-ONCE-AT-LOAD; a read NEVER creates and NEVER grows it.
+	//
+	//	edit()/editPtr() above are the LOAD-TIME WRITE path and belong to the ONE reader (loadJson), the reverse
+	//	pass and the classification registry -- nothing else ([DEC-one-json-reader]). An info is a pure data
+	//	source, loaded once and SHARED by every player, so a read that writes makes an immutable shared object
+	//	mutable per GAME rather than per LOAD ([DEC-json-not-cascade]) -- and a read is specified as a bare fetch
+	//	with nothing on it to gate ([state-repositories.md]).
+	//	⚑ What get-or-create actually answers with is a BLANK info, and a blank is indistinguishable from a real
+	//	one until something asks it a question: its getType() answers NULL (CvInfoBase), which is handed to the
+	//	EXE and to boost::python and dereferenced THERE -- so the failure surfaces in someone else's frame with
+	//	nothing left pointing back at the id that caused it.
+	//	⚑ Worse on an ALIASED repo, which is most of them: the backing IS GC.m_pa<X>Info, so growing it moves
+	//	getNum<X>Infos() -- a READ silently redefines the registry's own bound, and every bounded walk then runs
+	//	off into the entries the walk itself created.
+	//	⇒ An id outside the mapped range, or a slot no load pass ever filled, is a LOAD DEFECT. It is NAMED and
+	//	fails HERE, at the bad read, while the type and the id are still known ([DEC-no-legacy-masking]: what is
+	//	missing must be immediately visible, never quietly answered).
+	CvInfo* atPtr(int iId, const char* szTypeName) const
+	{
+		const std::vector<CvInfo*>& vec = m_pBacking ? *m_pBacking : m_data;
+		if (iId < 0 || iId >= (int)vec.size() || vec[iId] == NULL)
+		{
+			infoPlaneUnloadedRead(szTypeName, iId, (int)vec.size());
+		}
+		return vec[iId];
+	}
 
 	// the JSON info at id, or NULL if none mapped (consumers read this).
 	const CvInfo* get(int iId) const

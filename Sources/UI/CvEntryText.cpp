@@ -17,7 +17,7 @@
 #include "CvJsonConditionParse.h"   // cascadeSpellPredKind -- the predicate vocabulary's spell-back
 #include "CvYieldInfo.h"
 #include "CvCommerceInfo.h"
-#include "Data/CvReadJson.h"        // rjInfoForType -- FK id -> the referenced info (name resolution)
+#include "Data/CvReadJson.h"        // rjInfoForTypeConst -- FK id -> the referenced info (name resolution; a READ)
 #include "Defines/CvGlobals.h"
 
 namespace
@@ -89,7 +89,9 @@ namespace
 	{
 		if (!szType.empty() && iId >= 0)
 		{
-			const CvInfo* pInfo = rjInfoForType(szType, iId);
+			// the CONST twin -- name resolution is a READ, and the get-or-create dispatch would grow the
+			// registry for an FK that resolved to an id the registry never mapped.
+			const CvInfo* pInfo = rjInfoForTypeConst(szType, iId);
 			if (pInfo != NULL)
 			{
 				return etx_infoBaseName(*pInfo, szType);

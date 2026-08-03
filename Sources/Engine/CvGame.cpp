@@ -8797,17 +8797,23 @@ void CvGame::read(FDataStreamBase* pStream)
 
 	m_Properties.readWrapper(pStream);
 
-	//Example of how to skip element
-	//WRAPPER_SKIP_ELEMENT(wrapper,"CvGame",m_bCircumnavigated, SAVE_VALUE_ANY);
 	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper,"CvGame", REMAPPED_CLASS_TYPE_IMPROVEMENTS, GC.getNumImprovementInfos(), m_paiImprovementCount);
 	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper,"CvGame", REMAPPED_CLASS_TYPE_TECHS, GC.getNumTechInfos(), m_paiTechGameTurnDiscovered);
 	WRAPPER_READ_OBJECT_END(wrapper);
 
-	//establish improvement costs
-	//for (int iI = 0; iI < GC.getNumImprovementInfos(); iI++)
-	//{
-	//	GC.getImprovementInfo((ImprovementTypes)iI).setHighestCost();
-	//}
+	//	⛔ THE GAME HANDICAP IS DERIVED HERE, NOT AT LOAD-END. m_eHandicap is not serialized -- reset() leaves it
+	//	NO_HANDICAP and averageHandicaps() is what fills it -- but on the load path that call lived only in
+	//	onFinalInitialized, which runs AFTER the EXE has already started drawing. The EXE renders the city
+	//	billboards during the load, and that path prices production
+	//	(buildCityBillboardProductionString -> getProductionTurnsLeft -> CvPlayer::getProductionNeeded), which asks
+	//	getHandicapInfo(getHandicapType()) -- so it read id -1 while the value was still underived.
+	//	⚑ The inputs are ready: the per-player handicaps live in CvInitCore, which the EXE has read before this
+	//	point, so deriving it at the END of the save read is both correct and the earliest it CAN be correct.
+	//	⚠ This is NOT an ensure-on-read (tombstoned, superseded-ideas #14): nothing is derived at the read site --
+	//	the value is settled once, here, and every later read stays a bare fetch. onFinalInitialized still calls
+	//	averageHandicaps() for the multiplayer human-status case it was written for; this only closes the window
+	//	before it.
+	averageHandicaps();
 }
 
 #define TAGGED_SAVES 1
