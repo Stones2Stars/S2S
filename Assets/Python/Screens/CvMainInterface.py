@@ -1979,10 +1979,7 @@ class CvMainInterface:
 
 			if iUnitType not in aMap:
 				if bEnable:
-					for j in xrange(GC.getNumUnitInfos()):
-						if STATE.canUnitUpgrade(iOwner, iUnitID, j, True):
-							bUpg = True
-							break
+					bUpg = STATE.canUnitUpgradeToAny(iOwner, iUnitID)
 				else:
 					bUpg = False
 				aMap[iUnitType] = [INFO.getButton("UNIT_", iUnitType), bUpg]

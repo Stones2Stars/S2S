@@ -567,7 +567,7 @@ python::list CyState::getTradeRoutes(int iPlayer, int iCity) const
 	python::list rows = python::list();
 	CvCity* pCity = const_cast<CvCity*>(cys_city(iPlayer, iCity));
 	if (pCity == NULL) return rows;
-	const int iMax = pCity->getMaxTradeRoutes();
+	const int iMax = pCity->getNumTradeRouteSlots();
 	for (int i = 0; i < iMax; ++i)
 	{
 		CvCity* pPartner = pCity->getTradeCity(i);
@@ -821,6 +821,18 @@ bool CyState::isUnitActionRecommended(int iPlayer, int iUnit, int iAction) const
 		return false;
 	}
 	return pUnit->isActionRecommended(iAction);
+}
+
+bool CyState::canUnitUpgradeToAny(int iPlayer, int iUnit) const
+{
+	const CvUnit* pUnit = cys_unit(iPlayer, iUnit);
+	if (pUnit == NULL) return false;
+	const int iNumUnits = GC.getNumUnitInfos();
+	for (int iToUnit = 0; iToUnit < iNumUnits; ++iToUnit)
+	{
+		if (pUnit->canUpgrade((UnitTypes)iToUnit, true)) return true;
+	}
+	return false;
 }
 
 bool CyState::canUnitUpgrade(int iPlayer, int iUnit, int iToUnit, bool bTestVisible) const
@@ -1112,6 +1124,7 @@ void CyState::pythonPublish()
 		.def("isUnitPromotionOverridden",&CyState::isUnitPromotionOverridden)
 		.def("isUnitActionRecommended",  &CyState::isUnitActionRecommended)
 		.def("canUnitUpgrade",           &CyState::canUnitUpgrade)
+		.def("canUnitUpgradeToAny",      &CyState::canUnitUpgradeToAny)
 		.def("isCityRevealed",           &CyState::isCityRevealed)
 		.def("isEmphasize",              &CyState::isEmphasize)
 		.def("getHurryQuote",            &CyState::getHurryQuote)

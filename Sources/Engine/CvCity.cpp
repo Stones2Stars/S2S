@@ -10927,6 +10927,12 @@ void CvCity::setHasCorporation(CorporationTypes eIndex, bool bNewValue, bool bAn
 }
 
 
+int CvCity::getNumTradeRouteSlots() const
+{
+	return (int)m_paTradeCities.size();
+}
+
+
 CvCity* CvCity::getTradeCity(int iIndex) const
 {
 	FASSERT_BOUNDS(0, (int)m_paTradeCities.size(), iIndex);

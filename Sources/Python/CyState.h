@@ -246,6 +246,10 @@ public:
 	// Can this unit become that one -- a PAIR question (this unit, that target type), so the target is in
 	// the call. bTestVisible asks the display question ("show the button") rather than the strict one.
 	bool canUnitUpgrade(int iPlayer, int iUnit, int iToUnit, bool bTestVisible) const;
+	// ⛔ "Can this unit upgrade to ANYTHING?" is ONE question and therefore ONE read. Asking it by looping the
+	// whole unit registry from script costs a boundary crossing PER UNIT TYPE, per unit, per redraw -- and a
+	// boost::python call costs far more than the lookup inside it ([patterns.md]). The walk belongs here.
+	bool canUnitUpgradeToAny(int iPlayer, int iUnit) const;
 
 	// ---- EMPIRE-only groups ----
 	python::list getUpkeepKinds(int iPlayer) const;

@@ -1154,6 +1154,10 @@ public:
 	void setHasCorporation(CorporationTypes eIndex, bool bNewValue, bool bAnnounce, bool bArrows = true);
 	void applyCorporationModifiers(CorporationTypes eIndex, bool bValue);
 
+	//	How many trade-route SLOTS actually exist. ⛔ Iterate THIS, never getMaxTradeRoutes(): the slot vector is
+	//	sized once when the routes are cleared, while getMaxTradeRoutes() RECOMPUTES from a cascade value, so the
+	//	two drift apart -- and getTradeCity's only bound check is FASSERT_BOUNDS, which compiles out of Release.
+	int getNumTradeRouteSlots() const;
 	CvCity* getTradeCity(int iIndex) const;
 	int getTradeRoutes() const;
 	void clearTradeRoutes();

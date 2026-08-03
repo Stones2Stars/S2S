@@ -182,6 +182,13 @@ namespace Cy
 		//	interpreter reads freed memory on some later touch. So incref, and give the list its own reference.
 		//	⚠ The failure is REMOTE from the cause -- an access violation inside python24 at whatever next walks
 		//	the object -- so it reads as an interpreter bug rather than as a refcount error here.
+		//	⛔ THE OWNERSHIP CONTRACT IS "CREATE AND HAND OVER", and it is set by PyWrap beside this: PyWrap builds
+		//	its object with makePythonObject, stores the pointer, and NEVER decrefs -- a path that has worked for
+		//	years, so the args list takes ownership of what it is given. Every other CyArgsList::add agrees:
+		//	PyInt_FromLong / PyString_FromString / PyUnicode_FromWideChar all hand over a FRESH reference.
+		//	⚠ So handing it `identity.ptr()` bare would give ONE reference TWO owners -- this member and the list.
+		//	The incref is what makes the count match the number of owners; a decref in a destructor here would be
+		//	the same error mirrored, releasing what the list already owns.
 		PyIdentity(int iOwner, int iId) : identity(python::make_tuple(iOwner, iId))
 		{
 			pyobj = python::incref(identity.ptr());
