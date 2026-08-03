@@ -13416,6 +13416,11 @@ void CvUnit::getUnitRead(int (&unitRead)[NUM_UNIT_READS])
 	}
 
 	//	The ORDER state lives on the selection group, which is where Civ4 keeps it.
+	unitRead[UNIT_READ_DAMAGE]             = getDamage();
+	unitRead[UNIT_READ_FACING_DIRECTION]   = (int)getFacingDirection(false);
+	unitRead[UNIT_READ_LEADER_UNIT_TYPE]   = (int)getLeaderUnitType();
+	unitRead[UNIT_READ_UNIT_AI]            = (int)AI_getUnitAIType();
+	unitRead[UNIT_READ_GROUP_ID]           = -1;
 	unitRead[UNIT_READ_ACTIVITY]             = (int)NO_ACTIVITY;
 	unitRead[UNIT_READ_AUTOMATE]             = (int)NO_AUTOMATE;
 	unitRead[UNIT_READ_MISSION]              = (int)NO_MISSION;
@@ -13423,6 +13428,7 @@ void CvUnit::getUnitRead(int (&unitRead)[NUM_UNIT_READS])
 	const CvSelectionGroup* pGroup = getGroup();
 	if (pGroup != NULL)
 	{
+		unitRead[UNIT_READ_GROUP_ID]             = pGroup->getID();
 		unitRead[UNIT_READ_ACTIVITY]             = (int)pGroup->getActivityType();
 		unitRead[UNIT_READ_AUTOMATE]             = (int)pGroup->getAutomateType();
 		unitRead[UNIT_READ_MISSION_QUEUE_LENGTH] = pGroup->getLengthMissionQueue();

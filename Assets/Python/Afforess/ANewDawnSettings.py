@@ -7,6 +7,7 @@ import CvUtil
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
 STATE = CyState()
+ACT = CyAct()   # the ACTION surface
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 ANewDawnOpt = BugCore.game.RoMSettings
@@ -104,7 +105,7 @@ class ANewDawnSettings:
 			GC.getMap().updateMinimapColor()
 		#disabled/enable worker actions
 		elif protocol == CANBUILD_EVENT_ID:
-			GC.getBuildInfo(data2).setDisabled(data3)
+			ACT.setBuildDisabled(data2, data3)
 
 #####################################################
 # Module level functions defined in RoMSettings.xml #

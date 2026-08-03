@@ -824,30 +824,35 @@ class CvPlayerDesc:
 class CvUnitDesc:
 
 	# save unit desc to a file
-	def write(self, f, unit, plot):
+	def write(self, f, unitId, plot):
+		# A unit is an (owner, id) PAIR here like everywhere else; the whole unit crosses in two reads.
+		iOwner, iUnitID = unitId
+		aUnit  = STATE.getUnitRead(iOwner, iUnitID)
+		aFlags = STATE.getUnitFlags(iOwner, iUnitID)
 		f.write("\tBeginUnit\n\t\tUnitType=%s, UnitOwner=%d, (%s)\n"
-			%(INFO.getType("UNIT_", unit.getUnitType()), unit.getOwner(), GC.getPlayer(unit.getOwner()).getName().encode(fEncode))
+			%(INFO.getType("UNIT_", aUnit[UnitReadKind.UNIT_READ_TYPE]), iOwner, STATE.getPlayerName(iOwner).encode(fEncode))
 		)
-		if unit.isCommander():
+		if aFlags[UnitFlagKind.UNIT_FLAG_COMMANDER]:
 			f.write("\t\tCommander=1\n")
-		if unit.isCommodore():
+		if aFlags[UnitFlagKind.UNIT_FLAG_COMMODORE]:
 			f.write("\t\tCommodore=1\n")
-		if unit.getNameNoDesc():
-			f.write("\t\tUnitName=%s\n" % unit.getNameNoDesc().encode(fEncode))
-		if unit.getLeaderUnitType() != -1:
-			f.write("\t\tLeaderUnitType=%s\n" % INFO.getType("UNIT_", unit.getLeaderUnitType()))
-		if unit.getDamage() > 0:
-			f.write("\t\tDamage=%d\n" % unit.getDamage())
+		szNameNoDesc = STATE.getUnitNameNoDesc(iOwner, iUnitID)
+		if szNameNoDesc:
+			f.write("\t\tUnitName=%s\n" % szNameNoDesc.encode(fEncode))
+		if aUnit[UnitReadKind.UNIT_READ_LEADER_UNIT_TYPE] != -1:
+			f.write("\t\tLeaderUnitType=%s\n" % INFO.getType("UNIT_", aUnit[UnitReadKind.UNIT_READ_LEADER_UNIT_TYPE]))
+		if aUnit[UnitReadKind.UNIT_READ_DAMAGE] > 0:
+			f.write("\t\tDamage=%d\n" % aUnit[UnitReadKind.UNIT_READ_DAMAGE])
 
-		f.write("\t\tLevel=%d, Experience=%d\n" %(unit.getLevel(), unit.getExperience()))
+		f.write("\t\tLevel=%d, Experience=%d\n" %(aUnit[UnitReadKind.UNIT_READ_LEVEL], aUnit[UnitReadKind.UNIT_READ_EXPERIENCE] / 100))
 
 		for i in xrange(GC.getNumPromotionInfos()):
-			if unit.isHasPromotion(i):
+			if STATE.hasUnitPromotion(iOwner, iUnitID, i):
 				f.write("\t\tPromotionType=%s\n" % INFO.getType("PROMOTION_", i))
 
-		f.write("\t\tFacingDirection=%d\n" % unit.getFacingDirection())
+		f.write("\t\tFacingDirection=%d\n" % aUnit[UnitReadKind.UNIT_READ_FACING_DIRECTION])
 
-		temp = unit.getGroup().getActivityType()
+		temp = aUnit[UnitReadKind.UNIT_READ_ACTIVITY]
 		if temp == ActivityTypes.ACTIVITY_SLEEP:
 			f.write("\t\tSleep\n")
 		elif temp == ActivityTypes.ACTIVITY_INTERCEPT:
@@ -857,14 +862,13 @@ class CvUnitDesc:
 		elif temp == ActivityTypes.ACTIVITY_PLUNDER:
 			f.write("\t\tPlunder\n")
 
-		f.write("\t\tUnitAIType=%s\n" % INFO.getType("UNITAI_", unit.getUnitAIType()))
+		f.write("\t\tUnitAIType=%s\n" % INFO.getType("UNITAI_", aUnit[UnitReadKind.UNIT_READ_UNIT_AI]))
 
-		if unit.getScriptData():
-			f.write("\t\tScriptData=%s\n\t\t!ScriptData\n" % unit.getScriptData())
-		if unit.getImmobileTimer() > 0:
-			f.write("\t\tImmobile=%d\n" % unit.getImmobileTimer())
-		if unit.baseCombatStr() != info.getCombat():
-			f.write("\t\tCombatStr=%d\n" % unit.baseCombatStr())
+		szScriptData = STATE.getUnitScriptData(iOwner, iUnitID)
+		if szScriptData:
+			f.write("\t\tScriptData=%s\n\t\t!ScriptData\n" % szScriptData)
+		# ImmobileTimer is gone from the engine, and the CombatStr line compared against an `info` this
+		# scope never defined -- it could only ever have raised. Both drop rather than being invented back.
 
 		f.write("\tEndUnit\n")
 
@@ -1472,9 +1476,8 @@ class CvPlotDesc:
 			f.write("\tPlotType=%d\n" % int(plot.getPlotType()))
 
 		# units
-		for unit in plot.units():
-			if unit.getUnitType() > -1:
-				CvUnitDesc().write(f, unit, plot)
+		for aUnitId in STATE.getPlotUnitIds(plot.getX(), plot.getY()):
+			CvUnitDesc().write(f, aUnitId, plot)
 		# city
 		if plot.isCity():
 			CvCityDesc().write(f, plot)

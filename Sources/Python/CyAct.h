@@ -50,6 +50,11 @@ public:
 	bool setUnitListFilterActive(int iPlayer, int iCity, int iFilter, bool bActive) const;
 	bool setUnitListGrouping(int iPlayer, int iCity, int iGrouping) const;
 	bool setUnitListSorting(int iPlayer, int iCity, int iSorting) const;
+
+	// Enable/disable a worker BUILD at runtime -- the in-game settings toggle. ⚖ Sanctioned by the enabler's own
+	// design ([CvBuildEnabler]): "the isDisabled runtime toggle (Python settings scripts) stays a live check
+	// beside the bare read". So this is a live OPTION the settings screens own, not gameplay authored in script.
+	bool setBuildDisabled(int iBuild, bool bDisabled) const;
 	// Mark a build list stale so the next read rebuilds it. This is the screen ASKING for work, which is why it
 	// is an action and not folded into the read -- a read that rebuilt itself would be the self-healing shape
 	// the whole surface avoids ([DEC-no-self-heal]).

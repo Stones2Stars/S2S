@@ -751,6 +751,18 @@ python::list CyState::getUnitFlags(int iPlayer, int iUnit) const
 	return cys_toList(values);
 }
 
+std::wstring CyState::getUnitNameNoDesc(int iPlayer, int iUnit) const
+{
+	const CvUnit* pUnit = cys_unit(iPlayer, iUnit);
+	return pUnit ? std::wstring(pUnit->getNameNoDesc()) : std::wstring();
+}
+
+std::string CyState::getUnitScriptData(int iPlayer, int iUnit) const
+{
+	const CvUnit* pUnit = cys_unit(iPlayer, iUnit);
+	return pUnit ? pUnit->getScriptData() : std::string();
+}
+
 std::wstring CyState::getUnitName(int iPlayer, int iUnit) const
 {
 	const CvUnit* pUnit = cys_unit(iPlayer, iUnit);
@@ -1118,6 +1130,8 @@ void CyState::pythonPublish()
 		.def("getUnitRead",              &CyState::getUnitRead)
 		.def("getUnitFlags",             &CyState::getUnitFlags)
 		.def("getUnitName",              &CyState::getUnitName)
+		.def("getUnitNameNoDesc",        &CyState::getUnitNameNoDesc)
+		.def("getUnitScriptData",        &CyState::getUnitScriptData)
 		.def("getPlotUnitIds",           &CyState::getPlotUnitIds)
 		.def("isUnitInvisible",          &CyState::isUnitInvisible)
 		.def("hasUnitPromotion",         &CyState::hasUnitPromotion)

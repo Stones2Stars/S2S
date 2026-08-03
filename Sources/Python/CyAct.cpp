@@ -7,6 +7,7 @@
 #include "Defines/CvGlobals.h"
 #include "Engine/CvCity.h"
 #include "Engine/CvUnit.h"
+#include "Infos/CvBuildInfo.h"
 #include "UI/CvBuildingFilters.h"
 #include "UI/CvBuildingSort.h"
 #include "UI/CvUnitFilters.h"
@@ -131,6 +132,13 @@ bool CyAct::invalidateBuildingList(int iPlayer, int iCity) const
 	return true;
 }
 
+bool CyAct::setBuildDisabled(int iBuild, bool bDisabled) const
+{
+	if (iBuild < 0 || iBuild >= GC.getNumBuildInfos()) return false;
+	GC.getBuildInfo((BuildTypes)iBuild).setDisabled(bDisabled);
+	return true;
+}
+
 void CyAct::pythonPublish()
 {
 	OutputDebugString("Python Extension Module - CyAct\n");
@@ -145,5 +153,6 @@ void CyAct::pythonPublish()
 		.def("setUnitListSorting", &CyAct::setUnitListSorting)
 		.def("invalidateUnitList", &CyAct::invalidateUnitList)
 		.def("invalidateBuildingList", &CyAct::invalidateBuildingList)
+		.def("setBuildDisabled", &CyAct::setBuildDisabled)
 		;
 }

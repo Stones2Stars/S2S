@@ -234,6 +234,10 @@ public:
 	python::list getUnitRead(int iPlayer, int iUnit) const;
 	python::list getUnitFlags(int iPlayer, int iUnit) const;
 	std::wstring getUnitName(int iPlayer, int iUnit) const;
+	// The unit's CUSTOM name only -- empty when it carries none, unlike getUnitName which falls back to the
+	// type's description. A scenario writes this one, because a fallback name is not authored data.
+	std::wstring getUnitNameNoDesc(int iPlayer, int iUnit) const;
+	std::string getUnitScriptData(int iPlayer, int iUnit) const;
 	// The units standing on a plot, as [owner, id] pairs, in the engine's own plot order -- what a plot list
 	// iterates. ⚠ Answers EVERY unit present; the caller applies its own visibility test below, because
 	// visibility is per-OBSERVER and the list is drawn for one team.
