@@ -965,7 +965,12 @@ namespace
 			{
 				for (size_t iLinked = 0; iLinked < pLinkedIds->size(); ++iLinked)
 				{
-					static_cast<CvBonusInfo*>(InfoRepo<CvBonusInfo>::get().editPtr((*pLinkedIds)[iLinked]))->setTechObsolete(eTech);
+					CvBonusInfo* pBonus = static_cast<CvBonusInfo*>(InfoRepo<CvBonusInfo>::get().editPtr((*pLinkedIds)[iLinked]));
+					pBonus->setTechObsolete(eTech);
+					//	Land the INVERSE beside the FK, so the bonus answers "what obsoletes me?" the same way a
+					//	building already does ([DEC-one-reverse-view]) instead of only through a hand-named member
+					//	that no reader can reach parameterically.
+					pBonus->addReverseEdge(EDGEF_OBSOLETED_BY, EDGEB_TECHS, (int)eTech);
 				}
 			}
 			if (const std::vector<int>* pLinkedIds = pEdges->find(EDGEF_ENABLES, EDGEB_PROJECTS))

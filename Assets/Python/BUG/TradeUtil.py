@@ -86,6 +86,7 @@ import BugUtil
 GC = CyGlobalContext()
 GAME = GC.getGame()
 STATE = CyState()
+INFO = CyInfo()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 
@@ -313,8 +314,15 @@ def getDesiredBonuses(player, team):
 	bonuses = set()
 	for eBonus in range(GC.getNumBonusInfos()):
 		if player.getNumAvailableBonuses(eBonus) == 0:
-			eObsoleteTech = GC.getBonusInfo(eBonus).getTechObsolete()
-			if eObsoleteTech == -1 or not team.isHasTech(eObsoleteTech):
+			# "What obsoletes me?" is a reverse EDGE the readJson pass already landed
+			# ([DEC-one-reverse-view]) -- a LIST, because nothing says a bonus has only one obsoleter.
+			aObsoleters = INFO.getEdgeIds("BONUS_", eBonus, EdgeFamily.EDGEF_OBSOLETED_BY, EdgeBucket.EDGEB_TECHS)
+			bObsolete = False
+			for eObsoleteTech in aObsoleters:
+				if team.isHasTech(eObsoleteTech):
+					bObsolete = True
+					break
+			if not bObsolete:
 				bonuses.add(eBonus)
 	return bonuses | getCorporationBonuses(player)
 
@@ -511,19 +519,23 @@ def addTrade(type, format):
 ## whatever you want to display in the formatted string.
 
 def getTradeTech(player, trade):
-	return GC.getTechInfo(trade.iData).getDescription()
+	return INFO.getDescription("TECH_", trade.iData)
 
 def getTradeBonus(player, trade):
-	return GC.getBonusInfo(trade.iData).getDescription()
+	return INFO.getDescription("BONUS_", trade.iData)
 
 def getTradeCity(player, trade):
-	return getPlayer(player).getCity(trade.iData).getName()
+	# <player> arrives as either an id or a CyPlayer, so it is normalized before the id-based read.
+	pPlayer = getPlayer(player)
+	if pPlayer is None:
+		return u""
+	return STATE.getCityName(pPlayer.getID(), trade.iData)
 
 def getTradeCivic(player, trade):
-	return GC.getCivicInfo(trade.iData).getDescription()
+	return INFO.getDescription("CIVIC_", trade.iData)
 
 def getTradeReligion(player, trade):
-	return GC.getReligionInfo(trade.iData).getDescription()
+	return INFO.getDescription("RELIGION_", trade.iData)
 
 def getTradePlayer(player, trade):
 	return getPlayer(trade.iData).getName()
