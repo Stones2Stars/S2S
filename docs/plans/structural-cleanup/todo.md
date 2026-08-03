@@ -874,8 +874,18 @@
   ⚠ The same hole reaches any published accessor whose RETURN type is an object — the art-info classes behind the
   art manager, and any info-object handle still published. A def that resolves and then raises reads as a mystery
   rather than as a missing binding, which is why this class hid.
+  ⚑ **The PLAIN VALUE STRUCTS are in this set and take their FIELDS with them** — the purge deleted the struct
+  registrar whole, and for a coordinate pair or an RGBA quadruple the members ARE the value rather than a getter
+  over game state, so "do NOT re-add getters" does not bite there
+  ([patterns.md](../../architecture/patterns.md) THE PYTHON READ BOUNDARY). Restore on demand, named by the call
+  site that wanted it.
   ⚑ The test is mechanical: a type needs registration iff some engine call site passes or returns it. A wrapper
   whose `DECLARE_PY_WRAPPER` has no call site genuinely needs none.
+- Convert the remaining FONT-GLYPH reads off the deleted info accessors onto the translator's `[ICON_*]` tokens,
+  as each screen is met. ⛔ The glyph is text-plane, not info data, so this never closes by reviving
+  `get<X>Info` ([patterns.md](../../architecture/patterns.md) THE PYTHON READ BOUNDARY) — the token route needs
+  no engine work at all. ⚠ A screen's reads fail only when that screen is first opened, so they surface one at a
+  time rather than at load.
 - Re-home the module-scope engine HANDLES the cut dropped rather than re-pointed. Scripts bind them once at module
   scope and call them throughout; the binding went and the call sites did not, so the failure is at first use, not
   at import. ⛔ Do not answer it by republishing the legacy god object — the handles come back through the surface

@@ -603,6 +603,18 @@ of them:
   > ⇒ **When cutting a read surface, cut the `.def`s and KEEP the `class_<>` for any type the engine hands
   > across or hands back.** Deleting a whole registrar file takes both halves, and the second half is not yours
   > to take.
+  >
+  > **⚖ THE PLAIN VALUE STRUCTS ARE THE SAME RULE ONE LEVEL DOWN, AND THEIR FIELDS ARE NOT A READ SURFACE.**
+  > The purge deleted the struct registrar whole (`NiPoint3`/`NiPoint2`/`NiColorA`/`POINT`/`IDInfo`/`OrderData`/
+  > `MissionData`/…), and those are the MARSHALLING VOCABULARY, not handles: a coordinate pair or an RGBA
+  > quadruple answers no question about game state, so `def_readwrite` on it is the VALUE ITSELF and
+  > [DEC-cy-not-fixed](decisions.md#dec-cy-not-fixed)'s ban — which is on the info/state GETTER contract —
+  > does not reach it. ⛔ A struct registered without its fields is useless: Python cannot read the point it
+  > was handed, nor build the colour it must pass.
+  > ⚑ **They fail in BOTH directions, which is why the absence is easy to misread.** Python CONSTRUCTS some
+  > (`NiColorA(0,0,0,0)` for the dot-map overlay) — those raise `NameError` at IMPORT. The engine RETURNS others
+  > (`Win32::getCursorPos` → `POINT`, still published) — those resolve and then throw at CONVERSION, at first
+  > use, far from the cut. Restore on DEMAND, named by the call site that wanted it.
 
 **⛔ TWO THINGS THE LIBRARY DOES NOT OWN:**
 
@@ -611,6 +623,17 @@ of them:
   [naming.md](../specs/naming.md)). So the library serves already-RENDERED lines and the raw key reference;
   resolution stays with the existing managers and Python screen chrome keeps calling the text system directly.
   This is an unmigrated system BOUNDARY, not a hole in the library.
+  > **⛔ A FONT GLYPH IS TEXT-PLANE, NOT INFO DATA — and it is the case most likely to send a reader after a
+  > deleted info accessor.** `CvYieldInfo::getChar()` and its kin LOOK like authored data and are not: the glyph
+  > is a runtime GameFont slot the `CvGameTextMgr` symbol pass assigns via `setChar`, for seven registries
+  > (yield · commerce · religion · corporation · property · invisible · bonus) that straddle the JSON/XML line —
+  > so it is not info data on EITHER side, and no `get<X>Info` revival is the way to ask.
+  > ⚑ **The translator already publishes each one as an `[ICON_*]` token**, resolved through `CyTranslator`,
+  > which is the closed EXE's and was never ours to cut ([python-load-sequence.md](../reference/python-load-sequence.md)).
+  > `CyTranslator().getText("[ICON_FOOD]", ())` is the live in-tree idiom and needs no engine work at all.
+  > ⚠ The fixed symbols are the OTHER half and take the other route: `CyGame.getSymbolID(FontSymbols.X)` serves
+  > the `FontSymbols` enum, which deliberately holds no yield/commerce entry because those registries are
+  > variable-count. Reading one surface as the whole is what makes the glyph look unserved.
 - **REVOLUTION's distance mechanic.** ⚠ `revolution.distanceMod` is **NOT dead** — Revolutions is
   Python-authoritative and consumes it through the player/city aggregates, which makes the read INVISIBLE to any
   engine-side grep. It is the standing exhibit for why an engine-read census cannot prove Python coverage. **Both
