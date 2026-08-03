@@ -619,18 +619,6 @@ void CvPlot::setupGraphical()
 {
 	PROFILE_FUNC();
 
-	// ⛔ With graphics paging OFF, this LOAD-TIME hook is the only thing that can give a plot its graphics.
-	// The paging-off sweep that does it (CvPlotPaging::UpdatePaging's disable branch) runs from
-	// CvGame::update() -- the per-frame GAME LOOP -- but the EXE builds its scene BEFORE that loop starts,
-	// so waiting for it means every plot is still empty when the EXE first draws the world.
-	// m_requiredVisibleGraphics then stays NONE for every plot, showRequiredGraphics() computes an empty
-	// toShow, no symbol/feature/river/route/unit graphics are ever created, and the EXE dereferences a null
-	// scene object on the first plot it draws.
-	if (!GC.isGraphicalPaging())
-	{
-		disableGraphicsPaging();
-	}
-
 	showRequiredGraphics();
 
 	updateVisibility();

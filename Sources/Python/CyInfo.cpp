@@ -5,6 +5,10 @@
 //
 
 #include "CvGameCoreDLL.h"
+// boost::python::dict is NOT in the PCH's boost set (list/tuple/class/object are). Included HERE rather than
+// widened into CvGameCoreDLL.h: the umbrella is a foundational header, and adding to it rebuilds every TU.
+// ⚠ This resolves to Boost 1.32 -- the `python::` alias -- never boost155 (engine.md: two Boosts coexist).
+#include <boost/python/dict.hpp>
 #include "CyInfo.h"
 #include "Data/CvReadJson.h"     // rjInfoForType -- the ONE infotype-prefix -> InfoRepo dispatch
 #include "Infos/CvInfo.h"
@@ -55,7 +59,8 @@ namespace
 	const CvInfo* cyi_info(const std::string& szTypePrefix, int iId)
 	{
 		if (iId < 0) return NULL;
-		return rjInfoForType(szTypePrefix, iId);
+		// ⛔ the CONST twin: a read must answer NULL past the end, never grow the repo (CvReadJson.cpp)
+		return rjInfoForTypeConst(szTypePrefix, iId);
 	}
 
 	//
@@ -254,6 +259,29 @@ int CyInfo::getIntrinsic(const std::string& szTypePrefix, int iId, int iSlot) co
 	return -1;
 }
 
+python::list CyInfo::getIndex(const std::string& szTypePrefix) const
+{
+	python::list lEntries;
+
+	//	⚑ The BOUND comes from the ONE dispatch, never a per-prefix count table here: a registry is dense
+	//	(ids 0..N-1) and cyi_infoBase answers NULL past the end, so the first NULL IS the end. Keeping the
+	//	knowledge in the dispatch is what stops this file drifting from the load pipeline's table.
+	for (int iId = 0; ; iId++)
+	{
+		const CvInfoBase* pInfo = cyi_infoBase(szTypePrefix, iId);
+		if (pInfo == NULL) break;
+
+		python::dict kEntry;
+		kEntry["id"]          = iId;
+		kEntry["type"]        = std::string(pInfo->getType() != NULL ? pInfo->getType() : "");
+		kEntry["description"] = std::wstring(pInfo->getDescription());
+		kEntry["textKey"]     = std::wstring(pInfo->getTextKeyWide() != NULL ? pInfo->getTextKeyWide() : L"");
+		kEntry["button"]      = std::string(pInfo->getButton() != NULL ? pInfo->getButton() : "");
+		lEntries.append(kEntry);
+	}
+	return lEntries;
+}
+
 python::list CyInfo::getEdgeIds(const std::string& szTypePrefix, int iId, int iFamily, int iBucket) const
 {
 	python::list lIds;
@@ -304,6 +332,8 @@ void CyInfo::pythonPublish()
 		.def("getType",        &CyInfo::getType)
 		.def("getButton",      &CyInfo::getButton)
 		.def("exists",         &CyInfo::exists)
+		// getIndex is NOT published yet -- it needs a real per-prefix COUNT source; NULL-probing the dispatch
+		// does not bound (verified in-game: MemoryError). See todo.
 		.def("getEdgeIds",     &CyInfo::getEdgeIds)
 		.def("getIntrinsic",   &CyInfo::getIntrinsic)
 		.def("civicOptions",   &CyInfo::civicOptions, python::return_value_policy<python::reference_existing_object>())

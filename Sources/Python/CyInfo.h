@@ -76,6 +76,20 @@ public:
 	// vocabulary, so a new bucket is data and this surface does not grow.
 	python::list getEdgeIds(const std::string& szTypePrefix, int iId, int iFamily, int iBucket) const;
 
+	// THE PER-TYPE INDEX PAYLOAD (pedia-read-map §5 shape 2) -- the WHOLE registry in ONE crossing.
+	//
+	// ⚑ This is what every enumeration screen actually renders: the pedia hub's item lists, the A-Z index, the
+	// WorldBuilder drop-downs, Forgetful's whole-registry sweep. They ask (id, name, button) per entity and today
+	// pay one boundary crossing PER ENTITY -- a boost::python call costs far more than the lookup inside it, so
+	// the read that scales crosses ONCE and is cached Python-side (the CivicData precedent).
+	//
+	// Each entry is a dict: {"id", "type", "description", "textKey", "button"} -- the identity block, carrying
+	// the resolved TEXT and the TXT_KEY both, each named for which it is ([patterns.md]: a `*Key` returns a key,
+	// the bare form returns resolved text; a name that hides which you hold is how a raw key reaches a player).
+	// ⛔ CATEGORY TAGS are deliberately ABSENT: the pedia's taxonomy has no home yet (pedia-read-map finding 4),
+	// and minting one here would be exactly the bespoke shape that gap is waiting on a decision for.
+	python::list getIndex(const std::string& szTypePrefix) const;
+
 	// One lone intrinsic value, by SLOT (see PyIntrinsicSlot). Bools answer 0/1 and FKs answer their id, so the
 	// whole straggler plane is one int-returning read. Answers -1 when the (prefix, slot) pair names nothing,
 	// so a caller can tell "not served here" from a real 0.

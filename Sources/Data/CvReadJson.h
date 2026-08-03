@@ -49,5 +49,7 @@ void loadJsonCategory(const char* szDataFolder,
 //	repo-homed type, or NULL (tokens, XML-only kinds). Serves the /state/info observability read + any
 //	consumer needing an info by its type string.
 CvInfo* rjInfoForType(const std::string& szType, int iId);
+// READ-ONLY twin -- NULL past the end, never get-or-create. Consumers (the Cy read surface) use THIS.
+const CvInfo* rjInfoForTypeConst(const std::string& szType, int iId);
 
 #endif // CV_READJSON_H

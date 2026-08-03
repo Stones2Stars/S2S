@@ -294,6 +294,26 @@ static bool rj_isAliased(const std::string& t)
 // ([DEC-single-implementation]): a second hand-maintained prefix list here is what silently drifted from the table
 // and left a whole cutover wave unresolvable by the standing /state/info verification. Broader than the reverse
 // pass's REQUIRED_BY router (HAVE-axis re-gate kinds only), and than the table itself, which carries no generated infos.
+//
+//	⛔ THE READ-ONLY twin of rjInfoForType, and the one a CONSUMER must use.
+//
+//	rjInfoForType below routes through InfoRepo::editPtr, which is documented "get-or-create ... never NULL": it
+//	RESIZES the array and NEW's an empty info for any id it is handed. That is correct for the LOAD pipeline, which
+//	is what it was written for -- and silently wrong for a read, where an out-of-range id must answer NOTHING rather
+//	than grow the registry. InfoRepo::get() is the accessor whose own comment says "consumers read this".
+//
+//	⚑ Without this, a read surface cannot even discover where a registry ENDS: every id answers non-NULL forever,
+//	so a bounded walk is impossible and an over-large id mutates the repo instead of failing.
+//
+const CvInfo* rjInfoForTypeConst(const std::string& t, int iId)
+{
+	if (t == "TECH_GAME_START") return &cascadeStartNode();
+#define X(PFX, T) if (rj_starts(t, PFX)) return InfoRepo<T>::get().get(iId);
+	RJ_REPO_TYPES(X)
+#undef X
+	return ClassificationRegistry::infoForType(t);
+}
+
 CvInfo* rjInfoForType(const std::string& t, int iId)
 {
 	// the synthetic root's cascade data lives OFF the InfoRepo (cascadeStartNode) -- route it there, never the GC poco
