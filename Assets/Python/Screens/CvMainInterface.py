@@ -4108,16 +4108,16 @@ class CvMainInterface:
 
 				screen.setTextAt(label, panel, szBuffer, 1<<0, 4, y, 0, eFontGame, eWidGen, 0, 0)
 				#Stack Promotions
-				# ONE read per unit, then tally -- the promotion registry is ~1500 entries, so asking per promotion
-				# per unit would cost tens of thousands of boundary crossings every redraw.
+				# The panel asks what it HAS and iterates that -- it never sweeps the promotion registry. Sorted so
+				# the display order is stable without walking ~1500 ids to recover it.
 				aPromoCount = {}
 				for aStackId in aSelectedIds:
 					for iPromo in STATE.getUnitPromotions(aStackId[0], aStackId[1]):
 						aPromoCount[iPromo] = aPromoCount.get(iPromo, 0) + 1
-				for iPromo in xrange(self.iNumPromotionInfos):
-					iCount = aPromoCount.get(iPromo, 0)
-					if iCount:
-						aPromoList.append((iPromo, iCount))
+				aHeld = aPromoCount.keys()
+				aHeld.sort()
+				for iPromo in aHeld:
+					aPromoList.append((iPromo, aPromoCount[iPromo]))
 				# Unit type list
 				if iMissionCount <= 1 or not bMirrorsGroup:
 					for i in xrange(GC.getNumUnitInfos()):

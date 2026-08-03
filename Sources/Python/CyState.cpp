@@ -820,13 +820,15 @@ python::list CyState::getUnitPromotions(int iPlayer, int iUnit) const
 	python::list ids = python::list();
 	const CvUnit* pUnit = cys_unit(iPlayer, iUnit);
 	if (pUnit == NULL) return ids;
-	const int iNum = GC.getNumPromotionInfos();
-	for (int iPromotion = 0; iPromotion < iNum; ++iPromotion)
+	//	⛔ WALK WHAT THE UNIT HOLDS -- do NOT sweep the promotion registry asking "do you have this one?". The
+	//	unit keys only the promotions it actually carries, and isHasPromotion is a keyed LOOKUP, so a registry
+	//	sweep is ~1500 map searches per unit per redraw to rediscover a list the unit already has.
+	const std::map<PromotionTypes, PromotionKeyedInfo>& held = pUnit->getPromotionKeyedInfo();
+	for (std::map<PromotionTypes, PromotionKeyedInfo>::const_iterator it = held.begin(); it != held.end(); ++it)
 	{
-		const PromotionTypes ePromotion = (PromotionTypes)iPromotion;
-		if (pUnit->isHasPromotion(ePromotion) && !pUnit->isPromotionOverriden(ePromotion))
+		if (it->second.m_bHasPromotion && !pUnit->isPromotionOverriden(it->first))
 		{
-			ids.append(iPromotion);
+			ids.append((int)it->first);
 		}
 	}
 	return ids;
