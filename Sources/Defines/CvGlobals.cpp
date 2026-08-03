@@ -328,8 +328,19 @@ void CreateMiniDump(EXCEPTION_POINTERS *pep)
 									NULL,
 									NULL);
 
+	// ⛔ A FAILED WRITE MUST NOT LEAVE A FILE BEHIND. CreateFile has already made the .dmp, so discarding `result`
+	// leaves a ZERO-BYTE dump that looks exactly like a real one -- the crash workflow then reads as "we have a
+	// dump" right up until cdb refuses it, and the reason the write failed is gone for good. Name the failure and
+	// remove the husk, so "no dump" is distinguishable from "a dump nobody can open".
+	const DWORD dumpError = result ? 0 : GetLastError();
+
 	/* Close the file. */
 	CloseHandle(hFile);
+
+	if (!result)
+	{
+		DeleteFile(filename);
+	}
 
 	// String-parseable exception log: one `[EXCEPTION] ...` headline naming the cause (grep it to find the issue),
 	// with the dump filename + the Python callstack under it. Co-located in Exceptions.log so a crash is diagnosable
@@ -337,7 +348,12 @@ void CreateMiniDump(EXCEPTION_POINTERS *pep)
 	std::string exc = describeException(pep);
 	if (!exc.empty())
 	{
-		gDLL->logMsg("Exceptions.log", CvString::format("%s dump=%s", exc.c_str(), filename).c_str(), true, false);
+		// `dump=` names a file that EXISTS; a failed write reports the HRESULT instead, which is the difference
+		// between "go symbolize this" and "the dump writer itself is broken, fix that first".
+		gDLL->logMsg("Exceptions.log",
+			result ? CvString::format("%s dump=%s", exc.c_str(), filename).c_str()
+			       : CvString::format("%s dump=FAILED err=0x%08X", exc.c_str(), (unsigned)dumpError).c_str(),
+			true, false);
 	}
 	std::string pyTrace = getPyTrace();
 	if(!pyTrace.empty())
