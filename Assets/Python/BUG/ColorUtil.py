@@ -101,19 +101,20 @@ def keyToType(key):
 def createColors(argsList=None):
 	for key in COLOR_KEYS:
 		type = gc.getInfoTypeForString(key)
+		# The colour INFO object was only ever fetched to test that it existed -- but a type resolved by
+		# getInfoTypeForString exists by definition, so the fetch was redundant. Nothing here reads a colour
+		# channel; the id and the display name are the whole need.
 		if (type >= 0):
-			info = gc.getColorInfo(type)
-			if (info):
-				name = BugUtil.getPlainText("TXT_KEY_" + key, "")
-				if (not name):
-					name = key.replace("COLOR_", "").replace("_", " ").title()
-				COLOR_TYPES.append(type)
-				COLOR_DISPLAY_NAMES.append(name)
-				color = (len(COLORS), type, key, name)
-				COLORS.append(color)
-				COLORS_BY_TYPE[type] = color
-				COLORS_BY_KEY[key] = color
-				TYPES_BY_KEY[key] = type
+			name = BugUtil.getPlainText("TXT_KEY_" + key, "")
+			if (not name):
+				name = key.replace("COLOR_", "").replace("_", " ").title()
+			COLOR_TYPES.append(type)
+			COLOR_DISPLAY_NAMES.append(name)
+			color = (len(COLORS), type, key, name)
+			COLORS.append(color)
+			COLORS_BY_TYPE[type] = color
+			COLORS_BY_KEY[key] = color
+			TYPES_BY_KEY[key] = type
 
 def init(colors=None):
 	if colors is not None and (isinstance(colors, list) or isinstance(colors, tuple)):

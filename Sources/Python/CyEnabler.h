@@ -71,6 +71,13 @@ public:
 
 	// Publishes this surface + the three tri-state constants a script compares against
 	// (ENABLER_HIDDEN / ENABLER_GREYED / ENABLER_LISTED). Called from DLLPublishToPython.
+	// The BONUSES a corporation's `requires` names -- the forward "what does this need?" read, answered from the
+	// compiled condition tree by the ONE shared walker ([DEC-single-implementation]) rather than by a caller's
+	// own recursion. ⚑ Its consumer is the trade screen: a corporation makes bonuses SEMI-VOLUMETRIC (it consumes
+	// copies), so a player still wants more of a resource they already hold -- the one case where presence is not
+	// the answer. The desired-bonus set is (theirs - mine) UNION this, so this term needs no holdings context.
+	python::list getRequiredBonuses(int iCorporation) const;
+
 	static void pythonPublish();
 };
 

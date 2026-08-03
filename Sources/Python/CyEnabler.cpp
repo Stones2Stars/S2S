@@ -11,7 +11,10 @@
 #include "Engine/CvCity.h"
 #include "Engine/CvPlayer.h"
 #include "AI/CvPlayerAI.h"          // GET_PLAYER
-#include "Enabler/CvEnabler.h"      // EnablerDomain::State -- the tri-state this surface returns
+#include "Enabler/CvEnabler.h"
+#include "Conditions/CvConditionQuery.h"   // collectIds -- the ONE requires-tree walker
+#include "Repos/InfoRepo.h"
+#include "Infos/CvCorporationInfo.h"      // EnablerDomain::State -- the tri-state this surface returns
 
 namespace
 {
@@ -60,6 +63,23 @@ bool CyEnabler::isBuildingContinuable(int iPlayer, int iCity, int eBuilding) con
 {
 	const CvCity* pCity = cye_city(iPlayer, iCity);
 	return pCity ? pCity->isBuildingContinuable((BuildingTypes)eBuilding) : false;
+}
+
+python::list CyEnabler::getRequiredBonuses(int iCorporation) const
+{
+	std::vector<int> ids;
+	if (iCorporation >= 0)
+	{
+		const CvInfo* pCorp = InfoRepo<CvCorporationInfo>::get().get(iCorporation);
+		if (pCorp != NULL)
+		{
+			// build AND operate: a corporation's resource needs can sit on either leg, and over-inclusion here is
+			// safe for the trade hint while a MISS would silently drop a resource the player still wants.
+			CvConditionQuery::collectIds(pCorp->requiresBuild(), EDGEB_BONUSES, ids);
+			CvConditionQuery::collectIds(pCorp->requiresOperate(), EDGEB_BONUSES, ids);
+		}
+	}
+	return cye_toList(ids);
 }
 
 python::list CyEnabler::getAvailableBuildings(int iPlayer, int iCity) const
@@ -171,6 +191,7 @@ void CyEnabler::pythonPublish()
 {
 	python::class_<CyEnabler>("CyEnabler")
 		// CITY domains -- construction and training on one plane
+		.def("getRequiredBonuses",              &CyEnabler::getRequiredBonuses)
 		.def("getBuildingAvailability",         &CyEnabler::getBuildingAvailability)
 		.def("getUnitAvailability",             &CyEnabler::getUnitAvailability)
 		.def("isBuildingContinuable",           &CyEnabler::isBuildingContinuable)

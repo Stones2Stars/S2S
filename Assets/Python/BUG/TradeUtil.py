@@ -334,12 +334,15 @@ def initCorporationBonuses():
 	Initializes the CORP_BONUSES dictionary.
 	Map corporation ID to the set of bonus IDs it uses.
 	'''
+	# ⚑ This is an ENABLER question, not info payload: "which bonuses does this corporation need" is exactly what
+	# a `requires` tree answers, so it is asked of the enabler rather than reconstructed by walking every
+	# corporation info and inverting the result here.
+	# ⚠ WHY IT EXISTS AT ALL: a corporation CONSUMES copies, which makes bonuses semi-volumetric -- the one case
+	# in the game where a player still wants a resource they already hold. getDesiredBonuses UNIONs this set on
+	# top of (theirs - mine), so these must not be filtered out by presence.
+	ENABLER = CyEnabler()
 	for eCorp in range(GC.getNumCorporationInfos()):
-		corp = GC.getCorporationInfo(eCorp)
-		bonuses = set()
-		for eBonus in corp.getPrereqBonuses():
-			bonuses.add(eBonus)
-		CORP_BONUSES[eCorp] = bonuses
+		CORP_BONUSES[eCorp] = set(ENABLER.getRequiredBonuses(eCorp))
 
 def getTradeableBonuses(fromPlayer, eToPlayer):
 	"""

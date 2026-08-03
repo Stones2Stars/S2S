@@ -22,6 +22,7 @@ import WBPlotScreen
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -387,8 +388,10 @@ class CvEventManager:
 				self.UNIT_STORY_TELLER = GC.getInfoTypeForString("UNIT_STORY_TELLER")
 				# Biodome
 				self.aBiodomeList = aList = []
+				# The TYPE KEY is entity data, so it comes from CyInfo -- the global context hands out no info
+				# objects. No new read was needed: getType(prefix, id) already serves exactly this.
 				for iUnit in xrange(GC.getNumUnitInfos()):
-					if GC.getUnitInfo(iUnit).getType().find("UNIT_SUBDUED") > -1:
+					if INFO.getType("UNIT_", iUnit).find("UNIT_SUBDUED") > -1:
 						aList.append(iUnit)
 				# Militia
 				self.CIVIC_CONSCRIPTION = GC.getInfoTypeForString("CIVIC_CONSCRIPTION")
