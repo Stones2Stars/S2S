@@ -153,15 +153,14 @@ def initModifiers(argsList=None):
 			pMatch = re.match(u"^.*(\".+\")", sStr, re.UNICODE)
 			if pMatch:
 				MODIFIER_STRING_TO_KEY[unicode(pMatch.group(1))] = sKey
-	for iMemType in range(MemoryTypes.NUM_MEMORY_TYPES):
-		pMemInfo = GC.getMemoryInfo(iMemType)
-		if pMemInfo:
-			sKey = unicode(pMemInfo.getTextKey())
-			sStr = BugUtil.getPlainText(sKey, "NONE")
-			if sStr != "NONE":
-				# These modifier strings have no extra text and so
-				# we can use them directly
-				MODIFIER_STRING_TO_KEY[unicode(sStr)] = sKey
+	# The memory grievance keys come from the ENGINE, in one crossing, so the set is defined in exactly one
+	# place: a hand-listed copy here would have to be edited every time a memory type is added.
+	for sKey in CyGameTextMgr().getTextKeys("MEMORY_"):
+		sStr = BugUtil.getPlainText(sKey, "NONE")
+		if sStr != "NONE":
+			# These modifier strings have no extra text and so
+			# we can use them directly
+			MODIFIER_STRING_TO_KEY[unicode(sStr)] = sKey
 
 
 class Attitude:

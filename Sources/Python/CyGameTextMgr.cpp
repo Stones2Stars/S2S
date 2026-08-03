@@ -7,6 +7,7 @@
 #include "CyDeal.h"
 #include "CyGameTextMgr.h"
 #include "CyUnit.h"
+#include "Infos/CvInfoBase.h"   // getTextKeyWide -- the MEMORY_ registry is bare CvInfoBase shells
 
 CyGameTextMgr::CyGameTextMgr() :
 m_pGameTextMgr(NULL)
@@ -17,6 +18,24 @@ m_pGameTextMgr(NULL)
 CyGameTextMgr::CyGameTextMgr(CvGameTextMgr* pGameTextMgr) : m_pGameTextMgr(pGameTextMgr)
 {
 
+}
+
+python::list CyGameTextMgr::getTextKeys(const std::string& szTypePrefix) const
+{
+	python::list keys;
+
+	// MEMORY_ -- the diplomacy grievance keys. The registry is a bare CvInfoBase shell (Type + Description, the
+	// Description being the key), so there is nothing here for the info surface to serve; the count is the enum
+	// bound because the types are enumerated in the SDK, which is what the XML itself warns about.
+	if (szTypePrefix == "MEMORY_")
+	{
+		for (int iMemory = 0; iMemory < NUM_MEMORY_TYPES; ++iMemory)
+		{
+			keys.append(std::wstring(GC.getMemoryInfo((MemoryTypes)iMemory).getTextKeyWide()));
+		}
+	}
+
+	return keys;
 }
 
 void CyGameTextMgr::Reset()
@@ -335,6 +354,7 @@ void CyGameTextMgr::pythonPublish()
 {
 	python::class_<CyGameTextMgr>("CyGameTextMgr")
 		.def("Reset", &CyGameTextMgr::Reset)
+		.def("getTextKeys", &CyGameTextMgr::getTextKeys)
 		.def("getTimeStr", &CyGameTextMgr::getTimeStr)
 		.def("getDateStr", &CyGameTextMgr::getDateStr)
 		.def("getInterfaceTimeStr", &CyGameTextMgr::getInterfaceTimeStr)

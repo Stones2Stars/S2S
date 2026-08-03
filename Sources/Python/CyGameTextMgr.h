@@ -25,6 +25,18 @@ public:
 	// (patterns.md § THE PYTHON READ BOUNDARY) and Python screen chrome calls it directly.
 	static void pythonPublish();
 
+	// The TXT KEYS a registry declares, handed over as ONE crossing for the whole column.
+	//
+	// ⚑ A key is TEXT-plane, which is why it is served here and not on the info surface: only the JSON-fed
+	// infos carry that ([DEC-cy-not-fixed]), and the registries below are XML-era shells whose Description IS
+	// the key. ⛔ Serving it at all is the load-bearing part -- the alternative is a consumer hand-listing the
+	// keys, which defines the set in TWO places and has to be edited every time the registry gains a row.
+	//
+	// Addressed by infotype PREFIX so the surface grows by TABLE ROW rather than by method, the same rule the
+	// rest of the read surface obeys. An unknown prefix answers an empty list rather than raising: a script may
+	// legitimately probe a registry that carries no keys.
+	python::list getTextKeys(const std::string& szTypePrefix) const;
+
 	std::wstring getTimeStr(int iGameTurn, bool bSave);
 	std::wstring getDateStr(int iGameTurn, bool bSave, int /*CalendarTypes*/ eCalendar, int iStartYear, int /*GameSpeedTypes*/ eSpeed);
 	std::wstring getInterfaceTimeStr(int /*PlayerTypes*/ iPlayer);
