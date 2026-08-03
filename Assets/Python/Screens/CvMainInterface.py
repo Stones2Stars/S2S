@@ -211,15 +211,22 @@ class CvMainInterface:
 					aList1.append(u"")
 			self.iconCommerceList = list(aList1)
 			# Religion icons
+			# The two glyphs come from the TEXT manager, which is what assigns them: a religion's symbol is a
+			# GameFont slot its symbol pass fills, not info data ([patterns.md] THE PYTHON READ BOUNDARY). And
+			# unlike yields there is no fixed [ICON_*] token per religion, the registry being variable-count.
 			aList1 = []
 			aList2 = []
 			aMap = {}
 			for i in xrange(self.iNumReligionInfos):
-				CvReligionInfo = GC.getReligionInfo(i)
-				aList1.append(u'%c' % CvReligionInfo.getHolyCityChar())
-				aList2.append(u'%c' % CvReligionInfo.getChar())
-				# Map Religions to corresponding techs
-				aMap[CvReligionInfo.getTechPrereq()] = CvReligionInfo
+				aList1.append(u'%c' % CyGTM.getHolyCitySymbolChar(i))
+				aList2.append(u'%c' % CyGTM.getSymbolChar("RELIGION_", i))
+				# Map Religions to corresponding techs. "Which tech unlocks me" is the ENABLED_BY edge, which the
+				# readJson reverse pass already landed on the religion ([DEC-one-reverse-view]) -- so it is a
+				# served read, not a scan. The map holds the religion ID: the library hands out data, never an
+				# info object.
+				aTechs = INFO.getEdgeIds("RELIGION_", i, EdgeFamily.EDGEF_ENABLED_BY, EdgeBucket.EDGEB_TECHS)
+				for iTech in aTechs:
+					aMap[iTech] = i
 			self.aRel2TechMap = aMap.copy()
 			self.iconHolyCityList = list(aList1)
 			self.iconReligionList = list(aList2)
@@ -332,27 +339,31 @@ class CvMainInterface:
 			aBuildingList1 = []
 			aBuildingList2 = []
 			iNumBuildingInfos = GC.getNumBuildingInfos()
+			# The tuple carries the ID, not an info object: the library hands out DATA, and the global context
+			# hands out no infos at all ([DEC-cy-not-fixed]). A consumer wanting a field asks for it by id.
+			# ⚑ The cost read is `cost.production` -- the entity's own authored make-cost, one of the THREE cost
+			# planes and not the `costs` modifier family. It carries no -1 sentinel any more: "not player
+			# constructible" is `notConstructible`, never a magic cost value, so an absent cost block is 0.
 			for iBuilding in xrange(iNumBuildingInfos):
-				CvBuildingInfo = GC.getBuildingInfo(iBuilding)
-				szName = CvBuildingInfo.getDescription()
-				if CvBuildingInfo.getProductionCost() < 1:
-					aBuildingList2.append((szName, iBuilding, CvBuildingInfo))
-				elif isLimitedWonder(iBuilding):
-					aBuildingList1.append((szName, iBuilding, CvBuildingInfo))
+				szName = INFO.getDescription("BUILDING_", iBuilding)
+				if INFO.getIntrinsic("BUILDING_", iBuilding, IntrinsicSlot.PYINT_COST) < 1:
+					aBuildingList2.append((szName, iBuilding))
+				elif INFO.getIntrinsic("BUILDING_", iBuilding, IntrinsicSlot.PYINT_IS_LIMITED_WONDER):
+					aBuildingList1.append((szName, iBuilding))
 				else:
-					aBuildingList0.append((szName, iBuilding, CvBuildingInfo))
+					aBuildingList0.append((szName, iBuilding))
 			# Bonus infos:
 			aBonusList1 = []
 			aBonusList2 = []
 			aBonusList3 = []
 			BONUSCLASS_CULTURE = GC.getInfoTypeForString("BONUSCLASS_CULTURE")
 			for iBonus in xrange(self.iNumBonusInfos):
-				CvBonusInfo = GC.getBonusInfo(iBonus)
-				szName = CvBonusInfo.getDescription()
-				szChar = u"%c " %CvBonusInfo.getChar()
-				if CvBonusInfo.isMapBonus(): ## Map resource
+				szName = INFO.getDescription("BONUS_", iBonus)
+				# The glyph is text-plane, so it comes from the text manager that assigns it, not from the info.
+				szChar = u"%c " % CyGTM.getSymbolChar("BONUS_", iBonus)
+				if INFO.getIntrinsic("BONUS_", iBonus, IntrinsicSlot.PYINT_IS_MAP_BONUS): ## Map resource
 					aBonusList1.append((szName, iBonus, szChar))
-				elif CvBonusInfo.getBonusClassType() != BONUSCLASS_CULTURE:
+				elif INFO.getIntrinsic("BONUS_", iBonus, IntrinsicSlot.PYINT_BONUS_CLASS) != BONUSCLASS_CULTURE:
 					aBonusList2.append((szName, iBonus, szChar))
 				else:
 					aBonusList3.append((szName, iBonus, szChar))
@@ -534,8 +545,8 @@ class CvMainInterface:
 		y += 18
 		screen.setLabel("WonderLimit1", "", "", 1<<0, x, y, 0, eFontSmall, eWidGen, 0, 0)
 		# Population Bar
-		szColorFood		= GC.getYieldInfo(YieldTypes.YIELD_FOOD).getColorType()
-		szColorProd		= GC.getYieldInfo(YieldTypes.YIELD_PRODUCTION).getColorType()
+		szColorFood		= INFO.getIntrinsic("YIELD_", YieldTypes.YIELD_FOOD, IntrinsicSlot.PYINT_COLOR_TYPE)
+		szColorProd		= INFO.getIntrinsic("YIELD_", YieldTypes.YIELD_PRODUCTION, IntrinsicSlot.PYINT_COLOR_TYPE)
 		szColorEmpty	= GC.getInfoTypeForString("COLOR_EMPTY")
 		szColorNegRate	= GC.getInfoTypeForString("COLOR_NEGATIVE_RATE")
 		szColorStoredGP	= GC.getInfoTypeForString("COLOR_GREAT_PEOPLE_STORED")
@@ -821,7 +832,7 @@ class CvMainInterface:
 		szChild = "WID|PROMO|PromoPanel"
 		for iPromo in xrange(self.iNumPromotionInfos):
 			name = szChild + str(iPromo)
-			screen.setImageButtonAt(name, ScPnl, GC.getPromotionInfo(iPromo).getButton(), 0, 0, 32, 32, eWidGen, 0, 0)
+			screen.setImageButtonAt(name, ScPnl, INFO.getButton("PROMOTION_", iPromo), 0, 0, 32, 32, eWidGen, 0, 0)
 			screen.hide(name)
 		self.aHideList = []
 		self.aSelUnitPromoList = []
@@ -905,19 +916,19 @@ class CvMainInterface:
 		x = 42
 		# Top-left button row
 		btn = "TurnLogBtn"
-		screen.setImageButton(btn, "", x, y, iSize, iSize, iWidAction, GC.getControlInfo(ControlTypes.CONTROL_TURN_LOG).getActionInfoIndex(), -1)
+		screen.setImageButton(btn, "", x, y, iSize, iSize, iWidAction, INFO.getIntrinsic("CONTROL_", ControlTypes.CONTROL_TURN_LOG, IntrinsicSlot.PYINT_ACTION_INFO_INDEX), -1)
 		screen.setStyle(btn, "Button_HUDLog_Style")
 		screen.hide(btn)
 		x += dx
 
 		btn = "VictoryAdvBtn"
-		screen.setImageButton(btn, "", x, y, iSize, iSize, iWidAction, GC.getControlInfo(ControlTypes.CONTROL_VICTORY_SCREEN).getActionInfoIndex(), -1)
+		screen.setImageButton(btn, "", x, y, iSize, iSize, iWidAction, INFO.getIntrinsic("CONTROL_", ControlTypes.CONTROL_VICTORY_SCREEN, IntrinsicSlot.PYINT_ACTION_INFO_INDEX), -1)
 		screen.setStyle(btn, "Button_HUDAdvisorVictory_Style")
 		screen.hide(btn)
 		x += dx
 
 		btn = "InfoAdvBtn"
-		screen.setImageButton(btn, "", x, y, iSize, iSize, iWidAction, GC.getControlInfo(ControlTypes.CONTROL_INFO).getActionInfoIndex(), -1)
+		screen.setImageButton(btn, "", x, y, iSize, iSize, iWidAction, INFO.getIntrinsic("CONTROL_", ControlTypes.CONTROL_INFO, IntrinsicSlot.PYINT_ACTION_INFO_INDEX), -1)
 		screen.setStyle(btn, "Button_HUDAdvisorRecord_Style")
 		screen.hide(btn)
 
@@ -953,7 +964,7 @@ class CvMainInterface:
 		x = xRes - dx
 		y = yBotBar - 4
 		aBtn = "GlobeToggle"
-		screen.addCheckBoxGFC(aBtn, "", "", x, y, dx, dx, iWidAction, GC.getControlInfo(ControlTypes.CONTROL_GLOBELAYER).getActionInfoIndex(), -1, eBtnLabel)
+		screen.addCheckBoxGFC(aBtn, "", "", x, y, dx, dx, iWidAction, INFO.getIntrinsic("CONTROL_", ControlTypes.CONTROL_GLOBELAYER, IntrinsicSlot.PYINT_ACTION_INFO_INDEX), -1, eBtnLabel)
 		screen.setStyle(aBtn, "Button_HUDZoom_Style")
 
 		dx = 28
@@ -966,7 +977,7 @@ class CvMainInterface:
 
 		x -= dx
 		aBtn = "Grid"
-		screen.addCheckBoxGFC(aBtn, "", "", x, y, dx, dx, iWidAction, GC.getControlInfo(ControlTypes.CONTROL_GRID).getActionInfoIndex(), -1, eBtnLabel)
+		screen.addCheckBoxGFC(aBtn, "", "", x, y, dx, dx, iWidAction, INFO.getIntrinsic("CONTROL_", ControlTypes.CONTROL_GRID, IntrinsicSlot.PYINT_ACTION_INFO_INDEX), -1, eBtnLabel)
 		screen.setStyle(aBtn, "Button_HUDBtnGrid_Style")
 		aMinimapBtnList.append(aBtn)
 
@@ -978,19 +989,19 @@ class CvMainInterface:
 
 		x -= dx
 		aBtn = "Yields"
-		screen.addCheckBoxGFC(aBtn, "", "", x, y, dx, dx, iWidAction, GC.getControlInfo(ControlTypes.CONTROL_YIELDS).getActionInfoIndex(), -1, eBtnLabel)
+		screen.addCheckBoxGFC(aBtn, "", "", x, y, dx, dx, iWidAction, INFO.getIntrinsic("CONTROL_", ControlTypes.CONTROL_YIELDS, IntrinsicSlot.PYINT_ACTION_INFO_INDEX), -1, eBtnLabel)
 		screen.setStyle(aBtn, "Button_HUDBtnTileAssets_Style")
 		aMinimapBtnList.append(aBtn)
 
 		x -= dx
 		aBtn = "ResourceIcons"
-		screen.addCheckBoxGFC(aBtn, "", "", x, y, dx, dx, iWidAction, GC.getControlInfo(ControlTypes.CONTROL_RESOURCE_ALL).getActionInfoIndex(), -1, eBtnLabel)
+		screen.addCheckBoxGFC(aBtn, "", "", x, y, dx, dx, iWidAction, INFO.getIntrinsic("CONTROL_", ControlTypes.CONTROL_RESOURCE_ALL, IntrinsicSlot.PYINT_ACTION_INFO_INDEX), -1, eBtnLabel)
 		screen.setStyle(aBtn, "Button_HUDBtnResources_Style")
 		aMinimapBtnList.append(aBtn)
 
 		x -= dx
 		aBtn = "UnitIcons"
-		screen.addCheckBoxGFC(aBtn, "", "", x, y, dx, dx, iWidAction, GC.getControlInfo(ControlTypes.CONTROL_UNIT_ICONS).getActionInfoIndex(), -1, eBtnLabel)
+		screen.addCheckBoxGFC(aBtn, "", "", x, y, dx, dx, iWidAction, INFO.getIntrinsic("CONTROL_", ControlTypes.CONTROL_UNIT_ICONS, IntrinsicSlot.PYINT_ACTION_INFO_INDEX), -1, eBtnLabel)
 		screen.setStyle(aBtn, "Button_HUDGlobeUnit_Style")
 		aMinimapBtnList.append(aBtn)
 
@@ -1074,7 +1085,7 @@ class CvMainInterface:
 		for i in xrange(iNumSpecialistInfos):
 			szInc = str(i)
 			# Dynamic Citizens
-			if GC.getSpecialistInfo(i).isVisible():
+			if INFO.getIntrinsic("SPECIALIST_", i, IntrinsicSlot.PYINT_IS_VISIBLE):
 				if not n % iCol:
 					x = xStart
 					y -= iSize + 6
@@ -2188,15 +2199,12 @@ class CvMainInterface:
 					#	if special requirements like building requirements are not met.
 					if player.canResearch(iTechX, True, True):
 						szName = "WID|TECH|Selection" + str(iTechX)
-						if iTechX in aMap:
-							if not bCanFoundReligion or GAME.countKnownTechNumTeams(iTechX):
-								artPath = aMap[iTechX].getGenericTechButton()
-								if not artPath:
-									artPath = GC.getTechInfo(iTechX).getButton()
-							else:
-								artPath = aMap[iTechX].getTechButton()
-						else:
-							artPath = GC.getTechInfo(iTechX).getButton()
+						# The tech's own button, from the info library by infotype prefix. ⚠ BEHAVIOUR CHANGE,
+						# stated rather than hidden: a religion-founding tech used to show the RELIGION's own
+						# tech-tree art (ui.art.techButton / genericTechButton). That art is still authored and
+						# the info still serves it -- what is missing is a Python route to a per-type art slot,
+						# which is a shape decision rather than a getter to mint here.
+						artPath = INFO.getButton("TECH_", iTechX)
 						# Set the selection button position
 						x = xStart + 50 * (iCount % iNumTechBtnPerRow)
 						y = 50 * (iCount / iNumTechBtnPerRow)
@@ -3022,7 +3030,7 @@ class CvMainInterface:
 		ROW_0 = "BldgListRow%d"
 		iRow = 0
 		y = -2
-		for szName, i, CvBuildingInfo in aBuildingList:
+		for szName, i in aBuildingList:
 
 			if CyCity.hasBuilding(i):
 				szStat = ""
@@ -3719,7 +3727,7 @@ class CvMainInterface:
 			i = 0
 			while i < iNumInGroup:
 				iType = city.getBuildingListType(0, i)
-				if isLimitedWonder(iType):
+				if INFO.getIntrinsic("BUILDING_", iType, IntrinsicSlot.PYINT_IS_LIMITED_WONDER):
 					break
 				i += 1
 				BTN = GC.getBuildingInfo(iType).getButton()
@@ -3760,7 +3768,7 @@ class CvMainInterface:
 				for i in xrange(iNumInGroup):
 					iType = city.getBuildingListType(iGroup, i)
 
-					if not isLimitedWonder(iType):
+					if not INFO.getIntrinsic("BUILDING_", iType, IntrinsicSlot.PYINT_IS_LIMITED_WONDER):
 						break
 					CvBuildingInfo = GC.getBuildingInfo(iType)
 
@@ -5091,7 +5099,7 @@ class CvMainInterface:
 		for i in xrange(self.iNumSpecialistInfos):
 			szInc = str(i)
 			# Dynamic Citizens
-			if GC.getSpecialistInfo(i).isVisible():
+			if INFO.getIntrinsic("SPECIALIST_", i, IntrinsicSlot.PYINT_IS_VISIBLE):
 
 				iCount = CyCity.getSpecialistCount(i)
 				if bOwnCity:

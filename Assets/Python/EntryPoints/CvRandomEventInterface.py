@@ -429,7 +429,7 @@ def canApplyLooters3(argsList):
 	iTreshold = (100 + 20 * iEra * iEra) * GC.getGameSpeedInfo(GAME.getGameSpeedType()).getHammerCostPercent() / 100
 
 	for i in xrange(GC.getNumBuildingInfos()):
-		if isLimitedWonder(i) or not CyCity.hasBuilding(i):
+		if INFO.getIntrinsic("BUILDING_", i, IntrinsicSlot.PYINT_IS_LIMITED_WONDER) or not CyCity.hasBuilding(i):
 			continue
 		info = GC.getBuildingInfo(i)
 		if info.isAutoBuild():
@@ -452,7 +452,7 @@ def applyLooters3(argsList):
 
 	aList = []
 	for i in xrange(GC.getNumBuildingInfos()):
-		if isLimitedWonder(i) or not CyCity.hasBuilding(i): continue
+		if INFO.getIntrinsic("BUILDING_", i, IntrinsicSlot.PYINT_IS_LIMITED_WONDER) or not CyCity.hasBuilding(i): continue
 		info = GC.getBuildingInfo(i)
 		if info.isAutoBuild():
 			continue
@@ -545,7 +545,7 @@ def canApplyHurricane1(argsList):
 	CyCity = CyPlayer.getCity(data.iCityId)
 
 	for i in xrange(GC.getNumBuildingInfos()):
-		if isLimitedWonder(i) or not CyCity.hasBuilding(i) or CyCity.isFreeBuilding(i):
+		if INFO.getIntrinsic("BUILDING_", i, IntrinsicSlot.PYINT_IS_LIMITED_WONDER) or not CyCity.hasBuilding(i) or CyCity.isFreeBuilding(i):
 			continue
 		info = GC.getBuildingInfo(i)
 		if info.isNukeImmune() or info.isAutoBuild() or info.getProductionCost() < 1:
@@ -566,7 +566,7 @@ def applyHurricane1(argsList):
 
 	aList = []
 	for i in xrange(GC.getNumBuildingInfos()):
-		if isLimitedWonder(i) or not CyCity.hasBuilding(i) or CyCity.isFreeBuilding(i):
+		if INFO.getIntrinsic("BUILDING_", i, IntrinsicSlot.PYINT_IS_LIMITED_WONDER) or not CyCity.hasBuilding(i) or CyCity.isFreeBuilding(i):
 			continue
 		info = GC.getBuildingInfo(i)
 		if info.isNukeImmune() or info.isAutoBuild() or info.getProductionCost() < 1:
@@ -631,7 +631,7 @@ def applyTsunami2(argsList):
 
 	listBuildings = []
 	for i in xrange(GC.getNumBuildingInfos()):
-		if isLimitedWonder(i) or not CyCity.hasBuilding(i):
+		if INFO.getIntrinsic("BUILDING_", i, IntrinsicSlot.PYINT_IS_LIMITED_WONDER) or not CyCity.hasBuilding(i):
 			continue
 		info = GC.getBuildingInfo(i)
 		if info.getProductionCost() > 0 and not info.isAutoBuild():
@@ -6322,7 +6322,7 @@ def doWildFire(argsList):
 
 	validHousesList = []
 	for i in range(GC.getNumBuildingInfos()):
-		if isLimitedWonder(i) or not CyCity.hasBuilding(i) or CyCity.isFreeBuilding(i):
+		if INFO.getIntrinsic("BUILDING_", i, IntrinsicSlot.PYINT_IS_LIMITED_WONDER) or not CyCity.hasBuilding(i) or CyCity.isFreeBuilding(i):
 			continue
 		info = GC.getBuildingInfo(i)
 		if info.getProductionCost() < 1 or info.isNukeImmune() or info.isAutoBuild():
@@ -6350,7 +6350,7 @@ def doMinorFire(argsList):
 	iBurnBuilding = -1
 	iHighFlamm = 0
 	for i in xrange(GC.getNumBuildingInfos()):
-		if isLimitedWonder(i) or not CyCity.hasBuilding(i) or CyCity.isFreeBuilding(i):
+		if INFO.getIntrinsic("BUILDING_", i, IntrinsicSlot.PYINT_IS_LIMITED_WONDER) or not CyCity.hasBuilding(i) or CyCity.isFreeBuilding(i):
 			continue
 		info = GC.getBuildingInfo(i)
 		if info.getProductionCost() < 1 or info.isNukeImmune() or info.isAutoBuild():
@@ -6388,7 +6388,7 @@ def doMajorFire(argsList):
 		if currFlamm <= iFlammEnd:
 			break
 		for j in xrange(GC.getNumBuildingInfos()):
-			if isLimitedWonder(j) or not CyCity.hasBuilding(j) or CyCity.isFreeBuilding(j):
+			if INFO.getIntrinsic("BUILDING_", j, IntrinsicSlot.PYINT_IS_LIMITED_WONDER) or not CyCity.hasBuilding(j) or CyCity.isFreeBuilding(j):
 				continue
 			info = GC.getBuildingInfo(j)
 			if info.getProductionCost() < 1 or info.isNukeImmune() or info.isAutoBuild():
@@ -6442,7 +6442,7 @@ def doCatastrophicFire(argsList):
 		iHighFlamm = 0
 
 		for j in xrange(GC.getNumBuildingInfos()):
-			if isLimitedWonder(j) or not CyCity.hasBuilding(j) or CyCity.isFreeBuilding(j):
+			if INFO.getIntrinsic("BUILDING_", j, IntrinsicSlot.PYINT_IS_LIMITED_WONDER) or not CyCity.hasBuilding(j) or CyCity.isFreeBuilding(j):
 				continue
 			info = GC.getBuildingInfo(j)
 			if info.getProductionCost() < 1 or info.isNukeImmune() or info.isAutoBuild():

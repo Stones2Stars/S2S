@@ -4,6 +4,7 @@ import os
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 GAME = GC.getGame()
 MAP = GC.getMap()
 STATE = CyState()
@@ -108,12 +109,12 @@ class MetaDesc:
 class CvGameDesc:
 
 	def write(self, f):
-		f.write("BeginGame\n\tEra=%s\n\tSpeed=%s\n\tCalendar=%s\n" %(GC.getEraInfo(GAME.getStartEra()).getType(), GC.getGameSpeedInfo(GAME.getGameSpeedType()).getType(), GC.getCalendarInfo(GAME.getCalendar()).getType()))
+		f.write("BeginGame\n\tEra=%s\n\tSpeed=%s\n\tCalendar=%s\n" %(INFO.getType("C2C_ERA_", GAME.getStartEra()), INFO.getType("GAMESPEED_", GAME.getGameSpeedType()), INFO.getType("CALENDAR_", GAME.getCalendar())))
 
 		# write options
 		for i in xrange(GC.getNumGameOptionInfos()):
 			if GAME.isOption(i):
-				f.write("\tOption=%s\n" %(GC.getGameOptionInfo(i).getType()))
+				f.write("\tOption=%s\n" %(INFO.getType("GAMEOPTION_", i)))
 
 		# write mp options
 		for i in xrange(GC.getNumMPOptionInfos()):
@@ -129,7 +130,7 @@ class CvGameDesc:
 		for i in xrange(GC.getNumVictoryInfos()):
 			if GAME.isVictoryValid(i):
 				if not GC.getVictoryInfo(i).isPermanent():
-					f.write("\tVictory=%s\n" %(GC.getVictoryInfo(i).getType()))
+					f.write("\tVictory=%s\n" %(INFO.getType("VICTORY_", i)))
 
 		f.write("\tGameTurn=%d\n" % GAME.getGameTurn())
 		f.write("\tMaxTurns=%d\n" % GAME.getMaxTurns())
@@ -405,7 +406,7 @@ class CvTeamDesc:
 
 			for i in xrange(GC.getNumProjectInfos()):
 				for j in xrange(team.getProjectCount(i)):
-					f.write("\tProjectType=%s\n" %(GC.getProjectInfo(i).getType()))
+					f.write("\tProjectType=%s\n" %(INFO.getType("PROJECT_", i)))
 
 			if team.getVassalPower() != 0:
 				f.write("\tVassalPower=%d\n" % team.getVassalPower())
@@ -545,17 +546,17 @@ class CvPlayerDesc:
 			f.write("BeginPlayer\n\tPlayerSlot=%d\n\tTeam=%d\n" %(idx, player.getTeam()))
 
 			if player.getHandicapType() > -1:
-				f.write("\tHandicap=%s\n" % GC.getHandicapInfo(player.getHandicapType()).getType())
+				f.write("\tHandicap=%s\n" % INFO.getType("HANDICAP_", player.getHandicapType()))
 
 			# write leader and Civ Description info
-			f.write("\tLeaderType=%s\n" % GC.getLeaderHeadInfo(player.getLeaderType()).getType())
+			f.write("\tLeaderType=%s\n" % INFO.getType("LEADER_", player.getLeaderType()))
 			f.write("\tLeaderName=%s\n" % player.getNameKey().encode(fEncode))
 			f.write("\tCivDesc=%s\n" % player.getCivilizationDescriptionKey().encode(fEncode))
 			f.write("\tCivShortDesc=%s\n" % player.getCivilizationShortDescriptionKey().encode(fEncode))
 			f.write("\tCivAdjective=%s\n" % player.getCivilizationAdjectiveKey().encode(fEncode))
 			f.write("\tFlagDecal=%s\n" % player.getFlagDecal().encode(fEncode))
 			f.write("\tWhiteFlag=%d\n" % player.isWhiteFlag())
-			f.write("\tCivType=%s\n" % GC.getCivilizationInfo(player.getCivilizationType()).getType())
+			f.write("\tCivType=%s\n" % INFO.getType("CIVILIZATION_", player.getCivilizationType()))
 			f.write("\tColor=%s\n" % GC.getPlayerColorInfo(player.getPlayerColor()).getType())
 			f.write("\tArtStyle=%s\n" % GC.getArtStyleTypes(player.getArtStyleType()))
 			f.write("\tPlayableCiv=%d\n" % int(player.isPlayable()))
@@ -569,7 +570,7 @@ class CvPlayerDesc:
 				f.write("\tStartingGold=%d\n" % player.getGold())
 
 				for i in xrange(GC.getNumCivicOptionInfos()):
-					f.write("\tCivicOption=%s, Civic=%s\n" %(GC.getCivicOptionInfo(i).getType(), GC.getCivicInfo(player.getCivics(i)).getType()))
+					f.write("\tCivicOption=%s, Civic=%s\n" %(INFO.getType("CIVICOPTION_", i), INFO.getType("CIVIC_", player.getCivics(i))))
 
 				pPlayerReligionInfo = GC.getReligionInfo(player.getStateReligion())
 				if pPlayerReligionInfo:
@@ -595,7 +596,7 @@ class CvPlayerDesc:
 				if player.getStateReligionBuildingProductionModifier() != 0:
 					f.write("\tStateReligionBuilding=%d\n" % player.getStateReligionBuildingProductionModifier())
 
-			f.write("\tStartingEra=%s\n" %(GC.getEraInfo(player.getCurrentEra()).getType()))
+			f.write("\tStartingEra=%s\n" %(INFO.getType("C2C_ERA_", player.getCurrentEra())))
 
 			# write City List
 			for i in xrange(player.getNumCityNames()):
@@ -843,7 +844,7 @@ class CvUnitDesc:
 		if unit.getNameNoDesc():
 			f.write("\t\tUnitName=%s\n" % unit.getNameNoDesc().encode(fEncode))
 		if unit.getLeaderUnitType() != -1:
-			f.write("\t\tLeaderUnitType=%s\n" % GC.getUnitInfo(unit.getLeaderUnitType()).getType())
+			f.write("\t\tLeaderUnitType=%s\n" % INFO.getType("UNIT_", unit.getLeaderUnitType()))
 		if unit.getDamage() > 0:
 			f.write("\t\tDamage=%d\n" % unit.getDamage())
 
@@ -851,7 +852,7 @@ class CvUnitDesc:
 
 		for i in xrange(GC.getNumPromotionInfos()):
 			if unit.isHasPromotion(i):
-				f.write("\t\tPromotionType=%s\n" % GC.getPromotionInfo(i).getType())
+				f.write("\t\tPromotionType=%s\n" % INFO.getType("PROMOTION_", i))
 
 		f.write("\t\tFacingDirection=%d\n" % unit.getFacingDirection())
 
@@ -1072,33 +1073,33 @@ class CvCityDesc:
 			%(city.getOwner(), GC.getPlayer(city.getOwner()).getName().encode(fEncode), city.getName().encode(fEncode), city.getPopulation(), city.getFood())
 		)
 		if city.isProductionUnit():
-			f.write("\t\tProductionUnit=%s\n" %(GC.getUnitInfo(city.getProductionUnit()).getType(),))
+			f.write("\t\tProductionUnit=%s\n" %(INFO.getType("UNIT_", city.getProductionUnit()),))
 		elif city.isProductionBuilding():
-			f.write("\t\tProductionBuilding=%s\n" %(GC.getBuildingInfo(city.getProductionBuilding()).getType(),))
+			f.write("\t\tProductionBuilding=%s\n" %(INFO.getType("BUILDING_", city.getProductionBuilding()),))
 		elif city.isProductionProject():
-			f.write("\t\tProductionProject=%s\n" %(GC.getProjectInfo(city.getProductionProject()).getType(),))
+			f.write("\t\tProductionProject=%s\n" %(INFO.getType("PROJECT_", city.getProductionProject()),))
 		elif city.isProductionProcess():
-			f.write("\t\tProductionProcess=%s\n" %(GC.getProcessInfo(city.getProductionProcess()).getType(),))
+			f.write("\t\tProductionProcess=%s\n" %(INFO.getType("PROCESS_", city.getProductionProcess()),))
 
 		for iI in xrange(GC.getNumBuildingInfos()):
 			if city.hasBuilding(iI):
-				f.write("\t\tBuildingType=%s, BuildDate=%d\n" %(GC.getBuildingInfo(iI).getType(), city.getBuildingOriginalTime(iI)))
+				f.write("\t\tBuildingType=%s, BuildDate=%d\n" %(INFO.getType("BUILDING_", iI), city.getBuildingOriginalTime(iI)))
 
 		for iI in xrange(GC.getNumReligionInfos()):
 			if city.isHasReligion(iI):
-				f.write("\t\tReligionType=%s\n" %(GC.getReligionInfo(iI).getType()))
+				f.write("\t\tReligionType=%s\n" %(INFO.getType("RELIGION_", iI)))
 			if city.isHolyCityByType(iI):
-				f.write("\t\tHolyCityReligionType=%s\n" %(GC.getReligionInfo(iI).getType()))
+				f.write("\t\tHolyCityReligionType=%s\n" %(INFO.getType("RELIGION_", iI)))
 
 		for iI in xrange(GC.getNumCorporationInfos()):
 			if city.isHasCorporation(iI):
-				f.write("\t\tCorporationType=%s\n" %(GC.getCorporationInfo(iI).getType()))
+				f.write("\t\tCorporationType=%s\n" %(INFO.getType("CORPORATION_", iI)))
 			if city.isHeadquartersByType(iI):
-				f.write("\t\tHeadquarterCorporationType=%s\n" %(GC.getCorporationInfo(iI).getType()))
+				f.write("\t\tHeadquarterCorporationType=%s\n" %(INFO.getType("CORPORATION_", iI)))
 
 		for iI in xrange(GC.getNumSpecialistInfos()):
 			for iJ in xrange(city.getAddedFreeSpecialistCount(iI)):
-				f.write("\t\tFreeSpecialistType=%s\n" %(GC.getSpecialistInfo(iI).getType()))
+				f.write("\t\tFreeSpecialistType=%s\n" %(INFO.getType("SPECIALIST_", iI)))
 
 		if city.getScriptData():
 			f.write("\t\tScriptData=%s\n\t\t!ScriptData\n" % city.getScriptData())
@@ -1129,7 +1130,7 @@ class CvCityDesc:
 		if city.getExtraTradeRoutes() != 0:
 			f.write("\t\tExtraTrade=%d\n" %(city.getExtraTradeRoutes(),))
 		for i in xrange(GC.getNumBuildingInfos()):
-			szType = GC.getBuildingInfo(i).getType()
+			szType = INFO.getType("BUILDING_", i)
 			for k in xrange(YieldTypes.NUM_YIELD_TYPES):
 				if city.getBuildingYieldChange(i, k) != 0:
 					f.write("\t\tModifiedBuilding=%s, Yield=%s, Amount=%s\n" %(szType, GC.getYieldInfo(k).getType(), city.getBuildingYieldChange(i, k)))
@@ -1467,15 +1468,15 @@ class CvPlotDesc:
 		if plot.isStartingPlot():
 			f.write("\tStartingPlot\n")
 		if plot.getBonusType(-1) != -1:
-			f.write("\tBonusType=%s\n" % GC.getBonusInfo(plot.getBonusType(-1)).getType())
+			f.write("\tBonusType=%s\n" % INFO.getType("BONUS_", plot.getBonusType(-1)))
 		if plot.getImprovementType() != -1:
-			f.write("\tImprovementType=%s\n" % GC.getImprovementInfo(plot.getImprovementType()).getType())
+			f.write("\tImprovementType=%s\n" % INFO.getType("IMPROVEMENT_", plot.getImprovementType()))
 		if plot.getFeatureType() != -1:
-			f.write("\tFeatureType=%s, FeatureVariety=%d\n" %(GC.getFeatureInfo(plot.getFeatureType()).getType(), plot.getFeatureVariety()))
+			f.write("\tFeatureType=%s, FeatureVariety=%d\n" %(INFO.getType("FEATURE_", plot.getFeatureType()), plot.getFeatureVariety()))
 		if plot.getRouteType() != -1:
-			f.write("\tRouteType=%s\n" % GC.getRouteInfo(plot.getRouteType()).getType())
+			f.write("\tRouteType=%s\n" % INFO.getType("ROUTE_", plot.getRouteType()))
 		if plot.getTerrainType() != -1:
-			f.write("\tTerrainType=%s\n" % GC.getTerrainInfo(plot.getTerrainType()).getType())
+			f.write("\tTerrainType=%s\n" % INFO.getType("TERRAIN_", plot.getTerrainType()))
 		if plot.getPlotType() != PlotTypes.NO_PLOT:
 			f.write("\tPlotType=%d\n" % int(plot.getPlotType()))
 
@@ -1806,7 +1807,7 @@ Randomize Resources=0\nEndMap\n"
 				iGridW, iGridH,
 				MAP.getTopLatitude(), MAP.getBottomLatitude(),
 				MAP.isWrapX(), MAP.isWrapY(),
-				GC.getWorldInfo(MAP.getWorldSize()).getType(),
+				INFO.getType("WORLDSIZE_", MAP.getWorldSize()),
 				GC.getClimateInfo(MAP.getClimate()).getType(),
 				GC.getSeaLevelInfo(MAP.getSeaLevel()).getType()
 			)

@@ -459,7 +459,7 @@ def cityAdvise(CyCity, iPlayer):
 
 						for iBuildingX in xrange(GC.getNumBuildingInfos()):
 
-							if isLimitedWonder(iBuildingX): continue
+							if INFO.getIntrinsic("BUILDING_", iBuildingX, IntrinsicSlot.PYINT_IS_LIMITED_WONDER): continue
 
 							CvBuildingInfoX = GC.getBuildingInfo(iBuildingX)
 
@@ -497,7 +497,7 @@ def cityAdvise(CyCity, iPlayer):
 
 						for iBuildingX in xrange(GC.getNumBuildingInfos()):
 
-							if isLimitedWonder(iBuildingX): continue
+							if INFO.getIntrinsic("BUILDING_", iBuildingX, IntrinsicSlot.PYINT_IS_LIMITED_WONDER): continue
 
 							CvBuildingInfoX = GC.getBuildingInfo(iBuildingX)
 
@@ -535,7 +535,7 @@ def cityAdvise(CyCity, iPlayer):
 
 						for iBuildingX in xrange(GC.getNumBuildingInfos()):
 
-							if isLimitedWonder(iBuildingX): continue
+							if INFO.getIntrinsic("BUILDING_", iBuildingX, IntrinsicSlot.PYINT_IS_LIMITED_WONDER): continue
 
 							CvBuildingInfoX = GC.getBuildingInfo(iBuildingX)
 
@@ -573,7 +573,7 @@ def cityAdvise(CyCity, iPlayer):
 
 						for iBuildingX in xrange(GC.getNumBuildingInfos()):
 
-							if isLimitedWonder(iBuildingX): continue
+							if INFO.getIntrinsic("BUILDING_", iBuildingX, IntrinsicSlot.PYINT_IS_LIMITED_WONDER): continue
 
 							CvBuildingInfoX = GC.getBuildingInfo(iBuildingX)
 
@@ -608,7 +608,7 @@ def cityAdvise(CyCity, iPlayer):
 
 						for iBuildingX in xrange(GC.getNumBuildingInfos()):
 
-							if isLimitedWonder(iBuildingX): continue
+							if INFO.getIntrinsic("BUILDING_", iBuildingX, IntrinsicSlot.PYINT_IS_LIMITED_WONDER): continue
 
 							CvBuildingInfoX = GC.getBuildingInfo(iBuildingX)
 
@@ -646,7 +646,7 @@ def cityAdvise(CyCity, iPlayer):
 
 						for iBuildingX in xrange(GC.getNumBuildingInfos()):
 
-							if isLimitedWonder(iBuildingX): continue
+							if INFO.getIntrinsic("BUILDING_", iBuildingX, IntrinsicSlot.PYINT_IS_LIMITED_WONDER): continue
 
 							CvBuildingInfoX = GC.getBuildingInfo(iBuildingX)
 
@@ -684,7 +684,7 @@ def cityAdvise(CyCity, iPlayer):
 
 						for iBuildingX in xrange(GC.getNumBuildingInfos()):
 
-							if isLimitedWonder(iBuildingX): continue
+							if INFO.getIntrinsic("BUILDING_", iBuildingX, IntrinsicSlot.PYINT_IS_LIMITED_WONDER): continue
 
 							CvBuildingInfoX = GC.getBuildingInfo(iBuildingX)
 
@@ -722,7 +722,7 @@ def cityAdvise(CyCity, iPlayer):
 
 						for iBuildingX in xrange(GC.getNumBuildingInfos()):
 
-							if isLimitedWonder(iBuildingX): continue
+							if INFO.getIntrinsic("BUILDING_", iBuildingX, IntrinsicSlot.PYINT_IS_LIMITED_WONDER): continue
 
 							CvBuildingInfoX = GC.getBuildingInfo(iBuildingX)
 

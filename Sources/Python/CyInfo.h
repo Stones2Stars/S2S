@@ -27,6 +27,28 @@
 //
 //	BOOST: only the `python::` alias, never a bare `boost::` -- two Boosts coexist (engine.md).
 //
+//
+//	The INTRINSIC STRAGGLERS -- genuinely lone, unconditioned values that belong to no group
+//	([patterns.md] THE GETTER SETUP category 4: "bare typed reads ... plus getScalar for the 1-2-entry
+//	stragglers"). Addressed by SLOT so the surface grows by an enum entry rather than by a method per value,
+//	which is the same "extensible by DATA, not by new getters" rule the rest of the read surface obeys.
+//
+//	⛔ NOT a general escape hatch. A value that belongs to a GROUP is read through its group (yields, commerce,
+//	wellbeing, ...); a CLASSIFICATION is an O(1) bitset test; an EDGE is getEdgeIds. This is only for the
+//	leftovers those three do not cover, and a new entry earns its place by being one of them.
+//
+enum PyIntrinsicSlot
+{
+	PYINT_COST = 0,            // the entity's own authored make-cost (`cost.production`) -- HUMAN, never x100
+	PYINT_BONUS_CLASS,         // BONUSCLASS_* FK  (identity.bonusClassType)
+	PYINT_IS_MAP_BONUS,        // does this bonus appear on the map at all
+	PYINT_IS_VISIBLE,          // is this specialist assignable on the city screen (identity.visible)
+	PYINT_COLOR_TYPE,          // COLOR_* FK for a yield
+	PYINT_ACTION_INFO_INDEX,   // the hotkey/action index a control maps to
+	PYINT_IS_LIMITED_WONDER,   // does this building carry a SELF-cap (world/team/empire) -- i.e. is it a wonder
+	NUM_PYINT
+};
+
 class CyInfo
 {
 public:
@@ -51,6 +73,11 @@ public:
 	// ⛔ Parameterized over the family/bucket ENUMS, never a getter per relation: the axes are the spec's fixed
 	// vocabulary, so a new bucket is data and this surface does not grow.
 	python::list getEdgeIds(const std::string& szTypePrefix, int iId, int iFamily, int iBucket) const;
+
+	// One lone intrinsic value, by SLOT (see PyIntrinsicSlot). Bools answer 0/1 and FKs answer their id, so the
+	// whole straggler plane is one int-returning read. Answers -1 when the (prefix, slot) pair names nothing,
+	// so a caller can tell "not served here" from a real 0.
+	int getIntrinsic(const std::string& szTypePrefix, int iId, int iSlot) const;
 
 	// ⚑ THE BULK INDEX SHAPE -- one boundary crossing for a WHOLE id->value column, not one per entity.
 	// A boost::python call costs far more than the lookup inside it, so the read that scales is the one that

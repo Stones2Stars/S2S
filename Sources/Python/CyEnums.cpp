@@ -26,6 +26,7 @@
 #include "Defines/CvGlobals.h"
 #include "Enabler/CvEnabler.h"   // EnablerDomain::State -- the availability tri-state
 #include "Infos/CvEdges.h"       // EnEdgeFamily / EnEdgeBucket -- the edge axes ([DEC-one-reverse-view])
+#include "Python/CyInfo.h"       // PyIntrinsicSlot -- the straggler slots CyInfo::getIntrinsic is addressed by
 #include "UI/CvBuildingFilters.h"
 #include "UI/CvBuildingGrouping.h"
 #include "UI/CvBuildingSort.h"
@@ -69,6 +70,19 @@ void CyEnums::pythonPublish()
 		.value("EDGEF_RELATED",      EDGEF_RELATED)
 		.value("EDGEF_REQUIRED_BY",  EDGEF_REQUIRED_BY)
 		.value("EDGEF_ENABLED_BY",   EDGEF_ENABLED_BY)
+		;
+
+	// The INTRINSIC STRAGGLER slots ([patterns.md] THE GETTER SETUP category 4) -- the lone values that belong
+	// to no group, no classification block and no edge family. Addressed by slot so the read surface grows by
+	// an enum entry rather than a getter per value.
+	python::enum_<PyIntrinsicSlot>("IntrinsicSlot")
+		.value("PYINT_COST",              PYINT_COST)
+		.value("PYINT_BONUS_CLASS",       PYINT_BONUS_CLASS)
+		.value("PYINT_IS_MAP_BONUS",      PYINT_IS_MAP_BONUS)
+		.value("PYINT_IS_VISIBLE",        PYINT_IS_VISIBLE)
+		.value("PYINT_COLOR_TYPE",        PYINT_COLOR_TYPE)
+		.value("PYINT_ACTION_INFO_INDEX", PYINT_ACTION_INFO_INDEX)
+		.value("PYINT_IS_LIMITED_WONDER", PYINT_IS_LIMITED_WONDER)
 		;
 
 	python::enum_<EnEdgeBucket>("EdgeBucket")

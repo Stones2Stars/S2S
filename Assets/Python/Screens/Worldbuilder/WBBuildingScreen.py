@@ -15,6 +15,7 @@ import WorldBuilder
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -375,7 +376,7 @@ class WBBuildingScreen:
 				iType = not pCity.hasBuilding(item)
 			self.doEffects(pCity, item, iType)
 		iFreeBuilding = info.getFreeBuilding()
-		if iFreeBuilding > -1 and bWonder != isLimitedWonder(iFreeBuilding):
+		if iFreeBuilding > -1 and bWonder != INFO.getIntrinsic("BUILDING_", iFreeBuilding, IntrinsicSlot.PYINT_IS_LIMITED_WONDER):
 			return True
 		return False
 

@@ -413,7 +413,7 @@ class CvGameUtils:
 					lWonders = []
 					for i in xrange(GC.getNumBuildingInfos()):
 						if pCity.hasBuilding(i):
-							if isLimitedWonder(i):
+							if INFO.getIntrinsic("BUILDING_", i, IntrinsicSlot.PYINT_IS_LIMITED_WONDER):
 								lWonders.append(GC.getBuildingInfo(i).getDescription())
 							else:
 								lBuildings.append(GC.getBuildingInfo(i).getDescription())

@@ -19,6 +19,7 @@ import WBTradeScreen
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 GAME = GC.getGame()
 MAP = GC.getMap()
 STATE = CyState()
@@ -920,7 +921,7 @@ class WorldBuilder:
 			for i in xrange(GC.getNumBuildingInfos()):
 
 				if self.iSelectClass == 1:
-					if isLimitedWonder(i):
+					if INFO.getIntrinsic("BUILDING_", i, IntrinsicSlot.PYINT_IS_LIMITED_WONDER):
 						continue
 				elif self.iSelectClass == 2:
 					if not isNationalWonder(i):
