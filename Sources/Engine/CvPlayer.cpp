@@ -17144,18 +17144,19 @@ void CvPlayer::read(FDataStreamBase* pStream)
 			}
 		}
 
+		// ⛔ m_ppaaiImprovementYieldChange went with the accumulator cut, so EVERY element an older save holds for
+		// it is an orphan -- the SURVIVING Types exactly as much as the removed ones. Both branches therefore
+		// drain, which is save.md §4's "do both branches merely drain? ⇒ the member is dead" shape. Draining only
+		// the removed half left one element per surviving improvement sitting in the stream, and an unconsumed
+		// orphan is the one HARD failure the format has (save.md §3): Expect() reads the mismatch as
+		// "code ahead of stream", so every later read in this object slides onto the wrong tuple -- and the RAW
+		// m_researchQueue.Read below then takes a garbage element count and tries to allocate it.
+		// ⚑ The loop STAYS rather than moving to savemigration.txt: a decorated per-element tag cannot be
+		// soft-removed there, because the normalized dictionary name never matches the bracketed source literal.
 		for (int i = 0; i < wrapper.getNumClassEnumValues(REMAPPED_CLASS_TYPE_IMPROVEMENTS); ++i)
 		{
-			int	iI = wrapper.getNewClassEnumValue(REMAPPED_CLASS_TYPE_IMPROVEMENTS, i, true);
-
-			if ( iI != -1 )
-			{
-			}
-			else
-			{
-				//	Consume the values
-				WRAPPER_SKIP_ELEMENT(wrapper, "CvPlayer", m_ppaaiImprovementYieldChange[iI], SAVE_VALUE_TYPE_INT_ARRAY);
-			}
+			wrapper.getNewClassEnumValue(REMAPPED_CLASS_TYPE_IMPROVEMENTS, i, true);
+			WRAPPER_SKIP_ELEMENT(wrapper, "CvPlayer", m_ppaaiImprovementYieldChange[iI], SAVE_VALUE_TYPE_INT_ARRAY);
 		}
 		m_researchQueue.Read(pStream);
 
