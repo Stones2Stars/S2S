@@ -137,9 +137,6 @@ public:
 	int getGreatPeopleUnitProgress(int iPlayer, int iCity, int iUnit) const;
 	int getGreatPeopleThresholdNonMilitary(int iPlayer) const;
 	int getMilitaryHappinessUnits(int iPlayer, int iCity) const;
-	// Post-conquest resistance: whether it is running. The REMAINING TURNS are COUNTDOWN_OCCUPATION in the
-	// countdown group below -- a turn counter is not a lone fact, and every other counter reads there.
-	bool isOccupation(int iPlayer, int iCity) const;
 
 	// ---- The city's RAW-STATE groups: live engine counters and the current order. ----
 	// These are the state no deposit produces, so they answer off the city directly rather than off a package --
@@ -151,6 +148,17 @@ public:
 	python::list getOrder(int iPlayer, int iCity) const;
 	python::list getGrowth(int iPlayer, int iCity) const;
 	python::list getCulture(int iPlayer, int iCity) const;
+	// The city's parameterless predicates, as ONE group (CityFlagKind) -- occupation, disorder, capital,
+	// power, the two automation toggles and the conscript verdict. A lone bool getter beside this group
+	// would be a second surface for the same question, which is what the grammar exists to prevent.
+	python::list getCityFlags(int iPlayer, int iCity) const;
+	// The city screen's BUILD LISTS, already filtered / grouped / sorted by the engine's own view model: a list
+	// of GROUPS, each a list of entity ids. One crossing for the whole list rather than one per entry -- a
+	// boost::python call costs far more than the lookup inside it, and this is redrawn constantly.
+	// ⚠ A BARE fetch, like everything here: it reports the list as it currently stands and never rebuilds it.
+	// Rebuilding is an explicit ACT verb, because it is the screen ASKING for work, not a read repairing itself.
+	python::list getUnitListGroups(int iPlayer, int iCity) const;
+	python::list getBuildingListGroups(int iPlayer, int iCity) const;
 	// Has this team SEEN the city. Fog state, so it is live and per-team -- an unrevealed city is one a screen
 	// may know of but must not name.
 	bool isCityRevealed(int iPlayer, int iCity, int iTeam) const;
@@ -167,7 +175,6 @@ public:
 	// live state and belongs here. ⛔ These are the READS only. The matching setters are a WRITE, and no write
 	// surface exists yet ([roadmap] scope decision 6), so the lists READ correctly and do not yet re-sort on a
 	// click. Reads run on every redraw; the writes fire only on user action, which is why the split is usable.
-	bool isProductionAutomated(int iPlayer, int iCity) const;
 	int getOrderQueueLength(int iPlayer, int iCity) const;
 	bool getBuildingListFilterActive(int iPlayer, int iCity, int iFilter) const;
 	int getBuildingListSorting(int iPlayer, int iCity) const;

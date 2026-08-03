@@ -39,6 +39,23 @@ public:
 	// which script cannot hold, so the pair is resolved here. The three modifier flags are the click's.
 	bool selectUnitGroup(int iPlayer, int iUnit, bool bShift, bool bCtrl, bool bAlt) const;
 
+	// ---- The city screen's LIST VIEW state: which filter/sort/grouping the player left its lists on. ----
+	// ⚖ These are the one place this surface writes, and they are deliberately narrow: VIEW state, not
+	// gameplay. What the owner ruled banned is DEVELOPING game logic in Python; keeping the existing logic
+	// working is not ([roadmap] scope decision 6), and a list's sort order is not game logic by any reading --
+	// it changes what the player SEES, never what the game does. The matching READS are on CyState, so the
+	// lists both render and respond to a click through one coherent pair.
+	bool setBuildingListFilterActive(int iPlayer, int iCity, int iFilter, bool bActive) const;
+	bool setBuildingListSorting(int iPlayer, int iCity, int iSorting) const;
+	bool setUnitListFilterActive(int iPlayer, int iCity, int iFilter, bool bActive) const;
+	bool setUnitListGrouping(int iPlayer, int iCity, int iGrouping) const;
+	bool setUnitListSorting(int iPlayer, int iCity, int iSorting) const;
+	// Mark a build list stale so the next read rebuilds it. This is the screen ASKING for work, which is why it
+	// is an action and not folded into the read -- a read that rebuilt itself would be the self-healing shape
+	// the whole surface avoids ([DEC-no-self-heal]).
+	bool invalidateUnitList(int iPlayer, int iCity) const;
+	bool invalidateBuildingList(int iPlayer, int iCity) const;
+
 	static void pythonPublish();
 };
 

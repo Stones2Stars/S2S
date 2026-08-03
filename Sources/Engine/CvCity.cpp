@@ -383,6 +383,21 @@ void CvCity::getCultureRead(int (&culture)[NUM_CITY_CULTURE_READS]) const
 }
 
 
+void CvCity::getCityFlags(int (&flags)[NUM_CITY_FLAGS]) const
+{
+	flags[CITY_FLAG_PRODUCING]             = isProduction() ? 1 : 0;
+	flags[CITY_FLAG_CITIZENS_AUTOMATED]    = isCitizensAutomated() ? 1 : 0;
+	flags[CITY_FLAG_PRODUCTION_AUTOMATED]  = isProductionAutomated() ? 1 : 0;
+	flags[CITY_FLAG_CAN_CONSCRIPT]         = canConscript() ? 1 : 0;
+	flags[CITY_FLAG_DISORDER]              = isDisorder() ? 1 : 0;
+	flags[CITY_FLAG_CAPITAL]               = isCapital() ? 1 : 0;
+	flags[CITY_FLAG_GOVERNMENT_CENTER]     = isGovernmentCenter() ? 1 : 0;
+	flags[CITY_FLAG_POWER]                 = isPower() ? 1 : 0;
+	flags[CITY_FLAG_OCCUPATION]            = isOccupation() ? 1 : 0;
+	flags[CITY_FLAG_PLUNDERED]             = isPlundered() ? 1 : 0;
+	flags[CITY_FLAG_QUARANTINED]           = isQuarantined() ? 1 : 0;
+}
+
 void CvCity::getHurryQuote(HurryTypes eHurry, int (&quote)[NUM_CITY_HURRY_QUOTES]) const
 {
 	const bool bAllowed = canHurry(eHurry, false);

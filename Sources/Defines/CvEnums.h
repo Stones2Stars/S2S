@@ -1295,6 +1295,25 @@ enum UnitFlagKind
 	NUM_UNIT_FLAGS
 };
 
+//	A CITY's parameterless predicates, as one group -- the same shape as UnitFlagKind, for the same reason:
+//	the city screen asks most of them on every redraw, and a getter per bool is the shape being deleted.
+enum CityFlagKind
+{
+	CITY_FLAG_PRODUCING = 0,
+	CITY_FLAG_CITIZENS_AUTOMATED,
+	CITY_FLAG_PRODUCTION_AUTOMATED,
+	CITY_FLAG_CAN_CONSCRIPT,
+	CITY_FLAG_DISORDER,
+	CITY_FLAG_CAPITAL,
+	CITY_FLAG_GOVERNMENT_CENTER,
+	CITY_FLAG_POWER,
+	CITY_FLAG_OCCUPATION,
+	CITY_FLAG_PLUNDERED,
+	CITY_FLAG_QUARANTINED,
+
+	NUM_CITY_FLAGS
+};
+
 //	The city's FOOD/GROWTH state: what is in the store, what this turn adds, what the next citizen costs, and
 //	how far off it is. One group, because every consumer that asks one of these asks three of them.
 //	⚠ GROWTH_READ_FOOD_PER_TURN is the BOTTOMED difference (the engine's own default) -- a starving city

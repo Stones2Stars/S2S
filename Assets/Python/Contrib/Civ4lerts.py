@@ -561,10 +561,10 @@ class CityOccupation(AbstractCityTestAlert):
 		AbstractCityTestAlert.__init__(self, eventManager)
 
 	def _passesTest(self, cityId):
-		return STATE.isOccupation(cityId[0], cityId[1])
+		return STATE.getCityFlags(cityId[0], cityId[1])[CityFlagKind.CITY_FLAG_OCCUPATION]
 
 	def _willPassTest(self, cityId):
-		if not STATE.isOccupation(cityId[0], cityId[1]):
+		if not STATE.getCityFlags(cityId[0], cityId[1])[CityFlagKind.CITY_FLAG_OCCUPATION]:
 			return False
 		return STATE.getCountdowns(cityId[0], cityId[1])[CityCountdownKind.COUNTDOWN_OCCUPATION] > 1
 

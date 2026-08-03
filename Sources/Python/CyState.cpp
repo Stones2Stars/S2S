@@ -371,12 +371,6 @@ int CyState::getMilitaryHappinessUnits(int iPlayer, int iCity) const
 	return pCity ? pCity->getMilitaryHappinessUnits() : 0;
 }
 
-bool CyState::isOccupation(int iPlayer, int iCity) const
-{
-	const CvCity* pCity = cys_city(iPlayer, iCity);
-	return pCity ? pCity->isOccupation() : false;
-}
-
 // ---- The city's RAW-STATE groups ----
 
 python::list CyState::getCountdowns(int iPlayer, int iCity) const
@@ -402,6 +396,54 @@ python::list CyState::getGrowth(int iPlayer, int iCity) const
 	int values[NUM_CITY_GROWTH_READS] = { 0 };
 	const CvCity* pCity = cys_city(iPlayer, iCity);
 	if (pCity) pCity->getGrowthRead(values);
+	return cys_toList(values);
+}
+
+namespace
+{
+	//	The two build lists differ only in which accessors they walk, so the walk itself is written once.
+	template <class TGroupNum, class TInGroup, class TAt>
+	python::list cys_listGroups(CvCity* pCity, TGroupNum groupNum, TInGroup inGroup, TAt at)
+	{
+		python::list groups = python::list();
+		if (pCity == NULL)
+		{
+			return groups;
+		}
+		const int iGroups = (pCity->*groupNum)();
+		for (int iGroup = 0; iGroup < iGroups; ++iGroup)
+		{
+			python::list entries = python::list();
+			const int iCount = (pCity->*inGroup)(iGroup);
+			for (int iPos = 0; iPos < iCount; ++iPos)
+			{
+				entries.append((int)(pCity->*at)(iGroup, iPos));
+			}
+			groups.append(entries);
+		}
+		return groups;
+	}
+}
+
+python::list CyState::getUnitListGroups(int iPlayer, int iCity) const
+{
+	CvCity* pCity = const_cast<CvCity*>(cys_city(iPlayer, iCity));
+	return cys_listGroups(pCity, &CvCity::getUnitListGroupNum, &CvCity::getUnitListNumInGroup,
+	                      &CvCity::getUnitListType);
+}
+
+python::list CyState::getBuildingListGroups(int iPlayer, int iCity) const
+{
+	CvCity* pCity = const_cast<CvCity*>(cys_city(iPlayer, iCity));
+	return cys_listGroups(pCity, &CvCity::getBuildingListGroupNum, &CvCity::getBuildingListNumInGroup,
+	                      &CvCity::getBuildingListType);
+}
+
+python::list CyState::getCityFlags(int iPlayer, int iCity) const
+{
+	int values[NUM_CITY_FLAGS] = { 0 };
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	if (pCity) pCity->getCityFlags(values);
 	return cys_toList(values);
 }
 
@@ -551,12 +593,6 @@ bool CyState::canUnitUpgrade(int iPlayer, int iUnit, int iToUnit, bool bTestVisi
 // ---- The city screen's VIEW state ----
 // ⚠ The engine's getters here are non-const, so the city is resolved non-const too -- these READ, and the
 // const_cast is the engine's signature showing through, not an intent to write.
-
-bool CyState::isProductionAutomated(int iPlayer, int iCity) const
-{
-	const CvCity* pCity = cys_city(iPlayer, iCity);
-	return pCity ? pCity->isProductionAutomated() : false;
-}
 
 int CyState::getOrderQueueLength(int iPlayer, int iCity) const
 {
@@ -782,11 +818,13 @@ void CyState::pythonPublish()
 		.def("getGreatPeopleUnitProgress", &CyState::getGreatPeopleUnitProgress)
 		.def("getGreatPeopleThresholdNonMilitary", &CyState::getGreatPeopleThresholdNonMilitary)
 		.def("getMilitaryHappinessUnits",&CyState::getMilitaryHappinessUnits)
-		.def("isOccupation",             &CyState::isOccupation)
 		.def("getCountdowns",            &CyState::getCountdowns)
 		.def("getOrder",                 &CyState::getOrder)
 		.def("getGrowth",                &CyState::getGrowth)
 		.def("getCulture",               &CyState::getCulture)
+		.def("getCityFlags",             &CyState::getCityFlags)
+		.def("getUnitListGroups",        &CyState::getUnitListGroups)
+		.def("getBuildingListGroups",    &CyState::getBuildingListGroups)
 		.def("getUnitRead",              &CyState::getUnitRead)
 		.def("getUnitFlags",             &CyState::getUnitFlags)
 		.def("getUnitName",              &CyState::getUnitName)
@@ -799,7 +837,6 @@ void CyState::pythonPublish()
 		.def("isCityRevealed",           &CyState::isCityRevealed)
 		.def("isEmphasize",              &CyState::isEmphasize)
 		.def("getHurryQuote",            &CyState::getHurryQuote)
-		.def("isProductionAutomated",    &CyState::isProductionAutomated)
 		.def("getOrderQueueLength",      &CyState::getOrderQueueLength)
 		.def("getBuildingListFilterActive", &CyState::getBuildingListFilterActive)
 		.def("getBuildingListSorting",   &CyState::getBuildingListSorting)

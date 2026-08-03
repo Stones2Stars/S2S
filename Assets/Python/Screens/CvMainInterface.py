@@ -2104,14 +2104,16 @@ class CvMainInterface:
 		AtUnit = self.AtUnit
 
 		if InCity:
-			city = InCity.CyCity
-			bMyCity = InCity.iPlayer == self.iPlayer
+			iCityOwner = InCity.iPlayer
+			iCityID = InCity.iCityID
+			aCityFlags = STATE.getCityFlags(iCityOwner, iCityID)
+			bMyCity = iCityOwner == self.iPlayer
 			bOfInterest = (bMyCity or self.bDebugMode)
 
 			iTab = self.iCityTab
 			if self.bUpdateCityTab:
 				if self.iCityTab < 0:
-					if bMyCity and not city.isProduction():
+					if bMyCity and not aCityFlags[CityFlagKind.CITY_FLAG_PRODUCING]:
 						self.openCityTab(screen, CITYTAB_ADMIN)
 					else:
 						print "[WARN] self.bUpdateCityTab unnecessarily set to 'True'"
@@ -2130,8 +2132,8 @@ class CvMainInterface:
 
 			# Automate
 			if bMyCity:
-				screen.setState("AutomateCitizens", city.isCitizensAutomated())
-				screen.setState("CS|AutomateProduction0", city.isProductionAutomated())
+				screen.setState("AutomateCitizens", aCityFlags[CityFlagKind.CITY_FLAG_CITIZENS_AUTOMATED])
+				screen.setState("CS|AutomateProduction0", aCityFlags[CityFlagKind.CITY_FLAG_PRODUCTION_AUTOMATED])
 
 			screen.enable("AutomateCitizens", bMyCity)
 			screen.enable("CS|AutomateProduction0", bMyCity)
@@ -2141,17 +2143,17 @@ class CvMainInterface:
 			for i in xrange(iNumEmphasizeInfos):
 				if bCityScreen or i < (iNumEmphasizeInfos - 2):
 					szButtonID = "Emphasize" + str(i)
-					screen.setState(szButtonID, city.AI_isEmphasize(i))
+					screen.setState(szButtonID, STATE.isEmphasize(iCityOwner, iCityID, i))
 					screen.show(szButtonID)
 
 			# Hurry
 			for i in xrange(self.iNumHurryInfos):
 				szButtonID = "Hurry" + str(i)
 				screen.show(szButtonID)
-				screen.enable(szButtonID, city.canHurry(i, False))
+				screen.enable(szButtonID, STATE.getHurryQuote(iCityOwner, iCityID, i)[CityHurryQuote.HURRY_QUOTE_ALLOWED])
 
 			# Draft
-			screen.enable("Conscript", bOfInterest and city.canConscript())
+			screen.enable("Conscript", bOfInterest and aCityFlags[CityFlagKind.CITY_FLAG_CAN_CONSCRIPT])
 
 		elif AtUnit:
 			# Unit action list
@@ -3527,8 +3529,8 @@ class CvMainInterface:
 			if self.bCityScreen:
 				screen.setLabelAt(ID + "Text", ID, txt, 1<<2, (halfX - 8) / 2, 2, 0, FontTypes.GAME_FONT, eWidGen, 1, 2)
 			else:
-				city = self.InCity.CyCity
-				screen.setText("CT|Cityzoom0", ID, txt + " <color=60,200,240>" + city.getName(), 1<<2, halfX - 8, 140, 0, FontTypes.GAME_FONT, eWidGen, 1, 2)
+				szCityName = STATE.getCityName(self.InCity.iPlayer, self.InCity.iCityID)
+				screen.setText("CT|Cityzoom0", ID, txt + " <color=60,200,240>" + szCityName, 1<<2, halfX - 8, 140, 0, FontTypes.GAME_FONT, eWidGen, 1, 2)
 
 		elif iTab == CITYTAB_UNIT:
 			self.fillUnitCityTabHeader(screen)
@@ -3550,7 +3552,8 @@ class CvMainInterface:
 		screen.setText("CT|Options0", "", "<img=Art/Interface/Buttons/general/optionIcon1.dds>", 1<<0, xRes - xRes/4 - 42, 138, 0, FontTypes.GAME_FONT, eWidGen, 0, 0)
 
 	def fillUnitCityTabHeader(self, screen):
-		CyCity = self.InCity.CyCity
+		iCityOwner = self.InCity.iPlayer
+		iCityID = self.InCity.iCityID
 		# Filter and grouping
 		iFilterWidth = self.xRes/2 - self.wUnitGroupButton - self.wUnitSortButton - 42
 		if iFilterWidth > 13 * 30 + 24:
@@ -3590,7 +3593,7 @@ class CvMainInterface:
 			iFilter, art = aList.pop(0)
 			name = PF + str(iFilter)
 			screen.addCheckBoxGFCAt(ScPnl, name, art, self.artPathHilite, x, y, 30, 30, eWidGen, 1, 2, eBtnLabel, False)
-			screen.setState(name, CyCity.getUnitListFilterActive(iFilter))
+			screen.setState(name, STATE.getUnitListFilterActive(iCityOwner, iCityID, iFilter))
 			x += 30
 			if x > iFilterWidth - 48:
 				x = -1
@@ -5667,7 +5670,7 @@ class CvMainInterface:
 				elif TYPE == "AutomateProduction":
 					InCity = self.InCity
 					if not InCity: raise "Should not occur"
-					if STATE.isProductionAutomated(InCity.iPlayer, InCity.iCityID):
+					if STATE.getCityFlags(InCity.iPlayer, InCity.iCityID)[CityFlagKind.CITY_FLAG_PRODUCTION_AUTOMATED]:
 						szTxt = TRNSLTR.getText("TXT_KEY_MISC_OFF_PROD_AUTO", ())
 					else: szTxt = TRNSLTR.getText("TXT_KEY_MISC_ON_PROD_AUTO", ())
 
@@ -5847,7 +5850,7 @@ class CvMainInterface:
 					elif CASE[0] == "QueueEntry":
 						# Clicked an entry in the city work queue
 						InCity = self.InCity
-						if not InCity or InCity.CyCity.getOrderQueueLength() < 2: return
+						if not InCity or STATE.getOrderQueueLength(InCity.iPlayer, InCity.iCityID) < 2: return
 						iTab = self.iCityTab
 						# Check if the work selection needs a refresh.
 						if TYPE == "UNIT":
@@ -5923,11 +5926,11 @@ class CvMainInterface:
 
 			elif BASE == "CT":
 				if TYPE == "UnitFilter":
-					self.InCity.CyCity.setUnitListFilterActive(ID, not self.InCity.CyCity.getUnitListFilterActive(ID))
+					ACT.setUnitListFilterActive(self.InCity.iPlayer, self.InCity.iCityID, ID, not STATE.getUnitListFilterActive(self.InCity.iPlayer, self.InCity.iCityID, ID))
 					self.updateCityTab(screen)
 
 				elif TYPE == "BuildingFilter":
-					self.InCity.CyCity.setBuildingListFilterActive(ID, not self.InCity.CyCity.getBuildingListFilterActive(ID))
+					ACT.setBuildingListFilterActive(self.InCity.iPlayer, self.InCity.iCityID, ID, not STATE.getBuildingListFilterActive(self.InCity.iPlayer, self.InCity.iCityID, ID))
 					self.updateCityTab(screen)
 
 				elif TYPE == "Options":
@@ -5936,7 +5939,7 @@ class CvMainInterface:
 
 				elif TYPE == "Cityzoom":
 					self.exitCityTab(screen)
-					CyIF.selectCity(self.InCity.CyCity, False)
+					ACT.selectCity(self.InCity.iPlayer, self.InCity.iCityID, False)
 					self.bUpdateCityTab = True
 
 			elif BASE == "BldgList":
@@ -6024,7 +6027,7 @@ class CvMainInterface:
 						RevInstances.RevolutionInst.showBribeCityPopup(self.InCity.CyCity)
 
 				elif TYPE == "AutomateProduction":
-					bAutomate = not self.InCity.CyCity.isProductionAutomated()
+					bAutomate = not STATE.getCityFlags(self.InCity.iPlayer, self.InCity.iCityID)[CityFlagKind.CITY_FLAG_PRODUCTION_AUTOMATED]
 					GAME.selectedCitiesGameNetMessage(
 						GameMessageTypes.GAMEMESSAGE_DO_TASK,
 						TaskTypes.TASK_SET_AUTOMATED_PRODUCTION,
@@ -6092,15 +6095,15 @@ class CvMainInterface:
 					if TYPE == "BuildingSorting":
 						iBuildingSorting = screen.getPullDownData(NAME, iData)
 						if iBuildingSorting >= 0:
-							self.InCity.CyCity.setBuildingListSorting(iBuildingSorting)
+							ACT.setBuildingListSorting(self.InCity.iPlayer, self.InCity.iCityID, iBuildingSorting)
 					elif TYPE == "UnitGrouping":
 						iUnitGrouping = screen.getPullDownData(NAME, iData)
 						if iUnitGrouping >= 0:
-							self.InCity.CyCity.setUnitListGrouping(iUnitGrouping)
+							ACT.setUnitListGrouping(self.InCity.iPlayer, self.InCity.iCityID, iUnitGrouping)
 					elif TYPE == "UnitSorting":
 						iUnitSorting = screen.getPullDownData(NAME, iData)
 						if iUnitSorting >= 0:
-							self.InCity.CyCity.setUnitListSorting(iUnitSorting)
+							ACT.setUnitListSorting(self.InCity.iPlayer, self.InCity.iCityID, iUnitSorting)
 					self.updateCityTab(screen)
 
 		elif iCode == 20: # slider stop
