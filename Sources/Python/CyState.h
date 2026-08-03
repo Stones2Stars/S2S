@@ -87,6 +87,13 @@ public:
 	// A PERCENT, so it is NOT x100 and a reader never divides it ([DEC-fixedpoint-x100]).
 	python::list getYieldModifiers(int iPlayer, int iCity) const;
 	int getSight(int iPlayer, int iCity) const;   // the city's sight BUDGET (vision.md)
+	// Which player would receive this city if it were liberated, or -1 for nobody. A lone id, so it stays a
+	// bare typed read (patterns.md category 4) rather than being forced into a group that would mean nothing.
+	int getLiberationPlayer(int iPlayer, int iCity) const;
+	// The city's REALIZED maintenance -- the computed total with the disorder / we-love-the-king suppression
+	// applied, which the raw getMaintenanceKinds deposits do NOT carry. x100 native like every amount, so the
+	// name says the VALUE and never the scale ([DEC-fixedpoint-x100]); a reader divides at the point of use.
+	int64_t getMaintenance(int iPlayer, int iCity) const;
 
 	// ---- THE CURRENT SELECTION, as an IDENTITY. ----
 	// ⛔ Asked of the library, NOT of the EXE's CyInterface. getHeadSelectedCity/Unit there hand back a Cy*

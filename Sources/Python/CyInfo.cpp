@@ -134,13 +134,33 @@ namespace
 		return cyi_xmlOnlyInfo(szTypePrefix, iId);
 	}
 
-	// A SELF-cap at any ownable scope. The CATEGORY count-caps are a different axis and are not one.
-	bool cyi_hasSelfCap(const CvAllowed* pAllowed)
+	// WHICH ownable scope a SELF-cap sits at, or -1 for none. The cap's scope IS the wonder category
+	// ([json.md] 4.4), so the category and the is-it-capped test read the SAME function -- two tests would be
+	// two meanings of "capped" that can drift.
+	// ⚠ The CATEGORY count-caps are a different axis and are not a self-cap.
+	int cyi_selfCapScope(const CvAllowed* pAllowed)
 	{
-		if (pAllowed == NULL) return false;
-		return pAllowed->cap(ALLOWEDCAP_WORLD)  >= 0
-		    || pAllowed->cap(ALLOWEDCAP_TEAM)   >= 0
-		    || pAllowed->cap(ALLOWEDCAP_EMPIRE) >= 0;
+		if (pAllowed == NULL) return -1;
+		if (pAllowed->cap(ALLOWEDCAP_WORLD)  >= 0) return ALLOWEDCAP_WORLD;
+		if (pAllowed->cap(ALLOWEDCAP_TEAM)   >= 0) return ALLOWEDCAP_TEAM;
+		if (pAllowed->cap(ALLOWEDCAP_EMPIRE) >= 0) return ALLOWEDCAP_EMPIRE;
+		return -1;
+	}
+
+	// The building's cap scope, following the SAME two routes the enabler does: its own `allowed`, else the
+	// SPECIALBUILDING GROUP that holds the cap for all its members.
+	int cyi_buildingCapScope(int iId)
+	{
+		const CvBuildingInfo& kBuilding = GC.getBuildingInfo((BuildingTypes)iId);
+		const int iOwn = cyi_selfCapScope(kBuilding.getAllowed());
+		if (iOwn >= 0) return iOwn;
+
+		const int iSpecialBuilding = kBuilding.getSpecialBuildingType();
+		if (iSpecialBuilding != NO_SPECIALBUILDING)
+		{
+			return cyi_selfCapScope(GC.getSpecialBuildingInfo((SpecialBuildingTypes)iSpecialBuilding).getAllowed());
+		}
+		return -1;
 	}
 }
 
@@ -256,6 +276,20 @@ int CyInfo::getIntrinsic(const std::string& szTypePrefix, int iId, int iSlot) co
 		if (szTypePrefix == "PROJECT_" && iId < GC.getNumProjectInfos())
 			return GC.getProjectInfo((ProjectTypes)iId).isSpaceship() ? 1 : 0;
 		break;
+	case PYINT_WONDER_SCOPE:
+		//	WHICH scope the self-cap sits at -- an ALLOWEDCAP_* value, or -1 when the building is uncapped.
+		//	That scope IS the wonder category: WORLD -> world wonder, TEAM -> team wonder, EMPIRE -> national.
+		if (szTypePrefix == "BUILDING_" && iId < GC.getNumBuildingInfos())
+			return cyi_buildingCapScope(iId);
+		break;
+
+	case PYINT_IS_NO_INSTANCE_LIMIT:
+		//	RELOCATABLE: the building waives the EMPIRE (national-wonder) cap, so it can be rebuilt elsewhere --
+		//	the palace and the culture buildings. The cap itself stays; only its empire enforcement is waived
+		//	(CvBuildingEnabler), which is why this is its own fact and not the absence of a cap.
+		if (szTypePrefix == "BUILDING_" && iId < GC.getNumBuildingInfos())
+			return GC.getBuildingInfo((BuildingTypes)iId).isNoInstanceLimit() ? 1 : 0;
+		break;
 
 	case PYINT_ACTION_INFO_INDEX:
 		// CvControlInfo derives from CvHotkeyInfo, which owns the index -- the control registry is XML-only,
@@ -280,16 +314,7 @@ int CyInfo::getIntrinsic(const std::string& szTypePrefix, int iId, int iSlot) co
 		// bound set by CultureLevel -- and deliberately do not make a building "limited".
 		if (szTypePrefix == "BUILDING_" && iId < GC.getNumBuildingInfos())
 		{
-			const CvBuildingInfo& kBuilding = GC.getBuildingInfo((BuildingTypes)iId);
-			if (cyi_hasSelfCap(kBuilding.getAllowed())) return 1;
-
-			const int iSpecialBuilding = kBuilding.getSpecialBuildingType();
-			if (iSpecialBuilding != NO_SPECIALBUILDING
-			&&  cyi_hasSelfCap(GC.getSpecialBuildingInfo((SpecialBuildingTypes)iSpecialBuilding).getAllowed()))
-			{
-				return 1;
-			}
-			return 0;
+			return cyi_buildingCapScope(iId) >= 0 ? 1 : 0;
 		}
 		break;
 

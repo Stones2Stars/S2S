@@ -2570,11 +2570,12 @@ class CvMainInterface:
 
 		if self.bCityScreen:
 			self.yields = RawYields.Tracker()
-			CyCity = InCity.CyCity
+			iCityOwner = InCity.iPlayer
+			iCityID = InCity.iCityID
 			if self.bCityChange or self.bCityEnter:
 				self.buildCityListLeft(screen, InCity)
 				self.buildCityListRight(screen, InCity)
-				self.buildCitizenPanel(screen, CyCity)
+				self.buildCitizenPanel(screen, InCity)
 				if self.bCityEnter:
 					screen.show("InterfaceTopCityBackgroundWidget")
 					screen.show("InterfaceTopRightBackgroundWidget")
@@ -2627,8 +2628,17 @@ class CvMainInterface:
 
 			bOwnCity = iTeam == self.iTeam
 
+			# The city's state in four crossings, indexed by name below. angryPopulation is the FINAL-STATE
+			# calculation over the channels -- clamp(anger - happiness, 0, pop) -- not a channel of its own
+			# ([patterns.md] THE TWO READ ROLES, rule 6). The channels are x100, so they reduce here.
+			aCityFlags  = STATE.getCityFlags(iCityOwner, iCityID)
+			aCountdowns = STATE.getCountdowns(iCityOwner, iCityID)
+			aWellbeing  = STATE.getRealizedWellbeing(iCityOwner, iCityID, 0)
+			iHappy = aWellbeing[WellbeingChannel.WELLBEING_HAPPINESS] / 100
+			iAnger = aWellbeing[WellbeingChannel.WELLBEING_ANGER] / 100
+
 			# Liberate Button Show
-			if -1 != CyCity.getLiberationPlayer(False):
+			if -1 != STATE.getLiberationPlayer(iCityOwner, iCityID):
 				screen.show("Liberate")
 
 			if bOwnCity:
@@ -2638,48 +2648,48 @@ class CvMainInterface:
 
 			szTxt = "<font=4b>"
 
-			if CyCity.isCapital():
+			if aCityFlags[CityFlagKind.CITY_FLAG_CAPITAL]:
 				szTxt += self.iconStarGold
-			elif CyCity.isGovernmentCenter():
+			elif aCityFlags[CityFlagKind.CITY_FLAG_GOVERNMENT_CENTER]:
 				szTxt += self.iconStarSilver
 
-			if CyCity.isPower():
+			if aCityFlags[CityFlagKind.CITY_FLAG_POWER]:
 				szTxt += self.iconPower
 
-			szTxt += CyCity.getName() + ": " + str(CyCity.getPopulation())
+			szTxt += STATE.getCityName(iCityOwner, iCityID) + ": " + str(STATE.getCityPopulation(iCityOwner, iCityID))
 
-			if CyCity.isOccupation():
-				szTxt += " " + self.iconOccupation + ":" + str(CyCity.getOccupationTimer())
+			if aCityFlags[CityFlagKind.CITY_FLAG_OCCUPATION]:
+				szTxt += " " + self.iconOccupation + ":" + str(aCountdowns[CityCountdownKind.COUNTDOWN_OCCUPATION])
 
 			screen.setText("CityNameText", "", szTxt, 1<<2, halfX, 32, 0, eFontGame, WidgetTypes.WIDGET_CITY_NAME, 0, 1)
 
-			iHealthGood = CyCity.goodHealth()
-			iHealthBad = CyCity.badHealth(False)
+			iHealthGood = aWellbeing[WellbeingChannel.WELLBEING_HEALTH] / 100
+			iHealthBad = aWellbeing[WellbeingChannel.WELLBEING_UNHEALTH] / 100
 			if iHealthBad > 0 or iHealthGood >= 0:
-				if CyCity.healthRate(False, 0) < 0:
+				if iHealthGood < iHealthBad:
 					# BUG - Negative Health Rate is Positive Eaten Food
-					szTxt = TRNSLTR.getText("INTERFACE_CITY_HEALTH_BAD", (iHealthGood, iHealthBad, - CyCity.healthRate(False, 0)))
+					szTxt = TRNSLTR.getText("INTERFACE_CITY_HEALTH_BAD", (iHealthGood, iHealthBad, iHealthBad - iHealthGood))
 				elif iHealthBad > 0:
 					szTxt = TRNSLTR.getText("INTERFACE_CITY_HEALTH_GOOD", (iHealthGood, iHealthBad))
 				else:
 					szTxt = TRNSLTR.getText("INTERFACE_CITY_HEALTH_GOOD_NO_BAD", (iHealthGood, ))
 				screen.setLabel("HealthText", "", uFont2 + szTxt, 1<<0, xRes - xPopProgBar + 6, 70, 0, eFontGame, WidgetTypes.WIDGET_HELP_HEALTH, -1, -1)
 
-			iAngryPop = CyCity.angryPopulation(0)
-			iUnhappyLevel = CyCity.unhappyLevel(0)
-			if CyCity.isDisorder():
+			iAngryPop = max(0, min(iAnger - iHappy, STATE.getCityPopulation(iCityOwner, iCityID)))
+			iUnhappyLevel = iAnger
+			if aCityFlags[CityFlagKind.CITY_FLAG_DISORDER]:
 				szTxt = str(iAngryPop) + self.iconAngryPop
 			elif iAngryPop > 0:
 				# BUG - Negative Happy Rate is Positive Angry Population
-				szTxt = TRNSLTR.getText("INTERFACE_CITY_UNHAPPY", (CyCity.happyLevel(), iUnhappyLevel, iAngryPop))
+				szTxt = TRNSLTR.getText("INTERFACE_CITY_UNHAPPY", (iHappy, iUnhappyLevel, iAngryPop))
 			elif iUnhappyLevel > 0:
-				szTxt = TRNSLTR.getText("INTERFACE_CITY_HAPPY", (CyCity.happyLevel(), iUnhappyLevel))
+				szTxt = TRNSLTR.getText("INTERFACE_CITY_HAPPY", (iHappy, iUnhappyLevel))
 			else:
-				szTxt = TRNSLTR.getText("INTERFACE_CITY_HAPPY_NO_UNHAPPY", (CyCity.happyLevel(),))
+				szTxt = TRNSLTR.getText("INTERFACE_CITY_HAPPY_NO_UNHAPPY", (iHappy,))
 
 			if CityOpt.isShowAngerCounter() and bOwnCity:
 				# BUG - Anger Display
-				iAngerTimer = max(CyCity.getHurryAngerTimer(), CyCity.getConscriptAngerTimer())
+				iAngerTimer = max(aCountdowns[CityCountdownKind.COUNTDOWN_HURRY_ANGER], aCountdowns[CityCountdownKind.COUNTDOWN_CONSCRIPT_ANGER])
 				if iAngerTimer > 0:
 					szTxt += " (%i)" % iAngerTimer
 			screen.hide("CS|Happiness0")
@@ -2689,7 +2699,7 @@ class CvMainInterface:
 			# City Commerce panel
 			y = 34
 			screen.show("MaintenanceText")
-			iMaintenance = CyCity.getMaintenanceTimes100()
+			iMaintenance = STATE.getMaintenance(iCityOwner, iCityID)
 			szTxt = "<font=1>-%d.%02d" %(iMaintenance/100, iMaintenance%100) + uFont2 + iconCommerceList[0]
 			screen.setLabel("MaintenanceAmountText", "", szTxt, 1<<1, 252, y, 0, eFontSmall, WidgetTypes.WIDGET_HELP_MAINTENANCE, 0, 0)
 
@@ -3680,14 +3690,15 @@ class CvMainInterface:
 
 		eWidGen = WidgetTypes.WIDGET_GENERAL
 		InCity = self.InCity
-		city = InCity.CyCity
+		iCityOwner = InCity.iPlayer
+		iCityID = InCity.iCityID
 		iSize = CityOpt.getBuildIconSize()
 
 		Pnl = "CityTabScrPnl"
 		screen.addScrollPanel(Pnl, "", x, y0, w, h, PanelStyles.PANEL_STYLE_MAIN)
 		screen.setStyle(Pnl, "ScrollPanel_Alt_Style")
 
-		if InCity.WorkQueue and not city.getProductionProgress():
+		if InCity.WorkQueue and not STATE.getOrder(iCityOwner, iCityID)[CityOrderRead.ORDER_READ_PRODUCTION_PROGRESS]:
 			self.bFreshQueue = False
 		else: self.bFreshQueue = True
 
@@ -3699,20 +3710,18 @@ class CvMainInterface:
 		y = 0
 
 		if iTab == CITYTAB_UNIT:
-			city.setUnitListInvalid()
-			iGroups = city.getUnitListGroupNum()
+			ACT.invalidateUnitList(iCityOwner, iCityID)
+			aGroups = STATE.getUnitListGroups(iCityOwner, iCityID)
 			PF = "WID|UNIT|CityWork%d"
-			for iGroup in xrange(iGroups):
+			for aGroup in aGroups:
 				aList = []
 				iCount = 0
-				iNumInGroup = city.getUnitListNumInGroup(iGroup)
-				if not iNumInGroup:
+				if not aGroup:
 					continue
-				for i in xrange(iNumInGroup):
-					iType = city.getUnitListType(iGroup, i)
-					BTN = GC.getUnitInfo(iType).getButton()
+				for iType in aGroup:
+					BTN = INFO.getButton("UNIT_", iType)
 					Img = PF % iType
-					if not city.canTrain(iType, False, False, False, False):
+					if ENABLER.getUnitAvailability(iCityOwner, iCityID, iType) != EnablerState.ENABLER_LISTED:
 						aList.append([Img, iType, BTN])
 					else:
 						if iCount == iBtnPerRow:
@@ -3734,21 +3743,23 @@ class CvMainInterface:
 				x = xStart
 				y += dx
 		elif iTab == CITYTAB_BUILDING:
-			if not city.getBuildingListGroupNum(): return
-			iNumInGroup = city.getBuildingListNumInGroup(0)
+			aGroups = STATE.getBuildingListGroups(iCityOwner, iCityID)
+			if not aGroups: return
+			aGroup0 = aGroups[0]
+			iNumInGroup = len(aGroup0)
 			if not iNumInGroup: return
 			PF = "WID|BUILDING|CityWork%d"
 			aList = []
 			iCount = 0
 			i = 0
 			while i < iNumInGroup:
-				iType = city.getBuildingListType(0, i)
+				iType = aGroup0[i]
 				if INFO.getIntrinsic("BUILDING_", iType, IntrinsicSlot.PYINT_IS_LIMITED_WONDER):
 					break
 				i += 1
-				BTN = GC.getBuildingInfo(iType).getButton()
+				BTN = INFO.getButton("BUILDING_", iType)
 				Img = PF % iType
-				if not city.canConstruct(iType, False, False, False) or iPlayer != iPlayerAct:
+				if ENABLER.getBuildingAvailability(iCityOwner, iCityID, iType) != EnablerState.ENABLER_LISTED or iPlayer != iPlayerAct:
 					aList.append([Img, iType, BTN])
 				else:
 					if iCount == iBtnPerRow:
@@ -3774,31 +3785,23 @@ class CvMainInterface:
 			aList1 = []
 			aList2 = []
 			aList3 = []
-			iGroupNum = city.getBuildingListGroupNum()
-			iGroup = 0
-			while iGroup < iGroupNum:
-				iNumInGroup = city.getBuildingListNumInGroup(iGroup)
-				if not iNumInGroup:
-					iGroup += 1
-					continue
-				for i in xrange(iNumInGroup):
-					iType = city.getBuildingListType(iGroup, i)
-
+			for aGroup in STATE.getBuildingListGroups(iCityOwner, iCityID):
+				for iType in aGroup:
 					if not INFO.getIntrinsic("BUILDING_", iType, IntrinsicSlot.PYINT_IS_LIMITED_WONDER):
 						break
-					CvBuildingInfo = GC.getBuildingInfo(iType)
-
-					if CvBuildingInfo.isNoLimit():
+					# RELOCATABLE (the palace, the culture buildings) -- rendered as their own band below.
+					if INFO.getIntrinsic("BUILDING_", iType, IntrinsicSlot.PYINT_IS_NO_INSTANCE_LIMIT):
 						aList0.append(iType)
-
-					elif isNationalWonder(iType):
-						aList1.append(iType)
-
-					elif isTeamWonder(iType):
-						aList2.append(iType)
 					else:
-						aList3.append(iType)
-				iGroup += 1
+						# The cap's SCOPE is the wonder category ([json.md] 4.4) -- there is no isNationalWonder
+						# mirror to ask, and never was one on this surface.
+						eScope = INFO.getIntrinsic("BUILDING_", iType, IntrinsicSlot.PYINT_WONDER_SCOPE)
+						if eScope == AllowedCap.ALLOWEDCAP_EMPIRE:
+							aList1.append(iType)
+						elif eScope == AllowedCap.ALLOWEDCAP_TEAM:
+							aList2.append(iType)
+						else:
+							aList3.append(iType)
 
 			# Wonders
 			iCount = 0
@@ -3806,9 +3809,9 @@ class CvMainInterface:
 				if not aListX: continue
 				aList = []
 				for iType in aListX:
-					BTN = GC.getBuildingInfo(iType).getButton()
+					BTN = INFO.getButton("BUILDING_", iType)
 					Img = PF % iType
-					if not city.canConstruct(iType, False, False, False) or iPlayer != iPlayerAct:
+					if ENABLER.getBuildingAvailability(iCityOwner, iCityID, iType) != EnablerState.ENABLER_LISTED or iPlayer != iPlayerAct:
 						aList.append([Img, iType, BTN])
 					else:
 						if iCount == iBtnPerRow:
@@ -3836,12 +3839,12 @@ class CvMainInterface:
 			for iType in xrange(self.iNumProjectInfos):
 				# #430: bContinue=False so this routes to the cascade canCreate frontier (the bContinue=True shape
 				# fell through to legacy canCreate -> every project shown ungated). City screen relies purely on cascade.
-				if city.canCreate(iType, False, False):
+				if ENABLER.getProjectAvailability(iCityOwner, iType) == EnablerState.ENABLER_LISTED:
 					if iCount == iBtnPerRow:
 						x = xStart
 						y += dx
 						iCount = 0
-					BTN = GC.getProjectInfo(iType).getButton()
+					BTN = INFO.getButton("PROJECT_", iType)
 					Img = "WID|PROJECT|CityWork%d" % iType
 					screen.setImageButtonAt(Img, Pnl, BTN, x, y, iSize, iSize, eWidGen, 1, 1)
 					x += dx
@@ -3855,9 +3858,9 @@ class CvMainInterface:
 				iCount = 0
 			aList = []
 			for iType in aList0:
-				BTN = GC.getBuildingInfo(iType).getButton()
+				BTN = INFO.getButton("BUILDING_", iType)
 				Img = PF % iType
-				if not city.canConstruct(iType, False, False, False) or iPlayer != iPlayerAct:
+				if ENABLER.getBuildingAvailability(iCityOwner, iCityID, iType) != EnablerState.ENABLER_LISTED or iPlayer != iPlayerAct:
 					aList.append([Img, iType, BTN])
 				else:
 					if iCount == iBtnPerRow:

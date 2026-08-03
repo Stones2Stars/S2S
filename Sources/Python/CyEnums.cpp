@@ -25,6 +25,7 @@
 #include "Python/CyEnums.h"
 #include "Defines/CvGlobals.h"
 #include "Enabler/CvEnabler.h"   // EnablerDomain::State -- the availability tri-state
+#include "Infos/CvAllowed.h"    // EnAllowedCap -- the cap axes
 #include "Infos/CvEdges.h"       // EnEdgeFamily / EnEdgeBucket -- the edge axes ([DEC-one-reverse-view])
 #include "Python/CyInfo.h"       // PyIntrinsicSlot -- the straggler slots CyInfo::getIntrinsic is addressed by
 #include "Infos/CvInfoKinds.h"  // WellbeingChannel -- the group enum getRealizedWellbeing is indexed by
@@ -62,6 +63,19 @@ void CyEnums::pythonPublish()
 	// ⚠ EDGEF_RELATED is a candidate SUPERSET (display axis): it merges every relation, so it cannot tell an
 	// enabling tech from an obsoleting one. A consumer with ANY semantics is safe on it; one with ALL semantics
 	// is NOT, and wants EDGEF_ENABLED_BY / EDGEF_REQUIRED_BY, which are the exact axes.
+	// The cap axes ([json.md] 4.4). A SELF cap (world/team/empire) is what makes a building a wonder and WHICH
+	// scope it sits at is its category; the *_WONDERS entries are the per-city CATEGORY count-caps, a different
+	// axis entirely, so a consumer must not conflate them.
+	python::enum_<EnAllowedCap>("AllowedCap")
+		.value("ALLOWEDCAP_WORLD", ALLOWEDCAP_WORLD)
+		.value("ALLOWEDCAP_TEAM", ALLOWEDCAP_TEAM)
+		.value("ALLOWEDCAP_EMPIRE", ALLOWEDCAP_EMPIRE)
+		.value("ALLOWEDCAP_WORLD_WONDERS", ALLOWEDCAP_WORLD_WONDERS)
+		.value("ALLOWEDCAP_TEAM_WONDERS", ALLOWEDCAP_TEAM_WONDERS)
+		.value("ALLOWEDCAP_NATIONAL_WONDERS", ALLOWEDCAP_NATIONAL_WONDERS)
+		.value("NUM_ALLOWEDCAP", NUM_ALLOWEDCAP)
+	;
+
 	python::enum_<EnEdgeFamily>("EdgeFamily")
 		.value("EDGEF_ENABLES",      EDGEF_ENABLES)
 		.value("EDGEF_OBSOLETES",    EDGEF_OBSOLETES)
@@ -114,6 +128,8 @@ void CyEnums::pythonPublish()
 		.value("PYINT_IS_SEE_DEMOGRAPHICS", PYINT_IS_SEE_DEMOGRAPHICS)
 		.value("PYINT_IS_SEE_RESEARCH",  PYINT_IS_SEE_RESEARCH)
 		.value("PYINT_IS_SPACESHIP",     PYINT_IS_SPACESHIP)
+		.value("PYINT_IS_NO_INSTANCE_LIMIT", PYINT_IS_NO_INSTANCE_LIMIT)
+		.value("PYINT_WONDER_SCOPE",     PYINT_WONDER_SCOPE)
 		;
 
 	python::enum_<EnEdgeBucket>("EdgeBucket")
@@ -443,6 +459,7 @@ void CyEnums::pythonPublish()
 		.value("ORDER_READ_TYPE", ORDER_READ_TYPE)
 		.value("ORDER_READ_ID", ORDER_READ_ID)
 		.value("ORDER_READ_PRODUCTION_LEFT", ORDER_READ_PRODUCTION_LEFT)
+		.value("ORDER_READ_PRODUCTION_PROGRESS", ORDER_READ_PRODUCTION_PROGRESS)
 		.value("ORDER_READ_PRODUCTION_PER_TURN", ORDER_READ_PRODUCTION_PER_TURN)
 		.value("ORDER_READ_MAX_OVERFLOW", ORDER_READ_MAX_OVERFLOW)
 		.value("NUM_CITY_ORDER_READS", NUM_CITY_ORDER_READS)

@@ -357,6 +357,7 @@ void CvCity::getOrderRead(int (&order)[NUM_CITY_ORDER_READS]) const
 		order[ORDER_READ_ID]   = (int)getProductionProcess();
 	}
 	order[ORDER_READ_PRODUCTION_LEFT]     = productionLeft();
+	order[ORDER_READ_PRODUCTION_PROGRESS] = getProductionProgress();
 	order[ORDER_READ_PRODUCTION_PER_TURN] = getCurrentProductionDifference(ProductionCalc::FoodProduction);
 	order[ORDER_READ_MAX_OVERFLOW]        = getMaxProductionOverflow();
 }

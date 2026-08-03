@@ -52,7 +52,10 @@ enum PyIntrinsicSlot
 	PYINT_HEADQUARTERS_CORPORATION, // CORPORATION_* FK -- the corp this building is the HEADQUARTERS of (json §9)
 	PYINT_IS_SEE_DEMOGRAPHICS, // does this espionage mission reveal demographics (the scoreboard's power column)
 	PYINT_IS_SEE_RESEARCH,     // does this espionage mission reveal research (the scoreboard's research column)
-	PYINT_IS_SPACESHIP,        // is this project a spaceship part (the build-progress readout)
+	PYINT_IS_SPACESHIP,
+	PYINT_WONDER_SCOPE,         // WHICH scope a building's self-cap sits at -- the wonder CATEGORY
+	PYINT_IS_NO_INSTANCE_LIMIT, // is this building RELOCATABLE -- it waives the empire (national-wonder)
+	                            // cap, so a palace / culture building can be rebuilt elsewhere (json identity)        // is this project a spaceship part (the build-progress readout)
 	NUM_PYINT
 };
 

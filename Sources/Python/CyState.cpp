@@ -195,6 +195,18 @@ python::list CyState::getYieldModifiers(int iPlayer, int iCity) const
 	return cys_toList(values);
 }
 
+int CyState::getLiberationPlayer(int iPlayer, int iCity) const
+{
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	return pCity ? (int)pCity->getLiberationPlayer(false) : -1;
+}
+
+int64_t CyState::getMaintenance(int iPlayer, int iCity) const
+{
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	return pCity ? pCity->getMaintenanceTimes100() : 0;
+}
+
 int CyState::getSight(int iPlayer, int iCity) const
 {
 	const CvCity* pCity = cys_city(iPlayer, iCity);
@@ -802,6 +814,8 @@ void CyState::pythonPublish()
 		.def("getRealizedWellbeing",     &CyState::getRealizedWellbeing)
 		.def("getYieldModifiers",        &CyState::getYieldModifiers)
 		.def("getSight",                 &CyState::getSight)
+		.def("getLiberationPlayer",      &CyState::getLiberationPlayer)
+		.def("getMaintenance",           &CyState::getMaintenance)
 		// ENUMERATION + CITY rank groups + plain city facts
 		.def("getHeadSelectedCityId",    &CyState::getHeadSelectedCityId)
 		.def("getHeadSelectedUnitId",    &CyState::getHeadSelectedUnitId)
