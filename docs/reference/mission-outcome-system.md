@@ -113,12 +113,11 @@ discover/hurry/trade/greatWork/hurryFood, `goldenAge`→golden age (and `greatPe
   `happiness:{duration}`, inline `<Python>` dedented to compilable code). The `OUTCOME_*` infos convert via the new
   `curate_outcome.py` → `Assets/Data/outcomes/`. The engine reads it all through `mapFrom`.
 
-## ~~Design questions the `missions` block must answer~~ (SCRAPPED — outcomes are not ported; see the ruling up top)
+## Why a full `CvOutcome` port is a PERMANENT carve-out — the seven things it would have to solve
 
-> These questions only mattered for a *full CvOutcome port* (probabilistic outcome-lists, expression fields, payload
-> migration). Per the owner ruling above, that port is NOT happening — the outcomes stay in XML, and the future
-> `missions` block just LISTS which missions a unit can use. Retained below only as a record of the complexity that
-> justified NOT porting it.
+> Per the owner ruling up top, that port is NOT happening: the outcomes stay in XML, and the future `missions` block
+> just LISTS which missions a unit can use. This list is the standing JUSTIFICATION for that carve-out — read it
+> before proposing a port, because each item is a distinct machine the `grants` shape does not have.
 
 1. **Probabilistic, mutually-exclusive lists with tier-replacement** — roll one of N weighted, minus superseded.
    `grants` today is deterministic apply-all; missions need a "roll one, weighted, minus `ReplaceOutcomes`" semantic.
@@ -138,5 +137,4 @@ discover/hurry/trade/greatWork/hurryFood, `goldenAge`→golden age (and `greatPe
 
 ## See also
 
-- [json.md](../specs/json.md) §5 (`grants`) / §8 (the `missions` block — a PERMANENT carve-out, ground-up rework, out of #430). ·
-  [todo.md](../plans/structural-cleanup/todo.md) (the deferred-pass entry).
+- [json.md](../specs/json.md) §5 (`grants`) / §8 (the `missions` block — a PERMANENT carve-out, ground-up rework, out of #430).

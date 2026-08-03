@@ -46,8 +46,8 @@ All three are gated on `isGoldenAge()` and land in the city's **`base`**, so the
      added **AFTER** the golden-age check, so a rich improvement/route on a tile does **not** help it qualify — only
      the tile's intrinsic + city/player yields decide. (Thresholds are low for some yields — e.g. commerce — so the
      bonus fires almost everywhere and *looks* like "+1 on everything", but it is genuinely gated, and a
-     low-pre-improvement tile can miss it.) A cascade reproducing this must test the same pre-improvement base; the
-     engine dump exposes it per tile as `preImpBase` on `/computed/cities/yields`.
+     low-pre-improvement tile can miss it.) A cascade reproducing this must test the same pre-improvement base —
+     which no surface currently emits per tile.
 2. **Player base golden-age yield** — `CvCity.cpp:22902`. `getBaseYieldRate` adds `player.getGoldenAgeYield(y)`,
    a flat player-wide per-yield bonus, fed by traits' `getGoldenAgeYieldChanges[]` (`CvTraitInfo.cpp:2263`).
    Part of `base` (calc-map §1.1) — distinct from the per-plot bonus above.
@@ -74,10 +74,13 @@ anarchy** while in a golden age — the canonical "switch civics for free" windo
 
 ## How to OBSERVE it (no fishing)
 
-- `/state/players` — `isGoldenAge` per player (a raw player fact); the per-yield `getGoldenAgeYield` /
-  `getGoldenAgeYieldThreshold` config is static `CvYieldInfo` data (Assets/Data + `/state/all` world config).
-- `/computed/cities/yields` — the per-plot golden-age addend (worked-plot decomposition); city-level
-  `baseGoldenAgeYield` + `goldenAgeCommerce`.
+⛔ **The routes this section used to name are gone with the route-table purge**
+([../specs/http-endpoints.md](../specs/http-endpoints.md)), and an endpoint is not the way back — a route reading a
+legacy member keeps that member alive past the compiler census. Observe golden age the way everything else is
+observed now: **the spine log** (`Cascade.log`, readable while the game runs) and `/events`
+([observability.md](observability.md)). What to look for: the per-player `isGoldenAge` fact, and — for the per-plot
+addend — the pre-improvement base the threshold actually tests, which is the value a cascade must reproduce and
+which nothing currently emits. **Emitting it is step one of verifying this.**
 
 ## Where the NUMBERS live (data fields)
 

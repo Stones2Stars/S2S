@@ -47,6 +47,34 @@ spec — **[../specs/save.md](../specs/save.md)** (home of [DEC-save-remove-is-s
 matter for engine work: field removal is a soft `savemigration.txt` drain (**never** a `WRAPPER_SKIP_ELEMENT`, never a
 save-break); derived data serializes nothing; deleting a changer means auditing its whole body for riders.
 
+## ⛔ THE SYNCHRONIZED RNG IS SHARED SAVE STATE — do not touch the draws (owner)
+
+**Home of [DEC-synced-rng-is-shared-state](../architecture/decisions.md#dec-synced-rng-is-shared-state).**
+
+There are three random streams, and only the distinction between them is what keeps a game in sync:
+
+| stream | where | serialized? | what it is for |
+|---|---|---|---|
+| **`CvGame::getSorenRand`** (`getSorenRandNum`, `CvGame::SorenRand`) | `CvGame::m_sorenRand` | **YES** — `CvGame::read`/`write` | **every gameplay decision.** The overwhelming majority of draws in the tree. |
+| `CvGame::getMapRand` | `CvGame::m_mapRand` | **YES** | world generation |
+| `GC.getASyncRand()` | `CvGlobals`, not `CvGame` | **NO** | UI / cosmetic only — never a gameplay outcome |
+
+⛔ **The synchronized stream's seed rides the SAVE, and every client advances it in lockstep. So the NUMBER of
+values drawn, their ORDER, and whether a draw happens at all are shared game state — not implementation detail.**
+Adding, removing, reordering or short-circuiting a `getSorenRandNum` call changes the sequence every other client
+and every later turn sees: the symptom is an out-of-sync in multiplayer and a save that no longer replays.
+⚑ This is why *"it draws from `SorenRand`"* is a **live named reason** to leave a body's shape alone — one of the
+few that [superseded-ideas #22](../architecture/superseded-ideas.md) accepts in place of the dead
+"mirror the legacy behaviour" argument. It is a statement about shared state, never nostalgia for legacy code.
+⚠ Beware the subtle form: a short-circuit (`bCheap && getSorenRandNum(...)`) skips the draw when the left side is
+false, so a refactor that merely REORDERS a condition can desync the stream without touching a single draw.
+
+**⛔ THE RNG IS NOT DATA, AND NO JSON AUTHORS IT (owner).** No seed, stream, or draw is curated, and neither the
+cascade nor the curator owns any part of it — do not model it, do not migrate it, do not invent a `random`
+vocabulary. ⚑ **The line to hold, because it is easy to blur:** what JSON authors is the **ODDS** — a plain number
+(`chance`, a probability percent) that the engine's own roll compares against. The **ROLL** is engine mechanism on
+the synchronized stream. Authoring the threshold is data; performing the draw is not.
+
 ## Pathfinding — two systems
 
 - **`CvPathGenerator`** (`Sources/Infrastructure/`) is the **shipping unit pathfinder** (the legacy engine `FAStar`
@@ -76,9 +104,11 @@ save-break); derived data serializes nothing; deleting a changer means auditing 
 - **`CvPropertySolver`** is a member of `CvGame` (**not** a singleton — `GC.getPropertySolver()` does NOT exist),
   run once per `doTurn` in fixed order **propagators → interactions → sources**, each a predict/compute/correct/apply
   pass (spread resolves against *pre-source* values, then production applies — counter-intuitive).
-- **Band auto-placement** (the crime/disease/education/pollution buildings): `CvPropertyInfo` `PropertyBuilding`
-  bands silently grant/revoke buildings as a value crosses thresholds (`checkPropertyBuildings`, skipped for NPCs).
-  **A legacy maintainer the cascade replaces — verified live, then cut.** Property values fold into the OOS/save checksum.
+- **Band auto-placement** (the crime/disease/education/pollution buildings): legacy `CvPropertyInfo`
+  `PropertyBuilding` bands silently granted/revoked buildings as a value crossed a threshold, re-derived per turn
+  and skipped for NPCs. **That per-turn maintainer is CUT** — the band is now a `requires.operate` PROPERTY clause
+  the enabler holds, and the building itself is placed once by `CvCity::placeSystemBuildings` (see
+  [../specs/enabler.md](../specs/enabler.md)). Property values fold into the OOS/save checksum.
 
 ## Map generation — Python callbacks, DLL fallback
 

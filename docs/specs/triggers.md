@@ -20,6 +20,11 @@ searched for).
 collide with, and the dispatching event already names which considered action it is — a building's construction, a
 tech's research, a civic's adoption.
 
+⛔ **The ODDS are data; the ROLL is not.** A trigger authors a `chance` — a plain number — and the engine compares
+its own draw against it. That draw comes off the SYNCHRONIZED stream, which is shared save state, so no JSON
+authors a seed, a stream or a draw and neither the cascade nor the curator models one
+([DEC-synced-rng-is-shared-state](../architecture/decisions.md#dec-synced-rng-is-shared-state)).
+
 ## ⛔ A GRANTED ENTITY IS AN ORDINARY ENTITY (owner)
 
 *"The only difference between a building granted and a building constructed is that we didn't use production if
@@ -181,8 +186,8 @@ Do NOT build a "load these files, skip those" prune — that is the killed `load
 
 **What a new entity type requires** (skipping any of these is how an entity ends up half-wired): a folder under
 `Assets/Data/`, one object per file · the `STARTPACKAGE_` infotype prefix registered in [naming.md](naming.md) · a
-row in the ONE per-type repo dispatch (which earns it the full-registry re-map, the DepositIndex push, and a
-`/state/info` home) · an `_order.json` manifest · and authoring through `_additions`, since entity curation is
+row in the ONE per-type repo dispatch (which earns it the full-registry re-map, the DepositIndex push, and an
+info-repo home) · an `_order.json` manifest · and authoring through `_additions`, since entity curation is
 complete and there is no legacy XML to convert — the unit identities never existed as data.
 
 ## See also

@@ -50,8 +50,8 @@ not yet ported (still authored in `Assets/XML`, referenced from JSON by id). Ver
 | `SPECIALUNIT_` | a special-unit group | ✅ `specialunits/` |
 | `TECH_` | a technology | ✅ `techs/` |
 | `TERRAIN_` | a terrain | ✅ `terrains/` |
-| **`TRAIT_`** | a **simple** trait | ✅ `traits/simple/` |
-| **`TRAIT_COMPLEX_`** | a **complex** (Thunderbrd) trait | ✅ `traits/complex/` |
+| **`TRAIT_`** | a trait. ⛔ The prefix does NOT discriminate simple from complex — **the FOLDER is the set boundary** ([modifier.md §4](modifier.md)): `traits/complex/` holds both plain `TRAIT_*` (the complex-only records, which collide with nothing) and `TRAIT_COMPLEX_*` (the variants of a simple trait) | ✅ `traits/simple/` + `traits/complex/` |
+| **`TRAIT_COMPLEX_`** | the complex (Thunderbrd) VARIANT of a simple trait | ✅ `traits/complex/` |
 | `UNIT_` | a unit | ✅ `units/` |
 | `UNITCOMBAT_` | a unit-combat class | ✅ `unitcombats/` |
 | `VICTORY_` | a victory condition | ✅ `victories/` |

@@ -199,7 +199,7 @@ order is load-bearing (it decides what the percent stack scales and what it does
 
 | BASE source | origin | base vs computed |
 |---|---|---|
-| **worked-plot yields** (`basePlotYield`) | Σ over the city's worked plots of each plot's ONE isolated base package (§2 plot-as-base): `max(0, terrain+feature+bonus)` nature + improvement (floored at −nature) + route + keyed building/civic/trait `plot`-flats + `plots`-target + city-centre constant + threshold/golden-age per-plot | **computed** from the curated plot substrate + `/state/plots` |
+| **worked-plot yields** (`basePlotYield`) | Σ over the city's worked plots of each plot's ONE isolated base package (§2 plot-as-base): `max(0, terrain+feature+bonus)` nature + improvement (floored at −nature) + route + keyed building/civic/trait `plot`-flats + `plots`-target + city-centre constant + threshold/golden-age per-plot | **computed** from the curated plot substrate + engine plot state |
 | **trade-route yield** (`tradeYield`) | engine-generated (the trade network) | **input** — out-of-scope: the cascade cannot re-derive the network, so the calc *folds the route yield in*, never derives it. **The ONE live-yield input** — a clean addition at the very end of the base, and the sole sanctioned exception to the pollution guardrail ([validation](validation.md), [DEC-calc-zero-ride-in](../architecture/decisions.md#dec-calc-zero-ride-in)). ⚠ **The route COUNT is the OPPOSITE case (owner): `getMaxTradeRoutes` — game + player + coastal + `city.extra` slot deposits — is a modifier-influenced value the cascade COMPUTES, its own `tradeRoutes` channel.** Trade YIELD is read from the engine package; the trade-route COUNT is calculated here. Do not conflate them |
 | **free-city yield** (`freeCityYield`) | Σ the player's active traits' `YieldChanges` (`{ch}.empire.flat`) | **computed** — derivable from the trait JSON, so it is COMPUTED, never read off the engine; consuming the live value would leave the trait→yield derivation unvalidated ([validation](validation.md) pollution guardrail). ⚠ NAMING: "free-city" here = the legacy trait accumulator (`CvPlayer::m_aiFreeCityYield`, free yield granted in every city) — **NOT** the WLTKD celebration ("We Love the King/Emperor Day"), whose sole gameplay effect is zero city maintenance ([economy.md](../reference/economy.md)) |
 | **golden-age yield** | trait `goldenAge` member (`{ch}.empire.goldenAge.flat`) while in golden age | **computed** (`empire.goldenAge` member-mirror, §3 golden-age carve-out) |
@@ -414,7 +414,7 @@ enabler resolves that shape to *availability* ("can I?"), the modifier resolves 
 > per military unit — carries that state as a **predicate** in its `enabled`/`disabled` (or a `per`/`unit:` scaler,
 > §[json](json.md) §3.7), at the deposit's normal scope: `{family}.empire.percent` + `enabled:"IS_CAPITAL"`, NOT a
 > bespoke `{family}.empire.capital.percent` member. **The predicate registry is EXTENSIBLE** — if the condition has
-> no predicate named verbatim yet ([json](json.md) §3.5), **define a new one** (spec + evaluator + the `/state` fact
+> no predicate named verbatim yet ([json](json.md) §3.5), **define a new one** (spec + evaluator + the state fact
 > it reads); that *extends* the model. Encoding the condition as a new **member** instead *changes the core
 > structure* — the kraken way, and the exact shape (`byEra`, `empire.capital`, `perMilitaryUnit`) agents keep
 > re-inventing. Retire any such member to a predicate-gated deposit.
@@ -503,8 +503,8 @@ authored shape.
 > break the clean separation. Therefore, for a TRAIT keyed to a specialist (or any shared sub-city target with a per-set
 > value), the deposit takes the **governing-deliverer** shape instead: it lives **on the trait, keyed by the target** —
 > `yield.empire.specialists.{SPECIALIST_X}.flat` (and `commerce.…`) — authored in **each set's folder** (simple = the
-> base value; complex = the **replacement's** value — a **whole-Info swap, NO base-fill** per the engine's
-> `CvInfoReplacements`: a field the replacement
+> base value; complex = the **replacement's** value — a **whole-Info swap, NO base-fill**, per the legacy
+> replacement semantics: a field the replacement
 > omits is **0/absent** in the complex, never inherited from base). The cascade reads it from the **active** trait
 > set and applies it × the city's count of that specialist. *(Building/civic specialist boosts have no
 > simple/complex split, so they keep the ordinary own-output inversion onto the specialist.)*
@@ -512,9 +512,9 @@ authored shape.
 > **⛔ Trait option resolution — the curator translates the CRAZY → sensible; the cascade applies only CLEAN gates
 > (this is the volcano every agent rollerskates into — read it before touching trait values).**
 > Several `GAMEOPTION_LEADER_*` options can be live at once (complex, developing, pure, no-negative, …) and each
-> mutates a trait's *effective* values. The TB implementation is a runtime hack (`CvInfoReplacements`: a base trait
-> carries an inline `ReplacementID` + `ReplacementCondition` `BoolExpr`; `GC.updateReplacements()` swaps the WHOLE
-> `CvTraitInfo` in `aInfos[id]` for the first replacement whose condition holds — re-run on state changes). **We do
+> mutates a trait's *effective* values. The TB implementation was a runtime hack — **deleted from this tree**, and
+> described here only so it is never rebuilt: a base trait carried an inline replacement id + a `BoolExpr` condition,
+> and a global re-run swapped the WHOLE `CvTraitInfo` in place for the first replacement whose condition held. **We do
 > NOT emulate that hack anywhere in the cascade.** The split of responsibility is absolute:
 >
 > - **CRAZY → curator (`curate_trait`), offline, once.** The replacement/promotion-line machinery is dissolved into
@@ -524,7 +524,7 @@ authored shape.
 >     2026-07-21):** every trait is present, so the option-gated active-set read (`getTraitInfo`/`MMKernel::traitData`)
 >     NEVER falls back to a simple record under `COMPLEX_TRAITS` — the read can be made fail-loud with nothing to fall
 >     back to. Each id's complex def is its `Has(COMPLEX_TRAITS)`-gated **replacement** where one exists (WHOLE-SWAP, no
->     base-fill — a field the replacement omits is absent, mirroring the engine's `CvInfoReplacements`); a simple trait
+>     base-fill — a field the replacement omits is absent, mirroring the legacy replacement semantics); a simple trait
 >     with **no** replacement is base-filled into `complex/` whole (its base IS the complex version — e.g.
 >     `TRAIT_BARBARIAN`, the NPC-civ trait). **Folder classification** keys on the `OnGameOptions: COMPLEX` gate /
 >     replacement-variant; a developing-line (`PromotionLine`) member that UNIQUELY lacks the gate its siblings carry is
@@ -552,10 +552,10 @@ authored shape.
 >     two arms (`+1,+2,+3` and `-1,-2,-3`) each chain outward from it, so a line carrying both FORKS at the base.
 >   - **Developing line — do NOT auto-develop (engine-verified).** A `PromotionLine` is a chain of trait *levels*
 >     (`TRAIT_NOMAD1`→`TRAIT_NOMADIC2`→`…`, ordered by `iLinePriority`, each with a `PrereqTech`+`TraitPrereq`), but
->     **researching a level's `PrereqTech` does NOT advance the held trait**. The **held trait `/state` reports IS
+>     **researching a level's `PrereqTech` does NOT advance the held trait**. The **held trait the engine reports IS
 >     the authoritative level**; the cascade uses its payload as-is. ⚠️ A tech-gated "collapse" that folds higher
 >     levels into the entry is the WRONG model (it re-levels traits the engine leaves alone). Levels advance by some
->     other gameplay progression, not by tech alone; until that's mapped, trust `/state`.
+>     other gameplay progression, not by tech alone; until that's mapped, trust the engine's own reading.
 >   - **Complete, not pre-filtered.** The JSON carries ALL values — positive AND negative — plus the `negativeTrait`
 >     flag, so the runtime gates below have the full data to act on. The curator never bakes in a pure/no-negative pass.
 > - **CLEAN gates → cascade, at eval (its ordinary condition-eval, NOT hack emulation).**

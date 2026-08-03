@@ -117,7 +117,7 @@ lands on the scope object itself (the city — the common case). Full deposit sy
 > `max: "TARGET_NUM_CITIES"` (the world-size target city count; engine `getLargestCityHappiness` =
 > `findPopulationRank() ≤ TargetNumCities`, i.e. the empire's largest *cities*, plural — **not** the single largest).
 > Engine note: the cascade adds the sort/select step in **parsing**, one place for all ranking metrics; the
-> `TARGET_NUM_CITIES` token needs a `/state` scalar not emitted today (batched engine add) — until then the
+> `TARGET_NUM_CITIES` token needs a state scalar not emitted today (batched engine add) — until then the
 > largest-cities selection is inert. *(Status + open impl items: [plans/parked/ranked-target-selection.md](../plans/parked/ranked-target-selection.md).)*
 
 ### 3.4 Conditions — `all` / `any` / `noneOf`
@@ -208,7 +208,7 @@ IGNORED**, never treated as false — retiring a system never spuriously disable
 
 > **The predicate registry is EXTENSIBLE — and a condition is ALWAYS a predicate, never a bespoke member
 > ([DEC-conditions-are-predicates]).** When a deposit's condition has no predicate named verbatim
-> below yet, **define a new predicate** (add it here, wire it in the evaluator, and emit the `/state` fact it reads).
+> below yet, **define a new predicate** (add it here, wire it in the evaluator, and emit the state fact it reads).
 > Adding a predicate *extends* the model within the structure. What you must NOT do is encode the condition as a new
 > sub-scope **member** (`{family}.empire.capital.percent`, `perMilitaryUnit`) — that changes the core structure (the
 > kraken way; see [modifier.md §3](modifier.md), which also notes the **golden-age exception**: `empire.goldenAge`
@@ -858,12 +858,10 @@ Empire-agnostic self-description. Read directly — never summed or cascaded.
   ⛔ **AND IT CARRIES NO EFFECTS AT ALL (owner).** Not "few", not "only intrinsic ones" — **none**. A value that
   DOES something has a home already and `identity` is never it:
   - a **held boolean ability** is a classification block — unit `skills`, building `attributes`, empire
-    `capabilities` (§8). *`nukeImmune` is the worked case, and the data already proves the rule: **1367 buildings
-    author it in `attributes` and 6 units in `skills`** — correct. The only misplaced ones are **29 FEATURES**
-    authoring it in `identity`.* ⚠ Two facts that case exposes, both open: **plot substrate has no classification
-    block** (§8 covers unit / building / empire and stops), and the feature's meaning is **not** the building's —
-    a building's `nukeImmune` makes its CITY immune, a feature's means the FEATURE survives the blast. One word,
-    two mechanics, different carriers; re-homing must not merge them.
+    `capabilities` (§8). *`nukeImmune` is the worked case: a BUILDING authors it in `amenities` (it makes the CITY
+    immune — the building is not the thing protected) and a plot substrate in `characteristics` (the FEATURE
+    itself survives the blast). One word, two mechanics, different carriers — which is exactly why the blocks
+    are distinct, and why re-homing must never merge them.*
   - a **magnitude** is a modifier family (§6) — a radius, a movement cost, a sight range, a cargo amount.
   - a **constraint on what may exist or be built** is `requires` / `allowed` (§4).
   - a **capability to trade / work / travel on something** is its own root block (`canTrade`, `canTradeOn`,

@@ -92,11 +92,10 @@ pre-concept save produces an empty tree. **This backfill is the ONLY engine spec
 — everything else is pure data + the generic machine.
 
 > **`replaces` is the UNIT succession edge; building "replacement" is dormancy (engine-verified).**
-> A unit's `SupersedingUnits` ARE genuine removal-on-succession (the engine's `isSupersedingUnitAvailable` drops the
-> predecessor once a superseder is buildable) → modeled as the unit's `replacedBy.units` replace edge (§ units, below).
-> The legacy *building* `ReplacementBuildings` (A lists the buildings that supersede it) *looks* like removal, but the engine only
-> **disables** A while the successor is present (`setDisabledBuilding`, CvCity.cpp:14413) and re-enables it when the
-> successor is gone — reversible **dormancy**, never removed. So it is mirrored as the **target's
+> A unit's superseders ARE genuine removal-on-succession (the legacy engine dropped the predecessor once a
+> superseder was buildable) → modeled as the unit's `replacedBy.units` replace edge (§ units, below).
+> The legacy *building* `ReplacementBuildings` (A lists the buildings that supersede it) *looks* like removal, but the legacy engine only
+> DISABLED A while the successor was present and re-enabled it when the successor was gone — reversible **dormancy**, never removed. So it is mirrored as the **target's
 > `requires.operate.dormant: [successor]`** (§3) and leaves CAN-GET membership untouched — *not* a `replaces` edge.
 > This unifies the education ladders (a lower band dorms while a higher is present = only-highest-active) with the
 > pollution effects (blackened-skies dorms the observatory). `replaces` stays a defined family member for a future
@@ -201,8 +200,8 @@ So the build-time gate = `build ∧ operate`; the ongoing dormancy gate = `opera
 **dormancy trigger** `requires.operate.dormant: X` ("dormant *while* X is present") — distinct from a source-side `disables` ban by fate
 (dormant-and-reversible vs destroyed-and-rebuilt) and author (the target vs the law).
 
-**Pseudobuilding bands.** Legacy `CvPropertyInfo` `iMinValue`/`iMaxValue`/`BuildingType` + `checkPropertyBuildings`
-(each turn) adds/removes a building as the property value enters/leaves the band. The band models this as uniform
+**Pseudobuilding bands.** Legacy `CvPropertyInfo` `iMinValue`/`iMaxValue`/`BuildingType` added/removed a building
+every turn as the property value entered/left the band. The band models this as uniform
 `requires.operate` dormancy: the building is enabled once, and its `requires.operate` `{PROPERTY_*, min/max}` clause
 toggles it active/dormant as the value crosses the threshold — no per-turn add/remove churn. A band's own
 non-constructibility (it is placed by the property system, not the production queue) authors as `notConstructible`
@@ -213,6 +212,16 @@ entity is PLACED IN EVERY CITY UNCONDITIONALLY, and DORMANCY decides everything 
 every other system-placed building work identically — *"they should just get placed, then dormancy checked"* — so no
 placing system evaluates a placement gate, and the per-turn add/remove churn disappears for all of them at once
 rather than for bands alone.
+
+**The seam.** `notConstructible` collects the class into `BuildingsRepo::systemPlacedBuildings`, and
+`CvCity::placeSystemBuildings` puts every member into the city — at founding, and once over existing cities on load
+for saves predating the class. It evaluates no gate and it removes nothing; the `requires.operate` clause is the
+only thing that decides active vs dormant afterwards.
+
+⛔ **A band bound is a SIGNED threshold, so "absent" can never be encoded as a negative.** A property value is
+legitimately negative (the low-education ladder is authored entirely in negative bands), so a `min`/`max` absent-test
+that asks `< 0` silently drops a real bound and the clause collapses to always-true. The absent marker has to live
+outside the value domain.
 
 ⚑ **The consequence is that such an entity carries NO `requires.build`, and this is structural rather than a
 convention to remember.** `build` only ever greys a QUEUE candidate and is checked ONCE (§3 above); the ongoing
@@ -248,25 +257,15 @@ vassalage-granted only) → the `allowed` instance cap (`world` = lifetime-creat
 for a base of 5*; units have no `team` cap) → `requires.build` via the **same** condition evaluator. The two upgrade
 relationships are **distinct gates, mirroring the engine** (`build`/`operate` share the conditional vocabulary):
 - **`UnitUpgrades` → `requires.build.dormant.all`** = the unit's *direct* upgrades **minus** any that are also
-  superseders. The cascade recurses these engine-side (mirrors `allUpgradesAvailable`): hide the unit only when
+  superseders. The cascade recurses these engine-side: hide the unit only when
   **every** such upgrade resolves to a reachable-trainable unit (one dead branch keeps it buildable). The named
   `dormant` clause is fail-safe (default *not*-dormant). *(This recursion — `uc_reachable`, the StoneBase
   `UnitCascade.Reachable` closure — is what resolves the whole upgrade TREE: chains, obsolete intermediates, cycles.
   It is the spec'd resolver; do NOT replace it with a one-level or hand-rolled scheme.)*
-  ⛔ **`CvCity::allUpgradesAvailable` IS A SECOND IMPLEMENTATION OF THIS CLOSURE, and it goes**
-  ([DEC-single-implementation](../architecture/decisions.md#dec-single-implementation)). Verified against both
-  bodies: the legacy one recurses `getUnitUpgrade(i)` (skipping superseders) and its ONLY availability test at
-  the leaf is `canTrain(u, …, bIgnoreUpgrades=true)` — *"if a city canTrain, it can also upgrade, so it's a
-  looped canTrain call"* (owner). `bIgnoreUpgrades` exists purely to break its own recursion. The enabler needs
-  no such flag: `ud_reachable` resolves the whole tree ONCE and the per-unit verdict already folds it, so a
-  LISTED unit is by construction one whose upgrade chain does not dorm it.
-  ⚠ Its BOOLEAN callers (`…allUpgradesAvailable(u) != NO_UNIT`) are answered by the tri-state directly. Only the
-  return of WHICH unit you would get has a separate consumer, and that is a resolution the closure can serve —
-  it is not a reason to keep the duplicate.
 
 - **`SupersedingUnits` → the `replaces` edge (`replacedBy.units`, §2)** = genuine **removal-on-succession**: the unit
-  drops from buildable the moment any superseder is itself buildable (mirrors `isSupersedingUnitAvailable`). The engine
-  SKIPS superseders in `allUpgradesAvailable`, so they live here, not in the dormancy gate. This is the first real use
+  drops from buildable the moment any superseder is itself buildable. Superseders are excluded from the upgrade
+  closure, so they live here, not in the dormancy gate. This is the first real use
   of the long-reserved `replaces` family. **The enabler reads the curated TARGET-side `replacedBy.units`** (each unit's
   own superseders), never the source-side `replaces.units` (which nothing authors).
 
@@ -281,8 +280,9 @@ No `canTrain` gate logic is re-mirrored from the engine — every divergence is 
 NOT fixed; a plot can lie in two overlapping cities' vicinity (counts for both). The plot scan carries a
 **city-relative semantic** (`VICINITY ⊇ WORKABLE ⊇ IS_WORKED`, [json](json.md) §3.5): `VICINITY` = in the radius;
 `WORKABLE` = in radius **and owned/eligible-to-work**; `IS_WORKED` = a citizen works it. The engine's gates pick the
-level — `isValidTerrainForBuildings` requires an **owned** plot for terrain/improvement/peak/hill (= `WORKABLE`;
-a FEATURE prereq also accepts a neutral plot unless `EXP_STRICT_VICINITY`), and `hasVicinityBonus` requires the
+level — the workable-plot predicates (`evp_terrain`/`evp_improvement`/`evp_route`/`evp_peak`/`evp_hill`,
+`Conditions/CvConditionEval.cpp`) require an **owned** plot (= `WORKABLE`), while `evp_feature` also accepts a
+neutral plot unless `EXP_STRICT_VICINITY` is on — and `hasVicinityBonus` requires the
 bonus **owned + valid + connected** (the obtained semantic) or supplied by an active building.
 
 ### 3.1 The cache-friendly two-stage evaluation
@@ -500,8 +500,8 @@ volatile bottom (resources/bonuses/buildings), so derived have-entries resolve a
 **Game-option gates are the ENTITY-LEVEL `enabled`/`disabled` pair, evaluated LIVE ([DEC-entity-gate]).**
 The legacy engine checks the option tags at USE time, and the gate mirrors that: an entity whose `enabled` fails (or
 `disabled` holds) is simply never offered/valid while the option state says so. LOAD-STABLE machinery that genuinely
-resolves at load (the `CvInfoReplacements` swap, WorldBuilder/BUG, a per-civ research ban) is engine-side, not
-entity data.
+resolves at load (the legacy whole-Info replacement swap — dissolved into the curated trait sets, see
+[modifier.md](modifier.md) — WorldBuilder/BUG, a per-civ research ban) is engine-side, not entity data.
 
 ### 7.1 The concrete structure + the delta algorithm
 
@@ -566,15 +566,16 @@ maintains the unlocked-builds set, and the plot-validity half stays a live per-p
 
 ---
 
-## 8. Build state — where the enabler stands
+## 8. The machine's shape — components, host, and the read surface
 
-> **Project-specific build state**, kept on this one enabler surface (no separate plan doc, owner ruling). It
-> records only what is BUILT vs NOT, and the forks the §7 model has already resolved — never a narration of how
-> the code got here ([DEC-docs-current-truth](../architecture/decisions.md#dec-docs-current-truth)).
+> The structural half of the design: what the machine decomposes into, where its state lives, and the contract its
+> readers get. ⛔ It carries no build status and no worklist — what is NOT done is
+> [todo.md](../plans/structural-cleanup/todo.md)
+> ([DEC-spec-plus-todo](../architecture/decisions.md#dec-spec-plus-todo)).
 
-### What EXISTS
+### The components
 
-The enabler machine is built and lives in **`Sources/Enabler/`** — its own tree, carrying no `Cascade` prefix
+The enabler lives in **`Sources/Enabler/`** — its own tree, carrying no `Cascade` prefix
 ([DEC-enabler-not-cascade](../architecture/decisions.md#dec-enabler-not-cascade)):
 
 - **`EnablerDomain`** (`CvEnabler.{h,cpp}`) — the §7.1 shape: the tri-state array + the two membership refcount
@@ -619,9 +620,9 @@ hop and a lookup, not the group SUM the mirror was built to avoid.
 ⚖ **VICINITY belongs to the CITY and is a plain local-presence fact:** it satisfies `connection:"vicinity"`
 atoms and NOTHING else — it never adds a second owned count (one pasture is ONE horse, not vicinity+network=2).
 
-### The host — GRAFTED
+### The host — where the state lives
 
-The machine's state now lives on its scope owners, as plain DATA MEMBERS (the guardrail bars adding vtable *bases*
+The machine's state lives on its scope owners, as plain DATA MEMBERS (the guardrail bars adding vtable *bases*
 to EXE-bound classes, never members — [state-repositories.md](../architecture/state-repositories.md)):
 
 | owner | member | what it holds |
@@ -643,7 +644,7 @@ through the CityContext / EmpireContext stores, which the contexts' consumer bui
 `GAME_LOAD_FINISHED` event; gating ahead of it evaluates against empty stores and every verdict is silently wrong,
 with no self-heal to re-derive it ([state-repositories.md](../architecture/state-repositories.md)).
 
-### The availability READ surface — BUILT
+### The availability READ surface
 
 **⚖ THE NEW SURFACE IS BUILT WITHOUT WAITING FOR THE LEGACY DISCONNECT (owner):** *"assume it is already
 disconnected, add the new."* The disconnect is its own sweep; gating the replacement on it is what leaves the
@@ -722,7 +723,7 @@ dropped. An empty option slot displaces nothing.
 
 ⛔ **A BONUS IS NOT AN OVERLAY SOURCE, and the overlay refuses one.** The curator authors bonus `enables` edges
 (the reverse-mapped view of the target's retained `requires` atom) but the runtime never counts them — the bonus
-axis is GATE-ONLY (§8 resolved forks). Folding them would hand the hypothetical an edge class the maintained
+axis is GATE-ONLY (§8, the settled model rulings). Folding them would hand the hypothetical an edge class the maintained
 planes have never had, so every HIDDEN candidate whose inbound edge is that bonus would read as newly unlocked
 when acquiring it changes no membership whatsoever. *"Would this bonus let me build X"* is a **`requires`-GATE**
 question — re-evaluate the candidate's `requires` with the bonus injected into the eval ctx — and it is a
@@ -799,21 +800,23 @@ The gate verdict is a per-id flag (`setGateFailed`): a failed gate flips a tree 
 untouched. **A domain whose gate stage has not landed never sets the flag, so its members stay LISTED** — the
 enable-side over-offer, which is a VISIBLE defect to fix, never a reason to fall back to legacy.
 
-| domain | membership | `requires` gate | `allowed` cap |
-|---|---|---|---|
-| techs | ✅ | ✅ | ✅ (world-unique founder techs) |
-| buildings | ✅ | ✅ | ✅ (world/team/empire self-caps + the per-city wonder-CATEGORY cap, §4) |
-| units | ✅ | ✅ | ✅ (world lifetime-created; empire era-scaled national cap) |
-| projects | ✅ | ✅ | ✅ |
-| civics · processes · builds | ✅ | ✅ | ✅ |
-| promotions | ✅ | on demand (§7.1 carve-out — no maintained flag) | n/a |
+Every domain carries all three stages — membership, the `requires` gate, and an `allowed` cap — with the cap
+taking its domain's own shape:
+
+| domain | what its `allowed` cap bounds |
+|---|---|
+| techs | world-unique founder techs |
+| buildings | world/team/empire self-caps + the per-city wonder-CATEGORY cap (§4) |
+| units | world lifetime-created; empire era-scaled national cap |
+| projects · civics · processes · builds | the plain per-scope cap |
+| promotions | none — and the gate is on demand, not a maintained flag (§7.1 carve-out) |
 
 **Promotions are the exception to the over-offer:** they set no gate flag, but `requires` + the unit-state
 applicability leg (unitcombat QUALIFIED/DISQUALIFIED, game options, promotion-line prereq tech, and the runtime
 spy/pillage/commander/commodore/blend + intercept/evasion/XP caps) are enforced ON DEMAND at level-up, so the
 promotion offer is not over-inclusive.
 
-### Resolved forks (part of the §7 model — not open questions)
+### The settled model rulings
 
 - **HAVE model:** the enabler owns NO HAVE store — it ties into the object-owned has-lists that already exist
   (city buildings/religions/corps, player civics/traits/heritages, team techs). Presence stays on the objects; the
@@ -832,40 +835,40 @@ promotion offer is not over-inclusive.
   inbound edges are bonuses ROOTS, sitting visible-GREYED on its bonus requirement. The one carve-out — a bonus ON
   a plot enabling an improvement's placement (`enables.builds`) — is a live per-plot gate, no domain involvement.
 
-### Open work
+### The reverse index, and what is deliberately NOT one
 
-1. **The operate reverse index** — the building/unit buckets already converged onto `EDGEF_REQUIRED_BY`; what is
-   left is the operate index, and only its two PER-ID buckets are genuine duplicates of the canonical axis. The
-   axis-flag lists (power / golden age / state religion / the coarse religion-civic-tech lists) and the PROPERTY
-   band index are NOT convergence targets — the reverse pass deliberately excludes engine tokens, the plot
-   substrate and `PROPERTY_` bands, and a coarse list matches a coarse event. Detail + the perf caveat:
-   [todo.md](../plans/structural-cleanup/todo.md).
-2. **Neither the counts NOR plot-group MEMBERSHIP are trusted from a save** (membership is derived state: routes +
-   terrain-trade capabilities + ownership). The deserialized groups are drained and discarded; a load-end rebuild
-   re-colors membership from current state and folds the counts through the live entry points as each plot joins,
-   announcing every bonus fact as a genuine crossing emit before the `GAME_LOAD_FINISHED` gate pass.
-3. **The DORMANCY VERDICT is the operating-building fixpoint** (§3.2,
-   [DEC-calc-zero-ride-in](../architecture/decisions.md#dec-calc-zero-ride-in)) — applied through the engine's
-   disabled-building flag, never a hand re-derivation from legacy prereq getters, plus the two runtime-state legs
-   the authored data does not carry (employed-population composition; the banned-non-state-religion policy). The
-   load-end cross-city fixpoint — iterate {re-fixpoint each city's operating set → apply flips → the provides
-   injections adjust the network} until stable — reconciles the serialized flags to the computed verdict inside
-   the load bracket (a manufactured chain lights tier by tier: ore → wares → firearms). The iteration is
-   WORK-LIST driven, each flip keeps the FULL per-flip side-effect surface (power, freshwater, employed
-   population, traits, provides), and convergence is declared ONLY by a quiet FULL verify pass.
-   ⛔ **BAKED-CONSUMER RE-RUNS:** an engine consumer that BAKES state on modifier changes (the trade-route
-   ASSIGNMENT) runs during this fixpoint against not-yet-warmed packages and its baked result self-heals never;
-   every such consumer is re-run ONCE after the load-end package warm.
-4. **The dynamic operate axes ride their events** — connectivity via the plot-group/network bonus events,
-   vicinity (radius growth) via the culture-level event — routed into the operate re-check of dependents.
+**The canonical reverse axis is `EDGEF_REQUIRED_BY`** ([DEC-one-reverse-view](../architecture/decisions.md#dec-one-reverse-view)),
+and a per-id bucket that duplicates it is a defect. ⛔ But the axis-flag lists (power / golden age / state
+religion / the coarse religion-civic-tech lists) and the PROPERTY band index are **NOT** convergence targets and
+must not be swept into one: the reverse pass deliberately excludes engine tokens, the plot substrate and
+`PROPERTY_` bands, and **a coarse list matches a coarse event**. Reading the two populations as one uniform
+"operate index" is exactly the mistake the spelled-out naming rule exists to prevent
+([Sources/AGENTS.md](../../Sources/AGENTS.md) § Code Style).
 
-### The consumer ITERATION sweep (F2b)
+### Load-end reconciliation
 
-Spec authority is §6: the AI's decisions iterate ONLY the frontier, never the entity database. The hot AI decision
-loops whose gate is the plain-verdict `can*` read the enabler's LISTED frontier via `EnablerDomain::listedIds`
-instead of scanning the whole entity space. Two things are NOT a frontier swap and stay open: a loop calling a
-gate with WHAT-IF args cannot iterate the frontier (it answers only the current verdict), and the
-`AI_chooseProduction` focus-ladder collapse is an AI-architecture change, not a per-loop rewrite.
+- **Neither the counts NOR plot-group MEMBERSHIP are trusted from a save** (membership is derived state: routes +
+  terrain-trade capabilities + ownership). The deserialized groups are drained and discarded; a load-end rebuild
+  re-colors membership from current state and folds the counts through the live entry points as each plot joins,
+  announcing every bonus fact as a genuine crossing emit before the `GAME_LOAD_FINISHED` gate pass.
+- **The DORMANCY VERDICT is the operating-building fixpoint** (§3.2,
+  [DEC-calc-zero-ride-in](../architecture/decisions.md#dec-calc-zero-ride-in)) — applied through the engine's
+  disabled-building flag, never a hand re-derivation from legacy prereq getters, plus the two runtime-state legs
+  the authored data does not carry (employed-population composition; the banned-non-state-religion policy). The
+  load-end cross-city fixpoint — iterate {re-fixpoint each city's operating set → apply flips → the provides
+  injections adjust the network} until stable — reconciles the serialized flags to the computed verdict inside
+  the load bracket (a manufactured chain lights tier by tier: ore → wares → firearms). The iteration is
+  WORK-LIST driven, each flip keeps the FULL per-flip side-effect surface (power, freshwater, employed
+  population, traits, provides), and convergence is declared ONLY by a quiet FULL verify pass.
+  ⛔ **BAKED-CONSUMER RE-RUNS:** an engine consumer that BAKES state on modifier changes (the trade-route
+  ASSIGNMENT) runs during this fixpoint against not-yet-warmed packages and its baked result self-heals never;
+  every such consumer is re-run ONCE after the load-end package warm.
+- **The dynamic operate axes ride their events** — connectivity via the plot-group/network bonus events,
+  vicinity (radius growth) via the culture-level event — routed into the operate re-check of dependents.
+
+⚠ **A WHAT-IF asker can never iterate the frontier.** The frontier answers the CURRENT verdict only, so a gate
+called with hypothetical arguments is served by `EnablerOverlay` (§8, "WHAT THE ENABLER IS NOT") — not by a swap
+to `listedIds`.
 
 ---
 

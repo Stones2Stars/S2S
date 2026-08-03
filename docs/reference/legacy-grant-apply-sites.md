@@ -164,12 +164,12 @@ buildings (`:2443`, the only *live* settle-time seed), settler population (`:245
 (`:2229`, `:2257`), Nazca building bonuses (`:2301`) · `InitMilitaryPromos.py:131` · `RevEvents.py:740` ·
 `BarbarianCiv.py:580`.
 
-## 3. Live defects this map surfaced
+## 3. What this map surfaced — the live defects, and the questions it settled
 
-1. ~~Building `grants.repeatable` drops `interval` / `enabled` / `chance`.~~ **FIXED — by ownership, not by
-   widening.** `CvBuildingInfo::mapFrom` still collapses each entry into the legacy members (which keep NO
-   interval/enabled/chance), but those members now serve only the AI/pedia READ consumers. The per-turn APPLY
-   moved to the grants machine, which reads the composed `getGrants()->repeatables()` and honours
+1. **Building `grants.repeatable` — the APPLY belongs to the grants machine, not to the legacy members.**
+   `CvBuildingInfo::mapFrom` still collapses each entry into the legacy members (which keep NO
+   interval/enabled/chance), but those members serve only the AI/pedia READ consumers. The per-turn APPLY
+   reads the composed `getGrants()->repeatables()` and honours
    `intervalPerTurn`, the `enabled` condition (through `cascadeEvalCondition`) and the property-scaled chance —
    gated on the operating-building set, so a dormant building grants nothing. The legacy sites
    (`CvCity::doPropertyUnitSpawn`, `CvCity::doHeal`, `changePropertySpawn`/`changeNumUnitFullHeal` and their
@@ -183,14 +183,13 @@ buildings (`:2443`, the only *live* settle-time seed), settler population (`:245
    (`CvCity.cpp:13163`, default `false` at `CvCity.h:1079`), and the cascade side sums only building/civic/trait
    deposits — so event grants (`CvCity.cpp:17979`), vote-source grants (`:14185`) and the espionage
    assassinate-specialist `-1` (`CvPlayer.cpp:16055`) all vanish.
-3. ~~The game-start resolver reads the wrong era.~~ **FIXED** — `gr_resolvePlayerInit` now reads
-   `GC.getGame().getStartEra()`, matching every legacy site. (Verified by compile only: era-sourced game-start
-   grants fire at NEW GAME, so they cannot be exercised on the standing late-game save.)
+3. **The game-start resolver reads `GC.getGame().getStartEra()`**, matching every legacy site. ⚠ Era-sourced
+   game-start grants fire at NEW GAME only, so they cannot be exercised on the standing late-game save — the one
+   place this map's claims cannot be checked without starting a fresh game.
 4. **`SEVT_PLAYER_INIT` does not fire for every player who receives grants** — `initFreeUnits` early-returns on
    a null starting plot *before* the emit, and is only called for players with zero units and zero cities.
    Gold is also applied 21 lines *before* the emit (`CvGame.cpp:994` vs `:1015`).
-5. ~~The religion founder grant is dead under `GAMEOPTION_RELIGION_DIVINE_PROPHETS` / mixes slot and religion.~~
-   **NOT A DEFECT — both halves are BY DESIGN (owner):**
+5. **The religion founder grant — two things that LOOK like defects and are BY DESIGN (owner):**
    - Under `GAMEOPTION_RELIGION_DIVINE_PROPHETS`, `foundReligion` early-returns (`CvPlayer.cpp:8543`) because
      **founding a religion is an OUTCOME** under that option — the outcome system's job, and outcomes are a
      separate system from this machine (§2). Nothing is missing.
@@ -200,9 +199,10 @@ buildings (`:2443`, the only *live* settle-time seed), settler population (`:245
      the **CHOSEN** religion sets the free-unit **TYPE**. Slot = reward size, chosen religion = its flavour.
    ⚑ To MOVE this grant the emit must carry what the apply needs: the chosen religion, the slot religion, `bAward`,
    and the target city (`pBestCity`) — `emitReligionFounded` carries only player + religion today.
-6. **Both property-band machines have live code and zero data** — `m_aPropertyBuildings` /
-   `m_aPropertyPromotions` are never written; the bands are live instead through the F5 watermark →
-   `requires.operate` dormancy, a different semantic (operating, not presence).
+6. **Both property-band members are dead storage** — `m_aPropertyBuildings` / `m_aPropertyPromotions` are never
+   written, and nothing reads them any more either: the per-turn band sweep that did was deleted. Bands are live
+   instead as `requires.operate` PROPERTY clauses over buildings placed once by `CvCity::placeSystemBuildings`, a
+   different semantic (operating, not presence).
 7. **Legacy-that-stopped:** `getFreeBuilding`/`getFreeAreaBuilding` → `-1` (404 authorings, chain + save fields
    intact); `isApplyFreePromotionOnMove` → `false`, making `CvCity::doPromotion` unreachable so a unit that walks
    into a city never gains the building's promotions.
@@ -279,10 +279,10 @@ source survives (`CvUnit.cpp:8778`), city acquisition carries it (`CvPlayer.cpp:
 specialists are a persisted pulse, not a while-active modifier** (`CvPlayer.cpp:12187`) — which pins the lifetime
 question [grants-machine.md](../specs/triggers.md) left open.
 
-## 5. Open rulings (blocking the apply)
+## 5. The rulings that govern the apply
 
-1. ~~Python boundary.~~ **SETTLED (owner): Python events do NOT use grants yet.** The first pass of the machine
-   is **DLL-scoped**, and the Python granting catalogued in §2 stays where it is — a KNOWN and accepted parallel
+1. **Python boundary (owner): Python events do NOT use grants yet.** The first pass of the machine
+   is **DLL-scoped**, and the Python granting catalogued in §2 stays where it is — a KNOWN and accepted parallel.
    This is a deliberate boundary, not an oversight or a gap to close opportunistically. ⛔ Do NOT wire `CvEventManager` /
    Revolution / `BarbarianCiv` handouts into the machine, and do not claim "one place" without the DLL
    qualifier. "Yet" is deliberate: the boundary moves when the owner says so, and the map above is what that
@@ -294,7 +294,7 @@ question [grants-machine.md](../specs/triggers.md) left open.
    and the machine consumes it (`s_bFirstAcquire = (e.iA != 0)`, `CvTriggerEngine.cpp`), emitting it as
    `firstAcquire` beside `suppressed` so the withholding REASON is on the wire. What the apply must then honour is
    the engine's own semantic; the ruling itself is not closed here.
-3. ~~Serialized ledgers.~~ **SETTLED (owner): the machine REPLACES the existing per-turn work**, so the ledgers
+3. **Serialized ledgers (owner): the machine REPLACES the existing per-turn work**, so the ledgers
    feeding it become DERIVED. All three are written only by `CvCity::processBuilding` (`changePropertySpawn`
    `:4255`, `changeHealUnitCombatTypeVolume` `:4352`, `changeNumUnitFullHeal` `:4370`, all
    `kBuilding.getX() * iChange`) — no event/vote/espionage writer exists — so each is a Σ over the city's buildings
@@ -309,8 +309,8 @@ question [grants-machine.md](../specs/triggers.md) left open.
    |---|---|---|
    | `m_aPropertySpawns` | per-turn unit spawn — an arrival outside normal creation | **the grants machine** |
    | `m_iNumUnitFullHeal` | discrete per-turn action (fully heals up to N damaged units, `CvCity::doHeal` `:20202`); [json.md §5](../specs/json.md) names a heal as a `repeatable` payload | **the grants machine** |
-   | `m_paiHealUnitCombatTypeVolume` | **continuous heal-RATE contribution**, not a discrete event — consumed at `CvUnit.cpp:6232` (`iTotalHeal += pCity->getHealRate() + pCity->getHealUnitCombatTypeTotal(...)`) and already a named term in the `/computed/units/heal` decomposition | **the MODIFIER heal channel** (alive-with-source ⇒ modifier, the `freeSpecialists` precedent) — F4's unit-side heal channel is built; this is its city-scope deposit |
-4. ~~Scope of "grant".~~ **SETTLED by the §0 scope rule** — arrival-outside-normal-creation decides it. What
+   | `m_paiHealUnitCombatTypeVolume` | **continuous heal-RATE contribution**, not a discrete event — consumed at `CvUnit.cpp:6232` (`iTotalHeal += pCity->getHealRate() + pCity->getHealUnitCombatTypeTotal(...)`) | **the MODIFIER heal channel** (alive-with-source ⇒ modifier, the `freeSpecialists` precedent) — F4's unit-side heal channel is built; this is its city-scope deposit |
+4. **Scope of "grant" — settled by the §0 scope rule**: arrival-outside-normal-creation decides it. What
    remains is **HOMING, not a data gap: every one of these provisions IS curated** — verified against
    `Assets/Data` + the poco readers — just not into a `grants` block, so `getGrants()` resolves nothing and the
    machine cannot reach them:

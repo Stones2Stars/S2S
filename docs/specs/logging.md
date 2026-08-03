@@ -69,8 +69,9 @@ either without the other. The spine itself — the KIND firewall (`DOMAIN`/`DIAG
 
 The two reliable live reads:
 
-- **`/state/*` + `/computed/*` endpoints** — an on-demand snapshot via the game-thread mailbox; depends on no log file and
-  no gate. The most reliable read — when in doubt about a value, hit the endpoint.
+- **The `/computed` cache documents** — an on-demand snapshot via the game-thread mailbox; depends on no log file
+  and no gate, and is the most reliable read for a POINT-IN-TIME value. ⚠ They are the ONLY data routes that
+  answer; there is no `/state` surface today ([http-endpoints.md](http-endpoints.md)).
 - **`/events` SSE stream** — the gated `[TAG]` lines, live. The per-turn lines burst at the **top of
   `doTurn`**, so you must **connect *before* the turn ticks** (connect-then-end-turn).
   - **⚠ Capture with an AUTO-RECONNECT loop, not a fixed-window curl.** `CvGame::doTurn` fires at the

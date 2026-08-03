@@ -132,7 +132,8 @@ supply + corporate maintenance.
 - **Pollution is LIVE** via the [property solver](engine.md#properties--the-generic-attribute-bag--its-legacy-auto-placement) (propagators → interactions → sources).
   Rates (`CIV4PropertyInfos.xml`): city decay ~6%/turn + 1/pop/turn; city→plot ~5%, plot→city ~12%, plot→plot ~4%;
   target 0. **24 band buildings** (12 air, `POLLUTION_LIGHT_SMOG`@≥400 … `BLACKENED_SKIES`@≥1950; 12 water …
-  `TOXIC_HYDROSPHERE`@≥1800), placed/removed by `checkPropertyBuildings` — a property-band maintainer the cascade replaces.
+  `TOXIC_HYDROSPHERE`@≥1800). Legacy added/removed them per turn; they are now placed once and gated by a
+  `requires.operate` PROPERTY band ([engine.md](engine.md#properties--the-generic-attribute-bag--its-legacy-auto-placement)).
 
 ## See also
 

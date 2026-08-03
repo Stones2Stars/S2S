@@ -212,8 +212,9 @@ change, expected to show in the shadow, not a bug.)
 ## 3b. The effective-skill composition rules
 
 A unit's EFFECTIVE skills are the engine's per-unit COMPOSITE getters (`isBlitz()` etc., unit-info + promotion +
-unitcombat counts folded) — `/computed/unitSkills` is the oracle; the offline derivation is
-unit JSON `skills` ∪ combat-class JSON `skills` ∪ held promotions' JSON `skills`.
+unitcombat counts folded). The offline derivation is
+unit JSON `skills` ∪ combat-class JSON `skills` ∪ held promotions' JSON `skills`; the route that served the
+engine-side oracle is gone, so confirming a composite means emitting it on the spine.
 
 **The derivation rules a consumer must know (engine compositions that survive as CODE, not data):**
 - a unit's combat classes = **`identity.base.combatClass` (the PRIMARY — XML `Combat`) + `identity.combatClasses`

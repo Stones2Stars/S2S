@@ -34,11 +34,11 @@
 
 ## Data — curator
 
-- Curate `culture.unit.garrison` (flagged in-code, awaiting its batch).
+- Mint the `garrison` kind in the culture vocabulary. The curator already emits `culture.unit.garrison.flat`
+  and units author it, but no kind exists, so the deposits reach no getter.
 - Attach the ruling-16 trigger-plane set (`survivor`, `cityCapture`, `combat.subdueAnimal`,
   `combat.nukeInterception`, `diplomacy.techShare`) to its trigger's `chance`
   ([triggers.md](../../specs/triggers.md)).
-  ⛔ Do not unblock the dangling `getSubdueAnimalBonusAI` / `getTechShare` consumers by minting a kind for them.
   ⚠ `techShare` additionally needs its KIND retired: unlike the rest of the set it was minted as
   `DIPLOMACY_TECH_SHARE`, so the re-home is a curator change AND a vocabulary removal.
 - Give the §3.9 entry grammar a payload-less form so a carrier can state a cargo RESTRICTION with no capacity of
@@ -62,42 +62,18 @@
   ([json.md §7](../../specs/json.md)): constraints → `requires`/`allowed`; `diploVoteType` → the top-level
   `voteSource` section (and rename the getter off the legacy XML tag); `tradeable` → the `canTrade` block;
   `advancedStart` → resolve the curator's parked
-  flag; `pillageGold` → drop; **`allowsNukes` → `requires.build.disabled: "NO_NUKES"`**, the predicate
-  [json.md §3.5](../../specs/json.md) already defines for exactly this ("a nuke-enabling building carries
-  `requires.build.disabled: NO_NUKES`"). ⚠ Its legacy engine gate is CUT, so until the curator re-homes it the
-  no-nukes bar does not apply to projects at all — the hole is deliberate and visible
-  ([DEC-no-legacy-masking](../../architecture/decisions.md#dec-no-legacy-masking)), not an oversight.
+  flag; `pillageGold` → drop.
   ⚠ `espionagePoints` rides the missions/`CvOutcome` carve-out — its channel is settled, only its authoring home waits.
-- Give the ENABLER a TRAIT domain, and let `CvPlayer::canLearnTrait` / `canUnlearnTrait` read its verdict.
-  The ladder is now plain `enables.traits` data, so the generate pass already answers learnability for free —
-  a rung is in CAN GET iff the rung beneath it is held ([enabler.md §1](../../specs/enabler.md)). What is
-  missing is the DOMAIN: traits are not instantiated as an `EnablerDomain`, so nothing serves the verdict and
-  those two functions still hand-walk the trait registry.
-  ⛔ Do NOT answer it on the INFO side. Deriving a rung depth / line root by walking the edge chain on
-  `CvTraitInfo` rebuilds, per-info, exactly the walk the generate pass performs — a second implementation of
-  availability ([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation)), and
-  the enabler is where "can I?" lives ([DEC-enabler-not-cascade](../../architecture/decisions.md#dec-enabler-not-cascade)).
-  ⚠ Its consumers also want an ORDERING (which rung outranks which, for the unlearn/downgrade choice). That
-  falls out of the same domain rather than needing an authored rank.
-  ⚠ Until it is authored, `CvPlayer::canLearnTrait`'s ladder block is a legacy re-derivation MASKING that
-  absence ([DEC-no-legacy-masking](../../architecture/decisions.md#dec-no-legacy-masking)) — it scans the whole
-  trait registry for the rung beneath, and it is already half-migrated (calling the new `getSuccessionPriority`
-  beside the legacy `getPromotionLine`).
-  ⛔ Its TECH leg goes rather than converting: gating a rung on the line's `PrereqTech` is the tech-gated
-  collapse [modifier.md §4](../../specs/modifier.md) rules WRONG — researching a level's prereq tech does not
-  advance a held trait, and the held trait IS the authoritative level.
 - Bring `curate_trait`'s trade-route rows onto ruling 11, as `curate_building` already is: `iCoastalTradeRoutes`
   and `iForeignTradeRouteModifier` still emit `coastal` / `foreign` as MEMBERS, and neither has a kind in the
   vocabulary — so a trait authoring one emits an address that resolves to nothing and is dropped in silence.
   The ruled shape is the conditioned deposit (the memberless route count gated `HAS_COAST`; the modifier kind
   gated `IS_FOREIGN`) — a WHERE-member is the condition-as-member rollerskate
   ([DEC-conditions-are-predicates](../../architecture/decisions.md#dec-conditions-are-predicates)).
-  ⚠ No trait authors either tag today, so this is latent rather than live data loss. It closes by fixing the
-  mapping and REGENERATING (`curate_trait.py --write`) — traits are no longer content-locked
-  ([modifier.md §4](../../specs/modifier.md)).
+  ⛔ This is LIVE data loss, not latent: traits DO author both tags, and every one of those deposits resolves to
+  nothing and is dropped in silence. It closes by fixing the mapping and REGENERATING (`curate_trait.py --write`)
+  — traits are no longer content-locked ([modifier.md §4](../../specs/modifier.md)).
 
-- Emit property pulses through the shared property-source cleaner as trigger entries carrying
-  `on`/`relation`/`distance`, instead of parking them verbatim.
 - Author the leader→trait assignments. The chain is wired and the slots are authorable; the CONTENT is
   community-owned, so this closes by AUTHORING and never by reconstructing the tables the curator dropped.
 - Author per-leader `ai.personality.researchSearchDepth` ([enabler.md §8](../../specs/enabler.md)). Same shape as
@@ -115,7 +91,6 @@
   mechanic is the vanilla airplane ranged attack and STAYS; only the name carries `dcm`, and a live mechanic
   wearing a dead plane's prefix is what makes the next sweep mis-scope it
   ([skills.md](../../specs/skills.md)).
-- Retire the legacy `largestCity` member once ranked-target-selection EVALUATION lands.
 - Re-home `stronglyRestricted` to a `requires.build` civ-membership gate, when NPC civilizations are wired.
 - Move corp-HQ revenue (`HeadquarterCommerces`) with the corporation rework, and with it the two corp shapes
   no corporation authors: the HQ FREE UNIT — a `grants` payload, so it lands on the trigger plane off the
@@ -123,7 +98,7 @@
   EXCLUSION, whose home is the §9 `excludes` block ([json.md §9](../../specs/json.md)). Competition currently
   answers from the consumed-bonus overlap alone. ⛔ Neither is machinery to build ahead of data authoring it.
 - Retire `DOMAIN_IMMOBILE`. Immobile is not a domain ([json.md §7](../../specs/json.md)) — a domain is the
-  MEDIUM a unit operates in — and no unit authors it any more, so nothing keeps the member alive but its
+  MEDIUM a unit operates in. ⚠ UNITS STILL AUTHOR IT, so the data re-authoring comes FIRST; only then the
   consumers: the enum entry, ~21 engine/AI sites, the `CIV4DomainInfos.xml` record, its game text, and a Python
   read. ⚑ It is TERMINAL in the enum (immediately before `NUM_DOMAIN_TYPES`), so removing it shifts no other id
   — which matters because `DomainTypes` crosses the ABI through `DllExport CvUnit::getDomainType()`.
@@ -131,13 +106,360 @@
   ACCEPTS it beside `DOMAIN_LAND`), so this is a per-site read, never a delete-the-case sweep.
 - Map the flagged unitcombat remainder — map the obvious, flag the unsure, never blunt-purge
   ([unitcombat-tag-mapping.md](unitcombat-tag-mapping.md)).
-- Decide what an EMPIRE-scope `range` deposit means, and who consumes it. Traits author `range.empire.flat`
-  and the only `SCALAR_RANGE` reader asks at UNIT scope, so those deposits reach nothing — they load, resolve
-  to a real slot, and are read by nobody. ⚑ On the aerial line it looks like a duplicate of the
+- Decide what an EMPIRE-scope `range` deposit would mean, if one is ever authored. ⚠ None exists today — every
+  authored `range` is unit-scope, and no trait carries a `range` block at all. ⚑ On the aerial line it looks like a duplicate of the
   `air.empire.range` beside it; elsewhere it does not, which is why this is a DATA question and not a reader
   to bolt on ([DEC-no-guessing](../../architecture/decisions.md#dec-no-guessing)).
   ⚠ It closes through `curate_trait` + a regen ([modifier.md §4](../../specs/modifier.md) — traits are no longer
   content-locked), never by hand-editing the emitted JSON, which a regen would overwrite.
+
+## The new surface, wired wrong — fix these first
+
+> These are not legacy and not gaps: they are built machines connected to nothing, or connected wrongly. Each
+> compiles, runs, and produces a plausible wrong answer, which is why none of them surfaced on its own.
+> ⛔ Symbols, never line numbers — a symbol survives an edit and a line number does not.
+
+- **⛔ Route every domain through `EnablerKernel::gateSet` — the declared GENERATE→GATE primitive has ZERO
+  callers while SIX file-static copies of it exist**, one per domain (`bd_`/`bl_`/`ce_`/`pc_`/`pj_`/`ud_gateSet`).
+  The kernel's own header calls these "the single-implementation enabler primitives"; the gate ORDER
+  (obsolete-check → `requires` → `allowed` cap) now lives in six independent bodies free to drift apart
+  ([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation)). This is the
+  reinvented-machine signature at the centre of the enabler.
+- **Nothing can enumerate the GREYED tier.** `EnablerDomain::inTreeIds` (LISTED + GREYED — the visible tri-state)
+  has no caller, while its sibling `listedIds` has many. The "go get copper / adopt this civic" greyed build-list
+  entries that [enabler.md §6](../../specs/enabler.md) specifies cannot be rendered by anyone.
+- **The enabler's validation-oracle surface is unrunnable** — `BuildingEnabler::verifyCity`, `TechEnabler::available`
+  and `UnitEnabler::explain` all have zero callers, and no route reaches them. ⛔ This is the load-bearing one:
+  `CvTechEnabler`'s header states the design contract that the enabler consumes ONLY events *precisely so* a
+  missed emit surfaces as a visibly wrong enabler, with the oracle diff as the tripwire. **The event-only design
+  is resting on a tripwire nothing pulls.**
+- **Emit the load-pipeline diagnostic.** `emitLoadPipeline` is the ONE spine endpoint with no emitter anywhere —
+  the kind, the renderer and the field decode are all built. So load-stage timings, fixpoint pass/flip/converge
+  counts and the verify-catch count reach neither the log nor `/events`, and load time is the currency that pays
+  for turn time ([DEC-turn-time-is-king](../../architecture/decisions.md#dec-turn-time-is-king)).
+- **Consult `EnablerKernel::cityHasVicinityBonus` instead of re-deriving it.** Its header names it the ONE home
+  for "is this bonus in vicinity here?"; it has no caller, and the evaluator re-implements the same two-half union
+  inline. Behaviour agrees today — the divergence risk is structural.
+- **Wire the `InfoValuation` fold seams or delete them**: `tradeRouteChannelYield`, `combinedGroupSum` and
+  `netUpkeepAfterFree` are the declared canonical math "so the package rebuild and the `expected*` endpoints call
+  the SAME math", and all three have no caller while the arithmetic is hand-written at the consumers. ⚑ Knock-on:
+  the combine-floor metadata table is reachable ONLY from the dead `combinedGroupSum`, so adding a floored
+  (family, kind) row today would have zero effect, silently.
+- **Wire `DepositIndex::segIdFor*`** — a five-entry string-elimination optimizer whose header says it "kills all
+  string handling in the per-plot keyed walks". It has no caller and the per-read `lookupSegment(std::string(...))`
+  it was built to remove is still on the per-plot turn path.
+- **Give `ev_countCore` a `TAG_` branch** so `CvCascadeTally::countUnitsWithTag` is reachable. The count-atom
+  dispatcher branches on specialist/building/tech/unit only, so an authored `{TAG_X, min:N}` count silently falls
+  through to presence and answers 0/1. ⚠ Latent — no data authors one yet.
+- **Wire the `EnablerOverlay` DELTA reads** (`unlocks` / `unlockedIds`) or delete them. The overlay's `addHave`
+  half is live in the civic what-if; the delta half — the header's "deliberately the primitive rather than
+  something each caller re-derives" — has no consumer because the tech-picking one does not exist yet.
+- **Fix the stale comment pointing at `CvPlot::setWorkingCity`** on the working-city event — no such method
+  exists (only the override variant), and naming a dead site is the bait
+  ([DEC-no-rollerskate-evidence](../../architecture/decisions.md#dec-no-rollerskate-evidence)).
+- **Wire the operating-building seed and its maintenance hooks.** `EnablerKernel::seedOperatingBuildings` has no
+  caller, and the caller its own comment names — `CvCity::refreshOperatingBuildings` — does not exist. The six
+  `on*Active` hooks are equally unreached. `operatingBuildings()` is a bare fetch by ruling, so nothing rescues
+  it: the set is empty for every city, so every building reads DORMANT, `wireOperatingBuildings` fills the eval
+  ctx with empty active/provided sets, `cityHasVicinityBonus` answers false, and the trigger plane grants
+  nothing. ⚑ Diff `/computed/enabler/operating/{stored,oracle}` to confirm — that pair exists for exactly this.
+- **⛔ Stop reading a NEGATIVE band bound as "no bound" — this is the landmine directly behind the item above.**
+  `CvJsonConditionParse` defaults an unauthored `min`/`max` to **-1**, and the PROPERTY band atom in
+  `CvConditionEval` then treats *any* negative as absent (`a->min < 0 || …`). Its own comment four lines up says a
+  `PROPERTY_*` value can be legitimately negative, so the parse sentinel and the atom contradict each other. Every
+  `PROPERTY_EDUCATION` low-education tier is authored with a negative min **and** max, so BOTH bounds are dropped
+  and the band clause is unconditionally true; the positive-side bands are unaffected, which is exactly why it
+  reads as working. Those tiers are `notConstructible`, so `CvCity::placeSystemBuildings` puts them in every city
+  at founding, and the `dormant` successor ladder then leaves the DEEPEST tier — the one with no successors —
+  permanently active regardless of the city's real education. ⚑ The seed item above is what hides it — deposits
+  only flow for buildings in the operating set. **Fix both in the same change, or wiring the seed lights up a
+  crippling city-wide penalty and takes the blame for it.** The fix is a real absent-sentinel (a has-bound flag,
+  or `INT_MIN`/`INT_MAX`), never a `< 0` test — see [enabler.md](../../specs/enabler.md) §3.
+- **Delete `CvPropertyInfo::getPropertyBuildings`, `m_aPropertyBuildings` and their CURATOR-GAP comment.** Nothing
+  reads the getter, and the comment promises a resolution the band model supersedes
+  ([enabler.md](../../specs/enabler.md) §3).
+- **Give `CityContext::amenities` a load path and a working removal.** Its only feeder fact is emitted by the
+  dead seed above, so the fold is empty after every load — `isGovernmentCenter`, `getPowerCount`,
+  `isNoUnhappiness` and the health flags all read false. The removal leg is gated on the same empty operating
+  set, so amenities never decrement while additions fire: the dictionary grows monotonically for the life of a
+  game. ⛔ The building leg must ride a fact the CITY emits from its own read, not one the enabler produces —
+  a store that waits on another system's built state is the ordering dependency [contexts.md](../../architecture/contexts.md) bans.
+- **Call `clear()` on the contexts at owner reset.** `CityContext::clear` and `EmpireContext::clear` exist and
+  are never called. `CvCity::reset` resets `m_enabler` three lines away *because a city is recycled out of an
+  `FFreeListTrashArray`* — the identical hazard applies to every context store, and nothing re-derives them.
+- **Cut the legacy per-channel scalar plane on `CvCity`/`CvPlayer`/`CvPlot`, which is still FED from the
+  cascade.** `m_aiYieldRateModifier` takes its value from `getYieldModifier(..., CASC_SCOPE_EMPIRE)` and
+  `m_aiProductionToCommerceModifier` from `getProductionToCommerce(...)` — new data pushed into the old shape, a
+  parallel storage-push-read plane beside the uniform package
+  ([DEC-uniform-cache-shape](../../architecture/decisions.md#dec-uniform-cache-shape)).
+- **Route the facts that are emitted and consumed by nobody** — `SEVT_AREA_TILES_CHANGED` (so `AREA_SIZE` and the
+  coastal read stop drifting), `SEVT_HEADQUARTERS_CHANGED` (which would retire a per-call corporation-registry
+  scan), `SEVT_BUILDING_OBSOLETED`.
+- **Delete `CvCity::doVicinityBonus`** — a per-turn blanket clear plus lazy recompute-on-read beside the
+  event-built vicinity store ([DEC-no-self-heal](../../architecture/decisions.md#dec-no-self-heal)). Nothing is
+  missing behind it: the maintained store already exists, and this cache's own comment claims a reader that has none.
+- **Repair the `savemigration.txt` obligations naming `CascadeWellbeing`** — that class lives only in
+  `SourceArchive/`, so those cut fields have no source at all ([save.md §3](../../specs/save.md)).
+- **Sweep the writerless serialized accumulators** by the two-grep test: serialized and read, with no caller on
+  the changer. Beyond the two already named, `CvPlayer::changeHappyPerMilitaryUnit` and
+  `CvCity::changeImprovementFreeSpecialists` are the same shape.
+- **Stop handing `CvPlot*` out of `CityContext`** (`cityPlot`, `radiusPlot`) — the evaluator uses that hole to
+  reach a second context, while the eval ctx already carries one. The isolation is meant to be structural.
+- **De-instantiate `CvCascadeTally`** — a calculator is a static-methods holder, never an instance
+  ([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation)).
+- **Reset the enabler's build-once latches**, or make them re-entrant: `rj_clearAllRepos` re-maps every info on
+  the postmenu pass while `buildActiveIndex`, `bd_buildGateClasses`, `ud_buildClasses`, `bd_sbMembers` and
+  `bd_cappedBuildings` latch permanently. `di_ensureDependencies` is a literal ensure-on-read behind four reads.
+- **Collapse the second condition-evaluation surface.** `CvPropertyBridge` translates the cascade's own
+  `CvCondition` trees back into `BoolExpr` for the legacy solver to evaluate, with different semantics — count
+  thresholds and connections drop silently.
+
+## ⛔ THE PROPERTY-BAND ECOSYSTEM IS BROKEN FOUR INDEPENDENT WAYS
+
+> The crime / disease / pollution / education building ecosystem — the largest `requires.operate` population in
+> the data — is severed at four points at once. Fix them together; any one alone leaves it dead, and fixing the
+> seed alone lights up the negative-band defect (below) as a crippling city-wide penalty.
+
+- **`SEVT_PROPERTY_CHANGED` is emitted into the void.** The fact fires from the `CvProperties` mutation choke
+  points, but repo-wide the id exists ONLY as an enum entry, a log spelling, and the emitter — **no consumer
+  carries a case for it**. So a property value moving never re-checks the bands it crosses.
+- **The receiving machine is built and has zero callers**: `EnablerKernel::onPropertyBandHitActive` and
+  `propertyBandThresholds` (the threshold union the watermark was to read) are reached by nobody, and the
+  `s_operateNeedsLiveState` bucket that would otherwise catch these is a DEAD STORE — pushed to at load, never
+  read. The kernel opted out of the dynamic path in a comment promising "the watermark emits a targeted band-hit
+  on a threshold crossing". The watermark does not exist.
+  ⚑ **The un-announced fact is: "property P crossed one of its registered band boundaries in city C."** The
+  threshold table is already built; emit the crossing and route it — do not add a per-turn re-scan
+  ([DEC-no-self-heal](../../architecture/decisions.md#dec-no-self-heal)).
+- ⚠ **It fails INVISIBLY, not cleanly.** The re-check re-evaluates the WHOLE operate condition for whatever
+  buildings some other event happens to seed — so a crime building that also requires a tech gets its crime band
+  re-read incidentally the next time any tech lands. The verdict is right at unpredictable moments and wrong in
+  between, per city.
+- **A second band on the same property in one `requires.operate` tree silently overwrites the first** — the band
+  map is filled by assignment, not accumulation.
+- **`-1` as "no bound" recurs in the band THRESHOLD table**, same shape as the atom's `< 0` test. Fix both with
+  one real absent marker (a has-bound flag, or the `MIN_INT` shape already used correctly for build-year).
+
+## ⛔ SHAPE VIOLATIONS — the bespoke thing forcing bespoke machinery
+
+- **⛔ The ONE condition evaluator dispatches on RUNTIME STRINGS.** `CvCondition` keeps `type`/`param` as
+  `std::string` into the runtime, and the evaluator routes every atom through prefix compares — dozens of them in
+  one file, on both the package-rebuild path and the per-decision `expected*` read.
+  ⚑ **This project already MEASURED this exact defect and fixed it elsewhere**: `CvCapabilities` records that a
+  per-call `std::string` construction on the pathfinder "4x'd the turn", and precomputes flags for it. The same
+  shape survives in the evaluator. `CvCondition` already carries the FK-resolved `id` and a `predKind` — route on
+  an interned kind, and let no string survive load
+  ([DEC-materialize-at-mapfrom](../../architecture/decisions.md#dec-materialize-at-mapfrom),
+  [DEC-one-json-reader](../../architecture/decisions.md#dec-one-json-reader)).
+- **⛔ `EnAllowedCap` fuses KIND × SCOPE into one enum, and it has already produced a WRONG GATE.** Two ladders
+  collapse the team and empire arms into one branch, so a project's `empire:N` cap is enforced against a TEAM
+  count while a tech's `team:N` cap is enforced against an EMPIRE count. That is
+  [DEC-scope-is-an-axis](../../architecture/decisions.md#dec-scope-is-an-axis) failing as a live behavioural
+  defect, not a naming preference. Re-cut as `cap(ALLOWEDCAP_SELF, <scope>)` — the tally already takes a scope, so
+  all four hand-written kind→scope ladders delete.
+- **⛔ Delete `CvDerivedData` — it is a REVIVED KILLED IDEA.** `superseded-ideas.md` #1 records the derived-data
+  repository (`TLazy`/version/dirty aggregation) as killed with an explicit *"don't revive the repository"*, and
+  the file is back: four empty repositories, members on four game objects, zero tenants, and doc-comments
+  teaching ensure-on-read plus a "bounded staleness" periodic rebuild as the sanctioned architecture. It also
+  cites a plan doc that does not exist. ⚑ It executes nothing, which is exactly why it is dangerous — it is what
+  the next agent reads when asking how derived caches work here.
+- **The city's vicinity fact is derived THREE times.** `CityContext` stores it properly, while `CvCity` keeps a
+  hand-rolled ensure-on-read memo gated on a multiplayer option AND a per-turn blanket wipe over every bonus in
+  every city — under a comment claiming no stored context copy exists, which the live `CityContext` dictionaries
+  refute. ⚠ The `had*VicinityBonus` arrays it feeds are SERIALIZED derived state
+  ([DEC-derived-never-trusted](../../architecture/decisions.md#dec-derived-never-trusted)) and have **zero**
+  readers in the whole tree — a per-turn radius scan and a save payload feeding nothing.
+- **Give `capabilities` its generated classification ids.** The team caps carry three runtime
+  `std::set<std::string>` rebuilt by heap-copying strings per team per mark, to serve three accessors with zero
+  call sites — while the string-keyed source getters ARE called ~80 times from AI diplomacy with string literals.
+  [DEC-classification-infos](../../architecture/decisions.md#dec-classification-infos) makes the union a bitset OR
+  and deletes the key table, the three sets and the flag mirror together.
+- **Materialize the remaining per-call string reads in info getters** — the hide-and-seek detection row resolving
+  an infotype by string at read time (on every visibility check), the deposit-address `lookupSegment` built fresh
+  at its call site (the DEC's own worked example, reconstructed literally), and the trigger-promotion scans
+  comparing `happening` strings per call.
+- **Retire the `Global*` / `National*` scope fragments in names** — including newly-written `mapFrom` code that
+  had the scope in hand as a parameter and threw it into the member name instead.
+- **Re-home the condition-as-kind survivors** — kinds that answer WHERE/WHEN rather than WHAT (in-border
+  experience, the three territory heal kinds, hills work-rate, the holy-city and NPC-peace scalars). Each has an
+  existing predicate, and json.md rules a hill is `plots {HAS_HILLS}`, never its own kind.
+- **Kill the `getX`/`getX100` pairs** — the maintenance getter reduces `Times100` internally, which is the exact
+  pair [DEC-fixedpoint-x100](../../architecture/decisions.md#dec-fixedpoint-x100) forbids, plus the saved-maintenance
+  and unit-upkeep twins.
+- **Rename or delete `clearCanConstructCache`** — both overloads ignore their parameters, have identical bodies,
+  and say in their own text that there is no cache to clear. A name advertising a dead cache is the bait.
+- **Spell out the bare single-letter identifiers** in the enabler/capability code (`j` for the info, `c`, `r`,
+  `s`, `sb`, `jg`, `a`, `mem`, `wcap`). Per Sources/AGENTS.md this is a review-blocker on sight, and it is NOT
+  the sanctioned exception — that covers a file-anchored PREFIX, never a bare parameter name.
+
+## ⛔ COMMENTS THAT CONTRADICT THEIR OWN CODE
+
+> The highest-signal rollerskate: the right intent written down, something else implemented, and the comment
+> reassuring every subsequent reader. ⚑ Two cite a `DEC-*` id that does not exist in the ledger at all.
+
+- **A phantom `DEC-json-not-cascade` is cited in seven places and defined nowhere.** A second citation invokes
+  `DEC-mirror-then-redesign`, which is not a ruling either — it is in `superseded-ideas.md` as DEAD, under
+  "never re-argue that a shape must be preserved because it is what the engine does today". Both are load-bearing
+  justifications resting on authority that does not exist.
+- **A false "verified" claim, refuted 35 lines below it in the same file** — the reverse pass asserts no
+  corporation headquarters registry exists and nothing asks for one; the registry, its feeder and four consumers
+  are all there. ⛔ The word "verified" is what pre-empts the check, so an agent trusting it builds a second
+  registry.
+- **A cached-read contract on an uncached read** — the city maintenance getter's header promises "a BARE FETCH of
+  the derived cache — never a gate test, never a recompute", while the body gates and loops every kind through
+  the cross-scope legs, and concedes in its own text that nothing is cached. It misdirects the turn-time hunt.
+- **A live enum documented as dead** — the GREYED tri-state is marked "unused until it lands" while it is
+  assigned and wired across eight domains, with the same stale claim repeated on two sibling headers.
+- **A component and a hook that never existed** — the enabler header attributes trait maintenance to a
+  `TraitEnabler` with an `onTraitChanged` hook; neither has ever existed in the tree. Every sibling line around it
+  resolves, which is what makes it invisible.
+- **The evaluator is described as a class in three files**; it is a free function. And the promotion
+  negative-effects derivation is blocked by a comment saying it "waits on the firstStrike.chance vocabulary row"
+  — that row is live and already read elsewhere. Only the comment blocks it.
+- **The likely SEED of the ×100 cluster**: the JSON parse header claims "a BLANKET ×100 at every magnitude leaf".
+  It is not blanket — percent leaves are skipped. Fix this one first; it is what the next agent reads before
+  writing another divide.
+
+## ⛔ SELF-HEAL FOSSILS — each one is a missing emit wearing a per-turn sweep
+
+- **A negative empire commerce total is rewritten to ~2 billion.** A legacy wrapped-int "false accumulate"
+  detector (`< -9999` → `MAX_COMMERCE_RATE_VALUE`) survives on sums that are now accumulated in `int64_t` and
+  cannot wrap — so the only thing it still discriminates is a GENUINELY negative total, which the realized city
+  rate can legitimately produce (neither `cityRate` nor `commerceSplit` floors the flat/deposit legs). When it
+  fires, the AI's production and tech weighting, the demographics history, and the Python surface all read
+  positive two billion. Delete the detector; it can no longer detect what it was for.
+- **The whole map's visibility is wiped and re-applied EVERY TURN** in `CvGame::doTurn`, under a comment that
+  says outright it is "a stickytape - can't find where it's skewing visibility counts". ⚑ The comment names the
+  fix: an unpaired visibility increment/decrement leaves the per-plot counter outside its stated 0–1 invariant.
+  Find the unpaired mutation; the sweep then deletes itself. Until then it costs a full-map clear plus a whole-map
+  re-sight per turn ([DEC-turn-time-is-king](../../architecture/decisions.md#dec-turn-time-is-king)).
+- **The empire commerce total is an `ensure()`-on-read behind a `MAX_INT` sentinel, cleared by a per-turn
+  blanket** — the tombstoned read-side rebuild, a hand-named scalar array, and a blanket standing in for the
+  missing mark, all on one value, with the comment citing `state-repositories.md` while implementing what it bans.
+  Wire the mark that a member city's realized commerce moved to also mark the empire's receiver slot. ⚠ Its
+  sibling total-yield read has NO cache at all and re-walks every city per call, inside a players×yields double
+  loop.
+- **Delete `CvDerivedData` — a rival cache framework with zero tenants.** `TLazy<>` is declared on four owners and
+  `reset()` on all four, and not one datum has ever been declared in it. ⛔ It is a rollerskate GENERATOR: it is
+  what the next agent finds when asking how derived caches work here, and it documents recompute-on-read plus a
+  "bounded staleness" periodic rebuild as the sanctioned architecture — exactly what
+  [DEC-no-self-heal](../../architecture/decisions.md#dec-no-self-heal) and
+  [DEC-uniform-cache-shape](../../architecture/decisions.md#dec-uniform-cache-shape) refuse. It also points twice
+  at a plan doc that does not exist.
+- **The per-turn victory-city recount** wipes and refills two hand-named scalars whose only inputs are victory
+  validity and immutable info data. Cheap, same shape, same missing emit.
+- **Owner call needed on the AI turn-scoped memo clears** (tech values, mission targets, civic values, build
+  values, unit counts, trade routes, resource consumption). They memoize AI *valuations* rather than derived game
+  state, so whether the no-self-heal rule binds them is a ruling, not an agent's call. ⚑ Start with the mission
+  target cache — its own comment says it is force-recalculated "for reliabilty reasons (more robust to bugs)".
+
+## ⛔ VALUE CORRUPTION — the ×100 cluster's REMAINDER
+
+> ⚑ The contract, so it is never re-guessed: `mod_valueForUnit` returns a `CASC_UNIT_PERCENT` read as a PLAIN
+> HUMAN PERCENT; a FLAT is ×100 and reduces at its point of use. **Ask the KIND's unit, never the family's** — a
+> family-wide blanket on a per-kind-split family produced every defect in this cluster
+> ([DEC-fixedpoint-x100](../../architecture/decisions.md#dec-fixedpoint-x100)).
+
+## ⛔ DOUBLE-COUNTED VALUES — the cascade folds it, then legacy adds it again
+
+> One shape: a `process*` function reads a rebuilt info's compiled deposits and pushes them into the legacy
+> accumulator the cascade replaced — while the gather folds the SAME entries into the scope package, and one
+> consumer sums both. In three of four an in-tree comment asserts the legacy leg is sanctioned, which is exactly
+> why they survived ([DEC-accumulator-cut-uniform](../../architecture/decisions.md#dec-accumulator-cut-uniform)).
+
+- **City over-limit anger — counted twice, and the magnitude is wrong.** The ruling is written FIVE LINES ABOVE
+  the feeder: the over-limit member is a PRESENCE COUNT and "the anger MAGNITUDE now lives in the cascade's
+  CITY_LIMIT `per.above` deposits, never here." Every other consumer obeys it (`==0` / `>0` / `<1`). The
+  wellbeing verdict multiplies the presence count as a per-city anger amount, on top of the cascade's own
+  deposit — as does the UI attribution. Serve it from the wellbeing read alone.
+- **Tech health and happiness — counted twice behind a camouflaging comment.** `processTech` pushes the tech's
+  compiled empire-scope wellbeing into `m_iExtraHealth`/`m_iExtraHappiness`, which the city then adds on top of
+  the cascade fold of the same entries. ⛔ The comment calling these "genuine one-shot event state" is TRUE of the
+  random-event feeders (the owner-ruled carve-out) and FALSE since `processTech` started writing the same member.
+  Cut the `processTech` lines; keep the member for the event grants.
+- **Trade routes — counted twice, and one leg is at the wrong scope.** `m_iTradeRoutes` is fed from building
+  deposits at empire scope AND from tech deposits read at CITY scope into an empire accumulator, while the city
+  read already rolls team+empire+city. Serve from the cascade read alone and soft-remove the member.
+- **Building-keyed happiness — the reverse pass lands it, then `processBuilding` lands it again.** The keyed
+  happiness deposit is reverse-landed onto the TARGET building and folded with that building's own output; the
+  player-side keyed accumulator adds it a second time. ⛔ **Do NOT cut the neighbouring
+  `changeBuildingProductionModifier` on the same logic** — `buildRate` is excluded from the output-channel
+  landing and keyed entries are skipped by the fold outside plot scope, so its keyed accumulator is its only home.
+
+## ⛔ A LEGACY PLANE ALIVE ONLY FOR PYTHON — and a value silently lost
+
+- **Random-event yield modifiers reach nothing.** `CvCity`'s `m_aiYieldRateModifier` is written ONLY by random
+  events and read ONLY by the `Cy*` binding — `getBaseYieldRateModifier` is a pure cascade read that never
+  consults it. So event yield modifiers are stored, serialized, shown to Python, and have ZERO gameplay effect.
+  This is legacy-left-breathing masking a real functional loss, not merely a duplicate.
+- **The player twin is a serialized plane maintained solely to feed a binding.** `CvPlayer`'s
+  `m_aiYieldRateModifier` is fed from building deposits and has no engine consumer at all — its only reader is
+  `CyPlayer`. Exactly the shape [DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed) and
+  [DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface) ban.
+- **Cascade computes it, legacy is what consumers read** — the cascade slot beside each is dead and therefore
+  unverified: the space-production modifier, the team enemy-war-weariness modifier (whose own comment concedes it
+  is "what the legacy accumulator held"), the city production-to-commerce modifier, and the building commerce
+  change. Same for the per-unit plane: `CvUnitResolved`'s header states the legacy accumulators were cut "on the
+  promise of a named gatherer" and that it IS that source — yet they are still serialized and fed, while the
+  resolved air-range slot has no reader.
+- **Rule on the revolution mirror.** It is plausibly the sanctioned Python-authoritative mirror, but one leg
+  reads CITY scope into an empire accumulator and, unlike every sibling, applies no `/100`. Even if the mirror
+  stays, that leg is wrong.
+
+## Rollerskates — the abandoned path, still in the tree
+
+> Evidence of a path someone tried and left behind
+> ([DEC-no-rollerskate-evidence](../../architecture/decisions.md#dec-no-rollerskate-evidence)). It holds the NAMES
+> of dead things, which is what sends the next agent re-treading them — and being preprocessor-skipped or
+> commented, none of it is visible to the compiler census.
+
+- **Delete the `#ifdef` attic.** Each guard below is defined NOWHERE — not in `Sources/`, not in `fbuild.bff`, and
+  not even as a commented-out `#define` — so no switch ever existed and the block is an abandoned alternate:
+  `USE_BOTH_TECHBUILDING_EVALUATIONS` (a whole second, older tech-building valuation parked inside
+  `AI_techBuildingValue` — the very function the enablement-valuation ruling governs), `USE_OLD_PATH_GENERATOR`
+  (the old pathfinder, across `CvUnitAI`/`CvGameCoreUtils`/`CvSelectionGroup`/`CvUnit`, with live `#else`
+  branches), `VALIDITY_CHECK_NEW_ATTACK_SEARCH` (a migration-era harness that re-runs the old brute-force search
+  and diffs it), `TEMP_DEBUGGING_SUPPORT` (a parked `StreamWrapper : FDataStreamBase`), `EXTREME_PAGING`,
+  `EXPERIMENTAL_FEATURE_ON_PEAK`, `DEBUG_TECH_CHOICES`.
+  ⛔ **Do NOT sweep the OFF-SWITCHES with them.** A guard that HAS a commented-out `#define` is un-killed forward
+  intent and the disposition is the owner's ([DEC-keep-unkilled-ideas](../../architecture/decisions.md#dec-keep-unkilled-ideas)):
+  `ENABLE_FOGWAR_DECAY`, `USE_MEMMANAGER`, `GLOBAL_WARMING`, `THE_GREAT_WALL`, `USE_INTERNAL_PROFILER`,
+  `NO_RANDOM`, `VALIDATION_FOR_PLOT_GROUPS`, `VERIFY_CAN_BUILD_CACHE_RESULTS`, `VERIFY_PLOT_DANGER_CACHE_RESULTS`,
+  `VERIFY_YIELD_CACHE_RESULTS`, `DYNAMIC_PATH_STRUCTURE_VALIDATION`, `LIGHT_VALIDATION`. The mechanical test is
+  the commented `#define`, never the guard's name.
+- **Record WHY each off-switch is off, in its subsystem's reference doc.** Only `ENABLE_FOGWAR_DECAY` has its
+  reason written down; the rest do not, and an unexplained off-switch is what the next sweep eats.
+- **Strip the comment trails that name a DEAD symbol.** Keep the forward statement, delete the dead name — naming
+  it is the bait. Worst offenders: `ContextConsumer` (names the deleted `changeGovernmentCenterCount`), `CvCity`
+  (narrates a removed generic-citizen loop AND spells out how to revive it), `CvUnitAI` (`AI_bestCityBuild`
+  "retained for any external callers but no longer used"), `CvPlayerAI` ×3, `CyTeam`, `CvPlayer`,
+  `CvTriggerEngine`, `CvHttpServer`.
+- **Rewrite the `CyGameTextMgr` half-state comment** — it says the composer bodies "were cut and are being
+  rebuilt, so a method here answers empty until its composer lands." A doc/comment describing a half-state reads
+  as a sanctioned shape; state what IS, and put the missing composer in this list instead.
+- **Sweep the commented-out code**, worst in `CvUnitAI`, `CvPlayerAI`, `CvUnit`, `CvPlayer`. ⚑ Start with
+  `CvPlayerAI`'s commented-out `AI_getHealthWeight` + its `getAdditionalHealthByCivic` calls — it sits directly on
+  the wellbeing surface just cut, so it is the segment most likely to send someone after a getter that is gone.
+  Two entire commented-out `AI_Potential*` functions kept "just in case" are the other exemplar. Most of the bulk
+  is inherited C2C rot rather than #430 residue, so it is its own pass.
+
+## Whole-database scans where the forward edge already answers
+
+> [DEC-one-reverse-view](../../architecture/decisions.md#dec-one-reverse-view) + [enabler.md §6](../../specs/enabler.md):
+> ask the edge or the maintained frontier, never the registry. These are RESIDUE — in every case the same file
+> already does it right somewhere else, which is the tell that the conversion stopped short rather than skipped.
+
+- **`CvUnit::canAcquirePromotionAny` sweeps every promotion, on the hottest path there is.** `testPromotionReady`
+  calls it TWICE (the second is redundant once the first sets the flag), and it fires on every XP change, every
+  unit produced, and from a dozen other sites. ⚑ `CvUnitAI::AI_promote` sitting beside it already iterates the
+  player's maintained UNLOCKED-promotion set and says so in its own comment — then its entry guard
+  `isPromotionReady` sweeps the database anyway. Convert the guard onto `getUnlockedPromotions`.
+- **`CvTeam::processTech` asks four questions BACKWARDS** — `ObsoletePromotions` and `ObsoleteCorporations` scan
+  every promotion/corporation testing `getObsoleteTech()`, and two more scans test every build's `getTechPrereq`
+  and every improvement's `getPrereqTech`. All four answers are compiled onto the TECH
+  (`EDGEF_OBSOLETES`/`EDGEF_ENABLES`/`EDGEF_RELATED`) and are already read forward from `CvPlayerAI`.
+  ⚑ The tell: the SAME function already reads `enables.specialBuildings` off the tech's own edge a few lines
+  below, citing the ruling.
 
 ## Legacy still breathing — delete it
 
@@ -145,14 +467,6 @@
 > loop) is [roadmap.md § LEGACY STILL BREATHING](roadmap.md). ⚠ KNOWN-INCOMPLETE — legacy found anywhere else is
 > killed on the same terms. ⛔ Never record a found legacy surface as acceptable or "kept until X".
 
-- Re-point the city's WORKED-PLOT yield sum, the last leg of the city rate standing on a cut member. The VALUE
-  has a source — a plot carries its context and its own realized-yield group read — so what is missing is only
-  the city-side Σ over its worked plots. ⛔ Do NOT answer it from the city's own realized group read: that is
-  the receiver total the rate is being computed FOR, so reading it here is circular. ⛔ And do not re-sum the
-  radius per call — that is the measured cost class ([state-repositories.md](../../architecture/state-repositories.md):
-  the pull must be a CACHE at every level, marked by worked-plot flips and by a working plot's yield changing).
-  ⚑ The rest of the city rate hangs off this one, so it is the keystone of the yield cluster rather than one
-  more accessor.
 - Cut the PLAYER's trade-route count accumulator — it DOUBLE-COUNTS every empire-scope route deposit today.
   Its feeders read the building / trait / tech EMPIRE deposit and push it into the player member, while the city
   ALSO adds its own realized roll-up of the same channel — and that roll-up already includes the empire leg, so
@@ -170,32 +484,6 @@
   the target building's OWN `costs` entries, so the readers ask the target rather than a player-side map.
   ⚠ Distinct from its buildRate sibling, which stays source-keyed and converts to an entry-list read — the two
   look alike and do not resolve the same way.
-- Finish the HALF-CUT accessors: a member whose declaration, serialization and `savemigration.txt` tag are all
-  gone, but whose accessors and consumers were left standing in its own class. They are compile errors that the
-  per-TU error cap hides, so the census only names them a few at a time — sweep them from the migration ledger
-  instead of waiting. `CvCity` and `CvPlayer` carry the remainder.
-  ⚑ **The COMPILER enumerates them directly, and more cheaply than the ledger does:** a cut member's surviving
-  accessor is a `C2065`/`C3861` on the bare `m_` symbol, not the `C2039` the member-census greps for — so
-  extracting those names gives the exact live set, and every one should also appear in `savemigration.txt` (a
-  name that does NOT is the likelier defect of the two, since it means a member was dropped without its tag).
-  ⚠ Check each member's FEEDERS before converting — `resolvedValue` covers a unit's info ∪ promotions ∪
-  unit-combat classes and NOTHING else, so a member fed from anywhere else loses that leg silently.
-  ⚠ And check the slot's UNIT: a FLAT slot is ×100 and the reader reduces at its point of use, a percent slot
-  does not ([DEC-fixedpoint-x100](../../architecture/decisions.md#dec-fixedpoint-x100)) — the legacy feeds
-  divided at the WRITE, so a bare re-point is 100× on every flat channel.
-- Wire the COUNT a building's per-improvement free-specialist deposit scales by. The read is wired through the
-  ONE `per` resolver, but the count it resolves against does not count correctly yet, so those entries
-  contribute 0 — wired, not right, which is the ordering while the tree is red
-  ([roadmap.md](roadmap.md) WIRED OUTRANKS CORRECT); the value is checked from the cascade over HTTP once green.
-  ⚑ The defect is the same one the TRAIT per-specialist deposits had: the deposit does not state its plural
-  TARGET, so the count resolves at the wrong granularity. The trait emit passes `target="cities"`; the
-  building's improvement-scaled free-specialist emit passes no target at all, so nothing expresses "each city,
-  by its OWN count". ⛔ Fixing only the reader is inert — that was proven on the trait side, where the address
-  had to carry the target before any reader change could do anything ([modifier.md §5](../../specs/modifier.md)).
-- Give the PLAYER's improvement-yield change a source again. It is the DERIVABLE half — the recompute over
-  adopted civics, active traits and cascade-active buildings' global rows — so it is a `CvDerivedCacheVec`
-  ([state-repositories.md](../../architecture/state-repositories.md)), never a restored accumulator and never
-  the event store beside it. Its reader dangles until it exists; the TEAM half is already the grant store.
 - Serve the team improvement-yield GRANT through the new Python surface. The wonder events call it from
   `CvEventManager`, and the binding they called is gone — which is correct
   ([DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed)): it comes back as the library's own
@@ -254,16 +542,12 @@
 - Move every consumer off the hand-named channel-shaped getters on `CvCity`/`CvPlayer`, then delete the old names.
 - Cut the hide-and-seek per-type intensity ACCUMULATORS on `CvUnit` (serialized — the cut carries a
   `savemigration.txt` step; confirm the tag spelling against the stream first). Their replacements are built.
-  ⛔ The AI sites SUM inside a loop over every `INVISIBLE_*`, so this is a rewrite, not a rename — a mechanical
-  swap would count concealment once per type.
-  ⛔ Do NOT sweep the neighbouring `getInvisibleType` / `getSeeInvisibleType` calls: those are live `CvUnit`
-  methods sitting in the same blocks.
+  ⚡ The four accessor families have no call sites at all, so this is a plain deletion.
+  ⛔ Leave `getInvisibleType` alone — a live `CvUnit` method, unrelated.
 - Retire the direct `gDLL->logMsg` / BetterBTSAI log-helper call sites and the log-level globals they gate,
   wholesale as each domain migrates onto the spine — never tidied in place.
-- Delete the legacy `ConstructRequirement` / construct-condition surface once the `requires` RENDERER exists
-  (its last consumers are the prereq-block composers).
-- Delete `CvPlayer::getBuildingPrereqBuilding` with the last of its text consumers. ⛔ Do not revive the prereq
-  table to keep a text line rendering.
+- Delete the orphaned `ConstructRequirement` surface and the three stubbed `append*RequirementHelp` renderers.
+  ⚡ No renderer has to land first: the header is included by nothing and the bodies are empty with no callers.
 
 ## Not built yet
 
@@ -311,11 +595,10 @@
   city's anger" — that chooser cannot answer at all today, so only the culture-victory branch moves the slider.
   ⛔ Not a getter per channel: it is the `per`-scaled share of a group the read already hands out.
 
-- Serve the MISSION_CONSTRUCT building. `constructs` is the dominant `outcomes.actions[]` verb
-  ([json.md §8](../../specs/json.md)) and reaches nothing: `CvOutcome` carries no building payload by design —
-  the construct is one of the hardcoded mission-abilities, gated by the unit's own has-building surface
-  ([mission-outcome-system.md](../../reference/mission-outcome-system.md)) — and that surface does not exist on
-  the rebuilt unit info. ⛔ Do NOT answer it by giving `CvOutcome` a building member: that would make the
+- Migrate the `constructs` outcome data onto the unit's grants. `constructs` is the dominant
+  `outcomes.actions[]` verb ([json.md §8](../../specs/json.md)) and reaches nothing, while the has-building
+  surface it needs already exists on the rebuilt unit info and is read by the construct mission. ⚡ So this is a
+  CURATOR item: the units authoring `constructs` vastly outnumber those authoring `grants.buildings`. ⛔ Do NOT answer it by giving `CvOutcome` a building member: that would make the
   data-driven outcome plane carry a hardcoded ability's payload, which is the carve-out the mission-concept
   rework owns.
 
@@ -336,15 +619,6 @@
   city is known. ⚠ Until it lands the affected deposits are UNSERVED, and `savemigration.txt` carries the
   replacement obligation for the one whose accumulator has already been cut.
 
-- Give the plot's PRE-IMPROVEMENT yield its own package SLOT, and make the read a bare fetch. It recomputes per
-  call today while the cascade already holds the number, and it is asked per (plot × improvement × yield) by the
-  improvement placement gate and by both the city and worker improvement valuations — with the best-yield form
-  calling it twice — so it is squarely the per-read cost class
-  ([state-repositories.md](../../architecture/state-repositories.md): the pull must be a CACHE at every level).
-  ⛔ It is NOT answerable from the realized package: nature yield is the PRE-improvement, PRE-route subset, which
-  is exactly why it wants a slot of its own rather than a reader that subtracts its way back to one.
-  ⚑ The substrate facts that mark it are already emitted (terrain / feature / river / bonus), so this is a slot
-  plus a mark, not new machinery.
 
 - Charge the improvement UPGRADE cost from somewhere that can tell an upgrade from a build. Nothing charges it
   today. The only implementation sat in the improvement-set choke point, which cannot tell the two apart, so a
@@ -396,9 +670,9 @@
   it wants its own cached block on the same mark protocol, never a hand-named scalar pair beside it
   ([DEC-uniform-cache-shape](../../architecture/decisions.md#dec-uniform-cache-shape)).
   ⚠ `isInvisible` is one of the hottest reads in the engine, which is why the walk must not stay on it.
-- The PLAYER-ALERT consumer, and the alerts owed to it — including the six CAN_RETRAIN / NO_RETRAIN pairs the
-  promotion KEEP gate used to emit per failing axis (terrain / feature / plot bonus / improvement / local
-  building / promotion prereq). All twelve are authored and were rendering, so this is a real loss of
+- The PLAYER-ALERT consumer, and the alerts owed to it — including the CAN_RETRAIN / NO_RETRAIN pairs the
+  promotion KEEP gate used to emit per failing axis (terrain / feature / plot bonus / improvement-or-local-building
+  / promotion prereq, plus two more the axis list does not name). All are authored and were rendering, so this is a real loss of
   player-facing information, not a dead-key cleanup: a unit now loses a promotion without being told which
   condition it lost. ⛔ They do NOT come back as a per-axis walk beside the gate — that rebuilds the legacy
   battery to caption a failure — and the "your building was obsoleted" message,
@@ -467,34 +741,6 @@
   text manager's own job ([patterns.md](../../architecture/patterns.md) THE DIVISION OF LABOUR). ⚠ The CONDITION
   renderer it calls already exists and takes exactly what `CvRequires` holds, so this is a composer to write,
   never a renderer to build — reading it as the latter overstates the dependency and parks work that is doable.
-- Evaluate the promotion KEEP gate through the ONE evaluator instead of hand-reconstructing it. The ACQUIRE
-  half is done — that gate now asks `requires.build` once through `cascadeEvalCondition` — so what is left is
-  `CvUnit::canKeepPromotion`, which still walks the legacy prereq axes by hand (terrain, feature, plot bonus,
-  improvement / local building, and the promotion AND/OR trio) to re-validate a promotion the unit already
-  holds ([enabler.md §7.1](../../specs/enabler.md): promotions keep no maintained set, so `requires` is
-  enforced ON DEMAND).
-  ⛔ **This one needs an OWNER CALL first, and it is not a mechanical conversion.** Each failing axis emits its
-  OWN message — a CAN_RETRAIN / NO_RETRAIN pair per axis, six pairs — telling the player WHICH condition the
-  unit lost. A single evaluator call returns a bool and cannot attribute that, so converting as-is silently
-  trades twelve specific notices for one generic "you lost this promotion". Decide whether the per-axis
-  messages survive (and if so, what reports the failing axis) BEFORE converting.
-  ⛔ It is NOT a job for the structural `requires` walk, and reaching for that is the trap: a flat read reports
-  an `all`, an `anyOf` and a `noneOf` alike, so reconstructing the gate from it would silently turn the OR pair
-  into an AND and read a `noneOf` as a requirement. Mention is not requirement — the walk answers what a tree
-  NAMES, and a gate verdict is the evaluator's.
-  ⚑ Distinct from the REVERSE question ("who requires this bonus"), which `EDGEF_REQUIRED_BY` already answers —
-  do not read one as covering the other.
-- Move the BONUS-KEYED modifier consumers onto the AS-IF-HELD delta. "How much of this comes from the entry
-  gated on THIS id" is answered by `CvCascadeHypothetical` — the `expected*` reads take one, and its `absent`
-  set forces an id un-held, so the attribution IS the difference between two calls
-  ([patterns.md](../../architecture/patterns.md) THE VALUATION PROTOCOL: the caller gets a DELTA).
-  ⛔ The read exists; what is wrong is the CALL-SITE SHAPE. The resource-consumption pass asks per
-  (city × building × channel), and `expected*` is a per-DECISION read — one per (city, candidate) per pass — so
-  a per-channel `expectedModifier` there would run the evaluator in an inner loop. Convert through the GROUP
-  reads (`expectedFlatYields` / `expectedYieldModifiers` / …), which fill a whole array per call: two calls per
-  building, not two per channel.
-  ⚠ A point read excludes these entries by construction (only null-condition entries fold into the compiled
-  sum), so re-pointing one to the point read silently drops the bonus's whole contribution.
 - Give the ctx-taking KEYED SUM the scope filter its collecting twin already has. `collectKeyedTarget` takes an
   `iScope` (-1 = any) precisely because the same family+target is authored at two scopes with two different
   consumers; the ctx-taking `keyedTargetSum` — the one that serves the CONDITIONED tail through the ONE
@@ -516,27 +762,16 @@
 > ⛔ The unit of work is the CLASS of read, never the individual getter — many collapse as the rebuilt infos
 > wire through ([DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface)).
 
-- Move the what-if valuation consumers onto `expected*` — the AI candidate weighting and the build-list hover
-  tooltip are ONE call ([patterns.md](../../architecture/patterns.md) THE VALUATION PROTOCOL).
 - Move the IMPROVEMENT tech-yield reads onto the keyed what-if twin. One of them asks a THIRD question the twin
   does not answer: the `bOptimal` branch wants "assume every condition holds", which is neither the live
   evaluation nor a hypothetical over one named id. Decide whether that is a MODE of the same read or an
   entry-list sum before converting it — ⛔ never a second evaluator beside the one the twin already uses
   ([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation)).
-- Decide where the YIELD what-if's supersession-netting lives — the enabler owns `replacedBy`, or the call site
-  composes two valuations. ⛔ Not by widening `expected*` with a replaced-buildings argument.
 - Watch civic-choice STABILITY now that the cross-category half-value damper is gone (owner: drop it; if the
   problem shows, add it back properly). ⚠ It existed because civic valuations are linearly combined across
   categories, so a building gated by civics in two options could be counted at full value from both. If choices
   start oscillating, the principled fix is a `civics` id set on `CascadeCondDeps` — which is what the removed
   whole-civic-database sweep was reconstructing by hand — never restoring that sweep.
-- Build the GATE twin of that overlay — re-evaluating a candidate's `requires` with a hypothetical HAVE injected
-  into the eval ctx, which is what answers "would this BONUS let me build X". ⛔ It is NOT the membership
-  overlay and must not be folded into it: the bonus axis is GATE-ONLY
-  ([enabler.md §8](../../specs/enabler.md) resolved forks), so a bonus changes no membership and the overlay
-  refuses one outright. ⚠ The data DOES carry bonus `enables` edges the runtime ignores, so an overlay that
-  accepted a bonus would manufacture unlocks the real frontier never grants — which is why the refusal is
-  structural rather than a documented caution.
 - ⛔ Neither is a VALUATION question, and filing them as one is what sent a reader looking for a magnitude
   machine that was never the dependency: both ask AVAILABILITY under a hypothetical HAVE, which is the
   enabler's ([DEC-enabler-not-cascade](../../architecture/decisions.md#dec-enabler-not-cascade)).
@@ -553,13 +788,6 @@
   through `CityContext`, never a tally side-store. ⚠ The count the legacy multiplier used is assigned **plus
   typed-free** specialists, so the city's assigned-only population counter is NOT the number — forwarding it
   would under-count silently.
-- Restore a home for the city's TYPED FREE specialist counts. The getter and setter reference a member the city
-  no longer declares, and the setter computes its new value, fires its side effects and then stores nothing —
-  so the typed-free ledger reads empty whatever is granted into it. ⛔ Re-adding the member alone would restore
-  a legacy accumulator. ⚑ It is the half of the seam the cascade does NOT own: the untyped AMOUNT is a summed
-  deposit, but a TYPED free specialist is genuine one-shot state (a Great-Person join consumes its unit, an
-  era advance is a persisted pulse — [legacy-grant-apply-sites.md](../../reference/legacy-grant-apply-sites.md)),
-  so this wants a store, not a channel.
 - Make the empire GREAT-GENERAL rate a RECEIVER SUM over the player's cities, not an empire-package read.
   ⚑ Great general is NOT great people (owner): great PEOPLE accrue per city, while great general points are
   **summed from cities** plus battlefield experience into the player's own counter — so the empire figure is the
@@ -575,17 +803,6 @@
   ⚠ Audit each `change*` BODY for side-effect riders first ([save.md §6](../../specs/save.md)).
   ⛔ They do NOT each earn a replacement getter — the group read answers the TOTAL, and per-source attribution is
   the ORACLE's job. Their last maintainers (`processBonus`, `processSpecialist`) go with them.
-- Cut the `CvPlayer` unit-upkeep accumulators onto the UPKEEP cascade — ⛔ upkeep is NOT residue awaiting a new
-  surface: it is **its own cascade channel, together with MAINTENANCE** (owner), and the vocabulary is already
-  minted (`UPKEEP_UNIT_MILITARY` / `UPKEEP_UNIT_CIVILIAN` / `UPKEEP_FREE_MILITARY` / `UPKEEP_FREE_CIVILIAN` /
-  `UPKEEP_AMOUNT`, at `EMPIRE | UNIT`). So `m_iUnitUpkeepCivilian100` / `m_iUnitUpkeepMilitary100` and their
-  `*UpkeepMod` percent stages are the ordinary STORED-ACCUMULATOR DRIFT class
-  ([DEC-accumulator-cut-uniform](../../architecture/decisions.md#dec-accumulator-cut-uniform)), and the empire
-  total is a RECEIVER SLOT in the player's own package beside maintenance's — the second non-commerce receiver,
-  which is what makes that rule general rather than a maintenance special case
-  ([state-repositories.md](../../architecture/state-repositories.md), [economy.md](../../reference/economy.md)).
-  ⚠ The free allowances are SIGNED free-amount kinds whose group floors at zero as combine metadata, applied
-  BEFORE the consumption site's own `max(0, upkeep − Σfree)` — two floors, deliberately ([modifier.md §2](../../specs/modifier.md)).
 - Design the genuine residue that needs NEW surface: the slider math, the espionage counters, the live combat
   state, and `getHappinessTimer`.
 - Hoist the per-commerce valuation in `getBuildingCommerceValue` — it runs once per (candidate × channel) where
@@ -624,6 +841,20 @@
 > as you meet it — parking it spends the census budget the rest of the worklist needs. ⛔ Never borrow legacy as
 > a "temporary solution" for a read the library does not answer yet: add the read.
 
+- **WorldBuilder's UNIT editing needs a home on the new surface.** ⚑ `CyUnit` has no `boost::python`
+  registration on this branch and the composition root does not publish it, so `WBUnitScreen` / `CvWBDesc` reach
+  nothing today. **That is the EXPECTED state of the rework, not a defect** — the legacy binding surface is being
+  disconnected, not repaired ([DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed)).
+  ⛔ **Do NOT "fix" this by re-registering the legacy `CyUnit`.** A dead legacy binding is an outlaw; the answer
+  is the new library, never a revived `.def` surface.
+  ⚖ What the new surface OWES, because the owner has ruled it supported: **editing an individual unit's strength**
+  — *"you want people to be able to do things in WorldBuilder"* — plus the WBS scenario field that persists it.
+  The engine state for it is in place (the serialized per-unit base, `state-repositories.md`).
+  ⛔ Do NOT reproduce the legacy pair's bug when building it: the WB nudge did
+  `setBaseCombatStr(baseCombatStr() + iChange)`, but the setter writes the BASE while the getter returns the
+  fully-composed value (base + promotion/unit-combat delta + SizeMatters). They are not inverses, so every nudge
+  corrupted the base. The new surface needs a base-in/base-out pair, or an explicit set-to-absolute.
+
 - Build the ONE data-fetching library toward COMPLETE (its end state, not a gate on cutting). Build it for the
   pedia (a SHAPE oracle, NOT a coverage oracle — the appendix is enumerable).
   ⛔ **RESTORING THE ENGINE→PYTHON CALLBACK DIRECTION IS GATED ON THE INFO PLANE, and the reason is the IMPORT
@@ -636,7 +867,36 @@
   than rediscovering: the cut is meant to be one-way, and until this closes it is not.
   ⛔ It is NOT closed by publishing the legacy god object ([DEC-cy-not-fixed]) and NOT by a per-module shim
   ([DEC-no-legacy-masking]) — a module comes off it by having its reads served, one module at a time.
-- Shoot the dead `Cy*` bindings on sight as the compiler names them.
+- Restore the `class_<>` TYPE REGISTRATIONS the binding purge took along with the `.def` surfaces. A registration
+  carrying zero `.def`s is not a read surface — it is what lets the engine hand an object ACROSS
+  ([patterns.md](../../architecture/patterns.md) THE PYTHON READ BOUNDARY). Without it the kept engine→Python
+  direction raises at conversion instead of running. ⛔ Register the bare type; do NOT re-add getters with it.
+  ⚠ The same hole reaches any published accessor whose RETURN type is an object — the art-info classes behind the
+  art manager, and any info-object handle still published. A def that resolves and then raises reads as a mystery
+  rather than as a missing binding, which is why this class hid.
+  ⚑ The test is mechanical: a type needs registration iff some engine call site passes or returns it. A wrapper
+  whose `DECLARE_PY_WRAPPER` has no call site genuinely needs none.
+- Re-home the module-scope engine HANDLES the cut dropped rather than re-pointed. Scripts bind them once at module
+  scope and call them throughout; the binding went and the call sites did not, so the failure is at first use, not
+  at import. ⛔ Do not answer it by republishing the legacy god object — the handles come back through the surface
+  that serves them now, or the call sites move.
+- Serve the free-function map helpers (plot direction / XY / distance / step distance). Their registrar went with
+  the binding purge; the map-generation utilities call them throughout. ⚠ A map script's failure is SILENT — it
+  lands inside the override protocol and falls back to DLL-default generation, so a wrong map is the symptom.
+- Widen `CyInfo` to the per-type INDEX shape the whole-registry screens need — the text key and the button
+  reference beside the description and type key it already serves. That shape is what every enumeration screen
+  renders, across every registered category, and the prefix dispatch already reaches them all.
+- Serve the reverse EDGE families through the info surface. The pedia derives "what needs me" / "what unlocks me"
+  by scanning whole registries and asking a per-id predicate; the load-time reverse pass already lands those
+  families on the info ([DEC-one-reverse-view](../../architecture/decisions.md#dec-one-reverse-view)). It is a
+  served answer to an unserved question — the scans go when the read exists.
+- Bind the XML-named callbacks that resolve to no `def` in the module the DLL names, and the DLL-named game-utils
+  callbacks with no Python definition at all. ⚠ A name defined in ANOTHER module does not resolve, however
+  reachable it looks from Python — the module the DLL names is the only one consulted.
+- Add the missing `CvEventManager` handlers for the DOMAIN events the reporter emits and nothing handles. They
+  drop silently through the dispatch-map miss path.
+- Shoot the dead `Cy*` bindings on sight as the compiler names them. ⚠ Distinguish DEAD from UNREGISTERED first:
+  a wrapper the engine still hands across is not dead, it is missing its registration (above).
 - Serve the UPGRADE-AWARE building count the random-event surface reads. Its binding is already unpublished, so
   those reads answer nothing today — the cut NAMED the requirement rather than creating it.
   ⛔ It does not come back as the legacy count. "Including upgrades" resolves through a building's DORMANT
@@ -671,9 +931,9 @@
   NPC/barbarian starts.
 - Retire the engine start selection (the whole-database scan + AI scoring, and the per-role starting counts)
   once packages carry the identities.
-- Finish the TRAIT free-promotion path on the trigger plane, which the data already sits on: the curated traits
-  author `onTurnEnd` → `action.promote` carrying both the promotions and a `units.unitCombats` filter. TWO gaps
-  keep it from reaching a unit, and each has its pattern already in the same file:
+- Finish the TRAIT free-promotion path on the trigger plane. ⛔ The DATA COMES FIRST: no trait authors a promote
+  action today, and no `units.unitCombats` filter exists in the data, the compiled entry or the parser — the
+  engine half below cannot be verified until a trait authors one. Two engine gaps then remain:
   1. the per-unit promote pass walks only the city's OPERATING BUILDINGS, so no trait entry is ever consulted —
      it wants the player's HELD-TRAIT walk beside it (the era-advance resolver is that walk, and the same
      PRESENCE read, never the banned own-data inversion);
@@ -687,11 +947,6 @@
   ⚠ Until it lands, trait-granted promotions reach nobody, and `CvUnit::setFreePromotion`'s trait legs dangle
   naming exactly this. ⛔ Do not answer them by restoring a trait-side promotion×unitcombat map: that is the
   legacy mechanism whose data has already moved.
-- Dispatch a PROJECT's grants. The trigger engine has no project front door at all, so a project's
-  `grantsSpecialUnit` payload (the completion-time special-unit unlock) reaches nothing and its consumer stays
-  dangling. ⚑ Its sibling on the same completion — `enables.specialBuildings` — is an availability EDGE and is
-  already read off the project, so only the payload half waits: the split is [triggers.md](../../specs/triggers.md)'s
-  grant-vs-edge line, not a missing project concept.
 
 ## Scale conversion
 
@@ -707,8 +962,6 @@
 
 ## Enabler
 
-- Give the UNIT frontier an incremental path — events that do not affect it currently blanket-dirty it, forcing a
-  full re-walk. The operating-building fixpoint rides the same triggers.
 - Point the AI production decision at the maintained LISTED set, and collapse the `AI_chooseProduction`
   focus-ladder into ONE unified scoring pass ([enabler.md §6/§8](../../specs/enabler.md)). The collapse is an
   AI-architecture change, not a per-loop rewrite.
@@ -741,19 +994,39 @@
   ⚠ Its "would this bonus UNLOCK this" half needs the AS-IF-HELD overlay above and dangles until that lands;
   the rest does not wait on it. ⛔ The two halves are separable — treating the whole loop as blocked parks
   convertible work behind a dependency only part of it has.
-- Give the OBJECT a player-level held-building aggregate for the HELD-building sweeps
-  ([tally.md](../../specs/tally.md): let an object care about itself) — never a side-store.
 - Restore the members `AI_techValue`'s remaining sweeps read, then drive them from the tech's own edges.
 - Retire the active-set work-list ripple: the fact that justified it is now emitted, so the parallel propagation
   machine goes ([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation)).
   ⚠ `emit()` dispatches SYNCHRONOUSLY, so an event chain recurses on the call stack where the work-list iterated
   — design for that; it is not a reason to keep the machine.
   ⛔ Its runaway cap claims to "self-heal at the slice boundary"; that rebuild was REMOVED and nothing heals it.
-- Converge the operate reverse index's two PER-ID buckets onto `EDGEF_REQUIRED_BY`.
-  ⛔ The axis-flag lists and the PROPERTY band index are NOT convergence targets — a coarse list matches a coarse
-  event, and the reverse pass deliberately excludes engine tokens and the plot substrate.
-- Close the remaining [enabler.md §8](../../specs/enabler.md) items: plot-group membership not trusted from a
-  save, the load-end dormancy fixpoint, the dynamic operate axes.
+- Converge the enabler's bespoke per-id reverse indices onto `EDGEF_REQUIRED_BY`
+  ([DEC-one-reverse-view](../../architecture/decisions.md#dec-one-reverse-view) — a side index is banned
+  "especially not inside an enabler"). There are **five**, in two files, all rebuilt by re-scanning every info at
+  load: `s_operateBonusConsumers`, `s_operateBuildingDependents`, `s_operateDormantTriggeredBy`
+  (`CvEnablerKernel.cpp`) and `s_udUnitDeps`, `s_udUpgradePred` (`CvUnitEnabler.cpp`).
+  ⚑ The reverse pass already inverts BOTH `requires.build`/`requires.operate` AND `dormantTriggers()`, and
+  `CvBuildingEnabler` reads that canonical edge for the frontier half **in the same file family** — so the answer
+  these five recompute is already sitting on the info. The only delta is that they are operate-only while the
+  canonical edge merges build+operate, and [enabler.md §5](../../specs/enabler.md) pre-answers it: over-inclusion
+  in the reverse index is SAFE, a MISS is the bug.
+  ⛔ Read [enabler.md §8](../../specs/enabler.md) "The reverse index, and what is deliberately NOT one" first —
+  the axis-flag lists and `s_operatePropertyBandConsumers` are explicitly NOT convergence targets, and
+  `s_specialBuildingMembers` is a sanctioned group→members derivation ([json.md §4.4](../../specs/json.md)).
+  Sweeping those together with the five is the documented mistake.
+- Delete the hand-rolled condition walks in `CvImprovementInfo` and route them through `CvConditionQuery`
+  ([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation)). `ii_collectPredicateIds`
+  duplicates the canonical leaf test **verbatim** while the canonical `collectPredicateIds` sits at ZERO callers —
+  and `namesId` / `bucketForType` are equally unused. ⚠ The private walk covers only `all`+`anyOf`; the canonical
+  also walks `noneOf`/`enabled`/`disabled`, so the duplicate is not merely redundant, it is NARROWER.
+  ⚑ Same family: the three-way copy of the bonus/building presence-id collector in `CvImprovementInfo`,
+  `CvBuildInfo` (`collectPrereqBonuses`) and `CvCorporationInfo` (`corpCollectSpreadBuildings`) — each re-testing
+  an inline `compare(0,N,"PREFIX_")` that the zero-caller `bucketForType` exists to answer. The corp variant also
+  needs the clause's `min`, which the shared surface does not yet return: LIFT that onto the shared surface, never
+  keep the private copy for it. ⛔ `CvTechInfo`'s walk is NOT in this family — it reconstructs AND-vs-OR structure,
+  which `CvConditionQuery` deliberately refuses to expose.
+- Build out [enabler.md §8](../../specs/enabler.md) "Load-end reconciliation": plot-group membership derived
+  rather than trusted from the save, the load-end dormancy fixpoint, and the dynamic operate axes on their events.
 
 ## Tree / include hygiene
 

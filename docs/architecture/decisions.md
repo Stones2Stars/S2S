@@ -107,6 +107,19 @@ so **no `WRAPPER_SKIP_ELEMENT`** (a lingering skip still names the dead member �
 save-break-flush** (save-breaking is obsolete; the old two-stage model is retired). The one hard case: an UNLISTED
 deleted-read orphan desyncs the whole downstream read. **Home:** [save.md](../specs/save.md).
 
+### DEC-synced-rng-is-shared-state
+
+⛔ **Do not touch the synchronized RNG's draws (owner).** `CvGame`'s `m_sorenRand` seed is SERIALIZED into the save
+and advances in lockstep on every client, so the NUMBER of values drawn, their ORDER, and whether a draw happens
+at all are shared game state — adding, removing, reordering or short-circuiting a `getSorenRandNum` desyncs
+multiplayer and makes a save stop replaying. (`GC.getASyncRand()` is the unserialized UI/cosmetic stream and must
+never decide a gameplay outcome; `m_mapRand` is world generation.) ⚑ "It draws from `SorenRand`" is therefore a
+LIVE NAMED REASON to leave a body's shape alone — one of the few [superseded-ideas](superseded-ideas.md) #22
+accepts in place of the dead mirror-the-legacy argument. **⛔ And the RNG is NOT DATA: no JSON authors a seed,
+stream or draw, and neither the cascade nor the curator owns any part of it.** What JSON authors is the ODDS — the
+number the engine's roll compares against; the roll itself is engine mechanism.
+**Home:** [engine.md § THE SYNCHRONIZED RNG](../reference/engine.md).
+
 ### DEC-derived-never-trusted
 
 Derived data is never trusted from a save — `reset()` marks it dirty on load and recomputes from live state. **Home:** [save.md](../specs/save.md).
@@ -287,8 +300,8 @@ inverts the ruling into a shield for the surface being removed.
 **REUSING A LEGACY GETTER IS THE MECHANISM THAT PRODUCES THE HALF-MIGRATED STATE** (owner) — not a shortcut that
 merely risks one. A legacy getter's contract encodes legacy assumptions (its scale, its granularity, its combine,
 its one-channel shape), so pointing the cascade at it forces the CASCADE to bend to that shape; the result is a
-surface that is half cascade and half legacy and reads as nearly done. The **622 channel-shaped getter
-declarations (586 distinct names) measured on `CvCity`/`CvPlayer` alone** are that many such contracts. Therefore: **build a NEW uniform, parameterized getter set over
+surface that is half cascade and half legacy and reads as nearly done. Every channel-shaped getter on
+`CvCity`/`CvPlayer` is one such contract. Therefore: **build a NEW uniform, parameterized getter set over
 the channel index, move consumers onto it, and DISCONNECT the old set** — never re-body a legacy getter, never
 keep both surfaces live, and never widen a legacy getter to fit. Python is rewired onto the same uniform set
 (the [DEC-cy-not-fixed](#dec-cy-not-fixed) ban generalized from the `Cy*` bindings to the whole getter surface).
@@ -332,8 +345,7 @@ consumer deaf to the reseed and defeats the missed-emit tripwire). The load life
 `GAME_LOAD_STARTED` / `GAME_LOAD_FINISHED` spine events; result-producers (grants) rely PURELY on the spine and
 suppress between them (a grant is a RESULT of a genuine in-play acquisition; a load is not one), while the
 cache-build consumer stays load-active. New game builds the same way (real init fires the same events, grants
-active). **The reseed emit ENDPOINTS + the bracket exist; on `cascade-rebuild` their CALL SITES are severed and being
-re-wired** ([event-spine.md](../specs/event-spine.md) build status).
+active).
 **Home:** [event-spine.md](../specs/event-spine.md).
 
 ### DEC-close-event-gaps-now
@@ -397,12 +409,18 @@ an ERROR ([DEC-no-legacy-masking](#dec-no-legacy-masking)). The recompute-from-s
 
 ### DEC-playability-not-a-gate
 
-The rebuild branch is knowingly not playable AND does not compile; neither playability nor COMPILING is a gate on
+Neither playability nor COMPILING is a gate on
 removing legacy — "it would break the game / needs a playtest first" is a rollerskate excuse, and **green is the
 bait**: chasing it is what makes an agent shoehorn the new implementation into legacy, so everything goes in place
-first and the tree compiles at the END, as the result of the completed rewire. While it is red, **WIRED outranks
-CORRECT** (a machine's facts emitted and consumer registered beats knowing its output is right — correctness is
-endpoint-observable and untestable until green). Removal is DELETE-DRIVEN: hard-delete the member (save-safe via
+first and the tree compiles at the END, as the result of the completed rewire. ⛔ A red tree during a cut is an
+ACCEPTED state, never a defect to fix by re-attaching what was archived (owner: *"I could not possibly care less if
+this compiles; having a clean slate to do this right is the target."*), and equally **"get it building" is not a
+milestone** — a green tree is the by-product of a finished rewire, not evidence of progress toward one.
+**WHILE THE TREE IS RED, WIRED OUTRANKS CORRECT** — a machine's facts emitted, consumer registered and surface
+reachable beats knowing its output is right (owner: *"it is more important that triggers are wired than knowing if
+they give the correct result."*), because correctness is endpoint-observable and so cannot be tested until green.
+⚠ That SEQUENCES the acceptance bar, it does not relax it — and it lapses the moment the tree builds, when
+correctness becomes testable and therefore owed. Removal is DELETE-DRIVEN: hard-delete the member (save-safe via
 `savemigration.txt`), and the COMPILER is the census (every consumer still on it is a compile error —
 un-self-certifiable, so you cannot flip-and-pretend), so a compile error is a WORKLIST ENTRY, never a reason to
 re-shape what is being built. Done = compiler-complete rewire onto the cascade + endpoint-observable correctness on
@@ -415,7 +433,7 @@ a LOADED save (not *playing*). The only legacy that stays is an owner-ruled carv
 The XML `CvXInfo` classes are archived (`SourceArchive/Infos/`) as a fallback-proof ratchet: **never restore them,
 never re-add a `CvXInfo`, never treat a red build as a defect to fix by reviving one.** Green is reached ONLY by
 finishing the JsonInfo structure + the full getter/consumer wiring — never by re-adding the legacy fallback. (The
-tree currently LINKS green via that correct path; the ratchet rule stands regardless of build state.) **Home:**
+ratchet rule stands regardless of build state.) **Home:**
 [AGENTS.md](../../AGENTS.md) Build And Test.
 
 ### DEC-no-xml-into-game
@@ -440,6 +458,18 @@ An info getter NEVER does a per-call string-keyed read (modifier-address sums, b
 grants/allowed bucket fetches, raw JSON re-reads) — every such value materializes ONCE at mapFrom into a typed
 member and the getter is a bare member read. The compiled `CvModifiers` entry list is the one load-time scan
 source; classification blocks read by generated id (`CLS_HAS`). **Home:** [patterns.md § Materialize at mapFrom](patterns.md).
+
+### DEC-json-not-cascade
+
+Parsing and HOLDING the info data is **INFO-side, never cascade-side** (owner). An info is a pure data source with
+one outbound surface: authored data resolved to typed members at `mapFrom`, handed out ASKED-FOR-BY-CHANNEL. It
+carries **zero cascade runtime** — no DepositIndex, no evaluator, no per-owner state, no computed total, no dirty
+flag, no cache — and it never learns what a cascade, a scope or an owner is. The compiled deposit index is the
+mirror image: **cascade-side ONLY**, populated from the spec model at push time. The boundary is load-bearing
+because an info is write-once-at-load and SHARED by every player, so parking per-owner derived state on one makes
+an immutable shared object mutable per GAME rather than per LOAD — and it would be a third copy of the same static
+numbers, after the authored JSON and the compiled index. Stated as a CONTRACT, not a prohibition: there is no
+member to write to. **Home:** [patterns.md § The INFO DATA-OUT contract](patterns.md).
 
 ### DEC-one-json-reader
 

@@ -12,15 +12,14 @@
 |---|---|---|---|---|---|
 | 1 | `getFreeBuilding` / `getFreeAreaBuilding` | CvBuildingInfo.h:287-288 | -1 | **404 + 3 authored** | CvPlayer.cpp:7391/7397 (processBuilding grant), CvCityAI.cpp:4685/4764, CvGameTextMgr.cpp:15838 — free-building chains (zFolklore ×134, GreatWonders ×67, …) silently never grant. Curator STORE_TAGS drops building-side with no emitting path. |
 | 2 | `getHappinessPercentPerPopulation` / `getHealthPercentPerPopulation` | CvBuildingInfo.h:281-282 | 0 | **51 / 93 authored** | CvCity.cpp:4941-4942 + per-turn accrual (:8582/8597/8722/9285/9432). Data IS in JSON (`happiness.city`/`health.city` perPopulation); the getter refuses pending the documented SCALE ruling (h:274-278). ⛔ OWNER RULING NEEDED. |
-| 3 | `getPropertyBuildings` | CvPropertyInfo.h:64 | empty | **188 value-bands authored** | CvCity.cpp:1580 `checkPropertyBuildings` (per-turn via doAutobuild) — crime/pollution auto-building bands DEAD. Bands were split to the Building pass (#430 dormancy end-state, curate_property.py:11-24) but the receiving wiring has not landed. |
-| 4 | `getCelebrityHappy` (Promotion) | CvPromotionInfo.h:405 | 0 | 3 authored | CvUnit.cpp:18767 → CvCity.cpp:5794-5801/5943. Amount dropped for boolean `skills.celebrity`, but CvCity was never rewired to the skill — celebrity happiness dead, the skill emitted-but-unconsumed. |
-| 5 | S&D / SIZE_MATTERS / WITHOUT_WARNING **option-gate family** (stealth/unnerve/enclose/lunge/dynamicDefense/perSize/perVolume changes; promotion + unitcombat) | CvPromotionInfo.h:71-92, CvUnitCombatInfo.h:143-157 | values real — the legacy getters' GAME-OPTION gate is gone | — | CvUnit.cpp:18375-18455/18809-18935 accumulate ungated (archive getters returned 0 with the option off). lunge/dynamicDefense re-gated downstream (CvUnit.cpp:24845/24955); size/volume + stealth appear NOT — units bank bonuses with the options disabled. Needs a consumer-side gate audit. |
-| 6 | `getLocalSpecialistCommerceChange` | CvBuildingInfo.h:440 | 0 | 4 authored | CvCity.cpp:5005-5007 (per-turn). |
-| 7 | int*-array getters ×24 | CvBuildingInfo.h:395-418 | NULL | scalars real in JSON | CvGameTextMgr pedia only (NULL-guarded) — help lines suppressed. |
-| 8 | `getNotShowInCity` | CvBuildingInfo.h:121 | false | legacy derived from art | CvCity.cpp:19153 (3D display skip) — recomputable from the mapped art tag. |
-| 9 | `getCityLimit(ePlayer)` | CvCivicInfo.h:92 | 0 | 6 authored | pedia only (gameplay decoupled via CvGame::getCivicCityLimit — verified). |
-| 10 | `isQualifiedPromotionType` | CvUnitInfo.h:444 | false | derived post-load in legacy | Python pedia (CyInfoInterface1.cpp:273). |
-| 11 | `getSpecialistYieldChange` / `getSpecialistCommerceChange` | CvBuildingInfo.h:431-432 | 0 | 36 / 5 authored | CvCityAI.cpp:15695/15779 (AI specialist valuation). Claimed relocated to curate_specialist — NOT verified. |
+| 3 | `getCelebrityHappy` (Promotion) | CvPromotionInfo.h:405 | 0 | 3 authored | CvUnit.cpp:18767 → CvCity.cpp:5794-5801/5943. Amount dropped for boolean `skills.celebrity`, but CvCity was never rewired to the skill — celebrity happiness dead, the skill emitted-but-unconsumed. |
+| 4 | S&D / SIZE_MATTERS / WITHOUT_WARNING **option-gate family** (stealth/unnerve/enclose/lunge/dynamicDefense/perSize/perVolume changes; promotion + unitcombat) | CvPromotionInfo.h:71-92, CvUnitCombatInfo.h:143-157 | values real — the legacy getters' GAME-OPTION gate is gone | — | CvUnit.cpp:18375-18455/18809-18935 accumulate ungated (archive getters returned 0 with the option off). lunge/dynamicDefense re-gated downstream (CvUnit.cpp:24845/24955); size/volume + stealth appear NOT — units bank bonuses with the options disabled. Needs a consumer-side gate audit. |
+| 5 | `getLocalSpecialistCommerceChange` | CvBuildingInfo.h:440 | 0 | 4 authored | CvCity.cpp:5005-5007 (per-turn). |
+| 6 | int*-array getters ×24 | CvBuildingInfo.h:395-418 | NULL | scalars real in JSON | CvGameTextMgr pedia only (NULL-guarded) — help lines suppressed. |
+| 7 | `getNotShowInCity` | CvBuildingInfo.h:121 | false | legacy derived from art | CvCity.cpp:19153 (3D display skip) — recomputable from the mapped art tag. |
+| 8 | `getCityLimit(ePlayer)` | CvCivicInfo.h:92 | 0 | 6 authored | pedia only (gameplay decoupled via CvGame::getCivicCityLimit — verified). |
+| 9 | `isQualifiedPromotionType` | CvUnitInfo.h:444 | false | derived post-load in legacy | Python pedia (CyInfoInterface1.cpp:273). |
+| 10 | `getSpecialistYieldChange` / `getSpecialistCommerceChange` | CvBuildingInfo.h:431-432 | 0 | 36 / 5 authored | CvCityAI.cpp:15695/15779 (AI specialist valuation). Claimed relocated to curate_specialist — NOT verified. |
 
 ## 2. UNCLEAR (verify / owner ruling)
 

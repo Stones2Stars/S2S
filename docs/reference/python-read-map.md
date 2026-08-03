@@ -23,6 +23,13 @@
 > **Re-derive with `python Tools/census-python-boundary.py`** — it measures both directions and emits the tables
 > below ready to paste. These numbers describe a tree that is actively being cut, so they drift by nature: when
 > they matter, RE-RUN rather than trust. `--demand` adds the full per-name demand list.
+>
+> ⛔ **The tool keys UNSERVED against what THIS REPO publishes, so it over-reports by exactly the EXE's surface.**
+> `CvPythonExtensions` has two producers ([python-load-sequence.md](python-load-sequence.md)); a name the closed
+> EXE publishes — `CyInterface`, `CyTranslator`, `CyPythonMgr`, `CyFractal`, `NiTextOut`, `InputTypes` and their
+> kin — is SERVED in the running game and unserved to the census. Subtract that class before reading any total as
+> a worklist. ⚠ It also counts the Python builtins `find` and `has_key` as engine-shaped, and drops every name
+> Python defines itself — `getText` above all, which is why TEXT is not sized here at all (§4.1).
 
 Receiver-name heuristics are useless here — `CvBuildingInfo`, `CyCity` and `CyPlayer` are all used as ordinary
 *local variable names* in this tree, so "what does `GC.` call" undercounts and "what does `X.get*()` call"
@@ -635,10 +642,9 @@ but have **no pedia page**, so pedia-driven work would not serve them at all. Th
 - **`pyWB/CvWBDesc.py` (466)** — scenario serialization; authoritative for the save/load text format and needs
   **stable type keys** (§3.2).
 
-## 7. Open questions for the owner
+## 7. The boundary rulings — and the two questions still open
 
-1. ~~Do map scripts sit behind this library, or are they their own boundary?~~ **RULED (owner): MAP SCRIPTS ARE
-   THEIR OWN BOUNDARY.** They are outside the data-fetching library entirely, and the census backs the split on
+1. **Map scripts are THEIR OWN BOUNDARY (owner ruling).** They are outside the data-fetching library entirely, and the census backs the split on
    four independent counts: `CvMapGeneratorUtil.py` (269) + `MapScriptToolsOld.py` (672) + the `Assets/Maps`
    scripts (a) consume map-generation info types (`WorldInfo` 60 · `ClimateInfo` 20 · `SeaLevelInfo` 3 ·
    `MapInfo`) **nothing else reads**, (b) run **before most game state exists** — a different lifetime than any
@@ -651,7 +657,7 @@ but have **no pedia page**, so pedia-driven work would not serve them at all. Th
    behaviour. Third-party map scripts therefore remain a supported surface on their own terms, unaffected by the
    `Cy*` cut. A future map-gen boundary redesign is its own work item, never a stage-4 rider.
 
-2. ~~Is `Screens/Debug/TestCode.py` in scope for the library?~~ **RULED (owner): DELETED, not migrated** —
+2. **`Screens/Debug/TestCode.py` is DELETED, not migrated (owner ruling)** —
    *"nuke testcode, if we want that we do it properly"*, the Python refactor making it worthless. It was the
    largest INFO consumer after the pedia hub (1,488 INFO sites) and the sole consumer of 90 residue names /
    296 sites, all of which drop out of the library's obligations (**the appendix shrinks ~30%**). The whole
@@ -699,8 +705,7 @@ but have **no pedia page**, so pedia-driven work would not serve them at all. Th
    a localization service call). At 3,168 `getText` sites the answer materially changes the library's contract, so it
    wants an explicit ruling rather than an inherited assumption.
 
-5. ~~Is name-based enum/type resolution a first-class library operation?~~ **RULED (owner): YES — enum
-   operations are FIRST CLASS.** Name→value resolution is a supported operation of the library's surface, not an
+5. **Name-based enum/type resolution is a FIRST-CLASS library operation (owner ruling).** Name→value resolution is a supported operation of the library's surface, not an
    accident of `getattr` on a module, and the evidence in §5.3 is why: `WidgetTypes`, `InputTypes` and
    `InterfaceDirtyBits` are reached ONLY this way, so without it those reads have no path at all. ⚠ Note the
    shape this must cover is **resolution AND extension**: `BUG/WidgetUtil.py:62-68` does `getattr(WidgetTypes,

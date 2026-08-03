@@ -140,7 +140,7 @@ Payload classes that are still fully orphaned (6):
   RENAISSANCE, INDUSTRIAL, ATOMIC, INFORMATION, NANOTECH, TRANSHUMAN, GALACTIC, COSMIC, TRANSCENDENT, FUTURE}.
 - [ ] **27 `UNITCOMBAT_RELIGION_*`** — carry `identity.religion`; consumed by the religion-lock path
   (`CvUnit.cpp:30868/30883`) and are Ideas-project module content. Unreferenced in current data ≠ dead.
-- ~~**344 `UNITCOMBAT_CULTURE_*`**~~ → **DROPPED** (owner 2026-07-19, executed — see the Counts note above).
+- **`UNITCOMBAT_CULTURE_*` — DROPPED** (owner ruling, executed — see the Counts note above).
   Not module content worth keeping: redundant double-data of the culture BONUS, `getCulture()` dead, attached to
   no unit. Curator-filtered + files deleted; `unitcombats/_order.json` regenerated on actual output (→ 470).
 - [ ] **`UNITCOMBAT_MAMMAL_LAGOMORPH`** — empty + 0 data-JSON ref, BUT assigned by a unit in the **ExoticAnimals**

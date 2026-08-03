@@ -34,5 +34,5 @@ Neither is a plan; each is a surface awaiting owner input, reached from the todo
 
 **Where the legacy MAPS went:** they are censuses of how the legacy behaves, not work to do, so they live in
 [`docs/reference/`](../../reference/) — a legacy map filed under `plans/` reads as planned work, which is exactly
-the bait. See `legacy-value-calc-map`, `legacy-grant-apply-sites`, `legacy-constructibility`, `pedia-read-map`,
+the bait. See `legacy-value-calc-map`, `legacy-grant-apply-sites`, `pedia-read-map`,
 `python-read-map`.

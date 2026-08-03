@@ -64,9 +64,9 @@ architecture rules that apply to DLL source.
 > permanent and holds **whatever state the build is in**: a red build is fixed by finishing JsonInfo wiring, never
 > by reviving a `CvXInfo`.
 > ⛔ **This file states no build STATE, deliberately — a compile-state claim here is guaranteed to drift** (owner),
-> and a stale one is worse than none: it tells every agent the build works when it does not. Whether the tree
-> compiles today is MUTABLE work state and lives in [roadmap.md](docs/plans/structural-cleanup/roadmap.md); the
-> authoritative answer is the build itself. Rules belong here; status does not.
+> and a stale one is worse than none: it tells every agent the build works when it does not. **No doc records
+> whether the tree compiles today — the roadmap carries no status either. RUN THE BUILD; it is the only
+> authoritative answer, and it now costs ~15s on `Assert`.** Rules belong here; status does not.
 >
 > **⛔ HARD RULE — READING A REPLACED INFO'S XML **INTO THE GAME** IS HARD BANNED ([DEC-no-xml-into-game](docs/architecture/decisions.md#dec-no-xml-into-game)).**
 > The legacy info XMLs (`Assets/XML/**/CIV4<X>Infos.xml`) for every type we have replaced with a `CvJson<X>Info`
@@ -94,8 +94,8 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <C
     **The macros compile to NOTHING outside those configs, so the scopes already in the tree are INERT** — not a
     defect, not a purge backlog. What binds is the DIRECTION: **we never build TOWARD using the profiler.** So a
     broken/stale FProfiler include or reference is **DELETED as irrelevant code, never repaired** — "the build
-    can't find `FProfiler.h`" is never a reason to restore it (and never a reason to do anything: the branch is
-    deliberately red, [DEC-playability-not-a-gate](docs/architecture/decisions.md#dec-playability-not-a-gate)).
+    can't find `FProfiler.h`" is never a reason to restore it
+    ([DEC-playability-not-a-gate](docs/architecture/decisions.md#dec-playability-not-a-gate)).
   - **Which config for in-game testing:** for ordinary interactive testing — exercising a feature, pulling state
     from the HTTP endpoints, watching `/events` — a normal **`Release`** build suffices and is far faster than
     `FinalRelease` (a clean `FinalRelease` is a ~7-minute full rebuild). **Reserve `FinalRelease` for turn-lag /
@@ -103,9 +103,9 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <C
     `Release`/`FinalRelease` are for actually running.
 - **Verbs (composable, in order):** `clean`, `build` (incremental), `rebuild` (clean+build), `deploy` (xcopy DLL/PDB into `Assets/`).
 - **Modifier — `nostop` (opt-in, off by default):** passes FastBuild's `-nostoponerror`, so the build keeps going
-  after a failed object instead of stopping at the first one. On the deliberately-red tree the default stops after
-  a fraction of the objects, so a single `nostop` run reports across far more translation units — use it when you
-  want the whole error surface in one pass rather than peeling it one TU at a time. Unlike the verbs it is a
+  after a failed object instead of stopping at the first one. When a build is broadly broken the default stops
+  after a fraction of the objects, so a single `nostop` run reports across far more translation units — use it
+  when you want the whole error surface in one pass rather than peeling it one TU at a time. Unlike the verbs it is a
   modifier, not an ordered action: it is scanned up front and applies to every `build`/`rebuild` in the invocation
   regardless of position (`... _Build.ps1 Assert build nostop`). The `MakeDLL*.bat` shortcuts forward their extra
   arguments, so `MakeDLLAssert.bat nostop` works too. ⚠ It changes only how MUCH gets reported, never what
@@ -132,17 +132,15 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <C
   `rebuild`, and the whole incremental-PCH question stops being reachable on the config you compile-check with.
   ⚠ FastBuild reports **CPU** time in its per-step summary and **wall** time only on the closing `Time: Real`
   line; reading the former as the latter is what makes a 15-second build look like three minutes.
-  - **⛔ DO NOT BUILD UNLESS YOU ARE HUNTING BUGS (owner).** Building is not a checkpoint, not a way to "confirm"
-    an edit, and not something a change is finished with — the tree is deliberately red
-    ([DEC-playability-not-a-gate](docs/architecture/decisions.md#dec-playability-not-a-gate)), so a build tells
-    you almost nothing you did not already know. ⚠ The binding reason is that it tells you nothing, NOT that it
-    is slow: an `Assert` rebuild is ~15s (table above). Do not cite build cost as the justification here — the
-    ruling stands on the red tree, and on `Release`/`FinalRelease` being where the real minutes are.
-    Run one when you are ACTUALLY chasing a compiler error, and otherwise verify the way the red tree demands:
-    **read what you changed** and grep the census for the symbols you touched. ⚑ The trap is that the line above
-    reads as an invitation — "quick compile check after an edit" describes the tool, not a habit to acquire.
-  - **⛔ MSVC STOPS AT 100 ERRORS PER TRANSLATION UNIT (`fatal error C1003`), so on the deliberately-red tree a
-    grep for YOUR files in the build log PROVES NOTHING.** The unity batches truncate, and which files get to
+  - **✅ BUILDING IS A LEGITIMATE CHECK AGAIN (owner ruling — the don't-build rule is RETIRED).** It was binding
+    only because a red tree made a build uninformative; that premise is gone, so an `Assert rebuild` (~15s) is a
+    real signal and the compiler is once more a census you can actually run. ⛔ It is still not a substitute for
+    reading what you changed, and green is still not evidence that a change is CORRECT
+    ([DEC-playability-not-a-gate](docs/architecture/decisions.md#dec-playability-not-a-gate) —
+    [DEC-done-is-observable](docs/architecture/decisions.md#dec-done-is-observable) is the acceptance bar).
+    ⚠ Keep the cost asymmetry in mind: `Assert` is seconds, `Release`/`FinalRelease` are where the real minutes go.
+  - **⛔ MSVC STOPS AT 100 ERRORS PER TRANSLATION UNIT (`fatal error C1003`), so whenever a build is broadly
+    failing, a grep for YOUR files in the log PROVES NOTHING.** The unity batches truncate, and which files get to
     report is a function of how the earlier ones consumed the budget — so an edit of yours can be silently
     hidden behind ~38 files of pre-existing consumer debt, and appear only later when unrelated content shifts.
     *(Measured: a regex that stripped a first ctor initializer left `Class::Class()` followed by a leading comma
@@ -393,6 +391,18 @@ the total-observability bar below.)
      wrong place. When a cluster converts correctly the magic constants DISAPPEAR and the mixing sites need no
      edit at all. If you find yourself ADDING a compensating multiplier, stop and redraw the cluster boundary —
      do not push through. *(Caught: an AI ratio needing `×10000` because one operand was ×100 and the other human.)*
+     ⚑ **AND IT NAMES THE CULPRIT, not just the symptom (owner): a fudge factor is USUALLY LEGACY BEING FORCED
+     INTO THE NEW SURFACE AT AN AI CALL SITE.** The constant is what an unmigrated consumer needs in order to keep
+     reading a new-surface value in its old shape — so it marks the CALL SITE as the thing still on legacy, not
+     the value. ⛔ **Therefore the question is never "where does the conversion belong?" but "WHICH SIDE OF THIS IS
+     STILL LEGACY?"** — re-point that side and the constant deletes itself. Adding the multiplier instead is how
+     the AI half gets left rotting while the surface underneath it moves
+     ([DEC-new-getter-surface](docs/architecture/decisions.md#dec-new-getter-surface): reusing a legacy getter IS
+     the mechanism that produces the half-migrated state).
+     *(Worked: a `CvCityAI` yield valuation carried BOTH a `100 *` on one operand and a `/100` on the total, to
+     hold a legacy per-building sum beside a cascade value. Re-pointing that one call site onto the what-if driver
+     deleted both constants and dissolved an open question about a third term's scale — nobody had to decide it,
+     because only the hand-rolled sum ever needed to know.)*
   3. **For CACHE/PACKAGE work the acceptance test is CACHED-vs-FRESH, not "it builds and the value looks sane."**
      Pit the stored slot against its own fresh recompute and require agreement. *(Caught: `/computed`'s
      maintenance decomposition under-reporting by 39 against the served value for want of one duplicated term —
@@ -413,7 +423,7 @@ the total-observability bar below.)
   rules serve: this codebase is *"legendary in its lack of standard, coherence, or any reasonable consideration to
   common sense."* In a coherent codebase a small assumption is usually harmless; here it is the move that gets your
   ship eaten. **Maximal rigor is the STANDING default** until the owner explicitly declares otherwise.
-- **⛔ "FAST IS SLOW, SLOW IS FAST"** ([DEC-fast-is-slow](docs/architecture/decisions.md#dec-fast-is-slow)) — read
+- **⛔ "FAST IS SLOW, SLOW IS FAST"** ([DEC-fast-is-slow](docs/architecture/decisions.md#dec-fast-is-slow-slow-is-fast)) — read
   each subsystem doc IN FULL before acting. Skimming, or grepping a keyword instead of reading end-to-end,
   routinely costs far more downstream than the minutes it "saves."
 - **Nothing here is ever "just a one-liner" — expect hidden consequences.** Non-obvious cross-cutting wiring is the

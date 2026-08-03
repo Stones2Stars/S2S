@@ -6,12 +6,12 @@ computed and kept coherent. `CvPlot` and `CvCity` are **domain objects** — the
 
 This is the **design the cascade plane is built to**, stated independently of any one implementation of it. The
 component (`CvDerivedCache`, `Sources/Infrastructure/`) is live, and the value-cache plane is built on it: the ONE
-uniform package (`Sources/Cascade/CvCascadePackage.h`, channel-indexed Σflat100/Σpercent100 slots + receiver sums
+uniform package (`Sources/Cascade/CvCascadePackage.h`, channel-indexed Σflat (×100) / Σpercent (unscaled) slots + receiver sums
 on the 64-bit `CvDerivedCacheSet`) is a data member on team / player / city / plot; the per-scope channel sets are minted from the compiled deposits at load
 (`CvCascadeChannelRegistry`, the ClassificationRegistry precedent); the mark derivation lives on the DepositIndex
 (`routeFor` + the condition-dependency routes); the modifier's own spine consumer (`CvModifierConsumer`,
 load-active) applies the derived masks; the gather (`CvCascadeGather`) is the one rebuild implementation and the
-combine lives on the calc surface (`InfoValuation::cityRate100` / `groupSum100At`).
+combine lives on the calc surface (`InfoValuation::cityRate` / `groupSumAt`).
 
 ## The problem: no unified `dataChanged` trigger
 
@@ -139,10 +139,9 @@ stored-vs-recompute diff is **DRIFT (history pollution), never state to preserve
 ⚠ **Audit each deleted `change*`/`update*` BODY for side effects first** — legacy changers carry non-obvious riders
 (trade-network recompute, UI-dirty, power) the surviving trigger site must still fire ([save.md §6](../specs/save.md)).
 
-**Incremental-accumulate ledgers convert to recompute-from-source.** The serialized player ledger
-`m_ppiBuildingCommerceChange` double-counted by build order (the accumulator replayed onto the loaded value); it is
-now a recompute-from-source cache (Σ over the player's buildings' `GlobalBuildingExtraCommerces` on dirty), the
-changer is trigger-only, and the cities PULL it.
+**Incremental-accumulate ledgers convert to recompute-from-source.** A serialized player ledger that replays its
+accumulator onto the loaded value double-counts by build order. The conversion is the uniform one above: recompute
+from the player's own held sources on dirty, make the changer trigger-only, and have the cities PULL it.
 
 **Event/vote grants are NOT cached — they are a SEPARATELY PERSISTED store.** A per-building commerce change has
 two sources of fundamentally different nature: the **empire** grant (`GlobalBuildingExtraCommerces`, civics) is
@@ -408,6 +407,16 @@ public:
     bespoke struct awaiting consolidation — it is correctly its own shape, and the 12 unit-only families
     (`strength`, `movement`, `withdrawal`, `firstStrike`, `capture`, `collateral`, `heal`, `bombard`, `air`,
     `cargo`, `range`, `pillage`, …) never enter a scope's channel set.
+    ⚖ **STRENGTH'S BASE IS PER-UNIT STATE AND IS DELIBERATELY SERIALIZED (owner ruling).** Every other resolved
+    slot takes the unit's own TYPE from the gather, because it is a pure function of that type. Base strength is
+    not: **WorldBuilder edits an individual unit's strength**, and the WBS scenario format persists the result
+    (`CombatStr=`, written only when it differs from the type). *"You want people to be able to do things in
+    WorldBuilder."* So the base lives on `CvUnit` as the serialized `m_iBaseCombat`, the resolved plane carries
+    the promotion / unit-combat **DELTA ONLY**, and the consumer adds the two. ⛔ This is the ONE carve-out in an
+    otherwise uniform gather, and it is load-bearing: letting the type contribute to the strength slot as well
+    silently DOUBLE-COUNTS every unit's authored base. ⚠ It is therefore NOT a
+    [DEC-derived-never-trusted](decisions.md#dec-derived-never-trusted) violation — the value is genuine
+    per-unit state that no amount of re-derivation can reconstruct, which is exactly why it is stored.
   ⚠ Hand-maintained duplicates DRIFT — that is not theoretical: the maintenance decomposition and its cached fill
   duplicated five terms, and the L8 home/otherArea overlay landed in one and not the other, so `/computed`
   under-reported by 39 against the served value until the duplicate was replaced by a delegation.

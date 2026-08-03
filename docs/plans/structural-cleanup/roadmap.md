@@ -8,24 +8,10 @@
 > what is not done lives in the [todo](todo.md), and what is BUILT is answered by the tree, never by a table here
 > that drifts. Verify any claim against the code before acting on it.
 >
-> **⚑ Branch `cascade-rebuild` is a deliberate CLEAN SLATE and does not compile. That is the intended state**
-> (owner): *"I could not possibly care less if this compiles; having a clean slate to do this right is the target."*
-> A red tree is NOT a defect to fix by re-attaching what was archived (§Context).
->
-> **⛔ COMPILING IS NOT A GATE — AND GREEN IS THE BAIT (owner).** Everything goes IN PLACE FIRST; the tree compiles
-> at the END, as the RESULT of the completed rewire. The reason is a failure mode, not patience: **chasing green is
-> what makes an agent shoehorn the new implementation into legacy** — a half-built surface is made to compile by
-> bending it to whatever call sites are still standing, which is exactly the half-migration this rebuild exists to
-> undo ([DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface)). A compile error is a
-> WORKLIST ENTRY (the compiler is the census), never a reason to narrow, widen, or re-shape what is being built.
-> ⛔ "Get it building" is not a milestone, and a green tree is not evidence of progress.
->
-> **⛔ WIRED OUTRANKS CORRECT while the tree is red (owner).** The priority is that every machine is WIRED — its
-> facts emitted, its consumer registered, its surface reachable — not that its output is verified right: *"it is
-> more important that triggers are wired than knowing if they give the correct result."* Correctness is
-> endpoint-observable ([DEC-done-is-observable](../../architecture/decisions.md#dec-done-is-observable)) and so
-> **cannot be tested until the tree is green again**; ranking a not-yet-testable correctness gap as the top
-> priority mis-sequences the work. ⚠ This SEQUENCES the acceptance bar, it does not relax it.
+> **⛔ Compiling is not a gate, green is the bait, and a compile error is a worklist entry** —
+> [DEC-playability-not-a-gate](../../architecture/decisions.md#dec-playability-not-a-gate) states that ruling in
+> full, including the wired-outranks-correct sequencing and why chasing green is what shoehorns the new
+> implementation into legacy. It is not restated here.
 >
 > **⛔ THE AI LOOPS ARE ORDINARY CONSUMERS — CONVERT THEM (owner).** `CvPlayerAI`/`CvUnitAI`/`CvCityAI`/`CvTeamAI`
 > are the BULK of the consumer surface, and treating them as untouchable is what fragments the work: a single
@@ -77,32 +63,25 @@ compiler census): a RENAMED successor on the rebuilt info · an info genuinely M
 authored · or a term that is DEAD and goes. ⛔ Reaching for any other explanation is the wasted motion this
 guarantee exists to prevent.
 
-## Governing principles (ledgered as DECs)
+## Governing principles
 
-1. **No "deferred."** Anything marked deferred / parked / blocked / "later" / TODO / pending is a
-   **failure to fix**, not a backlog item ([DEC-no-deferred](../../architecture/decisions.md#dec-no-deferred)).
-2. **No self-heal.** No blanket per-turn/per-slice rebuild papers over a missed invalidation; correctness comes only
-   from complete, targeted, spine-routed invalidation, and a miss must surface as a live divergence
-   ([DEC-no-self-heal](../../architecture/decisions.md#dec-no-self-heal)).
-3. **The cascade is built and kept ENTIRELY from events.** Full build ONLY on load (the reseed); post-load only
-   dirty packages rebuild ([DEC-spine-reseed](../../architecture/decisions.md#dec-spine-reseed)). Steady-state
-   per-turn cost tracks *what changed* (thousands), never *what exists* (millions).
-4. **The keystone — self-invalidating per-package caches.** Each package is its own cache; a DOMAIN event marks
-   exactly the packages its source (per the deposit index) feeds. *"This is the basis of EVERYTHING."*
-5. **ONE cache shape everywhere** — the same object type on every owner, all invalidating the same way, only WHICH
-   SLOTS carry a value varying by scope. A hand-named scalar field is a DEFECT
-   ([DEC-uniform-cache-shape](../../architecture/decisions.md#dec-uniform-cache-shape)).
-6. **Universal yield.** ANY number game mechanics modify is a channel in ONE machine in ONE uniform package format
-   ([DEC-universal-yield](../../architecture/decisions.md#dec-universal-yield)).
-7. **A NEW getter surface; the old one disconnected.** Reusing a legacy getter is the MECHANISM that produces the
-   half-migrated state, not a shortcut that merely risks one
-   ([DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface)).
-8. **One consumer per system.** The enabler and the modifier are two separate machines
-   ([DEC-enabler-not-cascade](../../architecture/decisions.md#dec-enabler-not-cascade)); a shared consumer welds
-   them and forces one load policy onto two that genuinely differ.
-9. **Done = observable in the running game** via an endpoint poll — never "the code path exists" or "the data
-   loads" ([DEC-done-is-observable](../../architecture/decisions.md#dec-done-is-observable)) — and the per-turn
-   wall clock stays inside the target ([DEC-turn-time-is-king](../../architecture/decisions.md#dec-turn-time-is-king)).
+⛔ **These are LINKS, not summaries.** The rulings that govern this rebuild live in the
+[decisions ledger](../../architecture/decisions.md) and are read there — a restatement here is a second copy that
+drifts from its home and then gets trusted, which is the exact failure the ledger exists to end.
+
+[DEC-no-deferred](../../architecture/decisions.md#dec-no-deferred) ·
+[DEC-no-self-heal](../../architecture/decisions.md#dec-no-self-heal) ·
+[DEC-spine-reseed](../../architecture/decisions.md#dec-spine-reseed) ·
+[DEC-uniform-cache-shape](../../architecture/decisions.md#dec-uniform-cache-shape) ·
+[DEC-universal-yield](../../architecture/decisions.md#dec-universal-yield) ·
+[DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface) ·
+[DEC-enabler-not-cascade](../../architecture/decisions.md#dec-enabler-not-cascade) ·
+[DEC-done-is-observable](../../architecture/decisions.md#dec-done-is-observable) ·
+[DEC-turn-time-is-king](../../architecture/decisions.md#dec-turn-time-is-king)
+
+The one thing this rebuild adds that is not a ledger entry — the KEYSTONE it is organized around: **each package
+is its own self-invalidating cache**, and a DOMAIN event marks exactly the packages its source feeds, per the
+deposit index. *"This is the basis of EVERYTHING."*
 
 ## The accepted foundational design (unchanged — the code conforms to this)
 
@@ -129,11 +108,10 @@ Authority: [state-repositories.md](../../architecture/state-repositories.md), [m
   OUTPUT yields; only the middle mechanism is engine-owned (free-specialist assignment; the golden-age plot
   threshold).
 
-## ⛔ LEGACY STILL BREATHING — the KILL LIST (this is a DEMOLITION ORDER, not an inventory)
+## ⛔ LEGACY STILL BREATHING — the standing DEMOLITION ORDER
 
-**Every row below is legacy that is STILL ALIVE IN THE TREE RIGHT NOW. None of it is a gap, a stage, a
-transitional shape, or a thing to keep working while the replacement matures — it is a DEFECT, and the only
-correct action on it is DELETION** ([DEC-no-legacy-masking](../../architecture/decisions.md#dec-no-legacy-masking),
+**Surviving legacy is never a gap, a stage, a transitional shape, or a thing to keep working while the
+replacement matures — it is a DEFECT, and the only correct action on it is DELETION** ([DEC-no-legacy-masking](../../architecture/decisions.md#dec-no-legacy-masking),
 [DEC-no-deferred](../../architecture/decisions.md#dec-no-deferred),
 [DEC-proper-once](../../architecture/decisions.md#dec-proper-once)).
 
@@ -141,8 +119,8 @@ correct action on it is DELETION** ([DEC-no-legacy-masking](../../architecture/d
 it "until the new thing is ready" is the exact move that produces a half-migrated branch which reads as nearly
 done. What is missing or wrong must be IMMEDIATELY VISIBLE, which means legacy has to FAIL LOUD rather than quietly
 answer. **Blast radius is the SIGNAL the cut reached, never a reason to soften it**
-([DEC-accumulator-cut-uniform](../../architecture/decisions.md#dec-accumulator-cut-uniform)) — and the tree is
-deliberately red, so there is nothing to protect
+([DEC-accumulator-cut-uniform](../../architecture/decisions.md#dec-accumulator-cut-uniform)), and neither
+playability nor a broken build is a reason to soften it
 ([DEC-playability-not-a-gate](../../architecture/decisions.md#dec-playability-not-a-gate)).
 
 **What is still breathing, and the order on each, is the [todo](todo.md).** This section is the STANDING
@@ -171,8 +149,9 @@ as acceptable, scheduled, or "kept until X" — that reframing is the failure th
 > accessed."* (owner)
 
 Everything above is settled. The GRAMMAR is now settled too — [patterns.md § THE TWO READ ROLES](../../architecture/patterns.md)
-— and the GAME-OBJECT half is BUILT: **41 group reads** across plot / city / player / team, folding through
-the one cross-scope roll-up (`InfoValuation::realizedAt*`), plus the endpoint oracle.
+— and the GAME-OBJECT half stands: one group read per family on plot / city / player / team, each folding
+through the one cross-scope roll-up (`InfoValuation::realizedAt*`), beside the endpoint oracle. ⛔ The count of
+those reads is not recorded here; it drifts, and the headers are the census.
 
 ⛔ **What is NOT done is the DISCONNECT — the legacy getter set is STILL STANDING beside it (the KILL LIST above).**
 ⚠ An agent reading only that the group reads exist would conclude the access surface is done and build on a
@@ -190,7 +169,7 @@ the compiler as census).
 ⚑ **And a fair few of those getters CONSOLIDATE ON THEIR OWN (owner): they are INFO-BACKED reads, so restructuring
 the infos already collapses them** — the count is not a worklist of independent items. ⛔ Do not plan a per-getter
 sweep for work that falls out of wiring the rebuilt infos through; measure what actually survives that first, then
-cut the genuine residue. (The same reason the 622 are a DELETION list + COVERAGE checklist, never a per-getter
+cut the genuine residue. (The same reason the channel-shaped getter set is a DELETION list + COVERAGE checklist, never a per-getter
 migration worklist — [DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface).)
 
 The rest of the boundary every consumer meets:
@@ -235,33 +214,20 @@ The rest of the boundary every consumer meets:
   scope). A context is an **EVENT-BUILT STORE, not a forwarding facade** (owner): it STORES every DERIVED fact the
   evaluation reads — computed once, maintained by spine facts, never recomputed at read — and FORWARDS only the
   object's own RAW O(1) data. Nothing is serialized; the reseed rebuilds it.
-  **BUILT:** `PlotContext` holds the `CASC_PRED_*` verdict BITSET (own-plot + adjacency blocks, an 8-neighbour
-  fan-out on the adjacency half); `CityContext` holds `plotAttrs` (the literal FOLD of member plots' bits), the
-  tiered VICINITY-bonus sets, the area id + tile count, the largest-adjacent-water size
-  and the holy-city count; `EmpireContext` holds `policies`. All maintained solely by the contexts' own spine
-  consumer — no direct hooks anywhere — off the complete plot substrate surface (terrain / feature / improvement
-  / route / bonus / owner / type / river / irrigation / landmark / worked) plus `SEVT_AREAS_RECALCULATED`.
-  The payoff is the point: `hasVicinityBonus` was a full radius scan + a 5,202-building scan per check and
-  `isCoastalLand` an 8-neighbour scan per predicate — both now bare fetches. ⚠ The network bonus COUNT is the
-  deliberate non-instance: it FORWARDS to the plot group that owns it rather than being stored a third time
-  ([enabler.md §8](../../specs/enabler.md) RESIDENCY). **OPEN:** the id-keyed radius dictionaries that would collapse `ev_cityPlotHas`' remaining
-  per-check scan (terrain/feature/improvement/route prereqs), and the context gaps in the
-  [todo.md](todo.md).
-- **How the INFO side hands its data to the cascade — "make the infos sane" (active).** Today an info IS the legacy
-  variable set (220 members on `CvBuildingInfo`, 247 on `CvUnitInfo`), with JSON force-fed into it and a
-  ~300-getter surface mirroring the legacy `CvXInfo` contract. The target — **an info STYLED FOR THE JSON**:
-  members mirror the JSON anatomy, getters are ×100-native (no `100` in any name) and coherent (data-out by
-  channel), generalizing the in-tree `CLS_HAS`/bitset classification pattern — is
-  [patterns.md § The INFO DATA-OUT contract](../../architecture/patterns.md). The build sequence: (1) target shape
-  written; (2) rebuild `CvBuildingInfo` to it as the proven pattern (fattest, and it already carries both the
-  legacy-scalar defect and the sane `CLS_HAS` cure side by side); (3) roll across the other infos + rewire
-  consumers onto the coherent surface ([DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface)).
-  The ordered worklist (the one-reader consolidation, the interning pass, the scope-free vocabulary, the
-  `Json`-prefix rename sweep, acceptance): [todo.md](todo.md).
+  The per-context stores, their maintenance triggers and their open gaps are [contexts.md](../../architecture/contexts.md)
+  and [todo.md](todo.md) — not a census here, which drifts. ⚠ The network bonus COUNT is the deliberate
+  non-instance: it FORWARDS to the plot group that owns it rather than being stored a third time
+  ([enabler.md §8](../../specs/enabler.md) RESIDENCY).
+- **How the INFO side hands its data to the cascade — "make the infos sane".** The target — **an info STYLED FOR
+  THE JSON**: members mirror the JSON anatomy, amount getters ×100-native (no `100` in any name) and coherent
+  (data-out by channel), classification read as a parameterized bitset test — is
+  [patterns.md § The INFO DATA-OUT contract](../../architecture/patterns.md); the remaining work is
+  [todo.md](todo.md). Consumers move onto the coherent surface, never the reverse
+  ([DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface)).
   An info holds **only its own side**: cross-entity own-output (a building's improvement/terrain yields) is NOT a
   building member — the improvement owns its yield, conditioned on the building's presence
-  ([DEC-deliveryguy]). The info is shaped to that NOW; it is not distorted to hold data it shouldn't just because
-  the delivery mechanism isn't built (a red tree loses no live data).
+  ([DEC-deliveryguy](../../architecture/decisions.md#dec-deliveryguy)). The info is shaped to that NOW; it is not distorted to hold data it shouldn't just because
+  the delivery mechanism isn't built.
 - **The GENERAL modifier own-output reverse-map** — ONE general load-time pass. At load, any source's target-keyed own-output deposit is reverse-landed on the TARGET as a compiled
   conditioned own-output entry ("+X while the source is present" — the source's presence is the entry's prebuilt
   `enabled` condition), so a modder authors either side and both carry it. Two landing classes: a yield-channel
@@ -271,16 +237,16 @@ The rest of the boundary every consumer meets:
   health on a building/civic/tech — the wonder/civic/tech → building-type boosts, the reverse-pass landing rules)
   lands on the target BUILDING at CITY scope (building output per modifier.md §2a/§2b), same family/value/unit,
   presence-gated at the AUTHORED deposit's scope axis, any authored condition composed in.
-  Governing-deliverer keyed maps stay source-side ([DEC-deliveryguy], modifier.md §4): `buildRate` keyed targets,
+  Governing-deliverer keyed maps stay source-side ([DEC-deliveryguy](../../architecture/decisions.md#dec-deliveryguy), modifier.md §4): `buildRate` keyed targets,
   every TRAIT keyed deposit (the per-set carve-out), route→improvement yields (the §4 exemplar; the legacy
   improvement-side readers are fed by the pass's compat rows), and the civic feature-happiness keyed member (the
   §2b one-term bundling). The same pass generalizes `EDGEF_RELATED` over
   every compiled surface (edges/requires/deposits/grants/provides/triggers — the retired tech-only bespoke
   inversions and their legacy-mirror getter reads are deleted), carries the `EDGEF_REQUIRED_BY` gate walk, and
-  owns the forward compat reconstructions ([DEC-one-reverse-view]).
+  owns the forward compat reconstructions ([DEC-one-reverse-view](../../architecture/decisions.md#dec-one-reverse-view)).
   **The cut is FULL (owner): the new coherent surface is built and every consumer rewired onto it in the same
-  pass, the legacy getter names disconnected — never a thin-compat layer left breathing.** The red tree makes the
-  blast radius free to absorb; a change that left consumers untouched would be the half-migration tell.
+  pass, the legacy getter names disconnected — never a thin-compat layer left breathing.** Blast radius is the
+  SIGNAL the cut reached; a change that left consumers untouched would be the half-migration tell.
 - **⛔ NOTHING GATES THE DISCONNECT — A DEAD LEGACY PYTHON GETTER IS AN OUTLAW, SHOT ON SIGHT (owner).** There is
   no sequencing, no permission, no "wait until the library answers it": a binding to a getter that no longer
   exists is a dangling reference the compiler already named, and for a `Cy` binding the ONLY fix is DELETION
@@ -310,9 +276,10 @@ The rest of the boundary every consumer meets:
   Not a widened binding, not a shim beside it. Detail + acceptance: [todo.md](todo.md).
 - **The endpoint route table**, which reads the same uniform getters as everything else.
 
-⛔ **Do not start re-attaching machines to the game objects before this is defined.** A per-site rewire is exactly
-the half-migration this rebuild exists to undo, and it is what every previous attempt did while believing it was
-conforming.
+⛔ **A per-site rewire is the half-migration this rebuild exists to undo** — it is what every previous attempt did
+while believing it was conforming. Consumers move onto the new surface as a surface, never one call site bent to
+fit. ⚠ This is a rule about HOW, not a gate on WHEN: the `CvCity`/`CvPlayer`/`CvPlot` consumer work proceeds now
+(above).
 
 ## Observability / acceptance
 
@@ -321,7 +288,7 @@ Unchanged in principle, but note the surface it depends on is currently purged:
 1. **Manifestation polls** — PROGRAMMATIC against the `/computed` oracle endpoints, never eyeballing the screen. A
    blind value is EMITTED first; emitting it is step one of that item's fix.
 2. **Turn time** — the whole performance signal, on the wall clock; the target and its sequencing are in
-   §Verification targets below. The process-memory gauge on `/computed/perf` rides beside it.
+   §Verification targets below. The process-memory gauge rides beside it, once re-emitted.
 3. **Parity and shadow are CLOSED** and are NOT re-run, re-invoked, or used to frame remaining work
    ([DEC-verify-in-game-not-reshadow](../../architecture/decisions.md#dec-verify-in-game-not-reshadow)).
 

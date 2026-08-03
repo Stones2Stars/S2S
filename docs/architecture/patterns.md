@@ -48,7 +48,9 @@ needs a fact FEEDS it to the one function, it never re-derives it.
    thin wrappers) — they
    never re-read a predicate. A machine that needs a fact the evaluator uses (`hasVicinityBonus`/`isGovernmentCenter`/
    active-building) **supplies it through the eval context** (the precomputed operating-building set), never evaluates it itself.
-   *(Holds today — one evaluator, both machines delegate; the old `BoolExpr` duplicate was deleted.)*
+   ⚠ `BoolExpr` still exists and still serves the KEEP-legacy property engine — it is not the cascade evaluator,
+   and translating a `CvCondition` back into one so another solver can evaluate it is a SECOND evaluation surface,
+   whatever it is named.
 2. **One function per calculation**, mirroring StoneBase's `src/Application/Features/Calc/*` packages **1:1**:
    `PercentStack` · `YieldBasePackages` · `YieldRate` · `YieldSplit` · `CommerceSplit` · `CommercePackages` ·
    `BuildingPackage` · `CalcContributions`. No parallel or near-duplicate calc anywhere.
@@ -100,6 +102,9 @@ anti-rollerskate check an agent runs before adding cascade calc/eval code.
 
 ## The INFO DATA-OUT contract — what an info hands to the cascade
 
+> **This section is the home of [DEC-json-not-cascade](decisions.md#dec-json-not-cascade)** — parsing and holding
+> the info data is INFO-side, and cascade runtime never lives on an info.
+>
 > The **infos** row of [EACH IS ITS OWN SYSTEM](north-star.md): readJson puts data into infos, infos SERVE that
 > data, the cascade sums, the enabler resolves availability. This section is that row's concrete surface.
 > **It is stated as a CONTRACT, not a prohibition** — a prohibition has to be remembered by every future agent,
@@ -134,12 +139,12 @@ provisions · effects = the modifier families · intrinsic · classification · 
 typed structure. It is **not** a scalar-per-legacy-XML-field. The turnaround is the whole of "make the infos sane":
 the JSON model drives the info's shape; the legacy variable set is gone, not force-fed.
 
-- **The realized exemplar is already in-tree — generalize it.** The classification blocks are styled for the JSON:
-  `m_attributes` is a **JSON-derived bitset** (the `ClassificationRegistry` ids minted from the authored
-  `attributes` block, [DEC-classification-infos](decisions.md#dec-classification-infos)), and
-  `isDestroyedOnCapture()` is `CLS_HAS(m_attributes, CLSD_ATTRIBUTE, "destroyedOnCapture")` — a coherent read
-  over that structure, never a legacy `m_bDestroyedOnCapture`. Every block gets this shape, one member per block
-  the entity authors (`m_attributes` beside `m_amenities` on a building, [json.md §8](../specs/json.md)).
+- **The exemplar is the classification block — generalize it.** `m_attributes` is a **JSON-derived bitset** (the
+  `ClassificationRegistry` ids minted from the authored `attributes` block,
+  [DEC-classification-infos](decisions.md#dec-classification-infos)), read by the parameterized
+  `CvInfo::hasAttribute(id)` over `clsHasId` — never a legacy `m_bDestroyedOnCapture`, and never a named per-key
+  body. Every block gets this shape, one member per block the entity authors (`m_attributes` beside
+  `m_amenities` on a building, [json.md §8](../specs/json.md)).
 - **The defect the rebuild removes** is the legacy-named scalar-per-field with a comment mapping it back to a JSON
   address (`m_iDamageToAttacker` ← `defense.city.counterDamage.damage`; `m_aiRiverPlotYieldChange[]` ←
   `<yield>.city.plots` flats). Those are JSON parsed and **scattered into individually-named legacy variables**;
@@ -362,10 +367,14 @@ group's natural index** — never N individual getters for a groupable set. This
   scores (the sanctioned AI-heuristic residual, [superseded-ideas #1](superseded-ideas.md)) — it never re-asks the
   what-if in an inner loop. A regression in any of this surfaces where every performance regression surfaces — the
   per-turn wall clock ([DEC-turn-time-is-king](decisions.md#dec-turn-time-is-king)).
-- **Every getter IS ×100** ([DEC-fixedpoint-x100](decisions.md#dec-fixedpoint-x100)) — no `getX`/`getX100` pair, no
-  `100` suffix; the name says the VALUE, never the scale (always ×100). A reader wanting human does ÷100 at the
-  boundary. The split lives in the flat-vs-modifier member name (`getFlatYield` vs `getYieldModifier`), never a
-  scale suffix.
+- **Every AMOUNT getter is ×100; a PERCENT is NOT scaled** ([DEC-fixedpoint-x100](decisions.md#dec-fixedpoint-x100)) —
+  no `getX`/`getX100` pair, no `100` suffix; the name says the VALUE, never the scale. A reader wanting human
+  divides an AMOUNT by 100 at the boundary. The split lives in the flat-vs-modifier member name (`getFlatYield`
+  vs `getYieldModifier`), never a scale suffix.
+  ⛔ **A `÷100` applied to a PERCENT read is a defect, not a boundary reduction** — the parse converts amounts
+  and returns percents plain, so dividing one destroys it. ⚑ The tell is a comment asserting the read "stays
+  ×100" beside a percent-unit slot; the failures it produces are silent (a probability that becomes 0, a
+  multiplier that becomes the identity) and survive every smoke test.
 - **⚑ A LEGACY `Global*` / `Area*` / `National*` PREFIX IS A SCOPE FRAGMENT — its successor is the SAME kind read
   with a scope ARGUMENT.** This is the single most common disposition in the compiler census, and reading it as a
   missing member instead sends an agent looking for a getter that was never meant to come back:
@@ -575,6 +584,25 @@ of them:
 - ⚑ Consequence: the `Cy*` WRAPPER classes (`CyCity`/`CyUnit`/`CyPlayer`/…) STAY while their bindings do not —
   33 engine files hold them for that direction. **A wrapper with no binding is the CORRECT end state here**, and
   reading it as a half-cut to complete would delete working gameplay.
+
+  > **⛔ "NO BINDING" MEANS NO `.def` — IT DOES NOT MEAN NO `class_<>`. The TYPE REGISTRATION IS THE KEPT
+  > DIRECTION'S CARRIER, AND CUTTING IT BREAKS THAT DIRECTION.** A boost::python `class_<CyX>("CyX")` carrying
+  > **zero `.def`s** is not a read surface — it publishes no getter and answers no question. It is the type
+  > IDENTITY that lets an object cross the boundary at all: the marshaller (`Cy::PyWrap` → `makePythonObject`)
+  > is `python::object(pObj)`, which **throws at runtime unless the type has a registered converter**. So the
+  > engine→Python direction depends on the registration exactly as much as it depends on the callback.
+  > ⚑ **The measure is mechanical, not a judgement:** a `Cy*` type is registration-REQUIRED iff any engine call
+  > site passes it — `DECLARE_PY_WRAPPER(CyX, CvX*)` with at least one live `args << pCvX`, or a
+  > `CvGameObject::createPythonWrapper` branch. `CyCity`, `CyUnit` and `CyPlot` each carry dozens of such sites
+  > (the `CvDllPythonEvents` payloads, the `CvOutcome` hooks); `CySelectionGroup` declares the wrapper and has
+  > **zero** call sites, so it genuinely needs none.
+  > ⚠ **The same defect class reaches every published method whose RETURN type is a `Cv*`/`Cy*` object** — an
+  > art-info accessor, an info-object accessor, a handle returning a city. Publishing the accessor without
+  > registering what it returns yields a def that resolves and then raises at conversion: a `TypeError` where a
+  > reader expects an `AttributeError`, which is why it reads as a mystery rather than as a missing binding.
+  > ⇒ **When cutting a read surface, cut the `.def`s and KEEP the `class_<>` for any type the engine hands
+  > across or hands back.** Deleting a whole registrar file takes both halves, and the second half is not yours
+  > to take.
 
 **⛔ TWO THINGS THE LIBRARY DOES NOT OWN:**
 

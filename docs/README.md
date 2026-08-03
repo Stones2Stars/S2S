@@ -67,9 +67,12 @@ Verify against the tree before acting on any claim that something is built.
 - **The LEGACY censuses** — how the legacy behaves today, so the cascade can replace it:
   **[legacy-value-calc-map](reference/legacy-value-calc-map.md)** (which getter computes each per-turn value, and
   from what) · **[legacy-grant-apply-sites](reference/legacy-grant-apply-sites.md)** (where provisions are handed
-  over) · **[legacy-constructibility](reference/legacy-constructibility.md)** (the `canConstruct`/`canTrain`
-  machinery the enabler replaces) · **[pedia-read-map](reference/pedia-read-map.md)** +
+  over) · **[pedia-read-map](reference/pedia-read-map.md)** +
   **[python-read-map](reference/python-read-map.md)** (what the Python surface consumes).
+- **[reference/python-load-sequence.md](reference/python-load-sequence.md)** — the C++/Python boundary MECHANISM
+  and ORDER: the **two producers** of `CvPythonExtensions` (ours and the closed EXE's), the ordered DLL load
+  (premenu → menu → postmenu → game start → the consumer-registration contract), the Python entry cascade, and
+  the marshalling contract that decides which types must stay registered.
 
 ## `architecture/` — the design compass
 - **[architecture/decisions.md](architecture/decisions.md)** — the **DECISIONS LEDGER** (the `DEC-*` index — grep it before adding any ruling).

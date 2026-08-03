@@ -183,6 +183,16 @@ and none is.
 constants, the cluster boundary was drawn WRONG — stop and redraw it, never push through. (This is the second of
 [AGENTS.md](../../../AGENTS.md)'s drift detectors, stated as a conversion method.)
 
+⚑ **A fudge factor points AT the unmigrated consumer (owner).** In practice the constant is not a mis-drawn
+boundary in the abstract — it is **legacy being forced into the new surface at an AI call site**: the multiplier
+exists so a consumer that has not moved can keep reading a new-surface value in its old shape. ⛔ So when one turns
+up, do not ask where the conversion belongs — ask **WHICH SIDE IS STILL LEGACY**, and re-point that side. The
+constant then deletes itself, and it takes its scale question with it: a hand-rolled sum is the only thing that
+ever needed to know its operands' units, so re-pointing DISSOLVES the question rather than answering it.
+⚠ The failure mode is the opposite move — adding the multiplier and calling it done. That leaves the AI half on
+legacy while the surface beneath it moves, which is exactly the half-migrated state
+[DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface) names.
+
 ⚑ **A cluster is defined by what MIXES, not by what looks similar.** Worked groupings: the yield/food/wellbeing
 chain is one unit because food consumption subtracts angry population and health rate; commerce joins it at the
 production→commerce term; gold/maintenance/upkeep joins commerce because gold IS a yield
@@ -193,6 +203,33 @@ SizeMatters counts*, not a modifier channel — it is not a scale violation and 
 
 **Sequencing within a cluster (owner): set the mechanic up to spec FIRST, then wire the consumers.** Do not open
 with a hundred consumer edits; build the value chain so it is internally ×100-consistent, then reduce at the readers.
+
+### 4c-ter. The COMBAT-STRENGTH cluster — the target shape (owner ruling)
+
+⚖ **"The strength legs should not need to reduce to human until actually SHOWN IN THE UI."** Combat strength is an
+AMOUNT, so it is ×100 all the way through the calculation and reduces ONLY at the OUT boundary.
+
+**What that fixes, and why the current shape is worse than a stray divide.** Today `baseCombatStr()` returns a
+**different SCALE depending on a GAME OPTION** — ×100 under `GAMEOPTION_COMBAT_SIZE_MATTERS`, human without it —
+and `baseCombatStrNonGranular()` exists only to undo that. A read whose scale depends on live game state cannot be
+reasoned about at any call site, and it means every consumer is already wrong under one option or the other.
+
+**The target:**
+- **Strength is ×100 internally, ALWAYS — independent of any game option.** `baseCombatStrPreCheck` keeps both
+  legs ×100 (no reduce on the base seed, none on the resolved delta) and drops the `*= 100` that currently
+  re-manufactures the scale under SIZE_MATTERS; SizeMatters then simply scales an already-×100 value.
+- **ONE human accessor at the boundary**, and it is the ONLY `÷100` — for the UI, the `Cy*` bindings and the WBS
+  scenario field. `baseCombatStrNonGranular` becomes that accessor unconditionally (and should be NAMED for what
+  it is: the human read, not "non-granular").
+- **`m_iBaseCombat` goes ×100 with the cluster.** It is serialized, so this is a deliberate save-semantics change
+  — and the WorldBuilder boundary converts, because WB edits in human units.
+
+⛔ **It converts as ONE atomic pass, never piecemeal.** The internal reads (AI + engine) are the large majority
+and stay ×100 untouched; the boundary is a handful of sites. **The audit is NOT "every call site" — it is every
+site that MIXES strength with a human literal or a differently-scaled quantity.** A comparison of two strengths is
+scale-invariant and needs no edit; `> 5` or `+ someHumanCount` does. ⚠ A changed scale compiles silently on the
+same `int`, so the compiler is NOT the census here ([AGENTS.md](../../../AGENTS.md) drift detectors) — the mapped
+mixing-site list is, and a miss surfaces only as wrong combat numbers at runtime.
 
 ## 4d. ⛔ THE EDGE — where a scale error can occur at all, and therefore what an audit checks
 
@@ -247,6 +284,32 @@ The owner cannot eyeball thousands of JSONs, so a mis-scaled field is found by t
 authored JSON produces is observed live on the `/computed` oracle endpoints, on a real save
 ([DEC-done-is-observable](../../architecture/decisions.md#dec-done-is-observable)). **Residual divergence localises
 the next mis-scaled field** → fix the curator → regenerate → re-check. Exact parity is the bar — 0 in-scope mismatches; a residual divergence is a data-collection gap (a still-mis-scaled field), never a formula difference ([DEC-parity](../../architecture/decisions.md#dec-parity)).
+
+⚖ **CALIBRATION — a scale error BREAKS BALANCE AND BEHAVIOUR, NOT THE GAME (owner).** *"It's obvious when numbers
+are out of whack in a new game, and it does not actually break the game — it just breaks balance."* A wrong scale
+(and the fudge factor that hides one) costs no crash and no corrupt save; it shows up on a fresh start.
+⚠ **But do not read "just balance" as "just tuning."** Integer truncation does not mis-tune a mechanic, it SWITCHES
+IT OFF: the AI declaring war on no difficulty, property decay never running, starting gold landing at zero. The
+mechanic is absent, not weak — which is a behaviour break wearing a balance costume, and it is why these are worth
+finding rather than living with.
+⚑ **Read this as licence to CONVERT, not as licence to guess.** It means a well-reasoned conversion should be
+made and observed rather than parked behind more analysis — over-caution here costs more than a wrong scale does,
+because a mis-scaled field sitting unconverted is just as wrong and nobody is looking at it. The no-guessing rule
+is unchanged: establish the unit from `infoKindUnit` + the authored data, then convert.
+⛔ The exceptions that are NOT cheap, and still want care before landing: anything that changes what a SAVE means
+(a serialized member's scale), and anything feeding the synchronized RNG
+([DEC-synced-rng-is-shared-state](../../architecture/decisions.md#dec-synced-rng-is-shared-state)) — those fail
+silently or desync rather than looking odd.
+
+⚑ **AND THE AI DECISION LOG IS A SCALE INSTRUMENT (owner): a decision that NEVER VARIES is a truncated-to-zero
+input.** Integer division is what makes a mis-scaled value fail this way — a percent reduced by 100 lands on 0,
+and the branch it gates then resolves the same way forever. Because every AI decision is logged
+([logging.md](../logging.md)), that shows up as a decision going one way 100% of the time, which is far easier to
+spot than a number being quietly wrong.
+⛔ So read an always-the-same AI decision as a SCALE SUSPECT first, before theorising about the AI logic — a
+rand-versus-threshold that never fires, a gate that never opens, a modifier that never applies.
+*(Worked: `rand(100) < declareWar.ai.percent / 100` truncated 50–100 to 0, so the AI declared war on NO
+difficulty. The decision log would have shown that branch never taken; the code read as reasonable.)*
 
 ## See also
 - [decisions ledger](../../architecture/decisions.md) — `DEC-fixedpoint-x100`, `DEC-curator-owns-descale` index

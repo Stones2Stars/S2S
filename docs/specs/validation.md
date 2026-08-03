@@ -43,8 +43,9 @@ first; emitting it is step one of that item's fix.
 
 **Turn time is the performance half of acceptance.** The second live signal is the wall clock, not a counter:
 **≤ 2 minutes per turn** on the standing late-game save
-([DEC-turn-time-is-king](../architecture/decisions.md#dec-turn-time-is-king)), with the process-memory gauge on
-`/computed/perf` beside it under the 32-bit ceiling ([memory-footprint.md](../reference/memory-footprint.md)). A
+([DEC-turn-time-is-king](../architecture/decisions.md#dec-turn-time-is-king)), with the process-memory gauge
+beside it under the 32-bit ceiling — a gauge whose route went with the purge and which needs re-emitting
+([memory-footprint.md](../reference/memory-footprint.md)). A
 read is an unconditional bare fetch and the only path to a rebuild is a mark, so per-turn cost tracks what CHANGED
 — mark volume, which is event volume and is already visible on the spine — never what EXISTS. A regression shows up
 as turn time; the spine's event stream names what drove it. Numbers gathered while any legacy calc still runs on a
@@ -128,7 +129,7 @@ event spine, accumulators, all condition *evaluation*) — dictates *when* each 
   enough to confirm readJson did its job and the static/initial state is correct + inspectable. **No turn needed.**
 - **END TURN verifies LIVE integration.** Two cases: (1) the engine parts we will not replace can SEE the new cascade
   data; (2) the parts we will replace — `canTrain`/`canConstruct` and the modifier rates — produce the right values in
-  the AI's real per-turn calls (end-turn so the AI calls them), observed via `/computed/can*` and the rate endpoints.
+  the AI's real per-turn calls (end-turn so the AI calls them), observed on the spine — the gate and rate routes are gone.
   Consumers — engine, AI and Python alike — read the NEW uniform parameterized surface
   ([DEC-new-getter-surface](../architecture/decisions.md#dec-new-getter-surface)), so every layer observes the same
   values because it reads the same slots, not because a legacy contract was held stable underneath it.
