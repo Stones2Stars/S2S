@@ -14,6 +14,12 @@ import RevInstances
 GC = CyGlobalContext()
 INFO = CyInfo()
 STATE = CyState()
+
+# The yield/commerce ICON tokens, in ENGINE ENUM ORDER. A font glyph is text-plane rather than info data
+# ([patterns.md] THE PYTHON READ BOUNDARY), so the icon is asked of the translator, which expands each of these
+# inline. Kept here, at the presentation layer, because that is where the enum -> icon choice belongs.
+ICON_TOKEN_YIELD    = ("[ICON_FOOD]", "[ICON_PRODUCTION]", "[ICON_COMMERCE]")
+ICON_TOKEN_COMMERCE = ("[ICON_GOLD]", "[ICON_RESEARCH]", "[ICON_CULTURE]", "[ICON_ESPIONAGE]")
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 ENGINE = CyEngine()
@@ -184,14 +190,25 @@ class CvMainInterface:
 			self.iconGreatPeople		= u'%c' % GAME.getSymbolID(FontSymbols.GREAT_PEOPLE_CHAR)
 			self.iconDefense			= u'%c' % GAME.getSymbolID(FontSymbols.DEFENSE_CHAR)
 			# Yield icons
+			# A font GLYPH is TEXT-plane, not info data: it is a runtime GameFont slot the symbol pass assigns,
+			# and the translator already expands each one as an inline [ICON_*] token
+			# ([patterns.md] THE PYTHON READ BOUNDARY). So the icon comes from the text layer that owns it --
+			# no info accessor is involved, and none needs reviving. The lists stay indexed by the engine enum
+			# so every consumer keeps indexing them the same way.
 			aList1 = []
 			for i in xrange(YieldTypes.NUM_YIELD_TYPES):
-				aList1.append(u'%c' % GC.getYieldInfo(i).getChar())
+				if i < len(ICON_TOKEN_YIELD):
+					aList1.append(TRNSLTR.getText(ICON_TOKEN_YIELD[i], ()))
+				else:
+					aList1.append(u"")
 			self.iconYieldList = list(aList1)
 			# Commerce icons
 			aList1 = []
 			for i in xrange(CommerceTypes.NUM_COMMERCE_TYPES):
-				aList1.append(u'%c' % GC.getCommerceInfo(i).getChar())
+				if i < len(ICON_TOKEN_COMMERCE):
+					aList1.append(TRNSLTR.getText(ICON_TOKEN_COMMERCE[i], ()))
+				else:
+					aList1.append(u"")
 			self.iconCommerceList = list(aList1)
 			# Religion icons
 			aList1 = []

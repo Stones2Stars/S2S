@@ -177,6 +177,16 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <C
   under-reports, which is exactly how the prose case hid. ⛔ If it fires, decide which SIDE is right — a member
   whose only writer is `applyEvent` is genuine one-shot event state that CORRECTLY stays serialized, so there
   the ENTRY is the defect ([save.md §3](docs/specs/save.md)).
+- **Python 2.4 syntax: `python Tools/verify-python24.py`** — the embedded interpreter is **Python 2.4**
+  ([engine.md](docs/reference/engine.md)), so anything newer is a **SyntaxError at IMPORT**, and an import failure
+  does not fail politely: every module on the engine's entry chain (`CvEventInterface` → `BugEventManager` →
+  `CvEventManager` → `CvScreensInterface`) must import cleanly before **ANY** callback fires, so one bad line
+  silently severs the whole engine→Python direction. ⚑ The trap it exists for is the **conditional expression**
+  (`X if C else Y`, Python 2.5+): it is valid in every Python an agent has ever written, is invalid here, and
+  reads as completely ordinary — it was written into the tree once and **very nearly a second time in the same
+  session**, which is why this is a check and not a rule ("a rule has to be remembered; a check does not").
+  Also catches `with`, `except X as e`, `"...".format()`, and dict/set comprehensions. ⛔ If it fires, rewrite the
+  line for 2.4 — never widen the tool.
 - **Worklist docs: `python Tools/verify-worklist-docs.py`** — fails `todo.md` / `roadmap.md` when they carry
   STATE (counts, censuses, `file:line`, recorded verifications, completion markers). ⚑ It exists because
   [DEC-spec-plus-todo](docs/architecture/decisions.md#dec-spec-plus-todo) was in place and ignored anyway: the
