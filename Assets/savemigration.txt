@@ -1274,3 +1274,17 @@ absent the reader's sentinel (-1) re-seeds base strength from the unit's type, s
 strength; the only loss is a WorldBuilder per-unit strength override, which reverts to the unit's type base.
 
 CvUnit::m_iBaseCombat                      (int)
+
+========================
+2026-08-03 - two CvUnit accumulators were HARD-DELETED without their tags being listed here, which is the one
+failure the format cannot absorb (save.md par.3): the reader never consumes the orphan, Expect() reads the
+mismatch as "code ahead of stream", and every later read in that object slides onto the wrong tuple. Both were
+found by the load itself -- the stream named m_iExtraVisibilityRange as the tag blocking fifteen consecutive
+CvUnit reads -- rather than by the compiler, which cannot see a member that no longer exists.
+| REPLACEMENT (visibility): the unit's sight is the `vision` family -- strength from the unit + its promotions,
+| elevation from the ground it stands on ([vision.md] par.1/par.2). There is no per-unit accumulator to re-home.
+| REPLACEMENT (poison): none -- `poison` is an inert/edge unit flag ruled OUT of the modifier families
+| ([legacy-value-calc-map.md] par.8), so the value is dropped rather than served.
+
+CvUnit::m_iExtraVisibilityRange            (int)
+CvUnit::m_iExtraPoisonProbabilityModifier  (int)

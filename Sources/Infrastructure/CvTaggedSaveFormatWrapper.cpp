@@ -4035,6 +4035,7 @@ CvTaggedSaveFormatWrapper::Expect(const char* name, SaveValueType type, SaveValu
 			//	now has added fields to the serialisation of the current object.  These
 			//	are skipped and it is assumed that their default initialization suffices
 			//	to provide default semantics
+			sm_reportMismatch(normalizedName.c_str(), m_idDictionary[m_iNextElementNameId].m_name.c_str());
 			return false;
 		}
 	}
@@ -4045,6 +4046,45 @@ CvTaggedSaveFormatWrapper::Expect(const char* name, SaveValueType type, SaveValu
 		//	extra elements.  Thes will continue to be skipped until synchronisation is re-acquired
 		return false;
 	}
+}
+
+// ⚑ THE DESYNC INSTRUMENT. A mismatch on its own is NORMAL -- a soft-added field the old save never wrote
+// returns false here and the next read matches (save.md §2). What is NOT normal is the SAME stream tag failing
+// against many DIFFERENT expected names: that is an orphan nobody consumed, sitting at the head of the stream
+// while every later read slides past it (save.md §3, the one hard failure). So the signature to look for in
+// SaveRead.log is one `got=` repeated down the file -- the LAST `expected=` before it starts repeating is the
+// read that should have drained it. Capped, and it only ever fires on the failing path.
+void CvTaggedSaveFormatWrapper::sm_reportMismatch(const char* szExpected, const char* szInStream)
+{
+	// A loop that reads N elements of a no-longer-written member fails N times against the SAME head tag, which
+	// is a storm of one fact. Collapse consecutive repeats of the same (expected, got) pair to one line with a
+	// count, so the SEQUENCE stays readable and a genuine second orphan cannot hide behind the first one's noise.
+	static int s_reported = 0;
+	static std::string s_lastPair;
+	static int s_run = 0;
+	if (gDLL == NULL)
+	{
+		return;
+	}
+	const std::string pair = std::string(szExpected) + "\x1f" + szInStream;
+	if (pair == s_lastPair)
+	{
+		++s_run;
+		return;
+	}
+	if (s_run > 0)
+	{
+		gDLL->logMsg("SaveRead.log", CvString::format("    ... x%d more", s_run).c_str(), false, false);
+	}
+	s_run = 0;
+	s_lastPair = pair;
+	if (s_reported >= 4000)
+	{
+		return;
+	}
+	++s_reported;
+	gDLL->logMsg("SaveRead.log",
+		CvString::format("[SAVEREAD] mismatch expected=%s got=%s", szExpected, szInStream).c_str(), false, false);
 }
 
 void CvTaggedSaveFormatWrapper::ConsumeBytes(int numBytes) const

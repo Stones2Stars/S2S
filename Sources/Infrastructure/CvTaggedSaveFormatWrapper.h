@@ -289,6 +289,9 @@ private:
 	//	member would otherwise need (save.md §8). On a match the caller reads m_iNextElementType to learn
 	//	which form the stream actually holds, and converts.
 	bool		Expect(const char* name, SaveValueType type, SaveValueType eAlsoAcceptNarrow);
+	//	The DESYNC instrument -- names (expected, in-stream) on a tag mismatch, capped. See the .cpp for the
+	//	signature that separates a harmless soft-add from an unconsumed orphan.
+	static void	sm_reportMismatch(const char* szExpected, const char* szInStream);
 	void		SkipElement();
 	void		ConsumeBytes(int numBytes) const;
 	void		ReadDictionaryElement();

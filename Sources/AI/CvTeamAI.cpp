@@ -3455,8 +3455,14 @@ void CvTeamAI::read(FDataStreamBase* pStream)
 	WRAPPER_READ_ARRAY(wrapper, "CvTeamAI", MAX_TEAMS, m_aiEnemyPeacetimeGrantValue);
 	WRAPPER_READ_ARRAY(wrapper, "CvTeamAI", MAX_TEAMS, (int*)m_aeWarPlan);
 
+	// ⛔ THE TAG IS THE MEMBER'S NAME, NOT THE LOCAL'S. WRAPPER_READ/WRITE stringify their ARGUMENT, so reading
+	// into a scratch `int` silently renames the tag: the writer emits `m_eWorstEnemy` while a bare
+	// WRAPPER_READ(&iWorstEnemy) asks for `iWorstEnemy`, and the two can never match. Nothing then consumes the
+	// written element, so it sits at the head of the stream and EVERY later read slides past it -- the
+	// unconsumed-orphan desync (save.md §3), and CvTeamAI is read early enough to poison the players and cities
+	// that follow. The DECORATED form pins the tag to the member so the scratch local cannot rename it.
 	int iWorstEnemy = -1;
-	WRAPPER_READ(wrapper, "CvTeamAI", &iWorstEnemy);
+	WRAPPER_READ_DECORATED(wrapper, "CvTeamAI", &iWorstEnemy, "m_eWorstEnemy");
 	m_eWorstEnemy = (TeamTypes)iWorstEnemy;
 
 	//	Koshling - defend against apparent corrupt states (that have been observed)

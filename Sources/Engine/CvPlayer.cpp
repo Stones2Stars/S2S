@@ -8490,7 +8490,7 @@ int CvPlayer::unitsGoldenAgeReady() const
 	PROFILE_FUNC();
 
 	bool* pabUnitUsed;
-	int iCount;
+	int iCount = 0;
 	int iI;
 
 	pabUnitUsed = new bool[GC.getNumUnitInfos()];
@@ -16455,7 +16455,7 @@ void CvPlayer::doWarnings()
 	CvCity* pNearestCity;
 	CvPlot* pLoopPlot;
 	wchar_t szBuffer[1024];
-	int iMaxCount;
+	int iMaxCount = 0;
 	int iI;
 
 	//update enemy unit in your territory glow
@@ -16956,8 +16956,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		while(iNumBuildingTypes-- > 0)
 		{
 			int	eBuilding;
-			int iConstructionCount;
-
+			int iConstructionCount = 0;
 			WRAPPER_READ(wrapper, "CvPlayer", &eBuilding);
 			WRAPPER_READ(wrapper, "CvPlayer", &iConstructionCount);
 			eBuilding = wrapper.getNewClassEnumValue(REMAPPED_CLASS_TYPE_BUILDINGS, eBuilding, true);
@@ -17184,6 +17183,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 			m_cityNames.clear();
 			CvWString szBuffer;
 			uint iSize;
+			iSize = 0;
 			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "numCities");
 			for (uint i = 0; i < iSize; i++)
 			{
@@ -17192,7 +17192,8 @@ void CvPlayer::read(FDataStreamBase* pStream)
 			}
 		}
 
-		int iSize;
+		int iSize = 0;
+		iSize = 0;
 		WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "NUM_MAPS");
 
 		for (int i = 0; i < iSize; i++)
@@ -17227,6 +17228,29 @@ void CvPlayer::read(FDataStreamBase* pStream)
 			}
 		}
 		ReadStreamableFFreeListTrashArray(m_eventsTriggered, pStream);
+
+		// The DROP half of the allow-missing identity read (save.md §7). A record whose EVENTTRIGGER Type no
+		// longer exists resolves to NO_EVENTTRIGGER, and keeping it would register a live object pointing at
+		// nothing -- so the OWNER removes it here, which is the sweep the per-object read() structurally cannot
+		// do for itself. This is what makes an EVENTTRIGGER Type deletable at all: without it, removing one
+		// refuses the entire save ("not compatible due to missing class ..."), which is how a content ruling
+		// ended up unloadable rather than merely lossy.
+		// ⚠ Collect first, erase second: removeAt() mutates the free list the iterator is walking.
+		{
+			std::vector<int> aOrphaned;
+			int iIter = 0;
+			for (const EventTriggeredData* pData = firstEventTriggered(&iIter); pData != NULL; pData = nextEventTriggered(&iIter))
+			{
+				if (pData->m_eTrigger == NO_EVENTTRIGGER)
+				{
+					aOrphaned.push_back(pData->getID());
+				}
+			}
+			for (std::vector<int>::const_iterator it = aOrphaned.begin(); it != aOrphaned.end(); ++it)
+			{
+				m_eventsTriggered.removeAt(*it);
+			}
+		}
 
 		std::map<CvUnit*,bool> unitsPresent;
 
@@ -17284,6 +17308,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 
 		{
 			CvMessageQueue::_Alloc::size_type iSize;
+			iSize = 0;
 			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "numListGameMessages");
 			for (CvMessageQueue::_Alloc::size_type i = 0; i < iSize; i++)
 			{
@@ -17296,6 +17321,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		{
 			clearPopups();
 			CvPopupQueue::_Alloc::size_type iSize;
+			iSize = 0;
 			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "numPopups");
 			for (CvPopupQueue::_Alloc::size_type i = 0; i < iSize; i++)
 			{
@@ -17316,6 +17342,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		{
 			clearDiplomacy();
 			CvDiploQueue::_Alloc::size_type iSize;
+			iSize = 0;
 			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "numDiploParams");
 			for (CvDiploQueue::_Alloc::size_type i = 0; i < iSize; i++)
 			{
@@ -17330,6 +17357,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 
 		{
 			uint iSize;
+			iSize = 0;
 			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "numScoreHistEntries");
 			for (uint i = 0; i < iSize; i++)
 			{
@@ -17344,6 +17372,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		{
 			m_mapEconomyHistory.clear();
 			uint iSize;
+			iSize = 0;
 			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "numEconHistEntries");
 			for (uint i = 0; i < iSize; i++)
 			{
@@ -17358,6 +17387,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		{
 			m_mapIndustryHistory.clear();
 			uint iSize;
+			iSize = 0;
 			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "numIndHistEntries");
 			for (uint i = 0; i < iSize; i++)
 			{
@@ -17372,6 +17402,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		{
 			m_mapAgricultureHistory.clear();
 			uint iSize;
+			iSize = 0;
 			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "numAgriHistEntries");
 			for (uint i = 0; i < iSize; i++)
 			{
@@ -17386,6 +17417,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		{
 			m_mapPowerHistory.clear();
 			uint iSize;
+			iSize = 0;
 			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "numPowerHistEntries");
 			for (uint i = 0; i < iSize; i++)
 			{
@@ -17400,6 +17432,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		{
 			m_mapCultureHistory.clear();
 			uint iSize;
+			iSize = 0;
 			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "numCultHistEntries");
 			for (uint i = 0; i < iSize; i++)
 			{
@@ -17414,6 +17447,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		{
 			m_mapEspionageHistory.clear();
 			uint iSize;
+			iSize = 0;
 			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "numEspHistEntries");
 			for (uint i = 0; i < iSize; i++)
 			{
@@ -17429,6 +17463,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		{
 			m_mapRevolutionStabilityHistory.clear();
 			uint iSize;
+			iSize = 0;
 			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "numRevHistEntries");
 			for (uint i = 0; i < iSize; i++)
 			{
@@ -17444,6 +17479,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		{
 			m_mapEventsOccured.clear();
 			uint iSize;
+			iSize = 0;
 			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "numEventsOcurred");
 			for (uint i = 0; i < iSize; i++)
 			{
@@ -17462,6 +17498,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		{
 			m_mapEventCountdown.clear();
 			uint iSize;
+			iSize = 0;
 			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "numCountdownEvents");
 			for (uint i = 0; i < iSize; i++)
 			{
@@ -17476,6 +17513,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		{
 			m_aFreeUnitCombatPromotions.clear();
 			uint iSize;
+			iSize = 0;
 			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "numFreeCombatPromotions");
 			for (uint i = 0; i < iSize; i++)
 			{
@@ -17494,6 +17532,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		{
 			m_aFreeUnitPromotions.clear();
 			uint iSize;
+			iSize = 0;
 			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "numFreeUnitPromotions");
 			for (uint i = 0; i < iSize; i++)
 			{
@@ -17512,6 +17551,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		{
 			m_aVote.clear();
 			uint iSize;
+			iSize = 0;
 			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "numVotes");
 			for (uint i = 0; i < iSize; i++)
 			{
@@ -17526,6 +17566,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		{
 			m_aUnitExtraCosts.clear();
 			uint iSize;
+			iSize = 0;
 			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "numUnitCosts");
 			for (uint i = 0; i < iSize; i++)
 			{
@@ -17544,6 +17585,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		{
 			m_triggersFired.clear();
 			uint iSize;
+			iSize = 0;
 			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "numEventTriggers");
 			for (uint i = 0; i < iSize; i++)
 			{
@@ -17645,17 +17687,13 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		//TB Traits begin
 		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_IMPROVEMENTS, GC.getNumImprovementInfos(), m_paiBuildWorkerSpeedModifierSpecific);
 
+		// The CvCity twin of this loop, one scope up: m_ppaaiSpecialistExtraCommerce was cut and both branches
+		// left empty, so an older save's elements sat unconsumed and desynced everything after them (save.md §3).
+		// Its YIELD twin earlier in this function is still LIVE and reads normally.
 		for (int i = 0; i < wrapper.getNumClassEnumValues(REMAPPED_CLASS_TYPE_SPECIALISTS); ++i)
 		{
-			int	iI = wrapper.getNewClassEnumValue(REMAPPED_CLASS_TYPE_SPECIALISTS, i, true);
-
-			if ( iI != -1 )
-			{
-			}
-			else
-			{
-				//	Consume the values
-			}
+			wrapper.getNewClassEnumValue(REMAPPED_CLASS_TYPE_SPECIALISTS, i, true);
+			WRAPPER_SKIP_ELEMENT(wrapper, "CvPlayer", m_ppaaiSpecialistExtraCommerce[iI], SAVE_VALUE_TYPE_INT_ARRAY);
 		}
 		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_TRAITS, GC.getNumTraitInfos(), m_pabHasTrait);
 		// Reseed: the player's held traits (a wholesale-array read, so the per-fact loop lives HERE, inside read()).
@@ -17714,13 +17752,14 @@ void CvPlayer::read(FDataStreamBase* pStream)
 
 		// Toffer - Read maps
 		{
-			short iSize;
+			short iSize = 0;
 			short iType;
-			char cCount;
-			int iCount;
-			uint16_t sCountU;
-			uint32_t iCountU;
+			char cCount = 0;
+			int iCount = 0;
+			uint16_t sCountU = 0;
+			uint32_t iCountU = 0;
 			// Bonus counters
+			iSize = 0;
 			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "iBonusExportSize");
 			while (iSize-- > 0)
 			{
@@ -17734,6 +17773,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 				}
 			}
 
+			iSize = 0;
 			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "iBonusImportSize");
 			while (iSize-- > 0)
 			{
@@ -17747,6 +17787,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 				}
 			}
 
+			iSize = 0;
 			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "iBonusMintedPercentSize");
 			while (iSize-- > 0)
 			{
@@ -17761,6 +17802,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 			}
 			// Building counters
 
+			iSize = 0;
 			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "iBuildingMakingSize");
 			while (iSize-- > 0)
 			{
@@ -17774,6 +17816,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 				}
 			}
 
+			iSize = 0;
 			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "iExtraBuildingHappinessSize");
 			while (iSize-- > 0)
 			{
@@ -17787,6 +17830,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 				}
 			}
 
+			iSize = 0;
 			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "iExtraBuildingHealthSize");
 			while (iSize-- > 0)
 			{
@@ -17800,6 +17844,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 				}
 			}
 
+			iSize = 0;
 			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "iBuildingProductionModSize");
 			while (iSize-- > 0)
 			{
@@ -17813,6 +17858,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 				}
 			}
 
+			iSize = 0;
 			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "iBuildingCostModSize");
 			while (iSize-- > 0)
 			{
@@ -17826,6 +17872,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 				}
 			}
 			// Unit counters
+			iSize = 0;
 			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "iUnitCountSize");
 			while (iSize-- > 0)
 			{
@@ -17839,6 +17886,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 				}
 			}
 
+			iSize = 0;
 			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "iUnitMakingSize");
 			while (iSize-- > 0)
 			{
@@ -17852,6 +17900,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 				}
 			}
 
+			iSize = 0;
 			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "iGreatGeneralPointsTypeSize");
 			while (iSize-- > 0)
 			{
@@ -17865,6 +17914,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 				}
 			}
 
+			iSize = 0;
 			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "iGoldenAgeOnBirthOfGreatPersonCountSize");
 			while (iSize-- > 0)
 			{
@@ -17878,6 +17928,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 				}
 			}
 
+			iSize = 0;
 			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "iGreatPeopleRateforUnitSize");
 			while (iSize-- > 0)
 			{
@@ -17891,6 +17942,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 				}
 			}
 
+			iSize = 0;
 			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "iUnitProductionModSize");
 			while (iSize-- > 0)
 			{
@@ -17904,6 +17956,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 				}
 			}
 			// Unit-Combat counters
+			iSize = 0;
 			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "iUnitCombatProductionModSize");
 			while (iSize-- > 0)
 			{
@@ -17918,6 +17971,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 			}
 
 			// Unit counters
+			iSize = 0;
 			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "UnitCountSMSize");
 			while (iSize-- > 0)
 			{
@@ -17951,6 +18005,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		{
 			m_myHeritage.clear();
 			uint iSize = 0;
+			iSize = 0;
 			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "numHeritage");
 			for (uint i = 0; i < iSize; i++)
 			{
@@ -17978,6 +18033,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		// Read Vector
 		{
 			uint iSize = 0;
+			iSize = 0;
 			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "numCommandFieldPlots");
 			for (uint i = 0; i < iSize; i++)
 			{
@@ -17993,6 +18049,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		}
 		{
 			uint iSize = 0;
+			iSize = 0;
 			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "numCommodoreFieldPlots");
 			for (uint i = 0; i < iSize; i++)
 			{

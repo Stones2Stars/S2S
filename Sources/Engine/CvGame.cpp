@@ -8675,6 +8675,7 @@ void CvGame::read(FDataStreamBase* pStream)
 		uint iSize;
 
 		m_aszDestroyedCities.clear();
+		iSize = 0;
 		WRAPPER_READ_DECORATED(wrapper,"CvGame",&iSize,"DestroyedCityCount");
 		for (uint i = 0; i < iSize; i++)
 		{
@@ -8683,6 +8684,7 @@ void CvGame::read(FDataStreamBase* pStream)
 		}
 
 		m_aszGreatPeopleBorn.clear();
+		iSize = 0;
 		WRAPPER_READ_DECORATED(wrapper,"CvGame",&iSize,"GreatPeopleBornCount");
 		for (uint i = 0; i < iSize; i++)
 		{
@@ -8722,8 +8724,9 @@ void CvGame::read(FDataStreamBase* pStream)
 
 	// @SAVEBREAK delete
 	{
-		unsigned int iSize;
+		unsigned int iSize = 0;
 		m_aPlotExtraYields.clear();
+		iSize = 0;
 		WRAPPER_READ_DECORATED(wrapper,"CvGame",&iSize,"PlotYieldCount");
 		for (unsigned int i = 0; i < iSize; ++i)
 		{
@@ -8735,8 +8738,9 @@ void CvGame::read(FDataStreamBase* pStream)
 	// !SAVEBREAK
 
 	{
-		unsigned int iSize;
+		unsigned int iSize = 0;
 		m_mapVoteSourceReligions.clear();
+		iSize = 0;
 		WRAPPER_READ_DECORATED(wrapper,"CvGame",&iSize,"VoteSourceReligionsCount");
 		for (unsigned int i = 0; i < iSize; ++i)
 		{
@@ -8753,8 +8757,9 @@ void CvGame::read(FDataStreamBase* pStream)
 	}
 
 	{
-		unsigned int iSize;
+		unsigned int iSize = 0;
 		m_aeInactiveTriggers.clear();
+		iSize = 0;
 		WRAPPER_READ_DECORATED(wrapper,"CvGame",&iSize,"InactiveTriggersCount");
 		for (unsigned int i = 0; i < iSize; ++i)
 		{

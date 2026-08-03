@@ -12651,6 +12651,12 @@ void CvCity::readBody(FDataStreamBase* pStream)
 		}
 	}
 
+	// ⛔ PRE-ZERO BEFORE EVERY ONE OF THESE READS. Six drain blocks share the single `CvCity::iNumElts` tag, and a
+	// tag the stream does not carry leaves its variable UNTOUCHED (save.md §2) -- so without this the block
+	// inherits the PREVIOUS block's count and drains elements that were never written. The two blocks below then
+	// read RAW off pStream, so a stale count walks the raw stream off its position and the garbage it returns is
+	// what finally throws. (The last block already guarded itself; the four here did not.)
+	iNumElts = 0;
 	WRAPPER_READ(wrapper, "CvCity", &iNumElts);
 	m_aBuildingYieldChange.clear();
 	for (unsigned int i = 0; i < iNumElts; ++i)
@@ -12664,6 +12670,7 @@ void CvCity::readBody(FDataStreamBase* pStream)
 		}
 	}
 
+	iNumElts = 0;
 	WRAPPER_READ(wrapper, "CvCity", &iNumElts);
 	m_aBuildingCommerceChange.clear();
 	for (unsigned int i = 0; i < iNumElts; ++i)
@@ -12677,6 +12684,25 @@ void CvCity::readBody(FDataStreamBase* pStream)
 		}
 	}
 
+	// ⛔ DRAIN the event/vote per-building commerce store. It was serialized as its own DECORATED count tag
+	// followed by N RAW pStream records, and the rebuild's revert-to-main removed the READER while saves written
+	// before that still carry it. Unconsumed, the count tag parks at the head of the stream and every later read
+	// in this object slides past it (save.md §3) -- which is what corrupted the NEXT city's m_eOwner and sent
+	// BuildingEnabler::onCityCreated through a wild GET_PLAYER/GET_TEAM.
+	// ⚑ savemigration.txt CANNOT serve this one: it would drain the COUNT and leave the untagged records behind,
+	// so the drain LOOP is the mechanism (save.md §4, the PropertySpawns precedent below).
+	// ⚑ A save that never wrote it leaves the count 0 and the loop is a no-op (save.md §2).
+	{
+		unsigned int iNumEltsBCCEvents = 0;
+		WRAPPER_READ_DECORATED(wrapper, "CvCity", &iNumEltsBCCEvents, "iNumEltsBCCEvents");
+		for (unsigned int i = 0; i < iNumEltsBCCEvents; ++i)
+		{
+			BuildingCommerceChange kDrain;
+			kDrain.read(pStream);
+		}
+	}
+
+	iNumElts = 0;
 	WRAPPER_READ(wrapper, "CvCity", &iNumElts);
 	m_aBuildingHappyChange.clear();
 	for (unsigned int i = 0; i < iNumElts; ++i)
@@ -12692,6 +12718,7 @@ void CvCity::readBody(FDataStreamBase* pStream)
 		}
 	}
 
+	iNumElts = 0;
 	WRAPPER_READ(wrapper, "CvCity", &iNumElts);
 	m_aBuildingHealthChange.clear();
 	for (unsigned int i = 0; i < iNumElts; ++i)
@@ -12758,17 +12785,17 @@ void CvCity::readBody(FDataStreamBase* pStream)
 		PropertySpawns kDrain;
 		kDrain.read(pStream);
 	}
+	// ⛔ m_ppaaiLocalSpecialistExtraCommerce went with the accumulator cut, but an older save still holds one
+	// element per specialist -- and BOTH branches were left empty, so NOTHING consumed them. An unconsumed orphan
+	// desyncs every later read in the object (save.md §3), and here it ran past the end of this city into the
+	// NEXT one's m_eOwner: BuildingEnabler::onCityCreated then resolved GET_PLAYER -> GET_TEAM through a garbage
+	// id and called isHasTech on a wild CvTeam.
+	// ⚑ Its YIELD twin above is still LIVE and correctly reads; only the COMMERCE side was cut, which is why the
+	// two loops look alike and only one of them is a drain.
 	for (int i = 0; i < wrapper.getNumClassEnumValues(REMAPPED_CLASS_TYPE_SPECIALISTS); ++i)
 	{
-		int	iI = wrapper.getNewClassEnumValue(REMAPPED_CLASS_TYPE_SPECIALISTS, i, true);
-
-		if (iI != -1)
-		{
-		}
-		else
-		{
-			//	Consume the values
-		}
+		wrapper.getNewClassEnumValue(REMAPPED_CLASS_TYPE_SPECIALISTS, i, true);
+		WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_ppaaiLocalSpecialistExtraCommerce[iI], SAVE_VALUE_TYPE_INT_ARRAY);
 	}
 	WRAPPER_READ(wrapper, "CvCity", &m_bVisibilitySetup);
 	m_bVisibilitySetup = false;
@@ -12798,24 +12825,24 @@ void CvCity::readBody(FDataStreamBase* pStream)
 
 	// Toffer - Read vectors
 	{
-		short iType;
+		short iType = 0;
 		{
-			uint16_t iCityOutputHistorySize;
+			uint16_t iCityOutputHistorySize = 0;
 			WRAPPER_READ_DECORATED(wrapper, "CvCity", &iCityOutputHistorySize, "CityOutputHistorySize");
 
 			for (uint16_t iI = 0; iI < iCityOutputHistorySize; iI++)
 			{
-				uint32_t iTurn;
+				uint32_t iTurn = 0;
 				WRAPPER_READ_DECORATED(wrapper, "CvCity", &iTurn, "RecentOutputTurn");
 				m_outputHistory.setRecentOutputTurn(iI, iTurn);
 
-				uint16_t iCityOutputHistoryNumEntries;
+				uint16_t iCityOutputHistoryNumEntries = 0;
 				WRAPPER_READ_DECORATED(wrapper, "CvCity", &iCityOutputHistoryNumEntries, "CityOutputHistoryNumEntries");
 
 				for (uint16_t iJ = 0; iJ < iCityOutputHistoryNumEntries; iJ++)
 				{
-					uint16_t iOrderType;
-					uint16_t iType;
+					uint16_t iOrderType = 0;
+					uint16_t iType = 0;
 					WRAPPER_READ_DECORATED(wrapper, "CvCity", &iOrderType, "OrderType");
 					WRAPPER_READ_DECORATED(wrapper, "CvCity", &iType, "Type");
 
@@ -12823,10 +12850,11 @@ void CvCity::readBody(FDataStreamBase* pStream)
 				}
 			}
 		}
-		short iSize;
+		short iSize = 0;
 
 		// Buildings
 
+		iSize = 0;
 		WRAPPER_READ_DECORATED(wrapper, "CvCity", &iSize, "BuildingProgressSize");
 		for (short i = 0; i < iSize; ++i)
 		{
@@ -12841,6 +12869,7 @@ void CvCity::readBody(FDataStreamBase* pStream)
 			}
 		}
 
+		iSize = 0;
 		WRAPPER_READ_DECORATED(wrapper, "CvCity", &iSize, "DelayOnBuildingSize");
 		for (short i = 0; i < iSize; ++i)
 		{
@@ -12856,6 +12885,7 @@ void CvCity::readBody(FDataStreamBase* pStream)
 		}
 
 		// Units
+		iSize = 0;
 		WRAPPER_READ_DECORATED(wrapper, "CvCity", &iSize, "UnitProgressSize");
 		for (short i = 0; i < iSize; ++i)
 		{
@@ -12870,14 +12900,16 @@ void CvCity::readBody(FDataStreamBase* pStream)
 			}
 		}
 
+		iSize = 0;
 		WRAPPER_READ_DECORATED(wrapper, "CvCity", &iSize, "WorkersSize");
 		for (short i = 0; i < iSize; ++i)
 		{
-			int iUnitID;
+			int iUnitID = 0;
 			WRAPPER_READ_DECORATED(wrapper, "CvCity", &iUnitID, "WorkerUnitID");
 			m_workers.push_back(iUnitID);
 		}
 
+		iSize = 0;
 		WRAPPER_READ_DECORATED(wrapper, "CvCity", &iSize, "DelayOnUnitSize");
 		for (short i = 0; i < iSize; ++i)
 		{
@@ -12893,6 +12925,7 @@ void CvCity::readBody(FDataStreamBase* pStream)
 		}
 
 		// Bonuses
+		iSize = 0;
 		WRAPPER_READ_DECORATED(wrapper, "CvCity", &iSize, "CorpBonusProductionSize");
 		for (short i = 0; i < iSize; ++i)
 		{
@@ -12909,12 +12942,12 @@ void CvCity::readBody(FDataStreamBase* pStream)
 	}
 	// Toffer - Read maps
 	{
-		short iSize;
-		short iType;
-		int iCount;
-		uint16_t sCountU;
-
+		short iSize = 0;
+		short iType = 0;
+		int iCount = 0;
+		uint16_t sCountU = 0;
 		// Bonus
+		iSize = 0;
 		WRAPPER_READ_DECORATED(wrapper, "CvCity", &iSize, "BonusDefenseChangesSize");
 		while (iSize-- > 0)
 		{
@@ -12929,6 +12962,7 @@ void CvCity::readBody(FDataStreamBase* pStream)
 		}
 
 		// Building
+		iSize = 0;
 		WRAPPER_READ_DECORATED(wrapper, "CvCity", &iSize, "BuildingProductionModSize");
 		while (iSize-- > 0)
 		{
@@ -12945,6 +12979,7 @@ void CvCity::readBody(FDataStreamBase* pStream)
 		{
 		}
 
+		iSize = 0;
 		WRAPPER_READ_DECORATED(wrapper, "CvCity", &iSize, "BuildingLedgerSize");
 		while (iSize-- > 0)
 		{
@@ -12973,6 +13008,7 @@ void CvCity::readBody(FDataStreamBase* pStream)
 		}
 
 		// Unit
+		iSize = 0;
 		WRAPPER_READ_DECORATED(wrapper, "CvCity", &iSize, "UnitProductionModSize");
 		while (iSize-- > 0)
 		{

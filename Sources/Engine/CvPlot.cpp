@@ -10369,8 +10369,7 @@ void CvPlot::read(FDataStreamBase* pStream)
 	PROFILE_EXTRA_FUNC();
 	int iI;
 	bool bVal;
-	int iCount;
-
+	int iCount = 0;
 	CvTaggedSaveFormatWrapper&	wrapper = CvTaggedSaveFormatWrapper::getSaveFormatWrapper();
 
 	wrapper.AttachToStream(pStream);
@@ -10726,8 +10725,7 @@ void CvPlot::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvPlot", &iPlayersWithDanger);
 	while ( iPlayersWithDanger-- > 0 )
 	{
-		int	iDangerCount;
-
+		int	iDangerCount = 0;
 		WRAPPER_READ(wrapper, "CvPlot", (uint*)&iI);
 		WRAPPER_READ_DECORATED(wrapper, "CvPlot", &iDangerCount, "DangerCount");
 
@@ -10798,7 +10796,9 @@ void CvPlot::read(FDataStreamBase* pStream)
 		uint8_t uType8 = 0;
 		uint16_t uCount16 = 0;
 
+		iSize = 0;
 		WRAPPER_READ_DECORATED(wrapper, "CvPlot", &iSize, "iCommanderCountSize");
+		iSize = 0;
 		WRAPPER_READ_DECORATED(wrapper, "CvPlot", &iSize, "iCommodoreCountSize");
 		while (iSize-- > 0)
 		{
@@ -10824,6 +10824,7 @@ void CvPlot::read(FDataStreamBase* pStream)
 		short iSize = 0;
 		short iType = -1;
 		// Building
+		iSize = 0;
 		WRAPPER_READ_DECORATED(wrapper, "CvPlot", &iSize, "CultureRatesThisTurnSize");
 		for (short i = 0; i < iSize; ++i)
 		{
@@ -10836,6 +10837,7 @@ void CvPlot::read(FDataStreamBase* pStream)
 				m_cultureRatesThisTurn.push_back(std::make_pair(static_cast<PlayerTypes>(iType), iValue));
 			}
 		}
+		iSize = 0;
 		WRAPPER_READ_DECORATED(wrapper, "CvPlot", &iSize, "CultureRatesLastTurnSize");
 		for (short i = 0; i < iSize; ++i)
 		{
@@ -10848,6 +10850,7 @@ void CvPlot::read(FDataStreamBase* pStream)
 				m_cultureRatesLastTurn.push_back(std::make_pair(static_cast<PlayerTypes>(iType), iValue));
 			}
 		}
+		iSize = 0;
 		WRAPPER_READ_DECORATED(wrapper, "CvPlot", &iSize, "InfluencedByCityByPlayerLastTurnSize");
 		for (short i = 0; i < iSize; ++i)
 		{
@@ -10858,6 +10861,7 @@ void CvPlot::read(FDataStreamBase* pStream)
 				m_influencedByCityByPlayerLastTurn.push_back(static_cast<PlayerTypes>(iType));
 			}
 		}
+		iSize = 0;
 		WRAPPER_READ_DECORATED(wrapper, "CvPlot", &iSize, "InfluencedByCityByPlayerSize");
 		for (short i = 0; i < iSize; ++i)
 		{
