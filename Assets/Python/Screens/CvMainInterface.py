@@ -2732,7 +2732,8 @@ class CvMainInterface:
 				screen.show("TradeRouteListLabel")
 			# Trade
 			aList = []
-			for iOwnerX, iCityX, iProfitTimes100 in STATE.getTradeRoutes(iCityOwner, iCityID):
+			for iRoute, aRoute in enumerate(STATE.getTradeRoutes(iCityOwner, iCityID)):
+				iOwnerX, iCityX, iProfitTimes100 = aRoute
 				iPlayerX = iOwnerX
 				if iPlayerX > -1:
 					if bYieldView:
@@ -4051,7 +4052,7 @@ class CvMainInterface:
 						bAlt = CyIF.getOrderNodeSave(0)
 						x = self.xMidL-146
 						bPre = STATE.getOrder(iCityOwner, iCityID)[CityOrderRead.ORDER_READ_PRODUCTION_PROGRESS] > 0
-						szTxt = self.aFontList[5] + str(STATE.getGeneralProductionTurnsLeft(iCityOwner, iCityID))
+						szTxt = self.aFontList[5] + str(aOrder[CityOrderRead.ORDER_READ_GENERAL_TURNS_LEFT])
 					else:
 						szTxt = ""
 				if szTxt:
@@ -4330,7 +4331,8 @@ class CvMainInterface:
 		screen.setHitTest("PopulationText", HitTestTypes.HITTEST_NOHIT)
 
 		aYields = STATE.getYields(iCityOwner, iCityID)
-		iFoodYield = aYields[YieldTypes.YIELD_FOOD]
+		# x100 native ([DEC-fixedpoint-x100]); it is compared against whole food counts, so it reduces here.
+		iFoodYield = aYields[YieldTypes.YIELD_FOOD] / 100
 		iFoodEaten = aGrowth[CityGrowthRead.GROWTH_READ_FOOD_CONSUMPTION]
 		if iFoodYield == iFoodEaten or bFoodProduction or STATE.getCityFlags(iCityOwner, iCityID)[CityFlagKind.CITY_FLAG_DISORDER]:
 			szTxt = TRNSLTR.getText("INTERFACE_CITY_FOOD_STAGNATE", (iFoodYield, iFoodYield))
@@ -4367,7 +4369,7 @@ class CvMainInterface:
 		bProcess = aOrder[CityOrderRead.ORDER_READ_TYPE] == OrderTypes.ORDER_MAINTAIN
 
 		if bProcess or STATE.getOrderQueueLength(iCityOwner, iCityID) < 1:
-			iProductionDiffNoFood = aYields[YieldTypes.YIELD_PRODUCTION]
+			iProductionDiffNoFood = aYields[YieldTypes.YIELD_PRODUCTION] / 100
 			if bProcess:
 				szTxt = STATE.getProductionName(iCityOwner, iCityID)
 			else:
