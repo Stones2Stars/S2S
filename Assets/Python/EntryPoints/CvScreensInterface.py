@@ -61,26 +61,26 @@ def numPlotListButtons(): return 0 # Called from exe
 
 def showTechChooser():
 	if CyGame().getActivePlayer() != -1:
-		screenMap[TECH_CHOOSER].interfaceScreen(TECH_CHOOSER)
+		getScreen(TECH_CHOOSER).interfaceScreen(TECH_CHOOSER)
 
 def showHallOfFame(argsList):
-	screenMap[HALL_OF_FAME].interfaceScreen(argsList[0])
+	getScreen(HALL_OF_FAME).interfaceScreen(argsList[0])
 
 def showCivicsScreen():
 	if CyGame().getActivePlayer() != -1:
-		screenMap[CIVICS_SCREEN].interfaceScreen()
+		getScreen(CIVICS_SCREEN).interfaceScreen()
 
 def showHeritageScreen():
 	if CyGame().getActivePlayer() != -1:
-		screenMap[HERITAGE_SCREEN].interfaceScreen()
+		getScreen(HERITAGE_SCREEN).interfaceScreen()
 
 def showReligionScreen():
 	if CyGame().getActivePlayer() != -1:
-		screenMap[RELIGION_SCREEN].interfaceScreen()
+		getScreen(RELIGION_SCREEN).interfaceScreen()
 
 def showCorporationScreen():
 	if CyGame().getActivePlayer() != -1:
-		screenMap[CORPORATION_SCREEN].interfaceScreen()
+		getScreen(CORPORATION_SCREEN).interfaceScreen()
 
 optionsScreen = CvOptionsScreen.CvOptionsScreen()
 def showOptionsScreen():
@@ -88,42 +88,42 @@ def showOptionsScreen():
 
 def showForeignAdvisorScreen(argsList):
 	if CyGame().getActivePlayer() != -1:
-		screenMap[FOREIGN_ADVISOR].interfaceScreen()
+		getScreen(FOREIGN_ADVISOR).interfaceScreen()
 
 def showFinanceAdvisor():
 	if CyGame().getActivePlayer() != -1:
-		screenMap[FINANCE_ADVISOR].interfaceScreen()
+		getScreen(FINANCE_ADVISOR).interfaceScreen()
 
 def showDomesticAdvisor(argsList):
 	if CyGame().getActivePlayer() != -1:
-		screenMap[DOMESTIC_ADVISOR].interfaceScreen()
+		getScreen(DOMESTIC_ADVISOR).interfaceScreen()
 
 def showMilitaryAdvisor():
 	if CyGame().getActivePlayer() != -1:
-		screenMap[MILITARY_ADVISOR].interfaceScreen()
+		getScreen(MILITARY_ADVISOR).interfaceScreen()
 
 def showEspionageAdvisor():
 	if CyGame().getActivePlayer() != -1:
-		screenMap[ESPIONAGE_ADVISOR].interfaceScreen()
+		getScreen(ESPIONAGE_ADVISOR).interfaceScreen()
 
 def showDawnOfMan(argsList):
-	screenMap[DAWN_OF_MAN].interfaceScreen(DAWN_OF_MAN)
+	getScreen(DAWN_OF_MAN).interfaceScreen(DAWN_OF_MAN)
 
 def showIntroMovie(argsList):
-	screenMap[INTRO_MOVIE_SCREEN].interfaceScreen()
+	getScreen(INTRO_MOVIE_SCREEN).interfaceScreen()
 
 def showVictoryMovie(argsList):
-	screenMap[VICTORY_MOVIE_SCREEN].interfaceScreen(argsList[0])
+	getScreen(VICTORY_MOVIE_SCREEN).interfaceScreen(argsList[0])
 
 def showWonderMovie(argsList):
-	screenMap[WONDER_MOVIE_SCREEN].interfaceScreen(argsList[0], argsList[1], argsList[2], WONDER_MOVIE_SCREEN)
+	getScreen(WONDER_MOVIE_SCREEN).interfaceScreen(argsList[0], argsList[1], argsList[2], WONDER_MOVIE_SCREEN)
 
 def showEraMovie(argsList):
-	screenMap[ERA_MOVIE_SCREEN].interfaceScreen(argsList[0])
+	getScreen(ERA_MOVIE_SCREEN).interfaceScreen(argsList[0])
 
 def showSpaceShip(argsList):
 	if CyGame().getActivePlayer() != -1:
-		screenMap[SPACE_SHIP_SCREEN].interfaceScreen(argsList[0])
+		getScreen(SPACE_SHIP_SCREEN).interfaceScreen(argsList[0])
 
 replayScreen = CvReplayScreen.CvReplayScreen(REPLAY_SCREEN)
 def showReplay(argsList):
@@ -132,7 +132,7 @@ def showReplay(argsList):
 	replayScreen.showScreen(argsList[4])
 
 def showDanQuayleScreen(argsList):
-	screenMap[DAN_QUAYLE_SCREEN].interfaceScreen()
+	getScreen(DAN_QUAYLE_SCREEN).interfaceScreen()
 
 unVictoryScreen = None
 def getUnVictoryScreen():
@@ -147,14 +147,14 @@ def showUnVictoryScreen(argsList):
 	getUnVictoryScreen().interfaceScreen()
 
 def showTopCivs():
-	screenMap[TOP_CIVS].showScreen()
+	getScreen(TOP_CIVS).showScreen()
 
 def showInfoScreen(argsList):
 	if CyGame().getActivePlayer() != -1:
-		screenMap[INFO_SCREEN].interfaceScreen(argsList[0], argsList[1])
+		getScreen(INFO_SCREEN).interfaceScreen(argsList[0], argsList[1])
 
 def showDebugInfoScreen():
-	screenMap[DEBUG_INFO_SCREEN].interfaceScreen()
+	getScreen(DEBUG_INFO_SCREEN).interfaceScreen()
 
 def configTechSplash(option=None, value=None):
 	if value is None:
@@ -173,11 +173,11 @@ def configTechSplash(option=None, value=None):
 def showTechSplash(argsList):
 	if TECH_SPLASH not in screenMap:
 		configTechSplash()
-	screenMap[TECH_SPLASH].interfaceScreen(argsList[0])
+	getScreen(TECH_SPLASH).interfaceScreen(argsList[0])
 
 def showVictoryScreen():
 	if CyGame().getActivePlayer() != -1:
-		screenMap[VICTORY_SCREEN].interfaceScreen()
+		getScreen(VICTORY_SCREEN).interfaceScreen()
 
 
 # RevolutionWatchAdvisor
@@ -204,98 +204,98 @@ def cityScreenRedraw():
 
 def showBuildListScreen():
 	if CyGame().getActivePlayer() != -1:
-		screenMap[BUILD_LIST_SCREEN].interfaceScreen()
+		getScreen(BUILD_LIST_SCREEN).interfaceScreen()
 
 def showForgetfulScreen():
-	screenMap[FORGETFUL_SCREEN].interfaceScreen(FORGETFUL_SCREEN)
+	getScreen(FORGETFUL_SCREEN).interfaceScreen(FORGETFUL_SCREEN)
 
 #################################################
 ## Pedia
 #################################################
 
 def linkToPedia(argsList):
-	screenMap[PEDIA].link(argsList)
+	getScreen(PEDIA).link(argsList)
 
 def pediaShow():
-	screenMap[PEDIA].pediaShow()
+	getScreen(PEDIA).pediaShow()
 
 def pediaBack():
-	screenMap[PEDIA].back()
+	getScreen(PEDIA).back()
 
 def pediaForward():
-	screenMap[PEDIA].forward()
+	getScreen(PEDIA).forward()
 
 def pediaJumpToBuilding(argsList):
-	screenMap[PEDIA].pediaJump(-3, "", argsList[0])
+	getScreen(PEDIA).pediaJump(-3, "", argsList[0])
 
 def pediaJumpToUnit(argsList):
 	if argsList[0] > -1:
-		screenMap[PEDIA].pediaJump(-2, "", argsList[0])
+		getScreen(PEDIA).pediaJump(-2, "", argsList[0])
 	else:
-		screenMap[PEDIA].pediaJump(10, "UnitCombat", argsList[0] + 100000)
+		getScreen(PEDIA).pediaJump(10, "UnitCombat", argsList[0] + 100000)
 
 def pediaMain(argsList):
-	screenMap[PEDIA].pediaJump(-1, "", argsList[0])
+	getScreen(PEDIA).pediaJump(-1, "", argsList[0])
 
 def pediaShowHistorical(argsList):
 	if argsList[0] == CivilopediaPageTypes.CIVILOPEDIA_PAGE_CONCEPT_NEW:
-		screenMap[PEDIA].pediaJump(0, "NEW", argsList[1])
+		getScreen(PEDIA).pediaJump(0, "NEW", argsList[1])
 	else:
-		screenMap[PEDIA].pediaJump(0, "", argsList[1])
+		getScreen(PEDIA).pediaJump(0, "", argsList[1])
 
 def pediaJumpToTech(argsList):
-	screenMap[PEDIA].pediaJump(1, "", argsList[0])
+	getScreen(PEDIA).pediaJump(1, "", argsList[0])
 
 def pediaJumpToPromotion(argsList):
-	screenMap[PEDIA].pediaJump(4, "", argsList[0])
+	getScreen(PEDIA).pediaJump(4, "", argsList[0])
 
 def pediaJumpToBonus(argsList):
-	screenMap[PEDIA].pediaJump(7, "", argsList[0])
+	getScreen(PEDIA).pediaJump(7, "", argsList[0])
 
 def pediaJumpToTerrain(argsList):
-	screenMap[PEDIA].pediaJump(8, "Terrain", argsList[0])
+	getScreen(PEDIA).pediaJump(8, "Terrain", argsList[0])
 
 def pediaJumpToFeature(argsList):
-	screenMap[PEDIA].pediaJump(8, "Feature", argsList[0])
+	getScreen(PEDIA).pediaJump(8, "Feature", argsList[0])
 
 def pediaJumpToImprovement(argsList):
-	screenMap[PEDIA].pediaJump(8, "Improvement", argsList[0])
+	getScreen(PEDIA).pediaJump(8, "Improvement", argsList[0])
 
 def pediaJumpToTrait(argsList):
-	screenMap[PEDIA].pediaJump(9, "Trait", argsList[0])
+	getScreen(PEDIA).pediaJump(9, "Trait", argsList[0])
 
 def pediaJumpToCiv(argsList):
-	screenMap[PEDIA].pediaJump(9, "Civ", argsList[0])
+	getScreen(PEDIA).pediaJump(9, "Civ", argsList[0])
 
 def pediaJumpToLeader(argsList):
-	screenMap[PEDIA].pediaJump(9, "Leader", argsList[0])
+	getScreen(PEDIA).pediaJump(9, "Leader", argsList[0])
 
 def pediaJumpToCivic(argsList):
-	screenMap[PEDIA].pediaJump(9, "Civic", argsList[0])
+	getScreen(PEDIA).pediaJump(9, "Civic", argsList[0])
 
 def pediaJumpToReligion(argsList):
-	screenMap[PEDIA].pediaJump(9, "Religion", argsList[0])
+	getScreen(PEDIA).pediaJump(9, "Religion", argsList[0])
 
 def pediaJumpToHeritage(argsList):
-	screenMap[PEDIA].pediaJump(9, "Heritage", argsList[0])
+	getScreen(PEDIA).pediaJump(9, "Heritage", argsList[0])
 
 def pediaJumpToProject(argsList):
-	screenMap[PEDIA].pediaJump(10, "Project", argsList[0])
+	getScreen(PEDIA).pediaJump(10, "Project", argsList[0])
 
 def pediaJumpToSpecialist(argsList):
-	screenMap[PEDIA].pediaJump(10, "Specialist", argsList[0])
+	getScreen(PEDIA).pediaJump(10, "Specialist", argsList[0])
 
 def pediaJumpToCorporation(argsList):
-	screenMap[PEDIA].pediaJump(10, "Corporation", argsList[0])
+	getScreen(PEDIA).pediaJump(10, "Corporation", argsList[0])
 
 def pediaJumpToRoute(argsList):
 	if argsList[0] > -1:
-		screenMap[PEDIA].pediaJump(8, "Route", argsList[0])
+		getScreen(PEDIA).pediaJump(8, "Route", argsList[0])
 	else:
-		screenMap[PEDIA].pediaJump(10, "Build", argsList[0] + 100000)
+		getScreen(PEDIA).pediaJump(10, "Build", argsList[0] + 100000)
 
 def pediaJumpToEra(iEra):
-	screenMap[PEDIA].pediaJump(0, "Eras", iEra)
+	getScreen(PEDIA).pediaJump(0, "Eras", iEra)
 
 #################################################
 ## Worldbuilder
@@ -346,7 +346,7 @@ def WorldBuilderRevealTabModeCB():
 
 def WorldBuilderDiplomacyModeCB():
 	print "WorldBuilderDiplomacyModeCB"
-	screenMap[WB_DIPLOMACY].interfaceScreen(CyGame().getActivePlayer(), False)
+	getScreen(WB_DIPLOMACY).interfaceScreen(CyGame().getActivePlayer(), False)
 
 def WorldBuilderRevealAllCB():
 	print "WorldBuilderRevealAllCB"
@@ -445,9 +445,9 @@ def hideOverlayScreen():
 
 def movieDone(argsList):
 	if argsList[0] == INTRO_MOVIE_SCREEN:
-		screenMap[INTRO_MOVIE_SCREEN].hideScreen()
+		getScreen(INTRO_MOVIE_SCREEN).hideScreen()
 	elif argsList[0] == VICTORY_MOVIE_SCREEN:
-		screenMap[VICTORY_MOVIE_SCREEN].hideScreen()
+		getScreen(VICTORY_MOVIE_SCREEN).hideScreen()
 
 def leftMouseDown(argsList):
 
@@ -511,7 +511,7 @@ def onClose(argsList):
 # Forced screen update (250 ms)
 def forceScreenUpdate(argsList):
 	if argsList[0] == TECH_CHOOSER:
-		screenMap[TECH_CHOOSER].updateTechRecords(False)
+		getScreen(TECH_CHOOSER).updateTechRecords(False)
 
 	elif argsList[0] == MAIN_INTERFACE:
 		mainInterface.updateScreen()
@@ -535,14 +535,14 @@ def forceScreenRedraw(argsList):
 		mainInterface.redraw()
 
 	elif argsList[0] == TECH_CHOOSER:
-		screenMap[TECH_CHOOSER].updateTechRecords(True)
+		getScreen(TECH_CHOOSER).updateTechRecords(True)
 
 	elif argsList[0] == ESPIONAGE_ADVISOR:
-		screenMap[ESPIONAGE_ADVISOR].redraw(CyGInterfaceScreen("EspionageAdvisor", ESPIONAGE_ADVISOR))
+		getScreen(ESPIONAGE_ADVISOR).redraw(CyGInterfaceScreen("EspionageAdvisor", ESPIONAGE_ADVISOR))
 
 def minimapClicked (argsList):
 	if MILITARY_ADVISOR == argsList[0]:
-		screenMap[MILITARY_ADVISOR].minimapClicked()
+		getScreen(MILITARY_ADVISOR).minimapClicked()
 
 
 ############################################################################
@@ -569,9 +569,9 @@ def handleForward(screens):
 
 def refreshMilitaryAdvisor(argsList):
 	if 1 == argsList[0]:
-		screenMap[MILITARY_ADVISOR].refreshSelectedGroup(argsList[1])
+		getScreen(MILITARY_ADVISOR).refreshSelectedGroup(argsList[1])
 	elif argsList[0] <= 0:
-		screenMap[MILITARY_ADVISOR].refreshSelectedUnit(-argsList[0], argsList[1])
+		getScreen(MILITARY_ADVISOR).refreshSelectedUnit(-argsList[0], argsList[1])
 
 def updateMusicPath(argsList):
 	szPathName = argsList[0]
@@ -773,9 +773,17 @@ _screenFactories = {
 }
 
 def getScreen(screenId):
-	"""The screen for this id, built on first use."""
+	"""The screen for this id, built on first use.
+
+	⛔ EVERY screen access goes through here, never screenMap[id] directly. earlyInit no longer builds the
+	factory-owned screens, so a direct index raises the first time the ENGINE asks for one -- and these are
+	engine entry points (the intro/wonder/victory movies, the hall of fame, the spaceship), so the failure
+	lands on the engine's side of the call rather than in a screen nobody opened.
+	"""
 	screen = screenMap.get(screenId)
 	if screen is None:
+		if screenId not in _screenFactories:
+			raise KeyError("screen %s is neither registered nor buildable" % (screenId,))
 		moduleName, className, args = _screenFactories[screenId]
 		module = __import__(moduleName)
 		screen = getattr(module, className)(*args)
