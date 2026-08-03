@@ -750,6 +750,7 @@ def lateInit():
 		WB_TRADE              : ('WBTradeScreen', 'WBTradeScreen', (worldBuilderScreen,)),
 	})
 
+	import CivicData
 	CivicData.initCivicData()
 
 # ⛔ SCREENS CONSTRUCT ON FIRST USE, NOT AT IMPORT.

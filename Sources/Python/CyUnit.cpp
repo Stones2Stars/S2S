@@ -224,9 +224,10 @@ void CyUnit::setBaseCombatStr(int iCombat)
 	m_pUnit->setBaseCombatStr(iCombat);
 }
 
+// The Python boundary reads HUMAN -- strength is ×100 inside the engine ([DEC-fixedpoint-x100]).
 int CyUnit::baseCombatStr() const
 {
-	return m_pUnit->baseCombatStr();
+	return m_pUnit->baseCombatStrHuman();
 }
 
 bool CyUnit::canFight() const
@@ -234,9 +235,10 @@ bool CyUnit::canFight() const
 	return m_pUnit->canFight();
 }
 
+// Human at the boundary, as above.
 int CyUnit::airBaseCombatStr() const
 {
-	return m_pUnit->airBaseCombatStr();
+	return m_pUnit->airBaseCombatStr() / 100;
 }
 
 bool CyUnit::canAirAttack() const

@@ -4,6 +4,7 @@
 #define CyInfo_h__
 
 #include <string>
+#include "Infrastructure/IDValueMap.h"   // the bulk id->value index handed to Python in one crossing
 
 //
 //	CyInfo -- the Python INFO surface: the "what do I CARRY?" read role (patterns.md § THE TWO READ ROLES),
@@ -38,6 +39,14 @@ public:
 	// Whether the registry actually holds an entity at this id, so a caller can skip a hole without
 	// inferring it from an empty name.
 	bool exists(const std::string& szTypePrefix, int iId) const;
+
+	// ⚑ THE BULK INDEX SHAPE -- one boundary crossing for a WHOLE id->value column, not one per entity.
+	// A boost::python call costs far more than the lookup inside it, so the read that scales is the one that
+	// crosses ONCE and is cached on the Python side (CivicData does exactly that). Typed end to end: no string
+	// prefix, no string member name -- the id type IS the addressing.
+	// The map is engine-owned and built once at first use; Python receives a reference and may only iterate it,
+	// test membership, and getValue() -- it can mutate nothing.
+	const IDValueMap<CivicTypes, int>& civicOptions() const;
 
 	static void pythonPublish();
 };

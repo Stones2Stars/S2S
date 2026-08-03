@@ -8,6 +8,8 @@
 #include "CyInfo.h"
 #include "Data/CvReadJson.h"     // rjInfoForType -- the ONE infotype-prefix -> InfoRepo dispatch
 #include "Infos/CvInfo.h"
+#include "Infos/CvCivicInfo.h"       // the civic column the bulk index reads
+#include "Defines/CvGlobals.h"        // GC.getNumCivicInfos / getCivicInfo
 
 namespace
 {
@@ -37,11 +39,32 @@ bool CyInfo::exists(const std::string& szTypePrefix, int iId) const
 	return cyi_info(szTypePrefix, iId) != NULL;
 }
 
+// The civic -> CIVICOPTION_ column, compiled ONCE on first use and handed out by reference thereafter. Static
+// rather than rebuilt per call because IDValueMap is noncopyable and Python holds a reference: the object has to
+// outlive the call. Info data is immutable after load, so one build is correct for the process.
+const IDValueMap<CivicTypes, int>& CyInfo::civicOptions() const
+{
+	static IDValueMap<CivicTypes, int> s_civicOptions;
+	static bool s_built = false;
+	if (!s_built)
+	{
+		s_built = true;
+		for (int iCivic = 0; iCivic < GC.getNumCivicInfos(); ++iCivic)
+		{
+			s_civicOptions.insert((CivicTypes)iCivic, GC.getCivicInfo((CivicTypes)iCivic).getCivicOption());
+		}
+	}
+	return s_civicOptions;
+}
+
 void CyInfo::pythonPublish()
 {
+	publishIDValueMapPythonInterface<IDValueMap<CivicTypes, int> >();
+
 	python::class_<CyInfo>("CyInfo")
 		.def("getDescription", &CyInfo::getDescription)
 		.def("getType",        &CyInfo::getType)
 		.def("exists",         &CyInfo::exists)
+		.def("civicOptions",   &CyInfo::civicOptions, python::return_value_policy<python::reference_existing_object>())
 		;
 }

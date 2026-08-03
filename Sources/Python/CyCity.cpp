@@ -1098,10 +1098,6 @@ int CyCity::getProductionToCommerceModifier(int /*CommerceTypes*/ eIndex) const
 	return m_pCity->getProductionToCommerceModifier((CommerceTypes)eIndex);
 }
 
-int CyCity::getBuildingCommerceByBuilding(int /*CommerceTypes*/ eIndex, int /*BuildingTypes*/ iBuilding) const
-{
-	return m_pCity->getBuildingCommerceByBuilding((CommerceTypes)eIndex, (BuildingTypes) iBuilding);
-}
 
 int CyCity::getCommerceRateModifier(int /*CommerceTypes*/ eIndex) const
 {
@@ -1532,10 +1528,6 @@ void CyCity::changeEventAnger(int iChange)
 	m_pCity->changeEventAnger(iChange);
 }
 
-int CyCity::getBaseYieldRateFromBuilding(int iYield, int iBuilding) const
-{
-	return m_pCity->getBaseYieldRateFromBuilding((YieldTypes)iYield, (BuildingTypes)iBuilding);
-}
 
 bool CyCity::isAutomatedCanBuild(int /*BuildTypes*/ eIndex) const
 {

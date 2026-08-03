@@ -270,7 +270,6 @@ public:
 	int calculateTradeYield(int /*YieldTypes*/ eIndex, int iTradeProfit) const;
 
 	int getProductionToCommerceModifier(int /*CommerceTypes*/ eIndex) const;
-	int getBuildingCommerceByBuilding(int /*CommerceTypes*/ eIndex, int /*BuildingTypes*/ iBuilding) const;
 	int getCommerceRateModifier(int /*CommerceTypes*/ eIndex) const;
 	int getDomainProductionModifier(int /*DomainTypes*/ eIndex) const;
 
@@ -284,7 +283,6 @@ public:
 	void changeEventAnger(int iChange);
 
 
-	int getBaseYieldRateFromBuilding(int iYield, int iBuilding) const;
 
 	bool isAutomatedCanBuild(int /*BuildTypes*/ eIndex) const;
 	void setAutomatedCanBuild(int /*BuildTypes*/ eIndex, bool bNewValue);

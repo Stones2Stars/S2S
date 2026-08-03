@@ -64,6 +64,9 @@ def getModInfo(mapVersion=None, defLatitude=None, sMapInfo=None):
 	### civ universal constants
 	###########################
 	global MAP, iNumPlotsX, iNumPlotsY
+	# MAP is declared global here but was never ASSIGNED, so the first read raised NameError and took the whole
+	# map script down with it ("Failed to load python module C2C_Inland_Sea"). The module already holds GC.
+	MAP = GC.getMap()
 	iNumPlotsX = MAP.getGridWidth()
 	iNumPlotsY = MAP.getGridHeight()
 

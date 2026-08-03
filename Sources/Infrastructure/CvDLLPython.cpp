@@ -18,6 +18,7 @@
 #include "Python/CyPlayer.h"
 #include "Python/CyPlot.h"
 #include "Python/CyUnit.h"
+#include "Python/CySelectionGroup.h"
 #include "Tools/SCyDebug.h"
 #include "IDValueMap.h"
 #include "Tools/Win32.h"
@@ -139,6 +140,24 @@ DllExport void DLLPublishToPython()
 
 
 
+
+	// ⛔ TYPE REGISTRATION ONLY -- NOT a read surface, and NOT a revival of the cut Cy* bindings.
+	//
+	// `DECLARE_PY_WRAPPER` exists for exactly four types (CyCity / CyUnit / CySelectionGroup / CyPlot). When the
+	// engine calls into Python with a CvCity*/CvUnit*/CvSelectionGroup*, ArgTraits wraps it BY VALUE and marshals
+	// it through makePythonObject -> python::object(obj), which THROWS unless boost::python has a registered
+	// class_<> converter for that exact type. So without these three lines every engine event carrying a city, a
+	// unit or a selection group raises on the way out -- and CvDllPythonEvents fires those constantly, which is
+	// the Python-error popup storm rather than any fault in the Python tree.
+	//
+	// ⚑ REGISTRATION IS NOT BINDING (patterns.md § THE PYTHON READ BOUNDARY). These carry `no_init` and ZERO
+	// `.def`s: Python can RECEIVE and pass one back, and can call NOTHING on it. That is the correct end state
+	// for a wrapper whose read surface is deliberately gone ([DEC-cy-not-fixed]) -- the legacy getters stay cut.
+	// The Cy* BINDING purge took these registrations out along with the read surfaces it was aimed at; only the
+	// second half was ever the target.
+	python::class_<CyCity>("CyCity", python::no_init);
+	python::class_<CyUnit>("CyUnit", python::no_init);
+	python::class_<CySelectionGroup>("CySelectionGroup", python::no_init);
 
 	Win32::pythonPublish();
 

@@ -191,6 +191,18 @@ struct IDValueMap
 			GC.removeDelayedResolution((int*)&pair.first);
 	}
 
+	// Programmatic population, for an index BUILT at load rather than read from XML. The existing mutators are
+	// all XML readers, so a load-compiled index (the shape CyInfo hands to Python in ONE crossing) had no way in.
+	// ⚠ Append-only and non-defaulting: a value equal to `defaultValue` is skipped, keeping the map SPARSE, which
+	// is what getValue's linear scan assumes.
+	void insert(ID_ id, Value_ value)
+	{
+		if (value != static_cast<Value_>(defaultValue))
+		{
+			m_map.push_back(std::make_pair(id, value));
+		}
+	}
+
 	Value_ getValue(ID_ id) const
 	{
 		PROFILE_EXTRA_FUNC();

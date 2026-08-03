@@ -55,15 +55,55 @@ class RedirectDebug:
 			self.m_PythonMgr.debugMsg(stuff)
 
 class RedirectError:
-	"""Send Error Messages to Civ Engine"""
+	"""Send Error Messages to Civ Engine.
+
+	ONE POPUP PER ERROR, NOT PER LINE. The engine turns every errorMsg into a modal popup, and Python's
+	traceback machinery calls write() once PER LINE -- so a single six-line traceback used to cost six
+	dismissals, and a failure that repeats every turn popped forever. Lines are buffered here and emitted as
+	ONE message when the traceback completes, with identical messages shown only once per session.
+
+	Completion test: a traceback's last line is the `SomeError: detail` line -- non-indented, and not the
+	"Traceback ..." header. Continuation lines ("  File ...", the source echo) are indented, so they buffer.
+	A plain one-line write is non-indented and flushes immediately, exactly as before.
+	"""
+	MAX_BUFFERED_LINES = 200   # a safety valve: never hoard output if a message has no recognisable end
+
 	def __init__(self):
 		self.m_PythonMgr = CyPythonMgr()
+		self.m_buffer = []
+		self.m_seen = {}
+
 	def write(self, stuff):
+		self.m_buffer.append(stuff)
+		if len(self.m_buffer) >= RedirectError.MAX_BUFFERED_LINES:
+			self.flush()
+			return
+		# Only a completed line can END a message.
+		if stuff.endswith("\n"):
+			text = "".join(self.m_buffer)
+			stripped = text.rstrip("\n")
+			if stripped:
+				last = stripped.split("\n")[-1]
+				if last and not last[0].isspace() and not last.startswith("Traceback"):
+					self.flush()
+
+	def flush(self):
+		if not self.m_buffer:
+			return
+		text = "".join(self.m_buffer)
+		self.m_buffer = []
+		if not text.strip():
+			return
+		# Suppress repeats: a per-turn failure is worth seeing ONCE, not every turn.
+		seen = self.m_seen.get(text, 0)
+		self.m_seen[text] = seen + 1
+		if seen:
+			return
 		# if str is non unicode and contains encoded unicode data, supply the right encoder to encode it into a unicode object
-		if isinstance(stuff, unicode):
-			self.m_PythonMgr.errorMsgWide(stuff)
+		if isinstance(text, unicode):
+			self.m_PythonMgr.errorMsgWide(text)
 		else:
-			self.m_PythonMgr.errorMsg(stuff)
+			self.m_PythonMgr.errorMsg(text)
 
 def myExceptHook(type, value, tb):
 	import traceback # for error reporting
