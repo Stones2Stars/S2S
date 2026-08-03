@@ -76,6 +76,17 @@ public:
 	python::list getRealizedWellbeing(int iPlayer, int iCity) const;
 	int getSight(int iPlayer, int iCity) const;   // the city's sight BUDGET (vision.md)
 
+	// ---- THE CURRENT SELECTION, as an IDENTITY. ----
+	// ⛔ Asked of the library, NOT of the EXE's CyInterface. getHeadSelectedCity/Unit there hand back a Cy*
+	// HANDLE, and those wrappers carry ZERO defs -- so a script is given an object it cannot ask anything, not
+	// even which one it is. That return type is the closed EXE's and cannot be changed, so the only way the
+	// selection is reachable at all is to answer it HERE, in the (owner, id) pair every read on this surface
+	// takes. It is the same identity a callback hands over (Cy::PyIdentity), from the other direction.
+	// ⚠ Answers [-1, -1] when nothing is selected -- a real owner/id pair is never negative, so a caller tests
+	// the id rather than inferring emptiness from a missing value.
+	python::list getHeadSelectedCityId() const;
+	python::list getHeadSelectedUnitId() const;
+
 	// ---- ENUMERATION: which cities a player HAS, by id. ----
 	// ⛔ The prerequisite of every id-based city read on this surface, and it is structural rather than
 	// convenience: this library is deliberately ID-BASED so the legacy wrappers can be cut, but the cut leaves
@@ -104,11 +115,27 @@ public:
 	int64_t getCityRealPopulation(int iPlayer, int iCity) const;  // the displayed head-count; exceeds 32 bits
 	int getGreatPeopleRate(int iPlayer, int iCity) const;
 	int getGreatPeopleProgress(int iPlayer, int iCity) const;
+	// ⚠ Takes the unit id in the CALL, unlike a group read, and deliberately: this is not a channel family but a
+	// SPARSE id-keyed quantity over the whole unit registry (thousands of entries, of which a handful are great
+	// people). Handing back a list indexed by UnitTypes would cross thousands of zeros to answer about five.
+	int getGreatPeopleUnitProgress(int iPlayer, int iCity, int iUnit) const;
+	int getGreatPeopleThresholdNonMilitary(int iPlayer) const;
 	int getMilitaryHappinessUnits(int iPlayer, int iCity) const;
 	// Post-conquest resistance: whether it is running, and for how many more turns. Live city state, so it is
 	// here and not on the info surface -- occupation is something a city HAS, never something a type CARRIES.
 	bool isOccupation(int iPlayer, int iCity) const;
 	int getOccupationTimer(int iPlayer, int iCity) const;
+
+	// ---- The city screen's own VIEW state: which filter/sort/grouping the player left its lists on. ----
+	// ⚠ Genuinely per-city state that the engine stores, not authored data and not a derived value -- so it is
+	// live state and belongs here. ⛔ These are the READS only. The matching setters are a WRITE, and no write
+	// surface exists yet ([roadmap] scope decision 6), so the lists READ correctly and do not yet re-sort on a
+	// click. Reads run on every redraw; the writes fire only on user action, which is why the split is usable.
+	bool getBuildingListFilterActive(int iPlayer, int iCity, int iFilter) const;
+	int getBuildingListSorting(int iPlayer, int iCity) const;
+	bool getUnitListFilterActive(int iPlayer, int iCity, int iFilter) const;
+	int getUnitListGrouping(int iPlayer, int iCity) const;
+	int getUnitListSorting(int iPlayer, int iCity) const;
 
 	// ---- EMPIRE-only groups ----
 	python::list getUpkeepKinds(int iPlayer) const;

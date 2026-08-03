@@ -209,6 +209,18 @@ DllExport void DLLPublishToPython()
 		.def_readwrite("bHidden",   &TradeData::m_bHidden)
 		;
 
+	//
+	//	THE SHARED CALC HELPERS -- free functions, not a surface of their own.
+	//
+	//	⛔ Published rather than reimplemented in script ([DEC-single-implementation]: every calculation exists
+	//	EXACTLY ONCE). getModifiedIntValue is the engine's own percentage application, used throughout the AI, and
+	//	the interface applies the SAME formula when it shows what a modifier did -- so a Python copy would be a
+	//	second implementation of a game formula that could silently drift from the one the game actually runs.
+	//	⚠ This is NOT the banned read surface: it takes plain ints and answers a plain int. It reaches no info, no
+	//	game object and no per-owner state, so there is nothing here for a consumer to reach legacy THROUGH.
+	//
+	python::def("getModifiedIntValue", getModifiedIntValue);
+
 	Win32::pythonPublish();
 
 	OutputDebugString("Publishing to Python: End\n");

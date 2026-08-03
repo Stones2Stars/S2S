@@ -1458,11 +1458,15 @@ class CvMainInterface:
 		CyPlayerAct = self.CyPlayer
 
 		# Check City Selection
-		city = CyIF.getHeadSelectedCity()
+		# The selection as an IDENTITY. CyInterface is the EXE's and hands back a CyCity HANDLE, which carries
+		# zero defs -- so the object it returns cannot be asked anything, not even which city it is. The library
+		# answers the (owner, id) pair instead. -1 means nothing is selected.
+		aCitySelected = STATE.getHeadSelectedCityId()
 		InCityPre = self.InCity
 		AtUnitPre = self.AtUnit
-		if city:
-			iCityID = city.getID()
+		if aCitySelected[1] >= 0:
+			iCityOwner = aCitySelected[0]
+			iCityID = aCitySelected[1]
 			if not InCityPre or iCityID != InCityPre.iCityID:
 				print "City selected"
 				self.bFreshQueue = False
@@ -1471,7 +1475,7 @@ class CvMainInterface:
 				self.bBuildWorkQueue = True
 				self.bUpdateCityTab = True
 
-				self.InCity = City(city, iCityID)
+				self.InCity = City(iCityOwner, iCityID)
 
 				if not InCityPre:
 					self.bInverseShiftQueue = MainOpt.isInverseShiftForQueueing()
@@ -1481,7 +1485,7 @@ class CvMainInterface:
 					screen.show("AutomateCitizens")
 					screen.show("CS|AutomateProduction0")
 					if self.InCity.iPlayer == self.iPlayer or self.bDebugMode:
-						self.buildCitySelectionUI(screen, True, city)
+						self.buildCitySelectionUI(screen, True, self.InCity)
 
 		else: # No City Selected
 			if InCityPre:
@@ -1525,13 +1529,13 @@ class CvMainInterface:
 				if AtUnitPre:
 					screen.show("UnitButtons")
 
-			CyUnit = CyIF.getHeadSelectedUnit()
-			if CyUnit:
+			aUnitSelected = STATE.getHeadSelectedUnitId()
+			if aUnitSelected[1] >= 0:
 				self.CyPlayer.setForcedCityCycle(False);
 				print "Unit Selected"
-				iUnitID = CyUnit.getID()
+				iUnitID = aUnitSelected[1]
 				if not AtUnitPre or iUnitID != AtUnitPre.iUnitID:
-					self.AtUnit = Unit(CyUnit, iUnitID)
+					self.AtUnit = Unit(aUnitSelected[0], iUnitID)
 			elif AtUnitPre:
 				print "Unit deselected"
 				self.AtUnit = None
@@ -2251,6 +2255,9 @@ class CvMainInterface:
 					bTDDisplayOption = self.GO_WIN_FOR_LOSING or self.GO_TECH_DIFFUSION
 
 				iconCommerceList = self.iconCommerceList
+				# The whole commerce group in ONE crossing, indexed by CommerceTypes -- the getter IS the group,
+				# so it is fetched before the loop rather than once per channel. Empire scope (city id -1).
+				aEmpireCommerces = STATE.getCommerces(iPlayer, -1)
 				dY = 0
 				for i in xrange(iRange):
 					j = (i + 1) % iRange # 1, 2, 3, 0 (Research, Culture, Espionage, Gold)
@@ -2275,7 +2282,9 @@ class CvMainInterface:
 							screen.setLabel("CityPercentText" + str(i), "", szTxt, 1<<1, 252, 53 + dY, 0, eFontGame, WidgetTypes.WIDGET_COMMERCE_MOD_HELP, j, -1)
 						else:
 							if j != CommerceTypes.COMMERCE_RESEARCH:
-								commerceRate = CyPlayer.getCommerceRate(CommerceTypes(j))
+								# x100 native on the library; this line displays a whole rate, so it reduces here
+								# at the point of use -- never in the getter.
+								commerceRate = aEmpireCommerces[j] / 100
 
 							elif bTDDisplayOption:
 								commerceRate = getModifiedIntValue(iResearchRate, -iResearchMod)
@@ -2374,10 +2383,10 @@ class CvMainInterface:
 
 				# Great People Bar
 				if not bCityScreen:
-					city, iTurns = GPUtil.getDisplayCity()
+					iGPPlayer, iGPCityId, iTurns = GPUtil.getDisplayCity()
 					x, y, w, h = self.xywhGPBar
 					screen.setImageButton("GreatPersonBar0", "", x, y, w, h, eWidGen, 0, 0)
-					szTxt = GPUtil.getGreatPeopleText(city, iTurns, w - 32, MainOpt.isGPBarTypesNone(), MainOpt.isGPBarTypesOne(), True, uFont2)
+					szTxt = GPUtil.getGreatPeopleText(iGPPlayer, iGPCityId, iTurns, w - 32, MainOpt.isGPBarTypesNone(), MainOpt.isGPBarTypesOne(), True, uFont2)
 					if not self.iResID:	# Two rows
 						y += 1
 					else:
@@ -2385,10 +2394,10 @@ class CvMainInterface:
 					x += w / 2
 					screen.setText("GreatPersonBar1", "", szTxt, 1<<2, x, y, 0, eFontGame, eWidGen, 0, 0)
 					screen.setHitTest("GreatPersonBar1", HitTestTypes.HITTEST_NOHIT)
-					if city:
-						fThreshold = float(GC.getPlayer(city.getOwner()).greatPeopleThresholdNonMilitary())
-						fRate = float(city.getGreatPeopleRate())
-						fFirst = float(city.getGreatPeopleProgress()) / fThreshold
+					if iGPCityId >= 0:
+						fThreshold = float(STATE.getGreatPeopleThresholdNonMilitary(iGPPlayer))
+						fRate = float(STATE.getGreatPeopleRate(iGPPlayer, iGPCityId))
+						fFirst = float(STATE.getGreatPeopleProgress(iGPPlayer, iGPCityId)) / fThreshold
 
 						screen.setBarPercentage("GreatPersonBar", InfoBarTypes.INFOBAR_STORED, fFirst)
 						if fFirst == 1:
@@ -2953,7 +2962,7 @@ class CvMainInterface:
 					iGPTurns = None
 				if CityOpt.isShowCityGreatPersonInfo():
 					bOne = MainOpt.isGPBarTypesNone() or MainOpt.isGPBarTypesOne()
-					szTxt = GPUtil.getGreatPeopleText(CyCity, iGPTurns, w - 32, False, bOne, False, uFont2)
+					szTxt = GPUtil.getGreatPeopleText(InCity.iPlayer, InCity.iCityID, iGPTurns, w - 32, False, bOne, False, uFont2)
 				else:
 					szTxt = TRNSLTR.getText("INTERFACE_CITY_GREATPEOPLE_RATE", (GAME.getSymbolID(FontSymbols.GREAT_PEOPLE_CHAR), iGreatPeopleRate))
 					if iGreatPeopleRate > 0:
@@ -3297,10 +3306,11 @@ class CvMainInterface:
 
 		InCity.QueueIndex = iOrders
 
-	def buildCitySelectionUI(self, screen, bFirst, CyCity):
+	# Takes the City wrapper (which carries the owner + city id), not a CyCity handle -- see class City.
+	def buildCitySelectionUI(self, screen, bFirst, InCity):
 
 		if bFirst:
-			self.buildCityTabButtons(screen, CyCity)
+			self.buildCityTabButtons(screen, InCity)
 		# Unit Group/Sort
 		iLanguage = GAME.getCurrentLanguage()
 		if not iLanguage: # English
@@ -3322,7 +3332,7 @@ class CvMainInterface:
 		x0 = self.xRes - self.xRes/4 - 50
 
 		ID = "CT|UnitGrouping"
-		SELECTED = CyCity.getUnitListGrouping()
+		SELECTED = STATE.getUnitListGrouping(InCity.iPlayer, InCity.iCityID)
 		x = x0 - wGroupButton
 		screen.addDropDownBoxGFC(ID, x, 140, wGroupButton, WidgetTypes.WIDGET_UNIT_GROUPING, 0, 0, FontTypes.SMALL_FONT)
 		TYPE = UnitGroupingTypes.UNIT_GROUPING_SINGLE
@@ -3335,7 +3345,7 @@ class CvMainInterface:
 		screen.addPullDownString(ID, TRNSLTR.getText("TXT_KEY_UNITHELP_GROUPING_HERO", ()), TYPE, TYPE, SELECTED == TYPE)
 
 		ID = "CT|UnitSorting"
-		SELECTED = CyCity.getUnitListSorting()
+		SELECTED = STATE.getUnitListSorting(InCity.iPlayer, InCity.iCityID)
 		x -= wSortButton + 4
 		screen.addDropDownBoxGFC(ID, x, 140, wSortButton, WidgetTypes.WIDGET_UNIT_SORT, -1, -1, FontTypes.SMALL_FONT)
 		TYPE = UnitSortTypes.UNIT_SORT_NAME
@@ -3379,7 +3389,7 @@ class CvMainInterface:
 		self.wBuildingSortButton = wSortButton
 
 		ID = "CT|BuildingSorting"
-		SELECTED = CyCity.getBuildingListSorting()
+		SELECTED = STATE.getBuildingListSorting(InCity.iPlayer, InCity.iCityID)
 		x = x0 - wSortButton
 		screen.addDropDownBoxGFC(ID, x, 140, wSortButton, WidgetTypes.WIDGET_BUILDING_SORT, -1, -1, FontTypes.SMALL_FONT)
 		TYPE = BuildingSortTypes.BUILDING_SORT_NAME
@@ -3410,7 +3420,7 @@ class CvMainInterface:
 		if iTab not in (CITYTAB_BUILDING, CITYTAB_WONDER):
 			screen.hide("CT|BuildingSorting")
 
-	def buildCityTabButtons(self, screen, CyCity):
+	def buildCityTabButtons(self, screen, InCity):
 		eWidGen = WidgetTypes.WIDGET_GENERAL
 		# City Tabs
 		y = self.yBotBar + 32
@@ -3443,9 +3453,12 @@ class CvMainInterface:
 		screen.addScrollPanel(Pnl, "", x, y-8, w, iSize-6, PanelStyles.PANEL_STYLE_EMPTY)
 		screen.setStyle(Pnl, "ScrollPanel_Alt_Style")
 		x = 0
+		# "Can I run this process?" is the ENABLER's question, and its answer is a maintained SET -- fetched in
+		# ONE crossing and tested for membership, rather than asked once per process inside the loop.
+		aAvailableProcesses = ENABLER.getAvailableProcesses(InCity.iPlayer)
 		for i in xrange(self.iNumProcessInfos):
-			if CyCity.canMaintain(i):
-				BTN = GC.getProcessInfo(i).getButton()
+			if i in aAvailableProcesses:
+				BTN = INFO.getButton("PROCESS_", i)
 				Btn = "WID|PROCESS|CityWork" + str(i)
 				screen.setImageButtonAt(Btn, Pnl, BTN, x, 0, iSize, iSize, eWidGen, 1, 1)
 				x += dx
@@ -5219,21 +5232,21 @@ class CvMainInterface:
 		screen.hide("PlotHelp")
 
 	def helpGreatPersonBar(self, screen):
-		CyCity, iTurns = GPUtil.getDisplayCity()
-		if not CyCity:
+		iGPPlayer, iGPCityId, iTurns = GPUtil.getDisplayCity()
+		if iGPCityId < 0:
 			# no rate or progress in any city and no city selected
-			szTxt = TRNSLTR.getText("TXT_KEY_MISC_GREAT_PERSON", (0, self.CyPlayer.greatPeopleThresholdNonMilitary()))
+			szTxt = TRNSLTR.getText("TXT_KEY_MISC_GREAT_PERSON", (0, STATE.getGreatPeopleThresholdNonMilitary(self.iPlayer)))
 			self.updateTooltip(screen, szTxt)
 			return
-		iThreshold = GC.getPlayer(CyCity.getOwner()).greatPeopleThresholdNonMilitary()
-		iProgress = CyCity.getGreatPeopleProgress()
-		iRate = CyCity.getGreatPeopleRate()
-		szTxt = TRNSLTR.changeTextColor(CyCity.getName(), GC.getInfoTypeForString("COLOR_HIGHLIGHT_TEXT")) + "\n"
+		iThreshold = STATE.getGreatPeopleThresholdNonMilitary(iGPPlayer)
+		iProgress = STATE.getGreatPeopleProgress(iGPPlayer, iGPCityId)
+		iRate = STATE.getGreatPeopleRate(iGPPlayer, iGPCityId)
+		szTxt = TRNSLTR.changeTextColor(STATE.getCityName(iGPPlayer, iGPCityId), GC.getInfoTypeForString("COLOR_HIGHLIGHT_TEXT")) + "\n"
 		szTxt += TRNSLTR.getText("TXT_KEY_MISC_GREAT_PERSON", (iProgress, iThreshold))
 		if iRate:
 			szTxt += "\n" + str(iRate) + self.iconGreatPeople
 			szTxt += TRNSLTR.getText("TXT_KEY_PER_TURN", ()) + " " + TRNSLTR.getText("INTERFACE_CITY_TURNS", (iTurns,))
-		aPercentList = GPUtil.calcPercentages(CyCity)
+		aPercentList = GPUtil.calcPercentages(iGPPlayer, iGPCityId)
 		if aPercentList:
 			aPercentList.sort()
 			aPercentList.reverse()
@@ -6117,22 +6130,23 @@ def applyCityTabOptions(iPlayer, userData, popupReturn):
 # # # # # # #
 # Mini-Classes
 class City:
-	def __init__(self, CyCity, iCityID):
-		self.CyCity		= CyCity
+	# Built from the IDENTITY, not from a handle: CyCity carries zero defs, so an object here could answer
+	# neither its owner nor its team. Both come from the id pair and the player, which are still readable.
+	def __init__(self, iPlayer, iCityID):
 		self.iCityID	= iCityID
-		self.iPlayer	= iPlayer = CyCity.getOwner()
-		self.iTeam		= iTeam = CyCity.getTeam()
+		self.iPlayer	= iPlayer
 		self.CyPlayer	= GC.getPlayer(iPlayer)
+		self.iTeam		= iTeam = self.CyPlayer.getTeam()
 		self.CyTeam		= GC.getTeam(iTeam)
 		self.listBonus = [True,[],[],[]]
 		self.WorkQueue = []
 		self.QueueIndex = 0
 
 class Unit:
-	def __init__(self, CyUnit, iUnitID):
-		self.CyUnit		= CyUnit
+	# Built from the IDENTITY, for the same reason City is -- see above.
+	def __init__(self, iPlayer, iUnitID):
 		self.iUnitID	= iUnitID
-		self.iPlayer	= iPlayer = CyUnit.getOwner()
-		self.iTeam		= iTeam = CyUnit.getTeam()
+		self.iPlayer	= iPlayer
 		self.CyPlayer	= GC.getPlayer(iPlayer)
+		self.iTeam		= iTeam = self.CyPlayer.getTeam()
 		self.CyTeam		= GC.getTeam(iTeam)

@@ -11,8 +11,12 @@
 #include "Engine/CvCity.h"
 #include "Engine/CvGame.h"
 #include "Engine/CvPlayer.h"
+#include "Engine/CvUnit.h"                          // the selection reads answer a unit's owner + id
+#include "Infrastructure/CvDLLInterfaceIFaceBase.h"  // getHeadSelectedCity/Unit -- the CURRENT SELECTION
 #include "AI/CvPlayerAI.h"          // GET_PLAYER
 #include "Infos/CvInfoKinds.h"      // the NUM_<FAMILY>_KINDS the groups are sized by
+#include "UI/CvBuildingFilters.h"   // BuildingFilterTypes -- the city screen's list VIEW state
+#include "UI/CvUnitFilters.h"       // UnitFilterTypes -- ditto
 
 namespace
 {
@@ -174,6 +178,32 @@ int CyState::getSight(int iPlayer, int iCity) const
 	return pCity ? pCity->sight() : 0;
 }
 
+// ---- THE CURRENT SELECTION ----
+
+python::list CyState::getHeadSelectedCityId() const
+{
+	int values[2] = { -1, -1 };
+	const CvCity* pCity = gDLL->getInterfaceIFace()->getHeadSelectedCity();
+	if (pCity != NULL)
+	{
+		values[0] = (int)pCity->getOwner();
+		values[1] = pCity->getID();
+	}
+	return cys_toList(values);
+}
+
+python::list CyState::getHeadSelectedUnitId() const
+{
+	int values[2] = { -1, -1 };
+	const CvUnit* pUnit = gDLL->getInterfaceIFace()->getHeadSelectedUnit();
+	if (pUnit != NULL)
+	{
+		values[0] = (int)pUnit->getOwner();
+		values[1] = pUnit->getID();
+	}
+	return cys_toList(values);
+}
+
 // ---- ENUMERATION ----
 
 python::list CyState::getCityIds(int iPlayer) const
@@ -277,6 +307,22 @@ int CyState::getGreatPeopleProgress(int iPlayer, int iCity) const
 	return pCity ? pCity->getGreatPeopleProgress() : 0;
 }
 
+int CyState::getGreatPeopleUnitProgress(int iPlayer, int iCity, int iUnit) const
+{
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	if (pCity == NULL || iUnit < 0 || iUnit >= GC.getNumUnitInfos())
+	{
+		return 0;
+	}
+	return pCity->getGreatPeopleUnitProgress((UnitTypes)iUnit);
+}
+
+int CyState::getGreatPeopleThresholdNonMilitary(int iPlayer) const
+{
+	const CvPlayer* pPlayer = cys_player(iPlayer);
+	return pPlayer ? pPlayer->greatPeopleThresholdNonMilitary() : 0;
+}
+
 int CyState::getMilitaryHappinessUnits(int iPlayer, int iCity) const
 {
 	const CvCity* pCity = cys_city(iPlayer, iCity);
@@ -293,6 +339,42 @@ int CyState::getOccupationTimer(int iPlayer, int iCity) const
 {
 	const CvCity* pCity = cys_city(iPlayer, iCity);
 	return pCity ? pCity->getOccupationTimer() : 0;
+}
+
+// ---- The city screen's VIEW state ----
+// ⚠ The engine's getters here are non-const, so the city is resolved non-const too -- these READ, and the
+// const_cast is the engine's signature showing through, not an intent to write.
+
+bool CyState::getBuildingListFilterActive(int iPlayer, int iCity, int iFilter) const
+{
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	if (pCity == NULL || iFilter < 0 || iFilter >= NUM_BUILDING_FILTERS) return false;
+	return pCity->getBuildingListFilterActive((BuildingFilterTypes)iFilter);
+}
+
+int CyState::getBuildingListSorting(int iPlayer, int iCity) const
+{
+	CvCity* pCity = const_cast<CvCity*>(cys_city(iPlayer, iCity));
+	return pCity ? (int)pCity->getBuildingListSorting() : 0;
+}
+
+bool CyState::getUnitListFilterActive(int iPlayer, int iCity, int iFilter) const
+{
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	if (pCity == NULL || iFilter < 0 || iFilter >= NUM_UNIT_FILTERS) return false;
+	return pCity->getUnitListFilterActive((UnitFilterTypes)iFilter);
+}
+
+int CyState::getUnitListGrouping(int iPlayer, int iCity) const
+{
+	CvCity* pCity = const_cast<CvCity*>(cys_city(iPlayer, iCity));
+	return pCity ? (int)pCity->getUnitListGrouping() : 0;
+}
+
+int CyState::getUnitListSorting(int iPlayer, int iCity) const
+{
+	CvCity* pCity = const_cast<CvCity*>(cys_city(iPlayer, iCity));
+	return pCity ? (int)pCity->getUnitListSorting() : 0;
 }
 
 // ---- EMPIRE-only groups ----
@@ -453,6 +535,8 @@ void CyState::pythonPublish()
 		.def("getRealizedWellbeing",     &CyState::getRealizedWellbeing)
 		.def("getSight",                 &CyState::getSight)
 		// ENUMERATION + CITY rank groups + plain city facts
+		.def("getHeadSelectedCityId",    &CyState::getHeadSelectedCityId)
+		.def("getHeadSelectedUnitId",    &CyState::getHeadSelectedUnitId)
 		.def("getCityIds",               &CyState::getCityIds)
 		.def("getYieldRateRanks",        &CyState::getYieldRateRanks)
 		.def("getBaseYieldRateRanks",    &CyState::getBaseYieldRateRanks)
@@ -462,9 +546,16 @@ void CyState::pythonPublish()
 		.def("getCityRealPopulation",    &CyState::getCityRealPopulation)
 		.def("getGreatPeopleRate",       &CyState::getGreatPeopleRate)
 		.def("getGreatPeopleProgress",   &CyState::getGreatPeopleProgress)
+		.def("getGreatPeopleUnitProgress", &CyState::getGreatPeopleUnitProgress)
+		.def("getGreatPeopleThresholdNonMilitary", &CyState::getGreatPeopleThresholdNonMilitary)
 		.def("getMilitaryHappinessUnits",&CyState::getMilitaryHappinessUnits)
 		.def("isOccupation",             &CyState::isOccupation)
 		.def("getOccupationTimer",       &CyState::getOccupationTimer)
+		.def("getBuildingListFilterActive", &CyState::getBuildingListFilterActive)
+		.def("getBuildingListSorting",   &CyState::getBuildingListSorting)
+		.def("getUnitListFilterActive",  &CyState::getUnitListFilterActive)
+		.def("getUnitListGrouping",      &CyState::getUnitListGrouping)
+		.def("getUnitListSorting",       &CyState::getUnitListSorting)
 		// EMPIRE-only
 		.def("getUpkeepKinds",           &CyState::getUpkeepKinds)
 		.def("getCostKinds",             &CyState::getCostKinds)
