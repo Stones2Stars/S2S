@@ -20,6 +20,8 @@
 #include "Engine/CvPlayer.h"
 #include "AI/CvPlayerAI.h"      // GET_PLAYER
 
+extern const char* g_szLastCyRead;
+
 namespace
 {
 	//	A composer names its subject by the (owner, id) PAIR, like every other surface script reaches. The
@@ -158,6 +160,7 @@ std::wstring CyGameTextMgr::getTechHelp(int iTech, bool bCivilopediaText, bool b
 
 std::wstring CyGameTextMgr::getUnitHelp(int iUnit, bool bCivilopediaText, bool bStrategyText, bool bTechChooserText, int iPlayer, int iCity)
 {
+	g_szLastCyRead = "CyGameTextMgr::getUnitHelp";
 	CvWStringBuffer szBuffer;
 	GAMETEXT.setUnitHelp(szBuffer, (UnitTypes)iUnit, bCivilopediaText, bStrategyText, bTechChooserText, cgt_city(iPlayer, iCity));
 	return szBuffer.getCString();
@@ -165,6 +168,7 @@ std::wstring CyGameTextMgr::getUnitHelp(int iUnit, bool bCivilopediaText, bool b
 
 std::wstring CyGameTextMgr::getSpecificUnitHelp(int iPlayer, int iUnit, bool bOneLine, bool bShort)
 {
+	g_szLastCyRead = "CyGameTextMgr::getSpecificUnitHelp";
 	CvWStringBuffer szBuffer;
 	CvUnit* pUnit = cgt_unit(iPlayer, iUnit);
 	if (pUnit != NULL)
@@ -176,6 +180,7 @@ std::wstring CyGameTextMgr::getSpecificUnitHelp(int iPlayer, int iUnit, bool bOn
 
 std::wstring CyGameTextMgr::getBuildingHelp(int iBuilding, bool bActual, int iPlayer, int iCity, bool bCivilopediaText, bool bStrategyText, bool bTechChooserText)
 {
+	g_szLastCyRead = "CyGameTextMgr::getBuildingHelp";
 	CvWStringBuffer szBuffer;
 	GAMETEXT.setBuildingHelp(szBuffer, (BuildingTypes)iBuilding, bActual, cgt_city(iPlayer, iCity), bCivilopediaText, bStrategyText, bTechChooserText);
 	return szBuffer.getCString();
@@ -190,6 +195,7 @@ std::wstring CyGameTextMgr::getHeritageHelp(int iType, int iPlayer, int iCity, b
 
 std::wstring CyGameTextMgr::getProjectHelp(int iProject, bool bCivilopediaText, int iPlayer, int iCity)
 {
+	g_szLastCyRead = "CyGameTextMgr::getProjectHelp";
 	CvWStringBuffer szBuffer;
 	GAMETEXT.setProjectHelp(szBuffer, (ProjectTypes)iProject, bCivilopediaText, cgt_city(iPlayer, iCity));
 	return szBuffer.getCString();
@@ -225,6 +231,7 @@ std::wstring CyGameTextMgr::getBonusHelp(int iBonus, bool bCivilopediaText)
 
 std::wstring CyGameTextMgr::getProductionHelpCity(int iPlayer, int iCity)
 {
+	g_szLastCyRead = "CyGameTextMgr::getProductionHelpCity";
 	CvWStringBuffer szBuffer;
 	CvCity* pCity = cgt_city(iPlayer, iCity);
 	if (pCity == NULL)
@@ -404,6 +411,7 @@ std::wstring CyGameTextMgr::getFinanceUnitUpkeepString(int iPlayer)
 
 std::wstring CyGameTextMgr::getDefenseHelp(int iPlayer, int iCity)
 {
+	g_szLastCyRead = "CyGameTextMgr::getDefenseHelp";
 	CvWStringBuffer szBuffer;
 	CvCity* pCity = cgt_city(iPlayer, iCity);
 	if (pCity == NULL)

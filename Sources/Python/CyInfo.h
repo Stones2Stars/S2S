@@ -59,6 +59,23 @@ enum PyIntrinsicSlot
 	NUM_PYINT
 };
 
+//
+//	The LIST-valued intrinsics -- an info's own id LIST, addressed by SLOT exactly as the scalar intrinsics are,
+//	so this surface grows by an enum entry rather than by a method per relationship.
+//
+//	⚑ Each one exists because the alternative is a WHOLE-REGISTRY SCAN in script. The headquarters list is the
+//	worked case: the readJson reverse pass feeds it onto the corporation for exactly this reason ("every
+//	consumer asks the CORPORATION which building is its HQ; feeding the registry here is what stops each of them
+//	scanning the whole building registry" -- CvReversePass), and asking it the other way round is the shape
+//	[DEC-one-reverse-view] exists to delete.
+//
+enum PyIdListSlot
+{
+	PYLIST_HEADQUARTERS_BUILDINGS = 0, // CORPORATION_ -> the buildings that are its headquarters
+	PYLIST_CONSUMED_BONUSES,           // CORPORATION_ -> the bonuses it consumes
+	NUM_PYLIST
+};
+
 class CyInfo
 {
 public:
@@ -115,6 +132,8 @@ public:
 	// whole straggler plane is one int-returning read. Answers -1 when the (prefix, slot) pair names nothing,
 	// so a caller can tell "not served here" from a real 0.
 	int getIntrinsic(const std::string& szTypePrefix, int iId, int iSlot) const;
+	// An info's own id LIST, by SLOT (see PyIdListSlot). Empty when the (prefix, slot) pair names nothing.
+	python::list getIdList(const std::string& szTypePrefix, int iId, int iSlot) const;
 
 	// ⚑ THE BULK INDEX SHAPE -- one boundary crossing for a WHOLE id->value column, not one per entity.
 	// A boost::python call costs far more than the lookup inside it, so the read that scales is the one that

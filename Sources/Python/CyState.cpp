@@ -21,6 +21,8 @@
 #include "UI/CvBuildingFilters.h"   // BuildingFilterTypes -- the city screen's list VIEW state
 #include "UI/CvUnitFilters.h"       // UnitFilterTypes -- ditto
 
+extern const char* g_szLastCyRead;
+
 namespace
 {
 	// Resolve without asserting: a script may legitimately hold a stale id, and the honest answer for something
@@ -230,6 +232,7 @@ python::list CyState::getHeadSelectedCityId() const
 
 python::list CyState::getHeadSelectedUnitId() const
 {
+	g_szLastCyRead = "CyState::getHeadSelectedUnitId";
 	int values[2] = { -1, -1 };
 	const CvUnit* pUnit = gDLL->getInterfaceIFace()->getHeadSelectedUnit();
 	if (pUnit != NULL)
@@ -242,6 +245,7 @@ python::list CyState::getHeadSelectedUnitId() const
 
 python::list CyState::getSelectedUnitIds() const
 {
+	g_szLastCyRead = "CyState::getSelectedUnitIds";
 	python::list list = python::list();
 	const int iCount = gDLL->getInterfaceIFace()->getLengthSelectionList();
 	for (int i = 0; i < iCount; ++i)
@@ -733,6 +737,7 @@ python::list CyState::getHurryQuote(int iPlayer, int iCity, int iHurry) const
 
 python::list CyState::getUnitRead(int iPlayer, int iUnit) const
 {
+	g_szLastCyRead = "CyState::getUnitRead";
 	int values[NUM_UNIT_READS] = { 0 };
 	values[UNIT_READ_TYPE]     = -1;
 	values[UNIT_READ_ACTIVITY] = (int)NO_ACTIVITY;
@@ -745,6 +750,7 @@ python::list CyState::getUnitRead(int iPlayer, int iUnit) const
 
 python::list CyState::getUnitFlags(int iPlayer, int iUnit) const
 {
+	g_szLastCyRead = "CyState::getUnitFlags";
 	int values[NUM_UNIT_FLAGS] = { 0 };
 	const CvUnit* pUnit = cys_unit(iPlayer, iUnit);
 	if (pUnit) pUnit->getUnitFlags(values);
@@ -753,24 +759,28 @@ python::list CyState::getUnitFlags(int iPlayer, int iUnit) const
 
 std::wstring CyState::getUnitNameNoDesc(int iPlayer, int iUnit) const
 {
+	g_szLastCyRead = "CyState::getUnitNameNoDesc";
 	const CvUnit* pUnit = cys_unit(iPlayer, iUnit);
 	return pUnit ? std::wstring(pUnit->getNameNoDesc()) : std::wstring();
 }
 
 std::string CyState::getUnitScriptData(int iPlayer, int iUnit) const
 {
+	g_szLastCyRead = "CyState::getUnitScriptData";
 	const CvUnit* pUnit = cys_unit(iPlayer, iUnit);
 	return pUnit ? pUnit->getScriptData() : std::string();
 }
 
 std::wstring CyState::getUnitName(int iPlayer, int iUnit) const
 {
+	g_szLastCyRead = "CyState::getUnitName";
 	const CvUnit* pUnit = cys_unit(iPlayer, iUnit);
 	return pUnit ? std::wstring(pUnit->getName()) : std::wstring();
 }
 
 python::list CyState::getPlotUnitIds(int iX, int iY) const
 {
+	g_szLastCyRead = "CyState::getPlotUnitIds";
 	python::list list = python::list();
 	const CvPlot* pPlot = GC.getMap().plot(iX, iY);
 	if (pPlot == NULL)
@@ -795,6 +805,7 @@ python::list CyState::getPlotUnitIds(int iX, int iY) const
 
 bool CyState::isUnitInvisible(int iPlayer, int iUnit, int iTeam) const
 {
+	g_szLastCyRead = "CyState::isUnitInvisible";
 	const CvUnit* pUnit = cys_unit(iPlayer, iUnit);
 	if (pUnit == NULL || iTeam < 0 || iTeam >= MAX_TEAMS)
 	{
@@ -805,6 +816,7 @@ bool CyState::isUnitInvisible(int iPlayer, int iUnit, int iTeam) const
 
 bool CyState::hasUnitPromotion(int iPlayer, int iUnit, int iPromotion) const
 {
+	g_szLastCyRead = "CyState::hasUnitPromotion";
 	const CvUnit* pUnit = cys_unit(iPlayer, iUnit);
 	if (pUnit == NULL || iPromotion < 0 || iPromotion >= GC.getNumPromotionInfos())
 	{
@@ -815,6 +827,7 @@ bool CyState::hasUnitPromotion(int iPlayer, int iUnit, int iPromotion) const
 
 bool CyState::isUnitPromotionOverridden(int iPlayer, int iUnit, int iPromotion) const
 {
+	g_szLastCyRead = "CyState::isUnitPromotionOverridden";
 	const CvUnit* pUnit = cys_unit(iPlayer, iUnit);
 	if (pUnit == NULL || iPromotion < 0 || iPromotion >= GC.getNumPromotionInfos())
 	{
@@ -825,6 +838,7 @@ bool CyState::isUnitPromotionOverridden(int iPlayer, int iUnit, int iPromotion) 
 
 bool CyState::isUnitActionRecommended(int iPlayer, int iUnit, int iAction) const
 {
+	g_szLastCyRead = "CyState::isUnitActionRecommended";
 	const CvUnit* pUnit = cys_unit(iPlayer, iUnit);
 	//	BOTH bounds: the action id indexes the action registry, so an unchecked upper bound is an out-of-bounds
 	//	read rather than a wrong answer -- and FASSERT_BOUNDS is compiled out of Release, which is where it runs.
@@ -837,18 +851,21 @@ bool CyState::isUnitActionRecommended(int iPlayer, int iUnit, int iAction) const
 
 bool CyState::canUnitUpgradeToAny(int iPlayer, int iUnit) const
 {
+	g_szLastCyRead = "CyState::canUnitUpgradeToAny";
 	const CvUnit* pUnit = cys_unit(iPlayer, iUnit);
 	if (pUnit == NULL) return false;
-	const int iNumUnits = GC.getNumUnitInfos();
-	for (int iToUnit = 0; iToUnit < iNumUnits; ++iToUnit)
+	//	⛔ ASK THE UNIT WHAT IT UPGRADES TO -- do NOT scan the registry asking every type "can I become you?".
+	const std::vector<int>& upgrades = pUnit->getUnitInfo().getUpgradesTo();
+	for (size_t i = 0; i < upgrades.size(); ++i)
 	{
-		if (pUnit->canUpgrade((UnitTypes)iToUnit, true)) return true;
+		if (pUnit->canUpgrade((UnitTypes)upgrades[i], true)) return true;
 	}
 	return false;
 }
 
 bool CyState::canUnitUpgrade(int iPlayer, int iUnit, int iToUnit, bool bTestVisible) const
 {
+	g_szLastCyRead = "CyState::canUnitUpgrade";
 	const CvUnit* pUnit = cys_unit(iPlayer, iUnit);
 	if (pUnit == NULL || iToUnit < 0 || iToUnit >= GC.getNumUnitInfos())
 	{

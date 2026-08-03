@@ -235,6 +235,10 @@ std::string getPyTrace()
 	return buffer.str();
 }
 
+//	⚑ THE LAST PYTHON-FACING READ TO START. Set at the top of each read on the Cy* surface and never cleared, so
+//	a crash names the read that was live when it happened. The crash we are chasing faults INSIDE python24 with
+//	our DLL absent from the live frames, which makes the stack useless for attribution -- this is the attribution.
+const char* g_szLastCyRead = "(none)";
 // Render an SEH exception record as ONE string-parseable line -- `[EXCEPTION] key=value ...` -- so a crash NAMES its
 // own cause in the log (grep-able), instead of needing offline dump analysis. The delay-load cases (PROC/MOD not found,
 // c06d007e/f) decode the DelayLoadInfo and DEMANGLE the proc via UnDecorateSymbolName (dbghelp, already linked) -- this
@@ -346,6 +350,7 @@ void CreateMiniDump(EXCEPTION_POINTERS *pep)
 	// with the dump filename + the Python callstack under it. Co-located in Exceptions.log so a crash is diagnosable
 	// straight from the logs (the delay-load proc name, the AV read/write addr, ...) without offline dump analysis.
 	std::string exc = describeException(pep);
+	exc += CvString::format(" lastCyRead=%s", g_szLastCyRead);
 	if (!exc.empty())
 	{
 		// `dump=` names a file that EXISTS; a failed write reports the HRESULT instead, which is the difference

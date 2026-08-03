@@ -113,6 +113,11 @@ void CyEnums::pythonPublish()
 		.value("CASC_UNIT_PERCENT", CASC_UNIT_PERCENT)
 		;
 
+	python::enum_<PyIdListSlot>("IdListSlot")
+		.value("PYLIST_HEADQUARTERS_BUILDINGS", PYLIST_HEADQUARTERS_BUILDINGS)
+		.value("PYLIST_CONSUMED_BONUSES", PYLIST_CONSUMED_BONUSES)
+	;
+
 	python::enum_<PyIntrinsicSlot>("IntrinsicSlot")
 		.value("PYINT_COST",              PYINT_COST)
 		.value("PYINT_BONUS_CLASS",       PYINT_BONUS_CLASS)

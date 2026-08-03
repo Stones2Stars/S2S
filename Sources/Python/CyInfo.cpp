@@ -45,6 +45,7 @@
 #include "Infos/CvGoodyInfo.h"
 #include "Infos/CvUpkeepInfo.h"
 #include "Infos/CvWorldInfo.h"     // getDefaultPlayers -- the map-setup straggler (PYINT_DEFAULT_PLAYERS)
+#include "Infos/CvCorporationInfo.h"
 #include "Infos/CvProjectInfo.h"   // isSpaceship -- the build-progress readout (PYINT_IS_SPACESHIP)
 #include "Infos/CvVictoryInfo.h"   // isPermanent -- the scenario victory-list filter
 #include "Infos/CvTechInfo.h"      // isRepeat -- the scenario repeat-tech loop (PYINT_IS_REPEAT)
@@ -211,6 +212,34 @@ int CyInfo::getScalar(const std::string& szTypePrefix, int iId, int iScalar, int
 		return 0;
 	}
 	return pInfo->getScalar((InfoScalar)iScalar, (CvCascScope)iScope, (CvCascUnit)iUnit);
+}
+
+python::list CyInfo::getIdList(const std::string& szTypePrefix, int iId, int iSlot) const
+{
+	python::list ids = python::list();
+	if (szTypePrefix != "CORPORATION_" || iId < 0 || iId >= GC.getNumCorporationInfos())
+	{
+		return ids;
+	}
+	const CvCorporationInfo& kCorporation = GC.getCorporationInfo((CorporationTypes)iId);
+	switch (iSlot)
+	{
+	case PYLIST_HEADQUARTERS_BUILDINGS:
+		{
+			const std::vector<BuildingTypes>& buildings = kCorporation.getHeadquartersBuildings();
+			for (size_t i = 0; i < buildings.size(); ++i) ids.append((int)buildings[i]);
+		}
+		break;
+	case PYLIST_CONSUMED_BONUSES:
+		{
+			const std::vector<int>& bonuses = kCorporation.getConsumedBonuses();
+			for (size_t i = 0; i < bonuses.size(); ++i) ids.append(bonuses[i]);
+		}
+		break;
+	default:
+		break;
+	}
+	return ids;
 }
 
 int CyInfo::getIntrinsic(const std::string& szTypePrefix, int iId, int iSlot) const
@@ -428,6 +457,7 @@ void CyInfo::pythonPublish()
 		.def("getEdgeIds",     &CyInfo::getEdgeIds)
 		.def("getScalar",      &CyInfo::getScalar)
 		.def("getIntrinsic",   &CyInfo::getIntrinsic)
+		.def("getIdList", &CyInfo::getIdList)
 		.def("civicOptions",   &CyInfo::civicOptions, python::return_value_policy<python::reference_existing_object>())
 		;
 }
