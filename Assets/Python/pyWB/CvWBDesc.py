@@ -589,8 +589,6 @@ class CvPlayerDesc:
 					f.write("\tCombatXP_ThresholdMod=%d\n" % player.getGreatGeneralsThresholdModifier())
 				if player.getCombatExperience() > 0:
 					f.write("\tCombatXP=%d\n" % player.getCombatExperience())
-				if player.getCoastalTradeRoutes() != 0:
-					f.write("\tCoastalTradeRoute=%d\n" % player.getCoastalTradeRoutes())
 				if player.getStateReligionUnitProductionModifier() != 0:
 					f.write("\tStateReligionUnit=%d\n" % player.getStateReligionUnitProductionModifier())
 				if player.getStateReligionBuildingProductionModifier() != 0:
@@ -638,7 +636,6 @@ class CvPlayerDesc:
 		self.iAnarchy = 0
 		self.iCombatXP_ThresholdMod = 0
 		self.iCombatXP = 0
-		self.iCoastalTradeRoute = 0
 		self.iStateReligionUnit = 0
 		self.iStateReligionBuilding = 0
 		self.aaiCivics = []
@@ -795,11 +792,6 @@ class CvPlayerDesc:
 				v = parser.findTokenValue(toks, "CombatXP")
 				if v != -1:
 					self.iCombatXP = int(v)
-					continue
-
-				v = parser.findTokenValue(toks, "CoastalTradeRoute")
-				if v != -1:
-					self.iCoastalTradeRoute = int(v)
 					continue
 
 				v = parser.findTokenValue(toks, "StateReligionUnit")
@@ -2069,7 +2061,6 @@ Randomize Resources=0\nEndMap\n"
 			player.setCombatExperience(pWBPlayer.iCombatXP)
 			player.changeGoldenAgeTurns(pWBPlayer.iGoldenAge - player.getGoldenAgeTurns())
 			player.changeAnarchyTurns(pWBPlayer.iAnarchy - player.getAnarchyTurns())
-			player.changeCoastalTradeRoutes(pWBPlayer.iCoastalTradeRoute - player.getCoastalTradeRoutes())
 			player.changeStateReligionUnitProductionModifier(pWBPlayer.iStateReligionUnit - player.getStateReligionUnitProductionModifier())
 			player.changeStateReligionBuildingProductionModifier(pWBPlayer.iStateReligionBuilding - player.getStateReligionBuildingProductionModifier())
 

@@ -142,12 +142,6 @@ class WBPlayerScreen:
 		screen.setLabel("AnarchyText", "Background", "<font=3>" + sText + "</font>", 1<<0, 75, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 		iY += 30
-		screen.setButtonGFC("CoastalTradePlus", "", "", 20, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
-		screen.setButtonGFC("CoastalTradeMinus", "", "", 45, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
-		sText = CyTranslator().getText("TXT_KEY_WB_COASTAL_TRADE", (pPlayer.getCoastalTradeRoutes(),))
-		screen.setLabel("CoastalTradeText", "Background", "<font=3>" + sText + "</font>", 1<<0, 75, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-
-		iY += 30
 		for i in xrange(CommerceTypes.NUM_COMMERCE_TYPES):
 			iX = 20
 			screen.hide("CommerceFlexiblePlus" + str(i))
@@ -362,13 +356,6 @@ class WBPlayerScreen:
 				pPlayer.changeAnarchyTurns(iChange)
 			elif inputClass.getData1() == 1031:
 				pPlayer.changeAnarchyTurns(- min(iChange, pPlayer.getAnarchyTurns()))
-			self.placeStats()
-
-		elif inputClass.getFunctionName().find("CoastalTrade") > -1:
-			if inputClass.getData1() == 1030:
-				pPlayer.changeCoastalTradeRoutes(iChange)
-			elif inputClass.getData1() == 1031:
-				pPlayer.changeCoastalTradeRoutes(- min(iChange, pPlayer.getCoastalTradeRoutes()))
 			self.placeStats()
 
 		elif inputClass.getFunctionName().find("CommerceFlexible") > -1:
