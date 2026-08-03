@@ -193,6 +193,22 @@ DllExport void DLLPublishToPython()
 		.def_readwrite("y", &POINT::y)
 		;
 
+	//   TradeData -- fails in BOTH directions, which is why it surfaced twice over. The engine RETURNS one
+	//               (CyDeal::getFirstTrade / getSecondTrade), so the scoreboard's deal walk resolved the def and
+	//               then threw at CONVERSION -- "No Python class registered for C++ class struct TradeData",
+	//               a TypeError arriving inside forceScreenRedraw, once per frame. Python also CONSTRUCTS one
+	//               (TradeUtil / MoreCiv4lerts / CvRandomEventInterface / CvForeignAdvisor), which needs the
+	//               default ctor. It is the marshalling VOCABULARY, not a getter contract, so the
+	//               [DEC-cy-not-fixed] ban does not reach it.
+	//	⚠ The published FIELD NAMES are not the member names: script reads `trade.ItemType` and `trade.iData`.
+	//	Renaming them here to match the C++ members would silently break every reader.
+	python::class_<TradeData>("TradeData")
+		.def_readwrite("ItemType",  &TradeData::m_eItemType)
+		.def_readwrite("iData",     &TradeData::m_iData)
+		.def_readwrite("bOffering", &TradeData::m_bOffering)
+		.def_readwrite("bHidden",   &TradeData::m_bHidden)
+		;
+
 	Win32::pythonPublish();
 
 	OutputDebugString("Publishing to Python: End\n");

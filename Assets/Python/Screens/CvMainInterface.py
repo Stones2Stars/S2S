@@ -1965,7 +1965,7 @@ class CvMainInterface:
 							break
 				else:
 					bUpg = False
-				aMap[iUnitType] = [GC.getUnitInfo(iUnitType).getButton(), bUpg]
+				aMap[iUnitType] = [INFO.getButton("UNIT_", iUnitType), bUpg]
 			else:
 				bUpg = aMap[iUnitType][1]
 
@@ -2154,7 +2154,7 @@ class CvMainInterface:
 
 			actions = CyIF.getActionsToShow()
 			for i, iType in enumerate(actions):
-				BTN = GC.getActionInfo(iType).getButton()
+				BTN = INFO.getButton("ACTION_", iType)
 				screen.appendMultiListButton(MuLi, BTN, 0, WidgetTypes.WIDGET_ACTION, iType, 1, False)
 				if not CyIF.canHandleAction(iType, False):
 					screen.disableMultiListButton(MuLi, 0, i, BTN)
@@ -2317,12 +2317,11 @@ class CvMainInterface:
 				screen.show("Treasury")
 
 				iEra = CyPlayer.getCurrentEra()
-				CvEraInfo = GC.getEraInfo(iEra)
-				BTN = CvEraInfo.getButton()
+				BTN = INFO.getButton("ERA_", iEra)
 				if BTN:
 					screen.setText("EraIndicator0", "", "<img=%s>" % BTN, 1<<1, self.xMidL - 8, 0, 0, eFontGame, eWidGen, iEra, 0)
 				else:
-					szTxt = CvEraInfo.getDescription()
+					szTxt = INFO.getDescription("ERA_", iEra)
 					screen.setText("EraIndicator0", "", "<font=3>%s" % szTxt[:3], 1<<1, self.xMidL - 14, 0, 0, eFontGame, eWidGen, iEra, 0)
 
 				if iCurrentResearch == -1:
@@ -2357,7 +2356,7 @@ class CvMainInterface:
 							screen.setBarPercentage("ResearchBar", InfoBarTypes.INFOBAR_RATE, 0)
 						screen.show("ResearchBar")
 
-						szTxt = GC.getTechInfo(iCurrentResearch).getDescription() + " (" + str(CyPlayer.getResearchTurnsLeft(iCurrentResearch, True)) + ')'
+						szTxt = INFO.getDescription("TECH_", iCurrentResearch) + " (" + str(CyPlayer.getResearchTurnsLeft(iCurrentResearch, True)) + ')'
 						screen.setText("WID|TECH|ProgBar1", "", szTxt, 1<<2, x, 2, 0, eFontGame, eWidGen, iCurrentResearch, 0)
 
 				# Great General Bar
@@ -2814,7 +2813,7 @@ class CvMainInterface:
 				# Set the Religion button
 				x = X + S * (iCount % iBtnPerRow)
 				y = Y + S * (iCount / iBtnPerRow)
-				artPath = GC.getReligionInfo(i).getButton()
+				artPath = INFO.getButton("RELIGION_", i)
 				szName = "ReligionDDS" + str(i)
 				screen.setImageButton(szName, artPath, x, y, S, S, iWidCityReligion, i, 1)
 				if CyCity.isHolyCityByType(i):
@@ -2826,7 +2825,7 @@ class CvMainInterface:
 				# Set the Corporation button
 				x = X + S * (iCount % iBtnPerRow)
 				y = Y + S * (iCount / iBtnPerRow)
-				artPath = GC.getCorporationInfo(i).getButton()
+				artPath = INFO.getButton("CORPORATION_", i)
 				szName = "CorporationDDS" + str(i)
 				screen.setImageButton(szName, artPath, x, y, S, S, iWidCityCorporation, i, 1)
 				if CyCity.isHeadquartersByType(i):
@@ -2931,10 +2930,10 @@ class CvMainInterface:
 			iCultureTreshold = CyCity.getCultureThreshold()
 			iRate = CyCity.getCommerceRateTimes100(CommerceTypes.COMMERCE_CULTURE)
 			if not iRate % 100:
-				szTxt = TRNSLTR.getText("INTERFACE_CITY_COMMERCE_RATE", (GC.getCommerceInfo(CommerceTypes.COMMERCE_CULTURE).getChar(), GC.getCultureLevelInfo(CyCity.getCultureLevel()).getTextKey(), iRate/100))
+				szTxt = TRNSLTR.getText("INTERFACE_CITY_COMMERCE_RATE", (TRNSLTR.getText("[ICON_CULTURE]", ()), INFO.getTextKey("CULTURELEVEL_", CyCity.getCultureLevel()), iRate/100))
 			else:
 				szRate = u"+%d.%02d" % (iRate/100, iRate%100)
-				szTxt = TRNSLTR.getText("INTERFACE_CITY_COMMERCE_RATE_FLOAT", (GC.getCommerceInfo(CommerceTypes.COMMERCE_CULTURE).getChar(), GC.getCultureLevelInfo(CyCity.getCultureLevel()).getTextKey(), szRate))
+				szTxt = TRNSLTR.getText("INTERFACE_CITY_COMMERCE_RATE_FLOAT", (TRNSLTR.getText("[ICON_CULTURE]", ()), INFO.getTextKey("CULTURELEVEL_", CyCity.getCultureLevel()), szRate))
 
 			if iRate > 0 and iCultureTreshold > 0:
 				# Culture Turns
@@ -4153,7 +4152,7 @@ class CvMainInterface:
 					for i in xrange(GC.getNumUnitInfos()):
 						iCount = CyIF.countEntities(i)
 						if iCount:
-							szBufferL = "<font=1>" + GC.getUnitInfo(i).getDescription()
+							szBufferL = "<font=1>" + INFO.getDescription("UNIT_", i)
 							szBufferR = "<font=1>" + str(iCount)
 							screen.appendTableRow(unitTable)
 							screen.setTableText(unitTable, 0, iRow, szBufferL, "", WidgetTypes.WIDGET_PEDIA_JUMP_TO_UNIT, i, 1, 1<<0)
@@ -4317,7 +4316,7 @@ class CvMainInterface:
 						screen.addBuildingGraphicGFC(graphic, iBuilding, x, y, w, h, eWidGen, 0, 0, -20, 30, 1, False)
 
 					elif iOrderNode == OrderTypes.ORDER_CREATE:
-						if GC.getProjectInfo(CyIF.getOrderNodeData1(0)).isSpaceship():
+						if INFO.getIntrinsic("PROJECT_", CyIF.getOrderNodeData1(0), IntrinsicSlot.PYINT_IS_SPACESHIP) > 0:
 							iProject = CyIF.getOrderNodeData1(0)
 							screen.addSpaceShipWidgetGFC(graphic, x, y, w, h, iProject, 0, eWidGen, 0, 0)
 			elif CyUnit:
@@ -4624,7 +4623,7 @@ class CvMainInterface:
 							if bUsePlayerName:
 								szTxt = CyPlayer.getName()
 							else:
-								szTxt = GC.getLeaderHeadInfo(CyPlayer.getLeaderType()).getDescription()
+								szTxt = INFO.getDescription("LEADER_", CyPlayer.getLeaderType())
 							if bShowBothNames:
 								szTxt += "/" + CyPlayer.getCivilizationShortDescription(0)
 							elif bShowBothNamesShort:
@@ -4761,7 +4760,7 @@ class CvMainInterface:
 									if iTeamSpyPointAgainstYou < iYouSpyPointAgainstTeam:
 										scores.setEspionage()
 									for iMissionLoop in xrange(GC.getNumEspionageMissionInfos()):
-										if GC.getEspionageMissionInfo(iMissionLoop).isSeeResearch():
+										if INFO.getIntrinsic("ESPIONAGEMISSION_", iMissionLoop, IntrinsicSlot.PYINT_IS_SEE_RESEARCH) > 0:
 											bEspionageCanSeeResearch = CyPlayerAct.canDoEspionageMission(iMissionLoop, iPlayer, None, -1)
 											break
 									if bSameTeam or bEspionageCanSeeResearch or GC.getTeam(iPlayerTeam).isVassal(iTeamAct) or bDebug:

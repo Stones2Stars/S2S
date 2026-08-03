@@ -51,6 +51,8 @@ enum PyIntrinsicSlot
 	PYINT_DEFAULT_PLAYERS,     // a world size's default player count (the map-setup straggler)
 	PYINT_HEADQUARTERS_CORPORATION, // CORPORATION_* FK -- the corp this building is the HEADQUARTERS of (json §9)
 	PYINT_IS_SEE_DEMOGRAPHICS, // does this espionage mission reveal demographics (the scoreboard's power column)
+	PYINT_IS_SEE_RESEARCH,     // does this espionage mission reveal research (the scoreboard's research column)
+	PYINT_IS_SPACESHIP,        // is this project a spaceship part (the build-progress readout)
 	NUM_PYINT
 };
 
@@ -61,6 +63,11 @@ public:
 
 	// The entity's display NAME, already localized (the info's own resolved text).
 	std::wstring getDescription(const std::string& szTypePrefix, int iId) const;
+	// The entity's TXT_KEY -- the UNRESOLVED key, for a caller that composes it into a larger string the text
+	// system then resolves. ⛔ The `*Key` suffix is the contract ([patterns.md]): this returns a KEY, while
+	// getDescription above returns RESOLVED TEXT. A name that hides which one you hold is how a raw key ends up
+	// rendered to a player, or a resolved string ends up fed back into getText.
+	std::wstring getTextKey(const std::string& szTypePrefix, int iId) const;
 	// The entity's stable TYPE KEY ("UNIT_AXEMAN") -- what a scenario serializer and a config string need.
 	std::string getType(const std::string& szTypePrefix, int iId) const;
 	// The entity's BUTTON/icon art reference (the `ui` block, json.md §7). ART is an unmigrated system boundary

@@ -45,6 +45,7 @@
 #include "Infos/CvGoodyInfo.h"
 #include "Infos/CvUpkeepInfo.h"
 #include "Infos/CvWorldInfo.h"     // getDefaultPlayers -- the map-setup straggler (PYINT_DEFAULT_PLAYERS)
+#include "Infos/CvProjectInfo.h"   // isSpaceship -- the build-progress readout (PYINT_IS_SPACESHIP)
 #include "Infos/CvVictoryInfo.h"   // isPermanent -- the scenario victory-list filter
 #include "Infos/CvTechInfo.h"      // isRepeat -- the scenario repeat-tech loop (PYINT_IS_REPEAT)
 #include "Infos/CvVoteSourceInfo.h"
@@ -149,6 +150,16 @@ std::wstring CyInfo::getDescription(const std::string& szTypePrefix, int iId) co
 	return pInfo ? std::wstring(pInfo->getDescription()) : std::wstring();
 }
 
+std::wstring CyInfo::getTextKey(const std::string& szTypePrefix, int iId) const
+{
+	const CvInfoBase* pInfo = cyi_infoBase(szTypePrefix, iId);
+	if (pInfo == NULL || pInfo->getTextKeyWide() == NULL)
+	{
+		return std::wstring();
+	}
+	return std::wstring(pInfo->getTextKeyWide());
+}
+
 std::string CyInfo::getType(const std::string& szTypePrefix, int iId) const
 {
 	const CvInfoBase* pInfo = cyi_infoBase(szTypePrefix, iId);
@@ -220,6 +231,16 @@ int CyInfo::getIntrinsic(const std::string& szTypePrefix, int iId, int iSlot) co
 	case PYINT_IS_SEE_DEMOGRAPHICS:
 		if (szTypePrefix == "ESPIONAGEMISSION_" && iId < GC.getNumEspionageMissionInfos())
 			return GC.getEspionageMissionInfo((EspionageMissionTypes)iId).isSeeDemographics() ? 1 : 0;
+		break;
+
+	case PYINT_IS_SEE_RESEARCH:
+		if (szTypePrefix == "ESPIONAGEMISSION_" && iId < GC.getNumEspionageMissionInfos())
+			return GC.getEspionageMissionInfo((EspionageMissionTypes)iId).isSeeResearch() ? 1 : 0;
+		break;
+
+	case PYINT_IS_SPACESHIP:
+		if (szTypePrefix == "PROJECT_" && iId < GC.getNumProjectInfos())
+			return GC.getProjectInfo((ProjectTypes)iId).isSpaceship() ? 1 : 0;
 		break;
 
 	case PYINT_ACTION_INFO_INDEX:
@@ -360,6 +381,7 @@ void CyInfo::pythonPublish()
 
 	python::class_<CyInfo>("CyInfo")
 		.def("getDescription", &CyInfo::getDescription)
+		.def("getTextKey",     &CyInfo::getTextKey)
 		.def("getType",        &CyInfo::getType)
 		.def("getButton",      &CyInfo::getButton)
 		.def("exists",         &CyInfo::exists)

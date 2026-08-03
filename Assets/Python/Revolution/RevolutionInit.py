@@ -28,6 +28,7 @@ import BugCore
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -117,7 +118,7 @@ class RevolutionInit:
 	def showActivePopup(self):
 		revMaxCivs = RevOpt.getRevMaxCivs()
 		barbMaxCivs = RevOpt.getBarbCivMaxCivs()
-		revDefaultNumPlayers = GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers()
+		revDefaultNumPlayers = INFO.getIntrinsic("WORLD_", GC.getMap().getWorldSize(), IntrinsicSlot.PYINT_DEFAULT_PLAYERS)
 
 		bodStr = self.getRevComponentsText()
 		MAX_PC_PLAYERS = GC.getMAX_PC_PLAYERS()

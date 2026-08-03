@@ -20,6 +20,7 @@ TRNSLTR = CyTranslator()
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
 STATE = CyState()
+INFO = CyInfo()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 
@@ -389,7 +390,7 @@ class Scoreboard:
 					if playerScore._has[c]:
 						iTech = playerScore._values[c]
 						name = "WID|TECH|Score" + str(iTech) + "|" + str(playerScore.iPlayer)
-						BTN = GC.getTechInfo(iTech).getButton()
+						BTN = INFO.getButton("TECH_", iTech)
 						screen.setImageButton(name, BTN, x - techIconSize, y - p * height, techIconSize, techIconSize, eWidGen, 1, 1)
 				x -= techIconSize
 				totalWidth += techIconSize + spacing
