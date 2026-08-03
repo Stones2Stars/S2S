@@ -342,6 +342,12 @@ public:
 	DllExport IDInfo getIDInfo() const;
 	DllExport CvSelectionGroup* getGroup() const;
 	DllExport int getHotKeyNumber();
+	//	The unit's own scalars + its group's order state, and its parameterless predicates -- one read per group,
+	//	so the read surface grows by a slot rather than by a getter per value ([patterns.md] THE TWO READ ROLES).
+	//	⚠ Not const: getHotKeyNumber is not, and that is the engine's signature showing through, not an intent
+	//	to write.
+	void getUnitRead(int (&unitRead)[NUM_UNIT_READS]);
+	void getUnitFlags(int (&flags)[NUM_UNIT_FLAGS]) const;
 	DllExport int getViewportX() const;
 	DllExport int getViewportY() const;
 	DllExport bool atPlot(const CvPlot* pPlot) const;

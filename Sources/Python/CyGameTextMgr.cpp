@@ -16,16 +16,24 @@
 #include "Infos/CvCorporationInfo.h"
 #include "Infos/CvBonusInfo.h"
 #include "Engine/CvCity.h"
+#include "Engine/CvUnit.h"
 #include "Engine/CvPlayer.h"
 #include "AI/CvPlayerAI.h"      // GET_PLAYER
 
 namespace
 {
-	//	A composer names its city by the (owner, id) PAIR, like every other surface script reaches. The CyCity*
-	//	these used to take is unreachable from script -- the wrapper carries zero defs, so nothing can hold or
-	//	build one ([DEC-cy-not-fixed]) -- which made every city-context tooltip uncallable.
-	//	⚠ A NULL answer is legitimate here and always was: the pedia asks these with no city bound, and the
-	//	composers below already branch on it. So an unresolvable pair reads as "no city context", never as an error.
+	//	A composer names its subject by the (owner, id) PAIR, like every other surface script reaches. The
+	//	CyCity* / CyUnit* these used to take are unreachable from script -- both wrappers carry zero defs, so
+	//	nothing can hold or build one ([DEC-cy-not-fixed]) -- which made every city-context tooltip and the
+	//	unit help uncallable.
+	//	⚠ A NULL answer is legitimate and always was: the pedia asks these with no city bound, and the composers
+	//	below already branch on it. So an unresolvable pair reads as "no context", never as an error.
+	CvUnit* cgt_unit(int iPlayer, int iUnit)
+	{
+		if (iPlayer < 0 || iPlayer >= MAX_PLAYERS) return NULL;
+		return GET_PLAYER((PlayerTypes)iPlayer).getUnit(iUnit);
+	}
+
 	CvCity* cgt_city(int iPlayer, int iCity)
 	{
 		if (iPlayer < 0 || iPlayer >= MAX_PLAYERS || iCity < 0)
@@ -155,12 +163,13 @@ std::wstring CyGameTextMgr::getUnitHelp(int iUnit, bool bCivilopediaText, bool b
 	return szBuffer.getCString();
 }
 
-std::wstring CyGameTextMgr::getSpecificUnitHelp(CyUnit* pUnit, bool bOneLine, bool bShort)
+std::wstring CyGameTextMgr::getSpecificUnitHelp(int iPlayer, int iUnit, bool bOneLine, bool bShort)
 {
 	CvWStringBuffer szBuffer;
-	if (pUnit && pUnit->getUnit())
+	CvUnit* pUnit = cgt_unit(iPlayer, iUnit);
+	if (pUnit != NULL)
 	{
-		GAMETEXT.setUnitHelp(szBuffer, pUnit->getUnit(), bOneLine, bShort);
+		GAMETEXT.setUnitHelp(szBuffer, pUnit, bOneLine, bShort);
 	}
 	return szBuffer.getCString();
 }

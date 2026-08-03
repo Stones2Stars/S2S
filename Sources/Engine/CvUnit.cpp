@@ -13383,6 +13383,74 @@ int CvUnit::getHotKeyNumber()
 }
 
 
+void CvUnit::getUnitRead(int (&unitRead)[NUM_UNIT_READS])
+{
+	unitRead[UNIT_READ_TYPE]                = (int)getUnitType();
+	unitRead[UNIT_READ_DOMAIN]              = (int)getDomainType();
+	unitRead[UNIT_READ_LEVEL]               = getLevel();
+	unitRead[UNIT_READ_HP]                  = getHP();
+	unitRead[UNIT_READ_MAX_HP]              = getMaxHP();
+	unitRead[UNIT_READ_MOVES_LEFT]          = movesLeft();
+	unitRead[UNIT_READ_BASE_MOVES]          = baseMoves();
+	//	x100 native, like every amount -- the reader divides. The float-returning legacy accessor did that
+	//	division inside the DLL, which is the presentation layer's arithmetic on the wrong side of the boundary.
+	unitRead[UNIT_READ_EXPERIENCE]          = getExperience100();
+	unitRead[UNIT_READ_EXPERIENCE_NEEDED]   = experienceNeeded();
+	unitRead[UNIT_READ_HOTKEY_NUMBER]       = getHotKeyNumber();
+	unitRead[UNIT_READ_BASE_COMBAT]         = baseCombatStr();
+	unitRead[UNIT_READ_AIR_BASE_COMBAT]     = airBaseCombatStr();
+
+	unitRead[UNIT_READ_CONTROL_POINTS]                = 0;
+	unitRead[UNIT_READ_CONTROL_POINTS_LEFT]           = 0;
+	unitRead[UNIT_READ_COMMODORE_CONTROL_POINTS]      = 0;
+	unitRead[UNIT_READ_COMMODORE_CONTROL_POINTS_LEFT] = 0;
+	if (getCommanderComp() != NULL)
+	{
+		unitRead[UNIT_READ_CONTROL_POINTS]      = getCommanderComp()->getControlPoints();
+		unitRead[UNIT_READ_CONTROL_POINTS_LEFT] = getCommanderComp()->getControlPointsLeft();
+	}
+	if (getCommodoreComp() != NULL)
+	{
+		unitRead[UNIT_READ_COMMODORE_CONTROL_POINTS]      = getCommodoreComp()->getControlPoints();
+		unitRead[UNIT_READ_COMMODORE_CONTROL_POINTS_LEFT] = getCommodoreComp()->getControlPointsLeft();
+	}
+
+	//	The ORDER state lives on the selection group, which is where Civ4 keeps it.
+	unitRead[UNIT_READ_ACTIVITY]             = (int)NO_ACTIVITY;
+	unitRead[UNIT_READ_AUTOMATE]             = (int)NO_AUTOMATE;
+	unitRead[UNIT_READ_MISSION]              = (int)NO_MISSION;
+	unitRead[UNIT_READ_MISSION_QUEUE_LENGTH] = 0;
+	const CvSelectionGroup* pGroup = getGroup();
+	if (pGroup != NULL)
+	{
+		unitRead[UNIT_READ_ACTIVITY]             = (int)pGroup->getActivityType();
+		unitRead[UNIT_READ_AUTOMATE]             = (int)pGroup->getAutomateType();
+		unitRead[UNIT_READ_MISSION_QUEUE_LENGTH] = pGroup->getLengthMissionQueue();
+		if (unitRead[UNIT_READ_MISSION_QUEUE_LENGTH] > 0)
+		{
+			unitRead[UNIT_READ_MISSION] = pGroup->getMissionType(0);
+		}
+	}
+}
+
+
+void CvUnit::getUnitFlags(int (&flags)[NUM_UNIT_FLAGS]) const
+{
+	flags[UNIT_FLAG_SELECTED]        = IsSelected() ? 1 : 0;
+	flags[UNIT_FLAG_IN_BATTLE]       = isInBattle() ? 1 : 0;
+	flags[UNIT_FLAG_WAITING]         = isWaiting() ? 1 : 0;
+	flags[UNIT_FLAG_HURT]            = isHurt() ? 1 : 0;
+	flags[UNIT_FLAG_FORTIFYABLE]     = isFortifyable() ? 1 : 0;
+	flags[UNIT_FLAG_COMMANDER]       = isCommander() ? 1 : 0;
+	flags[UNIT_FLAG_COMMODORE]       = isCommodore() ? 1 : 0;
+	flags[UNIT_FLAG_PROMOTION_READY] = isPromotionReady() ? 1 : 0;
+	flags[UNIT_FLAG_HAS_MOVED]       = hasMoved() ? 1 : 0;
+	flags[UNIT_FLAG_CAN_MOVE]        = canMove() ? 1 : 0;
+	flags[UNIT_FLAG_CAN_FIGHT]       = canFight() ? 1 : 0;
+	flags[UNIT_FLAG_CAN_AIR_ATTACK]  = canAirAttack() ? 1 : 0;
+}
+
+
 void CvUnit::setHotKeyNumber(int iNewValue)
 {
 	PROFILE_EXTRA_FUNC();

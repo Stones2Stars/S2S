@@ -11,7 +11,9 @@
 #include "Engine/CvCity.h"
 #include "Engine/CvGame.h"
 #include "Engine/CvPlayer.h"
-#include "Engine/CvUnit.h"                          // the selection reads answer a unit's owner + id
+#include "Engine/CvUnit.h"       // the unit plane + the selection reads
+#include "Engine/CvPlot.h"
+#include "Engine/CvMap.h"        // the plot enumeration resolves its plot through the map
 #include "Infrastructure/CvDLLInterfaceIFaceBase.h"  // getHeadSelectedCity/Unit -- the CURRENT SELECTION
 #include "AI/CvPlayerAI.h"          // GET_PLAYER
 #include "Infos/CvInfoKinds.h"      // the NUM_<FAMILY>_KINDS the groups are sized by
@@ -32,6 +34,13 @@ namespace
 	{
 		const CvPlayer* pPlayer = cys_player(iPlayer);
 		return pPlayer ? pPlayer->getCity(iCity) : NULL;
+	}
+
+	// Non-const because a couple of the engine's unit accessors are (getHotKeyNumber); these READ.
+	CvUnit* cys_unit(int iPlayer, int iUnit)
+	{
+		if (iPlayer < 0 || iPlayer >= MAX_PLAYERS) return NULL;
+		return GET_PLAYER((PlayerTypes)iPlayer).getUnit(iUnit);
 	}
 
 	// The whole group out, in one call. N is deduced from the array the group read filled, so a family that
@@ -216,6 +225,25 @@ python::list CyState::getHeadSelectedUnitId() const
 		values[1] = pUnit->getID();
 	}
 	return cys_toList(values);
+}
+
+python::list CyState::getSelectedUnitIds() const
+{
+	python::list list = python::list();
+	const int iCount = gDLL->getInterfaceIFace()->getLengthSelectionList();
+	for (int i = 0; i < iCount; ++i)
+	{
+		const CvUnit* pUnit = gDLL->getInterfaceIFace()->getSelectionUnit(i);
+		if (pUnit == NULL)
+		{
+			continue;
+		}
+		python::list pair = python::list();
+		pair.append((int)pUnit->getOwner());
+		pair.append(pUnit->getID());
+		list.append(pair);
+	}
+	return list;
 }
 
 // ---- ENUMERATION ----
@@ -414,6 +442,110 @@ python::list CyState::getHurryQuote(int iPlayer, int iCity, int iHurry) const
 		pCity->getHurryQuote((HurryTypes)iHurry, values);
 	}
 	return cys_toList(values);
+}
+
+// ---- THE UNIT PLANE ----
+
+python::list CyState::getUnitRead(int iPlayer, int iUnit) const
+{
+	int values[NUM_UNIT_READS] = { 0 };
+	values[UNIT_READ_TYPE]     = -1;
+	values[UNIT_READ_ACTIVITY] = (int)NO_ACTIVITY;
+	values[UNIT_READ_AUTOMATE] = (int)NO_AUTOMATE;
+	values[UNIT_READ_MISSION]  = (int)NO_MISSION;
+	CvUnit* pUnit = cys_unit(iPlayer, iUnit);
+	if (pUnit) pUnit->getUnitRead(values);
+	return cys_toList(values);
+}
+
+python::list CyState::getUnitFlags(int iPlayer, int iUnit) const
+{
+	int values[NUM_UNIT_FLAGS] = { 0 };
+	const CvUnit* pUnit = cys_unit(iPlayer, iUnit);
+	if (pUnit) pUnit->getUnitFlags(values);
+	return cys_toList(values);
+}
+
+std::wstring CyState::getUnitName(int iPlayer, int iUnit) const
+{
+	const CvUnit* pUnit = cys_unit(iPlayer, iUnit);
+	return pUnit ? std::wstring(pUnit->getName()) : std::wstring();
+}
+
+python::list CyState::getPlotUnitIds(int iX, int iY) const
+{
+	python::list list = python::list();
+	const CvPlot* pPlot = GC.getMap().plot(iX, iY);
+	if (pPlot == NULL)
+	{
+		return list;
+	}
+	const int iNumUnits = pPlot->getNumUnits();
+	for (int i = 0; i < iNumUnits; ++i)
+	{
+		const CvUnit* pUnit = pPlot->getUnitByIndex(i);
+		if (pUnit == NULL)
+		{
+			continue;
+		}
+		python::list pair = python::list();
+		pair.append((int)pUnit->getOwner());
+		pair.append(pUnit->getID());
+		list.append(pair);
+	}
+	return list;
+}
+
+bool CyState::isUnitInvisible(int iPlayer, int iUnit, int iTeam) const
+{
+	const CvUnit* pUnit = cys_unit(iPlayer, iUnit);
+	if (pUnit == NULL || iTeam < 0 || iTeam >= MAX_TEAMS)
+	{
+		return false;
+	}
+	return pUnit->isInvisible((TeamTypes)iTeam, false);
+}
+
+bool CyState::hasUnitPromotion(int iPlayer, int iUnit, int iPromotion) const
+{
+	const CvUnit* pUnit = cys_unit(iPlayer, iUnit);
+	if (pUnit == NULL || iPromotion < 0 || iPromotion >= GC.getNumPromotionInfos())
+	{
+		return false;
+	}
+	return pUnit->isHasPromotion((PromotionTypes)iPromotion);
+}
+
+bool CyState::isUnitPromotionOverridden(int iPlayer, int iUnit, int iPromotion) const
+{
+	const CvUnit* pUnit = cys_unit(iPlayer, iUnit);
+	if (pUnit == NULL || iPromotion < 0 || iPromotion >= GC.getNumPromotionInfos())
+	{
+		return false;
+	}
+	return pUnit->isPromotionOverriden((PromotionTypes)iPromotion);
+}
+
+bool CyState::isUnitActionRecommended(int iPlayer, int iUnit, int iAction) const
+{
+	const CvUnit* pUnit = cys_unit(iPlayer, iUnit);
+	//	BOTH bounds: the action id indexes the action registry, so an unchecked upper bound is an out-of-bounds
+	//	read rather than a wrong answer -- and FASSERT_BOUNDS is compiled out of Release, which is where it runs.
+	if (pUnit == NULL || iAction < 0 || iAction >= GC.getNumActionInfos())
+	{
+		return false;
+	}
+	return pUnit->isActionRecommended(iAction);
+}
+
+bool CyState::canUnitUpgrade(int iPlayer, int iUnit, int iToUnit, bool bTestVisible) const
+{
+	const CvUnit* pUnit = cys_unit(iPlayer, iUnit);
+	if (pUnit == NULL || iToUnit < 0 || iToUnit >= GC.getNumUnitInfos())
+	{
+		return false;
+	}
+	return pUnit->canUpgrade((UnitTypes)iToUnit, bTestVisible);
 }
 
 // ---- The city screen's VIEW state ----
@@ -637,6 +769,7 @@ void CyState::pythonPublish()
 		// ENUMERATION + CITY rank groups + plain city facts
 		.def("getHeadSelectedCityId",    &CyState::getHeadSelectedCityId)
 		.def("getHeadSelectedUnitId",    &CyState::getHeadSelectedUnitId)
+		.def("getSelectedUnitIds",       &CyState::getSelectedUnitIds)
 		.def("getCityIds",               &CyState::getCityIds)
 		.def("getYieldRateRanks",        &CyState::getYieldRateRanks)
 		.def("getBaseYieldRateRanks",    &CyState::getBaseYieldRateRanks)
@@ -654,6 +787,15 @@ void CyState::pythonPublish()
 		.def("getOrder",                 &CyState::getOrder)
 		.def("getGrowth",                &CyState::getGrowth)
 		.def("getCulture",               &CyState::getCulture)
+		.def("getUnitRead",              &CyState::getUnitRead)
+		.def("getUnitFlags",             &CyState::getUnitFlags)
+		.def("getUnitName",              &CyState::getUnitName)
+		.def("getPlotUnitIds",           &CyState::getPlotUnitIds)
+		.def("isUnitInvisible",          &CyState::isUnitInvisible)
+		.def("hasUnitPromotion",         &CyState::hasUnitPromotion)
+		.def("isUnitPromotionOverridden",&CyState::isUnitPromotionOverridden)
+		.def("isUnitActionRecommended",  &CyState::isUnitActionRecommended)
+		.def("canUnitUpgrade",           &CyState::canUnitUpgrade)
 		.def("isCityRevealed",           &CyState::isCityRevealed)
 		.def("isEmphasize",              &CyState::isEmphasize)
 		.def("getHurryQuote",            &CyState::getHurryQuote)

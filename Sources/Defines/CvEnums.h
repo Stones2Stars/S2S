@@ -1242,6 +1242,59 @@ enum CityOrderRead
 	NUM_CITY_ORDER_READS
 };
 
+//	A UNIT's own scalars, plus the order state its selection group holds. One group, because the plot list and
+//	every unit panel ask for most of it at once ([patterns.md] THE TWO READ ROLES: the getter IS the group).
+//	⚠ UNIT_READ_EXPERIENCE is x100 NATIVE like every amount ([DEC-fixedpoint-x100]) -- the reader divides. The
+//	rest are whole game counts (hit points, moves, a level, an enum value) and are NOT scaled.
+//	⚠ The ORDER slots come from the unit's selection GROUP, which is where Civ4 keeps activity/automation/mission;
+//	UNIT_READ_MISSION is the head of the queue, or -1 when the queue is empty.
+enum UnitReadKind
+{
+	UNIT_READ_TYPE = 0,
+	UNIT_READ_DOMAIN,
+	UNIT_READ_LEVEL,
+	UNIT_READ_HP,
+	UNIT_READ_MAX_HP,
+	UNIT_READ_MOVES_LEFT,
+	UNIT_READ_BASE_MOVES,
+	UNIT_READ_EXPERIENCE,
+	UNIT_READ_EXPERIENCE_NEEDED,
+	UNIT_READ_HOTKEY_NUMBER,
+	UNIT_READ_BASE_COMBAT,
+	UNIT_READ_AIR_BASE_COMBAT,
+	UNIT_READ_CONTROL_POINTS,
+	UNIT_READ_CONTROL_POINTS_LEFT,
+	UNIT_READ_COMMODORE_CONTROL_POINTS,
+	UNIT_READ_COMMODORE_CONTROL_POINTS_LEFT,
+	UNIT_READ_ACTIVITY,
+	UNIT_READ_AUTOMATE,
+	UNIT_READ_MISSION,
+	UNIT_READ_MISSION_QUEUE_LENGTH,
+
+	NUM_UNIT_READS
+};
+
+//	A unit's PARAMETERLESS predicates, as one group. A predicate that needs a subject (is this promotion held,
+//	is this action recommended, is it invisible TO A TEAM) is a selector read instead -- it asks about a pair,
+//	so the subject belongs in the CALL and cannot be a slot.
+enum UnitFlagKind
+{
+	UNIT_FLAG_SELECTED = 0,
+	UNIT_FLAG_IN_BATTLE,
+	UNIT_FLAG_WAITING,
+	UNIT_FLAG_HURT,
+	UNIT_FLAG_FORTIFYABLE,
+	UNIT_FLAG_COMMANDER,
+	UNIT_FLAG_COMMODORE,
+	UNIT_FLAG_PROMOTION_READY,
+	UNIT_FLAG_HAS_MOVED,
+	UNIT_FLAG_CAN_MOVE,
+	UNIT_FLAG_CAN_FIGHT,
+	UNIT_FLAG_CAN_AIR_ATTACK,
+
+	NUM_UNIT_FLAGS
+};
+
 //	The city's FOOD/GROWTH state: what is in the store, what this turn adds, what the next citizen costs, and
 //	how far off it is. One group, because every consumer that asks one of these asks three of them.
 //	⚠ GROWTH_READ_FOOD_PER_TURN is the BOTTOMED difference (the engine's own default) -- a starving city

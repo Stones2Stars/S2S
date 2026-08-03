@@ -35,6 +35,10 @@ public:
 	// Answers whether the city resolved, so a caller can tell "did nothing" from "did it".
 	bool selectCity(int iPlayer, int iCity, bool bTestProduction) const;
 
+	// Select the group this unit belongs to (the plot-list click). The engine's selectGroup takes a CvUnit*,
+	// which script cannot hold, so the pair is resolved here. The three modifier flags are the click's.
+	bool selectUnitGroup(int iPlayer, int iUnit, bool bShift, bool bCtrl, bool bAlt) const;
+
 	static void pythonPublish();
 };
 

@@ -98,6 +98,10 @@ public:
 	// the id rather than inferring emptiness from a missing value.
 	python::list getHeadSelectedCityId() const;
 	python::list getHeadSelectedUnitId() const;
+	// The WHOLE selection, as [owner, id] pairs -- what a stack panel iterates. CyInterface::getSelectionUnit
+	// hands back a CyUnit the script cannot read, so the list is answered here for the same reason the head
+	// selection is.
+	python::list getSelectedUnitIds() const;
 
 	// ---- ENUMERATION: which cities a player HAS, by id. ----
 	// ⛔ The prerequisite of every id-based city read on this surface, and it is structural rather than
@@ -170,6 +174,26 @@ public:
 	bool getUnitListFilterActive(int iPlayer, int iCity, int iFilter) const;
 	int getUnitListGrouping(int iPlayer, int iCity) const;
 	int getUnitListSorting(int iPlayer, int iCity) const;
+
+	// ---- THE UNIT PLANE ----
+	// ⛔ Addressed by the same (owner, id) pair as everything else. CyUnit carries ZERO defs, so a script handed
+	// one -- by a callback or by CyPlot::getUnit -- can ask it nothing; the ids are the only way a unit is
+	// reachable at all, which is why the plot enumeration below is a prerequisite rather than a convenience.
+	python::list getUnitRead(int iPlayer, int iUnit) const;
+	python::list getUnitFlags(int iPlayer, int iUnit) const;
+	std::wstring getUnitName(int iPlayer, int iUnit) const;
+	// The units standing on a plot, as [owner, id] pairs, in the engine's own plot order -- what a plot list
+	// iterates. ⚠ Answers EVERY unit present; the caller applies its own visibility test below, because
+	// visibility is per-OBSERVER and the list is drawn for one team.
+	python::list getPlotUnitIds(int iX, int iY) const;
+	// The SELECTOR predicates: each asks about a PAIR, so the subject is in the call rather than a flag slot.
+	bool isUnitInvisible(int iPlayer, int iUnit, int iTeam) const;
+	bool hasUnitPromotion(int iPlayer, int iUnit, int iPromotion) const;
+	bool isUnitPromotionOverridden(int iPlayer, int iUnit, int iPromotion) const;
+	bool isUnitActionRecommended(int iPlayer, int iUnit, int iAction) const;
+	// Can this unit become that one -- a PAIR question (this unit, that target type), so the target is in
+	// the call. bTestVisible asks the display question ("show the button") rather than the strict one.
+	bool canUnitUpgrade(int iPlayer, int iUnit, int iToUnit, bool bTestVisible) const;
 
 	// ---- EMPIRE-only groups ----
 	python::list getUpkeepKinds(int iPlayer) const;

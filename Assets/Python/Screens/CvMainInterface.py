@@ -1824,7 +1824,10 @@ class CvMainInterface:
 		# Prepare the basics.
 		iPlayerAct = self.iPlayer
 		iTeamAct = self.iTeam
-		iUnits = CyPlot.getNumUnits()
+		# The units on this plot as (owner, id) PAIRS. CyPlot.getUnit hands back a CyUnit, which carries zero
+		# defs and so answers nothing -- the ids are the only way a unit is reachable ([DEC-cy-not-fixed]).
+		aUnitIds = STATE.getPlotUnitIds(CyPlot.getX(), CyPlot.getY())
+		iUnits = len(aUnitIds)
 		x = self.xMidL
 		bCityScreen	= self.bCityScreen
 		iMaxRows	= self.iPlotListMaxRows
@@ -1853,9 +1856,9 @@ class CvMainInterface:
 				# Find selected unit list position
 				i = iPos = 0
 				while i < iUnits:
-					CyUnit = CyPlot.getUnit(i)
-					if self.bDebugMode or not CyUnit.isInvisible(iTeamAct, False):
-						if CyUnit.IsSelected():
+					iOwner, iUnitID = aUnitIds[i]
+					if self.bDebugMode or not STATE.isUnitInvisible(iOwner, iUnitID, iTeamAct):
+						if STATE.getUnitFlags(iOwner, iUnitID)[UnitFlagKind.UNIT_FLAG_SELECTED]:
 							if iPos >= iMaxUnits:
 								self.iPlotListTopRow = iTopRow = 1 + (iPos - iMaxUnits)/iMaxCols
 							break
@@ -1870,34 +1873,38 @@ class CvMainInterface:
 		iStart = iTopRow * iMaxCols
 		i = iPos = iStart
 		while i < iUnits and iPos - iStart < iMaxUnits:
-			CyUnit = CyPlot.getUnit(i)
+			iOwner, iUnitID = aUnitIds[i]
 			i += 1
-			if not self.bDebugMode and CyUnit.isInvisible(iTeamAct, False): continue
+			if not self.bDebugMode and STATE.isUnitInvisible(iOwner, iUnitID, iTeamAct): continue
 			iPos += 1
-			iUnitType = CyUnit.getUnitType()
+			# The whole unit in two crossings rather than a dozen: its scalars, then its predicates.
+			aUnit = STATE.getUnitRead(iOwner, iUnitID)
+			aFlags = STATE.getUnitFlags(iOwner, iUnitID)
+			iUnitType = aUnit[UnitReadKind.UNIT_READ_TYPE]
 
-			bEnable = CyUnit.getOwner() == iPlayerAct
-			bSelected = CyUnit.IsSelected()
+			bEnable = iOwner == iPlayerAct
+			bSelected = aFlags[UnitFlagKind.UNIT_FLAG_SELECTED]
 
-			if CyUnit.isInBattle():
+			if aFlags[UnitFlagKind.UNIT_FLAG_IN_BATTLE]:
 				bShowHealth = False
-			elif CyUnit.getDomainType() == DomainTypes.DOMAIN_AIR:
-				bShowHealth = CyUnit.canAirAttack()
+			elif aUnit[UnitReadKind.UNIT_READ_DOMAIN] == DomainTypes.DOMAIN_AIR:
+				bShowHealth = aFlags[UnitFlagKind.UNIT_FLAG_CAN_AIR_ATTACK]
 			else:
-				bShowHealth = CyUnit.canFight()
-			if bShowHealth:
-				fHP = CyUnit.getHP() / float(CyUnit.getMaxHP())
+				bShowHealth = aFlags[UnitFlagKind.UNIT_FLAG_CAN_FIGHT]
+			iMaxHP = aUnit[UnitReadKind.UNIT_READ_MAX_HP]
+			if bShowHealth and iMaxHP > 0:
+				fHP = aUnit[UnitReadKind.UNIT_READ_HP] / float(iMaxHP)
 			else:
 				fHP = 0
 
 			bUpg = False
 			szActivity = ""
 			if bEnable:
-				bWaiting = CyUnit.isWaiting()
+				bWaiting = aFlags[UnitFlagKind.UNIT_FLAG_WAITING]
 				if bWaiting:
 					iDot0 = 0 # "OVERLAY_FORTIFY"
-				elif CyUnit.canMove():
-					if CyUnit.hasMoved():
+				elif aFlags[UnitFlagKind.UNIT_FLAG_CAN_MOVE]:
+					if aFlags[UnitFlagKind.UNIT_FLAG_HAS_MOVED]:
 						iDot0 = 2 # "OVERLAY_HASMOVED"
 					else:
 						iDot0 = 4 # "OVERLAY_MOVE"
@@ -1907,7 +1914,7 @@ class CvMainInterface:
 					iDot1 = 0
 				else: iDot1 = 1 # "_INJURED"
 
-				eType = CyUnit.getGroup().getActivityType()
+				eType = aUnit[UnitReadKind.UNIT_READ_ACTIVITY]
 				# is unit on air intercept mission
 				if eType == ActivityTypes.ACTIVITY_INTERCEPT:
 					szActivity = self.artPathOverlayIntercept
@@ -1927,7 +1934,7 @@ class CvMainInterface:
 				elif eType == ActivityTypes.ACTIVITY_HOLD:
 					szActivity = self.artPathOverlaySkip
 				if not szActivity:
-					eType = CyUnit.getGroup().getAutomateType()
+					eType = aUnit[UnitReadKind.UNIT_READ_AUTOMATE]
 					# has unit exploration mission
 					if eType == AutomateTypes.AUTOMATE_EXPLORE:
 						szActivity = self.artPathOverlayExplore
@@ -1944,19 +1951,19 @@ class CvMainInterface:
 					elif eType == AutomateTypes.AUTOMATE_RELIGION:
 						szActivity = self.artPathOverlayAutoReligion
 					# has unit a mission
-					elif CyUnit.getGroup().getLengthMissionQueue() > 0:
-						eType = CyUnit.getGroup().getMissionType(0)
+					elif aUnit[UnitReadKind.UNIT_READ_MISSION_QUEUE_LENGTH] > 0:
+						eType = aUnit[UnitReadKind.UNIT_READ_MISSION]
 						if eType == MissionTypes.MISSION_BUILD:
 							szActivity = self.artPathOverlayBuild
 						elif eType in (MissionTypes.MISSION_MOVE_TO, MissionTypes.MISSION_MOVE_TO_UNIT):
 							szActivity = self.artPathOverlayGoTo
 					# if none of the above and unit is waiting...
 					elif bWaiting:
-						if CyUnit.isFortifyable():
+						if aFlags[UnitFlagKind.UNIT_FLAG_FORTIFYABLE]:
 							szActivity = self.artPathOverlayActionFortify
 						else:
 							szActivity = self.artPathOverlaySleep
-				bPromo = CyUnit.isPromotionReady()
+				bPromo = aFlags[UnitFlagKind.UNIT_FLAG_PROMOTION_READY]
 			else:
 				iDot0 = -1
 				iDot1 = -1
@@ -1965,7 +1972,7 @@ class CvMainInterface:
 			if iUnitType not in aMap:
 				if bEnable:
 					for j in xrange(GC.getNumUnitInfos()):
-						if CyUnit.canUpgrade(j, True):
+						if STATE.canUnitUpgrade(iOwner, iUnitID, j, True):
 							bUpg = True
 							break
 				else:
@@ -1974,7 +1981,7 @@ class CvMainInterface:
 			else:
 				bUpg = aMap[iUnitType][1]
 
-			aList.append([CyUnit, iUnitType, bEnable, bSelected, fHP, [iDot0, iDot1], szActivity, bPromo, bUpg])
+			aList.append([[iOwner, iUnitID], iUnitType, bEnable, bSelected, fHP, [iDot0, iDot1], szActivity, bPromo, bUpg])
 
 		if aList == self.aPlotListList:
 			return
@@ -1982,8 +1989,8 @@ class CvMainInterface:
 		# Total visible units count
 		i = iVisibleUnits = 0
 		while i < iUnits:
-			CyUnit = CyPlot.getUnit(i)
-			if self.bDebugMode or not CyUnit.isInvisible(iTeamAct, False):
+			iOwner, iUnitID = aUnitIds[i]
+			if self.bDebugMode or not STATE.isUnitInvisible(iOwner, iUnitID, iTeamAct):
 				iVisibleUnits += 1
 			i += 1
 		# Scroll buttons?
@@ -2031,7 +2038,7 @@ class CvMainInterface:
 		upgSize = iSize6/2
 		i = 0
 		while i < iDisplayedUnits:
-			CyUnit, iUnitType, bEnable, bSelected, fHP, iDot, szActivity, bPromo, bUpg = aList[i]
+			aUnitId, iUnitType, bEnable, bSelected, fHP, iDot, szActivity, bPromo, bUpg = aList[i]
 			iDot0, iDot1 = iDot
 			x = (i % iMaxCols) * iSize4
 			y = y0 + (i / iMaxCols) * iSize8
@@ -2048,7 +2055,7 @@ class CvMainInterface:
 					screen.setHitTest(DDS, HitTestTypes.HITTEST_NOHIT)
 				# Units lead by a GG will get a star instead of a dot.
 				iS = actSize
-				if iLeaderPromo != -1 and CyUnit.isHasPromotion(iLeaderPromo):
+				if iLeaderPromo != -1 and STATE.hasUnitPromotion(aUnitId[0], aUnitId[1], iLeaderPromo):
 					iDot0 += 1 # "_GG"
 					iS += 4
 					iOff = 3
@@ -2147,7 +2154,6 @@ class CvMainInterface:
 			screen.enable("Conscript", bOfInterest and city.canConscript())
 
 		elif AtUnit:
-			CyUnit = AtUnit.CyUnit
 			# Unit action list
 			y = self.yBotBar + 60
 			h = self.yRes - y - 2
@@ -2163,7 +2169,7 @@ class CvMainInterface:
 				screen.appendMultiListButton(MuLi, BTN, 0, WidgetTypes.WIDGET_ACTION, iType, 1, False)
 				if not CyIF.canHandleAction(iType, False):
 					screen.disableMultiListButton(MuLi, 0, i, BTN)
-				if CyUnit.isActionRecommended(iType):
+				if STATE.isUnitActionRecommended(AtUnit.iPlayer, AtUnit.iUnitID, iType):
 					screen.enableMultiListPulse(MuLi, True, 0, i)
 				else:
 					screen.enableMultiListPulse(MuLi, False, 0, i)
@@ -4051,7 +4057,8 @@ class CvMainInterface:
 		eWidGen = WidgetTypes.WIDGET_GENERAL
 		eFontGame = FontTypes.GAME_FONT
 
-		CyUnit = CyIF.getHeadSelectedUnit()
+		aSelUnit = STATE.getHeadSelectedUnitId()
+		bHasUnit = aSelUnit[1] >= 0
 
 		yRes = self.yRes
 		xMidL = self.xMidL
@@ -4104,7 +4111,7 @@ class CvMainInterface:
 						szTxt += "*"
 					screen.setLabelAt("QueueTime"+szRow, "QueueRow"+szRow, szTxt, 1<<0, x, 0, 0, eFontGame, eWidGen, 1, 1)
 
-		elif CyUnit and IFT == InterfaceVisibility.INTERFACE_SHOW:
+		elif bHasUnit and IFT == InterfaceVisibility.INTERFACE_SHOW:
 			y = yBotBar + 58
 			h = yRes - y - 8
 			w = xMidL - 90
@@ -4112,14 +4119,15 @@ class CvMainInterface:
 			screen.setStyle(unitTable, "Table_EmptyScroll_Style")
 			iRow = 0
 
-			if CyIF.mirrorsSelectionGroup():
-				CySelectionGroup = CyUnit.getGroup()
-				iMissionCount = CySelectionGroup.getLengthMissionQueue()
+			aSelRead = STATE.getUnitRead(aSelUnit[0], aSelUnit[1])
+			bMirrorsGroup = CyIF.mirrorsSelectionGroup()
+			if bMirrorsGroup:
+				iMissionCount = aSelRead[UnitReadKind.UNIT_READ_MISSION_QUEUE_LENGTH]
 			else:
-				CySelectionGroup = 0
 				iMissionCount = 0
 			aPromoList = []
-			iSelectionRange = CyIF.getLengthSelectionList()
+			aSelectedIds = STATE.getSelectedUnitIds()
+			iSelectionRange = len(aSelectedIds)
 			fMoveDenominator = self.fMoveDenominator
 			if iSelectionRange > 1:
 				screen.setTableColumnHeader(unitTable, 0, "", w - 70)
@@ -4129,9 +4137,8 @@ class CvMainInterface:
 				# Stack movement
 				iMinMoves = 100000
 				iMaxMoves = 0
-				for i in xrange(iSelectionRange):
-					pUnit = CyIF.getSelectionUnit(i)
-					iMovesLeft = pUnit.movesLeft()
+				for aStackId in aSelectedIds:
+					iMovesLeft = STATE.getUnitRead(aStackId[0], aStackId[1])[UnitReadKind.UNIT_READ_MOVES_LEFT]
 					if iMovesLeft > iMaxMoves:
 						iMaxMoves = iMovesLeft
 					if iMovesLeft < iMinMoves:
@@ -4155,14 +4162,13 @@ class CvMainInterface:
 				#Stack Promotions
 				for iPromo in xrange(self.iNumPromotionInfos):
 					iCount = 0
-					for i in xrange(iSelectionRange):
-						pUnit = CyIF.getSelectionUnit(i)
-						if pUnit.isHasPromotion(iPromo) and not pUnit.isPromotionOverriden(iPromo):
+					for aStackId in aSelectedIds:
+						if STATE.hasUnitPromotion(aStackId[0], aStackId[1], iPromo) and not STATE.isUnitPromotionOverridden(aStackId[0], aStackId[1], iPromo):
 							iCount += 1
 					if iCount:
 						aPromoList.append((iPromo, iCount))
 				# Unit type list
-				if iMissionCount <= 1 or not CySelectionGroup:
+				if iMissionCount <= 1 or not bMirrorsGroup:
 					for i in xrange(GC.getNumUnitInfos()):
 						iCount = CyIF.countEntities(i)
 						if iCount:
@@ -4176,12 +4182,13 @@ class CvMainInterface:
 				A = w / 2
 				screen.setTableColumnHeader(unitTable, 0, "", A - 10)
 				screen.setTableColumnHeader(unitTable, 1, "", A)
-				iHotKeyNumber = CyUnit.getHotKeyNumber()
+				iHotKeyNumber = aSelRead[UnitReadKind.UNIT_READ_HOTKEY_NUMBER]
+				szSelName = STATE.getUnitName(aSelUnit[0], aSelUnit[1])
 				szBuffer = self.aFontList[3]
 				if iHotKeyNumber != -1:
-					szBuffer += TRNSLTR.getText("INTERFACE_PANE_UNIT_NAME_HOT_KEY", (iHotKeyNumber, CyUnit.getName()))
+					szBuffer += TRNSLTR.getText("INTERFACE_PANE_UNIT_NAME_HOT_KEY", (iHotKeyNumber, szSelName))
 				else:
-					szBuffer += TRNSLTR.getText("INTERFACE_PANE_UNIT_NAME", (CyUnit.getName(),))
+					szBuffer += TRNSLTR.getText("INTERFACE_PANE_UNIT_NAME", (szSelName,))
 
 				if self.iResID == 2:
 					y = -2
@@ -4193,22 +4200,22 @@ class CvMainInterface:
 				screen.setTextAt(label, panel, szBuffer, 1<<0, 4, y, 0, eFontGame, WidgetTypes.WIDGET_UNIT_NAME, 0, 0)
 				# Get Promotions
 				for iPromo in xrange(self.iNumPromotionInfos):
-					if CyUnit.isHasPromotion(iPromo) and not CyUnit.isPromotionOverriden(iPromo):
+					if STATE.hasUnitPromotion(aSelUnit[0], aSelUnit[1], iPromo) and not STATE.isUnitPromotionOverridden(aSelUnit[0], aSelUnit[1], iPromo):
 						aPromoList.append((iPromo, 1))
-				if not CySelectionGroup or iMissionCount <= 1:
-					if CyUnit.getDomainType() == DomainTypes.DOMAIN_AIR:
-						strengthBase = CyUnit.airBaseCombatStr()
+				if not bMirrorsGroup or iMissionCount <= 1:
+					if aSelRead[UnitReadKind.UNIT_READ_DOMAIN] == DomainTypes.DOMAIN_AIR:
+						strengthBase = aSelRead[UnitReadKind.UNIT_READ_AIR_BASE_COMBAT]
 						szTxt1 = self.szInterfacePaneStrengthAir
 					else:
-						strengthBase = CyUnit.baseCombatStr()
+						strengthBase = aSelRead[UnitReadKind.UNIT_READ_BASE_COMBAT]
 						szTxt1 = self.szInterfacePaneStrength
 					if strengthBase:
 						if self.GO_SIZE_MATTERS:
 							strengthBase /= 100.0
 
 						szTxt2 = ""
-						if CyUnit.isHurt():
-							fPercentHP = float(CyUnit.getHP()) / CyUnit.getMaxHP()
+						if STATE.getUnitFlags(aSelUnit[0], aSelUnit[1])[UnitFlagKind.UNIT_FLAG_HURT]:
+							fPercentHP = float(aSelRead[UnitReadKind.UNIT_READ_HP]) / aSelRead[UnitReadKind.UNIT_READ_MAX_HP]
 							fStrength = strengthBase * fPercentHP
 							szTxt2 += TextUtil.floatToString(fStrength) + "/"
 
@@ -4220,8 +4227,8 @@ class CvMainInterface:
 						iRow += 1
 					# Unit Movement Fraction
 					szTxt1 = self.szInterfacePaneMovement
-					iBaseMoves = CyUnit.baseMoves()
-					iMovesLeft = CyUnit.movesLeft()
+					iBaseMoves = aSelRead[UnitReadKind.UNIT_READ_BASE_MOVES]
+					iMovesLeft = aSelRead[UnitReadKind.UNIT_READ_MOVES_LEFT]
 					if not iMovesLeft:
 						szTxt2 = "0/"
 					elif iMovesLeft < iBaseMoves * fMoveDenominator:
@@ -4234,7 +4241,7 @@ class CvMainInterface:
 					screen.setTableText(unitTable, 1, iRow, "<font=1>" + szTxt2, "", eWidGen, 0, 0, 1<<0)
 					iRow += 1
 
-					iLevel = CyUnit.getLevel()
+					iLevel = aSelRead[UnitReadKind.UNIT_READ_LEVEL]
 					if iLevel:
 
 						szTxt1 = self.szInterfacePaneLevel
@@ -4245,28 +4252,28 @@ class CvMainInterface:
 						screen.setTableText(unitTable, 1, iRow, "<font=1>" + szTxt2, "", eWidGen, 0, 0, 1<<0)
 						iRow += 1
 					# Fractional XP
-					fXP = CyUnit.getRealExperience()
-					if fXP and not CyUnit.isInBattle():
+					fXP = aSelRead[UnitReadKind.UNIT_READ_EXPERIENCE] / 100.0
+					if fXP and not STATE.getUnitFlags(aSelUnit[0], aSelUnit[1])[UnitFlagKind.UNIT_FLAG_IN_BATTLE]:
 						szXP = self.szInterfacePaneExperience
 						screen.appendTableRow(unitTable)
 						screen.setTableText(unitTable, 0, iRow, "<font=1>" + szXP, "", eWidGen, 0, 0, 1<<0)
 						iRow += 1
-						iNeedXP = CyUnit.experienceNeeded()
+						iNeedXP = aSelRead[UnitReadKind.UNIT_READ_EXPERIENCE_NEEDED]
 						szXP = TextUtil.floatToString(fXP) + "/" + str(iNeedXP)
 						screen.appendTableRow(unitTable)
 						screen.setTableText(unitTable, 0, iRow, "<font=1>" + szXP, "", eWidGen, 0, 0, 1<<0)
 						iRow += 1
 					# Great Commanders
-					if CyUnit.isCommander():
-						szTxt2 = u"%d/%d " %(CyUnit.getControlPointsLeft(), CyUnit.getControlPoints())
+					if STATE.getUnitFlags(aSelUnit[0], aSelUnit[1])[UnitFlagKind.UNIT_FLAG_COMMANDER]:
+						szTxt2 = u"%d/%d " %(aSelRead[UnitReadKind.UNIT_READ_CONTROL_POINTS_LEFT], aSelRead[UnitReadKind.UNIT_READ_CONTROL_POINTS])
 						screen.appendTableRow(unitTable)
 						screen.setTableText(unitTable, 0, iRow, "<font=1>Control:", "", eWidGen, 0, 0, 1<<0)
 						iRow += 1
 						screen.appendTableRow(unitTable)
 						screen.setTableText(unitTable, 1, iRow, "<font=1>" + szTxt2, "", eWidGen, 0, 0, 1<<0)
 						iRow += 1
-					if CyUnit.isCommodore():
-						szTxt2 = u"%d/%d " %(CyUnit.getCommodoreControlPointsLeft(), CyUnit.getCommodoreControlPoints())
+					if STATE.getUnitFlags(aSelUnit[0], aSelUnit[1])[UnitFlagKind.UNIT_FLAG_COMMODORE]:
+						szTxt2 = u"%d/%d " %(aSelRead[UnitReadKind.UNIT_READ_COMMODORE_CONTROL_POINTS_LEFT], aSelRead[UnitReadKind.UNIT_READ_COMMODORE_CONTROL_POINTS])
 						screen.appendTableRow(unitTable)
 						screen.setTableText(unitTable, 0, iRow, "<font=1>Control:", "", eWidGen, 0, 0, 1<<0)
 						iRow += 1
@@ -4334,7 +4341,7 @@ class CvMainInterface:
 							iProject = CyIF.getOrderNodeData1(0)
 							screen.addSpaceShipWidgetGFC(graphic, x, y, w, h, iProject, 0, eWidGen, 0, 0)
 			elif CyUnit:
-				iUnit = CyUnit.getUnitType()
+				iUnit = aSelRead[UnitReadKind.UNIT_READ_TYPE]
 				screen.addUnitGraphicGFC(graphic, iUnit, x, y, w, h, WidgetTypes.WIDGET_UNIT_MODEL, iUnit, 0, -20, 30, 1, False)
 				screen.moveToFront("SelectedUnitLabel")
 				screen.moveToFront("SelectedUnitTable")
@@ -5340,6 +5347,13 @@ class CvMainInterface:
 	############################
 	def update(self, fDelta): return
 	# Will handle the input for this screen...
+	def isAtUnitIdle(self):
+		"Is the unit under the cursor doing nothing -- fortified/asleep, or out of moves."
+		aFlags = STATE.getUnitFlags(self.AtUnit.iPlayer, self.AtUnit.iUnitID)
+		if aFlags[UnitFlagKind.UNIT_FLAG_WAITING]:
+			return True
+		return not aFlags[UnitFlagKind.UNIT_FLAG_CAN_MOVE]
+
 	def handleInput(self, inputClass):
 		HandleInputUtil.debugInput(inputClass)
 
@@ -5366,7 +5380,7 @@ class CvMainInterface:
 				if self.InCity:
 					CyIF.clearSelectedCities()
 					return 1
-				elif self.AtUnit and (self.AtUnit.CyUnit.isWaiting() or not self.AtUnit.CyUnit.canMove()):
+				elif self.AtUnit and self.isAtUnitIdle():
 					CyIF.clearSelectionList()
 					return 1
 
@@ -5402,10 +5416,10 @@ class CvMainInterface:
 				if dataTT:
 					if bCtrl != dataTT[0] or bShift != dataTT[1] or bAlt != dataTT[2]:
 						if dataTT[3]:
-							szTxt = CyGTM.getSpecificUnitHelp(dataTT[4], False, False)
+							szTxt = CyGTM.getSpecificUnitHelp(dataTT[4][0], dataTT[4][1], False, False)
 							self.updateTooltip(screen, szTxt, self.xRes / 4, self.yPlotListTT)
 						else:
-							szTxt = CyGTM.getUnitHelp(dataTT[4], False, True, True, dataTT[5])
+							szTxt = CyGTM.getUnitHelp(dataTT[4], False, True, True, dataTT[5], dataTT[6])
 							self.updateTooltip(screen, szTxt)
 						dataTT[0] = bCtrl
 						dataTT[1] = bShift
@@ -5463,22 +5477,23 @@ class CvMainInterface:
 			if BASE == "WID":
 
 				if CASE[0] in ("CityWork", "QueueEntry", "BldgList"):
-					CyCity = self.InCity.CyCity
+					iCityOwner = self.InCity.iPlayer
+					iCityID = self.InCity.iCityID
 					if TYPE == "UNIT":
-						self.dataTT = [bCtrl, bShift, bAlt, "", iType, CyCity]
-						szTxt = CyGTM.getUnitHelp(iType, False, True, True, CyCity)
+						self.dataTT = [bCtrl, bShift, bAlt, "", iType, iCityOwner, iCityID]
+						szTxt = CyGTM.getUnitHelp(iType, False, True, True, iCityOwner, iCityID)
 						self.updateTooltip(screen, szTxt)
 					elif TYPE == "BUILDING":
-						szTxt = CyGTM.getBuildingHelp(iType, True, CyCity, False, False, True)
+						szTxt = CyGTM.getBuildingHelp(iType, True, iCityOwner, iCityID, False, False, True)
 						self.updateTooltip(screen, szTxt)
 					elif TYPE == "PROJECT":
-						szTxt = CyGTM.getProjectHelp(iType, False, CyCity)
+						szTxt = CyGTM.getProjectHelp(iType, False, iCityOwner, iCityID)
 						self.updateTooltip(screen, szTxt)
 					elif TYPE == "PROCESS":
 						y = self.yBotBar + 12
 						CvProcessInfo = GC.getProcessInfo(iType)
 						eYieldProd = YieldTypes.YIELD_PRODUCTION
-						fProd = CyCity.getYieldRate(eYieldProd) / 100.0
+						fProd = STATE.getYields(iCityOwner, iCityID)[eYieldProd] / 100.0
 						szTxt = CvProcessInfo.getDescription()
 						for i in xrange(CommerceTypes.NUM_COMMERCE_TYPES):
 							iValue = CvProcessInfo.getProductionToCommerceModifier(i)
@@ -5491,7 +5506,7 @@ class CvMainInterface:
 						self.updateTooltip(screen, szTxt, self.xPopProgBar, y)
 
 				elif TYPE == "UNIT":
-					self.dataTT = [bCtrl, bShift, bAlt, "", iType, self.InCity.CyCity]
+					self.dataTT = [bCtrl, bShift, bAlt, "", iType, self.InCity.iPlayer, self.InCity.iCityID]
 					self.updateTooltip(screen, CyGTM.getUnitHelp(iType, False, True, True, self.InCity.iPlayer, self.InCity.iCityID))
 
 				elif TYPE == "BUILDING":
@@ -5534,14 +5549,15 @@ class CvMainInterface:
 
 			elif BASE == "PlotList":
 				if TYPE in ("Button", "Health"):
-					CyUnit = self.aPlotListList[ID][0]
+					aUnitId = self.aPlotListList[ID][0]
 					if TYPE == "Button":
-						szTxt = CyGTM.getSpecificUnitHelp(CyUnit, False, False)
+						szTxt = CyGTM.getSpecificUnitHelp(aUnitId[0], aUnitId[1], False, False)
 						x = self.xRes / 4
 						y = self.yPlotListTT
-						self.dataTT = [bCtrl, bShift, bAlt, "spcfc", CyUnit]
+						self.dataTT = [bCtrl, bShift, bAlt, "spcfc", aUnitId]
 					elif TYPE == "Health":
-						szTxt = "HP: %d/%d" %(CyUnit.getHP(), CyUnit.getMaxHP())
+						aUnit = STATE.getUnitRead(aUnitId[0], aUnitId[1])
+						szTxt = "HP: %d/%d" %(aUnit[UnitReadKind.UNIT_READ_HP], aUnit[UnitReadKind.UNIT_READ_MAX_HP])
 						x = -1
 						y = -1
 					else: return
@@ -5878,9 +5894,9 @@ class CvMainInterface:
 					if szFlag == "MOUSE_RBUTTONUP":
 						UP.pediaJumpToUnit([self.aPlotListList[ID][1]])
 					else:
-						CyUnit = self.aPlotListList[ID][0]
-						if CyUnit.getOwner() == self.iPlayer:
-							CyIF.selectGroup(CyUnit, bShift, bCtrl, bAlt)
+						aUnitId = self.aPlotListList[ID][0]
+						if aUnitId[0] == self.iPlayer:
+							ACT.selectUnitGroup(aUnitId[0], aUnitId[1], bShift, bCtrl, bAlt)
 							self.bPlotListAutoScroll = False
 				elif TYPE == "Scroll":
 					self.bPlotListAutoScroll = False
