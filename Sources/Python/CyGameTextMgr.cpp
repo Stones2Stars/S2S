@@ -8,6 +8,13 @@
 #include "CyGameTextMgr.h"
 #include "CyUnit.h"
 #include "Infos/CvInfoBase.h"   // getTextKeyWide -- the MEMORY_ registry is bare CvInfoBase shells
+// The symbol-bearing registries, included SPECIFICALLY rather than through the CvInfos.h umbrella
+// (AGENTS.md Conventions) -- these carry the glyph the symbol pass assigns via setChar.
+#include "Infos/CvYieldInfo.h"
+#include "Infos/CvCommerceInfo.h"
+#include "Infos/CvReligionInfo.h"
+#include "Infos/CvCorporationInfo.h"
+#include "Infos/CvBonusInfo.h"
 
 CyGameTextMgr::CyGameTextMgr() :
 m_pGameTextMgr(NULL)
@@ -18,6 +25,42 @@ m_pGameTextMgr(NULL)
 CyGameTextMgr::CyGameTextMgr(CvGameTextMgr* pGameTextMgr) : m_pGameTextMgr(pGameTextMgr)
 {
 
+}
+
+int CyGameTextMgr::getSymbolChar(const std::string& szTypePrefix, int iId) const
+{
+	if (iId < 0) return 0;
+
+	// The seven registries this manager's symbol pass assigns a glyph to. An explicit table rather than a
+	// generic info read, because the glyph is NOT on the info surface: these straddle the JSON/XML line and
+	// several are not CvInfo-derived at all. The set is the spec's, so it does not grow by accident.
+	if (szTypePrefix == "YIELD_")
+	{
+		if (iId < NUM_YIELD_TYPES) return GC.getYieldInfo((YieldTypes)iId).getChar();
+	}
+	else if (szTypePrefix == "COMMERCE_")
+	{
+		if (iId < NUM_COMMERCE_TYPES) return GC.getCommerceInfo((CommerceTypes)iId).getChar();
+	}
+	else if (szTypePrefix == "RELIGION_")
+	{
+		if (iId < GC.getNumReligionInfos()) return GC.getReligionInfo((ReligionTypes)iId).getChar();
+	}
+	else if (szTypePrefix == "CORPORATION_")
+	{
+		if (iId < GC.getNumCorporationInfos()) return GC.getCorporationInfo((CorporationTypes)iId).getChar();
+	}
+	else if (szTypePrefix == "BONUS_")
+	{
+		if (iId < GC.getNumBonusInfos()) return GC.getBonusInfo((BonusTypes)iId).getChar();
+	}
+	return 0;
+}
+
+int CyGameTextMgr::getHolyCitySymbolChar(int iReligion) const
+{
+	if (iReligion < 0 || iReligion >= GC.getNumReligionInfos()) return 0;
+	return GC.getReligionInfo((ReligionTypes)iReligion).getHolyCityChar();
 }
 
 python::list CyGameTextMgr::getTextKeys(const std::string& szTypePrefix) const
@@ -355,6 +398,8 @@ void CyGameTextMgr::pythonPublish()
 	python::class_<CyGameTextMgr>("CyGameTextMgr")
 		.def("Reset", &CyGameTextMgr::Reset)
 		.def("getTextKeys", &CyGameTextMgr::getTextKeys)
+		.def("getSymbolChar", &CyGameTextMgr::getSymbolChar)
+		.def("getHolyCitySymbolChar", &CyGameTextMgr::getHolyCitySymbolChar)
 		.def("getTimeStr", &CyGameTextMgr::getTimeStr)
 		.def("getDateStr", &CyGameTextMgr::getDateStr)
 		.def("getInterfaceTimeStr", &CyGameTextMgr::getInterfaceTimeStr)

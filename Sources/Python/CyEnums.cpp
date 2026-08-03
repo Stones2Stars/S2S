@@ -25,6 +25,7 @@
 #include "Python/CyEnums.h"
 #include "Defines/CvGlobals.h"
 #include "Enabler/CvEnabler.h"   // EnablerDomain::State -- the availability tri-state
+#include "Infos/CvEdges.h"       // EnEdgeFamily / EnEdgeBucket -- the edge axes ([DEC-one-reverse-view])
 #include "UI/CvBuildingFilters.h"
 #include "UI/CvBuildingGrouping.h"
 #include "UI/CvBuildingSort.h"
@@ -51,6 +52,44 @@ void CyEnums::pythonPublish()
 		.value("ENABLER_HIDDEN", EnablerDomain::STATE_HIDDEN)
 		.value("ENABLER_GREYED", EnablerDomain::STATE_GREYED)
 		.value("ENABLER_LISTED", EnablerDomain::STATE_LISTED)
+		;
+
+	// The EDGE axes ([DEC-one-reverse-view]) -- the vocabulary CyInfo::getEdgeIds is addressed by. Every info
+	// ALREADY CARRIES its reverse lookups after load, so a consumer asking "what unlocks me" / "what needs me"
+	// reads them instead of scanning a whole registry and testing a per-id predicate.
+	// ⚠ EDGEF_RELATED is a candidate SUPERSET (display axis): it merges every relation, so it cannot tell an
+	// enabling tech from an obsoleting one. A consumer with ANY semantics is safe on it; one with ALL semantics
+	// is NOT, and wants EDGEF_ENABLED_BY / EDGEF_REQUIRED_BY, which are the exact axes.
+	python::enum_<EnEdgeFamily>("EdgeFamily")
+		.value("EDGEF_ENABLES",      EDGEF_ENABLES)
+		.value("EDGEF_OBSOLETES",    EDGEF_OBSOLETES)
+		.value("EDGEF_REPLACES",     EDGEF_REPLACES)
+		.value("EDGEF_DISABLES",     EDGEF_DISABLES)
+		.value("EDGEF_OBSOLETED_BY", EDGEF_OBSOLETED_BY)
+		.value("EDGEF_RELATED",      EDGEF_RELATED)
+		.value("EDGEF_REQUIRED_BY",  EDGEF_REQUIRED_BY)
+		.value("EDGEF_ENABLED_BY",   EDGEF_ENABLED_BY)
+		;
+
+	python::enum_<EnEdgeBucket>("EdgeBucket")
+		.value("EDGEB_BUILDINGS",   EDGEB_BUILDINGS)
+		.value("EDGEB_UNITS",       EDGEB_UNITS)
+		.value("EDGEB_BUILDS",      EDGEB_BUILDS)
+		.value("EDGEB_TECHS",       EDGEB_TECHS)
+		.value("EDGEB_CIVICS",      EDGEB_CIVICS)
+		.value("EDGEB_RELIGIONS",   EDGEB_RELIGIONS)
+		.value("EDGEB_CORPORATIONS",EDGEB_CORPORATIONS)
+		.value("EDGEB_PROJECTS",    EDGEB_PROJECTS)
+		.value("EDGEB_PROCESSES",   EDGEB_PROCESSES)
+		.value("EDGEB_PROMOTIONS",  EDGEB_PROMOTIONS)
+		.value("EDGEB_HERITAGES",   EDGEB_HERITAGES)
+		.value("EDGEB_IMPROVEMENTS",EDGEB_IMPROVEMENTS)
+		.value("EDGEB_BONUSES",     EDGEB_BONUSES)
+		.value("EDGEB_ROUTES",      EDGEB_ROUTES)
+		.value("EDGEB_VOTES",       EDGEB_VOTES)
+		.value("EDGEB_HURRIES",     EDGEB_HURRIES)
+		.value("EDGEB_TRAITS",      EDGEB_TRAITS)
+		.value("EDGEB_SPECIALISTS", EDGEB_SPECIALISTS)
 		;
 
 	python::enum_<GameStateTypes>("GameStateTypes")

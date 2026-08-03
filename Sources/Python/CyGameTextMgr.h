@@ -37,6 +37,21 @@ public:
 	// legitimately probe a registry that carries no keys.
 	python::list getTextKeys(const std::string& szTypePrefix) const;
 
+	// The entity's FONT GLYPH -- the GameFont slot this manager's own symbol pass assigns via setChar.
+	//
+	// ⛔ It lives HERE, not on the info library, and that is the whole point: a glyph is TEXT-PLANE, not info
+	// data ([patterns.md] THE PYTHON READ BOUNDARY), so no `get<X>Info` revival is the way to ask for one. The
+	// seven registries the symbol pass covers -- yield, commerce, religion, corporation, property, invisible,
+	// bonus -- straddle the JSON/XML line, so the glyph is not info data on EITHER side.
+	//
+	// ⚑ The FIXED symbols take the other route (`CyGame.getSymbolID(FontSymbols.X)`), and the yield/commerce
+	// ones additionally have inline `[ICON_*]` translator tokens. This serves the VARIABLE-COUNT registries,
+	// which have neither: there is no FontSymbols member per religion, and no per-religion icon token.
+	// Returns 0 when the prefix names no symbol-bearing registry, so a caller gets an empty glyph, never a throw.
+	int getSymbolChar(const std::string& szTypePrefix, int iId) const;
+	// A religion carries a SECOND symbol -- the holy-city marker -- which is a distinct glyph, not a variant.
+	int getHolyCitySymbolChar(int iReligion) const;
+
 	std::wstring getTimeStr(int iGameTurn, bool bSave);
 	std::wstring getDateStr(int iGameTurn, bool bSave, int /*CalendarTypes*/ eCalendar, int iStartYear, int /*GameSpeedTypes*/ eSpeed);
 	std::wstring getInterfaceTimeStr(int /*PlayerTypes*/ iPlayer);

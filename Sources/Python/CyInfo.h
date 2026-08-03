@@ -44,6 +44,14 @@ public:
 	// inferring it from an empty name.
 	bool exists(const std::string& szTypePrefix, int iId) const;
 
+	// The entity's EDGE ids for one (family, bucket) -- "what do I unlock", "what unlocks me", "what needs me".
+	// ⚑ This is a SERVED answer to a question script currently asks by SCANNING A WHOLE REGISTRY and testing a
+	// per-id predicate. The readJson reverse pass already lands every reverse family on the info
+	// ([DEC-one-reverse-view]), so the scan is not merely slow, it is re-deriving what the info already carries.
+	// ⛔ Parameterized over the family/bucket ENUMS, never a getter per relation: the axes are the spec's fixed
+	// vocabulary, so a new bucket is data and this surface does not grow.
+	python::list getEdgeIds(const std::string& szTypePrefix, int iId, int iFamily, int iBucket) const;
+
 	// ⚑ THE BULK INDEX SHAPE -- one boundary crossing for a WHOLE id->value column, not one per entity.
 	// A boost::python call costs far more than the lookup inside it, so the read that scales is the one that
 	// crosses ONCE and is cached on the Python side (CivicData does exactly that). Typed end to end: no string
