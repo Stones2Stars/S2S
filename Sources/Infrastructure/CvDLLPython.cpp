@@ -159,6 +159,34 @@ DllExport void DLLPublishToPython()
 	python::class_<CyUnit>("CyUnit", python::no_init);
 	python::class_<CySelectionGroup>("CySelectionGroup", python::no_init);
 
+	// ⛔ THE PLAIN-STRUCT MARSHALLING VOCABULARY -- the SAME registration-is-not-binding rule as the wrappers
+	// above, one level down. These are VALUE structs, not handles: their fields ARE the value, so they answer
+	// no question about game state and constitute no read surface ([DEC-cy-not-fixed] bans the info/state
+	// GETTER contract, which a bare coordinate pair is not).
+	//
+	// ⚑ Both directions of the boundary need them, which is why the absence bites twice over:
+	//   NiColorA -- Python CONSTRUCTS one and hands it to the engine (the strategy/dot-map overlay's plot
+	//               colours), so without the ctor the module raises NameError at import.
+	//   POINT    -- the engine RETURNS one (`Win32::getCursorPos`, published just below), so without the
+	//               registration that def resolves and then throws at CONVERSION -- a TypeError where a reader
+	//               expects an AttributeError, which is exactly why this class reads as a mystery rather than
+	//               as a missing binding (patterns.md § THE PYTHON READ BOUNDARY).
+	//
+	// Registered on DEMAND, not wholesale: the rest of the cut struct set has no live consumer, and a type that
+	// turns out to be needed comes back the same way this one did -- named by the call site that wanted it.
+	python::class_<NiColorA>("NiColorA")
+		.def(python::init<float, float, float, float>())
+		.def_readwrite("r", &NiColorA::r)
+		.def_readwrite("g", &NiColorA::g)
+		.def_readwrite("b", &NiColorA::b)
+		.def_readwrite("a", &NiColorA::a)
+		;
+
+	python::class_<POINT>("POINT")
+		.def_readwrite("x", &POINT::x)
+		.def_readwrite("y", &POINT::y)
+		;
+
 	Win32::pythonPublish();
 
 	OutputDebugString("Publishing to Python: End\n");
