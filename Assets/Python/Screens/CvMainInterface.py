@@ -21,6 +21,7 @@ STATE = CyState()
 ICON_TOKEN_YIELD    = ("[ICON_FOOD]", "[ICON_PRODUCTION]", "[ICON_COMMERCE]")
 ICON_TOKEN_COMMERCE = ("[ICON_GOLD]", "[ICON_RESEARCH]", "[ICON_CULTURE]", "[ICON_ESPIONAGE]")
 ENABLER = CyEnabler()
+ACT = CyAct()   # the ACTION surface: what script asks the engine to DO
 ENUMS = CyEnums()
 ENGINE = CyEngine()
 TRNSLTR = CyTranslator()
@@ -1552,7 +1553,7 @@ class CvMainInterface:
 				# Initialize City Screen
 				CyIF.clearSelectedCities() # Hack, the map camera FoV inside city screen is stuck at the current value.
 				self.setFieldofView(50)
-				CyIF.selectCity(city, False) # \Hack, City FoV is set and we can enter the city now.
+				ACT.selectCity(self.InCity.iPlayer, self.InCity.iCityID, False) # \Hack, City FoV is set and we can enter the city now.
 				self.evalIFT(screen, IFT, bCityScreen, CyPlayerAct)
 				self.bCityEnter = True
 			else: # Return to map.
@@ -3595,7 +3596,7 @@ class CvMainInterface:
 		screen.show("CT|UnitSorting")
 
 	def fillBuildingCityTabHeader(self, screen):
-		CyCity = self.InCity.CyCity
+		InCity = self.InCity
 		# Filter and grouping
 		iFilterWidth = self.xRes/2 - self.wBuildingSortButton - 38
 		if iFilterWidth > 20 * 30 + 24:
@@ -3642,7 +3643,7 @@ class CvMainInterface:
 			iFilter, art = aList.pop(0)
 			name = PF + str(iFilter)
 			screen.addCheckBoxGFCAt(ScPnl, name, art, self.artPathHilite, x, y, 30, 30, eWidGen, 1, 2, eBtnLabel, False)
-			screen.setState(name, CyCity.getBuildingListFilterActive(iFilter))
+			screen.setState(name, STATE.getBuildingListFilterActive(InCity.iPlayer, InCity.iCityID, iFilter))
 			x += 30
 			if x > iFilterWidth - 48:
 				x = -1
@@ -5650,10 +5651,7 @@ class CvMainInterface:
 				elif TYPE == "AutomateProduction":
 					InCity = self.InCity
 					if not InCity: raise "Should not occur"
-					city = InCity.CyCity
-					if not city: raise "Should not occur"
-
-					if city.isProductionAutomated():
+					if STATE.isProductionAutomated(InCity.iPlayer, InCity.iCityID):
 						szTxt = TRNSLTR.getText("TXT_KEY_MISC_OFF_PROD_AUTO", ())
 					else: szTxt = TRNSLTR.getText("TXT_KEY_MISC_ON_PROD_AUTO", ())
 

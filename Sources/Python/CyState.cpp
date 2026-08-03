@@ -345,6 +345,18 @@ int CyState::getOccupationTimer(int iPlayer, int iCity) const
 // ⚠ The engine's getters here are non-const, so the city is resolved non-const too -- these READ, and the
 // const_cast is the engine's signature showing through, not an intent to write.
 
+bool CyState::isProductionAutomated(int iPlayer, int iCity) const
+{
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	return pCity ? pCity->isProductionAutomated() : false;
+}
+
+int CyState::getOrderQueueLength(int iPlayer, int iCity) const
+{
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	return pCity ? pCity->getOrderQueueLength() : 0;
+}
+
 bool CyState::getBuildingListFilterActive(int iPlayer, int iCity, int iFilter) const
 {
 	const CvCity* pCity = cys_city(iPlayer, iCity);
@@ -551,6 +563,8 @@ void CyState::pythonPublish()
 		.def("getMilitaryHappinessUnits",&CyState::getMilitaryHappinessUnits)
 		.def("isOccupation",             &CyState::isOccupation)
 		.def("getOccupationTimer",       &CyState::getOccupationTimer)
+		.def("isProductionAutomated",    &CyState::isProductionAutomated)
+		.def("getOrderQueueLength",      &CyState::getOrderQueueLength)
 		.def("getBuildingListFilterActive", &CyState::getBuildingListFilterActive)
 		.def("getBuildingListSorting",   &CyState::getBuildingListSorting)
 		.def("getUnitListFilterActive",  &CyState::getUnitListFilterActive)

@@ -5,6 +5,7 @@ import CvUtil#, BugUtil
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 GAME = GC.getGame()
 MAP = GC.getMap()
 STATE = CyState()
@@ -38,7 +39,8 @@ class WoodlandCycle:
 			if plot.isWater() or plot.isPeak(): continue
 			plots.append(plot)
 		self.iMaxIndex = len(plots)
-		self.iFactorGS = GC.getGameSpeedInfo(GAME.getGameSpeedType()).getSpeedPercent()
+		# speed.world.percent is a straggler scalar on the gamespeed info, not a bespoke accessor.
+		self.iFactorGS = INFO.getScalar("GAMESPEED_", GAME.getGameSpeedType(), InfoScalar.SCALAR_SPEED, CascScope.CASC_SCOPE_WORLD, CascUnit.CASC_UNIT_PERCENT)
 
 	# Called at the beginning of the end of each turn
 	def onBeginGameTurn(self, argsList):

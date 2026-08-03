@@ -131,6 +131,8 @@ public:
 	// live state and belongs here. ⛔ These are the READS only. The matching setters are a WRITE, and no write
 	// surface exists yet ([roadmap] scope decision 6), so the lists READ correctly and do not yet re-sort on a
 	// click. Reads run on every redraw; the writes fire only on user action, which is why the split is usable.
+	bool isProductionAutomated(int iPlayer, int iCity) const;
+	int getOrderQueueLength(int iPlayer, int iCity) const;
 	bool getBuildingListFilterActive(int iPlayer, int iCity, int iFilter) const;
 	int getBuildingListSorting(int iPlayer, int iCity) const;
 	bool getUnitListFilterActive(int iPlayer, int iCity, int iFilter) const;

@@ -75,6 +75,29 @@ void CyEnums::pythonPublish()
 	// The INTRINSIC STRAGGLER slots ([patterns.md] THE GETTER SETUP category 4) -- the lone values that belong
 	// to no group, no classification block and no edge family. Addressed by slot so the read surface grows by
 	// an enum entry rather than a getter per value.
+	// The scalar/scope/unit vocabulary the straggler read (CyInfo::getScalar) is addressed by. Constants, not
+	// reads: a publication carrying zero .def and zero class_ is the VOCABULARY, and a script cannot name the
+	// slot it wants until the types exist (patterns.md: enum operations are first class).
+	// The straggler-scalar vocabulary (CyInfo::getScalar). ⚑ Entries are added AS CONSUMERS APPEAR -- the
+	// surface is meant to grow by an enum entry rather than by a method per value, and listing slots nothing
+	// reads yet would be vocabulary for nobody.
+	python::enum_<InfoScalar>("InfoScalar")
+		.value("SCALAR_SPEED", SCALAR_SPEED)
+		;
+
+	python::enum_<CvCascScope>("CascScope")
+		.value("CASC_SCOPE_WORLD",  CASC_SCOPE_WORLD)
+		.value("CASC_SCOPE_TEAM",   CASC_SCOPE_TEAM)
+		.value("CASC_SCOPE_EMPIRE", CASC_SCOPE_EMPIRE)
+		.value("CASC_SCOPE_CITY",   CASC_SCOPE_CITY)
+		.value("CASC_SCOPE_PLOT",   CASC_SCOPE_PLOT)
+		;
+
+	python::enum_<CvCascUnit>("CascUnit")
+		.value("CASC_UNIT_FLAT",    CASC_UNIT_FLAT)
+		.value("CASC_UNIT_PERCENT", CASC_UNIT_PERCENT)
+		;
+
 	python::enum_<PyIntrinsicSlot>("IntrinsicSlot")
 		.value("PYINT_COST",              PYINT_COST)
 		.value("PYINT_BONUS_CLASS",       PYINT_BONUS_CLASS)

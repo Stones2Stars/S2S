@@ -100,6 +100,14 @@ public:
 	// and minting one here would be exactly the bespoke shape that gap is waiting on a decision for.
 	python::list getIndex(const std::string& szTypePrefix) const;
 
+	// A STRAGGLER SCALAR off the compiled sums -- patterns.md's getScalar, the category-4 read for the genuinely
+	// lone unconditioned values that belong to no group. Keyed by the shared InfoScalar vocabulary, with SCOPE
+	// and UNIT as spelled-out arguments ([DEC-scope-is-an-axis]: scope is an axis, never a name fragment).
+	// ⚑ This is how a value that looks like it needs a bespoke accessor is actually reached -- a game speed's
+	// percent is getScalar("GAMESPEED_", id, SCALAR_SPEED, CASC_SCOPE_WORLD, CASC_UNIT_PERCENT), not a
+	// getSpeedPercent revival. The surface grows by an ENUM ENTRY, never by a method per value.
+	int getScalar(const std::string& szTypePrefix, int iId, int iScalar, int iScope, int iUnit) const;
+
 	// One lone intrinsic value, by SLOT (see PyIntrinsicSlot). Bools answer 0/1 and FKs answer their id, so the
 	// whole straggler plane is one int-returning read. Answers -1 when the (prefix, slot) pair names nothing,
 	// so a caller can tell "not served here" from a real 0.

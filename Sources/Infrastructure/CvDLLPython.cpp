@@ -9,6 +9,7 @@
 #include "Python/CyInfo.h"
 #include "CvPythonPlayerLoader.h"
 #include "CvPythonPlotLoader.h"
+#include "Python/CyAct.h"
 #include "Python/CyGame.h"
 #include "Python/CyTeam.h"
 #include "Python/CyGameTextMgr.h"
@@ -139,6 +140,7 @@ DllExport void DLLPublishToPython()
 		CvPythonPlayerLoader::CyPlayerPythonInterface2(player);
 		CvPythonPlayerLoader::CyPlayerPythonInterface3(player);
 	}
+	CyAct::pythonPublish();
 	CyMap::pythonPublish();
 	CyPlot::pythonPublish();
 	CyArea::pythonPublish();

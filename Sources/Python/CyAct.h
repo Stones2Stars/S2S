@@ -1,0 +1,41 @@
+#pragma once
+
+#ifndef CyAct_h__
+#define CyAct_h__
+
+//
+//	CyAct -- the Python ACTION surface: the things script ASKS THE ENGINE TO DO, as opposed to the things it
+//	reads. Sibling of CyState ("what do I HAVE?"), CyInfo ("what do I CARRY?") and CyEnabler ("can I?").
+//
+//	⛔ WHY THIS EXISTS AT ALL. The read library is deliberately READ-ONLY ([patterns.md] THE PYTHON READ
+//	BOUNDARY: data fetching, not gameplay), and that is right -- but it left script with no way to ask the
+//	engine for anything, and some of what script does is not a read. The interface has to be able to say
+//	"select this city"; that is not a value it can fetch.
+//
+//	⛔ ID-BASED, LIKE EVERY OTHER SURFACE HERE. An action names its subject by the (owner, id) pair, never by a
+//	Cy* handle -- the wrappers carry zero defs, so script has no handle to pass and the EXE's own accessors hand
+//	back ones it cannot use. Taking ids is what makes an action expressible at all.
+//
+//	⚖ THE LINE THIS SURFACE DOES NOT CROSS (owner): developing GAME LOGIC in Python is banned; keeping the
+//	existing logic working is not. So what belongs here is the engine ACTION a script asks for -- never a
+//	gameplay rule re-expressed in script, and never a setter minted to let Python compute something the engine
+//	should own. ⚠ A new verb earns its place by an existing call site that needs it, exactly as the value-struct
+//	registrations do -- this is not a place to pre-emptively mirror the old mutating bindings.
+//
+//	BOOST: only the `python::` alias, never a bare `boost::` -- two Boosts coexist (engine.md).
+//
+
+class CyAct
+{
+public:
+	CyAct() {}
+
+	// Make this city the selected one (the city screen / camera follow it). The engine's own selectCity takes a
+	// CvCity*, which script cannot hold -- so the pair is resolved here and the engine called on its behalf.
+	// Answers whether the city resolved, so a caller can tell "did nothing" from "did it".
+	bool selectCity(int iPlayer, int iCity, bool bTestProduction) const;
+
+	static void pythonPublish();
+};
+
+#endif // CyAct_h__

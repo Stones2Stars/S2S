@@ -179,6 +179,20 @@ bool CyInfo::exists(const std::string& szTypePrefix, int iId) const
 	return cyi_infoBase(szTypePrefix, iId) != NULL;
 }
 
+int CyInfo::getScalar(const std::string& szTypePrefix, int iId, int iScalar, int iScope, int iUnit) const
+{
+	if (iScalar < 0 || iScalar >= NUM_INFO_SCALARS)
+	{
+		return 0;
+	}
+	const CvInfo* pInfo = cyi_info(szTypePrefix, iId);
+	if (pInfo == NULL)
+	{
+		return 0;
+	}
+	return pInfo->getScalar((InfoScalar)iScalar, (CvCascScope)iScope, (CvCascUnit)iUnit);
+}
+
 int CyInfo::getIntrinsic(const std::string& szTypePrefix, int iId, int iSlot) const
 {
 	if (iId < 0) return -1;
@@ -387,6 +401,7 @@ void CyInfo::pythonPublish()
 		.def("exists",         &CyInfo::exists)
 		.def("getIndex",       &CyInfo::getIndex)
 		.def("getEdgeIds",     &CyInfo::getEdgeIds)
+		.def("getScalar",      &CyInfo::getScalar)
 		.def("getIntrinsic",   &CyInfo::getIntrinsic)
 		.def("civicOptions",   &CyInfo::civicOptions, python::return_value_policy<python::reference_existing_object>())
 		;

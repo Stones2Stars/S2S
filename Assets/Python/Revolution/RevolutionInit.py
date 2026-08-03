@@ -153,7 +153,7 @@ class RevolutionInit:
 		temp = ""
 		for iI in range(GC.getNumGameOptionInfos()):
 			if GAME.isOption(iI):
-				temp += szNewLineTab + GC.getGameOptionInfo(iI).getDescription()
+				temp += szNewLineTab + INFO.getDescription("GAMEOPTION_", iI)
 		if temp:
 			revComponentsText += optionFormat + temp
 			temp = ""
