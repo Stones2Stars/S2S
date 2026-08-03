@@ -13777,11 +13777,13 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 		// The AI will disfavor bad attitude modifiers more than good ones
 		if (kCivic.getDiplomacy(DIPLOMACY_ATTITUDE_SHARE, CASC_SCOPE_EMPIRE) < 0)
 		{
-			iTempValue += (kCivic.getDiplomacy(DIPLOMACY_ATTITUDE_SHARE, CASC_SCOPE_EMPIRE) * 4);
+			// ATTITUDE_SHARE is the FLAT kind of the diplomacy family (×100), so it reduces at this point of use --
+			// the twin read in AI_getAttitudeVal already does ([DEC-fixedpoint-x100]).
+			iTempValue += (kCivic.getDiplomacy(DIPLOMACY_ATTITUDE_SHARE, CASC_SCOPE_EMPIRE) / 100 * 4);
 		}
 		else if (kCivic.getDiplomacy(DIPLOMACY_ATTITUDE_SHARE, CASC_SCOPE_EMPIRE) > 0)
 		{
-			iTempValue += (kCivic.getDiplomacy(DIPLOMACY_ATTITUDE_SHARE, CASC_SCOPE_EMPIRE) * 3);
+			iTempValue += (kCivic.getDiplomacy(DIPLOMACY_ATTITUDE_SHARE, CASC_SCOPE_EMPIRE) / 100 * 3);
 		}
 		
 		iValue += iTempValue;
@@ -20793,7 +20795,7 @@ int CvPlayerAI::AI_eventValue(EventTypes eEvent, const EventTriggeredData& kTrig
 
 	if (NULL != pUnit)
 	{
-		iValue += (2 * pUnit->baseCombatStrNonGranular() * kEvent.getUnitExperience() * CvGameSpeedScale::hammerCostPercent()) / 100;
+		iValue += (2 * pUnit->baseCombatStrHuman() * kEvent.getUnitExperience() * CvGameSpeedScale::hammerCostPercent()) / 100;
 
 		iValue -= 10 * kEvent.getUnitImmobileTurns();
 	}
@@ -20819,7 +20821,7 @@ int CvPlayerAI::AI_eventValue(EventTypes eEvent, const EventTriggeredData& kTrig
 					{
 						if (!pLoopUnit->isHasPromotion((PromotionTypes)kEvent.getUnitCombatPromotion(i)))
 						{
-							iPromotionValue += 5 * pLoopUnit->baseCombatStrNonGranular();
+							iPromotionValue += 5 * pLoopUnit->baseCombatStrHuman();
 						}
 					}
 					//TB SubCombat Mod End
@@ -25082,7 +25084,7 @@ void CvPlayerAI::AI_doEnemyUnitData()
 						iUnitValue *= 4;
 					}
 
-					iUnitValue *= pLoopUnit->baseCombatStrNonGranular();
+					iUnitValue *= pLoopUnit->baseCombatStrHuman();
 					aiUnitCounts[pLoopUnit->getUnitType()] += iUnitValue;
 					aiDomainSums[pLoopUnit->getDomainType()] += iUnitValue;
 					iNewTotal += iUnitValue;
@@ -31674,9 +31676,9 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 	{
 		if (pUnit)
 		{
-			if (pUnit->baseCombatStrNonGranular() < 10)
+			if (pUnit->baseCombatStrHuman() < 10)
 			{
-				int ievaluation = ((11 - pUnit->baseCombatStrNonGranular()) * 30);
+				int ievaluation = ((11 - pUnit->baseCombatStrHuman()) * 30);
 				iValue += (iTemp * ievaluation);
 			}
 			else

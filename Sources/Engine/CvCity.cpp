@@ -5596,7 +5596,11 @@ int CvCity::getTotalGreatPeopleRateModifier() const
 
 	int aiScalars[NUM_INFO_SCALARS];
 	owner.getScalars(aiScalars);
-	int iModifier = 100 + getGreatPeopleRateModifier() + aiScalars[SCALAR_GREAT_PEOPLE_RATE];
+	// ⛔ SCALAR_GREAT_PEOPLE_RATE is the greatPeopleRate AMOUNT channel -- the very value getBaseGreatPeopleRate
+	// returns as the BASE (realizedAtCity on the same channel). Adding it here injected a ×100 amount into a
+	// percentage identity AND counted the base a second time; the percent deposits are already inside the
+	// realized base via the combine. Only the modifier belongs in this stack.
+	int iModifier = 100 + getGreatPeopleRateModifier();
 
 	if (owner.getStateReligion() != NO_RELIGION && isHasReligion(owner.getStateReligion()))
 	{
@@ -7107,7 +7111,9 @@ void CvCity::changeSpaceProductionModifier(int iChange)
 }
 
 
-int CvCity::getExtraTradeRoutes() const { return cascadeValue(MODFAM_TRADE_ROUTES, TRADE_ROUTE_AMOUNT); }
+// ⚠ TRADE_ROUTE_AMOUNT is a FLAT slot (×100) and a trade route is a whole COUNT, so it reduces at this point of
+// use -- exactly as the TRADE_ROUTE_MAX sibling below does ([DEC-fixedpoint-x100]).
+int CvCity::getExtraTradeRoutes() const { return cascadeValue(MODFAM_TRADE_ROUTES, TRADE_ROUTE_AMOUNT) / 100; }
 
 
 int CvCity::getMaxTradeRoutes() const
@@ -7878,19 +7884,6 @@ void CvCity::updateCultureLevel(bool bUpdatePlotGroups)
 
 
 
-// Toffer - Base yield directly produced by building, not indirectly through trade, plots, specialists, modifiers, etc.
-int CvCity::getBaseYieldRateFromBuilding(const YieldTypes eYield, const BuildingTypes eBuilding) const
-{
-	const CvBuildingInfo& building = GC.getBuildingInfo(eBuilding);
-	return (
-		building.getFlatYield(eYield, CASC_SCOPE_CITY)
-		+
-		building.getYieldPerPopulation(eYield, CASC_SCOPE_CITY) * getPopulation()
-		+
-		getBuildingYieldChange(eBuilding, eYield)
-	);
-}
-
 /*
  * Returns the total additional yield that adding one of the given buildings will provide.
  *
@@ -8330,73 +8323,6 @@ void CvCity::changeProductionToCommerceModifier(CommerceTypes eIndex, int iChang
 
 		gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
 	}
-}
-
-
-int CvCity::getBuildingCommerceByBuilding(CommerceTypes eIndex, BuildingTypes eBuilding, const bool bFull, const bool bTestVisible) const
-{
-	PROFILE_FUNC();
-
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eBuilding);
-
-	if (!isActiveBuilding(eBuilding) && !bTestVisible)
-		return 0;
-
-	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
-	const CvPlayer& kOwner = GET_PLAYER(getOwner());
-	const CvTeam& kTeam = GET_TEAM(getTeam());
-
-	int iCommerce = 0;
-
-	if (!isDormantBuilding(eBuilding))
-	{
-		int iBaseCommerceChange = kBuilding.getFlatCommerce(eIndex, CASC_SCOPE_CITY) / 100;
-
-		if (eIndex == COMMERCE_GOLD && iBaseCommerceChange < 0 && GC.getTREAT_NEGATIVE_GOLD_AS_MAINTENANCE())
-			iBaseCommerceChange = 0;
-
-		if (iBaseCommerceChange != 0)
-		{
-			if (kBuilding.hasAttribute(CLS_ATTRIBUTE_ORBITAL))
-			{
-				const int iOrbitalCities = kOwner.countNumCitiesWithOrbitalInfrastructure();
-				const int iVal = std::min(iBaseCommerceChange * iOrbitalCities, getPopulation());
-				iCommerce += hasOrbitalInfrastructure() ? iVal : (iVal / 2);
-			}
-			else
-			{
-				iCommerce += iBaseCommerceChange;
-			}
-		}
-
-		iCommerce += getBuildingCommerceChange(eBuilding, eIndex);
-
-		if (bFull)
-		{
-			iCommerce += kBuilding.getCommercePerPopulation(eIndex, CASC_SCOPE_CITY) / 100;
-		}
-
-		const ReligionTypes eRel = (ReligionTypes)kBuilding.getReligion();
-		if (eRel != NO_RELIGION && eRel == kOwner.getStateReligion())
-			iCommerce += kOwner.getStateReligionBuildingCommerce(eIndex);
-
-		const ReligionTypes eShrineReligion = (ReligionTypes)kBuilding.getShrineReligion();
-		if (eShrineReligion != NO_RELIGION)
-		{
-			iCommerce += GC.getReligionInfo(eShrineReligion).getShrineCommerce(eIndex)
-				* GC.getGame().countReligionLevels(eShrineReligion);
-		}
-	}
-
-	const CorporationTypes eGlobalCorp = (CorporationTypes)kBuilding.getHeadquartersCorporation();
-	if (eGlobalCorp != NO_CORPORATION)
-	{
-		iCommerce += GC.getCorporationInfo(eGlobalCorp).getHeadquartersCommerce(eIndex)
-			* GC.getGame().countCorporationLevels(eGlobalCorp);
-	}
-
-	return iCommerce;
 }
 
 
@@ -10030,9 +9956,19 @@ bool CvCity::isFreePromotion(PromotionTypes ePromo) const
 
 
 
-// The empire term is no longer added by hand: rolledLegsAtCity folds team+empire+city, so the national
-// espionage-defense deposits are already inside the chain (adding them again would double-count).
-int CvCity::getEspionageDefenseModifier() const { return cascadeValue(MODFAM_ESPIONAGE_DEFENSE, CHANNEL_AMOUNT); }
+// ⛔ SCOPE-SPLIT KIND, so it cannot go through cascadeValue: city scope is a FLAT (the building amount, ×100)
+// and empire scope is a PERCENT (the trait modifier). cascadeValue asks infoKindUnit at CITY scope, gets FLAT,
+// and returns the flat sum -- DISCARDING every trait percent. The consumer applies the result as percentage
+// points (`100 + x`), so both legs are summed here in those units: the flat reduces to human, the percent is
+// already human ([DEC-fixedpoint-x100]).
+int CvCity::getEspionageDefenseModifier() const
+{
+	const int iChannel = CascadeChannelRegistry::channelLookup(MODFAM_ESPIONAGE_DEFENSE, (int)CHANNEL_AMOUNT, -1);
+	int64_t lFlatSum = 0;
+	int64_t lPercentSum = 0;
+	InfoValuation::rolledLegsAtCity(*this, iChannel, lFlatSum, lPercentSum);
+	return (int)(lFlatSum / 100) + (int)lPercentSum;
+}
 
 
 bool CvCity::isWorkingPlot(int iIndex) const
@@ -16805,8 +16741,10 @@ int CvCity::getInvestigationTotal(bool bActual) const
 
 // UNDERWORLD, not espionage: the in-city criminal contest (json.md §6). The same words exist on the unit plane
 // as espionage spy stats -- a different mechanic, kept separate by family.
-int CvCity::getExtraInsidiousness() const { return cascadeValue(MODFAM_UNDERWORLD, UNDERWORLD_INSIDIOUSNESS); }
-int CvCity::getExtraInvestigation() const { return cascadeValue(MODFAM_UNDERWORLD, UNDERWORLD_INVESTIGATION); }
+// ⚠ Both are FLAT slots (×100) feeding a human contest rolled against a plain random, and the unit-plane twin
+// already reduces -- so they reduce here too ([DEC-fixedpoint-x100]). Raw, one building decides the contest.
+int CvCity::getExtraInsidiousness() const { return cascadeValue(MODFAM_UNDERWORLD, UNDERWORLD_INSIDIOUSNESS) / 100; }
+int CvCity::getExtraInvestigation() const { return cascadeValue(MODFAM_UNDERWORLD, UNDERWORLD_INVESTIGATION) / 100; }
 int CvCity::getSpecialistInsidiousness() const
 {
 	return m_iSpecialistInsidiousness;

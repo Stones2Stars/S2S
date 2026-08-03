@@ -990,8 +990,12 @@ int64_t InfoValuation::tradeRouteChannelYield(int64_t routeYield, int iChannelBa
 	// ×100 and one ÷10000 takes both back down. Converting at the edge means a caller passes what it HAS and
 	// cannot get the scale wrong; pushing it outward would put a scale contract on every consumer of the fold,
 	// which is how a +50% modifier becomes +5000%.
-	const int64_t iCombinedPercent100 = (int64_t)iChannelBasePercent * 100 + (int64_t)iChannelModifierPercentSum;
-	return routeYield * iCombinedPercent100 / 10000;
+	// Both are PERCENTS and a percent is NOT scaled ([DEC-fixedpoint-x100]), so they combine directly against
+	// the ordinary 100 identity. ⛔ The old shape lifted the base to ×100 and reduced by 10000, applying every
+	// authored modifier at a hundredth of its value -- the second identity constant fixed-point-and-scales.md §1
+	// says must never appear. cityRate, in this same file, is the correct reference.
+	const int64_t iCombinedPercent = (int64_t)iChannelBasePercent + (int64_t)iChannelModifierPercentSum;
+	return routeYield * iCombinedPercent / 100;
 }
 
 int64_t InfoValuation::combinedGroupSum(ModifierFamily eFamily, int iKind, int64_t sum)

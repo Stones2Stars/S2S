@@ -1042,7 +1042,10 @@ int CvSelectionGroupAI::AI_sumStrength(const CvPlot* pAttackedPlot, DomainTypes 
 				if (iPossibleTargets > 0)
 				{
 					// collateral damage is not trivial to calculate. This estimate is pretty rough.
-					strSum += (uint64_t)unit->baseCombatStrNonGranular() * COLLATERAL_COMBAT_DAMAGE * unit->collateralDamage() * iPossibleTargets / 100;
+					// ×100 like the currCombatStr terms this same accumulator receives -- the human read here made the
+					// collateral leg 100x under-weighted, and put it on a different scale from its defender-side twin
+					// in CvPlot::AI_sumStrength, which AI_compareStacks divides one by the other.
+					strSum += (uint64_t)unit->baseCombatStr() * COLLATERAL_COMBAT_DAMAGE * unit->collateralDamage() * iPossibleTargets / 100;
 				}
 			}
 

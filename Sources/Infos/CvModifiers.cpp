@@ -23,7 +23,10 @@ namespace
 	//	same two-decimal footing with identity 100 (×1.5 -> 150).
 	int mod_valueForUnit(double dHuman, CvCascUnit eUnit)
 	{
-		if (eUnit == CASC_UNIT_PERCENT)
+		// ⛔ Branch on the PERCENT SIDE, not the one enumerator: every downstream site treats rawPercent as a
+		// percent (the gather's percent-side test, the deposit index, the entry text), so scaling it here would
+		// land it ×100 in the percent plane and blow the `100 + Sigma-percent` identity by a hundred.
+		if (eUnit == CASC_UNIT_PERCENT || eUnit == CASC_UNIT_RAW_PERCENT)
 		{
 			return (int)(dHuman >= 0 ? dHuman + 0.5 : dHuman - 0.5);
 		}

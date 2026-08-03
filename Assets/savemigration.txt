@@ -1264,3 +1264,13 @@ The TEAM ROUTE MOVE-COST accumulator. A tech-gated route move delta is authored 
 | unconditioned base is served today; the tech-gated tail lands when that read evaluates its conditioned entries
 | against the asking team (ROUTE_VACTRAIN under TECH_SKYROADS is the one authoring in the shipped data).
 CvTeam::m_paiRouteChange
+
+========================
+2026-08-03 - the COMBAT-STRENGTH cluster converts to x100-native (fixed-point-and-scales.md 4c-ter, owner ruling:
+the strength legs do not reduce to human until shown in the UI). m_iBaseCombat changed MEANING (human -> x100), which
+the tagged format cannot express on the same tag -- an old save would load 1/100th strength silently. The value is
+therefore re-serialized under the NEW tag CvUnit::m_iBaseCombat100 and the old tag is CUT here. When the old tag is
+absent the reader's sentinel (-1) re-seeds base strength from the unit's type, so a pre-existing save keeps correct
+strength; the only loss is a WorldBuilder per-unit strength override, which reverts to the unit's type base.
+
+CvUnit::m_iBaseCombat                      (int)

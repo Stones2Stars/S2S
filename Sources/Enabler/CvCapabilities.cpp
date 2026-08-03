@@ -63,10 +63,10 @@ void CascadeCapabilities::refreshInto(const CvTeam& kTeam, CascadeTeamCaps& c)
 		if (kTeam.isHasTech((TechTypes)t))
 		{
 			ccap_union(static_cast<const CvTechInfo*>(InfoRepo<CvTechInfo>::get().get(t)), c);
-			// the derived corp revenue modifier (ruling 15: commerce.empire.corporation) -- the compiled point
-			// read is ×100 ([DEC-fixedpoint-x100]); this aggregate stays the human percent its CvTeam/CvCity
-			// consumers combine, so the ÷100 sits here at the boundary.
-			c.corpRevenueMod += GC.getTechInfo((TechTypes)t).getCorporationCommerceModifier(CASC_SCOPE_EMPIRE) / 100;
+			// the derived corp revenue modifier (ruling 15: commerce.empire.corporation). The read is a PERCENT,
+			// which is NOT scaled ([DEC-fixedpoint-x100]), so it is already the human percent its CvTeam/CvCity
+			// consumers combine -- nothing is reduced here.
+			c.corpRevenueMod += GC.getTechInfo((TechTypes)t).getCorporationCommerceModifier(CASC_SCOPE_EMPIRE);
 		}
 	// Precompute the HOT-PATH reads: the named flags + the per-terrain bit vector. All string/set work
 	// happens HERE, once per (team, tech-change) -- the queries below are plain array reads (the pathfinder

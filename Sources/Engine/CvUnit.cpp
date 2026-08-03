@@ -417,7 +417,7 @@ void CvUnit::init(int iID, UnitTypes eUnit, UnitAITypes eUnitAI, PlayerTypes eOw
 		plot()->setFlagDirty(true);
 
 		if (getDomainType() == DOMAIN_LAND && baseCombatStr() > 0
-		&& (GC.getGame().getBestLandUnit() == NO_UNIT || baseCombatStrNonGranular() > GC.getGame().getBestLandUnitCombat()))
+		&& (GC.getGame().getBestLandUnit() == NO_UNIT || baseCombatStrHuman() > GC.getGame().getBestLandUnitCombat()))
 		{
 			GC.getGame().setBestLandUnit(getUnitType());
 		}
@@ -658,11 +658,18 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 	m_eUnitType = eUnit;
 	m_eReligionType = NO_RELIGION;
 	m_pUnitInfo = (NO_UNIT != m_eUnitType) ? &GC.getUnitInfo(m_eUnitType) : NULL;
-	// ⚠ The ÷100 is a CLUSTER BOUNDARY, not a sanctioned shape: m_iBaseCombat is still a human whole number
+	// m_iBaseCombat100 is the unit's OWN base strength: seeded from the type here, then PER-UNIT STATE thereafter --
+	// WorldBuilder edits it and the WBS scenario format persists it, so it is deliberately serialized and is NOT
+	// re-derivable from the type alone (owner). The resolved plane carries the promotion/unit-combat DELTA only
+	// and does not repeat this value (Cascade/CvUnitResolved.h).
+	// ⚠ The ÷100 is a CLUSTER BOUNDARY, not a sanctioned shape: m_iBaseCombat100 is still a human whole number
 	// here (it mixes with getExtraStrength and the percent stack below), so this reduces to meet it. It goes
 	// when the combat cluster converts as a unit -- a scale conversion inside a calculation is the defect,
 	// never the fix ([DEC-fixedpoint-x100]; fixed-point-and-scales.md § CONVERT BY ARITHMETIC CLUSTER).
-	m_iBaseCombat = (NO_UNIT != m_eUnitType) ? m_pUnitInfo->getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100 : 0;
+	// ⚠ -1 (not 0) on the NO_UNIT path: CvUnit::read() calls reset() with NO_UNIT before draining the stream, so
+	// this is also the pre-load value. 0 is a LEGITIMATE strength (non-combat units), so it cannot mark "unset";
+	// read() re-seeds from the type when the save carried no value (see the m_iBaseCombat100 read).
+	m_iBaseCombat100 = (NO_UNIT != m_eUnitType) ? m_pUnitInfo->getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) : -1;
 	m_eLeaderUnitType = NO_UNIT;
 	m_eGGExperienceEarnedTowardsType = NO_UNIT;
 	m_iCargoCapacity = 0;
@@ -896,7 +903,7 @@ CvUnit& CvUnit::operator=(const CvUnit& other)
 	m_eUnitType = other.m_eUnitType;
 	m_eReligionType = other.m_eReligionType;
 	m_pUnitInfo = other.m_pUnitInfo;
-	m_iBaseCombat = other.m_iBaseCombat;
+	m_iBaseCombat100 = other.m_iBaseCombat100;
 	m_eLeaderUnitType = other.m_eLeaderUnitType;
 	m_eGGExperienceEarnedTowardsType = other.m_eGGExperienceEarnedTowardsType;
 	m_iCargoCapacity = other.m_iCargoCapacity;
@@ -10593,9 +10600,9 @@ int CvUnit::airRange() const
 	{
 		int aiAir[NUM_AIR_KINDS];
 		GET_PLAYER(getOwner()).getAirKinds(aiAir);
-		return (resolvedValue(URS_AIR_RANGE) + GET_TEAM(getTeam()).getExtraMoves(DOMAIN_AIR) + aiAir[AIR_RANGE] / 100);
+		return (resolvedValue(URS_AIR_RANGE) / 100 + GET_TEAM(getTeam()).getExtraMoves(DOMAIN_AIR) + aiAir[AIR_RANGE] / 100);
 	}
-	return (resolvedValue(URS_AIR_RANGE));
+	return (resolvedValue(URS_AIR_RANGE) / 100);
 }
 
 
@@ -11003,9 +11010,11 @@ bool CvUnit::isDead() const
 }
 
 
+// The human WRITE boundary (WorldBuilder / the Cy binding edit in whole numbers), so it lifts to the ×100
+// native scale here -- strength is ×100 everywhere inside the engine ([DEC-fixedpoint-x100]).
 void CvUnit::setBaseCombatStr(int iCombat)
 {
-	m_iBaseCombat = iCombat;
+	m_iBaseCombat100 = 100 * iCombat;
 }
 
 int CvUnit::baseCombatStr() const
@@ -11013,13 +11022,13 @@ int CvUnit::baseCombatStr() const
 	return GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS) ? getSMStrength() : baseCombatStrPreCheck();
 }
 
-int CvUnit::baseCombatStrNonGranular() const
+// THE human read boundary -- the ONE ÷100 on this cluster. Strength is ×100 everywhere inside the engine, so
+// only a human-facing consumer (UI, a Cy binding, a comparison against a human config value) calls this.
+// ⚠ Unconditional now: it used to reduce only under SIZE_MATTERS, because baseCombatStr() itself returned a
+// different SCALE depending on that option.
+int CvUnit::baseCombatStrHuman() const
 {
-	if (GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS))
-	{
-		return baseCombatStr() / 100;
-	}
-	return baseCombatStr();
+	return baseCombatStr() / 100;
 }
 
 int CvUnit::airBaseCombatStr() const
@@ -11033,15 +11042,13 @@ int CvUnit::airBaseCombatStr() const
 
 int CvUnit::baseCombatStrPreCheck() const
 {
-	int iStr = m_iBaseCombat + (resolvedValue(URS_STRENGTH_FLAT) / 100);
+	// Both legs are ×100 and stay ×100 -- the base member and the resolved promotion/unit-combat delta are on the
+	// same scale, so they add directly and nothing is reduced inside the calculation ([DEC-fixedpoint-x100]).
+	int iStr = m_iBaseCombat100 + resolvedValue(URS_STRENGTH_FLAT);
 
 	if (iStr < 0)
 	{
 		return 0;
-	}
-	if (GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS))
-	{
-		iStr *= 100;
 	}
 	if (getExtraStrengthModifier() != 0)
 	{
@@ -11053,15 +11060,13 @@ int CvUnit::baseCombatStrPreCheck() const
 
 int CvUnit::baseAirCombatStrPreCheck() const
 {
-	int iStr = m_pUnitInfo->getAirCombat() + (resolvedValue(URS_STRENGTH_FLAT) / 100);
+	// getAirCombat() is authored HUMAN (raw jsonIdInt, no ×100), so it lifts to meet the ×100 resolved delta --
+	// the same shape CvUnitInfo uses for its own air strength.
+	int iStr = 100 * m_pUnitInfo->getAirCombat() + resolvedValue(URS_STRENGTH_FLAT);
 
 	if (iStr < 0)
 	{
 		return 0;
-	}
-	if (GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS))
-	{
-		iStr *= 100;
 	}
 	if (getExtraStrengthModifier() != 0)
 	{
@@ -11081,16 +11086,6 @@ void CvUnit::setSMStrength()
 	const int iStrength = getDomainType() == DOMAIN_AIR? baseAirCombatStrPreCheck() : baseCombatStrPreCheck();
 	m_iSMStrength = applySMRank(iStrength, getSizeMattersOffsetValue(), GC.getSIZE_MATTERS_MOST_MULTIPLIER());
 	FASSERT_NOT_NEGATIVE(m_iSMStrength);
-}
-
-float CvUnit::fbaseCombatStr() const
-{
-	return (float)baseCombatStr()/100;
-}
-
-float CvUnit::fairBaseCombatStr() const
-{
-	return (float)airBaseCombatStr()/100;
 }
 
 struct CombatStrCacheEntry
@@ -11251,12 +11246,9 @@ int CvUnit::maxCombatStr(const CvPlot* pPlot, const CvUnit* pAttacker, CombatDet
 				//OutputDebugString("maxCombatStr.CachHit\n");
 				PROFILE("maxCombatStr.CachHit");
 				pEntry->iLRUIndex = iNextCombatCacheLRU++;
-				//TB overflow fix
-				if (GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS))
-				{
-					return pEntry->iResult / 100;
-				}
-				return pEntry->iResult;
+				// The cache stores the pre-reduce iCombat, so it reduces exactly as the fresh path does -- cached and
+				// fresh must agree or the two disagree by 100× (AGENTS.md drift detector 3).
+				return std::max(1, pEntry->iResult / 100);
 			}
 			if (pEntry->iLRUIndex < iBestLRU)
 			{
@@ -11848,8 +11840,10 @@ int CvUnit::maxCombatStr(const CvPlot* pPlot, const CvUnit* pAttacker, CombatDet
 
 	if (pCombatDetails != NULL)
 	{
-		pCombatDetails->iCombat = iCombat;
-		pCombatDetails->iMaxCombatStr = std::max(1, iCombat);
+		// Published to Python (CvUtil.py divides by 100), so these carry the ×100 NATIVE scale -- not the
+		// ×10000 intermediate iCombat is computed in.
+		pCombatDetails->iCombat = iCombat / 100;
+		pCombatDetails->iMaxCombatStr = std::max(1, iCombat / 100);
 		pCombatDetails->iCurrHitPoints = getHP();
 		pCombatDetails->iMaxHitPoints = getMaxHP();
 		pCombatDetails->iCurrCombatStr = ((pCombatDetails->iMaxCombatStr * pCombatDetails->iCurrHitPoints) / pCombatDetails->iMaxHitPoints);
@@ -11864,11 +11858,10 @@ int CvUnit::maxCombatStr(const CvPlot* pPlot, const CvUnit* pAttacker, CombatDet
 		pCacheEntry->pAttacker = pOriginalAttacker;
 		pCacheEntry->pForUnit = this;
 	}
-	if (GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS))
-	{
-		return std::max(1, iCombat / 100);
-	}
-	return std::max(1, iCombat);
+	// iCombat is base(×100) × a percent factor, so it is ×10000; one reduce brings it back to the ×100 native
+	// scale every consumer expects. ⛔ UNCONDITIONAL -- this used to be SIZE_MATTERS-only and only cancelled
+	// because baseCombatStr() was human without that option. Gating it again returns ×10000 in a normal game.
+	return std::max(1, iCombat / 100);
 }
 
 
@@ -11912,7 +11905,7 @@ float CvUnit::currCombatStrFloat(const CvPlot* pPlot, const CvUnit* pAttacker) c
 
 bool CvUnit::canFight() const
 {
-	return m_iBaseCombat > 0; // Don't bother calculating modifiers for this call
+	return m_iBaseCombat100 > 0; // Don't bother calculating modifiers for this call
 }
 
 bool CvUnit::canAttackNow() const
@@ -12123,7 +12116,9 @@ int CvUnit::airMaxCombatStr(const CvUnit* pOther) const
 		}
 	}
 
-	return std::max(1, getModifiedIntValue(100 * airBaseCombatStr(), iModifier));
+	// airBaseCombatStr() is already ×100, so the old `100 *` manufactured the scale a second time (air read
+	// ×10000 against land's ×100). getModifiedIntValue is scale-preserving.
+	return std::max(1, getModifiedIntValue(airBaseCombatStr(), iModifier));
 }
 
 
@@ -12424,15 +12419,19 @@ int CvUnit::maxXPValue(const CvUnit* pVictim, bool bBarb) const
 }
 
 
+// ⚠ URS_FIRST_STRIKES is a FLAT slot (×100), and a first strike is a whole COMBAT ROUND, so it reduces at this
+// point of use ([DEC-fixedpoint-x100]). Returning it raw grants a hundred-plus retaliation-free rounds per
+// promotion and feeds getCombatOddsImpl's binomial loops at n in the hundreds.
 int CvUnit::firstStrikes() const
 {
-	return std::max(0, resolvedValue(URS_FIRST_STRIKES));
+	return std::max(0, resolvedValue(URS_FIRST_STRIKES) / 100);
 }
 
 
+// Same FLAT-slot reduction as firstStrikes above -- a whole-round count, not a magnitude.
 int CvUnit::chanceFirstStrikes() const
 {
-	return std::max(0, (resolvedValue(URS_FIRST_STRIKE_CHANCE)));
+	return std::max(0, resolvedValue(URS_FIRST_STRIKE_CHANCE) / 100);
 }
 
 
@@ -18030,7 +18029,11 @@ void CvUnit::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvUnit", &m_iUpgradeDiscount);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExperiencePercent);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iKamikazePercent);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iBaseCombat);
+	// ⛔ NEW TAG: the member changed MEANING (human -> ×100), which the save format cannot express on the old
+	// tag -- an old save would silently load 1/100th strength (save.md: the silent-wrong-load class). The old
+	// tag is CUT in savemigration.txt; when it is absent the sentinel below re-seeds from the unit's type, so a
+	// pre-existing save keeps correct strength and loses only a WorldBuilder per-unit override.
+	WRAPPER_READ(wrapper, "CvUnit", &m_iBaseCombat100);
 	WRAPPER_READ(wrapper, "CvUnit", (int*)&m_eFacingDirection);
 
 	WRAPPER_READ(wrapper, "CvUnit", &m_bMadeAttack);
@@ -18062,6 +18065,12 @@ void CvUnit::read(FDataStreamBase* pStream)
 		bKill = true;
 	}
 	m_pUnitInfo = &GC.getUnitInfo(m_eUnitType);
+	// The save carried no base-strength value (a pre-×100 save): seed it from the type, exactly as reset() does
+	// for a newly created unit. 0 is a legitimate strength, which is why the unset marker is -1.
+	if (m_iBaseCombat100 < 0)
+	{
+		m_iBaseCombat100 = m_pUnitInfo->getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT);
+	}
 	m_movementCharacteristicsHash = m_pUnitInfo->getZobristValue();
 	// THE RESEED EMIT (DEC-spine-reseed): the unit INSTANCE fact. A loaded unit never runs init(), so without this
 	// the stream shows an empire whose units all predate the save. Emitted HERE, the first point m_iID / m_eOwner /
@@ -18971,7 +18980,7 @@ void CvUnit::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iUpgradeDiscount);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExperiencePercent);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iKamikazePercent);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iBaseCombat);
+	WRAPPER_WRITE(wrapper, "CvUnit", m_iBaseCombat100);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_eFacingDirection);
 
 	WRAPPER_WRITE(wrapper, "CvUnit", m_bMadeAttack);
@@ -23270,9 +23279,11 @@ void CvUnit::changeExtraTaunt(int iChange)
 	m_iExtraTaunt += iChange;
 }
 
+// ⚠ URS_TAUNT is a FLAT slot (×100) consumed as a human percent (`iValue += tauntTotal() * iValue / 100`), so
+// it reduces here ([DEC-fixedpoint-x100]) -- raw, a +50% taunt applies as roughly x51.
 int CvUnit::tauntTotal() const
 {
-	return std::max(0, resolvedValue(URS_TAUNT));
+	return std::max(0, resolvedValue(URS_TAUNT) / 100);
 }
 
 int CvUnit::getExtraCombatModifierPerSizeMore() const

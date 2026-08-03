@@ -780,10 +780,9 @@ public:
 
 	void setBaseCombatStr(int iCombat);
 	int baseCombatStr() const;
-	int baseCombatStrNonGranular() const;
+	int baseCombatStrHuman() const;
 	int baseCombatStrPreCheck() const;
 	int baseAirCombatStrPreCheck() const;
-	float fbaseCombatStr() const;
 	/*** Dexy - Surround and Destroy START ****/
 	int maxCombatStr(const CvPlot* pPlot, const CvUnit* pAttacker, CombatDetails* pCombatDetails = NULL, bool bSurroundedModifier = true) const;
 	int currCombatStr(const CvPlot* pPlot, const CvUnit* pAttacker, CombatDetails* pCombatDetails = NULL, bool bSurroundedModifier = true) const;
@@ -800,7 +799,6 @@ public:
 	bool canSiege(TeamTypes eTeam) const;
 
 	int airBaseCombatStr() const;
-	float fairBaseCombatStr() const;
 	int airMaxCombatStr(const CvUnit* pOther) const;
 	int airCurrCombatStr(const CvUnit* pOther) const;
 	int combatLimit(const CvUnit* pOpponent = NULL) const;
@@ -1564,7 +1562,7 @@ protected:
 	int m_iUpgradeDiscount;
 	int m_iExperiencePercent;
 	int m_iKamikazePercent;
-	int m_iBaseCombat;
+	int m_iBaseCombat100;
 	DirectionTypes m_eFacingDirection;
 	// UnitStatus -> TURNS REMAINING. Dense over the hand-maintained enum, which IS the dictionary while
 	// the key set is fixed and small -- and it serializes under ONE named array tag rather than repeated

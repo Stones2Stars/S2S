@@ -6881,7 +6881,9 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, CvArea* pAr
 
 	// `national` is a revolution KIND, not a scope fragment -- the data authors `revolution.city.national`, so the
 	// read is the kind at CITY scope. (Its sibling `local` is the same shape and carries the bulk of the data.)
-	changeRevIdxNational(kBuilding.getRevolution(REVOLUTION_NATIONAL, CASC_SCOPE_CITY) * iChange);
+	// REVOLUTION_NATIONAL is a FLAT (×100) and this accumulator is human -- the civic path reduces, so this one
+	// must too, or a building outweighs every civic by 100x in the same total ([DEC-fixedpoint-x100]).
+	changeRevIdxNational(kBuilding.getRevolution(REVOLUTION_NATIONAL, CASC_SCOPE_CITY) / 100 * iChange);
 
 	pArea->changeBorderObstacleCount(getTeam(), kBuilding.providesAmenity(CLS_AMENITY_BORDER_OBSTACLE) ? iChange : 0);
 
@@ -9924,7 +9926,10 @@ void CvPlayer::updateWarWearinessPercentAnger()
 			const CvTeam& kTeam = GET_TEAM((TeamTypes)iI);
 			if (kTeam.isAlive() && !kTeam.isMinorCiv() && kTeam.isAtWar(getTeam()))
 			{
-				iNewWarWearinessPercentAnger += GET_TEAM(getTeam()).getWarWeariness((TeamTypes)iI) * std::max(0, 100 + kTeam.getEnemyWarWearinessModifier()) / 1000000;
+				// ×100 weariness × a (100 + percent) factor, reduced ONCE by 10000. ⛔ This read used the HUMAN
+				// getWarWeariness against a /1000000, which truncated the whole term to nothing; its twin in
+				// CvTeamAI used a third divisor for the identical product ([DEC-fixedpoint-x100]).
+				iNewWarWearinessPercentAnger += GET_TEAM(getTeam()).getWarWearinessTimes100((TeamTypes)iI) * std::max(0, 100 + kTeam.getEnemyWarWearinessModifier()) / 10000;
 			}
 		}
 	}

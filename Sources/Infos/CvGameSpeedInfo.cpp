@@ -21,11 +21,13 @@ CvGameSpeedInfo::CvGameSpeedInfo()
 
 namespace
 {
-	// The speed percent as the HUMAN percent (÷100 at this internal boundary; the getter surface itself
-	// stays ×100 -- [DEC-fixedpoint-x100]). Normal = 100.
+	// This speed's pace percent (normal = 100). A PERCENT IS NOT SCALED ([DEC-fixedpoint-x100]), so the read is
+	// already the human percent and NOTHING is reduced here.
+	// ⚠ Takes the info explicitly, so it answers "THIS speed's percent" -- CvGameSpeedScale::speedPercent()
+	// answers "the RUNNING game's", and is what a live-state caller must use instead of re-reading the scalar.
 	int gs_speedPercent(const CvGameSpeedInfo& kSpeed)
 	{
-		return kSpeed.getScalar(SCALAR_SPEED, CASC_SCOPE_WORLD, CASC_UNIT_PERCENT) / 100;
+		return kSpeed.getScalar(SCALAR_SPEED, CASC_SCOPE_WORLD, CASC_UNIT_PERCENT);
 	}
 }
 

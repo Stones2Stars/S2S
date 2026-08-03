@@ -22,6 +22,13 @@
 //
 //	THE GATHER -- over the unit's HELD SET, from the COMPILED slot sums:
 //	    the unit's own CvUnitInfo  U  every held promotion  U  every held unit-combat class
+//
+//	⛔ WITH ONE CARVE-OUT, AND IT IS A DESIGN RATHER THAN AN EXCEPTION: **URS_STRENGTH_FLAT IS DELTA-ONLY** --
+//	the unit's own type does NOT contribute to it. A unit's BASE strength is PER-UNIT STATE, not a function of
+//	its type (owner): WorldBuilder edits an individual unit's strength and the WBS format persists it, so the
+//	base is the serialized CvUnit::m_iBaseCombat and the consumer adds the two. Strength is the only stat with a
+//	per-unit editable base, which is why it is the only slot that carves out. ⚠ Counting the type in both places
+//	is a silent DOUBLE COUNT of every unit's authored strength -- the defect this carve-out exists to prevent.
 //	each contributing its `(family, kind, CASC_SCOPE_UNIT, unit)` compiled sum (CvModifiers::sum -- a bare array
 //	load, no anatomy walk, no string address, [DEC-materialize-at-mapfrom]). Percent-unit kinds sum as percents
 //	and flat-unit kinds as flats; nothing multiplies here, because a unit value is already resolved.

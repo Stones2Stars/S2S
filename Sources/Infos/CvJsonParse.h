@@ -24,8 +24,15 @@
 #include <vector>
 
 // The single human -> ×100 fixed-point conversion (round half away from zero). 7 -> 700, 1.5 -> 150, -10 -> -1000.
-// The ONE place the human->int×100 conversion happens (determinism; DEC-fixedpoint-x100). The reader has ZERO
-// per-field scale knowledge -- a BLANKET ×100 at every magnitude leaf (fixed-point-and-scales.md §1/§3.2).
+// The ONE place the human->int×100 conversion happens (determinism; DEC-fixedpoint-x100).
+// ⛔ IT IS NOT A BLANKET, AND READING IT AS ONE IS THE COSTLIEST MISTAKE ON THIS SURFACE. It converts AMOUNTS
+// only. A PERCENT IS NEVER SCALED -- mod_valueForUnit (CvModifiers.cpp) picks per LEAF from the authored key and
+// routes a percent leaf straight past this function, plain. "Zero per-FIELD scale knowledge" (the curator owns
+// that, DEC-curator-owns-descale) does NOT mean zero per-UNIT distinction: the unit IS the decision.
+// ⚠ Consequence for every consumer: a value read with CASC_UNIT_PERCENT is already the human percent, so a
+// `/100` applied to it destroys it. Believing this was a blanket is what produced a family of such divides --
+// zeroed AI war declarations, culture thresholds and property decay among them. Ask the KIND's unit
+// (infoKindUnit), never the family's. (fixed-point-and-scales.md §1/§3.2)
 int jsonX100(double h);
 
 // FK-resolve an INFOTYPE id string via the kept type registry (GC.getInfoTypeForString). Returns the engine id, or -1

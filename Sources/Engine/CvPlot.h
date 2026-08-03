@@ -407,8 +407,6 @@ public:
 	bool isCanMoveSeaUnits() const;
 	bool isSeaTunnel() const;
 	int getRevoltProtection() const;
-	int getAverageEnemyStrength(TeamTypes eTeam) const;
-	int getAverageEnemyDamage(TeamTypes eTeam) const;
 	LandmarkTypes getLandmarkType() const;
 	void setLandmarkType(LandmarkTypes eLandmark);
 	CvWString getLandmarkName() const;

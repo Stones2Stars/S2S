@@ -107,6 +107,16 @@ void UnitResolvedValues::gatherInto(const CvUnit& kUnit, int (&aiOut)[NUM_UNIT_R
 	// composed question, so this needs no second derivation of the class set.
 	urs_addContributor(&kUnit.getUnitInfo(), aiOut);
 
+	// ⛔ STRENGTH IS THE ONE SLOT WHOSE BASE IS PER-UNIT STATE, NOT A FUNCTION OF THE TYPE (owner): WorldBuilder
+	// edits an individual unit's strength, and the WBS scenario format persists it (`CombatStr=`, written only
+	// when it differs from the type). So the BASE lives on CvUnit as the serialized m_iBaseCombat and THIS PLANE
+	// CARRIES THE DELTA ONLY -- promotions and unit-combats -- exactly as the #430 F4 migration ledger records
+	// it (Assets/savemigration.txt). The type's own strength is dropped here because the consumer
+	// (baseCombatStr*PreCheck) adds m_iBaseCombat; counting it in both places double-counts every unit's
+	// authored base. ⚠ The array was zeroed above and only the unit's own info has been added, so this removes
+	// exactly the type's contribution and nothing else.
+	aiOut[URS_STRENGTH_FLAT] = 0;
+
 	for (int iPromotion = 0; iPromotion < GC.getNumPromotionInfos(); ++iPromotion)
 	{
 		if (kUnit.isHasPromotion((PromotionTypes)iPromotion))

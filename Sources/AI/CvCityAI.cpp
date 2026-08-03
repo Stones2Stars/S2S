@@ -5294,8 +5294,9 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 
 			if ((iFocusFlags & BUILDINGFOCUS_ESPIONAGE) || (iPass > 0))
 			{
+				// FLAT (×100) against a human /8 weight, so the reduction rides the divisor ([DEC-fixedpoint-x100]).
 				iValue += cai_expectedScalarHere(kBuilding, SCALAR_ESPIONAGE_DEFENSE, CASC_UNIT_FLAT,
-					getCityContext(), kOwner.getEmpireContext(), plotGroup(getOwner())) / 8;
+					getCityContext(), kOwner.getEmpireContext(), plotGroup(getOwner())) / 800;
 			}
 
 
@@ -5367,7 +5368,8 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 
 				// The legacy AREA and GLOBAL legs fold to ONE empire slot (no area scope), so the value is
 				// counted once, over EVERY other city rather than only the landmass's.
-				iValue += (kBuilding.getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_EMPIRE) * (iNumCities - 1) * 8);
+				// getFlatWellbeing is a FLAT (×100) read against human AI weights, so it reduces here.
+				iValue += (kBuilding.getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_EMPIRE) / 100 * (iNumCities - 1) * 8);
 
 				int iWarWearinessPercentAnger = kOwner.getWarWearinessPercentAnger();
 				int iGlobalWarWearinessModifer = 0;   // folded into the read above (scope is an axis, not a getter)
@@ -5446,7 +5448,8 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 
 				// The legacy AREA and GLOBAL legs fold to ONE empire slot (no area scope), so the value is
 				// counted once, over EVERY other city rather than only the landmass's.
-				iValue += (kBuilding.getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_EMPIRE) * (iNumCities - 1) * 4);
+				// getFlatWellbeing is a FLAT (×100) read against human AI weights, so it reduces here.
+				iValue += (kBuilding.getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_EMPIRE) / 100 * (iNumCities - 1) * 4);
 			}
 
 			if ((iFocusFlags & BUILDINGFOCUS_EXPERIENCE) || (iPass > 0))
@@ -6469,14 +6472,19 @@ int CvCityAI::AI_buildingYieldValue(YieldTypes eYield, BuildingTypes eBuilding, 
 	}
 
 	{
-		const int iYield = 8 * (100 * iFreeSpecialistYield + getBaseYieldRateFromBuilding(eYield, eBuilding));
+		// The building's own yield contribution, from the ONE what-if driver rather than a hand-rolled sum
+		// ([DEC-single-implementation]). ⚑ The driver answers HUMAN, so the `100 *` that lifted the specialist
+		// yield and the `/100` that took the total back down BOTH disappear -- the units already cancel, which is
+		// the acceptance signal for a cluster conversion (fixed-point-and-scales.md §4c-bis).
+		const int iYield = 8 * (iFreeSpecialistYield + cai_expectedHere(kBuilding, infoYieldFamily(eYield), (int)CHANNEL_AMOUNT,
+				getCityContext(), GET_PLAYER(getOwner()).getEmpireContext(), plotGroup(getOwner())));
 		if (iYield > 0)
 		{
-			iValue += std::max(1, iYield / 100);
+			iValue += std::max(1, iYield);
 		}
 		else if (iYield < 0)
 		{
-			iValue += std::min(-1, iYield / 100);
+			iValue += std::min(-1, iYield);
 		}
 	}
 
@@ -12302,7 +12310,8 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 	const bool buildingModifiesCommerceYields =
 		(
 			InfoValuation::authorsAnySigned(kBuilding.getModifiers(), infoYieldFamily(YIELD_COMMERCE), +1)
-			|| getBaseYieldRateFromBuilding(YIELD_COMMERCE, eBuilding) > 0
+			|| cai_expectedHere(kBuilding, infoYieldFamily(YIELD_COMMERCE), (int)CHANNEL_AMOUNT,
+				getCityContext(), GET_PLAYER(getOwner()).getEmpireContext(), plotGroup(getOwner())) > 0
 			);
 
 	const bool bHasTradeRouteValue = buildingHasTradeRouteValue(eBuilding);
@@ -12312,7 +12321,8 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 		if (bHasTradeRouteValue
 			|| kBuilding.getScalar(SCALAR_FOOD_KEPT, CASC_SCOPE_CITY, CASC_UNIT_PERCENT) > 0
 			|| InfoValuation::authorsAnySigned(kBuilding.getModifiers(), infoYieldFamily(YIELD_FOOD), +1)
-			|| getBaseYieldRateFromBuilding(YIELD_FOOD, eBuilding) > 0)
+			|| cai_expectedHere(kBuilding, infoYieldFamily(YIELD_FOOD), (int)CHANNEL_AMOUNT,
+				getCityContext(), GET_PLAYER(getOwner()).getEmpireContext(), plotGroup(getOwner())) > 0)
 		{
 			return true;
 		}
@@ -12327,7 +12337,8 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 			|| InfoValuation::authorsAnySigned(kBuilding.getModifiers(), MODFAM_PRODUCTION, +1)
 			|| InfoValuation::authorsAnySigned(kBuilding.getModifiers(), MODFAM_BUILD_RATE, +1)
 			|| InfoValuation::authorsAnySigned(kBuilding.getModifiers(), MODFAM_COSTS, -1, COSTS_HURRY)
-			|| getBaseYieldRateFromBuilding(YIELD_PRODUCTION, eBuilding) > 0)
+			|| cai_expectedHere(kBuilding, infoYieldFamily(YIELD_PRODUCTION), (int)CHANNEL_AMOUNT,
+				getCityContext(), GET_PLAYER(getOwner()).getEmpireContext(), plotGroup(getOwner())) > 0)
 		{
 			return true;
 		}
@@ -12585,7 +12596,8 @@ int CvCityAI::getBuildingCommerceValue(BuildingTypes eBuilding, int iI, int* aiF
 	iTempValue = (
 		(iSemiModifiedBase + aiFreeSpecialistYield[YIELD_COMMERCE]) / 8
 		+
-		getBaseYieldRateFromBuilding(YIELD_COMMERCE, eBuilding) * 8 / 100
+		cai_expectedHere(kBuilding, infoYieldFamily(YIELD_COMMERCE), (int)CHANNEL_AMOUNT,
+				getCityContext(), GET_PLAYER(getOwner()).getEmpireContext(), plotGroup(getOwner())) * 8
 	);
 
 	// The flat half of that same valuation -- the bonus- and vicinity-gated commerce-yield flats included.

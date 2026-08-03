@@ -127,8 +127,11 @@ void CvPropertyInfo::mapFrom(const picojson::value& entity)
 			if (e->scope != CASC_SCOPE_CITY && e->scope != CASC_SCOPE_PLOT) continue;
 			if (e->enabled != NULL || e->disabled != NULL) continue;   // no property authors a conditioned own-source; fail-closed skip
 			const GameObjectTypes eObj = (e->scope == CASC_SCOPE_PLOT) ? GAMEOBJECT_PLOT : GAMEOBJECT_CITY;
+			// ⛔ The DECAY rate is a PERCENT, and a percent is NOT scaled ([DEC-fixedpoint-x100]) -- it arrives as
+			// the human percent the decay source consumes, so it does NOT take the reduction its FLAT neighbours
+			// below do. Dividing it truncates a single-digit rate to zero and switches decay off entirely.
 			if (e->unit == CASC_UNIT_PERCENT)
-				m_PropertyManipulators.addDecaySource(eSelf, e->value / 100, iTarget, eObj);
+				m_PropertyManipulators.addDecaySource(eSelf, e->value, iTarget, eObj);
 			else if (e->unit == CASC_UNIT_FLAT && e->hasPer && e->perType == "POPULATION")
 				m_PropertyManipulators.addAttributeConstantSource(eSelf, ATTRIBUTE_POPULATION, e->value / 100, eObj);
 			else if (e->unit == CASC_UNIT_FLAT && !e->hasPer)

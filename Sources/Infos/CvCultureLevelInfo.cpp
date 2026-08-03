@@ -24,11 +24,13 @@ CvCultureLevelInfo::CvCultureLevelInfo()
 // The per-GameSpeed culture threshold = base × the gamespeed's speed percent / 100 (the legacy SpeedThresholds
 // table was this exact precompute; curator COLLAPSE kept only the base -- the multiplier lives ON the
 // gamespeed). The speed percent is the gamespeed's 1-kind straggler read (speed.world.percent via the base
-// getScalar -- a ×100 percent, hence the /10000).
+// getScalar) -- a PERCENT, which is NOT scaled ([DEC-fixedpoint-x100]), so it is the human percent and the
+// division is the ordinary percent-as-ratio /100. ⛔ A /10000 here reads the percent as ×100 and puts every
+// culture threshold two orders low, which clears whole culture levels instantly.
 int CvCultureLevelInfo::getSpeedThreshold(int iSpeed) const
 {
 	const int iSpeedPercent = GC.getGameSpeedInfo((GameSpeedTypes)iSpeed).getScalar(SCALAR_SPEED, CASC_SCOPE_WORLD, CASC_UNIT_PERCENT);
-	return m_iCultureThreshold * iSpeedPercent / 10000;
+	return m_iCultureThreshold * iSpeedPercent / 100;
 }
 
 void CvCultureLevelInfo::mapFrom(const picojson::value& entity)

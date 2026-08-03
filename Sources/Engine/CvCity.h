@@ -910,7 +910,6 @@ public:
 	void setCultureLevel(CultureLevelTypes eNewValue, bool bUpdatePlotGroups);
 	void updateCultureLevel(bool bUpdatePlotGroups);
 
-	int getBaseYieldRateFromBuilding(const YieldTypes eIndex, const BuildingTypes eType) const;
 	int getAdditionalYieldByBuilding(YieldTypes eIndex, BuildingTypes eType, bool bFilter = false) const;
 
 	int getYieldBySpecialist(YieldTypes eIndex, SpecialistTypes eSpecialist) const;
@@ -947,7 +946,6 @@ public:
 	int getProductionToCommerceModifier(CommerceTypes eIndex) const;
 	void changeProductionToCommerceModifier(CommerceTypes eIndex, int iChange);
 
-	int getBuildingCommerceByBuilding(CommerceTypes eIndex, BuildingTypes eType, const bool bFull = false, const bool bTestVisible = false) const;
 	int getAdditionalCommerceByBuilding(CommerceTypes eIndex, BuildingTypes eType) const;
 	int getAdditionalCommerceRateModifierByBuilding(CommerceTypes eIndex, BuildingTypes eType) const;
 

@@ -3877,7 +3877,9 @@ void CvPlot::pushCultureFromImprovement(PlayerTypes ePlayer, int iChange, int iR
 					// Make sure that if a plot is newly in range it gets at least 1 culture
 					if (iChange > 0 && pLoopPlot->getCulture(ePlayer) == 0)
 					{
-						pLoopPlot->changeCulture(ePlayer, 1, false);
+						// 100 == one culture point: plot culture is ×100 native, so a literal 1 seeded 0.01 and the next
+						// turn's decay erased it -- the "at least 1 culture" guarantee was a no-op.
+						pLoopPlot->changeCulture(ePlayer, 100, false);
 					}
 					if (bUpdate)
 					{
@@ -10174,7 +10176,8 @@ void CvPlot::doCulture()
 				if (GC.getGame().isOption(GAMEOPTION_CULTURE_EQUILIBRIUM))
 				{
 					// By limiting decay to avoid 2+ -> 0, we can ensure that putting 2 culture on a tile will always be above 1 turn decay
-					const int iIsOverOne = getCulture(ePlayerX) > 1;
+					// The decay floor, ×100 native: a plot above one culture point never decays below one.
+					const int iIsOverOne = (getCulture(ePlayerX) > 100) ? 100 : 0;
 					if (isInCultureRangeOfCityByPlayer(ePlayerX))
 					{
 						int64_t iCulture64 = getCulture(ePlayerX);
@@ -12232,54 +12235,6 @@ int CvPlot::getRevoltProtection() const
 	if (!isCity()) return 0;
 
 	return algo::accumulate(units() | transformed(CvUnit::fn::revoltProtectionTotal()), 0);
-}
-
-int CvPlot::getAverageEnemyStrength(TeamTypes eTeam) const
-{
-	PROFILE_EXTRA_FUNC();
-	int iStrength = 0;
-	int iCount = 0;
-
-	foreach_(const CvUnit* pLoopUnit, units())
-	{
-		if (GET_TEAM(pLoopUnit->getTeam()).isAtWar(eTeam))
-		{
-			if (pLoopUnit->baseCombatStr() > 0)
-			{
-				iStrength += pLoopUnit->baseCombatStr();
-				iCount++;
-			}
-		}
-	}
-	if (iCount > 0)
-	{
-		return iStrength / iCount;
-	}
-	return 0;
-}
-
-int CvPlot::getAverageEnemyDamage(TeamTypes eTeam) const
-{
-	PROFILE_EXTRA_FUNC();
-	int iDamage = 0;
-	int iCount = 0;
-
-	foreach_(const CvUnit* pLoopUnit, units())
-	{
-		if (GET_TEAM(pLoopUnit->getTeam()).isAtWar(eTeam))
-		{
-			if (pLoopUnit->baseCombatStr() > 0)
-			{
-				iDamage += pLoopUnit->getDamagePercent();
-				iCount++;
-			}
-		}
-	}
-	if (iCount > 0)
-	{
-		return iDamage / iCount;
-	}
-	return 0;
 }
 
 LandmarkTypes CvPlot::getLandmarkType() const

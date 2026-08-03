@@ -1488,9 +1488,10 @@ DenialTypes CvTeamAI::AI_techTrade(const TechTypes eTech, const TeamTypes eTeam)
 				iNoTechTradeThreshold /= 100;
 
 				// diplomacy.team.noTechTrade.percent -- the difficulty scaling, on the rebuilt handicap surface
-				// (kind + scope as separate axes). ×100 reduces here, against the human-scale 100 base.
+				// (kind + scope as separate axes). A PERCENT IS NOT SCALED ([DEC-fixedpoint-x100]), so it combines
+				// directly against the human-scale 100 base -- reducing it collapses the whole difficulty scaling.
 				iNoTechTradeThreshold *= std::max(0, 100 + GC.getHandicapInfo(GET_TEAM(eTeam).getHandicapType())
-					.getDiplomacy(DIPLOMACY_NO_TECH_TRADE, CASC_SCOPE_TEAM, /*bAiAudience*/ false) / 100);
+					.getDiplomacy(DIPLOMACY_NO_TECH_TRADE, CASC_SCOPE_TEAM, /*bAiAudience*/ false));
 				iNoTechTradeThreshold /= 100;
 
 				if (AI_getMemoryCount(eTeam, MEMORY_RECEIVED_TECH_FROM_ANY) > iNoTechTradeThreshold)
@@ -1516,9 +1517,9 @@ DenialTypes CvTeamAI::AI_techTrade(const TechTypes eTech, const TeamTypes eTeam)
 		}
 		int iTechTradeKnownPercent = AI_techTradeKnownPercent();
 
-		// diplomacy.team.techTradeKnown.percent -- same surface, same reduce-at-use.
+		// diplomacy.team.techTradeKnown.percent -- same surface, same unscaled percent.
 		iTechTradeKnownPercent *= std::max(0, 100 + GC.getHandicapInfo(GET_TEAM(eTeam).getHandicapType())
-			.getDiplomacy(DIPLOMACY_TECH_TRADE_KNOWN, CASC_SCOPE_TEAM, /*bAiAudience*/ false) / 100);
+			.getDiplomacy(DIPLOMACY_TECH_TRADE_KNOWN, CASC_SCOPE_TEAM, /*bAiAudience*/ false));
 		iTechTradeKnownPercent /= 100;
 
 		iTechTradeKnownPercent *= AI_getTechMonopolyValue(eTech, eTeam);
@@ -2370,7 +2371,8 @@ bool CvTeamAI::AI_acceptSurrender(TeamTypes eSurrenderTeam) const
 			const int iWarWearinessPercentAnger =
 			(
 				GET_PLAYER((PlayerTypes)iI).getModifiedWarWearinessPercentAnger(
-					getWarWeariness(eSurrenderTeam)
+					// ×100 weariness × a (100 + percent) factor, reduced once -- same shape as the engine twin.
+					getWarWearinessTimes100(eSurrenderTeam)
 					*
 					std::max(0, 100 + GET_TEAM(eSurrenderTeam).getEnemyWarWearinessModifier())
 					/ 10000
@@ -4279,9 +4281,12 @@ void CvTeamAI::AI_doWar()
 
 			// overall war check (quite frequently true)
 			if (!bFinancesOpposeWar && (iGetBetterUnitsCount - iDaggerCount) * 3 < iNumMembers * 2
-			// random overall war chance -- diplomacy.empire.declareWar.ai.percent (the AI-audience leaf)
+			// random overall war chance -- diplomacy.empire.declareWar.ai.percent (the AI-audience leaf).
+			// ⛔ A PERCENT IS NOT SCALED ([DEC-fixedpoint-x100]): this is already 50..100, so it is compared
+			// DIRECTLY against a rand(100). Dividing it truncates every difficulty to 0 and the AI never
+			// declares war -- the case fixed-point-and-scales.md carries as its worked warning.
 			&& GC.getGame().getSorenRandNum(100, "AI Declare War 1") < GC.getHandicapInfo(GC.getGame().getHandicapType())
-				.getDiplomacy(DIPLOMACY_DECLARE_WAR, CASC_SCOPE_EMPIRE, /*bAiAudience*/ true) / 100)
+				.getDiplomacy(DIPLOMACY_DECLARE_WAR, CASC_SCOPE_EMPIRE, /*bAiAudience*/ true))
 			{
 				// if random in this range is 0, we go to war of this type (so lower numbers are higher probablity)
 				// average of everyone on our team
@@ -4456,9 +4461,10 @@ void CvTeamAI::AI_doWar()
 //returns true if war is veto'd by rolls.
 bool CvTeamAI::AI_performNoWarRolls(TeamTypes eTeam)
 {
-	// The AI-audience declare-war probability, off the rebuilt handicap surface.
+	// The AI-audience declare-war probability, off the rebuilt handicap surface. An unscaled PERCENT compared
+	// straight against rand(100) ([DEC-fixedpoint-x100]) -- a divide here vetoes war on every difficulty.
 	if (GC.getGame().getSorenRandNum(100, "AI Declare War 1") > GC.getHandicapInfo(GC.getGame().getHandicapType())
-		.getDiplomacy(DIPLOMACY_DECLARE_WAR, CASC_SCOPE_EMPIRE, /*bAiAudience*/ true) / 100)
+		.getDiplomacy(DIPLOMACY_DECLARE_WAR, CASC_SCOPE_EMPIRE, /*bAiAudience*/ true))
 	{
 		return true;
 	}

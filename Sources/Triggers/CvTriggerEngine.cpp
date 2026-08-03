@@ -22,6 +22,7 @@
 #include "AI/CvPlayerAI.h"        // GET_PLAYER -- the player's civ/era/handicap for the game-start resolve
 #include "AI/CvTeamAI.h"          // GET_TEAM -- the obsolete-building guard on a granted placement
 #include "Engine/CvGame.h"        // GC.getGame().getStartEra() -- the era the game-start grants key on
+#include "Engine/CvGameSpeedScale.h" // the ONE consuming-system speed calc -- never re-read the raw scalar
 #include "Engine/CvCity.h"        // the per-turn apply walks the player's cities
 #include "Engine/CityContext.h"   // fillEvalCtx (city/plot) -- the contexts fill the eval state (contexts.md)
 #include "Engine/EmpireContext.h" // fillEvalCtx (player/team)
@@ -657,13 +658,12 @@ static void tr_resolvePlayerInit(int iPlayer)
 	{
 		CvPlayer& player = GET_PLAYER((PlayerTypes)iPlayer);
 		player.setGold(0);
-		// ⚠ ÷10000, not ÷100: the speed scalar is ×100 like every other value on the surface
-		// ([DEC-fixedpoint-x100]), so multiplying a human gold amount by it lands in ×100 space and takes the
-		// second reduction. A ÷100 here would inflate starting gold 100-fold -- the latent 100x class the
-		// scale sweep exists to catch (info-rebuild ledger item 27).
-		const int iSpeedPercent =
-			GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getScalar(SCALAR_SPEED, CASC_SCOPE_WORLD, CASC_UNIT_PERCENT);
-		player.changeGold(nGold * iSpeedPercent / 10000);
+		// nGold is already HUMAN (tr_pulse reduces the ×100 pulse), and the speed percent is a PERCENT, which is
+		// NOT scaled ([DEC-fixedpoint-x100]) -- so this is the ordinary percent-as-ratio /100. ⛔ A /10000 here
+		// reads the percent as ×100 and truncates the whole starting grant to nothing.
+		// ⚑ Asked through CvGameSpeedScale, the ONE consuming-system speed calc: re-reading the raw scalar per
+		// call site is what let three separate consumers each invent their own scale ([DEC-single-implementation]).
+		player.changeGold(nGold * CvGameSpeedScale::speedPercent() / 100);
 	}
 	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_TRIGGERS, TRE_GAMESTART, 1)
 		.addI(TF_SUPPRESSED, s_bSuppressed ? 1 : 0).addI(TF_APPLIED, bApplied ? 1 : 0)
@@ -698,7 +698,9 @@ static void tr_resolvePlayerInit(int iPlayer)
 // the ordinary DOMAIN events and nothing downstream can tell the difference -- only the production debit is skipped.
 
 // The full-heal provision -- heal up to iCount damaged own-team units on the city plot, chosen at random.
-// Mirrors the legacy CvCity::doHeal body verbatim (DEC-mirror-then-redesign), including its RNG draw.
+// ⛔ The selection shuffles on CvGame::SorenRand, the SYNCHRONIZED stream, so how many values are consumed here
+// is shared save state ([DEC-synced-rng-is-shared-state]). Changing the shuffle is a deliberate change to every
+// client's sequence, never a refactor -- and that, not "the legacy body did it", is why the draw stays as it is.
 static int tr_applyFullHeal(CvCity* pCity, int iCount)
 {
 	UnitVector damagedUnits;

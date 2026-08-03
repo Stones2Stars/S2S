@@ -860,6 +860,11 @@ CvCascUnit infoKindUnit(ModifierFamily eFamily, int iKind, CvCascScope eScope)
 		// the two probability kinds are percent; turns/tiles/defenders counts are flat (handicap census)
 		return (iKind == (int)BARBARIANS_ANIMAL_ATTACK_PROB || iKind == (int)BARBARIANS_CITY_CREATION_PROB)
 			? CASC_UNIT_PERCENT : CASC_UNIT_FLAT;
+	case MODFAM_GREAT_PEOPLE_RATE:
+		// The AMOUNT channel is a FLAT count of great-people points; the family's percent authorings ride the
+		// channel's PERCENT plane and are applied by the combine, never by this unit answer. Stated explicitly
+		// rather than riding `default:` -- ask the KIND's unit, never the family's (fixed-point-and-scales.md).
+		return CASC_UNIT_FLAT;
 	case MODFAM_ESPIONAGE:
 		// the unit-plane spy stats are flat; the channel amount rides the named commerce getters, not here
 		return CASC_UNIT_FLAT;

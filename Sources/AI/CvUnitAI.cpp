@@ -25770,7 +25770,7 @@ bool CvUnitAI::AI_choke(int iRange, bool bDefensive)
 
 				if (bNoDefensiveBonus)
 				{
-					iValue *= std::max(0, ((baseCombatStrNonGranular() * 120) - GC.getGame().getBestLandUnitCombat()));
+					iValue *= std::max(0, ((baseCombatStrHuman() * 120) - GC.getGame().getBestLandUnitCombat()));
 				}
 				else iValue *= pLoopPlot->defenseModifier(getTeam(), false);
 
@@ -27871,7 +27871,9 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 
 	if (m_iGenericValue == -1 || m_eGenericValueFlagsCached != eFlags)
 	{
-		int	iResult = 100 * baseCombatStrNonGranular();
+		// Strength is ×100 natively, so this reads it directly. It used to reduce to human and lift straight back,
+		// which cost precision for nothing -- the round trip existed only while baseCombatStr() was option-scaled.
+		int	iResult = baseCombatStr();
 
 		foreach_(const STD_PAIR(PromotionTypes, PromotionKeyedInfo) & keyedInfo, getPromotionKeyedInfo())
 		{
