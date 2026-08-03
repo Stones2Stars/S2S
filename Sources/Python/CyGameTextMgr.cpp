@@ -15,6 +15,26 @@
 #include "Infos/CvReligionInfo.h"
 #include "Infos/CvCorporationInfo.h"
 #include "Infos/CvBonusInfo.h"
+#include "Engine/CvCity.h"
+#include "Engine/CvPlayer.h"
+#include "AI/CvPlayerAI.h"      // GET_PLAYER
+
+namespace
+{
+	//	A composer names its city by the (owner, id) PAIR, like every other surface script reaches. The CyCity*
+	//	these used to take is unreachable from script -- the wrapper carries zero defs, so nothing can hold or
+	//	build one ([DEC-cy-not-fixed]) -- which made every city-context tooltip uncallable.
+	//	⚠ A NULL answer is legitimate here and always was: the pedia asks these with no city bound, and the
+	//	composers below already branch on it. So an unresolvable pair reads as "no city context", never as an error.
+	CvCity* cgt_city(int iPlayer, int iCity)
+	{
+		if (iPlayer < 0 || iPlayer >= MAX_PLAYERS || iCity < 0)
+		{
+			return NULL;
+		}
+		return GET_PLAYER((PlayerTypes)iPlayer).getCity(iCity);
+	}
+}
 
 CyGameTextMgr::CyGameTextMgr() :
 m_pGameTextMgr(NULL)
@@ -128,10 +148,10 @@ std::wstring CyGameTextMgr::getTechHelp(int iTech, bool bCivilopediaText, bool b
 	return szBuffer.getCString();
 }
 
-std::wstring CyGameTextMgr::getUnitHelp(int iUnit, bool bCivilopediaText, bool bStrategyText, bool bTechChooserText, CyCity* pCity)
+std::wstring CyGameTextMgr::getUnitHelp(int iUnit, bool bCivilopediaText, bool bStrategyText, bool bTechChooserText, int iPlayer, int iCity)
 {
 	CvWStringBuffer szBuffer;
-	GAMETEXT.setUnitHelp(szBuffer, (UnitTypes)iUnit, bCivilopediaText, bStrategyText, bTechChooserText, ((pCity != NULL) ? pCity->getCity() : NULL));
+	GAMETEXT.setUnitHelp(szBuffer, (UnitTypes)iUnit, bCivilopediaText, bStrategyText, bTechChooserText, cgt_city(iPlayer, iCity));
 	return szBuffer.getCString();
 }
 
@@ -145,24 +165,24 @@ std::wstring CyGameTextMgr::getSpecificUnitHelp(CyUnit* pUnit, bool bOneLine, bo
 	return szBuffer.getCString();
 }
 
-std::wstring CyGameTextMgr::getBuildingHelp(int iBuilding, bool bActual, CyCity* pCity, bool bCivilopediaText, bool bStrategyText, bool bTechChooserText)
+std::wstring CyGameTextMgr::getBuildingHelp(int iBuilding, bool bActual, int iPlayer, int iCity, bool bCivilopediaText, bool bStrategyText, bool bTechChooserText)
 {
 	CvWStringBuffer szBuffer;
-	GAMETEXT.setBuildingHelp(szBuffer, (BuildingTypes)iBuilding, bActual, pCity != NULL ? pCity->getCity() : NULL, bCivilopediaText, bStrategyText, bTechChooserText);
+	GAMETEXT.setBuildingHelp(szBuffer, (BuildingTypes)iBuilding, bActual, cgt_city(iPlayer, iCity), bCivilopediaText, bStrategyText, bTechChooserText);
 	return szBuffer.getCString();
 }
 
-std::wstring CyGameTextMgr::getHeritageHelp(int iType, CyCity* pCity, bool bCivilopediaText, bool bStrategyText, bool bTechChooserText)
+std::wstring CyGameTextMgr::getHeritageHelp(int iType, int iPlayer, int iCity, bool bCivilopediaText, bool bStrategyText, bool bTechChooserText)
 {
 	CvWStringBuffer szBuffer;
-	GAMETEXT.setHeritageHelp(szBuffer, (HeritageTypes)iType, pCity ? pCity->getCity() : NULL, bCivilopediaText, bStrategyText, bTechChooserText);
+	GAMETEXT.setHeritageHelp(szBuffer, (HeritageTypes)iType, cgt_city(iPlayer, iCity), bCivilopediaText, bStrategyText, bTechChooserText);
 	return szBuffer.getCString();
 }
 
-std::wstring CyGameTextMgr::getProjectHelp(int iProject, bool bCivilopediaText, CyCity* pCity)
+std::wstring CyGameTextMgr::getProjectHelp(int iProject, bool bCivilopediaText, int iPlayer, int iCity)
 {
 	CvWStringBuffer szBuffer;
-	GAMETEXT.setProjectHelp(szBuffer, (ProjectTypes)iProject, bCivilopediaText, ((pCity != NULL) ? pCity->getCity() : NULL));
+	GAMETEXT.setProjectHelp(szBuffer, (ProjectTypes)iProject, bCivilopediaText, cgt_city(iPlayer, iCity));
 	return szBuffer.getCString();
 }
 
@@ -194,24 +214,29 @@ std::wstring CyGameTextMgr::getBonusHelp(int iBonus, bool bCivilopediaText)
 	return szBuffer.getCString();
 }
 
-std::wstring CyGameTextMgr::getProductionHelpCity(CyCity *pCity)
+std::wstring CyGameTextMgr::getProductionHelpCity(int iPlayer, int iCity)
 {
 	CvWStringBuffer szBuffer;
-	GAMETEXT.setProductionHelp(szBuffer, *pCity->getCity());
+	CvCity* pCity = cgt_city(iPlayer, iCity);
+	if (pCity == NULL)
+	{
+		return std::wstring();
+	}
+	GAMETEXT.setProductionHelp(szBuffer, *pCity);
 	return szBuffer.getCString();
 }
 
-std::wstring CyGameTextMgr::getReligionHelpCity(int iReligion, CyCity* pCity, bool bCityScreen, bool bForceReligion, bool bForceState, bool bNoStateReligion)
+std::wstring CyGameTextMgr::getReligionHelpCity(int iReligion, int iPlayer, int iCity, bool bCityScreen, bool bForceReligion, bool bForceState, bool bNoStateReligion)
 {
 	CvWStringBuffer szBuffer;
-	GAMETEXT.setReligionHelpCity(szBuffer, (ReligionTypes)iReligion, ((pCity != NULL) ? pCity->getCity() : NULL), bCityScreen, bForceReligion, bForceState, bNoStateReligion);
+	GAMETEXT.setReligionHelpCity(szBuffer, (ReligionTypes)iReligion, cgt_city(iPlayer, iCity), bCityScreen, bForceReligion, bForceState, bNoStateReligion);
 	return szBuffer.getCString();
 }
 
-std::wstring CyGameTextMgr::getCorporationHelpCity(int iCorporation, CyCity* pCity, bool bCityScreen, bool bForceCorporation)
+std::wstring CyGameTextMgr::getCorporationHelpCity(int iCorporation, int iPlayer, int iCity, bool bCityScreen, bool bForceCorporation)
 {
 	CvWStringBuffer szBuffer;
-	GAMETEXT.setCorporationHelpCity(szBuffer, (CorporationTypes)iCorporation, ((pCity != NULL) ? pCity->getCity() : NULL), bCityScreen, bForceCorporation);
+	GAMETEXT.setCorporationHelpCity(szBuffer, (CorporationTypes)iCorporation, cgt_city(iPlayer, iCity), bCityScreen, bForceCorporation);
 	return szBuffer.getCString();
 }
 
@@ -368,10 +393,15 @@ std::wstring CyGameTextMgr::getFinanceUnitUpkeepString(int iPlayer)
 	return szBuffer.getCString();
 }
 
-std::wstring CyGameTextMgr::getDefenseHelp(CyCity *pCity)
+std::wstring CyGameTextMgr::getDefenseHelp(int iPlayer, int iCity)
 {
 	CvWStringBuffer szBuffer;
-	GAMETEXT.getDefenseHelp(szBuffer, *pCity->getCity());
+	CvCity* pCity = cgt_city(iPlayer, iCity);
+	if (pCity == NULL)
+	{
+		return std::wstring();
+	}
+	GAMETEXT.getDefenseHelp(szBuffer, *pCity);
 	return szBuffer.getCString();
 }
 

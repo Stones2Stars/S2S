@@ -507,7 +507,7 @@ class PediaUnit:
 			szSpecial += TRNSLTR.getText("TXT_KEY_PEDIA_UNIT_DRAFTABLE", ()) + "\n"
 		if CvTheUnitInfo.getUnitCaptureType() > 0:
 			szSpecial += TRNSLTR.getText("TXT_KEY_PEDIA_UNIT_CAN_BE_CAPTURED", ()) + "\n"
-		szSpecial += CyGameTextMgr().getUnitHelp(iTheUnit, True, False, False, None)[1:]
+		szSpecial += CyGameTextMgr().getUnitHelp(iTheUnit, True, False, False, -1, -1)[1:]
 		# History
 		szText = ""
 		szTemp = CvTheUnitInfo.getStrategy()

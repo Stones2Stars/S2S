@@ -288,7 +288,7 @@ class HeritageScreen:
 			if BASE == "WID":
 
 				if TYPE == "HERITAGE":
-					self.tooltip.handle(screen, GTM.getHeritageHelp(ID, None, True, False, False), uFont=self.aFontList[4])
+					self.tooltip.handle(screen, GTM.getHeritageHelp(ID, -1, -1, True, False, False), uFont=self.aFontList[4])
 
 		elif iCode == NotifyCode.NOTIFY_CLICKED:
 

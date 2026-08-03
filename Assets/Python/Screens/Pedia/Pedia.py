@@ -1565,9 +1565,9 @@ class Pedia:
 					else:
 						self.tooltip.handle(screen, szSplit[-1].replace("_", " "))
 				elif "UNIT" in szSplit:
-					self.tooltip.handle(screen, CyGameTextMgr().getUnitHelp(ID, False, True, True, None))
+					self.tooltip.handle(screen, CyGameTextMgr().getUnitHelp(ID, False, True, True, -1, -1))
 				elif "BUILDING" in szSplit:
-					self.tooltip.handle(screen, CyGameTextMgr().getBuildingHelp(ID, False, None, False, False, True))
+					self.tooltip.handle(screen, CyGameTextMgr().getBuildingHelp(ID, False, -1, -1, False, False, True))
 				elif "PROMO" in szSplit:
 					self.tooltip.handle(screen, CyGameTextMgr().getPromotionHelp(ID, False))
 				elif "TECH" in szSplit:
@@ -1587,7 +1587,7 @@ class Pedia:
 				elif "ROUTE" in szSplit:
 					self.tooltip.handle(screen, CyGameTextMgr().getRouteHelp(ID, False))
 				elif "PROJECT" in szSplit:
-					self.tooltip.handle(screen, CyGameTextMgr().getProjectHelp(ID, False, None))
+					self.tooltip.handle(screen, CyGameTextMgr().getProjectHelp(ID, False, -1, -1))
 				elif "TRAIT" in szSplit:
 					self.tooltip.handle(screen, CyGameTextMgr().parseTraits(ID, False, False))
 				elif "LEADER" in szSplit:
@@ -1597,7 +1597,7 @@ class Pedia:
 				elif "RELIGION" in szSplit:
 					self.tooltip.handle(screen, CyGameTextMgr().parseReligionInfo(ID, False))
 				elif "HERITAGE" in szSplit:
-					self.tooltip.handle(screen, CyGameTextMgr().getHeritageHelp(ID, None, True, False, False))
+					self.tooltip.handle(screen, CyGameTextMgr().getHeritageHelp(ID, -1, -1, True, False, False))
 				elif "COMBAT" in szSplit:
 					self.tooltip.handle(screen, CyGameTextMgr().getUnitCombatHelp(ID, False))
 				elif "CONCEPT" in szSplit:

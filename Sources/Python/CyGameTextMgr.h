@@ -58,18 +58,18 @@ public:
 	std::wstring getOOSSeeds(int /*PlayerTypes*/ iPlayer);
 	std::wstring getNetStats(int /*PlayerTypes*/ iPlayer);
 	std::wstring getTechHelp(int iTech, bool bCivilopediaText, bool bPlayerContext, bool bStrategyText, bool bTreeInfo, int iFromTech);
-	std::wstring getUnitHelp(int iUnit, bool bCivilopediaText, bool bStrategyText, bool bTechChooserText, CyCity* pCity);
+	std::wstring getUnitHelp(int iUnit, bool bCivilopediaText, bool bStrategyText, bool bTechChooserText, int iPlayer, int iCity);
 	std::wstring getSpecificUnitHelp(CyUnit* pUnit, bool bOneLine, bool bShort);
-	std::wstring getBuildingHelp(int iBuilding, bool bActual, CyCity* pCity, bool bCivilopediaText, bool bStrategyText, bool bTechChooserText);
-	std::wstring getHeritageHelp(int iType, CyCity* pCity, bool bCivilopediaText, bool bStrategyText, bool bTechChooserText);
-	std::wstring getProjectHelp(int iProject, bool bCivilopediaText, CyCity* pCity);
+	std::wstring getBuildingHelp(int iBuilding, bool bActual, int iPlayer, int iCity, bool bCivilopediaText, bool bStrategyText, bool bTechChooserText);
+	std::wstring getHeritageHelp(int iType, int iPlayer, int iCity, bool bCivilopediaText, bool bStrategyText, bool bTechChooserText);
+	std::wstring getProjectHelp(int iProject, bool bCivilopediaText, int iPlayer, int iCity);
 	std::wstring getPromotionHelp(int iPromotion, bool bCivilopediaText);
 	std::wstring getUnitCombatHelp(int iUnitCombat, bool bCivilopediaText);
 	std::wstring getTraitHelp(int iTrait);
 	std::wstring getBonusHelp(int iBonus, bool bCivilopediaText);
-	std::wstring getProductionHelpCity(CyCity* pCity);
-	std::wstring getReligionHelpCity(int iReligion, CyCity* pCity, bool bCityScreen, bool bForceReligion, bool bForceState, bool bNoStateReligion);
-	std::wstring getCorporationHelpCity(int iCorporation, CyCity* pCity, bool bCityScreen, bool bForceCorporation);
+	std::wstring getProductionHelpCity(int iPlayer, int iCity);
+	std::wstring getReligionHelpCity(int iReligion, int iPlayer, int iCity, bool bCityScreen, bool bForceReligion, bool bForceState, bool bNoStateReligion);
+	std::wstring getCorporationHelpCity(int iCorporation, int iPlayer, int iCity, bool bCityScreen, bool bForceCorporation);
 	std::wstring getImprovementHelp(int iImprovement, bool bCivilopediaText);
 	std::wstring getRouteHelp(int iRoute, bool bCivilopediaText);
 	std::wstring getTerrainHelp(int iTerrain, bool bCivilopediaText);
@@ -91,7 +91,7 @@ public:
 	std::wstring getActiveDealsString(int iThisPlayer, int iOtherPlayer);
 	std::wstring getDealString(CyDeal* pDeal, int iPlayerPerspective);
 	std::wstring getFinanceUnitUpkeepString(int iPlayer);
-	std::wstring getDefenseHelp(CyCity* pCity);
+	std::wstring getDefenseHelp(int iPlayer, int iCity);
 	std::wstring getFlagHelp();
 
 protected:

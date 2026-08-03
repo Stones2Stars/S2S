@@ -953,7 +953,7 @@ class CvTechChooser:
 		if iCode == NotifyCode.NOTIFY_CHARACTER: # Character
 			if iData in (45, 49, 56): # Ctrl, Shift, Alt
 				if self.bUnitTT:
-					self.tooltip.handle(screen, CyGameTextMgr().getUnitHelp(self.iUnitTT, False, True, True, None))
+					self.tooltip.handle(screen, CyGameTextMgr().getUnitHelp(self.iUnitTT, False, True, True, -1, -1))
 					self.bUnitTT = None
 			return 1
 		elif iCode == 17: # Key Up
@@ -991,14 +991,14 @@ class CvTechChooser:
 						szTxt = CyGameTextMgr().getTechHelp(ID, False, True, True, True, -1)
 					self.tooltip.handle(screen, szTxt)
 				elif TYPE == "UNIT":
-					self.tooltip.handle(screen, CyGameTextMgr().getUnitHelp(ID, False, True, True, None))
+					self.tooltip.handle(screen, CyGameTextMgr().getUnitHelp(ID, False, True, True, -1, -1))
 					self.iUnitTT = ID
 					self.bUnitTT = True
 				elif TYPE == "BUILDING":
 					if CASE[0] == "OBS":
 						CvBuildingInfo = GC.getBuildingInfo(ID)
 						szTxt = TRNSLTR.getText("TXT_KEY_TECHHELP_OBSOLETES", (CvBuildingInfo.getType(), CvBuildingInfo.getTextKey()))
-					else: szTxt = CyGameTextMgr().getBuildingHelp(ID, False, None, False, False, True)
+					else: szTxt = CyGameTextMgr().getBuildingHelp(ID, False, -1, -1, False, False, True)
 					self.tooltip.handle(screen, szTxt)
 		elif iCode == NotifyCode.NOTIFY_CLICKED: # click
 			if BASE == "WID":

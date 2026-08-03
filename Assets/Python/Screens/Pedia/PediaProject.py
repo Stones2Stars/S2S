@@ -104,7 +104,7 @@ class PediaProject:
 		screen.addMultilineText(aName(), szText, X_COL_2 + 4, Y_ROW_1 + 8, W_COL_1 - 8, H_TOP_ROW - 16, iWidGen, 0, 0, 1<<0)
 		# Special
 		screen.addPanel(aName(), "", "", True, False, X_COL_1, Y_ROW_2, W_COL_1, H_ROW_2, iPanelBlue50)
-		szText = szfont3 + CyGameTextMgr().getProjectHelp(iTheProject, True, None)[1:]
+		szText = szfont3 + CyGameTextMgr().getProjectHelp(iTheProject, True, -1, -1)[1:]
 		screen.addMultilineText(aName(), szText, X_COL_1 + 4, Y_ROW_2 + 12, W_COL_1 - 8, H_ROW_2 - 20, iWidGen, 0, 0, 1<<0)
 		# History
 		screen.addPanel(aName(), "", "", True, False, X_COL_2, Y_ROW_2, W_COL_1, H_ROW_2, iPanelBlue50)

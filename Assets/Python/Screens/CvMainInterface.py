@@ -5492,13 +5492,13 @@ class CvMainInterface:
 
 				elif TYPE == "UNIT":
 					self.dataTT = [bCtrl, bShift, bAlt, "", iType, self.InCity.CyCity]
-					self.updateTooltip(screen, CyGTM.getUnitHelp(iType, False, True, True, self.InCity.CyCity))
+					self.updateTooltip(screen, CyGTM.getUnitHelp(iType, False, True, True, self.InCity.iPlayer, self.InCity.iCityID))
 
 				elif TYPE == "BUILDING":
-					self.updateTooltip(screen, CyGTM.getBuildingHelp(iType, True, self.InCity.CyCity, False, False, True))
+					self.updateTooltip(screen, CyGTM.getBuildingHelp(iType, True, self.InCity.iPlayer, self.InCity.iCityID, False, False, True))
 
 				elif TYPE == "PROJECT":
-					self.updateTooltip(screen, CyGTM.getProjectHelp(iType, False, self.InCity.CyCity))
+					self.updateTooltip(screen, CyGTM.getProjectHelp(iType, False, self.InCity.iPlayer, self.InCity.iCityID))
 
 				elif TYPE == "PROMO":
 					szTxt = ""
@@ -5643,10 +5643,10 @@ class CvMainInterface:
 					self.updateTooltip(screen, CyGTM.getHappinessHelp())
 
 				elif TYPE == "ProdYield":
-					self.updateTooltip(screen, CyGTM.getProductionHelpCity(self.InCity.CyCity))
+					self.updateTooltip(screen, CyGTM.getProductionHelpCity(self.InCity.iPlayer, self.InCity.iCityID))
 
 				elif TYPE == "Defense":
-					self.updateTooltip(screen, CyGTM.getDefenseHelp(self.InCity.CyCity))
+					self.updateTooltip(screen, CyGTM.getDefenseHelp(self.InCity.iPlayer, self.InCity.iCityID))
 
 				elif TYPE == "AutomateProduction":
 					InCity = self.InCity

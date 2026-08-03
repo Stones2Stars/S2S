@@ -323,7 +323,7 @@ class CvGameUtils:
 				elif iData2 == 2:
 					return CyTranslator().getText("TXT_KEY_WB_WAIT",())
 			elif iData1 == 6785:
-				return CyGameTextMgr().getProjectHelp(iData2, False, None)
+				return CyGameTextMgr().getProjectHelp(iData2, False, -1, -1)
 			elif iData1 == 6787:
 				return GC.getProcessInfo(iData2).getDescription()
 			elif iData1 == 6788:
@@ -440,7 +440,7 @@ class CvGameUtils:
 				return CyGameTextMgr().parseReligionInfo(iData2, False)
 ## Building Widget Text##
 			elif iData1 == 7870:
-				return CyGameTextMgr().getBuildingHelp(iData2, False, None, False, False, False)
+				return CyGameTextMgr().getBuildingHelp(iData2, False, -1, -1, False, False, False)
 ## Tech Widget Text##
 			elif iData1 == 7871:
 				if iData2 == -1:
@@ -495,7 +495,7 @@ class CvGameUtils:
 			elif iData1 == 8202:
 				if iData2 == -1:
 					return CyTranslator().getText("TXT_KEY_PEDIA_ALL_UNITS", ())
-				return CyGameTextMgr().getUnitHelp(iData2, False, False, False, None)
+				return CyGameTextMgr().getUnitHelp(iData2, False, False, False, -1, -1)
 			elif iData1 > 8299 and iData1 < 8400:
 				iPlayer = iData1 - 8300
 				pUnit = GC.getPlayer(iPlayer).getUnit(iData2)
