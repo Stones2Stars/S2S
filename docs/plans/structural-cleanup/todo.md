@@ -841,10 +841,11 @@
 > as you meet it — parking it spends the census budget the rest of the worklist needs. ⛔ Never borrow legacy as
 > a "temporary solution" for a read the library does not answer yet: add the read.
 
-- **WorldBuilder's UNIT editing needs a home on the new surface.** ⚑ `CyUnit` has no `boost::python`
-  registration on this branch and the composition root does not publish it, so `WBUnitScreen` / `CvWBDesc` reach
-  nothing today. **That is the EXPECTED state of the rework, not a defect** — the legacy binding surface is being
-  disconnected, not repaired ([DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed)).
+- **WorldBuilder's UNIT editing needs a home on the new surface.** ⚑ `CyUnit` carries the bare zero-`.def` type
+  registration (the kept engine→Python direction's carrier, [patterns.md](../../architecture/patterns.md)) and
+  nothing more, so `WBUnitScreen` / `CvWBDesc` reach no unit READS. **That is the EXPECTED state of the rework,
+  not a defect** — the legacy binding surface is being disconnected, not repaired
+  ([DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed)).
   ⛔ **Do NOT "fix" this by re-registering the legacy `CyUnit`.** A dead legacy binding is an outlaw; the answer
   is the new library, never a revived `.def` surface.
   ⚖ What the new surface OWES, because the owner has ruled it supported: **editing an individual unit's strength**
