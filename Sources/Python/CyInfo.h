@@ -48,6 +48,9 @@ enum PyIntrinsicSlot
 	PYINT_IS_LIMITED_WONDER,   // does this building carry a SELF-cap (world/team/empire) -- i.e. is it a wonder
 	PYINT_IS_PERMANENT,        // is this victory PERMANENT (never written into a scenario's victory list)
 	PYINT_IS_REPEAT,           // is this tech REPEATABLE (researchable more than once)
+	PYINT_DEFAULT_PLAYERS,     // a world size's default player count (the map-setup straggler)
+	PYINT_HEADQUARTERS_CORPORATION, // CORPORATION_* FK -- the corp this building is the HEADQUARTERS of (json §9)
+	PYINT_IS_SEE_DEMOGRAPHICS, // does this espionage mission reveal demographics (the scoreboard's power column)
 	NUM_PYINT
 };
 

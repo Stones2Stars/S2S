@@ -84,8 +84,13 @@ comment that states the dependency.
    graph is visible to a static grep of the Python tree.
 5. **`preGameStart`** → `CvScreensInterface.showMainInterface()` → `mainInterface.interfaceScreen()`.
 6. **`windowActivation`** → `CvEventManager.onWindowActivation` → **`CvScreensInterface.lateInit()`** on the
-   first activation. This is where the deferred screens are built and the lazy screen factories are registered.
-   ⚑ `earlyInit()` is retained as an empty body because the engine names it.
+   first activation. This is where the deferred screens are built and the screen factories are registered.
+   ⚑ **`earlyInit()` builds the factory-owned screens EAGERLY, and that is deliberate** — a screen constructor
+   reads the game, so constructing there is what puts those reads on the engine's entry path, where an info
+   plane that cannot answer them fails at the MENU as a named Python error. Building them on first use instead
+   moves the same failure to an access violation inside the EXE, deep in `interfaceScreen()`, while initializing
+   nothing ([DEC-info-plane-read-only](../architecture/decisions.md#dec-info-plane-read-only)). Every screen
+   access still goes through `getScreen`, which stays total.
 
 ## Where the two sides meet — the marshalling contract
 

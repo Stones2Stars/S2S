@@ -166,7 +166,6 @@ class Revolution:
 		customEM.addEventHandler("ModNetMessage", self.onModNetMessage)
 
 		# Popup launching and handling events
-		customEM.addEventHandler("kbdEvent", self.onKbdEvent)
 		self.customEM.setPopupHandler(RevDefs.revolutionPopup, ["revolutionPopup",self.revolutionPopupHandler,self.blankHandler])
 		self.customEM.setPopupHandler(RevDefs.joinHumanPopup, ["joinHumanPopup",self.joinHumanHandler,self.blankHandler])
 		self.customEM.setPopupHandler(RevDefs.controlLostPopup, ["controlLostPopup",self.blankHandler,self.blankHandler])
@@ -215,16 +214,7 @@ class Revolution:
 		self.showLocalEffect = int(self.showLocalEffect*RevUtils.getGameSpeedMod())
 
 
-##--- Keyboard handling and Rev Watch popup -------------------------------------------
-
-	def onKbdEvent(self, argsList):
-		eventType, key, mx, my, px, py = argsList
-
-		if eventType == 6:
-			# multiplayer warning, need to tell other computers about any city bribery
-			if key == InputTypes.KB_G and self.customEM.bShift and self.customEM.bCtrl:
-				CvScreensInterface.showRevolutionWatchAdvisor(self)
-
+##--- Rev Watch popup -------------------------------------------
 
 	def showRevWatchPopup(self, iPlayer):
 		if self.isLocalHumanPlayer(iPlayer):
@@ -472,9 +462,7 @@ class Revolution:
 			return
 
 		#RevolutionDCM - post bribe popup handling
-		if CvScreensInterface.isRevolutionWatchAdvisor():
-			CvScreensInterface.showRevolutionWatchAdvisor(self)
-		else: CvScreensInterface.cityScreenRedraw()
+		CvScreensInterface.cityScreenRedraw()
 
 
 ##--- Standard Event handling functions -------------------------------------------

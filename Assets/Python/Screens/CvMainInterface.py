@@ -51,6 +51,9 @@ class CvMainInterface:
 		global g_mainInterface
 		g_mainInterface = self
 
+		# Resolved on first use and kept: which espionage mission reveals demographics. None = not yet asked.
+		self.iDemographicsMission = None
+
 		global MainOpt, CityOpt, ClockOpt, ScoreOpt, RoMOpt
 		import BugCore
 		ClockOpt = BugCore.game.NJAGC
@@ -321,19 +324,22 @@ class CvMainInterface:
 			self.szFieldOfView				= obj.getText("TXT_KEY_BUG_OPT_MAININTERFACE__FIELDOFVIEW_TEXT", ())
 			self.szDeadCiv					= obj.getText("TXT_KEY_BUG_DEAD_CIV", ())
 			self.szMinorCiv					= obj.getText("TXT_KEY_MINOR_CIV_DISPLAY", ())
-			self.advisorButtonTip = [
-				(obj.getText("TXT_KEY_HUD_BUTTON_ADVISOR_DOMESTIC", ()) ,		"F1"),
-				(obj.getText("TXT_KEY_HUD_BUTTON_ADVISOR_FINANCE", ()),			"F2"),
-				(obj.getText("TXT_KEY_HUD_BUTTON_ADVISOR_CIVICS", ()),			"F3"),
-				(obj.getText("TXT_KEY_HUD_BUTTON_ADVISOR_FOREIGN", ()),			"F4"),
-				(obj.getText("TXT_KEY_HUD_BUTTON_ADVISOR_MILITARY", ()),		"F5"),
-				(obj.getText("TXT_KEY_HUD_BUTTON_ADVISOR_TECHNOLOGY", ()),		"F6"),
-				(obj.getText("TXT_KEY_HUD_BUTTON_ADVISOR_RELIGIOUS", ()),		"F7"),
-				(obj.getText("TXT_KEY_HUD_BUTTON_ADVISOR_CORPORATE", ()),		"Shift+F7"),
-				(obj.getText("TXT_KEY_HUD_BUTTON_ADVISOR_INTELLIGENCE", ()),	"Ctrl+E"),
-				(obj.getText("TXT_KEY_HUD_BUTTON_ADVISOR_PARTISAN", ()),		"Ctrl+Shift+G"),
-				(obj.getText("TXT_KEY_HUD_BUTTON_ADVISOR_HERITAGE", ()),		"")
-			]
+			# Keyed by the button's ID, which is the AdvBtn<N> widget suffix -- NOT a positional list. The
+			# widgets are named and their IDs are sparse (a button can be absent), so an ordered list silently
+			# ties every later tooltip to the presence of every earlier button: dropping one shifts the rest
+			# onto the wrong text and runs the last ID off the end.
+			self.advisorButtonTip = {
+				0	: (obj.getText("TXT_KEY_HUD_BUTTON_ADVISOR_DOMESTIC", ()),		"F1"),
+				1	: (obj.getText("TXT_KEY_HUD_BUTTON_ADVISOR_FINANCE", ()),		"F2"),
+				2	: (obj.getText("TXT_KEY_HUD_BUTTON_ADVISOR_CIVICS", ()),		"F3"),
+				3	: (obj.getText("TXT_KEY_HUD_BUTTON_ADVISOR_FOREIGN", ()),		"F4"),
+				4	: (obj.getText("TXT_KEY_HUD_BUTTON_ADVISOR_MILITARY", ()),		"F5"),
+				5	: (obj.getText("TXT_KEY_HUD_BUTTON_ADVISOR_TECHNOLOGY", ()),	"F6"),
+				6	: (obj.getText("TXT_KEY_HUD_BUTTON_ADVISOR_RELIGIOUS", ()),		"F7"),
+				7	: (obj.getText("TXT_KEY_HUD_BUTTON_ADVISOR_CORPORATE", ()),		"Shift+F7"),
+				8	: (obj.getText("TXT_KEY_HUD_BUTTON_ADVISOR_INTELLIGENCE", ()),	"Ctrl+E"),
+				10	: (obj.getText("TXT_KEY_HUD_BUTTON_ADVISOR_HERITAGE", ()),		"")
+			}
 			# Building infos:
 			aBuildingList0 = []
 			aBuildingList1 = []
@@ -853,13 +859,6 @@ class CvMainInterface:
 		screen.setStyle(btn, "Button_HUDBtnHeritage_Style")
 		screen.hide(btn)
 		x -= dx
-		# Partisan:
-		if self.GO_REVOLUTION:
-			btn = "AdvBtn9"
-			screen.setImageButton(btn, "Art/Interface/Buttons/revbtn.dds", x, y, iSize, iSize, eWidGen, 0, 0)
-			screen.setStyle(btn, "Button_HUDSmall_Style")
-			screen.hide(btn)
-			x -= dx
 		# Intelligence
 		btn = "AdvBtn8"
 		screen.setImageButton(btn, "", x, y, iSize, iSize, eWidGen, 0, 0)
@@ -1619,7 +1618,6 @@ class CvMainInterface:
 				screen.hide("AdvBtn6")
 				screen.hide("AdvBtn7")
 				screen.hide("AdvBtn8")
-				screen.hide("AdvBtn9")
 				screen.hide("VictoryAdvBtn")
 				screen.hide("InfoAdvBtn")
 				screen.hide("OptionsBtnBUG0")
@@ -1641,7 +1639,6 @@ class CvMainInterface:
 				screen.show("AdvBtn6")
 				screen.show("AdvBtn7")
 				screen.show("AdvBtn8")
-				screen.show("AdvBtn9")
 				screen.show("VictoryAdvBtn")
 				screen.show("InfoAdvBtn")
 				screen.show("OptionsBtnBUG0")
@@ -1679,7 +1676,6 @@ class CvMainInterface:
 			screen.hide("AdvBtn6")
 			screen.hide("AdvBtn7")
 			screen.hide("AdvBtn8")
-			screen.hide("AdvBtn9")
 			screen.hide("VictoryAdvBtn")
 			screen.hide("InfoAdvBtn")
 			screen.hide("OptionsBtnBUG0")
@@ -1726,7 +1722,6 @@ class CvMainInterface:
 			screen.hide("AdvBtn6")
 			screen.hide("AdvBtn7")
 			screen.hide("AdvBtn8")
-			screen.hide("AdvBtn9")
 			screen.hide("VictoryAdvBtn")
 			screen.hide("InfoAdvBtn")
 			screen.hide("CityScrollMinus")
@@ -1772,7 +1767,6 @@ class CvMainInterface:
 			screen.hide("AdvBtn6")
 			screen.hide("AdvBtn7")
 			screen.hide("AdvBtn8")
-			screen.hide("AdvBtn9")
 			screen.hide("VictoryAdvBtn")
 			screen.hide("InfoAdvBtn")
 			screen.hide("CityScrollMinus")
@@ -4518,12 +4512,16 @@ class CvMainInterface:
 					bShowCityCount	= ScoreOpt.isShowCountCities()
 				bShowPower			= ScoreOpt.isShowPower()
 				if bShowPower:
-					iDemographicsMission = -1
-					iSpyMissions = GC.getNumEspionageMissionInfos()
-					for iMissionLoop in xrange(iSpyMissions):
-						if GC.getEspionageMissionInfo(iMissionLoop).isSeeDemographics():
-							iDemographicsMission = iMissionLoop
-							break
+					# Which espionage mission reveals demographics is STATIC info data, so it is resolved once
+					# and remembered -- this sits on the per-frame redraw path, where re-scanning the whole
+					# registry every frame answered the same question hundreds of times a second.
+					if self.iDemographicsMission is None:
+						self.iDemographicsMission = -1
+						for iMissionLoop in xrange(len(INFO.getIndex("ESPIONAGEMISSION_"))):
+							if INFO.getIntrinsic("ESPIONAGEMISSION_", iMissionLoop, IntrinsicSlot.PYINT_IS_SEE_DEMOGRAPHICS) > 0:
+								self.iDemographicsMission = iMissionLoop
+								break
+					iDemographicsMission = self.iDemographicsMission
 					if iDemographicsMission == -1:
 						bShowPower = False
 				if bShowPower:
@@ -6033,8 +6031,6 @@ class CvMainInterface:
 					UP.showCorporationScreen()
 				elif ID == 8:
 					UP.showEspionageAdvisor()
-				elif ID == 9:
-					UP.showRevolutionWatchAdvisor(self)
 				elif ID == 10:
 					UP.showHeritageScreen()
 

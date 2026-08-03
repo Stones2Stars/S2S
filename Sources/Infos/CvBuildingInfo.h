@@ -199,6 +199,12 @@ public:
 	// BOUNDARY (json.md par.7): the JSON carries only the tag id and the definitions stay in the ART XML,
 	// so this is a shim onto ARTFILEMGR rather than data the info holds.
 	const CvArtInfoBuilding* getArtInfo() const;
+	// A building's BUTTON lives on its art define, not on the building -- the JSON carries the ART_DEF_* tag and
+	// the <Button> path stays in the ART XML with the rest of the definition (the same unmigrated boundary as
+	// getArtInfo above). Without this override the inherited CvInfoBase::getButton reads m_szButton, which no
+	// building ever authors, so every building answered "" and the interface asked the resource manager to load
+	// an empty texture path.
+	virtual const char* getButton() const;
 	int getSpecialBuildingType() const      { return m_iSpecialBuildingType; }      // SPECIALBUILDING_* FK (group cap, json §4.4)
 	int getFreeStartEra() const             { return m_iFreeStartEra; }             // ERA FK
 	int getDiploVoteType() const            { return m_iDiploVoteType; }            // DIPLOVOTE_* FK

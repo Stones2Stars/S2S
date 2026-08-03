@@ -12,9 +12,11 @@
 //	⛔ THIS IS A NEW SURFACE, NOT A WIDENED BINDING ([DEC-cy-not-fixed]). The legacy per-type wrappers
 //	(CyCity::getYieldRate, CyPlayer::getCommerceRate, ...) are NOT extended and NOT reused. Like CyEnabler it is
 //	deliberately ID-BASED -- it takes plain player / city ids and holds no CyCity or CyPlayer -- so the legacy
-//	wrappers can be CUT AWAY without touching it. That matters more here than it looks: the engine->Python
-//	CALLBACK direction is KEPT (patterns.md: the cut is DIRECTIONAL) and it pushes plain values, never Cy objects,
-//	so an id-based read surface is what the kept direction actually needs.
+//	wrappers can be CUT AWAY without touching it.
+//	⚑ THAT IS WHY A CALLBACK HANDS OVER AN IDENTITY, NOT A HANDLE. The engine->Python CALLBACK direction is KEPT
+//	(patterns.md: the cut is DIRECTIONAL), and a cut wrapper carries ZERO defs -- so a script handed one could ask
+//	it nothing, not even which object it is. The event reports therefore push the (owner, id) PAIR this surface is
+//	addressed by (Cy::PyIdentity, CvPython.h), which is what makes the kept direction usable at all.
 //
 //	THE GRAMMAR is the game-object half's, unchanged:
 //	  - ONE READ PER GROUP, and the getter IS the group. There is NO scalar getter per channel; a script wanting
@@ -73,6 +75,40 @@ public:
 	// a script that adds the two double-counts.
 	python::list getRealizedWellbeing(int iPlayer, int iCity) const;
 	int getSight(int iPlayer, int iCity) const;   // the city's sight BUDGET (vision.md)
+
+	// ---- ENUMERATION: which cities a player HAS, by id. ----
+	// ⛔ The prerequisite of every id-based city read on this surface, and it is structural rather than
+	// convenience: this library is deliberately ID-BASED so the legacy wrappers can be cut, but the cut leaves
+	// CyCity carrying ZERO defs -- a registration-only marshalling handle. So a script handed a CyCity cannot
+	// ask it anything, not even its own id, and player.cities() therefore hands back a list nothing can read.
+	// Without an id enumeration the whole surface is unreachable for any screen that LISTS cities, which is most
+	// of them. The ids are stable within a game and are what every other read here takes.
+	python::list getCityIds(int iPlayer) const;
+
+	// ---- CITY RANK groups: where this city places among its OWNER'S cities for each channel. ----
+	// ⛔ The engine enum indexes the RESULT, never the call (grammar rule 2 above), so a rank read hands back the
+	// WHOLE group and a script indexes it -- getYieldRateRanks(p, c)[YieldTypes.YIELD_FOOD]. A per-channel
+	// findYieldRateRank(p, c, eYield) would put the channel in the CALL, which is the per-channel scalar shape
+	// this surface exists to delete.
+	// ⚠ A rank is an ORDINAL (1 = highest), not an amount -- so it is NOT x100 and a reader never divides it.
+	python::list getYieldRateRanks(int iPlayer, int iCity) const;
+	python::list getBaseYieldRateRanks(int iPlayer, int iCity) const;
+	python::list getCommerceRateRanks(int iPlayer, int iCity) const;
+
+	// ---- CITY plain FACTS: genuine lone values, so they stay bare typed reads (patterns.md category 4) rather
+	// than being forced into a group that would mean nothing -- the getSight precedent. ----
+	// A coordinate is the one PAIR here: x and y are meaningless apart, so they cross as one [x, y] list rather
+	// than as two getters.
+	python::list getCityPosition(int iPlayer, int iCity) const;
+	int getCityPopulation(int iPlayer, int iCity) const;          // citizens; a whole game count, NOT x100
+	int64_t getCityRealPopulation(int iPlayer, int iCity) const;  // the displayed head-count; exceeds 32 bits
+	int getGreatPeopleRate(int iPlayer, int iCity) const;
+	int getGreatPeopleProgress(int iPlayer, int iCity) const;
+	int getMilitaryHappinessUnits(int iPlayer, int iCity) const;
+	// Post-conquest resistance: whether it is running, and for how many more turns. Live city state, so it is
+	// here and not on the info surface -- occupation is something a city HAS, never something a type CARRIES.
+	bool isOccupation(int iPlayer, int iCity) const;
+	int getOccupationTimer(int iPlayer, int iCity) const;
 
 	// ---- EMPIRE-only groups ----
 	python::list getUpkeepKinds(int iPlayer) const;

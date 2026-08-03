@@ -10,7 +10,7 @@
 // ⚠ This resolves to Boost 1.32 -- the `python::` alias -- never boost155 (engine.md: two Boosts coexist).
 #include <boost/python/dict.hpp>
 #include "CyInfo.h"
-#include "Data/CvReadJson.h"     // rjInfoForType -- the ONE infotype-prefix -> InfoRepo dispatch
+#include "Data/CvReadJson.h"     // the ONE infotype-prefix -> InfoRepo dispatch, READ-ONLY half (rjInfoForTypeConst / rjCountForType)
 #include "Infos/CvInfo.h"
 #include "Infos/CvEdges.h"           // the load-derived edge families ([DEC-one-reverse-view])
 #include "Infos/CvCivicInfo.h"       // the civic column the bulk index reads
@@ -44,6 +44,7 @@
 #include "Infos/CvEspionageMissionInfo.h"
 #include "Infos/CvGoodyInfo.h"
 #include "Infos/CvUpkeepInfo.h"
+#include "Infos/CvWorldInfo.h"     // getDefaultPlayers -- the map-setup straggler (PYINT_DEFAULT_PLAYERS)
 #include "Infos/CvVictoryInfo.h"   // isPermanent -- the scenario victory-list filter
 #include "Infos/CvTechInfo.h"      // isRepeat -- the scenario repeat-tech loop (PYINT_IS_REPEAT)
 #include "Infos/CvVoteSourceInfo.h"
@@ -124,7 +125,10 @@ namespace
 	const CvInfoBase* cyi_infoBase(const std::string& szTypePrefix, int iId)
 	{
 		if (iId < 0) return NULL;
-		const CvInfo* pJson = rjInfoForType(szTypePrefix, iId);
+		// ⛔ the CONST twin, for the same reason cyi_info above uses it: this is a READ, and the get-or-create
+		// dispatch would GROW the registry for any id handed to it -- which is how a walk over the identity
+		// plane ran away instead of finding its end.
+		const CvInfo* pJson = rjInfoForTypeConst(szTypePrefix, iId);
 		if (pJson != NULL) return pJson;   // CvInfo -> CvHotkeyInfo -> CvInfoBase
 		return cyi_xmlOnlyInfo(szTypePrefix, iId);
 	}
@@ -199,6 +203,25 @@ int CyInfo::getIntrinsic(const std::string& szTypePrefix, int iId, int iSlot) co
 			return GC.getYieldInfo((YieldTypes)iId).getColorType();
 		break;
 
+	case PYINT_DEFAULT_PLAYERS:
+		if (szTypePrefix == "WORLD_" && iId < GC.getNumWorldInfos())
+			return GC.getWorldInfo((WorldSizeTypes)iId).getDefaultPlayers();
+		break;
+
+	case PYINT_HEADQUARTERS_CORPORATION:
+		// ⚑ The FK lives on the BUILDING (json §9 `headquarters`: the relationship IS the data), so asking a
+		// building which corporation it heads is a straight member read. ⛔ It is NOT the inverse question --
+		// "which building founds corporation X" is a reverse lookup and belongs to the edge families
+		// ([DEC-one-reverse-view]), never to a scan of every building testing this slot.
+		if (szTypePrefix == "BUILDING_" && iId < GC.getNumBuildingInfos())
+			return GC.getBuildingInfo((BuildingTypes)iId).getHeadquartersCorporation();
+		break;
+
+	case PYINT_IS_SEE_DEMOGRAPHICS:
+		if (szTypePrefix == "ESPIONAGEMISSION_" && iId < GC.getNumEspionageMissionInfos())
+			return GC.getEspionageMissionInfo((EspionageMissionTypes)iId).isSeeDemographics() ? 1 : 0;
+		break;
+
 	case PYINT_ACTION_INFO_INDEX:
 		// CvControlInfo derives from CvHotkeyInfo, which owns the index -- the control registry is XML-only,
 		// so there is no InfoRepo route to it.
@@ -263,13 +286,21 @@ python::list CyInfo::getIndex(const std::string& szTypePrefix) const
 {
 	python::list lEntries;
 
-	//	⚑ The BOUND comes from the ONE dispatch, never a per-prefix count table here: a registry is dense
-	//	(ids 0..N-1) and cyi_infoBase answers NULL past the end, so the first NULL IS the end. Keeping the
-	//	knowledge in the dispatch is what stops this file drifting from the load pipeline's table.
-	for (int iId = 0; ; iId++)
+	//	⛔ THE BOUND IS ASKED FOR, NEVER PROBED. Walking until the first NULL is not a bound: a JSON repo answers
+	//	through InfoRepo, which may hold a NULL hole, and the id space does not end where the first hole is.
+	//	(Probing the get-or-create dispatch was worse still -- it GREW the registry, verified in-game as a
+	//	MemoryError.) So each half supplies its own real end: rjCountForType for a JSON registry, and for the
+	//	XML-only half the dispatch's own explicit bound-check, which genuinely answers NULL past the end.
+	const int iJsonCount = rjCountForType(szTypePrefix);
+
+	for (int iId = 0; iJsonCount < 0 || iId < iJsonCount; iId++)
 	{
 		const CvInfoBase* pInfo = cyi_infoBase(szTypePrefix, iId);
-		if (pInfo == NULL) break;
+		if (pInfo == NULL)
+		{
+			if (iJsonCount < 0) break;   // XML-only: NULL IS the end
+			continue;                    // JSON: a hole, not the end -- keep walking to the real count
+		}
 
 		python::dict kEntry;
 		kEntry["id"]          = iId;
@@ -332,8 +363,7 @@ void CyInfo::pythonPublish()
 		.def("getType",        &CyInfo::getType)
 		.def("getButton",      &CyInfo::getButton)
 		.def("exists",         &CyInfo::exists)
-		// getIndex is NOT published yet -- it needs a real per-prefix COUNT source; NULL-probing the dispatch
-		// does not bound (verified in-game: MemoryError). See todo.
+		.def("getIndex",       &CyInfo::getIndex)
 		.def("getEdgeIds",     &CyInfo::getEdgeIds)
 		.def("getIntrinsic",   &CyInfo::getIntrinsic)
 		.def("civicOptions",   &CyInfo::civicOptions, python::return_value_policy<python::reference_existing_object>())

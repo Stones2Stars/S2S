@@ -30,6 +30,29 @@ namespace Cy											\
 	};													\
 }
 
+//
+//	The object crosses to Python as its (owner, id) IDENTITY rather than as a Cy* handle -- see Cy::PyIdentity.
+//	⛔ Declared ONCE per class, so EVERY push site converts together ([DEC-single-implementation]): the event
+//	reports, the outcome callbacks, anything doing `Cy::Args() << pObject`. A per-site conversion would leave the
+//	two representations live at the same time, which is the half-migration this closes.
+//	⚠ The `class_<Cy*>` REGISTRATION stays regardless: CvGameObject::createPythonWrapper builds those handles on
+//	its own path and still needs the converter (patterns.md -- registration is not binding).
+//
+#define DECLARE_PY_IDENTITY(_class, _ownerOf, _idOf)		\
+namespace Cy											\
+{														\
+	template <>											\
+	struct ArgTraits< typename Cy::base_type<_class>::type > \
+	{													\
+		template < class Ty_ >							\
+		static void add(Args& args, Ty_ arg)			\
+		{												\
+			args.add_identity(arg ? (int)(arg->_ownerOf) : -1, \
+			                  arg ? (int)(arg->_idOf)    : -1); \
+		}												\
+	};													\
+}
+
 #define DECLARE_PY_WRAPPED(_class)						\
 namespace Cy											\
 {														\
@@ -139,6 +162,28 @@ namespace Cy
 	};
 
 	//
+	//	A game object's IDENTITY, crossing as the (owner, id) pair the read library is addressed by.
+	//
+	//	⛔ This is what a callback hands over instead of a Cy* HANDLE. The read surfaces (CyState / CyEnabler)
+	//	are deliberately ID-BASED so the legacy per-type wrappers can be cut, and the cut leaves those wrappers
+	//	carrying ZERO defs -- so a script handed one can ask it nothing, not even which object it is. Pushing the
+	//	pair directly is what makes the KEPT engine->Python direction usable at all.
+	//	⚑ It occupies ONE argument slot, so an event's existing argument POSITIONS are unchanged and only a
+	//	handler that actually uses the object is touched.
+	//	⚠ Holds the tuple for the duration of the call -- pyobj is a BORROWED pointer into it, exactly as PyWrap
+	//	borrows from the object it owns.
+	//
+	struct PyIdentity : PyWrapBase
+	{
+		PyIdentity(int iOwner, int iId) : identity(python::make_tuple(iOwner, iId))
+		{
+			pyobj = identity.ptr();
+		}
+
+		python::tuple identity;
+	};
+
+	//
 	// type for input args to python functions
 	//
 	struct Args
@@ -168,6 +213,15 @@ namespace Cy
 		Args& add_wrapped(const Ty_& arg)
 		{
 			m_wrapped.push_back(bst::shared_ptr<PyWrapBase>(new PyWrap<Ty_>(arg)));
+			m_args.add(m_wrapped.back()->pyobj);
+			return *this;
+		}
+
+		// The (owner, id) pair a callback hands over in place of a Cy* handle -- see PyIdentity above. Same
+		// lifetime discipline as add_wrapped: the holder lives in m_wrapped until the call has been made.
+		Args& add_identity(int iOwner, int iId)
+		{
+			m_wrapped.push_back(bst::shared_ptr<PyWrapBase>(new PyIdentity(iOwner, iId)));
 			m_args.add(m_wrapped.back()->pyobj);
 			return *this;
 		}

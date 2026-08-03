@@ -386,3 +386,28 @@ Unchanged in principle, but note the surface it depends on is currently purged:
    reactions). ⚑ **Their absence from any migration inventory is the scope boundary working, not a gap** — and
    there is **no exposure by construction**: the grants machine applies only what is in the XML-derived JSON, so
    an effect that was never in XML never enters the JSON and can never double-up or be lost.
+6. **⚖ THE MUTATING PYTHON EVENT HANDLERS ARE LEFT NONFUNCTIONING, AND THEIR SCOPE IS ASSESSED AT THE END
+   (owner).** The `Cy*` read cut removed the only path Python had for APPLYING gameplay: these handlers do not
+   merely read, they mutate (`setPopulation` / `changeCulture` / `setHasReligion` / `setHasPromotion`), and the
+   replacement library is a READ surface by contract
+   ([patterns.md § THE PYTHON READ BOUNDARY](../../architecture/patterns.md): data fetching, not gameplay). So
+   there is nowhere for those writes to go.
+   ⚑ **The reason it is PARKED rather than solved is historical and specific (owner): the Python events were
+   carved out BEFORE the trigger system was specced.** The triggers machine now exists but the Python events do
+   not route through it, so the destination for this behaviour is known
+   ([triggers.md](../../specs/triggers.md)) while the mapping is not.
+   ⚖ **PYTHON DOES NEED A WRITE SURFACE, for the foreseeable future (owner).** The read-only library is therefore
+   NOT the end state of the boundary — the missing write path is a real gap with a real answer.
+   ⚖ **AND THE LINE IS *DEVELOP* vs *KEEP WORKING* (owner): what is banned is DEVELOPING game logic in Python.
+   Keeping the EXISTING logic functional until it can be tackled properly is NOT banned.** So this is a
+   SEQUENCING choice, never a prohibition on the behaviour: the effects are not being killed, they are waiting
+   for the surface that carries them. ⛔ The corollary is the one to hold onto — a handler being broken is not a
+   licence to REWRITE what it does, only to re-home how it reaches the engine; new gameplay authored in Python
+   while re-homing one is the banned move wearing a repair's clothes.
+   ⛔ **What stays banned outright:** re-opening the `Cy*` wrappers so the old writes work again
+   ([DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed)), and half-converting a handler so its
+   arguments are ids while its body still calls a method that does not exist — which relocates the failure
+   instead of fixing it, the same move the lazy screens made.
+   ⚠ Until the write surface lands they stay nonfunctioning, which means the handler RAISES and the event manager
+   logs it — the failure stays visible, which is the point. It is NOT to be silenced with a no-op body or a
+   swallowed exception, because a quiet handler is indistinguishable from a working one when the scope pass runs.

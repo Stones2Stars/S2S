@@ -180,27 +180,8 @@ def showVictoryScreen():
 		getScreen(VICTORY_SCREEN).interfaceScreen()
 
 
-# RevolutionWatchAdvisor
-revolutionWatchAdvisor = None
-def createRevolutionWatchAdvisor():
-	"""Creates the Revolution Watch Advisor."""
-	global revolutionWatchAdvisor
-	if revolutionWatchAdvisor is None:
-		import RevolutionWatchAdvisor
-		revolutionWatchAdvisor = RevolutionWatchAdvisor.RevolutionWatchAdvisor()
-		screenMap[REVOLUTION_WATCH_ADVISOR] = revolutionWatchAdvisor
-
-def showRevolutionWatchAdvisor(argsList):
-	if CyGame().getActivePlayer() != -1:
-		revolutionWatchAdvisor.interfaceScreen()
-
-def isRevolutionWatchAdvisor():
-	return revolutionWatchAdvisor.isVisible()
-
 def cityScreenRedraw():
 	mainInterface.updateCityScreen()
-
-# !RevolutionWatchAdvisor
 
 def showBuildListScreen():
 	if CyGame().getActivePlayer() != -1:
@@ -696,8 +677,7 @@ screenMap = _LazyScreenMap({
 	MAIN_INTERFACE			: mainInterface,
 	OPTIONS_SCREEN			: optionsScreen,
 	REPLAY_SCREEN			: replayScreen,
-	STRATEGY_OVERLAY_SCREEN		: overlayScreen,
-	REVOLUTION_WATCH_ADVISOR	: revolutionWatchAdvisor
+	STRATEGY_OVERLAY_SCREEN		: overlayScreen
 })
 ##############
 # Initialize #
@@ -755,13 +735,13 @@ def lateInit():
 	import CivicData
 	CivicData.initCivicData()
 
-# ⛔ SCREENS CONSTRUCT ON FIRST USE, NOT AT IMPORT.
-# earlyInit() used to build every screen at module scope, so importing this module ran nine screen
-# constructors -- and a screen constructor reads the game. That put the whole screen tree, and the read
-# surface it touches, on the ENGINE'S ENTRY PATH: nothing could be imported until everything a screen
-# reads was answerable. The lazy shape is what the code already wanted (createRevolutionWatchAdvisor
-# tests `is None` for exactly this reason); earlyInit defeated it by forcing them eagerly.
-# for, so a screen nobody opens costs nothing and cannot break the import.
+# ⛔ THE SCREENS ARE BUILT EAGERLY, AT earlyInit, AND THAT IS THE POINT.
+# Building them on first use let the load reach the main interface without the info plane being able to
+# answer what the screens ask -- the reads simply happened later, deep inside interfaceScreen(), where a
+# missing one is no longer a named Python AttributeError but a NULL handed to the EXE and dereferenced
+# there. Deferring the read moved the failure somewhere it cannot be read; it initialized nothing.
+# Constructing here puts every screen's reads back on the engine's entry path, so an info plane that is
+# not fully stood up fails AT THE MENU, naming the read it could not answer.
 _screenFactories = {
 	INTRO_MOVIE_SCREEN   : ('CvIntroMovieScreen',   'CvIntroMovieScreen',   ()),
 	WONDER_MOVIE_SCREEN  : ('CvWonderMovieScreen',  'CvWonderMovieScreen',  ()),
@@ -773,12 +753,13 @@ _screenFactories = {
 }
 
 def getScreen(screenId):
-	"""The screen for this id, built on first use.
+	"""The screen for this id.
 
-	⛔ EVERY screen access goes through here, never screenMap[id] directly. earlyInit no longer builds the
-	factory-owned screens, so a direct index raises the first time the ENGINE asks for one -- and these are
-	engine entry points (the intro/wonder/victory movies, the hall of fame, the spaceship), so the failure
-	lands on the engine's side of the call rather than in a screen nobody opened.
+	⛔ EVERY screen access goes through here, never screenMap[id] directly -- these are ENGINE entry points
+	(the intro / wonder / victory movies, the hall of fame, the spaceship, Dan Quayle), so a direct index
+	that raises leaves the engine holding nothing, and the failure lands on its side of the call.
+	earlyInit builds the factory-owned screens up front; this stays total so an id registered elsewhere is
+	still returned, and an unknown one says what is wrong rather than raising a bare KeyError.
 	"""
 	screen = screenMap.get(screenId)
 	if screen is None:
@@ -791,5 +772,15 @@ def getScreen(screenId):
 	return screen
 
 def earlyInit():
-	"""Deliberately empty: screens build on first use (see above). Kept because the engine names it."""
-	pass
+	"""Build every factory-owned screen NOW, before the menu.
+
+	⛔ This is deliberately eager. A screen constructor reads the game, so constructing here is what puts
+	those reads on the engine's entry path -- which is exactly where we want a not-yet-initialized info
+	plane to fail: at the menu, as a named Python error naming the read, instead of surviving to the main
+	interface and dying as an access violation inside the EXE holding a NULL we returned.
+	"""
+	for screenId in _screenFactories:
+		getScreen(screenId)
+	getUnVictoryScreen()
+
+earlyInit()

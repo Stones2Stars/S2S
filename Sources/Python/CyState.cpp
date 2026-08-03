@@ -174,6 +174,127 @@ int CyState::getSight(int iPlayer, int iCity) const
 	return pCity ? pCity->sight() : 0;
 }
 
+// ---- ENUMERATION ----
+
+python::list CyState::getCityIds(int iPlayer) const
+{
+	python::list cityIds = python::list();
+	const CvPlayer* pPlayer = cys_player(iPlayer);
+	if (pPlayer)
+	{
+		int iIter = 0;
+		for (const CvCity* pCity = pPlayer->firstCity(&iIter); pCity != NULL; pCity = pPlayer->nextCity(&iIter))
+		{
+			cityIds.append(pCity->getID());
+		}
+	}
+	return cityIds;
+}
+
+// ---- CITY RANK groups ----
+//
+// A rank is the city's ORDINAL position among its owner's cities for one channel (1 = highest). The whole group
+// comes back in one call, indexed by the engine enum, so no channel is ever named in the call.
+// ⚠ Rank 0 is the "no city" answer here, and it is not a real rank -- the engine ranks from 1.
+
+python::list CyState::getYieldRateRanks(int iPlayer, int iCity) const
+{
+	int values[NUM_YIELD_TYPES] = { 0 };
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	if (pCity)
+	{
+		for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+		{
+			values[iYield] = pCity->findYieldRateRank((YieldTypes)iYield);
+		}
+	}
+	return cys_toList(values);
+}
+
+python::list CyState::getBaseYieldRateRanks(int iPlayer, int iCity) const
+{
+	int values[NUM_YIELD_TYPES] = { 0 };
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	if (pCity)
+	{
+		for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+		{
+			values[iYield] = pCity->findBaseYieldRateRank((YieldTypes)iYield);
+		}
+	}
+	return cys_toList(values);
+}
+
+python::list CyState::getCommerceRateRanks(int iPlayer, int iCity) const
+{
+	int values[NUM_COMMERCE_TYPES] = { 0 };
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	if (pCity)
+	{
+		for (int iCommerce = 0; iCommerce < NUM_COMMERCE_TYPES; ++iCommerce)
+		{
+			values[iCommerce] = pCity->findCommerceRateRank((CommerceTypes)iCommerce);
+		}
+	}
+	return cys_toList(values);
+}
+
+// ---- CITY plain FACTS ----
+
+python::list CyState::getCityPosition(int iPlayer, int iCity) const
+{
+	int values[2] = { -1, -1 };   // -1,-1 = no such city; a real plot coordinate is never negative
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	if (pCity)
+	{
+		values[0] = pCity->getX();
+		values[1] = pCity->getY();
+	}
+	return cys_toList(values);
+}
+
+int CyState::getCityPopulation(int iPlayer, int iCity) const
+{
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	return pCity ? pCity->getPopulation() : 0;
+}
+
+int64_t CyState::getCityRealPopulation(int iPlayer, int iCity) const
+{
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	return pCity ? pCity->getRealPopulation() : 0;
+}
+
+int CyState::getGreatPeopleRate(int iPlayer, int iCity) const
+{
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	return pCity ? pCity->getGreatPeopleRate() : 0;
+}
+
+int CyState::getGreatPeopleProgress(int iPlayer, int iCity) const
+{
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	return pCity ? pCity->getGreatPeopleProgress() : 0;
+}
+
+int CyState::getMilitaryHappinessUnits(int iPlayer, int iCity) const
+{
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	return pCity ? pCity->getMilitaryHappinessUnits() : 0;
+}
+
+bool CyState::isOccupation(int iPlayer, int iCity) const
+{
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	return pCity ? pCity->isOccupation() : false;
+}
+
+int CyState::getOccupationTimer(int iPlayer, int iCity) const
+{
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	return pCity ? pCity->getOccupationTimer() : 0;
+}
+
 // ---- EMPIRE-only groups ----
 
 python::list CyState::getUpkeepKinds(int iPlayer) const
@@ -331,6 +452,19 @@ void CyState::pythonPublish()
 		.def("getVisionKinds",           &CyState::getVisionKinds)
 		.def("getRealizedWellbeing",     &CyState::getRealizedWellbeing)
 		.def("getSight",                 &CyState::getSight)
+		// ENUMERATION + CITY rank groups + plain city facts
+		.def("getCityIds",               &CyState::getCityIds)
+		.def("getYieldRateRanks",        &CyState::getYieldRateRanks)
+		.def("getBaseYieldRateRanks",    &CyState::getBaseYieldRateRanks)
+		.def("getCommerceRateRanks",     &CyState::getCommerceRateRanks)
+		.def("getCityPosition",          &CyState::getCityPosition)
+		.def("getCityPopulation",        &CyState::getCityPopulation)
+		.def("getCityRealPopulation",    &CyState::getCityRealPopulation)
+		.def("getGreatPeopleRate",       &CyState::getGreatPeopleRate)
+		.def("getGreatPeopleProgress",   &CyState::getGreatPeopleProgress)
+		.def("getMilitaryHappinessUnits",&CyState::getMilitaryHappinessUnits)
+		.def("isOccupation",             &CyState::isOccupation)
+		.def("getOccupationTimer",       &CyState::getOccupationTimer)
 		// EMPIRE-only
 		.def("getUpkeepKinds",           &CyState::getUpkeepKinds)
 		.def("getCostKinds",             &CyState::getCostKinds)

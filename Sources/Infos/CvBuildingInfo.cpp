@@ -91,6 +91,15 @@ const CvArtInfoBuilding* CvBuildingInfo::getArtInfo() const
 	return ARTFILEMGR.getBuildingArtInfo(m_szArtDefineTag.c_str());
 }
 
+const char* CvBuildingInfo::getButton() const
+{
+	// ⚠ NULL-safe on purpose: a building may name an ART_DEF_* tag the ART XML does not define, and
+	// ArtFileMgr answers NULL for one. "" is what CvInfoBase::getButton contracts to return for an absent
+	// button -- never NULL, which the EXE UI and boost::python both dereference.
+	const CvArtInfoBuilding* pArtInfo = getArtInfo();
+	return pArtInfo != NULL ? pArtInfo->getButton() : "";
+}
+
 void CvBuildingInfo::mapFrom(const picojson::value& entity)
 {
 	CvInfo::mapFrom(entity);   // core reading (type / text keys) + the section dispatch (compiles m_modifiers)

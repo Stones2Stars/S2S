@@ -195,6 +195,7 @@ protected:
 	CvUnit* m_pUnit;
 };
 
-DECLARE_PY_WRAPPER(CyUnit, CvUnit*);
+// A unit crosses as its (owner, id) IDENTITY, for the same reason a city does -- see CyCity.h.
+DECLARE_PY_IDENTITY(CvUnit*, getOwner(), getID());
 
 #endif // CyUnit_h__

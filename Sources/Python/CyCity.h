@@ -416,6 +416,8 @@ private:
 	CvCity* m_pCity;
 };
 
-DECLARE_PY_WRAPPER(CyCity, CvCity*);
+// A city crosses to Python as its (owner, id) IDENTITY, not as a CyCity handle: CyCity carries zero defs, so a
+// script handed one could ask it nothing -- while every read on the library is addressed by exactly this pair.
+DECLARE_PY_IDENTITY(CvCity*, getOwner(), getID());
 
 #endif // CyCity_h__
