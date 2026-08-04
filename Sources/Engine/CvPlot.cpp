@@ -6726,18 +6726,10 @@ void CvPlot::setPlotType(PlotTypes eNewValue, bool bRecalculate, bool bRebuildGr
 		erase();
 	}
 
-	if (eOldPlotType != NO_PLOT)
-	{
-		m_movementCharacteristicsHash ^= g_plotTypeZobristHashes[eOldPlotType];
-	}
-	if (eNewValue != NO_PLOT)
-	{
-		m_movementCharacteristicsHash ^= g_plotTypeZobristHashes[eNewValue];
-	}
-
 	updateSeeFromSight(false, true);
 
-	m_ePlotType = eNewValue;
+	// The commit, the hash and the facts; then this setter's own EFFECTS below.
+	setPlotTypeInternal(eNewValue);
 
 	updateSeeFromSight(true, true);
 
@@ -6995,18 +6987,6 @@ void CvPlot::setPlotType(PlotTypes eNewValue, bool bRecalculate, bool bRebuildGr
 		updateRouteSymbol(false, true);
 		updateRiverSymbol(false, true);
 	}
-	// Emitted at the END of the setter, not at the field write: the areas are resettled above, and a consumer whose
-	// derivation reads this plot's neighbourhood (the adjacency leg) requires that.
-	// #430 event spine: PAST TENSE (see setTerrainType), and at the END of the setter -- the areas are resettled
-	// above, which the adjacency leg reads.
-	if (eOldPlotType != NO_PLOT)
-	{
-		emitPlotTypeRemoved(GC.getMap().plotNum(getX(), getY()), (int)getOwner(), (int)eOldPlotType);
-	}
-	if (eNewValue != NO_PLOT)
-	{
-		emitPlotTypeAdded(GC.getMap().plotNum(getX(), getY()), (int)getOwner(), (int)eNewValue);
-	}
 }
 
 
@@ -7143,29 +7123,8 @@ void CvPlot::setFeatureType(FeatureTypes eNewValue, int iVariety, bool bImprovem
 		{
 			setImprovementUpgradeCache(-1);
 		}
-		if (eOldFeature != NO_FEATURE)
-		{
-			m_movementCharacteristicsHash ^= GC.getFeatureInfo(eOldFeature).getZobristValue();
-		}
-		if (eNewValue != NO_FEATURE)
-		{
-			m_movementCharacteristicsHash ^= GC.getFeatureInfo(eNewValue).getZobristValue();
-		}
-		m_eFeatureType = eNewValue;
-		m_iFeatureVariety = iVariety;
-		// #430 event spine: PAST TENSE (see setTerrainType). Announced ONLY on a real feature-type change, never
-		// on a variety-only reroll.
-		if (eOldFeature != eNewValue)
-		{
-			if (eOldFeature != NO_FEATURE)
-			{
-				emitPlotFeatureRemoved(GC.getMap().plotNum(getX(), getY()), getOwner(), (int)eOldFeature);
-			}
-			if (eNewValue != NO_FEATURE)
-			{
-				emitPlotFeatureAdded(GC.getMap().plotNum(getX(), getY()), getOwner(), (int)eNewValue);
-			}
-		}
+		// The commit, the hash and the facts; then this setter's own EFFECTS below.
+		setFeatureTypeInternal(eNewValue, iVariety);
 
 		if (bUpdateSight)
 		{
@@ -7617,25 +7576,8 @@ void CvPlot::setRouteType(RouteTypes eNewValue, bool bUpdatePlotGroups)
 		updatePlotGroupBonus(false);
 	}
 
-	if (bOldRoute)
-	{
-		m_movementCharacteristicsHash ^= GC.getRouteInfo(eOldRoute).getZobristValue();
-	}
-	if (bNewRoute)
-	{
-		m_movementCharacteristicsHash ^= GC.getRouteInfo(eNewValue).getZobristValue();
-	}
-
-	m_eRouteType = eNewValue;
-	// #430 event spine: PAST TENSE (see setTerrainType).
-	if (eOldRoute != NO_ROUTE)
-	{
-		emitPlotRouteRemoved(GC.getMap().plotNum(getX(), getY()), getOwner(), (int)eOldRoute);
-	}
-	if (eNewValue != NO_ROUTE)
-	{
-		emitPlotRouteAdded(GC.getMap().plotNum(getX(), getY()), getOwner(), (int)eNewValue);
-	}
+	// The commit, the hash and the facts; then this setter's own EFFECTS below.
+	setRouteTypeInternal(eNewValue);
 
 	if (isOwned())
 	{
@@ -7970,35 +7912,8 @@ int CvPlot::getRiverCrossingCount() const
 void CvPlot::changeRiverCrossingCount(int iChange)
 {
 	PROFILE_EXTRA_FUNC();
-	const bool bWasRiver = m_iRiverCrossingCount > 0;
-	m_iRiverCrossingCount += iChange;
+	setRiverCrossingCountInternal(m_iRiverCrossingCount + iChange);
 	FASSERT_NOT_NEGATIVE(m_iRiverCrossingCount);
-
-	bool bNewRiverPlot = false;
-	bool bRiverRemoved = false;
-	if (bWasRiver)
-	{
-		if (m_iRiverCrossingCount < 1)
-		{
-			bRiverRemoved = true;
-		}
-	}
-	else if (m_iRiverCrossingCount > 0)
-	{
-		bNewRiverPlot = true;
-	}
-	if (bNewRiverPlot || bRiverRemoved)
-	{
-		// The PRESENCE transition is the fact; the running crossing count is not (only crossing zero changes state).
-		if (bNewRiverPlot)
-		{
-			emitPlotRiverAdded(GC.getMap().plotNum(getX(), getY()), (int)getOwner(), m_iRiverCrossingCount);
-		}
-		else
-		{
-			emitPlotRiverRemoved(GC.getMap().plotNum(getX(), getY()), (int)getOwner(), m_iRiverCrossingCount);
-		}
-	}
 }
 
 
