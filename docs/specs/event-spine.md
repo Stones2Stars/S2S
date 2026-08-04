@@ -193,8 +193,10 @@ reads objects). **Build order:** spine + the modifier scope accumulator → logg
   the headquarters designation, tested off the loaded IDInfo via `CvGame::isHeadquartersByOwnerId`, the
   `isHolyCityByOwnerId` precedent, because `CvGame`'s array deserializes before the cities), `CvPlayer::read`
   (anarchy turns — a save can load mid-revolution — the golden-age twin), `CvPlot::read` (the plot's city, whose
-  fact no other slot covers — no slot ever covers for another), `CvTeam::read` (the member count, emitted after `m_eID`
-  deserializes rather than beside the count, since the id the fact hangs on is only valid from there), and
+  fact no other slot covers — no slot ever covers for another), `CvTeam::read` (the member count, landed through `changeNumMembers` after `m_eID`
+  deserializes rather than beside the count, since the id the fact hangs on is only valid from there — and that
+  is the team's WHOLE reseed, because `EmpireContext` forwards exactly three team facts and the other two, techs
+  and projects, are announced per-self from `CvPlayer::read`), and
   **`CvUnit::read`, which previously emitted NOTHING** — the instance, its promotion set and its combat-class
   set, each at its own genuine per-element read. ⛔ Two in-read halves are deliberately ABSENT and are not
   oversights: **the world unit-created counter** (nothing stores a derivative of it — the cap reads it live, so

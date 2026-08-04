@@ -5808,7 +5808,10 @@ void CvTeam::read(FDataStreamBase* pStream)
 	// Init data before load
 	reset();
 
-	WRAPPER_READ(wrapper, "CvTeam", &m_iNumMembers);
+	// ⚠ Deserializes HERE, where the stream puts it, but LANDS through changeNumMembers further down -- the fact
+	// hangs on m_eID, which reset() cleared and which is only read much later. The local carries it across.
+	int iLoadedNumMembers = 0;
+	WRAPPER_READ_DECORATED(wrapper, "CvTeam", &iLoadedNumMembers, "m_iNumMembers");
 	WRAPPER_READ(wrapper, "CvTeam", &m_iAliveCount);
 	WRAPPER_READ(wrapper, "CvTeam", &m_iEverAliveCount);
 	WRAPPER_READ(wrapper, "CvTeam", &m_iNumCities);
@@ -5823,13 +5826,10 @@ void CvTeam::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvTeam", &m_bCapitulated);
 
 	WRAPPER_READ(wrapper, "CvTeam", (int*)&m_eID);
-	// THE RESEED EMIT (DEC-spine-reseed): m_iNumMembers deserializes WHOLESALE (read at the top of read()), so
-	// changeNumMembers never runs on load. Emitted HERE rather than beside that read: m_eID -- the id the fact
-	// hangs on -- is only valid from this line on, reset() having cleared it. The count IS the delta (old = 0).
-	if (m_iNumMembers > 0)
-	{
-		emitTeamMemberAdded((int)m_eID, m_iNumMembers);
-	}
+	// The member count LANDS here, through its own changer -- the first line at which m_eID, the id the fact
+	// hangs on, is valid. changeNumMembers needs no internal twin: it is already commit + announce with no
+	// effects of its own, so the load calls it directly and the count IS the delta (the member is still 0).
+	changeNumMembers(iLoadedNumMembers);
 
 	WRAPPER_READ_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_aiStolenVisibilityTimer);
 	EVENT_GRANTS_READ(wrapper, "CvTeam", m_eventGrants);
