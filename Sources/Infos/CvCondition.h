@@ -109,8 +109,13 @@ public:
 	// --- PRESENCE (PresenceAtom, json §3.4) ---
 	std::string type;                           // an INFOTYPE id: TECH_*/BUILDING_*/BONUS_*/CIVIC_*/... (or a token)
 	CvCascScope scope;                          // implied-from-type at parse, explicit here
-	int min;                                    // presence = min:1; a count threshold otherwise; -1 = unset
-	int max;                                    // -1 = unset
+	int min;                                    // presence = min:1; a count threshold otherwise
+	int max;
+	// ⛔ WHETHER A BOUND WAS AUTHORED, as its own flag -- NEVER inferred from the value's sign. A PROPERTY_ band
+	// bound is legitimately NEGATIVE (the low-education tiers are authored entirely in negative bands), so a
+	// `min < 0 means absent` test silently drops a real bound and collapses the clause to always-true.
+	bool hasMin;
+	bool hasMax;
 	CvCascConnection connection;
 	CvCascVicinity vicinity;
 
@@ -123,7 +128,7 @@ public:
 	int id;
 
 	CvCondition()
-		: kind(CASC_COND_GROUP), enabled(NULL), disabled(NULL), scope(CASC_SCOPE_CITY), min(-1), max(-1),
+		: kind(CASC_COND_GROUP), enabled(NULL), disabled(NULL), scope(CASC_SCOPE_CITY), min(-1), max(-1), hasMin(false), hasMax(false),
 		  connection(CASC_CONN_NONE), vicinity(CASC_VIC_NONE), predKind(CASC_PRED_UNKNOWN), id(-1) {}
 	~CvCondition();
 

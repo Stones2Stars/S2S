@@ -147,6 +147,15 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <C
     in TWO infos; both compiled "clean" by that grep, and one surfaced a build later.)* **Check `grep -c C1003`:
     if it is non-zero, errors are hidden — verify your own files by reading what you changed, not by their
     absence from the log.**
+  - **⛔ BUT `C1003 == 0` DOES *NOT* MEAN THE CENSUS IS COMPLETE — AFTER A BROAD CUT, A *LOW* ERROR COUNT IS
+    ITSELF THE SUSPICIOUS SIGNAL.** MSVC stops reporting an undefined identifier well before the 100-error cap,
+    so a delete-driven cut can leave dozens of live call sites and report a handful. **Measured: deleting six
+    mark-routing helpers left 52 live references in one file and the build reported 7 — zero `C1003`.** The
+    seven that reported were the ones sitting BEFORE the consumer class declaration; every call inside the
+    class body was silent. ⚑ **The tell is the RATIO, not the cap:** if you deleted a symbol with N known
+    references and the build names far fewer, the log is not the census. **After any delete-driven cut, count
+    the surviving references with a grep and treat THAT as the worklist** — the compiler is the census for a
+    deleted member only insofar as it actually reports one, and it is under no obligation to report them all.
   - **⛔ AN INCREMENTAL `build` DOES NOT REBUILD THE PCH, SO A HEADER EDIT CAN BE INVISIBLE TO EVERY TU.**
     `CvGlobals.h`, `CvEnums.h` and the rest of the umbrella live in `Build/<Config>/CvGameCoreDLL.pch`, and an
     incremental build has been observed serving a **day-old** PCH against freshly-edited headers — so every

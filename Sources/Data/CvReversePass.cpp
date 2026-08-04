@@ -691,6 +691,8 @@ namespace
 		pClone->scope = pCondition->scope;
 		pClone->min = pCondition->min;
 		pClone->max = pCondition->max;
+		pClone->hasMin = pCondition->hasMin;
+		pClone->hasMax = pCondition->hasMax;
 		pClone->connection = pCondition->connection;
 		pClone->vicinity = pCondition->vicinity;
 		pClone->predKind = pCondition->predKind;
@@ -729,7 +731,7 @@ namespace
 		pPresence->kind = CASC_COND_PRESENCE;
 		pPresence->type = pSourceInfo->getType();
 		pPresence->scope = pEntry->scope;   // the AUTHORED deposit's scope axis, never the source kind's
-		pPresence->min = 1;
+		pPresence->min = 1; pPresence->hasMin = true;
 		pPresence->id = iSourceId;
 		if (pEntry->enabled != NULL)
 		{
@@ -861,7 +863,7 @@ namespace
 				pPresence->kind = CASC_COND_PRESENCE;
 				pPresence->type = pSourceInfo->getType();
 				pPresence->scope = ePresenceScope;
-				pPresence->min = 1;
+				pPresence->min = 1; pPresence->hasMin = true;
 				pPresence->id = iSource;
 				pLanded->enabled = pPresence;
 				pTargetInfo->landOwnOutputEntry(pLanded);

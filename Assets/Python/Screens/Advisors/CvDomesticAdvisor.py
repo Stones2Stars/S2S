@@ -6,12 +6,14 @@ import cPickle
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 AFM = CyArtFileMgr()
 TRNSLTR = CyTranslator()
 
+TEXT = CyGameTextMgr()
 class CvDomesticAdvisor:
 
 	def __init__(self, screenId):
@@ -91,16 +93,18 @@ class CvDomesticAdvisor:
 			self.HURRY_TYPE_POP = GC.getInfoTypeForString("HURRY_POPULATION")
 			self.HURRY_TYPE_GOLD = GC.getInfoTypeForString("HURRY_GOLD")
 
-			# Yield icons
-			aList = []
-			for i in xrange(YieldTypes.NUM_YIELD_TYPES):
-				aList.append(u'%c' % GC.getYieldInfo(i).getChar())
-			self.yieldIcons = list(aList)
-			# Commerce icons
-			aList = []
-			for i in xrange(CommerceTypes.NUM_COMMERCE_TYPES):
-				aList.append(u'%c' % GC.getCommerceInfo(i).getChar())
-			self.commerceIcons = list(aList)
+			#	A font glyph is TEXT-plane, never info data ([patterns.md] THE PYTHON READ BOUNDARY): the
+			#	translator publishes each symbol as an [ICON_*] token, so this resolves through the text system
+			#	and needs no info accessor at all. Ordered to match YieldTypes / CommerceTypes.
+			self.yieldIcons = [
+				TRNSLTR.getText("[ICON_FOOD]", ()),
+				TRNSLTR.getText("[ICON_PRODUCTION]", ()),
+				TRNSLTR.getText("[ICON_COMMERCE]", ())]
+			self.commerceIcons = [
+				TRNSLTR.getText("[ICON_GOLD]", ()),
+				TRNSLTR.getText("[ICON_RESEARCH]", ()),
+				TRNSLTR.getText("[ICON_CULTURE]", ()),
+				TRNSLTR.getText("[ICON_ESPIONAGE]", ())]
 
 			# Special symbols for building, wonder and project views
 			self.objectUnderConstruction = self.yieldIcons[YieldTypes.YIELD_PRODUCTION]
@@ -254,23 +258,23 @@ class CvDomesticAdvisor:
 				COLUMNS_LIST.append((name, 50, "text", None, self.canHurry, i, header))
 			# Resources ("bonuses") -- presence
 			for i in xrange(GC.getNumBonusInfos()):
-				info = GC.getBonusInfo(i)
-				desc = u"%c" % info.getChar()
+				desc = u"%c" % TEXT.getSymbolChar("BONUS_", i)
 				key = "HAS_" + self.getBonusKey(i)
 
 				COLUMNS_LIST.append((key, 24, "bonus", None, self.calculateHasBonus, i, desc))
 			# Resources ("bonuses") -- effects
 			for i in xrange(GC.getNumBonusInfos()):
-				info = GC.getBonusInfo(i)
-				desc = u"%c" % info.getChar()
+				desc = u"%c" % TEXT.getSymbolChar("BONUS_", i)
 				key = self.getBonusKey(i)
 
 				COLUMNS_LIST.append((key, 50, "text", None, self.calculateBonus, i, desc))
 			# Properties
 			for i in xrange(GC.getNumPropertyInfos()):
-				info = GC.getPropertyInfo(i)
-				desc = u"%c" % info.getChar()
-				key = info.getType()
+				#	A property's glyph is a TRANSLATOR token, not a symbol-pass read: the token map builds an
+				#	`[ICON_<TYPE>]` entry per property at load (CvDllTranslator), which is why this registry takes
+				#	the other route from the five getSymbolChar serves.
+				key = INFO.getType("PROPERTY_", i)
+				desc = TRNSLTR.getText("[ICON_" + key + "]", ())
 
 				COLUMNS_LIST.append((key, 53, "int", None, self.calculateProperty, i, desc))
 				COLUMNS_LIST.append((key+"_CHANGE", 53, "int", None, self.calculatePropertyChange, i, "&#177 " + desc))
@@ -744,7 +748,7 @@ class CvDomesticAdvisor:
 		iUnit = city.getConscriptUnit()
 		if iUnit == -1:
 			return u""
-		return unicode(GC.getUnitInfo(iUnit).getDescription())
+		return unicode(INFO.getDescription("UNIT_", iUnit))
 
 	def calculateConscriptUnit(self, city, szKey, arg):
 		if city.canConscript():
@@ -764,10 +768,10 @@ class CvDomesticAdvisor:
 				lReligions.append(i)
 
 		for i in xrange(len(lHolyCity)):
-			szReturn += u"%c" %(GC.getReligionInfo(lHolyCity[i]).getHolyCityChar())
+			szReturn += u"%c" %(TEXT.getHolyCitySymbolChar(lHolyCity[i]))
 
 		for i in xrange(len(lReligions)):
-			szReturn += u"%c" %(GC.getReligionInfo(lReligions[i]).getChar())
+			szReturn += u"%c" %(TEXT.getSymbolChar("RELIGION_", lReligions[i]))
 
 		return szReturn
 
@@ -782,10 +786,10 @@ class CvDomesticAdvisor:
 				lCorps.append(i)
 
 		for i in xrange(len(lHeadquarters)):
-			szReturn += u"%c" %(GC.getCorporationInfo(lHeadquarters[i]).getHeadquarterChar())
+			szReturn += u"%c" %(TEXT.getHeadquarterSymbolChar(lHeadquarters[i]))
 
 		for i in xrange(len(lCorps)):
-			szReturn += u"%c" %(GC.getCorporationInfo(lCorps[i]).getChar())
+			szReturn += u"%c" %(TEXT.getSymbolChar("CORPORATION_", lCorps[i]))
 
 		return szReturn
 
@@ -1149,7 +1153,7 @@ class CvDomesticAdvisor:
 
 		szReturn = u""
 		if bestOrder != -1:
-			szReturn = GC.getBuildingInfo(bestOrder).getDescription()
+			szReturn = INFO.getDescription("BUILDING_", bestOrder)
 
 		if szReturn == CyCity.getProductionName():
 			szReturn = u""

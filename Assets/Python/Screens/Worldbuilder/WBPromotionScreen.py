@@ -11,6 +11,7 @@ import WorldBuilder
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -77,7 +78,7 @@ class WBPromotionScreen:
 		screen.addDropDownBoxGFC("CombatClass", iWidth + 40, self.iTable_Y - 30, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
 		screen.addPullDownString("CombatClass", CyTranslator().getText("TXT_KEY_WB_CITY_ALL",()), -2, -2, -2 == iSelectedClass)
 		for iCombatClass in xrange(GC.getNumUnitCombatInfos()):
-			screen.addPullDownString("CombatClass", GC.getUnitCombatInfo(iCombatClass).getDescription(), iCombatClass, iCombatClass, iCombatClass == iSelectedClass)
+			screen.addPullDownString("CombatClass", INFO.getDescription("UNITCOMBAT_", iCombatClass), iCombatClass, iCombatClass, iCombatClass == iSelectedClass)
 
 		sText = u"<font=3b>" + CyTranslator().getText("TXT_KEY_WB_COPY_ALL", (CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_UNIT", ()),)) + "</font>"
 		sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
@@ -156,8 +157,8 @@ class WBPromotionScreen:
 			screen.setTableText("WBCurrentUnit", 2, iRow, "<font=3>" + sColor + sText + "</color></font>", pUnitX.getButton(), WidgetTypes.WIDGET_PYTHON, 8300 + i[0], i[1], 1<<0)
 			iLeader = pPlayerX.getLeaderType()
 			iCiv = pUnitX.getCivilizationType()
-			screen.setTableText("WBCurrentUnit", 0, iRow, "", GC.getCivilizationInfo(iCiv).getButton(), WidgetTypes.WIDGET_PYTHON, 7872, iCiv, 1<<0 )
-			screen.setTableText("WBCurrentUnit", 1, iRow, "", GC.getLeaderHeadInfo(iLeader).getButton(), WidgetTypes.WIDGET_PYTHON, 7876, iLeader, 1<<0 )
+			screen.setTableText("WBCurrentUnit", 0, iRow, "", INFO.getButton("CIVILIZATION_", iCiv), WidgetTypes.WIDGET_PYTHON, 7872, iCiv, 1<<0 )
+			screen.setTableText("WBCurrentUnit", 1, iRow, "", INFO.getButton("LEADER_", iLeader), WidgetTypes.WIDGET_PYTHON, 7876, iLeader, 1<<0 )
 
 	def sortPromotions(self):
 		global lList

@@ -8,10 +8,12 @@ import WBInfoScreen
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 
+TEXT = CyGameTextMgr()
 bHeadquarter = False
 iOwnerType = 0
 lCities = []
@@ -101,7 +103,7 @@ class WBCorporationScreen:
 		screen.setTableText("WBAllCorporations", 0, 1, "<font=3b>" + sText + " (-)</font>", "", WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<2)
 
 		for i in xrange(GC.getNumCorporationInfos()):
-			sText = u"%c" %(GC.getCorporationInfo(i).getChar())
+			sText = u"%c" %(TEXT.getSymbolChar("CORPORATION_", i))
 			screen.setTableColumnHeader("WBAllCorporations", i + 1, "", (iWidth - 150) / GC.getNumCorporationInfos())
 			screen.setTableText("WBAllCorporations", i + 1, 0, "<font=4>" + sText + "</font>", "", WidgetTypes.WIDGET_PYTHON, 8201, i, 1<<2)
 			screen.setTableText("WBAllCorporations", i + 1, 1, "<font=4>" + sText + "</font>", "", WidgetTypes.WIDGET_PYTHON, 8202, i, 1<<2)
@@ -119,15 +121,15 @@ class WBCorporationScreen:
 			iCiv = pPlayerX.getCivilizationType()
 			sColor = u"<color=%d,%d,%d,%d>" %(pPlayerX.getPlayerTextColorR(), pPlayerX.getPlayerTextColorG(), pPlayerX.getPlayerTextColorB(), pPlayerX.getPlayerTextColorA())
 			iRow = screen.appendTableRow("WBCityCorporations")
-			screen.setTableText("WBCityCorporations", 0, iRow, "", GC.getCivilizationInfo(iCiv).getButton(), WidgetTypes.WIDGET_PYTHON, 7872, iCiv, 1<<2)
-			screen.setTableText("WBCityCorporations", 1, iRow, "", GC.getLeaderHeadInfo(iLeader).getButton(), WidgetTypes.WIDGET_PYTHON, 7876, iLeader, 1<<2)
+			screen.setTableText("WBCityCorporations", 0, iRow, "", INFO.getButton("CIVILIZATION_", iCiv), WidgetTypes.WIDGET_PYTHON, 7872, iCiv, 1<<2)
+			screen.setTableText("WBCityCorporations", 1, iRow, "", INFO.getButton("LEADER_", iLeader), WidgetTypes.WIDGET_PYTHON, 7876, iLeader, 1<<2)
 			screen.setTableText("WBCityCorporations", 2, iRow, "<font=3>" + sColor + loopCity.getName() + "</color></font>", "", WidgetTypes.WIDGET_PYTHON, 7200 + iPlayerX, loopCity.getID(), 1<<0)
 			for i in xrange(GC.getNumCorporationInfos()):
 				sText = " "
 				if loopCity.isHasCorporation(i):
-					sText = u"%c" %(GC.getCorporationInfo(i).getChar())
+					sText = u"%c" %(TEXT.getSymbolChar("CORPORATION_", i))
 				if loopCity.isHeadquartersByType(i):
-					sText = u"%c" %(GC.getCorporationInfo(i).getHeadquarterChar())
+					sText = u"%c" %(TEXT.getHeadquarterSymbolChar(i))
 				screen.setTableText("WBCityCorporations", i + 3, iRow, "<font=4>" + sText + "</font>", "", WidgetTypes.WIDGET_PYTHON, 8201, i, 1<<2)
 
 	def placeHeadquarter(self):
@@ -145,14 +147,14 @@ class WBCorporationScreen:
 
 		for i in xrange(GC.getNumCorporationInfos()):
 			iRow = screen.appendTableRow("WBHeadquarter")
-			screen.setTableText("WBHeadquarter", 0, iRow, "", GC.getCorporationInfo(i).getButton(), WidgetTypes.WIDGET_PYTHON, 8201, i, 1<<0)
+			screen.setTableText("WBHeadquarter", 0, iRow, "", INFO.getButton("CORPORATION_", i), WidgetTypes.WIDGET_PYTHON, 8201, i, 1<<0)
 			pHeadquarter = CyGame().getHeadquarters(i)
 			if pHeadquarter:
 				iPlayerX = pHeadquarter.getOwner()
 				pPlayerX = GC.getPlayer(iPlayerX)
 				sColor = u"<color=%d,%d,%d,%d>" %(pPlayerX.getPlayerTextColorR(), pPlayerX.getPlayerTextColorG(), pPlayerX.getPlayerTextColorB(), pPlayerX.getPlayerTextColorA())
 				iLeader = pPlayerX.getLeaderType()
-				screen.setTableText("WBHeadquarter", 1, iRow, "", GC.getLeaderHeadInfo(iLeader).getButton(), WidgetTypes.WIDGET_PYTHON, 7876, iPlayerX * 10000 + iLeader, 1<<0)
+				screen.setTableText("WBHeadquarter", 1, iRow, "", INFO.getButton("LEADER_", iLeader), WidgetTypes.WIDGET_PYTHON, 7876, iPlayerX * 10000 + iLeader, 1<<0)
 				screen.setTableText("WBHeadquarter", 2, iRow, "<font=3>" + sColor + pHeadquarter.getName() + "</color></font>", GC.getCivilizationInfo(pHeadquarter.getCivilizationType()).getButton(), WidgetTypes.WIDGET_PYTHON, 7200 + iPlayerX, pHeadquarter.getID(), 1<<0)
 
 	def handleInput(self, inputClass):

@@ -4,11 +4,13 @@ import WBDiplomacyScreen
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 
 
+TEXT = CyGameTextMgr()
 class WBTradeScreen:
 
 	def __init__(self, WB):
@@ -93,7 +95,7 @@ class WBTradeScreen:
 		if iType == TradeableItems.TRADE_GOLD_PER_TURN:
 			return CyTranslator().getText("[ICON_GOLD]", ()) + CyTranslator().getText("TXT_KEY_MISC_GOLD_PER_TURN", (iData,))
 		if iType == TradeableItems.TRADE_RESOURCES:
-			return u"%c%s" %(GC.getBonusInfo(iData).getChar(), GC.getBonusInfo(iData).getDescription())
+			return u"%c%s" %(TEXT.getSymbolChar("BONUS_", iData), INFO.getDescription("BONUS_", iData))
 		if iType == TradeableItems.TRADE_GOLD:
 			return CyTranslator().getText("[ICON_GOLD]", ()) + CyTranslator().getText("TXT_KEY_MISC_GOLD", (iData,))
 		return ""

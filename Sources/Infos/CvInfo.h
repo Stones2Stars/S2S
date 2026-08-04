@@ -202,6 +202,18 @@ public:
 		infoScalarSlot(eScalar, eFamily, iKind);
 		return modifier(eFamily, iKind, eScope, eUnit, bIncludeAiOnly);
 	}
+	// The wellbeing point read exposes the AUTHORED families' signed compiled sums (happiness/health); the
+	// four-channel sign ROUTING is a fill/valuation rule (modifier.md §2b -- expectedWellbeing), so the two
+	// unauthored channels (ANGER/UNHEALTH) hold no slot and read 0 here. On the BASE so every registry serves
+	// it -- a bonus carries wellbeing exactly as a building does.
+	int getFlatWellbeing(WellbeingChannel eChannel, CvCascScope eScope) const
+	{
+		if (eChannel == WELLBEING_ANGER || eChannel == WELLBEING_UNHEALTH)
+		{
+			return 0;
+		}
+		return modifier(infoWellbeingFamily(eChannel), CHANNEL_AMOUNT, eScope, CASC_UNIT_FLAT);
+	}
 	// The compiled conditioned list + its per-family range (patterns.md § THE GETTER SETUP read 2: the typed
 	// entries with prebuilt trees -- what the package rebuild, the pedia, and the valuation walk). Empty/0-range
 	// when the type composes no modifiers.

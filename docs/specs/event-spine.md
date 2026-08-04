@@ -70,20 +70,32 @@ reads objects). **Build order:** spine + the modifier scope accumulator → logg
   complete: terrain / feature / improvement / route / bonus / owner / **type / river / irrigation / landmark /
   worked**, so the per-scope contexts are maintained purely by facts, with no choke point driving a derivation
   directly ([contexts.md](../architecture/contexts.md)).
-  ⚠ **A substrate TYPE fact carries the OLD value alongside the new** (in `iA`, the `plotOwnerChanged` shape) —
-  terrain / feature / improvement / route, as `plotType` and `landmark` already did. This is not cosmetic: a
-  consumer that learns only what ARRIVED cannot re-mark a deposit conditioned or per-scaled on the type that
-  LEFT, so that deposit keeps contributing until something unrelated dirties it — and nothing self-heals it
-  ([DEC-no-self-heal](../architecture/decisions.md#dec-no-self-heal)). ⛔ The plot-BONUS fact is deliberately
-  NOT this shape: it carries the placed/removed DELTA instead, so its removal case is already named and its
-  `iA` must never be read as an old id. The **commerce SLIDERS** are on the surface too
-  (`SEVT_COMMERCE_PERCENT_CHANGED`, `CvPlayer::setCommercePercent` — the one choke point `changeCommercePercent` /
+  ⛔ **THE SUBSTRATE FACTS ARE `ADDED`/`REMOVED` PAIRS, NOT `CHANGED` (owner ruling — see § A FACT NAMES THE
+  HAPPENING).** Terrain / feature / improvement / route each announce a source LEAVING and a source ARRIVING as
+  two facts, because each end is its own consumer work: the old source's deposits are withdrawn, the new
+  source's applied. ⚑ Carrying the old value in `iA` on one `CHANGED` fact was the earlier shape and it is what
+  left the gap — a single "the slot moved" fact makes every consumer DERIVE the removal, and the derivation is
+  impossible once the state has moved. A `REMOVED` fact is emitted while the old state still holds, so a
+  withdrawal resolves against exactly what it deposited ([state-repositories.md](../architecture/state-repositories.md)
+  § THE INVARIANT).
+  ⚖ **THE WHOLE FAMILY IS `<SCOPE>_<THING>_ADDED` / `_REMOVED`, SCOPE-QUALIFIED (owner):** `PLOT_BONUS_ADDED` /
+  `PLOT_BONUS_REMOVED` beside `CITY_BONUS_ADDED` / `CITY_BONUS_REMOVED` — a resource appearing ON A TILE and a
+  city GAINING that resource are different happenings with different consumers, so the scope belongs in the
+  name rather than in a reader's head.
+  ⛔ **AND A ±1 IN THE PAYLOAD IS NOT A SUBSTITUTE FOR THE NAME.** A `CHANGED` fact carrying a placed/removed
+  delta still hands the consumer a discriminator to branch on, which is the calculation relocated into a
+  `switch` (§ A FACT NAMES THE HAPPENING) — it is an improvement on an old-id payload and it is not the answer.
+  The direction belongs in the FACT'S IDENTITY, where a consumer reads it by arriving at all.
+  ⚑ **The payoff is that every consumer's direction-decoding collapses.** A consumer that today decodes three
+  conventions — an id pairing, a presence boolean in `iA`, a signed delta in `iB` — decodes none: the event it
+  received IS the direction. The **commerce SLIDERS** are on the surface too
+  (`SEVT_EMPIRE_COMMERCE_PERCENT_ADDED / _REMOVED`, `CvPlayer::setCommercePercent` — the one choke point `changeCommercePercent` /
   `verifyGoldCommercePercent` / `changeCommerceFlexibleCount` all reach the value through): a slider is synced
   player state every city's realized per-commerce rate is built on ([modifier.md](modifier.md) §2a), so DOMAIN.
   ⚠ **ONE slider move emits SEVERAL facts** — the setter REBALANCES the other channels in place to hold the total
   at 100, writing them directly rather than recursing, so each channel it moves emits its own fact; a consumer
   reading only the caller's channel sees a 100-total that does not add up. **PROPERTY VALUES** are on the surface
-  too (`SEVT_PROPERTY_CHANGED`, the three `CvProperties` mutation choke points — `setValue` plus the two
+  too (`SEVT_PROPERTY_ADDED / _REMOVED`, the three `CvProperties` mutation choke points — `setValue` plus the two
   new-property `push_back` branches, which `changeValue` / `changeValueByProperty` / `setValueByProperty` all
   funnel through): `PROPERTY_*` is one cascade channel per property info
   ([state-repositories.md](../architecture/state-repositories.md)), read by `CityContext::propertyValue`, by every
@@ -118,26 +130,26 @@ reads objects). **Build order:** spine + the modifier scope accumulator → logg
   marked without a `worked` in-read emit. The worked SET itself is read live at the rebuild
   (`CvCity::isWorkingPlot`), never replayed from events.
   **THE TIER-1 HOLES ARE CLOSED** — the facts a named consumer read but nothing announced. **`isPowered()` is
-  whole**: its three ORed legs each announce now — the power COUNT (`SEVT_POWER_CHANGED`), the **disabled-power
-  timer** (`SEVT_CITY_POWER_DISABLED_CHANGED`, `CvCity::changeDisabledPowerTimer`) and the **area clean-power**
-  flag (`SEVT_AREA_CLEAN_POWER_CHANGED`, `CvArea::changeCleanPowerCount`). ⚠ The timer TICKS DOWN every turn, so
+  whole**: its three ORed legs each announce now — the power COUNT (`SEVT_CITY_POWER_ADDED / _REMOVED`), the **disabled-power
+  timer** (`SEVT_CITY_POWER_DISABLED_ADDED / _REMOVED`, `CvCity::changeDisabledPowerTimer`) and the **area clean-power**
+  flag (`SEVT_AREA_CLEAN_POWER_ADDED / _REMOVED`, `CvArea::changeCleanPowerCount`). ⚠ The timer TICKS DOWN every turn, so
   it emits at the derived 0-CROSSING, never per decrement — a counter that moves on a schedule is not a state
   change until its verdict flips, and this is the general rule for every timer-backed fact. Beside them:
-  **`SEVT_HEADQUARTERS_CHANGED`** (`CvGame::setHeadquarters`, per affected city — the `setHolyCity` shape, and
+  **`SEVT_CITY_HEADQUARTERS_ADDED / _REMOVED`** (`CvGame::setHeadquarters`, per affected city — the `setHolyCity` shape, and
   **not** a duplicate of the building/corporation PRESENCE facts the same setter drives),
-  **`SEVT_PLOT_CITY_CHANGED`** (`CvPlot::setPlotCity` — the ONE emit covering its `changeCityRadiusCount` /
-  `changePlayerCityRadiusCount` pass-throughs), **`SEVT_GOVERNMENT_CENTER_CHANGED`** and
-  **`SEVT_CITY_FRESH_WATER_CHANGED`** (the two `CvCity` counters, at their existing verdict crossings; the fresh
+  **`SEVT_PLOT_CITY_ADDED / _REMOVED`** (`CvPlot::setPlotCity` — the ONE emit covering its `changeCityRadiusCount` /
+  `changePlayerCityRadiusCount` pass-throughs), **`SEVT_CITY_GOVERNMENT_CENTER_ADDED / _REMOVED`** and
+  **`SEVT_CITY_FRESH_WATER_ADDED / _REMOVED`** (the two `CvCity` counters, at their existing verdict crossings; the fresh
   water one is the provider-BUILDING-fed access counter, distinct from the plot-adjacency verdict the substrate
-  maintains), **`SEVT_ANARCHY_CHANGED`** (`CvPlayer::changeAnarchyTurns`), **`SEVT_TEAM_MEMBERS_CHANGED`** and
-  **`SEVT_AREA_TILES_CHANGED`** (the two bare counters `EmpireContext::teamMemberCount` / `CityContext`'s
-  AREA_SIZE + max-adjacent-water read), and **`SEVT_UNIT_CREATED_COUNT_CHANGED`** (the world-instance cap's
-  cumulative counter — distinct from `SEVT_UNIT_COUNT`, the player's LIVE per-type tally, and from
+  maintains), **`SEVT_EMPIRE_ANARCHY_ADDED / _REMOVED`** (`CvPlayer::changeAnarchyTurns`), **`SEVT_TEAM_MEMBER_ADDED / _REMOVED`** and
+  **`SEVT_AREA_TILE_ADDED / _REMOVED`** (the two bare counters `EmpireContext::teamMemberCount` / `CityContext`'s
+  AREA_SIZE + max-adjacent-water read), and **`SEVT_WORLD_UNIT_CREATED_COUNT_ADDED`** (the world-instance cap's
+  cumulative counter — distinct from `SEVT_EMPIRE_UNIT_COUNT_ADDED / _REMOVED`, the player's LIVE per-type tally, and from
   `SEVT_UNIT_CREATED`, the instance; all three fire at one birth and none duplicates another).
-  **THE UNIT PLANE has its dirty triggers** — [state-repositories.md](../architecture/state-repositories.md)
-  specifies a unit's resolved values dirty *"ONLY when a promotion or combat class changes"*, and neither
-  existed: `SEVT_UNIT_PROMOTION_CHANGED` (`CvUnit::processPromotion`, the ONE funnel both `setHasPromotion`
-  overloads reach) and `SEVT_UNIT_COMBAT_CHANGED` (`CvUnit::processUnitCombat`, reached once past
+  **THE UNIT PLANE has its mark triggers** — [state-repositories.md](../architecture/state-repositories.md)
+  specifies a unit's resolved values move *"ONLY when a promotion or combat class changes"*, and neither
+  existed: `SEVT_UNIT_PROMOTION_ADDED / _REMOVED` (`CvUnit::processPromotion`, the ONE funnel both `setHasPromotion`
+  overloads reach) and `SEVT_UNIT_COMBAT_ADDED / _REMOVED` (`CvUnit::processUnitCombat`, reached once past
   `setHasUnitCombat`'s change guard AND its game-option/spy validity gate). **`SEVT_UNIT_KILLED`** is the DEATH
   TWIN `SEVT_UNIT_CREATED` lacked — without it grants and the out-of-process replay see units born and never die.
   ⛔ Its correctness is **STRUCTURAL, not positional**: it is emitted on the FIRST line of **`CvUnit::die`**, the
@@ -146,7 +158,7 @@ reads objects). **Build order:** spine + the modifier scope accumulator → logg
   (evacuate-to-capital, last-stand survival) are decided BEFORE `die()` is entered and never reach it, so a new
   outcome cannot silently slip in ahead of the fact — the shape a placement "past every early return" could not
   guarantee. An OFF-MAP death is a real outcome of that function, not a skipped one: `iSrcLoc` is -1 and the unit
-  is deleted exactly as an on-map one is. Beside it, **`SEVT_UNIT_DEATH_SCHEDULED`** carries `m_bDeathDelay`, the
+  is deleted exactly as an on-map one is. Beside it, **`SEVT_UNIT_DEATH_SCHEDULE_ADDED / _REMOVED`** carries `m_bDeathDelay`, the
   save-carried state a DELAYED kill leaves behind so the object outlives combat resolution, read across the engine
   through `isDelayedDeath()`/`isDead()`. It is **not** a duplicate of KILLED: a scheduled death is an INTENTION
   whose outcome can still flip to survival, so a consumer treating it as a death would bury units that walk away.
@@ -175,20 +187,20 @@ reads objects). **Build order:** spine + the modifier scope accumulator → logg
   endpoint has no honest caller. Open follow-ups (the tile-driven vicinity backstop; the per-city enabler
   priming that preceded the reseed emits): [todo.md](../plans/structural-cleanup/todo.md).
     **GAME OPTIONS and DIFFICULTY announce** — the two facts every maintained verdict is built on but nothing used
-  to announce. **`SEVT_GAME_OPTION_CHANGED`** (`CvGame::setOption` / `setModderGameOption`, both unguarded so the
+  to announce. **`SEVT_GAME_OPTION_ADDED / _REMOVED`** (`CvGame::setOption` / `setModderGameOption`, both unguarded so the
   emit supplies the flip guard): an option is the ONE axis an entity-level gate reads
   ([DEC-entity-gate](../architecture/decisions.md#dec-entity-gate)), and options are read BELOW that level too
   (civics carry option-gated production / happiness / commerce deposits), so a flip moves gate verdicts AND
   deposits at once. ⚠ It carries TWO id spaces, so `iB` = `GameOptionSpace` disambiguates them (the
-  `SEVT_PROPERTY_CHANGED` shape — a game-option id and a modder-option id are otherwise the same int).
-  **`SEVT_PLAYER_HANDICAP_CHANGED`** (`CvPlayer::setHandicap`) is a genuine cascade input rather than
+  `SEVT_PROPERTY_ADDED / _REMOVED` shape — a game-option id and a modder-option id are otherwise the same int).
+  **`SEVT_EMPIRE_HANDICAP_ADDED / _REMOVED`** (`CvPlayer::setHandicap`) is a genuine cascade input rather than
   observability: the gather folds the handicap's own modifier families into that player's packages, so
   **FLEXIBLE DIFFICULTY moving it silently froze every handicap-derived deposit at the old difficulty** with
-  nothing to re-derive it. **`SEVT_GAME_HANDICAP_CHANGED`** (`CvGame::setHandicapType`) is its DISTINCT twin, not
+  nothing to re-derive it. **`SEVT_GAME_HANDICAP_ADDED / _REMOVED`** (`CvGame::setHandicapType`) is its DISTINCT twin, not
   a duplicate — the derived average over alive humans that every `getAI*` advantage reads
   ([engine.md](../reference/engine.md): AI advantages scale with the HUMAN's difficulty), derived and never saved,
   so it needs no in-read half.
-  **`SEVT_GLOBAL_DEFINE_CHANGED`** completes that surface from the other side — the three
+  **`SEVT_GAME_GLOBAL_DEFINE_ADDED / _REMOVED`** completes that surface from the other side — the three
   `cvInternalGlobals::setDefine*` setters, i.e. the **LIVE-OPTION bridge**: a BUG option fires a Python callback →
   `GC.setDefineINT` → `cacheGlobals()`, so a user can flip an engine tunable at any time mid-game. It was the one
   mutation of that class with no fact at all, which made a live option unreactable by construction.
@@ -230,16 +242,16 @@ condition of the state change, and it is invisible to anything else that wanted 
   resolver AND appliers built (`tr_applyTechFirstDiscover` / `tr_applyBuildingFirstBuild` / `tr_applyPerTurn` /
   `tr_applyCityPerTurn` / `tr_applySpawn` / `tr_applyFullHeal` / `tr_promoteFromEntries`), dispatched from
   `SEVT_TECH_ACQUIRED` / `RELIGION_FOUNDED` / `PLAYER_INIT` / `CITY_FOUNDED` / `CIVIC_ADOPTED` / `TURN_STARTED` /
-  `BUILDING_CHANGED` / `BUILDING_PROCESSED` / `UNIT_CREATED` / `UNIT_ENTERED_CITY` / `CAPITAL_CHANGED`; the
+  `BUILDING_ADDED` / `BUILDING_ACTIVATED` / `UNIT_CREATED` / `UNIT_ENTERED_CITY` / `CAPITAL_CHANGED`; the
   remaining increments are in [grants-machine.md](triggers.md)).
   ⛔ It registers **LAST**, after the contexts / enabler / modifier: it READS the contexts (every entry condition
   evaluates through `fillEvalCtx`) and the enabler's operating set (a dormant building grants nothing), and unlike
   those machines it APPLIES -- so a stale read hands out a wrong GRANT, not merely a wrong number.
   Beside it: the **enabler's own** consumer
   (`Enabler/CvEnablerConsumer`, load-active), and the **modifier's own** consumer
-  (`Cascade/CvModifierConsumer`, load-active for cache building): DOMAIN events in, index-derived dirty marks
-  out (`DepositIndex::routeFor` + the condition-dependency routes --
-  [state-repositories.md](../architecture/state-repositories.md)).
+  (`Cascade/CvModifierConsumer`, load-active for cache building): DOMAIN events in, the moved source's compiled
+  deposits APPLIED into the slots they feed -- the maintained sum's one write path
+  ([state-repositories.md](../architecture/state-repositories.md)).
   The **tally** is NOT a consumer -- it reads the object-owned counts (`Tally/CvTally.{h,cpp}`).
   ⛔ **One consumer per system** -- the shared consumer that routed BOTH machines is dead
   ([superseded-ideas](../architecture/superseded-ideas.md) #16); never re-merge them.
@@ -277,6 +289,86 @@ lie about what happened; and if two call sites both look like the choke point, t
 that is (or emitting from the single place they both pass through), never picking one and hoping. Distinct facts
 that happen to fire together are NOT duplicates — emit both.
 
+## ⛔ A FACT NAMES THE HAPPENING — "something changed" IS NOT A FACT (owner)
+
+> *"`BUILDING_CHANGED` is not a valid event — it says that 'something happened', not what actually happened. Any
+> event that is not specific relies on actual calculation to happen."*
+
+**THE TEST, and it is about the FACT, never about what any consumer currently does with it: does the event name
+WHAT HAPPENED, or only that some state moved?** A fact that names only the movement has handed the consumer a
+question instead of an answer, and the only way to answer a question is to CALCULATE — so the calculation the
+spine exists to delete reappears inside every consumer at once.
+
+⇒ **It is [DEC-flag-is-fossil](../architecture/decisions.md#dec-flag-is-fossil) wearing the emit
+side's costume.** A staleness flag says *"something in this bucket moved"*; a `*_CHANGED` event with a direction bit
+says *"something about this entity moved"*. Both discard the identity of the happening, and both leave the
+consumer to reconstruct it. **A non-specific event is a staleness flag that learned to travel.**
+
+**⛔ SO WHERE SEVERAL DISTINCT HAPPENINGS REACH ONE CHOKE POINT, THEY ARE SEVERAL FACTS — never one fact with a
+discriminator field.** A payload int that a consumer must branch on to find out what occurred is the tell: the
+branch is the calculation, merely relocated from the consumer's body into its `switch`.
+
+⚑ **The tree already contains the correct shape, so this is a convergence and not a new design.** The UNIT plane
+is named happenings throughout — `UNIT_CREATED` / `UNIT_KILLED` / `UNIT_ENTERED_CITY` / `UNIT_LEFT_CITY` /
+`UNIT_DEATH_SCHEDULED`. Nobody wrote a `UNIT_CHANGED` carrying `±1`, and the reason is visible in what those
+facts buy: a consumer acts on each one directly, and none of them has ever needed a companion event to say what
+it meant.
+
+⚑ **And the argument is already recorded in this spec's own history, against exactly this failure.**
+`SEVT_CITY_FOUNDED` exists because founding *"produced NO identifiable fact before this, only a constellation of
+side-effects (`populationChanged`, `plotOwnerChanged`, `cityNetworkChanged`), which is why the settle-time
+provisions had no trigger to hang on."* A constellation of `*_CHANGED` movements could not substitute for the
+named happening — that is this rule, discovered once and then not generalized. Generalize it.
+
+⛔ **Splitting one `*_CHANGED` into its happenings is NOT the banned DUPLICATE.** A duplicate is ONE happening
+announced twice; this is SEVERAL happenings that were being announced as one. The rule above already settles it:
+*distinct facts that happen to fire together are not duplicates.* The choke point stays single — it simply emits
+the fact that names what it just did.
+
+> **⛔ `*_CHANGED` IS NOT A VALID EVENT NAME. FULL STOP (owner).** *"CHANGED is literally not a valid event
+> name — it has to say explicitly what happens."* There is no category of fact that is exempt, and the
+> exemptions this section used to list were wrong:
+>
+> | was | is |
+> |---|---|
+> | `PLOT_TERRAIN_CHANGED` | `PLOT_TERRAIN_ADDED` · `PLOT_TERRAIN_REMOVED` |
+> | `PLOT_FEATURE_CHANGED` | `PLOT_FEATURE_ADDED` · `PLOT_FEATURE_REMOVED` |
+> | `PLOT_BONUS_CHANGED` (`iB` = ±1) | `PLOT_BONUS_ADDED` · `PLOT_BONUS_REMOVED` |
+> | `BONUS_ADDED`/`_REMOVED` (city, unqualified) | `CITY_BONUS_ADDED` · `CITY_BONUS_REMOVED` |
+> | …and every other `*_CHANGED` | the pair of happenings it was standing in for |
+>
+> **⚖ THE EVENT IS THE OPERATOR; THE PAYLOAD IS ONLY EVER A MAGNITUDE (owner).** *"Events can hold a count, but
+> it is literally just a count — it's the event that shapes the subtraction/addition, not the count."* So a
+> fact may absolutely carry HOW MANY: `CITY_SPECIALIST_ADDED` with a count of 3 adds three times over, and
+> `CITY_SPECIALIST_REMOVED` with a count of 3 withdraws three times over. What the payload must never carry is
+> WHICH WAY — the count is unsigned in meaning, and the event name supplies the sign.
+> ⛔ So a `±1` in `iB`, a presence boolean in `iA`, or an old value beside a new one are all the same defect:
+> a DISCRIMINATOR the consumer must branch on, which is the calculation relocated into a `switch`. A consumer
+> learns what happened **by which event it received**, and reads the payload only for how much.
+>
+> ⚑ **SCOPE-QUALIFY THE NAME** — `PLOT_BONUS_ADDED` beside `CITY_BONUS_ADDED`. A resource appearing on a TILE
+> and a city GAINING that resource are different happenings with different consumers, so the scope belongs in
+> the name rather than in a reader's head.
+>
+> ⚑ **What this buys, concretely: every consumer's direction-decoding disappears.** A consumer that decodes
+> three conventions today — an id pairing, a boolean in `iA`, a signed delta in `iB` — decodes none. And a
+> WITHDRAWAL becomes announceable at the moment the old state still holds, which is what makes the maintained
+> sum exact ([state-repositories.md](../architecture/state-repositories.md) § THE INVARIANT) rather than
+> dependent on a consumer reconstructing what used to be true.
+>
+> **⚖ A SCALAR IS NO EXEMPTION, AND THE WORKED CASE IS POPULATION (owner):**
+> *"When a city grows a pop it is `CITY_POPULATION_ADDED 1`. If a city loses 2 pop, it is
+> `CITY_POPULATION_REMOVED 2`."*
+> ⚑ **Note what the payload is: the DELTA as a magnitude, not the new total.** `CITY_POPULATION_ADDED 1`, never
+> `POPULATION_SET 7` — a consumer maintaining a sum needs how much MOVED, and a new total would force it to
+> subtract against a remembered previous value, which is the derivation this whole rule removes. The one
+> consumer that wants the total reads the object, which owns it.
+> ⛔ So there is no "a scalar carrying its new value is already specific" carve-out: that was this document's own
+> wording and it was wrong. Every fact is `<SCOPE>_<THING>_ADDED` / `_REMOVED` with an unsigned magnitude.
+>
+> ⛔ **Splitting is NOT the banned duplicate** (above): a duplicate is ONE happening announced twice, this is
+> SEVERAL announced as one.
+
 **⛔ TOO MANY EVENTS IS BETTER THAN NOT ENOUGH (owner) — and if an emit is found not to exist, ADD IT.** When
 weighing whether some mutation "deserves" an event, the answer is EMIT. The costs are wildly asymmetric: a
 MISSING emit is a silently wrong value that no compiler and no runtime catches, found only by someone noticing a
@@ -298,7 +390,7 @@ wanted it, and why. Deferring converts a few minutes of wiring into a re-investi
 surface that — but the gap still closes in the same work item.
 
 > **⚖ THE COUNTER-CASE, so the rule is not misapplied: a deliberately-drawn SCOPE BOUNDARY is not a gap.** The
-> worked instance is the city's **obtained-bonus** fact (`SEVT_BONUS_CHANGED`), which announces the **PRESENCE
+> worked instance is the city's **obtained-bonus** pair (`SEVT_CITY_BONUS_ADDED` / `_REMOVED`), which announces the **PRESENCE
 > CROSSING ONLY** — 0 ⇄ non-zero — because `processNumBonusChange` reaches `processBonus` solely when the
 > has-verdict crosses zero. A count moving 2 → 3 therefore announces nothing, and **that is the ruling, not an
 > oversight (owner):** a per-count fact would force the engine to start *"processing all sorts of extra edge
@@ -316,14 +408,64 @@ surface that — but the gap still closes in the same work item.
 > gap is a fact nobody DECIDED to leave out.** Ask whether the omission is recorded as a decision; if it is,
 > the rule above does not apply to it.
 
-⚠ **The ruling is about EMITS, and it does NOT extend to MARKS — their cost shapes are opposite.** A surplus
-emit is ~free; a surplus MARK is a real package REBUILD that was not needed, paid on the turn path at event
-volume. So: **emit liberally, mark precisely.** A mark stays derived from what the rebuild actually reads (the
-mask derivation exists so a flat-only event never rebuilds a percent stack —
-[state-repositories.md](../architecture/state-repositories.md)), and "too many events is better" is never
-licence to mark-all, widen a mask, or paper a mark you could not derive
+⚠ **The ruling is about EMITS, and it does NOT extend to what a consumer DOES with one.** A surplus emit is
+~free; work a consumer performs is paid on the turn path at event volume. So: **emit liberally, apply
+precisely** — a consumer acts on exactly the deposits the fact names ([state-repositories.md](../architecture/state-repositories.md)
+§ THE MAINTAINED SUM), never on a widened mask and never on a whole-scope sweep it could not derive
 ([DEC-no-self-heal](../architecture/decisions.md#dec-no-self-heal)).
 Turn DURATION analytics remain the `[PERF]` phase logs' job, not these facts'.
+
+## ⚖ THE RECEIVED LINE — auditing the whole event flow live (owner)
+
+> *"We can literally audit the entire eventflow with the `/events` endpoint live — all we have to do is have a
+> 'received' event on the other side that is purely for logging."*
+
+**A consumer announces that it ACTED on a fact.** Emitted lines and received lines then stream side by side on
+`/events`, and the audit is a diff: **a DOMAIN fact with no matching received line names a MISSING CONSUMER
+ROUTE** — the third gap form in [DEC-close-event-gaps-now](../architecture/decisions.md#dec-close-event-gaps-now),
+and the only one with no other observable signature. The first two forms are visible today (a missing emit leaves
+the stream silent, a missing field leaves the payload short); this one is not, because the fact goes out
+perfectly and is simply dropped on the floor. The worked case is `SEVT_PROPERTY_ADDED / _REMOVED`, which fires from the
+`CvProperties` choke points into a consumer set that carries no case for it — a defect that took a code audit to
+find and that a missing received row would have named at a glance.
+
+⚑ **It is load-bearing under the maintained-sum model specifically:** the consumer route IS the maintenance
+([state-repositories.md](../architecture/state-repositories.md)), so this audits the correctness mechanism
+itself rather than the number that falls out of it.
+
+> **⚖ A "JOB DONE" ANNOUNCEMENT IS A RECEIVED LINE, AND IT IS ALWAYS `DIAGNOSTIC` (owner).** *"`SEVT_CITY_BUILDING_PROCESSED`
+> is a 'I have completed my job' event, if anything, and should purely be logging."*
+> ⛔ **THE TEST: does the fact say WHAT THE STATE IS, or WHAT SOME CODE DID?** A completion notice is the second,
+> so it is `DIAGNOSTIC` and **NO CONSUMER MAY BUILD STATE FROM IT** — deriving held state from an announcement
+> that an apply ran is the failure this kind exists to make unsayable.
+> ⚑ **The STATE a completion notice sits next to is a separate DOMAIN fact and gets its own id.** A building's
+> operate crossing (`ACTIVATED` / `DORMANTED`) is what the deposit, amenity and free-promotion consumers read;
+> the processed notice announces only that the apply ran, and nothing folds on it. ⚠ Letting one id carry both
+> means neither consumer can tell which arrived — a completion notice and a state change are not two readings of
+> one event, they are two events.
+> ⛔ The repair for such a conflation is always ADDITIVE, never a deletion
+> ([DEC-close-event-gaps-now](../architecture/decisions.md#dec-close-event-gaps-now)): mint the state fact, leave
+> the notice a notice, re-point the folds.
+> ⛔ **Do NOT suppress an EMIT to fix a CONSUMER.** Conflating "this fact fired" with "this consumer should act"
+> is what produced both the plot-mark fan and this shared id. **Emit every distinct fact, always; decide handling
+> per consumer, separately.**
+
+⛔ **THE KIND IS `DIAGNOSTIC`, NEVER `DOMAIN` — and this is what keeps it from becoming the killed verifier.**
+The firewall above already defines `DIAGNOSTIC` as *"code ran (a function entered, a decision re-evaluated) …
+logging only — never counted, never gates"*, which is exactly what a received line is, so it needs no new
+machinery.
+⚠ The near-miss to recognise is [superseded-ideas #19](../architecture/superseded-ideas.md), the gated in-DLL
+cache verifier, which was killed for putting a **divergence** on the spine: an event is an invitation to a
+consumer, and the next agent's consumer "handles" a value known to be wrong by CORRECTING it — so the shape
+itself licensed self-heal. **A received line announces THAT CODE RAN, never a VERDICT ABOUT A VALUE**, so it
+contains nothing to correct. Emitting it as DOMAIN would make it a synced authoritative fact the machine
+consumers may read, which is the shape that grows the self-healer, and would double the unconditional stream.
+⚑ As DIAGNOSTIC it rides `gStreamLogLevel` — decoupled from the file gate — so it costs nothing until it is
+turned on, and stays off the bounded SSE slot budget during ordinary play
+([http-endpoints.md](http-endpoints.md)).
+⛔ It reports NO judgement and accumulates NO counter behind a route: it is a line, on the one surface that
+already exists ([http-endpoints.md](http-endpoints.md): the server SERVES, it does not ACCUMULATE — a fact that
+is on neither surface is EMITTED, never given a side-counter).
 
 **Events are FACTS, not causal steps.** "This building is here", "this tech is held" — order-independent,
 prerequisite-free. Prerequisites are evaluated ONLY by the enabler (`canConstruct`/`canTrain`/`canResearch` — the

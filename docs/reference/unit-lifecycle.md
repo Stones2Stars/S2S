@@ -137,5 +137,5 @@ flanking kill). `units_safe()` is the snapshot variant used elsewhere for exactl
 statement that it is safe.
 
 ## See also
-- [event-spine.md](../specs/event-spine.md) — `SEVT_UNIT_KILLED` / `SEVT_UNIT_DEATH_SCHEDULED` and the reseed.
+- [event-spine.md](../specs/event-spine.md) — `SEVT_UNIT_KILLED` / `SEVT_UNIT_DEATH_SCHEDULE_ADDED / _REMOVED` and the reseed.
 - [engine.md](engine.md) — the save-load and pointer-lifetime constraints the toolchain imposes.

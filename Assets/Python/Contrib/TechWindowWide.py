@@ -14,6 +14,7 @@ TechWindowOpt = BugCore.game.TechWindow
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -248,10 +249,10 @@ class CvTechSplashScreen:
 		for j in range(GC.getNumTechInfos()):
 			for iPrereq in GC.getTechInfo(j).getPrereqOrTechs():
 				if iPrereq == self.iTech:
-					screen.attachImageButton(panelNameSIR, "", GC.getTechInfo(j).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_DERIVED_TECH, j, self.iTech, False)
+					screen.attachImageButton(panelNameSIR, "", INFO.getButton("TECH_", j), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_DERIVED_TECH, j, self.iTech, False)
 			for iPrereq in GC.getTechInfo(j).getPrereqAndTechs():
 				if iPrereq == self.iTech:
-					screen.attachImageButton(panelNameSIR, "", GC.getTechInfo(j).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_DERIVED_TECH, j, self.iTech, False)
+					screen.attachImageButton(panelNameSIR, "", INFO.getButton("TECH_", j), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_DERIVED_TECH, j, self.iTech, False)
 
 #---Eingefgt ENDE ------------------------------------------------
 
@@ -263,7 +264,7 @@ class CvTechSplashScreen:
 
 		for iUnit in range(GC.getNumUnitInfos()):
 			if isTechRequiredForUnit(self.iTech, iUnit):
-				screen.attachImageButton( panelName, "", GC.getUnitInfo(iUnit).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_UNIT, iUnit, 1, False )
+				screen.attachImageButton( panelName, "", INFO.getButton("UNIT_", iUnit), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_UNIT, iUnit, 1, False )
 
 		# Buildings Enabled
 		szBuildingsTitleDesc = u"<font=3b>" + TRNSLTR.getText("TXT_KEY_PEDIA_BUILDINGS_ENABLED", ()) + ":" + u"</font>"
@@ -273,7 +274,7 @@ class CvTechSplashScreen:
 
 		for eLoopBuilding in range(GC.getNumBuildingInfos()):
 			if (isTechRequiredForBuilding(self.iTech, eLoopBuilding)):
-				screen.attachImageButton( panelName2, "", GC.getBuildingInfo(eLoopBuilding).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM,
+				screen.attachImageButton( panelName2, "", INFO.getButton("BUILDING_", eLoopBuilding), GenericButtonSizes.BUTTON_SIZE_CUSTOM,
 						WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, eLoopBuilding, 1, False )
 
 		# Improvements
@@ -284,12 +285,12 @@ class CvTechSplashScreen:
 
 		for j in range(GC.getNumProjectInfos()):
 			if (isTechRequiredForProject(self.iTech, j)):
-				screen.attachImageButton( panelName3, "", GC.getProjectInfo(j).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM,
+				screen.attachImageButton( panelName3, "", INFO.getButton("PROJECT_", j), GenericButtonSizes.BUTTON_SIZE_CUSTOM,
 							  WidgetTypes.WIDGET_PEDIA_JUMP_TO_PROJECT, j, 1, False )
 
 		for j in range(GC.getNumPromotionInfos()):
 			if (GC.getPromotionInfo(j).getTechPrereq() == self.iTech):
-				screen.attachImageButton( panelName3, "", GC.getPromotionInfo(j).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM,
+				screen.attachImageButton( panelName3, "", INFO.getButton("PROMOTION_", j), GenericButtonSizes.BUTTON_SIZE_CUSTOM,
 							  WidgetTypes.WIDGET_PEDIA_JUMP_TO_PROMOTION, j, 1, False )
 
 #---Eingefgt START - kann komplett gelscht werden --------------
@@ -308,20 +309,20 @@ class CvTechSplashScreen:
 
 				if (bTechFound == 1):
 					if (GC.getBuildInfo(j).getImprovement() == -1):
-						screen.attachImageButton( panelName3, "", GC.getBuildInfo(j).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_HELP_IMPROVEMENT, j, 1, False )
+						screen.attachImageButton( panelName3, "", INFO.getButton("BUILD_", j), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_HELP_IMPROVEMENT, j, 1, False )
 					else:
-						screen.attachImageButton( panelName3, "", GC.getBuildInfo(j).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_IMPROVEMENT, GC.getBuildInfo(j).getImprovement(), 1, False )
+						screen.attachImageButton( panelName3, "", INFO.getButton("BUILD_", j), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_IMPROVEMENT, GC.getBuildInfo(j).getImprovement(), 1, False )
 
 		# Bonuses
 		for j in range(GC.getNumBonusInfos()):
 			if (GC.getBonusInfo(j).getTechReveal() == self.iTech):
-				screen.attachImageButton( panelName3, "", GC.getBonusInfo(j).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM,
+				screen.attachImageButton( panelName3, "", INFO.getButton("BONUS_", j), GenericButtonSizes.BUTTON_SIZE_CUSTOM,
 							  WidgetTypes.WIDGET_PEDIA_JUMP_TO_BONUS, j, 1, False )
 
 		# Civic
 		for j in range(GC.getNumCivicInfos()):
 			if (GC.getCivicInfo(j).getTechPrereq() == self.iTech):
-				screen.attachImageButton( panelName3, "", GC.getCivicInfo(j).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM,
+				screen.attachImageButton( panelName3, "", INFO.getButton("CIVIC_", j), GenericButtonSizes.BUTTON_SIZE_CUSTOM,
 							  WidgetTypes.WIDGET_PEDIA_JUMP_TO_CIVIC, j, 1, False )
 
 #---Eingefgt ENDE ------------------------------------------------

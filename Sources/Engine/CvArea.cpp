@@ -468,7 +468,14 @@ void CvArea::changeNumTiles(int iChange)
 		// every nonzero change is one state change -- there is no derived verdict to cross.
 		// ⛔ No in-read reseed twin: SEVT_AREAS_RECALCULATED plus the map-settled guarantee already stand every
 		// area-id holder up after a load, so a second announcement per area would re-derive the same block.
-		emitAreaTilesChanged(getID(), m_iNumTiles, iChange);
+		if (iChange > 0)
+	{
+		emitAreaTileAdded(getID(), iChange);
+	}
+	else
+	{
+		emitAreaTileRemoved(getID(), -iChange);
+	}
 	}
 }
 
@@ -796,7 +803,14 @@ void CvArea::changeCleanPowerCount(TeamTypes eIndex, int iChange)
 		{
 			// The third leg of CvCity::isPower() (reached through isAreaCleanPower). The existing count crossing IS
 			// the fact -- the raw count moves per providing building, the (area x team) verdict only here.
-			emitAreaCleanPowerChanged(getID(), (int)eIndex, m_aiCleanPowerCount[eIndex] > 0);
+			if (m_aiCleanPowerCount[eIndex] > 0)
+	{
+		emitAreaCleanPowerAdded(getID(), (int)eIndex);
+	}
+	else
+	{
+		emitAreaCleanPowerRemoved(getID(), (int)eIndex);
+	}
 
 			if (eIndex == GC.getGame().getActiveTeam())
 			{

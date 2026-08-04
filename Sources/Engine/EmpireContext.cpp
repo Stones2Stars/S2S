@@ -99,48 +99,7 @@ void EmpireContext::fillEvalCtx(CvCascadeEvalCtx& ec) const
 	ec.empireContext = this;
 }
 
-// Rebuild the enacted-policy UNION from the player's LIVE grantors -- adopted civics + held (active-set) traits --
-// exactly the grantor set the one policy read walks (CvConditionEval ev_playerHasPolicy). A WHOLE rebuild from
-// source, never a per-read walk; the union is then an O(1) `policies.has(pid)` for every consumer. Keyed by the
-// ClassificationRegistry domain-local POLICY id (CvClassificationBlock::hasId space).
-//
-// THE ONLY CALLER is the contexts' spine consumer, driven by the civic / trait / player-init DOMAIN facts (at play
-// AND through the load reseed's in-read emits). It is deliberately NOT called from CvPlayer's choke points: an
-// event-maintained store with a direct hook beside the event has two maintenance surfaces for one fact.
-void EmpireContext::rebuildPolicies() const
+bool EmpireContext::hasPolicy(int ePolicy) const
 {
-	policies.clear();
-	if (m_player == NULL)
-		return;
-	const int nPolicies = ClassificationRegistry::count(CLSD_POLICY);
-	if (nPolicies <= 0)
-		return;   // no POLICY_* minted -> nothing to union
-
-	// adopted civics
-	for (int i = 0; i < GC.getNumCivicOptionInfos(); ++i)
-	{
-		const CivicTypes eCivic = m_player->getCivics((CivicOptionTypes)i);
-		if (eCivic == NO_CIVIC)
-			continue;
-		const CvCivicInfo* d = static_cast<const CvCivicInfo*>(InfoRepo<CvCivicInfo>::get().get(eCivic));
-		const CvClassificationBlock* b = (d != NULL) ? d->getPolicies() : NULL;
-		if (b == NULL)
-			continue;
-		for (int pid = 0; pid < nPolicies; ++pid)
-			if (b->hasId(pid))
-				policies.add(pid, 1);
-	}
-	// held traits (the game-option-selected simple/complex set, via the shared active-set resolver)
-	for (int t = 0; t < GC.getNumTraitInfos(); ++t)
-	{
-		if (!m_player->hasTrait((TraitTypes)t))
-			continue;
-		const CvTraitInfo* d = MMKernel::traitData(t);
-		const CvClassificationBlock* b = (d != NULL) ? d->getPolicies() : NULL;
-		if (b == NULL)
-			continue;
-		for (int pid = 0; pid < nPolicies; ++pid)
-			if (b->hasId(pid))
-				policies.add(pid, 1);
-	}
+	return m_player != NULL && m_player->policies().has(ePolicy);
 }

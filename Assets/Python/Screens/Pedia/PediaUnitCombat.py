@@ -14,6 +14,7 @@ from CvPythonExtensions import *
 GC = CyGlobalContext()
 TRNSLTR = CyTranslator()
 
+TEXT = CyGameTextMgr()
 class PediaUnitCombat:
 
 	def __init__(self, parent, H_BOT_ROW):
@@ -119,8 +120,8 @@ class PediaUnitCombat:
 			iColWidth = iTableWidth - iColWidth
 			screen.setTableColumnHeader(Tbl, 1, u"%c" % CyGame().getSymbolID(FontSymbols.STRENGTH_CHAR), iColWidth * 2 / 10)
 			screen.setTableColumnHeader(Tbl, 2, u"%c" % CyGame().getSymbolID(FontSymbols.MOVES_CHAR), iColWidth * 2 / 10)
-			screen.setTableColumnHeader(Tbl, 3, u"%c" % GC.getYieldInfo(YieldTypes.YIELD_PRODUCTION).getChar(), iColWidth * 3 / 10)
-			screen.setTableColumnHeader(Tbl, 4, u"%c" % GC.getCommerceInfo(CommerceTypes.COMMERCE_RESEARCH).getChar(), iColWidth * 3 / 10)
+			screen.setTableColumnHeader(Tbl, 3, u"%c" % TEXT.getSymbolChar("YIELD_", YieldTypes.YIELD_PRODUCTION), iColWidth * 3 / 10)
+			screen.setTableColumnHeader(Tbl, 4, u"%c" % TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_RESEARCH), iColWidth * 3 / 10)
 
 			for iUnit, szName, szStrength, szMoves, szCost, szTechXGrid in aList:
 				iRow = screen.appendTableRow(Tbl)

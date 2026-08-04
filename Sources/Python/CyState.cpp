@@ -15,6 +15,7 @@
 #include "Engine/CvPlot.h"
 #include "Engine/CvMap.h"        // the plot enumeration resolves its plot through the map
 #include "Infrastructure/CvDLLInterfaceIFaceBase.h"  // getHeadSelectedCity/Unit -- the CURRENT SELECTION
+#include "AI/BetterBTSAI.h"   // PERF_SCOPE -- the ONE instrument, gated by gPerfLogLevel
 #include "AI/CvPlayerAI.h"          // GET_PLAYER
 #include "Infos/CvInfoKinds.h"      // the NUM_<FAMILY>_KINDS the groups are sized by
 #include "UI/CityOutputHistory.h"  // the city admin tab's recent-output rows
@@ -64,6 +65,7 @@ namespace
 
 python::list CyState::getYields(int iPlayer, int iCity) const
 {
+	PERF_SCOPE("CyState::getYields", -1);
 	int values[NUM_YIELD_TYPES] = { 0 };
 	if (iCity >= 0) { const CvCity* p = cys_city(iPlayer, iCity); if (p) p->getYields(values); }
 	else            { const CvPlayer* p = cys_player(iPlayer);    if (p) p->getYields(values); }
@@ -72,6 +74,7 @@ python::list CyState::getYields(int iPlayer, int iCity) const
 
 python::list CyState::getCommerces(int iPlayer, int iCity) const
 {
+	PERF_SCOPE("CyState::getCommerces", -1);
 	int values[NUM_COMMERCE_TYPES] = { 0 };
 	if (iCity >= 0) { const CvCity* p = cys_city(iPlayer, iCity); if (p) p->getCommerces(values); }
 	else            { const CvPlayer* p = cys_player(iPlayer);    if (p) p->getCommerces(values); }
@@ -178,6 +181,7 @@ python::list CyState::getVisionKinds(int iPlayer, int iCity) const
 
 python::list CyState::getRealizedWellbeing(int iPlayer, int iCity, int iExtraPopulation) const
 {
+	PERF_SCOPE("CyState::getRealizedWellbeing", -1);
 	int values[NUM_WELLBEING_CHANNELS] = { 0 };
 	const CvCity* pCity = cys_city(iPlayer, iCity);
 	if (pCity) pCity->realizedWellbeing(iExtraPopulation, values);
@@ -232,6 +236,7 @@ python::list CyState::getHeadSelectedCityId() const
 
 python::list CyState::getHeadSelectedUnitId() const
 {
+	PERF_SCOPE("CyState::getHeadSelectedUnitId", -1);
 	g_szLastCyRead = "CyState::getHeadSelectedUnitId";
 	int values[2] = { -1, -1 };
 	const CvUnit* pUnit = gDLL->getInterfaceIFace()->getHeadSelectedUnit();
@@ -245,6 +250,7 @@ python::list CyState::getHeadSelectedUnitId() const
 
 python::list CyState::getSelectedUnitIds() const
 {
+	PERF_SCOPE("CyState::getSelectedUnitIds", -1);
 	g_szLastCyRead = "CyState::getSelectedUnitIds";
 	python::list list = python::list();
 	const int iCount = gDLL->getInterfaceIFace()->getLengthSelectionList();
@@ -392,6 +398,7 @@ int CyState::getMilitaryHappinessUnits(int iPlayer, int iCity) const
 
 python::list CyState::getCountdowns(int iPlayer, int iCity) const
 {
+	PERF_SCOPE("CyState::getCountdowns", -1);
 	int values[NUM_CITY_COUNTDOWN_KINDS] = { 0 };
 	const CvCity* pCity = cys_city(iPlayer, iCity);
 	if (pCity) pCity->getCountdowns(values);
@@ -400,6 +407,7 @@ python::list CyState::getCountdowns(int iPlayer, int iCity) const
 
 python::list CyState::getOrder(int iPlayer, int iCity) const
 {
+	PERF_SCOPE("CyState::getOrder", -1);
 	int values[NUM_CITY_ORDER_READS] = { 0 };
 	values[ORDER_READ_TYPE] = NO_ORDER;
 	values[ORDER_READ_ID]   = -1;
@@ -410,6 +418,7 @@ python::list CyState::getOrder(int iPlayer, int iCity) const
 
 python::list CyState::getGrowth(int iPlayer, int iCity) const
 {
+	PERF_SCOPE("CyState::getGrowth", -1);
 	int values[NUM_CITY_GROWTH_READS] = { 0 };
 	const CvCity* pCity = cys_city(iPlayer, iCity);
 	if (pCity) pCity->getGrowthRead(values);
@@ -688,6 +697,7 @@ python::list CyState::getCityProperties(int iPlayer, int iCity) const
 
 python::list CyState::getCityFlags(int iPlayer, int iCity) const
 {
+	PERF_SCOPE("CyState::getCityFlags", -1);
 	int values[NUM_CITY_FLAGS] = { 0 };
 	const CvCity* pCity = cys_city(iPlayer, iCity);
 	if (pCity) pCity->getCityFlags(values);
@@ -737,6 +747,7 @@ python::list CyState::getHurryQuote(int iPlayer, int iCity, int iHurry) const
 
 python::list CyState::getUnitRead(int iPlayer, int iUnit) const
 {
+	PERF_SCOPE("CyState::getUnitRead", -1);
 	g_szLastCyRead = "CyState::getUnitRead";
 	int values[NUM_UNIT_READS] = { 0 };
 	values[UNIT_READ_TYPE]     = -1;
@@ -750,6 +761,7 @@ python::list CyState::getUnitRead(int iPlayer, int iUnit) const
 
 python::list CyState::getUnitFlags(int iPlayer, int iUnit) const
 {
+	PERF_SCOPE("CyState::getUnitFlags", -1);
 	g_szLastCyRead = "CyState::getUnitFlags";
 	int values[NUM_UNIT_FLAGS] = { 0 };
 	const CvUnit* pUnit = cys_unit(iPlayer, iUnit);
@@ -773,6 +785,7 @@ std::string CyState::getUnitScriptData(int iPlayer, int iUnit) const
 
 std::wstring CyState::getUnitName(int iPlayer, int iUnit) const
 {
+	PERF_SCOPE("CyState::getUnitName", -1);
 	g_szLastCyRead = "CyState::getUnitName";
 	const CvUnit* pUnit = cys_unit(iPlayer, iUnit);
 	return pUnit ? std::wstring(pUnit->getName()) : std::wstring();
@@ -780,6 +793,7 @@ std::wstring CyState::getUnitName(int iPlayer, int iUnit) const
 
 python::list CyState::getPlotUnitIds(int iX, int iY) const
 {
+	PERF_SCOPE("CyState::getPlotUnitIds", -1);
 	g_szLastCyRead = "CyState::getPlotUnitIds";
 	python::list list = python::list();
 	const CvPlot* pPlot = GC.getMap().plot(iX, iY);
@@ -805,6 +819,7 @@ python::list CyState::getPlotUnitIds(int iX, int iY) const
 
 bool CyState::isUnitInvisible(int iPlayer, int iUnit, int iTeam) const
 {
+	PERF_SCOPE("CyState::isUnitInvisible", -1);
 	g_szLastCyRead = "CyState::isUnitInvisible";
 	const CvUnit* pUnit = cys_unit(iPlayer, iUnit);
 	if (pUnit == NULL || iTeam < 0 || iTeam >= MAX_TEAMS)
@@ -816,6 +831,7 @@ bool CyState::isUnitInvisible(int iPlayer, int iUnit, int iTeam) const
 
 python::list CyState::getUnitPromotions(int iPlayer, int iUnit) const
 {
+	PERF_SCOPE("CyState::getUnitPromotions", -1);
 	g_szLastCyRead = "CyState::getUnitPromotions";
 	python::list ids = python::list();
 	const CvUnit* pUnit = cys_unit(iPlayer, iUnit);
@@ -858,6 +874,7 @@ bool CyState::isUnitPromotionOverridden(int iPlayer, int iUnit, int iPromotion) 
 
 bool CyState::isUnitActionRecommended(int iPlayer, int iUnit, int iAction) const
 {
+	PERF_SCOPE("CyState::isUnitActionRecommended", -1);
 	g_szLastCyRead = "CyState::isUnitActionRecommended";
 	const CvUnit* pUnit = cys_unit(iPlayer, iUnit);
 	//	BOTH bounds: the action id indexes the action registry, so an unchecked upper bound is an out-of-bounds
@@ -871,6 +888,7 @@ bool CyState::isUnitActionRecommended(int iPlayer, int iUnit, int iAction) const
 
 bool CyState::canUnitUpgradeToAny(int iPlayer, int iUnit) const
 {
+	PERF_SCOPE("CyState::canUnitUpgradeToAny", -1);
 	g_szLastCyRead = "CyState::canUnitUpgradeToAny";
 	const CvUnit* pUnit = cys_unit(iPlayer, iUnit);
 	if (pUnit == NULL) return false;

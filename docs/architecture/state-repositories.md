@@ -1,16 +1,27 @@
-# State repositories — recompute-only caches with a dirty trigger
+# State repositories — MAINTAINED SUMS, updated by the event that names the source
 
 The pattern for **derived engine state**: how a domain object's derived data (yields, commerce, health, …) is
 computed and kept coherent. `CvPlot` and `CvCity` are **domain objects** — the in-game data entities — and they
 **stay**. This is not about dissolving them (that's `CvCityAI`'s eventual job); it is about the derived layer.
 
-This is the **design the cascade plane is built to**, stated independently of any one implementation of it. The
-component (`CvDerivedCache`, `Sources/Infrastructure/`) is live, and the value-cache plane is built on it: the ONE
-uniform package (`Sources/Cascade/CvCascadePackage.h`, channel-indexed Σflat (×100) / Σpercent (unscaled) slots + receiver sums
-on the 64-bit `CvDerivedCacheSet`) is a data member on team / player / city / plot; the per-scope channel sets are minted from the compiled deposits at load
-(`CvCascadeChannelRegistry`, the ClassificationRegistry precedent); the mark derivation lives on the DepositIndex
-(`routeFor` + the condition-dependency routes); the modifier's own spine consumer (`CvModifierConsumer`,
-load-active) applies the derived masks; the gather (`CvCascadeGather`) is the one rebuild implementation and the
+> **⚖ THE FOUNDING CORRECTION (owner) — A PACKAGE IS NEVER DIRTIED AND RECALCULATED. IT IS A COMPILED SUM THAT
+> IS ALWAYS CURRENT, BECAUSE EVERY EVENT THAT MOVES IT UPDATES IT.** *"What I got wrong is that I thought the
+> yield packages had to be marked, and recalculated all the time, when it is in essence just a compiled sum
+> that is always updated, based on incoming spine events."*
+>
+> A package slot is Σ over the scope's sources of their deposit into that `(channel, unit)`. A DOMAIN event
+> NAMES the source, and the compiled index already holds that source's deposits — so applying them is a handful
+> of adds and the slot is correct **at that instant**. There is nothing to mark, because there is nothing
+> deferred. The staleness-flag / recompute protocol this document previously specified is RETIRED
+> ([superseded-ideas](superseded-ideas.md) #30); what stands in its place is § THE MAINTAINED SUM below.
+
+This is the **design the cascade plane is built to**, stated independently of any one implementation of it. The ONE
+uniform package (`Sources/Cascade/CvCascadePackage.h`, channel-indexed Σflat (×100) / Σpercent (unscaled) slots +
+receiver sums) is a data member on team / player / city / plot; the per-scope channel sets are minted from the
+compiled deposits at load (`CvCascadeChannelRegistry`, the ClassificationRegistry precedent); the package carries
+**apply verbs and no other writer**, so the modifier's own spine consumer (`CvModifierConsumer`, load-active)
+applies a moved source's deposits directly into the slots they feed; the gather (`CvCascadeGather`) is the
+INDEPENDENT endpoint ORACLE and never writes a stored slot (§ THE RECOMPUTE IS AN ENDPOINT ORACLE); and the
 combine lives on the calc surface (`InfoValuation::cityRate` / `groupSumAt`).
 
 ## The problem: no unified `dataChanged` trigger
@@ -28,18 +39,18 @@ the hot path.
 
 ## The model
 
-> **domain object mutates → marks the derived value → THE MARK REBUILDS IT → consumers up the chain read that one
-> value as a bare fetch.** One trigger, one refresh path, one source of truth.
+> **the state changes → the fact is emitted → the fact's own source updates the slot it feeds → every consumer
+> reads that one value as a bare fetch.** One announcement, one application, one source of truth.
 
 A derived cache in this model is:
 
-1. **Mark-driven, and the MARK is what rebuilds.** A trigger marks the component and the recompute runs there; a
-   READ is a **bare fetch** and never recomputes (§ `ensure()` below — an ensure-on-read protocol is tombstoned).
-   The expensive recompute runs **once per change**, never per read. The one deferral is the load bracket: inside
-   `GAME_LOAD_STARTED`..`FINISHED` the marks are BANKED (a mid-read recompute would read half-deserialized state)
-   and each system drains its own banked marks once at `GAME_LOAD_FINISHED`.
+1. **EVENT-MAINTAINED, not mark-driven.** The DOMAIN fact names the SOURCE; the compiled index names that
+   source's deposits; applying them IS the maintenance. A READ is a **bare fetch** and never recomputes
+   (an ensure-on-read protocol is tombstoned), and there is no staleness flag on the unconditioned plane to gate
+   anything on. **The work is proportional to what CHANGED (one source's handful of deposits), never to what
+   EXISTS (every source at the scope).**
 2. **Recompute-only, NOT serialized** — the [DEC-derived-never-trusted](decisions.md#dec-derived-never-trusted) rule,
-   applied per-field. Neither the value nor the flag is saved; on load the flag is dirty by default, so the first read
+   applied per-field. Neither the value nor the flag is saved; on load the flag is marked by default, so the first read
    recomputes from current state — **never stale-from-save**. Drop serialization by the **soft-remove**
    ([DEC-save-remove-is-soft](decisions.md#dec-save-remove-is-soft), [save.md §3](../specs/save.md)): FULL-DELETE the
    read + write and NAME the tag in `Assets/savemigration.txt`, which drains an old save's orphan bytes by name so
@@ -64,19 +75,25 @@ A derived cache in this model is:
    holds no bonus mirror at all — its read is a plot-group relay, [enabler.md §8](../specs/enabler.md)). A
    serialized store survives ONLY for genuine non-derivable state (the event/WB grant stores, e.g.
    `CvCity::m_paiFreeBonusEvents`).
-3. **The single source — PULL, not push.** Things up the chain (the city, the diagnostics, the cascade oracle) **read**
-   the value; the source does not **push** deltas into them. Push + a parallel cache double-count and drift; pull from
-   one authoritative value cannot.
+3. **The single source — PULL, not push, and the rule is CROSS-SCOPE.** ⛔ **What is banned is a scope pushing
+   its total into ANOTHER scope's store**: an upper scope's package never lands in a lower one, and a receiver
+   total is the Σ of its MEMBERS' realized values read at the receiver, never deltas the members push upward.
+   That is where "push + a parallel cache double-count and drift" actually bites — two stores holding one fact,
+   one of them maintained by someone else.
+   ⚑ **A deposit landing in its OWN scope's slot is NOT that, and reading it as that is the misreading this
+   clause exists to prevent.** By the scope principle ([modifier.md §1](../specs/modifier.md)) a city-scope
+   deposit BELONGS at city scope; the package is the only thing holding it, so there is no parallel cache to
+   diverge from and nothing to double-count. Applying the fact to the slot the fact feeds is the maintenance,
+   not a push.
 
-**Worked shape (the plot-yield cache):** `getYield()` = `return cached` — a bare fetch, always O(1);
-`updateYield()` is the **trigger** (marks the slot, which is what rebuilds it, and fires the downstream marks the
-old push carried — no push); **⚖ THE SUM OF THE PACKAGES IS CACHED AT ITS TARGET — as a RECEIVER SLOT, never as a member beside it (owner).**
+**Worked shape (the plot-yield cache):** `getYield()` = `return cached` — a bare fetch, always O(1), because the
+fact that moved the plot already applied its deposits into the slot;
+**⚖ THE SUM OF THE PACKAGES IS CACHED AT ITS TARGET — as a RECEIVER SLOT, never as a member beside it (owner).**
 Each channel has ONE consuming scope (production → city; the commerces further up), and the Σ that lands there is
-cached in that scope's OWN package (`CvCascadePackage::sum`, read `readSum`, marked `markSum`) — **invalidated by
-the EVENT SPINE per YIELD TYPE and LOCATION**, i.e. the derived mask names the channel and the owner it fires on
-(`scopeReceiversFedBy(CASC_SCOPE_CITY, CASC_SCOPE_PLOT)` for the plot-fed city sums). Its inputs are read through
-their own marks (`CvPlot::getCascadePackage().sourceFlat(channel)` — the gather's `baseFlat` plot leg), so an input
-the same event marked rebuilds before it is summed.
+cached in that scope's OWN package (`CvCascadePackage::sum`, read `readSum`, moved `applySum`). **ONE EVENT REACHES
+BOTH LEVELS**: the same derivation that names the packages a source feeds also names the receiver sums those
+packages feed, so a fact applies to both at the instant it arrives and no ordering between them exists to get
+wrong.
 
 ⛔ **What is banned is a HAND-NAMED field holding that same number** — a `CvCity::m_plotYieldSum`-shaped member is
 the defect [DEC-uniform-cache-shape](decisions.md#dec-uniform-cache-shape) names (it cannot be addressed by the
@@ -89,6 +106,42 @@ that already exists.** The push-maintained `m_aiBaseYieldRate` is dead, and a le
 governor's valuation, the cost class this whole doc exists to prevent. The engine's actual base yield thereby equals the build-order-independent value the cascade computes —
 stale-cache divergences resolved **at the source**, behaviour-preserving
 ([DEC-parity](decisions.md#dec-parity)).
+
+### ⛔ A STALENESS FLAG IS THE FOSSIL OF AN INCOMPLETE EMIT SURFACE — the same rule, one level up
+
+> **⛔ AND THE WORD GOES WITH THE MECHANISM — WE DO NOT USE "DIRTY" AS A TERM, FULL STOP (owner).** The only
+> survivor is **the one the EXE needs for GRAPHICS**: `InterfaceDirtyBits` and the repaint helpers over it
+> (`setDirty(X_DIRTY_BIT)`, `setLayoutDirty`, `setFlagDirty`, `setInfoDirty`) — EXE-bound, and resolved BY NAME
+> from BUG config strings, so it is a published vocabulary rather than ours
+> ([python-read-map.md](../reference/python-read-map.md)). **Every DERIVED-STATE use goes**, whatever its blast
+> radius: the mark/rebuild protocol, `markMaintenanceDirty`, `setCommerceDirty`, the AI re-evaluation flags.
+> ⚑ **The word is not being tidied — it is being removed with the thing it names.** A term that survives its
+> mechanism is exactly the evidence-of-the-abandoned-path that teaches the next agent to reach for it
+> ([DEC-no-rollerskate-evidence](decisions.md#dec-no-rollerskate-evidence)), and this one names a CLAIM the
+> engine can no longer make.
+
+> **⚖ WHEN IT WENT OBSOLETE, and why nothing announced it (owner): *"I did not recognize that marking became
+> obsolete the moment we landed on eventspine for everything."*** The derived-cache protocol was one of the
+> FIRST things designed for this rework — correct for the world it was designed in, and faithfully implemented.
+> ⛔ **So it is a SUPERSEDED DESIGN, not a rollerskate, and reading it as one sends the next agent hunting a
+> culprit that does not exist** — the surrounding implementation tracked the spec exactly
+> ([superseded-ideas](superseded-ideas.md) #30; contrast #14, the ensure-on-read protocol, which genuinely was one).
+
+**A staleness flag is a CLAIM THAT WE DO NOT KNOW WHAT CHANGED.** That is its whole job: a memo recording
+*something in this bucket moved*, kept because the happening itself was not available to consult. Once every mutation
+announces itself, the FACT is strictly more informative than the memo — it names the SOURCE, and the compiled
+index names that source's deposits — so the flag becomes a lossy summary of an answer already in hand.
+
+⚠ **The premise dissolved SILENTLY, which is why it survived.** A design does not fail when its justification
+goes away; it keeps producing correct numbers and merely does unnecessary work to get them. There is no error,
+no wrong value and no symptom to chase — the only trace here was a load that took minutes behind a drain of marks
+nobody could account for.
+
+⇒ **The mechanical test, and it applies to the whole engine, not just this plane: every staleness bit, staleness
+stamp, epoch counter and version number is asserting that what changed is unknowable. Under a complete spine that
+assertion is FALSE BY CONSTRUCTION.** So each surviving one is exactly two things and never a third: a **missing
+emit wearing a flag** (wire the fact — [DEC-close-event-gaps-now](decisions.md#dec-close-event-gaps-now)), or
+**dead weight** (delete it). ⛔ It is never a mechanism to keep because it works.
 
 ### ⛔ A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT — so it is a SEARCH, not just a ban
 
@@ -141,7 +194,7 @@ stored-vs-recompute diff is **DRIFT (history pollution), never state to preserve
 
 **Incremental-accumulate ledgers convert to recompute-from-source.** A serialized player ledger that replays its
 accumulator onto the loaded value double-counts by build order. The conversion is the uniform one above: recompute
-from the player's own held sources on dirty, make the changer trigger-only, and have the cities PULL it.
+from the player's own held sources on the mark, make the changer trigger-only, and have the cities PULL it.
 
 **Event/vote grants are NOT cached — they are a SEPARATELY PERSISTED store.** A per-building commerce change has
 two sources of fundamentally different nature: the **empire** grant (`GlobalBuildingExtraCommerces`, civics) is
@@ -195,46 +248,292 @@ are interpreted per event: city = `(owner, cityId)` · empire = `(playerId, —)
 plot = `(x, y)` (a plot has no owner-independent id, and the map index needs a map that does
 not exist at bind). Identity is passed IN at bind — the scope owners share no common id accessor.
 
-⚠ **Consequence, and it is not optional: the REBUILD MOVES ONTO THE MARK.** The event that marks a slot is what
-rebuilds it — the same shape the contexts use — with the batched turn-end sweep as the later refinement
-(§ THE TARGET END-STATE).
+⚠ **Consequence, and it is not optional: the STORED side is built by APPLIES ONLY.** The fact that names a source
+applies that source's deposits — the same shape the contexts use — and there is no rebuild anywhere for a sweep to
+batch (§ THE MAINTAINED SUM).
 
-**The realized shape.** `ensure()` is gone as a name; what stands in its place:
+## ⚖ EVERY DERIVED STORE IS ONE SHAPE — a KEYED ACCUMULATOR maintained by a delta (owner)
 
-- **`CvDerivedCacheSet::markDirty(mask)` marks AND rebuilds.** The rebuild is `rebuildMarked(mask)` (clear the
-  mark first, then run the owner's refresh). Marking without rebuilding is not an available move — which is the
-  invariant that lets every read be bare.
-- **THE ONE DEFERRAL — the load bracket.** Inside `GAME_LOAD_STARTED`..`FINISHED` `markDirty` BANKS the mark and
-  does not rebuild: a rebuild mid-read evaluates against half-deserialized state (the context stores, the areas
-  and the plot-group network complete only when the stream ends), and with no read-side recompute that wrong
-  value would then stand forever. Each system drains its OWN banked marks at `GAME_LOAD_FINISHED`
-  (`CvModifierConsumer::mc_drainLoadMarks`) — this is the reseed's eager load build, **not** a blanket: only bits
-  an in-read event actually marked rebuild, and a package no event reached stays unbuilt and visibly wrong.
-  ⚠ **Consumer registration order is therefore a contract, and it binds BOTH state-building machines** (consumers
-  dispatch in registration order): **contexts → enabler → modifier**. The contexts' consumer BUILDS the stores on
-  `GAME_LOAD_FINISHED`; the enabler's load-end gate pass evaluates its conditions THROUGH those stores
-  (`BuildingEnabler` → `getCityContext().fillEvalCtx`), and the modifier's drain does the same for every package
-  the reseed marked. Either machine registered ahead of the contexts evaluates against EMPTY stores — and with a
-  read being a bare fetch and no self-heal existing, nothing re-derives it afterwards. **Anything that reads a
-  context store registers after the contexts.**
-- **TWO read surfaces, and only one of them is a read path.** `CvCascadePackage::readFlat/readPercent/readSum`
-  are the CONSUMER read path — bare fetches. `sourceFlat/sourcePercent/sourceSum` are the **rebuild-path input
-  reads**, called only from `CascadeGather`: a combine runs inside a rebuild, so it reads a cross-scope input
-  through that input's own mark. That is what makes "there is no dependency-ordered rebuild pass" true — the mark
-  ORDER within an event is irrelevant, and the load drain needs no ordering either. It is **not** the retired
-  ensure-on-read: it can only fire for a slot something DID mark, so a MISSED emit still reads clean and stays
-  visibly wrong.
-- **THERE IS NO GATE ON A READ.** A read is a bare fetch unconditionally — nothing is tested on it, because
-  nothing on it can recompute.
+**A count is a sum.** The possession plane and the magnitude plane are not two mechanisms — they are one
+structure over different payloads, and the only things that vary are the key space and the value type:
+
+| store | key → value | the delta arrives from |
+|---|---|---|
+| the plot group's bonuses | `id → count` | a member plot/city joining or leaving |
+| `CityContext.amenities` | `id → count` | a grantor starting or stopping conferring |
+| `CityContext`'s vicinity tiers (owned/neutral/foreign/worked/connected) | `id → count` | a radius plot's bonus or tier moving |
+| `EmpireContext.policies` | `id → count` | a civic / trait / project / wonder |
+| the enabler's membership planes | `id → (enable, remove)` | a HAVE-change |
+| `OperatingBuildings::providedCount` | `id → count` | an active flip |
+| **the cascade packages** | `channel → Σvalue` | a source's compiled deposits |
+
+⇒ **`ContextDict` and `CvCascadePackage` share a MAINTENANCE RULE**, so
+[DEC-maintained-sum](decisions.md#dec-maintained-sum) is the MAGNITUDE case of one general rule, never a
+cascade-only one.
+
+> **⛔ THEY BEHAVE SIMILARLY AND ARE NOT THE SAME — sharing a mechanism is not sharing an identity (owner).**
+> The rule above governs HOW a derived store stays current. It says NOTHING about which store a value belongs
+> in, and reading it as licence to merge them is the conflation this callout exists to stop:
+>
+> | | context dictionary | package channel |
+> |---|---|---|
+> | the KEY is | a minted **classification** id — a named FEATURE | a minted **cascade channel** — a named QUANTITY |
+> | the VALUE is | grantors present, or a held strength | a summed magnitude in a unit |
+> | the SCALE rule | none — a count is a count | [DEC-fixedpoint-x100](decisions.md#dec-fixedpoint-x100): flats ×100, percents unscaled |
+> | READ by | gates, conditions, `per` scalers | the combine, the realized value |
+> | AUTHORED in | the `amenities` / classification block ([json.md §8](../specs/json.md)) | a family address `<family>.<scope>.<unit>` |
+>
+> ⚠ **The SCALE row is what bites silently if they merge** — ×100 semantics landing on a refcount, or dropping
+> off a magnitude, both staying entirely plausible.
+> ⚑ **The worked case: AIRLIFT CAPACITY.** A building's airlift is a NUMBER it carries and the city's total is a
+> SUM of numbers — so it is a modifier-family CHANNEL and retires onto the city's PACKAGE, exactly like the other
+> hand-named scalars ([DEC-uniform-cache-shape](decisions.md#dec-uniform-cache-shape)). ⛔ It is NOT an amenity,
+> however volumetric it looks: putting it in the dictionary would make an `AMENITY_*` id carry a magnitude and
+> break what that registry means.
+> ⚠ **Consequence for the volumetric headroom, stated so it is not mis-planned:** power becoming a CAPACITY a
+> city draws against would not be an amenity carrying a magnitude — it would be power CHANGING PLANES, from a
+> classification key to a channel. Do not "future-proof" the dictionary for a change that would relocate the
+> value. ⛔ [DEC-uniform-cache-shape](decisions.md#dec-uniform-cache-shape)'s scope of *"every derived
+cache on the cascade plane"* was drawn too narrowly: the plane boundary is not real, and the one store that
+drifted onto a different mechanism is the one that boundary excluded.
+
+### ⛔ THE SEMIBOOLEAN STATE — the read is BOOLEAN, the storage is NOT (owner)
+
+**That mismatch IS the trap: storing the thing as what it READS like is the whole error.** The contract:
+
+- **STORED** `id → count`, an int.
+- **READ** `has(id)` ≡ `count > 0`.
+- **WRITTEN** ±1 as a grantor starts or stops participating — never `set`, never `clear`, never a recount.
+- **ZEROED at owner reset** — a delta store is correct only from a known zero, and `CvCity` is recycled out of an
+  `FFreeListTrashArray`, so a reused slot inherits the previous occupant's counts and **no later delta can ever
+  correct them** ([contexts.md](contexts.md)).
+
+⛔ **THE READ SURFACE IS A BOOLEAN GETTER, AND CONSUMERS NEVER SEE THE INT (owner).** *"The dictionary literally
+needs to have a boolean getter that says whether it's there."* `has(id)` ≡ `count > 0` IS the contract; the count
+exists so MAINTENANCE can be correct, not so a reader can inspect it. ⚠ The moment a consumer reads the number
+the representation leaks — `count == 1` / `count > 2` logic appears, and then **volumetric can never land**,
+because changing what the number MEANS breaks readers that were never meant to see it. The one legitimate reader
+of the int is the genuinely volumetric one.
+⇒ **The surface: `has(id)` → bool for every consumer · `add(id, ±1)` for maintenance · `count(id)` reserved for
+a volumetric reader · and NO `set`.**
+⛔ **`set(id, n)` IS THE FOOTGUN AND DOES NOT BELONG ON THIS TYPE** — it overwrites a refcount, which is exactly
+how the workable-radius override became a plain assignment that zeroes the ring when a city loses ONE of TWO
+grantors. A type that PERMITS the banned move forces the rule to be remembered; removing the verb makes it
+unsayable, which is the enforcement model this project keeps choosing
+([patterns.md](patterns.md): a contract, not a prohibition).
+
+⛔ **ALWAYS A COUNT, NEVER A BIT — and the deciding argument is not "some keys have several grantors."** It is
+that **you can never safely answer NO**: these registries are OPEN by design
+([DEC-classification-infos](decisions.md#dec-classification-infos)), so a key with one grantor today gains a
+second the moment someone AUTHORS data, with no engine change. A bitset breaks silently on a data edit, in a
+build nobody touched. The count is not a concession to the multi-grantor cases; it is the only representation
+that survives an open registry.
+⚑ Two properties fall out free, and both are already ruled for the amenity instance: **VOLUMETRIC needs no
+reshape** (the slot is already an int, so a state that becomes a QUANTITY only changes what the number means),
+and the **REMOVAL-WINS trap is structurally absent**.
+⚠ **The masking to recognise:** a set-shaped store survives only while something RECOMPUTES it whole. Convert
+such a store to delta maintenance without converting its STORAGE and it breaks immediately — so the two halves
+land together or not at all.
+
+## ⚖ THE MAINTAINED SUM — THREE PLANES, ONE SLOT, AND NOTHING IS EVER RECOMPUTED
+
+Every slot is one identity, and reading it settles the whole maintenance question:
+
+> **`slot` = Σ over the scope's LIVE sources `S`, over `S`'s compiled deposits `d`, of
+> `value(d) × multiplier(S) × perScale(d) × [condition(d) holds]`**
+
+**All four operands are ALREADY MAINTAINED BY AN EVENT.** `value(d)` is compiled at load (the deposit index);
+`multiplier(S)` and `perScale(d)` are COUNTS the game objects and the [context dictionaries](contexts.md) hold;
+the condition verdict reads the contexts' own stored predicate state. Nothing on the right-hand side arrives
+unannounced, so there is nothing left for a recompute to discover — [DEC-flag-is-fossil](decisions.md#dec-flag-is-fossil)'s
+test applied to the VALUE plane rather than to a flag.
+
+The compiled data splits every deposit by WHICH OPERAND VARIES, and the split decides its **ROUTE, never its
+storage**. ⛔ All three planes apply into the SAME slot: there is no per-plane segment and no per-source
+decomposition (§ THE CROSS-SCOPE RECEIVER bans one, and this shape needs none — that it adds no storage at all
+is the tell that the cut is drawn in the right place).
+
+| plane | the deposit | the fact that moves it | the delta applied |
+|---|---|---|---|
+| **A — CONSTANT** | null-condition, unscaled | the SOURCE arriving or leaving | `±value` |
+| **B — SCALED** | `value × count(key)` — a `per` scaler, a `plots`-target, a keyed count | the source, **and the COUNT** | source: `±value × count` · **count: `±value × Δcount`** |
+| **C — CONDITIONED** | gated on a predicate | the source, **and the ATOM's verdict crossing** | `±value`, over the deposits that atom gates |
+
+⚑ **PLANE B IS WHAT THE DICTIONARIES BUY, AND IT IS WHY A COUNT FACT EXISTS AT ALL (owner).** `Δ(v × c) = v × Δc`
+is EXACT — `v` is a compiled constant and `Δc` is what the fact carries — so a `ContextDict::add(id, ±1)` IS a
+yield delta of `Σ(deposits keyed on id) × ±1`. *"+1 food per river tile"* stops being a re-derivation and becomes
+one multiply the moment a river bit moves. **This is the reason a population-changed fact is emitted** (owner):
+a `per: {POPULATION}` scaler is plane B, and the fact carries the delta that resolves it.
+
+### ⛔ THE INVARIANT — the slot is correct at every instant, which is what makes plane C delta-able
+
+> **At every instant `slot == Σ resolve(d, state_now)`, because every operand's move applies its own delta at the
+> moment it moves.**
+
+It is inductive, and it holds only if EVERY operand has a route — which is exactly what a saturated emit surface
+buys. Four consequences:
+
+- **A WITHDRAWAL IS ALWAYS EXACT.** `emit()` dispatches SYNCHRONOUSLY ([event-spine.md](../specs/event-spine.md)),
+  so no two operands are ever in flight together: when a fact arrives, every other operand still holds the value
+  the stored contribution was computed against.
+- **⚖ THE CONDITIONED TAIL IS THEREFORE DELTA'D TOO, PER ATOM (owner) — it is NOT re-resolved.** The earlier
+  ruling that plane C could only re-resolve rested on *"`perScale` at deposit time is gone"*, and that is true
+  only where a count can move WITHOUT announcing. Under plane B it always announces, so the state is never gone.
+  ⛔ **B AND C ARE COUPLED — deliver both, or neither.** Delta-ing C while a count can still move unrouted
+  reproduces precisely the drift the earlier ruling guarded against: the slot loses an amount it was never told
+  about, and nothing re-derives it ([DEC-no-self-heal](decisions.md#dec-no-self-heal)).
+- **ORDER-INDEPENDENCE SURVIVES, which is why LOAD is not a special case.** Source-then-count and
+  count-then-source converge: the source applies `value × count_now` (0 if the count has not arrived yet), and
+  the count applies `value × Δcount` for every deposit whose source is already live. A count route therefore
+  tests the source's liveness at that owner — an O(1) `has()` — and applies for nobody else.
+- ⚠ **THE HAZARD IS DOUBLE APPLICATION, NOT DRIFT.** One fact drives exactly ONE route class. Where a happening
+  moves both a source and a count they are two distinct FACTS
+  ([DEC-facts-name-happenings](decisions.md#dec-facts-name-happenings)), each applying its own — never one fact
+  applying both.
+
+- **⛔ NO PLANE HAS AN EVALUATION MOMENT TO DEFER, WHICH IS WHY NONE OF THEM CARRIES A STALENESS FLAG.** There is
+  nothing to be stale ABOUT: every operand is compiled or maintained, so a slot is either current or was never
+  told — and "never told" is a MISSING EMIT that must stay visible, not a state to schedule work against.
+- **⚖ THE COMPLEXITY SHIFTS FROM O(WHAT EXISTS) TO O(WHAT CHANGED), AND THAT IS THE PERFORMANCE CASE (owner).**
+  A rebuild re-walks the scope's sources, so its cost scales with how much a city HAS; an application touches the
+  moved source's own deposits, so it costs the same in a 900-building city as in a 3-building one — **the walks
+  disappear rather than getting faster**. This is [contexts.md](contexts.md)'s payoff one plane up: there, storing
+  a fact made cost track EVENT volume instead of READ volume; here, applying a fact makes it track event volume
+  instead of SOURCE volume.
+  ⚑ **It also makes a promise the specs already print come TRUE.** [validation.md](../specs/validation.md) states
+  that *"the only path to a rebuild is a mark, so per-turn cost tracks what CHANGED — mark volume, which is event
+  volume"* — which holds only if a mark is cheap. While a mark triggers a walk the real cost is
+  `events × sources-at-scope`, i.e. the dominant term is the one the sentence omits. Under the maintained sum the
+  sentence is literally true, which is [DEC-turn-time-is-king](decisions.md#dec-turn-time-is-king) getting the
+  property it was written for.
+  ⚠ **What legitimately still walks, so the claim is not overstated:** the CONDITIONED tail evaluates when its
+  dependency moves (bounded by the reverse index, never by the scope); the cross-scope roll-up at read sums the
+  ~5 packages the object sits under, which IS the design ([modifier.md §1](../specs/modifier.md)); and the
+  ORACLE remains a deliberate full recompute that is never trimmed (§ THE RECOMPUTE IS AN ENDPOINT ORACLE).
+- **⚑ PLANES B AND C ARE WHAT THE SOURCE FACT CANNOT ANSWER, and together they are the whole of the residue.** A
+  Forge's `+1 happiness while powered` moves when the POWER moves though the Forge did nothing, so it rides the
+  ATOM's route (plane C); a `per: {POPULATION}` deposit moves when the population moves, so it rides the COUNT's
+  route (plane B). Neither rides the building's.
+  ⛔ Both routes are REVERSE INDICES derived from the compiled deposit index — atom → the deposits it gates,
+  count-key → the deposits it scales — never a sweep of the scope's deposits asking each whether it cares, and
+  never hand-written ([DEC-one-reverse-view](decisions.md#dec-one-reverse-view)).
+- **⚖ ORDER-INDEPENDENCE IS FREE, and it is what makes LOAD stop being a special case.** Addition commutes, so an
+  accumulate needs no arrival order — exactly the property [event-spine.md](../specs/event-spine.md) already
+  demands of facts. The banked-marks bracket existed because *a rebuild mid-read evaluates against
+  half-deserialized state*; an application of a compiled constant evaluates nothing, so it has no such hazard.
+  **Only the CONDITIONED tail genuinely needs the `GAME_LOAD_STARTED`..`FINISHED` bracket**, because only it
+  reads state the stream may not have delivered yet.
+  ⚠ **Consumer registration order remains a contract for that half** (consumers dispatch in registration order):
+  **contexts → enabler → modifier → triggers**. Anything that EVALUATES a condition registers after the contexts
+  whose stores that condition reads.
+
+### ⚖ WHY DELTA-DERIVING FAILED BEFORE — two preconditions, both now met (owner)
+
+> *"The reason delta-deriving failed in the old model was because there was no unified eventing system, and
+> random event yields was baked in, and not as a separate source."*
+
+This is the archaeology that makes the retired protocol legible, and it matters because without it a reader
+concludes delta was TRIED AND FOUND WANTING. It was not: it was unavailable.
+
+1. **No unified eventing.** With no complete fact stream, the only honest statement a system could make was
+   *"something in here moved"* — which is exactly what a staleness flag encodes. The flag was the best available
+   statement, not a preference. ⇒ **The spine was never only an observability project; it is the precondition
+   that makes the cache unnecessary**, which is why it had to land first.
+2. **⛔ ONE-SHOT EVENT GRANTS WERE BAKED INTO THE SAME ACCUMULATOR AS THE DERIVABLE DEPOSITS — and that is the
+   one that actually poisoned it.** Such a slot can be maintained by NEITHER mechanism: you cannot DELTA it,
+   because the event contribution has no live source to withdraw against; and you cannot RECOMPUTE it either,
+   because recomputing WIPES the grant. The accumulator becomes unrecoverable — the history pollution
+   [DEC-accumulator-cut-uniform](decisions.md#dec-accumulator-cut-uniform) describes. ⚑ So the old model was not
+   choosing recompute OVER delta; with a baked-in grant both were broken, and recompute was the one that failed
+   quietly.
+
+**Both preconditions are now satisfied** — the spine carries the facts, and the event/vote grant has been split
+into its own persisted store outside the derivation (§ Event/vote grants, below: *"having events just be stored
+in the cache is lunacy"*; the reader sums `derivable + persisted`). The model that failed then is not the model
+specified here.
+
+⛔ **THE GUARD, so it cannot recur — and it is the test to run on any slot, not a historical note.**
+**Can EVERY contribution to this slot be attributed to a live source that announces itself?**
+- **YES** ⇒ the maintained sum holds.
+- **NO** ⇒ the non-derivable part is a SEPARATE STORE and is never folded in.
+
+⚠ The failure is silent, which is why it needs a test rather than vigilance: a baked-in one-shot grant leaves the
+number entirely plausible while making the slot unmaintainable by any mechanism at all.
+
+### ⛔ THE COST IS THE FORCING FUNCTION — a saturated emit surface is now STRUCTURAL, not a discipline (owner)
+
+> *"We have to take that cost — the system will by its very definition collapse if we do not saturate with
+> events."*
+
+A maintained sum fails differently from a recomputed one, and the difference is the POINT:
+
+| | a MISSED emit leaves | how it reads |
+|---|---|---|
+| recompute-on-mark | a stale but internally consistent value | **plausible forever** — nobody looks |
+| **the maintained sum** | a phantom contribution nothing later clears, compounding on repetition | **loud, and louder over time** |
+
+⚑ **That is [DEC-no-self-heal](decisions.md#dec-no-self-heal) carried to its conclusion rather than a weakness
+accepted against it.** The rule already says a missed invalidation must surface as a live divergence instead of
+being swept away; between two failure modes, the one that ANNOUNCES itself is the one the rule asks for. ⛔ So
+this is never a licence to relax the emit surface "because the number self-corrects" — nothing self-corrects,
+and that is deliberate.
+
+⚑ **It also promotes the roadmap's ordering from a preference to a law.** *"The EMIT surface comes first; the
+cache build is the step AFTER"* was sequencing advice under recompute; under a maintained sum an unsaturated
+spine cannot produce a correct number **at all**, so completeness of the emit surface is a PRECONDITION of the
+cascade being right rather than a quality target it trends toward.
+⇒ Every ruling that pushes the emit surface toward exhaustive — *"add all the events, ever"*, *"too many events
+is better than not enough"*, [DEC-close-event-gaps-now](decisions.md#dec-close-event-gaps-now) — is load-bearing
+on this model, not enthusiasm.
+
+⚠ **The bound on the damage, so the trade is stated honestly: a phantom lives at most ONE SESSION.** Nothing
+derived is serialized, so LOAD rebuilds every slot from the reseed's own facts — the history pollution that makes
+a legacy serialized accumulator unrecoverable ([DEC-accumulator-cut-uniform](decisions.md#dec-accumulator-cut-uniform))
+cannot accrue here. The missed-emit tripwire (the stored-vs-oracle endpoint pair, below) is what NAMES it inside
+that session.
+
+### ⚖ AND IT IS THE EASIER CORRECTNESS PROBLEM — the deciding argument (owner)
+
+> *"It is far easier to ensure we have all the events, than to ensure that we have all packages correctly
+> marked."*
+
+This holds independently of the cost trade above, and it is the reason to prefer the maintained sum even where
+the two models would perform alike. The mark model needs **two** censuses complete; the maintained sum needs
+**one** — and the one it drops is the harder of the pair:
+
+| | the EMIT census | the MARK census |
+|---|---|---|
+| the question | *does this mutation choke point announce?* | *does this fact reach every slot it could move, at every scope, for every owner?* |
+| where it is answerable | **LOCALLY**, at the setter — read it and you know | **NOWHERE local** — the answer lives in the authored data |
+| moves with the DATA? | no — an emit is engine mechanism | **YES** — a newly authored deposit can silently need a new route |
+| safe to over-include? | **YES** — a surplus emit costs one consumer branch that declines | **NO** — a surplus mark is a real rebuild on the turn path |
+
+⛔ **That last row is decisive, and it is already the spec's own rule** ([event-spine.md](../specs/event-spine.md):
+*"emit liberally, mark precisely"*). Over-inclusion is the technique that makes a completeness census tractable —
+it is how the enabler's reverse index is allowed to be safe ([enabler.md §5](../specs/enabler.md): over-inclusion
+is SAFE, a miss is the bug) — and the mark derivation is the one surface that cannot use it. A census that must
+be EXACT, over a surface that moves with authored data, has no cheap verification at all.
+
+⚑ **The emit census is owed ANYWAY, which is what makes dropping the other one a pure deletion.** The enabler,
+the contexts, the trigger plane, the file log, the `/events` stream and the out-of-process replay all already
+depend on the emit surface being complete. The mark derivation was a SECOND census serving one consumer, whose
+correctness nothing else in the engine was ever checking.
+
+⚑ **And a missing EMIT is multiply-observable** — a wrong availability verdict, an empty context store, a silent
+`/events` frame, a missing log line — while a missing MARK is observable in exactly one package, through one
+oracle diff, on one plane. The easier failure to find is the one to keep.
+- **ONE read surface, and it is a bare fetch.** `CvCascadePackage::readFlat/readPercent/readSum` is the whole of
+  it: a package has no second, rebuild-triggering read to reach for, so a cross-scope input needs no ordering
+  guarantee and the load bracket has nothing to drain. **THERE IS NO GATE ON A READ** — nothing is tested on it,
+  because nothing on it can recompute.
 - **The two served surfaces, per plane** (`/computed/*`, [http-endpoints.md](../specs/http-endpoints.md)):
   `.../stored` serves what the events built (`CvCascadePackage::readValuesInto`,
   `EnablerKernel::operatingBuildings`, `CascadeCapabilities::storedUnion`) and `.../oracle` serves the
   from-source recompute into a buffer the endpoint owns (`CascadeGather::gather*Into`,
   `EnablerKernel::recomputeOperatingSetInto`, `CascadeCapabilities::refreshInto`). Both sides render through
   ONE renderer per plane (`Sources/Tools/CvOracleEndpoints.cpp`), so the documents are diffable field by field.
-- **Where the oracle lives is decided by where the STORAGE lives.** `CvDerivedCacheSet` owns only the mark
-  protocol, so the storage owner supplies the scratch (the gather's `gather*Into` for the cascade packages);
-  the single-flag forms expose `recomputeInto(buffer)` directly.
+- **Where the oracle lives is decided by where the STORAGE lives** — the storage owner supplies the scratch (the
+  gather's `gather*Into` for the cascade packages), and the oracle is never handed the stored slots.
 - **An oracle run is a FULL RECALC, by design (owner) — it reads NOTHING off the stored surface.** Every input,
   including every cross-scope one, is recomputed from source. ⛔ The tempting alternative — recompute only the
   asked-about object and read its cross-scope inputs off the stored packages — is **WRONG, and wrong in the
@@ -251,82 +550,80 @@ rebuilds it — the same shape the contexts use — with the batched turn-end sw
 - **An oracle run ANNOUNCES nothing.** It emits no `[CASCADE] rebuilt` line: nothing was rebuilt, and a
   verification sweep must not move the numbers that describe real work.
 
-## The standardized `CvDerivedCache` component
+## ⛔ `CvDerivedCache` IS REPLACED BY `ContextDict` — VIRTUALLY EVERYWHERE (owner)
 
-**One reusable C++03 component** (`Sources/Infrastructure/CvDerivedCache.h`) rather than hand-rolled per cache — a
-templated value-holder with the recompute injected as a member-function-pointer (poor-man's-DI-adjacent,
-[patterns](patterns.md)). Three forms: the single-flag **`CvDerivedCache<TOwner,T,N>`** (leaf caches — the plot
-yield), the partial-dirty **`CvDerivedCacheSet<TOwner>`** (component-granular, see Refinements), and the
-runtime-sized **`CvDerivedCacheVec<TOwner,T>`** (the recompute receives the vector and fully sizes+defines it — the
-player building-commerce ledger).
+> *"`CvDerivedCache` should be replaced by `ContextDict` virtually everywhere needed, and we just need to start
+> taking one cluster at a time with event wiring."*
 
-```cpp
-template <class TOwner, class T, int N>
-class CvDerivedCache {                       // recompute-only, mark-driven, NEVER serialized; the single PULL source
-    mutable T    m_data[N];
-    mutable bool m_marked;
-    TOwner*      m_owner;
-    void (TOwner::*m_recompute)(T*) const;   // fills m_data from CURRENT state (needs owner; stays owner-side)
-public:
-    void bind(TOwner* o, void (TOwner::*fn)(T*) const);
-    void markDirty() const {                 // the trigger — call at every input-change site. THE MARK REBUILDS.
-        m_marked = true;
-        if (!spineGameLoadInProgress()) rebuildMarked();   // banked inside the load bracket; drained at its end
-    }
-    void rebuildMarked() const {             // clear the mark FIRST, then recompute (contract rule 1)
-        if (m_marked && m_owner) { m_marked = false; (m_owner->*m_recompute)(m_data); }
-    }
-    T get(int i) const { return m_data[i]; }               // A BARE FETCH — never a recompute, never a gate test
-    void recomputeInto(T* out) const;        // THE ORACLE — the same recompute over the CALLER's buffer, no gate
-};
-```
+**The component and the dictionary are the two answers to one question, and the spine decides which is right.**
+`CvDerivedCache` is *mark → recompute from sources*; `ContextDict` is *apply the delta the fact carries*. The
+first is only ever necessary when the inputs arrive UNANNOUNCED — and under a saturated emit surface no input
+does ([DEC-flag-is-fossil](decisions.md#dec-flag-is-fossil)). So the component's remaining niche is
+not small, it is EMPTY BY CONSTRUCTION, and every tenant of it is a store waiting to be re-expressed as a keyed
+accumulator ([DEC-keyed-accumulator](decisions.md#dec-keyed-accumulator)).
 
-**Contract rules (in the header; each plugged a real hole):**
+⛔ **A surviving `CvDerivedCache` tenant is therefore a MISSING EMIT wearing a component**, exactly as a staleness
+flag is a missing emit wearing a flag. The disposition is never "keep the cache for this one": it is **name the
+fact, wire it, and let the dictionary hold the answer** — after which there is nothing left for a recompute to
+do.
 
-1. **Clear-dirty BEFORE recompute** — clear-after recurses on read-back and loses mid-recompute dirties.
-2. **The recompute must fully define its output every call** — zero-fill on can't-compute; an early-return that
-   leaves stale values behind a clean flag is the bug class this kills.
-3. **NONCOPYABLE** — a copied cache keeps the ORIGINAL owner's pointer (dangling-owner footgun).
-4. `data()` pointers stay valid but values mutate — never cache across state changes; game-thread only.
-5. Fixed compile-time N in the array form; a runtime-sized domain uses the Vec form.
+**⚖ THE METHOD IS ONE CLUSTER AT A TIME, AND THE SIZE OF THE WHOLE IS IRRELEVANT (owner): *"this is one of
+those times where how big it is is irrelevant — we have to start in a corner."*** A cluster is one entity's
+FACTS plus the STORE those facts feed, converted together: the events re-cut to name their happenings
+([event-spine.md](../specs/event-spine.md) § A FACT NAMES THE HAPPENING), the store converted from
+mark-and-recompute to `id → count` fed ±1, and the recompute deleted in the same change. ⛔ Do NOT convert a
+store's STORAGE without its MAINTENANCE or the reverse — a set-shaped store survives only while something
+recomputes it whole, so the two halves land together or not at all (§ THE SEMIBOOLEAN STATE).
+⚠ **Counting the remaining clusters is not a prerequisite for starting one**, and treating the total as a
+decision to be taken first is the hesitation this ruling exists to remove.
 
-- **It is a DATA MEMBER** on `CvCity`/`CvPlot` — fine: the [patterns](patterns.md) guardrail bars adding vtable
-  *bases* to EXE-bound classes, **not** data members.
-- **Never serialized.** The owner's `read()`/`write()` drop the legacy field entirely and name its tag in
-  `Assets/savemigration.txt` (the soft-remove, [save.md §3](../specs/save.md)); dirty-on-construct means a loaded game
-  recomputes on first read.
-- **Every derived cache on the cascade plane uses this component** — there is no second cache mechanism, and a
-  hand-rolled dirty-flag pair beside it is a defect ([DEC-uniform-cache-shape](decisions.md#dec-uniform-cache-shape)).
-  The legacy `CvCity` hand-rolled dirty caches (`m_aiCommerceRate`, `m_aiBuildingCommerce100`, squirrelBanana) are
-  **demolition fodder**, never conversion targets: they are cut when the channel that replaces them lands, not
-  polished on the way.
+⚑ **What is genuinely NOT a `ContextDict` — so "virtually everywhere" is not read as "everywhere".** The
+dictionary holds a keyed COUNT; a summed MAGNITUDE belongs in the channel-indexed package
+(§ EVERY DERIVED STORE IS ONE SHAPE — they share the maintenance rule and not the identity), and a genuine
+per-object scalar that no key indexes stays a plain member. The question is what the slot HOLDS, never which
+mechanism is fashionable.
+
+**The component being removed** is `Sources/Infrastructure/CvDerivedCache.h` — a templated value-holder with the
+recompute injected as a member-function-pointer, in three forms: the single-flag `CvDerivedCache<TOwner,T,N>`,
+the partial-mask `CvDerivedCacheSet<TOwner>` (the mask protocol the packages and the team capabilities still
+sit on), and the runtime-sized `CvDerivedCacheVec<TOwner,T>`. Recognise it by its shape: **a `markDirty` that
+triggers a recompute over the owner's CURRENT state.** That recompute IS the calculation the fact was supposed
+to make unnecessary.
+
+⛔ **It is not extended, not given new tenants, and not "converted" in place.** A tenant leaves by the cluster
+move above — its fact re-cut to name the happening, its state re-expressed as `id → count` or as a channel slot,
+its recompute deleted — and the component disappears when the last tenant does. ⛔ A hand-rolled staleness-flag pair
+beside it is not an improvement on it; it is the same defect without the shared type
+([DEC-uniform-cache-shape](decisions.md#dec-uniform-cache-shape)).
+
+⚑ **The legacy `CvCity` hand-rolled staleness caches** (`m_aiCommerceRate`, `m_aiBuildingCommerce100`,
+squirrelBanana) are **demolition fodder rather than conversion targets** — they are cut when the channel that
+replaces them lands, never polished or re-homed onto the component on the way out.
 
 ## ⚖ Refinements
 
-- **PARTIAL DIRTYING.** A cache whose value composes from several isolated **plugin numbers** (each package a
-  standing value; "the rest of the pipe stays the same") carries a **dirty BITMASK, one bit per component**, and a
-  trigger marks only the components its event feeds — the `CvDerivedCacheSet` form. The single-flag form stays for
-  leaf caches.
-- **⚖ THE CAPSTONE RULE: the cascade is built and kept current ENTIRELY from events — no blanket rebuild, ever.**
-  On LOAD the cascade is stood up by the **event reseed** — the save read fires the DOMAIN events for every fact as it
-  deserializes, and each package builds from its own deposits ([event-spine.md](../specs/event-spine.md) /
-  [DEC-spine-reseed](decisions.md#dec-spine-reseed)); the old recompute-on-load / warm-up recalc
-  (`playerSliceRebuild` + `worldRebuild`) was a stabilize-the-drift STOPGAP and is REMOVED. Post-load, an event marks only the package(s) its deposits touch, and **ONLY marked (dirty) packages
-  rebuild** — there is NO full per-player rebuild on `doTurn`, NO mark-all, NO per-slice blanket, and NO turn-roll
-  self-heal ([DEC-no-self-heal](decisions.md#dec-no-self-heal)): those blankets (`playerSliceRebuild`, the EPOCH
-  bump, the RATE turn-roll) are REMOVED, each replaced by targeted, spine-routed per-source-mask invalidation. A
-  missed invalidation surfaces as a live divergence, never a silently self-healed cost — which is precisely why the
-  event spine must be COMPLETE (every mutation emits) and is built proper and FIRST. Reads are BARE NUMBER FETCHES
-  during the turn (an ensure-per-read protocol on AI-hot paths measurably ground unit automation). "It's the
-  percentage recalcs that hurt" — the mask derivation splits percent-vs-flat so a flat-only event never rebuilds a
-  percent stack. **The granularity TARGET: per-(package × CHANNEL)** — the compiled deposits carry the channel, so
-  the dirty bits split per yield/commerce channel; the bit-layout split is the increment after the bare-fetch shape
-  verifies.
+- **⚖ THE CAPSTONE RULE: the cascade is built and kept current ENTIRELY from events — no blanket rebuild, ever,
+  and no per-slot rebuild either.** On LOAD the cascade is stood up by the **event reseed** — the save read fires
+  the DOMAIN events for every fact as it deserializes and each fact applies its source's deposits
+  ([event-spine.md](../specs/event-spine.md) / [DEC-spine-reseed](decisions.md#dec-spine-reseed)); the old
+  recompute-on-load / warm-up recalc (`playerSliceRebuild` + `worldRebuild`) was a stabilize-the-drift STOPGAP
+  and is REMOVED. Post-load, a fact reaches exactly the slots its deposits feed and **nothing else runs at all** —
+  no full per-player rebuild on `doTurn`, no mark-all, no per-slice blanket, no turn-roll self-heal
+  ([DEC-no-self-heal](decisions.md#dec-no-self-heal)). A missed emit surfaces as a live divergence, never a
+  silently self-healed cost — which is precisely why the event spine must be COMPLETE (every mutation emits) and
+  is built proper and FIRST.
+  ⚑ **Under the maintained sum that sentence hardens from a design preference into a PRECONDITION:** an
+  unsaturated spine does not merely leave a value stale, it leaves the sum wrong with nothing that could ever
+  correct it ([DEC-maintained-sum](decisions.md#dec-maintained-sum)).
+  Reads are BARE NUMBER FETCHES during the turn (an ensure-per-read protocol on AI-hot paths measurably ground
+  unit automation). ⚑ *"It's the percentage recalcs that hurt"* is answered at the root rather than mitigated:
+  the compiled deposit carries its channel AND its unit, so a flat fact touches a flat slot and no percent stack
+  is ever walked — there is no mask to split, because there is no recalc to narrow.
 - **⚖ THE PER-SCOPE PACKAGE MODEL — the cascade's FOUNDING DESIGN ([modifier.md](../specs/modifier.md) §1), stated
-  as cache architecture.** A `CvDerivedCache` lives ON EVERY SCOPED ITEM, every level (world → team → player
+  as cache architecture.** A package lives ON EVERY SCOPED ITEM, every level (world → team → player
   → city → plot); the cascade loads **yield packages in ONE UNIFORM FORMAT** (Σflat and Σpercent each their OWN
-  package per channel; the unit is part of the slot key) into each scope's cache; each cache knows its own staleness
-  from events at its OWN scope (a world change rebuilds the world package while every other level stands). **The
+  package per channel; the unit is part of the slot key) into each scope's cache; each package is maintained
+  from events at its OWN scope (a world-scope fact moves the world package while every other level stands). **The
   only live calculation is adding the ~5 packages together at read.**
   **⛔ EVERY scope carries packages — whether a given scope's packages are EMPTY is IRRELEVANT (owner ruling).**
   The uniformity IS the design: it is what makes "the only live calc is summing the packages" literally true and keeps
@@ -360,7 +657,7 @@ public:
   Each scope carries ONLY the channels authored AT that scope, both the channel ids and the per-scope sets
   derived from the data at load (the `ClassificationRegistry` minting precedent), never hand-listed. Measured
   from `Assets/Data`: plot **13** · city **40** · empire **50** · team **3** · self 1 — the distinct non-unit
-  channels, with no object carrying more than 50. ⚠ city and empire exceed a 32-bit dirty mask, so the
+  channels, with no object carrying more than 50. ⚠ city and empire exceed a 32-bit derived mask, so the
   shared `CvDerivedCacheSet` mask widens to 64-bit (every existing user occupies few bits and is unaffected).
 
   **⛔ A SCOPE MUST BE UNAMBIGUOUSLY OWNABLE — WHICH IS WHY A LANDMASS IS NOT ONE (owner).** This is the test a
@@ -395,15 +692,22 @@ public:
 
   **⛔ TWO SCOPES ARE DELIBERATELY NOT PACKAGES (owner):**
   - **WORLD is CONFIG** — cost multipliers and the like, carried by eras / gamespeeds / handicaps. It changes
-    essentially never and is read from its sources, not cached behind a dirty protocol. A project granting
+    essentially never and is read from its sources, not cached behind a staleness protocol. A project granting
     something to every player is NOT world-scope state: it authors the plural TARGET `world.empires`
     ([json.md §3.3](../specs/json.md)) and lands in each PLAYER's package. The handful of `health.world` /
     `happiness.world` / `tradeRoutes.world` project authorings are mis-scoped data, a curator fix
     ([DEC-recurate-on-decision](decisions.md#dec-recurate-on-decision)).
   - **UNIT is RESOLVED VALUES, not a package** — "when the number is put on the unit, no more percentages or
     whatever is involved, the data just IS". The exact set of numbers a unit carries is known, so they are summed
-    and stored individually, and they dirty on a different trigger from everything else: ONLY when a promotion or
-    combat class changes. It is the most static plane in the engine. The unit's storage is therefore NOT a
+    and stored individually, and they move on a different trigger from everything else: ONLY when a promotion or
+    combat class changes. It is the most static plane in the engine.
+    ⛔ **THE SUM WALKS WHAT THE UNIT HOLDS, NEVER THE REGISTRY.** The contributors are the unit's own type plus
+    its held promotions and held combat classes, enumerated from the containers the unit already keys them in —
+    not discovered by sweeping every promotion and every class asking "do I have this?". That sweep costs the
+    DATABASE per gather to rediscover a handful, which is the O(registry) shape the event-built state exists to
+    delete ([contexts.md](contexts.md): a read that walks per call is the efficiency defect to reject in review)
+    and the own-data inversion [DEC-one-reverse-view](decisions.md#dec-one-reverse-view) bans one plane over.
+    The unit's storage is therefore NOT a
     bespoke struct awaiting consolidation — it is correctly its own shape, and the 12 unit-only families
     (`strength`, `movement`, `withdrawal`, `firstStrike`, `capture`, `collateral`, `heal`, `bombard`, `air`,
     `cargo`, `range`, `pillage`, …) never enter a scope's channel set.
@@ -430,19 +734,18 @@ public:
   a struct. So the package TYPE is unified FIRST (one owner-templated, channel-indexed package on
   `CvDerivedCacheSet<TOwner>`), after which every scope falls out of the same member. Adding a further per-scope
   struct deepens the divergence this closes.
-- **⚖ THE KEY IS SAMENESS (owner ruling): every cache is the SAME OBJECT TYPE everywhere, and they ALL invalidate
+- **⚖ THE KEY IS SAMENESS (owner ruling): every store is the SAME OBJECT TYPE everywhere, and they ALL MAINTAIN
   the SAME WAY.** That — not the per-scope layout — is the requirement the whole model rests on. One templated
-  cache type (`CvDerivedCacheSet<TOwner>` over a channel-indexed slot table) on every owner, and ONE mark
-  derivation driving all of it. What varies between scopes is only WHICH SLOTS carry a value; the type and the
-  protocol never vary.
+  channel-indexed slot table on every owner, and ONE application path driving all of it, derived from the deposit
+  index. What varies between scopes is only WHICH SLOTS carry a value; the type and the protocol never vary.
   - **A RECEIVER is not a different kind of cache — it is the same cache holding a different slot (owner).**
     Whatever scope CONSUMES a channel caches its realized sum as **one variable per channel**, in the same cache
     beside the packages: `CvPlayer` caches research / gold / culture / espionage; `CvCity` caches production /
     culture and the other sums it consumes. The city's realized yield rate (`yRate100[]`) is the general shape,
     not a special case — so there is no separate "receiver mechanism" to build.
   - **⛔ THIS IS WHY HAND-NAMED SCALAR FIELDS ARE THE DEFECT, not just untidy.** A named field cannot be addressed
-    uniformly, so it forces its own bespoke invalidation path — which is precisely how 33 of them accumulated.
-    Channel-indexed slots invalidate by derived mask with no per-field code.
+    uniformly, so it forces its own bespoke maintenance path — which is precisely how 33 of them accumulated.
+    Channel-indexed slots are reached by the deposit's own compiled address, with no per-field code.
   - **The receiving scope is NOT the storing scope.** A package never moves to its consumer (that breaks the scope
     principle); the consumer stores only its own realized TOTAL — one cheap variable per channel.
   - **⛔ A CROSS-SCOPE receiver total is the Σ of its MEMBERS' REALIZED values — and NOTHING beside that Σ.** The
@@ -458,11 +761,49 @@ public:
     Rejecting the legacy incremental accumulator does not license recomputing on every read: an empire-scope
     getter that re-walks every city per call (`CvPlayer::getCommerceRate`) is the per-read-walk cost class this
     doc exists to prevent, merely relocated one scope up.
-  - **ONE EVENT MARKS BOTH LEVELS (owner).** The event's derived mask names the packages it touches **and** the
-    sum slots those packages feed — one mark derivation, two targets (for a cross-scope aggregate, two owners).
-    There is **no** dependency-ordered rebuild pass: both are dirty, and a sum's rebuild reads its packages
-    through their own lazy dirty-check, so the package refreshes first by construction and a sum can never sit
-    stale behind a clean package.
+  - **ONE EVENT REACHES BOTH LEVELS (owner).** The event names the packages it feeds **and** the sum slots those
+    packages feed — one derivation from the deposit index, two targets (for a cross-scope aggregate, two owners).
+    There is **no** dependency-ordered pass, because nothing is deferred at either level.
+  - **⚖ THE CROSS-SCOPE RECEIVER — SUPPRESSION IS SETTLED; ONLY THE DELTA QUESTION IS OPEN.** A receiver total is
+    the Σ of its members' **REALIZED** values (§ A CROSS-SCOPE receiver total), and a realized value is the §2a
+    combine over the member's packages, not a stored deposit sum. Two of its apparent obstacles dissolve:
+    - **⛔ DISORDER AND WLTKD ARE NOT TERMS IN THE COMBINE — they are a PARTICIPATION GATE ON THE Σ (owner):**
+      *"disorder is easy, it just means that the packages that the city under disorder is simply not sent."* The
+      city's stored value stays the real one and the sum declines to take it
+      ([economy.md](../reference/economy.md): *"the package is sent out to the rest of the cascade only if no
+      status negates it"*).
+    - **⛔ THE GATE BELONGS AT THE Σ, NOT ON A MAINTAINED MEMBERSHIP DELTA — and the reason is already ruled.**
+      WLTKD is a ONE-TURN status re-applied every turn by its trigger ([state.md](../specs/state.md)), so
+      maintaining participation as a delta would flip a member in and out of the Σ every single turn *over a
+      number that never moved* — precisely the thrash [economy.md](../reference/economy.md) refuses to mark on
+      (*"it suppresses the CONSUMPTION of the value, never its contents — so neither is a cache input and neither
+      marks it"*). The filter therefore runs where the participation question is actually asked: at the sum.
+    **⚖ THE RECEIVER RE-SUMS ITS PARTICIPATING MEMBERS, AND NOTHING IS BUILT TO AVOID THAT (owner).** *"The
+    summing is so trivial that it would cost more to try some efficiency shenanigans."* The read side is ~5 int
+    adds for the cross-scope roll-up and one combine per participating member for a receiver Σ — against the
+    per-source walk the maintained sum deletes, that is not a cost to design around.
+    ⛔ **So do NOT build a per-source decomposition plane.** A `(scope × channel × SOURCE)` breakdown exists only
+    to make WITHDRAWAL cheap, and withdrawal is only expensive if summing is. Its source axis dwarfs the channel
+    axis that [KEYS ONLY WHERE NEEDED](#) already rejected as mostly-zeros, and the shape is the
+    add-another-struct failure [DEC-uniform-cache-shape](decisions.md#dec-uniform-cache-shape) names. The
+    unconditioned plane re-applies its compiled constant; the conditioned tail re-resolves; nothing stores a
+    per-source breakdown.
+    ⛔ **And do NOT push the realized delta upward** — that is the shenanigan the triviality makes pointless, and
+    it is a push up the chain. The third shape is barred outright: a member EMITTING *"my realized value
+    changed"* ([event-spine.md](../specs/event-spine.md): *"yield is a computed RESULT, never an event"*).
+    > **⚑ THIS IS NOT A DEFERRAL, and reading it as one is the misreading to prevent (owner): *"IF it shows that
+    > the summing requires any kind of serious power, we deal with it then."*** [DEC-no-deferred](decisions.md#dec-no-deferred)
+    > bans parking work KNOWN to be needed; this declines to build machinery for a cost nobody has demonstrated
+    > exists — which is what [roadmap.md](../plans/structural-cleanup/roadmap.md) already requires (*"build the
+    > base first; the most efficient way comes AFTER … do not build, investigate, or pre-shape it ahead of the
+    > base"*) and what [triggers.md](../specs/triggers.md) requires of hypothetical machinery. You cannot defer
+    > work whose necessity is unestablished.
+    > ⚑ **The REVISIT TRIGGER is named and it is a MEASUREMENT, never an argument:** a turn-time cost on the
+    > standing late-game save, attributed to the summing, on the wall clock
+    > ([DEC-turn-time-is-king](decisions.md#dec-turn-time-is-king)). ⛔ Until that exists, a proposal to optimize
+    > the sum is speculative structure — and an AI loop asking a receiver Σ per candidate is answered by the
+    > CALLER caching its own scores ([patterns.md](patterns.md), the sanctioned heuristic residual), never by
+    > reshaping the machine.
   - **Which scope receives a channel is spec'd, not chosen per site:** one consuming scope per channel
     (food/production → city; gold/research/espionage/**maintenance** → empire), with **culture the lone
     dual-consumer** (the city sums it for plot culture + border expansion, the empire for civ culture + traits —
@@ -485,35 +826,36 @@ public:
     cross-scope roll-up answers a receiver channel with its maintained SUM, so a consumer that wants the
     channel's percent STACK at that scope must read the legs directly — asking the roll-up would hand back the
     realized total instead, silently and plausibly.
-- **⚖ TWO DISTINCT KINDS OF DERIVED CACHE — do not conflate them:**
-  - **The yield + percent packages are an INPUT/OUTPUT (value) cache** — memoize the computed number,
-    dirty-invalidate on a source event, recompute from inputs on next read. This is what `CvDerivedCache` is FOR.
-  - **The ENABLER's sets (the frontier + the operating-building set) are themselves derived state** —
-    but maintained by **TARGETED PROPAGATION**: computed once (the walk-down), then each HAVE-change propagates
-    through the **affected subset only** (re-check the affected candidates / ripple the fixpoint), updating the
-    authoritative dataset **in place** via the reverse-index ([enabler.md](../specs/enabler.md) §7). They are
-    NEVER blanket-invalidated-and-recomputed, and NEVER a parallel shadow-delta.
+- **⚖ THE TWO DERIVED PLANES SHARE ONE MECHANISM — what differs is their CONTENT, never their maintenance:**
+  - **The yield + percent packages** are maintained by applying the moved source's deposits to the slot they
+    feed — § THE MAINTAINED SUM. ⛔ The earlier framing called this "an INPUT/OUTPUT value cache: memoize,
+    mark-invalidate on a source event, recompute from inputs" and pointed it at `CvDerivedCache`. That framing
+    is RETIRED, and it is what let the modifier alone keep a staleness protocol while both of its siblings ran
+    without one ([superseded-ideas](superseded-ideas.md) #30).
+  - **The ENABLER's sets (the frontier + the operating-building set)** are maintained by **TARGETED
+    PROPAGATION**: each HAVE-change ripples through the **affected subset only** (re-check the affected
+    candidates / ripple the fixpoint), updating the authoritative dataset **in place** via the reverse-index
+    ([enabler.md](../specs/enabler.md) §7). NEVER blanket-recomputed, NEVER a parallel shadow-delta.
+  - ⚑ **So the honest difference is what a slot HOLDS** — refcounted set MEMBERSHIP versus a summed MAGNITUDE —
+    and each is maintained in place by the fact that moved it. ⚠ That is why the enabler was able to run without
+    a staleness protocol from the start, and it is the model the packages now match rather than the exception they
+    were measured against.
   ⛔ Blanket-recomputing the whole operating-building fixpoint for every city on every event runs the enabler's set AS an
   input/output cache — **"burning down the library of Alexandria" (DESPAIR_INDEX #2)**. The fix is targeted
   propagation, the shape the frontier ALREADY uses (`onBuildingChanged` / `recheckHave` off the reverse-index). It
   is likewise **not a given** the yield-package shape fits any OTHER non-package channel (the unit plane,
   properties); each is decided per-channel, only AFTER the spec is fully in place.
-- **THE TARGET END-STATE — flags all turn, ONE unified rebuild at turn end.** ⚠ This is the NEXT increment, not
-  what stands: **today the mark rebuilds immediately** (§ `ensure()` above), so an event does pay its recompute
-  mid-turn. The whole model in one line: *"if things have not changed, cache is not stale; if it has, rebuild."*
-  Events become pure flag-sets (the DOMAIN-event → markDirty pattern, no mid-turn recompute); reads serve the
-  standing snapshot all turn; ONE batched rebuild pass at turn end sweeps every flagged cache **in dependency
-  order** (plot caches → city components → player aggregates), priming the next cycle. The load drain built for
-  the bracket is the same pass at a different cadence, so the batch lands as a re-cadencing rather than new
-  machinery. Consequences: no lazy-refresh reentrancy, no mid-turn freshness questions, rebuild cost is
-  one measurable phase. Pairs with the [AI build-queue-parity model](../plans/parked/ai-build-queue-parity.md) — the
-  snapshot IS the fairness mechanism; this end-state lands WITH that rework. **The event→cache routing is DERIVED
-  FROM THE DATA, never hand-wired:** a DOMAIN event carries its SOURCE; the source's compiled deposits (the
-  load-time strings→ints index, `Data/CvDepositIndex.{h,cpp}` — per-deposit interned segments + FK-resolved target
-  id + the resolved channel/scope slot, compiled at readJson push-time) name exactly the channels × scopes × targets
-  it touches — **the dirty flags fall out of the deposit addresses.** The routing is a pure function of the index;
-  a hand-coded hook mask per event site is a per-site bespoke path of exactly the kind
-  [DEC-uniform-cache-shape](decisions.md#dec-uniform-cache-shape) forbids. Derive it from the index.
+- **⛔ THERE IS NO BATCHED TURN-END REBUILD PASS, AND NONE IS TO BE BUILT.** A "flags all turn, one unified
+  rebuild at turn end, in dependency order" phase is the recompute model wearing a better cadence — it presumes
+  a rebuild exists to schedule. Under the maintained sum there is nothing to batch: the slot was already correct
+  when the fact arrived ([superseded-ideas](superseded-ideas.md) #30).
+- **THE APPLICATION IS DERIVED FROM THE DATA, never hand-wired.** A DOMAIN event carries its SOURCE; the source's
+  compiled deposits (the load-time strings→ints index, `Data/CvDepositIndex.{h,cpp}` — per-deposit interned
+  segments + FK-resolved target id + the resolved channel/scope slot, compiled at readJson push-time) name exactly
+  the channels × scopes × targets it feeds — **so what to apply, and where, falls out of the deposit addresses.**
+  The routing is a pure function of the index; a hand-coded hook per event site is a per-site bespoke path of
+  exactly the kind [DEC-uniform-cache-shape](decisions.md#dec-uniform-cache-shape) forbids. Derive it from the
+  index.
 - **Mid-turn read freshness: the per-player-slice SNAPSHOT** — *"getting a yield event in the middle of a turn is
   not retroactive; start of next turn is what is expected"*. A newly-founded city is the one ruled exception (it
   must read correct values the turn it exists, so its packages build eagerly at creation rather than waiting for

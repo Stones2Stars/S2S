@@ -82,20 +82,6 @@ namespace
 //Disable this passed in initialization list warning, as it is only stored in the constructor of CvBuildingList and not used
 #pragma warning( disable : 4355 )
 
-// The CITY-scope cascade package's refresh delegate -- the one-line delegation to the ONE gather
-// ([DEC-single-implementation]; see CvCascadeGather).
-void CvCity::refreshCascadePackage(int64_t iMask) const
-{
-	CascadeGather::refreshCity(*this, iMask);
-	// The empire TOTAL is the Σ of its cities' REALIZED maintenance, so a maintenance channel rebuilding here
-	// moves it. Tested against the SAME index-derived mask that routed the rebuild -- precise, never a blanket
-	// mark ("emit liberally, mark precisely": a surplus mark is a real rebuild paid on the turn path).
-	if ((iMask & CascadeChannelRegistry::scopeFamilyMask(CASC_SCOPE_CITY, MODFAM_MAINTENANCE)) != 0)
-	{
-		GET_PLAYER(getOwner()).markMaintenanceDirty();
-	}
-}
-
 // ---- THE CITY'S AVAILABILITY READS (see CvCity.h for the role + the grammar). Every one is a BARE O(1) fetch of
 // ---- the maintained tri-state: no gate runs here, no calculator is called, and `requires` is never evaluated --
 // ---- the verdict was put there by the events (enabler.md §7). ----
@@ -136,7 +122,7 @@ void CvCity::getYields(int (&yields)[NUM_YIELD_TYPES]) const
 	for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
 	{
 		const int iChannel = CascadeChannelRegistry::channelLookup(infoYieldFamily(iYield), (int)CHANNEL_AMOUNT, -1);
-		yields[iYield] = m_cascadePackage.readSum(iChannel);
+		yields[iYield] = InfoValuation::realizedAtCity(*this, iChannel);
 	}
 }
 
@@ -724,7 +710,6 @@ void CvCity::init(int iID, PlayerTypes eOwner, int iX, int iY, bool bBumpUnits, 
 
 	updateFreshWaterHealth();
 
-	player.markMaintenanceDirty();
 
 	GC.getMap().updateWorkingCity();
 
@@ -797,14 +782,23 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	PROFILE_EXTRA_FUNC();
 	m_dataRepository.reset();
 	m_cityContext.bind(this);   // bind the per-city context to its owner (the pointer IS this city; forwarding reads it)
-	// bind the CITY-scope cascade package (all-dirty from bind: a loaded/new city recomputes on first read)
-	m_cascadePackage.bind(CASC_SCOPE_CITY, this, &CvCity::refreshCascadePackage, (int)eOwner, iID);
+	// ⛔ ZERO ITS DELTA STORES. A CvCity is recycled out of an FFreeListTrashArray, and a keyed accumulator is
+	// correct ONLY from a known zero -- a reused slot would inherit the previous occupant's plotAttrs / vicinity
+	// counts, which no later ±1 can ever correct ([DEC-keyed-accumulator]).
+	m_cityContext.clear();
+	// bind the CITY-scope cascade package. It starts EMPTY and is filled ONLY by the facts ([DEC-maintained-sum]).
+	m_cascadePackage.bind(CASC_SCOPE_CITY, (int)eOwner, iID);
 	// The enabler's per-city state starts EMPTY and UN-READY: the domains are init'd by their domain enabler at
 	// this city's lifecycle start and filled by DOMAIN events thereafter ([DEC-spine-reseed]) -- never from the
 	// save. Clearing here is load-bearing because a CvCity is RECYCLED out of an FFreeListTrashArray: without it
 	// a new city would inherit the previous occupant's frontier and operating set.
 	m_enabler.reset();
 	m_operatingBuildings = OperatingBuildings();
+	// The AMENITY context, for exactly the same reason and in the same breath: it is a DELTA store, so it is
+	// correct only from a KNOWN ZERO, and a recycled slot would inherit counts no later delta could ever correct
+	// ([DEC-keyed-accumulator]). Bound here too -- the pointer IS this city.
+	m_amenity.bind(this);
+	m_amenity.clear();
 
 	//--------------------------------
 	// Uninit class
@@ -1409,7 +1403,6 @@ void CvCity::kill(bool bUpdatePlotGroups, bool bUpdateCulture)
 		}
 	}
 
-	kOwner.markMaintenanceDirty();
 
 	GC.getMap().updateWorkingCity();
 
@@ -3639,7 +3632,16 @@ void CvCity::processBonus(BonusTypes eBonus, int iChange)
 	// WHOLE-DATABASE building scan summing a bonus-keyed building field. Those fields are compiled DEPOSITS
 	// now, folded per scope by the cascade, so re-summing them city-side would be a second, drifting copy
 	// ([DEC-accumulator-cut-uniform]) -- and the scans go with them.
-	emitBonusChanged(getID(), getOwner(), (int)eBonus, iChange);
+	// The NETWORK supply presence crossing. processNumBonusChange reaches here only on a genuine 0 <-> non-zero
+	// flip and always with +-1, so this is two happenings and never a magnitude ([DEC-facts-name-happenings]).
+	if (iChange > 0)
+	{
+		emitCityBonusAdded(getID(), getOwner(), (int)eBonus);
+	}
+	else
+	{
+		emitCityBonusRemoved(getID(), getOwner(), (int)eBonus);
+	}
 }
 
 
@@ -3716,7 +3718,14 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 		clearRawVicinityBonusCache(eFreeBonus);
 		// the event carries the applied local DELTA (a city can hold several of a bonus locally --
 		// a presence-flip gate would hide the 1->2/2->1 transitions and undercount downstream)
-		emitVicinityBonusChanged(getID(), getOwner(), iFreeBonus, iSuppliedDelta);
+		if (iSuppliedDelta > 0)
+		{
+			emitCityVicinityBonusAdded(getID(), getOwner(), iFreeBonus, iSuppliedDelta);
+		}
+		else
+		{
+			emitCityVicinityBonusRemoved(getID(), getOwner(), iFreeBonus, -iSuppliedDelta);
+		}
 	}
 
 	changeMaxAirlift(kBuilding.getAirlift() * iChange);
@@ -3789,13 +3798,12 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 	if (!bReligiously && GC.getGame().isOption(GAMEOPTION_RELIGION_DISABLING))
 	{
 	}
-	markMaintenanceDirty();
 	setLayoutDirty(true);
 
 	// #430 event spine: announce the PROCESSED (operating-contribution) flip -- fires on construction/destruction's
-	// processing leg AND on dormancy disable/enable. NOT the presence fact (that is setHasBuilding's
-	// emitBuildingChanged): a disable flip processed through here must never read as the building leaving the city.
-	emitBuildingProcessed(getID(), getOwner(), (int)eBuilding, iChange);
+	// processing leg AND on dormancy disable/enable. NOT a presence fact (those are setHasBuilding's ADDED /
+	// REMOVED pair): a disable flip processed through here must never read as the building leaving the city.
+	emitCityBuildingProcessed(getID(), getOwner(), (int)eBuilding, (iChange > 0) ? iChange : -iChange);
 }
 
 
@@ -5462,7 +5470,14 @@ void CvCity::setPopulation(int iNewValue, bool bNormal)
 	m_iPopulation = iNewValue;
 	// #430 event spine: announce the population change (past the no-change guard). The cascade invalidation
 	// (perPop packages + the pop-operate building-active ripple) rides this emit -> the invalidation consumer.
-	emitPopulationChanged(getID(), getOwner(), iNewValue);
+	if (iNewValue > iOldPopulation)
+	{
+		emitCityPopulationAdded(getID(), getOwner(), iNewValue - iOldPopulation);
+	}
+	else
+	{
+		emitCityPopulationRemoved(getID(), getOwner(), iOldPopulation - iNewValue);
+	}
 
 	FASSERT_NOT_NEGATIVE(iNewValue);
 
@@ -5505,7 +5520,6 @@ void CvCity::setPopulation(int iNewValue, bool bNormal)
 			)
 		) AI_setChooseProductionDirty(true);
 	}
-	owner.markMaintenanceDirty();
 
 	owner.AI_makeAssignWorkDirty();
 
@@ -6111,14 +6125,6 @@ int64_t CvCity::maintenanceOfKind(int iKind) const
 	int64_t iPercentSum = 0;
 	maintenanceLegs(iKind, iFlatSum, iPercentSum);
 	return InfoValuation::realizedChannel(iFlatSum, iPercentSum, CASC_UNIT_FLAT);
-}
-
-void CvCity::markMaintenanceDirty() const
-{
-	// The empire total is the Σ of its members' realized values, so a member moving marks that RECEIVER SLOT --
-	// the same cache holding a different slot ([DEC-uniform-cache-shape]), never a second cache beside the
-	// package. ONE direction only: the receiving scope never fans back down into the members it sums.
-	GET_PLAYER(getOwner()).markMaintenanceDirty();
 }
 
 // The two LEGS of one maintenance KIND over the city's own chain (team + empire + city). ONE description of
@@ -7734,7 +7740,6 @@ void CvCity::setWeLoveTheKingDay(bool bNewValue)
 		setStatus(CITYSTATUS_WE_LOVE_THE_KING_DAY, bNewValue ? 1 : 0);
 
 		CvPlayer& owner = GET_PLAYER(getOwner());
-		markMaintenanceDirty();
 
 		CivicTypes eCivic = NO_CIVIC;
 
@@ -7924,7 +7929,14 @@ void CvCity::setCultureLevel(CultureLevelTypes eNewValue, bool bUpdatePlotGroups
 	// #430 event spine: culture level is a cascade input (wonder caps, defense, enabler frontier) AND the city's
 	// workable RADIUS grows with it -- so this ONE fact is ALSO the vicinity-MEMBERSHIP signal (the city gains/loses
 	// plots into its vicinity). Announce it.
-	emitCultureLevelChanged(getID(), getOwner(), (int)eNewValue, (int)eOldValue);
+	if (eOldValue != NO_CULTURELEVEL)
+	{
+		emitCityCultureLevelRemoved(getID(), getOwner(), (int)eOldValue);
+	}
+	if (eNewValue != NO_CULTURELEVEL)
+	{
+		emitCityCultureLevelAdded(getID(), getOwner(), (int)eNewValue);
+	}
 
 	// Culture level change can change our radius requiring recalculation of best builds
 	AI_markBestBuildValuesStale();
@@ -8567,7 +8579,6 @@ void CvCity::updateCorporation()
 {
 	PROFILE_EXTRA_FUNC();
 	updateCorporationBonus();
-	markMaintenanceDirty();
 }
 
 
@@ -9760,7 +9771,14 @@ void CvCity::setSpecialistCount(SpecialistTypes eIndex, int iNewValue)
 		}
 		else
 		{
-			emitSpecialistChanged(getID(), getOwner(), (int)eIndex, iNewValue - iOldValue);
+			if (iNewValue > iOldValue)
+	{
+		emitCitySpecialistAdded(getID(), getOwner(), (int)eIndex, iNewValue - iOldValue);
+	}
+	else
+	{
+		emitCitySpecialistRemoved(getID(), getOwner(), (int)eIndex, iOldValue - iNewValue);
+	}
 		}
 
 		changeSpecialistPopulation(iNewValue - iOldValue);
@@ -10195,7 +10213,14 @@ void CvCity::setWorkingPlot(int iIndex, bool bNewValue)
 			}
 			else
 			{
-				emitPlotWorkedChanged(GC.getMap().plotNum(pPlot->getX(), pPlot->getY()), (int)getOwner(), getID(), bNewValue);
+				if (bNewValue)
+	{
+		emitPlotWorkedAdded(GC.getMap().plotNum(pPlot->getX(), pPlot->getY()), (int)getOwner(), getID());
+	}
+	else
+	{
+		emitPlotWorkedRemoved(GC.getMap().plotNum(pPlot->getX(), pPlot->getY()), (int)getOwner(), getID());
+	}
 			}
 		}
 	}
@@ -10316,8 +10341,17 @@ void CvCity::setHasBuilding(const BuildingTypes eType, const bool bNewValue, con
 
 		// #430 event spine: the PRESENCE fact, at the presence choke point -- fires on EVERY genuine has-flip,
 		// including a building removed while disabled (which skips processBuilding entirely). The processed
-		// (operating) flip is the separate SEVT_BUILDING_PROCESSED from processBuilding.
-		emitBuildingChanged(getID(), getOwner(), (int)eType, bNewValue ? 1 : -1, bFirst);
+		// (operating) crossing is the enabler's separate SEVT_BUILDING_ACTIVATED / _DORMANTED.
+		// The two directions are two FACTS, so the branch is here ONCE rather than in every consumer's body
+		// ([DEC-facts-name-happenings]).
+		if (bNewValue)
+		{
+			emitCityBuildingAdded(getID(), getOwner(), (int)eType, bFirst);
+		}
+		else
+		{
+			emitCityBuildingRemoved(getID(), getOwner(), (int)eType);
+		}
 
 		// (Buildings REPLACED by this one are not disabled here: a predecessor standing under its successor is
 		// reversible DORMANCY, authored as the target's `requires.operate.dormant` and resolved by the enabler's
@@ -10392,7 +10426,7 @@ void CvCity::setupBuilding(const CvBuildingInfo& kBuilding, const BuildingTypes 
 		{
 			// ⛔ The first-build PAYLOAD is the trigger engine's, and it is not duplicated here. The local and
 			// empire population pulses, the golden age and the free techs are the source's `grants` applied by
-			// tr_applyBuildingFirstBuild off SEVT_BUILDING_CHANGED, gated exactly as this block gated them
+			// tr_applyBuildingFirstBuild off SEVT_BUILDING_ADDED, gated exactly as this block gated them
 			// (triggers.md: a grant is a trigger with a null condition). Keeping a copy beside it is the
 			// double-apply the roadmap names as the worst class of surviving legacy -- two live paths handing
 			// out the same thing, detectable only by noticing the effect landed twice.
@@ -10614,7 +10648,6 @@ bool CvCity::isHasReligion(ReligionTypes eIndex) const
 
 void CvCity::applyReligionModifiers(const ReligionTypes eIndex, const bool bValue)
 {
-	markMaintenanceDirty();
 }
 
 void CvCity::setHasReligion(ReligionTypes eIndex, bool bNewValue, bool bAnnounce, bool bArrows)
@@ -10633,7 +10666,14 @@ void CvCity::setHasReligion(ReligionTypes eIndex, bool bNewValue, bool bAnnounce
 		// #430 event spine: announce the religion change (past the isHasReligion != bNewValue guard). The cascade
 		// invalidation (commerce base/SR/operate-conditioned packages + the religion operate-active ripple) rides
 		// this emit -> the invalidation consumer.
-		emitReligionChanged(getID(), getOwner(), (int)eIndex, bNewValue);
+		if (bNewValue)
+	{
+		emitCityReligionAdded(getID(), getOwner(), (int)eIndex);
+	}
+	else
+	{
+		emitCityReligionRemoved(getID(), getOwner(), (int)eIndex);
+	}
 
 		for (int iVoteSource = 0; iVoteSource < GC.getNumVoteSourceInfos(); ++iVoteSource)
 		{
@@ -10841,7 +10881,14 @@ void CvCity::setHasCorporation(CorporationTypes eIndex, bool bNewValue, bool bAn
 		m_pabHasCorporation[eIndex] = bNewValue;
 		// #430 event spine: announce the corporation change (after the field commit; the early-return HQ-replace
 		// path commits this city's corp through a nested setHasCorporation that emits on its own).
-		emitCorporationChanged(getID(), getOwner(), (int)eIndex, bNewValue);
+		if (bNewValue)
+	{
+		emitCityCorporationAdded(getID(), getOwner(), (int)eIndex);
+	}
+	else
+	{
+		emitCityCorporationRemoved(getID(), getOwner(), (int)eIndex);
+	}
 
 		GET_PLAYER(getOwner()).changeHasCorporationCount(eIndex, ((isHasCorporation(eIndex)) ? 1 : -1));
 
@@ -11283,7 +11330,7 @@ void CvCity::pushOrder(OrderTypes eOrder, int iData1, int iData2, bool bSave, bo
 	// enabler.md par.7/8). Membership changes on HAVE events only (held flips on BUILT); a QUEUED building
 	// leaves the fresh OFFER via the GATE (par.7.1 step 3) -- this emit triggers the one-id re-gate, whose
 	// verdict reads the live queue.
-	emitCityOrderChanged(getID(), (int)getOwner(), (int)eOrder, iData1, +1);
+	emitCityOrderAdded(getID(), (int)getOwner(), (int)eOrder, iData1);
 
 	if (!bAppend || getOrderQueueLength() == 1)
 	{
@@ -11689,7 +11736,7 @@ void CvCity::popOrder(int orderIndex, bool bFinish, bool bChoose, bool bResolveL
 
 	m_orderQueue.erase(m_orderQueue.begin() + orderIndex);
 	// #430 enabler queue leg: the dequeue restores the fresh offer -- the one-id re-gate re-reads the queue.
-	emitCityOrderChanged(getID(), (int)getOwner(), (int)order.eOrderType, externalOrder.iData1, -1);
+	emitCityOrderRemoved(getID(), (int)getOwner(), (int)order.eOrderType, externalOrder.iData1);
 
 	if (bStart)
 	{
@@ -12638,18 +12685,18 @@ void CvCity::readBody(FDataStreamBase* pStream)
 		UnitEnabler::onCityCreated(*this);
 		// #430 reseed: the city's OWNERSHIP first (null -> current, owner ruling) -- establishes the city belongs to
 		// its owner before its contents (population/buildings/religion/...) reseed.
-		emitCityOwnerChanged(iCityId, (int)NO_PLAYER, iCityOwner);
-		emitPopulationChanged(iCityId, iCityOwner, m_iPopulation);
+		emitCityOwnerAdded(iCityId, iCityOwner);
+		emitCityPopulationAdded(iCityId, iCityOwner, m_iPopulation);
 		for (iI = 0; iI < GC.getNumReligionInfos(); ++iI)
 		{
 			if (m_pabHasReligion[iI])
 			{
-				emitReligionChanged(iCityId, iCityOwner, iI, true);
+				emitCityReligionAdded(iCityId, iCityOwner, iI);
 				// The holy-city fact rides the same reseed pass; the IDInfo test is read-safe here, where
 				// getHolyCity() cannot yet resolve this city back to itself.
 				if (GC.getGame().isHolyCityByOwnerId((ReligionTypes)iI, (PlayerTypes)m_eOwner, iCityId))
 				{
-					emitHolyCityChanged(iCityId, iCityOwner, iI, true);
+					emitCityHolyCityAdded(iCityId, iCityOwner, iI);
 				}
 			}
 		}
@@ -12657,13 +12704,13 @@ void CvCity::readBody(FDataStreamBase* pStream)
 		{
 			if (m_pabHasCorporation[iI])
 			{
-				emitCorporationChanged(iCityId, iCityOwner, iI, true);
+				emitCityCorporationAdded(iCityId, iCityOwner, iI);
 				// The headquarters fact rides the same reseed pass (the holy-city precedent above): CvGame's
 				// m_paHeadquarters deserializes before the cities, so setHeadquarters never runs. The IDInfo test
 				// is read-safe here, where getHeadquarters() cannot resolve this city back to itself.
 				if (GC.getGame().isHeadquartersByOwnerId((CorporationTypes)iI, (PlayerTypes)m_eOwner, iCityId))
 				{
-					emitHeadquartersChanged(iCityId, iCityOwner, iI, true);
+					emitCityHeadquartersAdded(iCityId, iCityOwner, iI);
 				}
 			}
 		}
@@ -12673,13 +12720,13 @@ void CvCity::readBody(FDataStreamBase* pStream)
 		{
 			if (m_paiSpecialistCount[iI] > 0)
 			{
-				emitSpecialistChanged(iCityId, iCityOwner, iI, m_paiSpecialistCount[iI]);
+				emitCitySpecialistAdded(iCityId, iCityOwner, iI, m_paiSpecialistCount[iI]);
 			}
 		}
 		// #430 reseed: culture level (+ its radius/vicinity footprint)
 		if (m_eCultureLevel != NO_CULTURELEVEL)
 		{
-			emitCultureLevelChanged(iCityId, iCityOwner, (int)m_eCultureLevel, (int)NO_CULTURELEVEL);
+			emitCityCultureLevelAdded(iCityId, iCityOwner, (int)m_eCultureLevel);
 		}
 		// (No in-read GOVERNMENT-CENTRE emit: the verdict is no longer a deserialized counter but the city's amenity
 		// FOLD, which builds at load from the enabler's operating-building seed. The contexts' consumer watches the
@@ -12701,7 +12748,7 @@ void CvCity::readBody(FDataStreamBase* pStream)
 	// its crossing never fires. Emitted here, co-located with the read; only a city that HAS access has a fact.
 	if (m_iFreshWater > 0)
 	{
-		emitCityFreshWaterChanged(m_iID, (int)m_eOwner, true, m_iFreshWater);
+		emitCityFreshWaterAdded(m_iID, (int)m_eOwner, m_iFreshWater);
 	}
 	WRAPPER_READ(wrapper, "CvCity", &m_iWorkableRadiusOverride);
 	WRAPPER_READ(wrapper, "CvCity", &m_iProtectedCultureCount);
@@ -12710,7 +12757,7 @@ void CvCity::readBody(FDataStreamBase* pStream)
 	// the HAS_POWER verdict reads powered for a city whose power is still disabled.
 	if (m_iDisabledPowerTimer > 0)
 	{
-		emitCityPowerDisabledChanged(m_iID, (int)m_eOwner, true, m_iDisabledPowerTimer);
+		emitCityPowerDisabledAdded(m_iID, (int)m_eOwner, m_iDisabledPowerTimer);
 	}
 	WRAPPER_READ(wrapper, "CvCity", &m_iWarWearinessTimer);
 
@@ -13145,7 +13192,7 @@ void CvCity::readBody(FDataStreamBase* pStream)
 				// building deserializes off the ledger stream, INSIDE the read loop -- the genuine per-element read
 				// (not a later walk over a populated array, superseded-ideas #13). Feeds the cache-build consumer's
 				// per-city operating-building set + building packages. m_iID / m_eOwner are read earlier in read().
-				emitBuildingChanged(m_iID, (int)m_eOwner, (int)eType, 1, /*bFirst*/false);   // a load RESTORES; it is not a first acquisition
+				emitCityBuildingAdded(m_iID, (int)m_eOwner, (int)eType, /*bFirst*/false);   // a load RESTORES; it is not a first acquisition
 				// compressed data all buildings have
 				BuiltBuildingData data;
 				data.eBuiltBy = (PlayerTypes)iPlayer;
@@ -15247,7 +15294,14 @@ void CvCity::changeFreshWater(int iChange)
 		{
 			// #430 event spine: the provider-building-fed ACCESS verdict crossing. ⚠ Distinct from the plot's
 			// adjacency HAS_FRESHWATER fact -- a building can grant a city access on a plot with no water.
-			emitCityFreshWaterChanged(getID(), getOwner(), hasFreshWater(), m_iFreshWater);
+			if (hasFreshWater())
+	{
+		emitCityFreshWaterAdded(getID(), getOwner(), m_iFreshWater);
+	}
+	else
+	{
+		emitCityFreshWaterRemoved(getID(), getOwner(), m_iFreshWater);
+	}
 			algo::for_each(plots(), bind(CvPlot::updateIrrigated, _1));
 
 			updateFreshWaterHealth();
@@ -15998,7 +16052,14 @@ void CvCity::changeDisabledPowerTimer(int iChange)
 	m_iDisabledPowerTimer += iChange;
 	if (bWasDisabled != (m_iDisabledPowerTimer > 0))
 	{
-		emitCityPowerDisabledChanged(getID(), getOwner(), m_iDisabledPowerTimer > 0, m_iDisabledPowerTimer);
+		if (m_iDisabledPowerTimer > 0)
+	{
+		emitCityPowerDisabledAdded(getID(), getOwner(), m_iDisabledPowerTimer);
+	}
+	else
+	{
+		emitCityPowerDisabledRemoved(getID(), getOwner(), m_iDisabledPowerTimer);
+	}
 	}
 }
 
@@ -17097,7 +17158,14 @@ void CvCity::endCitizenJuggling()
 			const int iNet = getSpecialistCount((SpecialistTypes)iSpecialist) - m_juggleSpecialistStart[iSpecialist];
 			if (iNet != 0)
 			{
-				emitSpecialistChanged(getID(), getOwner(), iSpecialist, iNet);
+				if (iNet > 0)
+	{
+		emitCitySpecialistAdded(getID(), getOwner(), iSpecialist, iNet);
+	}
+	else
+	{
+		emitCitySpecialistRemoved(getID(), getOwner(), iSpecialist, -iNet);
+	}
 			}
 		}
 	}
@@ -17117,7 +17185,14 @@ void CvCity::endCitizenJuggling()
 			{
 				continue;   // a radius index off the map edge: no plot, so no fact and nothing to refresh
 			}
-			emitPlotWorkedChanged(GC.getMap().plotNum(pPlot->getX(), pPlot->getY()), (int)getOwner(), getID(), isWorkingPlot(iPlot));
+			if (isWorkingPlot(iPlot))
+	{
+		emitPlotWorkedAdded(GC.getMap().plotNum(pPlot->getX(), pPlot->getY()), (int)getOwner(), getID());
+	}
+	else
+	{
+		emitPlotWorkedRemoved(GC.getMap().plotNum(pPlot->getX(), pPlot->getY()), (int)getOwner(), getID());
+	}
 			// the display half, once per genuinely-changed plot rather than once per probe
 			pPlot->updatePlotBuilder();
 			if (bShowSymbols)

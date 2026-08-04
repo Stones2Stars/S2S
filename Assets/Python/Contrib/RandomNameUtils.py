@@ -9,6 +9,7 @@ import string
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 gc = GC   # this module spells it lowercase
 STATE = CyState()
 ENABLER = CyEnabler()
@@ -209,7 +210,7 @@ def generateCivilizationName(iCivilizationType):
 	strCivilizationType = "DEFAULT"
 
 	if(gc.getCivilizationInfo(iCivilizationType) != None):
-		strCivilizationType = gc.getCivilizationInfo(iCivilizationType).getType()
+		strCivilizationType = INFO.getType("CIVILIZATION_", iCivilizationType)
 		if not civilizationNameHash.has_key(strCivilizationType):
 			strCivilizationType = "DEFAULT"
 

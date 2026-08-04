@@ -35,9 +35,16 @@ extra name, so the design collapses into "pass the god-object like always."
 > (the save read's own emits) and at play, with no phase ordering; written as a re-derivation over the enabler's
 > operating set it could not build at load at all.
 > ⚠ **The exception is a HARD COUNTER, and it is SERIALIZED STATE (owner): a city's POPULATION, its CULTURE, its
-> STORED PRODUCTION — "these kinds of things have to obviously just be serialized out."** They cannot realistically
-> have events, and they need none: they are not derived from anything, so they come back off the save directly and
-> are FORWARDED (below) rather than stored. That raises no ordering question at all.
+> STORED PRODUCTION — "these kinds of things have to obviously just be serialized out."** They are not derived
+> from anything, so the VALUE comes back off the save directly and is FORWARDED (below) rather than stored.
+> **⛔ BUT THEY DO EMIT, AND THE SAVE READ IS WHERE (owner).** Reading the counter off the stream fires
+> `CITY_POPULATION_ADDED <the stored amount>` — the ordinary `_ADDED` fact with its magnitude
+> ([event-spine.md](../specs/event-spine.md)), not a bespoke load verb. ⚑ **The counter needing no event and its
+> CONSUMERS needing one are different questions, and conflating them is what left a hole:** every deposit
+> scaled `per: {POPULATION}` is maintained from ZERO by applying, so without that fact a loaded city's
+> population-scaled deposits would all be missing — the value present on the object and absent from every sum
+> derived off it. ⚑ It also needs no load special case: the same `_ADDED` fact the growth path emits, with the
+> save's amount instead of 1 ([DEC-spine-reseed](decisions.md#dec-spine-reseed) — read, emit, populate). That raises no ordering question at all.
 > ⇒ The three-way test, and the exception confirms the split rather than bending it: **DERIVED ⇒ built by the
 > event replay, never serialized** ([DEC-derived-never-trusted](decisions.md#dec-derived-never-trusted)); **genuine
 > non-derivable state ⇒ serialized, and forwarded live** ([save.md §5](../specs/save.md) — a serialized store
@@ -125,6 +132,21 @@ supply is a union of two independently-owned halves, and storing either one twic
 The reader unions the two. A mirror of the building half on the context would also *drift*, because the enabler
 mutates its set in place as the fixpoint ripples.
 
+> **⚖ THE MAP HALF IS TWO DICTIONARIES, NOT ONE — bonuses, and natural features (owner).** *"There is nothing
+> wrong with having 2 dictionaries, 1 for bonuses and 1 for natural features; what I don't want is the constant
+> rewalk."* So the vicinity store is a **`BONUS_*`-keyed** dictionary beside a **`CASC_PRED_*`-keyed** one (the
+> vicinity twin of `plotAttrs` — river / coast / hills / peak / fresh water), each an ordinary `ContextDict`.
+> ⛔ **They are NOT merged into one dictionary**, and the reason is the one `ContextDict` already states as its
+> first: the two key spaces are DISJOINT REGISTRIES both starting at 0, so a merged store re-opens the
+> cross-registry id collision the `CLS_` prefix closed by construction. One dict per area of responsibility.
+> ⚑ **The objection the ruling answers is the REWALK, never the count of dictionaries** — a second dictionary
+> costs one more `add(id, ±1)` on a fact that is already being handled, while the absence of one costs a radius
+> scan per read. Adding a dictionary is how the walk disappears.
+> ⚠ **The ownership TIERS partition; they do not nest in storage.** [json.md §3.4](../specs/json.md) defines
+> `owned ⊂ owned+neutral ⊂ crossBorder`, so storing them as overlapping tiers would double-count on a fold.
+> Store the DISJOINT partitions (owned · neutral · foreign) and answer the nested tiers by ADDITION; `worked` and
+> `connected` are different predicates rather than ownership bands, so they stay their own.
+
 ⚖ **`CityContext.amenities` — THE CITY'S OWN FEATURE LIST, AND THE CITY IS WHAT GETS CHECKED (owner).** A
 grantor's `amenities` block ([json.md §8](../specs/json.md)) is static info data; what a consumer actually asks
 is *"does THIS CITY have this?"*. So the city holds the FOLD — over its **operating** buildings, plus the
@@ -140,11 +162,40 @@ surface: the fold is the ONE reader of the grantor side
 > (`has(id)` ≡ `count > 0`), the same refcount shape the enabler's membership formula and the operating set's
 > provided-bonus counts use, and the semantic legacy already had in its per-flag counters.
 
-⚑ **This is the `plotAttrs` shape one level up, and it is why it fits with no new machinery:** `plotAttrs` is
-literally the sum of its member plots' bits, so the two granularities cannot drift; the amenity fold is the
-same relationship between a city and its grantors. It rides the building-changed and the active↔dormant
-crossing facts the enabler already announces — DORMANCY is the reason it must be the OPERATING set rather than
-the present one, since a dormant building confers nothing ([enabler.md §3.2](../specs/enabler.md)).
+> **⛔ THE DICTIONARY IS THE FINAL STOPPING PLACE — IT IS WHERE THE DATA ACTUALLY LIVES (owner).** Every grantor
+> fact lands here and comes to REST: the building leg off the enabler's active↔dormant crossing (a dormant
+> building confers nothing, [enabler.md §3.2](../specs/enabler.md)), the civic / trait / tech legs off their own
+> facts. ⛔ It is NOT a projection of some other system's truth, and it is NOT relayed from the enabler — the
+> enabler is a SOURCE OF FACTS, never the home of this answer. One dictionary, every leg, one mechanism, and
+> every reader — the enabler's own gate included — reads it HERE.
+> **⛔ AND IT IS ITSELF A SPINE CONSUMER THAT KNOWS EXACTLY WHICH EVENTS TO LOOK FOR (owner).** A dictionary
+> REGISTERS on the spine and DECLARES the precise set of facts that maintain it; it is not fed by a central
+> switch that fans out to whichever store a case happens to name. ⚑ **The interest set IS the maintenance
+> contract, which is what makes it auditable at all:** with a fan-out, "does this fact reach the store that
+> needs it" is answerable only by reading the router, so a missing route hides in a `switch` that looks
+> complete; with a self-declaring dict the gap is visible AT the dict. It is also what makes the RECEIVED line
+> name something useful — the consumer that acted is the dictionary, by name
+> ([event-spine.md](../specs/event-spine.md) § THE RECEIVED LINE).
+> ⚑ It is the same move as the spine's own per-domain isolation: adding a domain touches only that domain, and
+> adding a dictionary now touches only that dictionary — no shared edit, no central case to remember.
+> ⚠ **REGISTRATION ORDER REMAINS A CONTRACT and self-registration must not quietly break it.** The enabler's
+> load-end gate pass evaluates THROUGH these stores, so every dictionary registers inside the CONTEXTS band of
+> `contexts → enabler → modifier → triggers` ([enabler.md §8](../specs/enabler.md)) — ordering is a property of
+> the band, never of which translation unit happened to initialize first.
+> ⛔ This does not license one consumer per SYSTEM being violated ([DEC-enabler-not-cascade](decisions.md#dec-enabler-not-cascade)):
+> that ban is on one consumer routing TWO MACHINES, not a cap of one consumer per machine. Several dictionaries
+> inside the contexts band are still exactly one system's worth of maintenance.
+>
+> **⛔ A CONTEXT DICTIONARY ONLY EVER CONSUMES; IT NEVER EMITS (owner) — which is why it can close no loop.**
+> Facts go in, state comes out, nothing goes back. A later read of that state by the machine whose fact fed it is
+> an ordinary read of CURRENT state, not feedback. ⚠ **The ordering ban at the top of this document does NOT
+> reach it, and reading it as though it does is the misapplication to avoid:** that ban is on a store that
+> RE-DERIVES BY READING another system's built set — which cannot run until that system is built. A
+> delta-CONSUMING store has no such dependency; it builds identically whenever the facts arrive, which is
+> precisely why the delta form is the one this document prescribes.
+> ⚑ Distinct from `ecOp.activeBuildings = NULL`, which breaks a genuine RECURSION INSIDE THE EVALUATOR (an
+> operate condition asking for the very set being computed). A dictionary updated by an earlier synchronous fold
+> is not recursion; it is simply current.
 
 > **⚖ THE FOLD HAS TWO LEGS, BECAUSE THE GRANTORS SIT AT DIFFERENT SCOPES — one implementation, two triggers.**
 > A BUILDING confers on its OWN city, so its leg is a pure delta off the per-building fact and needs nothing
@@ -175,9 +226,9 @@ the present one, since a dormant building confers nothing ([enabler.md §3.2](..
 ⚑ **The path is NOT missing — it is BUILT, three times over, BESPOKE. That is the actual defect.** The
 building→city→gate chain already runs end to end for a handful of attributes, each with its own hand-named
 `CvCity` counter, its own DOMAIN fact and its own predicate: **`governmentCenter`**
-(`changeGovernmentCenterCount` → `SEVT_GOVERNMENT_CENTER_CHANGED` → `CASC_PRED_IS_GOVERNMENT_CENTER`, evaluated
+(`changeGovernmentCenterCount` → `SEVT_CITY_GOVERNMENT_CENTER_ADDED / _REMOVED` → `CASC_PRED_IS_GOVERNMENT_CENTER`, evaluated
 as `cityContext->isGovernmentCenter()`), **`providesPower`** (`HAS_POWER`) and **fresh water**
-(`SEVT_CITY_FRESH_WATER_CHANGED`). ⇒ The generalization has a PROVEN shape and needs no new mechanism — what it
+(`SEVT_CITY_FRESH_WATER_ADDED / _REMOVED`). ⇒ The generalization has a PROVEN shape and needs no new mechanism — what it
 needs is to be made generic over the attribute id.
 
 ⛔ **So what this retires is a real defect, not a tidy-up:** one hand-named counter per flag
@@ -263,9 +314,20 @@ around it.
 
 An aggregate holds **counts keyed by id**, never the objects themselves. A building cares HOW MANY river plots /
 vicinity bonuses it has, never WHICH. So a `plots`-target (or keyed) deposit's output is `flat × count(id)`, and a
-gate is `has(id)` (count > 0). The uniform keyed dictionary is **`ContextDict`** (`id → count`, with
-`has`/`count`/`add`/`set`) — ONE kind, shared by every context, so the read is uniform and each family's key set is
-OPEN (a new predicate/type is a new key, never a reshape). `plotAttrs` keys on the `CASC_PRED_*` HAS_/IS_ plot
+gate is `has(id)` (count > 0).
+
+> **⚖ THAT PRODUCT IS A YIELD, AND THE DICTIONARY IS ONE OF ITS TWO OPERANDS — which is what makes a yield
+> delta-derivable at all (owner).** `flat` is a load-compiled constant and `count(id)` is maintained here, so
+> `Δ(flat × count) = flat × Δcount` is EXACT: an `add(id, ±1)` IS a yield delta of `Σ(deposits keyed on id) × ±1`.
+> That is plane **B** of the maintained sum ([state-repositories.md](state-repositories.md) § THE MAINTAINED SUM),
+> and it is the reason a count fact is emitted in the first place — *"+1 food per river tile"* becomes one
+> multiply when a river bit moves, never a re-derivation.
+> ⛔ **So a dictionary is not merely a gate store beside the value plane — it IS part of the value plane.** A
+> count with no route leaves every deposit scaled on it permanently wrong, exactly as a missing source fact does. The uniform keyed dictionary is **`ContextDict`** (`id → count`, read `has`/`count`,
+maintained `add(id, ±1)`, zeroed `clear()` at owner reset — **there is deliberately no `set`**, which would
+overwrite a refcount) — ONE kind, shared by every context, so the read is uniform and each family's key set is
+OPEN (a new predicate/type is a new key, never a reshape). It is also the destination the mark-and-recompute
+component retires ONTO ([DEC-contextdict-replaces-derivedcache](decisions.md#dec-contextdict-replaces-derivedcache)). `plotAttrs` keys on the `CASC_PRED_*` HAS_/IS_ plot
 predicate ids; `policies` on the `POLICY_*` classification ids.
 
 Non-dictionary scalars stay plain: population/power are `int` (power carries 0/1 today but stays `int` so a future
@@ -273,12 +335,36 @@ Non-dictionary scalars stay plain: population/power are `int` (power carries 0/1
 
 ## Maintained EVENT-DRIVEN — never a per-turn recompute
 
+> **⛔ WE DO NOT DIRTY CONTEXTS — THAT IS THE BOTTOM LINE (owner).** A context store carries **no staleness
+> mechanism of any kind**: no flag, no stamp, no epoch, no rebuild entry point, and no `refresh*`. **The FACT
+> SETS the bit it names and MOVES the count it names**, and that is the ENTIRE maintenance path
+> ([DEC-contexts-are-never-marked](decisions.md#dec-contexts-are-never-marked),
+> [DEC-no-staleness-vocabulary](decisions.md#dec-no-staleness-vocabulary)).
+> ⛔ Re-deriving a whole BLOCK because something in its vicinity happened is the legacy read path RESCHEDULED
+> from read-time to event-time, not deleted — the same single error the packages express per CHANNEL and the
+> contexts express per BLOCK.
+>
+> **⚖ A PLOT'S PREDICATES FOLLOW MEMBERSHIP, AND OWNERSHIP IS A MEMBERSHIP FACT (owner).** *"When a city gains or
+> loses ownership, the `HAS_RIVER`, `HAS_COAST` and whatever other predicates associated with that plot need to
+> be added to / removed from the city in question — that is how it has to work."* So the ONE applier
+> (`CvCity::onCityPlotChanged(plot, ±1)`, which folds the plot's STORED bitset) fires on **every membership
+> change**, not on the worked-radius relation alone:
+>
+> | membership fact | what moves |
+> |---|---|
+> | the plot gains / loses this city's OWNERSHIP | the whole of that plot's bits, `±1` each |
+> | the plot enters / leaves the worked radius | the same fold, same applier |
+> | a MEMBER plot's own bits move | **the PLOT announces the bit** -- `add(bit, ±1)`, nothing re-derived |
+>
+> ⚑ **One applier, several facts** — never one fact per relation with its own derivation, and never a re-scan of
+> the city's plots to find out what it now has.
+
 The stored aggregate rides events, exactly like the rest of the spine; a missed event drifts it, but that is the
 event spine's **baseline invariant** (plot-groups and vicinity drift the same way if events are incomplete), not a
 context-specific weakness. There is **no blanket per-turn rebuild** and no recompute-on-read.
 
 ⛔ **AND NOTHING HEALS A MISS — that is what makes incomplete wiring safe to grow (owner).** No periodic or per-turn
-context refresh, no "rebuild if it looks stale", no lazy recompute-on-read when a store looks empty, no dirty-timer
+context refresh, no "rebuild if it looks stale", no lazy recompute-on-read when a store looks empty, no staleness-timer
 sweep, no validity/epoch stamp that triggers re-derivation, and no "recompute once per turn to be safe" backstop —
 not as a safety net, not transitionally, not "just for load". The reasoning is the point: a missing emit is *cheap to
 find* precisely because the wrong value stays wrong and visible, whereas a self-healing recompute converts a loud,
@@ -289,9 +375,34 @@ CAPSTONE — LOAD is the only full build).
 
 - **`PlotContext`'s verdict bitset** ← the plot-substrate DOMAIN facts — terrain / feature / improvement / route /
   bonus / owner / **plot type / river / irrigation / landmark / worked** — routed to the contexts' consumer
-  (`Engine/ContextConsumer`), which re-derives the announcing plot's WHOLE block through the same `CvPlot` accessors
-  a read used to call — one uniform derivation, never a bespoke per-event bit mask — and then, **only if a bit the
-  neighbours read moved**, the ADJACENCY block of the 8 neighbours. That gate is exact: a neighbour's coast /
+  (`Engine/ContextConsumer`), which sets the bits the announcing fact FEEDS, and then, **only if a bit the
+  neighbours read moved**, the ADJACENCY block of the 8 neighbours.
+  > **⛔ THE FACT SETS THE BIT — it does not trigger a callback that goes and asks (owner).** *"Those 'refresh'
+  > functions are legacy-inspired rollerskating."* Re-deriving the WHOLE block through the same `CvPlot`
+  > accessors a read used to call is the legacy read path RESCHEDULED from read-time to event-time, not
+  > deleted — and this document bans that exact computation two sections up (§ a forwarded read that COMPUTES,
+  > whose worked example is `isCoastalLand()`'s 8-neighbour scan). Running it once per EVENT instead of once per
+  > READ is the same defect on a different clock.
+  > ⚑ **It is ONE error on two planes, not two errors (owner):** recalculate-instead-of-delta-derive, which the
+  > packages expressed per CHANNEL and the contexts express per BLOCK. ⚠ Their ORIGINS differ and that is worth
+  > keeping straight — the package protocol was designed that way and faithfully built
+  > ([superseded-ideas](superseded-ideas.md) #30: a superseded design, not a rollerskate), while these imported
+  > the legacy read path. Same shape, different provenance, one fix.
+  > ⚑ **It is [DEC-flag-is-fossil](decisions.md#dec-flag-is-fossil) wearing a second costume: both
+  > throw away the fact's identity.** A staleness flag reduces the fact to *"something moved"*; a whole-block
+  > re-derivation ignores WHICH bit the fact names. The spine already carries the answer —
+  > [DEC-spine-reseed](decisions.md#dec-spine-reseed)'s north-star is *the event SETTING the state (read → emit →
+  > populate)* — so a terrain fact carrying the new terrain SETS `IS_WATER`, never calls back to ask what the
+  > terrain is.
+  > ⚠ **What the retired justification was right about, so the fix does not re-introduce it:** *"one uniform
+  > derivation, never a bespoke per-event bit mask"* guarded against a hand-written per-event mask drifting from
+  > what the bits actually read — the same hazard [DEC-uniform-cache-shape](decisions.md#dec-uniform-cache-shape)
+  > names. The answer is the packages' answer: **DERIVE the routing, never hand-write it.** What each bit reads is
+  > declared beside that bit's own derivation — a small, checkable, per-BIT statement (eleven of them), never a
+  > per-EVENT judgement call.
+  > ⚑ **The ADJACENCY half cannot be set from one plot's payload and does not need to be rescanned either:** a
+  > neighbour's coast / fresh-water verdict reads the announcing plot's **STORED block**, never a fresh walk back
+  > through `CvPlot`. Same move, one hop out. That gate is exact: a neighbour's coast /
   fresh-water verdict reads nothing but facts held in this plot's own block, so the fan-out is one hop and cannot
   cascade; `IS_WORKED` is excluded from it outright, since a citizen taking a plot can move no neighbour's verdict
   and flips at citizen-reassignment cadence. **The consumer is the ONLY maintenance entry** — every plot mutation
@@ -302,11 +413,27 @@ CAPSTONE — LOAD is the only full build).
 - **`CityContext.plotAttrs`** ← `CvPlot::updateWorkingCity`: a plot entering/leaving the city's owned worked-radius
   set fires `CvCity::onCityPlotChanged(plot, ±1)` — the ONE applier, folding the plot's stored BITSET, so `plotAttrs`
   is literally the sum of the member plots' bits and the two granularities of one vocabulary cannot drift — and
-  emits the `SEVT_WORKING_CITY_CHANGED` DOMAIN fact (every mutation emits; the contexts' consumer ignores play-time
+  emits the `SEVT_PLOT_WORKING_CITY_ADDED / _REMOVED` DOMAIN fact (every mutation emits; the contexts' consumer ignores play-time
   events, the choke-point fold having already applied). A MEMBER plot's bits moving reaches the counts through the
-  same applier: the maintainer unfolds the old bits and refolds the new ones around every derivation.
-- **`CityContext`'s other blocks** ← each has ONE derivation, re-run WHOLE on any fact that can move it (never a
-  bespoke per-event delta), routed through the same consumer:
+  **PLOT's own announcement**: when a member plot's verdict bit moves, the PLOT says so and the dictionary
+  applies `add(bit, ±1)`.
+  > **⛔ THE PLOT SENDS IT UP THE CHAIN; THE CITY NEVER REACHES DOWN FOR IT (owner).** A city-side maintainer
+  > that "unfolds the old bits and refolds the new ones" cannot work and must not be built: by the time any
+  > consumer runs, the plot's bitset already holds the NEW value, so the old bits are gone and recovering them
+  > means re-deriving the block -- the legacy read path rescheduled from read-time to event-time, which this
+  > document bans two sections up. Let the object care about itself
+  > ([tally.md](../specs/tally.md)) and the dictionary consume the fact
+  > ([DEC-dict-is-a-consumer](decisions.md#dec-dict-is-a-consumer)).
+  > ⚠ **THE FAILURE IF IT IS MISSING IS NOT A STALE GATE -- IT IS A COMPOUNDING MAGNITUDE.** `plotAttrs` is
+  > plane B's COUNT ([state-repositories.md](state-repositories.md) § THE MAINTAINED SUM), so a bit that is
+  > never withdrawn leaves every deposit scaled on it (`+1 food per flatland plot`) inflated permanently, and
+  > inflated further on every subsequent substrate change.
+  > ⚑ The MEMBERSHIP case is different and needs no announcement of its own: a plot joining or leaving folds
+  > that plot's CURRENT bits, which are readable where they are.
+- **`CityContext`'s other blocks** ← each maintained by the fact that names what moved, routed through the same
+  consumer. ⚠ These are on the same re-derive-whole shape the callout above retires, and they convert the same
+  way — the target is the fact SETTING what it names, never a re-run of the block's whole derivation because
+  something in its vicinity happened:
   - the **VICINITY tiers** ← the radius tiles' bonus / owner / improvement / route / worked facts, plus the
     culture-level fact (the workable radius itself grows with culture, so that fact is also the vicinity-MEMBERSHIP
     signal). The plot→cities direction is the radius inverse: the workable fat cross is symmetric, so the cities that
@@ -337,7 +464,7 @@ CAPSTONE — LOAD is the only full build).
   there is — after which the facts alone maintain them.
   `CityContext.plotAttrs` builds from the in-read DOMAIN events
   ([DEC-spine-reseed](decisions.md#dec-spine-reseed)): each `CvPlot::read` announces its deserialized working-city
-  fact (`SEVT_WORKING_CITY_CHANGED` — the genuine read site emits), and the contexts' OWN spine consumer
+  fact (`SEVT_PLOT_WORKING_CITY_ADDED / _REMOVED` — the genuine read site emits), and the contexts' OWN spine consumer
   (`Engine/ContextConsumer`, one consumer per system) buffers the load bracket's facts and folds them through the
   same applier (`CvCity::onCityPlotChanged`) at `GAME_LOAD_FINISHED` — the cities stream AFTER the map, so the fold
   applies once after the stream ends (the [enabler §7.1](../specs/enabler.md) order rule's second option, never the
@@ -385,7 +512,7 @@ is not an owner.
 ⚑ **AND IT IS PURELY AN AI-LOOP CONCERN (owner)** — the AI deciding whether, and where, to send a unit to
 upgrade. That settles its cost class: the memo is **AI-heuristic caching**, the sanctioned residual
 ([superseded-ideas #1](superseded-ideas.md)), NOT engine state and NOT a derived cache on the cascade plane. It
-carries no dirty protocol, answers to no invalidation contract, and belongs with the asking side.
+carries no staleness protocol, answers to no invalidation contract, and belongs with the asking side.
 ⚠ It also means the arbitrary-city calls above are an AI APPROXIMATION, not a rule violation: a cheap stand-in
 for "somewhere", which is a fair thing for a heuristic to do. Do not "fix" them as a correctness bug — they move
 with the unit context, when the unit is the one asking.
@@ -425,7 +552,13 @@ built beside them. `expectedPlotYields` scales each plots-target deposit by `cit
 
 ## See also
 - [patterns.md](patterns.md) — the INFO DATA-OUT contract + the per-group valuation surface that reads these contexts.
-- [state-repositories.md](state-repositories.md) — the derived-cache (OUTPUT-value) plane; the contexts are the
-  INPUT-state read surface (distinct: contexts hold input facts the getters/evaluator read, not cached output values).
+- [state-repositories.md](state-repositories.md) — the maintained-sum plane, and the model BOTH planes share.
+  ⛔ **A context is cascade OUTPUT, not a separate "input" kind (owner):** *"contexts, when thinking about it,
+  are in essence the output of the cascade."* Same scopes, same spine, never serialized, rebuilt by the same
+  reseed, read as the same bare fetch — and maintained the same way, by the fact that names the source
+  ([DEC-maintained-sum](decisions.md#dec-maintained-sum)). What differs is only WHO CONSUMES the value: a
+  package answers a magnitude, a context store answers a gate. ⚠ That is a statement about the consumer, never
+  about the kind of thing being stored, and treating it as two planes is what let them drift onto opposite
+  maintenance mechanisms.
 - [../specs/modifier.md](../specs/modifier.md) — the deposits the getters sum; [../specs/enabler.md](../specs/enabler.md)
   — the availability machine that reads the same state; [decisions.md](decisions.md#dec-scope-contexts) — the ruling.

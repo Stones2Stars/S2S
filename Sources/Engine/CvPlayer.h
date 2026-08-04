@@ -17,6 +17,7 @@
 #include "CvPlotGroup.h"
 #include "CvProperties.h"
 #include "EmpireContext.h"
+#include "PolicyContext.h"   // the empire's enacted-policy dictionary: storage + maintenance, one place
 #include "CvCascadePackage.h"   // the EMPIRE-scope cascade package + receiver sums (state-repositories.md)
 #include "Infrastructure/CvDerivedCache.h"  // the ONE derived-cache component (mark-driven, never serialized)
 #include "Enabler/CvEnabler.h"  // PlayerEnabler -- the per-player tri-state domains (enabler.md §7.1)
@@ -233,7 +234,6 @@ public:
 	// through it would silently hand back the empire's realized TOTAL where a percent stack was asked for.
 	int maintenancePercentStack(int iKind) const;
 	// Marks the empire's maintenance RECEIVER slot -- what a member city's realized value moving invalidates.
-	void markMaintenanceDirty() const;
 
 
 	void updateCorporation();
@@ -794,6 +794,7 @@ public:
 	// The per-player ISOLATED empire-scope live state (EmpireContext) -- state religion, policies. The city eval reaches
 	// it up the scope chain for empire facts (not mirrored per city). Maintained event-driven.
 	const EmpireContext& getEmpireContext() const { return m_empireContext; }
+	PolicyContext& policies() const { return m_policies; }
 
 	// The EMPIRE-scope cascade package -- the percent/flat sums this player's sources author at empire scope,
 	// PLUS the empire RECEIVER sums (gold/research/culture/espionage -- the realized totals the empire
@@ -801,7 +802,6 @@ public:
 	// modifier consumer's derived masks; recompute-only, never serialized.
 	const CvCascadePackage<CvPlayer>& getCascadePackage() const { return m_cascadePackage; }
 	// The package's refresh delegate (the CvDerivedCacheSet contract) -- delegates to the ONE gather.
-	void refreshCascadePackage(int64_t iMask) const;
 
 	// ---- THE ENABLER'S PER-PLAYER DOMAINS (enabler.md §7.1) -- techs / civics / projects / processes / builds /
 	// promotions. The owner is where the domain's HAVE AXES live, NOT where the gate is asked: projects and
@@ -1843,6 +1843,10 @@ protected:
 	EraTypes m_eCurrentEra;
 	ReligionTypes m_eLastStateReligion;
 	EmpireContext m_empireContext;   // per-player empire-scope live state (see getEmpireContext); maintained event-driven
+	// The empire's ENACTED-POLICY dictionary. Owned HERE, as CvCity owns its amenity dictionary and for the same
+	// reason: the player owns the STORAGE while the context owns the delta LOGIC and the facts that drive it
+	// (Engine/PolicyContext.h -- one place responsible). Its maintainer reaches this accessor directly.
+	mutable PolicyContext m_policies;
 	// the EMPIRE-scope cascade package + receiver sums (see getCascadePackage); recompute-only, never serialized
 	CvCascadePackage<CvPlayer> m_cascadePackage;
 	PlayerTypes m_eParent;

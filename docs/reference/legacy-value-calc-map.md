@@ -164,14 +164,12 @@ Per assigned specialist of type X, `count[X] ×` the **FIVE** engine terms (`pro
 > local/perType/perAll get NO percent; a percent on a zero-intrinsic specialist adds nothing. The count-frozen
 > flat-per-specialist add-on is dropped (a PERMANENT carve-out, owner-ruled balance-later).
 >
-> - **Getters are RECOMPUTE-ON-READ (the committed form).** `getSpecialistCommerce` + `getSpecialistYieldTotal` recompute
->   from current state on every read (intrinsic loop; yield adds the eager `m_aiExtraSpecialistYield`). Per
->   [state-repositories.md](../architecture/state-repositories.md) this is the **acknowledged WORKAROUND form** (the
->   "squirrelBanana" recompute-every-read — correct, but pays the full cost per read); the **proper** end state is the
->   lazy dirty-flagged cache, to be delivered by the **standardized "cached array" component**,
->   which formalizes that doc's pattern and is applied to plot + specialist + future caches. Until then the eager
->   `updateSpecialist{Commerce}`/`updateExtraSpecialistYield` machinery remains only to fire the rate-dirty trigger
->   (`setCommerceDirty`/`onYieldChange`) — its cache writes are vestigial (the getter ignores them).
+> - **Getters are RECOMPUTE-ON-READ (the legacy form).** `getSpecialistCommerce` + `getSpecialistYieldTotal` recompute
+>   from current state on every read (intrinsic loop; yield adds the eager `m_aiExtraSpecialistYield`) — the
+>   "squirrelBanana" shape: correct, and paying the full cost per read. Its replacement is a package CHANNEL
+>   maintained by the facts ([state-repositories.md](../architecture/state-repositories.md) § THE MAINTAINED SUM):
+>   the specialist-count fact moves the slot, and the read becomes a bare fetch. ⛔ Not a lazy recompute behind a
+>   staleness flag — that design is retired ([superseded-ideas](../architecture/superseded-ideas.md) #30).
 > - **Stale save-read SKIPPED.** `m_aiSpecialistCommerce100` / `m_aiSpecialistYieldTotal` are `WRAPPER_SKIP_ELEMENT` on
 >   read (the [DEC-save-remove-is-soft](../architecture/decisions.md) soft-remove) so the old drift never loads —
 >   the [state-repositories.md](../architecture/state-repositories.md) "ignore save read + recompute" technique.
@@ -180,10 +178,7 @@ Per assigned specialist of type X, `count[X] ×` the **FIVE** engine terms (`pro
 > - **Cascade:** dropped the yield-vs-commerce branch in `SpecialistYieldTotal` — multiplicative for ALL channels. Yield
 >   verified clean (no specialist yield pct active in-save → no number change); commerce verified clean too
 >   (engine recomputes the same deterministic value as the cascade; commerce numbers shifted off their old stale values, authorized).
->   (2) The standardized `CvDerivedCache` component (upgrade recompute-on-read → lazy dirty cache; migrate plot +
->   specialist) — **formalized — F0 foundation work (owner-ruled), not deferred**; design +
->   chosen C++03 mechanism (templated value-holder + member-fn-ptr recompute) in
->   [state-repositories.md](../architecture/state-repositories.md#the-standardized-cvderivedcache-component).
+>
 >
 > **⛔ The specialist-commerce PERCENT (`SpecialistCommercePercentChanges`) is a balance-tweaked, buggy, STALE,
 > non-deterministic engine value — FULL mechanism mapped.** There are TWO engine writers to `m_aiSpecialistCommerce100`:
@@ -269,7 +264,7 @@ to the holding building via `getBaseCommerceRateFromBuilding100`), both modelled
 >   built after the guild (CARPENTER 1000 vs 500). Per [validation §"touching legacy"](../specs/validation.md) +
 >   [state-repositories](../architecture/state-repositories.md), fully mapped (every writer) + shown non-deterministic,
 >   then (owner-authorized) **streamlined to recompute-from-source**: `getBuildingCommerceChange` recomputes Σ over the
->   player's `getHasBuildings → getGlobalBuildingCommerceChanges` on a dedicated dirty flag (never serialized,
+>   player's `getHasBuildings → getGlobalBuildingCommerceChanges` on a dedicated staleness flag (never serialized,
 >   `WRAPPER_SKIP`), trigger-only writer, cities PULL it. Engine now == cascade (8900); P6/C8192 gold commerce verified
 >   CLEAN; commerce sweep 722/740 clean (guild double-count gone, no regression). **Event/vote grants are kept OUT of the
 >   cache (owner ruling: one-shot genuine state, not derivable — "events in the cache is lunacy")**: a SEPARATELY
@@ -444,7 +439,7 @@ What the cascade UNIFIES (delete N paths → one accumulator).
 - **Commerce-modifier ADD-THEN-SUBTRACT dedup** — in `getTotalCommerceRateModifier` (`CvCity.cpp` ~12008-12021), `CommerceRateModifierfromEvents` and `…fromBuildings` are ADDED then SUBTRACTED (folded into the player's generic `getCommerceRateModifier` AND tracked separately for UI). The cascade keeps ONE accumulator, no reverse-subtraction.
 - **Parallel city/area/player accumulators** — building **good/bad health** (city `getBuildingGoodHealth`:8294 + `area()`:659 + player:10798, summed in `goodHealth` ~5809) and building **happiness** (city:8449 + area:701 + player:10867, summed in happy/unhappy ~5644/5705). Three scopes summed at read time → the cascade resolves scope roll-up once.
 - **x1 / x100 twins** — `getYieldRate`÷`getYieldRate100`, `getCommerceRate`÷`getCommerceRateTimes100`, `getBaseCommerceRate`÷`…Times100`, `getExtraYield`÷`getExtraYield100`, `getSpecialistCommerce`÷`m_aiSpecialistCommerce100`: the x1 is always `x100/100` (a derived twin, not a separate value). Cascade stores once.
-- **`getTotalCommerceRateModifier` is the central hub** (`CvCity.cpp` ~11995, cached w/ dirty flag) assembling bonus+building+player-from-buildings+event+player(−dedup)+capital — the single point the commerce-modifier cascade replaces.
+- **`getTotalCommerceRateModifier` is the central hub** (`CvCity.cpp` ~11995, cached w/ staleness flag) assembling bonus+building+player-from-buildings+event+player(−dedup)+capital — the single point the commerce-modifier cascade replaces.
 - **No-cache recompute HOTSPOTS** (recomputed every call, multi-source, called per turn by UI/AI): `goodHealth`/`badHealth` (~13 sources each), `happyLevel`/`unhappyLevel` (~20-25 sources each), `getBaseYieldRateModifier`, `getCommerceFromPercent`, `getBaseCommerceRateExtra`, and O(n) loops `getImprovement{Good,Bad}Health`/`getSpecialist{Good,Bad}Health`/`getSpecialist{,Un}Happiness`. The cascade's O(1) summed accumulator is the direct replacement (perf win + dedup).
 
 ---

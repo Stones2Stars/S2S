@@ -4,12 +4,14 @@ import CvUtil
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 GAME = GC.getGame()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
 
+TEXT = CyGameTextMgr()
 def loadConfigurationData():
 	global g_bCheckPrereq
 	global g_iBasePercentOffset
@@ -127,7 +129,7 @@ class EnhancedTechConquest:
 		if fBasePercent < 1: return
 
 		city = argsList[2]
-		charBeaker = GC.getCommerceInfo(CommerceTypes.COMMERCE_RESEARCH).getChar()
+		charBeaker = TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_RESEARCH)
 		if iPopPercent:
 			iPopulation = city.getPopulation() + 1
 			fForce = iPopPercent * (1 + city.isCapital()) * iPopulation / (100.0 * (CyPlayerO.getTotalPopulation() + iPopulation))
@@ -189,7 +191,7 @@ class EnhancedTechConquest:
 			CyTeamN.changeResearchProgress(iTech, iBeakers, iOwnerNew)
 
 			if bHuman:
-				szTxt += "\n\t* " + GC.getTechInfo(iTech).getDescription() + u" <-> %i%c" %(iBeakers, charBeaker)
+				szTxt += "\n\t* " + INFO.getDescription("TECH_", iTech) + u" <-> %i%c" %(iBeakers, charBeaker)
 
 			iCount += 1
 

@@ -2,8 +2,10 @@
 
 from CvPythonExtensions import *
 GC = CyGlobalContext()
+INFO = CyInfo()
 TRNSLTR = CyTranslator()
 
+TEXT = CyGameTextMgr()
 class PediaImprovement:
 
 	def __init__(self, parent, H_BOT_ROW):
@@ -100,7 +102,7 @@ class PediaImprovement:
 		bYieldReq = False
 		szYield = ""
 		for k in range(YieldTypes.NUM_YIELD_TYPES):
-			szChar = u'%c' % (GC.getYieldInfo(k).getChar())
+			szChar = u'%c' % (TEXT.getSymbolChar("YIELD_", k))
 			iYieldChange = CvTheImproveInfo.getYieldChange(k)
 			if iYieldChange:
 				if iYieldChange < 0:
@@ -187,7 +189,7 @@ class PediaImprovement:
 						szYield += " <color=255,0,0,255>"
 					else:
 						szYield += " <color=0,230,0,255>"
-					szYield += str(iYieldChange) + u'%c' % (GC.getYieldInfo(k).getChar())
+					szYield += str(iYieldChange) + u'%c' % (TEXT.getSymbolChar("YIELD_", k))
 			if szYield:
 				aList1.append((iTech, szYield))
 		aList2 = []
@@ -200,7 +202,7 @@ class PediaImprovement:
 						szYield += " <color=255,0,0,255>"
 					else:
 						szYield += " <color=0,230,0,255>"
-					szYield += str(iYieldChange) + u'%c' % (GC.getYieldInfo(k).getChar())
+					szYield += str(iYieldChange) + u'%c' % (TEXT.getSymbolChar("YIELD_", k))
 			if szYield:
 				aList2.append((iCivic, szYield))
 		aList3 = []
@@ -215,11 +217,11 @@ class PediaImprovement:
 						szYield += " <color=255,0,0,255>"
 					else:
 						szYield += " <color=0,230,0,255>"
-					szYield += str(iYieldChange) + u'%c' % (GC.getYieldInfo(k).getChar())
+					szYield += str(iYieldChange) + u'%c' % (TEXT.getSymbolChar("YIELD_", k))
 			if szYield:
 				aList3.append((iType, szYield))
 			if CvTheImproveInfo.isImprovementBonusMakesValid(iType):
-				aValidList.append([szChild + str(iType) + "|" + str(n), GC.getBonusInfo(iType).getButton()])
+				aValidList.append([szChild + str(iType) + "|" + str(n), INFO.getButton("BONUS_", iType)])
 				n += 1
 		aList4 = []
 		for iRoute in range(GC.getNumRouteInfos()):
@@ -231,7 +233,7 @@ class PediaImprovement:
 						szYield += " <color=255,0,0,255>"
 					else:
 						szYield += " <color=0,230,0,255>"
-					szYield += str(iYieldChange) + u'%c' % (GC.getYieldInfo(k).getChar())
+					szYield += str(iYieldChange) + u'%c' % (TEXT.getSymbolChar("YIELD_", k))
 			if szYield:
 				aList4.append((iRoute, szYield))
 		if aList1 or aList2 or aList3 or aList4:
@@ -243,7 +245,7 @@ class PediaImprovement:
 				for i, szYield in aList1:
 					childPanelName = aName()
 					screen.attachPanel(panelName, childPanelName, "", "", True, True, ePnlEmpty)
-					screen.attachImageButton(childPanelName, "", GC.getTechInfo(i).getButton(), enumGBS, eWidJuToTech, i, 2, False)
+					screen.attachImageButton(childPanelName, "", INFO.getButton("TECH_", i), enumGBS, eWidJuToTech, i, 2, False)
 					screen.attachLabel(childPanelName, "", szfont3b + " " + szYield)
 					screen.attachLabel(panelName, "", "   ")
 			if aList2:
@@ -254,7 +256,7 @@ class PediaImprovement:
 				for i, szYield in aList2:
 					childPanelName = aName()
 					screen.attachPanel(panelName, childPanelName, "", "", True, True, ePnlEmpty)
-					screen.attachImageButton(childPanelName, "", GC.getCivicInfo(i).getButton(), enumGBS, eWidJuToCivic, i, 2, False)
+					screen.attachImageButton(childPanelName, "", INFO.getButton("CIVIC_", i), enumGBS, eWidJuToCivic, i, 2, False)
 					screen.attachLabel(childPanelName, "", szfont3b + " " + szYield)
 					screen.attachLabel(panelName, "", "   ")
 			if aList3:
@@ -265,7 +267,7 @@ class PediaImprovement:
 				for i, szYield in aList3:
 					childPanelName = aName()
 					screen.attachPanel(panelName, childPanelName, "", "", True, True, ePnlEmpty)
-					screen.attachImageButton(childPanelName, "", GC.getBonusInfo(i).getButton(), enumGBS, eWidJuToBonus, i, 2, False)
+					screen.attachImageButton(childPanelName, "", INFO.getButton("BONUS_", i), enumGBS, eWidJuToBonus, i, 2, False)
 					screen.attachLabel(childPanelName, "", szfont3b + " " + szYield)
 					screen.attachLabel(panelName, "", "   ")
 			if aList4:
@@ -276,7 +278,7 @@ class PediaImprovement:
 				for i, szYield in aList4:
 					childPanelName = aName()
 					screen.attachPanel(panelName, childPanelName, "", "", True, True, ePnlEmpty)
-					screen.attachImageButton(childPanelName, "", GC.getRouteInfo(i).getButton(), enumGBS, eWidJuToRoute, i, 2, False)
+					screen.attachImageButton(childPanelName, "", INFO.getButton("ROUTE_", i), enumGBS, eWidJuToRoute, i, 2, False)
 					screen.attachLabel(childPanelName, "", szfont3b + " " + szYield)
 					screen.attachLabel(panelName, "", "   ")
 		else:
@@ -286,7 +288,7 @@ class PediaImprovement:
 		nTerrains = GC.getNumTerrainInfos()
 		iType = CvTheImproveInfo.getPrereqTech()
 		if iType != -1:
-			aList0.append([PF + "TECH" + str(iType), GC.getTechInfo(iType).getButton()])
+			aList0.append([PF + "TECH" + str(iType), INFO.getButton("TECH_", iType)])
 
 		# bNotOnAnyBonus is not exposed to python.
 
@@ -318,7 +320,7 @@ class PediaImprovement:
 		szChild = PF + "TERRAIN"
 		for i in range(nTerrains):
 			if CvTheImproveInfo.getTerrainMakesValid(i):
-				aValidList.append((szChild + str(i) + "|" + str(n), GC.getTerrainInfo(i).getButton()))
+				aValidList.append((szChild + str(i) + "|" + str(n), INFO.getButton("TERRAIN_", i)))
 				n += 1
 		if CvTheImproveInfo.isHillsMakesValid():
 			aValidList.append((szChild + str(GC.getInfoTypeForString("TERRAIN_HILL")) + "|" + str(n), "Art/Interface/Buttons/BaseTerrain/Hill.dds"))
@@ -327,7 +329,7 @@ class PediaImprovement:
 		szChild = PF + "FEATURE"
 		for i in range(GC.getNumFeatureInfos()):
 			if CvTheImproveInfo.getFeatureMakesValid(i):
-				aValidList.append((szChild + str(i) + "|" + str(n), GC.getFeatureInfo(i).getButton()))
+				aValidList.append((szChild + str(i) + "|" + str(n), INFO.getButton("FEATURE_", i)))
 				n += 1
 
 		if aList0 or aValidList:

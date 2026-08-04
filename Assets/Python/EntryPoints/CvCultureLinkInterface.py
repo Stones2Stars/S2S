@@ -3,6 +3,7 @@ from CvPythonExtensions import *
 from copy import copy, deepcopy
 from math import *
 GC = CyGlobalContext()
+INFO = CyInfo()
 
 DMAX_EARTH = 20038	# max possible distance between two points on earth (WGS-84)
 
@@ -375,7 +376,7 @@ class CultureLink:
 			if eCivilization in CoordinatesDictionary:
 				pCoordinate = CoordinatesDictionary[eCivilization]
 			else:
-				print "[ERROR] Culturally Linked Starts: civilization %s (%d) not defined:" % (GC.getCivilizationInfo(eCivilization).getDescription(), eCivilization)
+				print "[ERROR] Culturally Linked Starts: civilization %s (%d) not defined:" % (INFO.getDescription("CIVILIZATION_", eCivilization), eCivilization)
 				pCoordinate = CoordinatesDictionary[eCivilization]
 			CultureLink.pRWCoordinatesList.append(pCoordinate)
 

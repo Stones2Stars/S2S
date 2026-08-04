@@ -9,6 +9,7 @@ import WBProjectScreen
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 MAP = GC.getMap()
 STATE = CyState()
 ENABLER = CyEnabler()
@@ -274,7 +275,7 @@ class WBInfoScreen:
 				pPlayer = GC.getPlayer(iPlayer)
 				iLeader = pPlayer.getLeaderType()
 				sColor = u"<color=%d,%d,%d,%d>" %(pPlayer.getPlayerTextColorR(), pPlayer.getPlayerTextColorG(), pPlayer.getPlayerTextColorB(), pPlayer.getPlayerTextColorA())
-				sButton = GC.getLeaderHeadInfo(iLeader).getButton()
+				sButton = INFO.getButton("LEADER_", iLeader)
 				sText = u"%s%s" % (sColor, pPlayer.getName())
 				screen.setTableText("PlotTable", iColumn, iRow, "<font=3>" + sText + "</color></font>", sButton, WidgetTypes.WIDGET_PYTHON, 7876, iPlayer * 10000 + iLeader, 1<<0)
 

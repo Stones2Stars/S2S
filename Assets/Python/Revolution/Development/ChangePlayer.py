@@ -13,6 +13,7 @@ import BugCore
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 GAME = GC.getGame()
 STATE = CyState()
 ENABLER = CyEnabler()
@@ -67,7 +68,7 @@ def changeCivPopup():
 
 	popup.createPythonPullDown(' ... with this leader', 3)
 	for i in xrange(GC.getNumLeaderHeadInfos()):
-		popup.addPullDownString(GC.getLeaderHeadInfo(i).getDescription(), i, 3)
+		popup.addPullDownString(INFO.getDescription("LEADER_", i), i, 3)
 
 	popup.setSelectedPulldownID(CyPlayer.getLeaderType(), 3)
 

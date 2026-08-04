@@ -61,80 +61,13 @@ void CityContext::clear() const
 	m_governmentCenterDistance = 0;
 	m_maxAdjacentWaterTiles = 0;
 	m_holyCityCount = 0;
-	amenities.clear();
-	empireAmenities.clear();
+	// ⚠ The AMENITY state is NOT cleared here -- it is not this context's to clear. `CvCity::reset` zeroes its own
+	// amenity context, the same way it resets its enabler and its operating set, because a city is recycled out of
+	// an FFreeListTrashArray and a delta store is correct only from a known zero.
 }
 
 // ---- the ONE derivation per stored block ------------------------------------------------------------------------
 
-// Re-derive the MAP-provider vicinity presence over the city's CURRENT workable radius (which grows with culture, so
-// the plot count is read live rather than assumed). A plot carries at most ONE bonus, so this is one cheap pass.
-// The two reveal semantics below are the ones the two existing read paths already used, preserved exactly:
-// the loose ownership tiers read the bonus as revealed to THIS city's team, while the CONNECTED tier reads the
-// plot's own revealed bonus -- the engine's obtained-vicinity form.
-void CityContext::refreshVicinityBonuses() const
-{
-	m_vicinityOwned.clear();
-	m_vicinityNeutral.clear();
-	m_vicinityForeign.clear();
-	m_vicinityWorked.clear();
-	m_vicinityConnected.clear();
-	if (m_city == NULL)
-	{
-		return;
-	}
-	const int iCityOwner = (int)m_city->getOwner();
-	const TeamTypes eCityTeam = m_city->getTeam();
-	const CvPlot* pCentrePlot = m_city->plot();
-	const int iNumCityPlots = m_city->getNumCityPlots();
-
-	for (int iRingIndex = 0; iRingIndex < iNumCityPlots; ++iRingIndex)
-	{
-		const CvPlot* pRadiusPlot = m_city->getCityIndexPlot(iRingIndex);
-		if (pRadiusPlot == NULL)
-		{
-			continue;
-		}
-		const bool bCentre = (pRadiusPlot == pCentrePlot);
-		const int iPlotOwner = (int)pRadiusPlot->getOwner();
-
-		const int eRevealedBonus = (int)pRadiusPlot->getBonusType(eCityTeam);
-		if (eRevealedBonus != (int)NO_BONUS)
-		{
-			if (bCentre || iPlotOwner == iCityOwner)
-			{
-				m_vicinityOwned.add(eRevealedBonus, 1);
-			}
-			else if (iPlotOwner == (int)NO_PLAYER)
-			{
-				m_vicinityNeutral.add(eRevealedBonus, 1);
-			}
-			else
-			{
-				m_vicinityForeign.add(eRevealedBonus, 1);
-			}
-			if (bCentre || pRadiusPlot->isBeingWorked())
-			{
-				m_vicinityWorked.add(eRevealedBonus, 1);
-			}
-		}
-
-		// The OBTAINED tier: owned + a valid (improved, revealed, networked) bonus + connected to this city.
-		const int eOwnBonus = (int)pRadiusPlot->getBonusType();
-		if (eOwnBonus == (int)NO_BONUS)
-		{
-			continue;
-		}
-		if (bCentre)
-		{
-			m_vicinityConnected.add(eOwnBonus, 1);
-		}
-		else if (iPlotOwner == iCityOwner && pRadiusPlot->isHasValidBonus() && pRadiusPlot->isConnectedTo(m_city))
-		{
-			m_vicinityConnected.add(eOwnBonus, 1);
-		}
-	}
-}
 
 // Re-derive the area facts: the city's area ID, that area's tile count, and the largest ADJACENT water body. The
 // area id replaces a per-read plot()->area() chase; the water-body size replaces CvPlot::isCoastalLand's 8-neighbour
@@ -235,121 +168,22 @@ void CityContext::refreshHolyCity() const
 }
 
 
-// The AMENITY FOLD -- the city's clean feature list, built from what its grantors CONFER on it (json §8).
-//
-// ⚖ A DELTA, NOT A RE-DERIVATION (owner: "listen to events and see 'oh yes this provides an amenity', then add
-// it"). That is what makes it self-contained: it reads NOTHING -- not the city, not the enabler. A rebuild would
-// have to walk the enabler's operating set, and the contexts' consumer registers BEFORE the enabler
-// (contexts -> enabler -> modifier, since the enabler gates THROUGH these stores), so at load that set does not
-// exist yet. Listening sidesteps the ordering entirely: the store builds itself from the same facts at load
-// (CvCity::read's per-building emit) and at play (setHasBuilding).
-//
-// ⛔ COUNTS, not bits: several grantors can confer the SAME amenity, so each contributes +1 and a departure
-// decrements -- losing one power plant must not darken a city that has two.
-void CityContext::onBuildingChanged(int eBuilding, int sign) const
+// The AMENITY reads are FORWARDS: the state is owned by CvCity's AmenityContext, which owns its storage, its
+// maintenance and the facts that drive it in one place (Engine/AmenityContext.h). This context stores none of
+// it and no caller reaches the amenity context THROUGH here.
+bool CityContext::hasAmenity(int iAmenityId) const
 {
-	if (eBuilding < 0)
-	{
-		return;
-	}
-	foldAmenities(GC.getBuildingInfo((BuildingTypes)eBuilding).getAmenities(), sign);
+	return m_city != NULL && m_city->amenity().has(iAmenityId);
 }
 
-// The EMPIRE-scope grantors. A civic confers on EVERY city of the empire (json §8: "a city or cities"), so the
-// city carries what its owner currently has adopted.
-//
-// ⚖ WITHDRAW-THEN-REFOLD, because a CONDITIONED grant cannot be un-added by re-evaluating its gate: once the city
-// stops being the capital, asking "does IS_CAPITAL hold?" answers NO and would subtract nothing, stranding the +1
-// forever ([DEC-no-self-heal] -- nothing would ever correct it). Replaying the RECORDED contribution instead is
-// exact whatever the condition was, and needs no memory of the verdict.
-//
-// ⚑ Reading the player's OWN adopted civics is a FORWARD of raw, object-owned O(1) state -- the HAVE axis every
-// context forwards -- not the banned re-derivation, which is a store reading ANOTHER SYSTEM's built state (the
-// enabler's operating set). The same read `rebuildPoliciesFor` already makes for the policy union.
-void CityContext::refreshEmpireAmenities() const
+int CityContext::amenityCount(int iAmenityId) const
 {
-	if (m_city == NULL)
-	{
-		return;
-	}
-	// (1) withdraw exactly what was last contributed -- the recorded counts, not a re-evaluated gate
-	for (std::map<int, int>::const_iterator it = empireAmenities.m.begin(); it != empireAmenities.m.end(); ++it)
-	{
-		amenities.add(it->first, -(it->second));
-	}
-	empireAmenities.clear();
-
-	// (2) re-fold from current state, recording the new contribution so it stays withdrawable
-	const CvPlayer& kOwner = GET_PLAYER(m_city->getOwner());
-	const int iNumCivicOptions = GC.getNumCivicOptionInfos();
-	for (int iCivicOption = 0; iCivicOption < iNumCivicOptions; ++iCivicOption)
-	{
-		const CivicTypes eCivic = kOwner.getCivics((CivicOptionTypes)iCivicOption);
-		if (eCivic == NO_CIVIC)
-		{
-			continue;
-		}
-		foldAmenities(GC.getCivicInfo(eCivic).getAmenities(), +1, &empireAmenities);
-	}
+	return m_city != NULL ? m_city->amenity().count(iAmenityId) : 0;
 }
 
 bool CityContext::hasAmenityKey(int& iIdCache, const char* szKey) const
 {
-	return amenities.has(ClassificationRegistry::cachedKeyId(iIdCache, CLSD_AMENITY, szKey));
-}
-
-void CityContext::foldAmenities(const CvClassificationBlock* pBlock, int sign, ContextDict* pRecordInto) const
-{
-	if (pBlock == NULL || sign == 0)
-	{
-		return;
-	}
-	// Walk what the GRANTOR carries (the index IS the generated id), never every minted amenity id.
-	const std::vector<char>& kGranted = pBlock->grantedById();
-	CvCascadeEvalCtx ec;
-	bool bCtxFilled = false;
-	for (int iAmenityId = 0; iAmenityId < (int)kGranted.size(); ++iAmenityId)
-	{
-		if (kGranted[iAmenityId] == 0)
-		{
-			continue;
-		}
-		// A CONDITIONED grant (the §3.9 entry form) is gated on THIS city -- `abolishedAnger` is conferred on the
-		// CAPITAL only. Evaluated on the grant AND on the repeal (owner), through the ONE evaluator: the same
-		// verdict decides the +1 and the -1, so a conditioned grant can never fold in and fail to fold out.
-		const CvCondition* pGate = pBlock->conditionForId(iAmenityId);
-		if (pGate != NULL)
-		{
-			if (!bCtxFilled)
-			{
-				fillEvalCtx(ec);
-				bCtxFilled = true;
-			}
-			if (!cascadeEvalCondition(pGate, ec, CvCascadeEvalFlags()))
-			{
-				continue;
-			}
-		}
-		//	A crossing (0 <-> non-zero) is a genuine state change, so it ANNOUNCES -- a consumer routing on an
-		//	amenity must not have to re-derive which key moved. Only the crossing: a second grantor of an
-		//	amenity the city already holds changes no verdict, exactly as the counters this replaces behaved.
-		const bool bHadBefore = amenities.has(iAmenityId);
-		amenities.add(iAmenityId, sign);
-		if (m_city != NULL && bHadBefore != amenities.has(iAmenityId))
-		{
-			//  ⚠ Power is the one amenity whose fact is wired today; the other per-attribute facts
-			//  (government centre, fresh water) still ride their own counters and migrate onto this crossing
-			//  as they convert (contexts.md: ONE parameterized fact replaces the family).
-			if (iAmenityId == CLS_AMENITY_PROVIDES_POWER)
-			{
-				emitPowerChanged(m_city->getID(), m_city->getOwner(), sign);
-			}
-		}
-		if (pRecordInto != NULL)
-		{
-			pRecordInto->add(iAmenityId, sign);
-		}
-	}
+	return m_city != NULL && m_city->amenity().hasKey(iIdCache, szKey);
 }
 
 // ---- the STORED reads: O(1) fetches over the blocks above -------------------------------------------------------
@@ -476,7 +310,7 @@ int  CityContext::buildingBuildYear(int eBuilding) const
 	return m_city->getBuildingData((BuildingTypes)eBuilding).iTimeBuilt;
 }
 int  CityContext::stateReligion() const        { return m_city != NULL ? (int)GET_PLAYER(m_city->getOwner()).getStateReligion() : -1; }
-bool CityContext::hasPolicy(int ePolicy) const { return m_city != NULL && GET_PLAYER(m_city->getOwner()).getEmpireContext().policies.has(ePolicy); }
+bool CityContext::hasPolicy(int ePolicy) const { return m_city != NULL && GET_PLAYER(m_city->getOwner()).policies().has(ePolicy); }
 
 // The realized-yield group forward: the bound city's own group read, handed on unchanged -- no store, no mirror, no
 // second derivation (contexts.md STORES vs FORWARDS: forwarding raw data the object already holds O(1) is not

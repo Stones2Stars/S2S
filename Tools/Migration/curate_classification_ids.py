@@ -65,6 +65,12 @@ HEADROOM = {
     # (owner, [modifier.md] §2b). The chain stays wired and every read answers false: live-but-inert headroom,
     # never a data gap to fill.
     "amenities": ["abolishedUnhealthFromPopulation", "abolishedUnhealthFromBuildings"],
+    # `freeSpeech` is mapped by curate_civic's POLICIES table and authored by NOTHING -- all 146 civics carry
+    # `bFreeSpeech>0<`, in base and modules alike -- so the curator correctly emits no key and the legacy read
+    # answered false for every civic. The revolutions view still ASKS (RevUtils canDoFreeSpeech / isFreeSpeech),
+    # so the id mints here and those reads answer false, exactly as they always did. It leaves this list the
+    # moment a civic authors the flag.
+    "policies": ["freeSpeech"],
 }
 
 

@@ -2,6 +2,7 @@
 
 from CvPythonExtensions import *
 GC = CyGlobalContext()
+INFO = CyInfo()
 TRNSLTR = CyTranslator()
 
 class PediaLeader:
@@ -88,11 +89,11 @@ class PediaLeader:
 
 		iCivic = CvLeaderHeadInfo.getFavoriteCivic()
 		if iCivic != -1:
-			screen.attachImageButton(panelName, "", GC.getCivicInfo(iCivic).getButton(), enumGBS, WidgetTypes.WIDGET_PEDIA_JUMP_TO_CIVIC, iCivic, 1, False)
+			screen.attachImageButton(panelName, "", INFO.getButton("CIVIC_", iCivic), enumGBS, WidgetTypes.WIDGET_PEDIA_JUMP_TO_CIVIC, iCivic, 1, False)
 
 		iReligion = CvLeaderHeadInfo.getFavoriteReligion()
 		if iReligion != -1:
-			screen.attachImageButton(panelName, "", GC.getReligionInfo(iReligion).getButton(), enumGBS, WidgetTypes.WIDGET_PEDIA_JUMP_TO_RELIGION, iReligion, 1, False)
+			screen.attachImageButton(panelName, "", INFO.getButton("RELIGION_", iReligion), enumGBS, WidgetTypes.WIDGET_PEDIA_JUMP_TO_RELIGION, iReligion, 1, False)
 
 		# History
 		screen.addPanel(aName(), "", "", True, True, X_COL_2, Y_ROW_1, W_COL_2, H_ROW_1, ePanelBlue50)

@@ -39,15 +39,20 @@ private:
 	{
 		switch (kEvent.iEventId)
 		{
-		case SEVT_BUILDING_CHANGED:
+		// The two PRESENCE happenings. The direction is the EVENT ID, so nothing here reads a delta int
+		// ([DEC-facts-name-happenings]); the two cases share a body only because the domain appliers are
+		// parameterized on held-ness, never because the fact was.
+		case SEVT_BUILDING_ADDED:
+		case SEVT_BUILDING_REMOVED:
 		{
 			const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iSrcLoc);
 			if (pCity != NULL)
 			{
+				const bool bHeld = (kEvent.iEventId == SEVT_BUILDING_ADDED);
 				// held flip + the building's own enables contribution.
 				// ORDER: UnitEnabler first (its flip guard reads the buildings domain's held flag PRE-flip).
-				UnitEnabler::onCityBuildingChanged(*pCity, kEvent.iType, kEvent.iB > 0);
-				BuildingEnabler::onCityBuildingChanged(*pCity, kEvent.iType, kEvent.iB > 0);   // idempotency = the domain's held guard
+				UnitEnabler::onCityBuildingChanged(*pCity, kEvent.iType, bHeld);
+				BuildingEnabler::onCityBuildingChanged(*pCity, kEvent.iType, bHeld);   // idempotency = the domain's held guard
 			}
 			break;
 		}
@@ -67,13 +72,17 @@ private:
 			if (pCity != NULL) BuildingEnabler::onCityCorporationChanged(*pCity, kEvent.iType, kEvent.iA != 0);   // flip-guarded emit
 			break;
 		}
-		case SEVT_BONUS_CHANGED:
+		// The NETWORK supply presence crossing. The direction is the event id ([DEC-facts-name-happenings]); the
+		// two cases share a body because the domain appliers take the crossing as a signed argument.
+		case SEVT_BONUS_ADDED:
+		case SEVT_BONUS_REMOVED:
 		{
 			const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iSrcLoc);
 			if (pCity != NULL)
 			{
-				BuildingEnabler::onCityBonusChanged(*pCity, kEvent.iType, kEvent.iB);   // count-delta crossing
-				UnitEnabler::onCityBonusChanged(*pCity, kEvent.iType, kEvent.iB);
+				const int iCrossing = (kEvent.iEventId == SEVT_BONUS_ADDED) ? 1 : -1;
+				BuildingEnabler::onCityBonusChanged(*pCity, kEvent.iType, iCrossing);
+				UnitEnabler::onCityBonusChanged(*pCity, kEvent.iType, iCrossing);
 			}
 			break;
 		}

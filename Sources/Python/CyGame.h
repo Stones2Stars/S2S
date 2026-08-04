@@ -180,6 +180,14 @@ public:
 	CalendarTypes getCalendar() const;
 	EraTypes getStartEra() const;
 	GameSpeedTypes getGameSpeedType() const;
+	// The running game's PACE percents. They belong to the GAME rather than the gamespeed INFO because two of
+	// them compose LIVE GAME STATE -- hammerCostPercent folds GAMEOPTION_EXP_UPSCALED_BUILDING_AND_UNIT_COSTS --
+	// and an info never reads game state ([engine.md] Consuming-system calcs). All three relay to the ONE calc
+	// (CvGameSpeedScale), so a caller can never re-derive a different answer
+	// ([DEC-single-implementation]). Each returns a HUMAN percent, already unscaled.
+	int getSpeedPercent() const;
+	int getHammerCostPercent() const;
+	int getMissionYieldPercent() const;
 	PlayerTypes getRankPlayer(int iRank) const;
 	int getPlayerRank(PlayerTypes iIndex) const;
 	int getPlayerScore(PlayerTypes iIndex) const;

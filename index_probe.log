@@ -1,0 +1,12 @@
+TECH_        entries=944
+    [0] id=0 type=TECH_CAVE_DWELLING desc=Cave Dwelling button=Art/Interface/Buttons/TechTree/cavedwelling.dds
+BUILDING_    entries=5178
+    [0] id=0 type=BUILDING_10000_YEAR_CLOCK desc=10,000 Year Clock button=
+UNIT_        entries=2073
+    [0] id=0 type=UNIT_ICBM desc=ICBM button=Art/Interface/Buttons/Units/sparth/ICBM.dds
+VICTORY_     entries=10
+    [0] id=0 type=VICTORY_SCORE desc=Score button=
+YIELD_       entries=3
+    [0] id=0 type=YIELD_FOOD desc=Food button=
+MISSION_     entries=174
+    [0] id=0 type=MISSION_MOVE_TO desc=Move To button=

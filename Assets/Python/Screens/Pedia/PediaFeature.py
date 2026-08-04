@@ -4,6 +4,7 @@ from CvPythonExtensions import *
 GC = CyGlobalContext()
 TRNSLTR = CyTranslator()
 
+TEXT = CyGameTextMgr()
 class PediaFeature:
 
 	def __init__(self, parent, H_BOT_ROW):
@@ -97,7 +98,7 @@ class PediaFeature:
 		if iTemp1 > 0:
 			fValue = iTemp1 * (GC.getFEATURE_GROWTH_MODIFIER() + 100) / 100.0
 			if CyPlayer:
-				fValue /= GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent()
+				fValue /= GC.getGame().getSpeedPercent()
 			else:
 				fValue /= 100
 
@@ -126,7 +127,7 @@ class PediaFeature:
 			else:
 				szTxt += "\n"
 			if CyPlayer:
-				fValue = iTemp / (1.0 * GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent())
+				fValue = iTemp / (1.0 * GC.getGame().getSpeedPercent())
 			else:
 				fValue = iTemp / 100.0
 
@@ -145,14 +146,14 @@ class PediaFeature:
 					szTemp += " <color=255,0,0,255>"
 				else:
 					szTemp += " <color=0,230,0,255>+"
-				szTemp += str(iTemp) + (u'%c' % (GC.getYieldInfo(k).getChar())) + "</color>"
+				szTemp += str(iTemp) + (u'%c' % (TEXT.getSymbolChar("YIELD_", k))) + "</color>"
 			iTemp = CvTheFeature.getRiverYieldChange(k)
 			if iTemp:
 				if iTemp < 0:
 					szTemp += " (<color=255,0,0,255>"
 				else:
 					szTemp += " (<color=0,230,0,255>+"
-				szTemp += str(iTemp) + (u'%c' % (GC.getYieldInfo(k).getChar())) + "</color>River)"
+				szTemp += str(iTemp) + (u'%c' % (TEXT.getSymbolChar("YIELD_", k))) + "</color>River)"
 		if szTemp:
 			szTxt += "\n" + szTemp
 		iTemp = CvTheFeature.getWarmingDefense()

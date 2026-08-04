@@ -2,6 +2,7 @@
 ## Copyright Firaxis Games 2005
 from CvPythonExtensions import *
 GC = CyGlobalContext()
+INFO = CyInfo()
 GAME = GC.getGame()
 MAP = GC.getMap()
 
@@ -1373,7 +1374,7 @@ class BonusBalancer:
 
 					for i in range(GC.getNumMapBonuses()):
 						iBonus = GC.getMapBonus(i)
-						szType = GC.getBonusInfo(iBonus).getType()
+						szType = INFO.getType("BONUS_", iBonus)
 						if szType in resources_placed or szType not in self.resourcesToBalance:
 							continue
 
@@ -1502,13 +1503,13 @@ def c2CMapReport(sWhen):
 
 	# Display actual Mod-Terrain
 	for ter in countTerrain:
-		type_string = GC.getTerrainInfo(ter).getType()
+		type_string = INFO.getType("TERRAIN_", ter)
 		sprint += "[MGU]   Terrain: #%2i - %s ( %i ) \n" % (ter, type_string, countTerrain[ter])
 	sprint += "\n"
 
 	# Display actual Mod-Features
 	for feat in countFeature:
-		type_string = GC.getFeatureInfo(feat).getType()
+		type_string = INFO.getType("FEATURE_", feat)
 		sprint += "[MGU]   Feature: #%2i - %s ( %i ) \n" % (feat, type_string, countFeature[feat])
 	sprint += "\n"
 
@@ -1518,9 +1519,9 @@ def c2CMapReport(sWhen):
 
 		region = "North American"
 		if (region, iBonus) in countResource:
-			sprint += "[MGU]   Bonus: #%2i - %s ( %s - %i ) " % (iBonus, GC.getBonusInfo(iBonus).getType(), region, countResource[region, iBonus])
+			sprint += "[MGU]   Bonus: #%2i - %s ( %s - %i ) " % (iBonus, INFO.getType("BONUS_", iBonus), region, countResource[region, iBonus])
 		else:
-			sprint += "[MGU]   Bonus: #%2i - %s ( %s - %i ) " % (iBonus, GC.getBonusInfo(iBonus).getType(), region, 0)
+			sprint += "[MGU]   Bonus: #%2i - %s ( %s - %i ) " % (iBonus, INFO.getType("BONUS_", iBonus), region, 0)
 		region = "European"
 		if (region, iBonus) in countResource:
 			sprint += "( %s - %i ) " % (region, countResource[region, iBonus])
@@ -1551,7 +1552,7 @@ def c2CMapReport(sWhen):
 
 	# Display actual Mod-Improvements
 	for imp in countImprovement:
-		sprint += "[MGU]   Improvement: #%3i  %s ( %i ) \n" % (imp, GC.getImprovementInfo(imp).getType(), countImprovement[imp])
+		sprint += "[MGU]   Improvement: #%3i  %s ( %i ) \n" % (imp, INFO.getType("IMPROVEMENT_", imp), countImprovement[imp])
 	sprint += "\n[MGU] ####################################################################### C2C:Map Statistics ###"
 	print sprint
 

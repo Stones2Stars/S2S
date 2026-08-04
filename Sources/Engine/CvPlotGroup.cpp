@@ -510,7 +510,14 @@ void CvPlotGroup::changeNumBonuses(const BonusTypes eBonus, const int iChange)
 		// plotGroupId) so the cache-invalidation consumer re-evals connection:trade deposits for the member cities.
 		if ((iOldTotal != 0) != (iNewTotal != 0))
 		{
-			emitPlotGroupBonusChanged((int)getOwner(), getID(), (int)eBonus, iChange > 0 ? 1 : -1);
+			if (iChange > 0)
+	{
+		emitPlotGroupBonusAdded((int)getOwner(), getID(), (int)eBonus, 1);
+	}
+	else
+	{
+		emitPlotGroupBonusRemoved((int)getOwner(), getID(), (int)eBonus, 1);
+	}
 		}
 
 		// The member cities hold no copy of this count -- their read relays straight back here

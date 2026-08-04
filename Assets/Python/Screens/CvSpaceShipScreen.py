@@ -7,6 +7,7 @@ import CvScreenEnums
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -76,7 +77,7 @@ class CvSpaceShipScreen:
 		self.finishedLabelX2 = self.finishedLabelX
 		self.finishedLabelY2 = self.finishedLabelY + 30
 		if(self.activeProject >= 0):
-			screen.setLabel("FinishedLabel", "SpaceShipMainPanel", "<color=255,255,0><font=4>" + localText.getText("TXT_KEY_WONDER_SCREEN", (GC.getProjectInfo(self.activeProject).getDescription(),)) + "</font></color>", 1<<0, self.finishedLabelX, self.finishedLabelY, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+			screen.setLabel("FinishedLabel", "SpaceShipMainPanel", "<color=255,255,0><font=4>" + localText.getText("TXT_KEY_WONDER_SCREEN", (INFO.getDescription("PROJECT_", self.activeProject),)) + "</font></color>", 1<<0, self.finishedLabelX, self.finishedLabelY, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 			screen.setLabel("FinishedLabel2", "SpaceShipMainPanel", "<color=255,255,0><font=4>" + localText.getText("TXT_KEY_SPACE_SHIP_SCREEN_ADD_COMPONENT", ()) + "</font></color>", 1<<0, self.finishedLabelX2, self.finishedLabelY2, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 		else:
 			#check if landed on alpha centauri

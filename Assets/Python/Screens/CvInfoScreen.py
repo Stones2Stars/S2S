@@ -10,12 +10,14 @@ import math
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 GAME = GC.getGame()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
 
+TEXT = CyGameTextMgr()
 class CvInfoScreen:
 
 	def __init__(self, screenId):
@@ -1006,7 +1008,7 @@ class CvInfoScreen:
 			for iWonderLoop in xrange(aiTopCitiesNumWonders[i]):
 
 				iBuildingID = aaiTopCitiesWonders[i][iWonderLoop]
-				screen.attachImageButton(szIconPanel, "", GC.getBuildingInfo(iBuildingID).getButton(), GenericButtonSizes.BUTTON_SIZE_46, WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, iBuildingID, -1, False)
+				screen.attachImageButton(szIconPanel, "", INFO.getButton("BUILDING_", iBuildingID), GenericButtonSizes.BUTTON_SIZE_46, WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, iBuildingID, -1, False)
 
 
 		xDD = 540
@@ -1196,7 +1198,7 @@ class CvInfoScreen:
 				iWidget = WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING
 
 			szWonderName = pWonderInfo.getDescription()
-			szTurnYearBuilt = u"<font=2>%c</font>" % GC.getYieldInfo(YieldTypes.YIELD_PRODUCTION).getChar()
+			szTurnYearBuilt = u"<font=2>%c</font>" % TEXT.getSymbolChar("YIELD_", YieldTypes.YIELD_PRODUCTION)
 
 			# Check to see if active player can see this city
 			if pCity and pCity.isRevealed(self.iTeam, False):
@@ -1439,7 +1441,7 @@ class CvInfoScreen:
 		# Add Units to table
 		for i in xrange(iNumUnits):
 
-			screen.setTableText(szUnitsTable, 0, i, GC.getUnitInfo(i).getDescription(), "", eWidGen, 1, 2, 1<<0)
+			screen.setTableText(szUnitsTable, 0, i, INFO.getDescription("UNIT_", i), "", eWidGen, 1, 2, 1<<0)
 			screen.setTableInt(szUnitsTable, 1, i, str(aiUnitsCurrent[i]), "", eWidGen, 1, 2, 1<<0)
 			screen.setTableInt(szUnitsTable, 2, i, str(aiUnitsBuilt[i]), "", eWidGen, 1, 2, 1<<0)
 			screen.setTableInt(szUnitsTable, 3, i, str(aiUnitsKilled[i]), "", eWidGen, 1, 2, 1<<0)
@@ -1447,7 +1449,7 @@ class CvInfoScreen:
 
 		# Add Buildings to table
 		for i in xrange(iNumBuildings):
-			screen.setTableText(szBuildingsTable, 0, i, GC.getBuildingInfo(i).getDescription(), "", eWidGen, 1, 2, 1<<0)
+			screen.setTableText(szBuildingsTable, 0, i, INFO.getDescription("BUILDING_", i), "", eWidGen, 1, 2, 1<<0)
 			screen.setTableInt(szBuildingsTable, 1, i, str(aiBuildingsBuilt[i]), "", eWidGen, 1, 2, 1<<0)
 
 		if self.bShowImprovement:
@@ -1456,7 +1458,7 @@ class CvInfoScreen:
 			for i in xrange(iNumImprovements):
 				iNumImprovementsCurrent = aiImprovementsCurrent[i]
 				if iNumImprovementsCurrent > 0:
-					screen.setTableText(szImprovementsTable, 0, iRow, GC.getImprovementInfo(i).getDescription(), "", eWidGen, 1, 2, 1<<0)
+					screen.setTableText(szImprovementsTable, 0, iRow, INFO.getDescription("IMPROVEMENT_", i), "", eWidGen, 1, 2, 1<<0)
 					screen.setTableInt(szImprovementsTable, 1, iRow, str(iNumImprovementsCurrent), "", eWidGen, 1, 2, 1<<0)
 					iRow += 1
 

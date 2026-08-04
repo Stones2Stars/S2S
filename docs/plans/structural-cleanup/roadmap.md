@@ -79,9 +79,16 @@ drifts from its home and then gets trusted, which is the exact failure the ledge
 [DEC-done-is-observable](../../architecture/decisions.md#dec-done-is-observable) ·
 [DEC-turn-time-is-king](../../architecture/decisions.md#dec-turn-time-is-king)
 
-The one thing this rebuild adds that is not a ledger entry — the KEYSTONE it is organized around: **each package
-is its own self-invalidating cache**, and a DOMAIN event marks exactly the packages its source feeds, per the
-deposit index. *"This is the basis of EVERYTHING."*
+[DEC-maintained-sum](../../architecture/decisions.md#dec-maintained-sum) ·
+[DEC-flag-is-fossil](../../architecture/decisions.md#dec-flag-is-fossil)
+
+The KEYSTONE this rebuild is organized around: **a package is a MAINTAINED SUM — a DOMAIN event names the source,
+the compiled deposit index names that source's deposits, and applying them IS the maintenance.** The slot is
+correct the instant the fact arrives; nothing is marked, deferred or batched. *"This is the basis of EVERYTHING."*
+⛔ The earlier form of this keystone — *each package is its own self-INVALIDATING cache, marked by the event that
+feeds it* — is RETIRED ([superseded-ideas](../../architecture/superseded-ideas.md) #30): marking became obsolete
+the moment the spine covered every mutation, because a staleness flag only ever claimed we could not know what
+changed.
 
 ## The accepted foundational design (unchanged — the code conforms to this)
 
@@ -94,16 +101,19 @@ Authority: [state-repositories.md](../../architecture/state-repositories.md), [m
   events are completely emitted — during play AND from inside the save read.
 - **Load and new-game are the SAME path.** Facts are order- and prerequisite-independent; the reseed is the ONE
   full build.
-- **Per-scope packages, one uniform format** — Σflat / Σpercent per channel, cached at each scope's OWN object,
-  each invalidated at its own scope only. The downward roll is realized AT READ: the realized value is the trivial
-  sum of the ~5 scope packages. A lower scope never STORES an upper scope's sums.
+- **Per-scope packages, one uniform format** — Σflat / Σpercent per channel, held at each scope's OWN object,
+  each MAINTAINED at its own scope only by the fact that names its source. The downward roll is realized AT READ:
+  the realized value is the trivial sum of the ~5 scope packages. A lower scope never STORES an upper scope's sums.
 - **The ORIGIN RULE** — yields come from PLOT, SPECIALISTS and BUILDINGS (city) only; modifiers come from
   everything BUT plot. Plot and the upper scopes are mirror images; CITY is the one scope carrying both.
 - **KEYS ONLY WHERE NEEDED** — the channel set is data-defined and no object uses more than a fraction of it; each
   scope carries only the channels authored AT that scope, derived from the data at load, never hand-listed.
-- **A cascade is a cache, two kinds** — the yield/percent packages are a VALUE cache (memoize, event-invalidate,
-  recompute-from-inputs). The ENABLER's sets are maintained by TARGETED PROPAGATION in place, NEVER
-  blanket-recomputed. Do not conflate them.
+- **Both derived planes are maintained IN PLACE by the fact — never blanket-recomputed, and never recomputed at
+  all.** The ENABLER's sets ripple by targeted propagation over the affected candidates; the modifier's packages
+  apply the moved source's deposits. ⚑ The old framing split these into "a VALUE cache that memoizes and
+  recomputes" versus "targeted propagation", which is what let the modifier alone keep a staleness protocol; under
+  [DEC-maintained-sum](../../architecture/decisions.md#dec-maintained-sum) they share the shape. ⚠ What genuinely
+  still differs is the CONTENT — refcounted set membership versus a summed magnitude — never the mechanism.
 - **THE OUTPUT-SEAM** — where the engine does placement/application, the cascade owns the authored INPUTS and the
   OUTPUT yields; only the middle mechanism is engine-owned (free-specialist assignment; the golden-age plot
   threshold).
@@ -206,8 +216,8 @@ The rest of the boundary every consumer meets:
     event-built contexts turning per-read scans into stored fetches
     ([contexts.md](../../architecture/contexts.md)). A snapshot is a refinement on top of that, not the source
     of the gain.
-- **How a scope owner carries its cache** — the member, its binding, and its mark derivation, uniform across
-  world / team / empire / area / city / plot.
+- **How a scope owner carries its packages** — the member, its binding, and the apply path derived from the
+  deposit index, uniform across world / team / empire / city / plot.
 - **The per-scope live-state CONTEXTS the getters + evaluator read** ([contexts.md](../../architecture/contexts.md),
   [DEC-scope-contexts](../../architecture/decisions.md#dec-scope-contexts)) — one per scope that needs it
   (plot / city / player; NO area — a bare id whose effects map to the player; units are a FUTURE role-specific

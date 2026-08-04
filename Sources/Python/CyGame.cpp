@@ -8,6 +8,7 @@
 #include "CyCity.h"
 #include "CyDeal.h"
 #include "CyGame.h"
+#include "Engine/CvGameSpeedScale.h"  // the ONE game-speed pace calc these relay to
 #include "CyPlot.h"
 #include "CyReplayInfo.h"
 #include "CvReplayInfo.h"
@@ -652,6 +653,21 @@ GameSpeedTypes CyGame::getGameSpeedType() const
 	return m_pGame.getGameSpeedType();
 }
 
+int CyGame::getSpeedPercent() const
+{
+	return CvGameSpeedScale::speedPercent();
+}
+
+int CyGame::getHammerCostPercent() const
+{
+	return CvGameSpeedScale::hammerCostPercent();
+}
+
+int CyGame::getMissionYieldPercent() const
+{
+	return CvGameSpeedScale::missionYieldPercent();
+}
+
 PlayerTypes CyGame::getRankPlayer(int iRank) const
 {
 	return m_pGame.getRankPlayer(iRank);
@@ -1294,6 +1310,9 @@ void CyGame::pythonPublish()
 		.def("getCalendar", &CyGame::getCalendar)
 		.def("getStartEra", &CyGame::getStartEra)
 		.def("getGameSpeedType", &CyGame::getGameSpeedType)
+		.def("getSpeedPercent", &CyGame::getSpeedPercent)
+		.def("getHammerCostPercent", &CyGame::getHammerCostPercent)
+		.def("getMissionYieldPercent", &CyGame::getMissionYieldPercent)
 		.def("getRankPlayer", &CyGame::getRankPlayer)
 		.def("getPlayerRank", &CyGame::getPlayerRank)
 		.def("getPlayerScore", &CyGame::getPlayerScore)

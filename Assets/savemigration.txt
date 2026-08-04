@@ -1288,3 +1288,27 @@ CvUnit reads -- rather than by the compiler, which cannot see a member that no l
 
 CvUnit::m_iExtraVisibilityRange            (int)
 CvUnit::m_iExtraPoisonProbabilityModifier  (int)
+
+========================
+2026-08-03 - #430 unit-plane residue: the last three stored per-unit accumulators that DUPLICATED a resolved
+slot are removed. Each was fed by processPromotion + processUnitCombat from exactly the compiled sum the unit
+RESOLVED plane (Cascade/CvUnitResolved.h) already gathers over the same held set, so the value was maintained
+twice and serialized once -- the STORED-ACCUMULATOR DRIFT class ([DEC-accumulator-cut-uniform]).
+| REPLACEMENT (airRange): URS_AIR_RANGE, already the sole reader -- CvUnit::airRange() composites it with the
+| team's domain-moves award and the player's air-range change. getExtraAirRange() had NO caller at all, so the
+| member was fed and stored for nobody.
+| REPLACEMENT (taunt): URS_TAUNT, already the sole reader via CvUnit::tauntTotal(). The member had no getter
+| whatsoever -- only a changer and a save slot.
+| REPLACEMENT (stealthStrikes): URS_STEALTH_STRIKES, which was the inverse case -- the cascade slot was gathered
+| and read by NOBODY while consumers read the legacy member ([DEC-no-legacy-masking]: a live legacy read masks
+| the hole its replacement has not filled, and leaves the new value unverified). CvUnit::stealthStrikesTotal()
+| now reduces that slot at the point of use and is the ONE read; the two CvPlayerAI promotion-valuation sites
+| call it instead of the delta-only getter.
+| BEHAVIOUR, stated rather than hidden ([validation.md]): the slot sums the held set in x100 and reduces ONCE,
+| where the legacy feeds reduced PER CARRIER before summing, so a fractional authored value no longer truncates
+| away per source. And the AI's with-unit branch now weighs the unit's WHOLE stealth-strike value; it previously
+| read the delta only and silently dropped the unit type's own, disagreeing with its own no-unit branch.
+
+CvUnit::m_iExtraAirRange                   (int)
+CvUnit::m_iExtraTaunt                      (int)
+CvUnit::m_iExtraStealthStrikes             (int)

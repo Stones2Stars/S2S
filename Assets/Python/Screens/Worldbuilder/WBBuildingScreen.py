@@ -130,9 +130,9 @@ class WBBuildingScreen:
 		for (loopCity, iPlayerX, sColor) in self.lCities:
 			iRow = screen.appendTableRow("CurrentCity")
 			iCiv = loopCity.getCivilizationType()
-			screen.setTableText("CurrentCity", 0, iRow, "", GC.getCivilizationInfo(iCiv).getButton(), WidgetTypes.WIDGET_PYTHON, 7872, iCiv, 1<<0)
+			screen.setTableText("CurrentCity", 0, iRow, "", INFO.getButton("CIVILIZATION_", iCiv), WidgetTypes.WIDGET_PYTHON, 7872, iCiv, 1<<0)
 			iLeader = GC.getPlayer(iPlayerX).getLeaderType()
-			screen.setTableText("CurrentCity", 1, iRow, "", GC.getLeaderHeadInfo(iLeader).getButton(), WidgetTypes.WIDGET_PYTHON, 7876, iLeader, 1<<0)
+			screen.setTableText("CurrentCity", 1, iRow, "", INFO.getButton("LEADER_", iLeader), WidgetTypes.WIDGET_PYTHON, 7876, iLeader, 1<<0)
 			screen.setTableText("CurrentCity", 2, iRow, "<font=3>" + sColor + loopCity.getName() + "</color></font>", '', WidgetTypes.WIDGET_PYTHON, 7200 + iPlayerX, loopCity.getID(), 1<<0)
 
 	def sortBuildings(self):
@@ -146,13 +146,13 @@ class WBBuildingScreen:
 		lWorld = []
 		for i in xrange(GC.getNumBuildingInfos()):
 			if isNationalWonder(i):
-				lNational.append([GC.getBuildingInfo(i).getDescription(), i])
+				lNational.append([INFO.getDescription("BUILDING_", i), i])
 			elif isTeamWonder(i):
-				lTeam.append([GC.getBuildingInfo(i).getDescription(), i])
+				lTeam.append([INFO.getDescription("BUILDING_", i), i])
 			elif isWorldWonder(i):
-				lWorld.append([GC.getBuildingInfo(i).getDescription(), i])
+				lWorld.append([INFO.getDescription("BUILDING_", i), i])
 			else:
-				lBuilding.append([GC.getBuildingInfo(i).getDescription(), i])
+				lBuilding.append([INFO.getDescription("BUILDING_", i), i])
 		lNational.sort()
 		lTeam.sort()
 		lWorld.sort()

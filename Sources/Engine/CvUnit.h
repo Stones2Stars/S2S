@@ -1082,8 +1082,6 @@ public:
 	int getExtraMoveDiscount() const;
 	void changeExtraMoveDiscount(int iChange);
 
-	int getExtraAirRange() const;
-	void changeExtraAirRange(int iChange);
 
 
 
@@ -1489,7 +1487,6 @@ protected:
 	// is what truncated this TU at calcUpkeep.
 	int m_iUpkeep100;
 	int m_iExtraMoveDiscount;
-	int m_iExtraAirRange;
 	//TB Combat Mods Begin
 	int m_iStampedeCount;
 	int m_iAttackOnlyCitiesCount;
@@ -1512,7 +1509,6 @@ protected:
 	int m_iExtraInvestigation;
 	int m_iDebugCount;
 	int m_iAssassinCount;
-	int m_iExtraStealthStrikes;
 	int m_iStealthDefenseCount;
 	int m_iOnlyDefensiveCount;
 	int m_iNoInvisibilityCount;
@@ -1544,7 +1540,6 @@ protected:
 
 	int m_iExtraBreakdownChance;
 	int m_iExtraBreakdownDamage;
-	int m_iExtraTaunt;
 	int m_iExtraCombatModifierPerSizeMore;
 	int m_iExtraCombatModifierPerSizeLess;
 	int m_iExtraCombatModifierPerVolumeMore;
@@ -1760,7 +1755,6 @@ public:
 	void changeExtraBreakdownDamage(int iChange);
 	int breakdownDamageTotal() const;
 
-	void changeExtraTaunt(int iChange);
 	int tauntTotal() const;
 
 	int getExtraCombatModifierPerSizeMore() const;
@@ -2074,8 +2068,6 @@ public:
 	void changeAssassinCount(int iChange);
 
 	int stealthStrikesTotal() const;
-	int getExtraStealthStrikes() const;
-	void changeExtraStealthStrikes(int iChange);
 
 	int stealthCombatModifierTotal() const;
 

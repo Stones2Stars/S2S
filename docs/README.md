@@ -79,7 +79,7 @@ Verify against the tree before acting on any claim that something is built.
 - **[architecture/north-star.md](architecture/north-star.md)** — the structural compass (data side vs AI side; the three machines; Clean Architecture in C++03).
 - **[architecture/superseded-ideas.md](architecture/superseded-ideas.md)** — the don't-revive registry.
 - **[architecture/patterns.md](architecture/patterns.md)** — interface contracts in C++03 (poor-man's DI) + the DRY single-implementation law.
-- **[architecture/state-repositories.md](architecture/state-repositories.md)** — recompute-only derived-state caches (`CvDerivedCache`).
+- **[architecture/state-repositories.md](architecture/state-repositories.md)** — the MAINTAINED SUM: derived state moved by the fact that names its source, never marked and never recomputed.
 
 ## `plans/` — mutable work state
 - **[plans/structural-cleanup/roadmap.md](plans/structural-cleanup/roadmap.md)** — 🔝 **the master plan** (the only

@@ -4,6 +4,7 @@ import CvUtil
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 GAME = GC.getGame()
 STATE = CyState()
 ENABLER = CyEnabler()
@@ -77,7 +78,7 @@ def doRemoveWVSlavery(argsList):
 
 				if bMessage:
 					msg = TRNSLTR.getText("TXT_KEY_MSG_SLAVE_MARKET_SOLD", (sCityName,))
-					CvUtil.sendMessage(msg, iPlayer, 16, GC.getBuildingInfo(iSlaveMarket).getButton(), ColorTypes(8), iCityX, iCityY, True, True, 0, "AS2D_BUILD_BANK")
+					CvUtil.sendMessage(msg, iPlayer, 16, INFO.getButton("BUILDING_", iSlaveMarket), ColorTypes(8), iCityX, iCityY, True, True, 0, "AS2D_BUILD_BANK")
 
 			# Remove all other Slavery Buildings if they exist
 			for ibuilding in aiSlaveBuildings:
@@ -97,28 +98,28 @@ def doRemoveWVSlavery(argsList):
 						for j in xrange(iCount):
 							player.initUnit(iUnitEntertain, iCityX, iCityY, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 						if bMessage:
-							msg = TRNSLTR.getText("TXT_KEY_MSG_FREED_SLAVES_AS", (sCityName, GC.getUnitInfo(iUnitEntertain).getDescription(), iCount))
+							msg = TRNSLTR.getText("TXT_KEY_MSG_FREED_SLAVES_AS", (sCityName, INFO.getDescription("UNIT_", iUnitEntertain), iCount))
 							CvUtil.sendMessage(msg, iPlayer, 12, 'Art/Interface/Buttons/Civics/Serfdom.dds', ColorTypes(44), iCityX, iCityY, True, True)
 
 					elif i == iSlaveProd:
 						for j in xrange(iCount):
 							player.initUnit(iUnitMerCaravan, iCityX, iCityY, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 						if bMessage:
-							msg = TRNSLTR.getText("TXT_KEY_MSG_FREED_SLAVES_AS", (sCityName, GC.getUnitInfo(iUnitMerCaravan).getDescription(), iCount))
+							msg = TRNSLTR.getText("TXT_KEY_MSG_FREED_SLAVES_AS", (sCityName, INFO.getDescription("UNIT_", iUnitMerCaravan), iCount))
 							CvUtil.sendMessage(msg, iPlayer, 12, 'Art/Interface/Buttons/Civics/Serfdom.dds', ColorTypes(44), iCityX, iCityY, True, True)
 
 					elif i == iSlaveFood:
 						for j in xrange(iCount):
 							player.initUnit(iUnitMerCaravan, iCityX, iCityY, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 						if bMessage:
-							msg = TRNSLTR.getText("TXT_KEY_MSG_FREED_SLAVES_AS", (sCityName, GC.getUnitInfo(iUnitMerCaravan).getDescription(), iCount))
+							msg = TRNSLTR.getText("TXT_KEY_MSG_FREED_SLAVES_AS", (sCityName, INFO.getDescription("UNIT_", iUnitMerCaravan), iCount))
 							CvUtil.sendMessage(msg, iPlayer, 12, 'Art/Interface/Buttons/Civics/Serfdom.dds', ColorTypes(44), iCityX, iCityY, True, True)
 
 					elif i == iSlaveHealth:
 						for j in xrange(iCount):
 							player.initUnit(iUnitHealth, iCityX, iCityY, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 						if bMessage:
-							msg = TRNSLTR.getText("TXT_KEY_MSG_FREED_SLAVES_AS", (sCityName, GC.getUnitInfo(iUnitHealth).getDescription(), iCount))
+							msg = TRNSLTR.getText("TXT_KEY_MSG_FREED_SLAVES_AS", (sCityName, INFO.getDescription("UNIT_", iUnitHealth), iCount))
 							CvUtil.sendMessage(msg, iPlayer, 16, 'Art/Interface/Buttons/Civics/Serfdom.dds', ColorTypes(44), iCityX, iCityY, True, True)
 
 					else: iFreeSlaves += iCount
@@ -127,7 +128,7 @@ def doRemoveWVSlavery(argsList):
 				for j in xrange(iFreeSlaves):
 					player.initUnit(iUnitFreedSlave, iCityX, iCityY, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 				if bMessage:
-					msg = TRNSLTR.getText("TXT_KEY_MSG_FREED_SLAVES_AS", (sCityName, GC.getUnitInfo(iUnitFreedSlave).getDescription(), iFreeSlaves))
+					msg = TRNSLTR.getText("TXT_KEY_MSG_FREED_SLAVES_AS", (sCityName, INFO.getDescription("UNIT_", iUnitFreedSlave), iFreeSlaves))
 					CvUtil.sendMessage(msg, iPlayer, 16, 'Art/Interface/Buttons/Civics/Serfdom.dds', ColorTypes(44), iCityX, iCityY, True, True)
 
 		if iSum > 0:

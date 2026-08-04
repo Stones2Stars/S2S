@@ -468,9 +468,9 @@ as it carries its package set — and the player carries the player-domain lists
 hurries / …). It is **ONE unified enabler component**, instantiated per scope owner and fed by the eventspine
 consumer — a **SIBLING of `CvDerivedCache`, which CANNOT operate the same way**
 ([state-repositories](../architecture/state-repositories.md): the two distinct kinds of derived cache). A value
-cache recomputes on dirty; the enabler **fundamentally behaves differently: the CAN-HAVE set is built PURELY on
+cache recomputes on its mark; the enabler **fundamentally behaves differently: the CAN-HAVE set is built PURELY on
 the events of ALREADY-HAS** — each HAVE-event applies its `enables`/removal edges in place, the load reseed's
-events are the one full build, and no dirty→recompute path exists at all. A component's `requires` gate resolves
+events are the one full build, and no mark-then-recompute path exists at all. A component's `requires` gate resolves
 cross-scope atoms by reading its parent scope's state up the chain (§5's upward callback, realized).
 
 **HAVE is NOT a new store — and its READ SURFACE is the per-scope CONTEXTS**
@@ -594,6 +594,25 @@ The enabler lives in **`Sources/Enabler/`** — its own tree, carrying no `Casca
   ([capabilities.md](capabilities.md)).
 
 ### RESIDENCY — the network count lives on the PLOT GROUP, and only there
+
+> **⛔ A PLOT GROUP IS A PURE OWNERSHIP QUESTION, AND IT IS ALWAYS FUNNELED THROUGH THE CITIES / FORTS THAT
+> PARTICIPATE IN IT — NEVER THROUGH THE PLOT (owner).** It answers *"does this city HAVE this bonus"* — feeding
+> `requires` gates, the `connection:"trade"` atom and any deposit conditioned on `HAS_BONUS`. It never
+> contributes a MAGNITUDE to anything, and it never answers for a tile: the city is the asker
+> (`CvCity::getNumBonuses` relays through the city's plot-group pointer), a fort participates as a city-like
+> member via the `actsAsCity` characteristic ([json.md §8](json.md)), and the plot is merely where the resource
+> sits.
+> ⛔ **THE ROLLERSKATE THIS EXISTS TO STOP — CONFLATING THE PLOT GROUP WITH THE LOCAL PLOT SCOPE.** Both say
+> "plot", and they are unrelated: a plot GROUP is a connectivity object spanning the map answering possession;
+> plot SCOPE is one tile's own output. ⚑ **The measured consequence when they were conflated:** the connection /
+> vicinity / network facts were routed into the PLOT package plane, where — carrying no plot — they fanned a mark
+> over every plot of every city of the owner, dominating the entire load bracket. A connection fact moves no
+> tile's output at all: the resource was already on its tile producing it.
+> ⚑ **And a bonus's own yield reaches ONE tile — its own.** A resource changing a NEIGHBOURING tile's output is
+> the deliveryguy's ([DEC-deliveryguy](../architecture/decisions.md#dec-deliveryguy)) and is authored on that
+> tile's IMPROVEMENT, conditioned on the bonus — never on the bonus. ⇒ A plot-scope deposit is authored only by a
+> PLOT-RESIDENT source, so a plot-scope route with no named plot has no target by construction, and declining to
+> fan drops nothing.
 
 **⛔ The `CvPlotGroup` is the ONLY authoritative list for trade resources, and NOTHING mirrors it.** The network's
 content is aggregated UP from its member plots and cities (`CvPlot::updatePlotGroupBonus` →
@@ -824,7 +843,7 @@ promotion offer is not over-inclusive.
 - **Evaluator depth:** `cascadeEvalCondition` reads raw object-owned state (legitimate live reads). What is
   event-driven is the MAINTENANCE — which dependents re-gate, when — never the read source.
 - **Component model:** one unified component, instantiated per §7.1 owner; the delta-apply SIBLING of
-  `CvDerivedCache`, which cannot operate the same way (§7 — no dirty→recompute path exists at all).
+  `CvDerivedCache`, which cannot operate the same way (§7 — no mark-then-recompute path exists at all).
 - **The root rule:** no implicit "no-edge ⇒ available" engine rule. Start-available entities are authored onto
   `TECH_GAME_START`'s `enables` (§2, curator-derived), the tree is fully connected, a missing edge fails closed.
   The load backfill of `TECH_GAME_START` itself is the ONLY engine special case the model needs.

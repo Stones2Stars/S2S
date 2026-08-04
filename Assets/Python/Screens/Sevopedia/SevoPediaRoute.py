@@ -7,6 +7,7 @@ import string
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 gc = GC   # this module spells it lowercase
 STATE = CyState()
 ENABLER = CyEnabler()
@@ -14,6 +15,7 @@ ENUMS = CyEnums()
 ArtFileMgr = CyArtFileMgr()
 localText = CyTranslator()
 
+TEXT = CyGameTextMgr()
 class SevoPediaRoute:
 	"Civilopedia Screen for tile Routes"
 
@@ -66,7 +68,7 @@ class SevoPediaRoute:
 
 		screen.addPanel(self.top.getNextWidgetName(), "", "", False, False, self.X_ROUTE_PANE, self.Y_ROUTE_PANE, self.W_ROUTE_PANE, self.H_ROUTE_PANE, PanelStyles.PANEL_STYLE_BLUE50)
 		screen.addPanel(self.top.getNextWidgetName(), "", "", False, False, self.X_ICON, self.Y_ICON, self.W_ICON, self.H_ICON, PanelStyles.PANEL_STYLE_MAIN)
-		screen.addDDSGFC(self.top.getNextWidgetName(), gc.getRouteInfo(self.iRoute).getButton(), self.X_ICON + self.W_ICON/2 - self.ICON_SIZE/2, self.Y_ICON + self.H_ICON/2 - self.ICON_SIZE/2, self.ICON_SIZE, self.ICON_SIZE, WidgetTypes.WIDGET_GENERAL, -1, -1 )
+		screen.addDDSGFC(self.top.getNextWidgetName(), INFO.getButton("ROUTE_", self.iRoute), self.X_ICON + self.W_ICON/2 - self.ICON_SIZE/2, self.Y_ICON + self.H_ICON/2 - self.ICON_SIZE/2, self.ICON_SIZE, self.ICON_SIZE, WidgetTypes.WIDGET_GENERAL, -1, -1 )
 
 		self.placeStats()
 		self.placeRequires()
@@ -89,8 +91,8 @@ class SevoPediaRoute:
 					sign = "+"
 				else:
 					sign = ""
-				szYield = (u"%s: %s%i " % (gc.getYieldInfo(k).getDescription().upper(), sign, iYieldChange))
-				screen.appendListBoxStringNoUpdate(panelName, u"<font=%d>" % iFontSize + szYield + (u"%c" % gc.getYieldInfo(k).getChar()) + u"</font>", WidgetTypes.WIDGET_GENERAL, 0, 0, 1<<0)
+				szYield = (u"%s: %s%i " % (INFO.getDescription("YIELD_", k).upper(), sign, iYieldChange))
+				screen.appendListBoxStringNoUpdate(panelName, u"<font=%d>" % iFontSize + szYield + (u"%c" % TEXT.getSymbolChar("YIELD_", k)) + u"</font>", WidgetTypes.WIDGET_GENERAL, 0, 0, 1<<0)
 
 		screen.updateListBox(panelName)
 
@@ -111,14 +113,14 @@ class SevoPediaRoute:
 				if (iYieldChange != 0):
 					if bImprovementChange == True:
 						szImprovementYield += (u",")
-					szImprovementYield += (u" %i %c" % (iYieldChange, gc.getYieldInfo(k).getChar()))
+					szImprovementYield += (u" %i %c" % (iYieldChange, TEXT.getSymbolChar("YIELD_", k)))
 					bImprovementYieldChange = True
 					bImprovementChange = True
 			if bImprovementChange:
 				childPanelName = self.top.getNextWidgetName()
 				screen.attachPanel(panelName, childPanelName, "", "", False, False, PanelStyles.PANEL_STYLE_EMPTY)
 				screen.attachLabel(childPanelName, "", "  ")
-				screen.attachImageButton( childPanelName, "", gc.getImprovementInfo(l).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_IMPROVEMENT, l, 1, False )
+				screen.attachImageButton( childPanelName, "", INFO.getButton("IMPROVEMENT_", l), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_IMPROVEMENT, l, 1, False )
 				screen.attachLabel(childPanelName, "", u"<font=4>" + szImprovementYield + u"</font>")
 
 		if bImprovementYieldChange == False:
@@ -147,14 +149,14 @@ class SevoPediaRoute:
 					if not iTech in aTechList:
 						aTechList.append(iTech)
 		for i in aTechList:
-			screen.attachImageButton( panelName, "", gc.getTechInfo(i).getButton(), GenericButtonSizes.BUTTON_SIZE_46, WidgetTypes.WIDGET_PEDIA_JUMP_TO_TECH, i, 2, False )
+			screen.attachImageButton( panelName, "", INFO.getButton("TECH_", i), GenericButtonSizes.BUTTON_SIZE_46, WidgetTypes.WIDGET_PEDIA_JUMP_TO_TECH, i, 2, False )
 
 		RouteInfo = gc.getRouteInfo(self.iRoute)
 		bFirst = True
 		iPrereq = RouteInfo.getPrereqBonus()
 		if (iPrereq >= 0):
 			bFirst = False
-			screen.attachImageButton(panelName, "", gc.getBonusInfo(iPrereq).getButton(), GenericButtonSizes.BUTTON_SIZE_46, WidgetTypes.WIDGET_PEDIA_JUMP_TO_BONUS, iPrereq, 2, False)
+			screen.attachImageButton(panelName, "", INFO.getButton("BONUS_", iPrereq), GenericButtonSizes.BUTTON_SIZE_46, WidgetTypes.WIDGET_PEDIA_JUMP_TO_BONUS, iPrereq, 2, False)
 		nOr = len(RouteInfo.getPrereqOrBonuses())
 		szLeftDelimeter = ""
 		szRightDelimeter = ""
@@ -172,7 +174,7 @@ class SevoPediaRoute:
 				screen.attachLabel(panelName, "", localText.getText("TXT_KEY_OR", ()))
 			else:
 				bFirst = False
-			screen.attachImageButton(panelName, "", gc.getBonusInfo(eBonus).getButton(), GenericButtonSizes.BUTTON_SIZE_46, WidgetTypes.WIDGET_PEDIA_JUMP_TO_BONUS, eBonus, -1, False)
+			screen.attachImageButton(panelName, "", INFO.getButton("BONUS_", eBonus), GenericButtonSizes.BUTTON_SIZE_46, WidgetTypes.WIDGET_PEDIA_JUMP_TO_BONUS, eBonus, -1, False)
 		if len(szRightDelimeter) > 0:
 			screen.attachLabel(panelName, "", szRightDelimeter)
 
@@ -209,7 +211,7 @@ class SevoPediaRoute:
 		# sort Routes alphabetically
 		rowListName=[(0,0)]*gc.getNumRouteInfos()
 		for j in range(gc.getNumRouteInfos()):
-			rowListName[j] = (gc.getRouteInfo(j).getDescription(), j)
+			rowListName[j] = (INFO.getDescription("ROUTE_", j), j)
 		rowListName.sort()
 
 		iSelected = 0

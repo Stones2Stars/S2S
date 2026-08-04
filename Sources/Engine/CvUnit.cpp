@@ -541,7 +541,6 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 	m_iExtraMoves = 0;
 	m_iUpkeep100 = 0;
 	m_iExtraMoveDiscount = 0;
-	m_iExtraAirRange = 0;
 	//TB Combat Mods Begin
 	m_iStampedeCount = 0;
 	m_iAttackOnlyCitiesCount = 0;
@@ -565,7 +564,6 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 
 	m_iExtraBreakdownChance = 0;
 	m_iExtraBreakdownDamage = 0;
-	m_iExtraTaunt = 0;
 	m_iExtraCombatModifierPerSizeMore = 0;
 	m_iExtraCombatModifierPerSizeLess = 0;
 	m_iExtraCombatModifierPerVolumeMore = 0;
@@ -682,7 +680,6 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 	m_iNoSelfHealCount = 0;
 	m_iDebugCount = 0;
 	m_iAssassinCount = 0;
-	m_iExtraStealthStrikes = 0;
 	m_iStealthDefenseCount = 0;
 	m_iOnlyDefensiveCount = 0;
 	m_iNoInvisibilityCount = 0;
@@ -808,7 +805,6 @@ CvUnit& CvUnit::operator=(const CvUnit& other)
 	m_iVictoryStackHeal = other.m_iVictoryStackHeal;
 	m_iExtraMoves = other.m_iExtraMoves;
 	m_iExtraMoveDiscount = other.m_iExtraMoveDiscount;
-	m_iExtraAirRange = other.m_iExtraAirRange;
 	m_iStampedeCount = other.m_iStampedeCount;
 	m_iAttackOnlyCitiesCount = other.m_iAttackOnlyCitiesCount;
 	m_iIgnoreNoEntryLevelCount = other.m_iIgnoreNoEntryLevelCount;
@@ -829,7 +825,6 @@ CvUnit& CvUnit::operator=(const CvUnit& other)
 	m_iCannotMergeSplitCount = other.m_iCannotMergeSplitCount;
 	m_iExtraBreakdownChance = other.m_iExtraBreakdownChance;
 	m_iExtraBreakdownDamage = other.m_iExtraBreakdownDamage;
-	m_iExtraTaunt = other.m_iExtraTaunt;
 	m_iExtraCombatModifierPerSizeMore = other.m_iExtraCombatModifierPerSizeMore;
 	m_iExtraCombatModifierPerSizeLess = other.m_iExtraCombatModifierPerSizeLess;
 	m_iExtraCombatModifierPerVolumeMore = other.m_iExtraCombatModifierPerVolumeMore;
@@ -916,7 +911,6 @@ CvUnit& CvUnit::operator=(const CvUnit& other)
 	m_iNoSelfHealCount = other.m_iNoSelfHealCount;
 	m_iDebugCount = other.m_iDebugCount;
 	m_iAssassinCount = other.m_iAssassinCount;
-	m_iExtraStealthStrikes = other.m_iExtraStealthStrikes;
 	m_iStealthDefenseCount = other.m_iStealthDefenseCount;
 	m_iOnlyDefensiveCount = other.m_iOnlyDefensiveCount;
 	m_iNoInvisibilityCount = other.m_iNoInvisibilityCount;
@@ -1378,8 +1372,8 @@ bool CvUnit::scheduleDeath(bool bDelay, PlayerTypes ePlayer, bool bMessaged)
 		if (bDelay)
 		{
 			m_bDeathDelay = true;
-			emitUnitDeathScheduled((int)getUnitType(), getID(), (int)eOwner,
-				GC.getMap().plotNum(pPlot->getX(), pPlot->getY()), true);
+			emitUnitDeathScheduleAdded((int)getUnitType(), getID(), (int)eOwner,
+				GC.getMap().plotNum(pPlot->getX(), pPlot->getY()));
 			return true;
 		}
 	}
@@ -1432,8 +1426,8 @@ void CvUnit::evacuateToCapital(const CvCity& kCapitalCity)
 		"AS2D_POSITIVE_DINK", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_GREEN(), getX(), getY()
 	);
 	m_bDeathDelay = false;
-	emitUnitDeathScheduled((int)getUnitType(), getID(), (int)getOwner(),
-		GC.getMap().plotNum(getX(), getY()), false);
+	emitUnitDeathScheduleRemoved((int)getUnitType(), getID(), (int)getOwner(),
+		GC.getMap().plotNum(getX(), getY()));
 }
 
 //	NOT a death: a damage set. The unit is left one hit from dying and stays exactly where it stood.
@@ -1449,8 +1443,8 @@ void CvUnit::surviveLastStand()
 	m_bDeathDelay = false;
 	//	Only applies to THIS combat - it might be attacked again the same turn
 	setSurvivor(false);
-	emitUnitDeathScheduled((int)getUnitType(), getID(), (int)getOwner(),
-		GC.getMap().plotNum(getX(), getY()), false);
+	emitUnitDeathScheduleRemoved((int)getUnitType(), getID(), (int)getOwner(),
+		GC.getMap().plotNum(getX(), getY()));
 }
 
 //	⛔ THE ONE TERMINAL -- the only function that ends a unit's life, and the only caller of emitUnitKilled. It
@@ -15176,16 +15170,6 @@ void CvUnit::changeExtraMoveDiscount(int iChange)
 }
 
 
-int CvUnit::getExtraAirRange() const
-{
-	return m_iExtraAirRange;
-}
-
-void CvUnit::changeExtraAirRange(int iChange)
-{
-	m_iExtraAirRange += iChange;
-}
-
 //TB Combat Mods Begin
 // Toffer - Upkeep
 void CvUnit::calcUpkeep()
@@ -17102,7 +17086,14 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 	bool bSM = GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS);
 	// #430 event spine: the unit plane's SECOND dirty trigger. This is the ONE funnel -- setHasUnitCombat reaches
 	// it exactly once past BOTH its change guard and its game-option/spy validity gate, with the flag written.
-	emitUnitCombatChanged(getID(), (int)getOwner(), (int)eIndex, iChange);
+	if (iChange > 0)
+	{
+		emitUnitCombatAdded(getID(), (int)getOwner(), (int)eIndex);
+	}
+	else
+	{
+		emitUnitCombatRemoved(getID(), (int)getOwner(), (int)eIndex);
+	}
 
 	if (bSM)
 	{
@@ -17122,7 +17113,6 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 
 	changeExtraMoves(kUnitCombat.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split diff
 	changeExtraMoveDiscount(kUnitCombat.getMovement(MOVEMENT_MOVE_DISCOUNT, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split diff
-	changeExtraAirRange(kUnitCombat.getAir(AIR_RANGE, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split diff
 	changeCargoSpace(kUnitCombat.getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split diff (since this mechanism is either a base setter or is for non-SM or non-player on SM.
 
 	// The SM cargo trio is the `sizeMatters` BLOCK (json.md par.9), not a modifier family -- plain authored
@@ -17184,7 +17174,6 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 	// The combat FLATS are ×100; the reader reduces at its point of use ([DEC-fixedpoint-x100]).
 	changeExtraBreakdownChance(kUnitCombat.getFlatCombat(COMBAT_BREAKDOWN_CHANCE, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split (larger/smaller just more/less survivable)
 	changeExtraBreakdownDamage(kUnitCombat.getFlatCombat(COMBAT_BREAKDOWN_DAMAGE, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split
-	changeExtraTaunt(kUnitCombat.getFlatCombat(COMBAT_TAUNT, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split
 	// The SM figures are the `sizeMatters` BLOCK (json.md par.9), plain authored ints -- never a family, so no
 	// de-scaling.
 	changeExtraMaxHP(kUnitCombat.getSizeMatters().maxHP * iChange);//merge/split
@@ -17250,7 +17239,6 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 	//	which is precisely why the boundary is written down.
 	changeExtraInsidiousness(kUnitCombat.getUnderworld(UNDERWORLD_INSIDIOUSNESS, CASC_SCOPE_UNIT) / 100 * iChange);
 	changeExtraInvestigation(kUnitCombat.getUnderworld(UNDERWORLD_INVESTIGATION, CASC_SCOPE_UNIT) / 100 * iChange);
-	changeExtraStealthStrikes(kUnitCombat.getFlatCombat(COMBAT_STEALTH_STRIKES, CASC_SCOPE_UNIT) / 100 * iChange);
 	changeStealthDefenseCount((kUnitCombat.hasSkill(CLS_SKILL_STEALTH_DEFENSE) ? 1 : 0) * iChange);
 	changeOnlyDefensiveCount((kUnitCombat.hasSkill(CLS_SKILL_DEFENSE_ONLY) ? 1 : 0) * iChange);
 	changeNoInvisibilityCount((kUnitCombat.hasSkill(CLS_SKILL_NO_INVISIBILITY) ? 1 : 0) * iChange);
@@ -17422,7 +17410,14 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	// is pinned between doSetFreePromotions and doSetDefaultStatuses -- see init), so these facts can precede the
 	// instance fact. That is sound rather than tolerated: spine events are FACTS, order-independent and
 	// prerequisite-free (event-spine.md), so a consumer resolves the unit by id and never by arrival order.
-	emitUnitPromotionChanged(getID(), (int)getOwner(), (int)eIndex, iChange);
+	if (iChange > 0)
+	{
+		emitUnitPromotionAdded(getID(), (int)getOwner(), (int)eIndex);
+	}
+	else
+	{
+		emitUnitPromotionRemoved(getID(), (int)getOwner(), (int)eIndex);
+	}
 
 
 
@@ -17521,7 +17516,6 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 
 	changeExtraMoves(kPromotion.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100 * iChange);
 	changeExtraMoveDiscount(kPromotion.getMovement(MOVEMENT_MOVE_DISCOUNT, CASC_SCOPE_UNIT) / 100 * iChange);
-	changeExtraAirRange(kPromotion.getAir(AIR_RANGE, CASC_SCOPE_UNIT) / 100 * iChange);
 	//TB Combat Mods Begin
 
 
@@ -17541,7 +17535,6 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	//	the combat accumulators carry whole points; the deposits are ×100 flats ([DEC-fixedpoint-x100])
 	changeExtraBreakdownChance(kPromotion.getFlatCombat(COMBAT_BREAKDOWN_CHANCE, CASC_SCOPE_UNIT) / 100 * iChange);
 	changeExtraBreakdownDamage(kPromotion.getFlatCombat(COMBAT_BREAKDOWN_DAMAGE, CASC_SCOPE_UNIT) / 100 * iChange);
-	changeExtraTaunt(kPromotion.getFlatCombat(COMBAT_TAUNT, CASC_SCOPE_UNIT) / 100 * iChange);
 	changeExcileCount((kPromotion.providesSkill(CLS_SKILL_EXCILE) ? 1 : 0) * iChange);
 	changePassageCount((kPromotion.providesSkill(CLS_SKILL_PASSAGE) ? 1 : 0) * iChange);
 	changeNoNonOwnedCityEntryCount((kPromotion.providesSkill(CLS_SKILL_NO_NON_OWNED_CITY_ENTRY) ? 1 : 0) * iChange);
@@ -17635,7 +17628,6 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	changeExtraInsidiousness(kPromotion.getUnderworld(UNDERWORLD_INSIDIOUSNESS, CASC_SCOPE_UNIT) / 100 * iChange);
 	changeExtraInvestigation(kPromotion.getUnderworld(UNDERWORLD_INVESTIGATION, CASC_SCOPE_UNIT) / 100 * iChange);
 	changeAssassinCount((kPromotion.providesSkill(CLS_SKILL_ASSASSIN) ? 1 : 0) * iChange);
-	changeExtraStealthStrikes(kPromotion.getFlatCombat(COMBAT_STEALTH_STRIKES, CASC_SCOPE_UNIT) / 100 * iChange);
 	changeStealthDefenseCount((kPromotion.providesSkill(CLS_SKILL_STEALTH_DEFENSE) ? 1 : 0) * iChange);
 	changeOnlyDefensiveCount((kPromotion.providesSkill(CLS_SKILL_DEFENSE_ONLY) ? 1 : 0) * iChange);
 	changeNoInvisibilityCount((kPromotion.providesSkill(CLS_SKILL_NO_INVISIBILITY) ? 1 : 0) * iChange);
@@ -18095,7 +18087,6 @@ void CvUnit::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvUnit", &m_iImmuneToFirstStrikesCount);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraMoves);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraMoveDiscount);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraAirRange);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraBombardRate);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iRevoltProtection);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iCollateralDamageProtection);
@@ -18149,7 +18140,7 @@ void CvUnit::read(FDataStreamBase* pStream)
 	// THE RESEED EMIT (DEC-spine-reseed): the unit INSTANCE fact. A loaded unit never runs init(), so without this
 	// the stream shows an empire whose units all predate the save. Emitted HERE, the first point m_iID / m_eOwner /
 	// m_eUnitType have all deserialized. Result-producers suppress inside the load bracket, so this restores the
-	// instance without re-granting anything -- the emitBuildingChanged(bFirst = false) contract.
+	// instance without re-granting anything -- the emitCityBuildingAdded(bFirst = false) contract.
 	emitUnitCreated((int)m_eUnitType, m_iID, (int)m_eOwner);
 	// The matching in-read half for the death SCHEDULE: a save can be taken with a kill already deferred, and
 	// no setter runs on a load to announce it. A cleared schedule is the reset() default and announces nothing,
@@ -18157,7 +18148,7 @@ void CvUnit::read(FDataStreamBase* pStream)
 	// the plot is not yet knowable here -- the id is what a consumer keys on.
 	if (m_bDeathDelay)
 	{
-		emitUnitDeathScheduled((int)m_eUnitType, m_iID, (int)m_eOwner, -1, true);
+		emitUnitDeathScheduleAdded((int)m_eUnitType, m_iID, (int)m_eOwner, -1);
 	}
 
 	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvUnit", REMAPPED_CLASS_TYPE_UNITS, (int*)&m_eLeaderUnitType);
@@ -18225,7 +18216,7 @@ void CvUnit::read(FDataStreamBase* pStream)
 			// promotion-line block) -- so the fact announced is the state that actually landed.
 			if (isHasPromotion((PromotionTypes)iI))
 			{
-				emitUnitPromotionChanged(m_iID, (int)m_eOwner, iI, 1);
+				emitUnitPromotionAdded(m_iID, (int)m_eOwner, iI);
 			}
 		}
 	}
@@ -18489,14 +18480,13 @@ void CvUnit::read(FDataStreamBase* pStream)
 			info->m_bHasUnitCombat = true;
 			// THE RESEED EMIT: the combat-class set is written straight into the keyed map here, so
 			// processUnitCombat never runs and the unit plane's second dirty trigger never fires.
-			emitUnitCombatChanged(m_iID, (int)m_eOwner, iI, 1);
+			emitUnitCombatAdded(m_iID, (int)m_eOwner, iI);
 		}
 	}
 
 	WRAPPER_READ(wrapper, "CvUnit", &m_iAttackOnlyCitiesCount);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iIgnoreNoEntryLevelCount);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iIgnoreZoneofControlCount);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraTaunt);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraMaxHP);
 
 	WRAPPER_READ(wrapper, "CvUnit", &m_iFliesToMoveCount);
@@ -18801,7 +18791,6 @@ void CvUnit::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraInvestigation);
 	WRAPPER_READ(wrapper, "CvUnit", (int*)&m_pPlayerInvestigated);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iAssassinCount);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraStealthStrikes);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iStealthDefenseCount);
 	WRAPPER_READ(wrapper, "CvUnit", &m_bRevealed);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iOnlyDefensiveCount);
@@ -19046,7 +19035,6 @@ void CvUnit::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iImmuneToFirstStrikesCount);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraMoves);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraMoveDiscount);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraAirRange);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraBombardRate);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iRevoltProtection);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iCollateralDamageProtection);
@@ -19196,7 +19184,6 @@ void CvUnit::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iAttackOnlyCitiesCount);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iIgnoreNoEntryLevelCount);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iIgnoreZoneofControlCount);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraTaunt);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraMaxHP);
 
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iFliesToMoveCount);
@@ -19419,7 +19406,6 @@ void CvUnit::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraInvestigation);
 	WRAPPER_WRITE(wrapper, "CvUnit", (int)m_pPlayerInvestigated);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iAssassinCount);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraStealthStrikes);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iStealthDefenseCount);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_bRevealed);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iOnlyDefensiveCount);
@@ -23348,11 +23334,6 @@ int CvUnit::breakdownDamageTotal() const
 	return std::max(0, iData);
 }
 
-void CvUnit::changeExtraTaunt(int iChange)
-{
-	m_iExtraTaunt += iChange;
-}
-
 // ⚠ URS_TAUNT is a FLAT slot (×100) consumed as a human percent (`iValue += tauntTotal() * iValue / 100`), so
 // it reduces here ([DEC-fixedpoint-x100]) -- raw, a +50% taunt applies as roughly x51.
 int CvUnit::tauntTotal() const
@@ -26512,24 +26493,10 @@ int CvUnit::stealthStrikesTotal() const
 	{
 		return 0;
 	}
-	int iAnswer = m_pUnitInfo->getFlatCombat(COMBAT_STEALTH_STRIKES, CASC_SCOPE_UNIT) / 100;
-	iAnswer += getExtraStealthStrikes();
-
-	return iAnswer;
-}
-
-int CvUnit::getExtraStealthStrikes() const
-{
-	if (!GC.getGame().isOption(GAMEOPTION_COMBAT_WITHOUT_WARNING))
-	{
-		return 0;
-	}
-	return m_iExtraStealthStrikes;
-}
-
-void CvUnit::changeExtraStealthStrikes(int iChange)
-{
-	m_iExtraStealthStrikes += iChange;
+	// URS_STEALTH_STRIKES is a FLAT slot (×100) consumed as a whole strike count, so it reduces here
+	// ([DEC-fixedpoint-x100] -- the reader ÷100s at the point of use). The slot already gathers the unit's OWN
+	// type alongside its promotions and combat classes, so this is the whole value in one read.
+	return std::max(0, resolvedValue(URS_STEALTH_STRIKES) / 100);
 }
 
 int CvUnit::stealthCombatModifierTotal() const

@@ -13,10 +13,12 @@ import WBInfoScreen
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 
+TEXT = CyGameTextMgr()
 iChange = 1
 iOwnerType = 0
 iPlotType = 2
@@ -135,9 +137,9 @@ class WBCityEditScreen:
 		for (loopCity, iPlayerX, sColor) in self.lCities:
 			iRow = screen.appendTableRow("CurrentCity")
 			iCiv = loopCity.getCivilizationType()
-			screen.setTableText("CurrentCity", 0, iRow, "", GC.getCivilizationInfo(iCiv).getButton(), WidgetTypes.WIDGET_PYTHON, 7872, iCiv, 1<<0)
+			screen.setTableText("CurrentCity", 0, iRow, "", INFO.getButton("CIVILIZATION_", iCiv), WidgetTypes.WIDGET_PYTHON, 7872, iCiv, 1<<0)
 			iLeader = GC.getPlayer(iPlayerX).getLeaderType()
-			screen.setTableText("CurrentCity", 1, iRow, "", GC.getLeaderHeadInfo(iLeader).getButton(), WidgetTypes.WIDGET_PYTHON, 7876, iLeader, 1<<0)
+			screen.setTableText("CurrentCity", 1, iRow, "", INFO.getButton("LEADER_", iLeader), WidgetTypes.WIDGET_PYTHON, 7876, iLeader, 1<<0)
 			screen.setTableText("CurrentCity", 2, iRow, "<font=3>" + sColor + loopCity.getName() + "</font></color>", '', WidgetTypes.WIDGET_PYTHON, 7200 + iPlayerX, loopCity.getID(), 1<<0)
 
 	def placeMap(self):
@@ -162,21 +164,21 @@ class WBCityEditScreen:
 		screen.addDropDownBoxGFC("CityCultureLevel", iX, iY, screen.getXResolution()/4 - 40, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
 		for i in xrange(GC.getNumCultureLevelInfos()):
 			if GC.getCultureLevelInfo(i).getLevel() > -1:
-				screen.addPullDownString("CityCultureLevel", GC.getCultureLevelInfo(i).getDescription(), i, i, pCity.getCultureLevel() == i)
+				screen.addPullDownString("CityCultureLevel", INFO.getDescription("CULTURELEVEL_", i), i, i, pCity.getCultureLevel() == i)
 
 		iY += 30
 		screen.setButtonGFC("CityChangeCulturePlus", "", "", iX, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
 		screen.setButtonGFC("CityChangeCultureMinus", "", "", iX + 25, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
 		if pCity.getCultureThreshold() > 0:
-			sText = u"<font=3>%s %s/%s%c</font>" %(CyTranslator().getText("TXT_KEY_WB_CULTURE",()), self.WB.addComma(pCity.getCulture(iPlayer)), self.WB.addComma(pCity.getCultureThreshold()), GC.getCommerceInfo(CommerceTypes.COMMERCE_CULTURE).getChar())
-		else: sText = u"<font=3>%s %s%c</font>" %(CyTranslator().getText("TXT_KEY_WB_CULTURE",()), self.WB.addComma(pCity.getCulture(iPlayer)), GC.getCommerceInfo(CommerceTypes.COMMERCE_CULTURE).getChar())
+			sText = u"<font=3>%s %s/%s%c</font>" %(CyTranslator().getText("TXT_KEY_WB_CULTURE",()), self.WB.addComma(pCity.getCulture(iPlayer)), self.WB.addComma(pCity.getCultureThreshold()), TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_CULTURE))
+		else: sText = u"<font=3>%s %s%c</font>" %(CyTranslator().getText("TXT_KEY_WB_CULTURE",()), self.WB.addComma(pCity.getCulture(iPlayer)), TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_CULTURE))
 
 		screen.setLabel("CityChangeCultureText", "Background", sText, 1<<0, iX + 50, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 		iY += 30
 		screen.setButtonGFC("CityFoodPlus", "", "", iX, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
 		screen.setButtonGFC("CityFoodMinus", "", "", iX + 25, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
-		sText = u"<font=3>%s: %d/%d%c</font>" %(CyTranslator().getText("TXT_WORD_FOOD",()), pCity.getFood(), pCity.growthThreshold(), GC.getYieldInfo(YieldTypes.YIELD_FOOD).getChar())
+		sText = u"<font=3>%s: %d/%d%c</font>" %(CyTranslator().getText("TXT_WORD_FOOD",()), pCity.getFood(), pCity.growthThreshold(), TEXT.getSymbolChar("YIELD_", YieldTypes.YIELD_FOOD))
 		screen.setLabel("CityFoodText", "Background", sText, 1<<0, iX + 50, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 		iY += 30
@@ -273,7 +275,7 @@ class WBCityEditScreen:
 		if pCity.isProductionProcess():
 			sText = pCity.getProductionName()
 		elif pCity.isProduction():
-			sText = u"%s: %d/%d%c" %(pCity.getProductionName(), pCity.getProductionProgress(), pCity.getProductionNeeded(), GC.getYieldInfo(YieldTypes.YIELD_PRODUCTION).getChar())
+			sText = u"%s: %d/%d%c" %(pCity.getProductionName(), pCity.getProductionProgress(), pCity.getProductionNeeded(), TEXT.getSymbolChar("YIELD_", YieldTypes.YIELD_PRODUCTION))
 			screen.setButtonGFC("CurrentProductionPlus", "", "", screen.getXResolution() - 70, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
 			screen.setButtonGFC("CurrentProductionMinus", "", "", screen.getXResolution() - 45, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
 

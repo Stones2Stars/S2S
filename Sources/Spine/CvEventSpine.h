@@ -17,9 +17,23 @@
 //	KIND is the OOS FIREWALL axis, declared at the call site (never inferred):
 //	  - DOMAIN     : game STATE changed (building built, unit created). SYNCED/deterministic -> gate-eligible;
 //	                 drives the grants consumer.
+//	  - SAVELOAD   : a fact was READ OFF THE SAVE STREAM. A LOG OF LOADING, never what sets state -> logging only.
 //	  - DIAGNOSTIC : code RAN (a function entered, a decision re-evaluated N times). UNSYNCED execution trace ->
 //	                 logging only; NEVER gates.
 //	  - TRACE      : fine-grained "show me every step" -> logging only.
+//
+//	⛔ WHY SAVELOAD IS ITS OWN KIND AND NOT A DIAGNOSTIC (owner). DIAGNOSTIC means CODE RAN; a save-load fact is a
+//	record of what the STREAM CONTAINED, which is a different statement. Filing it under DIAGNOSTIC would put "the
+//	save says this plot is TERRAIN_GRASS" in the same bucket as "this function was entered", after which the two
+//	are separable only by convention. Its own kind makes the rule STRUCTURAL instead: a state-building consumer
+//	registers for DOMAIN, so "nothing derives held state from the load log" is enforced by the interest mask rather
+//	than by reviewer memory -- the contract-not-prohibition shape (patterns.md). It sits on the UNSYNCED side of
+//	the firewall with DIAGNOSTIC: never counted, never gates.
+//	⚑ It needs no gate knob of its own -- volume rides the event's OWN iLevel through the existing file
+//	(gPlayerLogLevel) and stream (gStreamLogLevel) gates, so a load record costs nothing until it is turned on.
+//	⛔ The load's DOMAIN facts are NOT these: the save read populates base state through the objects' internal
+//	setters, and THOSE setters emit the ordinary DOMAIN facts that build the cascade, the enabler and the contexts
+//	-- one mechanism for load and play. A SAVELOAD line is testimony ABOUT the read, beside them.
 //
 //	Two consumer appetites, one front door: LOGGING is BROAD (sees everything, outputs per the existing log gates);
 //	GRANTS is SELECTIVE (takes only the DOMAIN kinds it resolves). Payload is RAW (never a pre-formatted string) so
@@ -30,6 +44,7 @@
 enum EventKind
 {
 	EVENTKIND_DOMAIN = 0,   // synced state change -> grants + logging; gate-eligible
+	EVENTKIND_SAVELOAD,     // a fact READ OFF THE SAVE STREAM -> logging only; NEVER builds state
 	EVENTKIND_DIAGNOSTIC,   // unsynced execution trace -> logging only
 	EVENTKIND_TRACE,        // fine-grained step trace -> logging only
 	NUM_EVENT_KINDS
@@ -194,348 +209,446 @@ void spineRenderEventLine(char* szBuf, int iBufSize, const CvSpineEvent& kEvent)
 //	gameplay state-changes emit these, so the spine's consumers are driven by genuine input, not a recompute.
 enum SpineDomainEvent
 {
-	SEVT_BUILDING_COUNT = 1,  // iType = BuildingTypes, iA = new empire count, iB = delta, iC = PlayerTypes -- a counted-domain event
-	SEVT_UNIT_COUNT     = 2,  // iType = UnitTypes,     iA = new empire count, iB = delta, iC = PlayerTypes
-	SEVT_NAME_CHANGE    = 3,  // iType = NameChangeKind, iA = owner player, iB = entity id (= owner for PLAYER/CIV), iC = 0
-	SEVT_TECH_ACQUIRED  = 4,  // iType = TechTypes, iA = 1 (first-discoverer), iC = discovering player -- the tech-grant trigger
-	SEVT_RELIGION_FOUNDED = 5,// iType = ReligionTypes, iC = founding player -- the religion-founder grant trigger
-	SEVT_CIVIC_ADOPTED  = 6,  // iType = CivicTypes, iC = adopting player -- the civic grant trigger (revolution pulse)
-	SEVT_PLAYER_INIT    = 7,  // iType = iC = player -- game start: resolve the player's civ/era/handicap grants
+	// ⛔ A FACT NAMES THE HAPPENING. `*_CHANGED` IS NOT A VALID EVENT NAME -- there is no exempt category
+	// (event-spine.md § A FACT NAMES THE HAPPENING; [DEC-facts-name-happenings]). Every fact below is
+	// `<SCOPE>_<THING>_ADDED` / `_REMOVED`: the EVENT is the OPERATOR, and the payload is ONLY EVER A MAGNITUDE.
+	// A fact may carry HOW MANY (an ADDED of 3 adds three times over); it must never carry WHICH WAY -- a ±1, a
+	// presence bool or an old value beside a new one are all the same defect, a discriminator the consumer must
+	// branch on, which is the calculation relocated into a `switch`.
+	// ⚑ A SLOT REPLACEMENT announces BOTH ends, REMOVED first: the withdrawal is emitted while the OLD STATE STILL
+	// HOLDS, which is what makes it exact ([state-repositories.md] § THE INVARIANT). emit() dispatches
+	// SYNCHRONOUSLY, so no two operands are ever in flight together.
+	// ⚑ Ids are grouped by SCOPE and sequential. They are an internal dispatch axis with no external contract --
+	// the rendered NAME is the wire form -- so a new fact is appended to its scope's band, never bolted on the end.
 
-	// The per-source STATE-CHANGE events -- the COMPLETE emit surface (event-spine.md: a DOMAIN event on EVERY state
-	// change a package can depend on). iType = source type index; iC = owner / triggering player; iSrcLoc = cityId
-	// (per-city) | plotId (per-plot) | -1 (empire/team/world); iA/iB carry has/new-value/delta where meaningful.
-	SEVT_BUILDING_CHANGED       = 8,  // CvCity::setHasBuilding: iType=Building, iC=owner, iSrcLoc=cityId, iB=+1/-1,
-	                                  // iA=bFirst (1 = genuine first acquisition, 0 = conquest transfer / load restore)
-	SEVT_RELIGION_CHANGED       = 9,  // CvCity::setHasReligion: iType=Religion, iC=owner, iSrcLoc=cityId, iA=has
-	SEVT_CORPORATION_CHANGED    = 10, // CvCity::setHasCorporation: iType=Corp, iC=owner, iSrcLoc=cityId, iA=has
-	// ⚖ The city's obtained-bonus PRESENCE CROSSING ONLY (0 <-> non-zero), by owner ruling -- NOT every count move.
-	// processNumBonusChange calls processBonus solely when the has-verdict crosses zero, so a count going 2 -> 3
-	// announces nothing, deliberately: a per-count fact would drag in attribution edge cases (WHICH city or source
-	// added this copy) that the crossing sidesteps entirely. ⛔ Do NOT "fix" the missing count fact -- it is a scope
-	// boundary, not a gap. A count-threshold reader (a `min: 3` atom) is knowingly outside it for now.
-	SEVT_BONUS_CHANGED          = 11, // CvCity::processBonus/doVicinityBonus: iType=Bonus, iC=owner, iSrcLoc=cityId, iB=change
-	SEVT_POPULATION_CHANGED     = 12, // CvCity::setPopulation: iC=owner, iSrcLoc=cityId, iA=newPop
-	SEVT_SPECIALIST_CHANGED     = 13, // CvCity::setSpecialistCount: iType=Specialist, iC=owner, iSrcLoc=cityId, iB=delta
-	SEVT_POWER_CHANGED          = 14, // the `providesPower` amenity CROSSING: iC=owner, iSrcLoc=cityId, iB=delta
-	// plot SUBSTRATE changes -- the ACTUAL state changes. Yield is a COMPUTED RESULT of these, never itself an event
-	// (an improvement/terrain/feature/route changed; the yield recomputes downstream). These emit for observability
-	// + consumers, but they are NOT the yield-cache gate: plot yield is pull-computed (updateYield self-dirties).
-	SEVT_IMPROVEMENT_CHANGED    = 15, // CvPlot::setImprovementType: iType=Improvement, iC=owner, iSrcLoc=plotId
-	SEVT_TERRAIN_CHANGED        = 16, // CvPlot::setTerrainType: iType=Terrain, iC=owner, iSrcLoc=plotId
-	SEVT_FEATURE_CHANGED        = 17, // CvPlot::setFeatureType: iType=Feature, iC=owner, iSrcLoc=plotId
-	SEVT_ROUTE_CHANGED          = 18, // CvPlot::setRouteType: iType=Route, iC=owner, iSrcLoc=plotId
-	SEVT_TECH_CHANGED           = 19, // CvTeam::setHasTech (BROAD -- any set): iType=Tech, iC=triggering player, iA=has
-	SEVT_TRAIT_CHANGED          = 20, // CvPlayer::processTrait/setHasTrait: iType=Trait, iC=player, iA=add
-	SEVT_PROJECT_CHANGED        = 21, // CvTeam::changeProjectCount (+ the load reseed): iType=Project, iC=member player (PER-MEMBER, one emit per alive team member), iB=count delta
-	SEVT_GOLDEN_AGE_CHANGED     = 22, // CvPlayer::changeGoldenAgeTurns (flip): iC=player, iA=on
-	SEVT_STATE_RELIGION_CHANGED = 23, // CvPlayer::setLastStateReligion: iType=Religion, iC=player
-	// ownership changes -- a city/plot changed OWNER (conquest / culture flip / gift): the entity's packages move
-	// scope and BOTH owners' empire aggregates change. iSrcLoc = cityId | plotId; iA = OLD owner; iC = NEW owner.
-	SEVT_CITY_OWNER_CHANGED     = 24, // a city changed owner (acquire / dispose)
-	SEVT_PLOT_OWNER_CHANGED     = 25, // CvPlot::setOwner
-	// a plot's WORKING CITY was reassigned -- the plot's yield moves from the old city to the new (both cities'
-	// yield packages change). iSrcLoc = plotId; iA = old working cityId; iB = new working cityId; iC = owner.
-	SEVT_WORKING_CITY_CHANGED   = 26, // CvPlot::setWorkingCity
-	// load LIFECYCLE -- a synced DOMAIN signal (NOT a state change): the save read is beginning / complete.
-	// Result-producers (grants) rely PURELY on the spine, so they gate on THESE -- LOAD_STARTED -> suppress,
-	// LOAD_FINISHED -> resume (a grant is a RESULT of a genuine in-play acquisition, and a load is not one). The
-	// cache-build consumer stays load-active. (event-spine.md the load-RESEED.)
-	SEVT_GAME_LOAD_STARTED      = 27,
-	SEVT_GAME_LOAD_FINISHED     = 28,
-	// plot SUBSTRATE (sibling of terrain/feature/improvement/route, §15-18): a plot's RESOURCE (BONUS_*) was placed /
-	// discovered / removed. All play-time paths route through CvPlot::setBonusType (a Great-Farmer build, a discovery
-	// event, removal); the reseed fires the SAME event. iType=Bonus, iC=owner, iSrcLoc=plotId, iB=+1 placed / -1 removed.
-	SEVT_PLOT_BONUS_CHANGED     = 29,
-	// DIAGNOSTIC (not a state-change): the cache invalidation OBSERVABILITY -- a package was marked dirty. Carries the
-	// scope + owning-object id + the package-bit names + the source event. The Orwell bar for the invalidation flow.
-	SEVT_CACHE_INVALIDATE       = 30,
-	// DIAGNOSTIC: the complement -- a package was REBUILT (recomputed from dirty). invalidate = max work queued;
-	// rebuilt = work actually done. Carries scope + owner + id + the package-bit names (no src).
-	SEVT_CACHE_REBUILT          = 31,
-	// a player HERITAGE was acquired/removed (CvPlayer::setHeritage) -- feeds the empire package's commerce
-	// flats (era-stacked). Acquired mid-game via MISSION_HERITAGE. iType=Heritage, iC=player, iA=add. DOMAIN.
-	SEVT_HERITAGE_CHANGED       = 32,
-	// a plot-group (the connectivity / trade-NETWORK identity) gained/lost access to a resource --
-	// CvPlotGroup::changeNumBonuses on a presence transition. A traded resource enters at the capital's group and
-	// reaches every connected city; the consumer re-evals connection:trade deposits for the group's member cities.
-	// iType=Bonus, iC=owner, iSrcLoc=plotGroupId, iB=+1 gained / -1 lost. DOMAIN.
-	SEVT_PLOTGROUP_BONUS_CHANGED = 33,
-	// a CITY's own center plot moved to a different plot-group (merge/split -- CvPlot::setPlotGroup, owner-gated), so
-	// its whole NETWORK resource set changed. The membership twin of SEVT_PLOTGROUP_BONUS_CHANGED (which is the
-	// resource-set twin). iC=owner, iSrcLoc=cityId. DOMAIN.
-	SEVT_CITY_NETWORK_CHANGED   = 34,
-	// a player's ERA advanced (CvPlayer::setCurrentEra) -- a BROAD player-scope cascade input: heritage era-stacked
-	// commerce (the empire package), every ERA-counter-threshold deposit, and ERA requires atoms (frontier). iC=player,
-	// iA=newEra. DOMAIN. (Cache-masked today via setHasTech's tech mark, but the state change is its own fact.)
-	SEVT_ERA_CHANGED            = 35,
-	// a player's NUKE STATE changed -- one of THREE: 0 DISABLED (no nuke-enabling building) / 1 ENABLED (built +
-	// available) / 2 BANNED (the world AP-UN no-nukes vote or option). "available" is PER-PLAYER (`m_bNukesValid`,
-	// `makeNukesValid` at CvCity processBuilding); "banned" is WORLD (`isNoNukes`) and flips EVERY player at once.
-	// iC=player, iA=state(0/1/2). DOMAIN. (The cascade NO_NUKES predicate reads only the world BAN half.)
-	SEVT_NUKES_CHANGED          = 36,
-	// a city's CULTURE LEVEL changed (CvCity::setCultureLevel). TWO things ride this one fact: the culture-level
-	// cascade input (wonder caps, defense) AND the city's workable RADIUS growth -- so it is ALSO the vicinity
-	// MEMBERSHIP signal (the city gains/loses plots into its vicinity). iC=owner, iSrcLoc=cityId, iA=newLevel. DOMAIN.
-	SEVT_CITY_CULTURE_LEVEL_CHANGED = 37,
-	// a religion's HOLY CITY designation moved (CvGame::setHolyCity) -- the IS_HOLY_CITY / IS_STATE_RELIGION_HOLY_CITY
-	// predicates flip for the OLD city (loses) and the NEW city (gains); gates conditioned commerce/yields. Emitted
-	// per affected city. iType=religion, iC=cityOwner, iSrcLoc=cityId, iA=1 now holy / 0 no longer. DOMAIN.
-	SEVT_HOLY_CITY_CHANGED      = 38,
-	// a city's LOCAL (vicinity) supply of a bonus changed -- an active providing building appeared/vanished
-	// (CvCity::processBuilding at construction/destruction). Vicinity supply never adds an owned COUNT (that lives on
-	// the plot group); the consumer re-gates the bonus's connection:vicinity dependents. iType=Bonus, iC=owner,
-	// iSrcLoc=cityId, iB=the applied local delta (a city can hold several of a bonus locally). DOMAIN.
-	// ⚠ The BUILDING half is the only half this fact carries. The MAP half -- a bonus appearing/vanishing on a radius
-	// tile, or that tile changing hands -- is announced by the PLOT facts (SEVT_PLOT_BONUS_CHANGED /
-	// SEVT_PLOT_OWNER_CHANGED / SEVT_PLOT_WORKED_CHANGED) and by the radius growth on SEVT_CITY_CULTURE_LEVEL_CHANGED;
-	// a consumer holding a city-scope vicinity store folds both halves from those. There is deliberately no per-turn
-	// sweep behind this fact -- a missed emit must stay visibly wrong (DEC-no-self-heal).
-	SEVT_VICINITY_BONUS_CHANGED = 39,
-	// a present building's PROCESSED (operating-contribution) state flipped -- construction/destruction's
-	// processing leg AND a dormancy active<->dormant flip (both reach processBuilding). DISTINCT from
-	// SEVT_BUILDING_CHANGED (the PRESENCE fact, emitted at CvCity::setHasBuilding): events are facts, and a
-	// process flip is NOT a presence change -- conflating them fed the enabler domains fake has-flips (the
-	// 62-phantom-in-tree over-offer). Consumed by the modifier invalidation (package dirties + the operating-set
-	// mark); the enabler domains consume only the presence fact. iType=Building, iC=owner, iSrcLoc=cityId,
-	// iB=+1 processed-in / -1 processed-out. DOMAIN.
-	SEVT_BUILDING_PROCESSED     = 40,
-	// the load-end pipeline diagnostic (DIAGNOSTIC -- logging/observability only): the stage timings + the
-	// dormancy-fixpoint depth, announced once per load through the registered SD_SPINE render path.
-	SEVT_LOAD_PIPELINE          = 41,
-	// a city's production QUEUE gained/lost an order (CvCity::pushOrder / popOrder). The enabler's queue leg
-	// (enabler.md par.7.1 step 3 -- "queueing/completion is the targeted single-id erase"): a QUEUED building
-	// leaves the fresh offer (a queued candidate is excluded from a FRESH offer by definition), and
-	// a dequeue restores it -- the event triggers the one-id re-gate; the gate itself reads the live queue
-	// (object-owned state, the resolved-fork rule). iType = the ordered item id, iA = OrderTypes,
-	// iB = +1 push / -1 pop, iC = owner, iSrcLoc = cityId. DOMAIN.
-	SEVT_CITY_ORDER_CHANGED     = 42,
-	// TURN BOUNDARIES. The turn counter advancing is a genuine synced state change, so both are DOMAIN. They
-	// bracket the real boundary: the GAME pair straddles CvGame::incrementGameTurn (ended = the closing turn,
-	// started = the incremented one); the PLAYER pair rides CvPlayer::setTurnActive. iType = the game turn,
-	// iC = the player (-1 = the GAME-scope boundary). Consumers filter on iC; the emit surface stays complete.
-	SEVT_TURN_STARTED           = 43,
-	SEVT_TURN_ENDED             = 44,
-	// A unit ENTERED a friendly city's plot (CvUnit::setXY's new-city branch). The targeted trigger for anything
-	// a city hands to units PRESENT in it -- above all building free promotions, which are otherwise a per-turn
-	// rescan of (promo buildings x every unit on the plot). NOT emitted on every move: only on a city entry, so
-	// the stream stays proportional to a rare fact rather than to unit traffic.
-	// ⚠ This must never grow into cache invalidation -- unit movement invalidating cache is a standing owner
-	// "full stop" ([DEC-unit-modifiers-on-top]; the per-move clear caused an automation storm). A GRANT is
-	// one-shot state, not a recompute, which is why it may ride here.
-	// iType = unit TYPE, iA = unit id, iC = owner, iSrcLoc = city id. DOMAIN.
-	SEVT_UNIT_ENTERED_CITY      = 45,
-	// A unit INSTANCE was created (CvUnit::init). Distinct from SEVT_UNIT_COUNT, which is the player's per-TYPE
-	// tally and carries no instance -- the grants machine needs the actual unit to hand its `grants.promotions` to.
-	// iType = unit TYPE, iA = unit id, iC = owner. DOMAIN.
-	SEVT_UNIT_CREATED           = 46,
-	// A city was FOUNDED (CvPlayer::found, once the city object exists and before the settle-time provisions).
-	// ⛔ Distinct from SEVT_CITY_OWNER_CHANGED, which fires on ACQUIRE (conquest/trade) and on the load restore --
-	// founding produced NO identifiable fact before this, only a constellation of side-effects (populationChanged,
-	// plotOwnerChanged, cityNetworkChanged), which is why the settle-time provisions had no trigger to hang on.
-	// iType = the FOUNDING unit's type (-1 if none), iA = that unit's id, iC = owner, iSrcLoc = the new city.
-	SEVT_CITY_FOUNDED           = 47,
-	// The empire's CAPITAL changed -- relocation after the old capital was lost (CvPlayer::findNewCapital, once it
-	// has PICKED the replacement), or a capital being established. The spine carried no capital fact at all, so
-	// nothing could react to a capital moving. iC = owner, iSrcLoc = the new capital city (-1 = none left).
-	SEVT_CAPITAL_CHANGED        = 48,
-	// plot SUBSTRATE, the remaining five (siblings of terrain/feature/improvement/route/bonus, par.15-18 + 29). Each
-	// is a genuine plot state change that carried no DOMAIN fact, so its consumers had to be wired from the setter.
-	// The plot's TYPE (CvPlot::setPlotType): flat / hills / peak / OCEAN. Load-bearing well beyond relief, because
-	// CvPlot::isWater() IS getPlotType() == PLOT_OCEAN -- the whole water/land axis (and every neighbour's coast
-	// verdict) hangs off this fact, not off terrain. iType = the NEW PlotTypes, iA = the OLD one (a consumer acting
-	// on the delta needs both, as with plotOwnerChanged), iC = owner, iSrcLoc = plotId. DOMAIN.
-	SEVT_PLOT_TYPE_CHANGED      = 49,
-	// The plot's RIVER presence flipped (CvPlot::changeRiverCrossingCount crossing zero) -- the count is a running
-	// tally of river-carrying edges, and only the PRESENCE transition is a fact worth announcing. iA = 1 has river /
-	// 0 no longer, iB = the new crossing count, iC = owner, iSrcLoc = plotId. DOMAIN.
-	SEVT_PLOT_RIVER_CHANGED     = 50,
-	// The plot's IRRIGATION flipped (CvPlot::setIrrigated) -- the spread of irrigation water, distinct from the
-	// improvement that carries it. iA = 1 irrigated / 0 not, iC = owner, iSrcLoc = plotId. DOMAIN.
-	SEVT_PLOT_IRRIGATION_CHANGED = 51,
-	// The plot's LANDMARK designation changed (CvPlot::setLandmarkType) -- the named natural feature (peak range,
-	// bay, lake, ...) the map generator and the landmark events assign. iType = the NEW LandmarkTypes, iA = the OLD
-	// one, iC = owner, iSrcLoc = plotId. DOMAIN.
-	SEVT_PLOT_LANDMARK_CHANGED  = 52,
-	// A citizen started / stopped WORKING the plot (CvCity::setWorkingPlot). CITY-driven, so it carries the city as
-	// well as the plot: the fact belongs to the plot (its IS_WORKED verdict flips) but only the city can attribute
-	// it. DISTINCT from SEVT_WORKING_CITY_CHANGED, which is the RADIUS-MEMBERSHIP fact (which city may work the
-	// plot) -- membership is the superset, working is the citizen actually assigned to it.
-	// iA = 1 worked / 0 no longer, iB = the working cityId, iC = owner, iSrcLoc = plotId. DOMAIN.
-	SEVT_PLOT_WORKED_CHANGED    = 53,
-	// EVERY area identity was reassigned (CvMap::recalculateAreas: every plot's area is cleared, the area list is
-	// emptied, and the areas are recalculated from scratch). It is the ONE wholesale-reassignment fact, so it carries
-	// no id: after it, EVERY holder of an area id must re-read, rather than each inventing its own staleness test.
-	// Areas are virtually never recalculated -- terrain levelled to sea level (the WMD mechanic) plus map generation --
-	// so announcing the whole reassignment costs nothing at its real frequency. This is NOT the banned self-heal: a
-	// wholesale identity reassignment is not addressable per-source, so there is no finer route to derive
-	// (DEC-no-self-heal bans papering over a MISSED invalidation, not announcing a genuine wholesale one).
-	// No payload -- the fact IS "all of them". DOMAIN.
-	SEVT_AREAS_RECALCULATED     = 54,
+	// ===== GAME / lifecycle =====
+	SEVT_GAME_LOAD_STARTED          = 1,
+	SEVT_GAME_LOAD_FINISHED         = 2,
+	// TURN BOUNDARIES. The turn counter advancing is a genuine synced state change, so both are DOMAIN. They bracket
+	// the real boundary: the GAME pair straddles CvGame::incrementGameTurn (ended = the closing turn, started = the
+	// incremented one); the PLAYER pair rides CvPlayer::setTurnActive. iType = the game turn, iC = the player
+	// (-1 = the GAME-scope boundary). Consumers filter on iC; the emit surface stays complete.
+	SEVT_TURN_STARTED               = 3,
+	SEVT_TURN_ENDED                 = 4,
+	// A GAME OPTION was turned ON / OFF (CvGame::setOption / setModderGameOption). An option is the ONE axis an
+	// entity-level gate reads ([DEC-entity-gate]), so a flip can change ANY entity's applicability at once, and
+	// WorldBuilder can toggle one at will -- without this fact every maintained gate verdict silently keeps the
+	// pre-flip answer and NOTHING re-derives it ([DEC-no-self-heal]).
+	// ⚠ TWO ID SPACES ride these, so iB DISAMBIGUATES (GameOptionSpace) -- a game-option id and a modder-option id
+	// are otherwise the same int. iType = the option id, iA = the value's magnitude. DOMAIN.
+	SEVT_GAME_OPTION_ADDED          = 5,
+	SEVT_GAME_OPTION_REMOVED        = 6,
+	// The GAME handicap moved (CvGame::setHandicapType) -- the integer average over alive HUMAN players, which every
+	// getAI* advantage reads (engine.md: AI advantages scale with the HUMAN's difficulty, never the AI's). A SLOT
+	// REPLACEMENT: REMOVED names the outgoing handicap, ADDED the incoming. Derived, never saved, so no in-read half.
+	// iType = the handicap. DOMAIN.
+	SEVT_GAME_HANDICAP_ADDED        = 7,
+	SEVT_GAME_HANDICAP_REMOVED      = 8,
+	// A GLOBAL DEFINE took a new value (cvInternalGlobals::setDefine*). A define is MP-SYNCED state, and this is the
+	// LIVE-OPTION bridge: a BUG option fires a Python callback -> GC.setDefineINT -> cacheGlobals(), so a user can
+	// flip an engine tunable AT ANY TIME mid-game. A SLOT REPLACEMENT, so the old value is REMOVED and the new one
+	// ADDED. ⚠ Emitted ONLY on the genuine LOCAL set: the `bUpdate` path sends a net message and
+	// CvGlobalDefineUpdate::Execute calls back with bUpdate=false, so emitting on both would double-announce.
+	// ⚠ A define is STRING-KEYED with no id space, so the NAME rides as a render field and a machine consumer keys
+	// on that, not the ints. iType = -1, iA = the INT magnitude, iB = GlobalDefineKind. DOMAIN.
+	SEVT_GAME_GLOBAL_DEFINE_ADDED   = 9,
+	SEVT_GAME_GLOBAL_DEFINE_REMOVED = 10,
+
+	// ===== WORLD =====
+	// The world's NUKE BAN was imposed / lifted -- the AP/UN no-nukes vote or option, which flips EVERY player at
+	// once. ⛔ DISTINCT from the per-player availability pair below, and deliberately a SEPARATE FACT rather than a
+	// tri-state on one id: "the world banned nukes" and "this empire can build one" are two happenings reaching one
+	// choke point, and a consumer branching on a state int to tell them apart is the calculation in a `switch`.
+	// The cascade's NO_NUKES predicate reads only this world half. iC = -1 (world scope). DOMAIN.
+	SEVT_WORLD_NUKES_BANNED_ADDED   = 11,
+	SEVT_WORLD_NUKES_BANNED_REMOVED = 12,
+	// The world's cumulative created-count of a unit type advanced (CvGame::incrementUnitCreatedCount) -- read live
+	// by the UnitEnabler's world-instance cap. ⛔ MONOTONIC, so there is no REMOVED half and that is not an omission:
+	// the counter only ever grows, so every increment IS a distinct state change with no verdict to cross. DISTINCT
+	// from SEVT_EMPIRE_UNIT_COUNT_* (a player's LIVE per-type tally) and from SEVT_UNIT_CREATED (the instance); all
+	// three fire at one birth and none duplicates another. iType = unit TYPE, iA = HOW MANY. DOMAIN.
+	SEVT_WORLD_UNIT_CREATED_COUNT_ADDED = 13,
+	// EVERY area identity was reassigned (CvMap::recalculateAreas). The ONE wholesale-reassignment fact, so it
+	// carries no id: after it, EVERY holder of an area id must re-read. Areas are virtually never recalculated
+	// (terrain levelled to sea level -- the WMD mechanic -- plus map generation), so the blanket costs nothing at
+	// its real frequency, and it is NOT the banned self-heal: a wholesale identity reassignment is not addressable
+	// per-source, so no finer route exists to derive. No payload -- the fact IS "all of them". DOMAIN.
+	SEVT_AREAS_RECALCULATED         = 14,
+
+	// ===== TEAM =====
+	// A team GAINED / LOST a member (CvTeam::changeNumMembers) -- the `TEAM` counter token
+	// (EmpireContext::teamMemberCount). iA = HOW MANY, unsigned. iC = -1 (a team has no owning player),
+	// iSrcLoc = teamId. DOMAIN.
+	SEVT_TEAM_MEMBER_ADDED          = 20,
+	SEVT_TEAM_MEMBER_REMOVED        = 21,
+
+	// ===== EMPIRE (player) =====
+	// The team GAINED / LOST a tech (CvTeam::setHasTech). Tech is TEAM-held but the fact is emitted per-self from
+	// each member's read, so it reads at empire scope like every other HAVE axis ([contexts.md]: team is the TECH
+	// BRIDGE, the player holds the context). iType = Tech, iC = triggering player. DOMAIN.
+	SEVT_EMPIRE_TECH_ADDED          = 30,
+	SEVT_EMPIRE_TECH_REMOVED        = 31,
+	// The player GAINED / LOST a trait (CvPlayer::processTrait / setHasTrait). iType = Trait, iC = player. DOMAIN.
+	SEVT_EMPIRE_TRAIT_ADDED         = 32,
+	SEVT_EMPIRE_TRAIT_REMOVED       = 33,
+	// A project was COMPLETED / lost (CvTeam::changeProjectCount + the load reseed). PER-MEMBER -- one emit per
+	// alive team member. iA = HOW MANY, unsigned. iType = Project, iC = member player. DOMAIN.
+	SEVT_EMPIRE_PROJECT_ADDED       = 34,
+	SEVT_EMPIRE_PROJECT_REMOVED     = 35,
+	// A player HERITAGE was acquired / lost (CvPlayer::setHeritage) -- feeds the empire package's era-stacked
+	// commerce flats. Acquired mid-game via MISSION_HERITAGE. iType = Heritage, iC = player. DOMAIN.
+	SEVT_EMPIRE_HERITAGE_ADDED      = 36,
+	SEVT_EMPIRE_HERITAGE_REMOVED    = 37,
+	// The player ADOPTED / RENOUNCED a state religion (CvPlayer::setLastStateReligion). A SLOT REPLACEMENT, so a
+	// swap announces both ends -- REMOVED for the outgoing religion first, then ADDED for the incoming.
+	// iType = Religion, iC = player. DOMAIN.
+	SEVT_EMPIRE_STATE_RELIGION_ADDED   = 38,
+	SEVT_EMPIRE_STATE_RELIGION_REMOVED = 39,
+	// The player ENTERED / LEFT a golden age (CvPlayer::changeGoldenAgeTurns, at its 0-crossing). iC = player. DOMAIN.
+	SEVT_EMPIRE_GOLDEN_AGE_ADDED    = 40,
+	SEVT_EMPIRE_GOLDEN_AGE_REMOVED  = 41,
+	// The player ENTERED / LEFT anarchy (CvPlayer::changeAnarchyTurns, at its 0-crossing). Anarchy zeroes the
+	// empire's commerce and suspends civic/corporation effects, so IS_ANARCHY is a live cascade input.
+	// iC = player. DOMAIN.
+	SEVT_EMPIRE_ANARCHY_ADDED       = 42,
+	SEVT_EMPIRE_ANARCHY_REMOVED     = 43,
+	// The player's ERA advanced (CvPlayer::setCurrentEra) -- a BROAD player-scope cascade input: heritage era-stacked
+	// commerce, every ERA-counter-threshold deposit, and ERA requires atoms. A SLOT REPLACEMENT: the outgoing era is
+	// REMOVED, the incoming ADDED. iType = the era, iC = player. DOMAIN.
+	SEVT_EMPIRE_ERA_ADDED           = 44,
+	SEVT_EMPIRE_ERA_REMOVED         = 45,
+	// The player's own SAVED handicap moved (CvPlayer::setHandicap), as FLEXIBLE DIFFICULTY does in play. A genuine
+	// cascade input rather than observability: the gather folds the handicap's OWN modifier families into that
+	// player's packages, so without this fact every handicap-derived deposit keeps the OLD difficulty permanently.
+	// ⚠ DISTINCT from the GAME handicap above and not a duplicate of it. A SLOT REPLACEMENT.
+	// iType = the handicap, iC = player. DOMAIN.
+	SEVT_EMPIRE_HANDICAP_ADDED      = 46,
+	SEVT_EMPIRE_HANDICAP_REMOVED    = 47,
+	// The empire's NUKE AVAILABILITY -- it built a nuke-enabling building (`m_bNukesValid`, `makeNukesValid` at
+	// CvCity processBuilding) or lost it. PER-PLAYER; the world BAN is its own fact above. iC = player. DOMAIN.
+	SEVT_EMPIRE_NUKES_ENABLED_ADDED   = 48,
+	SEVT_EMPIRE_NUKES_ENABLED_REMOVED = 49,
 	// A commerce SLIDER moved (CvPlayer::setCommercePercent) -- the empire's split of its cities' COMMERCE yield
-	// across gold / research / culture / espionage. Synced player state, deterministic and OOS-relevant, so
-	// DOMAIN and never DIAGNOSTIC: every city's realized rate of the moved channel is built on it (modifier.md
-	// §2a, the commerce paragraph). ⚠ ONE slider move emits SEVERAL of these -- the setter REBALANCES the other
-	// channels in place to keep the total at 100, and each channel it moves is its own state change.
-	// iType = CommerceTypes, iA = the new percent, iB = the old percent, iC = player, iSrcLoc = -1. DOMAIN.
-	SEVT_COMMERCE_PERCENT_CHANGED = 55,
-	// A game object's PROPERTY VALUE changed (CvProperties -- the generic (PropertyTypes,int) bag on
-	// game/team/player/city/unit/plot). DOMAIN: a property value is synced, deterministic, save-carried state that
-	// folds into the OOS checksum, and PROPERTY_* is one cascade channel per property info
-	// (state-repositories.md), read by CityContext::propertyValue, every requires.operate property BAND
-	// (enabler.md par.3) and every deposit conditioned on a property threshold.
-	// iType = PropertyTypes, iA = the NEW value, iB = the object KIND (GameObjectTypes -- what iSrcLoc identifies;
-	// a city id and a plot id are otherwise the same int), iC = owner player (-1 for the game, a team, an unowned
-	// plot), iSrcLoc = the object's OWN id (cityId | unitId | plotId | playerId | teamId; -1 = the game). The OLD
-	// value rides as a render field (the ints are full).
-	// ⚠ The solver's change PROPAGATION (CvProperties::propagateChange -- FLAMMABILITY's city->player rollup) fans
-	// one change onto OTHER objects, each of which re-enters the mutation path and emits its own fact. Those are
-	// DISTINCT objects' facts, not duplicates -- every one of them emits.
-	SEVT_PROPERTY_CHANGED = 56,
-	// The city's power-DISABLED state flipped (CvCity::changeDisabledPowerTimer). CvCity::isPower() ORs THREE legs
-	// -- the power COUNT (SEVT_POWER_CHANGED), this timer, and the area clean-power flag below -- so the HAS_POWER
-	// verdict is stale unless all three announce. ⚠ The timer TICKS DOWN every turn (CvCity::doDisabledPower), so
-	// only the derived 0-CROSSING is a fact; emitting per decrement would fire every turn for no state change.
-	// iA = 1 disabled / 0 restored, iB = the new timer value, iC = owner, iSrcLoc = cityId. DOMAIN.
-	SEVT_CITY_POWER_DISABLED_CHANGED = 57,
-	// An AREA's CLEAN-POWER flag flipped for a TEAM (CvArea::changeCleanPowerCount, at its existing count crossing)
-	// -- the third leg of CvCity::isPower(), reached through CvCity::isAreaCleanPower(). The fact is scoped to
-	// (area x team), which has no owning player, so iC stays -1 and the team rides iB.
-	// iA = 1 clean-powered / 0 no longer, iB = teamId, iC = -1, iSrcLoc = areaId. DOMAIN.
-	SEVT_AREA_CLEAN_POWER_CHANGED = 58,
-	// A corporation's HEADQUARTERS designation moved (CvGame::setHeadquarters) -- the IS_HEADQUARTERS predicate
-	// flips for the OLD city (loses) and the NEW city (gains). Emitted per affected city, the setHolyCity shape.
-	// ⛔ NOT a duplicate of the changeHasBuilding / setHasCorporation calls the same setter makes: those announce
-	// building PRESENCE and corporation PRESENCE, and an HQ designation is neither.
-	// iType = Corporation, iA = 1 now HQ / 0 no longer, iC = city owner, iSrcLoc = cityId. DOMAIN.
-	SEVT_HEADQUARTERS_CHANGED = 59,
-	// The city SITTING ON a plot changed (CvPlot::setPlotCity) -- a city was founded/acquired onto the plot or
-	// removed from it. DISTINCT from SEVT_WORKING_CITY_CHANGED (which city may WORK the plot) and from
-	// SEVT_CITY_FOUNDED (the founding act, which does not fire on razing or on a plot losing its city).
-	// ⚠ CvPlot::changeCityRadiusCount / changePlayerCityRadiusCount are PASS-THROUGHS of this setter -- this one
-	// fact covers them; a second emit there would announce the same change per radius plot.
-	// iA = old cityId (-1 = none), iB = new cityId (-1 = none), iC = owner, iSrcLoc = plotId. DOMAIN.
-	SEVT_PLOT_CITY_CHANGED = 60,
-	// The city's GOVERNMENT-CENTRE verdict flipped -- the palace/counterpart buildings that make a city a
-	// maintenance origin. The verdict is the city's AMENITY FOLD, so the crossing is announced by the contexts'
-	// consumer around the fold that moved it (ContextConsumer::announceAmenityCrossings). DISTINCT from
-	// SEVT_CAPITAL_CHANGED: a capital is always a government centre, but a government centre need not be capital.
-	// iA = 1 now a government centre / 0 no longer, iC = owner, iSrcLoc = cityId. DOMAIN.
-	SEVT_GOVERNMENT_CENTER_CHANGED = 61,
-	// The player entered / left ANARCHY (CvPlayer::changeAnarchyTurns, at its existing 0-crossing). Anarchy zeroes
-	// the empire's commerce and suspends civic/corporation effects, so IS_ANARCHY is a live cascade input.
-	// iA = 1 in anarchy / 0 no longer, iC = player, iSrcLoc = -1. DOMAIN.
-	SEVT_ANARCHY_CHANGED = 62,
-	// The city's FRESH-WATER ACCESS flipped (CvCity::changeFreshWater, at its existing count crossing) -- the
+	// across gold / research / culture / espionage. Synced player state, deterministic and OOS-relevant, so DOMAIN:
+	// every city's realized rate of the moved channel is built on it (modifier.md §2a).
+	// ⚠ ONE slider move emits SEVERAL facts -- the setter REBALANCES the other channels in place to hold the total
+	// at 100, writing them directly rather than recursing, so each channel it moves emits its own. A consumer
+	// reading only the caller's channel sees a 100-total that does not add up.
+	// iType = CommerceTypes, iA = HOW MANY percent points moved (unsigned), iC = player. DOMAIN.
+	SEVT_EMPIRE_COMMERCE_PERCENT_ADDED   = 50,
+	SEVT_EMPIRE_COMMERCE_PERCENT_REMOVED = 51,
+	// The empire's CAPITAL slot moved -- relocation after the old capital was lost (CvPlayer::findNewCapital, once
+	// it has PICKED the replacement), or a capital being established. A SLOT REPLACEMENT, and the REMOVED half is
+	// load-bearing: an IS_CAPITAL-gated grant cannot be withdrawn by re-evaluating its gate after the flip.
+	// iC = owner, iSrcLoc = the city. DOMAIN.
+	SEVT_EMPIRE_CAPITAL_ADDED       = 52,
+	SEVT_EMPIRE_CAPITAL_REMOVED     = 53,
+	// The player's per-TYPE empire tally of a building / unit moved -- the whole-empire count (iSrcLoc = -1),
+	// distinct from the per-city presence facts. iType = the type, iA = HOW MANY, iC = player. DOMAIN.
+	SEVT_EMPIRE_BUILDING_COUNT_ADDED   = 54,
+	SEVT_EMPIRE_BUILDING_COUNT_REMOVED = 55,
+	SEVT_EMPIRE_UNIT_COUNT_ADDED       = 56,
+	SEVT_EMPIRE_UNIT_COUNT_REMOVED     = 57,
+
+	// ===== CITY =====
+	// The city GAINED / LOST a building. TWO facts, because they are two HAPPENINGS -- an add owes its first-build
+	// payload, joins the operate fixpoint and confers its amenities; a remove withdraws deposits, repeals those
+	// amenities and can ripple dormancy.
+	// ⛔ There is deliberately NO constructed-vs-granted split: "the only difference between a building granted and
+	// a building constructed is that we didn't use production if granted", and NOTHING downstream may branch on it
+	// (triggers.md § A GRANTED ENTITY IS AN ORDINARY ENTITY). Both arrivals are this one fact.
+	// iA = bFirst on the ADD (1 = a genuine first acquisition in this city, 0 = conquest transfer / load restore) --
+	// NOT how it arrived, but whether the first-build payload is OWED: CvCity::setupBuilding runs that block only
+	// when bFirst, and CvPlayer::acquireCity re-adds every captured building with bFirst=false precisely so conquest
+	// does not re-fire the grants. The reseed passes 0 for the same reason -- a load is a restore, not a build.
+	// iType = Building, iC = owner, iSrcLoc = cityId. DOMAIN.
+	SEVT_CITY_BUILDING_ADDED        = 60,
+	SEVT_CITY_BUILDING_REMOVED      = 61,
+	// ⚖ THE OPERATE CROSSING -- a present building STARTED or STOPPED contributing. DOMAIN because the verdict is
+	// genuine synced state: it is the enabler's operate fixpoint (enabler.md §3.2), so the enabler announces it at
+	// the one place it changes.
+	// ⛔ This is what the deposit / amenity / free-promotion consumers actually want, and it is NOT a duplicate of
+	// the PRESENCE pair: presence cannot tell dormant from operating, which is exactly why a consumer given only
+	// presence had to go and CALCULATE the difference. A dormant building confers nothing and deposits nothing.
+	// iType = Building, iC = owner, iSrcLoc = cityId. DOMAIN.
+	SEVT_CITY_BUILDING_ACTIVATED    = 62,
+	SEVT_CITY_BUILDING_DORMANTED    = 63,
+	// A present building crossed into / out of OBSOLESCENCE in this city -- the enabler's own obsolete-set verdict.
+	// ⛔ OBSERVABILITY ONLY -- logging and the player NOTIFICATION (owner). It drives NOTHING: a tech is the only
+	// thing that can obsolete, so the FATE (an empty `whenObsolete` removes the instance, a tree-carrying one leaves
+	// it standing for that tree to take over) is applied on the TECH fact where the check already runs. Routing the
+	// apply through this fact would make a UI concern a condition of the state change.
+	// iType = Building, iC = owner, iSrcLoc = cityId. DOMAIN.
+	SEVT_CITY_BUILDING_OBSOLETED_ADDED   = 64,
+	SEVT_CITY_BUILDING_OBSOLETED_REMOVED = 65,
+	// The city GAINED / LOST a religion (CvCity::setHasReligion). iType = Religion, iC = owner, iSrcLoc = cityId.
+	SEVT_CITY_RELIGION_ADDED        = 66,
+	SEVT_CITY_RELIGION_REMOVED      = 67,
+	// The city GAINED / LOST a corporation (CvCity::setHasCorporation). iType = Corp, iC = owner, iSrcLoc = cityId.
+	SEVT_CITY_CORPORATION_ADDED     = 68,
+	SEVT_CITY_CORPORATION_REMOVED   = 69,
+	// The city OBTAINED / LOST a bonus -- the NETWORK (trade) supply presence crossing, from CvCity::processBonus.
+	// ⚖ THE PRESENCE CROSSING ONLY (0 <-> non-zero), by owner ruling -- NOT every count move. processNumBonusChange
+	// calls processBonus solely when the has-verdict crosses zero, so a count going 2 -> 3 announces nothing,
+	// deliberately: a per-count fact would drag in attribution edge cases (WHICH city or source added this copy)
+	// that the crossing sidesteps entirely. ⛔ Do NOT "fix" the missing count fact -- it is a scope boundary that
+	// somebody DECIDED, not a gap. A count-threshold reader (a `min: 3` atom) is knowingly outside it for now, and
+	// it reopens only when a resource becomes a QUANTITY a city draws against (the volumetric trigger).
+	// ⚠ DISTINCT from the VICINITY pair below: this is what the PLOT GROUP supplies, so a network membership move
+	// fires these and never those (a locally-provided bonus survives a group change).
+	// iType = Bonus, iC = owner, iSrcLoc = cityId. DOMAIN.
+	SEVT_CITY_BONUS_ADDED           = 70,
+	SEVT_CITY_BONUS_REMOVED         = 71,
+	// The city's LOCAL (vicinity) supply of a bonus moved -- an active providing building appeared / vanished (the
+	// operate/provides fixpoint, and CvCity::processBuilding). Vicinity supply never adds an owned COUNT (that lives
+	// on the plot group); the consumer re-gates the bonus's connection:vicinity dependents.
+	// ⚑ A city can hold SEVERAL of a bonus locally, so these carry a MAGNITUDE -- iA = HOW MANY, unsigned. That is
+	// the payload doing its job; the DIRECTION is still the id, never a sign. Splitting loses nothing: an ADDED of 2
+	// and a REMOVED of 1 say exactly what a signed delta said, without handing the consumer a branch.
+	// ⚠ The BUILDING half is the only half these facts carry. The MAP half -- a bonus appearing/vanishing on a
+	// radius tile, or that tile changing hands -- is announced by the PLOT facts and by the radius growth on the
+	// culture-level fact; a consumer holding a city-scope vicinity store folds both halves from those. There is
+	// deliberately no per-turn sweep behind this fact -- a missed emit must stay visibly wrong ([DEC-no-self-heal]).
+	// iType = Bonus, iC = owner, iSrcLoc = cityId. DOMAIN.
+	SEVT_CITY_VICINITY_BONUS_ADDED   = 72,
+	SEVT_CITY_VICINITY_BONUS_REMOVED = 73,
+	// The city GREW / SHRANK (CvCity::setPopulation). iA = HOW MANY population moved, as an unsigned MAGNITUDE --
+	// never the new total: a consumer maintaining a sum needs how much MOVED, and a total would force it to subtract
+	// against a remembered previous value, which is the derivation this split exists to remove. The one consumer
+	// that wants the total reads the city, which owns it. ⚑ The SAVE READ emits ADDED with the stored amount -- the
+	// ordinary fact with its magnitude, not a bespoke load verb -- so a loaded city's `per:{POPULATION}` deposits
+	// build from zero by applying, like every other ([DEC-spine-reseed]).
+	// iC = owner, iSrcLoc = cityId. DOMAIN.
+	SEVT_CITY_POPULATION_ADDED      = 74,
+	SEVT_CITY_POPULATION_REMOVED    = 75,
+	// Specialists were ASSIGNED to / REMOVED from the city (CvCity::setSpecialistCount). iA = HOW MANY, unsigned --
+	// an ADDED of 3 adds three times over. iType = Specialist, iC = owner, iSrcLoc = cityId. DOMAIN.
+	SEVT_CITY_SPECIALIST_ADDED      = 76,
+	SEVT_CITY_SPECIALIST_REMOVED    = 77,
+	// The `providesPower` amenity CROSSING -- the city started / stopped being powered. iSrcLoc = cityId. DOMAIN.
+	SEVT_CITY_POWER_ADDED           = 78,
+	SEVT_CITY_POWER_REMOVED         = 79,
+	// The city's power was DISABLED / RESTORED (CvCity::changeDisabledPowerTimer). CvCity::isPower() ORs THREE legs
+	// -- the power COUNT above, this timer, and the area clean-power flag -- so the HAS_POWER verdict is stale
+	// unless all three announce. ⚠ The timer TICKS DOWN every turn, so only the derived 0-CROSSING is a fact;
+	// emitting per decrement would fire every turn for no state change -- the general rule for every timer-backed
+	// fact. iB = the new timer value, iC = owner, iSrcLoc = cityId. DOMAIN.
+	SEVT_CITY_POWER_DISABLED_ADDED   = 80,
+	SEVT_CITY_POWER_DISABLED_REMOVED = 81,
+	// The city GAINED / LOST fresh-water ACCESS (CvCity::changeFreshWater, at its count crossing) -- the
 	// PROVIDER-BUILDING-fed access counter. ⚠ DISTINCT from the plot-adjacency HAS_FRESHWATER verdict the plot
 	// substrate maintains (CvPlot::isFreshWater): a building can grant a city access on a dry plot.
-	// iA = 1 has access / 0 no longer, iB = the new counter, iC = owner, iSrcLoc = cityId. DOMAIN.
-	SEVT_CITY_FRESH_WATER_CHANGED = 63,
-	// ===== the UNIT plane. state-repositories.md: a unit's resolved values dirty "ONLY when a promotion or a
-	// combat class changes" -- neither trigger existed, so the plane had no fact to rebuild from. =====
-	// A unit gained / lost a PROMOTION (CvUnit::processPromotion -- the single funnel BOTH setHasPromotion
-	// overloads reach; the PromotionApply::flags overload delegates to the bool overload, which calls it).
-	// iType = Promotion, iA = unit id, iB = +1 gained / -1 lost, iC = owner, iSrcLoc = -1. DOMAIN.
-	SEVT_UNIT_PROMOTION_CHANGED = 64,
-	// A unit gained / lost a COMBAT CLASS (CvUnit::processUnitCombat -- the single funnel setHasUnitCombat reaches
-	// once past BOTH its change guard and its game-option/spy validity gate) -- the unit plane's second dirty
-	// trigger. A promotion's subCombat grants route through the same setter, so the fact is emitted once per
-	// genuine class change regardless of what caused it.
-	// iType = UnitCombat, iA = unit id, iB = +1 gained / -1 lost, iC = owner, iSrcLoc = -1. DOMAIN.
-	SEVT_UNIT_COMBAT_CHANGED = 65,
-	// A unit INSTANCE died -- the DEATH TWIN of SEVT_UNIT_CREATED, without which grants and the out-of-process
-	// replay see units born and never die. Emitted on the FIRST line of CvUnit::die, the one function that ends
-	// a unit's life: die() carries no early return and no conditional deletion, so the fact is true BY
-	// CONSTRUCTION rather than by sitting past a run of survival branches. The outcomes that leave the unit
-	// alive (evacuate-to-capital, last-stand survival) are decided BEFORE die() is entered and never reach it.
-	// iType = unit TYPE, iA = unit id, iC = owner, iSrcLoc = the plot it died on (-1 = the unit held none).
-	// DOMAIN.
-	SEVT_UNIT_KILLED = 66,
-	// A unit LEFT a city's plot (CvUnit::setXY's old-city branch) -- the leave twin of SEVT_UNIT_ENTERED_CITY.
-	// ⚠ The leave is announced for EVERY city plot a unit vacates, while the entry's conquest branch resolves
-	// into an acquisition instead of an entry -- so the two are not a balanced pair, and a consumer that counts
-	// occupancy must read the unit's live plot rather than net the facts.
-	// iType = unit TYPE, iA = unit id, iC = owner, iSrcLoc = the city id it left. DOMAIN.
-	SEVT_UNIT_LEFT_CITY = 67,
-	// The WORLD's cumulative created-count of a unit type advanced (CvGame::incrementUnitCreatedCount) -- read
-	// live by the UnitEnabler's world-instance cap. The counter only ever grows, so every increment IS a distinct
-	// state change (there is no verdict to cross). DISTINCT from SEVT_UNIT_COUNT (a player's LIVE per-type tally)
-	// and from SEVT_UNIT_CREATED (the instance); all three fire at one unit's birth and none duplicates another.
-	// iType = unit TYPE, iA = the new world count, iB = +1, iC = -1 (world scope), iSrcLoc = -1. DOMAIN.
-	SEVT_UNIT_CREATED_COUNT_CHANGED = 68,
-	// A TEAM's member count changed (CvTeam::changeNumMembers) -- the `TEAM` counter token
-	// (EmpireContext::teamMemberCount). The COUNT itself is what the token reads, so every nonzero change is one
-	// state change; the setter carries no guard of its own, so the emit supplies it.
-	// iA = the new member count, iB = the change, iC = -1 (a team has no owning player), iSrcLoc = teamId. DOMAIN.
-	SEVT_TEAM_MEMBERS_CHANGED = 69,
-	// An AREA's tile count changed (CvArea::changeNumTiles) -- feeds CityContext's AREA_SIZE and its
-	// max-adjacent-water store (the isCoastal(minArea) form). An area has no owning player, so iC stays -1.
-	// iA = the new tile count, iB = the change, iC = -1, iSrcLoc = areaId. DOMAIN.
-	SEVT_AREA_TILES_CHANGED = 70,
-	// A unit's DEATH SCHEDULE flipped (CvUnit::m_bDeathDelay) -- the state a delayed kill leaves behind so the
-	// object outlives combat resolution, save-carried and read by isDead()/isDelayedDeath() across the engine.
-	// NOT a duplicate of SEVT_UNIT_KILLED: a scheduled death is an INTENTION whose outcome can still flip to
-	// survival (evacuate-to-capital, last stand), and a consumer that treated the schedule as a death would
-	// bury units that walk away. Both transitions announce, so a consumer never keeps a survivor marked dying.
-	// iType = unit TYPE, iA = unit id, iB = 1 scheduled / 0 cleared, iC = owner, iSrcLoc = the plot it stands
-	// on (-1 = none). DOMAIN.
-	SEVT_UNIT_DEATH_SCHEDULED = 71,
-	// A GAME OPTION flipped (CvGame::setOption / setModderGameOption). DOMAIN: an option is synced setup state that
-	// every consumer's verdicts are built on, and it is the ONE axis an entity-level gate reads
-	// ([DEC-entity-gate]) -- a whole-entity game-option bar authors as `enabled`/`disabled`, so a flip can change
-	// ANY entity's applicability at once.
-	// ⚑ WHY IT MUST EXIST even though options are "fixed at setup": WorldBuilder can toggle one at will, and the
-	// roadmap's WB requirement is that an arbitrary WB mutation emits exactly as the normal path does, with no WB
-	// special case. Without this fact every maintained gate verdict silently keeps the pre-flip answer, and NOTHING
-	// re-derives it ([DEC-no-self-heal]) -- the enabler's tri-state is a bare fetch by design.
-	// ⚠ TWO ID SPACES ride one fact, so iB DISAMBIGUATES (the SEVT_PROPERTY_CHANGED shape -- a game-option id and a
-	// modder-option id are otherwise the same int). Minting two near-identical facts would buy nothing.
-	// iType = the option id, iA = the new value (0/1 for a game option; the int for a modder option), iB =
-	// GameOptionSpace, iC = -1, iSrcLoc = -1. DOMAIN.
-	SEVT_GAME_OPTION_CHANGED = 72,
-	// A PLAYER's difficulty changed (CvPlayer::setHandicap) -- the per-player, SAVED handicap, moved in play by
-	// FLEXIBLE DIFFICULTY. DOMAIN, and a genuine cascade input rather than mere observability: the gather folds the
-	// handicap's OWN modifier families into that player's packages (CvCascadeGather), so without this fact every
-	// handicap-derived deposit keeps the OLD difficulty's value permanently.
-	// ⚠ DISTINCT from the game handicap below and NOT a duplicate of it: this is the player's own saved value
-	// (human-facing economics), the other is the derived average that drives AI advantages (engine.md).
-	// iType = the new handicap, iA = the old handicap, iC = player, iSrcLoc = -1. DOMAIN.
-	SEVT_PLAYER_HANDICAP_CHANGED = 73,
-	// The GAME handicap changed (CvGame::setHandicapType) -- the integer average over alive HUMAN players, which
-	// every getAI* advantage reads (engine.md: AI advantages scale with the HUMAN's difficulty, never the AI's).
-	// Derived, never saved, recomputed by averageHandicaps, so it needs no in-read reseed half.
-	// iType = the new handicap, iA = the old handicap, iC = -1 (no owning player), iSrcLoc = -1. DOMAIN.
-	SEVT_GAME_HANDICAP_CHANGED = 74,
-	// A GLOBAL DEFINE changed (cvInternalGlobals::setDefineINT / setDefineFLOAT / setDefineSTRING). DOMAIN: a
-	// define is MP-SYNCED state (the setter routes through sendGlobalDefineUpdate and every client re-caches), and
-	// the DLL reads it through cached accessors that this same call refreshes.
-	// ⚑ This is the LIVE-OPTION bridge: a BUG option declared in Assets/Config/<mod>.xml fires a Python callback
-	// on change -> GC.setDefineINT -> cacheGlobals(), so a user can flip an engine tunable AT ANY TIME mid-game.
-	// It was the one mutation of that class with no fact at all, which made a live option unreactable by
-	// construction; with it, a consumer that needs to answer a define change finally can.
-	// ⚠ EMITTED ONLY ON THE GENUINE LOCAL SET. The `bUpdate` path SENDS a net message instead of setting, and
-	// CvGlobalDefineUpdate::Execute calls straight back in with bUpdate=false -- so emitting on both paths would
-	// double-announce one change on the initiating machine. It fires AFTER cacheGlobals(), so a consumer reading a
-	// cached accessor sees the NEW value.
-	// ⚠ A define is STRING-KEYED with no id space, so the NAME rides as a render field (the SEVT_NAME_CHANGE
-	// precedent: a rare fact may carry a resolved string, the emit render being synchronous on the game thread).
-	// A machine consumer therefore keys on that field, not on the ints.
-	// iType = -1 (no id space), iA = the new INT value (0 for the float/string kinds), iB = GlobalDefineKind,
-	// iC = -1, iSrcLoc = -1. DOMAIN.
-	SEVT_GLOBAL_DEFINE_CHANGED = 75,
+	// iB = the new counter, iC = owner, iSrcLoc = cityId. DOMAIN.
+	SEVT_CITY_FRESH_WATER_ADDED     = 82,
+	SEVT_CITY_FRESH_WATER_REMOVED   = 83,
+	// The city BECAME / STOPPED BEING a government centre -- the palace/counterpart buildings that make a city a
+	// maintenance origin. The verdict is the city's AMENITY FOLD, so the crossing is announced by the contexts'
+	// consumer around the fold that moved it. DISTINCT from the CAPITAL pair: a capital is always a government
+	// centre, but a government centre need not be capital. iC = owner, iSrcLoc = cityId. DOMAIN.
+	SEVT_CITY_GOVERNMENT_CENTER_ADDED   = 84,
+	SEVT_CITY_GOVERNMENT_CENTER_REMOVED = 85,
+	// The city GAINED / LOST a religion's HOLY-CITY designation (CvGame::setHolyCity) -- the IS_HOLY_CITY /
+	// IS_STATE_RELIGION_HOLY_CITY predicates flip for the OLD city (loses) and the NEW city (gains); gates
+	// conditioned commerce/yields. Emitted per affected city. iType = Religion, iC = owner, iSrcLoc = cityId. DOMAIN.
+	SEVT_CITY_HOLY_CITY_ADDED       = 86,
+	SEVT_CITY_HOLY_CITY_REMOVED     = 87,
+	// The city GAINED / LOST a corporation's HEADQUARTERS designation (CvGame::setHeadquarters), the holy-city
+	// shape. ⛔ NOT a duplicate of the building-presence / corporation-presence facts the same setter drives: an HQ
+	// designation is neither. iType = Corporation, iC = owner, iSrcLoc = cityId. DOMAIN.
+	SEVT_CITY_HEADQUARTERS_ADDED    = 88,
+	SEVT_CITY_HEADQUARTERS_REMOVED  = 89,
+	// The city's CULTURE LEVEL moved (CvCity::setCultureLevel). TWO things ride this fact: the culture-level cascade
+	// input (wonder caps, defense) AND the city's workable RADIUS growth -- so it is ALSO the vicinity MEMBERSHIP
+	// signal. A SLOT REPLACEMENT: the outgoing level is REMOVED, the incoming ADDED.
+	// iA = the level, iC = owner, iSrcLoc = cityId. DOMAIN.
+	SEVT_CITY_CULTURE_LEVEL_ADDED   = 90,
+	SEVT_CITY_CULTURE_LEVEL_REMOVED = 91,
+	// The city's OWNER slot moved (conquest / culture flip / gift / dispose): the entity's packages move scope and
+	// BOTH owners' empire aggregates change. A SLOT REPLACEMENT -- REMOVED names the losing owner, ADDED the
+	// gaining one. iC = the owner this fact is about, iSrcLoc = cityId. DOMAIN.
+	SEVT_CITY_OWNER_ADDED           = 92,
+	SEVT_CITY_OWNER_REMOVED         = 93,
+	// The city's own centre plot JOINED / LEFT a plot-group (merge/split -- CvPlot::setPlotGroup, owner-gated). The
+	// MEMBERSHIP twin of the PLOTGROUP_BONUS pair (which is the resource-set twin).
+	// ⛔ The RESOURCE consequences are NOT these facts' to carry and must not be re-derived from them: the same
+	// choke point calls CvCity::onNetworkSupplyChanged FIRST, which walks the two groups' holdings and fires a
+	// per-bonus CITY_BONUS_ADDED / _REMOVED for every genuine presence crossing (in the deferred path too --
+	// endDeferredBonusProcessing replays them against the entry snapshot). Those specific facts already say what
+	// moved; a consumer re-gating everything on these is doing their work again.
+	// iA = the plotGroupId, iC = owner, iSrcLoc = cityId. DOMAIN.
+	SEVT_CITY_NETWORK_ADDED         = 94,
+	SEVT_CITY_NETWORK_REMOVED       = 95,
+	// The city's production QUEUE gained / lost an order (CvCity::pushOrder / popOrder). The enabler's queue leg
+	// (enabler.md §7.1 step 3): a QUEUED building leaves the fresh offer, and a dequeue restores it -- the event
+	// triggers the one-id re-gate; the gate itself reads the live queue (object-owned state).
+	// iType = the ordered item id, iA = OrderTypes, iC = owner, iSrcLoc = cityId. DOMAIN.
+	SEVT_CITY_ORDER_ADDED           = 96,
+	SEVT_CITY_ORDER_REMOVED         = 97,
+	// A city was FOUNDED (CvPlayer::found, once the city object exists and before the settle-time provisions).
+	// ⛔ Distinct from the CITY_OWNER pair, which fires on ACQUIRE (conquest/trade) and on the load restore --
+	// founding produced NO identifiable fact before this, only a constellation of side-effects, which is why the
+	// settle-time provisions had no trigger to hang on. That constellation is exactly what a `*_CHANGED` surface
+	// looks like from a consumer's side, and why this fact exists.
+	// iType = the FOUNDING unit's type (-1 if none), iA = that unit's id, iC = owner, iSrcLoc = the new city.
+	SEVT_CITY_FOUNDED               = 98,
 
-	// A present building crossed into (or out of) OBSOLESCENCE in this city -- the enabler's own obsolete-set
-	// verdict, announced where it changes ([enabler.md §3.2]).
-	// ⛔ OBSERVABILITY ONLY -- logging and the player NOTIFICATION (owner). It drives NOTHING: a tech is the only
-	// thing that can obsolete, so the FATE (an empty `whenObsolete` removes the instance, a tree-carrying one
-	// leaves it standing for that tree to take over) is applied on the TECH fact where the check already runs.
-	// Routing the apply through this fact would make a UI concern a condition of the state change.
-	// iType = the building, iA = +1 obsoleted / -1 no longer obsolete, iB = 0, iC = the owner, iSrcLoc = the city.
-	// DOMAIN.
-	SEVT_BUILDING_OBSOLETED = 76
+	// ===== PLOT =====
+	// ⛔ THE SUBSTRATE SLOTS. Each (terrain / feature / improvement / route / bonus / type / landmark) holds ONE
+	// source at a time, so a replacement is TWO happenings and announces as two facts: the old source LEAVING, then
+	// the new one ARRIVING. THE ORDER IS THE MECHANISM: the REMOVED fact is emitted while the OLD STATE STILL HOLDS,
+	// so a consumer withdrawing that source's deposits resolves them against exactly the state they were computed
+	// against ([state-repositories.md] § THE INVARIANT). Carrying the old id on one CHANGED fact was the earlier
+	// shape and it is what left the gap -- a single "the slot moved" fact makes every consumer DERIVE the removal,
+	// and that derivation is impossible once the state has moved.
+	// ⚑ The PLOT announces its own bits and sends them UP the chain; a city never reaches down to re-read them
+	// ([contexts.md]) -- a city-side maintainer that "unfolds the old bits and refolds the new" cannot work,
+	// because by the time any consumer runs the plot already holds the NEW value.
+	// iType = the source, iC = owner, iSrcLoc = plotId. DOMAIN.
+	SEVT_PLOT_TERRAIN_ADDED         = 110,
+	SEVT_PLOT_TERRAIN_REMOVED       = 111,
+	SEVT_PLOT_FEATURE_ADDED         = 112,
+	SEVT_PLOT_FEATURE_REMOVED       = 113,
+	SEVT_PLOT_IMPROVEMENT_ADDED     = 114,
+	SEVT_PLOT_IMPROVEMENT_REMOVED   = 115,
+	SEVT_PLOT_ROUTE_ADDED           = 116,
+	SEVT_PLOT_ROUTE_REMOVED         = 117,
+	// The plot's RESOURCE was placed / discovered / removed. All play-time paths route through
+	// CvPlot::setBonusType (a Great-Farmer build, a discovery event, removal); the reseed fires the SAME facts.
+	SEVT_PLOT_BONUS_ADDED           = 118,
+	SEVT_PLOT_BONUS_REMOVED         = 119,
+	// The plot's TYPE (CvPlot::setPlotType): flat / hills / peak / OCEAN. Load-bearing well beyond relief, because
+	// CvPlot::isWater() IS getPlotType() == PLOT_OCEAN -- the whole water/land axis (and every neighbour's coast
+	// verdict) hangs off this fact, not off terrain.
+	SEVT_PLOT_TYPE_ADDED            = 120,
+	SEVT_PLOT_TYPE_REMOVED          = 121,
+	// The plot's LANDMARK designation (CvPlot::setLandmarkType) -- the named natural feature (peak range, bay,
+	// lake, ...) the map generator and the landmark events assign.
+	SEVT_PLOT_LANDMARK_ADDED        = 122,
+	SEVT_PLOT_LANDMARK_REMOVED      = 123,
+	// The plot GAINED / LOST a river (CvPlot::changeRiverCrossingCount crossing zero) -- the count is a running
+	// tally of river-carrying edges, and only the PRESENCE transition is a fact worth announcing.
+	// iB = the new crossing count, iC = owner, iSrcLoc = plotId. DOMAIN.
+	SEVT_PLOT_RIVER_ADDED           = 124,
+	SEVT_PLOT_RIVER_REMOVED         = 125,
+	// The plot GAINED / LOST irrigation (CvPlot::setIrrigated) -- the spread of irrigation water, distinct from the
+	// improvement that carries it. iC = owner, iSrcLoc = plotId. DOMAIN.
+	SEVT_PLOT_IRRIGATION_ADDED      = 126,
+	SEVT_PLOT_IRRIGATION_REMOVED    = 127,
+	// The plot's OWNER slot moved (CvPlot::setOwner). ⚑ OWNERSHIP IS A MEMBERSHIP FACT: a plot gaining or losing a
+	// city's ownership adds or removes that plot's CASC_PRED_* bits from that city's dictionary through the ONE
+	// applier, exactly as entering or leaving the worked radius does ([DEC-contexts-are-never-marked]).
+	// iC = the owner this fact is about, iSrcLoc = plotId. DOMAIN.
+	SEVT_PLOT_OWNER_ADDED           = 128,
+	SEVT_PLOT_OWNER_REMOVED         = 129,
+	// The plot ENTERED / LEFT a city's workable RADIUS (CvPlot::setWorkingCity) -- the MEMBERSHIP fact: which city
+	// may work the plot. The plot's yield moves from the old city to the new, so both cities' packages change.
+	// DISTINCT from the WORKED pair below -- membership is the superset, working is the citizen actually assigned.
+	// iA = the cityId, iC = owner, iSrcLoc = plotId. DOMAIN.
+	SEVT_PLOT_WORKING_CITY_ADDED    = 130,
+	SEVT_PLOT_WORKING_CITY_REMOVED  = 131,
+	// A citizen STARTED / STOPPED working the plot (CvCity::setWorkingPlot). CITY-driven, so it carries the city as
+	// well as the plot: the fact belongs to the plot (its IS_WORKED verdict flips) but only the city can attribute
+	// it. iB = the working cityId, iC = owner, iSrcLoc = plotId. DOMAIN.
+	SEVT_PLOT_WORKED_ADDED          = 132,
+	SEVT_PLOT_WORKED_REMOVED        = 133,
+	// A city SAT DOWN on / was REMOVED from the plot (CvPlot::setPlotCity). DISTINCT from the WORKING_CITY pair
+	// (which city may WORK the plot) and from CITY_FOUNDED (the founding act, which does not fire on razing).
+	// ⚠ CvPlot::changeCityRadiusCount / changePlayerCityRadiusCount are PASS-THROUGHS of this setter -- these facts
+	// cover them; a second emit there would announce the same change per radius plot.
+	// iA = the cityId, iC = owner, iSrcLoc = plotId. DOMAIN.
+	SEVT_PLOT_CITY_ADDED            = 134,
+	SEVT_PLOT_CITY_REMOVED          = 135,
+
+	// ===== PLOT GROUP / AREA =====
+	// A plot-group (the connectivity / trade-NETWORK identity) GAINED / LOST access to a resource --
+	// CvPlotGroup::changeNumBonuses on a presence transition. A traded resource enters at the capital's group and
+	// reaches every connected city; the consumer re-evals connection:trade deposits for the group's member cities.
+	// iType = Bonus, iA = HOW MANY, iC = owner, iSrcLoc = plotGroupId. DOMAIN.
+	SEVT_PLOTGROUP_BONUS_ADDED      = 140,
+	SEVT_PLOTGROUP_BONUS_REMOVED    = 141,
+	// An AREA GAINED / LOST tiles (CvArea::changeNumTiles) -- feeds CityContext's AREA_SIZE and its
+	// max-adjacent-water store. An area has no owning player, so iC stays -1.
+	// iA = HOW MANY, unsigned. iSrcLoc = areaId. DOMAIN.
+	SEVT_AREA_TILE_ADDED            = 142,
+	SEVT_AREA_TILE_REMOVED          = 143,
+	// An AREA GAINED / LOST clean power for a TEAM (CvArea::changeCleanPowerCount, at its count crossing) -- the
+	// third leg of CvCity::isPower(), reached through CvCity::isAreaCleanPower(). The fact is scoped to
+	// (area x team), which has no owning player, so iC stays -1 and the team rides iB.
+	// iB = teamId, iSrcLoc = areaId. DOMAIN.
+	SEVT_AREA_CLEAN_POWER_ADDED     = 144,
+	SEVT_AREA_CLEAN_POWER_REMOVED   = 145,
+
+	// ===== UNIT =====
+	// A unit INSTANCE was created (CvUnit::init) / died (CvUnit::die). ⛔ KILLED's correctness is STRUCTURAL, not
+	// positional: it is emitted on the FIRST line of die(), the one function that ends a unit's life, which carries
+	// no early return and no conditional deletion and always ends in deleteUnit. The outcomes that leave a unit
+	// ALIVE (evacuate-to-capital, last-stand survival) are decided BEFORE die() is entered and never reach it.
+	// An OFF-MAP death is a real outcome of that function, not a skipped one: iSrcLoc is -1 and the unit is deleted
+	// exactly as an on-map one is. iType = unit TYPE, iA = unit id, iC = owner. DOMAIN.
+	SEVT_UNIT_CREATED               = 150,
+	SEVT_UNIT_KILLED                = 151,
+	// A unit's DEATH SCHEDULE was set / cleared (CvUnit::m_bDeathDelay) -- the save-carried state a delayed kill
+	// leaves behind so the object outlives combat resolution, read across the engine through isDelayedDeath().
+	// ⛔ NOT a duplicate of KILLED: a scheduled death is an INTENTION whose outcome can still flip to survival, so
+	// a consumer treating it as a death would bury units that walk away. BOTH transitions announce -- a one-way
+	// fact would leave a survivor permanently marked dying -- and CvUnit::read carries the in-read half for a save
+	// taken mid-schedule. iType = unit TYPE, iA = unit id, iC = owner, iSrcLoc = the plot. DOMAIN.
+	SEVT_UNIT_DEATH_SCHEDULE_ADDED   = 152,
+	SEVT_UNIT_DEATH_SCHEDULE_REMOVED = 153,
+	// A unit ENTERED / LEFT a friendly city's plot (CvUnit::setXY's city branches). The targeted trigger for
+	// anything a city hands to units PRESENT in it -- above all building free promotions, which are otherwise a
+	// per-turn rescan of (promo buildings x every unit on the plot). NOT emitted on every move: only on a city
+	// entry/leave, so the stream stays proportional to a rare fact rather than to unit traffic.
+	// ⚠ These must never grow into cache invalidation -- unit movement invalidating cache is a standing owner
+	// "full stop" ([DEC-unit-modifiers-on-top]). A GRANT is one-shot state, not a recompute, which is why it rides.
+	// ⚠ The LEAVE is announced for EVERY city plot a unit vacates while the ENTRY's conquest branch resolves into an
+	// acquisition instead of an entry, so the two do NOT net to occupancy -- a consumer needing occupancy reads the
+	// unit's live plot. iType = unit TYPE, iA = unit id, iC = owner, iSrcLoc = city id. DOMAIN.
+	SEVT_UNIT_ENTERED_CITY          = 154,
+	SEVT_UNIT_LEFT_CITY             = 155,
+	// A unit GAINED / LOST a promotion (CvUnit::processPromotion -- the ONE funnel both setHasPromotion overloads
+	// reach) and a COMBAT CLASS (CvUnit::processUnitCombat -- reached once past setHasUnitCombat's change guard AND
+	// its game-option/spy validity gate). state-repositories.md: a unit's resolved values move ONLY when a promotion
+	// or a combat class changes, so these two are that plane's whole maintenance surface.
+	// iType = Promotion | UnitCombat, iA = unit id, iC = owner. DOMAIN.
+	SEVT_UNIT_PROMOTION_ADDED       = 156,
+	SEVT_UNIT_PROMOTION_REMOVED     = 157,
+	SEVT_UNIT_COMBAT_ADDED          = 158,
+	SEVT_UNIT_COMBAT_REMOVED        = 159,
+
+	// ===== PROPERTY (any owner scope) =====
+	// A game object's PROPERTY VALUE moved (CvProperties -- the generic (PropertyTypes,int) bag on
+	// game/team/player/city/unit/plot). DOMAIN: a property value is synced, deterministic, save-carried state that
+	// folds into the OOS checksum, and PROPERTY_* is one cascade channel per property info, read by
+	// CityContext::propertyValue, every requires.operate property BAND and every threshold-conditioned deposit.
+	// ⛔ Emitted at the CvProperties sites and NEVER in CvGameObject::eventPropertyChanged: CvGameObjectUnit
+	// OVERRIDES that hook without chaining to the base, so an emit placed there is silently skipped for every unit.
+	// ⚠ The solver's change PROPAGATION fans one change onto OTHER objects, each of which re-enters the mutation
+	// path -- distinct objects' facts, so each emits.
+	// iType = PropertyTypes, iA = HOW MANY the value moved (unsigned), iB = the object KIND (GameObjectTypes -- a
+	// city id and a plot id are otherwise the same int), iC = owner (-1 where the object has none), iSrcLoc = the
+	// object's own id. DOMAIN.
+	SEVT_PROPERTY_ADDED             = 170,
+	SEVT_PROPERTY_REMOVED           = 171,
+
+	// ===== NAMED HAPPENINGS the trigger plane dispatches on =====
+	// These already name what happened and take no ADDED/REMOVED split: each is a single, directionless occurrence.
+	SEVT_TECH_ACQUIRED              = 180,  // iType = Tech, iA = 1 (first-discoverer), iC = discovering player
+	SEVT_RELIGION_FOUNDED           = 181,  // iType = Religion, iC = founding player
+	SEVT_CIVIC_ADOPTED              = 182,  // iType = Civic, iC = adopting player (the revolution pulse)
+	SEVT_PLAYER_INIT                = 183,  // iType = iC = player -- game start
+	SEVT_NAME_CHANGE                = 184,  // iType = NameChangeKind, iA = owner, iB = entity id
+
+	// ===== DIAGNOSTIC -- code RAN, never what the state IS =====
+	// ⛔ NO CONSUMER MAY BUILD STATE FROM THESE. "I have completed my job" -- the test that decides the kind is
+	// whether the fact says WHAT THE STATE IS or WHAT SOME CODE DID (event-spine.md § THE RECEIVED LINE). Deriving
+	// held state from an announcement that an apply ran is the failure this kind exists to make unsayable; the
+	// STATE these sit beside is the ACTIVATED / DORMANTED crossing above.
+	SEVT_CITY_BUILDING_PROCESSED    = 190,
+	SEVT_LOAD_PIPELINE              = 191
 };
 
-//	WHICH typed setter produced a SEVT_GLOBAL_DEFINE_CHANGED fact (its iB) -- the value's kind decides which render
+//	WHICH typed setter produced a SEVT_GAME_GLOBAL_DEFINE_ADDED / _REMOVED fact (its iB) -- the value's kind decides which render
 //	field carries it, since only the INT form fits the DOMAIN ints.
 enum GlobalDefineKind
 {
@@ -544,7 +657,7 @@ enum GlobalDefineKind
 	GLOBALDEFINE_STRING = 2
 };
 
-//	WHICH option id space a SEVT_GAME_OPTION_CHANGED fact speaks (its iB). The two are separate registries with
+//	WHICH option id space a SEVT_GAME_OPTION_ADDED / _REMOVED fact speaks (its iB). The two are separate registries with
 //	overlapping int ranges: GAMEOPTION_* is what an entity gate reads, MODDERGAMEOPTION_* is engine-side tuning.
 enum GameOptionSpace
 {
@@ -571,132 +684,209 @@ void emitNameChange(int iKind, int iOwner, int iEntityId);
 // ===== the DOMAIN emit ENDPOINTS -- the ONE API every state-change choke point calls (event-spine.md: "a DOMAIN
 // event on every state change"). Each builds a source-carrying DOMAIN event and hands it to eventSpine().emit().
 // Call AFTER the state field is updated. Source-carrying: the event names WHAT (iType) + WHO (iOwner) + WHERE
-// (iSrcLoc), so a consumer can route it -- but the endpoints themselves only emit (no consumer/routing here). =====
-void emitBuildingChanged(int iCity, int iOwner, int iBuilding, int iDelta, bool bFirst);
-void emitBuildingProcessed(int iCity, int iOwner, int iBuilding, int iDelta);
-// Observability only (logging + the player notification) -- see SEVT_BUILDING_OBSOLETED; drives no apply.
-void emitBuildingObsoleted(int iCity, int iOwner, int iBuilding, int iDelta);
+// (iSrcLoc), so a consumer can route it -- but the endpoints themselves only emit (no consumer/routing here).
+//
+// ⛔ THERE IS NO DIRECTION PARAMETER ANYWHERE ON THIS SURFACE, and its absence is the design. A `bool bHas` / an
+// `int iDelta` whose SIGN carries the direction is exactly the discriminator [DEC-facts-name-happenings] bans:
+// it makes the caller state what happened in a payload the consumer must then branch on. The CALLER picks the
+// endpoint that names what it just did; a magnitude argument is always HOW MANY, never which way.
+//
+// ⛔ A SLOT REPLACEMENT CALLS BOTH, REMOVED FIRST. The withdrawal must be announced while the OLD STATE STILL
+// HOLDS ([state-repositories.md] § THE INVARIANT) -- emit() dispatches synchronously, so ordering the two calls
+// IS the guarantee. Calling ADDED first leaves the removal resolving against state that has already moved, which
+// is the exact gap the old `*_CHANGED` shape left. =====
+void emitCityBuildingAdded(int iCity, int iOwner, int iBuilding, bool bFirst);
+void emitCityBuildingRemoved(int iCity, int iOwner, int iBuilding);
+void emitCityBuildingProcessed(int iCity, int iOwner, int iBuilding, int iCount);   // DIAGNOSTIC -- "the apply ran"
+void emitCityBuildingActivated(int iCity, int iOwner, int iBuilding);
+void emitCityBuildingDormanted(int iCity, int iOwner, int iBuilding);
+// Observability only (logging + the player notification) -- drives no apply.
+void emitCityBuildingObsoletedAdded(int iCity, int iOwner, int iBuilding);
+void emitCityBuildingObsoletedRemoved(int iCity, int iOwner, int iBuilding);
 void emitLoadPipeline(int iRebuildMs, int iFixpointMs, int iFixEnsureMs, int iFixProcessMs, int iPasses, int iFlips, int iConverged, int iVerifyCatches, int iPlotWarmMs, int iPackageWarmMs);
-void emitReligionChanged(int iCity, int iOwner, int iReligion, bool bHas);
-void emitCorporationChanged(int iCity, int iOwner, int iCorporation, bool bHas);
-void emitBonusChanged(int iCity, int iOwner, int iBonus, int iChange);
-void emitPopulationChanged(int iCity, int iOwner, int iNewPop);
-void emitSpecialistChanged(int iCity, int iOwner, int iSpecialist, int iDelta);
-void emitPowerChanged(int iCity, int iOwner, int iDelta);
-// The plot-SUBSTRATE type facts carry the OLD value alongside the new (the plotOwnerChanged shape below): a
-// consumer must be able to re-mark what LEFT, not only what arrived.
-void emitImprovementChanged(int iPlot, int iOwner, int iOldImprovement, int iImprovement);
-void emitPlotBonusChanged(int iPlot, int iOwner, int iBonus, int iChange);   // plot RESOURCE placed(+1)/removed(-1)
-void emitTerrainChanged(int iPlot, int iOwner, int iOldTerrain, int iTerrain);
-void emitFeatureChanged(int iPlot, int iOwner, int iOldFeature, int iFeature);
-void emitRouteChanged(int iPlot, int iOwner, int iOldRoute, int iRoute);
-void emitTechChanged(int iPlayer, int iTech, bool bHas);
-void emitTraitChanged(int iPlayer, int iTrait, bool bAdd);
-// A civic was adopted (revolution pulse). Mirrors the inline SEVT_CIVIC_ADOPTED emit in CvPlayer::setCivics so the
-// full-state replay + any future callers share one clean endpoint. iType = CivicTypes, iC = adopting player.
-void emitCivicAdopted(int iPlayer, int iCivic, int iOldCivic);   // the swap fact: adopted + swapped-out (iB)
-void emitProjectChanged(int iPlayer, int iProject, int iDelta);
-void emitGoldenAgeChanged(int iPlayer, bool bOn);
-void emitStateReligionChanged(int iPlayer, int iReligion);
-void emitHeritageChanged(int iPlayer, int iHeritage, bool bAdd);
-void emitPlotGroupBonusChanged(int iOwner, int iPlotGroupId, int iBonus, int iDelta);   // network: a plot-group gained(+1)/lost(-1) a resource
-void emitVicinityBonusChanged(int iCity, int iOwner, int iBonus, int iDelta);           // vicinity: a city's local presence of a bonus flipped (+1/-1)
-void emitCityNetworkChanged(int iOwner, int iCity);   // network membership: a city's center plot moved to a different plot-group
-void emitEraChanged(int iPlayer, int iEra);   // a player's era advanced (broad player-scope cascade input)
-//	A commerce slider moved. Call AFTER the percent field is updated, at EVERY choke point that moves it --
-//	including the setter's own rebalance of the channels the caller did not name (each is its own fact).
-void emitCommercePercentChanged(int iPlayer, int iCommerce, int iNewPercent, int iOldPercent);
-//	A game object's property value changed. Call AFTER the value is written, from the CvProperties mutation choke
-//	points -- never from CvGameObject::eventPropertyChanged (the unit override does not chain to the base).
-//	iObjectKind = GameObjectTypes (what iObjectId identifies); iOwner = NO_PLAYER (-1) where the object has none.
-void emitPropertyChanged(int iObjectKind, int iObjectId, int iOwner, int iProperty, int iNewValue, int iOldValue);
-//	The two silent legs of CvCity::isPower(), beside the power COUNT's emitPowerChanged. Call at the derived
-//	CROSSING only -- the disabled-power timer ticks down every turn, and a per-decrement emit would announce a
-//	fact that did not change.
-void emitCityPowerDisabledChanged(int iCity, int iOwner, bool bDisabled, int iTimer);
-void emitAreaCleanPowerChanged(int iArea, int iTeam, bool bCleanPower);
-//	A corporation headquarters designation moved. Call per AFFECTED city -- the old one loses, the new one gains
-//	(the emitHolyCityChanged shape). Never a substitute for the presence facts the same setter also drives.
-void emitHeadquartersChanged(int iCity, int iOwner, int iCorporation, bool bIsHeadquarters);
-//	The city sitting ON a plot changed. ONE emit at CvPlot::setPlotCity covers the radius-count pass-throughs.
-void emitPlotCityChanged(int iPlot, int iOwner, int iOldCity, int iNewCity);
-void emitGovernmentCenterChanged(int iCity, int iOwner, bool bIsGovernmentCenter);
-void emitAnarchyChanged(int iPlayer, bool bAnarchy);
-//	The city's PROVIDER-BUILDING-fed fresh-water ACCESS -- not the plot-adjacency fresh-water verdict.
-void emitCityFreshWaterChanged(int iCity, int iOwner, bool bHasFreshWater, int iCount);
-//	The unit plane's two dirty triggers. Call from the ONE funnel each (CvUnit::processPromotion /
-//	CvUnit::processUnitCombat), never from the setter overloads that pass through them.
-void emitUnitPromotionChanged(int iUnitId, int iOwner, int iPromotion, int iDelta);
-void emitUnitCombatChanged(int iUnitId, int iOwner, int iUnitCombat, int iDelta);
-//	A unit instance died -- the twin of emitUnitCreated. Call from CvUnit::die and nowhere else: that function is
-//	the only unconditional end of a unit's life. iPlot = -1 where the unit held no plot.
-void emitUnitKilled(int iUnitType, int iUnitId, int iOwner, int iPlot);
-//	A unit's death SCHEDULE flipped. Call AFTER m_bDeathDelay is written, at both transitions: bScheduled = true
-//	where a delayed kill deferred the death, false where an outcome brought the unit back.
-void emitUnitDeathScheduled(int iUnitType, int iUnitId, int iOwner, int iPlot, bool bScheduled);
-//	A unit left a city's plot -- the twin of emitUnitEnteredCity. Call from the old-city branch, before the move.
-void emitUnitLeftCity(int iUnitType, int iUnitId, int iOwner, int iCity);
-//	The world's cumulative created-count of a unit type advanced (the world-instance cap's input).
-void emitUnitCreatedCountChanged(int iUnitType, int iNewCount, int iDelta);
-//	A team's member count changed (the `TEAM` counter token's source).
-void emitTeamMembersChanged(int iTeam, int iNewCount, int iDelta);
-//	An area's tile count changed (AREA_SIZE + the city max-adjacent-water store).
-void emitAreaTilesChanged(int iArea, int iNewCount, int iDelta);
-//	A game option flipped. eSpace = GameOptionSpace -- WHICH id space iOption speaks (see SEVT_GAME_OPTION_CHANGED).
-void emitGameOptionChanged(int iOption, int iNewValue, int eSpace);
-//	Difficulty changed. The PLAYER one is the saved per-player handicap (flexible difficulty moves it in play and the
-//	cascade folds its modifiers); the GAME one is the derived human average behind every getAI* advantage.
-void emitPlayerHandicapChanged(int iPlayer, int iNewHandicap, int iOldHandicap);
-void emitGameHandicapChanged(int iNewHandicap, int iOldHandicap);
-//	A global define changed -- the LIVE-OPTION bridge (see SEVT_GLOBAL_DEFINE_CHANGED). ONE endpoint for the three
-//	typed setters; eKind = GlobalDefineKind says which of the value arguments is the real one. szName/szValue are
-//	borrowed for the SYNCHRONOUS emit only and are never copied.
-void emitGlobalDefineChanged(const char* szName, int eKind, int iValue, float fValue, const char* szValue);
-void emitNukesChanged(int iPlayer, int iState);   // a player's nuke state: 0 disabled / 1 enabled / 2 banned
-void emitCultureLevelChanged(int iCity, int iOwner, int iNewLevel, int iOldLevel);   // culture level old->new (+ the radius/vicinity growth it drives)
-void emitHolyCityChanged(int iCity, int iOwner, int iReligion, bool bIsHoly);   // a city gained(true)/lost(false) a religion's holy-city designation
-void emitCityOrderChanged(int iCity, int iOwner, int iOrderType, int iItem, int iDelta);   // production queue push(+1)/pop(-1) of an order (iOrderType = OrderTypes)
-void emitCityOwnerChanged(int iCity, int iOldOwner, int iNewOwner);
-//	Turn boundaries. iPlayer = -1 for the GAME-scope boundary, else the player whose turn opened/closed. These
-//	REPLACE the bespoke CvHttpServer::publishEvent("turnStart"/"turnEnd"/"playerTurnStart"/"playerTurnEnd")
-//	side-channel: a happening lives on the spine ONCE, and the file + /events stream consumers carry it for free.
-void emitTurnStarted(int iTurn, int iPlayer);
-void emitTurnEnded(int iTurn, int iPlayer);
-//	A unit entered a friendly city's plot. Call from the new-city branch, AFTER the move is committed.
-void emitUnitEnteredCity(int iUnitType, int iUnitId, int iOwner, int iCity);
-//	A unit INSTANCE was created. Call from CvUnit::init once the unit is constructed enough to take a promotion.
-void emitUnitCreated(int iUnitType, int iUnitId, int iOwner);
-//	A city was founded. Call from CvPlayer::found once the city exists, BEFORE the settle-time provisions run.
-//	The founding unit is passed so its `grants.buildings` (json §5) can resolve against the new city.
-void emitCityFounded(int iOwner, int iCity, int iFounderType, int iFounderId);
-//	The empire's capital changed. Call AFTER the replacement city has been chosen -- consumers need somewhere to
-//	put what a capital carries (above all the palace, which is what MAKES a city the capital).
-void emitCapitalChanged(int iOwner, int iCity);
-void emitPlotOwnerChanged(int iPlot, int iOldOwner, int iNewOwner);
-void emitWorkingCityChanged(int iPlot, int iOwner, int iOldCity, int iNewCity);
-// The remaining plot-substrate facts. Each carries what a consumer needs to act on the DELTA, so a type/landmark
-// change carries the OLD value alongside the new (the plotOwnerChanged shape) and a flip carries the new state.
-void emitPlotTypeChanged(int iPlot, int iOwner, int iOldPlotType, int iNewPlotType);
-void emitPlotRiverChanged(int iPlot, int iOwner, bool bHasRiver, int iCrossingCount);
-void emitPlotIrrigationChanged(int iPlot, int iOwner, bool bIrrigated);
-void emitPlotLandmarkChanged(int iPlot, int iOwner, int iOldLandmark, int iNewLandmark);
+void emitCityReligionAdded(int iCity, int iOwner, int iReligion);
+void emitCityReligionRemoved(int iCity, int iOwner, int iReligion);
+void emitCityCorporationAdded(int iCity, int iOwner, int iCorporation);
+void emitCityCorporationRemoved(int iCity, int iOwner, int iCorporation);
+// The NETWORK supply presence crossing (0 <-> non-zero), not a count move.
+void emitCityBonusAdded(int iCity, int iOwner, int iBonus);
+void emitCityBonusRemoved(int iCity, int iOwner, int iBonus);
+// The city's LOCAL (vicinity) supply. iCount = HOW MANY, unsigned -- a city can hold several of a bonus locally,
+// so the magnitude is real; the direction is the endpoint.
+void emitCityVicinityBonusAdded(int iCity, int iOwner, int iBonus, int iCount);
+void emitCityVicinityBonusRemoved(int iCity, int iOwner, int iBonus, int iCount);
+// The city grew / shrank. iCount = HOW MANY population moved, unsigned -- NEVER the new total. The save read calls
+// ADDED with the stored amount, which is why the reseed needs no bespoke load verb.
+void emitCityPopulationAdded(int iCity, int iOwner, int iCount);
+void emitCityPopulationRemoved(int iCity, int iOwner, int iCount);
+void emitCitySpecialistAdded(int iCity, int iOwner, int iSpecialist, int iCount);
+void emitCitySpecialistRemoved(int iCity, int iOwner, int iSpecialist, int iCount);
+void emitCityPowerAdded(int iCity, int iOwner);
+void emitCityPowerRemoved(int iCity, int iOwner);
+// The two silent legs of CvCity::isPower(), beside the power crossing above. Call at the derived CROSSING only --
+// the disabled-power timer ticks down every turn, and a per-decrement emit would announce a fact that did not change.
+void emitCityPowerDisabledAdded(int iCity, int iOwner, int iTimer);
+void emitCityPowerDisabledRemoved(int iCity, int iOwner, int iTimer);
+void emitCityFreshWaterAdded(int iCity, int iOwner, int iCount);
+void emitCityFreshWaterRemoved(int iCity, int iOwner, int iCount);
+void emitCityGovernmentCenterAdded(int iCity, int iOwner);
+void emitCityGovernmentCenterRemoved(int iCity, int iOwner);
+// A holy-city / headquarters designation moved. Call per AFFECTED city -- the old one REMOVED, the new one ADDED.
+void emitCityHolyCityAdded(int iCity, int iOwner, int iReligion);
+void emitCityHolyCityRemoved(int iCity, int iOwner, int iReligion);
+void emitCityHeadquartersAdded(int iCity, int iOwner, int iCorporation);
+void emitCityHeadquartersRemoved(int iCity, int iOwner, int iCorporation);
+// The culture level slot moved (+ the workable-radius / vicinity growth it drives). REMOVED the old, ADDED the new.
+void emitCityCultureLevelAdded(int iCity, int iOwner, int iLevel);
+void emitCityCultureLevelRemoved(int iCity, int iOwner, int iLevel);
+// The city's owner slot moved. REMOVED names the losing owner, ADDED the gaining one.
+void emitCityOwnerAdded(int iCity, int iOwner);
+void emitCityOwnerRemoved(int iCity, int iOwner);
+// Network MEMBERSHIP: the city's centre plot left one plot-group and joined another.
+void emitCityNetworkAdded(int iOwner, int iCity, int iPlotGroup);
+void emitCityNetworkRemoved(int iOwner, int iCity, int iPlotGroup);
+// The production queue gained / lost an order (iOrderType = OrderTypes).
+void emitCityOrderAdded(int iCity, int iOwner, int iOrderType, int iItem);
+void emitCityOrderRemoved(int iCity, int iOwner, int iOrderType, int iItem);
+// ===== PLOT SUBSTRATE. A replacement calls REMOVED(old) then ADDED(new) -- see the block header above. =====
+void emitPlotTerrainAdded(int iPlot, int iOwner, int iTerrain);
+void emitPlotTerrainRemoved(int iPlot, int iOwner, int iTerrain);
+void emitPlotFeatureAdded(int iPlot, int iOwner, int iFeature);
+void emitPlotFeatureRemoved(int iPlot, int iOwner, int iFeature);
+void emitPlotImprovementAdded(int iPlot, int iOwner, int iImprovement);
+void emitPlotImprovementRemoved(int iPlot, int iOwner, int iImprovement);
+void emitPlotRouteAdded(int iPlot, int iOwner, int iRoute);
+void emitPlotRouteRemoved(int iPlot, int iOwner, int iRoute);
+void emitPlotBonusAdded(int iPlot, int iOwner, int iBonus);
+void emitPlotBonusRemoved(int iPlot, int iOwner, int iBonus);
+void emitPlotTypeAdded(int iPlot, int iOwner, int iPlotType);
+void emitPlotTypeRemoved(int iPlot, int iOwner, int iPlotType);
+void emitPlotLandmarkAdded(int iPlot, int iOwner, int iLandmark);
+void emitPlotLandmarkRemoved(int iPlot, int iOwner, int iLandmark);
+void emitPlotRiverAdded(int iPlot, int iOwner, int iCrossingCount);
+void emitPlotRiverRemoved(int iPlot, int iOwner, int iCrossingCount);
+void emitPlotIrrigationAdded(int iPlot, int iOwner);
+void emitPlotIrrigationRemoved(int iPlot, int iOwner);
+void emitPlotOwnerAdded(int iPlot, int iOwner);
+void emitPlotOwnerRemoved(int iPlot, int iOwner);
+// Radius MEMBERSHIP (which city may work the plot), distinct from the citizen assignment below.
+void emitPlotWorkingCityAdded(int iPlot, int iOwner, int iCity);
+void emitPlotWorkingCityRemoved(int iPlot, int iOwner, int iCity);
 // City-driven: the plot is WHERE it happened (iSrcLoc), the city is WHO assigned the citizen.
-void emitPlotWorkedChanged(int iPlot, int iOwner, int iCity, bool bWorked);
+void emitPlotWorkedAdded(int iPlot, int iOwner, int iCity);
+void emitPlotWorkedRemoved(int iPlot, int iOwner, int iCity);
+// A city sat down on / was removed from the plot. ONE pair at CvPlot::setPlotCity covers the radius-count
+// pass-throughs (changeCityRadiusCount / changePlayerCityRadiusCount).
+void emitPlotCityAdded(int iPlot, int iOwner, int iCity);
+void emitPlotCityRemoved(int iPlot, int iOwner, int iCity);
+// ===== EMPIRE / player =====
+void emitEmpireTechAdded(int iPlayer, int iTech);
+void emitEmpireTechRemoved(int iPlayer, int iTech);
+void emitEmpireTraitAdded(int iPlayer, int iTrait);
+void emitEmpireTraitRemoved(int iPlayer, int iTrait);
+void emitEmpireProjectAdded(int iPlayer, int iProject, int iCount);
+void emitEmpireProjectRemoved(int iPlayer, int iProject, int iCount);
+void emitEmpireHeritageAdded(int iPlayer, int iHeritage);
+void emitEmpireHeritageRemoved(int iPlayer, int iHeritage);
+// A state-religion SWAP calls REMOVED(outgoing) then ADDED(incoming).
+void emitEmpireStateReligionAdded(int iPlayer, int iReligion);
+void emitEmpireStateReligionRemoved(int iPlayer, int iReligion);
+void emitEmpireGoldenAgeAdded(int iPlayer);
+void emitEmpireGoldenAgeRemoved(int iPlayer);
+void emitEmpireAnarchyAdded(int iPlayer);
+void emitEmpireAnarchyRemoved(int iPlayer);
+// The era advanced: REMOVED(old era) then ADDED(new era).
+void emitEmpireEraAdded(int iPlayer, int iEra);
+void emitEmpireEraRemoved(int iPlayer, int iEra);
+// The player's own SAVED handicap moved (flexible difficulty). A slot replacement.
+void emitEmpireHandicapAdded(int iPlayer, int iHandicap);
+void emitEmpireHandicapRemoved(int iPlayer, int iHandicap);
+// The empire's nuke AVAILABILITY (it built / lost a nuke-enabling building). The world BAN is its own pair below.
+void emitEmpireNukesEnabledAdded(int iPlayer);
+void emitEmpireNukesEnabledRemoved(int iPlayer);
+// A commerce slider moved. Call AFTER the percent field is updated, at EVERY choke point that moves it -- including
+// the setter's own rebalance of the channels the caller did not name (each is its own fact). iPoints = HOW MANY
+// percent points moved, unsigned.
+void emitEmpireCommercePercentAdded(int iPlayer, int iCommerce, int iPoints);
+void emitEmpireCommercePercentRemoved(int iPlayer, int iCommerce, int iPoints);
+// The capital slot moved. Call AFTER the replacement city has been chosen -- consumers need somewhere to put what
+// a capital carries (above all the palace, which is what MAKES a city the capital).
+void emitEmpireCapitalAdded(int iOwner, int iCity);
+void emitEmpireCapitalRemoved(int iOwner, int iCity);
+// The player's per-TYPE empire tally moved. iCount = HOW MANY, unsigned.
+void emitEmpireBuildingCountAdded(int iPlayer, int iBuilding, int iCount);
+void emitEmpireBuildingCountRemoved(int iPlayer, int iBuilding, int iCount);
+void emitEmpireUnitCountAdded(int iPlayer, int iUnit, int iCount);
+void emitEmpireUnitCountRemoved(int iPlayer, int iUnit, int iCount);
+// ===== PLOT GROUP / AREA =====
+void emitPlotGroupBonusAdded(int iOwner, int iPlotGroupId, int iBonus, int iCount);
+void emitPlotGroupBonusRemoved(int iOwner, int iPlotGroupId, int iBonus, int iCount);
+void emitAreaTileAdded(int iArea, int iCount);
+void emitAreaTileRemoved(int iArea, int iCount);
+void emitAreaCleanPowerAdded(int iArea, int iTeam);
+void emitAreaCleanPowerRemoved(int iArea, int iTeam);
+// ===== TEAM =====
+void emitTeamMemberAdded(int iTeam, int iCount);
+void emitTeamMemberRemoved(int iTeam, int iCount);
+// ===== UNIT =====
+// A unit INSTANCE was created / died. Call KILLED from CvUnit::die and nowhere else: that function is the only
+// unconditional end of a unit's life. iPlot = -1 where the unit held none.
+void emitUnitCreated(int iUnitType, int iUnitId, int iOwner);
+void emitUnitKilled(int iUnitType, int iUnitId, int iOwner, int iPlot);
+// A unit's death SCHEDULE. Call AFTER m_bDeathDelay is written, at BOTH transitions: ADDED where a delayed kill
+// deferred the death, REMOVED where an outcome brought the unit back.
+void emitUnitDeathScheduleAdded(int iUnitType, int iUnitId, int iOwner, int iPlot);
+void emitUnitDeathScheduleRemoved(int iUnitType, int iUnitId, int iOwner, int iPlot);
+void emitUnitEnteredCity(int iUnitType, int iUnitId, int iOwner, int iCity);
+void emitUnitLeftCity(int iUnitType, int iUnitId, int iOwner, int iCity);
+// The unit plane's two dirty triggers. Call from the ONE funnel each (CvUnit::processPromotion /
+// CvUnit::processUnitCombat), never from the setter overloads that pass through them.
+void emitUnitPromotionAdded(int iUnitId, int iOwner, int iPromotion);
+void emitUnitPromotionRemoved(int iUnitId, int iOwner, int iPromotion);
+void emitUnitCombatAdded(int iUnitId, int iOwner, int iUnitCombat);
+void emitUnitCombatRemoved(int iUnitId, int iOwner, int iUnitCombat);
+// ===== WORLD / GAME =====
+void emitWorldNukesBannedAdded();
+void emitWorldNukesBannedRemoved();
+// MONOTONIC -- the world's cumulative created-count only ever grows, so there is no REMOVED half.
+void emitWorldUnitCreatedCountAdded(int iUnitType, int iCount);
 // Every area identity was reassigned (CvMap::recalculateAreas). Carries no payload: the fact IS "all of them", so
 // every holder of an area id re-reads on it.
 void emitAreasRecalculated();
-
-// The empire-count observability events + the grant-trigger events -- distinct from the per-source state-change
-// endpoints above (these carry the whole-empire count / a game-start or first-discover trigger, iSrcLoc = -1). One
-// clean endpoint each so the emit sites in CvPlayer / CvTeam never build a CvSpineEvent inline (single-source; every
-// DOMAIN emit is tagged for the logging render path). grants reads iType/iA/iB/iC off these (CvTriggerEngine).
-void emitBuildingCount(int iPlayer, int iBuilding, int iNewCount, int iDelta);
-void emitUnitCount(int iPlayer, int iUnit, int iNewCount, int iDelta);
+// A game option was turned on / off. eSpace = GameOptionSpace -- WHICH id space iOption speaks.
+void emitGameOptionAdded(int iOption, int iValue, int eSpace);
+void emitGameOptionRemoved(int iOption, int iValue, int eSpace);
+// The derived human-average handicap behind every getAI* advantage. A slot replacement.
+void emitGameHandicapAdded(int iHandicap);
+void emitGameHandicapRemoved(int iHandicap);
+// A global define took a new value -- the LIVE-OPTION bridge. ONE pair for the three typed setters; eKind =
+// GlobalDefineKind says which of the value arguments is the real one. szName/szValue are borrowed for the
+// SYNCHRONOUS emit only and are never copied.
+void emitGameGlobalDefineAdded(const char* szName, int eKind, int iValue, float fValue, const char* szValue);
+void emitGameGlobalDefineRemoved(const char* szName, int eKind, int iValue, float fValue, const char* szValue);
+// ===== PROPERTY (any owner scope) =====
+// A game object's property value moved. Call AFTER the value is written, from the CvProperties mutation choke
+// points -- never from CvGameObject::eventPropertyChanged (the unit override does not chain to the base).
+// iObjectKind = GameObjectTypes (what iObjectId identifies); iOwner = NO_PLAYER (-1) where the object has none.
+// iAmount = HOW MUCH the value moved, unsigned.
+void emitPropertyAdded(int iObjectKind, int iObjectId, int iOwner, int iProperty, int iAmount);
+void emitPropertyRemoved(int iObjectKind, int iObjectId, int iOwner, int iProperty, int iAmount);
+// ===== NAMED HAPPENINGS + lifecycle =====
+// Turn boundaries. iPlayer = -1 for the GAME-scope boundary, else the player whose turn opened/closed. These
+// REPLACE the bespoke CvHttpServer::publishEvent("turnStart"/...) side-channel: a happening lives on the spine
+// ONCE, and the file + /events stream consumers carry it for free.
+void emitTurnStarted(int iTurn, int iPlayer);
+void emitTurnEnded(int iTurn, int iPlayer);
+// A city was FOUNDED. Call from CvPlayer::found once the city exists, BEFORE the settle-time provisions run.
+// The founding unit is passed so its `grants.buildings` (json §5) can resolve against the new city.
+void emitCityFounded(int iOwner, int iCity, int iFounderType, int iFounderId);
 void emitTechAcquired(int iPlayer, int iTech);
-//	A religion was FOUNDED. Carries what the founder-grant apply needs: the CHOSEN religion (iReligion -- sets the
-//	free-unit TYPE) and the SLOT being claimed (iSlotReligion -- sets the free-unit COUNT; the two are deliberately
-//	different, see CvPlayer::foundReligion), plus the award flag and the holy city the units spawn in.
+// A religion was FOUNDED. Carries what the founder-grant apply needs: the CHOSEN religion (sets the free-unit
+// TYPE) and the SLOT being claimed (sets the free-unit COUNT; the two are deliberately different), plus the award
+// flag and the holy city the units spawn in.
 void emitReligionFounded(int iPlayer, int iReligion, int iSlotReligion, int iCity, bool bAward);
+// A civic was adopted (the revolution pulse). iOldCivic = the one it displaced (-1 = an empty slot).
+void emitCivicAdopted(int iPlayer, int iCivic, int iOldCivic);
 void emitPlayerInit(int iPlayer);
 
 // The load-lifecycle bracket (event-spine.md the load-RESEED): emit STARTED before the save read begins, FINISHED
@@ -707,15 +897,8 @@ void emitGameLoadFinished();
 // behave differently during the reseed (e.g. skip play-time targeted ripples) read this.
 bool spineGameLoadInProgress();
 
-// The cache-invalidation OBSERVABILITY (SEVT_CACHE_INVALIDATE): announce a package dirty-mark so the invalidation
-// flow is verifiable in Cascade.log ("[CASCADE] invalidate scope=<team|empire|area|city|plot> id=<n> pkg=<NAMES>
-// src=<why>"). iScope = the package's CvCascScope; iMask = the scope's 64-bit dirty mask (channel + receiver-sum
-// bits, decoded to channel names via the CascadeChannelRegistry); szSource = the DOMAIN event that derived the
-// mark (spineEventName). DIAGNOSTIC kind.
-void emitCacheInvalidate(int iScope, int iOwner, int iId, int64_t iMask, const char* szSource);   // iOwner: the empire (city ids are unique only within a player); -1 = none
-void emitCacheRebuilt(int iScope, int iOwner, int iId, int64_t iMask);   // the complement: a package was recomputed
 
-// The short human name of a spine event id (e.g. "religionChanged") -- the invalidate observability's `src`.
+// The short human name of a spine event id (e.g. "cityReligionAdded").
 const char* spineEventName(int iEventId);
 
 //	A consumer of spine events (tally / grants / logging). C++03 virtual interface -- the consumer's state lives in the

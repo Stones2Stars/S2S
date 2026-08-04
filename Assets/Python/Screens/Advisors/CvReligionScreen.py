@@ -14,6 +14,7 @@ AdvisorOpt = BugCore.game.Advisors
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 GAME = GC.getGame()
 STATE = CyState()
 ENABLER = CyEnabler()
@@ -21,6 +22,7 @@ ENUMS = CyEnums()
 ArtFileMgr = CyArtFileMgr()
 localText = CyTranslator()
 
+TEXT = CyGameTextMgr()
 class CvReligionScreen:
 	"Religion Advisor Screen"
 
@@ -216,11 +218,11 @@ class CvReligionScreen:
 		for iRel in self.RELIGIONS:
 			szButtonName = self.getReligionButtonName(iRel)
 			if GAME.getReligionGameTurnFounded(iRel) >= 0:
-				screen.addCheckBoxGFCAt(szArea, szButtonName, GC.getReligionInfo(iRel).getButton(), ArtFileMgr.getInterfaceArtInfo("BUTTON_HILITE_SQUARE").getPath(), self.X_SCROLLABLE_RELIGION_AREA + xLoop - 25, self.Y_SCROLLABLE_RELIGION_AREA + 5, self.BUTTON_SIZE, self.BUTTON_SIZE, WidgetTypes.WIDGET_GENERAL, -1, -1, ButtonStyles.BUTTON_STYLE_LABEL, False)
+				screen.addCheckBoxGFCAt(szArea, szButtonName, INFO.getButton("RELIGION_", iRel), ArtFileMgr.getInterfaceArtInfo("BUTTON_HILITE_SQUARE").getPath(), self.X_SCROLLABLE_RELIGION_AREA + xLoop - 25, self.Y_SCROLLABLE_RELIGION_AREA + 5, self.BUTTON_SIZE, self.BUTTON_SIZE, WidgetTypes.WIDGET_GENERAL, -1, -1, ButtonStyles.BUTTON_STYLE_LABEL, False)
 			else:
 				screen.setImageButtonAt(szButtonName, szArea, GC.getReligionInfo(iRel).getButtonDisabled(), self.X_SCROLLABLE_RELIGION_AREA + xLoop - 25, self.Y_SCROLLABLE_RELIGION_AREA + 5, self.BUTTON_SIZE, self.BUTTON_SIZE, WidgetTypes.WIDGET_GENERAL, -1, -1)
 			szName = self.getReligionTextName(iRel)
-			szLabel = GC.getReligionInfo(iRel).getDescription()
+			szLabel = INFO.getDescription("RELIGION_", iRel)
 			screen.setLabelAt(szName, szArea, szLabel, 1<<2, self.X_SCROLLABLE_RELIGION_AREA + xLoop, self.Y_RELIGION_NAME, self.DZ, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 			xLoop += self.DX_RELIGION
 
@@ -358,7 +360,7 @@ class CvReligionScreen:
 		self.bBUGConstants = True
 
 		# BUG additions
-		self.hammerIcon = u"%c" %(GC.getYieldInfo(YieldTypes.YIELD_PRODUCTION).getChar())
+		self.hammerIcon = u"%c" %(TEXT.getSymbolChar("YIELD_", YieldTypes.YIELD_PRODUCTION))
 
 		# Special symbols for building, wonder and project views
 		self.objectIsPresent = "x"
@@ -440,7 +442,7 @@ class CvReligionScreen:
 
 			for iRel in range(self.NUM_RELIGIONS):   # columns for religious icons
 				if GAME.getReligionGameTurnFounded(iRel) >= 0:
-					szReligionIcon = u"<font=2>%c</font>" %(GC.getReligionInfo(iRel).getChar())
+					szReligionIcon = u"<font=2>%c</font>" %(TEXT.getSymbolChar("RELIGION_", iRel))
 					screen.setTableColumnHeader(self.TABLE_ID, self.COL_FIRST_RELIGION + iRel, szReligionIcon, 25)
 
 			# column for religious impact
@@ -462,9 +464,9 @@ class CvReligionScreen:
 					if GAME.getReligionGameTurnFounded(iRel) >= 0:
 						szReligionIcon = ""
 						if cityX.isHolyCityByType(iRel):
-							szReligionIcon = u"<font=2>%c</font>" %(GC.getReligionInfo(iRel).getHolyCityChar())
+							szReligionIcon = u"<font=2>%c</font>" %(TEXT.getHolyCitySymbolChar(iRel))
 						elif iRel in lReligions:
-							szReligionIcon = u"<font=2>%c</font>" %(GC.getReligionInfo(iRel).getChar())
+							szReligionIcon = u"<font=2>%c</font>" %(TEXT.getSymbolChar("RELIGION_", iRel))
 
 						screen.setTableText(self.TABLE_ID, self.COL_FIRST_RELIGION + iRel, i, szReligionIcon, "", WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<2)
 
@@ -507,11 +509,11 @@ class CvReligionScreen:
 						lHolyCity.append(iI)
 
 				for iI in lHolyCity:
-					szCityName += u"%c" % GC.getReligionInfo(iI).getHolyCityChar()
+					szCityName += u"%c" % TEXT.getHolyCitySymbolChar(iI)
 
 				for iI in lReligions:
 					if iI not in lHolyCity:
-						szCityName += u"%c" % GC.getReligionInfo(iI).getChar()
+						szCityName += u"%c" % TEXT.getSymbolChar("RELIGION_", iI)
 
 				szCityName += cityX.getName()[0:17] + "  "
 

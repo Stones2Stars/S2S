@@ -51,6 +51,8 @@ public:
 	int getSymbolChar(const std::string& szTypePrefix, int iId) const;
 	// A religion carries a SECOND symbol -- the holy-city marker -- which is a distinct glyph, not a variant.
 	int getHolyCitySymbolChar(int iReligion) const;
+	// The corporation's exact twin of that: the HEADQUARTERS marker, likewise a distinct glyph.
+	int getHeadquarterSymbolChar(int iCorporation) const;
 
 	std::wstring getTimeStr(int iGameTurn, bool bSave);
 	std::wstring getDateStr(int iGameTurn, bool bSave, int /*CalendarTypes*/ eCalendar, int iStartYear, int /*GameSpeedTypes*/ eSpeed);

@@ -7,6 +7,8 @@
 #include "Enabler/CvEnablerConsumer.h"     // the enabler registers its OWN consumer (one per system)
 #include "CvModifierConsumer.h"            // the modifier cascade's OWN consumer (one per system)
 #include "Engine/ContextConsumer.h"        // the contexts' OWN consumer (the plotAttrs load reseed)
+#include "Engine/AmenityContext.h"
+#include "Engine/PolicyContext.h"           // the enacted-policy dictionary's own consumer          // the amenity CONTEXT's own consumer ([DEC-dict-is-a-consumer])
 #include "CvCascadeChannelRegistry.h"      // the [CASCADE] mask decode (channel names per scope)
 #include "Spine/CvEventSpine.h"
 #include "Tools/CvHttpServer.h"   // the /events STREAM consumer (isEnabled + publishEvent)
@@ -245,10 +247,12 @@ void spineRenderEventLine(char* szBuf, int iBufSize, const CvSpineEvent& kEvent)
 class CvSpineLogConsumer : public IEventConsumer
 {
 public:
-	// BROAD: logging sees every kind (the tally is the SELECTIVE counterpart).
+	// BROAD: logging sees every kind (the tally is the SELECTIVE counterpart). SAVELOAD included -- the load record
+	// is a LOG of loading, and logging is exactly the consumer it is for.
 	int wantedKinds() const
 	{
-		return (1 << EVENTKIND_DOMAIN) | (1 << EVENTKIND_DIAGNOSTIC) | (1 << EVENTKIND_TRACE);
+		return (1 << EVENTKIND_DOMAIN) | (1 << EVENTKIND_SAVELOAD)
+			| (1 << EVENTKIND_DIAGNOSTIC) | (1 << EVENTKIND_TRACE);
 	}
 
 	void onEvent(const CvSpineEvent& kEvent)
@@ -285,12 +289,16 @@ class CvSpineStreamConsumer : public IEventConsumer
 public:
 	int wantedKinds() const
 	{
-		return (1 << EVENTKIND_DOMAIN) | (1 << EVENTKIND_DIAGNOSTIC) | (1 << EVENTKIND_TRACE);
+		return (1 << EVENTKIND_DOMAIN) | (1 << EVENTKIND_SAVELOAD)
+			| (1 << EVENTKIND_DIAGNOSTIC) | (1 << EVENTKIND_TRACE);
 	}
 
 	void onEvent(const CvSpineEvent& kEvent)
 	{
 		if (!CvHttpServer::isEnabled()) return;
+		// Only DOMAIN streams unconditionally. SAVELOAD rides gStreamLogLevel like the trace kinds -- deliberately,
+		// because the load record is the highest-volume stream in the engine and must not spend the bounded SSE
+		// slots during ordinary play.
 		if (kEvent.eKind != EVENTKIND_DOMAIN && gStreamLogLevel < kEvent.iLevel) return;
 		char szBuf[512];
 		spineRenderEventLine(szBuf, sizeof(szBuf), kEvent);
@@ -344,82 +352,141 @@ static const char* spineDomainPrefix(int iEventId)
 {
 	switch (iEventId)
 	{
-	case SEVT_BUILDING_COUNT:         return "[SPINE] buildingCount";
-	case SEVT_UNIT_COUNT:             return "[SPINE] unitCount";
-	case SEVT_NAME_CHANGE:            return "[SPINE] nameChange";
-	case SEVT_TECH_ACQUIRED:          return "[SPINE] techAcquired";
-	case SEVT_RELIGION_FOUNDED:       return "[SPINE] religionFounded";
-	case SEVT_CIVIC_ADOPTED:          return "[SPINE] civicAdopted";
-	case SEVT_PLAYER_INIT:            return "[SPINE] playerInit";
-	case SEVT_BUILDING_CHANGED:       return "[SPINE] buildingChanged";
-	case SEVT_BUILDING_PROCESSED:     return "[SPINE] buildingProcessed";
-	case SEVT_BUILDING_OBSOLETED:     return "[SPINE] buildingObsoleted";
-	case SEVT_LOAD_PIPELINE:          return "[SPINE] loadPipeline";
-	case SEVT_TURN_STARTED:           return "[SPINE] turnStarted";
-	case SEVT_TURN_ENDED:             return "[SPINE] turnEnded";
-	case SEVT_UNIT_ENTERED_CITY:      return "[SPINE] unitEnteredCity";
-	case SEVT_UNIT_CREATED:           return "[SPINE] unitCreated";
-	case SEVT_CITY_FOUNDED:           return "[SPINE] cityFounded";
-	case SEVT_CAPITAL_CHANGED:        return "[SPINE] capitalChanged";
-	case SEVT_RELIGION_CHANGED:       return "[SPINE] religionChanged";
-	case SEVT_CORPORATION_CHANGED:    return "[SPINE] corporationChanged";
-	case SEVT_BONUS_CHANGED:          return "[SPINE] bonusChanged";
-	case SEVT_POPULATION_CHANGED:     return "[SPINE] populationChanged";
-	case SEVT_SPECIALIST_CHANGED:     return "[SPINE] specialistChanged";
-	case SEVT_POWER_CHANGED:          return "[SPINE] powerChanged";
-	case SEVT_IMPROVEMENT_CHANGED:    return "[SPINE] improvementChanged";
-	case SEVT_PLOT_BONUS_CHANGED:     return "[SPINE] plotBonusChanged";
-	case SEVT_TERRAIN_CHANGED:        return "[SPINE] terrainChanged";
-	case SEVT_FEATURE_CHANGED:        return "[SPINE] featureChanged";
-	case SEVT_ROUTE_CHANGED:          return "[SPINE] routeChanged";
-	case SEVT_TECH_CHANGED:           return "[SPINE] techChanged";
-	case SEVT_TRAIT_CHANGED:          return "[SPINE] traitChanged";
-	case SEVT_PROJECT_CHANGED:        return "[SPINE] projectChanged";
-	case SEVT_GOLDEN_AGE_CHANGED:     return "[SPINE] goldenAgeChanged";
-	case SEVT_STATE_RELIGION_CHANGED: return "[SPINE] stateReligionChanged";
-	case SEVT_HERITAGE_CHANGED:       return "[SPINE] heritageChanged";
-	case SEVT_PLOTGROUP_BONUS_CHANGED: return "[SPINE] plotGroupBonusChanged";
-	case SEVT_CITY_NETWORK_CHANGED:    return "[SPINE] cityNetworkChanged";
-	case SEVT_VICINITY_BONUS_CHANGED:  return "[SPINE] vicinityBonusChanged";
-	case SEVT_ERA_CHANGED:             return "[SPINE] eraChanged";
-	case SEVT_COMMERCE_PERCENT_CHANGED: return "[SPINE] commercePercentChanged";
-	case SEVT_PROPERTY_CHANGED:        return "[SPINE] propertyChanged";
-	case SEVT_CITY_POWER_DISABLED_CHANGED: return "[SPINE] cityPowerDisabledChanged";
-	case SEVT_AREA_CLEAN_POWER_CHANGED:    return "[SPINE] areaCleanPowerChanged";
-	case SEVT_HEADQUARTERS_CHANGED:    return "[SPINE] headquartersChanged";
-	case SEVT_PLOT_CITY_CHANGED:       return "[SPINE] plotCityChanged";
-	case SEVT_GOVERNMENT_CENTER_CHANGED: return "[SPINE] governmentCenterChanged";
-	case SEVT_ANARCHY_CHANGED:         return "[SPINE] anarchyChanged";
-	case SEVT_CITY_FRESH_WATER_CHANGED: return "[SPINE] cityFreshWaterChanged";
-	case SEVT_UNIT_PROMOTION_CHANGED:  return "[SPINE] unitPromotionChanged";
-	case SEVT_UNIT_COMBAT_CHANGED:     return "[SPINE] unitCombatChanged";
-	case SEVT_UNIT_KILLED:             return "[SPINE] unitKilled";
-	case SEVT_UNIT_DEATH_SCHEDULED:    return "[SPINE] unitDeathScheduled";
-	case SEVT_UNIT_LEFT_CITY:          return "[SPINE] unitLeftCity";
-	case SEVT_UNIT_CREATED_COUNT_CHANGED: return "[SPINE] unitCreatedCountChanged";
-	case SEVT_TEAM_MEMBERS_CHANGED:    return "[SPINE] teamMembersChanged";
-	case SEVT_AREA_TILES_CHANGED:      return "[SPINE] areaTilesChanged";
-	case SEVT_NUKES_CHANGED:           return "[SPINE] nukesChanged";
-	case SEVT_CITY_CULTURE_LEVEL_CHANGED: return "[SPINE] cultureLevelChanged";
-	case SEVT_HOLY_CITY_CHANGED:       return "[SPINE] holyCityChanged";
-	case SEVT_CITY_OWNER_CHANGED:     return "[SPINE] cityOwnerChanged";
-	case SEVT_PLOT_OWNER_CHANGED:     return "[SPINE] plotOwnerChanged";
-	case SEVT_WORKING_CITY_CHANGED:   return "[SPINE] workingCityChanged";
-	case SEVT_PLOT_TYPE_CHANGED:      return "[SPINE] plotTypeChanged";
-	case SEVT_PLOT_RIVER_CHANGED:     return "[SPINE] plotRiverChanged";
-	case SEVT_PLOT_IRRIGATION_CHANGED: return "[SPINE] plotIrrigationChanged";
-	case SEVT_PLOT_LANDMARK_CHANGED:  return "[SPINE] plotLandmarkChanged";
-	case SEVT_PLOT_WORKED_CHANGED:    return "[SPINE] plotWorkedChanged";
-	case SEVT_AREAS_RECALCULATED:     return "[SPINE] areasRecalculated";
-	case SEVT_GAME_OPTION_CHANGED:    return "[SPINE] gameOptionChanged";
-	case SEVT_PLAYER_HANDICAP_CHANGED: return "[SPINE] playerHandicapChanged";
-	case SEVT_GAME_HANDICAP_CHANGED:  return "[SPINE] gameHandicapChanged";
-	case SEVT_GLOBAL_DEFINE_CHANGED:  return "[SPINE] globalDefineChanged";
-	case SEVT_GAME_LOAD_STARTED:      return "[SPINE] gameLoadStarted";
-	case SEVT_GAME_LOAD_FINISHED:     return "[SPINE] gameLoadFinished";
-	case SEVT_CACHE_INVALIDATE:       return "[CASCADE] invalidate";
-	case SEVT_CACHE_REBUILT:          return "[CASCADE] rebuilt";
-	default:                          return "[SPINE] ?";
+	case SEVT_GAME_LOAD_STARTED:                return "[SPINE] gameLoadStarted";
+	case SEVT_GAME_LOAD_FINISHED:               return "[SPINE] gameLoadFinished";
+	case SEVT_TURN_STARTED:                     return "[SPINE] turnStarted";
+	case SEVT_TURN_ENDED:                       return "[SPINE] turnEnded";
+	case SEVT_GAME_OPTION_ADDED:                return "[SPINE] gameOptionAdded";
+	case SEVT_GAME_OPTION_REMOVED:              return "[SPINE] gameOptionRemoved";
+	case SEVT_GAME_HANDICAP_ADDED:              return "[SPINE] gameHandicapAdded";
+	case SEVT_GAME_HANDICAP_REMOVED:            return "[SPINE] gameHandicapRemoved";
+	case SEVT_GAME_GLOBAL_DEFINE_ADDED:         return "[SPINE] gameGlobalDefineAdded";
+	case SEVT_GAME_GLOBAL_DEFINE_REMOVED:       return "[SPINE] gameGlobalDefineRemoved";
+	case SEVT_WORLD_NUKES_BANNED_ADDED:         return "[SPINE] worldNukesBannedAdded";
+	case SEVT_WORLD_NUKES_BANNED_REMOVED:       return "[SPINE] worldNukesBannedRemoved";
+	case SEVT_WORLD_UNIT_CREATED_COUNT_ADDED:   return "[SPINE] worldUnitCreatedCountAdded";
+	case SEVT_AREAS_RECALCULATED:               return "[SPINE] areasRecalculated";
+	case SEVT_TEAM_MEMBER_ADDED:                return "[SPINE] teamMemberAdded";
+	case SEVT_TEAM_MEMBER_REMOVED:              return "[SPINE] teamMemberRemoved";
+	case SEVT_EMPIRE_TECH_ADDED:                return "[SPINE] empireTechAdded";
+	case SEVT_EMPIRE_TECH_REMOVED:              return "[SPINE] empireTechRemoved";
+	case SEVT_EMPIRE_TRAIT_ADDED:               return "[SPINE] empireTraitAdded";
+	case SEVT_EMPIRE_TRAIT_REMOVED:             return "[SPINE] empireTraitRemoved";
+	case SEVT_EMPIRE_PROJECT_ADDED:             return "[SPINE] empireProjectAdded";
+	case SEVT_EMPIRE_PROJECT_REMOVED:           return "[SPINE] empireProjectRemoved";
+	case SEVT_EMPIRE_HERITAGE_ADDED:            return "[SPINE] empireHeritageAdded";
+	case SEVT_EMPIRE_HERITAGE_REMOVED:          return "[SPINE] empireHeritageRemoved";
+	case SEVT_EMPIRE_STATE_RELIGION_ADDED:      return "[SPINE] empireStateReligionAdded";
+	case SEVT_EMPIRE_STATE_RELIGION_REMOVED:    return "[SPINE] empireStateReligionRemoved";
+	case SEVT_EMPIRE_GOLDEN_AGE_ADDED:          return "[SPINE] empireGoldenAgeAdded";
+	case SEVT_EMPIRE_GOLDEN_AGE_REMOVED:        return "[SPINE] empireGoldenAgeRemoved";
+	case SEVT_EMPIRE_ANARCHY_ADDED:             return "[SPINE] empireAnarchyAdded";
+	case SEVT_EMPIRE_ANARCHY_REMOVED:           return "[SPINE] empireAnarchyRemoved";
+	case SEVT_EMPIRE_ERA_ADDED:                 return "[SPINE] empireEraAdded";
+	case SEVT_EMPIRE_ERA_REMOVED:               return "[SPINE] empireEraRemoved";
+	case SEVT_EMPIRE_HANDICAP_ADDED:            return "[SPINE] empireHandicapAdded";
+	case SEVT_EMPIRE_HANDICAP_REMOVED:          return "[SPINE] empireHandicapRemoved";
+	case SEVT_EMPIRE_NUKES_ENABLED_ADDED:       return "[SPINE] empireNukesEnabledAdded";
+	case SEVT_EMPIRE_NUKES_ENABLED_REMOVED:     return "[SPINE] empireNukesEnabledRemoved";
+	case SEVT_EMPIRE_COMMERCE_PERCENT_ADDED:    return "[SPINE] empireCommercePercentAdded";
+	case SEVT_EMPIRE_COMMERCE_PERCENT_REMOVED:  return "[SPINE] empireCommercePercentRemoved";
+	case SEVT_EMPIRE_CAPITAL_ADDED:             return "[SPINE] empireCapitalAdded";
+	case SEVT_EMPIRE_CAPITAL_REMOVED:           return "[SPINE] empireCapitalRemoved";
+	case SEVT_EMPIRE_BUILDING_COUNT_ADDED:      return "[SPINE] empireBuildingCountAdded";
+	case SEVT_EMPIRE_BUILDING_COUNT_REMOVED:    return "[SPINE] empireBuildingCountRemoved";
+	case SEVT_EMPIRE_UNIT_COUNT_ADDED:          return "[SPINE] empireUnitCountAdded";
+	case SEVT_EMPIRE_UNIT_COUNT_REMOVED:        return "[SPINE] empireUnitCountRemoved";
+	case SEVT_CITY_BUILDING_ADDED:              return "[SPINE] cityBuildingAdded";
+	case SEVT_CITY_BUILDING_REMOVED:            return "[SPINE] cityBuildingRemoved";
+	case SEVT_CITY_BUILDING_ACTIVATED:          return "[SPINE] cityBuildingActivated";
+	case SEVT_CITY_BUILDING_DORMANTED:          return "[SPINE] cityBuildingDormanted";
+	case SEVT_CITY_BUILDING_OBSOLETED_ADDED:    return "[SPINE] cityBuildingObsoletedAdded";
+	case SEVT_CITY_BUILDING_OBSOLETED_REMOVED:  return "[SPINE] cityBuildingObsoletedRemoved";
+	case SEVT_CITY_RELIGION_ADDED:              return "[SPINE] cityReligionAdded";
+	case SEVT_CITY_RELIGION_REMOVED:            return "[SPINE] cityReligionRemoved";
+	case SEVT_CITY_CORPORATION_ADDED:           return "[SPINE] cityCorporationAdded";
+	case SEVT_CITY_CORPORATION_REMOVED:         return "[SPINE] cityCorporationRemoved";
+	case SEVT_CITY_BONUS_ADDED:                 return "[SPINE] cityBonusAdded";
+	case SEVT_CITY_BONUS_REMOVED:               return "[SPINE] cityBonusRemoved";
+	case SEVT_CITY_VICINITY_BONUS_ADDED:        return "[SPINE] cityVicinityBonusAdded";
+	case SEVT_CITY_VICINITY_BONUS_REMOVED:      return "[SPINE] cityVicinityBonusRemoved";
+	case SEVT_CITY_POPULATION_ADDED:            return "[SPINE] cityPopulationAdded";
+	case SEVT_CITY_POPULATION_REMOVED:          return "[SPINE] cityPopulationRemoved";
+	case SEVT_CITY_SPECIALIST_ADDED:            return "[SPINE] citySpecialistAdded";
+	case SEVT_CITY_SPECIALIST_REMOVED:          return "[SPINE] citySpecialistRemoved";
+	case SEVT_CITY_POWER_ADDED:                 return "[SPINE] cityPowerAdded";
+	case SEVT_CITY_POWER_REMOVED:               return "[SPINE] cityPowerRemoved";
+	case SEVT_CITY_POWER_DISABLED_ADDED:        return "[SPINE] cityPowerDisabledAdded";
+	case SEVT_CITY_POWER_DISABLED_REMOVED:      return "[SPINE] cityPowerDisabledRemoved";
+	case SEVT_CITY_FRESH_WATER_ADDED:           return "[SPINE] cityFreshWaterAdded";
+	case SEVT_CITY_FRESH_WATER_REMOVED:         return "[SPINE] cityFreshWaterRemoved";
+	case SEVT_CITY_GOVERNMENT_CENTER_ADDED:     return "[SPINE] cityGovernmentCenterAdded";
+	case SEVT_CITY_GOVERNMENT_CENTER_REMOVED:   return "[SPINE] cityGovernmentCenterRemoved";
+	case SEVT_CITY_HOLY_CITY_ADDED:             return "[SPINE] cityHolyCityAdded";
+	case SEVT_CITY_HOLY_CITY_REMOVED:           return "[SPINE] cityHolyCityRemoved";
+	case SEVT_CITY_HEADQUARTERS_ADDED:          return "[SPINE] cityHeadquartersAdded";
+	case SEVT_CITY_HEADQUARTERS_REMOVED:        return "[SPINE] cityHeadquartersRemoved";
+	case SEVT_CITY_CULTURE_LEVEL_ADDED:         return "[SPINE] cityCultureLevelAdded";
+	case SEVT_CITY_CULTURE_LEVEL_REMOVED:       return "[SPINE] cityCultureLevelRemoved";
+	case SEVT_CITY_OWNER_ADDED:                 return "[SPINE] cityOwnerAdded";
+	case SEVT_CITY_OWNER_REMOVED:               return "[SPINE] cityOwnerRemoved";
+	case SEVT_CITY_NETWORK_ADDED:               return "[SPINE] cityNetworkAdded";
+	case SEVT_CITY_NETWORK_REMOVED:             return "[SPINE] cityNetworkRemoved";
+	case SEVT_CITY_ORDER_ADDED:                 return "[SPINE] cityOrderAdded";
+	case SEVT_CITY_ORDER_REMOVED:               return "[SPINE] cityOrderRemoved";
+	case SEVT_CITY_FOUNDED:                     return "[SPINE] cityFounded";
+	case SEVT_PLOT_TERRAIN_ADDED:               return "[SPINE] plotTerrainAdded";
+	case SEVT_PLOT_TERRAIN_REMOVED:             return "[SPINE] plotTerrainRemoved";
+	case SEVT_PLOT_FEATURE_ADDED:               return "[SPINE] plotFeatureAdded";
+	case SEVT_PLOT_FEATURE_REMOVED:             return "[SPINE] plotFeatureRemoved";
+	case SEVT_PLOT_IMPROVEMENT_ADDED:           return "[SPINE] plotImprovementAdded";
+	case SEVT_PLOT_IMPROVEMENT_REMOVED:         return "[SPINE] plotImprovementRemoved";
+	case SEVT_PLOT_ROUTE_ADDED:                 return "[SPINE] plotRouteAdded";
+	case SEVT_PLOT_ROUTE_REMOVED:               return "[SPINE] plotRouteRemoved";
+	case SEVT_PLOT_BONUS_ADDED:                 return "[SPINE] plotBonusAdded";
+	case SEVT_PLOT_BONUS_REMOVED:               return "[SPINE] plotBonusRemoved";
+	case SEVT_PLOT_TYPE_ADDED:                  return "[SPINE] plotTypeAdded";
+	case SEVT_PLOT_TYPE_REMOVED:                return "[SPINE] plotTypeRemoved";
+	case SEVT_PLOT_LANDMARK_ADDED:              return "[SPINE] plotLandmarkAdded";
+	case SEVT_PLOT_LANDMARK_REMOVED:            return "[SPINE] plotLandmarkRemoved";
+	case SEVT_PLOT_RIVER_ADDED:                 return "[SPINE] plotRiverAdded";
+	case SEVT_PLOT_RIVER_REMOVED:               return "[SPINE] plotRiverRemoved";
+	case SEVT_PLOT_IRRIGATION_ADDED:            return "[SPINE] plotIrrigationAdded";
+	case SEVT_PLOT_IRRIGATION_REMOVED:          return "[SPINE] plotIrrigationRemoved";
+	case SEVT_PLOT_OWNER_ADDED:                 return "[SPINE] plotOwnerAdded";
+	case SEVT_PLOT_OWNER_REMOVED:               return "[SPINE] plotOwnerRemoved";
+	case SEVT_PLOT_WORKING_CITY_ADDED:          return "[SPINE] plotWorkingCityAdded";
+	case SEVT_PLOT_WORKING_CITY_REMOVED:        return "[SPINE] plotWorkingCityRemoved";
+	case SEVT_PLOT_WORKED_ADDED:                return "[SPINE] plotWorkedAdded";
+	case SEVT_PLOT_WORKED_REMOVED:              return "[SPINE] plotWorkedRemoved";
+	case SEVT_PLOT_CITY_ADDED:                  return "[SPINE] plotCityAdded";
+	case SEVT_PLOT_CITY_REMOVED:                return "[SPINE] plotCityRemoved";
+	case SEVT_PLOTGROUP_BONUS_ADDED:            return "[SPINE] plotgroupBonusAdded";
+	case SEVT_PLOTGROUP_BONUS_REMOVED:          return "[SPINE] plotgroupBonusRemoved";
+	case SEVT_AREA_TILE_ADDED:                  return "[SPINE] areaTileAdded";
+	case SEVT_AREA_TILE_REMOVED:                return "[SPINE] areaTileRemoved";
+	case SEVT_AREA_CLEAN_POWER_ADDED:           return "[SPINE] areaCleanPowerAdded";
+	case SEVT_AREA_CLEAN_POWER_REMOVED:         return "[SPINE] areaCleanPowerRemoved";
+	case SEVT_UNIT_CREATED:                     return "[SPINE] unitCreated";
+	case SEVT_UNIT_KILLED:                      return "[SPINE] unitKilled";
+	case SEVT_UNIT_DEATH_SCHEDULE_ADDED:        return "[SPINE] unitDeathScheduleAdded";
+	case SEVT_UNIT_DEATH_SCHEDULE_REMOVED:      return "[SPINE] unitDeathScheduleRemoved";
+	case SEVT_UNIT_ENTERED_CITY:                return "[SPINE] unitEnteredCity";
+	case SEVT_UNIT_LEFT_CITY:                   return "[SPINE] unitLeftCity";
+	case SEVT_UNIT_PROMOTION_ADDED:             return "[SPINE] unitPromotionAdded";
+	case SEVT_UNIT_PROMOTION_REMOVED:           return "[SPINE] unitPromotionRemoved";
+	case SEVT_UNIT_COMBAT_ADDED:                return "[SPINE] unitCombatAdded";
+	case SEVT_UNIT_COMBAT_REMOVED:              return "[SPINE] unitCombatRemoved";
+	case SEVT_PROPERTY_ADDED:                   return "[SPINE] propertyAdded";
+	case SEVT_PROPERTY_REMOVED:                 return "[SPINE] propertyRemoved";
+	case SEVT_TECH_ACQUIRED:                    return "[SPINE] techAcquired";
+	case SEVT_RELIGION_FOUNDED:                 return "[SPINE] religionFounded";
+	case SEVT_CIVIC_ADOPTED:                    return "[SPINE] civicAdopted";
+	case SEVT_PLAYER_INIT:                      return "[SPINE] playerInit";
+	case SEVT_NAME_CHANGE:                      return "[SPINE] nameChange";
+	case SEVT_CITY_BUILDING_PROCESSED:          return "[SPINE] cityBuildingProcessed";
+	case SEVT_LOAD_PIPELINE:                    return "[SPINE] loadPipeline";
+	default:                                 return "[SPINE] ?";
 	}
 }
 
@@ -495,29 +562,6 @@ static const char* spineDomainFieldInfo(int iFieldTag, SpineFieldType* peType)
 	}
 }
 
-// ===================== the [CASCADE] invalidate OBSERVABILITY =====================
-// Decode a package dirty-mask to a "|"-joined HUMAN-READABLE channel-name string, per scope -- the registry
-// owns the per-scope bit contract (channel bits + the trailing receiver-sum bits, rendered "sum:<channel>"),
-// so the log reads "production|sum:culture", never a raw bit number.
-static void invDecodePackageNames(int iScope, int64_t iMask, char* szOut, int iOutSize)
-{
-	CascadeChannelRegistry::decodeMask((CvCascScope)iScope, iMask, szOut, iOutSize);
-}
-
-// The package scope's log spelling (the CvCascScope containment spine).
-static const char* invScopeName(int iScope)
-{
-	switch (iScope)
-	{
-	case CASC_SCOPE_WORLD:  return "world";
-	case CASC_SCOPE_TEAM:   return "team";
-	case CASC_SCOPE_EMPIRE: return "empire";
-	case CASC_SCOPE_CITY:   return "city";
-	case CASC_SCOPE_PLOT:   return "plot";
-	default:                return "?";
-	}
-}
-
 // The short name of a spine event id (strips the "[SPINE] " render prefix) -- the invalidate observability's `src`.
 const char* spineEventName(int iEventId)
 {
@@ -525,29 +569,6 @@ const char* spineEventName(int iEventId)
 	if (szPrefix != NULL && strncmp(szPrefix, "[SPINE] ", 8) == 0) return szPrefix + 8;
 	return (szPrefix != NULL) ? szPrefix : "?";
 }
-
-// Announce a package dirty-mark (DIAGNOSTIC -- logging only, gated at level 1). Renders via the registered SD_SPINE
-// path as "[CASCADE] invalidate scope=<> id=<> pkg=<NAMES> src=<why>". Called by the modifier consumer's derived
-// marks (szSource = the DOMAIN event that derived them) -- the whole invalidation flow is visible in Cascade.log.
-// Shared render for the [CASCADE] invalidate/rebuilt observability (DIAGNOSTIC -- logging only, gated at level 1).
-// scope + owner (the empire; the (owner,id) tuple is the unambiguous handle since city ids repeat across empires) +
-// id (the scoped object: cityId / plotId / areaId / teamId) + the channel names + an optional src (invalidate only).
-static void emitCacheEvent(int iEventId, int iScope, int iOwner, int iId, int64_t iMask, const char* szSource)
-{
-	char szPackages[512];
-	invDecodePackageNames(iScope, iMask, szPackages, sizeof(szPackages));
-	CvSpineEvent kEvent(EVENTKIND_DIAGNOSTIC, SD_SPINE, iEventId, 1);
-	kEvent.addStr(SPF_SCOPE, invScopeName(iScope));
-	if (iOwner >= 0) kEvent.addI(SPF_OWNER, iOwner);
-	if (iScope != CASC_SCOPE_EMPIRE) kEvent.addI(SPF_ID, iId);
-	kEvent.addStr(SPF_PKG, szPackages);
-	if (szSource != NULL) kEvent.addStr(SPF_SRC, szSource);
-	eventSpine().emit(kEvent);   // synchronous render -> szPackages / szSource still in scope
-}
-void emitCacheInvalidate(int iScope, int iOwner, int iId, int64_t iMask, const char* szSource)
-{ emitCacheEvent(SEVT_CACHE_INVALIDATE, iScope, iOwner, iId, iMask, (szSource != NULL) ? szSource : "?"); }
-void emitCacheRebuilt(int iScope, int iOwner, int iId, int64_t iMask)
-{ emitCacheEvent(SEVT_CACHE_REBUILT, iScope, iOwner, iId, iMask, NULL); }
 
 // The load-end pipeline diagnostic (once per load): stage timings + fixpoint depth, through the ONE registered
 // render path -- never an inline log call at the site.
@@ -599,6 +620,13 @@ void spineRegisterConsumers()
 	//     conditions against the same stores, so it goes LAST.
 	// Contexts -> enabler -> modifier. Anything reading a context store registers AFTER the contexts.
 	contextRegisterConsumer();
+	// ⚖ Inside the CONTEXTS band, and that is a contract rather than a placement: a context DICTIONARY is its own
+	// consumer with its own declared interest set ([DEC-dict-is-a-consumer]), so this file gains one line per
+	// dictionary as each converts -- but every one of them lands HERE, ahead of the enabler, because the enabler's
+	// load-end gate pass evaluates through these stores. Order is a property of the band, never of which
+	// translation unit happened to initialize first.
+	amenityContextRegisterConsumer();
+	policyContextRegisterConsumer();
 	enablerRegisterConsumer();
 	modifierRegisterConsumer();
 	// The TRIGGER machine (json.md §5: a grant is a trigger with a null condition) registers LAST, and that is the
@@ -636,138 +664,993 @@ void emitNameChange(int iKind, int iOwner, int iEntityId)
 	eventSpine().emit(e);   // synchronous render -> szName / szKind still in scope
 }
 
-// ===== the DOMAIN emit ENDPOINTS (event-spine.md) -- source-carrying: iType = WHAT, iC = WHO (owner/triggering
-// player), iSrcLoc = WHERE (cityId | plotId | -1). Each builds the event, tags the [SPINE] domain, and adds its
-// render fields, then emits; NO consumer/routing here (that is a separate build). The DOMAIN ints (iType/iA/iB/iC)
-// are kept for grants/cache; the addI fields are the readable render twin. The interest-guard makes an emit ~free
-// when no consumer wants DOMAIN. Ctor order is (kind, eventId, iType, iA, iB, iC, iSrcLoc). Call AFTER the state
-// field is updated.
-// iA carries bFIRST -- whether this is a GENUINE first acquisition (1) or a transfer/restore (0). The engine's
-// own grant gate is exactly this bit: CvCity::setupBuilding runs its first-build block only when bFirst, and
-// CvPlayer::acquireCity re-adds every captured building with bFirst=false precisely so conquest does NOT re-fire
-// the grants. A consumer that acts on building acquisition MUST see it, or capturing a city re-grants the whole
-// city's first-build bonuses. The reseed passes 0 for the same reason: a save load is a restore, not a build.
-void emitBuildingChanged(int iCity, int iOwner, int iBuilding, int iDelta, bool bFirst)
+// ===== the DOMAIN emit ENDPOINTS. ONE per happening; the CALLER picks the endpoint that names what it just
+// did, so no endpoint takes a direction argument and no payload carries a sign ([DEC-facts-name-happenings]).
+// A SLOT REPLACEMENT calls REMOVED then ADDED -- emit() is synchronous, so that ordering is what makes the
+// withdrawal resolve against the state it was computed against ([state-repositories.md] THE INVARIANT). =====
+
+// iA = bFirst -- whether the first-build payload is OWED, never how the building arrived.
+void emitCityBuildingAdded(int iCity, int iOwner, int iBuilding, bool bFirst)
 {
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_BUILDING_CHANGED, iBuilding, bFirst ? 1 : 0, iDelta, iOwner, iCity);
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_BUILDING_ADDED, iBuilding, bFirst ? 1 : 0, 0, iOwner, iCity);
 	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_BUILDING, iBuilding).addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_DELTA, iDelta);
-	eventSpine().emit(e);
-}
-void emitBuildingProcessed(int iCity, int iOwner, int iBuilding, int iDelta)
-{
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_BUILDING_PROCESSED, iBuilding, 0, iDelta, iOwner, iCity);
-	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_BUILDING, iBuilding).addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_DELTA, iDelta);
+	e.addI(SPF_BUILDING, iBuilding).addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_HAS, bFirst ? 1 : 0);
 	eventSpine().emit(e);
 }
 
-void emitBuildingObsoleted(int iCity, int iOwner, int iBuilding, int iDelta)
+void emitCityBuildingRemoved(int iCity, int iOwner, int iBuilding)
 {
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_BUILDING_OBSOLETED, iBuilding, 0, iDelta, iOwner, iCity);
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_BUILDING_REMOVED, iBuilding, 0, 0, iOwner, iCity);
 	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_BUILDING, iBuilding).addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_DELTA, iDelta);
+	e.addI(SPF_BUILDING, iBuilding).addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity);
 	eventSpine().emit(e);
 }
-void emitReligionChanged(int iCity, int iOwner, int iReligion, bool bHas)
+
+// DIAGNOSTIC -- says WHAT CODE DID, never what the state IS. No consumer may build state from it.
+void emitCityBuildingProcessed(int iCity, int iOwner, int iBuilding, int iCount)
 {
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_RELIGION_CHANGED, iReligion, bHas ? 1 : 0, 0, iOwner, iCity);
+	CvSpineEvent e(EVENTKIND_DIAGNOSTIC, SEVT_CITY_BUILDING_PROCESSED, iBuilding, iCount, 0, iOwner, iCity);
 	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_RELIGION, iReligion).addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_HAS, bHas ? 1 : 0);
+	e.addI(SPF_BUILDING, iBuilding).addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_COUNT, iCount);
 	eventSpine().emit(e);
 }
-void emitCorporationChanged(int iCity, int iOwner, int iCorporation, bool bHas)
+
+void emitCityBuildingActivated(int iCity, int iOwner, int iBuilding)
 {
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CORPORATION_CHANGED, iCorporation, bHas ? 1 : 0, 0, iOwner, iCity);
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_BUILDING_ACTIVATED, iBuilding, 0, 0, iOwner, iCity);
 	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_CORPORATION, iCorporation).addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_HAS, bHas ? 1 : 0);
+	e.addI(SPF_BUILDING, iBuilding).addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity);
 	eventSpine().emit(e);
 }
-void emitBonusChanged(int iCity, int iOwner, int iBonus, int iChange)
+
+void emitCityBuildingDormanted(int iCity, int iOwner, int iBuilding)
 {
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_BONUS_CHANGED, iBonus, 0, iChange, iOwner, iCity);
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_BUILDING_DORMANTED, iBuilding, 0, 0, iOwner, iCity);
 	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_BONUS, iBonus).addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_DELTA, iChange);
+	e.addI(SPF_BUILDING, iBuilding).addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity);
 	eventSpine().emit(e);
 }
-void emitPopulationChanged(int iCity, int iOwner, int iNewPop)
+
+void emitCityBuildingObsoletedAdded(int iCity, int iOwner, int iBuilding)
 {
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_POPULATION_CHANGED, -1, iNewPop, 0, iOwner, iCity);
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_BUILDING_OBSOLETED_ADDED, iBuilding, 0, 0, iOwner, iCity);
 	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_VALUE, iNewPop);
+	e.addI(SPF_BUILDING, iBuilding).addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity);
 	eventSpine().emit(e);
 }
-void emitSpecialistChanged(int iCity, int iOwner, int iSpecialist, int iDelta)
+
+void emitCityBuildingObsoletedRemoved(int iCity, int iOwner, int iBuilding)
 {
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_SPECIALIST_CHANGED, iSpecialist, 0, iDelta, iOwner, iCity);
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_BUILDING_OBSOLETED_REMOVED, iBuilding, 0, 0, iOwner, iCity);
 	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_SPECIALIST, iSpecialist).addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_DELTA, iDelta);
+	e.addI(SPF_BUILDING, iBuilding).addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity);
 	eventSpine().emit(e);
 }
-void emitPowerChanged(int iCity, int iOwner, int iDelta)
+
+void emitCityReligionAdded(int iCity, int iOwner, int iReligion)
 {
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_POWER_CHANGED, -1, 0, iDelta, iOwner, iCity);
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_RELIGION_ADDED, iReligion, 0, 0, iOwner, iCity);
 	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_DELTA, iDelta);
+	e.addI(SPF_RELIGION, iReligion).addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity);
 	eventSpine().emit(e);
 }
-// The four plot-SUBSTRATE type facts carry the OLD value alongside the new, in iA -- the plotOwnerChanged /
-// plotTypeChanged shape this file already documents as the rule for a type change. Without the departing type a
-// consumer can re-mark only what ARRIVED: a deposit conditioned or per-scaled on the type that just LEFT has no
-// route to re-derive it, so it keeps contributing forever ([DEC-no-self-heal]: marked here or never).
-void emitImprovementChanged(int iPlot, int iOwner, int iOldImprovement, int iImprovement)
+
+void emitCityReligionRemoved(int iCity, int iOwner, int iReligion)
 {
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_IMPROVEMENT_CHANGED, iImprovement, iOldImprovement, 0, iOwner, iPlot);
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_RELIGION_REMOVED, iReligion, 0, 0, iOwner, iCity);
 	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_IMPROVEMENT, iImprovement).addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot)
-		.addI(SPF_OLD_VALUE, iOldImprovement);
+	e.addI(SPF_RELIGION, iReligion).addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity);
 	eventSpine().emit(e);
 }
-void emitPlotBonusChanged(int iPlot, int iOwner, int iBonus, int iChange)
+
+void emitCityCorporationAdded(int iCity, int iOwner, int iCorporation)
 {
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_BONUS_CHANGED, iBonus, 0, iChange, iOwner, iPlot);
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_CORPORATION_ADDED, iCorporation, 0, 0, iOwner, iCity);
 	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_BONUS, iBonus).addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot).addI(SPF_DELTA, iChange);
+	e.addI(SPF_CORPORATION, iCorporation).addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity);
 	eventSpine().emit(e);
 }
-void emitTerrainChanged(int iPlot, int iOwner, int iOldTerrain, int iTerrain)
+
+void emitCityCorporationRemoved(int iCity, int iOwner, int iCorporation)
 {
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_TERRAIN_CHANGED, iTerrain, iOldTerrain, 0, iOwner, iPlot);
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_CORPORATION_REMOVED, iCorporation, 0, 0, iOwner, iCity);
 	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_TERRAIN, iTerrain).addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot)
-		.addI(SPF_OLD_VALUE, iOldTerrain);
+	e.addI(SPF_CORPORATION, iCorporation).addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity);
 	eventSpine().emit(e);
 }
-void emitFeatureChanged(int iPlot, int iOwner, int iOldFeature, int iFeature)
+
+// The NETWORK supply PRESENCE CROSSING (0 <-> non-zero), not a count move.
+void emitCityBonusAdded(int iCity, int iOwner, int iBonus)
 {
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_FEATURE_CHANGED, iFeature, iOldFeature, 0, iOwner, iPlot);
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_BONUS_ADDED, iBonus, 0, 0, iOwner, iCity);
 	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_FEATURE, iFeature).addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot)
-		.addI(SPF_OLD_VALUE, iOldFeature);
+	e.addI(SPF_BONUS, iBonus).addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity);
 	eventSpine().emit(e);
 }
-void emitRouteChanged(int iPlot, int iOwner, int iOldRoute, int iRoute)
+
+void emitCityBonusRemoved(int iCity, int iOwner, int iBonus)
 {
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_ROUTE_CHANGED, iRoute, iOldRoute, 0, iOwner, iPlot);
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_BONUS_REMOVED, iBonus, 0, 0, iOwner, iCity);
 	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_ROUTE, iRoute).addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot)
-		.addI(SPF_OLD_VALUE, iOldRoute);
+	e.addI(SPF_BONUS, iBonus).addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity);
 	eventSpine().emit(e);
 }
-void emitTechChanged(int iPlayer, int iTech, bool bHas)
+
+// iCount = HOW MANY, unsigned -- a city can hold several of a bonus locally.
+void emitCityVicinityBonusAdded(int iCity, int iOwner, int iBonus, int iCount)
 {
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_TECH_CHANGED, iTech, bHas ? 1 : 0, 0, iPlayer, -1);
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_VICINITY_BONUS_ADDED, iBonus, iCount, 0, iOwner, iCity);
 	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_TECH, iTech).addI(SPF_OWNER, iPlayer).addI(SPF_HAS, bHas ? 1 : 0);
+	e.addI(SPF_BONUS, iBonus).addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_COUNT, iCount);
 	eventSpine().emit(e);
 }
-void emitTraitChanged(int iPlayer, int iTrait, bool bAdd)
+
+void emitCityVicinityBonusRemoved(int iCity, int iOwner, int iBonus, int iCount)
 {
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_TRAIT_CHANGED, iTrait, bAdd ? 1 : 0, 0, iPlayer, -1);
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_VICINITY_BONUS_REMOVED, iBonus, iCount, 0, iOwner, iCity);
 	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_TRAIT, iTrait).addI(SPF_OWNER, iPlayer).addI(SPF_HAS, bAdd ? 1 : 0);
+	e.addI(SPF_BONUS, iBonus).addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_COUNT, iCount);
 	eventSpine().emit(e);
 }
+
+// iCount = HOW MANY population MOVED, never the new total. The save read calls this with the stored amount.
+void emitCityPopulationAdded(int iCity, int iOwner, int iCount)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_POPULATION_ADDED, -1, iCount, 0, iOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_COUNT, iCount);
+	eventSpine().emit(e);
+}
+
+void emitCityPopulationRemoved(int iCity, int iOwner, int iCount)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_POPULATION_REMOVED, -1, iCount, 0, iOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_COUNT, iCount);
+	eventSpine().emit(e);
+}
+
+void emitCitySpecialistAdded(int iCity, int iOwner, int iSpecialist, int iCount)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_SPECIALIST_ADDED, iSpecialist, iCount, 0, iOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_SPECIALIST, iSpecialist).addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_COUNT, iCount);
+	eventSpine().emit(e);
+}
+
+void emitCitySpecialistRemoved(int iCity, int iOwner, int iSpecialist, int iCount)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_SPECIALIST_REMOVED, iSpecialist, iCount, 0, iOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_SPECIALIST, iSpecialist).addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_COUNT, iCount);
+	eventSpine().emit(e);
+}
+
+void emitCityPowerAdded(int iCity, int iOwner)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_POWER_ADDED, -1, 0, 0, iOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity);
+	eventSpine().emit(e);
+}
+
+void emitCityPowerRemoved(int iCity, int iOwner)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_POWER_REMOVED, -1, 0, 0, iOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity);
+	eventSpine().emit(e);
+}
+
+// The derived 0-CROSSING only -- the timer ticks down every turn and a per-decrement emit would announce
+// a fact that did not change. The general rule for every timer-backed fact.
+void emitCityPowerDisabledAdded(int iCity, int iOwner, int iTimer)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_POWER_DISABLED_ADDED, -1, 0, iTimer, iOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_TIMER, iTimer);
+	eventSpine().emit(e);
+}
+
+void emitCityPowerDisabledRemoved(int iCity, int iOwner, int iTimer)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_POWER_DISABLED_REMOVED, -1, 0, iTimer, iOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_TIMER, iTimer);
+	eventSpine().emit(e);
+}
+
+void emitCityFreshWaterAdded(int iCity, int iOwner, int iCount)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_FRESH_WATER_ADDED, -1, 0, iCount, iOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_COUNT, iCount);
+	eventSpine().emit(e);
+}
+
+void emitCityFreshWaterRemoved(int iCity, int iOwner, int iCount)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_FRESH_WATER_REMOVED, -1, 0, iCount, iOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_COUNT, iCount);
+	eventSpine().emit(e);
+}
+
+void emitCityGovernmentCenterAdded(int iCity, int iOwner)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_GOVERNMENT_CENTER_ADDED, -1, 0, 0, iOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity);
+	eventSpine().emit(e);
+}
+
+void emitCityGovernmentCenterRemoved(int iCity, int iOwner)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_GOVERNMENT_CENTER_REMOVED, -1, 0, 0, iOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity);
+	eventSpine().emit(e);
+}
+
+void emitCityHolyCityAdded(int iCity, int iOwner, int iReligion)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_HOLY_CITY_ADDED, iReligion, 0, 0, iOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_RELIGION, iReligion).addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity);
+	eventSpine().emit(e);
+}
+
+void emitCityHolyCityRemoved(int iCity, int iOwner, int iReligion)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_HOLY_CITY_REMOVED, iReligion, 0, 0, iOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_RELIGION, iReligion).addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity);
+	eventSpine().emit(e);
+}
+
+void emitCityHeadquartersAdded(int iCity, int iOwner, int iCorporation)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_HEADQUARTERS_ADDED, iCorporation, 0, 0, iOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_CORPORATION, iCorporation).addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity);
+	eventSpine().emit(e);
+}
+
+void emitCityHeadquartersRemoved(int iCity, int iOwner, int iCorporation)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_HEADQUARTERS_REMOVED, iCorporation, 0, 0, iOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_CORPORATION, iCorporation).addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity);
+	eventSpine().emit(e);
+}
+
+void emitCityCultureLevelAdded(int iCity, int iOwner, int iLevel)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_CULTURE_LEVEL_ADDED, -1, iLevel, 0, iOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_VALUE, iLevel);
+	eventSpine().emit(e);
+}
+
+void emitCityCultureLevelRemoved(int iCity, int iOwner, int iLevel)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_CULTURE_LEVEL_REMOVED, -1, iLevel, 0, iOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_VALUE, iLevel);
+	eventSpine().emit(e);
+}
+
+void emitCityOwnerAdded(int iCity, int iOwner)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_OWNER_ADDED, -1, 0, 0, iOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity);
+	eventSpine().emit(e);
+}
+
+void emitCityOwnerRemoved(int iCity, int iOwner)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_OWNER_REMOVED, -1, 0, 0, iOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity);
+	eventSpine().emit(e);
+}
+
+void emitCityNetworkAdded(int iOwner, int iCity, int iPlotGroup)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_NETWORK_ADDED, -1, iPlotGroup, 0, iOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_ID, iPlotGroup);
+	eventSpine().emit(e);
+}
+
+void emitCityNetworkRemoved(int iOwner, int iCity, int iPlotGroup)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_NETWORK_REMOVED, -1, iPlotGroup, 0, iOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_ID, iPlotGroup);
+	eventSpine().emit(e);
+}
+
+void emitCityOrderAdded(int iCity, int iOwner, int iOrderType, int iItem)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_ORDER_ADDED, iItem, iOrderType, 0, iOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_ID, iItem).addI(SPF_VALUE, iOrderType);
+	eventSpine().emit(e);
+}
+
+void emitCityOrderRemoved(int iCity, int iOwner, int iOrderType, int iItem)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_ORDER_REMOVED, iItem, iOrderType, 0, iOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_ID, iItem).addI(SPF_VALUE, iOrderType);
+	eventSpine().emit(e);
+}
+
+void emitPlotTerrainAdded(int iPlot, int iOwner, int iTerrain)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_TERRAIN_ADDED, iTerrain, 0, 0, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_TERRAIN, iTerrain).addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot);
+	eventSpine().emit(e);
+}
+
+void emitPlotTerrainRemoved(int iPlot, int iOwner, int iTerrain)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_TERRAIN_REMOVED, iTerrain, 0, 0, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_TERRAIN, iTerrain).addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot);
+	eventSpine().emit(e);
+}
+
+void emitPlotFeatureAdded(int iPlot, int iOwner, int iFeature)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_FEATURE_ADDED, iFeature, 0, 0, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_FEATURE, iFeature).addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot);
+	eventSpine().emit(e);
+}
+
+void emitPlotFeatureRemoved(int iPlot, int iOwner, int iFeature)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_FEATURE_REMOVED, iFeature, 0, 0, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_FEATURE, iFeature).addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot);
+	eventSpine().emit(e);
+}
+
+void emitPlotImprovementAdded(int iPlot, int iOwner, int iImprovement)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_IMPROVEMENT_ADDED, iImprovement, 0, 0, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_IMPROVEMENT, iImprovement).addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot);
+	eventSpine().emit(e);
+}
+
+void emitPlotImprovementRemoved(int iPlot, int iOwner, int iImprovement)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_IMPROVEMENT_REMOVED, iImprovement, 0, 0, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_IMPROVEMENT, iImprovement).addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot);
+	eventSpine().emit(e);
+}
+
+void emitPlotRouteAdded(int iPlot, int iOwner, int iRoute)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_ROUTE_ADDED, iRoute, 0, 0, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_ROUTE, iRoute).addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot);
+	eventSpine().emit(e);
+}
+
+void emitPlotRouteRemoved(int iPlot, int iOwner, int iRoute)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_ROUTE_REMOVED, iRoute, 0, 0, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_ROUTE, iRoute).addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot);
+	eventSpine().emit(e);
+}
+
+void emitPlotBonusAdded(int iPlot, int iOwner, int iBonus)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_BONUS_ADDED, iBonus, 0, 0, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_BONUS, iBonus).addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot);
+	eventSpine().emit(e);
+}
+
+void emitPlotBonusRemoved(int iPlot, int iOwner, int iBonus)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_BONUS_REMOVED, iBonus, 0, 0, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_BONUS, iBonus).addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot);
+	eventSpine().emit(e);
+}
+
+void emitPlotTypeAdded(int iPlot, int iOwner, int iPlotType)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_TYPE_ADDED, iPlotType, 0, 0, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot).addI(SPF_VALUE, iPlotType);
+	eventSpine().emit(e);
+}
+
+void emitPlotTypeRemoved(int iPlot, int iOwner, int iPlotType)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_TYPE_REMOVED, iPlotType, 0, 0, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot).addI(SPF_VALUE, iPlotType);
+	eventSpine().emit(e);
+}
+
+void emitPlotLandmarkAdded(int iPlot, int iOwner, int iLandmark)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_LANDMARK_ADDED, iLandmark, 0, 0, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot).addI(SPF_VALUE, iLandmark);
+	eventSpine().emit(e);
+}
+
+void emitPlotLandmarkRemoved(int iPlot, int iOwner, int iLandmark)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_LANDMARK_REMOVED, iLandmark, 0, 0, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot).addI(SPF_VALUE, iLandmark);
+	eventSpine().emit(e);
+}
+
+void emitPlotRiverAdded(int iPlot, int iOwner, int iCrossingCount)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_RIVER_ADDED, -1, 0, iCrossingCount, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot).addI(SPF_COUNT, iCrossingCount);
+	eventSpine().emit(e);
+}
+
+void emitPlotRiverRemoved(int iPlot, int iOwner, int iCrossingCount)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_RIVER_REMOVED, -1, 0, iCrossingCount, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot).addI(SPF_COUNT, iCrossingCount);
+	eventSpine().emit(e);
+}
+
+void emitPlotIrrigationAdded(int iPlot, int iOwner)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_IRRIGATION_ADDED, -1, 0, 0, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot);
+	eventSpine().emit(e);
+}
+
+void emitPlotIrrigationRemoved(int iPlot, int iOwner)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_IRRIGATION_REMOVED, -1, 0, 0, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot);
+	eventSpine().emit(e);
+}
+
+void emitPlotOwnerAdded(int iPlot, int iOwner)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_OWNER_ADDED, -1, 0, 0, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot);
+	eventSpine().emit(e);
+}
+
+void emitPlotOwnerRemoved(int iPlot, int iOwner)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_OWNER_REMOVED, -1, 0, 0, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot);
+	eventSpine().emit(e);
+}
+
+void emitPlotWorkingCityAdded(int iPlot, int iOwner, int iCity)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_WORKING_CITY_ADDED, -1, iCity, 0, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot).addI(SPF_CITY, iCity);
+	eventSpine().emit(e);
+}
+
+void emitPlotWorkingCityRemoved(int iPlot, int iOwner, int iCity)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_WORKING_CITY_REMOVED, -1, iCity, 0, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot).addI(SPF_CITY, iCity);
+	eventSpine().emit(e);
+}
+
+void emitPlotWorkedAdded(int iPlot, int iOwner, int iCity)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_WORKED_ADDED, -1, 0, iCity, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot).addI(SPF_CITY, iCity);
+	eventSpine().emit(e);
+}
+
+void emitPlotWorkedRemoved(int iPlot, int iOwner, int iCity)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_WORKED_REMOVED, -1, 0, iCity, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot).addI(SPF_CITY, iCity);
+	eventSpine().emit(e);
+}
+
+void emitPlotCityAdded(int iPlot, int iOwner, int iCity)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_CITY_ADDED, -1, iCity, 0, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot).addI(SPF_CITY, iCity);
+	eventSpine().emit(e);
+}
+
+void emitPlotCityRemoved(int iPlot, int iOwner, int iCity)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_CITY_REMOVED, -1, iCity, 0, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot).addI(SPF_CITY, iCity);
+	eventSpine().emit(e);
+}
+
+void emitEmpireTechAdded(int iPlayer, int iTech)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_EMPIRE_TECH_ADDED, iTech, 0, 0, iPlayer, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_TECH, iTech).addI(SPF_OWNER, iPlayer);
+	eventSpine().emit(e);
+}
+
+void emitEmpireTechRemoved(int iPlayer, int iTech)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_EMPIRE_TECH_REMOVED, iTech, 0, 0, iPlayer, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_TECH, iTech).addI(SPF_OWNER, iPlayer);
+	eventSpine().emit(e);
+}
+
+void emitEmpireTraitAdded(int iPlayer, int iTrait)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_EMPIRE_TRAIT_ADDED, iTrait, 0, 0, iPlayer, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_TRAIT, iTrait).addI(SPF_OWNER, iPlayer);
+	eventSpine().emit(e);
+}
+
+void emitEmpireTraitRemoved(int iPlayer, int iTrait)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_EMPIRE_TRAIT_REMOVED, iTrait, 0, 0, iPlayer, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_TRAIT, iTrait).addI(SPF_OWNER, iPlayer);
+	eventSpine().emit(e);
+}
+
+void emitEmpireProjectAdded(int iPlayer, int iProject, int iCount)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_EMPIRE_PROJECT_ADDED, iProject, iCount, 0, iPlayer, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_PROJECT, iProject).addI(SPF_OWNER, iPlayer).addI(SPF_COUNT, iCount);
+	eventSpine().emit(e);
+}
+
+void emitEmpireProjectRemoved(int iPlayer, int iProject, int iCount)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_EMPIRE_PROJECT_REMOVED, iProject, iCount, 0, iPlayer, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_PROJECT, iProject).addI(SPF_OWNER, iPlayer).addI(SPF_COUNT, iCount);
+	eventSpine().emit(e);
+}
+
+void emitEmpireHeritageAdded(int iPlayer, int iHeritage)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_EMPIRE_HERITAGE_ADDED, iHeritage, 0, 0, iPlayer, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_HERITAGE, iHeritage).addI(SPF_OWNER, iPlayer);
+	eventSpine().emit(e);
+}
+
+void emitEmpireHeritageRemoved(int iPlayer, int iHeritage)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_EMPIRE_HERITAGE_REMOVED, iHeritage, 0, 0, iPlayer, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_HERITAGE, iHeritage).addI(SPF_OWNER, iPlayer);
+	eventSpine().emit(e);
+}
+
+void emitEmpireStateReligionAdded(int iPlayer, int iReligion)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_EMPIRE_STATE_RELIGION_ADDED, iReligion, 0, 0, iPlayer, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_RELIGION, iReligion).addI(SPF_OWNER, iPlayer);
+	eventSpine().emit(e);
+}
+
+void emitEmpireStateReligionRemoved(int iPlayer, int iReligion)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_EMPIRE_STATE_RELIGION_REMOVED, iReligion, 0, 0, iPlayer, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_RELIGION, iReligion).addI(SPF_OWNER, iPlayer);
+	eventSpine().emit(e);
+}
+
+void emitEmpireGoldenAgeAdded(int iPlayer)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_EMPIRE_GOLDEN_AGE_ADDED, -1, 0, 0, iPlayer, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iPlayer);
+	eventSpine().emit(e);
+}
+
+void emitEmpireGoldenAgeRemoved(int iPlayer)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_EMPIRE_GOLDEN_AGE_REMOVED, -1, 0, 0, iPlayer, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iPlayer);
+	eventSpine().emit(e);
+}
+
+void emitEmpireAnarchyAdded(int iPlayer)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_EMPIRE_ANARCHY_ADDED, -1, 0, 0, iPlayer, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iPlayer);
+	eventSpine().emit(e);
+}
+
+void emitEmpireAnarchyRemoved(int iPlayer)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_EMPIRE_ANARCHY_REMOVED, -1, 0, 0, iPlayer, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iPlayer);
+	eventSpine().emit(e);
+}
+
+void emitEmpireEraAdded(int iPlayer, int iEra)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_EMPIRE_ERA_ADDED, iEra, 0, 0, iPlayer, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_ERA, iEra).addI(SPF_OWNER, iPlayer);
+	eventSpine().emit(e);
+}
+
+void emitEmpireEraRemoved(int iPlayer, int iEra)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_EMPIRE_ERA_REMOVED, iEra, 0, 0, iPlayer, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_ERA, iEra).addI(SPF_OWNER, iPlayer);
+	eventSpine().emit(e);
+}
+
+void emitEmpireHandicapAdded(int iPlayer, int iHandicap)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_EMPIRE_HANDICAP_ADDED, iHandicap, 0, 0, iPlayer, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_HANDICAP, iHandicap).addI(SPF_OWNER, iPlayer);
+	eventSpine().emit(e);
+}
+
+void emitEmpireHandicapRemoved(int iPlayer, int iHandicap)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_EMPIRE_HANDICAP_REMOVED, iHandicap, 0, 0, iPlayer, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_HANDICAP, iHandicap).addI(SPF_OWNER, iPlayer);
+	eventSpine().emit(e);
+}
+
+void emitEmpireNukesEnabledAdded(int iPlayer)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_EMPIRE_NUKES_ENABLED_ADDED, -1, 0, 0, iPlayer, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iPlayer);
+	eventSpine().emit(e);
+}
+
+void emitEmpireNukesEnabledRemoved(int iPlayer)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_EMPIRE_NUKES_ENABLED_REMOVED, -1, 0, 0, iPlayer, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iPlayer);
+	eventSpine().emit(e);
+}
+
+// iPoints = HOW MANY percent points moved, unsigned. ONE slider move emits SEVERAL of these -- the setter
+// rebalances the other channels in place, and each channel it moves is its own state change.
+void emitEmpireCommercePercentAdded(int iPlayer, int iCommerce, int iPoints)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_EMPIRE_COMMERCE_PERCENT_ADDED, iCommerce, iPoints, 0, iPlayer, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_COMMERCE, iCommerce).addI(SPF_OWNER, iPlayer).addI(SPF_COUNT, iPoints);
+	eventSpine().emit(e);
+}
+
+void emitEmpireCommercePercentRemoved(int iPlayer, int iCommerce, int iPoints)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_EMPIRE_COMMERCE_PERCENT_REMOVED, iCommerce, iPoints, 0, iPlayer, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_COMMERCE, iCommerce).addI(SPF_OWNER, iPlayer).addI(SPF_COUNT, iPoints);
+	eventSpine().emit(e);
+}
+
+void emitEmpireCapitalAdded(int iOwner, int iCity)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_EMPIRE_CAPITAL_ADDED, -1, 0, 0, iOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity);
+	eventSpine().emit(e);
+}
+
+void emitEmpireCapitalRemoved(int iOwner, int iCity)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_EMPIRE_CAPITAL_REMOVED, -1, 0, 0, iOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity);
+	eventSpine().emit(e);
+}
+
+void emitEmpireBuildingCountAdded(int iPlayer, int iBuilding, int iCount)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_EMPIRE_BUILDING_COUNT_ADDED, iBuilding, iCount, 0, iPlayer, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_BUILDING, iBuilding).addI(SPF_OWNER, iPlayer).addI(SPF_COUNT, iCount);
+	eventSpine().emit(e);
+}
+
+void emitEmpireBuildingCountRemoved(int iPlayer, int iBuilding, int iCount)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_EMPIRE_BUILDING_COUNT_REMOVED, iBuilding, iCount, 0, iPlayer, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_BUILDING, iBuilding).addI(SPF_OWNER, iPlayer).addI(SPF_COUNT, iCount);
+	eventSpine().emit(e);
+}
+
+void emitEmpireUnitCountAdded(int iPlayer, int iUnit, int iCount)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_EMPIRE_UNIT_COUNT_ADDED, iUnit, iCount, 0, iPlayer, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_UNIT, iUnit).addI(SPF_OWNER, iPlayer).addI(SPF_COUNT, iCount);
+	eventSpine().emit(e);
+}
+
+void emitEmpireUnitCountRemoved(int iPlayer, int iUnit, int iCount)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_EMPIRE_UNIT_COUNT_REMOVED, iUnit, iCount, 0, iPlayer, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_UNIT, iUnit).addI(SPF_OWNER, iPlayer).addI(SPF_COUNT, iCount);
+	eventSpine().emit(e);
+}
+
+void emitPlotGroupBonusAdded(int iOwner, int iPlotGroupId, int iBonus, int iCount)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOTGROUP_BONUS_ADDED, iBonus, iCount, 0, iOwner, iPlotGroupId);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_BONUS, iBonus).addI(SPF_OWNER, iOwner).addI(SPF_ID, iPlotGroupId).addI(SPF_COUNT, iCount);
+	eventSpine().emit(e);
+}
+
+void emitPlotGroupBonusRemoved(int iOwner, int iPlotGroupId, int iBonus, int iCount)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOTGROUP_BONUS_REMOVED, iBonus, iCount, 0, iOwner, iPlotGroupId);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_BONUS, iBonus).addI(SPF_OWNER, iOwner).addI(SPF_ID, iPlotGroupId).addI(SPF_COUNT, iCount);
+	eventSpine().emit(e);
+}
+
+void emitAreaTileAdded(int iArea, int iCount)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_AREA_TILE_ADDED, -1, iCount, 0, -1, iArea);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_AREA, iArea).addI(SPF_COUNT, iCount);
+	eventSpine().emit(e);
+}
+
+void emitAreaTileRemoved(int iArea, int iCount)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_AREA_TILE_REMOVED, -1, iCount, 0, -1, iArea);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_AREA, iArea).addI(SPF_COUNT, iCount);
+	eventSpine().emit(e);
+}
+
+void emitAreaCleanPowerAdded(int iArea, int iTeam)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_AREA_CLEAN_POWER_ADDED, -1, 0, iTeam, -1, iArea);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_AREA, iArea).addI(SPF_TEAM, iTeam);
+	eventSpine().emit(e);
+}
+
+void emitAreaCleanPowerRemoved(int iArea, int iTeam)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_AREA_CLEAN_POWER_REMOVED, -1, 0, iTeam, -1, iArea);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_AREA, iArea).addI(SPF_TEAM, iTeam);
+	eventSpine().emit(e);
+}
+
+void emitTeamMemberAdded(int iTeam, int iCount)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_TEAM_MEMBER_ADDED, -1, iCount, 0, -1, iTeam);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_TEAM, iTeam).addI(SPF_COUNT, iCount);
+	eventSpine().emit(e);
+}
+
+void emitTeamMemberRemoved(int iTeam, int iCount)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_TEAM_MEMBER_REMOVED, -1, iCount, 0, -1, iTeam);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_TEAM, iTeam).addI(SPF_COUNT, iCount);
+	eventSpine().emit(e);
+}
+
+void emitUnitDeathScheduleAdded(int iUnitType, int iUnitId, int iOwner, int iPlot)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_UNIT_DEATH_SCHEDULE_ADDED, iUnitType, iUnitId, 0, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_UNIT, iUnitType).addI(SPF_UNIT_ID, iUnitId).addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot);
+	eventSpine().emit(e);
+}
+
+void emitUnitDeathScheduleRemoved(int iUnitType, int iUnitId, int iOwner, int iPlot)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_UNIT_DEATH_SCHEDULE_REMOVED, iUnitType, iUnitId, 0, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_UNIT, iUnitType).addI(SPF_UNIT_ID, iUnitId).addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot);
+	eventSpine().emit(e);
+}
+
+void emitUnitPromotionAdded(int iUnitId, int iOwner, int iPromotion)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_UNIT_PROMOTION_ADDED, iPromotion, iUnitId, 0, iOwner, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_PROMOTION, iPromotion).addI(SPF_UNIT_ID, iUnitId).addI(SPF_OWNER, iOwner);
+	eventSpine().emit(e);
+}
+
+void emitUnitPromotionRemoved(int iUnitId, int iOwner, int iPromotion)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_UNIT_PROMOTION_REMOVED, iPromotion, iUnitId, 0, iOwner, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_PROMOTION, iPromotion).addI(SPF_UNIT_ID, iUnitId).addI(SPF_OWNER, iOwner);
+	eventSpine().emit(e);
+}
+
+void emitUnitCombatAdded(int iUnitId, int iOwner, int iUnitCombat)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_UNIT_COMBAT_ADDED, iUnitCombat, iUnitId, 0, iOwner, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_UNITCOMBAT, iUnitCombat).addI(SPF_UNIT_ID, iUnitId).addI(SPF_OWNER, iOwner);
+	eventSpine().emit(e);
+}
+
+void emitUnitCombatRemoved(int iUnitId, int iOwner, int iUnitCombat)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_UNIT_COMBAT_REMOVED, iUnitCombat, iUnitId, 0, iOwner, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_UNITCOMBAT, iUnitCombat).addI(SPF_UNIT_ID, iUnitId).addI(SPF_OWNER, iOwner);
+	eventSpine().emit(e);
+}
+
+void emitWorldNukesBannedAdded()
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_WORLD_NUKES_BANNED_ADDED, -1, 0, 0, -1, -1);
+	e.iDomainTag = SD_SPINE;
+	eventSpine().emit(e);
+}
+
+void emitWorldNukesBannedRemoved()
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_WORLD_NUKES_BANNED_REMOVED, -1, 0, 0, -1, -1);
+	e.iDomainTag = SD_SPINE;
+	eventSpine().emit(e);
+}
+
+// MONOTONIC -- the counter only ever grows, so there is no REMOVED half.
+void emitWorldUnitCreatedCountAdded(int iUnitType, int iCount)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_WORLD_UNIT_CREATED_COUNT_ADDED, iUnitType, iCount, 0, -1, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_UNIT, iUnitType).addI(SPF_COUNT, iCount);
+	eventSpine().emit(e);
+}
+
+void emitGameOptionAdded(int iOption, int iValue, int eSpace)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_GAME_OPTION_ADDED, iOption, iValue, eSpace, -1, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OPTION, iOption).addI(SPF_VALUE, iValue).addI(SPF_OPTION_SPACE, eSpace);
+	eventSpine().emit(e);
+}
+
+void emitGameOptionRemoved(int iOption, int iValue, int eSpace)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_GAME_OPTION_REMOVED, iOption, iValue, eSpace, -1, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OPTION, iOption).addI(SPF_VALUE, iValue).addI(SPF_OPTION_SPACE, eSpace);
+	eventSpine().emit(e);
+}
+
+void emitGameHandicapAdded(int iHandicap)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_GAME_HANDICAP_ADDED, iHandicap, 0, 0, -1, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_HANDICAP, iHandicap);
+	eventSpine().emit(e);
+}
+
+void emitGameHandicapRemoved(int iHandicap)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_GAME_HANDICAP_REMOVED, iHandicap, 0, 0, -1, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_HANDICAP, iHandicap);
+	eventSpine().emit(e);
+}
+
+// iAmount = HOW MUCH the value moved, unsigned. Emitted at the CvProperties sites and NEVER in
+// CvGameObject::eventPropertyChanged (CvGameObjectUnit overrides it without chaining to the base).
+void emitPropertyAdded(int iObjectKind, int iObjectId, int iOwner, int iProperty, int iAmount)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PROPERTY_ADDED, iProperty, iAmount, iObjectKind, iOwner, iObjectId);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_PROPERTY, iProperty).addI(SPF_COUNT, iAmount).addI(SPF_OBJECT_KIND, iObjectKind).addI(SPF_OWNER, iOwner).addI(SPF_ID, iObjectId);
+	eventSpine().emit(e);
+}
+
+void emitPropertyRemoved(int iObjectKind, int iObjectId, int iOwner, int iProperty, int iAmount)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PROPERTY_REMOVED, iProperty, iAmount, iObjectKind, iOwner, iObjectId);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_PROPERTY, iProperty).addI(SPF_COUNT, iAmount).addI(SPF_OBJECT_KIND, iObjectKind).addI(SPF_OWNER, iOwner).addI(SPF_ID, iObjectId);
+	eventSpine().emit(e);
+}
+
+void emitGameGlobalDefineAdded(const char* szName, int eKind, int iValue, float fValue, const char* szValue)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_GAME_GLOBAL_DEFINE_ADDED, -1, iValue, eKind, -1, -1);
+	e.iDomainTag = SD_SPINE;
+	// The NAME is the define's whole identity (it has no id space), so it always rides; the value goes in
+	// whichever field its KIND can actually carry.
+	e.addStr(SPF_DEFINE, szName).addI(SPF_OPTION_SPACE, eKind);
+	if (eKind == GLOBALDEFINE_FLOAT)
+	{
+		e.addF(SPF_VALUE_F, fValue);
+	}
+	else if (eKind == GLOBALDEFINE_STRING)
+	{
+		e.addStr(SPF_VALUE_STR, szValue != NULL ? szValue : "");
+	}
+	else
+	{
+		e.addI(SPF_VALUE, iValue);
+	}
+	eventSpine().emit(e);
+}
+
+void emitGameGlobalDefineRemoved(const char* szName, int eKind, int iValue, float fValue, const char* szValue)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_GAME_GLOBAL_DEFINE_REMOVED, -1, iValue, eKind, -1, -1);
+	e.iDomainTag = SD_SPINE;
+	// The NAME is the define's whole identity (it has no id space), so it always rides; the value goes in
+	// whichever field its KIND can actually carry.
+	e.addStr(SPF_DEFINE, szName).addI(SPF_OPTION_SPACE, eKind);
+	if (eKind == GLOBALDEFINE_FLOAT)
+	{
+		e.addF(SPF_VALUE_F, fValue);
+	}
+	else if (eKind == GLOBALDEFINE_STRING)
+	{
+		e.addStr(SPF_VALUE_STR, szValue != NULL ? szValue : "");
+	}
+	else
+	{
+		e.addI(SPF_VALUE, iValue);
+	}
+	eventSpine().emit(e);
+}
+
 void emitCivicAdopted(int iPlayer, int iCivic, int iOldCivic)
 {
 	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CIVIC_ADOPTED, iCivic, 0, iOldCivic, iPlayer, -1);
@@ -775,166 +1658,7 @@ void emitCivicAdopted(int iPlayer, int iCivic, int iOldCivic)
 	e.addI(SPF_CIVIC, iCivic).addI(SPF_OWNER, iPlayer);
 	eventSpine().emit(e);
 }
-void emitProjectChanged(int iPlayer, int iProject, int iDelta)
-{
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PROJECT_CHANGED, iProject, 0, iDelta, iPlayer, -1);
-	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_PROJECT, iProject).addI(SPF_OWNER, iPlayer).addI(SPF_DELTA, iDelta);
-	eventSpine().emit(e);
-}
-void emitGoldenAgeChanged(int iPlayer, bool bOn)
-{
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_GOLDEN_AGE_CHANGED, -1, bOn ? 1 : 0, 0, iPlayer, -1);
-	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_OWNER, iPlayer).addI(SPF_ON, bOn ? 1 : 0);
-	eventSpine().emit(e);
-}
-void emitStateReligionChanged(int iPlayer, int iReligion)
-{
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_STATE_RELIGION_CHANGED, iReligion, 0, 0, iPlayer, -1);
-	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_RELIGION, iReligion).addI(SPF_OWNER, iPlayer);
-	eventSpine().emit(e);
-}
-void emitHeritageChanged(int iPlayer, int iHeritage, bool bAdd)
-{
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_HERITAGE_CHANGED, iHeritage, bAdd ? 1 : 0, 0, iPlayer, -1);
-	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_HERITAGE, iHeritage).addI(SPF_OWNER, iPlayer).addI(SPF_HAS, bAdd ? 1 : 0);
-	eventSpine().emit(e);
-}
-void emitPlotGroupBonusChanged(int iOwner, int iPlotGroupId, int iBonus, int iDelta)
-{
-	// iSrcLoc = the plot-group id (the network identity; unique within the owner, like a city id)
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOTGROUP_BONUS_CHANGED, iBonus, 0, iDelta, iOwner, iPlotGroupId);
-	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_BONUS, iBonus).addI(SPF_OWNER, iOwner).addI(SPF_ID, iPlotGroupId).addI(SPF_DELTA, iDelta);
-	eventSpine().emit(e);
-}
 
-void emitVicinityBonusChanged(int iCity, int iOwner, int iBonus, int iDelta)
-{
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_VICINITY_BONUS_CHANGED, iBonus, 0, iDelta, iOwner, iCity);
-	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_BONUS, iBonus).addI(SPF_OWNER, iOwner).addI(SPF_ID, iCity).addI(SPF_DELTA, iDelta);
-	eventSpine().emit(e);
-}
-void emitCityNetworkChanged(int iOwner, int iCity)
-{
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_NETWORK_CHANGED, -1, 0, 0, iOwner, iCity);
-	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_CITY, iCity).addI(SPF_OWNER, iOwner);
-	eventSpine().emit(e);
-}
-void emitEraChanged(int iPlayer, int iEra)
-{
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_ERA_CHANGED, -1, iEra, 0, iPlayer, -1);
-	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_ERA, iEra).addI(SPF_OWNER, iPlayer);
-	eventSpine().emit(e);
-}
-void emitCommercePercentChanged(int iPlayer, int iCommerce, int iNewPercent, int iOldPercent)
-{
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_COMMERCE_PERCENT_CHANGED, iCommerce, iNewPercent, iOldPercent, iPlayer, -1);
-	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_COMMERCE, iCommerce).addI(SPF_OWNER, iPlayer).addI(SPF_VALUE, iNewPercent).addI(SPF_OLD_VALUE, iOldPercent);
-	eventSpine().emit(e);
-}
-// The property fact's object KIND, spelled for the log. A raw GameObjectTypes int would leave the id field
-// uninterpretable (a city id and a plot id are the same int), so the kind renders as a borrowed literal -- the
-// invScopeName precedent, and safe because the render is synchronous at emit.
-static const char* propertyObjectKindName(int iObjectKind)
-{
-	switch (iObjectKind)
-	{
-	case GAMEOBJECT_GAME:   return "game";
-	case GAMEOBJECT_TEAM:   return "team";
-	case GAMEOBJECT_PLAYER: return "player";
-	case GAMEOBJECT_CITY:   return "city";
-	case GAMEOBJECT_UNIT:   return "unit";
-	case GAMEOBJECT_PLOT:   return "plot";
-	default:                return "?";
-	}
-}
-void emitPropertyChanged(int iObjectKind, int iObjectId, int iOwner, int iProperty, int iNewValue, int iOldValue)
-{
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PROPERTY_CHANGED, iProperty, iNewValue, iObjectKind, iOwner, iObjectId);
-	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_PROPERTY, iProperty).addStr(SPF_OBJECT_KIND, propertyObjectKindName(iObjectKind))
-	 .addI(SPF_OWNER, iOwner).addI(SPF_ID, iObjectId)
-	 .addI(SPF_VALUE, iNewValue).addI(SPF_OLD_VALUE, iOldValue);
-	eventSpine().emit(e);   // synchronous render -> the borrowed kind literal outlives it
-}
-// The two silent legs of CvCity::isPower(), beside emitPowerChanged (the COUNT leg). Each is its own fact: the
-// timer is city-scoped state, the clean-power flag is (area x team) state, and the verdict ORs all three.
-void emitCityPowerDisabledChanged(int iCity, int iOwner, bool bDisabled, int iTimer)
-{
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_POWER_DISABLED_CHANGED, -1, bDisabled ? 1 : 0, iTimer, iOwner, iCity);
-	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_CITY, iCity).addI(SPF_OWNER, iOwner).addI(SPF_HAS, bDisabled ? 1 : 0).addI(SPF_TIMER, iTimer);
-	eventSpine().emit(e);
-}
-// An area belongs to no player (contexts.md: an area "knows no borders"), so the fact carries the TEAM it holds
-// for and leaves the owner unset.
-void emitAreaCleanPowerChanged(int iArea, int iTeam, bool bCleanPower)
-{
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_AREA_CLEAN_POWER_CHANGED, -1, bCleanPower ? 1 : 0, iTeam, -1, iArea);
-	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_AREA, iArea).addI(SPF_TEAM, iTeam).addI(SPF_HAS, bCleanPower ? 1 : 0);
-	eventSpine().emit(e);
-}
-void emitHeadquartersChanged(int iCity, int iOwner, int iCorporation, bool bIsHeadquarters)
-{
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_HEADQUARTERS_CHANGED, iCorporation, bIsHeadquarters ? 1 : 0, 0, iOwner, iCity);
-	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_CORPORATION, iCorporation).addI(SPF_CITY, iCity).addI(SPF_OWNER, iOwner).addI(SPF_HAS, bIsHeadquarters ? 1 : 0);
-	eventSpine().emit(e);
-}
-// The old/new city pair is the emitWorkingCityChanged shape: a consumer acting on the delta needs both ends.
-void emitPlotCityChanged(int iPlot, int iOwner, int iOldCity, int iNewCity)
-{
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_CITY_CHANGED, -1, iOldCity, iNewCity, iOwner, iPlot);
-	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_PLOT, iPlot).addI(SPF_OWNER, iOwner).addI(SPF_OLD_CITY, iOldCity).addI(SPF_NEW_CITY, iNewCity);
-	eventSpine().emit(e);
-}
-void emitGovernmentCenterChanged(int iCity, int iOwner, bool bIsGovernmentCenter)
-{
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_GOVERNMENT_CENTER_CHANGED, -1, bIsGovernmentCenter ? 1 : 0, 0, iOwner, iCity);
-	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_CITY, iCity).addI(SPF_OWNER, iOwner).addI(SPF_HAS, bIsGovernmentCenter ? 1 : 0);
-	eventSpine().emit(e);
-}
-void emitAnarchyChanged(int iPlayer, bool bAnarchy)
-{
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_ANARCHY_CHANGED, -1, bAnarchy ? 1 : 0, 0, iPlayer, -1);
-	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_OWNER, iPlayer).addI(SPF_ON, bAnarchy ? 1 : 0);
-	eventSpine().emit(e);
-}
-void emitCityFreshWaterChanged(int iCity, int iOwner, bool bHasFreshWater, int iCount)
-{
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_FRESH_WATER_CHANGED, -1, bHasFreshWater ? 1 : 0, iCount, iOwner, iCity);
-	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_CITY, iCity).addI(SPF_OWNER, iOwner).addI(SPF_HAS, bHasFreshWater ? 1 : 0).addI(SPF_COUNT, iCount);
-	eventSpine().emit(e);
-}
-// The unit plane. iA carries the unit INSTANCE id (the emitUnitCreated shape) -- a unit-scope fact has no city or
-// plot to name in iSrcLoc, and the instance is what a consumer must resolve to.
-void emitUnitPromotionChanged(int iUnitId, int iOwner, int iPromotion, int iDelta)
-{
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_UNIT_PROMOTION_CHANGED, iPromotion, iUnitId, iDelta, iOwner, -1);
-	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_PROMOTION, iPromotion).addI(SPF_UNIT_ID, iUnitId).addI(SPF_OWNER, iOwner).addI(SPF_DELTA, iDelta);
-	eventSpine().emit(e);
-}
-void emitUnitCombatChanged(int iUnitId, int iOwner, int iUnitCombat, int iDelta)
-{
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_UNIT_COMBAT_CHANGED, iUnitCombat, iUnitId, iDelta, iOwner, -1);
-	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_UNITCOMBAT, iUnitCombat).addI(SPF_UNIT_ID, iUnitId).addI(SPF_OWNER, iOwner).addI(SPF_DELTA, iDelta);
-	eventSpine().emit(e);
-}
 void emitUnitKilled(int iUnitType, int iUnitId, int iOwner, int iPlot)
 {
 	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_UNIT_KILLED, iUnitType, iUnitId, 0, iOwner, iPlot);
@@ -942,15 +1666,7 @@ void emitUnitKilled(int iUnitType, int iUnitId, int iOwner, int iPlot)
 	e.addI(SPF_UNIT, iUnitType).addI(SPF_UNIT_ID, iUnitId).addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot);
 	eventSpine().emit(e);
 }
-// The unit is ALIVE at both transitions, so a play-time emit always has a plot to name; the in-read half
-// passes -1, its coordinates not having deserialized yet.
-void emitUnitDeathScheduled(int iUnitType, int iUnitId, int iOwner, int iPlot, bool bScheduled)
-{
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_UNIT_DEATH_SCHEDULED, iUnitType, iUnitId, bScheduled ? 1 : 0, iOwner, iPlot);
-	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_UNIT, iUnitType).addI(SPF_UNIT_ID, iUnitId).addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot).addI(SPF_ON, bScheduled ? 1 : 0);
-	eventSpine().emit(e);
-}
+
 void emitUnitLeftCity(int iUnitType, int iUnitId, int iOwner, int iCity)
 {
 	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_UNIT_LEFT_CITY, iUnitType, iUnitId, 0, iOwner, iCity);
@@ -958,64 +1674,7 @@ void emitUnitLeftCity(int iUnitType, int iUnitId, int iOwner, int iCity)
 	e.addI(SPF_UNIT, iUnitType).addI(SPF_UNIT_ID, iUnitId).addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity);
 	eventSpine().emit(e);
 }
-// World scope: the counter belongs to the game, not to the player who happened to build the unit.
-void emitUnitCreatedCountChanged(int iUnitType, int iNewCount, int iDelta)
-{
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_UNIT_CREATED_COUNT_CHANGED, iUnitType, iNewCount, iDelta, -1, -1);
-	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_UNIT, iUnitType).addI(SPF_COUNT, iNewCount).addI(SPF_DELTA, iDelta);
-	eventSpine().emit(e);
-}
-void emitTeamMembersChanged(int iTeam, int iNewCount, int iDelta)
-{
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_TEAM_MEMBERS_CHANGED, -1, iNewCount, iDelta, -1, iTeam);
-	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_TEAM, iTeam).addI(SPF_COUNT, iNewCount).addI(SPF_DELTA, iDelta);
-	eventSpine().emit(e);
-}
-void emitAreaTilesChanged(int iArea, int iNewCount, int iDelta)
-{
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_AREA_TILES_CHANGED, -1, iNewCount, iDelta, -1, iArea);
-	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_AREA, iArea).addI(SPF_COUNT, iNewCount).addI(SPF_DELTA, iDelta);
-	eventSpine().emit(e);
-}
-void emitNukesChanged(int iPlayer, int iState)
-{
-	// iA = state: 0 DISABLED / 1 ENABLED / 2 BANNED
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_NUKES_CHANGED, -1, iState, 0, iPlayer, -1);
-	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_OWNER, iPlayer).addI(SPF_VALUE, iState);
-	eventSpine().emit(e);
-}
-void emitCultureLevelChanged(int iCity, int iOwner, int iNewLevel, int iOldLevel)
-{
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_CULTURE_LEVEL_CHANGED, -1, iNewLevel, iOldLevel, iOwner, iCity);
-	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_CITY, iCity).addI(SPF_OWNER, iOwner).addI(SPF_VALUE, iNewLevel);
-	eventSpine().emit(e);
-}
-void emitHolyCityChanged(int iCity, int iOwner, int iReligion, bool bIsHoly)
-{
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_HOLY_CITY_CHANGED, iReligion, bIsHoly ? 1 : 0, 0, iOwner, iCity);
-	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_RELIGION, iReligion).addI(SPF_CITY, iCity).addI(SPF_OWNER, iOwner).addI(SPF_HAS, bIsHoly ? 1 : 0);
-	eventSpine().emit(e);
-}
-void emitCityOrderChanged(int iCity, int iOwner, int iOrderType, int iItem, int iDelta)
-{
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_ORDER_CHANGED, iItem, iOrderType, iDelta, iOwner, iCity);
-	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_CITY, iCity).addI(SPF_OWNER, iOwner).addI(SPF_VALUE, iOrderType).addI(SPF_ID, iItem).addI(SPF_DELTA, iDelta);
-	eventSpine().emit(e);
-}
-void emitCityOwnerChanged(int iCity, int iOldOwner, int iNewOwner)
-{
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_OWNER_CHANGED, -1, iOldOwner, 0, iNewOwner, iCity);
-	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_CITY, iCity).addI(SPF_OLD_OWNER, iOldOwner).addI(SPF_NEW_OWNER, iNewOwner);
-	eventSpine().emit(e);
-}
+
 //	The turn boundaries. The rendered line already carries the game turn as its first field, so the VALUE field
 //	is the turn the boundary belongs to (identical on the game pair, and the turn a player's phase sat in).
 void emitTurnStarted(int iTurn, int iPlayer)
@@ -1025,6 +1684,7 @@ void emitTurnStarted(int iTurn, int iPlayer)
 	e.addI(SPF_OWNER, iPlayer).addI(SPF_VALUE, iTurn);
 	eventSpine().emit(e);
 }
+
 void emitTurnEnded(int iTurn, int iPlayer)
 {
 	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_TURN_ENDED, iTurn, 0, 0, iPlayer, -1);
@@ -1032,6 +1692,7 @@ void emitTurnEnded(int iTurn, int iPlayer)
 	e.addI(SPF_OWNER, iPlayer).addI(SPF_VALUE, iTurn);
 	eventSpine().emit(e);
 }
+
 void emitUnitEnteredCity(int iUnitType, int iUnitId, int iOwner, int iCity)
 {
 	// The unit's TAGS ride the event (json §8 -- immutable, type-derived membership). A consumer can then act on
@@ -1058,6 +1719,7 @@ void emitUnitEnteredCity(int iUnitType, int iUnitId, int iOwner, int iCity)
 	 .addStr(SPF_TAGS, szTags.c_str());
 	eventSpine().emit(e);   // synchronous render -> szTags still in scope
 }
+
 void emitUnitCreated(int iUnitType, int iUnitId, int iOwner)
 {
 	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_UNIT_CREATED, iUnitType, iUnitId, 0, iOwner, -1);
@@ -1065,6 +1727,7 @@ void emitUnitCreated(int iUnitType, int iUnitId, int iOwner)
 	e.addI(SPF_UNIT, iUnitType).addI(SPF_OWNER, iOwner);
 	eventSpine().emit(e);
 }
+
 void emitCityFounded(int iOwner, int iCity, int iFounderType, int iFounderId)
 {
 	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_FOUNDED, iFounderType, iFounderId, 0, iOwner, iCity);
@@ -1072,62 +1735,7 @@ void emitCityFounded(int iOwner, int iCity, int iFounderType, int iFounderId)
 	e.addI(SPF_CITY, iCity).addI(SPF_OWNER, iOwner).addI(SPF_UNIT, iFounderType);
 	eventSpine().emit(e);
 }
-void emitCapitalChanged(int iOwner, int iCity)
-{
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CAPITAL_CHANGED, -1, 0, 0, iOwner, iCity);
-	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_CITY, iCity).addI(SPF_OWNER, iOwner);
-	eventSpine().emit(e);
-}
-void emitPlotOwnerChanged(int iPlot, int iOldOwner, int iNewOwner)
-{
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_OWNER_CHANGED, -1, iOldOwner, 0, iNewOwner, iPlot);
-	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_PLOT, iPlot).addI(SPF_OLD_OWNER, iOldOwner).addI(SPF_NEW_OWNER, iNewOwner);
-	eventSpine().emit(e);
-}
-void emitWorkingCityChanged(int iPlot, int iOwner, int iOldCity, int iNewCity)
-{
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_WORKING_CITY_CHANGED, -1, iOldCity, iNewCity, iOwner, iPlot);
-	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_PLOT, iPlot).addI(SPF_OWNER, iOwner).addI(SPF_OLD_CITY, iOldCity).addI(SPF_NEW_CITY, iNewCity);
-	eventSpine().emit(e);
-}
-void emitPlotTypeChanged(int iPlot, int iOwner, int iOldPlotType, int iNewPlotType)
-{
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_TYPE_CHANGED, iNewPlotType, iOldPlotType, 0, iOwner, iPlot);
-	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_PLOT, iPlot).addI(SPF_OWNER, iOwner).addI(SPF_OLD_VALUE, iOldPlotType).addI(SPF_NEW_VALUE, iNewPlotType);
-	eventSpine().emit(e);
-}
-void emitPlotRiverChanged(int iPlot, int iOwner, bool bHasRiver, int iCrossingCount)
-{
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_RIVER_CHANGED, -1, bHasRiver ? 1 : 0, iCrossingCount, iOwner, iPlot);
-	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_PLOT, iPlot).addI(SPF_OWNER, iOwner).addI(SPF_HAS, bHasRiver ? 1 : 0).addI(SPF_COUNT, iCrossingCount);
-	eventSpine().emit(e);
-}
-void emitPlotIrrigationChanged(int iPlot, int iOwner, bool bIrrigated)
-{
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_IRRIGATION_CHANGED, -1, bIrrigated ? 1 : 0, 0, iOwner, iPlot);
-	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_PLOT, iPlot).addI(SPF_OWNER, iOwner).addI(SPF_HAS, bIrrigated ? 1 : 0);
-	eventSpine().emit(e);
-}
-void emitPlotLandmarkChanged(int iPlot, int iOwner, int iOldLandmark, int iNewLandmark)
-{
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_LANDMARK_CHANGED, iNewLandmark, iOldLandmark, 0, iOwner, iPlot);
-	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_PLOT, iPlot).addI(SPF_OWNER, iOwner).addI(SPF_OLD_VALUE, iOldLandmark).addI(SPF_NEW_VALUE, iNewLandmark);
-	eventSpine().emit(e);
-}
-void emitPlotWorkedChanged(int iPlot, int iOwner, int iCity, bool bWorked)
-{
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_WORKED_CHANGED, -1, bWorked ? 1 : 0, iCity, iOwner, iPlot);
-	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_PLOT, iPlot).addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_HAS, bWorked ? 1 : 0);
-	eventSpine().emit(e);
-}
+
 // The wholesale area-identity reassignment. No payload and no owner: every area id in the game is replaced at once,
 // so the fact cannot be attributed to a source and every holder re-reads.
 void emitAreasRecalculated()
@@ -1137,69 +1745,6 @@ void emitAreasRecalculated()
 	eventSpine().emit(e);
 }
 
-void emitGameOptionChanged(int iOption, int iNewValue, int eSpace)
-{
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_GAME_OPTION_CHANGED, iOption, iNewValue, eSpace, -1, -1);
-	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_OPTION, iOption).addI(SPF_VALUE, iNewValue).addI(SPF_OPTION_SPACE, eSpace);
-	eventSpine().emit(e);
-}
-
-void emitPlayerHandicapChanged(int iPlayer, int iNewHandicap, int iOldHandicap)
-{
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLAYER_HANDICAP_CHANGED, iNewHandicap, iOldHandicap, 0, iPlayer, -1);
-	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_OWNER, iPlayer).addI(SPF_HANDICAP, iNewHandicap).addI(SPF_OLD_VALUE, iOldHandicap);
-	eventSpine().emit(e);
-}
-
-void emitGameHandicapChanged(int iNewHandicap, int iOldHandicap)
-{
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_GAME_HANDICAP_CHANGED, iNewHandicap, iOldHandicap, 0, -1, -1);
-	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_HANDICAP, iNewHandicap).addI(SPF_OLD_VALUE, iOldHandicap);
-	eventSpine().emit(e);
-}
-
-void emitGlobalDefineChanged(const char* szName, int eKind, int iValue, float fValue, const char* szValue)
-{
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_GLOBAL_DEFINE_CHANGED, -1, iValue, eKind, -1, -1);
-	e.iDomainTag = SD_SPINE;
-	// The NAME is the define's whole identity (it has no id space), so it always rides; the value goes in
-	// whichever field its KIND can actually carry.
-	e.addStr(SPF_DEFINE, szName).addI(SPF_OPTION_SPACE, eKind);
-	if (eKind == GLOBALDEFINE_FLOAT)
-	{
-		e.addF(SPF_VALUE_F, fValue);
-	}
-	else if (eKind == GLOBALDEFINE_STRING)
-	{
-		e.addStr(SPF_VALUE_STR, szValue != NULL ? szValue : "");
-	}
-	else
-	{
-		e.addI(SPF_VALUE, iValue);
-	}
-	eventSpine().emit(e);
-}
-
-// The empire-count observability events + the grant-trigger events. iSrcLoc = -1 (empire/world footprint). grants
-// reads iType/iA/iB/iC off these (CvTriggerEngine); the addI fields are the render twin. One endpoint each so the
-// CvPlayer / CvTeam emit sites never build a CvSpineEvent inline.
-void emitBuildingCount(int iPlayer, int iBuilding, int iNewCount, int iDelta)
-{
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_BUILDING_COUNT, iBuilding, iNewCount, iDelta, iPlayer);
-	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_BUILDING, iBuilding).addI(SPF_OWNER, iPlayer).addI(SPF_COUNT, iNewCount).addI(SPF_DELTA, iDelta);
-	eventSpine().emit(e);
-}
-void emitUnitCount(int iPlayer, int iUnit, int iNewCount, int iDelta)
-{
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_UNIT_COUNT, iUnit, iNewCount, iDelta, iPlayer);
-	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_UNIT, iUnit).addI(SPF_OWNER, iPlayer).addI(SPF_COUNT, iNewCount).addI(SPF_DELTA, iDelta);
-	eventSpine().emit(e);
-}
 void emitTechAcquired(int iPlayer, int iTech)
 {
 	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_TECH_ACQUIRED, iTech, 1, 0, iPlayer);   // iA = 1 (first-discoverer)
@@ -1207,6 +1752,7 @@ void emitTechAcquired(int iPlayer, int iTech)
 	e.addI(SPF_TECH, iTech).addI(SPF_OWNER, iPlayer);
 	eventSpine().emit(e);
 }
+
 void emitReligionFounded(int iPlayer, int iReligion, int iSlotReligion, int iCity, bool bAward)
 {
 	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_RELIGION_FOUNDED, iReligion, iSlotReligion, bAward ? 1 : 0, iPlayer, iCity);
@@ -1214,6 +1760,7 @@ void emitReligionFounded(int iPlayer, int iReligion, int iSlotReligion, int iCit
 	e.addI(SPF_RELIGION, iReligion).addI(SPF_OWNER, iPlayer).addI(SPF_CITY, iCity);
 	eventSpine().emit(e);
 }
+
 void emitPlayerInit(int iPlayer)
 {
 	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLAYER_INIT, iPlayer, 0, 0, iPlayer);

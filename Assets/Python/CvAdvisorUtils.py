@@ -7,6 +7,7 @@ GAME = GC.getGame()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
+INFO = CyInfo()
 TRNSLTR = CyTranslator()
 
 lPopulation = [
@@ -29,39 +30,47 @@ def resetNoLiberateCities():
 	global g_listNoLiberateCities
 	g_listNoLiberateCities = []
 
+	#	Walk the CORPORATIONS -- a few dozen -- and ask each one its own edges. The old shape swept all ~5200
+	#	buildings asking each what it founds, with a nested sweep of all ~2000 units inside it, on the LOAD path.
+	#	`FoundsCorporation` curates as the building's `enables.corporations`, so the corp's ENABLED_BY family IS
+	#	its founding building, and the building's ENABLED_BY/techs family IS its unlocking techs
+	#	([DEC-one-reverse-view]: every info already carries its reverse lookups; never a registry scan).
 	global lCorporations
 	lCorporations = []
-	for iI in xrange(GC.getNumBuildingInfos()):
-		CvBuildingInfo = GC.getBuildingInfo(iI)
-		eCorporation = CvBuildingInfo.getFoundsCorporation()
-		if eCorporation > -1 and not GAME.isCorporationFounded(eCorporation):
+	for eCorporation in xrange(GC.getNumCorporationInfos()):
+		if GAME.isCorporationFounded(eCorporation):
+			continue
 
-			bonuses = GC.getCorporationInfo(eCorporation).getPrereqBonuses()
-			if not bonuses:
+		bonuses = INFO.getIdList("CORPORATION_", eCorporation, IdListSlot.PYLIST_CONSUMED_BONUSES)
+		if not bonuses:
+			continue
+
+		for iBuilding in INFO.getEdgeIds("CORPORATION_", eCorporation, EdgeFamily.EDGEF_ENABLED_BY, EdgeBucket.EDGEB_BUILDINGS):
+			#	The founder is the unit whose `grants.buildings` names the HQ. RELATED is a candidate SUPERSET
+			#	(it merges every relation), so it is FILTERED to the exact grant rather than trusted.
+			iFounder = -1
+			for iUnit in INFO.getEdgeIds("BUILDING_", iBuilding, EdgeFamily.EDGEF_RELATED, EdgeBucket.EDGEB_UNITS):
+				if iBuilding in INFO.getIdList("UNIT_", iUnit, IdListSlot.PYLIST_GRANTED_BUILDINGS):
+					iFounder = iUnit
+					break
+			if iFounder < 0:
 				continue
 
-			for iUnit in xrange(GC.getNumUnitInfos()):
-				if GC.getUnitInfo(iUnit).getHasBuilding(iI):
-					break
-			else: continue
+			techs = INFO.getEdgeIds("BUILDING_", iBuilding, EdgeFamily.EDGEF_ENABLED_BY, EdgeBucket.EDGEB_TECHS)
+			lCorporations.append([eCorporation, techs, iFounder, bonuses])
+			break
 
-			techs = []
-			iTech = CvBuildingInfo.getPrereqAndTech()
-			if iTech > -1:
-				techs.append(iTech)
-			for iTech in CvBuildingInfo.getPrereqAndTechs():
-				techs.append(iTech)
-
-			lCorporations.append([eCorporation, techs, iUnit, bonuses])
-
+	#	A bonus's own compiled wellbeing decides whether it is a luxury / a health resource -- the entity is
+	#	asked what it carries, rather than the registry being swept through a dead accessor.
 	global lBonus
 	lBonus = []
 	lLuxury = []
 	lFood = []
 	for i in xrange(GC.getNumBonusInfos()):
-		if GC.getBonusInfo(i).getHappiness() > 0:
+		aWellbeing = INFO.getWellbeing("BONUS_", i, CascScope.CASC_SCOPE_CITY)
+		if aWellbeing[WellbeingChannel.WELLBEING_HAPPINESS] > 0:
 			lLuxury.append(i)
-		if GC.getBonusInfo(i).getHealth() > 0:
+		if aWellbeing[WellbeingChannel.WELLBEING_HEALTH] > 0:
 			lFood.append(i)
 	iBonus = GC.getInfoTypeForString("BONUS_COPPER_ORE")
 	if iBonus > -1:
@@ -191,7 +200,7 @@ def endTurnFeats(iPlayer):
 					popupInfo.setButtonPopupType(ButtonPopupTypes.BUTTONPOPUP_PYTHON)
 					popupInfo.setData1(item[0])
 					popupInfo.setData2(CyCity0.getID())
-					popupInfo.setText(TRNSLTR.getText(item[2], (GC.getBonusInfo(iBonus).getTextKey(),)))
+					popupInfo.setText(TRNSLTR.getText(item[2], (INFO.getTextKey("BONUS_", iBonus),)))
 					popupInfo.setOnClickedPythonCallback("featAccomplishedOnClickedCallback")
 					popupInfo.setOnFocusPythonCallback("featAccomplishedOnFocusCallback")
 					popupInfo.addPythonButton(TRNSLTR.getText("TXT_KEY_FEAT_ACCOMPLISHED_OK", ()), "")
@@ -219,12 +228,12 @@ def endTurnFeats(iPlayer):
 					szBonusList = u""
 					for j in xrange(len(item[3])):
 						eBonus = item[3][j]
-						szBonusList += GC.getBonusInfo(eBonus).getDescription()
+						szBonusList += INFO.getDescription("BONUS_", eBonus)
 						if j != len(item[3]) - 1:
 							szBonusList += TRNSLTR.getText("TXT_KEY_OR", ())
 
-					szFounder = GC.getUnitInfo(item[2]).getTextKey()
-					szCorporation = GC.getCorporationInfo(item[0]).getTextKey()
+					szFounder = INFO.getTextKey("UNIT_", item[2])
+					szCorporation = INFO.getTextKey("CORPORATION_", item[0])
 
 					if not GAME.isNetworkMultiPlayer() and iPlayer == GAME.getActivePlayer() and CyPlayer.isOption(PlayerOptionTypes.PLAYEROPTION_ADVISOR_POPUPS):
 						popupInfo = CyPopupInfo()
@@ -326,7 +335,7 @@ def cityAdvise(CyCity, iPlayer):
 								popupInfo.setData1(CyCity.getID())
 								popupInfo.setData2(OrderTypes.ORDER_TRAIN)
 								popupInfo.setData3(eBestUnit)
-								popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_UNIT_SETTLE_DEMAND", (GC.getUnitInfo(eBestUnit).getTextKey(), )))
+								popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_UNIT_SETTLE_DEMAND", (INFO.getTextKey("UNIT_", eBestUnit), )))
 								popupInfo.setOnClickedPythonCallback("cityWarningOnClickedCallback")
 								popupInfo.setOnFocusPythonCallback("cityWarningOnFocusCallback")
 								popupInfo.addPythonButton(TRNSLTR.getText("TXT_KEY_POPUP_DEMAND_AGREE", ()), "")
@@ -358,7 +367,7 @@ def cityAdvise(CyCity, iPlayer):
 							popupInfo.setData1(CyCity.getID())
 							popupInfo.setData2(OrderTypes.ORDER_TRAIN)
 							popupInfo.setData3(eBestUnit)
-							popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_UNIT_WORKER_DEMAND", (CyCity.getNameKey(), GC.getUnitInfo(eBestUnit).getTextKey())))
+							popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_UNIT_WORKER_DEMAND", (CyCity.getNameKey(), INFO.getTextKey("UNIT_", eBestUnit))))
 							popupInfo.setOnClickedPythonCallback("cityWarningOnClickedCallback")
 							popupInfo.setOnFocusPythonCallback("cityWarningOnFocusCallback")
 							popupInfo.addPythonButton(TRNSLTR.getText("TXT_KEY_POPUP_DEMAND_AGREE", ()), "")
@@ -392,7 +401,7 @@ def cityAdvise(CyCity, iPlayer):
 							popupInfo.setData1(CyCity.getID())
 							popupInfo.setData2(OrderTypes.ORDER_TRAIN)
 							popupInfo.setData3(eBestUnit)
-							popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_UNIT_DEFENSE_DEMAND", (CyCity.getNameKey(), GC.getUnitInfo(eBestUnit).getTextKey())))
+							popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_UNIT_DEFENSE_DEMAND", (CyCity.getNameKey(), INFO.getTextKey("UNIT_", eBestUnit))))
 							popupInfo.setOnClickedPythonCallback("cityWarningOnClickedCallback")
 							popupInfo.setOnFocusPythonCallback("cityWarningOnFocusCallback")
 							popupInfo.addPythonButton(TRNSLTR.getText("TXT_KEY_POPUP_DEMAND_AGREE", ()), "")
@@ -438,7 +447,7 @@ def cityAdvise(CyCity, iPlayer):
 									popupInfo.setData1(CyCity.getID())
 									popupInfo.setData2(OrderTypes.ORDER_TRAIN)
 									popupInfo.setData3(iBestUnit)
-									popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_MISSIONARY_DEMAND", (GC.getReligionInfo(eStateReligion).getTextKey(), CvUnitInfo.getTextKey(), CyCity.getNameKey())))
+									popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_MISSIONARY_DEMAND", (INFO.getTextKey("RELIGION_", eStateReligion), CvUnitInfo.getTextKey(), CyCity.getNameKey())))
 									popupInfo.setOnClickedPythonCallback("cityWarningOnClickedCallback")
 									popupInfo.setOnFocusPythonCallback("cityWarningOnFocusCallback")
 									popupInfo.addPythonButton(TRNSLTR.getText("TXT_KEY_POPUP_DEMAND_AGREE", ()), "")

@@ -154,8 +154,17 @@ void CvProperties::changeChangeByProperty(PropertyTypes eProp, int iChange)
 // without chaining to the base, so an emit placed there is silently skipped for every unit.
 static void emitPropertyFact(const CvGameObject* pObject, PropertyTypes eProperty, int iNewValue, int iOldValue)
 {
-	emitPropertyChanged((int)pObject->getGameObjectType(), pObject->getObjectInstanceId(),
-		(int)pObject->getOwnerPlayerId(), (int)eProperty, iNewValue, iOldValue);
+	// The event is the operator: which way the value moved is the FACT, and the payload carries only HOW MUCH.
+	if (iNewValue > iOldValue)
+	{
+		emitPropertyAdded((int)pObject->getGameObjectType(), pObject->getObjectInstanceId(),
+			(int)pObject->getOwnerPlayerId(), (int)eProperty, iNewValue - iOldValue);
+	}
+	else if (iNewValue < iOldValue)
+	{
+		emitPropertyRemoved((int)pObject->getGameObjectType(), pObject->getObjectInstanceId(),
+			(int)pObject->getOwnerPlayerId(), (int)eProperty, iOldValue - iNewValue);
+	}
 }
 
 void CvProperties::setValue(int index, int iVal)

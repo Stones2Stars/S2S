@@ -2,8 +2,10 @@
 
 from CvPythonExtensions import *
 GC = CyGlobalContext()
+INFO = CyInfo()
 TRNSLTR = CyTranslator()
 
+TEXT = CyGameTextMgr()
 class PediaProject:
 
 	def __init__(self, parent, H_BOT_ROW):
@@ -86,7 +88,7 @@ class PediaProject:
 			else:
 				iCost = iCost * GC.getDefineINT("PROJECT_PRODUCTION_PERCENT")/100
 			szCost = TRNSLTR.getText("TXT_KEY_PEDIA_COST", (iCost,))
-			screen.appendListBoxString(Pnl, szfont3b + szCost + u'%c' %GC.getYieldInfo(YieldTypes.YIELD_PRODUCTION).getChar(), iWidGen, 0, 0, 1<<0)
+			screen.appendListBoxString(Pnl, szfont3b + szCost + u'%c' %TEXT.getSymbolChar("YIELD_", YieldTypes.YIELD_PRODUCTION), iWidGen, 0, 0, 1<<0)
 		# Requires
 		iTech = CvTheProjectInfo.getTechPrereq()
 		if iTech != -1:
@@ -95,7 +97,7 @@ class PediaProject:
 			screen.addPanel(Pnl, szRequires, "", False, True, X_COL_1 + W_COL_1 - 108, Y_STATS + 16, 100, H_STATS - 16, PanelStyles.PANEL_STYLE_EMPTY)
 			screen.attachLabel(Pnl, "", "<font=4b>| ")
 			Img = "ToolTip|JumpTo|TECH" + str(iTech)
-			screen.attachImageButton(Pnl, Img, GC.getTechInfo(iTech).getButton(), self.main.enumGBS, iWidGen, 1, 1, False)
+			screen.attachImageButton(Pnl, Img, INFO.getButton("TECH_", iTech), self.main.enumGBS, iWidGen, 1, 1, False)
 			screen.attachLabel(Pnl, "", "<font=4b> |")
 		# Strategy
 		screen.addPanel(aName(), "", "", False, False, X_COL_2, Y_ROW_1, W_COL_1, H_TOP_ROW, iPanelBlue50)

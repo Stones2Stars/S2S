@@ -879,7 +879,7 @@ class WorldBuilder:
 			screen.addPullDownString("WBSelectClass", CyTranslator().getText("TXT_KEY_WB_CITY_ALL",()), -2, -2, -2 == self.iSelectClass)
 			screen.addPullDownString("WBSelectClass", CyTranslator().getText("TXT_PEDIA_NON_COMBAT",()), -1, -1, -1 == self.iSelectClass)
 			for iDomain in xrange(DomainTypes.NUM_DOMAIN_TYPES):
-				screen.addPullDownString("WBSelectClass", GC.getDomainInfo(iDomain).getDescription(), iDomain, iDomain, iDomain == self.iSelectClass)
+				screen.addPullDownString("WBSelectClass", INFO.getDescription("DOMAIN_", iDomain), iDomain, iDomain, iDomain == self.iSelectClass)
 
 			lItems = []
 			for i in xrange(GC.getNumUnitInfos()):
@@ -902,7 +902,7 @@ class WorldBuilder:
 			for item in lItems:
 				iRow = screen.appendTableRow("WBSelectItem")
 				if self.iSelection == item[1]: bValid = True
-				screen.setTableText("WBSelectItem", 0, iRow, "<font=3>" + item[0] + "</font>", GC.getUnitInfo(item[1]).getButton(), WidgetTypes.WIDGET_PYTHON, 8202, item[1], 1<<0)
+				screen.setTableText("WBSelectItem", 0, iRow, "<font=3>" + item[0] + "</font>", INFO.getButton("UNIT_", item[1]), WidgetTypes.WIDGET_PYTHON, 8202, item[1], 1<<0)
 			if not bValid:
 				self.iSelection = -1
 				if len(lItems) > 0:
@@ -932,7 +932,7 @@ class WorldBuilder:
 				elif self.iSelectClass == 4:
 					if not isWorldWonder(i):
 						continue
-				lItems.append([GC.getBuildingInfo(i).getDescription(), i])
+				lItems.append([INFO.getDescription("BUILDING_", i), i])
 			lItems.sort()
 
 			iY += 30
@@ -945,7 +945,7 @@ class WorldBuilder:
 			for item in lItems:
 				iRow = screen.appendTableRow("WBSelectItem")
 				if self.iSelection == item[1]: bValid = True
-				screen.setTableText("WBSelectItem", 0, iRow, "<font=3>" + item[0] + "</font>", GC.getBuildingInfo(item[1]).getButton(), WidgetTypes.WIDGET_HELP_BUILDING, item[1], item[1], 1<<0)
+				screen.setTableText("WBSelectItem", 0, iRow, "<font=3>" + item[0] + "</font>", INFO.getButton("BUILDING_", item[1]), WidgetTypes.WIDGET_HELP_BUILDING, item[1], item[1], 1<<0)
 			if not bValid:
 				self.iSelection = -1
 				if len(lItems) > 0:
@@ -968,7 +968,7 @@ class WorldBuilder:
 				iRow = screen.appendTableRow("WBSelectItem")
 				if self.iSelection == -1:
 					self.iSelection = item[1]
-				screen.setTableText("WBSelectItem", 0, iRow, "<font=3>" + item[0] + "</font>", GC.getFeatureInfo(item[1]).getButton(), WidgetTypes.WIDGET_PYTHON, 7874, item[1], 1<<0)
+				screen.setTableText("WBSelectItem", 0, iRow, "<font=3>" + item[0] + "</font>", INFO.getButton("FEATURE_", item[1]), WidgetTypes.WIDGET_PYTHON, 7874, item[1], 1<<0)
 
 		elif self.iPlayerAddMode == "Improvements":
 			iY = 25
@@ -988,7 +988,7 @@ class WorldBuilder:
 				iRow = screen.appendTableRow("WBSelectItem")
 				if self.iSelection == -1:
 					self.iSelection = item[1]
-				screen.setTableText("WBSelectItem", 0, iRow, "<font=3>" + item[0] + "</font>", GC.getImprovementInfo(item[1]).getButton(), WidgetTypes.WIDGET_PYTHON, 7877, item[1], 1<<0)
+				screen.setTableText("WBSelectItem", 0, iRow, "<font=3>" + item[0] + "</font>", INFO.getButton("IMPROVEMENT_", item[1]), WidgetTypes.WIDGET_PYTHON, 7877, item[1], 1<<0)
 
 		elif self.iPlayerAddMode == "Bonus":
 			iY = 25
@@ -1006,7 +1006,7 @@ class WorldBuilder:
 				iRow = screen.appendTableRow("WBSelectItem")
 				if self.iSelection == -1:
 					self.iSelection = item[1]
-				screen.setTableText("WBSelectItem", 0, iRow, "<font=3>" + item[0] + "</font>", GC.getBonusInfo(item[1]).getButton(), WidgetTypes.WIDGET_PYTHON, 7878, item[1], 1<<0)
+				screen.setTableText("WBSelectItem", 0, iRow, "<font=3>" + item[0] + "</font>", INFO.getButton("BONUS_", item[1]), WidgetTypes.WIDGET_PYTHON, 7878, item[1], 1<<0)
 
 		elif self.iPlayerAddMode == "Routes":
 			iY = 25
@@ -1025,7 +1025,7 @@ class WorldBuilder:
 				iRow = screen.appendTableRow("WBSelectItem")
 				if self.iSelection == -1:
 					self.iSelection = item[1]
-				screen.setTableText("WBSelectItem", 0, iRow, "<font=3>" + item[0] + "</font>", GC.getRouteInfo(item[1]).getButton(), WidgetTypes.WIDGET_PYTHON, 6788, item[1], 1<<0)
+				screen.setTableText("WBSelectItem", 0, iRow, "<font=3>" + item[0] + "</font>", INFO.getButton("ROUTE_", item[1]), WidgetTypes.WIDGET_PYTHON, 6788, item[1], 1<<0)
 
 		elif self.iPlayerAddMode == "Terrain":
 			iY = 25
@@ -1045,7 +1045,7 @@ class WorldBuilder:
 				iRow = screen.appendTableRow("WBSelectItem")
 				if self.iSelection == -1:
 					self.iSelection = item[1]
-				screen.setTableText("WBSelectItem", 0, iRow, "<font=3>" + item[0] + "</font>", GC.getTerrainInfo(item[1]).getButton(), WidgetTypes.WIDGET_PYTHON, 7875, item[1], 1<<0)
+				screen.setTableText("WBSelectItem", 0, iRow, "<font=3>" + item[0] + "</font>", INFO.getButton("TERRAIN_", item[1]), WidgetTypes.WIDGET_PYTHON, 7875, item[1], 1<<0)
 
 		elif self.iPlayerAddMode == "PlotType":
 			iHeight = 4 * 24 + 2
@@ -1058,13 +1058,13 @@ class WorldBuilder:
 			item = GC.getInfoTypeForString("TERRAIN_PEAK")
 			if self.iSelection == -1:
 				self.iSelection = item
-			screen.setTableText("WBSelectItem", 0, 0, "<font=3>" + GC.getTerrainInfo(item).getDescription() + "</font>", GC.getTerrainInfo(item).getButton(), WidgetTypes.WIDGET_PYTHON, 7875, item, 1<<0)
+			screen.setTableText("WBSelectItem", 0, 0, "<font=3>" + INFO.getDescription("TERRAIN_", item) + "</font>", INFO.getButton("TERRAIN_", item), WidgetTypes.WIDGET_PYTHON, 7875, item, 1<<0)
 			item = GC.getInfoTypeForString("TERRAIN_HILL")
-			screen.setTableText("WBSelectItem", 0, 1, "<font=3>" + GC.getTerrainInfo(item).getDescription() + "</font>", GC.getTerrainInfo(item).getButton(), WidgetTypes.WIDGET_PYTHON, 7875, item, 1<<0)
+			screen.setTableText("WBSelectItem", 0, 1, "<font=3>" + INFO.getDescription("TERRAIN_", item) + "</font>", INFO.getButton("TERRAIN_", item), WidgetTypes.WIDGET_PYTHON, 7875, item, 1<<0)
 			item = GC.getInfoTypeForString("TERRAIN_GRASSLAND")
-			screen.setTableText("WBSelectItem", 0, 2, "<font=3>" + GC.getTerrainInfo(item).getDescription() + "</font>", GC.getTerrainInfo(item).getButton(), WidgetTypes.WIDGET_PYTHON, 7875, item, 1<<0)
+			screen.setTableText("WBSelectItem", 0, 2, "<font=3>" + INFO.getDescription("TERRAIN_", item) + "</font>", INFO.getButton("TERRAIN_", item), WidgetTypes.WIDGET_PYTHON, 7875, item, 1<<0)
 			item = GC.getInfoTypeForString("TERRAIN_OCEAN")
-			screen.setTableText("WBSelectItem", 0, 3, "<font=3>" + GC.getTerrainInfo(item).getDescription() + "</font>", GC.getTerrainInfo(item).getButton(), WidgetTypes.WIDGET_PYTHON, 7875, item, 1<<0)
+			screen.setTableText("WBSelectItem", 0, 3, "<font=3>" + INFO.getDescription("TERRAIN_", item) + "</font>", INFO.getButton("TERRAIN_", item), WidgetTypes.WIDGET_PYTHON, 7875, item, 1<<0)
 		self.refreshSelection()
 
 	def refreshSelection(self):

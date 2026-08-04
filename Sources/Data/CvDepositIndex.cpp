@@ -42,6 +42,22 @@ static std::map<int, SourceRoute> s_depByPredicate;       // bare predicates (IS
 static SourceRoute s_depReligionCounts;                   // the counted-religion filter class (`religion:` qualifiers)
 static bool s_bDepsCompiled = false;
 
+// The dense SOURCE INDEX (see the header): assigned on first push, stable for the load, dropped with the
+// compiled registry. Append-only within a load, so an index handed to an owner's live-source record stays
+// valid for as long as that record does.
+static std::map<const CvInfo*, int> s_sourceIndex;
+
+
+// The SAME reverse axes carrying the DEPOSITS themselves -- what the apply path consumes (a mask names
+// channels; an apply needs the entries). Built in the one dependency pass below, so the two views cannot
+// describe different sets. Records are pointers INTO s_compiled, which is not mutated after the pass and is
+// dropped wholesale by clearCompiled() -- the same lifetime the mask routes already rely on.
+static std::map<std::string, std::vector<DepositIndex::GatedDeposit> > s_gatedByType;
+static std::map<std::string, std::vector<DepositIndex::GatedDeposit> > s_gatedByToken;
+static std::map<int, std::vector<DepositIndex::GatedDeposit> > s_gatedByPredicate;
+static std::vector<DepositIndex::GatedDeposit> s_gatedReligionCounts;
+
+
 
 int DepositIndex::internSegment(const std::string& s)
 {
@@ -144,6 +160,7 @@ static void di_pushFamilies(const CvInfo* j, const CvModifiers* mods, std::vecto
 		if (szUnit[0] == '\0') continue;   // UNKNOWN never reaches an entry (the leaf parse takes real units only)
 		out.push_back(CascadeDeposit());
 		CascadeDeposit& d = out.back();
+		d.entry = e;   // the entry this record compiles -- the apply path's route back to the ONE resolve
 		d.address = e->address();
 		d.unit = szUnit;
 		d.value = e->value;
@@ -202,6 +219,11 @@ void DepositIndex::pushInfo(const CvInfo* j)
 	const CvModifiers* mods = j->getModifiers();
 	const CvModifiers* obs = j->getWhenObsolete();
 	if ((mods == NULL || mods->empty()) && (obs == NULL || obs->empty())) return;
+	if (s_sourceIndex.find(j) == s_sourceIndex.end())
+	{
+		const int iNext = (int)s_sourceIndex.size();
+		s_sourceIndex[j] = iNext;
+	}
 	DiCompiledSet& set = s_compiled[j];
 	set.main.clear();          // re-push-safe: a re-mapped info compiles fresh, never doubles
 	set.whenObsolete.clear();
@@ -213,6 +235,11 @@ void DepositIndex::clearCompiled()
 {
 	s_compiled.clear();
 	s_routes.clear();
+	s_sourceIndex.clear();
+	s_gatedByType.clear();
+	s_gatedByToken.clear();
+	s_gatedByPredicate.clear();
+	s_gatedReligionCounts.clear();
 	s_depByType.clear();
 	s_depByToken.clear();
 	s_depByPredicate.clear();
@@ -298,7 +325,7 @@ const SourceRoute& DepositIndex::routeFor(const CvInfo* j)
 // Classify one condition-tree node's state reads into the dependency tables, crediting them with the carrying
 // record's reach. GROUP nodes recurse; PRESENCE atoms key their TYPE string; parameterized predicates key the
 // param TYPE; bare predicates key their kind.
-static void di_scanConditionTree(const CvCondition* node, const CascadeDeposit& record)
+static void di_scanConditionTree(const CvCondition* node, const CvInfo* pSource, const CascadeDeposit& record)
 {
 	if (node == NULL)
 	{
@@ -308,18 +335,18 @@ static void di_scanConditionTree(const CvCondition* node, const CascadeDeposit& 
 	{
 		for (size_t i = 0; i < node->all.size(); ++i)
 		{
-			di_scanConditionTree(node->all[i], record);
+			di_scanConditionTree(node->all[i], pSource, record);
 		}
 		for (size_t i = 0; i < node->anyOf.size(); ++i)
 		{
-			di_scanConditionTree(node->anyOf[i], record);
+			di_scanConditionTree(node->anyOf[i], pSource, record);
 		}
 		for (size_t i = 0; i < node->noneOf.size(); ++i)
 		{
-			di_scanConditionTree(node->noneOf[i], record);
+			di_scanConditionTree(node->noneOf[i], pSource, record);
 		}
-		di_scanConditionTree(node->enabled, record);
-		di_scanConditionTree(node->disabled, record);
+		di_scanConditionTree(node->enabled, pSource, record);
+		di_scanConditionTree(node->disabled, pSource, record);
 		return;
 	}
 	if (node->kind == CASC_COND_PRESENCE)
@@ -327,6 +354,7 @@ static void di_scanConditionTree(const CvCondition* node, const CascadeDeposit& 
 		if (!node->type.empty())
 		{
 			di_addRecordReach(s_depByType[node->type], record);
+			s_gatedByType[node->type].push_back(DepositIndex::GatedDeposit(pSource, &record, DepositIndex::sourceIndexOf(pSource)));
 		}
 		return;
 	}
@@ -334,27 +362,31 @@ static void di_scanConditionTree(const CvCondition* node, const CascadeDeposit& 
 	if (!node->param.empty())
 	{
 		di_addRecordReach(s_depByType[node->param], record);
+		s_gatedByType[node->param].push_back(DepositIndex::GatedDeposit(pSource, &record, DepositIndex::sourceIndexOf(pSource)));
 	}
 	if (node->predKind != CASC_PRED_UNKNOWN)
 	{
 		di_addRecordReach(s_depByPredicate[(int)node->predKind], record);
+		s_gatedByPredicate[(int)node->predKind].push_back(DepositIndex::GatedDeposit(pSource, &record, DepositIndex::sourceIndexOf(pSource)));
 	}
 }
 
-static void di_scanRecordDependencies(const CascadeDeposit& record)
+static void di_scanRecordDependencies(const CvInfo* pSource, const CascadeDeposit& record)
 {
-	di_scanConditionTree(record.enabled, record);
-	di_scanConditionTree(record.disabled, record);
+	di_scanConditionTree(record.enabled, pSource, record);
+	di_scanConditionTree(record.disabled, pSource, record);
 	// the §3.7 per count-scaler: the counted state's changes rescale the deposit
 	if (record.hasPer && !record.perType.empty())
 	{
 		if (record.perTypeId >= 0)
 		{
 			di_addRecordReach(s_depByType[record.perType], record);
+			s_gatedByType[record.perType].push_back(DepositIndex::GatedDeposit(pSource, &record, DepositIndex::sourceIndexOf(pSource)));
 		}
 		else
 		{
 			di_addRecordReach(s_depByToken[record.perType], record);
+			s_gatedByToken[record.perType].push_back(DepositIndex::GatedDeposit(pSource, &record, DepositIndex::sourceIndexOf(pSource)));
 		}
 	}
 	if (record.perAnyOfTypes != NULL)
@@ -362,18 +394,21 @@ static void di_scanRecordDependencies(const CascadeDeposit& record)
 		for (size_t i = 0; i < record.perAnyOfTypes->size(); ++i)
 		{
 			di_addRecordReach(s_depByType[(*record.perAnyOfTypes)[i]], record);
+			s_gatedByType[(*record.perAnyOfTypes)[i]].push_back(DepositIndex::GatedDeposit(pSource, &record, DepositIndex::sourceIndexOf(pSource)));
 		}
 	}
 	// the legacy per-unit spellings are population/specialist-count dependencies by construction
 	if (record.unit == "perPopulation")
 	{
 		di_addRecordReach(s_depByToken["POPULATION"], record);
+		s_gatedByToken["POPULATION"].push_back(DepositIndex::GatedDeposit(pSource, &record, DepositIndex::sourceIndexOf(pSource)));
 	}
 	// the §3.7 religion: counted-kind filter re-counts on any city religion change
 	if (record.religionQual != NULL)
 	{
 		di_addRecordReach(s_depReligionCounts, record);
-		di_scanConditionTree(record.religionQual, record);
+		s_gatedReligionCounts.push_back(DepositIndex::GatedDeposit(pSource, &record, DepositIndex::sourceIndexOf(pSource)));
+		di_scanConditionTree(record.religionQual, pSource, record);
 	}
 }
 
@@ -389,11 +424,11 @@ static void di_ensureDependencies()
 		const DiCompiledSet& set = it->second;
 		for (size_t i = 0; i < set.main.size(); ++i)
 		{
-			di_scanRecordDependencies(set.main[i]);
+			di_scanRecordDependencies(it->first, set.main[i]);
 		}
 		for (size_t i = 0; i < set.whenObsolete.size(); ++i)
 		{
-			di_scanRecordDependencies(set.whenObsolete[i]);
+			di_scanRecordDependencies(it->first, set.whenObsolete[i]);
 		}
 	}
 }
@@ -427,6 +462,49 @@ const SourceRoute* DepositIndex::dependencyForReligionCounts()
 {
 	di_ensureDependencies();
 	return s_depReligionCounts.empty() ? NULL : &s_depReligionCounts;
+}
+
+// The gated-deposit accessors -- the apply path's half of the same reverse derivation the mask routes serve.
+// Same lazy compile, same lifetime, same NULL-means-nothing-depends-on-it contract.
+int DepositIndex::sourceIndexOf(const CvInfo* j)
+{
+	if (j == NULL)
+	{
+		return -1;
+	}
+	const std::map<const CvInfo*, int>::const_iterator it = s_sourceIndex.find(j);
+	return (it == s_sourceIndex.end()) ? -1 : it->second;
+}
+
+const std::vector<DepositIndex::GatedDeposit>* DepositIndex::gatedByType(const std::string& szType)
+{
+	di_ensureDependencies();
+	const std::map<std::string, std::vector<GatedDeposit> >::const_iterator it = s_gatedByType.find(szType);
+	return (it == s_gatedByType.end()) ? NULL : &it->second;
+}
+
+const std::vector<DepositIndex::GatedDeposit>* DepositIndex::gatedByToken(const char* szToken)
+{
+	if (szToken == NULL)
+	{
+		return NULL;
+	}
+	di_ensureDependencies();
+	const std::map<std::string, std::vector<GatedDeposit> >::const_iterator it = s_gatedByToken.find(std::string(szToken));
+	return (it == s_gatedByToken.end()) ? NULL : &it->second;
+}
+
+const std::vector<DepositIndex::GatedDeposit>* DepositIndex::gatedByPredicate(CvCascPredKind ePredicate)
+{
+	di_ensureDependencies();
+	const std::map<int, std::vector<GatedDeposit> >::const_iterator it = s_gatedByPredicate.find((int)ePredicate);
+	return (it == s_gatedByPredicate.end()) ? NULL : &it->second;
+}
+
+const std::vector<DepositIndex::GatedDeposit>* DepositIndex::gatedByReligionCounts()
+{
+	di_ensureDependencies();
+	return s_gatedReligionCounts.empty() ? NULL : &s_gatedReligionCounts;
 }
 
 const std::vector<CascadeDeposit>& DepositIndex::depositsFor(const CvInfo* j)

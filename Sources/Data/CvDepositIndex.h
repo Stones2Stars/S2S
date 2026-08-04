@@ -43,6 +43,13 @@ class CvCondition;
 struct CascadeDeposit
 {
 	enum { CASC_DEP_SEGS = 4 };
+	// The §3.9 ENTRY this record was compiled from. Held so a dependency route can hand the APPLY path the
+	// exact entries an atom gates or a count scales, and the apply resolves them through the ONE per-entry
+	// resolve (MMKernel::resolveEntry) rather than growing a second copy of it for this carrier
+	// ([DEC-single-implementation]). ⚑ Lifetime is exact, not assumed: entries live on the WRITE-ONCE info and
+	// this index is dropped by clearCompiled() before any repo clear frees them, so the pointer cannot outlive
+	// its target.
+	const CvModEntry* entry;
 	std::string address;               // dotted address MINUS the unit (the CvModifiers family key)
 	std::string unit;                  // the unit segment string (the entry's unit, spelled)
 	int value;                      // x100 fixed-point magnitude (CvModEntry::value)
@@ -88,7 +95,7 @@ struct CascadeDeposit
 	bool  isPercent;                   // WHICH DICTIONARY -- the whole type axis (value vs percent)
 
 	CascadeDeposit()
-		: value(0), aiOnly(false), enabled(NULL), disabled(NULL), unitQual(NULL), religionQual(NULL), hasPer(false), perTypeId(-1), perTokenSeg(-1),
+		: entry(NULL), value(0), aiOnly(false), enabled(NULL), disabled(NULL), unitQual(NULL), religionQual(NULL), hasPer(false), perTypeId(-1), perTokenSeg(-1),
 		  perEach(1), perScope(-1), hasAbove(false), perAbove(-1), perAboveSeg(-1), perAnyOf(NULL), perAnyOfTypes(NULL),
 		  addressId(-1), unitId(-1), nSeg(0), targetFk(-1),
 		  family(-1), kind(-1), propertyFk(-1), channel(-1), scopeIdx(-1), isPercent(false)
@@ -193,6 +200,41 @@ public:
 	static const SourceRoute* dependencyForToken(const char* szToken);
 	static const SourceRoute* dependencyForPredicate(CvCascPredKind ePredicate);
 	static const SourceRoute* dependencyForReligionCounts();
+
+	// ⚖ THE SAME REVERSE AXES, ANSWERED AS DEPOSITS -- what planes B and C actually apply.
+	// A MASK names the channels a dependency can move, which is all a mark ever needed. An APPLY needs the
+	// DEPOSITS themselves: the exact entries that atom gates or that count scales, so it can move each slot by
+	// that entry's own resolved value ([DEC-maintained-sum]: B is ±value × Δcount on the COUNT fact, C is
+	// ±value on the ATOM's verdict crossing).
+	// ⛔ EACH DEPOSIT IS PAIRED WITH ITS OWNING SOURCE, and that is not bookkeeping: a gated deposit applies
+	// only where its source is LIVE. The count route tests that with an O(1) has() at the owner and applies for
+	// nobody else, which is exactly what makes source-then-count and count-then-source converge
+	// (state-repositories.md § THE INVARIANT, ORDER-INDEPENDENCE).
+	// NULL = nothing anywhere depends on that state.
+	struct GatedDeposit
+	{
+		const CvInfo* source;             // whose deposit it is -- the subject of the liveness test
+		const CascadeDeposit* deposit;    // the compiled record (its `entry` is the ONE resolve's input)
+		int sourceIndex;                  // that source's dense index -- the apply's liveness key (see below)
+		GatedDeposit() : source(NULL), deposit(NULL), sourceIndex(-1) {}
+		GatedDeposit(const CvInfo* s, const CascadeDeposit* d, int i) : source(s), deposit(d), sourceIndex(i) {}
+	};
+	// ⚖ THE SOURCE INDEX -- a dense id per pushed source info, minted at push and stable for the load.
+	// The apply path records WHAT IT HAS DEPOSITED at an owner keyed on this, which is what plane B and C test
+	// before moving an already-deposited amount ([DEC-maintained-sum]: the count applies for every deposit whose
+	// source is already live).
+	// ⛔ IT IS DELIBERATELY NOT THE ENGINE ID, and not a (kind, id) pair. Keying on the engine id would force the
+	// apply to route by INFOTYPE prefix to know which registry -- a per-call string walk on the event path, and a
+	// second copy of a routing table that already exists elsewhere. A dense index needs neither.
+	// ⚑ AND IT IS THE RIGHT QUESTION, not merely the cheap one: the HAVE axis would answer "does this city hold
+	// that building", which is NOT the same as "did that building's deposits land here" -- a PRESENT but DORMANT
+	// building deposits nothing ([enabler.md] §3.2). The apply's own record cannot disagree with what it applied.
+	static int sourceIndexOf(const CvInfo* j);
+
+	static const std::vector<GatedDeposit>* gatedByType(const std::string& szType);
+	static const std::vector<GatedDeposit>* gatedByToken(const char* szToken);
+	static const std::vector<GatedDeposit>* gatedByPredicate(CvCascPredKind ePredicate);
+	static const std::vector<GatedDeposit>* gatedByReligionCounts();
 
 	// Fill a record's compiled fields from its address/unit strings (push-time; the strings stay for
 	// rendering/diagnostics). Splits the dotted address, interns each segment (the first CASC_DEP_SEGS kept),

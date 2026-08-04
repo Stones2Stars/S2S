@@ -2,8 +2,10 @@
 
 from CvPythonExtensions import *
 GC = CyGlobalContext()
+INFO = CyInfo()
 TRNSLTR = CyTranslator()
 
+TEXT = CyGameTextMgr()
 class PediaTech:
 
 	def __init__(self, parent, H_BOT_ROW):
@@ -103,8 +105,8 @@ class PediaTech:
 			szTechCost = TRNSLTR.getText("TXT_KEY_PEDIA_COST", (GC.getTeam(CyPlayer.getTeam()).getResearchCost(iTheTech),))
 		else:
 			szTechCost = TRNSLTR.getText("%d1_Num", (CvTheTechInfo.getResearchCost(),))
-		szCostText = szTechCost + u"%c" % (GC.getCommerceInfo(CommerceTypes.COMMERCE_RESEARCH).getChar())
-		screen.appendListBoxStringNoUpdate(Pnl, szfont4b + GC.getEraInfo(iEra).getDescription(), eWidGen, 0, 0, 1<<2)
+		szCostText = szTechCost + u"%c" % (TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_RESEARCH))
+		screen.appendListBoxStringNoUpdate(Pnl, szfont4b + INFO.getDescription("C2C_ERA_", iEra), eWidGen, 0, 0, 1<<2)
 		screen.appendListBoxStringNoUpdate(Pnl, szfont4b + szCostText, eWidGen, 0, 0, 1<<2)
 
 		iHappiness = CvTheTechInfo.getHappiness()
@@ -169,11 +171,11 @@ class PediaTech:
 			screen.addPanel(Pnl, szBuildingsEnabled, "", False, True, X_COL_1, Y_BOT_ROW_1, W_PEDIA_PAGE, H_BOT_ROW, ePnlBlue50)
 			if aList1:
 				for i in range(len(aList1)):
-					screen.attachImageButton(Pnl, "", GC.getBuildingInfo(aList1[i]).getButton(), enumGBS, eWidJuToBuilding, aList1[i], 1, False)
+					screen.attachImageButton(Pnl, "", INFO.getButton("BUILDING_", aList1[i]), enumGBS, eWidJuToBuilding, aList1[i], 1, False)
 				aList1 = []
 			if aList2:
 				for i in range(len(aList2)):
-					screen.attachImageButton(Pnl, "", GC.getProjectInfo(aList2[i]).getButton(), enumGBS, eWidJuToProject, aList2[i], 1, False)
+					screen.attachImageButton(Pnl, "", INFO.getButton("PROJECT_", aList2[i]), enumGBS, eWidJuToProject, aList2[i], 1, False)
 				aList2 = []
 		else:
 			Y_BOT_ROW_3 += H_BOT_ROW
@@ -194,7 +196,7 @@ class PediaTech:
 			Pnl = aName()
 			screen.addPanel(Pnl, TRNSLTR.getText("TXT_KEY_PEDIA_UNITS_ENABLED", ()), "", False, True, X_COL_1, Y_BOT_ROW_2, W_PEDIA_PAGE, H_BOT_ROW, ePnlBlue50)
 			for i in range(len(aList1)):
-				screen.attachImageButton(Pnl, "", GC.getUnitInfo(aList1[i]).getButton(), enumGBS, eWidJuToUnit, aList1[i], 1, False)
+				screen.attachImageButton(Pnl, "", INFO.getButton("UNIT_", aList1[i]), enumGBS, eWidJuToUnit, aList1[i], 1, False)
 			aList1 = []
 		else:
 			Y_BOT_ROW_3 += H_BOT_ROW
@@ -215,7 +217,7 @@ class PediaTech:
 		szChild = PF + "TECH"
 		# Tech Req
 		for iType in CvTheTechInfo.getPrereqAndTechs():
-			aList1.append([szChild + str(iType) + "|" + str(n), GC.getTechInfo(iType).getButton()])
+			aList1.append([szChild + str(iType) + "|" + str(n), INFO.getButton("TECH_", iType)])
 			n += 1
 		nOr = 0
 		for iType in CvTheTechInfo.getPrereqOrTechs():
@@ -225,11 +227,11 @@ class PediaTech:
 			if nOr > 1:
 				aList1.append(braL)
 			iType = aList2.pop(0)
-			aList1.append([szChild + str(iType) + "|" + str(n), GC.getTechInfo(iType).getButton()])
+			aList1.append([szChild + str(iType) + "|" + str(n), INFO.getButton("TECH_", iType)])
 			n += 1
 			for iType in aList2:
 				aList1.append(OR)
-				aList1.append([szChild + str(iType) + "|" + str(n), GC.getTechInfo(iType).getButton()])
+				aList1.append([szChild + str(iType) + "|" + str(n), INFO.getButton("TECH_", iType)])
 				n += 1
 			if nOr > 1:
 				aList1.append(braR)
@@ -257,7 +259,7 @@ class PediaTech:
 				for iType, iAmount in aList2:
 					if iAmount > 1:
 						aList1.append(["TXT", "<font=4b>%d" % iAmount, 1<<1, 16, 0])
-					aList1.append([szChild + str(iType) + "|" + str(n), GC.getBuildingInfo(iType).getButton()])
+					aList1.append([szChild + str(iType) + "|" + str(n), INFO.getButton("BUILDING_", iType)])
 					n += 1
 
 			if aList3:
@@ -266,13 +268,13 @@ class PediaTech:
 				iType, iAmount = aList3.pop(0)
 				if iAmount > 1:
 					aList1.append(["TXT", "<font=4b>%d" % iAmount, 1<<1, 16, 0])
-				aList1.append([szChild + str(iType) + "|" + str(n), GC.getBuildingInfo(iType).getButton()])
+				aList1.append([szChild + str(iType) + "|" + str(n), INFO.getButton("BUILDING_", iType)])
 				n += 1
 				for iType, iAmount in aList3:
 					aList1.append(OR)
 					if iAmount > 1:
 						aList1.append(["TXT", "<font=4b>%d" % iAmount, 1<<1, 16, 0])
-					aList1.append([szChild + str(iType) + "|" + str(n), GC.getBuildingInfo(iType).getButton()])
+					aList1.append([szChild + str(iType) + "|" + str(n), INFO.getButton("BUILDING_", iType)])
 					n += 1
 				if nOr > 1:
 					aList1.append(braR)
@@ -299,7 +301,7 @@ class PediaTech:
 		screen.addPanel(Pnl, TRNSLTR.getText("TXT_KEY_PEDIA_LEADS_TO", ()), "", False, True, self.X_COL_3, Y_BOT_ROW_3, W_COL_3, H_BOT_ROW, ePnlBlue50)
 		for i in xrange(CvTheTechInfo.getNumLeadsToTechs()):
 			iTechX = CvTheTechInfo.getLeadsToTech(i)
-			screen.attachImageButton(Pnl, "", GC.getTechInfo(iTechX).getButton(), enumGBS, eWidJuToDerTech, iTechX, 1, False)
+			screen.attachImageButton(Pnl, "", INFO.getButton("TECH_", iTechX), enumGBS, eWidJuToDerTech, iTechX, 1, False)
 
 		# Quote
 		szTxt = CvTheTechInfo.getQuote()

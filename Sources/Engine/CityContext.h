@@ -71,6 +71,11 @@ public:
 	// point at play; the load reseed folds the same fact from the in-read SEVT_WORKING_CITY_CHANGED DOMAIN events
 	// (Engine/ContextConsumer -- DEC-spine-reseed).
 	void onPlotChanged(const CvPlot* plot, int sign);
+	// ⛔ THE VICINITY TIERS HAVE NO APPLIER. The radius walk is deleted and nothing has replaced it yet, so the
+	// tier dictionaries below stay EMPTY -- deliberately, and visibly wrong, rather than filled by something that
+	// re-reads the plot. They are rebuilt driven by the plot facts' own payloads (bonus +-1, owner old->new,
+	// worked 0/1, the network fact), each of which already names which tier moves and in which direction; an
+	// applier that asks the plot instead is the legacy read path on an event clock ([contexts.md]).
 
 	// --- STORED: the city's AMENITIES -- what its grantors CONFER ON IT (json §8) -----------------------------------
 	// The clean feature list every gate checks (owner): a consumer asks the CITY, never each building in turn.
@@ -79,27 +84,13 @@ public:
 	// refcount shape as OperatingBuildings::providedCount, for the same reason.) `has` is therefore count > 0.
 	// ⚑ It also makes VOLUMETRIC free: the slot is already an int, so an amenity that later becomes a QUANTITY
 	// needs no reshape, only a change in what the number means.
-	mutable ContextDict amenities;
-	// A grantor ARRIVED (sign +1) / LEFT (sign -1): fold its `amenities` (+/-1 each) into the dictionary. A pure
-	// DELTA -- it reads NOTHING, which is the point: a whole-dictionary re-derivation would have to read the
-	// enabler's operating set, and this consumer registers BEFORE the enabler (contexts -> enabler -> modifier),
-	// so at load that set does not exist yet. Listening instead means the store simply builds itself from the
-	// facts, at load (CvCity::read's per-building emit) and at play (setHasBuilding), with no phase ordering.
-	void onBuildingChanged(int eBuilding, int sign) const;
-	// The ONE fold implementation, over any grantor's block (DEC-single-implementation): a BUILDING confers on its
-	// own city, a CIVIC on every city of the empire, and both land here so the conditioned-entry evaluation and the
-	// refcounting exist exactly once. `pBlock` NULL or `sign` 0 is a no-op. `pRecordInto`, when given, receives the
-	// same delta -- that is what makes a fold REVERSIBLE without remembering the gate verdict it was made under.
-	void foldAmenities(const CvClassificationBlock* pBlock, int sign, ContextDict* pRecordInto = NULL) const;
-	// What the EMPIRE-scope grantors currently contribute to THIS city, held separately from `amenities` purely so
-	// the contribution can be withdrawn EXACTLY. ⛔ It is not a second source of truth: `amenities` stays the read.
-	mutable ContextDict empireAmenities;
-	// Re-derive the empire half: withdraw exactly what was last contributed, then re-fold from current state.
-	// ⚖ This is the "unfold the old, refold the new" idiom `plotAttrs` already uses, and it is what makes a
-	// CONDITIONED grant reversible -- the withdrawal replays the RECORDED contribution rather than re-evaluating a
-	// gate whose answer has since changed, so a city that stops being the capital loses exactly what being the
-	// capital gave it. Cheap because it is driven by RARE facts (a civic swap, a capital move), never a read.
-	void refreshEmpireAmenities() const;
+	// ⛔ THE AMENITY STATE IS NOT HELD HERE, and it is not reached THROUGH here either. It lives in its own
+	// context, owned by `CvCity` exactly as `m_operatingBuildings` is, and that context owns its storage, its
+	// maintenance AND the declared set of facts that drives it -- one place responsible (owner;
+	// Engine/AmenityContext.h, [DEC-dict-is-a-consumer]). This context FORWARDS the reads below, the same
+	// STORES-vs-FORWARDS split every other object-owned aggregate takes.
+	// ⚠ Its maintainer reaches `pCity->amenity()` DIRECTLY -- never `getCityContext().amenity()`, which would
+	// make this class a pass-through facade for state it does not own.
 
 	// --- MAINTENANCE: called ONLY by the contexts' spine consumer (Engine/ContextConsumer) --------------------------
 	// Each re-derives its WHOLE store from the bound city through the SAME engine accessors a read used to call --
@@ -107,7 +98,6 @@ public:
 	// CONSTRAINT: no choke point may call these directly. Every mutation that moves a stored fact emits its own DOMAIN
 	// fact, so the consumer is the single trigger path; a direct call beside the event would be a second maintenance
 	// surface for the same state.
-	void refreshVicinityBonuses() const;   // the par.3.4-tiered MAP-provider presence over the workable radius
 	void refreshAreaFacts() const;         // the city's area ID + the coastal water-body size
 	void refreshHolyCity() const;          // how many religions hold this city as their holy city
 	// Distance to the owner's nearest government centre. Re-derived for EVERY city of a player when a
@@ -143,8 +133,8 @@ public:
 	bool isHolyCityAny() const;               // bare IS_HOLY_CITY -- this city is some religion's holy city
 	// The city's amenity reads -- O(1) over the fold. `hasAmenity` is the gate every consumer wants;
 	// `amenityCount` exposes HOW MANY grantors confer it (the refcount, and the volumetric slot).
-	bool hasAmenity(int iAmenityId) const   { return amenities.has(iAmenityId); }
-	int  amenityCount(int iAmenityId) const { return amenities.count(iAmenityId); }
+	bool hasAmenity(int iAmenityId) const;
+	int  amenityCount(int iAmenityId) const;
 	// The BY-KEY read, for a caller that has a name rather than an id. Same shape as CLS_HAS on the info side and
 	// for the same reason: amenity ids are MINTED AT LOAD, so there is no compile-time id to pass
 	// ([DEC-classification-infos]) -- the caller keeps a static cache the registry fills once.
@@ -231,7 +221,7 @@ private:
 
 	// --- the stored blocks; derived state, so NEVER serialized ----------------------------------------------------
 	// The MAP-provider vicinity presence, one dictionary per json par.3.4 ownership tier, all folded by the ONE
-	// derivation (refreshVicinityBonuses). The tiers NEST -- owned ⊂ owned+neutral ⊂ crossBorder, worked ⊂ owned --
+	// derivation (the onPlotChanged fold). The tiers NEST -- owned ⊂ owned+neutral ⊂ crossBorder, worked ⊂ owned --
 	// so the read composes them rather than each carrying a redundant copy.
 	mutable ContextDict m_vicinityOwned;       // a radius tile this city owns (the centre tile included)
 	mutable ContextDict m_vicinityNeutral;     // an UNOWNED radius tile

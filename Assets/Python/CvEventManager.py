@@ -625,9 +625,10 @@ class CvEventManager:
 				if CyTeam.isAlive() and not CyTeam.isOpenBordersTrading():
 					CyTeam.setIsMinorCiv(True)
 
-		CvGameSpeedInfo = GC.getGameSpeedInfo(GAME.getGameSpeedType())
-		self.iTrainPrcntGS = CvGameSpeedInfo.getHammerCostPercent()
-		self.iGameSpeedPercent = CvGameSpeedInfo.getSpeedPercent()
+		#	The pace percents come from the GAME, not the gamespeed info: hammerCostPercent composes a live
+		#	game option, and an info never reads game state ([engine.md] Consuming-system calcs).
+		self.iTrainPrcntGS = GAME.getHammerCostPercent()
+		self.iGameSpeedPercent = GAME.getSpeedPercent()
 		# Find special buildings built where by whom.
 		mapBuildingType = getattr(self, "mapBuildingType", {})
 		aList0 = [ # Only meant for world wonders
@@ -1197,7 +1198,7 @@ class CvEventManager:
 			return
 
 		# Worker placed bonus
-		szType = GC.getImprovementInfo(iImprovement).getType()
+		szType = INFO.getType("IMPROVEMENT_", iImprovement)
 		if szType[:18] == "IMPROVEMENT_BONUS_":
 			CyPlot = GC.getMap().plot(iX, iY)
 			if CyPlot.getBonusType(-1) > -1:
@@ -1344,7 +1345,7 @@ class CvEventManager:
 					popupInfo.setButtonPopupType(ButtonPopupTypes.BUTTONPOPUP_PYTHON)
 					popupInfo.setData1(FeatTypes.FEAT_NATIONAL_WONDER)
 					popupInfo.setData2(CyCity.getID())
-					popupInfo.setText(TRNSLTR.getText("TXT_KEY_FEAT_NATIONAL_WONDER", (GC.getBuildingInfo(iBuilding).getTextKey(), CyCity.getNameKey(), )))
+					popupInfo.setText(TRNSLTR.getText("TXT_KEY_FEAT_NATIONAL_WONDER", (INFO.getTextKey("BUILDING_", iBuilding), CyCity.getNameKey(), )))
 					popupInfo.setOnClickedPythonCallback("featAccomplishedOnClickedCallback")
 					popupInfo.setOnFocusPythonCallback("featAccomplishedOnFocusCallback")
 					popupInfo.addPythonButton(TRNSLTR.getText("TXT_KEY_FEAT_ACCOMPLISHED_OK", ()), "")
@@ -1427,8 +1428,8 @@ class CvEventManager:
 								CyPlot.setImprovementType(BOAT)
 							if bMessage:
 								CvUtil.sendMessage(
-									TRNSLTR.getText("TXT_KEY_MSG_TSUKIJI", (GC.getBonusInfo(BONUS).getDescription(),)),
-									iPlayer, 16, GC.getBonusInfo(BONUS).getButton(), ColorTypes(11), CyCity.getX(), CyCity.getY(), True, True
+									TRNSLTR.getText("TXT_KEY_MSG_TSUKIJI", (INFO.getDescription("BONUS_", BONUS),)),
+									iPlayer, 16, INFO.getButton("BONUS_", BONUS), ColorTypes(11), CyCity.getX(), CyCity.getY(), True, True
 								)
 
 			elif KEY == "NAZCA_LINES":
@@ -2295,7 +2296,7 @@ class CvEventManager:
 				bNewEra = True
 				for iTechX in xrange(GC.getNumTechInfos()):
 					if CyTeam.isHasTech(iTechX) and iTechX != iTech:
-						if GC.getTechInfo(iTechX).getEra() >= GC.getTechInfo(iTech).getEra():
+						if INFO.getIntrinsic("TECH_", iTechX, IntrinsicSlot.PYINT_ERA) >= INFO.getIntrinsic("TECH_", iTech, IntrinsicSlot.PYINT_ERA):
 							bNewEra = False
 							break
 				if bNewEra:
@@ -2798,7 +2799,7 @@ class CvEventManager:
 	def onVictory(self, argsList):
 		iTeam, iVictory = argsList
 		if iVictory >= 0 and iVictory < GC.getNumVictoryInfos():
-			print "Victory!  Team %d achieves a %s victory" %(iTeam, GC.getVictoryInfo(iVictory).getDescription())
+			print "Victory!  Team %d achieves a %s victory" %(iTeam, INFO.getDescription("VICTORY_", iVictory))
 
 
 	def onVassalState(self, argsList):

@@ -1,5 +1,7 @@
 from CvPythonExtensions import *
 GC = CyGlobalContext()
+INFO = CyInfo()
+TEXT = CyGameTextMgr()
 GAME = GC.getGame()
 
 def GameFontScreen():
@@ -59,26 +61,27 @@ def GameFontScreen():
 		"CROSSED_CHAR",
 		"RANDOM_CHAR"
 	]
+	#	Each row is (glyph, prefix, id) rather than an info OBJECT: the glyph is TEXT-plane (this manager's own
+	#	symbol pass), while the button and type key are read back off the info surface by id.
 	aList1 = []
 	for i in range(GC.getNumReligionInfos()):
-		info = GC.getReligionInfo(i)
-		aList1.append((info.getChar(), info))
+		aList1.append((TEXT.getSymbolChar("RELIGION_", i), "RELIGION_", i))
 
 	for i in range(GC.getNumCorporationInfos()):
-		info = GC.getCorporationInfo(i)
-		aList1.append((info.getChar(), info))
+		aList1.append((TEXT.getSymbolChar("CORPORATION_", i), "CORPORATION_", i))
 
 	szBonusClass = "BONUSCLASS_CULTURE"
 	BONUSCLASS_CULTURE = GC.getInfoTypeForString(szBonusClass)
 	bOnce = True
 	for i in range(GC.getNumBonusInfos()):
-		info = GC.getBonusInfo(i)
-		if info.getBonusClassType() == BONUSCLASS_CULTURE:
+		cGlyph = TEXT.getSymbolChar("BONUS_", i)
+		if INFO.getIntrinsic("BONUS_", i, IntrinsicSlot.PYINT_BONUS_CLASS) == BONUSCLASS_CULTURE:
+			#	The culture bonuses all share one glyph, so the atlas lists the CLASS once instead of every member.
 			if bOnce:
-				aList1.append((info.getChar(), szBonusClass))
+				aList1.append((cGlyph, None, szBonusClass))
 				bOnce = False
 		else:
-			aList1.append((info.getChar(), info))
+			aList1.append((cGlyph, "BONUS_", i))
 	iMax = len(aList1)
 
 	iRow = -1
@@ -98,18 +101,18 @@ def GameFontScreen():
 		i = 0
 		while i < iMax:
 			if aList1[i][0] == iID:
-				info = aList1.pop(i)[1]
+				entry = aList1.pop(i)
 				iMax -= 1
 				if bFound:
 					screen.appendTableRow(TABLE)
 					iRow += 1
 					screen.setTableText(TABLE, 2, iRow, u"<font=4>%c</font>" % iID, "", eWidGen, 1, 1, 1<<0)
 				bFound = True
-				if info == szBonusClass:
-					screen.setTableText(TABLE, 4, iRow, szBonusClass, "", eWidGen, 1, 2, 1<<0)
+				if entry[1] is None:
+					screen.setTableText(TABLE, 4, iRow, entry[2], "", eWidGen, 1, 2, 1<<0)
 				else:
-					screen.setTableText(TABLE, 3, iRow, "", info.getButton(), eWidGen, 1, 2, 1<<0)
-					screen.setTableText(TABLE, 4, iRow, info.getType(), "", eWidGen, 1, 2, 1<<0)
+					screen.setTableText(TABLE, 3, iRow, "", INFO.getButton(entry[1], entry[2]), eWidGen, 1, 2, 1<<0)
+					screen.setTableText(TABLE, 4, iRow, INFO.getType(entry[1], entry[2]), "", eWidGen, 1, 2, 1<<0)
 			else:
 				i += 1
 

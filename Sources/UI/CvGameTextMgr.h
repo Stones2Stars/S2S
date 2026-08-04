@@ -23,7 +23,6 @@ class CounterSet;
 class CvCity;
 class CvDeal;
 class CvInfo;                 // appendEntryLines renders any info's compiled entries
-struct ConstructRequirement;
 class CvPopupInfo;
 class CvPlayer;
 
@@ -128,7 +127,8 @@ public:
 	// SETUP category 5, the CvCombatModel::computeCombatPreview detailLines pattern). Appends one localized
 	// line per compiled entry of a family -- magnitude, unit, target, scope, per-scaler and conditions all
 	// rendered by the ONE renderer, so a new channel needs no composer edit at all.
-	void appendEntryLines(CvWStringBuffer& szBuffer, const CvInfo& info, ModifierFamily eFamily);
+	void appendEntryLines(CvWStringBuffer& szBuffer, const CvInfo& info, ModifierFamily eFamily) const;
+	void appendEntityBlocks(CvWStringBuffer& szBuffer, const CvInfo& info, const ModifierFamily* aeFamilies, int iFamilyCount) const;
 	void setImprovementHelp(CvWStringBuffer &szBuffer, ImprovementTypes eImprovement, FeatureTypes eFeature = NO_FEATURE, bool bCivilopediaText = false);
 	void setRouteHelp(CvWStringBuffer &szBuffer, RouteTypes eRoute, bool bCivilopediaText = false);
 	void setTerrainHelp(CvWStringBuffer &szBuffer, TerrainTypes eTerrain, bool bCivilopediaText = false);
@@ -205,19 +205,16 @@ public:
 	// #195 Phase 2: render a single "in-city-vicinity" requirement (terrain / feature /
 	// improvement) from the unified prerequisite model, replacing the per-type hand-rolled
 	// loops in buildBuildingRequiresString.
-	void appendVicinityRequirementHelp(CvWStringBuffer& szBuffer, const ConstructRequirement& req);
 	// #195 Phase 2: status-aware renderer for a model requirement. Filters by what the city
 	// already has (via CvGameObject::hasGOM, the same oracle the construct-condition uses) and
 	// renders the unmet items as a "Requires: <links>" list (AND for REQUIRE_ALL, OR otherwise).
 	// szRequiresKey selects the leading label so callers can distinguish build-time gates from
 	// operating gates (e.g. TXT_KEY_REQUIRES_TO_OPERATE for prereq bonuses -- see #325).
-	void appendRequirementHelp(CvWStringBuffer& szBuffer, const ConstructRequirement& req, const CvCity* pCity, const char* szRequiresKey = "TXT_KEY_REQUIRES");
 	// #195 Phase 2: format one GOM (type,id) as a clickable <link>description</link>.
 	bool buildRequirementItemLink(GOMTypes eGOM, int iId, CvWString& szOut) const;
 	// #195 Phase 2: civic requirements use a different UX -- show ALL prereq civics coloured
 	// by have (green) / need (red), not just the unmet ones. Returns whether this requirement
 	// is satisfied (all for REQUIRE_ALL; any-or-empty for REQUIRE_ANY) for the active-civics note.
-	bool appendCivicRequirementHelp(CvWStringBuffer& szBuffer, const ConstructRequirement& req);
 	void buildMaintenanceModifiersString(CvWStringBuffer& szBuffer, TechTypes eTech, bool bList);
 
 	DllExport void buildCityBillboardIconString( CvWStringBuffer& szBuffer, CvCity* pCity);

@@ -287,13 +287,15 @@ question [grants-machine.md](../specs/triggers.md) left open.
    Revolution / `BarbarianCiv` handouts into the machine, and do not claim "one place" without the DLL
    qualifier. "Yet" is deliberate: the boundary moves when the owner says so, and the map above is what that
    later pass will work from.
-2. **Conquest re-grant.** `bFirst=false` on city acquisition (`CvPlayer.cpp:2572`) is the engine's deliberate
-   "don't re-fire grants on conquest" switch. **CODE STATE — the carrier is BUILT:** `SEVT_BUILDING_CHANGED` now
-   carries `bFirst` (`emitBuildingChanged(..., bool bFirst)`, `CvEventSpine.h:322`) — the real flag from
-   `CvCity.cpp:13501`, hard `false` from the load reseed at `:16752` (a load RESTORES, it is not an acquisition) —
-   and the machine consumes it (`s_bFirstAcquire = (e.iA != 0)`, `CvTriggerEngine.cpp`), emitting it as
-   `firstAcquire` beside `suppressed` so the withholding REASON is on the wire. What the apply must then honour is
-   the engine's own semantic; the ruling itself is not closed here.
+2. **Conquest re-grant.** `bFirst=false` on city acquisition is the engine's deliberate "don't re-fire grants on
+   conquest" switch. The carrier is `SEVT_CITY_BUILDING_ADDED`, which carries `bFirst` (`emitBuildingAdded(..., bool
+   bFirst)`) — the real flag from `CvCity::setHasBuilding`, hard `false` from the load reseed in `CvCity::read`
+   (a load RESTORES, it is not an acquisition) — and the machine consumes it (`s_bFirstAcquire = (e.iA != 0)`,
+   `CvTriggerEngine.cpp`), emitting it as `firstAcquire` beside `suppressed` so the withholding REASON is on the
+   wire. ⚑ `bFirst` is deliberately NOT a second event: it does not say how the building arrived (nothing
+   downstream may branch on granted-vs-constructed — [triggers.md](../specs/triggers.md)), only whether the
+   first-build payload is owed. What the apply must then honour is the engine's own semantic; the ruling itself is
+   not closed here.
 3. **Serialized ledgers (owner): the machine REPLACES the existing per-turn work**, so the ledgers
    feeding it become DERIVED. All three are written only by `CvCity::processBuilding` (`changePropertySpawn`
    `:4255`, `changeHealUnitCombatTypeVolume` `:4352`, `changeNumUnitFullHeal` `:4370`, all

@@ -21,6 +21,7 @@
 #include "Infrastructure/CvDerivedCache.h"  // the ONE derived-cache component (mark-driven, never serialized)
 #include "Enabler/CvEnabler.h"              // CityEnabler -- the per-city buildings/units tri-state domains
 #include "Enabler/CvOperatingBuildings.h"   // the ACTIVE-building set the modifier reads (enabler.md §3.2)
+#include "AmenityContext.h"                 // the city's amenity state: storage + maintenance, one place responsible
 
 class CvArea;
 class CvArtInfoBuilding;
@@ -537,12 +538,10 @@ public:
 
 	// ⛔ A BARE FETCH of the derived cache -- never a gate test, never a recompute on the read path (the
 	// `ensure()`-on-read protocol is tombstoned BY NAME, [superseded-ideas #14]). The MARK is what rebuilds:
-	// markMaintenanceDirty() marks AND recomputes, which is the invariant that lets this read be bare.
 	int64_t getMaintenance() const;
 	int64_t getMaintenanceTimes100() const;
 	// The realized value of ONE maintenance KIND -- the per-component breakdown read.
 	int64_t maintenanceOfKind(int iKind) const;
-	void markMaintenanceDirty() const;
 	// The city's ONE additive maintenance percent stack, rolled over the scope chain the city sits under
 	// (team + empire + city) by the cross-scope roll-up. It replaces the hand-summed city + player + area +
 	// connected-city legs: there is no area scope ([state-repositories.md]), an `area` modifier authors at
@@ -721,7 +720,6 @@ public:
 	// Marked ONLY by the modifier consumer's derived masks; recompute-only, never serialized.
 	const CvCascadePackage<CvCity>& getCascadePackage() const { return m_cascadePackage; }
 	// The package's refresh delegate (the CvDerivedCacheSet contract) -- delegates to the ONE gather.
-	void refreshCascadePackage(int64_t iMask) const;
 
 	// ---- THE ENABLER'S PER-CITY STATE (enabler.md §7.1) -- the "can I?" machine's host on this scope owner.
 	// ⛔ NOT a value cache and carrying NO dirty protocol: there is no dirty->recompute path at all. Both are
@@ -736,6 +734,12 @@ public:
 	mutable OperatingBuildings m_operatingBuildings;   // the ACTIVE (non-dormant) set + its provided bonuses, at the
 	                                                   // operate/provides least fixpoint -- what the MODIFIER reads
 	                                                   // to decide which buildings deposit (enabler.md §3.2)
+	// The city's AMENITY state. Owned HERE, beside the operating set and for the same reason: the city owns the
+	// STORAGE while the context owns the delta LOGIC and the facts that drive it (Engine/AmenityContext.h --
+	// one place responsible). `CityContext` FORWARDS the reads; its maintainer reaches THIS accessor directly,
+	// never through the city context, which owns none of this state.
+	mutable AmenityContext m_amenity;
+	AmenityContext& amenity() const { return m_amenity; }
 
 	// ---- THE AVAILABILITY READ SURFACE -- the ENABLER's "can I, right now?" half of the GAME-OBJECT read role
 	// (patterns.md § THE TWO READ ROLES). Distinct from the INFO role's authored what-do-I-CARRY answer and from

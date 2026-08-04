@@ -341,8 +341,8 @@ public:
 	// ---- AT READ -- so a scope object's realized channel value is the combine over the packages it sits under,
 	// ---- computed HERE once for every consumer ([DEC-single-implementation]).
 	// ---- ⛔ A lower scope never STORES an upper scope's sums: this composes at read and caches nothing upward.
-	// ---- ⛔ Every package read below is a BARE FETCH (readFlat/readPercent/readSum -- the CONSUMER read path),
-	// ---- never the gather's mark-firing sourceFlat/sourcePercent inputs, which belong to a rebuild only.
+	// ---- ⛔ Every package read below is a BARE FETCH (readFlat/readPercent/readSum) -- a package carries no other
+	// ---- read surface, and a read never triggers work of any kind ([DEC-maintained-sum]).
 
 	// The §2 combine over ONE channel's rolled sums. A group read has no external base (`base` = 0) and
 	// multiplier deposits are identity on every package channel, so the arithmetic is
@@ -377,6 +377,22 @@ public:
 	// different slot), so re-rolling it here would be a second derivation of a number that already exists.
 	// iChannel < 0 (never authored anywhere) answers 0.
 	static int realizedAtPlot(const CvPlot& plot, int iChannel);
+	// ⚖ THE SPECIALIST TERM of the §2a rate -- each assigned specialist's own output at CITY scope, times how
+	// many are assigned. Exposed because BOTH sides of the tripwire need it and neither may own it: the ORACLE
+	// folds it from fresh documents, the STORED read folds it beside the stored packages, and a second copy
+	// would make the two disagree for reasons that are not a missed emit ([DEC-single-implementation]).
+	static int64_t specialistTerm(const CvCity& city, int iChannel, const CvCascadeEvalCtx& evalCtx);
+
+	// ⚖ THE CITY RECEIVER -- the realized §2a RATE of a channel this city CONSUMES, re-summed from the members
+	// it is made of rather than read from a stored total. Its BASE is the Σ over the city's WORKED PLOTS of
+	// their own package flats -- the members whose realized values a receiver is defined as summing
+	// (state-repositories.md § A CROSS-SCOPE receiver total).
+	// ⛔ IT IS NOT A MAINTAINED SLOT, and could not be: a receiver is a Σ of COMBINES, and a combine is
+	// non-linear in the deposits it reads -- moving one member's Σflat by Δ moves this by Δ scaled by that
+	// member's OWN percent stack. There is no ±value a deposit could apply, which is why the receiver plane
+	// carries no delta verb at all.
+	static int64_t cityReceiverRate(const CvCity& city, int iChannel);
+
 	static int realizedAtCity(const CvCity& city, int iChannel);
 	// The CITY chain's two LEGS, before the combine -- the ONE description of what a city sits under (team +
 	// empire + (area × owner) + city), shared by realizedAtCity and by every consumer that needs the ONE additive

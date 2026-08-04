@@ -21,6 +21,9 @@
 #include "CvWorldInfo.h"               // getCityLimitsScalePercent -- the world-size scale of the civic base limit
 #include "Conditions/CvConditionEval.h"    // cascadeEvalCondition / cascadeCountOf / cascadeCountCityReligions
 #include "Data/CvDepositIndex.h"       // DepositIndex + the compiled CascadeDeposit record (hot paths match ints)
+#include "Infos/CvModEntry.h"          // CvModEntry + modSegmentLookup -- the interner targetSeg is written in
+#include "Cascade/CvCascadeChannelRegistry.h"   // channelLookup -- the entry's (family, kind) -> channel id
+#include "Engine/CvPlot.h"             // the plot substrate resolveEntry keys plot-scope targeted entries on
 
 // Query-side cached segment ids. A hit (>=0) is cached forever; a miss RE-LOOKS-UP each call -- the interner is
 // append-only, so a re-map can turn a miss into a hit but never invalidates a cached id.
@@ -31,6 +34,187 @@ static int mmk_seg(const char* s, int& cache)
 }
 static int s_segmentSelf = -1;
 static int s_segmentCityLimit = -1;
+
+// ⛔ THE TARGET SEGMENTS RESOLVE THROUGH `modSegmentLookup`, NOT `DepositIndex::lookupSegment`, AND THE TWO ARE
+// NOT INTERCHANGEABLE. They are independent interners with independently-assigned ids (`s_modSegments` vs
+// `s_segs`), and `CvModEntry::targetSeg` is written by `modSegmentIntern` -- the FIRST of them. Comparing a
+// targetSeg against the other map's id compiles clean, matches nothing, and silently stops every
+// plot-substrate keyed deposit from depositing. Same caching discipline as mmk_seg above: a hit is cached
+// forever, a miss re-looks-up (the interner is append-only, so a miss can become a hit but an id never moves).
+static int mmk_modSeg(const char* szSegment, int& iCache)
+{
+	if (iCache < 0) iCache = modSegmentLookup(std::string(szSegment));
+	return iCache;
+}
+static int s_segPlots = -1;
+static int s_segImprovements = -1;
+static int s_segTerrains = -1;
+static int s_segFeatures = -1;
+static int s_segBonuses = -1;
+static int s_segRoutes = -1;
+static int s_segEmpires = -1;
+static int s_segCities = -1;
+
+bool MMKernel::unitIsFlatSide(CvCascUnit eUnit)
+{
+	return eUnit == CASC_UNIT_FLAT
+		|| eUnit == CASC_UNIT_COUNT
+		|| eUnit == CASC_UNIT_PER_POPULATION
+		|| eUnit == CASC_UNIT_PER_SPECIALIST
+		|| eUnit == CASC_UNIT_PER_CORPORATION_LEVEL;
+}
+
+bool MMKernel::unitIsPercentSide(CvCascUnit eUnit)
+{
+	return eUnit == CASC_UNIT_PERCENT || eUnit == CASC_UNIT_RAW_PERCENT;
+}
+
+bool MMKernel::isRateFamily(ModifierFamily eFamily)
+{
+	return infoFamilyYield(eFamily) >= 0 || infoFamilyCommerce(eFamily) >= 0;
+}
+
+// THE ONE PER-ENTRY RESOLVE (see the header): what this entry deposits at this scope, and nothing about where
+// the answer goes. The apply path and the endpoint oracle both fold through it, so the tripwire they feed
+// compares one derivation against two builds rather than two derivations ([DEC-single-implementation]).
+bool MMKernel::resolveEntry(const CvModEntry& kEntry, int iMultiplier, CvCascScope eScope,
+	const CvCascadeEvalCtx& evalCtx, const CvPlot* pKeyPlot, int iPureSign, bool bSkipRateChannels,
+	int& iChannelOut, bool& bPercentSideOut, int64_t& iValueOut, PerScaling ePerScaling)
+{
+	if (iMultiplier == 0)
+	{
+		return false;
+	}
+	const int iEmpiresSeg = mmk_modSeg("empires", s_segEmpires);
+	const int iCitiesSeg = mmk_modSeg("cities", s_segCities);
+	// json §3.3's `empires` plural target: a WORLD-scope deposit onto EVERY empire lands in each PLAYER's
+	// package, because WORLD is CONFIG and carries no package of its own (state-repositories.md). So the empire
+	// scope accepts it even though the authored scope is world.
+	const bool bWorldEmpires = (eScope == CASC_SCOPE_EMPIRE
+		&& kEntry.scope == CASC_SCOPE_WORLD
+		&& iEmpiresSeg >= 0
+		&& kEntry.targetSeg == iEmpiresSeg);
+	// json §3.3's `cities` plural target, the exact sibling one scope down: an EMPIRE-scope deposit onto EVERY
+	// city lands in each CITY's package, because this city IS one of the targets.
+	// ⚑ Resolving PER CITY is the whole point: it is what lets the entry's `per` scaler and its conditions
+	// resolve against THIS city. Summed into the empire package instead they would resolve once, against no
+	// city, and hand every city that one number.
+	const bool bEmpireCities = (eScope == CASC_SCOPE_CITY
+		&& kEntry.scope == CASC_SCOPE_EMPIRE
+		&& iCitiesSeg >= 0
+		&& kEntry.targetSeg == iCitiesSeg);
+	if (kEntry.scope != eScope && !bWorldEmpires && !bEmpireCities)
+	{
+		return false;
+	}
+	if (kEntry.unitQual != NULL)
+	{
+		return false;   // unit-carried values ride ON TOP live ([DEC-unit-modifiers-on-top]) -- never stored
+	}
+	const bool bPercentSide = unitIsPercentSide(kEntry.unit);
+	if (!bPercentSide && !unitIsFlatSide(kEntry.unit))
+	{
+		return false;
+	}
+	if (bSkipRateChannels && isRateFamily(kEntry.family))
+	{
+		return false;
+	}
+	const int iChannel = CascadeChannelRegistry::channelLookup(kEntry.family,
+		(kEntry.family == MODFAM_PROPERTY) ? 0 : kEntry.kind, kEntry.propertyFk);
+	if (iChannel < 0)
+	{
+		return false;   // outside the vocabulary / never a package channel -- drops out with no special-casing
+	}
+	// TARGETED entries: at PLOT scope a keyed entry resolves iff its key IS this plot's substrate (the engine's
+	// improvement/terrain-keyed addends resolve INSIDE the isolated plot package, modifier.md §2); a
+	// `plots`-target entry resolves iff its per-plot filter holds HERE. At every other scope a targeted entry
+	// stays an entry-list read (the reverse pass already landed the building-keyed boosts on their targets).
+	if (kEntry.targetSeg >= 0 || kEntry.targetFk >= 0)
+	{
+		// The `empires` and `cities` fans are the targeted entries that resolve outside plot scope: their target
+		// IS the owner being resolved for, so landing it here is the deposit, not a keyed lookup.
+		if (!bWorldEmpires && !bEmpireCities && (eScope != CASC_SCOPE_PLOT || pKeyPlot == NULL))
+		{
+			return false;
+		}
+		if (bWorldEmpires || bEmpireCities)
+		{
+			// falls through: the fan IS the deposit, no per-target test applies
+		}
+		else if (kEntry.targetSeg == mmk_modSeg("plots", s_segPlots))
+		{
+			// falls through: applies() below evaluates the per-plot filter against THIS plot's ctx
+		}
+		else if (kEntry.targetSeg == mmk_modSeg("improvements", s_segImprovements))
+		{
+			if (kEntry.targetFk < 0 || kEntry.targetFk != (int)pKeyPlot->getImprovementType())
+			{
+				return false;
+			}
+		}
+		else if (kEntry.targetSeg == mmk_modSeg("terrains", s_segTerrains))
+		{
+			if (kEntry.targetFk < 0 || kEntry.targetFk != (int)pKeyPlot->getTerrainType())
+			{
+				return false;
+			}
+		}
+		else if (kEntry.targetSeg == mmk_modSeg("features", s_segFeatures))
+		{
+			if (kEntry.targetFk < 0 || kEntry.targetFk != (int)pKeyPlot->getFeatureType())
+			{
+				return false;
+			}
+		}
+		else if (kEntry.targetSeg == mmk_modSeg("bonuses", s_segBonuses))
+		{
+			const TeamTypes eSeeingTeam = (evalCtx.empireContext != NULL) ? (TeamTypes)evalCtx.empireContext->teamId() : NO_TEAM;
+			if (kEntry.targetFk < 0 || kEntry.targetFk != (int)pKeyPlot->getBonusType(eSeeingTeam))
+			{
+				return false;
+			}
+		}
+		else if (kEntry.targetSeg == mmk_modSeg("routes", s_segRoutes))
+		{
+			if (kEntry.targetFk < 0 || kEntry.targetFk != (int)pKeyPlot->getRouteType())
+			{
+				return false;
+			}
+		}
+		else
+		{
+			return false;
+		}
+	}
+	if (iPureSign > 0 && kEntry.value < 0)
+	{
+		return false;   // PURE_TRAITS: a positive trait's downside values drop (modifier.md §4)
+	}
+	if (iPureSign < 0 && kEntry.value > 0)
+	{
+		return false;   // PURE_TRAITS: a negative trait's upside values drop
+	}
+	if (!audienceOk(kEntry.aiOnly, evalCtx))
+	{
+		return false;
+	}
+	if (!applies(kEntry.enabled, kEntry.disabled, evalCtx))
+	{
+		return false;   // the conditioned evaluation -- the dormancy model (modifier.md §3)
+	}
+	// the ONE §3.7 resolver applies the per scaler AND the religion: counted-kind filter. A COUNT fact wants
+	// the per-UNIT value instead, because it supplies its own Δ (see PerScaling on the declaration).
+	int64_t iValue = (ePerScaling == PER_SCALE_APPLIED)
+		? perScale(kEntry, evalCtx, kEntry.value)
+		: (int64_t)kEntry.value;
+	iValue *= iMultiplier;
+
+	iChannelOut = iChannel;
+	bPercentSideOut = bPercentSide;
+	iValueOut = iValue;
+	return true;
+}
 
 // A deposit applies iff enabled holds (or is absent) AND disabled does NOT hold (json.md §3.9), evaluated through the
 // typed-condition evaluator against the live engine ctx. MODIFIER context = the lenient flags (default): a

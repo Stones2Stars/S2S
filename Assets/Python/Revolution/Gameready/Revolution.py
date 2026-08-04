@@ -25,6 +25,7 @@ import BugCore
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 GAME = GC.getGame()
 MAP = GC.getMap()
 STATE = CyState()
@@ -2629,7 +2630,7 @@ class Revolution:
 						if( instigator.isHolyCityByType(relType) and not stateRel == relType ) :
 							if( self.allowStateReligionToJoin or not instigator.isHasReligion(stateRel) ) :
 								revRel = relType
-								if self.LOG_DEBUG: print "[REV] Revolt: Instigator is rival religion (%s) holy city" % GC.getReligionInfo(revRel).getDescription()
+								if self.LOG_DEBUG: print "[REV] Revolt: Instigator is rival religion (%s) holy city" % INFO.getDescription("RELIGION_", revRel)
 								break
 
 			# Check for significant minority religion
@@ -2655,7 +2656,7 @@ class Revolution:
 						# Is the best good enough?
 						if maxCount >= 3:
 							revRel = maxCountRel
-							if self.LOG_DEBUG: print "[REV] Revolt: Instigator and enough others have " + GC.getReligionInfo(revRel).getDescription()
+							if self.LOG_DEBUG: print "[REV] Revolt: Instigator and enough others have " + INFO.getDescription("RELIGION_", revRel)
 
 			# Decide how to revolt
 			if( not revRel == None ) :
@@ -2665,7 +2666,7 @@ class Revolution:
 				for pCity in revCities :
 					if( pCity.isHasReligion(revRel) ) :
 						if( self.allowStateReligionToJoin or not pCity.isHasReligion(stateRel) ) :
-							if self.LOG_DEBUG: print "[REV] Revolt: %s has %s" % (pCity.getName(), GC.getReligionInfo(revRel).getDescription())
+							if self.LOG_DEBUG: print "[REV] Revolt: %s has %s" % (pCity.getName(), INFO.getDescription("RELIGION_", revRel))
 							relCities.append(pCity)
 
 				if( bPeaceful ) :
@@ -2677,17 +2678,17 @@ class Revolution:
 
 					if( not newRelCivic == None and newLevel > level ) :
 						if( level < -5 or (newLevel > 5 and level < 0) ) :
-							if self.LOG_DEBUG: print "[REV] Revolt: Asking for change from %s to %s"%(GC.getCivicInfo(pPlayer.getCivics(optionType)).getDescription(),GC.getCivicInfo(newRelCivic).getDescription())
+							if self.LOG_DEBUG: print "[REV] Revolt: Asking for change from %s to %s"%(GC.getCivicInfo(pPlayer.getCivics(optionType)).getDescription(),INFO.getDescription("CIVIC_", newRelCivic))
 
 							bodStr = RevUtils.getCityTextList(relCities, bPreCity = True, bPostIs = True)
 
 							# Can't pay them enough so they don't feel oppressed
 
 							if( level < -5 ) :
-								bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_REL_THEOCRACY1",()) + ' ' + GC.getCivicInfo(pPlayer.getCivics(optionType)).getDescription() + ".  " + TRNSLTR.getText("TXT_KEY_REV_REL_THEOCRACY2",()) + ' ' + GC.getCivicInfo(newRelCivic).getDescription() + '.'
+								bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_REL_THEOCRACY1",()) + ' ' + GC.getCivicInfo(pPlayer.getCivics(optionType)).getDescription() + ".  " + TRNSLTR.getText("TXT_KEY_REV_REL_THEOCRACY2",()) + ' ' + INFO.getDescription("CIVIC_", newRelCivic) + '.'
 							else :
-								bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_REL_FREE_REL1",()) + ' ' + GC.getCivicInfo(newRelCivic).getDescription() + '.  ' + TRNSLTR.getText("TXT_KEY_REV_REL_FREE_REL2",()) + ' ' + GC.getReligionInfo(stateRel).getDescription()
-								bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_REL_PRACTICE",()) + ' ' + GC.getReligionInfo(revRel).getDescription() + '.'
+								bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_REL_FREE_REL1",()) + ' ' + INFO.getDescription("CIVIC_", newRelCivic) + '.  ' + TRNSLTR.getText("TXT_KEY_REV_REL_FREE_REL2",()) + ' ' + INFO.getDescription("RELIGION_", stateRel)
+								bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_REL_PRACTICE",()) + ' ' + INFO.getDescription("RELIGION_", revRel) + '.'
 							bodStr += '\n\n' + TRNSLTR.getText("TXT_KEY_REV_HONORING",())
 
 							if self.LOG_DEBUG: print "[REV] Revolt: %d cities in revolution" % len(relCities)
@@ -2723,7 +2724,7 @@ class Revolution:
 						#iBuyOffCost = (60 + 12*pPlayer.getCurrentEra())*len(relCities) + GAME.getSorenRandNum(50+10*pPlayer.getCurrentEra(),'Rev')
 						if( not pPlayer.isHuman() ) : iBuyOffCost = int( iBuyOffCost*.7 )
 						iBuyOffCost = max( [iBuyOffCost, pPlayer.getGold()/10 + GAME.getSorenRandNum(50,'Rev')] )
-						bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_REL_CHANGE",()) + ' ' + GC.getReligionInfo( revRel ).getDescription() + '.'
+						bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_REL_CHANGE",()) + ' ' + INFO.getDescription("RELIGION_", revRel) + '.'
 						bodStr += '  ' + TRNSLTR.getText("TXT_KEY_REV_CURRENTLY",()) + ' %d '%(revRelCount) + TRNSLTR.getText("TXT_KEY_REV_REL_NEW_REL",()) + ' %d '%(stateRelCount) + TRNSLTR.getText("TXT_KEY_REV_REL_STATE_REL",())
 						bodStr += '\n\n' + TRNSLTR.getText("TXT_KEY_REV_REL_HONORING",())
 
@@ -2788,10 +2789,10 @@ class Revolution:
 								if self.LOG_DEBUG: print "[REV] Revolt: Vassal style %s chosen" % vassalStyle
 
 					if( not vassalStyle == None ) :
-						bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_REL_PEACE_VASSAL_1",()) + ' ' + GC.getReligionInfo( revRel ).getDescription() + '.'
+						bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_REL_PEACE_VASSAL_1",()) + ' ' + INFO.getDescription("RELIGION_", revRel) + '.'
 						bodStr += '  ' + TRNSLTR.getText("TXT_KEY_REV_REL_PEACE_VASSAL_2",()) + ' ' + pRevPlayer.getCivilizationShortDescription(0) + ' ' + TRNSLTR.getText("TXT_KEY_REV_REL_PEACE_VASSAL_3",())
 					else :
-						bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_REL_PEACE_IND_1",()) + ' ' + GC.getReligionInfo( revRel ).getDescription() + '.'
+						bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_REL_PEACE_IND_1",()) + ' ' + INFO.getDescription("RELIGION_", revRel) + '.'
 						bodStr += '  ' + TRNSLTR.getText("TXT_KEY_REV_REL_PEACE_IND_2",()) + ' ' + GC.getReligionInfo(pPlayer.getStateReligion()).getDescription() + ' ' + TRNSLTR.getText("TXT_KEY_REV_REL_PEACE_IND_3",()) + ' ' + pRevPlayer.getCivilizationShortDescription(0) + '.'
 						bodStr += '\n\n' + TRNSLTR.getText("TXT_KEY_REV_REL_PEACE",())
 
@@ -2839,7 +2840,7 @@ class Revolution:
 
 					bodStr = RevUtils.getCityTextList(indCities, bPreCity = True, bPostIs = True)
 
-					bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_REL_VIOLENT_IND_1",()) + ' %s.'%(GC.getReligionInfo( revRel ).getDescription())
+					bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_REL_VIOLENT_IND_1",()) + ' %s.'%(INFO.getDescription("RELIGION_", revRel))
 					bodStr += '  ' + TRNSLTR.getText("TXT_KEY_REV_REL_VIOLENT_IND_2",()) + ' %s '%(GC.getReligionInfo( pPlayer.getStateReligion() ).getDescription()) + TRNSLTR.getText("TXT_KEY_REV_REL_VIOLENT_IND_3",())
 					bodStr += '\n\n' + TRNSLTR.getText("TXT_KEY_REV_REL_VIOLENT_IND",())
 
@@ -2884,7 +2885,7 @@ class Revolution:
 						and not pTeam.isAVassal()
 						):
 							if self.LOG_DEBUG:
-								print "[REV] Holy city for %s (%d) is %s, owner %s practices %d"%(GC.getReligionInfo(stateRel).getDescription(),stateRel,stateHolyCity.getName(),stateHolyCityOwner.getCivilizationDescription(0),stateHolyCityOwner.getStateReligion())
+								print "[REV] Holy city for %s (%d) is %s, owner %s practices %d"%(INFO.getDescription("RELIGION_", stateRel),stateRel,stateHolyCity.getName(),stateHolyCityOwner.getCivilizationDescription(0),stateHolyCityOwner.getStateReligion())
 
 							relCities = []
 							for city in revCities:
@@ -2923,7 +2924,7 @@ class Revolution:
 								if self.LOG_DEBUG: print "[REV] Revolt: Ask for crusade against fellow believer, %s!" % stateHolyCityOwner.getCivilizationDescription(0)
 
 								bodStr += " " + TRNSLTR.getText("TXT_KEY_REV_HL_HOLY_WAR",()) + " %s."%(stateHolyCityOwner.getCivilizationDescription(0))
-								bodStr += "   " + TRNSLTR.getText("TXT_KEY_REV_HL_HOLY_WHILE",()) + ' %s '%(stateHolyCityOwner.getCivilizationDescription(0)) + TRNSLTR.getText("TXT_KEY_REV_HL_HOLY_CLAIMS",()) + ' %s, '%(GC.getReligionInfo(stateRel).getDescription()) + TRNSLTR.getText("TXT_KEY_REV_HL_HOLY_WORTHY",()) + " %s!"%(stateHolyCity.getName())
+								bodStr += "   " + TRNSLTR.getText("TXT_KEY_REV_HL_HOLY_WHILE",()) + ' %s '%(stateHolyCityOwner.getCivilizationDescription(0)) + TRNSLTR.getText("TXT_KEY_REV_HL_HOLY_CLAIMS",()) + ' %s, '%(INFO.getDescription("RELIGION_", stateRel)) + TRNSLTR.getText("TXT_KEY_REV_HL_HOLY_WORTHY",()) + " %s!"%(stateHolyCity.getName())
 								bodStr += "   " + TRNSLTR.getText("TXT_KEY_REV_HL_HOLY_DEVOTION",()) + " %s "%(stateHolyCity.getName()) + TRNSLTR.getText("TXT_KEY_REV_HL_HOLY_UNWORTHY",())
 								bodStr += "\n\n" + TRNSLTR.getText("TXT_KEY_REV_HL_HOLY_REQUEST",())
 
@@ -2960,7 +2961,7 @@ class Revolution:
 						iBuyOffCost = totalRevIdx/(20-pPlayer.getCurrentEra()) + GAME.getSorenRandNum(50+10*pPlayer.getCurrentEra(),'Rev')
 						if( not pPlayer.isHuman() ) : iBuyOffCost = int( iBuyOffCost*.7 )
 						iBuyOffCost = max( [iBuyOffCost, pPlayer.getGold()/10 + GAME.getSorenRandNum(50,'Rev')] )
-						bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_HL_EMAN_REJECT",()) + ' %s '%(GC.getCivicInfo(newCivic).getDescription()) + TRNSLTR.getText("TXT_KEY_REV_HL_EMAN_CIVIC",())
+						bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_HL_EMAN_REJECT",()) + ' %s '%(INFO.getDescription("CIVIC_", newCivic)) + TRNSLTR.getText("TXT_KEY_REV_HL_EMAN_CIVIC",())
 						bodStr += '\n\n' + TRNSLTR.getText("TXT_KEY_REV_PEACEFUL_CONCLUSION",())
 						bodStr += '  ' + TRNSLTR.getText("TXT_KEY_REV_HL_EMAN_SLAVE",())
 						bodStr += '  ' + TRNSLTR.getText("TXT_KEY_REV_BRIBE",())
@@ -3012,8 +3013,8 @@ class Revolution:
 							bodStr += RevUtils.getCityTextList(slaveCities) + '!'
 
 							bodStr += '  ' + TRNSLTR.getText("TXT_KEY_REV_HL_SLAVE_DEMAND",())
-							if self.LOG_DEBUG: print "[REV] Revolt: Asking change to " + GC.getCivicInfo(newCivic).getDescription()
-							bodStr += ' %s '%(GC.getCivicInfo(newCivic).getDescription())
+							if self.LOG_DEBUG: print "[REV] Revolt: Asking change to " + INFO.getDescription("CIVIC_", newCivic)
+							bodStr += ' %s '%(INFO.getDescription("CIVIC_", newCivic))
 
 							bodStr += TRNSLTR.getText("TXT_KEY_REV_HL_SLAVE_DENY",())
 
@@ -3039,7 +3040,7 @@ class Revolution:
 				[newEnviroLevel, newCivic] = RevUtils.getBestEnvironmentalProtection(pPlayer, optionType)
 				if( bPeaceful and newEnviroLevel > enviroLevel + 2 and not newCivic == None ) :
 					if( 30 > GAME.getSorenRandNum(100, 'Revolt - environmentalism request') ):
-						if self.LOG_DEBUG: print "[REV] Revolt: Asking change to %s, %d (environment)"%(GC.getCivicInfo(newCivic).getDescription(),newCivic)
+						if self.LOG_DEBUG: print "[REV] Revolt: Asking change to %s, %d (environment)"%(INFO.getDescription("CIVIC_", newCivic),newCivic)
 
 						bodStr = RevUtils.getCityTextList(revCities, bPreCity = True, bPostIs = True)
 
@@ -3050,7 +3051,7 @@ class Revolution:
 						iBuyOffCost = totalRevIdx/(20-pPlayer.getCurrentEra()) + GAME.getSorenRandNum(50+10*pPlayer.getCurrentEra(),'Rev')
 						if( not pPlayer.isHuman() ) : iBuyOffCost = int( iBuyOffCost*.7 )
 						iBuyOffCost = max( [iBuyOffCost, pPlayer.getGold()/10 + GAME.getSorenRandNum(50,'Rev')] )
-						bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_HL_ENV_REQUEST",()) + ' %s.'%(GC.getCivicInfo(newCivic).getDescription())
+						bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_HL_ENV_REQUEST",()) + ' %s.'%(INFO.getDescription("CIVIC_", newCivic))
 						bodStr += '  ' + TRNSLTR.getText("TXT_KEY_REV_HL_ENV_GREEN",())
 						bodStr += '\n\n' + TRNSLTR.getText("TXT_KEY_REV_PEACEFUL_CONCLUSION",())
 						bodStr += '  ' + TRNSLTR.getText("TXT_KEY_REV_HL_ENV_SMOG",())
@@ -3098,10 +3099,10 @@ class Revolution:
 						bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_COL_GOVT_REQUEST",())
 						if( newDemoLevel > 9 ) :
 							if self.LOG_DEBUG: print "[REV] Revolt: Asking change to universal sufferage"
-							bodStr += "  " + TRNSLTR.getText("TXT_KEY_REV_COL_GOVT_PROTESTING",()) + " %s!"%(GC.getCivicInfo(newCivic).getDescription())
+							bodStr += "  " + TRNSLTR.getText("TXT_KEY_REV_COL_GOVT_PROTESTING",()) + " %s!"%(INFO.getDescription("CIVIC_", newCivic))
 						else :
 							if self.LOG_DEBUG: print "[REV] Revolt: Asking change to representation"
-							bodStr += "  " + TRNSLTR.getText("TXT_KEY_REV_COL_GOVT_CRIES",()) + " %s!' "%(GC.getCivicInfo(newCivic).getDescription()) +TRNSLTR.getText("TXT_KEY_REV_COL_GOVT_MARCH",())
+							bodStr += "  " + TRNSLTR.getText("TXT_KEY_REV_COL_GOVT_CRIES",()) + " %s!' "%(INFO.getDescription("CIVIC_", newCivic)) +TRNSLTR.getText("TXT_KEY_REV_COL_GOVT_MARCH",())
 
 						#iBuyOffCost = (75 + 12*pPlayer.getCurrentEra())*len(foreignCities) + GAME.getSorenRandNum(100+10*pPlayer.getCurrentEra(),'Rev')
 						totalRevIdx = 0
@@ -3150,7 +3151,7 @@ class Revolution:
 					[laborLevel,optionType] = RevUtils.getLaborFreedom(pPlayer)
 					[newLaborLevel,newCivic] = RevUtils.getBestLaborFreedom(pPlayer, optionType)
 					if( laborLevel < 0 and newLaborLevel > 5 and not newCivic == None ):
-						if self.LOG_DEBUG: print "[REV] Revolt: Asking change to %s, %d"%(GC.getCivicInfo(newCivic).getDescription(),newCivic)
+						if self.LOG_DEBUG: print "[REV] Revolt: Asking change to %s, %d"%(INFO.getDescription("CIVIC_", newCivic),newCivic)
 
 						#iBuyOffCost = (50 + 12*pPlayer.getCurrentEra())*len(revCities) + GAME.getSorenRandNum(50+10*pPlayer.getCurrentEra(),'Rev')
 						totalRevIdx = 0
@@ -3159,7 +3160,7 @@ class Revolution:
 						iBuyOffCost = totalRevIdx/(20-pPlayer.getCurrentEra()) + GAME.getSorenRandNum(50+10*pPlayer.getCurrentEra(),'Rev')
 						if( not pPlayer.isHuman() ) : iBuyOffCost = int( iBuyOffCost*.7 )
 						iBuyOffCost = max( [iBuyOffCost, pPlayer.getGold()/10 + GAME.getSorenRandNum(50,'Rev')] )
-						bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_HL_EMAN_REJECT",()) + ' %s '%(GC.getCivicInfo(newCivic).getDescription()) + TRNSLTR.getText("TXT_KEY_REV_HL_EMAN_CIVIC",())
+						bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_HL_EMAN_REJECT",()) + ' %s '%(INFO.getDescription("CIVIC_", newCivic)) + TRNSLTR.getText("TXT_KEY_REV_HL_EMAN_CIVIC",())
 						bodStr += '\n\n' + TRNSLTR.getText("TXT_KEY_REV_PEACEFUL_CONCLUSION",())
 						bodStr += '  ' + TRNSLTR.getText("TXT_KEY_REV_HL_EMAN_SLAVE",())
 						bodStr += '  ' + TRNSLTR.getText("TXT_KEY_REV_BRIBE",())
@@ -3184,10 +3185,10 @@ class Revolution:
 					[isCanDoCommunism,newCivic] = RevUtils.canDoCommunism(pPlayer)
 					if( isCanDoCommunism and not newCivic == None ) :
 						if( 35 > GAME.getSorenRandNum(100, 'Rev - Communist revolution') ) :
-							if self.LOG_DEBUG: print "[REV] Revolt: Communist revolution, ask change to %s, %d" % (GC.getCivicInfo(newCivic).getDescription(), newCivic)
+							if self.LOG_DEBUG: print "[REV] Revolt: Communist revolution, ask change to %s, %d" % (INFO.getDescription("CIVIC_", newCivic), newCivic)
 
-							bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_CAP_COM_REQUEST",()) + ' %s.  '%(GC.getCivicInfo(newCivic).getDescription()) + TRNSLTR.getText("TXT_KEY_REV_CAP_COM_BROTHER",())
-							bodStr += ' %s '%(GC.getCivicInfo(newCivic).getDescription()) + TRNSLTR.getText("TXT_KEY_REV_CAP_COM_ECON",())
+							bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_CAP_COM_REQUEST",()) + ' %s.  '%(INFO.getDescription("CIVIC_", newCivic)) + TRNSLTR.getText("TXT_KEY_REV_CAP_COM_BROTHER",())
+							bodStr += ' %s '%(INFO.getDescription("CIVIC_", newCivic)) + TRNSLTR.getText("TXT_KEY_REV_CAP_COM_ECON",())
 
 							if self.LOG_DEBUG: print "[REV] Revolt: %d cities in revolution" % len(revCities)
 							assert( len(revCities) > 0 )
@@ -3214,10 +3215,10 @@ class Revolution:
 							bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_CAP_VOTE_REQUEST",())
 							if newDemoLevel > 9:
 								if self.LOG_DEBUG: print "[REV] Revolt: Asking change to universal sufferage, " + str(newCivic)
-								bodStr += "  " + TRNSLTR.getText("TXT_KEY_REV_CAP_VOTE_US",()) + " %s!"%(GC.getCivicInfo(newCivic).getDescription())
+								bodStr += "  " + TRNSLTR.getText("TXT_KEY_REV_CAP_VOTE_US",()) + " %s!"%(INFO.getDescription("CIVIC_", newCivic))
 							else:
 								if self.LOG_DEBUG: print "[REV] Revolt: Asking change to representation, " + str(newCivic)
-								bodStr += "  " + TRNSLTR.getText("TXT_KEY_REV_CAP_VOTE_CRIES",()) + " %s!' "%(GC.getCivicInfo(newCivic).getDescription()) +TRNSLTR.getText("TXT_KEY_REV_CAP_VOTE_MARCH",())
+								bodStr += "  " + TRNSLTR.getText("TXT_KEY_REV_CAP_VOTE_CRIES",()) + " %s!' "%(INFO.getDescription("CIVIC_", newCivic)) +TRNSLTR.getText("TXT_KEY_REV_CAP_VOTE_MARCH",())
 
 							#iBuyOffCost = (50 + 15*pPlayer.getCurrentEra())*len(revCities) + GAME.getSorenRandNum(150+15*pPlayer.getCurrentEra(),'Rev')
 							totalRevIdx = 0
@@ -3261,7 +3262,7 @@ class Revolution:
 							iBuyOffCost = totalRevIdx/(20-pPlayer.getCurrentEra()) + GAME.getSorenRandNum(50+12*pPlayer.getCurrentEra(),'Rev')
 							if( not pPlayer.isHuman() ) : iBuyOffCost = int( iBuyOffCost*.7 )
 							iBuyOffCost = max( [iBuyOffCost, pPlayer.getGold()/10 + GAME.getSorenRandNum(50,'Rev')] )
-							bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_CAP_SPEECH_REQUEST",()) + ' %s.'%(GC.getCivicInfo(newCivic).getDescription())
+							bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_CAP_SPEECH_REQUEST",()) + ' %s.'%(INFO.getDescription("CIVIC_", newCivic))
 							bodStr += '  ' + TRNSLTR.getText("TXT_KEY_REV_CAP_SPEECH_DENY",())
 
 							if self.LOG_DEBUG: print "[REV] Revolt: %d cities in revolution, buyoff cost %d"%(len(revCities),iBuyOffCost)
@@ -3874,12 +3875,12 @@ class Revolution:
 
 		if availLeader:
 			newLeaderType = availLeader[GAME.getSorenRandNum(count,'Revolution: pick leader')]
-			newLeaderName = GC.getLeaderHeadInfo(newLeaderType).getDescription()
+			newLeaderName = INFO.getDescription("LEADER_", newLeaderType)
 
 		if newLeaderType == None:
 			# Use same leader type, but with new name
 			newLeaderType = ownerLeaderType
-			newLeaderName = TextUtil.convertToStr(GC.getLeaderHeadInfo( newLeaderType ).getDescription())
+			newLeaderName = TextUtil.convertToStr(INFO.getDescription("LEADER_", newLeaderType))
 
 			if newLeaderName == owner.getName():
 				# Hack Roman numeral naming
@@ -5252,7 +5253,7 @@ class Revolution:
 						for buildingType in buildingList:
 							if not pCity.hasBuilding(buildingType) and not GC.getBuildingInfo(buildingType).isGovernmentCenter():
 								if self.LOG_DEBUG:
-									print "[REV] Revolt: Building %s saved" % GC.getBuildingInfo(buildingType).getDescription()
+									print "[REV] Revolt: Building %s saved" % INFO.getDescription("BUILDING_", buildingType)
 								pCity.changeHasBuilding(buildingType, True)
 
 						#if self.LOG_DEBUG: print "[REV] Revolt: %s at %d, %d"%(pCity.getName(),pCity.getX(),pCity.getY())
@@ -5635,7 +5636,7 @@ class Revolution:
 			if GAME.isOption(GameOptionTypes.GAMEOPTION_AI_RANDOM_PERSONALITIES):
 				if self.LOG_DEBUG: print "[REV] Revolt: Giving new, random personality by game option"
 				RevUtils.changePersonality(pPlayer.getID())
-			elif newLeaderName == TextUtil.convertToStr(GC.getLeaderHeadInfo( newLeaderType ).getDescription()):
+			elif newLeaderName == TextUtil.convertToStr(INFO.getDescription("LEADER_", newLeaderType)):
 				if self.LOG_DEBUG: print "[REV] Revolt: Giving back original leader personality"
 				RevUtils.changePersonality( pPlayer.getID(), newLeaderType )
 			else:
@@ -6440,7 +6441,7 @@ class Revolution:
 				for buildingType in buildingList:
 					if not pCity.hasBuilding(buildingType) and not GC.getBuildingInfo(buildingType).isGovernmentCenter():
 						if self.LOG_DEBUG:
-							print "[REV] Revolt: Building %s saved" % GC.getBuildingInfo(buildingType).getDescription()
+							print "[REV] Revolt: Building %s saved" % INFO.getDescription("BUILDING_", buildingType)
 						pCity.changeHasBuilding(buildingType, True)
 
 				# Reveal surrounding countryside

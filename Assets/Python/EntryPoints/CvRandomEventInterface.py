@@ -17,6 +17,7 @@ from operator import itemgetter
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 GAME = GC.getGame()
 MAP = GC.getMap()
 STATE = CyState()
@@ -25,6 +26,7 @@ ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
 
 
+TEXT = CyGameTextMgr()
 def isLocalHumanPlayer(iPlayer):
 	CyPlayer = GC.getPlayer(iPlayer)
 	return (CyPlayer.isHuman() or CyPlayer.isHumanDisabled()) and GAME.getActivePlayer() == iPlayer and not GAME.getAIAutoPlay(iPlayer)
@@ -146,7 +148,7 @@ def getHelpHolyMountain1(argsList):
 		iMinPoints = 2 * GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers()
 		szHelp = TRNSLTR.getText("TXT_KEY_EVENT_HOLY_MOUNTAIN_PART_1_HELP", (iMinPoints, ))
 		if iBuilding != -1:
-			szHelp += TRNSLTR.getText("TXT_KEY_EVENT_HOLY_MOUNTAIN_PART_2_HELP", ( GC.getBuildingInfo(iBuilding).getTextKey(), ))
+			szHelp += TRNSLTR.getText("TXT_KEY_EVENT_HOLY_MOUNTAIN_PART_2_HELP", ( INFO.getTextKey("BUILDING_", iBuilding), ))
 		szHelp += TRNSLTR.getText("TXT_KEY_EVENT_HOLY_MOUNTAIN_PART_3_HELP", ())
 
 	return szHelp
@@ -264,8 +266,7 @@ def doWeddingFeud2(argsList):
 
 def getHelpWeddingFeud2(argsList):
 	data = argsList[1]
-	religion = GC.getReligionInfo(data.eReligion)
-	return TRNSLTR.getText("TXT_KEY_EVENT_WEDDING_FEUD_2_HELP", (GC.getDefineINT("TEMP_HAPPY"), 30, religion.getChar()))
+	return TRNSLTR.getText("TXT_KEY_EVENT_WEDDING_FEUD_2_HELP", (GC.getDefineINT("TEMP_HAPPY"), 30, TEXT.getSymbolChar("RELIGION_", data.eReligion)))
 
 def canDoWeddingFeud3(argsList):
 	data = argsList[1]
@@ -329,7 +330,7 @@ def weddingFeud3Callback(argsList):
 
 def getHelpWeddingFeud3(argsList):
 	data = argsList[1]
-	return TRNSLTR.getText("TXT_KEY_EVENT_WEDDING_FEUD_3_HELP", (1, GC.getReligionInfo(data.eReligion).getChar()))
+	return TRNSLTR.getText("TXT_KEY_EVENT_WEDDING_FEUD_3_HELP", (1, TEXT.getSymbolChar("RELIGION_", data.eReligion)))
 
 ######## SPICY ###########
 
@@ -426,7 +427,7 @@ def canApplyLooters3(argsList):
 	CyTeam = GC.getTeam(CyPlayer.getTeam())
 	CyCity = CyPlayer.getCity(data.iOtherPlayerCityId)
 	iEra = CyPlayer.getCurrentEra()
-	iTreshold = (100 + 20 * iEra * iEra) * GC.getGameSpeedInfo(GAME.getGameSpeedType()).getHammerCostPercent() / 100
+	iTreshold = (100 + 20 * iEra * iEra) * GAME.getHammerCostPercent() / 100
 
 	for i in xrange(GC.getNumBuildingInfos()):
 		if INFO.getIntrinsic("BUILDING_", i, IntrinsicSlot.PYINT_IS_LIMITED_WONDER) or not CyCity.hasBuilding(i):
@@ -448,7 +449,7 @@ def applyLooters3(argsList):
 	CyTeam = GC.getTeam(CyPlayer.getTeam())
 	CyCity = CyPlayer.getCity(data.iOtherPlayerCityId)
 	iEra = CyPlayer.getCurrentEra()
-	iTreshold = (100 + 20 * iEra * iEra) * GC.getGameSpeedInfo(GAME.getGameSpeedType()).getHammerCostPercent() / 100
+	iTreshold = (100 + 20 * iEra * iEra) * GAME.getHammerCostPercent() / 100
 
 	aList = []
 	for i in xrange(GC.getNumBuildingInfos()):
@@ -464,9 +465,9 @@ def applyLooters3(argsList):
 	iCount = 0
 	while aList and iCount < iMax:
 		iBuilding = aList[GAME.getSorenRandNum(len(aList), "Looters event building destroyed")]
-		szBuffer = TRNSLTR.getText("TXT_KEY_EVENT_CITY_IMPROVEMENT_DESTROYED", (GC.getBuildingInfo(iBuilding).getTextKey(), ))
+		szBuffer = TRNSLTR.getText("TXT_KEY_EVENT_CITY_IMPROVEMENT_DESTROYED", (INFO.getTextKey("BUILDING_", iBuilding), ))
 		if isLocalHumanPlayer(data.eOtherPlayer) :
-			CyInterface().addMessage(data.eOtherPlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, GC.getBuildingInfo(iBuilding).getButton(), GC.getCOLOR_RED(), CyCity.getX(), CyCity.getY(), True, True)
+			CyInterface().addMessage(data.eOtherPlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, INFO.getButton("BUILDING_", iBuilding), GC.getCOLOR_RED(), CyCity.getX(), CyCity.getY(), True, True)
 		CyCity.changeHasBuilding(iBuilding, False)
 		aList.remove(iBuilding)
 		iCount += 1
@@ -575,9 +576,9 @@ def applyHurricane1(argsList):
 
 	if aList:
 		iBuilding = aList[GAME.getSorenRandNum(len(aList), "Hurricane")]
-		szBuffer = TRNSLTR.getText("TXT_KEY_EVENT_CITY_IMPROVEMENT_DESTROYED", (GC.getBuildingInfo(iBuilding).getTextKey(), ))
+		szBuffer = TRNSLTR.getText("TXT_KEY_EVENT_CITY_IMPROVEMENT_DESTROYED", (INFO.getTextKey("BUILDING_", iBuilding), ))
 		if isLocalHumanPlayer(data.ePlayer) :
-			CyInterface().addMessage(data.ePlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, GC.getBuildingInfo(iBuilding).getButton(), GC.getCOLOR_RED(), CyCity.getX(), CyCity.getY(), True, True)
+			CyInterface().addMessage(data.ePlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, INFO.getButton("BUILDING_", iBuilding), GC.getCOLOR_RED(), CyCity.getX(), CyCity.getY(), True, True)
 		CyCity.changeHasBuilding(iBuilding, False)
 
 
@@ -640,9 +641,9 @@ def applyTsunami2(argsList):
 	for i in xrange(5):
 		if len(listBuildings) > 0:
 			iBuilding = listBuildings[GAME.getSorenRandNum(len(listBuildings), "Tsunami event building destroyed")]
-			szBuffer = TRNSLTR.getText("TXT_KEY_EVENT_CITY_IMPROVEMENT_DESTROYED", (GC.getBuildingInfo(iBuilding).getTextKey(), ))
+			szBuffer = TRNSLTR.getText("TXT_KEY_EVENT_CITY_IMPROVEMENT_DESTROYED", (INFO.getTextKey("BUILDING_", iBuilding), ))
 			if isLocalHumanPlayer(data.ePlayer) :
-				CyInterface().addMessage(data.ePlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, GC.getBuildingInfo(iBuilding).getButton(), GC.getCOLOR_RED(), CyCity.getX(), CyCity.getY(), True, True)
+				CyInterface().addMessage(data.ePlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, INFO.getButton("BUILDING_", iBuilding), GC.getCOLOR_RED(), CyCity.getX(), CyCity.getY(), True, True)
 			CyCity.changeHasBuilding(iBuilding, False)
 			listBuildings.remove(iBuilding)
 
@@ -824,7 +825,7 @@ def getHelpChampion(argsList):
 	data = argsList[1]
 	unit = GC.getPlayer(data.ePlayer).getUnit(data.iUnitId)
 	iLeadership = GC.getInfoTypeForString("PROMOTION_LEADERSHIP")
-	return TRNSLTR.getText("TXT_KEY_EVENT_CHAMPION_HELP", (unit.getNameKey(), GC.getPromotionInfo(iLeadership).getTextKey()))
+	return TRNSLTR.getText("TXT_KEY_EVENT_CHAMPION_HELP", (unit.getNameKey(), INFO.getTextKey("PROMOTION_", iLeadership)))
 
 ######## ELECTRIC COMPANY ###########
 
@@ -951,7 +952,7 @@ def doAntelope2(argsList):
 
 def getHelpAntelope2(argsList):
 	iCamp = GC.getInfoTypeForString("IMPROVEMENT_HUNTING_CAMP")
-	return TRNSLTR.getText("TXT_KEY_EVENT_IMPROVEMENT_GROWTH", ( GC.getImprovementInfo(iCamp).getTextKey(), ))
+	return TRNSLTR.getText("TXT_KEY_EVENT_IMPROVEMENT_GROWTH", ( INFO.getTextKey("IMPROVEMENT_", iCamp), ))
 
 ######## WHALEOFATHING ###########
 
@@ -1054,7 +1055,7 @@ def doIndependentFilms(argsList):
 	return 1
 
 def getHelpIndependentFilms(argsList):
-	return TRNSLTR.getText("TXT_KEY_EVENT_INDEPENDENTFILMS_HELP_1", (1, GC.getBonusInfo(GC.getInfoTypeForString("BONUS_HIT_MOVIES")).getChar(), GC.getPlayer(argsList[1].ePlayer).getCity(argsList[1].iCityId).getNameKey()))
+	return TRNSLTR.getText("TXT_KEY_EVENT_INDEPENDENTFILMS_HELP_1", (1, TEXT.getSymbolChar("BONUS_", GC.getInfoTypeForString("BONUS_HIT_MOVIES")), GC.getPlayer(argsList[1].ePlayer).getCity(argsList[1].iCityId).getNameKey()))
 
 ######## ANCIENT OLYMPICS ###########
 
@@ -1978,7 +1979,7 @@ def canApplyClassicLiteratureDone2(argsList):
 	team = GC.getTeam(player.getTeam())
 	for i in xrange(team.getNumAdjacentResearch()):
 		iTechX = team.getAdjacentResearch(i)
-		if GC.getTechInfo(iTechX).getEra() == iEraAncient and player.canResearch(iTechX, True, True):
+		if INFO.getIntrinsic("TECH_", iTechX, IntrinsicSlot.PYINT_ERA) == iEraAncient and player.canResearch(iTechX, True, True):
 			return True
 	return False
 
@@ -1992,7 +1993,7 @@ def applyClassicLiteratureDone2(argsList):
 	team = GC.getTeam(player.getTeam())
 	for i in xrange(team.getNumAdjacentResearch()):
 		iTechX = team.getAdjacentResearch(i)
-		if GC.getTechInfo(iTechX).getEra() == iEraAncient and player.canResearch(iTechX, True, True):
+		if INFO.getIntrinsic("TECH_", iTechX, IntrinsicSlot.PYINT_ERA) == iEraAncient and player.canResearch(iTechX, True, True):
 			listTechs.append(iTechX)
 
 	if listTechs:
@@ -2108,10 +2109,10 @@ def applyMasterBlacksmithDone1(argsList):
 			TRNSLTR.getText(
 				"TXT_KEY_MISC_DISCOVERED_NEW_RESOURCE_IMPROVEMENT",
 				(
-					GC.getPlayer(data.ePlayer).getCity(data.iCityId).getNameKey(), GC.getBonusInfo(iBonus).getTextKey()
+					GC.getPlayer(data.ePlayer).getCity(data.iCityId).getNameKey(), INFO.getTextKey("BONUS_", iBonus)
 				)
 			),
-			"AS2D_DISCOVERBONUS", InterfaceMessageTypes.MESSAGE_TYPE_MINOR_EVENT, GC.getBonusInfo(iBonus).getButton(),
+			"AS2D_DISCOVERBONUS", InterfaceMessageTypes.MESSAGE_TYPE_MINOR_EVENT, INFO.getButton("BONUS_", iBonus),
 			GC.getInfoTypeForString("COLOR_WHITE"), plot.getX(), plot.getY(), True, True
 		)
 
@@ -2277,7 +2278,7 @@ def applyCrusadeDone1(argsList):
 
 def getHelpCrusadeDone2(argsList):
 	data = argsList[1]
-	return TRNSLTR.getText("TXT_KEY_EVENT_CRUSADE_DONE_HELP_2", (GC.getBuildingInfo(data.eBuilding).getTextKey(), GAME.getHolyCity(data.eReligion).getNameKey()))
+	return TRNSLTR.getText("TXT_KEY_EVENT_CRUSADE_DONE_HELP_2", (INFO.getTextKey("BUILDING_", data.eBuilding), GAME.getHolyCity(data.eReligion).getNameKey()))
 
 def canApplyCrusadeDone2(argsList):
 	data = argsList[1]
@@ -2307,7 +2308,7 @@ def applyCrusadeDone2(argsList):
 def getHelpCrusadeDone3(argsList):
 	data = argsList[1]
 	iNumCities = GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers()
-	return TRNSLTR.getText("TXT_KEY_EVENT_CRUSADE_DONE_HELP_3", (GC.getReligionInfo(data.eReligion).getTextKey(), iNumCities))
+	return TRNSLTR.getText("TXT_KEY_EVENT_CRUSADE_DONE_HELP_3", (INFO.getTextKey("RELIGION_", data.eReligion), iNumCities))
 
 def canApplyCrusadeDone3(argsList):
 	data = argsList[1]
@@ -2347,7 +2348,7 @@ def canTriggerEsteemedPlaywright(argsList):
 
 def getHelpSecretKnowledge2(argsList):
 	data = argsList[1]
-	return TRNSLTR.getText("TXT_KEY_EVENT_YIELD_CHANGE_BUILDING", (GC.getBuildingInfo(data.eBuilding).getTextKey(), u"+4[ICON_CULTURE]"))
+	return TRNSLTR.getText("TXT_KEY_EVENT_YIELD_CHANGE_BUILDING", (INFO.getTextKey("BUILDING_", data.eBuilding), u"+4[ICON_CULTURE]"))
 
 def applySecretKnowledge2(argsList):
 	data = argsList[1]
@@ -2455,9 +2456,9 @@ def getHelpGreed1(argsList):
 	CyPlayerOther = GC.getPlayer(data.eOtherPlayer)
 	iBonus = GC.getMap().plot(data.iPlotX, data.iPlotY).getBonusType(CyPlayer.getTeam())
 
-	iTurns = GC.getGameSpeedInfo(GAME.getGameSpeedType()).getSpeedPercent()
+	iTurns = GAME.getSpeedPercent()
 
-	return TRNSLTR.getText("TXT_KEY_EVENT_GREED_HELP_1", (CyPlayerOther.getCivilizationShortDescriptionKey(), GC.getBonusInfo(iBonus).getTextKey(), iTurns))
+	return TRNSLTR.getText("TXT_KEY_EVENT_GREED_HELP_1", (CyPlayerOther.getCivilizationShortDescriptionKey(), INFO.getTextKey("BONUS_", iBonus), iTurns))
 
 def expireGreed1(argsList):
 	data = argsList[1]
@@ -2467,7 +2468,7 @@ def expireGreed1(argsList):
 	if iOwner == -1 or iOwner == data.ePlayer:
 		return False
 
-	if GAME.getGameTurn() >= data.iTurn + GC.getGameSpeedInfo(GAME.getGameSpeedType()).getSpeedPercent():
+	if GAME.getGameTurn() >= data.iTurn + GAME.getSpeedPercent():
 		return True
 
 	if iOwner != data.eOtherPlayer:
@@ -2522,7 +2523,7 @@ def getHelpGreedDone1(argsList):
 	szHelp = ""
 
 	if iUnitType != -1:
-		szHelp = TRNSLTR.getText("TXT_KEY_EVENT_GREED_DONE_HELP_1", (iNumUnits, GC.getUnitInfo(iUnitType).getTextKey()))
+		szHelp = TRNSLTR.getText("TXT_KEY_EVENT_GREED_DONE_HELP_1", (iNumUnits, INFO.getTextKey("UNIT_", iUnitType)))
 	return szHelp
 
 def applyGreedDone1(argsList):
@@ -2608,7 +2609,7 @@ def canTriggerWarships(argsList):
 def getHelpWarships1(argsList):
 	iNumUnits = GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers()
 	iBuilding = GC.getInfoTypeForString("BUILDING_THE_GREAT_LIGHTHOUSE")
-	return TRNSLTR.getText("TXT_KEY_EVENT_WARSHIPS_HELP_1", (iNumUnits, GC.getBuildingInfo(iBuilding).getTextKey()))
+	return TRNSLTR.getText("TXT_KEY_EVENT_WARSHIPS_HELP_1", (iNumUnits, INFO.getTextKey("BUILDING_", iBuilding)))
 
 def canTriggerWarshipsDone(argsList):
   data = argsList[0]
@@ -2638,7 +2639,7 @@ def getHelpGunsButter1(argsList):
 	iNumUnits = GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers() + 1
 	iBuilding = GC.getInfoTypeForString("BUILDING_TAJ_MAHAL")
 
-	return TRNSLTR.getText("TXT_KEY_EVENT_GUNS_BUTTER_HELP_1", (iNumUnits, GC.getBuildingInfo(iBuilding).getTextKey()))
+	return TRNSLTR.getText("TXT_KEY_EVENT_GUNS_BUTTER_HELP_1", (iNumUnits, INFO.getTextKey("BUILDING_", iBuilding)))
 
 def canTriggerGunsButterDone(argsList):
 	data = argsList[0]
@@ -2674,7 +2675,7 @@ def canTriggerNobleKnights(argsList):
 def getHelpNobleKnights1(argsList):
 	iNumUnits = GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers() + 1
 	iBuilding = GC.getInfoTypeForString("BUILDING_THE_ORACLE")
-	return TRNSLTR.getText("TXT_KEY_EVENT_NOBLE_KNIGHTS_HELP_1", (iNumUnits, GC.getBuildingInfo(iBuilding).getTextKey()))
+	return TRNSLTR.getText("TXT_KEY_EVENT_NOBLE_KNIGHTS_HELP_1", (iNumUnits, INFO.getTextKey("BUILDING_", iBuilding)))
 
 def canTriggerNobleKnightsDone(argsList):
   data = argsList[0]
@@ -2733,8 +2734,8 @@ def getHelpOverwhelm1(argsList):
   iNumFighters = 9
   iBuilding = GC.getInfoTypeForString("BUILDING_MANHATTAN_PROJECT")
 
-# szHelp = TRNSLTR.getText("TXT_KEY_EVENT_OVERWHELM_HELP_1", (iNumDestroyers, GC.getUnitInfo(iDestroyer).getTextKey(), iNumBattleships, GC.getUnitInfo(iBattleship).getTextKey(), iNumCarriers, GC.getUnitInfo(iCarrier).getTextKey(), iNumFighters, GC.getSpecialUnitInfo(iFighter).getTextKey(), GC.getProjectInfo(iProject).getTextKey()))
-  szHelp = TRNSLTR.getText("TXT_KEY_EVENT_OVERWHELM_HELP_1", (iNumDestroyers, GC.getUnitInfo(iDestroyer).getTextKey(), iNumBattleships, GC.getUnitInfo(iBattleship).getTextKey(), iNumCarriers, GC.getUnitInfo(iCarrier).getTextKey(), iNumFighters, GC.getSpecialUnitInfo(iFighter).getTextKey(), GC.getBuildingInfo(iBuilding).getTextKey()))
+# szHelp = TRNSLTR.getText("TXT_KEY_EVENT_OVERWHELM_HELP_1", (iNumDestroyers, INFO.getTextKey("UNIT_", iDestroyer), iNumBattleships, INFO.getTextKey("UNIT_", iBattleship), iNumCarriers, INFO.getTextKey("UNIT_", iCarrier), iNumFighters, INFO.getTextKey("SPECIALUNIT_", iFighter), INFO.getTextKey("PROJECT_", iProject)))
+  szHelp = TRNSLTR.getText("TXT_KEY_EVENT_OVERWHELM_HELP_1", (iNumDestroyers, INFO.getTextKey("UNIT_", iDestroyer), iNumBattleships, INFO.getTextKey("UNIT_", iBattleship), iNumCarriers, INFO.getTextKey("UNIT_", iCarrier), iNumFighters, INFO.getTextKey("SPECIALUNIT_", iFighter), INFO.getTextKey("BUILDING_", iBuilding)))
 
   return szHelp
 
@@ -2825,7 +2826,7 @@ def expireCorporateExpansion1(argsList):
 def getHelpCorporateExpansion1(argsList):
 	data = argsList[1]
 	iNumCities = GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers() + 1
-	return TRNSLTR.getText("TXT_KEY_EVENT_CORPORATE_EXPANSION_HELP_1", (GC.getCorporationInfo(data.eCorporation).getTextKey(), iNumCities))
+	return TRNSLTR.getText("TXT_KEY_EVENT_CORPORATE_EXPANSION_HELP_1", (INFO.getTextKey("CORPORATION_", data.eCorporation), iNumCities))
 
 def canTriggerCorporateExpansionDone(argsList):
   data = argsList[0]
@@ -2849,7 +2850,7 @@ def canTriggerCorporateExpansionDone(argsList):
 
 def getHelpCorporateExpansionDone1(argsList):
 	data = argsList[1]
-	return TRNSLTR.getText("TXT_KEY_EVENT_YIELD_CHANGE_BUILDING", (GC.getBuildingInfo(data.eBuilding).getTextKey(), u"+50[ICON_GOLD]"))
+	return TRNSLTR.getText("TXT_KEY_EVENT_YIELD_CHANGE_BUILDING", (INFO.getTextKey("BUILDING_", data.eBuilding), u"+50[ICON_GOLD]"))
 
 def applyCorporateExpansionDone1(argsList):
   data = argsList[1]
@@ -2914,7 +2915,7 @@ def getHelpHostileTakeover1(argsList):
       szList += u", "
     else:
       bFirst = False
-    szList += u"[COLOR_HIGHLIGHT_TEXT]" + GC.getBonusInfo(iBonus).getDescription() + u"[COLOR_REVERT]"
+    szList += u"[COLOR_HIGHLIGHT_TEXT]" + INFO.getDescription("BONUS_", iBonus) + u"[COLOR_REVERT]"
 
   szHelp = TRNSLTR.getText("TXT_KEY_EVENT_HOSTILE_TAKEOVER_HELP_1", (len(listResources), szList))
 
@@ -2942,7 +2943,7 @@ def canTriggerHostileTakeoverDone(argsList):
 
 def getHelpHostileTakeoverDone1(argsList):
 	data = argsList[1]
-	return TRNSLTR.getText("TXT_KEY_EVENT_YIELD_CHANGE_BUILDING", (GC.getBuildingInfo(data.eBuilding).getTextKey(), u"+100[ICON_GOLD]"))
+	return TRNSLTR.getText("TXT_KEY_EVENT_YIELD_CHANGE_BUILDING", (INFO.getTextKey("BUILDING_", data.eBuilding), u"+100[ICON_GOLD]"))
 
 def applyHostileTakeoverDone1(argsList):
 	data = argsList[1]
@@ -2961,8 +2962,7 @@ def doGreatBeast3(argsList):
 
 def getHelpGreatBeast3(argsList):
 	data = argsList[1]
-	religion = GC.getReligionInfo(data.eReligion)
-	return TRNSLTR.getText("TXT_KEY_EVENT_GREAT_BEAST_3_HELP", (GC.getDefineINT("TEMP_HAPPY"), 40, religion.getChar()))
+	return TRNSLTR.getText("TXT_KEY_EVENT_GREAT_BEAST_3_HELP", (GC.getDefineINT("TEMP_HAPPY"), 40, TEXT.getSymbolChar("RELIGION_", data.eReligion)))
 
 ####### Comet Fragment ########
 
@@ -3222,7 +3222,7 @@ def getHelpRubicon2(argsList):
 	pPlayer = GC.getPlayer(data.ePlayer)
 	unit = pPlayer.getUnit(data.iUnitId)
 	iMorale = GC.getInfoTypeForString("PROMOTION_MORALE")
-	return TRNSLTR.getText("TXT_KEY_EVENT_CROSSING_THE_RUBICON_2_HELP", (unit.getNameKey(), GC.getPromotionInfo(iMorale).getTextKey()))
+	return TRNSLTR.getText("TXT_KEY_EVENT_CROSSING_THE_RUBICON_2_HELP", (unit.getNameKey(), INFO.getTextKey("PROMOTION_", iMorale)))
 
 def applyRubicon2(argsList):
 	data = argsList[1]
@@ -3461,11 +3461,11 @@ def canTriggerCitySyntheticFuels(argsList):
 
 def getHelpSyntheticFuels1(argsList):
 	data = argsList[1]
-	return TRNSLTR.getText("TXT_KEY_EVENT_SYNTHETIC_FUELS_HELP_1", ( 1, GC.getBonusInfo(GC.getInfoTypeForString("BONUS_OIL")).getChar(), GC.getPlayer(data.ePlayer).getCity(data.iCityId).getNameKey()))
+	return TRNSLTR.getText("TXT_KEY_EVENT_SYNTHETIC_FUELS_HELP_1", ( 1, TEXT.getSymbolChar("BONUS_", GC.getInfoTypeForString("BONUS_OIL")), GC.getPlayer(data.ePlayer).getCity(data.iCityId).getNameKey()))
 
 def getHelpSyntheticFuels2(argsList):
 	data = argsList[1]
-	return TRNSLTR.getText("TXT_KEY_EVENT_SYNTHETIC_FUELS_HELP_2", ( 1, GC.getBonusInfo(GC.getInfoTypeForString("BONUS_OIL")).getChar(), GC.getPlayer(data.ePlayer).getCity(data.iCityId).getNameKey()))
+	return TRNSLTR.getText("TXT_KEY_EVENT_SYNTHETIC_FUELS_HELP_2", ( 1, TEXT.getSymbolChar("BONUS_", GC.getInfoTypeForString("BONUS_OIL")), GC.getPlayer(data.ePlayer).getCity(data.iCityId).getNameKey()))
 
 def getHelpSyntheticFuels3(argsList):
 	return TRNSLTR.getText("TXT_KEY_EVENT_SYNTHETIC_FUELS_HELP_3", (1, ))
@@ -3474,7 +3474,7 @@ def getHelpSyntheticFuels4(argsList):
 	data = argsList[1]
 	pCity = GC.getPlayer(data.ePlayer).getCity(data.iCityId)
 	oBonus = GC.getInfoTypeForString("BONUS_PETROLEUM_PRODUCTS")
-	return TRNSLTR.getText("TXT_KEY_EVENT_SYNTHETIC_FUELS_HELP_4", (1, GC.getBonusInfo(oBonus).getChar(), pCity.getNameKey()))
+	return TRNSLTR.getText("TXT_KEY_EVENT_SYNTHETIC_FUELS_HELP_4", (1, TEXT.getSymbolChar("BONUS_", oBonus), pCity.getNameKey()))
 
 def doSyntheticFuels4(argsList):
 	GC.getPlayer(argsList[1].ePlayer).getCity(
@@ -5456,15 +5456,15 @@ def getHelpCompulsoryDem2(argsList):
 		iRepublic = GC.getInfoTypeForString("CIVIC_REPUBLIC")
 
 		if eCivic != iFederal and CyPlayer.canDoCivics(iFederal):
-			szType = GC.getCivicInfo(iFederal).getTextKey()
+			szType = INFO.getTextKey("CIVIC_", iFederal)
 			print "Can Switch to Federal"
 
 		elif eCivic != iDemocracy and CyPlayer.canDoCivics(iDemocracy):
-			szType = GC.getCivicInfo(iDemocracy).getTextKey()
+			szType = INFO.getTextKey("CIVIC_", iDemocracy)
 			print "Can Switch to Democracy"
 
 		elif eCivic != iRepublic and CyPlayer.canDoCivics(iRepublic):
-			szType = GC.getCivicInfo(iRepublic).getTextKey()
+			szType = INFO.getTextKey("CIVIC_", iRepublic)
 			print "Can Switch to Republic"
 	else:
 		print "Event #3"
@@ -5563,15 +5563,15 @@ def getHelpLessDictator2(argsList):
 
 	iFederal = GC.getInfoTypeForString("CIVIC_FEDERALISM")
 	if CyPlayer.canDoCivics(iFederal):
-		return TRNSLTR.getText("TXT_KEY_EVENT_CHANGE_CIVICS", (GC.getCivicInfo(iFederal).getTextKey(),))
+		return TRNSLTR.getText("TXT_KEY_EVENT_CHANGE_CIVICS", (INFO.getTextKey("CIVIC_", iFederal),))
 
 	iDemocracy = GC.getInfoTypeForString("CIVIC_DEMOCRACY")
 	if CyPlayer.canDoCivics(iDemocracy):
-		return TRNSLTR.getText("TXT_KEY_EVENT_CHANGE_CIVICS", (GC.getCivicInfo(iDemocracy).getTextKey(),))
+		return TRNSLTR.getText("TXT_KEY_EVENT_CHANGE_CIVICS", (INFO.getTextKey("CIVIC_", iDemocracy),))
 
 	iRepublic = GC.getInfoTypeForString("CIVIC_REPUBLIC")
 	if CyPlayer.canDoCivics(iRepublic):
-		return TRNSLTR.getText("TXT_KEY_EVENT_CHANGE_CIVICS", (GC.getCivicInfo(iRepublic).getTextKey(),))
+		return TRNSLTR.getText("TXT_KEY_EVENT_CHANGE_CIVICS", (INFO.getTextKey("CIVIC_", iRepublic),))
 
 	return TRNSLTR.getText("TXT_KEY_EVENT_CHANGE_CIVICS", ("",))
 
@@ -5754,11 +5754,11 @@ def getHelpSuperVirus3(argsList):
 	iSmartMedicine = GC.getInfoTypeForString("BONUS_SMART_MEDICINE")
 	if iSmartMedicine > 0:
 		if not CyCity.hasBonus(iSmartMedicine):
-			szHelp += "\n" + TRNSLTR.getText("TXT_KEY_BUILDINGHELP_REQUIRES_STRING", (GC.getBonusInfo(iSmartMedicine).getTextKey(),))
+			szHelp += "\n" + TRNSLTR.getText("TXT_KEY_BUILDINGHELP_REQUIRES_STRING", (INFO.getTextKey("BONUS_", iSmartMedicine),))
 
 	iSmartDrugs = GC.getInfoTypeForString("TECH_SMART_DRUGS")
 	if iSmartDrugs > 0 and not GC.getTeam(CyPlayer.getTeam()).isHasTech(iSmartDrugs):
-		szHelp += "\n" + TRNSLTR.getText("TXT_KEY_BUILDINGHELP_REQUIRES_STRING", (GC.getTechInfo(iSmartDrugs).getTextKey(),))
+		szHelp += "\n" + TRNSLTR.getText("TXT_KEY_BUILDINGHELP_REQUIRES_STRING", (INFO.getTextKey("TECH_", iSmartDrugs),))
 
 	return szHelp
 
@@ -5957,7 +5957,7 @@ def getHelpNewWorld(argsList):
 
 		iNavigation = GC.getInfoTypeForString("TECH_NAVIGATION")
 		if iNavigation > -1 and not GC.getTeam(GC.getPlayer(argsList[1].ePlayer).getTeam()).isHasTech(iNavigation):
-			szHelp += "\n" + TRNSLTR.getText("TXT_KEY_BUILDINGHELP_REQUIRES_STRING", (GC.getTechInfo(iNavigation).getTextKey(),))
+			szHelp += "\n" + TRNSLTR.getText("TXT_KEY_BUILDINGHELP_REQUIRES_STRING", (INFO.getTextKey("TECH_", iNavigation),))
 	return szHelp
 
 ##### VOLCANO C2C #####
@@ -6141,8 +6141,8 @@ def doVolcanoNeighbouringPlots(pPlot):
 			# Destroys improvements if the plot is not a city, and if the improvement is not immune
 			if iImprovement != -1 and not plotX.isCity() and not iImprovement in immuneImprovements:
 				if iPlayer > -1:
-					szBuffer = TRNSLTR.getText("TXT_KEY_EVENT_CITY_IMPROVEMENT_DESTROYED_NOOWNER", (GC.getImprovementInfo(iImprovement).getTextKey(), ))
-					CyInterface().addMessage(iPlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, GC.getImprovementInfo(iImprovement).getButton(), GC.getCOLOR_RED(), plotX.getX(), plotX.getY(), True, True)
+					szBuffer = TRNSLTR.getText("TXT_KEY_EVENT_CITY_IMPROVEMENT_DESTROYED_NOOWNER", (INFO.getTextKey("IMPROVEMENT_", iImprovement), ))
+					CyInterface().addMessage(iPlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, INFO.getButton("IMPROVEMENT_", iImprovement), GC.getCOLOR_RED(), plotX.getX(), plotX.getY(), True, True)
 				if iImprovement in listRuins:
 					plotX.setImprovementType(iRuins)
 				else:
@@ -6225,7 +6225,7 @@ def doVolcanoReport(argsList):
   for i in xrange(iMaxPlayer):
     loopPlayer = GC.getPlayer(i)
     if loopPlayer.isHuman() and loopPlayer.isAlive() and pPlot.isRevealed(loopPlayer.getTeam(), False):
-      CyInterface().addMessage(loopPlayer.getID(), False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, GC.getFeatureInfo(ft_volcano_active).getButton(), GC.getCOLOR_RED(), pPlot.getX(), pPlot.getY(), True, True)
+      CyInterface().addMessage(loopPlayer.getID(), False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, INFO.getButton("FEATURE_", ft_volcano_active), GC.getCOLOR_RED(), pPlot.getX(), pPlot.getY(), True, True)
 
       if pPlot.isInViewport():
         point = pPlot.getPoint()
@@ -6332,8 +6332,8 @@ def doWildFire(argsList):
 	if validHousesList:
 		iBuilding = validHousesList[GAME.getSorenRandNum(len(validHousesList), "Wildfire")]
 		if isLocalHumanPlayer(data.ePlayer) :
-			szBuffer = TRNSLTR.getText("TXT_KEY_EVENT_CITY_IMPROVEMENT_DESTROYED", (GC.getBuildingInfo(iBuilding).getTextKey(), ))
-			CyInterface().addMessage(data.ePlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, GC.getBuildingInfo(iBuilding).getButton(), GC.getCOLOR_RED(), CyCity.getX(), CyCity.getY(), True, True)
+			szBuffer = TRNSLTR.getText("TXT_KEY_EVENT_CITY_IMPROVEMENT_DESTROYED", (INFO.getTextKey("BUILDING_", iBuilding), ))
+			CyInterface().addMessage(data.ePlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, INFO.getButton("BUILDING_", iBuilding), GC.getCOLOR_RED(), CyCity.getX(), CyCity.getY(), True, True)
 		CyCity.changeHasBuilding(iBuilding, False)
 
 def doMinorFire(argsList):
@@ -6365,8 +6365,8 @@ def doMinorFire(argsList):
 
 	if iBurnBuilding != -1:
 		if isLocalHumanPlayer(data.ePlayer) :
-			szBuffer = TRNSLTR.getText("TXT_KEY_EVENT_CITY_IMPROVEMENT_DESTROYED", (GC.getBuildingInfo(iBurnBuilding).getTextKey(), ))
-			CyInterface().addMessage(data.ePlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, GC.getBuildingInfo(iBurnBuilding).getButton(), GC.getCOLOR_RED(), CyCity.getX(), CyCity.getY(), True, True)
+			szBuffer = TRNSLTR.getText("TXT_KEY_EVENT_CITY_IMPROVEMENT_DESTROYED", (INFO.getTextKey("BUILDING_", iBurnBuilding), ))
+			CyInterface().addMessage(data.ePlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, INFO.getButton("BUILDING_", iBurnBuilding), GC.getCOLOR_RED(), CyCity.getX(), CyCity.getY(), True, True)
 		CyCity.changeHasBuilding(iBurnBuilding, False)
 
 
@@ -6405,8 +6405,8 @@ def doMajorFire(argsList):
 			if isLocalHumanPlayer(data.ePlayer) :
 				CyInterface().addMessage(
 					data.ePlayer, False, GC.getEVENT_MESSAGE_TIME(),
-					TRNSLTR.getText("TXT_KEY_EVENT_CITY_IMPROVEMENT_DESTROYED", (GC.getBuildingInfo(iBurnBuilding).getTextKey(),)),
-					"AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, GC.getBuildingInfo(iBurnBuilding).getButton(),
+					TRNSLTR.getText("TXT_KEY_EVENT_CITY_IMPROVEMENT_DESTROYED", (INFO.getTextKey("BUILDING_", iBurnBuilding),)),
+					"AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, INFO.getButton("BUILDING_", iBurnBuilding),
 					GC.getCOLOR_RED(), CyCity.getX(), CyCity.getY(), True, True
 				)
 			CyCity.changeHasBuilding(iBurnBuilding, False)
@@ -6455,8 +6455,8 @@ def doCatastrophicFire(argsList):
 
 		if iBurnBuilding != -1:
 			if isLocalHumanPlayer(data.ePlayer) :
-				szBuffer = TRNSLTR.getText("TXT_KEY_EVENT_CITY_IMPROVEMENT_DESTROYED", (GC.getBuildingInfo(iBurnBuilding).getTextKey(),))
-				CyInterface().addMessage(data.ePlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, GC.getBuildingInfo(iBurnBuilding).getButton(), GC.getCOLOR_RED(), CyCity.getX(), CyCity.getY(), True, True)
+				szBuffer = TRNSLTR.getText("TXT_KEY_EVENT_CITY_IMPROVEMENT_DESTROYED", (INFO.getTextKey("BUILDING_", iBurnBuilding),))
+				CyInterface().addMessage(data.ePlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, INFO.getButton("BUILDING_", iBurnBuilding), GC.getCOLOR_RED(), CyCity.getX(), CyCity.getY(), True, True)
 			CyCity.changeHasBuilding(iBurnBuilding, False)
 
 def getHelpWildFire(argsList):

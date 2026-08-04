@@ -28,8 +28,11 @@ as unrelated bugs and get fixed one at a time:
   by every player; cascade state is per-owner and mutable, so this also makes a shared immutable object mutable
   per game rather than per load.
 - "the enabler cascade", or one spine consumer routing both = **two systems named and wired as one**. They differ
-  concretely (the enabler is load-ACTIVE and maintains sets by targeted propagation; the modifier is a
-  dirty→recompute value cache), so welding them forces one policy onto two that genuinely need different ones.
+  concretely — the enabler is load-ACTIVE while the modifier's cache build is not, and what each slot HOLDS is
+  refcounted set membership versus a summed magnitude — so welding them forces one policy onto two that genuinely
+  need different ones. ⚠ They no longer differ on MAINTENANCE: both are kept current in place by the fact that
+  names the source ([DEC-maintained-sum](decisions.md#dec-maintained-sum)), and the older framing of the modifier
+  as a mark-then-recompute value cache is exactly what let it alone keep a staleness protocol.
 - the cascade re-deriving whether a building is active = **the cascade doing the enabler's job**. It asks
   ([DEC-calc-zero-ride-in](decisions.md#dec-calc-zero-ride-in)).
 - a getter that reaches past the info surface into a per-type shape = **a consumer doing readJson's job**.
@@ -86,7 +89,10 @@ a pluggable external AI backend; retire the `CvInfos.h` umbrella; keep convertin
 interface-bounded machines.
 
 **Engine state** follows the same discipline: a domain object's *derived* data (yields, commerce, …) lives in a
-**recompute-only, dirty-flagged, never-serialized** cache that is the single **PULL** source up the chain — the
-[state-repositories](state-repositories.md) pattern (the plot-yield cache is the landed first instance). The unified
-`dataChanged` trigger it builds toward is the missing primitive behind the entire "stale cache" bug class. `CvPlot`/
-`CvCity` stay as the domain objects; only the derived layer and `Cv*AI` change.
+**never-serialized, event-MAINTAINED** store that is the single **PULL** source up the chain — the
+[state-repositories](state-repositories.md) pattern. ⚑ **The unified `dataChanged` trigger this was written
+reaching for turned out to BE the event spine**, and once the spine covered every mutation the staleness flag it was
+paired with became obsolete: a flag only ever claimed we could not know what changed
+([DEC-flag-is-fossil](decisions.md#dec-flag-is-fossil)). So the "stale cache" bug class closes by the
+fact naming its source, not by a better invalidation. `CvPlot`/`CvCity` stay as the domain objects; only the
+derived layer and `Cv*AI` change.

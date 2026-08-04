@@ -35,6 +35,7 @@ import CvMapGeneratorUtil as MGU
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 GAME = GC.getGame()
 MAP = GC.getMap()
 STATE = CyState()
@@ -229,7 +230,7 @@ def isBonus(sInfo):
 	if not (sInfo[0:5] == "BONUS"):
 		sInfo = "BONUS_" + sInfo.upper()
 	for i in range(GC.getNumBonusInfos()):
-		info_string = GC.getBonusInfo(i).getType()
+		info_string = INFO.getType("BONUS_", i)
 		if info_string==sInfo: return True
 	return False
 
@@ -2128,13 +2129,13 @@ class MapRegions:
 				pl.setBonusType( bon )
 				# work placed boni
 				if choose( chance, True, False ):
-					bonString = GC.getBonusInfo(bon).getType()
+					bonString = INFO.getType("BONUS_", bon)
 					bonTech = GC.getBonusInfo(bon).getTechCityTrade()
 					bonEra = 0
 					if bonTech > -1:
-						bonEra = GC.getTechInfo(bonTech).getEra()
+						bonEra = INFO.getIntrinsic("TECH_", bonTech, IntrinsicSlot.PYINT_ERA)
 					if bonEra < 0: bonEra = 0
-					eraString =	GC.getEraInfo(bonEra).getType()
+					eraString =	INFO.getType("C2C_ERA_", bonEra)
 					sprint += "[MST] Improve %s @ (%r,%r) - Era: %s\n" % (bonString,pl.getX(),pl.getY(),eraString)
 					# find possible improvements for boni
 					impList = [ (bonEra, imp) for imp in range(GC.getNumImprovementInfos())
@@ -2151,7 +2152,7 @@ class MapRegions:
 						if bonEra > 1:
 							sprint += "[MST] Civ to primitive to work %s @ (%r,%r)\n" % (bonString,pl.getX(),pl.getY())
 							continue												# ancient and classic tech only
-					impString = GC.getImprovementInfo(imp).getType()
+					impString = INFO.getType("IMPROVEMENT_", imp)
 					pl.setImprovementType( imp )
 					sprint += "[MST] Placed %s on %s @ (%r,%r)\n" % (impString,bonString,pl.getX(),pl.getY())
 			print sprint
@@ -2176,7 +2177,7 @@ class MapRegions:
 						pl.setFeatureType( FeatureTypes.NO_FEATURE, -1 )
 					if pl.canHaveImprovement( imp, TeamTypes.NO_TEAM, True ):
 						if choose( chance, True, False ): continue
-						impString = GC.getImprovementInfo(imp).getType()
+						impString = INFO.getType("IMPROVEMENT_", imp)
 						pl.setImprovementType( imp )
 						sprint += "[MST] Placed %s @ (%r,%r)\n" % (impString,pl.getX(),pl.getY())
 
@@ -2196,7 +2197,7 @@ class MapRegions:
 
 			eRoad = GC.getInfoTypeForString('ROUTE_ROAD')
 			if bAliens: eRoad = GC.getNumRouteInfos() - 1
-			roadString = GC.getRouteInfo(eRoad).getType()
+			roadString = INFO.getType("ROUTE_", eRoad)
 			for pl in pListCity:
 				if pl.isWater(): continue
 				if pl.isPeak(): continue
@@ -2213,7 +2214,7 @@ class MapRegions:
 			else: chance = 25
 
 			eRoad = GC.getInfoTypeForString('ROUTE_ROAD')
-			roadString = GC.getRouteInfo(eRoad).getType()
+			roadString = INFO.getType("ROUTE_", eRoad)
 			for x,y in pList:
 				pl = GetPlot(x,y)
 				if pl in pListCity: continue
@@ -2236,7 +2237,7 @@ class MapRegions:
 			else:
 				bon = chooseListElement( bonList )
 				pl.setBonusType( bon )
-				bonString = GC.getBonusInfo(bon).getType()
+				bonString = INFO.getType("BONUS_", bon)
 				sprint += "\n[MST] Placed %s @ (%r,%r)" % (bonString,pl.getX(),pl.getY())
 
 			# name
@@ -2641,7 +2642,7 @@ class BonusBalancer:
 			if not plot.isFlatlands(): continue
 			iBonus = plot.getBonusType( -1 )
 			if iBonus < 0: continue
-			type_string = GC.getBonusInfo(iBonus).getType()
+			type_string = INFO.getType("BONUS_", iBonus)
 			if type_string in lMinerals:
 				# find nearby hill
 				lHills = []
@@ -2683,7 +2684,7 @@ class BonusBalancer:
 			pl = MAP.plotByIndex(i)
 			iBonus = pl.getBonusType(-1)
 			if iBonus>=0:
-				type_string = GC.getBonusInfo(iBonus).getType()
+				type_string = INFO.getType("BONUS_", iBonus)
 				if type_string in self.resourcesToBalance:
 					if pl.getArea() in self.startArea:
 						iChoice = int(self.iEliminate)
@@ -2704,7 +2705,7 @@ class BonusBalancer:
 		lMissing, lFound, lFree = self.checkAllBoniPlaced()
 		if lMissing:
 			sprint = "[MST] Missing boni found: Not all resources have been randomly placed: \n"
-			for i in lMissing: sprint += "[MST] %s wasn't placed randomly \n" % (GC.getBonusInfo(i[0]).getType())
+			for i in lMissing: sprint += "[MST] %s wasn't placed randomly \n" % (INFO.getType("BONUS_", i[0]))
 			print sprint
 			# reduce numerous boni, since some other boni are missing
 			lFree = self.reduceNumerousBoni(lFound, lFree)
@@ -2713,7 +2714,7 @@ class BonusBalancer:
 			# print warning, if there are still missing boni
 			if lMissing:
 				sprint = "[MST] WARNING! - not all missing boni could be placed \n"
-				for i in lMissing: sprint += "[MST] %s is still missing \n" % (GC.getBonusInfo(i[0]).getType())
+				for i in lMissing: sprint += "[MST] %s is still missing \n" % (INFO.getType("BONUS_", i[0]))
 				print sprint
 			else:
 				print "[MST] All missing boni have been placed"
@@ -2830,7 +2831,7 @@ class BonusBalancer:
 					misBonus = boniMissing[i]
 					iBonus  = misBonus[0]
 					iDesire = misBonus[1]
-#					sprint += "[MST] Pass %i, %s need %i more \n" % (pass_num,GC.getBonusInfo(iBonus).getType(),iDesire)
+#					sprint += "[MST] Pass %i, %s need %i more \n" % (pass_num,INFO.getType("BONUS_", iBonus),iDesire)
 					if iDesire>0:
 						for j in range( len(freePlots) ):
 							inx = freePlots[j]
@@ -2882,7 +2883,7 @@ class BonusBalancer:
 						iDesire = misBonus[1]
 						if iDesire == 0:
 							del boniMissing[r]
-							sprint += "[MST] all %s placed \n" % ( GC.getBonusInfo(iBonus).getType() )
+							sprint += "[MST] all %s placed \n" % ( INFO.getType("BONUS_", iBonus) )
 						else:
 							r += 1
 					sprint += "[MST] %2i boni still missing: %r \n" % ( len(boniMissing), boniMissing )
@@ -3012,7 +3013,7 @@ class BonusBalancer:
 					if iBonus in resources_placed or iBonus in boniList:
 						continue
 
-					type_string = GC.getBonusInfo(iBonus).getType()
+					type_string = INFO.getType("BONUS_", iBonus)
 					if type_string not in self.resourcesToBalance:
 						continue
 
@@ -3036,7 +3037,7 @@ class BonusBalancer:
 
 		boniList = boniList + resources_placed
 		boniList.sort()
-		resList = [ GC.getBonusInfo(i).getType() for i in boniList ]
+		resList = [ INFO.getType("BONUS_", i) for i in boniList ]
 
 		return plBoniCnt
 

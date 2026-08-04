@@ -45,6 +45,10 @@ class PlotContext
 public:
 	PlotContext() : m_plot(NULL), m_attributeBits(0) {}
 	void bind(const CvPlot* plot) { m_plot = plot; }   // set once by the owning CvPlot; the pointer IS the owner (never dangles)
+	// ZEROED at owner reset. The verdict bits are a DELTA store -- each is SET by the fact that names it, never
+	// re-derived -- so they are correct only from a known zero ([DEC-keyed-accumulator]). A plot object is reused
+	// across a regen/load, and a bit no later fact happens to touch would otherwise survive from the last world.
+	void clear() { m_attributeBits = 0; }
 
 	// --- STORED: the CASC_PRED_* verdict bitset (both blocks) ---------------------------------------------------
 	// The raw mask, for a reader that folds every set bit at once (CityContext::onPlotChanged is the one such

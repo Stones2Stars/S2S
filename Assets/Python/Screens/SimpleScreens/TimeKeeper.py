@@ -1,5 +1,6 @@
 from CvPythonExtensions import *
 GC = CyGlobalContext()
+INFO = CyInfo()
 TRNSLTR = CyTranslator()
 
 def TimeKeeper():
@@ -28,7 +29,7 @@ def TimeKeeper():
 	screen.addTableControlGFC(TABLE, iNumColumns + 1, 0, 0, xRes, yRes, True, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD )
 	screen.setTableColumnHeader(TABLE, 0, "", 120)
 	for i in xrange(iNumColumns):
-		screen.setTableColumnHeader(TABLE, i + 1, GC.getGameSpeedInfo(i).getDescription(), (xRes - 120)/iNumColumns)
+		screen.setTableColumnHeader(TABLE, i + 1, INFO.getDescription("GAMESPEED_", i), (xRes - 120)/iNumColumns)
 
 	for _ in xrange(5 * iEras + 3):
 		screen.appendTableRow(TABLE)

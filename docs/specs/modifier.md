@@ -24,15 +24,18 @@ Magnitudes flow **DOWN** the scope spine (`world → … → city → plot | uni
 rolls down to each of the player's cities; a city-scope deposit lands locally; a `plots`-target deposit lands on
 each matching worked plot (§5). The target reads a combined value — it never re-walks the sources.
 
-> **⚖ STORAGE SEMANTICS — the SCOPE PRINCIPLE.** Deposits accumulate in a package **AT THEIR OWN SCOPE** — one uniform package
-> format (Σflat / Σpercent per channel, §2) cached on each scope object (world / team / empire /
-> city / plot), each package event-invalidated at its own scope only. The downward "roll" is realized **AT
-> READ TIME**: the realized value is the trivial sum of the ~5 scope packages, with per-city gates
+> **⚖ STORAGE SEMANTICS — the SCOPE PRINCIPLE.** Deposits **ACCUMULATE** in a package **AT THEIR OWN SCOPE** — one
+> uniform package format (Σflat / Σpercent per channel, §2) held on each scope object (world / team / empire /
+> city / plot), each package **event-MAINTAINED** at its own scope only: the fact names the source, the compiled
+> index names that source's deposits, and applying them keeps the slot current with nothing marked or deferred
+> ([DEC-maintained-sum](../architecture/decisions.md#dec-maintained-sum)). The downward "roll" is
+> realized **AT READ TIME**: the realized value is the trivial sum of the ~5 scope packages, with per-city gates
 > (state-religion-in-city, coastal, connected, area membership) applied live at the combine. **A lower
-> scope never STORES an upper scope's sums** — that would force downward invalidation fan-out and "break
-> the principle of the cascade in the first place." The only full rebuild of every package is at LOAD.
-> (Cache mechanics: [state-repositories.md](../architecture/state-repositories.md) — the per-scope package
-> model + the CvDerivedCache component.)
+> scope never STORES an upper scope's sums** — that would force downward fan-out and "break
+> the principle of the cascade in the first place." LOAD is not a rebuild either: the reseed's in-read facts
+> apply through the same path play uses.
+> (Mechanics: [state-repositories.md](../architecture/state-repositories.md) — the maintained-sum model + the
+> two planes, only one of which is ever evaluated.)
 >
 > **⛔ THE ORIGIN RULE — THE PURE CASCADE DESIGN (owner).** Which half of a package a scope ever fills is not
 > incidental, it IS the model:
@@ -372,7 +375,7 @@ Ledgered as [DEC-unit-modifiers-on-top](../architecture/decisions.md#dec-unit-mo
 > - The unit's RESOLVED values ([state-repositories.md](../architecture/state-repositories.md) UNIT plane) are
 >   **COMMANDER-FREE by construction**: they gather the unit's own info ∪ its promotions ∪ its unit-combat
 >   classes, and nothing else. A commander attaching, detaching or moving is neither a promotion nor a
->   combat-class change, so it must never be a cache input — there is no fact that would dirty it, and baking it
+>   combat-class change, so it must never be a cache input — there is no fact that would move it, and baking it
 >   in yields a plausible, permanently stale number the moment the commander moves.
 > - The commander's contribution is added **LIVE, ON TOP, at the COMBAT CALC**, which is also the only place
 >   that can ask the question the mechanic actually turns on: **has this commander got control points left to
@@ -382,7 +385,7 @@ Ledgered as [DEC-unit-modifiers-on-top](../architecture/decisions.md#dec-unit-mo
 > commander's points without ever checking whether any remain.
 
 **UNIT-driven wellbeing is END-TURN cadence.** The military/unit-count happiness
-term recomputes **once per turn** (the substrate's turn-roll), NEVER per unit move — a per-move dirty hook made
+term recomputes **once per turn** (the substrate's turn-roll), NEVER per unit move — a per-move mark hook made
 every post-move rate read pay the wellbeing walk (a measured unit-automation collapse) and is banned. The
 within-turn lag this leaves on the wellbeing slots (a handful of cities whose garrison changed mid-turn) is the
 RULED cadence, not a freshness hole; the getter flip proceeds with it.
@@ -401,7 +404,7 @@ improvement-yield phantoms), repaired wholesale when the slots recompute from da
 
 ---
 
-## 3. Conditioning — re-evaluated every recompute (the dormancy model)
+## 3. Conditioning — re-applied when its own dependency moves (the dormancy model)
 
 A deposit may carry `enabled` / `disabled` / `per` ([json](json.md) §3.7, §3.9). A deposit's condition uses the
 **same vocabulary** as the enabler's `requires` — the same `all`/`any`/`noneOf` tree over the same atoms and
@@ -432,9 +435,16 @@ the entity carries its `requires` once (whole-entity availability — the [enabl
 deposit carries its **own** `enabled`/`disabled` (does *this effect* apply). Same condition language, two
 independent fields.
 
-These conditions are **re-checked on every recompute**, and that re-check *is* the dormancy model: a deposit
-whose `enabled` no longer holds (or whose `disabled` now holds) simply stops contributing — the source goes quiet
-without being removed.
+**⛔ NOTHING IS RE-CHECKED ON A RECOMPUTE, BECAUSE THERE IS NO RECOMPUTE.** A conditioned deposit is applied
+`±value` by **the ATOM's own verdict crossing**, and a `per`-scaled one by `±value × Δcount` from **the COUNT's
+own fact** — the two routed planes of the maintained sum
+([state-repositories.md](../architecture/state-repositories.md) § THE MAINTAINED SUM;
+[DEC-maintained-sum](../architecture/decisions.md#dec-maintained-sum)). That re-application *is* the dormancy
+model: a deposit whose `enabled` stops holding (or whose `disabled` starts) is withdrawn from the slot at that
+instant — the source goes quiet without being removed.
+⚑ **Both routes are reverse indices derived from the compiled deposit index** (atom → the deposits it gates,
+count-key → the deposits it scales), so the cost is the deposits that atom or count actually touches — never a
+walk of the scope's deposits asking each whether it cares, and never a sweep of the entity database.
 
 - **`enabled` then `disabled`** — `enabled` is read first, `disabled` second; a `disabled` that holds overrides
   ([json](json.md) §3.9).

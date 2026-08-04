@@ -281,3 +281,36 @@
     ([DEC-conditions-are-predicates](decisions.md#dec-conditions-are-predicates)) inverted onto the target.
     ⚠ **The revival risk is the surviving SCHEMA tag**: it reads like an unmigrated field. The curator now DROPs
     it explicitly so the mapping cannot quietly re-emit a key nothing reads.
+30. **DIRTY-AND-RECOMPUTE FOR THE CASCADE PACKAGES** — the mark protocol (`markDirty(mask)` → `rebuildMarked` →
+    a gather that re-walks the scope's sources), the banked-marks load drain, the derived dirty MASK per event,
+    and the planned "flags all turn, ONE batched rebuild at turn end in dependency order" end-state *(dead —
+    owner: **"what I got wrong is that I thought the yield packages had to be dirtied and recalculated all the
+    time, when it is in essence just a compiled sum that is always updated, based on incoming spine events"**)*.
+    A package is a MAINTAINED SUM: the fact names the source, the compiled index names that source's deposits,
+    and applying them IS the maintenance — so there is nothing to mark, nothing to defer, and nothing to batch
+    ([state-repositories.md](state-repositories.md) § THE MAINTAINED SUM).
+    ⛔ **THIS IS A SUPERSEDED DESIGN, NOT A ROLLERSKATE — do not read it as one, and do not treat the code
+    around it as suspect.** The protocol was among the FIRST things designed for this rework and was implemented
+    faithfully; what changed is the premise, *"the moment we landed on eventspine for everything"* (owner). ⚠
+    Contrast entry #14: the ensure-ON-READ protocol genuinely was a rollerskate. Two adjacent entries, two
+    different populations — the registry holds both, and conflating them sends an agent hunting a culprit that
+    does not exist.
+    ⚑ **The general form, because it outlives this instance:** a dirty flag is a CLAIM THAT WE DO NOT KNOW WHAT
+    CHANGED, so a complete emit surface falsifies it by construction — *"a dirty flag is the fossil of an
+    incomplete emit surface"*, the [DEC-no-self-heal](decisions.md#dec-no-self-heal) fossil rule one level up.
+    ⚠ It dissolved SILENTLY: a design whose premise goes away keeps returning correct numbers and merely does
+    unnecessary work, so there is no symptom to notice — which is exactly why it survived.
+    ⚑ **Three independent reasons it died, and the third is the deciding one:** a rebuild's cost scales with
+    what a city HAS rather than with what CHANGED (so the walks do not get faster, they cease); a missed mark
+    leaves a stale-but-plausible value that reads fine forever, where a missed emit leaves a loud compounding
+    one ([DEC-no-self-heal](decisions.md#dec-no-self-heal) prefers the failure that announces itself); and the
+    mark derivation is a SECOND completeness census that — unlike the emit census — is **not answerable at any
+    one site, moves with the authored data, and cannot be made safe by over-inclusion** (*"it is far easier to
+    ensure we have all the events than to ensure that we have all packages correctly dirtied"*).
+    ⛔ **Never re-add a dirty flag, a derived dirty mask, a mark-then-rebuild protocol, or a batched rebuild
+    phase to the package plane.** ⚠ The CONDITIONED tail is NOT this: a deposit gated on state or scaled by a
+    count is genuinely re-resolved when its DEPENDENCY moves, routed by the condition-atom reverse index — that
+    is the one evaluation moment the model keeps, and reading its survival as licence to restore the mask is the
+    misreading this entry exists to prevent.
+    ⚠ Also NOT this: `CvDerivedCache`'s use for a genuine leaf recompute elsewhere, and the ENDPOINT ORACLE's
+    full recompute-from-source, which is deliberately independent and stays.

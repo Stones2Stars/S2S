@@ -127,10 +127,9 @@ class UnitCombatGrouping(Grouping):
 		self.NONE = 0
 
 		self._addGroup(Group(self, self.NONE, "TXT_KEY_UNITGROUPER_COMBAT_GROUP_NONE"))
-		for i in range(gc.getNumUnitCombatInfos()):
-			info = gc.getUnitCombatInfo(i)
-			if info:
-				self._addGroup(Group(self, i + 1, info.getDescription()))
+		#	The whole registry in ONE crossing (pedia-read-map shape 2), never a per-id info fetch inside a loop.
+		for entry in INFO.getIndex("UNITCOMBAT_"):
+			self._addGroup(Group(self, entry["id"] + 1, entry["description"]))
 
 	def calcGroupKeys(self, unit, player, team):
 		return (gc.getUnitInfo(unit.getUnitType()).getUnitCombatType() + 1,)

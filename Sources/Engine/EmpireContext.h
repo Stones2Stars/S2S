@@ -7,7 +7,8 @@
 //	so a reader always knows where to go: city state on CityContext, empire state here). Bound to its CvPlayer by
 //	pointer (never a value copy).
 //
-//	⛔ STORES only the uniquely-owned AGGREGATE -- `policies`: the empire's enacted-policy set, a derived UNION over
+//	⛔ STORES NOTHING TODAY -- the enacted-policy dictionary moved to its own home on CvPlayer. What follows
+//	describes what that store IS, not where it lives: `policies`, a derived UNION over
 //	the live civics'/traits' policy blocks that lives nowhere else (the empire analog of CityContext::plotAttrs),
 //	event-maintained on civic/trait change. Everything else FORWARDS through the bound player -- incl. the TEAM
 //	facts (team techs / projects / member count): team is deliberately NOT a context (contexts.md), so team-held
@@ -30,19 +31,13 @@ public:
 	EmpireContext() : m_player(NULL) {}
 	void bind(const CvPlayer* p) { m_player = p; }   // set once by the owning CvPlayer
 
-	// --- STORED aggregate: POLICY id -> the empire ENACTS this policy (json §9), keyed by the ClassificationRegistry
-	// domain-local POLICY id (the CvClassificationBlock::hasId space). The derived UNION over the player's LIVE grantors --
-	// adopted civics + held (active-set) traits -- rebuilt WHOLE on the civic/trait/player-init DOMAIN facts, never per read. ---
-	// `mutable` + a const refresh (the CvDerivedCache / PlotContext shape) so the maintainer drives it through the
-	// bound player's CONST accessor -- there is no second, mutable path onto the player.
-	mutable ContextDict policies;
-	// THE ONE MAINTENANCE ENTRY -- called ONLY by the contexts' spine consumer (Engine/ContextConsumer). Walks
-	// m_player's live civics + held traits and refills `policies` whole (out-of-line, EmpireContext.cpp).
-	// CONSTRAINT: no choke point may call this directly. A civic/trait change emits its own DOMAIN fact, so the
-	// consumer is the single trigger path; a direct call beside the event would be a second maintenance surface.
-	void rebuildPolicies() const;
-	void clear() const { policies.clear(); }
-	bool hasPolicy(int ePolicy) const { return policies.has(ePolicy); }   // the O(1) enacted-policy read (ev_playerHasPolicy)
+	// ⛔ THE POLICY STATE IS NOT HELD HERE, and it is not reached THROUGH here either. It lives in its own
+	// dictionary, owned by CvPlayer exactly as the amenity dictionary is owned by CvCity, and that dictionary owns
+	// its storage, its maintenance AND the declared set of facts that drives it -- one place responsible
+	// (Engine/PolicyContext.h, [DEC-dict-is-a-consumer]). This context FORWARDS the read and stores nothing.
+	// ⚠ Its maintainer reaches `player.policies()` DIRECTLY -- never through this context, which owns none of it.
+	void clear() const {}
+	bool hasPolicy(int ePolicy) const;   // the O(1) enacted-policy read (ev_playerHasPolicy), forwarded
 
 	// --- FORWARDED: read through the bound player / its team. Out-of-line (.cpp). ---
 	int  stateReligion() const;               // CvPlayer::getStateReligion (-1 = NO_RELIGION)

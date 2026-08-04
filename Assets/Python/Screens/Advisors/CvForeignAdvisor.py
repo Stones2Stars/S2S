@@ -10,6 +10,7 @@ import math
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 GAME = GC.getGame()
 STATE = CyState()
 ENABLER = CyEnabler()
@@ -18,6 +19,7 @@ AFM = CyArtFileMgr()
 GTM = CyGameTextMgr()
 TRNSLTR = CyTranslator()
 
+TEXT = CyGameTextMgr()
 # this class is shared by both the resource and technology foreign advisors
 class CvForeignAdvisor:
 	"Exotic Foreign Advisor Screen"
@@ -854,7 +856,7 @@ class CvForeignAdvisor:
 						else:
 							y1 = 3
 					aDealMap[iDeal] = [iBonus, CyDeal]
-					BTN = GC.getBonusInfo(iBonus).getButton()
+					BTN = INFO.getButton("BONUS_", iBonus)
 					screen.setImageButtonAt("WID|BONUS|DEAL|%d" %iDeal, Pnl, BTN, x1, y1, 40, 40, eWidGen, 1, 1)
 					iDeal += 1
 					x1 += 40
@@ -870,7 +872,7 @@ class CvForeignAdvisor:
 						else:
 							y1 = 3
 					aDealMap[iDeal] = [iBonus, CyDeal]
-					BTN = GC.getBonusInfo(iBonus).getButton()
+					BTN = INFO.getButton("BONUS_", iBonus)
 					screen.setImageButtonAt("WID|BONUS|DEAL|%d" %iDeal, Pnl, BTN, x1, y1, 40, 40, eWidGen, 1, 1)
 					iDeal += 1
 					x1 += 40
@@ -992,9 +994,9 @@ class CvForeignAdvisor:
 
 				szTxt = uFont3b + u"%c"
 				if CyPlayerX.hasHolyCity(iReligion):
-					szTxt = szTxt % GC.getReligionInfo(iReligion).getHolyCityChar()
+					szTxt = szTxt % TEXT.getHolyCitySymbolChar(iReligion)
 				else:
-					szTxt = szTxt % GC.getReligionInfo(iReligion).getChar()
+					szTxt = szTxt % TEXT.getSymbolChar("RELIGION_", iReligion)
 
 				screen.setTextAt("WID|RELIGION%d|%d" %(iReligion, iPlayerX), ScPnl, szTxt, 1<<0, x, y + dy/2 + 3, 0, eFontGame, eWidGen, 1, 1)
 			x += 28
@@ -1025,7 +1027,7 @@ class CvForeignAdvisor:
 			for iCat in range (iCivicOptions):
 				iCivic = CyPlayerX.getCivics(iCat)
 				Img = "WID|CIVIC%d|%d" %(iCivic, iter2)
-				BTN = GC.getCivicInfo(iCivic).getButton()
+				BTN = INFO.getButton("CIVIC_", iCivic)
 				screen.setImageButtonAt(Img, ScPnl, BTN, x + iOff, y + 9, iSize1, iSize1, eWidGen, 1, 1)
 				iter2 += 1
 				x += dx
@@ -1039,7 +1041,7 @@ class CvForeignAdvisor:
 
 				if iCivic > -1:
 					Img = "WID|CIVIC%d|%d" %(iCivic, iter2)
-					BTN = GC.getCivicInfo(iCivic).getButton()
+					BTN = INFO.getButton("CIVIC_", iCivic)
 					screen.setImageButtonAt(Img, ScPnl, BTN, x + iOff, y + 9, iSize1, iSize1, eWidGen, 1, 1)
 					iter2 += 1
 			y += dy
@@ -1192,7 +1194,7 @@ class CvForeignAdvisor:
 								y1 += 56
 							else:
 								y1 = 3
-						BTN = GC.getTechInfo(iTech).getButton()
+						BTN = INFO.getButton("TECH_", iTech)
 						screen.setImageButtonAt("WID|TECH|%d|%d" %(iTech, iter0), Pnl, BTN, x1, y1, 56, 56, eWidGen, 1, 1)
 						iter0 += 1
 						x1 += 56
@@ -1208,7 +1210,7 @@ class CvForeignAdvisor:
 								y1 += 56
 							else:
 								y1 = 3
-						BTN = GC.getTechInfo(iTech).getButton()
+						BTN = INFO.getButton("TECH_", iTech)
 						screen.setImageButtonAt("WID|TECH|%d|%d" %(iTech, iter0), Pnl, BTN, x1, y1, 56, 56, eWidGen, 1, 1)
 						iter0 += 1
 						x1 += 56

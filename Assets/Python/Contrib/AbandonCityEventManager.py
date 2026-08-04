@@ -8,6 +8,7 @@ GC = CyGlobalContext()
 GAME = GC.getGame()
 TRNSLTR = CyTranslator()
 
+TEXT = CyGameTextMgr()
 # globals
 CD = None
 
@@ -39,7 +40,6 @@ def startCityDemolish(screen, xRes, yRes):
 			else:
 				CD.bAbandonCity = True
 			CD.iconUnhappy = u'%c' % GAME.getSymbolID(FontSymbols.UNHAPPY_CHAR)
-			CD.CvGameSpeedInfo = GC.getGameSpeedInfo(GAME.getGameSpeedType())
 			CD.createPopup(screen, xRes, yRes)
 
 class CityDemolish:
@@ -48,7 +48,7 @@ class CityDemolish:
 		self.iSelected = None
 		self.bListHidden = False
 		self.updateTooltip = CvScreensInterface.mainInterface.updateTooltip
-		self.iconGold = u'%c' %GC.getCommerceInfo(CommerceTypes.COMMERCE_GOLD).getChar()
+		self.iconGold = u'%c' %TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_GOLD)
 		self.iAbandonTrigger = GC.getNumBuildingInfos()
 
 	def createPopup(self, screen, xRes, yRes):
@@ -107,7 +107,7 @@ class CityDemolish:
 		iconGold = self.iconGold
 		fGoldMod = 0.09
 		fGoldMod *= GC.getDefineINT("BUILDING_PRODUCTION_PERCENT") / 100.0
-		fFactorGS = self.CvGameSpeedInfo.getHammerCostPercent() / 100.0
+		fFactorGS = GAME.getHammerCostPercent() / 100.0
 		fGoldMod *= fFactorGS
 		self.fGoldMod = fGoldMod
 		# Build List
@@ -278,7 +278,7 @@ class CityDemolish:
 					CyMessageControl().sendModNetMessage(905, iPlayer, iCity, -1, UNIT)
 
 			# Merchants
-			fModifierGS = self.CvGameSpeedInfo.getHammerCostPercent() / 100.0
+			fModifierGS = GAME.getHammerCostPercent() / 100.0
 			aMerchantList = [
 				GC.getInfoTypeForString("UNIT_FREIGHT"),
 				GC.getInfoTypeForString("UNIT_SUPPLY_TRAIN"),

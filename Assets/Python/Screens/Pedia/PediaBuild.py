@@ -2,8 +2,10 @@
 
 from CvPythonExtensions import *
 GC = CyGlobalContext()
+INFO = CyInfo()
 TRNSLTR = CyTranslator()
 
+TEXT = CyGameTextMgr()
 class PediaBuild:
 
 	def __init__(self, parent, H_BOT_ROW):
@@ -83,7 +85,7 @@ class PediaBuild:
 			if fTime:
 				if CyPlayer:
 					G = GC.getGame()
-					fGameSpeedMod = GC.getGameSpeedInfo(G.getGameSpeedType()).getHammerCostPercent() / 100.0
+					fGameSpeedMod = G.getHammerCostPercent() / 100.0
 					fEraMod = GC.getEraInfo(G.getStartEra()).getBuildPercent() / 100.0
 				szTime = str(fTime) + "00"
 				index = szTime.find(".")
@@ -141,10 +143,10 @@ class PediaBuild:
 				screen.attachPanel(Panel2, Panel3, "", "", False, True, iPanelEmpty)
 				if iImp:
 					iImp -= 1
-					screen.attachImageButton(Panel3, PF + "IMP" + str(iImp), GC.getImprovementInfo(iImp).getButton(), enumBS, iWidGen, 1, 1, False)
+					screen.attachImageButton(Panel3, PF + "IMP" + str(iImp), INFO.getButton("IMPROVEMENT_", iImp), enumBS, iWidGen, 1, 1, False)
 				if iRou:
 					iRou -= 1
-					screen.attachImageButton(Panel3, PF + "ROUTE" + str(iRou), GC.getRouteInfo(iRou).getButton(), enumBS, iWidGen, 1, 1, False)
+					screen.attachImageButton(Panel3, PF + "ROUTE" + str(iRou), INFO.getButton("ROUTE_", iRou), enumBS, iWidGen, 1, 1, False)
 			if iTech:
 				iTech -= 1
 				Panel2 = aName()
@@ -152,7 +154,7 @@ class PediaBuild:
 				screen.attachLabel(Panel2, "", uFont4b + TRNSLTR.getText("TXT_KEY_PEDIA_REQUIRES", ()))
 				Panel3 = aName()
 				screen.attachPanel(Panel2, Panel3, "", "", False, True, iPanelEmpty)
-				screen.attachImageButton(Panel3, PF + "TECH" + str(iTech), GC.getTechInfo(iTech).getButton(), enumBS, iWidGen, 1, 1, False)
+				screen.attachImageButton(Panel3, PF + "TECH" + str(iTech), INFO.getButton("TECH_", iTech), enumBS, iWidGen, 1, 1, False)
 		# Capable
 		aList = []
 		for i in range(GC.getNumUnitInfos()):
@@ -183,7 +185,7 @@ class PediaBuild:
 			ScrollPanel = aName()
 			screen.addScrollPanel(ScrollPanel, "", X_COL_1 - 2, Y_TOP_ROW_2, W_PEDIA_PAGE + 16, H_TOP_ROW_2 - 22, iPanelStd)
 			screen.setStyle(ScrollPanel, "ScrollPanel_Alt_Style")
-			HAMMER = u'%c' %(GC.getYieldInfo(YieldTypes.YIELD_PRODUCTION).getChar())
+			HAMMER = u'%c' %(TEXT.getSymbolChar("YIELD_", YieldTypes.YIELD_PRODUCTION))
 			iOne2 = W_PEDIA_PAGE / 2
 			iOne4 = W_PEDIA_PAGE / 4
 			iOne6 = W_PEDIA_PAGE / 6

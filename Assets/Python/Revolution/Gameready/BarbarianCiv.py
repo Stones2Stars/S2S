@@ -17,6 +17,7 @@ from CvUtil import sendMessage
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 GAME = GC.getGame()
 MAP = GC.getMap()
 STATE = CyState()
@@ -68,7 +69,7 @@ class BarbarianCiv:
 		# Increase odds per barb city within reason.
 		fMod *= iNumCities ** .5
 		# Gamespeed factor
-		iFactorGS = GC.getGameSpeedInfo(GAME.getGameSpeedType()).getSpeedPercent()
+		iFactorGS = GAME.getSpeedPercent()
 		iRange = 16*iFactorGS
 		iEra = GAME.getCurrentEra()
 
@@ -252,7 +253,7 @@ class BarbarianCiv:
 			iMinEra = iEra - self.RevOpt.getNewWorldErasBehind()
 			if iMinEra > -1:
 				for iTech in xrange(iNumTechs):
-					if CyPlayer.canResearch(iTech, False, True) and GC.getTechInfo(iTech).getEra() <= iMinEra:
+					if CyPlayer.canResearch(iTech, False, True) and INFO.getIntrinsic("TECH_", iTech, IntrinsicSlot.PYINT_ERA) <= iMinEra:
 						CyTeam.setHasTech(iTech, True, iPlayer, False, False)
 		else:
 			iNumTeams = GAME.countCivTeamsAlive()
@@ -638,7 +639,7 @@ class BarbarianCiv:
 		odds += 4*CyPlayer.getWondersScore() # 20 points per wonder, see getWonderScore in CvGameCoreUtils.cpp.
 		if odds < 512: return
 
-		iFactorGS = GC.getGameSpeedInfo(GAME.getGameSpeedType()).getSpeedPercent()
+		iFactorGS = GAME.getSpeedPercent()
 		if not GAME.getSorenRandNum(40*iFactorGS + odds, 'minor2major') < odds: return
 
 		bLowScore = False

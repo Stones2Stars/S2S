@@ -49,6 +49,52 @@
 #include "Infrastructure/CvDLLUtilityIFaceBase.h"
 #include "CvTraitInfo.h"
 
+//	The THREE display compositions. A composer OWNS which families it shows and in what order -- that is the
+//	composition the blocks exist to express ([patterns.md] THE DIVISION OF LABOUR) -- while every magnitude
+//	renders itself through the ONE per-entry renderer. Three plane-shaped lists rather than one dump: what a
+//	CITY-plane source deposits, what a PLOT substrate produces, and what a UNIT carries are genuinely different
+//	sets, and an entity that authors none of a family simply contributes no line.
+namespace
+{
+	const ModifierFamily g_aeCityPlaneFamilies[] =
+	{
+		MODFAM_HAPPINESS, MODFAM_HEALTH,
+		MODFAM_FOOD, MODFAM_PRODUCTION, MODFAM_COMMERCE,
+		MODFAM_GOLD, MODFAM_RESEARCH, MODFAM_CULTURE, MODFAM_ESPIONAGE,
+		MODFAM_EXTRA_YIELD_THRESHOLD, MODFAM_LESS_YIELD_THRESHOLD,
+		MODFAM_GROWTH, MODFAM_FOOD_KEPT, MODFAM_MAINTENANCE, MODFAM_UPKEEP, MODFAM_HURRY, MODFAM_HURRY_ANGER,
+		MODFAM_COSTS, MODFAM_INFLATION, MODFAM_TRADE_ROUTES, MODFAM_TRADE_MISSION,
+		MODFAM_DEFENSE, MODFAM_ESPIONAGE_DEFENSE, MODFAM_CITY_CAPTURE, MODFAM_OCCUPATION_TIME, MODFAM_REVOLT_PROTECTION,
+		MODFAM_GREAT_PEOPLE_RATE, MODFAM_GREAT_GENERAL_RATE, MODFAM_FREE_SPECIALISTS, MODFAM_ALLOWED_SPECIALISTS,
+		MODFAM_EXPERIENCE, MODFAM_CONSCRIPT, MODFAM_POPULATION_GROWTH_RATE,
+		MODFAM_WORK_RATE, MODFAM_IMPROVEMENT_UPGRADE_RATE, MODFAM_BUILD_RATE, MODFAM_RESEARCH_RATE,
+		MODFAM_FEATURE_PRODUCTION, MODFAM_DOMAIN_MOVES,
+		MODFAM_DURATIONS, MODFAM_ANARCHY, MODFAM_GOLDEN_AGE, MODFAM_DIPLOMACY, MODFAM_STATE_RELIGION,
+		MODFAM_RELIGION, MODFAM_WAR_WEARINESS, MODFAM_REVOLUTION, MODFAM_BARBARIANS, MODFAM_SPAWN_RATE,
+		MODFAM_PROPERTY
+	};
+
+	const ModifierFamily g_aePlotPlaneFamilies[] =
+	{
+		MODFAM_FOOD, MODFAM_PRODUCTION, MODFAM_COMMERCE,
+		MODFAM_GOLD, MODFAM_RESEARCH, MODFAM_CULTURE, MODFAM_ESPIONAGE,
+		MODFAM_HAPPINESS, MODFAM_HEALTH,
+		MODFAM_MOVEMENT, MODFAM_VISION, MODFAM_DEFENSE, MODFAM_CULTURE_DISTANCE,
+		MODFAM_WORK_RATE, MODFAM_IMPROVEMENT_UPGRADE_RATE, MODFAM_FEATURE_PRODUCTION,
+		MODFAM_PILLAGE, MODFAM_SPAWN_RATE, MODFAM_PROPERTY
+	};
+
+	const ModifierFamily g_aeUnitPlaneFamilies[] =
+	{
+		MODFAM_STRENGTH, MODFAM_COMBAT, MODFAM_FIRST_STRIKE, MODFAM_WITHDRAWAL, MODFAM_COLLATERAL,
+		MODFAM_BOMBARD, MODFAM_AIR, MODFAM_RANGE, MODFAM_CAPTURE,
+		MODFAM_MOVEMENT, MODFAM_DOMAIN_MOVES, MODFAM_VISION, MODFAM_HEAL, MODFAM_CARGO,
+		MODFAM_UPKEEP, MODFAM_COSTS, MODFAM_EXPERIENCE, MODFAM_WORK_RATE, MODFAM_PILLAGE,
+		MODFAM_HAPPINESS, MODFAM_HEALTH, MODFAM_UNDERWORLD, MODFAM_ODDS, MODFAM_SURVIVOR, MODFAM_PROPERTY
+	};
+}
+
+
 int shortenID(int iId)
 {
 	return iId;
@@ -472,13 +518,98 @@ void CvGameTextMgr::setEspionageMissionHelp(CvWStringBuffer &szBuffer, const CvU
 }
 
 
+//	The UNIT INSTANCE's help -- this unit, right now: what the unit-name widget, the selected-unit hover and the
+//	plot unit list all render. It is the LIVE half; the TYPE half is the sibling overload, delegated to at the end
+//	so the two never drift apart ([DEC-single-implementation]).
 void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, bool bOneLine, bool bShort, bool bdarkColor)
 {
+	if (pUnit == NULL)
+	{
+		return;
+	}
+	szString.append(pUnit->getName());
+	if (bOneLine)
+	{
+		return;   // the caller asked for the name alone
+	}
+
+	//	The LIVE numbers, read through the same accessors every other consumer uses. Strength reduces at THIS out
+	//	boundary and nowhere earlier ([DEC-fixedpoint-x100]); the symbols are the text plane's, resolved by the
+	//	font manager rather than spelled out here.
+	szString.append(NEWLINE);
+	szString.append(CvWString::format(L"%d%c", pUnit->baseCombatStrHuman(), gDLL->getSymbolID(STRENGTH_CHAR)));
+
+	const int iMaxHP = pUnit->getMaxHP();
+	if (iMaxHP > 0 && pUnit->getHP() < iMaxHP)
+	{
+		szString.append(CvWString::format(L" %d/%d", pUnit->getHP(), iMaxHP));
+	}
+
+	const int iMoveDenominator = GC.getMOVE_DENOMINATOR();
+	if (iMoveDenominator > 0)
+	{
+		szString.append(CvWString::format(L"  %d/%d%c",
+			pUnit->movesLeft() / iMoveDenominator, pUnit->baseMoves(), gDLL->getSymbolID(MOVES_CHAR)));
+	}
+
+	if (pUnit->getLevel() > 0)
+	{
+		szString.append(CvWString::format(L"  %d (%d/%d)",
+			pUnit->getLevel(), pUnit->getExperience100() / 100, pUnit->experienceNeeded()));
+	}
+
+	//	⛔ THE HELD PROMOTIONS, WALKED FROM WHAT THE UNIT HOLDS -- never a sweep of the promotion registry asking
+	//	"do I have this?" ([contexts.md] a read that walks per call is the efficiency defect to reject in review).
+	//	This is the hottest text path in the game: it renders on every unit hover.
+	const std::map<PromotionTypes, PromotionKeyedInfo>& kHeldPromotions = pUnit->getPromotionKeyedInfo();
+	for (std::map<PromotionTypes, PromotionKeyedInfo>::const_iterator itPromotion = kHeldPromotions.begin();
+		itPromotion != kHeldPromotions.end(); ++itPromotion)
+	{
+		if (itPromotion->second.m_bHasPromotion)
+		{
+			szString.append(NEWLINE);
+			szString.append(GC.getPromotionInfo(itPromotion->first).getDescription());
+		}
+	}
+
+	//	The TYPE's own blocks, unless the caller wanted the short form. bCivilopediaText suppresses the type's
+	//	heading, which the unit's own name above has already served.
+	if (!bShort)
+	{
+		setUnitHelp(szString, pUnit->getUnitType(), true);
+	}
 }
 
 
+//	The PLOT's unit list -- what stands here. Each unit is rendered by the INSTANCE composer above rather than
+//	re-described locally, so the plot hover and the unit hover can never disagree ([DEC-single-implementation]);
+//	the caller's bOneLine/bShort pass straight through (the off-screen indicator label asks for both, and so
+//	gets one name per unit).
 void CvGameTextMgr::setPlotListHelp(CvWStringBuffer &szString, CvPlot* pPlot, bool bOneLine, bool bShort)
 {
+	if (pPlot == NULL)
+	{
+		return;
+	}
+	const TeamTypes eActiveTeam = GC.getGame().getActiveTeam();
+	bool bFirst = true;
+	//	The plot's OWN unit list -- what it holds, never a sweep of anything.
+	foreach_(const CvUnit* pLoopUnit, pPlot->units())
+	{
+		//	⛔ A HIDDEN UNIT MUST NOT LEAK THROUGH A TOOLTIP. The plot's list is unfiltered, so the viewer's own
+		//	visibility verdict is applied here -- rendering it would hand the player information the map is
+		//	deliberately withholding.
+		if (pLoopUnit == NULL || pLoopUnit->isInvisible(eActiveTeam, false))
+		{
+			continue;
+		}
+		if (!bFirst)
+		{
+			szString.append(NEWLINE);
+		}
+		bFirst = false;
+		setUnitHelp(szString, pLoopUnit, bOneLine, bShort);
+	}
 }
 
 namespace {
@@ -1957,16 +2088,23 @@ void CvGameTextMgr::parseSpecialistHelp(CvWStringBuffer &szHelpString, Specialis
 }
 
 void CvGameTextMgr::parseSpecialistHelpActual(CvWStringBuffer &szHelpString, SpecialistTypes eSpecialist, CvCity* pCity, bool bCivilopediaText, int iChange)
-// BUG - Specialist Actual Effects - end
 {
+	if ((int)eSpecialist < 0)
+	{
+		return;
+	}
+	const CvInfo& kInfo = GC.getSpecialistInfo(eSpecialist);
+	if (!bCivilopediaText)
+	{
+		szHelpString.append(kInfo.getDescription());
+	}
+	appendEntityBlocks(szHelpString, kInfo, g_aeCityPlaneFamilies, sizeof(g_aeCityPlaneFamilies) / sizeof(g_aeCityPlaneFamilies[0]));
 }
 
 
 void CvGameTextMgr::parseFreeSpecialistHelp(CvWStringBuffer &szHelpString, const CvCity& kCity)
 {
 }
-
-
 //
 // Promotion Help
 //
@@ -1977,8 +2115,13 @@ void CvGameTextMgr::parsePromotionHelp(CvWStringBuffer &szBuffer, PromotionTypes
 
 void CvGameTextMgr::parsePromotionHelpInternal(CvWStringBuffer &szBuffer, PromotionTypes ePromotion, const wchar_t* pcNewline, bool bAccrueLines)
 {
+	if ((int)ePromotion < 0)
+	{
+		return;
+	}
+	const CvInfo& kInfo = GC.getPromotionInfo(ePromotion);
+	appendEntityBlocks(szBuffer, kInfo, g_aeUnitPlaneFamilies, sizeof(g_aeUnitPlaneFamilies) / sizeof(g_aeUnitPlaneFamilies[0]));
 }
-
 //	Function:			parseCivicInfo()
 //	Description:	Will parse the civic info help
 //	Parameters:		szHelpText -- the text to put it into
@@ -1986,18 +2129,43 @@ void CvGameTextMgr::parsePromotionHelpInternal(CvWStringBuffer &szBuffer, Promot
 //	Returns:			nothing
 void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivic, bool bCivilopediaText, bool bPlayerContext, bool bSkipName)
 {
+	if ((int)eCivic < 0)
+	{
+		return;
+	}
+	const CvInfo& kInfo = GC.getCivicInfo(eCivic);
+	if (!bCivilopediaText && !bSkipName)
+	{
+		szHelpText.append(kInfo.getDescription());
+	}
+	appendEntityBlocks(szHelpText, kInfo, g_aeCityPlaneFamilies, sizeof(g_aeCityPlaneFamilies) / sizeof(g_aeCityPlaneFamilies[0]));
 }
-
-
 void CvGameTextMgr::setTechHelp(CvWStringBuffer &szBuffer, TechTypes eTech, bool bCivilopediaText, bool bPlayerContext, bool bStrategyText, bool bTreeInfo, TechTypes eFromTech)
 {
+	if ((int)eTech < 0)
+	{
+		return;
+	}
+	const CvInfo& kInfo = GC.getTechInfo(eTech);
+	if (!bCivilopediaText)
+	{
+		szBuffer.append(kInfo.getDescription());
+	}
+	appendEntityBlocks(szBuffer, kInfo, g_aeCityPlaneFamilies, sizeof(g_aeCityPlaneFamilies) / sizeof(g_aeCityPlaneFamilies[0]));
 }
-
-
 void CvGameTextMgr::setBasicUnitHelp(CvWStringBuffer &szBuffer, UnitTypes eUnit, bool bCivilopediaText)
 {
+	if ((int)eUnit < 0)
+	{
+		return;
+	}
+	const CvInfo& kInfo = GC.getUnitInfo(eUnit);
+	if (!bCivilopediaText)
+	{
+		szBuffer.append(kInfo.getDescription());
+	}
+	appendEntityBlocks(szBuffer, kInfo, g_aeUnitPlaneFamilies, sizeof(g_aeUnitPlaneFamilies) / sizeof(g_aeUnitPlaneFamilies[0]));
 }
-
 void CvGameTextMgr::setBasicUnitHelpWithCity(CvWStringBuffer &szBuffer, UnitTypes eUnit, bool bCivilopediaText, CvCity* pCity, bool bConscript, bool bTBUnitView1, bool bTBUnitView2, bool bTBUnitView3)
 {
 }
@@ -2034,8 +2202,60 @@ void CvGameTextMgr::setUnitExperienceHelp(CvWStringBuffer &szBuffer, CvWString s
 // BUG - Starting Experience - end
 
 
+//	The UNIT TYPE's help -- what this kind of unit carries, independent of any instance. Every widget that hovers
+//	a unit TYPE lands here: the build list, the production queue, the pedia jump, the tech chooser.
+//
+//	⛔ THE COMPOSER KEEPS THE BLOCKS AND LOSES THE SUB-BLOCKS ([patterns.md] THE DIVISION OF LABOUR). Its whole
+//	job is deciding WHICH families appear, in what ORDER, and under which heading; a magnitude is never assembled
+//	here. Each compiled entry renders ITSELF through the ONE renderer, carrying its own value, unit, target,
+//	scope, per-scaler and conditions -- so a newly authored family needs no edit beyond its place in the list.
 void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szBuffer, UnitTypes eUnit, bool bCivilopediaText, bool bStrategyText, bool bTechChooserText, CvCity* pCity)
 {
+	if (eUnit == NO_UNIT)
+	{
+		return;
+	}
+	const CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
+
+	//	The pedia page and the instance help both supply their own title, so the heading is the one thing the
+	//	caller gets to suppress.
+	if (!bCivilopediaText)
+	{
+		szBuffer.append(kUnit.getDescription());
+	}
+
+	static const ModifierFamily aeDisplayFamilies[] =
+	{
+		// what it is in a fight
+		MODFAM_STRENGTH, MODFAM_COMBAT, MODFAM_FIRST_STRIKE, MODFAM_WITHDRAWAL, MODFAM_COLLATERAL,
+		MODFAM_BOMBARD, MODFAM_AIR, MODFAM_RANGE, MODFAM_CAPTURE,
+		// how it moves, sees, recovers and carries
+		MODFAM_MOVEMENT, MODFAM_DOMAIN_MOVES, MODFAM_VISION, MODFAM_HEAL, MODFAM_CARGO,
+		// what it costs and what it earns
+		MODFAM_UPKEEP, MODFAM_COSTS, MODFAM_EXPERIENCE, MODFAM_WORK_RATE, MODFAM_PILLAGE,
+		// what it brings to a city it stands in
+		MODFAM_HAPPINESS, MODFAM_HEALTH, MODFAM_UNDERWORLD, MODFAM_PROPERTY
+	};
+	for (size_t iFamily = 0; iFamily < sizeof(aeDisplayFamilies) / sizeof(aeDisplayFamilies[0]); ++iFamily)
+	{
+		appendEntryLines(szBuffer, kUnit, aeDisplayFamilies[iFamily]);
+	}
+
+	//	The REQUIRES block. Deciding that build and operate are separate lines -- they mean different things, so
+	//	merging them into one phrase would misreport both -- is the composer's call; rendering the tree itself is
+	//	the condition renderer's ([todo] the requires block composer, whose renderer already existed).
+	const CvCondition* pRequiresBuild = kUnit.requiresBuild();
+	if (pRequiresBuild != NULL)
+	{
+		szBuffer.append(NEWLINE);
+		szBuffer.append(entryConditionText(pRequiresBuild));
+	}
+	const CvCondition* pRequiresOperate = kUnit.requiresOperate();
+	if (pRequiresOperate != NULL)
+	{
+		szBuffer.append(NEWLINE);
+		szBuffer.append(entryConditionText(pRequiresOperate));
+	}
 }
 
 // BUG - Building Actual Effects - start
@@ -2108,21 +2328,34 @@ void CvGameTextMgr::setBuildingActualEffects(CvWStringBuffer &szBuffer, const Cv
  */
 void CvGameTextMgr::setBuildingHelp(CvWStringBuffer &szBuffer, const BuildingTypes eBuilding, const bool bActual, CvCity* pCity, const bool bCivilopediaText, const bool bStrategyText, const bool bTechChooserText)
 {
+	if ((int)eBuilding < 0)
+	{
+		return;
+	}
+	const CvInfo& kInfo = GC.getBuildingInfo(eBuilding);
+	if (!bCivilopediaText)
+	{
+		szBuffer.append(kInfo.getDescription());
+	}
+	appendEntityBlocks(szBuffer, kInfo, g_aeCityPlaneFamilies, sizeof(g_aeCityPlaneFamilies) / sizeof(g_aeCityPlaneFamilies[0]));
 }
-
 void CvGameTextMgr::setHeritageHelp(CvWStringBuffer &szBuffer, const HeritageTypes eType, CvCity* pCity, const bool bCivilopediaText, const bool bStrategyText, const bool bTechChooserText)
 {
+	if ((int)eType < 0)
+	{
+		return;
+	}
+	const CvInfo& kInfo = GC.getHeritageInfo(eType);
+	if (!bCivilopediaText)
+	{
+		szBuffer.append(kInfo.getDescription());
+	}
+	appendEntityBlocks(szBuffer, kInfo, g_aeCityPlaneFamilies, sizeof(g_aeCityPlaneFamilies) / sizeof(g_aeCityPlaneFamilies[0]));
 }
-
-
 // #195 Phase 2: render one terrain / feature / improvement "requires ... in city vicinity"
 // requirement straight from the unified prerequisite model, replacing four near-identical
 // hand-rolled loops. Same TXT keys, separator (AND for REQUIRE_ALL, OR otherwise) and the
 // IN_CITY_VICINITY suffix as the code it supersedes.
-void CvGameTextMgr::appendVicinityRequirementHelp(CvWStringBuffer& szBuffer, const ConstructRequirement& req)
-{
-}
-
 // #195 Phase 2: format one GOM (type, id) as a clickable <link>description</link>. Returns
 // false for GOM types this renderer does not display (caller skips them).
 bool CvGameTextMgr::buildRequirementItemLink(GOMTypes eGOM, int iId, CvWString& szOut) const
@@ -2143,23 +2376,6 @@ bool CvGameTextMgr::buildRequirementItemLink(GOMTypes eGOM, int iId, CvWString& 
 	}
 }
 
-// #195 Phase 2: status-aware renderer for a model requirement. Filters by what the city
-// already has via CvGameObject::hasGOM -- the same oracle the construct-condition evaluates
-// against -- so the displayed have/need status matches actual constructibility. Renders the
-// unmet items as a "Requires: <links>" list (AND for REQUIRE_ALL, OR otherwise). pCity NULL
-// (Civilopedia) treats nothing as satisfied, so the full requirement is shown.
-void CvGameTextMgr::appendRequirementHelp(CvWStringBuffer& szBuffer, const ConstructRequirement& req, const CvCity* pCity, const char* szRequiresKey)
-{
-}
-
-// #195 Phase 2: civic requirement renderer. Unlike appendRequirementHelp, civics show EVERY
-// listed civic, coloured by whether the active player has it (POSITIVE = have, WARNING = need),
-// joined by AND (REQUIRE_ALL) / OR (REQUIRE_ANY) -- the "show-all status" UX the old hand-rolled
-// blocks used. Returns whether the requirement is met, for the "requires active civics" note.
-bool CvGameTextMgr::appendCivicRequirementHelp(CvWStringBuffer& szBuffer, const ConstructRequirement& req)
-{
-	return 0;
-}
 
 void CvGameTextMgr::buildBuildingRequiresString(CvWStringBuffer& szBuffer, BuildingTypes eBuilding, bool bCivilopediaText, bool bTechChooserText, const CvCity* pCity)
 {
@@ -2168,9 +2384,17 @@ void CvGameTextMgr::buildBuildingRequiresString(CvWStringBuffer& szBuffer, Build
 
 void CvGameTextMgr::setProjectHelp(CvWStringBuffer &szBuffer, ProjectTypes eProject, bool bCivilopediaText, CvCity* pCity)
 {
+	if ((int)eProject < 0)
+	{
+		return;
+	}
+	const CvInfo& kInfo = GC.getProjectInfo(eProject);
+	if (!bCivilopediaText)
+	{
+		szBuffer.append(kInfo.getDescription());
+	}
+	appendEntityBlocks(szBuffer, kInfo, g_aeCityPlaneFamilies, sizeof(g_aeCityPlaneFamilies) / sizeof(g_aeCityPlaneFamilies[0]));
 }
-
-
 void CvGameTextMgr::setProcessHelp(CvWStringBuffer &szBuffer, ProcessTypes eProcess)
 {
 	PROFILE_EXTRA_FUNC();
@@ -2888,16 +3112,34 @@ void CvGameTextMgr::setBonusTradeHelp(CvWStringBuffer &szBuffer, BonusTypes eBon
 
 void CvGameTextMgr::setReligionHelp(CvWStringBuffer &szBuffer, ReligionTypes eReligion, bool bCivilopedia)
 {
+	if ((int)eReligion < 0)
+	{
+		return;
+	}
+	const CvInfo& kInfo = GC.getReligionInfo(eReligion);
+	if (!bCivilopedia)
+	{
+		szBuffer.append(kInfo.getDescription());
+	}
+	appendEntityBlocks(szBuffer, kInfo, g_aeCityPlaneFamilies, sizeof(g_aeCityPlaneFamilies) / sizeof(g_aeCityPlaneFamilies[0]));
 }
-
 void CvGameTextMgr::setReligionHelpCity(CvWStringBuffer &szBuffer, ReligionTypes eReligion, CvCity *pCity, bool bCityBar, bool bForceReligion, bool bForceState, bool bNoStateReligion)
 {
 }
 
 void CvGameTextMgr::setCorporationHelp(CvWStringBuffer &szBuffer, CorporationTypes eCorporation, bool bCivilopedia)
 {
+	if ((int)eCorporation < 0)
+	{
+		return;
+	}
+	const CvInfo& kInfo = GC.getCorporationInfo(eCorporation);
+	if (!bCivilopedia)
+	{
+		szBuffer.append(kInfo.getDescription());
+	}
+	appendEntityBlocks(szBuffer, kInfo, g_aeCityPlaneFamilies, sizeof(g_aeCityPlaneFamilies) / sizeof(g_aeCityPlaneFamilies[0]));
 }
-
 void CvGameTextMgr::setCorporationHelpCity(CvWStringBuffer &szBuffer, CorporationTypes eCorporation, CvCity *pCity, bool bCityBar, bool bForceCorporation)
 {
 }
@@ -3386,9 +3628,42 @@ void CvGameTextMgr::setTraitHelp(CvWStringBuffer &szBuffer, TraitTypes eTrait)
 
 void CvGameTextMgr::setUnitCombatHelp(CvWStringBuffer& szBuffer, UnitCombatTypes eUnitCombat, bool bCivilopediaText) const
 {
+	if ((int)eUnitCombat < 0)
+	{
+		return;
+	}
+	const CvInfo& kInfo = GC.getUnitCombatInfo(eUnitCombat);
+	if (!bCivilopediaText)
+	{
+		szBuffer.append(kInfo.getDescription());
+	}
+	appendEntityBlocks(szBuffer, kInfo, g_aeUnitPlaneFamilies, sizeof(g_aeUnitPlaneFamilies) / sizeof(g_aeUnitPlaneFamilies[0]));
+}
+//	The ONE entity-help spine: the composer's chosen family blocks, then the REQUIRES block. Every entity
+//	composer is this shape, so they cannot drift apart ([DEC-single-implementation]); deciding that build and
+//	operate are separate lines is the composer's call (they mean different things -- merging them would
+//	misreport both), while rendering each tree is the condition renderer's.
+void CvGameTextMgr::appendEntityBlocks(CvWStringBuffer& szBuffer, const CvInfo& info, const ModifierFamily* aeFamilies, int iFamilyCount) const
+{
+	for (int iFamily = 0; iFamily < iFamilyCount; ++iFamily)
+	{
+		appendEntryLines(szBuffer, info, aeFamilies[iFamily]);
+	}
+	const CvCondition* pRequiresBuild = info.requiresBuild();
+	if (pRequiresBuild != NULL)
+	{
+		szBuffer.append(NEWLINE);
+		szBuffer.append(entryConditionText(pRequiresBuild));
+	}
+	const CvCondition* pRequiresOperate = info.requiresOperate();
+	if (pRequiresOperate != NULL)
+	{
+		szBuffer.append(NEWLINE);
+		szBuffer.append(entryConditionText(pRequiresOperate));
+	}
 }
 
-void CvGameTextMgr::appendEntryLines(CvWStringBuffer& szBuffer, const CvInfo& info, ModifierFamily eFamily)
+void CvGameTextMgr::appendEntryLines(CvWStringBuffer& szBuffer, const CvInfo& info, ModifierFamily eFamily) const
 {
 	const CvModifiers* pModifiers = info.getModifiers();
 	if (pModifiers == NULL)
@@ -3408,13 +3683,30 @@ void CvGameTextMgr::appendEntryLines(CvWStringBuffer& szBuffer, const CvInfo& in
 
 void CvGameTextMgr::setImprovementHelp(CvWStringBuffer &szBuffer, ImprovementTypes eImprovement, FeatureTypes eFeature, bool bCivilopediaText)
 {
+	if ((int)eImprovement < 0)
+	{
+		return;
+	}
+	const CvInfo& kInfo = GC.getImprovementInfo(eImprovement);
+	if (!bCivilopediaText)
+	{
+		szBuffer.append(kInfo.getDescription());
+	}
+	appendEntityBlocks(szBuffer, kInfo, g_aePlotPlaneFamilies, sizeof(g_aePlotPlaneFamilies) / sizeof(g_aePlotPlaneFamilies[0]));
 }
-
 void CvGameTextMgr::setRouteHelp(CvWStringBuffer &szBuffer, RouteTypes eRoute, bool bCivilopediaText)
 {
+	if ((int)eRoute < 0)
+	{
+		return;
+	}
+	const CvInfo& kInfo = GC.getRouteInfo(eRoute);
+	if (!bCivilopediaText)
+	{
+		szBuffer.append(kInfo.getDescription());
+	}
+	appendEntityBlocks(szBuffer, kInfo, g_aePlotPlaneFamilies, sizeof(g_aePlotPlaneFamilies) / sizeof(g_aePlotPlaneFamilies[0]));
 }
-
-
 void CvGameTextMgr::getDealString(CvWStringBuffer& szBuffer, CvDeal& deal, PlayerTypes ePlayerPerspective)
 {
 	PlayerTypes ePlayer1 = deal.getFirstPlayer();
@@ -3627,14 +3919,30 @@ void CvGameTextMgr::getTradeString(CvWStringBuffer& szBuffer, const TradeData& t
 
 void CvGameTextMgr::setFeatureHelp(CvWStringBuffer &szBuffer, FeatureTypes eFeature, bool bCivilopediaText)
 {
+	if ((int)eFeature < 0)
+	{
+		return;
+	}
+	const CvInfo& kInfo = GC.getFeatureInfo(eFeature);
+	if (!bCivilopediaText)
+	{
+		szBuffer.append(kInfo.getDescription());
+	}
+	appendEntityBlocks(szBuffer, kInfo, g_aePlotPlaneFamilies, sizeof(g_aePlotPlaneFamilies) / sizeof(g_aePlotPlaneFamilies[0]));
 }
-
-
 void CvGameTextMgr::setTerrainHelp(CvWStringBuffer &szBuffer, TerrainTypes eTerrain, bool bCivilopediaText)
 {
+	if ((int)eTerrain < 0)
+	{
+		return;
+	}
+	const CvInfo& kInfo = GC.getTerrainInfo(eTerrain);
+	if (!bCivilopediaText)
+	{
+		szBuffer.append(kInfo.getDescription());
+	}
+	appendEntityBlocks(szBuffer, kInfo, g_aePlotPlaneFamilies, sizeof(g_aePlotPlaneFamilies) / sizeof(g_aePlotPlaneFamilies[0]));
 }
-
-
 void CvGameTextMgr::buildFinanceSpecialistGoldString(CvWStringBuffer& szBuffer, PlayerTypes ePlayer) const
 {
 	PROFILE_EXTRA_FUNC();

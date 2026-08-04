@@ -19,6 +19,7 @@
 #include "CvTerrainInfo.h"   // the plot substrate's own defense/yield group reads
 #include "CvFeatureInfo.h"
 #include "CvInfos.h"
+#include "Infos/CvClassificationIds.h"   // the generated CLS_* ids this file tests by constant
 #include "CvMap.h"
 #include "AI/CvPlayerAI.h"
 #include "CvPlot.h"
@@ -66,13 +67,6 @@ stdext::hash_map<int,int>* CvPlot::m_resultHashMap = NULL;
 static const CvPlot* g_bestDefenderCachePlot = NULL;
 typedef stdext::hash_map<int, unitDefenderInfo> DefenderScoreCache;
 static DefenderScoreCache* g_bestDefenderCache = NULL;
-
-// The PLOT-scope cascade package's refresh delegate -- the one-line delegation to the ONE gather
-// ([DEC-single-implementation]; see CvCascadeGather).
-void CvPlot::refreshCascadePackage(int64_t iMask) const
-{
-	CascadeGather::refreshPlot(*this, iMask);
-}
 
 // The plot's group reads (see CvPlot.h for the role + the grammar). Each walks its group's own enum, resolves
 // that entry's CHANNEL by identity, and folds it through the ONE cross-scope roll-up -- whose plot entry is this
@@ -346,10 +340,14 @@ void CvPlot::reset(int iX, int iY, bool bConstructorCall)
 	m_iX = iX;
 	m_iY = iY;
 	m_plotContext.bind(this);   // bind the per-plot context to its owner (the pointer IS this plot; forwarding reads it)
-	// bind the PLOT-scope cascade package (all-dirty from bind: a loaded/new plot recomputes on first read)
+	// ...and ZERO its stored verdict bits. They are a delta store fed by the plot's own ADDED/REMOVED facts, so
+	// they are correct only from a known zero; a plot object outlives a regen/load and would otherwise carry a
+	// verdict from the previous world that no later fact clears ([DEC-keyed-accumulator]).
+	m_plotContext.clear();
+	// bind the PLOT-scope cascade package. It starts EMPTY and is filled ONLY by the facts ([DEC-maintained-sum]).
 	// PLOT identity is the coordinate pair (a plot has no owner-independent id; the map index needs a map that
 	// does not exist yet at reset), so a plot divergence reports owner=x id=y -- read with cache=plot.
-	m_cascadePackage.bind(CASC_SCOPE_PLOT, this, &CvPlot::refreshCascadePackage, iX, iY);
+	m_cascadePackage.bind(CASC_SCOPE_PLOT, iX, iY);
 	m_iArea = FFreeList::INVALID_INDEX;
 	m_pPlotArea = NULL;
 	m_iFeatureVariety = 0;
@@ -6114,7 +6112,14 @@ void CvPlot::setIrrigated(bool bNewValue)
 		{
 			pLoopPlot->setLayoutDirty(true);
 		}
-		emitPlotIrrigationChanged(GC.getMap().plotNum(getX(), getY()), (int)getOwner(), bNewValue);
+		if (bNewValue)
+		{
+			emitPlotIrrigationAdded(GC.getMap().plotNum(getX(), getY()), (int)getOwner());
+		}
+		else
+		{
+			emitPlotIrrigationRemoved(GC.getMap().plotNum(getX(), getY()), (int)getOwner());
+		}
 	}
 }
 
@@ -6388,8 +6393,16 @@ void CvPlot::setOwner(PlayerTypes eNewValue, bool bCheckUnits, bool bUpdatePlotG
 			}
 
 			m_eOwner = eNewValue;
-			// #430 event spine: announce the plot owner change (past the no-change guard, after the field commit).
-			emitPlotOwnerChanged(GC.getMap().plotNum(getX(), getY()), (int)eOldPlotOwner, (int)eNewValue);
+			// #430 event spine: PAST TENSE (see setTerrainType). OWNERSHIP IS A MEMBERSHIP FACT -- each end is its
+			// own happening, so each city's plot-predicate fold moves on the fact that names it.
+			if (eOldPlotOwner != NO_PLAYER)
+			{
+				emitPlotOwnerRemoved(GC.getMap().plotNum(getX(), getY()), (int)eOldPlotOwner);
+			}
+			if (eNewValue != NO_PLAYER)
+			{
+				emitPlotOwnerAdded(GC.getMap().plotNum(getX(), getY()), (int)eNewValue);
+			}
 
 			setWorkingCityOverride(NULL);
 			updateWorkingCity();
@@ -6823,7 +6836,16 @@ void CvPlot::setPlotType(PlotTypes eNewValue, bool bRecalculate, bool bRebuildGr
 	}
 	// Emitted at the END of the setter, not at the field write: the areas are resettled above, and a consumer whose
 	// derivation reads this plot's neighbourhood (the adjacency leg) requires that.
-	emitPlotTypeChanged(GC.getMap().plotNum(getX(), getY()), (int)getOwner(), (int)eOldPlotType, (int)eNewValue);
+	// #430 event spine: PAST TENSE (see setTerrainType), and at the END of the setter -- the areas are resettled
+	// above, which the adjacency leg reads.
+	if (eOldPlotType != NO_PLOT)
+	{
+		emitPlotTypeRemoved(GC.getMap().plotNum(getX(), getY()), (int)getOwner(), (int)eOldPlotType);
+	}
+	if (eNewValue != NO_PLOT)
+	{
+		emitPlotTypeAdded(GC.getMap().plotNum(getX(), getY()), (int)getOwner(), (int)eNewValue);
+	}
 }
 
 
@@ -6860,8 +6882,19 @@ void CvPlot::setTerrainType(TerrainTypes eNewValue, bool bRecalculate, bool bReb
 	if (eOldTerrain != eNewValue)
 	{
 		m_eTerrainType = eNewValue;
-		// #430 event spine: announce the terrain change (past the no-change guard). plotId per /state/plots convention.
-		emitTerrainChanged(GC.getMap().plotNum(getX(), getY()), getOwner(), (int)eOldTerrain, (int)eNewValue);
+		// #430 event spine: PAST TENSE -- the CRUD happens, then the facts say what happened. An event is
+		// TESTIMONY about a completed act, never an instruction that drives one: an effect may not mutate base
+		// state, so no consumer reaches back through a fact to change the plot. The REMOVED fact NAMES the source
+		// that left, so a withdrawal reads the FACT and never the plot -- which is why it needs no privileged
+		// position relative to the commit.
+		if (eOldTerrain != NO_TERRAIN)
+		{
+			emitPlotTerrainRemoved(GC.getMap().plotNum(getX(), getY()), getOwner(), (int)eOldTerrain);
+		}
+		if (eNewValue != NO_TERRAIN)
+		{
+			emitPlotTerrainAdded(GC.getMap().plotNum(getX(), getY()), getOwner(), (int)eNewValue);
+		}
 
 		if (eOldTerrain != NO_TERRAIN)
 		{
@@ -6979,10 +7012,18 @@ void CvPlot::setFeatureType(FeatureTypes eNewValue, int iVariety, bool bImprovem
 		}
 		m_eFeatureType = eNewValue;
 		m_iFeatureVariety = iVariety;
-		// #430 event spine: announce the feature change ONLY on a real feature-type change (not a variety-only reroll).
+		// #430 event spine: PAST TENSE (see setTerrainType). Announced ONLY on a real feature-type change, never
+		// on a variety-only reroll.
 		if (eOldFeature != eNewValue)
 		{
-			emitFeatureChanged(GC.getMap().plotNum(getX(), getY()), getOwner(), (int)eOldFeature, (int)eNewValue);
+			if (eOldFeature != NO_FEATURE)
+			{
+				emitPlotFeatureRemoved(GC.getMap().plotNum(getX(), getY()), getOwner(), (int)eOldFeature);
+			}
+			if (eNewValue != NO_FEATURE)
+			{
+				emitPlotFeatureAdded(GC.getMap().plotNum(getX(), getY()), getOwner(), (int)eNewValue);
+			}
 		}
 
 		if (bUpdateSight)
@@ -7141,8 +7182,8 @@ void CvPlot::setBonusType(BonusTypes eNewValue)
 		// bonus, so a replace emits the old at -1 then the new at +1.
 		{
 			const int iPlotNum = GC.getMap().plotNum(getX(), getY());
-			if (eOldBonus != NO_BONUS) { emitPlotBonusChanged(iPlotNum, (int)getOwner(), (int)eOldBonus, -1); }
-			if (eNewValue != NO_BONUS) { emitPlotBonusChanged(iPlotNum, (int)getOwner(), (int)eNewValue, 1); }
+			if (eOldBonus != NO_BONUS) { emitPlotBonusRemoved(iPlotNum, (int)getOwner(), (int)eOldBonus); }
+			if (eNewValue != NO_BONUS) { emitPlotBonusAdded(iPlotNum, (int)getOwner(), (int)eNewValue); }
 		}
 
 		if (getBonusType() != NO_BONUS)
@@ -7296,8 +7337,15 @@ void CvPlot::setImprovementType(ImprovementTypes eNewImprovement)
 			updatePlotGroupBonus(false);
 		}
 		m_eImprovementType = eNewImprovement;
-		// #430 event spine: announce the improvement change (past the no-change guard, after the field commit).
-		emitImprovementChanged(GC.getMap().plotNum(getX(), getY()), getOwner(), (int)eOldImprovement, (int)eNewImprovement);
+		// #430 event spine: PAST TENSE (see setTerrainType).
+		if (eOldImprovement != NO_IMPROVEMENT)
+		{
+			emitPlotImprovementRemoved(GC.getMap().plotNum(getX(), getY()), getOwner(), (int)eOldImprovement);
+		}
+		if (eNewImprovement != NO_IMPROVEMENT)
+		{
+			emitPlotImprovementAdded(GC.getMap().plotNum(getX(), getY()), getOwner(), (int)eNewImprovement);
+		}
 		if (isOwned())
 		{
 			updatePlotGroupBonus(true);
@@ -7438,8 +7486,15 @@ void CvPlot::setRouteType(RouteTypes eNewValue, bool bUpdatePlotGroups)
 	}
 
 	m_eRouteType = eNewValue;
-	// #430 event spine: announce the route change (past the no-change early-return guard, after the field commit).
-	emitRouteChanged(GC.getMap().plotNum(getX(), getY()), getOwner(), (int)eOldRoute, (int)eNewValue);
+	// #430 event spine: PAST TENSE (see setTerrainType).
+	if (eOldRoute != NO_ROUTE)
+	{
+		emitPlotRouteRemoved(GC.getMap().plotNum(getX(), getY()), getOwner(), (int)eOldRoute);
+	}
+	if (eNewValue != NO_ROUTE)
+	{
+		emitPlotRouteAdded(GC.getMap().plotNum(getX(), getY()), getOwner(), (int)eNewValue);
+	}
 
 	if (isOwned())
 	{
@@ -7554,8 +7609,14 @@ void CvPlot::setPlotCity(CvCity* pNewValue)
 	// this emit. ⚠ The changeCityRadiusCount / changePlayerCityRadiusCount loops around this write are
 	// PASS-THROUGHS of the same change, so this ONE fact covers them; announcing per radius plot would emit the
 	// same state change NUM_CITY_PLOTS times.
-	emitPlotCityChanged(GC.getMap().plotNum(getX(), getY()), (int)getOwner(), iOldCityId,
-		(pNewValue != NULL) ? pNewValue->getID() : -1);
+	if (iOldCityId != -1)
+	{
+		emitPlotCityRemoved(GC.getMap().plotNum(getX(), getY()), (int)getOwner(), iOldCityId);
+	}
+	if (pNewValue != NULL)
+	{
+		emitPlotCityAdded(GC.getMap().plotNum(getX(), getY()), (int)getOwner(), pNewValue->getID());
+	}
 
 	if (isCity())
 	{
@@ -7664,10 +7725,16 @@ void CvPlot::updateWorkingCity()
 		// the spine DOMAIN fact (every mutation emits): the working-city assignment moved. The contexts'
 		// consumer ignores this at play (the folds above ARE the applier); the load reseed's twin fires from
 		// CvPlot::read (Engine/ContextConsumer -- DEC-spine-reseed).
-		emitWorkingCityChanged(GC.getMap().plotNum(getX(), getY()),
-			(int)(pBestCity != NULL ? pBestCity->getOwner() : pOldWorkingCity->getOwner()),
-			pOldWorkingCity != NULL ? pOldWorkingCity->getID() : -1,
-			pBestCity != NULL ? pBestCity->getID() : -1);
+		if (pOldWorkingCity != NULL)
+		{
+			emitPlotWorkingCityRemoved(GC.getMap().plotNum(getX(), getY()),
+				(int)pOldWorkingCity->getOwner(), pOldWorkingCity->getID());
+		}
+		if (pBestCity != NULL)
+		{
+			emitPlotWorkingCityAdded(GC.getMap().plotNum(getX(), getY()),
+				(int)pBestCity->getOwner(), pBestCity->getID());
+		}
 
 		if (pOldWorkingCity != NULL)
 		{
@@ -7782,7 +7849,14 @@ void CvPlot::changeRiverCrossingCount(int iChange)
 	if (bNewRiverPlot || bRiverRemoved)
 	{
 		// The PRESENCE transition is the fact; the running crossing count is not (only crossing zero changes state).
-		emitPlotRiverChanged(GC.getMap().plotNum(getX(), getY()), (int)getOwner(), bNewRiverPlot, m_iRiverCrossingCount);
+		if (bNewRiverPlot)
+		{
+			emitPlotRiverAdded(GC.getMap().plotNum(getX(), getY()), (int)getOwner(), m_iRiverCrossingCount);
+		}
+		else
+		{
+			emitPlotRiverRemoved(GC.getMap().plotNum(getX(), getY()), (int)getOwner(), m_iRiverCrossingCount);
+		}
 	}
 }
 
@@ -8268,9 +8342,20 @@ void CvPlot::setPlotGroup(PlayerTypes ePlayer, CvPlotGroup* pNewValue, bool bRec
 			// announced is the crossing, not a pair of deltas); the fact then lets the cache re-eval connection:trade.
 			if (pCity != NULL && pCity->getOwner() == ePlayer)
 			{
-				pCity->onNetworkSupplyChanged(pOldPlotGroup, getPlotGroup(ePlayer));
+				const CvPlotGroup* pNewPlotGroup = getPlotGroup(ePlayer);
+				// The RESOURCE consequences go out FIRST and individually: this walks the two groups' holdings and
+				// fires a per-bonus presence crossing for each one that actually moved. The membership fact below
+				// then names only what IT is -- which group this city left and which it joined.
+				pCity->onNetworkSupplyChanged(pOldPlotGroup, pNewPlotGroup);
 
-				emitCityNetworkChanged((int)pCity->getOwner(), pCity->getID());
+				if (pOldPlotGroup != NULL)
+				{
+					emitCityNetworkRemoved((int)pCity->getOwner(), pCity->getID(), pOldPlotGroup->getID());
+				}
+				if (pNewPlotGroup != NULL)
+				{
+					emitCityNetworkAdded((int)pCity->getOwner(), pCity->getID(), pNewPlotGroup->getID());
+				}
 			}
 			if (ePlayer == getOwner())
 			{
@@ -10438,12 +10523,12 @@ void CvPlot::read(FDataStreamBase* pStream)
 	// THE RESEED EMIT (DEC-spine-reseed): the terrain DOMAIN event fires HERE, as the field deserializes off the
 	// stream, INSIDE the read -- never a later pass over already-populated plots (that pseudo-emit is banned,
 	// superseded-ideas). Coords (m_iX/m_iY) + owner (m_eOwner) are already read above.
-	emitTerrainChanged(GC.getMap().plotNum(m_iX, m_iY), (int)m_eOwner, (int)NO_TERRAIN, (int)m_eTerrainType);
+	emitPlotTerrainAdded(GC.getMap().plotNum(m_iX, m_iY), (int)m_eOwner, (int)m_eTerrainType);
 	// #430 reseed: plot OWNERSHIP as a change from unowned -> current (reseed change-shaped events as null -> current,
 	// exactly like a real acquisition). Only an OWNED plot has an ownership fact.
 	if (m_eOwner != NO_PLAYER)
 	{
-		emitPlotOwnerChanged(GC.getMap().plotNum(m_iX, m_iY), (int)NO_PLAYER, (int)m_eOwner);
+		emitPlotOwnerAdded(GC.getMap().plotNum(m_iX, m_iY), (int)m_eOwner);
 	}
 	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvPlot", REMAPPED_CLASS_TYPE_FEATURES, &m_eFeatureType);
 	// #430 reseed: the remaining plot-substrate DOMAIN events fire HERE as each field deserializes, INSIDE the read --
@@ -10451,23 +10536,23 @@ void CvPlot::read(FDataStreamBase* pStream)
 	// has no fact to reseed, so nothing fires (emitting NO_* for every empty plot would be noise, not a fact).
 	if (m_eFeatureType != NO_FEATURE)
 	{
-		emitFeatureChanged(GC.getMap().plotNum(m_iX, m_iY), (int)m_eOwner, (int)NO_FEATURE, (int)m_eFeatureType);
+		emitPlotFeatureAdded(GC.getMap().plotNum(m_iX, m_iY), (int)m_eOwner, (int)m_eFeatureType);
 	}
 
 	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvPlot", REMAPPED_CLASS_TYPE_BONUSES, &m_eBonusType);
 	if (m_eBonusType != NO_BONUS)
 	{
-		emitPlotBonusChanged(GC.getMap().plotNum(m_iX, m_iY), (int)m_eOwner, (int)m_eBonusType, 1);   // plot RESOURCE present (+1)
+		emitPlotBonusAdded(GC.getMap().plotNum(m_iX, m_iY), (int)m_eOwner, (int)m_eBonusType);
 	}
 	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvPlot", REMAPPED_CLASS_TYPE_IMPROVEMENTS, &m_eImprovementType);
 	if (m_eImprovementType != NO_IMPROVEMENT)
 	{
-		emitImprovementChanged(GC.getMap().plotNum(m_iX, m_iY), (int)m_eOwner, (int)NO_IMPROVEMENT, (int)m_eImprovementType);
+		emitPlotImprovementAdded(GC.getMap().plotNum(m_iX, m_iY), (int)m_eOwner, (int)m_eImprovementType);
 	}
 	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvPlot", REMAPPED_CLASS_TYPE_ROUTES, &m_eRouteType);
 	if (m_eRouteType != NO_ROUTE)
 	{
-		emitRouteChanged(GC.getMap().plotNum(m_iX, m_iY), (int)m_eOwner, (int)NO_ROUTE, (int)m_eRouteType);
+		emitPlotRouteAdded(GC.getMap().plotNum(m_iX, m_iY), (int)m_eOwner, (int)m_eRouteType);
 	}
 	WRAPPER_READ(wrapper, "CvPlot", &m_eRiverNSDirection);
 	WRAPPER_READ(wrapper, "CvPlot", &m_eRiverWEDirection);
@@ -10480,7 +10565,7 @@ void CvPlot::read(FDataStreamBase* pStream)
 	// is -1: a deserializing plot has no prior assignment to unfold.
 	if (m_plotCity.eOwner >= 0 && m_plotCity.eOwner < MAX_PLAYERS && m_plotCity.iID >= 0)
 	{
-		emitPlotCityChanged(GC.getMap().plotNum(m_iX, m_iY), (int)m_plotCity.eOwner, -1, m_plotCity.iID);
+		emitPlotCityAdded(GC.getMap().plotNum(m_iX, m_iY), (int)m_plotCity.eOwner, m_plotCity.iID);
 	}
 	WRAPPER_READ(wrapper, "CvPlot", (int*)&m_workingCity.eOwner);
 	WRAPPER_READ(wrapper, "CvPlot", &m_workingCity.iID);
@@ -10490,7 +10575,7 @@ void CvPlot::read(FDataStreamBase* pStream)
 	// here). Old city is -1: a deserializing plot has no prior assignment to unfold.
 	if (m_workingCity.eOwner >= 0 && m_workingCity.eOwner < MAX_PLAYERS && m_workingCity.iID >= 0)
 	{
-		emitWorkingCityChanged(GC.getMap().plotNum(m_iX, m_iY), (int)m_workingCity.eOwner, -1, m_workingCity.iID);
+		emitPlotWorkingCityAdded(GC.getMap().plotNum(m_iX, m_iY), (int)m_workingCity.eOwner, m_workingCity.iID);
 	}
 	WRAPPER_READ(wrapper, "CvPlot", (int*)&m_workingCityOverride.eOwner);
 	WRAPPER_READ(wrapper, "CvPlot", &m_workingCityOverride.iID);
@@ -12257,7 +12342,15 @@ void CvPlot::setLandmarkType(LandmarkTypes eLandmark)
 		return;
 	}
 	m_eLandmarkType = eLandmark;
-	emitPlotLandmarkChanged(GC.getMap().plotNum(getX(), getY()), (int)getOwner(), (int)eOldLandmark, (int)eLandmark);
+	// #430 event spine: PAST TENSE (see setTerrainType).
+	if (eOldLandmark != NO_LANDMARK)
+	{
+		emitPlotLandmarkRemoved(GC.getMap().plotNum(getX(), getY()), (int)getOwner(), (int)eOldLandmark);
+	}
+	if (eLandmark != NO_LANDMARK)
+	{
+		emitPlotLandmarkAdded(GC.getMap().plotNum(getX(), getY()), (int)getOwner(), (int)eLandmark);
+	}
 }
 CvWString CvPlot::getLandmarkName() const
 {

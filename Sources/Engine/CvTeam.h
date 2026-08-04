@@ -54,7 +54,6 @@ public:
 	// Marked ONLY by the modifier consumer's derived masks; recompute-only, never serialized.
 	const CvCascadePackage<CvTeam>& getCascadePackage() const { return m_cascadePackage; }
 	// The package's refresh delegate (the CvDerivedCacheSet contract) -- delegates to the ONE gather.
-	void refreshCascadePackage(int64_t iMask) const;
 
 	// ---- THE EMPIRE-CAPABILITY UNION (capabilities.md; json.md §8) -- the team's active capability set, derived
 	// on query as the UNION over its live HAVE sources rather than granted or stored: nothing is handed out, so a

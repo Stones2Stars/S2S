@@ -98,7 +98,7 @@ class PediaEra:
 			CvHandicapInfo = GC.getHandicapInfo(CyPlayer.getHandicapType())
 			iTemp += CvHandicapInfo.getStartingGold()
 			if iTemp:
-				iTemp *= GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent()
+				iTemp *= GC.getGame().getSpeedPercent()
 				iTemp /= 100
 		if iTemp:
 			szTxt += "\n\tStarting gold: %d" % iTemp

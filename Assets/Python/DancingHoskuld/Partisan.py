@@ -54,6 +54,7 @@ import CvUtil
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 GAME = GC.getGame()
 STATE = CyState()
 ENABLER = CyEnabler()
@@ -398,11 +399,11 @@ def onCombatResult(argsList):
 			iPlayerAct = GAME.getActivePlayer()
 			if iPlayerAct == iPlayerW:
 				CvUtil.sendMessage(
-					TRNSLTR.getText("TXT_KEY_PARTISAN_CAPTURE_UNIT2", (GC.getUnitInfo(iUnitL).getDescription(),)),
+					TRNSLTR.getText("TXT_KEY_PARTISAN_CAPTURE_UNIT2", (INFO.getDescription("UNIT_", iUnitL),)),
 					iPlayerAct, 16, 'Art/Interface/Buttons/civics/despotism.dds', ColorTypes(7), iX, iY, True, True
 				)
 			elif iPlayerAct == CyUnitL.getOwner():
 				CvUtil.sendMessage(
-					TRNSLTR.getText("TXT_KEY_PARTISAN_CAPTURE_UNIT1", (GC.getUnitInfo(iUnitL).getDescription(),)),
+					TRNSLTR.getText("TXT_KEY_PARTISAN_CAPTURE_UNIT1", (INFO.getDescription("UNIT_", iUnitL),)),
 					iPlayerAct, 16, 'Art/Interface/Buttons/civics/despotism.dds', ColorTypes(44), iX, iY, True, True
 				)

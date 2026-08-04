@@ -22,6 +22,7 @@ PALETTE_WIDTH = None
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -453,7 +454,7 @@ class DotMapLayer(StrategyLayer):
 	def drawCross(self, city, alpha):
 		# Draws the cross for a single city.
 		x, y = city.point
-		color = GC.getColorInfo(city.color).getType()
+		color = INFO.getType("COLOR_", city.color)
 		layer = city.layer
 		if city.bAlt:
 			aList = self.BFC_OFFSETS_ALT

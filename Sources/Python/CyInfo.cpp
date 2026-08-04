@@ -16,6 +16,7 @@
 #include "Infos/CvCivicInfo.h"       // the civic column the bulk index reads
 // The straggler dispatch reaches these concrete registries -- specific headers, never the CvInfos.h umbrella.
 #include "Infos/CvBuildingInfo.h"
+#include "Infos/CvUnitInfo.h"             // getGrantedBuildings -- the unit's MISSION_CONSTRUCT repertoire
 #include "Infos/CvAllowed.h"
 #include "Infos/CvSpecialBuildingInfo.h"   // the GROUP that may hold the cap for its members
 #include "Infos/CvBonusInfo.h"
@@ -38,12 +39,14 @@
 #include "Infos/CvGameOptionInfo.h"
 #include "Infos/CvColorInfo.h"
 #include "Infos/CvMissionInfo.h"
+#include "Infos/CvProcessInfo.h"   // getProductionToCommerce -- the process conversion group
 #include "Infos/CvActionInfo.h"
 #include "Infos/CvAdvisorInfo.h"
 #include "Infos/CvEmphasizeInfo.h"
 #include "Infos/CvEspionageMissionInfo.h"
 #include "Infos/CvGoodyInfo.h"
 #include "Infos/CvUpkeepInfo.h"
+#include "Infos/CvGameSpeedInfo.h" // getTotalTurns -- the game-length straggler
 #include "Infos/CvWorldInfo.h"     // getDefaultPlayers -- the map-setup straggler (PYINT_DEFAULT_PLAYERS)
 #include "Infos/CvCorporationInfo.h"
 #include "Infos/CvProjectInfo.h"   // isSpaceship -- the build-progress readout (PYINT_IS_SPACESHIP)
@@ -118,7 +121,12 @@ namespace
 		if (szTypePrefix == "CONCEPT_")          return iId < GC.getNumConceptInfos()          ? &GC.getConceptInfo((ConceptTypes)iId) : NULL;
 		if (szTypePrefix == "EVENT_")            return iId < GC.getNumEventInfos()            ? &GC.getEventInfo((EventTypes)iId) : NULL;
 		if (szTypePrefix == "EVENTTRIGGER_")     return iId < GC.getNumEventTriggerInfos()     ? &GC.getEventTriggerInfo((EventTriggerTypes)iId) : NULL;
-		if (szTypePrefix == "ACTION_")           return iId < GC.getNumActionInfos()           ? (const CvInfoBase*)&GC.getActionInfo(iId) : NULL;
+		// ⛔ ACTION_ is the one registry whose entry is NOT an info: a CvActionInfo is a SLOT in the hotkey
+		// table, holding an index and a subtype, and it MIRRORS the CvInfoBase reads by delegating each one to
+		// the entity the slot stands for. So the identity plane resolves through that entity, which is a real
+		// CvHotkeyInfo -- and the derived->base conversion is the compiler-checked one every registry above
+		// gets. A pointer cast here compiles and then dispatches a virtual call through the wrong vtable.
+		if (szTypePrefix == "ACTION_")           return iId < GC.getNumActionInfos()           ? GC.getActionInfo(iId).getHotkeyInfo() : NULL;
 		return NULL;
 	}
 
@@ -200,6 +208,67 @@ bool CyInfo::exists(const std::string& szTypePrefix, int iId) const
 	return cyi_infoBase(szTypePrefix, iId) != NULL;
 }
 
+python::list CyInfo::getRevolution(const std::string& szTypePrefix, int iId, int iScope) const
+{
+	python::list values;
+	const CvInfo* pInfo = cyi_info(szTypePrefix, iId);
+	for (int iKind = 0; iKind < NUM_REVOLUTION_KINDS; ++iKind)
+	{
+		// An entity authoring none answers 0 across the group -- a total read, never an error.
+		values.append(pInfo ? pInfo->modifier(MODFAM_REVOLUTION, iKind, (CvCascScope)iScope, CASC_UNIT_FLAT) : 0);
+	}
+	return values;
+}
+
+python::list CyInfo::getProductionToCommerce(const std::string& szTypePrefix, int iId, int iScope) const
+{
+	python::list values;
+	const bool bProcess = (szTypePrefix == "PROCESS_" && iId >= 0 && iId < GC.getNumProcessInfos());
+	for (int iCommerce = 0; iCommerce < NUM_COMMERCE_TYPES; ++iCommerce)
+	{
+		values.append(bProcess
+			? GC.getProcessInfo((ProcessTypes)iId).getProductionToCommerce((CommerceTypes)iCommerce, (CvCascScope)iScope)
+			: 0);
+	}
+	return values;
+}
+
+bool CyInfo::providesCapability(const std::string& szTypePrefix, int iId, int iCapabilityId) const
+{
+	const CvInfo* pInfo = cyi_info(szTypePrefix, iId);
+	// A block-less entity answers FALSE, so the read is TOTAL ([patterns.md] category 2).
+	return pInfo ? pInfo->providesCapability(iCapabilityId) : false;
+}
+
+bool CyInfo::providesPolicy(const std::string& szTypePrefix, int iId, int iPolicyId) const
+{
+	const CvInfo* pInfo = cyi_info(szTypePrefix, iId);
+	// The empire-STATE sibling of providesCapability (json.md §9): same O(1) bitset test, same total read.
+	return pInfo ? pInfo->providesPolicy(iPolicyId) : false;
+}
+
+bool CyInfo::canTradeItem(const std::string& szTypePrefix, int iId, const std::string& szItem) const
+{
+	// TECH_ is the only grantor the block is authored on today; another kind answers FALSE rather than erroring.
+	if (szTypePrefix != "TECH_" || iId < 0 || iId >= GC.getNumTechInfos())
+	{
+		return false;
+	}
+	return GC.getTechInfo((TechTypes)iId).canTradeItem(szItem);
+}
+
+python::list CyInfo::getWellbeing(const std::string& szTypePrefix, int iId, int iScope) const
+{
+	python::list values;
+	const CvInfo* pInfo = cyi_info(szTypePrefix, iId);
+	for (int iChannel = 0; iChannel < NUM_WELLBEING_CHANNELS; ++iChannel)
+	{
+		// An entity that authors none answers 0 across the group -- a total read, never an error.
+		values.append(pInfo ? pInfo->getFlatWellbeing((WellbeingChannel)iChannel, (CvCascScope)iScope) : 0);
+	}
+	return values;
+}
+
 int CyInfo::getScalar(const std::string& szTypePrefix, int iId, int iScalar, int iScope, int iUnit) const
 {
 	if (iScalar < 0 || iScalar >= NUM_INFO_SCALARS)
@@ -216,24 +285,46 @@ int CyInfo::getScalar(const std::string& szTypePrefix, int iId, int iScalar, int
 
 python::list CyInfo::getIdList(const std::string& szTypePrefix, int iId, int iSlot) const
 {
+	// Each SLOT names its own registry -- the pair (prefix, slot) has to agree, so the bound is checked per
+	// slot rather than by one hard-coded gate on the function.
 	python::list ids = python::list();
-	if (szTypePrefix != "CORPORATION_" || iId < 0 || iId >= GC.getNumCorporationInfos())
-	{
-		return ids;
-	}
-	const CvCorporationInfo& kCorporation = GC.getCorporationInfo((CorporationTypes)iId);
+	if (iId < 0) return ids;
+
 	switch (iSlot)
 	{
 	case PYLIST_HEADQUARTERS_BUILDINGS:
 		{
-			const std::vector<BuildingTypes>& buildings = kCorporation.getHeadquartersBuildings();
+			if (szTypePrefix != "CORPORATION_" || iId >= GC.getNumCorporationInfos()) break;
+			const std::vector<BuildingTypes>& buildings = GC.getCorporationInfo((CorporationTypes)iId).getHeadquartersBuildings();
 			for (size_t i = 0; i < buildings.size(); ++i) ids.append((int)buildings[i]);
 		}
 		break;
 	case PYLIST_CONSUMED_BONUSES:
 		{
-			const std::vector<int>& bonuses = kCorporation.getConsumedBonuses();
+			if (szTypePrefix != "CORPORATION_" || iId >= GC.getNumCorporationInfos()) break;
+			const std::vector<int>& bonuses = GC.getCorporationInfo((CorporationTypes)iId).getConsumedBonuses();
 			for (size_t i = 0; i < bonuses.size(); ++i) ids.append(bonuses[i]);
+		}
+		break;
+	case PYLIST_GRANTED_BUILDINGS:
+		{
+			if (szTypePrefix != "UNIT_" || iId >= GC.getNumUnitInfos()) break;
+			const std::vector<int>& buildings = GC.getUnitInfo((UnitTypes)iId).getGrantedBuildings();
+			for (size_t i = 0; i < buildings.size(); ++i) ids.append(buildings[i]);
+		}
+		break;
+	case PYLIST_PREREQ_AND_TECHS:
+		{
+			if (szTypePrefix != "TECH_" || iId >= GC.getNumTechInfos()) break;
+			const std::vector<TechTypes>& techs = GC.getTechInfo((TechTypes)iId).getPrereqAndTechs();
+			for (size_t i = 0; i < techs.size(); ++i) ids.append((int)techs[i]);
+		}
+		break;
+	case PYLIST_PREREQ_OR_TECHS:
+		{
+			if (szTypePrefix != "TECH_" || iId >= GC.getNumTechInfos()) break;
+			const std::vector<TechTypes>& techs = GC.getTechInfo((TechTypes)iId).getPrereqOrTechs();
+			for (size_t i = 0; i < techs.size(); ++i) ids.append((int)techs[i]);
 		}
 		break;
 	default:
@@ -304,6 +395,38 @@ int CyInfo::getIntrinsic(const std::string& szTypePrefix, int iId, int iSlot) co
 	case PYINT_IS_SPACESHIP:
 		if (szTypePrefix == "PROJECT_" && iId < GC.getNumProjectInfos())
 			return GC.getProjectInfo((ProjectTypes)iId).isSpaceship() ? 1 : 0;
+		break;
+
+	case PYINT_ERA:
+		if (szTypePrefix == "TECH_" && iId < GC.getNumTechInfos())
+			return GC.getTechInfo((TechTypes)iId).getEra();
+		break;
+
+	case PYINT_TOTAL_TURNS:
+		if (szTypePrefix == "GAMESPEED_" && iId < GC.getNumGameSpeedInfos())
+			return GC.getGameSpeedInfo((GameSpeedTypes)iId).getTotalTurns();
+		break;
+
+	case PYINT_ADVISOR:
+		if (szTypePrefix == "TECH_" && iId < GC.getNumTechInfos())
+			return GC.getTechInfo((TechTypes)iId).getAdvisor();
+		break;
+
+	case PYINT_GRID_X:
+		if (szTypePrefix == "TECH_" && iId < GC.getNumTechInfos())
+			return GC.getTechInfo((TechTypes)iId).getGridX();
+		break;
+
+	case PYINT_GRID_Y:
+		if (szTypePrefix == "TECH_" && iId < GC.getNumTechInfos())
+			return GC.getTechInfo((TechTypes)iId).getGridY();
+		break;
+
+	case PYINT_TRADE_ROUTE_AMOUNT:
+		//	Kind 0 IS the scope-wide flat route COUNT (CvInfoKinds.h TRADE_ROUTE_AMOUNT) -- the memberless
+		//	deposit, read at the scope the caller names rather than through a per-scope getter name.
+		if (szTypePrefix == "TECH_" && iId < GC.getNumTechInfos())
+			return GC.getTechInfo((TechTypes)iId).getTradeRoute(TRADE_ROUTE_AMOUNT, CASC_SCOPE_CITY);
 		break;
 	case PYINT_WONDER_SCOPE:
 		//	WHICH scope the self-cap sits at -- an ALLOWEDCAP_* value, or -1 when the building is uncapped.
@@ -455,6 +578,12 @@ void CyInfo::pythonPublish()
 		.def("exists",         &CyInfo::exists)
 		.def("getIndex",       &CyInfo::getIndex)
 		.def("getEdgeIds",     &CyInfo::getEdgeIds)
+		.def("getWellbeing",   &CyInfo::getWellbeing)
+		.def("getRevolution",  &CyInfo::getRevolution)
+		.def("getProductionToCommerce", &CyInfo::getProductionToCommerce)
+		.def("providesCapability", &CyInfo::providesCapability)
+		.def("providesPolicy", &CyInfo::providesPolicy)
+		.def("canTradeItem",   &CyInfo::canTradeItem)
 		.def("getScalar",      &CyInfo::getScalar)
 		.def("getIntrinsic",   &CyInfo::getIntrinsic)
 		.def("getIdList", &CyInfo::getIdList)

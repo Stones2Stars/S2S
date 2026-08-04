@@ -10,7 +10,6 @@
 //	 - CityContext.plotAttrs -- the per-predicate COUNTS, which are the FOLD of the member plots' bitsets.
 //	 - CityContext's VICINITY tiers / TRADED counts / AREA facts / HOLY-CITY count -- each re-derived whole by its
 //	   own single derivation off the facts that can move it (below).
-//	 - EmpireContext.policies -- the enacted-policy union, rebuilt on the civic / trait / player-init facts.
 //	All are derived state: never serialized, rebuilt from the save read's own in-read emits (DEC-spine-reseed --
 //	the genuine read emits, never a post-deserialization walk that fabricates events).
 //
@@ -60,9 +59,9 @@
 //	   the wholesale SEVT_AREAS_RECALCULATED reassignment.
 //	 - HOLY-CITY count <- the holy-city fact.
 //
-//	EmpireContext.policies <- SEVT_CIVIC_ADOPTED / SEVT_TRAIT_CHANGED / SEVT_PLAYER_INIT. The player-init fact is
-//	load-bearing on its own: a player's INITIAL traits are written straight into the has-array rather than through
-//	the trait setter, so that fact is the only announcement they ever make.
+//	⛔ The AMENITY and POLICY dictionaries are NOT maintained here. Each is its own spine consumer with its own
+//	declared interest set (Engine/AmenityContext.h, Engine/PolicyContext.h -- [DEC-dict-is-a-consumer]); this file
+//	is being emptied one dictionary at a time. `plotAttrs` and the vicinity tiers are what is left.
 //
 //	CONSTRAINT: the maintenance has NO entry point other than a spine event. Every plot mutation that moves a stored
 //	verdict emits its own DOMAIN fact, so the consumer is the single trigger path -- a direct call from a choke

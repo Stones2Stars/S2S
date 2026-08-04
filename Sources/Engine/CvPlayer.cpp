@@ -684,20 +684,6 @@ void CvPlayer::uninit()
 }
 
 
-// The EMPIRE-scope cascade package's refresh delegate -- the one-line delegation to the ONE gather
-// ([DEC-single-implementation]; see CvCascadeGather).
-void CvPlayer::refreshCascadePackage(int64_t iMask) const
-{
-	CascadeGather::refreshEmpire(*this, iMask);
-	// An EMPIRE-scope maintenance percent rolls DOWN into every city's realized value, so the total moves. The
-	// cities need no mark of their own: their read composes the roll-up live ([modifier.md] §1), which is what
-	// keeps a lower scope from storing an upper scope's sums.
-	if ((iMask & CascadeChannelRegistry::scopeFamilyMask(CASC_SCOPE_EMPIRE, MODFAM_MAINTENANCE)) != 0)
-	{
-		markMaintenanceDirty();
-	}
-}
-
 // The ENABLER's per-player lifecycle start (enabler.md 7.1): size every player-held domain and apply its static
 // exclusions. SIZING ONLY -- the domains' CONTENT is built by the DOMAIN events through the same appliers load
 // and play share ([DEC-spine-reseed]); nothing here reads deserialized state, which is why the load path can
@@ -1070,8 +1056,15 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 
 	m_dataRepository.reset();
 	m_empireContext.bind(this);   // bind the per-player empire context to its owner (forwarding reads it)
-	// bind the EMPIRE-scope cascade package (all-dirty from bind: a loaded/new player recomputes on first read)
-	m_cascadePackage.bind(CASC_SCOPE_EMPIRE, this, &CvPlayer::refreshCascadePackage, (int)eID, -1);
+	// ...and ZERO the empire's POLICY dictionary. It is a delta store fed by the civic / trait / player-init
+	// facts, so it is correct only from a known zero -- a player slot is reused across games and loads, and a
+	// policy count no later fact happens to move would survive from the previous occupant ([DEC-keyed-accumulator]).
+	m_policies.clear();
+	// The policy dictionary, bound and ZEROED: a delta store is correct only from a known zero.
+	m_policies.bind(this);
+	m_policies.clear();
+	// bind the EMPIRE-scope cascade package. It starts EMPTY and is filled ONLY by the facts ([DEC-maintained-sum]).
+	m_cascadePackage.bind(CASC_SCOPE_EMPIRE, (int)eID, -1);
 	// The enabler's domains start EMPTY and UN-READY -- init'd by their domain enablers at this player's
 	// lifecycle start, then filled by DOMAIN events ([DEC-spine-reseed]); never read from the save. Cleared here
 	// because a player slot is REUSED across games.
@@ -2862,7 +2855,11 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 		// Owner change (acquire half), announced once the acquisition setup is complete (buildings / religions /
 		// corporations / timers applied): iSrcLoc = the NEW city id -- the surviving entity now under the new owner.
 		// Old + new owner together drive both empires' aggregate change.
-		emitCityOwnerChanged(pNewCity->getID(), (int)eOldOwner, (int)eNewOwner);
+		if (eOldOwner != NO_PLAYER)
+	{
+		emitCityOwnerRemoved(pNewCity->getID(), (int)eOldOwner);
+	}
+	emitCityOwnerAdded(pNewCity->getID(), (int)eNewOwner);
 
 		// Don't bother with plot group calculations if they are immediately to be superseded by an auto raze
 		if (bUpdatePlotGroups)
@@ -5839,7 +5836,14 @@ void CvPlayer::findNewCapital()
 	// contents into. Above all the PALACE: it is what MAKES a city the capital (setupBuilding's isCapital branch
 	// calls setCapitalCity), and it is not in the civilization building list above. Emitted even when pBestCity is
 	// NULL (iSrcLoc = -1: the empire has no city left to be a capital) -- absence is a fact too.
-	emitCapitalChanged((int)getID(), (pBestCity != NULL) ? pBestCity->getID() : -1);
+	if (getCapitalCity() != NULL)
+	{
+		emitEmpireCapitalRemoved((int)getID(), getCapitalCity()->getID());
+	}
+	if (pBestCity != NULL)
+	{
+		emitEmpireCapitalAdded((int)getID(), pBestCity->getID());
+	}
 }
 
 
@@ -6325,7 +6329,7 @@ void CvPlayer::found(int iX, int iY, CvUnit *pUnit)
 		// reseed uses at CvCity::read, which establishes that the city belongs to its owner before its contents.
 		// Without this a FOUNDED city never announces ownership in live play at all: the only other owner emits are
 		// dispose and acquire, so the load path and the play path would disagree about the same fact.
-		emitCityOwnerChanged(pCity->getID(), (int)NO_PLAYER, (int)getID());
+		emitCityOwnerAdded(pCity->getID(), (int)getID());
 		emitCityFounded((int)getID(), pCity->getID(),
 			(pUnit != NULL) ? (int)pUnit->getUnitType() : -1, (pUnit != NULL) ? pUnit->getID() : -1);
 	}
@@ -8840,7 +8844,14 @@ void CvPlayer::changeGoldenAgeTurns(int iChange)
 		{
 			// Announced ONLY on the golden-age flip (on<->off), past the enclosing guard and after the turns field
 			// commit -- the IS_GOLDEN_AGE-conditioned invalidation rides this fact, so a non-flip must not emit.
-			emitGoldenAgeChanged(getID(), isGoldenAge());
+			if (isGoldenAge())
+	{
+		emitEmpireGoldenAgeAdded(getID());
+	}
+	else
+	{
+		emitEmpireGoldenAgeRemoved(getID());
+	}
 			if (!bWasGoldenAge)
 			{
 				changeAnarchyTurns(-getAnarchyTurns());
@@ -8951,7 +8962,14 @@ void CvPlayer::changeAnarchyTurns(int iChange, bool bHideMessages)
 		{
 			// #430 event spine: the IS_ANARCHY verdict crossing. The turn counter itself ticks down every turn, so
 			// only this 0-crossing is a state change.
-			emitAnarchyChanged(getID(), isAnarchy());
+			if (isAnarchy())
+	{
+		emitEmpireAnarchyAdded(getID());
+	}
+	else
+	{
+		emitEmpireAnarchyRemoved(getID());
+	}
 			updateTradeRoutes();
 			updateCorporation();
 
@@ -9838,15 +9856,11 @@ int CvPlayer::maintenancePercentStack(int iKind) const
 	return (int)iPercentSum;
 }
 
-void CvPlayer::markMaintenanceDirty() const
-{
-	getCascadePackage().markSum(
-		CascadeChannelRegistry::channelLookup(MODFAM_MAINTENANCE, (int)MAINTENANCE_AMOUNT, -1));
-}
-
 int64_t CvPlayer::getTotalMaintenance() const
 {
-	return getCascadePackage().readSum(
+	// The empire's maintenance total is the Σ of its cities' REALIZED maintenance -- the one non-commerce
+	// receiver, and the reason the receiver rule is general rather than a commerce habit (economy.md).
+	return (int64_t)InfoValuation::realizedAtEmpire(*this,
 		CascadeChannelRegistry::channelLookup(MODFAM_MAINTENANCE, (int)MAINTENANCE_AMOUNT, -1)) / 100;
 }
 
@@ -10153,7 +10167,6 @@ void CvPlayer::changeStateReligionCount(int iChange, bool bLimited)
 
 		if (!bLimited)
 		{
-			markMaintenanceDirty();
 		}
 
 		if (!bLimited)
@@ -10243,7 +10256,14 @@ void CvPlayer::setCapitalCity(CvCity* pNewCapitalCity)
 		// The capital genuinely CHANGED -- this is the choke point for every cause, including a player deliberately
 		// MOVING it by building a palace in another city (setupBuilding's isCapital branch lands here). Flip-guarded
 		// by the enclosing !=, so it announces a real transition only.
-		emitCapitalChanged((int)getID(), (pNewCapitalCity != NULL) ? pNewCapitalCity->getID() : -1);
+		if (pOldCapitalCity != NULL)
+		{
+			emitEmpireCapitalRemoved((int)getID(), pOldCapitalCity->getID());
+		}
+		if (pNewCapitalCity != NULL)
+		{
+			emitEmpireCapitalAdded((int)getID(), pNewCapitalCity->getID());
+		}
 
 		const bool bUpdatePlotGroups = pOldCapitalCity == NULL || pNewCapitalCity == NULL || pOldCapitalCity->plot()->getOwnerPlotGroup() != pNewCapitalCity->plot()->getOwnerPlotGroup();
 
@@ -10318,7 +10338,6 @@ void CvPlayer::setCapitalCity(CvCity* pNewCapitalCity)
 			}
 		}
 
-		markMaintenanceDirty();
 		updateTradeRoutes();
 
 		if (pOldCapitalCity)
@@ -11332,7 +11351,11 @@ void CvPlayer::setCurrentEra(EraTypes eNewValue)
 		m_eCurrentEra = eNewValue;
 		// Era is a BROAD player-scope cascade input -- heritage era-stacked commerce, every ERA-counter-gated
 		// deposit, and the ERA requires atoms. Announce the fact past the no-change guard.
-		emitEraChanged(getID(), (int)eNewValue);
+		if (eOldEra != NO_ERA)
+		{
+			emitEmpireEraRemoved(getID(), (int)eOldEra);
+		}
+		emitEmpireEraAdded(getID(), (int)eNewValue);
 
 		if (GC.getGame().getActiveTeam() != NO_TEAM)
 		{
@@ -11411,7 +11434,14 @@ void CvPlayer::setLastStateReligion(const ReligionTypes eNewReligion)
 	{
 		m_eLastStateReligion = eNewReligion;
 		// The state-religion switch, past the no-change guard and after the field commit.
-		emitStateReligionChanged(getID(), (int)eNewReligion);
+		if (eOldReligion != NO_RELIGION)
+		{
+			emitEmpireStateReligionRemoved(getID(), (int)eOldReligion);
+		}
+		if (eNewReligion != NO_RELIGION)
+		{
+			emitEmpireStateReligionAdded(getID(), (int)eNewReligion);
+		}
 
 
 		GC.getGame().updateSecretaryGeneral();
@@ -11772,7 +11802,14 @@ void CvPlayer::setCommercePercent(CommerceTypes eIndex, int iNewValue)
 		// §2a): a DOMAIN fact, emitted at the mutation site unconditionally -- consumers filter, the emit
 		// surface stays complete. This is the ONE choke point: changeCommercePercent and
 		// verifyGoldCommercePercent both reach the value through here.
-		emitCommercePercentChanged(getID(), (int)eIndex, m_aiCommercePercent[eIndex], iOldValue);
+		if (m_aiCommercePercent[eIndex] > iOldValue)
+	{
+		emitEmpireCommercePercentAdded(getID(), (int)eIndex, m_aiCommercePercent[eIndex] - iOldValue);
+	}
+	else
+	{
+		emitEmpireCommercePercentRemoved(getID(), (int)eIndex, iOldValue - m_aiCommercePercent[eIndex]);
+	}
 
 		int iTotalCommercePercent = 0;
 
@@ -11798,7 +11835,14 @@ void CvPlayer::setCommercePercent(CommerceTypes eIndex, int iNewValue)
 				// takes another channel down with it.
 				if (iAdjustment != 0)
 				{
-					emitCommercePercentChanged(getID(), iJ, m_aiCommercePercent[iJ], m_aiCommercePercent[iJ] + iAdjustment);
+					if (iAdjustment < 0)
+	{
+		emitEmpireCommercePercentAdded(getID(), iJ, -iAdjustment);
+	}
+	else
+	{
+		emitEmpireCommercePercentRemoved(getID(), iJ, iAdjustment);
+	}
 				}
 			}
 		}
@@ -12223,7 +12267,14 @@ void CvPlayer::changeUnitCount(const UnitTypes eUnit, const int iChange)
 	}
 	GET_TEAM(getTeam()).changeUnitCount(eUnit, iChange);
 	// The empire per-type unit count changed (the mirror of changeBuildingCount): the new count + the delta.
-	emitUnitCount((int)getID(), (int)eUnit, getUnitCount(eUnit), iChange);
+	if (iChange > 0)
+	{
+		emitEmpireUnitCountAdded((int)getID(), (int)eUnit, iChange);
+	}
+	else
+	{
+		emitEmpireUnitCountRemoved((int)getID(), (int)eUnit, -iChange);
+	}
 }
 
 int CvPlayer::getUnitCount(const UnitTypes eUnit) const
@@ -12339,7 +12390,14 @@ void CvPlayer::changeBuildingCount(BuildingTypes eIndex, int iChange)
 	}
 
 	// Every genuine empire building gain/loss, carrying the building type + the new empire count + the delta.
-	emitBuildingCount((int)getID(), (int)eIndex, getBuildingCount(eIndex), iChange);
+	if (iChange > 0)
+	{
+		emitEmpireBuildingCountAdded((int)getID(), (int)eIndex, iChange);
+	}
+	else
+	{
+		emitEmpireBuildingCountRemoved((int)getID(), (int)eIndex, -iChange);
+	}
 
 	clearCanConstructCache(eIndex, true);
 }
@@ -13591,7 +13649,7 @@ void CvPlayer::deleteCity(int iID)
 	// (NO_PLAYER -> owner). This is the ONE choke point: both CvCity::kill (raze / disband) and
 	// CvCity::killTestCheap funnel here, so a single emit covers every removal.
 	// ⛔ Emitted BEFORE removeAt -- afterwards the id no longer resolves.
-	emitCityOwnerChanged(iID, (int)getID(), (int)NO_PLAYER);
+	emitCityOwnerRemoved(iID, (int)getID());
 	m_cities[CURRENT_MAP]->removeAt(iID);
 }
 
@@ -16838,7 +16896,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_RELIGIONS, (int*)&m_eLastStateReligion);
 		if (m_eLastStateReligion != NO_RELIGION)
 		{
-			emitStateReligionChanged(getID(), (int)m_eLastStateReligion);
+			emitEmpireStateReligionAdded(getID(), (int)m_eLastStateReligion);
 		}
 		WRAPPER_READ(wrapper, "CvPlayer", (int*)&m_eParent);
 		updateTeamType(); //m_eTeamType not saved
@@ -16854,16 +16912,19 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		// m_bNukesValid were read earlier in this same read.
 		if (m_iGoldenAgeTurns > 0)
 		{
-			emitGoldenAgeChanged(getID(), true);
+			emitEmpireGoldenAgeAdded(getID());
 		}
 		// The anarchy twin of the golden-age fact: a save can be taken mid-revolution, and m_iAnarchyTurns
 		// deserializes WHOLESALE (read earlier in read()), so changeAnarchyTurns never runs.
 		if (m_iAnarchyTurns > 0)
 		{
-			emitAnarchyChanged(getID(), true);
+			emitEmpireAnarchyAdded(getID());
 		}
-		emitEraChanged(getID(), (int)m_eCurrentEra);
-		emitNukesChanged(getID(), getNukeState());
+		emitEmpireEraAdded(getID(), (int)m_eCurrentEra);
+		if (isNukesValid())
+	{
+		emitEmpireNukesEnabledAdded(getID());
+	}
 		if (getTeam() != NO_TEAM)
 		{
 			const CvTeam& kMyTeam = GET_TEAM(getTeam());
@@ -16873,7 +16934,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 			{
 				if (kMyTeam.isHasTech((TechTypes)iTech))
 				{
-					emitTechChanged(getID(), iTech, true);
+					emitEmpireTechAdded(getID(), iTech);
 				}
 			}
 			// The team's completed projects, per-self (the tech-emit precedent). The count IS the delta (old = 0
@@ -16883,7 +16944,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 				const int iProjectCount = kMyTeam.getProjectCount((ProjectTypes)iProject);
 				if (iProjectCount > 0)
 				{
-					emitProjectChanged(getID(), iProject, iProjectCount);
+					emitEmpireProjectAdded(getID(), iProject, iProjectCount);
 				}
 			}
 		}
@@ -16899,7 +16960,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		// split needs the whole 100-total picture. The old value is 0 (reset() zeroed the array before the read).
 		for (int iCommerce = 0; iCommerce < NUM_COMMERCE_TYPES; ++iCommerce)
 		{
-			emitCommercePercentChanged(getID(), iCommerce, m_aiCommercePercent[iCommerce], 0);
+			emitEmpireCommercePercentAdded(getID(), iCommerce, m_aiCommercePercent[iCommerce]);
 		}
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", MAX_PLAYERS, m_aiGoldPerTurnByPlayer);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", MAX_TEAMS, m_aiEspionageSpendingWeightAgainstTeam);
@@ -17701,7 +17762,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		{
 			if (m_pabHasTrait[iTrait])
 			{
-				emitTraitChanged(getID(), iTrait, true);
+				emitEmpireTraitAdded(getID(), iTrait);
 			}
 		}
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iLeaderHeadLevel);
@@ -18028,7 +18089,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		// valid here (well past m_eID's re-read + updateTeamType), matching the golden-age / tech reseed placement.
 		for (std::vector<HeritageTypes>::const_iterator itHeritage = m_myHeritage.begin(); itHeritage != m_myHeritage.end(); ++itHeritage)
 		{
-			emitHeritageChanged(getID(), (int)*itHeritage, true);
+			emitEmpireHeritageAdded(getID(), (int)*itHeritage);
 		}
 		// Read Vector
 		{
@@ -25507,8 +25568,11 @@ void CvPlayer::setHandicap(int iNewVal, bool bAdjustGameHandicap)
 		// The handicap is a MODIFIER SOURCE (the gather folds its families into this player's packages), so a
 		// difficulty move -- flexible difficulty's whole job -- must re-mark them or every handicap-derived
 		// deposit keeps the old difficulty's value with nothing to re-derive it ([DEC-no-self-heal]).
-		emitPlayerHandicapChanged((int)getID(), iNewVal, iOld);
-		markMaintenanceDirty();
+		if (iOld != NO_HANDICAP)
+	{
+		emitEmpireHandicapRemoved((int)getID(), iOld);
+	}
+	emitEmpireHandicapAdded((int)getID(), iNewVal);
 		setUnitUpkeepDirty();
 	}
 }
@@ -26183,13 +26247,22 @@ int CvPlayer::getNukeState() const
 
 void CvPlayer::makeNukesValid(bool bValid)
 {
-	const int iWasState = getNukeState();
+	const bool bWasValid = m_bNukesValid;
 	m_bNukesValid = bValid;
-	// This player's nuke AVAILABILITY flipped (built the nuke-enabling building). The new 3-state is announced only
-	// if it actually changed -- a BANNED player stays 2 (the ban overrides), so no spurious emit.
-	if (getNukeState() != iWasState)
+	// This empire's nuke AVAILABILITY flipped (it built or lost the nuke-enabling building). The guard reads the RAW
+	// member, never the composed 3-state: availability and the world BAN are two independent facts now, so the ban
+	// being up must not mask a genuine availability change -- and testing the composed state would announce one
+	// where nothing moved. A consumer wanting "can this empire nuke" reads both facts.
+	if (bValid != bWasValid)
 	{
-		emitNukesChanged(getID(), getNukeState());
+		if (bValid)
+		{
+			emitEmpireNukesEnabledAdded(getID());
+		}
+		else
+		{
+			emitEmpireNukesEnabledRemoved(getID());
+		}
 	}
 }
 
@@ -26253,7 +26326,14 @@ void CvPlayer::setHasTrait(TraitTypes eIndex, bool bNewValue)
 		// The RUNTIME trait change, past the top-of-function no-change guard and after the field commit inside the
 		// validity gate. Static/initial trait assignment goes through processTrait directly at init and is covered
 		// by PLAYER_INIT + the load reseed, so the emit belongs HERE, not in processTrait.
-		emitTraitChanged(getID(), (int)eIndex, bNewValue);
+		if (bNewValue)
+	{
+		emitEmpireTraitAdded(getID(), (int)eIndex);
+	}
+	else
+	{
+		emitEmpireTraitRemoved(getID(), (int)eIndex);
+	}
 		processTrait(eIndex, bNewValue ? 1 : -1);
 
 		// Announce a developing-leader trait change to the other humans. The old rank clause (only announce a
@@ -27389,14 +27469,14 @@ void CvPlayer::setHeritage(const HeritageTypes eType, const bool bNewValue)
 		if (itr == m_myHeritage.end())
 		{
 			m_myHeritage.push_back(eType);
-			emitHeritageChanged(getID(), (int)eType, true);
+			emitEmpireHeritageAdded(getID(), (int)eType);
 		}
 		else FErrorMsg("Tried to add a duplicate vector element!");
 	}
 	else if (itr != m_myHeritage.end())
 	{
 		m_myHeritage.erase(itr);
-		emitHeritageChanged(getID(), (int)eType, false);
+		emitEmpireHeritageRemoved(getID(), (int)eType);
 	}
 	else FErrorMsg("Vector element to remove was missing!");
 

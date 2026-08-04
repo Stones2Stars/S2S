@@ -9,6 +9,7 @@
 from CvPythonExtensions import *
 import BugOptionsTab
 GC = CyGlobalContext()
+INFO = CyInfo()
 GAME = GC.getGame()
 TRNSLTR = CyTranslator()
 
@@ -184,7 +185,7 @@ class ANDAutomationsTab(BugOptionsTab.BugOptionsTab):
 			self.buildNames = [(0,0)] * iNumBuilds
 			# Strip the <link="IMPROVEMENT_FOOBAR"> and </link> pair from the description while retaining the bit between them
 			for iI in range(iNumBuilds):
-				szDescription = TextUtil.convertToAscii(GC.getBuildInfo(iI).getDescription())
+				szDescription = TextUtil.convertToAscii(INFO.getDescription("BUILD_", iI))
 				iStartIndex = szDescription.rfind("<link")
 				iEndIndex = szDescription.rfind("'>") + 2
 				if iStartIndex > -1:

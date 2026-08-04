@@ -7,6 +7,7 @@ DebugLogging = False # Adjusted from CvDiplomacyInterface
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -238,7 +239,7 @@ class CvDiplomacy:
 			for i in xrange(team.getNumAdjacentResearch()):
 				iTechX = team.getAdjacentResearch(i)
 				if player.canResearch(iTechX, True, True):
-					self.addUserComment("USER_DIPLOCOMMENT_RESEARCH_TECH", iTechX, -1, GC.getTechInfo(iTechX).getTextKey())
+					self.addUserComment("USER_DIPLOCOMMENT_RESEARCH_TECH", iTechX, -1, INFO.getTextKey("TECH_", iTechX))
 
 			self.addUserComment("USER_DIPLOCOMMENT_SOMETHING_ELSE")
 			self.addUserComment("USER_DIPLOCOMMENT_EXIT")

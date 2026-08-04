@@ -2,8 +2,10 @@
 
 from CvPythonExtensions import *
 GC = CyGlobalContext()
+INFO = CyInfo()
 TRNSLTR = CyTranslator()
 
+TEXT = CyGameTextMgr()
 class PediaBuilding:
 
 	def __init__(self, parent, H_BOT_ROW):
@@ -101,7 +103,7 @@ class PediaBuilding:
 				szCost = TRNSLTR.getText("TXT_KEY_PEDIA_COST", (CyPlayer.getBuildingProductionNeeded(iTheBuilding),))
 			else:
 				szCost = TRNSLTR.getText("TXT_KEY_PEDIA_COST", ((iProductionCost * GC.getDefineINT("BUILDING_PRODUCTION_PERCENT"))/100,))
-			screen.appendListBoxStringNoUpdate(panelName, szfont3b + szCost + u'%c' %GC.getYieldInfo(YieldTypes.YIELD_PRODUCTION).getChar(), eWidGen, 0, 0, 1<<0)
+			screen.appendListBoxStringNoUpdate(panelName, szfont3b + szCost + u'%c' %TEXT.getSymbolChar("YIELD_", YieldTypes.YIELD_PRODUCTION), eWidGen, 0, 0, 1<<0)
 		elif CvTheBuildingInfo.isAutoBuild():
 			screen.appendListBoxStringNoUpdate(panelName, szfont3 + TRNSLTR.getText("TXT_KEY_PEDIA_AUTOBUILD",()) , eWidGen, 0, 0, 1<<0)
 		if CvTheBuildingInfo.isGoldenAge():
@@ -200,7 +202,7 @@ class PediaBuilding:
 				szText1 += "<color=255,0,0,255>%d" %iGreatPeopleRateChange + unichr(8862)
 			iGreatPeopleUnit = CvTheBuildingInfo.getGreatPeopleUnitType()
 			if iGreatPeopleUnit != -1:
-				szGreatPersonDesc = GC.getUnitInfo(iGreatPeopleUnit).getDescription()
+				szGreatPersonDesc = INFO.getDescription("UNIT_", iGreatPeopleUnit)
 				try:
 					szText1 += "</color> (" + szGreatPersonDesc.split(" ")[1] + ")"
 				except:
@@ -307,11 +309,11 @@ class PediaBuilding:
 		szChild = PF + "TECH"
 		iType = CvTheBuildingInfo.getPrereqAndTech()
 		if iType != -1:
-			screen.attachImageButton(panelName, szChild + str(iType), GC.getTechInfo(iType).getButton(), enumGBS, eWidGen, 1, 1, False)
+			screen.attachImageButton(panelName, szChild + str(iType), INFO.getButton("TECH_", iType), enumGBS, eWidGen, 1, 1, False)
 			bPlus = True
 		i = 0
 		for iType in CvTheBuildingInfo.getPrereqAndTechs():
-			screen.attachImageButton(panelName, szChild + str(iType), GC.getTechInfo(iType).getButton(), enumGBS, eWidGen, 1, 1, False)
+			screen.attachImageButton(panelName, szChild + str(iType), INFO.getButton("TECH_", iType), enumGBS, eWidGen, 1, 1, False)
 			bPlus = True
 			i += 1
 
@@ -324,7 +326,7 @@ class PediaBuilding:
 		#GOM AND requirements
 		for GOMTech in xrange(len(aGOMTechReqList[BoolExprTypes.BOOLEXPR_AND])):
 			iType = aGOMTechReqList[BoolExprTypes.BOOLEXPR_AND][GOMTech]
-			screen.attachImageButton(panelName, szChild + str(iType), GC.getTechInfo(iType).getButton(), enumGBS, eWidGen, 1, 1, False)
+			screen.attachImageButton(panelName, szChild + str(iType), INFO.getButton("TECH_", iType), enumGBS, eWidGen, 1, 1, False)
 			bPlus = True
 			i += 1
 
@@ -333,7 +335,7 @@ class PediaBuilding:
 			screen.attachLabel(panelName, "", szBracketL)
 			for GOMTech in xrange(len(aGOMTechReqList[BoolExprTypes.BOOLEXPR_OR])):
 				iType = aGOMTechReqList[BoolExprTypes.BOOLEXPR_OR][GOMTech]
-				screen.attachImageButton(panelName, szChild + str(iType), GC.getTechInfo(iType).getButton(), enumGBS, eWidGen, 1, 1, False)
+				screen.attachImageButton(panelName, szChild + str(iType), INFO.getButton("TECH_", iType), enumGBS, eWidGen, 1, 1, False)
 				if GOMTech+1 != len(aGOMTechReqList[BoolExprTypes.BOOLEXPR_OR]):
 					screen.attachLabel(panelName, "", szOr)
 				bPlus = True
@@ -348,7 +350,7 @@ class PediaBuilding:
 				screen.attachLabel(panelName, "", szAnd)
 			else:
 				bPlus = True
-			screen.attachImageButton(panelName, szChild + str(iType), GC.getReligionInfo(iType).getButton(), enumGBS, eWidGen, 1, 1, False)
+			screen.attachImageButton(panelName, szChild + str(iType), INFO.getButton("RELIGION_", iType), enumGBS, eWidGen, 1, 1, False)
 		# Corporation Req
 		szChild = PF + "CORP"
 		iType = CvTheBuildingInfo.getPrereqCorporation()
@@ -357,7 +359,7 @@ class PediaBuilding:
 				screen.attachLabel(panelName, "", szAnd)
 			else:
 				bPlus = True
-			screen.attachImageButton(panelName, szChild + str(iType), GC.getCorporationInfo(iType).getButton(), enumGBS, eWidGen, 1, 1, False)
+			screen.attachImageButton(panelName, szChild + str(iType), INFO.getButton("CORPORATION_", iType), enumGBS, eWidGen, 1, 1, False)
 		# Bonus Req
 		# TODO: Expand functionality so it can handle 8 differently defined bonus requirements: Bonus, Bonuses, RawBonus, RawBonuses, VicinityRawBonus, VicinityRawBonuses, GOM AND/OR Bonus
 		szChild = PF + "BONUS"
@@ -372,7 +374,7 @@ class PediaBuilding:
 		elif iType != -1 or nOr:
 			bPlus = True
 		if iType > -1:
-			screen.attachImageButton(panelName, szChild + str(iType), GC.getBonusInfo(iType).getButton(), enumGBS, eWidGen, 1, 1, False)
+			screen.attachImageButton(panelName, szChild + str(iType), INFO.getButton("BONUS_", iType), enumGBS, eWidGen, 1, 1, False)
 		if nOr > 1:
 			screen.attachLabel(panelName, "", szBracketL)
 		i = 0
@@ -381,7 +383,7 @@ class PediaBuilding:
 				if i:
 					screen.attachLabel(panelName, "", szOr)
 				else: i = 1
-				screen.attachImageButton(panelName, szChild + str(iType), GC.getBonusInfo(iType).getButton(), enumGBS, eWidGen, 1, 1, False)
+				screen.attachImageButton(panelName, szChild + str(iType), INFO.getButton("BONUS_", iType), enumGBS, eWidGen, 1, 1, False)
 			aList1 = []
 		if nOr > 1:
 			screen.attachLabel(panelName, "", szBracketR)
@@ -402,7 +404,7 @@ class PediaBuilding:
 				iType = lPrereqBonuses[i]
 				if i != 0:
 					screen.attachLabel(panelName, "", szOr)
-				screen.attachImageButton(panelName, szChild + str(iType), GC.getBonusInfo(iType).getButton(), enumGBS, eWidGen, 1, 1, False)
+				screen.attachImageButton(panelName, szChild + str(iType), INFO.getButton("BONUS_", iType), enumGBS, eWidGen, 1, 1, False)
 			if nOr > 1:
 				screen.attachLabel(panelName, "", szBracketR)
 		# Building Req
@@ -449,7 +451,7 @@ class PediaBuilding:
 				for i in range(len(aList3)):
 					iType, iAmount = aList3[i]
 					screen.attachLabel(panelName, "", szfont4b + " " + str(iAmount))
-					screen.attachImageButton(panelName, szChild1 + str(iType), GC.getBuildingInfo(iType).getButton(), enumGBS, eWidGen, 1, 1, False)
+					screen.attachImageButton(panelName, szChild1 + str(iType), INFO.getButton("BUILDING_", iType), enumGBS, eWidGen, 1, 1, False)
 				screen.attachLabel(panelName, "", szBracketR)
 				if aList2 and not aList1:
 					screen.attachLabel(panelName, "", szAnd)
@@ -457,7 +459,7 @@ class PediaBuilding:
 			if aList1:
 				for i in range(len(aList1)):
 					iType = aList1[i]
-					screen.attachImageButton(panelName, szChild + str(iType), GC.getBuildingInfo(iType).getButton(), enumGBS, eWidGen, 1, 1, False)
+					screen.attachImageButton(panelName, szChild + str(iType), INFO.getButton("BUILDING_", iType), enumGBS, eWidGen, 1, 1, False)
 				aList1 = []
 			if aList2:
 				iListLength = len(aList2)
@@ -467,14 +469,14 @@ class PediaBuilding:
 					iType = aList2[i]
 					if i != 0:
 						screen.attachLabel(panelName, "", szOr)
-					screen.attachImageButton(panelName, szChild + str(iType), GC.getBuildingInfo(iType).getButton(), enumGBS, eWidGen, 1, 1, False)
+					screen.attachImageButton(panelName, szChild + str(iType), INFO.getButton("BUILDING_", iType), enumGBS, eWidGen, 1, 1, False)
 				if iListLength > 1:
 					screen.attachLabel(panelName, "", szBracketR)
 				aList2 = []
 			if aList4:
 				for i in range(len(aList4)):
 					iType = aList4[i]
-					screen.attachImageButton(panelName, szChild + str(iType), GC.getBuildingInfo(iType).getButton(), enumGBS, eWidGen, 1, 1, False)
+					screen.attachImageButton(panelName, szChild + str(iType), INFO.getButton("BUILDING_", iType), enumGBS, eWidGen, 1, 1, False)
 				aList4 = []
 			if aList5:
 				iListLength = len(aList5)
@@ -484,7 +486,7 @@ class PediaBuilding:
 					iType = aList5[i]
 					if i != 0:
 						screen.attachLabel(panelName, "", szOr)
-					screen.attachImageButton(panelName, szChild + str(iType), GC.getBuildingInfo(iType).getButton(), enumGBS, eWidGen, 1, 1, False)
+					screen.attachImageButton(panelName, szChild + str(iType), INFO.getButton("BUILDING_", iType), enumGBS, eWidGen, 1, 1, False)
 				if iListLength > 1:
 					screen.attachLabel(panelName, "", szBracketR)
 				aList5 = []
@@ -506,7 +508,7 @@ class PediaBuilding:
 		if aList1:
 			for i in range(len(aList1)):
 				ID = aList1[i]
-				screen.attachImageButton(panelName, szChild + str(ID), GC.getCivicInfo(ID).getButton(), enumGBS, eWidGen, 1, 1, False)
+				screen.attachImageButton(panelName, szChild + str(ID), INFO.getButton("CIVIC_", ID), enumGBS, eWidGen, 1, 1, False)
 			aList1 = []
 		if aList2:
 			iListLength = len(aList2)
@@ -516,7 +518,7 @@ class PediaBuilding:
 				ID = aList2[i]
 				if i != 0:
 					screen.attachLabel(panelName, "", szOr)
-				screen.attachImageButton(panelName, szChild + str(ID), GC.getCivicInfo(ID).getButton(), enumGBS, eWidGen, 1, 1, False)
+				screen.attachImageButton(panelName, szChild + str(ID), INFO.getButton("CIVIC_", ID), enumGBS, eWidGen, 1, 1, False)
 			if iListLength > 1:
 				screen.attachLabel(panelName, "", szBracketR)
 			aList2 = []
@@ -535,7 +537,7 @@ class PediaBuilding:
 		if aList1:
 			for i in range(len(aList1)):
 				ID = aList1[i]
-				screen.attachImageButton(panelName, szChild + str(ID), GC.getTerrainInfo(ID).getButton(), enumGBS, eWidGen, 1, 1, False)
+				screen.attachImageButton(panelName, szChild + str(ID), INFO.getButton("TERRAIN_", ID), enumGBS, eWidGen, 1, 1, False)
 			aList1 = []
 		if aList2:
 			iListLength = len(aList2)
@@ -545,7 +547,7 @@ class PediaBuilding:
 				ID = aList2[i]
 				if i != 0:
 					screen.attachLabel(panelName, "", szOr)
-				screen.attachImageButton(panelName, szChild + str(ID), GC.getTerrainInfo(ID).getButton(), enumGBS, eWidGen, 1, 1, False)
+				screen.attachImageButton(panelName, szChild + str(ID), INFO.getButton("TERRAIN_", ID), enumGBS, eWidGen, 1, 1, False)
 			if iListLength > 1:
 				screen.attachLabel(panelName, "", szBracketR)
 			aList2 = []
@@ -565,7 +567,7 @@ class PediaBuilding:
 				ID = aList2[i]
 				if i != 0:
 					screen.attachLabel(panelName, "", szOr)
-				screen.attachImageButton(panelName, szChild + str(ID), GC.getImprovementInfo(ID).getButton(), enumGBS, eWidGen, 1, 1, False)
+				screen.attachImageButton(panelName, szChild + str(ID), INFO.getButton("IMPROVEMENT_", ID), enumGBS, eWidGen, 1, 1, False)
 			if iListLength > 1:
 				screen.attachLabel(panelName, "", szBracketR)
 			aList2 = []
@@ -586,7 +588,7 @@ class PediaBuilding:
 				ID = aList2[i]
 				if i != 0:
 					screen.attachLabel(panelName, "", szOr)
-				screen.attachImageButton(panelName, szChild + str(ID), GC.getFeatureInfo(ID).getButton(), enumGBS, eWidGen, 1, 1, False)
+				screen.attachImageButton(panelName, szChild + str(ID), INFO.getButton("FEATURE_", ID), enumGBS, eWidGen, 1, 1, False)
 			if iListLength > 1:
 				screen.attachLabel(panelName, "", szBracketR)
 			aList2 = []

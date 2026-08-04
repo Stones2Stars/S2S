@@ -2687,7 +2687,7 @@ void cvInternalGlobals::setDefineINT(const char* szName, int iValue, bool bUpdat
 
 		if (!bUpdate)
 		{
-			emitGlobalDefineChanged(szName, GLOBALDEFINE_INT, iValue, 0.0f, NULL);
+			emitGameGlobalDefineAdded(szName, GLOBALDEFINE_INT, iValue, 0.0f, NULL);
 		}
 	}
 }
@@ -2706,7 +2706,7 @@ void cvInternalGlobals::setDefineFLOAT(const char* szName, float fValue, bool bU
 
 		if (!bUpdate)
 		{
-			emitGlobalDefineChanged(szName, GLOBALDEFINE_FLOAT, 0, fValue, NULL);
+			emitGameGlobalDefineAdded(szName, GLOBALDEFINE_FLOAT, 0, fValue, NULL);
 		}
 	}
 }
@@ -2725,7 +2725,7 @@ void cvInternalGlobals::setDefineSTRING(const char* szName, const char* szValue,
 
 		if (!bUpdate)
 		{
-			emitGlobalDefineChanged(szName, GLOBALDEFINE_STRING, 0, 0.0f, szValue);
+			emitGameGlobalDefineAdded(szName, GLOBALDEFINE_STRING, 0, 0.0f, szValue);
 		}
 	}
 }

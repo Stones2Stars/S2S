@@ -14,6 +14,7 @@ ENABLER = CyEnabler()
 ENUMS = CyEnums()
 AFM = CyArtFileMgr()
 GTM = CyGameTextMgr()
+INFO = CyInfo()
 TRNSLTR = CyTranslator()
 
 class CvCivicsScreen:
@@ -230,7 +231,7 @@ class CvCivicsScreen:
 				x = (wScroll - w) / 2
 			else: x = 0
 			# Header
-			szTxt = GC.getCivicOptionInfo(iCivicOption).getDescription()
+			szTxt = INFO.getDescription("CIVICOPTION_", iCivicOption)
 			y += 4
 			screen.setLabelAt(self.getNextWidget(), ScPnl, uFont3b + szTxt, 1<<2, xMid - 7, y, 0, eFontGame, eWidGen, 1, 1)
 			iTemp = xRes + iOff
@@ -242,10 +243,10 @@ class CvCivicsScreen:
 			screen.attachPanelAt(ScPnl, self.getNextWidget(), "", "", True, True, ePnlOut, x, y, w, dy, eWidGen, 1, 1)
 			x += 16
 			y += 8
-			for civicX, iCivicX in civics:
+			for iCivicX in civics:
 				Img = "WID|CIVIC%d" % iCivicX
 				if bDebug or CyPlayer.canDoCivics(iCivicX):
-					BTN = civicX.getButton()
+					BTN = INFO.getButton("CIVIC_", iCivicX)
 				else: BTN = CANCEL
 				aCoordList[iCivicOption].append((x, y))
 				screen.setImageButtonAt(Img, ScPnl, BTN, x, y, iSize, iSize, eWidGen, 1, 1)
@@ -296,15 +297,15 @@ class CvCivicsScreen:
 
 			screen.attachPanelAt(ScPnl, self.getNextWidget(), "", "", True, True, ePnlMain, 0, y, 404, h, eWidGen, 1, 1)
 			# Header
-			szTxt = uFont4b + GC.getCivicOptionInfo(iCivicOption).getDescription()
+			szTxt = uFont4b + INFO.getDescription("CIVICOPTION_", iCivicOption)
 			y += 12
 			screen.setLabelAt(self.getNextWidget(), ScPnl, szTxt, 1<<0, 10, y, 0, eFontGame, eWidGen, 1, 1)
 			y += 32
 			# Build row
-			for civicX, iCivicX in civics:
+			for iCivicX in civics:
 				Txt = "WID|CIVIC|TEXT%d" % iCivicX
 				if bDebug or CyPlayer.canDoCivics(iCivicX):
-					BTN = civicX.getButton()
+					BTN = INFO.getButton("CIVIC_", iCivicX)
 				else: BTN = CANCEL
 				screen.addDDSGFCAt(self.getNextWidget(), ScPnl, BTN, 8, y, iSize, iSize, eWidGen, 1, 1, False)
 
@@ -312,7 +313,7 @@ class CvCivicsScreen:
 					szTxt = "<color=255,255,0>" + uFont3b
 				else: szTxt = uFont3
 
-				szTxt += civicX.getDescription()
+				szTxt += INFO.getDescription("CIVIC_", iCivicX)
 				screen.setTextAt(Txt, ScPnl, szTxt, 1<<0, dy, 2 + y, 0, eFontGame, eWidGen, 0, 0)
 				y += dy
 			y += dy
@@ -352,12 +353,12 @@ class CvCivicsScreen:
 					if self.iType:
 						Txt = "WID|CIVIC|TEXT%d" % iCivicY
 						screen.hide(Txt)
-						szTxt = self.aFontList[4] + GC.getCivicInfo(iCivicY).getDescription()
+						szTxt = self.aFontList[4] + INFO.getDescription("CIVIC_", iCivicY)
 						screen.modifyString(Txt, szTxt, 1<<0)
 						screen.show(Txt)
 						Txt = "WID|CIVIC|TEXT%d" % iCivic
 						screen.hide(Txt)
-						szTxt = self.aFontList[3] + "<color=255,255,0>" + GC.getCivicInfo(iCivic).getDescription()
+						szTxt = self.aFontList[3] + "<color=255,255,0>" + INFO.getDescription("CIVIC_", iCivic)
 						screen.modifyString(Txt, szTxt, 1<<0)
 						screen.show(Txt)
 					else:

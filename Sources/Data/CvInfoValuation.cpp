@@ -684,6 +684,61 @@ void InfoValuation::rolledLegsAtCity(const CvCity& city, int iChannel, int64_t& 
 	percentSum += city.getCascadePackage().readPercent(iChannel);
 }
 
+
+// THE SPECIALIST TERM (see the header): the ONE fold both the oracle and the stored read use.
+int64_t InfoValuation::specialistTerm(const CvCity& city, int iChannel, const CvCascadeEvalCtx& evalCtx)
+{
+	if (iChannel < 0)
+	{
+		return 0;
+	}
+	int64_t iSpecialists = 0;
+	const ModifierFamily eFamily = CascadeChannelRegistry::channelFamily(iChannel);
+	const int iKind = CascadeChannelRegistry::channelKind(iChannel);
+	for (int iSpecialist = 0; iSpecialist < GC.getNumSpecialistInfos(); ++iSpecialist)
+	{
+		const int iCount = city.getSpecialistCount((SpecialistTypes)iSpecialist);
+		if (iCount > 0)
+		{
+			iSpecialists += iCount * groupSumAt(
+				GC.getSpecialistInfo((SpecialistTypes)iSpecialist).getModifiers(),
+				eFamily, iKind, CASC_UNIT_FLAT, CASC_SCOPE_CITY, evalCtx);
+		}
+	}
+	return iSpecialists;
+}
+
+// THE CITY RECEIVER (see the header): the §2a rate, re-summed from the members it is made of.
+int64_t InfoValuation::cityReceiverRate(const CvCity& city, int iChannel)
+{
+	if (iChannel < 0)
+	{
+		return 0;
+	}
+	// BASE -- the Σ over this city's WORKED PLOTS of their own package flats. This is the member re-sum a
+	// receiver IS; nothing maintains it as a total, because a total of combines cannot be delta'd.
+	int64_t iBase = 0;
+	const int iNumPlots = city.getNumCityPlots();
+	for (int iPlotIndex = 0; iPlotIndex < iNumPlots; ++iPlotIndex)
+	{
+		if (!city.isWorkingPlot(iPlotIndex))
+		{
+			continue;
+		}
+		const CvPlot* pWorkedPlot = city.getCityIndexPlot(iPlotIndex);
+		if (pWorkedPlot != NULL)
+		{
+			iBase += pWorkedPlot->getCascadePackage().readFlat(iChannel);
+		}
+	}
+	CvCascadeEvalCtx evalCtx;
+	fillEvalCtx(city.getCityContext(), GET_PLAYER(city.getOwner()).getEmpireContext(), NULL, evalCtx);
+	int64_t iFlatSum = 0;
+	int64_t iPercentSum = 0;
+	rolledLegsAtCity(city, iChannel, iFlatSum, iPercentSum);
+	return cityRate(iBase, specialistTerm(city, iChannel, evalCtx), (int)iPercentSum, iFlatSum);
+}
+
 int InfoValuation::realizedAtCity(const CvCity& city, int iChannel)
 {
 	if (iChannel < 0)
@@ -695,7 +750,7 @@ int InfoValuation::realizedAtCity(const CvCity& city, int iChannel)
 	// cannot reproduce (it carries no specialist term and no post-percent EXTRA tier).
 	if (CascadeChannelRegistry::scopeReceiverIndex(CASC_SCOPE_CITY, iChannel) >= 0)
 	{
-		return city.getCascadePackage().readSum(iChannel);
+		return (int)cityReceiverRate(city, iChannel);
 	}
 	int64_t iFlatSum = 0;
 	int64_t iPercentSum = 0;
@@ -714,7 +769,22 @@ int InfoValuation::realizedAtEmpire(const CvPlayer& player, int iChannel)
 	// receiver sum at BOTH scopes, each over its own combine.
 	if (CascadeChannelRegistry::scopeReceiverIndex(CASC_SCOPE_EMPIRE, iChannel) >= 0)
 	{
-		return player.getCascadePackage().readSum(iChannel);
+		// ⚖ THE Σ OF ITS MEMBERS' REALIZED VALUES, re-summed here (owner: "the receiver re-sums its
+		// participating members, and nothing is built to avoid that"). ⛔ The empire's OWN package is NEVER
+		// added on top: its deposits roll DOWN and are therefore already inside every city's realized value,
+		// so adding them again would count each empire-scope deposit once per city PLUS once more.
+		// ⚠ PARTICIPATION is a gate on the Σ, not a term in the combine: a city under DISORDER or celebrating
+		// WLTKD keeps its real value and simply is not contributed (economy.md).
+		int64_t iTotal = 0;
+		for (CvPlayer::city_iterator cityIterator = player.beginCities(); cityIterator != player.endCities(); ++cityIterator)
+		{
+			const CvCity* pCity = *cityIterator;
+			if (pCity != NULL && !pCity->isDisorder())
+			{
+				iTotal += cityReceiverRate(*pCity, iChannel);
+			}
+		}
+		return (int)iTotal;
 	}
 	// AREA is deliberately absent from the empire chain: an area-scope value belongs to ONE area while an empire
 	// spans several, so it is read by each CITY for its own area id -- folding it here would credit every city

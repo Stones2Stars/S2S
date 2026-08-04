@@ -627,6 +627,23 @@ void CvGame::onFinalInitialized(const bool bNewGame)
 		}
 	}
 
+	// ⛔ THE LOAD-END PLOT-GROUP REBUILD (enabler.md §8 Load-end reconciliation) -- the bonus NETWORK is derived
+	// state and is NEVER trusted from a save ("the deserialized groups are drained and discarded; a load-end
+	// rebuild re-colors membership from current state and folds the counts through the live entry points as each
+	// plot joins"). `doPreTurn0` runs this for a NEW GAME only, so without it here a loaded game has no network:
+	// `CvCity::getNumBonuses` is a pure relay to the plot group ([enabler.md §8] RESIDENCY), so every
+	// `connection:"trade|vicinity"` requires-atom fails and nothing that needs a networked or vicinity resource
+	// can be built or trained.
+	// ⚑ It runs INSIDE the bracket, before the close, deliberately: the re-color announces every bonus crossing
+	// as an ordinary fact, so those emits bank with the rest of the reseed and the GAME_LOAD_FINISHED gate pass
+	// (and the operating-set seed it triggers) evaluates against a network that is already correct.
+	// ⚠ It is reachable only because `m_bFinalInitialized` is set at the top of this function -- CvPlayer::
+	// updatePlotGroups early-returns while `!isFinalInitialized()`.
+	if (!bNewGame)
+	{
+		updatePlotGroups(/*reInitialize*/ true);
+	}
+
 	// The load-lifecycle bracket CLOSE (event-spine.md): the per-object read()s and every load-end rebuild in this
 	// function are complete, so the on-FINISHED consumers (the ContextConsumer plotAttrs drain, the enabler's
 	// load-end gate pass) run against fully-final state -- the bracket is still open during the FINISHED dispatch
@@ -2280,6 +2297,24 @@ int CvGame::getTeamClosenessScore(int** aaiDistances, int* aiStartingLocs)
 
 void CvGame::update()
 {
+	//	⛔ THE LOAD-COMPLETE HOOK -- the DLL closes its OWN bracket, because the EXE's does not cover a load.
+	//	`setFinalInitialized` is the EXE's hand-back and it fires for a NEW GAME ONLY (its own comment records
+	//	that it "isn't called when loading saves"), so nothing else reaches `onFinalInitialized`. Without this the
+	//	bracket opened by `CvGame::read` never closes and the whole event-built plane stays unbuilt: the modifier's
+	//	marks stay BANKED (markDirty banks inside the bracket and drains at GAME_LOAD_FINISHED -- every package
+	//	reads 0), the enabler's load-end gate pass never runs (so every candidate stays LISTED -- the enable-side
+	//	over-offer, enabler.md par.8), and `isFinalInitialized()` stays false forever, which strands the contexts'
+	//	deferred adjacency derivation ([contexts.md] -- the deferred plots drain on the first event after the game
+	//	reports final-initialized).
+	//	⚑ The first update is the right point rather than a later one: the EXE has finished handing the save over
+	//	and control is back in the DLL, so the on-FINISHED consumers run against fully-final state, which is what
+	//	the registration-order contract (contexts -> enabler -> modifier) requires.
+	//	⚑ NEW GAME vs LOAD comes from the bracket itself -- a load is exactly "a GAME_LOAD_STARTED is open".
+	if (!m_bFinalInitialized)
+	{
+		onFinalInitialized(!spineGameLoadInProgress());
+	}
+
 	//	Per-frame DLL work accumulated across the whole turn (logged at CvGame::doTurn) --
 	//	this span, not the doTurn tree, is where AI unit movement runs.
 	PERF_ACCUM(gPerfGameUpdateAccumMs);
@@ -3810,12 +3845,16 @@ void CvGame::changeNoNukesCount(int iChange)
 	// this ban half; the per-player ENABLED/DISABLED half is makeNukesValid.)
 	if (bWasNoNukes != isNoNukes())
 	{
-		for (int iPlayerIndex = 0; iPlayerIndex < MAX_PC_PLAYERS; ++iPlayerIndex)
+		// ONE fact: the ban is WORLD-scope and flips every player at once, so it announces once rather than
+		// fanning a per-player state. A consumer that needs the per-empire verdict reads that empire's own
+		// availability fact beside this one.
+		if (isNoNukes())
 		{
-			if (GET_PLAYER((PlayerTypes)iPlayerIndex).isAlive())
-			{
-				emitNukesChanged(iPlayerIndex, GET_PLAYER((PlayerTypes)iPlayerIndex).getNukeState());
-			}
+			emitWorldNukesBannedAdded();
+		}
+		else
+		{
+			emitWorldNukesBannedRemoved();
 		}
 	}
 }
@@ -4726,7 +4765,11 @@ void CvGame::setHandicapType(HandicapTypes eHandicap)
 	{
 		const int iOld = (int)m_eHandicap;
 		m_eHandicap = eHandicap;
-		emitGameHandicapChanged((int)eHandicap, iOld);
+		if (iOld != NO_HANDICAP)
+	{
+		emitGameHandicapRemoved(iOld);
+	}
+	emitGameHandicapAdded((int)eHandicap);
 
 		if (eHandicap != NO_HANDICAP)
 		{
@@ -5059,7 +5102,14 @@ void CvGame::setOption(GameOptionTypes eIndex, bool bEnabled)
 	GC.getInitCore().setOption(eIndex, bEnabled);
 	if (bWas != bEnabled)
 	{
-		emitGameOptionChanged((int)eIndex, bEnabled ? 1 : 0, GAMEOPTSPACE_GAME);
+		if (bEnabled)
+	{
+		emitGameOptionAdded((int)eIndex, 1, GAMEOPTSPACE_GAME);
+	}
+	else
+	{
+		emitGameOptionRemoved((int)eIndex, 1, GAMEOPTSPACE_GAME);
+	}
 	}
 }
 
@@ -5102,7 +5152,7 @@ void CvGame::incrementUnitCreatedCount(UnitTypes eIndex)
 	// #430 event spine: the world-instance cap reads this counter live (CvUnitEnabler). It only ever grows, so
 	// every increment IS a state change -- there is no verdict to cross. ⛔ No in-read twin: nothing stores a
 	// derivative of it, so a loaded save serves the deserialized counter directly and has nothing to seed.
-	emitUnitCreatedCountChanged((int)eIndex, m_paiUnitCreatedCount[eIndex], 1);
+	emitWorldUnitCreatedCountAdded((int)eIndex, 1);
 }
 
 
@@ -5551,11 +5601,11 @@ void CvGame::setHolyCity(ReligionTypes eIndex, const CvCity* pNewValue, bool bAn
 	// city (loses) and the NEW city (gains), gating conditioned commerce/yields. Announce per affected city.
 	if (pOldValue != NULL)
 	{
-		emitHolyCityChanged(pOldValue->getID(), pOldValue->getOwner(), (int)eIndex, false);
+		emitCityHolyCityRemoved(pOldValue->getID(), pOldValue->getOwner(), (int)eIndex);
 	}
 	if (pNewValue != NULL)
 	{
-		emitHolyCityChanged(pNewValue->getID(), pNewValue->getOwner(), (int)eIndex, true);
+		emitCityHolyCityAdded(pNewValue->getID(), pNewValue->getOwner(), (int)eIndex);
 	}
 
 	if (pOldValue != NULL)
@@ -5679,11 +5729,11 @@ void CvGame::setHeadquarters(CorporationTypes eIndex, CvCity* pNewValue, bool bA
 		// setHasCorporation calls below: those are the building- and corporation-PRESENCE facts, not this one.
 		if (pOldValue != NULL)
 		{
-			emitHeadquartersChanged(pOldValue->getID(), pOldValue->getOwner(), (int)eIndex, false);
+			emitCityHeadquartersRemoved(pOldValue->getID(), pOldValue->getOwner(), (int)eIndex);
 		}
 		if (pNewValue != NULL)
 		{
-			emitHeadquartersChanged(pNewValue->getID(), pNewValue->getOwner(), (int)eIndex, true);
+			emitCityHeadquartersAdded(pNewValue->getID(), pNewValue->getOwner(), (int)eIndex);
 		}
 
 		if (pOldValue != NULL)
@@ -11191,7 +11241,14 @@ void CvGame::setModderGameOption(ModderGameOptionTypes eIndex, int iNewValue)
 	if (m_aiModderGameOption[eIndex] != iNewValue)
 	{
 		m_aiModderGameOption[eIndex] = iNewValue;
-		emitGameOptionChanged((int)eIndex, iNewValue, GAMEOPTSPACE_MODDER);
+		if (iNewValue != 0)
+	{
+		emitGameOptionAdded((int)eIndex, iNewValue, GAMEOPTSPACE_MODDER);
+	}
+	else
+	{
+		emitGameOptionRemoved((int)eIndex, iNewValue, GAMEOPTSPACE_MODDER);
+	}
 	}
 }
 

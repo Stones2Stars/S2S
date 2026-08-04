@@ -28689,7 +28689,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 				(eUnitAI == UNITAI_INFILTRATOR))
 		{
 			iTemp *= 25;
-			iExtra = pUnit == NULL ? (kUnit.getFlatCombat(COMBAT_STEALTH_STRIKES, CASC_SCOPE_UNIT) / 100) * 2 : pUnit->getExtraStealthStrikes() * 2;
+			iExtra = pUnit == NULL ? (kUnit.getFlatCombat(COMBAT_STEALTH_STRIKES, CASC_SCOPE_UNIT) / 100) * 2 : pUnit->stealthStrikesTotal() * 2;
 			iTemp *= 100 + iExtra * 15;
 			iTemp /= 100;
 
@@ -31293,7 +31293,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 				(eUnitAI == UNITAI_INFILTRATOR))
 		{
 			iTemp *= 25;
-			iExtra = pUnit ? pUnit->getExtraStealthStrikes() * 2 : (kUnit.getFlatCombat(COMBAT_STEALTH_STRIKES, CASC_SCOPE_UNIT) / 100) * 2;
+			iExtra = pUnit ? pUnit->stealthStrikesTotal() * 2 : (kUnit.getFlatCombat(COMBAT_STEALTH_STRIKES, CASC_SCOPE_UNIT) / 100) * 2;
 			iTemp *= 100 + iExtra * 15;
 			iTemp /= 100;
 

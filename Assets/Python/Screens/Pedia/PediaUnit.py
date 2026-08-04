@@ -2,8 +2,10 @@
 
 from CvPythonExtensions import *
 GC = CyGlobalContext()
+INFO = CyInfo()
 TRNSLTR = CyTranslator()
 
+TEXT = CyGameTextMgr()
 class PediaUnit:
 
 	def __init__(self, parent, H_BOT_ROW):
@@ -136,7 +138,7 @@ class PediaUnit:
 			elif not CvTheUnitInfo.isFound():
 				szText = str(iType * GC.getDefineINT("UNIT_PRODUCTION_PERCENT")/100)
 			if szText:
-				szText += u" %c" % GC.getYieldInfo(YieldTypes.YIELD_PRODUCTION).getChar()
+				szText += u" %c" % TEXT.getSymbolChar("YIELD_", YieldTypes.YIELD_PRODUCTION)
 				screen.appendListBoxStringNoUpdate(szName, szfont3 + szText, eWidGen, 0, 0, 1<<0)
 		iType = CvTheUnitInfo.getAirRange()
 		if iType > 0:
@@ -205,10 +207,10 @@ class PediaUnit:
 		szChild = PF + "TECH"
 		iType = CvTheUnitInfo.getPrereqAndTech()
 		if iType != -1:
-			aReqList.append([szChild + str(iType) + "|" + str(n), GC.getTechInfo(iType).getButton()])
+			aReqList.append([szChild + str(iType) + "|" + str(n), INFO.getButton("TECH_", iType)])
 			n += 1
 		for iType in CvTheUnitInfo.getPrereqAndTechs():
-			aReqList.append([szChild + str(iType) + "|" + str(n), GC.getTechInfo(iType).getButton()])
+			aReqList.append([szChild + str(iType) + "|" + str(n), INFO.getButton("TECH_", iType)])
 			n += 1
 
 		# Bonus Req
@@ -235,23 +237,23 @@ class PediaUnit:
 			if aReqList:
 				aReqList.append(AND)
 			if iType != -1:
-				aReqList.append([szChild + str(iType) + "|" + str(n), GC.getBonusInfo(iType).getButton()])
+				aReqList.append([szChild + str(iType) + "|" + str(n), INFO.getButton("BONUS_", iType)])
 				n += 1
 			if aReqList and len(aGOMBUnitReqList[BoolExprTypes.BOOLEXPR_AND]) > 0:
 				aReqList.append(AND)
 			for iType in xrange(len(aGOMBUnitReqList[BoolExprTypes.BOOLEXPR_AND])):
-				aReqList.append([szChild + str(aGOMBUnitReqList[BoolExprTypes.BOOLEXPR_AND][iType]) + "|" + str(n), GC.getBonusInfo(aGOMBUnitReqList[BoolExprTypes.BOOLEXPR_AND][iType]).getButton()])
+				aReqList.append([szChild + str(aGOMBUnitReqList[BoolExprTypes.BOOLEXPR_AND][iType]) + "|" + str(n), INFO.getButton("BONUS_", aGOMBUnitReqList[BoolExprTypes.BOOLEXPR_AND][iType])])
 				n += 1
 
 			if aList0:
 				if nOr > 1:
 					aReqList.append(braL)
 				iType = aList0.pop(0)
-				aReqList.append([szChild + str(iType) + "|" + str(n), GC.getBonusInfo(iType).getButton()])
+				aReqList.append([szChild + str(iType) + "|" + str(n), INFO.getButton("BONUS_", iType)])
 				n += 1
 				for iType in aList0:
 					aReqList.append(OR)
-					aReqList.append([szChild + str(iType) + "|" + str(n), GC.getBonusInfo(iType).getButton()])
+					aReqList.append([szChild + str(iType) + "|" + str(n), INFO.getButton("BONUS_", iType)])
 					n += 1
 				if nOr > 1:
 					aReqList.append(braR)
@@ -261,11 +263,11 @@ class PediaUnit:
 				if nGOMOr > 1:
 					aReqList.append(braL)
 				iType = aList2.pop(0)
-				aReqList.append([szChild + str(iType) + "|" + str(n), GC.getBonusInfo(iType).getButton()])
+				aReqList.append([szChild + str(iType) + "|" + str(n), INFO.getButton("BONUS_", iType)])
 				n += 1
 				for iType in aList2:
 					aReqList.append(OR)
-					aReqList.append([szChild + str(iType) + "|" + str(n), GC.getBonusInfo(iType).getButton()])
+					aReqList.append([szChild + str(iType) + "|" + str(n), INFO.getButton("BONUS_", iType)])
 					n += 1
 				if nGOMOr > 1:
 					aReqList.append(braR)
@@ -283,11 +285,11 @@ class PediaUnit:
 			if nOr > 1:
 				aReqList.append(braL)
 			iType = aList0.pop(0)
-			aReqList.append([szChild + str(iType) + "|" + str(n), GC.getCivicInfo(iType).getButton()])
+			aReqList.append([szChild + str(iType) + "|" + str(n), INFO.getButton("CIVIC_", iType)])
 			n += 1
 			for iType in aList0:
 				aReqList.append(OR)
-				aReqList.append([szChild + str(iType) + "|" + str(n), GC.getCivicInfo(iType).getButton()])
+				aReqList.append([szChild + str(iType) + "|" + str(n), INFO.getButton("CIVIC_", iType)])
 				n += 1
 			if nOr > 1:
 				aReqList.append(braR)
@@ -297,7 +299,7 @@ class PediaUnit:
 		szChild = PF + "RELIGION"
 		iType = CvTheUnitInfo.getPrereqReligion()
 		if iType != -1:
-			aReqList.append([szChild + str(iType) + "|" + str(n), GC.getReligionInfo(iType).getButton()])
+			aReqList.append([szChild + str(iType) + "|" + str(n), INFO.getButton("RELIGION_", iType)])
 			n += 1
 		# Building Req
 		szChild = PF + "BUILDING"
@@ -327,24 +329,24 @@ class PediaUnit:
 			if aReqList:
 				aReqList.append(AND)
 			for iType in aList0:
-				aReqList.append([szChild + str(iType) + "|" + str(n), GC.getBuildingInfo(iType).getButton()])
+				aReqList.append([szChild + str(iType) + "|" + str(n), INFO.getButton("BUILDING_", iType)])
 				n += 1
 
 			if aReqList and len(aGOMBUnitReqList[BoolExprTypes.BOOLEXPR_AND]) > 0:
 				aReqList.append(AND)
 			for iType in aList2:
-				aReqList.append([szChild + str(iType) + "|" + str(n), GC.getBuildingInfo(iType).getButton()])
+				aReqList.append([szChild + str(iType) + "|" + str(n), INFO.getButton("BUILDING_", iType)])
 				n += 1
 
 			if aList1:
 				if nOr > 1:
 					aReqList.append(braL)
 				iType = aList1.pop(0)
-				aReqList.append([szChild + str(iType) + "|" + str(n), GC.getBuildingInfo(iType).getButton()])
+				aReqList.append([szChild + str(iType) + "|" + str(n), INFO.getButton("BUILDING_", iType)])
 				n += 1
 				for iType in aList1:
 					aReqList.append(OR)
-					aReqList.append([szChild + str(iType) + "|" + str(n), GC.getBuildingInfo(iType).getButton()])
+					aReqList.append([szChild + str(iType) + "|" + str(n), INFO.getButton("BUILDING_", iType)])
 					n += 1
 				if nOr > 1:
 					aReqList.append(braR)
@@ -353,11 +355,11 @@ class PediaUnit:
 				if nGOMOr > 1:
 					aReqList.append(braL)
 				iType = aList3.pop(0)
-				aReqList.append([szChild + str(iType) + "|" + str(n), GC.getBuildingInfo(iType).getButton()])
+				aReqList.append([szChild + str(iType) + "|" + str(n), INFO.getButton("BUILDING_", iType)])
 				n += 1
 				for iType in aList3:
 					aReqList.append(OR)
-					aReqList.append([szChild + str(iType) + "|" + str(n), GC.getBuildingInfo(iType).getButton()])
+					aReqList.append([szChild + str(iType) + "|" + str(n), INFO.getButton("BUILDING_", iType)])
 					n += 1
 				if nGOMOr > 1:
 					aReqList.append(braR)
@@ -367,7 +369,7 @@ class PediaUnit:
 		szChild = PF + "UNIT"
 		for i in xrange(CvTheUnitInfo.getNumUnitUpgrades()):
 			iUnit = CvTheUnitInfo.getUnitUpgrade(i)
-			aUpgList.append([szChild + str(iUnit),  GC.getUnitInfo(iUnit).getButton()])
+			aUpgList.append([szChild + str(iUnit),  INFO.getButton("UNIT_", iUnit)])
 
 		iType = CvTheUnitInfo.getObsoleteTech()
 		H_SCROLL = H_BOT_ROW - 50
@@ -380,7 +382,7 @@ class PediaUnit:
 				screen.addPanel(Pnl, "", "", True, True, X_OBS, Y_BOT_ROW_1, H_BOT_ROW, H_BOT_ROW, ePnlBlue50)
 				szText = szfont3b + TRNSLTR.getText("TXT_KEY_PEDIA_BONUS_OBSOLETE", ())
 				screen.setLabelAt(aName(), Pnl, szText, 1<<2, H_BOT_ROW / 2, 2, 0, eFontTitle, eWidGen, 0, 0)
-				screen.setImageButtonAt(PF + "TECH" + str(iType), Pnl, GC.getTechInfo(iType).getButton(), x, x + 4, S_BOT_ROW, S_BOT_ROW, eWidGen, 1, 1)
+				screen.setImageButtonAt(PF + "TECH" + str(iType), Pnl, INFO.getButton("TECH_", iType), x, x + 4, S_BOT_ROW, S_BOT_ROW, eWidGen, 1, 1)
 				W_BOT_ROW -= H_BOT_ROW + 8
 			if aReqList or aUpgList:
 				i = len(aReqList)
@@ -450,7 +452,7 @@ class PediaUnit:
 				CvPromotionInfo = GC.getPromotionInfo(k)
 				for j in xrange(CvPromotionInfo.getNumAddsBuildTypes()):
 					iBuild = CvPromotionInfo.getAddsBuildType(j)
-					aList1.append((GC.getBuildInfo(iBuild).getButton(), iBuild))
+					aList1.append((INFO.getButton("BUILD_", iBuild), iBuild))
 
 		if aList0:
 			screen.addPanel(aName(), "", "", False, False, X_COL_1, Y_BOT_ROW_2, W_PEDIA_PAGE, H_BOT_ROW, ePnlBlue50)
@@ -478,7 +480,7 @@ class PediaUnit:
 		# Builds
 		for k in xrange(CvTheUnitInfo.getNumBuilds()):
 			iBuild = CvTheUnitInfo.getBuild(k)
-			aList1.append((GC.getBuildInfo(iBuild).getButton(), iBuild))
+			aList1.append((INFO.getButton("BUILD_", iBuild), iBuild))
 
 		if aList1:
 			Pnl = aName()

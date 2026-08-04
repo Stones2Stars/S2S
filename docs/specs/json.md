@@ -550,7 +550,7 @@ declare the number. Enforcement reads the [tally](tally.md) count.
 > downward flow, not a special case: *"the city knows what plot it's on, so the plot can handle the events from
 > the city — if a feature is on the plot, it reads the pop-increase event from the city, and voila"*. The worked
 > case is a feature destroyed as its city grows: `trigger: {type: POPULATION, scope: city, min: N}` +
-> `action: {destroy: self}`, off the `SEVT_POPULATION_CHANGED` fact the spine already carries.
+> `action: {destroy: self}`, off the `SEVT_CITY_POPULATION_ADDED / _REMOVED` fact the spine already carries.
 > ⚑ This is what lets ONE condition replace a legacy special case: the engine destroyed such a feature at
 > FOUNDING when its threshold was 0 or 1 and at `newPop >= N` thereafter — two code paths that are uniformly
 > "city population ≥ N", since a founded city always has population ≥ 1.

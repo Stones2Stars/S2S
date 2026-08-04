@@ -95,7 +95,7 @@ weighing a cut — though §5 still holds: this whole cluster is not where the p
 
 ## 3. Cascade / enabler / property derived state — ~40 MB, flat
 
-Recomputed in place (dirty-flag → rebuild into fixed-width storage), never grows per turn.
+Maintained in place by the facts, into fixed-width storage; never grows per turn.
 
 | Structure | Per object | ~total | Note |
 |---|---|--:|---|

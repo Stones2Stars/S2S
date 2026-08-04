@@ -689,7 +689,7 @@ but have **no pedia page**, so pedia-driven work would not serve them at all. Th
    is a user setting changeable mid-game. They are NOT to be folded into `GAMEOPTION_*` on the assumption that
    they are strays. The consequence worth knowing rather than re-deriving: **JSON cannot gate on a live option** —
    nothing static may depend on a value that moves under it.
-   ⚑ A flip DOES announce: `SEVT_GLOBAL_DEFINE_CHANGED` ([event-spine.md](../specs/event-spine.md)) fires from the
+   ⚑ A flip DOES announce: `SEVT_GAME_GLOBAL_DEFINE_ADDED / _REMOVED` ([event-spine.md](../specs/event-spine.md)) fires from the
    three `cvInternalGlobals::setDefine*` setters, so a consumer that needs to answer one can. That closes the
    reactability gap; it does not license gating authored data on a live option, which is a separate ruling and
    unchanged. The writes themselves belong to the contrib stacks' own reworks, not here.

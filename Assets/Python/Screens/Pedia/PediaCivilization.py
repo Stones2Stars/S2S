@@ -2,6 +2,7 @@
 
 from CvPythonExtensions import *
 GC = CyGlobalContext()
+INFO = CyInfo()
 TRNSLTR = CyTranslator()
 
 class PediaCivilization:
@@ -80,7 +81,7 @@ class PediaCivilization:
 		x = 8
 		for iLeader in xrange(GC.getNumLeaderHeadInfos()):
 			if not CvCivilizationInfo.isLeaders(iLeader): continue
-			screen.setImageButtonAt("", Pnl, GC.getLeaderHeadInfo(iLeader).getButton(), x, 4, size, size, eWidJuToLeader, iLeader, -1)
+			screen.setImageButtonAt("", Pnl, INFO.getButton("LEADER_", iLeader), x, 4, size, size, eWidJuToLeader, iLeader, -1)
 			x += size + 8
 
 		# City List

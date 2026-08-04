@@ -119,6 +119,71 @@
 > compiles, runs, and produces a plausible wrong answer, which is why none of them surfaced on its own.
 > ⛔ Symbols, never line numbers — a symbol survives an edit and a line number does not.
 
+- **⛔ CONVERT THE PACKAGES TO THE MAINTAINED SUM — the THREE PLANES**
+  ([DEC-maintained-sum](../../architecture/decisions.md#dec-maintained-sum);
+  [state-repositories.md](../../architecture/state-repositories.md) § THE MAINTAINED SUM; the retired protocol is
+  [superseded-ideas](../../architecture/superseded-ideas.md) #30). The addressing half already exists —
+  `DepositIndex::depositsFor` IS "the fact names the source, the index names its deposits" — so what is missing is
+  the WRITER and two of the three ROUTES.
+  **⛔ CUT FIRST, THEN FILL — do NOT build to keep the current numbers alive.** `CascadeGather::refresh*` is a
+  whole-registry sweep (it asks every building / tech / civic / trait / bonus / religion / corporation whether the
+  owner has it, per mark), which contradicts the spec, so it is cut EARLY and the packages bind CLEAN. Every
+  deposit without a route then reads **ZERO, visibly**, and that census is what drives the rest of this item.
+  `gather*Into` survives as the ORACLE and nothing else.
+  1. **`CvCascadePackage::apply(channel, unit, ±value)`** — a pure add. Today the only writer into a slot is the
+     gather's zero-then-refold; `sourceFlat`/`sourcePercent`/`sourceSum` are rebuild-path READS, not writers.
+  2. **Plane A — the SOURCE route.** `±value` on the source arriving or leaving. ⚑ There is no withdrawal input to
+     audit any more: every fact's direction IS its id, so the route is picked by which event arrived and the payload
+     is read only for HOW MANY ([DEC-facts-name-happenings](../../architecture/decisions.md#dec-facts-name-happenings);
+     [event-spine.md](../../specs/event-spine.md)). ⛔ So a consumer must never re-derive a direction from a payload
+     sign, an old-vs-new id pair or a presence bool — those conventions are gone from the surface, and reintroducing
+     one at a consumer rebuilds the branch the split deleted.
+  3. **Plane B — the COUNT route.** A `count-key → the deposits it scales` reverse index off the compiled deposit
+     index, so a `ContextDict::add(id, ±1)` applies `±value × Δcount` to every deposit scaled on it whose SOURCE is
+     live at that owner (an O(1) `has()` test — this is what keeps the two arrival orders convergent).
+  4. **Plane C — the ATOM route.** `±value` on a condition atom's verdict crossing, over the deposits that atom
+     gates. ⛔ **B and C land TOGETHER or neither** — C is delta-able only because B guarantees no count moves
+     unannounced ([DEC-maintained-sum](../../architecture/decisions.md#dec-maintained-sum)).
+  5. **Retire the staleness protocol** — the mask derivation, the banked-marks bracket, and `CvCascadePackage`'s
+     `CvDerivedCacheSet` member.
+  ⚠ **THE RIDER THE CUT DROPPED, owed by the apply path.** The four `refreshCascadePackage` delegates carried a
+  side effect past their one-line delegation: a MAINTENANCE channel moving at city / empire / team scope also
+  moved the empire's maintenance TOTAL. That obligation is real ([save.md §6](../../specs/save.md): audit a
+  deleted body for riders) and it is exactly "ONE EVENT REACHES BOTH LEVELS" — an apply into a maintenance
+  channel must also apply to the empire's maintenance RECEIVER SUM. ⛔ It does NOT come back as a hand-named
+  cache: the empire total is a receiver SLOT in the player's own package
+  ([state-repositories.md](../../architecture/state-repositories.md) § THE CROSS-SCOPE RECEIVER), which is also
+  what retires `markMaintenanceDirty` and its banned spelling.
+  ⛔ **Build NO per-source decomposition plane and NO upward push** — the receiver re-sums its participating
+  members, and the summing is trivial enough that avoiding it costs more than it saves
+  ([state-repositories.md](../../architecture/state-repositories.md) § THE CROSS-SCOPE RECEIVER). ⚠ That is a
+  measurement question if it ever reopens, never an argument: a turn-time cost on the standing save, attributed
+  to the summing.
+  ⚑ **Start in the corner that is the PLOT package**: the smallest channel set, no percent side (the origin rule),
+  five sources that all announce with old values, no receiver sums, and it exercises the `substrateFlat` segment.
+  Then city, then empire/team.
+- **⛔ SWEEP THE BANNED TERM OUT OF THE CODE** ([DEC-no-staleness-vocabulary](../../architecture/decisions.md#dec-no-staleness-vocabulary)).
+  KEEP only the graphics/interface repaint vocabulary the closed EXE needs and BUG resolves by name
+  (`InterfaceDirtyBits` and the `setDirty`/`setLayoutDirty`/`setFlagDirty`/`setInfoDirty` helpers over it).
+  Everything derived-state goes with its mechanism: `CvDerivedCacheSet`'s `markDirty`/`isDirty`/`markAllDirty`,
+  `markMaintenanceDirty`, `setCommerceDirty`, and the AI re-evaluation flags `AI_setAssignWorkDirty` /
+  `AI_makeAssignWorkDirty` / `AI_setChooseProductionDirty`. ⛔ A surviving derived-state site gets NO synonym —
+  name it for the job it does, or delete it with the mechanism.
+- **⛔ Convert the contexts' `refresh*` functions off whole-block re-derivation** — the same
+  recalculate-instead-of-delta error one plane over ([contexts.md](../../architecture/contexts.md)). `refreshOwnFacts`
+  recomputes every own bit on any substrate fact regardless of which fired, and `refreshAdjacencyFacts` re-runs the
+  8-neighbour `isCoastalLand()` scan the store exists to DELETE — the legacy read path rescheduled from read-time
+  to event-time. The fact SETS the bits it feeds; the adjacency half reads the announcing plot's STORED block
+  rather than walking back through `CvPlot`. ⚠ Do NOT answer it with a hand-written per-event bit mask — declare
+  what each bit READS, beside that bit's own derivation.
+  ⛔ **No context gets a staleness mechanism of any kind on the way out** — no flag, no stamp, no rebuild entry
+  point ([DEC-contexts-are-never-marked](../../architecture/decisions.md#dec-contexts-are-never-marked)).
+- **Fire the plot→city fold on OWNERSHIP, not on the worked-radius relation alone**
+  ([contexts.md](../../architecture/contexts.md)). A plot gaining or losing a city's ownership must add/remove
+  that plot's `CASC_PRED_*` bits from that city's dictionary through the ONE applier
+  (`CvCity::onCityPlotChanged`) — same applier, additional membership fact. ⚠ Until it fires there, every
+  `plots`-target and `per`-predicate deposit is scaled by a count that misses every ownership change, and nothing
+  re-derives it.
 - **⛔ Route every domain through `EnablerKernel::gateSet` — the declared GENERATE→GATE primitive has ZERO
   callers while SIX file-static copies of it exist**, one per domain (`bd_`/`bl_`/`ce_`/`pc_`/`pj_`/`ud_gateSet`).
   The kernel's own header calls these "the single-implementation enabler primitives"; the gate ORDER
@@ -178,23 +243,55 @@
 - **Delete `CvPropertyInfo::getPropertyBuildings`, `m_aPropertyBuildings` and their CURATOR-GAP comment.** Nothing
   reads the getter, and the comment promises a resolution the band model supersedes
   ([enabler.md](../../specs/enabler.md) §3).
-- **Give `CityContext::amenities` a load path and a working removal.** Its only feeder fact is emitted by the
-  dead seed above, so the fold is empty after every load — `isGovernmentCenter`, `getPowerCount`,
-  `isNoUnhappiness` and the health flags all read false. The removal leg is gated on the same empty operating
-  set, so amenities never decrement while additions fire: the dictionary grows monotonically for the life of a
-  game. ⛔ The building leg must ride a fact the CITY emits from its own read, not one the enabler produces —
-  a store that waits on another system's built state is the ordering dependency [contexts.md](../../architecture/contexts.md) bans.
-- **Call `clear()` on the contexts at owner reset.** `CityContext::clear` and `EmpireContext::clear` exist and
-  are never called. `CvCity::reset` resets `m_enabler` three lines away *because a city is recycled out of an
-  `FFreeListTrashArray`* — the identical hazard applies to every context store, and nothing re-derives them.
-- **Cut the legacy per-channel scalar plane on `CvCity`/`CvPlayer`/`CvPlot`, which is still FED from the
-  cascade.** `m_aiYieldRateModifier` takes its value from `getYieldModifier(..., CASC_SCOPE_EMPIRE)` and
-  `m_aiProductionToCommerceModifier` from `getProductionToCommerce(...)` — new data pushed into the old shape, a
-  parallel storage-push-read plane beside the uniform package
-  ([DEC-uniform-cache-shape](../../architecture/decisions.md#dec-uniform-cache-shape)).
-- **Route the facts that are emitted and consumed by nobody** — `SEVT_AREA_TILES_CHANGED` (so `AREA_SIZE` and the
-  coastal read stop drifting), `SEVT_HEADQUARTERS_CHANGED` (which would retire a per-call corporation-registry
-  scan), `SEVT_BUILDING_OBSOLETED`.
+- **Give `CityContext::amenities` a load path and a working removal.** Its feeder is the operate crossing, which
+  the dead seed above is what fires on load — so the fold is empty after every load and `isGovernmentCenter`,
+  `getPowerCount`, `isNoUnhappiness` and the health flags all read false. The removal leg is gated on the same
+  empty operating set, so amenities never decrement while additions fire: the dictionary grows monotonically for
+  the life of a game.
+  ⛔ **The building leg RIDES THE ENABLER'S CROSSING, and that is correct — do not "fix" it by moving the leg onto
+  a fact the city emits from its own read.** The enabler is a SOURCE OF FACTS, never the home of this answer, and
+  the dictionary is the final stopping place ([contexts.md](../../architecture/contexts.md)). The ordering ban
+  applies to a store that RE-DERIVES by reading another system's built set; a store that CONSUMES a delta has no
+  such dependency and builds identically whenever the facts arrive.
+- **⛔ BUILD the city's VICINITY store — it has NO WRITER AT ALL, so `hasVicinityBonus` answers FALSE in every
+  city.** The five tier dictionaries are only ever cleared and read; nothing calls `add` on them anywhere. So
+  every `connection:"vicinity"` requires-atom and every vicinity-gated deposit currently reads false. ⚠ This is
+  not "the tiers fold but carry the wrong keys" — there is no fold.
+  **It lands as TWO dictionaries — one keyed `BONUS_*`, one keyed `CASC_PRED_*`**
+  ([contexts.md](../../architecture/contexts.md), owner), and delta-only from the start: never a fill pass. Both are ordinary `ContextDict`s fed by the plot facts (`SEVT_PLOT_BONUS_ADDED / _REMOVED` /
+  `SEVT_PLOT_OWNER_ADDED / _REMOVED` / `SEVT_PLOT_WORKED_ADDED / _REMOVED` + the network fact) with a declared interest set, ±1 per
+  fact ([DEC-dict-is-a-consumer](../../architecture/decisions.md#dec-dict-is-a-consumer)); `hasVicinityBonus` is a
+  bare `count(bonus) > 0` fetch.
+  ⛔ **They are NOT merged** — the two key spaces are disjoint registries both starting at 0, so one store
+  re-opens the cross-registry id collision the `CLS_` prefix closed (`ContextDict.h`). The objection this answers
+  is the REWALK, never the number of dictionaries.
+  ⚠ Store the ownership tiers as DISJOINT partitions (owned · neutral · foreign) and answer the nested
+  `owned ⊂ owned+neutral ⊂ crossBorder` bands by ADDITION — overlapping tiers double-count on a fold.
+- **Convert `PlotContext`'s `refreshOwnFacts` / `refreshAdjacencyFacts` off whole-block re-derivation** — the fact
+  SETS the bits it feeds ([contexts.md](../../architecture/contexts.md)).
+- **Collapse the per-dictionary plumbing into one mechanism** — owner resolution, dispatch, consumer class and
+  registration are hand-written per family.
+- **Retire `CvDerivedCache` by emptying it, one tenant at a time**
+  ([DEC-contextdict-replaces-derivedcache](../../architecture/decisions.md#dec-contextdict-replaces-derivedcache)).
+- **Emit the RECEIVED line** so the whole event flow is auditable live off `/events`
+  ([event-spine.md](../../specs/event-spine.md) § THE RECEIVED LINE): a consumer announces that it ACTED on a
+  fact, and a DOMAIN fact with no matching received line names a missing consumer route — the one gap form with
+  no other observable signature. ⛔ `DIAGNOSTIC`, never `DOMAIN`.
+- **Collapse the TWO disjoint segment interners** — `modSegmentIntern`/`s_modSegments` and
+  `DepositIndex::internSegment`/`s_segs` intern the same concept in different id-spaces with different slot
+  counts, only one carrying spell-back, and `di_pushFamilies` round-trips ints → string → ints between them
+  ([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation)).
+  ⚠ **Neither is the SEGMENT of "a package is made up of its segments"** — those two intern ADDRESS FRAGMENTS,
+  while a package segment is a named SLICE of a channel total (`CvCascadePackage::substrateFlat` is the one
+  realized instance). One word, two unrelated concepts; do not converge them by name.
+- **Delete `te_applyDelta`'s hand-rolled copy of the membership fold** and route the TECH domain through
+  `EnablerKernel::applyEdges` like every other domain — techs are the largest HAVE axis, so the one domain that
+  bypasses the single writer is the one that matters most
+  ([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation)).
+- **Clamp the enabler's membership refcounts, or make the guard survive the shipped build.** The negative-refcount
+  `FAssertMsg` compiles out of `Release`/`FinalRelease` (`FASSERT_ENABLE` is Assert/Debug/Testing only) and
+  neither changer clamps, so in a shipping build an over-release leaves the enable count negative and the next
+  legitimate acquisition lands at zero — silently absenting the candidate.
 - **Delete `CvCity::doVicinityBonus`** — a per-turn blanket clear plus lazy recompute-on-read beside the
   event-built vicinity store ([DEC-no-self-heal](../../architecture/decisions.md#dec-no-self-heal)). Nothing is
   missing behind it: the maintained store already exists, and this cache's own comment claims a reader that has none.
@@ -220,7 +317,7 @@
 > the data — is severed at four points at once. Fix them together; any one alone leaves it dead, and fixing the
 > seed alone lights up the negative-band defect (below) as a crippling city-wide penalty.
 
-- **`SEVT_PROPERTY_CHANGED` is emitted into the void.** The fact fires from the `CvProperties` mutation choke
+- **`SEVT_PROPERTY_ADDED / _REMOVED` is emitted into the void.** The fact fires from the `CvProperties` mutation choke
   points, but repo-wide the id exists ONLY as an enum entry, a log spelling, and the emitter — **no consumer
   carries a case for it**. So a property value moving never re-checks the bands it crosses.
 - **The receiving machine is built and has zero callers**: `EnablerKernel::onPropertyBandHitActive` and
@@ -258,7 +355,7 @@
   defect, not a naming preference. Re-cut as `cap(ALLOWEDCAP_SELF, <scope>)` — the tally already takes a scope, so
   all four hand-written kind→scope ladders delete.
 - **⛔ Delete `CvDerivedData` — it is a REVIVED KILLED IDEA.** `superseded-ideas.md` #1 records the derived-data
-  repository (`TLazy`/version/dirty aggregation) as killed with an explicit *"don't revive the repository"*, and
+  repository (`TLazy`/version/staleness aggregation) as killed with an explicit *"don't revive the repository"*, and
   the file is back: four empty repositories, members on four game objects, zero tenants, and doc-comments
   teaching ensure-on-read plus a "bounded staleness" periodic rebuild as the sanctioned architecture. It also
   cites a plan doc that does not exist. ⚑ It executes nothing, which is exactly why it is dangerous — it is what
@@ -399,9 +496,7 @@
 - **Cascade computes it, legacy is what consumers read** — the cascade slot beside each is dead and therefore
   unverified: the space-production modifier, the team enemy-war-weariness modifier (whose own comment concedes it
   is "what the legacy accumulator held"), the city production-to-commerce modifier, and the building commerce
-  change. Same for the per-unit plane: `CvUnitResolved`'s header states the legacy accumulators were cut "on the
-  promise of a named gatherer" and that it IS that source — yet they are still serialized and fed, while the
-  resolved air-range slot has no reader.
+  change.
 - **Rule on the revolution mirror.** It is plausibly the sanctioned Python-authoritative mirror, but one leg
   reads CITY scope into an empire accumulator and, unlike every sibling, applies no `/100`. Even if the mirror
   stays, that leg is wrong.
@@ -546,15 +641,10 @@
   ⛔ Leave `getInvisibleType` alone — a live `CvUnit` method, unrelated.
 - Retire the direct `gDLL->logMsg` / BetterBTSAI log-helper call sites and the log-level globals they gate,
   wholesale as each domain migrates onto the spine — never tidied in place.
-- Delete the orphaned `ConstructRequirement` surface and the three stubbed `append*RequirementHelp` renderers.
-  ⚡ No renderer has to land first: the header is included by nothing and the bodies are empty with no callers.
 
 ## Not built yet
 
-- Move the PLOT YIELD PLANE onto the cascade — the whole of it, as ONE cut. `CvPlot`'s legacy per-read walk
-  (`calculateYield` and the `m_aiYield` / `getYield` / `updateYield` cache it feeds) is the hand-maintained plot
-  yield cache the plot's own `CvCascadePackage` + `getYields` already replace; the package and the gather's plot
-  leg are BUILT, so this is a deletion with a consumer sweep, not a machine to design.
+- Convert the PLOT-YIELD AI CALLERS, the residue of that plane's cut.
   ⚠ **`calculateNatureYield` still has its AI callers, and they are NOT a segment re-point.** The genuine
   consumers of the plot's actual substrate value are served; what is left on the legacy walk is AI yield
   arithmetic — the improvement valuations that compute `nature + calculateImprovementYieldChange` (that sum IS
@@ -637,7 +727,7 @@
   ⛔ **Three kinds, and collapsing them is the defect the surface must prevent, not a tidiness question.** A GAME
   OPTION (`GAMEOPTION_*`) is fixed at setup, so JSON may gate on it
   ([DEC-entity-gate](../../architecture/decisions.md#dec-entity-gate)); a CONFIG value is authored data on eras /
-  gamespeeds / handicaps (read from its sources, never cached behind a dirty protocol —
+  gamespeeds / handicaps (read from its sources, never cached behind a staleness protocol —
   [state-repositories.md](../../architecture/state-repositories.md): WORLD is CONFIG); a LIVE option is
   user-changeable **mid-game**, which is why nothing STATIC may depend on one — a value that moves under authored
   data is not something authored data can be gated on. One undifferentiated `getSetting` would erase the
@@ -651,7 +741,7 @@
   to violate rather than remembered.
   ⛔ **Grepping the two apart needs a negative lookbehind** — `MODDERGAMEOPTION_` CONTAINS `GAMEOPTION_`, so a
   naive scan reports every modder option as a game option and silently overstates the second.
-  ⚑ A live-option flip now ANNOUNCES (`SEVT_GLOBAL_DEFINE_CHANGED`), so a consumer that must answer one finally
+  ⚑ A live-option flip now ANNOUNCES (`SEVT_GAME_GLOBAL_DEFINE_ADDED / _REMOVED`), so a consumer that must answer one finally
   can — but that closes the *reactability* hole only. It does not make a live option a legitimate gate for static
   data, and reading "it emits now" as permission to author against one is the misreading to avoid.
   ⚠ HANDICAP is two values, not one, and a single `getHandicap()` silently picks the wrong one half the time: the
@@ -662,8 +752,8 @@
   `CvUnit::concealment()` / `detectionAgainst(methodSkill)` re-walk the unit's info ∪ promotions ∪ combat
   classes on every call, and `getInvisibleType()` reads the INFO alone — so a **promotion-granted method does
   not work at all**, which is the whole reason the method is a skill.
-  ⚑ The dirty triggers already exist and are exactly right: a unit's resolved values dirty ONLY on a promotion
-  or combat-class change (`SEVT_UNIT_PROMOTION_CHANGED` / `SEVT_UNIT_COMBAT_CHANGED`,
+  ⚑ The mark triggers already exist and are exactly right: a unit's resolved values move ONLY on a promotion
+  or combat-class change (`SEVT_UNIT_PROMOTION_ADDED / _REMOVED` / `SEVT_UNIT_COMBAT_ADDED / _REMOVED`,
   [state-repositories.md](../../architecture/state-repositories.md)), and those are precisely the three
   carriers the block gathers over. The CITY side dirties on its building facts.
   ⛔ It is a SECTION, so it cannot ride the `URS_*` resolved table, which gathers modifier-FAMILY entries —
@@ -676,14 +766,14 @@
   player-facing information, not a dead-key cleanup: a unit now loses a promotion without being told which
   condition it lost. ⛔ They do NOT come back as a per-axis walk beside the gate — that rebuilds the legacy
   battery to caption a failure — and the "your building was obsoleted" message,
-  which rides `SEVT_BUILDING_OBSOLETED` (emitted for exactly this, and for logging; it drives no apply) — they
+  which rides `SEVT_CITY_BUILDING_OBSOLETED_ADDED / _REMOVED` (emitted for exactly this, and for logging; it drives no apply) — they
   re-attach to the OPERATE CROSSING fact, never
   re-inlined at a mutation site ([event-spine.md](../../specs/event-spine.md)). Expect the owed list to GROW as
   each legacy mutator is cut; add them together on the facts.
 - Decide WHERE the citizen-assignment re-check is asked for. The mechanism itself is right and stays — the AI
   needs a way to be told the best plots to work may have moved — so this is a CALL-SITE question, never a
   removal. `AI_setAssignWorkDirty` is called from across the engine while `AI_updateAssignWork` re-runs the FULL
-  assignment for every dirty city, so the flips are a turn-time cost in their own right.
+  assignment for every marked city, so the flips are a turn-time cost in their own right.
   ⚖ **It LISTENS TO THE EVENT SPINE, and no AI loop ever touches it (owner)** — a consumer marking off the
   facts, exactly as the player alerts re-attach to the fact rather than being re-inlined at a mutation site
   ([event-spine.md](../../specs/event-spine.md)). So this is a ROUTING job, never a judgement re-made per site.
@@ -841,6 +931,25 @@
 > as you meet it — parking it spends the census budget the rest of the worklist needs. ⛔ Never borrow legacy as
 > a "temporary solution" for a read the library does not answer yet: add the read.
 
+- **⛔ THE PYTHON READ SURFACE DOES NOT GO THROUGH THE CONTEXTS, and that is the whole point of them (owner):**
+  *"it was kind of the point of the rework, to have these contexts, so we no longer had to loop infinitely
+  everywhere, and then we have not actually wired the python to read from the contexts."* Every `CyState` read
+  resolves a `CvCity*` / `CvUnit*` and asks the OBJECT, which is exactly what
+  [DEC-scope-contexts](../../architecture/decisions.md#dec-scope-contexts) forbids — the HAVE axis is asked of
+  the scope's CONTEXT, "never reached ad hoc off the game object".
+  ⚑ **The cost is not style, it is the loops coming back.** A context STORES its aggregate and hands it over, so
+  a possession question is a fetch; asking the object re-derives it. `CityContext` already holds
+  `operatingBuildings()`, `hasVicinityBonus()`, `tradedBonusCount()`, `hasAmenity()`/`amenityCount()`,
+  `power()`, `isCoastal()`, `areaId()`/`areaSize()`, `governmentCenterDistance()`, `isHolyCityAny()` — every one
+  of which the Python surface currently answers the long way or not at all.
+  ⚠ Three hangs came from the same shape on the state plane (a registry swept to rediscover what an entity
+  already holds), which is [DEC-one-reverse-view](../../architecture/decisions.md#dec-one-reverse-view)'s rule
+  one plane over. Re-point `CyState`'s city/plot/empire reads at the contexts; where a context cannot answer,
+  that is a CONTEXT GAP to close by adding the forward ([contexts.md](../../architecture/contexts.md)), never a
+  reason to reach past it.
+  ⚠ UNITS have no context yet (a FUTURE role-specific scope, DEC-scope-contexts), so the unit plane reads the
+  unit's own held containers meanwhile — O(held), never O(registry).
+
 - **WorldBuilder's UNIT editing needs a home on the new surface.** ⚑ `CyUnit` carries the bare zero-`.def` type
   registration (the kept engine→Python direction's carrier, [patterns.md](../../architecture/patterns.md)) and
   nothing more, so `WBUnitScreen` / `CvWBDesc` reach no unit READS. **That is the EXPECTED state of the rework,
@@ -882,19 +991,14 @@
   site that wanted it.
   ⚑ The test is mechanical: a type needs registration iff some engine call site passes or returns it. A wrapper
   whose `DECLARE_PY_WRAPPER` has no call site genuinely needs none.
-- Convert the remaining FONT-GLYPH reads off the deleted info accessors onto the translator's `[ICON_*]` tokens,
-  as each screen is met. ⛔ The glyph is text-plane, not info data, so this never closes by reviving
-  `get<X>Info` ([patterns.md](../../architecture/patterns.md) THE PYTHON READ BOUNDARY) — the token route needs
-  no engine work at all. ⚠ A screen's reads fail only when that screen is first opened, so they surface one at a
-  time rather than at load.
 - Serve the INFO-OBJECT accessor plane. `GC.get<X>Info(id).<method>()` is the dominant remaining Python read, and
   the global context hands out no info objects by design ([DEC-cy-not-fixed]) — so every one of them is an
   AttributeError at FIRST USE, not at import. `CyInfo` answers the generic reads by infotype prefix
   (`getDescription` / `getType` / `getButton`); what is unserved is the per-type tail (`getEra`, `getGridX/Y`,
   `getWorldSize`, `getPrereqAndTech`, `isVisible`, `getColorType`, `getActionInfoIndex`, …).
-  ⛔ `getChar` is NOT part of this — the font glyph is TEXT-plane and the translator already publishes each one as
-  an `[ICON_*]` token ([patterns.md](../../architecture/patterns.md) THE PYTHON READ BOUNDARY), so it never closes
-  by reviving an info accessor.
+  ⛔ `getChar` is NOT part of this — the font glyph is TEXT-plane and is served off `CyGameTextMgr`
+  ([patterns.md](../../architecture/patterns.md) THE PYTHON READ BOUNDARY), so it never closes by reviving an
+  info accessor.
   ⚑ Re-derive the demand with `python Tools/census-python-boundary.py`; the accessor histogram is what ranks the
   work, and the four generic methods dominate it.
 - Serve the free-function map helpers (plot direction / XY / distance / step distance). Their registrar went with
@@ -938,7 +1042,6 @@
   `EDGEF_RELATED` ([DEC-one-reverse-view](../../architecture/decisions.md#dec-one-reverse-view)), never a
   database scan; a promotion's per-unit lines read `CvPromotionAccrual::sum`, never a re-rolled rung loop
   ([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation)).
-- Re-point the unit consumer getters onto `resolvedValue()`.
 - Re-point the unit power-value plane's readers.
 
 ## Triggers / grants

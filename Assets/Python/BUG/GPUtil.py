@@ -25,6 +25,7 @@ from CvPythonExtensions import *
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 STATE = CyState()
 GAME = CyGame()
 ENABLER = CyEnabler()
@@ -60,7 +61,7 @@ def getUnitIcon(iUnit):
 	for iUnitX, char in g_gpUnitTypes:
 		if iUnit == iUnitX:
 			return char
-	print "[WARN] GPUtil.getUnitIcon\n\tNo GP icon for " + GC.getUnitInfo(iUnit).getType()
+	print "[WARN] GPUtil.getUnitIcon\n\tNo GP icon for " + INFO.getType("UNIT_", iUnit)
 	return unichr(8862) # Generic great person symbol
 
 def getDisplayCity():
@@ -183,7 +184,7 @@ def getGreatPeopleText(iPlayer, iCityId, iGPTurns, iGPBarWidth, bGPBarTypesNone,
 			if bGPBarTypesOne or iLength == 1:
 
 				iPercent, iUnit = lPercents[0]
-				name = GC.getUnitInfo(iUnit).getDescription()
+				name = INFO.getDescription("UNIT_", iUnit)
 				if iGPTurns:
 
 					if bIncludeCityName:

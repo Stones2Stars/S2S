@@ -9,6 +9,7 @@ from CvPythonExtensions import *
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -76,7 +77,7 @@ class UnitUpgradesGraph:
 		return GC.getNumUnitInfos()
 
 	def getPromotionType(self, e):
-		return GC.getPromotionInfo(e).getType()
+		return INFO.getType("PROMOTION_", e)
 
 	def getGraphEdges(self, graph):
 		for iUnitA in graph.iterkeys():
@@ -86,10 +87,10 @@ class UnitUpgradesGraph:
 				self.addUpgradePath(graph, iUnitA, iUnitB)
 
 	def placeOnScreen(self, screen, unit, xPos, yPos):
-		screen.setImageButtonAt(self.pediaScreen.getNextWidgetName(), self.upgradesList, GC.getUnitInfo(unit).getButton(), xPos, yPos, self.buttonSize, self.buttonSize, WidgetTypes.WIDGET_PEDIA_JUMP_TO_UNIT, unit, 1)
+		screen.setImageButtonAt(self.pediaScreen.getNextWidgetName(), self.upgradesList, INFO.getButton("UNIT_", unit), xPos, yPos, self.buttonSize, self.buttonSize, WidgetTypes.WIDGET_PEDIA_JUMP_TO_UNIT, unit, 1)
 
 	def unitToString(self, unit):
-		return GC.getUnitInfo(unit).getDescription() + ":%d"%(unit, )
+		return INFO.getDescription("UNIT_", unit) + ":%d"%(unit, )
 
 	################## Stuff to generate Unit Upgrade Graph ##################
 
@@ -178,7 +179,7 @@ class UnitUpgradesGraph:
 							continue
 
 						if self.bUnit:
-							if GC.getUnitInfo(unit).getType() in self.splitOutgoing:
+							if INFO.getType("UNIT_", unit) in self.splitOutgoing:
 								continue
 						elif self.bBuilding:
 							if GC.getBuildingInfo(unit) in self.BuildingSplitOutgoing:
@@ -207,7 +208,7 @@ class UnitUpgradesGraph:
 							continue
 
 						if self.bUnit:
-							if GC.getUnitInfo(unit).getType() in self.splitIncoming:
+							if INFO.getType("UNIT_", unit) in self.splitIncoming:
 								continue
 						elif self.bBuilding:
 							if GC.getBuildingInfo(unit) in self.BuildingSplitIncoming:
@@ -537,7 +538,7 @@ class PromotionsGraph(UnitUpgradesGraph):
 		return GC.getNumPromotionInfos()
 
 	def getPromotionType(self, e):
-		return GC.getPromotionInfo(e).getType()
+		return INFO.getType("PROMOTION_", e)
 
 	def getGraphEdges(self, graph):
 		for unitA in graph.iterkeys():
@@ -549,10 +550,10 @@ class PromotionsGraph(UnitUpgradesGraph):
 			self.addUpgradePath(graph, unitC, unitA)
 
 	def unitToString(self, unit):
-		return GC.getPromotionInfo(unit).getDescription() + ":%d"%(unit, )
+		return INFO.getDescription("PROMOTION_", unit) + ":%d"%(unit, )
 
 	def placeOnScreen(self, screen, unit, xPos, yPos):
-		screen.setImageButtonAt(self.pediaScreen.getNextWidgetName(), self.upgradesList, GC.getPromotionInfo(unit).getButton(), xPos, yPos, self.buttonSize, self.buttonSize, WidgetTypes.WIDGET_PEDIA_JUMP_TO_PROMOTION, unit, 1)
+		screen.setImageButtonAt(self.pediaScreen.getNextWidgetName(), self.upgradesList, INFO.getButton("PROMOTION_", unit), xPos, yPos, self.buttonSize, self.buttonSize, WidgetTypes.WIDGET_PEDIA_JUMP_TO_PROMOTION, unit, 1)
 
 
 class BuildingsGraph(UnitUpgradesGraph):
@@ -618,7 +619,7 @@ class BuildingsGraph(UnitUpgradesGraph):
 				self.addUpgradePath(graph, buildingA, numB)
 
 	def unitToString(self, unit):
-		return GC.getBuildingInfo(unit).getDescription() + ":%d"%(unit, )
+		return INFO.getDescription("BUILDING_", unit) + ":%d"%(unit, )
 
 	def placeOnScreen(self, screen, unit, xPos, yPos):
-		screen.setImageButtonAt(self.pediaScreen.getNextWidgetName(), self.upgradesList, GC.getBuildingInfo(unit).getButton(), xPos, yPos, self.buttonSize, self.buttonSize, WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, unit, 1)
+		screen.setImageButtonAt(self.pediaScreen.getNextWidgetName(), self.upgradesList, INFO.getButton("BUILDING_", unit), xPos, yPos, self.buttonSize, self.buttonSize, WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, unit, 1)

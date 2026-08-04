@@ -168,7 +168,6 @@ public:
 	// on every scoped item ([DEC-uniform-cache-shape]); marked ONLY by the modifier consumer's derived masks.
 	const CvCascadePackage<CvPlot>& getCascadePackage() const { return m_cascadePackage; }
 	// The package's refresh delegate (the CvDerivedCacheSet contract) -- delegates to the ONE gather.
-	void refreshCascadePackage(int64_t iMask) const;
 
 	// THE PLOT'S GROUP READ SURFACE -- the GAME-OBJECT read role's answer to "what do I HAVE, right now?"
 	// (patterns.md § THE TWO READ ROLES), one getter per modifier FAMILY the PLOT scope carries channels of

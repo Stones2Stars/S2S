@@ -11,11 +11,13 @@ import HandleInputUtil
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
 
+TEXT = CyGameTextMgr()
 iChange = 1
 iCopyType = 0
 iOwnerType = 0
@@ -160,7 +162,7 @@ class WBUnitScreen:
 
 		self.listUnitAI = listUnitAI = []
 		for i in xrange(UnitAITypes.NUM_UNITAI_TYPES):
-			sText = GC.getUnitAIInfo(i).getDescription()
+			sText = INFO.getDescription("UNITAI_", i)
 			sList = ""
 			while len(sText):
 				sText = sText[sText.find("_") +1:]
@@ -289,7 +291,7 @@ class WBUnitScreen:
 		screen.addTableControlGFC("MissionInput", 1, iX, iY, iWidth, iHeight, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD)
 		screen.setTableColumnHeader("MissionInput", 0, "", iWidth)
 
-		sMissionType = GC.getMissionInfo(iMissionType).getType()
+		sMissionType = INFO.getType("MISSION_", iMissionType)
 		screen.hide("MissionInput")
 		if sMissionType in self.lSelectableMissions:
 			screen.show("MissionInput")
@@ -324,12 +326,12 @@ class WBUnitScreen:
 			iTech = self.currentUnit.getDiscoveryTech()
 			if iTech > -1:
 				iRow = screen.appendTableRow("MissionInput")
-				screen.setTableText("MissionInput", 0, iRow, "<font=3>" + GC.getTechInfo(iTech).getDescription(), GC.getTechInfo(iTech).getButton(), WidgetTypes.WIDGET_PYTHON, 7871, iTech, 1<<0)
+				screen.setTableText("MissionInput", 0, iRow, "<font=3>" + INFO.getDescription("TECH_", iTech), INFO.getButton("TECH_", iTech), WidgetTypes.WIDGET_PYTHON, 7871, iTech, 1<<0)
 				iRow = screen.appendTableRow("MissionInput")
-				sText = u"%c %d / %d" %(GC.getCommerceInfo(CommerceTypes.COMMERCE_RESEARCH).getChar(), GC.getTeam(self.currentUnit.getTeam()).getResearchProgress(iTech), GC.getTeam(self.currentUnit.getTeam()).getResearchCost(iTech))
+				sText = u"%c %d / %d" %(TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_RESEARCH), GC.getTeam(self.currentUnit.getTeam()).getResearchProgress(iTech), GC.getTeam(self.currentUnit.getTeam()).getResearchCost(iTech))
 				screen.setTableText("MissionInput", 0, iRow, "<font=3>" + sText, "", WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<0)
 				iRow = screen.appendTableRow("MissionInput")
-				sText = u"%c <color=128,255,28>%+d" %(GC.getCommerceInfo(CommerceTypes.COMMERCE_RESEARCH).getChar(), self.currentUnit.getDiscoverResearch(iTech))
+				sText = u"%c <color=128,255,28>%+d" %(TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_RESEARCH), self.currentUnit.getDiscoverResearch(iTech))
 				screen.setTableText("MissionInput", 0, iRow, "<font=3>" + sText, "", WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<0)
 
 		elif sMissionType == "MISSION_GREAT_WORK":
@@ -337,13 +339,13 @@ class WBUnitScreen:
 			if self.currentPlot.isCity():
 				pCity = self.currentPlot.getPlotCity()
 				iRow = screen.appendTableRow("MissionInput")
-				sText = u"%c %s" %(GC.getCommerceInfo(CommerceTypes.COMMERCE_CULTURE).getChar(), GC.getCultureLevelInfo(pCity.getCultureLevel()).getDescription())
+				sText = u"%c %s" %(TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_CULTURE), GC.getCultureLevelInfo(pCity.getCultureLevel()).getDescription())
 				screen.setTableText("MissionInput", 0, iRow, "<font=3>" + sText, "", WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<0)
 				iRow = screen.appendTableRow("MissionInput")
-				sText = u"%c %d / %d" %(GC.getCommerceInfo(CommerceTypes.COMMERCE_CULTURE).getChar(), pCity.getCulture(pCity.getOwner()), pCity.getCultureThreshold())
+				sText = u"%c %d / %d" %(TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_CULTURE), pCity.getCulture(pCity.getOwner()), pCity.getCultureThreshold())
 				screen.setTableText("MissionInput", 0, iRow, "<font=3>" + sText, "", WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<0)
 				iRow = screen.appendTableRow("MissionInput")
-				sText = u"%c <color=128,255,28>%+d" %(GC.getCommerceInfo(CommerceTypes.COMMERCE_CULTURE).getChar(), self.currentUnit.getGreatWorkCulture(self.currentPlot))
+				sText = u"%c <color=128,255,28>%+d" %(TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_CULTURE), self.currentUnit.getGreatWorkCulture(self.currentPlot))
 				screen.setTableText("MissionInput", 0, iRow, "<font=3>" + sText, "", WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<0)
 
 		elif sMissionType == "MISSION_HURRY":
@@ -353,18 +355,18 @@ class WBUnitScreen:
 				iRow = screen.appendTableRow("MissionInput")
 				if pCity.isProductionBuilding():
 					iBuilding = pCity.getProductionBuilding()
-					screen.setTableText("MissionInput", 0, iRow, "<font=3>" + GC.getBuildingInfo(iBuilding).getDescription(), GC.getBuildingInfo(iBuilding).getButton(), WidgetTypes.WIDGET_PYTHON, 7870, iBuilding, 1<<0)
+					screen.setTableText("MissionInput", 0, iRow, "<font=3>" + INFO.getDescription("BUILDING_", iBuilding), INFO.getButton("BUILDING_", iBuilding), WidgetTypes.WIDGET_PYTHON, 7870, iBuilding, 1<<0)
 				elif pCity.isProductionProject():
 					iProject = pCity.getProductionProject()
-					screen.setTableText("MissionInput", 0, iRow, "<font=3>" + GC.getProjectInfo(iProject).getDescription(), GC.getProjectInfo(iProject).getButton(), WidgetTypes.WIDGET_PYTHON, 6785, iProject, 1<<0)
+					screen.setTableText("MissionInput", 0, iRow, "<font=3>" + INFO.getDescription("PROJECT_", iProject), INFO.getButton("PROJECT_", iProject), WidgetTypes.WIDGET_PYTHON, 6785, iProject, 1<<0)
 				elif pCity.isProductionUnit():
 					iUnit = pCity.getProductionUnit()
-					screen.setTableText("MissionInput", 0, iRow, "<font=3>" + GC.getUnitInfo(iUnit).getDescription(), GC.getUnitInfo(iUnit).getButton(), WidgetTypes.WIDGET_PYTHON, 8202, iUnit, 1<<0)
+					screen.setTableText("MissionInput", 0, iRow, "<font=3>" + INFO.getDescription("UNIT_", iUnit), INFO.getButton("UNIT_", iUnit), WidgetTypes.WIDGET_PYTHON, 8202, iUnit, 1<<0)
 				iRow = screen.appendTableRow("MissionInput")
-				sText = u"%c %d / %d" %(GC.getYieldInfo(YieldTypes.YIELD_PRODUCTION).getChar(), pCity.getProductionProgress(), pCity.getProductionNeeded())
+				sText = u"%c %d / %d" %(TEXT.getSymbolChar("YIELD_", YieldTypes.YIELD_PRODUCTION), pCity.getProductionProgress(), pCity.getProductionNeeded())
 				screen.setTableText("MissionInput", 0, iRow, "<font=3>" + sText, "", WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<0)
 				iRow = screen.appendTableRow("MissionInput")
-				sText = u"%c <color=128,255,28>%+d" %(GC.getYieldInfo(YieldTypes.YIELD_PRODUCTION).getChar(), self.currentUnit.getHurryProduction(self.currentPlot))
+				sText = u"%c <color=128,255,28>%+d" %(TEXT.getSymbolChar("YIELD_", YieldTypes.YIELD_PRODUCTION), self.currentUnit.getHurryProduction(self.currentPlot))
 				screen.setTableText("MissionInput", 0, iRow, "<font=3>" + sText, "", WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<0)
 
 	def placeDirection(self):
@@ -612,8 +614,8 @@ class WBUnitScreen:
 			screen.setTableText(ID, 2, iRow, "<font=3>" + sColor + sText + "</font></color>", unitX.getButton(), WidgetTypes.WIDGET_PYTHON, 8300 + i[0], i[1], 1<<0)
 			iLeader = pPlayerX.getLeaderType()
 			iCiv = unitX.getCivilizationType()
-			screen.setTableText(ID, 0, iRow, "", GC.getCivilizationInfo(iCiv).getButton(), WidgetTypes.WIDGET_PYTHON, 7872, iCiv, 1<<0 )
-			screen.setTableText(ID, 1, iRow, "", GC.getLeaderHeadInfo(iLeader).getButton(), WidgetTypes.WIDGET_PYTHON, 7876, iLeader, 1<<0 )
+			screen.setTableText(ID, 0, iRow, "", INFO.getButton("CIVILIZATION_", iCiv), WidgetTypes.WIDGET_PYTHON, 7872, iCiv, 1<<0 )
+			screen.setTableText(ID, 1, iRow, "", INFO.getButton("LEADER_", iLeader), WidgetTypes.WIDGET_PYTHON, 7876, iLeader, 1<<0 )
 
 
 	def placeCargo(self):
@@ -783,7 +785,7 @@ class WBUnitScreen:
 		return 0
 
 	def doMission(self):
-		sType = GC.getMissionInfo(iMissionType).getType()
+		sType = INFO.getType("MISSION_", iMissionType)
 
 		iData2 = -1
 		if sType == "MISSION_MOVE_TO_UNIT": return 2

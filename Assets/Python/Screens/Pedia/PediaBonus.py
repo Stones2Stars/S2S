@@ -2,8 +2,10 @@
 
 from CvPythonExtensions import *
 GC = CyGlobalContext()
+INFO = CyInfo()
 TRNSLTR = CyTranslator()
 
+TEXT = CyGameTextMgr()
 class PediaBonus:
 
 	def __init__(self, parent, H_BOT_ROW):
@@ -146,8 +148,8 @@ class PediaBonus:
 				if iBonusProductionModifier:
 					aAffectedUnits.append((iBonusProductionModifier, iUnit))
 		# Main Panel
-		szBonusChar = u'%c' % CvTheBonusInfo.getChar()
-		szBonusName = szBonusChar + " " + CvTheBonusInfo.getDescription() + " " + szBonusChar
+		szBonusChar = u'%c' % TEXT.getSymbolChar("BONUS_", iTheBonus)
+		szBonusName = szBonusChar + " " + INFO.getDescription("BONUS_", iTheBonus) + " " + szBonusChar
 		screen.setText(aName(), "", szfontEdge + szBonusName, 1<<0, X_COL_1, 0, 0, FontTypes.TITLE_FONT, eWidGen, 0, 0)
 		Pnl = aName()
 		screen.addPanel(Pnl, "", "", False, False, X_COL_1 - 3, Y_TOP_ROW_1 + 2, W_COL_1 + 8, H_TOP_ROW + 2, PanelStyles.PANEL_STYLE_MAIN)
@@ -205,23 +207,23 @@ class PediaBonus:
 				childPanelName = aName()
 				screen.attachPanel(panelName, childPanelName, "", "", True, True, ePanelEmpty)
 				screen.attachLabel(childPanelName, "", szfont4b + TRNSLTR.getText("TXT_KEY_PEDIA_BONUS_APPEARANCE_AND_TRADE", ()))
-				screen.attachImageButton(childPanelName, "", GC.getTechInfo(iRevealTech).getButton(), enumBS, eWidJuToTech, iRevealTech, 2, False)
+				screen.attachImageButton(childPanelName, "", INFO.getButton("TECH_", iRevealTech), enumBS, eWidJuToTech, iRevealTech, 2, False)
 			else:
 				if iRevealTech != -1:
 					childPanelName = aName()
 					screen.attachPanel(panelName, childPanelName, "", "", True, True, ePanelEmpty)
 					screen.attachLabel(childPanelName, "", szfont4b + TRNSLTR.getText("TXT_KEY_PEDIA_BONUS_APPEARANCE", ()))
-					screen.attachImageButton(childPanelName, "", GC.getTechInfo(iRevealTech).getButton(), enumBS, eWidJuToTech, iRevealTech, 2, False)
+					screen.attachImageButton(childPanelName, "", INFO.getButton("TECH_", iRevealTech), enumBS, eWidJuToTech, iRevealTech, 2, False)
 				if iEnableTech != -1:
 					childPanelName = aName()
 					screen.attachPanel(panelName, childPanelName, "", "", True, True, ePanelEmpty)
 					screen.attachLabel(childPanelName, "", szfont4b + TRNSLTR.getText("TXT_KEY_PEDIA_BONUS_TRADE", ()))
-					screen.attachImageButton(childPanelName, "", GC.getTechInfo(iEnableTech).getButton(), enumBS, eWidJuToTech, iEnableTech, 2, False)
+					screen.attachImageButton(childPanelName, "", INFO.getButton("TECH_", iEnableTech), enumBS, eWidJuToTech, iEnableTech, 2, False)
 			if iObsoleteTech != -1:
 				childPanelName = aName()
 				screen.attachPanel(panelName, childPanelName, "", "", True, True, ePanelEmpty)
 				screen.attachLabel(childPanelName, "", szfont4b + TRNSLTR.getText("TXT_KEY_PEDIA_BONUS_OBSOLETE", ()))
-				screen.attachImageButton(childPanelName, "", GC.getTechInfo(iObsoleteTech).getButton(), enumBS, eWidJuToTech, iObsoleteTech, 2, False)
+				screen.attachImageButton(childPanelName, "", INFO.getButton("TECH_", iObsoleteTech), enumBS, eWidJuToTech, iObsoleteTech, 2, False)
 		# Improvement
 		aImpList = []
 		if bMapBonus:
@@ -239,7 +241,7 @@ class PediaBonus:
 							szYield += " <color=255,0,0,255>"
 						else:
 							szYield += " <color=0,230,0,255>"
-						szYield += str(iYieldChange) + (u'%c' % (GC.getYieldInfo(k).getChar()))
+						szYield += str(iYieldChange) + (u'%c' % (TEXT.getSymbolChar("YIELD_", k)))
 				if szYield:
 					aImpList.append((iImprovement,  szfont3b + szYield))
 		if aSourceOfBonus or aImpList:
@@ -271,12 +273,12 @@ class PediaBonus:
 				screen.addPanel(impPanel, szImp, "", False, True, X_COL_1, Y_TOP_ROW_2, W_PEDIA_PAGE, H_BOT_ROW + 16, ePanelBlue50)
 			if aSourceOfBonus:
 				for i, iBuilding in enumerate(aSourceOfBonus):
-					screen.attachImageButton(sobPanel, "", GC.getBuildingInfo(iBuilding).getButton(), enumGBS, eWidJuToBuilding, iBuilding, 1, False)
+					screen.attachImageButton(sobPanel, "", INFO.getButton("BUILDING_", iBuilding), enumGBS, eWidJuToBuilding, iBuilding, 1, False)
 			if aImpList:
 				for i in xrange(len(aImpList)):
 					childPanelName = aName()
 					screen.attachPanel(impPanel, childPanelName, "", "", True, True, ePanelEmpty)
-					screen.attachImageButton(childPanelName, "", GC.getImprovementInfo(aImpList[i][0]).getButton(), enumGBS, eWidJuToImprove, aImpList[i][0], 1, False)
+					screen.attachImageButton(childPanelName, "", INFO.getButton("IMPROVEMENT_", aImpList[i][0]), enumGBS, eWidJuToImprove, aImpList[i][0], 1, False)
 					screen.attachLabel(childPanelName, "", aImpList[i][1])
 		else:
 			Y_TOP_ROW_3 -= H_BOT_ROW + 16
@@ -292,7 +294,7 @@ class PediaBonus:
 			screen.addPanel(panelName, szBuildingsEnabled, "", False, True, X_COL_1, Y_BOT_ROW_1, W_PEDIA_PAGE, H_BOT_ROW, ePanelBlue50)
 
 			for iBuilding in aNeededByBuildings:
-				screen.attachImageButton(panelName, "", GC.getBuildingInfo(iBuilding).getButton(), enumGBS, eWidJuToBuilding, iBuilding, 1, False)
+				screen.attachImageButton(panelName, "", INFO.getButton("BUILDING_", iBuilding), enumGBS, eWidJuToBuilding, iBuilding, 1, False)
 
 			if aVicinityBuildings:
 				szBracketL = ""
@@ -303,7 +305,7 @@ class PediaBonus:
 				if szBracketL:
 					screen.attachLabel(panelName, "", szBracketL)
 				for iBuilding in aVicinityBuildings:
-					screen.attachImageButton(panelName, "", GC.getBuildingInfo(iBuilding).getButton(), enumGBS, eWidJuToBuilding, iBuilding, 1, False)
+					screen.attachImageButton(panelName, "", INFO.getButton("BUILDING_", iBuilding), enumGBS, eWidJuToBuilding, iBuilding, 1, False)
 				if szBracketR:
 					screen.attachLabel(panelName, "", szBracketR)
 		else:
@@ -315,7 +317,7 @@ class PediaBonus:
 			panelName = aName()
 			screen.addPanel(panelName, TRNSLTR.getText("TXT_KEY_PEDIA_UNITS_ENABLED", ()), "", False, True, X_COL_1, Y_BOT_ROW_2, W_PEDIA_PAGE, H_BOT_ROW, ePanelBlue50)
 			for iUnit in aNeededByUnits:
-				screen.attachImageButton(panelName, "", GC.getUnitInfo(iUnit).getButton(), enumGBS, eWidJuToUnit, iUnit, 1, False)
+				screen.attachImageButton(panelName, "", INFO.getButton("UNIT_", iUnit), enumGBS, eWidJuToUnit, iUnit, 1, False)
 		else:
 			H_MID += H_BOT_ROW
 			Y_BOT_ROW_3 += H_BOT_ROW
@@ -349,11 +351,11 @@ class PediaBonus:
 				screen.addPanel(unitPanel, szUnit, "", False, True, X_COL_1, Y_BOT_ROW_3, W_PEDIA_PAGE, H_BOT_ROW, ePanelBlue50)
 			if aAffectedBuildings:
 				for iBuilding in aAffectedBuildings:
-					screen.attachImageButton(builPanel, "", GC.getBuildingInfo(iBuilding).getButton(), enumGBS, eWidJuToBuilding, iBuilding, 1, False)
+					screen.attachImageButton(builPanel, "", INFO.getButton("BUILDING_", iBuilding), enumGBS, eWidJuToBuilding, iBuilding, 1, False)
 			if aAffectedUnits:
 				szBracketL = szfont4b + " {"
 				szBracketR = szfont4b + "} "
-				szChar = u'%c' %(GC.getYieldInfo(YieldTypes.YIELD_PRODUCTION).getChar())
+				szChar = u'%c' %(TEXT.getSymbolChar("YIELD_", YieldTypes.YIELD_PRODUCTION))
 				aAffectedUnits.sort()
 				test = 0
 				for i, entry in enumerate(aAffectedUnits):
@@ -369,7 +371,7 @@ class PediaBonus:
 						szTxt += str(iModifier) + "%" + szChar
 						screen.attachLabel(unitPanel, "", szTxt)
 						test = iModifier
-					screen.attachImageButton(unitPanel, "", GC.getUnitInfo(iUnit).getButton(), enumGBS, eWidJuToUnit, iUnit, 1, False)
+					screen.attachImageButton(unitPanel, "", INFO.getButton("UNIT_", iUnit), enumGBS, eWidJuToUnit, iUnit, 1, False)
 				screen.attachLabel(unitPanel, "", szBracketR)
 		else:
 			H_MID += H_BOT_ROW

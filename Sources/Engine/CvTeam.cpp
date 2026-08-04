@@ -39,25 +39,6 @@
 #include "CvInfoKinds.h"                // the family + kind vocabulary the group reads walk
 #include "Data/CvInfoValuation.h"       // realizedAtTeam -- the ONE cross-scope roll-up
 
-// The TEAM-scope cascade package's refresh delegate -- the one-line delegation to the ONE gather
-// ([DEC-single-implementation]; see CvCascadeGather).
-void CvTeam::refreshCascadePackage(int64_t iMask) const
-{
-	CascadeGather::refreshTeam(*this, iMask);
-	// A TEAM-scope maintenance percent reaches every member's cities the same way -- mark each member's total.
-	if ((iMask & CascadeChannelRegistry::scopeFamilyMask(CASC_SCOPE_TEAM, MODFAM_MAINTENANCE)) != 0)
-	{
-		for (int iPlayer = 0; iPlayer < MAX_PC_PLAYERS; ++iPlayer)
-		{
-			const CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iPlayer);
-			if (kPlayer.isAlive() && kPlayer.getTeam() == getID())
-			{
-				kPlayer.markMaintenanceDirty();
-			}
-		}
-	}
-}
-
 // The capability union's refresh delegate -- the one-line delegation to the ONE derivation
 // ([DEC-single-implementation]; see CascadeCapabilities::refreshInto, which is also the endpoint oracle).
 // iMask is unused: the union is a whole-cache dirty/clean user, so a rebuild always redefines every field
@@ -233,8 +214,8 @@ void CvTeam::reset(TeamTypes eID, bool bConstructorCall)
 	int iI, iJ;
 
 	m_dataRepository.reset();
-	// bind the TEAM-scope cascade package (all-dirty from bind: a loaded/new team recomputes on first read)
-	m_cascadePackage.bind(CASC_SCOPE_TEAM, this, &CvTeam::refreshCascadePackage, -1, (int)eID);
+	// bind the TEAM-scope cascade package. It starts EMPTY and is filled ONLY by the facts ([DEC-maintained-sum]).
+	m_cascadePackage.bind(CASC_SCOPE_TEAM, -1, (int)eID);
 	// bind the capability union (all-dirty from bind: the first query derives it from current HAVE)
 	m_cascadeTeamCaps.set.bind(this, &CvTeam::cascadeRefreshCaps);
 
@@ -2971,7 +2952,14 @@ void CvTeam::changeNumMembers(int iChange)
 		// #430 event spine: the `TEAM` counter token reads this COUNT itself (EmpireContext::teamMemberCount), so
 		// there is no derived verdict to cross -- every nonzero change is one state change. The callers are player
 		// init and setTeam (a member joining or leaving), never a per-turn tick.
-		emitTeamMembersChanged((int)getID(), m_iNumMembers, iChange);
+		if (iChange > 0)
+	{
+		emitTeamMemberAdded((int)getID(), iChange);
+	}
+	else
+	{
+		emitTeamMemberRemoved((int)getID(), -iChange);
+	}
 	}
 }
 
@@ -3950,14 +3938,6 @@ void CvTeam::setVassal(TeamTypes eIndex, bool bNewValue, bool bCapitulated)
 			m_bCapitulated = false;
 		}
 
-		for (int i = 0; i < MAX_PC_PLAYERS; i++)
-		{
-			if (GET_PLAYER((PlayerTypes)i).isAliveAndTeam(eIndex))
-			{
-				GET_PLAYER((PlayerTypes)i).markMaintenanceDirty();
-			}
-		}
-
 		if (GC.getGame().isFinalInitialized() && !gDLL->GetWorldBuilderMode())
 		{
 			CvEventReporter::getInstance().vassalState(eIndex, getID(), bNewValue);
@@ -4208,7 +4188,14 @@ void CvTeam::changeProjectCount(ProjectTypes eIndex, int iChange)
 		{
 			if (GET_PLAYER((PlayerTypes)iMemberIndex).isAlive() && GET_PLAYER((PlayerTypes)iMemberIndex).getTeam() == getID())
 			{
-				emitProjectChanged(iMemberIndex, (int)eIndex, iChange);
+				if (iChange > 0)
+	{
+		emitEmpireProjectAdded(iMemberIndex, (int)eIndex, iChange);
+	}
+	else
+	{
+		emitEmpireProjectRemoved(iMemberIndex, (int)eIndex, -iChange);
+	}
 			}
 		}
 
@@ -4782,7 +4769,14 @@ void CvTeam::setHasTech(TechTypes eTech, bool bNewValue, PlayerTypes ePlayer, bo
 		}
 		processTech(eTech, iChange, bAnnounce);
 		// #430 event spine: broad tech-changed event on the repeat-tech (e.g. Future Tech) count change path.
-		emitTechChanged((int)ePlayer, (int)eTech, bNewValue);
+		if (bNewValue)
+	{
+		emitEmpireTechAdded((int)ePlayer, (int)eTech);
+	}
+	else
+	{
+		emitEmpireTechRemoved((int)ePlayer, (int)eTech);
+	}
 		return;
 	}
 
@@ -4808,7 +4802,14 @@ void CvTeam::setHasTech(TechTypes eTech, bool bNewValue, PlayerTypes ePlayer, bo
 	m_pabHasTech[eTech] = bNewValue;
 	// #430 event spine: broad tech-changed event (any set, gain or loss) -- past the no-change guard, after commit.
 	// This is the ADDITIONAL broad emit; the SEVT_TECH_ACQUIRED first-discoverer emit below stays separate.
-	emitTechChanged((int)ePlayer, (int)eTech, bNewValue);
+	if (bNewValue)
+	{
+		emitEmpireTechAdded((int)ePlayer, (int)eTech);
+	}
+	else
+	{
+		emitEmpireTechRemoved((int)ePlayer, (int)eTech);
+	}
 
 	for (int iI = 0; iI < GC.getMap().numPlots(); iI++)
 	{
@@ -5827,7 +5828,7 @@ void CvTeam::read(FDataStreamBase* pStream)
 	// hangs on -- is only valid from this line on, reset() having cleared it. The count IS the delta (old = 0).
 	if (m_iNumMembers > 0)
 	{
-		emitTeamMembersChanged((int)m_eID, m_iNumMembers, m_iNumMembers);
+		emitTeamMemberAdded((int)m_eID, m_iNumMembers);
 	}
 
 	WRAPPER_READ_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_aiStolenVisibilityTimer);

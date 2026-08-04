@@ -669,7 +669,7 @@ def playerCityLost(CyPlayer, CyCity, bConquest = True):
 	if CyPlayer.isNPC() or CyPlayer.getNumCities() < 1:
 		return
 
-	revIdxChange = (GAME.getGameTurn() - CyCity.getGameTurnAcquired()) * 100.0 / GC.getGameSpeedInfo(GAME.getGameSpeedType()).getSpeedPercent()
+	revIdxChange = (GAME.getGameTurn() - CyCity.getGameTurnAcquired()) * 100.0 / GAME.getSpeedPercent()
 	revIdxChange += CyCity.getHighestPopulation()
 	revIdxChange *= CyCity.plot().calculateCulturePercent(CyPlayer.getID()) / 100.0
 

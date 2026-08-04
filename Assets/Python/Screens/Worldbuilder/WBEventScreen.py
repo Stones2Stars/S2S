@@ -9,6 +9,7 @@ import WBInfoScreen
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -74,7 +75,7 @@ class WBEventScreen:
 
 		lEvents = []
 		for i in xrange(GC.getNumEventTriggerInfos()):
-			sEvent = GC.getEventTriggerInfo(i).getType()[13:]
+			sEvent = INFO.getType("EVENTTRIGGER_", i)[13:]
 			sEvent = sEvent.lower()
 			sEvent = sEvent.replace("_", " ")
 			sEvent = sEvent.capitalize()
@@ -118,8 +119,8 @@ class WBEventScreen:
 					sHeader = pPlayerX.getName()
 				iCivilization = pPlayerX.getCivilizationType()
 				iLeader = pPlayerX.getLeaderType()
-				screen.setTableText("WBEventPlayer", 0, iRow, "", GC.getCivilizationInfo(iCivilization).getButton(), WidgetTypes.WIDGET_PYTHON, 7872, iPlayerX * 10000 + iCivilization, 1<<0 )
-				screen.setTableText("WBEventPlayer", 1, iRow, "<font=3>" + sColor + pPlayerX.getName() + "</font></color>", GC.getLeaderHeadInfo(iLeader).getButton(), WidgetTypes.WIDGET_PYTHON, 7876, iPlayerX * 10000 + iLeader, 1<<0 )
+				screen.setTableText("WBEventPlayer", 0, iRow, "", INFO.getButton("CIVILIZATION_", iCivilization), WidgetTypes.WIDGET_PYTHON, 7872, iPlayerX * 10000 + iCivilization, 1<<0 )
+				screen.setTableText("WBEventPlayer", 1, iRow, "<font=3>" + sColor + pPlayerX.getName() + "</font></color>", INFO.getButton("LEADER_", iLeader), WidgetTypes.WIDGET_PYTHON, 7876, iPlayerX * 10000 + iLeader, 1<<0 )
 
 		screen.setLabel("EventPlayerText", "Background", "<font=3b>" + sHeader + "</font>", 1<<2, screen.getXResolution() * 3/10, self.iTable_Y - 30, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
 
@@ -149,8 +150,8 @@ class WBEventScreen:
 			pPlayerX = GC.getPlayer(iPlayerX)
 			iLeader = pPlayerX.getLeaderType()
 			iCiv = pUnitX.getCivilizationType()
-			screen.setTableText("WBEventUnit", 0, iRow, "", GC.getCivilizationInfo(iCiv).getButton(), WidgetTypes.WIDGET_PYTHON, 7872, iCiv, 1<<0 )
-			screen.setTableText("WBEventUnit", 1, iRow, "", GC.getLeaderHeadInfo(iLeader).getButton(), WidgetTypes.WIDGET_PYTHON, 7876, iLeader, 1<<0 )
+			screen.setTableText("WBEventUnit", 0, iRow, "", INFO.getButton("CIVILIZATION_", iCiv), WidgetTypes.WIDGET_PYTHON, 7872, iCiv, 1<<0 )
+			screen.setTableText("WBEventUnit", 1, iRow, "", INFO.getButton("LEADER_", iLeader), WidgetTypes.WIDGET_PYTHON, 7876, iLeader, 1<<0 )
 		screen.setLabel("EventUnitText", "Background", "<font=3b>" + sHeader + "</font>", 1<<2, screen.getXResolution() *9/10, self.iTable_Y - 30, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
 
 	def placeCorporations(self):
@@ -167,7 +168,7 @@ class WBEventScreen:
 			if item[1] == iSelectedCorporation:
 				sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
 				sHeader = item[0]
-			screen.setTableText("WBEventCorporation", 0, iRow, "<font=3>" + sColor + item[0] + "</font></color>", GC.getCorporationInfo(item[1]).getButton(), WidgetTypes.WIDGET_PYTHON, 8201, item[1], 1<<0 )
+			screen.setTableText("WBEventCorporation", 0, iRow, "<font=3>" + sColor + item[0] + "</font></color>", INFO.getButton("CORPORATION_", item[1]), WidgetTypes.WIDGET_PYTHON, 8201, item[1], 1<<0 )
 		screen.setLabel("EventCorporationText", "Background", "<font=3b>" + sHeader + "</font>", 1<<2, screen.getXResolution() *7/10, screen.getYResolution()/2, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
 
 	def placeReligions(self):
@@ -184,7 +185,7 @@ class WBEventScreen:
 			if item[1] == iSelectedReligion:
 				sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
 				sHeader = item[0]
-			screen.setTableText("WBEventReligion", 0, iRow, "<font=3>" + sColor + item[0] + "</font></color>", GC.getReligionInfo(item[1]).getButton(), WidgetTypes.WIDGET_HELP_RELIGION, item[1], -1, 1<<0 )
+			screen.setTableText("WBEventReligion", 0, iRow, "<font=3>" + sColor + item[0] + "</font></color>", INFO.getButton("RELIGION_", item[1]), WidgetTypes.WIDGET_HELP_RELIGION, item[1], -1, 1<<0 )
 		screen.setLabel("EventReligionText", "Background", "<font=3b>" + sHeader + "</font>", 1<<2, screen.getXResolution() /2, screen.getYResolution()/2, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
 
 	def placeBuildings(self):
@@ -201,7 +202,7 @@ class WBEventScreen:
 			if item[1] == iSelectedBuilding:
 				sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
 				sHeader = item[0]
-			screen.setTableText("WBEventBuilding", 0, iRow, "<font=3>" + sColor + item[0] + "</font></color>", GC.getBuildingInfo(item[1]).getButton(), WidgetTypes.WIDGET_HELP_BUILDING, item[1], -1, 1<<0 )
+			screen.setTableText("WBEventBuilding", 0, iRow, "<font=3>" + sColor + item[0] + "</font></color>", INFO.getButton("BUILDING_", item[1]), WidgetTypes.WIDGET_HELP_BUILDING, item[1], -1, 1<<0 )
 		screen.setLabel("EventBuildingText", "Background", "<font=3b>" + sHeader + "</font>", 1<<2, screen.getXResolution() * 3/10, screen.getYResolution()/2, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
 
 	def placeOtherCities(self):
@@ -245,8 +246,8 @@ class WBEventScreen:
 					sHeader = pPlayerX.getName()
 				iCivilization = pPlayerX.getCivilizationType()
 				iLeader = pPlayerX.getLeaderType()
-				screen.setTableText("WBOtherPlayer", 0, iRow, "", GC.getCivilizationInfo(iCivilization).getButton(), WidgetTypes.WIDGET_PYTHON, 7872, iPlayerX * 10000 + iCivilization, 1<<0 )
-				screen.setTableText("WBOtherPlayer", 1, iRow, "<font=3>" + sColor + pPlayerX.getName() + "</font></color>", GC.getLeaderHeadInfo(iLeader).getButton(), WidgetTypes.WIDGET_PYTHON, 7876, iPlayerX * 10000 + iLeader, 1<<0 )
+				screen.setTableText("WBOtherPlayer", 0, iRow, "", INFO.getButton("CIVILIZATION_", iCivilization), WidgetTypes.WIDGET_PYTHON, 7872, iPlayerX * 10000 + iCivilization, 1<<0 )
+				screen.setTableText("WBOtherPlayer", 1, iRow, "<font=3>" + sColor + pPlayerX.getName() + "</font></color>", INFO.getButton("LEADER_", iLeader), WidgetTypes.WIDGET_PYTHON, 7876, iPlayerX * 10000 + iLeader, 1<<0 )
 
 		screen.setLabel("OtherPlayerText", "Background", "<font=3b>" + sHeader + "</font>", 1<<2, screen.getXResolution()/2, self.iTable_Y - 30, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
 

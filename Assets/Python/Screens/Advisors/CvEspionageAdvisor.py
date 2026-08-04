@@ -14,6 +14,7 @@ ENABLER = CyEnabler()
 ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
 
+TEXT = CyGameTextMgr()
 class CvEspionageAdvisor:
 
 	def __init__(self):
@@ -110,8 +111,8 @@ class TheScreen:
 		self.aPlayerList = aList
 
 		# Declare constants
-		self.charBeaker			= u'%c' % GC.getCommerceInfo(CommerceTypes.COMMERCE_RESEARCH).getChar()
-		self.charEsp			= u'%c' % GC.getCommerceInfo(CommerceTypes.COMMERCE_ESPIONAGE).getChar()
+		self.charBeaker			= u'%c' % TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_RESEARCH)
+		self.charEsp			= u'%c' % TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_ESPIONAGE)
 		self.charCross			= u'%c' % GAME.getSymbolID(FontSymbols.CROSSED_CHAR)
 		self.charLifeSupportSS	= u'%c' %(GAME.getSymbolID(FontSymbols.HAPPY_CHAR) - 21)
 		self.ANGRY_CIV_CHAR				= GAME.getSymbolID(FontSymbols.ANGRY_CIV_CHAR)

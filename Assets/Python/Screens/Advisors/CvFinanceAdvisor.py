@@ -4,11 +4,13 @@ from CvPythonExtensions import *
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 GAME = GC.getGame()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
+TEXT = CyGameTextMgr()
 MAX_COMMERCE_RATE_MODIFIER_VALUE = 10000000
 
 class CvFinanceAdvisor:
@@ -63,7 +65,7 @@ class CvFinanceAdvisor:
 		# Commerce icons
 		aList = []
 		for i in xrange(CommerceTypes.NUM_COMMERCE_TYPES):
-			aList.append(u'%c' % GC.getCommerceInfo(i).getChar())
+			aList.append(u'%c' % TEXT.getSymbolChar("COMMERCE_", i))
 		self.iconCommerceList = list(aList)
 		# Enumerators
 		eWidGen = WidgetTypes.WIDGET_GENERAL
@@ -220,7 +222,7 @@ class CvFinanceAdvisor:
 		y += 8
 		szText = TRNSLTR.getText("TXT_KEY_BUG_FINANCIAL_ADVISOR_COMMERCE", ())
 		screen.setLabelAt("", Pnl, uFont2b + szText, 1<<0, 8, y, 0, eGameFont, eWidGen, 1, 1)
-		szText = str(iCommerce) + u'%c' % GC.getYieldInfo(YieldTypes.YIELD_COMMERCE).getChar()
+		szText = str(iCommerce) + u'%c' % TEXT.getSymbolChar("YIELD_", YieldTypes.YIELD_COMMERCE)
 		screen.setLabelAt("", Pnl, uFont2b + szText, 1<<1, x, y, 0, eGameFont, eWidGen, 1, 1)
 		y += 32
 
@@ -393,7 +395,7 @@ class CvFinanceAdvisor:
 				szText = uFont2b + iconCommerceList[iType]
 				screen.setLabelAt(aName(), Pnl, szText, 1<<0, 8, y + 2, 0, eGameFont, eWidGen, 1, 1)
 
-				szText = uFont2b + GC.getCommerceInfo(iType).getDescription()
+				szText = uFont2b + INFO.getDescription("COMMERCE_", iType)
 				screen.setLabelAt(aName(), Pnl, szText, 1<<0, 26, y+yBtnOffset, 0, eGameFont, eWidGen, 1, 1)
 
 				szText = uFont2b + str(CyPlayer.getCommercePercent(iType)) + "%"
@@ -570,7 +572,7 @@ class CvFinanceAdvisor:
 		for iType, iMultiplier, iGlobalMultiplier, iCount, fGold in multipliers:
 			if iCount and fGold > 0:
 				y += 20
-				szText = GC.getBuildingInfo(iType).getDescription() + " "
+				szText = INFO.getDescription("BUILDING_", iType) + " "
 				szText += TRNSLTR.getText("TXT_KEY_BUG_FINANCIAL_ADVISOR_BUILDING_COUNT_AVERAGE", (iCount, "%.2f" %(fGold / iCount), "%.2f" %fGold))
 				screen.setLabelAt(aName(), Pnl, uFont2 + szText, 1<<0, 8, y, 0, eGameFont, eWidGen, 1, 1)
 				screen.setLabelAt(aName(), Pnl, uFont2 + str(int(fGold)), 1<<1, x, y, 0, eGameFont, eWidGen, 1, 1)
@@ -581,7 +583,7 @@ class CvFinanceAdvisor:
 		for iType, iMultiplier, iGlobalMultiplier, iCount, fGold in multipliers:
 			if iCount and fGold < 0:
 				y += 20
-				szText = GC.getBuildingInfo(iType).getDescription() + " "
+				szText = INFO.getDescription("BUILDING_", iType) + " "
 				szText += TRNSLTR.getText("TXT_KEY_BUG_FINANCIAL_ADVISOR_BUILDING_COUNT_AVERAGE", (iCount, "%.2f" %(fGold / iCount), "%.2f" %fGold))
 				screen.setLabelAt(aName(), Pnl, uFont2 + szText, 1<<0, 8, y, 0, eGameFont, eWidGen, 1, 1)
 				screen.setLabelAt(aName(), Pnl, uFont2 + str(int(fGold)), 1<<1, x, y, 0, eGameFont, eWidGen, 1, 1)

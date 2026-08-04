@@ -97,7 +97,7 @@ the synchronized stream. Authoring the threshold is data; performing the draw is
 - **`CvProperties`** is a generic `(PropertyTypes, int)` bag (values + per-turn rates) attachable to any object
   (game…plot). The mutating *rules* are **not** on it — they live in **`CvPropertyManipulators`** on info objects
   (buildings / handicaps / bonuses), run by the solver each turn. Every value change announces
-  `SEVT_PROPERTY_CHANGED` from the bag's own mutation sites (+ the in-read reseed) —
+  `SEVT_PROPERTY_ADDED / _REMOVED` from the bag's own mutation sites (+ the in-read reseed) —
   [event-spine.md](../specs/event-spine.md). ⚠ The same class doubles as authored INFO data (`CvOutcome`,
   `CvEventInfo`, `CvEventTriggerInfo` prereqs); those instances are default-constructed with a NULL game object,
   which is exactly what keeps a data parse silent on both the notification hook and the spine.

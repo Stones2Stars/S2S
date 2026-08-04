@@ -46,9 +46,9 @@ first; emitting it is step one of that item's fix.
 ([DEC-turn-time-is-king](../architecture/decisions.md#dec-turn-time-is-king)), with the process-memory gauge
 beside it under the 32-bit ceiling — a gauge whose route went with the purge and which needs re-emitting
 ([memory-footprint.md](../reference/memory-footprint.md)). A
-read is an unconditional bare fetch and the only path to a rebuild is a mark, so per-turn cost tracks what CHANGED
-— mark volume, which is event volume and is already visible on the spine — never what EXISTS. A regression shows up
-as turn time; the spine's event stream names what drove it. Numbers gathered while any legacy calc still runs on a
+read is an unconditional bare fetch and the only work on the turn path is APPLYING a moved source's deposits, so
+per-turn cost tracks what CHANGED — event volume, which is already visible on the spine — never what EXISTS. A
+regression shows up as turn time; the spine's event stream names what drove it. Numbers gathered while any legacy calc still runs on a
 hot read path are poisoned and prove nothing
 ([DEC-legacy-decache-poisons-perf](../architecture/decisions.md#dec-legacy-decache-poisons-perf)).
 

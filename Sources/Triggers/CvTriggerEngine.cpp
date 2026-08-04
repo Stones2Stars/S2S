@@ -189,7 +189,7 @@ static int tr_promoteEntryCount(const CvInfo* j)   // `triggers` promote entries
 // Two triggers cover the whole (active promo building x unit present) relation, each firing only when that
 // relation actually CHANGES:
 //   (1) a unit ENTERS the city      -> grant it from every active promo building   (SEVT_UNIT_ENTERED_CITY)
-//   (2) a promo building GOES ACTIVE -> grant to every own-team unit present       (SEVT_BUILDING_PROCESSED, iB>0)
+//   (2) a promo building GOES ACTIVE -> grant to every own-team unit present       (SEVT_BUILDING_ACTIVATED)
 // (2) rides PROCESSED rather than the first-build apply because processBuilding fires on BOTH a fresh build AND a
 // dormancy WAKE -- so one hook covers "the building was just built" and "the building stepped out of dormancy"
 // (owner: both must grant). A unit TRAINED here is covered by its own creation path.
@@ -366,9 +366,9 @@ static int tr_grantBuildingsFrom(const CvInfo* j, CvCity* pSourceCity, CvPlayer&
 	return nPlaced;
 }
 
-// Ordering note: the legacy applied these MID-setup; the machine applies at SEVT_BUILDING_CHANGED, which fires at
-// the END of setHasBuilding (CvCity.cpp:13486, after setupBuilding at :13446) -- so the building is fully set up
-// before its provisions land, which is strictly the safer order.
+// Ordering note: the legacy applied these MID-setup; the machine applies at SEVT_BUILDING_ADDED, which fires at
+// the END of setHasBuilding (after setupBuilding) -- so the building is fully set up before its provisions land,
+// which is strictly the safer order.
 static void tr_applyBuildingFirstBuild(const CvInfo* j, int iBuilding, int iPlayer, int iCity)
 {
 	CvPlayer& player = GET_PLAYER((PlayerTypes)iPlayer);
@@ -807,7 +807,7 @@ static void tr_applyCityPerTurn(CvCity* pCity)
 		{
 			const CvTriggerEntry* pEntry = entries[i];
 			// This is the onTurn plane only -- the onTurnEnd promote entries ride the targeted-propagation
-			// free-promotion path (SEVT_BUILDING_PROCESSED / SEVT_UNIT_ENTERED_CITY), never a per-turn rescan.
+			// free-promotion path (SEVT_BUILDING_ACTIVATED / SEVT_UNIT_ENTERED_CITY), never a per-turn rescan.
 			if (pEntry->happening != "onTurn") continue;
 			// RECURRENCE (json §3.8 / §5): "onTurn" = every turn; {"onTurn": N} = every Nth.
 			if (pEntry->happeningInterval > 1 && (iTurn % pEntry->happeningInterval) != 0) continue;
@@ -1049,22 +1049,21 @@ void CvTriggerEngine::onEvent(const CvSpineEvent& e)
 	s_bSuppressed = spineGameLoadInProgress();
 	switch (e.iEventId)
 	{
-	// BUILDING grants ride SEVT_BUILDING_CHANGED, not the player COUNT event. Three reasons, all load-bearing:
-	// the count event is emitted only from CvPlayer::changeBuildingCount and so NEVER fires during the save read --
-	// the machine was blind to every building grant on load (0 lines, indistinguishable from "no grants"); CHANGED
-	// fires on the genuine presence flip in play AND per building in the reseed read loop (CvCity.cpp:13501 /
-	// :16752), which is exactly one resolve in both worlds; and it is NOT the dormancy signal (that is
-	// SEVT_BUILDING_PROCESSED, which processBuilding also fires on every disable/enable flip -- listening there
-	// would re-grant a building each time it woke up). iB = delta, iC = owner, iSrcLoc = city.
-	case SEVT_BUILDING_CHANGED:
-		if (e.iB > 0)
-		{
-			// iA = bFirst. A conquest transfer / load restore resolves (so it is visible) but is WITHHELD --
-			// the engine grants nothing in that case either (CvCity::setupBuilding's bFirst gate).
-			s_bFirstAcquire = (e.iA != 0);
-			if (!s_bFirstAcquire) s_bSuppressed = true;
-			tr_resolveBuilding(e.iType, e.iC, e.iSrcLoc);   // iSrcLoc = the city the building landed in
-		}
+	// BUILDING grants ride the presence ADD, not the player COUNT event. Three reasons, all load-bearing: the count
+	// event is emitted only from CvPlayer::changeBuildingCount and so NEVER fires during the save read -- the machine
+	// was blind to every building grant on load (0 lines, indistinguishable from "no grants"); the presence fact
+	// fires on the genuine flip in play AND per building in the reseed read loop, which is exactly one resolve in
+	// both worlds; and it is NOT the dormancy signal (that is the operate crossing, which also fires on every
+	// disable/enable flip -- listening there would re-grant a building each time it woke up).
+	// ⚑ The machine subscribes to the ARRIVAL and never sees a removal, so there is no direction to test: a payload
+	// guard here was the fact's missing name, wearing an `if` ([DEC-facts-name-happenings]).
+	// iC = owner, iSrcLoc = city.
+	case SEVT_BUILDING_ADDED:
+		// iA = bFirst. A conquest transfer / load restore resolves (so it is visible) but is WITHHELD --
+		// the engine grants nothing in that case either (CvCity::setupBuilding's bFirst gate).
+		s_bFirstAcquire = (e.iA != 0);
+		if (!s_bFirstAcquire) s_bSuppressed = true;
+		tr_resolveBuilding(e.iType, e.iC, e.iSrcLoc);   // iSrcLoc = the city the building landed in
 		break;
 	// The per-TYPE tally carries no instance, so it cannot apply -- the instance-aware SEVT_UNIT_CREATED does.
 	case SEVT_UNIT_CREATED:
@@ -1106,10 +1105,11 @@ void CvTriggerEngine::onEvent(const CvSpineEvent& e)
 	// CvPlayer::doTurn, so the player boundary is the ordering-faithful grain.
 	case SEVT_TURN_STARTED:     if (e.iC >= 0) { tr_applyPerTurn(e.iC); } break;
 	// Trigger (2) for free promotions: a building went ACTIVE in a city -- a fresh build OR a step out of
-	// dormancy (processBuilding fires on both). Hand its promotions to everyone already standing there.
-	// iType = building, iC = owner, iSrcLoc = city, iB = +1 in / -1 out.
-	case SEVT_BUILDING_PROCESSED:
-		if (!s_bSuppressed && e.iB > 0 && e.iC >= 0)
+	// dormancy (the operate crossing covers both). Hand its promotions to everyone already standing there.
+	// ⚑ The machine subscribes to the ACTIVATION alone, so there is no direction left to test
+	// ([DEC-facts-name-happenings]). iType = building, iC = owner, iSrcLoc = city.
+	case SEVT_BUILDING_ACTIVATED:
+		if (!s_bSuppressed && e.iC >= 0)
 		{
 			CvCity* pC = GET_PLAYER((PlayerTypes)e.iC).getCity(e.iSrcLoc);
 			const int n = (pC != NULL) ? tr_promoteCityUnits(pC, InfoRepo<CvBuildingInfo>::get().get(e.iType)) : 0;

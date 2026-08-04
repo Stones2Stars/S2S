@@ -93,6 +93,12 @@ int CyGameTextMgr::getHolyCitySymbolChar(int iReligion) const
 	return GC.getReligionInfo((ReligionTypes)iReligion).getHolyCityChar();
 }
 
+int CyGameTextMgr::getHeadquarterSymbolChar(int iCorporation) const
+{
+	if (iCorporation < 0 || iCorporation >= GC.getNumCorporationInfos()) return 0;
+	return GC.getCorporationInfo((CorporationTypes)iCorporation).getHeadquarterChar();
+}
+
 python::list CyGameTextMgr::getTextKeys(const std::string& szTypePrefix) const
 {
 	python::list keys;
@@ -447,6 +453,7 @@ void CyGameTextMgr::pythonPublish()
 		.def("getTextKeys", &CyGameTextMgr::getTextKeys)
 		.def("getSymbolChar", &CyGameTextMgr::getSymbolChar)
 		.def("getHolyCitySymbolChar", &CyGameTextMgr::getHolyCitySymbolChar)
+		.def("getHeadquarterSymbolChar", &CyGameTextMgr::getHeadquarterSymbolChar)
 		.def("getTimeStr", &CyGameTextMgr::getTimeStr)
 		.def("getDateStr", &CyGameTextMgr::getDateStr)
 		.def("getInterfaceTimeStr", &CyGameTextMgr::getInterfaceTimeStr)

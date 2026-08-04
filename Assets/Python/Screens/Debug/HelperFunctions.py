@@ -3,6 +3,7 @@ from CvPythonExtensions import *
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -26,9 +27,9 @@ class HelperFunctions:
 		#Main tech requirement
 		iTechMainReq = CvBuildingInfo.getPrereqAndTech()
 		if iTechMainReq != -1:
-			iTechMainLoc = GC.getTechInfo(iTechMainReq).getGridX()
-			iTechMainRow = GC.getTechInfo(iTechMainReq).getGridY()
-			aTechList.append(GC.getTechInfo(iTechMainReq).getType())
+			iTechMainLoc = INFO.getIntrinsic("TECH_", iTechMainReq, IntrinsicSlot.PYINT_GRID_X)
+			iTechMainRow = INFO.getIntrinsic("TECH_", iTechMainReq, IntrinsicSlot.PYINT_GRID_Y)
+			aTechList.append(INFO.getType("TECH_", iTechMainReq))
 			aTechGridXList.append(iTechMainLoc)
 			aTechXY.append(100*iTechMainLoc+iTechMainRow)
 		else:
@@ -39,11 +40,11 @@ class HelperFunctions:
 		aTechTypeLocList = []
 		aTechTypeRowList = []
 		for iTechType in CvBuildingInfo.getPrereqAndTechs():
-			aTechTypeLocList.append(GC.getTechInfo(iTechType).getGridX())
-			aTechTypeRowList.append(GC.getTechInfo(iTechType).getGridY())
-			aTechList.append(GC.getTechInfo(iTechType).getType())
-			aTechGridXList.append(GC.getTechInfo(iTechType).getGridX())
-			aTechXY.append(100*GC.getTechInfo(iTechType).getGridX()+GC.getTechInfo(iTechType).getGridY())
+			aTechTypeLocList.append(INFO.getIntrinsic("TECH_", iTechType, IntrinsicSlot.PYINT_GRID_X))
+			aTechTypeRowList.append(INFO.getIntrinsic("TECH_", iTechType, IntrinsicSlot.PYINT_GRID_Y))
+			aTechList.append(INFO.getType("TECH_", iTechType))
+			aTechGridXList.append(INFO.getIntrinsic("TECH_", iTechType, IntrinsicSlot.PYINT_GRID_X))
+			aTechXY.append(100*INFO.getIntrinsic("TECH_", iTechType, IntrinsicSlot.PYINT_GRID_X)+INFO.getIntrinsic("TECH_", iTechType, IntrinsicSlot.PYINT_GRID_Y))
 		if len(aTechTypeLocList) > 0 and len(aTechTypeRowList) > 0:
 			iTechTypeLoc = max(aTechTypeLocList)
 			for iTechLoc in xrange(len(aTechTypeLocList)):
@@ -58,9 +59,9 @@ class HelperFunctions:
 		if iSpecialBuilding != -1:
 			iTechSpecialReq = GC.getSpecialBuildingInfo(iSpecialBuilding).getTechPrereq()
 			if iTechSpecialReq != -1:
-				iTechSpecialLoc = GC.getTechInfo(iTechSpecialReq).getGridX()
-				iTechSpecialRow = GC.getTechInfo(iTechSpecialReq).getGridY()
-				aTechList.append(GC.getTechInfo(iTechSpecialReq).getType())
+				iTechSpecialLoc = INFO.getIntrinsic("TECH_", iTechSpecialReq, IntrinsicSlot.PYINT_GRID_X)
+				iTechSpecialRow = INFO.getIntrinsic("TECH_", iTechSpecialReq, IntrinsicSlot.PYINT_GRID_Y)
+				aTechList.append(INFO.getType("TECH_", iTechSpecialReq))
 				aTechGridXList.append(iTechSpecialLoc)
 				aTechXY.append(100*iTechSpecialLoc+iTechSpecialRow)
 			elif iTechSpecialReq == -1:
@@ -79,9 +80,9 @@ class HelperFunctions:
 			if iReligionBuilding != -1:
 				iTechReligionReq = GC.getReligionInfo(iReligionBuilding).getTechPrereq()
 				if iTechReligionReq != -1:
-					iTechReligionLoc = GC.getTechInfo(iTechReligionReq).getGridX()
-					iTechReligionRow = GC.getTechInfo(iTechReligionReq).getGridY()
-					aTechList.append(GC.getTechInfo(iTechReligionReq).getType())
+					iTechReligionLoc = INFO.getIntrinsic("TECH_", iTechReligionReq, IntrinsicSlot.PYINT_GRID_X)
+					iTechReligionRow = INFO.getIntrinsic("TECH_", iTechReligionReq, IntrinsicSlot.PYINT_GRID_Y)
+					aTechList.append(INFO.getType("TECH_", iTechReligionReq))
 					aTechGridXList.append(iTechReligionLoc)
 					aTechXY.append(100*iTechReligionLoc+iTechReligionRow)
 			elif iReligionBuilding == -1:
@@ -116,11 +117,11 @@ class HelperFunctions:
 
 		#Extract GOM AND requirements
 		for iTech in xrange(len(aTechGOMReqList[BoolExprTypes.BOOLEXPR_AND])):
-			aTechGOMAndLocList.append(GC.getTechInfo(aTechGOMReqList[BoolExprTypes.BOOLEXPR_AND][iTech]).getGridX())
-			aTechGOMAndRowList.append(GC.getTechInfo(aTechGOMReqList[BoolExprTypes.BOOLEXPR_AND][iTech]).getGridY())
-			aTechList.append(GC.getTechInfo(aTechGOMReqList[BoolExprTypes.BOOLEXPR_AND][iTech]).getType())
-			aTechGridXList.append(GC.getTechInfo(aTechGOMReqList[BoolExprTypes.BOOLEXPR_AND][iTech]).getGridX())
-			aTechXY.append(100*GC.getTechInfo(aTechGOMReqList[BoolExprTypes.BOOLEXPR_AND][iTech]).getGridX()+GC.getTechInfo(aTechGOMReqList[BoolExprTypes.BOOLEXPR_AND][iTech]).getGridY())
+			aTechGOMAndLocList.append(INFO.getIntrinsic("TECH_", aTechGOMReqList[BoolExprTypes.BOOLEXPR_AND][iTech], IntrinsicSlot.PYINT_GRID_X))
+			aTechGOMAndRowList.append(INFO.getIntrinsic("TECH_", aTechGOMReqList[BoolExprTypes.BOOLEXPR_AND][iTech], IntrinsicSlot.PYINT_GRID_Y))
+			aTechList.append(INFO.getType("TECH_", aTechGOMReqList[BoolExprTypes.BOOLEXPR_AND][iTech]))
+			aTechGridXList.append(INFO.getIntrinsic("TECH_", aTechGOMReqList[BoolExprTypes.BOOLEXPR_AND][iTech], IntrinsicSlot.PYINT_GRID_X))
+			aTechXY.append(100*INFO.getIntrinsic("TECH_", aTechGOMReqList[BoolExprTypes.BOOLEXPR_AND][iTech], IntrinsicSlot.PYINT_GRID_X)+INFO.getIntrinsic("TECH_", aTechGOMReqList[BoolExprTypes.BOOLEXPR_AND][iTech], IntrinsicSlot.PYINT_GRID_Y))
 		if len(aTechGOMAndLocList) > 0 and len(aTechGOMAndRowList) > 0:
 			iTechGOMAndLoc = max(aTechGOMAndLocList)
 			for iTechLoc in xrange(len(aTechGOMAndLocList)):
@@ -132,9 +133,9 @@ class HelperFunctions:
 
 		#Extract GOM OR requirements
 		for iTech in xrange(len(aTechGOMReqList[BoolExprTypes.BOOLEXPR_OR])):
-			aTechGOMOrLocList.append(GC.getTechInfo(aTechGOMReqList[BoolExprTypes.BOOLEXPR_OR][iTech]).getGridX())
-			aTechGOMOrRowList.append(GC.getTechInfo(aTechGOMReqList[BoolExprTypes.BOOLEXPR_OR][iTech]).getGridY())
-			aTechGOMOrTypeList.append(GC.getTechInfo(aTechGOMReqList[BoolExprTypes.BOOLEXPR_OR][iTech]).getType())
+			aTechGOMOrLocList.append(INFO.getIntrinsic("TECH_", aTechGOMReqList[BoolExprTypes.BOOLEXPR_OR][iTech], IntrinsicSlot.PYINT_GRID_X))
+			aTechGOMOrRowList.append(INFO.getIntrinsic("TECH_", aTechGOMReqList[BoolExprTypes.BOOLEXPR_OR][iTech], IntrinsicSlot.PYINT_GRID_Y))
+			aTechGOMOrTypeList.append(INFO.getType("TECH_", aTechGOMReqList[BoolExprTypes.BOOLEXPR_OR][iTech]))
 		if len(aTechGOMOrLocList) > 0 and len(aTechGOMOrRowList) > 0:
 			iTechGOMOrLoc = min(aTechGOMOrLocList)
 			aTechGridXList.append(iTechGOMOrLoc)
@@ -194,28 +195,28 @@ class HelperFunctions:
 
 		#Tech Type requirement
 		for iTech in CvBuildingInfo.getPrereqAndTechs():
-			if GC.getTechInfo(iTech).getEra() > iEra:
-				iEra = GC.getTechInfo(iTech).getEra()
+			if INFO.getIntrinsic("TECH_", iTech, IntrinsicSlot.PYINT_ERA) > iEra:
+				iEra = INFO.getIntrinsic("TECH_", iTech, IntrinsicSlot.PYINT_ERA)
 
 		#Tech requirement as defined in special building infos (core tech)
 		if CvBuildingInfo.getSpecialBuildingType() != -1:
 			iTech = GC.getSpecialBuildingInfo(CvBuildingInfo.getSpecialBuildingType()).getTechPrereq()
-			if iTech != -1 and GC.getTechInfo(iTech).getEra() > iEra:
-				iEra = GC.getTechInfo(iTech).getEra()
+			if iTech != -1 and INFO.getIntrinsic("TECH_", iTech, IntrinsicSlot.PYINT_ERA) > iEra:
+				iEra = INFO.getIntrinsic("TECH_", iTech, IntrinsicSlot.PYINT_ERA)
 
 		#Tech requirement derived from location of religion in tech tree
 		if CvBuildingInfo.getPrereqReligion() != -1:
 			iTech = GC.getReligionInfo(CvBuildingInfo.getPrereqReligion()).getTechPrereq()
-			if iTech != -1 and GC.getTechInfo(iTech).getEra() > iEra:
-				iEra = GC.getTechInfo(iTech).getEra()
+			if iTech != -1 and INFO.getIntrinsic("TECH_", iTech, IntrinsicSlot.PYINT_ERA) > iEra:
+				iEra = INFO.getIntrinsic("TECH_", iTech, IntrinsicSlot.PYINT_ERA)
 		if CvBuildingInfo.getReligionType() != -1:
 			iTech = GC.getReligionInfo(CvBuildingInfo.getReligionType()).getTechPrereq()
-			if iTech != -1 and GC.getTechInfo(iTech).getEra() > iEra:
-				iEra = GC.getTechInfo(iTech).getEra()
+			if iTech != -1 and INFO.getIntrinsic("TECH_", iTech, IntrinsicSlot.PYINT_ERA) > iEra:
+				iEra = INFO.getIntrinsic("TECH_", iTech, IntrinsicSlot.PYINT_ERA)
 		if CvBuildingInfo.getPrereqStateReligion() != -1:
 			iTech = GC.getReligionInfo(CvBuildingInfo.getPrereqStateReligion()).getTechPrereq()
-			if iTech != -1 and GC.getTechInfo(iTech).getEra() > iEra:
-				iEra = GC.getTechInfo(iTech).getEra()
+			if iTech != -1 and INFO.getIntrinsic("TECH_", iTech, IntrinsicSlot.PYINT_ERA) > iEra:
+				iEra = INFO.getIntrinsic("TECH_", iTech, IntrinsicSlot.PYINT_ERA)
 
 		#Folklore handling - X Require tech requirement is treated as one of tech requirements of building, assuming X Require is main building requirement.
 		if CvBuildingInfo.getType().find("BUILDING_FOLKLORE_",0,18) != -1:
@@ -231,13 +232,13 @@ class HelperFunctions:
 
 		#Extract GOM AND requirements
 		for iTech in xrange(len(aTechGOMReqList[BoolExprTypes.BOOLEXPR_AND])):
-			if GC.getTechInfo(aTechGOMReqList[BoolExprTypes.BOOLEXPR_AND][iTech]).getEra() > iEra:
-				iEra = GC.getTechInfo(aTechGOMReqList[BoolExprTypes.BOOLEXPR_AND][iTech]).getEra()
+			if INFO.getIntrinsic("TECH_", aTechGOMReqList[BoolExprTypes.BOOLEXPR_AND][iTech], IntrinsicSlot.PYINT_ERA) > iEra:
+				iEra = INFO.getIntrinsic("TECH_", aTechGOMReqList[BoolExprTypes.BOOLEXPR_AND][iTech], IntrinsicSlot.PYINT_ERA)
 
 		#Extract GOM OR requirements - those are OR type requirements, so pick earliest one.
 		aEraList = []
 		for iTech in xrange(len(aTechGOMReqList[BoolExprTypes.BOOLEXPR_OR])):
-			aEraList.append(GC.getTechInfo(aTechGOMReqList[BoolExprTypes.BOOLEXPR_OR][iTech]).getEra())
+			aEraList.append(INFO.getIntrinsic("TECH_", aTechGOMReqList[BoolExprTypes.BOOLEXPR_OR][iTech], IntrinsicSlot.PYINT_ERA))
 		if len(aEraList) > 0 and min(aEraList) > iEra:
 			iEra = min(aEraList)
 
@@ -248,8 +249,8 @@ class HelperFunctions:
 		#Main tech
 		iTechMainReq = CvUnitInfo.getPrereqAndTech()
 		if iTechMainReq != -1:
-			iTechMainLoc = GC.getTechInfo(iTechMainReq).getGridX()
-			iTechMainRow = GC.getTechInfo(iTechMainReq).getGridY()
+			iTechMainLoc = INFO.getIntrinsic("TECH_", iTechMainReq, IntrinsicSlot.PYINT_GRID_X)
+			iTechMainRow = INFO.getIntrinsic("TECH_", iTechMainReq, IntrinsicSlot.PYINT_GRID_Y)
 		else:
 			iTechMainLoc = 0
 			iTechMainRow = 0
@@ -258,8 +259,8 @@ class HelperFunctions:
 		aTechTypeLocList = []
 		aTechTypeRowList = []
 		for iTechType in CvUnitInfo.getPrereqAndTechs():
-			aTechTypeLocList.append(GC.getTechInfo(iTechType).getGridX())
-			aTechTypeRowList.append(GC.getTechInfo(iTechType).getGridY())
+			aTechTypeLocList.append(INFO.getIntrinsic("TECH_", iTechType, IntrinsicSlot.PYINT_GRID_X))
+			aTechTypeRowList.append(INFO.getIntrinsic("TECH_", iTechType, IntrinsicSlot.PYINT_GRID_Y))
 		if len(aTechTypeLocList) > 0 and len(aTechTypeRowList) > 0:
 			iTechTypeLoc = max(aTechTypeLocList)
 			for iTechLoc in xrange(len(aTechTypeLocList)):
@@ -281,8 +282,8 @@ class HelperFunctions:
 
 		#Extract GOM AND requirements
 		for iTech in xrange(len(aTechGOMReqList[BoolExprTypes.BOOLEXPR_AND])):
-			aTechGOMAndLocList.append(GC.getTechInfo(aTechGOMReqList[BoolExprTypes.BOOLEXPR_AND][iTech]).getGridX())
-			aTechGOMAndRowList.append(GC.getTechInfo(aTechGOMReqList[BoolExprTypes.BOOLEXPR_AND][iTech]).getGridY())
+			aTechGOMAndLocList.append(INFO.getIntrinsic("TECH_", aTechGOMReqList[BoolExprTypes.BOOLEXPR_AND][iTech], IntrinsicSlot.PYINT_GRID_X))
+			aTechGOMAndRowList.append(INFO.getIntrinsic("TECH_", aTechGOMReqList[BoolExprTypes.BOOLEXPR_AND][iTech], IntrinsicSlot.PYINT_GRID_Y))
 		if len(aTechGOMAndLocList) > 0 and len(aTechGOMAndRowList) > 0:
 			iTechGOMAndLoc = max(aTechGOMAndLocList)
 			for iTechLoc in xrange(len(aTechGOMAndLocList)):
@@ -294,8 +295,8 @@ class HelperFunctions:
 
 		#Extract GOM OR requirements
 		for iTech in xrange(len(aTechGOMReqList[BoolExprTypes.BOOLEXPR_OR])):
-			aTechGOMOrLocList.append(GC.getTechInfo(aTechGOMReqList[BoolExprTypes.BOOLEXPR_OR][iTech]).getGridX())
-			aTechGOMOrRowList.append(GC.getTechInfo(aTechGOMReqList[BoolExprTypes.BOOLEXPR_OR][iTech]).getGridY())
+			aTechGOMOrLocList.append(INFO.getIntrinsic("TECH_", aTechGOMReqList[BoolExprTypes.BOOLEXPR_OR][iTech], IntrinsicSlot.PYINT_GRID_X))
+			aTechGOMOrRowList.append(INFO.getIntrinsic("TECH_", aTechGOMReqList[BoolExprTypes.BOOLEXPR_OR][iTech], IntrinsicSlot.PYINT_GRID_Y))
 		if len(aTechGOMOrLocList) > 0 and len(aTechGOMOrRowList) > 0:
 			iTechGOMOrLoc = min(aTechGOMOrLocList)
 			for iTechLoc in xrange(len(aTechGOMOrLocList)):
@@ -330,8 +331,8 @@ class HelperFunctions:
 		#Promotions have one tech requirement.
 		TechReq = CvPromotionInfo.getTechPrereq()
 		if TechReq != -1:
-			iTechLoc = GC.getTechInfo(TechReq).getGridX()
-			iTechRow = GC.getTechInfo(TechReq).getGridY()
+			iTechLoc = INFO.getIntrinsic("TECH_", TechReq, IntrinsicSlot.PYINT_GRID_X)
+			iTechRow = INFO.getIntrinsic("TECH_", TechReq, IntrinsicSlot.PYINT_GRID_Y)
 		else:
 			iTechLoc = 0
 			iTechRow = 0
@@ -353,15 +354,15 @@ class HelperFunctions:
 		TechReqEnable = CvBonusInfo.getTechCityTrade()
 
 		if TechReqReveal != -1:
-			iTechRevealLoc = GC.getTechInfo(TechReqReveal).getGridX()
-			iTechRevealRow = GC.getTechInfo(TechReqReveal).getGridY()
+			iTechRevealLoc = INFO.getIntrinsic("TECH_", TechReqReveal, IntrinsicSlot.PYINT_GRID_X)
+			iTechRevealRow = INFO.getIntrinsic("TECH_", TechReqReveal, IntrinsicSlot.PYINT_GRID_Y)
 		else:
 			iTechRevealLoc = 0
 			iTechRevealRow = 0
 
 		if TechReqEnable != -1:
-			iTechEnableLoc = GC.getTechInfo(TechReqEnable).getGridX()
-			iTechEnableRow = GC.getTechInfo(TechReqEnable).getGridY()
+			iTechEnableLoc = INFO.getIntrinsic("TECH_", TechReqEnable, IntrinsicSlot.PYINT_GRID_X)
+			iTechEnableRow = INFO.getIntrinsic("TECH_", TechReqEnable, IntrinsicSlot.PYINT_GRID_Y)
 		else:
 			iTechEnableLoc = 0
 			iTechEnableRow = 0
@@ -383,8 +384,8 @@ class HelperFunctions:
 		#Improvements have one tech requirement
 		TechReq = CvImprovementInfo.getPrereqTech()
 		if TechReq != -1:
-			iTechLoc = GC.getTechInfo(TechReq).getGridX()
-			iTechRow = GC.getTechInfo(TechReq).getGridY()
+			iTechLoc = INFO.getIntrinsic("TECH_", TechReq, IntrinsicSlot.PYINT_GRID_X)
+			iTechRow = INFO.getIntrinsic("TECH_", TechReq, IntrinsicSlot.PYINT_GRID_Y)
 		else:
 			iTechLoc = 0
 			iTechRow = 0
@@ -403,8 +404,8 @@ class HelperFunctions:
 		#Civics have one tech requirement.
 		TechReq = CvCivicInfo.getTechPrereq()
 		if TechReq != -1:
-			iTechLoc = GC.getTechInfo(TechReq).getGridX()
-			iTechRow = GC.getTechInfo(TechReq).getGridY()
+			iTechLoc = INFO.getIntrinsic("TECH_", TechReq, IntrinsicSlot.PYINT_GRID_X)
+			iTechRow = INFO.getIntrinsic("TECH_", TechReq, IntrinsicSlot.PYINT_GRID_Y)
 		else:
 			iTechLoc = 0
 			iTechRow = 0
@@ -423,8 +424,8 @@ class HelperFunctions:
 		#Builds have one tech requirement
 		TechReq = CvBuildInfo.getTechPrereq()
 		if TechReq != -1:
-			iTechLoc = GC.getTechInfo(TechReq).getGridX()
-			iTechRow = GC.getTechInfo(TechReq).getGridY()
+			iTechLoc = INFO.getIntrinsic("TECH_", TechReq, IntrinsicSlot.PYINT_GRID_X)
+			iTechRow = INFO.getIntrinsic("TECH_", TechReq, IntrinsicSlot.PYINT_GRID_Y)
 		else:
 			iTechLoc = 0
 			iTechRow = 0

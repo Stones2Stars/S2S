@@ -4,6 +4,7 @@ from CvPythonExtensions import *
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 MAP = GC.getMap()
 STATE = CyState()
 ENABLER = CyEnabler()
@@ -81,7 +82,7 @@ class DebugUtils:
 			elif self.iLastUnitPicker == iNumUnits:
 				szTxt = 'City'
 			else:
-				szTxt = GC.getUnitInfo(self.iLastUnitPicker).getDescription()
+				szTxt = INFO.getDescription("UNIT_", self.iLastUnitPicker)
 				popup.addListBoxString(szTxt, self.iLastUnitPicker, 0)
 
 		popup.addListBoxString('City', iNumUnits, 0) # list City first
@@ -89,7 +90,7 @@ class DebugUtils:
 		# sort units alphabetically
 		unitsList=[(0,0)]*iNumUnits
 		for j in xrange(iNumUnits):
-			unitsList[j] = (GC.getUnitInfo(j).getDescription(), j)
+			unitsList[j] = (INFO.getDescription("UNIT_", j), j)
 		unitsList.sort()
 
 		for j in xrange(iNumUnits):
@@ -172,14 +173,14 @@ def initWonderMovie():
 	for i in xrange(GC.getNumBuildingInfos()):
 		szMovieFile = GC.getBuildingInfo(i).getMovie()
 		if szMovieFile:
-			popup.addPullDownString(GC.getBuildingInfo(i).getDescription(), i, 0)
+			popup.addPullDownString(INFO.getDescription("BUILDING_", i), i, 0)
 
 	for i in xrange(GC.getNumProjectInfos()):
 		szArtDef = GC.getProjectInfo(i).getMovieArtDef()
 		if szArtDef:
 			szMovieFile = CyArtFileMgr().getMovieArtInfo(szArtDef).getPath()
 			if szMovieFile:
-				popup.addPullDownString(GC.getProjectInfo(i).getDescription(), GC.getNumBuildingInfos() + i, 0)
+				popup.addPullDownString(INFO.getDescription("PROJECT_", i), GC.getNumBuildingInfos() + i, 0)
 
 	popup.launch(True, PopupStates.POPUPSTATE_IMMEDIATE)
 
@@ -215,7 +216,7 @@ def initTechsCheat():
 	popup.createPythonEditBox("0", "Integer value (positive or negative)", 0)
 
 	for i in xrange(GC.getNumEraInfos()):
-		popup.addButton(GC.getEraInfo(i).getDescription())
+		popup.addButton(INFO.getDescription("C2C_ERA_", i))
 
 	popup.launch(True, PopupStates.POPUPSTATE_IMMEDIATE)
 
@@ -281,7 +282,7 @@ def initEditCity(px, py):
 	lBuildings = []
 	for i in range(iNumBuildings):
 		# ('Library', iIndex)
-		lBuildings.append((GC.getBuildingInfo(i).getDescription(), i))
+		lBuildings.append((INFO.getDescription("BUILDING_", i), i))
 	lBuildings.sort()
 
 	popup.addListBoxString(local.getText("TXT_KEY_WB_CITY_NOTHING", ()), -1, 0)

@@ -10,10 +10,12 @@ import WBInfoScreen
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 
+TEXT = CyGameTextMgr()
 bAdd = True
 bSensibility = True
 iEditType = 0
@@ -109,7 +111,7 @@ class WBPlotScreen:
 		screen.addPullDownString("BonusClass", CyTranslator().getText("TXT_KEY_GLOBELAYER_RESOURCES_GENERAL",()), 0, 0, 0 == iSelectedClass)
 		iBonusClass = 1
 		while not GC.getBonusClassInfo(iBonusClass) is None:
-			sText = GC.getBonusClassInfo(iBonusClass).getType()
+			sText = INFO.getType("BONUSCLASS_", iBonusClass)
 			sText = sText[sText.find("_") +1:]
 			sText = sText.lower()
 			sText = sText.capitalize()
@@ -196,8 +198,8 @@ class WBPlotScreen:
 				iRow = screen.appendTableRow("WBSigns")
 				iCivilization = pPlayerX.getCivilizationType()
 				iLeader = pPlayerX.getLeaderType()
-				screen.setTableText("WBSigns", 0, iRow, "", GC.getCivilizationInfo(iCivilization).getButton(), WidgetTypes.WIDGET_PYTHON, 7872, iPlayerX * 10000 + iCivilization, 1<<0 )
-				screen.setTableText("WBSigns", 1, iRow, "", GC.getLeaderHeadInfo(iLeader).getButton(), WidgetTypes.WIDGET_PYTHON, 7876, iPlayerX * 10000 + iLeader, 1<<0 )
+				screen.setTableText("WBSigns", 0, iRow, "", INFO.getButton("CIVILIZATION_", iCivilization), WidgetTypes.WIDGET_PYTHON, 7872, iPlayerX * 10000 + iCivilization, 1<<0 )
+				screen.setTableText("WBSigns", 1, iRow, "", INFO.getButton("LEADER_", iLeader), WidgetTypes.WIDGET_PYTHON, 7876, iPlayerX * 10000 + iLeader, 1<<0 )
 				sText = "<font=3>" + self.WB.addComma(pPlot.getCulture(iPlayerX)) + CyTranslator().getText("[ICON_CULTURE]", ()) + "</font>"
 				screen.setTableText("WBSigns", 2, iRow, sText, "", WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<1)
 				iIndex = lSigns[iPlayerX]
@@ -225,8 +227,8 @@ class WBPlotScreen:
 				iYield -= pPlot.calculateImprovementYieldChange(iImprovement, YieldTypes(i), pPlot.getOwner(), False)
 			screen.setButtonGFC("BaseYieldPlus" + str(i), "", "", iX, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, i, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
 			screen.setButtonGFC("BaseYieldMinus" + str(i), "", "", iX + 25, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, i, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
-			sText = CyTranslator().getText("TXT_KEY_WB_BASE_YIELD", (GC.getYieldInfo(i).getDescription(), iYield,))
-			sText = u"%s%c" %(sText, GC.getYieldInfo(i).getChar())
+			sText = CyTranslator().getText("TXT_KEY_WB_BASE_YIELD", (INFO.getDescription("YIELD_", i), iYield,))
+			sText = u"%s%c" %(sText, TEXT.getSymbolChar("YIELD_", i))
 			screen.setLabel("BaseYieldText" + str(i), "Background", "<font=3>" + sText + "</font>", 1<<0, iX + 50, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 			iY += 30
 		self.placeSigns()
@@ -299,7 +301,7 @@ class WBPlotScreen:
 		sText = CyTranslator().getText("TXT_KEY_CULTURELEVEL_NONE", ())
 		sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
 		if iRoute > -1:
-			sText = GC.getRouteInfo(iRoute).getDescription()
+			sText = INFO.getDescription("ROUTE_", iRoute)
 			sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
 		screen.setLabel("RouteHeader", "Background", "<font=3b>" + sText + "</font>", 1<<2, iX + screen.getXResolution()/10 - 10, iY - 30, -0.1, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 		screen.addTableControlGFC("WBPlotRoutes", 1, iX, iY, iWidth, iHeight, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD)
@@ -312,7 +314,7 @@ class WBPlotScreen:
 			sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
 			if iRoute == item[1]:
 				sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
-			screen.setTableText("WBPlotRoutes", 0, iRow, "<font=3>" + sColor + item[0] + "</font></color>", GC.getRouteInfo(item[1]).getButton(), WidgetTypes.WIDGET_PYTHON, 6788, item[1], 1<<0 )
+			screen.setTableText("WBPlotRoutes", 0, iRow, "<font=3>" + sColor + item[0] + "</font></color>", INFO.getButton("ROUTE_", item[1]), WidgetTypes.WIDGET_PYTHON, 6788, item[1], 1<<0 )
 
 	def placeFeature(self):
 		screen = CyGInterfaceScreen( "WBPlotScreen", CvScreenEnums.WB_PLOT)
@@ -324,7 +326,7 @@ class WBPlotScreen:
 		sText = CyTranslator().getText("TXT_KEY_CULTURELEVEL_NONE", ())
 		sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
 		if iFeature > -1:
-			sText = GC.getFeatureInfo(iFeature).getDescription()
+			sText = INFO.getDescription("FEATURE_", iFeature)
 			sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
 
 		screen.setLabel("FeatureHeader", "Background", "<font=3b>" + sText + "</font>", 1<<2, iX + screen.getXResolution()/10 - 10, iY - 30, -0.1, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
@@ -339,7 +341,7 @@ class WBPlotScreen:
 			iType = item[1] % 10000
 			if iFeature == iType and iVariety == item[1] / 10000:
 				sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
-			screen.setTableText("WBPlotFeature", 0, iRow, "<font=3>" + sColor + item[0] + "</font></color>", GC.getFeatureInfo(iType).getButton(), WidgetTypes.WIDGET_PYTHON, 7874, item[1], 1<<0 )
+			screen.setTableText("WBPlotFeature", 0, iRow, "<font=3>" + sColor + item[0] + "</font></color>", INFO.getButton("FEATURE_", iType), WidgetTypes.WIDGET_PYTHON, 7874, item[1], 1<<0 )
 
 	def placeImprovements(self):
 		screen = CyGInterfaceScreen( "WBPlotScreen", CvScreenEnums.WB_PLOT)
@@ -359,7 +361,7 @@ class WBPlotScreen:
 				screen.setButtonGFC("UpgradeTimeMinus", "", "", iX + 25, iUpgrade_Y, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
 				sText = CyTranslator().getText("TXT_KEY_WB_UPGRADE_PROGRESS", (pPlot.getUpgradeTimeLeft(iImprovement, pPlot.getOwner()),))
 				screen.setLabel("UpgradeTimeText", "Background", "<font=3>" + sText + "</font>", 1<<0, iX + 55, iUpgrade_Y + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-			sText = GC.getImprovementInfo(iImprovement).getDescription()
+			sText = INFO.getDescription("IMPROVEMENT_", iImprovement)
 			sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
 		screen.setLabel("ImprovementHeader", "Background", "<font=3b>" + sText + "</font>", 1<<2, iX + screen.getXResolution()/10 - 10, iY - 30, -0.1, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 		screen.addTableControlGFC("WBPlotImprovement", 1, iX, iY, iWidth, iHeight, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD)
@@ -372,7 +374,7 @@ class WBPlotScreen:
 			sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
 			if iImprovement == item[1]:
 				sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
-			screen.setTableText("WBPlotImprovement", 0, iRow, "<font=3>" + sColor + item[0] + "</font></color>", GC.getImprovementInfo(item[1]).getButton(), WidgetTypes.WIDGET_PYTHON, 7877, item[1], 1<<0 )
+			screen.setTableText("WBPlotImprovement", 0, iRow, "<font=3>" + sColor + item[0] + "</font></color>", INFO.getButton("IMPROVEMENT_", item[1]), WidgetTypes.WIDGET_PYTHON, 7877, item[1], 1<<0 )
 
 	def createBonusList(self):
 		global lBonus
@@ -393,7 +395,7 @@ class WBPlotScreen:
 		sText = CyTranslator().getText("TXT_KEY_CULTURELEVEL_NONE", ())
 		sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
 		if iBonus > -1:
-			sText = GC.getBonusInfo(iBonus).getDescription()
+			sText = INFO.getDescription("BONUS_", iBonus)
 			sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
 		screen.setLabel("BonusHeader", "Background", "<font=3b>" + sText + "</font>", 1<<2, iX + screen.getXResolution()/10 - 10, iY - 30, -0.1, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 		screen.addTableControlGFC("WBPlotBonus", 1, iX, iY, iWidth, iHeight, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD)
@@ -417,7 +419,7 @@ class WBPlotScreen:
 		iHeight = (screen.getYResolution()/2 - 32 - iY) /24 * 24 + 2
 
 		iTerrain = pPlot.getTerrainType()
-		sText = GC.getTerrainInfo(iTerrain).getDescription()
+		sText = INFO.getDescription("TERRAIN_", iTerrain)
 		screen.setLabel("TerrainHeader", "Background", "<font=3b>" + sText + "</font>", 1<<2, iX + screen.getXResolution()/10 - 10, iY - 30, -0.1, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 		screen.addTableControlGFC("WBPlotTerrain", 1, iX, iY, iWidth, iHeight, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD)
 		screen.setTableColumnHeader("WBPlotTerrain", 0, "", iWidth)

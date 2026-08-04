@@ -3,28 +3,24 @@
 #define CV_CASCADE_GATHER_H
 
 //
-//	CascadeGather -- the ONE package-rebuild implementation of the modifier cascade's value-cache plane
-//	(state-repositories.md; [DEC-single-implementation]). Every owner's refresh delegate (the
-//	CvDerivedCacheSet member-function contract) is a one-line delegation here; no second gather exists.
+//	CascadeGather -- THE ENDPOINT ORACLE of the modifier cascade's value plane, and nothing else
+//	(state-repositories.md § THE RECOMPUTE IS AN ENDPOINT ORACLE; [DEC-single-implementation]).
 //
-//	A refresh receives the DIRTY MASK (the derived marks -- SourceRoute / the dependency routes) and, per the
-//	CvDerivedCache contract rule 2, FULLY DEFINES the masked slots: zero them, then fold every live source's
-//	compiled entries at this scope through the shared per-info fold -- conditions through the ONE evaluator
-//	(MMKernel::applies, the conditioned evaluation at REBUILD cadence, modifier.md §3), per scalers through
-//	the ONE §3.7 resolver (MMKernel::perScale), audience through MMKernel::audienceOk, wellbeing sign-routed
-//	to its twin channel at fill (modifier.md §2b). Unit-qualified entries never enter a package
-//	([DEC-unit-modifiers-on-top]). Every rebuild announces itself with its (scope, owner, id, mask) through
-//	emitCacheRebuilt -- the [CASCADE] rebuilt line is how a package's recompute is observable at all.
+//	The gather*Into entry points recompute every slot of one scoped object FROM SOURCE into a CALLER-OWNED
+//	CvCascadeSlotValues: fold every live source's compiled entries at this scope through the shared per-info
+//	fold -- conditions through the ONE evaluator (MMKernel::applies), per scalers through the ONE §3.7 resolver
+//	(MMKernel::perScale), audience through MMKernel::audienceOk, wellbeing sign-routed to its twin channel at
+//	fill (modifier.md §2b). Unit-qualified entries never enter a package ([DEC-unit-modifiers-on-top]).
+//	RECEIVER sums are gathered the same way, combining through the ONE combine seam (InfoValuation::cityRate /
+//	realizedPercentStack -- the calc surface owns the math).
 //
-//	RECEIVER sum slots rebuild here too -- reading the scope packages through their OWN lazy dirty-check (no
-//	dependency-ordered pass; a sum can never sit stale behind a clean package) and combining through the ONE
-//	combine seam (InfoValuation::cityRate / realizedPercentStack -- the calc surface owns the math).
-//
-//	THE ORACLE LEG (state-repositories.md, the endpoint oracle) -- the gather*Into entry points run the SAME
-//	folds over a CALLER-OWNED CvCascadeSlotValues so an endpoint can serve a fresh from-source recompute beside
-//	the stored values and an external consumer can diff them. It is never handed a stored package, which is
-//	what makes "the oracle never repairs" structural; and it does not announce a rebuild, because nothing was
-//	rebuilt -- a [CASCADE] rebuilt line from a sweep would claim a stored slot had just moved when none did.
+//	⛔ IT IS NOT A REBUILD PATH, AND THE STORED SLOTS ARE NEVER WRITTEN HERE. A package is a MAINTAINED SUM
+//	filled only by the apply verbs from the facts ([DEC-maintained-sum]), so this class is the INDEPENDENT
+//	SECOND DERIVATION the stored-vs-oracle pair diffs against. That independence is the entire value: while a
+//	refresh filled the stored side, both served documents came out of these same folds, so the diff could never
+//	turn red and verified nothing (the flaw that killed the old comparison-twin surface).
+//	⚑ It is never handed a stored package -- which is what makes "the oracle never repairs" STRUCTURAL -- and it
+//	announces nothing, because nothing was rebuilt.
 //
 //	⛔ AN ORACLE RUN IS A FULL RECALC AND READS NOTHING OFF THE STORED SURFACE (owner). Every input, including
 //	every CROSS-SCOPE one, is recomputed from source: a city's realized total re-gathers each worked plot, the
@@ -58,15 +54,12 @@ struct CvCascadeEvalCtx;
 class CascadeGather
 {
 public:
-	// THE REBUILD PATH -- refresh the masked slots of the owner's OWN package (the CvDerivedCacheSet refresh
-	// delegate every scope owner binds), counted and announced.
-	static void refreshPlot(const CvPlot& plot, int64_t iMask);
-	static void refreshCity(const CvCity& city, int64_t iMask);
-	static void refreshEmpire(const CvPlayer& player, int64_t iMask);
-	static void refreshTeam(const CvTeam& team, int64_t iMask);
-
-	// THE ORACLE -- every slot of one scoped object, recomputed FROM SOURCE into the caller's document. The
-	// stored package is neither read as an output nor written.
+	// THE ORACLE, AND NOTHING ELSE -- every slot of one scoped object, recomputed FROM SOURCE into the caller's
+	// document. The stored package is neither read as an output nor written.
+	// ⛔ THERE IS NO REBUILD PATH HERE ANY MORE. The stored slots are a MAINTAINED SUM, filled only by the apply
+	// verbs from the facts ([DEC-maintained-sum]); this class is now purely the independent second derivation
+	// the stored-vs-oracle tripwire diffs against. That independence is the whole point: while a refresh filled
+	// the stored side, BOTH served documents came out of these same folds and the diff could not turn red.
 	static void gatherPlotInto(const CvPlot& plot, CvCascadeSlotValues& kValues);
 	static void gatherCityInto(const CvCity& city, CvCascadeSlotValues& kValues);
 	static void gatherEmpireInto(const CvPlayer& player, CvCascadeSlotValues& kValues);

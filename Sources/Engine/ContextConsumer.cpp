@@ -9,7 +9,6 @@
 #include "Engine/CvCity.h"          // onCityPlotChanged -- the ONE plotAttrs applier
 #include "Engine/CvPlot.h"          // getPlotContext -- the stored verdict bitset
 #include "Engine/CityContext.h"     // the city stores' refresh entry points
-#include "Engine/EmpireContext.h"   // rebuildPolicies -- the empire store's refresh entry point
 #include "AI/CvGameAI.h"            // GC.getGame() -- isFinalInitialized, the map-settled guard the adjacency derivation needs
 #include "Engine/CvMap.h"           // plotByIndex / numPlots -- the event's iSrcLoc resolution
 #include "Engine/CvGameCoreUtils.h" // plotDirection / plotCity -- the adjacency fan-out + the radius-city inverse
@@ -73,13 +72,11 @@ public:
 		case SEVT_IMPROVEMENT_CHANGED:
 		case SEVT_ROUTE_CHANGED:
 			refreshPlotByIndex(kEvent.iSrcLoc);
-			refreshVicinityAroundPlot(kEvent.iSrcLoc);
 			break;
 		// A citizen took or left a tile. Only the WORKING city's worked tier can move -- a tile is worked by exactly
 		// one city -- so this hottest of the plot facts costs one city, not a neighbourhood.
 		case SEVT_PLOT_WORKED_CHANGED:
 			refreshPlotByIndex(kEvent.iSrcLoc);
-			refreshVicinityForCity(kEvent.iC, kEvent.iB);
 			break;
 		// A tile's TYPE changed (land <-> ocean): the neighbourhood's coastal water-body size can move, and with it
 		// which cities read as coastal.
@@ -93,67 +90,27 @@ public:
 		// than going through the trait setter, so the init fact is the only announcement those traits ever make.
 		case SEVT_TRAIT_CHANGED:
 		case SEVT_PLAYER_INIT:
-			rebuildPoliciesFor(kEvent.iC);
 			break;
 		// A civic SWAP moves what the empire confers on every one of its cities (json §8), so the empire half of each
 		// city's amenity fold is re-derived.
 		// ⛔ Play-time ONLY. At load the civic facts fire from CvPlayer::read, and the TRAIT ones fire AFTER the
 		// cities deserialize -- so an unguarded fan would double-count against the load build below, which derives
 		// the owner's standing grantors per city once the stream has ended.
-		case SEVT_CIVIC_ADOPTED:
-			rebuildPoliciesFor(kEvent.iC);
-			if (!spineGameLoadInProgress())
-			{
-				refreshEmpireAmenitiesForPlayer(kEvent.iC);
-			}
-			break;
-		// THE CAPITAL MOVED -- a conditioned grant's GATE changed for two cities at once (the one that stopped being
-		// the capital and the one that became it), while the grantor set did not move at all. Without this the
-		// `abolishedAnger` a capital was given would simply stay with it forever ([DEC-no-self-heal] -- a stored
-		// value nothing re-derives). Re-deriving the whole empire half covers both cities without the fact needing
-		// to name the OLD capital.
-		case SEVT_CAPITAL_CHANGED:
-			if (!spineGameLoadInProgress())
-			{
-				refreshEmpireAmenitiesForPlayer(kEvent.iC);
-			}
-			break;
-		// A city CHANGED HANDS -- its empire-conferred amenities belong to a different set of civics now, and the
-		// grantor facts will never restate themselves for it. Without this a conquered city keeps whatever its
-		// PREVIOUS owner's civics conferred, permanently. iC = the new owner, iSrcLoc = the city; a disposal
-		// (NO_PLAYER) has nothing to re-derive. Guarded to play: the load build covers every city already, and at
-		// load this fires from CvCity::read against a city that is still being read.
-		case SEVT_CITY_OWNER_CHANGED:
-			if (!spineGameLoadInProgress() && kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS)
-			{
-				const CvCity* pCity = cityFor(kEvent.iC, kEvent.iSrcLoc);
-				if (pCity != NULL)
-				{
-					pCity->getCityContext().refreshEmpireAmenities();
-				}
-			}
-			break;
+
+		// ⛔ The CAPITAL-MOVED and CITY-CHANGED-HANDS routes are NOT here: both moved amenity state, which
+		// this consumer no longer owns. They are declared by the amenity context itself
+		// (Engine/AmenityContext.h, [DEC-dict-is-a-consumer]).
 
 		// ---- the CITY stores ----
-		// The city's workable RADIUS grew or shrank with its culture level -- the vicinity MEMBERSHIP fact.
-		case SEVT_CITY_CULTURE_LEVEL_CHANGED:
-			refreshVicinityForCity(kEvent.iC, kEvent.iSrcLoc);
-			break;
-		// A network resource entered or left a PLOT GROUP: the obtained-vicinity tier can move with it, since that
-		// tier requires the bonus to be connected to the city. The city's network COUNT needs nothing here -- it
-		// is forwarded from the plot group, so it follows the change with no store to refresh.
-		case SEVT_PLOTGROUP_BONUS_CHANGED:
-			refreshVicinityForPlayer(kEvent.iC);
-			break;
-		// A grantor's OPERATING contribution turned on or off: fold its amenities in or out (+1 / -1). The
-		// OPERATING axis is the right one -- a DORMANT grantor confers nothing (enabler.md §3.2) -- and it now
-		// fires in BOTH phases: processBuilding at play (construction/destruction AND a dormancy flip), and the
-		// enabler's load seed announcing the verdict it just computed. So the store builds itself with no
-		// load-phase special case. ⛔ NOT the presence fact: presence cannot tell dormant from operating, and at
-		// play both would fire for one construction (a double count). iB carries the sign.
-		case SEVT_BUILDING_PROCESSED:
-			foldAmenitiesFor(kEvent.iC, kEvent.iSrcLoc, kEvent.iType, kEvent.iB);
-			break;
+		// ⛔ The VICINITY routes are gone with the radius walk, and NOTHING has replaced them yet: the tier
+		// dictionaries are unmaintained and read empty. That is the deliberate exposed state -- they are rebuilt
+		// driven by the plot facts' own payloads (the bonus +-1, the owner old->new, worked 0/1, the network
+		// fact), never by an applier that re-reads the plot the fact just named.
+		// ⛔ The AMENITY dictionary's BUILDING leg is NOT routed from here, and its absence is the DESIGN rather
+		// than a missing case: that dictionary is its own spine consumer with its own declared interest set
+		// (Engine/AmenityContext.h, [DEC-dict-is-a-consumer]). A store fed by a central switch cannot state what
+		// maintains it -- the answer lives in the router instead of at the store -- which is exactly what this
+		// file is being emptied of, one dictionary at a time.
 		// A government centre appeared or went: EVERY city of that player re-measures its distance to the nearest
 		// one, because the nearest may now be this city or may have just stopped being a centre. The fan-out is
 		// the whole point -- one rare fact, one bounded re-derivation, instead of the per-read min-over-cities
@@ -243,24 +200,6 @@ private:
 		return GET_PLAYER((PlayerTypes)iOwner).getCity(iCityId);
 	}
 
-	static void rebuildPoliciesFor(int iPlayer)
-	{
-		if (iPlayer < 0 || iPlayer >= MAX_PLAYERS)
-		{
-			return;
-		}
-		GET_PLAYER((PlayerTypes)iPlayer).getEmpireContext().rebuildPolicies();
-	}
-
-	static void refreshVicinityForCity(int iOwner, int iCityId)
-	{
-		const CvCity* pCity = cityFor(iOwner, iCityId);
-		if (pCity != NULL)
-		{
-			pCity->getCityContext().refreshVicinityBonuses();
-		}
-	}
-
 	static void refreshHolyCityFor(int iOwner, int iCityId)
 	{
 		const CvCity* pCity = cityFor(iOwner, iCityId);
@@ -276,30 +215,6 @@ private:
 	// change — one emit, at the genuine change — which is what keeps the counter's removal from opening an event
 	// gap ([DEC-close-event-gaps-now]). The AI work-dirty rider the deleted changers carried rides here too
 	// (save.md §6: a deleted changer's side effects must survive at the surviving trigger).
-	static void announceAmenityCrossings(const CvCity* pCity, bool bWasGovernmentCentre)
-	{
-		if (pCity == NULL)
-		{
-			return;
-		}
-		const bool bIsGovernmentCentre = pCity->isGovernmentCenter();
-		if (bIsGovernmentCentre != bWasGovernmentCentre)
-		{
-			emitGovernmentCenterChanged(pCity->getID(), pCity->getOwner(), bIsGovernmentCentre);
-		}
-	}
-
-	static void foldAmenitiesFor(int iOwner, int iCityId, int iBuilding, int iSign)
-	{
-		const CvCity* pCity = cityFor(iOwner, iCityId);
-		if (pCity != NULL)
-		{
-			const bool bWasGovernmentCentre = pCity->isGovernmentCenter();
-			pCity->getCityContext().onBuildingChanged(iBuilding, iSign);
-			announceAmenityCrossings(pCity, bWasGovernmentCentre);
-		}
-	}
-
 	static void refreshAllStoresForCity(int iOwner, int iCityId)
 	{
 		const CvCity* pCity = cityFor(iOwner, iCityId);
@@ -308,14 +223,12 @@ private:
 			return;
 		}
 		const CityContext& kContext = pCity->getCityContext();
-		kContext.refreshVicinityBonuses();
 		kContext.refreshAreaFacts();
 		kContext.refreshHolyCity();
 		kContext.refreshGovernmentCenterDistance();
 		// A city founded mid-game starts empty, so it folds the empire-scope grantors its owner ALREADY has --
 		// the same half the load build covers, at the other moment a city starts existing. Its own buildings
 		// arrive later as ordinary per-building facts.
-		kContext.refreshEmpireAmenities();
 	}
 
 	// The RADIUS-CITY INVERSE: which cities can see this plot. The workable fat cross is symmetric, so the cities
@@ -348,41 +261,16 @@ private:
 		}
 	}
 
-	struct RefreshVicinity
-	{
-		void operator()(const CityContext& kContext) const { kContext.refreshVicinityBonuses(); }
-	};
 	struct RefreshAreaFacts
 	{
 		void operator()(const CityContext& kContext) const { kContext.refreshAreaFacts(); }
 	};
-
-	static void refreshVicinityAroundPlot(int iPlotIndex)
-	{
-		forEachRadiusCity(iPlotIndex, RefreshVicinity());
-	}
 
 	// A land/ocean flip moves the water-body size its NEIGHBOURS read, so the affected cities are those whose CENTRE
 	// is adjacent to the changed plot -- covered by the same radius sweep, which is a superset of adjacency.
 	static void refreshAreaFactsAroundPlot(int iPlotIndex)
 	{
 		forEachRadiusCity(iPlotIndex, RefreshAreaFacts());
-	}
-
-	// A plot-group resource move touches every city of that player: it moves the obtained-vicinity tier, which
-	// requires the bonus to be connected to the city.
-	static void refreshVicinityForPlayer(int iPlayer)
-	{
-		if (iPlayer < 0 || iPlayer >= MAX_PLAYERS)
-		{
-			return;
-		}
-		int iLoop = 0;
-		CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iPlayer);
-		for (const CvCity* pCity = kPlayer.firstCity(&iLoop); pCity != NULL; pCity = kPlayer.nextCity(&iLoop))
-		{
-			pCity->getCityContext().refreshVicinityBonuses();
-		}
 	}
 
 	// Every city of ONE player re-measures. A city gaining or losing government-centre status moves the answer
@@ -422,29 +310,6 @@ private:
 		}
 	}
 
-	// Re-derive the EMPIRE half of every one of this player's cities' amenity folds. ONE entry point for every fact
-	// that can move it -- a civic swapped (the grantor set changed) or the capital moved (a conditioned grant's gate
-	// changed for two cities). ⚖ Uniform rather than a per-fact delta because a CONDITIONED grant is not reversible
-	// by re-evaluating its gate: the withdraw-then-refold inside re-plays the recorded contribution instead.
-	// Both driving facts are RARE, so the whole-empire fan costs nothing at its real frequency.
-	static void refreshEmpireAmenitiesForPlayer(int iPlayer)
-	{
-		if (iPlayer < 0 || iPlayer >= MAX_PLAYERS)
-		{
-			return;
-		}
-		CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iPlayer);
-		if (!kPlayer.isAlive())
-		{
-			return;
-		}
-		int iLoop = 0;
-		for (const CvCity* pCity = kPlayer.firstCity(&iLoop); pCity != NULL; pCity = kPlayer.nextCity(&iLoop))
-		{
-			pCity->getCityContext().refreshEmpireAmenities();
-		}
-	}
-
 	// The LOAD build -- the one full pass over every city's blocks, run once at the end of the load stream.
 	static void refreshAllStoresForAllCities()
 	{
@@ -459,8 +324,7 @@ private:
 			for (const CvCity* pCity = kPlayer.firstCity(&iLoop); pCity != NULL; pCity = kPlayer.nextCity(&iLoop))
 			{
 				const CityContext& kContext = pCity->getCityContext();
-				kContext.refreshVicinityBonuses();
-				kContext.refreshAreaFacts();
+						kContext.refreshAreaFacts();
 				kContext.refreshHolyCity();
 				// AFTER the loop would be wrong only if it read another city's store; it reads government-centre
 				// STATUS, which the save read has already set on every city by now, so measuring here is safe.
@@ -469,8 +333,7 @@ private:
 				// facts, which the save read already emitted. The EMPIRE half does: the civic facts fired from
 				// CvPlayer::read, before this city existed to fan to, so the city folds its owner's standing
 				// civics once, here.
-				kContext.refreshEmpireAmenities();
-			}
+					}
 		}
 	}
 

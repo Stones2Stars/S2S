@@ -424,6 +424,26 @@ void BuildingEnabler::gateAllCities()
 
 void BuildingEnabler::onLoadFinished()
 {
+	// ⛔ SEED THE OPERATING SET FIRST -- the gate pass below and every deposit read downstream ask which
+	// buildings are OPERATING, and the set is empty from birth (CvOperatingBuildings.h: never serialized). This
+	// is the load seed enabler.md par.3.2 names ("the full recompute recomputeOperatingBuildingsInto is the load
+	// seed and the validation oracle"), NOT the tombstoned warm-up walk: that fabricates PRESENCE facts by
+	// walking populated objects, whereas the operate verdict is DERIVED and is computed here.
+	// ⚑ It must precede gateAllCities: a gate evaluated against an empty operating set reads every building as
+	// dormant, so `requires.operate` clauses that consume an active building's provides would all fail.
+	for (int iPlayer = 0; iPlayer < MAX_PLAYERS; ++iPlayer)
+	{
+		const CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iPlayer);
+		if (!kPlayer.isAlive())
+		{
+			continue;
+		}
+		int iLoop = 0;
+		for (const CvCity* pLoopCity = kPlayer.firstCity(&iLoop); pLoopCity != NULL; pLoopCity = kPlayer.nextCity(&iLoop))
+		{
+			EnablerKernel::seedOperatingBuildings(pLoopCity);
+		}
+	}
 	// the par.7.1 order rule's "gate once after the stream ends" option: every city's full gate pass, exactly
 	// once, against the fully-loaded state (fires from GAME_LOAD_FINISHED at the end of onFinalInitialized).
 	gateAllCities();

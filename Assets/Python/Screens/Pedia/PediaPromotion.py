@@ -2,6 +2,7 @@
 
 from CvPythonExtensions import *
 GC = CyGlobalContext()
+INFO = CyInfo()
 TRNSLTR = CyTranslator()
 
 class PediaPromotion:
@@ -75,25 +76,25 @@ class PediaPromotion:
 		aList1 = [] # Requires
 		iType = CvThePromotionInfo.getTechPrereq()
 		if iType > -1:
-			aList1.append((GC.getTechInfo(iType).getButton(), "TECH" + str(iType), ""))
+			aList1.append((INFO.getButton("TECH_", iType), "TECH" + str(iType), ""))
 			szLogic = szAnd
 		iType = CvThePromotionInfo.getStateReligionPrereq()
 		if iType > -1:
-			aList1.append((GC.getReligionInfo(iType).getButton(), "RELIGION" + str(iType), szLogic))
+			aList1.append((INFO.getButton("RELIGION_", iType), "RELIGION" + str(iType), szLogic))
 			szLogic = szAnd
 		iType = CvThePromotionInfo.getPrereqPromotion()
 		if iType > -1:
-			aList1.append((GC.getPromotionInfo(iType).getButton(), "PROMO" + str(iType), szLogic))
+			aList1.append((INFO.getButton("PROMOTION_", iType), "PROMO" + str(iType), szLogic))
 			szLogic = ""
 		iOr1 = CvThePromotionInfo.getPrereqOrPromotion1()
 		iOr2 = CvThePromotionInfo.getPrereqOrPromotion2()
 		if iOr1 > -1 and iOr2 > -1:
 			szLogic += szBracketL
 		if iOr1 > -1:
-			aList1.append((GC.getPromotionInfo(iOr1).getButton(), "PROMO" + str(iOr1), szLogic))
+			aList1.append((INFO.getButton("PROMOTION_", iOr1), "PROMO" + str(iOr1), szLogic))
 			szLogic = szOr
 		if iOr2 > -1:
-			aList1.append((GC.getPromotionInfo(iOr2).getButton(), "PROMO" + str(iOr2), szLogic))
+			aList1.append((INFO.getButton("PROMOTION_", iOr2), "PROMO" + str(iOr2), szLogic))
 		aList2 = [] # Leads To
 		for iType in xrange(GC.getNumPromotionInfos()):
 			CvPromotionInfo = GC.getPromotionInfo(iType)

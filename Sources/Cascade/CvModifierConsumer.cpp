@@ -1,23 +1,21 @@
 //
 //	CvModifierConsumer -- the modifier cascade's own spine consumer (see the header). The switch below names
-//	only the event's SEMANTICS (which repo its iType indexes; which state a stateful event embodies); every
-//	MASK is derived from the deposit index -- routeFor for a source-carrying event, the condition-dependency
-//	routes for a state flip a deposit's gate reads. ONE application helper marks packages + receiver sums.
-//	The ONLY non-derived masks are the RULED blankets, each carrying its justifying constraint at the case:
-//	scope-object lifecycle/composition events (city founded / ownership moves) and the golden-age engine
-//	member-mirror are not deposit-addressed, so no route exists in the index to derive.
+//	only the event's SEMANTICS (which repo its iType indexes; which state a stateful event embodies); what a
+//	source DEPOSITS is never decided here -- it comes from that source's own compiled entries, resolved through
+//	the ONE per-entry resolve (MMKernel::resolveEntry) this consumer shares with the endpoint oracle.
 //
-//	A PLOT-FACT predicate route names its owner objects through mc_applyPlotPredicate, whose fan is read off
-//	CascadeGather's per-scope ctx binding rather than guessed: the plot itself, the city SITTING ON it and that
-//	city's package are the only ones a plot verdict can move, because those are the only folds
-//	that bind a plot -- so a one-tile fact never reaches the player. HAS_COAST and HAS_FRESHWATER additionally
-//	fan ONE HOP (the two adjacency verdicts, PlotContext::adjacencyFactsMask).
+//	⚖ A FACT APPLIES; NOTHING IS MARKED AND NOTHING IS REBUILT ([DEC-maintained-sum]). The DOMAIN fact names the
+//	SOURCE and carries the DIRECTION as a signed multiplicity (+1 arriving, -1 leaving, ±N for a count), the
+//	compiled index names that source's deposits, and applying them IS the maintenance -- so every slot is correct
+//	at the instant the fact arrives, with nothing deferred and no load-bracket drain to order.
+//	⛔ A MISSED EMIT therefore leaves a loud compounding error that nothing re-derives. That is the design, not a
+//	weakness of it ([DEC-no-self-heal]): it is how the missing fact gets found.
 //
-//	⚠ A MARK HERE IS ALSO THE REBUILD (state-repositories.md: "the rebuild moves onto the mark"). Reads are bare
-//	fetches, so nothing downstream will recompute later -- the recompute happens at markMask, inside this
-//	consumer, on the event that derived the mark. Inside the load bracket the marks are BANKED instead and
-//	drained once at GAME_LOAD_FINISHED (mc_drainLoadMarks); the walk order there is irrelevant because a
-//	rebuild reads its cross-scope inputs through the package's rebuild-path accessors.
+//	⚠ WHAT IS NOT WIRED HERE, and is a HOLE rather than a decision: the COUNT route (plane B) and the ATOM route
+//	(plane C). Both are reverse indices off the same compiled deposits, and both still answer as MASKS -- a mask
+//	names channels, and a channel has nothing to apply. They land when DepositIndex returns the DEPOSITS an atom
+//	gates and a count scales; until then a deposit conditioned on a predicate, or scaled by a count, is not
+//	maintained when that predicate or count moves.
 //
 
 #include "CvGameCoreDLL.h"
@@ -25,7 +23,8 @@
 #include "CvCascadePackage.h"
 #include "CvCascadeChannelRegistry.h"
 #include "Data/CvDepositIndex.h"        // routeFor + the dependency routes -- the ONE mark derivation
-#include "Data/CvDepositRead.h"         // MMKernel::traitData -- the active trait set's info
+#include "Data/CvDepositRead.h"         // MMKernel::resolveEntry -- the ONE per-entry resolve, shared with the oracle
+#include "Data/CvInfoValuation.h"       // the eval-ctx fill seam (the contexts ARE the eval state)
 #include "Spine/CvEventSpine.h"
 #include "Defines/CvGlobals.h"
 #include "Engine/CvMap.h"
@@ -56,175 +55,6 @@ namespace
 {
 	// ---- the ONE mark application: a derived route x the owner objects the event names ----
 
-	void mc_invalidate(CvCascScope eScope, int iOwner, int iId, int64_t iMask, const char* szSource)
-	{
-		if (iMask != 0)
-		{
-			emitCacheInvalidate((int)eScope, iOwner, iId, iMask, szSource);
-		}
-	}
-
-	void mc_markCity(const CvCity* pCity, int64_t iMask, const char* szSource)
-	{
-		if (pCity == NULL || iMask == 0)
-		{
-			return;
-		}
-		pCity->getCascadePackage().markMask(iMask);
-		mc_invalidate(CASC_SCOPE_CITY, (int)pCity->getOwner(), pCity->getID(), iMask, szSource);
-	}
-
-	void mc_markPlot(const CvPlot* pPlot, int64_t iMask, const char* szSource)
-	{
-		if (pPlot == NULL || iMask == 0)
-		{
-			return;
-		}
-		pPlot->getCascadePackage().markMask(iMask);
-		mc_invalidate(CASC_SCOPE_PLOT, (int)pPlot->getOwner(), GC.getMap().plotNum(pPlot->getX(), pPlot->getY()), iMask, szSource);
-	}
-
-	void mc_markEmpire(const CvPlayer* pPlayer, int64_t iMask, const char* szSource)
-	{
-		if (pPlayer == NULL || iMask == 0)
-		{
-			return;
-		}
-		pPlayer->getCascadePackage().markMask(iMask);
-		mc_invalidate(CASC_SCOPE_EMPIRE, (int)pPlayer->getID(), (int)pPlayer->getID(), iMask, szSource);
-	}
-
-	// A re-based plot's realized sums, ONE EVENT MARKS BOTH LEVELS: the working city's rates AND the owner's
-	// empire sums fed by the plot-authored channels (culture, the dual-consumer, reaches both). The masks
-	// derive from the minted plot channel set (scopeReceiversFedBy), never a hand-listed all-receivers.
-	void mc_markPlotFedSums(const CvPlot* pPlot, const char* szSource)
-	{
-		if (pPlot == NULL)
-		{
-			return;
-		}
-		mc_markCity(pPlot->getWorkingCity(),
-			CascadeChannelRegistry::scopeReceiversFedBy(CASC_SCOPE_CITY, CASC_SCOPE_PLOT), szSource);
-		if (pPlot->getOwner() != NO_PLAYER)
-		{
-			mc_markEmpire(&GET_PLAYER(pPlot->getOwner()),
-				CascadeChannelRegistry::scopeReceiversFedBy(CASC_SCOPE_EMPIRE, CASC_SCOPE_PLOT), szSource);
-		}
-	}
-
-	// The EMPIRE receiver bits whose channel is a COMMERCE channel -- derived from the MINTED receiver set, so
-	// a receiver that is not a commerce channel is never marked and no bit is hand-listed. This is the reach of
-	// the city's production->commerce PROCESS conversion: the gather folds getProductionProcess()'s
-	// productionToCommerce into the per-city commerce SPLIT, and that split is the per-city quantity ONLY an
-	// empire commerce receiver sums (a city's own receiver rates are the plain §2a combine, which reads no
-	// process and no slider).
-	int64_t mc_empireCommerceReceiverMask()
-	{
-		int64_t iMask = 0;
-		const int iReceivers = CascadeChannelRegistry::scopeReceiverCount(CASC_SCOPE_EMPIRE);
-		for (int iReceiver = 0; iReceiver < iReceivers; ++iReceiver)
-		{
-			const int iChannel = CascadeChannelRegistry::scopeReceiverChannel(CASC_SCOPE_EMPIRE, iReceiver);
-			if (iChannel < 0)
-			{
-				continue;
-			}
-			if (infoFamilyCommerce(CascadeChannelRegistry::channelFamily(iChannel)) >= 0)
-			{
-				iMask |= CascadeChannelRegistry::scopeReceiverBit(CASC_SCOPE_EMPIRE, iChannel);
-			}
-		}
-		return iMask;
-	}
-
-	// Apply a derived route to the owner objects the event names. pCity/pPlot narrow the fan to the event's
-	// own object; a NULL city with city-reaching bits fans to every owner city (an above-city deposit rolls
-	// DOWN -- SourceRoute::cityFanAll is the per-CHANNEL statement of the same fact for the sums).
-	void mc_applyRoute(const SourceRoute* pRoute, const CvPlayer* pPlayer, const CvCity* pCity, const CvPlot* pPlot,
-		const char* szSource)
-	{
-		if (pRoute == NULL || pRoute->empty())
-		{
-			return;
-		}
-		// PLOT packages: the event's own plot; a plot-authoring source with no event plot (a civic's plot
-		// flats) reaches every plot the owner works -- fanned through the owner's cities' radii.
-		const int64_t iPlotMask = pRoute->packageMask[(int)CASC_SCOPE_PLOT];
-		if (iPlotMask != 0)
-		{
-			if (pPlot != NULL)
-			{
-				mc_markPlot(pPlot, iPlotMask, szSource);
-			}
-			else if (pPlayer != NULL)
-			{
-				for (CvPlayer::city_iterator cityIterator = pPlayer->beginCities(); cityIterator != pPlayer->endCities(); ++cityIterator)
-				{
-					const CvCity* pLoopCity = *cityIterator;
-					const int iNumPlots = pLoopCity->getNumCityPlots();
-					for (int iPlotIndex = 0; iPlotIndex < iNumPlots; ++iPlotIndex)
-					{
-						mc_markPlot(pLoopCity->getCityIndexPlot(iPlotIndex), iPlotMask, szSource);
-					}
-				}
-			}
-		}
-		// CITY packages
-		const int64_t iCityMask = pRoute->packageMask[(int)CASC_SCOPE_CITY];
-		if (iCityMask != 0)
-		{
-			if (pCity != NULL)
-			{
-				mc_markCity(pCity, iCityMask, szSource);
-			}
-			else if (pPlayer != NULL)
-			{
-				for (CvPlayer::city_iterator cityIterator = pPlayer->beginCities(); cityIterator != pPlayer->endCities(); ++cityIterator)
-				{
-					mc_markCity(*cityIterator, iCityMask, szSource);
-				}
-			}
-		}
-		// EMPIRE package
-		const int64_t iEmpireMask = pRoute->packageMask[(int)CASC_SCOPE_EMPIRE];
-		if (iEmpireMask != 0 && pPlayer != NULL)
-		{
-			pPlayer->getCascadePackage().markMask(iEmpireMask);
-			mc_invalidate(CASC_SCOPE_EMPIRE, (int)pPlayer->getID(), (int)pPlayer->getID(), iEmpireMask, szSource);
-		}
-		// TEAM package
-		const int64_t iTeamMask = pRoute->packageMask[(int)CASC_SCOPE_TEAM];
-		if (iTeamMask != 0 && pPlayer != NULL)
-		{
-			const CvTeam& team = GET_TEAM(pPlayer->getTeam());
-			team.getCascadePackage().markMask(iTeamMask);
-			mc_invalidate(CASC_SCOPE_TEAM, (int)pPlayer->getID(), (int)team.getID(), iTeamMask, szSource);
-		}
-		// the RECEIVER sums the touched channels feed (ONE derivation marks BOTH levels)
-		if (pRoute->citySumMask != 0)
-		{
-			const CvCity* pSumCity = (pCity != NULL) ? pCity : ((pPlot != NULL) ? pPlot->getWorkingCity() : NULL);
-			if (pSumCity != NULL && !pRoute->cityFanAll)
-			{
-				pSumCity->getCascadePackage().markMask(pRoute->citySumMask);
-				mc_invalidate(CASC_SCOPE_CITY, (int)pSumCity->getOwner(), pSumCity->getID(), pRoute->citySumMask, szSource);
-			}
-			else if (pPlayer != NULL)
-			{
-				for (CvPlayer::city_iterator cityIterator = pPlayer->beginCities(); cityIterator != pPlayer->endCities(); ++cityIterator)
-				{
-					(*cityIterator)->getCascadePackage().markMask(pRoute->citySumMask);
-				}
-				mc_invalidate(CASC_SCOPE_CITY, (int)pPlayer->getID(), -1, pRoute->citySumMask, szSource);
-			}
-		}
-		if (pRoute->empireSumMask != 0 && pPlayer != NULL)
-		{
-			pPlayer->getCascadePackage().markMask(pRoute->empireSumMask);
-			mc_invalidate(CASC_SCOPE_EMPIRE, (int)pPlayer->getID(), (int)pPlayer->getID(), pRoute->empireSumMask, szSource);
-		}
-	}
-
 	// One plot-substrate id -> its TYPE string, for the dependency route keyed by that type. ONE lookup shared by
 	// the arriving and the departing id, so the two directions cannot drift apart.
 	const char* mc_substrateTypeName(int iEventId, int iId)
@@ -250,73 +80,345 @@ namespace
 		}
 	}
 
-	// The source-carrying application: the source info's own deposits + everything conditioned ON the source
-	// (a deposit gated on this entity's presence re-evaluates -- the dependency route keyed by its TYPE).
-	void mc_applySource(const CvInfo* pSourceInfo, const char* szTypeName,
-		const CvPlayer* pPlayer, const CvCity* pCity, const CvPlot* pPlot, const char* szSource)
+	// ---- PLANE A: THE SOURCE ROUTE -- a source arrived or left, so its deposits are applied ([DEC-maintained-sum]) ----
+	//
+	// iMultiplicity is SIGNED and is the whole of the direction: +1 for a source arriving, -1 for one leaving,
+	// ±N where the fact moves a count (an owned-building count, a project count). resolveEntry multiplies the
+	// resolved value by it, so a withdrawal is the same walk with the sign flipped -- there is no separate
+	// removal path to keep in step.
+	//
+	// ⚠ WITHDRAWAL EXACTNESS IS AN EMIT-ORDERING CONTRACT, not something this function can enforce. The `per`
+	// scaler resolves against the ctx AS IT STANDS, so a removal must be announced while the source's other
+	// operands still hold the values its deposit was computed against (state-repositories.md § THE INVARIANT).
+	// A fact emitted after the state moved withdraws a different number than it deposited and leaves a residue
+	// nothing re-derives.
+
+	// ⚖ THE SIGNED MULTIPLICITY -- the DIRECTION a fact carries, read from that fact's own documented payload.
+	// This is the ONE place the per-fact convention is decoded, so a call site never repeats it and the two
+	// directions of one fact cannot drift apart. Three shapes, all authored on the spine (CvEventSpine.h):
+	//   - the EVENT ID itself is the direction, where the fact is a PAIR (activated/dormanted, added/removed);
+	//   - a HAS/ADD boolean in iA -- the fact names a presence, so it is +1 held / -1 lost;
+	//   - a signed COUNT DELTA in iB -- the fact already carries ±N, which is exactly what a multiplicity is
+	//     (a specialist count moving by 3 deposits three times over, and withdraws the same way).
+	// ⛔ Returning 0 is NOT a default to fall back on: it applies nothing. A source-carrying fact whose
+	// convention is not decoded here would silently stop maintaining its deposits, so an unlisted one is a hole
+	// to close at this switch, never a case to let fall through.
+	int mc_sourceDirection(const CvSpineEvent& kEvent)
 	{
-		if (pSourceInfo != NULL)
+		switch (kEvent.iEventId)
 		{
-			mc_applyRoute(&DepositIndex::routeFor(pSourceInfo), pPlayer, pCity, pPlot, szSource);
-		}
-		if (szTypeName != NULL)
-		{
-			mc_applyRoute(DepositIndex::dependencyForType(std::string(szTypeName)), pPlayer, pCity, pPlot, szSource);
+		// the fact is a PAIR: the id says which way
+		case SEVT_BUILDING_ACTIVATED:   return 1;
+		case SEVT_BUILDING_DORMANTED:   return -1;
+		case SEVT_BONUS_ADDED:          return 1;
+		case SEVT_BONUS_REMOVED:        return -1;
+		// a presence BOOLEAN in iA
+		case SEVT_RELIGION_CHANGED:
+		case SEVT_CORPORATION_CHANGED:
+		case SEVT_TECH_CHANGED:
+		case SEVT_TRAIT_CHANGED:
+		case SEVT_HERITAGE_CHANGED:     return (kEvent.iA != 0) ? 1 : -1;
+		// a signed COUNT DELTA in iB
+		case SEVT_SPECIALIST_CHANGED:
+		case SEVT_PROJECT_CHANGED:
+		case SEVT_PLOTGROUP_BONUS_CHANGED:
+		case SEVT_VICINITY_BONUS_CHANGED: return kEvent.iB;
+		default:                        return 0;
 		}
 	}
 
-	// ---- the PLOT-FACT predicate routes: the owner objects whose rebuild READS the announcing plot ----
-	//
-	// A plot predicate (HAS_IRRIGATION / HAS_LANDMARK / IS_OWNED / HAS_COAST / HAS_FRESHWATER / the relief block)
-	// is answered off the eval ctx's PLOT (CvConditionEval::ev_evalPredicate -> PlotContext), and CascadeGather
-	// binds that plot PER SCOPE -- which IS the whole derivation of where a flip can reach:
-	//   PLOT   fold -- evalCtx.plotContext = the plot's own silo                (gt_gatherPlotChannels)
-	//   CITY   fold -- evalCtx.plotContext = THAT CITY'S OWN CENTRE plot's silo (gt_fillCityEvalCtx -> InfoValuation::
-	//                  fillEvalCtx -> CityContext::fillEvalCtx: the city hands in its own + its centre plot's)
-	//   EMPIRE and TEAM folds bind NO plot at all (EmpireContext::fillEvalCtx fills player/team only; the team
-	//   gather sets team/player), so a plot predicate is constantly not-present there -- the evaluator's
-	//   NULL-object convention -- and those packages cannot move on a plot fact.
-	// So the objects a plot fact names are: the plot, the city SITTING ON it (if any) and that city's
-	// own package. ⛔ The PLAYER is therefore passed ONLY together with that city: every player-reaching
-	// leg of mc_applyRoute (the empire/team packages, the city-less all-cities fan, the cityFanAll sum fan) would
-	// otherwise turn a ONE-TILE fact into an empire-wide sweep -- the widening "emit liberally, mark precisely"
-	// forbids (event-spine.md; [DEC-no-self-heal]).
-	// The realized SUMS still reach the city that WORKS the plot: mc_applyRoute's receiver leg falls back to
-	// pPlot->getWorkingCity(), which is the city whose rate sums this plot's package (the worked-plot Sigma the
-	// gather reads through CvCity::isWorkingPlot).
-	void mc_applyPlotPredicate(CvCascPredKind ePredicate, const CvPlot* pPlot, bool bPlotPackageAlreadyMarked,
-		const char* szSource)
+	// The plot SEGMENT a plot-resident source deposits into. The §2a floors make the resolved plot slot
+	// non-linear, so it cannot itself be a maintained sum -- each SEGMENT is a plain sum and is what the delta
+	// lands in (CvCascadePackage: applyPlotSegment re-derives the floored slot from the three).
+	CvCascadePackage<CvPlot>::PlotSegment mc_plotSegmentFor(int iEventId)
 	{
-		if (pPlot == NULL)
+		switch (iEventId)
+		{
+		case SEVT_TERRAIN_CHANGED:
+		case SEVT_FEATURE_CHANGED:
+		case SEVT_PLOT_BONUS_CHANGED:
+			return CvCascadePackage<CvPlot>::PLOTSEG_NATURE;        // the PRE-improvement substrate
+		case SEVT_IMPROVEMENT_CHANGED:
+			return CvCascadePackage<CvPlot>::PLOTSEG_IMPROVEMENT;   // floored at -nature at resolve
+		default:
+			return CvCascadePackage<CvPlot>::PLOTSEG_REST;          // route + the owner's plot-scope flats
+		}
+	}
+
+	// One city's share of a source's deposits. Its OWN eval ctx, so the entry's `per` scalers and conditions
+	// resolve against THIS city -- which is the whole reason an above-city deposit is folded per city rather
+	// than resolved once and handed out.
+	void mc_applyCityDeposits(const std::vector<CvModEntry*>& entries, int iMultiplicity, int iSourceIndex, const CvCity& city)
+	{
+		CvCascadeEvalCtx evalCtx;
+		InfoValuation::fillEvalCtx(city.getCityContext(), GET_PLAYER(city.getOwner()).getEmpireContext(), NULL, evalCtx);
+		for (size_t iEntry = 0; iEntry < entries.size(); ++iEntry)
+		{
+			const CvModEntry* pEntry = entries[iEntry];
+			int iChannel = -1;
+			bool bPercentSide = false;
+			int64_t iValue = 0;
+			if (pEntry == NULL || !MMKernel::resolveEntry(*pEntry, iMultiplicity, CASC_SCOPE_CITY,
+				evalCtx, NULL, 0, false, iChannel, bPercentSide, iValue))
+			{
+				continue;
+			}
+			if (bPercentSide)
+			{
+				city.getCascadePackage().applyPercent(iChannel, (int)iValue);
+			}
+			else
+			{
+				city.getCascadePackage().applyFlat(iChannel, iValue);
+			}
+		}
+		city.getCascadePackage().noteSourceApplied(iSourceIndex, iMultiplicity);
+	}
+
+	// Apply ONE source's compiled deposits into every package they feed. The scopes a source reaches come from
+	// its own entries (resolveEntry declines any entry not at the scope being applied), so nothing here decides
+	// what a source deposits -- only WHERE the owner objects are.
+	void mc_applySourceDeposits(const CvInfo* pSourceInfo, int iMultiplicity,
+		const CvPlayer* pPlayer, const CvCity* pCity, const CvPlot* pPlot,
+		CvCascadePackage<CvPlot>::PlotSegment ePlotSegment)
+	{
+		if (pSourceInfo == NULL || iMultiplicity == 0)
 		{
 			return;
 		}
-		const SourceRoute* pRoute = DepositIndex::dependencyForPredicate(ePredicate);
-		if (pRoute == NULL || pRoute->empty())
+		const CvModifiers* pModifiers = pSourceInfo->getModifiers();
+		if (pModifiers == NULL || pModifiers->empty())
+		{
+			return;
+		}
+		const std::vector<CvModEntry*>& entries = pModifiers->entries();
+		// the apply path's own liveness key -- resolved once, recorded wherever these deposits land
+		const int iSourceIndex = DepositIndex::sourceIndexOf(pSourceInfo);
+
+		// PLOT: the plot the fact NAMES, and no other. A plot-scope deposit is authored only by a PLOT-RESIDENT
+		// source, whose output is its own tile's -- an effect on a NEIGHBOURING tile is the deliveryguy's and is
+		// authored on that tile's improvement ([DEC-deliveryguy]). So a plot-scope entry with no named plot has
+		// no target by construction and nothing is dropped by declining.
+		if (pPlot != NULL)
+		{
+			CvCascadeEvalCtx evalCtx;
+			InfoValuation::fillEvalCtxAtPlot(*pPlot, evalCtx);
+			for (size_t iEntry = 0; iEntry < entries.size(); ++iEntry)
+			{
+				const CvModEntry* pEntry = entries[iEntry];
+				int iChannel = -1;
+				bool bPercentSide = false;
+				int64_t iValue = 0;
+				if (pEntry == NULL || !MMKernel::resolveEntry(*pEntry, iMultiplicity, CASC_SCOPE_PLOT,
+					evalCtx, pPlot, 0, false, iChannel, bPercentSide, iValue))
+				{
+					continue;
+				}
+				// the ORIGIN RULE: plot is yield-only, so a plot-scope percent has no side to land on
+				if (!bPercentSide)
+				{
+					pPlot->getCascadePackage().applyPlotSegment(ePlotSegment, iChannel, iValue);
+				}
+			}
+			pPlot->getCascadePackage().noteSourceApplied(iSourceIndex, iMultiplicity);
+		}
+
+		// CITY: the city the fact names, else every city of the owner -- an above-city deposit rolls DOWN, and
+		// the `cities` plural fan resolves PER CITY so each one's own `per` scalers and conditions apply.
+		if (pCity != NULL)
+		{
+			mc_applyCityDeposits(entries, iMultiplicity, iSourceIndex, *pCity);
+		}
+		else if (pPlayer != NULL)
+		{
+			for (CvPlayer::city_iterator cityIterator = pPlayer->beginCities();
+				cityIterator != pPlayer->endCities(); ++cityIterator)
+			{
+				if (*cityIterator != NULL)
+				{
+					mc_applyCityDeposits(entries, iMultiplicity, iSourceIndex, **cityIterator);
+				}
+			}
+		}
+
+		// EMPIRE and TEAM: both read the empire ctx (team is the TECH BRIDGE and holds no context of its own --
+		// every team fact is asked of the player, [DEC-scope-contexts]).
+		if (pPlayer != NULL)
+		{
+			CvCascadeEvalCtx evalCtx;
+			pPlayer->getEmpireContext().fillEvalCtx(evalCtx);
+			for (size_t iEntry = 0; iEntry < entries.size(); ++iEntry)
+			{
+				const CvModEntry* pEntry = entries[iEntry];
+				int iChannel = -1;
+				bool bPercentSide = false;
+				int64_t iValue = 0;
+				if (pEntry != NULL && MMKernel::resolveEntry(*pEntry, iMultiplicity, CASC_SCOPE_EMPIRE,
+					evalCtx, NULL, 0, false, iChannel, bPercentSide, iValue))
+				{
+					if (bPercentSide)
+					{
+						pPlayer->getCascadePackage().applyPercent(iChannel, (int)iValue);
+					}
+					else
+					{
+						pPlayer->getCascadePackage().applyFlat(iChannel, iValue);
+					}
+				}
+				iChannel = -1;
+				bPercentSide = false;
+				iValue = 0;
+				if (pEntry != NULL && MMKernel::resolveEntry(*pEntry, iMultiplicity, CASC_SCOPE_TEAM,
+					evalCtx, NULL, 0, false, iChannel, bPercentSide, iValue))
+				{
+					const CvTeam& team = GET_TEAM(pPlayer->getTeam());
+					if (bPercentSide)
+					{
+						team.getCascadePackage().applyPercent(iChannel, (int)iValue);
+					}
+					else
+					{
+						team.getCascadePackage().applyFlat(iChannel, iValue);
+					}
+				}
+			}
+			pPlayer->getCascadePackage().noteSourceApplied(iSourceIndex, iMultiplicity);
+			GET_TEAM(pPlayer->getTeam()).getCascadePackage().noteSourceApplied(iSourceIndex, iMultiplicity);
+		}
+	}
+
+	// ---- PLANES B and C: the COUNT route and the ATOM route ----
+	//
+	// Both move deposits ALREADY IN a slot, which is what makes them one function: plane B scales a deposit by
+	// the count's own delta, plane C withdraws or re-deposits one whose gate crossed. They differ only in what
+	// the caller passes -- the delta, and whether the `per` scaler applies (MMKernel::PerScaling).
+	//
+	// ⛔ THE LIVENESS TEST IS THE PACKAGE'S OWN RECORD, NOT THE HAVE AXIS. Applying for a source that never
+	// deposited here would invent a contribution from nothing, and asking whether the OWNER HOLDS the source is
+	// a different question: a present-but-DORMANT building deposits nothing, so the HAVE axis answers yes where
+	// the truth is no. hasAppliedSource cannot disagree with what was applied, because it IS what was applied.
+	//
+	// ⚠ Plane C's SIGN is the crossing direction the fact carries, and its withdrawal is exact only if that fact
+	// is emitted while the old state still holds (§ THE INVARIANT) -- the same emit-ordering contract plane A
+	// answers to, and the one thing this function cannot enforce for itself.
+	void mc_applyGated(const std::vector<DepositIndex::GatedDeposit>* pGated, int iDelta,
+		MMKernel::PerScaling ePerScaling, const CvPlayer* pPlayer, const CvCity* pCity, const CvPlot* pPlot)
+	{
+		if (pGated == NULL || iDelta == 0)
+		{
+			return;
+		}
+		for (size_t iGated = 0; iGated < pGated->size(); ++iGated)
+		{
+			const DepositIndex::GatedDeposit& kGated = (*pGated)[iGated];
+			if (kGated.deposit == NULL || kGated.deposit->entry == NULL)
+			{
+				continue;
+			}
+			const CvCascScope eScope = (CvCascScope)kGated.deposit->scopeIdx;
+			int iChannel = -1;
+			bool bPercentSide = false;
+			int64_t iValue = 0;
+			if (eScope == CASC_SCOPE_PLOT)
+			{
+				if (pPlot == NULL || !pPlot->getCascadePackage().hasAppliedSource(kGated.sourceIndex))
+				{
+					continue;
+				}
+				CvCascadeEvalCtx evalCtx;
+				InfoValuation::fillEvalCtxAtPlot(*pPlot, evalCtx);
+				if (MMKernel::resolveEntry(*kGated.deposit->entry, iDelta, eScope, evalCtx, pPlot, 0, false,
+					iChannel, bPercentSide, iValue, ePerScaling) && !bPercentSide)
+				{
+					pPlot->getCascadePackage().applyPlotSegment(
+						CvCascadePackage<CvPlot>::PLOTSEG_REST, iChannel, iValue);
+				}
+				continue;
+			}
+			if (eScope == CASC_SCOPE_CITY)
+			{
+				if (pCity == NULL || !pCity->getCascadePackage().hasAppliedSource(kGated.sourceIndex))
+				{
+					continue;
+				}
+				CvCascadeEvalCtx evalCtx;
+				InfoValuation::fillEvalCtx(pCity->getCityContext(),
+					GET_PLAYER(pCity->getOwner()).getEmpireContext(), NULL, evalCtx);
+				if (MMKernel::resolveEntry(*kGated.deposit->entry, iDelta, eScope, evalCtx, NULL, 0, false,
+					iChannel, bPercentSide, iValue, ePerScaling))
+				{
+					if (bPercentSide) pCity->getCascadePackage().applyPercent(iChannel, (int)iValue);
+					else              pCity->getCascadePackage().applyFlat(iChannel, iValue);
+				}
+				continue;
+			}
+			if (pPlayer == NULL)
+			{
+				continue;
+			}
+			CvCascadeEvalCtx evalCtx;
+			pPlayer->getEmpireContext().fillEvalCtx(evalCtx);
+			if (eScope == CASC_SCOPE_TEAM)
+			{
+				const CvTeam& team = GET_TEAM(pPlayer->getTeam());
+				if (!team.getCascadePackage().hasAppliedSource(kGated.sourceIndex))
+				{
+					continue;
+				}
+				if (MMKernel::resolveEntry(*kGated.deposit->entry, iDelta, eScope, evalCtx, NULL, 0, false,
+					iChannel, bPercentSide, iValue, ePerScaling))
+				{
+					if (bPercentSide) team.getCascadePackage().applyPercent(iChannel, (int)iValue);
+					else              team.getCascadePackage().applyFlat(iChannel, iValue);
+				}
+				continue;
+			}
+			if (!pPlayer->getCascadePackage().hasAppliedSource(kGated.sourceIndex))
+			{
+				continue;
+			}
+			if (MMKernel::resolveEntry(*kGated.deposit->entry, iDelta, eScope, evalCtx, NULL, 0, false,
+				iChannel, bPercentSide, iValue, ePerScaling))
+			{
+				if (bPercentSide) pPlayer->getCascadePackage().applyPercent(iChannel, (int)iValue);
+				else              pPlayer->getCascadePackage().applyFlat(iChannel, iValue);
+			}
+		}
+	}
+
+	// The source-carrying application: the source's own deposits (PLANE A, applied here) plus everything
+	// conditioned ON the source -- a deposit gated on this entity's presence. That second half is the ATOM
+	// route (plane C) and is NOT wired: the reverse index still answers it as a MASK, and a mask has nothing
+	// to apply. It stays a hole until dependencyForType returns the deposits the atom gates.
+	void mc_applySource(const CvInfo* pSourceInfo, int iMultiplicity, int iEventId,
+		const CvPlayer* pPlayer, const CvCity* pCity, const CvPlot* pPlot)
+	{
+		mc_applySourceDeposits(pSourceInfo, iMultiplicity, pPlayer, pCity, pPlot, mc_plotSegmentFor(iEventId));
+	}
+
+
+	// A PLOT PREDICATE's verdict moved, so the deposits it gates are re-applied on the plot and the city SITTING
+	// on it (the only two folds that bind a plot; a one-tile fact never reaches the player, which is what keeps
+	// "emit liberally, apply precisely" honest).
+	//
+	// ⛔ THE DIRECTION IS PER PREDICATE AND CANNOT BE ONE SIGN FOR THE FACT. A substrate swap moves several
+	// verdicts AT ONCE AND IN BOTH DIRECTIONS -- grassland to hills LOSES IS_FLATLANDS and GAINS HAS_HILLS on a
+	// single fact -- so a caller passing "the fact's direction" would withdraw deposits it should be adding.
+	// Each predicate carries its own crossing: +1 the verdict became true, -1 it became false.
+	// ⚠ And the withdrawal is exact only if the fact reaches here while the OLD state still holds
+	// (state-repositories.md § THE INVARIANT): resolveEntry evaluates the deposit's whole gate against the ctx
+	// as it stands, so a -1 announced after the substrate already moved resolves a different number than it
+	// deposited. That is an emit-ordering contract, not something this function can enforce.
+	void mc_applyPlotPredicate(CvCascPredKind ePredicate, int iCrossing, const CvPlot* pPlot)
+	{
+		if (pPlot == NULL || iCrossing == 0)
 		{
 			return;
 		}
 		const CvCity* pPlotCity = pPlot->getPlotCity();
 		const CvPlayer* pPlayer = (pPlotCity != NULL) ? &GET_PLAYER(pPlotCity->getOwner()) : NULL;
-		SourceRoute kRoute = *pRoute;
-		if (bPlotPackageAlreadyMarked)
-		{
-			// The caller's case already marked this plot's package WHOLE (the substrate blanket below), and a
-			// mark is ALSO the rebuild (CvCascadePackage::markMask -> CvDerivedCacheSet::markDirty) -- re-marking
-			// a bit marked moments ago is a SECOND full gather of the same plot, not a no-op. The blanket is a
-			// superset of every plot-scope bit this route can name, so the plot leg drops and the rest applies.
-			kRoute.packageMask[(int)CASC_SCOPE_PLOT] = 0;
-		}
-		if (pPlotCity == NULL)
-		{
-			// No city sits here, so no CITY fold -- which binds a city's CENTRE plot -- can have
-			// moved: the only package that did is the plot's own, and exactly ONE city consumes its realized
-			// value (the one working it). An above-city deposit's cityFanAll thus has nothing to fan, and leaving
-			// it set would instead DROP the working city's sums, mc_applyRoute's fan-all branch needing the
-			// player this fact does not name.
-			kRoute.cityFanAll = false;
-		}
-		mc_applyRoute(&kRoute, pPlayer, pPlotCity, pPlot, szSource);
+		mc_applyGated(DepositIndex::gatedByPredicate(ePredicate), iCrossing,
+			MMKernel::PER_SCALE_APPLIED, pPlayer, pPlotCity, pPlot);
 	}
 
 	// The ADJACENCY predicates fan ONE HOP. HAS_COAST and HAS_FRESHWATER are the two verdicts a plot derives from
@@ -395,21 +497,34 @@ namespace
 				mc_markPlayerWhole(pPlayer, szSource);
 				break;
 			// ---- source-carrying state changes: the mask IS the source's compiled route ----
-			case SEVT_BUILDING_PROCESSED:   // the operating-contribution flip -- deposits flow only while processed
+			// The OPERATE CROSSING -- deposits flow only while the building is operating, so this is the fact that
+			// starts and stops them. ⛔ Deliberately NOT the "processed" completion notice, which is DIAGNOSTIC and
+			// says only that an apply ran (event-spine.md § THE RECEIVED LINE).
+			case SEVT_BUILDING_ACTIVATED:
+			case SEVT_BUILDING_DORMANTED:
 			{
 				const CvCity* pCity = mc_city(pPlayer, kEvent.iSrcLoc);
 				if (kEvent.iType >= 0 && kEvent.iType < GC.getNumBuildingInfos())
 				{
-					mc_applySource(&GC.getBuildingInfo((BuildingTypes)kEvent.iType), NULL, pPlayer, pCity, NULL, szSource);
+					mc_applySource(&GC.getBuildingInfo((BuildingTypes)kEvent.iType), mc_sourceDirection(kEvent), kEvent.iEventId,
+						pPlayer, pCity, NULL);
 				}
 				break;
 			}
-			case SEVT_BUILDING_CHANGED:     // the PRESENCE fact -- re-evaluates everything gated on this building
+			// The PRESENCE happenings -- re-resolve everything CONDITIONED on holding this building. Both
+			// directions do the same work here and that is not the fact being non-specific: a condition atom
+			// naming the building is re-resolved against CURRENT state either way, so the direction is genuinely
+			// not an input to this consumer. The building's OWN deposits ride the operate crossing instead, since
+			// a present-but-dormant building deposits nothing ([enabler.md] §3.2).
+			case SEVT_BUILDING_ADDED:
+			case SEVT_BUILDING_REMOVED:
 			{
 				const CvCity* pCity = mc_city(pPlayer, kEvent.iSrcLoc);
 				if (kEvent.iType >= 0 && kEvent.iType < GC.getNumBuildingInfos())
 				{
-					mc_applySource(NULL, GC.getBuildingInfo((BuildingTypes)kEvent.iType).getType(), pPlayer, pCity, NULL, szSource);
+					// ⛔ HOLE (plane C, the ATOM route): everything CONDITIONED on holding this source needs
+					// re-resolving here, and cannot be until the reverse index answers with the DEPOSITS the
+					// atom gates rather than a channel MASK. Deliberately left failing rather than papered over.
 				}
 				break;
 			}
@@ -418,10 +533,11 @@ namespace
 				const CvCity* pCity = mc_city(pPlayer, kEvent.iSrcLoc);
 				if (kEvent.iType >= 0 && kEvent.iType < GC.getNumReligionInfos())
 				{
-					mc_applySource(&GC.getReligionInfo((ReligionTypes)kEvent.iType),
-						GC.getReligionInfo((ReligionTypes)kEvent.iType).getType(), pPlayer, pCity, NULL, szSource);
+					mc_applySource(&GC.getReligionInfo((ReligionTypes)kEvent.iType), mc_sourceDirection(kEvent), kEvent.iEventId,
+						pPlayer, pCity, NULL);
 				}
-				mc_applyRoute(DepositIndex::dependencyForReligionCounts(), pPlayer, pCity, NULL, szSource);
+				mc_applyGated(DepositIndex::gatedByReligionCounts(), mc_sourceDirection(kEvent), MMKernel::PER_SCALE_APPLIED,
+					pPlayer, pCity, NULL);
 				break;
 			}
 			case SEVT_CORPORATION_CHANGED:
@@ -429,8 +545,8 @@ namespace
 				const CvCity* pCity = mc_city(pPlayer, kEvent.iSrcLoc);
 				if (kEvent.iType >= 0 && kEvent.iType < GC.getNumCorporationInfos())
 				{
-					mc_applySource(&GC.getCorporationInfo((CorporationTypes)kEvent.iType),
-						GC.getCorporationInfo((CorporationTypes)kEvent.iType).getType(), pPlayer, pCity, NULL, szSource);
+					mc_applySource(&GC.getCorporationInfo((CorporationTypes)kEvent.iType), mc_sourceDirection(kEvent), kEvent.iEventId,
+						pPlayer, pCity, NULL);
 				}
 				break;
 			}
@@ -439,40 +555,40 @@ namespace
 				const CvCity* pCity = mc_city(pPlayer, kEvent.iSrcLoc);
 				if (kEvent.iType >= 0 && kEvent.iType < GC.getNumSpecialistInfos())
 				{
-					mc_applySource(&GC.getSpecialistInfo((SpecialistTypes)kEvent.iType),
-						GC.getSpecialistInfo((SpecialistTypes)kEvent.iType).getType(), pPlayer, pCity, NULL, szSource);
+					mc_applySource(&GC.getSpecialistInfo((SpecialistTypes)kEvent.iType), mc_sourceDirection(kEvent), kEvent.iEventId,
+						pPlayer, pCity, NULL);
 				}
 				break;
 			}
-			case SEVT_BONUS_CHANGED:          // a city's connected-bonus count changed
-			case SEVT_VICINITY_BONUS_CHANGED: // a city's local (vicinity) supply flipped
+			case SEVT_BONUS_ADDED:            // the city obtained a bonus over the network
+			case SEVT_BONUS_REMOVED:          // ... or lost it
+			case SEVT_VICINITY_BONUS_CHANGED: // a city's local (vicinity) supply count moved
 			{
 				const CvCity* pCity = mc_city(pPlayer, kEvent.iSrcLoc);
 				if (kEvent.iType >= 0 && kEvent.iType < GC.getNumBonusInfos())
 				{
-					mc_applySource(&GC.getBonusInfo((BonusTypes)kEvent.iType),
-						GC.getBonusInfo((BonusTypes)kEvent.iType).getType(), pPlayer, pCity, NULL, szSource);
+					mc_applySource(&GC.getBonusInfo((BonusTypes)kEvent.iType), mc_sourceDirection(kEvent), kEvent.iEventId,
+						pPlayer, pCity, NULL);
 				}
 				break;
 			}
 			case SEVT_PLOTGROUP_BONUS_CHANGED:   // the trade network's resource set -- reaches every connected city
-			case SEVT_CITY_NETWORK_CHANGED:      // a city's whole network membership changed
 			{
-				const char* szBonusType = (kEvent.iEventId == SEVT_PLOTGROUP_BONUS_CHANGED
-					&& kEvent.iType >= 0 && kEvent.iType < GC.getNumBonusInfos())
-					? GC.getBonusInfo((BonusTypes)kEvent.iType).getType() : NULL;
-				if (szBonusType != NULL)
+				if (kEvent.iType >= 0 && kEvent.iType < GC.getNumBonusInfos())
 				{
-					mc_applySource(&GC.getBonusInfo((BonusTypes)kEvent.iType), szBonusType, pPlayer, NULL, NULL, szSource);
-				}
-				else
-				{
-					// membership flip: every bonus-conditioned deposit of the owner re-gates (the network set
-					// is unknown here -- the connection dependency class fans the owner's cities)
-					mc_applyRoute(DepositIndex::dependencyForPredicate(CASC_PRED_HAS_BONUS), pPlayer, NULL, NULL, szSource);
+					mc_applySource(&GC.getBonusInfo((BonusTypes)kEvent.iType), mc_sourceDirection(kEvent), kEvent.iEventId,
+						pPlayer, NULL, NULL);
 				}
 				break;
 			}
+			// ⛔ SEVT_CITY_NETWORK_CHANGED is deliberately NOT handled here, and its absence is a DECISION rather
+			// than a missing route. The membership move's resource consequences are announced individually and
+			// FIRST, by the same choke point: CvCity::onNetworkSupplyChanged walks the old and new groups' holdings
+			// and fires a per-bonus obtained/lost fact for every genuine presence crossing (the deferred path
+			// replays them at endDeferredBonusProcessing against the entry snapshot). Every one of those lands in
+			// the case above, naming its bonus. Re-gating the whole owner on the membership fact as well would be
+			// the same work a second time -- a blanket bought because the fact used to name nothing
+			// ([DEC-facts-name-happenings]).
 			// ---- plot substrate changes: the plot's isolated base package refills whole (the substrate IS
 			// ---- the base; the event carries no old-type to narrow by) + the working city's rates ----
 			// ---- THE UNIT PLANE: resolved values, not a package (state-repositories.md). The model names
@@ -506,9 +622,11 @@ namespace
 					// smallest of them (modifier.md plot-as-base). The per-TYPE dependency routes below address what a
 					// package blanket cannot -- deposits at CITY/EMPIRE scope keyed on the substrate -- and they now run
 					// in BOTH directions, the fact having gained the departing id.
-					pPlot->getCascadePackage().markMask(CascadeChannelRegistry::scopeAllChannelsMask(CASC_SCOPE_PLOT));
-					mc_invalidate(CASC_SCOPE_PLOT, kEvent.iC, kEvent.iSrcLoc, CascadeChannelRegistry::scopeAllChannelsMask(CASC_SCOPE_PLOT), szSource);
-					mc_markPlotFedSums(pPlot, szSource);
+					// â HOLE (plot substrate swap): the blanket that stood here is gone -- a blanket recompute does not exist
+					// under the maintained sum and is never to be built. What this needs instead is a WITHDRAW AND
+					// REAPPLY over this plot's plot-resident sources (terrain / feature /
+					// bonus / route / improvement), which is the same plane-A
+					// walk run twice with opposite signs. Deliberately left unmaintained rather than swept.
 					// The blanket covers this plot's OWN package and nothing else, so the two substrate facts a
 					// FRESH-WATER verdict reads carry legs it cannot reach. CvPlot::isFreshWater reads this plot's
 					// TERRAIN (isFreshWaterTerrain, and isImpassable) and its FEATURE (isAddsFreshWater) -- moving
@@ -537,7 +655,9 @@ namespace
 					const char* szArriving = mc_substrateTypeName(kEvent.iEventId, kEvent.iType);
 					if (szArriving != NULL)
 					{
-						mc_applySource(NULL, szArriving, pPlayer, pPlot->getWorkingCity(), pPlot, szSource);
+					// ⛔ HOLE (plane C, the ATOM route): everything CONDITIONED on holding this source needs
+					// re-resolving here, and cannot be until the reverse index answers with the DEPOSITS the
+					// atom gates rather than a channel MASK. Deliberately left failing rather than papered over.
 					}
 					// ⛔ NOT for SEVT_PLOT_BONUS_CHANGED: that fact carries the placed/removed DELTA in iB and
 					// leaves iA at 0, so reading iA as an old id there would route bonus id 0 on every placement.
@@ -547,7 +667,9 @@ namespace
 						const char* szDeparting = mc_substrateTypeName(kEvent.iEventId, kEvent.iA);
 						if (szDeparting != NULL)
 						{
-							mc_applySource(NULL, szDeparting, pPlayer, pPlot->getWorkingCity(), pPlot, szSource);
+					// ⛔ HOLE (plane C, the ATOM route): everything CONDITIONED on holding this source needs
+					// re-resolving here, and cannot be until the reverse index answers with the DEPOSITS the
+					// atom gates rather than a channel MASK. Deliberately left failing rather than papered over.
 						}
 					}
 				}
@@ -623,9 +745,6 @@ namespace
 				const CvCity* pNewCity = mc_city(pPlayer, kEvent.iB);
 				// derived, not blanket: exactly the realized sums the plot-authored channels feed
 				const int64_t iSumMask = CascadeChannelRegistry::scopeReceiversFedBy(CASC_SCOPE_CITY, CASC_SCOPE_PLOT);
-				mc_markCity(pOldCity, iSumMask, szSource);
-				mc_markCity(pNewCity, iSumMask, szSource);
-				mc_markEmpire(pPlayer, CascadeChannelRegistry::scopeReceiversFedBy(CASC_SCOPE_EMPIRE, CASC_SCOPE_PLOT), szSource);
 				break;
 			}
 			case SEVT_PLOT_WORKED_CHANGED:   // a citizen took / left the plot: the city's worked-plot Sigma moves
@@ -638,15 +757,11 @@ namespace
 				// fact, whose subset this assignment fact is (membership = may work it, worked = a citizen does).
 				// The event names its city (iB), so the fan never widens past it.
 				const CvCity* pCity = mc_city(pPlayer, kEvent.iB);
-				mc_markCity(pCity,
-					CascadeChannelRegistry::scopeReceiversFedBy(CASC_SCOPE_CITY, CASC_SCOPE_PLOT), szSource);
-				mc_markEmpire(pPlayer,
-					CascadeChannelRegistry::scopeReceiversFedBy(CASC_SCOPE_EMPIRE, CASC_SCOPE_PLOT), szSource);
 				// IS_WORKED is a live PREDICATE a deposit's gate may read (PlotContext::isWorked), so the
 				// deposits conditioned on it re-evaluate -- through the route the index derives for that state,
 				// never a widened mask.
-				mc_applyRoute(DepositIndex::dependencyForPredicate(CASC_PRED_IS_WORKED), pPlayer, pCity,
-					mc_plot(kEvent.iSrcLoc), szSource);
+				mc_applyGated(DepositIndex::gatedByPredicate(CASC_PRED_IS_WORKED), mc_sourceDirection(kEvent), MMKernel::PER_SCALE_APPLIED,
+					pPlayer, pCity, mc_plot(kEvent.iSrcLoc));
 				break;
 			}
 			case SEVT_CITY_ORDER_CHANGED:   // the queue HEAD is the active process (the production->commerce conversion)
@@ -659,7 +774,6 @@ namespace
 				// ORDER_MAINTAIN, so pushing an ordinary build DISPLACES a running process -- a filter on
 				// ORDER_MAINTAIN would miss exactly that. The head order moving is what this fact announces, and
 				// the head order IS the process, so the mark is the process's own reach, unfiltered.
-				mc_markEmpire(pPlayer, mc_empireCommerceReceiverMask(), szSource);
 				break;
 			}
 			// ---- empire-level source flips ----
@@ -667,8 +781,8 @@ namespace
 			{
 				if (kEvent.iType >= 0 && kEvent.iType < GC.getNumTechInfos())
 				{
-					mc_applySource(&GC.getTechInfo((TechTypes)kEvent.iType),
-						GC.getTechInfo((TechTypes)kEvent.iType).getType(), pPlayer, NULL, NULL, szSource);
+					mc_applySource(&GC.getTechInfo((TechTypes)kEvent.iType), mc_sourceDirection(kEvent), kEvent.iEventId,
+						pPlayer, NULL, NULL);
 				}
 				break;
 			}
@@ -677,7 +791,8 @@ namespace
 				if (kEvent.iType >= 0 && kEvent.iType < GC.getNumTraitInfos())
 				{
 					const CvTraitInfo* pTrait = MMKernel::traitData(kEvent.iType);   // the ACTIVE set's record
-					mc_applySource(pTrait, (pTrait != NULL) ? pTrait->getType() : NULL, pPlayer, NULL, NULL, szSource);
+					mc_applySource(pTrait, mc_sourceDirection(kEvent), kEvent.iEventId,
+						pPlayer, NULL, NULL);
 				}
 				break;
 			}
@@ -685,13 +800,13 @@ namespace
 			{
 				if (kEvent.iType >= 0 && kEvent.iType < GC.getNumCivicInfos())
 				{
-					mc_applySource(&GC.getCivicInfo((CivicTypes)kEvent.iType),
-						GC.getCivicInfo((CivicTypes)kEvent.iType).getType(), pPlayer, NULL, NULL, szSource);
+					mc_applySource(&GC.getCivicInfo((CivicTypes)kEvent.iType), mc_sourceDirection(kEvent), kEvent.iEventId,
+						pPlayer, NULL, NULL);
 				}
 				if (kEvent.iB >= 0 && kEvent.iB < GC.getNumCivicInfos())
 				{
-					mc_applySource(&GC.getCivicInfo((CivicTypes)kEvent.iB),
-						GC.getCivicInfo((CivicTypes)kEvent.iB).getType(), pPlayer, NULL, NULL, szSource);
+					mc_applySource(&GC.getCivicInfo((CivicTypes)kEvent.iB), mc_sourceDirection(kEvent), kEvent.iEventId,
+						pPlayer, NULL, NULL);
 				}
 				break;
 			}
@@ -699,8 +814,8 @@ namespace
 			{
 				if (kEvent.iType >= 0 && kEvent.iType < GC.getNumProjectInfos())
 				{
-					mc_applySource(&GC.getProjectInfo((ProjectTypes)kEvent.iType),
-						GC.getProjectInfo((ProjectTypes)kEvent.iType).getType(), pPlayer, NULL, NULL, szSource);
+					mc_applySource(&GC.getProjectInfo((ProjectTypes)kEvent.iType), mc_sourceDirection(kEvent), kEvent.iEventId,
+						pPlayer, NULL, NULL);
 				}
 				break;
 			}
@@ -708,8 +823,8 @@ namespace
 			{
 				if (kEvent.iType >= 0 && kEvent.iType < GC.getNumHeritageInfos())
 				{
-					mc_applySource(&GC.getHeritageInfo((HeritageTypes)kEvent.iType),
-						GC.getHeritageInfo((HeritageTypes)kEvent.iType).getType(), pPlayer, NULL, NULL, szSource);
+					mc_applySource(&GC.getHeritageInfo((HeritageTypes)kEvent.iType), mc_sourceDirection(kEvent), kEvent.iEventId,
+						pPlayer, NULL, NULL);
 				}
 				break;
 			}
@@ -717,13 +832,15 @@ namespace
 			case SEVT_POPULATION_CHANGED:
 			{
 				const CvCity* pCity = mc_city(pPlayer, kEvent.iSrcLoc);
-				mc_applyRoute(DepositIndex::dependencyForToken("POPULATION"), pPlayer, pCity, NULL, szSource);
+				mc_applyGated(DepositIndex::gatedByToken("POPULATION"), kEvent.iB, MMKernel::PER_SCALE_SUPPRESSED,
+					pPlayer, pCity, NULL);
 				break;
 			}
 			case SEVT_POWER_CHANGED:
 			{
 				const CvCity* pCity = mc_city(pPlayer, kEvent.iSrcLoc);
-				mc_applyRoute(DepositIndex::dependencyForPredicate(CASC_PRED_HAS_POWER), pPlayer, pCity, NULL, szSource);
+				mc_applyGated(DepositIndex::gatedByPredicate(CASC_PRED_HAS_POWER), mc_sourceDirection(kEvent), MMKernel::PER_SCALE_APPLIED,
+					pPlayer, pCity, NULL);
 				break;
 			}
 			case SEVT_CITY_FRESH_WATER_CHANGED:
@@ -745,42 +862,53 @@ namespace
 			}
 			case SEVT_GOLDEN_AGE_CHANGED:
 			{
-				mc_applyRoute(DepositIndex::dependencyForPredicate(CASC_PRED_IS_GOLDEN_AGE), pPlayer, NULL, NULL, szSource);
+				mc_applyGated(DepositIndex::gatedByPredicate(CASC_PRED_IS_GOLDEN_AGE), mc_sourceDirection(kEvent), MMKernel::PER_SCALE_APPLIED,
+					pPlayer, NULL, NULL);
 				// the golden-age member-mirror (the ledgered engine carve-out) applies at the receiver
 				// combine -- the flip re-realizes every rate of the player
-				mc_markAllPlayerSums(pPlayer, szSource);
 				break;
 			}
 			case SEVT_STATE_RELIGION_CHANGED:
 			{
-				mc_applyRoute(DepositIndex::dependencyForPredicate(CASC_PRED_HAS_STATE_RELIGION), pPlayer, NULL, NULL, szSource);
-				mc_applyRoute(DepositIndex::dependencyForPredicate(CASC_PRED_STATE_RELIGION_IN_CITY), pPlayer, NULL, NULL, szSource);
-				mc_applyRoute(DepositIndex::dependencyForPredicate(CASC_PRED_STATE_RELIGION), pPlayer, NULL, NULL, szSource);
-				mc_applyRoute(DepositIndex::dependencyForPredicate(CASC_PRED_IS_STATE_RELIGION), pPlayer, NULL, NULL, szSource);
-				mc_applyRoute(DepositIndex::dependencyForReligionCounts(), pPlayer, NULL, NULL, szSource);
+				mc_applyGated(DepositIndex::gatedByPredicate(CASC_PRED_HAS_STATE_RELIGION), mc_sourceDirection(kEvent), MMKernel::PER_SCALE_APPLIED,
+					pPlayer, NULL, NULL);
+				mc_applyGated(DepositIndex::gatedByPredicate(CASC_PRED_STATE_RELIGION_IN_CITY), mc_sourceDirection(kEvent), MMKernel::PER_SCALE_APPLIED,
+					pPlayer, NULL, NULL);
+				mc_applyGated(DepositIndex::gatedByPredicate(CASC_PRED_STATE_RELIGION), mc_sourceDirection(kEvent), MMKernel::PER_SCALE_APPLIED,
+					pPlayer, NULL, NULL);
+				mc_applyGated(DepositIndex::gatedByPredicate(CASC_PRED_IS_STATE_RELIGION), mc_sourceDirection(kEvent), MMKernel::PER_SCALE_APPLIED,
+					pPlayer, NULL, NULL);
+				mc_applyGated(DepositIndex::gatedByReligionCounts(), mc_sourceDirection(kEvent), MMKernel::PER_SCALE_APPLIED,
+					pPlayer, NULL, NULL);
 				break;
 			}
 			case SEVT_HOLY_CITY_CHANGED:
 			{
 				const CvCity* pCity = mc_city(pPlayer, kEvent.iSrcLoc);
-				mc_applyRoute(DepositIndex::dependencyForPredicate(CASC_PRED_IS_HOLY_CITY), pPlayer, pCity, NULL, szSource);
-				mc_applyRoute(DepositIndex::dependencyForPredicate(CASC_PRED_IS_STATE_RELIGION_HOLY_CITY), pPlayer, pCity, NULL, szSource);
+				mc_applyGated(DepositIndex::gatedByPredicate(CASC_PRED_IS_HOLY_CITY), mc_sourceDirection(kEvent), MMKernel::PER_SCALE_APPLIED,
+					pPlayer, pCity, NULL);
+				mc_applyGated(DepositIndex::gatedByPredicate(CASC_PRED_IS_STATE_RELIGION_HOLY_CITY), mc_sourceDirection(kEvent), MMKernel::PER_SCALE_APPLIED,
+					pPlayer, pCity, NULL);
 				break;
 			}
 			case SEVT_ERA_CHANGED:
 			{
-				mc_applyRoute(DepositIndex::dependencyForToken("ERA"), pPlayer, NULL, NULL, szSource);
+				mc_applyGated(DepositIndex::gatedByToken("ERA"), kEvent.iB, MMKernel::PER_SCALE_SUPPRESSED,
+					pPlayer, NULL, NULL);
 				break;
 			}
 			case SEVT_NUKES_CHANGED:
 			{
-				mc_applyRoute(DepositIndex::dependencyForPredicate(CASC_PRED_NO_NUKES), pPlayer, NULL, NULL, szSource);
+				mc_applyGated(DepositIndex::gatedByPredicate(CASC_PRED_NO_NUKES), mc_sourceDirection(kEvent), MMKernel::PER_SCALE_APPLIED,
+					pPlayer, NULL, NULL);
 				break;
 			}
 			case SEVT_CAPITAL_CHANGED:
 			{
-				mc_applyRoute(DepositIndex::dependencyForPredicate(CASC_PRED_IS_CAPITAL), pPlayer, NULL, NULL, szSource);
-				mc_applyRoute(DepositIndex::dependencyForPredicate(CASC_PRED_IS_GOVERNMENT_CENTER), pPlayer, NULL, NULL, szSource);
+				mc_applyGated(DepositIndex::gatedByPredicate(CASC_PRED_IS_CAPITAL), mc_sourceDirection(kEvent), MMKernel::PER_SCALE_APPLIED,
+					pPlayer, NULL, NULL);
+				mc_applyGated(DepositIndex::gatedByPredicate(CASC_PRED_IS_GOVERNMENT_CENTER), mc_sourceDirection(kEvent), MMKernel::PER_SCALE_APPLIED,
+					pPlayer, NULL, NULL);
 				break;
 			}
 			case SEVT_CITY_FOUNDED:   // the ruled exception: a new city reads correct values the turn it exists
@@ -792,10 +920,13 @@ namespace
 					// no single source's route exists; every channel authored at city scope may be fed by the
 					// new city's owner sources, so the whole package + sums build (the state-repositories.md
 					// founded-city eager-build ruling).
-					pCity->getCascadePackage().markMask(
-						CascadeChannelRegistry::scopeAllChannelsMask(CASC_SCOPE_CITY)
-						| CascadeChannelRegistry::scopeAllReceiversMask(CASC_SCOPE_CITY));
-					mc_applyRoute(DepositIndex::dependencyForToken("CITY"), pPlayer, NULL, NULL, szSource);
+				// â HOLE (city lifecycle / ownership): the blanket that stood here is gone -- a blanket recompute does not exist
+				// under the maintained sum and is never to be built. What this needs instead is a WITHDRAW AND
+				// REAPPLY over every source this city holds and every above-city
+				// source of its owner, which is the same plane-A
+				// walk run twice with opposite signs. Deliberately left unmaintained rather than swept.
+					mc_applyGated(DepositIndex::gatedByToken("CITY"), kEvent.iB, MMKernel::PER_SCALE_SUPPRESSED,
+					pPlayer, NULL, NULL);
 				}
 				break;
 			}
@@ -811,14 +942,16 @@ namespace
 				const CvCity* pCity = mc_city(pNewOwner, kEvent.iSrcLoc);
 				if (pCity != NULL)
 				{
-					pCity->getCascadePackage().markMask(
-						CascadeChannelRegistry::scopeAllChannelsMask(CASC_SCOPE_CITY)
-						| CascadeChannelRegistry::scopeAllReceiversMask(CASC_SCOPE_CITY));
+				// â HOLE (city lifecycle / ownership): the blanket that stood here is gone -- a blanket recompute does not exist
+				// under the maintained sum and is never to be built. What this needs instead is a WITHDRAW AND
+				// REAPPLY over every source this city holds and every above-city
+				// source of its owner, which is the same plane-A
+				// walk run twice with opposite signs. Deliberately left unmaintained rather than swept.
 				}
-				mc_markEmpireWhole(pOldOwner, szSource);
-				mc_markEmpireWhole(pNewOwner, szSource);
-				mc_applyRoute(DepositIndex::dependencyForToken("CITY"), pOldOwner, NULL, NULL, szSource);
-				mc_applyRoute(DepositIndex::dependencyForToken("CITY"), pNewOwner, NULL, NULL, szSource);
+				mc_applyGated(DepositIndex::gatedByToken("CITY"), kEvent.iB, MMKernel::PER_SCALE_SUPPRESSED,
+					pOldOwner, NULL, NULL);
+				mc_applyGated(DepositIndex::gatedByToken("CITY"), kEvent.iB, MMKernel::PER_SCALE_SUPPRESSED,
+					pNewOwner, NULL, NULL);
 				break;
 			}
 			case SEVT_PLOT_OWNER_CHANGED:
@@ -830,8 +963,6 @@ namespace
 				const CvPlot* pPlot = mc_plot(kEvent.iSrcLoc);
 				if (pPlot != NULL)
 				{
-					mc_markPlot(pPlot, CascadeChannelRegistry::scopeAllChannelsMask(CASC_SCOPE_PLOT), szSource);
-					mc_markPlotFedSums(pPlot, szSource);
 					// ...and the DEPARTED owner. mc_markPlotFedSums reads the plot's LIVE owner, so it can only
 					// ever reach the NEW one -- but the plot's yield has just left the old empire, whose plot-fed
 					// receiver sums are now stale with no route to re-derive them ([DEC-no-self-heal]: marked here
@@ -839,8 +970,6 @@ namespace
 					// this is the same both-sides shape SEVT_WORKING_CITY_CHANGED uses for its two cities.
 					if (kEvent.iA >= 0 && kEvent.iA != (int)NO_PLAYER)
 					{
-						mc_markEmpire(&GET_PLAYER((PlayerTypes)kEvent.iA),
-							CascadeChannelRegistry::scopeReceiversFedBy(CASC_SCOPE_EMPIRE, CASC_SCOPE_PLOT), szSource);
 					}
 					// IS_OWNED is a live PREDICATE a deposit's gate may read (PlotContext::isOwned = getOwner() !=
 					// NO_PLAYER), and setOwner is its ONE mutation. The plot leg is suppressed -- the blanket
@@ -865,7 +994,6 @@ namespace
 			// ---- the load bracket end: DRAIN the banked marks, then the channel-set census ----
 			case SEVT_GAME_LOAD_FINISHED:
 			{
-				mc_drainLoadMarks();
 				CascadeChannelRegistry::reportChannelCensus();
 				break;
 			}
@@ -875,69 +1003,6 @@ namespace
 		}
 
 	private:
-		// THE LOAD DRAIN. Inside the load bracket a mark does NOT rebuild (CvDerivedCache.h: mid-read the state a
-		// rebuild would read is half-deserialized -- the context stores, the areas and the plot-group network
-		// complete only when the stream ends), so the reseed's marks are BANKED. This drains them once, here.
-		// ⛔ It is NOT a blanket rebuild and must never become one ([state-repositories.md] CAPSTONE): every
-		// package walked rebuilds ONLY the bits an in-read event actually marked, and a package no event reached
-		// stays unbuilt -- visibly wrong, which is how its missing emit gets found. The walk order is
-		// irrelevant: a package's rebuild reads its cross-scope inputs through the rebuild-path accessors, so
-		// each input rebuilds its own banked marks first.
-		static void mc_drainLoadMarks()
-		{
-			const int iNumPlots = GC.getMap().numPlots();
-			for (int iPlotIndex = 0; iPlotIndex < iNumPlots; ++iPlotIndex)
-			{
-				const CvPlot* pPlot = GC.getMap().plotByIndex(iPlotIndex);
-				if (pPlot != NULL)
-				{
-					pPlot->getCascadePackage().rebuildMarked();
-				}
-			}
-			for (int iTeam = 0; iTeam < MAX_TEAMS; ++iTeam)
-			{
-				const CvTeam& team = GET_TEAM((TeamTypes)iTeam);
-				if (team.isAlive())
-				{
-					team.getCascadePackage().rebuildMarked();
-				}
-			}
-			for (int iPlayer = 0; iPlayer < MAX_PLAYERS; ++iPlayer)
-			{
-				const CvPlayer& player = GET_PLAYER((PlayerTypes)iPlayer);
-				if (!player.isAlive())
-				{
-					continue;
-				}
-				for (CvPlayer::city_iterator cityIterator = player.beginCities(); cityIterator != player.endCities(); ++cityIterator)
-				{
-					(*cityIterator)->getCascadePackage().rebuildMarked();
-				}
-				player.getCascadePackage().rebuildMarked();
-			}
-		}
-
-		// Every rate of the player re-realizes. All-receivers blanket KEPT: the golden-age yield/commerce
-		// effect is the OWNER-RULED engine member-mirror (modifier.md §3, the goldenAge carve-out) -- applied
-		// at the receiver combine, NOT authored as deposits, so the DepositIndex holds no route to derive
-		// (the deposit-authored golden-age data -- IS_GOLDEN_AGE-gated entries, the goldenAge kinds -- routes
-		// separately via dependencyForPredicate at the caller). The receiver sums ARE the combine's outputs,
-		// so the all-receivers mask IS the honest realization of the mirror's reach.
-		static void mc_markAllPlayerSums(const CvPlayer* pPlayer, const char* szSource)
-		{
-			if (pPlayer == NULL)
-			{
-				return;
-			}
-			for (CvPlayer::city_iterator cityIterator = pPlayer->beginCities(); cityIterator != pPlayer->endCities(); ++cityIterator)
-			{
-				(*cityIterator)->getCascadePackage().markMask(CascadeChannelRegistry::scopeAllReceiversMask(CASC_SCOPE_CITY));
-			}
-			pPlayer->getCascadePackage().markMask(CascadeChannelRegistry::scopeAllReceiversMask(CASC_SCOPE_EMPIRE));
-			mc_invalidate(CASC_SCOPE_EMPIRE, (int)pPlayer->getID(), (int)pPlayer->getID(),
-				CascadeChannelRegistry::scopeAllReceiversMask(CASC_SCOPE_EMPIRE), szSource);
-		}
-
 		// A whole PLAYER's deposit basis moved -- every package it owns re-derives (its cities' channels + sums and
 		// its own empire channels + sums). The two callers are the facts that move a source the gather folds at
 		// EVERY scope rather than at a deposit-addressed one:
@@ -957,30 +1022,14 @@ namespace
 			}
 			for (CvPlayer::city_iterator it = pPlayer->beginCities(); it != pPlayer->endCities(); ++it)
 			{
-				(*it)->getCascadePackage().markMask(
-					CascadeChannelRegistry::scopeAllChannelsMask(CASC_SCOPE_CITY)
-					| CascadeChannelRegistry::scopeAllReceiversMask(CASC_SCOPE_CITY));
+				// â HOLE (city lifecycle / ownership): the blanket that stood here is gone -- a blanket recompute does not exist
+				// under the maintained sum and is never to be built. What this needs instead is a WITHDRAW AND
+				// REAPPLY over every source this city holds and every above-city
+				// source of its owner, which is the same plane-A
+				// walk run twice with opposite signs. Deliberately left unmaintained rather than swept.
 			}
-			mc_markEmpireWhole(pPlayer, szSource);
-			mc_markAllPlayerSums(pPlayer, szSource);
 		}
 
-		// An empire changed composition wholesale (conquest): its empire package + sums re-derive.
-		// Whole-scope blankets KEPT: the event is a scope-object COMPOSITION move, not deposit-addressed --
-		// the empire's live source multiplicities (owned-building counts, presence sets, per-city scalers)
-		// shift at once, and no union of per-source routes can address the DEPARTED side's folded deposits.
-		static void mc_markEmpireWhole(const CvPlayer* pPlayer, const char* szSource)
-		{
-			if (pPlayer == NULL)
-			{
-				return;
-			}
-			pPlayer->getCascadePackage().markMask(
-				CascadeChannelRegistry::scopeAllChannelsMask(CASC_SCOPE_EMPIRE)
-				| CascadeChannelRegistry::scopeAllReceiversMask(CASC_SCOPE_EMPIRE));
-			mc_invalidate(CASC_SCOPE_EMPIRE, (int)pPlayer->getID(), (int)pPlayer->getID(),
-				CascadeChannelRegistry::scopeAllChannelsMask(CASC_SCOPE_EMPIRE), szSource);
-		}
 	};
 
 	CvModifierConsumer s_modifierConsumer;

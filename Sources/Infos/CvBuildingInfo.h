@@ -100,17 +100,6 @@ public:
 	{ return m_modifiers.sum(infoYieldFamily(eYield), CHANNEL_AMOUNT, eScope, CASC_UNIT_PER_POPULATION); }
 	int getCommercePerPopulation(CommerceTypes eCommerce, CvCascScope eScope) const
 	{ return m_modifiers.sum(infoCommerceFamily(eCommerce), CHANNEL_AMOUNT, eScope, CASC_UNIT_PER_POPULATION); }
-	// The wellbeing point read exposes the AUTHORED families' signed compiled sums (happiness/health); the
-	// four-channel sign ROUTING is a fill/valuation rule (modifier.md §2b -- expectedWellbeing), so the two
-	// unauthored channels (ANGER/UNHEALTH) hold no slot and read 0 here.
-	int getFlatWellbeing(WellbeingChannel eChannel, CvCascScope eScope) const
-	{
-		if (eChannel == WELLBEING_ANGER || eChannel == WELLBEING_UNHEALTH)
-		{
-			return 0;
-		}
-		return m_modifiers.sum(infoWellbeingFamily(eChannel), CHANNEL_AMOUNT, eScope, CASC_UNIT_FLAT);
-	}
 	// The grouped families this type's census participation covers -- one getter per group, parameterized over
 	// the group's kind enum; the canonical authored unit resolves in the vocabulary (infoKindUnit), never here.
 	int getDefense(DefenseKind eKind, CvCascScope eScope) const

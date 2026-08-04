@@ -34,6 +34,7 @@ ENUMS = CyEnums()
 ENGINE = CyEngine()
 TRNSLTR = CyTranslator()
 CyIF = CyInterface()
+TEXT = CyGameTextMgr()
 CyGTM = CyGameTextMgr()
 
 import Scoreboard
@@ -129,7 +130,6 @@ class CvMainInterface:
 		# Cache Game Options
 		self.GO_REVOLUTION			= GAME.isOption(GameOptionTypes.GAMEOPTION_UNSUPPORTED_REVOLUTION)
 		self.GO_PICK_RELIGION		= GAME.isOption(GameOptionTypes.GAMEOPTION_RELIGION_PICK)
-		self.GO_SIZE_MATTERS		= GAME.isOption(GameOptionTypes.GAMEOPTION_COMBAT_SIZE_MATTERS)
 		self.GO_WIN_FOR_LOSING		= GAME.isOption(GameOptionTypes.GAMEOPTION_TECH_WIN_FOR_LOSING)
 		self.GO_TECH_DIFFUSION   	= GAME.isOption(GameOptionTypes.GAMEOPTION_TECH_DIFFUSION)
 		self.GO_ONE_CITY_CHALLENGE	= GAME.isOption(GameOptionTypes.GAMEOPTION_CHALLENGE_ONE_CITY)
@@ -3180,7 +3180,7 @@ class CvMainInterface:
 				if STATE.hasCorporation(iCityOwner, iCityID, i):
 					for eBonus in GC.getCorporationInfo(i).getPrereqBonuses():
 						if eBonus == iBonus:
-							szRightBuffer += u'%c' %(GC.getCorporationInfo(i).getChar())
+							szRightBuffer += u'%c' %(TEXT.getSymbolChar("CORPORATION_", i))
 			screen.appendTableRow(ID)
 			screen.setTableText(ID, 0, iRow, szLeftBuffer, "", iWidget, iBonus, -1, 1<<0)
 			screen.setTableText(ID, 1, iRow, szRightBuffer, "", iWidget, iBonus, -1, 1<<1)
@@ -3269,7 +3269,7 @@ class CvMainInterface:
 				szName += "PROJECT|"
 
 			elif iOrder == OrderTypes.ORDER_MAINTAIN:
-				szTxt1 = GC.getProcessInfo(iType).getDescription()
+				szTxt1 = INFO.getDescription("PROCESS_", iType)
 				szName += "PROCESS|"
 
 			elif iOrder == OrderTypes.ORDER_LIST:
@@ -3463,11 +3463,11 @@ class CvMainInterface:
 				order = CyPlayer.getBLOrder(i, 0)
 				Btn = "WID|LIST|CityWork" + str(CyPlayer.getBLID(i))
 				if order.eOrderType == OrderTypes.ORDER_TRAIN:
-					BTN = GC.getUnitInfo(order.iData1).getButton()
+					BTN = INFO.getButton("UNIT_", order.iData1)
 				elif order.eOrderType == OrderTypes.ORDER_CONSTRUCT:
-					BTN = GC.getBuildingInfo(order.iData1).getButton()
+					BTN = INFO.getButton("BUILDING_", order.iData1)
 				else:
-					BTN = GC.getProjectInfo(order.iData1).getButton()
+					BTN = INFO.getButton("PROJECT_", order.iData1)
 				screen.setImageButtonAt(Btn, Pnl, BTN, x, 0, iSize, iSize, eWidGen, 1, 1)
 				x += dx
 
@@ -4029,15 +4029,15 @@ class CvMainInterface:
 
 					if TYPE == "UNIT":
 						bPre = STATE.getUnitInCity(iCityOwner, iCityID, iType)[CityUnitRead.CITY_UNIT_PROGRESS] > 0
-						szTxt += str(STATE.getProductionTurnsLeft(iCityOwner, iCityID, iOrder, iType, iNode))
+						szTxt += str(STATE.getProductionTurnsLeft(iCityOwner, iCityID, OrderTypes.ORDER_TRAIN, iType, iNode))
 
 					elif TYPE == "BUILDING":
 						bPre = STATE.getBuildingInCity(iCityOwner, iCityID, iType)[CityBuildingRead.CITY_BUILDING_PROGRESS] > 0
-						szTxt += str(STATE.getProductionTurnsLeft(iCityOwner, iCityID, iOrder, iType, iNode))
+						szTxt += str(STATE.getProductionTurnsLeft(iCityOwner, iCityID, OrderTypes.ORDER_CONSTRUCT, iType, iNode))
 
 					elif TYPE == "PROJECT":
 						bPre = STATE.getProjectProduction(iCityOwner, iCityID, iType) > 0
-						szTxt += str(STATE.getProductionTurnsLeft(iCityOwner, iCityID, iOrder, iType, iNode))
+						szTxt += str(STATE.getProductionTurnsLeft(iCityOwner, iCityID, OrderTypes.ORDER_CREATE, iType, iNode))
 					else:
 						szTxt = ""
 					self.NewQueueRowTime = []
@@ -4048,7 +4048,9 @@ class CvMainInterface:
 						szRow = aList[2]
 						bAlt = CyIF.getOrderNodeSave(0)
 						x = self.xMidL-146
-						bPre = STATE.getOrder(iCityOwner, iCityID)[CityOrderRead.ORDER_READ_PRODUCTION_PROGRESS] > 0
+						#	The order in ONE read, indexed twice -- never two crossings for two fields of one payload.
+						aOrder = STATE.getOrder(iCityOwner, iCityID)
+						bPre = aOrder[CityOrderRead.ORDER_READ_PRODUCTION_PROGRESS] > 0
 						szTxt = self.aFontList[5] + str(aOrder[CityOrderRead.ORDER_READ_GENERAL_TURNS_LEFT])
 					else:
 						szTxt = ""
@@ -4085,12 +4087,17 @@ class CvMainInterface:
 				# Stack movement
 				iMinMoves = 100000
 				iMaxMoves = 0
+				aTypeCount = {}
 				for aStackId in aSelectedIds:
-					iMovesLeft = STATE.getUnitRead(aStackId[0], aStackId[1])[UnitReadKind.UNIT_READ_MOVES_LEFT]
+					aStackRead = STATE.getUnitRead(aStackId[0], aStackId[1])
+					iMovesLeft = aStackRead[UnitReadKind.UNIT_READ_MOVES_LEFT]
 					if iMovesLeft > iMaxMoves:
 						iMaxMoves = iMovesLeft
 					if iMovesLeft < iMinMoves:
 						iMinMoves = iMovesLeft
+					#	The stack's OWN composition, counted while we are already walking it.
+					iStackType = aStackRead[UnitReadKind.UNIT_READ_TYPE]
+					aTypeCount[iStackType] = aTypeCount.get(iStackType, 0) + 1
 				fMinMoves = iMinMoves / fMoveDenominator
 				if iMinMoves == iMaxMoves:
 					szBuffer += ' %.1f' % fMinMoves
@@ -4120,8 +4127,13 @@ class CvMainInterface:
 					aPromoList.append((iPromo, aPromoCount[iPromo]))
 				# Unit type list
 				if iMissionCount <= 1 or not bMirrorsGroup:
-					for i in xrange(GC.getNumUnitInfos()):
-						iCount = CyIF.countEntities(i)
+					#	The panel asks what the stack HAS and iterates that -- it never sweeps the unit registry
+					#	asking the interface "how many of type i?" once per id. Sorted so the display order stays
+					#	the familiar registry order without walking ~2000 ids to recover it.
+					aTypesHeld = aTypeCount.keys()
+					aTypesHeld.sort()
+					for i in aTypesHeld:
+						iCount = aTypeCount[i]
 						if iCount:
 							szBufferL = "<font=1>" + INFO.getDescription("UNIT_", i)
 							szBufferR = "<font=1>" + str(iCount)
@@ -4160,8 +4172,11 @@ class CvMainInterface:
 						strengthBase = aSelRead[UnitReadKind.UNIT_READ_BASE_COMBAT]
 						szTxt1 = self.szInterfacePaneStrength
 					if strengthBase:
-						if self.GO_SIZE_MATTERS:
-							strengthBase /= 100.0
+						#	x100 native, ALWAYS -- so the reduce is unconditional. It used to be gated on
+						#	SIZE_MATTERS because baseCombatStr() itself returned a different scale per option;
+						#	the engine's strength cluster is uniform now, so reducing only under the option
+						#	rendered every unit's strength 100x too large with it off.
+						strengthBase /= 100.0
 
 						szTxt2 = ""
 						if STATE.getUnitFlags(aSelUnit[0], aSelUnit[1])[UnitFlagKind.UNIT_FLAG_HURT]:
@@ -5224,7 +5239,7 @@ class CvMainInterface:
 			aPercentList.reverse()
 			szTxt += "\n"
 			for iPercent, iUnit in aPercentList:
-				szTxt += u"\n%s%s - %d%%" % (GPUtil.getUnitIcon(iUnit), GC.getUnitInfo(iUnit).getDescription(), iPercent)
+				szTxt += u"\n%s%s - %d%%" % (GPUtil.getUnitIcon(iUnit), INFO.getDescription("UNIT_", iUnit), iPercent)
 		self.updateTooltip(screen, szTxt)
 
 
@@ -5248,7 +5263,7 @@ class CvMainInterface:
 			iCivic = player.getCivics(i)
 			iValue = player.getSingleCivicUpkeep(iCivic, True)
 			if iValue:
-				szTemp += "\n\t" + str(iValue) + iconCommerceGold + " "+ TRNSLTR.getText("TXT_INTERFACE_TREASURYHELP_FROM", ())+ " " + GC.getCivicInfo(iCivic).getDescription()
+				szTemp += "\n\t" + str(iValue) + iconCommerceGold + " "+ TRNSLTR.getText("TXT_INTERFACE_TREASURYHELP_FROM", ())+ " " + INFO.getDescription("CIVIC_", iCivic)
 				iSum += iValue
 		if iSum:
 			szTxt += "\n" + TRNSLTR.getText("TXT_INTERFACE_TREASURYHELP_CIVIC_UPKEEP", ()) +" " + str(iSum) + iconCommerceGold + szTemp
@@ -5462,7 +5477,7 @@ class CvMainInterface:
 						for i in xrange(CommerceTypes.NUM_COMMERCE_TYPES):
 							iValue = CvProcessInfo.getProductionToCommerceModifier(i)
 							if not iValue: continue
-							szTxt += "\n" + TRNSLTR.getText("TXT_KEY_PROCESS_CONVERTS", (iValue, GC.getYieldInfo(eYieldProd).getChar(), GC.getCommerceInfo(i).getChar()),)
+							szTxt += "\n" + TRNSLTR.getText("TXT_KEY_PROCESS_CONVERTS", (iValue, TEXT.getSymbolChar("YIELD_", eYieldProd), TEXT.getSymbolChar("COMMERCE_", i)),)
 							szTxt += r" -> " + "%.1f" %(fProd * iValue)
 							if szTxt[-1] == "0":
 								szTxt = szTxt[:-2]
@@ -5721,7 +5736,7 @@ class CvMainInterface:
 						szTxt = ""
 						if TYPE == "PROCESS":
 							iOrder = OrderTypes.ORDER_MAINTAIN
-							szTxt = GC.getProcessInfo(iType).getDescription()
+							szTxt = INFO.getDescription("PROCESS_", iType)
 
 						elif TYPE == "LIST":
 							iOrder = OrderTypes.ORDER_LIST
@@ -5733,7 +5748,7 @@ class CvMainInterface:
 							iOrder = OrderTypes.ORDER_TRAIN
 							if bAlt:
 								szTxt = "*"
-							szTxt += GC.getUnitInfo(iType).getDescription()
+							szTxt += INFO.getDescription("UNIT_", iType)
 							if self.isUnitMaxedOut(iType, InCity, 1):
 								if self.iCityTab == CITYTAB_ADMIN:
 									self.bUpdateCityTab = True
@@ -5752,7 +5767,7 @@ class CvMainInterface:
 
 						elif TYPE == "PROJECT":
 							iOrder = OrderTypes.ORDER_CREATE
-							szTxt = GC.getProjectInfo(iType).getDescription()
+							szTxt = INFO.getDescription("PROJECT_", iType)
 							screen.hide(NAME + str(iType))
 
 						if self.bUpdateCityTab:

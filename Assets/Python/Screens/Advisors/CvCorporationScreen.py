@@ -7,12 +7,14 @@ import CvScreenEnums
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 ArtFileMgr = CyArtFileMgr()
 localText = CyTranslator()
 
+TEXT = CyGameTextMgr()
 class CvCorporationScreen:
 	"Corporation Advisor Screen"
 
@@ -173,7 +175,7 @@ class CvCorporationScreen:
 		xLoop = self.X_CORPORATION_START
 		for i in range(GC.getNumCorporationInfos()):
 			if GC.getGame().canEverSpread(i):
-				screen.addCheckBoxGFCAt("CivicList", self.getCorporationButtonName(i), GC.getCorporationInfo(i).getButton(), ArtFileMgr.getInterfaceArtInfo("BUTTON_HILITE_SQUARE").getPath(), self.X_CORPORATION_AREA + xLoop - 25, self.Y_CORPORATION_AREA + 10, self.BUTTON_SIZE, self.BUTTON_SIZE, WidgetTypes.WIDGET_GENERAL, -1, -1, ButtonStyles.BUTTON_STYLE_LABEL, False)
+				screen.addCheckBoxGFCAt("CivicList", self.getCorporationButtonName(i), INFO.getButton("CORPORATION_", i), ArtFileMgr.getInterfaceArtInfo("BUTTON_HILITE_SQUARE").getPath(), self.X_CORPORATION_AREA + xLoop - 25, self.Y_CORPORATION_AREA + 10, self.BUTTON_SIZE, self.BUTTON_SIZE, WidgetTypes.WIDGET_GENERAL, -1, -1, ButtonStyles.BUTTON_STYLE_LABEL, False)
 				screen.setActivation(self.getCorporationButtonName(i), ActivationTypes.ACTIVATE_NORMAL)
 				xLoop += self.DX_CORPORATION
 
@@ -199,7 +201,7 @@ class CvCorporationScreen:
 						break
 				for iUnit in range(GC.getNumUnitInfos()):
 					if GC.getUnitInfo(iUnit).getHasBuilding(iBuilding):
-						szGreatPerson = GC.getUnitInfo(iUnit).getDescription()
+						szGreatPerson = INFO.getDescription("UNIT_", iUnit)
 						break
 				screen.setLabelAt("", "CivicList", szGreatPerson, 1<<2, xLoop, self.Y_GREAT_PERSON, self.DZ, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
@@ -218,7 +220,7 @@ class CvCorporationScreen:
 					else:
 						szList += u", "
 					iNum += 1
-					szList += u"%c" % (GC.getBonusInfo(eBonus).getChar(), )
+					szList += u"%c" % (TEXT.getSymbolChar("BONUS_", eBonus), )
 
 					if iNum > 3:
 						iNum = 0
@@ -316,8 +318,8 @@ class CvCorporationScreen:
 				if cityX.isHasCorporation(iI):
 					lCorporations.append(iI)
 					if cityX.isHeadquartersByType(iI):
-						szCityName += u"%c" % GC.getCorporationInfo(iI).getHeadquarterChar()
-					else: szCityName += u"%c" % GC.getCorporationInfo(iI).getChar()
+						szCityName += u"%c" % TEXT.getHeadquarterSymbolChar(iI)
+					else: szCityName += u"%c" % TEXT.getSymbolChar("CORPORATION_", iI)
 
 			szCityName += cityX.getName()[0:17] + "  "
 
@@ -342,7 +344,7 @@ class CvCorporationScreen:
 
 		# Header...
 		if self.iCorporationExamined != -1:
-			screen.setLabel("CorporationScreenHeader", "", "<font=4b>" + GC.getCorporationInfo(self.iCorporationExamined).getDescription().upper(), 1<<2, self.X_SCREEN, self.Y_TITLE, self.Z_TEXT, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+			screen.setLabel("CorporationScreenHeader", "", "<font=4b>" + INFO.getDescription("CORPORATION_", self.iCorporationExamined).upper(), 1<<2, self.X_SCREEN, self.Y_TITLE, self.Z_TEXT, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 		else: screen.setLabel("CorporationScreenHeader", "", "<font=4b>" + localText.getText("TXT_KEY_CORPORATION_SCREEN_TITLE", ()).upper(), 1<<2, self.X_SCREEN, self.Y_TITLE, self.Z_TEXT, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 		screen.setText(self.EXIT_NAME, "", self.EXIT_TEXT, 1<<1, self.X_EXIT, self.Y_EXIT, self.Z_TEXT, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, 1, 0)

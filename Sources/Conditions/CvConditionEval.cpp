@@ -340,7 +340,8 @@ static bool ev_evalPresence(const CvCascadeEvalCtx& ctx, const CvCascadeEvalFlag
 	if (en_starts(t, "PROPERTY_"))
 	{
 		const int val = ev_countOf(ctx, a);
-		return (a->min < 0 || val >= a->min) && (a->max < 0 || val <= a->max);
+		// A PROPERTY value is legitimately NEGATIVE, so a bound's PRESENCE decides, never its sign.
+		return (!a->hasMin || val >= a->min) && (!a->hasMax || val <= a->max);
 	}
 	// A typed BONUS_ presence whose reference did NOT resolve (a->id < 0 -- a curator typo like BONUS_ELEPHANT for
 	// BONUS_ELEPHANTS, or a renamed/removed bonus) names an entity that does not exist, so it is NOT present. Guard
@@ -514,7 +515,7 @@ static bool ev_isWaivedPrereq(const CvCascadeEvalCtx& ctx, const CvCondition* c)
 }
 
 // The §9 POLICY read (json §9): resolve the policy key to its minted POLICY_* id and read the player's PREBUILT
-// enacted-policy UNION on its EmpireContext (rebuilt on civic/trait change + at load, EmpireContext::rebuildPolicies),
+// enacted-policy DICTIONARY the player owns (delta-maintained by the civic/trait/player-init facts, PolicyContext),
 // so the per-leaf read is O(1) with NO walk. The union IS the single source (DEC-single-implementation): it reads the
 // CvJson*Info policies sets, never a legacy counter (DEC-calc-zero-ride-in). Sole data grantors today: complex traits
 // (bigot/progressive/spiritual); the civic half is model headroom the union carries for free. (The naive per-leaf walk

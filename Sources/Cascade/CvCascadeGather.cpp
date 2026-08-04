@@ -17,7 +17,6 @@
 #include "Data/CvInfoValuation.h"         // the combine seam (cityRate) + the per-scope group fold
 #include "Conditions/CvConditionEval.h"   // CvCascadeEvalCtx
 #include "Enabler/CvEnablerKernel.h"      // wireOperatingBuildings -- the FED-IN active/dormant verdict
-#include "Spine/CvEventSpine.h"           // emitCacheRebuilt -- the [CASCADE] rebuilt observability
 #include "Defines/CvGlobals.h"
 #include "Engine/CvPlot.h"
 #include "Engine/CvCity.h"
@@ -44,28 +43,6 @@
 
 namespace
 {
-	// The dictionary a unit folds into (the whole type axis -- value vs percent; modifier.md §2). The legacy
-	// per-* unit spellings are flat-side (their scaling is the §3.7 resolver's); multiplier units compose by
-	// product and never slot (identity on every package channel today -- entry-list evaluated if ever authored).
-	bool gt_unitIsFlatSide(CvCascUnit eUnit)
-	{
-		return eUnit == CASC_UNIT_FLAT
-			|| eUnit == CASC_UNIT_COUNT
-			|| eUnit == CASC_UNIT_PER_POPULATION
-			|| eUnit == CASC_UNIT_PER_SPECIALIST
-			|| eUnit == CASC_UNIT_PER_CORPORATION_LEVEL;
-	}
-	bool gt_unitIsPercentSide(CvCascUnit eUnit)
-	{
-		return eUnit == CASC_UNIT_PERCENT || eUnit == CASC_UNIT_RAW_PERCENT;
-	}
-
-	// Is this family a rate (yield/commerce) channel family? (The specialist §2a carve-out below keys on it.)
-	bool gt_isRateFamily(ModifierFamily eFamily)
-	{
-		return infoFamilyYield(eFamily) >= 0 || infoFamilyCommerce(eFamily) >= 0;
-	}
-
 	// Land one applying value in its slot -- wellbeing sign-routes to the twin channel at fill
 	// (modifier.md §2b: a negative happiness deposit lands as positive anger; a routing rule, never storage).
 	void gt_landValue(CvCascScope eScope, int64_t iWantedBits, int iChannel, bool bPercentSide, int64_t iValue,
@@ -109,12 +86,14 @@ namespace
 		}
 	}
 
-	// Fold ONE source info's compiled entries AT one scope into the package dictionaries. iMultiplier = the
-	// source's live multiplicity (owned building count, project count, specialist count -- 1 for presence).
-	// pKeyPlot = the plot whose substrate keys/filters plot-scope targeted entries (plot gather only).
-	// iPureSign: the PURE_TRAITS value filter (+1 keep >= 0, -1 keep <= 0, 0 unfiltered).
-	// bSkipRateChannels: the §2a specialist carve-out -- a specialist's yield/commerce output joins the rate
-	// BASE with its own percent layer at the receiver combine, never the city package's flat tier.
+	// Fold ONE source info's compiled entries AT one scope into the ORACLE's scratch dictionaries.
+	// ⛔ THE RESOLVE IS NOT HERE. What an entry deposits -- the scope test, the plural fans, the target keys, the
+	// gates, the per scaler -- is MMKernel::resolveEntry, shared verbatim with the apply path that maintains the
+	// stored slots ([DEC-single-implementation]). This function is now ONLY the oracle's SINK: the wanted-channel
+	// mask and the scratch vectors, neither of which the apply path has. That split is what keeps the
+	// stored-vs-oracle tripwire honest -- the two sides build the same numbers from ONE derivation, so a
+	// disagreement can only be a missed emit and never a drifted second copy of the fold.
+	// iMultiplier / pKeyPlot / iPureSign / bSkipRateChannels are passed straight through (documented on resolveEntry).
 	void gt_foldInfo(const CvModifiers* pModifiers, int iMultiplier, CvCascScope eScope, int64_t iWantedBits,
 		const CvCascadeEvalCtx& evalCtx, const CvPlot* pKeyPlot, int iPureSign, bool bSkipRateChannels,
 		std::vector<int64_t>& flatSlots, std::vector<int>& percentSlots)
@@ -123,14 +102,6 @@ namespace
 		{
 			return;
 		}
-		const int iPlotsSeg = modSegmentLookup("plots");
-		const int iImprovementsSeg = modSegmentLookup("improvements");
-		const int iTerrainsSeg = modSegmentLookup("terrains");
-		const int iFeaturesSeg = modSegmentLookup("features");
-		const int iBonusesSeg = modSegmentLookup("bonuses");
-		const int iRoutesSeg = modSegmentLookup("routes");
-		const int iEmpiresSeg = modSegmentLookup("empires");
-		const int iCitiesSeg = modSegmentLookup("cities");
 		const std::vector<CvModEntry*>& entries = pModifiers->entries();
 		for (size_t iEntry = 0; iEntry < entries.size(); ++iEntry)
 		{
@@ -139,129 +110,14 @@ namespace
 			{
 				continue;
 			}
-			// json §3.3's `empires` plural target: a WORLD-scope deposit onto EVERY empire lands in each
-			// PLAYER's package, because WORLD is CONFIG and carries no package of its own
-			// (state-repositories.md -- "a project granting something to every player is NOT world-scope
-			// state"). So the empire gather accepts it even though the authored scope is world.
-			const bool bWorldEmpires = (eScope == CASC_SCOPE_EMPIRE
-				&& pEntry->scope == CASC_SCOPE_WORLD
-				&& iEmpiresSeg >= 0
-				&& pEntry->targetSeg == iEmpiresSeg);
-			// json §3.3's `cities` plural target, the exact sibling of the `empires` fan one scope down: an
-			// EMPIRE-scope deposit onto EVERY city of the player lands in each CITY's package, because this
-			// city IS one of the targets -- landing it here is the deposit, not a keyed lookup.
-			// ⚑ Folding PER CITY is the whole point: it is what lets the entry's `per` scaler and its
-			// conditions resolve against THIS city. The same deposit summed into the empire package instead
-			// would resolve them once, against no city, and then hand every city that one number.
-			const bool bEmpireCities = (eScope == CASC_SCOPE_CITY
-				&& pEntry->scope == CASC_SCOPE_EMPIRE
-				&& iCitiesSeg >= 0
-				&& pEntry->targetSeg == iCitiesSeg);
-			if (pEntry->scope != eScope && !bWorldEmpires && !bEmpireCities)
+			int iChannel = -1;
+			bool bPercentSide = false;
+			int64_t iValue = 0;
+			if (!MMKernel::resolveEntry(*pEntry, iMultiplier, eScope, evalCtx, pKeyPlot, iPureSign,
+				bSkipRateChannels, iChannel, bPercentSide, iValue))
 			{
 				continue;
 			}
-			if (pEntry->unitQual != NULL)
-			{
-				continue;   // unit-carried values ride ON TOP live ([DEC-unit-modifiers-on-top]) -- never cached
-			}
-			const bool bPercentSide = gt_unitIsPercentSide(pEntry->unit);
-			if (!bPercentSide && !gt_unitIsFlatSide(pEntry->unit))
-			{
-				continue;
-			}
-			if (bSkipRateChannels && gt_isRateFamily(pEntry->family))
-			{
-				continue;
-			}
-			const int iChannel = CascadeChannelRegistry::channelLookup(pEntry->family,
-				(pEntry->family == MODFAM_PROPERTY) ? 0 : pEntry->kind, pEntry->propertyFk);
-			if (iChannel < 0)
-			{
-				continue;   // outside the vocabulary / never a package channel -- drops out with no special-casing
-			}
-			// TARGETED entries: at the PLOT scope a keyed entry folds iff its key IS this plot's substrate
-			// (the engine's improvement/terrain-keyed addends resolve INSIDE the isolated plot package,
-			// modifier.md §2); a `plots`-target entry folds iff its per-plot filter holds HERE. At every other
-			// scope a targeted entry stays an entry-list read (the reverse pass already landed the
-			// building-keyed boosts on their targets; the specialist-keyed trait carve-out reads at the
-			// receiver's specialist term).
-			if (pEntry->targetSeg >= 0 || pEntry->targetFk >= 0)
-			{
-				// The `empires` and `cities` fans are the targeted entries that fold outside plot scope: their
-				// target IS the gathering owner, so landing it here is the deposit, not a keyed lookup.
-				if (!bWorldEmpires && !bEmpireCities && (eScope != CASC_SCOPE_PLOT || pKeyPlot == NULL))
-				{
-					continue;
-				}
-				if (bWorldEmpires || bEmpireCities)
-				{
-					// falls through: the fan IS the fold, no per-target test applies
-				}
-				else if (pEntry->targetSeg == iPlotsSeg)
-				{
-					// falls through: applies() below evaluates the per-plot filter against THIS plot's ctx
-				}
-				else if (pEntry->targetSeg == iImprovementsSeg)
-				{
-					if (pEntry->targetFk < 0 || pEntry->targetFk != (int)pKeyPlot->getImprovementType())
-					{
-						continue;
-					}
-				}
-				else if (pEntry->targetSeg == iTerrainsSeg)
-				{
-					if (pEntry->targetFk < 0 || pEntry->targetFk != (int)pKeyPlot->getTerrainType())
-					{
-						continue;
-					}
-				}
-				else if (pEntry->targetSeg == iFeaturesSeg)
-				{
-					if (pEntry->targetFk < 0 || pEntry->targetFk != (int)pKeyPlot->getFeatureType())
-					{
-						continue;
-					}
-				}
-				else if (pEntry->targetSeg == iBonusesSeg)
-				{
-					const TeamTypes eSeeingTeam = (evalCtx.empireContext != NULL) ? (TeamTypes)evalCtx.empireContext->teamId() : NO_TEAM;
-					if (pEntry->targetFk < 0 || pEntry->targetFk != (int)pKeyPlot->getBonusType(eSeeingTeam))
-					{
-						continue;
-					}
-				}
-				else if (pEntry->targetSeg == iRoutesSeg)
-				{
-					if (pEntry->targetFk < 0 || pEntry->targetFk != (int)pKeyPlot->getRouteType())
-					{
-						continue;
-					}
-				}
-				else
-				{
-					continue;
-				}
-			}
-			if (iPureSign > 0 && pEntry->value < 0)
-			{
-				continue;   // PURE_TRAITS: a positive trait's downside values drop (modifier.md §4)
-			}
-			if (iPureSign < 0 && pEntry->value > 0)
-			{
-				continue;   // PURE_TRAITS: a negative trait's upside values drop
-			}
-			if (!MMKernel::audienceOk(pEntry->aiOnly, evalCtx))
-			{
-				continue;
-			}
-			if (!MMKernel::applies(pEntry->enabled, pEntry->disabled, evalCtx))
-			{
-				continue;   // the conditioned evaluation at rebuild cadence -- the dormancy model (modifier.md §3)
-			}
-			// the ONE §3.7 resolver applies the per scaler AND the religion: counted-kind filter
-			int64_t iValue = MMKernel::perScale(*pEntry, evalCtx, pEntry->value);
-			iValue *= iMultiplier;
 			gt_landValue(eScope, iWantedBits, iChannel, bPercentSide, iValue, flatSlots, percentSlots);
 		}
 	}
@@ -660,34 +516,6 @@ namespace
 		CascadeCityCombineTerms() : baseFlat(0), percentSum(0), cityFlat(0) {}
 	};
 
-	// The REBUILD path's terms: read through each input's own mark, so an input the same event marked rebuilds
-	// before it is summed and the mark ORDER within one event cannot leave a sum stale.
-	void gt_collectStoredCityTerms(const CvCity& city, int iChannel, CascadeCityCombineTerms& kTerms)
-	{
-		const CvPlayer& owner = GET_PLAYER(city.getOwner());
-		const CvTeam& team = GET_TEAM(owner.getTeam());
-
-		const int iNumPlots = city.getNumCityPlots();
-		for (int iPlotIndex = 0; iPlotIndex < iNumPlots; ++iPlotIndex)
-		{
-			if (!city.isWorkingPlot(iPlotIndex))
-			{
-				continue;
-			}
-			const CvPlot* pWorkedPlot = city.getCityIndexPlot(iPlotIndex);
-			if (pWorkedPlot != NULL)
-			{
-				kTerms.baseFlat += pWorkedPlot->getCascadePackage().sourceFlat(iChannel);
-			}
-		}
-		kTerms.baseFlat += owner.getCascadePackage().sourceFlat(iChannel);
-		kTerms.baseFlat += team.getCascadePackage().sourceFlat(iChannel);
-		kTerms.percentSum += city.getCascadePackage().sourcePercent(iChannel);
-		kTerms.percentSum += owner.getCascadePackage().sourcePercent(iChannel);
-		kTerms.percentSum += team.getCascadePackage().sourcePercent(iChannel);
-		kTerms.cityFlat = city.getCascadePackage().sourceFlat(iChannel);
-	}
-
 	// The ORACLE's terms: every one of them off a document recomputed from source. Not a single stored slot is
 	// read here -- an oracle that consumed one would be partly built on the state it exists to check, and would
 	// silently INHERIT a wrong input (state-repositories.md: independence is the entire value of the oracle).
@@ -745,26 +573,6 @@ namespace
 	// ---- The scope principle says the same thing from the other side: a lower scope never stores an upper
 	// ---- scope's sums, and the downward roll is realized at the combine. ----
 
-	// The city's ROLLED CHAIN legs for one channel, read the REBUILD way: the SAME chain
-	// InfoValuation::rolledLegsAtCity describes on the read path -- team + empire + city --
-	// through the rebuild-path accessors, so every input rebuilds through its own mark and the mark ORDER within
-	// one event stays irrelevant. The worked plots are deliberately absent (a plot never enters an upper scope's
-	// chain -- modifier.md §2 plot-as-base), and the city's own flats sit INSIDE the rolled sum rather than in a
-	// post-percent tier: for commerce every term but the process conversion is scaled by the percent stack.
-	void gt_collectStoredCityRolledLegs(const CvCity& city, int iChannel, int64_t& flatSum, int64_t& percentSum)
-	{
-		flatSum = 0;
-		percentSum = 0;
-		const CvPlayer& owner = GET_PLAYER(city.getOwner());
-		const CvTeam& team = GET_TEAM(owner.getTeam());
-		flatSum += team.getCascadePackage().sourceFlat(iChannel);
-		percentSum += team.getCascadePackage().sourcePercent(iChannel);
-		flatSum += owner.getCascadePackage().sourceFlat(iChannel);
-		percentSum += owner.getCascadePackage().sourcePercent(iChannel);
-		flatSum += city.getCascadePackage().sourceFlat(iChannel);
-		percentSum += city.getCascadePackage().sourcePercent(iChannel);
-	}
-
 	// The ORACLE's twin of the chain above, off the documents this run recomputed from source -- not one stored
 	// slot is read (state-repositories.md: independence is the entire value of the oracle).
 	void gt_collectFreshCityRolledLegs(int iChannel, const CvCascadeSlotValues& kCityDocument,
@@ -805,26 +613,6 @@ namespace
 		const ModifierFamily eFamily = CascadeChannelRegistry::channelFamily(iChannel);
 		const int iKind = CascadeChannelRegistry::channelKind(iChannel);
 		return InfoValuation::realizedChannel(iRolledFlat, iRolledPercent, infoKindUnit(eFamily, iKind, CASC_SCOPE_CITY));
-	}
-
-	void gt_collectStoredCityCommerceTerms(const CvCity& city, int iChannel, CascadeCityCommerceTerms& kTerms)
-	{
-		const int iCommerceYieldChannel = CascadeChannelRegistry::channelLookup(infoYieldFamily((int)YIELD_COMMERCE), (int)CHANNEL_AMOUNT, -1);
-		const int iProductionYieldChannel = CascadeChannelRegistry::channelLookup(infoYieldFamily((int)YIELD_PRODUCTION), (int)CHANNEL_AMOUNT, -1);
-		kTerms.commerceYieldRate = city.getCascadePackage().sourceSum(iCommerceYieldChannel);
-		kTerms.productionYieldRate = city.getCascadePackage().sourceSum(iProductionYieldChannel);
-		int64_t iRolledFlat = 0;
-		int64_t iRolledPercent = 0;
-		gt_collectStoredCityRolledLegs(city, iChannel, iRolledFlat, iRolledPercent);
-		kTerms.channelPercentSum = iRolledPercent;
-		if (CascadeChannelRegistry::scopeReceiverIndex(CASC_SCOPE_CITY, iChannel) >= 0)
-		{
-			kTerms.channelDeposits = city.getCascadePackage().sourceSum(iChannel);
-		}
-		else
-		{
-			kTerms.channelDeposits = gt_channelDepositsFromLegs(iChannel, iRolledFlat, iRolledPercent);
-		}
 	}
 
 	void gt_collectFreshCityCommerceTerms(const CvCity& city, int iChannel, const CvCascadeEvalCtx& evalCtx,
@@ -877,27 +665,6 @@ namespace
 	// ---- functions rather than one with a switch: the rebuild path's inputs are the stored packages (read
 	// ---- through their marks), the oracle's are recomputed in full. ----
 
-	void gt_rebuildCitySums(const CvCity& city, int64_t iReceiverBits, const CvCascadeEvalCtx& evalCtx,
-		std::vector<int64_t>& sumSlots)
-	{
-		const int iReceivers = CascadeChannelRegistry::scopeReceiverCount(CASC_SCOPE_CITY);
-		for (int iReceiver = 0; iReceiver < iReceivers; ++iReceiver)
-		{
-			const int iChannel = CascadeChannelRegistry::scopeReceiverChannel(CASC_SCOPE_CITY, iReceiver);
-			if ((iReceiverBits & CascadeChannelRegistry::scopeReceiverBit(CASC_SCOPE_CITY, iChannel)) == 0)
-			{
-				continue;
-			}
-			if (iReceiver >= (int)sumSlots.size())
-			{
-				continue;
-			}
-			CascadeCityCombineTerms kTerms;
-			gt_collectStoredCityTerms(city, iChannel, kTerms);
-			sumSlots[iReceiver] = gt_cityRateFromTerms(city, iChannel, evalCtx, kTerms);
-		}
-	}
-
 	// Fills the receiver slots of a city document whose CHANNEL slots this run has already gathered -- every
 	// receiver, always, since an oracle run is a full recalc and has no mask to honour.
 	void gt_oracleCitySums(const CvCity& city, const CvCascadeEvalCtx& evalCtx, CvCascadeSlotValues& kCityDocument)
@@ -915,61 +682,6 @@ namespace
 			CascadeCityCombineTerms kTerms;
 			gt_collectFreshCityTerms(iChannel, kCityDocument, kInputs, kTerms);
 			kCityDocument.sum[iReceiver] = gt_cityRateFromTerms(city, iChannel, evalCtx, kTerms);
-		}
-	}
-
-	// The empire's realized totals: per receiver channel, the Σ over the player's cities of the CITY's realized
-	// value of that channel -- and nothing beside the Σ (the double-count constraint stated at the commerce
-	// section above). A COMMERCE receiver's per-city quantity is the commerce split; MAINTENANCE is the one
-	// receiver whose realized value the packages cannot answer alone (it folds the engine components and the
-	// status gate), so it asks the city; and the plain rate combine stands for anything else, since "the
-	// city's realized value" is what the Σ takes in every case.
-	void gt_rebuildEmpireSums(const CvPlayer& player, int64_t iReceiverBits, std::vector<int64_t>& sumSlots)
-	{
-		const int iReceivers = CascadeChannelRegistry::scopeReceiverCount(CASC_SCOPE_EMPIRE);
-		for (int iReceiver = 0; iReceiver < iReceivers; ++iReceiver)
-		{
-			const int iChannel = CascadeChannelRegistry::scopeReceiverChannel(CASC_SCOPE_EMPIRE, iReceiver);
-			if ((iReceiverBits & CascadeChannelRegistry::scopeReceiverBit(CASC_SCOPE_EMPIRE, iChannel)) == 0)
-			{
-				continue;
-			}
-			const ModifierFamily eFamily = CascadeChannelRegistry::channelFamily(iChannel);
-			const int iCommerce = infoFamilyCommerce(eFamily);
-			int64_t iTotal = 0;
-			for (CvPlayer::city_iterator cityIterator = player.beginCities(); cityIterator != player.endCities(); ++cityIterator)
-			{
-				const CvCity* pLoopCity = *cityIterator;
-				if (eFamily == MODFAM_MAINTENANCE)
-				{
-					// ⚑ MAINTENANCE's per-city quantity is the city's REALIZED value, which the plain combine
-					// below cannot answer: the status gate (WLTKD / disorder) suppresses the whole contribution
-					// at the READ, and it is live city state no package carries. The Σ takes the member's
-					// realized value ([state-repositories.md]), so it asks the city for exactly that.
-					iTotal += pLoopCity->getMaintenanceTimes100();
-				}
-				else if (iCommerce >= 0)
-				{
-					CascadeCityCommerceTerms kCommerceTerms;
-					gt_collectStoredCityCommerceTerms(*pLoopCity, iChannel, kCommerceTerms);
-					iTotal += gt_cityCommerceFromTerms(*pLoopCity, iCommerce, kCommerceTerms);
-				}
-				else
-				{
-					CvCascadeEvalCtx cityEvalCtx;
-					gt_fillCityEvalCtx(*pLoopCity, cityEvalCtx);
-					CascadeCityCombineTerms kTerms;
-					gt_collectStoredCityTerms(*pLoopCity, iChannel, kTerms);
-					iTotal += gt_cityRateFromTerms(*pLoopCity, iChannel, cityEvalCtx, kTerms);
-				}
-			}
-			if (iReceiver < (int)sumSlots.size())
-			{
-				// The slot is int64 and so is the Σ: a receiver total accumulates across every member city at
-				// ×100, which is the case [fixed-point-and-scales.md §1b] says carries 64 bits. Narrowing here
-				// would throw that away at the last step, on the plane (culture) already known to overflow.
-				sumSlots[iReceiver] = iTotal;
-			}
 		}
 	}
 
@@ -1025,37 +737,9 @@ namespace
 	}
 }
 
-void CascadeGather::refreshPlot(const CvPlot& plot, int64_t iMask)
-{
-	const CvCascadePackage<CvPlot>& package = plot.getCascadePackage();
-	package.ensureSized();
-	gt_gatherPlotChannels(plot, iMask, package.flat, package.percent, &package.substrateFlat);
-	emitCacheRebuilt((int)CASC_SCOPE_PLOT, (int)plot.getOwner(),
-		plot.getX() + plot.getY() * GC.getMap().getGridWidth(), iMask);
-}
-
 void CascadeGather::gatherPlotInto(const CvPlot& plot, CvCascadeSlotValues& kValues)
 {
 	gt_freshPlotDocument(plot, kValues);
-}
-
-void CascadeGather::refreshCity(const CvCity& city, int64_t iMask)
-{
-	const CvCascadePackage<CvCity>& package = city.getCascadePackage();
-	package.ensureSized();
-	CvCascadeEvalCtx evalCtx;
-	gt_fillCityEvalCtx(city, evalCtx);
-	const int64_t iChannelBits = iMask & CascadeChannelRegistry::scopeAllChannelsMask(CASC_SCOPE_CITY);
-	const int64_t iReceiverBits = iMask & CascadeChannelRegistry::scopeAllReceiversMask(CASC_SCOPE_CITY);
-	if (iChannelBits != 0)
-	{
-		gt_gatherCityChannels(city, iChannelBits, evalCtx, package.flat, package.percent);
-	}
-	if (iReceiverBits != 0)
-	{
-		gt_rebuildCitySums(city, iReceiverBits, evalCtx, package.sum);
-	}
-	emitCacheRebuilt((int)CASC_SCOPE_CITY, (int)city.getOwner(), city.getID(), iMask);
 }
 
 void CascadeGather::gatherCityInto(const CvCity& city, CvCascadeSlotValues& kValues)
@@ -1066,37 +750,10 @@ void CascadeGather::gatherCityInto(const CvCity& city, CvCascadeSlotValues& kVal
 	gt_oracleCitySums(city, evalCtx, kValues);
 }
 
-void CascadeGather::refreshEmpire(const CvPlayer& player, int64_t iMask)
-{
-	const CvCascadePackage<CvPlayer>& package = player.getCascadePackage();
-	package.ensureSized();
-	const int64_t iChannelBits = iMask & CascadeChannelRegistry::scopeAllChannelsMask(CASC_SCOPE_EMPIRE);
-	const int64_t iReceiverBits = iMask & CascadeChannelRegistry::scopeAllReceiversMask(CASC_SCOPE_EMPIRE);
-	if (iChannelBits != 0)
-	{
-		CvCascadeEvalCtx evalCtx;
-		player.getEmpireContext().fillEvalCtx(evalCtx);   // player + team (no city at empire scope)
-		gt_gatherEmpireChannels(player, iChannelBits, evalCtx, package.flat, package.percent);
-	}
-	if (iReceiverBits != 0)
-	{
-		gt_rebuildEmpireSums(player, iReceiverBits, package.sum);
-	}
-	emitCacheRebuilt((int)CASC_SCOPE_EMPIRE, (int)player.getID(), (int)player.getID(), iMask);
-}
-
 void CascadeGather::gatherEmpireInto(const CvPlayer& player, CvCascadeSlotValues& kValues)
 {
 	gt_freshEmpireDocument(player, kValues);
 	gt_oracleEmpireSums(player, kValues.sum);
-}
-
-void CascadeGather::refreshTeam(const CvTeam& team, int64_t iMask)
-{
-	const CvCascadePackage<CvTeam>& package = team.getCascadePackage();
-	package.ensureSized();
-	gt_gatherTeamChannels(team, iMask, package.flat, package.percent);
-	emitCacheRebuilt((int)CASC_SCOPE_TEAM, (int)team.getLeaderID(), (int)team.getID(), iMask);
 }
 
 void CascadeGather::gatherTeamInto(const CvTeam& team, CvCascadeSlotValues& kValues)

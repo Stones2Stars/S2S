@@ -2,6 +2,7 @@
 
 from CvPythonExtensions import *
 GC = CyGlobalContext()
+INFO = CyInfo()
 TRNSLTR = CyTranslator()
 
 class Page:
@@ -92,7 +93,7 @@ class Page:
 			or iTheHeritage in aGOMBonusReqList[BoolExprTypes.BOOLEXPR_AND] \
 			or iTheHeritage in aGOMBonusReqList[BoolExprTypes.BOOLEXPR_OR] \
 			:
-				buildings.append([szChild + str(iBuilding),  GC.getBuildingInfo(iBuilding).getButton()])
+				buildings.append([szChild + str(iBuilding),  INFO.getButton("BUILDING_", iBuilding)])
 
 		if buildings or units:
 

@@ -29,6 +29,7 @@
 #include "Infos/CvEdges.h"       // EnEdgeFamily / EnEdgeBucket -- the edge axes ([DEC-one-reverse-view])
 #include "Python/CyInfo.h"       // PyIntrinsicSlot -- the straggler slots CyInfo::getIntrinsic is addressed by
 #include "Infos/CvInfoKinds.h"  // WellbeingChannel -- the group enum getRealizedWellbeing is indexed by
+#include "Infos/CvClassificationIds.h"  // CapabilityClsTypes -- the GENERATED capability ids ([DEC-classification-infos])
 #include "UI/CvBuildingFilters.h"
 #include "UI/CvBuildingGrouping.h"
 #include "UI/CvBuildingSort.h"
@@ -116,6 +117,9 @@ void CyEnums::pythonPublish()
 	python::enum_<PyIdListSlot>("IdListSlot")
 		.value("PYLIST_HEADQUARTERS_BUILDINGS", PYLIST_HEADQUARTERS_BUILDINGS)
 		.value("PYLIST_CONSUMED_BONUSES", PYLIST_CONSUMED_BONUSES)
+		.value("PYLIST_GRANTED_BUILDINGS", PYLIST_GRANTED_BUILDINGS)
+		.value("PYLIST_PREREQ_AND_TECHS", PYLIST_PREREQ_AND_TECHS)
+		.value("PYLIST_PREREQ_OR_TECHS",  PYLIST_PREREQ_OR_TECHS)
 	;
 
 	python::enum_<PyIntrinsicSlot>("IntrinsicSlot")
@@ -135,6 +139,35 @@ void CyEnums::pythonPublish()
 		.value("PYINT_IS_SPACESHIP",     PYINT_IS_SPACESHIP)
 		.value("PYINT_IS_NO_INSTANCE_LIMIT", PYINT_IS_NO_INSTANCE_LIMIT)
 		.value("PYINT_WONDER_SCOPE",     PYINT_WONDER_SCOPE)
+		.value("PYINT_ERA",              PYINT_ERA)
+		.value("PYINT_ADVISOR",          PYINT_ADVISOR)
+		.value("PYINT_TOTAL_TURNS",      PYINT_TOTAL_TURNS)
+		.value("PYINT_GRID_X",           PYINT_GRID_X)
+		.value("PYINT_GRID_Y",           PYINT_GRID_Y)
+		.value("PYINT_TRADE_ROUTE_AMOUNT", PYINT_TRADE_ROUTE_AMOUNT)
+		;
+
+	//	The generated CAPABILITY ids ([DEC-classification-infos]) -- CONSTANTS, not a read surface, so this is
+	//	not the banned `.def` getter contract ([patterns.md] THE PYTHON READ BOUNDARY: an enum publication
+	//	carrying zero .def and zero class_ is vocabulary). Script asks providesCapability() BY ID, exactly as
+	//	the engine does, never by key name.
+	python::enum_<CapabilityClsTypes>("CapabilityId")
+		.value("CLS_CAPABILITY_CAN_SEE_FURTHER_FROM_WATER", CLS_CAPABILITY_CAN_SEE_FURTHER_FROM_WATER)
+		.value("CLS_CAPABILITY_HAS_CENTERED_MAP",           CLS_CAPABILITY_HAS_CENTERED_MAP)
+		.value("CLS_CAPABILITY_HAS_WHOLE_MAP_REVEALED",     CLS_CAPABILITY_HAS_WHOLE_MAP_REVEALED)
+		.value("CLS_CAPABILITY_HAS_LANGUAGE",               CLS_CAPABILITY_HAS_LANGUAGE)
+		.value("CLS_CAPABILITY_HAS_RIVER_TRADE",            CLS_CAPABILITY_HAS_RIVER_TRADE)
+		.value("CLS_CAPABILITY_CAN_PASS_PEAKS",             CLS_CAPABILITY_CAN_PASS_PEAKS)
+		.value("CLS_CAPABILITY_CAN_FOUND_ON_PEAKS",         CLS_CAPABILITY_CAN_FOUND_ON_PEAKS)
+		.value("CLS_CAPABILITY_CAN_MOVE_FAST_ON_PEAKS",     CLS_CAPABILITY_CAN_MOVE_FAST_ON_PEAKS)
+		.value("CLS_CAPABILITY_CAN_FARM_DESERT",            CLS_CAPABILITY_CAN_FARM_DESERT)
+		.value("CLS_CAPABILITY_CAN_SPREAD_IRRIGATION",      CLS_CAPABILITY_CAN_SPREAD_IRRIGATION)
+		.value("CLS_CAPABILITY_CAN_IGNORE_IRRIGATION",      CLS_CAPABILITY_CAN_IGNORE_IRRIGATION)
+		.value("CLS_CAPABILITY_CAN_BUILD_BRIDGES",          CLS_CAPABILITY_CAN_BUILD_BRIDGES)
+		.value("CLS_CAPABILITY_CAN_REBASE_ANYWHERE",        CLS_CAPABILITY_CAN_REBASE_ANYWHERE)
+		.value("CLS_CAPABILITY_CAN_SET_SCIENCE_RATE",       CLS_CAPABILITY_CAN_SET_SCIENCE_RATE)
+		.value("CLS_CAPABILITY_CAN_SET_CULTURE_RATE",       CLS_CAPABILITY_CAN_SET_CULTURE_RATE)
+		.value("CLS_CAPABILITY_CAN_SET_ESPIONAGE_RATE",     CLS_CAPABILITY_CAN_SET_ESPIONAGE_RATE)
 		;
 
 	python::enum_<EnEdgeBucket>("EdgeBucket")
@@ -162,6 +195,30 @@ void CyEnums::pythonPublish()
 		.value("GAMESTATE_ON", GAMESTATE_ON)
 		.value("GAMESTATE_OVER", GAMESTATE_OVER)
 		.value("GAMESTATE_EXTENDED", GAMESTATE_EXTENDED)
+	;
+
+	//	The empire POLICY ids -- the generated sibling of the capability block ([json.md] §9: a policy is a
+	//	pure empire STATE a civic or trait enacts). Constants, not reads.
+	python::enum_<PolicyClsTypes>("PolicyId")
+		.value("CLS_POLICY_ALL_RELIGIONS_ACTIVE", CLS_POLICY_ALL_RELIGIONS_ACTIVE)
+		.value("CLS_POLICY_ALLOW_INQUISITIONS", CLS_POLICY_ALLOW_INQUISITIONS)
+		.value("CLS_POLICY_BANS_NON_STATE_RELIGIONS", CLS_POLICY_BANS_NON_STATE_RELIGIONS)
+		.value("CLS_POLICY_CAN_DO_ELECTION", CLS_POLICY_CAN_DO_ELECTION)
+		.value("CLS_POLICY_CITIES_START_WITH_STATE_RELIGION", CLS_POLICY_CITIES_START_WITH_STATE_RELIGION)
+		.value("CLS_POLICY_COMMUNISM", CLS_POLICY_COMMUNISM)
+		.value("CLS_POLICY_DISALLOW_INQUISITIONS", CLS_POLICY_DISALLOW_INQUISITIONS)
+		.value("CLS_POLICY_DRAFTS_ON_CITY_CAPTURE", CLS_POLICY_DRAFTS_ON_CITY_CAPTURE)
+		.value("CLS_POLICY_EXTRA_GOODY", CLS_POLICY_EXTRA_GOODY)
+		.value("CLS_POLICY_FIXED_BORDERS", CLS_POLICY_FIXED_BORDERS)
+		.value("CLS_POLICY_FREE_SPEECH", CLS_POLICY_FREE_SPEECH)
+		.value("CLS_POLICY_MILITARY_FOOD_PRODUCTION", CLS_POLICY_MILITARY_FOOD_PRODUCTION)
+		.value("CLS_POLICY_NO_CORPORATIONS", CLS_POLICY_NO_CORPORATIONS)
+		.value("CLS_POLICY_NO_FOREIGN_CORPORATIONS", CLS_POLICY_NO_FOREIGN_CORPORATIONS)
+		.value("CLS_POLICY_NO_FOREIGN_TRADE", CLS_POLICY_NO_FOREIGN_TRADE)
+		.value("CLS_POLICY_NO_NON_STATE_RELIGION_SPREAD", CLS_POLICY_NO_NON_STATE_RELIGION_SPREAD)
+		.value("CLS_POLICY_NON_STATE_RELIGION_COMMERCE", CLS_POLICY_NON_STATE_RELIGION_COMMERCE)
+		.value("CLS_POLICY_STATE_RELIGION", CLS_POLICY_STATE_RELIGION)
+		.value("CLS_POLICY_UPGRADE_ANYWHERE", CLS_POLICY_UPGRADE_ANYWHERE)
 	;
 
 	python::enum_<PopupStates>("PopupStates")
@@ -386,6 +443,28 @@ void CyEnums::pythonPublish()
 		.value("WELLBEING_HEALTH", WELLBEING_HEALTH)
 		.value("WELLBEING_UNHEALTH", WELLBEING_UNHEALTH)
 		.value("NUM_WELLBEING_CHANNELS", NUM_WELLBEING_CHANNELS)
+	;
+
+	//	The REVOLUTION group's kinds. Revolutions is Python-authoritative and due its own rework, so this
+	//	vocabulary only carries the authored data faithfully ([legacy-value-calc-map]: revolution is parsed,
+	//	never modelled). ⛔ LOCAL and NATIONAL are DISTINCT MECHANICS, not scope variants -- never collapse
+	//	them onto the scope axis (CvInfoKinds.h).
+	python::enum_<RevolutionKind>("RevolutionKind")
+		.value("REVOLUTION_AMOUNT", REVOLUTION_AMOUNT)
+		.value("REVOLUTION_LOCAL", REVOLUTION_LOCAL)
+		.value("REVOLUTION_NATIONAL", REVOLUTION_NATIONAL)
+		.value("REVOLUTION_DISTANCE_MODIFIER", REVOLUTION_DISTANCE_MODIFIER)
+		.value("REVOLUTION_HOLY_CITY_GOOD", REVOLUTION_HOLY_CITY_GOOD)
+		.value("REVOLUTION_HOLY_CITY_BAD", REVOLUTION_HOLY_CITY_BAD)
+		.value("REVOLUTION_DEMOCRACY_LEVEL", REVOLUTION_DEMOCRACY_LEVEL)
+		.value("REVOLUTION_GOOD_RELIGION", REVOLUTION_GOOD_RELIGION)
+		.value("REVOLUTION_BAD_RELIGION", REVOLUTION_BAD_RELIGION)
+		.value("REVOLUTION_NATIONALITY", REVOLUTION_NATIONALITY)
+		.value("REVOLUTION_RELIGIOUS_FREEDOM", REVOLUTION_RELIGIOUS_FREEDOM)
+		.value("REVOLUTION_ENVIRONMENTAL_PROTECTION", REVOLUTION_ENVIRONMENTAL_PROTECTION)
+		.value("REVOLUTION_VIOLENT", REVOLUTION_VIOLENT)
+		.value("REVOLUTION_LABOR_FREEDOM", REVOLUTION_LABOR_FREEDOM)
+		.value("NUM_REVOLUTION_KINDS", NUM_REVOLUTION_KINDS)
 	;
 
 	//	The kind enums that index CyState's raw-state city groups. They are the consumer's vocabulary for those

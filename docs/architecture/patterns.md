@@ -119,7 +119,7 @@ by every player — so it can carry authored data and nothing else. Concretely:
 2. **What an info hands out** — its data, ASKED FOR BY CHANNEL: *"give me your flats / your percents for these
    channels."* The cascade points at a LIST of infos and sums what comes back. It never reaches inside an info's
    per-type shape, and an info never learns what a cascade, a scope, or an owner is.
-3. **What an info CANNOT hold** — per-owner state, a computed total, a dirty flag, a cache. Not by rule: by
+3. **What an info CANNOT hold** — per-owner state, a computed total, a staleness flag, a cache. Not by rule: by
    construction. There is nowhere on the object to put it, because the outbound surface is the only surface.
 
 **Why the boundary is load-bearing, not tidiness.** An info is write-once-at-load and shared; cascade runtime is
@@ -671,12 +671,21 @@ of them:
   > is a runtime GameFont slot the `CvGameTextMgr` symbol pass assigns via `setChar`, for seven registries
   > (yield · commerce · religion · corporation · property · invisible · bonus) that straddle the JSON/XML line —
   > so it is not info data on EITHER side, and no `get<X>Info` revival is the way to ask.
-  > ⚑ **The translator already publishes each one as an `[ICON_*]` token**, resolved through `CyTranslator`,
-  > which is the closed EXE's and was never ours to cut ([python-load-sequence.md](../reference/python-load-sequence.md)).
-  > `CyTranslator().getText("[ICON_FOOD]", ())` is the live in-tree idiom and needs no engine work at all.
-  > ⚠ The fixed symbols are the OTHER half and take the other route: `CyGame.getSymbolID(FontSymbols.X)` serves
-  > the `FontSymbols` enum, which deliberately holds no yield/commerce entry because those registries are
-  > variable-count. Reading one surface as the whole is what makes the glyph look unserved.
+  > ⛔ **THREE ROUTES SERVE IT, SPLIT BY WHETHER THE REGISTRY IS FIXED-COUNT — and a reader who knows only one
+  > concludes the glyph is unserved.** The split is not stylistic: a token is a literal STRING, so a registry
+  > whose size is a runtime count can only be addressed by ID.
+  > - **`CyGame.getSymbolID(FontSymbols.X)`** — the fixed engine symbols (happy, bullet, strength, …).
+  > - **`CyTranslator().getText("[ICON_X]", ())`** — the `[ICON_*]` token map (`CvDllTranslator::initializeTags`,
+  >   ours): the fixed symbols again, the 3 YIELDS and 4 COMMERCES by name, plus a token built PER ENTITY at load
+  >   for **property** and **invisible** (`[ICON_<TYPE>]`, from the type key). ⚠ Those two are the only registries
+  >   whose per-entity token exists, so `[ICON_" + typeKey + "]"` composes for them and for nothing else.
+  > - **`CyGameTextMgr().getSymbolChar(prefix, id)`** — the symbol pass's own read, covering the five registries it
+  >   assigns by id: `YIELD_` · `COMMERCE_` · `RELIGION_` · `CORPORATION_` · `BONUS_`. ⛔ **RELIGION, CORPORATION
+  >   and BONUS have NO `[ICON_*]` token of any kind** — they are variable-count, so this is their ONLY route, and
+  >   `[ICON_RELIGION]` is the generic religion symbol rather than a per-religion glyph. It returns an INT, so it
+  >   substitutes for a `getChar()` under an existing `%c` with no format surgery.
+  > ⚑ **Two registries carry a SECOND, distinct glyph**, each its own read: a religion's HOLY-CITY marker
+  > (`getHolyCitySymbolChar`) and a corporation's HEADQUARTERS marker (`getHeadquarterSymbolChar`).
 - **REVOLUTION's distance mechanic.** ⚠ `revolution.distanceMod` is **NOT dead** — Revolutions is
   Python-authoritative and consumes it through the player/city aggregates, which makes the read INVISIBLE to any
   engine-side grep. It is the standing exhibit for why an engine-read census cannot prove Python coverage. **Both
@@ -719,13 +728,13 @@ turn-time/FPS tax.
   cross-registry fact, the PASS computes it once and FEEDS it in (the DRY shape — a machine never re-derives
   what another can hand it). Idempotent like its siblings: it fully redefines every member it fills.
   ⛔ The alternative — resolving on first read behind a memo — is BANNED, and not as untidiness: a memo puts a
-  cache **and a dirty flag** on an info, which the INFO DATA-OUT contract above forbids *by construction*.
+  cache **and a staleness flag** on an info, which the INFO DATA-OUT contract above forbids *by construction*.
   ⛔ And it is ONE step, not a per-type habit: minting a second post-map hook beside this pass is the
   does-the-same-thing failure the enforcement check below exists to catch — reuse `deriveAtRegistryComplete`.
   *(Realized: the unit plane's SM base sums / derived era / upgrade-chain closure, and `CvHeritageInfo`'s
   acquisition prereqs — the tech and predecessor heritages whose `enables.heritages` list it.)*
 - The cascade's own gated sums are NOT this surface — they are `MMKernel` over the compiled `DepositIndex`,
-  running at dirty-rebuild cadence, not per read.
+  running at mark-rebuild cadence, not per read.
 
 ## The ONE reader — the load pipeline law
 

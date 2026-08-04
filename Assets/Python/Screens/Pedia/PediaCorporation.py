@@ -2,6 +2,8 @@
 
 from CvPythonExtensions import *
 GC = CyGlobalContext()
+INFO = CyInfo()
+TEXT = CyGameTextMgr()
 TRNSLTR = CyTranslator()
 
 class PediaCorporation:
@@ -62,7 +64,7 @@ class PediaCorporation:
 		W_HALF_PP = self.W_HALF_PP
 
 		# Main Panel
-		szCorpName = u'%c ' % CvTheCorporationInfo.getHeadquarterChar() + CvTheCorporationInfo.getDescription() + u' %c' % CvTheCorporationInfo.getChar()
+		szCorpName = u'%c ' % TEXT.getHeadquarterSymbolChar(iTheCorporation) + INFO.getDescription("CORPORATION_", iTheCorporation) + u' %c' % TEXT.getSymbolChar("CORPORATION_", iTheCorporation)
 		screen.setText(self.main.getNextWidgetName(), "", uFontEdge + szCorpName, 1<<0, X_COL_1, 0, 0, FontTypes.TITLE_FONT, iWidGeneral, 0, 0)
 		screen.addPanel(self.main.getNextWidgetName(), "", "", False, False, X_COL_1, Y_TOP_ROW_1 + 3, W_PEDIA_PAGE, H_TOP_ROW, PanelStyles.PANEL_STYLE_MAIN)
 		screen.addDDSGFC(self.main.getNextWidgetName(), CvTheCorporationInfo.getButton(), X_COL_1 - 2, Y_TOP_ROW_1 + 8, S_ICON, S_ICON, iWidGeneral, -1, -1)
@@ -85,7 +87,7 @@ class PediaCorporation:
 		iTech = CvTheCorporationInfo.getTechPrereq()
 		aReqBonusListLength = 0
 		for iBonus in CvTheCorporationInfo.getPrereqBonuses():
-			aConsumesList.append((GC.getBonusInfo(iBonus).getButton(), iBonus))
+			aConsumesList.append((INFO.getButton("BONUS_", iBonus), iBonus))
 			aReqBonusListLength += 1
 		if aReqBuildList or aConsumesList or iTech != -1:
 			enumBS = GenericButtonSizes.BUTTON_SIZE_CUSTOM
@@ -102,7 +104,7 @@ class PediaCorporation:
 				screen.attachLabel(childMainCont, "", uFont4b + "Requires")
 				screen.attachPanel(childMainCont, childMainContList, "", "", False, True, iPanelEmpty)
 				if iTech != -1:
-					screen.attachImageButton(childMainContList, "", GC.getTechInfo(iTech).getButton(), enumBS, WidgetTypes.WIDGET_PEDIA_JUMP_TO_TECH, iTech, 2, False)
+					screen.attachImageButton(childMainContList, "", INFO.getButton("TECH_", iTech), enumBS, WidgetTypes.WIDGET_PEDIA_JUMP_TO_TECH, iTech, 2, False)
 					if aReqBuildList:
 						screen.attachLabel(childMainContList, "", "<font=3> &#38 ")
 				for i, entry in enumerate(aReqBuildList):

@@ -10,9 +10,11 @@ import WBInfoScreen
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
+TEXT = CyGameTextMgr()
 iChange = 1
 
 class WBPlayerScreen:
@@ -72,7 +74,7 @@ class WBPlayerScreen:
 		iY += 30
 		screen.addDropDownBoxGFC("CurrentEra", 20, iY, screen.getXResolution()/5, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
 		for i in xrange(GC.getNumEraInfos()):
-			screen.addPullDownString("CurrentEra", GC.getEraInfo(i).getDescription(), i, i, i == pPlayer.getCurrentEra())
+			screen.addPullDownString("CurrentEra", INFO.getDescription("C2C_ERA_", i), i, i, i == pPlayer.getCurrentEra())
 
 		global lReligions
 
@@ -92,8 +94,8 @@ class WBPlayerScreen:
 		screen = CyGInterfaceScreen( "WBPlayerScreen", CvScreenEnums.WB_PLAYER)
 		iLeader = pPlayer.getLeaderType()
 		iCiv = pPlayer.getCivilizationType()
-		screen.addDDSGFC("LeaderPic", GC.getLeaderHeadInfo(iLeader).getButton(), screen.getXResolution() * 3/8 - self.iIconSize/2, 80, self.iIconSize, self.iIconSize, WidgetTypes.WIDGET_PYTHON, 7876, iLeader)
-		screen.addDDSGFC("CivPic", GC.getCivilizationInfo(iCiv).getButton(), screen.getXResolution() * 5/8 - self.iIconSize/2, 80, self.iIconSize, self.iIconSize, WidgetTypes.WIDGET_PYTHON, 7872, iCiv)
+		screen.addDDSGFC("LeaderPic", INFO.getButton("LEADER_", iLeader), screen.getXResolution() * 3/8 - self.iIconSize/2, 80, self.iIconSize, self.iIconSize, WidgetTypes.WIDGET_PYTHON, 7876, iLeader)
+		screen.addDDSGFC("CivPic", INFO.getButton("CIVILIZATION_", iCiv), screen.getXResolution() * 5/8 - self.iIconSize/2, 80, self.iIconSize, self.iIconSize, WidgetTypes.WIDGET_PYTHON, 7872, iCiv)
 		sText = pPlayer.getName()
 		lTraits = []
 		for iTrait in xrange(GC.getNumTraitInfos()):
@@ -114,7 +116,7 @@ class WBPlayerScreen:
 		iY = 110
 		screen.setButtonGFC("PlayerGoldPlus", "", "", 20, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
 		screen.setButtonGFC("PlayerGoldMinus", "", "", 45, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
-		sText = u"%s %s%c" %(CyTranslator().getText("TXT_KEY_WB_GOLD", ()), self.WB.addComma(pPlayer.getGold()), GC.getCommerceInfo(CommerceTypes.COMMERCE_GOLD).getChar())
+		sText = u"%s %s%c" %(CyTranslator().getText("TXT_KEY_WB_GOLD", ()), self.WB.addComma(pPlayer.getGold()), TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_GOLD))
 		screen.setLabel("PlayerGoldText", "Background", "<font=3>" + sText + "</font>", 1<<0, 75, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 		iY += 30
@@ -151,8 +153,8 @@ class WBPlayerScreen:
 				sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
 				screen.setButtonGFC("CommerceFlexiblePlus" + str(i), "", "", iX, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, i, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
 				screen.setButtonGFC("CommerceFlexibleMinus" + str(i), "", "", iX + 25, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, i, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
-			sText = sColor + u"<font=3>%c: %d%% %s</color></font>" %(GC.getCommerceInfo(i).getChar(), pPlayer.getCommercePercent(i), CyTranslator().getText("TXT_KEY_MISC_POS_GOLD_PER_TURN", (pPlayer.getCommerceRate(CommerceTypes(i)),)))
-			screen.setText("AdjustCommerceFlexible" + GC.getCommerceInfo(i).getType(), "Background", "<font=3>" + sText + "</font>", 1<<0, iX + 50, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_PYTHON, 7881, i)
+			sText = sColor + u"<font=3>%c: %d%% %s</color></font>" %(TEXT.getSymbolChar("COMMERCE_", i), pPlayer.getCommercePercent(i), CyTranslator().getText("TXT_KEY_MISC_POS_GOLD_PER_TURN", (pPlayer.getCommerceRate(CommerceTypes(i)),)))
+			screen.setText("AdjustCommerceFlexible" + INFO.getType("COMMERCE_", i), "Background", "<font=3>" + sText + "</font>", 1<<0, iX + 50, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_PYTHON, 7881, i)
 			iY += 30
 
 	def placeScript(self):
@@ -198,7 +200,7 @@ class WBPlayerScreen:
 				iCount += 1
 				ItemInfo = GC.getTechInfo(iTechX)
 				sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
-				sText = u"%s (%d/%d)%c" %(ItemInfo.getDescription(), pTeam.getResearchProgress(iTechX), pTeam.getResearchCost(iTechX), GC.getCommerceInfo(CommerceTypes.COMMERCE_RESEARCH).getChar())
+				sText = u"%s (%d/%d)%c" %(ItemInfo.getDescription(), pTeam.getResearchProgress(iTechX), pTeam.getResearchCost(iTechX), TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_RESEARCH))
 				if iCurrentTech == iTechX:
 					sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
 					sCurrentTech = sText
@@ -231,10 +233,9 @@ class WBPlayerScreen:
 			elif pPlayer.getHasReligionCount(item[1]) > 0:
 				sColor = CyTranslator().getText("[COLOR_YELLOW]", ())
 			iRow = screen.appendTableRow("WBPlayerReligions")
-			ItemInfo = GC.getReligionInfo(item[1])
-			sChar = ItemInfo.getChar()
+			sChar = TEXT.getSymbolChar("RELIGION_", item[1])
 			if pPlayer.hasHolyCity(item[1]):
-				sChar = ItemInfo.getHolyCityChar()
+				sChar = TEXT.getHolyCitySymbolChar(item[1])
 			sText = u"<font=4>%c <font=3>%s</font>" %(sChar, item[0])
 			screen.setTableText("WBPlayerReligions", 0, iRow, sColor + sText + "</color>", "", WidgetTypes.WIDGET_HELP_RELIGION, item[1], -1, 1<<0)
 
@@ -273,7 +274,7 @@ class WBPlayerScreen:
 			if iRow > iMaxRow:
 				screen.appendTableRow("WBPlayerCivics")
 				iMaxRow = iRow
-			sText = "<font=3>" + CyTranslator().getText("[COLOR_HIGHLIGHT_TEXT]", ()) + GC.getCivicOptionInfo(iCivicOption).getDescription() + "</font></color>"
+			sText = "<font=3>" + CyTranslator().getText("[COLOR_HIGHLIGHT_TEXT]", ()) + INFO.getDescription("CIVICOPTION_", iCivicOption) + "</font></color>"
 			screen.setTableText("WBPlayerCivics", iColumn, iRow, sText, "", WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<2)
 			for item in xrange(GC.getNumCivicInfos()):
 				ItemInfo = GC.getCivicInfo(item)

@@ -117,18 +117,30 @@ void UnitResolvedValues::gatherInto(const CvUnit& kUnit, int (&aiOut)[NUM_UNIT_R
 	// exactly the type's contribution and nothing else.
 	aiOut[URS_STRENGTH_FLAT] = 0;
 
-	for (int iPromotion = 0; iPromotion < GC.getNumPromotionInfos(); ++iPromotion)
+	// ⛔ WALK WHAT THE UNIT HOLDS -- NEVER THE REGISTRY. Sweeping every promotion and every unit-combat asking
+	// "do I have this?" re-discovers a set the unit already enumerates, and each ask is a map lookup, so the
+	// cost tracks the DATABASE rather than the handful the unit carries. That is the O(registry) shape the
+	// event-built state exists to delete ([contexts.md]: a read that walks per call is the efficiency defect to
+	// reject in review) and it is the same own-data inversion [DEC-one-reverse-view] bans one plane over.
+	// The keyed maps hold an entry per promotion / class the unit has ever touched, and the has-flag tested here
+	// is the SAME test isHasPromotion / isHasUnitCombat apply -- so the contributor set is identical.
+	const std::map<PromotionTypes, PromotionKeyedInfo>& kHeldPromotions = kUnit.getPromotionKeyedInfo();
+	for (std::map<PromotionTypes, PromotionKeyedInfo>::const_iterator itPromotion = kHeldPromotions.begin();
+		itPromotion != kHeldPromotions.end(); ++itPromotion)
 	{
-		if (kUnit.isHasPromotion((PromotionTypes)iPromotion))
+		if (itPromotion->second.m_bHasPromotion)
 		{
-			urs_addContributor(&GC.getPromotionInfo((PromotionTypes)iPromotion), aiOut);
+			urs_addContributor(&GC.getPromotionInfo(itPromotion->first), aiOut);
 		}
 	}
-	for (int iCombat = 0; iCombat < GC.getNumUnitCombatInfos(); ++iCombat)
+
+	const std::map<UnitCombatTypes, UnitCombatKeyedInfo>& kHeldCombats = kUnit.getUnitCombatKeyedInfo();
+	for (std::map<UnitCombatTypes, UnitCombatKeyedInfo>::const_iterator itCombat = kHeldCombats.begin();
+		itCombat != kHeldCombats.end(); ++itCombat)
 	{
-		if (kUnit.isHasUnitCombat((UnitCombatTypes)iCombat))
+		if (itCombat->second.m_bHasUnitCombat)
 		{
-			urs_addContributor(&GC.getUnitCombatInfo((UnitCombatTypes)iCombat), aiOut);
+			urs_addContributor(&GC.getUnitCombatInfo(itCombat->first), aiOut);
 		}
 	}
 }

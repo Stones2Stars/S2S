@@ -15,9 +15,11 @@ import WorldBuilder
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
+TEXT = CyGameTextMgr()
 iCityID = -1
 iCityOwner = -1
 iUnitID = -1
@@ -91,7 +93,7 @@ class WBPlayerUnits:
 
 		iY = self.iTable_Y - 30
 		sKillButton = "Art/Interface/Buttons/Actions/Delete.dds"
-		sSkipButton = GC.getMissionInfo(MissionTypes.MISSION_SKIP).getButton()
+		sSkipButton = INFO.getButton("MISSION_", MissionTypes.MISSION_SKIP)
 
 		screen.setImageButton("DeleteCurrentCity", sKillButton, 20, iY, 28, 28, WidgetTypes.WIDGET_PYTHON, 1041, -1)
 		screen.setLabel("DeleteCitiesText", "Background", "<font=4b>" + CyTranslator().getText("TXT_KEY_WB_CITY_ALL", ()) + "</font>", 1<<1, screen.getXResolution()/2 - 35, iY, -0.1, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
@@ -203,7 +205,7 @@ class WBPlayerUnits:
 		iHeight = (screen.getYResolution() - iY - 42) / 24 * 24 + 2
 		iColWidth = (iWidth - 24*2 - 10) /9
 
-		lStatus = [CyArtFileMgr().getInterfaceArtInfo("INTERFACE_BUTTONS_CANCEL").getPath(), GC.getMissionInfo(MissionTypes.MISSION_FORTIFY).getButton(), GC.getMissionInfo(MissionTypes.MISSION_SKIP).getButton()]
+		lStatus = [CyArtFileMgr().getInterfaceArtInfo("INTERFACE_BUTTONS_CANCEL").getPath(), INFO.getButton("MISSION_", MissionTypes.MISSION_FORTIFY), INFO.getButton("MISSION_", MissionTypes.MISSION_SKIP)]
 
 		screen.addTableControlGFC( "WBUnitList", 8, 10 + screen.getXResolution()/2, iY, iWidth, iHeight, True, True, 24, 24, TableStyles.TABLE_STYLE_STANDARD)
 		screen.setTableColumnHeader( "WBUnitList", 0, "", 24)
@@ -231,7 +233,7 @@ class WBPlayerUnits:
 			if iUnitID == loopUnit.getID() and iUnitOwner == loopUnit.getOwner():
 				sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
 			iCivilization = loopUnit.getCivilizationType()
-			screen.setTableText("WBUnitList", 0, iRow, "", GC.getCivilizationInfo(iCivilization).getButton(), WidgetTypes.WIDGET_PYTHON, 7872, i[0] * 10000 + iCivilization, 1<<2)
+			screen.setTableText("WBUnitList", 0, iRow, "", INFO.getButton("CIVILIZATION_", iCivilization), WidgetTypes.WIDGET_PYTHON, 7872, i[0] * 10000 + iCivilization, 1<<2)
 			screen.setTableText("WBUnitList", 1, iRow, str(iStatus), lStatus[iStatus], WidgetTypes.WIDGET_PYTHON, 1043, iStatus, 1<<0)
 			screen.setTableText("WBUnitList", 2, iRow, "<font=3>" + sColor + loopUnit.getName() + "</color></font>", loopUnit.getButton(), WidgetTypes.WIDGET_PYTHON, 8300 + i[0], i[1], 1<<0)
 			screen.setTableInt("WBUnitList", 3, iRow, "<font=3>" + str(loopUnit.getID()) + "</font>", "", WidgetTypes.WIDGET_PYTHON, 8300 + i[0], i[1], 1<<2)
@@ -266,7 +268,7 @@ class WBPlayerUnits:
 			if iCityID == loopCity.getID() and iCityOwner == loopCity.getOwner():
 				sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
 			iCivilization = loopCity.getCivilizationType()
-			screen.setTableText("WBCityList", 0, iRow, "", GC.getCivilizationInfo(iCivilization).getButton(), WidgetTypes.WIDGET_PYTHON, 7872, i[0] * 10000 + iCivilization, 1<<2)
+			screen.setTableText("WBCityList", 0, iRow, "", INFO.getButton("CIVILIZATION_", iCivilization), WidgetTypes.WIDGET_PYTHON, 7872, i[0] * 10000 + iCivilization, 1<<2)
 			screen.setTableText("WBCityList", 1, iRow, "<font=3>" + sColor + loopCity.getName() + "</color></font>", "", WidgetTypes.WIDGET_PYTHON, 7200 + i[0], i[1], 1<<0)
 			screen.setTableInt("WBCityList", 2, iRow, "<font=3>" + str(loopCity.getID()) + "</font>", "", WidgetTypes.WIDGET_PYTHON, 7200 + i[0], i[1], 1<<2)
 			screen.setTableInt("WBCityList", 3, iRow, "<font=3>" + self.WB.addComma(loopCity.getCulture(i[0])) + "</font>", "", WidgetTypes.WIDGET_PYTHON, 7200 + i[0], i[1], 1<<2)
@@ -322,15 +324,15 @@ class WBPlayerUnits:
 			sTemp += CyTranslator().getText("[ICON_TRADE]", ())
 		for i in xrange(GC.getNumReligionInfos()):
 			if pCity.isHolyCityByType(i):
-				sTemp += u"%c" %(GC.getReligionInfo(i).getHolyCityChar())
+				sTemp += u"%c" %(TEXT.getHolyCitySymbolChar(i))
 			elif pCity.isHasReligion(i):
-				sTemp += u"%c" %(GC.getReligionInfo(i).getChar())
+				sTemp += u"%c" %(TEXT.getSymbolChar("RELIGION_", i))
 
 		for i in xrange(GC.getNumCorporationInfos()):
 			if pCity.isHeadquartersByType(i):
-				sTemp += u"%c" %(GC.getCorporationInfo(i).getHeadquarterChar())
+				sTemp += u"%c" %(TEXT.getHeadquarterSymbolChar(i))
 			elif pCity.isHasCorporation(i):
-				sTemp += u"%c" %(GC.getCorporationInfo(i).getChar())
+				sTemp += u"%c" %(TEXT.getSymbolChar("CORPORATION_", i))
 		if len(sTemp) > 0:
 			sText += "\n" + sTemp
 
@@ -367,7 +369,7 @@ class WBPlayerUnits:
 		for i in xrange(CommerceTypes.NUM_COMMERCE_TYPES):
 			iAmount = pCity.getCommerceRateTimes100(i)
 			if iAmount <= 0: continue
-			sTemp = u"%d.%02d%c" %(pCity.getCommerceRate(i), pCity.getCommerceRateTimes100(i)%100, GC.getCommerceInfo(i).getChar())
+			sTemp = u"%d.%02d%c" %(pCity.getCommerceRate(i), pCity.getCommerceRateTimes100(i)%100, TEXT.getSymbolChar("COMMERCE_", i))
 			lTemp.append(sTemp)
 		if len(lTemp) > 0:
 			sText += "\n"
@@ -379,7 +381,7 @@ class WBPlayerUnits:
 		iMaintenance = pCity.getMaintenanceTimes100()
 		if iMaintenance != 0:
 			sText += "\n" + CyTranslator().getText("[COLOR_WARNING_TEXT]", ()) + CyTranslator().getText("INTERFACE_CITY_MAINTENANCE", ()) + " </color>"
-			sText += u"-%d.%02d%c" %(iMaintenance/100, iMaintenance%100, GC.getCommerceInfo(CommerceTypes.COMMERCE_GOLD).getChar())
+			sText += u"-%d.%02d%c" %(iMaintenance/100, iMaintenance%100, TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_GOLD))
 
 		sText += "\n" + CyTranslator().getText("TXT_WORD_CITY", ()) + " ID: " + str(pCity.getID())
 		sText += "\n" + "X: " + str(pCity.getX()) + ", Y: " + str(pCity.getY())

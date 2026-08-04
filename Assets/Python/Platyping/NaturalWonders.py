@@ -7,6 +7,7 @@ TRNSLTR = CyTranslator()
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 GAME = GC.getGame()
 MAP = GC.getMap()
 STATE = CyState()
@@ -25,7 +26,7 @@ class NaturalWonders:
         MAP = GC.getMap()
         GAME = GC.getGame()
         for iFeature in xrange(GC.getNumFeatureInfos()):
-            sType = GC.getFeatureInfo(iFeature).getType()
+            sType = INFO.getType("FEATURE_", iFeature)
             if sType.find("FEATURE_PLATY_") == -1:
                 continue
             WonderPlot = []
@@ -176,7 +177,7 @@ class NaturalWonders:
 
         self.discoveredWonders[(iFeature, iTeam)] = True
 
-        iCulture = self.iFirstCulture * GC.getGameSpeedInfo(GAME.getGameSpeedType()).getSpeedPercent() / 100
+        iCulture = self.iFirstCulture * GAME.getSpeedPercent() / 100
 
         import CvUtil
         TRNSLTR = CyTranslator()

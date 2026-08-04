@@ -7,12 +7,14 @@ import UnitUpgradesGraph
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 MAP = GC.getMap()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
 
+TEXT = CyGameTextMgr()
 class Pedia:
 
 	def __init__(self, screenId):
@@ -107,10 +109,10 @@ class Pedia:
 
 		# Initialize category classes
 		G = GC.getGame()
-		PRODUCTION	= u'%c' %GC.getYieldInfo(YieldTypes.YIELD_PRODUCTION).getChar()
-		COMMERCE	= u'%c' %GC.getYieldInfo(YieldTypes.YIELD_COMMERCE).getChar()
-		GOLD		= u'%c' %GC.getCommerceInfo(CommerceTypes.COMMERCE_GOLD).getChar()
-		BEAKER		= u'%c' %GC.getCommerceInfo(CommerceTypes.COMMERCE_RESEARCH).getChar()
+		PRODUCTION	= u'%c' %TEXT.getSymbolChar("YIELD_", YieldTypes.YIELD_PRODUCTION)
+		COMMERCE	= u'%c' %TEXT.getSymbolChar("YIELD_", YieldTypes.YIELD_COMMERCE)
+		GOLD		= u'%c' %TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_GOLD)
+		BEAKER		= u'%c' %TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_RESEARCH)
 		STRENGHT	= u'%c' %G.getSymbolID(FontSymbols.STRENGTH_CHAR)
 		MOVES		= u'%c' %G.getSymbolID(FontSymbols.MOVES_CHAR)
 		SILVERSTAR	= u'%c' %G.getSymbolID(FontSymbols.SILVER_STAR_CHAR)
@@ -229,7 +231,7 @@ class Pedia:
 		self.iNumEras = iNumEras = GC.getNumEraInfos()
 		szEraList.append(szCatAllEras)
 		for i in xrange(iNumEras):
-			szEraList.append(GC.getEraInfo(i).getDescription())
+			szEraList.append(INFO.getDescription("C2C_ERA_", i))
 		szTechSubCatList = list(szEraList)
 		szTechSubCatList.append(szChronology)
 		PEDIA_SUB_CONCEPTS 		= [szCatConcepts, szCatConceptsNew, szCatStrategy, szCatShortcuts, szCatHints, szCatEras]
@@ -557,7 +559,7 @@ class Pedia:
 			elif szSubCat == "Feature":
 				szSubCatSimple = szSubCat
 				bFuncBySubCatSimple = True
-				if GC.getFeatureInfo(iObjectType).getType().find("FEATURE_PLATY_") == -1:
+				if INFO.getType("FEATURE_", iObjectType).find("FEATURE_PLATY_") == -1:
 					szSubCat = self.mapSubCat.get(iCategory)[1]
 				else: ## Natural Wonder
 					szSubCat = self.mapSubCat.get(iCategory)[2]
@@ -951,7 +953,7 @@ class Pedia:
 		if iSpecialBuilding != -1:
 			if iSpecialBuilding == GC.getInfoTypeForString("SPECIALBUILDING_C2C_CULTURE"):
 				return 4
-			if GC.getSpecialBuildingInfo(iSpecialBuilding).getType().find("_GROUP_") != -1:
+			if INFO.getType("SPECIALBUILDING_", iSpecialBuilding).find("_GROUP_") != -1:
 				return 2
 		if szStrat.find("Folklore -", 0, 10) + szStrat.find("Folklore (E) -", 0, 14) + szStrat.find("Folklore (T) -", 0, 14) + szStrat.find("Enclosure -", 0, 11) + szStrat.find("Remains -", 0, 9) != -5:
 			return 6
@@ -1325,28 +1327,28 @@ class Pedia:
 
 		#Tech Type requirement
 		for iTech in CvBuildingInfo.getPrereqAndTechs():
-			if GC.getTechInfo(iTech).getEra() > iEra:
-				iEra = GC.getTechInfo(iTech).getEra()
+			if INFO.getIntrinsic("TECH_", iTech, IntrinsicSlot.PYINT_ERA) > iEra:
+				iEra = INFO.getIntrinsic("TECH_", iTech, IntrinsicSlot.PYINT_ERA)
 
 		#Tech requirement as defined in special building infos (core tech)
 		if CvBuildingInfo.getSpecialBuildingType() != -1:
 			iTech = GC.getSpecialBuildingInfo(CvBuildingInfo.getSpecialBuildingType()).getTechPrereq()
-			if iTech != -1 and GC.getTechInfo(iTech).getEra() > iEra:
-				iEra = GC.getTechInfo(iTech).getEra()
+			if iTech != -1 and INFO.getIntrinsic("TECH_", iTech, IntrinsicSlot.PYINT_ERA) > iEra:
+				iEra = INFO.getIntrinsic("TECH_", iTech, IntrinsicSlot.PYINT_ERA)
 
 		#Tech requirement derived from location of religion in tech tree
 		if CvBuildingInfo.getPrereqReligion() != -1:
 			iTech = GC.getReligionInfo(CvBuildingInfo.getPrereqReligion()).getTechPrereq()
-			if GC.getTechInfo(iTech).getEra() > iEra:
-				iEra = GC.getTechInfo(iTech).getEra()
+			if INFO.getIntrinsic("TECH_", iTech, IntrinsicSlot.PYINT_ERA) > iEra:
+				iEra = INFO.getIntrinsic("TECH_", iTech, IntrinsicSlot.PYINT_ERA)
 		if CvBuildingInfo.getReligionType() != -1:
 			iTech = GC.getReligionInfo(CvBuildingInfo.getReligionType()).getTechPrereq()
-			if GC.getTechInfo(iTech).getEra() > iEra:
-				iEra = GC.getTechInfo(iTech).getEra()
+			if INFO.getIntrinsic("TECH_", iTech, IntrinsicSlot.PYINT_ERA) > iEra:
+				iEra = INFO.getIntrinsic("TECH_", iTech, IntrinsicSlot.PYINT_ERA)
 		if CvBuildingInfo.getPrereqStateReligion() != -1:
 			iTech = GC.getReligionInfo(CvBuildingInfo.getPrereqStateReligion()).getTechPrereq()
-			if GC.getTechInfo(iTech).getEra() > iEra:
-				iEra = GC.getTechInfo(iTech).getEra()
+			if INFO.getIntrinsic("TECH_", iTech, IntrinsicSlot.PYINT_ERA) > iEra:
+				iEra = INFO.getIntrinsic("TECH_", iTech, IntrinsicSlot.PYINT_ERA)
 
 		#Folklore handling - X Require tech requirement is treated as one of tech requirements of building, assuming X Require is main building requirement.
 		if CvBuildingInfo.getType().find("BUILDING_FOLKLORE_",0,18) != -1 or CvBuildingInfo.getType().find("BUILDING_PRESENCE_OF_",0,21) != -1:
@@ -1362,13 +1364,13 @@ class Pedia:
 
 		#Extract GOM AND requirements
 		for iTech in xrange(len(aTechGOMReqList[BoolExprTypes.BOOLEXPR_AND])):
-			if GC.getTechInfo(aTechGOMReqList[BoolExprTypes.BOOLEXPR_AND][iTech]).getEra() > iEra:
-				iEra = GC.getTechInfo(aTechGOMReqList[BoolExprTypes.BOOLEXPR_AND][iTech]).getEra()
+			if INFO.getIntrinsic("TECH_", aTechGOMReqList[BoolExprTypes.BOOLEXPR_AND][iTech], IntrinsicSlot.PYINT_ERA) > iEra:
+				iEra = INFO.getIntrinsic("TECH_", aTechGOMReqList[BoolExprTypes.BOOLEXPR_AND][iTech], IntrinsicSlot.PYINT_ERA)
 
 		#Extract GOM OR requirements - those are OR type requirements, so pick earliest one.
 		aEraList = []
 		for iTech in xrange(len(aTechGOMReqList[BoolExprTypes.BOOLEXPR_OR])):
-			aEraList.append(GC.getTechInfo(aTechGOMReqList[BoolExprTypes.BOOLEXPR_OR][iTech]).getEra())
+			aEraList.append(INFO.getIntrinsic("TECH_", aTechGOMReqList[BoolExprTypes.BOOLEXPR_OR][iTech], IntrinsicSlot.PYINT_ERA))
 		if len(aEraList) > 0 and min(aEraList) > iEra:
 			iEra = min(aEraList)
 
@@ -1387,7 +1389,7 @@ class Pedia:
 		else:
 			iEra = CvTechInfo.getEra() + 1
 		for iType in CvUnitInfo.getPrereqAndTechs():
-			iEraTemp = GC.getTechInfo(iType).getEra() + 1
+			iEraTemp = INFO.getIntrinsic("TECH_", iType, IntrinsicSlot.PYINT_ERA) + 1
 			if iEraTemp > iEra:
 				iEra = iEraTemp
 		return iEra
@@ -1593,7 +1595,7 @@ class Pedia:
 				elif "LEADER" in szSplit:
 					self.tooltip.handle(screen, CyGameTextMgr().parseLeaderTraits(ID, False, False))
 				elif "BUILD" in szSplit:
-					self.tooltip.handle(screen, GC.getBuildInfo(ID).getDescription())
+					self.tooltip.handle(screen, INFO.getDescription("BUILD_", ID))
 				elif "RELIGION" in szSplit:
 					self.tooltip.handle(screen, CyGameTextMgr().parseReligionInfo(ID, False))
 				elif "HERITAGE" in szSplit:
@@ -1601,7 +1603,7 @@ class Pedia:
 				elif "COMBAT" in szSplit:
 					self.tooltip.handle(screen, CyGameTextMgr().getUnitCombatHelp(ID, False))
 				elif "CONCEPT" in szSplit:
-					self.tooltip.handle(screen, GC.getConceptInfo(ID).getDescription())
+					self.tooltip.handle(screen, INFO.getDescription("CONCEPT_", ID))
 				elif "CONCEPT_NEW" in szSplit:
 					self.tooltip.handle(screen, GC.getNewConceptInfo(ID).getDescription())
 				return 1

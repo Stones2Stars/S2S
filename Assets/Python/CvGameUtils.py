@@ -9,11 +9,13 @@ import CvUtil
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 GAME = GC.getGame()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 
+TEXT = CyGameTextMgr()
 class CvGameUtils:
 
 	def __init__(self):
@@ -38,7 +40,7 @@ class CvGameUtils:
 		# Bonus placing builds
 		CyPlot = GC.getMap().plot(iX, iY)
 		if CyPlot and CyPlot.getBonusType(-1) < 0 and not CyPlot.isWater():
-			szType = GC.getBuildInfo(iBuild).getType()
+			szType = INFO.getType("BUILD_", iBuild)
 			if szType[:12] == "BUILD_BONUS_":
 				iBonus = GC.getInfoTypeForString(szType[6:])
 
@@ -70,7 +72,7 @@ class CvGameUtils:
 		}
 		CyTeam = GC.getTeam(CyCity.getTeam())
 
-		TYPE = GC.getProcessInfo(iProcess).getType()
+		TYPE = INFO.getType("PROCESS_", iProcess)
 
 		if not TYPE.count("_"): return False
 
@@ -325,11 +327,11 @@ class CvGameUtils:
 			elif iData1 == 6785:
 				return CyGameTextMgr().getProjectHelp(iData2, False, -1, -1)
 			elif iData1 == 6787:
-				return GC.getProcessInfo(iData2).getDescription()
+				return INFO.getDescription("PROCESS_", iData2)
 			elif iData1 == 6788:
 				if iData2 == -1:
 					return CyTranslator().getText("TXT_KEY_CULTURELEVEL_NONE", ())
-				return GC.getRouteInfo(iData2).getDescription()
+				return INFO.getDescription("ROUTE_", iData2)
 ## City Hover Text ##
 			elif iData1 > 7199 and iData1 < 7300:
 				iPlayer = iData1 - 7200
@@ -347,15 +349,15 @@ class CvGameUtils:
 						sTemp += CyTranslator().getText("[ICON_TRADE]", ())
 					for i in xrange(GC.getNumReligionInfos()):
 						if pCity.isHolyCityByType(i):
-							sTemp += u"%c" %(GC.getReligionInfo(i).getHolyCityChar())
+							sTemp += u"%c" %(TEXT.getHolyCitySymbolChar(i))
 						elif pCity.isHasReligion(i):
-							sTemp += u"%c" %(GC.getReligionInfo(i).getChar())
+							sTemp += u"%c" %(TEXT.getSymbolChar("RELIGION_", i))
 
 					for i in xrange(GC.getNumCorporationInfos()):
 						if pCity.isHeadquartersByType(i):
-							sTemp += u"%c" %(GC.getCorporationInfo(i).getHeadquarterChar())
+							sTemp += u"%c" %(TEXT.getHeadquarterSymbolChar(i))
 						elif pCity.isHasCorporation(i):
-							sTemp += u"%c" %(GC.getCorporationInfo(i).getChar())
+							sTemp += u"%c" %(TEXT.getSymbolChar("CORPORATION_", i))
 					if sTemp:
 						sText += "\n" + sTemp
 
@@ -395,7 +397,7 @@ class CvGameUtils:
 					for i in xrange(CommerceTypes.NUM_COMMERCE_TYPES):
 						iAmount = pCity.getCommerceRateTimes100(i)
 						if iAmount <= 0: continue
-						sTemp = u"%d.%02d%c" %(pCity.getCommerceRate(i), pCity.getCommerceRateTimes100(i)%100, GC.getCommerceInfo(i).getChar())
+						sTemp = u"%d.%02d%c" %(pCity.getCommerceRate(i), pCity.getCommerceRateTimes100(i)%100, TEXT.getSymbolChar("COMMERCE_", i))
 						lTemp.append(sTemp)
 					if lTemp:
 						sText += "\n"
@@ -407,16 +409,16 @@ class CvGameUtils:
 					iMaintenance = pCity.getMaintenanceTimes100()
 					if iMaintenance != 0:
 						sText += "\n" + CyTranslator().getText("[COLOR_WARNING_TEXT]", ()) + CyTranslator().getText("INTERFACE_CITY_MAINTENANCE", ()) + " </color>"
-						sText += u"-%d.%02d%c" %(iMaintenance/100, iMaintenance%100, GC.getCommerceInfo(CommerceTypes.COMMERCE_GOLD).getChar())
+						sText += u"-%d.%02d%c" %(iMaintenance/100, iMaintenance%100, TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_GOLD))
 
 					lBuildings = []
 					lWonders = []
 					for i in xrange(GC.getNumBuildingInfos()):
 						if pCity.hasBuilding(i):
 							if INFO.getIntrinsic("BUILDING_", i, IntrinsicSlot.PYINT_IS_LIMITED_WONDER):
-								lWonders.append(GC.getBuildingInfo(i).getDescription())
+								lWonders.append(INFO.getDescription("BUILDING_", i))
 							else:
-								lBuildings.append(GC.getBuildingInfo(i).getDescription())
+								lBuildings.append(INFO.getDescription("BUILDING_", i))
 					if lBuildings:
 						lBuildings.sort()
 						sText += "\n" + CyTranslator().getText("[COLOR_BUILDING_TEXT]", ()) + CyTranslator().getText("TXT_KEY_WB_BUILDINGS", ()) + ": </color>"
@@ -481,13 +483,13 @@ class CvGameUtils:
 				return CyGameTextMgr().getSpecialistHelp(iData2, False)
 ## Yield Text##
 			elif iData1 == 7880:
-				return GC.getYieldInfo(iData2).getDescription()
+				return INFO.getDescription("YIELD_", iData2)
 ## Commerce Text##
 			elif iData1 == 7881:
-				return GC.getCommerceInfo(iData2).getDescription()
+				return INFO.getDescription("COMMERCE_", iData2)
 ## Build Text##
 			elif iData1 == 7882:
-				return GC.getBuildInfo(iData2).getDescription()
+				return INFO.getDescription("BUILD_", iData2)
 ## Corporation Screen ##
 			elif iData1 == 8201:
 				return CyGameTextMgr().parseCorporationInfo(iData2, False)

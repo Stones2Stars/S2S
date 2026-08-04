@@ -10,8 +10,28 @@ GC = CyGlobalContext()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
+INFO = CyInfo()
 TRNSLTR = CyTranslator()
 AFM = CyArtFileMgr()
+
+#	A tech's forward EDGE buckets, each paired with the benefit row it renders as. The tech carries these
+#	compiled at load ([DEC-one-reverse-view]), so the whole unlock set is a list fetch per bucket.
+TECH_ENABLES = (
+	("UnlockUnit",        EdgeBucket.EDGEB_UNITS),
+	("UnlockBuilding",    EdgeBucket.EDGEB_BUILDINGS),
+	("UnlockPromotion",   EdgeBucket.EDGEB_PROMOTIONS),
+	("UnlockImprovement", EdgeBucket.EDGEB_BUILDS),
+	("UnlockCivic",       EdgeBucket.EDGEB_CIVICS),
+	("UnlockProject",     EdgeBucket.EDGEB_PROJECTS),
+	("UnlockProcess",     EdgeBucket.EDGEB_PROCESSES),
+	("UnlockReligion",    EdgeBucket.EDGEB_RELIGIONS),
+	("UnlockCorporation", EdgeBucket.EDGEB_CORPORATIONS),
+	("RevealBonus",       EdgeBucket.EDGEB_BONUSES),
+)
+TECH_OBSOLETES = (
+	("ObsoleteBuilding",  EdgeBucket.EDGEB_BUILDINGS),
+	("ObsoleteBonus",     EdgeBucket.EDGEB_BONUSES),
+)
 
 CIV_NO_RESEARCH = -1
 CIV_HAS_TECH = 0
@@ -141,8 +161,7 @@ class CvTechChooser:
 		for i in xrange(self.iNumEras - 1):
 			posX = self.treeToMinimapX(self.minEraXPos[i] - self.minX) # SLIDER_BORDER + self.minEraXPos[i] * (self.xRes - SLIDER_BORDER * 2) / self.maxX
 			posY = self.yRes - SCREEN_PANEL_BOTTOM_BAR_H + 5
-			eraInfo = GC.getEraInfo(i)
-			img = eraInfo.getButton()
+			img = INFO.getButton("C2C_ERA_", i)
 			if img: # and i < self.iNumEras - 1: # exclude future icon
 				screen.setText("WID|ERAIM|" + str(i), "", "<img=%s>" % (img), 0, posX - 4, posY, 0, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, 0, 0)
 			if i > 0:
@@ -236,12 +255,11 @@ class CvTechChooser:
 		self.minX = maxint
 		self.maxX = 0
 		for iTech in xrange(self.iNumTechs):
-			info = GC.getTechInfo(iTech)
-			gridX = info.getGridX()
+			gridX = INFO.getIntrinsic("TECH_", iTech, IntrinsicSlot.PYINT_GRID_X)
 			if gridX > 0:
 				iX = gridX * self.xCellDist
 				iX1 = (gridX + 1) * self.xCellDist
-				iEra = info.getEra()
+				iEra = INFO.getIntrinsic("TECH_", iTech, IntrinsicSlot.PYINT_ERA)
 				if iX < self.minEraXPos[iEra]:
 					self.minEraXPos[iEra] = iX
 				if gridX < self.firstEraTech[iEra][0]:
@@ -327,15 +345,13 @@ class CvTechChooser:
 			minimapWid = 2
 
 		for iTech in techs:
-			CvTechInfo = GC.getTechInfo(iTech)
-
-			x0 = CvTechInfo.getGridX()
+			x0 = INFO.getIntrinsic("TECH_", iTech, IntrinsicSlot.PYINT_GRID_X)
 			if x0 < 1:
 				continue
 
 			iTechStr = str(iTech)
 			techCellId = TECH_CHOICE + iTechStr
-			y0 = CvTechInfo.getGridY()
+			y0 = INFO.getIntrinsic("TECH_", iTech, IntrinsicSlot.PYINT_GRID_Y)
 
 			iX = x0 * self.xCellDist - self.minX
 			iY = yEmptySpace + ((y0 - 1) * yCellDist) / 2
@@ -353,7 +369,7 @@ class CvTechChooser:
 
 					# Tech cell
 					screen.setImageButtonAt(techCellId, SCREEN_PANEL, "", iX, iY, self.wCell + CELL_BORDER_W * 2, self.hCell + CELL_BORDER_H * 2, eWidGen, 1, 2)
-					screen.addDDSGFCAt(ICON + iTechStr, techCellId, CvTechInfo.getButton(), 3 + CELL_BORDER_W, 5 + CELL_BORDER_H, self.sIcon0, self.sIcon0, eWidGen, 1, 2, False)
+					screen.addDDSGFCAt(ICON + iTechStr, techCellId, INFO.getButton("TECH_", iTech), 3 + CELL_BORDER_W, 5 + CELL_BORDER_H, self.sIcon0, self.sIcon0, eWidGen, 1, 2, False)
 					screen.setHitTest(ICON + iTechStr, HitTestTypes.HITTEST_NOHIT)
 					screen.moveToFront(techCellId)
 
@@ -375,16 +391,14 @@ class CvTechChooser:
 					# Requires
 					iX = self.wCell + CELL_BORDER_W - 2
 					iY = 5 + CELL_BORDER_H
-					for iTechX in CvTechInfo.getPrereqAndTechs():
+					for iTechX in INFO.getIdList("TECH_", iTech, IdListSlot.PYLIST_PREREQ_AND_TECHS):
 						iX -= dx
-						screen.setImageButtonAt(TECH_REQ + str(iTechX) + "|" + iTechStr, techCellId, GC.getTechInfo(iTechX).getButton(), iX, iY, self.sIcon1, self.sIcon1, eWidGen, 1, 2)
+						screen.setImageButtonAt(TECH_REQ + str(iTechX) + "|" + iTechStr, techCellId, INFO.getButton("TECH_", iTechX), iX, iY, self.sIcon1, self.sIcon1, eWidGen, 1, 2)
 
 					# Draw connecting arrows
-					for iTechX in CvTechInfo.getPrereqOrTechs():
-						techInfoX = GC.getTechInfo(iTechX)
-
-						x1 = techInfoX.getGridX()
-						y1 = techInfoX.getGridY()
+					for iTechX in INFO.getIdList("TECH_", iTech, IdListSlot.PYLIST_PREREQ_OR_TECHS):
+						x1 = INFO.getIntrinsic("TECH_", iTechX, IntrinsicSlot.PYINT_GRID_X)
+						y1 = INFO.getIntrinsic("TECH_", iTechX, IntrinsicSlot.PYINT_GRID_Y)
 						iX = x1 * self.xCellDist + self.wCell + CELL_BORDER_W * 2 - self.minX
 						iY = yEmptySpace + ((y1 - 1) * yCellDist) / 2 + 4
 
@@ -456,28 +470,28 @@ class CvTechChooser:
 							screen.addDDSGFCAt(key + str(iTech * 1000 + i), techCellId, button, iX, iY, self.sIcon1, self.sIcon1, widgetType, tech, item, flag)
 
 						if sType == "UnlockUnit":
-							imageButton("WID|UNIT" + str(iItem) + '|', GC.getUnitInfo(iItem).getButton())
+							imageButton("WID|UNIT" + str(iItem) + '|', INFO.getButton("UNIT_", iItem))
 						elif sType == "UnlockBuilding":
-							imageButton("WID|BUILDING" + str(iItem) + '|', GC.getBuildingInfo(iItem).getButton())
+							imageButton("WID|BUILDING" + str(iItem) + '|', INFO.getButton("BUILDING_", iItem))
 						elif sType == "ObsoleteBuilding":
-							ddsgfc("", GC.getBuildingInfo(iItem).getButton(), eWidGen, 1, 2, False)
+							ddsgfc("", INFO.getButton("BUILDING_", iItem), eWidGen, 1, 2, False)
 							imageButton("WID|BUILDING|OBS" + str(iItem) + '|', RED_X)
 						elif sType == "UnlockSpecialBuilding":
-							ddsgfc("Item", GC.getSpecialBuildingInfo(iItem).getButton(), WidgetTypes.WIDGET_HELP_SPECIAL_BUILDING, iTech, iItem, False)
+							ddsgfc("Item", INFO.getButton("SPECIALBUILDING_", iItem), WidgetTypes.WIDGET_HELP_SPECIAL_BUILDING, iTech, iItem, False)
 						elif sType == "ObsoleteSpecialBuilding":
-							ddsgfc("Item", GC.getSpecialBuildingInfo(iItem).getButton(), WidgetTypes.WIDGET_HELP_OBSOLETE_SPECIAL, iTech, iItem, False)
+							ddsgfc("Item", INFO.getButton("SPECIALBUILDING_", iItem), WidgetTypes.WIDGET_HELP_OBSOLETE_SPECIAL, iTech, iItem, False)
 							ddsgfc("Obsolete", RED_X, WidgetTypes.WIDGET_HELP_OBSOLETE_SPECIAL, iItem, -1, False)
 						elif sType == "RevealBonus":
-							ddsgfc("Item", GC.getBonusInfo(iItem).getButton(), WidgetTypes.WIDGET_HELP_BONUS_REVEAL, iTech, iItem, False)
+							ddsgfc("Item", INFO.getButton("BONUS_", iItem), WidgetTypes.WIDGET_HELP_BONUS_REVEAL, iTech, iItem, False)
 						elif sType == "ObsoleteBonus":
-							ddsgfc("Item", GC.getBonusInfo(iItem).getButton(), WidgetTypes.WIDGET_HELP_OBSOLETE_BONUS, iTech, iItem, False)
+							ddsgfc("Item", INFO.getButton("BONUS_", iItem), WidgetTypes.WIDGET_HELP_OBSOLETE_BONUS, iTech, iItem, False)
 							ddsgfc("Obsolete", RED_X, WidgetTypes.WIDGET_HELP_OBSOLETE_BONUS, iItem, -1, False)
 						elif sType == "RouteChange":
 							ddsgfc("Item", AFM.getInterfaceArtInfo("INTERFACE_TECH_MOVE_BONUS").getPath(), WidgetTypes.WIDGET_HELP_MOVE_BONUS, iTech, -1, False)
 						elif sType == "UnlockPromotion":
-							ddsgfc("Item", GC.getPromotionInfo(iItem).getButton(), WidgetTypes.WIDGET_PEDIA_JUMP_TO_PROMOTION, iItem, -1, False)
+							ddsgfc("Item", INFO.getButton("PROMOTION_", iItem), WidgetTypes.WIDGET_PEDIA_JUMP_TO_PROMOTION, iItem, -1, False)
 						elif sType == "FreeUnit":
-							ddsgfc("Item", GC.getUnitInfo(iItem).getButton(), WidgetTypes.WIDGET_HELP_FREE_UNIT, iItem, iTech, False)
+							ddsgfc("Item", INFO.getButton("UNIT_", iItem), WidgetTypes.WIDGET_HELP_FREE_UNIT, iItem, iTech, False)
 						elif sType == "FeatureProduction":
 							ddsgfc("Item", AFM.getInterfaceArtInfo("INTERFACE_TECH_FEATURE_PRODUCTION").getPath(), WidgetTypes.WIDGET_HELP_FEATURE_PRODUCTION, iTech, -1, False)
 						elif sType == "WorkerSpeed":
@@ -521,7 +535,7 @@ class CvTechChooser:
 						elif sType == "WaterWork":
 							ddsgfc("Item", AFM.getInterfaceArtInfo("INTERFACE_TECH_WATERWORK").getPath(), WidgetTypes.WIDGET_HELP_WATER_WORK, iTech, -1, False)
 						elif sType == "UnlockImprovement":
-							ddsgfc("Item", GC.getBuildInfo(iItem).getButton(), WidgetTypes.WIDGET_HELP_IMPROVEMENT, iTech, iItem, False)
+							ddsgfc("Item", INFO.getButton("BUILD_", iItem), WidgetTypes.WIDGET_HELP_IMPROVEMENT, iTech, iItem, False)
 						elif sType == "DomainMoves":
 							ddsgfc("Item", AFM.getInterfaceArtInfo("INTERFACE_TECH_WATERMOVES").getPath(), WidgetTypes.WIDGET_HELP_DOMAIN_EXTRA_MOVES, iTech, iItem, False)
 						elif sType == "CommerceFlexible":
@@ -536,17 +550,17 @@ class CvTechChooser:
 						elif sType == "RiverTrade":
 							ddsgfc("Item", AFM.getInterfaceArtInfo("INTERFACE_TECH_RIVERTRADE").getPath(), WidgetTypes.WIDGET_HELP_TERRAIN_TRADE, iTech, GC.getNumTerrainInfos(), False)
 						elif sType == "ImprovementYield":
-							ddsgfc("Item", GC.getImprovementInfo(iItem).getButton(), WidgetTypes.WIDGET_HELP_YIELD_CHANGE, iTech, iItem, False)
+							ddsgfc("Item", INFO.getButton("IMPROVEMENT_", iItem), WidgetTypes.WIDGET_HELP_YIELD_CHANGE, iTech, iItem, False)
 						elif sType == "UnlockCivic":
-							ddsgfc("Item", GC.getCivicInfo(iItem).getButton(), WidgetTypes.WIDGET_HELP_CIVIC_REVEAL, iTech, iItem, False)
+							ddsgfc("Item", INFO.getButton("CIVIC_", iItem), WidgetTypes.WIDGET_HELP_CIVIC_REVEAL, iTech, iItem, False)
 						elif sType == "UnlockProject":
-							ddsgfc("Item", GC.getProjectInfo(iItem).getButton(), WidgetTypes.WIDGET_PEDIA_JUMP_TO_PROJECT, iItem, 1, False)
+							ddsgfc("Item", INFO.getButton("PROJECT_", iItem), WidgetTypes.WIDGET_PEDIA_JUMP_TO_PROJECT, iItem, 1, False)
 						elif sType == "UnlockProcess":
-							ddsgfc("Item", GC.getProcessInfo(iItem).getButton(), WidgetTypes.WIDGET_HELP_PROCESS_INFO, iTech, iItem, False)
+							ddsgfc("Item", INFO.getButton("PROCESS_", iItem), WidgetTypes.WIDGET_HELP_PROCESS_INFO, iTech, iItem, False)
 						elif sType == "UnlockReligion":
-							ddsgfc("Item", GC.getReligionInfo(iItem).getButton(), WidgetTypes.WIDGET_HELP_FOUND_RELIGION, iTech, iItem, False)
+							ddsgfc("Item", INFO.getButton("RELIGION_", iItem), WidgetTypes.WIDGET_HELP_FOUND_RELIGION, iTech, iItem, False)
 						elif sType == "UnlockCorporation":
-							ddsgfc("Item", GC.getCorporationInfo(iItem).getButton(), WidgetTypes.WIDGET_HELP_FOUND_CORPORATION, iTech, iItem, False)
+							ddsgfc("Item", INFO.getButton("CORPORATION_", iItem), WidgetTypes.WIDGET_HELP_FOUND_CORPORATION, iTech, iItem, False)
 						iX += dx
 
 				self.updateTechState(iTech)
@@ -571,7 +585,7 @@ class CvTechChooser:
 					screen.setBarPercentage(stackBar, InfoBarTypes.INFOBAR_RATE, self.CyPlayer.calculateResearchRate(iNewCurrentResearch) * 1.0 / (iCost - iProgress - iOverflow))
 				screen.show(stackBar)
 
-				szTxt = "<font=3>" + GC.getTechInfo(iNewCurrentResearch).getDescription() + ' (' + str(self.CyPlayer.getResearchTurnsLeft(iNewCurrentResearch, True)) + ")"
+				szTxt = "<font=3>" + INFO.getDescription("TECH_", iNewCurrentResearch) + ' (' + str(self.CyPlayer.getResearchTurnsLeft(iNewCurrentResearch, True)) + ")"
 				screen.setLabel("Researching", "", szTxt, 1<<2, self.xRes/2, 6, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, iNewCurrentResearch, 0)
 				screen.setHitTest("Researching", HitTestTypes.HITTEST_NOHIT)
 				screen.moveToFront("WID|TECH|CURRENT0")
@@ -587,8 +601,7 @@ class CvTechChooser:
 		changed = []
 
 		for iTech in xrange(self.iNumTechs):
-			CvTechInfo = GC.getTechInfo(iTech)
-			x0 = CvTechInfo.getGridX()
+			x0 = INFO.getIntrinsic("TECH_", iTech, IntrinsicSlot.PYINT_GRID_X)
 			if x0 <= 0:
 				continue
 			iX = x0 * self.xCellDist - self.minX
@@ -632,12 +645,11 @@ class CvTechChooser:
 		# # Minimap cell color
 		techState = self.currentTechState[iTech]
 
-		CvTechInfo = GC.getTechInfo(iTech)
 		szTechString = self.aFontList[3]
-		iAdvisor = CvTechInfo.getAdvisorType()
+		iAdvisor = INFO.getIntrinsic("TECH_", iTech, IntrinsicSlot.PYINT_ADVISOR)
 		if iAdvisor > -1:
 			szTechString += ADVISORS[iAdvisor]
-		szTechString += CvTechInfo.getDescription()
+		szTechString += INFO.getDescription("TECH_", iTech)
 
 		techCellId = TECH_CHOICE + iTechStr
 
@@ -645,7 +657,7 @@ class CvTechChooser:
 		screen.setHitTest(TECH_NAME + iTechStr, HitTestTypes.HITTEST_NOHIT)
 
 		# Colours
-		iEra = CvTechInfo.getEra()
+		iEra = INFO.getIntrinsic("TECH_", iTech, IntrinsicSlot.PYINT_ERA)
 		techCellStyle = self.getTechStyleForState(techState, iEra)
 		screen.setStyle(techCellId, techCellStyle)
 
@@ -681,7 +693,7 @@ class CvTechChooser:
 				screen.setLabel("ASPointsLabel", "", "<font=4>" + TRNSLTR.getText("TXT_KEY_WB_AS_SELECTED_TECH_COST", (iCost, iPoints)), 1<<0, 180, 4, 0, self.eFontTitle, WidgetTypes.WIDGET_GENERAL, 1, 2)
 				if iPoints >= iCost:
 					screen.show("AddTechButton")
-			szTxt = "<font=4b>" + GC.getTechInfo(iTech).getDescription() + " (" + str(iCost) + unichr(8500) + ')'
+			szTxt = "<font=4b>" + INFO.getDescription("TECH_", iTech) + " (" + str(iCost) + unichr(8500) + ')'
 			screen.setLabel("SelectedTechLabel", "", szTxt, 1<<0, self.xRes/2, 4, 0, self.eFontTitle, WidgetTypes.WIDGET_GENERAL, 1, 2)
 			screen.hide("TC_Header")
 		else:
@@ -697,187 +709,57 @@ class CvTechChooser:
 		iTech = 0
 		while iTech < self.iNumTechs:
 			techBenefits.append([])
-			info = GC.getTechInfo(iTech)
-			if info.getGridX() > 0:
-				iType = info.getFirstFreeUnit()
-				if iType > -1:
-					techBenefits[iTech].append(["FreeUnit", iType])
-				if info.getTradeRoutes():
+			#	The tech is asked what it CARRIES: wellbeing through the group read, the map/trade abilities
+			#	through the classification + `canTrade` planes ([capabilities.md] -- the whole `-Trading` family
+			#	re-homed out of flat capabilities into `canTrade`).
+			if INFO.getIntrinsic("TECH_", iTech, IntrinsicSlot.PYINT_GRID_X) > 0:
+				if INFO.getIntrinsic("TECH_", iTech, IntrinsicSlot.PYINT_TRADE_ROUTE_AMOUNT):
 					techBenefits[iTech].append(["TradeRoute", -1])
-				if info.getHealth():
+				aWellbeing = INFO.getWellbeing("TECH_", iTech, CascScope.CASC_SCOPE_EMPIRE)
+				if aWellbeing[WellbeingChannel.WELLBEING_HEALTH]:
 					techBenefits[iTech].append(["Health", -1])
-				if info.getHappiness():
+				if aWellbeing[WellbeingChannel.WELLBEING_HAPPINESS]:
 					techBenefits[iTech].append(["Happiness", -1])
-				if info.getFirstFreeTechs():
-					techBenefits[iTech].append(["FreeTech", -1])
-				if info.isExtraWaterSeeFrom():
+				if INFO.providesCapability("TECH_", iTech, CapabilityId.CLS_CAPABILITY_CAN_SEE_FURTHER_FROM_WATER):
 					techBenefits[iTech].append(["WaterSight", -1])
-				if info.isMapCentering():
+				if INFO.providesCapability("TECH_", iTech, CapabilityId.CLS_CAPABILITY_HAS_CENTERED_MAP):
 					techBenefits[iTech].append(["MapCentering", -1])
-				if info.isMapVisible():
+				if INFO.providesCapability("TECH_", iTech, CapabilityId.CLS_CAPABILITY_HAS_WHOLE_MAP_REVEALED):
 					techBenefits[iTech].append(["MapVisible", -1])
-				if info.isMapTrading():
+				if INFO.canTradeItem("TECH_", iTech, "maps"):
 					techBenefits[iTech].append(["MapTrading", -1])
-				if info.isTechTrading():
+				if INFO.canTradeItem("TECH_", iTech, "techs"):
 					techBenefits[iTech].append(["TechTrading", -1])
-				if info.isGoldTrading():
+				if INFO.canTradeItem("TECH_", iTech, "gold"):
 					techBenefits[iTech].append(["GoldTrading", -1])
-				if info.isOpenBordersTrading():
+				if INFO.canTradeItem("TECH_", iTech, "openBorders"):
 					techBenefits[iTech].append(["OpenBorders", -1])
-				if info.isDefensivePactTrading():
+				if INFO.canTradeItem("TECH_", iTech, "defensivePact"):
 					techBenefits[iTech].append(["DefensivePact", -1])
-				if info.isPermanentAllianceTrading():
+				if INFO.canTradeItem("TECH_", iTech, "permanentAlliance"):
 					techBenefits[iTech].append(["PermanentAlliance", -1])
-				if info.isVassalStateTrading():
+				if INFO.canTradeItem("TECH_", iTech, "vassals"):
 					techBenefits[iTech].append(["VassalState", -1])
-				if info.isIrrigation():
+				if INFO.providesCapability("TECH_", iTech, CapabilityId.CLS_CAPABILITY_CAN_SPREAD_IRRIGATION):
 					techBenefits[iTech].append(["EnablesIrrigation", -1])
-				if info.isIgnoreIrrigation():
+				if INFO.providesCapability("TECH_", iTech, CapabilityId.CLS_CAPABILITY_CAN_IGNORE_IRRIGATION):
 					techBenefits[iTech].append(["IgnoreIrrigation", -1])
-				if info.isWaterWork():
-					techBenefits[iTech].append(["WaterWork", -1])
-				iType = 0
-				while iType < iNumDomains:
-					if info.getDomainExtraMoves(iType):
-						techBenefits[iTech].append(["DomainMoves", iType])
-					iType += 1
-				iType = 0
-				while iType < iNumCommerce:
-					if info.isCommerceFlexible(iType):
-						techBenefits[iTech].append(["CommerceFlexible", iType])
-					iType += 1
-				iType = 0
-				while iType < iNumTerrains:
-					if info.isTerrainTrade(iType):
-						techBenefits[iTech].append(["TerrainTrade", iType])
-					iType += 1
-				if info.isRiverTrade():
+				if INFO.providesCapability("TECH_", iTech, CapabilityId.CLS_CAPABILITY_HAS_RIVER_TRADE):
 					techBenefits[iTech].append(["RiverTrade", -1])
-				if info.getFeatureProductionModifier():
-					techBenefits[iTech].append(["FeatureProduction", -1])
-				if info.getWorkerSpeedModifier():
-					techBenefits[iTech].append(["WorkerSpeed", -1])
+			#	WHAT A TECH UNLOCKS IS ITS OWN FORWARD EDGE -- never a sweep of every registry asking each entity
+			#	which tech unlocks it ([DEC-one-reverse-view]; AGENTS.md: "a FORWARD EDGE FETCH, never a database
+			#	scan"). These two walks replace twelve whole-registry loops.
+			for sTag, eBucket in TECH_ENABLES:
+				for iItem in INFO.getEdgeIds("TECH_", iTech, EdgeFamily.EDGEF_ENABLES, eBucket):
+					techBenefits[iTech].append([sTag, iItem])
+			for sTag, eBucket in TECH_OBSOLETES:
+				for iItem in INFO.getEdgeIds("TECH_", iTech, EdgeFamily.EDGEF_OBSOLETES, eBucket):
+					techBenefits[iTech].append([sTag, iItem])
 			iTech += 1
 
-		iType = 0
-		while iType < GC.getNumRouteInfos():
-			info = GC.getRouteInfo(iType)
-			iTech = 0
-			while iTech < self.iNumTechs:
-				if info.getTechMovementChange(iTech):
-					techBenefits[iTech].append(["RouteChange", iType])
-				iTech += 1
-			iType += 1
-
-		iNumYields = int(YieldTypes.NUM_YIELD_TYPES)
-		iType = 0
-		while iType < GC.getNumImprovementInfos():
-			info = GC.getImprovementInfo(iType)
-			iTech = 0
-			while iTech < self.iNumTechs:
-				i = 0
-				while i < iNumYields:
-					if info.getTechYieldChanges(iTech, i):
-						techBenefits[iTech].append(["ImprovementYield", iType])
-					i += 1
-				iTech += 1
-			iType += 1
-
-		iType = 0
-		while iType < GC.getNumUnitInfos():
-			iTech = GC.getUnitInfo(iType).getPrereqAndTech()
-			if iTech > -1:
-				techBenefits[iTech].append(["UnlockUnit", iType])
-			iType += 1
-
-		iType = 0
-		while iType < GC.getNumBuildingInfos():
-			info = GC.getBuildingInfo(iType)
-			iTech = info.getPrereqAndTech()
-			if iTech > -1:
-				techBenefits[iTech].append(["UnlockBuilding", iType])
-			iTech = info.getObsoleteTech()
-			if iTech > -1:
-				techBenefits[iTech].append(["ObsoleteBuilding", iType])
-			iType += 1
-
-		iType = 0
-		while iType < GC.getNumSpecialBuildingInfos():
-			info = GC.getSpecialBuildingInfo(iType)
-			iTech = info.getTechPrereq()
-			if iTech > -1:
-				techBenefits[iTech].append(["UnlockSpecialBuilding", iType])
-			iTech = info.getObsoleteTech()
-			if iTech > -1:
-				techBenefits[iTech].append(["ObsoleteSpecialBuilding", iType])
-			iType += 1
-
-		iType = 0
-		while iType < GC.getNumBonusInfos():
-			info = GC.getBonusInfo(iType)
-			iTech = info.getTechReveal()
-			if iTech > -1:
-				techBenefits[iTech].append(["RevealBonus", iType])
-			iTech = info.getTechObsolete()
-			if iTech > -1:
-				techBenefits[iTech].append(["ObsoleteBonus", iType])
-			iType += 1
-
-		iType = 0
-		while iType < GC.getNumPromotionInfos():
-			iTech = GC.getPromotionInfo(iType).getTechPrereq()
-			if iTech > -1:
-				techBenefits[iTech].append(["UnlockPromotion", iType])
-			iType += 1
-
-		iFeatures = GC.getNumFeatureInfos()
-		iType = 0
-		while iType < GC.getNumBuildInfos():
-			info = GC.getBuildInfo(iType)
-			iTech = info.getTechPrereq()
-			if iTech > -1:
-				techBenefits[iTech].append(["UnlockImprovement", iType])
-			else:
-				for i in xrange(iFeatures):
-					iTech = info.getFeatureTech(i)
-					if iTech > -1:
-						techBenefits[iTech].append(["UnlockImprovement", iType])
-			iType += 1
-
-		iType = 0
-		while iType < GC.getNumCivicInfos():
-			iTech = GC.getCivicInfo(iType).getTechPrereq()
-			if iTech > -1:
-				techBenefits[iTech].append(["UnlockCivic", iType])
-			iType += 1
-
-		iType = 0
-		while iType < GC.getNumProjectInfos():
-			iTech = GC.getProjectInfo(iType).getTechPrereq()
-			if iTech > -1:
-				techBenefits[iTech].append(["UnlockProject", iType])
-			iType += 1
-
-		iType = 0
-		while iType < GC.getNumProcessInfos():
-			iTech = GC.getProcessInfo(iType).getTechPrereq()
-			if iTech > -1:
-				techBenefits[iTech].append(["UnlockProcess", iType])
-			iType += 1
-
-		iType = 0
-		while iType < GC.getNumReligionInfos():
-			iTech = GC.getReligionInfo(iType).getTechPrereq()
-			if iTech > -1:
-				techBenefits[iTech].append(["UnlockReligion", iType])
-			iType += 1
-
-		iType = 0
-		while iType < GC.getNumCorporationInfos():
-			iTech = GC.getCorporationInfo(iType).getTechPrereq()
-			if iTech > -1:
-				techBenefits[iTech].append(["UnlockCorporation", iType])
-			iType += 1
+		#	The route MOVEMENT tail, the improvement tech-YIELD table and the SPECIALBUILDING unlock rows are
+		#	not served yet -- the first two are keyed tech modifiers with no Python read, and no EDGEB_ bucket
+		#	names specialBuildings. Their rows are absent rather than wrong ([DEC-no-legacy-masking]).
 		self.techBenefits = techBenefits
 
 
@@ -986,7 +868,7 @@ class CvTechChooser:
 					if CASE[0] == "CURRENT":
 						szTxt = "Researching: " + CyGameTextMgr().getTechHelp(self.CyPlayer.getCurrentResearch(), False, True, True, True, -1)
 					elif CASE[0] == "REQ":
-						szTxt = TRNSLTR.getText("TXT_KEY_MISC_TECH_REQUIRES_KNOWLEDGE_OF", (GC.getTechInfo(ID).getTextKey(),))
+						szTxt = TRNSLTR.getText("TXT_KEY_MISC_TECH_REQUIRES_KNOWLEDGE_OF", (INFO.getTextKey("TECH_", ID),))
 					else:
 						szTxt = CyGameTextMgr().getTechHelp(ID, False, True, True, True, -1)
 					self.tooltip.handle(screen, szTxt)
@@ -996,8 +878,7 @@ class CvTechChooser:
 					self.bUnitTT = True
 				elif TYPE == "BUILDING":
 					if CASE[0] == "OBS":
-						CvBuildingInfo = GC.getBuildingInfo(ID)
-						szTxt = TRNSLTR.getText("TXT_KEY_TECHHELP_OBSOLETES", (CvBuildingInfo.getType(), CvBuildingInfo.getTextKey()))
+						szTxt = TRNSLTR.getText("TXT_KEY_TECHHELP_OBSOLETES", (INFO.getType("BUILDING_", ID), INFO.getTextKey("BUILDING_", ID)))
 					else: szTxt = CyGameTextMgr().getBuildingHelp(ID, False, -1, -1, False, False, True)
 					self.tooltip.handle(screen, szTxt)
 		elif iCode == NotifyCode.NOTIFY_CLICKED: # click
@@ -1063,8 +944,7 @@ class CvTechChooser:
 		print "CvTechChooser.onClose - DONE"
 
 	def getTechPos(self, idx):
-		info = GC.getTechInfo(idx)
-		return info.getGridX() * self.xCellDist - self.minX
+		return INFO.getIntrinsic("TECH_", idx, IntrinsicSlot.PYINT_GRID_X) * self.xCellDist - self.minX
 
 	def getLastResearchingIdx(self):
 		lastTechInQueue = (-1, -1)
@@ -1078,8 +958,7 @@ class CvTechChooser:
 		lastResearched = (-1, -1)
 		for idx in xrange(self.iNumTechs):
 			if self.CyTeam.isHasTech(idx):
-				info = GC.getTechInfo(idx)
-				iX = info.getGridX()
+				iX = INFO.getIntrinsic("TECH_", idx, IntrinsicSlot.PYINT_GRID_X)
 				if iX > lastResearched[1]:
 					lastResearched = (idx, iX)
 		return lastResearched[0]

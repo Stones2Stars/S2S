@@ -8,6 +8,7 @@ import CvGFCScreen
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 gc = GC   # this module spells it lowercase
 STATE = CyState()
 ENABLER = CyEnabler()
@@ -185,7 +186,7 @@ class CvDebugInfoScreen(CvGFCScreen.CvGFCScreen):
 
 						iPlayerXAttitudeTowardPlayerY = pPlayerX.AI_getAttitude(y)
 
-						strBuffer = "%s" %(gc.getAttitudeInfo(iPlayerXAttitudeTowardPlayerY).getDescription(),)
+						strBuffer = "%s" %(INFO.getDescription("ATTITUDE_", iPlayerXAttitudeTowardPlayerY),)
 						list_loopRowData.append(strBuffer)
 						continue # prevents the value from getting overwritten by a font icon
 
@@ -214,7 +215,7 @@ class CvDebugInfoScreen(CvGFCScreen.CvGFCScreen):
 		d_TableData[0] = self.setPlayers("Civics")
 
 		for i in range( gc.getNumCivicOptionInfos() ):
-			strName = gc.getCivicOptionInfo(i).getDescription()
+			strName = INFO.getDescription("CIVICOPTION_", i)
 			list_loopRowData.append(strName)
 
 			for j in range( self.iNumPlayers ):
@@ -243,7 +244,7 @@ class CvDebugInfoScreen(CvGFCScreen.CvGFCScreen):
 
 				iTech = pPlayer.getCurrentResearch()
 				if iTech > -1:
-					szCurrentTech = gc.getTechInfo(iTech).getDescription()
+					szCurrentTech = INFO.getDescription("TECH_", iTech)
 				else: szCurrentTech = "No Research"
 
 				CivInfoFnx = [
@@ -276,7 +277,7 @@ class CvDebugInfoScreen(CvGFCScreen.CvGFCScreen):
 		d_TableData[0] = self.setPlayers("Unit AI")
 
 		for i in range( UnitAITypes.NUM_UNITAI_TYPES ):
-			strName = gc.getUnitAIInfo(i).getDescription()
+			strName = INFO.getDescription("UNITAI_", i)
 			strName.strip("UNITAI_")
 			list_loopRowData.append(strName)
 
@@ -299,7 +300,7 @@ class CvDebugInfoScreen(CvGFCScreen.CvGFCScreen):
 		d_TableData[0] = self.setPlayers("Available Bonuses")
 
 		for i in range( gc.getNumBonusInfos() ):
-			list_loopRowData.append(gc.getBonusInfo(i).getDescription())
+			list_loopRowData.append(INFO.getDescription("BONUS_", i))
 
 			for j in range( self.iNumPlayers ):
 				list_loopRowData.append( int(gc.getPlayer(j).getNumAvailableBonuses(i)) )

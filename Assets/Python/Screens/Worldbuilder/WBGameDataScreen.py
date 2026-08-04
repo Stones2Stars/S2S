@@ -1,6 +1,7 @@
 from CvPythonExtensions import *
 import HandleInputUtil
 GC = CyGlobalContext()
+INFO = CyInfo()
 GAME = GC.getGame()
 TRNSLTR = CyTranslator()
 
@@ -330,7 +331,7 @@ class WBGameDataScreen:
 				sText = "<font=3>" + sColor + aList[i][0] + "</font></color>"
 				screen.setTableText("WBNewLeader", iColumn, iRow, sText, Info.getButton(), WidgetTypes.WIDGET_PYTHON, 7876, item, 1<<0)
 			if iSelectedLeader > -1:
-				sHeaderText += ", " + self.GC.getLeaderHeadInfo(iSelectedLeader).getDescription()
+				sHeaderText += ", " + self.INFO.getDescription("LEADER_", iSelectedLeader)
 				sText = self.TRNSLTR.getText("[COLOR_SELECTED_TEXT]", ()) + "<font=4b>" + self.TRNSLTR.getText("TXT_KEY_MAIN_MENU_LOADSAVE_CREATE", ()) + "</color></font>"
 				screen.setText("CreatePlayer", "", sText, 1<<1, self.xRes - 16, 52, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, 1, 2)
 		screen.setLabel("NewPlayerHeader", "", "<font=3b>" + sHeaderText + "</font>", 1<<2, self.xRes *3/4, self.iNewPlayer_Y - 30, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
@@ -427,7 +428,7 @@ class WBGameDataScreen:
 					iEstimateEndTurn = iGameTurn + iMaxTurns
 					self.GAME.setEstimateEndTurn(iGameTurn + iMaxTurns)
 				else:
-					iEstimateEndTurn = self.GC.getGameSpeedInfo(self.GAME.getGameSpeedType()).getTotalTurns()
+					iEstimateEndTurn = INFO.getIntrinsic("GAMESPEED_", self.GAME.getGameSpeedType(), IntrinsicSlot.PYINT_TOTAL_TURNS)
 					self.GAME.setEstimateEndTurn(iEstimateEndTurn)
 
 				screen.hide("EstimateEndTurn")

@@ -54,6 +54,13 @@ enum PyIntrinsicSlot
 	PYINT_IS_SEE_RESEARCH,     // does this espionage mission reveal research (the scoreboard's research column)
 	PYINT_IS_SPACESHIP,
 	PYINT_WONDER_SCOPE,         // WHICH scope a building's self-cap sits at -- the wonder CATEGORY
+	PYINT_ERA,                  // TECH_ era FK (identity.era) -- the tech tree's era banding
+	PYINT_ADVISOR,              // TECH_ ADVISOR_* FK (ui.art.advisor) -- which advisor the tech is filed under
+	PYINT_TOTAL_TURNS,          // GAMESPEED_ the speed's total game length in turns (the end-turn estimate)
+	PYINT_GRID_X,               // TECH_ tech-tree layout column (identity.gridX)
+	PYINT_GRID_Y,               // TECH_ tech-tree layout row
+	PYINT_TRADE_ROUTE_AMOUNT,   // the scope-wide flat trade-ROUTE COUNT this entity deposits (kind 0 IS the
+	                            // count -- TRADE_ROUTE_AMOUNT, CvInfoKinds.h)
 	PYINT_IS_NO_INSTANCE_LIMIT, // is this building RELOCATABLE -- it waives the empire (national-wonder)
 	                            // cap, so a palace / culture building can be rebuilt elsewhere (json identity)        // is this project a spaceship part (the build-progress readout)
 	NUM_PYINT
@@ -73,6 +80,17 @@ enum PyIdListSlot
 {
 	PYLIST_HEADQUARTERS_BUILDINGS = 0, // CORPORATION_ -> the buildings that are its headquarters
 	PYLIST_CONSUMED_BONUSES,           // CORPORATION_ -> the bonuses it consumes
+	PYLIST_GRANTED_BUILDINGS,          // UNIT_ -> the buildings its `grants.buildings` hands over (the
+	                                   // MISSION_CONSTRUCT repertoire the construct gate reads). The EXACT
+	                                   // relation, so a consumer can filter the merged EDGEF_RELATED candidate
+	                                   // set down to it instead of trusting that superset.
+	PYLIST_PREREQ_AND_TECHS,           // TECH_ -> the techs its requires.build.all names (ALL must be held)
+	PYLIST_PREREQ_OR_TECHS,            // TECH_ -> the techs of its requires.build any-group (ONE must be held)
+	                                   // ⚑ The AND/OR split is why these are two slots rather than the merged
+	                                   // EDGEF_ENABLED_BY family: that bucket mixes enabling techs with
+	                                   // OBSOLETING ones and drops the distinction ([enabler.md] §2), so a
+	                                   // consumer with ALL semantics -- a tech tree drawing prereq arrows --
+	                                   // cannot read it. These are the load-reconstructed forward views.
 	NUM_PYLIST
 };
 
@@ -119,6 +137,34 @@ public:
 	// ⛔ CATEGORY TAGS are deliberately ABSENT: the pedia's taxonomy has no home yet (pedia-read-map finding 4),
 	// and minting one here would be exactly the bespoke shape that gap is waiting on a decision for.
 	python::list getIndex(const std::string& szTypePrefix) const;
+
+	// The WELLBEING group -- one read hands back the WHOLE group, indexed by the published WellbeingChannel
+	// ([patterns.md] THE TWO READ ROLES rule 1: the surface grows by GROUPS, never by channels, so there is no
+	// per-channel getter to add). SCOPE is a spelled-out argument ([DEC-scope-is-an-axis]).
+	// ⚑ This is what lets a consumer ask "which bonuses are a luxury / a health resource" WITHOUT sweeping the
+	// registry asking a per-id predicate -- it reads the entity's own compiled sum.
+	// Values are x100 ([DEC-fixedpoint-x100]); a reader divides at its point of use.
+	python::list getWellbeing(const std::string& szTypePrefix, int iId, int iScope) const;
+
+	// The REVOLUTION group -- the whole kind-indexed group in one read, exactly as getWellbeing hands back its
+	// channels ([patterns.md] THE TWO READ ROLES rule 1). Revolutions is Python-authoritative and due its own
+	// rework, so this carries the authored data faithfully and models nothing.
+	python::list getRevolution(const std::string& szTypePrefix, int iId, int iScope) const;
+
+	// The PROCESS conversion group -- how much of the city's production this process turns into each commerce,
+	// the whole group in one read indexed by CommerceTypes ([patterns.md] THE TWO READ ROLES rule 1).
+	python::list getProductionToCommerce(const std::string& szTypePrefix, int iId, int iScope) const;
+
+	// A CLASSIFICATION test -- O(1) bitset, the parameterized read ([patterns.md] THE GETTER SETUP category 2:
+	// a consumer asks by generated ID, never by key NAME, and no per-key getter is ever added).
+	bool providesCapability(const std::string& szTypePrefix, int iId, int iCapabilityId) const;
+	// The empire-STATE sibling ([json.md] §9 `policies`) -- same parameterized bitset read, by generated id.
+	bool providesPolicy(const std::string& szTypePrefix, int iId, int iPolicyId) const;
+
+	// The `canTrade` block -- what this entity puts on the trade table (capabilities.md). Deliberately
+	// STRING-keyed: canTrade keys are open DATA, not classification-registry ids, so the key IS the vocabulary.
+	// ⚠ Cold display/AI path only; it is not on any turn read.
+	bool canTradeItem(const std::string& szTypePrefix, int iId, const std::string& szItem) const;
 
 	// A STRAGGLER SCALAR off the compiled sums -- patterns.md's getScalar, the category-4 read for the genuinely
 	// lone unconditioned values that belong to no group. Keyed by the shared InfoScalar vocabulary, with SCOPE

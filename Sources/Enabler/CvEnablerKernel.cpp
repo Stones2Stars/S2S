@@ -603,16 +603,30 @@ static void ek_recheckActiveSet(const CvCity* pCity, const std::vector<int>& see
 			// ⚖ OBSERVABILITY ONLY -- logging + the player NOTIFICATION (owner). The FATE is applied on the TECH
 			// fact (a tech is the only thing that can obsolete), so nothing waits on this and no consumer may
 			// route the apply through it ([enabler.md §3.2], [event-spine.md] player alerts).
-			emitBuildingObsoleted(pCity->getID(), (int)pCity->getOwner(), b, nowObs ? 1 : -1);
+			if (nowObs)
+	{
+		emitCityBuildingObsoletedAdded(pCity->getID(), (int)pCity->getOwner(), b);
+	}
+	else
+	{
+		emitCityBuildingObsoletedRemoved(pCity->getID(), (int)pCity->getOwner(), b);
+	}
 		}
 		if (now == was) continue;
 		// ⚖ ANNOUNCE THE OPERATE CROSSING. This is the play-time twin of the load seed's emit: the verdict is the
 		// enabler's, so the enabler announces it, at the one place it changes. Consumers keyed on the operating
-		// fact -- the city's amenity fold, the modifier's marks -- see a dormancy flip exactly as they see a
-		// construction, which is what makes a dormant building stop contributing.
-		// ⛔ It is NOT a duplicate of the building-PRESENCE fact: presence cannot tell dormant from operating
+		// fact -- the city's amenity fold, the modifier's deposits, the free-promotion path -- see a dormancy flip
+		// exactly as they see a construction, which is what makes a dormant building stop contributing.
+		// ⛔ It is NOT a duplicate of the building-PRESENCE facts: presence cannot tell dormant from operating
 		// (event-spine.md), and this fires only on a genuine active<->dormant change (`now == was` returned above).
-		emitBuildingProcessed(pCity->getID(), pCity->getOwner(), b, now ? 1 : -1);
+		if (now)
+		{
+			emitCityBuildingActivated(pCity->getID(), pCity->getOwner(), b);
+		}
+		else
+		{
+			emitCityBuildingDormanted(pCity->getID(), pCity->getOwner(), b);
+		}
 		const std::vector<int>* prov = ek_provides(b);
 		if (now)
 		{
@@ -658,7 +672,14 @@ static void ek_recheckActiveSet(const CvCity* pCity, const std::vector<int>& see
 	// reason the fixpoint does: a no-op write crosses nothing and announces nothing.
 	for (size_t i = 0; i < supplyCrossings.size(); ++i)
 	{
-		emitVicinityBonusChanged(pCity->getID(), pCity->getOwner(), supplyCrossings[i].first, supplyCrossings[i].second);
+		if (supplyCrossings[i].second > 0)
+	{
+		emitCityVicinityBonusAdded(pCity->getID(), pCity->getOwner(), supplyCrossings[i].first, supplyCrossings[i].second);
+	}
+	else
+	{
+		emitCityVicinityBonusRemoved(pCity->getID(), pCity->getOwner(), supplyCrossings[i].first, -supplyCrossings[i].second);
+	}
 	}
 }
 
@@ -878,7 +899,7 @@ void EnablerKernel::seedOperatingBuildings(const CvCity* pCity)
 	const std::set<int>& kActive = pCity->m_operatingBuildings.active;
 	for (std::set<int>::const_iterator it = kActive.begin(); it != kActive.end(); ++it)
 	{
-		emitBuildingProcessed(pCity->getID(), pCity->getOwner(), *it, 1);
+		emitCityBuildingActivated(pCity->getID(), pCity->getOwner(), *it);
 	}
 }
 

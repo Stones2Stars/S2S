@@ -7,6 +7,7 @@ import WBTradeScreen
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -166,14 +167,14 @@ class WBDiplomacyScreen:
 			sColor = u"<color=%d,%d,%d,%d>" %(pPlayer.getPlayerTextColorR(), pPlayer.getPlayerTextColorG(), pPlayer.getPlayerTextColorB(), pPlayer.getPlayerTextColorA())
 			iCivilization = pPlayer.getCivilizationType()
 			sText = pPlayer.getCivilizationShortDescription(0)
-			screen.setTableText("WBDiplomacy", 0, iRow, "<font=3>" + sColor + sText + "</font></color>", GC.getCivilizationInfo(iCivilization).getButton(), WidgetTypes.WIDGET_PYTHON, 7872, iPlayer * 10000 + iCivilization, 1<<0 )
+			screen.setTableText("WBDiplomacy", 0, iRow, "<font=3>" + sColor + sText + "</font></color>", INFO.getButton("CIVILIZATION_", iCivilization), WidgetTypes.WIDGET_PYTHON, 7872, iPlayer * 10000 + iCivilization, 1<<0 )
 			iLeader = pPlayer.getLeaderType()
 			sText = pPlayer.getName()
 			if not pPlayer.isAlive():
 				sText = "*" + sText
 			if pPlayer.isTurnActive():
 				sText = "[" + sText + "]"
-			screen.setTableText("WBDiplomacy", 1, iRow, "<font=3>" + sColor + sText + "</font></color>", GC.getLeaderHeadInfo(iLeader).getButton(), WidgetTypes.WIDGET_PYTHON, 7876, iPlayer * 10000 + iLeader, 1<<0 )
+			screen.setTableText("WBDiplomacy", 1, iRow, "<font=3>" + sColor + sText + "</font></color>", INFO.getButton("LEADER_", iLeader), WidgetTypes.WIDGET_PYTHON, 7876, iPlayer * 10000 + iLeader, 1<<0 )
 			screen.setTableInt("WBDiplomacy", 2, iRow, "<font=3>" + sColor + str(iTeam) + "</font></color>", "", WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<2 )
 
 			if bTowardsPlayer:
@@ -182,7 +183,7 @@ class WBDiplomacyScreen:
 			else:
 				iAttitude = GC.getPlayer(iSelectedPlayer).AI_getAttitude(iPlayer)
 				sWeariness = str(GC.getTeam(iSelectedTeam).getWarWeariness(iTeam))
-			sText = CyTranslator().changeTextColor(GC.getAttitudeInfo(iAttitude).getDescription(), GC.getInfoTypeForString(self.lAttitude[iAttitude]))
+			sText = CyTranslator().changeTextColor(INFO.getDescription("ATTITUDE_", iAttitude), GC.getInfoTypeForString(self.lAttitude[iAttitude]))
 			screen.setTableText("WBDiplomacy", 3, iRow, "<font=3>" + sText + "</font>", "", WidgetTypes.WIDGET_PYTHON, 1030, iPlayer, 1<<2)
 
 			if bTowardsPlayer:
@@ -221,7 +222,7 @@ class WBDiplomacyScreen:
 		screen = CyGInterfaceScreen( "WBDiplomacyScreen", CvScreenEnums.WB_DIPLOMACY)
 		screen.addDropDownBoxGFC("CurrentMemory", screen.getXResolution()/5 + 20, screen.getYResolution() - 40, 450, eWidGen, 1, 2, FontTypes.GAME_FONT)
 		for i in xrange(MemoryTypes.NUM_MEMORY_TYPES):
-			screen.addPullDownString("CurrentMemory", GC.getMemoryInfo(i).getDescription(), i, i, i == iSelectedMemory)
+			screen.addPullDownString("CurrentMemory", INFO.getDescription("MEMORY_", i), i, i, i == iSelectedMemory)
 
 		szEspionage = CyTranslator().getText("TXT_WORD_ESPIONAGE", ())
 		iWidth = screen.getXResolution() - 40
@@ -257,14 +258,14 @@ class WBDiplomacyScreen:
 			pTeam = GC.getTeam(iTeam)
 			sColor = u"<color=%d,%d,%d,%d>" %(pPlayer.getPlayerTextColorR(), pPlayer.getPlayerTextColorG(), pPlayer.getPlayerTextColorB(), pPlayer.getPlayerTextColorA())
 			iCivilization = pPlayer.getCivilizationType()
-			screen.setTableText("WBEspionage", 0, iRow, "<font=3>" + sColor + pPlayer.getCivilizationShortDescription(0) + "</font></color>", GC.getCivilizationInfo(iCivilization).getButton(), WidgetTypes.WIDGET_PYTHON, 7872, iPlayer * 10000 + iCivilization, 1<<0 )
+			screen.setTableText("WBEspionage", 0, iRow, "<font=3>" + sColor + pPlayer.getCivilizationShortDescription(0) + "</font></color>", INFO.getButton("CIVILIZATION_", iCivilization), WidgetTypes.WIDGET_PYTHON, 7872, iPlayer * 10000 + iCivilization, 1<<0 )
 			iLeader = pPlayer.getLeaderType()
 			sText = pPlayer.getName()
 			if not pPlayer.isAlive():
 				sText = "*" + sText
 			if pPlayer.isTurnActive():
 				sText = "[" + sText + "]"
-			screen.setTableText("WBEspionage", 1, iRow, "<font=3>" + sColor + sText + "</font></color>", GC.getLeaderHeadInfo(iLeader).getButton(), WidgetTypes.WIDGET_PYTHON, 7876, iPlayer * 10000 + iLeader, 1<<0 )
+			screen.setTableText("WBEspionage", 1, iRow, "<font=3>" + sColor + sText + "</font></color>", INFO.getButton("LEADER_", iLeader), WidgetTypes.WIDGET_PYTHON, 7876, iPlayer * 10000 + iLeader, 1<<0 )
 			if bTowardsPlayer:
 				sMemory = str(pPlayer.AI_getMemoryCount(iSelectedPlayer, iSelectedMemory))
 				sEspionage = str(pTeam.getEspionagePointsAgainstTeam(iSelectedTeam))

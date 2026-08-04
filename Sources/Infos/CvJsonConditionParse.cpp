@@ -184,9 +184,15 @@ static CvCondition* cp_parseObject(const picojson::object& o)
 		{
 			const std::string type = ty->get<std::string>();
 			const std::string sc = po_str(o, "scope");
-			return cp_presence(type, sc.empty() ? cp_impliedScope(type) : jsonParseScope(sc, CASC_SCOPE_EMPIRE),
+			CvCondition* pAtom = cp_presence(type, sc.empty() ? cp_impliedScope(type) : jsonParseScope(sc, CASC_SCOPE_EMPIRE),
 			                   po_int(o, "min", -1), po_int(o, "max", -1),
 			                   cp_parseConnection(po_str(o, "connection")), cp_parseVicinity(po_str(o, "vicinity")));
+			// A bound is AUTHORED iff its key is present. ⛔ Never inferred from the value's sign: a PROPERTY_
+			// band bound is legitimately negative (CvCondition.h), so a sign test drops it and the clause
+			// collapses to always-true.
+			pAtom->hasMin = (po_get(o, "min") != NULL);
+			pAtom->hasMax = (po_get(o, "max") != NULL);
+			return pAtom;
 		}
 	}
 
