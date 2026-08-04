@@ -723,6 +723,27 @@ public:
 	PlotTypes getPlotType() const;
 	bool isWater() const;
 	DllExport bool isWaterExternal() const;
+	// ── THE INTERNAL SUBSTRATE SETTERS (#430) ────────────────────────────────────────────────────
+	// COMMIT the member, MAINTAIN the plot's own derived movement hash, ANNOUNCE the fact -- and
+	// NOTHING else. A public setter is its own guard, then one of these, then its EFFECTS (plot
+	// groups, areas, sight, graphics, the land/water cascade); CvPlot::read calls these DIRECTLY.
+	//
+	// ⛔ WHY read() MUST NOT GO THROUGH THE PUBLIC SETTER. The save stream is authoritative for base
+	// state, and a public setter carries effects that would DECIDE parts of that state themselves --
+	// resettling areas, recolouring plot groups, cascading a terrain change into a plot-type change.
+	// An effect may not mutate base state, so the load takes the commit and leaves the effects out.
+	// ⛔ AND WHY read() MUST NOT WRITE THE MEMBERS DIRECTLY EITHER, which is what it used to do: the
+	// emit and the movement-hash maintenance then live in a SECOND place that has to be kept in step
+	// by hand, and it was not -- five slots deserialized silently and the hash needed a whole
+	// rebuild pass at the end of the read to paper over it. One body per slot knows how to land it.
+	void setPlotTypeInternal(PlotTypes eNewValue);
+	void setTerrainTypeInternal(TerrainTypes eNewValue);
+	void setFeatureTypeInternal(FeatureTypes eNewValue, int iVariety);
+	void setRouteTypeInternal(RouteTypes eNewValue);
+	void setRiverWEDirectionInternal(CardinalDirectionTypes eRiverDir);
+	void setRiverNSDirectionInternal(CardinalDirectionTypes eRiverDir);
+	void setRiverCrossingCountInternal(int iNewCount);
+
 	bool isFlatlands() const;
 	DllExport bool isHills() const;
 	DllExport bool isPeak() const;

@@ -5925,6 +5925,185 @@ bool CvPlot::isNOfRiver() const
 }
 
 
+// ══════════════════════ THE INTERNAL SUBSTRATE SETTERS (#430) ══════════════════════
+// COMMIT the member, MAINTAIN the movement hash, ANNOUNCE the fact -- and nothing else. Each is the
+// ONE body that knows how to land its slot, so a public setter and CvPlot::read reach the identical
+// commit + hash + emit and neither can drift from the other. The effects (plot groups, areas, sight,
+// graphics, the land/water cascade) stay in the PUBLIC setter, which is why the save read can call
+// these: the stream is authoritative for base state, and no effect gets to decide any part of it.
+//
+// The movement hash is the reason this is one body rather than a convention. It is NOT serialized, so
+// every contributor has to XOR itself in as it lands; the read used to write the members raw and then
+// rebuild the whole hash in a trailing pass, which is a recompute standing in for the maintenance
+// these setters now do. That pass is GONE -- keeping it beside these would XOR every contributor a
+// second time and cancel the hash to zero, silently, on every plot in the map.
+
+void CvPlot::setPlotTypeInternal(PlotTypes eNewValue)
+{
+	const PlotTypes eOldPlotType = getPlotType();
+	if (eOldPlotType == eNewValue)
+	{
+		return;
+	}
+	if (eOldPlotType != NO_PLOT)
+	{
+		m_movementCharacteristicsHash ^= g_plotTypeZobristHashes[eOldPlotType];
+	}
+	if (eNewValue != NO_PLOT)
+	{
+		m_movementCharacteristicsHash ^= g_plotTypeZobristHashes[eNewValue];
+	}
+	m_ePlotType = eNewValue;
+	if (eOldPlotType != NO_PLOT)
+	{
+		emitPlotTypeRemoved(GC.getMap().plotNum(getX(), getY()), (int)getOwner(), (int)eOldPlotType);
+	}
+	if (eNewValue != NO_PLOT)
+	{
+		emitPlotTypeAdded(GC.getMap().plotNum(getX(), getY()), (int)getOwner(), (int)eNewValue);
+	}
+}
+
+void CvPlot::setTerrainTypeInternal(TerrainTypes eNewValue)
+{
+	const TerrainTypes eOldTerrain = getTerrainType();
+	if (eOldTerrain == eNewValue)
+	{
+		return;
+	}
+	if (eOldTerrain != NO_TERRAIN)
+	{
+		m_movementCharacteristicsHash ^= GC.getTerrainInfo(eOldTerrain).getZobristValue();
+	}
+	if (eNewValue != NO_TERRAIN)
+	{
+		m_movementCharacteristicsHash ^= GC.getTerrainInfo(eNewValue).getZobristValue();
+	}
+	m_eTerrainType = eNewValue;
+	if (eOldTerrain != NO_TERRAIN)
+	{
+		emitPlotTerrainRemoved(GC.getMap().plotNum(getX(), getY()), getOwner(), (int)eOldTerrain);
+	}
+	if (eNewValue != NO_TERRAIN)
+	{
+		emitPlotTerrainAdded(GC.getMap().plotNum(getX(), getY()), getOwner(), (int)eNewValue);
+	}
+}
+
+// The VARIETY rides along because it is part of the same slot, but it is NOT part of the fact: a
+// variety-only reroll changes how the feature is drawn and announces nothing.
+void CvPlot::setFeatureTypeInternal(FeatureTypes eNewValue, int iVariety)
+{
+	const FeatureTypes eOldFeature = getFeatureType();
+	if (eOldFeature != eNewValue)
+	{
+		if (eOldFeature != NO_FEATURE)
+		{
+			m_movementCharacteristicsHash ^= GC.getFeatureInfo(eOldFeature).getZobristValue();
+		}
+		if (eNewValue != NO_FEATURE)
+		{
+			m_movementCharacteristicsHash ^= GC.getFeatureInfo(eNewValue).getZobristValue();
+		}
+	}
+	m_eFeatureType = eNewValue;
+	m_iFeatureVariety = iVariety;
+	if (eOldFeature != eNewValue)
+	{
+		if (eOldFeature != NO_FEATURE)
+		{
+			emitPlotFeatureRemoved(GC.getMap().plotNum(getX(), getY()), getOwner(), (int)eOldFeature);
+		}
+		if (eNewValue != NO_FEATURE)
+		{
+			emitPlotFeatureAdded(GC.getMap().plotNum(getX(), getY()), getOwner(), (int)eNewValue);
+		}
+	}
+}
+
+void CvPlot::setRouteTypeInternal(RouteTypes eNewValue)
+{
+	const RouteTypes eOldRoute = getRouteType();
+	if (eOldRoute == eNewValue)
+	{
+		return;
+	}
+	if (eOldRoute != NO_ROUTE)
+	{
+		m_movementCharacteristicsHash ^= GC.getRouteInfo(eOldRoute).getZobristValue();
+	}
+	if (eNewValue != NO_ROUTE)
+	{
+		m_movementCharacteristicsHash ^= GC.getRouteInfo(eNewValue).getZobristValue();
+	}
+	m_eRouteType = eNewValue;
+	if (eOldRoute != NO_ROUTE)
+	{
+		emitPlotRouteRemoved(GC.getMap().plotNum(getX(), getY()), getOwner(), (int)eOldRoute);
+	}
+	if (eNewValue != NO_ROUTE)
+	{
+		emitPlotRouteAdded(GC.getMap().plotNum(getX(), getY()), getOwner(), (int)eNewValue);
+	}
+}
+
+// The two river DIRECTIONS carry no fact of their own -- what a consumer asks about a river is the
+// PRESENCE verdict, which is the crossing count below. They still have to land here, because each
+// contributes to the movement hash.
+// ⚠ The N/W naming inversion is the existing engine shape and is preserved deliberately: the
+// NORTH-of-river edge carries the WEST-EAST flow direction, and the WEST-of-river edge the
+// NORTH-SOUTH one.
+void CvPlot::setRiverWEDirectionInternal(CardinalDirectionTypes eRiverDir)
+{
+	if (m_eRiverWEDirection == eRiverDir)
+	{
+		return;
+	}
+	if (m_eRiverWEDirection != NO_CARDINALDIRECTION)
+	{
+		m_movementCharacteristicsHash ^= g_riverDirectionZobristHashes[m_eRiverWEDirection];
+	}
+	if (eRiverDir != NO_CARDINALDIRECTION)
+	{
+		m_movementCharacteristicsHash ^= g_riverDirectionZobristHashes[eRiverDir];
+	}
+	m_eRiverWEDirection = eRiverDir;
+}
+
+void CvPlot::setRiverNSDirectionInternal(CardinalDirectionTypes eRiverDir)
+{
+	if (m_eRiverNSDirection == eRiverDir)
+	{
+		return;
+	}
+	if (m_eRiverNSDirection != NO_CARDINALDIRECTION)
+	{
+		m_movementCharacteristicsHash ^= g_riverDirectionZobristHashes[m_eRiverNSDirection];
+	}
+	if (eRiverDir != NO_CARDINALDIRECTION)
+	{
+		m_movementCharacteristicsHash ^= g_riverDirectionZobristHashes[eRiverDir];
+	}
+	m_eRiverNSDirection = eRiverDir;
+}
+
+// The river PRESENCE fact. Only crossing zero is a state change -- a count moving between two
+// non-zero values leaves the plot just as much a river plot as it was.
+void CvPlot::setRiverCrossingCountInternal(int iNewCount)
+{
+	const bool bWasRiver = m_iRiverCrossingCount > 0;
+	const bool bIsRiver = iNewCount > 0;
+	m_iRiverCrossingCount = iNewCount;
+	if (bIsRiver && !bWasRiver)
+	{
+		emitPlotRiverAdded(GC.getMap().plotNum(getX(), getY()), (int)getOwner(), m_iRiverCrossingCount);
+	}
+	else if (!bIsRiver && bWasRiver)
+	{
+		emitPlotRiverRemoved(GC.getMap().plotNum(getX(), getY()), (int)getOwner(), m_iRiverCrossingCount);
+	}
+}
+
 void CvPlot::setNOfRiver(bool bNewValue, CardinalDirectionTypes eRiverDir)
 {
 	PROFILE_EXTRA_FUNC();
@@ -5951,16 +6130,7 @@ void CvPlot::setNOfRiver(bool bNewValue, CardinalDirectionTypes eRiverDir)
 
 		FAssertMsg(eRiverDir == CARDINALDIRECTION_WEST || eRiverDir == CARDINALDIRECTION_EAST || eRiverDir == NO_CARDINALDIRECTION, "invalid parameter");
 
-		if (m_eRiverWEDirection != NO_CARDINALDIRECTION)
-		{
-			m_movementCharacteristicsHash ^= g_riverDirectionZobristHashes[m_eRiverWEDirection];
-		}
-		if (eRiverDir != NO_CARDINALDIRECTION)
-		{
-			m_movementCharacteristicsHash ^= g_riverDirectionZobristHashes[eRiverDir];
-		}
-
-		m_eRiverWEDirection = eRiverDir;
+		setRiverWEDirectionInternal(eRiverDir);
 
 		updateRiverSymbol(true, true);
 	}
@@ -5999,16 +6169,7 @@ void CvPlot::setWOfRiver(bool bNewValue, CardinalDirectionTypes eRiverDir)
 
 		FAssertMsg(eRiverDir == CARDINALDIRECTION_NORTH || eRiverDir == CARDINALDIRECTION_SOUTH || eRiverDir == NO_CARDINALDIRECTION, "invalid parameter");
 
-		if (m_eRiverNSDirection != NO_CARDINALDIRECTION)
-		{
-			m_movementCharacteristicsHash ^= g_riverDirectionZobristHashes[m_eRiverNSDirection];
-		}
-		if (eRiverDir != NO_CARDINALDIRECTION)
-		{
-			m_movementCharacteristicsHash ^= g_riverDirectionZobristHashes[eRiverDir];
-		}
-
-		m_eRiverNSDirection = eRiverDir;
+		setRiverNSDirectionInternal(eRiverDir);
 
 		updateRiverSymbol(true, true);
 	}
@@ -6881,29 +7042,9 @@ void CvPlot::setTerrainType(TerrainTypes eNewValue, bool bRecalculate, bool bReb
 
 	if (eOldTerrain != eNewValue)
 	{
-		m_eTerrainType = eNewValue;
-		// #430 event spine: PAST TENSE -- the CRUD happens, then the facts say what happened. An event is
-		// TESTIMONY about a completed act, never an instruction that drives one: an effect may not mutate base
-		// state, so no consumer reaches back through a fact to change the plot. The REMOVED fact NAMES the source
-		// that left, so a withdrawal reads the FACT and never the plot -- which is why it needs no privileged
-		// position relative to the commit.
-		if (eOldTerrain != NO_TERRAIN)
-		{
-			emitPlotTerrainRemoved(GC.getMap().plotNum(getX(), getY()), getOwner(), (int)eOldTerrain);
-		}
-		if (eNewValue != NO_TERRAIN)
-		{
-			emitPlotTerrainAdded(GC.getMap().plotNum(getX(), getY()), getOwner(), (int)eNewValue);
-		}
+		// The commit, the hash and the facts; then this setter's own EFFECTS below.
+		setTerrainTypeInternal(eNewValue);
 
-		if (eOldTerrain != NO_TERRAIN)
-		{
-			m_movementCharacteristicsHash ^= GC.getTerrainInfo(eOldTerrain).getZobristValue();
-		}
-		if (eNewValue != NO_TERRAIN)
-		{
-			m_movementCharacteristicsHash ^= GC.getTerrainInfo(eNewValue).getZobristValue();
-		}
 		updatePlotGroup();
 
 		if (eNewValue != NO_TERRAIN)
