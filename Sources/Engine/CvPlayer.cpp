@@ -8830,21 +8830,64 @@ bool CvPlayer::isGoldenAge() const
 	return m_iGoldenAgeTurns > 0;
 }
 
-void CvPlayer::changeGoldenAgeTurns(int iChange)
+// ══════════════════════ THE INTERNAL SLOT SETTERS (#430) ══════════════════════
+// COMMIT the member, ANNOUNCE the fact -- and nothing else. Each is the ONE body that knows how to land its
+// slot, so the public setter and CvPlayer::read reach the identical commit + emit and neither can drift from
+// the other. The effects (graphics, trade routes, corporations, AI marks, alerts, UI) stay in the PUBLIC setter,
+// which is why the save read can call these: the stream is authoritative for base state and no effect gets to
+// decide any part of it.
+
+void CvPlayer::setCurrentEraInternal(EraTypes eNewValue)
 {
-	PROFILE_EXTRA_FUNC();
-	if (iChange != 0)
+	const EraTypes eOldEra = (EraTypes)m_eCurrentEra;
+	if (eOldEra == eNewValue)
 	{
-		const bool bWasGoldenAge = m_iGoldenAgeTurns > 0;
+		return;
+	}
+	m_eCurrentEra = eNewValue;
+	// Era is a BROAD player-scope cascade input -- heritage era-stacked commerce, every ERA-counter-gated
+	// deposit, and the ERA requires atoms.
+	if (eOldEra != NO_ERA)
+	{
+		emitEmpireEraRemoved(getID(), (int)eOldEra);
+	}
+	emitEmpireEraAdded(getID(), (int)eNewValue);
+}
 
-		m_iGoldenAgeTurns += iChange;
-		FASSERT_NOT_NEGATIVE(m_iGoldenAgeTurns);
+void CvPlayer::setLastStateReligionInternal(ReligionTypes eNewReligion)
+{
+	const ReligionTypes eOldReligion = (ReligionTypes)m_eLastStateReligion;
+	if (eOldReligion == eNewReligion)
+	{
+		return;
+	}
+	m_eLastStateReligion = eNewReligion;
+	if (eOldReligion != NO_RELIGION)
+	{
+		emitEmpireStateReligionRemoved(getID(), (int)eOldReligion);
+	}
+	if (eNewReligion != NO_RELIGION)
+	{
+		emitEmpireStateReligionAdded(getID(), (int)eNewReligion);
+	}
+}
 
-		if (bWasGoldenAge != isGoldenAge())
-		{
-			// Announced ONLY on the golden-age flip (on<->off), past the enclosing guard and after the turns field
-			// commit -- the IS_GOLDEN_AGE-conditioned invalidation rides this fact, so a non-flip must not emit.
-			if (isGoldenAge())
+// The turn counter ticks down every turn, so only the on<->off FLIP is a fact -- the IS_GOLDEN_AGE-conditioned
+// deposits ride it, and a non-flip must not announce.
+void CvPlayer::changeGoldenAgeTurnsInternal(int iChange)
+{
+	if (iChange == 0)
+	{
+		return;
+	}
+	const bool bWasGoldenAge = m_iGoldenAgeTurns > 0;
+	m_iGoldenAgeTurns += iChange;
+	FASSERT_NOT_NEGATIVE(m_iGoldenAgeTurns);
+	if (bWasGoldenAge == isGoldenAge())
+	{
+		return;
+	}
+	if (isGoldenAge())
 	{
 		emitEmpireGoldenAgeAdded(getID());
 	}
@@ -8852,6 +8895,66 @@ void CvPlayer::changeGoldenAgeTurns(int iChange)
 	{
 		emitEmpireGoldenAgeRemoved(getID());
 	}
+}
+
+// The IS_ANARCHY verdict crossing, same shape: the counter ticks, only the crossing is the fact.
+void CvPlayer::changeAnarchyTurnsInternal(int iChange)
+{
+	if (iChange == 0)
+	{
+		return;
+	}
+	const bool bOldAnarchy = isAnarchy();
+	m_iAnarchyTurns += iChange;
+	FASSERT_NOT_NEGATIVE(getAnarchyTurns());
+	if (bOldAnarchy == isAnarchy())
+	{
+		return;
+	}
+	if (isAnarchy())
+	{
+		emitEmpireAnarchyAdded(getID());
+	}
+	else
+	{
+		emitEmpireAnarchyRemoved(getID());
+	}
+}
+
+// The slider is synced player state every city's realized per-commerce rate is built on (modifier.md par.2a).
+// ⚠ It does NOT rebalance -- that is the public setter's effect, and it lands each channel it moves back
+// through HERE, so every moved channel announces its own fact from one body.
+void CvPlayer::setCommercePercentInternal(CommerceTypes eIndex, int iNewValue)
+{
+	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
+	const int iOldValue = m_aiCommercePercent[eIndex];
+	m_aiCommercePercent[eIndex] = range(iNewValue, 0, 100);
+	if (iOldValue == m_aiCommercePercent[eIndex])
+	{
+		return;
+	}
+	if (m_aiCommercePercent[eIndex] > iOldValue)
+	{
+		emitEmpireCommercePercentAdded(getID(), (int)eIndex, m_aiCommercePercent[eIndex] - iOldValue);
+	}
+	else
+	{
+		emitEmpireCommercePercentRemoved(getID(), (int)eIndex, iOldValue - m_aiCommercePercent[eIndex]);
+	}
+}
+
+void CvPlayer::changeGoldenAgeTurns(int iChange)
+{
+	PROFILE_EXTRA_FUNC();
+	if (iChange != 0)
+	{
+		const bool bWasGoldenAge = m_iGoldenAgeTurns > 0;
+
+		// The commit and the flip fact; then this setter's own EFFECTS below.
+		changeGoldenAgeTurnsInternal(iChange);
+
+		if (bWasGoldenAge != isGoldenAge())
+		{
 			if (!bWasGoldenAge)
 			{
 				changeAnarchyTurns(-getAnarchyTurns());
@@ -8955,21 +9058,11 @@ void CvPlayer::changeAnarchyTurns(int iChange, bool bHideMessages)
 	{
 		const bool bOldAnarchy = isAnarchy();
 
-		m_iAnarchyTurns += iChange;
-		FASSERT_NOT_NEGATIVE(getAnarchyTurns());
+		// The commit and the crossing fact; then this setter's own EFFECTS below.
+		changeAnarchyTurnsInternal(iChange);
 
 		if (bOldAnarchy != isAnarchy())
 		{
-			// #430 event spine: the IS_ANARCHY verdict crossing. The turn counter itself ticks down every turn, so
-			// only this 0-crossing is a state change.
-			if (isAnarchy())
-	{
-		emitEmpireAnarchyAdded(getID());
-	}
-	else
-	{
-		emitEmpireAnarchyRemoved(getID());
-	}
 			updateTradeRoutes();
 			updateCorporation();
 
@@ -11347,15 +11440,11 @@ void CvPlayer::setCurrentEra(EraTypes eNewValue)
 
 	if (getCurrentEra() != eNewValue)
 	{
-		EraTypes eOldEra = m_eCurrentEra;
-		m_eCurrentEra = eNewValue;
-		// Era is a BROAD player-scope cascade input -- heritage era-stacked commerce, every ERA-counter-gated
-		// deposit, and the ERA requires atoms. Announce the fact past the no-change guard.
-		if (eOldEra != NO_ERA)
-		{
-			emitEmpireEraRemoved(getID(), (int)eOldEra);
-		}
-		emitEmpireEraAdded(getID(), (int)eNewValue);
+		// Captured before the commit: the entity-graphics update below re-skins units against the era they are
+		// leaving, so it needs the OLD value.
+		const EraTypes eOldEra = (EraTypes)m_eCurrentEra;
+		// The commit and the facts; then this setter's own EFFECTS below.
+		setCurrentEraInternal(eNewValue);
 
 		if (GC.getGame().getActiveTeam() != NO_TEAM)
 		{
@@ -11432,17 +11521,8 @@ void CvPlayer::setLastStateReligion(const ReligionTypes eNewReligion)
 
 	if (eOldReligion != eNewReligion)
 	{
-		m_eLastStateReligion = eNewReligion;
-		// The state-religion switch, past the no-change guard and after the field commit.
-		if (eOldReligion != NO_RELIGION)
-		{
-			emitEmpireStateReligionRemoved(getID(), (int)eOldReligion);
-		}
-		if (eNewReligion != NO_RELIGION)
-		{
-			emitEmpireStateReligionAdded(getID(), (int)eNewReligion);
-		}
-
+		// The commit and the facts; then this setter's own EFFECTS below.
+		setLastStateReligionInternal(eNewReligion);
 
 		GC.getGame().updateSecretaryGeneral();
 		GC.getGame().AI_makeAssignWorkDirty();
@@ -11794,23 +11874,12 @@ void CvPlayer::setCommercePercent(CommerceTypes eIndex, int iNewValue)
 
 	const int iOldValue = m_aiCommercePercent[eIndex];
 
-	m_aiCommercePercent[eIndex] = range(iNewValue, 0, 100);
+	// The commit and the fact; then this setter's own EFFECTS below. ⚠ This is the ONE choke point --
+	// changeCommercePercent and verifyGoldCommercePercent both reach the value through here.
+	setCommercePercentInternal(eIndex, iNewValue);
 
 	if (iOldValue != m_aiCommercePercent[eIndex])
 	{
-		// The slider is synced player state every city's realized per-commerce rate is built on (modifier.md
-		// §2a): a DOMAIN fact, emitted at the mutation site unconditionally -- consumers filter, the emit
-		// surface stays complete. This is the ONE choke point: changeCommercePercent and
-		// verifyGoldCommercePercent both reach the value through here.
-		if (m_aiCommercePercent[eIndex] > iOldValue)
-	{
-		emitEmpireCommercePercentAdded(getID(), (int)eIndex, m_aiCommercePercent[eIndex] - iOldValue);
-	}
-	else
-	{
-		emitEmpireCommercePercentRemoved(getID(), (int)eIndex, iOldValue - m_aiCommercePercent[eIndex]);
-	}
-
 		int iTotalCommercePercent = 0;
 
 		for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
@@ -11827,23 +11896,12 @@ void CvPlayer::setCommercePercent(CommerceTypes eIndex, int iNewValue)
 					break;
 				}
 				const int iAdjustment = std::min(m_aiCommercePercent[iJ], iTotalCommercePercent - 100);
-				m_aiCommercePercent[iJ] -= iAdjustment;
+				// Through the INTERNAL setter, never the public one: the rebalance must not recurse into another
+				// rebalance, but each channel it moves IS its own state change and announces its own fact. ⚠ ONE
+				// slider move therefore emits SEVERAL facts, and a consumer reading only the caller's channel
+				// sees a 100-total that does not add up.
+				setCommercePercentInternal((CommerceTypes)iJ, m_aiCommercePercent[iJ] - iAdjustment);
 				iTotalCommercePercent -= iAdjustment;
-				// The rebalance writes the OTHER channels' percents DIRECTLY (it must not recurse through the
-				// setter), so those moves reach no other emit site: each channel it moves is its own state
-				// change and emits its own fact, or the surface is silently partial for every slider move that
-				// takes another channel down with it.
-				if (iAdjustment != 0)
-				{
-					if (iAdjustment < 0)
-	{
-		emitEmpireCommercePercentAdded(getID(), iJ, -iAdjustment);
-	}
-	else
-	{
-		emitEmpireCommercePercentRemoved(getID(), iJ, iAdjustment);
-	}
-				}
 			}
 		}
 		FAssert(100 == iTotalCommercePercent);
@@ -16892,12 +16950,13 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		}
 		// SAVEBREAK@
 
-		WRAPPER_READ(wrapper, "CvPlayer", (int*)&m_eCurrentEra);
-		WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_RELIGIONS, (int*)&m_eLastStateReligion);
-		if (m_eLastStateReligion != NO_RELIGION)
-		{
-			emitEmpireStateReligionAdded(getID(), (int)m_eLastStateReligion);
-		}
+		// Both deserialize into LOCALS and LAND through their internal setters below, once updateTeamType() has
+		// run and the enabler domains are sized -- getTeam() is not valid before that, and a fact landing on an
+		// un-sized domain is dropped by the appliers.
+		int iLoadedCurrentEra = NO_ERA;
+		WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iLoadedCurrentEra, "m_eCurrentEra");
+		int iLoadedLastStateReligion = NO_RELIGION;
+		WRAPPER_READ_CLASS_ENUM_DECORATED_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_RELIGIONS, &iLoadedLastStateReligion, "m_eLastStateReligion");
 		WRAPPER_READ(wrapper, "CvPlayer", (int*)&m_eParent);
 		updateTeamType(); //m_eTeamType not saved
 		updateHuman();
@@ -16907,24 +16966,32 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		// Sizing only -- it reads no deserialized state, so it is safe this early.
 		primeEnablerDomains();
 
-		// The in-read reseed, emitted HERE: getID() is valid only after m_eID was read above, and getTeam() only
-		// after updateTeamType() just ran (m_eTeamType is NOT saved; reset() cleared it). m_iGoldenAgeTurns and
-		// m_bNukesValid were read earlier in this same read.
-		if (m_iGoldenAgeTurns > 0)
-		{
-			emitEmpireGoldenAgeAdded(getID());
-		}
-		// The anarchy twin of the golden-age fact: a save can be taken mid-revolution, and m_iAnarchyTurns
-		// deserializes WHOLESALE (read earlier in read()), so changeAnarchyTurns never runs.
-		if (m_iAnarchyTurns > 0)
-		{
-			emitEmpireAnarchyAdded(getID());
-		}
-		emitEmpireEraAdded(getID(), (int)m_eCurrentEra);
-		if (isNukesValid())
-	{
-		emitEmpireNukesEnabledAdded(getID());
-	}
+		// ══════════ THE EMPIRE'S SLOTS, THROUGH THE INTERNAL SETTERS ══════════
+		// The first point at which an empire fact can land: getID() is valid only after m_eID was read above,
+		// getTeam() only after updateTeamType() just ran (m_eTeamType is NOT saved; reset() cleared it), and the
+		// enabler domains are sized. A slot that deserialized earlier crosses the gap in a local, or is taken
+		// off the member, reset, and handed back to its setter -- so the fact always comes from the one body.
+		// ⚠ ERA's reset value is a VALID era (0), not NO_ERA, so it is put back to NO_ERA first: landed against
+		// era 0 the setter would see a no-change and announce nothing, which is exactly the early-game case.
+		m_eCurrentEra = NO_ERA;
+		setCurrentEraInternal((EraTypes)iLoadedCurrentEra);
+		setLastStateReligionInternal((ReligionTypes)iLoadedLastStateReligion);
+		// A save can be taken mid-golden-age or mid-revolution, and both counters deserialized WHOLESALE earlier
+		// in this read -- so take the loaded turns, zero the counter, and hand it back for the on/off crossing.
+		const int iLoadedGoldenAgeTurns = m_iGoldenAgeTurns;
+		m_iGoldenAgeTurns = 0;
+		changeGoldenAgeTurnsInternal(iLoadedGoldenAgeTurns);
+		const int iLoadedAnarchyTurns = m_iAnarchyTurns;
+		m_iAnarchyTurns = 0;
+		changeAnarchyTurnsInternal(iLoadedAnarchyTurns);
+		// makeNukesValid is already commit + announce with no effects of its own, so the load calls it directly.
+		// ⚠ It guards on the RAW member while the old in-read emit tested isNukesValid(), which folds in the
+		// GAMEOPTION_NO_NUKES ban -- so a loaded empire that HAS nuke availability under a world ban now
+		// announces its availability, correctly: the ban is CvGame's own independent fact, and a consumer
+		// wanting "can this empire nuke" reads both.
+		const bool bLoadedNukesValid = m_bNukesValid;
+		m_bNukesValid = false;
+		makeNukesValid(bLoadedNukesValid);
 		if (getTeam() != NO_TEAM)
 		{
 			const CvTeam& kMyTeam = GET_TEAM(getTeam());
@@ -16953,14 +17020,17 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiYieldRateModifier);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiExtraYieldThreshold);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiTradeYieldModifier);
+		// The sliders deserialize WHOLESALE, so each is taken off the array, zeroed, and landed through the
+		// internal setter -- never the public one, which would rebalance the others and fight the stream.
+		// ⚠ A channel loaded at 0 announces NOTHING, and that is correct now: the fact carries a DELTA as a
+		// magnitude, so from a zeroed array a 0% slider is a zero-delta, which is not a happening. (The older
+		// unconditional emit was written when the payload was the VALUE.)
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommercePercent);
-		// #430 reseed (event-spine.md the load-RESEED): the sliders deserialize WHOLESALE, so setCommercePercent
-		// never runs and its emit never fires -- the fact is announced here, co-located with the read. Every
-		// channel, not only the nonzero ones: 0% is a genuine slider position, and a consumer rebuilding the
-		// split needs the whole 100-total picture. The old value is 0 (reset() zeroed the array before the read).
 		for (int iCommerce = 0; iCommerce < NUM_COMMERCE_TYPES; ++iCommerce)
 		{
-			emitEmpireCommercePercentAdded(getID(), iCommerce, m_aiCommercePercent[iCommerce]);
+			const int iLoadedCommercePercent = m_aiCommercePercent[iCommerce];
+			m_aiCommercePercent[iCommerce] = 0;
+			setCommercePercentInternal((CommerceTypes)iCommerce, iLoadedCommercePercent);
 		}
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", MAX_PLAYERS, m_aiGoldPerTurnByPlayer);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", MAX_TEAMS, m_aiEspionageSpendingWeightAgainstTeam);

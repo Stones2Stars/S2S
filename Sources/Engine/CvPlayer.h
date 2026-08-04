@@ -461,6 +461,18 @@ public:
 	int getAdvancedStartTechCost(TechTypes eTech, bool bAdd) const;
 	int getAdvancedStartVisibilityCost(const CvPlot* pPlot = NULL) const;
 
+	// ── THE INTERNAL SLOT SETTERS (#430) ─────────────────────────────────────────────────────────
+	// COMMIT the member, ANNOUNCE the fact -- and nothing else. The public setter is its guard, then
+	// one of these, then its EFFECTS (graphics, trade routes, corporations, AI marks, alerts, UI).
+	// `CvPlayer::read` calls these directly: the stream is authoritative for base state, so no effect
+	// may decide any part of it, while the fact still comes from the ONE body per slot.
+	// ⚠ `makeNukesValid` needs no twin -- it is already commit + announce with no effects of its own.
+	void setCurrentEraInternal(EraTypes eNewValue);
+	void setLastStateReligionInternal(ReligionTypes eNewReligion);
+	void changeGoldenAgeTurnsInternal(int iChange);
+	void changeAnarchyTurnsInternal(int iChange);
+	void setCommercePercentInternal(CommerceTypes eIndex, int iNewValue);
+
 	int getGoldenAgeTurns() const;
 	bool isGoldenAge() const;
 	void changeGoldenAgeTurns(int iChange);
