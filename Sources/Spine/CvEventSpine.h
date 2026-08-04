@@ -617,8 +617,10 @@ enum SpineDomainEvent
 	SEVT_UNIT_ENTERED_CITY          = 154,
 	SEVT_UNIT_LEFT_CITY             = 155,
 	// A unit GAINED / LOST a promotion (CvUnit::processPromotion -- the ONE funnel both setHasPromotion overloads
-	// reach) and a COMBAT CLASS (CvUnit::processUnitCombat -- reached once past setHasUnitCombat's change guard AND
-	// its game-option/spy validity gate). state-repositories.md: a unit's resolved values move ONLY when a promotion
+	// reach) and a COMBAT CLASS (CvUnit::setHasUnitCombatInternal -- the commit + hash + fact, which the public
+	// setter reaches past its change guard and its game-option/spy validity gate, and which the LOAD calls on its
+	// own; processUnitCombat beside it applies only the STATS, which a load must not re-apply).
+	// state-repositories.md: a unit's resolved values move ONLY when a promotion
 	// or a combat class changes, so these two are that plane's whole maintenance surface.
 	// iType = Promotion | UnitCombat, iA = unit id, iC = owner. DOMAIN.
 	SEVT_UNIT_PROMOTION_ADDED       = 156,
@@ -851,8 +853,8 @@ void emitUnitDeathScheduleAdded(int iUnitType, int iUnitId, int iOwner, int iPlo
 void emitUnitDeathScheduleRemoved(int iUnitType, int iUnitId, int iOwner, int iPlot);
 void emitUnitEnteredCity(int iUnitType, int iUnitId, int iOwner, int iCity);
 void emitUnitLeftCity(int iUnitType, int iUnitId, int iOwner, int iCity);
-// The unit plane's two dirty triggers. Call from the ONE funnel each (CvUnit::processPromotion /
-// CvUnit::processUnitCombat), never from the setter overloads that pass through them.
+// The unit plane's two mark triggers. Call from the ONE body each (CvUnit::processPromotion /
+// CvUnit::setHasUnitCombatInternal), never from the setter overloads that pass through them.
 void emitUnitPromotionAdded(int iUnitId, int iOwner, int iPromotion);
 void emitUnitPromotionRemoved(int iUnitId, int iOwner, int iPromotion);
 void emitUnitCombatAdded(int iUnitId, int iOwner, int iUnitCombat);

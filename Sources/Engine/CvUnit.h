@@ -1272,6 +1272,14 @@ public:
 	bool isHasUnitCombat(UnitCombatTypes eIndex) const;
 	void processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPromo = false);
 	void setHasUnitCombat(UnitCombatTypes eIndex, bool bNewValue, bool bByPromo = false);
+	// ── THE INTERNAL COMBAT-CLASS SETTER (#430) ──────────────────────────────────────────────────
+	// COMMIT the keyed flag, MAINTAIN the movement hash, ANNOUNCE the fact -- and nothing else.
+	// processUnitCombat stays the STAT APPLIER beside it (the class's moves, cargo and skill counts).
+	// ⚠ The LOAD calls this one and deliberately NOT processUnitCombat: every stat that applier would
+	// add is serialized on the unit in its own right, so running it on a load DOUBLES all of them.
+	// That is why the read wrote the flag by hand before, and why splitting the announcement out is
+	// what lets it stop.
+	void setHasUnitCombatInternal(UnitCombatTypes eIndex, bool bNewValue);
 	bool isHasPromotion(PromotionTypes eIndex) const;
 
 	void setHasPromotion(PromotionTypes eIndex, bool bNewValue, PromotionApply::flags flags);

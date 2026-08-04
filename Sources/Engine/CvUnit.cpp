@@ -17096,16 +17096,33 @@ bool CvUnit::isHasUnitCombat(UnitCombatTypes eIndex) const
 	return (info != NULL && info->m_bHasUnitCombat);
 }
 
-void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPromo)
+// COMMIT the keyed flag, MAINTAIN the movement hash, ANNOUNCE the fact -- and nothing else. processUnitCombat
+// below is the STAT APPLIER; the two are deliberately separable because the LOAD wants this half and not that
+// one (every stat the applier adds is serialized on the unit in its own right, so running it on a load doubles
+// them all). Splitting the announcement out is exactly what lets the read stop writing the flag by hand.
+void CvUnit::setHasUnitCombatInternal(UnitCombatTypes eIndex, bool bNewValue)
 {
-	PROFILE_EXTRA_FUNC();
+	UnitCombatKeyedInfo* infoKeyed =
+	(
+		bNewValue
+		?
+		findOrCreateUnitCombatKeyedInfo(eIndex)
+		:
+		(UnitCombatKeyedInfo*)findUnitCombatKeyedInfo(eIndex)
+	);
+	if (infoKeyed == NULL || infoKeyed->m_bHasUnitCombat == bNewValue)
+	{
+		return;
+	}
+	infoKeyed->m_bHasUnitCombat = bNewValue;
+
 	const CvUnitCombatInfo& kUnitCombat = GC.getUnitCombatInfo(eIndex);
-	const int iChange = (bAdding ? 1 : -1);
-	int	iI;
-	bool bSM = GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS);
-	// #430 event spine: the unit plane's SECOND dirty trigger. This is the ONE funnel -- setHasUnitCombat reaches
-	// it exactly once past BOTH its change guard and its game-option/spy validity gate, with the flag written.
-	if (iChange > 0)
+	if (kUnitCombat.changesMoveThroughPlots())
+	{
+		m_movementCharacteristicsHash ^= kUnitCombat.getZobristValue();
+		m_iMaxMoveCacheTurn = -1;
+	}
+	if (bNewValue)
 	{
 		emitUnitCombatAdded(getID(), (int)getOwner(), (int)eIndex);
 	}
@@ -17113,6 +17130,15 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 	{
 		emitUnitCombatRemoved(getID(), (int)getOwner(), (int)eIndex);
 	}
+}
+
+void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPromo)
+{
+	PROFILE_EXTRA_FUNC();
+	const CvUnitCombatInfo& kUnitCombat = GC.getUnitCombatInfo(eIndex);
+	const int iChange = (bAdding ? 1 : -1);
+	int	iI;
+	bool bSM = GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS);
 
 	if (bSM)
 	{
@@ -17238,11 +17264,6 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 	changeIgnoreNoEntryLevelCount((kUnitCombat.hasSkill(CLS_SKILL_IGNORE_NO_ENTRY_LEVEL)) ? iChange : 0);
 	changeIgnoreZoneofControlCount((kUnitCombat.hasSkill(CLS_SKILL_IGNORE_ZONE_OF_CONTROL)) ? iChange : 0);
 	changeFliesToMoveCount((kUnitCombat.hasSkill(CLS_SKILL_FLIES_TO_MOVE)) ? iChange : 0);
-	if ( kUnitCombat.changesMoveThroughPlots() )
-	{
-		m_movementCharacteristicsHash ^= kUnitCombat.getZobristValue();
-		m_iMaxMoveCacheTurn = -1;
-	}
 	//	`canPassPeaks` is DUAL-PLANE under one name ([skills.md]): a promotion/combat class grants the UNIT
 	//	skill, TECH_MOUNTAINEERING grants the empire CAPABILITY, and the effective check is the OR of the two.
 	//	The legacy `bCanMovePeaks` was the unit half, so it resolves here.
@@ -17373,19 +17394,8 @@ void CvUnit::setHasUnitCombat(UnitCombatTypes eIndex, bool bNewValue, bool bByPr
 		// Disable spy promotions mechanism, exempt commando promotion
 		&& (!isSpy() || GC.isSS_ENABLED() || info.providesSkill(CLS_SKILL_ENEMY_ROUTE)))
 		{
-			UnitCombatKeyedInfo* infoKeyed =
-			(
-				bNewValue
-				?
-				findOrCreateUnitCombatKeyedInfo(eIndex)
-				:
-				(UnitCombatKeyedInfo*)findUnitCombatKeyedInfo(eIndex)
-			);
-
-			if (infoKeyed != NULL)
-			{
-				infoKeyed->m_bHasUnitCombat = bNewValue;
-			}
+			// The commit, the hash and the fact; then the STATS this class carries, then the effects below.
+			setHasUnitCombatInternal(eIndex, bNewValue);
 			processUnitCombat(eIndex, bNewValue, bByPromo);
 
 			AI_flushValueCache();
@@ -18514,18 +18524,10 @@ void CvUnit::read(FDataStreamBase* pStream)
 	{
 		if (g_pabTempHasUnitCombat[iI])
 		{
-			UnitCombatKeyedInfo* info = findOrCreateUnitCombatKeyedInfo((UnitCombatTypes)iI);
-
-			info->m_bHasUnitCombat = true;
-			// The movement hash, maintained here for the same reason as the promotion leg above -- over the
-			// classes the unit HOLDS, never a sweep of the ~981-entry registry asking each one.
-			if (GC.getUnitCombatInfo((UnitCombatTypes)iI).changesMoveThroughPlots())
-			{
-				m_movementCharacteristicsHash ^= GC.getUnitCombatInfo((UnitCombatTypes)iI).getZobristValue();
-			}
-			// THE RESEED EMIT: the combat-class set is written straight into the keyed map here, so
-			// processUnitCombat never runs and the unit plane's second dirty trigger never fires.
-			emitUnitCombatAdded(m_iID, (int)m_eOwner, iI);
+			// Lands through the internal setter: the commit, the movement hash and the fact, from the one body
+			// that owns them. ⛔ NOT processUnitCombat -- the stats it applies are serialized on this unit in
+			// their own right, so running it here would double every one of them.
+			setHasUnitCombatInternal((UnitCombatTypes)iI, true);
 		}
 	}
 
