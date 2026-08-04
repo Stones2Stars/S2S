@@ -481,6 +481,24 @@ public:
 	int getGameDateAcquired(const bool bHistoricalCalendar = false) const;
 	void setGameTurnAcquired(const int iNewValue, const bool bHistoricalCalendar = false);
 
+	// ── THE INTERNAL SLOT SETTERS (#430) ─────────────────────────────────────────────────────────
+	// COMMIT the member, ANNOUNCE the fact -- and nothing else. The public setter is its guard, then
+	// one of these, then its EFFECTS (rank caches, area/player totals, plot updates, alerts, art).
+	// `CvCity::readBody` calls these directly: the save stream is authoritative for base state, so
+	// no effect may decide any part of it, while the fact still comes from the ONE body per slot.
+	// ⚠ Unlike CvPlot's, these cannot all fire AT their read point. Every city fact names m_iID and
+	// m_eOwner, and the enabler domains must be SIZED before any of them lands or the appliers drop
+	// it -- so a slot deserializing before that carries its value in a LOCAL and lands afterwards.
+	// That gap is the whole reason the read had a deferred announce block; the block is now a
+	// sequence of setter calls rather than a second place that knows how to announce a city.
+	void setPopulationInternal(int iNewValue);
+	void setCultureLevelInternal(CultureLevelTypes eNewValue);
+	void changeFreshWaterInternal(int iChange);
+	void changeDisabledPowerTimerInternal(int iChange);
+	void setHasReligionInternal(ReligionTypes eIndex, bool bNewValue);
+	void setHasCorporationInternal(CorporationTypes eIndex, bool bNewValue);
+	void setSpecialistCountInternal(SpecialistTypes eIndex, int iNewValue);
+
 	int getPopulation() const;
 	void setPopulation(int iNewValue, bool bNormal = true);
 	void changePopulation(int iChange);
