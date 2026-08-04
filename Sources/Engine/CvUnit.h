@@ -1272,6 +1272,13 @@ public:
 	bool isHasUnitCombat(UnitCombatTypes eIndex) const;
 	void processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPromo = false);
 	void setHasUnitCombat(UnitCombatTypes eIndex, bool bNewValue, bool bByPromo = false);
+	// ── THE INTERNAL PROMOTION SETTER (#430) ─────────────────────────────────────────────────────
+	// The twin of the combat-class one below, and the same shape, because the COMMIT is the same: one
+	// keyed bool. ⛔ What is NOT in here, and never was part of the commit, is the CALLER's decision
+	// about WHICH promotions to set -- the `isRemoveAfterSet` skip and the promotion-line implication
+	// are both "which ids", answered by whoever is doing the setting.
+	void setHasPromotionInternal(PromotionTypes eIndex, bool bNewValue);
+
 	// ── THE INTERNAL COMBAT-CLASS SETTER (#430) ──────────────────────────────────────────────────
 	// COMMIT the keyed flag, MAINTAIN the movement hash, ANNOUNCE the fact -- and nothing else.
 	// processUnitCombat stays the STAT APPLIER beside it (the class's moves, cargo and skill counts).

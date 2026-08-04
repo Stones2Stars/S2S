@@ -17425,6 +17425,42 @@ bool CvUnit::isHasPromotion(PromotionTypes eIndex) const
 	return (info != NULL && info->m_bHasPromotion);
 }
 
+// COMMIT the keyed flag, MAINTAIN the movement hash, ANNOUNCE the fact -- and nothing else. The twin of
+// setHasUnitCombatInternal, and the same shape because the commit is the same: one keyed bool. processPromotion
+// below keeps the STATS the promotion carries, which a load must not re-apply (they are serialized on the unit
+// in their own right).
+void CvUnit::setHasPromotionInternal(PromotionTypes eIndex, bool bNewValue)
+{
+	PromotionKeyedInfo* info =
+	(
+		bNewValue
+		?
+		findOrCreatePromotionKeyedInfo(eIndex)
+		:
+		(PromotionKeyedInfo*)findPromotionKeyedInfo(eIndex)
+	);
+	if (info == NULL || info->m_bHasPromotion == bNewValue)
+	{
+		return;
+	}
+	info->m_bHasPromotion = bNewValue;
+
+	const CvPromotionInfo& kPromotion = GC.getPromotionInfo(eIndex);
+	if (kPromotion.changesMoveThroughPlots())
+	{
+		m_movementCharacteristicsHash ^= kPromotion.getZobristValue();
+		m_iMaxMoveCacheTurn = -1;
+	}
+	if (bNewValue)
+	{
+		emitUnitPromotionAdded(getID(), (int)getOwner(), (int)eIndex);
+	}
+	else
+	{
+		emitUnitPromotionRemoved(getID(), (int)getOwner(), (int)eIndex);
+	}
+}
+
 void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial)
 {
 	PROFILE_EXTRA_FUNC();
@@ -17439,22 +17475,8 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	// is pinned between doSetFreePromotions and doSetDefaultStatuses -- see init), so these facts can precede the
 	// instance fact. That is sound rather than tolerated: spine events are FACTS, order-independent and
 	// prerequisite-free (event-spine.md), so a consumer resolves the unit by id and never by arrival order.
-	if (iChange > 0)
-	{
-		emitUnitPromotionAdded(getID(), (int)getOwner(), (int)eIndex);
-	}
-	else
-	{
-		emitUnitPromotionRemoved(getID(), (int)getOwner(), (int)eIndex);
-	}
 
 
-
-	if ( kPromotion.changesMoveThroughPlots() )
-	{
-		m_movementCharacteristicsHash ^= kPromotion.getZobristValue();
-		m_iMaxMoveCacheTurn = -1;
-	}
 
 	if (kPromotion.getDomainCargoChange() != NO_DOMAIN)
 	{
@@ -17869,19 +17891,8 @@ void CvUnit::setHasPromotion(PromotionTypes eIndex, bool bNewValue, bool bFree, 
 
 		if (canPromote)
 		{
-			PromotionKeyedInfo* info =
-			(
-				bNewValue
-				?
-				findOrCreatePromotionKeyedInfo(eIndex)
-				:
-				(PromotionKeyedInfo*)findPromotionKeyedInfo(eIndex)
-			);
-
-			if (info != NULL)
-			{
-				info->m_bHasPromotion = bNewValue;
-			}
+			// The commit, the hash and the fact; then the STATS this promotion carries, then the effects below.
+			setHasPromotionInternal(eIndex, bNewValue);
 
 			if (bAssignFree)
 			{
@@ -18231,41 +18242,35 @@ void CvUnit::read(FDataStreamBase* pStream)
 	{
 		if (g_pabTempHasPromotion[iI])
 		{
+			// Lands through the internal setter: the commit, the movement hash and the fact, from the one body
+			// that owns them. ⛔ NOT processPromotion -- the stats it applies are serialized on this unit in
+			// their own right (m_iExtraMoves, m_iBlitzCount, ... are read straight off the stream above), so
+			// running it here would double every one.
 			if (!GC.getPromotionInfo((PromotionTypes)iI).isRemoveAfterSet())
 			{
-				findOrCreatePromotionKeyedInfo((PromotionTypes)iI)->m_bHasPromotion = true;
+				setHasPromotionInternal((PromotionTypes)iI, true);
 			}
 
 			if (GC.getPromotionInfo((PromotionTypes)iI).getPromotionLine() != NO_PROMOTIONLINE
 			&& !GC.getPromotionInfo((PromotionTypes)iI).isStatus())
 			{
 				//	All lesser priority promotions on the same line are implied - make sure they are set
+				// ⛔ Through the INTERNAL setter, never the public one: the public setter would APPLY the
+				// promotion's stats, and an older save already carries their effect in its serialized totals.
+				// That is what the previous raw write was avoiding -- and the internal setter is exactly the
+				// half it wanted, so the implied rung now gets the movement hash and the fact as well.
+				// ⚠ IT SETS iI, INSIDE A LOOP OVER iJ, SO IT LANDS THE RUNG ALREADY SET ABOVE AND THE IMPLIED
+				// ONES NEVER GET SET. Preserved verbatim -- changing which promotions a loaded unit holds is a
+				// behaviour decision, not a refactor. It reads as `iJ` was meant; when that is decided, the fix
+				// is one character and the fact and hash come with it for free.
 				for (int iJ = 0; iJ < GC.getNumPromotionInfos(); iJ++)
 				{
 					if (GC.getPromotionInfo((PromotionTypes)iJ).getPromotionLine() == GC.getPromotionInfo((PromotionTypes)iI).getPromotionLine()
 					&& GC.getPromotionInfo((PromotionTypes)iI).getLinePriority() > GC.getPromotionInfo((PromotionTypes)iJ).getLinePriority())
 					{
-						//	Set the map directly not via a call to setHasPromotion because the older versions
-						//	would have the effect of the promotion already even though the flag was not set
-						findOrCreatePromotionKeyedInfo((PromotionTypes)iI)->m_bHasPromotion = true;
+						setHasPromotionInternal((PromotionTypes)iI, true);
 					}
 				}
-			}
-			// THE RESEED EMIT: the promotion set is written straight into the keyed map here, so processPromotion
-			// never runs and the unit plane's dirty trigger never fires. Tested against the RESULTING flag rather
-			// than the stream bit, because the two writes above are conditional (isRemoveAfterSet, the implied
-			// promotion-line block) -- so the fact announced is the state that actually landed.
-			if (isHasPromotion((PromotionTypes)iI))
-			{
-				// The movement hash is NOT serialized, so every contributor XORs itself in AS IT LANDS -- here,
-				// over what the unit actually HOLDS. This replaces a trailing sweep that asked EVERY promotion in
-				// the database whether this unit had it, per unit, on every load; the walk-the-registry shape is
-				// the own-data inversion state-repositories.md bans, and it was doing the maintenance this line does.
-				if (GC.getPromotionInfo((PromotionTypes)iI).changesMoveThroughPlots())
-				{
-					m_movementCharacteristicsHash ^= GC.getPromotionInfo((PromotionTypes)iI).getZobristValue();
-				}
-				emitUnitPromotionAdded(m_iID, (int)m_eOwner, iI);
 			}
 		}
 	}
