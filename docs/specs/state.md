@@ -82,6 +82,21 @@ namings); the **system** is the [json spec](json.md) §8. Sibling of [skills.md]
 > as a CONSUMER of the fact ([event-spine.md](event-spine.md)), and is on the owed list in
 > [todo.md](../plans/structural-cleanup/todo.md).
 
+> **⚖ A STATUS ACTS ON ITS OWN OBJECT — ITS CONSUMERS ARE NOTIFICATIONS AND LOGGING (owner).** *"Not a lot of
+> things outside of notifications and logging actually care about statuses; they mostly have an effect on the
+> actual ongoings on its own object."* A paralyzed unit cannot move, a blackout city is not powered, a
+> celebrating city pays no maintenance — the effect lands **where the status is held**, so almost nothing
+> downstream needs to hear about it at all.
+> ⛔ **So a status gets NO context store, NO dictionary and NO mirror anywhere.** It is object-owned and O(1), so
+> it is FORWARDED under the STORES-vs-FORWARDS split ([contexts.md](../architecture/contexts.md)) — storing it a
+> second time would be the duplication that rule exists to prevent. ⚠ This is the sentence to re-read before
+> "wiring statuses into" anything: the wiring is a `hasStatus` call at the point of use.
+> ⚑ **That is also why the generic fact is enough.** With no machine folding on a status, per-status facts would
+> buy a routing precision nobody consumes — while costing an engine change per authored status.
+> ⚠ **The one real cross-machine reader, so the rule is not overstated:** `CITYSTATUS_POWER_DISABLED` is a leg of
+> `CvCity::isPower()`, which the `HAS_POWER` predicate gates on. Even there the split holds — the CONSUMER reads
+> the verdict off the city, and the FACT only tells it to re-gate. The fact carries the trigger, never the value.
+
 > **⚖ THE CROSSING IS ANNOUNCED, AND THE FACT IS GENERIC OVER THE STATUS.** `CvCity::setStatus` is the ONE write
 > path — the per-turn tick and the LOAD both come through it — and it emits `SEVT_CITY_STATUS_ADDED` /
 > `_REMOVED` at the 0-crossing only, carrying WHICH status in `iType`.

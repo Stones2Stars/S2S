@@ -32,7 +32,17 @@
 //	drops its old save field, the in-flight value is lost on existing saves, and that is accepted rather than
 //	migrated. Re-home, name the old tag in savemigration.txt, take the loss.
 //	⚠ A loaded status must LAND THROUGH setStatus, never straight into the array: the array read is wholesale, so
-//	a status written directly announces nothing and every consumer gating on it reads a city that is not held.
+//	a status written directly announces nothing and every consumer gating on it reads a holder that is not held.
+//
+//	⚖ A STATUS ACTS ON ITS OWN OBJECT, and its consumers are NOTIFICATIONS and LOGGING (owner). A paralyzed unit
+//	cannot move, a blackout city is not powered -- the effect lands where the status is HELD, so almost nothing
+//	downstream needs to hear about it. ⛔ Hence NO context store, NO dictionary, NO mirror: it is object-owned and
+//	O(1), so it is FORWARDED, and a second copy is the duplication the contexts split exists to prevent. The
+//	wiring is a hasStatus() call at the point of use. ⚑ It is also why ONE generic fact per scope is enough --
+//	with no machine folding on a status, per-status facts would buy precision nobody consumes and cost an engine
+//	change per authored status. ⚠ The one cross-machine reader is CITYSTATUS_POWER_DISABLED, a leg of
+//	CvCity::isPower() that HAS_POWER gates on -- and even there the consumer reads the verdict off the CITY while
+//	the fact only tells it to re-gate. The fact carries the TRIGGER, never the value.
 //
 
 enum UnitStatus
