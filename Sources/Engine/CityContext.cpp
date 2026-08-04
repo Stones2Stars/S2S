@@ -61,6 +61,7 @@ void CityContext::clear() const
 	m_governmentCenterDistance = 0;
 	m_maxAdjacentWaterTiles = 0;
 	m_holyCityCount = 0;
+	m_headquartersCount = 0;
 	// ⚠ The AMENITY state is NOT cleared here -- it is not this context's to clear. `CvCity::reset` zeroes its own
 	// amenity context, the same way it resets its enabler and its operating set, because a city is recycled out of
 	// an FFreeListTrashArray and a delta store is correct only from a known zero.
@@ -150,21 +151,18 @@ void CityContext::refreshGovernmentCenterDistance() const
 	m_governmentCenterDistance = (iNearest > 0) ? iNearest : 0;
 }
 
-void CityContext::refreshHolyCity() const
+// ±1 from the fact that names the designation. ⛔ Never a recount: the store is zeroed at owner reset and every
+// designation announces both ends, so the count IS the number of live designations at every instant.
+void CityContext::changeHolyCityCount(int iChange) const
 {
-	m_holyCityCount = 0;
-	if (m_city == NULL)
-	{
-		return;
-	}
-	const int iNumReligions = GC.getNumReligionInfos();
-	for (int eReligion = 0; eReligion < iNumReligions; ++eReligion)
-	{
-		if (m_city->isHolyCity((ReligionTypes)eReligion))
-		{
-			++m_holyCityCount;
-		}
-	}
+	m_holyCityCount += iChange;
+	FASSERT_NOT_NEGATIVE(m_holyCityCount);
+}
+
+void CityContext::changeHeadquartersCount(int iChange) const
+{
+	m_headquartersCount += iChange;
+	FASSERT_NOT_NEGATIVE(m_headquartersCount);
 }
 
 
@@ -257,7 +255,7 @@ bool CityContext::isHolyCityOf(int eReligion) const  { return m_city != NULL && 
 bool CityContext::hasCorporation(int eCorp) const    { return m_city != NULL && m_city->isHasCorporation((CorporationTypes)eCorp); }
 bool CityContext::hasActiveCorporation(int eCorp) const { return m_city != NULL && m_city->isActiveCorporation((CorporationTypes)eCorp); }
 bool CityContext::isHeadquartersOf(int eCorp) const  { return m_city != NULL && m_city->isHeadquarters((CorporationTypes)eCorp); }
-bool CityContext::isHeadquartersAny() const          { return m_city != NULL && m_city->isHeadquarters(); }
+bool CityContext::isHeadquartersAny() const          { return m_headquartersCount > 0; }
 bool CityContext::isCapital() const            { return m_city != NULL && m_city->isCapital(); }
 bool CityContext::isGovernmentCenter() const   { return m_city != NULL && m_city->isGovernmentCenter(); }
 bool CityContext::hasFreshWaterAccess() const  { return m_city != NULL && m_city->hasFreshWater(); }

@@ -3924,17 +3924,12 @@ bool CvCity::isHolyCity(ReligionTypes eIndex) const
 	return eIndex != NO_RELIGION && GC.getGame().getHolyCity(eIndex) == this;
 }
 
+// The bare verdict reads the city's own MAINTAINED COUNT, not a walk of the religion registry asking CvGame
+// once per entry. The count is fed +-1 by the holy-city fact ([contexts.md]); CvGame keeps the authoritative
+// per-religion assignment, because exactly one city holds each and uniqueness is structural there.
 bool CvCity::isHolyCity() const
 {
-	PROFILE_EXTRA_FUNC();
-	for (int iI = 0; iI < GC.getNumReligionInfos(); iI++)
-	{
-		if (isHolyCity((ReligionTypes)iI))
-		{
-			return true;
-		}
-	}
-	return false;
+	return m_cityContext.isHolyCityAny();
 }
 
 
@@ -3951,18 +3946,10 @@ void CvCity::setHeadquarters(CorporationTypes eIndex)
 	}
 }
 
+// The corporation twin of isHolyCity() above, and the same shape: a maintained count, never a registry walk.
 bool CvCity::isHeadquarters() const
 {
-	PROFILE_EXTRA_FUNC();
-	for (int iI = 0; iI < GC.getNumCorporationInfos(); iI++)
-	{
-		if (isHeadquarters((CorporationTypes)iI))
-		{
-			return true;
-		}
-	}
-
-	return false;
+	return m_cityContext.isHeadquartersAny();
 }
 
 

@@ -59,7 +59,7 @@ class CityContext
 {
 public:
 	CityContext()
-		: m_city(NULL), m_areaId(-1), m_areaTileCount(0), m_maxAdjacentWaterTiles(0), m_holyCityCount(0),
+		: m_city(NULL), m_areaId(-1), m_areaTileCount(0), m_maxAdjacentWaterTiles(0), m_holyCityCount(0), m_headquartersCount(0),
 		  m_governmentCenterDistance(0) {}
 	void bind(const CvCity* c) { m_city = c; }   // set once by the owning CvCity; the pointer IS the owner (never dangles)
 
@@ -99,7 +99,17 @@ public:
 	// fact, so the consumer is the single trigger path; a direct call beside the event would be a second maintenance
 	// surface for the same state.
 	void refreshAreaFacts() const;         // the city's area ID + the coastal water-body size
-	void refreshHolyCity() const;          // how many religions hold this city as their holy city
+	// ⚖ THE DESIGNATION COUNTS ARE DELTA STORES, applied ±1 by the fact that names the designation -- never
+	// re-derived. Both used to be answered by asking CvGame once per entry of the whole religion / corporation
+	// registry, which is read-time work that GROWS with a registry and therefore earns a store
+	// ([contexts.md]: ask what the read WALKS; one pointer forwards, a scan stores). ⛔ There is deliberately
+	// no `refresh*` twin: a fact that triggers a callback which goes and asks is the legacy read path moved
+	// from read-time to event-time, not deleted.
+	// ⚠ The authoritative assignment stays on CvGame, keyed by religion / corporation -- exactly one city each,
+	// so uniqueness is STRUCTURAL there and a per-city bit could never guarantee it. The city holds only HOW
+	// MANY name it, which is all any consumer of the bare verdict asks.
+	void changeHolyCityCount(int iChange) const;
+	void changeHeadquartersCount(int iChange) const;
 	// Distance to the owner's nearest government centre. Re-derived for EVERY city of a player when a
 	// government centre appears or goes, and for one city when it is founded or changes hands -- the fan-out is
 	// bounded by the city count and the facts driving it are rare.
@@ -235,6 +245,7 @@ private:
 	// (isCoastal(N) == m_maxAdjacentWaterTiles >= N), so a new authored minArea needs no new store.
 	mutable int m_maxAdjacentWaterTiles;
 	mutable int m_holyCityCount;               // how many religions hold this city as their holy city
+	mutable int m_headquartersCount;           // how many corporations are headquartered here
 	// Plot distance to the owner's NEAREST government centre (0 here, or with none anywhere). One int answers
 	// the whole distance-maintenance leg; it moves only on a government-centre crossing or a city gained/lost.
 	mutable int m_governmentCenterDistance;

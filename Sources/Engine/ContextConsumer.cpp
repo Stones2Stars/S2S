@@ -118,9 +118,20 @@ public:
 		case SEVT_GOVERNMENT_CENTER_CHANGED:
 			refreshGovernmentCenterDistanceForPlayer(kEvent.iC);
 			break;
-		// A religion's holy city moved: the bare IS_HOLY_CITY verdict flips for the city that gained or lost it.
-		case SEVT_HOLY_CITY_CHANGED:
-			refreshHolyCityFor(kEvent.iC, kEvent.iSrcLoc);
+		// A religion's holy city moved, or a corporation's headquarters did: ±1 on the city that gained or lost
+		// it. The fact NAMES the designation, so nothing re-derives -- the previous route asked CvGame once per
+		// entry of the whole religion registry, which is the read the store exists to delete.
+		case SEVT_CITY_HOLY_CITY_ADDED:
+			changeHolyCityCountFor(kEvent.iC, kEvent.iSrcLoc, +1);
+			break;
+		case SEVT_CITY_HOLY_CITY_REMOVED:
+			changeHolyCityCountFor(kEvent.iC, kEvent.iSrcLoc, -1);
+			break;
+		case SEVT_CITY_HEADQUARTERS_ADDED:
+			changeHeadquartersCountFor(kEvent.iC, kEvent.iSrcLoc, +1);
+			break;
+		case SEVT_CITY_HEADQUARTERS_REMOVED:
+			changeHeadquartersCountFor(kEvent.iC, kEvent.iSrcLoc, -1);
 			break;
 		// EVERY area id was reassigned, so every city re-reads its area facts. Rare by construction (terrain levelled
 		// to sea level, map generation), and not addressable per-source -- which is why it is announced wholesale.
@@ -200,12 +211,21 @@ private:
 		return GET_PLAYER((PlayerTypes)iOwner).getCity(iCityId);
 	}
 
-	static void refreshHolyCityFor(int iOwner, int iCityId)
+	static void changeHolyCityCountFor(int iOwner, int iCityId, int iChange)
 	{
 		const CvCity* pCity = cityFor(iOwner, iCityId);
 		if (pCity != NULL)
 		{
-			pCity->getCityContext().refreshHolyCity();
+			pCity->getCityContext().changeHolyCityCount(iChange);
+		}
+	}
+
+	static void changeHeadquartersCountFor(int iOwner, int iCityId, int iChange)
+	{
+		const CvCity* pCity = cityFor(iOwner, iCityId);
+		if (pCity != NULL)
+		{
+			pCity->getCityContext().changeHeadquartersCount(iChange);
 		}
 	}
 
@@ -224,7 +244,9 @@ private:
 		}
 		const CityContext& kContext = pCity->getCityContext();
 		kContext.refreshAreaFacts();
-		kContext.refreshHolyCity();
+		// ⛔ The holy-city and headquarters counts are NOT built here, and adding them back would be a bug: they
+		// are delta stores fed ±1 by their own facts, which a founding city has none of yet and a loading city
+		// has already had. A build pass beside a delta store double-counts.
 		kContext.refreshGovernmentCenterDistance();
 		// A city founded mid-game starts empty, so it folds the empire-scope grantors its owner ALREADY has --
 		// the same half the load build covers, at the other moment a city starts existing. Its own buildings
@@ -324,8 +346,9 @@ private:
 			for (const CvCity* pCity = kPlayer.firstCity(&iLoop); pCity != NULL; pCity = kPlayer.nextCity(&iLoop))
 			{
 				const CityContext& kContext = pCity->getCityContext();
-						kContext.refreshAreaFacts();
-				kContext.refreshHolyCity();
+				kContext.refreshAreaFacts();
+				// (no holy-city / headquarters build: both are delta stores, and CvCity::read already announced
+				// every designation this city holds -- rebuilding here would double every one)
 				// AFTER the loop would be wrong only if it read another city's store; it reads government-centre
 				// STATUS, which the save read has already set on every city by now, so measuring here is safe.
 				kContext.refreshGovernmentCenterDistance();
