@@ -1312,3 +1312,12 @@ twice and serialized once -- the STORED-ACCUMULATOR DRIFT class ([DEC-accumulato
 CvUnit::m_iExtraAirRange                   (int)
 CvUnit::m_iExtraTaunt                      (int)
 CvUnit::m_iExtraStealthStrikes             (int)
+
+The city's DISABLED-POWER timer, re-homed onto the city STATUS store rather than replaced by a computed
+| value. A blackout is an applied counter that ticks down and is over at zero -- the status model exactly
+| ([state.md], Engine/CvStatus.h) -- so it stops being a hand-named member with its own getter, changer,
+| per-turn decrement and save field. Statuses are not serialized, so this carries NO conversion.
+| BEHAVIOUR: a save taken mid-blackout loads with the power already back on. Owner-ruled and accepted -- a
+| transient counter is not worth a migration for a short-term changeover.
+| REPLACEMENT: CvCity::hasStatus(CITYSTATUS_POWER_DISABLED), read through CvCity::isPower.
+CvCity::m_iDisabledPowerTimer

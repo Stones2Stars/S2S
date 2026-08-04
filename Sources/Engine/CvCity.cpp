@@ -868,7 +868,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_iLostProduction = 0;
 	m_iWorkableRadiusOverride = 0;
 	m_iProtectedCultureCount = 0;
-	m_iDisabledPowerTimer = 0;
 	m_iWarWearinessTimer = 0;
 	m_iEventAnger = 0;
 	m_iMinimumDefenseLevel = 0;
@@ -1518,7 +1517,6 @@ void CvCity::doTurn()
 	//Spreads corporations
 	{ PERF_SCOPE("city.doCorporation", getOwner()); doCorporation(); }
 	//Counts down the disable power timer
-	doDisabledPower();
 
 
 	doWarWeariness();
@@ -5528,26 +5526,6 @@ void CvCity::changeFreshWaterInternal(int iChange)
 	}
 }
 
-// The timer TICKS DOWN every turn, so it announces at the derived 0-CROSSING and never per decrement -- a counter
-// moving on a schedule is not a state change until its verdict flips.
-void CvCity::changeDisabledPowerTimerInternal(int iChange)
-{
-	const bool bWasDisabled = m_iDisabledPowerTimer > 0;
-	m_iDisabledPowerTimer += iChange;
-	if (bWasDisabled == (m_iDisabledPowerTimer > 0))
-	{
-		return;
-	}
-	if (m_iDisabledPowerTimer > 0)
-	{
-		emitCityPowerDisabledAdded(getID(), getOwner(), m_iDisabledPowerTimer);
-	}
-	else
-	{
-		emitCityPowerDisabledRemoved(getID(), getOwner(), m_iDisabledPowerTimer);
-	}
-}
-
 void CvCity::setHasReligionInternal(ReligionTypes eIndex, bool bNewValue)
 {
 	if (m_pabHasReligion[eIndex] == bNewValue)
@@ -7561,7 +7539,7 @@ int CvCity::getPowerCount() const
 
 bool CvCity::isPower() const
 {
-	return getDisabledPowerTimer() < 1 && (getPowerCount() > 0 || isAreaCleanPower());
+	return !hasStatus(CITYSTATUS_POWER_DISABLED) && (getPowerCount() > 0 || isAreaCleanPower());
 }
 
 
@@ -7835,10 +7813,27 @@ bool CvCity::hasStatus(CityStatus eStatus) const
 	return getStatus(eStatus) > 0;
 }
 
+// The ONE write path for every city status, so the HOLDS-crossing announces from exactly one place -- the tick
+// below and every applier alike come through here.
 void CvCity::setStatus(CityStatus eStatus, int iTurns)
 {
 	FASSERT_BOUNDS(0, NUM_CITY_STATUSES, eStatus);
+	const bool bWasHeld = m_aiStatusTurns[eStatus] > 0;
 	m_aiStatusTurns[eStatus] = std::max(0, iTurns);
+	// Only the 0-CROSSING is a fact: a status ticking 5 -> 4 moves nothing a consumer gates on, and the gate IS
+	// `count > 0`. The general rule for every timer-backed fact.
+	if (bWasHeld == (m_aiStatusTurns[eStatus] > 0))
+	{
+		return;
+	}
+	if (m_aiStatusTurns[eStatus] > 0)
+	{
+		emitCityStatusAdded(getID(), getOwner(), (int)eStatus, m_aiStatusTurns[eStatus]);
+	}
+	else
+	{
+		emitCityStatusRemoved(getID(), getOwner(), (int)eStatus, 0);
+	}
 }
 
 void CvCity::changeStatus(CityStatus eStatus, int iChange)
@@ -7852,7 +7847,8 @@ void CvCity::doStatusTurn()
 	{
 		if (m_aiStatusTurns[iStatus] > 0)
 		{
-			--m_aiStatusTurns[iStatus];
+			// Through setStatus, so the turn a status runs out announces its expiry like any other crossing.
+			setStatus((CityStatus)iStatus, m_aiStatusTurns[iStatus] - 1);
 		}
 	}
 }
@@ -12716,6 +12712,9 @@ void CvCity::readBody(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvCity", &m_bBombarded);
 	WRAPPER_READ(wrapper, "CvCity", &m_bDrafted);
 	WRAPPER_READ(wrapper, "CvCity", &m_bAirliftTargeted);
+	// The statuses deserialize WHOLESALE here and LAND through setStatus below, once m_eOwner is off the stream
+	// -- a status fact names the owner like every other city fact. Written straight into the array they would
+	// announce nothing, and every consumer gating on one would read a city that is not held.
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_CITY_STATUSES, m_aiStatusTurns);
 	EVENT_GRANTS_READ(wrapper, "CvCity", m_eventGrants);
 	WRAPPER_READ(wrapper, "CvCity", &m_bCitizensAutomated);
@@ -12843,6 +12842,17 @@ void CvCity::readBody(FDataStreamBase* pStream)
 		}
 		// Culture level carries the city's radius/vicinity footprint with it.
 		setCultureLevelInternal((CultureLevelTypes)iLoadedCultureLevel);
+		// The held STATUSES, landed the same way as the wholesale arrays above: take the deserialized turns,
+		// zero the slot, hand it back to setStatus so the HOLDS-crossing announces from its one write path.
+		for (iI = 0; iI < NUM_CITY_STATUSES; ++iI)
+		{
+			if (m_aiStatusTurns[iI] > 0)
+			{
+				const int iLoadedStatusTurns = m_aiStatusTurns[iI];
+				m_aiStatusTurns[iI] = 0;
+				setStatus((CityStatus)iI, iLoadedStatusTurns);
+			}
+		}
 		// (No in-read GOVERNMENT-CENTRE emit: the verdict is no longer a deserialized counter but the city's amenity
 		// FOLD, which builds at load from the enabler's operating-building seed. The contexts' consumer watches the
 		// verdict across that fold and announces the same crossing, so the fact still fires exactly once -- it has
@@ -12865,11 +12875,6 @@ void CvCity::readBody(FDataStreamBase* pStream)
 	changeFreshWaterInternal(iLoadedFreshWater);
 	WRAPPER_READ(wrapper, "CvCity", &m_iWorkableRadiusOverride);
 	WRAPPER_READ(wrapper, "CvCity", &m_iProtectedCultureCount);
-	// Same shape: a save can be taken mid-blackout, so without this crossing the HAS_POWER verdict would read
-	// powered for a city whose power is still disabled.
-	int iLoadedDisabledPowerTimer = 0;
-	WRAPPER_READ_DECORATED(wrapper, "CvCity", &iLoadedDisabledPowerTimer, "m_iDisabledPowerTimer");
-	changeDisabledPowerTimerInternal(iLoadedDisabledPowerTimer);
 	WRAPPER_READ(wrapper, "CvCity", &m_iWarWearinessTimer);
 
 	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvCity", REMAPPED_CLASS_TYPE_COMBATINFOS, GC.getNumUnitCombatInfos(), m_paiUnitCombatExtraStrength);
@@ -13459,7 +13464,6 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvCity", m_iFreshWater);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iWorkableRadiusOverride);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iProtectedCultureCount);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iDisabledPowerTimer);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iWarWearinessTimer);
 
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_COMBATINFOS, GC.getNumUnitCombatInfos(), m_paiUnitCombatExtraStrength);
@@ -16141,18 +16145,6 @@ int64_t CvCity::calcCorporateMaintenance() const
 	return iTaxes / 100;
 }
 
-int CvCity::getDisabledPowerTimer() const
-{
-	return m_iDisabledPowerTimer;
-}
-
-void CvCity::changeDisabledPowerTimer(int iChange)
-{
-	// The crossing is the second of the three legs CvCity::isPower() ORs (the count leg emits from the amenity
-	// fold crossing). This setter carries no effects of its own -- the commit and the fact are all of it.
-	changeDisabledPowerTimerInternal(iChange);
-}
-
 int CvCity::getWarWearinessTimer() const
 {
 	return m_iWarWearinessTimer;
@@ -16161,20 +16153,6 @@ int CvCity::getWarWearinessTimer() const
 void CvCity::changeWarWearinessTimer(int iChange)
 {
 	m_iWarWearinessTimer += iChange;
-}
-
-void CvCity::doDisabledPower()
-{
-	if (getDisabledPowerTimer() > 0)
-	{
-		changeDisabledPowerTimer(-1);
-		if (getDisabledPowerTimer() == 0)
-		{
-
-			CvWString szBuffer = gDLL->getText("TXT_KEY_MISC_POWER_RESTORED", getNameKey());
-			AddDLLMessage(getOwner(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_POSITIVE_DINK", MESSAGE_TYPE_MINOR_EVENT, ARTFILEMGR.getInterfaceArtInfo("WORLDBUILDER_CITY_EDIT")->getPath(), GC.getCOLOR_GREEN(), getX(), getY(), false, false);
-		}
-	}
 }
 
 void CvCity::doWarWeariness()

@@ -416,8 +416,10 @@ static const char* spineDomainPrefix(int iEventId)
 	case SEVT_CITY_SPECIALIST_REMOVED:          return "[SPINE] citySpecialistRemoved";
 	case SEVT_CITY_POWER_ADDED:                 return "[SPINE] cityPowerAdded";
 	case SEVT_CITY_POWER_REMOVED:               return "[SPINE] cityPowerRemoved";
-	case SEVT_CITY_POWER_DISABLED_ADDED:        return "[SPINE] cityPowerDisabledAdded";
-	case SEVT_CITY_POWER_DISABLED_REMOVED:      return "[SPINE] cityPowerDisabledRemoved";
+	case SEVT_CITY_STATUS_ADDED:                return "[SPINE] cityStatusAdded";
+	case SEVT_CITY_STATUS_REMOVED:              return "[SPINE] cityStatusRemoved";
+	case SEVT_UNIT_STATUS_ADDED:                return "[SPINE] unitStatusAdded";
+	case SEVT_UNIT_STATUS_REMOVED:              return "[SPINE] unitStatusRemoved";
 	case SEVT_CITY_FRESH_WATER_ADDED:           return "[SPINE] cityFreshWaterAdded";
 	case SEVT_CITY_FRESH_WATER_REMOVED:         return "[SPINE] cityFreshWaterRemoved";
 	case SEVT_CITY_GOVERNMENT_CENTER_ADDED:     return "[SPINE] cityGovernmentCenterAdded";
@@ -842,21 +844,37 @@ void emitCityPowerRemoved(int iCity, int iOwner)
 	eventSpine().emit(e);
 }
 
-// The derived 0-CROSSING only -- the timer ticks down every turn and a per-decrement emit would announce
+// The derived 0-CROSSING only -- a status ticks down every turn and a per-decrement emit would announce
 // a fact that did not change. The general rule for every timer-backed fact.
-void emitCityPowerDisabledAdded(int iCity, int iOwner, int iTimer)
+void emitCityStatusAdded(int iCity, int iOwner, int iStatus, int iTurns)
 {
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_POWER_DISABLED_ADDED, -1, 0, iTimer, iOwner, iCity);
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_STATUS_ADDED, iStatus, 0, iTurns, iOwner, iCity);
 	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_TIMER, iTimer);
+	e.addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_TIMER, iTurns);
 	eventSpine().emit(e);
 }
 
-void emitCityPowerDisabledRemoved(int iCity, int iOwner, int iTimer)
+void emitCityStatusRemoved(int iCity, int iOwner, int iStatus, int iTurns)
 {
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_POWER_DISABLED_REMOVED, -1, 0, iTimer, iOwner, iCity);
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_STATUS_REMOVED, iStatus, 0, iTurns, iOwner, iCity);
 	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_TIMER, iTimer);
+	e.addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_TIMER, iTurns);
+	eventSpine().emit(e);
+}
+
+void emitUnitStatusAdded(int iUnit, int iOwner, int iStatus, int iTurns, int iPlot)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_UNIT_STATUS_ADDED, iStatus, iUnit, iTurns, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iOwner).addI(SPF_UNIT, iUnit).addI(SPF_TIMER, iTurns);
+	eventSpine().emit(e);
+}
+
+void emitUnitStatusRemoved(int iUnit, int iOwner, int iStatus, int iTurns, int iPlot)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_UNIT_STATUS_REMOVED, iStatus, iUnit, iTurns, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iOwner).addI(SPF_UNIT, iUnit).addI(SPF_TIMER, iTurns);
 	eventSpine().emit(e);
 }
 

@@ -25,6 +25,15 @@
 //	HAND-MAINTAINED -- when we find more, we add more (owner). More arriving is the normal state, never a gap to
 //	close. Glossary: docs/specs/state.md.
 //
+//	⚖ THE STORE IS SERIALIZED (owner). Turns-remaining is genuine NON-DERIVABLE state -- nothing can reconstruct
+//	"three turns of blackout left" from anything else -- so it is exactly the class save.md par.5 keeps a
+//	serialized store for, and [DEC-derived-never-trusted] does not reach it (that rule bans serializing DERIVED
+//	data). ⛔ What is deliberately NOT carried is the CONVERSION of a legacy timer into this store: re-homing one
+//	drops its old save field, the in-flight value is lost on existing saves, and that is accepted rather than
+//	migrated. Re-home, name the old tag in savemigration.txt, take the loss.
+//	⚠ A loaded status must LAND THROUGH setStatus, never straight into the array: the array read is wholesale, so
+//	a status written directly announces nothing and every consumer gating on it reads a city that is not held.
+//
 
 enum UnitStatus
 {
@@ -49,6 +58,13 @@ enum CityStatus
 	// code owns deciding whether the conditions match. ⛔ Not a half-migration to finish opportunistically --
 	// an owner-ruled carve-out.
 	CITYSTATUS_WE_LOVE_THE_KING_DAY = 0,
+	// A blackout: the city's power is out for N turns and comes back on its own. Applied by an event, ticking
+	// down, over at zero -- the model exactly, and previously written out longhand as a hand-named member with
+	// its own getter, changer, per-turn decrement and save field.
+	// ⚠ What is not carried is the CONVERSION from that old member -- an existing save's in-flight blackout is
+	// simply lost, because migrating a transient counter is not worth it for a short-term changeover (owner).
+	// The status STORE itself serializes like every other, so a blackout applied from here on survives a save.
+	CITYSTATUS_POWER_DISABLED,
 	NUM_CITY_STATUSES
 };
 

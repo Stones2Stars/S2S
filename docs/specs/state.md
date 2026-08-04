@@ -49,10 +49,49 @@ namings); the **system** is the [json spec](json.md) §8. Sibling of [skills.md]
 > standardization is the deliverable; the empty authoring surface is the model working.
 
 ## States
+
+**UNIT** (`UnitStatus`)
+
 | state | meaning | legacy mechanism |
 |---|---|---|
 | `paralyze` | immobilises the unit for the turn (`setImmobileTimer(1)`) | a promotion granted by an event |
 | … | *(to identify)* | pseudo-promotions / Python event handlers |
+
+**CITY** (`CityStatus`)
+
+| state | meaning | legacy mechanism |
+|---|---|---|
+| `weLoveTheKingDay` | the celebration; a DURATION-1 status re-applied every turn while its conditions hold | its own bool + timer |
+| `powerDisabled` | a blackout — the city's power is out for N turns and comes back on its own | `m_iDisabledPowerTimer`, longhand |
+
+**PLAYER** (`PlayerStatus`) — `goldenAge`.
+
+> **⚖ THE STORE IS SERIALIZED; WHAT IS NOT CARRIED IS THE CONVERSION (owner).** Turns-remaining is genuine
+> NON-DERIVABLE state — nothing reconstructs *"three turns of blackout left"* from anything else — so it is
+> exactly the class [save.md §5](save.md) keeps a serialized store for, and
+> [DEC-derived-never-trusted](../architecture/decisions.md#dec-derived-never-trusted) does not reach it: that
+> rule bans serializing DERIVED data.
+> ⛔ **What is deliberately dropped is the MIGRATION of a legacy timer into the store.** Re-homing one deletes
+> its old save field, so an existing save's in-flight value is lost — *"we just don't convert the old statuses
+> to the new object for virtually no real gain"*. **The blackout is the worked case:** a save taken mid-blackout
+> loads with the power already back on. The old tag is named in `Assets/savemigration.txt` and drains
+> ([save.md §3](save.md)).
+> ⚑ **The recipe generalizes to every status that follows:** re-home onto the store, name the old tag, take the
+> one-time loss. There is no per-status migration to design, and none is worth designing.
+> ⚠ Its PLAYER-ALERT ("power restored") died with the per-turn maintainer, as those alerts do — it comes back
+> as a CONSUMER of the fact ([event-spine.md](event-spine.md)), and is on the owed list in
+> [todo.md](../plans/structural-cleanup/todo.md).
+
+> **⚖ THE CROSSING IS ANNOUNCED, AND THE FACT IS GENERIC OVER THE STATUS.** `CvCity::setStatus` is the ONE write
+> path — the per-turn tick and the LOAD both come through it — and it emits `SEVT_CITY_STATUS_ADDED` /
+> `_REMOVED` at the 0-crossing only, carrying WHICH status in `iType`.
+> ⚠ **The load therefore LANDS through it, never straight into the array.** The store deserializes wholesale, so
+> a status written directly into the slot announces nothing and every consumer gating on it reads a holder that
+> is not held — the same hole the plot substrate had. ⛔ That id is not the discriminator
+> [DEC-facts-name-happenings](../architecture/decisions.md#dec-facts-name-happenings) bans: it names which
+> member of an OPEN registry moved, exactly as a religion or property id does, and the direction is in the event
+> name. A fact per status would mean an engine change per authored status — the very thing the open registry and
+> the no-named-accessor rule exist to avoid.
 
 ## Open
 - **Identify the faked states** — catalogue everything currently implemented as a pseudo-promotion or a Python

@@ -203,9 +203,10 @@ public:
 	//    as it is read; it is correctly a live read, not a missing fact.
 	// isPowered() and isHeadquartersAny() stay FORWARDS by the STORES-vs-FORWARDS split (both are data CvCity
 	// already answers O(1)), but all three of isPowered()'s legs now announce -- the power COUNT
-	// (SEVT_POWER_CHANGED), the disabled-power timer (SEVT_CITY_POWER_DISABLED_CHANGED) and the area clean-power
-	// flag (SEVT_AREA_CLEAN_POWER_CHANGED) -- and the headquarters designation announces
-	// SEVT_HEADQUARTERS_CHANGED, so a reader that needs to react to either has a fact to hang on.
+	// (SEVT_CITY_POWER_ADDED / _REMOVED), the BLACKOUT status (SEVT_CITY_STATUS_ADDED / _REMOVED carrying
+	// CITYSTATUS_POWER_DISABLED) and the area clean-power flag (SEVT_AREA_CLEAN_POWER_ADDED / _REMOVED) -- and
+	// the headquarters designation announces SEVT_CITY_HEADQUARTERS_ADDED / _REMOVED, so a reader that needs to
+	// react to any of them has a fact to hang on.
 
 	// Fill the CITY half of a condition-eval context (this silo + its centre plot's + the enabler's operating
 	// set) -- the context IS the

@@ -15083,7 +15083,7 @@ bool CvPlayer::doEspionageMission(EspionageMissionTypes eMission, PlayerTypes eT
 			// Disable Power
 			if (kMission.isDisablePower())
 			{
-				pCity->changeDisabledPowerTimer(6*CvGameSpeedScale::speedPercent()/100);
+				pCity->changeStatus(CITYSTATUS_POWER_DISABLED, 6*CvGameSpeedScale::speedPercent()/100);
 				bSomethingHappened = true;
 				strcpy(szSound, "AS2D_BUILD_PLANTNUCLEAR");
 				szBuffer = bCaught ?

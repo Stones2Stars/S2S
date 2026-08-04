@@ -15467,10 +15467,28 @@ bool CvUnit::hasStatus(UnitStatus eStatus) const
 	return getStatus(eStatus) > 0;
 }
 
+// The ONE write path for every unit status, so the HOLDS-crossing announces from exactly one place -- the tick
+// below, the load, and every applier alike come through here.
 void CvUnit::setStatus(UnitStatus eStatus, int iTurns)
 {
 	FASSERT_BOUNDS(0, NUM_UNIT_STATUSES, eStatus);
+	const bool bWasHeld = m_aiStatusTurns[eStatus] > 0;
 	m_aiStatusTurns[eStatus] = std::max(0, iTurns);
+	// Only the 0-CROSSING is a fact: a status ticking 5 -> 4 moves nothing a consumer gates on, and the gate IS
+	// `count > 0`. The general rule for every timer-backed fact.
+	if (bWasHeld == (m_aiStatusTurns[eStatus] > 0))
+	{
+		return;
+	}
+	const int iPlotNum = (plot() != NULL) ? GC.getMap().plotNum(getX(), getY()) : -1;
+	if (m_aiStatusTurns[eStatus] > 0)
+	{
+		emitUnitStatusAdded(getID(), (int)getOwner(), (int)eStatus, m_aiStatusTurns[eStatus], iPlotNum);
+	}
+	else
+	{
+		emitUnitStatusRemoved(getID(), (int)getOwner(), (int)eStatus, 0, iPlotNum);
+	}
 }
 
 void CvUnit::changeStatus(UnitStatus eStatus, int iChange)
@@ -15485,7 +15503,8 @@ void CvUnit::doStatusTurn()
 	{
 		if (m_aiStatusTurns[iStatus] > 0)
 		{
-			--m_aiStatusTurns[iStatus];
+			// Through setStatus, so the turn a status runs out announces its expiry like any other crossing.
+			setStatus((UnitStatus)iStatus, m_aiStatusTurns[iStatus] - 1);
 		}
 	}
 }
@@ -18159,7 +18178,19 @@ void CvUnit::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvUnit", &m_transportUnit.iID);
 
 	WRAPPER_READ_ARRAY(wrapper, "CvUnit", NUM_DOMAIN_TYPES, m_aiExtraDomainModifier);
+	// The statuses deserialize WHOLESALE, then LAND through setStatus: take the loaded turns, zero the slot, hand
+	// it back to the one write path so the HOLDS-crossing announces. Written straight into the array they would
+	// announce nothing and every consumer gating on one would read a unit that is not held.
 	WRAPPER_READ_ARRAY(wrapper, "CvUnit", NUM_UNIT_STATUSES, m_aiStatusTurns);
+	for (int iStatus = 0; iStatus < NUM_UNIT_STATUSES; ++iStatus)
+	{
+		if (m_aiStatusTurns[iStatus] > 0)
+		{
+			const int iLoadedStatusTurns = m_aiStatusTurns[iStatus];
+			m_aiStatusTurns[iStatus] = 0;
+			setStatus((UnitStatus)iStatus, iLoadedStatusTurns);
+		}
+	}
 
 	WRAPPER_READ_STRING(wrapper, "CvUnit", m_szName);
 	WRAPPER_READ_STRING(wrapper, "CvUnit", m_szScriptData);

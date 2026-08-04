@@ -428,13 +428,23 @@ enum SpineDomainEvent
 	// The `providesPower` amenity CROSSING -- the city started / stopped being powered. iSrcLoc = cityId. DOMAIN.
 	SEVT_CITY_POWER_ADDED           = 78,
 	SEVT_CITY_POWER_REMOVED         = 79,
-	// The city's power was DISABLED / RESTORED (CvCity::changeDisabledPowerTimer). CvCity::isPower() ORs THREE legs
-	// -- the power COUNT above, this timer, and the area clean-power flag -- so the HAS_POWER verdict is stale
-	// unless all three announce. ⚠ The timer TICKS DOWN every turn, so only the derived 0-CROSSING is a fact;
-	// emitting per decrement would fire every turn for no state change -- the general rule for every timer-backed
-	// fact. iB = the new timer value, iC = owner, iSrcLoc = cityId. DOMAIN.
-	SEVT_CITY_POWER_DISABLED_ADDED   = 80,
-	SEVT_CITY_POWER_DISABLED_REMOVED = 81,
+	// A CITY STATUS was APPLIED / EXPIRED (CvCity::setStatus, at the 0-crossing). A status is an applied counter
+	// that ticks down and is over at zero (Engine/CvStatus.h), so only the CROSSING is a fact -- emitting per
+	// decrement would fire every turn for no state change, the general rule for every timer-backed fact.
+	// ⚑ The fact is GENERIC OVER THE STATUS, and deliberately: the CityStatus enum is hand-maintained and GROWS,
+	// so a fact per status would mean an engine change per status -- exactly what an open registry exists to
+	// avoid. iType names WHICH status, the same standing a religion or property id has; it is not a direction
+	// discriminator, which is what [DEC-facts-name-happenings] actually bans. The direction is the event.
+	// ⚠ `CITYSTATUS_POWER_DISABLED` is one of the THREE legs CvCity::isPower() ORs -- with the power COUNT above
+	// and the area clean-power flag -- so the HAS_POWER verdict is stale unless all three announce.
+	// iType = the CityStatus, iB = turns remaining, iC = owner, iSrcLoc = cityId. DOMAIN.
+	SEVT_CITY_STATUS_ADDED           = 80,
+	SEVT_CITY_STATUS_REMOVED         = 81,
+	// The UNIT-scope twin, same model one scope down (Engine/CvStatus.h -- a status is a SCOPE concept, so each
+	// scope carries its own enum and the identical store). iType = the UnitStatus, iB = turns remaining,
+	// iC = owner, iSrcLoc = plotNum. DOMAIN.
+	SEVT_UNIT_STATUS_ADDED           = 192,
+	SEVT_UNIT_STATUS_REMOVED         = 193,
 	// The city GAINED / LOST fresh-water ACCESS (CvCity::changeFreshWater, at its count crossing) -- the
 	// PROVIDER-BUILDING-fed access counter. ⚠ DISTINCT from the plot-adjacency HAS_FRESHWATER verdict the plot
 	// substrate maintains (CvPlot::isFreshWater): a building can grant a city access on a dry plot.
@@ -725,8 +735,10 @@ void emitCityPowerAdded(int iCity, int iOwner);
 void emitCityPowerRemoved(int iCity, int iOwner);
 // The two silent legs of CvCity::isPower(), beside the power crossing above. Call at the derived CROSSING only --
 // the disabled-power timer ticks down every turn, and a per-decrement emit would announce a fact that did not change.
-void emitCityPowerDisabledAdded(int iCity, int iOwner, int iTimer);
-void emitCityPowerDisabledRemoved(int iCity, int iOwner, int iTimer);
+void emitCityStatusAdded(int iCity, int iOwner, int iStatus, int iTurns);
+void emitCityStatusRemoved(int iCity, int iOwner, int iStatus, int iTurns);
+void emitUnitStatusAdded(int iUnit, int iOwner, int iStatus, int iTurns, int iPlot);
+void emitUnitStatusRemoved(int iUnit, int iOwner, int iStatus, int iTurns, int iPlot);
 void emitCityFreshWaterAdded(int iCity, int iOwner, int iCount);
 void emitCityFreshWaterRemoved(int iCity, int iOwner, int iCount);
 void emitCityGovernmentCenterAdded(int iCity, int iOwner);

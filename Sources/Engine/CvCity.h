@@ -494,7 +494,6 @@ public:
 	void setPopulationInternal(int iNewValue);
 	void setCultureLevelInternal(CultureLevelTypes eNewValue);
 	void changeFreshWaterInternal(int iChange);
-	void changeDisabledPowerTimerInternal(int iChange);
 	void setHasReligionInternal(ReligionTypes eIndex, bool bNewValue);
 	void setHasCorporationInternal(CorporationTypes eIndex, bool bNewValue);
 	void setSpecialistCountInternal(SpecialistTypes eIndex, int iNewValue);
@@ -1333,9 +1332,6 @@ public:
 	int getCorporationInfluence(CorporationTypes eCorporation) const;
 	int64_t calcCorporateMaintenance() const;
 
-	int getDisabledPowerTimer() const;
-	void changeDisabledPowerTimer(int iChange);
-	void doDisabledPower();
 
 	int getWarWearinessTimer() const;
 	void changeWarWearinessTimer(int iChange);
@@ -1588,7 +1584,6 @@ protected:
 	int m_iLandmarkAngerTimer;
 	int m_iWorkableRadiusOverride;
 	int m_iProtectedCultureCount;
-	int m_iDisabledPowerTimer;
 	int m_iWarWearinessTimer;
 	int m_iMinimumDefenseLevel;
 	int m_iHappinessPercentPerPopulation;

@@ -760,7 +760,9 @@
   it wants its own cached block on the same mark protocol, never a hand-named scalar pair beside it
   ([DEC-uniform-cache-shape](../../architecture/decisions.md#dec-uniform-cache-shape)).
   ⚠ `isInvisible` is one of the hottest reads in the engine, which is why the walk must not stay on it.
-- The PLAYER-ALERT consumer, and the alerts owed to it — including the CAN_RETRAIN / NO_RETRAIN pairs the
+- The PLAYER-ALERT consumer, and the alerts owed to it — including "power restored"
+  (`TXT_KEY_MISC_POWER_RESTORED`), which rode the per-turn maintainer the blackout status replaced and now hangs
+  on `SEVT_CITY_STATUS_REMOVED` carrying `CITYSTATUS_POWER_DISABLED`; and the CAN_RETRAIN / NO_RETRAIN pairs the
   promotion KEEP gate used to emit per failing axis (terrain / feature / plot bonus / improvement-or-local-building
   / promotion prereq, plus two more the axis list does not name). All are authored and were rendering, so this is a real loss of
   player-facing information, not a dead-key cleanup: a unit now loses a promotion without being told which
