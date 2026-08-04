@@ -10535,14 +10535,21 @@ void CvPlot::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlot", &iVariety);
 	}
 
-	WRAPPER_READ(wrapper, "CvPlot", &m_iFeatureVariety);
+	// ⚠ These two deserialize HERE, where the stream puts them, but land through their slot's internal setter
+	// FURTHER DOWN -- after m_eOwner is off the stream. Every substrate fact names the owner, so announcing one
+	// before the owner is read would attribute it to NO_PLAYER. The local carries the value across that gap.
+	// Each local keeps the MEMBER'S OWN TYPE: the wrapper picks its read overload from the destination, so a
+	// wider local would ask the stream for a different type code than the writer put there.
+	short iFeatureVariety = -1;
+	WRAPPER_READ_DECORATED(wrapper, "CvPlot", &iFeatureVariety, "m_iFeatureVariety");
 	WRAPPER_READ(wrapper, "CvPlot", &m_iOwnershipDuration);
 	WRAPPER_READ(wrapper, "CvPlot", &m_iUpgradeProgress);
 	WRAPPER_READ(wrapper, "CvPlot", &m_iCityRadiusCount);
 	WRAPPER_READ(wrapper, "CvPlot", &m_iRiverID);
 	WRAPPER_READ(wrapper, "CvPlot", &m_iMinOriginalStartDist);
 	WRAPPER_READ(wrapper, "CvPlot", &m_iReconCount);
-	WRAPPER_READ(wrapper, "CvPlot", &m_iRiverCrossingCount);
+	short iRiverCrossingCount = 0;
+	WRAPPER_READ_DECORATED(wrapper, "CvPlot", &iRiverCrossingCount, "m_iRiverCrossingCount");
 
 	// Super Forts
 	WRAPPER_READ(wrapper, "CvPlot", &m_iCanalValue);
@@ -10571,30 +10578,40 @@ void CvPlot::read(FDataStreamBase* pStream)
 	WRAPPER_READ_DECORATED(wrapper, "CvPlot", &bVal, "m_bPotentialCityWork");
 	m_bPotentialCityWork = bVal;
 
+	// The OWNER lands first, because every substrate fact below names it. Only an OWNED plot has an
+	// ownership fact; a reseeded one reads unowned -> current, exactly as a real acquisition does.
 	WRAPPER_READ(wrapper, "CvPlot", &m_eOwner);
-	WRAPPER_READ(wrapper, "CvPlot", &m_ePlotType);
-	// TERRAIN is MANDATORY on every plot -- a plot with no terrain is an unrenderable hole in the map, so a
-	// missing TERRAIN_ Type is CORRUPTION, not a soft condition: this read stays fail-loud (save.md par.7).
-	WRAPPER_READ_CLASS_ENUM(wrapper, "CvPlot", REMAPPED_CLASS_TYPE_TERRAINS, &m_eTerrainType);
-	// THE RESEED EMIT (DEC-spine-reseed): the terrain DOMAIN event fires HERE, as the field deserializes off the
-	// stream, INSIDE the read -- never a later pass over already-populated plots (that pseudo-emit is banned,
-	// superseded-ideas). Coords (m_iX/m_iY) + owner (m_eOwner) are already read above.
-	emitPlotTerrainAdded(GC.getMap().plotNum(m_iX, m_iY), (int)m_eOwner, (int)m_eTerrainType);
-	// #430 reseed: plot OWNERSHIP as a change from unowned -> current (reseed change-shaped events as null -> current,
-	// exactly like a real acquisition). Only an OWNED plot has an ownership fact.
 	if (m_eOwner != NO_PLAYER)
 	{
 		emitPlotOwnerAdded(GC.getMap().plotNum(m_iX, m_iY), (int)m_eOwner);
 	}
-	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvPlot", REMAPPED_CLASS_TYPE_FEATURES, &m_eFeatureType);
-	// #430 reseed: the remaining plot-substrate DOMAIN events fire HERE as each field deserializes, INSIDE the read --
-	// the same in-read pattern as the terrain fact above. Present-gated: a plot with no feature/bonus/improvement/route
-	// has no fact to reseed, so nothing fires (emitting NO_* for every empty plot would be noise, not a fact).
-	if (m_eFeatureType != NO_FEATURE)
-	{
-		emitPlotFeatureAdded(GC.getMap().plotNum(m_iX, m_iY), (int)m_eOwner, (int)m_eFeatureType);
-	}
 
+	// ══════════ THE SUBSTRATE, THROUGH THE INTERNAL SETTERS ══════════
+	// Each slot deserializes into a LOCAL and is handed to the one body that knows how to land it, so the
+	// commit, the movement hash and the fact all happen exactly where they happen during play. The read no
+	// longer knows how to announce a plot, and cannot fall out of step with the setters again.
+	// ⛔ The tag is spelled explicitly on the DECORATED form, and it is the SAME tag: NormalizeName strips
+	// the address-of and any cast (its own comment: "m_thingy on save should match (int*)&m_thingy on
+	// load"), so "m_ePlotType" normalizes identically to what &m_ePlotType produced. The DESTINATION moves;
+	// the save format does not. The write side is untouched.
+	// ⛔ No effect runs here -- the stream is authoritative for base state, and the public setters' plot
+	// group / area / sight / graphics work would otherwise decide parts of it for themselves.
+	short iPlotType = NO_PLOT;
+	WRAPPER_READ_DECORATED(wrapper, "CvPlot", &iPlotType, "m_ePlotType");
+	setPlotTypeInternal((PlotTypes)iPlotType);
+
+	// TERRAIN is MANDATORY on every plot -- a plot with no terrain is an unrenderable hole in the map, so a
+	// missing TERRAIN_ Type is CORRUPTION, not a soft condition: this read stays fail-loud (save.md par.7).
+	short iTerrainType = NO_TERRAIN;
+	WRAPPER_READ_CLASS_ENUM_DECORATED(wrapper, "CvPlot", REMAPPED_CLASS_TYPE_TERRAINS, &iTerrainType, "m_eTerrainType");
+	setTerrainTypeInternal((TerrainTypes)iTerrainType);
+
+	short iFeatureType = NO_FEATURE;
+	WRAPPER_READ_CLASS_ENUM_DECORATED_ALLOW_MISSING(wrapper, "CvPlot", REMAPPED_CLASS_TYPE_FEATURES, &iFeatureType, "m_eFeatureType");
+	setFeatureTypeInternal((FeatureTypes)iFeatureType, iFeatureVariety);
+
+	// Bonus and improvement carry no movement-hash contribution, so they commit here and announce beside
+	// the rest. Present-gated: an empty plot has no fact to reseed.
 	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvPlot", REMAPPED_CLASS_TYPE_BONUSES, &m_eBonusType);
 	if (m_eBonusType != NO_BONUS)
 	{
@@ -10605,13 +10622,21 @@ void CvPlot::read(FDataStreamBase* pStream)
 	{
 		emitPlotImprovementAdded(GC.getMap().plotNum(m_iX, m_iY), (int)m_eOwner, (int)m_eImprovementType);
 	}
-	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvPlot", REMAPPED_CLASS_TYPE_ROUTES, &m_eRouteType);
-	if (m_eRouteType != NO_ROUTE)
-	{
-		emitPlotRouteAdded(GC.getMap().plotNum(m_iX, m_iY), (int)m_eOwner, (int)m_eRouteType);
-	}
-	WRAPPER_READ(wrapper, "CvPlot", &m_eRiverNSDirection);
-	WRAPPER_READ(wrapper, "CvPlot", &m_eRiverWEDirection);
+
+	short iRouteType = NO_ROUTE;
+	WRAPPER_READ_CLASS_ENUM_DECORATED_ALLOW_MISSING(wrapper, "CvPlot", REMAPPED_CLASS_TYPE_ROUTES, &iRouteType, "m_eRouteType");
+	setRouteTypeInternal((RouteTypes)iRouteType);
+
+	char cRiverNSDirection = NO_CARDINALDIRECTION;
+	WRAPPER_READ_DECORATED(wrapper, "CvPlot", &cRiverNSDirection, "m_eRiverNSDirection");
+	setRiverNSDirectionInternal((CardinalDirectionTypes)cRiverNSDirection);
+	char cRiverWEDirection = NO_CARDINALDIRECTION;
+	WRAPPER_READ_DECORATED(wrapper, "CvPlot", &cRiverWEDirection, "m_eRiverWEDirection");
+	setRiverWEDirectionInternal((CardinalDirectionTypes)cRiverWEDirection);
+
+	// The river PRESENCE fact, from the count the stream carried. updateRiverCrossing() cannot serve it here
+	// -- it derives the count from the ADJACENT plots, which have not necessarily deserialized yet.
+	setRiverCrossingCountInternal(iRiverCrossingCount);
 
 	WRAPPER_READ(wrapper, "CvPlot", (int*)&m_plotCity.eOwner);
 	WRAPPER_READ(wrapper, "CvPlot", &m_plotCity.iID);
@@ -11026,33 +11051,6 @@ void CvPlot::read(FDataStreamBase* pStream)
 	//WRAPPER_SKIP_ELEMENT(wrapper, "CvPlot", m_bPeaks, SAVE_VALUE_ANY);
 	WRAPPER_READ_OBJECT_END(wrapper);
 
-	//	Zobrist characteristic hashes are not serialized so recalculate
-	//	Right now it's just characteristics that affect what a unit might
-	//	be able to move through that matter, so its unit class + certain promotions
-	if ( getPlotType() != NO_PLOT )
-	{
-		m_movementCharacteristicsHash ^= g_plotTypeZobristHashes[getPlotType()];
-	}
-	if ( getFeatureType() != NO_FEATURE )
-	{
-		m_movementCharacteristicsHash ^= GC.getFeatureInfo(getFeatureType()).getZobristValue();
-	}
-	if ( getTerrainType() != NO_TERRAIN )
-	{
-		m_movementCharacteristicsHash ^= GC.getTerrainInfo(getTerrainType()).getZobristValue();
-	}
-	if ( getRouteType() != NO_ROUTE )
-	{
-		m_movementCharacteristicsHash ^= GC.getRouteInfo(getRouteType()).getZobristValue();
-	}
-	if (getRiverNSDirection() != NO_CARDINALDIRECTION)
-	{
-		m_movementCharacteristicsHash ^= g_riverDirectionZobristHashes[getRiverNSDirection()];
-	}
-	if (getRiverWEDirection() != NO_CARDINALDIRECTION)
-	{
-		m_movementCharacteristicsHash ^= g_riverDirectionZobristHashes[getRiverWEDirection()];
-	}
 	updateCenterUnit();
 }
 
