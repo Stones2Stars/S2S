@@ -18216,6 +18216,14 @@ void CvUnit::read(FDataStreamBase* pStream)
 			// promotion-line block) -- so the fact announced is the state that actually landed.
 			if (isHasPromotion((PromotionTypes)iI))
 			{
+				// The movement hash is NOT serialized, so every contributor XORs itself in AS IT LANDS -- here,
+				// over what the unit actually HOLDS. This replaces a trailing sweep that asked EVERY promotion in
+				// the database whether this unit had it, per unit, on every load; the walk-the-registry shape is
+				// the own-data inversion state-repositories.md bans, and it was doing the maintenance this line does.
+				if (GC.getPromotionInfo((PromotionTypes)iI).changesMoveThroughPlots())
+				{
+					m_movementCharacteristicsHash ^= GC.getPromotionInfo((PromotionTypes)iI).getZobristValue();
+				}
 				emitUnitPromotionAdded(m_iID, (int)m_eOwner, iI);
 			}
 		}
@@ -18478,6 +18486,12 @@ void CvUnit::read(FDataStreamBase* pStream)
 			UnitCombatKeyedInfo* info = findOrCreateUnitCombatKeyedInfo((UnitCombatTypes)iI);
 
 			info->m_bHasUnitCombat = true;
+			// The movement hash, maintained here for the same reason as the promotion leg above -- over the
+			// classes the unit HOLDS, never a sweep of the ~981-entry registry asking each one.
+			if (GC.getUnitCombatInfo((UnitCombatTypes)iI).changesMoveThroughPlots())
+			{
+				m_movementCharacteristicsHash ^= GC.getUnitCombatInfo((UnitCombatTypes)iI).getZobristValue();
+			}
 			// THE RESEED EMIT: the combat-class set is written straight into the keyed map here, so
 			// processUnitCombat never runs and the unit plane's second dirty trigger never fires.
 			emitUnitCombatAdded(m_iID, (int)m_eOwner, iI);
@@ -18950,28 +18964,6 @@ void CvUnit::read(FDataStreamBase* pStream)
 	if (GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS))
 	{
 		setSMValues(true);
-	}
-	//	Zobrist characteristic hashes are not serialized so recalculate
-	//	Right now it's just characteristics that affect what a unit might
-	//	be able to move through that matter, so its unit class + certain promotions
-
-	for (int iI = 0; iI < GC.getNumPromotionInfos(); iI++)
-	{
-		if (isHasPromotion((PromotionTypes)iI))
-		{
-			if (GC.getPromotionInfo((PromotionTypes)iI).changesMoveThroughPlots())
-			{
-				m_movementCharacteristicsHash ^= GC.getPromotionInfo((PromotionTypes)iI).getZobristValue();
-			}
-		}
-	}
-
-	for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
-	{
-		if (isHasUnitCombat((UnitCombatTypes)iI) && GC.getUnitCombatInfo((UnitCombatTypes)iI).changesMoveThroughPlots())
-		{
-			m_movementCharacteristicsHash ^= GC.getUnitCombatInfo((UnitCombatTypes)iI).getZobristValue();
-		}
 	}
 	establishBuildups();
 	if (bKill)
