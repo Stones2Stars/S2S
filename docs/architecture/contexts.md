@@ -390,10 +390,8 @@ CAPSTONE — LOAD is the only full build).
   > the legacy read path. Same shape, different provenance, one fix.
   > ⚑ **It is [DEC-flag-is-fossil](decisions.md#dec-flag-is-fossil) wearing a second costume: both
   > throw away the fact's identity.** A staleness flag reduces the fact to *"something moved"*; a whole-block
-  > re-derivation ignores WHICH bit the fact names. The spine already carries the answer —
-  > [DEC-spine-reseed](decisions.md#dec-spine-reseed)'s north-star is *the event SETTING the state (read → emit →
-  > populate)* — so a terrain fact carrying the new terrain SETS `IS_WATER`, never calls back to ask what the
-  > terrain is.
+  > re-derivation ignores WHICH bit the fact names. The spine already carries the answer: the fact NAMES the new
+  > terrain, so a terrain fact SETS `IS_WATER` and never calls back to ask what the terrain is.
   > ⚠ **What the retired justification was right about, so the fix does not re-introduce it:** *"one uniform
   > derivation, never a bespoke per-event bit mask"* guarded against a hand-written per-event mask drifting from
   > what the bits actually read — the same hazard [DEC-uniform-cache-shape](decisions.md#dec-uniform-cache-shape)

@@ -475,9 +475,16 @@ and could not be made safe by over-inclusion — is deleted rather than finished
 
 ### DEC-spine-reseed
 
-On load, the cascade is built from events that come from **inside the save read itself** — reading a fact off the
-stream is what fires its DOMAIN event (`CvGame::read` → `CvPlayer`/`CvCity`/`CvPlot::read`); the north-star is
-the event SETTING the state (read → emit → populate); object-populated-by-events is out of the current scope.
+On load, the cascade is built from events that come from **inside the save read itself** — each slot deserializes
+into a local and is handed to that slot's **INTERNAL SETTER** (commit + maintain + announce, no effect fan-out),
+which fires the same DOMAIN fact play does (`CvGame::read` → `CvPlayer`/`CvCity`/`CvPlot::read`). ⛔ **The CRUD is
+not the event; what happened is** — the stream is authoritative for base state and the fact is testimony in the
+past tense. The earlier north-star *"the event SETTING the state (read → emit → populate)"* is RETIRED: it made an
+effect the thing that mutates base state, and a read that writes members raw puts the emit and the derived-state
+maintenance in a second place that drifts (five `CvPlot` slots announced nothing, and a whole-object recompute
+stood in for the maintenance). ⚠ Such a recompute may never survive beside the setters — both apply, and an
+XOR-maintained value cancels to zero. A `SAVELOAD`-kind line may report what the stream CONTAINED, consumed by
+logging alone; it builds no state.
 It is NOT a separate post-deserialization pass that fabricates events by walking already-populated objects — that
 pseudo-emit is banned ([superseded-ideas](superseded-ideas.md) #13) — and equally NOT a warm-up "seed" that walks
 has-lists into a consumer's cache beside the event stream (an invented second build mechanism that leaves the

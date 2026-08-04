@@ -16,8 +16,26 @@ keeps the synced and unsynced streams apart:
 | KIND | meaning | synced? | consumed by |
 |---|---|---|---|
 | **`DOMAIN`** | game **state** changed (building built, unit created, tech researched) | yes — deterministic | logging + grants + cache-invalidation + out-of-process replay (NOT the in-engine tally — it reads the object-owned counts) |
+| **`SAVELOAD`** | a fact was **read off the save stream** — a log of LOADING, never what sets state | no | **logging only** — never counted, never gates |
 | **`DIAGNOSTIC`** | **code** ran (a function entered, a decision re-evaluated) | no — execution trace | **logging only** — never counted, never gates |
 | **`TRACE`** | fine-grained "every step" | no | logging only |
+
+> **⛔ `SAVELOAD` IS ITS OWN KIND AND NOT A `DIAGNOSTIC`, AND THE DIFFERENCE IS LOAD-BEARING (owner).**
+> `DIAGNOSTIC` means CODE RAN. A save-load fact is a record of what the STREAM CONTAINED — a different
+> statement — so filing it under `DIAGNOSTIC` would put *"the save says this plot is `TERRAIN_GRASS`"* in the
+> same bucket as *"this function was entered"*, after which only convention separates them.
+> ⚑ **Its own kind makes the rule STRUCTURAL rather than remembered:** a state-building consumer registers for
+> `DOMAIN`, so *"nothing derives held state from the load log"* is enforced by the interest mask, not by
+> reviewer memory — the contract-not-prohibition shape ([patterns.md](../architecture/patterns.md)).
+> ⚑ It also gets its own volume story for free: the load record is the highest-volume stream in the engine, and
+> as a separate kind it never has to ride the `DIAGNOSTIC` firehose to be watched.
+> ⛔ **It needs NO gate knob of its own** — volume rides the event's own `iLevel` through the existing file
+> (`gPlayerLogLevel`) and stream (`gStreamLogLevel`) gates. Only `DOMAIN` streams unconditionally; a load
+> record must never spend the bounded SSE slots during ordinary play.
+> ⚠ **The load's DOMAIN facts are NOT these.** The save read populates base state through the objects' own
+> INTERNAL SETTERS, and those setters emit the ordinary `DOMAIN` facts that build the cascade, the enabler and
+> the contexts — one mechanism for load and for play. A `SAVELOAD` line is testimony ABOUT the read, beside
+> them, and nothing folds on it.
 
 Only `DOMAIN` events carry authoritative synced state-changes (for observability, cache-invalidation, and the
 out-of-process replay). The in-engine [tally](tally.md) does **not** consume them — it reads the object-owned counts
@@ -38,7 +56,7 @@ reads objects). **Build order:** spine + the modifier scope accumulator → logg
   **render payload** (`iDomainTag`/`iEventId`/`aFields[]`, `SPINE_MAX_FIELDS = 16`; a field is `{int eTag; union{int
   i; float f; char* s; wchar_t* w;}}`, 8B/POD) that the one logging path formats. A **`DOMAIN`** event carries BOTH —
   its state ints for the machine consumers **and** a domain tag + fields so it renders through the same registered
-  path as everything else; a **`DIAGNOSTIC`/`TRACE`** event carries only the render payload. There is no
+  path as everything else; a **`SAVELOAD`/`DIAGNOSTIC`/`TRACE`** event carries only the render payload. There is no
   inline-formatted event: the spine's own DOMAIN events register under `SD_SPINE` exactly like an AI domain.
 - **Per-domain isolation:** a domain registers via `spineRegisterDomain` (a line-prefix fn + a field-info fn with
   typed index kinds `SFT_BUILDING`/`UNIT`/`BONUS`/…); `spineRenderEventLine` formats. **Zero global field registry,
@@ -50,9 +68,10 @@ reads objects). **Build order:** spine + the modifier scope accumulator → logg
 - **The `/events` STREAM is its OWN registered consumer** (`CvSpineStreamConsumer`) — never a tee inside the
   logging consumer (that chained stream visibility to the FILE gate). **DOMAIN events stream UNCONDITIONALLY**
   whenever the HTTP server is up (the facts the machine consumers see — the out-of-process replay feed);
-  DIAGNOSTIC/TRACE lines stream at the stream's own verbosity knob (`gStreamLogLevel` /
+  SAVELOAD/DIAGNOSTIC/TRACE lines stream at the stream's own verbosity knob (`gStreamLogLevel` /
   `Autolog__LogLevelStream`), fully decoupled from `gPlayerLogLevel` — streaming everything never requires
-  opening the level-4 file firehose. The SSE queue is capped; on overflow the first frame that fits again
+  opening the level-4 file firehose. ⚠ SAVELOAD is deliberately NOT on the unconditional side: the load record is
+  the highest-volume stream in the engine and would exhaust the bounded SSE slots during ordinary play. The SSE queue is capped; on overflow the first frame that fits again
   reports `[STREAM] dropped=N` — a gap is always visible as a gap, never silent.
 - **Interest guard:** an `m_iInterestMask` bit-test gates dispatch, so the verbose call-site `if(logLevel)` gates
   vanish structurally.
@@ -115,20 +134,22 @@ reads objects). **Build order:** spine + the modifier scope accumulator → logg
   held tech / project / civic / trait / heritage + era / golden-age / state-religion / nukes / commerce sliders,
   `CvCity::read` per building / religion + holy-city / corp / specialist / population / power / culture-level,
   `CvPlot::read`
-  substrate + owner + working-city, `CvProperties::readWrapper` per stored property value on every owner scope),
-  wrapped by the bracket. ⚠ The property block needs its own in-read emit and has **no** duplicate to weigh
-  against: a property value is DERIVED FROM NOTHING, so — unlike a plot's substrate — no other in-read fact
-  re-derives it. A stored 0 is skipped, for the same reason the setter suppresses a no-op (the owner's `reset()`
+  the whole substrate + owner + working-city — through the INTERNAL SETTERS, so the read announces nothing
+  itself, `CvProperties::readWrapper` per stored property value on every owner scope),
+  wrapped by the bracket. ⚠ The property block emits from its own read because a property value is DERIVED FROM
+  NOTHING; nothing else could announce it. A stored 0 is skipped, for the same reason the setter suppresses a no-op (the owner's `reset()`
   emptied the bag, so 0 → 0 is not a change); the per-turn CHANGE ledger beside it is deliberately silent, being
-  an accumulation of deltas the value facts already carry. ⚠ A plot fact whose field deserializes with no emit of
-  its own (type / river / irrigation / landmark / worked) needs **none**: `CvPlot::read`'s terrain emit is
-  UNCONDITIONAL, and a substrate fact re-derives the plot's WHOLE verdict block — so every plot is already covered
-  exactly once, and adding a second in-read emit would only re-derive the same block. This holds for the MODIFIER
-  plane as well as the contexts', and for the same reason rather than by luck: `CvPlot::read`'s
-  `emitWorkingCityChanged` derives the very mask the play-time `worked` fact does
-  (`scopeReceiversFedBy(CITY|EMPIRE, PLOT)` — the plot-fed receiver sums), so a loaded city's plot-fed sums are
-  marked without a `worked` in-read emit. The worked SET itself is read live at the rebuild
-  (`CvCity::isWorkingPlot`), never replayed from events.
+  an accumulation of deltas the value facts already carry. ⛔ **ONE SERIALIZED SLOT, ONE FACT — there is no slot a neighbour's fact covers for.** This spec used to claim
+  that a plot field deserializing with no emit of its own (type / river / irrigation / landmark / worked) needed
+  **none**, because *"a substrate fact re-derives the plot's WHOLE verdict block"* so every plot was already
+  covered. **That premise WAS event-as-command** — a consumer reaching back through the object to re-derive a
+  block from a fact that did not name it — and it went with the model. A fact now sets ONLY the bit it names
+  ([contexts.md](../architecture/contexts.md)), so a slot nothing announces is a slot nothing knows about.
+  ⚑ **The fix is structural, not five remembered emits:** the emit lives in the slot's INTERNAL SETTER, so a
+  newly serialized field cannot be added without going through the one body that announces it. That is what
+  closed these five, and it is why the answer was never a longer hand-maintained list in the read.
+  ⚠ The worked SET itself is still read live at the load-end rebuild (`CvCity::isWorkingPlot`), never replayed
+  from events.
   **THE TIER-1 HOLES ARE CLOSED** — the facts a named consumer read but nothing announced. **`isPowered()` is
   whole**: its three ORed legs each announce now — the power COUNT (`SEVT_CITY_POWER_ADDED / _REMOVED`), the **disabled-power
   timer** (`SEVT_CITY_POWER_DISABLED_ADDED / _REMOVED`, `CvCity::changeDisabledPowerTimer`) and the **area clean-power**
@@ -172,15 +193,16 @@ reads objects). **Build order:** spine + the modifier scope accumulator → logg
   the headquarters designation, tested off the loaded IDInfo via `CvGame::isHeadquartersByOwnerId`, the
   `isHolyCityByOwnerId` precedent, because `CvGame`'s array deserializes before the cities), `CvPlayer::read`
   (anarchy turns — a save can load mid-revolution — the golden-age twin), `CvPlot::read` (the plot's city, whose
-  fact the terrain emit does **not** cover: terrain re-derives the stored verdict BITSET and city-presence is a
-  `PlotContext` FORWARD, not a bit in that block), `CvTeam::read` (the member count, emitted after `m_eID`
+  fact no other slot covers — no slot ever covers for another), `CvTeam::read` (the member count, emitted after `m_eID`
   deserializes rather than beside the count, since the id the fact hangs on is only valid from there), and
   **`CvUnit::read`, which previously emitted NOTHING** — the instance, its promotion set and its combat-class
   set, each at its own genuine per-element read. ⛔ Two in-read halves are deliberately ABSENT and are not
   oversights: **the world unit-created counter** (nothing stores a derivative of it — the cap reads it live, so
-  there is nothing to seed) and **the area tile count** (`SEVT_AREAS_RECALCULATED` plus the map-settled guarantee
-  already stand every area-id holder up, so a per-area announcement would re-derive the same block — the
-  `CvPlot::read` terrain precedent).
+  there is nothing to seed) and **the area tile count** (`SEVT_AREAS_RECALCULATED` is a WHOLESALE fact by
+  construction — it names no source, so every area-id holder re-reads on it and a per-area announcement would
+  say nothing the wholesale one has not).
+  ⛔ Neither is the retired *"another slot's fact covers it"* argument, which is why they are stated in their own
+  terms: one has no consumer to seed, the other already has a fact. **No slot is ever covered by a neighbour's.**
   ⚠ **One endpoint is deliberately unwired: `emitLoadPipeline`** — every one of its arguments is produced by the
   archived load-time warm-up/rebuild pass, which the CAPSTONE rule removed
   ([state-repositories.md](../architecture/state-repositories.md)); the event reseed replaced that pass, so the
@@ -473,14 +495,37 @@ prerequisite-free. Prerequisites are evaluated ONLY by the enabler (`canConstruc
 Corollary — **yield is a computed RESULT, never an event**: emit the CAUSES (improvement/terrain/feature/route
 changed), and a consumer computes the yield downstream.
 
-**The load RESEED — event-source the save READ (BUILT, live).** A loaded save deserializes state directly into the
-`CvCity`/`CvPlot` objects — the incremental setters never fire, so the **cascade** (its value packages AND its enabler
-side) would have nothing to build from. The reseed fixes this **from inside the save read itself**: reading a fact off
-the stream is what fires its DOMAIN event (`CvGame::read` → `CvPlayer::read` → `CvCity::read` / `CvPlot::read`; tech
-is team-held but emitted per-self from each member's `CvPlayer::read`, one emit per alive member; projects the same).
-The north-star is that the event itself SETS the state — read → emit → populate, one mechanism for the
-game object AND the cascade; object-populated-by-events is out of the current scope, and the events come from
-the genuine read.
+**The load RESEED — the save read goes through the INTERNAL SETTERS.** A loaded save used to deserialize straight
+into the `CvCity`/`CvPlot` members, so the setters never fired and the **cascade** (its value packages AND its
+enabler side) had nothing to build from. The reseed is fixed **at the read itself**: each slot deserializes into a
+LOCAL and is handed to that slot's **internal setter** — the ONE body that commits the member, maintains whatever
+derived state the object owns, and announces the fact.
+
+> **⛔ THE CRUD IS NOT THE EVENT; WHAT HAPPENED IS (owner).** The event does NOT set the state, and the earlier
+> north-star that said so — *read → emit → populate* — was **backward**. It made an EFFECT the thing that mutates
+> base state, which violates the principle the whole model rests on, and it is precisely what the old `*_CHANGED`
+> payload existed to serve (an old value beside a new one, so a consumer could drive the mutation). **The stream
+> is authoritative for base state; the fact is TESTIMONY about a completed act, in the past tense.**
+>
+> ⇒ **An INTERNAL setter is commit + maintain + announce, and NOTHING else.** The public setter is its guard,
+> then the internal one, then its EFFECTS (plot groups, areas, sight, graphics, cascading type changes). The read
+> calls the internal one directly — which is exactly what lets it: no effect gets to decide any part of the state
+> the save is authoritative for.
+> ⚑ **And the drift it closes was real, not theoretical.** While the read wrote members raw, the emit and the
+> derived-state maintenance lived in a SECOND place that had to be kept in step BY HAND — and was not: five
+> `CvPlot` slots deserialized with no fact at all, and the movement hash needed a whole rebuild pass at the end of
+> the read to paper over the maintenance the setters would have done. The pass is gone with the bypass that
+> caused it. ⛔ Such a rebuild can NEVER stand beside the setters: both would apply, and for an XOR-maintained
+> value that cancels it to zero — silently, on every object.
+> ⚠ **The save TAG does not move when the destination does.** `NormalizeName` strips the address-of and any cast
+> (*"m_thingy on save should match `(int*)&m_thingy` on load"*), so a `WRAPPER_READ_DECORATED` naming the tag
+> explicitly reads the byte-identical tag the plain form produced. Keep each local the MEMBER'S OWN TYPE — the
+> wrapper picks its read overload from the destination, and a wider local asks the stream for a type code the
+> writer never wrote ([save.md](save.md)).
+
+Tech is team-held but emitted per-self from each member's `CvPlayer::read`, one emit per alive member; projects
+the same. Beside the DOMAIN facts the setters emit, the read may announce what the STREAM CONTAINED as
+`SAVELOAD` lines — a log of loading, consumed by logging alone.
 
 ⛔ What the reseed is **NOT**: a separate pass that walks already-deserialized objects and **fabricates** events from
 their populated state (a "for each building present, emit built"). That pseudo-emit feeds the cascade reconstructed
