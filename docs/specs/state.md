@@ -64,7 +64,28 @@ namings); the **system** is the [json spec](json.md) §8. Sibling of [skills.md]
 | `weLoveTheKingDay` | the celebration; a DURATION-1 status re-applied every turn while its conditions hold | its own bool + timer |
 | `powerDisabled` | a blackout — the city's power is out for N turns and comes back on its own | `m_iDisabledPowerTimer`, longhand |
 
-**PLAYER** (`PlayerStatus`) — `goldenAge`.
+**PLAYER** (`PlayerStatus`) — `goldenAge`, and `anarchy` beside it. ⛔ **Neither is wired, deliberately** — see
+the carve-out below; `CvPlayer` carries no status store at all.
+
+> **⛔ GOLDEN AGE AND ANARCHY ARE THE TWO DELIBERATE EXCEPTIONS, AND THEY ARE NOT WIRED (owner).** They remain the
+> hand-named `m_iGoldenAgeTurns` / `m_iAnarchyTurns` on `CvPlayer`, and **the existing engine handles their
+> empire-wide effect today**. `PlayerStatus` is forward intent; nothing implements it, and `CvPlayer` carries no
+> status store. **A held decision, not an unfinished conversion** — do not read the enum entry as wired.
+>
+> **⚖ THE DESIGN IS SETTLED — this is SEQUENCING, not an open question (owner).** The two are empire-wide on all
+> cities, and they resolve by **landing a status ON EACH CITY**, driven by the empire-scope happening:
+> `SEVT_EMPIRE_GOLDEN_AGE_ADDED` / `_REMOVED` and `SEVT_EMPIRE_ANARCHY_ADDED` / `_REMOVED`, both of which
+> **already exist**. The player holds the SOURCE (am I in one, for how long); each city holds the EFFECT as an
+> ordinary city status. What is missing is only the consumer that does the landing.
+> ⚑ **So the object-local rule is not broken by them — it is RESTORED by the fan.** Once the status is
+> city-held, `hasStatus()` at the point of use is the whole wiring again, exactly as everywhere else. The
+> empire-wide part is the announcement, never the storage.
+>
+> **⛔ AND IT IS BUILT AT THE END, WHEN THE STRUCTURE IS SET — NOT AS PART OF INITIAL SETUP (owner):** *"that is
+> how rollerskating happens."* ⛔ Do not wire the consumer now, and do not re-home the two members onto a player
+> store to "prepare" for it — both look like progress while pre-committing a structure that is not settled yet.
+> ⚠ This is an owner-ruled ORDERING, so [DEC-no-deferred](../architecture/decisions.md#dec-no-deferred) does not
+> reach it: the work is named, its design is decided, and its position in the sequence is the ruling.
 
 > **⚖ THE STORE IS SERIALIZED; WHAT IS NOT CARRIED IS THE CONVERSION (owner).** Turns-remaining is genuine
 > NON-DERIVABLE state — nothing reconstructs *"three turns of blackout left"* from anything else — so it is
@@ -93,9 +114,17 @@ namings); the **system** is the [json spec](json.md) §8. Sibling of [skills.md]
 > "wiring statuses into" anything: the wiring is a `hasStatus` call at the point of use.
 > ⚑ **That is also why the generic fact is enough.** With no machine folding on a status, per-status facts would
 > buy a routing precision nobody consumes — while costing an engine change per authored status.
-> ⚠ **The one real cross-machine reader, so the rule is not overstated:** `CITYSTATUS_POWER_DISABLED` is a leg of
-> `CvCity::isPower()`, which the `HAS_POWER` predicate gates on. Even there the split holds — the CONSUMER reads
-> the verdict off the city, and the FACT only tells it to re-gate. The fact carries the trigger, never the value.
+> ⚠ **Two things qualify this, and they are DIFFERENT KINDS of exception — do not collapse them.**
+> - **A cross-machine READER, effect still object-local.** `CITYSTATUS_POWER_DISABLED` is a leg of
+>   `CvCity::isPower()`, which `HAS_POWER` gates on. The rule survives intact: the consumer reads the verdict off
+>   the CITY and the fact only tells it to re-gate — the fact carries the trigger, never the value. Something
+>   outside listens; the effect still lands where the status is held.
+> - **An EFFECT that lands on ANOTHER scope's objects** — golden age and anarchy, held by the player and acting
+>   on every city (the carve-out above). These resolve by FANNING the empire happening into a per-city status,
+>   after which they are ordinary again; they are unwired on ORDER, not on doubt.
+> ⇒ **The test for any new status: where does its EFFECT land?** On its holder ⇒ ordinary, wire it. On a
+> different scope's objects ⇒ it is the golden-age class: the holder announces, and a consumer lands a status on
+> each object the effect reaches. ⛔ The storage never moves up to the announcing scope.
 
 > **⚖ THE CROSSING IS ANNOUNCED, AND THE FACT IS GENERIC OVER THE STATUS.** `CvCity::setStatus` is the ONE write
 > path — the per-turn tick and the LOAD both come through it — and it emits `SEVT_CITY_STATUS_ADDED` /

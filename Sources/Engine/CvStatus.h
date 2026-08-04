@@ -51,6 +51,19 @@ enum UnitStatus
 	NUM_UNIT_STATUSES
 };
 
+// ⛔ THE PLAYER SCOPE IS DELIBERATELY NOT WIRED, AND THIS ENUM IS FORWARD INTENT ONLY (owner). `CvPlayer`
+// carries NO status store: GOLDEN AGE and ANARCHY are still the hand-named m_iGoldenAgeTurns / m_iAnarchyTurns,
+// and the EXISTING ENGINE handles their empire-wide effect today. That is a HELD DECISION, not an unfinished
+// conversion -- do not read the enum entry as a wired thing.
+// ⚑ THE DESIGN IS SETTLED, so this is sequencing and not an open question (owner): the two are EMPIRE-WIDE ON
+// ALL CITIES, and they resolve by LANDING A STATUS ON EACH CITY off the empire-scope happening --
+// SEVT_EMPIRE_GOLDEN_AGE_ADDED / _REMOVED and SEVT_EMPIRE_ANARCHY_ADDED / _REMOVED, which already exist. The
+// player holds the SOURCE (am I in one, for how long); each city holds the EFFECT as an ordinary city status.
+// ⚑ So the object-local rule above is not broken by them after all -- it is restored by the fan: once the
+// status is city-held, hasStatus() at the point of use is the whole wiring again, exactly as everywhere else.
+// ⛔ AND IT IS BUILT AT THE END, WHEN THE STRUCTURE IS SET -- NOT AS PART OF INITIAL SETUP, "because that is how
+// rollerskating happens" (owner). Do not wire the consumer now, and do not re-home the two members onto a
+// player store to "prepare" for it. Both are the shape that looks like progress and pre-commits the structure.
 enum PlayerStatus
 {
 	PLAYERSTATUS_GOLDEN_AGE = 0,   // the empire-wide boost period; mutually exclusive with anarchy
