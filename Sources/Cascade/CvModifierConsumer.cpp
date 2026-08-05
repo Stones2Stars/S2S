@@ -85,6 +85,37 @@ namespace
 		}
 	}
 
+	// The plot-resident SOURCE a substrate fact names. The same switch as mc_substrateTypeName one level up,
+	// returning the INFO rather than its name, because plane A applies the source's own compiled deposits and
+	// needs the object. ONE id per fact (iType): _ADDED names what arrived, _REMOVED what left.
+	const CvInfo* mc_substrateInfo(int iEventId, int iId)
+	{
+		if (iId < 0)
+		{
+			return NULL;
+		}
+		switch (iEventId)
+		{
+		case SEVT_PLOT_IMPROVEMENT_ADDED:
+		case SEVT_PLOT_IMPROVEMENT_REMOVED:
+			return (iId < GC.getNumImprovementInfos()) ? &GC.getImprovementInfo((ImprovementTypes)iId) : NULL;
+		case SEVT_PLOT_TERRAIN_ADDED:
+		case SEVT_PLOT_TERRAIN_REMOVED:
+			return (iId < GC.getNumTerrainInfos()) ? &GC.getTerrainInfo((TerrainTypes)iId) : NULL;
+		case SEVT_PLOT_FEATURE_ADDED:
+		case SEVT_PLOT_FEATURE_REMOVED:
+			return (iId < GC.getNumFeatureInfos()) ? &GC.getFeatureInfo((FeatureTypes)iId) : NULL;
+		case SEVT_PLOT_ROUTE_ADDED:
+		case SEVT_PLOT_ROUTE_REMOVED:
+			return (iId < GC.getNumRouteInfos()) ? &GC.getRouteInfo((RouteTypes)iId) : NULL;
+		case SEVT_PLOT_BONUS_ADDED:
+		case SEVT_PLOT_BONUS_REMOVED:
+			return (iId < GC.getNumBonusInfos()) ? &GC.getBonusInfo((BonusTypes)iId) : NULL;
+		default:
+			return NULL;
+		}
+	}
+
 	// ---- PLANE A: THE SOURCE ROUTE -- a source arrived or left, so its deposits are applied ([DEC-maintained-sum]) ----
 	//
 	// iMultiplicity is SIGNED and is the whole of the direction: +1 for a source arriving, -1 for one leaving,
@@ -116,6 +147,14 @@ namespace
 		case SEVT_CITY_BONUS_ADDED:
 		case SEVT_CITY_RELIGION_ADDED:
 		case SEVT_CITY_CORPORATION_ADDED:
+		// The PLOT-RESIDENT sources. These ARE the yield base (modifier.md: the origin rule -- yields come from
+		// plot, specialists and buildings, and a plot's package is the base every city rate is built on), so a
+		// missing direction here is not a wrong number, it is a map with no yields at all.
+		case SEVT_PLOT_TERRAIN_ADDED:
+		case SEVT_PLOT_FEATURE_ADDED:
+		case SEVT_PLOT_IMPROVEMENT_ADDED:
+		case SEVT_PLOT_ROUTE_ADDED:
+		case SEVT_PLOT_BONUS_ADDED:
 		case SEVT_CITY_POWER_ADDED:
 		case SEVT_CITY_HOLY_CITY_ADDED:
 		case SEVT_CITY_OWNER_ADDED:
@@ -133,6 +172,11 @@ namespace
 		case SEVT_CITY_BONUS_REMOVED:
 		case SEVT_CITY_RELIGION_REMOVED:
 		case SEVT_CITY_CORPORATION_REMOVED:
+		case SEVT_PLOT_TERRAIN_REMOVED:
+		case SEVT_PLOT_FEATURE_REMOVED:
+		case SEVT_PLOT_IMPROVEMENT_REMOVED:
+		case SEVT_PLOT_ROUTE_REMOVED:
+		case SEVT_PLOT_BONUS_REMOVED:
 		case SEVT_CITY_POWER_REMOVED:
 		case SEVT_CITY_HOLY_CITY_REMOVED:
 		case SEVT_CITY_OWNER_REMOVED:
@@ -652,25 +696,22 @@ namespace
 				const CvPlot* pPlot = mc_plot(kEvent.iSrcLoc);
 				if (pPlot != NULL)
 				{
-					// the whole-plot-package mark is the RULED blanket, not a derivable route: a substrate swap
-					// re-derives this plot's whole isolated base package either way, and the plot channel set is the
-					// smallest of them (modifier.md plot-as-base). The per-TYPE dependency routes below address what a
-					// package blanket cannot -- deposits at CITY/EMPIRE scope keyed on the substrate -- and they now run
-					// in BOTH directions, the fact having gained the departing id.
-					// â HOLE (plot substrate swap): the blanket that stood here is gone -- a blanket recompute does not exist
-					// under the maintained sum and is never to be built. What this needs instead is a WITHDRAW AND
-					// REAPPLY over this plot's plot-resident sources (terrain / feature /
-					// bonus / route / improvement), which is the same plane-A
-					// walk run twice with opposite signs. Deliberately left unmaintained rather than swept.
-					// The blanket covers this plot's OWN package and nothing else, so the two substrate facts a
-					// FRESH-WATER verdict reads carry legs it cannot reach. CvPlot::isFreshWater reads this plot's
-					// TERRAIN (isFreshWaterTerrain, and isImpassable) and its FEATURE (isAddsFreshWater) -- moving
-					// the verdict a CITY sitting here folds through its own centre plot
-					// slot with it. TERRAIN additionally moves what the NEIGHBOURS read: isFreshWater's rect(1,1)
-					// leg tests an adjacent plot's isWater AND fresh-water terrain, so a terrain flip re-gates the
-					// ring's HAS_FRESHWATER deposits. The other three facts of this group reach neither leg --
-					// improvement / route / bonus appear nowhere in isFreshWater or isCoastalLand, and the
-					// irrigation they drive announces itself through CvPlot::setIrrigated's own fact.
+					// ⚖ PLANE A FOR THE PLOT-RESIDENT SOURCES -- this IS the yield base. The plot's package is what
+					// every city rate is built on (modifier.md, the origin rule + plot-as-base), so a substrate source
+					// depositing nothing here is not a slightly wrong number: the map has no yields at all.
+					// ⚑ THE PAIRS ARE WHAT MAKE IT ONE CALL. The hole that stood here called for a WITHDRAW AND
+					// REAPPLY -- the same plane-A walk run twice with opposite signs -- because ONE *_CHANGED fact
+					// carried a swap and the departing source had to be recovered from a second payload field. One
+					// source per fact with the direction in its id needs neither: _ADDED applies +1, _REMOVED applies
+					// -1, and a swap is just the two facts the emitter already sends.
+					const CvInfo* pSubstrate = mc_substrateInfo(kEvent.iEventId, kEvent.iType);
+					if (pSubstrate != NULL)
+					{
+						// mc_plotSegmentFor routes it to the right SEGMENT of the plot package (nature / improvement /
+						// rest), which is what keeps the §2a floors derivable from three plain sums.
+						mc_applySource(pSubstrate, mc_sourceDirection(kEvent), kEvent.iEventId,
+							pPlayer, pPlot->getPlotCity(), pPlot);
+					}
 					// ⛔ The fresh-water verdict is NOT re-derived here, and the ring is not walked. Terrain and
 					// feature are two of the axes PlotContext derives HAS_FRESHWATER from, so it re-derives the bit
 					// and announces the crossing -- including on the 8 neighbours, whose own leg reads this plot.
