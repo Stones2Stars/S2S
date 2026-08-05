@@ -590,8 +590,11 @@ The enabler lives in **`Sources/Enabler/`** — its own tree, carrying no `Casca
   ([DEC-spine-reseed](../architecture/decisions.md#dec-spine-reseed)) — there is no warm-up seed walk. One
   consumer per system; it never routes modifier work.
 - **`OperatingBuildings`** (`CvOperatingBuildings.h`) — the §3.2 set type (`active` + `provided` + `obsolete`).
-- **`CascadeCapabilities`** (`CvCapabilities.{h,cpp}`) — the per-team derived-on-query capability union
-  ([capabilities.md](capabilities.md)).
+
+⛔ **The empire-capability union is NOT one of these** — it is a keyed store the PLAYER holds, fed by the tech /
+civic / building facts ([capabilities.md](capabilities.md),
+[DEC-scope-contexts](../architecture/decisions.md#dec-scope-contexts)). The enabler is a SOURCE of those facts,
+never the home of that answer.
 
 ### RESIDENCY — the network count lives on the PLOT GROUP, and only there
 
@@ -649,7 +652,6 @@ to EXE-bound classes, never members — [state-repositories.md](../architecture/
 | `CvCity` | `m_enabler` (`CityEnabler`) | the constructible + trainable tri-state domains |
 | `CvCity` | `m_operatingBuildings` | the ACTIVE set + provided bonuses at the operate/provides fixpoint (§3.2) |
 | `CvPlayer` | `m_enabler` (`PlayerEnabler`) | techs / civics / projects / processes / builds / promotions |
-| `CvTeam` | `m_cascadeTeamCaps` | the capability union, on the `CvDerivedCacheSet` mark protocol ([capabilities.md](capabilities.md)) |
 
 All are **public and mutable** by requirement rather than laxity: the domain enablers write through a
 `const CvCity&` / `const CvPlayer&` — the owner holds the STORAGE, the enabler owns the delta LOGIC. **None is
@@ -806,8 +808,8 @@ composition over game state plus authored data belongs at the consuming system.
 
 ⚠ The two **carve-out** domains answer the UNLOCKED half only, and a consumer treating either as the whole verdict
 over-offers: a BUILD's plot-validity half and a PROMOTION's per-unit applicability are evaluated LIVE at their
-decision points (§7.1). The TEAM's capability reads are not here — `CascadeCapabilities` is already that query
-surface ([capabilities.md](capabilities.md)); duplicating it onto `CvTeam` would be a second implementation.
+decision points (§7.1). EMPIRE-capability reads are not here either: they are asked of the PLAYER's own keyed
+union ([capabilities.md](capabilities.md)), which no availability read duplicates.
 
 ⛔ Still do not re-attach the machine ad hoc — a per-site `can*` rewire is the half-migration this rebuild exists
 to avoid ([DEC-new-getter-surface](../architecture/decisions.md#dec-new-getter-surface)). Moving CONSUMERS onto
