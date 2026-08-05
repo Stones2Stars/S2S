@@ -80,7 +80,7 @@ public:
 	static void onCityCorporationChanged(const CvCity& kCity, int iCorporation, bool bHas);
 	static void onCityBonusChanged(const CvCity& kCity, int iBonus, int iChange);     // network count delta; re-gates on a 0-crossing
 	static void onCityVicinityBonusChanged(const CvCity& kCity, int iBonus);          // LOCAL presence flip; re-gates vicinity dependents
-	static void onCityCultureLevelChanged(const CvCity& kCity, int iOldLevel, int iNewLevel);
+	static void onCityCultureLevelChanged(const CvCity& kCity, int iLevel, int iCrossing);
 	static void onPlayerCivicsChanged(PlayerTypes ePlayer, int iOldCivic, int iNewCivic);
 
 	// NB there is NO read accessor here (enabler.md par.7: a static is a PURE CALCULATOR -- seed/delta/oracle;

@@ -42,13 +42,13 @@ private:
 		// The two PRESENCE happenings. The direction is the EVENT ID, so nothing here reads a delta int
 		// ([DEC-facts-name-happenings]); the two cases share a body only because the domain appliers are
 		// parameterized on held-ness, never because the fact was.
-		case SEVT_BUILDING_ADDED:
-		case SEVT_BUILDING_REMOVED:
+		case SEVT_CITY_BUILDING_ADDED:
+		case SEVT_CITY_BUILDING_REMOVED:
 		{
 			const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iSrcLoc);
 			if (pCity != NULL)
 			{
-				const bool bHeld = (kEvent.iEventId == SEVT_BUILDING_ADDED);
+				const bool bHeld = (kEvent.iEventId == SEVT_CITY_BUILDING_ADDED);
 				// held flip + the building's own enables contribution.
 				// ORDER: UnitEnabler first (its flip guard reads the buildings domain's held flag PRE-flip).
 				UnitEnabler::onCityBuildingChanged(*pCity, kEvent.iType, bHeld);
@@ -56,37 +56,41 @@ private:
 			}
 			break;
 		}
-		case SEVT_RELIGION_CHANGED:
+		case SEVT_CITY_RELIGION_ADDED:
+		case SEVT_CITY_RELIGION_REMOVED:
 		{
 			const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iSrcLoc);
 			if (pCity != NULL)
 			{
-				BuildingEnabler::onCityReligionChanged(*pCity, kEvent.iType, kEvent.iA != 0);   // flip-guarded emit
-				UnitEnabler::onCityReligionChanged(*pCity, kEvent.iType, kEvent.iA != 0);
+				const bool bHeld = (kEvent.iEventId == SEVT_CITY_RELIGION_ADDED);
+				BuildingEnabler::onCityReligionChanged(*pCity, kEvent.iType, bHeld);
+				UnitEnabler::onCityReligionChanged(*pCity, kEvent.iType, bHeld);
 			}
 			break;
 		}
-		case SEVT_CORPORATION_CHANGED:
+		case SEVT_CITY_CORPORATION_ADDED:
+		case SEVT_CITY_CORPORATION_REMOVED:
 		{
 			const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iSrcLoc);
-			if (pCity != NULL) BuildingEnabler::onCityCorporationChanged(*pCity, kEvent.iType, kEvent.iA != 0);   // flip-guarded emit
+			if (pCity != NULL) BuildingEnabler::onCityCorporationChanged(*pCity, kEvent.iType, kEvent.iEventId == SEVT_CITY_CORPORATION_ADDED);
 			break;
 		}
 		// The NETWORK supply presence crossing. The direction is the event id ([DEC-facts-name-happenings]); the
 		// two cases share a body because the domain appliers take the crossing as a signed argument.
-		case SEVT_BONUS_ADDED:
-		case SEVT_BONUS_REMOVED:
+		case SEVT_CITY_BONUS_ADDED:
+		case SEVT_CITY_BONUS_REMOVED:
 		{
 			const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iSrcLoc);
 			if (pCity != NULL)
 			{
-				const int iCrossing = (kEvent.iEventId == SEVT_BONUS_ADDED) ? 1 : -1;
+				const int iCrossing = (kEvent.iEventId == SEVT_CITY_BONUS_ADDED) ? 1 : -1;
 				BuildingEnabler::onCityBonusChanged(*pCity, kEvent.iType, iCrossing);
 				UnitEnabler::onCityBonusChanged(*pCity, kEvent.iType, iCrossing);
 			}
 			break;
 		}
-		case SEVT_VICINITY_BONUS_CHANGED:   // LOCAL presence flip: re-gate the bonus's connection:vicinity dependents
+		case SEVT_CITY_VICINITY_BONUS_ADDED:
+		case SEVT_CITY_VICINITY_BONUS_REMOVED:   // LOCAL presence flip: re-gate the bonus's connection:vicinity dependents
 		{
 			const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iSrcLoc);
 			if (pCity != NULL)
@@ -96,13 +100,16 @@ private:
 			}
 			break;
 		}
-		case SEVT_CITY_CULTURE_LEVEL_CHANGED:   // the culture-level HAVE axis
+		case SEVT_CITY_CULTURE_LEVEL_ADDED:
+		case SEVT_CITY_CULTURE_LEVEL_REMOVED:   // the culture-level HAVE axis
 		{
 			const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iSrcLoc);
-			if (pCity != NULL) BuildingEnabler::onCityCultureLevelChanged(*pCity, kEvent.iB, kEvent.iA);   // old (iB) -> new (iA)
+			if (pCity != NULL) BuildingEnabler::onCityCultureLevelChanged(*pCity, kEvent.iA,
+				(kEvent.iEventId == SEVT_CITY_CULTURE_LEVEL_ADDED) ? +1 : -1);   // iA = the level this fact names
 			break;
 		}
-		case SEVT_CITY_ORDER_CHANGED:   // queue push/pop: the buildings gate's queued-exclusion re-gate (par.7.1 step 3)
+		case SEVT_CITY_ORDER_ADDED:
+		case SEVT_CITY_ORDER_REMOVED:   // queue push/pop: the buildings gate's queued-exclusion re-gate (par.7.1 step 3)
 		{
 			if (kEvent.iA == ORDER_CONSTRUCT)
 			{
@@ -111,7 +118,8 @@ private:
 			}
 			break;
 		}
-		case SEVT_TECH_CHANGED:
+		case SEVT_EMPIRE_TECH_ADDED:
+		case SEVT_EMPIRE_TECH_REMOVED:
 			if (kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS)
 			{
 				// A tech moves the per-bonus TechCityTrade GATE, and that gate lives inside CvCity::getNumBonuses
@@ -155,7 +163,8 @@ private:
 				TechEnabler::onTechChanged(GET_PLAYER((PlayerTypes)kEvent.iC).getTeam(), (TechTypes)kEvent.iType, kEvent.iA != 0);
 			}
 			break;
-		case SEVT_TRAIT_CHANGED:
+		case SEVT_EMPIRE_TRAIT_ADDED:
+		case SEVT_EMPIRE_TRAIT_REMOVED:
 			if (kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS)
 			{
 				// the HELD-TRAIT axis: a rung's own `enables.traits` edge is the developing ladder, so acquiring
@@ -173,7 +182,8 @@ private:
 				UnitEnabler::onPlayerCivicsChanged((PlayerTypes)kEvent.iC, kEvent.iB, kEvent.iType);
 			}
 			break;
-		case SEVT_PROJECT_CHANGED:
+		case SEVT_EMPIRE_PROJECT_ADDED:
+		case SEVT_EMPIRE_PROJECT_REMOVED:
 			if (kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS)
 			{
 				// the project->project HAVE axis (iType=Project, iB=team count delta). PER-MEMBER emits (one per
@@ -184,7 +194,8 @@ private:
 			break;
 		// ---- the requires-gate CLASS re-gates (no FK reverse edge exists for these -- the load-compiled
 		// class lists re-gate; the enablers skip them inside the load bracket) ----
-		case SEVT_POPULATION_CHANGED:
+		case SEVT_CITY_POPULATION_ADDED:
+		case SEVT_CITY_POPULATION_REMOVED:
 		{
 			const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iSrcLoc);
 			if (pCity != NULL)
@@ -194,7 +205,8 @@ private:
 			}
 			break;
 		}
-		case SEVT_POWER_CHANGED:
+		case SEVT_CITY_POWER_ADDED:
+		case SEVT_CITY_POWER_REMOVED:
 		{
 			const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iSrcLoc);
 			if (pCity != NULL)
@@ -204,14 +216,16 @@ private:
 			}
 			break;
 		}
-		case SEVT_GOLDEN_AGE_CHANGED:
+		case SEVT_EMPIRE_GOLDEN_AGE_ADDED:
+		case SEVT_EMPIRE_GOLDEN_AGE_REMOVED:
 			if (kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS)
 			{
 				BuildingEnabler::onPlayerGateClass((PlayerTypes)kEvent.iC, BuildingEnabler::GATE_GOLDEN_AGE);
 				UnitEnabler::onPlayerGateClass((PlayerTypes)kEvent.iC, UnitEnabler::GATE_GOLDEN_AGE);
 			}
 			break;
-		case SEVT_STATE_RELIGION_CHANGED:
+		case SEVT_EMPIRE_STATE_RELIGION_ADDED:
+		case SEVT_EMPIRE_STATE_RELIGION_REMOVED:
 			if (kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS)
 			{
 				BuildingEnabler::onPlayerGateClass((PlayerTypes)kEvent.iC, BuildingEnabler::GATE_STATE_RELIGION);
@@ -222,7 +236,8 @@ private:
 		// requires.build.disabled: NO_NUKES). NO_NUKES is an unrecognized predicate -> the GATE_DYNAMIC bucket, so the
 		// frontier re-gate is onPlayerGateClass(GATE_DYNAMIC). Emitted per-player (the ban fans out), rare (once/game),
 		// so re-gating the player's dynamic buildings is cheap. No modifier mark (no NO_NUKES-conditioned deposits).
-		case SEVT_NUKES_CHANGED:
+		case SEVT_WORLD_NUKES_BANNED_ADDED:
+		case SEVT_WORLD_NUKES_BANNED_REMOVED:
 			if (kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS)
 			{
 				BuildingEnabler::onPlayerGateClass((PlayerTypes)kEvent.iC, BuildingEnabler::GATE_DYNAMIC);
@@ -230,7 +245,8 @@ private:
 			}
 			break;
 		// ---- the unit-count crossing (par.7.1 step 3): caps / unit-count requires / upgrade availability ----
-		case SEVT_UNIT_COUNT:
+		case SEVT_EMPIRE_UNIT_COUNT_ADDED:
+		case SEVT_EMPIRE_UNIT_COUNT_REMOVED:
 			if (kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS)
 				UnitEnabler::onUnitCountChanged((PlayerTypes)kEvent.iC, kEvent.iType);
 			break;
@@ -250,7 +266,8 @@ private:
 		// condition in the tree names a real GAMEOPTION_ -- so a modder-option flip (a BUG-menu slider like the
 		// leader-promotion culture threshold) moves no verdict, and re-gating every city for it would be a blanket
 		// bought with nothing. Emit liberally, GATE precisely.
-		case SEVT_GAME_OPTION_CHANGED:
+		case SEVT_GAME_OPTION_ADDED:
+		case SEVT_GAME_OPTION_REMOVED:
 			if (kEvent.iB == GAMEOPTSPACE_GAME)
 			{
 				BuildingEnabler::gateAllCities();

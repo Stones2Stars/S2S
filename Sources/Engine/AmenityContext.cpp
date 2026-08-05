@@ -48,15 +48,17 @@ bool AmenityContext::wantsEvent(int iEventId)
 	switch (iEventId)
 	{
 	// The BUILDING leg -- the enabler's OPERATE crossing (never presence, never the processed notice).
-	case SEVT_BUILDING_ACTIVATED:
-	case SEVT_BUILDING_DORMANTED:
+	case SEVT_CITY_BUILDING_ACTIVATED:
+	case SEVT_CITY_BUILDING_DORMANTED:
 	// The EMPIRE leg -- a civic swap moves what the empire confers on every city; a capital move changes a
-	// CONDITIONED grant's gate for two cities at once while the grantor set does not move at all.
+	// CONDITIONED grant's gate, one NAMED city per fact, while the grantor set does not move at all.
 	case SEVT_CIVIC_ADOPTED:
-	case SEVT_CAPITAL_CHANGED:
+	case SEVT_EMPIRE_CAPITAL_ADDED:
+	case SEVT_EMPIRE_CAPITAL_REMOVED:
 	// A city CHANGED HANDS: its empire-conferred amenities belong to a different set of civics now, and the
 	// grantor facts will never restate themselves for it.
-	case SEVT_CITY_OWNER_CHANGED:
+	case SEVT_CITY_OWNER_ADDED:
+	case SEVT_CITY_OWNER_REMOVED:
 	// A city STARTED EXISTING: it folds what its owner already holds. The building half needs no pass (it is a
 	// delta off the per-building crossings), but the civic facts fired before this city existed to fan to.
 	case SEVT_CITY_FOUNDED:
@@ -78,14 +80,14 @@ void AmenityContext::onSpineEvent(const CvSpineEvent& kEvent)
 	}
 	switch (kEvent.iEventId)
 	{
-	case SEVT_BUILDING_ACTIVATED:
-	case SEVT_BUILDING_DORMANTED:
+	case SEVT_CITY_BUILDING_ACTIVATED:
+	case SEVT_CITY_BUILDING_DORMANTED:
 	{
 		const CvCity* pCity = amenityCityFor(kEvent.iC, kEvent.iSrcLoc);
 		if (pCity != NULL)
 		{
 			pCity->amenity().onGrantorCrossing(kEvent.iType,
-				(kEvent.iEventId == SEVT_BUILDING_ACTIVATED) ? 1 : -1);
+				(kEvent.iEventId == SEVT_CITY_BUILDING_ACTIVATED) ? 1 : -1);
 		}
 		break;
 	}
@@ -105,27 +107,32 @@ void AmenityContext::onSpineEvent(const CvSpineEvent& kEvent)
 			}
 		}
 		break;
-	// THE CAPITAL MOVED -- a conditioned grant's GATE flipped for two NAMED cities while the grantor set did not
-	// move at all. iSrcLoc = the new capital, iA = the old. Exactly two cities are touched, never the empire.
-	case SEVT_CAPITAL_CHANGED:
-		if (!spineGameLoadInProgress() && kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS)
-		{
-			const CvCity* pOld = amenityCityFor(kEvent.iC, kEvent.iA);
-			const CvCity* pNew = amenityCityFor(kEvent.iC, kEvent.iSrcLoc);
-			if (pOld != NULL) pOld->amenity().foldGateFlip(kEvent.iC, CASC_PRED_IS_CAPITAL, -1);
-			if (pNew != NULL) pNew->amenity().foldGateFlip(kEvent.iC, CASC_PRED_IS_CAPITAL, +1);
-		}
-		break;
-	// A city CHANGED HANDS: its empire-conferred amenities belong to a different set of civics now. iA = the OLD
-	// owner, iC = the new -- so the swap is derivable from the fact alone.
-	case SEVT_CITY_OWNER_CHANGED:
+	// THE CAPITAL MOVED -- a conditioned grant's GATE flipped while the grantor set did not move at all. Each
+	// fact names ONE city (iSrcLoc) and its owner (iC), so a move is the REMOVED of the old beside the ADDED of
+	// the new and neither side has to be recovered from a payload.
+	case SEVT_EMPIRE_CAPITAL_ADDED:
+	case SEVT_EMPIRE_CAPITAL_REMOVED:
 		if (!spineGameLoadInProgress() && kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS)
 		{
 			const CvCity* pCity = amenityCityFor(kEvent.iC, kEvent.iSrcLoc);
 			if (pCity != NULL)
 			{
-				pCity->amenity().foldAllCivicsOf(kEvent.iA, -1);
-				pCity->amenity().foldAllCivicsOf(kEvent.iC, +1);
+				pCity->amenity().foldGateFlip(kEvent.iC, CASC_PRED_IS_CAPITAL,
+					(kEvent.iEventId == SEVT_EMPIRE_CAPITAL_ADDED) ? +1 : -1);
+			}
+		}
+		break;
+	// A city CHANGED HANDS: its empire-conferred amenities belong to a different set of civics now. Each fact
+	// names the city and the ONE owner it concerns, so the losing and gaining ends are two facts.
+	case SEVT_CITY_OWNER_ADDED:
+	case SEVT_CITY_OWNER_REMOVED:
+		if (!spineGameLoadInProgress() && kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS)
+		{
+			const CvCity* pCity = amenityCityFor(kEvent.iC, kEvent.iSrcLoc);
+			if (pCity != NULL)
+			{
+				pCity->amenity().foldAllCivicsOf(kEvent.iC,
+					(kEvent.iEventId == SEVT_CITY_OWNER_ADDED) ? +1 : -1);
 			}
 		}
 		break;

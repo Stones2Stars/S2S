@@ -40,9 +40,10 @@ bool PolicyContext::wantsEvent(int iEventId)
 {
 	switch (iEventId)
 	{
-	case SEVT_CIVIC_ADOPTED:   // the swap: iType adopted, iB displaced
-	case SEVT_TRAIT_CHANGED:   // iType trait, iA = add
-	case SEVT_PLAYER_INIT:     // the initial traits, which no setter announces
+	case SEVT_CIVIC_ADOPTED:          // the swap: iType adopted, iB displaced
+	case SEVT_EMPIRE_TRAIT_ADDED:     // iType trait; the direction is the fact's identity
+	case SEVT_EMPIRE_TRAIT_REMOVED:
+	case SEVT_PLAYER_INIT:            // the initial traits, which no setter announces
 		return true;
 	default:
 		return false;
@@ -69,8 +70,11 @@ void PolicyContext::onSpineEvent(const CvSpineEvent& kEvent)
 		pPolicies->foldCivic(kEvent.iB, -1);
 		pPolicies->foldCivic(kEvent.iType, +1);
 		break;
-	case SEVT_TRAIT_CHANGED:
-		pPolicies->foldTrait(kEvent.iType, (kEvent.iA != 0) ? +1 : -1);
+	case SEVT_EMPIRE_TRAIT_ADDED:
+		pPolicies->foldTrait(kEvent.iType, +1);
+		break;
+	case SEVT_EMPIRE_TRAIT_REMOVED:
+		pPolicies->foldTrait(kEvent.iType, -1);
 		break;
 	case SEVT_PLAYER_INIT:
 		pPolicies->foldHeldTraits(+1);

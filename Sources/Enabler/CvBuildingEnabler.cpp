@@ -640,16 +640,25 @@ void BuildingEnabler::onCityVicinityBonusChanged(const CvCity& kCity, int iBonus
 	bd_gateSet(kCity, touched);
 }
 
-void BuildingEnabler::onCityCultureLevelChanged(const CvCity& kCity, int iOldLevel, int iNewLevel)
+// ONE LEVEL PER CALL, signed -- a level MOVE is the REMOVED of the old beside the ADDED of the new, so this no
+// longer takes both ends. The capped set re-gates on either end because the per-city wonder-CATEGORY cap reads
+// the level's max, and re-gating it twice across a move is idempotent.
+void BuildingEnabler::onCityCultureLevelChanged(const CvCity& kCity, int iLevel, int iCrossing)
 {
 	EnablerDomain& d = kCity.m_enabler.buildings;
-	if (!d.isSeeded() || iOldLevel == iNewLevel) return;
-	bd_applyAxis(d, AX_CULTURE, iOldLevel, -1);
-	bd_applyAxisGated(kCity, d, AX_CULTURE, iNewLevel, +1);   // one gate pass over both levels' touched... the new level's; the old level's dependents ride its REQUIRED_BY below
+	if (!d.isSeeded() || iLevel < 0 || iCrossing == 0) return;
+	if (iCrossing > 0)
+	{
+		bd_applyAxisGated(kCity, d, AX_CULTURE, iLevel, +1);
+	}
+	else
+	{
+		bd_applyAxis(d, AX_CULTURE, iLevel, -1);
+	}
 	if (!spineGameLoadInProgress())
 	{
 		std::set<int> touched;
-		bd_touched(bd_sourceInfo(AX_CULTURE, iOldLevel), touched);
+		bd_touched(bd_sourceInfo(AX_CULTURE, iLevel), touched);
 		// ...plus every CAPPED building here: the per-city wonder-CATEGORY cap reads the culture level's max, so a
 		// level change moves that verdict for candidates referencing the level NOWHERE -- the touched set above
 		// cannot reach them, and an unrouted gate input is a permanently stale verdict ([DEC-no-self-heal]).

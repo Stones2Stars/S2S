@@ -189,7 +189,7 @@ static int tr_promoteEntryCount(const CvInfo* j)   // `triggers` promote entries
 // Two triggers cover the whole (active promo building x unit present) relation, each firing only when that
 // relation actually CHANGES:
 //   (1) a unit ENTERS the city      -> grant it from every active promo building   (SEVT_UNIT_ENTERED_CITY)
-//   (2) a promo building GOES ACTIVE -> grant to every own-team unit present       (SEVT_BUILDING_ACTIVATED)
+//   (2) a promo building GOES ACTIVE -> grant to every own-team unit present       (SEVT_CITY_BUILDING_ACTIVATED)
 // (2) rides PROCESSED rather than the first-build apply because processBuilding fires on BOTH a fresh build AND a
 // dormancy WAKE -- so one hook covers "the building was just built" and "the building stepped out of dormancy"
 // (owner: both must grant). A unit TRAINED here is covered by its own creation path.
@@ -366,7 +366,7 @@ static int tr_grantBuildingsFrom(const CvInfo* j, CvCity* pSourceCity, CvPlayer&
 	return nPlaced;
 }
 
-// Ordering note: the legacy applied these MID-setup; the machine applies at SEVT_BUILDING_ADDED, which fires at
+// Ordering note: the legacy applied these MID-setup; the machine applies at SEVT_CITY_BUILDING_ADDED, which fires at
 // the END of setHasBuilding (after setupBuilding) -- so the building is fully set up before its provisions land,
 // which is strictly the safer order.
 static void tr_applyBuildingFirstBuild(const CvInfo* j, int iBuilding, int iPlayer, int iCity)
@@ -807,7 +807,7 @@ static void tr_applyCityPerTurn(CvCity* pCity)
 		{
 			const CvTriggerEntry* pEntry = entries[i];
 			// This is the onTurn plane only -- the onTurnEnd promote entries ride the targeted-propagation
-			// free-promotion path (SEVT_BUILDING_ACTIVATED / SEVT_UNIT_ENTERED_CITY), never a per-turn rescan.
+			// free-promotion path (SEVT_CITY_BUILDING_ACTIVATED / SEVT_UNIT_ENTERED_CITY), never a per-turn rescan.
 			if (pEntry->happening != "onTurn") continue;
 			// RECURRENCE (json §3.8 / §5): "onTurn" = every turn; {"onTurn": N} = every Nth.
 			if (pEntry->happeningInterval > 1 && (iTurn % pEntry->happeningInterval) != 0) continue;
@@ -1058,7 +1058,7 @@ void CvTriggerEngine::onEvent(const CvSpineEvent& e)
 	// ⚑ The machine subscribes to the ARRIVAL and never sees a removal, so there is no direction to test: a payload
 	// guard here was the fact's missing name, wearing an `if` ([DEC-facts-name-happenings]).
 	// iC = owner, iSrcLoc = city.
-	case SEVT_BUILDING_ADDED:
+	case SEVT_CITY_BUILDING_ADDED:
 		// iA = bFirst. A conquest transfer / load restore resolves (so it is visible) but is WITHHELD --
 		// the engine grants nothing in that case either (CvCity::setupBuilding's bFirst gate).
 		s_bFirstAcquire = (e.iA != 0);
@@ -1090,16 +1090,17 @@ void CvTriggerEngine::onEvent(const CvSpineEvent& e)
 		break;
 	// A city ACQUIRED (conquest/trade) arrives under a new owner who may already hold granting sources, so it
 	// folds them exactly as a founded city does. iC = the NEW owner (-1 on dispose -- the fold guards it).
-	case SEVT_CITY_OWNER_CHANGED: tr_foldOwnerGrantedBuildings(e.iC, e.iSrcLoc); break;
-	// iC = owner, iSrcLoc = the new capital (-1 = none left)
-	case SEVT_CAPITAL_CHANGED: tr_resolveCapitalChanged(e.iC, e.iSrcLoc); break;
+	case SEVT_CITY_OWNER_ADDED: tr_foldOwnerGrantedBuildings(e.iC, e.iSrcLoc); break;
+	// iC = owner, iSrcLoc = the capital that ARRIVED. A move is REMOVED beside ADDED, so "none left" is simply
+// the absence of an ADDED fact rather than a -1 this case has to recognise.
+	case SEVT_EMPIRE_CAPITAL_ADDED: tr_resolveCapitalChanged(e.iC, e.iSrcLoc); break;
 	case SEVT_TECH_ACQUIRED:    tr_resolveTech(e.iType, e.iC);       break;  // first-discover only (iC = discoverer)
 	// iType = chosen religion, iA = slot religion, iB = bAward, iC = founding player, iSrcLoc = holy city
 	case SEVT_RELIGION_FOUNDED: tr_resolveReligion(e.iType, e.iA, e.iC, e.iSrcLoc, e.iB != 0); break;
 	case SEVT_CIVIC_ADOPTED:    tr_resolveCivic(e.iType, e.iC);      break;  // iC = adopting player
 	case SEVT_PLAYER_INIT:      tr_resolvePlayerInit(e.iC);          break;  // iC = player (game start)
 	// iA = the new era, iC = the player whose era advanced (tech-driven -- CvTeam::setHasTech)
-	case SEVT_ERA_CHANGED:      if (e.iC >= 0) { tr_resolveEraChanged(e.iC); } break;
+	case SEVT_EMPIRE_ERA_ADDED: if (e.iC >= 0) { tr_resolveEraChanged(e.iC); } break;
 	// The per-turn provisions (increment 5). PLAYER-scoped only -- the GAME-scope boundary carries iC = -1 and is
 	// the perf/observability fact, not a grant trigger. Legacy ran the per-turn spawn inside CvCity::doTurn within
 	// CvPlayer::doTurn, so the player boundary is the ordering-faithful grain.
@@ -1108,7 +1109,7 @@ void CvTriggerEngine::onEvent(const CvSpineEvent& e)
 	// dormancy (the operate crossing covers both). Hand its promotions to everyone already standing there.
 	// ⚑ The machine subscribes to the ACTIVATION alone, so there is no direction left to test
 	// ([DEC-facts-name-happenings]). iType = building, iC = owner, iSrcLoc = city.
-	case SEVT_BUILDING_ACTIVATED:
+	case SEVT_CITY_BUILDING_ACTIVATED:
 		if (!s_bSuppressed && e.iC >= 0)
 		{
 			CvCity* pC = GET_PLAYER((PlayerTypes)e.iC).getCity(e.iSrcLoc);
