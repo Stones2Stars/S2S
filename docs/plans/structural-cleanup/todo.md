@@ -119,6 +119,24 @@
 > compiles, runs, and produces a plausible wrong answer, which is why none of them surfaced on its own.
 > ⛔ Symbols, never line numbers — a symbol survives an edit and a line number does not.
 
+- **⛔ REBUILD THE CONTEXTS' CONSUMER LAYER — `ContextConsumer` is DELETED, not converted (owner).** It is a
+  central switch that re-derives: every plot-substrate case calls `refreshPlot` → `applyPlotRefresh`, which
+  recomputes the whole `CASC_PRED_*` block through `CvPlot`'s own accessors and unfolds/refolds the working
+  city around it. That is the legacy read path rescheduled from read-time to event-time, which
+  [contexts.md](../../architecture/contexts.md) bans by name, and a central router is what
+  [DEC-dict-is-a-consumer](../../architecture/decisions.md#dec-dict-is-a-consumer) replaces — the interest set
+  belongs AT the store, or a missing route hides in a `switch` that looks complete. The target:
+  - **A per-bit plot fact, which does not exist yet** — `SEVT_PLOT_PREDICATE_ADDED` / `_REMOVED` carrying the
+    `CASC_PRED_*` id. It is what lets a member plot's bit reach `CityContext.plotAttrs` as `add(bit, ±1)`
+    instead of the city unfolding and refolding the plot's whole block.
+  - **The substrate fact SETS the bits it names** on `PlotContext`, per-bit, each bit's derivation declared
+    beside that bit — never a per-event judgement call, and never a re-read of the plot. `refreshOwnFacts` /
+    `refreshAdjacencyFacts` / `applyPlotRefresh` go with it.
+  - **`PlotContext` and `CityContext` each register their OWN consumer** declaring their own interest set, the
+    shape `AmenityContext::wantsEvent` already realizes; both inside the CONTEXTS band.
+  - **The adjacency leg reads the announcing plot's STORED block**, one hop, and each neighbour whose own bit
+    moves announces it — the fan-out stays bounded and needs no second mechanism.
+
 - **⛔ CONVERT THE PACKAGES TO THE MAINTAINED SUM — the THREE PLANES**
   ([DEC-maintained-sum](../../architecture/decisions.md#dec-maintained-sum);
   [state-repositories.md](../../architecture/state-repositories.md) § THE MAINTAINED SUM; the retired protocol is
