@@ -238,20 +238,56 @@
   the dictionary is the final stopping place ([contexts.md](../../architecture/contexts.md)). The ordering ban
   applies to a store that RE-DERIVES by reading another system's built set; a store that CONSUMES a delta has no
   such dependency and builds identically whenever the facts arrive.
-- **Move the capability union off `CvTeam` onto the PLAYER, fed by facts** ([capabilities.md](../../specs/capabilities.md)).
-  It is a `CvDerivedCacheSet` memo bound to a recompute and held on the one scope that is deliberately not a
-  context, so it breaks [DEC-scope-contexts](../../architecture/decisions.md#dec-scope-contexts) and
-  [DEC-flag-is-fossil](../../architecture/decisions.md#dec-flag-is-fossil) at once. It builds at team
-  CONSTRUCTION, before any tech exists, and the reseed announces techs as FACTS rather than through
-  `CvTeam::setHasTech` — so nothing ever marks it and it stays empty for the whole game. ⛔ The fix is NOT a mark
-  on the tech fact (that completes the banned mechanism): it is the `EmpireContext.policies` shape with the
-  `CAPABILITY_*` key space, fed `±1` by the tech / civic / building facts, with the readers re-pointed at the
-  player and `CascadeCapabilities` + `m_cascadeTeamCaps` deleted.
+- **Stop the amenity fold DOUBLE-ADDING at city founding.** `CvPlayer::found` announces the new city's owner AND
+  the founding itself, and both legs fold the owner's civics into the same store. The count lands at 2, which
+  `has()` hides — and the amenity then never lapses when its grantor goes. ONE of the two facts owns the fold.
+- **Stop the amenity fold going NEGATIVE on conquest.** `acquireCity` announces the old owner's removal against a
+  RECYCLED city object whose store was just zeroed, so the withdrawal runs from a known zero and an amenity both
+  empires' civics grant reads false FOREVER after the transfer. A delta store is correct only from a known zero
+  ([DEC-keyed-accumulator]) — the withdrawal must not be applied to a store that never held the addition.
+- **Announce the LEADER-CHANGE trait swap.** `clearLeaderTraits` and the re-assign in `changeLeader` write the
+  has-array raw and emit nothing, so the policy union keeps the old leader's policies forever and never gains the
+  new leader's. The player-init fact covers only a player's INITIAL traits; a leader swap is its own happening
+  ([DEC-facts-name-happenings]) and Revolution drives it.
+- **Emit the plot slots the read deserializes silently.** Irrigation, landmark and the city's working-plot set
+  deserialize wholesale, so `HAS_IRRIGATION`, `HAS_LANDMARK` and `IS_WORKED` are FALSE on every loaded game until
+  unrelated play happens to move them. ⚠ `IS_WORKED` is the one that compounds: `plotAttrs` folds it and every
+  plane-B deposit scales on it. The emit belongs in the slot's INTERNAL SETTER, which is what stops the next
+  serialized field being added without one ([event-spine.md](../../specs/event-spine.md): one slot, one fact).
+- **Re-route `governmentCenterDistance` and delete the fact pair nobody emits.** Its interest set names the
+  government-centre crossing, whose emitters have no callers at all — the counter that raised them became the
+  amenity fold and the interest set did not follow, so the distance is frozen at whatever founding or load
+  computed while `DISTANCE_TO_GOVERNMENT_CENTER` is read live. ⚠ It also re-derives by reading the amenity fold,
+  which is the ordering dependency [contexts.md](../../architecture/contexts.md) bans — settle the registration
+  order in the same change, and correct contexts.md, which still documents the retired counter as live.
+- **Give `NO_PLAYER`-attributed tech grants a consumer route.** The game's own free/start-era techs announce with
+  no owning player, so the capability union, the enabler and the modifier consumer all drop them alike. The fact
+  identifies the TEAM's acquisition; the consumers key on a player.
+- **Make the repeat-tech emit symmetric.** Play announces on every count increment while the read announces once
+  per held tech, so a counted tech's folded state differs across a save/load round-trip AND from the oracle's
+  from-source walk — which makes the missed-emit tripwire report a divergence that is not one.
 - **Give the vicinity store its `CASC_PRED_*`-keyed twin** — the vicinity counterpart of `plotAttrs` (river / coast
   / hills / peak / fresh water over the radius tiles), beside the `BONUS_*`-keyed one that now exists
   ([contexts.md](../../architecture/contexts.md), owner). ⛔ The two are NOT merged: the key spaces are disjoint
   registries both starting at 0, so one store re-opens the cross-registry id collision the `CLS_` prefix closed
   (`ContextDict.h`). Nothing reads it yet, so it lands when a consumer wants it.
+- **Declare `HAS_FRESHWATER`'s missing axes.** Its row enumerates most of the legs the live engine predicate
+  reads but omits the impassability leg, which branches on the OWNING TEAM's pass-peaks capability — so neither
+  an ownership change nor that tech re-derives the bit. ⚑ This is the standing cost of the
+  [DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation) carve-out: the one row
+  that calls a live engine predicate instead of reading stored bits has to transcribe its dependency set BY HAND,
+  and a hand-transcribed set can silently under-declare. Any future row of that kind carries the same hazard.
+- **Consume the withdrawal halves the unit plane already announces.** The unit-killed and left-city facts reach
+  no consumer while their created / entered-city twins do, so whatever folds on the arrival never retires it —
+  a compounding magnitude, not a stale gate ([state-repositories.md](../../architecture/state-repositories.md)).
+  ⛔ Acting on one half of an ADDED/REMOVED pair is the defect; find the folds, not just the facts.
+- **Emit the global-define WITHDRAWAL.** The removal helper exists with no caller while the addition fires, so a
+  live-option slot REPLACEMENT is announced half-open and the old value is never taken back
+  ([DEC-facts-name-happenings]: a slot replacement is two facts, and the withdrawal must be announced while the
+  old state still holds).
+- **Route the BUILDING grantor into the ability union when data authors one.** The building info already carries
+  the block and the union folds only the tech leg, so a building-authored capability would be silently dropped.
+  ⚠ No data authors one today — this lands WITH that data, never speculatively.
 - **Collapse the per-dictionary plumbing into one mechanism** — owner resolution, dispatch, consumer class and
   registration are hand-written per family.
 - **Retire `CvDerivedCache` by emptying it, one tenant at a time**
