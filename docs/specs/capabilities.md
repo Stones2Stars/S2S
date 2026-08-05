@@ -23,11 +23,17 @@ boolean gates that are neither (a building's `damageAllAttackers`, a wonder's `b
 
 **Current state:** readJson maps the `capabilities` block onto the entity's `CvJsonInfo` — each key realized as a
 runtime-generated **`CAPABILITY_*` info** ([DEC-classification-infos](../architecture/decisions.md#dec-classification-infos),
-[json.md §8](json.md)) with the grantor-side getters reading O(1) id bitsets — and the CvTeam capability
-getters **run on the cascade**: `CascadeCapabilities` (per-team cached derived-on-query union — O(1) precomputed
-flags + a per-terrain bit vector, invalidated at `setHasTech`/`reset`) is the **sole** union; the legacy counters
+[json.md §8](json.md)) with the grantor-side getters reading O(1) id bitsets; the legacy counters
 are deleted, their serialization retired by the soft-remove — the read + write dropped and the tags named in
-`Assets/savemigration.txt` ([save.md §3](save.md)). NPC guards + game-option compositions
+`Assets/savemigration.txt` ([save.md §3](save.md)).
+
+**The union is the PLAYER's, keyed and fact-fed** — `EmpireContext.policies`' shape with the `CAPABILITY_*` key
+space, fed by the tech / civic / building facts ([DEC-scope-contexts](../architecture/decisions.md#dec-scope-contexts):
+a team owns no live-state surface; [DEC-contextdict-replaces-derivedcache](../architecture/decisions.md#dec-contextdict-replaces-derivedcache)).
+⚠ **What that rules out, because the tree still holds it:** a per-team `CvDerivedCacheSet` memo bound to a
+recompute. Filled once at team CONSTRUCTION, before any tech exists, and marked by nothing thereafter — the reseed
+announces techs as FACTS, not through `CvTeam::setHasTech` — so it reads empty for the whole game, `canWorkOn.water`
+answers false and `CvCity::canWork` refuses every water tile. NPC guards + game-option compositions
 live in the getters; the side effects the deleted changers carried (the trade-network recompute
 `updatePlotGroups` + `MarkBridgesDirty`, the improvement-validity cache round, `updateYield`) survive in
 `processTech`. **The shadow phase has ended** ([validation.md](validation.md)) — the `[CAPSHADOW]` net no longer

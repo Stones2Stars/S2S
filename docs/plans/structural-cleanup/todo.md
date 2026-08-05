@@ -238,6 +238,15 @@
   the dictionary is the final stopping place ([contexts.md](../../architecture/contexts.md)). The ordering ban
   applies to a store that RE-DERIVES by reading another system's built set; a store that CONSUMES a delta has no
   such dependency and builds identically whenever the facts arrive.
+- **Move the capability union off `CvTeam` onto the PLAYER, fed by facts** ([capabilities.md](../../specs/capabilities.md)).
+  It is a `CvDerivedCacheSet` memo bound to a recompute and held on the one scope that is deliberately not a
+  context, so it breaks [DEC-scope-contexts](../../architecture/decisions.md#dec-scope-contexts) and
+  [DEC-flag-is-fossil](../../architecture/decisions.md#dec-flag-is-fossil) at once. It builds at team
+  CONSTRUCTION, before any tech exists, and the reseed announces techs as FACTS rather than through
+  `CvTeam::setHasTech` — so nothing ever marks it and it stays empty for the whole game. ⛔ The fix is NOT a mark
+  on the tech fact (that completes the banned mechanism): it is the `EmpireContext.policies` shape with the
+  `CAPABILITY_*` key space, fed `±1` by the tech / civic / building facts, with the readers re-pointed at the
+  player and `CascadeCapabilities` + `m_cascadeTeamCaps` deleted.
 - **Give the vicinity store its `CASC_PRED_*`-keyed twin** — the vicinity counterpart of `plotAttrs` (river / coast
   / hills / peak / fresh water over the radius tiles), beside the `BONUS_*`-keyed one that now exists
   ([contexts.md](../../architecture/contexts.md), owner). ⛔ The two are NOT merged: the key spaces are disjoint

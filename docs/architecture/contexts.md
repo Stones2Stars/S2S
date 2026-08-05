@@ -603,6 +603,9 @@ reference, and an area-shaped effect authors at **empire**.
 > A team's job on this plane is to hold the shared TECH/war facts and hand them across its members. It owns no
 > live-state surface, so **every team fact a reader needs is asked of the PLAYER** — team-held techs through
 > `EmpireContext::teamHasTech`, and everything else forwarded the same way.
+> ⇒ The team carries the unified TECH and PROJECT lists as MEMBERSHIP; anything DERIVED off them — the capability
+> union, the skill planes — is the PLAYER's. A derived store landing on `CvTeam` is misplaced by construction,
+> whatever maintains it.
 > ⛔ **Consequence, and it is structural: `CvCascadeEvalCtx` carries NO `CvTeam*`**, and no getter, evaluator,
 > predicate or valuation reaches a team to answer a state question. A player that cannot answer one is a
 > **CONTEXT GAP to close by adding the forward** (§ THE EVAL CTX), never a reason to reach a team.
