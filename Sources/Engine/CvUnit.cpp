@@ -18260,31 +18260,12 @@ void CvUnit::read(FDataStreamBase* pStream)
 			// that owns them. ⛔ NOT processPromotion -- the stats it applies are serialized on this unit in
 			// their own right (m_iExtraMoves, m_iBlitzCount, ... are read straight off the stream above), so
 			// running it here would double every one.
+			// ⚠ An isRemoveAfterSet promotion is the one the stream carries that is NOT restored as held: it
+			// removes itself once applied, so its effect is already in the unit's serialized totals and the
+			// flag correctly stays down.
 			if (!GC.getPromotionInfo((PromotionTypes)iI).isRemoveAfterSet())
 			{
 				setHasPromotionInternal((PromotionTypes)iI, true);
-			}
-
-			if (GC.getPromotionInfo((PromotionTypes)iI).getPromotionLine() != NO_PROMOTIONLINE
-			&& !GC.getPromotionInfo((PromotionTypes)iI).isStatus())
-			{
-				//	All lesser priority promotions on the same line are implied - make sure they are set
-				// ⛔ Through the INTERNAL setter, never the public one: the public setter would APPLY the
-				// promotion's stats, and an older save already carries their effect in its serialized totals.
-				// That is what the previous raw write was avoiding -- and the internal setter is exactly the
-				// half it wanted, so the implied rung now gets the movement hash and the fact as well.
-				// ⚠ IT SETS iI, INSIDE A LOOP OVER iJ, SO IT LANDS THE RUNG ALREADY SET ABOVE AND THE IMPLIED
-				// ONES NEVER GET SET. Preserved verbatim -- changing which promotions a loaded unit holds is a
-				// behaviour decision, not a refactor. It reads as `iJ` was meant; when that is decided, the fix
-				// is one character and the fact and hash come with it for free.
-				for (int iJ = 0; iJ < GC.getNumPromotionInfos(); iJ++)
-				{
-					if (GC.getPromotionInfo((PromotionTypes)iJ).getPromotionLine() == GC.getPromotionInfo((PromotionTypes)iI).getPromotionLine()
-					&& GC.getPromotionInfo((PromotionTypes)iI).getLinePriority() > GC.getPromotionInfo((PromotionTypes)iJ).getLinePriority())
-					{
-						setHasPromotionInternal((PromotionTypes)iI, true);
-					}
-				}
 			}
 		}
 	}
