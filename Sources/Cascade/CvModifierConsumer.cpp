@@ -116,26 +116,46 @@ namespace
 		case SEVT_CITY_BONUS_ADDED:
 		case SEVT_CITY_RELIGION_ADDED:
 		case SEVT_CITY_CORPORATION_ADDED:
+		case SEVT_CITY_POWER_ADDED:
+		case SEVT_CITY_HOLY_CITY_ADDED:
+		case SEVT_CITY_OWNER_ADDED:
+		case SEVT_PLOT_OWNER_ADDED:
+		case SEVT_EMPIRE_CAPITAL_ADDED:
+		case SEVT_EMPIRE_ERA_ADDED:
+		case SEVT_WORLD_NUKES_BANNED_ADDED:
 		case SEVT_EMPIRE_TECH_ADDED:
 		case SEVT_EMPIRE_TRAIT_ADDED:
-		case SEVT_EMPIRE_HERITAGE_ADDED:       return 1;
+		case SEVT_EMPIRE_HERITAGE_ADDED:
+		case SEVT_EMPIRE_GOLDEN_AGE_ADDED:
+		case SEVT_EMPIRE_STATE_RELIGION_ADDED: return 1;
 
 		case SEVT_CITY_BUILDING_DORMANTED:
 		case SEVT_CITY_BONUS_REMOVED:
 		case SEVT_CITY_RELIGION_REMOVED:
 		case SEVT_CITY_CORPORATION_REMOVED:
+		case SEVT_CITY_POWER_REMOVED:
+		case SEVT_CITY_HOLY_CITY_REMOVED:
+		case SEVT_CITY_OWNER_REMOVED:
+		case SEVT_PLOT_OWNER_REMOVED:
+		case SEVT_EMPIRE_CAPITAL_REMOVED:
+		case SEVT_EMPIRE_ERA_REMOVED:
+		case SEVT_WORLD_NUKES_BANNED_REMOVED:
 		case SEVT_EMPIRE_TECH_REMOVED:
 		case SEVT_EMPIRE_TRAIT_REMOVED:
-		case SEVT_EMPIRE_HERITAGE_REMOVED:     return -1;
+		case SEVT_EMPIRE_HERITAGE_REMOVED:
+		case SEVT_EMPIRE_GOLDEN_AGE_REMOVED:
+		case SEVT_EMPIRE_STATE_RELIGION_REMOVED: return -1;
 
 		// These four carry a MAGNITUDE (iA), so the multiplicity is the payload and the SIGN is still the id --
 		// "CITY_SPECIALIST_REMOVED 3" withdraws three times over ([event-spine.md]: the event is the operator).
 		case SEVT_CITY_SPECIALIST_ADDED:
+		case SEVT_CITY_POPULATION_ADDED:
 		case SEVT_EMPIRE_PROJECT_ADDED:
 		case SEVT_PLOTGROUP_BONUS_ADDED:
 		case SEVT_CITY_VICINITY_BONUS_ADDED:   return  kEvent.iA;
 
 		case SEVT_CITY_SPECIALIST_REMOVED:
+		case SEVT_CITY_POPULATION_REMOVED:
 		case SEVT_EMPIRE_PROJECT_REMOVED:
 		case SEVT_PLOTGROUP_BONUS_REMOVED:
 		case SEVT_CITY_VICINITY_BONUS_REMOVED: return -kEvent.iA;
@@ -479,7 +499,8 @@ namespace
 			// deposit, for every player at once, with no per-source route to derive it from.
 			// ⚠ The GAME space ONLY -- no authored deposit condition names a MODDERGAMEOPTION_, so a modder-option
 			// flip changes no deposit and marking for it would be a blanket bought with nothing.
-			case SEVT_GAME_OPTION_CHANGED:
+			case SEVT_GAME_OPTION_ADDED:
+			case SEVT_GAME_OPTION_REMOVED:
 				if (kEvent.iB == GAMEOPTSPACE_GAME)
 				{
 					for (int iP = 0; iP < MAX_PLAYERS; iP++)
@@ -494,15 +515,16 @@ namespace
 				break;
 			// A player's DIFFICULTY moved (flexible difficulty). The handicap is a modifier SOURCE the gather
 			// folds per scope, so this one player's whole basis re-derives.
-			case SEVT_PLAYER_HANDICAP_CHANGED:
+			case SEVT_EMPIRE_HANDICAP_ADDED:
+			case SEVT_EMPIRE_HANDICAP_REMOVED:
 				mc_markPlayerWhole(pPlayer, szSource);
 				break;
 			// ---- source-carrying state changes: the mask IS the source's compiled route ----
 			// The OPERATE CROSSING -- deposits flow only while the building is operating, so this is the fact that
 			// starts and stops them. ⛔ Deliberately NOT the "processed" completion notice, which is DIAGNOSTIC and
 			// says only that an apply ran (event-spine.md § THE RECEIVED LINE).
-			case SEVT_BUILDING_ACTIVATED:
-			case SEVT_BUILDING_DORMANTED:
+			case SEVT_CITY_BUILDING_ACTIVATED:
+			case SEVT_CITY_BUILDING_DORMANTED:
 			{
 				const CvCity* pCity = mc_city(pPlayer, kEvent.iSrcLoc);
 				if (kEvent.iType >= 0 && kEvent.iType < GC.getNumBuildingInfos())
@@ -517,8 +539,8 @@ namespace
 			// naming the building is re-resolved against CURRENT state either way, so the direction is genuinely
 			// not an input to this consumer. The building's OWN deposits ride the operate crossing instead, since
 			// a present-but-dormant building deposits nothing ([enabler.md] §3.2).
-			case SEVT_BUILDING_ADDED:
-			case SEVT_BUILDING_REMOVED:
+			case SEVT_CITY_BUILDING_ADDED:
+			case SEVT_CITY_BUILDING_REMOVED:
 			{
 				const CvCity* pCity = mc_city(pPlayer, kEvent.iSrcLoc);
 				if (kEvent.iType >= 0 && kEvent.iType < GC.getNumBuildingInfos())
@@ -529,7 +551,8 @@ namespace
 				}
 				break;
 			}
-			case SEVT_RELIGION_CHANGED:
+			case SEVT_CITY_RELIGION_ADDED:
+			case SEVT_CITY_RELIGION_REMOVED:
 			{
 				const CvCity* pCity = mc_city(pPlayer, kEvent.iSrcLoc);
 				if (kEvent.iType >= 0 && kEvent.iType < GC.getNumReligionInfos())
@@ -541,7 +564,8 @@ namespace
 					pPlayer, pCity, NULL);
 				break;
 			}
-			case SEVT_CORPORATION_CHANGED:
+			case SEVT_CITY_CORPORATION_ADDED:
+			case SEVT_CITY_CORPORATION_REMOVED:
 			{
 				const CvCity* pCity = mc_city(pPlayer, kEvent.iSrcLoc);
 				if (kEvent.iType >= 0 && kEvent.iType < GC.getNumCorporationInfos())
@@ -551,7 +575,8 @@ namespace
 				}
 				break;
 			}
-			case SEVT_SPECIALIST_CHANGED:
+			case SEVT_CITY_SPECIALIST_ADDED:
+			case SEVT_CITY_SPECIALIST_REMOVED:
 			{
 				const CvCity* pCity = mc_city(pPlayer, kEvent.iSrcLoc);
 				if (kEvent.iType >= 0 && kEvent.iType < GC.getNumSpecialistInfos())
@@ -561,9 +586,10 @@ namespace
 				}
 				break;
 			}
-			case SEVT_BONUS_ADDED:            // the city obtained a bonus over the network
-			case SEVT_BONUS_REMOVED:          // ... or lost it
-			case SEVT_VICINITY_BONUS_CHANGED: // a city's local (vicinity) supply count moved
+			case SEVT_CITY_BONUS_ADDED:              // the city obtained a bonus over the network
+			case SEVT_CITY_BONUS_REMOVED:            // ... or lost it
+			case SEVT_CITY_VICINITY_BONUS_ADDED:     // a city's local (vicinity) supply count moved
+			case SEVT_CITY_VICINITY_BONUS_REMOVED:
 			{
 				const CvCity* pCity = mc_city(pPlayer, kEvent.iSrcLoc);
 				if (kEvent.iType >= 0 && kEvent.iType < GC.getNumBonusInfos())
@@ -573,7 +599,8 @@ namespace
 				}
 				break;
 			}
-			case SEVT_PLOTGROUP_BONUS_CHANGED:   // the trade network's resource set -- reaches every connected city
+			case SEVT_PLOTGROUP_BONUS_ADDED:     // the trade network's resource set -- reaches every connected city
+			case SEVT_PLOTGROUP_BONUS_REMOVED:
 			{
 				if (kEvent.iType >= 0 && kEvent.iType < GC.getNumBonusInfos())
 				{
@@ -596,8 +623,10 @@ namespace
 			// ---- these two facts EXACTLY -- "they dirty on a different trigger from everything else: ONLY
 			// ---- when a promotion or combat class changes" -- so there is no route derivation here and no
 			// ---- blanket: the held set moved, so the unit re-resolves. Unit MOVEMENT never reaches this.
-			case SEVT_UNIT_PROMOTION_CHANGED:
-			case SEVT_UNIT_COMBAT_CHANGED:
+			case SEVT_UNIT_PROMOTION_ADDED:
+			case SEVT_UNIT_PROMOTION_REMOVED:
+			case SEVT_UNIT_COMBAT_ADDED:
+			case SEVT_UNIT_COMBAT_REMOVED:
 			{
 				if (pPlayer != NULL && kEvent.iA >= 0)
 				{
@@ -609,11 +638,16 @@ namespace
 				}
 				break;
 			}
-			case SEVT_IMPROVEMENT_CHANGED:
-			case SEVT_TERRAIN_CHANGED:
-			case SEVT_FEATURE_CHANGED:
-			case SEVT_ROUTE_CHANGED:
-			case SEVT_PLOT_BONUS_CHANGED:
+			case SEVT_PLOT_IMPROVEMENT_ADDED:
+			case SEVT_PLOT_IMPROVEMENT_REMOVED:
+			case SEVT_PLOT_TERRAIN_ADDED:
+			case SEVT_PLOT_TERRAIN_REMOVED:
+			case SEVT_PLOT_FEATURE_ADDED:
+			case SEVT_PLOT_FEATURE_REMOVED:
+			case SEVT_PLOT_ROUTE_ADDED:
+			case SEVT_PLOT_ROUTE_REMOVED:
+			case SEVT_PLOT_BONUS_ADDED:
+			case SEVT_PLOT_BONUS_REMOVED:
 			{
 				const CvPlot* pPlot = mc_plot(kEvent.iSrcLoc);
 				if (pPlot != NULL)
@@ -646,28 +680,16 @@ namespace
 					// EMPIRE scope that is CONDITIONED on -- or `per`-scaled by -- this substrate TYPE; that is
 					// exactly what the dependency route addresses, and without it such a deposit was never
 					// re-marked when the substrate appeared, staying wrong until something unrelated dirtied it.
-					// BOTH DIRECTIONS. The four substrate TYPE facts carry the departing value in iA beside the
-					// arriving one in iType, so a deposit keyed on what LEFT is routed too -- previously it could
-					// not be, and such a deposit kept contributing until something unrelated dirtied it.
-					const char* szArriving = mc_substrateTypeName(kEvent.iEventId, kEvent.iType);
-					if (szArriving != NULL)
+					// ⚑ ONE SOURCE PER FACT, named in iType: _ADDED names what arrived, _REMOVED what left. The
+					// old-value decode this used to carry -- a departing id in iA beside the arriving one, with a
+					// carve-out for the one fact that put a delta in iB instead -- is gone with the *_CHANGED shape
+					// it existed for, and with it the bonus special case that shape needed.
+					const char* szSubstrate = mc_substrateTypeName(kEvent.iEventId, kEvent.iType);
+					if (szSubstrate != NULL)
 					{
 					// ⛔ HOLE (plane C, the ATOM route): everything CONDITIONED on holding this source needs
 					// re-resolving here, and cannot be until the reverse index answers with the DEPOSITS the
 					// atom gates rather than a channel MASK. Deliberately left failing rather than papered over.
-					}
-					// ⛔ NOT for SEVT_PLOT_BONUS_CHANGED: that fact carries the placed/removed DELTA in iB and
-					// leaves iA at 0, so reading iA as an old id there would route bonus id 0 on every placement.
-					// Its removal case is already addressed -- it announces the bonus id with a -1 delta.
-					if (kEvent.iEventId != SEVT_PLOT_BONUS_CHANGED && kEvent.iA >= 0 && kEvent.iA != kEvent.iType)
-					{
-						const char* szDeparting = mc_substrateTypeName(kEvent.iEventId, kEvent.iA);
-						if (szDeparting != NULL)
-						{
-					// ⛔ HOLE (plane C, the ATOM route): everything CONDITIONED on holding this source needs
-					// re-resolving here, and cannot be until the reverse index answers with the DEPOSITS the
-					// atom gates rather than a channel MASK. Deliberately left failing rather than papered over.
-						}
 					}
 				}
 				break;
@@ -697,7 +719,8 @@ namespace
 			// apply the same crossing twice. What each fact additionally moves is a city RECEIVER SUM, which is
 			// the receiver's own route and not a mask to mark here ([state-repositories.md] § THE CROSS-SCOPE
 			// RECEIVER); the stubs that computed one and dropped it were left over from the retired protocol.
-			case SEVT_CITY_ORDER_CHANGED:   // the queue HEAD is the active process (the production->commerce conversion)
+			case SEVT_CITY_ORDER_ADDED:     // the queue HEAD is the active process (the production->commerce conversion)
+			case SEVT_CITY_ORDER_REMOVED:
 			{
 				// A city's active PROCESS is its head order, and the conversion it drives is a TIER-2 term of the
 				// per-city commerce split -- so the mark is exactly the empire's COMMERCE receiver sums, derived
@@ -710,7 +733,8 @@ namespace
 				break;
 			}
 			// ---- empire-level source flips ----
-			case SEVT_TECH_CHANGED:
+			case SEVT_EMPIRE_TECH_ADDED:
+			case SEVT_EMPIRE_TECH_REMOVED:
 			{
 				if (kEvent.iType >= 0 && kEvent.iType < GC.getNumTechInfos())
 				{
@@ -719,7 +743,8 @@ namespace
 				}
 				break;
 			}
-			case SEVT_TRAIT_CHANGED:
+			case SEVT_EMPIRE_TRAIT_ADDED:
+			case SEVT_EMPIRE_TRAIT_REMOVED:
 			{
 				if (kEvent.iType >= 0 && kEvent.iType < GC.getNumTraitInfos())
 				{
@@ -729,21 +754,27 @@ namespace
 				}
 				break;
 			}
-			case SEVT_CIVIC_ADOPTED:   // the swap fact: the adopted civic AND the swapped-out one both re-route
+			case SEVT_CIVIC_ADOPTED:   // the SWAP fact: one civic arrives (iType) and the one it displaces leaves (iB)
 			{
+				// ⛔ THE TWO SIDES TAKE OPPOSITE SIGNS, and they are written here rather than asked of
+				// mc_sourceDirection because that function answers per FACT and this one fact carries both ends.
+				// Applying one direction to both would deposit the displaced civic's modifiers a second time
+				// instead of withdrawing them -- a compounding phantom nothing later clears
+				// ([state-repositories.md] § THE MAINTAINED SUM).
 				if (kEvent.iType >= 0 && kEvent.iType < GC.getNumCivicInfos())
 				{
-					mc_applySource(&GC.getCivicInfo((CivicTypes)kEvent.iType), mc_sourceDirection(kEvent), kEvent.iEventId,
+					mc_applySource(&GC.getCivicInfo((CivicTypes)kEvent.iType), 1, kEvent.iEventId,
 						pPlayer, NULL, NULL);
 				}
 				if (kEvent.iB >= 0 && kEvent.iB < GC.getNumCivicInfos())
 				{
-					mc_applySource(&GC.getCivicInfo((CivicTypes)kEvent.iB), mc_sourceDirection(kEvent), kEvent.iEventId,
+					mc_applySource(&GC.getCivicInfo((CivicTypes)kEvent.iB), -1, kEvent.iEventId,
 						pPlayer, NULL, NULL);
 				}
 				break;
 			}
-			case SEVT_PROJECT_CHANGED:
+			case SEVT_EMPIRE_PROJECT_ADDED:
+			case SEVT_EMPIRE_PROJECT_REMOVED:
 			{
 				if (kEvent.iType >= 0 && kEvent.iType < GC.getNumProjectInfos())
 				{
@@ -752,7 +783,8 @@ namespace
 				}
 				break;
 			}
-			case SEVT_HERITAGE_CHANGED:
+			case SEVT_EMPIRE_HERITAGE_ADDED:
+			case SEVT_EMPIRE_HERITAGE_REMOVED:
 			{
 				if (kEvent.iType >= 0 && kEvent.iType < GC.getNumHeritageInfos())
 				{
@@ -762,14 +794,18 @@ namespace
 				break;
 			}
 			// ---- state flips a deposit's GATE reads: the dependency routes ----
-			case SEVT_POPULATION_CHANGED:
+			case SEVT_CITY_POPULATION_ADDED:
+			case SEVT_CITY_POPULATION_REMOVED:
 			{
+				// Plane B, the COUNT route: the delta is the fact's MAGNITUDE with the sign of its id, which is
+				// exactly what mc_sourceDirection resolves -- the payload no longer carries a signed number.
 				const CvCity* pCity = mc_city(pPlayer, kEvent.iSrcLoc);
-				mc_applyGated(DepositIndex::gatedByToken("POPULATION"), kEvent.iB, MMKernel::PER_SCALE_SUPPRESSED,
+				mc_applyGated(DepositIndex::gatedByToken("POPULATION"), mc_sourceDirection(kEvent), MMKernel::PER_SCALE_SUPPRESSED,
 					pPlayer, pCity, NULL);
 				break;
 			}
-			case SEVT_POWER_CHANGED:
+			case SEVT_CITY_POWER_ADDED:
+			case SEVT_CITY_POWER_REMOVED:
 			{
 				const CvCity* pCity = mc_city(pPlayer, kEvent.iSrcLoc);
 				mc_applyGated(DepositIndex::gatedByPredicate(CASC_PRED_HAS_POWER), mc_sourceDirection(kEvent), MMKernel::PER_SCALE_APPLIED,
@@ -781,7 +817,8 @@ namespace
 			// PlotContext consumes that city fact for exactly this reason (pc_cityAxisFor) and announces the
 			// crossing, and the predicate route above then binds the plot AND the city standing on it, which is
 			// the same reach this case had. Applying it here as well would double the crossing.
-			case SEVT_GOLDEN_AGE_CHANGED:
+			case SEVT_EMPIRE_GOLDEN_AGE_ADDED:
+			case SEVT_EMPIRE_GOLDEN_AGE_REMOVED:
 			{
 				mc_applyGated(DepositIndex::gatedByPredicate(CASC_PRED_IS_GOLDEN_AGE), mc_sourceDirection(kEvent), MMKernel::PER_SCALE_APPLIED,
 					pPlayer, NULL, NULL);
@@ -789,7 +826,8 @@ namespace
 				// combine -- the flip re-realizes every rate of the player
 				break;
 			}
-			case SEVT_STATE_RELIGION_CHANGED:
+			case SEVT_EMPIRE_STATE_RELIGION_ADDED:
+			case SEVT_EMPIRE_STATE_RELIGION_REMOVED:
 			{
 				mc_applyGated(DepositIndex::gatedByPredicate(CASC_PRED_HAS_STATE_RELIGION), mc_sourceDirection(kEvent), MMKernel::PER_SCALE_APPLIED,
 					pPlayer, NULL, NULL);
@@ -803,7 +841,8 @@ namespace
 					pPlayer, NULL, NULL);
 				break;
 			}
-			case SEVT_HOLY_CITY_CHANGED:
+			case SEVT_CITY_HOLY_CITY_ADDED:
+			case SEVT_CITY_HOLY_CITY_REMOVED:
 			{
 				const CvCity* pCity = mc_city(pPlayer, kEvent.iSrcLoc);
 				mc_applyGated(DepositIndex::gatedByPredicate(CASC_PRED_IS_HOLY_CITY), mc_sourceDirection(kEvent), MMKernel::PER_SCALE_APPLIED,
@@ -812,19 +851,24 @@ namespace
 					pPlayer, pCity, NULL);
 				break;
 			}
-			case SEVT_ERA_CHANGED:
+			case SEVT_EMPIRE_ERA_ADDED:
+			case SEVT_EMPIRE_ERA_REMOVED:
 			{
-				mc_applyGated(DepositIndex::gatedByToken("ERA"), kEvent.iB, MMKernel::PER_SCALE_SUPPRESSED,
+				mc_applyGated(DepositIndex::gatedByToken("ERA"), mc_sourceDirection(kEvent), MMKernel::PER_SCALE_SUPPRESSED,
 					pPlayer, NULL, NULL);
 				break;
 			}
-			case SEVT_NUKES_CHANGED:
+			// ⚠ The WORLD ban, not the empire's own nuke capability: CASC_PRED_NO_NUKES is the world verdict
+			// ([json.md] §3.5), so the ban ARRIVING is the predicate becoming true.
+			case SEVT_WORLD_NUKES_BANNED_ADDED:
+			case SEVT_WORLD_NUKES_BANNED_REMOVED:
 			{
 				mc_applyGated(DepositIndex::gatedByPredicate(CASC_PRED_NO_NUKES), mc_sourceDirection(kEvent), MMKernel::PER_SCALE_APPLIED,
 					pPlayer, NULL, NULL);
 				break;
 			}
-			case SEVT_CAPITAL_CHANGED:
+			case SEVT_EMPIRE_CAPITAL_ADDED:
+			case SEVT_EMPIRE_CAPITAL_REMOVED:
 			{
 				mc_applyGated(DepositIndex::gatedByPredicate(CASC_PRED_IS_CAPITAL), mc_sourceDirection(kEvent), MMKernel::PER_SCALE_APPLIED,
 					pPlayer, NULL, NULL);
@@ -852,7 +896,8 @@ namespace
 				break;
 			}
 			// ---- ownership moves: the entity's packages change scope owner; both empires' aggregates move ----
-			case SEVT_CITY_OWNER_CHANGED:
+			case SEVT_CITY_OWNER_ADDED:
+			case SEVT_CITY_OWNER_REMOVED:
 			{
 				// whole-scope blankets KEPT: an ownership move is a scope-object COMPOSITION event, not
 				// deposit-addressed -- the transferred city's evaluated source set (owner civics/traits/
@@ -875,7 +920,8 @@ namespace
 					pNewOwner, NULL, NULL);
 				break;
 			}
-			case SEVT_PLOT_OWNER_CHANGED:
+			case SEVT_PLOT_OWNER_ADDED:
+			case SEVT_PLOT_OWNER_REMOVED:
 			{
 				// an owner flip changes the plot's evaluated SOURCE SET (refreshPlot folds gt_foldPlayerSources
 				// over the NEW owner), so the whole isolated base package re-derives -- the substrate blanket's
