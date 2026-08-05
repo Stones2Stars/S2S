@@ -1272,6 +1272,12 @@ public:
 	bool isHasUnitCombat(UnitCombatTypes eIndex) const;
 	void processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPromo = false);
 	void setHasUnitCombat(UnitCombatTypes eIndex, bool bNewValue, bool bByPromo = false);
+	// ── THE INTERNAL DEATH-SCHEDULE SETTER (#430) ────────────────────────────────────────────────
+	// The save-carried state a DELAYED kill leaves behind so the object outlives combat resolution.
+	// ⚠ It is an INTENTION whose outcome can still flip to survival, which is why it is its own fact
+	// and not a death: a consumer treating it as one would bury units that walk away.
+	void setDeathDelayInternal(bool bNewValue);
+
 	// ── THE INTERNAL PROMOTION SETTER (#430) ─────────────────────────────────────────────────────
 	// The twin of the combat-class one below, and the same shape, because the COMMIT is the same: one
 	// keyed bool. ⛔ What is NOT in here, and never was part of the commit, is the CALLER's decision

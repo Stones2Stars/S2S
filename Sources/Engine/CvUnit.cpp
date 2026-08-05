@@ -1371,9 +1371,7 @@ bool CvUnit::scheduleDeath(bool bDelay, PlayerTypes ePlayer, bool bMessaged)
 
 		if (bDelay)
 		{
-			m_bDeathDelay = true;
-			emitUnitDeathScheduleAdded((int)getUnitType(), getID(), (int)eOwner,
-				GC.getMap().plotNum(pPlot->getX(), pPlot->getY()));
+			setDeathDelayInternal(true);
 			return true;
 		}
 	}
@@ -1425,9 +1423,7 @@ void CvUnit::evacuateToCapital(const CvCity& kCapitalCity)
 		gDLL->getText("TXT_KEY_MISC_BATTLEFIELD_EVAC", getNameKey()),
 		"AS2D_POSITIVE_DINK", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_GREEN(), getX(), getY()
 	);
-	m_bDeathDelay = false;
-	emitUnitDeathScheduleRemoved((int)getUnitType(), getID(), (int)getOwner(),
-		GC.getMap().plotNum(getX(), getY()));
+	setDeathDelayInternal(false);
 }
 
 //	NOT a death: a damage set. The unit is left one hit from dying and stays exactly where it stood.
@@ -1440,11 +1436,9 @@ void CvUnit::surviveLastStand()
 		gDLL->getText("TXT_KEY_MISC_YOUR_UNIT_IS_HARDCORE", getNameKey()),
 		"AS2D_POSITIVE_DINK", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_GREEN(), getX(), getY()
 	);
-	m_bDeathDelay = false;
+	setDeathDelayInternal(false);
 	//	Only applies to THIS combat - it might be attacked again the same turn
 	setSurvivor(false);
-	emitUnitDeathScheduleRemoved((int)getUnitType(), getID(), (int)getOwner(),
-		GC.getMap().plotNum(getX(), getY()));
 }
 
 //	⛔ THE ONE TERMINAL -- the only function that ends a unit's life, and the only caller of emitUnitKilled. It
@@ -17425,6 +17419,27 @@ bool CvUnit::isHasPromotion(PromotionTypes eIndex) const
 	return (info != NULL && info->m_bHasPromotion);
 }
 
+// COMMIT the flag, ANNOUNCE the fact. Both transitions announce -- a one-way fact would leave a survivor
+// permanently marked dying. The PLOT is passed in because the load knows the unit's id long before its
+// coordinates deserialize, and the id is what a consumer keys on.
+void CvUnit::setDeathDelayInternal(bool bNewValue)
+{
+	if (m_bDeathDelay == bNewValue)
+	{
+		return;
+	}
+	m_bDeathDelay = bNewValue;
+	const int iPlotNum = (plot() != NULL) ? GC.getMap().plotNum(getX(), getY()) : -1;
+	if (bNewValue)
+	{
+		emitUnitDeathScheduleAdded((int)getUnitType(), getID(), (int)getOwner(), iPlotNum);
+	}
+	else
+	{
+		emitUnitDeathScheduleRemoved((int)getUnitType(), getID(), (int)getOwner(), iPlotNum);
+	}
+}
+
 // COMMIT the keyed flag, MAINTAIN the movement hash, ANNOUNCE the fact -- and nothing else. The twin of
 // setHasUnitCombatInternal, and the same shape because the commit is the same: one keyed bool. processPromotion
 // below keeps the STATS the promotion carries, which a load must not re-apply (they are serialized on the unit
@@ -18182,14 +18197,13 @@ void CvUnit::read(FDataStreamBase* pStream)
 	// m_eUnitType have all deserialized. Result-producers suppress inside the load bracket, so this restores the
 	// instance without re-granting anything -- the emitCityBuildingAdded(bFirst = false) contract.
 	emitUnitCreated((int)m_eUnitType, m_iID, (int)m_eOwner);
-	// The matching in-read half for the death SCHEDULE: a save can be taken with a kill already deferred, and
-	// no setter runs on a load to announce it. A cleared schedule is the reset() default and announces nothing,
-	// for the same reason a stored 0 property value is skipped. The unit's coordinates deserialize later, so
-	// the plot is not yet knowable here -- the id is what a consumer keys on.
-	if (m_bDeathDelay)
-	{
-		emitUnitDeathScheduleAdded((int)m_eUnitType, m_iID, (int)m_eOwner, -1);
-	}
+	// The death SCHEDULE lands through its setter: a save can be taken with a kill already deferred. It
+	// deserialized earlier, so it is taken off the member, cleared, and handed back -- a cleared schedule is
+	// the reset() default and correctly announces nothing. The unit's coordinates arrive later, so the setter
+	// resolves no plot here and the id is what a consumer keys on.
+	const bool bLoadedDeathDelay = m_bDeathDelay;
+	m_bDeathDelay = false;
+	setDeathDelayInternal(bLoadedDeathDelay);
 
 	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvUnit", REMAPPED_CLASS_TYPE_UNITS, (int*)&m_eLeaderUnitType);
 
