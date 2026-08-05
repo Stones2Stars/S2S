@@ -1,129 +1,256 @@
 //
-//	PlotContext -- the ONE derivation of the plot's stored CASC_PRED_* verdicts (see the header for the two blocks
-//	and the fan-out rule), plus the forwards for the raw substrate a parameterized predicate keys on.
+//	PlotContext -- the PER-BIT derivation table for the plot's stored CASC_PRED_* verdicts, and the store's own
+//	spine consumer (see the header for the two blocks, the symmetric HAS_COAST ruling and the one-hop fan-out).
 //
-//	DEC-single-implementation: each verdict is derived by calling the SAME CvPlot accessor a read used to call --
-//	once, at maintenance time, instead of once per read. No predicate's logic is re-implemented here.
+//	⛔ THE TABLE IS THE DESIGN. Each row states ONE bit: its id, the substrate AXES it reads, and its derivation.
+//	The routing is then DERIVED from the table -- a fact re-derives exactly the rows whose axes it moved, and
+//	nothing else. That is what replaces the whole-block re-derivation contexts.md bans by name, and it answers the
+//	hazard the retired justification was right about (a hand-written per-event bit mask drifting from what the bits
+//	actually read) by putting the dependency BESIDE the derivation instead of in a switch somewhere else.
 //
-//	CONSTRAINT: refreshAdjacencyFacts reads the NEIGHBOURS' state (CvPlot::isCoastalLand / isFreshWater), so it is
-//	valid only once the map is settled -- CvPlot::area() is NULL for a plot whose area has not been assigned, and
-//	isCoastalLand dereferences an adjacent water plot's area. The maintainer (Engine/ContextConsumer) holds that
-//	guarantee: it defers every derivation until CvGame::isFinalInitialized().
+//	DEC-single-implementation: every own-plot row derives by calling the SAME CvPlot accessor a read used to call --
+//	once, when a fact that feeds it arrives, instead of once per read. No predicate's logic is re-implemented here.
+//	The ONE row that does not call an accessor is HAS_COAST, and it does not because the accessor's whole content is
+//	a neighbour walk this store already holds the answer to (the header's ruling).
 //
 
 #include "CvGameCoreDLL.h"
 #include "PlotContext.h"
 #include "CvPlot.h"
+#include "CvMap.h"                  // plotByIndex / plotNum -- the fact's iSrcLoc resolution
+#include "CvGameCoreUtils.h"        // plotDirection -- the one-hop neighbour fan-out
+#include "Defines/CvGlobals.h"      // GC
+#include "Spine/CvEventSpine.h"     // IEventConsumer / SEVT_* / the crossing emit
 
-unsigned int PlotContext::ownFactsMask()
+namespace
 {
-	return bitFor(CASC_PRED_IS_WATER)
-		| bitFor(CASC_PRED_IS_LAND)
-		| bitFor(CASC_PRED_IS_FLATLANDS)
-		| bitFor(CASC_PRED_HAS_HILLS)
-		| bitFor(CASC_PRED_HAS_PEAK)
-		| bitFor(CASC_PRED_HAS_RIVER)
-		| bitFor(CASC_PRED_HAS_IRRIGATION)
-		| bitFor(CASC_PRED_HAS_FEATURE)
-		| bitFor(CASC_PRED_HAS_LANDMARK)
-		| bitFor(CASC_PRED_IS_OWNED)
-		| bitFor(CASC_PRED_IS_WORKED);
-}
+	// --- THE PER-BIT DERIVATIONS ------------------------------------------------------------------------------
+	// Own-plot rows: one accessor call each, so the verdict is the engine's own and cannot drift from it.
+	bool pc_deriveIsWater(const CvPlot* pPlot)       { return pPlot->isWater(); }
+	bool pc_deriveIsLand(const CvPlot* pPlot)        { return !pPlot->isWater(); }
+	// Relief-free, NOT CvPlot::isFlatlands (which is the PLOT_LAND plot type): water carries no relief either,
+	// json par.3.5 -- this is the verdict the forwarding read produced and it is preserved exactly.
+	bool pc_deriveIsFlatlands(const CvPlot* pPlot)   { return !pPlot->isHills() && !pPlot->isPeak(); }
+	bool pc_deriveHasHills(const CvPlot* pPlot)      { return pPlot->isHills(); }
+	bool pc_deriveHasPeak(const CvPlot* pPlot)       { return pPlot->isPeak(); }
+	bool pc_deriveHasRiver(const CvPlot* pPlot)      { return pPlot->isRiver(); }
+	bool pc_deriveHasIrrigation(const CvPlot* pPlot) { return pPlot->isIrrigated(); }
+	bool pc_deriveHasFeature(const CvPlot* pPlot)    { return pPlot->getFeatureType() != NO_FEATURE; }
+	bool pc_deriveHasLandmark(const CvPlot* pPlot)   { return pPlot->getLandmarkType() != NO_LANDMARK; }
+	bool pc_deriveIsOwned(const CvPlot* pPlot)       { return pPlot->isOwned(); }
+	bool pc_deriveIsWorked(const CvPlot* pPlot)      { return pPlot->isBeingWorked(); }
 
-unsigned int PlotContext::adjacencyFactsMask()
-{
-	return bitFor(CASC_PRED_HAS_COAST)
-		| bitFor(CASC_PRED_HAS_FRESHWATER);
-}
-
-// Every stored bit EXCEPT IS_WORKED (see the header): a citizen taking or leaving a plot cannot move any
-// neighbour's coast / fresh-water verdict, so it must not pay for the one-hop rescan.
-unsigned int PlotContext::fanOutTriggerMask()
-{
-	return (ownFactsMask() | adjacencyFactsMask()) & ~bitFor(CASC_PRED_IS_WORKED);
-}
-
-// Re-derive the OWN-PLOT block from the bound plot alone.
-void PlotContext::refreshOwnFacts() const
-{
-	unsigned int derivedBits = 0;
-
-	if (m_plot != NULL)
+	// ⚖ HAS_COAST -- LAND WITH ADJACENT WATER, OR WATER WITH ADJACENT LAND (owner). Off the stored bits that is
+	// one statement: a neighbour whose IS_WATER differs from mine, i.e. this plot sits on the land/water boundary.
+	// ⛔ It reads the NEIGHBOURS' STORED BLOCKS, never a walk back through CvPlot ([contexts.md]) -- which is also
+	// why nothing here touches CvArea, and why this file needs no unsettled-map deferral.
+	// ⚠ It reads THIS plot's stored IS_WATER too, so the table's ORDER is load-bearing: the IS_WATER row sits above
+	// this one and is therefore already committed when a TYPE fact reaches this row.
+	bool pc_deriveHasCoast(const CvPlot* pPlot)
 	{
-		const bool bWater = m_plot->isWater();
-		const bool bHills = m_plot->isHills();
-		const bool bPeak = m_plot->isPeak();
+		const bool bWater = pPlot->getPlotContext().isWater();
+		for (int iDirection = 0; iDirection < NUM_DIRECTION_TYPES; ++iDirection)
+		{
+			const CvPlot* pAdjacentPlot = plotDirection(pPlot->getX(), pPlot->getY(), (DirectionTypes)iDirection);
+			if (pAdjacentPlot != NULL && pAdjacentPlot->getPlotContext().isWater() != bWater)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 
-		if (bWater)
+	// ⚖ HAS_FRESHWATER keeps calling CvPlot::isFreshWater (the header states why: it is a seven-leg verdict the
+	// ENGINE still consults for irrigation and farm gates, so a second expression of it would fork a live
+	// predicate). What changed is the CADENCE -- it now runs only when a fact that actually feeds it arrives.
+	// ⚠ TERRAIN IS THE ONE PRECONDITION: isFreshWater's first act is GC.getTerrainInfo(getTerrainType()), so a
+	// plot whose terrain is not set yet (mid world-generation) must not be asked. Terrain is mandatory on every
+	// plot and announces its own fact, which re-derives this row the moment it lands -- so this is a precondition
+	// on ONE derivation, never a staleness mechanism ([DEC-contexts-are-never-marked]).
+	bool pc_deriveHasFreshWater(const CvPlot* pPlot)
+	{
+		if (pPlot->getTerrainType() == NO_TERRAIN)
 		{
-			derivedBits |= bitFor(CASC_PRED_IS_WATER);
+			return false;
 		}
-		else
+		return pPlot->isFreshWater() || pPlot->isRiver();
+	}
+
+	typedef bool (*PlotBitDerive)(const CvPlot*);
+
+	struct PlotBitRule
+	{
+		int           iPredicateId;      // the CASC_PRED_* this row owns
+		int           iAxes;             // the substrate axes whose movement re-derives it
+		bool          bReadsNeighbours;  // an ADJACENCY row: re-derivable by a neighbour's move alone
+		PlotBitDerive pfnDerive;
+	};
+
+	// ⚑ ORDER MATTERS ONCE, and only here: HAS_COAST reads this plot's own stored IS_WATER, so the own-plot rows
+	// precede the adjacency rows. Everything else is independent.
+	const PlotBitRule s_plotBitRules[] =
+	{
+		{ CASC_PRED_IS_WATER,       PLOTAXIS_TYPE,       false, pc_deriveIsWater       },
+		{ CASC_PRED_IS_LAND,        PLOTAXIS_TYPE,       false, pc_deriveIsLand        },
+		{ CASC_PRED_IS_FLATLANDS,   PLOTAXIS_TYPE,       false, pc_deriveIsFlatlands   },
+		{ CASC_PRED_HAS_HILLS,      PLOTAXIS_TYPE,       false, pc_deriveHasHills      },
+		{ CASC_PRED_HAS_PEAK,       PLOTAXIS_TYPE,       false, pc_deriveHasPeak       },
+		{ CASC_PRED_HAS_RIVER,      PLOTAXIS_RIVER,      false, pc_deriveHasRiver      },
+		{ CASC_PRED_HAS_IRRIGATION, PLOTAXIS_IRRIGATION, false, pc_deriveHasIrrigation },
+		{ CASC_PRED_HAS_FEATURE,    PLOTAXIS_FEATURE,    false, pc_deriveHasFeature    },
+		{ CASC_PRED_HAS_LANDMARK,   PLOTAXIS_LANDMARK,   false, pc_deriveHasLandmark   },
+		{ CASC_PRED_IS_OWNED,       PLOTAXIS_OWNER,      false, pc_deriveIsOwned       },
+		{ CASC_PRED_IS_WORKED,      PLOTAXIS_WORKED,     false, pc_deriveIsWorked      },
+		// --- the ADJACENCY rows: derived from this plot AND its neighbours ---
+		{ CASC_PRED_HAS_COAST,      PLOTAXIS_TYPE,       true,  pc_deriveHasCoast      },
+		{ CASC_PRED_HAS_FRESHWATER,
+		  PLOTAXIS_TYPE | PLOTAXIS_TERRAIN | PLOTAXIS_RIVER | PLOTAXIS_FEATURE | PLOTAXIS_CITY,
+		                                                 true,  pc_deriveHasFreshWater }
+	};
+
+	const int NUM_PLOT_BIT_RULES = sizeof(s_plotBitRules) / sizeof(s_plotBitRules[0]);
+
+	// The fact -> AXIS map. One axis per substrate fact PAIR: the DIRECTION is the fact's own id and never a
+	// payload, so both halves of a pair land on the same axis and the row's derivation answers which way it went.
+	int pc_axisFor(int iEventId)
+	{
+		switch (iEventId)
 		{
-			derivedBits |= bitFor(CASC_PRED_IS_LAND);
-		}
-		// Relief-free, NOT CvPlot::isFlatlands (which is the PLOT_LAND plot type): water carries no relief either,
-		// json par.3.5 -- this is the verdict the forwarding read produced and it is preserved exactly.
-		if (!bHills && !bPeak)
-		{
-			derivedBits |= bitFor(CASC_PRED_IS_FLATLANDS);
-		}
-		if (bHills)
-		{
-			derivedBits |= bitFor(CASC_PRED_HAS_HILLS);
-		}
-		if (bPeak)
-		{
-			derivedBits |= bitFor(CASC_PRED_HAS_PEAK);
-		}
-		if (m_plot->isRiver())
-		{
-			derivedBits |= bitFor(CASC_PRED_HAS_RIVER);
-		}
-		if (m_plot->isIrrigated())
-		{
-			derivedBits |= bitFor(CASC_PRED_HAS_IRRIGATION);
-		}
-		if (m_plot->getFeatureType() != NO_FEATURE)
-		{
-			derivedBits |= bitFor(CASC_PRED_HAS_FEATURE);
-		}
-		if (m_plot->getLandmarkType() != NO_LANDMARK)
-		{
-			derivedBits |= bitFor(CASC_PRED_HAS_LANDMARK);
-		}
-		if (m_plot->isOwned())
-		{
-			derivedBits |= bitFor(CASC_PRED_IS_OWNED);
-		}
-		if (m_plot->isBeingWorked())
-		{
-			derivedBits |= bitFor(CASC_PRED_IS_WORKED);
+		case SEVT_PLOT_TYPE_ADDED:
+		case SEVT_PLOT_TYPE_REMOVED:         return PLOTAXIS_TYPE;
+		case SEVT_PLOT_TERRAIN_ADDED:
+		case SEVT_PLOT_TERRAIN_REMOVED:      return PLOTAXIS_TERRAIN;
+		case SEVT_PLOT_FEATURE_ADDED:
+		case SEVT_PLOT_FEATURE_REMOVED:      return PLOTAXIS_FEATURE;
+		case SEVT_PLOT_RIVER_ADDED:
+		case SEVT_PLOT_RIVER_REMOVED:        return PLOTAXIS_RIVER;
+		case SEVT_PLOT_IRRIGATION_ADDED:
+		case SEVT_PLOT_IRRIGATION_REMOVED:   return PLOTAXIS_IRRIGATION;
+		case SEVT_PLOT_LANDMARK_ADDED:
+		case SEVT_PLOT_LANDMARK_REMOVED:     return PLOTAXIS_LANDMARK;
+		case SEVT_PLOT_OWNER_ADDED:
+		case SEVT_PLOT_OWNER_REMOVED:        return PLOTAXIS_OWNER;
+		case SEVT_PLOT_WORKED_ADDED:
+		case SEVT_PLOT_WORKED_REMOVED:       return PLOTAXIS_WORKED;
+		case SEVT_PLOT_CITY_ADDED:
+		case SEVT_PLOT_CITY_REMOVED:         return PLOTAXIS_CITY;
+		default:                             return 0;
 		}
 	}
 
-	m_attributeBits = (m_attributeBits & ~ownFactsMask()) | derivedBits;
+	class PlotContextSpineConsumer : public IEventConsumer
+	{
+	public:
+		int wantedKinds() const { return (1 << EVENTKIND_DOMAIN); }
+		void onEvent(const CvSpineEvent& kEvent) { PlotContext::onSpineEvent(kEvent); }
+	};
+
+	PlotContextSpineConsumer s_plotContextConsumer;
+	bool s_bPlotContextRegistered = false;
 }
 
-// Re-derive the ADJACENCY block. Both verdicts read the neighbours through the plot's own accessors, so this is
-// the leg that must run for the 8 neighbours of any plot whose block moved.
-void PlotContext::refreshAdjacencyFacts() const
+// ⚖ THE DECLARED INTEREST SET. Everything that maintains a plot's verdict bits is named here, at the store -- so
+// a fact that does not reach it is visible HERE rather than inferable from a router ([DEC-dict-is-a-consumer]).
+// ⛔ SEVT_PLOT_PREDICATE_* is deliberately ABSENT: this store EMITS that fact, it does not consume it. Routing the
+// fan-out on the AXIS instead of on a bit's own crossing is what bounds the fan-out to one hop and makes a cascade
+// structurally impossible rather than merely avoided.
+bool PlotContext::wantsEvent(int iEventId)
 {
-	unsigned int derivedBits = 0;
+	return pc_axisFor(iEventId) != 0;
+}
 
-	if (m_plot != NULL)
+void PlotContext::onSpineEvent(const CvSpineEvent& kEvent)
+{
+	const int iAxis = pc_axisFor(kEvent.iEventId);
+	if (iAxis == 0 || kEvent.iSrcLoc < 0)
 	{
-		if (m_plot->isCoastalLand())
+		return;
+	}
+	const CvPlot* pPlot = GC.getMap().plotByIndex(kEvent.iSrcLoc);
+	if (pPlot == NULL)
+	{
+		return;
+	}
+	pPlot->getPlotContext().applyAxes(iAxis);
+
+	// THE ONE-HOP FAN-OUT. Only an axis a neighbour's adjacency verdict actually READS can move that neighbour, and
+	// an adjacency verdict is itself read by nobody's adjacency verdict -- so this reaches exactly the 8 neighbours
+	// and can never recurse. ⚑ It also makes the load order self-correcting: whichever plot of a boundary pair is
+	// read second re-derives BOTH sides, so a stream that fills the map in any order converges with no drain pass.
+	if ((iAxis & neighbourVisibleAxes()) != 0)
+	{
+		for (int iDirection = 0; iDirection < NUM_DIRECTION_TYPES; ++iDirection)
 		{
-			derivedBits |= bitFor(CASC_PRED_HAS_COAST);
-		}
-		if (m_plot->isFreshWater() || m_plot->isRiver())
-		{
-			derivedBits |= bitFor(CASC_PRED_HAS_FRESHWATER);
+			const CvPlot* pAdjacentPlot = plotDirection(pPlot->getX(), pPlot->getY(), (DirectionTypes)iDirection);
+			if (pAdjacentPlot != NULL)
+			{
+				pAdjacentPlot->getPlotContext().applyAdjacency();
+			}
 		}
 	}
+}
 
-	m_attributeBits = (m_attributeBits & ~adjacencyFactsMask()) | derivedBits;
+// Re-derive exactly the rows the moved axes feed. Never the whole block.
+void PlotContext::applyAxes(int iAxisMask) const
+{
+	if (m_plot == NULL)
+	{
+		return;
+	}
+	for (int iRule = 0; iRule < NUM_PLOT_BIT_RULES; ++iRule)
+	{
+		if ((s_plotBitRules[iRule].iAxes & iAxisMask) != 0)
+		{
+			setPredicate(s_plotBitRules[iRule].iPredicateId, s_plotBitRules[iRule].pfnDerive(m_plot));
+		}
+	}
+}
+
+// A NEIGHBOUR moved: only the rows that read neighbours can have changed.
+void PlotContext::applyAdjacency() const
+{
+	if (m_plot == NULL)
+	{
+		return;
+	}
+	for (int iRule = 0; iRule < NUM_PLOT_BIT_RULES; ++iRule)
+	{
+		if (s_plotBitRules[iRule].bReadsNeighbours)
+		{
+			setPredicate(s_plotBitRules[iRule].iPredicateId, s_plotBitRules[iRule].pfnDerive(m_plot));
+		}
+	}
+}
+
+// THE ONE WRITE POINT. Commits the bit and announces the CROSSING -- and only the crossing, so a derivation that
+// lands on the value already held costs nothing and says nothing.
+void PlotContext::setPredicate(int predicateId, bool bHeld) const
+{
+	const unsigned int iBit = bitFor(predicateId);
+	if (iBit == 0 || m_plot == NULL)
+	{
+		return;
+	}
+	const bool bWasHeld = (m_attributeBits & iBit) != 0;
+	if (bWasHeld == bHeld)
+	{
+		return;
+	}
+	m_attributeBits = bHeld ? (m_attributeBits | iBit) : (m_attributeBits & ~iBit);
+
+	// The fact that carries this bit UP to the city ([contexts.md]: the plot sends it up the chain; the city never
+	// reaches down for it). Emitted here because THIS is the maintenance path -- the store that owns the verdict
+	// announces its crossing, exactly as the amenity fold does.
+	const int iPlotIndex = GC.getMap().plotNum(m_plot->getX(), m_plot->getY());
+	const int iOwner = (int)m_plot->getOwner();
+	if (bHeld)
+	{
+		emitPlotPredicateAdded(iPlotIndex, iOwner, predicateId);
+	}
+	else
+	{
+		emitPlotPredicateRemoved(iPlotIndex, iOwner, predicateId);
+	}
 }
 
 // --- forwarded: the raw substrate CvPlot already holds O(1); a parameterized predicate keys on the id, and the one
@@ -164,4 +291,14 @@ void PlotContext::yields(int (&realizedYields)[NUM_YIELD_TYPES]) const
 		return;
 	}
 	m_plot->getYields(realizedYields);
+}
+
+void plotContextRegisterConsumer()
+{
+	if (s_bPlotContextRegistered)
+	{
+		return;
+	}
+	s_bPlotContextRegistered = true;
+	eventSpine().registerConsumer(&s_plotContextConsumer);
 }

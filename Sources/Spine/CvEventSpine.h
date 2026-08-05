@@ -568,6 +568,27 @@ enum SpineDomainEvent
 	// iA = the cityId, iC = owner, iSrcLoc = plotId. DOMAIN.
 	SEVT_PLOT_CITY_ADDED            = 134,
 	SEVT_PLOT_CITY_REMOVED          = 135,
+	// ⚖ THE PLOT'S OWN DERIVED VERDICT CROSSED -- one CASC_PRED_* bit of its stored block moved. Announced by
+	// PlotContext, which OWNS the verdict, at the crossing and nowhere else ([contexts.md]: the crossing is
+	// emitted by the FOLD, because the fold IS the maintenance path).
+	// ⚑ IT IS WHAT LETS A MEMBER PLOT'S BIT REACH THE CITY as `plotAttrs.add(bit, ±1)`. Without it a city could
+	// only learn that "something about this plot moved" and would have to unfold and refold the plot's whole
+	// block -- which cannot work, because by the time any consumer runs the plot already holds the NEW value.
+	// The PLOT sends its bit UP; the city never reaches down for it.
+	// ⛔ It is NOT a substrate fact and never replaces one: the substrate facts say what the TILE now carries,
+	// this says what that MEANS for the one predicate that moved. A consumer routing on a substrate id is asking
+	// about the source; a consumer routing on this is asking about the verdict.
+	// iType = the CASC_PRED_* id, iC = owner, iSrcLoc = plotId. DOMAIN.
+	SEVT_PLOT_PREDICATE_ADDED       = 136,
+	SEVT_PLOT_PREDICATE_REMOVED     = 137,
+	// ⚖ THE PLOT ENTERED / LEFT A CITY'S POTENTIAL WORK AREA -- the membership the CITY defines and the PLOT
+	// holds (`CvPlot::setWorkableBy`). ⛔ DISTINCT from the WORKING_CITY pair: that names the ONE city actually
+	// assigned the tile, this names every city that MAY work it, which is the set a radius-keyed store folds on.
+	// ⚑ It is what makes a GROWING radius an ordinary fact: the city-plot addressing is a fixed ring-ordered
+	// table, so a culture level-up admits exactly the indices between the old and new counts, and each announces.
+	// iA = the cityId, iC = owner, iSrcLoc = plotId. DOMAIN.
+	SEVT_PLOT_WORKABLE_BY_ADDED     = 138,
+	SEVT_PLOT_WORKABLE_BY_REMOVED   = 139,
 
 	// ===== PLOT GROUP / AREA =====
 	// A plot-group (the connectivity / trade-NETWORK identity) GAINED / LOST access to a resource --
@@ -793,6 +814,13 @@ void emitPlotWorkedRemoved(int iPlot, int iOwner, int iCity);
 // pass-throughs (changeCityRadiusCount / changePlayerCityRadiusCount).
 void emitPlotCityAdded(int iPlot, int iOwner, int iCity);
 void emitPlotCityRemoved(int iPlot, int iOwner, int iCity);
+// The plot's own derived verdict crossed. Emitted by PlotContext at the crossing ONLY -- never from a mutation
+// site, which owns the SOURCE and not the verdict.
+void emitPlotPredicateAdded(int iPlot, int iOwner, int iPredicate);
+void emitPlotPredicateRemoved(int iPlot, int iOwner, int iPredicate);
+// The plot entered / left a city's potential work area. Emitted by CvPlot::setWorkableBy only.
+void emitPlotWorkableByAdded(int iPlot, int iOwner, int iCity);
+void emitPlotWorkableByRemoved(int iPlot, int iOwner, int iCity);
 // ===== EMPIRE / player =====
 void emitEmpireTechAdded(int iPlayer, int iTech);
 void emitEmpireTechRemoved(int iPlayer, int iTech);

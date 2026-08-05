@@ -6,9 +6,12 @@
 #include "CvGameCoreDLL.h"
 #include "Enabler/CvEnablerConsumer.h"     // the enabler registers its OWN consumer (one per system)
 #include "CvModifierConsumer.h"            // the modifier cascade's OWN consumer (one per system)
-#include "Engine/ContextConsumer.h"        // the contexts' OWN consumer (the plotAttrs load reseed)
-#include "Engine/AmenityContext.h"
-#include "Engine/PolicyContext.h"           // the enacted-policy dictionary's own consumer          // the amenity CONTEXT's own consumer ([DEC-dict-is-a-consumer])
+// Each context store registers its OWN consumer with its OWN declared interest set ([DEC-dict-is-a-consumer]);
+// there is no central contexts router.
+#include "Engine/PlotContext.h"            // the plot's CASC_PRED_* verdict bits
+#include "Engine/CityContext.h"            // plotAttrs + the city-scope derived blocks
+#include "Engine/AmenityContext.h"         // the amenity CONTEXT's own consumer
+#include "Engine/PolicyContext.h"          // the enacted-policy dictionary's own consumer
 #include "CvCascadeChannelRegistry.h"      // the [CASCADE] mask decode (channel names per scope)
 #include "Spine/CvEventSpine.h"
 #include "Tools/CvHttpServer.h"   // the /events STREAM consumer (isEnabled + publishEvent)
@@ -323,6 +326,8 @@ enum SpineDomainField
 	SPF_TECH, SPF_TRAIT, SPF_CIVIC, SPF_PROJECT, SPF_IMPROVEMENT, SPF_TERRAIN, SPF_FEATURE, SPF_ROUTE,
 	SPF_OWNER, SPF_OLD_OWNER, SPF_NEW_OWNER,
 	SPF_CITY, SPF_PLOT, SPF_OLD_CITY, SPF_NEW_CITY,
+	// the plot's derived verdict crossing: WHICH CASC_PRED_* bit moved (the direction is the event's own id)
+	SPF_PREDICATE,
 	SPF_DELTA, SPF_HAS, SPF_VALUE, SPF_COUNT, SPF_ON,
 	// The generic old->new pair, for a fact whose value is a bare engine enum with no info table to resolve
 	// (PlotTypes, LandmarkTypes): the event PREFIX already names WHICH value it is, so the field stays generic.
@@ -463,6 +468,10 @@ static const char* spineDomainPrefix(int iEventId)
 	case SEVT_PLOT_WORKED_REMOVED:              return "[SPINE] plotWorkedRemoved";
 	case SEVT_PLOT_CITY_ADDED:                  return "[SPINE] plotCityAdded";
 	case SEVT_PLOT_CITY_REMOVED:                return "[SPINE] plotCityRemoved";
+	case SEVT_PLOT_PREDICATE_ADDED:             return "[SPINE] plotPredicateAdded";
+	case SEVT_PLOT_PREDICATE_REMOVED:           return "[SPINE] plotPredicateRemoved";
+	case SEVT_PLOT_WORKABLE_BY_ADDED:           return "[SPINE] plotWorkableByAdded";
+	case SEVT_PLOT_WORKABLE_BY_REMOVED:         return "[SPINE] plotWorkableByRemoved";
 	case SEVT_PLOTGROUP_BONUS_ADDED:            return "[SPINE] plotgroupBonusAdded";
 	case SEVT_PLOTGROUP_BONUS_REMOVED:          return "[SPINE] plotgroupBonusRemoved";
 	case SEVT_AREA_TILE_ADDED:                  return "[SPINE] areaTileAdded";
@@ -516,6 +525,7 @@ static const char* spineDomainFieldInfo(int iFieldTag, SpineFieldType* peType)
 	case SPF_NEW_OWNER:   *peType = SFT_PLAYER;      return "newOwner";
 	case SPF_CITY:        *peType = SFT_INT;         return "city";
 	case SPF_PLOT:        *peType = SFT_INT;         return "plot";
+	case SPF_PREDICATE:   *peType = SFT_INT;         return "predicate";
 	case SPF_OLD_CITY:    *peType = SFT_INT;         return "oldCity";
 	case SPF_NEW_CITY:    *peType = SFT_INT;         return "newCity";
 	case SPF_DELTA:       *peType = SFT_INT;         return "delta";
@@ -611,9 +621,8 @@ void spineRegisterConsumers()
 	// hand-wired mutation-site marks.
 	// ⛔ REGISTRATION ORDER IS A CONTRACT HERE, not tidiness, and it binds BOTH state-building machines.
 	// Consumers are dispatched in registration order, and GAME_LOAD_FINISHED is where the dependency bites:
-	//   - the CONTEXTS' consumer BUILDS the CityContext / EmpireContext stores on that event (it buffers the
-	//     load bracket's working-city facts and drains them through CvCity::onCityPlotChanged -- the plotAttrs
-	//     reseed), so it must go FIRST;
+	//   - the CONTEXT stores BUILD themselves on that event (CityContext buffers the load bracket's membership
+	//     facts and drains them through CvCity::onCityPlotChanged -- the plotAttrs reseed), so they go FIRST;
 	//   - the ENABLER's load-end pass gates every city, and each gate evaluates its conditions THROUGH those
 	//     stores (BuildingEnabler -> getCityContext().fillEvalCtx). Gating ahead of the contexts would evaluate
 	//     against EMPTY plotAttrs and empty vicinity sets -- every verdict silently wrong, with nothing to
@@ -621,12 +630,15 @@ void spineRegisterConsumers()
 	//   - the MODIFIER's drain rebuilds every package the reseed marked, and a package rebuild evaluates its
 	//     conditions against the same stores, so it goes LAST.
 	// Contexts -> enabler -> modifier. Anything reading a context store registers AFTER the contexts.
-	contextRegisterConsumer();
-	// ⚖ Inside the CONTEXTS band, and that is a contract rather than a placement: a context DICTIONARY is its own
-	// consumer with its own declared interest set ([DEC-dict-is-a-consumer]), so this file gains one line per
-	// dictionary as each converts -- but every one of them lands HERE, ahead of the enabler, because the enabler's
-	// load-end gate pass evaluates through these stores. Order is a property of the band, never of which
-	// translation unit happened to initialize first.
+	// ⚖ THE CONTEXTS BAND, and that is a contract rather than a placement: every context store is its own consumer
+	// with its own declared interest set ([DEC-dict-is-a-consumer]), so this file carries one line per store -- but
+	// every one of them lands HERE, ahead of the enabler, because the enabler's load-end gate pass evaluates
+	// through these stores. Order is a property of the band, never of which translation unit happened to
+	// initialize first.
+	// ⚑ WITHIN the band, PLOT precedes CITY: a plot's bit crossing is what the city folds, so the store that owns
+	// the bits sees the substrate fact before the store that counts them.
+	plotContextRegisterConsumer();
+	cityContextRegisterConsumer();
 	amenityContextRegisterConsumer();
 	policyContextRegisterConsumer();
 	enablerRegisterConsumer();
@@ -1209,6 +1221,40 @@ void emitPlotCityAdded(int iPlot, int iOwner, int iCity)
 void emitPlotCityRemoved(int iPlot, int iOwner, int iCity)
 {
 	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_CITY_REMOVED, -1, iCity, 0, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot).addI(SPF_CITY, iCity);
+	eventSpine().emit(e);
+}
+
+// The plot's own derived verdict crossed. iType carries the CASC_PRED_* id -- WHICH bit; the event id carries the
+// DIRECTION, so no payload sign, presence bool or old/new pair is needed ([DEC-facts-name-happenings]).
+void emitPlotPredicateAdded(int iPlot, int iOwner, int iPredicate)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_PREDICATE_ADDED, iPredicate, 0, 0, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot).addI(SPF_PREDICATE, iPredicate);
+	eventSpine().emit(e);
+}
+
+void emitPlotPredicateRemoved(int iPlot, int iOwner, int iPredicate)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_PREDICATE_REMOVED, iPredicate, 0, 0, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot).addI(SPF_PREDICATE, iPredicate);
+	eventSpine().emit(e);
+}
+
+void emitPlotWorkableByAdded(int iPlot, int iOwner, int iCity)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_WORKABLE_BY_ADDED, -1, iCity, 0, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot).addI(SPF_CITY, iCity);
+	eventSpine().emit(e);
+}
+
+void emitPlotWorkableByRemoved(int iPlot, int iOwner, int iCity)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_WORKABLE_BY_REMOVED, -1, iCity, 0, iOwner, iPlot);
 	e.iDomainTag = SD_SPINE;
 	e.addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot).addI(SPF_CITY, iCity);
 	eventSpine().emit(e);

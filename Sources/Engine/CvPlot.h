@@ -683,6 +683,15 @@ public:
 	void setImprovementUpgradeProgress(int iNewValue);
 	void changeImprovementUpgradeProgress(int iChange);
 
+	// ⚖ WHICH CITIES MAY WORK THIS PLOT -- the membership the CITY defines and the plot holds. DERIVED (city
+	// positions × their radii), so it is never serialized and the reseed rebuilds it.
+	// ⚑ It is the IDENTITY beside `m_iCityRadiusCount`'s bare COUNT: a count can say how many radii cover the
+	// tile but not WHOSE, so every consumer that needed the set had to re-derive it by walking a radius inverse.
+	// ⛔ The ONE write point is setWorkableBy, which announces the membership fact -- no other path mutates it.
+	bool isWorkableBy(const CvCity* pCity) const;
+	void setWorkableBy(const CvCity* pCity, bool bWorkable);
+	const std::vector<IDInfo>& workableByCities() const { return m_workableByCities; }
+
 	int getCityRadiusCount() const;
 	int isCityRadius() const;
 	void changeCityRadiusCount(int iChange);
@@ -1001,6 +1010,9 @@ protected:
 	short m_iOwnershipDuration;
 	short m_iUpgradeProgress;
 	short m_iCityRadiusCount;
+	// The cities whose CURRENT work area covers this plot. Derived, never serialized; typically 0-2 entries, so a
+	// plain vector beats any keyed structure at ~9,600 plots under the 32-bit ceiling.
+	std::vector<IDInfo> m_workableByCities;
 	int m_iRiverID;
 	short m_iMinOriginalStartDist;
 	short m_iReconCount;

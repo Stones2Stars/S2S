@@ -153,6 +153,25 @@ then fill the hole.
 same terms; add it here when you find it. ⛔ What is NOT allowed is discovering a legacy surface and recording it
 as acceptable, scheduled, or "kept until X" — that reframing is the failure this section exists to prevent.
 
+> **⚖ A WRONG WIRING IS REMOVED ON SIGHT, AND AN INTERIM WRONG NUMBER IS ACCEPTABLE (owner): *"it does not
+> really matter if we temporarily doublecount, it is more important that things are wired correctly, and wrong
+> wirings are removed on sight."*** This extends the demolition order above from legacy CODE to legacy
+> STRUCTURE, and it is the same ruling as
+> [DEC-playability-not-a-gate](../../architecture/decisions.md#dec-playability-not-a-gate)'s *wired outranks
+> correct* applied to the maintenance surface rather than to the build.
+> ⛔ **So a double-count is NEVER a reason to keep a second maintenance surface alive, and it is never a thing to
+> weigh.** The tempting move is to preserve the wrong wiring because removing it makes a number visibly wrong for
+> a while — which is exactly backwards: the wrong number is temporary and loud, while the second surface is
+> permanent and quiet, and it is what the next consumer route silently doubles against.
+> ⚑ **The shape to recognise:** a mutation choke point that MAINTAINS a derived store directly beside the fact it
+> emits. The mutation site owns the SOURCE, never the store ([DEC-dict-is-a-consumer](../../architecture/decisions.md#dec-dict-is-a-consumer));
+> a store is maintained by its OWN consumer, off the fact. ⚠ The tell that one is present is a consumer
+> deliberately IGNORING a fact "because the choke point already applied it" — that skip is the compensation, and
+> it fails the moment anything else routes on the same fact.
+> ⛔ **Do not record one as a todo entry.** Finding it IS the work item ([DEC-close-event-gaps-now](../../architecture/decisions.md#dec-close-event-gaps-now)
+> is the same rule for the other direction, a missing route); it closes in the same change, and the compensating
+> skip goes with it.
+
 ## ⛔ THE OPEN ITEM — the ACCESS surface
 
 > *"What we ultimately want is settled in the spec. What is not done is defining what and how things are

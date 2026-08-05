@@ -49,11 +49,22 @@ class CvPlot;
 class CvCity;
 class CvClassificationBlock;   // a grantor's §8 `amenities` block, folded by pointer (never included here)
 struct CvCascadeEvalCtx;
+struct CvSpineEvent;
 struct OperatingBuildings;   // the enabler's per-city ACTIVE set, forwarded (CvCity owns the storage)
 
 // The city-side twin of CLS_HAS: a one-line getter body reading the city's amenity FOLD by key, with the
 // load-minted id memoized per call site. The city is what a gate asks (contexts.md) -- never each grantor.
 #define CITY_HAS_AMENITY(ctx, key) { static int s_amenityId = -1; return (ctx).hasAmenityKey(s_amenityId, key); }
+
+//	The STORED vicinity partitions. ⛔ NEUTRAL is deliberately absent -- it is the DEFAULT (no owner), answered as
+//	the residual `all − owned − foreign`, so it needs no storage and no fact (see the members).
+enum CityVicinityPartition
+{
+	CITYVIC_ALL,       // on a radius tile at all -- the total the ownership bands are carved out of
+	CITYVIC_OWNED,     // that tile is owned by this city's owner
+	CITYVIC_FOREIGN,   // that tile is owned by another player
+	CITYVIC_WORKED     // a citizen of this city works that tile
+};
 
 class CityContext
 {
@@ -67,15 +78,24 @@ public:
 	// `mutable` like every other store here, so the const maintenance entry points can reach it.
 	mutable ContextDict plotAttrs;
 	// A plot ENTERED (sign +1) / LEFT (sign -1) the city's owned worked-radius set: fold its stable HAS_/IS_ attributes
-	// (+/-1) into plotAttrs. COUNTS only; the plot is never stored. Fired from the CvPlot::updateWorkingCity choke
-	// point at play; the load reseed folds the same fact from the in-read SEVT_WORKING_CITY_CHANGED DOMAIN events
-	// (Engine/ContextConsumer -- DEC-spine-reseed).
+	// (+/-1) into plotAttrs. COUNTS only; the plot is never stored. Reached ONLY from this store's own consumer, off
+	// the SEVT_PLOT_WORKING_CITY_ADDED / _REMOVED membership fact -- at play as it fires, and at load from the
+	// buffered in-read facts once the stream has ended (DEC-spine-reseed).
 	void onPlotChanged(const CvPlot* plot, int sign);
-	// ⛔ THE VICINITY TIERS HAVE NO APPLIER. The radius walk is deleted and nothing has replaced it yet, so the
-	// tier dictionaries below stay EMPTY -- deliberately, and visibly wrong, rather than filled by something that
-	// re-reads the plot. They are rebuilt driven by the plot facts' own payloads (bonus +-1, owner old->new,
-	// worked 0/1, the network fact), each of which already names which tier moves and in which direction; an
-	// applier that asks the plot instead is the legacy read path on an event clock ([contexts.md]).
+	// A radius tile's BONUS arrived / left, or its OWNERSHIP moved it between partitions. ±1, applied by this
+	// store's own consumer off the plot facts -- never a radius walk, and never a fill pass
+	// ([contexts.md]: the objection the dictionary answers is the REWALK).
+	void applyVicinityBonus(int iBonus, CityVicinityPartition ePartition, int iSign) const;
+	// ⚖ A MEMBER PLOT'S OWN BIT MOVED -- the ±1 the per-bit fact exists for. The PLOT announces the crossing
+	// (SEVT_PLOT_PREDICATE_ADDED / _REMOVED) and this applies it; the city never reaches down to re-read the
+	// plot's block ([contexts.md]). ⛔ THE ALTERNATIVE CANNOT WORK, which is why the fact was minted: a city-side
+	// maintainer that "unfolds the old bits and refolds the new" runs after the plot already holds the NEW value,
+	// so the old bits it needs are gone. ⚠ The failure if this route is missing is NOT a stale gate but a
+	// COMPOUNDING MAGNITUDE -- plotAttrs is plane B's COUNT, so a bit never withdrawn leaves every deposit scaled
+	// on it inflated permanently, and further inflated on every later substrate change.
+	void onPlotPredicateChanged(int iPredicateId, int iSign) const;
+	// The VICINITY store is fed by `applyVicinityBonus` off the plot facts' own payloads -- each already names
+	// which band moves and in which direction, so nothing re-reads the plot to find out ([contexts.md]).
 
 	// --- STORED: the city's AMENITIES -- what its grantors CONFER ON IT (json §8) -----------------------------------
 	// The clean feature list every gate checks (owner): a consumer asks the CITY, never each building in turn.
@@ -92,7 +112,14 @@ public:
 	// ⚠ Its maintainer reaches `pCity->amenity()` DIRECTLY -- never `getCityContext().amenity()`, which would
 	// make this class a pass-through facade for state it does not own.
 
-	// --- MAINTENANCE: called ONLY by the contexts' spine consumer (Engine/ContextConsumer) --------------------------
+	// --- THE MAINTENANCE: reached ONLY through this store's own spine consumer -------------------------------------
+	// ⚖ THE DECLARED INTEREST SET -- the facts that maintain this store, stated AT the store rather than in a
+	// central switch that fans out to whichever store a case happens to name ([DEC-dict-is-a-consumer]). A fact
+	// absent from this list does not reach the store, and that is readable HERE.
+	static bool wantsEvent(int iEventId);
+	static void onSpineEvent(const CvSpineEvent& kEvent);
+
+	// --- MAINTENANCE ENTRY POINTS: called ONLY from this store's own consumer ---------------------------------------
 	// Each re-derives its WHOLE store from the bound city through the SAME engine accessors a read used to call --
 	// ONCE per change instead of once per read, and one uniform derivation rather than a bespoke per-event delta.
 	// CONSTRAINT: no choke point may call these directly. Every mutation that moves a stored fact emits its own DOMAIN
@@ -234,11 +261,15 @@ private:
 	// The MAP-provider vicinity presence, one dictionary per json par.3.4 ownership tier, all folded by the ONE
 	// derivation (the onPlotChanged fold). The tiers NEST -- owned ⊂ owned+neutral ⊂ crossBorder, worked ⊂ owned --
 	// so the read composes them rather than each carrying a redundant copy.
-	mutable ContextDict m_vicinityOwned;       // a radius tile this city owns (the centre tile included)
-	mutable ContextDict m_vicinityNeutral;     // an UNOWNED radius tile
-	mutable ContextDict m_vicinityForeign;     // a radius tile owned by another player (the crossBorder opt-in only)
+	// ⚖ NEUTRAL IS THE DEFAULT STATE -- IF THERE IS NO OWNER IT IS NEUTRAL (owner). So neutral is NOT a stored
+	// partition and needs no fact of its own: it is the RESIDUAL, `all − owned − foreign`. That is what makes the
+	// store maintainable at all, because the owner pair (`SEVT_PLOT_OWNER_ADDED / _REMOVED`) is guarded on
+	// `!= NO_PLAYER` and therefore announces only the OWNED ends -- a stored neutral tier would have no announced
+	// transition across `unowned ⇄ owned` and could not be kept correct by any delta.
+	mutable ContextDict m_vicinityAll;         // the bonus is on a radius tile, whoever owns it -- moved ONLY by the bonus facts
+	mutable ContextDict m_vicinityOwned;       // ...and that tile is owned by THIS city's owner
+	mutable ContextDict m_vicinityForeign;     // ...and that tile is owned by ANOTHER player (the crossBorder opt-in only)
 	mutable ContextDict m_vicinityWorked;      // a radius tile a citizen works this turn (the centre tile included)
-	mutable ContextDict m_vicinityConnected;   // owned + a valid bonus + connected to this city (the "obtained" tier)
 	mutable int m_areaId;                      // the city's area ID (-1 = unassigned)
 	mutable int m_areaTileCount;               // that area's tile count -- AREA_SIZE served without dereferencing CvArea
 	// The largest ADJACENT water body, in tiles -- ONE int that answers isCoastal at EVERY threshold
@@ -250,5 +281,7 @@ private:
 	// the whole distance-maintenance leg; it moves only on a government-centre crossing or a city gained/lost.
 	mutable int m_governmentCenterDistance;
 };
+
+void cityContextRegisterConsumer();   // register on the event spine (from spineRegisterConsumers; idempotent)
 
 #endif // CV_CITY_CONTEXT_H

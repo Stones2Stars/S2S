@@ -620,6 +620,11 @@ void CvCity::init(int iID, PlayerTypes eOwner, int iX, int iY, bool bBumpUnits, 
 
 	updateCultureLevel(false);
 
+	// The city now HAS a work area: hand every plot in it this city's membership. ⚠ The culture-level transition
+	// above may already have covered part of the range; setWorkableBy announces only genuine crossings, so the
+	// overlap is a no-op rather than a double.
+	changeWorkableArea(0, getNumCityPlots());
+
 	pPlot->changeCulture(getOwner(), GC.getFREE_CITY_CULTURE(), bBumpUnits);
 
 	// Immediately put some tiles on adjacent tiles if not 1TF option. Which tiles depends on game options.
@@ -1369,6 +1374,10 @@ void CvCity::kill(bool bUpdatePlotGroups, bool bUpdateCulture)
 	area()->changeCitiesPerPlayer(eOwner, -1);
 	GET_TEAM(getTeam()).changeNumCities(-1);
 	GC.getGame().changeNumCities(-1);
+
+	// The city is going: withdraw its membership from every plot of its work area, so no store keeps folding a
+	// city that no longer exists.
+	changeWorkableArea(getNumCityPlots(), 0);
 
 	pPlot->setPlotCity(NULL);
 
@@ -5479,6 +5488,11 @@ void CvCity::setCultureLevelInternal(CultureLevelTypes eNewValue)
 		return;
 	}
 	m_eCultureLevel = eNewValue;
+	// THE RADIUS MAY HAVE GROWN OR SHRUNK: hand the plots between the two counts their membership change. Read
+	// through the parameterized form, because m_eCultureLevel has already moved -- the OLD work area is only
+	// answerable from the old level.
+	changeWorkableArea(getNumCityPlotsAtCultureLevel((int)eOldValue),
+		getNumCityPlotsAtCultureLevel((int)eNewValue));
 	if (eOldValue != NO_CULTURELEVEL)
 	{
 		emitCityCultureLevelRemoved(getID(), getOwner(), (int)eOldValue);
@@ -15131,11 +15145,41 @@ is a city size of 1.
 */
 int CvCity::getNumCityPlots() const
 {
+	return getNumCityPlotsAtCultureLevel((int)getCultureLevel());
+}
+
+// THE WHOLE MAINTENANCE SURFACE of the plots' `workableBy` membership. The city-plot addressing is a FIXED
+// ring-ordered table, so a radius is a PREFIX of it and a change is exactly the index range between the two
+// counts -- nothing geometric is rebuilt, and the direction falls out of which count is larger.
+void CvCity::changeWorkableArea(int iOldNumCityPlots, int iNewNumCityPlots) const
+{
+	const bool bGrowing = (iNewNumCityPlots > iOldNumCityPlots);
+	const int iFrom = bGrowing ? iOldNumCityPlots : iNewNumCityPlots;
+	const int iTo = bGrowing ? iNewNumCityPlots : iOldNumCityPlots;
+	for (int iRingIndex = iFrom; iRingIndex < iTo; ++iRingIndex)
+	{
+		CvPlot* pPlot = getCityIndexPlot(iRingIndex);
+		if (pPlot != NULL)
+		{
+			pPlot->setWorkableBy(this, bGrowing);
+		}
+	}
+}
+
+// The SAME derivation, parameterized by the culture level rather than reading the city's current one -- so the
+// work area a level the city NO LONGER HOLDS defined is still answerable. That is what lets a level change apply
+// as a RING DELTA (the plots between the two counts) instead of a re-derivation: the city-plot addressing is a
+// FIXED ring-ordered table (index 0 = the city, 1-8 = ring 1, 9-20 = ring 2, 21-36 = ring 3), so a radius IS a
+// prefix of it and a growth is exactly the indices [oldCount, newCount).
+// ⛔ ONE implementation ([DEC-single-implementation]) -- getNumCityPlots() delegates here rather than the two
+// carrying a copy of the override/level ladder each.
+int CvCity::getNumCityPlotsAtCultureLevel(int iCultureLevel) const
+{
 	if (getWorkableRadiusOverride() == 0 && !GC.getGame().isOption(GAMEOPTION_EXP_LARGER_CITIES))
 	{
 		return NUM_CITY_PLOTS_2;
 	}
-	if (getCultureLevel() == -1)
+	if (iCultureLevel == -1)
 	{
 		return NUM_CITY_PLOTS_1;
 	}
@@ -15145,7 +15189,7 @@ int CvCity::getNumCityPlots() const
 		?
 		getWorkableRadiusOverride()
 		:
-		GC.getCultureLevelInfo(getCultureLevel()).getCityRadius()
+		GC.getCultureLevelInfo((CultureLevelTypes)iCultureLevel).getCityRadius()
 	);
 	switch (iRadius)
 	{

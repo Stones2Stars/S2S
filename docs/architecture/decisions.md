@@ -566,6 +566,13 @@ milestone** — a green tree is the by-product of a finished rewire, not evidenc
 **WHILE THE TREE IS RED, WIRED OUTRANKS CORRECT** — a machine's facts emitted, consumer registered and surface
 reachable beats knowing its output is right (owner: *"it is more important that triggers are wired than knowing if
 they give the correct result."*), because correctness is endpoint-observable and so cannot be tested until green.
+⇒ **AND A WRONG WIRING IS REMOVED ON SIGHT, WITH AN INTERIM WRONG NUMBER ACCEPTED** (owner: *"it does not really
+matter if we temporarily doublecount, it is more important that things are wired correctly"*). A double-count is
+never a reason to keep a second maintenance surface alive and is never a thing to weigh: the wrong number is
+temporary and loud, the second surface permanent and quiet. The shape is a mutation choke point MAINTAINING a
+derived store beside the fact it emits, and its tell is a consumer that deliberately ignores that fact "because
+the choke point already applied it" — the skip IS the compensation. Removed in the same change, never recorded
+as a todo. **Home:** [roadmap.md](../plans/structural-cleanup/roadmap.md) § LEGACY STILL BREATHING.
 ⚠ That SEQUENCES the acceptance bar, it does not relax it — and it lapses the moment the tree builds, when
 correctness becomes testable and therefore owed. Removal is DELETE-DRIVEN: hard-delete the member (save-safe via
 `savemigration.txt`), and the COMPILER is the census (every consumer still on it is a compile error —

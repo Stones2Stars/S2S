@@ -726,9 +726,10 @@ public:
 	// Vicinity/local only -- traded stays on CvPlotGroup.
 	const CityContext& getCityContext() const { return m_cityContext; }
 	// Plot ENTER (+1) / LEAVE (-1) -- fold the plot's HAS_/IS_ attributes into this city's context (plotAttrs, the one
-	// stored aggregate). THE ONE APPLIER: fired from CvPlot::updateWorkingCity as a plot joins/leaves the city's
-	// worked set at play, and by the contexts' spine consumer draining the in-read working-city facts at the
-	// load-finish reseed (Engine/ContextConsumer -- DEC-spine-reseed).
+	// stored aggregate). THE ONE APPLIER, and it is reached ONLY from CityContext's own spine consumer, off the
+	// working-city MEMBERSHIP fact: as it fires at play, and from the buffered in-read facts at the load-finish
+	// reseed (DEC-spine-reseed). ⛔ Never called beside a mutation site -- the choke point announces, the store
+	// applies ([DEC-dict-is-a-consumer]).
 	void onCityPlotChanged(const CvPlot* pPlot, int iSign) { m_cityContext.onPlotChanged(pPlot, iSign); }
 
 	// The CITY-scope cascade package -- the one scope carrying BOTH sides of the origin rule (yield flats from
@@ -1261,6 +1262,13 @@ public:
 
 	int getAdditionalDefenseByBuilding(BuildingTypes eType) const;
 	int getNumCityPlots() const;
+	// The same derivation for an ARBITRARY culture level -- the work area a level the city no longer holds
+	// defined, which is what makes a level change a ring DELTA rather than a re-derivation.
+	int getNumCityPlotsAtCultureLevel(int iCultureLevel) const;
+	// ⚖ THE POTENTIAL WORK AREA IS THE CITY'S TO DEFINE (owner), and this is where it hands that definition to
+	// the plots: every plot between the two counts gains or loses this city in its `workableBy` membership.
+	// The addressing is a FIXED ring-ordered table, so the delta is the plain index range [iOld, iNew).
+	void changeWorkableArea(int iOldNumCityPlots, int iNewNumCityPlots) const;
 	int getPopulationgrowthratepercentage() const;
 
 	void changeFreshWater(int iChange);

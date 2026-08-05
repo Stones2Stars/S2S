@@ -119,24 +119,6 @@
 > compiles, runs, and produces a plausible wrong answer, which is why none of them surfaced on its own.
 > ⛔ Symbols, never line numbers — a symbol survives an edit and a line number does not.
 
-- **⛔ REBUILD THE CONTEXTS' CONSUMER LAYER — `ContextConsumer` is DELETED, not converted (owner).** It is a
-  central switch that re-derives: every plot-substrate case calls `refreshPlot` → `applyPlotRefresh`, which
-  recomputes the whole `CASC_PRED_*` block through `CvPlot`'s own accessors and unfolds/refolds the working
-  city around it. That is the legacy read path rescheduled from read-time to event-time, which
-  [contexts.md](../../architecture/contexts.md) bans by name, and a central router is what
-  [DEC-dict-is-a-consumer](../../architecture/decisions.md#dec-dict-is-a-consumer) replaces — the interest set
-  belongs AT the store, or a missing route hides in a `switch` that looks complete. The target:
-  - **A per-bit plot fact, which does not exist yet** — `SEVT_PLOT_PREDICATE_ADDED` / `_REMOVED` carrying the
-    `CASC_PRED_*` id. It is what lets a member plot's bit reach `CityContext.plotAttrs` as `add(bit, ±1)`
-    instead of the city unfolding and refolding the plot's whole block.
-  - **The substrate fact SETS the bits it names** on `PlotContext`, per-bit, each bit's derivation declared
-    beside that bit — never a per-event judgement call, and never a re-read of the plot. `refreshOwnFacts` /
-    `refreshAdjacencyFacts` / `applyPlotRefresh` go with it.
-  - **`PlotContext` and `CityContext` each register their OWN consumer** declaring their own interest set, the
-    shape `AmenityContext::wantsEvent` already realizes; both inside the CONTEXTS band.
-  - **The adjacency leg reads the announcing plot's STORED block**, one hop, and each neighbour whose own bit
-    moves announces it — the fan-out stays bounded and needs no second mechanism.
-
 - **⛔ CONVERT THE PACKAGES TO THE MAINTAINED SUM — the THREE PLANES**
   ([DEC-maintained-sum](../../architecture/decisions.md#dec-maintained-sum);
   [state-repositories.md](../../architecture/state-repositories.md) § THE MAINTAINED SUM; the retired protocol is
@@ -187,21 +169,6 @@
   `markMaintenanceDirty`, `setCommerceDirty`, and the AI re-evaluation flags `AI_setAssignWorkDirty` /
   `AI_makeAssignWorkDirty` / `AI_setChooseProductionDirty`. ⛔ A surviving derived-state site gets NO synonym —
   name it for the job it does, or delete it with the mechanism.
-- **⛔ Convert the contexts' `refresh*` functions off whole-block re-derivation** — the same
-  recalculate-instead-of-delta error one plane over ([contexts.md](../../architecture/contexts.md)). `refreshOwnFacts`
-  recomputes every own bit on any substrate fact regardless of which fired, and `refreshAdjacencyFacts` re-runs the
-  8-neighbour `isCoastalLand()` scan the store exists to DELETE — the legacy read path rescheduled from read-time
-  to event-time. The fact SETS the bits it feeds; the adjacency half reads the announcing plot's STORED block
-  rather than walking back through `CvPlot`. ⚠ Do NOT answer it with a hand-written per-event bit mask — declare
-  what each bit READS, beside that bit's own derivation.
-  ⛔ **No context gets a staleness mechanism of any kind on the way out** — no flag, no stamp, no rebuild entry
-  point ([DEC-contexts-are-never-marked](../../architecture/decisions.md#dec-contexts-are-never-marked)).
-- **Fire the plot→city fold on OWNERSHIP, not on the worked-radius relation alone**
-  ([contexts.md](../../architecture/contexts.md)). A plot gaining or losing a city's ownership must add/remove
-  that plot's `CASC_PRED_*` bits from that city's dictionary through the ONE applier
-  (`CvCity::onCityPlotChanged`) — same applier, additional membership fact. ⚠ Until it fires there, every
-  `plots`-target and `per`-predicate deposit is scaled by a count that misses every ownership change, and nothing
-  re-derives it.
 - **⛔ Route every domain through `EnablerKernel::gateSet` — the declared GENERATE→GATE primitive has ZERO
   callers while SIX file-static copies of it exist**, one per domain (`bd_`/`bl_`/`ce_`/`pc_`/`pj_`/`ud_gateSet`).
   The kernel's own header calls these "the single-implementation enabler primitives"; the gate ORDER
@@ -271,22 +238,11 @@
   the dictionary is the final stopping place ([contexts.md](../../architecture/contexts.md)). The ordering ban
   applies to a store that RE-DERIVES by reading another system's built set; a store that CONSUMES a delta has no
   such dependency and builds identically whenever the facts arrive.
-- **⛔ BUILD the city's VICINITY store — it has NO WRITER AT ALL, so `hasVicinityBonus` answers FALSE in every
-  city.** The five tier dictionaries are only ever cleared and read; nothing calls `add` on them anywhere. So
-  every `connection:"vicinity"` requires-atom and every vicinity-gated deposit currently reads false. ⚠ This is
-  not "the tiers fold but carry the wrong keys" — there is no fold.
-  **It lands as TWO dictionaries — one keyed `BONUS_*`, one keyed `CASC_PRED_*`**
-  ([contexts.md](../../architecture/contexts.md), owner), and delta-only from the start: never a fill pass. Both are ordinary `ContextDict`s fed by the plot facts (`SEVT_PLOT_BONUS_ADDED / _REMOVED` /
-  `SEVT_PLOT_OWNER_ADDED / _REMOVED` / `SEVT_PLOT_WORKED_ADDED / _REMOVED` + the network fact) with a declared interest set, ±1 per
-  fact ([DEC-dict-is-a-consumer](../../architecture/decisions.md#dec-dict-is-a-consumer)); `hasVicinityBonus` is a
-  bare `count(bonus) > 0` fetch.
-  ⛔ **They are NOT merged** — the two key spaces are disjoint registries both starting at 0, so one store
-  re-opens the cross-registry id collision the `CLS_` prefix closed (`ContextDict.h`). The objection this answers
-  is the REWALK, never the number of dictionaries.
-  ⚠ Store the ownership tiers as DISJOINT partitions (owned · neutral · foreign) and answer the nested
-  `owned ⊂ owned+neutral ⊂ crossBorder` bands by ADDITION — overlapping tiers double-count on a fold.
-- **Convert `PlotContext`'s `refreshOwnFacts` / `refreshAdjacencyFacts` off whole-block re-derivation** — the fact
-  SETS the bits it feeds ([contexts.md](../../architecture/contexts.md)).
+- **Give the vicinity store its `CASC_PRED_*`-keyed twin** — the vicinity counterpart of `plotAttrs` (river / coast
+  / hills / peak / fresh water over the radius tiles), beside the `BONUS_*`-keyed one that now exists
+  ([contexts.md](../../architecture/contexts.md), owner). ⛔ The two are NOT merged: the key spaces are disjoint
+  registries both starting at 0, so one store re-opens the cross-registry id collision the `CLS_` prefix closed
+  (`ContextDict.h`). Nothing reads it yet, so it lands when a consumer wants it.
 - **Collapse the per-dictionary plumbing into one mechanism** — owner resolution, dispatch, consumer class and
   registration are hand-written per family.
 - **Retire `CvDerivedCache` by emptying it, one tenant at a time**
@@ -543,7 +499,7 @@
 - **Record WHY each off-switch is off, in its subsystem's reference doc.** Only `ENABLE_FOGWAR_DECAY` has its
   reason written down; the rest do not, and an unexplained off-switch is what the next sweep eats.
 - **Strip the comment trails that name a DEAD symbol.** Keep the forward statement, delete the dead name — naming
-  it is the bait. Worst offenders: `ContextConsumer` (names the deleted `changeGovernmentCenterCount`), `CvCity`
+  it is the bait. Worst offenders: `CvCity`
   (narrates a removed generic-citizen loop AND spells out how to revive it), `CvUnitAI` (`AI_bestCityBuild`
   "retained for any external callers but no longer used"), `CvPlayerAI` ×3, `CyTeam`, `CvPlayer`,
   `CvTriggerEngine`, `CvHttpServer`.

@@ -354,6 +354,10 @@ void CvPlot::reset(int iX, int iY, bool bConstructorCall)
 	m_iOwnershipDuration = 0;
 	m_iUpgradeProgress = 0;
 	m_iCityRadiusCount = 0;
+	// DERIVED, so it is zeroed at reset and rebuilt from the cities' own work areas -- never trusted from a save
+	// ([DEC-derived-never-trusted]). A plot object is reused across a regen/load, so a membership left standing
+	// here would name a city from the previous world and no later delta could correct it.
+	m_workableByCities.clear();
 	m_iRiverID = -1;
 	m_iMinOriginalStartDist = -1;
 	m_iReconCount = 0;
@@ -5900,6 +5904,66 @@ int CvPlot::isCityRadius() const
 }
 
 
+bool CvPlot::isWorkableBy(const CvCity* pCity) const
+{
+	if (pCity == NULL)
+	{
+		return false;
+	}
+	const IDInfo kCity = pCity->getIDInfo();
+	for (std::vector<IDInfo>::const_iterator it = m_workableByCities.begin(); it != m_workableByCities.end(); ++it)
+	{
+		if (it->eOwner == kCity.eOwner && it->iID == kCity.iID)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+// THE ONE WRITE POINT for the membership, so the fact is announced exactly once and from exactly one place.
+// Only a genuine change announces -- re-stating a membership the plot already holds costs nothing and says nothing.
+void CvPlot::setWorkableBy(const CvCity* pCity, bool bWorkable)
+{
+	if (pCity == NULL)
+	{
+		return;
+	}
+	const IDInfo kCity = pCity->getIDInfo();
+	std::vector<IDInfo>::iterator it = m_workableByCities.begin();
+	for (; it != m_workableByCities.end(); ++it)
+	{
+		if (it->eOwner == kCity.eOwner && it->iID == kCity.iID)
+		{
+			break;
+		}
+	}
+	const bool bHeld = (it != m_workableByCities.end());
+	if (bHeld == bWorkable)
+	{
+		return;
+	}
+	if (bWorkable)
+	{
+		m_workableByCities.push_back(kCity);
+	}
+	else
+	{
+		m_workableByCities.erase(it);
+	}
+	// The membership FACT: this plot entered / left that city's potential work area. It is what lets a store keyed
+	// on the radius fold a DELTA instead of re-deriving which cities can reach the tile.
+	const int iPlotIndex = GC.getMap().plotNum(getX(), getY());
+	if (bWorkable)
+	{
+		emitPlotWorkableByAdded(iPlotIndex, (int)kCity.eOwner, kCity.iID);
+	}
+	else
+	{
+		emitPlotWorkableByRemoved(iPlotIndex, (int)kCity.eOwner, kCity.iID);
+	}
+}
+
 void CvPlot::changeCityRadiusCount(int iChange)
 {
 	m_iCityRadiusCount += iChange;
@@ -7801,13 +7865,14 @@ void CvPlot::updateWorkingCity()
 		}
 		else m_workingCity.reset();
 
-		// CityContext plot enter/leave (event-driven, no recompute): this plot left pOldWorkingCity's worked set and
-		// joined pBestCity's -- fold its HAS_/IS_ attributes out of the old city's context and into the new one's.
-		if (pOldWorkingCity != NULL) pOldWorkingCity->onCityPlotChanged(this, -1);
-		if (pBestCity != NULL)       pBestCity->onCityPlotChanged(this, +1);
-		// the spine DOMAIN fact (every mutation emits): the working-city assignment moved. The contexts'
-		// consumer ignores this at play (the folds above ARE the applier); the load reseed's twin fires from
-		// CvPlot::read (Engine/ContextConsumer -- DEC-spine-reseed).
+		// The spine DOMAIN fact (every mutation emits): the working-city assignment moved. THE FACT IS THE ONLY
+		// MAINTENANCE PATH -- CityContext folds the plot's attributes out of the old city and into the new one
+		// from its own consumer ([DEC-dict-is-a-consumer]), so this choke point ANNOUNCES and does not apply.
+		// ⛔ A direct fold beside the emit is a SECOND surface maintaining one fact, and it double-counted the
+		// moment the consumer grew the route: the mutation site owns the SOURCE, never the store.
+		// ⚑ emit() dispatches SYNCHRONOUSLY, so the fold still lands here, against exactly this state; and each
+		// side resolves ITS city from the fact's own payload rather than from m_workingCity, which has already
+		// moved by now.
 		if (pOldWorkingCity != NULL)
 		{
 			emitPlotWorkingCityRemoved(GC.getMap().plotNum(getX(), getY()),

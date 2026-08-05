@@ -645,7 +645,7 @@ void CvGame::onFinalInitialized(const bool bNewGame)
 	}
 
 	// The load-lifecycle bracket CLOSE (event-spine.md): the per-object read()s and every load-end rebuild in this
-	// function are complete, so the on-FINISHED consumers (the ContextConsumer plotAttrs drain, the enabler's
+	// function are complete, so the on-FINISHED consumers (CityContext's plotAttrs drain, the enabler's
 	// load-end gate pass) run against fully-final state -- the bracket is still open during the FINISHED dispatch
 	// (the flag clears after the emit). No-op on a new game: no GAME_LOAD_STARTED fired, so the endpoint returns.
 	emitGameLoadFinished();

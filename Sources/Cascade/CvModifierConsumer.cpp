@@ -422,12 +422,11 @@ namespace
 	}
 
 	// The ADJACENCY predicates fan ONE HOP. HAS_COAST and HAS_FRESHWATER are the two verdicts a plot derives from
-	// its NEIGHBOURS (PlotContext::adjacencyFactsMask), so a fact moving what a neighbour reads moves that
-	// neighbour's verdict too -- the same one-hop fan-out the contexts' maintainer runs
-	// (Engine/ContextConsumer::fanOutAdjacency). It cannot cascade: a neighbour's coast / fresh-water verdict
-	// reads nothing but facts held in the announcing plot's OWN block (CvPlot::isCoastalLand reads a neighbour's
-	// isWater plus its water area's tile count; CvPlot::isFreshWater's rect(1,1) leg reads a neighbour's isWater
-	// plus its fresh-water TERRAIN), so the derivation terminates at one ring.
+	// its NEIGHBOURS, so a fact moving what a neighbour reads moves that neighbour's verdict too -- the same
+	// one-hop fan PlotContext runs off its own consumer. It cannot cascade: a neighbour's coast / fresh-water
+	// verdict reads nothing but facts held in the announcing plot's OWN block (HAS_COAST is a neighbour whose
+	// IS_WATER differs from this plot's; CvPlot::isFreshWater's rect(1,1) leg reads a neighbour's isWater plus
+	// its fresh-water TERRAIN), so the derivation terminates at one ring.
 	void mc_applyAdjacentPlotPredicate(CvCascPredKind ePredicate, const CvPlot* pPlot, const char* szSource)
 	{
 		if (pPlot == NULL)
@@ -683,9 +682,9 @@ namespace
 			case SEVT_PLOT_TYPE_CHANGED:
 			{
 				// The land/water/relief axis. CvPlot::isWater() IS getPlotType() == PLOT_OCEAN, so this one fact
-				// carries the whole own-plot relief block (PlotContext::refreshOwnFacts reads isWater/isHills/
-				// isPeak, all of them getPlotType) AND both adjacency verdicts: isCoastalLand reads this plot's
-				// isWater and every neighbour's, and isFreshWater reads isWater on this plot and, through its
+				// carries the whole own-plot relief block (IS_WATER / IS_LAND / IS_FLATLANDS / HAS_HILLS /
+				// HAS_PEAK all read getPlotType) AND both adjacency verdicts: HAS_COAST reads this plot's
+				// IS_WATER and every neighbour's, and isFreshWater reads isWater on this plot and, through its
 				// rect(1,1) leg, on the ring. Hence self for all of them, plus the one-hop fan for the two
 				// adjacency verdicts alone.
 				const CvPlot* pPlot = mc_plot(kEvent.iSrcLoc);

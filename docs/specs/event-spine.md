@@ -89,6 +89,20 @@ reads objects). **Build order:** spine + the modifier scope accumulator → logg
   complete: terrain / feature / improvement / route / bonus / owner / **type / river / irrigation / landmark /
   worked**, so the per-scope contexts are maintained purely by facts, with no choke point driving a derivation
   directly ([contexts.md](../architecture/contexts.md)).
+  ⚖ **BESIDE THE SUBSTRATE FACTS, THE PLOT ANNOUNCES ITS OWN DERIVED VERDICT: `SEVT_PLOT_PREDICATE_ADDED /
+  _REMOVED`, carrying the `CASC_PRED_*` id.** It is emitted by `PlotContext` — the store that OWNS the verdict —
+  at the 0 ⇄ 1 crossing and nowhere else, exactly as the amenity fold announces its own crossings: the fold IS
+  the maintenance path, so an emit anywhere else would be a second one.
+  ⛔ **It is NOT a duplicate of the substrate fact and never replaces one.** A substrate fact says what the TILE
+  now CARRIES; this says what that MEANS for the one predicate that moved. A consumer routing on a substrate id
+  is asking about the SOURCE; a consumer routing on this is asking about the VERDICT.
+  ⚑ **It exists because the city cannot derive it.** `CityContext.plotAttrs` is the fold of its member plots'
+  bits, and by the time any consumer runs the plot already holds the NEW value — so a city-side "unfold the old
+  bits, refold the new" is impossible, not merely wasteful ([contexts.md](../architecture/contexts.md): the plot
+  sends its bit UP, the city never reaches down). With the fact, a member plot's bit is one `add(bit, ±1)`.
+  ⚠ Its absence would not read as a stale gate but as a **COMPOUNDING MAGNITUDE**: `plotAttrs` is plane B's
+  COUNT, so a bit never withdrawn leaves every deposit scaled on it permanently inflated, and inflated further on
+  every later substrate change.
   ⛔ **THE SUBSTRATE FACTS ARE `ADDED`/`REMOVED` PAIRS, NOT `CHANGED` (owner ruling — see § A FACT NAMES THE
   HAPPENING).** Terrain / feature / improvement / route each announce a source LEAVING and a source ARRIVING as
   two facts, because each end is its own consumer work: the old source's deposits are withdrawn, the new

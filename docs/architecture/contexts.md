@@ -118,6 +118,7 @@ event-driven — never a read-time scan, and never left on the old accessor as a
 |---|---|---|---|
 | **CityContext** | `CvCity` | `plotAttrs` — per-predicate plot COUNTS (the fold of member plots' bits) · **`amenities`** — the `AMENITY_*` id→COUNT fold over the city's OPERATING buildings + the empire-scope grantors (json §8; the count is load-bearing — see the callout below) · **the VICINITY BONUSES available in the city** (owner) — the §5a radius union, MAP half (see the split below) · the **AREA facts** (area id, its tile count, the coastal water-body size) · the **holy-city and HEADQUARTERS counts** — how many religions / corporations name this city, each a delta store fed ±1 by its own fact | population, power, religion presence, holy-city-of, corporation, capital, government-centre, fresh-water access, property value (raw, `CvCity`-owned, O(1)); state religion (→ owner `CvPlayer`); **the TRADED count** — the gated network number, forwarded through `CvCity::getNumBonuses`, which relays to the PLOT GROUP that owns it ([enabler.md §8](../specs/enabler.md) RESIDENCY: nothing mirrors the group); **the CURRENT REALIZED YIELDS** (owner) — the city's own O(1) group read, forwarded so a valuation can resolve a percent against a real base (below); **the CURRENT REALIZED COMMERCE** — `CvCity::getCommerces`, the per-commerce SPLIT of that commerce yield by the empire's sliders plus each channel's own deposits ([modifier.md §2a](../specs/modifier.md)), forwarded for the same reason |
 | **EmpireContext** | `CvPlayer` | `policies` — the empire's enacted-policy set (the derived UNION over live civics'/traits' policy blocks, stored nowhere else) | state religion (single enum → `CvPlayer::getStateReligion`), civics/traits/heritages presence, the team-held facts; **the CURRENT REALIZED COMMERCE** — `CvPlayer::getCommerces`, the four empire RECEIVER totals: the city-yields forward's empire twin, so an empire-scope percent resolves against a real base; **the COMMERCE SLIDER PERCENTAGES** (owner) — the player's gold / research / culture / espionage rates, the `GOLD_RATE`/`RESEARCH_RATE`/`CULTURE_RATE`/`ESPIONAGE_RATE` tokens ([json.md §3.1](../specs/json.md)); a group keyed by `CommerceTypes`, forwarded because `CvPlayer` owns them O(1) |
+| **PlotContext** | `CvPlot` | the `CASC_PRED_*` verdict **BITSET** — the OWN-PLOT block (water/land/relief/hills/peak/river/irrigation/feature-present/landmark/owned/**worked**) plus the ADJACENCY block (coast, fresh-water) · **`workableBy`** — the cities whose potential work area this plot is in, set by `CvCity::changeWorkableArea` and announced per plot (§ the VICINITY store) | the RAW substrate a parameterized predicate keys on — terrain/feature/improvement/route/bonus ids, owner, latitude, nature yield — plus city-presence, the one verdict with no mutation event a bit could be maintained from (→ `CvPlot`); **the plot's CURRENT REALIZED YIELDS** — `CvPlot::getYields`, the whole isolated per-plot base package as a bare cache fetch. ⛔ The PRE-IMPROVEMENT leg (`natureYield`) is a SECOND SLOT of that same package, never a per-call computation: it is asked per (plot × improvement × yield) by the placement gate and both improvement valuations, which is the cost class this whole section deletes. A read that recomputes it is the forwarded-read-that-COMPUTES defect above, and the number is already in the package |
 
 ⛔ **THE VICINITY SPLIT — the context holds the MAP half, the enabler holds the BUILDING half.** The §5a in-vicinity
 supply is a union of two independently-owned halves, and storing either one twice is the duplication the model bans:
@@ -144,8 +145,34 @@ mutates its set in place as the fixpoint ripples.
 > scan per read. Adding a dictionary is how the walk disappears.
 > ⚠ **The ownership TIERS partition; they do not nest in storage.** [json.md §3.4](../specs/json.md) defines
 > `owned ⊂ owned+neutral ⊂ crossBorder`, so storing them as overlapping tiers would double-count on a fold.
-> Store the DISJOINT partitions (owned · neutral · foreign) and answer the nested tiers by ADDITION; `worked` and
-> `connected` are different predicates rather than ownership bands, so they stay their own.
+>
+> **⚖ NEUTRAL IS THE DEFAULT STATE — IF THERE IS NO OWNER IT IS NEUTRAL (owner).** So neutral is **not stored and
+> needs no fact**: the store holds `all` (the bonus is on a radius tile at all, moved only by the BONUS facts)
+> beside the two ownership bands `owned` and `foreign`, and the neutral count is the RESIDUAL
+> `all − owned − foreign`. The bands are then carved out of the total — `crossBorder` IS `all`, the default band
+> is `all − foreign`, `owned` is itself.
+> ⚑ **That is what makes the store maintainable at all.** `SEVT_PLOT_OWNER_ADDED / _REMOVED` are both guarded on
+> `!= NO_PLAYER`, so they announce only the OWNED ends — a *stored* neutral tier would have no announced
+> transition across `unowned ⇄ owned` and no delta could keep it correct. As a residual it needs none: all four
+> transitions (`unowned→A`, `A→unowned`, `A→B`, and a bonus arriving) balance exactly, because each fact names
+> the owner ITS half is about while the plot's own `m_eOwner` has already moved.
+> ⛔ Two workarounds were considered and are wrong wirings: reading the dict to decide a withdrawal
+> (`if (neutral.has(b)) add(b,-1)`) makes a GATE read the refcount and picks the wrong plot when two radius tiles
+> carry one bonus; and composing the neutral end from the `IS_OWNED` predicate crossing double-applies on
+> `unowned → owned`, where that crossing AND `OWNER_ADDED` both fire.
+>
+> ⚖ **THE SEEDING MOMENT IS `SEVT_PLOT_CITY_ADDED`, and it is ordering rather than taste.** `CvCity::init` sits
+> the city on its plot and only THEN claims its radius through `updateCultureLevel`, while `emitCityFounded` comes
+> later still from `CvPlayer::found`. That fact is therefore the one window where the city is already visible to
+> the radius inverse and its radius has NOT yet taken ownership: the seed books what is already there, and the
+> ownership claims that follow apply their bands for exactly the tiles that change. ⛔ Seeding at `CITY_FOUNDED`
+> would double every band the claim had announced. ⚠ It is guarded to the non-load path, with the
+> `GAME_LOAD_FINISHED` fold as its load-time twin — the map streams before the players, so at load the radius
+> facts reach no city at all (the amenity fold guards its play-time fan the same way, for the same reason).
+>
+> `worked` and `connected` are different predicates rather than ownership bands, so they stay their own — and
+> `connected` is COMPOSED rather than stored: on an owned radius tile AND reaching this city through the network,
+> the second half forwarded from the plot group that owns it ([enabler.md §8](../specs/enabler.md) RESIDENCY).
 
 ⚖ **`CityContext.amenities` — THE CITY'S OWN FEATURE LIST, AND THE CITY IS WHAT GETS CHECKED (owner).** A
 grantor's `amenities` block ([json.md §8](../specs/json.md)) is static info data; what a consumer actually asks
@@ -239,7 +266,6 @@ costs an engine change today (a counter, a fact, a predicate) instead of being p
 one parameterized fact replaces the whole family, after which an authored attribute needs no engine work at all —
 which is the open-registry promise ([DEC-classification-infos](decisions.md#dec-classification-infos)) finally
 reaching the consumer side.
-| **PlotContext** | `CvPlot` | the `CASC_PRED_*` verdict **BITSET** — the OWN-PLOT block (water/land/relief/hills/peak/river/irrigation/feature-present/landmark/owned/**worked**) plus the ADJACENCY block (coast, fresh-water) | the RAW substrate a parameterized predicate keys on — terrain/feature/improvement/route/bonus ids, owner, latitude, nature yield — plus city-presence, the one verdict with no mutation event a bit could be maintained from (→ `CvPlot`); **the plot's CURRENT REALIZED YIELDS** — `CvPlot::getYields`, the whole isolated per-plot base package as a bare cache fetch. ⛔ The PRE-IMPROVEMENT leg (`natureYield`) is a SECOND SLOT of that same package, never a per-call computation: it is asked per (plot × improvement × yield) by the placement gate and both improvement valuations, which is the cost class this whole section deletes. A read that recomputes it is the forwarded-read-that-COMPUTES defect above, and the number is already in the package |
 
 **Pass by reference/pointer, never by value (owner).** Passing a bound context is far cheaper than snapshotting
 values; a context is never a value copy — that is *why* it forwards rather than mirrors.
@@ -356,6 +382,16 @@ Non-dictionary scalars stay plain: population/power are `int` (power carries 0/1
 > | the plot enters / leaves the worked radius | the same fold, same applier |
 > | a MEMBER plot's own bits move | **the PLOT announces the bit** -- `add(bit, ±1)`, nothing re-derived |
 >
+> ⚑ **THE FIRST TWO ROWS ARE ONE FACT, not two routes — `CvPlot::setOwner` CALLS `updateWorkingCity`.** So an
+> ownership change re-assigns the working city and announces
+> `SEVT_PLOT_WORKING_CITY_ADDED / _REMOVED`, which is the membership fold; a city cannot work a plot it does not
+> own, so the two triggers cannot come apart. ⛔ **Adding a second route on `SEVT_PLOT_OWNER_*` into the same
+> applier would therefore DOUBLE-COUNT** — the wrong-wiring class
+> ([DEC-playability-not-a-gate](decisions.md#dec-playability-not-a-gate)), not a gap to close.
+> ⚠ The ORDER composes exactly, which is worth knowing rather than re-deriving: `setOwner` writes `m_eOwner`
+> first, so the `IS_OWNED` bit crosses and is withdrawn by its own predicate fact BEFORE `updateWorkingCity`
+> folds the remaining bits out — no bit is subtracted twice.
+>
 > ⚑ **One applier, several facts** — never one fact per relation with its own derivation, and never a re-scan of
 > the city's plots to find out what it now has.
 
@@ -374,9 +410,31 @@ recompute to add ([DEC-no-self-heal](decisions.md#dec-no-self-heal); [state-repo
 CAPSTONE — LOAD is the only full build).
 
 - **`PlotContext`'s verdict bitset** ← the plot-substrate DOMAIN facts — terrain / feature / improvement / route /
-  bonus / owner / **plot type / river / irrigation / landmark / worked** — routed to the contexts' consumer
-  (`Engine/ContextConsumer`), which sets the bits the announcing fact FEEDS, and then, **only if a bit the
-  neighbours read moved**, the ADJACENCY block of the 8 neighbours.
+  bonus / owner / **plot type / river / irrigation / landmark / worked** — consumed by `PlotContext` ITSELF
+  ([DEC-dict-is-a-consumer](decisions.md#dec-dict-is-a-consumer)), which sets the bits the announcing fact FEEDS
+  and nothing else.
+  > **⚖ THE ROUTING IS DERIVED FROM A PER-BIT TABLE, never hand-written per event.** Each bit declares its own
+  > derivation AND the substrate AXES it reads, side by side; a fact re-derives exactly the rows whose axes it
+  > moved. That is what answers the hazard the retired whole-block derivation was right about — a hand-written
+  > per-event bit mask drifting from what the bits actually read — without recomputing everything to avoid it. A
+  > new bit is one row; a new fact is one axis.
+  > **⚖ HAS_COAST IS SYMMETRIC: LAND WITH ADJACENT WATER, *OR WATER WITH ADJACENT LAND* (owner).** Off the stored
+  > bits that is ONE statement — **a neighbour whose `IS_WATER` differs from mine**, i.e. the plot sits on the
+  > land/water boundary — so the verdict reads entirely off blocks the stores already hold.
+  > ⚠ It also fixes a live defect: the derivation this replaced called `isCoastalLand()`, which returns false for
+  > a water plot outright, so **every water tile read `HAS_COAST` false**.
+  > ⚑ **And it is what deletes the deferred-drain machinery.** The only reason the old derivation touched `CvArea`
+  > at all was `isCoastal`'s `>= iMinWaterSize` test, and the bare predicate passes `-1` — a comparison no existing
+  > area can fail. With no area dereference there is no unsettled-map window to defer against, so the mark/drain
+  > pass, its per-plot byte vector and the `isFinalInitialized` gate all go. *(The city-scope
+  > `{HAS_COAST:{minArea:N}}` form is the one that genuinely needs the water-body SIZE, and it stays
+  > `CityContext`'s.)*
+  > ⚖ **`HAS_FRESHWATER` keeps calling `CvPlot::isFreshWater`, deliberately** — a seven-leg verdict the ENGINE
+  > still consults for irrigation and farm gates, so re-expressing it over stored bits would fork a live predicate
+  > into two implementations that drift ([DEC-single-implementation](decisions.md#dec-single-implementation)).
+  > Deriving a bit by calling the ONE accessor is what that rule asks for; what is banned is re-deriving the WHOLE
+  > BLOCK, which per-bit routing is precisely what stops. Its neighbour leg is the one walk left, and it is now
+  > paid only when a fact that actually feeds it arrives.
   > **⛔ THE FACT SETS THE BIT — it does not trigger a callback that goes and asks (owner).** *"Those 'refresh'
   > functions are legacy-inspired rollerskating."* Re-deriving the WHOLE block through the same `CvPlot`
   > accessors a read used to call is the legacy read path RESCHEDULED from read-time to event-time, not
@@ -400,21 +458,38 @@ CAPSTONE — LOAD is the only full build).
   > per-EVENT judgement call.
   > ⚑ **The ADJACENCY half cannot be set from one plot's payload and does not need to be rescanned either:** a
   > neighbour's coast / fresh-water verdict reads the announcing plot's **STORED block**, never a fresh walk back
-  > through `CvPlot`. Same move, one hop out. That gate is exact: a neighbour's coast /
-  fresh-water verdict reads nothing but facts held in this plot's own block, so the fan-out is one hop and cannot
-  cascade; `IS_WORKED` is excluded from it outright, since a citizen taking a plot can move no neighbour's verdict
-  and flips at citizen-reassignment cadence. **The consumer is the ONLY maintenance entry** — every plot mutation
-  that moves a stored verdict emits its own DOMAIN fact, so no choke point calls the derivation directly
-  ([DEC-single-implementation](decisions.md)). Derivation is DEFERRED while the map is unsettled (world generation,
-  mid-save-read, a `recalculateAreas` window) — the adjacency leg dereferences an adjacent water plot's `CvArea` —
-  and the deferred plots drain on the first event after the game reports final-initialized.
-- **`CityContext.plotAttrs`** ← `CvPlot::updateWorkingCity`: a plot entering/leaving the city's owned worked-radius
-  set fires `CvCity::onCityPlotChanged(plot, ±1)` — the ONE applier, folding the plot's stored BITSET, so `plotAttrs`
-  is literally the sum of the member plots' bits and the two granularities of one vocabulary cannot drift — and
-  emits the `SEVT_PLOT_WORKING_CITY_ADDED / _REMOVED` DOMAIN fact (every mutation emits; the contexts' consumer ignores play-time
-  events, the choke-point fold having already applied). A MEMBER plot's bits moving reaches the counts through the
-  **PLOT's own announcement**: when a member plot's verdict bit moves, the PLOT says so and the dictionary
-  applies `add(bit, ±1)`.
+  > through `CvPlot`. Same move, one hop out.
+  > **⚖ THE FAN-OUT RIDES THE AXIS, NEVER A BIT'S OWN CROSSING — that is what BOUNDS it to one hop.** Only
+  > `TYPE` and `TERRAIN` are neighbour-visible (a neighbour's `HAS_COAST` reads my `IS_WATER`; its
+  > `HAS_FRESHWATER` reads my water + fresh-terrain state), so those two axes re-derive the 8 neighbours'
+  > adjacency rows and nothing else does. An adjacency verdict is read by nobody's adjacency verdict, so a
+  > cascade is structurally impossible rather than merely avoided — and `IS_WORKED` is excluded by construction
+  > rather than by an exclusion anyone has to remember.
+  > ⚑ **It also makes the LOAD ORDER self-correcting, which is what retires the drain pass:** whichever plot of a
+  > boundary pair is read second re-derives BOTH sides, so a stream that fills the map in any order converges with
+  > no deferral, no marks and no final sweep.
+  **The store's own consumer is the ONLY maintenance entry** — every plot mutation that moves a stored verdict
+  emits its own DOMAIN fact, so no choke point calls a derivation directly
+  ([DEC-single-implementation](decisions.md)).
+- **`CityContext.plotAttrs`** ← the `SEVT_PLOT_WORKING_CITY_ADDED / _REMOVED` MEMBERSHIP fact, consumed by
+  `CityContext` itself: a plot entering/leaving the city's owned worked-radius set folds through
+  `CvCity::onCityPlotChanged(plot, ±1)` — the ONE applier, folding the plot's stored BITSET, so `plotAttrs` is
+  literally the sum of the member plots' bits and the two granularities of one vocabulary cannot drift.
+  > **⛔ THE CHOKE POINT ANNOUNCES; IT DOES NOT APPLY.** `CvPlot::updateWorkingCity` used to fold DIRECTLY beside
+  > its emit, with the consumer skipping the fact at play to compensate. That is a SECOND surface maintaining one
+  > fact, and it double-counts the instant the consumer grows the route — the exact failure
+  > [DEC-dict-is-a-consumer](decisions.md#dec-dict-is-a-consumer) exists to prevent. The mutation site owns the
+  > SOURCE, never the store. ⚑ Nothing is lost by moving it: `emit()` dispatches SYNCHRONOUSLY, so the fold still
+  > lands at that instant, and each side resolves ITS city from the fact's own payload rather than from
+  > `m_workingCity`, which has already moved by then.
+  > ⚠ **The consumer's play-time SKIP was the tell.** It ignored the membership fact "because the choke point
+  > already applied it", which is what a second maintenance surface always looks like from the store's side.
+  > A wrong wiring like this is removed ON SIGHT and an interim double-count is accepted rather than weighed
+  > ([DEC-playability-not-a-gate](decisions.md#dec-playability-not-a-gate)).
+
+  A MEMBER plot's bits moving reaches the counts through the **PLOT's own announcement**
+  (`SEVT_PLOT_PREDICATE_ADDED / _REMOVED`, carrying the `CASC_PRED_*` id): when a member plot's verdict bit moves,
+  the PLOT says so and the dictionary applies `add(bit, ±1)`.
   > **⛔ THE PLOT SENDS IT UP THE CHAIN; THE CITY NEVER REACHES DOWN FOR IT (owner).** A city-side maintainer
   > that "unfolds the old bits and refolds the new ones" cannot work and must not be built: by the time any
   > consumer runs, the plot's bitset already holds the NEW value, so the old bits are gone and recovering them
@@ -432,10 +507,26 @@ CAPSTONE — LOAD is the only full build).
   consumer. ⚠ These are on the same re-derive-whole shape the callout above retires, and they convert the same
   way — the target is the fact SETTING what it names, never a re-run of the block's whole derivation because
   something in its vicinity happened:
-  - the **VICINITY tiers** ← the radius tiles' bonus / owner / improvement / route / worked facts, plus the
-    culture-level fact (the workable radius itself grows with culture, so that fact is also the vicinity-MEMBERSHIP
-    signal). The plot→cities direction is the radius inverse: the workable fat cross is symmetric, so the cities that
-    may hold a plot sit at the same offsets around it.
+  - the **VICINITY store** ← the radius tiles' bonus / owner / worked facts, each applying `±1` through the ONE
+    write point.
+    > **⚖ THE CITY DEFINES ITS OWN POTENTIAL WORK AREA, AND THAT IS UNAVOIDABLE (owner) — because the cross
+    > GROWS** (culture level, `adds3rdRing`, the workable-radius override), so no fixed geometry can answer it.
+    > The city hands that definition to the plots as `CvPlot`'s **`workableBy`** membership, announced per plot as
+    > `SEVT_PLOT_WORKABLE_BY_ADDED / _REMOVED`; the fold then reads the plot's own list and is EXACT.
+    > ⛔ **There is no radius inverse and no membership test** — a store keyed on the radius folds a DELTA, and a
+    > radius GROWING is an ordinary fact rather than something a walk must rediscover.
+    > ⚑ **THE ADDRESSING IS WHAT MAKES IT CHEAP, and it is already defined (owner): the city-plot table is
+    > RING-ORDERED** — index 0 the city, 1–8 ring 1, 9–20 ring 2, 21–36 ring 3 — so a radius IS a prefix of it and
+    > a level change is exactly the index range `[oldCount, newCount)`. Nothing geometric is rebuilt;
+    > `CvCity::changeWorkableArea` walks that range and is the whole maintenance surface, reached from three sites
+    > (the city starting to exist, ceasing to, and `setCultureLevelInternal`).
+    > ⚑ **The same route SEEDS the store**, so there is no separate build pass: a city establishing its work area
+    > announces one membership fact per plot, at birth and again at `GAME_LOAD_FINISHED` — where the map streamed
+    > before the players, so nothing could have announced to a city that did not yet exist.
+    > ⚠ It is DERIVED: zeroed at `CvPlot::reset` and never serialized, since a recycled plot would otherwise name
+    > a city from the previous world ([DEC-derived-never-trusted](decisions.md#dec-derived-never-trusted)).
+    > ⚠ `m_iCityRadiusCount` / `m_aiPlayerCityRadiusCount` keep their own readers and stay — what this replaces is
+    > the vicinity fold's need to re-derive membership, never those counters.
   - the **AREA facts** ← the plot-TYPE fact near the city, and the wholesale **areas-recalculated** fact below.
   - the **holy-city and HEADQUARTERS counts** ← their own facts, applied `±1`.
     > **⚖ THE DESIGNATION LIVES ON `CvGame`, AND THE CITY HOLDS ONLY HOW MANY NAME IT.** The authoritative
@@ -453,8 +544,8 @@ CAPSTONE — LOAD is the only full build).
     > deleted. The fact now applies `±1` and nothing re-derives. ⚠ Consequently there is **no build pass** for
     > either count at city-founded or load-finish: the facts already carry them (`CvCity::read` announces every
     > designation the city holds), and a rebuild beside a delta store doubles it.
-- **`EmpireContext.policies`** ← the **civic / trait / player-init DOMAIN facts**, routed through the contexts'
-  consumer, which refills the WHOLE union over the player's live civics + held (active-set) traits. It is the single
+- **`EmpireContext.policies`** ← the **civic / trait / player-init DOMAIN facts**, consumed by the policy store
+  itself, which refills the WHOLE union over the player's live civics + held (active-set) traits. It is the single
   source the one policy read (`ev_playerHasPolicy`) uses — reads never re-walk the grantors. The **player-init** fact
   is load-bearing on its own: a player's INITIAL traits are written straight into the has-array rather than through
   the trait setter, so that fact is the only announcement they ever make.
@@ -477,11 +568,14 @@ CAPSTONE — LOAD is the only full build).
   there is — after which the facts alone maintain them.
   `CityContext.plotAttrs` builds from the in-read DOMAIN events
   ([DEC-spine-reseed](decisions.md#dec-spine-reseed)): each `CvPlot::read` announces its deserialized working-city
-  fact (`SEVT_PLOT_WORKING_CITY_ADDED / _REMOVED` — the genuine read site emits), and the contexts' OWN spine consumer
-  (`Engine/ContextConsumer`, one consumer per system) buffers the load bracket's facts and folds them through the
-  same applier (`CvCity::onCityPlotChanged`) at `GAME_LOAD_FINISHED` — the cities stream AFTER the map, so the fold
-  applies once after the stream ends (the [enabler §7.1](../specs/enabler.md) order rule's second option, never the
-  mixed form). There is never a blanket per-turn recompute.
+  fact (`SEVT_PLOT_WORKING_CITY_ADDED / _REMOVED` — the genuine read site emits), and `CityContext`'s own consumer
+  BUFFERS the load bracket's membership facts and folds them through the one applier
+  (`CvCity::onCityPlotChanged`) at `GAME_LOAD_FINISHED` — the cities stream AFTER the map, so the fold applies once
+  after the stream ends (the [enabler §7.1](../specs/enabler.md) order rule's second option, never the mixed form).
+  ⚠ **The buffer is an ORDERING fact, not a staleness mechanism** — there is no city to fold into while the map
+  streams. The per-bit facts need no such treatment and are simply dropped inside the bracket: by the drain every
+  plot has announced its substrate, so the fold reads FINAL bits and applying them earlier would only count them
+  twice. There is never a blanket per-turn recompute.
 
 ## Scope set — plot / city / player now; units FUTURE (role-specific); no AreaContext (owner)
 
