@@ -65,15 +65,20 @@ namespace
 		}
 		switch (iEventId)
 		{
-		case SEVT_IMPROVEMENT_CHANGED:
+		case SEVT_PLOT_IMPROVEMENT_ADDED:
+		case SEVT_PLOT_IMPROVEMENT_REMOVED:
 			return (iId < GC.getNumImprovementInfos()) ? GC.getImprovementInfo((ImprovementTypes)iId).getType() : NULL;
-		case SEVT_TERRAIN_CHANGED:
+		case SEVT_PLOT_TERRAIN_ADDED:
+		case SEVT_PLOT_TERRAIN_REMOVED:
 			return (iId < GC.getNumTerrainInfos()) ? GC.getTerrainInfo((TerrainTypes)iId).getType() : NULL;
-		case SEVT_FEATURE_CHANGED:
+		case SEVT_PLOT_FEATURE_ADDED:
+		case SEVT_PLOT_FEATURE_REMOVED:
 			return (iId < GC.getNumFeatureInfos()) ? GC.getFeatureInfo((FeatureTypes)iId).getType() : NULL;
-		case SEVT_ROUTE_CHANGED:
+		case SEVT_PLOT_ROUTE_ADDED:
+		case SEVT_PLOT_ROUTE_REMOVED:
 			return (iId < GC.getNumRouteInfos()) ? GC.getRouteInfo((RouteTypes)iId).getType() : NULL;
-		case SEVT_PLOT_BONUS_CHANGED:
+		case SEVT_PLOT_BONUS_ADDED:
+		case SEVT_PLOT_BONUS_REMOVED:
 			return (iId < GC.getNumBonusInfos()) ? GC.getBonusInfo((BonusTypes)iId).getType() : NULL;
 		default:
 			return NULL;
@@ -93,37 +98,49 @@ namespace
 	// A fact emitted after the state moved withdraws a different number than it deposited and leaves a residue
 	// nothing re-derives.
 
-	// ⚖ THE SIGNED MULTIPLICITY -- the DIRECTION a fact carries, read from that fact's own documented payload.
-	// This is the ONE place the per-fact convention is decoded, so a call site never repeats it and the two
-	// directions of one fact cannot drift apart. Three shapes, all authored on the spine (CvEventSpine.h):
-	//   - the EVENT ID itself is the direction, where the fact is a PAIR (activated/dormanted, added/removed);
-	//   - a HAS/ADD boolean in iA -- the fact names a presence, so it is +1 held / -1 lost;
-	//   - a signed COUNT DELTA in iB -- the fact already carries ±N, which is exactly what a multiplicity is
-	//     (a specialist count moving by 3 deposits three times over, and withdraws the same way).
-	// ⛔ Returning 0 is NOT a default to fall back on: it applies nothing. A source-carrying fact whose
-	// convention is not decoded here would silently stop maintaining its deposits, so an unlisted one is a hole
-	// to close at this switch, never a case to let fall through.
+	// ⚖ THE SIGNED MULTIPLICITY -- +1 for a source arriving, -1 for one leaving, ±N where the fact carries a
+	// count. This is the ONE place it is resolved, so a call site never repeats it and the two directions of one
+	// fact cannot drift apart.
+	// ⛔ Returning 0 is NOT a default to fall back on: it applies nothing. A source-carrying fact missing from
+	// this switch would silently stop maintaining its deposits, so an unlisted one is a hole to close here,
+	// never a case to let fall through.
+	// ⛔ THE DIRECTION IS WHICH EVENT ARRIVED. Nothing here decodes a payload to find out which way a source
+	// moved: this function used to carry THREE conventions at once -- an id pairing, a presence boolean in iA,
+	// and a signed count delta in iB -- and all three went with the *_CHANGED facts that needed them
+	// ([DEC-facts-name-happenings]). The payload is now read for HOW MANY and never for which way.
 	int mc_sourceDirection(const CvSpineEvent& kEvent)
 	{
 		switch (kEvent.iEventId)
 		{
-		// the fact is a PAIR: the id says which way
-		case SEVT_BUILDING_ACTIVATED:   return 1;
-		case SEVT_BUILDING_DORMANTED:   return -1;
-		case SEVT_BONUS_ADDED:          return 1;
-		case SEVT_BONUS_REMOVED:        return -1;
-		// a presence BOOLEAN in iA
-		case SEVT_RELIGION_CHANGED:
-		case SEVT_CORPORATION_CHANGED:
-		case SEVT_TECH_CHANGED:
-		case SEVT_TRAIT_CHANGED:
-		case SEVT_HERITAGE_CHANGED:     return (kEvent.iA != 0) ? 1 : -1;
-		// a signed COUNT DELTA in iB
-		case SEVT_SPECIALIST_CHANGED:
-		case SEVT_PROJECT_CHANGED:
-		case SEVT_PLOTGROUP_BONUS_CHANGED:
-		case SEVT_VICINITY_BONUS_CHANGED: return kEvent.iB;
-		default:                        return 0;
+		case SEVT_CITY_BUILDING_ACTIVATED:
+		case SEVT_CITY_BONUS_ADDED:
+		case SEVT_CITY_RELIGION_ADDED:
+		case SEVT_CITY_CORPORATION_ADDED:
+		case SEVT_EMPIRE_TECH_ADDED:
+		case SEVT_EMPIRE_TRAIT_ADDED:
+		case SEVT_EMPIRE_HERITAGE_ADDED:       return 1;
+
+		case SEVT_CITY_BUILDING_DORMANTED:
+		case SEVT_CITY_BONUS_REMOVED:
+		case SEVT_CITY_RELIGION_REMOVED:
+		case SEVT_CITY_CORPORATION_REMOVED:
+		case SEVT_EMPIRE_TECH_REMOVED:
+		case SEVT_EMPIRE_TRAIT_REMOVED:
+		case SEVT_EMPIRE_HERITAGE_REMOVED:     return -1;
+
+		// These four carry a MAGNITUDE (iA), so the multiplicity is the payload and the SIGN is still the id --
+		// "CITY_SPECIALIST_REMOVED 3" withdraws three times over ([event-spine.md]: the event is the operator).
+		case SEVT_CITY_SPECIALIST_ADDED:
+		case SEVT_EMPIRE_PROJECT_ADDED:
+		case SEVT_PLOTGROUP_BONUS_ADDED:
+		case SEVT_CITY_VICINITY_BONUS_ADDED:   return  kEvent.iA;
+
+		case SEVT_CITY_SPECIALIST_REMOVED:
+		case SEVT_EMPIRE_PROJECT_REMOVED:
+		case SEVT_PLOTGROUP_BONUS_REMOVED:
+		case SEVT_CITY_VICINITY_BONUS_REMOVED: return -kEvent.iA;
+
+		default:                               return 0;
 		}
 	}
 
@@ -134,11 +151,15 @@ namespace
 	{
 		switch (iEventId)
 		{
-		case SEVT_TERRAIN_CHANGED:
-		case SEVT_FEATURE_CHANGED:
-		case SEVT_PLOT_BONUS_CHANGED:
+		case SEVT_PLOT_TERRAIN_ADDED:
+		case SEVT_PLOT_TERRAIN_REMOVED:
+		case SEVT_PLOT_FEATURE_ADDED:
+		case SEVT_PLOT_FEATURE_REMOVED:
+		case SEVT_PLOT_BONUS_ADDED:
+		case SEVT_PLOT_BONUS_REMOVED:
 			return CvCascadePackage<CvPlot>::PLOTSEG_NATURE;        // the PRE-improvement substrate
-		case SEVT_IMPROVEMENT_CHANGED:
+		case SEVT_PLOT_IMPROVEMENT_ADDED:
+		case SEVT_PLOT_IMPROVEMENT_REMOVED:
 			return CvCascadePackage<CvPlot>::PLOTSEG_IMPROVEMENT;   // floored at -nature at resolve
 		default:
 			return CvCascadePackage<CvPlot>::PLOTSEG_REST;          // route + the owner's plot-scope flats
