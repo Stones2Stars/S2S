@@ -18,6 +18,8 @@
 #include "PlotContext.h"
 #include "CvPlot.h"
 #include "CvMap.h"                  // plotByIndex / plotNum -- the fact's iSrcLoc resolution
+#include "CvCity.h"                 // the fresh-water counter's city -> its plot
+#include "AI/CvPlayerAI.h"          // GET_PLAYER -- a city fact names its owner, never a map index
 #include "CvGameCoreUtils.h"        // plotDirection -- the one-hop neighbour fan-out
 #include "Defines/CvGlobals.h"      // GC
 #include "Spine/CvEventSpine.h"     // IEventConsumer / SEVT_* / the crossing emit
@@ -138,6 +140,22 @@ namespace
 		}
 	}
 
+	// ⚖ A CITY-SCOPE FACT THAT A PLOT VERDICT READS. `CvPlot::isFreshWater` consults the city STANDING ON the plot
+	// (`hasFreshWater`, the provider-BUILDING access counter), so that counter crossing moves the plot's
+	// HAS_FRESHWATER while no plot fact fires at all. Without this route the verdict goes stale with nothing to
+	// re-derive it ([DEC-no-self-heal]) -- the missing-CONSUMER-ROUTE gap form, which has no other signature.
+	// ⛔ It is kept SEPARATE from pc_axisFor because the two resolve their plot differently: a plot fact carries a
+	// map INDEX in iSrcLoc, a city fact carries a city ID plus its owner in iC.
+	int pc_cityAxisFor(int iEventId)
+	{
+		switch (iEventId)
+		{
+		case SEVT_CITY_FRESH_WATER_ADDED:
+		case SEVT_CITY_FRESH_WATER_REMOVED:  return PLOTAXIS_CITY;
+		default:                             return 0;
+		}
+	}
+
 	class PlotContextSpineConsumer : public IEventConsumer
 	{
 	public:
@@ -154,19 +172,35 @@ namespace
 // ⛔ SEVT_PLOT_PREDICATE_* is deliberately ABSENT: this store EMITS that fact, it does not consume it. Routing the
 // fan-out on the AXIS instead of on a bit's own crossing is what bounds the fan-out to one hop and makes a cascade
 // structurally impossible rather than merely avoided.
+// ⚠ The set is NOT plot facts only -- a verdict reads what it reads, so the CITY fresh-water counter is in here too
+// (pc_cityAxisFor). Scope is a property of how the fact RESOLVES its plot, never of whether it belongs.
 bool PlotContext::wantsEvent(int iEventId)
 {
-	return pc_axisFor(iEventId) != 0;
+	return pc_axisFor(iEventId) != 0 || pc_cityAxisFor(iEventId) != 0;
 }
 
 void PlotContext::onSpineEvent(const CvSpineEvent& kEvent)
 {
-	const int iAxis = pc_axisFor(kEvent.iEventId);
-	if (iAxis == 0 || kEvent.iSrcLoc < 0)
+	if (kEvent.iSrcLoc < 0)
 	{
 		return;
 	}
-	const CvPlot* pPlot = GC.getMap().plotByIndex(kEvent.iSrcLoc);
+	const CvPlot* pPlot = NULL;
+	int iAxis = pc_axisFor(kEvent.iEventId);
+	if (iAxis != 0)
+	{
+		pPlot = GC.getMap().plotByIndex(kEvent.iSrcLoc);
+	}
+	else
+	{
+		iAxis = pc_cityAxisFor(kEvent.iEventId);
+		if (iAxis == 0 || kEvent.iC < 0)
+		{
+			return;
+		}
+		const CvCity* pCity = GET_PLAYER((PlayerTypes)kEvent.iC).getCity(kEvent.iSrcLoc);
+		pPlot = (pCity != NULL) ? pCity->plot() : NULL;
+	}
 	if (pPlot == NULL)
 	{
 		return;
