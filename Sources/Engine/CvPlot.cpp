@@ -2032,8 +2032,21 @@ bool CvPlot::isFreshWater() const
 	return false;
 }
 
+// ⛔ NO_TERRAIN IS A REAL STATE HERE, AND IT IS THE RING THAT PRODUCES IT. This is the per-NEIGHBOUR leg of
+// isFreshWater's rect(1,1) walk, so it is asked about plots OTHER than the one being examined -- and during
+// CvMap::read the stream fills the map one plot at a time, so a neighbour that has not deserialized yet still
+// carries NO_TERRAIN. Reading the info plane for id -1 is a LOAD defect everywhere else and correctly fails
+// loud ([DEC-info-plane-read-only]); here the id is simply not known YET, which is a sentinel to test, never an
+// unanswerable read to raise on.
+// ⚑ Answering false is not a guess and costs no accuracy: PLOTAXIS_TERRAIN is neighbour-visible, so when that
+// neighbour is read its own fact fans back over this ring and both sides re-derive -- the load order is
+// self-correcting by construction ([contexts.md]), which is exactly why no drain pass is needed to make it so.
 bool CvPlot::isWaterAndIsFresh() const
 {
+	if (getTerrainType() == NO_TERRAIN)
+	{
+		return false;
+	}
 	return isWater() && GC.getTerrainInfo(getTerrainType()).isFreshWaterTerrain();
 }
 

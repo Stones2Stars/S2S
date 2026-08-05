@@ -435,6 +435,19 @@ CAPSTONE — LOAD is the only full build).
   > Deriving a bit by calling the ONE accessor is what that rule asks for; what is banned is re-deriving the WHOLE
   > BLOCK, which per-bit routing is precisely what stops. Its neighbour leg is the one walk left, and it is now
   > paid only when a fact that actually feeds it arrives.
+  > **⛔ THE PRICE OF CALLING A LIVE ENGINE PREDICATE FROM A LOAD-STREAM FACT: IT MUST BE TOTAL AGAINST THE
+  > NOT-YET-READ SENTINEL.** `CvMap::read` fills the map ONE PLOT AT A TIME and each plot announces as it lands,
+  > so a derivation that reaches a NEIGHBOUR reaches one that may still hold `NO_TERRAIN` / `NO_FEATURE` / no
+  > city. Every such leg tests its sentinel and answers false; an unguarded `getTerrainInfo(NO_TERRAIN)` is a
+  > fail-loud info-plane read ([DEC-info-plane-read-only](decisions.md#dec-info-plane-read-only)) and kills the
+  > load outright. ⚠ **The self-correcting load order does NOT cover this** — it guarantees the VALUE converges
+  > (the neighbour's own fact fans back and both sides re-derive), which is worth nothing if the first pass
+  > raised. Convergence is about the answer; totality is about surviving to give one.
+  > ⚑ **The distinction that decides which bits are exposed: what the leg READS.** `HAS_COAST` reads the
+  > neighbour's STORED `IS_WATER` bit, so an unread neighbour reads false and the row is safe by construction;
+  > `HAS_FRESHWATER` reaches through a live `CvPlot` accessor into the info plane, so it is not. That is the cost
+  > of the [DEC-single-implementation](decisions.md#dec-single-implementation) carve-out above, and it is worth
+  > paying — but it is paid HERE, by making the engine leg total, never by re-introducing a deferred drain pass.
   > **⛔ THE FACT SETS THE BIT — it does not trigger a callback that goes and asks (owner).** *"Those 'refresh'
   > functions are legacy-inspired rollerskating."* Re-deriving the WHOLE block through the same `CvPlot`
   > accessors a read used to call is the legacy read path RESCHEDULED from read-time to event-time, not
