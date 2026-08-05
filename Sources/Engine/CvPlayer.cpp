@@ -5,7 +5,7 @@
 #include "Infos/CvClassificationIds.h"   // the generated SKILL_/TAG_/CAPABILITY_ id table
 
 #include "CvGameCoreDLL.h"
-#include "Enabler/CvCapabilities.h"
+#include "Infos/CvClassificationIds.h"   // the generated CLS_* ids the ability reads key on
 #include "CvTraitSelection.h"
 #include "Engine/CvGameSpeedScale.h"
 #include "Engine/CvBuildCostScale.h"   // the option-gated build-cost compositions (one place)
@@ -1063,6 +1063,9 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	// The policy dictionary, bound and ZEROED: a delta store is correct only from a known zero.
 	m_policies.bind(this);
 	m_policies.clear();
+	// The ability union, bound and ZEROED for the same reason -- a delta store fed by the grantor facts.
+	m_capabilities.bind(this);
+	m_capabilities.clear();
 	// bind the EMPIRE-scope cascade package. It starts EMPTY and is filled ONLY by the facts ([DEC-maintained-sum]).
 	m_cascadePackage.bind(CASC_SCOPE_EMPIRE, (int)eID, -1);
 	// The enabler's domains start EMPTY and UN-READY -- init'd by their domain enablers at this player's
@@ -1732,10 +1735,11 @@ void CvPlayer::changeLeader(LeaderHeadTypes eNewLeader)
 	foreach_(const int iTrait, CvTraitSelection::leaderTraits(GC.getLeaderHeadInfo(eLeader)))
 	{
 		const TraitTypes eTrait = (TraitTypes)iTrait;
+		// The GAME-START selectability semantics are this call site's own; the commit, the fact and the apply
+		// are the shared body's.
 		if (CvTraitSelection::isSelectable(GC.getTraitInfo(eTrait), true))
 		{
-			m_pabHasTrait[eTrait] = true;
-			processTrait(eTrait, 1);
+			setHasTraitInternal(eTrait, true);
 		}
 	}
 
@@ -1919,9 +1923,25 @@ void CvPlayer::setIsHuman( bool bNewValue )
 }
 
 
+// COMMIT + ANNOUNCE. The fact is what lets the authored rebel maintenance discount ever resolve: it is gated
+// `enabled: IS_REBEL` on TECH_GAME_START, which every player holds from turn one and never loses -- so the
+// deposit's own SOURCE never moves again and the ATOM's crossing is the only thing that can apply or withdraw it
+// ([DEC-maintained-sum] plane C).
 void CvPlayer::setIsRebel(bool bNewValue)
 {
+	if (m_bRebel == bNewValue)
+	{
+		return;
+	}
 	m_bRebel = bNewValue;
+	if (bNewValue)
+	{
+		emitEmpireRebelAdded(getID());
+	}
+	else
+	{
+		emitEmpireRebelRemoved(getID());
+	}
 }
 
 bool CvPlayer::isRebel() const
@@ -11747,9 +11767,6 @@ void CvPlayer::changeYieldRateModifier(YieldTypes eIndex, int iChange)
 
 		invalidateYieldRankCache(eIndex);
 
-		if (eIndex == YIELD_COMMERCE)
-		{
-		}
 		AI_makeAssignWorkDirty();
 
 		if (getTeam() == GC.getGame().getActiveTeam())
@@ -11906,8 +11923,11 @@ void CvPlayer::setCommercePercent(CommerceTypes eIndex, int iNewValue)
 		}
 		FAssert(100 == iTotalCommercePercent);
 
-
-		AI_makeAssignWorkDirty();
+		// ⛔ A SLIDER MOVES NO OUTPUT, so no citizen decision depends on it (owner). It re-divides the city's
+		// COMMERCE yield between gold / research / culture / espionage and changes neither that yield nor any
+		// plot's value -- and a plot is not evaluated on the commerce channels in the first place. So nothing
+		// here re-evaluates an assignment: the realized rates simply read the new split at the combine
+		// ([modifier.md](../../docs/specs/modifier.md) §2a).
 
 		if (getTeam() == GC.getGame().getActiveTeam())
 		{
@@ -14419,7 +14439,7 @@ bool CvPlayer::canDoEspionageMission(EspionageMissionTypes eMission, PlayerTypes
 		{
 			return false;
 		}
-		if (!pCity->isPower())
+		if (!pCity->isPowered())
 		{
 			return false;
 		}
@@ -16917,7 +16937,12 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_bDisableHuman); // AI_AUTO_PLAY - 07/09/08 - jdog5000
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iStabilityIndex);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iStabilityIndexAverage);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_bRebel);
+		// Lands through its setter, so a save taken mid-revolt announces the state it carries. m_bRebel is still
+		// false from reset(), so the read IS the crossing and the fact fires exactly once, from the one body that
+		// owns it ([DEC-spine-reseed]).
+		bool bLoadedRebel = false;
+		WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &bLoadedRebel, "m_bRebel");
+		setIsRebel(bLoadedRebel);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iMotherPlayer);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_bDoNotBotherStatus);
 
@@ -25715,7 +25740,7 @@ int CvPlayer::getCorporationInfluence(CorporationTypes eIndex) const
 	}
 	int iInfluence = 100;
 
-	iInfluence += CascadeCapabilities::corporationRevenueModifier(getTeam()) / 2;
+	iInfluence += capabilities().corporationRevenueModifier() / 2;
 
 	//Find the prereq tech for corporate HQ
 	TechTypes ePrereqTech = GC.getCorporationInfo(eIndex).getTechPrereq();
@@ -26382,6 +26407,28 @@ void CvPlayer::changeBuildWorkerSpeedModifierSpecific(BuildTypes eBuild, int iCh
 
 
 
+// COMMIT + ANNOUNCE + apply. Static/initial assignment is covered by PLAYER_INIT and by the load reseed, so
+// the emit belongs here rather than in processTrait -- but every RUNTIME move of a held trait comes through
+// this body, including a leader SWAP, which used to write the has-array raw and announce nothing at all.
+void CvPlayer::setHasTraitInternal(TraitTypes eIndex, bool bNewValue)
+{
+	if (eIndex == NO_TRAIT || hasTrait(eIndex) == bNewValue)
+	{
+		return;
+	}
+	m_pabHasTrait[eIndex] = bNewValue;
+	if (bNewValue)
+	{
+		emitEmpireTraitAdded(getID(), (int)eIndex);
+	}
+	else
+	{
+		emitEmpireTraitRemoved(getID(), (int)eIndex);
+	}
+	processTrait(eIndex, bNewValue ? 1 : -1);
+}
+
+
 void CvPlayer::setHasTrait(TraitTypes eIndex, bool bNewValue)
 {
 	PROFILE_EXTRA_FUNC();
@@ -26392,19 +26439,7 @@ void CvPlayer::setHasTrait(TraitTypes eIndex, bool bNewValue)
 
 	if (!bNewValue || (bNewValue && CvTraitSelection::isSelectable(GC.getTraitInfo(eIndex), false)))
 	{
-		m_pabHasTrait[eIndex] = bNewValue;
-		// The RUNTIME trait change, past the top-of-function no-change guard and after the field commit inside the
-		// validity gate. Static/initial trait assignment goes through processTrait directly at init and is covered
-		// by PLAYER_INIT + the load reseed, so the emit belongs HERE, not in processTrait.
-		if (bNewValue)
-	{
-		emitEmpireTraitAdded(getID(), (int)eIndex);
-	}
-	else
-	{
-		emitEmpireTraitRemoved(getID(), (int)eIndex);
-	}
-		processTrait(eIndex, bNewValue ? 1 : -1);
+		setHasTraitInternal(eIndex, bNewValue);
 
 		// Announce a developing-leader trait change to the other humans. The old rank clause (only announce a
 		// non-base rung) went with the succession rank; under DEVELOPING every trait change is a level-up move
@@ -26749,8 +26784,7 @@ void CvPlayer::clearLeaderTraits()
 		TraitTypes eTrait = ((TraitTypes)iI);
 		if (hasTrait(eTrait))
 		{
-			m_pabHasTrait[eTrait] = false;
-			processTrait((TraitTypes)iI, -1);
+			setHasTraitInternal(eTrait, false);
 		}
 	}
 	setLeaderHeadLevel(0);
@@ -27494,7 +27528,7 @@ bool CvPlayer::canAddHeritage(const HeritageTypes eType, const bool bTestVisible
 
 	// The language gate is a derived-on-query CAPABILITY over the team's live grantors (capabilities.md), not a
 	// latched player bool -- it lapses with its last live source rather than being set once.
-	if (heritage.needsLanguage() && !CascadeCapabilities::flag(getTeam(), CCF_HAS_LANGUAGE))
+	if (heritage.needsLanguage() && !capabilities().hasCapability(CLS_CAPABILITY_HAS_LANGUAGE))
 	{
 		return false;
 	}

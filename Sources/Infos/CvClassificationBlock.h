@@ -39,6 +39,8 @@ enum ClsDomain
 	CLSD_CHARACTERISTIC,// plot substrate `characteristics` (terrain/feature/improvement/route)
 	CLSD_CAPABILITY,    // empire `capabilities`
 	CLSD_POLICY,        // empire `policies`
+	CLSD_CANTRADE,      // empire `canTrade` -- what may appear on the trade table (capabilities.md)
+	CLSD_CANWORKON,     // empire `canWorkOn` -- which coarse plot classes citizens may work (capabilities.md)
 	NUM_CLS_DOMAINS
 };
 

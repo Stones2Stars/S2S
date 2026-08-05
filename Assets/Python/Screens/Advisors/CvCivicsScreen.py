@@ -320,21 +320,21 @@ class CvCivicsScreen:
 			iCivicOption += 1
 
 	def setCivicText(self, screen, iCivic):
-		info = GC.getCivicInfo(iCivic)
-		szTxt = self.aFontList[1] + info.getDescription() + "\n"
-		szTxt += self.aFontList[4] + info.getStrategy() + GTM.parseCivicInfo(iCivic, False, True, True) + "\n\n"
+		# The info plane is reached through the ONE data-fetching library, addressed by infotype prefix -- the
+		# global context hands out no info objects by design ([DEC-cy-not-fixed]).
+		szTxt = self.aFontList[1] + INFO.getDescription("CIVIC_", iCivic) + "\n"
+		szTxt += self.aFontList[4] + INFO.getStrategy("CIVIC_", iCivic) + GTM.parseCivicInfo(iCivic, False, True, True) + "\n\n"
 
 		if iCivic in self.originalCivics:
-			szTxt += info.getCivilopedia()
+			szTxt += INFO.getCivilopedia("CIVIC_", iCivic)
 		else:
 			iCivicOption = 0
 			for civics in CivicData.civicLists:
 				for _, iCivicX in civics:
 					if iCivicX == iCivic:
 						iCivic = self.originalCivics[iCivicOption]
-						info = GC.getCivicInfo(iCivic)
-						szTxt += self.aFontList[1] + info.getDescription() + "\n"
-						szTxt += self.aFontList[4] + info.getStrategy() + GTM.parseCivicInfo(iCivic, False, True, True)
+						szTxt += self.aFontList[1] + INFO.getDescription("CIVIC_", iCivic) + "\n"
+						szTxt += self.aFontList[4] + INFO.getStrategy("CIVIC_", iCivic) + GTM.parseCivicInfo(iCivic, False, True, True)
 						break
 				else: iCivicOption += 1; continue
 				break

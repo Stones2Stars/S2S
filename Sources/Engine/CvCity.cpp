@@ -3,7 +3,6 @@
 #include "Infos/CvClassificationIds.h"   // the generated SKILL_/TAG_/CAPABILITY_ id table
 
 #include "CvGameCoreDLL.h"
-#include "Enabler/CvCapabilities.h"
 #include "Engine/CvGameSpeedScale.h"
 #include "AI/BetterBTSAI.h" // logCityAI ([CIT/produced] / [CIT/waste] production-pipeline logging)
 #include "CvArea.h"
@@ -386,7 +385,7 @@ void CvCity::getCityFlags(int (&flags)[NUM_CITY_FLAGS]) const
 	flags[CITY_FLAG_DISORDER]              = isDisorder() ? 1 : 0;
 	flags[CITY_FLAG_CAPITAL]               = isCapital() ? 1 : 0;
 	flags[CITY_FLAG_GOVERNMENT_CENTER]     = isGovernmentCenter() ? 1 : 0;
-	flags[CITY_FLAG_POWER]                 = isPower() ? 1 : 0;
+	flags[CITY_FLAG_POWER]                 = isPowered() ? 1 : 0;
 	flags[CITY_FLAG_OCCUPATION]            = isOccupation() ? 1 : 0;
 	flags[CITY_FLAG_PLUNDERED]             = isPlundered() ? 1 : 0;
 	flags[CITY_FLAG_QUARANTINED]           = isQuarantined() ? 1 : 0;
@@ -7538,9 +7537,26 @@ int CvCity::getPowerCount() const
 }
 
 
-bool CvCity::isPower() const
+//	The UNGATED source: does a live grantor supply power here at all. This is the AMENITY's own answer, and a
+//	blackout does not touch it -- two power plants are two live grantors throughout an outage.
+bool CvCity::hasPowerSource() const
 {
-	return !hasStatus(CITYSTATUS_POWER_DISABLED) && (getPowerCount() > 0 || isAreaCleanPower());
+	return getPowerCount() > 0 || isAreaCleanPower();
+}
+
+
+//	⚖ A STATUS IS MIDDLEWARE BETWEEN A SOURCE AND ITS TARGETS (owner): it gates what is DELIVERED, never what is
+//	STORED. So a blackout leaves the amenity refcount standing and stops its value reaching the targets --
+//	the same shape a city under WLTKD/disorder emitting 0 instead of its maintenance package already has
+//	(economy.md: it suppresses the CONSUMPTION of the value, never its contents).
+//	⚖ AND THAT IS WHY THIS VALUE EARNS AN EXPLICIT GETTER (owner), against the one-getter-per-group grammar
+//	(patterns.md): a gate needs a named point to tap into, which a channel-indexed group read does not offer.
+//	⛔ THIS is the definition of "powered" -- the predicate (CASC_PRED_HAS_POWER -> CityContext::isPowered), every
+//	consumer, and the CROSSING the amenity fold announces all resolve through it, so a fact and a read cannot
+//	disagree. A second expression of it anywhere is the drift this getter exists to prevent.
+bool CvCity::isPowered() const
+{
+	return hasPowerSource() && !hasStatus(CITYSTATUS_POWER_DISABLED);
 }
 
 
@@ -10284,8 +10300,8 @@ void CvCity::processWorkingPlot(int iPlot, int iChange, bool yieldsOnly)
 			}
 		}
 
-		// The worked-plot Σ is the cascade's: emitPlotWorkedChanged above is what marks this city's plot-fed
-		// receiver sums (SEVT_PLOT_WORKED_CHANGED). Only the UI-side rider the retired push carried stays here.
+		// The worked-plot Σ is the cascade's -- the IS_WORKED fact the internal setter announces is what moves
+		// this city's plot-fed sums. Only the UI-side rider stays here.
 		onYieldChange();
 	}
 
@@ -10301,33 +10317,35 @@ void CvCity::processWorkingPlot(int iPlot, int iChange, bool yieldsOnly)
 #endif
 }
 
-void CvCity::setWorkingPlot(int iIndex, bool bNewValue)
+// COMMIT + ANNOUNCE, and nothing else -- the body the save read hands each deserialized worked slot to.
+void CvCity::setWorkingPlotInternal(int iIndex, bool bNewValue)
 {
 	FASSERT_BOUNDS(0, NUM_CITY_PLOTS, iIndex);
 
-	if (isWorkingPlot(iIndex) != bNewValue)
+	if (isWorkingPlot(iIndex) == bNewValue)
 	{
-		m_pabWorkingPlot[iIndex] = bNewValue;
+		return;
+	}
+	m_pabWorkingPlot[iIndex] = bNewValue;
 
-		processWorkingPlot(iIndex, bNewValue ? 1 : -1);
-
-		CvPlot* pPlot = getCityIndexPlot(iIndex);
-		if (bNewValue)
-		{
-			FAssertMsg(pPlot != NULL, CvString::format("pPlot was null for iIndex %d", iIndex).c_str());
-		}
-		// The plot's IS_WORKED verdict flipped. The fact belongs to the PLOT (iSrcLoc) but only the city can
-		// attribute it, so both ride. A city-radius index off the map edge resolves to no plot -- there is then
-		// no plot whose state changed, so there is no fact to announce.
-		if (pPlot != NULL)
-		{
-			if (isCitizenJuggling())
-			{
-				m_bJuggleDeferredWork = true;   // the NET flip announces at the close, not this probe
-			}
-			else
-			{
-				if (bNewValue)
+	CvPlot* pPlot = getCityIndexPlot(iIndex);
+	if (bNewValue)
+	{
+		FAssertMsg(pPlot != NULL, CvString::format("pPlot was null for iIndex %d", iIndex).c_str());
+	}
+	// The plot's IS_WORKED verdict flipped. The fact belongs to the PLOT (iSrcLoc) but only the city can
+	// attribute it, so both ride. A city-radius index off the map edge resolves to no plot -- there is then
+	// no plot whose state changed, so there is no fact to announce.
+	if (pPlot == NULL)
+	{
+		return;
+	}
+	if (isCitizenJuggling())
+	{
+		m_bJuggleDeferredWork = true;   // the NET flip announces at the close, not this probe
+		return;
+	}
+	if (bNewValue)
 	{
 		emitPlotWorkedAdded(GC.getMap().plotNum(pPlot->getX(), pPlot->getY()), (int)getOwner(), getID());
 	}
@@ -10335,9 +10353,21 @@ void CvCity::setWorkingPlot(int iIndex, bool bNewValue)
 	{
 		emitPlotWorkedRemoved(GC.getMap().plotNum(pPlot->getX(), pPlot->getY()), (int)getOwner(), getID());
 	}
-			}
-		}
+}
+
+
+void CvCity::setWorkingPlot(int iIndex, bool bNewValue)
+{
+	FASSERT_BOUNDS(0, NUM_CITY_PLOTS, iIndex);
+
+	if (isWorkingPlot(iIndex) == bNewValue)
+	{
+		return;
 	}
+	setWorkingPlotInternal(iIndex, bNewValue);
+	// The EFFECT half, which the read deliberately does not run: working population, the plot builder and
+	// symbol refresh, the yield rider and the interface dirty bits.
+	processWorkingPlot(iIndex, bNewValue ? 1 : -1);
 }
 
 
@@ -12839,6 +12869,21 @@ void CvCity::readBody(FDataStreamBase* pStream)
 				const int iLoadedSpecialistCount = m_paiSpecialistCount[iI];
 				m_paiSpecialistCount[iI] = 0;
 				setSpecialistCountInternal((SpecialistTypes)iI, iLoadedSpecialistCount);
+			}
+		}
+		// The WORKED set, landed the same way as the wholesale arrays above. Without this no plot's IS_WORKED
+		// verdict is announced by a load at all: the array deserializes whole, setWorkingPlot never runs, and
+		// the bit is re-derived by its own fact and by nothing else ([DEC-contexts-are-never-marked]) -- so it
+		// read FALSE for the entire session while isWorkingPlot said true.
+		// ⚑ The cities stream AFTER the map, so the plot exists to carry the bit; and the fact lands before the
+		// GAME_LOAD_FINISHED drain folds each plot's FINAL block into its city's plotAttrs, which is what keeps
+		// the count exact rather than short by every worked tile.
+		for (iI = 0; iI < NUM_CITY_PLOTS; ++iI)
+		{
+			if (m_pabWorkingPlot[iI])
+			{
+				m_pabWorkingPlot[iI] = false;
+				setWorkingPlotInternal(iI, true);
 			}
 		}
 		// Culture level carries the city's radius/vicinity footprint with it.

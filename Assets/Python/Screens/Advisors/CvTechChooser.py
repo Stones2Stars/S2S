@@ -108,7 +108,9 @@ class CvTechChooser:
 	def getTechState(self, iTech):
 		if self.CyTeam.isHasTech(iTech):
 			return CIV_HAS_TECH
-		if not self.CyPlayer.canResearch(iTech, False, True):
+		# Availability is the ENABLER's own maintained verdict, never a re-derived gate ([DEC-enabler-not-cascade]).
+		# The tri-state is returned whole; "offerable now" is == ENABLER_LISTED.
+		if ENABLER.getTechAvailability(self.iPlayer, iTech) != ENABLER_LISTED:
 			return CIV_NO_RESEARCH
 		if not self.CyPlayer.isResearchingTech(iTech):
 			return CIV_TECH_AVAILABLE

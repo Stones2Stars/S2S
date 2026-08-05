@@ -261,6 +261,29 @@ enum PolicyClsTypes
 	NUM_CLS_POLICY_TYPES = 19
 };
 
+// CLSD_CANTRADE -- the `canTrade` block (9 authored keys)
+enum CanTradeClsTypes
+{
+	CLS_CANTRADE_DEFENSIVE_PACT = 0,
+	CLS_CANTRADE_EMBASSY = 1,
+	CLS_CANTRADE_GOLD = 2,
+	CLS_CANTRADE_MAPS = 3,
+	CLS_CANTRADE_OPEN_BORDERS = 4,
+	CLS_CANTRADE_PERMANENT_ALLIANCE = 5,
+	CLS_CANTRADE_RIGHT_OF_PASSAGE = 6,
+	CLS_CANTRADE_TECHS = 7,
+	CLS_CANTRADE_VASSALS = 8,
+	NUM_CLS_CANTRADE_TYPES = 9
+};
+
+// CLSD_CANWORKON -- the `canWorkOn` block (2 authored keys)
+enum CanWorkOnClsTypes
+{
+	CLS_CANWORKON_OCEAN = 0,
+	CLS_CANWORKON_WATER = 1,
+	NUM_CLS_CANWORKON_TYPES = 2
+};
+
 // The seed table -- ClassificationRegistry::buildAndResolve mints these first, in order, so the
 // constants above equal the runtime ids. One NULL-terminated list per domain, indexed by ClsDomain.
 static const char* const CLS_SEED_CLSD_SKILL[] =
@@ -495,6 +518,27 @@ static const char* const CLS_SEED_CLSD_POLICY[] =
 	NULL
 };
 
+static const char* const CLS_SEED_CLSD_CANTRADE[] =
+{
+	"defensivePact",
+	"embassy",
+	"gold",
+	"maps",
+	"openBorders",
+	"permanentAlliance",
+	"rightOfPassage",
+	"techs",
+	"vassals",
+	NULL
+};
+
+static const char* const CLS_SEED_CLSD_CANWORKON[] =
+{
+	"ocean",
+	"water",
+	NULL
+};
+
 static const char* const* const CLS_SEED_KEYS[NUM_CLS_DOMAINS] =
 {
 	CLS_SEED_CLSD_SKILL,
@@ -504,6 +548,8 @@ static const char* const* const CLS_SEED_KEYS[NUM_CLS_DOMAINS] =
 	CLS_SEED_CLSD_CHARACTERISTIC,
 	CLS_SEED_CLSD_CAPABILITY,
 	CLS_SEED_CLSD_POLICY,
+	CLS_SEED_CLSD_CANTRADE,
+	CLS_SEED_CLSD_CANWORKON,
 };
 
 #endif // CV_CLASSIFICATION_IDS_H

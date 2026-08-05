@@ -32,7 +32,6 @@
 #include "AI/CvTeamAI.h"
 #include "Engine/CvUnit.h"
 #include "CvUnitCombatInfo.h" // /computed/cities/yields heal-per-unitcombat decomposition (getUnitCombatInfo().getType())
-#include "Enabler/CvCapabilities.h" // /computed/teamFlags hasLanguage (the legacy latch is cut, #430)
 #include "Enabler/CvEnablerKernel.h" // wireOperatingBuildings for the wellbeing eval ctx
 #include "CvOracleEndpoints.h" // the derived-state planes' stored/oracle documents (the documents live THERE)
 // This surface serves RAW state (/state) and the engine's own answers (/computed). The /computed cache
@@ -403,7 +402,7 @@ namespace
 			{ "/computed/cascade/packages/oracle",  "cascadePackagesOracle",  "the same packages recomputed from source into scratch -- diff against .../stored" },
 			{ "/computed/enabler/operating/stored", "enablerOperatingStored", "the per-city operating set the targeted propagation maintains: active/obsolete/provided + provider counts. ?player=N[&city=M]" },
 			{ "/computed/enabler/operating/oracle", "enablerOperatingOracle", "the same set recomputed from source into scratch -- diff against .../stored" },
-			{ "/computed/capabilities/stored",      "capabilitiesStored",     "the team capability union as the have-change marks built it. ?player=N (its team)" },
+			{ "/computed/capabilities/stored",      "capabilitiesStored",     "the empire ability union as the grantor facts built it: capabilities/canTrade/canWorkOn/canTradeOn. ?player=N" },
 			{ "/computed/capabilities/oracle",      "capabilitiesOracle",     "the same union recomputed from source into scratch -- diff against .../stored" }
 		};
 

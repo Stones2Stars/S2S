@@ -88,6 +88,11 @@ public:
 	virtual const CvClassificationBlock* getCharacteristics() const { return NULL; } // §8 (plot substrate)
 	virtual const CvClassificationBlock* getCapabilities() const { return NULL; }   // §8 (grantors)
 	virtual const CvClassificationBlock* getPolicies()     const { return NULL; }   // §9 (civics/traits)
+	// §9 root blocks that ride the SAME grantor-provides mechanic as `capabilities` -- what may appear on the
+	// trade table, and which coarse plot classes citizens may work (capabilities.md). Their own id domains: the
+	// key spaces are disjoint registries, so they are never merged with capabilities' ([contexts.md]).
+	virtual const CvClassificationBlock* getCanTrade()     const { return NULL; }
+	virtual const CvClassificationBlock* getCanWorkOn()    const { return NULL; }
 
 	// ⚖ THE PARAMETERIZED CLASSIFICATION READ -- ONE per domain, for every info ([patterns.md] § THE GETTER
 	// SETUP: "all these individual getters should be replaced with one parameterized read"). The id argument is
@@ -104,6 +109,8 @@ public:
 	bool hasCharacteristic(int iCharacteristicId) const{ return clsHasId(getCharacteristics(), iCharacteristicId); }
 	bool providesCapability(int iCapabilityId) const   { return clsHasId(getCapabilities(), iCapabilityId); }
 	bool providesPolicy(int iPolicyId) const           { return clsHasId(getPolicies(), iPolicyId); }
+	bool providesCanTrade(int iCanTradeId) const       { return clsHasId(getCanTrade(), iCanTradeId); }
+	bool providesCanWorkOn(int iCanWorkOnId) const     { return clsHasId(getCanWorkOn(), iCanWorkOnId); }
 	// The REVOKE plane (skills.md §4 grant/revoke: a promotion authoring `stampede: false` takes the ability away).
 	bool revokesSkill(int iSkillId) const              { return clsHasFalseId(getSkills(), iSkillId); }
 
@@ -275,6 +282,8 @@ protected:
 	virtual CvClassificationBlock* mutCharacteristics() { return NULL; }
 	virtual CvClassificationBlock* mutCapabilities() { return NULL; }
 	virtual CvClassificationBlock* mutPolicies()     { return NULL; }
+	virtual CvClassificationBlock* mutCanTrade()     { return NULL; }
+	virtual CvClassificationBlock* mutCanWorkOn()    { return NULL; }
 
 private:
 	CvInfo(const CvInfo&);            // noncopyable (the composed units own conditions)

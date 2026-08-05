@@ -899,9 +899,9 @@ int CyCity::getNukeModifier() const
 	return m_pCity->getNukeModifier();
 }
 
-bool CyCity::isPower() const
+bool CyCity::isPowered() const
 {
-	return m_pCity->isPower();
+	return m_pCity->isPowered();
 }
 
 int CyCity::getDefenseDamage() const

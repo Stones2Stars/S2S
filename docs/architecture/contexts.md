@@ -244,7 +244,11 @@ surface: the fold is the ONE reader of the grantor side
 > failure a plain counter or a bitset cannot express.
 > ⚑ **The fold ANNOUNCES its crossings** (0 ⇄ non-zero, never a second grantor of a key the city already holds),
 > because a consumer routing on an amenity must not re-derive which key moved — the modifier's `HAS_POWER`
-> dependency route and the enabler's power gate both ride that fact. ⚠ Power is the one wired today; government
+> dependency route and the enabler's power gate both ride that fact.
+> ⛔ **Where a STATUS gates delivery, the announced crossing is the GATED verdict's, not the store's** — for power,
+> `CvCity::isPowered` rather than the refcount ([state.md](../specs/state.md) § A STATUS IS MIDDLEWARE). The two
+> genuinely differ, so announcing the store would put the fact and every consumer's read on different values; the
+> status reaches this fold for that reason alone and never becomes a store entry or a cascade input. ⚠ Power is the one wired today; government
 > centre and fresh water still ride their own counters and migrate onto this crossing as they convert, which is
 > what turns the per-attribute facts into the ONE parameterized fact described below.
 > ⛔ The crossing is emitted by the FOLD, not by a mutation site: the fold IS the maintenance path, so an emit

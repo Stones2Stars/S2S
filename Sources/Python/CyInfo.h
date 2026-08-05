@@ -106,6 +106,10 @@ public:
 	// getDescription above returns RESOLVED TEXT. A name that hides which one you hold is how a raw key ends up
 	// rendered to a player, or a resolved string ends up fed back into getText.
 	std::wstring getTextKey(const std::string& szTypePrefix, int iId) const;
+	// The other two GENERIC CvInfoBase texts, on the same prefix dispatch: every registry carries them, so they
+	// belong on the generic plane rather than a per-type accessor. RESOLVED TEXT, like getDescription.
+	std::wstring getCivilopedia(const std::string& szTypePrefix, int iId) const;
+	std::wstring getStrategy(const std::string& szTypePrefix, int iId) const;
 	// The entity's stable TYPE KEY ("UNIT_AXEMAN") -- what a scenario serializer and a config string need.
 	std::string getType(const std::string& szTypePrefix, int iId) const;
 	// The entity's BUTTON/icon art reference (the `ui` block, json.md §7). ART is an unmigrated system boundary

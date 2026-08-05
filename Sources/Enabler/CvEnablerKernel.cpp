@@ -381,7 +381,7 @@ bool EnablerKernel::allowedOk(const CvInfo* j, int iId, const CvPlayer& kPlayer,
 	return true;
 }
 
-// (The empire-capability query lives in CascadeCapabilities -- the ONE derived-on-query union, cached per team;
+// (The empire-capability query lives on the PLAYER, as its own keyed union -- Engine/CapabilityContext.h;
 // the kernel's former techs-only duplicate was folded into it 2026-07-02, capabilities.md.)
 
 // canFoundReligion -- a PLAYER-WIDE state predicate (CvPlayer::canFoundReligion): NOT a JSON frontier, reproduced from

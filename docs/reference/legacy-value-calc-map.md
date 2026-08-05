@@ -109,7 +109,7 @@ getYieldRate100(y) = min(CITY_MAX_YIELD_RATE, max(100,
 | building | `getBuildingYieldModifier(y)` (`m_buildingYieldMod`) | `modBuilding` |
 | event (city) | `getYieldRateModifier(y)` | `modEvent` |
 | player | `player.getYieldRateModifier(y)` | `modPlayer` |
-| power | `getPowerYieldRateModifier(y)` — **only if `isPower()`** | `modPower` |
+| power | `getPowerYieldRateModifier(y)` — **only if `isPowered()`** | `modPower` |
 | area | `area()->getYieldRateModifier(owner, y)` — only if `area()!=NULL` | `modArea` |
 | capital | `player.getCapitalYieldRateModifier(y)` — **only if `isCapital()`** | `modCapital` |
 

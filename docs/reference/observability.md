@@ -117,7 +117,22 @@ everything downstream is a consumer of it (owner, founding decree). Concretely (
 **the BetterBTSAI log helpers (`logAIJson` et al.) are RETIRED — never route new work through them — and every
 direct `gDLL->logMsg` inside Engine files is likewise unwanted**; each domain migrates by EMITTING spine events
 (the field census below is the prepared input), whereupon it gains the file consumer, the `/events` stream
-consumer, and the off-thread writer for free. Every DOMAIN event gets an assigned importance LEVEL as it
+consumer, and the off-thread writer for free.
+
+> **⚖ THE OLD LOGGING IS NOT A CLEANUP BACKLOG — IT IS A SURFACE YOU MUST NOT RELY ON TO FIND THINGS (owner):**
+> *"I am not prioritizing removing the old logging; it should just not be relied on to find things, because it
+> means that is an emit that should be in the spine."*
+> ⇒ **The migration is DEMAND-DRIVEN, and the trigger is an INVESTIGATION, not a sweep.** The moment answering a
+> question requires reading a legacy `log<Domain>AI` sink, that requirement IS the finding: the fact belongs on
+> the spine and is not there. **Emit it** ([DEC-close-event-gaps-now](../architecture/decisions.md#dec-close-event-gaps-now)) —
+> the domain then gets the file consumer, the `/events` stream and the off-thread writer for free, and the legacy
+> line beside it stops mattering whether or not anyone deletes it.
+> ⛔ So do NOT plan, size, or schedule a wholesale conversion of the remaining call sites; a count of them is not
+> a worklist. And do not read a surviving legacy line as debt to pay down — it is inert until someone LEANS on
+> it, and leaning on it is the only thing that is actually banned.
+> ⚑ **The test while debugging: "which surface answered my question?"** A spine-written domain (its
+> `spineRegisterDomain` file — `Cascade.log`, `CityAI.log`, …) is the instrument working. A legacy sink is a gap
+> report with your name on it. Every DOMAIN event gets an assigned importance LEVEL as it
 migrates (levels today are only meaningful on the DIAGNOSTIC side; DOMAIN defaults to 1). The multiplayer
 **OOS special logger is deliberately KEPT** — a synchronization-debugging surface in its own right, and a
 natural future consumer of the synced DOMAIN stream. ✅ **DONE — the turn-boundary side-channel is consolidated onto the spine.** The four bespoke

@@ -28,7 +28,8 @@
 #include "CvUnitCombatInfo.h"
 #include "CvTraitInfo.h"
 #include "CvVictoryInfo.h"
-#include "Enabler/CvCapabilities.h"     // the empire capability union + the authored-key vocabulary
+#include "Engine/CapabilityContext.h"     // the empire ability union: the commerce-slider capability map
+#include "Infos/CvClassificationIds.h"      // the generated CLS_* ids a consumer reads by
 #include "Infrastructure/CvInitCore.h"
 #include "Engine/CvMap.h"
 #include "Engine/CvPlot.h"
@@ -47,6 +48,12 @@
 #include "Infrastructure/FAStarNode.h"
 #include "Engine/CvArmy.h"
 #include "Spine/CvEventSpine.h" // #430 logging consolidation: route [DIP]/[ESP] through the event spine (shadow)
+#include "CvCityLogTags.h" // [CIT] tag enums -- the assign-dirty FAN attribution emitted from AI_makeAssignWorkDirty
+
+// The compiler intrinsic behind the [CIT/assign/fan] caller attribution (the same one CvCityAI.cpp uses for the
+// per-city line; re-declared here because the unity batching must not decide whether it is visible).
+extern "C" void* _ReturnAddress(void);
+#pragma intrinsic(_ReturnAddress)
 
 // #430 logging: [DIP] diplomacy/deals + [ESP] espionage -> event spine (CvPlayerAI). Both domains self-register their
 // prefix providers so the spine stays domain-agnostic. Shadow discipline: emits run ALONGSIDE the legacy logDiploAI /
@@ -1670,6 +1677,22 @@ void CvPlayerAI::AI_unitUpdate()
 
 void CvPlayerAI::AI_makeAssignWorkDirty()
 {
+	// The FAN's own attribution. The per-city [CIT/assign/dirty] line cannot serve it: its return address is the
+	// for_each below, so every whole-scope caller reports one identical RVA. Captured HERE, the address is the
+	// site that actually asked for the fan, and one line covers the whole sweep instead of one per city.
+	{
+		static const char* s_pModuleBase = (const char*)GetModuleHandle("CvGameCoreDLL.dll");
+		int iCities = 0;
+		foreach_(const CvCity* pLoopCity, cities())
+		{
+			(void)pLoopCity;
+			++iCities;
+		}
+		eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_ASSIGN_FAN, 3)
+			.addI(CITF_owner, getID())
+			.addI(CITF_cities, iCities)
+			.addI(CITF_callerRva, (int)((const char*)_ReturnAddress() - s_pModuleBase)));
+	}
 	algo::for_each(cities(), CvCity::fn::AI_setAssignWorkDirty(true));
 }
 
@@ -4624,7 +4647,7 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 	}
 
 	// Expand trading options
-	if (kTech.canTradeItem("maps"))
+	if (kTech.providesCanTrade(CLS_CANTRADE_MAPS))
 	{
 		iValue += 100;
 
@@ -4634,14 +4657,14 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 		}
 	}
 
-	if (kTech.canTradeItem("techs") && !GC.getGame().isOption(GAMEOPTION_NO_TECH_TRADING))
+	if (kTech.providesCanTrade(CLS_CANTRADE_TECHS) && !GC.getGame().isOption(GAMEOPTION_NO_TECH_TRADING))
 	{
 		iValue += 500;
 
 		iValue += 500 * iHasMetCount;
 	}
 
-	if (kTech.canTradeItem("gold"))
+	if (kTech.providesCanTrade(CLS_CANTRADE_GOLD))
 	{
 		iValue += 200;
 
@@ -4651,7 +4674,7 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 		}
 	}
 
-	if (kTech.canTradeItem("openBorders") && iHasMetCount > 0)
+	if (kTech.providesCanTrade(CLS_CANTRADE_OPEN_BORDERS) && iHasMetCount > 0)
 	{
 		iValue += 500;
 
@@ -4666,17 +4689,17 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 		}
 	}
 
-	if (kTech.canTradeItem("defensivePact"))
+	if (kTech.providesCanTrade(CLS_CANTRADE_DEFENSIVE_PACT))
 	{
 		iValue += 400;
 	}
 
-	if (kTech.canTradeItem("permanentAlliance") && GC.getGame().isOption(GAMEOPTION_ENABLE_PERMANENT_ALLIANCES))
+	if (kTech.providesCanTrade(CLS_CANTRADE_PERMANENT_ALLIANCE) && GC.getGame().isOption(GAMEOPTION_ENABLE_PERMANENT_ALLIANCES))
 	{
 		iValue += 200;
 	}
 
-	if (kTech.canTradeItem("vassals") && !GC.getGame().isOption(GAMEOPTION_NO_VASSAL_STATES))
+	if (kTech.providesCanTrade(CLS_CANTRADE_VASSALS) && !GC.getGame().isOption(GAMEOPTION_NO_VASSAL_STATES))
 	{
 		iValue += 200;
 	}
@@ -4697,7 +4720,7 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 		iValue += 500;
 	}
 
-	if (kTech.canWorkOnClass("water"))
+	if (kTech.providesCanWorkOn(CLS_CANWORKON_WATER))
 	{
 		iValue += (600 * iCoastalCities);
 	}
@@ -4852,8 +4875,7 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 		// Does this tech unlock the channel's SLIDER? The grantor's own `capabilities` block, keyed by the
 		// channel's slider capability -- GOLD is residual and has none, which answers false without a special
 		// case here.
-		if (kTech.getCapabilities()->has(
-				CascadeCapabilities::flagName(CascadeCapabilities::commerceRateFlag((CommerceTypes)iI))))
+		if (kTech.providesCapability(CapabilityContext::commerceRateCapability((CommerceTypes)iI)))
 		{
 			iValue += 100;
 			if (iI == COMMERCE_CULTURE && AI_isDoVictoryStrategy(AI_VICTORY_CULTURE2))
@@ -5601,7 +5623,7 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 	}
 
 	//Tech Whore
-	if (!GC.getGame().isOption(GAMEOPTION_NO_TECH_TRADING) && (kTech.canTradeItem("techs") || kTeam.isTechTrading()))
+	if (!GC.getGame().isOption(GAMEOPTION_NO_TECH_TRADING) && (kTech.providesCanTrade(CLS_CANTRADE_TECHS) || kTeam.isTechTrading()))
 	{
 		if ((bAsync ? GC.getASyncRand().get(100, "AI Tech Whore ASYNC") : GC.getGame().getSorenRandNum(100, "AI Tech Whore")) < (GC.getGame().isOption(GAMEOPTION_NO_TECH_BROKERING) ? 20 : 10))
 		{
@@ -21433,13 +21455,12 @@ int CvPlayerAI::AI_cultureVictoryTechValue(TechTypes eTech) const
 	}
 	int iValue = 0;
 
-	if (GC.getTechInfo(eTech).canTradeItem("defensivePact"))
+	if (GC.getTechInfo(eTech).providesCanTrade(CLS_CANTRADE_DEFENSIVE_PACT))
 	{
 		iValue += 50;
 	}
 
-	if (GC.getTechInfo(eTech).getCapabilities()->has(
-			CascadeCapabilities::flagName(CascadeCapabilities::commerceRateFlag(COMMERCE_CULTURE))))
+	if (GC.getTechInfo(eTech).providesCapability(CapabilityContext::commerceRateCapability(COMMERCE_CULTURE)))
 	{
 		iValue += 100;
 	}

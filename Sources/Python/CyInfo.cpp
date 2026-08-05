@@ -13,6 +13,7 @@
 #include "Data/CvReadJson.h"     // the ONE infotype-prefix -> InfoRepo dispatch, READ-ONLY half (rjInfoForTypeConst / rjCountForType)
 #include "Infos/CvInfo.h"
 #include "Infos/CvEdges.h"           // the load-derived edge families ([DEC-one-reverse-view])
+#include "Infos/CvClassificationRegistry.h"   // the cold-path authored-key -> generated-id resolve
 #include "Infos/CvCivicInfo.h"       // the civic column the bulk index reads
 // The straggler dispatch reaches these concrete registries -- specific headers, never the CvInfos.h umbrella.
 #include "Infos/CvBuildingInfo.h"
@@ -179,6 +180,18 @@ std::wstring CyInfo::getDescription(const std::string& szTypePrefix, int iId) co
 	return pInfo ? std::wstring(pInfo->getDescription()) : std::wstring();
 }
 
+std::wstring CyInfo::getCivilopedia(const std::string& szTypePrefix, int iId) const
+{
+	const CvInfoBase* pInfo = cyi_infoBase(szTypePrefix, iId);
+	return pInfo ? std::wstring(pInfo->getCivilopedia()) : std::wstring();
+}
+
+std::wstring CyInfo::getStrategy(const std::string& szTypePrefix, int iId) const
+{
+	const CvInfoBase* pInfo = cyi_infoBase(szTypePrefix, iId);
+	return pInfo ? std::wstring(pInfo->getStrategy()) : std::wstring();
+}
+
 std::wstring CyInfo::getTextKey(const std::string& szTypePrefix, int iId) const
 {
 	const CvInfoBase* pInfo = cyi_infoBase(szTypePrefix, iId);
@@ -254,7 +267,10 @@ bool CyInfo::canTradeItem(const std::string& szTypePrefix, int iId, const std::s
 	{
 		return false;
 	}
-	return GC.getTechInfo((TechTypes)iId).canTradeItem(szItem);
+	// A COLD, name-keyed caller (the Python surface resolves by authored key, not by generated id), so the
+	// registry does the name->id resolve here rather than the block carrying a string plane for it.
+	return GC.getTechInfo((TechTypes)iId).providesCanTrade(
+		ClassificationRegistry::keyId(CLSD_CANTRADE, szItem));
 }
 
 python::list CyInfo::getWellbeing(const std::string& szTypePrefix, int iId, int iScope) const
@@ -573,6 +589,8 @@ void CyInfo::pythonPublish()
 	python::class_<CyInfo>("CyInfo")
 		.def("getDescription", &CyInfo::getDescription)
 		.def("getTextKey",     &CyInfo::getTextKey)
+		.def("getCivilopedia", &CyInfo::getCivilopedia)
+		.def("getStrategy",    &CyInfo::getStrategy)
 		.def("getType",        &CyInfo::getType)
 		.def("getButton",      &CyInfo::getButton)
 		.def("exists",         &CyInfo::exists)

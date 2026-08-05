@@ -162,13 +162,21 @@ reads objects). **Build order:** spine + the modifier scope accumulator → logg
   ⚑ **The fix is structural, not five remembered emits:** the emit lives in the slot's INTERNAL SETTER, so a
   newly serialized field cannot be added without going through the one body that announces it. That is what
   closed these five, and it is why the answer was never a longer hand-maintained list in the read.
-  ⚠ The worked SET itself is still read live at the load-end rebuild (`CvCity::isWorkingPlot`), never replayed
-  from events.
-  **THE TIER-1 HOLES ARE CLOSED** — the facts a named consumer read but nothing announced. **`isPowered()` is
-  whole**: its three ORed legs each announce now — the power COUNT (`SEVT_CITY_POWER_ADDED / _REMOVED`), the **disabled-power
-  timer** (`SEVT_CITY_POWER_DISABLED_ADDED / _REMOVED`, `CvCity::changeDisabledPowerTimer`) and the **area clean-power**
-  flag (`SEVT_AREA_CLEAN_POWER_ADDED / _REMOVED`, `CvArea::changeCleanPowerCount`). ⚠ The timer TICKS DOWN every turn, so
-  it emits at the derived 0-CROSSING, never per decrement — a counter that moves on a schedule is not a state
+  ⚠ **The WORKED set is the CITY's slot, so it reseeds from `CvCity::read`, not from the plot's.** The plot
+  carries the `IS_WORKED` verdict but only the city can attribute it, so the array's in-read landing is where
+  the fact comes from — and the cities stream AFTER the map, which is exactly what makes the plot available to
+  carry the bit and puts the fact before the `GAME_LOAD_FINISHED` fold that reads each plot's FINAL block.
+  **THE TIER-1 HOLES ARE CLOSED** — the facts a named consumer read but nothing announced.
+  ⚖ **`isPowered()` announces ONCE, and what it announces is the VERDICT — never a leg.** `CvCity::isPowered` is the
+  ONE definition (a live grantor supplies power AND no blackout gates delivery), and its crossing is announced by
+  the AMENITY FOLD as `SEVT_CITY_POWER_ADDED / _REMOVED` — the fact the modifier's plane-C route and the enabler's
+  gate both ride. Its inputs reach that fold and stop there: the grantor crossing itself, and the blackout status
+  (`SEVT_CITY_STATUS_ADDED / _REMOVED` carrying `CITYSTATUS_POWER_DISABLED`), which is MIDDLEWARE gating delivery
+  and is never a cascade input ([state.md](state.md) § A STATUS IS MIDDLEWARE).
+  ⛔ **Announcing a LEG instead would be wrong twice**: no single leg is the verdict (a second plant built during a
+  blackout moves the store and delivers nothing; a blackout lifting delivers power with the store unmoved), and
+  routing several legs into one plane-C application would double-apply. ⚠ A status TICKS DOWN every turn, so it
+  emits at the derived 0-CROSSING only, never per decrement — a counter that moves on a schedule is not a state
   change until its verdict flips, and this is the general rule for every timer-backed fact. Beside them:
   **`SEVT_CITY_HEADQUARTERS_ADDED / _REMOVED`** (`CvGame::setHeadquarters`, per affected city — the `setHolyCity` shape, and
   **not** a duplicate of the building/corporation PRESENCE facts the same setter drives),
@@ -548,6 +556,23 @@ their populated state (a "for each building present, emit built"). That pseudo-e
 lies and trains the next agent to reconstruct more — it is banned
 ([superseded-ideas](../architecture/superseded-ideas.md)). There is no clean middle between it and the real
 event-sourced read, so the read-driven reseed is built as its own step, never shimmed.
+
+> **⚖ AI RE-EVALUATION IS A RESULT-PRODUCER TOO — IT RUNS ONCE THE GAME HAS LOADED, NEVER DURING THE SAVE READ
+> (owner).** *"The AI needs to be allowed to do work; the important part is to not have the AI do work during
+> saveload."* A citizen assignment, a production choice, a re-scored plan are DECISIONS taken over base state —
+> and while the stream is still arriving that state is incomplete, so the decision is paid for in full and then
+> invalidated by the next fact. The save already carries the answer the AI would re-derive, so a load owes no
+> re-decision at all.
+> ⚑ **The flag STAYS SET; only the WORK is suppressed.** Whoever marked the city still wants the work, so it is
+> DEFERRED to the first sweep past `GAME_LOAD_FINISHED` — the identical suppress-then-resume shape grants take
+> off this bracket, applied to the AI plane.
+> ⛔ **Guard the WORK, not the mark.** A guard on each marking site is a rule every future caller must remember,
+> and the marks arrive from whole-scope fans as well as direct calls; a guard at the one place the work is
+> performed covers every path by construction. ⚠ It is NOT a licence to suppress the FACTS — the reseed's
+> DOMAIN events are what build the state, and they are exactly what must keep flowing.
+> ⚑ **The measured shape this closes:** the load fanned a full-empire citizen-reassignment mark once per
+> empire-scope yield-modifier deposit, concentrated in the load's closing seconds — thousands of marks over
+> state that no citizen had yet been placed against.
 
 **The load lifecycle is bracketed by two spine events — `GAME_LOAD_STARTED` / `GAME_LOAD_FINISHED`.** Result-producers
 (grants, and any future on-event side-effect machinery) rely **purely on the spine**: they see `LOAD_STARTED` →

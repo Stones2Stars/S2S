@@ -36,20 +36,19 @@ public:
 	virtual const CvAllowed*   getAllowed()   const { return &m_allowed; }
 	virtual const CvModifiers* getModifiers() const { return &m_modifiers; }
 	virtual const CvClassificationBlock* getCapabilities() const { return &m_capabilities; }
+	virtual const CvClassificationBlock* getCanTrade()     const { return &m_canTrade; }
+	virtual const CvClassificationBlock* getCanWorkOn()    const { return &m_canWorkOn; }
 
 	// ======================= 2. CLASSIFICATION -- O(1) bitset tests, hold-vs-provide in the NAME (json §8) ====
 	// A tech PROVIDES a capability to the empire while held (the grantor direction; capabilities.md -- the
-	// empire's active set is the derived-on-query union CascadeCapabilities maintains).
+	// empire's active set is the keyed union the PLAYER maintains off these facts).
 	bool providesCapabilities() const                { return !m_capabilities.isEmpty(); }
-	// The bespoke capability-plane SIBLING blocks (capabilities.md; json §2 auxiliary): typed sections the
-	// trade-table / trade-route / canWork systems union over live sources. Open string registries by design
-	// (canTrade/canWorkOn keys are data, not classification-registry ids); canTradeOn carries real TERRAIN_ FKs.
-	const std::set<std::string>& getCanTrade() const  { return m_canTrade; }
+	// The capability-plane SIBLING blocks (capabilities.md; json §2 auxiliary): sections the trade-table /
+	// trade-route / canWork systems union over live sources. `canTrade` and `canWorkOn` carry their OWN generated
+	// id domains (CLSD_CANTRADE / CLSD_CANWORKON) so a holder can refcount them like any other keyed store; their
+	// key spaces are disjoint registries and are never merged. `canTradeOn` carries real TERRAIN_ FKs already.
 	const std::set<int>& getCanTradeOnTerrains() const { return m_canTradeOnTerrains; }
-	const std::set<std::string>& getCanWorkOn() const { return m_canWorkOn; }
-	bool canTradeItem(const std::string& szItem) const   { return m_canTrade.count(szItem) != 0; }
 	bool canTradeOnTerrain(int iTerrain) const           { return m_canTradeOnTerrains.count(iTerrain) != 0; }
-	bool canWorkOnClass(const std::string& szClass) const { return m_canWorkOn.count(szClass) != 0; }
 
 	// ======================= 3. MODIFIER GROUPS -- point reads over the compiled sums ========================
 	// (Conditioned-list access + the expected* what-if valuations are the base CvInfo surface. Census
@@ -120,6 +119,8 @@ protected:
 	virtual CvTriggers*  mutTriggers()  { return &m_triggers; }
 	virtual CvModifiers* mutModifiers() { return &m_modifiers; }
 	virtual CvClassificationBlock* mutCapabilities() { return &m_capabilities; }
+	virtual CvClassificationBlock* mutCanTrade()     { return &m_canTrade; }
+	virtual CvClassificationBlock* mutCanWorkOn()    { return &m_canWorkOn; }
 
 private:
 	// --- the composed section units ---
@@ -131,9 +132,9 @@ private:
 	CvClassificationBlock m_capabilities;
 
 	// --- the bespoke capability-plane sibling blocks (typed sections; capabilities.md) ---
-	std::set<std::string> m_canTrade;        // canTrade:{item:true} -- trade-table items/agreements
+	CvClassificationBlock m_canTrade;        // canTrade:{item:true} -- trade-table items/agreements (CLSD_CANTRADE)
 	std::set<int> m_canTradeOnTerrains;      // canTradeOn:{terrains:[TERRAIN_..]} -- FK ids
-	std::set<std::string> m_canWorkOn;       // canWorkOn:{class:true} -- workable plot classes
+	CvClassificationBlock m_canWorkOn;       // canWorkOn:{class:true} -- workable plot classes (CLSD_CANWORKON)
 
 	// --- the intrinsic identity members (materialized once at mapFrom; getters are bare reads) ---
 	int m_iResearchCost;

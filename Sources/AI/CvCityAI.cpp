@@ -76,6 +76,7 @@ namespace
 		case CIT_PROP:                return "[CIT/prop]";
 		case CIT_PROPLEVEL:           return "[CIT/proplevel]";
 		case CIT_ASSIGN_DIRTY:        return "[CIT/assign/dirty]";
+		case CIT_ASSIGN_FAN:          return "[CIT/assign/fan]";
 		case CIT_ASSIGN_RUN:          return "[CIT/assign/run]";
 		case CIT_BILLBOARD_POLL:      return "[CIT/billboard]";
 		case CIT_PUSH_REJECT_UNIT:    return "[CIT/push/reject] kind=unit reason=spamGuard";
@@ -162,6 +163,7 @@ namespace
 		case CITF_lostProd:     return "lostProd";
 		case CITF_gold:         return "gold";
 		case CITF_callerRva:    return "callerRva";
+		case CITF_cities:       return "cities";
 		case CITF_fn:           return "fn";
 		default:              return NULL;
 		}
@@ -758,6 +760,20 @@ void CvCityAI::AI_assignWorkingPlots()
 
 void CvCityAI::AI_updateAssignWork()
 {
+	// ⛔ THE AI DOES ITS WORK ONCE THE GAME HAS LOADED -- NEVER DURING THE SAVE READ (owner). The stream is
+	// authoritative for base state, and a citizen assignment is a DECISION taken over that state: re-deciding
+	// while the state is still arriving spends the whole cost on inputs that are not there yet, and then throws
+	// the answer away when the rest of the stream lands. The saved assignment is already correct, so the load
+	// owes no re-decision at all.
+	// ⚑ The FLAG is deliberately left standing rather than cleared: whoever set it during the read still wants
+	// the work, so it is simply DEFERRED to the first sweep past GAME_LOAD_FINISHED -- the same suppress-then-
+	// resume shape the grants machine takes off the load bracket ([DEC-spine-reseed]).
+	// ⚠ This is the WORK's own guard, not the flag's: it covers every path that marks a city, including the
+	// whole-scope fans, so no caller has to remember the rule.
+	if (spineGameLoadInProgress())
+	{
+		return;
+	}
 	if (AI_isAssignWorkDirty())
 	{
 		//	Don't mess with plot assignments while the user is in the city screen as
@@ -6501,7 +6517,7 @@ int CvCityAI::AI_buildingYieldValue(YieldTypes eYield, BuildingTypes eBuilding, 
 
 		// The candidate would switch the city's POWER on, which is not its own deposit but a state flip that
 		// lets the city's power-gated modifier apply. `providesPower` is the authored attribute (json §8).
-		if (!isPower() && kBuilding.providesAmenity(CLS_AMENITY_PROVIDES_POWER))
+		if (!isPowered() && kBuilding.providesAmenity(CLS_AMENITY_PROVIDES_POWER))
 		{
 			iMod += getPowerYieldRateModifier(eYield);
 		}

@@ -23,6 +23,7 @@ class CvEraInfo; class CvHandicapInfo; class CvSpecialBuildingInfo; class CvProp
 // POLICY_ infos from the union of authored §8/§9 block keys) -- JSON-derived, no XML shell, plain-CvInfo payload.
 class CvSkillClsTag; class CvTagClsTag; class CvAttributeClsTag; class CvCapabilityClsTag; class CvPolicyClsTag;
 class CvCharacteristicClsTag; class CvAmenityClsTag;
+class CvCanTradeClsTag; class CvCanWorkOnClsTag;
 
 //
 //	THE UNLOADED READ. The info plane is built once, by the ONE reader; a read that cannot be answered means a
@@ -116,6 +117,8 @@ CASCADE_INFOREPO_OWNED(CvAmenityClsTag)
 CASCADE_INFOREPO_OWNED(CvCapabilityClsTag)
 CASCADE_INFOREPO_OWNED(CvCharacteristicClsTag)
 CASCADE_INFOREPO_OWNED(CvPolicyClsTag)
+CASCADE_INFOREPO_OWNED(CvCanTradeClsTag)
+CASCADE_INFOREPO_OWNED(CvCanWorkOnClsTag)
 
 #undef CASCADE_INFOREPO_ALIAS
 #undef CASCADE_INFOREPO_OWNED

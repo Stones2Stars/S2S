@@ -128,6 +128,8 @@ void CvInfo::clearSections()
 	if (CvClassificationBlock* u = mutCharacteristics()) u->clearParsed();
 	if (CvClassificationBlock* u = mutCapabilities()) u->clearParsed();
 	if (CvClassificationBlock* u = mutPolicies())     u->clearParsed();
+	if (CvClassificationBlock* u = mutCanTrade())     u->clearParsed();
+	if (CvClassificationBlock* u = mutCanWorkOn())    u->clearParsed();
 }
 
 // §8/§9 classification id-plane resolve -- each carried block fills its by-id bitsets from the generated
@@ -141,6 +143,8 @@ void CvInfo::resolveClassificationIds()
 	if (CvClassificationBlock* u = mutCharacteristics()) u->resolveIds(CLSD_CHARACTERISTIC);
 	if (CvClassificationBlock* u = mutCapabilities()) u->resolveIds(CLSD_CAPABILITY);
 	if (CvClassificationBlock* u = mutPolicies())     u->resolveIds(CLSD_POLICY);
+	if (CvClassificationBlock* u = mutCanTrade())     u->resolveIds(CLSD_CANTRADE);
+	if (CvClassificationBlock* u = mutCanWorkOn())    u->resolveIds(CLSD_CANWORKON);
 }
 
 void CvInfo::mapSections(const picojson::value& entity)
@@ -181,6 +185,8 @@ void CvInfo::mapSections(const picojson::value& entity)
 		if (k == "characteristics")   { if (CvClassificationBlock* u = mutCharacteristics()) u->parse(v); else jsonNoteUnconsumed(m_szType.GetCString(), k); continue; }
 		if (k == "capabilities")      { if (CvClassificationBlock* u = mutCapabilities())    u->parse(v); else jsonNoteUnconsumed(m_szType.GetCString(), k); continue; }
 		if (k == "policies")          { if (CvClassificationBlock* u = mutPolicies())        u->parse(v); else jsonNoteUnconsumed(m_szType.GetCString(), k); continue; }
+		if (k == "canTrade")          { if (CvClassificationBlock* u = mutCanTrade())        u->parse(v); else jsonNoteUnconsumed(m_szType.GetCString(), k); continue; }
+		if (k == "canWorkOn")         { if (CvClassificationBlock* u = mutCanWorkOn())       u->parse(v); else jsonNoteUnconsumed(m_szType.GetCString(), k); continue; }
 
 		switch (jsonClassifyKey(k, v.is<picojson::object>()))
 		{

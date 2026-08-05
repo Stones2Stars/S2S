@@ -12,6 +12,7 @@
 #include "Engine/CityContext.h"            // plotAttrs + the city-scope derived blocks
 #include "Engine/AmenityContext.h"         // the amenity CONTEXT's own consumer
 #include "Engine/PolicyContext.h"          // the enacted-policy dictionary's own consumer
+#include "Engine/CapabilityContext.h"      // the empire-ability union's own consumer
 #include "CvCascadeChannelRegistry.h"      // the [CASCADE] mask decode (channel names per scope)
 #include "Spine/CvEventSpine.h"
 #include "Tools/CvHttpServer.h"   // the /events STREAM consumer (isEnabled + publishEvent)
@@ -387,6 +388,8 @@ static const char* spineDomainPrefix(int iEventId)
 	case SEVT_EMPIRE_GOLDEN_AGE_REMOVED:        return "[SPINE] empireGoldenAgeRemoved";
 	case SEVT_EMPIRE_ANARCHY_ADDED:             return "[SPINE] empireAnarchyAdded";
 	case SEVT_EMPIRE_ANARCHY_REMOVED:           return "[SPINE] empireAnarchyRemoved";
+	case SEVT_EMPIRE_REBEL_ADDED:               return "[SPINE] empireRebelAdded";
+	case SEVT_EMPIRE_REBEL_REMOVED:             return "[SPINE] empireRebelRemoved";
 	case SEVT_EMPIRE_ERA_ADDED:                 return "[SPINE] empireEraAdded";
 	case SEVT_EMPIRE_ERA_REMOVED:               return "[SPINE] empireEraRemoved";
 	case SEVT_EMPIRE_HANDICAP_ADDED:            return "[SPINE] empireHandicapAdded";
@@ -641,6 +644,7 @@ void spineRegisterConsumers()
 	cityContextRegisterConsumer();
 	amenityContextRegisterConsumer();
 	policyContextRegisterConsumer();
+	capabilityContextRegisterConsumer();
 	enablerRegisterConsumer();
 	modifierRegisterConsumer();
 	// The TRIGGER machine (json.md §5: a grant is a trigger with a null condition) registers LAST, and that is the
@@ -1367,6 +1371,22 @@ void emitEmpireAnarchyAdded(int iPlayer)
 void emitEmpireAnarchyRemoved(int iPlayer)
 {
 	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_EMPIRE_ANARCHY_REMOVED, -1, 0, 0, iPlayer, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iPlayer);
+	eventSpine().emit(e);
+}
+
+void emitEmpireRebelAdded(int iPlayer)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_EMPIRE_REBEL_ADDED, -1, 0, 0, iPlayer, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iPlayer);
+	eventSpine().emit(e);
+}
+
+void emitEmpireRebelRemoved(int iPlayer)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_EMPIRE_REBEL_REMOVED, -1, 0, 0, iPlayer, -1);
 	e.iDomainTag = SD_SPINE;
 	e.addI(SPF_OWNER, iPlayer);
 	eventSpine().emit(e);

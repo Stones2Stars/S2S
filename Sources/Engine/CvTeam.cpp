@@ -39,13 +39,44 @@
 #include "CvInfoKinds.h"                // the family + kind vocabulary the group reads walk
 #include "Data/CvInfoValuation.h"       // realizedAtTeam -- the ONE cross-scope roll-up
 
-// The capability union's refresh delegate -- the one-line delegation to the ONE derivation
-// ([DEC-single-implementation]; see CascadeCapabilities::refreshInto, which is also the endpoint oracle).
-// iMask is unused: the union is a whole-cache dirty/clean user, so a rebuild always redefines every field
-// (the CvDerivedCache contract rule 2).
-void CvTeam::cascadeRefreshCaps(int /*iMask*/) const
+// The team's ABILITY RELAYS. The union is the PLAYER's ([DEC-scope-contexts]) -- the team stores nothing and
+// mirrors nothing; it asks a member, exactly as CvCity::getNumBonuses relays to the plot group that owns the
+// count (enabler.md RESIDENCY). Tech is team-held, so every alive member's union answers identically.
+const CapabilityContext* CvTeam::memberCapabilities() const
 {
-	CascadeCapabilities::refreshInto(*this, m_cascadeTeamCaps);
+	for (int iPlayer = 0; iPlayer < MAX_PLAYERS; ++iPlayer)
+	{
+		const CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iPlayer);
+		if (kPlayer.isAlive() && kPlayer.getTeam() == getID())
+		{
+			return &kPlayer.capabilities();
+		}
+	}
+	return NULL;
+}
+
+bool CvTeam::teamHasCapability(int iCapabilityId) const
+{
+	const CapabilityContext* pCaps = memberCapabilities();
+	return pCaps != NULL && pCaps->hasCapability(iCapabilityId);
+}
+
+bool CvTeam::teamHasCanTrade(int iCanTradeId) const
+{
+	const CapabilityContext* pCaps = memberCapabilities();
+	return pCaps != NULL && pCaps->hasCanTrade(iCanTradeId);
+}
+
+bool CvTeam::teamHasCanWorkOn(int iCanWorkOnId) const
+{
+	const CapabilityContext* pCaps = memberCapabilities();
+	return pCaps != NULL && pCaps->hasCanWorkOn(iCanWorkOnId);
+}
+
+bool CvTeam::teamCanTradeOnTerrain(int iTerrain) const
+{
+	const CapabilityContext* pCaps = memberCapabilities();
+	return pCaps != NULL && pCaps->canTradeOnTerrain(iTerrain);
 }
 
 // The team's group reads (see CvTeam.h for the role + the grammar). Same shape as every other owner's: walk the
@@ -216,8 +247,6 @@ void CvTeam::reset(TeamTypes eID, bool bConstructorCall)
 	m_dataRepository.reset();
 	// bind the TEAM-scope cascade package. It starts EMPTY and is filled ONLY by the facts ([DEC-maintained-sum]).
 	m_cascadePackage.bind(CASC_SCOPE_TEAM, -1, (int)eID);
-	// bind the capability union (all-dirty from bind: the first query derives it from current HAVE)
-	m_cascadeTeamCaps.set.bind(this, &CvTeam::cascadeRefreshCaps);
 
 	//--------------------------------
 	// Uninit class
@@ -3099,62 +3128,62 @@ void CvTeam::changeForceTeamVoteEligibilityCount(VoteSourceTypes eVoteSource, in
 
 bool CvTeam::isExtraWaterSeeFrom() const
 {
-	return CascadeCapabilities::flag(getID(), CCF_EXTRA_WATER_SEE_FROM);
+	return teamHasCapability(CLS_CAPABILITY_CAN_SEE_FURTHER_FROM_WATER);
 }
 
 bool CvTeam::isMapTrading()	const
 {
-	return CascadeCapabilities::flag(getID(), CCF_TRADE_MAPS);
+	return teamHasCanTrade(CLS_CANTRADE_MAPS);
 }
 
 bool CvTeam::isTechTrading() const
 {
-	return CascadeCapabilities::flag(getID(), CCF_TRADE_TECHS);
+	return teamHasCanTrade(CLS_CANTRADE_TECHS);
 }
 
 bool CvTeam::isGoldTrading() const
 {
-	return CascadeCapabilities::flag(getID(), CCF_TRADE_GOLD);
+	return teamHasCanTrade(CLS_CANTRADE_GOLD);
 }
 
 bool CvTeam::isOpenBordersTrading() const
 {
-	return CascadeCapabilities::flag(getID(), CCF_TRADE_OPEN_BORDERS);
+	return teamHasCanTrade(CLS_CANTRADE_OPEN_BORDERS);
 }
 
 bool CvTeam::isDefensivePactTrading() const
 {
-	return CascadeCapabilities::flag(getID(), CCF_TRADE_DEFENSIVE_PACT);
+	return teamHasCanTrade(CLS_CANTRADE_DEFENSIVE_PACT);
 }
 
 bool CvTeam::isPermanentAllianceTrading() const
 {
-	return GC.getGame().isOption(GAMEOPTION_ENABLE_PERMANENT_ALLIANCES) && CascadeCapabilities::flag(getID(), CCF_TRADE_PERMANENT_ALLIANCE);
+	return GC.getGame().isOption(GAMEOPTION_ENABLE_PERMANENT_ALLIANCES) && teamHasCanTrade(CLS_CANTRADE_PERMANENT_ALLIANCE);
 }
 
 bool CvTeam::isVassalStateTrading() const
 {
-	return !GC.getGame().isOption(GAMEOPTION_NO_VASSAL_STATES) && CascadeCapabilities::flag(getID(), CCF_TRADE_VASSALS);
+	return !GC.getGame().isOption(GAMEOPTION_NO_VASSAL_STATES) && teamHasCanTrade(CLS_CANTRADE_VASSALS);
 }
 
 bool CvTeam::isBridgeBuilding()	const
 {
-	return CascadeCapabilities::flag(getID(), CCF_BRIDGE_BUILDING);
+	return teamHasCapability(CLS_CAPABILITY_CAN_BUILD_BRIDGES);
 }
 
 bool CvTeam::isIrrigation() const
 {
-	return CascadeCapabilities::flag(getID(), CCF_SPREAD_IRRIGATION);
+	return teamHasCapability(CLS_CAPABILITY_CAN_SPREAD_IRRIGATION);
 }
 
 bool CvTeam::isIgnoreIrrigation() const
 {
-	return CascadeCapabilities::flag(getID(), CCF_IGNORE_IRRIGATION);
+	return teamHasCapability(CLS_CAPABILITY_CAN_IGNORE_IRRIGATION);
 }
 
 bool CvTeam::isWaterWork() const
 {
-	return CascadeCapabilities::flag(getID(), CCF_WORK_WATER);
+	return teamHasCanWorkOn(CLS_CANWORKON_WATER);
 }
 
 int CvTeam::getVassalPower() const
@@ -3345,9 +3374,9 @@ bool CvTeam::isCommerceFlexible(CommerceTypes eIndex) const
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
 	switch (eIndex)
 	{
-	case COMMERCE_RESEARCH:   return CascadeCapabilities::flag(getID(), CCF_SET_SCIENCE_RATE);
-	case COMMERCE_CULTURE:    return CascadeCapabilities::flag(getID(), CCF_SET_CULTURE_RATE);
-	case COMMERCE_ESPIONAGE:  return CascadeCapabilities::flag(getID(), CCF_SET_ESPIONAGE_RATE);
+	case COMMERCE_RESEARCH:   return teamHasCapability(CLS_CAPABILITY_CAN_SET_SCIENCE_RATE);
+	case COMMERCE_CULTURE:    return teamHasCapability(CLS_CAPABILITY_CAN_SET_CULTURE_RATE);
+	case COMMERCE_ESPIONAGE:  return teamHasCapability(CLS_CAPABILITY_CAN_SET_ESPIONAGE_RATE);
 	default:                  return false;   // gold has no slider (capabilities.md)
 	}
 }
@@ -4486,13 +4515,13 @@ bool CvTeam::isTerrainTrade(TerrainTypes eIndex) const
 	{
 		return false;
 	}
-	return CascadeCapabilities::canTradeOnTerrain(getID(), eIndex);
+	return teamCanTradeOnTerrain(eIndex);
 }
 
 
 bool CvTeam::isRiverTrade() const
 {
-	return CascadeCapabilities::flag(getID(), CCF_RIVER_TRADE);
+	return teamHasCapability(CLS_CAPABILITY_HAS_RIVER_TRADE);
 }
 
 
@@ -5313,7 +5342,7 @@ void CvTeam::processTech(TechTypes eTech, int iChange, bool bAnnounce)
 	PROFILE_FUNC();
 	const CvTechInfo& tech = GC.getTechInfo(eTech);
 	// What this tech PROVIDES, asked once. The empire's active set is a different question with its own
-	// surface (CascadeCapabilities, the sole union -- capabilities.md); these gates fire the SIDE EFFECTS a
+	// surface (the player-held ability union -- capabilities.md); these gates fire the SIDE EFFECTS a
 	// grant carries, so they ask the grantor.
 	const CvClassificationBlock* caps = tech.getCapabilities();
 
@@ -5335,7 +5364,7 @@ void CvTeam::processTech(TechTypes eTech, int iChange, bool bAnnounce)
 		GC.getGame().makeTechDiscovered(eTech);
 	}
 
-	// The VALUE is the cascade's -- CascadeCapabilities derives it from the held techs' commerce.corporation
+	// The VALUE is the cascade's -- the player's ability union maintains it off the held techs' commerce.corporation
 	// deposits, never a team accumulator. What survives here is the deleted changer's RIDER: a consumer that
 	// BAKES the modifier has to be re-run when it moves ([save.md] §6).
 	if (tech.getCorporationCommerceModifier(CASC_SCOPE_EMPIRE) != 0)
@@ -5373,7 +5402,7 @@ void CvTeam::processTech(TechTypes eTech, int iChange, bool bAnnounce)
 		setLastRoundOfValidImprovementCacheUpdate();
 	}
 
-	if (tech.getCanWorkOn().count("water") > 0)
+	if (tech.providesCanWorkOn(CLS_CANWORKON_WATER))
 	{
 		AI_makeAssignWorkDirty();
 		setLastRoundOfValidImprovementCacheUpdate();
@@ -6162,22 +6191,22 @@ bool CvTeam::hasLaunched() const
 
 bool CvTeam::isCanPassPeaks() const
 {
-	return CascadeCapabilities::flag(getID(), CCF_CAN_PASS_PEAKS);
+	return teamHasCapability(CLS_CAPABILITY_CAN_PASS_PEAKS);
 }
 
 bool CvTeam::isMoveFastPeaks() const
 {
-	return CascadeCapabilities::flag(getID(), CCF_MOVE_FAST_PEAKS);
+	return teamHasCapability(CLS_CAPABILITY_CAN_MOVE_FAST_ON_PEAKS);
 }
 
 bool CvTeam::isCanFoundOnPeaks() const
 {
-	return CascadeCapabilities::flag(getID(), CCF_CAN_FOUND_ON_PEAKS);
+	return teamHasCapability(CLS_CAPABILITY_CAN_FOUND_ON_PEAKS);
 }
 
 bool CvTeam::isRebaseAnywhere() const
 {
-	return CascadeCapabilities::flag(getID(), CCF_REBASE_ANYWHERE);
+	return teamHasCapability(CLS_CAPABILITY_CAN_REBASE_ANYWHERE);
 }
 
 void CvTeam::AI_setAssignWorkDirtyInEveryPlayerCityWithActiveBuilding(BuildingTypes eBuilding)
@@ -6198,12 +6227,12 @@ void CvTeam::AI_setAssignWorkDirtyInEveryPlayerCityWithActiveBuilding(BuildingTy
 
 bool CvTeam::isCanFarmDesert() const
 {
-	return CascadeCapabilities::flag(getID(), CCF_CAN_FARM_DESERT);
+	return teamHasCapability(CLS_CAPABILITY_CAN_FARM_DESERT);
 }
 
 bool CvTeam::isLimitedBordersTrading() const
 {
-	return CascadeCapabilities::flag(getID(), CCF_TRADE_RIGHT_OF_PASSAGE);
+	return teamHasCanTrade(CLS_CANTRADE_RIGHT_OF_PASSAGE);
 }
 
 void CvTeam::signLimitedBorders(TeamTypes eTeam)
@@ -6316,7 +6345,7 @@ void CvTeam::setHasEmbassy(TeamTypes eIndex, bool bNewValue)
 
 bool CvTeam::isEmbassyTrading() const
 {
-	return CascadeCapabilities::flag(getID(), CCF_TRADE_EMBASSY);
+	return teamHasCanTrade(CLS_CANTRADE_EMBASSY);
 }
 
 void CvTeam::ObsoletePromotions(TechTypes eObsoleteTech)

@@ -221,7 +221,7 @@ public:
 	int getMaxAirlift() const;
 	int getAirModifier() const;
 	int getNukeModifier() const;
-	bool isPower() const;
+	bool isPowered() const;
 	int getDefenseDamage() const;
 	void changeDefenseDamage(int iChange);
 	int getTotalDefense(bool bIgnoreBuilding) const;

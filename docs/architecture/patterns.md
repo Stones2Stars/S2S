@@ -467,6 +467,16 @@ two surfaces.
    A consumer wanting one value takes the group and indexes it. This is the standardization: the surface grows by
    GROUPS (a handful), never by channels (hundreds), and the per-channel scalar getter is the very shape the
    rebuild is deleting.
+   > **⚖ THE ONE QUALIFICATION — A GATED VALUE EARNS AN EXPLICIT GETTER, BECAUSE A GATE NEEDS A TAP POINT
+   > (owner).** Where a STATUS gates what a source delivers, the gated value gets a named read for something else
+   > to attach to; a channel-indexed group read offers no such point. The full ruling, its ungated/gated shape and
+   > why the announced crossing follows the GATED value live at its home,
+   > [state.md](../specs/state.md) § A STATUS IS MIDDLEWARE.
+   > ⛔ This is NOT licence to grow the per-channel surface back (owner: *"what I don't want is to have the getter
+   > spaghetti we used to have"*). **The test is whether the getter carries a CONCEPT something else attaches
+   > to** — a gate tapping it, a predicate resolving through it — never whether a caller would like one value
+   > without indexing. A getter that only names a channel is the spaghetti; a getter that names the thing a
+   > status suppresses is a seam.
 2. **The EXISTING ENGINE ENUM indexes the RESULT, not the call** (`YieldTypes`, `CommerceTypes`, …); a family
    with no engine enum uses its own kind enum (`CvInfoKinds.h`). So the enum stays the consumer's vocabulary
    while the call itself carries no channel argument. The data-minted channel id remains the CACHE's internal

@@ -188,7 +188,7 @@ public:
 	// operate fixpoint ripples, so a mirror would drift (the contexts.md vicinity-split reasoning).
 	const OperatingBuildings* operatingBuildings() const;
 	int  power() const;                       // the `providesPower` AMENITY fold (owner: power IS an amenity)
-	bool isPowered() const;                   // CvCity::isPower -- the HAS_POWER verdict; see the CONTEXT GAP note below
+	bool isPowered() const;                   // CvCity::isPowered -- the HAS_POWER verdict; see the CONTEXT GAP note below
 	bool hasReligion(int eReligion) const;    // CvCity::isHasReligion            (the presence array)
 	bool isHolyCityOf(int eReligion) const;   // CvCity::isHolyCity(eReligion)    ({IS_HOLY_CITY: R}; one game-level lookup)
 	bool hasCorporation(int eCorp) const;     // CvCity::isHasCorporation (presence; spread state)
@@ -239,11 +239,15 @@ public:
 	//  - ownCulturePercent(): plot culture moves EVERY turn for every plot, so a store would be rewritten as often
 	//    as it is read; it is correctly a live read, not a missing fact.
 	// isPowered() and isHeadquartersAny() stay FORWARDS by the STORES-vs-FORWARDS split (both are data CvCity
-	// already answers O(1)), but all three of isPowered()'s legs now announce -- the power COUNT
-	// (SEVT_CITY_POWER_ADDED / _REMOVED), the BLACKOUT status (SEVT_CITY_STATUS_ADDED / _REMOVED carrying
-	// CITYSTATUS_POWER_DISABLED) and the area clean-power flag (SEVT_AREA_CLEAN_POWER_ADDED / _REMOVED) -- and
-	// the headquarters designation announces SEVT_CITY_HEADQUARTERS_ADDED / _REMOVED, so a reader that needs to
-	// react to any of them has a fact to hang on.
+	// already answers O(1)).
+	// ⚖ isPowered() forwards to CvCity::isPowered -- the ONE definition of "powered": a live grantor supplies it
+	// AND no blackout gates delivery. What ANNOUNCES is that VERDICT's crossing, as SEVT_CITY_POWER_ADDED /
+	// _REMOVED from the amenity fold; a status is middleware gating delivery, so it reaches the fold and stops
+	// there, never becoming a store entry or a cascade input (state.md § A STATUS IS MIDDLEWARE).
+	// ⛔ No LEG is the verdict -- a grantor arriving mid-blackout moves the store and delivers nothing -- so a
+	// consumer routes on the verdict fact and never on a leg.
+	// The headquarters designation announces SEVT_CITY_HEADQUARTERS_ADDED / _REMOVED, so a reader that needs to
+	// react to it has a fact to hang on.
 
 	// Fill the CITY half of a condition-eval context (this silo + its centre plot's + the enabler's operating
 	// set) -- the context IS the

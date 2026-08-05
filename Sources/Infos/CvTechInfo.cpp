@@ -58,9 +58,7 @@ void CvTechInfo::mapFrom(const picojson::value& entity)
 	// member (the ability sets clear-first; the prereq vectors would double).
 	// NB m_leadsTo is NOT cleared here -- the reverse pass's rp_deriveTechLeadsTo owns it (clear-first), not this parse
 	// (addLeadsToTech is a std::set insert, so a re-populate cannot double).
-	m_canTrade.clear();
 	m_canTradeOnTerrains.clear();
-	m_canWorkOn.clear();
 	m_flavours.clear();
 	m_aePrereqAndTechs.clear();
 	m_aePrereqOrTechs.clear();
@@ -73,19 +71,10 @@ void CvTechInfo::mapFrom(const picojson::value& entity)
 	}
 	const picojson::object& entityObj = entity.get<picojson::object>();
 
-	// --- the capability-plane sibling blocks (json §8 / capabilities.md): the flat `capabilities` block rides
-	// the base dispatch into the composed m_capabilities unit; the bespoke siblings parse here. ---
-	picojson::object::const_iterator blockIter = entityObj.find("canTrade");
-	if (blockIter != entityObj.end())
-	{
-		jsonBoolSet(blockIter->second, m_canTrade);
-	}
-	blockIter = entityObj.find("canWorkOn");
-	if (blockIter != entityObj.end())
-	{
-		jsonBoolSet(blockIter->second, m_canWorkOn);
-	}
-	blockIter = entityObj.find("canTradeOn");
+	// --- the capability-plane sibling blocks (json §8 / capabilities.md): `capabilities`, `canTrade` and
+	// `canWorkOn` are flat-bool blocks and ride the ONE section dispatch into their composed units; only
+	// `canTradeOn` is bespoke, carrying TERRAIN_ FKs rather than authored keys, so it parses here. ---
+	picojson::object::const_iterator blockIter = entityObj.find("canTradeOn");
 	if (blockIter != entityObj.end() && blockIter->second.is<picojson::object>())
 	{
 		const picojson::object& canTradeOnObj = blockIter->second.get<picojson::object>();

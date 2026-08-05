@@ -8,6 +8,7 @@
 #include "CityContext.h"
 #include "Spine/CvEventSpine.h"
 #include "CvCity.h"
+#include "CvStatus.h"                          // CITYSTATUS_POWER_DISABLED -- the status this store's verdict is gated by
 #include "AI/CvPlayerAI.h"                     // GET_PLAYER
 #include "Infos/CvClassificationIds.h"         // CLS_AMENITY_* -- the generated ids the crossing tests
 #include "Infos/CvClassificationRegistry.h"    // the load-minted amenity id registry (cachedKeyId)
@@ -55,13 +56,19 @@ bool AmenityContext::wantsEvent(int iEventId)
 	case SEVT_CIVIC_ADOPTED:
 	case SEVT_EMPIRE_CAPITAL_ADDED:
 	case SEVT_EMPIRE_CAPITAL_REMOVED:
-	// A city CHANGED HANDS: its empire-conferred amenities belong to a different set of civics now, and the
-	// grantor facts will never restate themselves for it.
+	// A city STARTED EXISTING UNDER AN OWNER -- founded or acquired. It folds what that owner already holds,
+	// from zero; the grantor facts fired before this city existed to fan to and will never restate themselves.
+	// ⛔ The city-FOUNDED fact is deliberately NOT here: `CvPlayer::found` announces ownership FIRST and then the
+	// founding, so folding on both counted every civic-granted amenity twice -- which `has()` hides, and which
+	// then leaves the amenity standing after its last grantor is gone.
+	// ⛔ The owner-REMOVED half is deliberately NOT here either -- see the apply.
 	case SEVT_CITY_OWNER_ADDED:
-	case SEVT_CITY_OWNER_REMOVED:
-	// A city STARTED EXISTING: it folds what its owner already holds. The building half needs no pass (it is a
-	// delta off the per-building crossings), but the civic facts fired before this city existed to fan to.
-	case SEVT_CITY_FOUNDED:
+	// ⚖ THE STATUS LEG -- a status is MIDDLEWARE that gates DELIVERY, so it moves no amenity count and is never
+	// folded into the store. It reaches this context for ONE reason: the powered verdict it gates is what this
+	// store announces, so a blackout starting or ending crosses that verdict with the grantor set untouched.
+	// ⛔ It goes no further -- the status is never a cascade input, and nothing downstream routes on it.
+	case SEVT_CITY_STATUS_ADDED:
+	case SEVT_CITY_STATUS_REMOVED:
 	// THE LOAD BUILD. The building half needs no pass -- it is a delta off the per-building crossings the save
 	// read already emitted. The EMPIRE half does: the civic facts fired from CvPlayer::read, BEFORE the cities
 	// deserialized, so there was no city to fan to. Every city folds its owner's standing civics once, here.
@@ -122,26 +129,41 @@ void AmenityContext::onSpineEvent(const CvSpineEvent& kEvent)
 			}
 		}
 		break;
-	// A city CHANGED HANDS: its empire-conferred amenities belong to a different set of civics now. Each fact
-	// names the city and the ONE owner it concerns, so the losing and gaining ends are two facts.
+	// ⚖ A CITY STARTING TO EXIST UNDER AN OWNER IS THE *ONLY* CIVIC FOLD-IN, AND OWNER_ADDED IS THAT MOMENT.
+	// It is announced for BOTH paths that produce one -- founding (`CvPlayer::found`) and acquisition
+	// (`CvPlayer::acquireCity`) -- and in both the store has just been zeroed, so the fold is a delta from a
+	// known zero ([DEC-keyed-accumulator]).
+	// ⛔ THE WITHDRAWAL HALF IS DELIBERATELY ABSENT, and that is not an unrouted pair. `acquireCity` announces
+	// the removal against the *NEW* city id (its own comment: "the surviving entity now under the new owner"),
+	// so a `-1` there withdraws the OLD owner's civics from a store that never held them -- driving the count
+	// negative and leaving an amenity BOTH empires grant reading false forever. The conquered city's real store
+	// died with the old object. A withdrawal is only ever exact against the store that took the addition.
 	case SEVT_CITY_OWNER_ADDED:
-	case SEVT_CITY_OWNER_REMOVED:
 		if (!spineGameLoadInProgress() && kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS)
 		{
 			const CvCity* pCity = amenityCityFor(kEvent.iC, kEvent.iSrcLoc);
 			if (pCity != NULL)
 			{
-				pCity->amenity().foldAllCivicsOf(kEvent.iC,
-					(kEvent.iEventId == SEVT_CITY_OWNER_ADDED) ? +1 : -1);
+				pCity->amenity().foldAllCivicsOf(kEvent.iC, +1);
 			}
 		}
 		break;
-	// A city STARTED EXISTING: fold its owner's standing civics in, from zero.
-	case SEVT_CITY_FOUNDED:
-		if (!spineGameLoadInProgress() && kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS)
+	// A STATUS GATED OR UNGATED DELIVERY. The store does not move -- the grantors are exactly as they were -- but
+	// the verdict they feed does, so the crossing is announced here like any other.
+	// ⚠ The status has ALREADY moved by the time its fact lands (CvCity::setStatus commits, then emits), so the
+	// PRIOR verdict is reconstructed from the ungated source rather than re-read: a blackout STARTING was preceded
+	// by whatever the source supplied, and a blackout ENDING was preceded by nothing being delivered at all.
+	case SEVT_CITY_STATUS_ADDED:
+	case SEVT_CITY_STATUS_REMOVED:
+		if (kEvent.iType == (int)CITYSTATUS_POWER_DISABLED)
 		{
 			const CvCity* pCity = amenityCityFor(kEvent.iC, kEvent.iSrcLoc);
-			if (pCity != NULL) pCity->amenity().foldAllCivicsOf(kEvent.iC, +1);
+			if (pCity != NULL)
+			{
+				const bool bPoweredBefore = (kEvent.iEventId == SEVT_CITY_STATUS_ADDED)
+					&& pCity->hasPowerSource();
+				pCity->amenity().announcePowerCrossing(bPoweredBefore);
+			}
 		}
 		break;
 	// THE LOAD BUILD. The building half needs no pass -- it is a delta off the per-building crossings the save
@@ -290,26 +312,43 @@ void AmenityContext::foldBlock(const CvClassificationBlock* pBlock, int iSign)
 // The single write point, so the CROSSING announcement exists exactly once.
 void AmenityContext::applyKey(int iAmenityId, int iSign)
 {
-	// A crossing (0 <-> non-zero) is a genuine state change, so it ANNOUNCES -- a consumer routing on an amenity
-	// must not have to re-derive which key moved. Only the crossing: a second grantor of an amenity the city
-	// already holds changes no verdict, exactly as the counters this replaces behaved.
-	const bool bHadBefore = has(iAmenityId);
+	// A crossing is a genuine state change, so it ANNOUNCES -- a consumer routing on an amenity must not have to
+	// re-derive which key moved. Only the crossing: a second grantor of an amenity the city already holds changes
+	// no verdict, exactly as the counters this replaces behaved.
+	// ⛔ POWER announces the crossing of the GATED verdict (CvCity::isPowered), NEVER of the raw refcount. A status
+	// is middleware between a source and its targets, so the two values genuinely differ: a plant completed during
+	// a blackout moves the store while delivering nothing, and a blackout lifting delivers power while the store
+	// stands still. Announcing the refcount would put the fact and every consumer's read on two different values,
+	// leaving plane C holding deposits nothing withdraws ([DEC-maintained-sum]).
+	const bool bIsPowerKey = (iAmenityId == CLS_AMENITY_PROVIDES_POWER);
+	const bool bPoweredBefore = bIsPowerKey && m_city != NULL && m_city->isPowered();
 	add(iAmenityId, iSign);
-	if (m_city != NULL && bHadBefore != has(iAmenityId))
+	// Power is the one amenity whose fact is wired today; the other per-attribute facts (government centre,
+	// fresh water) still ride their own counters and migrate onto this crossing as they convert.
+	if (bIsPowerKey && m_city != NULL)
 	{
-		// Power is the one amenity whose fact is wired today; the other per-attribute facts (government centre,
-		// fresh water) still ride their own counters and migrate onto this crossing as they convert.
-		if (iAmenityId == CLS_AMENITY_PROVIDES_POWER)
-		{
-			if (iSign > 0)
+		announcePowerCrossing(bPoweredBefore);
+	}
+}
+
+
+// ⚖ THE ONE ANNOUNCEMENT POINT for the powered verdict. BOTH inputs that can move it -- a grantor starting or
+// stopping, and the blackout status gating delivery -- resolve through CvCity::isPowered and compare against what
+// held before, so neither leg has to know the other's, and no second expression of "powered" exists to drift.
+void AmenityContext::announcePowerCrossing(bool bPoweredBefore)
+{
+	const bool bPoweredNow = m_city->isPowered();
+	if (bPoweredBefore == bPoweredNow)
+	{
+		return;
+	}
+	if (bPoweredNow)
 	{
 		emitCityPowerAdded(m_city->getID(), m_city->getOwner());
 	}
 	else
 	{
 		emitCityPowerRemoved(m_city->getID(), m_city->getOwner());
-	}
-		}
 	}
 }
 

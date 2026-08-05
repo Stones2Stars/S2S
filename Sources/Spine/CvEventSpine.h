@@ -435,8 +435,10 @@ enum SpineDomainEvent
 	// so a fact per status would mean an engine change per status -- exactly what an open registry exists to
 	// avoid. iType names WHICH status, the same standing a religion or property id has; it is not a direction
 	// discriminator, which is what [DEC-facts-name-happenings] actually bans. The direction is the event.
-	// ⚠ `CITYSTATUS_POWER_DISABLED` is one of the THREE legs CvCity::isPower() ORs -- with the power COUNT above
-	// and the area clean-power flag -- so the HAS_POWER verdict is stale unless all three announce.
+	// ⚖ `CITYSTATUS_POWER_DISABLED` is MIDDLEWARE, not a leg: it gates what the power amenity DELIVERS while the
+	// store keeps its grantors (state.md § A STATUS IS MIDDLEWARE). So this fact reaches the AMENITY FOLD and
+	// stops -- the fold re-checks CvCity::isPowered and announces SEVT_CITY_POWER_* if that verdict crossed.
+	// ⛔ It is never a cascade input, and nothing downstream routes on it: the verdict is what consumers ride.
 	// iType = the CityStatus, iB = turns remaining, iC = owner, iSrcLoc = cityId. DOMAIN.
 	SEVT_CITY_STATUS_ADDED           = 80,
 	SEVT_CITY_STATUS_REMOVED         = 81,
@@ -445,6 +447,12 @@ enum SpineDomainEvent
 	// iC = owner, iSrcLoc = plotNum. DOMAIN.
 	SEVT_UNIT_STATUS_ADDED           = 192,
 	SEVT_UNIT_STATUS_REMOVED         = 193,
+	// The player BECAME / STOPPED BEING a rebel (CvPlayer::setIsRebel, the one write path). IS_REBEL gates the
+	// authored rebel maintenance discount on TECH_GAME_START, which every player holds forever -- so without this
+	// fact that deposit resolves ONCE, at game start when nobody is a rebel, and the discount can never apply.
+	// iC = player. DOMAIN.
+	SEVT_EMPIRE_REBEL_ADDED          = 194,
+	SEVT_EMPIRE_REBEL_REMOVED        = 195,
 	// The city GAINED / LOST fresh-water ACCESS (CvCity::changeFreshWater, at its count crossing) -- the
 	// PROVIDER-BUILDING-fed access counter. ⚠ DISTINCT from the plot-adjacency HAS_FRESHWATER verdict the plot
 	// substrate maintains (CvPlot::isFreshWater): a building can grant a city access on a dry plot.
@@ -602,8 +610,8 @@ enum SpineDomainEvent
 	// iA = HOW MANY, unsigned. iSrcLoc = areaId. DOMAIN.
 	SEVT_AREA_TILE_ADDED            = 142,
 	SEVT_AREA_TILE_REMOVED          = 143,
-	// An AREA GAINED / LOST clean power for a TEAM (CvArea::changeCleanPowerCount, at its count crossing) -- the
-	// third leg of CvCity::isPower(), reached through CvCity::isAreaCleanPower(). The fact is scoped to
+	// An AREA GAINED / LOST clean power for a TEAM (CvArea::changeCleanPowerCount, at its count crossing) -- a leg
+	// of CvCity::hasPowerSource(), reached through CvCity::isAreaCleanPower(). The fact is scoped to
 	// (area x team), which has no owning player, so iC stays -1 and the team rides iB.
 	// iB = teamId, iSrcLoc = areaId. DOMAIN.
 	SEVT_AREA_CLEAN_POWER_ADDED     = 144,
@@ -756,8 +764,8 @@ void emitCitySpecialistAdded(int iCity, int iOwner, int iSpecialist, int iCount)
 void emitCitySpecialistRemoved(int iCity, int iOwner, int iSpecialist, int iCount);
 void emitCityPowerAdded(int iCity, int iOwner);
 void emitCityPowerRemoved(int iCity, int iOwner);
-// The two silent legs of CvCity::isPower(), beside the power crossing above. Call at the derived CROSSING only --
-// the disabled-power timer ticks down every turn, and a per-decrement emit would announce a fact that did not change.
+// A STATUS crossing. Call at the derived CROSSING only -- a status ticks down every turn, and a per-decrement emit
+// would announce a fact that did not change.
 void emitCityStatusAdded(int iCity, int iOwner, int iStatus, int iTurns);
 void emitCityStatusRemoved(int iCity, int iOwner, int iStatus, int iTurns);
 void emitUnitStatusAdded(int iUnit, int iOwner, int iStatus, int iTurns, int iPlot);
@@ -837,6 +845,8 @@ void emitEmpireGoldenAgeAdded(int iPlayer);
 void emitEmpireGoldenAgeRemoved(int iPlayer);
 void emitEmpireAnarchyAdded(int iPlayer);
 void emitEmpireAnarchyRemoved(int iPlayer);
+void emitEmpireRebelAdded(int iPlayer);
+void emitEmpireRebelRemoved(int iPlayer);
 // The era advanced: REMOVED(old era) then ADDED(new era).
 void emitEmpireEraAdded(int iPlayer, int iEra);
 void emitEmpireEraRemoved(int iPlayer, int iEra);

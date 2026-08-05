@@ -41,7 +41,7 @@
 //	wiring is a hasStatus() call at the point of use. ⚑ It is also why ONE generic fact per scope is enough --
 //	with no machine folding on a status, per-status facts would buy precision nobody consumes and cost an engine
 //	change per authored status. ⚠ The one cross-machine reader is CITYSTATUS_POWER_DISABLED, a leg of
-//	CvCity::isPower() that HAS_POWER gates on -- and even there the consumer reads the verdict off the CITY while
+//	CvCity::isPowered() that HAS_POWER gates on -- and even there the consumer reads the verdict off the CITY while
 //	the fact only tells it to re-gate. The fact carries the TRIGGER, never the value.
 //
 

@@ -379,7 +379,7 @@ void CyTeam::changeWarWeariness(int /*TeamTypes*/ eIndex, int iChange)
 	m_pTeam->changeWarWeariness((TeamTypes)eIndex, iChange);
 }
 
-// The commerce-flexible counter is CUT (#430, capabilities.md): the sliders derive from CascadeCapabilities.
+// The commerce-flexible counter is CUT (#430, capabilities.md): the sliders derive from the player's ability union.
 // The count getter answers boolean-as-count; the changer is a documented dead poke (grant the tech instead).
 bool CyTeam::isCommerceFlexible(int /*CommerceTypes*/ eIndex) const
 {

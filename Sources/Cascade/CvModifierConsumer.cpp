@@ -867,6 +867,15 @@ namespace
 				// combine -- the flip re-realizes every rate of the player
 				break;
 			}
+			// The rebel maintenance discount's ONLY route. Its source (TECH_GAME_START) is held from turn one and
+			// never moves again, so plane A can never re-resolve it -- the atom's crossing is the whole mechanism.
+			case SEVT_EMPIRE_REBEL_ADDED:
+			case SEVT_EMPIRE_REBEL_REMOVED:
+			{
+				mc_applyGated(DepositIndex::gatedByPredicate(CASC_PRED_IS_REBEL), mc_sourceDirection(kEvent), MMKernel::PER_SCALE_APPLIED,
+					pPlayer, NULL, NULL);
+				break;
+			}
 			case SEVT_EMPIRE_STATE_RELIGION_ADDED:
 			case SEVT_EMPIRE_STATE_RELIGION_REMOVED:
 			{

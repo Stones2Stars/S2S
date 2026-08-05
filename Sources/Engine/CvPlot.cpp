@@ -6340,24 +6340,38 @@ bool CvPlot::isIrrigated() const
 }
 
 
+// COMMIT + ANNOUNCE, and nothing else -- the body the save read hands its deserialized value to.
+void CvPlot::setIrrigatedInternal(bool bNewValue)
+{
+	if (isIrrigated() == bNewValue)
+	{
+		return;
+	}
+	m_bIrrigated = bNewValue;
+	if (bNewValue)
+	{
+		emitPlotIrrigationAdded(GC.getMap().plotNum(getX(), getY()), (int)getOwner());
+	}
+	else
+	{
+		emitPlotIrrigationRemoved(GC.getMap().plotNum(getX(), getY()), (int)getOwner());
+	}
+}
+
+
 void CvPlot::setIrrigated(bool bNewValue)
 {
 	PROFILE_EXTRA_FUNC();
-	if (isIrrigated() != bNewValue)
+	if (isIrrigated() == bNewValue)
 	{
-		m_bIrrigated = bNewValue;
-		foreach_(CvPlot* pLoopPlot, rect(1, 1))
-		{
-			pLoopPlot->setLayoutDirty(true);
-		}
-		if (bNewValue)
-		{
-			emitPlotIrrigationAdded(GC.getMap().plotNum(getX(), getY()), (int)getOwner());
-		}
-		else
-		{
-			emitPlotIrrigationRemoved(GC.getMap().plotNum(getX(), getY()), (int)getOwner());
-		}
+		return;
+	}
+	setIrrigatedInternal(bNewValue);
+	// The EFFECT half, which the read deliberately does not run: a repaint of this plot and its neighbours,
+	// whose irrigation ARTWORK joins up with this one's.
+	foreach_(CvPlot* pLoopPlot, rect(1, 1))
+	{
+		pLoopPlot->setLayoutDirty(true);
 	}
 }
 
@@ -10644,15 +10658,21 @@ void CvPlot::read(FDataStreamBase* pStream)
 	WRAPPER_READ_STRING(wrapper, "CvPlot", m_szLandmarkMessage);
 	WRAPPER_READ_STRING(wrapper, "CvPlot", m_szLandmarkName);
 	WRAPPER_READ(wrapper, "CvPlot", &m_eClaimingOwner);
-	WRAPPER_READ(wrapper, "CvPlot", (int*)&m_eLandmarkType);
+	// Another of the across-the-gap locals (see the note above): the landmark fact names the owner, which is
+	// still further down the stream. The DECORATED form spells the tag so it stays byte-identical to what
+	// `(int*)&m_eLandmarkType` produced, and the local keeps the read's own `int` width.
+	int iLandmarkType = NO_LANDMARK;
+	WRAPPER_READ_DECORATED(wrapper, "CvPlot", &iLandmarkType, "m_eLandmarkType");
 	WRAPPER_READ(wrapper, "CvPlot", &m_zobristContribution);
 
 	WRAPPER_READ_DECORATED(wrapper, "CvPlot", &bVal, "m_bNOfRiver");
 	m_bNOfRiver = bVal;
 	WRAPPER_READ_DECORATED(wrapper, "CvPlot", &bVal, "m_bWOfRiver");
 	m_bWOfRiver = bVal;
-	WRAPPER_READ_DECORATED(wrapper, "CvPlot", &bVal, "m_bIrrigated");
-	m_bIrrigated = bVal;
+	// Its own local rather than the shared bVal, because it lands further down (after the owner) and bVal is
+	// reused by the reads in between. m_bIrrigated is a BITFIELD, so it cannot be read into directly anyway.
+	bool bIrrigated = false;
+	WRAPPER_READ_DECORATED(wrapper, "CvPlot", &bIrrigated, "m_bIrrigated");
 	WRAPPER_READ_DECORATED(wrapper, "CvPlot", &bVal, "m_bPotentialCityWork");
 	m_bPotentialCityWork = bVal;
 
@@ -10715,6 +10735,15 @@ void CvPlot::read(FDataStreamBase* pStream)
 	// The river PRESENCE fact, from the count the stream carried. updateRiverCrossing() cannot serve it here
 	// -- it derives the count from the ADJACENT plots, which have not necessarily deserialized yet.
 	setRiverCrossingCountInternal(iRiverCrossingCount);
+
+	// IRRIGATION and LANDMARK, landed from the locals read further up. Both are own-plot axes whose verdict
+	// rows (HAS_IRRIGATION / HAS_LANDMARK) are re-derived by their own fact and by nothing else -- there is no
+	// rebuild anywhere that would set them later ([DEC-contexts-are-never-marked]), so a slot that deserialized
+	// straight into its member left the bit reading FALSE for the whole session while the accessor said true.
+	// ⛔ Irrigation goes through the INTERNAL setter: the public one repaints this plot and its neighbours, and
+	// an effect never runs on the load path. Landmark's setter is already commit + announce only.
+	setIrrigatedInternal(bIrrigated);
+	setLandmarkType((LandmarkTypes)iLandmarkType);
 
 	WRAPPER_READ(wrapper, "CvPlot", (int*)&m_plotCity.eOwner);
 	WRAPPER_READ(wrapper, "CvPlot", &m_plotCity.iID);

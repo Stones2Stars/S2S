@@ -285,7 +285,7 @@ const OperatingBuildings* CityContext::operatingBuildings() const
 { return m_city != NULL ? &m_city->m_operatingBuildings : NULL; }
 //  Power is an AMENITY (owner), so this reads the fold it lives in rather than forwarding to a counter.
 int  CityContext::power() const                { return amenityCount(CLS_AMENITY_PROVIDES_POWER); }
-bool CityContext::isPowered() const            { return m_city != NULL && m_city->isPower(); }
+bool CityContext::isPowered() const            { return m_city != NULL && m_city->isPowered(); }
 bool CityContext::hasReligion(int eReligion) const   { return m_city != NULL && m_city->isHasReligion((ReligionTypes)eReligion); }
 bool CityContext::isHolyCityOf(int eReligion) const  { return m_city != NULL && m_city->isHolyCity((ReligionTypes)eReligion); }
 bool CityContext::hasCorporation(int eCorp) const    { return m_city != NULL && m_city->isHasCorporation((CorporationTypes)eCorp); }

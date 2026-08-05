@@ -398,11 +398,13 @@ static bool ev_evalPredicate(const CvCascadeEvalCtx& ctx, const CvCascadeEvalFla
 	                                                   : ev_cityPlotHas(cityContext, evp_workedFeature, pr);
 	case CASC_PRED_HAS_IMPROVEMENT: return ev_cityPlotHas(cityContext, evp_workedImprovement, pr);
 	case CASC_PRED_IS_CAPITAL:            return cityContext != NULL && cityContext->isCapital();
-	// The two engine-counter reads below are OWNER-RULED SANCTIONED (2026-07-05, cutover.md Rulings #4):
-	// isGovernmentCenter -> the counter is KEEP until the Gate-3 building-attributes lane wires (then this
-	// predicate derives from the cascade operating buildings); isPower -> the power machinery is KEEP wholesale ("a city
-	// either has power or does not"), revisited at the later power pass. Neither is a self-containment
-	// violation to re-flag. Both read through the city context's forwards.
+	// Both predicates below read the CITY's own verdict through the context's forwards, and neither is a
+	// self-containment violation to re-flag.
+	// ⚖ isPowered resolves CvCity::isPowered -- the ONE definition of "powered" (a live grantor supplies it AND no
+	// blackout gates delivery), whose crossing the amenity fold announces. A STATUS is middleware gating delivery,
+	// so it never reaches this evaluator ([state.md] § A STATUS IS MIDDLEWARE).
+	// ⚠ isGovernmentCenter still rides its own hand-named counter and migrates onto the amenity crossing as it
+	// converts ([contexts.md]).
 	case CASC_PRED_IS_GOVERNMENT_CENTER:  return cityContext != NULL && cityContext->isGovernmentCenter();
 	case CASC_PRED_HAS_POWER:             return cityContext != NULL && cityContext->isPowered();
 	case CASC_PRED_IS_GOLDEN_AGE:         return empireContext != NULL && empireContext->isGoldenAge();

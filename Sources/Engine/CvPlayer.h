@@ -18,6 +18,7 @@
 #include "CvProperties.h"
 #include "EmpireContext.h"
 #include "PolicyContext.h"   // the empire's enacted-policy dictionary: storage + maintenance, one place
+#include "CapabilityContext.h"   // the empire's ability union: storage + maintenance, one place
 #include "CvCascadePackage.h"   // the EMPIRE-scope cascade package + receiver sums (state-repositories.md)
 #include "Infrastructure/CvDerivedCache.h"  // the ONE derived-cache component (mark-driven, never serialized)
 #include "Enabler/CvEnabler.h"  // PlayerEnabler -- the per-player tri-state domains (enabler.md §7.1)
@@ -807,6 +808,9 @@ public:
 	// it up the scope chain for empire facts (not mirrored per city). Maintained event-driven.
 	const EmpireContext& getEmpireContext() const { return m_empireContext; }
 	PolicyContext& policies() const { return m_policies; }
+	// The empire's ABILITY union (capabilities / canTrade / canWorkOn / canTradeOn). It is the PLAYER's, never
+	// the team's -- CvTeam is the tech BRIDGE and owns no live-state surface ([DEC-scope-contexts]).
+	CapabilityContext& capabilities() const { return m_capabilities; }
 
 	// The EMPIRE-scope cascade package -- the percent/flat sums this player's sources author at empire scope,
 	// PLUS the empire RECEIVER sums (gold/research/culture/espionage -- the realized totals the empire
@@ -1859,6 +1863,7 @@ protected:
 	// reason: the player owns the STORAGE while the context owns the delta LOGIC and the facts that drive it
 	// (Engine/PolicyContext.h -- one place responsible). Its maintainer reaches this accessor directly.
 	mutable PolicyContext m_policies;
+	mutable CapabilityContext m_capabilities;
 	// the EMPIRE-scope cascade package + receiver sums (see getCascadePackage); recompute-only, never serialized
 	CvCascadePackage<CvPlayer> m_cascadePackage;
 	PlayerTypes m_eParent;
@@ -2018,6 +2023,11 @@ public:
 
 
 	void setHasTrait(TraitTypes eIndex, bool bNewValue);
+	// COMMIT + ANNOUNCE + apply -- the ONE body a held trait moves through, so no caller can move one
+	// silently. The SELECTABILITY gate stays with the caller, because it genuinely differs: a leader SWAP
+	// re-assigns under game-start semantics (the barbarian carve-out, START_NO_POSITIVE), a runtime grant
+	// does not.
+	void setHasTraitInternal(TraitTypes eIndex, bool bNewValue);
 	bool canLearnTrait(TraitTypes eIndex, bool isSelectingNegative = false) const;
 	bool canUnlearnTrait(TraitTypes eTrait, bool bPositive) const;
 

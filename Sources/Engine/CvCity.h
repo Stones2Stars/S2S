@@ -497,6 +497,7 @@ public:
 	void setHasReligionInternal(ReligionTypes eIndex, bool bNewValue);
 	void setHasCorporationInternal(CorporationTypes eIndex, bool bNewValue);
 	void setSpecialistCountInternal(SpecialistTypes eIndex, int iNewValue);
+	void setWorkingPlotInternal(int iCityPlotIndex, bool bNewValue);
 
 	int getPopulation() const;
 	void setPopulation(int iNewValue, bool bNormal = true);
@@ -718,7 +719,11 @@ public:
 	int getFreeSpecialist() const;
 
 	int getPowerCount() const;
-	bool isPower() const;
+	// The UNGATED source (a live grantor supplies power) and the GATED read a status taps into. isPowered() is the
+	// ONE definition of "powered": the predicate, every consumer and the amenity fold's crossing all resolve
+	// through it.
+	bool hasPowerSource() const;
+	bool isPowered() const;
 
 	// The per-city ISOLATED live-state object -- the (cityContext, plotGroup) building-output getters + the evaluator read it.
 	// Maintained EVENT-DRIVEN (never a per-turn recompute): population on setPopulation, plot attributes on plot

@@ -752,6 +752,7 @@ public:
 	void setRiverWEDirectionInternal(CardinalDirectionTypes eRiverDir);
 	void setRiverNSDirectionInternal(CardinalDirectionTypes eRiverDir);
 	void setRiverCrossingCountInternal(int iNewCount);
+	void setIrrigatedInternal(bool bNewValue);
 
 	bool isFlatlands() const;
 	DllExport bool isHills() const;

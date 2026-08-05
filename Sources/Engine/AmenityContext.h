@@ -98,6 +98,11 @@ public:
 	// ⛔ This is why no record of past contributions is kept: the fact remembers, so the store need not.
 	void foldGateFlip(int iPlayer, CvCascPredKind ePredicate, int iSign);
 	void foldBlock(const CvClassificationBlock* pBlock, int iSign);
+	// ⚖ THE POWERED CROSSING -- announced against CvCity::isPowered, the ONE definition of "powered". A STATUS is
+	// middleware gating DELIVERY, so a blackout crosses this verdict while moving no count in the store; the caller
+	// passes what held BEFORE its own input moved. ⛔ The status never enters the store and never reaches the
+	// cascade -- this is the whole of its reach.
+	void announcePowerCrossing(bool bPoweredBefore);
 
 private:
 	// The single write point, so the CROSSING announcement exists exactly once.

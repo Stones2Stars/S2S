@@ -42,6 +42,7 @@ enum CitEvent
 	CIT_SPIN_NO_PROD,        // [CIT/spin] reason=noProductionChosen
 	CIT_WASTE,               // [CIT/waste]
 	CIT_ASSIGN_DIRTY,        // [CIT/assign/dirty] -- assignWork false->true transition + the caller's RVA (the churn-storm attribution instrument)
+	CIT_ASSIGN_FAN,          // [CIT/assign/fan] -- a WHOLE-SCOPE assign-dirty fan + the RVA of whoever asked for it (see the header note)
 	CIT_ASSIGN_RUN,          // [CIT/assign/run] -- one AI_assignWorkingPlots run completed (runs/city/turn = the storm shape)
 	CIT_BILLBOARD_POLL       // [CIT/billboard] -- an EXE billboard entry point was called (fn = the census index; the exhaustive billboard-feed trace)
 };
@@ -64,8 +65,14 @@ enum CitField
 	CITF_overflow, CITF_lost, CITF_ownerHas, CITF_aiRoleHas,
 	CITF_lostProd, CITF_gold,
 	CITF_callerRva,  // the dirty-setter caller's RVA (module-relative return address; resolve via the PDB: `ln CvGameCoreDLL+<val>`)
+	CITF_cities,     // how many cities one assign-dirty FAN reached
 	CITF_fn          // the billboard entry-point census index (gPerfBillboardFnNames)
 };
+
+// ⛔ WHY THE FAN NEEDS ITS OWN TAG: the per-city [CIT/assign/dirty] line captures the return address inside
+// AI_setAssignWorkDirty, which attributes a DIRECT caller correctly -- but every WHOLE-SCOPE fan arrives through
+// one `algo::for_each(cities(), ...)`, so all of them report that one address and the instrument names the fan
+// instead of whoever asked for it. The fan therefore captures its OWN caller, once, at the entry point.
 
 // The billboard-feed trace (owner 2026-07-16): EVERY billboard entry point emits a [CIT/billboard] spine event
 // per call (+ increments the census counter). Defined once in CvCityAI.cpp; called from CvCity.cpp + CvGameTextMgr.cpp.

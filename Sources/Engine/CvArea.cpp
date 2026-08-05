@@ -801,16 +801,17 @@ void CvArea::changeCleanPowerCount(TeamTypes eIndex, int iChange)
 
 		if (bWasCleanPower != (m_aiCleanPowerCount[eIndex] > 0))
 		{
-			// The third leg of CvCity::isPower() (reached through isAreaCleanPower). The existing count crossing IS
-			// the fact -- the raw count moves per providing building, the (area x team) verdict only here.
+			// A leg of CvCity::hasPowerSource() (reached through isAreaCleanPower) -- power supplied to every city
+			// of this team in this area. The count crossing IS the fact: the raw count moves per providing
+			// building, the (area x team) verdict only here.
 			if (m_aiCleanPowerCount[eIndex] > 0)
-	{
-		emitAreaCleanPowerAdded(getID(), (int)eIndex);
-	}
-	else
-	{
-		emitAreaCleanPowerRemoved(getID(), (int)eIndex);
-	}
+			{
+				emitAreaCleanPowerAdded(getID(), (int)eIndex);
+			}
+			else
+			{
+				emitAreaCleanPowerRemoved(getID(), (int)eIndex);
+			}
 
 			if (eIndex == GC.getGame().getActiveTeam())
 			{

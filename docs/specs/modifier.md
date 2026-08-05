@@ -237,6 +237,20 @@ The EXTRA is held ×100; the `100 × ⌊EXTRA100⁄100⌋` **truncates it to who
 > commerce receivers**. The ONE place a lower scope's contribution meets the split is **DISPLAY** — a tooltip
 > saying what this building is worth — and that is the [valuation](../architecture/patterns.md) answering a
 > resolved delta, not the plot or building carrying split knowledge of its own.
+>
+> ⛔ **AND THEREFORE A SLIDER MOVE RE-EVALUATES NOTHING — no citizen re-assignment, no plot re-scoring
+> (owner).** *"Moving a slider should not really need to reassign citizens; it does not change commerce
+> outputs at all, and plots are not evaluated on the commerce yields themselves."* The slider re-divides a
+> COMMERCE yield it does not change, and the plot valuation never reads the commerce channels, so every input
+> to a citizen decision is exactly what it was. The realized rates pick the new split up at the COMBINE, which
+> is the whole of the work a slider causes.
+> ⚑ **The measured cost of getting this wrong, because it is the reason the rule is written down:** the setter
+> flagged every one of the player's cities for re-assignment, so ONE slider tick re-ran the full citizen
+> assignment across the empire and **stalled for fifteen seconds**, of which the entire observable result was a
+> couple of dozen facts — a handful of cities moving a citizen, which is the churn of a re-decision that had no
+> new input to decide on.
+> ⚠ It is the [DEC-flag-is-fossil](../architecture/decisions.md#dec-flag-is-fossil) shape on the AI plane: the
+> flag asserted that something a citizen cares about had moved, and nothing had.
 
 ### How the percentages "smash together" — ONE additive stack
 

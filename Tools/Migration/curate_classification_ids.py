@@ -50,6 +50,8 @@ DOMAINS = [
     ("characteristics", "CLSD_CHARACTERISTIC", "CLS_CHARACTERISTIC_", "CharacteristicClsTypes"),
     ("capabilities",    "CLSD_CAPABILITY",     "CLS_CAPABILITY_",     "CapabilityClsTypes"),
     ("policies",        "CLSD_POLICY",         "CLS_POLICY_",         "PolicyClsTypes"),
+    ("canTrade",        "CLSD_CANTRADE",       "CLS_CANTRADE_",       "CanTradeClsTypes"),
+    ("canWorkOn",       "CLSD_CANWORKON",      "CLS_CANWORKON_",      "CanWorkOnClsTypes"),
 ]
 
 # ⚖ HEADROOM: keys the SPEC glossaries name as real members but which NO shipped entity authors today

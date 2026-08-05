@@ -10,7 +10,7 @@
 #include "CvDerivedData.h"
 #include "CvEventGrants.h"
 #include "CvCascadePackage.h"      // the TEAM-scope cascade package (state-repositories.md)
-#include "Enabler/CvCapabilities.h"   // CascadeTeamCaps -- the derived-on-query capability union (capabilities.md)
+class CapabilityContext;   // the PLAYER-held ability union these relays read ([DEC-scope-contexts])
 
 class CvArea;
 
@@ -60,9 +60,6 @@ public:
 	// capability lapses with its last live source. It is CACHED because the queries are hot (isTerrainTrade rides
 	// the pathing/trade-network loops), on the ONE CvDerivedCacheSet protocol -- setHasTech/reset MARK, and THE
 	// MARK IS WHAT REBUILDS; a query is a BARE FETCH. Never serialized.
-	// PUBLIC + MUTABLE by the same requirement as the enabler domains: CascadeCapabilities is the query surface
-	// and owns the derivation; the team owns only the storage.
-	mutable CascadeTeamCaps m_cascadeTeamCaps;
 
 	// Improvement yields a PYTHON EVENT granted this team (the wonder-event grants). One-shot state, so it is
 	// stored apart from anything derived -- Engine/CvEventGrants.h.
@@ -70,7 +67,12 @@ public:
 	int getImprovementYieldChange(ImprovementTypes eImprovement, YieldTypes eYield) const;
 	void recordImprovementYieldGrant(int eEvent, ImprovementTypes eImprovement, YieldTypes eYield, int iChange);
 	// The union's refresh delegate (the CvDerivedCacheSet contract) -- delegates to the ONE derivation.
-	void cascadeRefreshCaps(int iMask) const;
+	// The ABILITY RELAYS -- the team stores no union; it asks a member player, which owns it.
+	const CapabilityContext* memberCapabilities() const;
+	bool teamHasCapability(int iCapabilityId) const;
+	bool teamHasCanTrade(int iCanTradeId) const;
+	bool teamHasCanWorkOn(int iCanWorkOnId) const;
+	bool teamCanTradeOnTerrain(int iTerrain) const;
 
 	// THE TEAM'S GROUP READ SURFACE -- the GAME-OBJECT read role's answer to "what do I HAVE, right now?"
 	// (patterns.md § THE TWO READ ROLES), one getter per modifier FAMILY the TEAM scope carries channels of --

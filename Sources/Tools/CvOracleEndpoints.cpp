@@ -9,7 +9,8 @@
 #include "Cascade/CvCascadeSlotValues.h"    // the served shape both sides answer in
 #include "Cascade/CvCascadeChannelRegistry.h"
 #include "Enabler/CvEnablerKernel.h"        // the operating set: the standing read + the from-source recompute
-#include "Enabler/CvCapabilities.h"         // the team capability union: the standing read + the recompute
+#include "Engine/CapabilityContext.h"        // the empire ability union: the stored read + the from-source oracle
+#include "Infos/CvClassificationRegistry.h"  // id -> authored key, so a served ability names itself
 #include "Engine/CvCity.h"
 #include "Engine/CvPlot.h"
 #include "Engine/CvPlayer.h"
@@ -189,32 +190,40 @@ namespace
 		return picojson::value(kOut);
 	}
 
-	picojson::value oe_renderTeamCaps(TeamTypes eTeam, const CascadeTeamCaps& kCaps)
+	// Render a dictionary by its AUTHORED KEY rather than by id, so an external differ names the ability that
+	// moved instead of a bit position. The registry owns the id -> key direction ([DEC-classification-infos]).
+	picojson::value oe_renderClsDict(const ContextDict& kDict, int eDomain)
+	{
+		picojson::value::array kOut;
+		for (std::map<int, int>::const_iterator it = kDict.m.begin(); it != kDict.m.end(); ++it)
+		{
+			if (it->second > 0)
+			{
+				kOut.push_back(picojson::value(ClassificationRegistry::keyOf(eDomain, it->first)));
+			}
+		}
+		return picojson::value(kOut);
+	}
+
+	picojson::value oe_renderCapabilities(int iPlayer, const CapabilityContext& kCaps)
 	{
 		picojson::value::object kRow;
-		kRow["team"] = picojson::value((double)eTeam);
-		kRow["capabilities"] = oe_renderStringSet(kCaps.caps);
-		kRow["canTrade"] = oe_renderStringSet(kCaps.trade);
-		kRow["canWorkOn"] = oe_renderStringSet(kCaps.work);
+		kRow["player"] = picojson::value((double)iPlayer);
+		kRow["capabilities"] = oe_renderClsDict(kCaps.capabilityDict(), CLSD_CAPABILITY);
+		kRow["canTrade"]     = oe_renderClsDict(kCaps.canTradeDict(),   CLSD_CANTRADE);
+		kRow["canWorkOn"]    = oe_renderClsDict(kCaps.canWorkOnDict(),  CLSD_CANWORKON);
 		picojson::value::array kTradeTerrains;
-		for (size_t iTerrain = 0; iTerrain < kCaps.terrainTrade.size(); ++iTerrain)
+		const ContextDict& kTerrains = kCaps.canTradeOnDict();
+		for (std::map<int, int>::const_iterator it = kTerrains.m.begin(); it != kTerrains.m.end(); ++it)
 		{
-			if (!kCaps.terrainTrade[iTerrain])
+			if (it->second > 0 && it->first >= 0 && it->first < GC.getNumTerrainInfos())
 			{
-				continue;
+				kTradeTerrains.push_back(picojson::value(std::string(
+					GC.getTerrainInfo((TerrainTypes)it->first).getType())));
 			}
-			kTradeTerrains.push_back(picojson::value(std::string(
-				GC.getTerrainInfo((TerrainTypes)iTerrain).getType())));
 		}
 		kRow["canTradeOn"] = picojson::value(kTradeTerrains);
-		picojson::value::object kFlags;
-		for (int iFlag = 0; iFlag < CCF_COUNT; ++iFlag)
-		{
-			kFlags[std::string(CascadeCapabilities::flagName((CascadeCapFlag)iFlag))] =
-				picojson::value(kCaps.aFlag[iFlag]);
-		}
-		kRow["flags"] = picojson::value(kFlags);
-		kRow["corporationRevenueModifier"] = picojson::value((double)kCaps.corpRevenueMod);
+		kRow["corporationRevenueModifier"] = picojson::value((double)kCaps.corporationRevenueModifier());
 		return picojson::value(kRow);
 	}
 
@@ -377,25 +386,24 @@ CvString OracleEndpoints::teamCapabilities(int iPlayer, OracleSide eSide)
 	{
 		return oe_error("no player");
 	}
-	const TeamTypes eTeam = GET_PLAYER(ePlayer).getTeam();
-	if (eTeam < 0 || eTeam >= MAX_TEAMS)
+	const CvPlayer& kPlayer = GET_PLAYER(ePlayer);
+	if (kPlayer.getTeam() == NO_TEAM)
 	{
 		return oe_error("no team");
 	}
-	const CvTeam& kTeam = GET_TEAM(eTeam);
 
 	picojson::value::object kRoot;
 	kRoot["side"] = picojson::value(std::string(oe_sideName(eSide)));
 	kRoot["player"] = picojson::value((double)ePlayer);
 	if (eSide == ORACLE_SIDE_ORACLE)
 	{
-		CascadeTeamCaps kFresh;   // the oracle's own buffer -- the stored union is never passed in
-		CascadeCapabilities::refreshInto(kTeam, kFresh);
-		kRoot["capabilityUnion"] = oe_renderTeamCaps(eTeam, kFresh);
+		CapabilityContext kFresh;   // the oracle's own buffer -- the stored union is never passed in
+		CapabilityContext::recomputeInto(kPlayer, kFresh);
+		kRoot["capabilityUnion"] = oe_renderCapabilities((int)ePlayer, kFresh);
 	}
 	else
 	{
-		kRoot["capabilityUnion"] = oe_renderTeamCaps(eTeam, CascadeCapabilities::storedUnion(eTeam));
+		kRoot["capabilityUnion"] = oe_renderCapabilities((int)ePlayer, kPlayer.capabilities());
 	}
 	return oe_serialize(kRoot);
 }
