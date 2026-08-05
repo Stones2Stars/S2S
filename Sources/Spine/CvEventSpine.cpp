@@ -552,7 +552,7 @@ static const char* spineDomainFieldInfo(int iFieldTag, SpineFieldType* peType)
 	case SPF_ERA:         *peType = SFT_INT;         return "era";
 	case SPF_COMMERCE:    *peType = SFT_COMMERCE;    return "commerce";
 	case SPF_PROPERTY:    *peType = SFT_PROPERTY;    return "property";
-	case SPF_OBJECT_KIND: *peType = SFT_STR;         return "objectKind";
+	case SPF_OBJECT_KIND: *peType = SFT_INT;         return "objectKind";
 	case SPF_PROMOTION:   *peType = SFT_PROMOTION;   return "promotion";
 	case SPF_UNITCOMBAT:  *peType = SFT_UNITCOMBAT;  return "unitCombat";
 	case SPF_UNIT_ID:     *peType = SFT_INT;         return "unitId";

@@ -196,6 +196,20 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <C
   session**, which is why this is a check and not a rule ("a rule has to be remembered; a check does not").
   Also catches `with`, `except X as e`, `"...".format()`, and dict/set comprehensions. ⛔ If it fires, rewrite the
   line for 2.4 — never widen the tool.
+- **Spine field types: `python Tools/verify-spine-fields.py`** — a `CvSpineEvent` field is declared once in the
+  field-info switch (`*peType = SFT_X`) and filled at each emit by an adder (`addI`/`addStr`/`addW`/`addF`/`addB`);
+  the two must agree, because **the RENDERER switches on the DECLARED type**. A field declared `SFT_STR` but filled
+  with `addI` makes `spineRenderEventLine` read the integer AS A `char*`, so the process dies with an
+  `ACCESS_VIOLATION at an address equal to the value` — nothing subtler than that, and nothing sooner either.
+  ⚑ The trap it exists for is that **the compiler cannot see it** (both sides are ints at the call site; the
+  mismatch lives between a switch arm and a call in another function) and **it is silent until that field is
+  actually RENDERED** — so it survives every build and every run that does not happen to emit that fact past the
+  log gate. *(Worked: `SPF_OBJECT_KIND` was correctly moved to a raw `addI` — a per-property, per-object LOAD emit
+  must not resolve a name string at emit time — while its declaration stayed `SFT_STR`. The tree was red at the
+  time, so nothing could run; the first green build crashed on load reading `faultAddr=0x00000005`, the
+  object-kind value itself.)* ⛔ If it fires, fix the side that is WRONG — and prefer the raw int, since a payload
+  carries typed fields and never a pre-resolved string ([event-spine.md](docs/specs/event-spine.md)); never widen
+  the tool.
 - **Worklist docs: `python Tools/verify-worklist-docs.py`** — fails `todo.md` / `roadmap.md` when they carry
   STATE (counts, censuses, `file:line`, recorded verifications, completion markers). ⚑ It exists because
   [DEC-spec-plus-todo](docs/architecture/decisions.md#dec-spec-plus-todo) was in place and ignored anyway: the
