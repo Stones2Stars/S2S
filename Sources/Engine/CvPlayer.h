@@ -20,13 +20,11 @@
 #include "PolicyContext.h"   // the empire's enacted-policy dictionary: storage + maintenance, one place
 #include "CapabilityContext.h"   // the empire's ability union: storage + maintenance, one place
 #include "CvCascadePackage.h"   // the EMPIRE-scope cascade package + receiver sums (state-repositories.md)
-#include "Infrastructure/CvDerivedCache.h"  // the ONE derived-cache component (mark-driven, never serialized)
 #include "Enabler/CvEnabler.h"  // PlayerEnabler -- the per-player tri-state domains (enabler.md §7.1)
 #include "AI/CvSelectionGroupAI.h"
 #include "UI/CvTalkingHeadMessage.h"
 #include "UI/CvUnitList.h"
 #include "AI/CvUnitAI.h"
-#include "CvDerivedData.h"
 #include "Infrastructure/index_iterator_base.h"
 #include "Infrastructure/LinkedList.h"
 #ifdef CVARMY_BREAKSAVE
@@ -98,14 +96,8 @@ public:
 	std::vector<HeritageTypes> getHeritage() const { return m_myHeritage; }
 
 public:
-	//	Player-level derived-data repository (see CvDerivedData.h). Tech/civic/promotion/bonus
-	//	values, counts, etc.; empty for now.
-	CvPlayerDataRepository&       dataRepository()       { return m_dataRepository; }
-	const CvPlayerDataRepository& dataRepository() const { return m_dataRepository; }
-
 protected:
 	CvGameObjectPlayer m_GameObject;
-	CvPlayerDataRepository m_dataRepository;
 	void baseInit(PlayerTypes eID);
 	void initMore(PlayerTypes eID, LeaderHeadTypes ePersonality, bool bSetAlive = true);
 
@@ -814,10 +806,10 @@ public:
 
 	// The EMPIRE-scope cascade package -- the percent/flat sums this player's sources author at empire scope,
 	// PLUS the empire RECEIVER sums (gold/research/culture/espionage -- the realized totals the empire
-	// consumes) riding the same cache beside the packages ([DEC-uniform-cache-shape]). Marked ONLY by the
-	// modifier consumer's derived masks; recompute-only, never serialized.
+	// consumes) riding the same cache beside the packages ([DEC-uniform-cache-shape]). A MAINTAINED SUM
+	// ([DEC-maintained-sum]): the fact names the source and APPLYING that source's compiled deposits is the whole
+	// maintenance -- nothing marked, deferred or rebuilt. Never serialized.
 	const CvCascadePackage<CvPlayer>& getCascadePackage() const { return m_cascadePackage; }
-	// The package's refresh delegate (the CvDerivedCacheSet contract) -- delegates to the ONE gather.
 
 	// ---- THE ENABLER'S PER-PLAYER DOMAINS (enabler.md §7.1) -- techs / civics / projects / processes / builds /
 	// promotions. The owner is where the domain's HAVE AXES live, NOT where the gate is asked: projects and
@@ -2008,7 +2000,6 @@ protected:
 	void getCultureLayerColors(std::vector<NiColorA>& aColors, std::vector<CvPlotIndicatorData>& aIndicators) const; // used by Globeview culture layer
 
 	void processTrait(TraitTypes eTrait, int iChange);
-	void recalculateUnitCounts();
 
 	//TB Traits begin
 public:

@@ -450,7 +450,6 @@ CvCity::CvCity()
 	m_Properties(this),
 	m_outputHistory()
 {
-	m_dataRepository.init(this);
 	m_aiYieldRateModifier = new int[NUM_YIELD_TYPES];
 	m_aiPowerYieldRateModifier = new int[NUM_YIELD_TYPES];
 	m_aiTradeYield = new int[NUM_YIELD_TYPES];
@@ -784,7 +783,6 @@ void CvCity::uninit()
 void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructorCall)
 {
 	PROFILE_EXTRA_FUNC();
-	m_dataRepository.reset();
 	m_cityContext.bind(this);   // bind the per-city context to its owner (the pointer IS this city; forwarding reads it)
 	// ⛔ ZERO ITS DELTA STORES. A CvCity is recycled out of an FFreeListTrashArray, and a keyed accumulator is
 	// correct ONLY from a known zero -- a reused slot would inherit the previous occupant's plotAttrs / vicinity

@@ -15189,10 +15189,6 @@ int CvUnit::getUpkeep() const
 	return m_iUpkeep100;
 }
 
-void CvUnit::recalculateUnitUpkeep()
-{
-	calcUpkeep();
-}
 // ! Upkeep
 
 

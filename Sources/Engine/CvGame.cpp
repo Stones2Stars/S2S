@@ -65,7 +65,6 @@ CvGame::CvGame()
 	, m_eCurrentMap(MAP_EARTH)
 {
 	PROFILE_EXTRA_FUNC();
-	m_dataRepository.init(this);
 	m_aiRankPlayer = new int[MAX_PLAYERS];        // Ordered by rank...
 	m_aiPlayerRank = new int[MAX_PLAYERS];        // Ordered by player ID...
 	m_aiPlayerScore = new int[MAX_PLAYERS];       // Ordered by player ID...
@@ -920,7 +919,6 @@ CvString create_game_id()
 void CvGame::reset(HandicapTypes eHandicap, bool bConstructorCall)
 {
 	PROFILE_EXTRA_FUNC();
-	m_dataRepository.reset();
 	CvPlotPaging::ResetPaging();
 
 	// Toffer - bStartingGameSession is true when starting any new game or when loading any save,
@@ -2300,9 +2298,10 @@ void CvGame::update()
 	//	⛔ THE LOAD-COMPLETE HOOK -- the DLL closes its OWN bracket, because the EXE's does not cover a load.
 	//	`setFinalInitialized` is the EXE's hand-back and it fires for a NEW GAME ONLY (its own comment records
 	//	that it "isn't called when loading saves"), so nothing else reaches `onFinalInitialized`. Without this the
-	//	bracket opened by `CvGame::read` never closes and the whole event-built plane stays unbuilt: the modifier's
-	//	marks stay BANKED (markDirty banks inside the bracket and drains at GAME_LOAD_FINISHED -- every package
-	//	reads 0), the enabler's load-end gate pass never runs (so every candidate stays LISTED -- the enable-side
+	//	bracket opened by `CvGame::read` never closes and every load-END pass is stranded: the contexts' own load
+	//	build never runs (the buffered membership fold, the empire-scope grantor folds -- the facts that could only
+	//	fire before their city existed), the result-producers never resume from suppression, the enabler's load-end
+	//	gate pass never runs (so every candidate stays LISTED -- the enable-side
 	//	over-offer, enabler.md par.8), and `isFinalInitialized()` stays false forever, which strands the contexts'
 	//	deferred adjacency derivation ([contexts.md] -- the deferred plots drain on the first event after the game
 	//	reports final-initialized).

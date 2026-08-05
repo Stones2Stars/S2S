@@ -13,12 +13,10 @@
 #include "CvProperties.h"
 #include "UI/CvBuildingList.h"
 #include "UI/CvUnitList.h"
-#include "CvDerivedData.h"
 #include "UI/CityOutputHistory.h"
 #include "CvGameObject.h"
 #include "CityContext.h"
 #include "CvCascadePackage.h"   // the CITY-scope cascade package + receiver sums (state-repositories.md)
-#include "Infrastructure/CvDerivedCache.h"  // the ONE derived-cache component (mark-driven, never serialized)
 #include "Enabler/CvEnabler.h"              // CityEnabler -- the per-city buildings/units tri-state domains
 #include "Enabler/CvOperatingBuildings.h"   // the ACTIVE-building set the modifier reads (enabler.md §3.2)
 #include "AmenityContext.h"                 // the city's amenity state: storage + maintenance, one place responsible
@@ -67,11 +65,6 @@ public:
 	CvGameObjectCity* getGameObject() { return &m_GameObject; }
 	const CvGameObjectCity* getGameObject() const { return &m_GameObject; }
 
-	//	City-level derived-data repository (see CvDerivedData.h). Constructible set, building
-	//	values, declared needs; empty for now.
-	CvCityDataRepository&       dataRepository()       { return m_dataRepository; }
-	const CvCityDataRepository& dataRepository() const { return m_dataRepository; }
-
 	int getNumWorkers() const { return m_workers.size(); }
 	std::vector<int> getWorkers() const { return m_workers; }
 	void setWorkerHave(const int iUnitID, const bool bNewValue);
@@ -84,7 +77,6 @@ private:
 
 protected:
 	CvGameObjectCity m_GameObject;
-	CvCityDataRepository m_dataRepository;
 	CityOutputHistory m_outputHistory;
 
 
@@ -740,9 +732,10 @@ public:
 	// The CITY-scope cascade package -- the one scope carrying BOTH sides of the origin rule (yield flats from
 	// buildings + the percent stacks), PLUS this city's RECEIVER sums (the realized rates it consumes:
 	// food/production/commerce/culture) riding the same cache beside the packages ([DEC-uniform-cache-shape]).
-	// Marked ONLY by the modifier consumer's derived masks; recompute-only, never serialized.
+	// A MAINTAINED SUM ([DEC-maintained-sum]): the DOMAIN fact names the source, the compiled index names that
+	// source's deposits, and APPLYING them is the whole maintenance -- nothing marked, deferred or rebuilt. Never
+	// serialized; the reseed's own in-read facts build it.
 	const CvCascadePackage<CvCity>& getCascadePackage() const { return m_cascadePackage; }
-	// The package's refresh delegate (the CvDerivedCacheSet contract) -- delegates to the ONE gather.
 
 	// ---- THE ENABLER'S PER-CITY STATE (enabler.md §7.1) -- the "can I?" machine's host on this scope owner.
 	// ⛔ NOT a value cache and carrying NO dirty protocol: there is no dirty->recompute path at all. Both are
@@ -1794,7 +1787,6 @@ protected:
 	int getHurryPopulation(HurryTypes eHurry, int iHurryCost) const;
 	bool canHurryUnit(HurryTypes eHurry, UnitTypes eUnit) const;
 	bool canHurryBuilding(HurryTypes eHurry, BuildingTypes eType) const;
-	void recalculateMaxFoodKeptPercent();
 	virtual bool AI_addBestCitizen(bool bWorkers, bool bSpecialists, int* piBestPlot = NULL, SpecialistTypes* peBestSpecialist = NULL) = 0;
 	virtual bool AI_removeWorstCitizen(SpecialistTypes eIgnoreSpecialist = NO_SPECIALIST) = 0;
 

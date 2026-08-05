@@ -14,8 +14,8 @@
 > (a) emit the calc's INTERNAL sources so the value is REPRODUCIBLE, not merely read, and (b) confirm **WHEN**
 > the store is set (its freshness) — a `getX()` read of a stale store is a silent wrong value. *Example:* per-unit
 > `getUpkeep100()` is the store; `calcUpkeep100()` = `100×unitInfo.getBaseUpkeep() + extraUpkeep100`, then
-> `×upkeepModifier`, then `×upkeepMultiplierSM` (NPC skipped) — maintained fresh on unit init + every source
-> mutation + `recalculateUnitUpkeep` (so the store is current). Dump BOTH the store and the four calc sources.
+> `×upkeepModifier`, then `×upkeepMultiplierSM` (NPC skipped) — maintained fresh on unit init and on every source
+> mutation, which is the whole of it. Dump BOTH the store and the four calc sources.
 >
 > This is the **per-calc DESTROY-pass map**: for each per-turn value the engine realizes, *which legacy
 > getter computes it, what components feed it, the x1/x100 + clamp gotchas, and what the diagnostic dump

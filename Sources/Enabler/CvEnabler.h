@@ -3,8 +3,8 @@
 #define CV_ENABLER_H
 
 //
-//	The STANDARDIZED ENABLER component (enabler.md par.7 + par.7.1) -- the delta-apply SIBLING of CvDerivedCache.
-//	It CANNOT operate like a value cache: there is NO dirty->recompute path at all. The CAN-HAVE content is built
+//	The STANDARDIZED ENABLER component (enabler.md par.7 + par.7.1) -- DELTA-APPLIED, never a value cache:
+//	there is NO dirty->recompute path at all. The CAN-HAVE content is built
 //	PURELY on the events of already-HAS -- ONE mechanism for load and play (DEC-spine-reseed): at load the
 //	in-read reseed emits stream through the same O(delta) appliers the play-time emits use (the domain is
 //	init'd -- sized + static exclusions, NO content -- at its owner's lifecycle start, before the emits). The

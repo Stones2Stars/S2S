@@ -1095,7 +1095,6 @@ public:
 
 
 	void calcUpkeep();
-	void recalculateUnitUpkeep();
 	int getUpkeep() const;
 
 	int getStampedeCount() const;

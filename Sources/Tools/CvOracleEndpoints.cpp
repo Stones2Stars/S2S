@@ -231,6 +231,22 @@ namespace
 	// ---- document type. The oracle is handed this local buffer and never the package, which is what makes
 	// ---- "serving the oracle cannot repair the stored slots" structural. ----
 
+	// ⛔ THE IDENTITY IS STAMPED FROM THE LIVE OWNER ON BOTH SIDES, AND THE STORED SIDE CANNOT INHERIT IT FROM THE
+	// PACKAGE. A package binds its identity in the owner's `reset()`, which on a LOAD runs from `readIdentity`
+	// BEFORE the real id is off the stream -- so every loaded object's package carries the placeholder (-1 / 0)
+	// while a FOUNDED one carries the truth. Serving that would make every city's row key on "-1-0", collapse
+	// them onto one another, and leave the two documents undiffable -- which is the whole point of the pair
+	// ([state-repositories.md]: a divergence must NAME the object that drifted).
+	// ⚑ The gather already stamps the live identity on the oracle side, so doing the same here is what puts both
+	// documents on ONE key space. `identityFirst/Second` is read by nothing but this renderer, so this is the
+	// point of use and there is no second consumer to keep in step.
+	void oe_stampIdentity(CvCascadeSlotValues& kValues, CvCascScope eScope, int iFirst, int iSecond)
+	{
+		kValues.scope = eScope;
+		kValues.identityFirst = iFirst;
+		kValues.identitySecond = iSecond;
+	}
+
 	void oe_fillCity(const CvCity& kCity, OracleEndpoints::OracleSide eSide, CvCascadeSlotValues& kValues)
 	{
 		if (eSide == OracleEndpoints::ORACLE_SIDE_ORACLE)
@@ -240,6 +256,7 @@ namespace
 		else
 		{
 			kCity.getCascadePackage().readValuesInto(kValues);
+			oe_stampIdentity(kValues, CASC_SCOPE_CITY, (int)kCity.getOwner(), kCity.getID());
 		}
 	}
 
@@ -252,6 +269,7 @@ namespace
 		else
 		{
 			kPlayer.getCascadePackage().readValuesInto(kValues);
+			oe_stampIdentity(kValues, CASC_SCOPE_EMPIRE, (int)kPlayer.getID(), -1);
 		}
 	}
 
@@ -264,6 +282,7 @@ namespace
 		else
 		{
 			kTeam.getCascadePackage().readValuesInto(kValues);
+			oe_stampIdentity(kValues, CASC_SCOPE_TEAM, -1, (int)kTeam.getID());
 		}
 	}
 
@@ -276,6 +295,7 @@ namespace
 		else
 		{
 			kPlot.getCascadePackage().readValuesInto(kValues);
+			oe_stampIdentity(kValues, CASC_SCOPE_PLOT, kPlot.getX(), kPlot.getY());
 		}
 	}
 }

@@ -104,7 +104,6 @@ void CvTeam::getDiplomacyKinds(int (&diplomacies)[NUM_DIPLOMACY_KINDS]) const
 CvTeam::CvTeam() : m_GameObject(this),
 m_Properties(this)
 {
-	m_dataRepository.init(this);
 	m_aiStolenVisibilityTimer = new int[MAX_TEAMS];
 	m_aiWarWearinessTimes100 = new int[MAX_TEAMS];
 	m_aiExtraMoves = new int[NUM_DOMAIN_TYPES];
@@ -244,7 +243,6 @@ void CvTeam::reset(TeamTypes eID, bool bConstructorCall)
 	PROFILE_EXTRA_FUNC();
 	int iI, iJ;
 
-	m_dataRepository.reset();
 	// bind the TEAM-scope cascade package. It starts EMPTY and is filled ONLY by the facts ([DEC-maintained-sum]).
 	m_cascadePackage.bind(CASC_SCOPE_TEAM, -1, (int)eID);
 

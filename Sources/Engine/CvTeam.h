@@ -7,7 +7,6 @@
 
 #include "CvGameObject.h"
 #include "CvProperties.h"
-#include "CvDerivedData.h"
 #include "CvEventGrants.h"
 #include "CvCascadePackage.h"      // the TEAM-scope cascade package (state-repositories.md)
 class CapabilityContext;   // the PLAYER-held ability union these relays read ([DEC-scope-contexts])
@@ -45,28 +44,22 @@ public:
 
 	CvGameObjectTeam* getGameObject() { return &m_GameObject; }
 
-	//	Team-level derived-data repository (see CvDerivedData.h). Tech/war-shared facts; empty for now.
-	CvTeamDataRepository&       dataRepository()       { return m_dataRepository; }
-	const CvTeamDataRepository& dataRepository() const { return m_dataRepository; }
-
 	// The TEAM-scope cascade package -- the uniform CvCascadePackage on every scoped item
 	// ([DEC-uniform-cache-shape]; three channels measured at team scope -- trivial as keyed slots).
-	// Marked ONLY by the modifier consumer's derived masks; recompute-only, never serialized.
+	// A MAINTAINED SUM: the fact names the source and applying its compiled deposits is the whole maintenance
+	// ([DEC-maintained-sum]). Never serialized.
 	const CvCascadePackage<CvTeam>& getCascadePackage() const { return m_cascadePackage; }
-	// The package's refresh delegate (the CvDerivedCacheSet contract) -- delegates to the ONE gather.
 
-	// ---- THE EMPIRE-CAPABILITY UNION (capabilities.md; json.md §8) -- the team's active capability set, derived
-	// on query as the UNION over its live HAVE sources rather than granted or stored: nothing is handed out, so a
-	// capability lapses with its last live source. It is CACHED because the queries are hot (isTerrainTrade rides
-	// the pathing/trade-network loops), on the ONE CvDerivedCacheSet protocol -- setHasTech/reset MARK, and THE
-	// MARK IS WHAT REBUILDS; a query is a BARE FETCH. Never serialized.
+	// ---- THE EMPIRE-CAPABILITY SET (capabilities.md; json.md §8) -- active as the union over the live HAVE
+	// sources, so nothing is handed out and a capability lapses with its last live source. ⛔ THE TEAM DOES NOT
+	// HOLD IT: a team owns no live-state surface ([DEC-scope-contexts]), so the store is the PLAYER's keyed
+	// CapabilityContext, fed by the tech / civic / building facts, and the reads below are pure relays.
 
 	// Improvement yields a PYTHON EVENT granted this team (the wonder-event grants). One-shot state, so it is
 	// stored apart from anything derived -- Engine/CvEventGrants.h.
 	CvEventGrantStore m_eventGrants;
 	int getImprovementYieldChange(ImprovementTypes eImprovement, YieldTypes eYield) const;
 	void recordImprovementYieldGrant(int eEvent, ImprovementTypes eImprovement, YieldTypes eYield, int iChange);
-	// The union's refresh delegate (the CvDerivedCacheSet contract) -- delegates to the ONE derivation.
 	// The ABILITY RELAYS -- the team stores no union; it asks a member player, which owns it.
 	const CapabilityContext* memberCapabilities() const;
 	bool teamHasCapability(int iCapabilityId) const;
@@ -87,8 +80,7 @@ public:
 
 protected:
 	CvGameObjectTeam m_GameObject;
-	CvTeamDataRepository m_dataRepository;
-	// the TEAM-scope cascade package (see getCascadePackage); recompute-only, never serialized
+	// the TEAM-scope cascade package (see getCascadePackage); a maintained sum, never serialized
 	CvCascadePackage<CvTeam> m_cascadePackage;
 	void uninit();
 

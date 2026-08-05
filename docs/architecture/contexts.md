@@ -399,6 +399,27 @@ Non-dictionary scalars stay plain: population/power are `int` (power carries 0/1
 > ⚑ **One applier, several facts** — never one fact per relation with its own derivation, and never a re-scan of
 > the city's plots to find out what it now has.
 
+> **⚖ THE SANCTIONED EXCEPTION — AN EVENT-TRIGGERED RECALC, WHERE THE FACT CANNOT NAME WHAT MOVES (owner).**
+> *"It is the best example of event triggered recalc we need."* The rule above assumes the fact NAMES the thing
+> that moved, so the applier can set it. Where that assumption fails the recalc is CORRECT, and banning it on the
+> word `refresh` mistakes the name for the mechanism.
+> ⚑ **The exemplar is `DISTANCE_TO_GOVERNMENT_CENTER`** (`CityContext::refreshGovernmentCenterDistance`, driven by
+> `SEVT_CITY_GOVERNMENT_CENTER_ADDED / _REMOVED`): the value is a **MIN over the player's government centres**, so
+> a centre appearing in ONE city can shorten the distance for EVERY city, and one disappearing forces a re-derive
+> against the remaining set. The fact names the city that gained or lost the designation; the values that move
+> belong to all the others.
+> ⇒ **THE TEST, and it is narrow:** a recalc is sanctioned when (1) a genuine DOMAIN fact triggers it, (2) the
+> consequence is NON-LOCAL — the fact cannot name the values that move — and (3) no finer route exists to derive,
+> because the quantity is an aggregate over a set (a min, a nearest, a wholesale identity reassignment) rather
+> than a sum a delta could carry. `SEVT_AREAS_RECALCULATED` is the other instance, for the same reason.
+> ⛔ **What stays banned is unchanged, and none of it is this:** a recalc with NO naming fact (per-turn, blanket,
+> or on-read); one that papers over a MISSED invalidation
+> ([DEC-no-self-heal](decisions.md#dec-no-self-heal)); and one that RE-DERIVES A WHOLE BLOCK because something in
+> its vicinity happened when the fact could simply have set what it named — the legacy read path rescheduled to
+> event time, which is what the callouts above retire.
+> ⚠ So *"a context carries no `refresh*`"* is about the MECHANISM, never the spelling: the question to ask of one
+> is **what triggers it, and could the fact have named the value instead** — not what it is called.
+
 The stored aggregate rides events, exactly like the rest of the spine; a missed event drifts it, but that is the
 event spine's **baseline invariant** (plot-groups and vicinity drift the same way if events are incomplete), not a
 context-specific weakness. There is **no blanket per-turn rebuild** and no recompute-on-read.

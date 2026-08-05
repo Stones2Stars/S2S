@@ -180,6 +180,150 @@ the word is read as "power", full stop.
 
 ---
 
+## 5. Culture distance RECOMPUTES ON READ — the tombstoned ensure protocol, still live
+
+**⚠ PRIORITY / DISPOSITION (owner): it has to be fixed, but it needs PROPER PLANNING — and it WORKS.** *"I have
+never noticed any performance issues from it."* ⛔ So this is a SHAPE defect, not a perf incident: do not open it
+as an optimization, and do not cite turn time as the reason to take it. It waits for a designed fix.
+
+**What it is.** `CvCity::cultureDistance(const CvPlot&)` is the shortest **weighted** path from the city to a
+plot (terrain / feature / route / bonus each cost more), live ONLY under
+`GAMEOPTION_CULTURE_REALISTIC_SPREAD`; without that option it is plain `plotDistance` with no cache and no
+recompute at all. ⚑ The option gate is the likely reason no cost has ever been felt.
+
+**PROVEN — the read triggers the recompute.** On a cache miss (`m_aCultureDistances`, a
+`std::map<const CvPlot*,int>`) the const read calls `recalculateCultureDistances(getCultureLevel())`, which is a
+`while (bHasChanged)` **relaxation re-sweeping the whole `rect(iMaxDistance, iMaxDistance)`** until the
+distances converge. That is [superseded-ideas](../../architecture/superseded-ideas.md) **#14** — the
+`ensure()`-on-read protocol — verbatim, and the shape [state-repositories.md](../../architecture/state-repositories.md)
+bans outright (*"a read is a BARE FETCH, unconditionally"*).
+⚑ The code states its own cost: *"rather brute-force and inefficient"* and *"This happens ~iMaxDistance times per
+city per turn."*
+
+**PROVEN — the cache is cleared EVERY TURN, per city.** `CvCity::doPlotCulture` clears it, so the first read
+after each turn's culture spread pays the full radius fixpoint. Its own comment says so: *"need to recompute
+cache each turn because many things can change distance."*
+
+**PROVEN — invalidation EXISTS and covers capture.** Four sites, so this is NOT a stale-forever cache:
+
+| site | when |
+|---|---|
+| `CvPlayer::acquireCity` (`CvPlayer.cpp:2578`) | a city is TAKEN |
+| `CvCity::kill` (`CvCity.cpp:1321`) | the city dies |
+| `CvCity::doPlotCulture` (`CvCity.cpp:12072`) | every turn |
+| `CvCity::readBody` (`CvCity.cpp:13099`) | the load |
+
+**RULED OUT — it is not deletable, and not delta-maintainable like a package.** A shortest path moves
+NON-LOCALLY when terrain or a route changes, so it is not a sum and the maintained-sum shape does not reach it;
+[legacy-value-calc-map.md](../../reference/legacy-value-calc-map.md) already classifies `cultureDistance` as
+**SPATIAL (#429-adjacent)**, a permanent carve-out. The mechanic stays.
+
+**NOT YET KNOWN — the designed fix.** The obvious direction is to move the recompute OFF the read and onto the
+invalidation (rebuild where it is cleared, so the read becomes the bare fetch it is specified to be) — but that
+turns a lazy per-city cost into an eager one at four sites, including a per-turn one, and whether that is the
+right trade has not been established. ⚠ Do not assume the eager form is cheaper; nothing here has been measured,
+and the owner's standing observation is that the current form costs nothing noticeable.
+
+---
+
+## 6. `CvPlotGroup::recalculatePlots` — the trade network recomputes to find out whether it had to
+
+> **⛔⛔ DO NOT TOUCH THIS OPPORTUNISTICALLY — AND THE USUAL SAFETY NET DOES NOT COVER IT.** This entry exists to
+> STOP the cut, not to invite it. The owner's standing position: *"I am scared to deal with that, specifically
+> because of the traderoute recalcing."* That caution is correct and is part of the finding.
+
+**Why the blast radius is the worst in the tree.** `CvPlotGroup` is **the ONLY authoritative list for trade
+resources** ([enabler.md §8](../../specs/enabler.md) RESIDENCY) — every `requires` gate, every
+`connection:"trade"` atom and `CvCity::getNumBonuses` relay through it. A wrong cut does not move a number; it
+silently changes what is BUILDABLE, in every city, with no loud symptom.
+
+**⛔ THE STORED-vs-ORACLE TRIPWIRE CANNOT CATCH A REGRESSION HERE.** The pair works only because its two sides are
+independent derivations. The plot group is an **INPUT to both**: the oracle's operate fixpoint resolves `requires`
+through `getNumBonuses`, which relays to the same group the stored side read. So a wrong network is INHERITED by
+both sides and the diff stays GREEN — the same-derivation failure
+([superseded-ideas #17](../../architecture/superseded-ideas.md)) arriving through the input rather than the
+comparison. ⇒ **Any change here needs verification built for it FIRST.** "Cut it and let the tripwire catch it"
+does not apply and must not be assumed.
+
+**PROVEN — what it actually does.** It computes the answer in order to decide whether it needed to:
+1. Runs a full `FAStar` pathfind over the connected region to build two **Zobrist hashes** (all nodes, resource
+   nodes).
+2. `allNodesHash` unchanged ⇒ early return.
+3. Only `resourceNodesHash` unchanged ⇒ cheap path: drop the plots that left the group and re-colour them.
+4. Otherwise ⇒ full rebuild of the plot list and bonus counts.
+
+**PROVEN — three retired shapes, stacked.**
+- **Hash-based change detection** — the inverse of *the fact names the source*: it pays the pathfind first and
+  then asks whether anything moved.
+- **Session SEQUENCE counters** (`m_bulkRecalcStartSeq` / `m_sessionRecalcSeq` / `m_recalcSeqForSession`) — the
+  epoch class [DEC-flag-is-fossil](../../architecture/decisions.md#dec-flag-is-fossil) names outright.
+- **A blanket sweep** — `algo::for_each(plot_groups(), CvPlotGroup::fn::recalculatePlots())`
+  (`CvPlayer.cpp:4243`) over every group of a player.
+
+**Call sites (none is the sanctioned load-end rebuild):** `CvPlayer.cpp:4243` (whole-player sweep) ·
+`CvCity.cpp:1438` and `CvPlayer.cpp:2893` (via `originalTradeNetworkConnectivity`, on city kill and
+`acquireCity`) · `CvPlot.cpp:8656` (a plot change) · `CvGame.cpp:496` → `RecalculatePlotGroupHashes`.
+
+**⚖ RULED — THIS IS A *KEEP*, NOT CASCADE WORK (owner): *"it is somewhat out of scope of what the
+enabler/cascade setup is supposed to do."*** [north-star.md](../../architecture/north-star.md) names the
+**trade-route network calculation** as one of the three legitimate KEEPs — work that is *"none of the four
+systems' job"* — which is precisely why route yield is FOLDED IN as an input rather than derived. The enabler
+reading the group is *"the boundary working, not a KEEP of the reading system's own work."*
+⇒ **So the shapes above are observations about ENGINE-OWNED code, never a conversion worklist.** Do not schedule
+this as cascade/enabler work, and do not read the retired-shape list as a to-do.
+
+**⚖ AND IT IS NOT A HOT PATH (owner)** — so no performance argument reaches it either. Between that and the KEEP
+ruling, the ONLY thing that would justify opening it is a demonstrated correctness defect in the network itself.
+
+⚠ A load-end rebuild is separately sanctioned and must survive anything done here
+([enabler.md §8](../../specs/enabler.md)): the deserialized groups are drained and membership re-coloured from
+current state.
+
+**NOT YET KNOWN — and deliberately not pursued.** What verification would make a change safe (the tripwire does
+not), and whether the connectivity facts to maintain membership as a delta exist. Both are open questions about a
+KEEP, so neither is owed an answer by this rework.
+
+---
+
+## 7. `recalculateAllResourceConsumption` — a per-turn sweep, KEPT
+
+**⚖ DISPOSITION (owner): KEPT — resource depletion needs it**, *"even if the thing is buggy afaik."* So the
+suspected bugginess is recorded, NOT diagnosed here, and this is not an invitation to rewrite it.
+
+**PROVEN.** `CvPlayer::doTurn` calls it every turn, gated on `MODDERGAMEOPTION_RESOURCE_DEPLETION`; it walks
+every city × every bonus to build a consumption vector, and its ONLY consumer is the depletion-odds scaling in
+`CvPlot::doBonusDepletion`. ⚑ The option gate is why a per-turn O(cities × bonuses) walk has not been felt.
+
+---
+
+## 8. The LIVE Python failures — what actually fires, as opposed to what the census counts
+
+**Method (reproducible):** load the standing save with the game up and read
+`Documents/My Games/Beyond the Sword/Logs/PythonErr.log`. ⚑ **This is a FLOOR, never a census.** The log records
+only what has RUN, so a load with no turns played and no screens opened exercises almost nothing — the per-turn
+handlers, advisors, pedia and city screen are all still unmeasured. Play turns and open screens to grow it.
+⚑ **Why it beats the static count:** [python-read-map.md](../../reference/python-read-map.md) measures 2,070
+unserved names / 21,279 call sites but states plainly that REACHABILITY is not provable from the Python tree (XML
+callbacks and BUG config decide what executes). The log is the only thing that says which of them run.
+
+| failing read | path | note |
+|---|---|---|
+| `CyGlobalContext.getBuildingInfo` | `CvEventManager.onLoadGame` → `gameStart` (`:735` → `:649`) | fires on **every load**, on the engine's own callback chain — everything `gameStart` does after that line never runs |
+| `CyCity.getOwner` | `CvWBInterface.writeDesc` → `CvWBDesc.write` (`:1819`/`:1483`/`:1067`) | WORLDBUILDER — accepted breakage ([roadmap.md](roadmap.md) § scope decision 1b) but recorded here because that ruling requires a knowingly-broken WB path to be SAID, not left silent |
+| `CyGlobalContext.getBonusInfo` | `MoreCiv4lerts.buildBonusString` | the same defect as entry 3 |
+
+**PROVEN — the shape of the demand is narrow.** Every live failure is one of two kinds: an **info-registry read**
+(`getBuildingInfo` / `getBonusInfo`) or **basic object state** (`getOwner`). That is the demand-driven seed for
+the replacement library — serve what actually fires, in the order it fires
+([observability.md](../../reference/observability.md): the investigation names the read, not a sweep).
+
+⛔ **The fix is to SERVE the read on the new surface, never to restore the binding**
+([DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed)). ⚠ A handler RAISING is the intended
+interim state — it stays visible rather than being silenced ([roadmap.md](roadmap.md) § the mutating Python
+handlers).
+
+---
+
 # Migrated from the todo
 
 > Everything below was the defect half of `todo.md` and is moved VERBATIM — the wording, the evidence and the

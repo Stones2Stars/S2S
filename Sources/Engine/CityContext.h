@@ -22,7 +22,7 @@
 //	MAINTENANCE IS EXTERNAL AND EVENT-DRIVEN -- a read NEVER recomputes, and NOTHING heals a missed fact. There is no
 //	periodic refresh, no recompute-on-read fallback, no staleness stamp: a fact that fails to fire leaves the stored
 //	value visibly wrong, which is how it gets found (DEC-no-self-heal; LOAD is the only full build). The refresh entry
-//	points are const with the stores `mutable` (the CvDerivedCache / PlotContext shape) so the maintainer can drive
+//	points are const with the stores `mutable` (the PlotContext shape) so the maintainer can drive
 //	them through the bound city's const accessor without a second, mutable path onto the city.
 //
 //	NEVER SERIALIZED (DEC-derived-never-trusted): every store rebuilds from the save read's own in-read DOMAIN emits

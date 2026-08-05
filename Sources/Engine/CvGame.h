@@ -12,7 +12,6 @@
 #include "CvPropertySolver.h"
 #include "CvDate.h"
 #include "Infrastructure/CvAllocator.h"
-#include "CvDerivedData.h"
 
 class CvArtInfoBuilding;
 class CvCity;
@@ -41,13 +40,8 @@ public:
 
 	CvGameObjectGame* getGameObject() {return &m_GameObject;};
 
-	//	Game-level derived-data repository (see CvDerivedData.h). Game-state-derived data; empty for now.
-	CvGameDataRepository&       dataRepository()       { return m_dataRepository; }
-	const CvGameDataRepository& dataRepository() const { return m_dataRepository; }
-
 protected:
 	CvGameObjectGame m_GameObject;
-	CvGameDataRepository m_dataRepository;
 	void uninit();
 
 public:

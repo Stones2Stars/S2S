@@ -467,8 +467,8 @@ static EkBuildingVerdict ek_classifyBuilding(int b, const CvCity* pCity, CvCasca
 // civics in practice, not building-active).
 void EnablerKernel::recomputeOperatingBuildingsInto(const CvCity* pCity, std::set<int>& activeOut, std::set<int>& providedOut, std::set<int>& obsoleteOut)
 {
-	// The PURE fixpoint recompute -- the standing cache's refresh target (CvCity::refreshOperatingBuildings). Contract
-	// rule 2 (CvDerivedCache.h): FULLY define the output every call.
+	// The PURE fixpoint recompute: the LOAD SEED and the validation ORACLE, never the read path. It FULLY defines
+	// its output every call, so a caller never sees a partially-filled set.
 	activeOut.clear();
 	providedOut.clear();
 	obsoleteOut.clear();
@@ -883,7 +883,7 @@ void EnablerKernel::recomputeOperatingSetInto(const CvCity* pCity, OperatingBuil
 	}
 }
 
-// The LOAD seed (CvCity::refreshOperatingBuildings): the ONE full recompute into the city's own storage. It runs
+// The LOAD seed: the ONE full recompute into the city's own storage. It runs
 // once per load/reset/city-creation; the on*Active hooks maintain the set in place thereafter (targeted
 // propagation, never a blanket recompute -- enabler.md §3.2), so the full recompute never runs per-event again.
 void EnablerKernel::seedOperatingBuildings(const CvCity* pCity)

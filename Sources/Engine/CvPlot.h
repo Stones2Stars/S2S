@@ -165,9 +165,9 @@ public:
 
 	// The PLOT-scope cascade package -- this plot's ISOLATED base-value cache (modifier.md §2: one base
 	// package per plot, resolved in isolation; the origin rule's yield side). The uniform CvCascadePackage
-	// on every scoped item ([DEC-uniform-cache-shape]); marked ONLY by the modifier consumer's derived masks.
+	// on every scoped item ([DEC-uniform-cache-shape]), a MAINTAINED SUM: the fact that names a source applies
+	// that source's compiled deposits, and nothing is marked or rebuilt ([DEC-maintained-sum]).
 	const CvCascadePackage<CvPlot>& getCascadePackage() const { return m_cascadePackage; }
-	// The package's refresh delegate (the CvDerivedCacheSet contract) -- delegates to the ONE gather.
 
 	// THE PLOT'S GROUP READ SURFACE -- the GAME-OBJECT read role's answer to "what do I HAVE, right now?"
 	// (patterns.md § THE TWO READ ROLES), one getter per modifier FAMILY the PLOT scope carries channels of

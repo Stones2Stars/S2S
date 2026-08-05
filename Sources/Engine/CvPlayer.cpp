@@ -178,7 +178,6 @@ m_pBuildLists(NULL),
 m_cachedBonusCount(NULL)
 {
 	PROFILE_EXTRA_FUNC();
-	m_dataRepository.init(this);
 	m_aiSeaPlotYield = new int[NUM_YIELD_TYPES];
 	m_aiYieldRateModifier = new int[NUM_YIELD_TYPES];
 	m_aiExtraYieldThreshold = new int[NUM_YIELD_TYPES];
@@ -1054,7 +1053,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	PROFILE_EXTRA_FUNC();
 	int iI, iJ;
 
-	m_dataRepository.reset();
 	m_empireContext.bind(this);   // bind the per-player empire context to its owner (forwarding reads it)
 	// ...and ZERO the empire's POLICY dictionary. It is a delta store fed by the civic / trait / player-init
 	// facts, so it is correct only from a known zero -- a player slot is reused across games and loads, and a
@@ -12308,16 +12306,6 @@ bool CvPlayer::isUnitMaxedOut(const UnitTypes eIndex, const int iExtra) const
 }
 
 
-void CvPlayer::recalculateUnitCounts()
-{
-	PROFILE_FUNC();
-
-	foreach_(CvUnit* unit, units())
-	{
-		unit->recalculateUnitUpkeep();
-		unit->area()->changePower(getID(), unit->getPowerValueTotal());
-	}
-}
 
 void CvPlayer::changeUnitCount(const UnitTypes eUnit, const int iChange)
 {
