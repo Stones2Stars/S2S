@@ -1689,8 +1689,11 @@ class CvVictoryScreen:
 				self.iTab = 0
 				self.showVictoryConditionScreen(screen)
 		elif iCode == NotifyCode.NOTIFY_CLICKED:
-			if NAME.startswith("VS_Tab"):
-				ID = int(NAME[-1])
+			#	Parse the WHOLE suffix, and only when it is one: the widgets are VS_Tab0..VS_Tab3, so a name
+			#	with no numeric tail is not a tab and must not be parsed as one (a bare "VS_Tab" raised
+			#	ValueError on int('b')). Reading NAME[-1] was also wrong for any tab index above 9.
+			if NAME.startswith("VS_Tab") and NAME[6:].isdigit():
+				ID = int(NAME[6:])
 				screen.hide("VS_Col_Tab" + str(self.iTab))
 				screen.show("VS_Tab" + str(self.iTab))
 				screen.hide("VS_Tab" + str(ID))
