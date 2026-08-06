@@ -73,6 +73,13 @@ enum PyIntrinsicSlot
 	                            // count -- TRADE_ROUTE_AMOUNT, CvInfoKinds.h)
 	PYINT_IS_NO_INSTANCE_LIMIT, // is this building RELOCATABLE -- it waives the empire (national-wonder)
 	                            // cap, so a palace / culture building can be rebuilt elsewhere (json identity)        // is this project a spaceship part (the build-progress readout)
+	PYINT_DOMAIN,               // UNIT_ DOMAIN_* FK (identity.domain) -- WHERE the unit operates.
+	                            // ⛔ It is a genuine INTRINSIC, never a tag read ([json.md] par.7, [tags.md]): a
+	                            // tag says what a unit IS, a domain says where it OPERATES, and answering the
+	                            // second from the tag set means FILTERING EVERY TAG for what one field holds.
+	                            // The domain tags (landUnit/seaUnit/airUnit) exist and are inert by ruling --
+	                            // there is deliberately no composition over them for this, so a consumer asking
+	                            // "which domain" asks HERE.
 	NUM_PYINT
 };
 

@@ -312,22 +312,22 @@ def cityAdvise(CyCity, iPlayer):
 							iBestValue = 0
 							eBestUnit = -1
 
-							for iUnitX in xrange(GC.getNumUnitInfos()):
+							#	Iterate the ENABLER's maintained frontier, never the whole unit registry.
+							#	It answers what this city can actually train right now, and it already
+							#	EXCLUDES what is queued here ([enabler.md] par.6/par.8) -- so the old
+							#	canTrain call and the getFirstUnitOrder queue test are both subsumed, not
+							#	dropped.
+							for iUnitX in ENABLER.getAvailableUnits(iPlayer, CyCity.getID()):
 
-								if isLimitedUnit(iUnitX): continue
+								if INFO.getIntrinsic("UNIT_", iUnitX, IntrinsicSlot.PYINT_DOMAIN) != DomainTypes.DOMAIN_LAND:
+									continue
 
-								if GC.getUnitInfo(iUnitX).getDomainType() == DomainTypes.DOMAIN_LAND:
+								iValue = CyPlayer.AI_unitValue(iUnitX, UnitAITypes.UNITAI_SETTLE, CyArea)
 
-									if CyCity.canTrain(iUnitX, False, False, False, False):
+								if iValue > iBestValue:
 
-										if CyCity.getFirstUnitOrder(iUnitX) == -1:
-
-											iValue = CyPlayer.AI_unitValue(iUnitX, UnitAITypes.UNITAI_SETTLE, CyArea)
-
-											if iValue > iBestValue:
-
-												iBestValue = iValue
-												eBestUnit = iUnitX
+									iBestValue = iValue
+									eBestUnit = iUnitX
 
 							if eBestUnit > -1:
 								popupInfo = CyPopupInfo()
@@ -351,15 +351,14 @@ def cityAdvise(CyCity, iPlayer):
 
 						if CyCity.AI_countBestBuilds(CyArea) > 3:
 							iBestValue = 0
-							for iUnit in xrange(GC.getNumUnitInfos()):
-								if isLimitedUnit(iUnit) or GC.getUnitInfo(iUnit).getDomainType() != DomainTypes.DOMAIN_LAND:
+							for iUnit in ENABLER.getAvailableUnits(iPlayer, CyCity.getID()):
+								if INFO.getIntrinsic("UNIT_", iUnit, IntrinsicSlot.PYINT_DOMAIN) != DomainTypes.DOMAIN_LAND:
 									continue
 
-								if CyCity.getFirstUnitOrder(iUnit) == -1 and CyCity.canTrain(iUnit, False, False, False, False):
-									iValue = CyPlayer.AI_unitValue(iUnit, UnitAITypes.UNITAI_WORKER, CyArea)
-									if iValue > iBestValue:
-										iBestValue = iValue
-										eBestUnit = iUnit
+								iValue = CyPlayer.AI_unitValue(iUnit, UnitAITypes.UNITAI_WORKER, CyArea)
+								if iValue > iBestValue:
+									iBestValue = iValue
+									eBestUnit = iUnit
 
 						if eBestUnit != -1:
 							popupInfo = CyPopupInfo()
@@ -384,16 +383,17 @@ def cityAdvise(CyCity, iPlayer):
 						iBestValue = 0
 						eBestUnit = -1
 
-						for iUnit in xrange(GC.getNumUnitInfos()):
+						#	The maintained frontier, not a registry sweep -- already gated, and already
+						#	without what is queued here ([enabler.md] par.6/par.8), so canTrain is subsumed.
+						for iUnit in ENABLER.getAvailableUnits(iPlayer, CyCity.getID()):
 
-							if isLimitedUnit(iUnit) or GC.getUnitInfo(iUnit).getDomainType() != DomainTypes.DOMAIN_LAND:
+							if INFO.getIntrinsic("UNIT_", iUnit, IntrinsicSlot.PYINT_DOMAIN) != DomainTypes.DOMAIN_LAND:
 								continue
-							if CyCity.canTrain(iUnit, False, False, False, False):
-								iValue = CyPlayer.AI_unitValue(iUnit, UnitAITypes.UNITAI_CITY_DEFENSE, CyArea) * 2
-								iValue += CyPlayer.AI_unitValue(iUnit, UnitAITypes.UNITAI_ATTACK, CyArea)
-								if iValue > iBestValue:
-									iBestValue = iValue
-									eBestUnit = iUnit
+							iValue = CyPlayer.AI_unitValue(iUnit, UnitAITypes.UNITAI_CITY_DEFENSE, CyArea) * 2
+							iValue += CyPlayer.AI_unitValue(iUnit, UnitAITypes.UNITAI_ATTACK, CyArea)
+							if iValue > iBestValue:
+								iBestValue = iValue
+								eBestUnit = iUnit
 
 						if eBestUnit != -1:
 							popupInfo = CyPopupInfo()
