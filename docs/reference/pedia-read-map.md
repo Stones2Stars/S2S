@@ -131,7 +131,11 @@ A pedia page is served by a HANDFUL of coherent reads, replacing the hundreds of
    `CyBoolExpr` trees from `getConstructCondition`/`getTrainCondition` to extract tech/bonus prereqs on 5+
    pages. The structured `CvRequires`/condition objects (or the REQUIRED_BY inversion for the cross-link
    direction) answer this; no boolean-expression API belongs on the new surface.
-4. **GAP — category/sort metadata has no clean home yet.** The hub's category system derives groupings from
+4. **CLOSED — the category home is `identity.pediaCategory`** ([json.md §7](../specs/json.md), owner). The
+   taxonomy becomes AUTHORED DATA the curator derives once, so no consumer re-derives it; the era sub-category
+   stays derived from the entity's own era. ⛔ The banned repair is publishing the legacy getters so the Python
+   classifier resolves — it reads as migrated while preserving the substring-match-on-display-name buckets.
+   The original finding, kept because it is the evidence for what the field replaces: the hub derives groupings from
    heterogeneous heuristics: `getEra`+1, `getBonusClassType`, `getSpecialBuildingType`, `getMapCategories`
    (space test), `getDefaultUnitAIType` (animal/missionary buckets), `getProductionCost() <= 0` (misc),
    `getMaxGlobalInstances() == 1` (world unit/wonder), promotion-line `isBuildUp`/`isStatus`, `isDisable`,

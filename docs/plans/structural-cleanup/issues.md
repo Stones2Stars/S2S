@@ -408,10 +408,16 @@ registry's identity block, which is exactly what these render. The table becomes
 ⚠ **But it is a hub refactor, not a sweep** — the helpers, the sort, the sub-category mapping and the
 jump-widget payloads all thread the accessor.
 
-**PROVEN — one leg is blocked on a KNOWN GAP, not on this.** `Pedia.getBuildingList` reads
-`isGraphicalOnly()` and `getBuildingType()` — the pedia's category/sort TAXONOMY, which
-[pedia-read-map.md](../../reference/pedia-read-map.md) finding 4 records as having no home yet. That
-decision is upstream of the refactor: re-shaping the table does not answer where category tags live.
+**One leg needed a DATA decision, and it has one: `identity.pediaCategory`** ([json.md §7](../../specs/json.md),
+owner). `Pedia.getBuildingList` classified in Python from seven legacy getters plus a substring match on the
+localized DISPLAY NAME; the category is now authored data the curator derives once, so the classifier goes
+rather than being re-pointed. ⛔ Publishing those getters so it resolves is the banned repair — it preserves
+the name-matched buckets while reading as migrated.
+
+⚠ **The REST of this issue was never blocked, and reading it that way is the misreading to avoid** — it is a
+hub refactor, not a sweep. The precedent now exists: `Screens/Forgetful.py` was the same
+`(label, accessorFn, count)` → `(label, prefix)` + `INFO.getIndex` conversion over 51 registries, and
+`Index_Pedia`'s 19-row table is that table, smaller.
 
 ⚖ **The full-registry SCAN itself is NOT the defect here** ([patterns.md](../../architecture/patterns.md)):
 enumerating every entity IS the pedia's job and those loops STAY. What changes is the COST — one crossing

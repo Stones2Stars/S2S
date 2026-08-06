@@ -844,6 +844,24 @@ Empire-agnostic self-description. Read directly — never summed or cascaded.
   ⛔ **`identity` is STRICTLY self-description — NEVER a catch-all** (owner): a datum that isn't "what am I"
   (e.g. per-religion spread strength) does NOT go here; it gets its own block (`spread`, §9). Reaching for `identity`
   because a value has no obvious home is the anti-pattern.
+  > **⚖ `identity.pediaCategory` IS THE PEDIA-PLACEMENT MEMBER (owner)** — the concrete form of the
+  > "display/pedia placement" clause above: which pedia bucket an entity is listed in. It passes identity's own
+  > test outright, producing nothing on its own, and it is per-ENTITY rather than building-only (every paged type
+  > categorises the same way).
+  > ⛔ **THE POINT IS THAT THE TAXONOMY BECOMES DATA — a consumer must never RE-DERIVE a category.** The pedia
+  > classified buildings in Python from seven legacy per-field getters plus, for three buckets, a **substring
+  > match on the localized DISPLAY NAME** (`"Folklore -"`, `"Enclosure -"`, `"Remains -"`) — a taxonomy built out
+  > of prose, silently wrong in every non-English localization. Publishing those getters so the classifier
+  > resolves would preserve it exactly ([DEC-new-getter-surface](../architecture/decisions.md#dec-new-getter-surface):
+  > a walk that compiles against the new surface while doing what it always did is the half-migration).
+  > ⚑ **The CURATOR derives the value once — CRAZY → curator, offline** (the [modifier.md §4](modifier.md) trait
+  > precedent), and most of it falls out of data that already exists rather than being authored: world/national
+  > wonder from **which self-cap the entity authors** ([enabler.md §4](enabler.md) — the category IS the cap's
+  > scope, "never from an `isWorldWonder` mirror"), the system-placed buckets from `notConstructible`/`autoBuild`
+  > (§7), the off-world bucket from `mapCategories`. What genuinely needs authoring is only what no existing
+  > datum expresses — the name-matched group above.
+  > ⚠ **Absent means the ORDINARY bucket**, never a special case to encode; the pedia's sub-category (era
+  > chronology) stays derived from the entity's own era and is not a second field.
   ⚖ **The worked case that PASSES — a unit's `domain` (owner).** Where a unit operates is empire-agnostic
   self-description that produces nothing on its own, so it is a genuine identity member rather than a value
   parked there for want of a home. ⛔ It is deliberately NOT a [tag](tags.md): a tag says what a unit IS, a
