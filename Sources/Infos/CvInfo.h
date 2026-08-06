@@ -71,6 +71,13 @@ protected:
 
 public:
 
+	//	The pedia BUCKET this entity is listed in (identity.pediaCategory, json.md §7). It lives on the BASE
+	//	because it lives on ALL of them (owner) -- a datum every entity KIND carries belongs to the shared
+	//	identity plane, while one only some kinds carry belongs to their own block.
+	//	⚠ It is a stable authored KEY, not display text: the pedia's own bucket name, never localized. Empty
+	//	means the ORDINARY bucket, which the pedia sub-buckets by era -- absence is the default, not a value.
+	const char* getPediaCategory() const { return m_szPediaCategory; }
+
 	// --- the composable section units -- DATA-FREE here; a derived info that composes one overrides its pair ---
 	virtual const CvRequires*  getRequires()     const { return NULL; }   // §4.3
 	virtual const CvEdges*     getEdges()        const { return NULL; }   // §4.1/§4.2
@@ -284,6 +291,9 @@ protected:
 	virtual CvClassificationBlock* mutPolicies()     { return NULL; }
 	virtual CvClassificationBlock* mutCanTrade()     { return NULL; }
 	virtual CvClassificationBlock* mutCanWorkOn()    { return NULL; }
+
+protected:
+	CvString m_szPediaCategory;       // identity.pediaCategory -- empty = the ordinary bucket
 
 private:
 	CvInfo(const CvInfo&);            // noncopyable (the composed units own conditions)

@@ -148,6 +148,10 @@ public:
 	// that stays ([roadmap] Scope decisions), so what crosses here is the TAG the art manager resolves -- never
 	// pixels, and never an art OBJECT. This is the read every enumeration screen makes beside the description.
 	std::string getButton(const std::string& szTypePrefix, int iId) const;
+	//	The pedia BUCKET (identity.pediaCategory) for ONE entity -- the per-id twin of the same field on
+	//	getIndex. Both exist because the pedia asks both questions: which entities are in a bucket (the list),
+	//	and which bucket is THIS entity in (the jump-to-page). Empty = the ordinary bucket.
+	std::string getPediaCategory(const std::string& szTypePrefix, int iId) const;
 	// Whether the registry actually holds an entity at this id, so a caller can skip a hole without
 	// inferring it from an empty name.
 	bool exists(const std::string& szTypePrefix, int iId) const;

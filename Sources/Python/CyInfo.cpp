@@ -283,6 +283,16 @@ std::string CyInfo::getButton(const std::string& szTypePrefix, int iId) const
 	return szButton ? std::string(szButton) : std::string();
 }
 
+std::string CyInfo::getPediaCategory(const std::string& szTypePrefix, int iId) const
+{
+	//	The JSON base, not CvInfoBase: the field is on CvInfo, so an XML-only registry answers empty -- which is
+	//	the ordinary bucket, i.e. the same answer an uncategorised entity gives.
+	const CvInfo* pInfo = cyi_info(szTypePrefix, iId);
+	if (pInfo == NULL) return std::string();
+	const char* szCategory = pInfo->getPediaCategory();
+	return szCategory ? std::string(szCategory) : std::string();
+}
+
 bool CyInfo::exists(const std::string& szTypePrefix, int iId) const
 {
 	return cyi_infoBase(szTypePrefix, iId) != NULL;
@@ -656,6 +666,12 @@ python::list CyInfo::getIndex(const std::string& szTypePrefix) const
 		kEntry["description"] = std::wstring(pInfo->getDescription());
 		kEntry["textKey"]     = std::wstring(pInfo->getTextKeyWide() != NULL ? pInfo->getTextKeyWide() : L"");
 		kEntry["button"]      = std::string(pInfo->getButton() != NULL ? pInfo->getButton() : "");
+		//	The pedia BUCKET, on the index because the pedia builds LISTS: filtering a category is then one
+		//	crossing over the registry rather than a per-entity ask. Empty for an XML-only registry (the field is
+		//	on the JSON base) and for an uncategorised entity -- both mean the ordinary bucket.
+		const CvInfo* pJson = cyi_info(szTypePrefix, iId);
+		kEntry["pediaCategory"] = std::string(pJson != NULL && pJson->getPediaCategory() != NULL
+		                                      ? pJson->getPediaCategory() : "");
 		lEntries.append(kEntry);
 	}
 	return lEntries;
@@ -716,6 +732,7 @@ void CyInfo::pythonPublish()
 		.def("getShortDescription", &CyInfo::getShortDescription)
 		.def("getType",        &CyInfo::getType)
 		.def("getButton",      &CyInfo::getButton)
+		.def("getPediaCategory", &CyInfo::getPediaCategory)
 		.def("exists",         &CyInfo::exists)
 		.def("getIndex",       &CyInfo::getIndex)
 		.def("getEdgeIds",     &CyInfo::getEdgeIds)

@@ -515,19 +515,18 @@ class Pedia:
 		elif iCategory == self.PEDIA_BUILDINGS_0:
 			bFuncByGroupCat = True
 			self.iGroupCategory = iGroupCategory = iCategory
-			CvBuildingInfo = GC.getBuildingInfo(iObjectType)
-			iBuildingType = self.getBuildingType(CvBuildingInfo, iObjectType)
-			if iBuildingType != -1:
+			szCategory = INFO.getPediaCategory("BUILDING_", iObjectType)
+			if szCategory in self.PEDIA_BUILDING_BUCKETS:
 				iCategory = self.PEDIA_BUILDINGS_2
-				szSubCat = self.mapSubCat.get(iCategory)[iBuildingType]
+				szSubCat = self.mapSubCat.get(iCategory)[self.PEDIA_BUILDING_BUCKETS.index(szCategory)]
 			else:
 				iCategory = self.PEDIA_BUILDINGS_1
 				if self.SECTION == [iCategory, self.szCatAllEras]:
 					szSubCat = self.SECTION[1]
 				else:
-					iEra = self.getBuildingEra(CvBuildingInfo)
+					iEra = self.getBuildingEra(iObjectType)
 					szSubCat = self.mapSubCat.get(iCategory)[iEra]
-			print "Selected: %s", CvBuildingInfo.getDescription()
+			print "Selected: %s", INFO.getDescription("BUILDING_", iObjectType)
 
 		elif iCategory in (self.PEDIA_BUILDINGS_1, self.PEDIA_BUILDINGS_2):
 			bFuncByGroupCat = True
@@ -917,57 +916,35 @@ class Pedia:
 		self.aList = self.getBuildingList(7)
 		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, GC.getBuildingInfo)
 
+	#	The pedia BUCKET is authored data now (identity.pediaCategory, json.md §7), so this filters the index
+	#	instead of re-deriving a taxonomy. ONE crossing for the registry, and the classifier that read seven
+	#	legacy getters plus a substring match on the localized DISPLAY NAME is gone with it.
+	PEDIA_BUILDING_BUCKETS = ["nationalWonder", "greatWonder", "groupWonder", "specialBuilding",
+	                          "culture", "religious", "animalistic", "space"]
+
 	def getBuildingList(self, iBuildingType):
 		aList = []
 		iCategory, szSubCat = self.SECTION
 		aSubCatList = self.mapSubCat.get(iCategory)
-		bValid = False
-		for i in xrange(GC.getNumBuildingInfos()):
-			CvBuildingInfo = GC.getBuildingInfo(i)
-			if CvBuildingInfo.isGraphicalOnly():
-				continue
-			if iBuildingType != -1:
-				if self.getBuildingType(CvBuildingInfo, i) == iBuildingType:
-					bValid = True
-			elif self.getBuildingType(CvBuildingInfo, i) == -1:
-				if szSubCat == self.szCatAllEras:
-					bValid = True
-				else:
-					iEra = self.getBuildingEra(CvBuildingInfo)
-					if szSubCat == aSubCatList[iEra]:
-						bValid = True
-			if bValid:
-				aList.append((CvBuildingInfo.getDescription(), i))
-				bValid = False
+		szWanted = ""
+		if iBuildingType != -1:
+			szWanted = self.PEDIA_BUILDING_BUCKETS[iBuildingType]
+		for kEntry in INFO.getIndex("BUILDING_"):
+			szCategory = kEntry["pediaCategory"]
+			if szWanted:
+				if szCategory != szWanted:
+					continue
+			else:
+				#	The ORDINARY bucket is the absent one, sub-bucketed by era.
+				if szCategory:
+					continue
+				if szSubCat != self.szCatAllEras:
+					iEra = self.getBuildingEra(kEntry["id"])
+					if szSubCat != aSubCatList[iEra]:
+						continue
+			aList.append((kEntry["description"], kEntry["id"]))
 		aList.sort()
 		return aList
-
-	def getBuildingType(self, CvBuildingInfo, iBuilding):
-		szStrat = CvBuildingInfo.getDescription()
-
-		if GC.getInfoTypeForString("MAPCATEGORY_EARTH") not in CvBuildingInfo.getMapCategories():
-			return 7
-
-		iSpecialBuilding = CvBuildingInfo.getSpecialBuildingType()
-
-		if iSpecialBuilding != -1:
-			if iSpecialBuilding == GC.getInfoTypeForString("SPECIALBUILDING_C2C_CULTURE"):
-				return 4
-			if INFO.getType("SPECIALBUILDING_", iSpecialBuilding).find("_GROUP_") != -1:
-				return 2
-		if szStrat.find("Folklore -", 0, 10) + szStrat.find("Folklore (E) -", 0, 14) + szStrat.find("Folklore (T) -", 0, 14) + szStrat.find("Enclosure -", 0, 11) + szStrat.find("Remains -", 0, 9) != -5:
-			return 6
-		if CvBuildingInfo.getReligionType() != -1 or CvBuildingInfo.getPrereqReligion() != -1:
-			return 5
-		if CvBuildingInfo.getProductionCost() == -1 or CvBuildingInfo.isAutoBuild():
-			return 3
-		if isWorldWonder(iBuilding):
-			return 1
-		if isNationalWonder(iBuilding):
-			return 0
-
-		return -1
-
 
 	def placeUnitTree(self):
 		print "Category: Unit Tree"
@@ -1318,8 +1295,16 @@ class Pedia:
 		list.sort()
 		return list
 
-	def getBuildingEra(self, CvBuildingInfo):
+	#	⛔ THE ONE UNCONVERTED LEG, and it is NAMED rather than papered over. It derives a building's era by
+	#	walking its prereq techs, which no read serves: PYLIST_PREREQ_AND/OR_TECHS are TECH_-only, and the
+	#	building's own EDGEF_ENABLED_BY bucket MIXES enabling techs with obsoleting ones ([enabler.md] §2), so
+	#	reading it as "my era" would band a building by whatever obsoletes it.
+	#	⇒ The missing machine is a building->era answer -- either an authored identity.era or a split edge
+	#	bucket. That is a DATA decision, not wiring, so it is not invented here.
+	#	⚠ It is dead exactly as it was before pediaCategory landed; the 8 CATEGORISED buckets no longer reach it.
+	def getBuildingEra(self, iBuilding):
 		iEra = 0
+		CvBuildingInfo = GC.getBuildingInfo(iBuilding)
 
 		#Main tech requirement
 		if CvBuildingInfo.getPrereqAndTech() != -1:

@@ -155,12 +155,17 @@ void CvInfo::mapSections(const picojson::value& entity)
 
 	// --- core reading: the shared CvInfoBase fields (type FIRST -- the diagnostics key on it) ---
 	if (jsonIdStr(o, "type", s)) m_szType = s.c_str();
+	//	⚠ CLEARED before the block, not merely assigned inside it: mapFrom re-runs on the complete registry and
+	//	must FULLY DEFINE its output each call, and this member is ABSENT on most entities (empty = the ordinary
+	//	bucket). Without the clear, an entity would keep whatever the first pass left.
+	m_szPediaCategory = "";
 	if (const picojson::object* io = jsonChildObj(o, "identity"))
 	{
 		if (jsonIdStr(*io, "description", s)) m_szTextKey        = CvWString(s.c_str());
 		if (jsonIdStr(*io, "civilopedia", s)) m_szCivilopediaKey = CvWString(s.c_str());
 		if (jsonIdStr(*io, "help", s))        m_szHelpKey        = CvWString(s.c_str());
 		if (jsonIdStr(*io, "strategy", s))    m_szStrategyKey    = CvWString(s.c_str());
+		if (jsonIdStr(*io, "pediaCategory", s)) m_szPediaCategory = s.c_str();
 	}
 	if (const picojson::object* ui = jsonChildObj(o, "ui"))
 		if (const picojson::object* art = jsonChildObj(*ui, "art"))
